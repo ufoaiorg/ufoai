@@ -1,0 +1,90 @@
+// ==================
+// HIRE MENU
+// ==================
+menu employees
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/empl_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/empl_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/empl_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/empl_lr
+		pos		"512 512"
+	}
+
+	// ==================
+	// list
+	// ==================
+
+	text employeelist
+	{
+		pos		"40 30"
+		size	"286 710"
+//		bgcolor "1 1 1 0.5"
+		format	"22 0"
+		num	18
+		click
+		rclick
+		mousefx	true
+	}
+
+	text employeelist_amount
+	{
+		pos		"336 30"
+		size	"114 710"
+//		bgcolor "1 1 1 0.5"
+		format	"22 0"
+		num	19
+		mousefx	true
+	}
+
+	// ====================
+	// employee description
+	// ====================
+
+	text description
+	{
+		pos		"610 428"
+//		bgcolor "1 1 1 0.5"
+		size	"366 80"
+		format	"20 260"
+		num	20
+	}
+
+	// ==================
+	// init function
+	// ==================
+
+	func init
+	{
+		cmd "hire_init"
+	}
+}
