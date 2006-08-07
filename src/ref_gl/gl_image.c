@@ -591,7 +591,8 @@ void LoadTGA(char *name, byte ** pic, int *width, int *height)
 			pixbuf = targa_rgba + row * columns * 4;
 			for (column = 0; column < columns;) {
 				packetHeader = *buf_p++;
-				packetSize = 1 + (packetHeader & 0x7f);
+				/* SCHAR_MAX although it's unsigned */
+				packetSize = 1 + (packetHeader & SCHAR_MAX);
 				if (packetHeader & 0x80) {	/* run-length packet */
 					switch (targa_header.pixel_size) {
 					case 24:

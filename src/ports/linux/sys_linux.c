@@ -161,7 +161,7 @@ void Sys_Printf (char *fmt, ...)
 		return;
 
 	for (p = (unsigned char *)text; *p; p++) {
-		*p &= 0x7f;
+		*p &= SCHAR_MAX;
 		if ((*p > 128 || *p < 32) && *p != 10 && *p != 13 && *p != 9)
 			printf("[%02x]", *p);
 		else

@@ -93,10 +93,8 @@ void Con_ToggleChat_f(void)
 	Key_ClearTyping();
 
 	if (cls.key_dest == key_console) {
-		if (cls.state == ca_active) {
-/*			M_ForceMenuOff (); */
+		if (cls.state == ca_active)
 			cls.key_dest = key_game;
-		}
 	} else
 		cls.key_dest = key_console;
 
@@ -160,7 +158,7 @@ static void Con_Dump_f(void)
 				break;
 		}
 		for (x = 0; buffer[x]; x++)
-			buffer[x] &= 0x7f;
+			buffer[x] &= SCHAR_MAX;
 
 		fprintf(f, "%s\n", buffer);
 	}
