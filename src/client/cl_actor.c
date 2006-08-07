@@ -187,8 +187,6 @@ void CL_UGVCvars(character_t *chr)
 
 /**
  * @brief Updates the global character cvars.
- *
- *
  */
 void CL_ActorGlobalCVars(void)
 {
@@ -783,8 +781,6 @@ void CL_BuildForbiddenList(void)
 
 /**
  * @brief Checks that an action is valid.
- *
- * TODO: This probably belongs in the core logic.
  */
 int CL_CheckAction(void)
 {
@@ -812,7 +808,7 @@ int CL_CheckAction(void)
 
 /**
  * @brief Draws the way to walk when confirm actions is activated.
- *
+ * @param[in] to
  */
 int CL_TraceMove(pos3_t to)
 {
@@ -846,8 +842,8 @@ int CL_TraceMove(pos3_t to)
 
 /**
  * @brief Starts moving actor.
- *
- * TODO: This probably belongs in the core logic.
+ * @param[in] le
+ * @param[in] to
  */
 void CL_ActorStartMove(le_t * le, pos3_t to)
 {
@@ -871,8 +867,8 @@ void CL_ActorStartMove(le_t * le, pos3_t to)
 
 /**
  * @brief Shoot with actor.
- *
- * TODO: This probably belongs in the core logic.
+ * @param[in] le
+ * @param[in] at
  */
 void CL_ActorShoot(le_t * le, pos3_t at)
 {
@@ -895,8 +891,8 @@ void CL_ActorShoot(le_t * le, pos3_t at)
 
 /**
  * @brief Reload weapon with actor.
- *
- * TODO: This probably belongs in the core logic.
+ * @param[in] hand
+ * @sa CL_CheckAction
  */
 void CL_ActorReload(int hand)
 {
@@ -962,14 +958,11 @@ void CL_ActorReload(int hand)
 
 /**
  * @brief Moves actor.
- *
- * TODO: This probably belongs in the core logic.
+ * @param[in] sb
  */
 void CL_ActorDoMove(sizebuf_t * sb)
 {
 	le_t *le;
-
-/*	int		i; */
 
 	/* get le */
 	le = LE_Get(MSG_ReadShort(sb));
@@ -1021,8 +1014,7 @@ void CL_ActorTurnMouse(void)
 
 /**
  * @brief Turns actor.
- *
- * TODO: This probably belongs in the core logic.
+ * @param[in] sb
  */
 void CL_ActorDoTurn(sizebuf_t *sb)
 {
@@ -1038,8 +1030,6 @@ void CL_ActorDoTurn(sizebuf_t *sb)
 	le->dir = MSG_ReadByte(sb);
 	le->angles[YAW] = dangle[le->dir];
 
-/* 	cl.cmode = M_MOVE; */
-
 	/* calculate possible moves */
 	CL_BuildForbiddenList();
 	Grid_MoveCalc(&clMap, le->pos, MAX_ROUTE, fb_list, fb_length);
@@ -1048,8 +1038,6 @@ void CL_ActorDoTurn(sizebuf_t *sb)
 
 /**
  * @brief Stands or crouches actor.
- *
- * TODO: This probably belongs in the core logic.
  */
 void CL_ActorStandCrouch(void)
 {
@@ -1067,9 +1055,8 @@ void CL_ActorStandCrouch(void)
  * @brief Stuns an actor.
  *
  * Stunning is handled as a dead actor but afterwards in CL_CollectAliens we only collect aliens with STATE_STUN
- * remember: we can do this because STATE_STUN is 0x43 and STATE_DEAD is 0x03 (checking for STATE_DEAD is also true when STATE_STUN was set)
- * NOTE: Do we really need this as a script command? Currently there is no binding - but who knows?
- * TODO: This probably belongs in the core logic.
+ * @note: we can do this because STATE_STUN is 0x43 and STATE_DEAD is 0x03 (checking for STATE_DEAD is also true when STATE_STUN was set)
+ * @note: Do we really need this as a script command? Currently there is no binding - but who knows?
  */
 void CL_ActorStun(void)
 {
@@ -1083,8 +1070,6 @@ void CL_ActorStun(void)
 
 /**
  * @brief Toggles reaction fire.
- *
- * TODO: This probably belongs in the core logic.
  */
 void CL_ActorToggleReaction(void)
 {
@@ -1097,8 +1082,6 @@ void CL_ActorToggleReaction(void)
 
 /**
  * @brief Records if shot is first shot.
- *
- * TODO: This looks very out of place. Code probably needs reworking.
  */
 static qboolean firstShot = qfalse;
 
@@ -1144,6 +1127,7 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 
 /**
  * @brief Throw item with actor.
+ * @param[in] sb
  */
 void CL_ActorDoThrow(sizebuf_t * sb)
 {
@@ -1171,8 +1155,7 @@ void CL_ActorDoThrow(sizebuf_t * sb)
 
 /**
  * @brief Starts shooting with actor.
- *
- * TODO: This probably belongs in core logic.
+ * @param[in] sb
  */
 void CL_ActorStartShoot(sizebuf_t * sb)
 {
@@ -1212,8 +1195,7 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 
 /**
  * @brief Kills actor.
- *
- * This probably belongs in core logic.
+ * @param[in] sb
  */
 void CL_ActorDie(sizebuf_t * sb)
 {
@@ -1316,8 +1298,6 @@ ROUND MANAGEMENT
 
 /**
  * @brief Finishes the current round of the player in battlescape and starts the round for the next team.
- *
- * TODO: This probably belongs in core logic.
  */
 void CL_NextRound(void)
 {
@@ -1351,6 +1331,7 @@ void CL_DisplayHudMessage(char *text, int time)
 
 /**
  * @brief Performs end-of-turn processing.
+ * @param[in] sb
  */
 void CL_DoEndRound(sizebuf_t * sb)
 {
@@ -1484,6 +1465,8 @@ ACTOR GRAPHICS
 
 /**
  * @brief Adds an actor.
+ * @param[in] le
+ * @param[in] ent
  * @sa CL_AddUGV
  */
 qboolean CL_AddActor(le_t * le, entity_t * ent)
@@ -1552,6 +1535,8 @@ qboolean CL_AddActor(le_t * le, entity_t * ent)
 
 /**
  * @brief Adds an UGV.
+ * @param[in] le
+ * @param[in] ent
  * @sa CL_AddActor
  */
 qboolean CL_AddUGV(le_t * le, entity_t * ent)
@@ -1628,8 +1613,7 @@ TARGETING GRAPHICS
 
 /**
  * @brief Calculates chance to hit.
- *
- * TODO: This almost certainly belongs in the core logic!
+ * @param[in] toPos
  */
 float CL_TargetingToHit(pos3_t toPos)
 {
@@ -1734,6 +1718,8 @@ float CL_TargetingToHit(pos3_t toPos)
 
 /**
  * @brief Draws line to target.
+ * @param[in] fromPos
+ * @param[in] toPos
  */
 void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 {
@@ -1767,7 +1753,8 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 
 /**
  * @brief Shows targetting for a grenade.
- *
+ * @param[in] fromPos
+ * @param[in] toPos
  */
 void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 {
@@ -1816,7 +1803,6 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 
 /**
  * @brief field marker box
- * TODO: This looks out of place.
  */
 const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT };
 #define BoxSize(i,source,target) (target[0]=i*source[0],target[1]=i*source[1],target[2]=source[2])
