@@ -80,6 +80,7 @@ void G_SendStats(edict_t * ent)
 	gi.WriteByte(ent->TU);
 	gi.WriteByte(ent->HP);
 	gi.WriteByte(ent->STUN);
+	gi.WriteByte(ent->AP);
 	gi.WriteByte(ent->morale);
 }
 
@@ -2364,12 +2365,6 @@ void G_ClientTeamInfo(player_t * player)
 				ent->chr.kills[k] = gi.ReadShort();
 			ent->chr.assigned_missions = gi.ReadShort();
 
-			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
-			ent->AP = 100;
-			ent->STUN = 0;
-			if (ent->type == ET_ACTOR)
-				ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
-
 			/* inventory */
 			item.t = gi.ReadByte();
 			while (item.t != NONE && item.t != -1) {
@@ -2391,6 +2386,13 @@ void G_ClientTeamInfo(player_t * player)
 			ent->body = gi.modelindex(Com_CharGetBody(&ent->chr));
 			ent->head = gi.modelindex(Com_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
+
+			/* set initial vital statistics */
+			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
+			ent->AP = ent->i.c[gi.csi->idArmor] ? 100 : 0;
+			ent->STUN = 0;
+			if (ent->type == ET_ACTOR)
+				ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 		} else {
 			/* just do nothing with the info */
 			gi.ReadShort();

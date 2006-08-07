@@ -11,7 +11,7 @@ item medikit
 	shape		"0 0 2 2"
 	center		"1 0 2"
 	scale		1.1
-	ammo		2
+	ammo		5
 	price		1700
 	buytype		2
 
@@ -59,6 +59,7 @@ item irgoggles
 	shape		"0 0 2 2"
 	center		"-1.5 -4 -4.5"
 	scale		0.85
+	ammo		30
 	price		18700
 	buytype		2
 

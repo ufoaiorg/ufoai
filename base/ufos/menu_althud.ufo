@@ -620,7 +620,13 @@ menu althud
 	string str_crg
 	{
 		string	"*cvar mn_morale"
-		pos		"959 369"
+		pos		"958 369"
+		align	uc
+	}
+	string str_ap
+	{
+		string	"*cvar mn_ap"
+		pos		"988 369"
 		align	uc
 	}
 
@@ -822,7 +828,7 @@ menu althud
 	text infoscreen
 	{
 		pos		"20 722"
-		size	"150 40"
+		size	"260 40"
 		format	"18 0"
 		color	"0 1 0 1"
 	}

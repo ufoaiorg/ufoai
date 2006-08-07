@@ -73,7 +73,7 @@
 // on average, while 8 plaspistol and 8 tachyonpistol gives only 1 sidearm
 // (so 4 plaspistol and 4 tachyonpistol is a better idea in practice).
 
-equipment campaign_stage1_workers
+equipment stage1_workers
 {
 	plaspistol			3
 	plaspistol_ammo		4
@@ -82,7 +82,7 @@ equipment campaign_stage1_workers
 	kerrblade			10
 }
 
-equipment campaign_stage1_workers_explosive
+equipment stage1_workers_explosive
 {
 	plaspistol			3
 	plaspistol_ammo		4
@@ -93,7 +93,7 @@ equipment campaign_stage1_workers_explosive
 	plasmagrenade		5
 }
 
-equipment campaign_stage1_soldiers
+equipment stage1_soldiers
 {
 	plaspistol			5
 	plaspistol_ammo		11
@@ -105,7 +105,7 @@ equipment campaign_stage1_soldiers
 	plasblade			1
 }
 
-equipment campaign_stage2_workers
+equipment stage2_workers
 {
 	plaspistol			6
 	plaspistol_ammo		7
@@ -116,7 +116,7 @@ equipment campaign_stage2_workers
 	alienincgrenade		4
 }
 
-equipment campaign_stage2_soldiers_melee
+equipment stage2_soldiers_melee
 {
 	plaspistol			1
 	plaspistol_ammo		1
@@ -131,7 +131,7 @@ equipment campaign_stage2_soldiers_melee
 	alienincgrenade		7
 }
 
-equipment campaign_stage2_soldiers
+equipment stage2_soldiers
 {
 	plaspistol			7
 	plaspistol_ammo		15
@@ -145,7 +145,7 @@ equipment campaign_stage2_soldiers
 	plasmagrenade		1
 }
 
-equipment campaign_stage3_workers
+equipment stage3_workers
 {
 	plaspistol			3
 	plaspistol_ammo		4
@@ -159,7 +159,7 @@ equipment campaign_stage3_workers
 	plasmagrenade		4
 }
 
-equipment campaign_stage3_workers_explosive
+equipment stage3_workers_explosive
 {
 	plaspistol			2
 	plaspistol_ammo		2
@@ -174,7 +174,7 @@ equipment campaign_stage3_workers_explosive
 	plasmagrenade		23
 }
 
-equipment campaign_stage3_soldiers
+equipment stage3_soldiers
 {
 	plaspistol			3
 	plaspistol_ammo		5
@@ -192,7 +192,7 @@ equipment campaign_stage3_soldiers
 	plasmagrenade		7
 }
 
-equipment campaign_stage4_workers
+equipment stage4_workers
 {
 	plaspistol			2
 	plaspistol_ammo		3
@@ -208,7 +208,7 @@ equipment campaign_stage4_workers
 	plasmagrenade		7
 }
 
-equipment campaign_stage4_soldiers_plasma
+equipment stage4_soldiers_plasma
 {
 	plaspistol			7
 	plaspistol_ammo		20
@@ -222,7 +222,7 @@ equipment campaign_stage4_soldiers_plasma
 	plasmagrenade		20
 }
 
-equipment campaign_stage4_soldiers
+equipment stage4_soldiers
 {
 	plaspistol			3
 	plaspistol_ammo		8
@@ -240,14 +240,4 @@ equipment campaign_stage4_soldiers
 	plasblade			14
 	alienincgrenade		14
 	plasmagrenade		14
-}
-
-
-// just for now, so that aliens don't get too few weapons with old code
-equipment campaign_stage1
-{
-	plaspistol			12
-	plaspistol_ammo		18
-	tachyonpistol		12
-	tachyonpistol_ammo	18
 }

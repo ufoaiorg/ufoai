@@ -454,7 +454,7 @@ void Com_ParseEquipment(char *name, char **text)
 	char *token;
 	int i, n;
 
-	/* search for containers with same name */
+	/* search for equipments with same name */
 	for (i = 0; i < csi.numEDs; i++)
 		if (!Q_strncmp(name, csi.eds[i].name, MAX_VAR))
 			break;
@@ -1093,6 +1093,12 @@ void Com_ParseScripts(void)
 	Com_InitCSI(&csi);
 	csi.idRight = csi.idLeft = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmor = csi.idFloor = csi.idEquip = NONE;
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damTachyon = csi.damStun = NONE;
+
+	/* I guess this is needed, too, if not please remove */
+	csi.numODs = 0;
+	csi.numIDs = 0;
+	csi.numEDs = 0;
+	csi.numDTs = 0;
 
 	/* reset name and team def counters */
 	numNameCats = 0;

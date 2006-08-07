@@ -95,7 +95,7 @@ char *ev_format[] =
 	"bb",				/* EV_ACTOR_SHOOT_HIDDEN */
 	"sbbpp",			/* EV_ACTOR_THROW */
 	"!ss",				/* EV_ACTOR_DIE */
-	"!sbbbb",			/* EV_ACTOR_STATS */
+	"!sbbbbb",			/* EV_ACTOR_STATS */
 	"!ss",				/* EV_ACTOR_STATECHANGE */
 
 	"n",				/* EV_INV_ADD */
@@ -674,6 +674,9 @@ void CL_ActorAppear( sizebuf_t *sb )
 /*
 =====================
 CL_ActorStats
+
+Why, on Earth, is this duplicated with the EV_ACTOR_STATS format above?
+Aaaaaaaaaaaaa! (* Bandobras goes crazy)
 =====================
 */
 void CL_ActorStats( sizebuf_t *sb )
@@ -692,6 +695,7 @@ void CL_ActorStats( sizebuf_t *sb )
 	le->TU = MSG_ReadByte( sb );
 	le->HP = MSG_ReadByte( sb );
 	le->STUN = MSG_ReadByte( sb );
+	le->AP = MSG_ReadByte( sb );
 	le->morale = MSG_ReadByte( sb );
 	if ( le->TU > le->maxTU )
 		le->maxTU = le->TU;

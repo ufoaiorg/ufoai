@@ -98,7 +98,7 @@ campaign heavy
 	name		"_Hard Campaign"
 	text		"_txt_hard_campaign"
 	team		human
-	soldiers	4
+	soldiers	7
 	difficulty	3
 	equipment	campaign_player
 	market		campaign_market
@@ -115,7 +115,7 @@ campaign easy
 	name		"_Easy Campaign"
 	text		"_txt_easy_campaign"
 	team		human
-	soldiers	20
+	soldiers	12
 	difficulty	-3
 	equipment	campaign_player
 	market		campaign_market
@@ -132,7 +132,7 @@ campaign main
 	name		"_Standard Campaign"
 	text		"_txt_standard_campaign"
 	team		human
-	soldiers	12
+	soldiers	9
 	difficulty	0
 //	ugvs	2
 	equipment	campaign_player

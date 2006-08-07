@@ -9,8 +9,10 @@ mission stadium
 	music		mission3
 	pos			"74 41"
 	aliens		4
+	alienteam	alien
+	alienequip	stage3_soldiers
 	civilians	2
-	alienequip	campaign_stage1
+	civteam		european
 	recruits	4
 	$win		400
 	$alien		250
@@ -30,8 +32,10 @@ mission terrain
 	music		mission3
 	pos			"-9 46"
 	aliens		4
+	alienteam	alien
+	alienequip	stage3_soldiers
 	civilians	2
-	alienequip	campaign_stage1
+	civteam		european
 	recruits	4
 	$win		400
 	$alien		250
@@ -51,8 +55,10 @@ mission spedition
 	music		mission3
 	pos			"-10 60"
 	aliens		4
+	alienteam	alien
+	alienequip	stage3_soldiers
 	civilians	2
-	alienequip	campaign_stage1
+	civteam		european
 	recruits	4
 	$win		400
 	$alien		250
@@ -72,9 +78,10 @@ mission pdi
 	music		mission3
 	pos			"-30 36"
 	aliens		4
+	alienteam	alien
+	alienequip	stage3_soldiers
 	civilians	2
-	civteam	tourist
-	alienequip	campaign_stage1
+	civteam     tourist
 	recruits	4
 	$win		400
 	$alien		250
@@ -93,9 +100,9 @@ mission mart
 	map			mart05
 	music		mission
 	pos			"-13 52"
-	aliens		3
+	aliens		6
 	alienteam	alien
-	alienequip	campaign_stage1_soldiers
+	alienequip	stage1_soldiers
 	civilians	6
 	civteam		european
 	recruits	2
@@ -118,7 +125,7 @@ mission mine_crash
 	pos			"-20 -23"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_stage1_workers_explosive
+	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
 	recruits	2
@@ -140,8 +147,10 @@ mission mine
 	music		mission4
 	pos			"-174 -41"
 	aliens		5
+	alienteam	alien
+	alienequip	stage1_workers_explosive
 	civilians	3
-	alienequip	campaign_stage1
+	civteam		european
 	recruits	6
 	$win		800
 	$alien		200
@@ -162,7 +171,7 @@ mission office
 	pos			"-149 -21"
 	aliens		8
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	2
 	civteam		scientist
 	recruits	3
@@ -185,7 +194,7 @@ mission africa
 	pos			"-30 18"
 	aliens		5
 	alienteam	alien
-	alienequip	campaign_stage2_soldiers_melee
+	alienequip	stage2_soldiers_melee
 	civilians	6
 	civteam		oriental
 	recruits	3
@@ -208,7 +217,7 @@ mission bunker
 	pos			"2 51"
 	aliens		5
 	alienteam	alien
-	alienequip	campaign_stage1_soldiers
+	alienequip	stage1_workers_explosive
 	civilians	6
 	civteam		scientist
 	recruits	6
@@ -231,7 +240,7 @@ mission city
 	pos			"96 19"
 	aliens		5
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	6
 	civteam		mexican
 	recruits	6
@@ -254,7 +263,7 @@ mission construction
 	pos			"-17 60"
 	aliens		6
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
 	recruits	3
@@ -276,9 +285,10 @@ mission africa_excavation
 	music		mission4
 	pos			"-29 -20"
 	aliens		4
+	alienteam	alien
+	alienequip	stage1_workers
 	civilians	6
 	civteam		oriental
-	alienequip	campaign_stage1_workers
 	recruits	4
 	$win		750
 	$alien		200
@@ -299,7 +309,7 @@ mission italy
 	pos			"-18 40"
 	aliens		8
 	alienteam	alien
-	alienequip	campaign_stage1_soldiers
+	alienequip	stage1_soldiers
 	civilians	6
 	civteam		european
 	recruits	3
@@ -321,9 +331,10 @@ mission subway
 	music		mission3
 	pos			"74 40"
 	aliens		4
+	alienteam	alien
+	alienequip	stage3_soldiers
 	civilians	2
 	civteam		americans
-	alienequip	campaign_stage1
 	recruits	4
 	$win		400
 	$alien		250
@@ -345,7 +356,7 @@ mission vil_lille
 	pos			"-3 50"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
 	recruits	4
@@ -368,7 +379,7 @@ mission harbor
 	pos			"-129 35"
 	aliens		8
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
 	recruits	3
@@ -391,7 +402,7 @@ mission japan
 	pos			"-141 39"
 	aliens		10
 	alienteam	alien
-	alienequip	campaign_stage1_soldiers
+	alienequip	stage2_soldiers_melee
 	civilians	6
 	civteam		european
 	recruits	4
@@ -415,7 +426,7 @@ mission falconcrash
 	pos			"116 52"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	3
 	civteam		european
 	recruits	3
@@ -435,9 +446,9 @@ mission farm
 	map			farm08
 	music		mission
 	pos			"116 52"
-	aliens  	3
+	aliens  	5
 	alienteam	alien
-	alienequip	campaign_stage1_workers
+	alienequip	stage1_workers
 	civilians	3
 	civteam		european
 	recruits	3
@@ -459,14 +470,17 @@ mission frozen_groenland
 	music		mission
 	pos			"47 -42"
 	aliens		6
-	civilians	3
-	recruits	6
 	alienteam	alien
+	alienequip	stage3_soldiers
+	civilians	3
 	civteam		european
-	alienequip	campaign_stage1
+	recruits	6
 	$win		1000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission frozen_small
@@ -480,13 +494,16 @@ mission frozen_small
 	pos			"116 52"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	3
 	civteam		european
 	recruits	3
 	$win		6000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission frozen_landingnature
@@ -500,13 +517,16 @@ mission frozen_landingnature
 	pos			"32 -66"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	3
 	civteam		european
 	recruits	3
 	$win		6000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission frozen_industrial
@@ -520,13 +540,16 @@ mission frozen_industrial
 	pos			"54 75"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	3
 	civteam		european
 	recruits	3
 	$win		6000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission frozen_alienlandingindustrial
@@ -540,13 +563,16 @@ mission frozen_alienlandingindustrial
 	pos			"25 -64"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	3
 	civteam		european
 	recruits	3
 	$win		6000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission gasstation
@@ -559,7 +585,7 @@ mission gasstation
 	pos			"-111 21"
 	aliens		8
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
 	recruits	3
@@ -581,7 +607,7 @@ mission lake
 	pos			"-77 67"
 	aliens		6
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	5
 	civteam		european
 	recruits	2
@@ -603,7 +629,7 @@ mission oriental
 	pos			"-62 25"
 	aliens		5
 	alienteam	alien
-	alienequip	campaign_stage1_soldiers
+	alienequip	stage1_soldiers
 	civilians	6
 	civteam		oriental
 	recruits	3
@@ -625,13 +651,16 @@ mission or_asyut
 	pos			"-31 27"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	6
 	civteam		oriental
 	recruits	3
 	$win		4000
 	$alien		100
 	$civilian	1200
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission or_tabelbala
@@ -644,13 +673,16 @@ mission or_tabelbala
 	pos			"3 28"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	6
 	civteam		oriental
 	recruits	3
 	$win		4000
 	$alien		100
 	$civilian	1200
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // this map is not finished right now
@@ -664,7 +696,7 @@ mission or_tabelbala
 //	pos			"308 412"
 //	aliens		4
 //	civilians	2
-//	alienequip	campaign_stage1
+//	alienequip	stage3_soldiers
 //	recruits	4
 //	$win		400
 //	$alien		250
@@ -684,8 +716,10 @@ mission tower
 	music		mission3
 	pos			"119 34"
 	aliens		4
+	alienteam	alien
+	alienequip	stage3_soldiers
 	civilians	2
-	alienequip	campaign_stage1
+	civteam		european
 	recruits	4
 	$win		400
 	$alien		250
@@ -705,7 +739,7 @@ mission transport
 	pos			"97 47"
 	aliens		4
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
 	recruits	3
@@ -728,12 +762,17 @@ mission tropic_river
 //	alienarmor	light
 	pos			"90 10"
 	aliens		4
+	alienteam	alien
+	alienequip	stage3_soldiers
 	civilians	2
-	alienequip	campaign_stage1
+	civteam		oriental
 	recruits	4
 	$win		400
 	$alien		250
 	$civilian	200
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission tropic_drug
@@ -746,12 +785,17 @@ mission tropic_drug
 	music		mission3
 	pos			"77 18"
 	aliens		4
+	alienteam	alien
+	alienequip	stage3_soldiers
 	civilians	2
-	alienequip	campaign_stage1
+	civteam		european
 	recruits	4
 	$win		400
 	$alien		250
 	$civilian	200
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission village
@@ -764,7 +808,7 @@ mission village
 	pos			"97 47"
 	aliens		4
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
 	recruits	3
@@ -787,13 +831,16 @@ mission vil_grenchen
 	pos			"-7 47"
 	aliens		3
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	7
 	civteam		european
 	recruits	2
 	$win		1000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission vil_albany
@@ -807,13 +854,16 @@ mission vil_albany
 	pos			"84 32"
 	aliens		8
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	7
 	civteam		european
 	recruits	3
 	$win		2000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission vil_shannon
@@ -827,13 +877,16 @@ mission vil_shannon
 	pos			"9 52"
 	aliens		18
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	stage3_soldiers
 	civilians	4
 	civteam		european
 	recruits	3
 	$win		4000
 	$alien		100
 	$civilian	1200
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission baseattack
@@ -844,11 +897,11 @@ mission baseattack
 // 	. means that they attack a random base (only the first char counts)
 	map			".base"
 	music		base
-	alienteam	alien
 	aliens		12
+	alienteam	alien
+	alienequip	stage3_soldiers
 	civilians	12
 	civteam		scientist
-	alienequip	campaign_stage1
 	recruits	12
 	$win		400
 	$alien		250

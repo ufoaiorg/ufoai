@@ -211,6 +211,8 @@ void CL_ActorGlobalCVars(void)
 			Cvar_Set(va("mn_tumax%i", i), str);
 			Com_sprintf(str, MAX_VAR, "%i", le->STUN);
 			Cvar_Set(va("mn_stun%i", i), str);
+			Com_sprintf(str, MAX_VAR, "%i", le->AP);
+			Cvar_Set(va("mn_ap%i", i), str);
 		} else {
 			Cvar_Set(va("mn_head%i", i), "");
 			Cvar_Set(va("mn_hp%i", i), "0");
@@ -218,6 +220,7 @@ void CL_ActorGlobalCVars(void)
 			Cvar_Set(va("mn_tu%i", i), "0");
 			Cvar_Set(va("mn_tumax%i", i), "1");
 			Cvar_Set(va("mn_stun%i", i), "0");
+			Cvar_Set(va("mn_ap%i", i), "0");
 		}
 	}
 }
@@ -338,6 +341,7 @@ void CL_ActorUpdateCVars(void)
 		Cvar_Set("mn_hp", va("%i", selActor->HP));
 		Cvar_Set("mn_hpmax", va("%i", selActor->maxHP));
 		Cvar_Set("mn_stun", va("%i", selActor->STUN));
+		Cvar_Set("mn_ap", va("%i", selActor->AP));
 
 		/* animation and weapons */
 		name = re.AnimGetName(&selActor->as, selActor->model1);
@@ -404,10 +408,10 @@ void CL_ActorUpdateCVars(void)
 					actorMoveLength = 0xFF;
 
 				if (actorMoveLength < 0xFF) {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Health\t%i\nMove\t%i\n"), selActor->HP, actorMoveLength);
+					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\nMove %i\n"), selActor->AP, selActor->morale, actorMoveLength);
 					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
 				} else {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Health\t%i\n"), selActor->HP);
+					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
 					CL_RefreshWeaponButtons(selActor->TU);
 				}
 				time = actorMoveLength;
@@ -464,6 +468,7 @@ void CL_ActorUpdateCVars(void)
 			Cvar_Set("mn_ammoright", "");
 			Cvar_Set("mn_ammoleft", "");
 			Cvar_Set("mn_stun", "0");
+			Cvar_Set("mn_ap", "0");
 			*/
 			if (refresh)
 				Cbuf_AddText("tostand\n");
@@ -484,6 +489,7 @@ void CL_ActorUpdateCVars(void)
 		Cvar_SetValue("mn_hp", 0);
 		Cvar_SetValue("mn_hpmax", 100);
 		Cvar_SetValue("mn_stun", 0);
+		Cvar_SetValue("mn_ap", 100);
 	}
 
 	/* mode */

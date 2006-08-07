@@ -425,7 +425,7 @@ void AI_Run(void)
  *
  * TODO: choose between multiple ammo for the same weapon
  */
-int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte * equip)
+int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJDEFS])
 {
 	int ammo;
 	item_t item = {0,0,0};
@@ -489,7 +489,7 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte * equip)
 #define HAS_WEAPON_BONUS	1.0
 #define HAS_WEAPON_MALUS	-0.5
 
-void G_EquipAIPlayer(edict_t *ent, const byte * equip)
+void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 {
 	int i, weapon, max_price, prev_price;
 	int has_weapon = 0, primary_tachyon = 0;
@@ -591,9 +591,9 @@ void G_EquipAIPlayer(edict_t *ent, const byte * equip)
 			/* still no weapon even at this point? */
 			num = 
 				equip[weapon] / 8 
-				+ ((has_weapon ? HAS_WEAPON_MALUS : 2 * HAS_WEAPON_BONUS
+				+ (((has_weapon ? HAS_WEAPON_MALUS : 2 * HAS_WEAPON_BONUS)
 					+ equip[weapon] % 8)
-				   > frand() * equip[weapon]);
+				   > 8 * frand());
 			while (num--)
 				has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
 		}
@@ -729,7 +729,6 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 			/* set model */
 			ent->chr.inv = &ent->i;
-
 /*			ent->chr.inv->c[gi.csi->idArmor]*/
 			ent->body = gi.modelindex(Com_CharGetBody(&ent->chr));
 			ent->head = gi.modelindex(Com_CharGetHead(&ent->chr));

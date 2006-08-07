@@ -503,6 +503,7 @@ typedef struct le_s {
 	int morale, maxMorale;
 	int HP, maxHP;
 	int STUN;					/* if stunned - state STATE_STUN */
+	int AP;
 	int state;
 
 	float angles[3];
