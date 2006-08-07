@@ -1934,11 +1934,11 @@ static int B_BuildingAddEmployees(building_t *b, employeeType_t type, int amount
 void B_BuildingAddEmployees_f ( void )
 {
 	employeeType_t type;
-	Com_DPrintf("B_BuildingAddEmployees_f started 1.\n");
+	Com_DPrintf("B_BuildingAddEmployees_f started\n");
 	/* can be called from everywhere - so make a sanity check here */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
 		return;
-	Com_DPrintf("B_BuildingAddEmployees_f started 2.\n");
+
 	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: building_add_employees <type> <amount>\n");
 		return;
