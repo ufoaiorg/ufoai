@@ -2088,8 +2088,7 @@ int B_CheckBuildingConstruction(building_t * building, int base_idx)
 			building->buildingStatus = B_STATUS_WORKING;
 
 			if (*building->onConstruct) {
-				/* baseCurrent = gd.bases[base_idx] */
-				baseCurrent->buildingCurrent = building;
+				gd.bases[base_idx].buildingCurrent = building;
 				Com_DPrintf("B_CheckBuildingConstruction: %s\n", building->onConstruct);
 				Cbuf_AddText(va("%s %i;", building->onConstruct, base_idx));
 			}
