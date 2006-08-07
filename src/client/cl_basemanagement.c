@@ -651,6 +651,30 @@ building_t *B_GetBuildingByIdx(int idx)
 }
 
 /**
+ * @brief Gets the building in a given base by its index
+ *
+ * @param[in] base Pointer to base_t (base has to be founded already)
+ * @param[in] buildingID Pointer to char
+ * @return buildings_t pointer to gd.buildings
+ */
+building_t *B_GetBuildingInBase(base_t* base, char* buildingID)
+{
+	int row, col;
+
+	if (base || !base->founded)
+		return NULL;
+
+	for (row = 0; row < BASE_SIZE; row++)
+		for (col = 0; col < BASE_SIZE; col++)
+			if (!Q_strncmp(gd.buildings[base->idx][base->map[row][col]].id, buildingID, MAX_VAR))
+				return &gd.buildings[base->idx][base->map[row][col]];
+
+	Com_Printf("B_GetBuildingInBase: Building '%s' not found\n", buildingID);
+	/* just that there are no warnings */
+	return NULL;
+}
+
+/**
  * @brief Opens up the 'pedia if you right click on a building in the list.
  *
  * @todo Really only do this on rightclick.
@@ -1151,9 +1175,9 @@ employee_t* B_CreateEmployee(employeeType_t type)
 	employee_t* employee = NULL;
 	/* TODO: check for maxemployees? */
 	employee = &gd.employees[gd.numEmployees++];
-	
+
 	if (!employee) return NULL;
-		
+
 	switch (type) {
 		case EMPL_SOLDIER:
 			/* TODO: create random data for the employees depending on type and skill-min/max */
@@ -1195,13 +1219,17 @@ employee_t* B_CreateEmployee(employeeType_t type)
  * @sa B_RemoveEmployee
  * @return Returns true if adding was possible/sane otherwise false. In the later case nothing will be changed.
  */
-qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_type)
+qboolean B_AssignEmployee(building_t *building_dest, employeeType_t employee_type)
 {
 	int i, j;
 	employee_t *employee = NULL;
 	building_t *building_source = NULL;
 	employees_t *employees_in_building_dest = NULL;
 	employees_t *employees_in_building_source = NULL;
+
+	/* maybe no quarters in base? */
+	if (!building_dest)
+		return qfalse;
 
 	if (!baseCurrent) {
 		Com_DPrintf("B_AssignEmployee: No Base set\n");
@@ -1212,7 +1240,6 @@ qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_ty
 	employee = NULL;
 	/* Check if there is enough space to add one employee in the destination building. */
 	if (employees_in_building_dest->numEmployees < employees_in_building_dest->maxEmployees) {
-		
 		if (building_dest->buildingType == B_QUARTERS) {
 			/* Get unassigned employee with correct type from global list. */
 			for (i = 0; i < gd.numEmployees; i++) {
@@ -1223,7 +1250,7 @@ qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_ty
 					employee = NULL;
 				}
 			}
-			
+
 			/* If an employee was found add it to to the destination building (quarters) */
 			if (employee) {
 				employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee->idx;
@@ -1248,7 +1275,7 @@ qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_ty
 					}
 				}
 			}
-			
+
 			/* if an employee was found add it to to the destination building */
 			if (employee) {
 				employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee->idx;

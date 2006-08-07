@@ -276,6 +276,7 @@ void B_BuildingInit(void);
 void B_AssembleMap(void);
 void B_BaseAttack(void);
 building_t *B_GetBuildingByIdx(int idx);
+building_t *B_GetBuildingInBase(base_t* base, char* buildingID);
 building_t *B_GetBuildingType(char *buildingName);
 
 extern vec2_t newBasePos;
