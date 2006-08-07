@@ -2380,7 +2380,7 @@ void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py)
 				return;
 			}
 #ifdef PARANOID
-	Com_Printf("Com_FindSpace: no space for %s: %s in %s\n", CSI->ods[item].type, CSI->ods[item].kurz, CSI->ids[container].name);
+	Com_DPrintf("Com_FindSpace: no space for %s: %s in %s\n", CSI->ods[item].type, CSI->ods[item].kurz, CSI->ids[container].name);
 #endif
 	*px = *py = NONE;
 }
