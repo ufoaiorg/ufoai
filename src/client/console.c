@@ -332,7 +332,6 @@ void Con_Print(char *txt)
 			cr = qfalse;
 		}
 
-
 		if (!con.x) {
 			Con_Linefeed();
 			/* mark time for transparent overlay */
@@ -350,7 +349,7 @@ void Con_Print(char *txt)
 			cr = 1;
 			break;
 
-		default:				/* display character and advance */
+		default:	/* display character and advance */
 			y = con.current % con.totallines;
 			con.text[y * con.linewidth + con.x] = c | mask | con.ormask;
 			con.x++;
@@ -358,7 +357,6 @@ void Con_Print(char *txt)
 				con.x = 0;
 			break;
 		}
-
 	}
 }
 

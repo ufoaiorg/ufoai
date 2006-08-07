@@ -259,7 +259,7 @@ static void Key_Console(int key)
 
 			if (i > 0) {
 				cbd[i] = 0;
-				strcat(key_lines[edit_line], cbd);
+				Q_strcat(key_lines[edit_line], cbd, MAXCMDLINE);
 				key_linepos += i;
 			}
 			free(cbd);

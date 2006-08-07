@@ -702,11 +702,11 @@ void SCR_UpdateScreen(void)
 			SCR_DrawLoading();
 			continue;
 		} else {
-			/* draw the menus */
-			MN_DrawMenus();
-
 			/* draw scene */
 			V_RenderView(separation[i]);
+
+			/* draw the menus on top of the render view (for hud and so on) */
+			MN_DrawMenus();
 
 			SCR_DrawNet();
 			SCR_CheckDrawCenterString();
