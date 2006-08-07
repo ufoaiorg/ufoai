@@ -1,13 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
-"Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-08-03 22:03+0200\n"
-"PO-Revision-Date: 2006-06-18 15:47+0200\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2006-08-06 17:20+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Estonian\n"
 "X-Poedit-Country: ESTONIA\n"
@@ -22,11 +21,11 @@ msgstr "lask"
 
 #: ../base/ufos/armor.ufo:5
 msgid "fire"
-msgstr "tuli"
+msgstr "tulista"
 
 #: ../base/ufos/armor.ufo:6
 msgid "shock"
-msgstr "Šokk"
+msgstr "šokk"
 
 #: ../base/ufos/armor.ufo:7
 msgid "laser"
@@ -90,7 +89,8 @@ msgstr "Elamispind"
 msgid "UFO Hangar"
 msgstr "Ufode hangaar"
 
-#: ../base/ufos/basemanagement.ufo:139 ../base/ufos/basemanagement.ufo:156
+#: ../base/ufos/basemanagement.ufo:139
+#: ../base/ufos/basemanagement.ufo:156
 msgid "Hangar"
 msgstr "Hangaar"
 
@@ -151,9 +151,8 @@ msgid "UFO - Destroyer class"
 msgstr "Ufo - Hävitaja klass"
 
 #: ../base/ufos/campaign.ufo:98
-#, fuzzy
 msgid "Hard Campaign"
-msgstr "Test Kampaania"
+msgstr "Raske Kampaania"
 
 #: ../base/ufos/campaign.ufo:99
 #, fuzzy
@@ -161,9 +160,8 @@ msgid "txt_hard_campaign"
 msgstr "<Not sure yet>"
 
 #: ../base/ufos/campaign.ufo:115
-#, fuzzy
 msgid "Easy Campaign"
-msgstr "Test Kampaania"
+msgstr "Kerge Kampaania"
 
 #: ../base/ufos/campaign.ufo:116
 #, fuzzy
@@ -174,35 +172,37 @@ msgstr "<Not sure yet>"
 msgid "Standard Campaign"
 msgstr "Tava Kampaania"
 
-#: ../base/ufos/campaign.ufo:133 ../base/ufos/campaign.ufo:151
+#: ../base/ufos/campaign.ufo:133
+#: ../base/ufos/campaign.ufo:151
 msgid "txt_standard_campaign"
 msgstr "<Not sure yet>"
 
 #: ../base/ufos/campaign.ufo:150
 msgid "Testing and Tweaking Campaign --- Please Ignore"
-msgstr ""
+msgstr "Katsetan kampaaniat --- Palun oota"
 
 #: ../base/ufos/events.ufo:21
-#, fuzzy
 msgid "Devastating alien terror attack on Mumbai"
-msgstr "Laastav tulnukate rünnak Mumbayle"
+msgstr "Laastav tulnukate rünnak Mumbaile"
 
 #: ../base/ufos/events.ufo:29
 msgid "Alien stealth aircraft sighted"
 msgstr "Hiilija tüüpi UFOt märgatud"
 
-#: ../base/ufos/fonts.ufo:15 ../base/ufos/fonts.ufo:21
+#: ../base/ufos/fonts.ufo:15
+#: ../base/ufos/fonts.ufo:21
 msgid "media/DejaVuSans.ttf"
-msgstr ""
+msgstr "media/DejaVuSans.ttf"
 
-#: ../base/ufos/fonts.ufo:27 ../base/ufos/fonts.ufo:33
+#: ../base/ufos/fonts.ufo:27
+#: ../base/ufos/fonts.ufo:33
 #: ../base/ufos/fonts.ufo:40
 msgid "media/FreeSans.ttf"
-msgstr ""
+msgstr "media/FreeSans.ttf"
 
 #: ../base/ufos/medals.ufo:3
 msgid "Cross"
-msgstr "Rist"
+msgstr "Au Rist"
 
 #: ../base/ufos/medals.ufo:9
 msgid "Coin"
@@ -248,24 +248,28 @@ msgstr "Käivita oma lennumasin"
 msgid "Start Aircraft"
 msgstr "Käivita lennumasin"
 
-#: ../base/ufos/menu_aircraft.ufo:129 ../base/ufos/menu_bases.ufo:143
+#: ../base/ufos/menu_aircraft.ufo:129
+#: ../base/ufos/menu_bases.ufo:143
 msgid "Transfer equipment or personnel"
 msgstr "Saada varustust või töötajaid"
 
-#: ../base/ufos/menu_aircraft.ufo:144 ../base/ufos/menu_bases.ufo:158
+#: ../base/ufos/menu_aircraft.ufo:144
+#: ../base/ufos/menu_bases.ufo:158
 msgid "Transfer"
 msgstr "Saada"
 
 #: ../base/ufos/menu_aircraft.ufo:156
 msgid "Equip weapons and shields"
-msgstr ""
+msgstr "Aseta relvad ja kilbid"
 
 #: ../base/ufos/menu_aircraft.ufo:171
 msgid "Equip"
-msgstr ""
+msgstr "Relvasta"
 
-#: ../base/ufos/menu_aircraft.ufo:211 ../base/ufos/menu_aircraft.ufo:387
-#: ../base/ufos/menu_team.ufo:894 ../base/ufos/menu_team.ufo:1493
+#: ../base/ufos/menu_aircraft.ufo:211
+#: ../base/ufos/menu_aircraft.ufo:387
+#: ../base/ufos/menu_team.ufo:894
+#: ../base/ufos/menu_team.ufo:1493
 msgid "Done"
 msgstr "Valmis"
 
@@ -281,84 +285,88 @@ msgstr "Mine järgmise lennumasina juurde"
 msgid "Call back"
 msgstr "Kutsu tagasi"
 
-#: ../base/ufos/menu_aircraft.ufo:257 ../base/ufos/menu_team.ufo:878
-#, fuzzy
+#: ../base/ufos/menu_aircraft.ufo:257
+#: ../base/ufos/menu_team.ufo:878
 msgid "Team Members:"
-msgstr "Tiimi eelistused"
+msgstr "Tiimi Liikmed:"
 
 #: ../base/ufos/menu_aircraft.ufo:337
-#, fuzzy
 msgid "Shield"
-msgstr "Kilp:\t%s"
+msgstr "Kilp"
 
 #: ../base/ufos/menu_aircraft.ufo:345
-#, fuzzy
 msgid "Weapon"
-msgstr "Relvad"
+msgstr "Relv"
 
 #: ../base/ufos/menu_aircraft.ufo:353
-#, fuzzy
 msgid "Available equipment:"
-msgstr "Osta/Müü varustust"
+msgstr "Olemasolev varustus"
 
 #: ../base/ufos/menu_althud.ufo:45
 msgid "Inventory and physical stats"
-msgstr ""
+msgstr "Esemed ja füüsiline jõud"
 
-#: ../base/ufos/menu_althud.ufo:388 ../base/ufos/menu_hud.ufo:223
+#: ../base/ufos/menu_althud.ufo:388
+#: ../base/ufos/menu_hud.ufo:223
 msgid "Enemy spotted"
 msgstr "Vaenlane nähtaval"
 
-#: ../base/ufos/menu_althud.ufo:395 ../base/ufos/menu_hud.ufo:233
+#: ../base/ufos/menu_althud.ufo:395
+#: ../base/ufos/menu_hud.ufo:233
 msgid "Click to cycle through the spotted enemies"
 msgstr "Vajuta, et vaadelda erinevaid nähtavaid vastaseid"
 
-#: ../base/ufos/menu_althud.ufo:402 ../base/ufos/menu_hud.ufo:212
+#: ../base/ufos/menu_althud.ufo:402
+#: ../base/ufos/menu_hud.ufo:212
 msgid "Finish round"
 msgstr "Lõpeta käik"
 
-#: ../base/ufos/menu_althud.ufo:445 ../base/ufos/menu_althud.ufo:465
-#: ../base/ufos/menu_hud.ufo:408 ../base/ufos/menu_hud.ufo:418
+#: ../base/ufos/menu_althud.ufo:445
+#: ../base/ufos/menu_althud.ufo:465
+#: ../base/ufos/menu_hud.ufo:408
+#: ../base/ufos/menu_hud.ufo:418
 msgid "Primary fire mode"
 msgstr "Põhiline tulistamine"
 
-#: ../base/ufos/menu_althud.ufo:455 ../base/ufos/menu_althud.ufo:475
-#: ../base/ufos/menu_hud.ufo:428 ../base/ufos/menu_hud.ufo:438
+#: ../base/ufos/menu_althud.ufo:455
+#: ../base/ufos/menu_althud.ufo:475
+#: ../base/ufos/menu_hud.ufo:428
+#: ../base/ufos/menu_hud.ufo:438
 msgid "Secondary fire mode"
 msgstr "Teisejärguline tulistamine"
 
-#: ../base/ufos/menu_althud.ufo:489 ../base/ufos/menu_hud.ufo:517
+#: ../base/ufos/menu_althud.ufo:489
+#: ../base/ufos/menu_hud.ufo:517
 msgid "Toggle reaction-fire"
 msgstr "Käivita reaktsioon tulistamine"
 
-#: ../base/ufos/menu_althud.ufo:501 ../base/ufos/menu_hud.ufo:448
-#: ../base/ufos/menu_hud.ufo:459 ../base/ufos/seq_tutorials.ufo:296
+#: ../base/ufos/menu_althud.ufo:501
+#: ../base/ufos/menu_hud.ufo:448
+#: ../base/ufos/menu_hud.ufo:459
+#: ../base/ufos/seq_tutorials.ufo:296
 msgid "Reload weapon"
 msgstr "Lae relv"
 
-#: ../base/ufos/menu_althud.ufo:515 ../base/ufos/menu_hud.ufo:504
+#: ../base/ufos/menu_althud.ufo:515
+#: ../base/ufos/menu_hud.ufo:504
 msgid "Crouch/Stand up"
 msgstr "Lasku põlvele/Seisa püsti"
 
 #: ../base/ufos/menu_althud.ufo:526
-#, fuzzy
 msgid "Level up"
-msgstr "Tase 1"
+msgstr "Vaade kõrgemale"
 
 #: ../base/ufos/menu_althud.ufo:536
-#, fuzzy
 msgid "Level down"
-msgstr "Tase 1"
+msgstr "Vaade madalamale"
 
 #: ../base/ufos/menu_althud.ufo:581
-#, fuzzy
 msgid "Switch to right hand weapon"
-msgstr "Mine järgmise baasi juurde"
+msgstr "Vaheta paremakäe relvale"
 
 #: ../base/ufos/menu_althud.ufo:590
-#, fuzzy
 msgid "Switch to left hand weapon"
-msgstr "Mine järgmise baasi juurde"
+msgstr "Vaheta vasakukäe relvale"
 
 #: ../base/ufos/menu_bases.ufo:48
 msgid "Back to worldview"
@@ -368,7 +376,8 @@ msgstr "Tagasi maailmavaatesse"
 msgid "Build base-facilities"
 msgstr "Ehita oma baasi-ehitised"
 
-#: ../base/ufos/menu_bases.ufo:86 ../base/ufos/research.ufo:63
+#: ../base/ufos/menu_bases.ufo:86
+#: ../base/ufos/research.ufo:63
 msgid "Buildings"
 msgstr "Ehitised"
 
@@ -376,7 +385,8 @@ msgstr "Ehitised"
 msgid "Manage your aircraft"
 msgstr "Halda oma lennumasinaid"
 
-#: ../base/ufos/menu_bases.ufo:110 ../base/ufos/menu_geoscape.ufo:729
+#: ../base/ufos/menu_bases.ufo:110
+#: ../base/ufos/menu_geoscape.ufo:729
 #: ../base/ufos/research.ufo:57
 msgid "Aircraft"
 msgstr "Lennumasin"
@@ -398,22 +408,25 @@ msgid "Research"
 msgstr "Uurimine"
 
 #: ../base/ufos/menu_bases.ufo:191
-#, fuzzy
 msgid "Produce new equipment"
-msgstr "Näita teist varustust"
+msgstr "Tooda uut varustust"
 
 #: ../base/ufos/menu_bases.ufo:206
 msgid "Production"
-msgstr ""
+msgstr "Tootmine"
 
-#: ../base/ufos/menu_bases.ufo:219 ../base/ufos/menu_buildings.ufo:76
-#: ../base/ufos/menu_buy.ufo:708 ../base/ufos/menu_buy.ufo:1142
-#: ../base/ufos/menu_geoscape.ufo:86 ../base/ufos/menu_production.ufo:49
+#: ../base/ufos/menu_bases.ufo:219
+#: ../base/ufos/menu_buildings.ufo:76
+#: ../base/ufos/menu_buy.ufo:708
+#: ../base/ufos/menu_buy.ufo:1142
+#: ../base/ufos/menu_geoscape.ufo:86
+#: ../base/ufos/menu_production.ufo:49
 #: ../base/ufos/menu_research.ufo:888
 msgid "CREDIT"
 msgstr "AUTORID"
 
-#: ../base/ufos/menu_bases.ufo:227 ../base/ufos/menu_geoscape.ufo:94
+#: ../base/ufos/menu_bases.ufo:227
+#: ../base/ufos/menu_geoscape.ufo:94
 msgid "Organisation capital"
 msgstr "Organisatsiooni keskus"
 
@@ -433,107 +446,148 @@ msgstr "Mine eelmise baasi juurde"
 msgid "Switch to the next base"
 msgstr "Mine järgmise baasi juurde"
 
-#: ../base/ufos/menu_buildings.ufo:58 ../base/ufos/menu_buy.ufo:820
-#: ../base/ufos/menu_production.ufo:266 ../base/ufos/menu_research.ufo:933
+#: ../base/ufos/menu_buildings.ufo:58
+#: ../base/ufos/menu_buy.ufo:820
+#: ../base/ufos/menu_production.ufo:266
+#: ../base/ufos/menu_research.ufo:933
 msgid "Back to baseview"
 msgstr "Tagasi baasivaatesse"
 
-#: ../base/ufos/menu_buy.ufo:255 ../base/ufos/menu_buy.ufo:271
-#: ../base/ufos/menu_buy.ufo:287 ../base/ufos/menu_buy.ufo:303
-#: ../base/ufos/menu_buy.ufo:319 ../base/ufos/menu_buy.ufo:335
-#: ../base/ufos/menu_buy.ufo:351 ../base/ufos/menu_buy.ufo:367
-#: ../base/ufos/menu_buy.ufo:383 ../base/ufos/menu_buy.ufo:399
-#: ../base/ufos/menu_buy.ufo:415 ../base/ufos/menu_buy.ufo:431
-#: ../base/ufos/menu_buy.ufo:447 ../base/ufos/menu_buy.ufo:463
-#: ../base/ufos/menu_buy.ufo:479 ../base/ufos/menu_buy.ufo:495
-#: ../base/ufos/menu_buy.ufo:511 ../base/ufos/menu_buy.ufo:527
-#: ../base/ufos/menu_buy.ufo:543 ../base/ufos/menu_buy.ufo:559
-#: ../base/ufos/menu_buy.ufo:575 ../base/ufos/menu_buy.ufo:591
-#: ../base/ufos/menu_buy.ufo:607 ../base/ufos/menu_buy.ufo:623
-#: ../base/ufos/menu_buy.ufo:639 ../base/ufos/menu_buy.ufo:655
-#: ../base/ufos/menu_buy.ufo:671 ../base/ufos/menu_buy.ufo:687
+#: ../base/ufos/menu_buy.ufo:255
+#: ../base/ufos/menu_buy.ufo:271
+#: ../base/ufos/menu_buy.ufo:287
+#: ../base/ufos/menu_buy.ufo:303
+#: ../base/ufos/menu_buy.ufo:319
+#: ../base/ufos/menu_buy.ufo:335
+#: ../base/ufos/menu_buy.ufo:351
+#: ../base/ufos/menu_buy.ufo:367
+#: ../base/ufos/menu_buy.ufo:383
+#: ../base/ufos/menu_buy.ufo:399
+#: ../base/ufos/menu_buy.ufo:415
+#: ../base/ufos/menu_buy.ufo:431
+#: ../base/ufos/menu_buy.ufo:447
+#: ../base/ufos/menu_buy.ufo:463
+#: ../base/ufos/menu_buy.ufo:479
+#: ../base/ufos/menu_buy.ufo:495
+#: ../base/ufos/menu_buy.ufo:511
+#: ../base/ufos/menu_buy.ufo:527
+#: ../base/ufos/menu_buy.ufo:543
+#: ../base/ufos/menu_buy.ufo:559
+#: ../base/ufos/menu_buy.ufo:575
+#: ../base/ufos/menu_buy.ufo:591
+#: ../base/ufos/menu_buy.ufo:607
+#: ../base/ufos/menu_buy.ufo:623
+#: ../base/ufos/menu_buy.ufo:639
+#: ../base/ufos/menu_buy.ufo:655
+#: ../base/ufos/menu_buy.ufo:671
+#: ../base/ufos/menu_buy.ufo:687
 msgid "Buy item"
 msgstr "Osta ese"
 
-#: ../base/ufos/menu_buy.ufo:263 ../base/ufos/menu_buy.ufo:279
-#: ../base/ufos/menu_buy.ufo:295 ../base/ufos/menu_buy.ufo:311
-#: ../base/ufos/menu_buy.ufo:327 ../base/ufos/menu_buy.ufo:343
-#: ../base/ufos/menu_buy.ufo:359 ../base/ufos/menu_buy.ufo:375
-#: ../base/ufos/menu_buy.ufo:391 ../base/ufos/menu_buy.ufo:407
-#: ../base/ufos/menu_buy.ufo:423 ../base/ufos/menu_buy.ufo:439
-#: ../base/ufos/menu_buy.ufo:455 ../base/ufos/menu_buy.ufo:471
-#: ../base/ufos/menu_buy.ufo:487 ../base/ufos/menu_buy.ufo:503
-#: ../base/ufos/menu_buy.ufo:519 ../base/ufos/menu_buy.ufo:535
-#: ../base/ufos/menu_buy.ufo:551 ../base/ufos/menu_buy.ufo:567
-#: ../base/ufos/menu_buy.ufo:583 ../base/ufos/menu_buy.ufo:599
-#: ../base/ufos/menu_buy.ufo:615 ../base/ufos/menu_buy.ufo:631
-#: ../base/ufos/menu_buy.ufo:647 ../base/ufos/menu_buy.ufo:663
-#: ../base/ufos/menu_buy.ufo:679 ../base/ufos/menu_buy.ufo:695
+#: ../base/ufos/menu_buy.ufo:263
+#: ../base/ufos/menu_buy.ufo:279
+#: ../base/ufos/menu_buy.ufo:295
+#: ../base/ufos/menu_buy.ufo:311
+#: ../base/ufos/menu_buy.ufo:327
+#: ../base/ufos/menu_buy.ufo:343
+#: ../base/ufos/menu_buy.ufo:359
+#: ../base/ufos/menu_buy.ufo:375
+#: ../base/ufos/menu_buy.ufo:391
+#: ../base/ufos/menu_buy.ufo:407
+#: ../base/ufos/menu_buy.ufo:423
+#: ../base/ufos/menu_buy.ufo:439
+#: ../base/ufos/menu_buy.ufo:455
+#: ../base/ufos/menu_buy.ufo:471
+#: ../base/ufos/menu_buy.ufo:487
+#: ../base/ufos/menu_buy.ufo:503
+#: ../base/ufos/menu_buy.ufo:519
+#: ../base/ufos/menu_buy.ufo:535
+#: ../base/ufos/menu_buy.ufo:551
+#: ../base/ufos/menu_buy.ufo:567
+#: ../base/ufos/menu_buy.ufo:583
+#: ../base/ufos/menu_buy.ufo:599
+#: ../base/ufos/menu_buy.ufo:615
+#: ../base/ufos/menu_buy.ufo:631
+#: ../base/ufos/menu_buy.ufo:647
+#: ../base/ufos/menu_buy.ufo:663
+#: ../base/ufos/menu_buy.ufo:679
+#: ../base/ufos/menu_buy.ufo:695
 msgid "Sell item"
 msgstr "Müü ese"
 
-#: ../base/ufos/menu_buy.ufo:740 ../base/ufos/menu_production.ufo:178
+#: ../base/ufos/menu_buy.ufo:740
+#: ../base/ufos/menu_production.ufo:178
 msgid "Show only primary weapons"
 msgstr "Näita ainult põhirelvi"
 
-#: ../base/ufos/menu_buy.ufo:755 ../base/ufos/menu_production.ufo:193
+#: ../base/ufos/menu_buy.ufo:755
+#: ../base/ufos/menu_production.ufo:193
 #: ../base/ufos/menu_team.ufo:1212
-#, fuzzy
 msgid "Primary"
-msgstr "Põhi:\t%s\n"
+msgstr "Põhi:"
 
-#: ../base/ufos/menu_buy.ufo:760 ../base/ufos/menu_production.ufo:198
+#: ../base/ufos/menu_buy.ufo:760
+#: ../base/ufos/menu_production.ufo:198
 msgid "Show only secondary weapons"
 msgstr "Näita ainult varu relvi"
 
-#: ../base/ufos/menu_buy.ufo:775 ../base/ufos/menu_production.ufo:213
+#: ../base/ufos/menu_buy.ufo:775
+#: ../base/ufos/menu_production.ufo:213
 #: ../base/ufos/menu_team.ufo:1232
-#, fuzzy
 msgid "Secondary"
-msgstr "Teine:\t%s\n"
+msgstr "Teine"
 
-#: ../base/ufos/menu_buy.ufo:780 ../base/ufos/menu_production.ufo:218
+#: ../base/ufos/menu_buy.ufo:780
+#: ../base/ufos/menu_production.ufo:218
 msgid "Show other equipment"
 msgstr "Näita teist varustust"
 
-#: ../base/ufos/menu_buy.ufo:795 ../base/ufos/menu_production.ufo:233
+#: ../base/ufos/menu_buy.ufo:795
+#: ../base/ufos/menu_production.ufo:233
 #: ../base/ufos/menu_team.ufo:1252
-#, fuzzy
 msgid "Misc"
-msgstr "Muusika:"
+msgstr "Muud"
 
-#: ../base/ufos/menu_buy.ufo:800 ../base/ufos/menu_production.ufo:238
+#: ../base/ufos/menu_buy.ufo:800
+#: ../base/ufos/menu_production.ufo:238
 msgid "Show only armor"
 msgstr "Näita ainult kehakaitseid"
 
-#: ../base/ufos/menu_buy.ufo:815 ../base/ufos/menu_production.ufo:253
+#: ../base/ufos/menu_buy.ufo:815
+#: ../base/ufos/menu_production.ufo:253
 #: ../base/ufos/menu_team.ufo:1272
-#, fuzzy
 msgid "Armor"
-msgstr "Kehakaitsed"
+msgstr "Kehakaitse"
 
-#: ../base/ufos/menu_buy.ufo:977 ../base/ufos/menu_buy.ufo:993
-#: ../base/ufos/menu_buy.ufo:1009 ../base/ufos/menu_buy.ufo:1025
-#: ../base/ufos/menu_buy.ufo:1041 ../base/ufos/menu_buy.ufo:1057
-#: ../base/ufos/menu_buy.ufo:1073 ../base/ufos/menu_buy.ufo:1089
-#: ../base/ufos/menu_buy.ufo:1105 ../base/ufos/menu_buy.ufo:1121
-#, fuzzy
+#: ../base/ufos/menu_buy.ufo:977
+#: ../base/ufos/menu_buy.ufo:993
+#: ../base/ufos/menu_buy.ufo:1009
+#: ../base/ufos/menu_buy.ufo:1025
+#: ../base/ufos/menu_buy.ufo:1041
+#: ../base/ufos/menu_buy.ufo:1057
+#: ../base/ufos/menu_buy.ufo:1073
+#: ../base/ufos/menu_buy.ufo:1089
+#: ../base/ufos/menu_buy.ufo:1105
+#: ../base/ufos/menu_buy.ufo:1121
 msgid "Buy aircraft"
-msgstr "Osta/Müü Lennumasin(aid)"
+msgstr "Osta Lennumasin(aid)"
 
-#: ../base/ufos/menu_buy.ufo:985 ../base/ufos/menu_buy.ufo:1001
-#: ../base/ufos/menu_buy.ufo:1017 ../base/ufos/menu_buy.ufo:1033
-#: ../base/ufos/menu_buy.ufo:1049 ../base/ufos/menu_buy.ufo:1065
-#: ../base/ufos/menu_buy.ufo:1081 ../base/ufos/menu_buy.ufo:1097
-#: ../base/ufos/menu_buy.ufo:1113 ../base/ufos/menu_buy.ufo:1129
-#, fuzzy
+#: ../base/ufos/menu_buy.ufo:985
+#: ../base/ufos/menu_buy.ufo:1001
+#: ../base/ufos/menu_buy.ufo:1017
+#: ../base/ufos/menu_buy.ufo:1033
+#: ../base/ufos/menu_buy.ufo:1049
+#: ../base/ufos/menu_buy.ufo:1065
+#: ../base/ufos/menu_buy.ufo:1081
+#: ../base/ufos/menu_buy.ufo:1097
+#: ../base/ufos/menu_buy.ufo:1113
+#: ../base/ufos/menu_buy.ufo:1129
 msgid "Sell aircraft"
-msgstr "Osta/Müü Lennumasin(aid)"
+msgstr "Osta Lennumasin(aid)"
 
 #: ../base/ufos/menu_buy.ufo:1162
-#, fuzzy
 msgid "Back to hangar"
-msgstr "Tagasi sisu juurde"
+msgstr "Tagasi Hangaari juurde"
 
 #: ../base/ufos/menu_campaign.ufo:53
 msgid "Campaigns"
@@ -543,7 +597,8 @@ msgstr "Kampaaniad"
 msgid "Start campaign"
 msgstr "Alusta kampaaniat"
 
-#: ../base/ufos/menu_campaign.ufo:96 ../base/ufos/menu_multiplayer.ufo:123
+#: ../base/ufos/menu_campaign.ufo:96
+#: ../base/ufos/menu_multiplayer.ufo:123
 #: ../base/ufos/menu_multiplayer.ufo:505
 msgid "Back"
 msgstr "Tagasi"
@@ -572,8 +627,10 @@ msgstr "Ufopedia"
 msgid "Create base"
 msgstr "Loo baas"
 
-#: ../base/ufos/menu_geoscape.ufo:224 ../base/ufos/menu_hud.ufo:614
-#: ../base/ufos/menu_main.ufo:110 ../base/ufos/menu_singleplayer.ufo:285
+#: ../base/ufos/menu_geoscape.ufo:224
+#: ../base/ufos/menu_hud.ufo:614
+#: ../base/ufos/menu_main.ufo:110
+#: ../base/ufos/menu_singleplayer.ufo:285
 msgid "Options"
 msgstr "Valikud"
 
@@ -589,41 +646,51 @@ msgstr "Valmis"
 msgid "Aircraft reached desired location - what to do?"
 msgstr "Lennuk jõudis sihtkohta - mida teha?"
 
-#: ../base/ufos/menu_geoscape.ufo:319 ../base/ufos/menu_geoscape.ufo:435
-#: ../base/ufos/menu_geoscape.ufo:532 ../base/ufos/menu_geoscape.ufo:584
-#: ../base/ufos/menu_geoscape.ufo:690 ../base/ufos/menu_geoscape.ufo:759
+#: ../base/ufos/menu_geoscape.ufo:319
+#: ../base/ufos/menu_geoscape.ufo:435
+#: ../base/ufos/menu_geoscape.ufo:532
+#: ../base/ufos/menu_geoscape.ufo:584
+#: ../base/ufos/menu_geoscape.ufo:690
+#: ../base/ufos/menu_geoscape.ufo:759
 msgid "Close this dialog"
-msgstr ""
+msgstr "Sulge see aken"
 
-#: ../base/ufos/menu_geoscape.ufo:332 ../base/ufos/menu_geoscape.ufo:459
-#: ../base/ufos/menu_geoscape.ufo:545 ../base/ufos/menu_geoscape.ufo:587
-#: ../base/ufos/menu_geoscape.ufo:703 ../base/ufos/menu_geoscape.ufo:772
+#: ../base/ufos/menu_geoscape.ufo:332
+#: ../base/ufos/menu_geoscape.ufo:459
+#: ../base/ufos/menu_geoscape.ufo:545
+#: ../base/ufos/menu_geoscape.ufo:587
+#: ../base/ufos/menu_geoscape.ufo:703
+#: ../base/ufos/menu_geoscape.ufo:772
 msgid "Cancel"
-msgstr ""
+msgstr "Katkesta"
 
-#: ../base/ufos/menu_geoscape.ufo:339 ../base/ufos/menu_geoscape.ufo:594
+#: ../base/ufos/menu_geoscape.ufo:339
+#: ../base/ufos/menu_geoscape.ufo:594
 msgid "Enter the battlefield"
-msgstr ""
+msgstr "Sisene võitlusväljale"
 
-#: ../base/ufos/menu_geoscape.ufo:352 ../base/ufos/menu_geoscape.ufo:607
-#, fuzzy
+#: ../base/ufos/menu_geoscape.ufo:352
+#: ../base/ufos/menu_geoscape.ufo:607
 msgid "Enter"
-msgstr "Sissepääs"
+msgstr "Sisene"
 
-#: ../base/ufos/menu_geoscape.ufo:360 ../base/ufos/menu_geoscape.ufo:615
+#: ../base/ufos/menu_geoscape.ufo:360
+#: ../base/ufos/menu_geoscape.ufo:615
 msgid "Automatically finish mission"
-msgstr ""
+msgstr "Automaatselt lõpeta missioon"
 
 #: ../base/ufos/menu_geoscape.ufo:374
 msgid "Auto mission"
-msgstr ""
+msgstr "Automaatne missioon"
 
 #: ../base/ufos/menu_geoscape.ufo:403
 msgid "New base"
 msgstr "Uus baas"
 
-#: ../base/ufos/menu_geoscape.ufo:410 ../base/ufos/menu_geoscape.ufo:503
-#: ../base/ufos/menu_geoscape.ufo:672 ../base/ufos/menu_options.ufo:746
+#: ../base/ufos/menu_geoscape.ufo:410
+#: ../base/ufos/menu_geoscape.ufo:503
+#: ../base/ufos/menu_geoscape.ufo:672
+#: ../base/ufos/menu_options.ufo:746
 msgid "Name:"
 msgstr "Nimi:"
 
@@ -633,12 +700,11 @@ msgstr "Maksumus:"
 
 #: ../base/ufos/menu_geoscape.ufo:446
 msgid "Build the base"
-msgstr ""
+msgstr "Ehita baas"
 
 #: ../base/ufos/menu_geoscape.ufo:467
-#, fuzzy
 msgid "Build"
-msgstr "Ehitised"
+msgstr "Ehita"
 
 #: ../base/ufos/menu_geoscape.ufo:496
 msgid "Select aircraft"
@@ -652,28 +718,26 @@ msgstr "Seisund:"
 msgid "Base:"
 msgstr "Baas:"
 
-#: ../base/ufos/menu_geoscape.ufo:629 ../base/ufos/weapons_human.ufo:54
+#: ../base/ufos/menu_geoscape.ufo:629
+#: ../base/ufos/weapons_human.ufo:54
 msgid "Auto"
 msgstr "Sihtimata Valang"
 
 #: ../base/ufos/menu_geoscape.ufo:659
-#, fuzzy
 msgid "Select item"
-msgstr "Müü ese"
+msgstr "Vali ese"
 
 #: ../base/ufos/menu_geoscape.ufo:666
 msgid "Type:"
-msgstr ""
+msgstr "Tüüp:"
 
 #: ../base/ufos/menu_geoscape.ufo:736
-#, fuzzy
 msgid "Action:"
-msgstr "Tegevus:\t%s\n"
+msgstr "Tegevus:"
 
 #: ../base/ufos/menu_geoscape.ufo:742
-#, fuzzy
 msgid "Description:"
-msgstr "Suurus:"
+msgstr "Kirjeldus:"
 
 #: ../base/ufos/menu_hud.ufo:62
 msgid "Level 1"
@@ -740,99 +804,108 @@ msgid "Soldier 8"
 msgstr "Sõdur 8"
 
 #: ../base/ufos/menu_hud.ufo:576
-#, fuzzy
 msgid "Chat"
-msgstr "Loo"
+msgstr "Suhtlemine"
 
 #: ../base/ufos/menu_hud.ufo:589
-#, fuzzy
 msgid "Teamchat"
-msgstr "Tiim"
+msgstr "Rääkimine:"
 
 #: ../base/ufos/menu_hud.ufo:603
-#, fuzzy
 msgid "Chat messages"
-msgstr "Ava teated"
+msgstr "Rääkimine"
 
 #: ../base/ufos/menu_hud.ufo:625
 msgid "Physical stats of this soldier"
 msgstr "Selle sõduri füüsilised omadused"
 
-#: ../base/ufos/menu_hud.ufo:636 ../base/ufos/seq_tutorials.ufo:217
+#: ../base/ufos/menu_hud.ufo:636
+#: ../base/ufos/seq_tutorials.ufo:217
 msgid "Inventory"
 msgstr "Varustus"
 
-#: ../base/ufos/menu_hud.ufo:754 ../base/ufos/menu_team.ufo:945
-#, fuzzy
+#: ../base/ufos/menu_hud.ufo:754
+#: ../base/ufos/menu_team.ufo:945
 msgid "Backpack"
-msgstr "Tagasi"
+msgstr "Seljakott"
 
-#: ../base/ufos/menu_hud.ufo:763 ../base/ufos/menu_team.ufo:954
+#: ../base/ufos/menu_hud.ufo:763
+#: ../base/ufos/menu_team.ufo:954
 msgid "Left Hand"
-msgstr ""
+msgstr "Vasak käsi"
 
-#: ../base/ufos/menu_hud.ufo:772 ../base/ufos/menu_team.ufo:963
+#: ../base/ufos/menu_hud.ufo:772
+#: ../base/ufos/menu_team.ufo:963
 msgid "Right Hand"
-msgstr ""
+msgstr "Parem käsi"
 
-#: ../base/ufos/menu_hud.ufo:781 ../base/ufos/menu_team.ufo:972
-#, fuzzy
+#: ../base/ufos/menu_hud.ufo:781
+#: ../base/ufos/menu_team.ufo:972
 msgid "Holster"
-msgstr "laser"
+msgstr "Võta kätte"
 
-#: ../base/ufos/menu_hud.ufo:790 ../base/ufos/menu_team.ufo:981
+#: ../base/ufos/menu_hud.ufo:790
+#: ../base/ufos/menu_team.ufo:981
 msgid "Belt"
-msgstr ""
+msgstr "Vöö"
 
 #: ../base/ufos/menu_hud.ufo:799
 msgid "Floor"
-msgstr ""
+msgstr "Maapind"
 
-#: ../base/ufos/menu_hud.ufo:948 ../base/ufos/menu_team.ufo:791
+#: ../base/ufos/menu_hud.ufo:948
+#: ../base/ufos/menu_team.ufo:791
 #: ../base/ufos/menu_team.ufo:1318
 msgid "Power:"
 msgstr "Jõud:"
 
-#: ../base/ufos/menu_hud.ufo:953 ../base/ufos/menu_team.ufo:796
+#: ../base/ufos/menu_hud.ufo:953
+#: ../base/ufos/menu_team.ufo:796
 #: ../base/ufos/menu_team.ufo:1323
 msgid "Speed:"
 msgstr "Kiirus:"
 
-#: ../base/ufos/menu_hud.ufo:958 ../base/ufos/menu_team.ufo:801
+#: ../base/ufos/menu_hud.ufo:958
+#: ../base/ufos/menu_team.ufo:801
 #: ../base/ufos/menu_team.ufo:1328
 msgid "Accuracy:"
 msgstr "Täpsus:"
 
-#: ../base/ufos/menu_hud.ufo:963 ../base/ufos/menu_team.ufo:806
+#: ../base/ufos/menu_hud.ufo:963
+#: ../base/ufos/menu_team.ufo:806
 #: ../base/ufos/menu_team.ufo:1333
 msgid "Mind:"
 msgstr "Mõttejõud:"
 
-#: ../base/ufos/menu_hud.ufo:968 ../base/ufos/menu_team.ufo:811
+#: ../base/ufos/menu_hud.ufo:968
+#: ../base/ufos/menu_team.ufo:811
 #: ../base/ufos/menu_team.ufo:1338
 msgid "Close Combat:"
 msgstr "Lähivõitlus:"
 
-#: ../base/ufos/menu_hud.ufo:973 ../base/ufos/menu_team.ufo:816
+#: ../base/ufos/menu_hud.ufo:973
+#: ../base/ufos/menu_team.ufo:816
 #: ../base/ufos/menu_team.ufo:1343
 msgid "Heavy Weapons:"
 msgstr "Raske relvad"
 
-#: ../base/ufos/menu_hud.ufo:978 ../base/ufos/menu_team.ufo:821
+#: ../base/ufos/menu_hud.ufo:978
+#: ../base/ufos/menu_team.ufo:821
 #: ../base/ufos/menu_team.ufo:1348
 msgid "Assault Guns:"
 msgstr "Ründe relvad"
 
-#: ../base/ufos/menu_hud.ufo:983 ../base/ufos/menu_team.ufo:826
+#: ../base/ufos/menu_hud.ufo:983
+#: ../base/ufos/menu_team.ufo:826
 #: ../base/ufos/menu_team.ufo:1353
 msgid "Sniper Rifles:"
 msgstr "Snaiper püssid"
 
-#: ../base/ufos/menu_hud.ufo:988 ../base/ufos/menu_team.ufo:831
+#: ../base/ufos/menu_hud.ufo:988
+#: ../base/ufos/menu_team.ufo:831
 #: ../base/ufos/menu_team.ufo:1358
-#, fuzzy
 msgid "High-Explosives:"
-msgstr "Lõhkeained"
+msgstr "Raske Lõhkeained"
 
 #: ../base/ufos/menu_main.ufo:70
 msgid "Singleplayer"
@@ -842,7 +915,8 @@ msgstr "Singel player"
 msgid "Multiplayer"
 msgstr "Multyplayer"
 
-#: ../base/ufos/menu_main.ufo:130 ../base/ufos/menu_tutorials.ufo:46
+#: ../base/ufos/menu_main.ufo:130
+#: ../base/ufos/menu_tutorials.ufo:46
 msgid "Tutorials"
 msgstr "Õpetused"
 
@@ -850,11 +924,13 @@ msgstr "Õpetused"
 msgid "Credits"
 msgstr "Autorid ja abilised"
 
-#: ../base/ufos/menu_main.ufo:170 ../base/ufos/menu_options.ufo:123
+#: ../base/ufos/menu_main.ufo:170
+#: ../base/ufos/menu_options.ufo:123
 #: ../base/ufos/menu_singleplayer.ufo:149
 #: ../base/ufos/menu_singleplayer.ufo:305
 #: ../base/ufos/menu_singleplayer.ufo:467
-#: ../base/ufos/menu_singleplayer.ufo:642 ../base/ufos/menu_tutorials.ufo:66
+#: ../base/ufos/menu_singleplayer.ufo:642
+#: ../base/ufos/menu_tutorials.ufo:66
 msgid "Exit"
 msgstr "Välju"
 
@@ -874,7 +950,8 @@ msgstr "Tiim"
 msgid "Load team from current selected slot"
 msgstr "Lae tiim praegu valitud kastist"
 
-#: ../base/ufos/menu_multiplayer.ufo:248 ../base/ufos/menu_singleplayer.ufo:89
+#: ../base/ufos/menu_multiplayer.ufo:248
+#: ../base/ufos/menu_singleplayer.ufo:89
 #: ../base/ufos/menu_singleplayer.ufo:363
 msgid "Load"
 msgstr "Lae"
@@ -897,7 +974,8 @@ msgstr "Praegune tiim"
 msgid "Edit your team after loading"
 msgstr "Muuda oma tiimi pärast laadimist"
 
-#: ../base/ufos/menu_multiplayer.ufo:303 ../base/ufos/menu_team.ufo:764
+#: ../base/ufos/menu_multiplayer.ufo:303
+#: ../base/ufos/menu_team.ufo:764
 msgid "Edit"
 msgstr "Muuda"
 
@@ -921,27 +999,30 @@ msgstr "Nimi"
 msgid "Bookmark"
 msgstr "Järjehoidja"
 
-#: ../base/ufos/menu_multiplayer.ufo:485 ../base/ufos/menu_multiplayer.ufo:716
+#: ../base/ufos/menu_multiplayer.ufo:485
+#: ../base/ufos/menu_multiplayer.ufo:716
 msgid "Connect"
 msgstr "Ühenda"
 
-#: ../base/ufos/menu_multiplayer.ufo:556 ../base/ufos/menu_multiplayer.ufo:669
+#: ../base/ufos/menu_multiplayer.ufo:556
+#: ../base/ufos/menu_multiplayer.ufo:669
 msgid "LAN"
 msgstr "LAN"
 
-#: ../base/ufos/menu_multiplayer.ufo:564 ../base/ufos/menu_multiplayer.ufo:677
+#: ../base/ufos/menu_multiplayer.ufo:564
+#: ../base/ufos/menu_multiplayer.ufo:677
 msgid "Internet"
 msgstr "Internett"
 
-#: ../base/ufos/menu_multiplayer.ufo:586 ../base/ufos/menu_multiplayer.ufo:748
+#: ../base/ufos/menu_multiplayer.ufo:586
+#: ../base/ufos/menu_multiplayer.ufo:748
 #: ../base/ufos/menu_multiplayer.ufo:1019
 msgid "Team preference:"
 msgstr "Tiimi eelistused"
 
 #: ../base/ufos/menu_multiplayer.ufo:628
-#, fuzzy
 msgid "Refresh"
-msgstr "Tangi"
+msgstr "Uuenda"
 
 #: ../base/ufos/menu_multiplayer.ufo:686
 msgid "Bookmarks"
@@ -968,9 +1049,8 @@ msgid "Max. clients:"
 msgstr "Maksimum ühendusi:"
 
 #: ../base/ufos/menu_multiplayer.ufo:919
-#, fuzzy
 msgid "Sets the max allowed clients to connect"
-msgstr "Maksimum sõdureid ühe tiimi kohta"
+msgstr "Maksimum kliente lubatud ühendada"
 
 #: ../base/ufos/menu_multiplayer.ufo:951
 msgid "Max. soldiers per team:"
@@ -989,9 +1069,8 @@ msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "Maksimum sõdureid lubatud mängija kohta kui mängitakse tiimi mängus"
 
 #: ../base/ufos/menu_multiplayer.ufo:1021
-#, fuzzy
 msgid "Sets the preferred team"
-msgstr "Vali eelistatud rühma"
+msgstr "Valib eelistatud rühma"
 
 #: ../base/ufos/menu_multiplayer.ufo:1054
 msgid "Max. players per team:"
@@ -1093,9 +1172,10 @@ msgstr "Kinnita tegevust:"
 msgid "HUD Design:"
 msgstr "HUD kujundus:"
 
-#: ../base/ufos/menu_options.ufo:593 ../base/ufos/menu_options.ufo:603
+#: ../base/ufos/menu_options.ufo:593
+#: ../base/ufos/menu_options.ufo:603
 msgid "Choose another hud"
-msgstr ""
+msgstr "Vali teine vaade"
 
 #: ../base/ufos/menu_options.ufo:612
 msgid "Tooltips:"
@@ -1103,24 +1183,23 @@ msgstr "Abi:"
 
 #: ../base/ufos/menu_options.ufo:628
 msgid "Deactivates tooltips"
-msgstr ""
+msgstr "Ära näita abi"
 
 #: ../base/ufos/menu_options.ufo:642
-#, fuzzy
 msgid "Activates tooltips"
-msgstr "Käivita"
+msgstr "Käivita abi"
 
 #: ../base/ufos/menu_options.ufo:655
 msgid "Center view:"
-msgstr ""
+msgstr "Keskele vaade:"
 
 #: ../base/ufos/menu_options.ufo:671
 msgid "No centering at soldier selecting, shooting and appearing"
-msgstr ""
+msgstr "Ei jälgi sõdurit kes on valitud, tulistab või ilmub vaatevälja"
 
 #: ../base/ufos/menu_options.ufo:685
 msgid "Centering at soldier selecting, shooting and appearing"
-msgstr ""
+msgstr "Jälgi sõdurit kes on valitud, tulistab või ilmub vaatevälja"
 
 #: ../base/ufos/menu_options.ufo:698
 msgid "Camera Scroll:"
@@ -1132,55 +1211,84 @@ msgstr "Kaamera pööramine"
 
 #: ../base/ufos/menu_production.ufo:93
 msgid "Increase production by 1"
-msgstr ""
+msgstr "Tõsta tootmist 1 võrra"
 
-#: ../base/ufos/menu_production.ufo:103 ../base/ufos/menu_production.ufo:111
+#: ../base/ufos/menu_production.ufo:103
+#: ../base/ufos/menu_production.ufo:111
 msgid "Stop production"
-msgstr ""
+msgstr "Katkesta tootmine"
 
 #: ../base/ufos/menu_production.ufo:121
 msgid "Decrease production by 1"
-msgstr ""
+msgstr "Vähenda tootmist 1 võrra"
 
 #: ../base/ufos/menu_production.ufo:131
 msgid "Increase production by 10"
-msgstr ""
+msgstr "Tõsta tootmist 10 võrra"
 
 #: ../base/ufos/menu_production.ufo:141
 msgid "Decrease production by 10"
-msgstr ""
+msgstr "Vähenda tootmist 10 võrra"
 
-#: ../base/ufos/menu_research.ufo:373 ../base/ufos/menu_research.ufo:389
-#: ../base/ufos/menu_research.ufo:405 ../base/ufos/menu_research.ufo:421
-#: ../base/ufos/menu_research.ufo:437 ../base/ufos/menu_research.ufo:453
-#: ../base/ufos/menu_research.ufo:469 ../base/ufos/menu_research.ufo:485
-#: ../base/ufos/menu_research.ufo:501 ../base/ufos/menu_research.ufo:517
-#: ../base/ufos/menu_research.ufo:533 ../base/ufos/menu_research.ufo:549
-#: ../base/ufos/menu_research.ufo:565 ../base/ufos/menu_research.ufo:581
-#: ../base/ufos/menu_research.ufo:597 ../base/ufos/menu_research.ufo:613
-#: ../base/ufos/menu_research.ufo:629 ../base/ufos/menu_research.ufo:645
-#: ../base/ufos/menu_research.ufo:661 ../base/ufos/menu_research.ufo:677
-#: ../base/ufos/menu_research.ufo:693 ../base/ufos/menu_research.ufo:709
-#: ../base/ufos/menu_research.ufo:725 ../base/ufos/menu_research.ufo:741
-#: ../base/ufos/menu_research.ufo:757 ../base/ufos/menu_research.ufo:773
-#: ../base/ufos/menu_research.ufo:789 ../base/ufos/menu_research.ufo:805
+#: ../base/ufos/menu_research.ufo:373
+#: ../base/ufos/menu_research.ufo:389
+#: ../base/ufos/menu_research.ufo:405
+#: ../base/ufos/menu_research.ufo:421
+#: ../base/ufos/menu_research.ufo:437
+#: ../base/ufos/menu_research.ufo:453
+#: ../base/ufos/menu_research.ufo:469
+#: ../base/ufos/menu_research.ufo:485
+#: ../base/ufos/menu_research.ufo:501
+#: ../base/ufos/menu_research.ufo:517
+#: ../base/ufos/menu_research.ufo:533
+#: ../base/ufos/menu_research.ufo:549
+#: ../base/ufos/menu_research.ufo:565
+#: ../base/ufos/menu_research.ufo:581
+#: ../base/ufos/menu_research.ufo:597
+#: ../base/ufos/menu_research.ufo:613
+#: ../base/ufos/menu_research.ufo:629
+#: ../base/ufos/menu_research.ufo:645
+#: ../base/ufos/menu_research.ufo:661
+#: ../base/ufos/menu_research.ufo:677
+#: ../base/ufos/menu_research.ufo:693
+#: ../base/ufos/menu_research.ufo:709
+#: ../base/ufos/menu_research.ufo:725
+#: ../base/ufos/menu_research.ufo:741
+#: ../base/ufos/menu_research.ufo:757
+#: ../base/ufos/menu_research.ufo:773
+#: ../base/ufos/menu_research.ufo:789
+#: ../base/ufos/menu_research.ufo:805
 msgid "Add scientist"
 msgstr "Lisa teadlane(sed)"
 
-#: ../base/ufos/menu_research.ufo:381 ../base/ufos/menu_research.ufo:397
-#: ../base/ufos/menu_research.ufo:413 ../base/ufos/menu_research.ufo:429
-#: ../base/ufos/menu_research.ufo:445 ../base/ufos/menu_research.ufo:461
-#: ../base/ufos/menu_research.ufo:477 ../base/ufos/menu_research.ufo:493
-#: ../base/ufos/menu_research.ufo:509 ../base/ufos/menu_research.ufo:525
-#: ../base/ufos/menu_research.ufo:541 ../base/ufos/menu_research.ufo:557
-#: ../base/ufos/menu_research.ufo:573 ../base/ufos/menu_research.ufo:589
-#: ../base/ufos/menu_research.ufo:605 ../base/ufos/menu_research.ufo:621
-#: ../base/ufos/menu_research.ufo:637 ../base/ufos/menu_research.ufo:653
-#: ../base/ufos/menu_research.ufo:669 ../base/ufos/menu_research.ufo:685
-#: ../base/ufos/menu_research.ufo:701 ../base/ufos/menu_research.ufo:717
-#: ../base/ufos/menu_research.ufo:733 ../base/ufos/menu_research.ufo:749
-#: ../base/ufos/menu_research.ufo:765 ../base/ufos/menu_research.ufo:781
-#: ../base/ufos/menu_research.ufo:797 ../base/ufos/menu_research.ufo:813
+#: ../base/ufos/menu_research.ufo:381
+#: ../base/ufos/menu_research.ufo:397
+#: ../base/ufos/menu_research.ufo:413
+#: ../base/ufos/menu_research.ufo:429
+#: ../base/ufos/menu_research.ufo:445
+#: ../base/ufos/menu_research.ufo:461
+#: ../base/ufos/menu_research.ufo:477
+#: ../base/ufos/menu_research.ufo:493
+#: ../base/ufos/menu_research.ufo:509
+#: ../base/ufos/menu_research.ufo:525
+#: ../base/ufos/menu_research.ufo:541
+#: ../base/ufos/menu_research.ufo:557
+#: ../base/ufos/menu_research.ufo:573
+#: ../base/ufos/menu_research.ufo:589
+#: ../base/ufos/menu_research.ufo:605
+#: ../base/ufos/menu_research.ufo:621
+#: ../base/ufos/menu_research.ufo:637
+#: ../base/ufos/menu_research.ufo:653
+#: ../base/ufos/menu_research.ufo:669
+#: ../base/ufos/menu_research.ufo:685
+#: ../base/ufos/menu_research.ufo:701
+#: ../base/ufos/menu_research.ufo:717
+#: ../base/ufos/menu_research.ufo:733
+#: ../base/ufos/menu_research.ufo:749
+#: ../base/ufos/menu_research.ufo:765
+#: ../base/ufos/menu_research.ufo:781
+#: ../base/ufos/menu_research.ufo:797
+#: ../base/ufos/menu_research.ufo:813
 msgid "Remove scientist"
 msgstr "Eemalda teadlane(sed)"
 
@@ -1202,9 +1310,8 @@ msgid "Continue"
 msgstr "Jätka"
 
 #: ../base/ufos/menu_singleplayer.ufo:129
-#, fuzzy
 msgid "New game"
-msgstr "Uus baas"
+msgstr "Uus mäng"
 
 #: ../base/ufos/menu_singleplayer.ufo:245
 msgid "Abort"
@@ -1218,29 +1325,46 @@ msgstr "Proovi uuesti"
 msgid "Statistics"
 msgstr "Statistika"
 
-#: ../base/ufos/menu_team.ufo:234 ../base/ufos/menu_team.ufo:244
-#: ../base/ufos/menu_team.ufo:254 ../base/ufos/menu_team.ufo:264
-#: ../base/ufos/menu_team.ufo:274 ../base/ufos/menu_team.ufo:284
-#: ../base/ufos/menu_team.ufo:294 ../base/ufos/menu_team.ufo:304
-#: ../base/ufos/menu_team.ufo:314 ../base/ufos/menu_team.ufo:324
-#: ../base/ufos/menu_team.ufo:334 ../base/ufos/menu_team.ufo:344
-#: ../base/ufos/menu_team.ufo:354 ../base/ufos/menu_team.ufo:364
-#: ../base/ufos/menu_team.ufo:374 ../base/ufos/menu_team.ufo:384
-#: ../base/ufos/menu_team.ufo:394 ../base/ufos/menu_team.ufo:404
+#: ../base/ufos/menu_team.ufo:234
+#: ../base/ufos/menu_team.ufo:244
+#: ../base/ufos/menu_team.ufo:254
+#: ../base/ufos/menu_team.ufo:264
+#: ../base/ufos/menu_team.ufo:274
+#: ../base/ufos/menu_team.ufo:284
+#: ../base/ufos/menu_team.ufo:294
+#: ../base/ufos/menu_team.ufo:304
+#: ../base/ufos/menu_team.ufo:314
+#: ../base/ufos/menu_team.ufo:324
+#: ../base/ufos/menu_team.ufo:334
+#: ../base/ufos/menu_team.ufo:344
+#: ../base/ufos/menu_team.ufo:354
+#: ../base/ufos/menu_team.ufo:364
+#: ../base/ufos/menu_team.ufo:374
+#: ../base/ufos/menu_team.ufo:384
+#: ../base/ufos/menu_team.ufo:394
+#: ../base/ufos/menu_team.ufo:404
 #: ../base/ufos/menu_team.ufo:414
-#, fuzzy
 msgid "Soldier carries equipment"
-msgstr "Näita teist varustust"
+msgstr "Sõdur kannab varustust"
 
-#: ../base/ufos/menu_team.ufo:424 ../base/ufos/menu_team.ufo:433
-#: ../base/ufos/menu_team.ufo:442 ../base/ufos/menu_team.ufo:451
-#: ../base/ufos/menu_team.ufo:460 ../base/ufos/menu_team.ufo:469
-#: ../base/ufos/menu_team.ufo:478 ../base/ufos/menu_team.ufo:487
-#: ../base/ufos/menu_team.ufo:496 ../base/ufos/menu_team.ufo:505
-#: ../base/ufos/menu_team.ufo:514 ../base/ufos/menu_team.ufo:523
-#: ../base/ufos/menu_team.ufo:532 ../base/ufos/menu_team.ufo:541
-#: ../base/ufos/menu_team.ufo:550 ../base/ufos/menu_team.ufo:559
-#: ../base/ufos/menu_team.ufo:568 ../base/ufos/menu_team.ufo:577
+#: ../base/ufos/menu_team.ufo:424
+#: ../base/ufos/menu_team.ufo:433
+#: ../base/ufos/menu_team.ufo:442
+#: ../base/ufos/menu_team.ufo:451
+#: ../base/ufos/menu_team.ufo:460
+#: ../base/ufos/menu_team.ufo:469
+#: ../base/ufos/menu_team.ufo:478
+#: ../base/ufos/menu_team.ufo:487
+#: ../base/ufos/menu_team.ufo:496
+#: ../base/ufos/menu_team.ufo:505
+#: ../base/ufos/menu_team.ufo:514
+#: ../base/ufos/menu_team.ufo:523
+#: ../base/ufos/menu_team.ufo:532
+#: ../base/ufos/menu_team.ufo:541
+#: ../base/ufos/menu_team.ufo:550
+#: ../base/ufos/menu_team.ufo:559
+#: ../base/ufos/menu_team.ufo:568
+#: ../base/ufos/menu_team.ufo:577
 #: ../base/ufos/menu_team.ufo:586
 msgid "Add/remove this soldier"
 msgstr "Lisa/eemalda see sõdur"
@@ -1257,10 +1381,14 @@ msgstr "Missioone:"
 msgid "Killed Enemies:"
 msgstr "Vastaseid tapetud:"
 
-#: ../base/ufos/menu_team.ufo:1051 ../base/ufos/menu_team.ufo:1060
-#: ../base/ufos/menu_team.ufo:1069 ../base/ufos/menu_team.ufo:1078
-#: ../base/ufos/menu_team.ufo:1087 ../base/ufos/menu_team.ufo:1096
-#: ../base/ufos/menu_team.ufo:1105 ../base/ufos/menu_team.ufo:1114
+#: ../base/ufos/menu_team.ufo:1051
+#: ../base/ufos/menu_team.ufo:1060
+#: ../base/ufos/menu_team.ufo:1069
+#: ../base/ufos/menu_team.ufo:1078
+#: ../base/ufos/menu_team.ufo:1087
+#: ../base/ufos/menu_team.ufo:1096
+#: ../base/ufos/menu_team.ufo:1105
+#: ../base/ufos/menu_team.ufo:1114
 msgid "Equip this soldier"
 msgstr "Relvasta see sõdur"
 
@@ -1304,261 +1432,266 @@ msgstr "Tagasi sisu juurde"
 msgid "Leave Ufopedia"
 msgstr "Sulge Ufopedia"
 
-#: ../base/ufos/missions.ufo:5 ../base/ufos/missions.ufo:317
+#: ../base/ufos/missions.ufo:5
+#: ../base/ufos/missions.ufo:317
 msgid "New York"
-msgstr ""
+msgstr "New York"
 
-#: ../base/ufos/missions.ufo:6 ../base/ufos/missions.ufo:27
-#: ../base/ufos/missions.ufo:48 ../base/ufos/missions.ufo:69
-#: ../base/ufos/missions.ufo:91 ../base/ufos/missions.ufo:137
-#: ../base/ufos/missions.ufo:158 ../base/ufos/missions.ufo:204
-#: ../base/ufos/missions.ufo:227 ../base/ufos/missions.ufo:250
-#: ../base/ufos/missions.ufo:273 ../base/ufos/missions.ufo:295
-#: ../base/ufos/missions.ufo:318 ../base/ufos/missions.ufo:340
-#: ../base/ufos/missions.ufo:364 ../base/ufos/missions.ufo:455
-#: ../base/ufos/missions.ufo:475 ../base/ufos/missions.ufo:515
-#: ../base/ufos/missions.ufo:555 ../base/ufos/missions.ufo:577
-#: ../base/ufos/missions.ufo:599 ../base/ufos/missions.ufo:621
-#: ../base/ufos/missions.ufo:640 ../base/ufos/missions.ufo:681
-#: ../base/ufos/missions.ufo:701 ../base/ufos/missions.ufo:723
-#: ../base/ufos/missions.ufo:742 ../base/ufos/missions.ufo:760
-#: ../base/ufos/missions.ufo:782 ../base/ufos/missions.ufo:802
+#: ../base/ufos/missions.ufo:6
+#: ../base/ufos/missions.ufo:27
+#: ../base/ufos/missions.ufo:48
+#: ../base/ufos/missions.ufo:69
+#: ../base/ufos/missions.ufo:91
+#: ../base/ufos/missions.ufo:137
+#: ../base/ufos/missions.ufo:158
+#: ../base/ufos/missions.ufo:204
+#: ../base/ufos/missions.ufo:227
+#: ../base/ufos/missions.ufo:250
+#: ../base/ufos/missions.ufo:273
+#: ../base/ufos/missions.ufo:295
+#: ../base/ufos/missions.ufo:318
+#: ../base/ufos/missions.ufo:340
+#: ../base/ufos/missions.ufo:364
+#: ../base/ufos/missions.ufo:455
+#: ../base/ufos/missions.ufo:475
+#: ../base/ufos/missions.ufo:515
+#: ../base/ufos/missions.ufo:555
+#: ../base/ufos/missions.ufo:577
+#: ../base/ufos/missions.ufo:599
+#: ../base/ufos/missions.ufo:621
+#: ../base/ufos/missions.ufo:640
+#: ../base/ufos/missions.ufo:681
+#: ../base/ufos/missions.ufo:701
+#: ../base/ufos/missions.ufo:723
+#: ../base/ufos/missions.ufo:742
+#: ../base/ufos/missions.ufo:760
+#: ../base/ufos/missions.ufo:782
+#: ../base/ufos/missions.ufo:802
 msgid "Terror Attack"
-msgstr ""
+msgstr "Terror Rünnak"
 
-#: ../base/ufos/missions.ufo:7 ../base/ufos/missions.ufo:28
-#: ../base/ufos/missions.ufo:49 ../base/ufos/missions.ufo:70
-#: ../base/ufos/missions.ufo:319 ../base/ufos/missions.ufo:682
-#: ../base/ufos/missions.ufo:724 ../base/ufos/missions.ufo:743
-#, fuzzy
-msgid ""
-"Damn it, you've let some of them get\\away again! Reequip your squad and"
-"\\get after them!"
-msgstr ""
-"Kurat küll, sa lasid  mõned\\jälle minema. Relvasta oma tiim ja\\keri neile "
-"järele.\\"
+#: ../base/ufos/missions.ufo:7
+#: ../base/ufos/missions.ufo:28
+#: ../base/ufos/missions.ufo:49
+#: ../base/ufos/missions.ufo:70
+#: ../base/ufos/missions.ufo:319
+#: ../base/ufos/missions.ufo:682
+#: ../base/ufos/missions.ufo:724
+#: ../base/ufos/missions.ufo:743
+msgid "Damn it, you've let some of them get\\away again! Reequip your squad and\\get after them!"
+msgstr "Sa poolearuline! Sa lasid  mõned\\jälle minema. Relvasta oma tiim ja\\keri neile järele!!!"
 
 #: ../base/ufos/missions.ufo:26
 msgid "Altdorf"
-msgstr ""
+msgstr "Altdorf"
 
 #: ../base/ufos/missions.ufo:47
 msgid "Oslo"
-msgstr ""
+msgstr "Oslo"
 
 #: ../base/ufos/missions.ufo:68
-#, fuzzy
 msgid "Antalya"
-msgstr ""
-"Olles karmi sõjaväelis juhtimise all on Antareanidel auastmed: Töölised, "
-"Sõdurid ja komandöörid. Väiksed UFOd on mehitatud töölistega kes koguvad "
-"infot Maastiku kohta, röövivad eluvorme ja muud sellist.  Sõjalaeva tüüpi "
-"UFOdel on ka sõdureid Komandöörid on ainult Juggernaut ja Bulwarki tüüpi "
-"UFOdes ja Antareanide baasides. Inimese sarnased, suurte silmade ja halli "
-"kehaga tulnukad kes domineerisid 20saj. õudus filmides. Nad sarnanevad "
-"inimestega nii keha ehituselt kui aju suuruselt, mis aitas nende madalal "
-"kogukonnal areneda  Kosmose vallutajateks."
+msgstr "Antalya"
 
 #: ../base/ufos/missions.ufo:90
 msgid "Berlin"
-msgstr ""
+msgstr "Berliin"
 
-#: ../base/ufos/missions.ufo:92 ../base/ufos/missions.ufo:159
-#: ../base/ufos/missions.ufo:205 ../base/ufos/missions.ufo:228
-#: ../base/ufos/missions.ufo:251 ../base/ufos/missions.ufo:296
-#: ../base/ufos/missions.ufo:341 ../base/ufos/missions.ufo:365
-#: ../base/ufos/missions.ufo:456 ../base/ufos/missions.ufo:476
-#: ../base/ufos/missions.ufo:516 ../base/ufos/missions.ufo:556
-#: ../base/ufos/missions.ufo:578 ../base/ufos/missions.ufo:600
-#: ../base/ufos/missions.ufo:622 ../base/ufos/missions.ufo:641
-#: ../base/ufos/missions.ufo:702 ../base/ufos/missions.ufo:761
-#: ../base/ufos/missions.ufo:783 ../base/ufos/missions.ufo:803
+#: ../base/ufos/missions.ufo:92
+#: ../base/ufos/missions.ufo:159
+#: ../base/ufos/missions.ufo:205
+#: ../base/ufos/missions.ufo:228
+#: ../base/ufos/missions.ufo:251
+#: ../base/ufos/missions.ufo:296
+#: ../base/ufos/missions.ufo:341
+#: ../base/ufos/missions.ufo:365
+#: ../base/ufos/missions.ufo:456
+#: ../base/ufos/missions.ufo:476
+#: ../base/ufos/missions.ufo:516
+#: ../base/ufos/missions.ufo:556
+#: ../base/ufos/missions.ufo:578
+#: ../base/ufos/missions.ufo:600
+#: ../base/ufos/missions.ufo:622
+#: ../base/ufos/missions.ufo:641
+#: ../base/ufos/missions.ufo:702
+#: ../base/ufos/missions.ufo:761
+#: ../base/ufos/missions.ufo:783
+#: ../base/ufos/missions.ufo:803
 msgid "Protect inhabitants"
-msgstr ""
+msgstr "Kaitse elanikke"
 
 #: ../base/ufos/missions.ufo:113
 msgid "Gobabis"
-msgstr ""
+msgstr "Gobabis"
 
 #: ../base/ufos/missions.ufo:114
-#, fuzzy
 msgid "Crash Site"
-msgstr "Loo"
+msgstr "Allakukkumise koht"
 
 #: ../base/ufos/missions.ufo:115
 msgid "Secure Area"
-msgstr ""
+msgstr "Valluta ala"
 
 #: ../base/ufos/missions.ufo:136
 msgid "Wellington"
-msgstr ""
+msgstr "Wellington"
 
 #: ../base/ufos/missions.ufo:138
-#, fuzzy
-msgid ""
-"There are rumors of a mine being\\overrun by aliens. Although this\\source "
-"of information is doubtful,\\you'll need to investigate."
-msgstr ""
-"On levinud kuulujutte, et kaevanduses\\on märgatud tulnukaid\\Kuigi see "
-"informatsioon ei pruugi olla tõene,\\pead sa seda kontrollima.\\"
+msgid "There are rumors of a mine being\\overrun by aliens. Although this\\source of information is doubtful,\\you'll need to investigate."
+msgstr "On levinud kuulujutte, et kaevanduses\\on märgatud tulnukaid\\Kuigi see informatsioon ei pruugi olla tõene,\\pead sa seda kontrollima."
 
 #: ../base/ufos/missions.ufo:157
-#, fuzzy
 msgid "Mackay"
-msgstr "Tagasi"
+msgstr "Mackay"
 
 #: ../base/ufos/missions.ufo:180
 msgid "Dongola"
-msgstr ""
+msgstr "Dongola"
 
-#: ../base/ufos/missions.ufo:181 ../base/ufos/missions.ufo:411
+#: ../base/ufos/missions.ufo:181
+#: ../base/ufos/missions.ufo:411
 msgid "Crashed Alien Ship"
-msgstr ""
+msgstr "Alla tulistatud Tulnukate laev"
 
 #: ../base/ufos/missions.ufo:182
 msgid "Secure area"
-msgstr ""
+msgstr "Valluta ala"
 
 #: ../base/ufos/missions.ufo:203
-#, fuzzy
 msgid "Bristol"
-msgstr "Poolik Valang"
+msgstr "Bristol"
 
 #: ../base/ufos/missions.ufo:226
 msgid "Veracruz"
-msgstr ""
+msgstr "Veracruz"
 
 #: ../base/ufos/missions.ufo:249
 msgid "Uppsala"
-msgstr ""
+msgstr "Uppsala"
 
-#: ../base/ufos/missions.ufo:272 ../base/ufos/missions.ufo:598
+#: ../base/ufos/missions.ufo:272
+#: ../base/ufos/missions.ufo:598
 msgid "Gwanda"
-msgstr ""
+msgstr "Gwanda"
 
 #: ../base/ufos/missions.ufo:274
-#, fuzzy
-msgid ""
-"Some aliens have escaped from the\\mine, and their tracks lead south,"
-"\\towards a nearby excavation site.\\Protect that site at all cost."
-msgstr ""
-"Mõned tulnukad on põgenenud\\kaevandusest ja nende jäljed viivad lõnasse"
-"\\lähedal asuva karjääri äärde.\\Kaitse seda karjääri iga hinna eest.\\"
+msgid "Some aliens have escaped from the\\mine, and their tracks lead south,\\towards a nearby excavation site.\\Protect that site at all cost."
+msgstr "Mõned tulnukad on põgenenud\\kaevandusest ja nende jäljed viivad lõnasse\\lähedal asuva karjääri äärde.\\Kaitse seda karjääri iga hinna eest."
 
 #: ../base/ufos/missions.ufo:294
 msgid "Marina Serra"
-msgstr ""
+msgstr "Marina Serra"
 
 #: ../base/ufos/missions.ufo:339
 msgid "Lille"
-msgstr ""
+msgstr "Lille"
 
 #: ../base/ufos/missions.ufo:363
-#, fuzzy
 msgid "Busan"
-msgstr "Poolik Valang"
+msgstr "Busan"
 
 #: ../base/ufos/missions.ufo:386
 msgid "Morioka"
-msgstr ""
+msgstr "Morioka"
 
 #: ../base/ufos/missions.ufo:387
-#, fuzzy
 msgid "Alien Hideout"
-msgstr "Tulnukate liigid"
+msgstr "Tulnukate peidukoht."
 
 #: ../base/ufos/missions.ufo:388
 msgid "Eliminate intruders"
-msgstr ""
+msgstr "Hävita sissetungijad"
 
-#: ../base/ufos/missions.ufo:410 ../base/ufos/missions.ufo:432
+#: ../base/ufos/missions.ufo:410
+#: ../base/ufos/missions.ufo:432
 #: ../base/ufos/missions.ufo:474
 msgid "Revelstoke"
-msgstr ""
+msgstr "Revelstoke"
 
 #: ../base/ufos/missions.ufo:412
 msgid "Secure Alien Ship"
-msgstr ""
+msgstr "Valluta tulnukate laev"
 
-#: ../base/ufos/missions.ufo:433 ../base/ufos/missions.ufo:495
+#: ../base/ufos/missions.ufo:433
+#: ../base/ufos/missions.ufo:495
 #: ../base/ufos/missions.ufo:535
 msgid "Landed Alien Ship"
-msgstr ""
+msgstr "Maandunud tulnukate laev"
 
-#: ../base/ufos/missions.ufo:434 ../base/ufos/missions.ufo:496
+#: ../base/ufos/missions.ufo:434
+#: ../base/ufos/missions.ufo:496
 #: ../base/ufos/missions.ufo:536
 msgid "Secure Alien Ship before Liftoff"
-msgstr ""
+msgstr "Valluta tulnukate laev enne starti"
 
 #: ../base/ufos/missions.ufo:454
 msgid "Nuuk"
-msgstr ""
+msgstr "Nuuk"
 
 #: ../base/ufos/missions.ufo:494
 msgid "Antarctic"
-msgstr ""
+msgstr "Arktika"
 
 #: ../base/ufos/missions.ufo:514
 msgid "Agpat"
-msgstr ""
+msgstr "Agpat"
 
 #: ../base/ufos/missions.ufo:534
 msgid "Dunholm"
-msgstr ""
+msgstr "Dunholm"
 
 #: ../base/ufos/missions.ufo:554
 msgid "La Paz"
-msgstr ""
+msgstr "La Paz"
 
 #: ../base/ufos/missions.ufo:576
 msgid "Tazovskij"
-msgstr ""
+msgstr "Tazovskij"
 
 #: ../base/ufos/missions.ufo:620
-#, fuzzy
 msgid "Asyut"
-msgstr "Sihtimata Valang"
+msgstr "Asyut"
 
 #: ../base/ufos/missions.ufo:639
 msgid "Tabelbala"
-msgstr ""
+msgstr "Tabelbala"
 
 #: ../base/ufos/missions.ufo:680
-#, fuzzy
 msgid "San Fransisco"
-msgstr "Transpordis"
+msgstr "San Fransisco"
 
-#: ../base/ufos/missions.ufo:700 ../base/ufos/missions.ufo:722
+#: ../base/ufos/missions.ufo:700
+#: ../base/ufos/missions.ufo:722
 #: ../base/ufos/missions.ufo:741
 msgid "TODO"
-msgstr ""
+msgstr "TODO"
 
 #: ../base/ufos/missions.ufo:759
 msgid "Fargo"
-msgstr ""
+msgstr "Fargo"
 
 #: ../base/ufos/missions.ufo:781
-#, fuzzy
 msgid "Grenchen"
-msgstr "Kranaadid"
+msgstr "Grenchen"
 
 #: ../base/ufos/missions.ufo:801
 msgid "Albany"
-msgstr ""
+msgstr "Albaania"
 
 #: ../base/ufos/missions.ufo:821
 msgid "Shannon"
-msgstr ""
+msgstr "Shannon"
 
 #: ../base/ufos/missions.ufo:822
 msgid "Major Alien Intrusion"
-msgstr ""
+msgstr "Suur tulnukate kallaletung"
 
 #: ../base/ufos/missions.ufo:823
 msgid "Stop them"
-msgstr ""
+msgstr "Peata nad"
 
-#: ../base/ufos/missions.ufo:842 client/cl_campaign.c:555
+#: ../base/ufos/missions.ufo:842
+#: client/cl_campaign.c:555
 #, fuzzy
 msgid "Base Attack"
 msgstr "Baasirünnak"
@@ -1589,7 +1722,7 @@ msgstr "Aafrika Ühendus"
 
 #: ../base/ufos/nations.ufo:81
 msgid "Russian Federation"
-msgstr ""
+msgstr "Vene Föderatsioon"
 
 #: ../base/ufos/nations.ufo:92
 msgid "Australia"
@@ -1609,12 +1742,11 @@ msgstr "Kehakaitsed"
 
 #: ../base/ufos/research.ufo:61
 msgid "Damage Types"
-msgstr ""
+msgstr "Kahju tüübid"
 
 #: ../base/ufos/research.ufo:62
-#, fuzzy
 msgid "Soldier Skills"
-msgstr "Sõdur 8"
+msgstr "Sõduri oskused"
 
 #: ../base/ufos/research.ufo:64
 msgid "Alien Species"
@@ -1642,13 +1774,7 @@ msgstr "Arenenud Plasma kontroll"
 
 #: ../base/ufos/research.ufo:91
 msgid "plasma_txt"
-msgstr ""
-"Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat "
-"sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei ole "
-"tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid plasma "
-"relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased suudavad "
-"mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
-"uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
+msgstr "Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei ole tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid plasma relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased suudavad mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
 
 #: ../base/ufos/research.ufo:101
 msgid "Tachyon Control"
@@ -1656,14 +1782,7 @@ msgstr "Tachyoni kontroll"
 
 #: ../base/ufos/research.ufo:103
 msgid "tachyon_txt"
-msgstr ""
-"Tachyon - tähendades liikumist kiiremini kui valgus kiirus, on olnud alati "
-"saladuseks inimeste ees. Antareanid suutsid selle mõistatuse siiski "
-"lahendada ja mitte ainult lahendad nad on õppinud kuidas, neid nn\"ussiauke"
-"\" luua, hävitada või nendega manipuleerida.  Kuna nemad seda suutsid teha, "
-"suudame seda ka meie. Antareanid kasutavad seda tehnoloogjat hävitavate "
-"relvade tegemiseks. Meie teadlased usuvad, et nad suudavad järeletoota "
-"Tachyoni relv, kohe kui nad saavad endale mõn näidise."
+msgstr "Tachyon - tähendades liikumist kiiremini kui valgus kiirus, on olnud alati saladuseks inimeste ees. Antareanid suutsid selle mõistatuse siiski lahendada ja mitte ainult lahendad nad on õppinud kuidas, neid nn\"ussiauke\" luua, hävitada või nendega manipuleerida.  Kuna nemad seda suutsid teha, suudame seda ka meie. Antareanid kasutavad seda tehnoloogjat hävitavate relvade tegemiseks. Meie teadlased usuvad, et nad suudavad järeletoota Tachyoni relv, kohe kui nad saavad endale mõn näidise."
 
 #: ../base/ufos/research.ufo:113
 msgid "Nano Technology"
@@ -1671,12 +1790,7 @@ msgstr "Nano tehnoloogja"
 
 #: ../base/ufos/research.ufo:115
 msgid "nano_txt"
-msgstr ""
-"Nano tehnoloogia avab meile palju uusi tehnoloogilisi võimalusi eriti "
-"relvastuse ja kehakaitsete alal. Kasutades nano tehnoloogiat on võimalik "
-"luua relvi ja kehakaitseid peaaegu aatomitasandil. See mitte ainult ei "
-"paranda relvade ja kehakaitsete tugevus,t vaid teeb neid ka kergemaks ja "
-"kuumakindlamaks kui seni tuntud materiaalid."
+msgstr "Nano tehnoloogia avab meile palju uusi tehnoloogilisi võimalusi eriti relvastuse ja kehakaitsete alal. Kasutades nano tehnoloogiat on võimalik luua relvi ja kehakaitseid peaaegu aatomitasandil. See mitte ainult ei paranda relvade ja kehakaitsete tugevus,t vaid teeb neid ka kergemaks ja kuumakindlamaks kui seni tuntud materiaalid."
 
 #: ../base/ufos/research.ufo:125
 msgid "Advanced Armor Fabrics"
@@ -1684,7 +1798,7 @@ msgstr "Arenenud relva tööstused"
 
 #: ../base/ufos/research.ufo:127
 msgid "armor_fabrics_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:139
 msgid "General UFO technology"
@@ -1694,186 +1808,100 @@ msgstr "Üldine tulnukate tehnoloogja"
 msgid "ufo_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:160 ../base/ufos/research.ufo:172
+#: ../base/ufos/research.ufo:160
+#: ../base/ufos/research.ufo:172
 msgid "assault_txt"
-msgstr ""
-"AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja "
-"revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline "
-"automaat. AR-80 salve kuju ja salve positsioon, lubavad tal isegi täpsemini "
-"tulistada. Automaati on ka lihtne parandada, kuna see on erinevatest osadest "
-"kokku pandud. Tulistamise mehanismi saab parandad lahingus olles, lihtsalt "
-"tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult "
-"natuke üle minuti."
+msgstr "AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline automaat. AR-80 salve kuju ja salve positsioon, lubavad tal isegi täpsemini tulistada. Automaati on ka lihtne parandada, kuna see on erinevatest osadest kokku pandud. Tulistamise mehanismi saab parandad lahingus olles, lihtsalt tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult natuke üle minuti."
 
-#: ../base/ufos/research.ufo:184 ../base/ufos/research.ufo:196
+#: ../base/ufos/research.ufo:184
+#: ../base/ufos/research.ufo:196
 msgid "sniper_txt"
-msgstr ""
-"Kasutades tugevat ja mehaanilist sihikut on uus snaiper püss kõige surmavam "
-"relv Phalanxsi vägedes. Kuulid on 0,5 mm mis suudavad läbida 10 cm läbi "
-"petoon seina 200 m kauguselt lastuna. Aga kuna relv on väga kohmakas, võtab "
-"sellega sihtimine kaua aega. Seega ei sobi WE-78 kindlasti lähivõitlusesse."
+msgstr "Kasutades tugevat ja mehaanilist sihikut on uus snaiper püss kõige surmavam relv Phalanxsi vägedes. Kuulid on 0,5 mm mis suudavad läbida 10 cm läbi petoon seina 200 m kauguselt lastuna. Aga kuna relv on väga kohmakas, võtab sellega sihtimine kaua aega. Seega ei sobi WE-78 kindlasti lähivõitlusesse."
 
-#: ../base/ufos/research.ufo:208 ../base/ufos/research.ufo:220
+#: ../base/ufos/research.ufo:208
+#: ../base/ufos/research.ufo:220
 msgid "smg_txt"
-msgstr ""
-"Võrreldes AR-80 automaadiga suudab SMG-68 tulistada rohkem kuule korraga, "
-"probleemiks aga on vähene täpsus ja jõud. SMG-68 on ideaalne lähivõitluseks "
-"ruumides, metsas jm. Et tulistada rohkem on sellel relval 2 toru, et "
-"vähendad tagasilööki, kasutatakse arenenud gaaside väljalaske süsteemi. SMG-"
-"68 on ebatäpne, isegi keskmisel kaugusel aga ideaalne lähedal võitluses."
+msgstr "Võrreldes AR-80 automaadiga suudab SMG-68 tulistada rohkem kuule korraga, probleemiks aga on vähene täpsus ja jõud. SMG-68 on ideaalne lähivõitluseks ruumides, metsas jm. Et tulistada rohkem on sellel relval 2 toru, et vähendad tagasilööki, kasutatakse arenenud gaaside väljalaske süsteemi. SMG-68 on ebatäpne, isegi keskmisel kaugusel aga ideaalne lähedal võitluses."
 
-#: ../base/ufos/research.ufo:232 ../base/ufos/research.ufo:244
+#: ../base/ufos/research.ufo:232
+#: ../base/ufos/research.ufo:244
 msgid "shotgun_txt"
-msgstr ""
-"Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste "
-"pumppüssidega SWAT tiimides, suudab SG-260 paremini juhtida haavleid torus, "
-"millest tuleneb palju suurem laskeulatus. See omakorda tähendab, et pumpüss "
-"on kasulik ka keskmiste vahemaade tagant. SG-260 eelis SMG-68 ees on see, et "
-"see teeb rohkem kahju ühe lasuga, tehes selle paremaks relvaks "
-"kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikses ruumis ja "
-"lähivõitluses näiteks: majas."
+msgstr "Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste pumppüssidega SWAT tiimides, suudab SG-260 paremini juhtida haavleid torus, millest tuleneb palju suurem laskeulatus. See omakorda tähendab, et pumpüss on kasulik ka keskmiste vahemaade tagant. SG-260 eelis SMG-68 ees on see, et see teeb rohkem kahju ühe lasuga, tehes selle paremaks relvaks kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikses ruumis ja lähivõitluses näiteks: majas."
 
-#: ../base/ufos/research.ufo:256 ../base/ufos/research.ufo:268
+#: ../base/ufos/research.ufo:256
+#: ../base/ufos/research.ufo:268
 msgid "flamer_txt"
-msgstr ""
-"FT-207 leegiheitja on üks uuemaid lisasid Phalanxi relvade poolel. Eelmised "
-"versioonid sellest relvast süütasid põlema kõik ümberringi. FT-207 on aga "
-"ülitäpse gaaside väljalaske süsteemiga mis ei sütita põlema ümbritesevaid "
-"alasid, vaid ainult ala mida sihitakse."
+msgstr "FT-207 leegiheitja on üks uuemaid lisasid Phalanxi relvade poolel. Eelmised versioonid sellest relvast süütasid põlema kõik ümberringi. FT-207 on aga ülitäpse gaaside väljalaske süsteemiga mis ei sütita põlema ümbritesevaid alasid, vaid ainult ala mida sihitakse."
 
-#: ../base/ufos/research.ufo:280 ../base/ufos/research.ufo:292
+#: ../base/ufos/research.ufo:280
+#: ../base/ufos/research.ufo:292
 msgid "pistol_txt"
-msgstr ""
-"P-95 on enim levinud Phalanxi abi relv. Selle relva lihtne disain teeb selle "
-"relva väga usaltusväärseks lisaks iga sõduri varustusele. Tänu relva kergele "
-"kaalule, suudab proffesionaalne tulistaja kanda kahte P-95te korraga., selle "
-"tulistamise viisi miinus on täpsuse langus. P-95 hinnatakse eriliselt "
-"snaiprite poolt kuna seda on lihtne käsitseda lähivõitluses. P-95 on väge "
-"täpne ka keskmisel kaugusel. P-95 saab tulistada kiiresti aga AR-80 "
-"automaadile jääb ta alla jõus. "
+msgstr "P-95 on enim levinud Phalanxi abi relv. Selle relva lihtne disain teeb selle relva väga usaltusväärseks lisaks iga sõduri varustusele. Tänu relva kergele kaalule, suudab proffesionaalne tulistaja kanda kahte P-95te korraga., selle tulistamise viisi miinus on täpsuse langus. P-95 hinnatakse eriliselt snaiprite poolt kuna seda on lihtne käsitseda lähivõitluses. P-95 on väge täpne ka keskmisel kaugusel. P-95 saab tulistada kiiresti aga AR-80 automaadile jääb ta alla jõus. "
 
 #: ../base/ufos/research.ufo:304
 msgid "rpg_txt"
-msgstr ""
-"RL-1056 eelkäiad olid Stingeri raketid. Phalanxi teadlased ja insenärid "
-"suutsid toota paremad raketid, mis ei sihi ainult õhus olevaid sihtmärke "
-"vaid ka maapinnal olevaid.  RL-1056 raketid  kasutavad lasersihtimist ja "
-"kiirsalvestuskaameraid, et kindlaks teha sihtmärgi asukoht. Hoolimata heast "
-"täpsusest kui jägimise süsteemil oli piisavalt aega, et sihtmärk lukustada, "
-"on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata "
-"sihtmärkidel, kuna lukustamiseks pole aega."
+msgstr "RL-1056 eelkäiad olid Stingeri raketid. Phalanxi teadlased ja insenärid suutsid toota paremad raketid, mis ei sihi ainult õhus olevaid sihtmärke vaid ka maapinnal olevaid.  RL-1056 raketid  kasutavad lasersihtimist ja kiirsalvestuskaameraid, et kindlaks teha sihtmärgi asukoht. Hoolimata heast täpsusest kui jägimise süsteemil oli piisavalt aega, et sihtmärk lukustada, on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata sihtmärkidel, kuna lukustamiseks pole aega."
 
 #: ../base/ufos/research.ufo:316
 msgid "rpg_ammo_txt"
-msgstr ""
-"RL-1056 eelkäiad olid Stingeri raketid. Phalanxi teadlased ja insenärid "
-"suutsid toota paremad raketid mis ei sihi ainult õhus olevaid sihtmärke vaid "
-"ka maapinnal olevaid.  RL-1056 raketid  kasutavad lasersihtimist ja "
-"kiirsalvestuskaameraid, et kindlaks teha sihtmärgi asukoht. Hoolimata heast "
-"täpsusest kui jägimis süsteemil oli piisavalt aega, et sihtmärk lukustada, "
-"on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata "
-"sihtmärkidel, kuna lukustamiseks pole aega."
+msgstr "RL-1056 eelkäiad olid Stingeri raketid. Phalanxi teadlased ja insenärid suutsid toota paremad raketid mis ei sihi ainult õhus olevaid sihtmärke vaid ka maapinnal olevaid.  RL-1056 raketid  kasutavad lasersihtimist ja kiirsalvestuskaameraid, et kindlaks teha sihtmärgi asukoht. Hoolimata heast täpsusest kui jägimis süsteemil oli piisavalt aega, et sihtmärk lukustada, on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata sihtmärkidel, kuna lukustamiseks pole aega."
 
 #: ../base/ufos/research.ufo:328
 #, fuzzy
 msgid "fraggren_txt"
-msgstr ""
-"Kild granaate saab visata sõduri poolt. Selle plahvatuse kahju kandub "
-"üksustele selle plahvatuse raadiuses. Aega saab määrata 0-9. 0 tähendab, et "
-"granaat plahvatab maandudes. 1 tähendab, et plahvatab vastase käigu alguses, "
-"2 et sinu järgmise käigu alguses jne. Ajastatud granaate võib ülesse korjata "
-"ja edasi visata."
+msgstr "Kild granaate saab visata sõduri poolt. Selle plahvatuse kahju kandub üksustele selle plahvatuse raadiuses. Aega saab määrata 0-9. 0 tähendab, et granaat plahvatab maandudes. 1 tähendab, et plahvatab vastase käigu alguses, 2 et sinu järgmise käigu alguses jne. Ajastatud granaate võib ülesse korjata ja edasi visata."
 
 #: ../base/ufos/research.ufo:352
 #, fuzzy
 msgid "combatknife_txt"
-msgstr ""
-"Sõjaväe nuga. Saab kasutada kõrvalseisja vastu nt: uksel seisab tulnukas ja "
-"sina avasid ukse või saab seda visata. Nagu ka püstoleid saab 2 nuga korraga "
-"kanda."
+msgstr "Sõjaväe nuga. Saab kasutada kõrvalseisja vastu nt: uksel seisab tulnukas ja sina avasid ukse või saab seda visata. Nagu ka püstoleid saab 2 nuga korraga kanda."
 
 #: ../base/ufos/research.ufo:368
 msgid "stunrod_txt"
-msgstr ""
-"Kergesti kasutatav, tugeva uinutiga ja uimastitega-elektripiitsa on kerge "
-"kasutada. Miinus pool seisneb selles, et peab seisma vastase kõrval. Pluss "
-"pool selles, et Elektripiits on mitu korda effektiivsem kui uimastamise "
-"granaadid."
+msgstr "Kergesti kasutatav, tugeva uinutiga ja uimastitega-elektripiitsa on kerge kasutada. Miinus pool seisneb selles, et peab seisma vastase kõrval. Pluss pool selles, et Elektripiits on mitu korda effektiivsem kui uimastamise granaadid."
 
 #: ../base/ufos/research.ufo:380
 msgid "medikit_txt"
-msgstr ""
-"Pakk erinevaid arstivahendeid alustades skapellidest lõpedades "
-"valuvaigistitega. Arstipakk suudab parandada haavad või väheamalt peatada "
-"sõdurite haavade laienemise ja sõdurite suremise."
+msgstr "Pakk erinevaid arstivahendeid alustades skapellidest lõpedades valuvaigistitega. Arstipakk suudab parandada haavad või väheamalt peatada sõdurite haavade laienemise ja sõdurite suremise."
 
 #: ../base/ufos/research.ufo:392
 msgid "irgoggles_txt"
-msgstr ""
-"Need prillid lubavad sõduril näha soojusallikaid isegi läbi 1m paksuse "
-"seina, kahjuks ei ole õpitud veel eristama tulnukate soojust inimest omast. "
+msgstr "Need prillid lubavad sõduril näha soojusallikaid isegi läbi 1m paksuse seina, kahjuks ei ole õpitud veel eristama tulnukate soojust inimest omast. "
 
 #: ../base/ufos/research.ufo:404
-#, fuzzy
 msgid "alienincgrenade_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:416
 #, fuzzy
 msgid "stungren_txt"
-msgstr ""
-"Kergesti kasutatav, tugeva uinutiga ja uimastitega-elektripiitsa on kerge "
-"kasutada. Miinus pool seisneb selles, et peab seisma vastase kõrval. Pluss "
-"pool selles, et Elektripiits on mitu korda effektiivsem kui uimastamise "
-"granaadid."
+msgstr "Kergesti kasutatav, tugeva uinutiga ja uimastitega-elektripiitsa on kerge kasutada. Miinus pool seisneb selles, et peab seisma vastase kõrval. Pluss pool selles, et Elektripiits on mitu korda effektiivsem kui uimastamise granaadid."
 
 #: ../base/ufos/research.ufo:428
 #, fuzzy
 msgid "plasmagren_txt"
-msgstr ""
-"Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat "
-"sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei ole "
-"tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid plasma "
-"relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased suudavad "
-"mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
-"uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
+msgstr "Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei ole tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid plasma relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased suudavad mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
 
 #: ../base/ufos/research.ufo:441
 #, fuzzy
 msgid "rpg_incendiary_ammo_txt"
-msgstr ""
-"RL-1056 eelkäiad olid Stingeri raketid. Phalanxi teadlased ja insenärid "
-"suutsid toota paremad raketid mis ei sihi ainult õhus olevaid sihtmärke vaid "
-"ka maapinnal olevaid.  RL-1056 raketid  kasutavad lasersihtimist ja "
-"kiirsalvestuskaameraid, et kindlaks teha sihtmärgi asukoht. Hoolimata heast "
-"täpsusest kui jägimis süsteemil oli piisavalt aega, et sihtmärk lukustada, "
-"on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata "
-"sihtmärkidel, kuna lukustamiseks pole aega."
+msgstr "RL-1056 eelkäiad olid Stingeri raketid. Phalanxi teadlased ja insenärid suutsid toota paremad raketid mis ei sihi ainult õhus olevaid sihtmärke vaid ka maapinnal olevaid.  RL-1056 raketid  kasutavad lasersihtimist ja kiirsalvestuskaameraid, et kindlaks teha sihtmärgi asukoht. Hoolimata heast täpsusest kui jägimis süsteemil oli piisavalt aega, et sihtmärk lukustada, on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata sihtmärkidel, kuna lukustamiseks pole aega."
 
 #: ../base/ufos/research.ufo:453
 #, fuzzy
 msgid "rpg_tachyon_ammo_txt"
-msgstr ""
-"Kuigi meie insenäärid ei ole suutnud täienisti mõista, tachyonide "
-"tööpõhimeted nii väiksel suurusel on nad suutnud järele teha ja mõista "
-"Tachyonide püssi ehituse. Thachyoni püss suudab läbistada ka meile kõige "
-"tugevad teadaolevad materjalid ja läbida kehaitseid kergesti jätkades isegi "
-"10cm edasi läbimist enne kui, jõud otsa saab. Selletõttu sõdur, kes saab "
-"pihta saab ainult väikse haavandi aga tohutud sisemised haavad."
+msgstr "Kuigi meie insenäärid ei ole suutnud täienisti mõista, tachyonide tööpõhimeted nii väiksel suurusel on nad suutnud järele teha ja mõista Tachyonide püssi ehituse. Thachyoni püss suudab läbistada ka meile kõige tugevad teadaolevad materjalid ja läbida kehaitseid kergesti jätkades isegi 10cm edasi läbimist enne kui, jõud otsa saab. Selletõttu sõdur, kes saab pihta saab ainult väikse haavandi aga tohutud sisemised haavad."
 
 #: ../base/ufos/research.ufo:465
 msgid "kerrblade_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:478 ../base/ufos/research.ufo:490
+#: ../base/ufos/research.ufo:478
+#: ../base/ufos/research.ufo:490
 msgid "bolterrifle_txt"
 msgstr ""
-"MkII Elektromagnet püss laseb välja väga suure võimsusega, väikse "
-"elektrikera. Kera on suurem kui AR-80 kuul ja suurtel kiirustel suudab see "
-"teha rohkem kahju. MkII EM-il pole liikuvaid osi seega on kuulda ainult heli "
-"mis tekib kui kera ületab helibarjääri.\n"
-"Laskude vahel on märgatav taaslaadimis aeg mis tõttu on täiest automaatne "
-"valang võimatu. Kuigi saab lasta mitu lasku tihedalt järiest. "
+"MkII Elektromagnet püss laseb välja väga suure võimsusega, väikse elektrikera. Kera on suurem kui AR-80 kuul ja suurtel kiirustel suudab see teha rohkem kahju. MkII EM-il pole liikuvaid osi seega on kuulda ainult heli mis tekib kui kera ületab helibarjääri.\n"
+"Laskude vahel on märgatav taaslaadimis aeg mis tõttu on täiest automaatne valang võimatu. Kuigi saab lasta mitu lasku tihedalt järiest. "
 
 #: ../base/ufos/research.ufo:502
 msgid "grenl_txt"
@@ -1888,88 +1916,56 @@ msgstr "<TODO>"
 msgid "grenl_plasma_ammo_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:538 ../base/ufos/research.ufo:550
+#: ../base/ufos/research.ufo:538
+#: ../base/ufos/research.ufo:550
 msgid "laserpistol_txt"
-msgstr ""
-"Kasutades väiksemat ja vähem võimsat versiooni \"YAG laser reaktorist\"\\ on "
-"LAS-10 nagu selle suur vend LAS-24 laser automaat. Seoses aga väikse "
-"reaktori vähese energiaga on LAS-10 tunduvamalt nõrgem, aga täpsem kui "
-"tavaline püstol. Nagu ka püstolit, võib proffesionaal ka 2 laser püstolit "
-"korraga tulistada."
+msgstr "Kasutades väiksemat ja vähem võimsat versiooni \"YAG laser reaktorist\"\\ on LAS-10 nagu selle suur vend LAS-24 laser automaat. Seoses aga väikse reaktori vähese energiaga on LAS-10 tunduvamalt nõrgem, aga täpsem kui tavaline püstol. Nagu ka püstolit, võib proffesionaal ka 2 laser püstolit korraga tulistada."
 
-#: ../base/ufos/research.ufo:562 ../base/ufos/research.ufo:574
+#: ../base/ufos/research.ufo:562
+#: ../base/ufos/research.ufo:574
 msgid "laserrifle_txt"
-msgstr ""
-"Nagu ka AR-80 on LA-24 effektiivne keskmisel kaugusel. See teeb rohkem kahju "
-"kui AR-80 ja on täpsem tänu vähendatud tagasilöögile."
+msgstr "Nagu ka AR-80 on LA-24 effektiivne keskmisel kaugusel. See teeb rohkem kahju kui AR-80 ja on täpsem tänu vähendatud tagasilöögile."
 
-#: ../base/ufos/research.ufo:586 ../base/ufos/research.ufo:598
+#: ../base/ufos/research.ufo:586
+#: ../base/ufos/research.ufo:598
 #, fuzzy
 msgid "heavylaser_txt"
 msgstr "laser.txt"
 
 #: ../base/ufos/research.ufo:610
 msgid "plasblade_txt"
-msgstr ""
-"See lähivõitluse relv on kujunenud väga kasulikuks lähivõitluses, kuna iga "
-"üks kes selle Plasmalmõõga tera puutudab saab tohutuid põletushaavu. "
-"Tavaliselt ei suuda vaenlane pärast ühte lööki enam edasi võidelda. "
-"Miinuseks on selle relva väike ulatus."
+msgstr "See lähivõitluse relv on kujunenud väga kasulikuks lähivõitluses, kuna iga üks kes selle Plasmalmõõga tera puutudab saab tohutuid põletushaavu. Tavaliselt ei suuda vaenlane pärast ühte lööki enam edasi võidelda. Miinuseks on selle relva väike ulatus."
 
-#: ../base/ufos/research.ufo:623 ../base/ufos/research.ufo:636
+#: ../base/ufos/research.ufo:623
+#: ../base/ufos/research.ufo:636
 #, fuzzy
 msgid "plasatomizer_txt"
-msgstr ""
-"Seda plasmarelva kasutatakse kõige enam osavate tulnukate sõdalaste poolt. "
-"Selle relva poolt välja tulistatud plasma sööbib kerge vaevaga läbi 20cm "
-"paksusest terasest. Seetõttu ei paku tavaline Kevlarist kehakaitse selle "
-"eest kuigi palju kaitset. Erinevalt Plasma püssist mis tekitab ainult nõrku "
-"põletushaavu, tekitab plasma kahur tohutud põletushaavad mis enamasti "
-"savaadgi surmavaks. "
+msgstr "Seda plasmarelva kasutatakse kõige enam osavate tulnukate sõdalaste poolt. Selle relva poolt välja tulistatud plasma sööbib kerge vaevaga läbi 20cm paksusest terasest. Seetõttu ei paku tavaline Kevlarist kehakaitse selle eest kuigi palju kaitset. Erinevalt Plasma püssist mis tekitab ainult nõrku põletushaavu, tekitab plasma kahur tohutud põletushaavad mis enamasti savaadgi surmavaks. "
 
-#: ../base/ufos/research.ufo:648 ../base/ufos/research.ufo:661
+#: ../base/ufos/research.ufo:648
+#: ../base/ufos/research.ufo:661
 msgid "plasrifle_txt"
-msgstr ""
-"Kasutades sama tehnoloogiat mida plasmapüssgi, suudab plasma püstol teha "
-"märgatavat kahju sihtmärgile. Kuna plasma püstol on väike ei suuda ta väga "
-"tugevat kahju teha kuna plasma hulk on piiratud, sellegi poolest suudab "
-"plasma püstol tulistada läbi 5cm paksuse teras plaadi."
+msgstr "Kasutades sama tehnoloogiat mida plasmapüssgi, suudab plasma püstol teha märgatavat kahju sihtmärgile. Kuna plasma püstol on väike ei suuda ta väga tugevat kahju teha kuna plasma hulk on piiratud, sellegi poolest suudab plasma püstol tulistada läbi 5cm paksuse teras plaadi."
 
-#: ../base/ufos/research.ufo:673 ../base/ufos/research.ufo:686
+#: ../base/ufos/research.ufo:673
+#: ../base/ufos/research.ufo:686
 msgid "plasblaster_txt"
-msgstr ""
-"Seda plasmarelva kasutatakse kõige enam osavate tulnukate sõdalaste poolt. "
-"Selle relva poolt välja tulistatud plasma sööbib kerge vaevaga läbi 20cm "
-"paksusest terasest. Seetõttu ei paku tavaline Kevlarist kehakaitse selle "
-"eest kuigi palju kaitset. Erinevalt Plasma püssist mis tekitab ainult nõrku "
-"põletushaavu, tekitab plasma kahur tohutud põletushaavad mis enamasti "
-"savaadgi surmavaks. "
+msgstr "Seda plasmarelva kasutatakse kõige enam osavate tulnukate sõdalaste poolt. Selle relva poolt välja tulistatud plasma sööbib kerge vaevaga läbi 20cm paksusest terasest. Seetõttu ei paku tavaline Kevlarist kehakaitse selle eest kuigi palju kaitset. Erinevalt Plasma püssist mis tekitab ainult nõrku põletushaavu, tekitab plasma kahur tohutud põletushaavad mis enamasti savaadgi surmavaks. "
 
-#: ../base/ufos/research.ufo:698 ../base/ufos/research.ufo:711
+#: ../base/ufos/research.ufo:698
+#: ../base/ufos/research.ufo:711
 msgid "tachyonpistol_txt"
-msgstr ""
-"See võimas relv on väiksem versioon tachyoon kiirendist. Selletõttu on "
-"Tachyoni püstolil, nii nõrgem kui ka vähem täpsem. Selle relva eelis on "
-"selle kerge kaal mis teeb relva väärtuslikuks abirelvaks."
+msgstr "See võimas relv on väiksem versioon tachyoon kiirendist. Selletõttu on Tachyoni püstolil, nii nõrgem kui ka vähem täpsem. Selle relva eelis on selle kerge kaal mis teeb relva väärtuslikuks abirelvaks."
 
-#: ../base/ufos/research.ufo:723 ../base/ufos/research.ufo:736
+#: ../base/ufos/research.ufo:723
+#: ../base/ufos/research.ufo:736
 msgid "tachyonrifle_txt"
-msgstr ""
-"Kuigi meie insenäärid ei ole suutnud täiesti mõista, tachyonide "
-"tööpõhimõtteid nii väiksel suurusel. On nad suutnud järele teha ja mõista "
-"Tachyonide püssi ehituse. Thachyoni püss suudab läbistada ka meile kõige "
-"tugevad, teadaolevad materjalid ja läbida kehaitseid kergesti, jätkades "
-"isegi 10cm edasi läbimist enne kui, jõud otsa saab. Selletõttu sõdur, kes "
-"saab pihta saab ainult väikse haavandi aga tohutud sisemised haavad."
+msgstr "Kuigi meie insenäärid ei ole suutnud täiesti mõista, tachyonide tööpõhimõtteid nii väiksel suurusel. On nad suutnud järele teha ja mõista Tachyonide püssi ehituse. Thachyoni püss suudab läbistada ka meile kõige tugevad, teadaolevad materjalid ja läbida kehaitseid kergesti, jätkades isegi 10cm edasi läbimist enne kui, jõud otsa saab. Selletõttu sõdur, kes saab pihta saab ainult väikse haavandi aga tohutud sisemised haavad."
 
-#: ../base/ufos/research.ufo:748 ../base/ufos/research.ufo:761
+#: ../base/ufos/research.ufo:748
+#: ../base/ufos/research.ufo:761
 msgid "tachyonsniper_txt"
-msgstr ""
-"Tachyoni sniper on võimas relv. Selle aeglane tulistamine tuleneb asjaolust, "
-"et enne lasku toimub tohutu laadimine, mis mitte ainult ei tee lasku "
-"tugevamaks vaid ka ülitäpseks. Laadimine aga annab aega sihtimiseks, tänu "
-"millele saab sihtida täpsemalt ja suurema kahjuga. Thacyoni snaiper püssi "
-"purustusjõud on isegi suurem tachyoni püssi omast"
+msgstr "Tachyoni sniper on võimas relv. Selle aeglane tulistamine tuleneb asjaolust, et enne lasku toimub tohutu laadimine, mis mitte ainult ei tee lasku tugevamaks vaid ka ülitäpseks. Laadimine aga annab aega sihtimiseks, tänu millele saab sihtida täpsemalt ja suurema kahjuga. Thacyoni snaiper püssi purustusjõud on isegi suurem tachyoni püssi omast"
 
 #: ../base/ufos/research.ufo:777
 msgid "kevlar_armor_txt"
@@ -1977,13 +1973,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:788
 msgid "nano_armor_txt"
-msgstr ""
-"Kasutades kergekaalulist, vabrikus tehtud kehakaitset mis on kokkupandud "
-"imepisikestest silindritest on see kehakaitse pea-aegu, et purustamatu. "
-"Kokkupõrke korral kandub kokkupõrkest tekkinud energia silidtrite vahel "
-"laiali, mis vähendab kümneid kordi kahju, mis oleks juhtunud ilma selle "
-"kehakaitseta. Energiarünnakud kanduvad järiest edasi mööda silindreid, "
-"aeglaselt vähendades plasma relva jõud nii, et sõdur seda peaaegu ei tunnegi."
+msgstr "Kasutades kergekaalulist, vabrikus tehtud kehakaitset mis on kokkupandud imepisikestest silindritest on see kehakaitse pea-aegu, et purustamatu. Kokkupõrke korral kandub kokkupõrkest tekkinud energia silidtrite vahel laiali, mis vähendab kümneid kordi kahju, mis oleks juhtunud ilma selle kehakaitseta. Energiarünnakud kanduvad järiest edasi mööda silindreid, aeglaselt vähendades plasma relva jõud nii, et sõdur seda peaaegu ei tunnegi."
 
 #: ../base/ufos/research.ufo:800
 msgid "nano_heavy_armor_txt"
@@ -1991,135 +1981,83 @@ msgstr "<TODO<"
 
 #: ../base/ufos/research.ufo:816
 msgid "Normal Damage Type"
-msgstr ""
+msgstr "Tavaline tüüpi kahju"
 
 #: ../base/ufos/research.ufo:818
-#, fuzzy
 msgid "normal_damage_txt"
-msgstr ""
-"Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat "
-"sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei ole "
-"tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid plasma "
-"relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased suudavad "
-"mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
-"uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:829
 msgid "Blast Damage Type"
-msgstr ""
+msgstr "Blast Damage Type"
 
 #: ../base/ufos/research.ufo:831
 #, fuzzy
 msgid "blast_damage_txt"
-msgstr ""
-"Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat "
-"sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei ole "
-"tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid plasma "
-"relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased suudavad "
-"mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
-"uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
+msgstr "Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei ole tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid plasma relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased suudavad mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
 
 #: ../base/ufos/research.ufo:842
 msgid "Fire Damage Type"
-msgstr ""
+msgstr "Tule tüüpi kahju"
 
 #: ../base/ufos/research.ufo:844
 #, fuzzy
 msgid "fire_damage_txt"
-msgstr ""
-"Kild granaate saab visata sõduri poolt. Selle plahvatuse kahju kandub "
-"üksustele selle plahvatuse raadiuses. Aega saab määrata 0-9. 0 tähendab, et "
-"granaat plahvatab maandudes. 1 tähendab, et plahvatab vastase käigu alguses, "
-"2 et sinu järgmise käigu alguses jne. Ajastatud granaate võib ülesse korjata "
-"ja edasi visata."
+msgstr "Kild granaate saab visata sõduri poolt. Selle plahvatuse kahju kandub üksustele selle plahvatuse raadiuses. Aega saab määrata 0-9. 0 tähendab, et granaat plahvatab maandudes. 1 tähendab, et plahvatab vastase käigu alguses, 2 et sinu järgmise käigu alguses jne. Ajastatud granaate võib ülesse korjata ja edasi visata."
 
 #: ../base/ufos/research.ufo:855
 msgid "Shock Damage Type"
-msgstr ""
+msgstr "Shock Damage Type"
 
 #: ../base/ufos/research.ufo:857
 #, fuzzy
 msgid "shock_damage_txt"
-msgstr ""
-"Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste "
-"pumppüssidega SWAT tiimides suudab SG-260 paremini juhtida haavleid torus, "
-"millest tuleneb palju suurem laskeulatus,. See omakorda tähendab, et pumpüss "
-"on kasulik ka keskmiste vahemaade tagant. SG-260 eelis SMG-68 ees on see, et "
-"see teeb rohkem kahju ühe lasuga, tehes selle paremaks relvaks "
-"kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikeses ruumis ja "
-"lähivõitluses näiteks: majas, metsas."
+msgstr "Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste pumppüssidega SWAT tiimides suudab SG-260 paremini juhtida haavleid torus, millest tuleneb palju suurem laskeulatus,. See omakorda tähendab, et pumpüss on kasulik ka keskmiste vahemaade tagant. SG-260 eelis SMG-68 ees on see, et see teeb rohkem kahju ühe lasuga, tehes selle paremaks relvaks kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikeses ruumis ja lähivõitluses näiteks: majas, metsas."
 
 #: ../base/ufos/research.ufo:868
 msgid "Laser Damage Type"
-msgstr ""
+msgstr "Laser tüüpi kahju"
 
 #: ../base/ufos/research.ufo:870
 #, fuzzy
 msgid "laser_damage_txt"
-msgstr ""
-"Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat "
-"sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei ole "
-"tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid plasma "
-"relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased suudavad "
-"mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
-"uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
+msgstr "laser.txt"
 
 #: ../base/ufos/research.ufo:881
-#, fuzzy
 msgid "Plasma Damage Type"
-msgstr "PlasmaMõõk"
+msgstr "Plasma kahju"
 
 #: ../base/ufos/research.ufo:883
 #, fuzzy
 msgid "plasma_damage_txt"
-msgstr ""
-"Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat "
-"sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei ole "
-"tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid plasma "
-"relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased suudavad "
-"mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
-"uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
+msgstr "Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei ole tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid plasma relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased suudavad mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
 
 #: ../base/ufos/research.ufo:894
 msgid "Tachyon Damage Type"
-msgstr ""
+msgstr "Tachyon tüüpi kahju"
 
 #: ../base/ufos/research.ufo:896
 #, fuzzy
 msgid "tachyon_damage_txt"
-msgstr ""
-"Tachyon - tähendades liikumist kiiremini kui valgus kiirus, on olnud alati "
-"saladuseks inimeste ees. Antareanid suutsid selle mõistatuse siiski "
-"lahendada ja mitte ainult lahendad nad on õppinud kuidas, neid nn\"ussiauke"
-"\" luua, hävitada või nendega manipuleerida.  Kuna nemad seda suutsid teha, "
-"suudame seda ka meie. Antareanid kasutavad seda tehnoloogjat hävitavate "
-"relvade tegemiseks. Meie teadlased usuvad, et nad suudavad järeletoota "
-"Tachyoni relv, kohe kui nad saavad endale mõn näidise."
+msgstr "Tachyon - tähendades liikumist kiiremini kui valgus kiirus, on olnud alati saladuseks inimeste ees. Antareanid suutsid selle mõistatuse siiski lahendada ja mitte ainult lahendad nad on õppinud kuidas, neid nn\"ussiauke\" luua, hävitada või nendega manipuleerida.  Kuna nemad seda suutsid teha, suudame seda ka meie. Antareanid kasutavad seda tehnoloogjat hävitavate relvade tegemiseks. Meie teadlased usuvad, et nad suudavad järeletoota Tachyoni relv, kohe kui nad saavad endale mõn näidise."
 
 #: ../base/ufos/research.ufo:907
 msgid "Stun Damage Type"
-msgstr ""
+msgstr "Paralüseerimis tüüpi kahju"
 
 #: ../base/ufos/research.ufo:909
 #, fuzzy
 msgid "stun_damage_txt"
-msgstr ""
-"Kergesti kasutatav, tugeva uinutiga ja uimastitega-elektripiitsa on kerge "
-"kasutada. Miinus pool seisneb selles, et peab seisma vastase kõrval. Pluss "
-"pool selles, et Elektripiits on mitu korda effektiivsem kui uimastamise "
-"granaadid."
+msgstr "Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste pumppüssidega SWAT tiimides suudab SG-260 paremini juhtida haavleid torus, millest tuleneb palju suurem laskeulatus,. See omakorda tähendab, et pumpüss on kasulik ka keskmiste vahemaade tagant. SG-260 eelis SMG-68 ees on see, et see teeb rohkem kahju ühe lasuga, tehes selle paremaks relvaks kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikeses ruumis ja lähivõitluses näiteks: majas, metsas."
 
 #: ../base/ufos/research.ufo:924
 msgid "Power Attribute"
-msgstr ""
+msgstr "Jõud"
 
 #: ../base/ufos/research.ufo:926
 #, fuzzy
 msgid "power_skill_txt"
-msgstr ""
-"Jõujaam varustab baasi energiaga. Ilma energiata enamus baasi ehitisi ei "
-"suuda töötada. Selle pärast on jõujaam eluliselt vajalik ja seda üritatakse "
-"kindlasti hävitada kui vastased peaksid baasi ründama"
+msgstr "Jõujaam varustab baasi energiaga. Ilma energiata enamus baasi ehitisi ei suuda töötada. Selle pärast on jõujaam eluliselt vajalik ja seda üritatakse kindlasti hävitada kui vastased peaksid baasi ründama"
 
 #: ../base/ufos/research.ufo:937
 #, fuzzy
@@ -2129,35 +2067,28 @@ msgstr "Kiirenda aega"
 #: ../base/ufos/research.ufo:939
 #, fuzzy
 msgid "speed_skill_txt"
-msgstr ""
-"Pakk erinevaid arstivahendeid alustades skapellidest lõpedades "
-"valuvaigistitega. Arstipakk suudab parandada haavad või väheamalt peatada "
-"sõdurite haavade laienemise ja sõdurite suremise."
+msgstr "Pakk erinevaid arstivahendeid alustades skapellidest lõpedades valuvaigistitega. Arstipakk suudab parandada haavad või väheamalt peatada sõdurite haavade laienemise ja sõdurite suremise."
 
 #: ../base/ufos/research.ufo:950
 msgid "Accuracy Attribute"
-msgstr ""
+msgstr "Täpsus"
 
 #: ../base/ufos/research.ufo:952
 msgid "accuracy_skill_txt"
-msgstr ""
+msgstr "accuracy_skill_txt"
 
 #: ../base/ufos/research.ufo:963
 msgid "Mind Attribute"
-msgstr ""
+msgstr "Mõttejõud"
 
 #: ../base/ufos/research.ufo:965
 #, fuzzy
 msgid "mind_skill_txt"
-msgstr ""
-"Pakk erinevaid arstivahendeid alustades skapellidest lõpedades "
-"valuvaigistitega. Arstipakk suudab parandada haavad või väheamalt peatada "
-"sõdurite haavade laienemise ja sõdurite suremise."
+msgstr "Pakk erinevaid arstivahendeid alustades skapellidest lõpedades valuvaigistitega. Arstipakk suudab parandada haavad või väheamalt peatada sõdurite haavade laienemise ja sõdurite suremise."
 
 #: ../base/ufos/research.ufo:976
-#, fuzzy
 msgid "Close Combat Proficiency"
-msgstr "Lähivõitlus:"
+msgstr "Lähivõitlususe oskus"
 
 #: ../base/ufos/research.ufo:978
 #, fuzzy
@@ -2165,137 +2096,76 @@ msgid "close_skill_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:989
-#, fuzzy
 msgid "Heavy Weapons Proficiency"
-msgstr "Raske relvad"
+msgstr "Raske relvade oskus"
 
 #: ../base/ufos/research.ufo:991
-#, fuzzy
 msgid "heavy_skill_txt"
-msgstr "laser.txt"
+msgstr "heavy_skill_txt"
 
 #: ../base/ufos/research.ufo:1002
-#, fuzzy
 msgid "Assault Guns Proficiency"
-msgstr "Ründe relvad"
+msgstr "Ründe relvade oskus"
 
 #: ../base/ufos/research.ufo:1004
 #, fuzzy
 msgid "assault_skill_txt"
-msgstr ""
-"AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja "
-"revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline "
-"automaat. AR-80 salve kuju ja salve positsioon, lubavad tal isegi täpsemini "
-"tulistada. Automaati on ka lihtne parandada, kuna see on erinevatest osadest "
-"kokku pandud. Tulistamise mehanismi saab parandad lahingus olles, lihtsalt "
-"tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult "
-"natuke üle minuti."
+msgstr "AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline automaat. AR-80 salve kuju ja salve positsioon, lubavad tal isegi täpsemini tulistada. Automaati on ka lihtne parandada, kuna see on erinevatest osadest kokku pandud. Tulistamise mehanismi saab parandad lahingus olles, lihtsalt tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult natuke üle minuti."
 
 #: ../base/ufos/research.ufo:1015
-#, fuzzy
 msgid "Sniper Rifles Proficiency"
-msgstr "WE-78 salv"
+msgstr "Snaiper püsside oskus"
 
 #: ../base/ufos/research.ufo:1017
 #, fuzzy
 msgid "sniper_skill_txt"
-msgstr ""
-"Jõujaam varustab baasi energiaga. Ilma energiata enamus baasi ehitisi ei "
-"suuda töötada. Selle pärast on jõujaam eluliselt vajalik ja seda üritatakse "
-"kindlasti hävitada kui vastased peaksid baasi ründama"
+msgstr "Kasutades tugevat ja mehaanilist sihikut on uus snaiper püss kõige surmavam relv Phalanxsi vägedes. Kuulid on 0,5 mm mis suudavad läbida 10 cm läbi petoon seina 200 m kauguselt lastuna. Aga kuna relv on väga kohmakas, võtab sellega sihtimine kaua aega. Seega ei sobi WE-78 kindlasti lähivõitlusesse."
 
 #: ../base/ufos/research.ufo:1028
-#, fuzzy
 msgid "High-Explosives Proficiency"
-msgstr "Suurejõulise lõhkeainega raketid"
+msgstr "Raske lõhkeaine oskus"
 
 #: ../base/ufos/research.ufo:1030
 #, fuzzy
 msgid "explosive_skill_txt"
-msgstr ""
-"Kasutades sama tehnoloogiat mida plasmapüssgi, suudab plasma püstol teha "
-"märgatavat kahju sihtmärgile. Kuna plasma püstol on väike ei suuda ta väga "
-"tugevat kahju teha, kuna plasma hulk on piiratud, sellegi poolest suudab "
-"plasma püstol tulistada läbi 5cm paksuse teras plaadi."
+msgstr "Kasutades sama tehnoloogiat mida plasmapüssgi, suudab plasma püstol teha märgatavat kahju sihtmärgile. Kuna plasma püstol on väike ei suuda ta väga tugevat kahju teha, kuna plasma hulk on piiratud, sellegi poolest suudab plasma püstol tulistada läbi 5cm paksuse teras plaadi."
 
 #: ../base/ufos/research.ufo:1044
 msgid "b_entrance_txt"
-msgstr ""
-"See on personali sissekäik Phalanxi baasi. See on põhiliselt lift mis sõidab "
-"pinnalt maa alla.  Maa-alune koridoor viib liftist edasi baasi. Lifti sisse "
-"käik on varjatud ja maapinnalt/õhust raskesti märgatav, et välistada baasi "
-"avastamist tulnukate poolt. Lift suudab korraga tuua kaasa ainult 4 inimest "
-"- see on turvameede, hoidmaks vastseid baasi tungimiast suurtes numbrites. "
-"Aga kuna see on üks väheseid kohti mis ühendab baasi maapinnaga jääb see "
-"ikkagi nõrgaks kohaks baasi kaitsel. Kui tulnukad peaksid baasi ründama "
-"sisenevad nad kindlasti siit."
+msgstr "See on personali sissekäik Phalanxi baasi. See on põhiliselt lift mis sõidab pinnalt maa alla.  Maa-alune koridoor viib liftist edasi baasi. Lifti sisse käik on varjatud ja maapinnalt/õhust raskesti märgatav, et välistada baasi avastamist tulnukate poolt. Lift suudab korraga tuua kaasa ainult 4 inimest - see on turvameede, hoidmaks vastseid baasi tungimiast suurtes numbrites. Aga kuna see on üks väheseid kohti mis ühendab baasi maapinnaga jääb see ikkagi nõrgaks kohaks baasi kaitsel. Kui tulnukad peaksid baasi ründama sisenevad nad kindlasti siit."
 
 #: ../base/ufos/research.ufo:1056
 #, fuzzy
 msgid "b_command_txt"
-msgstr ""
-"Juhtimis keskus on iga Phalanxi baasi süda. Kõik missioonid planeeritakse "
-"seal, radari ja muu info kogumine ja uurimine toimub ka seal. Ilma juhtimis "
-"keskuseta ei saa ükski baas töötada, kui sa ehitad uue baasi siis ehita "
-"kindlasti juhtimis keskus muidu baas ei saa töötada."
+msgstr "Juhtimis keskus on iga Phalanxi baasi süda. Kõik missioonid planeeritakse seal, radari ja muu info kogumine ja uurimine toimub ka seal. Ilma juhtimis keskuseta ei saa ükski baas töötada, kui sa ehitad uue baasi siis ehita kindlasti juhtimis keskus muidu baas ei saa töötada."
 
 #: ../base/ufos/research.ufo:1068
 msgid "b_powerplant_txt"
-msgstr ""
-"Jõujaam varustab baasi energiaga. Ilma energiata enamus baasi ehitisi ei "
-"suuda töötada. Selle pärast on jõujaam eluliselt vajalik ja seda üritatakse "
-"kindlasti hävitada kui vastased peaksid baasi ründama"
+msgstr "Jõujaam varustab baasi energiaga. Ilma energiata enamus baasi ehitisi ei suuda töötada. Selle pärast on jõujaam eluliselt vajalik ja seda üritatakse kindlasti hävitada kui vastased peaksid baasi ründama"
 
 #: ../base/ufos/research.ufo:1080
 msgid "b_storage_txt"
-msgstr ""
-"See ehitis on varustuse ja varuosade hoidmiseks. Iga hoidla suudab hoida 50 "
-"objekti. "
+msgstr "See ehitis on varustuse ja varuosade hoidmiseks. Iga hoidla suudab hoida 50 objekti. "
 
 #: ../base/ufos/research.ufo:1092
 msgid "b_hangar_txt"
-msgstr ""
-"Hangaaris hoitakse Phalanxi lennumasinaid ja nende jaoks vajalike tööriistu, "
-"et hoida masinad korras. Enamus hangaarist on tohutu lift. Kui Lennumasin "
-"peab väljuma baasist, viib lift ta maapinnale. Hangaari ukseava on peidetud "
-"ja raskesti märgatav õhust/maapinnalt. Kuigi see on üks väheseid ehitisi mis "
-"ühedavad baasi maapinnaga., seega on see nõrk koht baasi kaitses ja kõige "
-"tõenäolisemalt rünnatakse just sealt baasi baasi rünnaku ajal.  "
+msgstr "Hangaaris hoitakse Phalanxi lennumasinaid ja nende jaoks vajalike tööriistu, et hoida masinad korras. Enamus hangaarist on tohutu lift. Kui Lennumasin peab väljuma baasist, viib lift ta maapinnale. Hangaari ukseava on peidetud ja raskesti märgatav õhust/maapinnalt. Kuigi see on üks väheseid ehitisi mis ühedavad baasi maapinnaga., seega on see nõrk koht baasi kaitses ja kõige tõenäolisemalt rünnatakse just sealt baasi baasi rünnaku ajal.  "
 
 #: ../base/ufos/research.ufo:1104
 msgid "b_ufo_hangar_txt"
-msgstr ""
-"Ufo hangaaris hoitakse vallutatud UFOsid. Kuna on ohtlik uurida vallutatud "
-"ufot kohapeal kuna see kutsuks tulnukaid seda tagasi vallutama. Seega pärast "
-"UFO vallutamist tuuakse see lähimasse UFO hangaari. Seda tehakse tavaliste "
-"sõdurite abiga seega pole see Phalanxi mure. UFO hangaar pakub kohta igale "
-"ufole kuni transport UFO klassini."
+msgstr "Ufo hangaaris hoitakse vallutatud UFOsid. Kuna on ohtlik uurida vallutatud ufot kohapeal kuna see kutsuks tulnukaid seda tagasi vallutama. Seega pärast UFO vallutamist tuuakse see lähimasse UFO hangaari. Seda tehakse tavaliste sõdurite abiga seega pole see Phalanxi mure. UFO hangaar pakub kohta igale ufole kuni transport UFO klassini."
 
 #: ../base/ufos/research.ufo:1116
 msgid "b_intercept_txt"
-msgstr ""
-"Iterceptor raketid on baasi kaitse mis kaitseb baasi UFOde maandumiste eets. "
-"Iga UFO mis üritab maanduda baasi lähedal tulistatakse all. Kuigi "
-"iterceptorid suudavad hakkama saad nõrgemate kallaletungidega, ei saa nad "
-"suurtemate UFOde vastu."
+msgstr "Iterceptor raketid on baasi kaitse mis kaitseb baasi UFOde maandumiste eets. Iga UFO mis üritab maanduda baasi lähedal tulistatakse all. Kuigi iterceptorid suudavad hakkama saad nõrgemate kallaletungidega, ei saa nad suurtemate UFOde vastu."
 
 #: ../base/ufos/research.ufo:1128
 msgid "b_quarters_txt"
-msgstr ""
-"Eluruumid on mõeldud Phalanxi töötajatele elamiseks. Nii sõdurid, teadlased "
-"kui tavatöötajad kutsuvad seda kohta koduks. Igal töötjal on oma kuubiku "
-"kujuline tuba, milles on voodi, väike laud ja tool ning pesemise koht.  "
-"Lisaks on eluruumid koht kus töötajad saavad suhelda ja puhata. Iga eluruum "
-"pakub elukohta 20le inimesele."
+msgstr "Eluruumid on mõeldud Phalanxi töötajatele elamiseks. Nii sõdurid, teadlased kui tavatöötajad kutsuvad seda kohta koduks. Igal töötjal on oma kuubiku kujuline tuba, milles on voodi, väike laud ja tool ning pesemise koht.  Lisaks on eluruumid koht kus töötajad saavad suhelda ja puhata. Iga eluruum pakub elukohta 20le inimesele."
 
 #: ../base/ufos/research.ufo:1140
 msgid "b_lab_txt"
-msgstr ""
-"Labor on koht kus katsetatakse, uuritakse nii relvi, tulnukaid ja nende "
-"tehnoloogjat. Lisaks arutatakse teooriaid, tehakse eksperimente, kasutatakse "
-"arvuti simulatsioone ja testitakse uut varustust. Kuigi teadlased ei vaja "
-"laborit, et baasis elada, ei saa nad ilma laborita töötada. Iga labor annab "
-"töökoha 10 le teadlasele"
+msgstr "Labor on koht kus katsetatakse, uuritakse nii relvi, tulnukaid ja nende tehnoloogjat. Lisaks arutatakse teooriaid, tehakse eksperimente, kasutatakse arvuti simulatsioone ja testitakse uut varustust. Kuigi teadlased ei vaja laborit, et baasis elada, ei saa nad ilma laborita töötada. Iga labor annab töökoha 10 le teadlasele"
 
 #: ../base/ufos/research.ufo:1152
 msgid "b_teamroom_txt"
@@ -2303,35 +2173,17 @@ msgstr "<unknow> scrapped or renamed"
 
 #: ../base/ufos/research.ufo:1164
 msgid "b_radar_txt"
-msgstr ""
-"Radar tähendab tegelikult ruumi koos erinevate UFO avastus seadmetega. "
-"Kasutades radari ruumis saadud infot on võimalik kindlaks teha kus asuvad "
-"ufod 25 sekundi täpsusega, lubades juhtimis keskusle saata välja UFOde ründe "
-"missioone või evakueerida baas Baasi rünnaku ohu korral."
+msgstr "Radar tähendab tegelikult ruumi koos erinevate UFO avastus seadmetega. Kasutades radari ruumis saadud infot on võimalik kindlaks teha kus asuvad ufod 25 sekundi täpsusega, lubades juhtimis keskusle saata välja UFOde ründe missioone või evakueerida baas Baasi rünnaku ohu korral."
 
 #: ../base/ufos/research.ufo:1179
 msgid "dropship_txt"
 msgstr ""
-"Transpordi laeva tüüp koodnimega H-92 on üks põhilisi transpordi vahendeid "
-"Phalanxi järiest kasvavale armeele. Saades energiat nejast HM-5600 turbo "
-"mootorist, suudab H-92 arendad kiiruse mach 1.0. Mootorid asetsevad nii, et "
-"oleks võimalik ülestõusta ja maanduda nii vertikaalselt kui horisontaalselt. "
-"See tehnikaline omadus on vajalik sõdurite transpordiks pea igasse maailma "
-"nurka.\n"
-"H-92 suurimaks miinuseks on vähene relvastus. Sellepärast ongi välja "
-"töötatud hävitajad(F-48), mis katavad H-92 kui ta maandub, et rünnata UFOt."
+"Transpordi laeva tüüp koodnimega H-92 on üks põhilisi transpordi vahendeid Phalanxi järiest kasvavale armeele. Saades energiat nejast HM-5600 turbo mootorist, suudab H-92 arendad kiiruse mach 1.0. Mootorid asetsevad nii, et oleks võimalik ülestõusta ja maanduda nii vertikaalselt kui horisontaalselt. See tehnikaline omadus on vajalik sõdurite transpordiks pea igasse maailma nurka.\n"
+"H-92 suurimaks miinuseks on vähene relvastus. Sellepärast ongi välja töötatud hävitajad(F-48), mis katavad H-92 kui ta maandub, et rünnata UFOt."
 
 #: ../base/ufos/research.ufo:1194
 msgid "interceptor_txt"
-msgstr ""
-"F-48 hävitaja on Phalanxi õhuväe au ja uhkus. Saades energiat kahest Volkot "
-"VO-36 turbo mootorist, suudab hävitaja jõuda isegi kiiruseni mach 1.4. Kuigi "
-"see kiirus on tunduvalt aeglasem paljude UFOde kiirusest, suudab F-48 "
-"võistelda manööverdamises ka parimate UFOdega. Nagu  ka H-92 suudab ka F-48 "
-"startidad ja maanduda nii vertikaalselt kui horisontaalselt. Sellest "
-"tulenevalt on kõikide Phalanxi baasides vertikaalsed sahtid, mis viivad "
-"maaaluse maandumise ja stardi paigani. See on kõige kindlam viis kuidas "
-"varjata lennuvälja maapinnalt avastamise vastu. "
+msgstr "F-48 hävitaja on Phalanxi õhuväe au ja uhkus. Saades energiat kahest Volkot VO-36 turbo mootorist, suudab hävitaja jõuda isegi kiiruseni mach 1.4. Kuigi see kiirus on tunduvalt aeglasem paljude UFOde kiirusest, suudab F-48 võistelda manööverdamises ka parimate UFOdega. Nagu  ka H-92 suudab ka F-48 startidad ja maanduda nii vertikaalselt kui horisontaalselt. Sellest tulenevalt on kõikide Phalanxi baasides vertikaalsed sahtid, mis viivad maaaluse maandumise ja stardi paigani. See on kõige kindlam viis kuidas varjata lennuvälja maapinnalt avastamise vastu. "
 
 #: ../base/ufos/research.ufo:1225
 msgid "Small alien craft"
@@ -2355,18 +2207,7 @@ msgstr "Ortnok - Lahingu Tähelepanekud"
 
 #: ../base/ufos/research.ufo:1266
 msgid "ortnok_notes_txt"
-msgstr ""
-"Üldiselt on rohelise nahaga Ortnokid väga sarnased inimrassile. Umbes 80% "
-"nende DNAst on sama mis inimestelgi. Kehaosad ja elundid mis on erinevad on "
-"arvatavasti geneetiliselt muutetud, sest neil puuduvad vähemadgi erinevused. "
-"Fakt, et nad on geneetiliselt muutetud ja, et neil puuduvad paljunemise "
-"organid on arvatavasti tulenenud sellest, et nad on tundmatu tulnukate liigi "
-"poolt valmistatud kloonid. Lisaks on Ortnokidel mitu kiipi mis asetsevad "
-"lihastes, silmades, ajus ja paljudes teistes kohtades üle keha. Tänu sellele "
-"on neil palju rohkem jõudu ja vastupidavust  inimestega võrreldes. Aju "
-"kiipide ülesanne ei ole veel teada aga meie teadlased usuvad, et need on "
-"käskude vastuvõtmiseks. Aga praegu on see vaid oletus, sest puuduvad tõendid "
-"ühegi sellise super-tulnuka rassi olemasolust."
+msgstr "Üldiselt on rohelise nahaga Ortnokid väga sarnased inimrassile. Umbes 80% nende DNAst on sama mis inimestelgi. Kehaosad ja elundid mis on erinevad on arvatavasti geneetiliselt muutetud, sest neil puuduvad vähemadgi erinevused. Fakt, et nad on geneetiliselt muutetud ja, et neil puuduvad paljunemise organid on arvatavasti tulenenud sellest, et nad on tundmatu tulnukate liigi poolt valmistatud kloonid. Lisaks on Ortnokidel mitu kiipi mis asetsevad lihastes, silmades, ajus ja paljudes teistes kohtades üle keha. Tänu sellele on neil palju rohkem jõudu ja vastupidavust  inimestega võrreldes. Aju kiipide ülesanne ei ole veel teada aga meie teadlased usuvad, et need on käskude vastuvõtmiseks. Aga praegu on see vaid oletus, sest puuduvad tõendid ühegi sellise super-tulnuka rassi olemasolust."
 
 #: ../base/ufos/research.ufo:1282
 msgid "Ortnok - Autopsy"
@@ -2374,14 +2215,7 @@ msgstr "Ortnuki - Kehaehitus"
 
 #: ../base/ufos/research.ufo:1283
 msgid "ortnok_autopsy_txt"
-msgstr ""
-"Rohelin nahk on soomuseline ja tugev, rakuanalüüsid näitavad, et kehas on "
-"palju klorofülli - aine mis teeb lehed roheliseks. Seedimis elundkond on "
-"normaal suurusega seega elavad ortniokid keskkonnas kus võivad toidallikad "
-"ajutiselt otsa lõppeda. Sest klorofülli süsteem oleks ainuke variant "
-"sellistes olukordades.Paljunemis organid on sellel liigil väga aktiivsed, "
-"töötades isegi kuni 14 tundi pärast ortnoki surma.Sellepärast kasutavadgi "
-"Antareanid neid kauhrilihana kõikides kohtades mida nad tahavd valitseda."
+msgstr "Rohelin nahk on soomuseline ja tugev, rakuanalüüsid näitavad, et kehas on palju klorofülli - aine mis teeb lehed roheliseks. Seedimis elundkond on normaal suurusega seega elavad ortniokid keskkonnas kus võivad toidallikad ajutiselt otsa lõppeda. Sest klorofülli süsteem oleks ainuke variant sellistes olukordades.Paljunemis organid on sellel liigil väga aktiivsed, töötades isegi kuni 14 tundi pärast ortnoki surma.Sellepärast kasutavadgi Antareanid neid kauhrilihana kõikides kohtades mida nad tahavd valitseda."
 
 #: ../base/ufos/research.ufo:1301
 msgid "Ortnok - Xenobiology"
@@ -2400,9 +2234,8 @@ msgid "ortnok_interrogation_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1337
-#, fuzzy
 msgid "Ortnok Worker"
-msgstr "Ortnuki Sõdlane"
+msgstr "Ortnuoki Tööline"
 
 #: ../base/ufos/research.ufo:1338
 msgid "ortnok_light_txt"
@@ -2414,16 +2247,7 @@ msgstr "Ortnuki Sõdlane"
 
 #: ../base/ufos/research.ufo:1357
 msgid "ortnok_medium_txt"
-msgstr ""
-"Omades samasuguseid genetilis omadusi nagu ka tavline ortnok, on Ortnok "
-"Warriorid laialdaselt paigutatud ja paljude kiipidega. Kõik need lisa kiibid "
-"parandavad võitlustulemusi ja annavad tohutu kontrolli jõu üle. Sellepärast "
-"on käed ja jald peaaegu täielikult asendatud proteesidega mis tõstavad jõud "
-"veelgi. Tohutu küüne sarnased käed on loodud taluma tohutuid raskusi. "
-"Rindmik on kaetud paksu terasplaadiga millest tavlised püssikuulid vaevu "
-"läbi tungivad. Mask kaitseb  gaaside eest kuid tagab ka parema happniku "
-"varustuse. Selle massivse kiipidega sõdalase (warrior) ainus nõrkus on "
-"elektromagnet impulsid (EMP)"
+msgstr "Omades samasuguseid genetilis omadusi nagu ka tavline ortnok, on Ortnok Warriorid laialdaselt paigutatud ja paljude kiipidega. Kõik need lisa kiibid parandavad võitlustulemusi ja annavad tohutu kontrolli jõu üle. Sellepärast on käed ja jald peaaegu täielikult asendatud proteesidega mis tõstavad jõud veelgi. Tohutu küüne sarnased käed on loodud taluma tohutuid raskusi. Rindmik on kaetud paksu terasplaadiga millest tavlised püssikuulid vaevu läbi tungivad. Mask kaitseb  gaaside eest kuid tagab ka parema happniku varustuse. Selle massivse kiipidega sõdalase (warrior) ainus nõrkus on elektromagnet impulsid (EMP)"
 
 #: ../base/ufos/research.ufo:1375
 msgid "Antarean - Combat notes"
@@ -2479,13 +2303,7 @@ msgstr "Shevaar - Kehaehitus"
 
 #: ../base/ufos/research.ufo:1480
 msgid "shevaar_autopsy_txt"
-msgstr ""
-"Tugev ja muskliline keha toetub suurele, sirgel skelettile andes sellel "
-"liigile tohtu kaitse. Kaks kihti hambaid toetuvad selle eluka õlagadele, "
-"tehes tema suu sama laiaks kui tema ise. Suur, märg nina on tegelikult aju "
-"mis on kaetud eriliste sensor rakkudega. Tänu neile rakkudel suudab Shevaar "
-"kergelt jahtida igat saaki, aga kuna tema aju pole kaitstud ei naha ega "
-"luude poolt on Shevaar nõrk nii psionic rünnakule kui ka lähivõitluses."
+msgstr "Tugev ja muskliline keha toetub suurele, sirgel skelettile andes sellel liigile tohtu kaitse. Kaks kihti hambaid toetuvad selle eluka õlagadele, tehes tema suu sama laiaks kui tema ise. Suur, märg nina on tegelikult aju mis on kaetud eriliste sensor rakkudega. Tänu neile rakkudel suudab Shevaar kergelt jahtida igat saaki, aga kuna tema aju pole kaitstud ei naha ega luude poolt on Shevaar nõrk nii psionic rünnakule kui ka lähivõitluses."
 
 #: ../base/ufos/research.ufo:1496
 msgid "Shevaar - Xenobiology"
@@ -2509,16 +2327,7 @@ msgstr "Hovernet - Jäänuste uurimine"
 
 #: ../base/ufos/research.ufo:1533
 msgid "hovernet_autopsy_txt"
-msgstr ""
-"Arutades lahti segipaisatud traadi Hoverneti kehal, tuleb välja tugev, "
-"mittepainduv tundmatu kontstruktsiooniga plokk. Relvade liitmis kohad on "
-"selgelt nähtavad, läbi märgistuste mida mei teadlased veel tõlgivad. Neist "
-"aru saamine oleks esimene samm    mõista tulnukate keelt.Ühtegi liitmiskohta "
-"pole näha traadi küljes mis ulatuvad plokkist välja, isegi mitte elektri "
-"mikroskoobi all. On võimalike, et traadid tehti korraga koos plokkiga, et "
-"jagad võrdselt hoverneti energiat ja panna ta hõljuma. Lahtiseid traate on "
-"raske lasta kuulide või energiarelvadega, kõige paremini mõjuksid plahvatus "
-"või tule relvad. "
+msgstr "Arutades lahti segipaisatud traadi Hoverneti kehal, tuleb välja tugev, mittepainduv tundmatu kontstruktsiooniga plokk. Relvade liitmis kohad on selgelt nähtavad, läbi märgistuste mida mei teadlased veel tõlgivad. Neist aru saamine oleks esimene samm    mõista tulnukate keelt.Ühtegi liitmiskohta pole näha traadi küljes mis ulatuvad plokkist välja, isegi mitte elektri mikroskoobi all. On võimalike, et traadid tehti korraga koos plokkiga, et jagad võrdselt hoverneti energiat ja panna ta hõljuma. Lahtiseid traate on raske lasta kuulide või energiarelvadega, kõige paremini mõjuksid plahvatus või tule relvad. "
 
 #: ../base/ufos/research.ufo:1549
 msgid "Hovernet - design"
@@ -2542,14 +2351,7 @@ msgstr "Cyborg Ortnok - Kehaehitus"
 
 #: ../base/ufos/research.ufo:1586
 msgid "cyborg_ortnok_autopsy_txt"
-msgstr ""
-"Eraldades cyborgi metall-luustiku eluka kehast lendab sädemeid ja väljub "
-"uimastav, vänge gaas. Sisikond on toetatud arvukatele kunst luudele ja "
-"toetustele. Paistab, et seedimise süsteem ja paljunemis organid on "
-"eemaldatud ja asendatud paljude masinatega.  Klorofülli poolt tekkitatud "
-"energjast piisab masinate käivitamiseks. Antareanide cyborgi programmi "
-"eesmärk on luua super ortnok, mis oleks vastupidavam ja tugevam kui tavaline "
-"ortnok ja mida saaks kasutada kõikjal"
+msgstr "Eraldades cyborgi metall-luustiku eluka kehast lendab sädemeid ja väljub uimastav, vänge gaas. Sisikond on toetatud arvukatele kunst luudele ja toetustele. Paistab, et seedimise süsteem ja paljunemis organid on eemaldatud ja asendatud paljude masinatega.  Klorofülli poolt tekkitatud energjast piisab masinate käivitamiseks. Antareanide cyborgi programmi eesmärk on luua super ortnok, mis oleks vastupidavam ja tugevam kui tavaline ortnok ja mida saaks kasutada kõikjal"
 
 #: ../base/ufos/research.ufo:1602
 msgid "Cyborg Ortnok - Xenobiology"
@@ -2576,9 +2378,8 @@ msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1656
-#, fuzzy
 msgid "Light Shield"
-msgstr "Kilp:\t%s"
+msgstr "Kerge Kilp"
 
 #: ../base/ufos/research.ufo:1657
 #, fuzzy
@@ -2587,116 +2388,107 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1673
 msgid "Flac Cannon"
-msgstr ""
+msgstr "Flac Cannon"
 
 #: ../base/ufos/research.ufo:1674
 msgid "craft_weapon_flac_txt"
-msgstr ""
+msgstr "craft_weapon_flac_txt"
 
 #: ../base/ufos/seq_credits.ufo:35
 msgid "This game is now community driven"
-msgstr ""
+msgstr "See mäng tehakse vabatahliku tiimi poolt"
 
 #: ../base/ufos/seq_credits.ufo:42
 msgid "To honor the original development team:"
-msgstr ""
+msgstr "Au eelmistele ufo:ai arendajatele!"
 
 #: ../base/ufos/seq_credits.ufo:75
 msgid "Code, Visual Effects"
-msgstr ""
+msgstr "Koodimine, Illustratsioonid"
 
 #: ../base/ufos/seq_credits.ufo:127
 msgid "Maps, Textures, Art"
-msgstr ""
+msgstr "Kaardid, Detailid, kunst"
 
 #: ../base/ufos/seq_credits.ufo:133
 msgid "SparX"
-msgstr ""
+msgstr "SparX"
 
 #: ../base/ufos/seq_credits.ufo:180
 msgid "Models, Animations"
-msgstr ""
+msgstr "Modeleeriad ja animaatorid"
 
 #: ../base/ufos/seq_credits.ufo:186
 msgid "Rastaman"
-msgstr ""
+msgstr "Rastaman"
 
 #: ../base/ufos/seq_credits.ufo:232
-#, fuzzy
 msgid "Music"
-msgstr "Muusika:"
+msgstr "Muusika"
 
 #: ../base/ufos/seq_credits.ufo:238
 msgid "Vanethian"
-msgstr ""
+msgstr "Vanethian"
 
 #: ../base/ufos/seq_credits.ufo:282
 msgid "Webdesign"
-msgstr ""
+msgstr "Weebi kujundus"
 
 #: ../base/ufos/seq_credits.ufo:288
 msgid "Ww 3"
-msgstr ""
+msgstr "Ww 3"
 
 #: ../base/ufos/seq_credits.ufo:320
 msgid "Special Thanks To"
-msgstr ""
+msgstr "Erilised tänud: "
 
 #: ../base/ufos/seq_credits.ufo:327
 msgid "id Software"
-msgstr ""
+msgstr "id Software"
 
 #: ../base/ufos/seq_credits.ufo:334
 msgid "Quake 2 Engine"
-msgstr ""
+msgstr "Quake 2 Engine"
 
 #: ../base/ufos/seq_credits.ufo:341
 msgid "Extreme Players"
-msgstr ""
+msgstr "Erilistele mängijatele"
 
 #: ../base/ufos/seq_credits.ufo:348
-#, fuzzy
 msgid "Our Host"
-msgstr "Poolik Valang"
+msgstr "Meie Host"
 
 #: ../base/ufos/seq_credits.ufo:356
 msgid "Additional Thanks To"
-msgstr ""
+msgstr "Lisaks tänud:"
 
 #: ../base/ufos/seq_credits.ufo:363
 msgid "Sacrusha"
-msgstr ""
+msgstr "Sacrusha"
 
 #: ../base/ufos/seq_credits.ufo:370
 msgid "Mattn"
-msgstr ""
+msgstr "Mattn"
 
 #: ../base/ufos/seq_credits.ufo:377
 msgid "The Community"
-msgstr ""
+msgstr "Meie vabatahtlikutele"
 
 #: ../base/ufos/seq_credits.ufo:384
 msgid "Everyone who supported us"
-msgstr ""
+msgstr "Kõigile kes meid toetasid"
 
 #: ../base/ufos/seq_credits.ufo:416
 msgid "http://www.ufoai.net"
-msgstr ""
+msgstr "http://www.ufoai.net"
 
 #: ../base/ufos/seq_credits.ufo:422
 msgid "Copyright 2004-2006 by UFO: AI Team"
-msgstr ""
+msgstr "Copyright 2004-2006 by UFO: AI Team"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr ""
-"Aasta 2084 - rahu on viimaks tulnud maapeale. Vanad sõjad on minevik nagu ka "
-"vanad riigipiirid. Riigid on ühinenud ja valitsused on rahulikuks muutunud. "
-"Riigid on ühinenud \"super-riikideks\" - poliitilisteks kogukondadeks, mis "
-"ühendavad vana maailma riike. Kõik \"super-riigid\" töötavad koos, ühiste "
-"huvide nimel. Vaesus ja nälg on kadunud, alles on jäänud vaid mälestused 20 "
-"sajandi vaesusest ja näljast. Inimesed usuvad oma juhtidesse ja juhid teevad "
-"kõik, et seda usk hoida.  "
+msgstr "Aasta 2084 - rahu on viimaks tulnud maapeale. Vanad sõjad on minevik nagu ka vanad riigipiirid. Riigid on ühinenud ja valitsused on rahulikuks muutunud. Riigid on ühinenud \"super-riikideks\" - poliitilisteks kogukondadeks, mis ühendavad vana maailma riike. Kõik \"super-riigid\" töötavad koos, ühiste huvide nimel. Vaesus ja nälg on kadunud, alles on jäänud vaid mälestused 20 sajandi vaesusest ja näljast. Inimesed usuvad oma juhtidesse ja juhid teevad kõik, et seda usk hoida.  "
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
@@ -2704,28 +2496,15 @@ msgstr "...Ootamatult algab rünnak ..."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr ""
-"Ajal kus seda kõige vähem oodatakse tungivad tulnukad maale. Nad ründavad "
-"Mumbai linna, kuna see on kõige tihedamalt asustatud linn maal. Sajad-"
-"tuhanded süütud linnaelanikud on tapetud enne kui tulnukad sunnitakse "
-"taganema Aasia ühenduse vägede poolt, suurte kaotustega."
+msgstr "Ajal kus seda kõige vähem oodatakse tungivad tulnukad maale. Nad ründavad Mumbai linna, kuna see on kõige tihedamalt asustatud linn maal. Sajad-tuhanded süütud linnaelanikud on tapetud enne kui tulnukad sunnitakse taganema Aasia ühenduse vägede poolt, suurte kaotustega."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr ""
-"Keegi ei tea kust Nad tulid. Nendega üritatakse rahu sõlmida, aga "
-"rahupakkujad tapetakse. 48 tundi päarst esimest rünnakut, kuulutavad kõik "
-"seitse \"super-riiki\" sõjaolukorra. Kaks nädalat uritavad maa armeed ennast "
-"kaitsta tulnukate rünnakute eest aga nad võidavad vähe, kalleid võite. "
-"Ühinenud riikide nõukogu koos seitsme \"super-riigi\" juhtidega otsustavad "
-"luua spetsiaalse Tulnukate Võitluse Üksuse koodnimega PHALANX"
+msgstr "Keegi ei tea kust Nad tulid. Nendega üritatakse rahu sõlmida, aga rahupakkujad tapetakse. 48 tundi päarst esimest rünnakut, kuulutavad kõik seitse \"super-riiki\" sõjaolukorra. Kaks nädalat uritavad maa armeed ennast kaitsta tulnukate rünnakute eest aga nad võidavad vähe, kalleid võite. Ühinenud riikide nõukogu koos seitsme \"super-riigi\" juhtidega otsustavad luua spetsiaalse Tulnukate Võitluse Üksuse koodnimega PHALANX"
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr ""
-"Käsuga võidelda tulnukate ohuga, rahastatud maailma 7 super-riigi poolt ja "
-"varustatud parimate sõduritega eliit vägedest. Kas PHALANX on võimeline "
-"vastuseisma tulnukate vägedele jääb saladuseks."
+msgstr "Käsuga võidelda tulnukate ohuga, rahastatud maailma 7 super-riigi poolt ja varustatud parimate sõduritega eliit vägedest. Kas PHALANX on võimeline vastuseisma tulnukate vägedele jääb saladuseks."
 
 #: ../base/ufos/seq_intro.ufo:62
 msgid "prolog_sentence1"
@@ -2733,101 +2512,83 @@ msgstr "PROLOOG"
 
 #: ../base/ufos/seq_intro.ufo:72
 msgid "prolog_sentence2"
-msgstr ""
-"Tere tulemast, Komandöör. Teie käsutusse on PHALANXsi väed. Teie ülesanne "
-"on: kaitsta Maa elanikke ja hävitada tulnukate oht. Kuidas seda teha jääb "
-"Teie otsutada, aga Te peate teadma kaotada te ei tohi."
+msgstr "Tere tulemast, Komandöör. Teie käsutusse on PHALANXsi väed. Teie ülesanne on: kaitsta Maa elanikke ja hävitada tulnukate oht. Kuidas seda teha jääb Teie otsutada, aga Te peate teadma kaotada te ei tohi."
 
 #: ../base/ufos/seq_intro.ufo:81
 msgid "prolog_sentence3"
-msgstr ""
-"Teie esimene käsk on seada ülesse peakorter. Valige asukoht targalt sest see "
-"jääb mõjutama teie edu PHALANXi projektis"
+msgstr "Teie esimene käsk on seada ülesse peakorter. Valige asukoht targalt sest see jääb mõjutama teie edu PHALANXi projektis"
 
 #: ../base/ufos/seq_intro.ufo:90
 msgid "prolog_sentence4"
-msgstr ""
-"Hiljutine analüüs Mumbai rünnaku kohta kinnitas fakti, et tulnukate "
-"aktiivsus on tõusnud tihedamalt asustatud aladel näiteks: Kesk ameerikas, "
-"Euroopas, Aasias, Aafrikas ja Austraalias. Te peaksite neid alasid kaitsma "
-"iga hinna eest!"
+msgstr "Hiljutine analüüs Mumbai rünnaku kohta kinnitas fakti, et tulnukate aktiivsus on tõusnud tihedamalt asustatud aladel näiteks: Kesk ameerikas, Euroopas, Aasias, Aafrikas ja Austraalias. Te peaksite neid alasid kaitsma iga hinna eest!"
 
 #: ../base/ufos/seq_intro.ufo:99
 msgid "prolog_sentence5"
-msgstr ""
-"Kohe kui olete asutanud esimes baasi peate te ette valmistama oma sõdurid. "
-"Noored sõdurid kes on PHALANXi projectiga liitunud peavad olema määratud "
-"transpordi laevale ja lahinguks relvastatud."
+msgstr "Kohe kui olete asutanud esimes baasi peate te ette valmistama oma sõdurid. Noored sõdurid kes on PHALANXi projectiga liitunud peavad olema määratud transpordi laevale ja lahinguks relvastatud."
 
 #: ../base/ufos/seq_intro.ufo:108
 msgid "prolog_sentence6"
-msgstr ""
-"Ja ärge unustage neid hästi kaitsta. Elus sõdur tapab rohkem tulnukaid kui "
-"surnud sõdur."
+msgstr "Ja ärge unustage neid hästi kaitsta. Elus sõdur tapab rohkem tulnukaid kui surnud sõdur."
 
 #: ../base/ufos/seq_intro.ufo:117
 msgid "prolog_sentence7"
 msgstr "See on kõik, Komandöör. Head õnne - Teil läheb seda vaja !"
 
 #: ../base/ufos/seq_tutorials.ufo:3
-#, fuzzy
 msgid "Gameplay"
-msgstr "Tiimimäng"
+msgstr "Mäng"
 
 #: ../base/ufos/seq_tutorials.ufo:27
-#, fuzzy
 msgid "Tactical mission"
-msgstr "Transpordi Missioon"
+msgstr "Taktikaline Missioon"
 
 #: ../base/ufos/seq_tutorials.ufo:45
 msgid "Tactical mission tutorial"
-msgstr ""
+msgstr "Taktikalise missiooni juhend"
 
 #: ../base/ufos/seq_tutorials.ufo:89
 msgid "Switch view level via left mouseclick"
-msgstr ""
+msgstr "Vaheta vaate kõrgust hiireklikiga"
 
 #: ../base/ufos/seq_tutorials.ufo:101
 msgid "You can also use the cursor keys to switch the levels"
-msgstr ""
+msgstr "Sa saad kasutada ka noole klahve et vahetada vaate kõrgusts"
 
 #: ../base/ufos/seq_tutorials.ufo:122
 msgid "The selected soldier"
-msgstr ""
+msgstr "Valitud sõdur"
 
 #: ../base/ufos/seq_tutorials.ufo:143
 msgid "Select soldiers via click"
-msgstr ""
+msgstr "Vali sõdureid klikiga"
 
 #: ../base/ufos/seq_tutorials.ufo:155
 msgid "Or via the keys 1-8"
-msgstr ""
+msgstr "või numbritele 1-8"
 
 #: ../base/ufos/seq_tutorials.ufo:175
-#, fuzzy
 msgid "Physical stats"
-msgstr "Selle sõduri füüsilised omadused"
+msgstr "Füüsilised omadused"
 
 #: ../base/ufos/seq_tutorials.ufo:196
 msgid "Stats bars: movement and health"
-msgstr ""
+msgstr "Liikumis käigud (TU) ja tervis"
 
 #: ../base/ufos/seq_tutorials.ufo:245
 msgid "Weapon in right hand"
-msgstr ""
+msgstr "Relv paremas käes"
 
 #: ../base/ufos/seq_tutorials.ufo:267
 msgid "Shots remaining"
-msgstr ""
+msgstr "Kuule alles"
 
 #: ../base/ufos/seq_tutorials.ufo:325
 msgid "Primary attack"
-msgstr ""
+msgstr "Põhi rünnak"
 
 #: ../base/ufos/seq_tutorials.ufo:354
-#, fuzzy
 msgid "Secondary attack"
-msgstr "Teine:\t%s\n"
+msgstr "Varu rünnak"
 
 #: ../base/ufos/seq_tutorials.ufo:376
 #, fuzzy
@@ -2836,79 +2597,38 @@ msgstr "Käivita reaktsioon tulistamine"
 
 #: ../base/ufos/seq_tutorials.ufo:397
 msgid "Crouch (kneel down) or stand up"
-msgstr ""
+msgstr "Kükita (lasku jalale või seisa püsti)"
 
 #: ../base/ufos/seq_tutorials.ufo:418
-#, fuzzy
 msgid "Cycle through visible enemies"
-msgstr "Vajuta, et vaadelda erinevaid nähtavaid vastaseid"
+msgstr "Vaatle erinevaid nähtavaid vastaseid"
 
 #: ../base/ufos/seq_tutorials.ufo:439
-#, fuzzy
 msgid "End round"
-msgstr "Lõpeta käik"
+msgstr "Lõpeta round"
 
 #: ../base/ufos/team_aliens.ufo:213
 msgid "Ortnok"
-msgstr ""
-"Ortnokid suudavad kasutada lihtsamaid tulnukate püsse, nad ei suuda kasutada "
-"ei raskerelvastust ega granaate, kuna see on nende piiratud mõistusele liiga "
-"raske.Rohelise nahaga esireasõdurid. Alistatud Antareanside poolt sajandeid "
-"tagasi, on nad nüüd Antareanide impeeriumi orjad. Inteligentsuselt on nad "
-"võrreldavad Maa ahvidega, isaseid  Ortnoke treenitakse sünnist peale "
-"tugevateks ja osavateks sõduriteks. Emased hoitakse nn. sünnitus hoidlates, "
-"kinnitamaks, et Antareansidel oleks alati värske varu \"kahuriliha\""
+msgstr "Ortnokid suudavad kasutada lihtsamaid tulnukate püsse, nad ei suuda kasutada ei raskerelvastust ega granaate, kuna see on nende piiratud mõistusele liiga raske.Rohelise nahaga esireasõdurid. Alistatud Antareanside poolt sajandeid tagasi, on nad nüüd Antareanide impeeriumi orjad. Inteligentsuselt on nad võrreldavad Maa ahvidega, isaseid  Ortnoke treenitakse sünnist peale tugevateks ja osavateks sõduriteks. Emased hoitakse nn. sünnitus hoidlates, kinnitamaks, et Antareansidel oleks alati värske varu \"kahuriliha\""
 
 #: ../base/ufos/team_aliens.ufo:223
 msgid "Antarean"
-msgstr ""
-"Olles karmi sõjaväelis juhtimise all on Antareanidel auastmed: Töölised, "
-"Sõdurid ja komandöörid. Väiksed UFOd on mehitatud töölistega kes koguvad "
-"infot Maastiku kohta, röövivad eluvorme ja muud sellist.  Sõjalaeva tüüpi "
-"UFOdel on ka sõdureid Komandöörid on ainult Juggernaut ja Bulwarki tüüpi "
-"UFOdes ja Antareanide baasides. Inimese sarnased, suurte silmade ja halli "
-"kehaga tulnukad kes domineerisid 20saj. õudus filmides. Nad sarnanevad "
-"inimestega nii keha ehituselt kui aju suuruselt, mis aitas nende madalal "
-"kogukonnal areneda  Kosmose vallutajateks."
+msgstr "Olles karmi sõjaväelis juhtimise all on Antareanidel auastmed: Töölised, Sõdurid ja komandöörid. Väiksed UFOd on mehitatud töölistega kes koguvad infot Maastiku kohta, röövivad eluvorme ja muud sellist.  Sõjalaeva tüüpi UFOdel on ka sõdureid Komandöörid on ainult Juggernaut ja Bulwarki tüüpi UFOdes ja Antareanide baasides. Inimese sarnased, suurte silmade ja halli kehaga tulnukad kes domineerisid 20saj. õudus filmides. Nad sarnanevad inimestega nii keha ehituselt kui aju suuruselt, mis aitas nende madalal kogukonnal areneda  Kosmose vallutajateks."
 
 #: ../base/ufos/team_aliens.ufo:233
 msgid "Shevaar"
-msgstr ""
-"Alguses tungivad Shevaarid vastasele otse kallale ja ründavad neid "
-"lähivõitluses. Hiljem olles harjunud Maa gravitsiooniga saavad nad endale "
-"kehakaitset ja tachyoni automaadi, et olla kasulik ka kaugelt. Shevaar võtab "
-"enda alla 2x2 ala.Ebatavaliselt laiad ja tugevad eluvormid keda võib ka "
-"kirjeldada kui \"looduse tanke\". Kuigi nad ei ole pikemad kui tavaline "
-"inimene, on nad palju laiemad, meenutades õudusfilmide koletisi. Oma kahe "
-"hambareaga suudab Shevaar kergesti ära rebida inimeste jäsemeid jm. Nende "
-"nahk on väga paks. Sellepärast kasutavad Antareanid neid sõjakoeradena. Sell "
-"ajal kui vastane tegeleb shevaaridega, tulistavad Antareanid neid kaugelt."
+msgstr "Alguses tungivad Shevaarid vastasele otse kallale ja ründavad neid lähivõitluses. Hiljem olles harjunud Maa gravitsiooniga saavad nad endale kehakaitset ja tachyoni automaadi, et olla kasulik ka kaugelt. Shevaar võtab enda alla 2x2 ala.Ebatavaliselt laiad ja tugevad eluvormid keda võib ka kirjeldada kui \"looduse tanke\". Kuigi nad ei ole pikemad kui tavaline inimene, on nad palju laiemad, meenutades õudusfilmide koletisi. Oma kahe hambareaga suudab Shevaar kergesti ära rebida inimeste jäsemeid jm. Nende nahk on väga paks. Sellepärast kasutavad Antareanid neid sõjakoeradena. Sell ajal kui vastane tegeleb shevaaridega, tulistavad Antareanid neid kaugelt."
 
 #: ../base/ufos/team_aliens.ufo:243
 msgid "Hovernet"
-msgstr ""
-"Hovernetid on kaugjuhitavad ja nad ilmuvad ainult UFO maandumis/vallutamise "
-"ja baasi rünnakute ajal. Kuigi hovernetidel on ka bioloogilisi osi on nad "
-"siiski masinad. Nende tulistamine hävitab enamus nende elutähtsaid osi. Et "
-"püüda hoverneti elusalt, peab hävitama Antareani kes hovernette kontrollib. "
-"Tavaliselt asub ta laeva kontroll ruumis.Need on väiksed, hõljuvad, "
-"mehaanilised, relvad kellel anti hüüdnimeks \"Hovernet\" nende poolt kes "
-"elasid üle esimese kokkupuute nendega. Nende nimi tuleneb 2 sõnast Hover - "
-"hõljuma ja Net - võrk. Nad hõljuvad maapinna kohal ja nad on väga ohtlikud, "
-"sest nad on relvastatud tachyoni snaiper püssiga. Arvatavasti on nad "
-"kaitsesüsteem mis aktiveerub kui UFO maandub või sunnitakse maanduma."
+msgstr "Hovernetid on kaugjuhitavad ja nad ilmuvad ainult UFO maandumis/vallutamise ja baasi rünnakute ajal. Kuigi hovernetidel on ka bioloogilisi osi on nad siiski masinad. Nende tulistamine hävitab enamus nende elutähtsaid osi. Et püüda hoverneti elusalt, peab hävitama Antareani kes hovernette kontrollib. Tavaliselt asub ta laeva kontroll ruumis.Need on väiksed, hõljuvad, mehaanilised, relvad kellel anti hüüdnimeks \"Hovernet\" nende poolt kes elasid üle esimese kokkupuute nendega. Nende nimi tuleneb 2 sõnast Hover - hõljuma ja Net - võrk. Nad hõljuvad maapinna kohal ja nad on väga ohtlikud, sest nad on relvastatud tachyoni snaiper püssiga. Arvatavasti on nad kaitsesüsteem mis aktiveerub kui UFO maandub või sunnitakse maanduma."
 
 #: ../base/ufos/team_aliens.ufo:253
 msgid "Cyborg Ortnok"
-msgstr ""
-"Erinevalt tavalistest Ortnokidest, on Cyborg Ortnoki relvad ehitatud tema "
-"käte kohapeale. Need käe-relvad võivad olla tachyoni automaatidest kuni "
-"granaadi heitjateni.Nad on Antareanide masinprogrammi tulemus, jäsemed ja "
-"enamus siseelundid on eemaldatud ja asendatud masinatega, pealuu on "
-"tugendatud metalliga mis on sulatatud kolju külge kinni. Cybork Ortnokid on "
-"väga agresiivsed lahingus."
+msgstr "Erinevalt tavalistest Ortnokidest, on Cyborg Ortnoki relvad ehitatud tema käte kohapeale. Need käe-relvad võivad olla tachyoni automaatidest kuni granaadi heitjateni.Nad on Antareanide masinprogrammi tulemus, jäsemed ja enamus siseelundid on eemaldatud ja asendatud masinatega, pealuu on tugendatud metalliga mis on sulatatud kolju külge kinni. Cybork Ortnokid on väga agresiivsed lahingus."
 
-#: ../base/ufos/team_humans.ufo:1303 ../base/ufos/team_humans.ufo:1323
+#: ../base/ufos/team_humans.ufo:1303
+#: ../base/ufos/team_humans.ufo:1323
 #, fuzzy
 msgid "UGV"
 msgstr "Mehitamata masinad"
@@ -2927,7 +2647,8 @@ msgstr "Triax"
 msgid "Medikit"
 msgstr "Arsti Abi Pakk"
 
-#: ../base/ufos/weapons.ufo:20 ../base/ufos/weapons.ufo:34
+#: ../base/ufos/weapons.ufo:20
+#: ../base/ufos/weapons.ufo:34
 msgid "Heal"
 msgstr "Tervenda"
 
@@ -2935,60 +2656,51 @@ msgstr "Tervenda"
 msgid "IR Goggles"
 msgstr "Infrapuna prillid"
 
-#: ../base/ufos/weapons.ufo:67 ../base/ufos/weapons.ufo:77
+#: ../base/ufos/weapons.ufo:67
+#: ../base/ufos/weapons.ufo:77
 msgid "Scan"
-msgstr ""
+msgstr "skaneeri ala"
 
 #: ../base/ufos/weapons.ufo:93
 msgid "Frag Grenade"
 msgstr "Kildkranaat"
 
-#: ../base/ufos/weapons.ufo:108 ../base/ufos/weapons.ufo:132
-#: ../base/ufos/weapons.ufo:206 ../base/ufos/weapons.ufo:230
-#: ../base/ufos/weapons.ufo:275 ../base/ufos/weapons.ufo:299
-#: ../base/ufos/weapons.ufo:344 ../base/ufos/weapons.ufo:368
-#: ../base/ufos/weapons_human.ufo:618 ../base/ufos/weapons_human.ufo:883
+#: ../base/ufos/weapons.ufo:108
+#: ../base/ufos/weapons.ufo:132
+#: ../base/ufos/weapons.ufo:206
+#: ../base/ufos/weapons.ufo:230
+#: ../base/ufos/weapons.ufo:275
+#: ../base/ufos/weapons.ufo:299
+#: ../base/ufos/weapons.ufo:344
+#: ../base/ufos/weapons.ufo:368
+#: ../base/ufos/weapons_human.ufo:618
+#: ../base/ufos/weapons_human.ufo:883
 #: ../base/ufos/weapons_plasma.ufo:185
 msgid "Throw"
 msgstr "Viska"
 
 #: ../base/ufos/weapons.ufo:191
-#, fuzzy
 msgid "Stun Grenade"
-msgstr "Suitsu kranaat"
+msgstr "Suitsu granaat"
 
 #: ../base/ufos/weapons.ufo:259
 msgid "Hellfire Canister"
-msgstr ""
+msgstr "Põrgutule granaat"
 
 #: ../base/ufos/weapons.ufo:328
-#, fuzzy
 msgid "Plasma Grenade"
-msgstr "PlasmaMõõk"
+msgstr "Plasma granaat"
 
 #: ../base/ufos/weapons_human.ufo:6
 msgid "Assault Rifle"
-msgstr ""
-"AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja "
-"revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline "
-"automaat. AR-80 salve kuju ja salve positsioon lubavad tal isegi täpsemini "
-"tulistada. Automaati on ka lihtne parandada, kuna see on erinevatest osadest "
-"kokku pandud. Tulistamise mehanismi saab parandad lahingus olles, lihtsalt "
-"tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult "
-"natuke üle minuti."
+msgstr "AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline automaat. AR-80 salve kuju ja salve positsioon lubavad tal isegi täpsemini tulistada. Automaati on ka lihtne parandada, kuna see on erinevatest osadest kokku pandud. Tulistamise mehanismi saab parandad lahingus olles, lihtsalt tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult natuke üle minuti."
 
 #: ../base/ufos/weapons_human.ufo:23
 msgid "Assault Rifle Clip"
-msgstr ""
-"AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja "
-"revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline "
-"automaat. AR-80 salve kuju ja salve positsioon lubavad tal isegi täpsemini "
-"tulistada. Automaati on ka lihtne parandada, kuna see on erinevatest osadest "
-"kokku pandud. Tulistamise mehanismi saab parandad lahingus olles, lihtsalt "
-"tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult "
-"natuke üle minuti."
+msgstr "AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline automaat. AR-80 salve kuju ja salve positsioon lubavad tal isegi täpsemini tulistada. Automaati on ka lihtne parandada, kuna see on erinevatest osadest kokku pandud. Tulistamise mehanismi saab parandad lahingus olles, lihtsalt tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult natuke üle minuti."
 
-#: ../base/ufos/weapons_human.ufo:35 ../base/ufos/weapons_human.ufo:251
+#: ../base/ufos/weapons_human.ufo:35
+#: ../base/ufos/weapons_human.ufo:251
 msgid "Burst"
 msgstr "Poolik Valang"
 
@@ -3000,14 +2712,19 @@ msgstr "WE-78 Snaiper"
 msgid "Sniper Rifle Clip"
 msgstr "WE-78 salv"
 
-#: ../base/ufos/weapons_human.ufo:108 ../base/ufos/weapons_human.ufo:475
-#: ../base/ufos/weapons_human.ufo:536 ../base/ufos/weapons_tachyon.ufo:35
-#: ../base/ufos/weapons_tachyon.ufo:182 ../base/ufos/weapons_tachyon.ufo:239
+#: ../base/ufos/weapons_human.ufo:108
+#: ../base/ufos/weapons_human.ufo:475
+#: ../base/ufos/weapons_human.ufo:536
+#: ../base/ufos/weapons_tachyon.ufo:35
+#: ../base/ufos/weapons_tachyon.ufo:182
+#: ../base/ufos/weapons_tachyon.ufo:239
 msgid "Snap Shot"
 msgstr "Sihtimata lask"
 
-#: ../base/ufos/weapons_human.ufo:126 ../base/ufos/weapons_human.ufo:498
-#: ../base/ufos/weapons_human.ufo:559 ../base/ufos/weapons_tachyon.ufo:262
+#: ../base/ufos/weapons_human.ufo:126
+#: ../base/ufos/weapons_human.ufo:498
+#: ../base/ufos/weapons_human.ufo:559
+#: ../base/ufos/weapons_tachyon.ufo:262
 msgid "Aimed Shot"
 msgstr "Sihitud lask"
 
@@ -3019,9 +2736,12 @@ msgstr "9mm Püstol"
 msgid "Pistol Clip"
 msgstr "9mm salv"
 
-#: ../base/ufos/weapons_human.ufo:179 ../base/ufos/weapons_human.ufo:324
-#: ../base/ufos/weapons_human.ufo:671 ../base/ufos/weapons_human.ufo:696
-#: ../base/ufos/weapons_human.ufo:755 ../base/ufos/weapons_plasma.ufo:300
+#: ../base/ufos/weapons_human.ufo:179
+#: ../base/ufos/weapons_human.ufo:324
+#: ../base/ufos/weapons_human.ufo:671
+#: ../base/ufos/weapons_human.ufo:696
+#: ../base/ufos/weapons_human.ufo:755
+#: ../base/ufos/weapons_plasma.ufo:300
 #: ../base/ufos/weapons_plasma.ufo:325
 msgid "Single Shot"
 msgstr "Üks lask"
@@ -3080,21 +2800,21 @@ msgstr "Suurejõulise lõhkeainega raketid"
 
 #: ../base/ufos/weapons_human.ufo:523
 msgid "Incendiary Rocket"
-msgstr ""
+msgstr "Süüte rakett"
 
 #: ../base/ufos/weapons_human.ufo:588
 msgid "Combat Knife"
-msgstr ""
+msgstr "Lahingu nuga"
 
-#: ../base/ufos/weapons_human.ufo:603 ../base/ufos/weapons_human.ufo:868
+#: ../base/ufos/weapons_human.ufo:603
+#: ../base/ufos/weapons_human.ufo:868
 #: ../base/ufos/weapons_plasma.ufo:170
 msgid "Stab"
 msgstr "Torka"
 
 #: ../base/ufos/weapons_human.ufo:642
-#, fuzzy
 msgid "Grenade Launcher"
-msgstr "Granaadiheitja"
+msgstr "Bazooka"
 
 #: ../base/ufos/weapons_human.ufo:659
 #, fuzzy
@@ -3111,21 +2831,20 @@ msgstr "MkII - EM laeng"
 
 #: ../base/ufos/weapons_human.ufo:774
 msgid "Cannonade"
-msgstr ""
+msgstr "Cannonade"
 
 #: ../base/ufos/weapons_human.ufo:799
-#, fuzzy
 msgid "Stun Rod"
-msgstr "Tugev elektri piits"
+msgstr "Elektri piits"
 
-#: ../base/ufos/weapons_human.ufo:814 ../base/ufos/weapons_human.ufo:831
+#: ../base/ufos/weapons_human.ufo:814
+#: ../base/ufos/weapons_human.ufo:831
 msgid "Stun"
 msgstr "Oimetuks lööma"
 
 #: ../base/ufos/weapons_human.ufo:853
-#, fuzzy
 msgid "Kerrblade"
-msgstr "<TODO>"
+msgstr "KerrBlade"
 
 #: ../base/ufos/weapons_laser.ufo:6
 msgid "Laser Pistol"
@@ -3135,12 +2854,14 @@ msgstr "Laser püstol LAS-10"
 msgid "Laser Pistol Charge"
 msgstr "LAS-10 laeng"
 
-#: ../base/ufos/weapons_laser.ufo:35 ../base/ufos/weapons_laser.ufo:107
+#: ../base/ufos/weapons_laser.ufo:35
+#: ../base/ufos/weapons_laser.ufo:107
 #: ../base/ufos/weapons_laser.ufo:181
 msgid "Single Pulse"
 msgstr "Üksik Õhuvõnge"
 
-#: ../base/ufos/weapons_laser.ufo:53 ../base/ufos/weapons_laser.ufo:125
+#: ../base/ufos/weapons_laser.ufo:53
+#: ../base/ufos/weapons_laser.ufo:125
 msgid "Multiple Pulses"
 msgstr "Mitu võnget"
 
@@ -3153,38 +2874,36 @@ msgid "Laser Rifle Charge"
 msgstr "LAS-24 laeng"
 
 #: ../base/ufos/weapons_laser.ufo:150
-#, fuzzy
 msgid "Heavy Laser"
-msgstr "Raske relvad"
+msgstr "Kahur-Laser"
 
 #: ../base/ufos/weapons_laser.ufo:168
-#, fuzzy
 msgid "Heavy Laser Charge"
-msgstr "Plasma kahuri laeng"
+msgstr "Kahur-laseri laeng"
 
 #: ../base/ufos/weapons_laser.ufo:199
-#, fuzzy
 msgid "Overload"
-msgstr "Valmis"
+msgstr "Ülelaadimine"
 
 #: ../base/ufos/weapons_plasma.ufo:7
 #, fuzzy
 msgid "Plasma Atomizer"
-msgstr "Plasma kahur"
+msgstr "Plasma Automaat"
 
 #: ../base/ufos/weapons_plasma.ufo:24
 #, fuzzy
 msgid "Plasma Atomizer Charge"
-msgstr "Plasma kahuri laeng"
+msgstr "Plasma Automaadi Laeng"
 
-#: ../base/ufos/weapons_plasma.ufo:36 ../base/ufos/weapons_plasma.ufo:110
+#: ../base/ufos/weapons_plasma.ufo:36
+#: ../base/ufos/weapons_plasma.ufo:110
 msgid "Charged Pulse"
 msgstr "Super Võnked"
 
-#: ../base/ufos/weapons_plasma.ufo:55 ../base/ufos/weapons_plasma.ufo:129
-#, fuzzy
+#: ../base/ufos/weapons_plasma.ufo:55
+#: ../base/ufos/weapons_plasma.ufo:129
 msgid "Continuous Stream"
-msgstr "Tihe"
+msgstr "Kestev kiir"
 
 #: ../base/ufos/weapons_plasma.ufo:81
 msgid "Plasma Rifle"
@@ -3195,33 +2914,28 @@ msgid "Plasma Rifle Charge"
 msgstr "Plasma Automaadi Laeng"
 
 #: ../base/ufos/weapons_plasma.ufo:155
-#, fuzzy
 msgid "Plasma Blade"
-msgstr "PlasmaMõõk"
+msgstr "Plasma Mõõk"
 
 #: ../base/ufos/weapons_plasma.ufo:209
-#, fuzzy
 msgid "Plasma Blaster"
-msgstr "Plasma kahur"
+msgstr "Plasma Kahur"
 
 #: ../base/ufos/weapons_plasma.ufo:226
-#, fuzzy
 msgid "Plasma Blaster Charge"
-msgstr "Plasma kahuri laeng"
+msgstr "Plasma Kahuri laeng"
 
 #: ../base/ufos/weapons_plasma.ufo:238
-#, fuzzy
 msgid "Charged Ball"
-msgstr "Super purstus"
+msgstr "Laetud Kuul"
 
 #: ../base/ufos/weapons_plasma.ufo:261
 msgid "Continuous Beam"
 msgstr "Tihe"
 
 #: ../base/ufos/weapons_plasma.ufo:287
-#, fuzzy
 msgid "Plasma Grenade Shells"
-msgstr "PlasmaMõõk"
+msgstr "Plasma granaadi kestad"
 
 #: ../base/ufos/weapons_tachyon.ufo:6
 #, fuzzy
@@ -3233,7 +2947,8 @@ msgstr "Tachyoni Püstol"
 msgid "Tachyon Pistol Clip"
 msgstr "Tachyoni Püstoli salv"
 
-#: ../base/ufos/weapons_tachyon.ufo:53 ../base/ufos/weapons_tachyon.ufo:128
+#: ../base/ufos/weapons_tachyon.ufo:53
+#: ../base/ufos/weapons_tachyon.ufo:128
 #: ../base/ufos/weapons_tachyon.ufo:200
 msgid "Rapid Shots"
 msgstr "Kiired lasud"
@@ -3259,50 +2974,48 @@ msgid "Tachyon Sniper Charge"
 msgstr "Tachyoni snaiper püssi salv"
 
 #: ../base/ufos/weapons_tachyon.ufo:226
-#, fuzzy
 msgid "Tachyon-Beam Rocket"
-msgstr "Tachyoni Automaat"
+msgstr "Tachyoni-kiire rakett"
 
 #: client/cl_actor.c:61
 msgid "Pathetic"
-msgstr ""
+msgstr "Hale"
 
 #: client/cl_actor.c:63
 msgid "Very Poor"
-msgstr ""
+msgstr "Väga kehv"
 
 #: client/cl_actor.c:65
-#, fuzzy
 msgid "Poor"
-msgstr "Jõud:"
+msgstr "Kehva"
 
 #: client/cl_actor.c:67
 msgid "Medicore"
-msgstr ""
+msgstr "Keskmine"
 
 #: client/cl_actor.c:69
 msgid "Good"
-msgstr ""
+msgstr "Hea"
 
 #: client/cl_actor.c:71
 msgid "Very Good"
-msgstr ""
+msgstr "Väga Hea"
 
 #: client/cl_actor.c:73
 msgid "Excellent"
-msgstr ""
+msgstr "Suurepärane"
 
 #: client/cl_actor.c:75
 msgid "Amazing"
-msgstr ""
+msgstr "Hämmastav"
 
 #: client/cl_actor.c:77
 msgid "Superhuman"
-msgstr ""
+msgstr "Super osav"
 
 #: client/cl_actor.c:79
 msgid "Godlike"
-msgstr ""
+msgstr "Jumalik"
 
 #: client/cl_actor.c:113
 #, c-format
@@ -3389,19 +3102,29 @@ msgstr "Alla"
 msgid "Not enough credits to build this\n"
 msgstr "Pole piisavalt raha, et seda ehitada\n"
 
-#: client/cl_basemanagement.c:365 client/cl_basemanagement.c:1848
-#: client/cl_campaign.c:362 client/cl_campaign.c:723 client/cl_campaign.c:795
-#: client/cl_campaign.c:1741 client/cl_campaign.c:1777
-#: client/cl_campaign.c:1779 client/cl_research.c:491 client/cl_research.c:618
-#: client/cl_research.c:621 client/cl_research.c:625 client/cl_research.c:645
-#: client/cl_research.c:671 client/cl_research.c:675 client/cl_research.c:810
+#: client/cl_basemanagement.c:365
+#: client/cl_basemanagement.c:1848
+#: client/cl_campaign.c:362
+#: client/cl_campaign.c:723
+#: client/cl_campaign.c:795
+#: client/cl_campaign.c:1741
+#: client/cl_campaign.c:1777
+#: client/cl_campaign.c:1779
+#: client/cl_research.c:491
+#: client/cl_research.c:618
+#: client/cl_research.c:621
+#: client/cl_research.c:625
+#: client/cl_research.c:645
+#: client/cl_research.c:671
+#: client/cl_research.c:675
+#: client/cl_research.c:810
 msgid "Notice"
 msgstr "Teade"
 
 #: client/cl_basemanagement.c:492
-#, fuzzy, c-format
+#, c-format
 msgid "Costs:\t%1.0f c\n"
-msgstr "Kulud:\t%1.2f\n"
+msgstr "Kulud:\t%1.0f c\n"
 
 #: client/cl_basemanagement.c:495
 #, c-format
@@ -3409,9 +3132,9 @@ msgid "%i Day(s) to build\n"
 msgstr "%i Ehitus päev(i)\n"
 
 #: client/cl_basemanagement.c:498
-#, fuzzy, c-format
+#, c-format
 msgid "Running Costs:\t%1.0f c\n"
-msgstr "Jooksvad kulud:\t%1.2f\n"
+msgstr "Jooksvad kulud:\t%1.0f c\n"
 
 #: client/cl_basemanagement.c:501
 #, c-format
@@ -3428,7 +3151,8 @@ msgstr "%i päeva järel"
 msgid "A new base has been built: %s."
 msgstr "Uus baasi on ehitatud: %s."
 
-#: client/cl_basemanagement.c:1626 client/cl_basemanagement.c:1632
+#: client/cl_basemanagement.c:1626
+#: client/cl_basemanagement.c:1632
 msgid "Base built"
 msgstr "Baas ehitatud"
 
@@ -3459,9 +3183,9 @@ msgid "Your base %s is under attack."
 msgstr "Sinu baasi %s rünnatakse."
 
 #: client/cl_campaign.c:580
-#, fuzzy, c-format
+#, c-format
 msgid "Alien activity has been reported: '%s'"
-msgstr "Tulnukate tegevusest on teatatud"
+msgstr "Tulnukate tegevusest on teatatud '%s'"
 
 #: client/cl_campaign.c:581
 msgid "Alien activity"
@@ -3525,7 +3249,8 @@ msgstr "%s on ülendatud %s.\n"
 msgid "Soldier promoted"
 msgstr "Sõdur sai ametikõrgendust"
 
-#: client/cl_campaign.c:2802 client/cl_campaign.c:2833
+#: client/cl_campaign.c:2802
+#: client/cl_campaign.c:2833
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -3534,12 +3259,21 @@ msgid ""
 "Difficulty: %s\n"
 "%s\n"
 msgstr ""
+"Rass: %s\n"
+"Töötajaid: %i\n"
+"Raha: %ic\n"
+"Raskusaste: %s\n"
+"%s\n"
 
-#: client/cl_main.c:328 client/cl_main.c:671 client/cl_menu.c:408
+#: client/cl_main.c:328
+#: client/cl_main.c:671
+#: client/cl_menu.c:408
 msgid "Assemble a team first"
 msgstr "Kogu tiim enne"
 
-#: client/cl_main.c:328 client/cl_main.c:671 client/cl_menu.c:408
+#: client/cl_main.c:328
+#: client/cl_main.c:671
+#: client/cl_menu.c:408
 msgid "Error"
 msgstr "VIGA"
 
@@ -3604,34 +3338,31 @@ msgstr "Nimetu"
 
 #: client/cl_main.c:1411
 msgid "Chicken-hearted"
-msgstr ""
+msgstr "Kartlik"
 
 #: client/cl_main.c:1414
 msgid "Very Easy"
-msgstr ""
+msgstr "Väga kerge"
 
 #: client/cl_main.c:1417
 msgid "Easy"
-msgstr ""
+msgstr "Kerge"
 
 #: client/cl_main.c:1420
-#, fuzzy
 msgid "Normal"
-msgstr "tavaline"
+msgstr "Tavaline"
 
 #: client/cl_main.c:1423
-#, fuzzy
 msgid "Hard"
-msgstr "Hangaar"
+msgstr "Raske"
 
 #: client/cl_main.c:1426
 msgid "Very Hard"
-msgstr ""
+msgstr "Väga Raske"
 
 #: client/cl_main.c:1429
-#, fuzzy
 msgid "Insane"
-msgstr "Nimetu"
+msgstr "Hullumeelne"
 
 #: client/cl_menu.c:415
 msgid "Set playersoldiers lower than teamsoldiers"
@@ -3677,9 +3408,9 @@ msgid "Researched in this base."
 msgstr "Uuritakse selles baasis"
 
 #: client/cl_research.c:391
-#, fuzzy, c-format
+#, c-format
 msgid "Progress: %.1f%%"
-msgstr "Edasijõudmine: %1f\\%"
+msgstr "Edasijõudmine: %.1f%%"
 
 #: client/cl_research.c:393
 msgid "Progress: Not available."
@@ -3711,19 +3442,19 @@ msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
 "in order to assign scientists to research this technology.\n"
-msgstr ""
-"Ei ole vaba labori ruumi.\\Sa pead ehitama uue labori või peatama teise"
-"\\uurimuse, et teadlased saaksid seda tehnoloogjat uurida.\n"
+msgstr "Ei ole vaba labori ruumi.\\Sa pead ehitama uue labori või peatama teise\\uurimuse, et teadlased saaksid seda tehnoloogjat uurida.\n"
 
 #: client/cl_research.c:618
 msgid "This item is already under research by your scientists."
 msgstr "Seda asja juba uuritakse juba meie teadlaste poolt."
 
-#: client/cl_research.c:621 client/cl_research.c:671
+#: client/cl_research.c:621
+#: client/cl_research.c:671
 msgid "The research on this item continues."
 msgstr "Selle asja uurimine jätkub."
 
-#: client/cl_research.c:625 client/cl_research.c:675
+#: client/cl_research.c:625
+#: client/cl_research.c:675
 msgid "The research on this item is complete."
 msgstr "Uurimus selle asja kohta on lõppenud."
 
@@ -3875,26 +3606,17 @@ msgid "New Recruits\t%i\n"
 msgstr "Uued sõdurid\t%i\n"
 
 #: client/cl_ufopedia.c:50
-#, fuzzy
 msgid "Close"
-msgstr "Maksumus:"
+msgstr "Sulge"
 
 #: client/cl_ufopedia.c:53
-#, fuzzy
 msgid "Heavy"
-msgstr "Tervenda"
+msgstr "Raske"
 
 #: client/cl_ufopedia.c:56
 #, fuzzy
 msgid "Assault"
-msgstr ""
-"AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja "
-"revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline "
-"automaat. AR-80 salve kuju ja salve positsioon lubavad tal isegi täpsemini "
-"tulistada. Automaati on ka lihtne parandada, kuna see on erinevatest osadest "
-"kokku pandud. Tulistamise mehanismi saab parandad lahingus olles, lihtsalt "
-"tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult "
-"natuke üle minuti."
+msgstr "Ründe relvad"
 
 #: client/cl_ufopedia.c:59
 #, fuzzy
@@ -3902,33 +3624,30 @@ msgid "Sniper"
 msgstr "WE-78 Snaiper"
 
 #: client/cl_ufopedia.c:62
-#, fuzzy
 msgid "Explosive"
-msgstr "Lõhkeained"
+msgstr "Lõhkeaine"
 
 #: client/cl_ufopedia.c:65
 msgid "Unknown weapon skill"
-msgstr ""
+msgstr "Tundmatu relva oskus"
 
 #: client/cl_ufopedia.c:85
-#, fuzzy
 msgid "No requirements"
-msgstr "Näita teist varustust"
+msgstr "Ei ole vajadusi"
 
 #: client/cl_ufopedia.c:134
-#, fuzzy
 msgid "Armor\n"
-msgstr "Kehakaitsed"
+msgstr "Kehakaitsed\n"
 
 #: client/cl_ufopedia.c:136
-#, fuzzy, c-format
+#, c-format
 msgid "Primary:\t%s\t(%s)\n"
-msgstr "Põhi:\t%s\n"
+msgstr "Põhi:\t%s\t(%s)\n"
 
 #: client/cl_ufopedia.c:137
-#, fuzzy, c-format
+#, c-format
 msgid "Secondary:\t%s\t(%s)\n"
-msgstr "Teine:\t%s\n"
+msgstr "Teine:\t%s\t(%s)\n"
 
 #: client/cl_ufopedia.c:139
 #, c-format
@@ -4010,7 +3729,9 @@ msgstr "Viga - ei suutnud leida ehitist"
 msgid "Depends:\t%s\n"
 msgstr "Oleneb:\t%s\n"
 
-#: client/cl_ufopedia.c:220 client/cl_ufopedia.c:241 client/cl_ufopedia.c:242
+#: client/cl_ufopedia.c:220
+#: client/cl_ufopedia.c:241
+#: client/cl_ufopedia.c:242
 msgid "None"
 msgstr "Puudub"
 
@@ -4089,7 +3810,8 @@ msgstr "Sa ei saa seda teha - te pole samas tiimis\n"
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Sa ei saa seda teha - Sul ei ole kontrolli liitlase üle\n"
 
-#: game/g_client.c:660 game/g_client.c:753
+#: game/g_client.c:660
+#: game/g_client.c:753
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Sa ei saa seda teha - pole piisavalt TUse\n"
 
@@ -4133,341 +3855,3 @@ msgstr "Sa ei saa seda teha - Pole kuule\n"
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Sa ei saa seda teha - Pole piisavalt kuule\n"
 
-#, fuzzy
-#~ msgid "The Aliens have taken over a rocket silo. Go and capture it again."
-#~ msgstr "Tulnukad on vallutanud raketibaasi. Valluta see tagasi!"
-
-#, fuzzy
-#~ msgid "Incendiary Grenade"
-#~ msgstr "Kildkranaat"
-
-#~ msgid "Intercept alien craft or visit alien (crash) site."
-#~ msgstr "Valluta ufode (häda) maandumis koht."
-
-#~ msgid "Difficulty:"
-#~ msgstr "Raskus aste: "
-
-#~ msgid "UFO appears on our radar"
-#~ msgstr "Radar märkas UFO-t"
-
-#~ msgid "UFO disappears on our radar"
-#~ msgstr "Ufo kadus radari ekraanilt"
-
-#~ msgid "Soundsystem:"
-#~ msgstr "Heli süsteem:"
-
-#~ msgid "plaspistol_txt"
-#~ msgstr ""
-#~ "Kasutades sama tehnoloogiat mida plasmapüssgi, suudab plasma püstol teha "
-#~ "märgatavat kahju sihtmärgile. Kuna plasma püstol on väike ei suuda ta "
-#~ "väga tugevat kahju teha, kuna plasma hulk on piiratud, sellegi poolest "
-#~ "suudab plasma püstol tulistada läbi 5cm paksuse teras plaadi."
-
-#~ msgid "Ortnok TODO: FIND A NAME"
-#~ msgstr "<TODO>"
-
-#, fuzzy
-#~ msgid "Reload"
-#~ msgstr "Valmis"
-
-#~ msgid "Baseattack"
-#~ msgstr "Baasirünnak"
-
-#~ msgid "Assign a team to aircraft"
-#~ msgstr "Suuna tiim lennumasinale"
-
-#, fuzzy
-#~ msgid "Base\t%s\n"
-#~ msgstr "Kaart:\t%s\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Location: %s\n"
-#~ "Type: %s\n"
-#~ "Objective: %s\n"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid "Night"
-#~ msgstr "Öö"
-
-#~ msgid "Day"
-#~ msgstr "Päev"
-
-#~ msgid ""
-#~ "Select the desired location of the\n"
-#~ "new base on the map.\n"
-#~ msgstr ""
-#~ "Vali soovitud asukoht oma\n"
-#~ "uuele baasile\n"
-
-#~ msgid ""
-#~ "Aliens are attacking our base\n"
-#~ "at this very moment.\n"
-#~ msgstr ""
-#~ "Tulnukad ründavad mei baasi\n"
-#~ "praegusel hetkel\n"
-
-#~ msgid "Select ufo or mission on map\n"
-#~ msgstr "Vali ufo või selle kaarti missioon\n"
-
-#~ msgid "UFO in radar range\n"
-#~ msgstr "Ufo on radari ulatuses\n"
-
-#~ msgid "Aircraft started"
-#~ msgstr "Lennumasin startis"
-
-#~ msgid "Nothing - should not be displayed"
-#~ msgstr "Midagi - ei peaks olema nähtav"
-
-#~ msgid "At homebase"
-#~ msgstr "Kodubaasis"
-
-#~ msgid "Refuel"
-#~ msgstr "Tangi"
-
-#~ msgid "Idle"
-#~ msgstr "Üksik"
-
-#~ msgid "Ready for drop down"
-#~ msgstr "Valmis rünnakule asuma"
-
-#~ msgid "On interception"
-#~ msgstr "Rünnakul"
-
-#~ msgid "Transportmission"
-#~ msgstr "Transpordi Missioon"
-
-#~ msgid "Returning to homebase"
-#~ msgstr "Pöördub kodubaasi"
-
-#~ msgid "Fuel:\t%i/%i\n"
-#~ msgstr "Kütus:\t%i/%i\n"
-
-#~ msgid "You've got a new aircraft (a %s) in base %s"
-#~ msgstr "Sull on uus lennumasin (a %s) baasis %s"
-
-#~ msgid "Your dropship has low fuel and returns to base"
-#~ msgstr ""
-#~ "Su transpordi laeval on kütus otsakorral ja see pöördub tagasi baasi."
-
-#~ msgid "assault_ammo_txt"
-#~ msgstr ""
-#~ "AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja "
-#~ "revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline "
-#~ "automaat. AR-80 salve kuju ja salve positsioon lubavad tal isegi "
-#~ "täpsemini tulistada. Automaati on ka lihtne parandada, kuna see on "
-#~ "erinevatest osadest kokku pandud. Tulistamise mehanismi saab parandad "
-#~ "lahingus olles, lihtsalt tõmmates vana välja ja pannes uue asemele. Kogu "
-#~ "protsess võta aega ainult natuke üle minuti."
-
-#~ msgid "sniper_ammo_txt"
-#~ msgstr ""
-#~ "Kasutades tugevat ja mehaanilist sihikut on uus snaiper püss kõige "
-#~ "surmavam relv Phalanxsi vägedes. Kuulid on 0,5 mm mis suudavad läbida 10 "
-#~ "cm läbi petoon seina 200 m kauguselt lastuna. Aga kuna relv on väga "
-#~ "kohmakas, võtab sellega sihtimine kaua aega. Seega ei sobi WE-78 "
-#~ "kindlasti lähivõitlusesse."
-
-#~ msgid "smg_ammo_txt"
-#~ msgstr ""
-#~ "Võrreldes AR-80 automaadiga suudab SMG-68 tulistada rohkem kuule korraga, "
-#~ "probleemiks aga on vähene täpsus ja jõud. SMG-68 on ideaalne "
-#~ "lähivõitluseks ruumides, metsas jm. Et tulistada rohkem on sellel relval "
-#~ "2 toru, et vähendad tagasilööki, kasutatakse arenenud gaaside väljalaske "
-#~ "süsteemi. SMG-68 on ebatäpne isegi keskmisel kaugusel aga ideaalne "
-#~ "lähedal võitluses."
-
-#~ msgid "flamer_ammo_txt"
-#~ msgstr ""
-#~ "FT-207 leegiheitja on üks uuemaid lisasid Phalanxi relvade poolel. "
-#~ "Eelmised versioonid sellest relvast süütasid põlema kõik ümberringi. FT-"
-#~ "207 on aga ülitäpse gaaside väljalaske süsteemiga mis ei sütita põlema "
-#~ "ümbritesevaid alasid vaid, ainult ala mida sihitakse."
-
-#~ msgid "pistol_ammo_txt"
-#~ msgstr ""
-#~ "P-95 on enim levinud Phalanxi abi relv. Selle relva lihtne disain teeb "
-#~ "selle väga usaltusväärseks lisaks iga sõduri varustusele. Tänu relva "
-#~ "kergele kaalule suudab proffesionaalne tulistaja kanda kahte P-95te "
-#~ "korraga., selle tulistamise viisi miinus on täpsuse langus. P-95 "
-#~ "hinnatakse eriliselt snaiprite poolt, kuna seda on lihtne käsitseda "
-#~ "lähivõitluses. P-95 on väge täpne ka keskmisel kaugusel. P-95 saab "
-#~ "tulistada kiiresti aga AR-80 automaadile jääb ta alla jõus. "
-
-#~ msgid "bolterrifle_ammo_txt"
-#~ msgstr ""
-#~ "MkII Elektromagnet püss laseb välja väga suure võimsusega, väikse "
-#~ "elektrikera. Kera on suurem kui AR-80 kuul ja suurtel kiirustel suudab "
-#~ "see teha rohkem kahju. MkII EM pole liikuvaid osi seega on kuulda ainult "
-#~ "heli mis tekib kui kera ületab helibarjääri.\n"
-#~ "Laskude vahel on märgatav taaslaadimis aeg mis tõttu on täiest automaatne "
-#~ "valang võimatu. Kuigi saab lasta mitu lasku tihedalt järiest. "
-
-#~ msgid "laserpistol_ammo_txt"
-#~ msgstr ""
-#~ "Kasutades väiksemat ja vähem võimsat versiooni \"YAG laser reaktorist\" "
-#~ "on LAS-10 nagu selle suur vend LAS-24 laser automaat. Seoses aga väikse "
-#~ "reaktori vähese energiaga on LAS-10 tunduvamalt nõrgem, aga tapsem kui "
-#~ "tavaline püstol. Nagu ka püstolit võib proffesionaal ka 2 laser püstolit "
-#~ "korraga tulistada."
-
-#~ msgid "plaspistol_ammo_txt"
-#~ msgstr ""
-#~ "Kasutades sama tehnoloogiat mida plasmapüssgi, suudab plasma püstol teha "
-#~ "märgatavat kahju sihtmärgile. Kuna plasma püstol on väike, ei suuda ta "
-#~ "väga tugevat kahju teha, kuna plasma hulk on piiratud, sellegi poolest "
-#~ "suudab plasma püstol tulistada läbi 5cm paksuse teras plaadi."
-
-#~ msgid "plasrifle_ammo_txt"
-#~ msgstr ""
-#~ "Kasutades sama tehnoloogiat mida plasmapüssgi, suudab plasma püstol teha "
-#~ "märgatavat kahju sihtmärgile. Kuna plasma püstol on väike ei suuda ta "
-#~ "väga tugevat kahju teha kuna plasma hulk on piiratud, sellegi poolest "
-#~ "suudab plasma püstol tulistada läbi 5cm paksuse teras plaadi."
-
-#~ msgid "plasblaster_ammo_txt"
-#~ msgstr ""
-#~ "Seda plasmarelva kasutatakse kõige enam osavate tulnukate sõdalaste "
-#~ "poolt. Selle relva poolt välja tulistatud plasma sööbib kerge vaevaga "
-#~ "läbi 20cm paksusest terasest, Seetõttu ei paku tavaline Kevlarist "
-#~ "kehakaitse selle eest kuigi palju kaitset. Erinevalt Plasma püssist mis "
-#~ "tekitab ainult nõrku põletushaavu, tekitab plasma kahur tohutud "
-#~ "põletushaavad mis enamasti saavadgi surmavaks. "
-
-#~ msgid "tachyonpistol_ammo_txt"
-#~ msgstr ""
-#~ "See võimas relv on väiksem versioon tachyoon kiirendist. Selletõttu on "
-#~ "Tachyoni püstolil nii nõrgem kui ka vähem täpsem. Selle relva eelis on "
-#~ "selle kerge kaal mis teeb selle väärtuslikuks abirelvaks."
-
-#~ msgid "tachyonrifle_ammo_txt"
-#~ msgstr ""
-#~ "Kuigi meie insenäärid ei ole suutnud täienisti mõista, tachyonide "
-#~ "tööpõhimeted nii väiksel suurusel on nad suutnud järele teha ja mõista "
-#~ "Tachyonide püssi ehituse. Thachyoni püss suudab läbistada ka meile kõige "
-#~ "tugevad teadaolevad materjalid ja läbida kehaitseid kergesti jätkades "
-#~ "isegi 10cm edasi läbimist enne kui, jõud otsa saab. Selletõttu sõdur, kes "
-#~ "saab pihta saab ainult väikse haavandi aga tohutud sisemised haavad."
-
-#~ msgid "tachyonsniper_ammo_txt"
-#~ msgstr ""
-#~ "Tachyoni sniper on võimas relv. Selle aeglane tulistamine tuleneb "
-#~ "asjaolust, et enne lasku toimub tohutu laadimine, mis mitte ainult ei tee "
-#~ "lasku tugevamaks vaid ka ülitäpseks. Laadimine aga annab aega "
-#~ "sihtimiseks, tänu millele saab sihtida täpsemalt ja suurema kahjuga. "
-#~ "Thacyoni snaiper püssi purustusjõud on isegi suurem tachyoni püssi omast"
-
-#, fuzzy
-#~ msgid "flaregren_txt"
-#~ msgstr ""
-#~ "FT-207 leegiheitja on üks uuemaid lisasid Phalanxi relvade poolel. "
-#~ "Eelmised versioonid sellest relvast süütasid põlema kõik ümberringi. FT-"
-#~ "207 on aga ülitäpse gaaside väljalaske süsteemiga mis ei sütita põlema "
-#~ "ümbritesevaid alasid, vaid ainult ala mida sihitakse."
-
-#~ msgid "smokegren_txt"
-#~ msgstr ""
-#~ "See granaat teeb väga vähe kahju aga see tekitab suitsu, mis varjab "
-#~ "nägemisulatust."
-
-#~ msgid "Smoke Grenade"
-#~ msgstr "Suitsu kranaat"
-
-#~ msgid "Grenades"
-#~ msgstr "Kranaadid"
-
-#~ msgid "Plasma Pistol"
-#~ msgstr "Plasma Püstol"
-
-#~ msgid "Plasma Pistol Charge"
-#~ msgstr "Plasma Püstoli Laeng"
-
-#~ msgid "%i researches finished\n"
-#~ msgstr "%i uurimustöid lõpetatud\n"
-
-#~ msgid ""
-#~ "Location: Gwandaf\\Type: Terror Attack\\Objective: Protect inhabitants"
-#~ msgstr "Asukoht: Gwandaf//Rünnaku tüüp: Terror//Ülesanne: Kaitsda elanike"
-
-#~ msgid ""
-#~ "Location: Uppsala\\Type: Terror Attack\\Objective: Protect inhabitants"
-#~ msgstr "Asukoht: Uppsala//Rünnaku tüüp: Terror//Ülesanne Kaitsta elanikke"
-
-#~ msgid ""
-#~ "We are going put you in charge of a\\mission of utmost importance. We've"
-#~ "\\shot down one of their crafts. Get\\there before the E.T.'s do. "
-#~ "(difficult)\\"
-#~ msgstr ""
-#~ "Me anname sulle\\äärmiselt tähtsa ülessande. Me tulistasime\\alla ühe "
-#~ "nende lennumasinatest. Mine\\ja valluta see enne kui vastaste väed kohale "
-#~ "jõuavad!(keeruline)\\ "
-
-#~ msgid ""
-#~ "Location: Revelstoke\\Type: Landed Alien Ship\\Objective: Secure Alien "
-#~ "Ship before Liftoff"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid ""
-#~ "Location: Marina Serra\\Type: Terror Attack\\Objective: Protect "
-#~ "inhabitants"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid ""
-#~ "Location: Morioka\\Type: Alien Hideout\\Objective: Eliminate intruders"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid ""
-#~ "Location: Tazovskij\\Type: Terror Attack\\Objective: Protect inhabitants"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid ""
-#~ "Location: Mackay\\Type: Terror Attack\\Objective: Protect inhabitants"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid "Location: Asyut\\Type: Terror Attack\\Objective: Protect inhabitants"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid ""
-#~ "Location: Tabelbala\\Type: Terror Attack\\Objective: Protect inhabitants"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid "Location: Fargo\\Type: Terror Attack\\Objective: Protect inhabitants"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid ""
-#~ "Location: Grenchen\\Type: Terror Attack\\Objective: Protect inhabitants"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid "Location: Lille\\Type: Terror Attack\\Objective: Protect inhabitants"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid ""
-#~ "Location: Albany\\Type: Terror Attack\\Objective: Protect inhabitants"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid "Location: Shannon\\Type: Major Alien Intrusion\\Objective: Stop them"
-#~ msgstr "<Not sure yet>"
-
-#~ msgid "Refuel the selected aircraft"
-#~ msgstr "Tangi valitud lennuk"
-
-#~ msgid "Russia"
-#~ msgstr "Venemaa"
-
-#~ msgid "Blade"
-#~ msgstr "Tera"
-
-#~ msgid "Knife"
-#~ msgstr "Nuga"
-
-#~ msgid "Constructing: %i day(s)"
-#~ msgstr "Ehitamine kestab: %i päev(a)"
-
-#~ msgid "%s (%s) died on his last mission.\n"
-#~ msgstr "%s (%s) suri oma viimasel missioonil.\n"
-
-#~ msgid "Soldier died"
-#~ msgstr "Sõdur suri"
-
-#~ msgid "Race: %s\n"
-#~ msgstr "Rass: %s\n"
