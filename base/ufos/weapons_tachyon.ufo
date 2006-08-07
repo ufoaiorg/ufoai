@@ -222,9 +222,8 @@ item tachyonsniper_ammo
 
 item rpg_tachyon_ammo
 {
-	name		"_Tachyon-Beam Rocket"
-	model		weapons/rpg/rpg_ammo
-//	model	weapons/rpg/rpg_tachyon_ammo
+	name	"_Tachyon-Beam Rocket"
+	model	weapons/rpg/rpg_tachyon_ammo
 	type	ammo
 	category	0
 	shape	"0 0 1 2"
@@ -237,7 +236,7 @@ item rpg_tachyon_ammo
 	{
 		name	"_Snap Shot"
 		skill	explosive
-		projtl	rocket
+		projtl	rocket_tachyon
 		impact	tachyonBigImpact
 		hitbody	tachyonBigImpact
 		firesnd	weapons/rpg.wav
@@ -259,7 +258,7 @@ item rpg_tachyon_ammo
 	{
 		name	"_Aimed Shot"
 		skill	explosive
-		projtl	rocket
+		projtl	rocket_tachyon
 		impact	tachyonBigImpact
 		hitbody	tachyonBigImpact
 		firesnd	weapons/rpg.wav

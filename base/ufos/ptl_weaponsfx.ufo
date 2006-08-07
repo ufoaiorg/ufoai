@@ -205,6 +205,38 @@ particle rocketFire
 	think { kill }
 }
 
+particle rocket_inc
+{
+	init
+	{
+		model  weapons/rpg/rocket
+//		model  weapons/rpg/rocket_inc
+		color  ".5 .5 .5 1"
+		tps    40.0
+	}
+	think
+	{
+		spawn rocketSmoke
+		spawn rocketFire
+	}
+}
+
+particle rocket_tachyon
+{
+	init
+	{
+		model  weapons/rpg/rocket
+//		model  weapons/rpg/rocket_tachyon
+		color  ".5 .5 .5 1"
+		tps    40.0
+	}
+	think
+	{
+		spawn rocketSmoke
+		spawn rocketFire
+	}
+}
+
 
 // ==================
 // LASER EFFECTS

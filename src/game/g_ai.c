@@ -599,7 +599,7 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 		}
 	} while (max_price);
 
-	/* if no weapon at all, add a blade (usually at least one in any eq) */ 
+	/* if no weapon at all, bad guys will always find a blade to wield */ 
 	if (!has_weapon) { 
 		Com_DPrintf("G_EquipAIPlayer: no weapon picked for an AI in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", gi.cvar_string("ai_equipment"));
 		max_price = 0;
@@ -616,9 +616,9 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 		if (max_price)
 			has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
 	}
-	/* if still no weapon, something is broken, or we equip farmers */
+	/* if still no weapon, something is broken, or no blade in equip */
 	if (!has_weapon)
-		Com_DPrintf("G_EquipAIPlayer: cannot add any weapon to AI.\n");
+		Com_DPrintf("G_EquipAIPlayer: cannot add any weapon to AI; no secondary weapon without reload detected for equipment '%s'.\n", gi.cvar_string("ai_equipment"));
 }
 
 
