@@ -512,14 +512,7 @@ static void CL_CampaignAddMission(setState_t * set)
 		return;
 	}
 
-	/* FIXME:
-	Example: 2missions, means set->def->missions[0|1] are set
-	- in 9 from 10 cases the first mission will be chosen
-	- AND !!! numMissions * 1.0 == 2 - means overflow
-	- TODO: Check whether def->numMissions can become zero - otherwise
-	  we can use (int) ((set->def->numMissions - 1) * frand())
-	*/
-	misTemp = &missions[set->def->missions[(int) (set->def->numMissions * frand())]];
+	misTemp = &missions[set->def->missions[(int) (0.5 + (set->def->numMissions - 1) * frand())]];
 	if (misTemp->onGeoscape) {
 		Com_DPrintf("Mission is already on geoscape\n");
 		return;
