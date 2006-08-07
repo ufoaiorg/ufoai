@@ -396,11 +396,13 @@ extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft)
   *
   * TODO: Fuel
   */
+#define GROUND_MISSION 0.5
 void CL_CampaignRunAircraft(int dt)
 {
 	aircraft_t *aircraft;
 	base_t *base;
 	int i, j;
+	byte *color;
 
 	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
 		if (!base->founded)
@@ -458,11 +460,17 @@ void CL_CampaignRunAircraft(int dt)
 					ufo = gd.ufos + aircraft->ufo;
 					if (abs(ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
 						/* The aircraft can attack the ufo */
+						color = CL_GetmapColor(ufo->pos);
+						if (MapIsWater(color)) {
+							/* ufo/aircraft crashes to water */
+						} else if (frand() <= GROUND_MISSION ) {
+							/* spawn new mission */
+						}
 						Com_Printf("Aircraft touch UFO, back to base\n");
-						/* TO DO : display an attack popup */
+						/* TODO : display an attack popup */
 						CL_AircraftReturnToBase(aircraft);
 					} else {
-						/* TO DO : Find better system to make the aircraft purchasing ufo */
+						/* TODO : Find better system to make the aircraft purchasing ufo */
 						CL_SendAircraftPurchasingUfo(aircraft, ufo);
 					}
 				}
