@@ -1935,7 +1935,6 @@ void B_BuildingAddEmployees_f ( void )
 {
 	employeeType_t type;
 	Com_DPrintf("B_BuildingAddEmployees_f started 1.\n");
-	Com_DPrintf("B_BuildingAddEmployees_f %i %i\n", baseCurrent, baseCurrent->buildingCurrent);
 	/* can be called from everywhere - so make a sanity check here */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
 		return;
