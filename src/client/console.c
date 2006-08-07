@@ -297,6 +297,7 @@ static void Con_Linefeed(void)
  * @brief Handles cursor positioning, line wrapping, etc
  * All console printing must go through this in order to be logged to disk
  * If no console is visible, the text will appear at the top of the game window
+ * @sa Sys_ConsoleOutput
  */
 void Con_Print(char *txt)
 {
@@ -350,6 +351,10 @@ void Con_Print(char *txt)
 			break;
 
 		default:	/* display character and advance */
+#if 0
+			if (!isprint(c))
+				continue;
+#endif
 			y = con.current % con.totallines;
 			con.text[y * con.linewidth + con.x] = c | mask | con.ormask;
 			con.x++;

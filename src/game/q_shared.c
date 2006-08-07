@@ -54,6 +54,9 @@ const byte dvleft[8] = { 4, 5, 6, 7, 2, 3, 1, 0 };
 
 /*============================================================================ */
 
+/**
+ * @brief
+ */
 int AngleToDV(int angle)
 {
 	int i, mini;
@@ -85,6 +88,9 @@ int AngleToDV(int angle)
 #pragma optimize( "", off )
 #endif
 
+/**
+ * @brief
+ */
 void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, float degrees)
 {
 	float m[3][3];
@@ -143,6 +149,9 @@ void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, f
 #pragma optimize( "", on )
 #endif
 
+/**
+ * @brief
+ */
 void AngleVectors(vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 {
 	float angle;
@@ -177,6 +186,9 @@ void AngleVectors(vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 	}
 }
 
+/**
+ * @brief
+ */
 void ProjectPointOnPlane(vec3_t dst, const vec3_t p, const vec3_t normal)
 {
 	float d;
@@ -198,7 +210,7 @@ void ProjectPointOnPlane(vec3_t dst, const vec3_t p, const vec3_t normal)
 
 /**
  * @brief
- * assumes "src" is normalized
+ * @note assumes "src" is normalized
  */
 void PerpendicularVector(vec3_t dst, const vec3_t src)
 {
@@ -228,7 +240,6 @@ void PerpendicularVector(vec3_t dst, const vec3_t src)
 /**
  * @brief
  * @param
- * @sa
  */
 void R_ConcatRotations(float in1[3][3], float in2[3][3], float out[3][3])
 {
@@ -376,6 +387,7 @@ float anglemod(float a)
  * @brief
  * @param
  * @sa
+ * @return 1, 2, or 1 + 2
  */
 /* this is the slow, general version */
 int BoxOnPlaneSide2(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
@@ -405,13 +417,6 @@ int BoxOnPlaneSide2(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 	return sides;
 }
 
-/*
-==================
-BoxOnPlaneSide
-
-Returns 1, 2, or 1 + 2
-==================
-*/
 #if !id386 || defined __linux__ || __MINGW32__ || defined __FreeBSD__ || defined __sun || defined __sgi
 int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 {
@@ -711,8 +716,8 @@ Lerror:
 #endif
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] mins
+ * @param[in] maxs
  */
 void ClearBounds(vec3_t mins, vec3_t maxs)
 {
@@ -722,8 +727,9 @@ void ClearBounds(vec3_t mins, vec3_t maxs)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] v
+ * @param[in] mins
+ * @param[in] maxs
  */
 void AddPointToBounds(vec3_t v, vec3_t mins, vec3_t maxs)
 {
@@ -741,8 +747,10 @@ void AddPointToBounds(vec3_t v, vec3_t mins, vec3_t maxs)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] v1
+ * @param[in] v2
+ * @param[in] comp
+ * @return qboolean
  */
 qboolean VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp)
 {
@@ -757,9 +765,10 @@ qboolean VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp)
 
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief Calculated the normal vector for a given vec3_t
+ * @param[in] v Vector to normalize
+ * @sa VectorNormalize2
+ * @return vector length as vec_t
  */
 vec_t VectorNormalize(vec3_t v)
 {
@@ -780,9 +789,11 @@ vec_t VectorNormalize(vec3_t v)
 
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief Calculated the normal vector for a given vec3_t
+ * @param[in] v Vector to normalize
+ * @param[out] out The normalized vector
+ * @sa VectorNormalize
+ * @return vector length as vec_t
  */
 vec_t VectorNormalize2(vec3_t v, vec3_t out)
 {
@@ -855,7 +866,7 @@ void VectorClampMA(vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
 /**
  * @brief
  * @param
- * @sa
+ * @sa VectorNormalize
  */
 void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
 {
@@ -877,7 +888,7 @@ void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
 /**
  * @brief
  * @param
- * @sa
+ * @sa GLMatrixMultiply
  */
 void MatrixMultiply(vec3_t a[3], vec3_t b[3], vec3_t c[3])
 {
@@ -898,7 +909,7 @@ void MatrixMultiply(vec3_t a[3], vec3_t b[3], vec3_t c[3])
 /**
  * @brief
  * @param
- * @sa
+ * @sa MatrixMultiply
  */
 void GLMatrixMultiply(float a[16], float b[16], float c[16])
 {
@@ -952,7 +963,7 @@ vec_t _DotProduct(vec3_t v1, vec3_t v2)
 /**
  * @brief
  * @param
- * @sa
+ * @sa _VectorAdd
  */
 void _VectorSubtract(vec3_t veca, vec3_t vecb, vec3_t out)
 {
@@ -984,7 +995,7 @@ void _VectorSubtract(vec3_t veca, vec3_t vecb, vec3_t out)
 /**
  * @brief
  * @param
- * @sa
+ * @sa _VectorSubtract
  */
 void _VectorAdd(vec3_t veca, vec3_t vecb, vec3_t out)
 {
@@ -1055,8 +1066,9 @@ double sqrt(double x);
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] v Vector to calculate the length of
+ * @sa VectorNormalize
+ * @return Vector length as vec_t
  */
 vec_t VectorLength(vec3_t v)
 {
@@ -1150,7 +1162,7 @@ float crand(void)
 /**
  * @brief
  * @param
- * @sa
+ * @sa Com_SkipTokens
  */
 static qboolean Com_CharIsOneOfCharset(char c, char *set)
 {
@@ -1167,7 +1179,7 @@ static qboolean Com_CharIsOneOfCharset(char c, char *set)
 /**
  * @brief
  * @param
- * @sa
+ * @sa Com_CharIsOneOfCharset
  */
 char *Com_SkipCharset(char *s, char *sep)
 {
@@ -1186,7 +1198,7 @@ char *Com_SkipCharset(char *s, char *sep)
 /**
  * @brief
  * @param
- * @sa
+ * @sa Com_CharIsOneOfCharset
  */
 char *Com_SkipTokens(char *s, int numTokens, char *sep)
 {
@@ -1345,8 +1357,8 @@ float LittleFloat(float l)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] l
+ * @sa ShortNoSwap
  */
 short ShortSwap(short l)
 {
@@ -1360,8 +1372,8 @@ short ShortSwap(short l)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] l
+ * @sa ShortSwap
  */
 short ShortNoSwap(short l)
 {
@@ -1370,25 +1382,25 @@ short ShortNoSwap(short l)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] l
+ * @sa LongNoSwap
  */
 int LongSwap(int l)
 {
 	byte b1, b2, b3, b4;
 
-	b1 = l & 255;
-	b2 = (l >> 8) & 255;
-	b3 = (l >> 16) & 255;
-	b4 = (l >> 24) & 255;
+	b1 = l & UCHAR_MAX;
+	b2 = (l >> 8) & UCHAR_MAX;
+	b3 = (l >> 16) & UCHAR_MAX;
+	b4 = (l >> 24) & UCHAR_MAX;
 
 	return ((int) b1 << 24) + ((int) b2 << 16) + ((int) b3 << 8) + b4;
 }
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] l
+ * @sa LongSwap
  */
 int LongNoSwap(int l)
 {
@@ -1397,8 +1409,8 @@ int LongNoSwap(int l)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] l
+ * @sa FloatNoSwap
  */
 float FloatSwap(float f)
 {
@@ -1418,8 +1430,8 @@ float FloatSwap(float f)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] l
+ * @sa FloatSwap
  */
 float FloatNoSwap(float f)
 {
@@ -2387,8 +2399,11 @@ void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] inv Inventory pointer to add the item
+ * @param[in] item Item to add to inventory
+ * @param[in] container Container id
+ * @sa Com_FindSpace
+ * @sa Com_AddToInventory
  */
 int Com_TryAddToInventory(inventory_t * inv, item_t item, int container)
 {
@@ -2412,8 +2427,11 @@ CHARACTER GENERATION AND HANDLING
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] chr
+ * @param[in] minAbility
+ * @param[in] maxAbility
+ * @param[in] minSkill
+ * @param[in] maxSkill
  */
 #define MAX_GENCHARRETRIES	20
 void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility, int minSkill, int maxSkill)
@@ -2605,7 +2623,8 @@ static char *if_strings[IF_SIZE] = {
  * @brief Translate the condition string to menuIfCondition_t enum value
  * @param[in] conditionString The string from scriptfiles (see if_strings)
  * @return menuIfCondition_t value
- * @return IF_SIZE on error
+ * @return enum value for condition string
+ * @note Produces a Sys_Error if conditionString was not found in if_strings array
  */
 int Com_ParseConditionType(const char* conditionString, const char *token)
 {
@@ -2811,8 +2830,12 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] base The start pointer to a given data type (typedef, struct)
+ * @param[in] set The data which should be parsed
+ * @param[in] type The data type that should be parsed
+ * @param[in] ofs The offset for the value
+ * @sa Com_ValueToStr
+ * @note The offset is most likely given by the offsetof macro
  */
 int Com_SetValue(void *base, void *set, int type, int ofs)
 {
@@ -2912,8 +2935,11 @@ int Com_SetValue(void *base, void *set, int type, int ofs)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] base The start pointer to a given data type (typedef, struct)
+ * @param[in] type The data type that should be parsed
+ * @param[in] ofs The offset for the value
+ * @sa Com_SetValue
+ * @return char pointer with translated data type value
  */
 char *Com_ValueToStr(void *base, int type, int ofs)
 {
@@ -2996,9 +3022,7 @@ char *Com_ValueToStr(void *base, int type, int ofs)
 }
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief Lists all object definitions
  */
 void Com_InventoryList_f(void)
 {

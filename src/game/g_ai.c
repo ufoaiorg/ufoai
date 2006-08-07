@@ -33,11 +33,9 @@ typedef struct {
 	edict_t *target;
 } ai_action_t;
 
-/*
-=================
-AI_CheckFF
-=================
-*/
+/**
+ * @brief
+ */
 static qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 {
 	edict_t *check;
@@ -72,11 +70,6 @@ static qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 }
 
 
-/*
-=================
-AI_FighterCalcGuete
-=================
-*/
 #define GUETE_HIDE			30
 #define GUETE_SHOOT_HIDE	40
 #define GUETE_CLOSE_IN		8
@@ -89,6 +82,9 @@ AI_FighterCalcGuete
 #define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*M_PI/180) : 0)
 #define HIDE_DIST			3
 
+/**
+ * @brief
+ */
 static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 {
 	objDef_t *od;
@@ -241,16 +237,14 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 }
 
 
-/*
-=================
-AI_CivilianCalcGuete
-=================
-*/
 #define GUETE_CIV_RANDOM	30
 #define GUETE_RUN_AWAY		50
 #define GUETE_CIV_LAZINESS	5
 #define RUN_AWAY_DIST		160
 
+/**
+ * @brief
+ */
 static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 {
 	edict_t *check;
@@ -293,11 +287,9 @@ static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 }
 
 
-/*
-=================
-AI_ActorThink
-=================
-*/
+/**
+ * @brief
+ */
 #define AI_MAX_DIST	30
 
 void AI_ActorThink(player_t * player, edict_t * ent)
@@ -375,13 +367,9 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 }
 
 
-/*
-=================
-AI_Run
-
-Every server frame one single actor is handled - always in the same order
-=================
-*/
+/**
+ * @brief Every server frame one single actor is handled - always in the same order
+ */
 void AI_Run(void)
 {
 	player_t *player;
@@ -441,16 +429,16 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
 			/* load ammo */
 			item.a = gi.csi->ods[weapon].ammo;
 			item.m = ammo;
-			num = 
-				equip[ammo] / equip[weapon] 
-				+ (equip[ammo] % equip[weapon] 
+			num =
+				equip[ammo] / equip[weapon]
+				+ (equip[ammo] % equip[weapon]
 				   > frand() * equip[weapon]);
 			num = num > 3 ? 3 : num;
 			while (--num) {
 				item_t mun = {0,0,0};
-				
+
 				mun.t = ammo;
-				/* ammo to backpack; belt reseved for knives and grenades */
+				/* ammo to backpack; belt reserved for knives and grenades */
 				Com_TryAddToInventory(&ent->i, mun, gi.csi->idBackpack);
 				/* no problem if no space left --- one ammo already loaded */
 			}
@@ -471,13 +459,13 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
  * @brief Fully equip one AI player
  * @param[in] ent The actor that will get the weapons
  * @param[in] equip The equipment that shows what is available
- * @note The code below is a complete implementation 
+ * @note The code below is a complete implementation
  * of the scheme sketched at the beginning of equipment_missions.ufo.
  * However, aliens cannot yet swap weapons,
  * so only the weapon(s) in hands will be used.
  * The rest will be just player's loot.
  * If two weapons in the same category have the same price,
- * only one will be considered for inventory. 
+ * only one will be considered for inventory.
  *
  * TODO: try and see if this creates a tolerable
  * initial equipment for human players
@@ -518,8 +506,8 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 				 * so that we get more possible squads */
 				has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
 				if (has_weapon) {
-					primary_tachyon = 
-						(gi.csi->ods[weapon].fd[0].dmgtype 
+					primary_tachyon =
+						(gi.csi->ods[weapon].fd[0].dmgtype
 						 == gi.csi->damTachyon);
 					max_price = 0; /* one primary weapon is enough */
 				}
@@ -545,7 +533,7 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 			}
 		}
 		if ( !(max_price == primary_tachyon ? INT_MAX : 0) ) {
-			if (has_weapon) { 
+			if (has_weapon) {
 				/* already got primary weapon */
 				if ( HAS_WEAPON_MALUS + equip[weapon] >= 8 * frand() ) {
 					if ( G_PackAmmoAndWeapon(ent, weapon, equip) ) {
@@ -576,7 +564,7 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 		max_price = 0;
 		for (i = 0; i < gi.csi->numODs; i++) {
 			obj = gi.csi->ods[i];
-			if ( equip[i] 
+			if ( equip[i]
 				 && ((obj.weapon && obj.buytype == 1 && !obj.reload)
 					 || obj.buytype == 2) ) {
 				if ( obj.price > max_price && obj.price < prev_price ) {
@@ -589,8 +577,8 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 			int num;
 
 			/* still no weapon even at this point? */
-			num = 
-				equip[weapon] / 8 
+			num =
+				equip[weapon] / 8
 				+ (((has_weapon ? HAS_WEAPON_MALUS : 2 * HAS_WEAPON_BONUS)
 					+ equip[weapon] % 8)
 				   > 8 * frand());
@@ -599,8 +587,8 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 		}
 	} while (max_price);
 
-	/* if no weapon at all, bad guys will always find a blade to wield */ 
-	if (!has_weapon) { 
+	/* if no weapon at all, bad guys will always find a blade to wield */
+	if (!has_weapon) {
 		Com_DPrintf("G_EquipAIPlayer: no weapon picked for an AI in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", gi.cvar_string("ai_equipment"));
 		max_price = 0;
 		for (i = 0; i < gi.csi->numODs; i++) {
