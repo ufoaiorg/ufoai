@@ -18,7 +18,7 @@ menu employees
 
 	pic back_ul
 	{
-		image	menu/empl_ul
+		image	menu/prod_ul
 		pos		"0 0"
 	}
 
@@ -30,13 +30,13 @@ menu employees
 
 	pic back_ll
 	{
-		image	menu/empl_ll
+		image	menu/prod_ll
 		pos		"0 512"
 	}
 
 	pic back_lr
 	{
-		image	menu/empl_lr
+		image	menu/prod_lr
 		pos		"512 512"
 	}
 
@@ -80,11 +80,96 @@ menu employees
 	}
 
 	// ==================
+	// buttons
+	// ==================
+
+	confunc empl_reset
+	{
+		*s_scientists	color "1 1 1 0.6"
+		*s_soldiers		color "1 1 1 0.6"
+		*s_workers		color "1 1 1 0.6"
+	}
+	confunc empl_scientists	{ cmd "employee_init 0;" empl_reset *s_scientists	color "1 1 1 1" }
+	confunc empl_soldiers	{ cmd "employee_init 1;" empl_reset *s_soldiers	color "1 1 1 1" }
+	confunc empl_workers	{ cmd "employee_init 2;" empl_reset *s_workers	color "1 1 1 1" }
+
+	pic bt_scientists
+	{
+		tooltip	"_Hire scientists"
+		image	menu/button_blue
+		mousefx	true
+		pos		"615 585"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ empl_scientists }
+	}
+
+	string s_scientists
+	{
+		pos	"679 595"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Scientists"
+	}
+
+	pic bt_soldiers
+	{
+		tooltip	"_Hier soldiers"
+		image	menu/button_blue
+		mousefx	true
+		pos		"615 655"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ empl_soldiers }
+	}
+
+	string s_soldiers
+	{
+		pos	"679 665"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Soldiers"
+	}
+
+	pic bt_workers
+	{
+		tooltip	"_Hire workers"
+		image	menu/button_blue
+		mousefx	true
+		pos		"765 585"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ empl_workers }
+	}
+
+	string s_workers
+	{
+		pos	"829 595"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Workers"
+	}
+
+	pic bt_continue
+	{
+		tooltip	"_Back to baseview"
+		image	hud/buttons2
+		mousefx	true
+		pos		"940 686"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop }
+	}
+
+	// ==================
 	// init function
 	// ==================
 
 	func init
 	{
-		cmd "hire_init"
+		cmd "employee_init"
 	}
 }
