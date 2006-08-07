@@ -1974,7 +1974,7 @@ static int B_BuildingRemoveEmployees (building_t *b, employeeType_t type, int am
  * @sa B_BuildingRemoveEmployees
  * Script function for removing employees from a building
  */
-void B_BuildingRemoveEmployees_f ( void )
+static void B_BuildingRemoveEmployees_f ( void )
 {
 	employeeType_t type;
 	/* can be called from everywhere - so make a sanity check here */
@@ -1996,6 +1996,7 @@ void B_BuildingRemoveEmployees_f ( void )
 
 /**
  * @brief Resets console commands.
+ * @sa MN_ResetMenus
  */
 void B_ResetBaseManagement(void)
 {
@@ -2088,7 +2089,7 @@ int B_CheckBuildingConstruction(building_t * building, int base_idx)
 
 			if (*building->onConstruct) {
 				gd.bases[base_idx].buildingCurrent = building;
-				Com_DPrintf("B_CheckBuildingConstruction: %s\n", building->onConstruct);
+				Com_DPrintf("B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, base_idx);
 				Cbuf_AddText(va("%s %i;", building->onConstruct, base_idx));
 			}
 
