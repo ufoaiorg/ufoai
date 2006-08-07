@@ -821,7 +821,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 		if (tech_link) {
 			building->tech = tech_link->idx;
 		} else {
-			if (!building->needs)
+			if (!*building->needs)
 				/* TODO: are the techs already parsed? */
 				Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", id);
 		}
@@ -1966,6 +1966,7 @@ static int B_BuildingRemoveEmployees (building_t *b, employeeType_t type, int am
 {
 	if ( type >= MAX_EMPL )
 		return 0;
+	/* TODO: Implement me */
 	return 0;
 }
 
