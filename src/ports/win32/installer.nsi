@@ -502,6 +502,7 @@ Section "Game" SEC01
   File "..\..\..\base\pics\tutorial\*.jpg"
   SetOutPath "$INSTDIR\base\pics\techs"
   File "..\..\..\base\pics\techs\*.jpg"
+  File "..\..\..\base\pics\techs\*.tga"
   SetOutPath "$INSTDIR\base\pics\althud"
   File "..\..\..\base\pics\althud\*.tga"
   SetOutPath "$INSTDIR\base\pics\armor"
