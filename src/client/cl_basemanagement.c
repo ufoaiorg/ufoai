@@ -3,7 +3,7 @@
  * @brief Handles everything that is located in or accessed trough a base.
  *
  * See "base/ufos/basemanagement.ufo", "base/ufos/menu_bases.ufo" and "base/ufos/menu_buildings.ufo" for the underlying content.
- * TODO: new game does not reset basemangagement
+ * @todo New game does not reset basemangagement
  */
 
 /*
@@ -555,10 +555,12 @@ int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx)
 /**
  * @brief Get the maximum status of a building.
  *
- * TODO: I have no idea what this does or is for.
+ * This function is mostly used to check if the construction of a building with a given type is finished.
+ * e.g.: "if (B_GetMaximumBuildingStatus(base_idx, B_LAB) >= B_STATUS_CONSTRUCTION_FINISHED) { ... }"
+ *
  * @param[in] base_idx Which base
  * @param[in] buildingType Which buildingtype
- * @return
+ * @return The max./highest building status found.
  */
 buildingStatus_t B_GetMaximumBuildingStatus(int base_idx, buildingType_t buildingType)
 {
@@ -617,7 +619,6 @@ void B_BuildingInit(void)
 
 			/* if the building is researched add it to the list */
 			if (RS_IsResearched_idx(buildingType->tech)) {
-				/* TODO: check if this out-commented code is still needed */
 				if (buildingType->dependsBuilding < 0
 					|| B_GetMaximumBuildingStatus(baseCurrent->idx, buildingType->buildingType) >= B_STATUS_CONSTRUCTION_FINISHED) {
 					B_BuildingAddToList(buildingType);
@@ -652,8 +653,8 @@ building_t *B_GetBuildingByIdx(int idx)
 /**
  * @brief Opens up the 'pedia if you right click on a building in the list.
  *
- * TODO: really only do this on rightclick.
- * TODO: left click should show building-status.
+ * @todo Really only do this on rightclick.
+ * @todo Left click should show building-status.
  */
 void B_BuildingInfoClick_f(void)
 {
@@ -850,7 +851,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
  * @brief Reads in information about employees and assigns them to the correct rooms in a base.
  *
  * This should be called after setting up the first base.
- * TODO: This right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
+ * @todo This right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
  * @sa CL_GameInit
  */
 void B_InitEmployees(void)
@@ -1069,7 +1070,7 @@ int B_GetUnusedLabs(int base_idx)
 /**
  * @brief Removes all assigned employees from a building.
  *
- * TODO: If the building is of type "B_QUARTERS" before it's cleared all other buildings need to be checked if there is an employees there that also is in the qarter. These employees need to be removed from those buildings.
+ * @todo If the building is of type "B_QUARTERS" before it's cleared all other buildings need to be checked if there is an employees there that also is in the qarter. These employees need to be removed from those buildings.
  * @param[in] building Building pointer of the building to be cleared
  */
 void B_ClearBuilding(building_t * building)
@@ -1266,7 +1267,7 @@ qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_ty
 /**
  * @brief Remove one employee from building.
  *
- * TODO: Add check for destination building vs. employee_type and abort if they do not match.
+ * @todo Add check for destination building vs. employee_type and abort if they do not match.
  * @sa B_AssignEmployee
  * @param[in] building Which building to remove the employee from. Can be any type of building that has employees in it. If quarters are given the employee will be removed from every other building as well.
  *
@@ -1698,7 +1699,7 @@ void B_SelectBase(void)
 /**
  * @brief Constructs a new base.
  *
- * TODO: First base needs to be constructed automatically.
+ * @todo First base needs to be constructed automatically.
  */
 void B_BuildBase(void)
 {
@@ -1763,9 +1764,9 @@ void B_BaseAttack(void)
  * @brief Builds a base map for tactical combat.
  * @sa SV_AssembleMap
  * @sa B_BaseAttack
- * NOTE: Do we need day and night maps here, too?
- * TODO: Search a empty field and add a alien craft there.
- * FIXME: We need to get rid of the tunnels to nivana.
+ * @note Do we need day and night maps here, too?
+ * @todo Search a empty field and add a alien craft there.
+ * @todo We need to get rid of the tunnels to nivana.
  */
 void B_AssembleMap(void)
 {
@@ -1861,7 +1862,7 @@ static void B_AssembleRandomBase(void)
  * @brief Just lists all buildings with their data
  *
  * Just for debugging purposes - not needed in game
- * TODO: To be extended for load/save purposes
+ * @todo To be extended for load/save purposes
  */
 static void B_BuildingList_f(void)
 {
@@ -1904,7 +1905,7 @@ static void B_BuildingList_f(void)
  * @brief Just lists all bases with their data
  *
  * Just for debugging purposes - not needed in game
- * TODO: To be extended for load/save purposes
+ * @todo To be extended for load/save purposes
  */
 static void B_BaseList_f(void)
 {
