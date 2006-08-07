@@ -512,6 +512,13 @@ static void CL_CampaignAddMission(setState_t * set)
 		return;
 	}
 
+	/* FIXME:
+	Example: 2missions, means set->def->missions[0|1] are set
+	- in 9 from 10 cases the first mission will be chosen
+	- AND !!! numMissions * 1.0 == 2 - means overflow
+	- TODO: Check whether def->numMissions can become zero - otherwise
+	  we can use (int) ((set->def->numMissions - 1) * frand())
+	*/
 	misTemp = &missions[set->def->missions[(int) (set->def->numMissions * frand())]];
 	if (misTemp->onGeoscape) {
 		Com_DPrintf("Mission is already on geoscape\n");
@@ -796,8 +803,11 @@ static void CL_UpdateNationData(void)
 		/* maybe we don't get scientists of this nation */
 		if ( frand() <= NATION_PROBABILITY )
 			continue;
-		for (j=0; j<nation->scientists; j++)
+		for (j=0; j<nation->scientists; j++) {
 			B_CreateEmployee(EMPL_SCIENTIST);
+			/* gd.numBases is always (at least) 1 at this point */
+			B_AssignEmployee(B_GetBuildingInBase(&gd.bases[(int)((gd.numBases-1)*frand())], "building_quarters"), EMPL_SCIENTIST);
+		}
 		/* TODO: soldiers */
 	}
 }
