@@ -1663,7 +1663,7 @@ tech rs_craft_shield_light
 	researched	true
 	needscollected	false
 
-	image_top	"tech/craftshield_light"
+	image_top	"techs/craftshield_light"
 }
 
 tech rs_craft_weapon_flac
@@ -1680,5 +1680,5 @@ tech rs_craft_weapon_flac
 	researched	true
 	needscollected	false
 
-	image_top	"tech/craftweapon_flac"
+	image_top	"techs/craftweapon_flac"
 }
