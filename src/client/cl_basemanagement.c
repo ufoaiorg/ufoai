@@ -1181,15 +1181,18 @@ employee_t* B_CreateEmployee(employeeType_t type)
 }
 
 /**
- * @brief Add a free employee from the quarters to building_dest. (the employee will be linked to both of them)
+ * @brief Assigns an employee to a building.
  *
- * TODO: Add check for destination building vs. employee_type and abort if they do not match.
- * TODO: Possibility to add employees to quarters (from the global list)
+ * There are two cases of assignment:
+ *	1.) From global list to quarters (building_dest is a quarter). This will search for compeltely unassigned employee of the given type in the global list gd.employees and assign them to the quarter if it has free space. The employee will only be linked to a quarter.
+ *	2.) From quarters to 'any' other building (i.e. lab + workshop for now). This will search for a free (i.e not yet assigned to a building other than quarters) employee of the given type in a quarter in the same base building_dest is located in and. The employee will be linked to its quarter and the assinged building.
+ *
+ * @todo Add check for destination building vs. employee_type and abort if they do not match.
  *
  * @param[in] building_dest Which building to assign the employee to.
  * @param[in] employee_type	What type of employee to assign to the building.
  * @sa B_RemoveEmployee
- * @return Returns true if adding was possible/sane otherwise false.
+ * @return Returns true if adding was possible/sane otherwise false. In the later case nothing will be changed.
  */
 qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_type)
 {
