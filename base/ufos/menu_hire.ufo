@@ -598,37 +598,19 @@ menu employees
 		*s_scientists	color "1 1 1 0.6"
 		*s_soldiers		color "1 1 1 0.6"
 		*s_workers		color "1 1 1 0.6"
+		*s_medics		color "1 1 1 0.6"
 	}
-	confunc empl_scientists	{ cmd "employee_init 0;" empl_reset *s_scientists	color "1 1 1 1" }
-	confunc empl_soldiers	{ cmd "employee_init 1;" empl_reset *s_soldiers	color "1 1 1 1" }
-	confunc empl_workers	{ cmd "employee_init 2;" empl_reset *s_workers	color "1 1 1 1" }
+	confunc empl_soldiers	{ cmd "employee_init 0;" empl_reset *s_soldiers		color "1 1 1 1" }
+	confunc empl_scientists	{ cmd "employee_init 1;" empl_reset *s_scientists	color "1 1 1 1" }
+	confunc empl_workers	{ cmd "employee_init 2;" empl_reset *s_workers		color "1 1 1 1" }
+	confunc empl_medics		{ cmd "employee_init 3;" empl_reset *s_medics		color "1 1 1 1" }
 
-	pic bt_scientists
+	pic bt_soldier
 	{
-		tooltip	"_Hire scientists"
+		tooltip	"_Hire soldiers"
 		image	menu/button_blue
 		mousefx	true
 		pos		"615 585"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ empl_scientists }
-	}
-
-	string s_scientists
-	{
-		pos	"679 595"
-		align	uc
-		color "1 1 1 0.6"
-		font	"f_big"
-		string	"_Scientists"
-	}
-
-	pic bt_soldiers
-	{
-		tooltip	"_Hier soldiers"
-		image	menu/button_blue
-		mousefx	true
-		pos		"615 655"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ empl_soldiers }
@@ -636,11 +618,31 @@ menu employees
 
 	string s_soldiers
 	{
-		pos	"679 665"
+		pos	"679 595"
 		align	uc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Soldiers"
+	}
+
+	pic bt_scientists
+	{
+		tooltip	"_Hier scientists"
+		image	menu/button_blue
+		mousefx	true
+		pos		"615 655"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ empl_scientists }
+	}
+
+	string s_scientists
+	{
+		pos	"679 665"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Scientists"
 	}
 
 	pic bt_workers
@@ -661,6 +663,26 @@ menu employees
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Workers"
+	}
+
+	pic bt_medics
+	{
+		tooltip	"_Hire medics"
+		image	menu/button_blue
+		mousefx	true
+		pos		"374 290"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ empl_medics }
+	}
+
+	string s_medics
+	{
+		pos	"438 300"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Medics"
 	}
 
 	pic bt_continue
