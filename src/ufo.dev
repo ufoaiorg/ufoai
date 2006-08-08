@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_ports/win32/libjpeg.lib_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=91
+UnitCount=93
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -31,7 +31,7 @@ CompilerSettings=0000001000000001000000
 
 [Unit1]
 FileName=ports\win32\cd_win.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -41,7 +41,7 @@ BuildCmd=
 
 [Unit2]
 FileName=client\cl_actor.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -51,7 +51,7 @@ BuildCmd=
 
 [Unit3]
 FileName=client\cl_basemanagement.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -61,7 +61,7 @@ BuildCmd=
 
 [Unit4]
 FileName=client\cl_campaign.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -71,7 +71,7 @@ BuildCmd=
 
 [Unit5]
 FileName=client\cl_fx.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -81,7 +81,7 @@ BuildCmd=
 
 [Unit6]
 FileName=client\cl_input.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -91,7 +91,7 @@ BuildCmd=
 
 [Unit7]
 FileName=client\cl_le.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -101,7 +101,7 @@ BuildCmd=
 
 [Unit8]
 FileName=client\cl_main.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -111,7 +111,7 @@ BuildCmd=
 
 [Unit9]
 FileName=client\cl_menu.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -121,7 +121,7 @@ BuildCmd=
 
 [Unit10]
 FileName=client\cl_parse.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -131,7 +131,7 @@ BuildCmd=
 
 [Unit11]
 FileName=client\cl_particle.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -141,7 +141,7 @@ BuildCmd=
 
 [Unit12]
 FileName=client\cl_research.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -151,7 +151,7 @@ BuildCmd=
 
 [Unit13]
 FileName=client\cl_scrn.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -161,7 +161,7 @@ BuildCmd=
 
 [Unit14]
 FileName=client\cl_sequence.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -171,7 +171,7 @@ BuildCmd=
 
 [Unit15]
 FileName=client\cl_team.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -181,7 +181,7 @@ BuildCmd=
 
 [Unit16]
 FileName=client\cl_ufopedia.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -191,7 +191,7 @@ BuildCmd=
 
 [Unit17]
 FileName=client\cl_view.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -201,7 +201,7 @@ BuildCmd=
 
 [Unit18]
 FileName=qcommon\cmd.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -211,7 +211,7 @@ BuildCmd=
 
 [Unit19]
 FileName=qcommon\cmodel.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -221,7 +221,7 @@ BuildCmd=
 
 [Unit20]
 FileName=qcommon\common.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -231,7 +231,7 @@ BuildCmd=
 
 [Unit21]
 FileName=ports\win32\conproc.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -241,7 +241,7 @@ BuildCmd=
 
 [Unit22]
 FileName=client\console.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -251,7 +251,7 @@ BuildCmd=
 
 [Unit23]
 FileName=qcommon\crc.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -261,7 +261,7 @@ BuildCmd=
 
 [Unit24]
 FileName=qcommon\cvar.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -271,7 +271,7 @@ BuildCmd=
 
 [Unit25]
 FileName=qcommon\files.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -281,7 +281,7 @@ BuildCmd=
 
 [Unit26]
 FileName=ports\win32\in_win.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -291,7 +291,7 @@ BuildCmd=
 
 [Unit27]
 FileName=client\keys.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -301,7 +301,7 @@ BuildCmd=
 
 [Unit28]
 FileName=qcommon\md4.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -311,7 +311,7 @@ BuildCmd=
 
 [Unit29]
 FileName=qcommon\net_chan.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -321,7 +321,7 @@ BuildCmd=
 
 [Unit30]
 FileName=ports\win32\net_wins.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -331,7 +331,7 @@ BuildCmd=
 
 [Unit31]
 FileName=game\q_shared.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -341,7 +341,7 @@ BuildCmd=
 
 [Unit32]
 FileName=ports\win32\q_shwin.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -351,7 +351,7 @@ BuildCmd=
 
 [Unit33]
 FileName=qcommon\scripts.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -361,7 +361,7 @@ BuildCmd=
 
 [Unit34]
 FileName=client\snd_ref.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -371,7 +371,7 @@ BuildCmd=
 
 [Unit35]
 FileName=client\snd_mem.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -381,7 +381,7 @@ BuildCmd=
 
 [Unit36]
 FileName=client\snd_mix.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -391,7 +391,7 @@ BuildCmd=
 
 [Unit37]
 FileName=server\sv_ccmds.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -401,7 +401,7 @@ BuildCmd=
 
 [Unit38]
 FileName=server\sv_game.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -411,7 +411,7 @@ BuildCmd=
 
 [Unit39]
 FileName=server\sv_init.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -421,7 +421,7 @@ BuildCmd=
 
 [Unit40]
 FileName=server\sv_main.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -431,7 +431,7 @@ BuildCmd=
 
 [Unit41]
 FileName=server\sv_send.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -441,7 +441,7 @@ BuildCmd=
 
 [Unit42]
 FileName=server\sv_user.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -451,7 +451,7 @@ BuildCmd=
 
 [Unit43]
 FileName=server\sv_world.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -461,7 +461,7 @@ BuildCmd=
 
 [Unit44]
 FileName=ports\win32\sys_win.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -471,7 +471,7 @@ BuildCmd=
 
 [Unit45]
 FileName=ports\win32\vid_dll.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -481,7 +481,7 @@ BuildCmd=
 
 [Unit46]
 FileName=client\x86.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -491,7 +491,7 @@ BuildCmd=
 
 [Unit47]
 FileName=client\anorms.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -501,7 +501,7 @@ BuildCmd=
 
 [Unit48]
 FileName=client\cdaudio.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -511,7 +511,7 @@ BuildCmd=
 
 [Unit49]
 FileName=client\cl_basemanagement.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -521,7 +521,7 @@ BuildCmd=
 
 [Unit50]
 FileName=client\cl_research.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -531,7 +531,7 @@ BuildCmd=
 
 [Unit51]
 FileName=client\client.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -541,7 +541,7 @@ BuildCmd=
 
 [Unit52]
 FileName=ports\win32\conproc.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -551,7 +551,7 @@ BuildCmd=
 
 [Unit53]
 FileName=client\console.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -561,7 +561,7 @@ BuildCmd=
 
 [Unit54]
 FileName=game\game.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -571,7 +571,7 @@ BuildCmd=
 
 [Unit55]
 FileName=client\input.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -581,7 +581,7 @@ BuildCmd=
 
 [Unit56]
 FileName=client\keys.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -591,7 +591,7 @@ BuildCmd=
 
 [Unit57]
 FileName=ports\win32\libintl.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -601,7 +601,7 @@ BuildCmd=
 
 [Unit58]
 FileName=client\os_types.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -611,7 +611,7 @@ BuildCmd=
 
 [Unit59]
 FileName=game\q_shared.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -621,7 +621,7 @@ BuildCmd=
 
 [Unit60]
 FileName=qcommon\qcommon.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -631,7 +631,7 @@ BuildCmd=
 
 [Unit61]
 FileName=qcommon\qfiles.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -641,7 +641,7 @@ BuildCmd=
 
 [Unit62]
 FileName=client\ref.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -651,7 +651,7 @@ BuildCmd=
 
 [Unit63]
 FileName=client\screen.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -661,7 +661,7 @@ BuildCmd=
 
 [Unit64]
 FileName=server\server.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -671,7 +671,7 @@ BuildCmd=
 
 [Unit65]
 FileName=client\snd_loc.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -681,7 +681,7 @@ BuildCmd=
 
 [Unit66]
 FileName=client\sound.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -691,7 +691,7 @@ BuildCmd=
 
 [Unit67]
 FileName=client\vid.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -701,7 +701,7 @@ BuildCmd=
 
 [Unit68]
 FileName=ports\win32\vorbisfile.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -711,7 +711,7 @@ BuildCmd=
 
 [Unit69]
 FileName=ports\win32\winquake.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -928,28 +928,28 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_radar.c -o cl_radar.o $(CFLAGS)
 
 [Unit92]
-FileName=client\cl_radar.c
-CompileCpp=0
-Folder=Source Files
+FileName=client\cl_employee.h
+CompileCpp=1
+Folder=Header Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_radar.c -o cl_radar.o $(CFLAGS)
+BuildCmd=
 
 [Unit93]
-FileName=client\cl_radar.c
+FileName=client\cl_employee.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_radar.c -o cl_radar.o $(CFLAGS)
+BuildCmd=$(CC) -c cl_employee.c -o cl_employee.o $(CFLAGS)
 
 [Unit70]
 FileName=ports\win32\ufo.ico
-Folder="Resource Files"
+Folder=Resource Files
 Compile=0
 Link=0
 Priority=1000
