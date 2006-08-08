@@ -487,58 +487,118 @@ qboolean E_RemoveEmployee(building_t * building)
 
 
 /**
- * @brief Function that does the real employee adding
- * @param[in] b Pointer to building
- * @param[in] amount Amount of employees to assign
- * @sa E_BuildingAddEmployees
- * @sa E_BuildingRemoveEmployees
- * @sa E_BuildingAddEmployees_f
+ * @brief Gets an unassigned employee of a given type from the global list.
+ *
+ * @todo E_GetFreeEmployee
+ * @param[in] type The type of employee to search.
+ * @return employee_t 
+  * @sa E_EmployeeIsUnassinged
  */
-int E_BuildingAddEmployees(building_t *b, employeeType_t type, int amount)
+employee_t * E_GetUnassingedEmployee(employeeType_t type)
 {
-	employees_t *employees_in_building = NULL;
+	int i;
 	employee_t *employee = NULL;
-
-	if ( gd.numEmployees >= MAX_EMPLOYEES ) {
-		Com_Printf("Employee limit hit\n");
-		return 0;
-	}
-
-	if ( type >= MAX_EMPL )
-		return 0;
-
-	employees_in_building = &b->assigned_employees;
-	if (employees_in_building->maxEmployees <= 0) {
-		Com_Printf("No employees for this building: '%s'\n", b->id);
-		return 0;
-	}
-
-	for (employees_in_building->numEmployees = 0; employees_in_building->numEmployees < amount;) {
-		/* check for overflow */
-		if (employees_in_building->numEmployees >= MAX_EMPLOYEES_IN_BUILDING)
+	
+	for (i = 0; i < gd.numEmployees; i++) {
+		employee = &gd.employees[i];
+		if ((employee->type == type) && E_EmployeeIsUnassinged(employee)) {
 			break;
-		/* assign random employee infos. */
-		/* link this employee in the building to the global employee-list. */
-		employees_in_building->assigned[employees_in_building->numEmployees] = gd.numEmployees;
-		employee = &gd.employees[gd.numEmployees];
-		memset(employee, 0, sizeof(employee_t));
-		employee->idx = gd.numEmployees;
-		employee->type = type;
-
-		employees_in_building->numEmployees++;
-		gd.numEmployees++;
+		} else {
+			employee = NULL;
+		}
 	}
-	return 0;
+	return employee;
 }
 
 /**
- * @brief
+ * @brief Gets the number of unassigned employees of a given type from the global list.
+ *
+ * @param[in] type The type of employee to search.
+ * @return int number of found employees.
+ * @sa E_EmployeeIsUnassinged
+ * @sa E_GetUnassingedEmployee
+*/
+int E_GetUnassingedEmployeesByType(employeeType_t type)
+{
+	int i;
+	int amount;
+	employee_t *employee = NULL;
+	
+	for (i = 0; i < gd.numEmployees; i++) {
+		employee = &gd.employees[i];
+		if ((employee->type == type) && E_EmployeeIsUnassinged(employee)) {
+			amount++;
+		}
+	}
+	return amount;
+}
+
+/**
+ * @brief Function that does the real employee adding
+ * @note This will only add to quarters right now.
+ * @param[in] b Pointer to building
+ * @param[in] amount Amount of employees to assign
  * @sa E_BuildingAddEmployees
- * Script function for adding new employees to a building
+ * @sa E_BuildingAddEmployees_f
+ * @todo This function should look for unassinged employees for the give type in the global list (abort if not enough are found) and assign them to the building.
+ */
+qboolean E_BuildingAddEmployees(building_t *building, employeeType_t type, int amount)
+{
+	employees_t *employees_in_building = NULL;
+	employee_t *employee = NULL;
+	int unassinged_empl;
+	int i;
+	
+	if (!building) return qfalse;
+
+	if ( building->type != B_QUARTERS) {
+		Com_Printf("Buulding is not a quarter.\n");
+		return qfalse;
+	}
+	
+	if ( type >= MAX_EMPL )
+		return qfalse;
+	
+	unassinged_empl = E_GetUnassingedEmployeesByType(type);
+	
+	if ( unassinged_empl < amount) {
+		Com_Printf("Not enough employees free of the given type (only %i instead of %i).\n", unassinged_empl, amount);
+		return qfalse;
+	}
+	
+	employees_in_building = &building->assigned_employees;
+	if (employees_in_building->maxEmployees <= 0) {
+		Com_Printf("No employees for this building: '%s'\n", building->id);
+		return qfalse;
+	}
+
+	if ((employees_in_building->numEmployees + amount) >  employees_in_building->maxEmployees) {
+		Com_Printf("The given amount of employees will not fit into this building: '%s'\n", building->id);
+		return qfalse;
+	}
+	
+	for (i = 0; i < amount; i++) {
+		/* Get unassigned empl of given type. */
+		employee = E_GetUnassingedEmployee(type)
+		/* Assign empl to building. */
+		if (!employee || !E_AssignEmployee(building,type)) {
+			Com_Printf("Assignment of one employee went wrong: '%s'\n", building->id);
+		}		
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Script function for adding new employees to a building.
+ * @note This will only add to quarters right now.
+ * @sa E_BuildingAddEmployees
  */
 void E_BuildingAddEmployees_f ( void )
 {
+	int i;
+	int amount;
 	employeeType_t type;
+	
 	Com_DPrintf("E_BuildingAddEmployees_f started\n");
 	/* can be called from everywhere - so make a sanity check here */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
@@ -548,58 +608,26 @@ void E_BuildingAddEmployees_f ( void )
 		Com_Printf("Usage: building_add_employees <type> <amount>\n");
 		return;
 	}
-
+	
 	type = E_GetEmployeeType(Cmd_Argv(1));
 	Com_DPrintf("E_BuildingAddEmployees_f %i/%i\n", type, MAX_EMPL);
 	if (type == MAX_EMPL)
 		return;
 
-	if (!E_BuildingAddEmployees(baseCurrent->buildingCurrent, type, atoi(Cmd_Argv(2))))
-		Com_DPrintf("Employees not added - at least not all\n");
-	Com_DPrintf("E_BuildingAddEmployees_f finished.\n");
-}
+	amount = atoi(Cmd_Argv(2));
+	
+	if ( (gd.numEmployees + amount) < gd.maxEmployees ) {
+		for (i = 0; i < amount; i++) {
+			E_CreateEmployee(type);
+		}
 
-/**
- * @brief Remove some employees from the current building
- * @param amount[in] Amount of employees you would like to remove from the current building
- * @sa E_BuildingAddEmployees
- * @sa E_BuildingRemoveEmployees_f
- *
- * @note baseCurrent and baseCurrent->buildingCurrent may not be NULL
- */
-static int E_BuildingRemoveEmployees (building_t *b, employeeType_t type, int amount)
-{
-	if ( type >= MAX_EMPL )
-		return 0;
-	/* TODO: Implement me */
-	return 0;
-}
-
-/**
- * @brief
- * @sa E_BuildingRemoveEmployees
- * Script function for removing employees from a building
- */
-static void E_BuildingRemoveEmployees_f ( void )
-{
-	employeeType_t type;
-	/* can be called from everywhere - so make a sanity check here */
-	if (!baseCurrent || !baseCurrent->buildingCurrent)
-		return;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: building_remove_employees <type> <amount>\n");
-		return;
+		if (!E_BuildingAddEmployees(baseCurrent->buildingCurrent, type, amount))
+			Com_DPrintf("No Employees added.\n");
+		Com_DPrintf("E_BuildingAddEmployees_f finished.\n");
+	} else {
+		Com_DPrintf("E_BuildingAddEmployees_f: maxEmployees reached (num=$i, max=$i, new=$i).\n",gd.numEmployees, gd.maxEmployees, ammount);
 	}
-
-	type = E_GetEmployeeType(Cmd_Argv(1));
-	if (type == MAX_EMPL)
-		return;
-
-	if (!E_BuildingRemoveEmployees(baseCurrent->buildingCurrent, type, atoi(Cmd_Argv(2))))
-		Com_DPrintf("Employees not removed - at least not all\n");
 }
-
 
 /**
  * @brief Returns the number of employees in the given base (in the quaters) of the given type.
@@ -690,7 +718,6 @@ void E_ResetEmployee(void)
 	/* add commands */
 	Cmd_AddCommand("employee_init", E_EmployeeList);
 	Cmd_AddCommand("building_add_employees", E_BuildingAddEmployees_f );
-	Cmd_AddCommand("building_remove_employees", E_BuildingRemoveEmployees_f );
 	Cmd_AddCommand("employee_hire", E_EmployeeHire_f);
 	Cmd_AddCommand("employee_select", E_EmployeeSelect_f);
 }
