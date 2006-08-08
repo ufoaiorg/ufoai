@@ -972,6 +972,7 @@ void CL_Stats_Update(void)
   * @sa CL_GameLoad
   * @sa CL_SaveEquipment
   */
+#if 0
 void CL_LoadEquipment ( sizebuf_t *buf, base_t* base )
 {
 	item_t item;
@@ -1002,11 +1003,13 @@ void CL_LoadEquipment ( sizebuf_t *buf, base_t* base )
 		}
 	}
 }
+#endif
 
 /**
   * @brief Stores the equipment for a game
   * @sa CL_LoadEquipment
   */
+#if 0
 void CL_SaveEquipment ( sizebuf_t *buf, character_t *team, const int num )
 {
 	invList_t *ic;
@@ -1022,8 +1025,8 @@ void CL_SaveEquipment ( sizebuf_t *buf, character_t *team, const int num )
 		/* terminate list */
 		MSG_WriteByte(buf, NONE);
 	}
-
 }
+#endif
 
 /**
  * @brief Saved the complete message stack
@@ -1062,7 +1065,6 @@ void CL_GameSave(char *filename, char *comment)
 {
 	stageState_t *state;
 	actMis_t *mis;
-	base_t *base;
 	sizebuf_t sb;
 	char savegame[MAX_OSPATH];
 	message_t *message;
@@ -1162,8 +1164,8 @@ void CL_GameSave(char *filename, char *comment)
 		MSG_WriteLong(&sb, mis->expire.sec);
 	}
 
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
-		CL_SaveEquipment( &sb, base->wholeTeam, base->numWholeTeam );
+/*	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
+		CL_SaveEquipment( &sb, base->wholeTeam, base->numWholeTeam );*/
 
 	/* save all the stats */
 	SZ_Write(&sb, &stats, sizeof(stats));
@@ -1213,6 +1215,26 @@ static void CL_GameSaveCmd(void)
 }
 
 /**
+ * @brief Return a given character pointer of an employee in the given base of a given type
+ * @param[in] base Which base the employee should be hired in
+ * @param[in] type Which employee type do we search
+ * @param[in] num Which employee id (in global employee array)
+ * @return character_t pointer or NULL
+ */
+character_t* CL_GetHiredCharacter(base_t* base, employeeType_t type, int num)
+{
+	int i, j;
+	for (i=0; i<gd.numEmployees[EMPL_SOLDIER]; i++) {
+		if (gd.employees[EMPL_SOLDIER][i].hired && gd.employees[EMPL_SOLDIER][i].baseIDHired == base->idx) {
+			j++;
+			if (j == num)
+				return &gd.employees[EMPL_SOLDIER][i].chr;
+		}
+	}
+	return NULL;
+}
+
+/**
  * @brief Will fix the pointers in gd after loading
  */
 void CL_UpdatePointersInGlobalData(void)
@@ -1232,10 +1254,10 @@ void CL_UpdatePointersInGlobalData(void)
 		}
 
 		/* now fix the curTeam pointers */
-		for (i = 0, p = 0; i < base->numWholeTeam; i++)
+		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 			if (base->teamMask[base->aircraftCurrent] & (1 << i)) {
 				/* maybe we already have soldiers in this base */
-				base->curTeam[p] = &base->wholeTeam[i];
+				base->curTeam[p] = CL_GetHiredCharacter(base, EMPL_SOLDIER, i);
 				p++;
 			}
 		/* rest will be null */
@@ -1263,7 +1285,6 @@ int CL_GameLoad(char *filename)
 	setState_t dummy;
 	sizebuf_t sb;
 	byte *buf;
-	base_t *base;
 	char *name, *title, *text;
 	FILE *f;
 	int version, dataSize;
@@ -1473,8 +1494,8 @@ int CL_GameLoad(char *filename)
 		}
 	}
 
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
-		CL_LoadEquipment( &sb, base );
+/*	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
+		CL_LoadEquipment( &sb, base );*/
 
 	/* load the stats */
 	memcpy(&stats, sb.data + sb.readcount, sizeof(stats_t));
@@ -1771,7 +1792,7 @@ void CL_GameAutoGo(void)
 	/* add recruits */
 	if (won && mis->recruits)
 		for (i = 0; i < mis->recruits; i++)
-			CL_GenerateCharacter(curCampaign->team, EMPL_SOLDIER);
+			E_CreateEmployee(EMPL_SOLDIER);
 
 	/* campaign effects */
 	selMis->cause->done++;
@@ -1965,9 +1986,9 @@ void CL_UpdateCharacterStats(int won)
 	int i, j;
 
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
-	for (i=0; i<baseCurrent->numWholeTeam; i++)
+	for (i=0; i<gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
-			chr = &baseCurrent->wholeTeam[i];
+			chr = CL_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			assert(chr);
 			chr->assigned_missions++;
 
