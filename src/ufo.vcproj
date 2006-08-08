@@ -512,6 +512,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\client\cl_employee.c"
+				>
+			</File>
+			<File
 				RelativePath=".\client\cl_fx.c"
 				>
 			</File>
@@ -745,6 +749,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\client\cl_employee.h"
+				>
+			</File>
+			<File
 				RelativePath=".\client\cl_global.h"
 				>
 			</File>
@@ -817,11 +825,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ports\win32\os_types.h"
+				RelativePath=".\client\os_types.h"
 				>
 			</File>
 			<File
-				RelativePath=".\client\os_types.h"
+				RelativePath=".\ports\win32\os_types.h"
 				>
 			</File>
 			<File
