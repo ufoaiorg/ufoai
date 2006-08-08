@@ -45,7 +45,7 @@ static void E_EmployeeList (void)
 	employee_t* employee;
 
 	/* can be called from everywhere without a started game */
-	if (!baseCurrent ||!curCampaign)
+	if (!baseCurrent || !curCampaign)
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -139,33 +139,12 @@ qboolean E_EmployeeIsFree(employee_t * employee)
 employee_t* E_GetEmployee(base_t* base, employeeType_t type, int num)
 {
 	int i;
-	for (i=0; i<gd.numEmployees[EMPL_SOLDIER]; i++) {
-		if (i == num)
-			return &gd.employees[EMPL_SOLDIER][i];
+	for (i=0; i<gd.numEmployees[type]; i++) {
+		if (i == num && gd.employees[type][i].baseIDHired == base->idx)
+			return &gd.employees[type][i];
 	}
 	return NULL;
 }
-
-/**
- * @brief Return a given employee pointer in the given base of a given type
- * @param[in] base Which base the employee should be hired in
- * @param[in] type Which employee type do we search
- * @param[in] num Which employee id (in global employee array)
- * @return employee_t pointer or NULL
- */
-employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int num)
-{
-	int i, j = 0;
-	for (i=0; i<gd.numEmployees[EMPL_SOLDIER]; i++) {
-		if (gd.employees[EMPL_SOLDIER][i].hired && gd.employees[EMPL_SOLDIER][i].baseIDHired == base->idx) {
-			j++;
-			if (j == num)
-				return &gd.employees[EMPL_SOLDIER][i];
-		}
-	}
-	return NULL;
-}
-
 
 /**
  * @brief Return a given character pointer of an employee in the given base of a given type
@@ -184,7 +163,23 @@ character_t* E_GetCharacter(base_t* base, employeeType_t type, int num)
 }
 
 /**
- * @brief Return a given character pointer of an employee in the given base of a given type
+ * @brief Return a given hired employee pointer in the given base of a given type
+ * @param[in] base Which base the employee should be hired in
+ * @param[in] type Which employee type do we search
+ * @param[in] num Which employee id (in global employee array)
+ * @return employee_t pointer or NULL
+ */
+employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int num)
+{
+	employee_t* employee = E_GetEmployee(base, type, num);
+	if (employee && employee->hired)
+		return employee;
+
+	return NULL;
+}
+
+/**
+ * @brief Return a given character pointer of a hired employee in the given base of a given type
  * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
  * @param[in] num Which employee id (in global employee array)
@@ -212,6 +207,29 @@ qboolean E_EmployeeIsUnassinged(employee_t * employee)
 }
 
 /**
+ * @brief Gets an unassigned employee of a given type from the given base.
+ *
+ * @param[in] type The type of employee to search.
+ * @return employee_t
+ * @sa E_EmployeeIsUnassinged
+ * @sa E_EmployeesInBase
+ * @note unassigned is not unhired - they are already hired in a base but are at quarters
+ */
+employee_t * E_GetUnassingedEmployee(base_t* base, employeeType_t type)
+{
+	int i;
+	employee_t *employee;
+
+	for (i = 0; i < gd.numEmployees[type]; i++) {
+		employee = &gd.employees[type][i];
+		if ( employee->baseIDHired == base->idx 
+			 && E_EmployeeIsUnassinged(employee) )
+			return employee;
+	}
+	return NULL;
+}
+
+/**
  * @brief Creates an entry of a new employee in the global list and assignes it to no building/base.
  *
  * @param[in] type Tell the function what type of employee to create.
@@ -220,7 +238,7 @@ qboolean E_EmployeeIsUnassinged(employee_t * employee)
  */
 employee_t* E_CreateEmployee(employeeType_t type)
 {
-	employee_t* employee = NULL;
+	employee_t* employee;
 
 	if (type == MAX_EMPL) return NULL;
 
@@ -260,7 +278,7 @@ employee_t* E_CreateEmployee(employeeType_t type)
 }
 
 /**
- * @brief Removes the employee compeltely from the game (buildings + global list).
+ * @brief Removes the employee completely from the game (buildings + global list).
  *
  * @param[in] employee The pointer to the employee you want to remove.
  * @return True if the employee was removed sucessfully, otherwise false.
@@ -314,7 +332,7 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
  *	1.) From global list to quarters (building_dest is a quarter). This will search for compeltely unassigned employee of the given type in the global list gd.employees and assign them to the quarter if it has free space. The employee will only be linked to a quarter.
  *	2.) From quarters to 'any' other building (i.e. lab + workshop for now). This will search for a free (i.e not yet assigned to a building other than quarters) employee of the given type in a quarter in the same base building_dest is located in and. The employee will be linked to its quarter and the assinged building.
  *
- * @todo Add check for destination building vs. employee_type and abort if they do not match.
+ * @todo Add check for base vs. employee_type and abort if they do not match.
  *
  * @param[in] building_dest Which building to assign the employee to.
  * @param[in] employee_type	What type of employee to assign to the building.
@@ -342,40 +360,42 @@ qboolean E_AssignEmployee(base_t *base, employeeType_t type)
 /**
  * @brief Remove one employee from building.
  *
- * @todo Add check for destination building vs. employee_type and abort if they do not match.
+ * @todo Add check for base vs. employee_type and abort if they do not match.
  * @sa E_AssignEmployee
  * @param[in] building Which building to remove the employee from. Can be any type of building that has employees in it. If quarters are given the employee will be removed from every other building as well.
  *
- * @return Returns true if adding was possible/sane otherwise false.
+ * @return Returns true if removing was possible/sane otherwise false.
  */
 qboolean E_RemoveEmployee(base_t* base, employeeType_t type, int num)
 {
 	int i;
-	for (i=0; i<gd.numEmployees[type];i++)
-		if (i==num) {
 
-			gd.numEmployees[type]--;
+	for (i=0; i<gd.numEmployees[type];i++)
+		if (i==num && gd.employees[type][i].baseIDHired == base->idx) {
+
+			/* TODO */
 			break;
 		}
-	for (;i<gd.numEmployees[type];i++) {
 
-	}
+	/* TODO */
 	return qfalse;
 }
 
 /**
- * @brief Counts unassigned employees of a given type in a given base
+ * @brief Counts hired employees of a given type in a given base
+ *
  * @param[in] type The type of employee to search.
  * @param[in] base The base where we count
+ * @return count of hired employees of a given type in a given base
  */
-int E_GetUnassingedEmployeeCount(base_t* base, employeeType_t type)
+int E_CountHired(base_t* base, employeeType_t type)
 {
-	int count, i;
-	employee_t *employee = NULL;
+	int count = 0, i;
+	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->baseIDHired == base->idx && employee->buildingID < 0)
+		if (employee->hired && employee->baseIDHired == base->idx)
 			count++;
 	}
 	return count;
@@ -388,60 +408,35 @@ int E_GetUnassingedEmployeeCount(base_t* base, employeeType_t type)
  * @param[in] base The base where we count
  * @return count of hired employees of a given type in a given base
  */
-int E_GetUnhiredCharacterCount(base_t* base, employeeType_t type)
+int E_CountUnhired(base_t* base, employeeType_t type)
 {
 	int count = 0, i;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (!employee->hired)
+		if (!employee->hired && employee->baseIDHired == base->idx)
 			count++;
 	}
 	return count;
 }
 
 /**
- * @brief Counts hired employees of a given type in a given base
- *
+ * @brief Counts unassigned employees of a given type in a given base
  * @param[in] type The type of employee to search.
  * @param[in] base The base where we count
- * @return count of hired employees of a given type in a given base
  */
-int E_GetHiredCharacterCount(base_t* base, employeeType_t type)
+int E_CountUnassinged(base_t* base, employeeType_t type)
 {
 	int count = 0, i;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->hired && employee->baseIDHired == base->idx)
+		if (employee->buildingID < 0 && employee->baseIDHired == base->idx)
 			count++;
 	}
 	return count;
-}
-
-/**
- * @brief Gets an unassigned employee of a given type from the global list.
- *
- * @param[in] type The type of employee to search.
- * @return employee_t
- * @sa E_EmployeeIsUnassinged
- * @sa E_EmployeesInBase
- * @note unassigned is not unhired - they are already hired in a base but are at quarters
- */
-employee_t * E_GetUnassingedEmployee(employeeType_t type, base_t* base)
-{
-	int i;
-	employee_t *employee = NULL;
-
-	for (i = 0; i < gd.numEmployees[type]; i++) {
-		employee = &gd.employees[type][i];
-		if (employee->baseIDHired == base->idx )
-			if (E_EmployeeIsUnassinged(employee))
-				return employee;
-	}
-	return NULL;
 }
 
 /**

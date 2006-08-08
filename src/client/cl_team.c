@@ -554,7 +554,7 @@ void CL_UpdateHireVar(void)
 	baseCurrent->hiredMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent];
 
 	/* update curTeam list */
-	for (i = 0, p = 0; i < E_GetUnhiredCharacterCount(baseCurrent, EMPL_SOLDIER); i++)
+	for (i = 0, p = 0; i < E_CountUnhired(baseCurrent, EMPL_SOLDIER); i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
@@ -562,7 +562,7 @@ void CL_UpdateHireVar(void)
 
 	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
 		Sys_Error("CL_UpdateHireVar: numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",
-			E_GetHiredCharacterCount(baseCurrent, EMPL_SOLDIER),
+			E_CountHired(baseCurrent, EMPL_SOLDIER),
 			baseCurrent->aircraftCurrent,
 			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent],
 			p,
