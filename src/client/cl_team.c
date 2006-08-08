@@ -152,18 +152,19 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type)
 void CL_ResetCharacters(base_t * base)
 {
 	int i;
+	character_t *chr;
 
 	/* reset inventory data */
-	for (i = 0; i < MAX_WHOLETEAM; i++) {
-		(base->teamInv[i]).c[csi.idFloor] = NULL;
-		Com_DestroyInventory(&base->teamInv[i]);
-/*		base->teamInv[i].c[csi.idFloor] = base->equipment; */
-		base->wholeTeam[i].inv = &base->teamInv[i];
+	for (i = 0; i < MAX_EMPLOYEES; i++) {
+		chr = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
+		if (!chr)
+			continue;
+		chr->inv->c[csi.idFloor] = NULL;
+		Com_DestroyInventory(chr->inv);
 	}
 
 	/* reset hire info */
 	Cvar_ForceSet("cl_selected", "0");
-	base->numWholeTeam = 0;
 	base->numHired = 0;
 	for (i = 0; i < base->numAircraftInBase; i++)
 		base->teamMask[i] = base->numOnTeam[i] = 0;
@@ -192,8 +193,8 @@ static void CL_ChangeNameCmd(void)
 	if (!baseCurrent)
 		return;
 
-	if (sel >= 0 && sel < baseCurrent->numWholeTeam)
-		Q_strncpyz(baseCurrent->wholeTeam[sel].name, Cvar_VariableString("mn_name"), MAX_VAR);
+	if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER])
+		Q_strncpyz(gd.employees[EMPL_SOLDIER][sel].chr.name, Cvar_VariableString("mn_name"), MAX_VAR);
 }
 
 
@@ -205,7 +206,7 @@ static void CL_ChangeSkinCmd(void)
 	int sel, newSkin;
 
 	sel = cl_selected->value;
-	if (sel >= 0 && sel < baseCurrent->numWholeTeam) {
+	if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
 		newSkin = (int) Cvar_VariableValue("mn_skin") + 1;
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
@@ -345,13 +346,13 @@ void CL_CleanTempInventory(void)
 		return;
 
 	Com_DestroyInventory(&baseCurrent->equipment);
-	for (i = 0; i < MAX_WHOLETEAM; i++)
+	for (i = 0; i < MAX_EMPLOYEES; i++)
 		for (k = 0; k < csi.numIDs; k++)
 			if (k == csi.idEquip)
-				baseCurrent->teamInv[i].c[k] = NULL;
+				gd.employees[EMPL_SOLDIER][i].inv.c[k] = NULL;
 			/* idFloor and idEquip are temp */
 			else if (csi.ids[k].temp)
-				Com_EmptyContainer(&baseCurrent->teamInv[i], k);
+				Com_EmptyContainer(&gd.employees[EMPL_SOLDIER][i].inv, k);
 }
 
 /**
@@ -380,17 +381,17 @@ static void CL_GenerateEquipmentCmd(void)
 
 	/* store hired names */
 	Cvar_ForceSet("cl_selected", "0");
-	for (i = 0, p = 0; i < baseCurrent->numWholeTeam; i++)
+	for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
 			/* maybe we already have soldiers in this base */
-			baseCurrent->curTeam[p] = &baseCurrent->wholeTeam[i];
+			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			Com_DPrintf("add %s to curTeam (pos: %i)\n", baseCurrent->curTeam[p]->name, p);
 			Cvar_ForceSet(va("mn_name%i", p), baseCurrent->curTeam[p]->name);
 			p++;
 		}
 
 	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
-		Sys_Error("CL_GenerateEquipmentCmd: numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",baseCurrent->numWholeTeam, baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p, baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
+		Sys_Error("CL_GenerateEquipmentCmd: numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",gd.numEmployees[EMPL_SOLDIER], baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p, baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
 
 	for (; p < MAX_ACTIVETEAM; p++) {
 		Cvar_ForceSet(va("mn_name%i", p), "");
@@ -398,7 +399,7 @@ static void CL_GenerateEquipmentCmd(void)
 		baseCurrent->curTeam[p] = NULL;
 	}
 
-	menuInventory = &baseCurrent->teamInv[0];
+	menuInventory = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, 0)->inv;
 	selActor = NULL;
 
 	/* reset description */
@@ -476,6 +477,7 @@ static void CL_SelectCmd(void)
 {
 	char *arg;
 	char command[MAX_VAR];
+	character_t *chr;
 	int num;
 
 	/* check syntax */
@@ -512,7 +514,7 @@ static void CL_SelectCmd(void)
 		}
 		menuInventory = baseCurrent->curTeam[num]->inv;
 	} else if (!Q_strncmp(command, "team", 4)) {
-		if (!baseCurrent || num >= baseCurrent->numWholeTeam)
+		if (!baseCurrent || num >= gd.numEmployees[EMPL_SOLDIER])
 			return;
 	}
 
@@ -522,13 +524,14 @@ static void CL_SelectCmd(void)
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
 	/* set info cvars */
+	chr = E_GetCharacter(baseCurrent, EMPL_SOLDIER, num);
 	if (!Q_strncmp(command, "team", 4)) {
-		if ( baseCurrent->wholeTeam[num].fieldSize == ACTOR_SIZE_NORMAL )
-			CL_CharacterCvars(&baseCurrent->wholeTeam[num]);
+		if ( chr->fieldSize == ACTOR_SIZE_NORMAL )
+			CL_CharacterCvars(chr);
 		else
-			CL_UGVCvars(&baseCurrent->wholeTeam[num]);
+			CL_UGVCvars(chr);
 	} else {
-		if ( baseCurrent->curTeam[num]->fieldSize == ACTOR_SIZE_NORMAL )
+		if ( chr->fieldSize == ACTOR_SIZE_NORMAL )
 			CL_CharacterCvars(baseCurrent->curTeam[num]);
 		else
 			CL_UGVCvars(baseCurrent->curTeam[num]);
@@ -551,14 +554,14 @@ void CL_UpdateHireVar(void)
 	baseCurrent->hiredMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent];
 
 	/* update curTeam list */
-	for (i = 0, p = 0; i < baseCurrent->numWholeTeam; i++)
+	for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
-			baseCurrent->curTeam[p] = &baseCurrent->wholeTeam[i];
+			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
 		}
 
 	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
-		Sys_Error("CL_UpdateHireVar: numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",baseCurrent->numWholeTeam, baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p, baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
+		Sys_Error("CL_UpdateHireVar: numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",gd.numEmployees[EMPL_SOLDIER], baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p, baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
 
 	for (; p<MAX_ACTIVETEAM; p++)
 		baseCurrent->curTeam[p] = NULL;
@@ -604,10 +607,10 @@ static void CL_MarkTeamCmd(void)
 
 	CL_UpdateHireVar();
 
-	for (i = 0; i < baseCurrent->numWholeTeam; i++) {
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 		cnt = 0;
 		alreadyInOtherShip = qfalse;
-		Cvar_ForceSet(va("mn_name%i", i), baseCurrent->wholeTeam[i].name);
+		Cvar_ForceSet(va("mn_name%i", i), gd.employees[EMPL_SOLDIER][i].chr.name);
 		for (j = 0; j < MAX_AIRCRAFT; j++) {
 			if (j==baseCurrent->aircraftCurrent)
 				continue;
@@ -623,7 +626,7 @@ static void CL_MarkTeamCmd(void)
 			Cbuf_AddText(va("listdisable%i\n", i));
 
 		for (j = 0; j < csi.numIDs; j++) {
-			for (ic = baseCurrent->wholeTeam[i].inv->c[j]; ic; ic = ic->next) {
+			for (ic = gd.employees[EMPL_SOLDIER][i].inv.c[j]; ic; ic = ic->next) {
 				if (j != csi.idFloor && j != csi.idEquip)
 					cnt++;
 			}
@@ -634,7 +637,7 @@ static void CL_MarkTeamCmd(void)
 			Cbuf_AddText(va("listholdsnoequip%i\n", i));
 	}
 
-	for (i = baseCurrent->numWholeTeam; i < (int) cl_numnames->value; i++) {
+	for (i = gd.numEmployees[EMPL_SOLDIER]; i < (int) cl_numnames->value; i++) {
 		Cbuf_AddText(va("listdisable%i\n", i));
 		Cvar_ForceSet(va("mn_name%i", i), "");
 		Cbuf_AddText(va("listholdsnoequip%i\n", i));
@@ -658,7 +661,7 @@ static void CL_HireActorCmd(void)
 	}
 	num = atoi(Cmd_Argv(1));
 
-	if (num >= baseCurrent->numWholeTeam)
+	if (num >= gd.numEmployees[EMPL_SOLDIER])
 		return;
 
 	if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << num)) {
@@ -666,14 +669,14 @@ static void CL_HireActorCmd(void)
 		Cbuf_AddText(va("listdel%i\n", num));
 
 		for (i = 0; i < csi.numIDs; i++) {
-			for (ic = baseCurrent->wholeTeam[num].inv->c[i]; ic; ic = ic->next) {
+			for (ic = gd.employees[EMPL_SOLDIER][num].inv.c[i]; ic; ic = ic->next) {
 				if (i != csi.idFloor && i != csi.idEquip)
 					cnt++;
 			}
 		}
 
 		if (cnt) {
-			Com_DestroyInventory(baseCurrent->wholeTeam[num].inv);
+			Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][num].inv);
 			Cbuf_AddText(va("listholdsnoequip%i\n", num));
 		}
 		baseCurrent->hiredMask &= ~(1 << num);
@@ -777,7 +780,7 @@ void CL_SaveTeam(char *filename)
 	MSG_WriteString(&sb, name);
 
 	/* store team */
-	CL_SendTeamInfo(&sb, baseCurrent->wholeTeam, baseCurrent->numWholeTeam);
+	CL_SendTeamInfo(&sb, baseCurrent->idx, gd.numEmployees[EMPL_SOLDIER]);
 
 	/* store assignement */
 	/* get assignement */
@@ -887,27 +890,35 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 {
 	character_t *chr;
-	int i, p;
+	employee_t *employee;
+	int i, p, num;
 
 	/* reset data */
 	CL_ResetCharacters(base);
 
 	/* read whole team list */
 	MSG_ReadByte(sb);
-	base->numWholeTeam = MSG_ReadByte(sb);
-	for (i = 0, chr = base->wholeTeam; i < base->numWholeTeam; chr++, i++)
+	num = MSG_ReadByte(sb);
+	for (i=0; i<num; i++) {
+		chr = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
+		if (!chr) {
+			/* New employee */
+			employee = E_CreateEmployee(EMPL_SOLDIER);
+			chr = &employee->chr;
+		}
 		CL_LoadTeamMember(sb, chr);
+	}
 
 	/* get assignement */
 	MSG_ReadFormat(sb, "bl", &base->numHired, &base->hiredMask);
 	for (i = 0; i < base->numAircraftInBase; i++)
 		MSG_ReadFormat(sb, "bl", &base->numOnTeam[i], &base->teamMask[i]);
 
-	Com_DPrintf("Load team with %i members and %i slots\n", base->numHired, base->numWholeTeam);
+	Com_DPrintf("Load team with %i members and %i slots\n", base->numHired, num);
 
-	for (i = 0, p = 0; i < base->numWholeTeam; i++)
+	for (i = 0, p = 0; i < num; i++)
 		if (base->teamMask[base->aircraftCurrent] & (1 << i))
-			base->curTeam[p++] = &base->wholeTeam[i];
+			base->curTeam[p++] = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
 
 	for (;p<MAX_ACTIVETEAM;p++)
 		base->curTeam[p] = NULL;
@@ -1039,7 +1050,7 @@ void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
   *
   * Called by CL_SaveTeam to store the team info
   */
-void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
+void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 {
 	character_t *chr;
 	invList_t *ic;
@@ -1052,7 +1063,8 @@ void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 	MSG_WriteByte(buf, clc_teaminfo);
 	MSG_WriteByte(buf, num);
 
-	for (i = 0, chr = team; i < num; chr++, i++) {
+	for (i = 0; i < num; i++) {
+		chr = &gd.employees[EMPL_SOLDIER][i].chr;
 		/* send the fieldSize ACTOR_SIZE_* */
 		MSG_WriteByte(buf, chr->fieldSize);
 
@@ -1163,11 +1175,12 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 		for (i=0; i<num; i++) {
 			chr = NULL;
 			/* MAX_WHOLETEAM and not numWholeTeam - maybe some other soldier died */
-			for (j=0; j<MAX_WHOLETEAM; j++)
-				if (baseCurrent->wholeTeam[j].ucn == updateCharacterArray[i].ucn) {
-					chr = &baseCurrent->wholeTeam[j];
+			for (j=0; j<MAX_EMPLOYEES; j++) {
+				chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, j);
+				if (chr->ucn == updateCharacterArray[i].ucn)
 					break;
-				}
+				chr = NULL;
+			}
 			if (!chr) {
 				Com_Printf("Warning: Could not get character with ucn: %i\n", updateCharacterArray[i].ucn);
 				continue;
@@ -1178,7 +1191,7 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 		num = 0;
 	} else {
 		num = MSG_ReadByte(buf);
-		if (num > MAX_WHOLETEAM)
+		if (num > MAX_EMPLOYEES)
 			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
 		else if (num < 0)
 			Sys_Error("CL_ParseCharacterData: MSG_ReadByte error (%i)\n", num);

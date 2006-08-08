@@ -74,5 +74,7 @@ int E_EmployeesInBase2(int base_id, employeeType_t employee_type, qboolean free_
 int E_BuildingAddEmployees(building_t* b, employeeType_t type, int amount);
 character_t* E_GetHiredCharacter(base_t* base, employeeType_t type, int num);
 employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int num);
+employee_t* E_GetEmployee(base_t* base, employeeType_t type, int num);
+character_t* E_GetCharacter(base_t* base, employeeType_t type, int num);
 
 #endif /* CLIENT_CL_EMPLOYEE */

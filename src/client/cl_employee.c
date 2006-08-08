@@ -136,6 +136,23 @@ qboolean E_EmployeeIsFree(employee_t * employee)
  * @param[in] num Which employee id (in global employee array)
  * @return employee_t pointer or NULL
  */
+employee_t* E_GetEmployee(base_t* base, employeeType_t type, int num)
+{
+	int i;
+	for (i=0; i<gd.numEmployees[EMPL_SOLDIER]; i++) {
+		if (i == num)
+			return &gd.employees[EMPL_SOLDIER][i];
+	}
+	return NULL;
+}
+
+/**
+ * @brief Return a given employee pointer in the given base of a given type
+ * @param[in] base Which base the employee should be hired in
+ * @param[in] type Which employee type do we search
+ * @param[in] num Which employee id (in global employee array)
+ * @return employee_t pointer or NULL
+ */
 employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int num)
 {
 	int i, j;
@@ -146,6 +163,23 @@ employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int num)
 				return &gd.employees[EMPL_SOLDIER][i];
 		}
 	}
+	return NULL;
+}
+
+
+/**
+ * @brief Return a given character pointer of an employee in the given base of a given type
+ * @param[in] base Which base the employee should be hired in
+ * @param[in] type Which employee type do we search
+ * @param[in] num Which employee id (in global employee array)
+ * @return character_t pointer or NULL
+ */
+character_t* E_GetCharacter(base_t* base, employeeType_t type, int num)
+{
+	employee_t* employee = E_GetEmployee(base, type, num);
+	if (employee)
+		return &(employee->chr);
+
 	return NULL;
 }
 
