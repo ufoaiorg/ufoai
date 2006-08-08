@@ -51,55 +51,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define BASE_SIZE		5
 #define MAX_BASE_LEVELS		1
 
-/* max values for employee-management */
-#define MAX_EMPLOYEES 1024
-#define MAX_EMPLOYEES_IN_BUILDING 64
-/* TODO: */
-/* MAX_EMPLOYEES_IN_BUILDING should be redefined by a config variable that is lab/workshop/quarters-specific */
-/* e.g.: */
-/* if ( !maxEmployeesInQuarter ) maxEmployeesInQuarter = MAX_EMPLOYEES_IN_BUILDING; */
-/* if ( !maxEmployeesWorkersInLab ) maxEmployeesWorkersInLab = MAX_EMPLOYEES_IN_BUILDING; */
-/* if ( !maxEmployeesInWorkshop ) maxEmployeesInWorkshop = MAX_EMPLOYEES_IN_BUILDING; */
 
 /* allocate memory for menuText[TEXT_STANDARD] contained the information about a building */
 char buildingText[MAX_LIST_CHAR];
-
-/* The types of employees */
-typedef enum {
-	EMPL_UNDEF,
-	EMPL_SOLDIER,
-	EMPL_SCIENTIST,
-	EMPL_WORKER,				/* unused right now */
-	EMPL_MEDIC,					/* unused right now */
-	EMPL_ROBOT,					/* unused right now */
-	MAX_EMPL					/* for counting over all available enums */
-} employeeType_t;
-
-/* The definition of an employee */
-typedef struct employee_s {
-	int idx;					/* self link in global employee-list. */
-	employeeType_t type;		/* What profession does this employee has. */
-
-	char speed;					/* Speed of this Worker/Scientist at research/construction. */
-
-	int base_idx;				/* what base this employee is in. */
-	int quarters;				/* The quarter this employee is assigned to. (all except EMPL_ROBOT) */
-	int lab;					/* The lab this scientist is working in. (only EMPL_SCIENTIST) */
-	int workshop;				/* The lab this worker is working in. (only EMPL_WORKER) */
-	/*int sickbay;  // The sickbay this employee is medicaly treated in. (all except EMPL_ROBOT ... since all can get injured.) */
-	/*int training_room;    // The room this soldier is training in in. (only EMPL_SOLDIER) */
-
-	struct character_s *combat_stats;	/* Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
-} employee_t;
-
-
-/* Struct to be used in building definition - List of employees. */
-typedef struct employees_s {
-	int assigned[MAX_EMPLOYEES_IN_BUILDING];	/* List of employees (links to global list). */
-	int numEmployees;			/* Current number of employees. */
-	int maxEmployees;			/* Max. number of employees (from config file) */
-	float cost_per_employee;	/* Costs per employee that are added to toom-total-costs- */
-} employees_t;
 
 typedef enum {
 	BASE_NOT_USED,
@@ -237,7 +191,7 @@ typedef struct base_s {
 
 	/* FIXME: Replace this with employees */
 	character_t wholeTeam[MAX_WHOLETEAM];
-
+	/* FIXME: Replace this with employees */
 	/* set in CL_GenerateEquipmentCmd and CL_LoadTeam */
 	character_t *curTeam[MAX_ACTIVETEAM];
 	character_t *curChr;
@@ -256,7 +210,7 @@ typedef struct base_s {
 extern base_t *baseCurrent;
 
 void B_SetSensor(void);
-void B_InitEmployees(void);
+
 void B_UpdateBaseData(void);
 base_t *B_GetBase(int id);
 void B_UpgradeBuilding(building_t * b);
@@ -267,9 +221,6 @@ building_t *B_GetUnusedLab(int base_id);
 int B_GetUnusedLabs(int base_id);
 void B_ClearBuilding(building_t * building);
 int B_EmployeesInBase2(int base_id, employeeType_t employee_type, qboolean free_only);
-qboolean B_RemoveEmployee(building_t * building);
-qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_type);
-employee_t* B_CreateEmployee(employeeType_t type);
 void B_ParseBuildings(char *id, char **text, qboolean link);
 void B_ParseBases(char *title, char **text);
 void B_BuildingInit(void);
