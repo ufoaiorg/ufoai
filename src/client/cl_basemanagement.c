@@ -706,7 +706,8 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 	value_t *edp = NULL;
 	char *errhead = "B_ParseBuildings: unexptected end of file (names ";
 	char *token = NULL, *split = NULL;
-	int employeesAmount = 0;
+	int employeesAmount = 0, i;
+	employee_t* employee;
 
 	/* get id list body */
 	token = COM_Parse(text);
@@ -792,7 +793,10 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 					*split++ = '\0';
 					employeesAmount = atoi(token);
 					Com_DPrintf("Add %i employees '%s' to '%s'\n", employeesAmount, split, building->id);
-					E_BuildingAddEmployees(building, E_GetEmployeeType(split), employeesAmount);
+					for (i=0; i<employeesAmount;i++) {
+						employee = E_CreateEmployee(employeesAmount);
+						/*E_AssignEmployee(employee);*/
+					}
 				}
 			} else
 				for (edp = valid_vars; edp->string; edp++)

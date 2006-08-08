@@ -370,41 +370,21 @@ qboolean E_RemoveEmployee(base_t* base, employeeType_t type, int num)
  * @param[in] type The type of employee to search.
  * @return employee_t
  * @sa E_EmployeeIsUnassinged
- * @sa E_EmployeesInBase2
+ * @sa E_EmployeesInBase
+ * @note unassigned is not unhired - they are already hired in a base but are at quarters
  */
-employee_t * E_GetUnassingedEmployee(employeeType_t type)
+employee_t * E_GetUnassingedEmployee(employeeType_t type, base_t* base)
 {
 	int i;
 	employee_t *employee = NULL;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (E_EmployeeIsUnassinged(employee))
-			return employee;
+		if (employee->baseIDHired == base->idx )
+			if (E_EmployeeIsUnassinged(employee))
+				return employee;
 	}
 	return NULL;
-}
-
-/**
- * @brief Gets the number of unassigned employees of a given type from the global list.
- *
- * @param[in] type The type of employee to search.
- * @return int number of found employees.
- * @sa E_EmployeeIsUnassinged
- * @sa E_GetUnassingedEmployee
-*/
-int E_GetUnassingedEmployeesByType(employeeType_t type)
-{
-	int i;
-	int amount;
-	employee_t *employee = NULL;
-
-	for (i = 0; i < gd.numEmployees[type]; i++) {
-		employee = &gd.employees[type][i];
-		if (E_EmployeeIsUnassinged(employee))
-			amount++;
-	}
-	return amount;
 }
 
 /**

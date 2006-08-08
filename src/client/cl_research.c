@@ -364,7 +364,7 @@ static void RS_ResearchDisplayInfo(void)
 	tech = researchList[researchListPos];
 
 	/* Display total number of free labs in current base. */
-	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), E_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue)));
+	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), E_GetUnassingedEmployee(EMPL_SCIENTIST, baseCurrent)));
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
 	/* Display the base this tech is researched in. */
@@ -461,7 +461,7 @@ static void RS_AssignScientist2(technology_t* tech)
 {
 	building_t *building = NULL;
 
-	if ( E_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue) <= 0 ) {
+	if ( E_GetUnassingedEmployee(EMPL_SCIENTIST, baseCurrent) <= 0 ) {
 		/* no scientists are free in this base */
 		return;
 	}
@@ -639,7 +639,7 @@ void RS_UpdateData(void)
 	/* Make everything the same (predefined in the ufo-file) color. */
 	Cbuf_AddText("research_clear\n");
 
-	available = E_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue);
+	available = E_GetUnassingedEmployee(EMPL_SCIENTIST, baseCurrent);
 
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];

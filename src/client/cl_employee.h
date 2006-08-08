@@ -70,11 +70,12 @@ qboolean E_AssignEmployee(base_t *base, employeeType_t type);
 qboolean E_RemoveEmployee(base_t* base, employeeType_t type, int num);
 employee_t* E_CreateEmployee(employeeType_t type);
 employeeType_t E_GetEmployeeType(char* type);
-int E_EmployeesInBase2(int base_id, employeeType_t employee_type, qboolean free_only);
+int E_EmployeesInBase(base_t *base, employeeType_t type, qboolean free_only);
 int E_BuildingAddEmployees(building_t* b, employeeType_t type, int amount);
 character_t* E_GetHiredCharacter(base_t* base, employeeType_t type, int num);
 employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int num);
 employee_t* E_GetEmployee(base_t* base, employeeType_t type, int num);
 character_t* E_GetCharacter(base_t* base, employeeType_t type, int num);
+employee_t * E_GetUnassingedEmployee(employeeType_t type, base_t* base);
 
 #endif /* CLIENT_CL_EMPLOYEE */
