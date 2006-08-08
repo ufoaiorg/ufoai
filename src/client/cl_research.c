@@ -365,7 +365,7 @@ static void RS_ResearchDisplayInfo(void)
 
 	/* Display total number of free labs in current base. */
 	Cvar_Set("mn_research_labs", va(_("Free labs in this base: %i"), B_GetUnusedLabs(baseCurrent->idx)));
-	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue)));
+	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), E_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue)));
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
 	/* Display the base this tech is researched in. */
@@ -456,7 +456,7 @@ static void CL_ResearchSelectCmd(void)
 /**
   * @brief Assigns scientist to the selected research-project.
   * @sa RS_AssignScientist
-  * @sa B_AssignEmployee
+  * @sa E_AssignEmployee
   */
 static void RS_AssignScientist2(int num)
 {
@@ -470,7 +470,7 @@ static void RS_AssignScientist2(int num)
 
 	tech = researchList[num];
 
-	if ( B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue) <= 0 ) {
+	if ( E_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue) <= 0 ) {
 		/* no scientists are free in this base */
 		return;
 	}
@@ -493,7 +493,7 @@ static void RS_AssignScientist2(int num)
 		}
 
 		/* Assign a scientists to the lab. */
-		if (B_AssignEmployee(&gd.buildings[baseCurrent->idx][tech->lab], EMPL_SCIENTIST)) {
+		if (E_AssignEmployee(&gd.buildings[baseCurrent->idx][tech->lab], EMPL_SCIENTIST)) {
 			tech->statusResearch = RS_RUNNING;
 		} else {
 			Com_Printf("Can't add scientist from the lab.\n");
@@ -548,7 +548,7 @@ static void RS_RemoveScientist2(int num)
 	if (tech->lab >= 0) {
 		building = &gd.buildings[tech->base_idx][tech->lab];
 		Com_DPrintf("RS_RemoveScientist: %s\n", building->name);
-		if (B_RemoveEmployee(building)) {
+		if (E_RemoveEmployee(building)) {
 			Com_DPrintf("RS_RemoveScientist: Removal done.\n");
 			employees_in_building = &building->assigned_employees;
 			if (employees_in_building->numEmployees == 0) {
@@ -699,7 +699,7 @@ void RS_UpdateData(void)
 	/* Make everything the same (predefined in the ufo-file) color. */
 	Cbuf_AddText("research_clear\n");
 
-	available = B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue);
+	available = E_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue);
 
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];

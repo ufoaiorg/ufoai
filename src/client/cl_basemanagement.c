@@ -29,10 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-building_t *B_GetFreeBuildingType(buildingType_t type);
-int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx);
-static int B_BuildingAddEmployees(building_t* b, employeeType_t type, int amount);
-
 vec2_t newBasePos;
 cvar_t *mn_base_title;
 
@@ -796,7 +792,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 					*split++ = '\0';
 					employeesAmount = atoi(token);
 					Com_DPrintf("Add %i employees '%s' to '%s'\n", employeesAmount, split, building->id);
-					B_BuildingAddEmployees(building, E_GetEmployeeType(split), employeesAmount);
+					E_BuildingAddEmployees(building, E_GetEmployeeType(split), employeesAmount);
 				}
 			} else
 				for (edp = valid_vars; edp->string; edp++)
@@ -1021,54 +1017,6 @@ void B_ClearBuilding(building_t * building)
 	default:
 		break;
 	}
-}
-
-
-/**
- * @brief Returns the number of employees in the given base (in the quaters) of the given type.
- * @sa B_EmployeesInBase
- * You can choose (free_only) if you want the number of free employees or the total number.
- * If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
- */
-int B_EmployeesInBase2(int base_idx, employeeType_t employee_type, qboolean free_only)
-{
-	int i, j;
-	int numEmployeesInBase = 0;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
-	employee_t *employee = NULL;
-
-	if (!baseCurrent) {
-		Com_DPrintf("B_EmployeesInBase2: No Base set.\n");
-		return 0;
-	}
-
-	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
-		building = &gd.buildings[base_idx][i];
-		if (building->buildingType == B_QUARTERS) {
-			/* quarters found */
-			employees_in_building = &building->assigned_employees;
-
-			/*loop trough building and add to numEmployeesInBase if a match is found. */
-			for (j = 0; j < employees_in_building->numEmployees; j++) {
-				employee = &gd.employees[employees_in_building->assigned[j]];
-				if (((employee_type == employee->type) || (employee_type == MAX_EMPL))
-					&& (E_EmployeeIsFree(employee) || !free_only))
-					numEmployeesInBase++;
-			}
-		}
-	}
-	return numEmployeesInBase;
-}
-
-/**
- * @brief Returns the number of employees in the given base (in the quaters) of the given type.
- * @sa B_EmployeesInBase2
- * If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
- */
-int B_EmployeesInBase(int base_idx, employeeType_t employee_type)
-{
-	return B_EmployeesInBase2(base_idx, employee_type, qfalse);
 }
 
 /**
@@ -1653,8 +1601,6 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("new_building", B_NewBuildingFromList);
 	Cmd_AddCommand("set_building", B_SetBuilding);
 	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle);
-	Cmd_AddCommand("building_add_employees", B_BuildingAddEmployees_f );
-	Cmd_AddCommand("building_remove_employees", B_BuildingRemoveEmployees_f );
 	Cmd_AddCommand("rename_base", B_RenameBase);
 	Cmd_AddCommand("base_attack", B_BaseAttack);
 	Cmd_AddCommand("base_changename", B_ChangeBaseNameCmd);

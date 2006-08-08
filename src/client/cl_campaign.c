@@ -797,9 +797,9 @@ static void CL_UpdateNationData(void)
 		if ( frand() <= NATION_PROBABILITY )
 			continue;
 		for (j=0; j<nation->scientists; j++) {
-			B_CreateEmployee(EMPL_SCIENTIST);
+			E_CreateEmployee(EMPL_SCIENTIST);
 			/* gd.numBases is always (at least) 1 at this point */
-			B_AssignEmployee(B_GetBuildingInBase(&gd.bases[rand() % gd.numBases], "building_quarters"), EMPL_SCIENTIST);
+			E_AssignEmployee(B_GetBuildingInBase(&gd.bases[rand() % gd.numBases], "building_quarters"), EMPL_SCIENTIST);
 		}
 		/* TODO: soldiers */
 	}
@@ -2723,7 +2723,7 @@ void CL_GameInit ( void )
 	CL_AircraftInit();
 
 	/* init employee list */
-	B_InitEmployees();
+	E_InitEmployees();
 
 	/* Init popup and map/geoscape */
 	CL_PopupInit();

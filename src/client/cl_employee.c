@@ -33,11 +33,11 @@ static int employeeCategory = 0;
 /*****************************************************
  * VISUAL/GUI STUFF
   *****************************************************/
-  
+
 /**
  * @brief Prints information about the current employee
  */
-static void EM_EmployeeInfo (void)
+static void E_EmployeeInfo (void)
 {
 	static char employeeInfo[512];
 	menuText[TEXT_EMPLOYEE_INFO] = employeeInfo;
@@ -46,7 +46,7 @@ static void EM_EmployeeInfo (void)
 /**
  * @brief Click function for employee list
  */
-static void EM_EmployeeListRightClick_f (void)
+static void E_EmployeeListRightClick_f (void)
 {
 	int num;
 
@@ -61,7 +61,7 @@ static void EM_EmployeeListRightClick_f (void)
 /**
  * @brief Click function for employee list
  */
-static void EM_EmployeeListClick_f (void)
+static void E_EmployeeListClick_f (void)
 {
 	int num;
 
@@ -71,12 +71,14 @@ static void EM_EmployeeListClick_f (void)
 
 	/* clicked which item? */
 	num = atoi(Cmd_Argv(1));
+
+/*	CL_CharacterCvars(&baseCurrent->wholeTeam[num]);*/
 }
 
 /**
  * @brief Will fill the list with employees
  */
-static void EM_EmployeeList (void)
+static void E_EmployeeList (void)
 {
 	static char employeeList[1024];
 	static char employeeAmount[256];
@@ -97,27 +99,13 @@ static void EM_EmployeeList (void)
 	/* bind the amount of available items */
 	menuText[TEXT_EMPLOYEE_AMOUNT] = employeeAmount;
 	/* now print the information about the current employee */
-	EM_EmployeeInfo();
+	E_EmployeeInfo();
 }
 
-/**
-  * @brief This is more or less the initial
-  * Bind some of the functions in this file to console-commands that you can call ingame.
-  * Called from MN_ResetMenus resp. CL_InitLocal
-  */
-void EM_ResetEmployee(void)
-{
-	/* add commands */
-	Cmd_AddCommand("employee_init", EM_EmployeeList);
-	Cmd_AddCommand("employeelist_rclick", EM_EmployeeListRightClick_f);
-	Cmd_AddCommand("employeelist_click", EM_EmployeeListClick_f);
-}
-
-/*
 
 /*****************************************************
  * EMPLOYEE BACKEND STUFF
-  *****************************************************/
+ *****************************************************/
 
 /**
  * @brief Convert string to employeeType_t
@@ -319,25 +307,25 @@ qboolean E_DeleteEmployeeFromBuilding(employee_t * employee, int building )
 	employees_t *employees_in_building = NULL;
 	qboolean found = qfalse;
 	building_t * building_ptr = NULL;
-	
+
 	if (!employee) return qfalse;
-	
+
 	building_ptr = &gd.buildings[employee->base_idx][building];
 	employees_in_building = &building_ptr->assigned_employees;
-	
+
 	found = qfalse;
-	
+
 	for (i = 0; i < (employees_in_building->numEmployees - 1); i++) {
 		if (employees_in_building->assigned[i] == employee->idx)
 			found = qtrue;
-		if (found) 
+		if (found)
 			employees_in_building->assigned[i] = employees_in_building->assigned[i + 1];
 	}
 	if (found)
 		employees_in_building->numEmployees--;
 	else
 		return qfalse;
-	
+
 	return qtrue;
 }
 
@@ -352,41 +340,41 @@ qboolean E_DeleteEmployee(employee_t * employee)
 {
 	int i;
 	qboolean found;
-	
+
 	if (!employee) return qfalse;
-		
+
 	if (employee->lab) {
 		if (E_DeleteEmployeeFromBuilding(employee, employee->lab))
 			employee->lab = -1;
 	}
-	
+
 	if (employee->workshop) {
 		if (E_DeleteEmployeeFromBuilding(employee, employee->workshop))
 			employee->workshop = -1;
 	}
-	
+
 	if (employee->quarters) {
 		if (E_DeleteEmployeeFromBuilding(employee, employee->quarters))
 			employee->quarters = -1;
 	}
-	
+
 	employee->base_idx = -1;
-	
+
 	/* remove the employee from the global list */
 	for (i = 0; i < (gd.numEmployees - 1); i++) {
 		if (gd.employees[i].idx == employee->idx)
 			found = qtrue;
-		if (found) 
+		if (found)
 			gd.employees[i] = gd.employees[i + 1];
 	}
-	
+
 	if (found) {
 		gd.numEmployees--;
 	} else {
 		Com_DPrintf("E_DeleteEmployee: Employee wasn't in the global list.\n");
 		return qfalse;
 	}
-	
+
 	return qtrue;
 }
 
@@ -541,7 +529,7 @@ qboolean E_RemoveEmployee(building_t * building)
  * @sa E_BuildingRemoveEmployees
  * @sa E_BuildingAddEmployees_f
  */
-static int E_BuildingAddEmployees(building_t *b, employeeType_t type, int amount)
+int E_BuildingAddEmployees(building_t *b, employeeType_t type, int amount)
 {
 	employees_t *employees_in_building = NULL;
 	employee_t *employee = NULL;
@@ -645,4 +633,57 @@ static void E_BuildingRemoveEmployees_f ( void )
 
 	if (!E_BuildingRemoveEmployees(baseCurrent->buildingCurrent, type, atoi(Cmd_Argv(2))))
 		Com_DPrintf("Employees not removed - at least not all\n");
+}
+
+
+/**
+ * @brief Returns the number of employees in the given base (in the quaters) of the given type.
+ * @sa E_EmployeesInBase
+ * You can choose (free_only) if you want the number of free employees or the total number.
+ * If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
+ */
+int E_EmployeesInBase2(int base_idx, employeeType_t employee_type, qboolean free_only)
+{
+	int i, j;
+	int numEmployeesInBase = 0;
+	building_t *building = NULL;
+	employees_t *employees_in_building = NULL;
+	employee_t *employee = NULL;
+
+	if (!baseCurrent) {
+		Com_DPrintf("B_EmployeesInBase2: No Base set.\n");
+		return 0;
+	}
+
+	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
+		building = &gd.buildings[base_idx][i];
+		if (building->buildingType == B_QUARTERS) {
+			/* quarters found */
+			employees_in_building = &building->assigned_employees;
+
+			/*loop trough building and add to numEmployeesInBase if a match is found. */
+			for (j = 0; j < employees_in_building->numEmployees; j++) {
+				employee = &gd.employees[employees_in_building->assigned[j]];
+				if (((employee_type == employee->type) || (employee_type == MAX_EMPL))
+					&& (E_EmployeeIsFree(employee) || !free_only))
+					numEmployeesInBase++;
+			}
+		}
+	}
+	return numEmployeesInBase;
+}
+
+/**
+  * @brief This is more or less the initial
+  * Bind some of the functions in this file to console-commands that you can call ingame.
+  * Called from MN_ResetMenus resp. CL_InitLocal
+  */
+void E_ResetEmployee(void)
+{
+	/* add commands */
+	Cmd_AddCommand("employee_init", E_EmployeeList);
+	Cmd_AddCommand("employeelist_rclick", E_EmployeeListRightClick_f);
+	Cmd_AddCommand("employeelist_click", E_EmployeeListClick_f);
+	Cmd_AddCommand("building_add_employees", E_BuildingAddEmployees_f );
+	Cmd_AddCommand("building_remove_employees", E_BuildingRemoveEmployees_f );
 }

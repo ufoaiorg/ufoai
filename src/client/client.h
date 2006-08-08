@@ -700,9 +700,6 @@ extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 /* cl_produce.c */
 #include "cl_produce.h"
 
-/* cl_employee.c */
-#include "cl_employee.h"
-
 /* SAVEGAMES */
 #ifndef SAVE_FILE_VERSION
 #define SAVE_FILE_VERSION 4
@@ -714,6 +711,8 @@ extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 /* needs the MAX_ACTIVETEAM definition from above. */
 #include "cl_basemanagement.h"
 
+/* cl_employee.c */
+#include "cl_employee.h"
 
 /* MISC */
 /* TODO: needs to be sorted (e.g what file is it defined?) */
@@ -796,7 +795,7 @@ void CL_InitMessageSystem(void);
 
 /* cl_menu.c */
 #define MAX_MENUS			64
-#define MAX_MENUNODES		2048
+#define MAX_MENUNODES		4096
 #define MAX_MENUACTIONS		4096
 #define MAX_MENUSTACK		16
 #define MAX_MENUMODELS		128

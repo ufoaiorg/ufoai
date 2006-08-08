@@ -51,6 +51,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define BASE_SIZE		5
 #define MAX_BASE_LEVELS		1
 
+#define MAX_EMPLOYEES_IN_BUILDING 64
+/* Struct to be used in building definition - List of employees. */
+typedef struct employees_s {
+	int assigned[MAX_EMPLOYEES_IN_BUILDING];	/* List of employees (links to global list). */
+	int numEmployees;			/* Current number of employees. */
+	int maxEmployees;			/* Max. number of employees (from config file) */
+	float cost_per_employee;	/* Costs per employee that are added to toom-total-costs- */
+} employees_t;
 
 /* allocate memory for menuText[TEXT_STANDARD] contained the information about a building */
 char buildingText[MAX_LIST_CHAR];
@@ -220,7 +228,6 @@ int B_GetNumOnTeam(void);
 building_t *B_GetUnusedLab(int base_id);
 int B_GetUnusedLabs(int base_id);
 void B_ClearBuilding(building_t * building);
-int B_EmployeesInBase2(int base_id, employeeType_t employee_type, qboolean free_only);
 void B_ParseBuildings(char *id, char **text, qboolean link);
 void B_ParseBases(char *title, char **text);
 void B_BuildingInit(void);
@@ -242,5 +249,8 @@ void B_ResetBaseManagement(void);
 void B_ClearBase(base_t * base);
 void B_NewBases(void);
 void B_BuildingStatus(void);
+
+building_t *B_GetFreeBuildingType(buildingType_t type);
+int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx);
 
 #endif /* CLIENT_CL_BASEMANGEMENT_H */

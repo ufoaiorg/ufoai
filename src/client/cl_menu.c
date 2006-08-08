@@ -2159,7 +2159,7 @@ void MN_ResetMenus(void)
 	B_ResetBaseManagement();
 	RS_ResetResearch();
 	PR_ResetProduction();
-	EM_ResetEmployee();
+	E_ResetEmployee();
 	MAP_ResetAction();
 	UFO_Reset();
 }
@@ -2262,6 +2262,7 @@ qboolean MN_ParseAction(menuAction_t * action, char **text, char **token)
 
 				/* get the node name */
 				action->data = curadata;
+
 				strcpy((char *) curadata, &(*token)[1]);
 				curadata += strlen((char *) curadata) + 1;
 
@@ -2535,6 +2536,8 @@ qboolean MN_ParseMenuBody(menu_t * menu, char **text)
 
 					/* initialize node */
 					if (!node) {
+						if (numNodes>=MAX_MENUNODES)
+							Sys_Error("MAX_MENUNODES exceeded\n");
 						node = &menuNodes[numNodes++];
 						memset(node, 0, sizeof(menuNode_t));
 						Q_strncpyz(node->name, token, MAX_VAR);
