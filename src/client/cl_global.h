@@ -36,7 +36,7 @@ globalData_t gd
 This struct/variable holds the global data for a game.
 
 Content
-This struct will be save directly to the savegame-file.
+This struct will be saved directly to the savegame-file.
 Everything that should be saved needs to be in here.
 No pointers are allowed inside this struct. Use an index of an array instead.
 */

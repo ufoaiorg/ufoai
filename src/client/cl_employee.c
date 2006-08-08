@@ -364,7 +364,7 @@ qboolean E_RemoveEmployee(base_t* base, employeeType_t type, int num)
 }
 
 /**
- * @brief Returns the number of unassigned employees of a given type in a given base
+ * @brief Counts unassigned employees of a given type in a given base
  * @param[in] type The type of employee to search.
  * @param[in] base The base where we count
  */
@@ -382,7 +382,7 @@ int E_GetUnassingedEmployeeCount(base_t* base, employeeType_t type)
 }
 
 /**
- * @brief Gets an unassigned employee of a given type from the global list.
+ * @brief Counts unhired employees of a given type in a given base
  *
  * @param[in] type The type of employee to search.
  * @param[in] base The base where we count
@@ -402,7 +402,7 @@ int E_GetUnhiredCharacterCount(base_t* base, employeeType_t type)
 }
 
 /**
- * @brief Gets an unassigned employee of a given type from the global list.
+ * @brief Counts hired employees of a given type in a given base
  *
  * @param[in] type The type of employee to search.
  * @param[in] base The base where we count
