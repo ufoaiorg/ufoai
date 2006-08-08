@@ -64,7 +64,7 @@ static char *CL_GetSkillString(const int skill)
 	case 2:
 		return _("Poor");
 	case 3:
-		return _("Medicore");
+		return _("Mediocre");
 	case 4:
 		return _("Good");
 	case 5:
