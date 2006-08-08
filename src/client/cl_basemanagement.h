@@ -54,14 +54,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_EMPLOYEES_IN_BUILDING 64
 #define MAX_EMPLOYEES 256
 
-/* Struct to be used in building definition - List of employees. */
-typedef struct employees_s {
-	int assigned[MAX_EMPLOYEES_IN_BUILDING];	/* List of employees (links to global list). */
-	int numEmployees;			/* Current number of employees. */
-	int maxEmployees;			/* Max. number of employees (from config file) */
-	float cost_per_employee;	/* Costs per employee that are added to toom-total-costs- */
-} employees_t;
-
 /* allocate memory for menuText[TEXT_STANDARD] contained the information about a building */
 char buildingText[MAX_LIST_CHAR];
 
