@@ -164,7 +164,7 @@ employee_t* E_CreateEmployee(employeeType_t type)
 	if (!employee) return NULL;
 	employee->hired		= qfalse;
 	employee->buildingID	= -1;
-	
+
 	switch (type) {
 		case EMPL_SOLDIER:
 			/* TODO: create random data for the employees depending on type and skill-min/max */
@@ -292,74 +292,21 @@ qboolean E_DeleteEmployee(employee_t * employee)
  * @sa E_RemoveEmployee
  * @return Returns true if adding was possible/sane otherwise false. In the later case nothing will be changed.
  */
-qboolean E_AssignEmployee(building_t * building_dest, employeeType_t employee_type)
+qboolean E_AssignEmployee(base_t *base, employeeType_t type)
 {
 	int i, j;
-	employee_t *employee = NULL;
-	building_t *building_source = NULL;
-	employees_t *employees_in_building_dest = NULL;
-	employees_t *employees_in_building_source = NULL;
-
-	/* maybe no quarters in base? */
-	if (!building_dest)
-		return qfalse;
-
-	if (!baseCurrent) {
-		Com_DPrintf("E_AssignEmployee: No Base set\n");
-		return qfalse;
-	}
-
-	employees_in_building_dest = &building_dest->assigned_employees;
-	employee = NULL;
-	/* Check if there is enough space to add one employee in the destination building. */
-	if (employees_in_building_dest->numEmployees < employees_in_building_dest->maxEmployees) {
-		if (building_dest->buildingType == B_QUARTERS) {
-			/* Get unassigned employee with correct type from global list. */
-			for (i = 0; i < gd.numEmployees; i++) {
-				employee = &gd.employees[i];
-				if ((employee->type == employee_type) && E_EmployeeIsUnassinged(employee)) {
-					break;
-				} else {
-					employee = NULL;
-				}
-			}
-
-			/* If an employee was found add it to to the destination building (quarters) */
-			if (employee) {
-				employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee->idx;
-				employee->quarters = building_dest->idx;
-				employee->base_idx = building_dest->base_idx;
-				return qtrue;
-			}
-		} else {
-			/* Get free employee from quarters in current base. */
-			for (i = 0; i < gd.numBuildings[building_dest->base_idx]; i++) {
-				building_source = &gd.buildings[building_dest->base_idx][i];
-
-				/* check if there is a free employee in the quarters. */
-				if (building_source->buildingType == B_QUARTERS) {
-					employees_in_building_source = &building_source->assigned_employees;
-					for (j = 0; j < employees_in_building_source->numEmployees; j++) {
-						employee = &gd.employees[employees_in_building_source->assigned[j]];
-						if ((employee->type == employee_type) && E_EmployeeIsFree(employee))
-							break;
-						else
-							employee = NULL;
-					}
-				}
-			}
-
-			/* if an employee was found add it to to the destination building */
-			if (employee) {
-				employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee->idx;
-				employee->lab = building_dest->idx;
-				return qtrue;
-			} else {
-				Com_Printf("No employee available in this base.\n");
-			}
+	switch (type) {
+	case EMPL_SOLDIER:
+		break;
+	case EMPL_SCIENTIST:
+		/* see also RS_AssignScientist2 */
+		if (base->hasLab) {
+			return qtrue;
 		}
-	} else {
-		Com_Printf("No free room in destination building \"%s\".\n", building_dest->id);
+		return qfalse;
+	default:
+		Com_DPrintf("Unhandled employee type: %i\n", type);
+		break;
 	}
 	return qfalse;
 }
@@ -375,48 +322,6 @@ qboolean E_AssignEmployee(building_t * building_dest, employeeType_t employee_ty
  */
 qboolean E_RemoveEmployee(building_t * building)
 {
-	/* TODO
-	int i;
-	*/
-	employee_t *employee = NULL;
-	employees_t *employees_in_building = NULL;
-
-	/* TODO
-	building_t *building_temp = NULL;
-	qboolean found = qfalse;
-	*/
-
-	employees_in_building = &building->assigned_employees;
-
-	if (employees_in_building->numEmployees <= 0) {
-		Com_DPrintf("E_RemoveEmployee: No employees in building. Can't remove one. %s\n", building->id);
-		return qfalse;
-	}
-
-	/* Check where else (which buildings) the employee needs to be removed. */
-	switch (building->buildingType) {
-	case B_LAB:
-		employees_in_building->numEmployees--;	/* remove the employee from the list of assigned workers in the building. */
-		employee = &gd.employees[employees_in_building->assigned[employees_in_building->numEmployees]];	/* get the last employee in the building. */
-		Com_DPrintf("E_RemoveEmployee: %s\n", building->id);
-		/* unlink the employee from lab (the current building). */
-		employee->lab = -1;
-		Com_DPrintf("E_RemoveEmployee: %s 2\n", building->id);
-		return qtrue;
-		/* break; */
-#if 0
-		/* TODO */
-	case B_WORKSHOP:
-		/* unlink the employee from workshop (the current building). */
-		employee->workshop = NULL;
-		return qtrue;
-		break;
-		EMPL_MEDIC EMPL_ROBOT
-#endif
-	default:
-		break;
-	}
-
 	return qfalse;
 }
 

@@ -106,7 +106,8 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type)
 {
 	character_t *chr = NULL;
 
-	if (!employee) return;
+	if (!employee)
+		return;
 
 	chr = &employee->chr;
 	memset(chr, 0, sizeof(character_t));

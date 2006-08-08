@@ -188,9 +188,6 @@ typedef struct base_s {
 	int numHired;
 	int numOnTeam[MAX_AIRCRAFT];
 
-	/* this should not be bigger than MAX_WHOLETEAM */
-	int numWholeTeam;			/* available soldiers in this base */
-
 	/* the onconstruct value of the buliding */
 	/* building_radar increases the sensor width */
 	radar_t	radar;
@@ -198,9 +195,6 @@ typedef struct base_s {
 	/* equipment in base */
 	inventory_t equipment;
 
-	/* FIXME: Replace this with employees */
-	/*character_t wholeTeam[MAX_WHOLETEAM];*/
-	/* FIXME: Replace this with employees */
 	/* set in CL_GenerateEquipmentCmd and CL_LoadTeam */
 	character_t *curTeam[MAX_ACTIVETEAM];
 	character_t *curChr;

@@ -799,7 +799,7 @@ static void CL_UpdateNationData(void)
 		for (j=0; j<nation->scientists; j++) {
 			E_CreateEmployee(EMPL_SCIENTIST);
 			/* gd.numBases is always (at least) 1 at this point */
-			E_AssignEmployee(B_GetBuildingInBase(&gd.bases[rand() % gd.numBases], "building_quarters"), EMPL_SCIENTIST);
+			E_AssignEmployee(&gd.bases[rand() % gd.numBases], EMPL_SCIENTIST);
 		}
 		/* TODO: soldiers */
 	}
@@ -977,16 +977,16 @@ void CL_LoadEquipment ( sizebuf_t *buf, base_t* base )
 	item_t item;
 	int container, x, y;
 	int i, j;
-	character_t *chr = base->wholeTeam;
+	character_t *chr = NULL;
 
 	assert(base);
 
 	/* link the inventory in after load */
-	for (i = 0; i < base->numWholeTeam; i++)
-		base->wholeTeam[i].inv = &base->teamInv[i];
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
+		gd.employees[EMPL_SOLDIER][i].chr.inv = &(gd.employees[EMPL_SOLDIER][i].inv);
 
-	/* inventory */
-	for (i = 0; i < base->numWholeTeam; chr++, i++) {
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+		chr = &(gd.employees[EMPL_SOLDIER][i].chr);
 		for (j = 0; j < MAX_CONTAINERS; j++)
 			chr->inv->c[j] = NULL;
 		item.t = MSG_ReadByte(buf);
