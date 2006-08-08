@@ -91,29 +91,36 @@ static void CL_GiveNameCmd(void)
 }
 
 /**
-  * @brief Generates the skills and inventory for a character and for a UGV
-  *
-  * TODO: Generate UGV
-  * @sa CL_ResetCharacters
-  */
-void CL_GenerateCharacter(char *team, employeeType_t type)
+ * @brief Generates the skills and inventory for a character and for a UGV
+ *
+ * TODO: Generate UGV
+ * @sa CL_ResetCharacters
+ * @param[in] employee The employee to create character data for.
+ * @param[in] team Which team to use for creation.
+ * @param[in] type ???
+ * @todo fix the assignment of the inventory (assume that you do not know the base yet)
+ * @todo fix the assignment of ucn??
+ * @todo fix the WholeTeam stuff
+ */
+void CL_GenerateCharacter(employee_t *employee, char *team, int type)
 {
-	character_t *chr;
-	employee_t *employee;
+	character_t *chr = NULL;
 
-	/* reset character */
-	employee = E_CreateEmployee(type);
-	if (!employee)
-		return;
+	if (!employee) return;
+
 	chr = &employee->chr;
 	memset(chr, 0, sizeof(character_t));
 
 	/* link inventory */
+	/*
 	chr->inv = &base->teamInv[base->numWholeTeam];
 	Com_DestroyInventory(chr->inv);
+	*/
 
 	/* get ucn */
+	/*
 	chr->ucn = base->nextUCN++;
+	*/
 
 	/* set the actor size */
 	switch ( type ) {
@@ -135,9 +142,9 @@ void CL_GenerateCharacter(char *team, employeeType_t type)
 
 	/* get model and name */
 	chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
-	Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);
+	/* Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name); */
 
-	base->numWholeTeam++;
+	/* base->numWholeTeam++; */
 }
 
 

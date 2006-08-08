@@ -169,12 +169,13 @@ employee_t* E_CreateEmployee(employeeType_t type)
 		case EMPL_SOLDIER:
 			/* TODO: create random data for the employees depending on type and skill-min/max */
 			/* employee->combat_stats = CL_GenerateCharacter(Cvar_VariableString("team"), NULL, ET_ACTOR); */
+			CL_GenerateCharacter(employee, Cvar_VariableString("team"), ET_ACTOR);
 			break;
 		case EMPL_SCIENTIST:
 		case EMPL_WORKER:
 			/* TODO: create random data for the employees depending on type and skill-min/max */
 			/* employee->combat_stats = CL_GenerateCharacter(Cvar_VariableString("team"), NULL, ET_ACTOR); */
-		
+			CL_GenerateCharacter(employee, Cvar_VariableString("team"), ET_ACTOR);
 			if (employee->type == EMPL_SCIENTIST) {
 				/* TODO: create random data for the employees depending on type and skill-min/max */
 				employee->speed = 100;
