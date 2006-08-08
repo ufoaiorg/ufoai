@@ -320,8 +320,25 @@ qboolean E_AssignEmployee(base_t *base, employeeType_t type)
  *
  * @return Returns true if adding was possible/sane otherwise false.
  */
-qboolean E_RemoveEmployee(building_t * building)
+qboolean E_RemoveEmployee(base_t* base, employeeType_t type, int num)
 {
+	int i;
+	for (i=0; i<gd.numEmployees[type];i++)
+		if (i==num) {
+			/* TODO: delete me */
+			/* THIS IS NEEDED, too */
+			/*
+			(baseCurrent->teamInv[i]).c[csi.idFloor] = NULL;
+			Com_DestroyInventory(&baseCurrent->teamInv[i]);
+			memset(&baseCurrent->teamInv[j], 0, sizeof(inventory_t));
+			*/
+
+			gd.numEmployees[type]--;
+			break;
+		}
+	for (;i<gd.numEmployees[type];i++) {
+
+	}
 	return qfalse;
 }
 

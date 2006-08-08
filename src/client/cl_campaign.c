@@ -2041,7 +2041,7 @@ static void CL_DebugChangeCharacterStats_f(void)
 static void CL_GameResultsCmd(void)
 {
 	int won;
-	int i, j;
+	int i;
 	int tempMask;
 
 	/* multiplayer? */
@@ -2076,16 +2076,8 @@ static void CL_GameResultsCmd(void)
 			tempMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent] >> 1;
 			baseCurrent->teamMask[baseCurrent->aircraftCurrent] =
 				(baseCurrent->teamMask[baseCurrent->aircraftCurrent] & ((1 << i) - 1)) | (tempMask & ~((1 << i) - 1));
-			baseCurrent->numWholeTeam--;
+			E_RemoveEmployee(baseCurrent, EMPL_SOLDIER, i);
 			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
-			(baseCurrent->teamInv[i]).c[csi.idFloor] = NULL;
-			Com_DestroyInventory(&baseCurrent->teamInv[i]);
-			for (j = i; j < baseCurrent->numWholeTeam; j++) {
-				baseCurrent->teamInv[j] = baseCurrent->teamInv[j + 1];
-				baseCurrent->wholeTeam[j] = baseCurrent->wholeTeam[j + 1];
-				baseCurrent->wholeTeam[j].inv = &baseCurrent->teamInv[j];
-			}
-			memset(&baseCurrent->teamInv[j], 0, sizeof(inventory_t));
 		} else
 			i++;
 	}
