@@ -41,22 +41,6 @@ menu employees
 	}
 
 	// ==================
-	// list
-	// ==================
-
-	text employeelist
-	{
-		pos		"40 30"
-		size	"286 710"
-//		bgcolor "1 1 1 0.5"
-		format	"22 0"
-		num	18
-		click
-		rclick
-		mousefx	true
-	}
-
-	// ==================
 	// names list
 	// ==================
 
@@ -592,16 +576,6 @@ menu employees
 	string	kills_lbl { pos "700 400" string "_Killed Enemies:" }
 	string	kills_val { pos "975 400" string "*cvar mn_chrkillalien" align ur }
 
-	text employeelist_amount
-	{
-		pos		"336 30"
-		size	"114 710"
-//		bgcolor "1 1 1 0.5"
-		format	"22 0"
-		num	19
-		mousefx	true
-	}
-
 	// ====================
 	// employee description
 	// ====================
@@ -612,7 +586,7 @@ menu employees
 //		bgcolor "1 1 1 0.5"
 		size	"366 80"
 		format	"20 260"
-		num	20
+		num	18
 	}
 
 	// ==================

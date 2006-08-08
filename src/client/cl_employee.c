@@ -40,39 +40,7 @@ static int employeeCategory = 0;
 static void E_EmployeeInfo (void)
 {
 	static char employeeInfo[512];
-	menuText[TEXT_EMPLOYEE_INFO] = employeeInfo;
-}
-
-/**
- * @brief Click function for employee list
- */
-static void E_EmployeeListRightClick_f (void)
-{
-	int num;
-
-	/* not enough parameters */
-	if (Cmd_Argc() < 2)
-		return;
-
-	/* clicked which item? */
-	num = atoi(Cmd_Argv(1));
-}
-
-/**
- * @brief Click function for employee list
- */
-static void E_EmployeeListClick_f (void)
-{
-	int num;
-
-	/* not enough parameters */
-	if (Cmd_Argc() < 2)
-		return;
-
-	/* clicked which item? */
-	num = atoi(Cmd_Argv(1));
-
-/*	CL_CharacterCvars(&baseCurrent->wholeTeam[num]);*/
+	menuText[TEXT_EMPLOYEE] = employeeInfo;
 }
 
 /**
@@ -94,10 +62,6 @@ static void E_EmployeeList (void)
 	}
 	employeeCategory = atoi(Cmd_Argv(1));
 
-	/* bind the menu text to our static char array */
-	menuText[TEXT_EMPLOYEE_LIST] = employeeList;
-	/* bind the amount of available items */
-	menuText[TEXT_EMPLOYEE_AMOUNT] = employeeAmount;
 	/* now print the information about the current employee */
 	E_EmployeeInfo();
 }
@@ -682,8 +646,6 @@ void E_ResetEmployee(void)
 {
 	/* add commands */
 	Cmd_AddCommand("employee_init", E_EmployeeList);
-	Cmd_AddCommand("employeelist_rclick", E_EmployeeListRightClick_f);
-	Cmd_AddCommand("employeelist_click", E_EmployeeListClick_f);
 	Cmd_AddCommand("building_add_employees", E_BuildingAddEmployees_f );
 	Cmd_AddCommand("building_remove_employees", E_BuildingRemoveEmployees_f );
 }
