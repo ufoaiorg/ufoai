@@ -64,12 +64,7 @@ typedef struct employee_s {
 	int buildingID;				/* assigned to this building in gd.buildings[baseIDHired][buildingID] */
 
 	character_t chr;		/* Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
-
-	/* FIXME: Remove me */
-	int base_idx;				/* what base this employee is in. */
-	int quarters;				/* The quarter this employee is assigned to. (all except EMPL_ROBOT) */
-	int lab;					/* The lab this scientist is working in. (only EMPL_SCIENTIST) */
-	int workshop;				/* The lab this worker is working in. (only EMPL_WORKER) */
+	inventory_t inv;			/* employee inventory */
 } employee_t;
 
 void E_InitEmployees(void);
