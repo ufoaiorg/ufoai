@@ -75,8 +75,8 @@
 
 equipment stage1_workers
 {
-	plaspistol			3
-	plaspistol_ammo		4
+	plaspistol			4
+	plaspistol_ammo		5
 	plasrifle			1
 	plasrifle_ammo		1
 	kerrblade			10
