@@ -43,6 +43,14 @@ static void EM_EmployeeInfo (void)
  */
 static void EM_EmployeeListRightClick_f (void)
 {
+	int num;
+
+	/* not enough parameters */
+	if (Cmd_Argc() < 2)
+		return;
+
+	/* clicked which item? */
+	num = atoi(Cmd_Argv(1));
 }
 
 /**
@@ -50,6 +58,14 @@ static void EM_EmployeeListRightClick_f (void)
  */
 static void EM_EmployeeListClick_f (void)
 {
+	int num;
+
+	/* not enough parameters */
+	if (Cmd_Argc() < 2)
+		return;
+
+	/* clicked which item? */
+	num = atoi(Cmd_Argv(1));
 }
 
 /**
