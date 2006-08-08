@@ -18,7 +18,7 @@ menu employees
 
 	pic back_ul
 	{
-		image	menu/prod_ul
+		image	menu/empl_ul
 		pos		"0 0"
 	}
 
@@ -30,13 +30,13 @@ menu employees
 
 	pic back_ll
 	{
-		image	menu/prod_ll
+		image	menu/empl_ll
 		pos		"0 512"
 	}
 
 	pic back_lr
 	{
-		image	menu/prod_lr
+		image	menu/empl_lr
 		pos		"512 512"
 	}
 
@@ -170,6 +170,6 @@ menu employees
 
 	func init
 	{
-		cmd "employee_init"
+		cmd "employee_init 0"
 	}
 }
