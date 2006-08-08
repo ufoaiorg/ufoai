@@ -561,7 +561,13 @@ void CL_UpdateHireVar(void)
 		}
 
 	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
-		Sys_Error("CL_UpdateHireVar: numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",gd.numEmployees[EMPL_SOLDIER], baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p, baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
+		Sys_Error("CL_UpdateHireVar: numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",
+			E_GetHiredCharacterCount(baseCurrent, EMPL_SOLDIER),
+			baseCurrent->aircraftCurrent,
+			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent],
+			p,
+			baseCurrent->teamMask[baseCurrent->aircraftCurrent]
+		);
 
 	for (; p<MAX_ACTIVETEAM; p++)
 		baseCurrent->curTeam[p] = NULL;
@@ -607,7 +613,7 @@ static void CL_MarkTeamCmd(void)
 
 	CL_UpdateHireVar();
 
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+	for (i = 0; i < (int)cl_numnames->value; i++) {
 		cnt = 0;
 		alreadyInOtherShip = qfalse;
 		Cvar_ForceSet(va("mn_name%i", i), gd.employees[EMPL_SOLDIER][i].chr.name);
@@ -637,7 +643,7 @@ static void CL_MarkTeamCmd(void)
 			Cbuf_AddText(va("listholdsnoequip%i\n", i));
 	}
 
-	for (i = gd.numEmployees[EMPL_SOLDIER]; i < (int) cl_numnames->value; i++) {
+	for (;i < (int) cl_numnames->value; i++) {
 		Cbuf_AddText(va("listdisable%i\n", i));
 		Cvar_ForceSet(va("mn_name%i", i), "");
 		Cbuf_AddText(va("listholdsnoequip%i\n", i));

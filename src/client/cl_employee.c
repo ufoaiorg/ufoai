@@ -235,6 +235,7 @@ employee_t* E_CreateEmployee(employeeType_t type)
 		return NULL;
 
 	employee->hired = qfalse;
+	employee->baseIDHired = -1;
 	employee->buildingID = -1;
 
 	switch (type) {
@@ -394,7 +395,7 @@ int E_GetHiredCharacterCount(base_t* base, employeeType_t type)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->baseIDHired == base->idx)
+		if (employee->hired && employee->baseIDHired == base->idx)
 			count++;
 	}
 	return count;
@@ -447,7 +448,7 @@ void E_EmployeeHire_f (void)
 	if (gd.employees[employeeCategory][num].hired)
 		gd.employees[employeeCategory][num].hired = qfalse;
 	else
-		gd.employees[employeeCategory][num].hired = qfalse;
+		gd.employees[employeeCategory][num].hired = qtrue;
 	/* update list */
 	E_EmployeeList();
 }
