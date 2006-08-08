@@ -492,7 +492,8 @@ qboolean E_RemoveEmployee(building_t * building)
  * @todo E_GetFreeEmployee
  * @param[in] type The type of employee to search.
  * @return employee_t 
-  * @sa E_EmployeeIsUnassinged
+ * @sa E_EmployeeIsUnassinged
+ * @sa E_EmployeesInBase2
  */
 employee_t * E_GetUnassingedEmployee(employeeType_t type)
 {
@@ -630,10 +631,13 @@ void E_BuildingAddEmployees_f ( void )
 }
 
 /**
- * @brief Returns the number of employees in the given base (in the quaters) of the given type.
+ * @brief Returns the number of employees in the given base of the given type.
+ * 
+ * @param[in] base_idx what bbase to search in.
+ * @param[in] employee_type What type of employee to search for. If you call it with MAX_EMPL it will return every type of employees.
+ * @param[in] free_only Set this to qtrue if you want to search only for free (i.e empl only in quarters) employees otherwise qfalse.
+ * @return int Number of found employees.
  * @sa E_EmployeesInBase
- * You can choose (free_only) if you want the number of free employees or the total number.
- * If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
  */
 int E_EmployeesInBase2(int base_idx, employeeType_t employee_type, qboolean free_only)
 {
