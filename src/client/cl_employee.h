@@ -32,8 +32,6 @@ void E_ResetEmployee(void);
 
 /******* BACKEND STUFF ********/
 
-/* max values for employee-management */
-#define MAX_EMPLOYEES 1024
 /* TODO: */
 /* MAX_EMPLOYEES_IN_BUILDING should be redefined by a config variable that is lab/workshop/quarters-specific */
 /* e.g.: */

@@ -2024,8 +2024,8 @@ static void CL_DebugChangeCharacterStats_f(void)
 {
 	int i, j;
 	character_t* chr;
-	for (i = 0; i < baseCurrent->numWholeTeam;i++) {
-		chr = &baseCurrent->wholeTeam[i];
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER];i++) {
+		chr = CL_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 		for (j=0; j<KILLED_NUM_TYPES; j++)
 			chr->kills[j]++;
 	}
@@ -2069,7 +2069,7 @@ static void CL_GameResultsCmd(void)
 	CL_UpdateCredits(ccs.credits + ccs.reward);
 
 	/* remove the dead (and their item preference) */
-	for (i = 0; i < baseCurrent->numWholeTeam;) {
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER];) {
 		if (baseCurrent->deathMask & (1 << i)) {
 			Com_DPrintf("CL_GameResultsCmd - remove player %i - he died\n", i);
 			baseCurrent->deathMask >>= 1;
@@ -2093,7 +2093,7 @@ static void CL_GameResultsCmd(void)
 	/* add recruits */
 	if (won && selMis->def->recruits)
 		for (i = 0; i < selMis->def->recruits; i++)
-			CL_GenerateCharacter(curCampaign->team, EMPL_SOLDIER);
+			E_CreateEmployee(EMPL_SOLDIER);
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won);
