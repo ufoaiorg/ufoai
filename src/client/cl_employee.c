@@ -28,7 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* holds the current active employee category */
 static int employeeCategory = 0;
-
+/* how many employees in current list (changes on every catergory change, too) */
+static int employeesInCurrentList = 0;
 
 /*****************************************************
  * VISUAL/GUI STUFF
@@ -57,6 +58,10 @@ static void E_EmployeeList (void)
 		return;
 	}
 	employeeCategory = atoi(Cmd_Argv(1));
+
+	/*
+	employeesInCurrentList++;
+	*/
 
 	/* now print the information about the current employee */
 	E_EmployeeInfo();
@@ -634,6 +639,48 @@ int E_EmployeesInBase2(int base_idx, employeeType_t employee_type, qboolean free
 }
 
 /**
+ * @brief
+ */
+void E_EmployeeHire_f (void)
+{
+	int num;
+
+	/* check syntax */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: hire <num>\n");
+		return;
+	}
+	num = atoi(Cmd_Argv(1));
+
+	if (num >= employeesInCurrentList)
+		return;
+}
+
+/**
+  * @brief
+  */
+static void E_EmployeeSelect_f(void)
+{
+	int num;
+
+	/* check syntax */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: employee_select <num>\n");
+		return;
+	}
+	num = atoi(Cmd_Argv(1));
+
+	/* console commands */
+	Cbuf_AddText(va("employeedeselect%i\n", (int) cl_selected->value));
+	Cbuf_AddText(va("employeeselect%i\n", num));
+	Cvar_ForceSet("cl_selected", va("%i", num));
+
+	/* set info cvars */
+	/* TODO: */
+	/*CL_CharacterCvars(&baseCurrent->wholeTeam[num]);*/
+}
+
+/**
   * @brief This is more or less the initial
   * Bind some of the functions in this file to console-commands that you can call ingame.
   * Called from MN_ResetMenus resp. CL_InitLocal
@@ -644,4 +691,6 @@ void E_ResetEmployee(void)
 	Cmd_AddCommand("employee_init", E_EmployeeList);
 	Cmd_AddCommand("building_add_employees", E_BuildingAddEmployees_f );
 	Cmd_AddCommand("building_remove_employees", E_BuildingRemoveEmployees_f );
+	Cmd_AddCommand("employee_hire", E_EmployeeHire_f);
+	Cmd_AddCommand("employee_select", E_EmployeeSelect_f);
 }
