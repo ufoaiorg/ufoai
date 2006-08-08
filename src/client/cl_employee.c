@@ -362,11 +362,47 @@ qboolean E_RemoveEmployee(base_t* base, employeeType_t type, int num)
 	return qfalse;
 }
 
+/**
+ * @brief Returns the number of unassigned employees of a given type in a given base
+ * @param[in] type The type of employee to search.
+ * @param[in] base The base where we count
+ */
+int E_GetUnassingedEmployeeCount(base_t* base, employeeType_t type)
+{
+	int count, i;
+	employee_t *employee = NULL;
+
+	for (i = 0; i < gd.numEmployees[type]; i++) {
+		employee = &gd.employees[type][i];
+		if (employee->baseIDHired == base->idx && employee->buildingID < 0)
+			count++;
+	}
+	return count;
+}
 
 /**
  * @brief Gets an unassigned employee of a given type from the global list.
  *
- * @todo E_GetFreeEmployee
+ * @param[in] type The type of employee to search.
+ * @param[in] base The base where we count
+ * @return count of hired employees of a given type in a given base
+ */
+int E_GetHiredCharacterCount(base_t* base, employeeType_t type)
+{
+	int count, i;
+	employee_t *employee = NULL;
+
+	for (i = 0; i < gd.numEmployees[type]; i++) {
+		employee = &gd.employees[type][i];
+		if (employee->baseIDHired == base->idx)
+			count++;
+	}
+	return count;
+}
+
+/**
+ * @brief Gets an unassigned employee of a given type from the global list.
+ *
  * @param[in] type The type of employee to search.
  * @return employee_t
  * @sa E_EmployeeIsUnassinged

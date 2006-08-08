@@ -639,7 +639,7 @@ void RS_UpdateData(void)
 	/* Make everything the same (predefined in the ufo-file) color. */
 	Cbuf_AddText("research_clear\n");
 
-	available = E_GetUnassingedEmployee(EMPL_SCIENTIST, baseCurrent);
+	available = E_GetUnassingedEmployeeCount(baseCurrent, EMPL_SCIENTIST);
 
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];

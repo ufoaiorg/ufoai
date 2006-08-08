@@ -139,7 +139,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type)
 
 	/* get model and name */
 	chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
-	/* Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name); */
+	/*Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);*/
 
 	/* base->numWholeTeam++; */
 }
@@ -554,7 +554,7 @@ void CL_UpdateHireVar(void)
 	baseCurrent->hiredMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent];
 
 	/* update curTeam list */
-	for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
+	for (i = 0, p = 0; i < E_GetHiredCharacterCount(baseCurrent, EMPL_SOLDIER); i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
