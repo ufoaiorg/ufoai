@@ -48,10 +48,6 @@ static void E_EmployeeInfo (void)
  */
 static void E_EmployeeList (void)
 {
-	static char employeeList[1024];
-	static char employeeAmount[256];
-	employeeAmount[0] = employeeList[0] = '\0';
-
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
 		return;
