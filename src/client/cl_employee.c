@@ -160,6 +160,8 @@ employee_t* E_CreateEmployee(employeeType_t type)
 {
 	employee_t* employee = NULL;
 
+	if (type == MAX_EMPL) return NULL;
+
 	if (gd.numEmployees[type] >= MAX_EMPLOYEES) {
 		Com_Printf("E_CreateEmployee: MAX_EMPLOYEES exceeded\n");
 		return NULL;
@@ -167,6 +169,33 @@ employee_t* E_CreateEmployee(employeeType_t type)
 
 	employee = &gd.employees[type][gd.numEmployees[type]++];
 
+	if (!employee) return NULL;
+	employee->hired		= qfalse;
+	employee->buildingID	= -1;
+	
+	switch (type) {
+		case EMPL_SOLDIER:
+			/* TODO: create random data for the employees depending on type and skill-min/max */
+			/* employee->combat_stats = CL_GenerateCharacter(Cvar_VariableString("team"), NULL, ET_ACTOR); */
+			break;
+		case EMPL_SCIENTIST:
+		case EMPL_WORKER:
+			/* TODO: create random data for the employees depending on type and skill-min/max */
+			/* employee->combat_stats = CL_GenerateCharacter(Cvar_VariableString("team"), NULL, ET_ACTOR); */
+		
+			if (employee->type == EMPL_SCIENTIST) {
+				/* TODO: create random data for the employees depending on type and skill-min/max */
+				employee->speed = 100;
+			} else {
+				/* TODO: create random data for the employees depending on type and skill-min/max */
+				employee->speed = 100;
+			}
+			break;
+		/*case EMPL_MEDIC: break; */
+		/*case EMPL_ROBOT: break; */
+		default:
+			break;
+		}
 	return employee;
 }
 
