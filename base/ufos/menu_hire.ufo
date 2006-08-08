@@ -702,7 +702,7 @@ menu employees
 
 	func init
 	{
-		team_clear
+		employee_clear
 		cmd "employee_init 0"
 	}
 }
