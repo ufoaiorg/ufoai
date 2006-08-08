@@ -124,26 +124,10 @@ typedef struct globalData_s
 	/* UFOs on geoscape */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUfos;
-
-	/* TODO
-		craftupgrade_t craftupgrades[MAX_CRAFTUPGRADES];
-		int    numCraftUpgrades;
-
-		aircraft_t   aircraft[MAX_BASES][MAX_AIRCRAFT];
-		int  numAircraft;
-
-		team_t   teams[MAX_BASES][MAX_TEAMS];
-		int numTeams;
-
-		inventory_t  inventory[MAX_BASES][MAX_TEAMS];
-		int numInv;
-	*/
 } globalData_t;
 
 
 extern globalData_t gd;
-
-
 
 globalData_t gd;
 

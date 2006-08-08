@@ -155,7 +155,7 @@ employee_t* E_GetEmployee(base_t* base, employeeType_t type, int num)
  */
 employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int num)
 {
-	int i, j;
+	int i, j = 0;
 	for (i=0; i<gd.numEmployees[EMPL_SOLDIER]; i++) {
 		if (gd.employees[EMPL_SOLDIER][i].hired && gd.employees[EMPL_SOLDIER][i].baseIDHired == base->idx) {
 			j++;
@@ -389,7 +389,7 @@ int E_GetUnassingedEmployeeCount(base_t* base, employeeType_t type)
  */
 int E_GetHiredCharacterCount(base_t* base, employeeType_t type)
 {
-	int count, i;
+	int count = 0, i;
 	employee_t *employee = NULL;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
