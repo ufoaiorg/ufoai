@@ -161,9 +161,11 @@ employee_t* E_CreateEmployee(employeeType_t type)
 
 	employee = &gd.employees[type][gd.numEmployees[type]++];
 
-	if (!employee) return NULL;
-	employee->hired		= qfalse;
-	employee->buildingID	= -1;
+	if (!employee)
+		return NULL;
+
+	employee->hired = qfalse;
+	employee->buildingID = -1;
 
 	switch (type) {
 		case EMPL_SOLDIER:
@@ -176,13 +178,7 @@ employee_t* E_CreateEmployee(employeeType_t type)
 			/* TODO: create random data for the employees depending on type and skill-min/max */
 			/* employee->combat_stats = CL_GenerateCharacter(Cvar_VariableString("team"), NULL, ET_ACTOR); */
 			CL_GenerateCharacter(employee, Cvar_VariableString("team"), ET_ACTOR);
-			if (employee->type == EMPL_SCIENTIST) {
-				/* TODO: create random data for the employees depending on type and skill-min/max */
-				employee->speed = 100;
-			} else {
-				/* TODO: create random data for the employees depending on type and skill-min/max */
-				employee->speed = 100;
-			}
+			employee->speed = 100;
 			break;
 		/*case EMPL_MEDIC: break; */
 		/*case EMPL_ROBOT: break; */
@@ -193,83 +189,45 @@ employee_t* E_CreateEmployee(employeeType_t type)
 }
 
 /**
- * @brief Force-removes an employee from a building.
- * @warning Use only from within E_DeleteEmployee.
- *
- * @param[in] employee The pointer to the employee you want to remove.
- * @param[in] building The pointer to the building the employee shoudl be removed from.
- * @return True if the employee was removed sucessfully, otherwise false.
- * @sa E_DeleteEmployee
- */
-qboolean E_DeleteEmployeeFromBuilding(employee_t * employee, int building )
-{
-	int i;
-	employees_t *employees_in_building = NULL;
-	qboolean found = qfalse;
-	building_t * building_ptr = NULL;
-
-	if (!employee) return qfalse;
-
-	building_ptr = &gd.buildings[employee->base_idx][building];
-	employees_in_building = &building_ptr->assigned_employees;
-
-	found = qfalse;
-
-	for (i = 0; i < (employees_in_building->numEmployees - 1); i++) {
-		if (employees_in_building->assigned[i] == employee->idx)
-			found = qtrue;
-		if (found)
-			employees_in_building->assigned[i] = employees_in_building->assigned[i + 1];
-	}
-	if (found)
-		employees_in_building->numEmployees--;
-	else
-		return qfalse;
-
-	return qtrue;
-}
-
-/**
  * @brief Removes the employee compeltely from the game (buildings + global list).
  *
  * @param[in] employee The pointer to the employee you want to remove.
  * @return True if the employee was removed sucessfully, otherwise false.
  * @sa E_CreateEmployee
  */
-qboolean E_DeleteEmployee(employee_t * employee)
+qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 {
 	int i;
 	qboolean found;
 
-	if (!employee) return qfalse;
+	if (!employee)
+		return qfalse;
 
-	if (employee->lab) {
-		if (E_DeleteEmployeeFromBuilding(employee, employee->lab))
-			employee->lab = -1;
+	if (employee->buildingID) {
+/*		if (E_DeleteEmployeeFromBuilding(employee, employee->quarters))
+			employee->quarters = -1;*/
 	}
 
-	if (employee->workshop) {
-		if (E_DeleteEmployeeFromBuilding(employee, employee->workshop))
-			employee->workshop = -1;
-	}
-
-	if (employee->quarters) {
-		if (E_DeleteEmployeeFromBuilding(employee, employee->quarters))
-			employee->quarters = -1;
-	}
-
-	employee->base_idx = -1;
+	employee->baseIDHired = -1;
 
 	/* remove the employee from the global list */
-	for (i = 0; i < (gd.numEmployees - 1); i++) {
-		if (gd.employees[i].idx == employee->idx)
+	for (i = 0; i < gd.numEmployees[type] - 1; i++) {
+		if (gd.employees[type][i].idx == employee->idx) {
+			/* TODO: delete me */
+			/* THIS IS NEEDED, too */
+			/*
+			(baseCurrent->teamInv[i]).c[csi.idFloor] = NULL;
+			Com_DestroyInventory(&baseCurrent->teamInv[i]);
+			memset(&baseCurrent->teamInv[j], 0, sizeof(inventory_t));
+			*/
 			found = qtrue;
+		}
 		if (found)
-			gd.employees[i] = gd.employees[i + 1];
+			gd.employees[type][i] = gd.employees[type][i + 1];
 	}
 
 	if (found) {
-		gd.numEmployees--;
+		gd.numEmployees[type]--;
 	} else {
 		Com_DPrintf("E_DeleteEmployee: Employee wasn't in the global list.\n");
 		return qfalse;
@@ -294,7 +252,6 @@ qboolean E_DeleteEmployee(employee_t * employee)
  */
 qboolean E_AssignEmployee(base_t *base, employeeType_t type)
 {
-	int i, j;
 	switch (type) {
 	case EMPL_SOLDIER:
 		break;
@@ -325,13 +282,6 @@ qboolean E_RemoveEmployee(base_t* base, employeeType_t type, int num)
 	int i;
 	for (i=0; i<gd.numEmployees[type];i++)
 		if (i==num) {
-			/* TODO: delete me */
-			/* THIS IS NEEDED, too */
-			/*
-			(baseCurrent->teamInv[i]).c[csi.idFloor] = NULL;
-			Com_DestroyInventory(&baseCurrent->teamInv[i]);
-			memset(&baseCurrent->teamInv[j], 0, sizeof(inventory_t));
-			*/
 
 			gd.numEmployees[type]--;
 			break;
@@ -357,15 +307,12 @@ employee_t * E_GetUnassingedEmployee(employeeType_t type)
 	int i;
 	employee_t *employee = NULL;
 
-	for (i = 0; i < gd.numEmployees; i++) {
-		employee = &gd.employees[i];
-		if ((employee->type == type) && E_EmployeeIsUnassinged(employee)) {
-			break;
-		} else {
-			employee = NULL;
-		}
+	for (i = 0; i < gd.numEmployees[type]; i++) {
+		employee = &gd.employees[type][i];
+		if (E_EmployeeIsUnassinged(employee))
+			return employee;
 	}
-	return employee;
+	return NULL;
 }
 
 /**
@@ -382,11 +329,10 @@ int E_GetUnassingedEmployeesByType(employeeType_t type)
 	int amount;
 	employee_t *employee = NULL;
 
-	for (i = 0; i < gd.numEmployees; i++) {
-		employee = &gd.employees[i];
-		if ((employee->type == type) && E_EmployeeIsUnassinged(employee)) {
+	for (i = 0; i < gd.numEmployees[type]; i++) {
+		employee = &gd.employees[type][i];
+		if (E_EmployeeIsUnassinged(employee))
 			amount++;
-		}
 	}
 	return amount;
 }
