@@ -52,6 +52,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BASE_LEVELS		1
 
 #define MAX_EMPLOYEES_IN_BUILDING 64
+#define MAX_EMPLOYEES 1024
+
 /* Struct to be used in building definition - List of employees. */
 typedef struct employees_s {
 	int assigned[MAX_EMPLOYEES_IN_BUILDING];	/* List of employees (links to global list). */
@@ -193,13 +195,11 @@ typedef struct base_s {
 	/* building_radar increases the sensor width */
 	radar_t	radar;
 
-	/* equipment that each team carries */
-	inventory_t teamInv[MAX_WHOLETEAM];
 	/* equipment in base */
 	inventory_t equipment;
 
 	/* FIXME: Replace this with employees */
-	character_t wholeTeam[MAX_WHOLETEAM];
+	/*character_t wholeTeam[MAX_WHOLETEAM];*/
 	/* FIXME: Replace this with employees */
 	/* set in CL_GenerateEquipmentCmd and CL_LoadTeam */
 	character_t *curTeam[MAX_ACTIVETEAM];

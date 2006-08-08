@@ -1771,7 +1771,7 @@ void CL_GameAutoGo(void)
 	/* add recruits */
 	if (won && mis->recruits)
 		for (i = 0; i < mis->recruits; i++)
-			CL_GenerateCharacter(curCampaign->team, baseCurrent, ET_ACTOR);
+			CL_GenerateCharacter(curCampaign->team, EMPL_SOLDIER);
 
 	/* campaign effects */
 	selMis->cause->done++;
@@ -2072,7 +2072,7 @@ static void CL_GameResultsCmd(void)
 	/* add recruits */
 	if (won && selMis->def->recruits)
 		for (i = 0; i < selMis->def->recruits; i++)
-			CL_GenerateCharacter(curCampaign->team, baseCurrent, ET_ACTOR);
+			CL_GenerateCharacter(curCampaign->team, EMPL_SOLDIER);
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won);

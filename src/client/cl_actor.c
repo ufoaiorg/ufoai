@@ -619,14 +619,14 @@ void CL_RemoveActorFromTeamList(le_t * le)
 			if (!curCampaign)
 				return;
 
-			for (j = 0; j < baseCurrent->numWholeTeam; j++) {
-				if (baseCurrent->curTeam[i]->ucn == baseCurrent->wholeTeam[j].ucn) {
+			for (j = 0; j < gd.numEmployees[EMPL_SOLDIER]; j++) {
+				if (baseCurrent->curTeam[i]->ucn == gd.employees[EMPL_SOLDIER][i].chr.ucn) {
 					baseCurrent->deathMask |= 1 << j;
 					break;
 				}
 			}
 #ifdef DEBUG
-			if ( j == baseCurrent->numWholeTeam )
+			if ( j == gd.numEmployees[EMPL_SOLDIER] )
 				Com_Printf("CL_RemoveActorFromTeamList: could not mask as dead - ucn: %i\n", baseCurrent->curTeam[i]->ucn);
 #endif
 			return;

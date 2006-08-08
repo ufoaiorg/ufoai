@@ -457,17 +457,9 @@ static void CL_ResearchSelectCmd(void)
   * @sa RS_AssignScientist
   * @sa E_AssignEmployee
   */
-static void RS_AssignScientist2(int num)
+static void RS_AssignScientist2(technology_t* tech)
 {
-	technology_t *tech = NULL;
 	building_t *building = NULL;
-
-	if (num >= researchListLength) {
-		menuText[TEXT_STANDARD] = NULL;
-		return;
-	}
-
-	tech = researchList[num];
 
 	if ( E_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue) <= 0 ) {
 		/* no scientists are free in this base */
@@ -488,7 +480,7 @@ static void RS_AssignScientist2(int num)
 		}
 
 		/* Assign a scientists to the lab. */
-		if (E_AssignEmployee(building, EMPL_SCIENTIST)) {
+		if (E_AssignEmployee(EMPL_SCIENTIST, baseCurrent)) {
 			tech->statusResearch = RS_RUNNING;
 		} else {
 			Com_Printf("Can't add scientist from the lab.\n");
@@ -515,40 +507,15 @@ static void RS_AssignScientist(void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-
-	RS_AssignScientist2(num);
-}
-
-
-
-/**
-  * @brief Remove scientist from the selected research-project.
-  * @sa RS_RemoveScientist
-  */
-static void RS_RemoveScientist2(int num)
-{
-	technology_t *tech = NULL;
-
-	if (num >= researchListLength) {
-		menuText[TEXT_STANDARD] = NULL;
+	if (num < 0 || num > researchListLength)
 		return;
-	}
 
-	tech = researchList[num];
-
-	if (tech->scientists >= 0) {
-		tech->scientists--;
-		/* TODO: */
-	}
-
-	/* Update display-list and display-info. */
-	RS_ResearchDisplayInfo();
-	RS_UpdateData();
+	RS_AssignScientist2(researchList[num]);
 }
+
 
 /**
   * @brief
-  * @sa RS_RemoveScientist2
   * @sa RS_AssignScientist
   */
 static void RS_RemoveScientist(void)
@@ -561,8 +528,17 @@ static void RS_RemoveScientist(void)
 	}
 
 	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num > researchListLength)
+		return;
 
-	RS_RemoveScientist2(num);
+	if (researchList[num]->scientists >= 0) {
+		researchList[num]->scientists--;
+		/* TODO: */
+	}
+
+	/* Update display-list and display-info. */
+	RS_ResearchDisplayInfo();
+	RS_UpdateData();
 }
 
 /**
@@ -572,8 +548,6 @@ static void RS_RemoveScientist(void)
 static void RS_ResearchStart(void)
 {
 	technology_t *tech = NULL;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
 
 	/* We are not in base view. */
 	if (!baseCurrent)
@@ -601,16 +575,9 @@ static void RS_ResearchStart(void)
 			MN_Popup(_("Notice"), _("The research on this item is complete."));
 			break;
 		case RS_NONE:
-			if (tech->lab < 0) {
+			if (tech->scientists <= 0) {
 				/* Add scientists to tech. */
-				RS_AssignScientist2(researchListPos);
-			} else {
-				building = &gd.buildings[tech->base_idx][tech->lab];
-				employees_in_building = &building->assigned_employees;
-				if (employees_in_building->numEmployees < 1) {
-					/* add scientists to tech */
-					RS_AssignScientist2(researchListPos);
-				}
+				RS_AssignScientist2(tech);
 			}
 			tech->statusResearch = RS_RUNNING;
 			break;
@@ -668,11 +635,6 @@ void RS_UpdateData(void)
 	char name[MAX_VAR];
 	int i, j, available;
 	technology_t *tech = NULL;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
-	char tempstring[MAX_VAR];
-
-	*name = '\0'; /* init temp-name */
 
 	/* Make everything the same (predefined in the ufo-file) color. */
 	Cbuf_AddText("research_clear\n");
@@ -695,6 +657,7 @@ void RS_UpdateData(void)
 			/* counting the numbers of display-list entries. */
 			j++;
 		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
+#if 0
 			if (tech->lab >= 0) {
 				/* Display the assigned/free/max numbers of scientists for this tech. */
 				building = &gd.buildings[tech->base_idx][tech->lab];
@@ -705,7 +668,9 @@ void RS_UpdateData(void)
 				Com_sprintf(tempstring, MAX_VAR, "%i\n", employees_in_building->numEmployees);
 				/* Assigned employees to the technology. */
 				Cvar_Set(va("mn_researchassigned%i", j), tempstring);
-			} else {
+			} else
+#endif
+			{
 				Cvar_SetValue(va("mn_researchassigned%i", j), 0);
 				Cvar_Set(va("mn_researchmax%i", j), "mx.");
 			}
@@ -842,8 +807,6 @@ void CL_CheckResearchStatus(void)
 {
 	int i, newResearch = 0;
 	technology_t *tech = NULL;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
 
 	if (!researchListLength)
 		return;
@@ -855,15 +818,16 @@ void CL_CheckResearchStatus(void)
 				Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Research of %s finished\n"), tech->name);
 				MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech);
 
-				B_ClearBuilding(&gd.buildings[tech->base_idx][tech->lab]);
+/*				B_ClearBuilding(&gd.buildings[tech->base_idx][tech->lab]);*/
 				tech->base_idx = -1;
-				tech->lab = -1;
+				tech->scientists = 0;
 				RS_MarkResearched(tech->id);
 				researchListPos = 0;
 				newResearch++;
 				tech->time = 0;
 			} else {
-				if (tech->lab >= 0) {
+#if 0
+				if (tech->scientists >= 0) {
 					building = &gd.buildings[tech->base_idx][tech->lab];
 					Com_DPrintf("building found %s\n", building->name);
 					employees_in_building = &building->assigned_employees;
@@ -885,6 +849,7 @@ void CL_CheckResearchStatus(void)
 							tech->time = 0;
 					}
 				}
+#endif
 			}
 		}
 	}
@@ -1110,7 +1075,7 @@ void RS_ParseTechnologies(char *id, char **text)
 	tech->statusCollected = 0;
 	tech->time = 0;
 	tech->overalltime = 0;
-	tech->lab = -1;
+	tech->scientists = 0;
 	tech->prev = -1;
 	tech->next = -1;
 

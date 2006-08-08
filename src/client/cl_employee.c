@@ -126,10 +126,7 @@ void E_InitEmployees(void)
  */
 qboolean E_EmployeeIsFree(employee_t * employee)
 {
-	return (
-		(employee->lab < 0) &&
-		(employee->workshop < 0)
-	);
+	return (employee->buildingID < 0 && employee->hired);
 }
 
 /**
@@ -141,12 +138,7 @@ qboolean E_EmployeeIsFree(employee_t * employee)
  */
 qboolean E_EmployeeIsUnassinged(employee_t * employee)
 {
-	return (
-		(employee->lab < 0) &&
-		(employee->workshop < 0) &&
-		(employee->quarters < 0) &&
-		(employee->base_idx < 0)
-	);
+	return (employee->buildingID < 0);
 }
 
 /**

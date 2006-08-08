@@ -941,13 +941,13 @@ void B_ClearBase(base_t * base)
 	if (!curCampaign) {
 		/* should be multiplayer */
 		while (base->numWholeTeam < cl_numnames->value)
-			CL_GenerateCharacter(Cvar_VariableString("team"), base, ET_ACTOR);
+			CL_GenerateCharacter(Cvar_VariableString("team"), EMPL_SOLDIER);
 	} else {
 		/* should be multiplayer (campaignmode TODO) or singleplayer */
 		for (i = 0; i < curCampaign->soldiers; i++)
-			CL_GenerateCharacter(curCampaign->team, base, ET_ACTOR);
+			CL_GenerateCharacter(curCampaign->team, EMPL_SOLDIER);
 		for (i = 0; i < curCampaign->ugvs; i++)
-			CL_GenerateCharacter("ugv", base, ET_UGV);
+			CL_GenerateCharacter("ugv", EMPL_ROBOT);
 	}
 
 	for (row = BASE_SIZE - 1; row >= 0; row--)
