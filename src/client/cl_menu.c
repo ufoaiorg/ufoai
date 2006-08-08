@@ -791,7 +791,7 @@ static void MN_Drag(menuNode_t * node, int x, int y)
 
 			/* update character info (for armor changes) */
 			sel = cl_selected->value;
-			if (sel >= 0 && sel < baseCurrent->numWholeTeam) {
+			if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
 				if ( baseCurrent->curTeam[sel]->fieldSize == ACTOR_SIZE_NORMAL )
 					CL_CharacterCvars(baseCurrent->curTeam[sel]);
 				else
