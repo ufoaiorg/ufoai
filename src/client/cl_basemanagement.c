@@ -446,7 +446,6 @@ static void B_NewBuildingFromList(void)
 static void B_DrawBuilding(void)
 {
 	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
 
 	/*maybe someone call this command before the buildings are parsed?? */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
@@ -456,7 +455,6 @@ static void B_DrawBuilding(void)
 	*menuText[TEXT_BUILDING_INFO] = '\0';
 
 	building = baseCurrent->buildingCurrent;
-	employees_in_building = &building->assigned_employees;
 
 	B_BuildingStatus();
 
@@ -471,8 +469,8 @@ static void B_DrawBuilding(void)
 	if (building->varCosts)
 		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Running Costs:\t%1.0f c\n"), building->varCosts), MAX_LIST_CHAR);
 
-	if (employees_in_building->numEmployees)
-		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Employees:\t%i\n"), employees_in_building->numEmployees), MAX_LIST_CHAR);
+/*	if (employees_in_building->numEmployees)
+		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Employees:\t%i\n"), employees_in_building->numEmployees), MAX_LIST_CHAR);*/
 
 	/* FIXME: Rename mn_building_name and mn_building_title */
 	if (building->id)
@@ -701,7 +699,6 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 {
 	building_t *building = NULL;
 	building_t *dependsBuilding = NULL;
-	employees_t *employees_in_building = NULL;
 	technology_t *tech_link = NULL;
 	value_t *edp = NULL;
 	char *errhead = "B_ParseBuildings: unexptected end of file (names ";
@@ -765,14 +762,14 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
-				employees_in_building = &building->assigned_employees;
+/*				employees_in_building = &building->assigned_employees;
 
 				if (*token)
 					employees_in_building->maxEmployees = atoi(token);
 				else {
 					employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
 					Com_Printf("Set max employees to %i for building '%s'\n", MAX_EMPLOYEES_IN_BUILDING, building->id);
-				}
+				}*/
 			} else
 			/* no linking yet */
 			if (!Q_strncmp(token, "depends", MAX_VAR)) {
@@ -890,17 +887,16 @@ building_t *B_GetFreeBuildingType(buildingType_t type)
 {
 	int i;
 	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
 
 	for (i = 0; i < gd.numBuildingTypes; i++) {
 		building = &gd.buildingTypes[i];
 		if (building->buildingType == type) {
 			/* found correct building-type */
-			employees_in_building = &building->assigned_employees;
-			if (employees_in_building->numEmployees < employees_in_building->maxEmployees) {
+/*			employees_in_building = &building->assigned_employees;
+			if (employees_in_building->numEmployees < employees_in_building->maxEmployees) {*/
 				/* the bulding has free space for employees */
-				return building;
-			}
+				/*return building;
+			}*/
 		}
 	}
 	/* no buildings available at all, no correct building type found or no building free */
