@@ -1215,26 +1215,6 @@ static void CL_GameSaveCmd(void)
 }
 
 /**
- * @brief Return a given character pointer of an employee in the given base of a given type
- * @param[in] base Which base the employee should be hired in
- * @param[in] type Which employee type do we search
- * @param[in] num Which employee id (in global employee array)
- * @return character_t pointer or NULL
- */
-character_t* CL_GetHiredCharacter(base_t* base, employeeType_t type, int num)
-{
-	int i, j;
-	for (i=0; i<gd.numEmployees[EMPL_SOLDIER]; i++) {
-		if (gd.employees[EMPL_SOLDIER][i].hired && gd.employees[EMPL_SOLDIER][i].baseIDHired == base->idx) {
-			j++;
-			if (j == num)
-				return &gd.employees[EMPL_SOLDIER][i].chr;
-		}
-	}
-	return NULL;
-}
-
-/**
  * @brief Will fix the pointers in gd after loading
  */
 void CL_UpdatePointersInGlobalData(void)
@@ -1257,7 +1237,7 @@ void CL_UpdatePointersInGlobalData(void)
 		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 			if (base->teamMask[base->aircraftCurrent] & (1 << i)) {
 				/* maybe we already have soldiers in this base */
-				base->curTeam[p] = CL_GetHiredCharacter(base, EMPL_SOLDIER, i);
+				base->curTeam[p] = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
 				p++;
 			}
 		/* rest will be null */
@@ -1988,7 +1968,7 @@ void CL_UpdateCharacterStats(int won)
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 	for (i=0; i<gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
-			chr = CL_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
+			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			assert(chr);
 			chr->assigned_missions++;
 
@@ -2025,7 +2005,7 @@ static void CL_DebugChangeCharacterStats_f(void)
 	int i, j;
 	character_t* chr;
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER];i++) {
-		chr = CL_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
+		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 		for (j=0; j<KILLED_NUM_TYPES; j++)
 			chr->kills[j]++;
 	}

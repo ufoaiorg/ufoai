@@ -113,15 +113,11 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type)
 	memset(chr, 0, sizeof(character_t));
 
 	/* link inventory */
-	/*
-	chr->inv = &base->teamInv[base->numWholeTeam];
+	chr->inv = &employee->inv;
 	Com_DestroyInventory(chr->inv);
-	*/
 
 	/* get ucn */
-	/*
-	chr->ucn = base->nextUCN++;
-	*/
+	/*chr->ucn = base->nextUCN++;*/
 
 	/* set the actor size */
 	switch ( type ) {
