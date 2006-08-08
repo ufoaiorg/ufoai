@@ -73,8 +73,7 @@ typedef struct technology_s {
 	researchStatus_t statusResearch;
 
 	int base_idx;				/* The base this tech is researched in. */
-	int lab;					/* Where this techology is currently researched. */
-	/*int workshop; // Where the 'provided' item is currently produced. */
+	int scientists;					/* Where this techology is currently researched. */
 
 	char image_top[MAX_VAR];
 	char image_bottom[MAX_VAR];

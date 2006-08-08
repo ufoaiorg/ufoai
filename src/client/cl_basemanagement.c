@@ -904,119 +904,24 @@ building_t *B_GetFreeBuildingType(buildingType_t type)
 }
 
 /**
- * @brief Gets a lab in the given base with no research running.
+ * @brief Gets a lab in the given base
+ * @note You can run more than one research in a lab
  *
  * @param[in] base_id The number/id of the base to search in.
  *
- * @return The (unused) lab.
+ * @return The lab or NULL if base has no lab
  */
-building_t *B_GetUnusedLab(int base_idx)
-{
-	int i, j;
-	building_t *building = NULL;
-	technology_t *tech = NULL;
-	qboolean used = qfalse;
-
-	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
-		building = &gd.buildings[base_idx][i];
-		if (building->buildingType == B_LAB) {
-			used = qfalse;
-			/* check in research tree if the lab is used */
-			for (j = 0; j < gd.numTechnologies; j++) {
-				tech = &gd.technologies[j];
-				if (tech->lab == building->idx) {
-					used = qtrue;
-					break;
-				}
-			}
-			if (!used)
-				return building;
-		}
-		building = NULL;
-	}
-	return building;
-}
-
-/**
- * @brief Gets the number of unused labs (no assigned workers, no research) in the given base of the given type.
- *
- * @param[in] base_id The number/id of the base to search in.
- *
- * @return Number of found (empty) building.
- */
-int B_GetUnusedLabs(int base_idx)
-{
-	int i, j;
-	building_t *building = NULL;
-	technology_t *tech = NULL;
-	qboolean used = qfalse;
-
-	int numFreeLabs = 0;
-
-	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
-		building = &gd.buildings[base_idx][i];
-		if (building->buildingType == B_LAB) {
-			used = qfalse;
-			/* check in research tree if the lab is used */
-			for (j = 0; j < gd.numTechnologies; j++) {
-				tech = &gd.technologies[j];
-				if (tech->lab == building->idx) {
-					used = qtrue;
-					break;
-				}
-			}
-			if (!used) {
-				/*Com_DPrintf("B_GetUnusedLabs: %s is unused in base %i\n", building->id, base_idx ); */
-				numFreeLabs++;
-			} else {
-				/*Com_DPrintf("B_GetUnusedLabs: %s is used in base %i\n", building->id, base_idx ); */
-			}
-		}
-	}
-	return numFreeLabs;
-}
-
-/**
- * @brief Removes all assigned employees from a building.
- *
- * @todo If the building is of type "B_QUARTERS" before it's cleared all other buildings need to be checked if there is an employees there that also is in the qarter. These employees need to be removed from those buildings.
- * @param[in] building Building pointer of the building to be cleared
- */
-void B_ClearBuilding(building_t * building)
+building_t *B_GetLab(int base_idx)
 {
 	int i;
-	employees_t *employees_in_building = NULL;
-	employee_t *employee = NULL;
+	building_t *building = NULL;
 
-	if (!building)
-		return;
-
-	employees_in_building = &building->assigned_employees;
-	switch (building->buildingType) {
-	case B_QUARTERS:
-		/*TODO: ignored for now, will surely be usefull later on. */
-		break;
-	case B_LAB:
-		for (i = 0; i < employees_in_building->numEmployees; i++) {
-			employee = &gd.employees[employees_in_building->assigned[i]];
-			employee->lab = -1;
-		}
-		employees_in_building->numEmployees = 0;
-		break;
-	case B_WORKSHOP:
-		for (i = 0; i < employees_in_building->numEmployees; i++) {
-			employee = &gd.employees[employees_in_building->assigned[i]];
-			employee->workshop = -1;
-		}
-		employees_in_building->numEmployees = 0;
-		break;
-		/* TODO:
-		   EMPL_MEDIC
-		   EMPL_ROBOT
-		 */
-	default:
-		break;
+	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
+		building = &gd.buildings[base_idx][i];
+		if (building->buildingType == B_LAB)
+			return building;
 	}
+	return NULL;
 }
 
 /**

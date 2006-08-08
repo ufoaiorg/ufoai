@@ -43,7 +43,6 @@ void E_ResetEmployee(void);
 
 /* The types of employees */
 typedef enum {
-	EMPL_UNDEF,
 	EMPL_SOLDIER,
 	EMPL_SCIENTIST,
 	EMPL_WORKER,				/* unused right now */
@@ -55,24 +54,27 @@ typedef enum {
 /* The definition of an employee */
 typedef struct employee_s {
 	int idx;					/* self link in global employee-list. */
-	employeeType_t type;		/* What profession does this employee has. */
+
+	/* this is true if the employee was already hired */
+	qboolean hired;				/* default is qfalse */
+	int baseIDHired;			/* baseID where the soldier is hired atm */
 
 	char speed;					/* Speed of this Worker/Scientist at research/construction. */
 
+	int buildingID;				/* assigned to this building in gd.buildings[baseIDHired][buildingID] */
+
+	character_t chr;		/* Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
+
+	/* FIXME: Remove me */
 	int base_idx;				/* what base this employee is in. */
 	int quarters;				/* The quarter this employee is assigned to. (all except EMPL_ROBOT) */
 	int lab;					/* The lab this scientist is working in. (only EMPL_SCIENTIST) */
 	int workshop;				/* The lab this worker is working in. (only EMPL_WORKER) */
-	/*int sickbay;  // The sickbay this employee is medicaly treated in. (all except EMPL_ROBOT ... since all can get injured.) */
-	/*int training_room;    // The room this soldier is training in in. (only EMPL_SOLDIER) */
-
-	struct character_s *combat_stats;	/* Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
 } employee_t;
 
 void E_InitEmployees(void);
-qboolean E_RemoveEmployee(building_t * building);
-qboolean E_AssignEmployee(building_t * building_dest, employeeType_t employee_type);
-employee_t* E_CreateEmployee(employeeType_t type);
+qboolean E_AssignEmployee(employeeType_t type, base_t *base);
+employee_t* E_CreateEmployee(employeeType_t type, base_t* base);
 employeeType_t E_GetEmployeeType(char* type);
 int E_EmployeesInBase2(int base_id, employeeType_t employee_type, qboolean free_only);
 int E_BuildingAddEmployees(building_t* b, employeeType_t type, int amount);

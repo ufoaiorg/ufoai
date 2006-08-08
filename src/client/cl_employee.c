@@ -36,19 +36,14 @@ static int employeesInCurrentList = 0;
   *****************************************************/
 
 /**
- * @brief Prints information about the current employee
- */
-static void E_EmployeeInfo (void)
-{
-	static char employeeInfo[512];
-	menuText[TEXT_EMPLOYEE] = employeeInfo;
-}
-
-/**
  * @brief Will fill the list with employees
+ * @note is the init function in employee menu
  */
 static void E_EmployeeList (void)
 {
+	int i, j;
+	employee_t* employee;
+
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
 		return;
@@ -58,13 +53,28 @@ static void E_EmployeeList (void)
 		return;
 	}
 	employeeCategory = atoi(Cmd_Argv(1));
+	if (employeeCategory > MAX_EMPL || employeeCategory < 0)
+		employeeCategory = EMPL_SOLDIER;
 
-	/*
-	employeesInCurrentList++;
-	*/
+	employeesInCurrentList = 0;
 
-	/* now print the information about the current employee */
-	E_EmployeeInfo();
+	for (j=0, employee=gd.employees[employeeCategory]; j<gd.numEmployees[employeeCategory]; j++, employee++) {
+		Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
+		/* TODO; Check whether he is assigned to aircraft and/or carries weapons */
+		/* change the buttons */
+		if (employee->hired)
+			Cbuf_AddText(va("employeeadd%i\n", employeesInCurrentList));
+
+		employeesInCurrentList++;
+		/* we can't display more than 19 employees */
+		if (employeesInCurrentList>=(int)cl_numnames->value)
+			break;
+	}
+	i = employeesInCurrentList;
+	for (;i<(int)cl_numnames->value;i++) {
+		Cvar_ForceSet(va("mn_name%i", i), "");
+		Cbuf_AddText(va("employeedisable%i\n", i));
+	}
 }
 
 
@@ -105,82 +115,6 @@ employeeType_t E_GetEmployeeType(char* type)
  */
 void E_InitEmployees(void)
 {
-	int i, j;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
-	employee_t *employee = NULL;
-
-	/* Loop trough the buildings to assign the type of employee. */
-	/* TODO: this right now assumes that there are not more employees than free quarter space ... but it will not puke if there are. */
-	for (i = 0; i < gd.numBuildingTypes; i++) {
-		building = &gd.buildingTypes[i];
-		employees_in_building = &building->assigned_employees;
-		/* TODO: fixed value right now, needs a configureable one. */
-		employees_in_building->cost_per_employee = 100;
-		if (employees_in_building->maxEmployees <= 0)
-			employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
-		for (j = 0; j < employees_in_building->numEmployees; j++) {
-			employee = &gd.employees[employees_in_building->assigned[j]];
-			switch (building->buildingType) {
-			case B_QUARTERS:
-				employee->type = EMPL_SOLDIER;
-				break;
-			case B_LAB:
-				employee->type = EMPL_SCIENTIST;
-				break;
-			case B_WORKSHOP:
-				employee->type = EMPL_WORKER;
-				break;
-				/*EMPL_MEDIC */
-				/*EMPL_ROBOT */
-			default:
-				break;
-			}
-		}
-	}
-	Com_DPrintf("E_InitEmployees: Existing building types: 0 to %i\n", i);
-
-	building = NULL;
-	/* Generate stats for employees and assign the quarter-less to quarters. */
-	for (i = 0; i < gd.numEmployees; i++) {
-		employee = &gd.employees[i];
-		switch (employee->type) {
-		case EMPL_SOLDIER:
-			/* TODO: create random data for the employees depending on type and skill-min/max */
-			/* employee->combat_stats = */
-			break;
-		case EMPL_SCIENTIST:
-		case EMPL_WORKER:
-			employee->lab = -1;
-			employee->workshop = -1;
-			if (employee->type == EMPL_SCIENTIST) {
-				/* TODO: create random data for the employees depending on type and skill-min/max */
-				employee->speed = 100;
-			} else {
-				/* TODO: create random data for the employees depending on type and skill-min/max */
-				employee->speed = 100;
-			}
-			building = B_GetFreeBuildingType(B_QUARTERS);
-			if (!building)
-				break;
-			employees_in_building = &building->assigned_employees;
-			employees_in_building->assigned[employees_in_building->numEmployees++] = employee->idx;
-			break;
-			/*case EMPL_MEDIC: break; */
-			/*case EMPL_ROBOT: break; */
-		default:
-			break;
-		}
-	}
-
-	/* Remove them all from their assigned buildings except quarters .. this was just needed for firstbase. */
-	for (i = 0; i < gd.numBuildingTypes; i++) {
-		building = &gd.buildingTypes[i];
-		employees_in_building = &building->assigned_employees;
-		if (building->buildingType != B_QUARTERS) {
-			employees_in_building->numEmployees = 0;
-		}
-	}
 }
 
 /**
@@ -222,38 +156,17 @@ qboolean E_EmployeeIsUnassinged(employee_t * employee)
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-employee_t* E_CreateEmployee(employeeType_t type)
+employee_t* E_CreateEmployee(employeeType_t type, base_t* base)
 {
 	employee_t* employee = NULL;
-	/* TODO: check for maxemployees? */
-	employee = &gd.employees[gd.numEmployees++];
 
-	if (!employee) return NULL;
+	if (gd.numEmployees[type] >= MAX_EMPLOYEES) {
+		Com_Printf("E_CreateEmployee: MAX_EMPLOYEES exceeded\n");
+		return NULL;
+	}
 
-	switch (type) {
-		case EMPL_SOLDIER:
-			/* TODO: create random data for the employees depending on type and skill-min/max */
-			/* employee->combat_stats = CL_GenerateCharacter(Cvar_VariableString("team"), NULL, ET_ACTOR); */
-			break;
-		case EMPL_SCIENTIST:
-		case EMPL_WORKER:
-			employee->base_idx	= -1;
-			employee->quarters	= -1;
-			employee->lab		= -1;
-			employee->workshop	= -1;
-			if (employee->type == EMPL_SCIENTIST) {
-				/* TODO: create random data for the employees depending on type and skill-min/max */
-				employee->speed = 100;
-			} else {
-				/* TODO: create random data for the employees depending on type and skill-min/max */
-				employee->speed = 100;
-			}
-			break;
-			/*case EMPL_MEDIC: break; */
-			/*case EMPL_ROBOT: break; */
-		default:
-			break;
-		}
+	employee = &gd.employees[type][gd.numEmployees[type]++];
+
 	return employee;
 }
 
@@ -491,7 +404,7 @@ qboolean E_RemoveEmployee(building_t * building)
  *
  * @todo E_GetFreeEmployee
  * @param[in] type The type of employee to search.
- * @return employee_t 
+ * @return employee_t
  * @sa E_EmployeeIsUnassinged
  * @sa E_EmployeesInBase2
  */
@@ -499,7 +412,7 @@ employee_t * E_GetUnassingedEmployee(employeeType_t type)
 {
 	int i;
 	employee_t *employee = NULL;
-	
+
 	for (i = 0; i < gd.numEmployees; i++) {
 		employee = &gd.employees[i];
 		if ((employee->type == type) && E_EmployeeIsUnassinged(employee)) {
@@ -524,7 +437,7 @@ int E_GetUnassingedEmployeesByType(employeeType_t type)
 	int i;
 	int amount;
 	employee_t *employee = NULL;
-	
+
 	for (i = 0; i < gd.numEmployees; i++) {
 		employee = &gd.employees[i];
 		if ((employee->type == type) && E_EmployeeIsUnassinged(employee)) {
@@ -549,24 +462,24 @@ qboolean E_BuildingAddEmployees(building_t *building, employeeType_t type, int a
 	employee_t *employee = NULL;
 	int unassinged_empl;
 	int i;
-	
+
 	if (!building) return qfalse;
 
 	if ( building->type != B_QUARTERS) {
 		Com_Printf("Buulding is not a quarter.\n");
 		return qfalse;
 	}
-	
+
 	if ( type >= MAX_EMPL )
 		return qfalse;
-	
+
 	unassinged_empl = E_GetUnassingedEmployeesByType(type);
-	
+
 	if ( unassinged_empl < amount) {
 		Com_Printf("Not enough employees free of the given type (only %i instead of %i).\n", unassinged_empl, amount);
 		return qfalse;
 	}
-	
+
 	employees_in_building = &building->assigned_employees;
 	if (employees_in_building->maxEmployees <= 0) {
 		Com_Printf("No employees for this building: '%s'\n", building->id);
@@ -577,14 +490,14 @@ qboolean E_BuildingAddEmployees(building_t *building, employeeType_t type, int a
 		Com_Printf("The given amount of employees will not fit into this building: '%s'\n", building->id);
 		return qfalse;
 	}
-	
+
 	for (i = 0; i < amount; i++) {
 		/* Get unassigned empl of given type. */
 		employee = E_GetUnassingedEmployee(type)
 		/* Assign empl to building. */
 		if (!employee || !E_AssignEmployee(building,type)) {
 			Com_Printf("Assignment of one employee went wrong: '%s'\n", building->id);
-		}		
+		}
 	}
 	return qtrue;
 }
@@ -599,7 +512,7 @@ void E_BuildingAddEmployees_f ( void )
 	int i;
 	int amount;
 	employeeType_t type;
-	
+
 	Com_DPrintf("E_BuildingAddEmployees_f started\n");
 	/* can be called from everywhere - so make a sanity check here */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
@@ -609,14 +522,14 @@ void E_BuildingAddEmployees_f ( void )
 		Com_Printf("Usage: building_add_employees <type> <amount>\n");
 		return;
 	}
-	
+
 	type = E_GetEmployeeType(Cmd_Argv(1));
 	Com_DPrintf("E_BuildingAddEmployees_f %i/%i\n", type, MAX_EMPL);
 	if (type == MAX_EMPL)
 		return;
 
 	amount = atoi(Cmd_Argv(2));
-	
+
 	if ( (gd.numEmployees + amount) < gd.maxEmployees ) {
 		for (i = 0; i < amount; i++) {
 			E_CreateEmployee(type);
@@ -628,46 +541,6 @@ void E_BuildingAddEmployees_f ( void )
 	} else {
 		Com_DPrintf("E_BuildingAddEmployees_f: maxEmployees reached (num=$i, max=$i, new=$i).\n",gd.numEmployees, gd.maxEmployees, ammount);
 	}
-}
-
-/**
- * @brief Returns the number of employees in the given base of the given type.
- * 
- * @param[in] base_idx what bbase to search in.
- * @param[in] employee_type What type of employee to search for. If you call it with MAX_EMPL it will return every type of employees.
- * @param[in] free_only Set this to qtrue if you want to search only for free (i.e empl only in quarters) employees otherwise qfalse.
- * @return int Number of found employees.
- * @sa E_EmployeesInBase
- */
-int E_EmployeesInBase2(int base_idx, employeeType_t employee_type, qboolean free_only)
-{
-	int i, j;
-	int numEmployeesInBase = 0;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
-	employee_t *employee = NULL;
-
-	if (!baseCurrent) {
-		Com_DPrintf("B_EmployeesInBase2: No Base set.\n");
-		return 0;
-	}
-
-	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
-		building = &gd.buildings[base_idx][i];
-		if (building->buildingType == B_QUARTERS) {
-			/* quarters found */
-			employees_in_building = &building->assigned_employees;
-
-			/*loop trough building and add to numEmployeesInBase if a match is found. */
-			for (j = 0; j < employees_in_building->numEmployees; j++) {
-				employee = &gd.employees[employees_in_building->assigned[j]];
-				if (((employee_type == employee->type) || (employee_type == MAX_EMPL))
-					&& (E_EmployeeIsFree(employee) || !free_only))
-					numEmployeesInBase++;
-			}
-		}
-	}
-	return numEmployeesInBase;
 }
 
 /**
@@ -684,8 +557,19 @@ void E_EmployeeHire_f (void)
 	}
 	num = atoi(Cmd_Argv(1));
 
-	if (num >= employeesInCurrentList)
+	/* some sanity checks */
+	if (employeeCategory >= MAX_EMPL && employeeCategory < EMPL_SOLDIER )
 		return;
+
+	if (num >= employeesInCurrentList || num < 0)
+		return;
+
+	if (gd.employees[employeeCategory][num].hired)
+		gd.employees[employeeCategory][num].hired = qfalse;
+	else
+		gd.employees[employeeCategory][num].hired = qfalse;
+	/* update list */
+	E_EmployeeList();
 }
 
 /**
@@ -702,14 +586,16 @@ static void E_EmployeeSelect_f(void)
 	}
 	num = atoi(Cmd_Argv(1));
 
+	if (num >= gd.numEmployees[employeeCategory])
+		return;
+
 	/* console commands */
 	Cbuf_AddText(va("employeedeselect%i\n", (int) cl_selected->value));
 	Cbuf_AddText(va("employeeselect%i\n", num));
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
 	/* set info cvars */
-	/* TODO: */
-	/*CL_CharacterCvars(&baseCurrent->wholeTeam[num]);*/
+	CL_CharacterCvars(&(gd.employees[employeeCategory][num].chr));
 }
 
 /**
@@ -721,7 +607,6 @@ void E_ResetEmployee(void)
 {
 	/* add commands */
 	Cmd_AddCommand("employee_init", E_EmployeeList);
-	Cmd_AddCommand("building_add_employees", E_BuildingAddEmployees_f );
 	Cmd_AddCommand("employee_hire", E_EmployeeHire_f);
 	Cmd_AddCommand("employee_select", E_EmployeeSelect_f);
 }

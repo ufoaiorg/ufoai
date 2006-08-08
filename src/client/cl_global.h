@@ -62,10 +62,10 @@ typedef struct globalData_s
 
 	/* == employees == */
 	/* A list of all phalanx employees (soldiers, scies, workers, etc...) */
-	employee_t employees[MAX_EMPLOYEES];
+	employee_t employees[MAX_EMPL][MAX_EMPLOYEES];
 
 	/* Total number of employees. */
-	int numEmployees;
+	int numEmployees[MAX_EMPL];
 
 
 	/* == bases == */

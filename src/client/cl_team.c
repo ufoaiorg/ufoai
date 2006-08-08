@@ -99,19 +99,13 @@ static void CL_GiveNameCmd(void)
 void CL_GenerateCharacter(char *team, base_t *base, int type)
 {
 	character_t *chr;
-
-	/* check for too many characters */
-	if (base->numWholeTeam >= (int) cl_numnames->value)
-		return;
-#ifdef DEBUG
-	if (base->numWholeTeam >= MAX_WHOLETEAM) {
-		Sys_Error("numWholeTeam (%i) is bigger than the allowed maximum (%i) - this is a prospectiv overflow\n", base->numWholeTeam, MAX_WHOLETEAM);
-		return; /* for code analysts - never reached */
-	}
-#endif
+	employee_t *employee;
 
 	/* reset character */
-	chr = &base->wholeTeam[base->numWholeTeam];
+	employee = E_CreateEmployee(EMPL_SOLDIER, base);
+	if (!employee)
+		return;
+	chr = &employee->chr;
 	memset(chr, 0, sizeof(character_t));
 
 	/* link inventory */

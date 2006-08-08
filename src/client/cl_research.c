@@ -364,12 +364,11 @@ static void RS_ResearchDisplayInfo(void)
 	tech = researchList[researchListPos];
 
 	/* Display total number of free labs in current base. */
-	Cvar_Set("mn_research_labs", va(_("Free labs in this base: %i"), B_GetUnusedLabs(baseCurrent->idx)));
 	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), E_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue)));
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
 	/* Display the base this tech is researched in. */
-	if (tech->lab >= 0) {
+	if (tech->scientists >= 0) {
 		if (tech->base_idx != baseCurrent->idx) {
 			base = &gd.bases[tech->base_idx];
 			Cvar_Set("mn_research_selbase", va(_("Researched in %s"), base->name));
@@ -476,24 +475,20 @@ static void RS_AssignScientist2(int num)
 	}
 
 	if (tech->statusResearchable) {
-		/* Check if the tech already has been assigned to a lab. */
-		if (tech->lab < 0) {
-			/* Check if there is a free lab available. */
-			/* Get a free lab from the currently active base. */
-			building = B_GetUnusedLab(baseCurrent->idx);
-			if (building) {
-				/* Assign the tech to a lab&base. */
-				tech->lab = building->idx;
-				tech->base_idx = building->base_idx;
-			} else {
-				MN_Popup(_("Notice"),
-					_("There is no free lab available.\nYou need to build one or free another\nin order to assign scientists to research this technology.\n"));
-				return;
-			}
+		/* Get a free lab from the currently active base. */
+		building = B_GetLab(baseCurrent->idx);
+		if (building) {
+			/* Assign the tech to a lab&base. */
+			tech->scientists++;
+			tech->base_idx = building->base_idx;
+		} else {
+			MN_Popup(_("Notice"),
+				_("There is no free lab available.\nYou need to build one or free another\nin order to assign scientists to research this technology.\n"));
+			return;
 		}
 
 		/* Assign a scientists to the lab. */
-		if (E_AssignEmployee(&gd.buildings[baseCurrent->idx][tech->lab], EMPL_SCIENTIST)) {
+		if (E_AssignEmployee(EMPL_SCIENTIST, baseCurrent)) {
 			tech->statusResearch = RS_RUNNING;
 		} else {
 			Com_Printf("Can't add scientist from the lab.\n");
@@ -533,8 +528,6 @@ static void RS_AssignScientist(void)
 static void RS_RemoveScientist2(int num)
 {
 	technology_t *tech = NULL;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
 
 	if (num >= researchListLength) {
 		menuText[TEXT_STANDARD] = NULL;
@@ -543,24 +536,9 @@ static void RS_RemoveScientist2(int num)
 
 	tech = researchList[num];
 
-	/* TODO: remove scientists from research-item */
-	Com_DPrintf("RS_RemoveScientist: %s\n", tech->id);
-	if (tech->lab >= 0) {
-		building = &gd.buildings[tech->base_idx][tech->lab];
-		Com_DPrintf("RS_RemoveScientist: %s\n", building->name);
-		if (E_RemoveEmployee(building)) {
-			Com_DPrintf("RS_RemoveScientist: Removal done.\n");
-			employees_in_building = &building->assigned_employees;
-			if (employees_in_building->numEmployees == 0) {
-				tech->lab = -1;
-				tech->base_idx = -1;
-				tech->statusResearch = RS_PAUSED;
-			}
-		} else {
-			Com_DPrintf("Can't remove scientist from the lab.\n");
-		}
-	} else {
-		Com_DPrintf("This tech is not researched in any lab.\n");
+	if (tech->scientists >= 0) {
+		tech->scientists--;
+		/* TODO: */
 	}
 
 	/* Update display-list and display-info. */

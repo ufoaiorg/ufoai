@@ -101,6 +101,7 @@ typedef struct building_s {
 	int timeStart, buildTime;
 
 	/* A list of employees assigned to this building. */
+	/* FIXME: Remove me - only use global employee list */
 	employees_t assigned_employees;
 
 	/*if we can build more than one building of the same type: */
@@ -225,8 +226,7 @@ void B_UpgradeBuilding(building_t * b);
 void B_RepairBuilding(building_t * b);
 int B_CheckBuildingConstruction(building_t * b, int baseID);
 int B_GetNumOnTeam(void);
-building_t *B_GetUnusedLab(int base_id);
-int B_GetUnusedLabs(int base_id);
+building_t *B_GetLab(int base_id);
 void B_ClearBuilding(building_t * building);
 void B_ParseBuildings(char *id, char **text, qboolean link);
 void B_ParseBases(char *title, char **text);
