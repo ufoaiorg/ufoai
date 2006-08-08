@@ -488,7 +488,7 @@ static void RS_AssignScientist2(int num)
 		}
 
 		/* Assign a scientists to the lab. */
-		if (E_AssignEmployee(EMPL_SCIENTIST, baseCurrent)) {
+		if (E_AssignEmployee(building, EMPL_SCIENTIST)) {
 			tech->statusResearch = RS_RUNNING;
 		} else {
 			Com_Printf("Can't add scientist from the lab.\n");

@@ -156,7 +156,7 @@ qboolean E_EmployeeIsUnassinged(employee_t * employee)
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-employee_t* E_CreateEmployee(employeeType_t type, base_t* base)
+employee_t* E_CreateEmployee(employeeType_t type)
 {
 	employee_t* employee = NULL;
 
