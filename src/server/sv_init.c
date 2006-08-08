@@ -154,7 +154,7 @@ static void RandomList(int n, short *list)
 		list[i] = i;
 
 	for (i = 0; i < n; i++) {
-		r = i + (n - i) * frand();
+		r = rand() % (i + (n - i));
 		t = list[r];
 		list[r] = list[i];
 		list[i] = t;
@@ -624,7 +624,7 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 
 	/* use random assembly, if no valid one has been specified */
 	if (!mAsm)
-		mAsm = &mAssembly[(int) (frand() * numAssemblies)];
+		mAsm = &mAssembly[rand() % numAssemblies];
 
 	/* calculate regions */
 	regNumX = mAsm->w / MAX_REGIONSIZE + 1;

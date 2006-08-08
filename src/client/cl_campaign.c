@@ -311,8 +311,8 @@ qboolean CL_MapMaskFind(byte * color, vec2_t polar)
 		return qfalse;
 
 	/* get position */
-	num *= frand();
-	for (i = 0, c = maskPic; i < num; c += 4)
+	num = rand() % num;
+	for (i = 0, c = maskPic; i <= num; c += 4)
 		if (c[0] == color[0] && c[1] == color[1] && c[2] == color[2])
 			i++;
 
@@ -512,7 +512,7 @@ static void CL_CampaignAddMission(setState_t * set)
 		return;
 	}
 
-	misTemp = &missions[set->def->missions[(int) (0.5 + (set->def->numMissions - 1) * frand())]];
+	misTemp = &missions[set->def->missions[rand() % set->def->numMissions]];
 	if (misTemp->onGeoscape) {
 		Com_DPrintf("Mission is already on geoscape\n");
 		return;
@@ -799,7 +799,7 @@ static void CL_UpdateNationData(void)
 		for (j=0; j<nation->scientists; j++) {
 			B_CreateEmployee(EMPL_SCIENTIST);
 			/* gd.numBases is always (at least) 1 at this point */
-			B_AssignEmployee(B_GetBuildingInBase(&gd.bases[(int)((gd.numBases-1)*frand())], "building_quarters"), EMPL_SCIENTIST);
+			B_AssignEmployee(B_GetBuildingInBase(&gd.bases[rand() % gd.numBases], "building_quarters"), EMPL_SCIENTIST);
 		}
 		/* TODO: soldiers */
 	}

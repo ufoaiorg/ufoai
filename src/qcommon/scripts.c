@@ -526,7 +526,7 @@ char *Com_GiveName(int gender, char *category)
 			/* found category */
 			if (!nc->numNames[gender])
 				return NULL;
-			name = nc->numNames[gender] * frand();
+			name = rand() % nc->numNames[gender];
 
 			/* skip names */
 			pos = nc->names[gender];
@@ -562,7 +562,7 @@ char *Com_GiveModel(int type, int gender, char *category)
 				Com_Printf("Com_GiveModel: no models defined for gender %i and category '%s'\n", gender, category);
 				return NULL;
 			}
-			num = (int) (nc->numModels[gender] * frand()) * 4;
+			num = (rand() % nc->numModels[gender]) * 4;
 			num += type;
 
 			/* skip models and unwanted info */
@@ -613,9 +613,9 @@ int Com_GetModelAndName(char *team, char *path, char *body, char *head, char *na
 
 	/* get the models */
 	while (team) {
-		gender = frand() * NAME_LAST;
+		gender = rand() % NAME_LAST;
 		if (td)
-			category = (int) td->cats[(int) (frand() * td->num)];
+			category = (int) td->cats[rand() % td->num];
 
 		/* get name */
 		if (name) {

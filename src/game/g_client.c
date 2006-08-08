@@ -2043,7 +2043,7 @@ void G_ActorDie(edict_t * ent, int state)
 	switch (state) {
 	case STATE_DEAD:
 		ent->HP = 0;
-		ent->state |= (int) (1 + frand() * 3);
+		ent->state |= (rand() % 4);
 		break;
 	case STATE_STUN:
 		ent->STUN = 0;

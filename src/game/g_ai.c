@@ -432,7 +432,7 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
 			num =
 				equip[ammo] / equip[weapon]
 				+ (equip[ammo] % equip[weapon]
-				   > frand() * equip[weapon]);
+				   > rand() % equip[weapon]);
 			num = num > 3 ? 3 : num;
 			while (--num) {
 				item_t mun = {0,0,0};
@@ -581,7 +581,7 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 				equip[weapon] / 8
 				+ (((has_weapon ? HAS_WEAPON_MALUS : 2 * HAS_WEAPON_BONUS)
 					+ equip[weapon] % 8)
-				   > 8 * frand());
+				   >= 8 * frand());
 			while (num--)
 				has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
 		}
@@ -665,9 +665,10 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 		item_t item = {0,0,0};
 		char *ref;
 
+		assert (numPoints > 0);
 		/* select spawnpoint */
 		while (ent->type != ET_ACTORSPAWN)
-			ent = &g_edicts[spawnPoints[(int) (frand() * numPoints)]];
+			ent = &g_edicts[spawnPoints[rand() % numPoints]];
 
 		/* spawn */
 		level.num_spawned[team]++;
