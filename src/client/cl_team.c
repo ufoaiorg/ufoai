@@ -554,7 +554,7 @@ void CL_UpdateHireVar(void)
 	baseCurrent->hiredMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent];
 
 	/* update curTeam list */
-	for (i = 0, p = 0; i < E_GetHiredCharacterCount(baseCurrent, EMPL_SOLDIER); i++)
+	for (i = 0, p = 0; i < E_GetUnhiredCharacterCount(baseCurrent, EMPL_SOLDIER); i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
@@ -599,7 +599,7 @@ void CL_ResetTeamInBase(void)
   */
 static void CL_MarkTeamCmd(void)
 {
-	int i, j, cnt = 0;
+	int i, j, k, cnt = 0;
 	invList_t* ic;
 	qboolean alreadyInOtherShip = qfalse;
 
@@ -613,9 +613,14 @@ static void CL_MarkTeamCmd(void)
 
 	CL_UpdateHireVar();
 
-	for (i = 0; i < (int)cl_numnames->value; i++) {
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+		if (k >= (int)cl_numnames->value)
+			break;
 		cnt = 0;
 		alreadyInOtherShip = qfalse;
+		if (gd.employees[EMPL_SOLDIER][i].hired && gd.employees[EMPL_SOLDIER][i].baseIDHired != baseCurrent->idx)
+			continue;
+		k++;
 		Cvar_ForceSet(va("mn_name%i", i), gd.employees[EMPL_SOLDIER][i].chr.name);
 		for (j = 0; j < MAX_AIRCRAFT; j++) {
 			if (j==baseCurrent->aircraftCurrent)
@@ -687,6 +692,8 @@ static void CL_HireActorCmd(void)
 		}
 		baseCurrent->hiredMask &= ~(1 << num);
 		baseCurrent->teamMask[baseCurrent->aircraftCurrent] &= ~(1 << num);
+		/* TODO E_UnhireEmployee() */
+		Com_Printf("TODO: Set employee to hired = qfalse\n");
 		baseCurrent->numHired--;
 		baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
 	} else {
@@ -706,6 +713,8 @@ static void CL_HireActorCmd(void)
 				baseCurrent->hiredMask |= (1 << num);
 				baseCurrent->numHired++;
 				baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]++;
+				/* TODO: E_HireEmployee() */
+				Com_Printf("TODO: Set employee to hired = qtrue\n");
 				baseCurrent->teamMask[baseCurrent->aircraftCurrent] |= (1 << num);
 			}
 		}

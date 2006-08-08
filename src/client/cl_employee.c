@@ -388,6 +388,26 @@ int E_GetUnassingedEmployeeCount(base_t* base, employeeType_t type)
  * @param[in] base The base where we count
  * @return count of hired employees of a given type in a given base
  */
+int E_GetUnhiredCharacterCount(base_t* base, employeeType_t type)
+{
+	int count = 0, i;
+	employee_t *employee = NULL;
+
+	for (i = 0; i < gd.numEmployees[type]; i++) {
+		employee = &gd.employees[type][i];
+		if (!employee->hired)
+			count++;
+	}
+	return count;
+}
+
+/**
+ * @brief Gets an unassigned employee of a given type from the global list.
+ *
+ * @param[in] type The type of employee to search.
+ * @param[in] base The base where we count
+ * @return count of hired employees of a given type in a given base
+ */
 int E_GetHiredCharacterCount(base_t* base, employeeType_t type)
 {
 	int count = 0, i;
