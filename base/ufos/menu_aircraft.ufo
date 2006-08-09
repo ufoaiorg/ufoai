@@ -45,6 +45,7 @@ menu aircraft
 	// ===============
 	pic button_squad
 	{
+		if "mn_soldiers_in_base > 0"
 		tooltip	"_Assign your squad"
 		image   menu/button
 		pos	"45 100"
@@ -58,9 +59,29 @@ menu aircraft
 		out		{ *txt_squad color "0 0.8 0 1" *button_squad texl "0 0" *button_squad texh "230 64" }
 		in		{ *txt_squad color "1 1 1 1" *button_squad texl "230 0" *button_squad texh "460 64" }
 	}
+	pic button_no_squad
+	{
+		if "mn_soldiers_in_base <= 0"
+		tooltip	"_Hire your team first"
+		image   menu/button
+		pos	"45 100"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+	}
 	string txt_squad
 	{
+		if "mn_soldiers_in_base > 0"
 		string	"_Equip Aircraft"
+		color	"0 0.8 0 1"
+		pos	"160 116"
+		font	f_menu
+		align	uc
+	}
+	string txt_no_squad
+	{
+		if "mn_soldiers_in_base <= 0"
+		string	"_Not available"
 		color	"0 0.8 0 1"
 		pos	"160 116"
 		font	f_menu
