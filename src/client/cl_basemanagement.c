@@ -163,8 +163,11 @@ extern void B_BuildingStatus(void)
 void B_SetUpBase(void)
 {
 	int i;
-	building_t *building = NULL;
+#if 0
+	int j;
 	employeeType_t employeeType;
+#endif
+	building_t *building = NULL;
 
 	assert(baseCurrent);
 	/* update the building-list */
@@ -186,8 +189,8 @@ void B_SetUpBase(void)
 			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			building->buildingStatus = B_STATUS_WORKING;
-
-			if ((building->employees_firstbase > 0) && gd.buildingTypes[i].firstbase) {
+#if 0
+			if ((building->employees > 0) && gd.buildingTypes[i].firstbase) {
 				switch (building->buildingType) {
 				case B_LAB:
 					employeeType = EMPL_SCIENTIST;
@@ -198,10 +201,14 @@ void B_SetUpBase(void)
 				default:
 					break;
 				}
-				for (;building->employees_firstbase--;)
-					if (!E_HireEmployee(baseCurrent, employeeType, 0))
-						Com_Printf("B_SetUpBase: Hiring %i employee(s) of type %i failed.\n", building->employees_firstbase, employeeType);
+				for (j=0; j < building->employees; j++) {
+					employee = E_GetUnassingedEmployee(baseCurrent, employeeType);
+					if (!employee || !E_HireEmployee(baseCurrent, employeeType, employee->idx)) {
+						Com_Printf("B_SetUpBase: Hiring %i employee(s) of type %i failed.\n", building->employees, employeeType);
+					}
+				}
 			}
+#endif
 			/*
 			   if ( building->moreThanOne
 			   && building->howManyOfThisType < BASE_SIZE*BASE_SIZE )
@@ -719,10 +726,12 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 	technology_t *tech_link = NULL;
 	value_t *edp = NULL;
 	char *errhead = "B_ParseBuildings: unexptected end of file (names ";
-	char *token = NULL, *split = NULL;
+	char *token = NULL;
+#if 0
+	char *split = NULL;
 	int employeesAmount = 0, i;
 	employee_t* employee;
-
+#endif
 	/* get id list body */
 	token = COM_Parse(text);
 	if (!*text || *token != '{') {
@@ -793,14 +802,15 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
-			} else if (!Q_strncmp(token, "employees_firstbase", MAX_VAR)) {
+#if 0
+			} else if (!Q_strncmp(token, "employees", MAX_VAR)) {
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
 				if (*token) {
 					split = strstr(token, " ");
 					if (!split) {
-						Sys_Error("Wrong 'employees_firstbase' line: [amount] [type] ('%s')\n", token);
+						Sys_Error("Wrong 'employees' line: [amount] [type] ('%s')\n", token);
 						/* never reached */
 						return;
 					}
@@ -812,8 +822,9 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 						if (!employee)
 							Sys_Error("Could not create employee '%s'\n", split);
 					}
-					building->employees_firstbase = employeesAmount;
+					building->employees = employeesAmount;
 				}
+#endif
 			} else
 				for (edp = valid_vars; edp->string; edp++)
 					if (!Q_strncmp(token, edp->string, sizeof(edp->string))) {

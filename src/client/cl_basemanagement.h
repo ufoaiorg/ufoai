@@ -122,8 +122,10 @@ typedef struct building_s {
 	/*autobuild when base is set up */
 	qboolean firstbase;
 	
+#if 0
 	/* How many employees to creat&hire on construction in the first base. lab=scis, quarter=soldeirs, etc.. */
-	int employees_firstbase;
+	int employees;
+#endif
 
 	/*this way we can rename the buildings without loosing the control */
 	buildingType_t buildingType;
