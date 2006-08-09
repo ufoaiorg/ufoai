@@ -800,7 +800,7 @@ static void CL_UpdateNationData(void)
 			/* Create one free scientist. */
 			E_CreateEmployee(EMPL_SCIENTIST);
 			/* Hire one free scientist. gd.numBases is always (at least) 1 at this point. */
-			E_HireEmployee(&gd.bases[rand() % gd.numBases], EMPL_SCIENTIST, -1); 
+			E_HireEmployee(&gd.bases[rand() % gd.numBases], EMPL_SCIENTIST, -1);
 		}
 		/* TODO: soldiers */
 	}
@@ -844,7 +844,7 @@ void CL_CampaignRun(void)
 		/* set time cvars */
 		CL_DateConvert(&ccs.date, &day, &month);
 		/* every first day of a month */
-		if (day == 1 && gd.fund != qfalse) {
+		if (day == 1 && gd.fund != qfalse && gd.numBases) {
 			CL_UpdateNationData();
 			gd.fund = qfalse;
 		} else if (day > 1)
@@ -2057,7 +2057,7 @@ static void CL_GameResultsCmd(void)
 			tempMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent] >> 1;
 			baseCurrent->teamMask[baseCurrent->aircraftCurrent] =
 				(baseCurrent->teamMask[baseCurrent->aircraftCurrent] & ((1 << i) - 1)) | (tempMask & ~((1 << i) - 1));
-			
+
 			E_UnhireEmployee(baseCurrent, EMPL_SOLDIER, i);
 			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
 		} else
@@ -2432,6 +2432,10 @@ value_t campaign_vals[] = {
 	{"team", V_STRING, offsetof(campaign_t, team)}
 	,
 	{"soldiers", V_INT, offsetof(campaign_t, soldiers)}
+	,
+	{"workers", V_INT, offsetof(campaign_t, workers)}
+	,
+	{"medics", V_INT, offsetof(campaign_t, medics)}
 	,
 	{"scientists", V_INT, offsetof(campaign_t, scientists)}
 	,
