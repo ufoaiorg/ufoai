@@ -533,7 +533,7 @@ static void CL_SelectCmd(void)
 
 	if (!Q_strncmp(command, "team", 4)) {
 		/* set info cvars */
-		chr = E_GetCharacter(baseCurrent, EMPL_SOLDIER, num);
+		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, num);
 		if ( chr->fieldSize == ACTOR_SIZE_NORMAL )
 			CL_CharacterCvars(chr);
 		else
