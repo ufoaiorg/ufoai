@@ -702,9 +702,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 	technology_t *tech_link = NULL;
 	value_t *edp = NULL;
 	char *errhead = "B_ParseBuildings: unexptected end of file (names ";
-	char *token = NULL, *split = NULL;
-	int employeesAmount = 0, i;
-	employee_t* employee;
+	char *token = NULL;
 
 	/* get id list body */
 	token = COM_Parse(text);
@@ -776,23 +774,6 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
-			} else if (!Q_strncmp(token, "employees_firstbase", MAX_VAR)) {
-				token = COM_EParse(text, errhead, id);
-				if (!*text)
-					return;
-				if (*token) {
-					split = strstr(token, " ");
-					if (!split) {
-						Sys_Error("Wrong 'employees_firstbase' line: [amount] [type] ('%s')\n", token);
-						/* never reached */
-						return;
-					}
-					*split++ = '\0';
-					employeesAmount = atoi(token);
-					Com_DPrintf("Add %i employees '%s' to '%s'\n", employeesAmount, split, building->id);
-					for (i=0; i<employeesAmount;i++)
-						employee = E_CreateEmployee(E_GetEmployeeType(split));
-				}
 			} else
 				for (edp = valid_vars; edp->string; edp++)
 					if (!Q_strncmp(token, edp->string, sizeof(edp->string))) {
@@ -930,6 +911,7 @@ building_t *B_GetLab(int base_idx)
 void B_ClearBase(base_t * base)
 {
 	int row, col, i;
+	employee_t* employee;
 
 	memset(base, 0, sizeof(base_t));
 
@@ -938,12 +920,20 @@ void B_ClearBase(base_t * base)
 	/* setup team */
 	if (!curCampaign) {
 		/* should be multiplayer */
-		while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->value)
-			E_CreateEmployee(EMPL_SOLDIER);
-	} else {
+		while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->value) {
+			employee = E_CreateEmployee(EMPL_SOLDIER);
+			employee->hired = qtrue;
+			employee->baseIDHired = base->idx;
+		}
+	} else if (!E_CountUnhired(base, EMPL_SOLDIER)) {
 		/* should be multiplayer (campaignmode TODO) or singleplayer */
+		Com_DPrintf("B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
 		for (i = 0; i < curCampaign->soldiers; i++)
 			E_CreateEmployee(EMPL_SOLDIER);
+		Com_DPrintf("B_ClearBase: create %i scientists\n", curCampaign->scientists);
+		for (i = 0; i < curCampaign->scientists; i++)
+			E_CreateEmployee(EMPL_SCIENTIST);
+		Com_DPrintf("B_ClearBase: create %i robots\n", curCampaign->ugvs);
 		for (i = 0; i < curCampaign->ugvs; i++)
 			E_CreateEmployee(EMPL_ROBOT);
 	}
