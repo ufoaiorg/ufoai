@@ -470,33 +470,34 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 }
 
 #if 0
+/************************
+TODO: Will later on be used in e.g RS_AssignScientist_f 
+*********************************/
 /**
  * @brief Assigns an employee to a building.
  *
- * There are two cases of assignment:
- *	1.) From global list to quarters (building_dest is a quarter). This will search for compeltely unassigned employee of the given type in the global list gd.employees and assign them to the quarter if it has free space. The employee will only be linked to a quarter.
- *	2.) From quarters to 'any' other building (i.e. lab + workshop for now). This will search for a free (i.e not yet assigned to a building other than quarters) employee of the given type in a quarter in the same base building_dest is located in and. The employee will be linked to its quarter and the assinged building.
- *
- * @todo Add check for base vs. employee_type and abort if they do not match.
- *
- * @param[in] building_dest Which building to assign the employee to.
+ * @param[in] building The building the employee is assigned to.
  * @param[in] employee_type	What type of employee to assign to the building.
  * @sa E_RemoveEmployee
  * @return Returns true if adding was possible/sane otherwise false. In the later case nothing will be changed.
  */
-qboolean E_AssignEmployee(base_t *base, employeeType_t type)
+qboolean E_AssignEmployee(building_t *building, employeeType_t type)
 {
+	employee_t * employee = NULL;
+	
 	switch (type) {
 	case EMPL_SOLDIER:
 		break;
 	case EMPL_SCIENTIST:
-		/* see also RS_AssignScientist2 */
-		if (base->hasLab) {
-			return qtrue;
+		employee = E_GetUnassingedEmployee(&gd.bases[building->base_idx], type);
+		if (employee) {
+			employee->buildingID = building->idx;
+		} else {
+			/* TODO: message -> no employee available */
 		}
-		return qfalse;
+		break;
 	default:
-		Com_DPrintf("Unhandled employee type: %i\n", type);
+		Com_DPrintf("E_AssignEmployee: Unhandled employee type: %i\n", type);
 		break;
 	}
 	return qfalse;
@@ -504,6 +505,10 @@ qboolean E_AssignEmployee(base_t *base, employeeType_t type)
 #endif
 
 #if 0
+/************************
+TODO: Will later on be used in e.g E_UnhireEmployee and  RS_RemoveScientist_f 
+Code does not yet reflect that though.
+*********************************/
 /**
  * @brief Remove one employee from building.
  *
