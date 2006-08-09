@@ -77,6 +77,7 @@ character_t * E_GetCharacter(base_t* base, employeeType_t type, int num);
 employee_t * E_GetHiredEmployee(base_t* base, employeeType_t type, int num);
 character_t * E_GetHiredCharacter(base_t* base, employeeType_t type, int num);
 employee_t * E_GetUnassingedEmployee(base_t* base, employeeType_t type);
+employee_t * E_GetAssingedEmployee(base_t* base, employeeType_t type);
 int E_CountHired(base_t* base, employeeType_t type);
 int E_CountUnhired(base_t* base, employeeType_t type);
 int E_CountUnassinged(base_t* base, employeeType_t type);

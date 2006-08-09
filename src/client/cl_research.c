@@ -454,15 +454,19 @@ static void CL_ResearchSelectCmd(void)
 
 /**
   * @brief Assigns scientist to the selected research-project.
-  * @sa RS_AssignScientist
-  * @sa E_AssignEmployee
+  * @note The lab will be automatically selected (the first one that has still free space).
+  * @param[in] tech What technology you want to assign the scientist to.
+  * @sa RS_AssignScientist_f
   */
-static void RS_AssignScientist2(technology_t* tech)
+static void RS_AssignScientist(technology_t* tech)
 {
 	building_t *building = NULL;
+	employee_t *employee = NULL;
 
-	if ( E_GetUnassingedEmployee(baseCurrent, EMPL_SCIENTIST) <= 0 ) {
-		/* no scientists are free in this base */
+	employee = E_GetUnassingedEmployee(baseCurrent, EMPL_SCIENTIST);
+	
+	if (!employee) {
+		/* No scientists are free in this base. */
 		return;
 	}
 
@@ -473,18 +477,14 @@ static void RS_AssignScientist2(technology_t* tech)
 			/* Assign the tech to a lab&base. */
 			tech->scientists++;
 			tech->base_idx = building->base_idx;
+			employee->buildingID = building->idx;
 		} else {
 			MN_Popup(_("Notice"),
 				_("There is no free lab available.\nYou need to build one or free another\nin order to assign scientists to research this technology.\n"));
 			return;
 		}
 
-		/* Assign a scientists to the lab. */
-		if (E_AssignEmployee(baseCurrent, EMPL_SCIENTIST)) {
-			tech->statusResearch = RS_RUNNING;
-		} else {
-			Com_Printf("Can't add scientist from the lab.\n");
-		}
+		tech->statusResearch = RS_RUNNING;
 
 		/* Update display-list and display-info. */
 		RS_ResearchDisplayInfo();
@@ -494,10 +494,10 @@ static void RS_AssignScientist2(technology_t* tech)
 
 /**
   * @brief
-  * @sa RS_AssignScientist2
-  * @sa RS_RemoveScientist
+  * @sa RS_AssignScientist
+  * @sa RS_RemoveScientist_f
   */
-static void RS_AssignScientist(void)
+static void RS_AssignScientist_f(void)
 {
 	int num;
 
@@ -510,18 +510,20 @@ static void RS_AssignScientist(void)
 	if (num < 0 || num > researchListLength)
 		return;
 
-	RS_AssignScientist2(researchList[num]);
+	RS_AssignScientist(researchList[num]);
 }
 
 
 /**
   * @brief
-  * @sa RS_AssignScientist
+  * @sa RS_RemoveScientist
+  * @sa RS_AssignScientist_f
   */
-static void RS_RemoveScientist(void)
+static void RS_RemoveScientist_f(void)
 {
 	int num;
-
+	employee_t *employee = NULL;
+	
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: mn_rs_remove <num_in_list>\n");
 		return;
@@ -532,8 +534,9 @@ static void RS_RemoveScientist(void)
 		return;
 
 	if (researchList[num]->scientists >= 0) {
+		employee = E_GetAssingedEmployee(&gd.bases[researchList[num]->base_idx], EMPL_SCIENTIST);
+		employee->buildingID = -1;
 		researchList[num]->scientists--;
-		/* TODO: */
 	}
 
 	/* Update display-list and display-info. */
@@ -577,7 +580,7 @@ static void RS_ResearchStart(void)
 		case RS_NONE:
 			if (tech->scientists <= 0) {
 				/* Add scientists to tech. */
-				RS_AssignScientist2(tech);
+				RS_AssignScientist(tech);
 			}
 			tech->statusResearch = RS_RUNNING;
 			break;
@@ -994,8 +997,8 @@ void RS_ResetResearch(void)
 	Cmd_AddCommand("research_type", CL_ResearchType);
 	Cmd_AddCommand("mn_start_research", RS_ResearchStart);
 	Cmd_AddCommand("mn_stop_research", RS_ResearchStop);
-	Cmd_AddCommand("mn_rs_add", RS_AssignScientist);
-	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist);
+	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f);
+	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f);
 	Cmd_AddCommand("research_update", RS_UpdateData);
 	Cmd_AddCommand("invlist", Com_InventoryList_f);
 #ifdef DEBUG

@@ -277,6 +277,29 @@ qboolean E_EmployeeIsUnassinged(employee_t * employee)
  * @return employee_t
  * @sa E_EmployeeIsUnassinged
  * @sa E_EmployeesInBase
+ * @note assigned is not hired - they are already hired in a base, in a quarter _and_ working in another building.
+ */
+employee_t * E_GetAssingedEmployee(base_t* base, employeeType_t type)
+{
+	int i;
+	employee_t *employee;
+
+	for (i = 0; i < gd.numEmployees[type]; i++) {
+		employee = &gd.employees[type][i];
+		if ( employee->baseIDHired == base->idx
+			 && !E_EmployeeIsUnassinged(employee) )
+			return employee;
+	}
+	return NULL;
+}
+
+/**
+ * @brief Gets an assigned employee of a given type from the given base.
+ *
+ * @param[in] type The type of employee to search.
+ * @return employee_t
+ * @sa E_EmployeeIsUnassinged
+ * @sa E_EmployeesInBase
  * @note unassigned is not unhired - they are already hired in a base but are at quarters
  */
 employee_t * E_GetUnassingedEmployee(base_t* base, employeeType_t type)
