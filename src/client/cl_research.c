@@ -364,7 +364,7 @@ static void RS_ResearchDisplayInfo(void)
 	tech = researchList[researchListPos];
 
 	/* Display total number of free labs in current base. */
-	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), E_GetUnassingedEmployee(baseCurrent, EMPL_SCIENTIST )));
+	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), E_CountUnassinged(baseCurrent, EMPL_SCIENTIST)));
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
 	/* Display the base this tech is researched in. */
@@ -464,7 +464,7 @@ static void RS_AssignScientist(technology_t* tech)
 	employee_t *employee = NULL;
 
 	employee = E_GetUnassingedEmployee(baseCurrent, EMPL_SCIENTIST);
-	
+
 	if (!employee) {
 		/* No scientists are free in this base. */
 		return;
@@ -523,7 +523,7 @@ static void RS_RemoveScientist_f(void)
 {
 	int num;
 	employee_t *employee = NULL;
-	
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: mn_rs_remove <num_in_list>\n");
 		return;
