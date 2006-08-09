@@ -719,7 +719,9 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 	technology_t *tech_link = NULL;
 	value_t *edp = NULL;
 	char *errhead = "B_ParseBuildings: unexptected end of file (names ";
-	char *token = NULL;
+	char *token = NULL, *split = NULL;
+	int employeesAmount = 0, i;
+	employee_t* employee;
 
 	/* get id list body */
 	token = COM_Parse(text);
