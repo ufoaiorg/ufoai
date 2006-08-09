@@ -77,6 +77,7 @@ typedef enum {
 	B_LAB,
 	B_QUARTERS,
 	B_WORKSHOP,
+	B_HOSPITAL,
 	B_HANGAR
 } buildingType_t;
 
