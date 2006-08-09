@@ -627,7 +627,7 @@ menu employees
 
 	pic bt_scientists
 	{
-		tooltip	"_Hier scientists"
+		tooltip	"_Hire scientists"
 		image	menu/button_blue
 		mousefx	true
 		pos		"615 655"
