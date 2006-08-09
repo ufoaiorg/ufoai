@@ -584,7 +584,7 @@ void E_EmployeeHire_f (void)
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: hire <num>\n");
+		Com_Printf("Usage: employee_hire <num>\n");
 		return;
 	}
 	num = atoi(Cmd_Argv(1));
