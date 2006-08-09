@@ -1,14 +1,61 @@
+// base/ufos/seq_ingame.ufo - 2006-08-08
+
+// Screens with scrolling text at the begin of the stages
+// ToDo: write & insert text from the wiki
+
 sequence invasion
 {
+	cmd "ov_stop;music mission;ov_start;"
+	cmd "seq_animspeed 100;"
 
+	2dobj inv_sentence1
+	{
+//		text	"_inv_sentence1"
+		text	"_The aliens begin their invasion ..."
+		pos		"512 485"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -30"
+		relative	true
+	}
+	wait 20.0
+
+	rem inv_sentence1
 }
 
 sequence ufos_are_coming
 {
+	cmd "ov_stop;music mission;ov_start;"
+	cmd "seq_animspeed 100;"
 
+	2dobj uac_sentence1
+	{
+//		text	"_ufos_sentence1"
+		text	"_UFOs appear in the sky around the world ..."
+		pos		"512 485"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -30"
+		relative	true
+	}
+	wait 20.0
+
+	rem uac_sentence1
 }
 
 sequence alienbase
 {
+	cmd "ov_stop;music mission;ov_start;"
+	cmd "seq_animspeed 100;"
 
+	2dobj ab_sentence1
+	{
+//		text	"_alienbase_sentence1"
+		text	"_Finally: The attack on the alien base ..."
+		pos		"512 485"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -30"
+		relative	true
+	}
+	wait 20.0
+
+	rem ab_sentence1
 }
