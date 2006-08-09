@@ -199,11 +199,14 @@ employee_t* E_GetUnhiredEmployee(base_t* base, employeeType_t type, int num)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (!employee->hired) {
-			if (j == num)
-				return employee;
-			j++;
+		if (employee->hired && employee->baseIDHired != base->idx)
+			continue;
+		if (j == num) {
+			if (employee->hired)
+				Com_Printf("E_GetUnhiredEmployee: Warning: employee is hired\n");
+			return employee;
 		}
+		j++;
 	}
 	return NULL;
 }
@@ -222,11 +225,11 @@ employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int num)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->hired && employee->baseIDHired == base->idx) {
-			if (j == num)
-				return employee;
-			j++;
-		}
+		if (employee->hired && employee->baseIDHired != base->idx)
+			continue;
+		if (j == num)
+			return employee;
+		j++;
 	}
 	return NULL;
 }
@@ -299,7 +302,8 @@ qboolean E_HireEmployee(base_t* base, employeeType_t type, int num)
 		employee->hired = qtrue;
 		employee->baseIDHired = base->idx;
 		return qtrue;
-	}
+	} else
+		Com_Printf("Could not get unhired employee '%i' from base '%i'\n", num, base->idx);
 	return qfalse;
 }
 
@@ -320,7 +324,8 @@ qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int num)
 		employee->baseIDHired = -1;
 		employee->buildingID = -1;
 		return qtrue;
-	}
+	} else
+		Com_Printf("Could not get hired employee '%i' from base '%i'\n", num, base->idx);
 	return qfalse;
 }
 
