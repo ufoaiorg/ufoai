@@ -670,7 +670,7 @@ menu employees
 		tooltip	"_Hire medics"
 		image	menu/button_blue
 		mousefx	true
-		pos		"374 290"
+		pos		"765 655"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ empl_medics }
@@ -678,7 +678,7 @@ menu employees
 
 	string s_medics
 	{
-		pos	"438 300"
+		pos	"829 665"
 		align	uc
 		color "1 1 1 0.6"
 		font	"f_big"
