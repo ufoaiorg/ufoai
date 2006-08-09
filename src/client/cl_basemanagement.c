@@ -187,7 +187,7 @@ void B_SetUpBase(void)
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			building->buildingStatus = B_STATUS_WORKING;
 				
-			if (building->employees_firstbase > 0) {
+			if ((building->employees_firstbase > 0) && gd.buildingTypes[i].firstbase) {
 				switch (building->buildingType) {
 				case B_LAB:
 					employeeType = EMPL_SCIENTIST;
