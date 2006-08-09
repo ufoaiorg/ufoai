@@ -165,7 +165,7 @@ void B_SetUpBase(void)
 	int i;
 	building_t *building = NULL;
 	employeeType_t employeeType;
-	
+
 	assert(baseCurrent);
 	/* update the building-list */
 	B_BuildingInit();
@@ -186,7 +186,7 @@ void B_SetUpBase(void)
 			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			building->buildingStatus = B_STATUS_WORKING;
-				
+
 			if ((building->employees_firstbase > 0) && gd.buildingTypes[i].firstbase) {
 				switch (building->buildingType) {
 				case B_LAB:
@@ -198,9 +198,9 @@ void B_SetUpBase(void)
 				default:
 					break;
 				}
-				if (!E_HireEmployee(baseCurrent, employeeType, building->employees_firstbase)) {
-					Com_Printf("B_SetUpBase: Hiring %i employee(s) of type %i failed.\n", building->employees_firstbase, employeeType);
-				}
+				for (;building->employees_firstbase--;)
+					if (!E_HireEmployee(baseCurrent, employeeType, 0))
+						Com_Printf("B_SetUpBase: Hiring %i employee(s) of type %i failed.\n", building->employees_firstbase, employeeType);
 			}
 			/*
 			   if ( building->moreThanOne
@@ -806,9 +806,12 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 					}
 					*split++ = '\0';
 					employeesAmount = atoi(token);
-					Com_DPrintf("Add %i employees '%s' to '%s'\n", employeesAmount, split, building->id);
-					for (i=0; i<employeesAmount;i++)
+					Com_DPrintf("Add %i employees '%s'\n", employeesAmount, split);
+					for (i=0; i<employeesAmount;i++) {
 						employee = E_CreateEmployee(E_GetEmployeeType(split));
+						if (!employee)
+							Sys_Error("Could not create employee '%s'\n", split);
+					}
 					building->employees_firstbase = employeesAmount;
 				}
 			} else
