@@ -458,6 +458,7 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 	return qtrue;
 }
 
+#if 0
 /**
  * @brief Assigns an employee to a building.
  *
@@ -489,6 +490,7 @@ qboolean E_AssignEmployee(base_t *base, employeeType_t type)
 	}
 	return qfalse;
 }
+#endif
 
 /**
  * @brief Remove one employee from building.
