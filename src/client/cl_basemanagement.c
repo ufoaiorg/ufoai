@@ -164,7 +164,8 @@ void B_SetUpBase(void)
 {
 	int i;
 	building_t *building = NULL;
-
+	employeeType_t employeeType;
+	
 	assert(baseCurrent);
 	/* update the building-list */
 	B_BuildingInit();
@@ -185,6 +186,22 @@ void B_SetUpBase(void)
 			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			building->buildingStatus = B_STATUS_WORKING;
+				
+			if (building->employees_firstbase > 0) {
+				switch (building->buildingType) {
+				case B_LAB:
+					employeeType = EMPL_SCIENTIST;
+					break;
+				case B_QUARTERS:
+					employeeType = EMPL_SOLDIER;
+					break;
+				default:
+					break;
+				}
+				if (!E_HireEmployee(baseCurrent, employeeType, building->employees_firstbase)) {
+					Com_Printf("B_SetUpBase: Hiring %i employee(s) of type %i failed.\n", building->employees_firstbase, employeeType);
+				}
+			}
 			/*
 			   if ( building->moreThanOne
 			   && building->howManyOfThisType < BASE_SIZE*BASE_SIZE )
@@ -774,6 +791,24 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
+			} else if (!Q_strncmp(token, "employees_firstbase", MAX_VAR)) {
+				token = COM_EParse(text, errhead, id);
+				if (!*text)
+					return;
+				if (*token) {
+					split = strstr(token, " ");
+					if (!split) {
+						Sys_Error("Wrong 'employees_firstbase' line: [amount] [type] ('%s')\n", token);
+						/* never reached */
+						return;
+					}
+					*split++ = '\0';
+					employeesAmount = atoi(token);
+					Com_DPrintf("Add %i employees '%s' to '%s'\n", employeesAmount, split, building->id);
+					for (i=0; i<employeesAmount;i++)
+						employee = E_CreateEmployee(E_GetEmployeeType(split));
+					building->employees_firstbase = employeesAmount;
+				}
 			} else
 				for (edp = valid_vars; edp->string; edp++)
 					if (!Q_strncmp(token, edp->string, sizeof(edp->string))) {
