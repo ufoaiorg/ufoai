@@ -209,7 +209,7 @@ employee_t* E_GetUnhiredEmployee(employeeType_t type, int idx)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-	
+
 		/* Return first unhired employee if no idx is given. */
 		if (idx < 0 && !employee->hired) {
 			return employee;
@@ -408,13 +408,13 @@ employee_t* E_CreateEmployee(employeeType_t type)
 			CL_GenerateCharacter(employee, Cvar_VariableString("team"), ET_ACTOR);
 			break;
 		case EMPL_SCIENTIST:
+		case EMPL_MEDIC:
 		case EMPL_WORKER:
 			/* TODO: create random data for the employees depending on type and skill-min/max */
 			/* employee->combat_stats = CL_GenerateCharacter(Cvar_VariableString("team"), NULL, ET_ACTOR); */
 			CL_GenerateCharacter(employee, Cvar_VariableString("team"), ET_ACTOR);
 			employee->speed = 100;
 			break;
-		/*case EMPL_MEDIC: break; */
 		/*case EMPL_ROBOT: break; */
 		default:
 			break;
@@ -471,7 +471,7 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 
 #if 0
 /************************
-TODO: Will later on be used in e.g RS_AssignScientist_f 
+TODO: Will later on be used in e.g RS_AssignScientist_f
 *********************************/
 /**
  * @brief Assigns an employee to a building.
@@ -484,7 +484,7 @@ TODO: Will later on be used in e.g RS_AssignScientist_f
 qboolean E_AssignEmployee(building_t *building, employeeType_t type)
 {
 	employee_t * employee = NULL;
-	
+
 	switch (type) {
 	case EMPL_SOLDIER:
 		break;
@@ -506,7 +506,7 @@ qboolean E_AssignEmployee(building_t *building, employeeType_t type)
 
 #if 0
 /************************
-TODO: Will later on be used in e.g E_UnhireEmployee and  RS_RemoveScientist_f 
+TODO: Will later on be used in e.g E_UnhireEmployee and  RS_RemoveScientist_f
 Code does not yet reflect that though.
 *********************************/
 /**
