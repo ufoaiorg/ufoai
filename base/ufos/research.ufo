@@ -1146,6 +1146,18 @@ tech rs_building_lab
 	researched	true
 }
 
+tech rs_building_hospital
+{
+	type	building
+	description	"_b_hospital_txt"
+	up_chapter	buildings
+
+	requires	rs_building_lab
+	provides	building_hospital
+	time	0
+	researched	true
+}
+
 tech rs_building_teamroom
 {
 	type	building

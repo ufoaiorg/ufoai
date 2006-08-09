@@ -73,6 +73,21 @@ building building_lab
 	pedia		rs_building_lab
 }
 
+building building_hospital
+{
+	name		"_Hospital"
+	image		base/hospital
+	depends		building_lab
+	fixcosts	1000000
+	max_employees	10
+	more_than_one	true
+	build_time	9
+	varcosts	500
+	map_name	"hospital"
+	type	    hospital
+	pedia		rs_building_hospital
+}
+
 building building_storage
 {
 	name		"_Storage"
