@@ -797,9 +797,10 @@ static void CL_UpdateNationData(void)
 		if ( frand() <= NATION_PROBABILITY )
 			continue;
 		for (j=0; j<nation->scientists; j++) {
+			/* Create one free scientist. */
 			E_CreateEmployee(EMPL_SCIENTIST);
-			/* gd.numBases is always (at least) 1 at this point */
-			E_AssignEmployee(&gd.bases[rand() % gd.numBases], EMPL_SCIENTIST);
+			/* Hire one free scientist. gd.numBases is always (at least) 1 at this point. */
+			E_HireEmployee(&gd.bases[rand() % gd.numBases], EMPL_SCIENTIST, -1); 
 		}
 		/* TODO: soldiers */
 	}
