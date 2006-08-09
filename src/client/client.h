@@ -312,6 +312,7 @@ extern cvar_t *cl_selected;
 extern cvar_t *cl_numnames;
 
 extern cvar_t *difficulty;
+extern cvar_t *cl_start_scratch;
 
 extern cvar_t *mn_active;
 extern cvar_t *mn_main;

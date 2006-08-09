@@ -100,6 +100,8 @@ cvar_t *mn_hud;
 cvar_t *mn_lastsave;
 
 cvar_t *difficulty;
+cvar_t *cl_start_scratch;
+
 cvar_t *confirm_actions;
 
 cvar_t *cl_precachemenus;
@@ -1190,6 +1192,7 @@ void CL_InitLocal(void)
 	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET);
 
 	difficulty = Cvar_Get("difficulty", "0", CVAR_NOSET);
+	cl_start_scratch = Cvar_Get("cl_start_scratch", "0", CVAR_ARCHIVE);
 
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE);
 

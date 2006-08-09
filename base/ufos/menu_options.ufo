@@ -529,6 +529,49 @@ menu options_sound
 menu options_game
 {
 	// ===================
+	// START FROM SCRATCH
+	// ===================
+	string scratch_str
+	{
+		string	"_Start from scratch:"
+		pos		"500 130"
+	}
+	string scratch_value
+	{
+		string	"*cvar mn_start_scratch"
+		pos		"840 130"
+		align	ur
+	}
+	pic scratch_dec
+	{
+		image	menu/buttons_small
+		pos		"868 134"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		tooltip	"_Start campaigns with no employees in the initial base"
+		click
+		{
+			cmd "mn_modify cl_start_scratch -1 0 1;"
+			cmd "mn_translate cl_start_scratch mn_start_scratch 0:No,1:Yes;"
+		}
+	}
+	pic scratch_inc
+	{
+		image	menu/buttons_small
+		pos		"884 134"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		tooltip	"_Start campaigns with no employees in the initial base"
+		click
+		{
+			cmd "mn_modify cl_start_scratch +1 0 1;"
+			cmd "mn_translate cl_start_scratch mn_start_scratch 0:No,1:Yes;"
+		}
+	}
+
+	// ===================
 	// CONFIRM ACTIONS
 	// ===================
 	string confirm_str
@@ -763,6 +806,7 @@ menu options_game
 
 	func init
 	{
+		cmd "mn_translate cl_start_scratch mn_start_scratch 0:No,1:Yes;"
 		cmd "mn_translate cl_centerview mn_centerview 0:No,1:Yes;"
 		cmd "mn_translate cl_show_tooltips mn_show_tooltips 0:No,1:Yes;"
 		cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes;"
