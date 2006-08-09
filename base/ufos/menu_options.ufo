@@ -549,7 +549,7 @@ menu options_game
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		tooltip	"_Start campaigns with no employees in the initial base"
+		tooltip	"_Non-empty base at campaign start"
 		click
 		{
 			cmd "mn_modify cl_start_scratch -1 0 1;"
@@ -561,9 +561,9 @@ menu options_game
 		image	menu/buttons_small
 		pos		"884 134"
 		texl	"16 0"
-		texh	"32 16"
+		texh	"32 16" 
 		mousefx	true
-		tooltip	"_Start campaigns with no employees in the initial base"
+		tooltip	"_Empty base at campaign start"
 		click
 		{
 			cmd "mn_modify cl_start_scratch +1 0 1;"
@@ -592,6 +592,7 @@ menu options_game
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
+		tooltip	"_No confirmation before walking and shooting"
 		click
 		{
 			cmd "mn_modify confirm_actions -1 0 1;"
@@ -605,6 +606,7 @@ menu options_game
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
+		tooltip	"_Confirmation needed before walking and shooting"
 		click
 		{
 			cmd "mn_modify confirm_actions +1 0 1;"
