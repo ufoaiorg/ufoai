@@ -1486,7 +1486,7 @@ int CL_GameLoad(char *filename)
 
 	CL_GameInit();
 
-	Cvar_Set("mn_main", "singleplayer");
+	Cvar_Set("mn_main", "singleplayermission");
 	Cvar_Set("mn_active", "map");
 	Cbuf_AddText("disconnect\n");
 	ccs.singleplayer = qtrue;

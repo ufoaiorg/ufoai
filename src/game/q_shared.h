@@ -144,7 +144,8 @@ typedef uint8_t byte;
 #define	MAX_OSPATH			128	/* max length of a filesystem pathname */
 
 /* per-level limits */
-#define MAX_TILESTRINGS		8
+/* 25 - bases are 5*5 */
+#define MAX_TILESTRINGS		25
 #define MAX_TEAMS			8
 #define	MAX_CLIENTS			256	/* absolute limit */
 #define	MAX_EDICTS			1024	/* must change protocol to increase more */

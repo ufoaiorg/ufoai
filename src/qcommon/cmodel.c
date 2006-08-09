@@ -1119,9 +1119,7 @@ void CM_LoadMap(char *tiles, char *pos)
 		}
 
 		/* get tile name */
-#ifdef PARANOID
-		Com_Printf("CM_AddMapTile: token: %s\n", token);
-#endif
+		Com_DPrintf("CM_AddMapTile: token: %s\n", token);
 		if (token[0] == '+')
 			Com_sprintf(name, MAX_VAR, "%s%s", base, token + 1);
 		else
