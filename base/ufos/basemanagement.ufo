@@ -10,6 +10,32 @@
 // 2: x-x x-x x-x x-x Entr
 // 3: xxx xxx tea x-x Stor
 // 4: rad Lab Pow Cmd Qrt
+//
+// Common envisioned base types:
+//
+// Radar Outpost:
+// powerplant, radar
+// cost
+//
+// Defended Radar Outpost:
+// Radar Outpost + storage, quarters, 10 soldiers
+// cost
+//
+// Dropship Base:
+// Defended Radar Outpost + hangar
+// cost
+//
+// Dropship Base with Ammunition Production:
+// Dropship Base + quarters, 10 workers, workshop, teamroom
+// cost
+//
+// 
+//
+//
+//
+//
+//
+//
 
 // ====================
 // Buildings
@@ -59,7 +85,7 @@ building building_powerplant
 
 building building_quarters
 {
-	name		"_Quarters"
+	name		"_Living Quarters"
 	image		base/quarters
 	fixcosts	80000
 	depends		building_powerplant // so that they don't freeze
@@ -104,7 +130,7 @@ building building_workshop
 
 building building_hangar
 {
-	name		"_Hangar"
+	name		"_Dropship Hangar"
 	image		base/drop2
 	fixcosts	600000
 	needs		building_hangar2
@@ -121,7 +147,7 @@ building building_hangar
 
 building building_hangar2
 {
-	name		"_Hangar"
+	name		"_Dropship Hangar"
 	image		base/drop1
 	fixcosts	600000
 	more_than_one	true
@@ -162,7 +188,7 @@ building building_command
 
 building building_intercept
 {
-	name		"_Interceptors"
+	name		"_Interceptor Hangar"
 	image		base/intercept
 	fixcosts	800000
 	depends		building_command // no interceptions without supervision
