@@ -293,6 +293,8 @@ void CL_AircraftSelect(void)
 
 	CL_UpdateHireVar();
 
+	Cvar_SetValue("mn_soldiers_in_base", E_CountHired(baseCurrent, EMPL_SOLDIER));
+	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
 	Cvar_Set("mn_aircraftstatus", CL_AircraftStatusToName(aircraft));
 	Cvar_Set("mn_aircraftname", aircraft->name);
 	Cvar_Set("mn_aircraft_model", aircraft->model);
@@ -483,10 +485,10 @@ void CL_CampaignRunAircraft(int dt)
 					if (abs(ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
 						/* Display airfight sequence */
 						Cbuf_ExecuteText(EXEC_NOW, "seq_start airfight airfight");
-					
+
 						/* The aircraft can attack the ufo */
 						battleStatus = AIR_Fight(aircraft, ufo);
-					
+
 						if (battleStatus) {
 							color = CL_GetmapColor(ufo->pos);
 							if (!MapIsWater(color) && frand() <= GROUND_MISSION ) {

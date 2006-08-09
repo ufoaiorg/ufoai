@@ -1107,8 +1107,8 @@ void B_BaseInit(void)
 
 	baseCurrent = &gd.bases[baseID];
 
-	/*these are the workers you can set on buildings */
-	Cvar_SetValue("mn_available_workers", 0);
+	Cvar_SetValue("mn_soldiers_in_base", E_CountHired(baseCurrent, EMPL_SOLDIER));
+	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
 
 	Cvar_Set("mn_credits", va("%i c", ccs.credits));
 }
