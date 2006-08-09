@@ -70,7 +70,6 @@ building building_lab
 	pos		"4 1"
 	firstbase	true
 	type	lab
-	employees_firstbase	"2 EMPL_SCIENTIST"
 	pedia		rs_building_lab
 }
 
@@ -112,7 +111,6 @@ building building_quarters
 	more_than_one	true
 	max_employees	20
 	build_time	4
-	onconstruct	"building_add_employees EMPL_SCIENTIST 6"
 	varcosts	10
 	map_name	"quarters"
 	pos		"4 4"

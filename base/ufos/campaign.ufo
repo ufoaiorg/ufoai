@@ -99,6 +99,7 @@ campaign heavy
 	text		"_txt_hard_campaign"
 	team		human
 	soldiers	7
+	scientists	3
 	difficulty	3
 	equipment	campaign_player
 	market		campaign_market
@@ -116,6 +117,7 @@ campaign easy
 	text		"_txt_easy_campaign"
 	team		human
 	soldiers	12
+	scientists	9
 	difficulty	-3
 	equipment	campaign_player
 	market		campaign_market
@@ -133,6 +135,7 @@ campaign main
 	text		"_txt_standard_campaign"
 	team		human
 	soldiers	9
+	scientists	6
 	difficulty	0
 //	ugvs	2
 	equipment	campaign_player
@@ -151,6 +154,7 @@ campaign test
 	text		"_txt_standard_campaign"
 	team		human
 	soldiers	12
+	scientists	9
 	difficulty	0
 //	ugvs	2
 	equipment	testing_and_tweaking
