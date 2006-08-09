@@ -535,8 +535,10 @@ static void RS_RemoveScientist_f(void)
 
 	if (researchList[num]->scientists >= 0) {
 		employee = E_GetAssingedEmployee(&gd.bases[researchList[num]->base_idx], EMPL_SCIENTIST);
-		employee->buildingID = -1;
-		researchList[num]->scientists--;
+		if (employee) {
+			employee->buildingID = -1;
+			researchList[num]->scientists--;
+		}
 	}
 
 	/* Update display-list and display-info. */
