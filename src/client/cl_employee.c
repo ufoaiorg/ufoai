@@ -207,8 +207,8 @@ employee_t* E_GetUnhiredEmployee(base_t* base, employeeType_t type, int num)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->baseIDHired != base->idx)
-			continue;
+/*		if (employee->baseIDHired != base->idx)
+			continue;*/
 		if (j == num) {
 			if (employee->hired)
 				Com_Printf("E_GetUnhiredEmployee: Warning: employee is hired\n");
@@ -350,10 +350,11 @@ qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int num)
 	employee_t* employee;
 	employee = E_GetHiredEmployee(base, type, num);
 	if (employee) {
-		/* TODO: Destroy inventory */
 		employee->hired = qfalse;
 		employee->baseIDHired = -1;
 		employee->buildingID = -1;
+		employee->inv.c[csi.idFloor] = NULL;
+		Com_DestroyInventory(&employee->inv);
 		return qtrue;
 	} else
 		Com_Printf("Could not get hired employee '%i' from base '%i'\n", num, base->idx);
@@ -432,17 +433,15 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 	}
 
 	employee->baseIDHired = -1;
+	employee->hired = qfalse;
 
 	/* remove the employee from the global list */
 	for (i = 0; i < gd.numEmployees[type] - 1; i++) {
 		if (gd.employees[type][i].idx == employee->idx) {
-			/* TODO: delete me */
-			/* THIS IS NEEDED, too */
-			/*
-			(baseCurrent->teamInv[i]).c[csi.idFloor] = NULL;
-			Com_DestroyInventory(&baseCurrent->teamInv[i]);
-			memset(&baseCurrent->teamInv[j], 0, sizeof(inventory_t));
-			*/
+			/* TODO: delete this employee */
+			gd.employees[type][i].inv.c[csi.idFloor] = NULL;
+			Com_DestroyInventory(&gd.employees[type][i].inv);
+			memset(&gd.employees[type][i].inv, 0, sizeof(inventory_t));
 			found = qtrue;
 		}
 		if (found)
