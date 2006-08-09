@@ -136,17 +136,17 @@ qboolean E_EmployeeIsFree(employee_t * employee)
 }
 
 /**
- * @brief Return a given employee pointer in the given base of a given type
- * @param[in] base Which base the employee should be hired in
- * @param[in] type Which employee type do we search
- * @param[in] num Which employee id (in global employee array)
+ * @brief Return a given employee pointer in the given base of a given type.
+ * @param[in] base Which base the employee should be hired in.
+ * @param[in] type Which employee type do we search.
+ * @param[in] idx Which employee id (in global employee array)
  * @return employee_t pointer or NULL
  */
-employee_t* E_GetEmployee(base_t* base, employeeType_t type, int num)
+employee_t* E_GetEmployee(base_t* base, employeeType_t type, int idx)
 {
 	int i;
 	for (i=0; i<gd.numEmployees[type]; i++) {
-		if (i == num && (!gd.employees[type][i].hired || gd.employees[type][i].baseIDHired == base->idx))
+		if (i == idx && (!gd.employees[type][i].hired || gd.employees[type][i].baseIDHired == base->idx))
 			return &gd.employees[type][i];
 	}
 	return NULL;
@@ -181,12 +181,12 @@ void E_UnhireAllEmployees(base_t* base, employeeType_t type)
  * @brief Return a given character pointer of an employee in the given base of a given type
  * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
- * @param[in] num Which employee id (in global employee array)
+ * @param[in] idx Which employee id (in global employee array)
  * @return character_t pointer or NULL
  */
-character_t* E_GetCharacter(base_t* base, employeeType_t type, int num)
+character_t* E_GetCharacter(base_t* base, employeeType_t type, int idx)
 {
-	employee_t* employee = E_GetEmployee(base, type, num);
+	employee_t* employee = E_GetEmployee(base, type, idx);
 	if (employee)
 		return &(employee->chr);
 
@@ -257,12 +257,12 @@ employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int idx)
  * @brief Return a given character pointer of a hired employee in the given base of a given type
  * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
- * @param[in] num Which employee id (in global employee array)
+ * @param[in] idx Which employee id (in global employee array)
  * @return character_t pointer or NULL
  */
-character_t* E_GetHiredCharacter(base_t* base, employeeType_t type, int num)
+character_t* E_GetHiredCharacter(base_t* base, employeeType_t type, int idx)
 {
-	employee_t* employee = E_GetHiredEmployee(base, type, num);
+	employee_t* employee = E_GetHiredEmployee(base, type, idx);
 	if (employee)
 		return &(employee->chr);
 
@@ -354,12 +354,12 @@ qboolean E_HireEmployee(base_t* base, employeeType_t type, int idx)
  * @note set the hired flag to true
  * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
- * @param[in] num Which employee id (in global employee array)
+ * @param[in] idx Which employee id (in global employee array)
  */
-qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int num)
+qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int idx)
 {
 	employee_t* employee;
-	employee = E_GetHiredEmployee(base, type, num);
+	employee = E_GetHiredEmployee(base, type, idx);
 	if (employee) {
 		employee->hired = qfalse;
 		employee->baseIDHired = -1;
@@ -368,7 +368,7 @@ qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int num)
 		Com_DestroyInventory(&employee->inv);
 		return qtrue;
 	} else
-		Com_Printf("Could not get hired employee '%i' from base '%i'\n", num, base->idx);
+		Com_Printf("Could not get hired employee '%i' from base '%i'\n", idx, base->idx);
 	return qfalse;
 }
 
@@ -503,6 +503,7 @@ qboolean E_AssignEmployee(base_t *base, employeeType_t type)
 }
 #endif
 
+#if 0
 /**
  * @brief Remove one employee from building.
  *
@@ -512,7 +513,7 @@ qboolean E_AssignEmployee(base_t *base, employeeType_t type)
  *
  * @return Returns true if removing was possible/sane otherwise false.
  */
-qboolean E_RemoveEmployee(base_t* base, employeeType_t type, int num)
+qboolean E_RemoveEmployee(base_t* base, employeeType_t type, int idx)
 {
 	int i;
 
@@ -526,7 +527,7 @@ qboolean E_RemoveEmployee(base_t* base, employeeType_t type, int num)
 	/* TODO */
 	return qfalse;
 }
-
+#endif
 /**
  * @brief Counts hired employees of a given type in a given base
  *
