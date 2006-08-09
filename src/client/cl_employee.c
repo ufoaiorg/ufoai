@@ -62,8 +62,13 @@ static void E_EmployeeList (void)
 		Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
 		/* TODO; Check whether he is assigned to aircraft and/or carries weapons */
 		/* change the buttons */
-		if (employee->hired)
-			Cbuf_AddText(va("employeeadd%i\n", employeesInCurrentList));
+		if (employee->hired) {
+			if (employee->baseIDHired == baseCurrent->idx)
+				Cbuf_AddText(va("employeeadd%i\n", employeesInCurrentList));
+			else
+				Cbuf_AddText(va("employeedisable%i\n", employeesInCurrentList));
+		} else
+			Cbuf_AddText(va("employeedel%i\n", employeesInCurrentList));
 
 		employeesInCurrentList++;
 		/* we can't display more than 19 employees */
@@ -75,6 +80,7 @@ static void E_EmployeeList (void)
 		Cvar_ForceSet(va("mn_name%i", i), "");
 		Cbuf_AddText(va("employeedisable%i\n", i));
 	}
+	Cbuf_AddText("employee_select 0\n");
 }
 
 
@@ -158,9 +164,10 @@ void E_UnhireAllEmployees(base_t* base, employeeType_t type)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if ( employee->baseIDHired == base->idx ) {
+		if (employee->baseIDHired == base->idx) {
 			employee->hired = qfalse;
 			employee->buildingID = -1;
+			employee->baseIDHired = -1;
 		}
 	}
 	if (type == EMPL_SCIENTIST) {
@@ -225,10 +232,10 @@ employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int num)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
+		if (j == num && employee->baseIDHired == base->idx)
+			return employee;
 		if (employee->hired && employee->baseIDHired != base->idx)
 			continue;
-		if (j == num)
-			return employee;
 		j++;
 	}
 	return NULL;
@@ -516,7 +523,7 @@ int E_CountUnhired(base_t* base, employeeType_t type)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (!employee->hired && employee->baseIDHired == base->idx)
+		if (!employee->hired)
 			count++;
 	}
 	return count;
@@ -547,6 +554,9 @@ void E_EmployeeHire_f (void)
 {
 	int num;
 
+	if (!baseCurrent)
+		return;
+
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: hire <num>\n");
@@ -561,12 +571,17 @@ void E_EmployeeHire_f (void)
 	if (num >= employeesInCurrentList || num < 0)
 		return;
 
-	if (gd.employees[employeeCategory][num].hired)
+	if (gd.employees[employeeCategory][num].hired) {
 		gd.employees[employeeCategory][num].hired = qfalse;
-	else
+		gd.employees[employeeCategory][num].baseIDHired = -1;
+		gd.employees[employeeCategory][num].buildingID = -1;
+		Cbuf_AddText(va("employeedel%i\n", num));
+	} else {
 		gd.employees[employeeCategory][num].hired = qtrue;
-	/* update list */
-	E_EmployeeList();
+		gd.employees[employeeCategory][num].baseIDHired = baseCurrent->idx;
+		Cbuf_AddText(va("employeeadd%i\n", num));
+	}
+	Cbuf_AddText(va("employee_select %i\n", num));
 }
 
 /**

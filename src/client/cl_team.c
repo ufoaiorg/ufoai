@@ -520,7 +520,7 @@ static void CL_SelectCmd(void)
 		}
 		menuInventory = baseCurrent->curTeam[num]->inv;
 	} else if (!Q_strncmp(command, "team", 4)) {
-		if (!baseCurrent || num >= (int)cl_numnames->value)
+		if (!baseCurrent || num >= E_CountHired(baseCurrent, EMPL_SOLDIER))
 			return;
 	}
 
@@ -607,7 +607,7 @@ void CL_ResetTeamInBase(void)
   */
 static void CL_MarkTeamCmd(void)
 {
-	int i, j, k = -1, cnt = 0;
+	int i, j, k = 0, cnt = 0;
 	invList_t* ic;
 	qboolean alreadyInOtherShip = qfalse;
 
@@ -621,16 +621,12 @@ static void CL_MarkTeamCmd(void)
 
 	CL_UpdateHireVar();
 
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-		if (k >= (int)cl_numnames->value)
-			break;
+	for (i = 0; i < (int)cl_numnames->value; i++) {
 		cnt = 0;
 		alreadyInOtherShip = qfalse;
 		/* don't show other base's recruits */
-		if (gd.employees[EMPL_SOLDIER][i].hired && gd.employees[EMPL_SOLDIER][i].baseIDHired != baseCurrent->idx)
+		if (!gd.employees[EMPL_SOLDIER][i].hired || gd.employees[EMPL_SOLDIER][i].baseIDHired != baseCurrent->idx)
 			continue;
-		k++;
-		Cvar_ForceSet(va("mn_name%i", k), gd.employees[EMPL_SOLDIER][i].chr.name);
 		for (j = 0; j < MAX_AIRCRAFT; j++) {
 			if (j==baseCurrent->aircraftCurrent)
 				continue;
@@ -638,8 +634,9 @@ static void CL_MarkTeamCmd(void)
 			if (baseCurrent->teamMask[j] & (1 << i))
 				alreadyInOtherShip = qtrue;
 		}
+		Cvar_ForceSet(va("mn_name%i", k), gd.employees[EMPL_SOLDIER][i].chr.name);
 		/* change the buttons */
-		if (!alreadyInOtherShip && baseCurrent->hiredMask & (1 << k))
+		if (!alreadyInOtherShip && baseCurrent->hiredMask & (1 << i))
 			Cbuf_AddText(va("listadd%i\n", k));
 		/* disable the button - the soldier is already on another aircraft */
 		else if (alreadyInOtherShip)
@@ -655,10 +652,8 @@ static void CL_MarkTeamCmd(void)
 			Cbuf_AddText(va("listholdsequip%i\n", k));
 		else
 			Cbuf_AddText(va("listholdsnoequip%i\n", k));
+		k++;
 	}
-
-	if (k < 0)
-		k = 0;
 
 	for (;k < (int) cl_numnames->value; k++) {
 		Cbuf_AddText(va("listdisable%i\n", k));
@@ -704,8 +699,6 @@ static void CL_HireActorCmd(void)
 		}
 		baseCurrent->hiredMask &= ~(1 << num);
 		baseCurrent->teamMask[baseCurrent->aircraftCurrent] &= ~(1 << num);
-		if (!E_UnhireEmployee(baseCurrent, EMPL_SOLDIER, num))
-			Sys_Error("employee %i could not be unhired\n", num);
 		baseCurrent->numHired--;
 		baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
 	} else {
@@ -724,8 +717,6 @@ static void CL_HireActorCmd(void)
 				Cbuf_AddText(va("listadd%i\n", num));
 				baseCurrent->numHired++;
 				baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]++;
-				if (!E_HireEmployee(baseCurrent, EMPL_SOLDIER, num))
-					Sys_Error("employee could not be hired\n");
 				baseCurrent->teamMask[baseCurrent->aircraftCurrent] |= (1 << num);
 			}
 		}
