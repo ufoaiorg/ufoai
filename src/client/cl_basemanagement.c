@@ -163,10 +163,6 @@ extern void B_BuildingStatus(void)
 void B_SetUpBase(void)
 {
 	int i;
-#if 0
-	int j;
-	employeeType_t employeeType;
-#endif
 	building_t *building = NULL;
 
 	assert(baseCurrent);
@@ -201,12 +197,9 @@ void B_SetUpBase(void)
 				default:
 					break;
 				}
-				for (j=0; j < building->employees; j++) {
-					employee = E_GetUnassingedEmployee(baseCurrent, employeeType);
-					if (!employee || !E_HireEmployee(baseCurrent, employeeType, employee->idx)) {
-						Com_Printf("B_SetUpBase: Hiring %i employee(s) of type %i failed.\n", building->employees, employeeType);
-					}
-				}
+				for (;building->employees_firstbase--;)
+					if (!E_HireEmployee(baseCurrent, employeeType, 0))
+						Com_Printf("B_SetUpBase: Hiring %i employee(s) of type %i failed.\n", building->employees_firstbase, employeeType);
 			}
 #endif
 			/*
