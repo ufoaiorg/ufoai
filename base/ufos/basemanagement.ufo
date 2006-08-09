@@ -55,7 +55,7 @@ building building_lab
 	fixcosts	1500000
 	max_employees	10
 	more_than_one	true
-	employees_firstbase	2
+	employees_firstbase	2 EMPL_SCIENTIST
 	build_time	12
 	varcosts	300
 	map_name	"lab"
