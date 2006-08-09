@@ -100,6 +100,8 @@ campaign heavy
 	team		human
 	soldiers	7
 	scientists	3
+	workers		2
+	medics		1
 	difficulty	3
 	equipment	campaign_player
 	market		campaign_market
@@ -118,6 +120,8 @@ campaign easy
 	team		human
 	soldiers	12
 	scientists	9
+	workers		6
+	medics		3
 	difficulty	-3
 	equipment	campaign_player
 	market		campaign_market
@@ -136,6 +140,8 @@ campaign main
 	team		human
 	soldiers	9
 	scientists	6
+	workers		4
+	medics		2
 	difficulty	0
 //	ugvs	2
 	equipment	campaign_player
@@ -155,6 +161,8 @@ campaign test
 	team		human
 	soldiers	12
 	scientists	9
+	workers		6
+	medics		3
 	difficulty	0
 //	ugvs	2
 	equipment	testing_and_tweaking
