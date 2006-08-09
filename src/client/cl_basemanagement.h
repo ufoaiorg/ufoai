@@ -188,8 +188,6 @@ typedef struct base_s {
 	character_t *curChr;
 
 	int equipType;
-	/* unified character id (base dependent) */
-	int nextUCN;
 
 	/* needed if there is another buildingpart to build (link to gd.buildingTypes) */
 	int buildingToBuild;

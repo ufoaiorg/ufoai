@@ -140,10 +140,33 @@ employee_t* E_GetEmployee(base_t* base, employeeType_t type, int num)
 {
 	int i;
 	for (i=0; i<gd.numEmployees[type]; i++) {
-		if (i == num && gd.employees[type][i].baseIDHired == base->idx)
+		if (i == num && (!gd.employees[type][i].hired || gd.employees[type][i].baseIDHired == base->idx))
 			return &gd.employees[type][i];
 	}
 	return NULL;
+}
+
+/**
+ * @brief Reset the hired flag for all employees of a given type in a given base
+ * @param[in] base Which base the employee should be hired in
+ * @param[in] type Which employee type do we search
+ */
+void E_UnhireAllEmployees(base_t* base, employeeType_t type)
+{
+	int i;
+	employee_t *employee;
+
+	for (i = 0; i < gd.numEmployees[type]; i++) {
+		employee = &gd.employees[type][i];
+		if ( employee->baseIDHired == base->idx ) {
+			employee->hired = qfalse;
+			employee->buildingID = -1;
+		}
+	}
+	if (type == EMPL_SCIENTIST) {
+		/* TODO: Scientists needs to be handled seperate
+		   because there may be a tech they are working on */
+	}
 }
 
 /**
@@ -169,12 +192,42 @@ character_t* E_GetCharacter(base_t* base, employeeType_t type, int num)
  * @param[in] num Which employee id (in global employee array)
  * @return employee_t pointer or NULL
  */
+employee_t* E_GetUnhiredEmployee(base_t* base, employeeType_t type, int num)
+{
+	int i, j = 0;
+	employee_t *employee;
+
+	for (i = 0; i < gd.numEmployees[type]; i++) {
+		employee = &gd.employees[type][i];
+		if (!employee->hired) {
+			if (j == num)
+				return employee;
+			j++;
+		}
+	}
+	return NULL;
+}
+
+/**
+ * @brief Return a given hired employee pointer in the given base of a given type
+ * @param[in] base Which base the employee should be hired in
+ * @param[in] type Which employee type do we search
+ * @param[in] num Which employee id (in global employee array)
+ * @return employee_t pointer or NULL
+ */
 employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int num)
 {
-	employee_t* employee = E_GetEmployee(base, type, num);
-	if (employee && employee->hired)
-		return employee;
+	int i, j = 0;
+	employee_t *employee;
 
+	for (i = 0; i < gd.numEmployees[type]; i++) {
+		employee = &gd.employees[type][i];
+		if (employee->hired && employee->baseIDHired == base->idx) {
+			if (j == num)
+				return employee;
+			j++;
+		}
+	}
 	return NULL;
 }
 
@@ -222,11 +275,53 @@ employee_t * E_GetUnassingedEmployee(base_t* base, employeeType_t type)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if ( employee->baseIDHired == base->idx 
+		if ( employee->baseIDHired == base->idx
 			 && E_EmployeeIsUnassinged(employee) )
 			return employee;
 	}
 	return NULL;
+}
+
+/**
+ * @brief Hires an employee
+ * @note set the hired flag to true
+ * @param[in] base Which base the employee should be hired in
+ * @param[in] type Which employee type do we search
+ * @param[in] num Which employee id (in global employee array)
+ * TODO: Check for quarter space
+ */
+qboolean E_HireEmployee(base_t* base, employeeType_t type, int num)
+{
+	employee_t* employee;
+	employee = E_GetUnhiredEmployee(base, type, num);
+	if (employee) {
+		/* now uses quarter space */
+		employee->hired = qtrue;
+		employee->baseIDHired = base->idx;
+		return qtrue;
+	}
+	return qfalse;
+}
+
+/**
+ * @brief Hires an employee
+ * @note set the hired flag to true
+ * @param[in] base Which base the employee should be hired in
+ * @param[in] type Which employee type do we search
+ * @param[in] num Which employee id (in global employee array)
+ */
+qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int num)
+{
+	employee_t* employee;
+	employee = E_GetHiredEmployee(base, type, num);
+	if (employee) {
+		/* now uses quarter space */
+		employee->hired = qfalse;
+		employee->baseIDHired = -1;
+		employee->buildingID = -1;
+		return qtrue;
+	}
+	return qfalse;
 }
 
 /**
@@ -240,7 +335,8 @@ employee_t* E_CreateEmployee(employeeType_t type)
 {
 	employee_t* employee;
 
-	if (type == MAX_EMPL) return NULL;
+	if (type == MAX_EMPL)
+		return NULL;
 
 	if (gd.numEmployees[type] >= MAX_EMPLOYEES) {
 		Com_Printf("E_CreateEmployee: MAX_EMPLOYEES exceeded\n");

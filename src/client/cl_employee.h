@@ -80,5 +80,8 @@ employee_t * E_GetUnassingedEmployee(base_t* base, employeeType_t type);
 int E_CountHired(base_t* base, employeeType_t type);
 int E_CountUnhired(base_t* base, employeeType_t type);
 int E_CountUnassinged(base_t* base, employeeType_t type);
+void E_UnhireAllEmployees(base_t* base, employeeType_t type);
+qboolean E_HireEmployee(base_t* base, employeeType_t type, int num);
+qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int num);
 
 #endif /* CLIENT_CL_EMPLOYEE */

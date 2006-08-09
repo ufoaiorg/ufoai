@@ -117,7 +117,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type)
 	Com_DestroyInventory(chr->inv);
 
 	/* get ucn */
-	/*chr->ucn = base->nextUCN++;*/
+	chr->ucn = gd.nextUCN++;
 
 	/* set the actor size */
 	switch ( type ) {
@@ -166,6 +166,7 @@ void CL_ResetCharacters(base_t * base)
 	/* reset hire info */
 	Cvar_ForceSet("cl_selected", "0");
 	base->numHired = 0;
+	E_UnhireAllEmployees(base, EMPL_SOLDIER);
 	for (i = 0; i < base->numAircraftInBase; i++)
 		base->teamMask[i] = base->numOnTeam[i] = 0;
 }
@@ -391,7 +392,12 @@ static void CL_GenerateEquipmentCmd(void)
 		}
 
 	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
-		Sys_Error("CL_GenerateEquipmentCmd: numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",gd.numEmployees[EMPL_SOLDIER], baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p, baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
+		Sys_Error("CL_GenerateEquipmentCmd: numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",
+			gd.numEmployees[EMPL_SOLDIER],
+			baseCurrent->aircraftCurrent,
+			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent],
+			p,
+			baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
 
 	for (; p < MAX_ACTIVETEAM; p++) {
 		Cvar_ForceSet(va("mn_name%i", p), "");
@@ -399,7 +405,7 @@ static void CL_GenerateEquipmentCmd(void)
 		baseCurrent->curTeam[p] = NULL;
 	}
 
-	menuInventory = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, 0)->inv;
+	menuInventory = &(gd.employees[EMPL_SOLDIER][0].inv);
 	selActor = NULL;
 
 	/* reset description */
@@ -556,7 +562,7 @@ void CL_UpdateHireVar(void)
 	baseCurrent->hiredMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent];
 
 	/* update curTeam list */
-	for (i = 0, p = 0; i < E_CountUnhired(baseCurrent, EMPL_SOLDIER); i++)
+	for (i = 0, p = 0; i < (int)cl_numnames->value; i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
@@ -674,7 +680,7 @@ static void CL_HireActorCmd(void)
 	}
 	num = atoi(Cmd_Argv(1));
 
-	if (num >= gd.numEmployees[EMPL_SOLDIER])
+	if (num >= gd.numEmployees[EMPL_SOLDIER] || num >= (int)cl_numnames->value)
 		return;
 
 	if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << num)) {
@@ -694,8 +700,8 @@ static void CL_HireActorCmd(void)
 		}
 		baseCurrent->hiredMask &= ~(1 << num);
 		baseCurrent->teamMask[baseCurrent->aircraftCurrent] &= ~(1 << num);
-		/* TODO E_UnhireEmployee() */
-		Com_Printf("TODO: Set employee to hired = qfalse\n");
+		if (!E_UnhireEmployee(baseCurrent, EMPL_SOLDIER, num))
+			Sys_Error("employee could not be hired\n");
 		baseCurrent->numHired--;
 		baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
 	} else {
@@ -712,11 +718,10 @@ static void CL_HireActorCmd(void)
 			/* hire */
 			if (aircraft->size > baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]) {
 				Cbuf_AddText(va("listadd%i\n", num));
-				baseCurrent->hiredMask |= (1 << num);
 				baseCurrent->numHired++;
 				baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]++;
-				/* TODO: E_HireEmployee() */
-				Com_Printf("TODO: Set employee to hired = qtrue\n");
+				if (!E_HireEmployee(baseCurrent, EMPL_SOLDIER, num))
+					Sys_Error("employee could not be hired\n");
 				baseCurrent->teamMask[baseCurrent->aircraftCurrent] |= (1 << num);
 			}
 		}
@@ -797,7 +802,7 @@ void CL_SaveTeam(char *filename)
 	MSG_WriteString(&sb, name);
 
 	/* store team */
-	CL_SendTeamInfo(&sb, baseCurrent->idx, gd.numEmployees[EMPL_SOLDIER]);
+	CL_SendTeamInfo(&sb, baseCurrent->idx, E_CountHired(baseCurrent, EMPL_SOLDIER));
 
 	/* store assignement */
 	/* get assignement */
@@ -859,8 +864,8 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 	/* unique character number */
 	chr->fieldSize = MSG_ReadByte(sb);
 	chr->ucn = MSG_ReadShort(sb);
-	if (chr->ucn >= baseCurrent->nextUCN)
-		baseCurrent->nextUCN = chr->ucn + 1;
+	if (chr->ucn >= gd.nextUCN)
+		gd.nextUCN = chr->ucn + 1;
 
 	/* name and model */
 	Q_strncpyz(chr->name, MSG_ReadString(sb), MAX_VAR);
@@ -917,6 +922,7 @@ void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 	MSG_ReadByte(sb);
 	num = MSG_ReadByte(sb);
 	for (i=0; i<num; i++) {
+		/* FIXME: Is he already hired here?? */
 		chr = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
 		if (!chr) {
 			/* New employee */
@@ -1081,7 +1087,10 @@ void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 	MSG_WriteByte(buf, num);
 
 	for (i = 0; i < num; i++) {
-		chr = &gd.employees[EMPL_SOLDIER][i].chr;
+		/* FIXME: This will not lead to the i.th character if we have more than one base
+		maybe not even if we only have one base
+		*/
+		chr = E_GetHiredCharacter(&gd.bases[baseID], EMPL_SOLDIER, i);
 		/* send the fieldSize ACTOR_SIZE_* */
 		MSG_WriteByte(buf, chr->fieldSize);
 

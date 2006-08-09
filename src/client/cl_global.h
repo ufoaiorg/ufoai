@@ -121,6 +121,9 @@ typedef struct globalData_s
 	ugv_t ugvs[MAX_UGV];
 	int numUGV;
 
+	/* unified character id */
+	int nextUCN;
+
 	/* UFOs on geoscape */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUfos;

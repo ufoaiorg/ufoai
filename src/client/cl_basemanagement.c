@@ -790,10 +790,8 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 					*split++ = '\0';
 					employeesAmount = atoi(token);
 					Com_DPrintf("Add %i employees '%s' to '%s'\n", employeesAmount, split, building->id);
-					for (i=0; i<employeesAmount;i++) {
-						employee = E_CreateEmployee(employeesAmount);
-						/*E_AssignEmployee(employee);*/
-					}
+					for (i=0; i<employeesAmount;i++)
+						employee = E_CreateEmployee(E_GetEmployeeType(split));
 				}
 			} else
 				for (edp = valid_vars; edp->string; edp++)
