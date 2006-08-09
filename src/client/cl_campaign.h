@@ -131,6 +131,8 @@ typedef struct campaign_s {
 	char firststage[MAX_VAR];
 	int soldiers;
 	int scientists;
+	int workers;
+	int medics;
 	int ugvs;
 	int credits;
 	int num;

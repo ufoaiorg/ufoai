@@ -800,7 +800,7 @@ static void CL_UpdateNationData(void)
 			/* Create one free scientist. */
 			E_CreateEmployee(EMPL_SCIENTIST);
 			/* Hire one free scientist. gd.numBases is always (at least) 1 at this point. */
-			E_HireEmployee(&gd.bases[rand() % gd.numBases], EMPL_SCIENTIST, -1); 
+			E_HireEmployee(&gd.bases[rand() % gd.numBases], EMPL_SCIENTIST, -1);
 		}
 		/* TODO: soldiers */
 	}
@@ -2433,6 +2433,10 @@ value_t campaign_vals[] = {
 	{"soldiers", V_INT, offsetof(campaign_t, soldiers)}
 	,
 	{"scientists", V_INT, offsetof(campaign_t, scientists)}
+	,
+	{"workers", V_INT, offsetof(campaign_t, workers)}
+	,
+	{"medics", V_INT, offsetof(campaign_t, medics)}
 	,
 	{"ugvs", V_INT, offsetof(campaign_t, ugvs)}
 	,

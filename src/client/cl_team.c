@@ -923,12 +923,16 @@ void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 	/* read whole team list */
 	MSG_ReadByte(sb);
 	num = MSG_ReadByte(sb);
+	Com_DPrintf("load %i teammembers\n", num);
 	for (i=0; i<num; i++) {
 		/* FIXME: Is he already hired here?? */
 		chr = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
 		if (!chr) {
+			Com_DPrintf("create new employee\n", num);
 			/* New employee */
 			employee = E_CreateEmployee(EMPL_SOLDIER);
+			employee->hired = qtrue;
+			employee->baseIDHired = base->idx;
 			chr = &employee->chr;
 		}
 		CL_LoadTeamMember(sb, chr);
@@ -1146,7 +1150,7 @@ void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
 	MSG_WriteByte(buf, num);
 
 	for (i = 0; i < num; i++) {
-	        chr = team[i];
+		chr = team[i];
 		/* send the fieldSize ACTOR_SIZE_* */
 		MSG_WriteByte(buf, chr->fieldSize);
 

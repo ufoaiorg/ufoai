@@ -985,6 +985,12 @@ void B_ClearBase(base_t * base)
 		Com_DPrintf("B_ClearBase: create %i robots\n", curCampaign->ugvs);
 		for (i = 0; i < curCampaign->ugvs; i++)
 			E_CreateEmployee(EMPL_ROBOT);
+		Com_DPrintf("B_ClearBase: create %i workers\n", curCampaign->workers);
+		for (i = 0; i < curCampaign->workers; i++)
+			E_CreateEmployee(EMPL_WORKER);
+		Com_DPrintf("B_ClearBase: create %i medics\n", curCampaign->medics);
+		for (i = 0; i < curCampaign->medics; i++)
+			E_CreateEmployee(EMPL_MEDIC);
 	}
 
 	for (row = BASE_SIZE - 1; row >= 0; row--)
