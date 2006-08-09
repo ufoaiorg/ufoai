@@ -1050,14 +1050,14 @@ tech rs_building_entrance
 	researched	true
 }
 
-tech rs_building_command
+tech rs_building_storage
 {
 	type	building
-	description	"_b_command_txt"
+	description	"_b_storage_txt"
 	up_chapter	buildings
 
-	requires	initial
-	provides	building_command
+	requires	rs_building_entrance
+	provides	building_storage
 	time	0
 	researched	true
 }
@@ -1068,56 +1068,8 @@ tech rs_building_powerplant
 	description	"_b_powerplant_txt"
 	up_chapter	buildings
 
-	requires	initial
+	requires	rs_building_entrance
 	provides	building_powerplant
-	time	0
-	researched	true
-}
-
-tech rs_building_storage
-{
-	type	building
-	description	"_b_storage_txt"
-	up_chapter	buildings
-
-	requires	initial
-	provides	building_storage
-	time	0
-	researched	true
-}
-
-tech rs_building_hangar
-{
-	type	building
-	description	"_b_hangar_txt"
-	up_chapter	buildings
-
-	requires	initial
-	provides	building_hangar
-	time	0
-	researched	true
-}
-
-tech rs_building_ufo_hangar
-{
-	type	building
-	description	"_b_ufo_hangar_txt"
-	up_chapter	buildings
-
-	requires	initial
-	provides	building_ufo_hangar
-	time	0
-	researched	true
-}
-
-tech rs_building_intercept
-{
-	type	building
-	description	"_b_intercept_txt"
-	up_chapter	buildings
-
-	requires	initial
-	provides	building_intercept
 	time	0
 	researched	true
 }
@@ -1128,32 +1080,8 @@ tech rs_building_quarters
 	description	"_b_quarters_txt"
 	up_chapter	buildings
 
-	requires	initial
+	requires	rs_building_powerplant
 	provides	building_quarters
-	time	0
-	researched	true
-}
-
-tech rs_building_lab
-{
-	type	building
-	description	"_b_lab_txt"
-	up_chapter	buildings
-
-	requires	initial
-	provides	building_lab
-	time	0
-	researched	true
-}
-
-tech rs_building_hospital
-{
-	type	building
-	description	"_b_hospital_txt"
-	up_chapter	buildings
-
-	requires	rs_building_lab
-	provides	building_hospital
 	time	0
 	researched	true
 }
@@ -1164,8 +1092,32 @@ tech rs_building_teamroom
 	description	"_b_teamroom_txt"
 	up_chapter	buildings
 
-	requires	initial
+	requires	rs_building_quarters
 	provides	building_teamroom
+	time	0
+	researched	true
+}
+
+tech rs_building_workshop
+{
+	type	    building
+	description	"_b_workshop_txt"
+	up_chapter	buildings
+
+	requires	rs_building_powerplant
+	provides	building_workshop
+	time	0
+	researched	true
+}
+
+tech rs_building_hangar
+{
+	type	building
+	description	"_b_hangar_txt"
+	up_chapter	buildings
+
+	requires	rs_building_powerplant
+	provides	building_hangar
 	time	0
 	researched	true
 }
@@ -1176,8 +1128,68 @@ tech rs_building_radar
 	description	"_b_radar_txt"
 	up_chapter	buildings
 
-	requires	initial
+	requires	rs_building_powerplant
 	provides	building_radar
+	time	0
+	researched	true
+}
+
+tech rs_building_command
+{
+	type	building
+	description	"_b_command_txt"
+	up_chapter	buildings
+
+	requires	rs_building_powerplant
+	provides	building_command
+	time	0
+	researched	true
+}
+
+tech rs_building_intercept
+{
+	type	building
+	description	"_b_intercept_txt"
+	up_chapter	buildings
+
+	requires	rs_building_command
+	provides	building_intercept
+	time	0
+	researched	true
+}
+
+tech rs_building_lab
+{
+	type	    building
+	description	"_b_lab_txt"
+	up_chapter	buildings
+
+	requires	rs_building_command
+	provides	building_lab
+	time	0
+	researched	true
+}
+
+tech rs_building_hospital
+{
+	type	    building
+	description	"_b_hospital_txt"
+	up_chapter	buildings
+
+	requires	rs_building_lab
+	provides	building_hospital
+	time	0
+	researched	true
+}
+
+tech rs_building_ufo_hangar
+{
+	type	building
+	description	"_b_ufo_hangar_txt"
+	up_chapter	buildings
+
+	requires	"rs_building_lab rs_craft_ufo_tech"
+	provides	building_ufo_hangar
 	time	0
 	researched	true
 }
