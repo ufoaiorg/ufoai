@@ -662,26 +662,14 @@ void RS_UpdateData(void)
 			/* counting the numbers of display-list entries. */
 			j++;
 		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
-#if 0
-			if (tech->lab >= 0) {
-				/* Display the assigned/free/max numbers of scientists for this tech. */
-				building = &gd.buildings[tech->base_idx][tech->lab];
-				employees_in_building = &building->assigned_employees;
-				Com_sprintf(tempstring, MAX_VAR, _("%i max.\n"), employees_in_building->maxEmployees);
-				/* Maximum number of employees in this base. */
-				Cvar_Set(va("mn_researchmax%i", j), tempstring);
-				Com_sprintf(tempstring, MAX_VAR, "%i\n", employees_in_building->numEmployees);
-				/* Assigned employees to the technology. */
-				Cvar_Set(va("mn_researchassigned%i", j), tempstring);
-			} else
-#endif
-			{
-				Cvar_SetValue(va("mn_researchassigned%i", j), 0);
-				Cvar_Set(va("mn_researchmax%i", j), "mx.");
-			}
+			/* How many scis are assigned to this tech. */
+			Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
 			/* Maximal available scientists in the base the tech is reseearched. */
 			Cvar_SetValue(va("mn_researchavailable%i", j), available);
-
+			/* TODO: Free space in all labs. */
+			/* Cvar_SetValue(va("mn_researchmax%i", j), available); */
+			Cvar_Set(va("mn_researchmax%i", j), "mx.");
+			/*DEBUG*/ Q_strcat(name, " x", MAX_VAR);
 			/* Set the text of the research items and mark them if they are currently researched. */
 			switch (tech->statusResearch) {
 			case RS_RUNNING:
