@@ -382,7 +382,7 @@ static void CL_GenerateEquipmentCmd(void)
 
 	/* store hired names */
 	Cvar_ForceSet("cl_selected", "0");
-	for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
+	for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER] && i < (int)cl_numnames->value; i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
 			/* maybe we already have soldiers in this base */
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
@@ -520,7 +520,7 @@ static void CL_SelectCmd(void)
 		}
 		menuInventory = baseCurrent->curTeam[num]->inv;
 	} else if (!Q_strncmp(command, "team", 4)) {
-		if (!baseCurrent || num >= E_CountHired(baseCurrent, EMPL_SOLDIER))
+		if (!baseCurrent || num >= (int)cl_numnames->value)
 			return;
 	}
 
