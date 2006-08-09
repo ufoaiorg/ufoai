@@ -633,6 +633,39 @@ static qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
 {
 	int sx, sy, tx, ty;
 
+	if (*node->depends.var) {
+		/* menuIfCondition_t */
+		switch (node->depends.cond) {
+		case IF_EQ:
+			if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0)->value)
+				return qfalse;
+			break;
+		case IF_LE:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value > atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_GE:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value < atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_GT:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value <= atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_LT:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value >= atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_NE:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value == atof(node->depends.value))
+				return qfalse;
+			break;
+		default:
+			Sys_Error("Unknown condition for if statement: %i\n", node->depends.cond);
+			break;
+		}
+	}
+
 	/* containers */
 	if (node->type == MN_CONTAINER) {
 		if (node->mousefx == C_UNDEFINED)
