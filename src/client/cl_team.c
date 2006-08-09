@@ -382,10 +382,12 @@ static void CL_GenerateEquipmentCmd(void)
 
 	/* store hired names */
 	Cvar_ForceSet("cl_selected", "0");
-	for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER] && i < (int)cl_numnames->value; i++)
+	for (i = 0, p = 0; i < (int)cl_numnames->value; i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
 			/* maybe we already have soldiers in this base */
-			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
+			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
+			if (!baseCurrent->curTeam[p])
+				Sys_Error("CL_GenerateNamesCmd: Could not get employee character with idx: %i\n", p);
 			Com_DPrintf("add %s to curTeam (pos: %i)\n", baseCurrent->curTeam[p]->name, p);
 			Cvar_ForceSet(va("mn_name%i", p), baseCurrent->curTeam[p]->name);
 			p++;
@@ -670,6 +672,7 @@ static void CL_HireActorCmd(void)
 {
 	int num, i, cnt = 0;
 	aircraft_t *aircraft = NULL;
+	employee_t *employee;
 	invList_t *ic;
 
 	/* check syntax */
@@ -679,10 +682,15 @@ static void CL_HireActorCmd(void)
 	}
 	num = atoi(Cmd_Argv(1));
 
-	if (num >= gd.numEmployees[EMPL_SOLDIER] || num >= (int)cl_numnames->value)
+	if (num >= E_CountHired(baseCurrent, EMPL_SOLDIER) || num >= (int)cl_numnames->value)
 		return;
 
-	if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << num)) {
+	employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, num);
+	if (!employee)
+		Sys_Error("CL_HireActorCmd: Could not get employee %i\n", num);
+
+	Com_Printf("CL_HireActorCmd: employee with idx %i selected\n", employee->idx);
+	if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << employee->idx)) {
 		/* unhire */
 		Cbuf_AddText(va("listdel%i\n", num));
 
@@ -697,8 +705,7 @@ static void CL_HireActorCmd(void)
 			Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][num].inv);
 			Cbuf_AddText(va("listholdsnoequip%i\n", num));
 		}
-		baseCurrent->hiredMask &= ~(1 << num);
-		baseCurrent->teamMask[baseCurrent->aircraftCurrent] &= ~(1 << num);
+		baseCurrent->teamMask[baseCurrent->aircraftCurrent] &= ~(1 << employee->idx);
 		baseCurrent->numHired--;
 		baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
 	} else {
@@ -709,7 +716,7 @@ static void CL_HireActorCmd(void)
 				if (i==baseCurrent->aircraftCurrent)
 					continue;
 				/* already on another aircraft */
-				if (baseCurrent->teamMask[i] & (1 << num))
+				if (baseCurrent->teamMask[i] & (1 << employee->idx))
 					return;
 			}
 			/* hire */
@@ -717,7 +724,7 @@ static void CL_HireActorCmd(void)
 				Cbuf_AddText(va("listadd%i\n", num));
 				baseCurrent->numHired++;
 				baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]++;
-				baseCurrent->teamMask[baseCurrent->aircraftCurrent] |= (1 << num);
+				baseCurrent->teamMask[baseCurrent->aircraftCurrent] |= (1 << employee->idx);
 			}
 		}
 	}

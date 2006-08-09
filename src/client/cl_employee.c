@@ -165,6 +165,7 @@ void E_UnhireAllEmployees(base_t* base, employeeType_t type)
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
 		if (employee->baseIDHired == base->idx) {
+			/* TODO: Destroy inventory */
 			employee->hired = qfalse;
 			employee->buildingID = -1;
 			employee->baseIDHired = -1;
@@ -206,7 +207,7 @@ employee_t* E_GetUnhiredEmployee(base_t* base, employeeType_t type, int num)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->hired && employee->baseIDHired != base->idx)
+		if (employee->baseIDHired != base->idx)
 			continue;
 		if (j == num) {
 			if (employee->hired)
@@ -234,7 +235,7 @@ employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int num)
 		employee = &gd.employees[type][i];
 		if (j == num && employee->baseIDHired == base->idx)
 			return employee;
-		if (employee->hired && employee->baseIDHired != base->idx)
+		if (employee->baseIDHired != base->idx)
 			continue;
 		j++;
 	}
@@ -326,7 +327,7 @@ qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int num)
 	employee_t* employee;
 	employee = E_GetHiredEmployee(base, type, num);
 	if (employee) {
-		/* now uses quarter space */
+		/* TODO: Destroy inventory */
 		employee->hired = qfalse;
 		employee->baseIDHired = -1;
 		employee->buildingID = -1;
@@ -355,11 +356,12 @@ employee_t* E_CreateEmployee(employeeType_t type)
 		return NULL;
 	}
 
-	employee = &gd.employees[type][gd.numEmployees[type]++];
+	employee = &gd.employees[type][gd.numEmployees[type]];
 
 	if (!employee)
 		return NULL;
 
+	employee->idx = gd.numEmployees[type];
 	employee->hired = qfalse;
 	employee->baseIDHired = -1;
 	employee->buildingID = -1;
@@ -382,6 +384,7 @@ employee_t* E_CreateEmployee(employeeType_t type)
 		default:
 			break;
 		}
+	gd.numEmployees[type]++;
 	return employee;
 }
 
