@@ -403,6 +403,9 @@ void B_SetBuildingByClick(int row, int col)
 			case B_LAB:
 				baseCurrent->hasLab = 1;
 				break;
+			case B_HOSPITAL:
+				baseCurrent->hasHospital = 1;
+				break;
 			case B_HANGAR:
 				baseCurrent->hasHangar = 1;
 				break;
@@ -770,6 +773,8 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 
 				if (!Q_strncmp(token, "lab", MAX_VAR)) {
 					building->buildingType = B_LAB;
+				} else if (!Q_strncmp(token, "hospital", MAX_VAR)) {
+					building->buildingType = B_HOSPITAL;
 				} else if (!Q_strncmp(token, "hangar", MAX_VAR)) {
 					building->buildingType = B_HANGAR;
 				} else if (!Q_strncmp(token, "quarters", MAX_VAR)) {

@@ -122,7 +122,7 @@ typedef struct building_s {
 
 	/*autobuild when base is set up */
 	qboolean firstbase;
-	
+
 #if 0
 	/* How many employees to creat&hire on construction in the first base. lab=scis, quarter=soldeirs, etc.. */
 	int employees;
@@ -146,7 +146,8 @@ typedef struct base_s {
 
 	/* to decide which actions are available in the basemenu */
 	qboolean hasHangar;
-	qboolean hasLab;			/* TODO: still needed. */
+	qboolean hasLab;
+	qboolean hasHospital;
 
 	/*this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];
