@@ -2431,6 +2431,8 @@ value_t campaign_vals[] = {
 	,
 	{"soldiers", V_INT, offsetof(campaign_t, soldiers)}
 	,
+	{"scientists", V_INT, offsetof(campaign_t, scientists)}
+	,
 	{"ugvs", V_INT, offsetof(campaign_t, ugvs)}
 	,
 	{"equipment", V_STRING, offsetof(campaign_t, equipment)}

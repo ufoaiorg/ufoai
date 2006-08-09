@@ -130,6 +130,7 @@ typedef struct campaign_s {
 	char map[MAX_VAR];			/* geoscape map */
 	char firststage[MAX_VAR];
 	int soldiers;
+	int scientists;
 	int ugvs;
 	int credits;
 	int num;
