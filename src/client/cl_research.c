@@ -480,6 +480,9 @@ static void RS_AssignScientist(technology_t* tech)
 			tech->scientists++;
 			tech->base_idx = building->base_idx;
 			employee->buildingID = building->idx;
+			/* TODO: use
+			E_AssignEmployeeToBuilding(employee, building);
+			instead. */
 		} else {
 			MN_Popup(_("Notice"),
 				_("There is no free lab available.\nYou need to build one or free another\nin order to assign scientists to research this technology.\n"));
@@ -538,8 +541,8 @@ static void RS_RemoveScientist_f(void)
 	if (researchList[num]->scientists >= 0) {
 		employee = E_GetAssingedEmployee(&gd.bases[researchList[num]->base_idx], EMPL_SCIENTIST);
 		if (employee) {
-			employee->buildingID = -1;
-			researchList[num]->scientists--;
+			E_RemoveEmployeeFromBuilding(employee);
+			researchList[num]->scientists--; /* This should be moved to E_RemoveEmployeeFromBuilding i think */
 		}
 	}
 
