@@ -2134,7 +2134,7 @@ static void CL_GameResultsCmd(void)
 			baseCurrent->teamMask[baseCurrent->aircraftCurrent] =
 				(baseCurrent->teamMask[baseCurrent->aircraftCurrent] & ((1 << i) - 1)) | (tempMask & ~((1 << i) - 1));
 
-			E_UnhireEmployee(baseCurrent, EMPL_SOLDIER, i);
+			E_DeleteEmployee(&gd.employees[EMPL_SOLDIER][i], EMPL_SOLDIER);
 			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
 		} else
 			i++;

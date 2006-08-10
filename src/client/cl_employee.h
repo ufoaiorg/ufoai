@@ -66,22 +66,26 @@ typedef struct employee_s {
 } employee_t;
 
 void E_ResetEmployees(void);
-qboolean E_RemoveEmployeeFromBuilding(employee_t *employee);
 employee_t * E_CreateEmployee(employeeType_t type);
+qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
+qboolean E_HireEmployee(base_t* base, employeeType_t type, int num);
+qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int num);
+qboolean E_RemoveEmployeeFromBuilding(employee_t *employee);
+
 employeeType_t E_GetEmployeeType(char* type);
 int E_EmployeesInBase(base_t* base, employeeType_t type, qboolean free_only);
-int E_BuildingAddEmployees(building_t* b, employeeType_t type, int amount);
+
 employee_t * E_GetEmployee(base_t* base, employeeType_t type, int num);
 character_t * E_GetCharacter(base_t* base, employeeType_t type, int num);
 employee_t * E_GetHiredEmployee(base_t* base, employeeType_t type, int num);
 character_t * E_GetHiredCharacter(base_t* base, employeeType_t type, int num);
 employee_t * E_GetUnassingedEmployee(base_t* base, employeeType_t type);
 employee_t * E_GetAssingedEmployee(base_t* base, employeeType_t type);
+
 int E_CountHired(base_t* base, employeeType_t type);
 int E_CountUnhired(base_t* base, employeeType_t type);
 int E_CountUnassinged(base_t* base, employeeType_t type);
 void E_UnhireAllEmployees(base_t* base, employeeType_t type);
-qboolean E_HireEmployee(base_t* base, employeeType_t type, int num);
-qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int num);
+
 
 #endif /* CLIENT_CL_EMPLOYEE */

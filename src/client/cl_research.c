@@ -674,7 +674,6 @@ void RS_UpdateData(void)
 			/* TODO: Free space in all labs. */
 			/* Cvar_SetValue(va("mn_researchmax%i", j), available); */
 			Cvar_Set(va("mn_researchmax%i", j), "mx.");
-			/*DEBUG*/ Q_strcat(name, " x", MAX_VAR);
 			/* Set the text of the research items and mark them if they are currently researched. */
 			switch (tech->statusResearch) {
 			case RS_RUNNING:
