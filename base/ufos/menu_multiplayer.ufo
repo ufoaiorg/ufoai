@@ -384,7 +384,7 @@ menu mp_team
 
 	func init
 	{
-		cmd	"set mn_slot 0;team_comments;loadteamslot;"
+		cmd	"set mn_slot 0;team_comments"
 		teamslot0
 	}
 
