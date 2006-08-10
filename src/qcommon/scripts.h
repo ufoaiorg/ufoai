@@ -38,7 +38,7 @@ extern char *name_strings[NAME_NUM_TYPES];
 
 char *Com_GiveName(int gender, char *category);
 char *Com_GiveModel(int type, int gender, char *category);
-int Com_GetModelAndName(char *team, char *path, char *body, char *head, char *name);
+int Com_GetModelAndName(char *team, character_t * chr);
 
 void Com_ParseScripts(void);
 

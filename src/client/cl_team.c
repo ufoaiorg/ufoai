@@ -140,7 +140,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 		/* Create attributes. */
 		Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
 		/* Get model and name. */
-		chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
+		chr->skin = Com_GetModelAndName(team, chr);
 		break;
 	case EMPL_SCIENTIST:
 	case EMPL_MEDIC:
@@ -149,7 +149,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 		/* Create attributes. */
 		Com_CharGenAbilitySkills(chr, 15, 50, 15, 50);
 		/* Get model and name. */
-		chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
+		chr->skin = Com_GetModelAndName(team, chr);
 		break;
 	case EMPL_ROBOT:
 		chr->rank = -1;
@@ -157,7 +157,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 		/* Create attributes. */
 		Com_CharGenAbilitySkills(chr, 80, 80, 80, 80);
 		/* Get model and name. */
-		chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
+		chr->skin = Com_GetModelAndName(team, chr);
 		break;
 	default:
 		Sys_Error("Unknown employee type\n");

@@ -585,10 +585,13 @@ char *Com_GiveModel(int type, int gender, char *category)
 
 /**
  * @brief
+ * @param[in] team
+ * @param[in] chr
+ * @param[out] chr
  * @sa Com_GiveName
  * @sa Com_GiveModel
  */
-int Com_GetModelAndName(char *team, char *path, char *body, char *head, char *name)
+int Com_GetModelAndName(char *team, character_t * chr)
 {
 	teamDef_t *td;
 	char *str;
@@ -624,39 +627,39 @@ int Com_GetModelAndName(char *team, char *path, char *body, char *head, char *na
 			category = (int) td->cats[rand() % td->num];
 
 		/* get name */
-		if (name) {
+		if (chr->name) {
 			str = Com_GiveName(gender, nameCat[category].title);
 			if (!str)
 				continue;
-			Q_strncpyz(name, str, MAX_VAR);
-			Q_strcat(name, " ", MAX_VAR);
+			Q_strncpyz(chr->name, str, MAX_VAR);
+			Q_strcat(chr->name, " ", MAX_VAR);
 
 			str = Com_GiveName(gender + LASTNAME, nameCat[category].title);
 			if (!str)
 				continue;
-			Q_strcat(name, str, MAX_VAR);
+			Q_strcat(chr->name, str, MAX_VAR);
 		}
 
 		/* get model */
-		if (path) {
+		if (chr->path) {
 			str = Com_GiveModel(MODEL_PATH, gender, nameCat[category].title);
 			if (!str)
 				continue;
-			Q_strncpyz(path, str, MAX_VAR);
+			Q_strncpyz(chr->path, str, MAX_VAR);
 		}
 
-		if (body) {
+		if (chr->body) {
 			str = Com_GiveModel(MODEL_BODY, gender, nameCat[category].title);
 			if (!str)
 				continue;
-			Q_strncpyz(body, str, MAX_VAR);
+			Q_strncpyz(chr->body, str, MAX_VAR);
 		}
 
-		if (head) {
+		if (chr->head) {
 			str = Com_GiveModel(MODEL_HEAD, gender, nameCat[category].title);
 			if (!str)
 				continue;
-			Q_strncpyz(head, str, MAX_VAR);
+			Q_strncpyz(chr->head, str, MAX_VAR);
 		}
 
 		str = Com_GiveModel(MODEL_SKIN, gender, nameCat[category].title);
