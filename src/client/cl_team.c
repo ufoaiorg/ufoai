@@ -120,7 +120,8 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 	chr->ucn = gd.nextUCN++;
 
 	Com_DPrintf("Generate character for team: '%s' (type: %i)\n", team, employeeType);
-	/* set the actor size */
+	
+	/* Set the actor size. */
 	switch (type) {
 	case ET_ACTOR:
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
@@ -132,7 +133,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 		Sys_Error("CL_GenerateCharacter: Unknown character type (%i)\n", type);
 	}
 
-
+	/* Generate character stats, moels & names. */
 	switch (employeeType) {
 	case EMPL_SOLDIER:
 		chr->rank = 0;
@@ -162,6 +163,10 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 		Sys_Error("Unknown employee type\n");
 		break;
 	}
+	
+	/* Backlink from chr to employee struct. */
+	chr->empl_type = employeeType;
+	chr->empl_idx = employee->idx;
 }
 
 
