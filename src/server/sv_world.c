@@ -101,6 +101,7 @@ void InsertLinkBefore(link_t * l, link_t * before)
 
 /**
  * @brief Builds a uniformly subdivided tree for the given world size
+ * @sa SV_ClearWorld
  */
 areanode_t *SV_CreateAreaNode(int depth, vec3_t mins, vec3_t maxs)
 {
@@ -141,7 +142,9 @@ areanode_t *SV_CreateAreaNode(int depth, vec3_t mins, vec3_t maxs)
 }
 
 /**
- * @brief high level object sorting to reduce interaction tests
+ * @brief called after the world model has been loaded, before linking any entities
+ * @sa SV_SpawnServer
+ * @sa SV_CreateAreaNode
  */
 void SV_ClearWorld(void)
 {
@@ -152,7 +155,7 @@ void SV_ClearWorld(void)
 
 
 /**
- * @brief called after the world model has been loaded, before linking any entities
+ * @brief call before removing an entity, and before trying to move one, so it doesn't clip against itself
  */
 void SV_UnlinkEdict(edict_t * ent)
 {
@@ -165,7 +168,11 @@ void SV_UnlinkEdict(edict_t * ent)
 
 #define MAX_TOTAL_ENT_LEAFS		128
 /**
- * @brief call before removing an entity, and before trying to move one, so it doesn't clip against itself
+ * @brief Needs to be called any time an entity changes origin, mins, maxs,
+ * or solid.  Automatically unlinks if needed.
+ * sets ent->v.absmin and ent->v.absmax
+ * sets ent->leafnums[] for pvs determination even if the entity
+ * is not solid
  */
 void SV_LinkEdict(edict_t * ent)
 {
@@ -219,7 +226,12 @@ void SV_LinkEdict(edict_t * ent)
 
 
 /**
- * @brief
+ * @brief fills in a table of edict pointers with edicts that have bounding boxes
+ * that intersect the given area.  It is possible for a non-axial bmodel
+ * to be returned that doesn't actually intersect the area on an exact test.
+ * @return the number of pointers filled in
+ * @note ??? does this always return the world?
+ * @sa SV_AreaEdicts
  */
 void SV_AreaEdicts_r(areanode_t * node)
 {
@@ -270,6 +282,7 @@ void SV_AreaEdicts_r(areanode_t * node)
 
 /**
  * @brief
+ * @sa SV_AreaEdicts_r
  */
 int SV_AreaEdicts(vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int areatype)
 {
@@ -384,11 +397,17 @@ void SV_ClipMoveToEntities(moveclip_t * clip)
 
 /**
  * @brief
+ * @param[in] mins and maxs are relative
+ * @param[in] passedict is explicitly excluded from clipping checks (normally NULL)
+ * if the entire move stays in a solid volume, trace.allsolid will be set,
+ * trace.startsolid will be set, and trace.fraction will be 0
+ * if the starting point is in a solid, it will be allowed to move out to an open area
+ * @sa SV_Trace
  */
 void SV_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
 {
 #if 0
-/* debug to test against everything */
+	/* debug to test against everything */
 	boxmins[0] = boxmins[1] = boxmins[2] = -9999;
 	boxmaxs[0] = boxmaxs[1] = boxmaxs[2] = 9999;
 #else
@@ -409,6 +428,7 @@ void SV_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t b
 /**
  * @brief Moves the given mins/maxs volume through the world from start to end.
  * @note Passedict and edicts owned by passedict are explicitly not checked.
+ * @sa SV_TraceBounds
  */
 trace_t SV_Trace(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask)
 {

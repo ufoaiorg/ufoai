@@ -276,20 +276,7 @@ void SV_ClearWorld(void);
 void SV_UnlinkEdict(edict_t * ent);
 void SV_LinkEdict(edict_t * ent);
 
-/* Needs to be called any time an entity changes origin, mins, maxs, */
-/* or solid.  Automatically unlinks if needed. */
-/* sets ent->v.absmin and ent->v.absmax */
-/* sets ent->leafnums[] for pvs determination even if the entity */
-/* is not solid */
-
 int SV_AreaEdicts(vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int areatype);
-
-/* fills in a table of edict pointers with edicts that have bounding boxes */
-/* that intersect the given area.  It is possible for a non-axial bmodel */
-/* to be returned that doesn't actually intersect the area on an exact */
-/* test. */
-/* returns the number of pointers filled in */
-/* ??? does this always return the world? */
 
 /*=================================================================== */
 
@@ -297,15 +284,5 @@ int SV_AreaEdicts(vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int a
 /* Quake 2 extends this to also check entities, to allow moving liquids */
 
 trace_t SV_Trace(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask);
-
-/* mins and maxs are relative */
-
-/* if the entire move stays in a solid volume, trace.allsolid will be set, */
-/* trace.startsolid will be set, and trace.fraction will be 0 */
-
-/* if the starting point is in a solid, it will be allowed to move out */
-/* to an open area */
-
-/* passedict is explicitly excluded from clipping checks (normally NULL) */
 
 #endif /* SERVER_SERVER_H */
