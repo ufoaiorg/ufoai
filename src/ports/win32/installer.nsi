@@ -533,6 +533,8 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\sound"
   SetOutPath "$INSTDIR\base\sound\misc"
   File "..\..\..\base\sound\misc\*.wav"
+  SetOutPath "$INSTDIR\base\sound\ambience"
+  File "..\..\..\base\sound\ambience\*.wav"
   SetOutPath "$INSTDIR\base\sound\weapons"
   File "..\..\..\base\sound\weapons\*.wav"
 
