@@ -137,14 +137,13 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 		Sys_Error("CL_GenerateCharacter: Unknown character type (%i)\n", type);
 	}
 
-	
+
 	switch (type) {
 		case EMPL_SOLDIER:
 			/* Create attributes. */
 			Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
 			/* Get model and name. */
 			chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
-			/*Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);*/
 			break;
 		case EMPL_SCIENTIST:
 		case EMPL_MEDIC:
@@ -153,9 +152,14 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 			Com_CharGenAbilitySkills(chr, 15, 50, 15, 50);
 			/* Get model and name. */
 			chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
-			/*Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);*/
 			break;
-		/*case EMPL_ROBOT: break; */
+		case EMPL_ROBOT:
+			/* FIXME: */
+			/* Create attributes. */
+			Com_CharGenAbilitySkills(chr, 15, 50, 15, 50);
+			/* Get model and name. */
+			chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
+			break;
 		default:
 			if (type == ET_UGV) {
 				/* Create attributes. */
