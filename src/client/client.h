@@ -725,7 +725,7 @@ void CL_LoadTeam(sizebuf_t *sb, base_t *base, int version);
 void CL_UpdateHireVar(void);
 
 void CL_ResetCharacters(base_t *base);
-void CL_GenerateCharacter(employee_t *employee, char *team, int type);
+void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeType_t employeeType);
 
 void MN_BuildNewBase(vec2_t pos);
 

@@ -102,7 +102,7 @@ static void CL_GiveNameCmd(void)
  * @todo fix the assignment of ucn??
  * @todo fix the WholeTeam stuff
  */
-void CL_GenerateCharacter(employee_t *employee, char *team, int type)
+void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeType_t employeeType)
 {
 	character_t *chr = NULL;
 
@@ -123,25 +123,47 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type)
 	switch ( type ) {
 	case ET_ACTOR:
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
-		chr->rank = 0;
+		if (employeeType == EMPL_SOLDIER)
+			chr->rank = 0;
+		else
+			chr->rank = -1;
 		break;
 	case ET_UGV:
 		chr->fieldSize = ACTOR_SIZE_UGV;
 		/* UGV does not have a rank */
 		chr->rank = -1;
+		/* Create attributes. */
+		Com_CharGenAbilitySkills(chr, 80, 80, 80, 80);
+		/* Get model and name. */
+		chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
+		/*Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);*/
 		break;
 	default:
 		Sys_Error("CL_GenerateCharacter: Unknown character type (%i)\n", type);
 	}
 
-	/* new attributes */
-	Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
-
-	/* get model and name */
-	chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
-	/*Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);*/
-
-	/* base->numWholeTeam++; */
+	
+	switch (type) {
+		case EMPL_SOLDIER:
+			/* Create attributes. */
+			Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
+			/* Get model and name. */
+			chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
+			/*Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);*/
+			break;
+		case EMPL_SCIENTIST:
+		case EMPL_MEDIC:
+		case EMPL_WORKER:
+			/* Create attributes. */
+			Com_CharGenAbilitySkills(chr, 15, 50, 15, 50);
+			/* Get model and name. */
+			chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
+			/*Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);*/
+			break;
+		/*case EMPL_ROBOT: break; */
+		default:
+			break;
+		}
 }
 
 
