@@ -510,9 +510,12 @@ void Com_ParseEquipment(char *name, char **text)
 
 ==============================================================================*/
 
-/*======================
-Com_GiveName
-======================*/
+/**
+ * @brief
+ * @param[in] gender 1 (female) or 2 (male)
+ * @param[in] category country strings like: spanish_italian, german, russian and so on
+ * @sa Com_GetModelAndName
+ */
 char *Com_GiveName(int gender, char *category)
 {
 	static char returnName[MAX_VAR];
@@ -542,12 +545,13 @@ char *Com_GiveName(int gender, char *category)
 	return NULL;
 }
 
-/*======================
-Com_GiveModel
-
-gender is 1 (female) or 2 (male)
-category are the country strings like: spanish_italian, german, russian and so on
-======================*/
+/**
+ * @brief
+ * @param[in] type
+ * @param[in] gender 1 (female) or 2 (male)
+ * @param[in] category country strings like: spanish_italian, german, russian and so on
+ * @sa Com_GetModelAndName
+ */
 char *Com_GiveModel(int type, int gender, char *category)
 {
 	nameCategory_t *nc;
@@ -579,9 +583,11 @@ char *Com_GiveModel(int type, int gender, char *category)
 	return NULL;
 }
 
-/*======================
-Com_GetModelAndName
-======================*/
+/**
+ * @brief
+ * @sa Com_GiveName
+ * @sa Com_GiveModel
+ */
 int Com_GetModelAndName(char *team, char *path, char *body, char *head, char *name)
 {
 	teamDef_t *td;
