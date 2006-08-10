@@ -373,7 +373,7 @@ qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int idx)
 	if (employee) {
 		if (employee->buildingID) {
 			/* TODO: Remove employee from building (and tech) and assign new one if available. */
-			E_RemoveEmployee(employee);
+			E_RemoveEmployeeFromBuilding(employee);
 			/* E_AssignEmployee(employee, building_rom_unhired_employee); */
 		}
 		employee->hired = qfalse;
@@ -488,10 +488,10 @@ TODO: Will later on be used in e.g RS_AssignScientist_f
  *
  * @param[in] building The building the employee is assigned to.
  * @param[in] employee_type	What type of employee to assign to the building.
- * @sa E_RemoveEmployee
+ * @sa E_RemoveEmployeeFromBuilding
  * @return Returns true if adding was possible/sane otherwise false. In the later case nothing will be changed.
  */
-qboolean E_AssignEmployee(building_t *building, employeeType_t type)
+qboolean E_AssignEmployeeToBuilding(building_t *building, employeeType_t type)
 {
 	employee_t * employee = NULL;
 
@@ -520,9 +520,9 @@ qboolean E_AssignEmployee(building_t *building, employeeType_t type)
  * @todo Add check for base vs. employee_type and abort if they do not match.
  * @param[in] employee What employee to remove from its building.
  * @return Returns true if removing was possible/sane otherwise false.
- * @sa E_AssignEmployee
+ * @sa E_AssignEmployeeToBuilding
  */
-qboolean E_RemoveEmployee(employee_t *employee)
+qboolean E_RemoveEmployeeFromBuilding(employee_t *employee)
 {
 	character_t *chr = NULL;
 	if (employee) {

@@ -66,7 +66,7 @@ typedef struct employee_s {
 } employee_t;
 
 void E_ResetEmployees(void);
-qboolean E_RemoveEmployee(employee_t *employee);
+qboolean E_RemoveEmployeeFromBuilding(employee_t *employee);
 employee_t * E_CreateEmployee(employeeType_t type);
 employeeType_t E_GetEmployeeType(char* type);
 int E_EmployeesInBase(base_t* base, employeeType_t type, qboolean free_only);
