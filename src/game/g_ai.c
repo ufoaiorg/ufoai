@@ -683,7 +683,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 		/* FIXME: Aliens with more than one unit */
 		ent->chr.fieldSize = ACTOR_SIZE_NORMAL;
 		if (team != TEAM_CIVILIAN) {
-			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_alien"), ent->chr.path, ent->chr.body, ent->chr.head, ent->chr.name);
+			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_alien"), ent->chr);
 
 			/* search the armor definition */
 			ref = gi.cvar_string("ai_armor");
@@ -736,7 +736,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 			ent->STUN = 0;
 			ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 
-			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_civilian"), ent->chr.path, ent->chr.body, ent->chr.head, ent->chr.name);
+			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_civilian"), ent->chr);
 			ent->chr.inv = &ent->i;
 			/* FIXME: Maybe we have civilians with armor, too - police and so on */
 			ent->body = gi.modelindex(Com_CharGetBody(&ent->chr));

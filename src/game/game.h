@@ -204,7 +204,7 @@ typedef struct {
 	void (*ReadData) (void *buffer, int size);
 
 	/* misc functions */
-	int (*GetModelAndName) (char *team, char *path, char *body, char *head, char *name);
+	int (*GetModelAndName) (char *team, character_t *chr);
 
 	/* managed memory allocation */
 	void *(*TagMalloc) (size_t size, int tag);
