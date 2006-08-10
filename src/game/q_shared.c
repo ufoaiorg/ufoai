@@ -2001,6 +2001,7 @@ void Com_InitCSI(csi_t * import)
 	CSI = import;
 }
 
+
 /**
  * @brief
  * @param
@@ -2025,6 +2026,7 @@ void Com_InitInventory(invList_t * invList)
 	}
 }
 
+
 /**
  * @brief
  * @param
@@ -2032,7 +2034,7 @@ void Com_InitInventory(invList_t * invList)
  */
 qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, int y)
 {
-	invList_t *ic, *right, *left;
+	invList_t *ic;
 	int mask[16];
 	int j;
 
@@ -2056,31 +2058,23 @@ qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, i
 	} else if (CSI->ids[container].armor)
 		return qfalse;
 
-	/* special hand checks */
-	right = i->c[CSI->idRight];
-	left = i->c[CSI->idLeft];
-
-	if (container == CSI->idRight) {
-		if (!right && (!CSI->ods[item].twohanded || !left))
-			return qtrue;
-		else
-			return qfalse;
-	} else if (container == CSI->idLeft) {
-		if (!left && ((right && !CSI->ods[right->item.t].twohanded) || !right)
-			&& !CSI->ods[item].twohanded)
-			return qtrue;
-		else
+	/* twohanded item */
+	if (CSI->ods[item].twohanded) {
+		if ( (container == CSI->idRight && i->c[CSI->idLeft])
+			 || container == CSI->idLeft )
 			return qfalse;
 	}
 
-	/* single item containers */
+	/* left hand is busy if right wields twohanded */
+	if ( container == CSI->idLeft && i->c[CSI->idRight]
+		 && CSI->ods[i->c[CSI->idRight]->item.t].twohanded )
+		return qfalse;
+
+	/* single item containers, e.g. hands */
 	if (CSI->ids[container].single) {
 		/* there is already an item */
 		if (i->c[container])
 			return qfalse;
-		/* empty */
-		else
-			return qtrue;
 	}
 
 	/* check bounds */
@@ -2384,6 +2378,7 @@ void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py)
 
 	assert(inv);
 
+	/* this can be done more efficiently, using container shape info */
 	for (y = 0; y < 16; y++)
 		for (x = 0; x < 32; x++)
 			if (Com_CheckToInventory(inv, item, container, x, y)) {
