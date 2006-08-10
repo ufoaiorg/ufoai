@@ -2384,9 +2384,8 @@ void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py)
 
 	assert(inv);
 
-	/* TODO: should be done more efficiently using container shape info */
-	for (x = 0; x < 32; x++)
-		for (y = 0; y < 16; y++)
+	for (y = 0; y < 16; y++)
+		for (x = 0; x < 32; x++)
 			if (Com_CheckToInventory(inv, item, container, x, y)) {
 				*px = x;
 				*py = y;
