@@ -563,7 +563,8 @@ static void CL_SelectCmd(void)
 
 	if (!Q_strncmp(command, "team", 4)) {
 		/* set info cvars */
-		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, num);
+		num++;
+		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -num);
 		if (!chr)
 			Sys_Error("CL_SelectCmd: No hired character at pos %i (base: %i)\n", num, baseCurrent->idx);
 		if ( chr->fieldSize == ACTOR_SIZE_NORMAL )
@@ -729,7 +730,7 @@ static void CL_HireActorCmd(void)
 	if (num >= E_CountHired(baseCurrent, EMPL_SOLDIER) || num >= (int)cl_numnames->value)
 		return;
 
-	employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, num);
+	employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, -(num+1));
 	if (!employee)
 		Sys_Error("CL_HireActorCmd: Could not get employee %i\n", num);
 
@@ -1124,7 +1125,7 @@ void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 		/* FIXME: This will not lead to the i.th character if we have more than one base
 		maybe not even if we only have one base
 		*/
-		chr = E_GetHiredCharacter(&gd.bases[baseID], EMPL_SOLDIER, i);
+		chr = E_GetHiredCharacter(&gd.bases[baseID], EMPL_SOLDIER, -(i+1));
 		/* send the fieldSize ACTOR_SIZE_* */
 		MSG_WriteByte(buf, chr->fieldSize);
 
