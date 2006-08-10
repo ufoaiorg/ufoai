@@ -271,17 +271,9 @@ void SV_InitEdict(edict_t * e);
 
 /*============================================================ */
 
-/* high level object sorting to reduce interaction tests */
-
 void SV_ClearWorld(void);
 
-/* called after the world model has been loaded, before linking any entities */
-
 void SV_UnlinkEdict(edict_t * ent);
-
-/* call before removing an entity, and before trying to move one, */
-/* so it doesn't clip against itself */
-
 void SV_LinkEdict(edict_t * ent);
 
 /* Needs to be called any time an entity changes origin, mins, maxs, */

@@ -141,7 +141,7 @@ areanode_t *SV_CreateAreaNode(int depth, vec3_t mins, vec3_t maxs)
 }
 
 /**
- * @brief
+ * @brief high level object sorting to reduce interaction tests
  */
 void SV_ClearWorld(void)
 {
@@ -152,7 +152,7 @@ void SV_ClearWorld(void)
 
 
 /**
- * @brief
+ * @brief called after the world model has been loaded, before linking any entities
  */
 void SV_UnlinkEdict(edict_t * ent)
 {
@@ -163,10 +163,10 @@ void SV_UnlinkEdict(edict_t * ent)
 }
 
 
-/**
- * @brief
- */
 #define MAX_TOTAL_ENT_LEAFS		128
+/**
+ * @brief call before removing an entity, and before trying to move one, so it doesn't clip against itself
+ */
 void SV_LinkEdict(edict_t * ent)
 {
 	areanode_t *node;
