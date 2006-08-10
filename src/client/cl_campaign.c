@@ -676,46 +676,40 @@ static void CL_BuildingAircraftList_f(void)
   * TODO: Use mis->pos to determine the position on the geoscape and get the nation
   * TODO: Use colors for nations
   */
-static void CL_HandleNationData(qboolean expires, actMis_t * mis) 
-{ 
+static void CL_HandleNationData(qboolean expires, actMis_t * mis)
+{
 /* TODO: please change formatting and whitespace to agree with coding guidlines
    a discussion is pending about the nation and happiness flags */
 #if 0
-	int i; 
-	mission_t* mission=mis->def; 
-	char* nation_name=mission->nation; 
+	int i;
+	mission_t* mission=mis->def;
+	char* nation_name=mission->nation;
 
-	for (i=0; i<numNations; i++) 
-	{ 
-		nation_t* nation=&nations[i]; 
-		if (expires) 
-		{
-			if (!strcmp(nation->name, nation_name))
-			{  /* Strong negative reaction */
-				nation->happiness *= nation->alienFriendly/100; 
-			} 
-			else 
-			{  /* Minor negative reaction */
-				nation->happiness *= 1 - pow(1 - nation->alienFriendly/100, 5); 
-			} 
-		} 
-		else 
-		{ 
-			if (!strcmp(nation->name, nation_name)) 
-			{  /* Strong positive reaction */
-				nation->happiness /= 1 - nation->alienFriendly/100; 
-				nation->happiness += nation->alienFriendly/100 / 10; 
-			} 
-			else 
-			{  /* Minor positive reaction */
-				nation->happiness /= pow(1 - nation->alienFriendly/100, 0.2); 
-				nation->happiness += nation->alienFriendly/100 / 50; 
-			} 
-			if (nation->happiness > 1.0) 
-			{  /* Can't be more than 100% happy with you. */
-				nation->happiness = 1.0; 
-			} 
-		} 
+	for (i=0; i<numNations; i++) {
+		nation_t* nation=&nations[i];
+		if (expires) {
+			if (!Q_strcmp(nation->name, nation_name)) {
+				/* Strong negative reaction */
+				nation->happiness *= nation->alienFriendly/100;
+			} else {
+				/* Minor negative reaction */
+				nation->happiness *= 1 - pow(1 - nation->alienFriendly/100, 5);
+			}
+		} else {
+			if (!Q_strcmp(nation->name, nation_name)) {
+				/* Strong positive reaction */
+				nation->happiness /= 1 - nation->alienFriendly/100;
+				nation->happiness += nation->alienFriendly/100 / 10;
+			} else {
+				/* Minor positive reaction */
+				nation->happiness /= pow(1 - nation->alienFriendly/100, 0.2);
+				nation->happiness += nation->alienFriendly/100 / 50;
+			}
+			if (nation->happiness > 1.0) {
+				/* Can't be more than 100% happy with you. */
+				nation->happiness = 1.0;
+			}
+		}
 	}
 #endif
 }
@@ -823,11 +817,13 @@ static void CL_UpdateNationData(void)
 {
 	int i, j;
 	char message[1024];
-/* TODO:	char happiness_str[1024];*/
+#if 0
+	char happiness_str[1024];
+	int funding;
+#endif
 	nation_t *nation;
 
 	for (i = 0; i < numNations; i++) {
-/* TODO:		int funding;*/
 		/* maybe we don't get fund of this nation */
 		if ( frand() <= NATION_PROBABILITY )
 			continue;
@@ -835,34 +831,33 @@ static void CL_UpdateNationData(void)
 		Com_sprintf(message, sizeof(message), _("Gained %i credits from nation %s"), nation->funding, _(nation->name));
 
 
-/* TODO: a new code to be discussed */ 
+/* TODO: a new code to be discussed */
 #if 0
 		funding = nation->funding * nation->happiness;
 
-		/* TODO: Take into account translations with this message. */
 		if (nation->happiness < 0.015)
-			strcpy(happiness_str, "Giving up");
+			Q_strncpyz(happiness_str, _("Giving up"), sizeof(happiness_str));
 		else if (nation->happiness < 0.025)
-			strcpy(happiness_str, "Furious");
+			Q_strncpyz(happiness_str, _("Furious"), sizeof(happiness_str));
 		else if (nation->happiness < 0.04)
-			strcpy(happiness_str, "Angry");
+			Q_strncpyz(happiness_str, _("Angry"), sizeof(happiness_str));
 		else if (nation->happiness < 0.06)
-			strcpy(happiness_str, "Mad");
+			Q_strncpyz(happiness_str, _("Mad"), sizeof(happiness_str));
 		else if (nation->happiness < 0.1)
-			strcpy(happiness_str, "Upset");
+			Q_strncpyz(happiness_str, _("Upset"), sizeof(happiness_str));
 		else if (nation->happiness < 0.15)
-			strcpy(happiness_str, "Tolerant");
+			Q_strncpyz(happiness_str, _("Tolerant"), sizeof(happiness_str));
 		else if (nation->happiness < 0.25)
-			strcpy(happiness_str, "Neutral");
+			Q_strncpyz(happiness_str, _("Neutral"), sizeof(happiness_str));
 		else if (nation->happiness < 0.35)
-			strcpy(happiness_str, "Content");
+			Q_strncpyz(happiness_str, _("Content"), sizeof(happiness_str));
 		else if (nation->happiness < 0.60)
-			strcpy(happiness_str, "Pleased");
+			Q_strncpyz(happiness_str, _("Pleased"), sizeof(happiness_str));
 		else if (nation->happiness < 1.0)
-			strcpy(happiness_str, "Happy");
+			Q_strncpyz(happiness_str, _("Happy"), sizeof(happiness_str));
 		else
-			strcpy(happiness_str, "Exuberant");
-		
+			Q_strncpyz(happiness_str, _("Exuberant"), sizeof(happiness_str));
+
 		Com_sprintf(message, sizeof(message), _("Gained %i credits from nation %s (%s)"), funding, _(nation->name), happiness_str);
 
 		CL_UpdateCredits(ccs.credits + funding);
