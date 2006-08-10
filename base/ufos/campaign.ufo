@@ -109,7 +109,7 @@ campaign heavy
 	map		map_earth
 	visible		true
 
-	date		"2048 0 7"
+	date		"2084 0 7"
 	firststage	intro
 }
 
@@ -129,7 +129,7 @@ campaign easy
 	map		map_earth
 	visible		true
 
-	date		"2048 0 7"
+	date		"2084 0 7"
 	firststage	intro
 }
 
@@ -150,7 +150,7 @@ campaign main
 	map		map_earth
 	visible		true
 
-	date		"2048 0 7"
+	date		"2084 0 7"
 	firststage	intro
 }
 
@@ -171,6 +171,6 @@ campaign test
 	map		map_earth
 	visible		false
 
-	date		"2048 0 7"
+	date		"2084 0 7"
 	firststage	ufos_are_coming
 }
