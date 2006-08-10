@@ -1233,7 +1233,8 @@ void CL_ActorDie(sizebuf_t * sb)
 	if (selActor && confirm_actions->value)
 		Grid_MoveCalc(&clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length);
 
-	CL_RemoveActorFromTeamList(le);
+/*	if (le->team == cls.team)*/
+		CL_RemoveActorFromTeamList(le);
 }
 
 

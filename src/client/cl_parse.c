@@ -560,8 +560,12 @@ void CL_EntPerish( sizebuf_t *sb )
 			actor->i.c[csi.idFloor] = NULL;
 	}
 
+	/* FIXME: Check whether this call is needed */
+	/* the actor die event should handle this already - don't it */
+#if 0
 	if ( le->type == ET_ACTOR || le->type == ET_UGV )
 		CL_RemoveActorFromTeamList( le );
+#endif
 
 	le->inuse = qfalse;
 

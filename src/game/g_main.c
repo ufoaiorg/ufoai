@@ -489,8 +489,10 @@ void G_RunFrame(void)
 /*	Com_Printf( "frame: %i   time: %f\n", level.framenum, level.time ); */
 
 	/* check for intermission */
-	if (level.intermissionTime && level.time > level.intermissionTime)
+	if (level.intermissionTime && level.time > level.intermissionTime) {
 		G_EndGame(level.winningTeam);
+		return;
+	}
 
 	/* run ai */
 	AI_Run();
