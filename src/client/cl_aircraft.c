@@ -760,7 +760,7 @@ void CL_ParseAircraft(char *name, char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseAircraft: aircraft def \"%s\" without body ignored\n", name);
-		numCampaigns--;
+		gd.numAircraft--;
 		return;
 	}
 

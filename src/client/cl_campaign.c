@@ -27,26 +27,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 /* public vars */
-mission_t missions[MAX_MISSIONS];
-int numMissions;
+static mission_t missions[MAX_MISSIONS];
+static int numMissions;
 actMis_t *selMis;
 
 nation_t nations[MAX_NATIONS];
 int numNations = 0;
 
-campaign_t campaigns[MAX_CAMPAIGNS];
-int numCampaigns = 0;
+static campaign_t campaigns[MAX_CAMPAIGNS];
+static int numCampaigns = 0;
 
-stageSet_t stageSets[MAX_STAGESETS];
-stage_t stages[MAX_STAGES];
-int numStageSets = 0;
-int numStages = 0;
+static stageSet_t stageSets[MAX_STAGESETS];
+static stage_t stages[MAX_STAGES];
+static int numStageSets = 0;
+static int numStages = 0;
 
 campaign_t *curCampaign;
 ccs_t ccs;
 base_t *baseCurrent;
 
-byte *maskPic;
+static byte *maskPic;
 static int maskWidth, maskHeight;
 
 /* extern in client.h */

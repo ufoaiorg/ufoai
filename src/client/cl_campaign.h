@@ -196,17 +196,7 @@ typedef enum aircraftStatus_s {
 	AIR_RETURNING				/* returning to homebase */
 } aircraftStatus_t;
 
-extern mission_t missions[MAX_MISSIONS];
-extern int numMissions;
 extern actMis_t *selMis;
-
-extern campaign_t campaigns[MAX_CAMPAIGNS];
-extern int numCampaigns;
-
-extern stageSet_t stageSets[MAX_STAGESETS];
-extern stage_t stages[MAX_STAGES];
-extern int numStageSets;
-extern int numStages;
 
 extern campaign_t *curCampaign;
 extern ccs_t ccs;
