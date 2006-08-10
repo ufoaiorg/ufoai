@@ -123,15 +123,9 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 	switch ( type ) {
 	case ET_ACTOR:
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
-		if (employeeType == EMPL_SOLDIER)
-			chr->rank = 0;
-		else
-			chr->rank = -1;
 		break;
 	case ET_UGV:
 		chr->fieldSize = ACTOR_SIZE_UGV;
-		/* UGV does not have a rank */
-		chr->rank = -1;
 		break;
 	default:
 		Sys_Error("CL_GenerateCharacter: Unknown character type (%i)\n", type);
@@ -140,6 +134,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 
 	switch (type) {
 		case EMPL_SOLDIER:
+			chr->rank = 0;
 			/* Create attributes. */
 			Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
 			/* Get model and name. */
@@ -148,33 +143,27 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 		case EMPL_SCIENTIST:
 		case EMPL_MEDIC:
 		case EMPL_WORKER:
+			chr->rank = -1;
 			/* Create attributes. */
 			Com_CharGenAbilitySkills(chr, 15, 50, 15, 50);
 			/* Get model and name. */
 			chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
 			break;
 		case EMPL_ROBOT:
-			/* FIXME: */
+			chr->rank = -1;
+			/* FIXME: Check also if ET_UGV should be checked in 'default:' */
 			/* Create attributes. */
-			Com_CharGenAbilitySkills(chr, 15, 50, 15, 50);
+			Com_CharGenAbilitySkills(chr, 80, 80, 80, 80);
 			/* Get model and name. */
 			chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
 			break;
 		default:
-			if (type == ET_UGV) {
-				/* Create attributes. */
-				Com_CharGenAbilitySkills(chr, 80, 80, 80, 80);
-				/* Get model and name. */
-				chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
-				/*Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);*/
-			} else {
-				/* Default values. */
-				/* Create attributes. */
-				Com_CharGenAbilitySkills(chr, 15, 50, 15, 50);
-				/* Get model and name. */
-				chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
-				/*Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);*/
-			}
+			/* Default values. */
+			chr->rank = -1;
+			/* Create attributes. */
+			Com_CharGenAbilitySkills(chr, 15, 50, 15, 50);
+			/* Get model and name. */
+			chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
 			break;
 		}
 }
