@@ -584,10 +584,9 @@ char *Com_GiveModel(int type, int gender, char *category)
 }
 
 /**
- * @brief
- * @param[in] team
- * @param[in] chr
- * @param[out] chr
+ * @brief Assign 3D models and names to a character.
+ * @param[in] team What team the character is on.
+ * @param[in,out] chr The character that should get the paths to the differenbt models/skins.
  * @sa Com_GiveName
  * @sa Com_GiveModel
  */
