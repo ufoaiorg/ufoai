@@ -44,6 +44,8 @@ static int researchListLength;
 /* The currently selected entry in the above list. */
 static int researchListPos;
 
+static stringlist_t curRequiredList;
+
 
 /**
   * @brief Marks one tech as 'collected'  if an item it 'provides' (= id) has been collected.
@@ -311,6 +313,9 @@ void RS_InitTree(void)
 	}
 	RS_MarkCollected();
 	RS_MarkResearchable();
+
+	memset(&curRequiredList, 0, sizeof(stringlist_t));
+
 	Com_DPrintf("RS_InitTree: Technology tree initialised. %i entries found.\n", i);
 }
 
@@ -318,6 +323,7 @@ void RS_InitTree(void)
   * @brief Return "name" if present, otherwise enter the correct .ufo file and get it from the definition there.
   * @param[in] id unique id of a technology_t
   * @param[out] name Full name of this technology_t (technology_t->name) - defaults to id if nothing is found.
+  * @note name has a maxlength of MAX_VAR
   */
 void RS_GetName(char *id, char *name)
 {
@@ -350,9 +356,8 @@ static void RS_ResearchDisplayInfo(void)
 	int i;
 	technology_t *tech = NULL;
 	base_t *base = NULL;
-	char dependencies[MAX_VAR];
+	static char dependencies[256];
 	char tempstring[MAX_VAR];
-	stringlist_t req_temp;
 
 	/* we are not in base view */
 	if (!baseCurrent)
@@ -372,23 +377,21 @@ static void RS_ResearchDisplayInfo(void)
 		if (tech->base_idx != baseCurrent->idx) {
 			base = &gd.bases[tech->base_idx];
 			Cvar_Set("mn_research_selbase", va(_("Researched in %s"), base->name));
-		} else {
+		} else
 			Cvar_Set("mn_research_selbase", _("Researched in this base."));
-		}
 	}
 
 	Cvar_Set("mn_research_selname", tech->name);
 	if (tech->overalltime) {
 		if (tech->time > tech->overalltime) {
 			Com_Printf("RS_ResearchDisplayInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", tech->id, tech->time,
-					   tech->overalltime);
+					tech->overalltime);
 			/* just in case the values got messed up */
 			tech->time = tech->overalltime;
 		}
 		Cvar_Set("mn_research_seltime", va(_("Progress: %.1f%%"), 100 - (tech->time * 100 / tech->overalltime)));
-	} else {
+	} else
 		Cvar_Set("mn_research_seltime", _("Progress: Not available."));
-	}
 
 	switch (tech->statusResearch) {
 	case RS_RUNNING:
@@ -407,22 +410,21 @@ static void RS_ResearchDisplayInfo(void)
 		break;
 	}
 
-	req_temp.numEntries = 0;
-	RS_GetFirstRequired(tech->idx, &req_temp);
-	Com_sprintf(dependencies, MAX_VAR, _("Dependencies: "));
-	if (req_temp.numEntries > 0) {
-		for (i = 0; i < req_temp.numEntries; i++) {
-			/* name_temp gets initialised in getname. */
-			RS_GetName(req_temp.string[i], tempstring);
-			Q_strcat(dependencies, tempstring, MAX_VAR);
+	memset(&curRequiredList, 0, sizeof(stringlist_t));
+	RS_GetFirstRequired(tech->idx, &curRequiredList);
 
-			if (i < req_temp.numEntries - 1)
-				Q_strcat(dependencies, ", ", MAX_VAR);
-		}
-	} else {
-		*dependencies = '\0';
+	/* clear the list */
+	*dependencies = '\0';
+
+	for (i = 0; i < curRequiredList.numEntries; i++) {
+		/* name_temp gets initialised in getname. */
+		RS_GetName(curRequiredList.string[i], tempstring);
+		Q_strcat(dependencies, tempstring, sizeof(dependencies));
+		Q_strcat(dependencies, "\n", sizeof(dependencies));
 	}
-	Cvar_Set("mn_research_seldep", dependencies);
+
+	menuText[TEXT_RESEARCH_INFO] = dependencies;
+	Cvar_Set("mn_research_seldep", _("Dependencies"));
 }
 
 /**
@@ -589,9 +591,9 @@ static void RS_ResearchStart(void)
 		default:
 			break;
 		}
-	} else {
+	} else
 		MN_Popup(_("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first."));
-	}
+
 	RS_UpdateData();
 }
 
@@ -819,30 +821,17 @@ void CL_CheckResearchStatus(void)
 				newResearch++;
 				tech->time = 0;
 			} else {
-#if 0
 				if (tech->scientists >= 0) {
-					building = &gd.buildings[tech->base_idx][tech->lab];
-					Com_DPrintf("building found %s\n", building->name);
-					employees_in_building = &building->assigned_employees;
-					if (employees_in_building->numEmployees > 0) {
-						Com_DPrintf("employees are there\n");
-#if 0
-						/* OLD */
-						/* reduce one time-unit */
-						tech->time--;
-#endif
-						Com_DPrintf("timebefore %.2f\n", tech->time);
-						Com_DPrintf("timedelta %.2f\n", employees_in_building->numEmployees * 0.8);
-						/* TODO: Just for testing, better formular may be needed. */
-						tech->time -= employees_in_building->numEmployees * 0.8;
-						Com_DPrintf("timeafter %.2f\n", tech->time);
-						/* TODO include employee-skill in calculation. */
-						/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
-						if (tech->time < 0)
-							tech->time = 0;
-					}
+					Com_DPrintf("timebefore %.2f\n", tech->time);
+					Com_DPrintf("timedelta %.2f\n", tech->scientists * 0.8);
+					/* TODO: Just for testing, better formular may be needed. */
+					tech->time -= tech->scientists * 0.8;
+					Com_DPrintf("timeafter %.2f\n", tech->time);
+					/* TODO include employee-skill in calculation. */
+					/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
+					if (tech->time < 0)
+						tech->time = 0;
 				}
-#endif
 			}
 		}
 	}
@@ -973,6 +962,22 @@ static void RS_DebugResearchAll(void)
 }
 #endif
 
+void RS_DependenciesClick_f (void)
+{
+	int num;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: research_dependencies_click <num>\n");
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	if (num >= curRequiredList.numEntries)
+		return;
+
+	UP_OpenWith(curRequiredList.string[num]);
+}
+
 /**
   * @brief This is more or less the initial
   * Bind some of the functions in this file to console-commands that you can call ingame.
@@ -991,6 +996,7 @@ void RS_ResetResearch(void)
 	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f);
 	Cmd_AddCommand("research_update", RS_UpdateData);
 	Cmd_AddCommand("invlist", Com_InventoryList_f);
+	Cmd_AddCommand("research_dependencies_click", RS_DependenciesClick_f);
 #ifdef DEBUG
 	Cmd_AddCommand("techlist", RS_TechnologyList_f);
 	Cmd_AddCommand("research_all", RS_DebugResearchAll);
