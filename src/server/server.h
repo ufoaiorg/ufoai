@@ -209,7 +209,6 @@ int SV_ImageIndex(char *name);
 
 void SV_WriteClientdataToMessage(client_t * client, sizebuf_t * msg);
 
-void SV_ExecuteUserCommand(char *s);
 void SV_InitOperatorCommands(void);
 
 void SV_SendServerinfo(client_t * client);
@@ -247,7 +246,6 @@ void SV_BroadcastPrintf(int level, char *fmt, ...);
 void SV_BroadcastCommand(char *fmt, ...);
 
 /* sv_user.c */
-void SV_Nextserver(void);
 void SV_ExecuteClientMessage(client_t * cl);
 
 /* sv_ccmds.c */

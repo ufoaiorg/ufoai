@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -71,18 +71,26 @@ int area_type;
 int SV_HullForEntity(edict_t * ent, int *tile);
 
 
-/* ClearLink is used for new headnodes */
+/**
+ * @brief ClearLink is used for new headnodes
+ */
 void ClearLink(link_t * l)
 {
 	l->prev = l->next = l;
 }
 
+/**
+ * @brief
+ */
 void RemoveLink(link_t * l)
 {
 	l->next->prev = l->prev;
 	l->prev->next = l->next;
 }
 
+/**
+ * @brief
+ */
 void InsertLinkBefore(link_t * l, link_t * before)
 {
 	l->next = before;
@@ -91,13 +99,9 @@ void InsertLinkBefore(link_t * l, link_t * before)
 	l->next->prev = l;
 }
 
-/*
-===============
-SV_CreateAreaNode
-
-Builds a uniformly subdivided tree for the given world size
-===============
-*/
+/**
+ * @brief Builds a uniformly subdivided tree for the given world size
+ */
 areanode_t *SV_CreateAreaNode(int depth, vec3_t mins, vec3_t maxs)
 {
 	areanode_t *anode;
@@ -136,12 +140,9 @@ areanode_t *SV_CreateAreaNode(int depth, vec3_t mins, vec3_t maxs)
 	return anode;
 }
 
-/*
-===============
-SV_ClearWorld
-
-===============
-*/
+/**
+ * @brief
+ */
 void SV_ClearWorld(void)
 {
 	memset(sv_areanodes, 0, sizeof(sv_areanodes));
@@ -150,12 +151,9 @@ void SV_ClearWorld(void)
 }
 
 
-/*
-===============
-SV_UnlinkEdict
-
-===============
-*/
+/**
+ * @brief
+ */
 void SV_UnlinkEdict(edict_t * ent)
 {
 	if (!ent->area.prev)
@@ -165,12 +163,9 @@ void SV_UnlinkEdict(edict_t * ent)
 }
 
 
-/*
-===============
-SV_LinkEdict
-
-===============
-*/
+/**
+ * @brief
+ */
 #define MAX_TOTAL_ENT_LEAFS		128
 void SV_LinkEdict(edict_t * ent)
 {
@@ -223,12 +218,9 @@ void SV_LinkEdict(edict_t * ent)
 }
 
 
-/*
-====================
-SV_AreaEdicts_r
-
-====================
-*/
+/**
+ * @brief
+ */
 void SV_AreaEdicts_r(areanode_t * node)
 {
 	link_t *l, *next, *start;
@@ -276,11 +268,9 @@ void SV_AreaEdicts_r(areanode_t * node)
 		SV_AreaEdicts_r(node->children[1]);
 }
 
-/*
-================
-SV_AreaEdicts
-================
-*/
+/**
+ * @brief
+ */
 int SV_AreaEdicts(vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int areatype)
 {
 	area_mins = mins;
@@ -309,16 +299,12 @@ typedef struct {
 
 
 
-/*
-================
-SV_HullForEntity
-
-Returns a headnode that can be used for testing or clipping an
-object of mins/maxs size.
-Offset is filled in to contain the adjustment that must be added to the
-testing object's origin to get a point to use with the returned hull.
-================
-*/
+/**
+ * @brief Returns a headnode that can be used for testing or clipping an
+ * object of mins/maxs size.
+ * Offset is filled in to contain the adjustment that must be added to the
+ * testing object's origin to get a point to use with the returned hull.
+ */
 int SV_HullForEntity(edict_t * ent, int *tile)
 {
 	cmodel_t *model;
@@ -342,12 +328,9 @@ int SV_HullForEntity(edict_t * ent, int *tile)
 
 /*=========================================================================== */
 
-/*
-====================
-SV_ClipMoveToEntities
-
-====================
-*/
+/**
+ * @brief
+ */
 void SV_ClipMoveToEntities(moveclip_t * clip)
 {
 	int i, num;
@@ -381,9 +364,9 @@ void SV_ClipMoveToEntities(moveclip_t * clip)
 
 		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, touch->origin, vec3_origin);
 
-/*		Com_Printf( "%i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex, 
+/*		Com_Printf( "%i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex,
 			(int)touch->mins[0], (int)touch->mins[1], (int)touch->mins[2],
-			(int)touch->maxs[0], (int)touch->maxs[1], (int)touch->maxs[2], 
+			(int)touch->maxs[0], (int)touch->maxs[1], (int)touch->maxs[2],
 			(int)touch->origin[0], (int)touch->origin[1], (int)touch->origin[2] );
 */
 		if (trace.allsolid || trace.startsolid || trace.fraction < clip->trace.fraction) {
@@ -399,11 +382,9 @@ void SV_ClipMoveToEntities(moveclip_t * clip)
 }
 
 
-/*
-==================
-SV_TraceBounds
-==================
-*/
+/**
+ * @brief
+ */
 void SV_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
 {
 #if 0
@@ -425,16 +406,10 @@ void SV_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t b
 #endif
 }
 
-/*
-==================
-SV_Trace
-
-Moves the given mins/maxs volume through the world from start to end.
-
-Passedict and edicts owned by passedict are explicitly not checked.
-
-==================
-*/
+/**
+ * @brief Moves the given mins/maxs volume through the world from start to end.
+ * @note Passedict and edicts owned by passedict are explicitly not checked.
+ */
 trace_t SV_Trace(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask)
 {
 	moveclip_t clip;

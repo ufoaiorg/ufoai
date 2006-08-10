@@ -44,11 +44,9 @@ sv_client and sv_player will be valid.
 ============================================================
 */
 
-/*
-==================
-SV_BeginDemoServer
-==================
-*/
+/**
+ * @brief
+ */
 void SV_BeginDemoserver(void)
 {
 	char name[MAX_OSPATH];
@@ -59,16 +57,12 @@ void SV_BeginDemoserver(void)
 		Com_Error(ERR_DROP, "Couldn't open %s\n", name);
 }
 
-/*
-================
-SV_New_f
-
-Sends the first message from the server to a connected client.
-This will be sent on the initial connection and upon each server load.
-Client reads via CL_ParseServerData in cl_parse.c
-================
-*/
-void SV_New_f(void)
+/**
+ * @brief Sends the first message from the server to a connected client.
+ * This will be sent on the initial connection and upon each server load.
+ * Client reads via CL_ParseServerData in cl_parse.c
+ */
+static void SV_New_f(void)
 {
 	char *gamedir;
 	int playernum;
@@ -88,10 +82,8 @@ void SV_New_f(void)
 		return;
 	}
 
-	/* */
 	/* serverdata needs to go over for all types of servers */
 	/* to make sure the protocol is right, and to set the gamedir */
-	/* */
 	gamedir = Cvar_VariableString("gamedir");
 
 	/* send the serverdata */
@@ -110,9 +102,7 @@ void SV_New_f(void)
 	/* send full levelname */
 	MSG_WriteString(&sv_client->netchan.message, sv.configstrings[CS_NAME]);
 
-	/* */
 	/* game server */
-	/* */
 	if (sv.state == ss_game) {
 		/* begin fetching configstrings */
 		MSG_WriteByte(&sv_client->netchan.message, svc_stufftext);
@@ -120,12 +110,10 @@ void SV_New_f(void)
 	}
 }
 
-/*
-==================
-SV_Configstrings_f
-==================
-*/
-void SV_Configstrings_f(void)
+/**
+ * @brief
+ */
+static void SV_Configstrings_f(void)
 {
 	int start;
 
@@ -166,12 +154,10 @@ void SV_Configstrings_f(void)
 }
 
 
-/*
-==================
-SV_Begin_f
-==================
-*/
-void SV_Begin_f(void)
+/**
+ * @brief
+ */
+static void SV_Begin_f(void)
 {
 	Com_DPrintf("Begin() from %s\n", sv_client->name);
 
@@ -192,46 +178,34 @@ void SV_Begin_f(void)
 
 /*============================================================================ */
 
-/*
-=================
-SV_Disconnect_f
-
-The client is going to disconnect, so remove the connection immediately
-=================
-*/
-void SV_Disconnect_f(void)
+/**
+ * @brief The client is going to disconnect, so remove the connection immediately
+ */
+static void SV_Disconnect_f(void)
 {
 /*	SV_EndRedirect (); */
 	SV_DropClient(sv_client);
 }
 
 
-/*
-==================
-SV_ShowServerinfo_f
-
-Dumps the serverinfo info string
-==================
-*/
-void SV_ShowServerinfo_f(void)
+/**
+ * @brief Dumps the serverinfo info string
+ */
+static void SV_ShowServerinfo_f(void)
 {
 	Info_Print(Cvar_Serverinfo());
 }
 
 
-/*
-==================
-SV_Nextserver
-
-This variable holds the name of the next alias to be executed.
-A looping series of aliases is created which look something like
-'alias l1 "somecommandhere; set nextserver l2"'
-and
-'alias l2 "someothercommandhere; set nextserver l1"'.
-These two aliases would loop the commands until a key is pressed.
-==================
-*/
-void SV_Nextserver(void)
+/**
+ * @brief This variable holds the name of the next alias to be executed.
+ * A looping series of aliases is created which look something like
+ * 'alias l1 "somecommandhere; set nextserver l2"'
+ * and
+ * 'alias l2 "someothercommandhere; set nextserver l1"'.
+ * These two aliases would loop the commands until a key is pressed.
+ */
+static void SV_Nextserver(void)
 {
 	char *v;
 
@@ -250,15 +224,10 @@ void SV_Nextserver(void)
 	Cvar_Set("nextserver", "");
 }
 
-/*
-==================
-SV_Nextserver_f
-
-A cinematic has completed or been aborted by a client, so move
-to the next server,
-==================
-*/
-void SV_Nextserver_f(void)
+/**
+ * @brief A cinematic has completed or been aborted by a client, so move to the next server,
+ */
+static void SV_Nextserver_f(void)
 {
 	if (atoi(Cmd_Argv(1)) != svs.spawncount) {
 		Com_DPrintf("Nextserver() from wrong level, from %s\n", sv_client->name);
@@ -275,7 +244,7 @@ typedef struct {
 	void (*func) (void);
 } ucmd_t;
 
-ucmd_t ucmds[] = {
+static ucmd_t ucmds[] = {
 	/* auto issued */
 	{"new", SV_New_f},
 	{"configstrings", SV_Configstrings_f},
@@ -291,12 +260,10 @@ ucmd_t ucmds[] = {
 	{NULL, NULL}
 };
 
-/*
-==================
-SV_ExecuteUserCommand
-==================
-*/
-void SV_ExecuteUserCommand(char *s)
+/**
+ * @brief
+ */
+static void SV_ExecuteUserCommand(char *s)
 {
 	ucmd_t *u;
 
@@ -320,13 +287,9 @@ void SV_ExecuteUserCommand(char *s)
 
 
 #define	MAX_STRINGCMDS	8
-/*
-===================
-SV_ExecuteClientMessage
-
-The current net_message is parsed for the given client
-===================
-*/
+/**
+ * @brief The current net_message is parsed for the given client
+ */
 void SV_ExecuteClientMessage(client_t * cl)
 {
 	int c;
