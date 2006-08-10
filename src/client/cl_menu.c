@@ -2192,7 +2192,7 @@ void MN_ResetMenus(void)
 	B_ResetBaseManagement();
 	RS_ResetResearch();
 	PR_ResetProduction();
-	E_ResetEmployee();
+	E_Reset();
 	MAP_ResetAction();
 	UFO_Reset();
 }

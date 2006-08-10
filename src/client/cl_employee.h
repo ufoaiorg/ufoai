@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /******* GUI STUFF ********/
 
-void E_ResetEmployee(void);
+void E_Reset(void);
 
 /******* BACKEND STUFF ********/
 
@@ -65,7 +65,7 @@ typedef struct employee_s {
 	inventory_t inv;			/* employee inventory */
 } employee_t;
 
-void E_InitEmployees(void);
+void E_ResetEmployees(void);
 qboolean E_AssignEmployee(base_t* base, employeeType_t type);
 qboolean E_RemoveEmployee(base_t* base, employeeType_t type, int num);
 employee_t * E_CreateEmployee(employeeType_t type);

@@ -113,14 +113,18 @@ employeeType_t E_GetEmployeeType(char* type)
 }
 
 /**
- * @brief Reads in information about employees and assigns them to the correct rooms in a base.
- *
- * This should be called after setting up the first base.
- * @todo This right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
- * @sa CL_GameInit
+ * @brief Clears the employees list for loaded and new games
+ * @sa CL_ResetSinglePlayerData
+ * @sa E_DeleteEmployee
  */
-void E_InitEmployees(void)
+void E_ResetEmployees(void)
 {
+	int i;
+	for (i=EMPL_SOLDIER;i<MAX_EMPL;i++)
+		if (gd.numEmployees[i]) {
+			memset(gd.employees[i], 0, sizeof(employee_t)*MAX_EMPLOYEES);
+			gd.numEmployees[i] = 0;
+		}
 }
 
 /**
@@ -429,6 +433,7 @@ employee_t* E_CreateEmployee(employeeType_t type)
  * @param[in] employee The pointer to the employee you want to remove.
  * @return True if the employee was removed sucessfully, otherwise false.
  * @sa E_CreateEmployee
+ * @sa E_ResetEmployees
  */
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 {
@@ -615,6 +620,11 @@ void E_EmployeeHire_f (void)
 	if (num >= employeesInCurrentList || num < 0)
 		return;
 
+	/* already hired in another base */
+	if (gd.employees[employeeCategory][num].hired
+	 && gd.employees[employeeCategory][num].baseIDHired != baseCurrent->idx)
+	 	return;
+
 	if (gd.employees[employeeCategory][num].hired) {
 		gd.employees[employeeCategory][num].hired = qfalse;
 		gd.employees[employeeCategory][num].baseIDHired = -1;
@@ -659,7 +669,7 @@ static void E_EmployeeSelect_f(void)
   * Bind some of the functions in this file to console-commands that you can call ingame.
   * Called from MN_ResetMenus resp. CL_InitLocal
   */
-void E_ResetEmployee(void)
+void E_Reset(void)
 {
 	/* add commands */
 	Cmd_AddCommand("employee_init", E_EmployeeList);

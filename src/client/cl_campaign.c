@@ -168,11 +168,13 @@ static qboolean CheckAND(char **s)
 }
 
 /**
-  * @brief
+  * @brief Boolean expression parser
   *
   * @param[in] expr
   * @param[in] varFuncParam Function pointer
   * @return qboolean
+  * @sa CheckOR
+  * @sa CheckAND
   */
 static qboolean CheckBEP(char *expr, qboolean(*varFuncParam) (char *var))
 {
@@ -2722,9 +2724,6 @@ void CL_GameInit ( void )
 	/* and shields to aircrafts. */
 	CL_AircraftInit();
 
-	/* init employee list */
-	E_InitEmployees();
-
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 	MAP_GameInit();
@@ -2887,6 +2886,7 @@ void CL_ResetSinglePlayerData ( void )
 	memset(stageSets, 0, sizeof(stageSet_t)*MAX_STAGESETS);
 	memset(stages, 0, sizeof(stage_t)*MAX_STAGES);
 	memset(&invList,0,sizeof(invList));
+	E_ResetEmployees();
 	Com_InitInventory(invList);
 }
 
