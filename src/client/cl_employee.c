@@ -120,6 +120,7 @@ employeeType_t E_GetEmployeeType(char* type)
 void E_ResetEmployees(void)
 {
 	int i;
+	Com_DPrintf("E_ResetEmployees: Delete all employees\n");
 	for (i=EMPL_SOLDIER;i<MAX_EMPL;i++)
 		if (gd.numEmployees[i]) {
 			memset(gd.employees[i], 0, sizeof(employee_t)*MAX_EMPLOYEES);

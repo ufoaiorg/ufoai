@@ -973,6 +973,7 @@ void B_ClearBase(base_t * base)
 			employee = E_CreateEmployee(EMPL_SOLDIER);
 			employee->hired = qtrue;
 			employee->baseIDHired = base->idx;
+			Com_DPrintf("B_ClearBase: Generate character for multiplayer - employee->chr.name: '%s'\n", employee->chr.name);
 		}
 	} else if (!E_CountUnhired(base, EMPL_SOLDIER)) {
 		/* should be multiplayer (campaignmode TODO) or singleplayer */

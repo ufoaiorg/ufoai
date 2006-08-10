@@ -554,6 +554,8 @@ static void CL_SelectCmd(void)
 	if (!Q_strncmp(command, "team", 4)) {
 		/* set info cvars */
 		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, num);
+		if (!chr)
+			Sys_Error("CL_SelectCmd: No hired character at pos %i (base: %i)\n", num, baseCurrent->idx);
 		if ( chr->fieldSize == ACTOR_SIZE_NORMAL )
 			CL_CharacterCvars(chr);
 		else
