@@ -418,6 +418,12 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
 	int ammo;
 	item_t item = {0,0,0};
 
+#ifdef PARANOID
+	if (weapon < 0) {
+		Com_Printf("Error in G_PackAmmoAndWeapon - weapon is %i\n", weapon);
+	}
+#endif
+
 	item.t = weapon;
 	if ( gi.csi->ods[weapon].reload ) {
 		for (ammo = 0; ammo < gi.csi->numODs; ammo++)
