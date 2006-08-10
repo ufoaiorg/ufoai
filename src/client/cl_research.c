@@ -465,6 +465,11 @@ void RS_AssignScientist(technology_t* tech)
 	building_t *building = NULL;
 	employee_t *employee = NULL;
 
+	if  ((tech->base_idx != baseCurrent->idx) && (tech->base_idx >= 0)) {
+		Com_DPrintf("RS_AssignScientist: Tech not researched in current base.\n");
+		return;
+	}
+	
 	employee = E_GetUnassingedEmployee(baseCurrent, EMPL_SCIENTIST);
 
 	if (!employee) {
@@ -543,6 +548,10 @@ static void RS_RemoveScientist_f(void)
 			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
 			researchList[num]->scientists--;
 		}
+	}
+
+	if (researchList[num]->scientists == 0) {
+		researchList[num]->base_idx = -1;
 	}
 
 	/* Update display-list and display-info. */
@@ -669,8 +678,13 @@ void RS_UpdateData(void)
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
 			/* Maximal available scientists in the base the tech is reseearched. */
-			Cvar_SetValue(va("mn_researchavailable%i", j), available);
-			/* TODO: Free space in all labs. */
+			if ((tech->base_idx == baseCurrent->idx) || (tech->base_idx < 0) ) {
+				Cvar_SetValue(va("mn_researchavailable%i", j), available);
+			} else {
+				/* TODO: Display available scientists of other base here. */
+				Cvar_SetValue(va("mn_researchavailable%i", j), 0);
+			}
+			/* TODO: Free space in all labs in this base. */
 			/* Cvar_SetValue(va("mn_researchmax%i", j), available); */
 			Cvar_Set(va("mn_researchmax%i", j), "mx.");
 			/* Set the text of the research items and mark them if they are currently researched. */
@@ -1078,6 +1092,7 @@ void RS_ParseTechnologies(char *id, char **text)
 	tech->scientists = 0;
 	tech->prev = -1;
 	tech->next = -1;
+	tech->base_idx = -1;
 
 
 	do {
