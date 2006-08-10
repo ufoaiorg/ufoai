@@ -1383,6 +1383,7 @@ static void RS_GetFirstRequired2(int tech_idx, int first_tech_idx, stringlist_t 
 	}
 	for (i = 0; i < required_temp->numEntries; i++) {
 		tech = RS_GetTechByID(required_temp->string[i]);
+		assert(tech); /* here we are in singleplayer and no hacks, please */
 		if (RS_IsResearched_ptr(tech)) {
 			if (required->numEntries < MAX_TECHLINKS) {
 				required->idx[required->numEntries] = tech->idx;
