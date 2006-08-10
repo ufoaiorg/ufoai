@@ -206,25 +206,20 @@ extern int mapAction;
 void AIR_SaveAircraft(sizebuf_t * sb, base_t * base);
 void AIR_LoadAircraft(sizebuf_t * sb, base_t * base, int version);
 
-char *CL_AircraftStatusToName(aircraft_t * aircraft);
-qboolean CL_MapIsNight(vec2_t pos);
+extern qboolean CL_MapIsNight(vec2_t pos);
 void CL_ResetCampaign(void);
 void CL_ResetSinglePlayerData ( void );
 void CL_DateConvert(date_t * date, int *day, int *month);
 char *CL_DateGetMonthName(int month);
 void CL_CampaignRun(void);
 void CL_GameTimeStop(void);
-byte *CL_GetmapColor(vec2_t pos);
-qboolean CL_NewBase(vec2_t pos);
+extern byte *CL_GetmapColor(vec2_t pos);
+extern qboolean CL_NewBase(vec2_t pos);
 void CL_ParseMission(char *name, char **text);
 mission_t* CL_AddMission(char *name);
 void CL_ParseStage(char *name, char **text);
 void CL_ParseCampaign(char *name, char **text);
 void CL_ParseNations(char *name, char **text);
-void CL_AircraftSelect(void);
-void CL_NewAircraft_f(void);
-void CL_NewAircraft(base_t * base, char *name);
-void CL_AircraftInit(void);
 void CL_CollectAliens(mission_t * mission);
 void CL_CollectItems(int won);
 void CL_UpdateCharacterStats(int won);
@@ -232,5 +227,6 @@ void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
 void CL_GameInit (void);
 extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2);
+void CL_NewAircraft(base_t * base, char *name);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */

@@ -83,7 +83,7 @@ typedef struct aircraft_s {
 	struct actMis_s* mission;	/* The mission the aircraft is moving to */
 	int ufo;				/* Ufo's id the aircraft is purchasing (gd.ufos + id) */
 	radar_t	radar;			/* Radar to track ufos */
-	
+
 	qboolean visible;		/* The ufo is visible ? */
 } aircraft_t;
 
@@ -100,6 +100,10 @@ void CL_AircraftReturnToBase_f(void);
 void CL_AircraftEquipmenuMenuInit_f(void);
 void CL_AircraftEquipmenuMenuWeaponsClick_f(void);
 void CL_AircraftEquipmenuMenuShieldsClick_f(void);
+char *CL_AircraftStatusToName(aircraft_t * aircraft);
+void CL_AircraftInit(void);
+void CL_AircraftSelect(void);
+void CL_NewAircraft_f(void);
 
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *CL_GetAircraft(char *name);

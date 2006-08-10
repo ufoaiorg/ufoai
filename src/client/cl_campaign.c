@@ -52,7 +52,6 @@ static int maskWidth, maskHeight;
 /* extern in client.h */
 stats_t stats;
 
-extern cmdList_t game_commands[];
 extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission);
 extern void CL_AircraftsNotifyMissionRemoved(const actMis_t* mission);
 static void CL_GameExit(void);
@@ -71,12 +70,10 @@ enum {
 	BEPERR_NOTFOUND
 } BEPerror;
 
-char varName[MAX_VAR];
+static char varName[MAX_VAR];
 
-qboolean(*varFunc) (char *var);
-
-qboolean CheckOR(char **s);
-qboolean CheckAND(char **s);
+static qboolean(*varFunc) (char *var);
+static qboolean CheckAND(char **s);
 
 static void SkipWhiteSpaces(char **s)
 {
@@ -104,7 +101,7 @@ static char *GetSwitchName(char **s)
 	return varName;
 }
 
-qboolean CheckOR(char **s)
+static qboolean CheckOR(char **s)
 {
 	qboolean result = qfalse;
 	int goon = 0;
@@ -130,7 +127,7 @@ qboolean CheckOR(char **s)
 	return result;
 }
 
-qboolean CheckAND(char **s)
+static qboolean CheckAND(char **s)
 {
 	qboolean result = qtrue;
 	qboolean negate = qfalse;
@@ -177,7 +174,7 @@ qboolean CheckAND(char **s)
   * @param[in] varFuncParam Function pointer
   * @return qboolean
   */
-qboolean CheckBEP(char *expr, qboolean(*varFuncParam) (char *var))
+static qboolean CheckBEP(char *expr, qboolean(*varFuncParam) (char *var))
 {
 	qboolean result;
 	char *str;
@@ -231,7 +228,7 @@ extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2)
 /**
   * @brief
   */
-qboolean CL_MapIsNight(vec2_t pos)
+extern qboolean CL_MapIsNight(vec2_t pos)
 {
 	float p, q, a, root, x;
 
@@ -248,7 +245,7 @@ qboolean CL_MapIsNight(vec2_t pos)
 /**
   * @brief
   */
-qboolean Date_LaterThan(date_t now, date_t compare)
+static qboolean Date_LaterThan(date_t now, date_t compare)
 {
 	if (now.day > compare.day)
 		return qtrue;
@@ -263,7 +260,7 @@ qboolean Date_LaterThan(date_t now, date_t compare)
 /**
   * @brief
   */
-date_t Date_Add(date_t a, date_t b)
+static date_t Date_Add(date_t a, date_t b)
 {
 	a.sec += b.sec;
 	a.day += (a.sec / (3600 * 24)) + b.day;
@@ -275,7 +272,7 @@ date_t Date_Add(date_t a, date_t b)
 /**
   * @brief
   */
-date_t Date_Random(date_t frame)
+static date_t Date_Random(date_t frame)
 {
 	frame.sec = (frame.day * 3600 * 24 + frame.sec) * frand();
 	frame.day = frame.sec / (3600 * 24);
@@ -290,7 +287,7 @@ date_t Date_Random(date_t frame)
 /**
   * @brief
   */
-qboolean CL_MapMaskFind(byte * color, vec2_t polar)
+static qboolean CL_MapMaskFind(byte * color, vec2_t polar)
 {
 	byte *c;
 	int res, i, num;
@@ -325,9 +322,11 @@ qboolean CL_MapMaskFind(byte * color, vec2_t polar)
 }
 
 /**
-  * @brief
+  * @brief Returns the color value from geoscape of maskPic at a given position
+  * @param[in] pos vec2_t value of position on map to get the color value from
+  * @return the color value at given position
   */
-byte *CL_GetmapColor(vec2_t pos)
+extern byte *CL_GetmapColor(vec2_t pos)
 {
 	int x, y;
 
@@ -345,7 +344,7 @@ byte *CL_GetmapColor(vec2_t pos)
 /**
   * @brief
   */
-qboolean CL_NewBase(vec2_t pos)
+extern qboolean CL_NewBase(vec2_t pos)
 {
 	byte *color;
 
@@ -2630,7 +2629,7 @@ qboolean CL_OnBattlescape(void)
 /* ===================================================================== */
 
 /* these commands are only available in singleplayer */
-cmdList_t game_commands[] = {
+static cmdList_t game_commands[] = {
 	{"aircraft_start", CL_AircraftStart_f}
 	,
 	{"aircraftlist", CL_ListAircraft_f}
