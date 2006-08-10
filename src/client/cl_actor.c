@@ -107,13 +107,17 @@ void CL_CharacterCvars(character_t *chr)
 	Cvar_Set("mn_chrkillalien", va("%i", chr->kills[KILLED_ALIENS]));
 	Cvar_Set("mn_chrkillcivilian", va("%i", chr->kills[KILLED_CIVILIANS]));
 	Cvar_Set("mn_chrkillteam", va("%i", chr->kills[KILLED_TEAM]));
-	/* TODO: Doesn't work yet */
-	/* FIXME: Multiplayer don't have access to gd.ranks because they are not parsed, yet */
-	/* (and will never be) in multiplayer */
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Rank: %s"), gd.ranks[chr->rank].name);
-	Cvar_Set("mn_chrrank", messageBuffer);
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), "%s", gd.ranks[chr->rank].image);
-	Cvar_Set("mn_chrrank_img", messageBuffer);
+
+	/* Display rank if not in multiplayer (numRanks==0) and the character has one. */
+	if (chr->rank >= 0 && gd.numRanks) {
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Rank: %s"), gd.ranks[chr->rank].name);
+		Cvar_Set("mn_chrrank", messageBuffer);
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), "%s", gd.ranks[chr->rank].image);
+		Cvar_Set("mn_chrrank_img", messageBuffer);
+	} else {
+		Cvar_Set("mn_chrrank", "");
+		Cvar_Set("mn_chrrank_img", "");
+	}
 
 	Cvar_Set("mn_vpwr", va("%i", chr->skills[ABILITY_POWER]));
 	Cvar_Set("mn_vspd", va("%i", chr->skills[ABILITY_SPEED]));
