@@ -661,11 +661,10 @@ void SV_CheckTimeouts(void)
 	}
 }
 
-/*
-=================
-SV_RunGameFrame
-=================
-*/
+/**
+ * @brief
+ * @sa G_RunFrame
+ */
 void SV_RunGameFrame(void)
 {
 	if (host_speeds->value)

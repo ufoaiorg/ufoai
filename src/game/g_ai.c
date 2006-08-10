@@ -84,6 +84,7 @@ static qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 
 /**
  * @brief
+ * @sa AI_ActorThink
  */
 static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 {
@@ -244,6 +245,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 
 /**
  * @brief
+ * @sa AI_ActorThink
  */
 static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 {
@@ -289,9 +291,10 @@ static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 
 /**
  * @brief
+ * @sa AI_FighterCalcGuete
+ * @sa AI_CivilianCalcGuete
  */
 #define AI_MAX_DIST	30
-
 void AI_ActorThink(player_t * player, edict_t * ent)
 {
 	ai_action_t aia, bestAia;
@@ -617,18 +620,14 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 }
 
 
-/*
-=================
-G_SpawnAIPlayer
-=================
-*/
 #define MAX_SPAWNPOINTS		64
 static int spawnPoints[MAX_SPAWNPOINTS];
 
 /**
  * @brief Spawn civilians and aliens
- * @param
- * @sa
+ * @param[in] player
+ * @param[in] numSpawn
+ * @sa AI_CreatePlayer
  */
 static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 {
@@ -757,11 +756,13 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 }
 
 
-/*
-=================
-AI_CreatePlayer
-=================
-*/
+/**
+ * @brief Spawn civilians and aliens
+ * @param[in] team
+ * @sa G_SpawnAIPlayer
+ * @return player_t pointer
+ * @note see cvars ai_numaliens, ai_numcivilians, ai_numactors
+ */
 player_t *AI_CreatePlayer(int team)
 {
 	player_t *p;
