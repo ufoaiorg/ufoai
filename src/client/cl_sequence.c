@@ -457,7 +457,9 @@ void SEQ_Wait(char *name, char *data)
 }
 
 /**
- * @brief
+ * @brief Precaches the models and images for a sequence
+ * @sa R_RegisterModel
+ * @sa Draw_FindPic
  */
 void SEQ_Precache(char *name, char *data)
 {
