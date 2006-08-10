@@ -132,11 +132,6 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 		chr->fieldSize = ACTOR_SIZE_UGV;
 		/* UGV does not have a rank */
 		chr->rank = -1;
-		/* Create attributes. */
-		Com_CharGenAbilitySkills(chr, 80, 80, 80, 80);
-		/* Get model and name. */
-		chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
-		/*Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);*/
 		break;
 	default:
 		Sys_Error("CL_GenerateCharacter: Unknown character type (%i)\n", type);
@@ -162,6 +157,20 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 			break;
 		/*case EMPL_ROBOT: break; */
 		default:
+			if (type == ET_UGV) {
+				/* Create attributes. */
+				Com_CharGenAbilitySkills(chr, 80, 80, 80, 80);
+				/* Get model and name. */
+				chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
+				/*Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);*/
+			} else {
+				/* Default values. */
+				/* Create attributes. */
+				Com_CharGenAbilitySkills(chr, 15, 50, 15, 50);
+				/* Get model and name. */
+				chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
+				/*Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);*/
+			}
 			break;
 		}
 }
