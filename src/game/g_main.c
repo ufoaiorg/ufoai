@@ -129,15 +129,10 @@ invList_t invChain[MAX_INVLIST];
 /*=================================================================== */
 
 
-/*
-============
-InitGame
-
-This will be called when the dll is first loaded, which
-only happens when a new game is started or a save game
-is loaded.
-============
-*/
+/**
+ * @brief This will be called when the dll is first loaded
+ * @note only happens when a new game is started or a save game is loaded.
+ */
 void InitGame(void)
 {
 	gi.dprintf("==== InitGame ====\n");
@@ -252,6 +247,10 @@ void InitGame(void)
 /*=================================================================== */
 
 
+/**
+ * @brief Free the tags TAG_LEVEL and TAG_GAME
+ * @sa Z_FreeTags
+ */
 void ShutdownGame(void)
 {
 	gi.dprintf("==== ShutdownGame ====\n");
@@ -261,14 +260,9 @@ void ShutdownGame(void)
 }
 
 
-/*
-=================
-GetGameAPI
-
-Returns a pointer to the structure with all entry points
-and global variables
-=================
-*/
+/**
+ * @brief Returns a pointer to the structure with all entry points and global variables
+ */
 game_export_t *GetGameAPI(game_import_t * import)
 {
 	gi = *import;
@@ -346,11 +340,9 @@ void Com_DPrintf(char *msg, ...)
 /*====================================================================== */
 
 
-/*
-=================
-CheckNeedPass
-=================
-*/
+/**
+ * @brief
+ */
 void CheckNeedPass(void)
 {
 	int need;
@@ -374,9 +366,10 @@ void CheckNeedPass(void)
 /**
   * @brief Sends character stats like assigned missions and kills back to client
   *
-  * first short is the ucn to allow the client to identify the character
-  * Parsed in CL_ParseCharacterData
-  * TODO: Handle retry missions
+  * @note first short is the ucn to allow the client to identify the character
+  * @note parsed in CL_ParseCharacterData
+  * @sa CL_ParseCharacterData
+  * @sa G_EndGame
   */
 static void G_SendCharacterData( edict_t* ent )
 {
@@ -397,15 +390,13 @@ static void G_SendCharacterData( edict_t* ent )
 
 /**
   * @brief Handles the end of a game
-  *
-  * Called by game_abort command (or sv win [team])
-  * TODO: Handle mission retries (problem is that G_SendCharacterData
-  * will update the character stats regardless of a mission retry)
+  * @note Called by game_abort command (or sv win [team])
+  * @sa G_RunFrame
   */
 void G_EndGame(int team)
 {
 	edict_t *ent;
-	int i, j;
+	int i, j = 0;
 	player_t* player;
 
 	/* Make everything visible to anyone who can't already see it */
@@ -444,18 +435,19 @@ void G_EndGame(int team)
 	/* how many */
 	gi.WriteByte(j);
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
-		  && !(ent->state & STATE_DEAD)
-		  && ent->team == player->pers.team)
-			G_SendCharacterData(ent);
+	if (j) {
+		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
+			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+			&& !(ent->state & STATE_DEAD)
+			&& ent->team == player->pers.team)
+				G_SendCharacterData(ent);
+	}
 }
 
-/*
-=================
-G_CheckEndGame
-=================
-*/
+/**
+ * @brief Checks whether there are still actors to fight with left
+ * @sa G_EndGame
+ */
 void G_CheckEndGame(void)
 {
 	int activeTeams;
@@ -477,11 +469,12 @@ void G_CheckEndGame(void)
 	}
 }
 
-/*
-================
-G_RunFrame
-================
-*/
+/**
+ * @brief
+ * @sa SV_RunGameFrame
+ * @sa G_EndGame
+ * @sa AI_Run
+ */
 void G_RunFrame(void)
 {
 	level.framenum++;
