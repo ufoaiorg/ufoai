@@ -525,11 +525,19 @@ qboolean E_AssignEmployeeToBuilding(building_t *building, employeeType_t type)
 qboolean E_RemoveEmployeeFromBuilding(employee_t *employee)
 {
 	character_t *chr = NULL;
+	technology_t *tech = NULL;
+	
 	if (employee) {
 		chr = &employee->chr;
 		switch (chr->empl_type) {
 		case EMPL_SCIENTIST:
-			/*TODO: get technology this scientist is researching in & remove him. */
+			/* Get technology with highest scientist-count and remove one scientist. */
+			tech = RS_GetTechWithMostScientists(employee->baseIDHired);
+			if (tech) {
+				tech->scientists--;
+				/* Try to assign replacement scientist */
+				RS_AssignScientist(tech);
+			}
 			employee->buildingID = -1;
 			break;
 
@@ -537,7 +545,7 @@ qboolean E_RemoveEmployeeFromBuilding(employee_t *employee)
 		case EMPL_MEDIC:
 		case EMPL_WORKER:
 		case EMPL_ROBOT:
-			/*TODO: Check if they are linked to enywhere and remove them there. */
+			/*TODO: Check if they are linked to anywhere and remove them there. */
 			break;
 		default:
 			Com_DPrintf("E_RemoveEmployeeFromBuilding: Unhandled employee type: %i\n", chr->empl_type);

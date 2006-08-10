@@ -460,7 +460,7 @@ static void CL_ResearchSelectCmd(void)
   * @param[in] tech What technology you want to assign the scientist to.
   * @sa RS_AssignScientist_f
   */
-static void RS_AssignScientist(technology_t* tech)
+void RS_AssignScientist(technology_t* tech)
 {
 	building_t *building = NULL;
 	employee_t *employee = NULL;
@@ -541,8 +541,8 @@ static void RS_RemoveScientist_f(void)
 	if (researchList[num]->scientists >= 0) {
 		employee = E_GetAssingedEmployee(&gd.bases[researchList[num]->base_idx], EMPL_SCIENTIST);
 		if (employee) {
-			E_RemoveEmployeeFromBuilding(employee);
-			researchList[num]->scientists--; /* This should be moved to E_RemoveEmployeeFromBuilding i think */
+			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
+			researchList[num]->scientists--;
 		}
 	}
 
@@ -1513,4 +1513,29 @@ technology_t **RS_GetTechsByType(researchType_t type)
 	techList[j] = NULL;
 	Com_DPrintf("techlist with %i entries\n", j);
 	return techList;
+}
+
+/**
+ * @brief Searches for the technology that has teh most scientists assigned in a given base.
+ * @param[in] base_idx In what base the tech shoudl be researched.
+ * @sa E_RemoveEmployeeFromBuilding
+ */
+technology_t *RS_GetTechWithMostScientists( int base_idx )
+{
+	technology_t *tech = NULL;
+	technology_t *tech_temp = NULL;
+	int i = 0;
+	int max = 0;
+
+	for (i=0; i<gd.numTechnologies;i++) {
+		tech_temp = &gd.technologies[i];
+		if ( (tech_temp->statusResearch == RS_RUNNING) && (tech_temp->base_idx == base_idx) ) {
+			if (tech_temp->scientists > max) {
+				tech = tech_temp;
+				max = tech->scientists;
+			}
+		}
+	}
+	
+	return tech;
 }
