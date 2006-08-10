@@ -676,9 +676,48 @@ static void CL_BuildingAircraftList_f(void)
   * TODO: Use mis->pos to determine the position on the geoscape and get the nation
   * TODO: Use colors for nations
   */
-static void CL_HandleNationData(qboolean expires, actMis_t * mis)
-{
+static void CL_HandleNationData(qboolean expires, actMis_t * mis) 
+{ 
+/* TODO: please change formatting and whitespace to agree with coding guidlines
+   a discussion is pending about the nation and happiness flags */
+#if 0
+	int i; 
+	mission_t* mission=mis->def; 
+	char* nation_name=mission->nation; 
 
+	for (i=0; i<numNations; i++) 
+	{ 
+		nation_t* nation=&nations[i]; 
+		if (expires) 
+		{
+			if (!strcmp(nation->name, nation_name))
+			{  /* Strong negative reaction */
+				nation->happiness *= nation->alienFriendly/100; 
+			} 
+			else 
+			{  /* Minor negative reaction */
+				nation->happiness *= 1 - pow(1 - nation->alienFriendly/100, 5); 
+			} 
+		} 
+		else 
+		{ 
+			if (!strcmp(nation->name, nation_name)) 
+			{  /* Strong positive reaction */
+				nation->happiness /= 1 - nation->alienFriendly/100; 
+				nation->happiness += nation->alienFriendly/100 / 10; 
+			} 
+			else 
+			{  /* Minor positive reaction */
+				nation->happiness /= pow(1 - nation->alienFriendly/100, 0.2); 
+				nation->happiness += nation->alienFriendly/100 / 50; 
+			} 
+			if (nation->happiness > 1.0) 
+			{  /* Can't be more than 100% happy with you. */
+				nation->happiness = 1.0; 
+			} 
+		} 
+	}
+#endif
 }
 
 
@@ -784,14 +823,51 @@ static void CL_UpdateNationData(void)
 {
 	int i, j;
 	char message[1024];
+/* TODO:	char happiness_str[1024];*/
 	nation_t *nation;
 
 	for (i = 0; i < numNations; i++) {
+/* TODO:		int funding;*/
 		/* maybe we don't get fund of this nation */
 		if ( frand() <= NATION_PROBABILITY )
 			continue;
 		nation = &nations[i];
 		Com_sprintf(message, sizeof(message), _("Gained %i credits from nation %s"), nation->funding, _(nation->name));
+
+
+/* TODO: a new code to be discussed */ 
+#if 0
+		funding = nation->funding * nation->happiness;
+
+		/* TODO: Take into account translations with this message. */
+		if (nation->happiness < 0.015)
+			strcpy(happiness_str, "Giving up");
+		else if (nation->happiness < 0.025)
+			strcpy(happiness_str, "Furious");
+		else if (nation->happiness < 0.04)
+			strcpy(happiness_str, "Angry");
+		else if (nation->happiness < 0.06)
+			strcpy(happiness_str, "Mad");
+		else if (nation->happiness < 0.1)
+			strcpy(happiness_str, "Upset");
+		else if (nation->happiness < 0.15)
+			strcpy(happiness_str, "Tolerant");
+		else if (nation->happiness < 0.25)
+			strcpy(happiness_str, "Neutral");
+		else if (nation->happiness < 0.35)
+			strcpy(happiness_str, "Content");
+		else if (nation->happiness < 0.60)
+			strcpy(happiness_str, "Pleased");
+		else if (nation->happiness < 1.0)
+			strcpy(happiness_str, "Happy");
+		else
+			strcpy(happiness_str, "Exuberant");
+		
+		Com_sprintf(message, sizeof(message), _("Gained %i credits from nation %s (%s)"), funding, _(nation->name), happiness_str);
+
+		CL_UpdateCredits(ccs.credits + funding);
+#endif
+
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 		CL_UpdateCredits(ccs.credits + nation->funding);
 		/* maybe we don't get scientists of this nation */
@@ -1766,10 +1842,13 @@ void CL_GameAutoGo(void)
 	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int) difficulty->value, *(aircraft->teamSize));
 
 	/* give reward */
-	if (won)
+	if (won) {
 		CL_UpdateCredits(ccs.credits + mis->cr_win + (mis->cr_alien * mis->aliens));
-	else
+		CL_HandleNationData(0, selMis);
+	} else {
 		CL_UpdateCredits(ccs.credits + mis->cr_win - (mis->cr_civilian * mis->civilians));
+		CL_HandleNationData(0, selMis);
+	}
 
 	/* add recruits */
 	if (won && mis->recruits)
@@ -2043,6 +2122,7 @@ static void CL_GameResultsCmd(void)
 		return;
 	}
 	won = atoi(Cmd_Argv(1));
+	CL_HandleNationData(won, selMis);
 
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
