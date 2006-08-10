@@ -532,8 +532,15 @@ qboolean E_RemoveEmployeeFromBuilding(employee_t *employee)
 			/*TODO: get technology this scientist is researching in & remove him. */
 			employee->buildingID = -1;
 			break;
+
+		case EMPL_SOLDIER:
+		case EMPL_MEDIC:
+		case EMPL_WORKER:
+		case EMPL_ROBOT:
+			/*TODO: Check if they are linked to enywhere and remove them there. */
+			break;
 		default:
-			Com_DPrintf("E_AssignEmployee: Unhandled employee type: %i\n", chr->empl_type);
+			Com_DPrintf("E_RemoveEmployeeFromBuilding: Unhandled employee type: %i\n", chr->empl_type);
 			break;
 		}
 	}
