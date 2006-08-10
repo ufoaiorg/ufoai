@@ -498,7 +498,7 @@ void RS_AssignScientist(technology_t* tech)
 }
 
 /**
-  * @brief
+  * @brief Script function to add a scientist to  the technology entry in the research-list.
   * @sa RS_AssignScientist
   * @sa RS_RemoveScientist_f
   */
@@ -520,8 +520,7 @@ static void RS_AssignScientist_f(void)
 
 
 /**
-  * @brief
-  * @sa RS_RemoveScientist
+  * @brief Script function to remove a scientist from the technology entry in the research-list.
   * @sa RS_AssignScientist_f
   */
 static void RS_RemoveScientist_f(void)
@@ -538,7 +537,7 @@ static void RS_RemoveScientist_f(void)
 	if (num < 0 || num > researchListLength)
 		return;
 
-	if (researchList[num]->scientists >= 0) {
+	if (researchList[num]->scientists > 0) {
 		employee = E_GetAssingedEmployee(&gd.bases[researchList[num]->base_idx], EMPL_SCIENTIST);
 		if (employee) {
 			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
