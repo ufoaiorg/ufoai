@@ -611,12 +611,15 @@ void CL_UpdateHireVar(void)
 }
 
 /**
-  * @brief
-  *
-  * only for multiplayer when setting up a new team
+  * @brief only for multiplayer when setting up a new team
+  * @sa E_ResetEmployees
+  * @sa CL_CleanTempInventory
+  * @note We need baseCurrent to point to gd.bases[0] here
   */
 void CL_ResetTeamInBase(void)
 {
+	employee_t* employee;
+
 	if (ccs.singleplayer)
 		return;
 
@@ -628,6 +631,13 @@ void CL_ResetTeamInBase(void)
 
 	CL_CleanTempInventory();
 	baseCurrent->teamMask[0] = baseCurrent->hiredMask = baseCurrent->numOnTeam[0] = 0;
+	E_ResetEmployees();
+	while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->value) {
+		employee = E_CreateEmployee(EMPL_SOLDIER);
+		employee->hired = qtrue;
+		employee->baseIDHired = baseCurrent->idx;
+		Com_DPrintf("B_ClearBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
+	}
 }
 
 /**
@@ -987,19 +997,15 @@ void CL_LoadTeamMultiplayer(char *filename)
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
 	FILE *f;
-	char title[MAX_VAR];
-
-	CL_ResetTeamInBase();
-
-	/* return the base title */
-	Q_strncpyz(title, gd.bases[0].name, MAX_VAR);
-	B_ClearBase(&gd.bases[0]);
-	Q_strncpyz(gd.bases[0].name, title, MAX_VAR);
 
 	/* set base for multiplayer */
 	baseCurrent = &gd.bases[0];
 	gd.numBases = 1;
 
+	/* remove all employees and generate new ones */
+	CL_ResetTeamInBase();
+
+	/* now add a dropship where we can place our soldiers in */
 	CL_NewAircraft(baseCurrent, "craft_dropship");
 
 	/* open file */

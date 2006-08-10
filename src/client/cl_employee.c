@@ -397,6 +397,7 @@ employee_t* E_CreateEmployee(employeeType_t type)
 	}
 
 	employee = &gd.employees[type][gd.numEmployees[type]];
+	memset(employee, 0, sizeof(employee_t));
 
 	if (!employee)
 		return NULL;

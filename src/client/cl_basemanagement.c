@@ -960,22 +960,17 @@ building_t *B_GetLab(int base_idx)
 void B_ClearBase(base_t * base)
 {
 	int row, col, i;
-	employee_t* employee;
 
 	memset(base, 0, sizeof(base_t));
 
 	CL_ResetCharacters(base);
 
+	/* only go further if we have a active campaign */
+	if (!curCampaign)
+		return;
+
 	/* setup team */
-	if (!curCampaign) {
-		/* should be multiplayer */
-		while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->value) {
-			employee = E_CreateEmployee(EMPL_SOLDIER);
-			employee->hired = qtrue;
-			employee->baseIDHired = base->idx;
-			Com_DPrintf("B_ClearBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, base->idx);
-		}
-	} else if (!E_CountUnhired(base, EMPL_SOLDIER)) {
+	if (!E_CountUnhired(base, EMPL_SOLDIER)) {
 		/* should be multiplayer (campaignmode TODO) or singleplayer */
 		Com_DPrintf("B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
 		for (i = 0; i < curCampaign->soldiers; i++)

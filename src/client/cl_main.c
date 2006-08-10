@@ -1490,12 +1490,14 @@ void CL_Frame(int msec)
 	if (sv_maxclients->modified) {
 		if ((int) sv_maxclients->value > 1) {
 			ccs.singleplayer = qfalse;
+			curCampaign = NULL;
+			selMis = NULL;
 			baseCurrent = &gd.bases[0];
+			B_ClearBase(&gd.bases[0]);
 			Com_Printf("Changing to Multiplayer\n");
 			/* no campaign equipment but standard */
 			Cvar_Set("equip", "standard");
 			Cvar_Set("map_dropship", "craft_dropship");
-
 		} else {
 			ccs.singleplayer = qtrue;
 			Com_Printf("Changing to Singleplayer\n");
