@@ -631,7 +631,7 @@ void CL_RemoveActorFromTeamList(le_t * le)
 			}
 #ifdef DEBUG
 			if ( j == gd.numEmployees[EMPL_SOLDIER] )
-				Com_Printf("CL_RemoveActorFromTeamList: could not mask as dead - ucn: %i\n", baseCurrent->curTeam[i]->ucn);
+				Com_Printf("CL_RemoveActorFromTeamList: could not mask as dead - ucn: %i; team:%i.\n", baseCurrent->curTeam[i]->ucn, i);
 #endif
 			return;
 		}
