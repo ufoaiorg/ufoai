@@ -556,6 +556,8 @@ static void CL_SelectCmd(void)
 	Cbuf_AddText(va("%sselect%i\n", command, num));
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
+	Com_DPrintf("CL_SelectCmd: Command: '%s' - num: %i\n", command, num);
+
 	if (!Q_strncmp(command, "team", 4)) {
 		/* set info cvars */
 		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, num);
@@ -615,6 +617,8 @@ void CL_UpdateHireVar(void)
   * @sa E_ResetEmployees
   * @sa CL_CleanTempInventory
   * @note We need baseCurrent to point to gd.bases[0] here
+  * @note available via script command team_reset
+  * @note called when initializing the multiplayer menu (for init node and new team button)
   */
 void CL_ResetTeamInBase(void)
 {
@@ -726,7 +730,7 @@ static void CL_HireActorCmd(void)
 	if (!employee)
 		Sys_Error("CL_HireActorCmd: Could not get employee %i\n", num);
 
-	Com_Printf("CL_HireActorCmd: employee with idx %i selected\n", employee->idx);
+	Com_DPrintf("CL_HireActorCmd: employee with idx %i selected\n", employee->idx);
 	if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << employee->idx)) {
 		/* unhire */
 		Cbuf_AddText(va("listdel%i\n", num));
@@ -824,7 +828,7 @@ void CL_SaveTeam(char *filename)
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
 	char *name;
-	int res, i;
+	int res;
 
 	assert(baseCurrent);
 
@@ -844,10 +848,7 @@ void CL_SaveTeam(char *filename)
 	CL_SendTeamInfo(&sb, baseCurrent->idx, E_CountHired(baseCurrent, EMPL_SOLDIER));
 
 	/* store assignement */
-	/* get assignement */
-	MSG_WriteFormat(&sb, "bl", baseCurrent->numHired, baseCurrent->hiredMask);
-	for (i = 0; i < baseCurrent->numAircraftInBase; i++)
-		MSG_WriteFormat(&sb, "bl", baseCurrent->numOnTeam[i], baseCurrent->teamMask[i]);
+	MSG_WriteFormat(&sb, "bl", baseCurrent->numOnTeam[0], baseCurrent->teamMask[0]);
 
 	/* write data */
 	res = FS_WriteFile(buf, sb.cursize, filename);
@@ -972,9 +973,7 @@ void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 	}
 
 	/* get assignement */
-	MSG_ReadFormat(sb, "bl", &base->numHired, &base->hiredMask);
-	for (i = 0; i < base->numAircraftInBase; i++)
-		MSG_ReadFormat(sb, "bl", &base->numOnTeam[i], &base->teamMask[i]);
+	MSG_ReadFormat(sb, "bl", &base->numOnTeam[0], &base->teamMask[0]);
 
 	Com_DPrintf("Load team with %i members and %i slots\n", base->numHired, num);
 
