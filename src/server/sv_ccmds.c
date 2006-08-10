@@ -38,13 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 
-/*
-====================
-SV_SetMaster_f
-
-Specify a list of master servers
-====================
-*/
+/**
+ * @brief Specify a list of master servers
+ */
 void SV_SetMaster_f(void)
 {
 	int i, slot;
@@ -87,13 +83,9 @@ void SV_SetMaster_f(void)
 
 
 
-/*
-==================
-SV_SetPlayer
-
-Sets sv_client and sv_player to the player with idnum Cmd_Argv(1)
-==================
-*/
+/**
+ * @brief Sets sv_client and sv_player to the player with idnum Cmd_Argv(1)
+ */
 qboolean SV_SetPlayer(void)
 {
 	client_t *cl;
@@ -138,25 +130,19 @@ qboolean SV_SetPlayer(void)
 	return qfalse;
 }
 
-/*
-==================
-SV_DemoMap_f
-
-Puts the server in demo mode on a specific map/cinematic
-==================
-*/
+/**
+ * @brief Puts the server in demo mode on a specific map/cinematic
+ */
 void SV_DemoMap_f(void)
 {
 	SV_Map(qtrue, Cmd_Argv(1), qfalse);
 }
 
-/*
-==================
-SV_Map_f
-
-Goes directly to a given map
-==================
-*/
+/**
+ * @brief Goes directly to a given map
+ * @sa SV_InitGame
+ * @sa SV_SpawnServer
+ */
 void SV_Map_f(void)
 {
 	/* change */
@@ -174,13 +160,9 @@ void SV_Map_f(void)
 	SV_BroadcastCommand("reconnect\n");
 }
 
-/*
-==================
-SV_Kick_f
-
-Kick a user off of the server
-==================
-*/
+/**
+ * @brief Kick a user off of the server
+ */
 void SV_Kick_f(void)
 {
 	if (!svs.initialized) {
@@ -205,11 +187,9 @@ void SV_Kick_f(void)
 }
 
 
-/*
-================
-SV_Status_f
-================
-*/
+/**
+ * @brief
+ */
 void SV_Status_f(void)
 {
 	int i, j, l;
@@ -259,11 +239,9 @@ void SV_Status_f(void)
 	Com_Printf("\n");
 }
 
-/*
-==================
-SV_ConSay_f
-==================
-*/
+/**
+ * @brief
+ */
 void SV_ConSay_f(void)
 {
 	client_t *client;
@@ -292,24 +270,18 @@ void SV_ConSay_f(void)
 }
 
 
-/*
-==================
-SV_Heartbeat_f
-==================
-*/
+/**
+ * @brief
+ */
 void SV_Heartbeat_f(void)
 {
 	svs.last_heartbeat = -9999999;
 }
 
 
-/*
-===========
-SV_Serverinfo_f
-
-  Examine or change the serverinfo string
-===========
-*/
+/**
+ * @brief Examine or change the serverinfo string
+ */
 void SV_Serverinfo_f(void)
 {
 	Com_Printf("Server info settings:\n");
@@ -317,13 +289,9 @@ void SV_Serverinfo_f(void)
 }
 
 
-/*
-===========
-SV_DumpUser_f
-
-Examine all a users info strings
-===========
-*/
+/**
+ * @brief Examine all a users info strings
+ */
 void SV_DumpUser_f(void)
 {
 	if (Cmd_Argc() != 2) {
@@ -341,14 +309,10 @@ void SV_DumpUser_f(void)
 }
 
 
-/*
-==============
-SV_ServerRecord_f
-
-Begins server demo recording.  Every entity and every message will be
-recorded, but no playerinfo will be stored.  Primarily for demo merging.
-==============
-*/
+/**
+ * @brief Begins server demo recording.  Every entity and every message will be
+ * recorded, but no playerinfo will be stored.  Primarily for demo merging.
+ */
 void SV_ServerRecord_f(void)
 {
 	char name[MAX_OSPATH];
@@ -420,13 +384,9 @@ void SV_ServerRecord_f(void)
 }
 
 
-/*
-==============
-SV_ServerStop_f
-
-Ends server demo recording
-==============
-*/
+/**
+ * @brief Ends server demo recording
+ */
 void SV_ServerStop_f(void)
 {
 	if (!svs.demofile) {
@@ -439,14 +399,9 @@ void SV_ServerStop_f(void)
 }
 
 
-/*
-===============
-SV_KillServer_f
-
-Kick everyone off, possibly in preparation for a new game
-
-===============
-*/
+/**
+ * @brief Kick everyone off, possibly in preparation for a new game
+ */
 void SV_KillServer_f(void)
 {
 	if (!svs.initialized)
@@ -455,13 +410,9 @@ void SV_KillServer_f(void)
 	NET_Config(qfalse);			/* close network sockets */
 }
 
-/*
-===============
-SV_ServerCommand_f
-
-Let the game dll handle a command
-===============
-*/
+/**
+ * @brief Let the game dll handle a command
+ */
 void SV_ServerCommand_f(void)
 {
 	if (!ge) {
@@ -474,11 +425,9 @@ void SV_ServerCommand_f(void)
 
 /*=========================================================== */
 
-/*
-================
-SV_ListMaps_f
-================
-*/
+/**
+ * @brief List all valid maps
+ */
 void SV_ListMaps_f(void)
 {
 	int i;
@@ -491,11 +440,9 @@ void SV_ListMaps_f(void)
 	}
 }
 
-/*
-==================
-SV_InitOperatorCommands
-==================
-*/
+/**
+ * @brief
+ */
 void SV_InitOperatorCommands(void)
 {
 	Cmd_AddCommand("heartbeat", SV_Heartbeat_f);

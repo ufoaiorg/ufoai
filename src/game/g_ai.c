@@ -290,9 +290,13 @@ static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 
 
 /**
- * @brief
+ * @brief The think function for the ai controlled aliens
+ * @param[in] player
+ * @param[in] ent
  * @sa AI_FighterCalcGuete
  * @sa AI_CivilianCalcGuete
+ * @sa G_ClientMove
+ * @sa G_ClientShoot
  */
 #define AI_MAX_DIST	30
 void AI_ActorThink(player_t * player, edict_t * ent)
@@ -463,6 +467,9 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
 		|| Com_TryAddToInventory(&ent->i, item, gi.csi->idBackpack);
 }
 
+#define AKIMBO_CHANCE		0.2
+#define HAS_WEAPON_BONUS	1.0
+#define HAS_WEAPON_MALUS	-0.5
 
 /**
  * @brief Fully equip one AI player
@@ -481,11 +488,6 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
  * (of course this would result in random number of initial weapons),
  * though there is already CL_CheckInventory in cl_team.c.
  */
-
-#define AKIMBO_CHANCE		0.2
-#define HAS_WEAPON_BONUS	1.0
-#define HAS_WEAPON_MALUS	-0.5
-
 void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 {
 	int weapon = -1; /* this variable is never used before being set */

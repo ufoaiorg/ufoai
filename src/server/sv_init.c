@@ -37,12 +37,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 server_static_t svs;			/* persistant server info */
 server_t sv;					/* local server */
 
-/*
-================
-SV_FindIndex
-
-================
-*/
+/**
+ * @brief
+ */
 static int SV_FindIndex(char *name, int start, int max, qboolean create)
 {
 	int i;
@@ -74,16 +71,25 @@ static int SV_FindIndex(char *name, int start, int max, qboolean create)
 }
 
 
+/**
+ * @brief
+ */
 int SV_ModelIndex(char *name)
 {
 	return SV_FindIndex(name, CS_MODELS, MAX_MODELS, qtrue);
 }
 
+/**
+ * @brief
+ */
 int SV_SoundIndex(char *name)
 {
 	return SV_FindIndex(name, CS_SOUNDS, MAX_SOUNDS, qtrue);
 }
 
+/**
+ * @brief
+ */
 int SV_ImageIndex(char *name)
 {
 	return SV_FindIndex(name, CS_IMAGES, MAX_IMAGES, qtrue);
@@ -842,7 +848,7 @@ void SV_InitGame(void)
 
 
 /**
- * @brief
+ * @brief Loads the map
  * @note the full syntax is:
  * @note map [*]<map>$<startspot>+<nextserver>
  * command from the console or progs.

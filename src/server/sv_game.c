@@ -447,7 +447,11 @@ void SV_ShutdownGameProgs(void)
 	ge = NULL;
 }
 
+/**
+ * @brief
+ */
 void SCR_DebugGraph(float value, int color);
+
 /**
   * @brief Init the game subsystem for a new map
   */
