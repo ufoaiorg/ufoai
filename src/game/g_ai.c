@@ -479,7 +479,7 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
 
 void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 {
-	int i, weapon, max_price, prev_price;
+	int i, weapon = 0, max_price, prev_price;
 	int has_weapon = 0, primary_tachyon = 0;
 	objDef_t obj;
 
