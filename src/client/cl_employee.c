@@ -339,11 +339,11 @@ employee_t * E_GetUnassingedEmployee(base_t* base, employeeType_t type)
 
 /**
  * @brief Hires an employee
- * @note set the hired flag to true
  * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
- * @param[in] idx Which employee id (in global employee array)
- * TODO: Check for quarter space
+ * @param[in] idx Which employee id (in global employee array) See E_GetUnhiredEmployee for usage.
+ * @todo Check for quarter space
+ * @sa E_UnhireEmployee
  */
 qboolean E_HireEmployee(base_t* base, employeeType_t type, int idx)
 {
@@ -360,20 +360,24 @@ qboolean E_HireEmployee(base_t* base, employeeType_t type, int idx)
 }
 
 /**
- * @brief Hires an employee
- * @note set the hired flag to true
+ * @brief Fires an employee.
  * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
- * @param[in] idx Which employee id (in global employee array)
+ * @param[in] idx Which employee id (in global employee array) See E_GetHiredEmployee for usage.
+ * @sa E_HireEmployee
  */
 qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int idx)
 {
 	employee_t* employee;
 	employee = E_GetHiredEmployee(base, type, idx);
 	if (employee) {
+		if (employee->buildingID) {
+			/* TODO: Remove employee from building (and tech) and assign new one if available. */
+			E_RemoveEmployee(employee);
+			/* E_AssignEmployee(employee, building_rom_unhired_employee); */
+		}
 		employee->hired = qfalse;
 		employee->baseIDHired = -1;
-		employee->buildingID = -1;
 		employee->inv.c[csi.idFloor] = NULL;
 		Com_DestroyInventory(&employee->inv);
 		return qtrue;
@@ -449,14 +453,9 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 	if (!employee)
 		return qfalse;
 
-	if (employee->buildingID) {
-/*		if (E_DeleteEmployeeFromBuilding(employee, employee->quarters))
-			employee->quarters = -1;*/
-	}
-
-	employee->baseIDHired = -1;
-	employee->hired = qfalse;
-
+	/* Fire the employee. This will also remove him from buildings&work. */
+	E_UnhireEmployee(&gd.bases[employee->baseIDHired], type, employee->idx);
+	
 	/* remove the employee from the global list */
 	for (i = 0; i < gd.numEmployees[type] - 1; i++) {
 		if (gd.employees[type][i].idx == employee->idx) {
@@ -515,35 +514,33 @@ qboolean E_AssignEmployee(building_t *building, employeeType_t type)
 }
 #endif
 
-#if 0
-/************************
-TODO: Will later on be used in e.g E_UnhireEmployee and  RS_RemoveScientist_f
-Code does not yet reflect that though.
-*********************************/
 /**
  * @brief Remove one employee from building.
  *
  * @todo Add check for base vs. employee_type and abort if they do not match.
- * @sa E_AssignEmployee
- * @param[in] building Which building to remove the employee from. Can be any type of building that has employees in it. If quarters are given the employee will be removed from every other building as well.
- *
+ * @param[in] employee What employee to remove from its building.
  * @return Returns true if removing was possible/sane otherwise false.
+ * @sa E_AssignEmployee
  */
-qboolean E_RemoveEmployee(base_t* base, employeeType_t type, int idx)
+qboolean E_RemoveEmployee(employee_t *employee)
 {
-	int i;
-
-	for (i=0; i<gd.numEmployees[type];i++)
-		if (i==num && gd.employees[type][i].baseIDHired == base->idx) {
-
-			/* TODO */
+	character_t *chr = NULL;
+	if (employee) {
+		chr = &employee->chr;
+		switch (chr->empl_type) {
+		case EMPL_SCIENTIST:
+			/*TODO: get technology this scientist is researching in & remove him. */
+			employee->buildingID = -1;
+			break;
+		default:
+			Com_DPrintf("E_AssignEmployee: Unhandled employee type: %i\n", chr->empl_type);
 			break;
 		}
-
-	/* TODO */
+	}
 	return qfalse;
+
 }
-#endif
+
 /**
  * @brief Counts hired employees of a given type in a given base
  *
