@@ -120,7 +120,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 	chr->ucn = gd.nextUCN++;
 
 	Com_DPrintf("Generate character for team: '%s' (type: %i)\n", team, employeeType);
-	
+
 	/* Set the actor size. */
 	switch (type) {
 	case ET_ACTOR:
@@ -163,7 +163,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 		Sys_Error("Unknown employee type\n");
 		break;
 	}
-	
+
 	/* Backlink from chr to employee struct. */
 	chr->empl_type = employeeType;
 	chr->empl_idx = employee->idx;
@@ -951,17 +951,13 @@ void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 	MSG_ReadByte(sb);
 	num = MSG_ReadByte(sb);
 	Com_DPrintf("load %i teammembers\n", num);
+	E_ResetEmployees();
 	for (i=0; i<num; i++) {
-		/* FIXME: Is he already hired here?? */
-		chr = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
-		if (!chr) {
-			Com_DPrintf("create new employee\n", num);
-			/* New employee */
-			employee = E_CreateEmployee(EMPL_SOLDIER);
-			employee->hired = qtrue;
-			employee->baseIDHired = base->idx;
-			chr = &employee->chr;
-		}
+		/* New employee */
+		employee = E_CreateEmployee(EMPL_SOLDIER);
+		employee->hired = qtrue;
+		employee->baseIDHired = base->idx;
+		chr = &employee->chr;
 		CL_LoadTeamMember(sb, chr);
 	}
 
@@ -1003,9 +999,6 @@ void CL_LoadTeamMultiplayer(char *filename)
 	/* set base for multiplayer */
 	baseCurrent = &gd.bases[0];
 	gd.numBases = 1;
-
-	/* FIXME: Check whether this is needed */
-/*	baseCurrent->hiredMask = 0;*/
 
 	CL_NewAircraft(baseCurrent, "craft_dropship");
 

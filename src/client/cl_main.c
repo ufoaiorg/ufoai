@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "cl_global.h"
 
 cvar_t *freelook;
 
@@ -1489,6 +1490,7 @@ void CL_Frame(int msec)
 	if (sv_maxclients->modified) {
 		if ((int) sv_maxclients->value > 1) {
 			ccs.singleplayer = qfalse;
+			baseCurrent = &gd.bases[0];
 			Com_Printf("Changing to Multiplayer\n");
 			/* no campaign equipment but standard */
 			Cvar_Set("equip", "standard");
