@@ -433,7 +433,7 @@ employee_t* E_CreateEmployee(employeeType_t type)
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 {
 	int i;
-	qboolean found;
+	qboolean found = qfalse;
 
 	if (!employee)
 		return qfalse;
