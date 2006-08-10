@@ -159,12 +159,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 		chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
 		break;
 	default:
-		/* Default values. */
-		chr->rank = -1;
-		/* Create attributes. */
-		Com_CharGenAbilitySkills(chr, 15, 50, 15, 50);
-		/* Get model and name. */
-		chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
+		Sys_Error("Unknown employee type\n");
 		break;
 	}
 }
