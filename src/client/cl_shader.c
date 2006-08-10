@@ -41,7 +41,7 @@ int r_numshaders;
 /* r_shaders is external and is linked to cl.refdef.shaders in cl_view.c V_RenderView */
 shader_t r_shaders[MAX_SHADERS];
 
-value_t shader_values[] = {
+static value_t shader_values[] = {
 	{"filename",	V_STRING,	offsetof( shader_t, filename)},
 	{"frag",	V_BOOL,	offsetof( shader_t, frag)},
 	{"vertex",	V_BOOL,	offsetof( shader_t, vertex)},

@@ -1380,7 +1380,7 @@ void CL_ParseResults(sizebuf_t * buf)
 
 /* ======= RANKS & MEDALS =========*/
 
-value_t rankValues[] =
+static value_t rankValues[] =
 {
 	{ "name",	V_TRANSLATION_STRING,	offsetof( rank_t, name ) },
 	{ "image",	V_STRING,				offsetof( rank_t, image ) },
@@ -1444,7 +1444,7 @@ void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 	}
 }
 
-value_t ugvValues[] =
+static value_t ugvValues[] =
 {
 	{ "tu",	V_INT,			offsetof( ugv_t, tu ) },
 	{ "weapon",	V_STRING,	offsetof( ugv_t, weapon ) },

@@ -3042,7 +3042,7 @@ font_t fonts[MAX_FONTS];
 font_t *fontBig;
 font_t *fontSmall;
 
-value_t fontValues[] = {
+static value_t fontValues[] = {
 	{"font", V_TRANSLATION2_STRING, offsetof(font_t, path)},
 	{"size", V_INT, offsetof(font_t, size)},
 	{"style", V_STRING, offsetof(font_t, style)},
@@ -3163,7 +3163,7 @@ void CL_InitFonts(void)
 
 /* ===================== USE_SDL_TTF stuff end ====================== */
 
-value_t tutValues[] = {
+static value_t tutValues[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(tutorial_t, name)}
 	,
 	{"sequence", V_STRING, offsetof(tutorial_t, sequence)}

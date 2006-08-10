@@ -2087,7 +2087,7 @@ static void CL_GameResultsCmd(void)
 /* =========================================================== */
 
 
-value_t mission_vals[] = {
+static value_t mission_vals[] = {
 	{"location", V_TRANSLATION_STRING, offsetof(mission_t, location)}
 	,
 	{"type", V_TRANSLATION_STRING, offsetof(mission_t, type)}
@@ -2140,7 +2140,7 @@ value_t mission_vals[] = {
 
 #define		MAX_MISSIONTEXTS	MAX_MISSIONS*128
 static char missionTexts[MAX_MISSIONTEXTS];
-char *mtp = missionTexts;
+static char *mtp = missionTexts;
 
 /**
  * @brief Adds a mission to current stageSet
@@ -2261,7 +2261,7 @@ void CL_ParseMission(char *name, char **text)
 /* =========================================================== */
 
 
-value_t stageset_vals[] = {
+static value_t stageset_vals[] = {
 	{"needed", V_STRING, offsetof(stageSet_t, needed)}
 	,
 	{"delay", V_DATE, offsetof(stageSet_t, delay)}
@@ -2289,7 +2289,7 @@ value_t stageset_vals[] = {
 /**
   * @brief
   */
-void CL_ParseStageSet(char *name, char **text)
+static void CL_ParseStageSet(char *name, char **text)
 {
 	char *errhead = "CL_ParseStageSet: unexptected end of file (stageset ";
 	stageSet_t *sp;
@@ -2428,7 +2428,7 @@ void CL_ParseStage(char *name, char **text)
 
 /* =========================================================== */
 
-value_t campaign_vals[] = {
+static value_t campaign_vals[] = {
 	{"team", V_STRING, offsetof(campaign_t, team)}
 	,
 	{"soldiers", V_INT, offsetof(campaign_t, soldiers)}
@@ -2534,7 +2534,7 @@ void CL_ParseCampaign(char *id, char **text)
 
 /* =========================================================== */
 
-value_t nation_vals[] = {
+static value_t nation_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(nation_t, name)}
 	,
 	{"color", V_COLOR, offsetof(nation_t, color)}
