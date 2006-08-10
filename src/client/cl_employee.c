@@ -234,7 +234,7 @@ employee_t* E_GetUnhiredEmployee(employeeType_t type, int idx)
  * @brief Return a given hired employee pointer in the given base of a given type
  * @param[in] base Which base the employee should be hired in.
  * @param[in] type Which employee type to search for.
- * @param[in] idx Which employee id (in global employee array). Use -1 to return the first "hired" employee.
+ * @param[in] idx Which employee id (in global employee array). Use -1, -2, etc.. to return the first/ second, etc... "hired" employee.
  * @return employee_t pointer or NULL
  * @sa E_GetUnhiredEmployee
  * @sa E_HireEmployee
@@ -243,13 +243,18 @@ employee_t* E_GetUnhiredEmployee(employeeType_t type, int idx)
 employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int idx)
 {
 	int i = 0;
+	int j = -1;	/* The number of found hired employees. Ignore the minus. */
 	employee_t *employee = NULL;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
 		if (employee->baseIDHired == base->idx) {
-			if ((i == idx) || (idx < 0)) {
+			if (i == idx)
 				return employee;
+			if (idx < 0) {
+				if (idx == j)
+					return employee;
+				j--;
 			}
 		} else {
 			continue;
