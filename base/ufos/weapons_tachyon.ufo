@@ -109,7 +109,7 @@ item tachyonrifle_ammo
 		projtl	tachyonBigBeam
 		impact	tachyonBigImpact
 		hitbody tachyonBigImpact
-		firesnd	weapons/tachyonbig.wav
+		firesnd	weapons/tachyon_rifle_explosive.wav
 		speed	0
 		spread	"4 4"
 		crouch	0.8
@@ -129,7 +129,7 @@ item tachyonrifle_ammo
 		projtl	tachyonMiniBeam
 		impact	tachyonImpact
 		hitbody tachyonImpact
-		firesnd	weapons/tachyon.wav
+		firesnd	weapons/tachyonbig.wav
 		speed	0
 		spread	"3 3"
 		crouch	0.6
@@ -240,8 +240,8 @@ item rpg_tachyon_ammo
 		impact	tachyonBigImpact
 		hitbody	tachyonBigImpact
 		firesnd	weapons/rpg.wav
-		impsnd	weapons/tachyonbig.wav
-		bodysnd	weapons/tachyonbig.wav
+		impsnd	weapons/tachyon_beam_rocket.wav
+		bodysnd	weapons/tachyon_beam_rocket.wav
 		speed	250
 		spread	"5 5"
 		crouch	0.8
@@ -262,8 +262,8 @@ item rpg_tachyon_ammo
 		impact	tachyonBigImpact
 		hitbody	tachyonBigImpact
 		firesnd	weapons/rpg.wav
-		impsnd	weapons/tachyonbig.wav
-		bodysnd	weapons/tachyonbig.wav
+		impsnd	weapons/tachyon_beam_rocket.wav
+		bodysnd	weapons/tachyon_beam_rocket.wav
 		speed	250
 		spread	"2.5 2.5"
 		crouch	0.6

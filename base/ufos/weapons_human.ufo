@@ -536,8 +536,8 @@ item rpg_incendiary_ammo
 		impact	fire_explosion
 		hitbody fire_explosion
 		firesnd	weapons/rpg.wav
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+		impsnd	weapons/incendiary_rocket.wav
+		bodysnd	weapons/incendiary_rocket.wav
 		speed	250
 		spread	"5 5"
 		crouch	0.8
@@ -558,8 +558,8 @@ item rpg_incendiary_ammo
 		impact	fire_explosion
 		hitbody fire_explosion
 		firesnd	weapons/rpg.wav
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+		impsnd	weapons/incendiary_rocket.wav
+		bodysnd	weapons/incendiary_rocket.wav
 		speed	250
 		spread	"2.5 2.5"
 		crouch	0.6
@@ -668,6 +668,7 @@ item grenl_ammo
 		projtl	grenl_ammo
 		impact	frag_explosion
 		hitbody frag_explosion
+// code fix needed		firesnd	weapons/grenade_launcher.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
@@ -693,6 +694,7 @@ item grenl_ammo
 		projtl	grenl_ammo
 		impact	frag_explosion
 		hitbody frag_explosion
+// code fix needed		firesnd	weapons/grenade_launcher.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
@@ -752,7 +754,7 @@ item bolterrifle_ammo
 		projtl  bullet
 		impact  bulletImpact
 		hitbody blood
-		firesnd weapons/tachyonsniper.wav
+		firesnd weapons/bolter.wav
 		speed   0
 		spread  "3.5 3.5"
 		crouch  0.8
@@ -771,7 +773,7 @@ item bolterrifle_ammo
 		projtl  bullet
 		impact  bulletImpact
 		hitbody blood
-		firesnd weapons/tachyonsniper.wav
+		firesnd weapons/bolter2.wav
 		speed   0
 		spread  "7 11"
 		crouch  0.5
@@ -863,7 +865,7 @@ item kerrblade
 		projtl	null
 		impact	null
 		hitbody blood
-		firesnd	misc/klonk03.wav
+		firesnd	weapons/kerrblade.wav
 		speed	0
 		range	1.5
 		shots	1
@@ -878,8 +880,9 @@ item kerrblade
 		projtl	kerrblade
 		impact	null
 		hitbody blood
-		impsnd	misc/klonk03.wav
-		bodysnd misc/klonk01.wav
+		firesnd	misc/plopp01.wav
+		impsnd	misc/klonk02.wav
+		bodysnd weapons/kerrblade.wav
 		speed	320
 		range	10
 		spread	"5 5"

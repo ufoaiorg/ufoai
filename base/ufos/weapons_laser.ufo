@@ -201,7 +201,7 @@ item heavylaser_ammo
 		projtl	laserOverload
 		impact	laserImpact
 		hitbody	laserImpact
-		firesnd	weapons/tachyonbig.wav
+		firesnd	weapons/heavy_laser.wav
 		speed	0
 		spread	"3.5 3.5"
 		crouch	0.7

@@ -131,7 +131,7 @@ item plasrifle_ammo
 		projtl	plasmaContinuous
 		impact	plasmaImpact
 		hitbody	plasmaImpact
-		firesnd	weapons/plasma_c.wav
+		firesnd	weapons/plasma_big.wav
 		sndonce true
 		speed	0
 		spread	"9 5"
@@ -172,7 +172,7 @@ item plasblade
 		projtl	null
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
-		firesnd	misc/klonk03.wav
+		firesnd	weapons/plasma_blade.wav
 		speed	0
 		range	1.5
 		shots	1
@@ -188,7 +188,7 @@ item plasblade
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
 		impsnd	misc/klonk03.wav
-		bodysnd misc/klonk01.wav
+		bodysnd weapons/plasma_blade.wav
 		speed	320
 		range	10
 		spread	"7 7"
@@ -241,8 +241,8 @@ item plasblaster_ammo
 		impact	plasmaBigImpact
 		hitbody	plasmaBigImpact
 		firesnd	weapons/plasma_s.wav
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+		impsnd	weapons/plasma_grenade.wav
+		bodysnd	weapons/plasma_grenade.wav
 		gravity	true
 		spread	"4 4"
 		range	17
@@ -262,7 +262,7 @@ item plasblaster_ammo
 		projtl	plasmaContinuous
 		impact	plasmaImpact
 		hitbody	plasmaImpact
-		firesnd	weapons/plasma_c.wav
+		firesnd	weapons/plasma_big.wav
 		sndonce true
 		speed	0
 		spread	"11 5"
@@ -300,8 +300,9 @@ item grenl_plasma_ammo
 		projtl	grenl_plasma_ammo
 		impact	plasmaBigExplosion
 		hitbody plasmaBigExplosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+// code fix needed		firesnd	weapons/grenade_launcher.wav
+		impsnd	weapons/plasma_grenade.wav
+		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -325,8 +326,9 @@ item grenl_plasma_ammo
 		projtl	grenl_plasma_ammo
 		impact	plasmaBigExplosion
 		hitbody plasmaBigExplosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+// code fix needed		firesnd	weapons/grenade_launcher.wav
+		impsnd	weapons/plasma_grenade.wav
+		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1

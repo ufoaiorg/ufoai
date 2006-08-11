@@ -111,8 +111,8 @@ item fraggrenade
 		projtl	fraggren
 		impact	frag_explosion
 		hitbody frag_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+		impsnd	misc/metalbreak.wav
+		bodysnd	misc/metalbreak.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -135,8 +135,8 @@ item fraggrenade
 		projtl	fraggren
 		impact	frag_explosion
 		hitbody frag_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+		impsnd	misc/metalbreak.wav
+		bodysnd	misc/metalbreak.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -209,8 +209,8 @@ item stungrenade
 		projtl	stungren
 		impact	coronaImpact
 		hitbody coronaImpact
-		impsnd	misc/metalbreak.wav
-		bodysnd	misc/metalbreak.wav
+		impsnd	weapons/stun_grenade.wav
+		bodysnd	weapons/stun_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -233,8 +233,8 @@ item stungrenade
 		projtl	stungren
 		impact	coronaImpact
 		hitbody coronaImpact
-		impsnd	misc/metalbreak.wav
-		bodysnd	misc/metalbreak.wav
+		impsnd	weapons/stun_grenade.wav
+		bodysnd	weapons/stun_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -278,8 +278,8 @@ item alienincgrenade
 		projtl	incgren
 		impact	fire_explosion
 		hitbody fire_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+		impsnd	weapons/incendiary_grenade.wav
+		bodysnd	weapons/incendiary_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -302,8 +302,8 @@ item alienincgrenade
 		projtl	incgren
 		impact	fire_explosion
 		hitbody fire_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+		impsnd	weapons/incendiary_grenade.wav
+		bodysnd	weapons/incendiary_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -346,8 +346,8 @@ item plasmagrenade
 		projtl	plasmagren
 		impact	plasmaBigExplosion
 		hitbody plasmaBigExplosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+		impsnd	weapons/plasma_grenade.wav
+		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -370,8 +370,8 @@ item plasmagrenade
 		projtl	plasmagren
 		impact	plasmaBigExplosion
 		hitbody plasmaBigExplosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+		impsnd	weapons/plasma_grenade.wav
+		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
