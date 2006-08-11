@@ -464,22 +464,24 @@ void RS_AssignScientist(technology_t* tech)
 {
 	building_t *building = NULL;
 	employee_t *employee = NULL;
+	base_t *base = NULL;
 
-	if  ((tech->base_idx != baseCurrent->idx) && (tech->base_idx >= 0)) {
-		Com_DPrintf("RS_AssignScientist: Tech not researched in current base.\n");
-		return;
+	if  (tech->base_idx >= 0) {
+		base = &gd.bases[tech->base_idx];
+	} else {
+		base = baseCurrent;
 	}
-	
-	employee = E_GetUnassingedEmployee(baseCurrent, EMPL_SCIENTIST);
 
+	employee = E_GetUnassingedEmployee(base, EMPL_SCIENTIST);
+	
 	if (!employee) {
 		/* No scientists are free in this base. */
 		return;
 	}
 
 	if (tech->statusResearchable) {
-		/* Get a free lab from the currently active base. */
-		building = B_GetLab(baseCurrent->idx);
+		/* Get a free lab from the base. */
+		building = B_GetLab(base->idx);
 		if (building) {
 			/* Assign the tech to a lab&base. */
 			tech->scientists++;
