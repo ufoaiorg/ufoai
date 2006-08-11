@@ -134,7 +134,7 @@ building building_teamroom
 building building_workshop
 {
 	name		"_Workshop"
-	image		base/workshop
+	image		base/workshop2
 	fixcosts	230000
 	depends		building_powerplant // construction plans uploaded over net
 	build_time	7
@@ -142,10 +142,19 @@ building building_workshop
 	map_name	"workshop"
 	pedia		rs_building_workshop
 	firstbase	true
-	pos		    "4 0"
+	pos		    "3 1"
 	more_than_one	true
 	type	    workshop
 	max_employees	10
+	needs		building_workshop2
+}
+
+building building_workshop2
+{
+	name		"_Workshop"
+	image		base/workshop1
+	pedia		rs_building_workshop
+	visible		false
 }
 
 building building_hangar
