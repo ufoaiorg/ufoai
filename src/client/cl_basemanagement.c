@@ -67,6 +67,7 @@ static value_t valid_vars[] = {
 	{"fixcosts", V_FLOAT, offsetof(building_t, fixCosts)},	/**< Cost to build. */
 	{"varcosts", V_FLOAT, offsetof(building_t, varCosts)},	/**< Costs that will come up by using the building. */
 	{"build_time", V_INT, offsetof(building_t, buildTime)},	/**< How many days it takes to construct the building. */
+	{"max_employees", V_INT, offsetof(building_t, maxEmployees)},	/**< How many employees to hire on construction in the first base. */
 
 	/*event handler functions */
 	{"onconstruct", V_STRING, offsetof(building_t, onConstruct)}, /**< Event handler. */
@@ -158,6 +159,53 @@ extern void B_BuildingStatus(void)
 }
 
 /**
+ * @brief  Hires some employees of appropriate type for a building
+ * @param building  in which building
+ * @param num  how many employees, if -1, hire building->maxEmployees
+ *
+ * @sa B_SetUpBase
+ */
+void B_HireForBuilding (building_t * building, int num)
+{
+	employeeType_t employeeType;
+
+	assert(baseCurrent);
+
+	if (num < 0) 
+		num = building->maxEmployees;
+
+	if (num) {
+		switch (building->buildingType) {
+		case B_WORKSHOP:
+			employeeType = EMPL_WORKER;
+			break;
+		case B_LAB:
+			employeeType = EMPL_SCIENTIST;
+			break;
+		case B_HOSPITAL:
+			employeeType = EMPL_MEDIC;
+			break;
+		case B_HANGAR: /* the Dropship Hangar */
+			employeeType = EMPL_SOLDIER;
+			break;
+		case B_QUARTERS:
+			return;
+		case B_MISC:
+			Com_DPrintf("B_HireForBuilding: Misc bulding type: %s with employees: %i.\n", building->buildingType, num);
+			return;
+		default:
+			Com_DPrintf("B_HireForBuilding: Unknown bulding type: %s.\n", building->buildingType);
+			return;
+		}
+		for (;num--;)
+			if (!E_HireEmployee(baseCurrent, employeeType, -1)) {
+				Com_DPrintf("B_HireForBuilding: Hiring %i employee(s) of type %i failed.\n", num, employeeType);
+				return;
+			}
+	}
+}
+
+/**
  * @brief Setup new base?
  */
 void B_SetUpBase(void)
@@ -187,23 +235,10 @@ void B_SetUpBase(void)
 			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			building->buildingStatus = B_STATUS_WORKING;
-#if 0
-			if ((building->employees > 0) && gd.buildingTypes[i].firstbase) {
-				switch (building->buildingType) {
-				case B_LAB:
-					employeeType = EMPL_SCIENTIST;
-					break;
-				case B_QUARTERS:
-					employeeType = EMPL_SOLDIER;
-					break;
-				default:
-					break;
-				}
-				for (;building->employees_firstbase--;)
-					if (!E_HireEmployee(baseCurrent, employeeType, 0))
-						Com_Printf("B_SetUpBase: Hiring %i employee(s) of type %i failed.\n", building->employees_firstbase, employeeType);
-			}
-#endif
+
+			if (cl_start_employees->value)
+				B_HireForBuilding(building, -1);
+
 			/*
 			   if ( building->moreThanOne
 			   && building->howManyOfThisType < BASE_SIZE*BASE_SIZE )
@@ -784,11 +819,11 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 				} else if (!Q_strncmp(token, "workshop", MAX_VAR)) {
 					building->buildingType = B_WORKSHOP;
 				}
-			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
+/*			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
-/*				employees_in_building = &building->assigned_employees;
+				employees_in_building = &building->assigned_employees;
 
 				if (*token)
 					employees_in_building->maxEmployees = atoi(token);
@@ -797,13 +832,16 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 					Com_Printf("Set max employees to %i for building '%s'\n", MAX_EMPLOYEES_IN_BUILDING, building->id);
 				}*/
 			} else
-			/* no linking yet */
-			if (!Q_strncmp(token, "depends", MAX_VAR)) {
-				token = COM_EParse(text, errhead, id);
-				if (!*text)
-					return;
+				/* no linking yet */
+				if (!Q_strncmp(token, "depends", MAX_VAR)) {
+					token = COM_EParse(text, errhead, id);
+					if (!*text)
+						return;
 #if 0
-			} else if (!Q_strncmp(token, "employees", MAX_VAR)) {
+/* I think hiring _and_ _creating_ employees for the first base is too much
+   just hire those that are already there... */
+			} else
+				if (!Q_strncmp(token, "employees", MAX_VAR)) {
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
@@ -825,7 +863,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 					building->employees = employeesAmount;
 				}
 #endif
-			} else
+				} else {
 				for (edp = valid_vars; edp->string; edp++)
 					if (!Q_strncmp(token, edp->string, sizeof(edp->string))) {
 						/* found a definition */
@@ -836,6 +874,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 						Com_ParseValue(building, token, edp->type, edp->ofs);
 						break;
 					}
+				}
 
 			if (!edp->string)
 				Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, id);

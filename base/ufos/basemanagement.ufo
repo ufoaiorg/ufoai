@@ -8,8 +8,8 @@
 // 0: xxx xxx xxx xxx Int
 // 1: xxx xxx xxx Drp-shp
 // 2: xxx xxx xxx xxx Ent
-// 3: Rdr xxx xxx xxx Str
-// 4: Wrk Lab Pwr Cmd Qrt
+// 3: Lab Cmd xxx xxx Str
+// 4: Wrk-shp Rdr Qrt Pwr 
 //
 //
 // Common envisioned base types:
@@ -98,7 +98,7 @@ building building_powerplant
 	map_name	"powerplant"
 	pedia		rs_building_powerplant
 	firstbase	true
-	pos		    "4 2"
+	pos		    "4 4"
 	more_than_one	false // are we sure? this is boring now...
 }
 
@@ -113,7 +113,7 @@ building building_quarters
 	map_name	"quarters"
 	pedia		rs_building_quarters
 	firstbase	true
-	pos		    "4 4"
+	pos		    "4 3"
 	more_than_one	true
 	type     	quarters
 	max_employees	20
@@ -142,7 +142,7 @@ building building_workshop
 	map_name	"workshop"
 	pedia		rs_building_workshop
 	firstbase	true
-	pos		    "3 1"
+	pos		    "4 0"
 	more_than_one	true
 	type	    workshop
 	max_employees	10
@@ -172,6 +172,7 @@ building building_hangar
 	more_than_one	true
 	type	    hangar
 	needs		building_hangar2
+	max_employees	8
 }
 
 building building_hangar2
@@ -193,7 +194,7 @@ building building_radar
 	map_name	"radar"
 	pedia		rs_building_radar
 	firstbase	true
-	pos		    "3 0"
+	pos		    "4 2"
 	more_than_one	true
 	onconstruct	"inc_sensor 30"
 	ondestroy	"dec_sensor 30"
@@ -210,7 +211,7 @@ building building_command
 	map_name	"commando"
 	pedia		rs_building_command
 	firstbase	true
-	pos		    "4 3"
+	pos		    "3 1"
 }
 
 building building_intercept
@@ -228,6 +229,7 @@ building building_intercept
 	more_than_one	true
 	onconstruct	"aircraft_new craft_interceptor"
 //	ondestroy	???
+	type        hangar 
 }
 
 building building_lab
@@ -241,7 +243,7 @@ building building_lab
 	map_name	"lab"
 	pedia		rs_building_lab
 	firstbase	true
-	pos		    "4 1"
+	pos		    "3 0"
 	more_than_one	true
 	type    	lab
 	max_employees	10
@@ -274,7 +276,7 @@ building building_ufo_hangar
 	map_name	"ufohangar"
 	pedia		rs_building_ufo_hangar
 	more_than_one	true
-    type    	hangar // ??? bad name, or a bug?
+    type    	hangar
 }
 
 base main
