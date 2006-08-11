@@ -528,46 +528,89 @@ menu options_sound
 
 menu options_game
 {
-	// ===================
-	// START FROM SCRATCH
-	// ===================
-	string scratch_str
+	// =====================
+	// START WITH EMPLOYEES
+	// =====================
+	string start_employees_str
 	{
-		string	"_Start from scratch:"
+		string	"_Start with employees:"
+		pos		"500 105"
+	}
+	string start_employees_value
+	{
+		string	"*cvar mn_start_employees"
+		pos		"840 105"
+		align	ur
+	}
+	pic start_employees_dec
+	{
+		image	menu/buttons_small
+		pos		"868 109"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		tooltip	"_No employees hired at campaign start"
+		click
+		{
+			cmd "mn_modify cl_start_employees -1 0 1;"
+			cmd "mn_translate cl_start_employees mn_start_employees 0:No,1:Yes;"
+		}
+	}
+	pic start_employees_inc
+	{
+		image	menu/buttons_small
+		pos		"884 109"
+		texl	"16 0"
+		texh	"32 16" 
+		mousefx	true
+		tooltip	"_Employees already hired at campaign start"
+		click
+		{
+			cmd "mn_modify cl_start_employees +1 0 1;"
+			cmd "mn_translate cl_start_employees mn_start_employees 0:No,1:Yes;"
+		}
+	}
+
+	// =====================
+	// START WITH BUILDINGS
+	// =====================
+	string start_buildings_str
+	{
+		string	"_Start with buildings:"
 		pos		"500 130"
 	}
-	string scratch_value
+	string start_buildings_value
 	{
-		string	"*cvar mn_start_scratch"
+		string	"*cvar mn_start_buildings"
 		pos		"840 130"
 		align	ur
 	}
-	pic scratch_dec
+	pic start_buildings_dec
 	{
 		image	menu/buttons_small
 		pos		"868 134"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		tooltip	"_Non-empty base at campaign start"
+		tooltip	"_No buildings in the initial base"
 		click
 		{
-			cmd "mn_modify cl_start_scratch -1 0 1;"
-			cmd "mn_translate cl_start_scratch mn_start_scratch 0:No,1:Yes;"
+			cmd "mn_modify cl_start_buildings -1 0 1;"
+			cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
 		}
 	}
-	pic scratch_inc
+	pic start_buildings_inc
 	{
 		image	menu/buttons_small
 		pos		"884 134"
 		texl	"16 0"
 		texh	"32 16" 
 		mousefx	true
-		tooltip	"_Empty base at campaign start"
+		tooltip	"_Buildings already built in the initial base"
 		click
 		{
-			cmd "mn_modify cl_start_scratch +1 0 1;"
-			cmd "mn_translate cl_start_scratch mn_start_scratch 0:No,1:Yes;"
+			cmd "mn_modify cl_start_buildings +1 0 1;"
+			cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
 		}
 	}
 
@@ -808,7 +851,8 @@ menu options_game
 
 	func init
 	{
-		cmd "mn_translate cl_start_scratch mn_start_scratch 0:No,1:Yes;"
+		cmd "mn_translate cl_start_employees mn_start_employees 0:No,1:Yes;"
+		cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
 		cmd "mn_translate cl_centerview mn_centerview 0:No,1:Yes;"
 		cmd "mn_translate cl_show_tooltips mn_show_tooltips 0:No,1:Yes;"
 		cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes;"
