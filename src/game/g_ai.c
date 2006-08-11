@@ -442,11 +442,13 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
 			/* load ammo */
 			item.a = gi.csi->ods[weapon].ammo;
 			item.m = ammo;
+
+			/* pack some more ammo */
 			num =
 				equip[ammo] / equip[weapon]
 				+ (equip[ammo] % equip[weapon]
 				   > rand() % equip[weapon]);
-			num = num > 3 ? 3 : num;
+			num = (num > 3) ? 3 : num;
 			while (--num) {
 				item_t mun = {0,0,0};
 
@@ -468,8 +470,7 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
 }
 
 #define AKIMBO_CHANCE		0.2
-#define HAS_WEAPON_BONUS	1.0
-#define HAS_WEAPON_MALUS	-0.5
+#define WEAPONLESS_BONUS	3.0
 
 /**
  * @brief Fully equip one AI player
@@ -544,17 +545,18 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 				}
 			}
 		}
-		if ( !(max_price == primary_tachyon ? INT_MAX : 0) ) {
+		if ( !(max_price == (primary_tachyon ? INT_MAX : 0)) ) {
 			if (has_weapon) {
 				/* already got primary weapon */
-				if ( HAS_WEAPON_MALUS + equip[weapon] >= 8 * frand() ) {
+				if ( equip[weapon] >= 8 * frand() ) {
 					if ( G_PackAmmoAndWeapon(ent, weapon, equip) ) {
 						max_price = 0; /* then one sidearm is enough */
 					}
 				}
 			} else {
 				/* no primary weapon */
-				if ( HAS_WEAPON_BONUS + equip[weapon] >= 8 * frand() ) {
+				if ( equip[weapon] 
+					 >= 8 * frand() - WEAPONLESS_BONUS * frand() ) {
 					has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
 					if (has_weapon) {
 						/* try to get the second akimbo pistol */
@@ -567,7 +569,7 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 				}
 			}
 		}
-	} while ( !(max_price == primary_tachyon ? INT_MAX : 0) );
+	} while ( !(max_price == (primary_tachyon ? INT_MAX : 0)) );
 
 	/* misc items and secondary weapons without reload */
 	max_price = INT_MAX;
@@ -588,12 +590,7 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 		if (max_price) {
 			int num;
 
-			/* still no weapon even at this point? */
-			num =
-				equip[weapon] / 8
-				+ (((has_weapon ? HAS_WEAPON_MALUS : 2 * HAS_WEAPON_BONUS)
-					+ equip[weapon] % 8)
-				   >= 8 * frand());
+			num = equip[weapon] / 8 + (equip[weapon] % 8 >= 8 * frand());
 			while (num--)
 				has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
 		}
@@ -616,7 +613,7 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 		if (max_price)
 			has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
 	}
-	/* if still no weapon, something is broken, or no blade in equip */
+	/* if still no weapon, something is broken, or no blades in equip */
 	if (!has_weapon)
 		Com_DPrintf("G_EquipAIPlayer: cannot add any weapon to AI; no secondary weapon without reload detected for equipment '%s'.\n", gi.cvar_string("ai_equipment"));
 }
