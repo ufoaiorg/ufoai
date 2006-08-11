@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-08-11 17:42+0200\n"
+"POT-Creation-Date: 2006-08-11 23:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.ufo.po (UFO Alien Invasion)  #-#-#-#-#\n"
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: http://www.sourceforge.net/projects/ufoai/\n"
-"POT-Creation-Date: 2006-08-11 17:42+0200\n"
+"POT-Creation-Date: 2006-08-11 23:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,94 +81,94 @@ msgid "Storage"
 msgstr ""
 
 #: ../base/ufos/basemanagement.ufo:92
-msgid "Power Plant"
-msgstr ""
-
-#: ../base/ufos/basemanagement.ufo:107
-msgid "Living Quarters"
-msgstr ""
-
-#: ../base/ufos/basemanagement.ufo:124
 msgid "Team Room"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:136
+#: ../base/ufos/basemanagement.ufo:104
+msgid "Power Plant"
+msgstr ""
+
+#: ../base/ufos/basemanagement.ufo:119
+msgid "Living Quarters"
+msgstr ""
+
+#: ../base/ufos/basemanagement.ufo:136 ../base/ufos/basemanagement.ufo:154
 msgid "Workshop"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:153 ../base/ufos/basemanagement.ufo:170
+#: ../base/ufos/basemanagement.ufo:162 ../base/ufos/basemanagement.ufo:180
 msgid "Dropship Hangar"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:178
+#: ../base/ufos/basemanagement.ufo:188
 msgid "Radar"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:195
+#: ../base/ufos/basemanagement.ufo:205
 msgid "Command Center"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:209
+#: ../base/ufos/basemanagement.ufo:219
 msgid "Interceptor Hangar"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:226
+#: ../base/ufos/basemanagement.ufo:237
 msgid "Laboratory"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:243
+#: ../base/ufos/basemanagement.ufo:254
 msgid "Hospital"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:259
+#: ../base/ufos/basemanagement.ufo:270
 msgid "UFO Hangar"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:273
+#: ../base/ufos/basemanagement.ufo:284
 msgid "Home"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:274
+#: ../base/ufos/basemanagement.ufo:285
 msgid "Base #2"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:275
+#: ../base/ufos/basemanagement.ufo:286
 msgid "Base #3"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:276
+#: ../base/ufos/basemanagement.ufo:287
 msgid "Base #4"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:277
+#: ../base/ufos/basemanagement.ufo:288
 msgid "Base #5"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:278
+#: ../base/ufos/basemanagement.ufo:289
 msgid "Base #6"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:279
+#: ../base/ufos/basemanagement.ufo:290
 msgid "Base #7"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:280
+#: ../base/ufos/basemanagement.ufo:291
 msgid "Base #8"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:286
+#: ../base/ufos/basemanagement.ufo:297
 msgid "Dropship"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:300
+#: ../base/ufos/basemanagement.ufo:311
 msgid "Interceptor"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:317
+#: ../base/ufos/basemanagement.ufo:328
 msgid "UFO"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:331
+#: ../base/ufos/basemanagement.ufo:342
 msgid "UFO - Destroyer class"
 msgstr ""
 
@@ -2972,32 +2972,32 @@ msgstr ""
 msgid "Your round started!\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:135
+#: client/cl_basemanagement.c:136
 msgid "Not set"
 msgstr ""
 
-#: client/cl_basemanagement.c:141
+#: client/cl_basemanagement.c:142
 #, c-format
 msgid "Already %i in base"
 msgstr ""
 
-#: client/cl_basemanagement.c:147
+#: client/cl_basemanagement.c:148
 msgid "Construction finished"
 msgstr ""
 
-#: client/cl_basemanagement.c:150
+#: client/cl_basemanagement.c:151
 msgid "Working 100%"
 msgstr ""
 
-#: client/cl_basemanagement.c:153
+#: client/cl_basemanagement.c:154
 msgid "Down"
 msgstr ""
 
-#: client/cl_basemanagement.c:356
+#: client/cl_basemanagement.c:393
 msgid "Not enough credits to build this\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:356 client/cl_basemanagement.c:1513
+#: client/cl_basemanagement.c:393 client/cl_basemanagement.c:1556
 #: client/cl_campaign.c:363 client/cl_campaign.c:755 client/cl_campaign.c:866
 #: client/cl_campaign.c:1825 client/cl_campaign.c:1864
 #: client/cl_campaign.c:1866 client/cl_research.c:494 client/cl_research.c:588
@@ -3006,49 +3006,49 @@ msgstr ""
 msgid "Notice"
 msgstr ""
 
-#: client/cl_basemanagement.c:484
+#: client/cl_basemanagement.c:521
 #, c-format
 msgid "Costs:\t%1.0f c\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:487
+#: client/cl_basemanagement.c:524
 #, c-format
 msgid "%i Day(s) to build\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:490
+#: client/cl_basemanagement.c:527
 #, c-format
 msgid "Running Costs:\t%1.0f c\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1127
+#: client/cl_basemanagement.c:1168
 #, c-format
 msgid "%i days left"
 msgstr ""
 
-#: client/cl_basemanagement.c:1290
+#: client/cl_basemanagement.c:1331
 #, c-format
 msgid "A new base has been built: %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:1291 client/cl_basemanagement.c:1297
+#: client/cl_basemanagement.c:1332 client/cl_basemanagement.c:1338
 msgid "Base built"
 msgstr ""
 
-#: client/cl_basemanagement.c:1296
+#: client/cl_basemanagement.c:1337
 msgid "Not enough credits to set up a new base."
 msgstr ""
 
-#: client/cl_basemanagement.c:1513
+#: client/cl_basemanagement.c:1556
 msgid "You've reached the base limit."
 msgstr ""
 
-#: client/cl_basemanagement.c:1602
+#: client/cl_basemanagement.c:1645
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:1603
+#: client/cl_basemanagement.c:1646
 msgid "Building finished"
 msgstr ""
 
@@ -3282,15 +3282,15 @@ msgstr ""
 msgid "Settings doesn't make sense"
 msgstr ""
 
-#: client/cl_parse.c:662
+#: client/cl_parse.c:666
 msgid "Alien spotted!\n"
 msgstr ""
 
-#: client/cl_parse.c:664
+#: client/cl_parse.c:668
 msgid "Enemy spotted!\n"
 msgstr ""
 
-#: client/cl_parse.c:666
+#: client/cl_parse.c:670
 msgid "Civilian spotted!\n"
 msgstr ""
 
