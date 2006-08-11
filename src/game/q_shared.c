@@ -1477,7 +1477,7 @@ char *va(char *format, ...)
 {
 	va_list argptr;
 	/* in case va is called by nested functions */
-	static char string[2][2048];
+	static char string[2][4096];
 	static int index = 0;
 	char *buf;
 
@@ -1547,6 +1547,8 @@ skipwhite:
 			if (len < MAX_TOKEN_CHARS) {
 				com_token[len] = c;
 				len++;
+			} else {
+				Com_Printf("Com_Parse len exceeded: %i/MAX_TOKEN_CHARS\n", len);
 			}
 		}
 	}
