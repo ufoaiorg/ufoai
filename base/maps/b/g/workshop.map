@@ -4966,4 +4966,5 @@
 "classname" "misc_model"
 "origin" "849 359 5"
 "model" "models/objects/base/minicrane/minicrane.md2"
+"spawnflags" "3"
 }
