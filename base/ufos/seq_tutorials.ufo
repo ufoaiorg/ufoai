@@ -8,15 +8,88 @@ sequence tut_gameplay
 {
 	2dobj gameplay_welcome
 	{
-		text	"<Todo>"
-		pos	"512 370"
+		text	"_Some notes about the gameplay"
+		pos	"512 0"
 		align	uc
-		color	"1 1 1 1"
+		color	"0 0.6 0 1"
+		speed	"0 10"
 		font	f_big
 	}
 	wait 4
 	2dobj gameplay_welcome { speed	"0 0" }
 	wait 2
+
+	2dobj gameplay_base_txt
+	{
+		text	"_Set up a base"
+		pos	"512 100"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 2
+	2dobj gameplay_hire_txt
+	{
+		text	"_Hire your employees"
+		pos	"512 120"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 2
+	2dobj gameplay_equip_txt
+	{
+		text	"_Equip your aircraft with soldiers and weapons"
+		pos	"512 140"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 3
+	2dobj gameplay_geoscape_txt
+	{
+		text	"_Speed up time on geoscape until first alien mission appears"
+		pos	"512 160"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 3
+	2dobj gameplay_send_aircraft_txt
+	{
+		text	"_Select the mission (doubleclick) and choose aircraft from list"
+		pos	"512 180"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 4
+	2dobj gameplay_enter_mission_txt
+	{
+		text	"_Hit start or auto mission button to fight the aliens"
+		pos	"512 200"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 4
+	2dobj gameplay_tac_mission_txt
+	{
+		text	"_For further instruction watch the tactical mission tutorial"
+		pos	"512 250"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+
+	wait 6
+	rem gameplay_tac_mission_txt
+	rem gameplay_enter_mission_txt
+	rem gameplay_send_aircraft_txt
+	rem gameplay_geoscape_txt
+	rem gameplay_equip_txt
+	rem gameplay_hire_txt
+	rem gameplay_base_txt
 	rem gameplay_welcome
 }
 
