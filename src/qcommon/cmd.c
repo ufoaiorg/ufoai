@@ -45,43 +45,33 @@ static int alias_count;				/* for detecting runaway loops */
 
 /*============================================================================= */
 
-/*
-============
-Cmd_Open_f
-
-Reopens the command buffer for writing
-============
-*/
+/**
+ * @brief Reopens the command buffer for writing
+ * @sa Cmd_Close_f
+ */
 void Cmd_Open_f(void)
 {
 	Com_DPrintf("Cmd_Close_f: command buffer opened again\n");
 	cmd_closed = qfalse;
 }
 
-/*
-============
-Cmd_Close_f
-
-Will no longer add any command to command buffer
-...until cmd_close is qfalse again
-Does not affect EXEC_NOW
-============
-*/
+/**
+ * @brief Will no longer add any command to command buffer
+ * ...until cmd_close is qfalse again
+ * Does not affect EXEC_NOW
+ * @sa Cmd_Open_f
+ */
 void Cmd_Close_f(void)
 {
 	Com_DPrintf("Cmd_Close_f: command buffer closed\n");
 	cmd_closed = qtrue;
 }
 
-/*
-============
-Cmd_Wait_f
-
-Causes execution of the remainder of the command buffer to be delayed until
-next frame.  This allows commands like:
-bind g "impulse 5 ; +attack ; wait ; -attack ; impulse 2"
-============
-*/
+/**
+ * @brief Causes execution of the remainder of the command buffer to be delayed until
+ * next frame.  This allows commands like:
+ * bind g "impulse 5 ; +attack ; wait ; -attack ; impulse 2"
+ */
 void Cmd_Wait_f(void)
 {
 	cmd_wait = qtrue;
@@ -101,23 +91,17 @@ static byte cmd_text_buf[8192];
 
 static char defer_text_buf[8192];
 
-/*
-============
-Cbuf_Init
-============
-*/
+/**
+ * @brief
+ */
 void Cbuf_Init(void)
 {
 	SZ_Init(&cmd_text, cmd_text_buf, sizeof(cmd_text_buf));
 }
 
-/*
-============
-Cbuf_AddText
-
-Adds command text at the end of the buffer
-============
-*/
+/**
+ * @brief Adds command text at the end of the buffer
+ */
 void Cbuf_AddText(char *text)
 {
 	int l;
@@ -140,15 +124,11 @@ void Cbuf_AddText(char *text)
 }
 
 
-/*
-============
-Cbuf_InsertText
-
-Adds command text immediately after the current command
-Adds a \n to the text
-FIXME: actually change the command buffer to do less copying
-============
-*/
+/**
+ * @brief Adds command text immediately after the current command
+ * @note Adds a \n to the text
+ * FIXME: actually change the command buffer to do less copying
+ */
 void Cbuf_InsertText(char *text)
 {
 	char *temp;
@@ -174,11 +154,9 @@ void Cbuf_InsertText(char *text)
 }
 
 
-/*
-============
-Cbuf_CopyToDefer
-============
-*/
+/**
+ * @brief
+ */
 void Cbuf_CopyToDefer(void)
 {
 	memcpy(defer_text_buf, cmd_text_buf, cmd_text.cursize);
@@ -186,11 +164,9 @@ void Cbuf_CopyToDefer(void)
 	cmd_text.cursize = 0;
 }
 
-/*
-============
-Cbuf_InsertFromDefer
-============
-*/
+/**
+ * @brief
+ */
 void Cbuf_InsertFromDefer(void)
 {
 	Cbuf_InsertText(defer_text_buf);
@@ -198,11 +174,9 @@ void Cbuf_InsertFromDefer(void)
 }
 
 
-/*
-============
-Cbuf_ExecuteText
-============
-*/
+/**
+ * @brief
+ */
 void Cbuf_ExecuteText(int exec_when, char *text)
 {
 	switch (exec_when) {
@@ -220,11 +194,10 @@ void Cbuf_ExecuteText(int exec_when, char *text)
 	}
 }
 
-/*
-============
-Cbuf_Execute
-============
-*/
+/**
+ * @brief
+ * @sa Cmd_ExecuteString
+ */
 void Cbuf_Execute(void)
 {
 	int i;
@@ -282,19 +255,13 @@ void Cbuf_Execute(void)
 }
 
 
-/*
-===============
-Cbuf_AddEarlyCommands
-
-Adds command line parameters as script statements
-Commands lead with a +, and continue until another +
-
-Set commands are added early, so they are guaranteed to be set before
-the client and server initialize for the first time.
-
-Other commands are added late, after all initialization is complete.
-===============
-*/
+/**
+ * @brief Adds command line parameters as script statements
+ * Commands lead with a +, and continue until another +
+ * Set commands are added early, so they are guaranteed to be set before
+ * the client and server initialize for the first time.
+ * Other commands are added late, after all initialization is complete.
+ */
 void Cbuf_AddEarlyCommands(qboolean clear)
 {
 	int i;
@@ -314,18 +281,11 @@ void Cbuf_AddEarlyCommands(qboolean clear)
 	}
 }
 
-/*
-=================
-Cbuf_AddLateCommands
-
-Adds command line parameters as script statements
-Commands lead with a + and continue until another + or -
-quake +vid_ref gl +map amlev1
-
-Returns true if any late commands were added, which
-will keep the demoloop from immediately starting
-=================
-*/
+/**
+ * @brief Adds command line parameters as script statements
+ * @note Commands lead with a + and continue until another + or -
+ * @Return true if any late commands were added, which will keep the demoloop from immediately starting
+ */
 qboolean Cbuf_AddLateCommands(void)
 {
 	int i, j;
@@ -388,12 +348,9 @@ SCRIPT COMMANDS
 ==============================================================================
 */
 
-
-/*
-===============
-Cmd_Exec_f
-===============
-*/
+/**
+ * @brief
+ */
 void Cmd_Exec_f(void)
 {
 	char *f, *f2;
@@ -423,13 +380,9 @@ void Cmd_Exec_f(void)
 }
 
 
-/*
-===============
-Cmd_Echo_f
-
-Just prints the rest of the line to the console
-===============
-*/
+/**
+ * @brief Just prints the rest of the line to the console
+ */
 void Cmd_Echo_f(void)
 {
 	int i;
@@ -439,13 +392,9 @@ void Cmd_Echo_f(void)
 	Com_Printf("\n");
 }
 
-/*
-===============
-Cmd_Alias_f
-
-Creates a new command that executes a command string (possibly ; seperated)
-===============
-*/
+/**
+ * @brief Creates a new command that executes a command string (possibly ; seperated)
+ */
 void Cmd_Alias_f(void)
 {
 	cmdalias_t *a;
@@ -515,21 +464,22 @@ static char cmd_args[MAX_STRING_CHARS];
 
 static cmd_function_t *cmd_functions;	/* possible commands to execute */
 
-/*
-============
-Cmd_Argc
-============
-*/
+/**
+ * @brief
+ * @return the number of arguments
+ * @sa Cmd_Argv
+ */
 int Cmd_Argc(void)
 {
 	return cmd_argc;
 }
 
-/*
-============
-Cmd_Argv
-============
-*/
+/**
+ * @brief Returns a given argument
+ * @param[in] arg The argument at position arg in cmd_argv
+ * @return the argument from cmd_argv
+ * @sa Cmd_Argc
+ */
 char *Cmd_Argv(int arg)
 {
 	if ((unsigned) arg >= cmd_argc)
@@ -537,24 +487,19 @@ char *Cmd_Argv(int arg)
 	return cmd_argv[arg];
 }
 
-/*
-============
-Cmd_Args
-
-Returns a single string containing argv(1) to argv(argc()-1)
-============
-*/
+/**
+ * @brief Returns a single string containing argv(1) to argv(argc()-1)
+ */
 char *Cmd_Args(void)
 {
 	return cmd_args;
 }
 
 
-/*
-======================
-Cmd_MacroExpandString
-======================
-*/
+/**
+ * @brief
+ * @sa Cmd_TokenizeString
+ */
 char *Cmd_MacroExpandString(char *text)
 {
 	int i, j, count, len;
@@ -616,14 +561,11 @@ char *Cmd_MacroExpandString(char *text)
 }
 
 
-/*
-============
-Cmd_TokenizeString
-
-Parses the given string into command line tokens.
-$Cvars will be expanded unless they are in a quoted token
-============
-*/
+/**
+ * @brief Parses the given string into command line tokens.
+ * @note $Cvars will be expanded unless they are in a quoted token
+ * @sa Cmd_MacroExpandString
+ */
 void Cmd_TokenizeString(char *text, qboolean macroExpand)
 {
 	int i;
@@ -691,11 +633,12 @@ void Cmd_TokenizeString(char *text, qboolean macroExpand)
 }
 
 
-/*
-============
-Cmd_AddCommand
-============
-*/
+/**
+ * @brief Add a new command to the script interface
+ * @param[in] cmd_name The name the command is available via script interface
+ * @param[in] function The function pointer
+ * @sa Cmd_RemoveCommand
+ */
 void Cmd_AddCommand(char *cmd_name, xcommand_t function)
 {
 	cmd_function_t *cmd;
@@ -721,11 +664,11 @@ void Cmd_AddCommand(char *cmd_name, xcommand_t function)
 	cmd_functions = cmd;
 }
 
-/*
-============
-Cmd_RemoveCommand
-============
-*/
+/**
+ * @brief Removes a command from script interface
+ * @param[in] cmd_name The script interface function name to remove
+ * @sa Cmd_AddCommand
+ */
 void Cmd_RemoveCommand(char *cmd_name)
 {
 	cmd_function_t *cmd, **back;
@@ -746,11 +689,10 @@ void Cmd_RemoveCommand(char *cmd_name)
 	}
 }
 
-/*
-============
-Cmd_Exists
-============
-*/
+/**
+ * @brief Checks whether a function exists already
+ * @param[in] cmd_name The script interface function name to search for
+ */
 qboolean Cmd_Exists(char *cmd_name)
 {
 	cmd_function_t *cmd;
@@ -816,18 +758,18 @@ char *Cmd_CompleteCommand(char *partial)
 }
 
 
-/*
-============
-Cmd_ExecuteString
-
-A complete command line has been parsed, so try to execute it
-FIXME: lookupnoadd the token to speed search?
-============
-*/
+/**
+ * @brief A complete command line has been parsed, so try to execute it
+ * FIXME: lookupnoadd the token to speed search?
+ */
 void Cmd_ExecuteString(char *text)
 {
 	cmd_function_t *cmd;
 	cmdalias_t *a;
+
+#ifdef DEBUG
+	Com_DPrintf("ExecuteString: '%s'\n", text);
+#endif
 
 	Cmd_TokenizeString(text, qtrue);
 
@@ -867,11 +809,9 @@ void Cmd_ExecuteString(char *text)
 	Cmd_ForwardToServer();
 }
 
-/*
-============
-Cmd_List_f
-============
-*/
+/**
+ * @brief List all available script interface functions
+ */
 void Cmd_List_f(void)
 {
 	cmd_function_t *cmd;
@@ -896,11 +836,9 @@ void Cmd_List_f(void)
 	Com_Printf("%i commands\n", i);
 }
 
-/*
-============
-Cmd_Init
-============
-*/
+/**
+ * @brief
+ */
 void Cmd_Init(void)
 {
 	/* register our commands */
