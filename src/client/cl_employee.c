@@ -624,33 +624,35 @@ void E_EmployeeHire_f (void)
 	if (!baseCurrent)
 		return;
 
-	/* check syntax */
+	/* Check syntax. */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: employee_hire <num>\n");
 		return;
 	}
 	num = atoi(Cmd_Argv(1));
 
-	/* some sanity checks */
+	/* Some sanity checks. */
 	if (employeeCategory >= MAX_EMPL && employeeCategory < EMPL_SOLDIER )
 		return;
 
 	if (num >= employeesInCurrentList || num < 0)
 		return;
 
-	/* already hired in another base */
+	/* Already hired in another base. */
+	/* TODO: Should hired employees in another base be listed here at all? */
 	if (gd.employees[employeeCategory][num].hired
 	 && gd.employees[employeeCategory][num].baseIDHired != baseCurrent->idx)
 	 	return;
 
 	if (gd.employees[employeeCategory][num].hired) {
-		gd.employees[employeeCategory][num].hired = qfalse;
-		gd.employees[employeeCategory][num].baseIDHired = -1;
-		gd.employees[employeeCategory][num].buildingID = -1;
+		if (!E_UnhireEmployee(&gd.bases[gd.employees[employeeCategory][num].baseIDHired], employeeCategory, num)) {
+			/* TODO: message - Couldn't fire employee. */
+		}
 		Cbuf_AddText(va("employeedel%i\n", num));
 	} else {
-		gd.employees[employeeCategory][num].hired = qtrue;
-		gd.employees[employeeCategory][num].baseIDHired = baseCurrent->idx;
+		if (!E_HireEmployee(baseCurrent, employeeCategory, num)) {
+			/* TODO: message - Couldn't hire employee. */
+		}
 		Cbuf_AddText(va("employeeadd%i\n", num));
 	}
 	Cbuf_AddText(va("employee_select %i\n", num));
@@ -663,7 +665,7 @@ static void E_EmployeeSelect_f(void)
 {
 	int num;
 
-	/* check syntax */
+	/* Check syntax. */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: employee_select <num>\n");
 		return;
