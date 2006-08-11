@@ -651,13 +651,16 @@ static void RS_ResearchStop(void)
 void RS_UpdateData(void)
 {
 	char name[MAX_VAR];
-	int i, j, available;
+	int i, j;
+	int available[MAX_BASES];
 	technology_t *tech = NULL;
 
 	/* Make everything the same (predefined in the ufo-file) color. */
 	Cbuf_AddText("research_clear\n");
 
-	available = E_CountUnassinged(baseCurrent, EMPL_SCIENTIST);
+	for (i=0; i < gd.numBases; i++) {
+		available[i] = E_CountUnassinged(&gd.bases[i], EMPL_SCIENTIST);
+	}
 
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
@@ -677,12 +680,12 @@ void RS_UpdateData(void)
 		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
-			/* Maximal available scientists in the base the tech is reseearched. */
 			if ((tech->base_idx == baseCurrent->idx) || (tech->base_idx < 0) ) {
-				Cvar_SetValue(va("mn_researchavailable%i", j), available);
+				/* Maximal available scientists in the base the tech is reseearched. */
+				Cvar_SetValue(va("mn_researchavailable%i", j), available[baseCurrent->idx]);
 			} else {
-				/* TODO: Display available scientists of other base here. */
-				Cvar_SetValue(va("mn_researchavailable%i", j), 0);
+				/* Display available scientists of other base here. */
+				Cvar_SetValue(va("mn_researchavailable%i", j), available[tech->base_idx]);
 			}
 			/* TODO: Free space in all labs in this base. */
 			/* Cvar_SetValue(va("mn_researchmax%i", j), available); */
