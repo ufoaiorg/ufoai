@@ -154,7 +154,7 @@ building building_workshop2
 	name		"_Workshop"
 	image		base/workshop1
 	pedia		rs_building_workshop
-	visible		false
+	visible		false // no 'needs' field here!
 }
 
 building building_hangar
@@ -180,7 +180,7 @@ building building_hangar2
 	name		"_Dropship Hangar"
 	image		base/drop1
 	pedia		rs_building_hangar
-	visible		false
+	visible		false // no 'needs' field here!
 }
 
 building building_radar

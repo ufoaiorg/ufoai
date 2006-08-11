@@ -1092,7 +1092,7 @@ tech rs_building_teamroom
 	description	"_b_teamroom_txt"
 	up_chapter	buildings
 
-	requires	rs_building_quarters
+	requires	rs_building_powerplant
 	provides	building_teamroom
 	time	0
 	researched	true

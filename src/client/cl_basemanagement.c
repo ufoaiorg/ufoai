@@ -410,7 +410,7 @@ void B_SetBuildingByClick(int row, int col)
 
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
 		if (baseCurrent->map[row][col] < 0) {
-			if (*baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible)
+			if (*baseCurrent->buildingCurrent->needs)
 				secondBuildingPart = B_GetBuildingType(baseCurrent->buildingCurrent->needs);
 			if (secondBuildingPart) {
 				if (col + 1 == BASE_SIZE) {
@@ -889,7 +889,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 		if (tech_link) {
 			building->tech = tech_link->idx;
 		} else {
-			if (!*building->needs)
+			if (building->visible)
 				/* TODO: are the techs already parsed? */
 				Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", id);
 		}
