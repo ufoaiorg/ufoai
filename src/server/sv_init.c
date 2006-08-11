@@ -708,6 +708,7 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
  * @brief Change the server to a new map, taking all connected clients along with it.
  * @sa SV_AssembleMap
  * @sa CM_LoadMap
+ * @sa Com_SetServerState
  */
 void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qboolean attractloop, qboolean loadgame)
 {
@@ -750,9 +751,6 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 	}
 
 	sv.time = 1000;
-
-	Q_strncpyz(sv.name, server, MAX_QPATH);
-	Q_strncpyz(sv.configstrings[CS_NAME], server, MAX_TOKEN_CHARS);
 
 	if (serverstate == ss_game) {
 		char *map, *pos;
