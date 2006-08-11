@@ -1372,9 +1372,11 @@ void B_BaseAttack(void)
  * @brief Builds a base map for tactical combat.
  * @sa SV_AssembleMap
  * @sa B_BaseAttack
- * @note Do we need day and night maps here, too?
- * @todo Search a empty field and add a alien craft there.
- * @todo We need to get rid of the tunnels to nivana.
+ * @note Do we need day and night maps here, too? Sure!
+ * @todo Search a empty field and add a alien craft there, also add alien
+ * spawn points around the craft, also some trees, etc. for their cover
+ * @todo Add soldier spawn points, the best place is quarters.
+ * @todo We need to get rid of the tunnels to nirvana.
  */
 void B_AssembleMap(void)
 {
@@ -1434,7 +1436,7 @@ void B_AssembleMap(void)
 				Q_strcat(maps, baseMapPart, sizeof(maps));
 				Q_strcat(maps, " ", sizeof(maps));
 				/* basetiles are 16 units in each direction */
-				Q_strcat(coords, va("%i %i ", col * 16, row * 16), sizeof(coords));
+				Q_strcat(coords, va("%i %i ", col * 16, (BASE_SIZE - row - 1) * 16), sizeof(coords));
 			}
 		}
 	Cbuf_AddText(va("map \"%s\" \"%s\"\n", maps, coords));
@@ -1459,7 +1461,7 @@ void B_NewBases(void)
 /**
  * @brief Builds a random base
  *
- * call B_AssembleMap with a random base over script command 'base_assemble'
+ * call B_AssembleMap with a random base over script command 'base_assemble_rand'
  */
 static void B_AssembleRandomBase(void)
 {
