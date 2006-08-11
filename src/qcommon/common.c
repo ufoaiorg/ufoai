@@ -285,6 +285,7 @@ int Com_ServerState(void)
 
 /**
  * @brief
+ * @sa SV_SpawnServer
  */
 void Com_SetServerState(int state)
 {
