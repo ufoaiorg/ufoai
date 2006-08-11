@@ -1503,9 +1503,9 @@ char *va(char *format, ...)
  */
 char *COM_Parse(char **data_p)
 {
-	static char com_token[MAX_TOKEN_CHARS];
+	static char com_token[4096];
 	int c;
-	int len;
+	size_t len;
 	char *data;
 
 	data = *data_p;
@@ -1544,7 +1544,7 @@ skipwhite:
 				*data_p = data;
 				return com_token;
 			}
-			if (len < MAX_TOKEN_CHARS) {
+			if (len < sizeof(com_token)) {
 				com_token[len] = c;
 				len++;
 			} else {
@@ -1555,7 +1555,7 @@ skipwhite:
 
 	/* parse a regular word */
 	do {
-		if (len < MAX_TOKEN_CHARS) {
+		if (len < sizeof(com_token)) {
 			com_token[len] = c;
 			len++;
 		}
@@ -1563,7 +1563,7 @@ skipwhite:
 		c = *data;
 	} while (c > 32);
 
-	if (len == MAX_TOKEN_CHARS) {
+	if (len == sizeof(com_token)) {
 		Com_Printf("Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS);
 		len = 0;
 	}
