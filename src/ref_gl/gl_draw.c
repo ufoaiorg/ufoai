@@ -1,3 +1,8 @@
+/**
+ * @file gl_draw.c
+ * @brief
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -18,8 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-/* gl_draw.c */
-
 #include "gl_local.h"
 
 #ifdef __linux__
@@ -34,11 +37,9 @@ image_t *shadow;
 /* console font */
 image_t *draw_chars;
 
-/*
-===============
-Draw_InitLocal
-===============
-*/
+/**
+ * @brief
+ */
 void Draw_InitLocal(void)
 {
 	shadow = GL_FindImage("pics/sfx/shadow.tga", it_pic);
@@ -52,15 +53,11 @@ void Draw_InitLocal(void)
 }
 
 
-/*
-================
-Draw_Char
-
-Draws one 8*8 graphics character with 0 being transparent.
-It can be clipped to the top of the screen to allow the console to be
-smoothly scrolled off.
-================
-*/
+/**
+ * @brief Draws one 8*8 graphics character with 0 being transparent.
+ * It can be clipped to the top of the screen to allow the console to be
+ * smoothly scrolled off.
+ */
 void Draw_Char(int x, int y, int num)
 {
 	int row, col;
@@ -95,11 +92,9 @@ void Draw_Char(int x, int y, int num)
 	qglEnd();
 }
 
-/*
-================
-Draw_Color
-================
-*/
+/**
+ * @brief
+ */
 void Draw_Color(float *rgba)
 {
 	if (rgba) {
@@ -112,11 +107,9 @@ void Draw_Color(float *rgba)
 	}
 }
 
-/*
-=============
-Draw_FindPic
-=============
-*/
+/**
+ * @brief
+ */
 image_t *Draw_FindPic(char *name)
 {
 	image_t *gl;
@@ -131,11 +124,9 @@ image_t *Draw_FindPic(char *name)
 	return gl;
 }
 
-/*
-=============
-Draw_GetPicSize
-=============
-*/
+/**
+ * @brief
+ */
 void Draw_GetPicSize(int *w, int *h, char *pic)
 {
 	image_t *gl;
@@ -149,11 +140,9 @@ void Draw_GetPicSize(int *w, int *h, char *pic)
 	*h = gl->height;
 }
 
-/*
-=============
-Draw_StretchPic
-=============
-*/
+/**
+ * @brief
+ */
 void Draw_StretchPic(int x, int y, int w, int h, char *pic)
 {
 	image_t *gl;
@@ -181,11 +170,9 @@ void Draw_StretchPic(int x, int y, int w, int h, char *pic)
 }
 
 
-/*
-=============
-Draw_NormPic
-=============
-*/
+/**
+ * @brief
+ */
 void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name)
 {
 	float nx, ny, nw = 0.0, nh = 0.0;
@@ -269,11 +256,9 @@ void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float 
 }
 
 
-/*
-=============
-Draw_Pic
-=============
-*/
+/**
+ * @brief
+ */
 void Draw_Pic(int x, int y, char *pic)
 {
 	image_t *gl;
@@ -300,14 +285,9 @@ void Draw_Pic(int x, int y, char *pic)
 	qglEnd();
 }
 
-/*
-=============
-Draw_TileClear
-
-This repeats a 64*64 tile graphic to fill the screen around a sized down
-refresh window.
-=============
-*/
+/**
+ * @brief This repeats a 64*64 tile graphic to fill the screen around a sized down refresh window.
+ */
 void Draw_TileClear(int x, int y, int w, int h, char *name)
 {
 	image_t *image;
@@ -332,13 +312,9 @@ void Draw_TileClear(int x, int y, int w, int h, char *name)
 }
 
 
-/*
-=============
-Draw_Fill
-
-Fills a box of pixels with a single color
-=============
-*/
+/**
+ * @brief Fills a box of pixels with a single color
+ */
 void Draw_Fill(int x, int y, int w, int h, int style, vec4_t color)
 {
 	float nx, ny, nw, nh;
@@ -385,14 +361,9 @@ void Draw_Fill(int x, int y, int w, int h, int style, vec4_t color)
 	qglEnable(GL_TEXTURE_2D);
 }
 
-/*============================================================================= */
-
-/*
-================
-Draw_FadeScreen
-
-================
-*/
+/**
+ * @brief
+ */
 void Draw_FadeScreen(void)
 {
 	qglEnable(GL_BLEND);
@@ -411,17 +382,10 @@ void Draw_FadeScreen(void)
 	qglDisable(GL_BLEND);
 }
 
-
-/*==================================================================== */
-
-
-/*
-=============
-Draw_StretchRaw
-=============
-*/
 extern unsigned r_rawpalette[256];
-
+/**
+ * @brief
+ */
 void Draw_StretchRaw(int x, int y, int w, int h, int cols, int rows, byte * data)
 {
 	unsigned *image32;
@@ -492,13 +456,10 @@ void Draw_StretchRaw(int x, int y, int w, int h, int cols, int rows, byte * data
 }
 
 
-/*
-================
-Draw_DayAndNight
-================
-*/
 static float lastQ;
-
+/**
+ * @brief
+ */
 void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
 {
 	image_t *gl;
@@ -575,12 +536,10 @@ void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, fl
 	qglDisable(GL_BLEND);
 }
 
-/*
-================
-Draw_LineStrip
-================
-*/
 #define MAX_LINEVERTS 256
+/**
+ * @brief
+ */
 void Draw_LineStrip(int points, int *verts)
 {
 	static int vs[MAX_LINEVERTS * 2];
@@ -608,7 +567,9 @@ void Draw_LineStrip(int points, int *verts)
 	qglEnable(GL_TEXTURE_2D);
 }
 
-/* vertices of a unit icosahedron */
+/**
+ * @brief vertices of a unit icosahedron
+ */
 static globe_triangle_t icosahedron[MAX_ICOSAHEDRON] = {
 	/* "north" pole */
 
@@ -638,14 +599,10 @@ static globe_triangle_t icosahedron[MAX_ICOSAHEDRON] = {
 	{{Im2, Im5, Im1},},
 };
 
-/*
-================
-Globe_CoordToVec
-
-This function fills v with the x-, y-, and z-coordinate
-for the specified point on the surface.
-================
-*/
+/**
+ * @brief This function fills v with the x-, y-, and z-coordinate
+ * for the specified point on the surface.
+ */
 void Globe_CoordToVec(double lat, double lon, vec3_t v)
 {
 	v[0] = (float) sin(lon * GLOBE_TORAD) * cos(lat * GLOBE_TORAD);
@@ -653,14 +610,10 @@ void Globe_CoordToVec(double lat, double lon, vec3_t v)
 	v[2] = (float) cos(lon * GLOBE_TORAD) * cos(lat * GLOBE_TORAD);
 }
 
-/*
-================
-Globe_ToLong
-
-returns the longitude of a point on the unit sphere.
-(Longitudes are the "x" axis on a mercator projection map.)
-================
-*/
+/**
+ * @brief returns the longitude of a point on the unit sphere.
+ * (Longitudes are the "x" axis on a mercator projection map.)
+ */
 double Globe_ToLong(vec3_t v)
 {
 	double s;
@@ -671,27 +624,19 @@ double Globe_ToLong(vec3_t v)
 	return ((atan2(v[0] / s, v[2] / s) * GLOBE_TODEG));
 }
 
-/*
-================
-Globe_ToLat
-
-returns the latitude of a point on the unit sphere.
-(Latitudes are the "y" axis on a mercator projection map.)
-================
-*/
+/**
+ * @brief returns the latitude of a point on the unit sphere.
+ * (Latitudes are the "y" axis on a mercator projection map.)
+ */
 double Globe_ToLat(vec3_t v)
 {
 	return (atan2(v[1], sqrt(1 - v[1] * v[1])) * GLOBE_TODEG);
 }
 
-/*
-================
-Globe_Distance
-
-returns the actual theoretical minimum
-distance (in meters) the signal has to travel.
-================
-*/
+/**
+ * @brief returns the actual theoretical minimum
+ * distance (in meters) the signal has to travel.
+ */
 unsigned long Globe_Distance(int site)
 {
 	unsigned long distance_covered = 0;
@@ -719,13 +664,9 @@ unsigned long Globe_Distance(int site)
 	return distance_covered;
 }
 
-/*
-================
-Globe_Normalize
-
-normalize vector r
-================
-*/
+/**
+ * @brief normalize vector r
+ */
 void Globe_Normalize(vec3_t r)
 {
 	float mag;
@@ -739,13 +680,9 @@ void Globe_Normalize(vec3_t r)
 	}
 }
 
-/*
-================
-Globe_Lerp
-
-linearly interpolate between a & b, by fraction f
-================
-*/
+/**
+ * @brief linearly interpolate between a & b, by fraction f
+ */
 void Globe_Lerp(vec3_t a, vec3_t b, float f, vec3_t r)
 {
 	r[0] = a[0] + f * (b[0] - a[0]);
@@ -753,14 +690,10 @@ void Globe_Lerp(vec3_t a, vec3_t b, float f, vec3_t r)
 	r[2] = a[2] + f * (b[2] - a[2]);
 }
 
-/*
-================
-Globe_AddVertex
-
-Convenience function used only in Draw_3DGlobe.
-Adds a vertex to a tstrip.
-================
-*/
+/**
+ * @brief Convenience function used only in Draw_3DGlobe.
+ * Adds a vertex to a tstrip.
+ */
 void Globe_AddVertex(vec3_t v, double *lastlon)
 {
 	double a, b, dist;
@@ -799,24 +732,20 @@ void Globe_AddVertex(vec3_t v, double *lastlon)
 	qglVertex3fv(x);
 }
 
-/*
-================
-Draw_3DMapMarkers
-================
-*/
+/**
+ * @brief
+ */
 void Draw_3DMapMarkers(float latitude, float longitude, char *image)
 {
 
 }
 
-/*
-================
-This is only used from makeearth, to plot a line on the globe.
-There is some difficultish maths in this one.
-"to" and "from" in the comments in the code refers to the two
-points given as arguments.
-================
-*/
+/**
+ * @brief This is only used from makeearth, to plot a line on the globe.
+ * There is some difficultish maths in this one.
+ * "to" and "from" in the comments in the code refers to the two
+ * points given as arguments.
+ */
 void Draw_3DMapLine(int n, float dist, vec2_t * path)
 {
 	float vink;
@@ -860,13 +789,9 @@ void Draw_3DMapLine(int n, float dist, vec2_t * path)
 	qglPopMatrix();
 }
 
-/*
-================
-Draw_3DGlobe
-
-responsible for drawing the 3d globe on geoscape
-================
-*/
+/**
+ * @brief responsible for drawing the 3d globe on geoscape
+ */
 void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
 {
 	int nrows = 1 << 3;

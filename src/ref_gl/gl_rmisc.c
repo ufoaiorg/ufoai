@@ -1,3 +1,8 @@
+/**
+ * @file gl_rmisc.c
+ * @brief
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,16 +22,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* r_misc.c */
 
 #include "gl_local.h"
 
-/*
-==================
-R_InitParticleTexture
-==================
-*/
-byte dottexture[8][8] = {
+static byte dottexture[8][8] = {
 	{0, 0, 0, 0, 0, 0, 0, 0},
 	{0, 0, 1, 1, 0, 0, 0, 0},
 	{0, 1, 1, 1, 1, 0, 0, 0},
@@ -37,7 +36,7 @@ byte dottexture[8][8] = {
 	{0, 0, 0, 0, 0, 0, 0, 0},
 };
 
-byte gridtexture[8][8] = {
+static byte gridtexture[8][8] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},
 	{1, 0, 0, 0, 0, 0, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 1},
@@ -48,6 +47,9 @@ byte gridtexture[8][8] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},
 };
 
+/**
+ * @brief
+ */
 void R_InitParticleTexture(void)
 {
 	int x, y;
@@ -94,11 +96,9 @@ typedef struct _TargaHeader {
 } TargaHeader;
 
 
-/*
-==================
-GL_ScreenShot_f
-==================
-*/
+/**
+ * @brief
+ */
 void GL_ScreenShot_f(void)
 {
 	byte *buffer;
@@ -149,9 +149,9 @@ void GL_ScreenShot_f(void)
 	free(buffer);
 }
 
-/*
-** GL_Strings_f
-*/
+/**
+ * @brief Prints some OpenGL strings
+ */
 void GL_Strings_f(void)
 {
 	ri.Con_Printf(PRINT_ALL, "GL_VENDOR: %s\n", gl_config.vendor_string);
@@ -162,9 +162,9 @@ void GL_Strings_f(void)
 	ri.Con_Printf(PRINT_ALL, "GL_MAX_TEXTURE_SIZE: %d\n", gl_config.maxTextureSize);
 }
 
-/*
-** GL_SetDefaultState
-*/
+/**
+ * @brief
+ */
 void GL_SetDefaultState(void)
 {
 	qglCullFace(GL_FRONT);
@@ -217,6 +217,9 @@ void GL_SetDefaultState(void)
 	vid.ry = (float) vid.height / VID_NORM_HEIGHT;
 }
 
+/**
+ * @brief
+ */
 void GL_UpdateSwapInterval(void)
 {
 	if (gl_swapinterval->modified) {
@@ -241,9 +244,9 @@ void GL_UpdateSwapInterval(void)
 */
 
 
-/*
-** R_DrawBeam
-*/
+/**
+ * @brief
+ */
 void R_DrawBeam(entity_t * e)
 {
 #define NUM_BEAM_SEGS 6
@@ -308,12 +311,10 @@ void R_DrawBeam(entity_t * e)
 	qglDepthMask(GL_TRUE);
 }
 
-/*=============
-R_DrawBox
-
-Draws the field marker
-entity is specified in cl_actor.c CL_AddTargeting
-=============*/
+/**
+ * @brief Draws the field marker entity is specified in cl_actor.c CL_AddTargeting
+ * @sa CL_AddTargeting
+ */
 void R_DrawBox(entity_t * e)
 {
 	vec3_t upper, lower;

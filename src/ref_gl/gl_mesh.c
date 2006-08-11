@@ -1,3 +1,8 @@
+/**
+ * @file gl_mesh.c
+ * @brief triangle model functions
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* gl_mesh.c: triangle model functions */
 
 #include "gl_local.h"
 
@@ -50,6 +54,9 @@ float r_avertexnormal_dots[SHADEDOT_QUANT][256] =
 
 float *shadedots = r_avertexnormal_dots[0];
 
+/**
+ * @brief
+ */
 void GL_LerpVerts(int nverts, dtrivertx_t * v, dtrivertx_t * ov, dtrivertx_t * verts, float *lerp, float move[3], float frontv[3], float backv[3])
 {
 	int i;
@@ -61,14 +68,10 @@ void GL_LerpVerts(int nverts, dtrivertx_t * v, dtrivertx_t * ov, dtrivertx_t * v
 	}
 }
 
-/*
-=============
-GL_DrawAliasFrameLerp
-
-interpolates between two frames and origins
-FIXME: batch lerp all vertexes
-=============
-*/
+/**
+ * @brief interpolates between two frames and origins
+ * FIXME: batch lerp all vertexes
+ */
 void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp, int framenum, int oldframenum)
 {
 	daliasframe_t *frame, *oldframe;
@@ -164,9 +167,9 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp, int framenum, int
 		qglUnlockArraysEXT();
 }
 
-/*
-** R_CullAliasModel
-*/
+/**
+ * @brief
+ */
 static qboolean R_CullAliasModel(entity_t * e)
 {
 	int i;
@@ -271,12 +274,9 @@ static qboolean R_CullAliasModel(entity_t * e)
 	}
 }
 
-/*
-=================
-R_EnableLights
-
-=================
-*/
+/**
+ * @brief
+ */
 void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lightambient)
 {
 	dlight_t *light;
@@ -358,11 +358,9 @@ void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lig
 }
 
 
-/*
-=================
-R_DrawAliasModel
-=================
-*/
+/**
+ * @brief
+ */
 void R_DrawAliasModel(entity_t * e)
 {
 	qboolean lightfixed;
@@ -551,11 +549,9 @@ void R_DrawAliasModel(entity_t * e)
 	qglColor4f(1, 1, 1, 1);
 }
 
-/*
-=================
-R_TransformModelDirect
-=================
-*/
+/**
+ * @brief
+ */
 void R_TransformModelDirect(modelInfo_t * mi)
 {
 	/* translate and rotate */
@@ -598,11 +594,10 @@ void R_TransformModelDirect(modelInfo_t * mi)
 	}
 }
 
-/*
-=================
-R_DrawModelDirect
-=================
-*/
+/**
+ * @brief
+ * @sa R_DrawAliasModel
+ */
 void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, char *tagname)
 {
 	int i;
@@ -726,11 +721,9 @@ void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, char *tagname)
 	qglColor4f(1, 1, 1, 1);
 }
 
-/*
-=================
-R_DrawModelParticle
-=================
-*/
+/**
+ * @brief
+ */
 void R_DrawModelParticle(modelInfo_t * mi)
 {
 	dmdl_t *paliashdr;

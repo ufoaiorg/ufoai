@@ -1,3 +1,8 @@
+/**
+ * @file gl_arb_shader.c
+ * @brief
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -24,14 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 unsigned int SH_LoadProgram_ARB_FP(char *path);
 unsigned int SH_LoadProgram_ARB_VP(char *path);
 
-/*
-============
-GL_ShaderInit
-
-Cycle through all parsed shaders and compile them
-TODO:
-============
-*/
+/**
+ * @brief Cycle through all parsed shaders and compile them
+ */
 void GL_ShaderInit(void)
 {
 	int i = 0;
@@ -54,22 +54,16 @@ void GL_ShaderInit(void)
 	}
 }
 
-/*
-============
-GL_ShutdownShaders
-============
-*/
+/**
+ * @brief
+ */
 void GL_ShutdownShaders(void)
 {
 }
 
-/*
-============
-LoadProgram_ARB_FP
-
-Load and link files containing shaders
-============
-*/
+/**
+ * @brief Load and link files containing shaders
+ */
 unsigned int SH_LoadProgram_ARB_FP(char *path)
 {
 	char *fbuf, *buf;
@@ -115,6 +109,9 @@ unsigned int SH_LoadProgram_ARB_FP(char *path)
 	return fpid;
 }
 
+/**
+ * @brief
+ */
 unsigned int SH_LoadProgram_ARB_VP(char *path)
 {
 	char *fbuf, *buf;
@@ -160,13 +157,9 @@ unsigned int SH_LoadProgram_ARB_VP(char *path)
 	return vpid;
 }
 
-/*
-============
-UseProgram_ARB_FP
-
-Activate Shaders
-============
-*/
+/**
+ * @brief Activate Shaders
+ */
 void SH_UseProgram_ARB_FP(unsigned int fpid)
 {
 	if (fpid > 0) {
@@ -177,6 +170,9 @@ void SH_UseProgram_ARB_FP(unsigned int fpid)
 	}
 }
 
+/**
+ * @brief
+ */
 void SH_UseProgram_ARB_VP(unsigned int vpid)
 {
 	if (vpid > 0) {
@@ -187,6 +183,9 @@ void SH_UseProgram_ARB_VP(unsigned int vpid)
 	}
 }
 
+/**
+ * @brief
+ */
 void SH_UseShader(shader_t * shader)
 {
 	assert(shader);
@@ -205,11 +204,9 @@ Shaders
 ================================
 */
 
-/*
-=================
-ABR Water Shader
-=================
-*/
+/**
+ * @brief
+ */
 const char *arb_water =
 	"!!ARBfp1.0\n"
 	"OPTION ARB_precision_hint_fastest;\n"
@@ -220,6 +217,9 @@ const char *arb_water =
 	"ADD R0.xy, R0, fragment.texcoord[0];\n" "TEX R0, R0, texture[0], 2D;\n" "MUL R0, R0, fragment.color.primary;\n" "MUL result.color, R0, c[0].x;\n" "END\n";
 
 
+/**
+ * @brief
+ */
 unsigned int SH_CompileWaterShader(unsigned int arb_water_id)
 {
 	qglGenProgramsARB(1, &arb_water_id);

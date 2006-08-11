@@ -1,3 +1,8 @@
+/**
+ * @file gl_rsurf.c
+ * @brief surface-related refresh code
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* GL_RSURF.C: surface-related refresh code */
+
 #include <assert.h>
 
 #include "gl_local.h"
@@ -72,13 +77,9 @@ extern void R_BuildLightMap(msurface_t * surf, byte * dest, int stride);
 =============================================================
 */
 
-/*
-===============
-R_TextureAnimation
-
-Returns the proper texture for a given time and base texture
-===============
-*/
+/**
+ * @brief Returns the proper texture for a given time and base texture
+ */
 image_t *R_TextureAnimation(mtexinfo_t * tex)
 {
 	int c;
@@ -95,11 +96,9 @@ image_t *R_TextureAnimation(mtexinfo_t * tex)
 	return tex->image;
 }
 
-/*
-================
-DrawGLPoly
-================
-*/
+/**
+ * @brief
+ */
 void DrawGLPoly(glpoly_t * p)
 {
 	int i;
@@ -114,11 +113,9 @@ void DrawGLPoly(glpoly_t * p)
 	qglEnd();
 }
 
-/*
-================
-DrawGLFlowingPoly -- version of DrawGLPoly that handles scrolling texture
-================
-*/
+/**
+ * @brief version of DrawGLPoly that handles scrolling texture
+ */
 void DrawGLFlowingPoly(msurface_t * fa)
 {
 	int i;
@@ -141,12 +138,9 @@ void DrawGLFlowingPoly(msurface_t * fa)
 	qglEnd();
 }
 
-/*PGM */
-/*============ */
-
-/*
-** R_DrawTriangleOutlines
-*/
+/**
+ * @brief
+ */
 void R_DrawTriangleOutlines(void)
 {
 	int i, j;
@@ -181,9 +175,9 @@ void R_DrawTriangleOutlines(void)
 	qglEnable(GL_TEXTURE_2D);
 }
 
-/*
-** DrawGLPolyChain
-*/
+/**
+ * @brief
+ */
 void DrawGLPolyChain(glpoly_t * p, float soffset, float toffset)
 {
 	if (soffset == 0 && toffset == 0) {
@@ -215,12 +209,10 @@ void DrawGLPolyChain(glpoly_t * p, float soffset, float toffset)
 	}
 }
 
-/*
-** R_BlendLightMaps
-**
-** This routine takes all the given light mapped surfaces in the world and
-** blends them into the framebuffer.
-*/
+/**
+ * @brief This routine takes all the given light mapped surfaces in the world and
+ * blends them into the framebuffer.
+ */
 void R_BlendLightmaps(void)
 {
 	int i;
@@ -358,11 +350,9 @@ void R_BlendLightmaps(void)
 	qglDepthMask(1);
 }
 
-/*
-================
-R_RenderBrushPoly
-================
-*/
+/**
+ * @brief
+ */
 void R_RenderBrushPoly(msurface_t * fa)
 {
 	int maps;
@@ -439,15 +429,11 @@ void R_RenderBrushPoly(msurface_t * fa)
 }
 
 
-/*
-================
-R_DrawAlphaSurfaces
-
-Draw water surfaces and windows.
-The BSP tree is waled front to back, so unwinding the chain
-of alpha_surfaces will draw back to front, giving proper ordering.
-================
-*/
+/**
+ * @brief Draw water surfaces and windows.
+ * The BSP tree is waled front to back, so unwinding the chain
+ * of alpha_surfaces will draw back to front, giving proper ordering.
+ */
 void R_DrawAlphaSurfaces(void)
 {
 	msurface_t *s;
@@ -487,11 +473,9 @@ void R_DrawAlphaSurfaces(void)
 	r_alpha_surfaces = NULL;
 }
 
-/*
-================
-DrawTextureChains
-================
-*/
+/**
+ * @brief
+ */
 void DrawTextureChains(void)
 {
 	int i;
@@ -549,6 +533,9 @@ void DrawTextureChains(void)
 }
 
 
+/**
+ * @brief
+ */
 static void GL_RenderLightmappedPoly(msurface_t * surf)
 {
 	int i, nv = surf->polys->numverts;
@@ -676,11 +663,9 @@ static void GL_RenderLightmappedPoly(msurface_t * surf)
 	}
 }
 
-/*
-=================
-R_DrawInlineBModel
-=================
-*/
+/**
+ * @brief
+ */
 void R_DrawInlineBModel(void)
 {
 	int i, k;
@@ -737,11 +722,9 @@ void R_DrawInlineBModel(void)
 	}
 }
 
-/*
-=================
-R_DrawBrushModel
-=================
-*/
+/**
+ * @brief
+ */
 void R_DrawBrushModel(entity_t * e)
 {
 	vec3_t mins, maxs;
@@ -814,11 +797,9 @@ void R_DrawBrushModel(entity_t * e)
 =============================================================
 */
 
-/*
-================
-R_RecursiveWorldNode
-================
-*/
+/**
+ * @brief
+ */
 void R_RecursiveWorldNode(mnode_t * node)
 {
 	int c, side, sidebit;
@@ -898,11 +879,9 @@ void R_RecursiveWorldNode(mnode_t * node)
 }
 
 
-/*
-=============
-R_DrawWorld
-=============
-*/
+/**
+ * @brief
+ */
 void R_DrawWorld(mnode_t * nodes)
 {
 	entity_t ent;
@@ -948,11 +927,9 @@ void R_DrawWorld(mnode_t * nodes)
 }
 
 
-/*
-=================
-R_FindModelNodes_r
-=================
-*/
+/**
+ * @brief
+ */
 void R_FindModelNodes_r(mnode_t * node)
 {
 	if (!node->plane) {
@@ -964,11 +941,9 @@ void R_FindModelNodes_r(mnode_t * node)
 }
 
 
-/*
-=================
-R_DrawLevelBrushes
-=================
-*/
+/**
+ * @brief
+ */
 void R_DrawLevelBrushes(void)
 {
 	entity_t ent;
@@ -1007,11 +982,17 @@ void R_DrawLevelBrushes(void)
 =============================================================================
 */
 
+/**
+ * @brief
+ */
 static void LM_InitBlock(void)
 {
 	memset(gl_lms.allocated, 0, sizeof(gl_lms.allocated));
 }
 
+/**
+ * @brief
+ */
 static void LM_UploadBlock(qboolean dynamic)
 {
 	int texture;
@@ -1042,7 +1023,9 @@ static void LM_UploadBlock(qboolean dynamic)
 	}
 }
 
-/* returns a texture number and the position inside it */
+/**
+ * @brief returns a texture number and the position inside it
+ */
 static qboolean LM_AllocBlock(int w, int h, int *x, int *y)
 {
 	int i, j;
@@ -1075,11 +1058,9 @@ static qboolean LM_AllocBlock(int w, int h, int *x, int *y)
 	return qtrue;
 }
 
-/*
-================
-GL_BuildPolygonFromSurface
-================
-*/
+/**
+ * @brief
+ */
 void GL_BuildPolygonFromSurface(msurface_t * fa, int shift[3])
 {
 	int i, lindex, lnumverts;
@@ -1145,11 +1126,9 @@ void GL_BuildPolygonFromSurface(msurface_t * fa, int shift[3])
 
 }
 
-/*
-========================
-GL_CreateSurfaceLightmap
-========================
-*/
+/**
+ * @brief
+ */
 void GL_CreateSurfaceLightmap(msurface_t * surf)
 {
 	int smax, tmax;
@@ -1178,12 +1157,9 @@ void GL_CreateSurfaceLightmap(msurface_t * surf)
 }
 
 
-/*
-==================
-GL_BeginBuildingLightmaps
-
-==================
-*/
+/**
+ * @brief
+ */
 void GL_BeginBuildingLightmaps(void)
 {
 	static lightstyle_t lightstyles[MAX_LIGHTSTYLES];
@@ -1249,11 +1225,9 @@ void GL_BeginBuildingLightmaps(void)
 	qglTexImage2D(GL_TEXTURE_2D, 0, gl_lms.internal_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, dummy);
 }
 
-/*
-=======================
-GL_EndBuildingLightmaps
-=======================
-*/
+/**
+ * @brief
+ */
 void GL_EndBuildingLightmaps(void)
 {
 	LM_UploadBlock(qfalse);

@@ -1,15 +1,34 @@
-/* gl_anim.c -- animation parsing and playing */
-
-
-#include "gl_local.h"
-
-#define LNEXT(x)	((x+1 < MAX_ANIMLIST) ? x+1 : 0)
+/**
+ * @file gl_arb_shader.c
+ * @brief animation parsing and playing
+ */
 
 /*
-===============
-Anim_Get
-===============
+Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
 */
+
+#include "gl_local.h"
+#define LNEXT(x)	((x+1 < MAX_ANIMLIST) ? x+1 : 0)
+
+/**
+ * @brief
+ */
 manim_t *Anim_Get(model_t * mod, char *name)
 {
 	manim_t *anim;
@@ -27,11 +46,9 @@ manim_t *Anim_Get(model_t * mod, char *name)
 }
 
 
-/*
-===============
-Anim_Append
-===============
-*/
+/**
+ * @brief
+ */
 void Anim_Append(animState_t * as, model_t * mod, char *name)
 {
 	manim_t *anim;
@@ -73,11 +90,9 @@ void Anim_Append(animState_t * as, model_t * mod, char *name)
 }
 
 
-/*
-===============
-Anim_Change
-===============
-*/
+/**
+ * @brief
+ */
 void Anim_Change(animState_t * as, model_t * mod, char *name)
 {
 	manim_t *anim;
@@ -128,11 +143,9 @@ void Anim_Change(animState_t * as, model_t * mod, char *name)
 }
 
 
-/*
-===============
-Anim_Run
-===============
-*/
+/**
+ * @brief
+ */
 void Anim_Run(animState_t * as, model_t * mod, int msec)
 {
 	manim_t *anim;
@@ -180,11 +193,9 @@ void Anim_Run(animState_t * as, model_t * mod, int msec)
 }
 
 
-/*
-===============
-Anim_GetName
-===============
-*/
+/**
+ * @brief
+ */
 char *Anim_GetName(animState_t * as, model_t * mod)
 {
 	manim_t *anim;

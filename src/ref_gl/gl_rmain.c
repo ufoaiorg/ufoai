@@ -1,3 +1,8 @@
+/**
+ * @file gl_rmain.c
+ * @brief
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* r_main.c */
+
 #include "gl_local.h"
 #include <ctype.h>
 
@@ -58,9 +63,7 @@ void GL_Strings_f(void);
 /* entity transform */
 transform_t trafo[MAX_ENTITIES];
 
-/* */
 /* view origin */
-/* */
 vec3_t vup;
 vec3_t vpn;
 vec3_t vright;
@@ -69,9 +72,7 @@ vec3_t r_origin;
 float r_world_matrix[16];
 float r_base_world_matrix[16];
 
-/* */
 /* screen size info */
-/* */
 refdef_t r_newrefdef;
 
 int r_viewcluster, r_viewcluster2, r_oldviewcluster, r_oldviewcluster2;
@@ -156,6 +157,9 @@ cvar_t *vid_gamma;
 cvar_t *vid_ref;
 cvar_t *vid_grabmouse;
 
+/**
+ * @brief
+ */
 void R_CastShadow(void)
 {
 	int i;
@@ -178,13 +182,9 @@ void R_CastShadow(void)
 	}
 }
 
-/*
-=================
-R_CullBox
-
-Returns true if the box is completely outside the frustom
-=================
-*/
+/**
+ * @brief Returns true if the box is completely outside the frustom
+ */
 qboolean R_CullBox(vec3_t mins, vec3_t maxs)
 {
 	int i;
@@ -199,6 +199,9 @@ qboolean R_CullBox(vec3_t mins, vec3_t maxs)
 }
 
 
+/**
+ * @brief
+ */
 void R_RotateForEntity(entity_t * e)
 {
 	qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
@@ -218,12 +221,9 @@ void R_RotateForEntity(entity_t * e)
 */
 
 
-/*
-=================
-R_DrawSpriteModel
-
-=================
-*/
+/**
+ * @brief
+ */
 void R_DrawSpriteModel(entity_t * e)
 {
 	float alpha = 1.0F;
@@ -310,14 +310,10 @@ void R_DrawSpriteModel(entity_t * e)
 	qglColor4f(1, 1, 1, 1);
 }
 
-/*================================================================================== */
 
-/*
-=============
-R_DrawNullModel
-=============
-*/
-
+/**
+ * @brief
+ */
 void R_DrawNullModel(void)
 {
 	vec3_t shadelight;
@@ -356,11 +352,9 @@ void R_DrawNullModel(void)
 }
 
 
-/*
-=============
-R_InterpolateTransform
-=============
-*/
+/**
+ * @brief
+ */
 void R_InterpolateTransform(animState_t * as, int numframes, float *tag, float *interpolated)
 {
 	float *current, *old;
@@ -399,11 +393,9 @@ void R_InterpolateTransform(animState_t * as, int numframes, float *tag, float *
 }
 
 
-/*
-=============
-R_CalcTransform
-=============
-*/
+/**
+ * @brief
+ */
 float *R_CalcTransform(entity_t * e)
 {
 	vec3_t angles;
@@ -491,11 +483,9 @@ float *R_CalcTransform(entity_t * e)
 }
 
 
-/*
-=============
-R_TransformEntitiesOnList
-=============
-*/
+/**
+ * @brief
+ */
 void R_TransformEntitiesOnList(void)
 {
 	int i;
@@ -516,11 +506,9 @@ void R_TransformEntitiesOnList(void)
 }
 
 
-/*
-=============
-R_DrawEntitiesOnList
-=============
-*/
+/**
+ * @brief
+ */
 void R_DrawEntitiesOnList(void)
 {
 	int i;
@@ -603,10 +591,9 @@ void R_DrawEntitiesOnList(void)
 
 }
 
-/*
-** GL_DrawParticles
-**
-*/
+/**
+ * @brief
+ */
 void GL_DrawParticles(int num_particles, const particle_t particles[], const unsigned colortable[768])
 {
 	const particle_t *p;
@@ -655,11 +642,9 @@ void GL_DrawParticles(int num_particles, const particle_t particles[], const uns
 	GL_TexEnv(GL_REPLACE);
 }
 
-/*
-===============
-R_DrawParticles
-===============
-*/
+/**
+ * @brief
+ */
 void R_DrawParticles(void)
 {
 	if (gl_ext_pointparameters->value && qglPointParameterfEXT) {
@@ -693,11 +678,9 @@ void R_DrawParticles(void)
 }
 
 
-/*
-============
-R_PolyBlend
-============
-*/
+/**
+ * @brief
+ */
 void R_PolyBlend(void)
 {
 	if (!gl_polyblend->value)
@@ -733,8 +716,9 @@ void R_PolyBlend(void)
 	qglColor4f(1, 1, 1, 1);
 }
 
-/*======================================================================= */
-
+/**
+ * @brief
+ */
 int SignbitsForPlane(cplane_t * out)
 {
 	int bits, j;
@@ -748,7 +732,9 @@ int SignbitsForPlane(cplane_t * out)
 	return bits;
 }
 
-
+/**
+ * @brief
+ */
 void R_SetFrustum(void)
 {
 	int i;
@@ -783,13 +769,9 @@ void R_SetFrustum(void)
 	}
 }
 
-/*======================================================================= */
-
-/*
-===============
-R_SetupFrame
-===============
-*/
+/**
+ * @brief
+ */
 void R_SetupFrame(void)
 {
 	int i;
@@ -816,7 +798,9 @@ void R_SetupFrame(void)
 	}
 }
 
-
+/**
+ * @brief
+ */
 void MYgluPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)
 {
 	GLdouble xmin, xmax, ymin, ymax;
@@ -837,11 +821,9 @@ void MYgluPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble z
 }
 
 
-/*
-=============
-R_SetupGL
-=============
-*/
+/**
+ * @brief
+ */
 void R_SetupGL(void)
 {
 	float screenaspect;
@@ -898,11 +880,9 @@ void R_SetupGL(void)
 	}
 }
 
-/*
-=============
-R_Clear
-=============
-*/
+/**
+ * @brief
+ */
 void R_Clear(void)
 {
 	if (gl_ztrick->value) {
@@ -934,6 +914,9 @@ void R_Clear(void)
 	qglDepthRange(gldepthmin, gldepthmax);
 }
 
+/**
+ * @brief
+ */
 void R_Flash(void)
 {
 /*	R_ShadowBlend(); */
@@ -941,13 +924,9 @@ void R_Flash(void)
 }
 
 
-/*
-================
-R_RenderView
-
-r_newrefdef must be set before the first call
-================
-*/
+/**
+ * @brief r_newrefdef must be set before the first call
+ */
 void R_RenderView(refdef_t * fd)
 {
 	if (r_norefresh->value)
@@ -1003,6 +982,9 @@ void R_RenderView(refdef_t * fd)
 }
 
 
+/**
+ * @brief
+ */
 void R_LeaveGL2D(void)
 {
 	qglMatrixMode(GL_MODELVIEW);
@@ -1014,6 +996,9 @@ void R_LeaveGL2D(void)
 	qglPopAttrib();
 }
 
+/**
+ * @brief
+ */
 void R_SetGL2D(void)
 {
 	/* set 2D virtual screen size */
@@ -1032,11 +1017,9 @@ void R_SetGL2D(void)
 	qglColor4f(1, 1, 1, 1);
 }
 
-/*
-====================
-R_RenderFrame
-====================
-*/
+/**
+ * @brief
+ */
 void R_RenderFrame(refdef_t * fd)
 {
 	R_RenderView(fd);
@@ -1053,6 +1036,9 @@ static cmdList_t r_commands[] = {
 	{NULL, NULL}
 };
 
+/**
+ * @brief
+ */
 void R_Register(void)
 {
 	cmdList_t *commands;
@@ -1155,11 +1141,9 @@ void R_Register(void)
 		ri.Cmd_AddCommand(commands->name, commands->function);
 }
 
-/*
-==================
-R_SetMode
-==================
-*/
+/**
+ * @brief
+ */
 qboolean R_SetMode (void)
 {
 	rserr_t err;
@@ -1195,11 +1179,9 @@ qboolean R_SetMode (void)
 	return qtrue;
 }
 
-/*
-===============
-R_Init
-===============
-*/
+/**
+ * @brief
+ */
 qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 {
 	char renderer_buffer[1000];
@@ -1554,11 +1536,10 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	return qfalse;
 }
 
-/*
-===============
-R_Shutdown
-===============
-*/
+/**
+ * @brief
+ * @sa R_Init
+ */
 void R_Shutdown(void)
 {
 	cmdList_t *commands;
@@ -1587,11 +1568,9 @@ void R_Shutdown(void)
 
 
 
-/*
-====================
-R_BeginFrame
-====================
-*/
+/**
+ * @brief
+ */
 void R_BeginFrame(float camera_separation)
 {
 
@@ -1666,13 +1645,10 @@ void R_BeginFrame(float camera_separation)
 	R_Clear();
 }
 
-/*
-=============
-R_SetPalette
-=============
-*/
 unsigned r_rawpalette[256];
-
+/**
+ * @brief
+ */
 void R_SetPalette(const unsigned char *palette)
 {
 	int i;
@@ -1698,11 +1674,9 @@ void R_SetPalette(const unsigned char *palette)
 	qglClear(GL_COLOR_BUFFER_BIT);
 }
 
-/*
-==================
-RB_TakeVideoFrameCmd
-==================
-*/
+/**
+ * @brief
+ */
 void R_TakeVideoFrame(int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
 {
 	int frameSize;
@@ -1724,8 +1698,6 @@ void R_TakeVideoFrame(int w, int h, byte * captureBuffer, byte * encodeBuffer, q
 }
 
 
-/*=================================================================== */
-
 
 void R_BeginRegistration(char *tiles, char *pos);
 struct model_s *R_RegisterModelShort(char *name);
@@ -1742,12 +1714,9 @@ void Draw_FadeScreen(void);
 
 void LoadTGA(char *name, byte ** pic, int *width, int *height);
 
-/*
-====================
-GetRefAPI
-
-====================
-*/
+/**
+ * @brief
+ */
 refexport_t GetRefAPI(refimport_t rimp)
 {
 	refexport_t re;
@@ -1808,6 +1777,9 @@ refexport_t GetRefAPI(refimport_t rimp)
 
 #ifndef REF_HARD_LINKED
 /* this is only here so the functions in q_shared.c and q_shwin.c can link */
+/**
+ * @brief
+ */
 void Sys_Error(char *error, ...)
 {
 	va_list argptr;
@@ -1824,6 +1796,9 @@ void Sys_Error(char *error, ...)
 	ri.Sys_Error(ERR_FATAL, "%s", text);
 }
 
+/**
+ * @brief
+ */
 void Com_Printf(char *fmt, ...)
 {
 	va_list argptr;
@@ -1836,6 +1811,9 @@ void Com_Printf(char *fmt, ...)
 	ri.Con_Printf(PRINT_ALL, "%s", text);
 }
 
+/**
+ * @brief
+ */
 void Com_DPrintf(char *fmt, ...)
 {
 	va_list argptr;

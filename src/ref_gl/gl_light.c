@@ -1,3 +1,8 @@
+/**
+ * @file gl_light.c
+ * @brief
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* r_light.c */
 
 #include "gl_local.h"
 
@@ -33,6 +37,10 @@ DYNAMIC LIGHTS BLEND RENDERING
 =============================================================================
 */
 
+/**
+ * @brief
+ * @sa R_RenderDlights
+ */
 void R_RenderDlight(dlight_t * light)
 {
 	int i, j;
@@ -66,11 +74,10 @@ void R_RenderDlight(dlight_t * light)
 	qglEnd();
 }
 
-/*
-=============
-R_RenderDlights
-=============
-*/
+/**
+ * @brief Renders all dynamic lights
+ * @sa R_RenderDlight
+ */
 void R_RenderDlights(void)
 {
 	int i;
@@ -107,11 +114,9 @@ DYNAMIC LIGHTS
 =============================================================================
 */
 
-/*
-=============
-R_MarkLights
-=============
-*/
+/**
+ * @brief
+ */
 void R_MarkLights(dlight_t * light, int bit, mnode_t * node)
 {
 	cplane_t *splitplane;
@@ -169,11 +174,9 @@ LIGHT SAMPLING
 
 static float s_blocklights[34 * 34 * 3];
 
-/*
-===============
-R_AddDynamicLights
-===============
-*/
+/**
+ * @brief
+ */
 void R_AddDynamicLights(msurface_t * surf)
 {
 	int lnum;
@@ -241,9 +244,9 @@ void R_AddDynamicLights(msurface_t * surf)
 }
 
 
-/*
-** R_SetCacheState
-*/
+/**
+ * @brief
+ */
 void R_SetCacheState(msurface_t * surf)
 {
 	int maps;
@@ -252,13 +255,9 @@ void R_SetCacheState(msurface_t * surf)
 		surf->cached_light[maps] = r_newrefdef.lightstyles[surf->styles[maps]].white;
 }
 
-/*
-===============
-R_BuildLightMap
-
-Combine and scale multiple lightmaps into the floating format in blocklights
-===============
-*/
+/**
+ * @brief Combine and scale multiple lightmaps into the floating format in blocklights
+ */
 void R_BuildLightMap(msurface_t * surf, byte * dest, int stride)
 {
 	int smax, tmax;
@@ -502,6 +501,9 @@ vec3_t pointcolor;
 cplane_t *lightplane;			/* used as shadow plane */
 vec3_t lightspot;
 
+/**
+ * @brief
+ */
 int RecursiveLightPoint(mnode_t * node, vec3_t start, vec3_t end)
 {
 	float front, back, frac;
@@ -598,11 +600,9 @@ int RecursiveLightPoint(mnode_t * node, vec3_t start, vec3_t end)
 	return RecursiveLightPoint(node->children[!side], mid, end);
 }
 
-/*
-===============
-R_LightPoint
-===============
-*/
+/**
+ * @brief
+ */
 void R_LightPoint(vec3_t p, vec3_t color)
 {
 	vec3_t end;

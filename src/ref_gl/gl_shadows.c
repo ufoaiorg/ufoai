@@ -1,3 +1,8 @@
+/**
+ * @file gl_shadows.c
+ * @brief shadow functions
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* shadows.c: shadow functions */
 
 #include "gl_local.h"
 
@@ -36,6 +40,10 @@ int worldlight = 0;
   Modificated By Vortex and Kirk Barnes
 =============================================
 */
+
+/**
+ * @brief
+ */
 void vectoangles(vec3_t value1, vec3_t angles)
 {
 	float forward;
@@ -71,6 +79,9 @@ void vectoangles(vec3_t value1, vec3_t angles)
 }
 
 qboolean nolight;
+/**
+ * @brief
+ */
 void R_ShadowLight(vec3_t pos, vec3_t lightAdd)
 {
 	int i;
@@ -118,17 +129,13 @@ void R_ShadowLight(vec3_t pos, vec3_t lightAdd)
 	VectorScale(dist, shadowdist, lightAdd);
 }
 
-/*
-=============
-GL_DrawAliasShadow
-Modifications by MrG, Carbon14, Kirk Barnes
-=============
-*/
-
 extern cvar_t *r_shading;
 dlight_t model_dlights[MAX_MODEL_DLIGHTS];
 int model_dlights_num;
 
+/**
+ * @brief
+ */
 void GL_DrawAliasShadow(entity_t * e, dmdl_t * paliashdr, int posenum)
 {
 	dtrivertx_t *verts;
@@ -201,11 +208,9 @@ void GL_DrawAliasShadow(entity_t * e, dmdl_t * paliashdr, int posenum)
 	qglColor4f(1, 1, 1, 1);
 }
 
-/*
-===============
-SHADOW VOLUMES
-===============
-*/
+/**
+ * @brief
+ */
 void BuildShadowVolume(dmdl_t * hdr, vec3_t light, float projectdistance)
 {
 	dtriangle_t *ot, *tris;
@@ -307,6 +312,9 @@ void BuildShadowVolume(dmdl_t * hdr, vec3_t light, float projectdistance)
 	qglEnd();
 }
 
+/**
+ * @brief
+ */
 void GL_RenderVolumes(dmdl_t * paliashdr, vec3_t lightdir, int projdist)
 {
 	int incr = gl_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR;
@@ -338,6 +346,9 @@ void GL_RenderVolumes(dmdl_t * paliashdr, vec3_t lightdir, int projdist)
 	}
 }
 
+/**
+ * @brief
+ */
 void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm)
 {
 	int *order, i, o, dist;
@@ -449,6 +460,9 @@ void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm)
 	qglDepthFunc(GL_LEQUAL);
 }
 
+/**
+ * @brief
+ */
 void R_DrawShadow(entity_t * e)
 {
 	dmdl_t *paliashdr;
@@ -519,6 +533,9 @@ void R_DrawShadow(entity_t * e)
 	}
 }
 
+/**
+ * @brief
+ */
 void R_DrawShadowVolume(entity_t * e)
 {
 	dmdl_t *paliashdr;
@@ -580,11 +597,9 @@ void R_DrawShadowVolume(entity_t * e)
 	}
 }
 
-/*
-==============
-R_ShadowBlend
-==============
-*/
+/**
+ * @brief
+ */
 void R_ShadowBlend(void)
 {
 	if (gl_shadows->value != 2)

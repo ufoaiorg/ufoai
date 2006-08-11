@@ -1,3 +1,8 @@
+/**
+ * @file gl_warp.c
+ * @brief water polygons
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* gl_warp.c -- water polygons */
 
 #include "gl_local.h"
 
@@ -28,6 +32,9 @@ static msurface_t *warpface;
 #define	SUBDIVIDE_SIZE	64
 /*#define	SUBDIVIDE_SIZE	1024 */
 
+/**
+ * @brief
+ */
 void BoundPoly(int numverts, float *verts, vec3_t mins, vec3_t maxs)
 {
 	int i, j;
@@ -45,6 +52,9 @@ void BoundPoly(int numverts, float *verts, vec3_t mins, vec3_t maxs)
 		}
 }
 
+/**
+ * @brief
+ */
 void SubdividePolygon(int numverts, float *verts)
 {
 	int i, j, k;
@@ -140,15 +150,10 @@ void SubdividePolygon(int numverts, float *verts)
 	memcpy(poly->verts[i + 1], poly->verts[1], sizeof(poly->verts[0]));
 }
 
-/*
-================
-GL_SubdivideSurface
-
-Breaks a polygon up along axial 64 unit
-boundaries so that turbulent
-can be done reasonably.
-================
-*/
+/**
+ * @brief Breaks a polygon up along axial 64 unit boundaries so that turbulent
+ * can be done reasonably.
+ */
 void GL_SubdivideSurface(msurface_t * fa)
 {
 	vec3_t verts[64];
@@ -175,8 +180,6 @@ void GL_SubdivideSurface(msurface_t * fa)
 	SubdividePolygon(numverts, verts[0]);
 }
 
-/*========================================================= */
-
 
 
 /* speed up sin calculations - Ed */
@@ -186,13 +189,9 @@ float r_turbsin[] = {
 
 #define TURBSCALE (256.0 / (2 * M_PI))
 
-/*
-=============
-EmitWaterPolys
-
-Does a water warp on the pre-fragmented glpoly_t chain
-=============
-*/
+/**
+ * @brief Does a water warp on the pre-fragmented glpoly_t chain
+ */
 void EmitWaterPolys(msurface_t * fa)
 {
 	glpoly_t *p, *bp;

@@ -1,3 +1,7 @@
+/**
+ * @file gl_image.c
+ * @brief
+ */
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -46,6 +50,9 @@ int gl_compressed_alpha_format = 0;
 int gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
 int gl_filter_max = GL_LINEAR;
 
+/**
+ * @brief
+ */
 void GL_EnableMultitexture(qboolean enable)
 {
 	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
@@ -64,6 +71,9 @@ void GL_EnableMultitexture(qboolean enable)
 	GL_TexEnv(GL_REPLACE);
 }
 
+/**
+ * @brief
+ */
 void GL_SelectTexture(GLenum texture)
 {
 	int tmu;
@@ -89,6 +99,9 @@ void GL_SelectTexture(GLenum texture)
 	}
 }
 
+/**
+ * @brief
+ */
 void GL_TexEnv(GLenum mode)
 {
 	static GLenum lastmodes[2] = { (GLenum) - 1, (GLenum) - 1 };
@@ -99,6 +112,9 @@ void GL_TexEnv(GLenum mode)
 	}
 }
 
+/**
+ * @brief
+ */
 void GL_Bind(int texnum)
 {
 	extern image_t *draw_chars;
@@ -111,6 +127,9 @@ void GL_Bind(int texnum)
 	qglBindTexture(GL_TEXTURE_2D, texnum);
 }
 
+/**
+ * @brief
+ */
 void GL_MBind(GLenum target, int texnum)
 {
 	GL_SelectTexture(target);
@@ -129,7 +148,7 @@ typedef struct {
 	int minimize, maximize;
 } glmode_t;
 
-glmode_t modes[] = {
+static glmode_t modes[] = {
 	{"GL_NEAREST", GL_NEAREST, GL_NEAREST},
 	{"GL_LINEAR", GL_LINEAR, GL_LINEAR},
 	{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST},
@@ -145,7 +164,7 @@ typedef struct {
 	int mode;
 } gltmode_t;
 
-gltmode_t gl_alpha_modes[] = {
+static gltmode_t gl_alpha_modes[] = {
 	{"default", 4},
 	{"GL_RGBA", GL_RGBA},
 	{"GL_RGBA8", GL_RGBA8},
@@ -156,7 +175,7 @@ gltmode_t gl_alpha_modes[] = {
 
 #define NUM_GL_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof (gltmode_t))
 
-gltmode_t gl_solid_modes[] = {
+static gltmode_t gl_solid_modes[] = {
 	{"default", 3},
 	{"GL_RGB", GL_RGB},
 	{"GL_RGB8", GL_RGB8},
@@ -170,11 +189,9 @@ gltmode_t gl_solid_modes[] = {
 
 #define NUM_GL_SOLID_MODES (sizeof(gl_solid_modes) / sizeof (gltmode_t))
 
-/*
-===============
-GL_TextureMode
-===============
-*/
+/**
+ * @brief
+ */
 void GL_TextureMode(char *string)
 {
 	int i;
@@ -203,11 +220,9 @@ void GL_TextureMode(char *string)
 	}
 }
 
-/*
-===============
-GL_TextureAlphaMode
-===============
-*/
+/**
+ * @brief
+ */
 void GL_TextureAlphaMode(char *string)
 {
 	int i;
@@ -225,11 +240,9 @@ void GL_TextureAlphaMode(char *string)
 	gl_alpha_format = gl_alpha_modes[i].mode;
 }
 
-/*
-===============
-GL_TextureSolidMode
-===============
-*/
+/**
+ * @brief
+ */
 void GL_TextureSolidMode(char *string)
 {
 	int i;
@@ -247,11 +260,9 @@ void GL_TextureSolidMode(char *string)
 	gl_solid_format = gl_solid_modes[i].mode;
 }
 
-/*
-===============
-GL_ImageList_f
-===============
-*/
+/**
+ * @brief
+ */
 void GL_ImageList_f(void)
 {
 	int i;
@@ -313,7 +324,10 @@ int scrap_allocated[MAX_SCRAPS][BLOCK_WIDTH];
 byte scrap_texels[MAX_SCRAPS][BLOCK_WIDTH * BLOCK_HEIGHT];
 qboolean scrap_dirty;
 
-/* returns a texture number and the position inside it */
+/**
+ * @brief
+ * @return a texture number and the position inside it
+ */
 int Scrap_AllocBlock(int w, int h, int *x, int *y)
 {
 	int i, j;
@@ -351,8 +365,11 @@ int Scrap_AllocBlock(int w, int h, int *x, int *y)
 /*	Sys_Error ("Scrap_AllocBlock: full"); */
 }
 
-int scrap_uploads;
+static int scrap_uploads = 0;
 
+/**
+ * @brief
+ */
 void Scrap_Upload(void)
 {
 	scrap_uploads++;
@@ -370,11 +387,9 @@ PCX LOADING
 */
 
 
-/*
-==============
-LoadPCX
-==============
-*/
+/**
+ * @brief
+ */
 void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, int *height)
 {
 	byte *raw;
@@ -475,11 +490,9 @@ typedef struct _TargaHeader {
 	unsigned char pixel_size, attributes;
 } TargaHeader;
 
-/*
-=============
-LoadTGA
-=============
-*/
+/**
+ * @brief
+ */
 void LoadTGA(char *name, byte ** pic, int *width, int *height)
 {
 	int columns, rows, numPixels;
@@ -681,16 +694,25 @@ By Robert 'Heffo' Heffernan
 =================================================================
 */
 
+/**
+ * @brief
+ */
 void jpg_null(j_decompress_ptr cinfo)
 {
 }
 
+/**
+ * @brief
+ */
 boolean jpg_fill_input_buffer(j_decompress_ptr cinfo)
 {
 	ri.Con_Printf(PRINT_ALL, "Premature end of JPEG data\n");
 	return 1;
 }
 
+/**
+ * @brief
+ */
 void jpg_skip_input_data(j_decompress_ptr cinfo, long num_bytes)
 {
 	if (cinfo->src->bytes_in_buffer < (size_t) num_bytes)
@@ -700,6 +722,9 @@ void jpg_skip_input_data(j_decompress_ptr cinfo, long num_bytes)
 	cinfo->src->bytes_in_buffer -= (size_t) num_bytes;
 }
 
+/**
+ * @brief
+ */
 void jpeg_mem_src(j_decompress_ptr cinfo, byte * mem, int len)
 {
 	cinfo->src = (struct jpeg_source_mgr *) (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT, sizeof(struct jpeg_source_mgr));
@@ -712,11 +737,11 @@ void jpeg_mem_src(j_decompress_ptr cinfo, byte * mem, int len)
 	cinfo->src->next_input_byte = mem;
 }
 
-/*
-==============
-LoadJPG
-==============
-*/
+/**
+ * @brief
+ * @sa LoadPCX
+ * @sa LoadTGA
+ */
 void LoadJPG(char *filename, byte ** pic, int *width, int *height)
 {
 	struct jpeg_decompress_struct cinfo;
@@ -824,11 +849,9 @@ typedef struct {
 
 typedef my_destination_mgr *my_dest_ptr;
 
-/*
- * Initialize destination --- called by jpeg_start_compress
- * before any data is actually written.
+/**
+ * @brief Initialize destination --- called by jpeg_start_compress before any data is actually written
  */
-
 void init_destination(j_compress_ptr cinfo)
 {
 	my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
@@ -837,11 +860,11 @@ void init_destination(j_compress_ptr cinfo)
 	dest->pub.free_in_buffer = dest->size;
 }
 
-/*
- * Terminate destination --- called by jpeg_finish_compress
+/**
+ * @brief Terminate destination --- called by jpeg_finish_compress
  * after all data has been written.  Usually needs to flush buffer.
  *
- * NB: *not* called by jpeg_abort or jpeg_destroy; surrounding
+ * @note *not* called by jpeg_abort or jpeg_destroy; surrounding
  * application must deal with any cleanup that should happen even
  * for error exit.
  */
@@ -910,6 +933,9 @@ void jpegDest(j_compress_ptr cinfo, byte * outfile, int size)
 	dest->size = size;
 }
 
+/**
+ * @brief
+ */
 void SaveJPG(char *filename, int quality, int image_width, int image_height, unsigned char *image_buffer)
 {
 	/* This struct contains the JPEG compression parameters and pointers to
@@ -1017,11 +1043,9 @@ void SaveJPG(char *filename, int quality, int image_width, int image_height, uns
 	/* And we're done! */
 }
 
-/*
-=================
-SaveJPGToBuffer
-=================
-*/
+/**
+ * @brief
+ */
 int SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_height, byte * image_buffer)
 {
 	struct jpeg_compress_struct cinfo;
@@ -1093,14 +1117,6 @@ IMAGE FLOOD FILLING
 */
 
 
-/*
-=================
-Mod_FloodFillSkin
-
-Fill background pixels so mipmapping doesn't have haloes
-=================
-*/
-
 typedef struct {
 	short x, y;
 } floodfill_t;
@@ -1120,6 +1136,9 @@ typedef struct {
 	else if (pos[off] != 255) fdc = pos[off]; \
 }
 
+/**
+ * @brief Fill background pixels so mipmapping doesn't have haloes
+ */
 void R_FloodFillSkin(byte * skin, int skinwidth, int skinheight)
 {
 	byte fillcolor = *skin;		/* assume this is the pixel to fill */
@@ -1175,11 +1194,9 @@ void R_FloodFillSkin(byte * skin, int skinwidth, int skinheight)
 /*======================================================= */
 
 
-/*
-================
-GL_ResampleTexture
-================
-*/
+/**
+ * @brief
+ */
 void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
 {
 	int i, j;
@@ -1223,14 +1240,9 @@ void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, 
 		qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 }
 
-/*
-================
-GL_LightScaleTexture
-
-Scale up the pixel values in a texture to increase the
-lighting range
-================
-*/
+/**
+ * @brief Scale up the pixel values in a texture to increase the lighting range
+ */
 void GL_LightScaleTexture(unsigned *in, int inwidth, int inheight, qboolean only_gamma)
 {
 	if (gl_combine || only_gamma) {
@@ -1260,13 +1272,9 @@ void GL_LightScaleTexture(unsigned *in, int inwidth, int inheight, qboolean only
 	}
 }
 
-/*
-================
-GL_MipMap
-
-Operates in place, quartering the size of the texture
-================
-*/
+/**
+ * @brief Operates in place, quartering the size of the texture
+ */
 void GL_MipMap(byte * in, int width, int height)
 {
 	int i, j;
@@ -1290,6 +1298,9 @@ void GL_MipMap(byte * in, int width, int height)
 #define EDGE_FILTER	2
 #define EMBOSS_FILTER	3
 
+/**
+ * @brief
+ */
 float FilterMatrix[][FILTER_SIZE][FILTER_SIZE] = {
 	/* regular blur */
 	{
@@ -1325,18 +1336,14 @@ float FilterMatrix[][FILTER_SIZE][FILTER_SIZE] = {
 	 }
 };
 
-/*
-==================
-R_FilterTexture
-
-Applies a 5 x 5 filtering matrix to the texture, then runs it through a simulated OpenGL texture environment
-blend with the original data to derive a new texture.  Freaky, funky, and *f--king* *fantastic*.  You can do
-reasonable enough "fake bumpmapping" with this baby...
-
-Filtering algorithm from http://www.student.kuleuven.ac.be/~m0216922/CG/filtering.html
-All credit due
-==================
-*/
+/**
+ * @brief Applies a 5 x 5 filtering matrix to the texture, then runs it through a simulated OpenGL texture environment
+ * blend with the original data to derive a new texture.  Freaky, funky, and *f--king* *fantastic*.  You can do
+ * reasonable enough "fake bumpmapping" with this baby...
+ *
+ * Filtering algorithm from http://www.student.kuleuven.ac.be/~m0216922/CG/filtering.html
+ * All credit due
+ */
 void R_FilterTexture(int filterindex, unsigned int *data, int width, int height, float factor, float bias, qboolean greyscale, GLenum GLBlendOperator)
 {
 	int i;
@@ -1456,16 +1463,13 @@ void R_FilterTexture(int filterindex, unsigned int *data, int width, int height,
 	free(temp);
 }
 
-/*
-===============
-GL_Upload32
-
-Returns has_alpha
-===============
-*/
 int upload_width, upload_height;
 unsigned scaled_buffer[1024 * 1024];
 
+/**
+ * @brief
+ * @return has_alpha
+ */
 qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type)
 {
 	unsigned *scaled;
@@ -1578,13 +1582,10 @@ qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qbo
 	return (samples == gl_alpha_format || samples == gl_compressed_alpha_format);
 }
 
-/*
-===============
-GL_Upload8
-
-Returns has_alpha
-===============
-*/
+/**
+ * @brief
+ * @return has_alpha
+ */
 qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type)
 {
 	unsigned *trans;
@@ -1634,11 +1635,6 @@ qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagety
 }
 
 
-/*
-================
-GL_CalcDayAndNight
-================
-*/
 #define DAN_WIDTH	512
 #define DAN_HEIGHT	256
 
@@ -1647,6 +1643,9 @@ GL_CalcDayAndNight
 byte DaNalpha[DAN_WIDTH * DAN_HEIGHT];
 image_t *DaN;
 
+/**
+ * @brief
+ */
 void GL_CalcDayAndNight(float q)
 {
 /* 	int start; */
@@ -1708,13 +1707,9 @@ void GL_CalcDayAndNight(float q)
 }
 
 
-/*
-================
-GL_LoadPic
-
-This is also used as an entry point for the generated r_notexture
-================
-*/
+/**
+ * @brief This is also used as an entry point for the generated r_notexture
+ */
 image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t type, int bits)
 {
 	image_t *image;
@@ -1798,11 +1793,9 @@ image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t t
 }
 
 
-/*
-================
-GL_LoadWal
-================
-*/
+/**
+ * @brief
+ */
 image_t *GL_LoadWal(char *name)
 {
 	miptex_t *mt;
@@ -1827,13 +1820,9 @@ image_t *GL_LoadWal(char *name)
 }
 
 
-/*
-===============
-GL_FindImageForShader
-
-Finds an image for a shader
-===============
-*/
+/**
+ * @brief Finds an image for a shader
+ */
 image_t *GL_FindImageForShader(char *name)
 {
 	int i;
@@ -1846,13 +1835,9 @@ image_t *GL_FindImageForShader(char *name)
 	return NULL;
 }
 
-/*
-===============
-GL_FindImage
-
-Finds or loads the given image
-===============
-*/
+/**
+ * @brief Finds or loads the given image
+ */
 image_t *GL_FindImage(char *pname, imagetype_t type)
 {
 	char lname[MAX_QPATH];
@@ -1956,24 +1941,17 @@ image_t *GL_FindImage(char *pname, imagetype_t type)
 
 
 
-/*
-===============
-R_RegisterSkin
-===============
-*/
+/**
+ * @brief
+ */
 struct image_s *R_RegisterSkin(char *name)
 {
 	return GL_FindImage(name, it_skin);
 }
 
-/*
-================
-GL_FreeUnusedImages
-
-Any image that was not touched on this registration sequence
-will be freed.
-================
-*/
+/**
+ * @brief Any image that was not touched on this registration sequence will be freed
+ */
 void GL_FreeUnusedImages(void)
 {
 	int i;
@@ -1997,11 +1975,9 @@ void GL_FreeUnusedImages(void)
 }
 
 
-/*
-===============
-Draw_GetPalette
-===============
-*/
+/**
+ * @brief
+ */
 int Draw_GetPalette(void)
 {
 	int i;
@@ -2035,11 +2011,9 @@ int Draw_GetPalette(void)
 }
 
 
-/*
-===============
-GL_InitImages
-===============
-*/
+/**
+ * @brief
+ */
 void GL_InitImages(void)
 {
 	int i, j;
@@ -2089,11 +2063,9 @@ void GL_InitImages(void)
 	}
 }
 
-/*
-===============
-GL_ShutdownImages
-===============
-*/
+/**
+ * @brief
+ */
 void GL_ShutdownImages(void)
 {
 	int i;

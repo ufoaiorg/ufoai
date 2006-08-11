@@ -1,4 +1,27 @@
-/* gl_mesh.c: triangle model functions */
+/**
+ * @file gl_rmain.c
+ * @brief
+ */
+
+/*
+Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
 
 #include "gl_local.h"
 
@@ -10,11 +33,9 @@
 =============================================================
 */
 
-/*
-===============
-R_DrawSprite
-===============
-*/
+/**
+ * @brief
+ */
 void R_DrawSprite(ptl_t * p)
 {
 	vec3_t up, right;
@@ -76,11 +97,9 @@ void R_DrawSprite(ptl_t * p)
 }
 
 
-/*
-===============
-R_DrawPtlModel
-===============
-*/
+/**
+ * @brief
+ */
 void R_DrawPtlModel(ptl_t * p)
 {
 	modelInfo_t mi;
@@ -97,11 +116,9 @@ void R_DrawPtlModel(ptl_t * p)
 }
 
 
-/*
-===============
-R_DrawPtlLine
-===============
-*/
+/**
+ * @brief
+ */
 void R_DrawPtlLine(ptl_t * p)
 {
 	qglDisable(GL_TEXTURE_2D);
@@ -127,13 +144,10 @@ void R_DrawPtlLine(ptl_t * p)
 =============================================================
 */
 
-/*
-===============
-GL_SetBlendMode
-===============
-*/
 static int blend_mode;
-
+/**
+ * @brief
+ */
 void GL_SetBlendMode(int mode)
 {
 	if (blend_mode != mode) {
@@ -166,11 +180,9 @@ void GL_SetBlendMode(int mode)
 }
 
 
-/*
-===============
-R_DrawPtls
-===============
-*/
+/**
+ * @brief
+ */
 void R_DrawPtls(void)
 {
 	ptl_t *p;

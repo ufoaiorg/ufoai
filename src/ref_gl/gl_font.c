@@ -42,9 +42,9 @@ fontRenderStyle_t fontStyle[] = {
 
 /*============================================================== */
 
-/*================
-Font_TextureAddToCache
-================*/
+/**
+ * @brief
+ */
 static GLuint Font_TextureAddToCache(SDL_Surface * s)
 {
 	int i;
@@ -73,9 +73,9 @@ static GLuint Font_TextureAddToCache(SDL_Surface * s)
 	return textureCache[i].texture;
 }
 
-/*================
-Font_TextureCleanCache
-================*/
+/**
+ * @brief
+ */
 static void Font_TextureCleanCache(void)
 {
 	int i;
@@ -89,11 +89,9 @@ static void Font_TextureCleanCache(void)
 	firstTextureCache = lastTextureCache = 0;
 }
 
-/*===============
-Font_Shutdown
-
-frees the SDL_ttf fonts
-===============*/
+/**
+ * @brief frees the SDL_ttf fonts
+ */
 void Font_Shutdown(void)
 {
 	int i;
@@ -109,11 +107,10 @@ void Font_Shutdown(void)
 	TTF_Quit();
 }
 
-/*================
-Font_Analyze
-
-TODO: Check whether font is already loaded
-================*/
+/**
+ * @brief
+ * @TODO: Check whether font is already loaded
+ */
 font_t *Font_Analyze(char *name, char *path, int renderStyle, int size)
 {
 	font_t *f = NULL;
@@ -159,9 +156,9 @@ font_t *Font_Analyze(char *name, char *path, int renderStyle, int size)
 	return f;
 }
 
-/*================
-Font_GetFont
-================*/
+/**
+ * @brief
+ */
 static font_t *Font_GetFont(char *name)
 {
 	int i;
@@ -173,9 +170,9 @@ static font_t *Font_GetFont(char *name)
 	return NULL;
 }
 
-/*================
-Font_Length
-================*/
+/**
+ * @brief
+ */
 void Font_Length(char *font, char *c, int *width, int *height)
 {
 	font_t *f = NULL;
@@ -193,9 +190,9 @@ void Font_Length(char *font, char *c, int *width, int *height)
 	TTF_SizeUTF8(f->font, c, width, height);
 }
 
-/*================
-Font_CleanCache
-================*/
+/**
+ * @brief
+ */
 void Font_CleanCache(void)
 {
 	int i = 0;
@@ -213,9 +210,9 @@ void Font_CleanCache(void)
 	numInCache = 0;
 }
 
-/*============
-Font_ListCache_f
-============*/
+/**
+ * @brief
+ */
 void Font_ListCache_f(void)
 {
 	int i = 0;
@@ -244,9 +241,9 @@ void Font_ListCache_f(void)
 	ri.Con_Printf(PRINT_ALL, "...overall collisions %i\n", collSum);
 }
 
-/*============
-Font_Hash
-============*/
+/**
+ * @brief
+ */
 static int Font_Hash(const char *string, int maxlen)
 {
 	int register hashValue, i;
@@ -259,9 +256,9 @@ static int Font_Hash(const char *string, int maxlen)
 	return hashValue & (MAX_FONT_CACHE - 1);
 }
 
-/*================
-Font_GetFromCache
-================*/
+/**
+ * @brief
+ */
 static fontCache_t *Font_GetFromCache(const char *s)
 {
 	fontCache_t *font = NULL;
@@ -275,13 +272,11 @@ static fontCache_t *Font_GetFromCache(const char *s)
 	return NULL;
 }
 
-/*================
-Font_AddToCache
-
-We add the font string (e.g. f_small) to the beginning
-of each string (char *s) because we can have the same strings
-but other fonts.
-================*/
+/**
+ * @brief We add the font string (e.g. f_small) to the beginning
+ * of each string (char *s) because we can have the same strings
+ * but other fonts.
+ */
 static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 {
 	int hashValue;
@@ -312,9 +307,9 @@ static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 	return &fontCache[numInCache-1];
 }
 
-/*================
-Font_GenerateCache
-================*/
+/**
+ * @brief
+ */
 static fontCache_t *Font_GenerateCache(const char *s, const char *fontString, font_t * f)
 {
 	int w, h;
@@ -349,12 +344,11 @@ static fontCache_t *Font_GenerateCache(const char *s, const char *fontString, fo
 	return Font_AddToCache(fontString, openGLSurface, textSurface->w, textSurface->h);
 }
 
-/*================
-Font_GetLineWrap
-
-maxWidth is a pixel value
-FIXME: if maxWidth is too small to display even the first word this has bugs
-================*/
+/**
+ * @brief
+ * @param[in] maxWidth is a pixel value
+ * FIXME: if maxWidth is too small to display even the first word this has bugs
+ */
 static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width, int *height)
 {
 	char *space = NULL;
@@ -464,9 +458,9 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 	return 0;
 }
 
-/*================
-Font_ConvertChars
-================*/
+/**
+ * @brief
+ */
 static void Font_ConvertChars(char *buffer)
 {
 	char *replace = NULL;
@@ -489,9 +483,9 @@ static void Font_ConvertChars(char *buffer)
 		*replace = '\0';
 }
 
-/*================
-Font_DrawString
-================*/
+/**
+ * @brief
+ */
 int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c)
 {
 	int w = 0, h = 0, locX;
@@ -598,9 +592,9 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	return returnHeight / vid.ry;
 }
 
-/*================
-Font_Init
-================*/
+/**
+ * @brief
+ */
 void Font_Init(void)
 {
 	numFonts = 0;
@@ -613,9 +607,9 @@ void Font_Init(void)
 	atexit(TTF_Quit);
 }
 
-/*===============
-Font_Register
-===============*/
+/**
+ * @brief
+ */
 void Font_Register(char *name, int size, char *path, char *style)
 {
 	int renderstyle = 0;		/* NORMAL is standard */

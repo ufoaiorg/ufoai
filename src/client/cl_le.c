@@ -208,11 +208,9 @@ void CL_RegisterLocalModels(void)
 }
 
 
-/*
-==================
-CL_AddLocalModel
-==================
-*/
+/**
+ * @brief
+ */
 lm_t *CL_AddLocalModel(char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags)
 {
 	lm_t *lm;

@@ -1,3 +1,8 @@
+/**
+ * @file gl_model.c
+ * @brief model loading and caching
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* models.c -- model loading and caching */
 
 #include "gl_local.h"
 
@@ -43,11 +47,9 @@ int numInline;
 
 int registration_sequence;
 
-/*
-===============
-Mod_PointInLeaf
-===============
-*/
+/**
+ * @brief
+ */
 mleaf_t *Mod_PointInLeaf(vec3_t p, model_t * model)
 {
 	mnode_t *node;
@@ -77,11 +79,9 @@ mleaf_t *Mod_PointInLeaf(vec3_t p, model_t * model)
 
 /*=============================================================================== */
 
-/*
-================
-Mod_Modellist_f
-================
-*/
+/**
+ * @brief Prints all loaded models
+ */
 void Mod_Modellist_f(void)
 {
 	int i;
@@ -99,11 +99,9 @@ void Mod_Modellist_f(void)
 	ri.Con_Printf(PRINT_ALL, "Total resident: %i\n", total);
 }
 
-/*
-===============
-Mod_Init
-===============
-*/
+/**
+ * @brief
+ */
 void Mod_Init(void)
 {
 	memset(mod_novis, 0xff, sizeof(mod_novis));
@@ -111,13 +109,9 @@ void Mod_Init(void)
 
 
 
-/*
-==================
-Mod_ForName
-
-Loads in a model for the given name
-==================
-*/
+/**
+ * @brief Loads in a model for the given name
+ */
 model_t *Mod_ForName(char *name, qboolean crash)
 {
 	model_t *mod;
@@ -215,11 +209,9 @@ model_t *Mod_ForName(char *name, qboolean crash)
 byte *mod_base;
 static int shift[3];
 
-/*
-=================
-Mod_LoadLighting
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadLighting(lump_t * l)
 {
 	if (!l->filelen) {
@@ -232,11 +224,9 @@ void Mod_LoadLighting(lump_t * l)
 }
 
 
-/*
-=================
-Mod_LoadVertexes
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadVertexes(lump_t * l)
 {
 	dvertex_t *in;
@@ -259,11 +249,9 @@ void Mod_LoadVertexes(lump_t * l)
 	}
 }
 
-/*
-=================
-RadiusFromBounds
-=================
-*/
+/**
+ * @brief
+ */
 float RadiusFromBounds(vec3_t mins, vec3_t maxs)
 {
 	int i;
@@ -276,11 +264,9 @@ float RadiusFromBounds(vec3_t mins, vec3_t maxs)
 }
 
 
-/*
-=================
-Mod_LoadSubmodels
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadSubmodels(lump_t * l)
 {
 	dmodel_t *in;
@@ -310,11 +296,9 @@ void Mod_LoadSubmodels(lump_t * l)
 	}
 }
 
-/*
-=================
-Mod_LoadEdges
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadEdges(lump_t * l)
 {
 	dedge_t *in;
@@ -336,11 +320,9 @@ void Mod_LoadEdges(lump_t * l)
 	}
 }
 
-/*
-=================
-Mod_LoadTexinfo
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadTexinfo(lump_t * l)
 {
 	texinfo_t *in;
@@ -386,13 +368,9 @@ void Mod_LoadTexinfo(lump_t * l)
 	}
 }
 
-/*
-================
-CalcSurfaceExtents
-
-Fills in s->texturemins[] and s->extents[]
-================
-*/
+/**
+ * @brief Fills in s->texturemins[] and s->extents[]
+ */
 void CalcSurfaceExtents(msurface_t * s)
 {
 	float mins[2], maxs[2], val;
@@ -438,11 +416,9 @@ void CalcSurfaceExtents(msurface_t * s)
 void GL_BuildPolygonFromSurface(msurface_t * fa, int shift[3]);
 void GL_CreateSurfaceLightmap(msurface_t * surf);
 
-/*
-=================
-Mod_LoadFaces
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadFaces(lump_t * l)
 {
 	dface_t *in;
@@ -513,11 +489,9 @@ void Mod_LoadFaces(lump_t * l)
 }
 
 
-/*
-=================
-Mod_SetParent
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_SetParent(mnode_t * node, mnode_t * parent)
 {
 	node->parent = parent;
@@ -527,11 +501,9 @@ void Mod_SetParent(mnode_t * node, mnode_t * parent)
 	Mod_SetParent(node->children[1], node);
 }
 
-/*
-=================
-Mod_LoadNodes
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadNodes(lump_t * l)
 {
 	int i, j, count, p;
@@ -577,11 +549,9 @@ void Mod_LoadNodes(lump_t * l)
 	Mod_SetParent(loadmodel->nodes, NULL);
 }
 
-/*
-=================
-Mod_LoadLeafs
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadLeafs(lump_t * l)
 {
 	dleaf_t *in;
@@ -616,11 +586,9 @@ void Mod_LoadLeafs(lump_t * l)
 	}
 }
 
-/*
-=================
-Mod_LoadMarksurfaces
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadMarksurfaces(lump_t * l)
 {
 	int i, j, count;
@@ -644,11 +612,9 @@ void Mod_LoadMarksurfaces(lump_t * l)
 	}
 }
 
-/*
-=================
-Mod_LoadSurfedges
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadSurfedges(lump_t * l)
 {
 	int i, count;
@@ -671,11 +637,9 @@ void Mod_LoadSurfedges(lump_t * l)
 }
 
 
-/*
-=================
-Mod_LoadPlanes
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadPlanes(lump_t * l)
 {
 	int i, j;
@@ -708,11 +672,9 @@ void Mod_LoadPlanes(lump_t * l)
 }
 
 
-/*
-=================
-Mod_ShiftTile
-=================
-*/
+/**
+ * @brief
+ */
 static void Mod_ShiftTile(void)
 {
 	mvertex_t *vert;
@@ -732,11 +694,9 @@ static void Mod_ShiftTile(void)
 }
 
 
-/*
-=================
-R_AddMapTile
-=================
-*/
+/**
+ * @brief
+ */
 static void R_AddMapTile(char *name, int sX, int sY, int sZ)
 {
 	int i;
@@ -843,11 +803,9 @@ ALIAS MODELS
 ==============================================================================
 */
 
-/*
-=================
-Mod_LoadTags
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadTags(model_t * mod, void *buffer)
 {
 	dtag_t *pintag, *pheader;
@@ -897,11 +855,9 @@ void Mod_LoadTags(model_t * mod, void *buffer)
 }
 
 
-/*
-=================
-Mod_LoadAnims
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadAnims(model_t * mod, void *buffer)
 {
 	char *text, *token;
@@ -953,11 +909,9 @@ void Mod_LoadAnims(model_t * mod, void *buffer)
 }
 
 
-/*
-=================
-Mod_LoadAliasModel
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadAliasModel(model_t * mod, void *buffer)
 {
 	int i, j;
@@ -1088,11 +1042,9 @@ SPRITE MODELS
 ==============================================================================
 */
 
-/*
-=================
-Mod_LoadSpriteModel
-=================
-*/
+/**
+ * @brief
+ */
 void Mod_LoadSpriteModel(model_t * mod, void *buffer)
 {
 	dsprite_t *sprin, *sprout;
@@ -1195,6 +1147,9 @@ void R_BeginRegistration(char *tiles, char *pos)
 	ri.Sys_Error(ERR_DROP, "R_BeginRegistration: invalid tile names\n");
 }
 
+/**
+ * @brief
+ */
 signed int Mod_GetTris(short p1, short p2, dtriangle_t * side1, dmdl_t * hdr)
 {
 	dtriangle_t *tris = (dtriangle_t *) ((unsigned char *) hdr + hdr->ofs_tris);
@@ -1216,7 +1171,9 @@ signed int Mod_GetTris(short p1, short p2, dtriangle_t * side1, dmdl_t * hdr)
 	return -1;
 }
 
-
+/**
+ * @brief
+ */
 void Mod_FindSharedEdges(model_t * mod)
 {
 	dmdl_t *hdr = (dmdl_t *) mod->extradata;
@@ -1239,12 +1196,9 @@ void Mod_FindSharedEdges(model_t * mod)
 }
 
 
-/*
-@@@@@@@@@@@@@@@@@@@@@
-R_RegisterModel
-
-@@@@@@@@@@@@@@@@@@@@@
-*/
+/**
+ * @brief
+ */
 struct model_s *R_RegisterModel(char *name)
 {
 	model_t *mod;
@@ -1288,6 +1242,9 @@ struct model_s *R_RegisterModel(char *name)
 	return mod;
 }
 
+/**
+ * @brief
+ */
 struct model_s *R_RegisterModelShort(char *name)
 {
 	if (!name || !name[0])
@@ -1322,11 +1279,10 @@ void R_EndRegistration(void)
 	GL_FreeUnusedImages();
 }
 
-/*
-================
-Mod_Free
-================
-*/
+/**
+ * @brief
+ * @sa Mod_FreeAll
+ */
 void Mod_Free(model_t * mod)
 {
 	if (mod->extradatasize)
@@ -1334,11 +1290,10 @@ void Mod_Free(model_t * mod)
 	memset(mod, 0, sizeof(*mod));
 }
 
-/*
-================
-Mod_FreeAll
-================
-*/
+/**
+ * @brief
+ * @sa Mod_Free
+ */
 void Mod_FreeAll(void)
 {
 	int i;
