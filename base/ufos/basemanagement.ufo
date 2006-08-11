@@ -5,11 +5,11 @@
 // Alternative initial base-layout, better suited for defense
 //
 // -- _0_ _1_ _2_ _3_ _4_
-// 0: xxx xxx xxx xxx Int
-// 1: xxx xxx xxx Drp-shp
+// 0: xxx xxx xxx Drp-shp
+// 1: xxx xxx xxx Int Rdr
 // 2: xxx xxx xxx xxx Ent
-// 3: Lab Cmd xxx xxx Str
-// 4: Wrk-shp Rdr Qrt Pwr 
+// 3: xxx xxx Lab xxx Str
+// 4: Wrk-shp Cmd Qrt Pwr 
 //
 //
 // Common envisioned base types:
@@ -87,6 +87,18 @@ building building_storage
 	more_than_one	true
 }
 
+building building_teamroom
+{
+	name		"_Team Room"
+	image		base/teamroom
+	fixcosts	30000
+	depends		building_entrance // a cheap building to shield powerplant
+	build_time	3
+	varcosts	7
+	map_name	"teamroom"
+	pedia		rs_building_teamroom
+}
+
 building building_powerplant
 {
 	name		"_Power Plant"
@@ -117,18 +129,6 @@ building building_quarters
 	more_than_one	true
 	type     	quarters
 	max_employees	20
-}
-
-building building_teamroom
-{
-	name		"_Team Room"
-	image		base/teamroom
-	fixcosts	30000
-	depends		building_quarters
-	build_time	3
-	varcosts	7
-	map_name	"teamroom"
-	pedia		rs_building_teamroom
 }
 
 building building_workshop
@@ -168,7 +168,7 @@ building building_hangar
 	map_name	"drop"
 	pedia		rs_building_hangar
 	firstbase	true
-	pos		    "1 3"
+	pos		    "0 3"
 	more_than_one	true
 	type	    hangar
 	needs		building_hangar2
@@ -194,7 +194,7 @@ building building_radar
 	map_name	"radar"
 	pedia		rs_building_radar
 	firstbase	true
-	pos		    "4 2"
+	pos		    "1 4"
 	more_than_one	true
 	onconstruct	"inc_sensor 30"
 	ondestroy	"dec_sensor 30"
@@ -211,7 +211,7 @@ building building_command
 	map_name	"commando"
 	pedia		rs_building_command
 	firstbase	true
-	pos		    "3 1"
+	pos		    "4 2"
 }
 
 building building_intercept
@@ -225,7 +225,7 @@ building building_intercept
 	map_name	"intercept"
 	pedia		rs_building_intercept
 	firstbase	true
-	pos		    "0 4"
+	pos		    "1 3"
 	more_than_one	true
 	onconstruct	"aircraft_new craft_interceptor"
 //	ondestroy	???
@@ -243,7 +243,7 @@ building building_lab
 	map_name	"lab"
 	pedia		rs_building_lab
 	firstbase	true
-	pos		    "3 0"
+	pos		    "3 2"
 	more_than_one	true
 	type    	lab
 	max_employees	10
