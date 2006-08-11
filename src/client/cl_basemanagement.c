@@ -171,8 +171,10 @@ void B_SetUpBase(void)
 	Com_DPrintf("Set up for %i\n", baseCurrent->idx);
 
 	for (i = 0; i < gd.numBuildingTypes; i++) {
-		if ((gd.numBases == 1 && gd.buildingTypes[i].firstbase)
-			|| gd.buildingTypes[i].autobuild) {
+		if (gd.buildingTypes[i].autobuild
+			|| (gd.numBases == 1 
+				&& gd.buildingTypes[i].firstbase
+				&& cl_start_buildings->value)) {
 			/* TODO: implement check for moreThanOne */
 			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 			memcpy(building, &gd.buildingTypes[i], sizeof(building_t));
