@@ -2074,6 +2074,14 @@ void CL_UpdateCharacterStats(int won)
 
 #ifdef DEBUG
 /**
+ * @brief Debug function to set the credits to max
+ */
+void CL_DebugFullCredits (void)
+{
+	CL_UpdateCredits(MAX_CREDITS);
+}
+
+/**
  * @brief Debug function to increase the kills and test the ranks
  */
 static void CL_DebugChangeCharacterStats_f(void)
@@ -2755,6 +2763,10 @@ static cmdList_t game_commands[] = {
 	,
 	{"mn_mapaction_reset", MAP_ResetAction}
 	,
+#ifdef DEBUG
+	{"debug_fullcredits", CL_DebugFullCredits}
+	,
+#endif
 	{NULL, NULL}
 };
 
