@@ -84,13 +84,13 @@ equipment stage1_workers
 
 equipment stage1_workers_explosive
 {
-	plaspistol			3
-	plaspistol_ammo		4
+	plaspistol			2
+	plaspistol_ammo		3
 	plasblaster			1
 	plasblaster_ammo	1
 	kerrblade			2
-	alienincgrenade		20
-	plasmagrenade		5
+	alienincgrenade		28
+	plasmagrenade		4
 }
 
 equipment stage1_soldiers
@@ -118,8 +118,6 @@ equipment stage2_workers
 
 equipment stage2_soldiers_melee
 {
-	plaspistol			1
-	plaspistol_ammo		1
 	plasrifle			1
 	plasrifle_ammo		1
 	plasblaster			1
@@ -127,7 +125,7 @@ equipment stage2_soldiers_melee
 	tachyonpistol		1
 	tachyonpistol_ammo	1
 	kerrblade			20
-	plasblade			30
+	plasblade			28
 	alienincgrenade		7
 }
 
@@ -147,12 +145,12 @@ equipment stage2_soldiers
 
 equipment stage3_workers
 {
-	plaspistol			3
-	plaspistol_ammo		4
-	plasrifle			2
-	plasrifle_ammo		3
-	tachyonpistol		3
-	tachyonpistol_ammo	4
+	plaspistol			1
+	plaspistol_ammo		2
+	plasrifle			1
+	plasrifle_ammo		1
+	tachyonpistol		4
+	tachyonpistol_ammo	5
 	kerrblade			3
 	plasblade			4
 	alienincgrenade		4
@@ -161,17 +159,15 @@ equipment stage3_workers
 
 equipment stage3_workers_explosive
 {
-	plaspistol			2
-	plaspistol_ammo		2
-	plasblaster			3
-	plasblaster_ammo	4
+	plasblaster			2
+	plasblaster_ammo	3
 	tachyonpistol		2
 	tachyonpistol_ammo	2
 	tachyonrifle		1
 	tachyonrifle_ammo	1
 	kerrblade			2
-	alienincgrenade		23
-	plasmagrenade		23
+	alienincgrenade		22
+	plasmagrenade		27
 }
 
 equipment stage3_soldiers
@@ -269,14 +265,14 @@ equipment human_farmers // some may be weaponless
 {
 	pistol				1
 	pistol_ammo			1
-	shotgun				2
-	shotgun_ammo		2
+	shotgun				1
+	shotgun_ammo		1
 }
 
 equipment human_gang
 {
-	pistol				2
-	pistol_ammo			2
+	pistol				1
+	pistol_ammo			1
 	smg 				2
 	smg_ammo			10
 	rpg				    1
@@ -287,8 +283,8 @@ equipment human_gang
 
 equipment human_police // some may be weaponless
 {
-	pistol				4
-	pistol_ammo			10
+	pistol				2
+	pistol_ammo			5
 	shotgun				1
 	shotgun_ammo		2
 	fraggrenade			1
