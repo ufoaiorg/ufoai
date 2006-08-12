@@ -171,7 +171,7 @@ typedef struct base_s {
 	/* hiredMask is teamMask from current selected aircraft */
 	int hiredMask;				/* hired mask for all soldiers in base */
 
-	/* these are 31bit masks (see baseCurrent->numWholeTeam should never exceed MAX_WHOLETEAM-1) */
+	/* these are 31bit masks FIXME: still? */
 	/* NOTE: we only use the first 19 (because we can only select from 19 soldiers) */
 	/* see cl_numnames cvars */
 	int teamMask[MAX_AIRCRAFT];	/* assigned to a specific aircraft */
