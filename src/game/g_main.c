@@ -472,7 +472,7 @@ void G_CheckEndGame(void)
 			level.winningTeam = 0;
 		else if (activeTeams == 1)
 			level.winningTeam = last;
-		level.intermissionTime = level.time + (last == 7 ? 7.0 : 3.0);
+		level.intermissionTime = level.time + (last == TEAM_ALIEN ? 7.0 : 3.0);
 	}
 }
 
@@ -491,7 +491,7 @@ void G_RunFrame(void)
 	/* check for intermission */
 	if (level.intermissionTime && level.time > level.intermissionTime) {
 		G_EndGame(level.winningTeam);
-		/* if the message gets lost, the game will not end 
+		/* if the message gets lost, the game will not end
 		   until you kill someone else, so we'll try again later */
 		level.intermissionTime = level.time + 2.0;
 		return;
