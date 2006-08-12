@@ -457,6 +457,9 @@ void G_CheckEndGame(void)
 	int activeTeams;
 	int i, last;
 
+	if (level.intermissionTime) /* already decided */
+		return;
+
 	for (i = 1, activeTeams = 0, last = 0; i < MAX_TEAMS; i++)
 		if (level.num_alive[i]) {
 			last = i;
@@ -465,11 +468,11 @@ void G_CheckEndGame(void)
 
 	/* prepare for sending results */
 	if (activeTeams < 2) {
-		level.intermissionTime = level.time + 7.0;
 		if (activeTeams == 0)
 			level.winningTeam = 0;
 		else if (activeTeams == 1)
 			level.winningTeam = last;
+		level.intermissionTime = level.time + (last == 7 ? 7.0 : 3.0);
 	}
 }
 
@@ -488,16 +491,9 @@ void G_RunFrame(void)
 	/* check for intermission */
 	if (level.intermissionTime && level.time > level.intermissionTime) {
 		G_EndGame(level.winningTeam);
-		/* is this right? can the message get lost? 
-		   if so, the game will not end until you kill someone else... */
-		level.intermissionTime = 0;
-		/* so perhaps, remove this, but add: */
-#if 0
-		/* don't run this too often to prevent overflows */
-		if (level.framenum % 100)
-			return;
-#endif
-		/* at the beginning of G_EndGame? */
+		/* if the message gets lost, the game will not end 
+		   until you kill someone else, so we'll try again later */
+		level.intermissionTime = level.time + 2.0;
 		return;
 	}
 
