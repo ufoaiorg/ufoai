@@ -228,6 +228,7 @@ employee_t* E_GetUnhiredEmployee(employeeType_t type, int idx)
 			j--;
 		}
 	}
+	Com_Printf("Could not get unhired employee with index: %i of type %i (available: %i)\n", idx, type, gd.numEmployees[type]);
 	return NULL;
 }
 
@@ -261,7 +262,6 @@ employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int idx)
 			continue;
 		}
 	}
-	Com_Printf("Could not get unhired employee with index: %i at base %i of type %i (available: %i)\n", idx, base->idx, type, gd.numEmployees[type]);
 	return NULL;
 }
 
