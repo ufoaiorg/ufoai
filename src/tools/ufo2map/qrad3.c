@@ -290,14 +290,11 @@ void MakeTransfers (int i)
 		if (!patch->transfers)
 			Error ("Memory allocation failure");
 
-		/* */
 		/* normalize all transfers so all of the light */
 		/* is transfered to the surroundings */
-		/* */
 		t = patch->transfers;
 		itotal = 0;
-		for (j=0 ; j<num_patches ; j++)
-		{
+		for (j=0 ; j<num_patches ; j++) {
 			if (transfers[j] <= 0)
 				continue;
 			itrans = transfers[j]*0x10000 / total;
@@ -322,8 +319,7 @@ void FreeTransfers (void)
 {
 	int		i;
 
-	for (i=0 ; i<num_patches ; i++)
-	{
+	for (i=0 ; i<num_patches ; i++) {
 		free (patches[i].transfers);
 		patches[i].transfers = NULL;
 	}

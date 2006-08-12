@@ -1,6 +1,4 @@
-/* */
 /* trilib.h: header file for loading triangles from an Alias triangle file */
-/* */
 #define MAXTRIANGLES	2048
 
 typedef struct {

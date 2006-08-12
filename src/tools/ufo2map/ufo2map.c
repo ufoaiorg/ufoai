@@ -266,11 +266,8 @@ int main (int argc, char **argv)
 	strcpy (name, ExpandArg (argv[argc-1]));
 	DefaultExtension (name, ".map");	/* might be .reg */
 
-	/* */
 	/* if onlyents, just grab the entites and resave */
-	/* */
-	if (onlyents)
-	{
+	if (onlyents) {
 		char out[1024];
 
 		sprintf (out, "%s.bsp", source);
@@ -284,12 +281,8 @@ int main (int argc, char **argv)
 		UnparseEntities ();
 
 		WriteBSPFile (out);
-	}
-	else
-	{
-		/* */
+	} else {
 		/* start from scratch */
-		/* */
 		LoadMapFile (name);
 		SetModelNumbers ();
 		SetLightStyles ();
@@ -300,8 +293,7 @@ int main (int argc, char **argv)
 	end = I_FloatTime ();
 	printf ("%5.0f seconds elapsed\n", end-start);
 
-	if (!onlyents)
-	{
+	if (!onlyents) {
 		printf ("----- Radiosity ----\n");
 
 		begin = start;

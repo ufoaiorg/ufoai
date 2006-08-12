@@ -711,15 +711,11 @@ qboolean CheckPlaneAgainstVolume (int pnum, node_t *node)
 	return good;
 }
 
-/*
-================
-SelectSplitSide
-
-Using a hueristic, choses one of the sides out of the brushlist
-to partition the brushes with.
-Returns NULL if there are no valid planes to split with..
-================
-*/
+/**
+ * @brief Using a hueristic, choses one of the sides out of the brushlist
+ * to partition the brushes with.
+ * @return NULL if there are no valid planes to split with..
+ */
 side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 {
 	int			value, bestvalue;
@@ -743,16 +739,13 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 	/* If any valid plane is available in a pass, no further */
 	/* passes will be tried. */
 	numpasses = 4;
-	for (pass = 0 ; pass < numpasses ; pass++)
-	{
-		for (brush = brushes ; brush ; brush=brush->next)
-		{
+	for (pass = 0 ; pass < numpasses ; pass++) {
+		for (brush = brushes ; brush ; brush=brush->next) {
 			if ( (pass & 1) && !(brush->original->contents & CONTENTS_DETAIL) )
 				continue;
 			if ( !(pass & 1) && (brush->original->contents & CONTENTS_DETAIL) )
 				continue;
-			for (i=0 ; i<brush->numsides ; i++)
-			{
+			for (i=0 ; i<brush->numsides ; i++) {
 				side = brush->sides + i;
 				if (side->bevel)
 					continue;	/* never use a bevel as a spliter */
@@ -782,8 +775,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				splits = 0;
 				epsilonbrush = 0;
 
-				for (test = brushes ; test ; test=test->next)
-				{
+				for (test = brushes ; test ; test=test->next) {
 					s = TestBrushToPlanenum (test, pnum, &bsplits, &hintsplit, &epsilonbrush);
 
 					splits += bsplits;
@@ -793,8 +785,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 					test->testside = s;
 					/* if the brush shares this face, don't bother */
 					/* testing that facenum as a splitter again */
-					if (s & PSIDE_FACING)
-					{
+					if (s & PSIDE_FACING) {
 						facing++;
 						for (j=0 ; j<test->numsides ; j++)
 						{
@@ -826,8 +817,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				/* save off the side test so we don't need */
 				/* to recalculate it when we actually seperate */
 				/* the brushes */
-				if (value > bestvalue)
-				{
+				if (value > bestvalue) {
 					bestvalue = value;
 					bestside = side;
 					bestsplits = splits;
@@ -839,10 +829,8 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 
 		/* if we found a good plane, don't bother trying any */
 		/* other passes */
-		if (bestside)
-		{
-			if (pass > 1)
-			{
+		if (bestside) {
+			if (pass > 1) {
 				if (numthreads == 1)
 					c_nonvis++;
 			}
@@ -852,11 +840,8 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 		}
 	}
 
-	/* */
 	/* clear all the tested flags we set */
-	/* */
-	for (brush = brushes ; brush ; brush=brush->next)
-	{
+	for (brush = brushes ; brush ; brush=brush->next) {
 		for (i=0 ; i<brush->numsides ; i++)
 			brush->sides[i].tested = qfalse;
 	}

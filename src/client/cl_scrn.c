@@ -149,9 +149,7 @@ void SCR_DrawDebugGraph(void)
 	float v;
 	vec4_t color = { 0.0, 0.0, 0.0, 1.0 };
 
-	/* */
 	/* draw the graph */
-	/* */
 	w = scr_vrect.width;
 
 	x = scr_vrect.x;

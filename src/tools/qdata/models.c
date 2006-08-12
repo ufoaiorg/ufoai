@@ -3,7 +3,7 @@
 
 /*================================================================= */
 
-typedef struct 
+typedef struct
 {
 	int		numnormals;
 	vec3_t	normalsum;
@@ -34,9 +34,7 @@ vec3_t		adjust;				/* set by $origin */
 int			g_fixedwidth, g_fixedheight;	/* set by $skinsize */
 
 
-/* */
 /* base frame info */
-/* */
 vec3_t		base_xyz[MAX_VERTS];
 dstvert_t	base_st[MAX_VERTS];
 dtriangle_t	triangles[MAX_TRIANGLES];
@@ -78,7 +76,7 @@ void ClearModel (void)
 	memset (&model, 0, sizeof(model));
 
 	modelname[0] = 0;
-	scale_up = 1.0;	
+	scale_up = 1.0;
 	VectorCopy (vec3_origin, adjust);
 	g_fixedwidth = g_fixedheight = 0;
 	g_skipmodel = qfalse;
@@ -131,41 +129,30 @@ void WriteModelFile (FILE *modelouthandle)
 	model.ofs_glcmds = model.ofs_frames + model.num_frames*model.framesize;
 	model.ofs_end = model.ofs_glcmds + model.num_glcmds*4;
 
-	/* */
 	/* write out the model header */
-	/* */
 	for (i=0 ; i<sizeof(dmdl_t)/4 ; i++)
 		((int *)&modeltemp)[i] = LittleLong (((int *)&model)[i]);
 
 	SafeWrite (modelouthandle, &modeltemp, sizeof(modeltemp));
 
-	/* */
 	/* write out the skin names */
-	/* */
 	SafeWrite (modelouthandle, g_skins, model.num_skins * MAX_SKINNAME);
 
-	/* */
 	/* write out the texture coordinates */
-	/* */
 	c_on = c_off = 0;
-	for (i=0 ; i<model.num_st ; i++)
-	{
+	for (i=0 ; i<model.num_st ; i++) {
 		base_st[i].s = LittleShort (base_st[i].s);
 		base_st[i].t = LittleShort (base_st[i].t);
 	}
 
 	SafeWrite (modelouthandle, base_st, model.num_st * sizeof(base_st[0]));
 
-	/* */
 	/* write out the triangles */
-	/* */
-	for (i=0 ; i<model.num_tris ; i++)
-	{
+	for (i=0 ; i<model.num_tris ; i++) {
 		int			j;
 		dtriangle_t	tri;
 
-		for (j=0 ; j<3 ; j++)
-		{
+		for (j=0 ; j<3 ; j++) {
 			tri.index_xyz[j] = LittleShort (triangles[i].index_xyz[j]);
 			tri.index_st[j] = LittleShort (triangles[i].index_st[j]);
 		}
@@ -173,32 +160,26 @@ void WriteModelFile (FILE *modelouthandle)
 		SafeWrite (modelouthandle, &tri, sizeof(tri));
 	}
 
-	/* */
 	/* write out the frames */
-	/* */
-	for (i=0 ; i<model.num_frames ; i++)
-	{
+	for (i=0 ; i<model.num_frames ; i++) {
 		in = &g_frames[i];
 		out = (daliasframe_t *)buffer;
 
 		strcpy (out->name, in->name);
-		for (j=0 ; j<3 ; j++)
-		{
+		for (j=0 ; j<3 ; j++) {
 			out->scale[j] = (in->maxs[j] - in->mins[j])/255;
 			out->translate[j] = in->mins[j];
 		}
 
-		for (j=0 ; j<model.num_xyz ; j++)
-		{
-		/* all of these are byte values, so no need to deal with endianness */
+		for (j=0 ; j<model.num_xyz ; j++) {
+			/* all of these are byte values, so no need to deal with endianness */
 			out->verts[j].lightnormalindex = in->v[j].lightnormalindex;
 
-			for (k=0 ; k<3 ; k++)
-			{
-			/* scale to byte values & min/max check */
+			for (k=0 ; k<3 ; k++) {
+				/* scale to byte values & min/max check */
 				v = Q_rint ( (in->v[j].v[k] - out->translate[k]) / out->scale[k] );
 
-			/* clamp, so rounding doesn't wrap from 255.6 to 0 */
+				/* clamp, so rounding doesn't wrap from 255.6 to 0 */
 				if (v > 255.0)
 					v = 255.0;
 				if (v < 0)
@@ -207,8 +188,7 @@ void WriteModelFile (FILE *modelouthandle)
 			}
 		}
 
-		for (j=0 ; j<3 ; j++)
-		{
+		for (j=0 ; j<3 ; j++) {
 			out->scale[j] = LittleFloat (out->scale[j]);
 			out->translate[j] = LittleFloat (out->translate[j]);
 		}
@@ -216,9 +196,7 @@ void WriteModelFile (FILE *modelouthandle)
 		SafeWrite (modelouthandle, out, model.framesize);
 	}
 
-	/* */
 	/* write out glcmds */
-	/* */
 	SafeWrite (modelouthandle, commands, numcommands*4);
 }
 
@@ -233,32 +211,26 @@ void FinishModel (void)
 	FILE		*modelouthandle;
 	int			i;
 	char		name[1024];
-	
+
 	if (!model.num_frames)
 		return;
-	
-/* */
-/* copy to release directory tree if doing a release build */
-/* */
-	if (g_release)
-	{
+
+	/* copy to release directory tree if doing a release build */
+	if (g_release) {
 		if (modelname[0])
 			sprintf (name, "%s", modelname);
 		else
 			sprintf (name, "%s/tris.md2", cdpartial);
 		ReleaseFile (name);
 
-		for (i=0 ; i<model.num_skins ; i++)
-		{
+		for (i=0 ; i<model.num_skins ; i++) {
 			ReleaseFile (g_skins[i]);
 		}
 		model.num_frames = 0;
 		return;
 	}
-	
-/* */
-/* write the model output file */
-/* */
+
+	/* write the model output file */
 	if (modelname[0])
 		sprintf (name, "%s%s", gamedir, modelname);
 	else
@@ -268,7 +240,7 @@ void FinishModel (void)
 	modelouthandle = SafeOpenWrite (name);
 
 	WriteModelFile (modelouthandle);
-	
+
 	printf ("%3dx%3d skin\n", model.skinwidth, model.skinheight);
 	printf ("%4d vertexes\n", model.num_xyz);
 	printf ("%4d triangles\n", model.num_tris);
@@ -278,7 +250,7 @@ void FinishModel (void)
 	printf ("%4d skins\n", model.num_skins);
 	printf ("file size: %d\n", (int)ftell (modelouthandle) );
 	printf ("---------------------\n");
-	
+
 	fclose (modelouthandle);
 
 	/* finish writing header file */
@@ -340,10 +312,8 @@ int	StripLength (int starttri, int startv)
 	/* look for a matching triangle */
 nexttri:
 	for (j=starttri+1, check=&triangles[starttri+1]
-		; j<model.num_tris ; j++, check++)
-	{
-		for (k=0 ; k<3 ; k++)
-		{
+		; j<model.num_tris ; j++, check++) {
+		for (k=0 ; k<3 ; k++) {
 			if (check->index_xyz[k] != m1)
 				continue;
 			if (check->index_st[k] != st1)
@@ -360,13 +330,10 @@ nexttri:
 				goto done;
 
 			/* the new edge */
-			if (stripcount & 1)
-			{
+			if (stripcount & 1) {
 				m2 = check->index_xyz[ (k+2)%3 ];
 				st2 = check->index_st[ (k+2)%3 ];
-			}
-			else
-			{
+			} else {
 				m1 = check->index_xyz[ (k+2)%3 ];
 				st1 = check->index_st[ (k+2)%3 ];
 			}
@@ -426,11 +393,9 @@ int	FanLength (int starttri, int startv)
 
 	/* look for a matching triangle */
 nexttri:
-	for (j=starttri+1, check=&triangles[starttri+1] 
-		; j<model.num_tris ; j++, check++)
-	{
-		for (k=0 ; k<3 ; k++)
-		{
+	for (j=starttri+1, check=&triangles[starttri+1]
+		; j<model.num_tris ; j++, check++) {
+		for (k=0 ; k<3 ; k++) {
 			if (check->index_xyz[k] != m1)
 				continue;
 			if (check->index_st[k] != st1)
@@ -471,14 +436,9 @@ done:
 
 
 
-/*
-================
-BuildGlCmds
-
-Generate a list of trifans or strips
-for the model, which holds for all frames
-================
-*/
+/**
+ * @brief Generate a list of trifans or strips for the model, which holds for all frames
+ */
 void BuildGlCmds (void)
 {
 	int		i, j, k;
@@ -490,34 +450,26 @@ void BuildGlCmds (void)
 	int		best_tris[1024];
 	int		type;
 
-	/* */
 	/* build tristrips */
-	/* */
 	numcommands = 0;
 	numglverts = 0;
 	memset (used, 0, sizeof(used));
-	for (i=0 ; i<model.num_tris ; i++)
-	{
+	for (i=0 ; i<model.num_tris ; i++) {
 		/* pick an unused triangle and start the trifan */
 		if (used[i])
 			continue;
 
 		bestlen = 0;
-		for (type = 0 ; type < 2 ; type++)
-/*	type = 1; */
-		{
-			for (startv =0 ; startv < 3 ; startv++)
-			{
+		for (type = 0 ; type < 2 ; type++) {
+			for (startv =0 ; startv < 3 ; startv++) {
 				if (type == 1)
 					len = StripLength (i, startv);
 				else
 					len = FanLength (i, startv);
-				if (len > bestlen)
-				{
+				if (len > bestlen) {
 					besttype = type;
 					bestlen = len;
-					for (j=0 ; j<bestlen+2 ; j++)
-					{
+					for (j=0 ; j<bestlen+2 ; j++) {
 						best_st[j] = strip_st[j];
 						best_xyz[j] = strip_xyz[j];
 					}
@@ -538,8 +490,7 @@ void BuildGlCmds (void)
 
 		numglverts += bestlen+2;
 
-		for (j=0 ; j<bestlen+2 ; j++)
-		{
+		for (j=0 ; j<bestlen+2 ; j++) {
 			/* emit a vertex into the reorder buffer */
 			k = best_st[j];
 
@@ -568,17 +519,10 @@ BASE FRAME SETUP
 ===============================================================
 */
 
-/*
-============
-BuildST
-
-Builds the triangle_st array for the base frame and
-model.skinwidth / model.skinheight
-
-  FIXME: allow this to be loaded from a file for
-  arbitrary mappings
-============
-*/
+/**
+ * @brief Builds the triangle_st array for the base frame and model.skinwidth / model.skinheight
+ * FIXME: allow this to be loaded from a file for arbitrary mappings
+ */
 void BuildST (triangle_t *ptri, int numtri)
 {
 	int			i, j;
@@ -590,29 +534,25 @@ void BuildST (triangle_t *ptri, int numtri)
 	float		*pbasevert;
 	vec3_t		vtemp1, vtemp2, normal;
 
-	/* */
 	/* find bounds of all the verts on the base frame */
-	/* */
 	ClearBounds (mins, maxs);
-	
+
 	for (i=0 ; i<numtri ; i++)
 		for (j=0 ; j<3 ; j++)
 			AddPointToBounds (ptri[i].verts[j], mins, maxs);
-	
-	for (i=0 ; i<3 ; i++)
-	{
+
+	for (i=0 ; i<3 ; i++) {
 		mins[i] = floor(mins[i]);
 		maxs[i] = ceil(maxs[i]);
 	}
-	
+
 	width = maxs[0] - mins[0];
 	height = maxs[2] - mins[2];
 
-	if (!g_fixedwidth)
-	{	/* old style */
+	if (!g_fixedwidth) {	/* old style */
 		scale = 8;
 		if (width*scale >= 150)
-			scale = 150.0 / width;	
+			scale = 150.0 / width;
 		if (height*scale >= 190)
 			scale = 190.0 / height;
 
@@ -623,9 +563,7 @@ void BuildST (triangle_t *ptri, int numtri)
 
 		iwidth += 4;
 		iheight += 4;
-	}
-	else
-	{	/* new style */
+	} else {	/* new style */
 		iwidth = g_fixedwidth / 2;
 		iheight = g_fixedheight;
 
@@ -633,27 +571,20 @@ void BuildST (triangle_t *ptri, int numtri)
 		t_scale = (float)(iheight-4) / height;
 	}
 
-/* */
-/* determine which side of each triangle to map the texture to */
-/* */
-	for (i=0 ; i<numtri ; i++)
-	{
+	/* determine which side of each triangle to map the texture to */
+	for (i=0 ; i<numtri ; i++) {
 		VectorSubtract (ptri[i].verts[0], ptri[i].verts[1], vtemp1);
 		VectorSubtract (ptri[i].verts[2], ptri[i].verts[1], vtemp2);
 		CrossProduct (vtemp1, vtemp2, normal);
 
-		if (normal[1] > 0)
-		{
+		if (normal[1] > 0) {
 			basex = iwidth + 2;
-		}
-		else
-		{
+		} else {
 			basex = 2;
 		}
 		basey = 2;
-		
-		for (j=0 ; j<3 ; j++)
-		{
+
+		for (j=0 ; j<3 ; j++) {
 			pbasevert = ptri[i].verts[j];
 
 			triangle_st[i][j][0] = Q_rint((pbasevert[0] - mins[0]) * s_scale + basex);
@@ -661,8 +592,8 @@ void BuildST (triangle_t *ptri, int numtri)
 		}
 	}
 
-/* make the width a multiple of 4; some hardware requires this, and it ensures */
-/* dword alignment for each scan */
+	/* make the width a multiple of 4; some hardware requires this, and it ensures */
+	/* dword alignment for each scan */
 	swidth = iwidth*2;
 	model.skinwidth = (swidth + 3) & ~3;
 	model.skinheight = iheight;
@@ -698,35 +629,26 @@ void Cmd_Base (void)
 	if (time1 == -1)
 		Error ("%s doesn't exist", file1);
 
-/* */
-/* load the base triangles */
-/* */
+	/* load the base triangles */
 	if (do3ds)
 		Load3DSTriangleList (file1, &ptri, &model.num_tris);
 	else
 		LoadTriangleList (file1, &ptri, &model.num_tris);
 
-/* */
-/* get the ST values */
-/* */
+	/* get the ST values */
 	BuildST (ptri, model.num_tris);
 
-/* */
-/* run through all the base triangles, storing each unique vertex in the */
-/* base vertex list and setting the indirect triangles to point to the base */
-/* vertices */
-/* */
-	for (i=0 ; i<model.num_tris ; i++)
-	{
-		for (j=0 ; j<3 ; j++)
-		{
+	/* run through all the base triangles, storing each unique vertex in the */
+	/* base vertex list and setting the indirect triangles to point to the base */
+	/* vertices */
+	for (i=0 ; i<model.num_tris ; i++) {
+		for (j=0 ; j<3 ; j++) {
 			/* get the xyz index */
 			for (k=0 ; k<model.num_xyz ; k++)
 				if (VectorCompare (ptri[i].verts[j], base_xyz[k]))
 					break;	/* this vertex is already in the base vertex list */
 
-			if (k == model.num_xyz)
-			{ /* new index */
+			if (k == model.num_xyz) { /* new index */
 				VectorCopy (ptri[i].verts[j], base_xyz[model.num_xyz]);
 				model.num_xyz++;
 			}
@@ -739,8 +661,7 @@ void Cmd_Base (void)
 				&& triangle_st[i][j][1] == base_st[k].t)
 					break;	/* this vertex is already in the base vertex list */
 
-			if (k == model.num_st)
-			{ /* new index */
+			if (k == model.num_st) { /* new index */
 				base_st[model.num_st].s = triangle_st[i][j][0];
 				base_st[model.num_st].t = triangle_st[i][j][1];
 				model.num_st++;
@@ -781,8 +702,7 @@ char	*FindFrameFile (char *frame)
 	/* check for 'run1.tri' */
 	sprintf (file1, "%s/%s%s.%s",cddir, base, suffix, trifileext);
 	time1 = FileTime (file1);
-	if (time1 != -1)
-	{
+	if (time1 != -1) {
 		sprintf (retname, "%s%s.%s", base, suffix, trifileext);
 		return retname;
 	}
@@ -790,8 +710,7 @@ char	*FindFrameFile (char *frame)
 	/* check for 'run.1' */
 	sprintf (file1, "%s/%s.%s",cddir, base, suffix);
 	time1 = FileTime (file1);
-	if (time1 != -1)
-	{
+	if (time1 != -1) {
 		sprintf (retname, "%s.%s", base, suffix);
 		return retname;
 	}
@@ -836,9 +755,7 @@ void GrabFrame (char *frame)
 
 	strcpy (fr->name, frame);
 
-/* */
-/* load the frame */
-/* */
+	/* load the frame */
 	if (do3ds)
 		Load3DSTriangleList (file1, &ptri, &num_tris);
 	else
@@ -847,25 +764,19 @@ void GrabFrame (char *frame)
 	if (num_tris != model.num_tris)
 		Error ("%s: number of triangles doesn't match base frame\n", file1);
 
-/* */
-/* allocate storage for the frame's vertices */
-/* */
+	/* allocate storage for the frame's vertices */
 	ptrivert = fr->v;
 
-	for (i=0 ; i<model.num_xyz ; i++)
-	{
+	for (i=0 ; i<model.num_xyz ; i++) {
 		vnorms[i].numnormals = 0;
 		VectorClear (vnorms[i].normalsum);
 	}
 	ClearBounds (fr->mins, fr->maxs);
 
-/* */
-/* store the frame's vertices in the same order as the base. This assumes the */
-/* triangles and vertices in this frame are in exactly the same order as in the */
-/* base */
-/* */
-	for (i=0 ; i<num_tris ; i++)
-	{
+	/* store the frame's vertices in the same order as the base. This assumes the */
+	/* triangles and vertices in this frame are in exactly the same order as in the */
+	/* base */
+	for (i=0 ; i<num_tris ; i++) {
 		vec3_t	vtemp1, vtemp2, normal;
 		float	ftemp;
 
@@ -875,7 +786,7 @@ void GrabFrame (char *frame)
 
 		VectorNormalize (normal, normal);
 
-	/* rotate the normal so the model faces down the positive x axis */
+		/* rotate the normal so the model faces down the positive x axis */
 		ftemp = normal[0];
 		normal[0] = -normal[1];
 		normal[1] = ftemp;
@@ -884,8 +795,8 @@ void GrabFrame (char *frame)
 		{
 			index_xyz = triangles[i].index_xyz[j];
 
-		/* rotate the vertices so the model faces down the positive x axis */
-		/* also adjust the vertices to the desired origin */
+			/* rotate the vertices so the model faces down the positive x axis */
+			/* also adjust the vertices to the desired origin */
 			ptrivert[index_xyz].v[0] = ((-ptri[i].verts[j][1]) * scale_up) +
 										adjust[0];
 			ptrivert[index_xyz].v[1] = (ptri[i].verts[j][0] * scale_up) +
@@ -900,12 +811,9 @@ void GrabFrame (char *frame)
 		}
 	}
 
-/* */
-/* calculate the vertex normals, match them to the template list, and store the */
-/* index of the best match */
-/* */
-	for (i=0 ; i<model.num_xyz ; i++)
-	{
+	/* calculate the vertex normals, match them to the template list, and store the */
+	/* index of the best match */
+	for (i=0 ; i<model.num_xyz ; i++) {
 		int		j;
 		vec3_t	v;
 		float	maxdot;
@@ -922,8 +830,7 @@ void GrabFrame (char *frame)
 		maxdot = -999999.0;
 		maxdotindex = -1;
 
-		for (j=0 ; j<NUMVERTEXNORMALS ; j++)
-		{
+		for (j=0 ; j<NUMVERTEXNORMALS ; j++) {
 			float	dot;
 
 			dot = DotProduct (v, avertexnormals[j]);
@@ -942,18 +849,16 @@ void GrabFrame (char *frame)
 
 /*
 ===============
-Cmd_Frame	
+Cmd_Frame
 ===============
 */
 void Cmd_Frame (void)
 {
-	while (TokenAvailable())
-	{
+	while (TokenAvailable()) {
 		GetToken (qfalse);
 		if (g_skipmodel)
 			continue;
-		if (g_release || g_archive)
-		{
+		if (g_release || g_archive) {
 			model.num_frames = 1;	/* don't skip the writeout */
 			continue;
 		}
@@ -965,14 +870,9 @@ void Cmd_Frame (void)
 }
 
 
-/*
-===============
-Cmd_Skin
-
-Skins aren't actually stored in the file, only a reference
-is saved out to the header file.
-===============
-*/
+/**
+ * @brief Skins aren't actually stored in the file, only a reference is saved out to the header file.
+ */
 void Cmd_Skin (void)
 {
 	byte	*palette;
@@ -994,14 +894,11 @@ void Cmd_Skin (void)
 	strcpy (name, ExpandPathAndArchive( name ) );
 /*	sprintf (name, "%s/%s.lbm", cddir, token); */
 
-	if (TokenAvailable())
-	{
+	if (TokenAvailable()) {
 		GetToken (qfalse);
 		sprintf (g_skins[model.num_skins], "%s.pcx", token);
 		sprintf (savename, "%s%s.pcx", gamedir, g_skins[model.num_skins]);
-	}
-	else
-	{
+	} else {
 		sprintf (savename, "%s/%s.pcx", cddir, token);
 		sprintf (g_skins[model.num_skins], "%s/%s.pcx", cdpartial, token);
 	}
@@ -1018,8 +915,7 @@ void Cmd_Skin (void)
 
 	/* crop it to the proper size */
 	cropped = malloc (model.skinwidth*model.skinheight);
-	for (y=0 ; y<model.skinheight ; y++)
-	{
+	for (y=0 ; y<model.skinheight ; y++) {
 		memcpy (cropped+y*model.skinwidth,
 			pixels+y*width, model.skinwidth);
 	}
@@ -1072,13 +968,9 @@ void Cmd_ScaleUp (void)
 }
 
 
-/*
-=================
-Cmd_Skinsize
-
-Set a skin size other than the default
-=================
-*/
+/**
+ * @brief Set a skin size other than the default
+ */
 void Cmd_Skinsize (void)
 {
 	GetToken (qfalse);
@@ -1087,13 +979,9 @@ void Cmd_Skinsize (void)
 	g_fixedheight = atoi(token);
 }
 
-/*
-=================
-Cmd_Modelname
-
-Gives a different name/location for the file, instead of the cddir
-=================
-*/
+/**
+ * @brief Gives a different name/location for the file, instead of the cddir
+ */
 void Cmd_Modelname (void)
 {
 	GetToken (qfalse);
@@ -1113,8 +1001,8 @@ void Cmd_Cd (void)
 	GetToken (qfalse);
 
 	/* this is a silly mess... */
-	sprintf (cdpartial, "models/%s", token); 
-	sprintf (cdarchive, "%smodels/%s", gamedir+strlen(qdir), token); 
+	sprintf (cdpartial, "models/%s", token);
+	sprintf (cdarchive, "%smodels/%s", gamedir+strlen(qdir), token);
 	sprintf (cddir, "%s%s", gamedir, cdpartial);
 
 	/* if -only was specified and this cd doesn't match, */
@@ -1122,8 +1010,7 @@ void Cmd_Cd (void)
 	/* so you could regrab all monsters with -only monsters) */
 	if (!g_only[0])
 		return;
-	if (strncmp(token, g_only, strlen(g_only)))
-	{
+	if (strncmp(token, g_only, strlen(g_only))) {
 		g_skipmodel = qtrue;
 		printf ("skipping %s\n", cdpartial);
 	}

@@ -14,8 +14,7 @@ int	FindMiptex (char *name)
 	miptex_t	*mt;
 
 	for (i=0 ; i<nummiptex ; i++)
-		if (!strcmp (name, textureref[i].name))
-		{
+		if (!strcmp (name, textureref[i].name)) {
 			return i;
 		}
 	if (nummiptex == MAX_MAP_TEXTURES)
@@ -24,8 +23,7 @@ int	FindMiptex (char *name)
 
 	/* load the miptex to get the flags and values */
 	sprintf (path, "%stextures/%s.wal", gamedir, name);
-	if (TryLoadFile (path, (void **)&mt) != -1)
-	{
+	if (TryLoadFile (path, (void **)&mt) != -1) {
 		textureref[i].value = LittleLong (mt->value);
 		textureref[i].flags = LittleLong (mt->flags);
 		textureref[i].contents = LittleLong (mt->contents);
@@ -61,20 +59,18 @@ void TextureAxisFromPlane(plane_t *pln, vec3_t xv, vec3_t yv)
 	int		bestaxis;
 	vec_t	dot,best;
 	int		i;
-	
+
 	best = 0;
 	bestaxis = 0;
-	
-	for (i=0 ; i<6 ; i++)
-	{
+
+	for (i=0 ; i<6 ; i++) {
 		dot = DotProduct (pln->normal, baseaxis[i*3]);
-		if (dot > best)
-		{
+		if (dot > best) {
 			best = dot;
 			bestaxis = i;
 		}
 	}
-	
+
 	VectorCopy (baseaxis[bestaxis*3+1], xv);
 	VectorCopy (baseaxis[bestaxis*3+2], yv);
 }
@@ -119,8 +115,7 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin)
 		{ sinv = 0 ; cosv = -1; }
 	else if (bt->rotate == 270)
 		{ sinv = -1 ; cosv = 0; }
-	else
-	{	
+	else {
 		ang = bt->rotate / 180 * Q_PI;
 		sinv = sin(ang);
 		cosv = cos(ang);
@@ -132,16 +127,15 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin)
 		sv = 1;
 	else
 		sv = 2;
-				
+
 	if (vecs[1][0])
 		tv = 0;
 	else if (vecs[1][1])
 		tv = 1;
 	else
 		tv = 2;
-					
-	for (i=0 ; i<2 ; i++)
-	{
+
+	for (i=0 ; i<2 ; i++) {
 		ns = cosv * vecs[i][sv] - sinv * vecs[i][tv];
 		nt = sinv * vecs[i][sv] +  cosv * vecs[i][tv];
 		vecs[i][sv] = ns;
@@ -157,22 +151,17 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin)
 	tx.flags = bt->flags;
 	tx.value = bt->value;
 
-	/* */
 	/* find the texinfo */
-	/* */
 	tc = texinfo;
-	for (i=0 ; i<numtexinfo ; i++, tc++)
-	{
+	for (i=0 ; i<numtexinfo ; i++, tc++) {
 		if (tc->flags != tx.flags)
 			continue;
 		if (tc->value != tx.value)
 			continue;
-		for (j=0 ; j<2 ; j++)
-		{
+		for (j=0 ; j<2 ; j++) {
 			if (strcmp (tc->texture, tx.texture))
 				goto skip;
-			for (k=0 ; k<4 ; k++)
-			{
+			for (k=0 ; k<4 ; k++) {
 				if (tc->vecs[j][k] != tx.vecs[j][k])
 					goto skip;
 			}
@@ -185,15 +174,12 @@ skip:;
 
 	/* load the next animation */
 	mt = FindMiptex (bt->name);
-	if (textureref[mt].animname[0])
-	{
+	if (textureref[mt].animname[0]) {
 		anim = *bt;
 		strcpy (anim.name, textureref[mt].animname);
 		tc->nexttexinfo = TexinfoForBrushTexture (plane, &anim, origin);
-	}
-	else
+	} else
 		tc->nexttexinfo = -1;
-
 
 	return i;
 }

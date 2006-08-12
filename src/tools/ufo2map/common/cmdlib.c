@@ -639,14 +639,11 @@ void    SaveFile (char *filename, void *buffer, int count)
 void DefaultExtension (char *path, char *extension)
 {
 	char    *src;
-/* */
-/* if path doesnt have a .EXT, append extension */
-/* (extension should include the .) */
-/* */
+	/* if path doesnt have a .EXT, append extension */
+	/* (extension should include the .) */
 	src = path + strlen(path) - 1;
 
-	while (*src != PATHSEPERATOR && src != path)
-	{
+	while (*src != PATHSEPERATOR && src != path) {
 		if (*src == '.')
 			return;                 /* it has an extension */
 		src--;
@@ -707,9 +704,7 @@ void ExtractFilePath (char *path, char *dest)
 
 	src = path + strlen(path) - 1;
 
-/* */
-/* back up until a \ or the start */
-/* */
+	/* back up until a \ or the start */
 	while (src != path && *(src-1) != '\\' && *(src-1) != '/')
 		src--;
 
@@ -723,14 +718,11 @@ void ExtractFileBase (char *path, char *dest)
 
 	src = path + strlen(path) - 1;
 
-/* */
-/* back up until a \ or the start */
-/* */
+	/* back up until a \ or the start */
 	while (src != path && *(src-1) != PATHSEPERATOR)
 		src--;
 
-	while (*src && *src != '.')
-	{
+	while (*src && *src != '.') {
 		*dest++ = *src++;
 	}
 	*dest = 0;
@@ -742,13 +734,10 @@ void ExtractFileExtension (char *path, char *dest)
 
 	src = path + strlen(path) - 1;
 
-/* */
-/* back up until a . or the start */
-/* */
+	/* back up until a . or the start */
 	while (src != path && *(src-1) != '.')
 		src--;
-	if (src == path)
-	{
+	if (src == path) {
 		*dest = 0;	/* no extension */
 		return;
 	}
@@ -770,8 +759,7 @@ int ParseHex (char *hex)
 	num = 0;
 	str = hex;
 
-	while (*str)
-	{
+	while (*str) {
 		num <<= 4;
 		if (*str >= '0' && *str <= '9')
 			num += *str-'0';
@@ -813,7 +801,7 @@ int ParseNum (char *str)
 
 #ifdef __BIG_ENDIAN__
 
-short   LittleShort (short l)
+short LittleShort (short l)
 {
 	byte    b1,b2;
 
@@ -823,15 +811,15 @@ short   LittleShort (short l)
 	return (b1<<8) + b2;
 }
 
-short   BigShort (short l)
+short BigShort (short l)
 {
 	return l;
 }
 
 
-int    LittleLong (int l)
+int LittleLong (int l)
 {
-	byte    b1,b2,b3,b4;
+	byte b1,b2,b3,b4;
 
 	b1 = l&255;
 	b2 = (l>>8)&255;
@@ -841,13 +829,13 @@ int    LittleLong (int l)
 	return ((int)b1<<24) + ((int)b2<<16) + ((int)b3<<8) + b4;
 }
 
-int    BigLong (int l)
+int BigLong (int l)
 {
 	return l;
 }
 
 
-float	LittleFloat (float l)
+float LittleFloat (float l)
 {
 	union {byte b[4]; float f;} in, out;
 
@@ -860,7 +848,7 @@ float	LittleFloat (float l)
 	return out.f;
 }
 
-float	BigFloat (float l)
+float BigFloat (float l)
 {
 	return l;
 }
@@ -869,9 +857,9 @@ float	BigFloat (float l)
 #else
 
 
-short   BigShort (short l)
+short BigShort (short l)
 {
-	byte    b1,b2;
+	byte b1,b2;
 
 	b1 = l&255;
 	b2 = (l>>8)&255;
@@ -879,15 +867,15 @@ short   BigShort (short l)
 	return (b1<<8) + b2;
 }
 
-short   LittleShort (short l)
+short LittleShort (short l)
 {
 	return l;
 }
 
 
-int    BigLong (int l)
+int BigLong (int l)
 {
-	byte    b1,b2,b3,b4;
+	byte b1,b2,b3,b4;
 
 	b1 = l&255;
 	b2 = (l>>8)&255;
@@ -897,12 +885,12 @@ int    BigLong (int l)
 	return ((int)b1<<24) + ((int)b2<<16) + ((int)b3<<8) + b4;
 }
 
-int    LittleLong (int l)
+int LittleLong (int l)
 {
 	return l;
 }
 
-float	BigFloat (float l)
+float BigFloat (float l)
 {
 	union {byte b[4]; float f;} in, out;
 
@@ -915,7 +903,7 @@ float	BigFloat (float l)
 	return out.f;
 }
 
-float	LittleFloat (float l)
+float LittleFloat (float l)
 {
 	return l;
 }
@@ -1000,11 +988,9 @@ void	CreatePath (char *path)
 	if (path[1] == ':')
 		path += 2;
 
-	for (ofs = path+1 ; *ofs ; ofs++)
-	{
+	for (ofs = path+1 ; *ofs ; ofs++) {
 		c = *ofs;
-		if (c == '/' || c == '\\')
-		{	/* create the directory */
+		if (c == '/' || c == '\\') {	/* create the directory */
 			*ofs = 0;
 			Q_mkdir (path);
 			*ofs = c;
@@ -1013,13 +999,9 @@ void	CreatePath (char *path)
 }
 
 
-/*
-============
-QCopyFile
-
-  Used to archive source files
-============
-*/
+/**
+ * @brief Used to archive source files
+ */
 void QCopyFile (char *from, char *to)
 {
 	void	*buffer;

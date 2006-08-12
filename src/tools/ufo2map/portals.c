@@ -432,33 +432,27 @@ void SplitNodePortals (node_t *node)
 		RemovePortalFromNode (p, p->nodes[0]);
 		RemovePortalFromNode (p, p->nodes[1]);
 
-		/* */
 		/* cut the portal into two portals, one on each side of the cut plane */
-		/* */
 		ClipWindingEpsilon (p->winding, plane->normal, plane->dist,
 			SPLIT_WINDING_EPSILON, &frontwinding, &backwinding);
 
-		if (frontwinding && WindingIsTiny(frontwinding))
-		{
+		if (frontwinding && WindingIsTiny(frontwinding)) {
 			FreeWinding (frontwinding);
 			frontwinding = NULL;
 			c_tinyportals++;
 		}
 
-		if (backwinding && WindingIsTiny(backwinding))
-		{
+		if (backwinding && WindingIsTiny(backwinding)) {
 			FreeWinding (backwinding);
 			backwinding = NULL;
 			c_tinyportals++;
 		}
 
-		if (!frontwinding && !backwinding)
-		{	/* tiny windings on both sides */
+		if (!frontwinding && !backwinding) {	/* tiny windings on both sides */
 			continue;
 		}
 
-		if (!frontwinding)
-		{
+		if (!frontwinding) {
 			FreeWinding (backwinding);
 			if (side == 0)
 				AddPortalToNodes (p, b, other_node);
@@ -466,8 +460,7 @@ void SplitNodePortals (node_t *node)
 				AddPortalToNodes (p, other_node, b);
 			continue;
 		}
-		if (!backwinding)
-		{
+		if (!backwinding) {
 			FreeWinding (frontwinding);
 			if (side == 0)
 				AddPortalToNodes (p, f, other_node);
@@ -483,13 +476,10 @@ void SplitNodePortals (node_t *node)
 		FreeWinding (p->winding);
 		p->winding = frontwinding;
 
-		if (side == 0)
-		{
+		if (side == 0) {
 			AddPortalToNodes (p, f, other_node);
 			AddPortalToNodes (new_portal, b, other_node);
-		}
-		else
-		{
+		} else {
 			AddPortalToNodes (p, other_node, f);
 			AddPortalToNodes (new_portal, other_node, b);
 		}
@@ -512,8 +502,7 @@ void CalcNodeBounds (node_t *node)
 
 	/* calc mins/maxs for both leafs and nodes */
 	ClearBounds (node->mins, node->maxs);
-	for (p = node->portals ; p ; p = p->next[s])
-	{
+	for (p = node->portals ; p ; p = p->next[s]) {
 		s = (p->nodes[1] == node);
 		if (!p->winding) continue;
 		for (i=0 ; i<p->winding->numpoints ; i++)
@@ -532,15 +521,12 @@ void MakeTreePortals_r (node_t *node)
 	int		i;
 
 	CalcNodeBounds (node);
-	if (node->mins[0] >= node->maxs[0])
-	{
+	if (node->mins[0] >= node->maxs[0]) {
 		printf ("WARNING: node without a volume\n");
 	}
 
-	for (i=0 ; i<3 ; i++)
-	{
-		if (node->mins[i] < -8000 || node->maxs[i] > 8000)
-		{
+	for (i=0 ; i<3 ; i++) {
+		if (node->mins[i] < -8000 || node->maxs[i] > 8000) {
 			printf ("WARNING: node with unbounded volume\n");
 			break;
 		}
@@ -586,8 +572,7 @@ void FloodPortals_r (node_t *node, int dist)
 
 	node->occupied = dist;
 
-	for (p=node->portals ; p ; p = p->next[s])
-	{
+	for (p=node->portals ; p ; p = p->next[s]) {
 		s = (p->nodes[1] == node);
 
 		if (p->nodes[!s]->occupied)
@@ -613,8 +598,7 @@ qboolean PlaceOccupant (node_t *headnode, vec3_t origin, entity_t *occupant)
 
 	/* find the leaf to start in */
 	node = headnode;
-	while (node->planenum != PLANENUM_LEAF)
-	{
+	while (node->planenum != PLANENUM_LEAF) {
 		plane = &mapplanes[node->planenum];
 		d = DotProduct (origin, plane->normal) - plane->dist;
 		if (d >= 0)
@@ -632,13 +616,9 @@ qboolean PlaceOccupant (node_t *headnode, vec3_t origin, entity_t *occupant)
 	return qtrue;
 }
 
-/*
-=============
-FloodEntities
-
-Marks all nodes that can be reached by entites
-=============
-*/
+/**
+ * @brief Marks all nodes that can be reached by entites
+ */
 qboolean FloodEntities (tree_t *tree)
 {
 	int		i;
@@ -652,8 +632,7 @@ qboolean FloodEntities (tree_t *tree)
 	inside = qfalse;
 	tree->outside_node.occupied = 0;
 
-	for (i=1 ; i<num_entities ; i++)
-	{
+	for (i=1 ; i<num_entities ; i++) {
 		GetVectorForKey (&entities[i], "origin", origin);
 		if (VectorCompare(origin, vec3_origin))
 			continue;
@@ -667,14 +646,11 @@ qboolean FloodEntities (tree_t *tree)
 		{
 			int	x, y;
 
-			for (x=-16 ; x<=16 ; x += 16)
-			{
-				for (y=-16 ; y<=16 ; y += 16)
-				{
+			for (x=-16 ; x<=16 ; x += 16) {
+				for (y=-16 ; y<=16 ; y += 16) {
 					origin[0] += x;
 					origin[1] += y;
-					if (PlaceOccupant (headnode, origin, &entities[i]))
-					{
+					if (PlaceOccupant (headnode, origin, &entities[i])) {
 						inside = qtrue;
 						goto gotit;
 					}
@@ -683,20 +659,15 @@ qboolean FloodEntities (tree_t *tree)
 				}
 			}
 gotit: ;
-		}
-		else
-		{
+		} else {
 			if (PlaceOccupant (headnode, origin, &entities[i]))
 				inside = qtrue;
 		}
 	}
 
-	if (!inside)
-	{
+	if (!inside) {
 		qprintf ("no entities in open -- no filling\n");
-	}
-	else if (tree->outside_node.occupied)
-	{
+	} else if (tree->outside_node.occupied) {
 		qprintf ("entity reached from outside -- no filling\n");
 	}
 
@@ -725,8 +696,7 @@ void FloodAreas_r (node_t *node)
 	bspbrush_t	*b;
 	entity_t	*e;
 
-	if (node->contents == CONTENTS_AREAPORTAL)
-	{
+	if (node->contents == CONTENTS_AREAPORTAL) {
 		/* this node is part of an area portal */
 		b = node->brushlist;
 		e = &entities[b->original->entitynum];
@@ -737,8 +707,7 @@ void FloodAreas_r (node_t *node)
 			return;
 
 		/* note the current area as bounding the portal */
-		if (e->portalareas[1])
-		{
+		if (e->portalareas[1]) {
 			printf ("WARNING: areaportal entity %i touches > 2 areas\n", b->original->entitynum);
 			return;
 		}
@@ -754,8 +723,7 @@ void FloodAreas_r (node_t *node)
 		return;		/* allready got it */
 	node->area = c_areas;
 
-	for (p=node->portals ; p ; p = p->next[s])
-	{
+	for (p=node->portals ; p ; p = p->next[s]) {
 		s = (p->nodes[1] == node);
 #if 0
 		if (p->nodes[!s]->occupied)
@@ -768,18 +736,12 @@ void FloodAreas_r (node_t *node)
 	}
 }
 
-/*
-=============
-FindAreas_r
-
-Just decend the tree, and for each node that hasn't had an
-area set, flood fill out from there
-=============
-*/
+/**
+ * @brief Just decend the tree, and for each node that hasn't had an area set, flood fill out from there
+ */
 void FindAreas_r (node_t *node)
 {
-	if (node->planenum != PLANENUM_LEAF)
-	{
+	if (node->planenum != PLANENUM_LEAF) {
 		FindAreas_r (node->children[0]);
 		FindAreas_r (node->children[1]);
 		return;
@@ -803,36 +765,28 @@ void FindAreas_r (node_t *node)
 	FloodAreas_r (node);
 }
 
-/*
-=============
-SetAreaPortalAreas_r
-
-Just decend the tree, and for each node that hasn't had an
-area set, flood fill out from there
-=============
-*/
+/**
+ * @brief Just decend the tree, and for each node that hasn't had an area set, flood fill out from there
+ */
 void SetAreaPortalAreas_r (node_t *node)
 {
 	bspbrush_t	*b;
 	entity_t	*e;
 
-	if (node->planenum != PLANENUM_LEAF)
-	{
+	if (node->planenum != PLANENUM_LEAF) {
 		SetAreaPortalAreas_r (node->children[0]);
 		SetAreaPortalAreas_r (node->children[1]);
 		return;
 	}
 
-	if (node->contents == CONTENTS_AREAPORTAL)
-	{
+	if (node->contents == CONTENTS_AREAPORTAL) {
 		if (node->area)
 			return;		/* allready set */
 
 		b = node->brushlist;
 		e = &entities[b->original->entitynum];
 		node->area = e->portalareas[0];
-		if (!e->portalareas[1])
-		{
+		if (!e->portalareas[1]) {
 			printf ("WARNING: areaportal entity %i doesn't touch two areas\n", b->original->entitynum);
 			return;
 		}
@@ -856,23 +810,18 @@ void EmitAreaPortals (node_t *headnode)
 	numareas = c_areas+1;
 	numareaportals = 1;		/* leave 0 as an error */
 
-	for (i=1 ; i<=c_areas ; i++)
-	{
+	for (i=1 ; i<=c_areas ; i++) {
 		dareas[i].firstareaportal = numareaportals;
-		for (j=0 ; j<num_entities ; j++)
-		{
+		for (j=0 ; j<num_entities ; j++) {
 			e = &entities[j];
 			if (!e->areaportalnum)
 				continue;
 			dp = &dareaportals[numareaportals];
-			if (e->portalareas[0] == i)
-			{
+			if (e->portalareas[0] == i) {
 				dp->portalnum = e->areaportalnum;
 				dp->otherarea = e->portalareas[1];
 				numareaportals++;
-			}
-			else if (e->portalareas[1] == i)
-			{
+			} else if (e->portalareas[1] == i) {
 				dp->portalnum = e->areaportalnum;
 				dp->otherarea = e->portalareas[0];
 				numareaportals++;
@@ -885,13 +834,9 @@ void EmitAreaPortals (node_t *headnode)
 	qprintf ("%5i numareaportals\n", numareaportals);
 }
 
-/*
-=============
-FloodAreas
-
-Mark each leaf with an area, bounded by CONTENTS_AREAPORTAL
-=============
-*/
+/**
+ * @brief Mark each leaf with an area, bounded by CONTENTS_AREAPORTAL
+ */
 void FloodAreas (tree_t *tree)
 {
 	qprintf ("--- FloodAreas ---\n");
@@ -908,8 +853,7 @@ int		c_solid;
 
 void FillOutside_r (node_t *node)
 {
-	if (node->planenum != PLANENUM_LEAF)
-	{
+	if (node->planenum != PLANENUM_LEAF) {
 		FillOutside_r (node->children[0]);
 		FillOutside_r (node->children[1]);
 		return;
@@ -917,28 +861,19 @@ void FillOutside_r (node_t *node)
 
 	/* anything not reachable by an entity */
 	/* can be filled away */
-	if (!node->occupied)
-	{
-		if (node->contents != CONTENTS_SOLID)
-		{
+	if (!node->occupied) {
+		if (node->contents != CONTENTS_SOLID) {
 			c_outside++;
 			node->contents = CONTENTS_SOLID;
-		}
-		else
+		} else
 			c_solid++;
-	}
-	else
+	} else
 		c_inside++;
-
 }
 
-/*
-=============
-FillOutside
-
-Fill all nodes that can't be reached by entities
-=============
-*/
+/**
+ * @brief Fill all nodes that can't be reached by entities
+ */
 void FillOutside (node_t *headnode)
 {
 	c_outside = 0;
@@ -954,13 +889,9 @@ void FillOutside (node_t *headnode)
 
 /*============================================================== */
 
-/*
-============
-FindPortalSide
-
-Finds a brush side to use for texturing the given portal
-============
-*/
+/**
+ * @brief Finds a brush side to use for texturing the given portal
+ */
 void FindPortalSide (portal_t *p)
 {
 	int			viscontents;
@@ -983,12 +914,10 @@ void FindPortalSide (portal_t *p)
 	bestside = NULL;
 	bestdot = 0;
 
-	for (j=0 ; j<2 ; j++)
-	{
+	for (j=0 ; j<2 ; j++) {
 		n = p->nodes[j];
 		p1 = &mapplanes[p->onnode->planenum];
-		for (bb=n->brushlist ; bb ; bb=bb->next)
-		{
+		for (bb=n->brushlist ; bb ; bb=bb->next) {
 			brush = bb->original;
 
 			if ( !(brush->contents & viscontents) )
@@ -1000,16 +929,14 @@ void FindPortalSide (portal_t *p)
 					continue;
 				if (side->texinfo == TEXINFO_NODE)
 					continue;		/* non-visible */
-				if ((side->planenum&~1) == planenum)
-				{	/* exact match */
+				if ((side->planenum&~1) == planenum) {	/* exact match */
 					bestside = &brush->original_sides[i];
 					goto gotit;
 				}
 				/* see how close the match is */
 				p2 = &mapplanes[side->planenum&~1];
 				dot = DotProduct (p1->normal, p2->normal);
-				if (dot > bestdot)
-				{
+				if (dot > bestdot) {
 					bestdot = dot;
 					bestside = side;
 				}
@@ -1037,8 +964,7 @@ void MarkVisibleSides_r (node_t *node)
 	portal_t	*p;
 	int			s;
 
-	if (node->planenum != PLANENUM_LEAF)
-	{
+	if (node->planenum != PLANENUM_LEAF) {
 		MarkVisibleSides_r (node->children[0]);
 		MarkVisibleSides_r (node->children[1]);
 		return;
@@ -1049,8 +975,7 @@ void MarkVisibleSides_r (node_t *node)
 		return;
 
 	/* see if there is a visible face */
-	for (p=node->portals ; p ; p = p->next[!s])
-	{
+	for (p=node->portals ; p ; p = p->next[!s]) {
 		s = (p->nodes[0] == node);
 		if (!p->onnode)
 			continue;		/* edge of world */
@@ -1077,11 +1002,8 @@ void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 	qprintf ("--- MarkVisibleSides ---\n");
 
 	/* clear all the visible flags */
-	for (i=startbrush ; i<endbrush ; i++)
-	{
-
+	for (i=startbrush ; i<endbrush ; i++) {
 		mb = &mapbrushes[i];
-
 		numsides = mb->numsides;
 		for (j=0 ; j<numsides ; j++)
 			mb->original_sides[j].visible = qfalse;

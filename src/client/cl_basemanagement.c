@@ -241,7 +241,7 @@ void B_SetUpBase(void)
 			/* now call the onconstruct trigger */
 			if (*building->onConstruct) {
 				baseCurrent->buildingCurrent = building;
-				Com_DPrintf("B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, baseCurrent->idx);
+				Com_DPrintf("B_SetUpBase: %s %i;\n", building->onConstruct, baseCurrent->idx);
 				Cbuf_AddText(va("%s %i;", building->onConstruct, baseCurrent->idx));
 			}
 

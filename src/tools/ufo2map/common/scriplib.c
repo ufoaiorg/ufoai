@@ -151,9 +151,7 @@ qboolean GetToken (qboolean crossline)
 	if (script->script_p >= script->end_p)
 		return EndOfScript (crossline);
 
-	/* */
 	/* skip space */
-	/* */
 skipspace:
 	while (*script->script_p <= 32)
 	{
@@ -198,17 +196,13 @@ skipspace:
 		goto skipspace;
 	}
 
-	/* */
 	/* copy token */
-	/* */
 	token_p = token;
 
-	if (*script->script_p == '"')
-	{
+	if (*script->script_p == '"') {
 		/* quoted token */
 		script->script_p++;
-		while (*script->script_p != '"')
-		{
+		while (*script->script_p != '"') {
 			*token_p++ = *script->script_p++;
 			if (script->script_p == script->end_p)
 				break;
@@ -216,21 +210,18 @@ skipspace:
 				Error ("Token too large on line %i\n",scriptline);
 		}
 		script->script_p++;
-	}
-	else	/* regular token */
-	while ( *script->script_p > 32 && *script->script_p != ';')
-	{
-		*token_p++ = *script->script_p++;
-		if (script->script_p == script->end_p)
-			break;
-		if (token_p == &token[MAXTOKEN])
-			Error ("Token too large on line %i\n",scriptline);
-	}
+	} else	/* regular token */
+		while ( *script->script_p > 32 && *script->script_p != ';') {
+			*token_p++ = *script->script_p++;
+			if (script->script_p == script->end_p)
+				break;
+			if (token_p == &token[MAXTOKEN])
+				Error ("Token too large on line %i\n",scriptline);
+		}
 
 	*token_p = 0;
 
-	if (!strcmp (token, "$include"))
-	{
+	if (!strcmp (token, "$include")) {
 		GetToken (qfalse);
 		AddScriptToStack (token);
 		return GetToken (crossline);
@@ -240,13 +231,9 @@ skipspace:
 }
 
 
-/*
-==============
-TokenAvailable
-
-Returns true if there is another token on the line
-==============
-*/
+/**
+ * @brief Returns true if there is another token on the line
+ */
 qboolean TokenAvailable (void)
 {
 	char    *search_p;
@@ -256,14 +243,12 @@ qboolean TokenAvailable (void)
 	if (search_p >= script->end_p)
 		return qfalse;
 
-	while ( *search_p <= 32)
-	{
+	while ( *search_p <= 32) {
 		if (*search_p == '\n')
 			return qfalse;
 		search_p++;
 		if (search_p == script->end_p)
 			return qfalse;
-
 	}
 
 	if (*search_p == ';')

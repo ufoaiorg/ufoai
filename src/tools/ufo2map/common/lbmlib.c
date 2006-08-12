@@ -132,18 +132,14 @@ void LoadLBM (char *filename, byte **picture, byte **palette)
 	int    formtype,formlength;
 	int    chunktype,chunklength;
 
-/* qiet compiler warnings */
+	/* qiet compiler warnings */
 	picbuffer = NULL;
 	cmapbuffer = NULL;
 
-/* */
-/* load the LBM */
-/* */
+	/* load the LBM */
 	LoadFile (filename, (void **)&LBMbuffer);
 
-/* */
-/* parse the LBM header */
-/* */
+	/* parse the LBM header */
 	LBM_P = LBMbuffer;
 	if ( *(int *)LBMbuffer != LittleLong(FORMID) )
 	   Error ("No FORM ID at start of file!\n");
@@ -161,12 +157,9 @@ void LoadLBM (char *filename, byte **picture, byte **palette)
 
 	LBM_P += 4;
 
-/* */
-/* parse chunks */
-/* */
+	/* parse chunks */
 
-	while (LBM_P < LBMEND_P)
-	{
+	while (LBM_P < LBMEND_P) {
 		chunktype = LBM_P[0] + (LBM_P[1]<<8) + (LBM_P[2]<<16) + (LBM_P[3]<<24);
 		LBM_P += 4;
 		chunklength = LBM_P[3] + (LBM_P[2]<<8) + (LBM_P[1]<<16) + (LBM_P[0]<<24);
@@ -194,29 +187,20 @@ void LoadLBM (char *filename, byte **picture, byte **palette)
 			body_p = LBM_P;
 
 			pic_p = picbuffer = malloc (bmhd.w*bmhd.h);
-			if (formtype == PBMID)
-			{
-			/* */
-			/* unpack PBM */
-			/* */
-				for (y=0 ; y<bmhd.h ; y++, pic_p += bmhd.w)
-				{
+			if (formtype == PBMID) {
+				/* unpack PBM */
+				for (y=0 ; y<bmhd.h ; y++, pic_p += bmhd.w) {
 					if (bmhd.compression == cm_rle1)
 						body_p = LBMRLEDecompress ((byte *)body_p
 						, pic_p , bmhd.w);
-					else if (bmhd.compression == cm_none)
-					{
+					else if (bmhd.compression == cm_none) {
 						memcpy (pic_p,body_p,bmhd.w);
 						body_p += Align(bmhd.w);
 					}
 				}
 
-			}
-			else
-			{
-			/* */
-			/* unpack ILBM */
-			/* */
+			} else {
+				/* unpack ILBM */
 				Error ("%s is an interlaced LBM, not packed", filename);
 			}
 			break;
@@ -257,9 +241,7 @@ void WriteLBMfile (char *filename, byte *data,
 
 	lbm = lbmptr = malloc (width*height+1000);
 
-/* */
-/* start FORM */
-/* */
+	/* start FORM */
 	*lbmptr++ = 'F';
 	*lbmptr++ = 'O';
 	*lbmptr++ = 'R';
@@ -273,9 +255,7 @@ void WriteLBMfile (char *filename, byte *data,
 	*lbmptr++ = 'M';
 	*lbmptr++ = ' ';
 
-/* */
-/* write BMHD */
-/* */
+	/* write BMHD */
 	*lbmptr++ = 'B';
 	*lbmptr++ = 'M';
 	*lbmptr++ = 'H';
@@ -301,9 +281,7 @@ void WriteLBMfile (char *filename, byte *data,
 	if (length&1)
 		*lbmptr++ = 0;          /* pad chunk to even offset */
 
-/* */
-/* write CMAP */
-/* */
+	/* write CMAP */
 	*lbmptr++ = 'C';
 	*lbmptr++ = 'M';
 	*lbmptr++ = 'A';
@@ -320,9 +298,7 @@ void WriteLBMfile (char *filename, byte *data,
 	if (length&1)
 		*lbmptr++ = 0;          /* pad chunk to even offset */
 
-/* */
-/* write BODY */
-/* */
+	/* write BODY */
 	*lbmptr++ = 'B';
 	*lbmptr++ = 'O';
 	*lbmptr++ = 'D';
@@ -339,17 +315,13 @@ void WriteLBMfile (char *filename, byte *data,
 	if (length&1)
 		*lbmptr++ = 0;          /* pad chunk to even offset */
 
-/* */
-/* done */
-/* */
+	/* done */
 	length = lbmptr-(byte *)formlength-4;
 	*formlength = BigLong(length);
 	if (length&1)
 		*lbmptr++ = 0;          /* pad chunk to even offset */
 
-/* */
-/* write output file */
-/* */
+	/* write output file */
 	SaveFile (filename, lbm, lbmptr-lbm);
 	free (lbm);
 }
@@ -395,14 +367,10 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 	int		dataByte, runLength;
 	byte	*out, *pix;
 
-	/* */
 	/* load the file */
-	/* */
 	len = LoadFile (filename, (void **)&raw);
 
-	/* */
 	/* parse the PCX file */
-	/* */
 	pcx = (pcx_t *)raw;
 	raw = &pcx->data;
 
@@ -423,8 +391,7 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 		|| pcx->ymax >= 480)
 		Error ("Bad pcx file %s", filename);
 
-	if (palette)
-	{
+	if (palette) {
 		*palette = malloc(768);
 		memcpy (*palette, (byte *)pcx + len - 768, 768);
 	}
@@ -445,24 +412,19 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 
 	pix = out;
 
-	for (y=0 ; y<=pcx->ymax ; y++, pix += pcx->xmax+1)
-	{
-		for (x=0 ; x<=pcx->xmax ; )
-		{
+	for (y=0 ; y<=pcx->ymax ; y++, pix += pcx->xmax+1) {
+		for (x=0 ; x<=pcx->xmax ; ) {
 			dataByte = *raw++;
 
-			if((dataByte & 0xC0) == 0xC0)
-			{
+			if((dataByte & 0xC0) == 0xC0) {
 				runLength = dataByte & 0x3F;
 				dataByte = *raw++;
-			}
-			else
+			} else
 				runLength = 1;
 
 			while(runLength-- > 0)
 				pix[x++] = dataByte;
 		}
-
 	}
 
 	if ( raw - (byte *)pcx > len)
@@ -503,14 +465,11 @@ void WritePCXfile (char *filename, byte *data,
 	/* pack the image */
 	pack = &pcx->data;
 
-	for (i=0 ; i<height ; i++)
-	{
-		for (j=0 ; j<width ; j++)
-		{
+	for (i=0 ; i<height ; i++) {
+		for (j=0 ; j<width ; j++) {
 			if ( (*data & 0xc0) != 0xc0)
 				*pack++ = *data++;
-			else
-			{
+			else {
 				*pack++ = 0xc1;
 				*pack++ = *data++;
 			}
@@ -522,7 +481,7 @@ void WritePCXfile (char *filename, byte *data,
 	for (i=0 ; i<768 ; i++)
 		*pack++ = *palette++;
 
-/* write output file */
+	/* write output file */
 	length = pack - (byte *)pcx;
 	SaveFile (filename, pcx, length);
 
@@ -552,30 +511,22 @@ void Load256Image (char *name, byte **pixels, byte **palette,
 	char	ext[128];
 
 	ExtractFileExtension (name, ext);
-	if (!Q_strcasecmp (ext, "lbm"))
-	{
+	if (!Q_strcasecmp (ext, "lbm")) {
 		LoadLBM (name, pixels, palette);
 		if (width)
 			*width = bmhd.w;
 		if (height)
 			*height = bmhd.h;
-	}
-	else if (!Q_strcasecmp (ext, "pcx"))
-	{
+	} else if (!Q_strcasecmp (ext, "pcx")) {
 		LoadPCX (name, pixels, palette, width, height);
-	}
-	else
+	} else
 		Error ("%s doesn't have a known image extension", name);
 }
 
 
-/*
-==============
-Save256Image
-
-Will save either an lbm or pcx, depending on extension.
-==============
-*/
+/**
+ * @brief Will save either an lbm or pcx, depending on extension.
+ */
 void Save256Image (char *name, byte *pixels, byte *palette,
 				   int width, int height)
 {
@@ -583,13 +534,9 @@ void Save256Image (char *name, byte *pixels, byte *palette,
 
 	ExtractFileExtension (name, ext);
 	if (!Q_strcasecmp (ext, "lbm"))
-	{
 		WriteLBMfile (name, pixels, width, height, palette);
-	}
 	else if (!Q_strcasecmp (ext, "pcx"))
-	{
 		WritePCXfile (name, pixels, width, height, palette);
-	}
 	else
 		Error ("%s doesn't have a known image extension", name);
 }

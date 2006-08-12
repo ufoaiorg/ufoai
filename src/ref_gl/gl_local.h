@@ -206,17 +206,13 @@ extern int gl_filter_min, gl_filter_max;
 
 extern image_t *DaN;
 
-/* */
 /* view origin */
-/* */
 extern vec3_t vup;
 extern vec3_t vpn;
 extern vec3_t vright;
 extern vec3_t r_origin;
 
-/* */
 /* screen size info */
-/* */
 extern refdef_t r_newrefdef;
 
 extern cvar_t *r_norefresh;

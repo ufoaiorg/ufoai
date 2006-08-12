@@ -1,8 +1,6 @@
 
-/* */
 /* qfiles.h: quake file formats */
 /* This file must be identical in the quake and utils directories */
-/* */
 
 /*
 ========================================================================
@@ -81,7 +79,7 @@ typedef struct
 	short	t;
 } dstvert_t;
 
-typedef struct 
+typedef struct
 {
 	short	index_xyz[3];
 	short	index_st[3];
@@ -137,7 +135,7 @@ typedef struct
 	int			ofs_st;			/* byte offset from start for stverts */
 	int			ofs_tris;		/* offset for dtriangles */
 	int			ofs_frames;		/* offset for first frame */
-	int			ofs_glcmds;	
+	int			ofs_glcmds;
 	int			ofs_end;		/* end of file */
 
 } dmdl_t;
@@ -266,7 +264,7 @@ typedef struct
 typedef struct
 {
 	int			ident;
-	int			version;	
+	int			version;
 	lump_t		lumps[HEADER_LUMPS];
 } dheader_t;
 
@@ -404,7 +402,7 @@ typedef struct
 	short		side;
 
 	int			firstedge;		/* we must support > 64k edges */
-	short		numedges;	
+	short		numedges;
 	short		texinfo;
 
 /* lighting info */

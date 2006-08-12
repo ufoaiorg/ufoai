@@ -1,6 +1,7 @@
-/* */
-/* trilib.c: library for loading triangles from an Alias triangle file */
-/* */
+/**
+ * @file trilib.c
+ * @brief library for loading triangles from an Alias triangle file
+ */
 
 #include <stdio.h>
 #include "cmdlib.h"
@@ -8,7 +9,6 @@
 #include "trilib.h"
 
 /* on disk representation of a face */
-
 
 #define	FLOAT_START	99999.0
 #define	FLOAT_END	-FLOAT_START
@@ -37,9 +37,8 @@ typedef struct {
 void ByteSwapTri (tf_triangle *tri)
 {
 	int		i;
-	
-	for (i=0 ; i<sizeof(tf_triangle)/4 ; i++)
-	{
+
+	for (i=0 ; i<sizeof(tf_triangle)/4 ; i++) {
 		((int *)tri)[i] = BigLong (((int *)tri)[i]);
 	}
 }
@@ -79,8 +78,7 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 		if (fread(&start,  sizeof(float), 1, input) < 1)
 			break;
 		*(int *)&start = BigLong(*(int *)&start);
-		if (*(int *)&start != exitpattern)
-		{
+		if (*(int *)&start != exitpattern) {
 			if (start == FLOAT_START) {
 				/* Start of an object or group of objects. */
 				i = -1;
@@ -91,7 +89,7 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 					++i;
 					fread( &(name[i]), sizeof( char ), 1, input);
 				} while( name[i] != '\0' );
-	
+
 /*				indent(); */
 /*				fprintf(stdout,"OBJECT START: %s\n",name); */
 				fread( &count, sizeof(int), 1, input);
@@ -100,17 +98,17 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 				if (count != 0) {
 /*					indent(); */
 /*					fprintf(stdout,"NUMBER OF TRIANGLES: %d\n",count); */
-	
+
 					i = -1;
 					do {
 						++i;
 						fread( &(tex[i]), sizeof( char ), 1, input);
 					} while( tex[i] != '\0' );
-	
+
 /*					indent(); */
 /*					fprintf(stdout,"  Object texture name: '%s'\n",tex); */
 				}
-	
+
 				/* Else (count == 0) this is the start of a group, and */
 				/* no texture name is present. */
 			}
@@ -126,27 +124,23 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 					++i;
 					fread( &(name[i]), sizeof( char ), 1, input);
 				} while( name[i] != '\0' );
-	
+
 /*				indent(); */
 /*				fprintf(stdout,"OBJECT END: %s\n",name); */
 				continue;
 			}
 		}
 
-/* */
-/* read the triangles */
-/*		 */
+		/* read the triangles */
 		for (i = 0; i < count; ++i) {
 			int		j;
 
 			fread( &tri, sizeof(tf_triangle), 1, input );
 			ByteSwapTri (&tri);
-			for (j=0 ; j<3 ; j++)
-			{
+			for (j=0 ; j<3 ; j++) {
 				int		k;
 
-				for (k=0 ; k<3 ; k++)
-				{
+				for (k=0 ; k<3 ; k++) {
 					ptri->verts[j][k] = tri.pt[j].p.v[k];
 				}
 			}

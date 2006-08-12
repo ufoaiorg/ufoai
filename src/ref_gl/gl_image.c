@@ -507,9 +507,7 @@ void LoadTGA(char *name, byte ** pic, int *width, int *height)
 
 	*pic = NULL;
 
-	/* */
 	/* load the file */
-	/* */
 	length = ri.FS_LoadFile(name, (void **) &buffer);
 	if (!buffer) {
 		ri.Con_Printf(PRINT_DEVELOPER, "Bad tga file %s\n", name);

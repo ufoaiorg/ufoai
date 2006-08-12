@@ -1,6 +1,4 @@
-/* */
 /* l3dslib.c: library for loading triangles from an Alias triangle file */
-/* */
 
 #include <stdio.h>
 #include "cmdlib.h"
@@ -50,7 +48,7 @@ void StoreAliasTriangles (void)
 			}
 		}
 	}
-	
+
 	totaltris += numtris;
 	numtris = 0;
 	vertsfound = 0;

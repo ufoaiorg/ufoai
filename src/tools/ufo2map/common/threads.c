@@ -143,19 +143,13 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	pacifier = showpacifier;
 	threaded = qtrue;
 
-	/* */
 	/* run threads in parallel */
-	/* */
 	InitializeCriticalSection (&crit);
 
-	if (numthreads == 1)
-	{	/* use same thread */
+	if (numthreads == 1) {	/* use same thread */
 		func (0);
-	}
-	else
-	{
-		for (i=0 ; i<numthreads ; i++)
-		{
+	} else {
+		for (i=0 ; i<numthreads ; i++) {
 			threadhandle[i] = CreateThread(
 			   NULL,	/* LPSECURITY_ATTRIBUTES lpsa, */
 			   0,		/* DWORD cbStack, */
@@ -194,8 +188,7 @@ int		numthreads = 4;
 
 void ThreadSetDefault (void)
 {
-	if (numthreads == -1)	/* not set manually */
-	{
+	if (numthreads == -1) {	/* not set manually */
 		numthreads = 4;
 	}
 }
@@ -242,8 +235,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	if (pacifier)
 		setbuf (stdout, NULL);
 
-	if (!my_mutex)
-	{
+	if (!my_mutex) {
 		my_mutex = malloc (sizeof(*my_mutex));
 		if (pthread_mutexattr_create (&mattrib) == -1)
 			Error ("pthread_mutex_attr_create failed");
@@ -258,15 +250,13 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	if (pthread_attr_setstacksize (&attrib, 0x100000) == -1)
 		Error ("pthread_attr_setstacksize failed");
 
-	for (i=0 ; i<numthreads ; i++)
-	{
+	for (i=0 ; i<numthreads ; i++) {
   		if (pthread_create(&work_threads[i], attrib
 		, (pthread_startroutine_t)func, (pthread_addr_t)i) == -1)
 			Error ("pthread_create failed");
 	}
 
-	for (i=0 ; i<numthreads ; i++)
-	{
+	for (i=0 ; i<numthreads ; i++) {
 		if (pthread_join (work_threads[i], &status) == -1)
 			Error ("pthread_join failed");
 	}
@@ -298,15 +288,14 @@ IRIX
 #include <sys/prctl.h>
 
 
-int		numthreads = -1;
-abilock_t		lck;
+int numthreads = -1;
+abilock_t lck;
 
 void ThreadSetDefault (void)
 {
 	if (numthreads == -1)
 		numthreads = prctl(PR_MAXPPROCS);
 	printf ("%i threads\n", numthreads);
-/*@@ */
 	usconfig (CONF_INITUSERS, numthreads);
 }
 
@@ -345,14 +334,12 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 
 	init_lock (&lck);
 
-	for (i=0 ; i<numthreads-1 ; i++)
-	{
+	for (i=0 ; i<numthreads-1 ; i++) {
 		pid[i] = sprocsp ( (void (*)(void *, size_t))func, PR_SALL, (void *)i
 			, NULL, 0x100000);
 /*		pid[i] = sprocsp ( (void (*)(void *, size_t))func, PR_SALL, (void *)i */
 /*			, NULL, 0x80000); */
-		if (pid[i] == -1)
-		{
+		if (pid[i] == -1) {
 			perror ("sproc");
 			Error ("sproc failed");
 		}

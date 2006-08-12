@@ -236,20 +236,13 @@ lm_t *CL_AddLocalModel(char *model, char *particle, vec3_t origin, vec3_t angles
 }
 
 
-/*=========================================================================== */
-/* */
-/* LE thinking */
-/* */
-/*=========================================================================== */
+/*===========================================================================
+LE thinking
+=========================================================================== */
 
-/*
-==============
-LE_Status
-
-Checks whether there are soldiers alive
-if not - end round automatically
-==============
-*/
+/**
+ * @brief Checks whether there are soldiers alive if not - end round automatically
+ */
 void LE_Status(void)
 {
 	le_t *le;
@@ -292,11 +285,9 @@ void LE_Think(void)
 }
 
 
-/*=========================================================================== */
-/* */
-/* LE think functions */
-/* */
-/*=========================================================================== */
+/*===========================================================================
+ LE think functions
+=========================================================================== */
 
 char retAnim[MAX_VAR];
 
@@ -480,11 +471,9 @@ void LET_Projectile(le_t * le)
 	}
 }
 
-/*=========================================================================== */
-/* */
-/* LE Special Effects */
-/* */
-/*=========================================================================== */
+/*===========================================================================
+ LE Special Effects
+=========================================================================== */
 
 void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal)
 {
@@ -597,16 +586,13 @@ void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 }
 
 
-/*=========================================================================== */
-/* */
-/* LE Management functions */
-/* */
-/*=========================================================================== */
+/*===========================================================================
+ LE Management functions
+=========================================================================== */
 
 
 /*
 ==============
-
 LE_Add
 ==============
 */
@@ -731,11 +717,9 @@ void LE_AddToScene(void)
 }
 
 
-/*=========================================================================== */
-/* */
-/* LE Tracing */
-/* */
-/*=========================================================================== */
+/*===========================================================================
+ LE Tracing
+=========================================================================== */
 
 
 typedef struct {
@@ -752,7 +736,6 @@ typedef struct {
 /*
 ====================
 CL_ClipMoveToLEs
-
 ====================
 */
 void CL_ClipMoveToLEs(moveclip_t * clip)
@@ -807,16 +790,10 @@ void CL_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t b
 	}
 }
 
-/*
-==================
-CL_Trace
-
-Moves the given mins/maxs volume through the world from start to end.
-
-Passedict and edicts owned by passedict are explicitly not checked.
-
-==================
-*/
+/**
+ * @brief Moves the given mins/maxs volume through the world from start to end.
+ * @note Passedict and edicts owned by passedict are explicitly not checked.
+ */
 trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * passle, int contentmask)
 {
 	moveclip_t clip;

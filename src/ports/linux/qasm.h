@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -232,7 +232,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	.extern fp_64k
 	.extern fp_1m
 	.extern fp_1m_minus_1
-	.extern fp_8 
+	.extern fp_8
 	.extern entryvec_table
 	.extern advancetable
 	.extern sstep
@@ -282,10 +282,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	.extern C(vpn)
 	.extern C(BOPS_Error)
 
-/* */
 /* !!! note that this file must match the corresponding C structures at all */
 /* times !!! */
-/* */
 
 /* plane_t structure */
 /* !!! if this is changed, it must be changed in model.h too !!! */
@@ -349,10 +347,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define psp_size		8
 
 
-/* */
 /* !!! note that this file must match the corresponding C structures at all */
 /* times !!! */
-/* */
 
 /* !!! if this is changed, it must be changed in r_local.h too !!! */
 #define	NEAR_CLIP	0.01
@@ -385,7 +381,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define spanpackage_t_tfrac				20
 #define spanpackage_t_light				24
 #define spanpackage_t_zi				28
-#define spanpackage_t_size				32 
+#define spanpackage_t_size				32
 
 /* edge_t structure */
 /* !!! if this is changed, it must be changed in r_shared.h too !!! */
