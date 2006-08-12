@@ -181,7 +181,7 @@ TRANSFER SCALES
 int	PointInLeafnum (vec3_t point)
 {
 	int nodenum;
-	vec_t ist;
+	vec_t dist;
 	dnode_t *node;
 	dplane_t *plane;
 
