@@ -1237,9 +1237,6 @@ void CL_GameSave(char *filename, char *comment)
 		MSG_WriteLong(&sb, mis->expire.sec);
 	}
 
-/*	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
-		CL_SaveEquipment( &sb, base->wholeTeam, base->numWholeTeam );*/
-
 	/* save all the stats */
 	SZ_Write(&sb, &stats, sizeof(stats));
 
@@ -2107,6 +2104,7 @@ static void CL_GameResultsCmd(void)
 	int won;
 	int i;
 	int tempMask;
+	employee_t* employee;
 
 	/* multiplayer? */
 	if (!curCampaign || !selMis || !baseCurrent )
@@ -2134,11 +2132,6 @@ static void CL_GameResultsCmd(void)
 	CL_UpdateCredits(ccs.credits + ccs.reward);
 
 	/* remove the dead (and their item preference) */
-	/* TODO: this is buggy, upon lost mission it writes:
-CL_GameResultsCmd - remove player 5 - he died
-Could not get hired employee '7' from base '0'
-CL_GameResultsCmd - done removing dead players
-	*/
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER];) {
 		if (baseCurrent->deathMask & (1 << i)) {
 			Com_DPrintf("CL_GameResultsCmd - remove player %i - he died\n", i);
@@ -2147,7 +2140,10 @@ CL_GameResultsCmd - done removing dead players
 			baseCurrent->teamMask[baseCurrent->aircraftCurrent] =
 				(baseCurrent->teamMask[baseCurrent->aircraftCurrent] & ((1 << i) - 1)) | (tempMask & ~((1 << i) - 1));
 
-			E_DeleteEmployee(&gd.employees[EMPL_SOLDIER][i], EMPL_SOLDIER);
+			employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, -(i+1));
+			if (!employee)
+				Sys_Error("Could not get hired employee %i from base %i\n", i, baseCurrent->idx);
+			E_DeleteEmployee(employee, EMPL_SOLDIER);
 			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
 		} else
 			i++;
