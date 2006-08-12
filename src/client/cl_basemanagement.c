@@ -240,9 +240,9 @@ void B_SetUpBase(void)
 
 			/* now call the onconstruct trigger */
 			if (*building->onConstruct) {
-				gd.bases[base_idx].buildingCurrent = building;
-				Com_DPrintf("B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, base_idx);
-				Cbuf_AddText(va("%s %i;", building->onConstruct, base_idx));
+				baseCurrent->buildingCurrent = building;
+				Com_DPrintf("B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, baseCurrent->idx);
+				Cbuf_AddText(va("%s %i;", building->onConstruct, baseCurrent->idx));
 			}
 
 			if (cl_start_employees->value)
