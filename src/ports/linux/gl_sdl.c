@@ -253,13 +253,11 @@ int SDLateKey(SDL_KeyboardEvent sdlke)
 		key = '~';
 		break;
 
-	default: /* assuming that the other sdl keys are mapped to ascii */
-		if( sdlke.keysym.unicode < 256 )
-			/* If the translated key is between 0 and 256, it's ok */
+	default: 
+		if( keysym >= 128 )
 			key = sdlke.keysym.unicode;
 		else
-			/* The key don't fit in the Quake3 keyboard array */
-			key = 0;
+			key = keysym;
 		break;
 	}
 
