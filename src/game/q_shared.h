@@ -1091,7 +1091,7 @@ typedef struct character_s {
 
 	int fieldSize;				/* ACTOR_SIZE_* */
 	inventory_t *inv;
-	
+
 	/* Backlink to employee-struct. */
 	int empl_idx;
 	int empl_type;

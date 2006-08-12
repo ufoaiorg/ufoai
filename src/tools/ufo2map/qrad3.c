@@ -1,17 +1,30 @@
-/* qrad.c */
-
-#include "qrad.h"
-
-
+/**
+ * @file qrad3.c
+ * @brief
+ * @note every surface must be divided into at least two patches each axis
+ */
 
 /*
+Copyright (C) 1997-2001 Id Software, Inc.
 
-NOTES
------
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
 
-every surface must be divided into at least two patches each axis
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+
+#include "qrad.h"
 
 patch_t		*face_patches[MAX_MAP_FACES];
 entity_t	*face_entity[MAX_MAP_FACES];
@@ -74,8 +87,7 @@ void MakeBackplanes (void)
 {
 	int		i;
 
-	for (i=0 ; i<numplanes ; i++)
-	{
+	for (i=0 ; i<numplanes ; i++) {
 		backplanes[i].dist = -dplanes[i].dist;
 		VectorSubtract (vec3_origin, dplanes[i].normal, backplanes[i].normal);
 	}
@@ -97,8 +109,7 @@ void MakeParents (int nodenum, int parent)
 	nodeparents[nodenum] = parent;
 	node = &dnodes[nodenum];
 
-	for (i=0 ; i<2 ; i++)
-	{
+	for (i=0 ; i<2 ; i++) {
 		j = node->children[i];
 		if (j < 0)
 			leafparents[-j - 1] = nodenum;
@@ -129,17 +140,15 @@ void CalcVertexNormals ( int vnum )
 	VectorClear( normal );
 	found = qfalse;
 
-	for ( i = 0, face = dfaces; i < numfaces; i++, face++ )
-		if ( texinfo[face->texinfo].flags & 0x8000 )
-			for ( k = 0, se = &dsurfedges[face->firstedge]; k < face->numedges; k++, se++ )
-			{
+	for (i = 0, face = dfaces; i < numfaces; i++, face++)
+		if (texinfo[face->texinfo].flags & 0x8000)
+			for (k = 0, se = &dsurfedges[face->firstedge]; k < face->numedges; k++, se++) {
 				if (*se < 0)
 					v = dedges[-*se].v[1];
 				else
 					v = dedges[*se].v[0];
 
-				if ( v == vnum || VectorCompare( dvertexes[v].point, vert ) )
-				{
+				if (v == vnum || VectorCompare(dvertexes[v].point, vert)) {
 					/* found a plane containing that vertex */
 					VectorAdd( normal, dplanes[face->planenum].normal, normal );
 					found = qtrue;
@@ -171,14 +180,13 @@ TRANSFER SCALES
 
 int	PointInLeafnum (vec3_t point)
 {
-	int		nodenum;
-	vec_t	dist;
-	dnode_t	*node;
-	dplane_t	*plane;
+	int nodenum;
+	vec_t ist;
+	dnode_t *node;
+	dplane_t *plane;
 
 	nodenum = 0;
-	while (nodenum >= 0)
-	{
+	while (nodenum >= 0) {
 		node = &dnodes[nodenum];
 		plane = &dplanes[node->planenum];
 		dist = DotProduct (point, plane->normal) - plane->dist;
@@ -192,9 +200,9 @@ int	PointInLeafnum (vec3_t point)
 }
 
 
-dleaf_t		*PointInLeafRad (vec3_t point)
+dleaf_t *PointInLeafRad (vec3_t point)
 {
-	int		num;
+	int num;
 
 	num = PointInLeafnum (point);
 	return &dleafs[num];
@@ -235,8 +243,7 @@ void MakeTransfers (int i)
 
 	all_transfers = transfers;
 	patch->numtransfers = 0;
-	for (j=0, patch2 = patches ; j<num_patches ; j++, patch2++)
-	{
+	for (j=0, patch2 = patches ; j<num_patches ; j++, patch2++) {
 		transfers[j] = 0;
 
 		if (j == i)
@@ -267,8 +274,7 @@ void MakeTransfers (int i)
 /*			trans = 0;		// rounding errors... */
 
 		transfers[j] = trans;
-		if (trans > 0)
-		{
+		if (trans > 0) {
 			total += trans;
 			patch->numtransfers++;
 		}
@@ -279,8 +285,7 @@ void MakeTransfers (int i)
 	/* because partial occlusion isn't accounted for, and nearby */
 	/* patches have underestimated form factors, it will usually */
 	/* be higher than PI */
-	if (patch->numtransfers)
-	{
+	if (patch->numtransfers) {
 		transfer_t	*t;
 
 		if (patch->numtransfers < 0 || patch->numtransfers > MAX_PATCHES)
