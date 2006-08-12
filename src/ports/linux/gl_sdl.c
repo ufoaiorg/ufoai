@@ -100,7 +100,14 @@ int SDLateKey(SDL_KeyboardEvent sdlke)
 	int keysym = sdlke.keysym.sym;
 	int key = 0;
 
-	switch(keysym) {
+	/* these happen to match the ASCII chars. */
+	if ((keysym >= ' ') && (keysym <= '~'))
+	{
+		key = keysym;
+	}
+	else
+	switch (keysym)
+	{
 	case SDLK_KP9:
 		key = K_KP_PGUP;
 		break;
@@ -254,10 +261,22 @@ int SDLateKey(SDL_KeyboardEvent sdlke)
 		break;
 
 	default: 
+#if 0
 		if( keysym >= 128 )
 			key = sdlke.keysym.unicode;
 		else
 			key = keysym;
+#endif
+#if 0
+		if (sdlke.keysym.unicode < 256) {
+			/* If the translated key is between 0 and 256, it's ok */
+			key = sdlke.keysym.unicode;
+			if (key <= 0)
+				key = keysym;
+		} else
+			/* The key don't fit in the Quake3 keyboard array */
+			key = 0;
+#endif
 		break;
 	}
 
