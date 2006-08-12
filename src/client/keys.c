@@ -195,7 +195,7 @@ static void Key_CompleteCommand(void)
 
 /**
   * @brief Interactive line editing and console scrollback
-  * @param key
+  * @param[in] key
   */
 static void Key_Console(int key)
 {
@@ -362,11 +362,13 @@ static void Key_Console(int key)
 		key_linepos++;
 		key_lines[edit_line][key_linepos] = 0;
 	}
-
 }
 
-/*============================================================================ */
-
+/**
+ * @brief Handles input when cls.key_dest == key_message
+ * @note Used for chatting and cvar editing via menu
+ * @sa Key_Event
+ */
 void Key_Message(int key)
 {
 	if (key == K_ENTER || key == K_KP_ENTER) {
@@ -432,18 +434,14 @@ void Key_Message(int key)
 		Cbuf_AddText(va("msgmenu \"%s\"\n", msg_buffer));
 }
 
-/*============================================================================ */
 
-
-/*
-===================
-Key_StringToKeynum
-
-Returns a key number to be used to index keybindings[] by looking at
-the given string.  Single ascii characters return themselves, while
-the K_* names are matched up.
-===================
-*/
+/**
+ * @brief Convert to given string to keynum
+ * @param[in] str The keystring to convert to keynum
+ * @return a key number to be used to index keybindings[] by looking at
+ * the given string.  Single ascii characters return themselves, while
+ * the K_* names are matched up.
+ */
 int Key_StringToKeynum(char *str)
 {
 	keyname_t *kn;
@@ -460,15 +458,12 @@ int Key_StringToKeynum(char *str)
 	return -1;
 }
 
-/*
-===================
-Key_KeynumToString
-
-Returns a string (either a single ascii char, or a K_* name) for the
-given keynum.
-FIXME: handle quote special (general escape sequence?)
-===================
-*/
+/**
+ * @brief Convert a given keynum to string
+ * @param[in] keynum The keynum to convert to string
+ * @return a string (either a single ascii char, or a K_* name) for the given keynum.
+ * FIXME: handle quote special (general escape sequence?)
+ */
 char *Key_KeynumToString(int keynum)
 {
 	keyname_t *kn;
@@ -490,11 +485,13 @@ char *Key_KeynumToString(int keynum)
 }
 
 
-/*
-===================
-Key_SetBinding
-===================
-*/
+/**
+ * @brief Bind a keynum to script command
+ * @param[in] keynum Converted from string to keynum
+ * @param[in] binding The script command to bind keynum to
+ * @sa Key_Bind_f
+ * @sa Key_StringToKeynum
+ */
 void Key_SetBinding(int keynum, char *binding)
 {
 	char *new;
@@ -516,11 +513,10 @@ void Key_SetBinding(int keynum, char *binding)
 	keybindings[keynum] = new;
 }
 
-/*
-===================
-Key_Unbind_f
-===================
-*/
+/**
+ * @brief Unbind a given key binding
+ * @sa Key_SetBinding
+ */
 void Key_Unbind_f(void)
 {
 	int b;
@@ -539,6 +535,10 @@ void Key_Unbind_f(void)
 	Key_SetBinding(b, "");
 }
 
+/**
+ * @brief Unbind all key bindings
+ * @sa Key_SetBinding
+ */
 void Key_Unbindall_f(void)
 {
 	int i;
@@ -549,11 +549,10 @@ void Key_Unbindall_f(void)
 }
 
 
-/*
-===================
-Key_Bind_f
-===================
-*/
+/**
+ * @brief Binds a key to a given script command
+ * @sa Key_SetBinding
+ */
 void Key_Bind_f(void)
 {
 	int i, c, b;
@@ -590,13 +589,10 @@ void Key_Bind_f(void)
 	Key_SetBinding(b, cmd);
 }
 
-/*
-============
-Key_WriteBindings
-
-Writes lines containing "bind key value"
-============
-*/
+/**
+ * @brief Writes lines containing "bind key value"
+ * @param[in] f Filehandle to print the keybinding too
+ */
 void Key_WriteBindings(FILE * f)
 {
 	int i;
@@ -607,12 +603,9 @@ void Key_WriteBindings(FILE * f)
 }
 
 
-/*
-============
-Key_Bindlist_f
-
-============
-*/
+/**
+ * @brief List all binded keys with its function
+ */
 void Key_Bindlist_f(void)
 {
 	int i;
@@ -718,6 +711,7 @@ void Key_Init(void)
 /**
  * @brief Called by the system between frames for both key up and key down events
  * @note Should NOT be called during an interrupt!
+ * @sa Key_Message
  */
 void Key_Event(int key, qboolean down, unsigned time)
 {
