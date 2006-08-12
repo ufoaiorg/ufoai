@@ -372,7 +372,7 @@ qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int idx)
 	employee_t* employee;
 	employee = E_GetHiredEmployee(base, type, idx);
 	if (employee) {
-		if (employee->buildingID) {
+		if (employee->buildingID >= 0 ) {
 			/* TODO: Remove employee from building (and tech) and assign new one if available. */
 			E_RemoveEmployeeFromBuilding(employee);
 			/* E_AssignEmployee(employee, building_rom_unhired_employee); */
