@@ -454,8 +454,9 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 		return qfalse;
 
 	/* Fire the employee. This will also remove him from buildings&work. */
-	E_UnhireEmployee(&gd.bases[employee->baseIDHired], type, employee->idx);
-	
+	if (employee->baseIDHired >= 0)
+		E_UnhireEmployee(&gd.bases[employee->baseIDHired], type, employee->idx);
+
 	/* remove the employee from the global list */
 	for (i = 0; i < gd.numEmployees[type] - 1; i++) {
 		if (gd.employees[type][i].idx == employee->idx) {
@@ -526,7 +527,7 @@ qboolean E_RemoveEmployeeFromBuilding(employee_t *employee)
 {
 	character_t *chr = NULL;
 	technology_t *tech = NULL;
-	
+
 	if (employee) {
 		chr = &employee->chr;
 		switch (chr->empl_type) {
