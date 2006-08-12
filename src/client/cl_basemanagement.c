@@ -238,6 +238,13 @@ void B_SetUpBase(void)
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			building->buildingStatus = B_STATUS_WORKING;
 
+			/* now call the onconstruct trigger */
+			if (*building->onConstruct) {
+				gd.bases[base_idx].buildingCurrent = building;
+				Com_DPrintf("B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, base_idx);
+				Cbuf_AddText(va("%s %i;", building->onConstruct, base_idx));
+			}
+
 			if (cl_start_employees->value)
 				B_HireForBuilding(building, -1);
 
