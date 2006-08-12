@@ -1224,6 +1224,7 @@ typedef struct updateCharacter_s {
 /**
   * @brief Parses the character data which was send by G_SendCharacterData
   * @sa G_SendCharacterData
+  * @todo why is argument updateCharacter unused?
   */
 void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 {
@@ -1235,7 +1236,7 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 	if (updateCharacterArray) {
 		for (i=0; i<num; i++) {
 			chr = NULL;
-			/* MAX_WHOLETEAM and not numWholeTeam - maybe some other soldier died */
+			/* MAX_EMPLOYEES and not numWholeTeam - maybe some other soldier died */
 			for (j=0; j<MAX_EMPLOYEES; j++) {
 				chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, j);
 				if (chr->ucn == updateCharacterArray[i].ucn)
@@ -1266,7 +1267,7 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 
 
 /**
-  * @brief
+  * @brief Reads mission result data from server
   * See EV_RESULTS
   * @sa G_EndGame
   * @sa CL_GameResultsCmd

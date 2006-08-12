@@ -411,6 +411,7 @@ void G_EndGame(int team)
 	gi.AddEvent(PM_ALL, EV_RESULTS);
 	gi.WriteByte(MAX_TEAMS);
 	gi.WriteByte(team);
+	Com_DPrintf("Sending results for game won by team %i.\n", team);
 
 	for (i = 0; i < MAX_TEAMS; i++) {
 		gi.WriteByte(level.num_spawned[i]);
@@ -434,13 +435,16 @@ void G_EndGame(int team)
 
 	/* how many */
 	gi.WriteByte(j);
+	Com_DPrintf("Sending results with %i alive actors.\n", j);
 
 	if (j) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
-			&& !(ent->state & STATE_DEAD)
-			&& ent->team == player->pers.team)
+			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+				 && !(ent->state & STATE_DEAD)
+				 && ent->team == player->pers.team ) {
+				Com_DPrintf("Sending results for actor %i.\n", i);
 				G_SendCharacterData(ent);
+			}
 	}
 }
 
@@ -461,7 +465,7 @@ void G_CheckEndGame(void)
 
 	/* prepare for sending results */
 	if (activeTeams < 2) {
-		level.intermissionTime = level.time + 4.0;
+		level.intermissionTime = level.time + 7.0;
 		if (activeTeams == 0)
 			level.winningTeam = 0;
 		else if (activeTeams == 1)
@@ -484,6 +488,16 @@ void G_RunFrame(void)
 	/* check for intermission */
 	if (level.intermissionTime && level.time > level.intermissionTime) {
 		G_EndGame(level.winningTeam);
+		/* is this right? can the message get lost? 
+		   if so, the game will not end until you kill someone else... */
+		level.intermissionTime = 0;
+		/* so perhaps, remove this, but add: */
+#if 0
+		/* don't run this too often to prevent overflows */
+		if (level.framenum % 100)
+			return;
+#endif
+		/* at the beginning of G_EndGame? */
 		return;
 	}
 

@@ -2134,6 +2134,11 @@ static void CL_GameResultsCmd(void)
 	CL_UpdateCredits(ccs.credits + ccs.reward);
 
 	/* remove the dead (and their item preference) */
+	/* TODO: this is buggy, upon lost mission it writes:
+CL_GameResultsCmd - remove player 5 - he died
+Could not get hired employee '7' from base '0'
+CL_GameResultsCmd - done removing dead players
+	*/
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER];) {
 		if (baseCurrent->deathMask & (1 << i)) {
 			Com_DPrintf("CL_GameResultsCmd - remove player %i - he died\n", i);
@@ -2147,6 +2152,7 @@ static void CL_GameResultsCmd(void)
 		} else
 			i++;
 	}
+	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n", i);
 
 	/* add recruits */
 	if (won && selMis->def->recruits)
