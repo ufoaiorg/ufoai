@@ -1945,10 +1945,11 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 {
 	technology_t *tech = NULL;
 
+	/* fake item */
+	assert (weapon->item.t != NONE);
 	/* twohanded weapons and container is left hand container */
-	/* item.t ?? */
-	if (weapon->item.t == NONE || (left_hand && csi.ods[weapon->item.t].twohanded))
-		return;
+	assert (!(left_hand && csi.ods[weapon->item.t].twohanded));
+
 	if (market)
 		ccs.eMarket.num[weapon->item.t]++;
 	else
@@ -2140,7 +2141,7 @@ static void CL_GameResultsCmd(void)
 			baseCurrent->teamMask[baseCurrent->aircraftCurrent] =
 				(baseCurrent->teamMask[baseCurrent->aircraftCurrent] & ((1 << i) - 1)) | (tempMask & ~((1 << i) - 1));
 
-			employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, -(i+1));
+			employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
 			if (!employee)
 				Sys_Error("Could not get hired employee %i from base %i\n", i, baseCurrent->idx);
 			E_DeleteEmployee(employee, EMPL_SOLDIER);

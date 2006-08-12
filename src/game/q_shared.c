@@ -1991,7 +1991,7 @@ INVENTORY MANAGEMENT
 
 static csi_t *CSI;
 static invList_t *invUnused;
-static item_t cacheItem;
+static item_t cacheItem = {-1,-1,-1}; /* to crash as soon as possible */
 
 /**
  * @brief
@@ -2188,10 +2188,10 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 		invUnused = ic;
 		cacheItem = ic->item;
 		i->c[container] = ic->next;
-#if 0
+
 		if (CSI->ids[container].single && ic->next)
-			Sys_Error("Com_RemoveFromInventory: Error in line %i at file %s (container: %s)\n", __LINE__, __FILE__, CSI->ids[container].name);
-#endif
+			Com_Printf("Com_RemoveFromInventory: Error: single container %s has many items.\n", CSI->ids[container].name);
+
 		invUnused->next = old;
 		return qtrue;
 	}
@@ -2218,7 +2218,6 @@ int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int t
 {
 	invList_t *ic;
 	int time;
-	item_t cacheItem2;
 
 	assert((from >= 0) && (from < MAX_INVDEFS));
 #ifdef DEBUG
@@ -2251,6 +2250,8 @@ int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int t
 
 	/*check if the target is a blocked inv-armor and source!=dest */
 	if (CSI->ids[to].armor && from != to && !Com_CheckToInventory(i, cacheItem.t, to, tx, ty)) {
+		item_t cacheItem2;
+		
 		/* save/cache (source) item */
 		cacheItem2 = cacheItem;
 		/* move the destination item to the source */
@@ -2261,8 +2262,10 @@ int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int t
 		ic = Com_SearchInInventory(i, to, tx, ty);
 
 		if (ic && CSI->ods[cacheItem.t].link == ic->item.t) {
-			if (ic->item.a >= CSI->ods[ic->item.t].ammo) {
-				/* weapon already loaded - back to source location */
+			if (ic->item.a >= CSI->ods[ic->item.t].ammo 
+				&& ic->item.m == cacheItem.t) {
+				/* weapon already loaded with the same ammunition 
+				   - back to source location */
 				Com_AddToInventory(i, cacheItem, from, fx, fy);
 				return IA_NORELOAD;
 			}

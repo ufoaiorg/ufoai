@@ -1314,7 +1314,7 @@ void MN_DrawMenus(void)
 	char *anim;					/* model anim state */
 	char source[MAX_VAR];
 	int sp, pp;
-	item_t item;
+	item_t item = {1,NONE,NONE};
 	vec4_t color;
 	int mouseOver = 0;
 	char *cur, *tab, *end;
@@ -1615,9 +1615,6 @@ void MN_DrawMenus(void)
 							break;
 					if (item.t == csi.numODs || item.t == NONE)
 						break;
-
-					item.a = 1;
-					item.m = 0; /* just in case */
 
 					MN_DrawItem(node->pos, item, 0, 0, 0, 0, node->scale, color);
 					break;

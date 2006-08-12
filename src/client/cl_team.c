@@ -273,12 +273,9 @@ static void CL_TeamCommentsCmd(void)
   */
 item_t CL_AddWeaponAmmo(equipDef_t * ed, int type)
 {
-	item_t item;
+	item_t item = {0, NONE, NONE};
 	int i;
 
-	item.a = 0;
-	item.m = NONE;
-	item.t = NONE;
 	if (ed->num[type] <= 0)
 		return item;
 
@@ -286,13 +283,11 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, int type)
 	item.t = type;
 
 	if (!csi.ods[type].reload) {
-		item.a = csi.ods[type].ammo;
-		item.m = type;
+		item.a = 1;
+		item.m = item.t;
 		return item;
 	}
 
-	item.a = 0;
-	item.m = NONE;
 	/* Search for any complete clips */
 	for (i = 0; i < csi.numODs; i++) {
 		if (csi.ods[i].link == type) {
@@ -1095,11 +1090,6 @@ void CL_ResetTeams(void)
   */
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
 {
-	if (!csi.ods[item.t].reload) {
-		/* if no ammo needed, transfer with free ammo, just in case */
-		item.m = item.t;
-		item.a = 1;
-	}
 	MSG_WriteFormat(buf, "bbbbbb", item.t, item.a, item.m, container, x, y);
 }
 
@@ -1238,12 +1228,12 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 			/* MAX_EMPLOYEES and not numWholeTeam - maybe some other soldier died */
 			for (j=0; j<MAX_EMPLOYEES; j++) {
 				chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, j);
-				if (chr->ucn == updateCharacterArray[i].ucn)
+				if (chr && chr->ucn == updateCharacterArray[i].ucn)
 					break;
 				chr = NULL;
 			}
 			if (!chr) {
-				Com_Printf("Warning: Could not get character with ucn: %i\n", updateCharacterArray[i].ucn);
+				Com_Printf("Warning: Could not get character with ucn: %i.\n", updateCharacterArray[i].ucn);
 				continue;
 			}
 			for (j=0; j<KILLED_NUM_TYPES; j++)
@@ -1304,6 +1294,9 @@ void CL_ParseResults(sizebuf_t * buf)
 	if (MSG_ReadByte(buf) != NONE)
 		Com_Printf("WARNING: bad result message\n");
 
+	/* skip EndEvents */
+	MSG_ReadByte(buf);
+	 
 	CL_ParseCharacterData(buf, qfalse);
 
 	/* init result text */

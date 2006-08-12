@@ -1912,7 +1912,7 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 		container = gi.csi->idLeft;
 	}
 	fd = &gi.csi->ods[weapon->m].fd[type & 1];
-	wi = weapon->m | ((type % 2) << 7);
+	wi = weapon->m | ((type % 2/*filter out hand*/) << 7/*move to byte end*/);
 	ammo = weapon->a;
 
 	/* check if action is possible */
@@ -2127,8 +2127,9 @@ qboolean G_ReactionFire(edict_t * target)
 				if (target->team == TEAM_CIVILIAN || target->team == ent->team)
 					if (!(ent->state & (STATE_SHAKEN & ~STATE_REACTION)) || (float) ent->morale / mor_shaken->value > frand())
 						continue;
-				/*if reaction fire is triggered by a friendly unit and the shooter is still sane, don't shoot */
-				/*well, if the shooter isn't sane anymore... */
+				/*if reaction fire is triggered by a friendly unit 
+				  and the shooter is still sane, don't shoot;
+				  well, if the shooter isn't sane anymore... */
 
 				/* get player */
 				player = game.players + ent->pnum;
@@ -2367,7 +2368,7 @@ void G_ClientTeamInfo(player_t * player)
 
 			/* inventory */
 			item.t = gi.ReadByte();
-			while (item.t != NONE && item.t != -1) {
+			while (item.t != NONE) {
 				/* read info */
 				item.a = gi.ReadByte();
 				item.m = gi.ReadByte();

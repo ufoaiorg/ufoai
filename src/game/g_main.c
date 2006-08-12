@@ -492,8 +492,9 @@ void G_RunFrame(void)
 	if (level.intermissionTime && level.time > level.intermissionTime) {
 		G_EndGame(level.winningTeam);
 		/* if the message gets lost, the game will not end
-		   until you kill someone else, so we'll try again later */
-		level.intermissionTime = level.time + 2.0;
+		   until you kill someone else, so we'll try again later,
+		   but much later, so that the intermission animations can end */
+		level.intermissionTime = level.time + 10.0;
 		return;
 	}
 

@@ -175,7 +175,7 @@ typedef struct base_s {
 	/* NOTE: we only use the first 19 (because we can only select from 19 soldiers) */
 	/* see cl_numnames cvars */
 	int teamMask[MAX_AIRCRAFT];	/* assigned to a specific aircraft */
-	int deathMask;				/* mask of soldiers (relative to wholeTeam) that are died */
+	int deathMask;				/* mask of soldiers (relative to gd.employees) that have died */
 
 	/* these should not be bigger than MAX_ACTIVETEAM */
 	int numHired;

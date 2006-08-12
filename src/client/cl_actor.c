@@ -911,7 +911,7 @@ void CL_ActorReload(int hand)
 	/* check weapon */
 	inv = &selActor->i;
 
-	/* search for clips and select the one that is available easely */
+	/* search for clips and select the one that is available easily */
 	x = 0;
 	y = 0;
 	tu = 100;
@@ -1186,7 +1186,7 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 	if (!le)
 		return;
 
-	/* erase one-time weapons from storage */
+	/* erase one-time weapons from storage --- TODO: broken? */
 	if (curCampaign && le->team == cls.team && !csi.ods[type].ammo) {
 		if (ccs.eMission.num[type])
 			ccs.eMission.num[type]--;

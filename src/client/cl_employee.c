@@ -467,8 +467,11 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 			memset(&gd.employees[type][i].inv, 0, sizeof(inventory_t));
 			found = qtrue;
 		}
-		if (found)
+		if (found) {
 			gd.employees[type][i] = gd.employees[type][i + 1];
+			gd.employees[type][i].idx = i;
+			gd.employees[type][i].chr.empl_idx = i;
+		}
 	}
 
 	if (found) {

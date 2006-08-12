@@ -40,7 +40,7 @@ unsigned old_sys_frame_time;
 int mouseSpace;
 int mx, my;
 int dragFrom, dragFromX, dragFromY;
-item_t dragItem;
+item_t dragItem = {-1,-1,-1}; /* to crash as soon as possible */
 float *rotateAngles;
 
 static qboolean cameraRoute = qfalse;

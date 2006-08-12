@@ -148,15 +148,14 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 						if (dmg == 0.0)
 							continue;
 
+						/* TODO: take into account armor */
 						dmg *= fd->damage[0] * fd->shots * shots;
 						if (nspread && dist > nspread)
 							dmg *= nspread / dist;
-						if (dmg > 100.0)
-							dmg = 100.0;
 
 						/* add kill bonus */
 						if (dmg > check->HP)
-							dmg += GUETE_KILL;
+							dmg = check->HP + GUETE_KILL;
 
 						/* civilian malus */
 						if (check->team == TEAM_CIVILIAN && !(ent->state & STATE_INSANE))
@@ -423,7 +422,7 @@ void AI_Run(void)
 int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJDEFS])
 {
 	int ammo;
-	item_t item = {0,0,0};
+	item_t item = {1,NONE,NONE};
 
 #ifdef PARANOID
 	if (weapon < 0) {
@@ -450,7 +449,7 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
 				   > rand() % equip[weapon]);
 			num = (num > 3) ? 3 : num;
 			while (--num) {
-				item_t mun = {0,0,0};
+				item_t mun = {1,NONE,NONE};
 
 				mun.t = ammo;
 				/* ammo to backpack; belt reserved for knives and grenades */
@@ -459,6 +458,9 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
 			}
 		} else
 			Com_Printf("G_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", gi.csi->ods[weapon].kurz, gi.cvar_string("ai_equipment"));
+	}
+	else {
+		item.m = item.t; /* no ammo needed, so fire definition are in t */
 	}
 	/* now try to pack the weapon */
 	return
@@ -667,7 +669,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 	/* spawn players */
 	for (j = 0; j < numSpawn; j++) {
-		item_t item = {0,0,0};
+		item_t item = {1,NONE,NONE};
 		char *ref;
 
 		assert (numPoints > 0);
@@ -691,10 +693,9 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 			/* found */
 			if (item.t < gi.csi->numODs && item.t != NONE) {
-				if (!Q_strncmp(gi.csi->ods[item.t].type, "armor", MAX_VAR)) {
-					item.a = 1; /* FIXME */
+				if (!Q_strncmp(gi.csi->ods[item.t].type, "armor", MAX_VAR))
 					Com_AddToInventory(&ent->i, item, gi.csi->idArmor, 0, 0);
-				} else
+				else
 					Com_Printf("No valid alien armor '%s'\n", ref);
 			} else if (*ref)
 				Com_Printf("Could not find alien armor '%s'\n", ref);
