@@ -171,7 +171,7 @@ void B_HireForBuilding (building_t * building, int num)
 
 	assert(baseCurrent);
 
-	if (num < 0) 
+	if (num < 0)
 		num = building->maxEmployees;
 
 	if (num) {
@@ -220,7 +220,7 @@ void B_SetUpBase(void)
 
 	for (i = 0; i < gd.numBuildingTypes; i++) {
 		if (gd.buildingTypes[i].autobuild
-			|| (gd.numBases == 1 
+			|| (gd.numBases == 1
 				&& gd.buildingTypes[i].firstbase
 				&& cl_start_buildings->value)) {
 			/* TODO: implement check for moreThanOne */
@@ -292,8 +292,8 @@ static void B_RemoveBuilding(void)
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 		building->buildingStatus = B_STATUS_NOT_SET;
 /*		baseCurrent->map[building->pos[0]][building->pos[1]] = -1; */
-/* 		if ( building->dependsBuilding >= 0) */
-/* 			baseCurrent->map[building->dependsBuilding->pos[0]][building->dependsBuilding->pos[1]] = -1; */
+/*		if ( building->dependsBuilding >= 0) */
+/*			baseCurrent->map[building->dependsBuilding->pos[0]][building->dependsBuilding->pos[1]] = -1; */
 		B_BuildingStatus();
 	}
 }

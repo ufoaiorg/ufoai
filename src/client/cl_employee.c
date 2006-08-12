@@ -201,7 +201,7 @@ character_t* E_GetCharacter(base_t* base, employeeType_t type, int idx)
 /**
  * @brief Return a given "not hired" employee pointer in the given base of a given type.
  * @param[in] type Which employee type to search for.
- * @param[in] idx Which employee id (in global employee array). Use -1 to return the first "not hired" employee.
+ * @param[in] idx Which employee id (in global employee array). Use -1, -2, etc.. to return the first/ second, etc... "hired" employee.
  * @return employee_t pointer or NULL
  * @sa E_GetHiredEmployee
  * @sa E_UnhireEmployee
@@ -210,21 +210,22 @@ character_t* E_GetCharacter(base_t* base, employeeType_t type, int idx)
 employee_t* E_GetUnhiredEmployee(employeeType_t type, int idx)
 {
 	int i = 0;
+	int j = -1;	/* The number of found hired employees. Ignore the minus. */
 	employee_t *employee = NULL;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
 
-		/* Return first unhired employee if no idx is given. */
-		if (idx < 0 && !employee->hired) {
-			return employee;
-		}
 		if (i == idx) {
 			if (employee->hired) {
 				Com_Printf("E_GetUnhiredEmployee: Warning: employee is already hired!\n");
 				return NULL;
 			}
 			return employee;
+		} else if (idx < 0 && !employee->hired) {
+			if (idx == j)
+				return employee;
+			j--;
 		}
 	}
 	return NULL;
@@ -260,6 +261,7 @@ employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int idx)
 			continue;
 		}
 	}
+	Com_Printf("Could not get unhired employee with index: %i at base %i of type %i (available: %i)\n", idx, base->idx, type, gd.numEmployees[type]);
 	return NULL;
 }
 
@@ -354,8 +356,7 @@ qboolean E_HireEmployee(base_t* base, employeeType_t type, int idx)
 		employee->hired = qtrue;
 		employee->baseIDHired = base->idx;
 		return qtrue;
-	} else
-		Com_Printf("Could not get unhired employee '%i' from base '%i'\n", idx, base->idx);
+	}
 	return qfalse;
 }
 
