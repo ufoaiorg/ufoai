@@ -197,6 +197,8 @@ void B_HireForBuilding (building_t * building, int num)
 			Com_DPrintf("B_HireForBuilding: Unknown bulding type: %s.\n", building->buildingType);
 			return;
 		}
+		if (num > gd.numEmployees[employeeType])
+			num = gd.numEmployees[employeeType];
 		for (;num--;)
 			if (!E_HireEmployee(baseCurrent, employeeType, -1)) {
 				Com_DPrintf("B_HireForBuilding: Hiring %i employee(s) of type %i failed.\n", num, employeeType);
