@@ -660,6 +660,8 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	int i, best_fit, best_dist, dist, x, y;
 #endif /* HAVE_XF86_VIDMODE */
 
+	srandom(getpid());
+
 	r_fakeFullscreen = ri.Cvar_Get( "r_fakeFullscreen", "0", CVAR_ARCHIVE);
 
 	ri.Con_Printf( PRINT_ALL, "Initializing OpenGL display\n");
