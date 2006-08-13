@@ -69,7 +69,7 @@ char *svc_strings[256] =
 /* a	| angle		| 1 */
 /* !	| do not read	| 1 */
 /* *	| read from va	| */
-/* &	| read bytes 	| 1 */
+/* &	| read bytes 	| */
 /* n	| pascal string type - SIZE+DATA | 2 + sizeof(DATA) */
 /*	| until NONE	| */
 char *ev_format[] =
@@ -79,8 +79,8 @@ char *ev_format[] =
 	"",					/* EV_START */
 	"b",				/* EV_ENDROUND */
 
-	/* TODO: data for '&' MUST NOT have values == NONE (0xFF). */
-	"bb&",				/* EV_RESULTS */
+	/* Beware: data for '&' MUST NOT have values == NONE (0xFF). */
+	"bb&*",				/* EV_RESULTS */
 	"g",				/* EV_CENTERVIEW */
 
 	"!sbg",				/* EV_ENT_APPEAR */

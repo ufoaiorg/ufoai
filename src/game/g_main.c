@@ -408,34 +408,37 @@ void G_EndGame(int team)
 		}
 
 	/* send results */
+	Com_DPrintf("Sending results for game won by team %i.\n", team);
 	gi.AddEvent(PM_ALL, EV_RESULTS);
 	gi.WriteByte(MAX_TEAMS);
 	gi.WriteByte(team);
-	Com_DPrintf("Sending results for game won by team %i.\n", team);
 
 	for (i = 0; i < MAX_TEAMS; i++) {
+		assert (level.num_spawned[i] != NONE);
 		gi.WriteByte(level.num_spawned[i]);
+		assert (level.num_alive[i] != NONE);
 		gi.WriteByte(level.num_alive[i]);
 	}
 
 	for (i = 0; i < MAX_TEAMS; i++)
-		for (j = 0; j < MAX_TEAMS; j++)
+		for (j = 0; j < MAX_TEAMS; j++) {
+			assert (level.num_kills[i][j] != NONE);
 			gi.WriteByte(level.num_kills[i][j]);
+		}
 
+	/* end of spawn, alive and kill counts */
 	gi.WriteByte(NONE);
-	gi.EndEvents();
 
 	player = game.players + ent->pnum;
-
 	for (j = 0, i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
-		  && !(ent->state & STATE_DEAD)
-		  && ent->team == player->pers.team)
+			&& !(ent->state & STATE_DEAD)
+			&& ent->team == player->pers.team)
 			j++;
 
 	/* how many */
-	gi.WriteByte(j);
 	Com_DPrintf("Sending results with %i alive actors.\n", j);
+	gi.WriteByte((KILLED_NUM_TYPES + 1) * j * 2);
 
 	if (j) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
@@ -446,6 +449,8 @@ void G_EndGame(int team)
 				G_SendCharacterData(ent);
 			}
 	}
+
+	gi.EndEvents();
 }
 
 /**
@@ -472,7 +477,7 @@ void G_CheckEndGame(void)
 			level.winningTeam = 0;
 		else if (activeTeams == 1)
 			level.winningTeam = last;
-		level.intermissionTime = level.time + (last == TEAM_ALIEN ? 7.0 : 3.0);
+		level.intermissionTime = level.time + (last == TEAM_ALIEN ? 10.0 : 3.0);
 	}
 }
 
@@ -491,10 +496,15 @@ void G_RunFrame(void)
 	/* check for intermission */
 	if (level.intermissionTime && level.time > level.intermissionTime) {
 		G_EndGame(level.winningTeam);
+#if 0 
+/* It still happens that game resulsts are send twice --- dangerous */
+
 		/* if the message gets lost, the game will not end
 		   until you kill someone else, so we'll try again later,
 		   but much later, so that the intermission animations can end */
 		level.intermissionTime = level.time + 10.0;
+#endif
+		level.intermissionTime = 0.0;
 		return;
 	}
 

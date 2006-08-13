@@ -1212,7 +1212,7 @@ typedef struct updateCharacter_s {
 } updateCharacter_t;
 
 /**
- * @brief Parses the character data which was send by G_SendCharacterData
+ * @brief Parses the character data which was send by G_EndGame using G_SendCharacterData
  * @sa G_SendCharacterData
  */
 void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
@@ -1241,7 +1241,7 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 		}
 		num = 0;
 	} else {
-		num = MSG_ReadByte(buf);
+		num = MSG_ReadByte(buf) / (2 * (KILLED_NUM_TYPES + 1));
 		if (num > MAX_EMPLOYEES)
 			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
 		else if (num < 0)
@@ -1294,9 +1294,6 @@ void CL_ParseResults(sizebuf_t * buf)
 	if (MSG_ReadByte(buf) != NONE)
 		Com_Printf("WARNING: bad result message\n");
 
-	/* skip EndEvents */
-	MSG_ReadByte(buf);
-	 
 	CL_ParseCharacterData(buf, qfalse);
 
 	/* init result text */
@@ -1396,7 +1393,7 @@ void CL_ParseResults(sizebuf_t * buf)
 		MN_PushMenu("won");
 	else
 		MN_PushMenu("lost");
-	Cbuf_AddText("disconnect\n");
+ 	Cbuf_AddText("disconnect\n");
 	Cbuf_Execute();
 }
 

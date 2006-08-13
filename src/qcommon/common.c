@@ -907,9 +907,10 @@ int MSG_LengthFormat(sizebuf_t * sb, char *format)
 			length++;
 			break;
 		case '&':
-			delta = 1;
+			delta = 0;
 			while (MSG_ReadByte(sb) != NONE)
 				length++;
+			length++;
 			break;
 		default:
 			Com_Error(ERR_DROP, "LengthFormat: Unknown type!\n");
