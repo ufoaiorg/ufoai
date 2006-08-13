@@ -1714,7 +1714,7 @@ static void CL_GameGo(void)
 
 	/* check inventory */
 	ccs.eMission = ccs.eCampaign;
-	CL_CheckInventory(&ccs.eMission);
+	CL_CheckInventory(&ccs.eMission, 0);
 
 	/* prepare */
 	baseCurrent->deathMask = 0;

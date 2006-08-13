@@ -286,6 +286,9 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, int type)
 		item.a = 1;
 		item.m = item.t;
 		return item;
+	} else if (item.a == csi.ods[type].ammo) {
+		/* fully loaded, no need to reload */
+		return item;
 	}
 
 	/* Search for any complete clips */
@@ -325,7 +328,7 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, int type)
 /**
   * @brief
   */
-void CL_CheckInventory(equipDef_t * equip)
+void CL_CheckInventory(equipDef_t * equip, int initial)
 {
 	character_t *cp;
 	invList_t *ic, *next;
@@ -347,10 +350,16 @@ void CL_CheckInventory(equipDef_t * equip)
 			cp = baseCurrent->curTeam[p];
 			for (ic = cp->inv->c[container]; ic; ic = next) {
 				next = ic->next;
-				if (equip->num[ic->item.t] > 0)
-					ic->item = CL_AddWeaponAmmo(equip, ic->item.t);
-				else
-					Com_RemoveFromInventory(cp->inv, container, ic->x, ic->y);
+				if (initial) {
+					equip->num[ic->item.t]++;
+					if (csi.ods[ic->item.t].reload)
+						equip->num[ic->item.m]++;
+				} else {
+					if (equip->num[ic->item.t] > 0)
+						ic->item = CL_AddWeaponAmmo(equip, ic->item.t);
+					else
+						Com_RemoveFromInventory(cp->inv, container, ic->x, ic->y);
+				}
 			}
 		}
 	}
@@ -454,7 +463,7 @@ static void CL_GenerateEquipmentCmd(void)
 		unused = ccs.eCampaign;
 
 	/* manage inventory */
-	CL_CheckInventory(&unused);
+	CL_CheckInventory(&unused, 0);
 
 	for (i = 0; i < csi.numODs; i++)
 		while (unused.num[i]) {

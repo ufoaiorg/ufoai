@@ -422,7 +422,7 @@ static int spawnPoints[MAX_SPAWNPOINTS];
 static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 {
 	edict_t *ent;
-	equipDef_t *ed;
+	equipDef_t *ed = &gi.csi->eds[0];
 	int i, j, numPoints, team;
 	char name[MAX_VAR];
 

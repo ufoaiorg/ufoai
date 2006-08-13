@@ -675,7 +675,7 @@ void CL_ResetTeams(void);
 void CL_ParseResults(sizebuf_t * buf);
 void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num);
 void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num);
-void CL_CheckInventory(equipDef_t * equip);
+void CL_CheckInventory(equipDef_t * equip, int initial);
 void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
 
 /* cl_radar.c */

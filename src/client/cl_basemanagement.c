@@ -1339,6 +1339,7 @@ static void B_PackInitialEquipmentCmd(void)
 			Com_DPrintf("B_PackInitialEquipmentCmd: Packing initial equipment for %s.\n", cp->name);
 			Com_EquipActor(cp->inv, ed->num, cl_initial_equipment->string);
 		}
+		CL_CheckInventory(&ccs.eCampaign, 1);
 	}
 }
 
@@ -1380,7 +1381,7 @@ void B_BuildBase(void)
 				for (i = MAX_TEAMLIST; --i >= 0;)
 					Cbuf_AddText(va("team_hire %i\n", i));
 
-/*					Cbuf_AddText(va("pack_initial\n")); */
+					Cbuf_AddText(va("pack_initial\n"));
 			}
 			return;
 		}
