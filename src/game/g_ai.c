@@ -458,8 +458,7 @@ int G_PackAmmoAndWeapon(inventory_t *inv, const int weapon, const int equip[MAX_
 			}
 		} else
 			Com_Printf("G_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", gi.csi->ods[weapon].kurz, gi.cvar_string("ai_equipment"));
-	}
-	else {
+	} else {
 		item.m = item.t; /* no ammo needed, so fire definition are in t */
 	}
 	/* now try to pack the weapon */
@@ -557,7 +556,7 @@ void G_EquipAIPlayer(inventory_t *inv, const int equip[MAX_OBJDEFS])
 				}
 			} else {
 				/* no primary weapon */
-				if ( equip[weapon] 
+				if ( equip[weapon]
 					 >= 8 * frand() - WEAPONLESS_BONUS * frand() ) {
 					has_weapon += G_PackAmmoAndWeapon(inv, weapon, equip);
 					if (has_weapon) {
@@ -636,7 +635,7 @@ void G_EquipAIPlayer(inventory_t *inv, const int equip[MAX_OBJDEFS])
 		if (max_price) {
 			if ( equip[weapon] >= 8 * frand() ) {
 				item_t item = {1,NONE,NONE};
-				
+
 				item.t = weapon;
 				if (Com_TryAddToInventory(inv, item, gi.csi->idArmor))
 					max_price = 0; /* one armor is enough */
