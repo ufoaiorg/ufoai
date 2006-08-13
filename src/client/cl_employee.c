@@ -137,6 +137,9 @@ void E_ResetEmployees(void)
  */
 qboolean E_EmployeeIsFree(employee_t * employee)
 {
+	if ( !employee )
+		Sys_Error("E_EmployeeIsUnassinged: Employee is NULL.\n");
+
 	return (employee->buildingID < 0 && employee->hired);
 }
 
@@ -191,7 +194,7 @@ void E_UnhireAllEmployees(base_t* base, employeeType_t type)
  */
 character_t* E_GetCharacter(base_t* base, employeeType_t type, int idx)
 {
-	employee_t* employee = E_GetEmployee(base, type, idx);
+	employee_t* employee = E_GetEmployee(base, type, idx); /* Parameter sanity is checked here. */
 	if (employee)
 		return &(employee->chr);
 
@@ -210,8 +213,13 @@ character_t* E_GetCharacter(base_t* base, employeeType_t type, int idx)
 employee_t* E_GetUnhiredEmployee(employeeType_t type, int idx)
 {
 	int i = 0;
-	int j = -1;	/* The number of found hired employees. Ignore the minus. */
+	int j = -1;	/* The number of found unhired employees. Ignore the minus. */
 	employee_t *employee = NULL;
+	
+	if ( type >= MAX_EMPL || type < 0 ) {
+		Com_Printf("E_GetUnhiredEmployee: Unknown EmployeeType: %i\n", type );
+		return NULL;
+	}
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
@@ -247,6 +255,14 @@ employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int idx)
 	int i = 0;
 	int j = -1;	/* The number of found hired employees. Ignore the minus. */
 	employee_t *employee = NULL;
+	
+	if ( !base)
+		return NULL;
+
+	if ( type >= MAX_EMPL || type < 0 ) {
+		Com_Printf("E_GetHiredEmployee: Unknown EmployeeType: %i\n", type );
+		return NULL;
+	}
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
@@ -274,7 +290,7 @@ employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int idx)
  */
 character_t* E_GetHiredCharacter(base_t* base, employeeType_t type, int idx)
 {
-	employee_t* employee = E_GetHiredEmployee(base, type, idx);
+	employee_t* employee = E_GetHiredEmployee(base, type, idx);  /* Parameter sanity is checked here. */
 	if (employee)
 		return &(employee->chr);
 
@@ -290,6 +306,9 @@ character_t* E_GetHiredCharacter(base_t* base, employeeType_t type, int idx)
  */
 qboolean E_EmployeeIsUnassinged(employee_t * employee)
 {
+	if ( !employee )
+		Sys_Error("E_EmployeeIsUnassinged: Employee is NULL.\n");
+
 	return (employee->buildingID < 0);
 }
 
@@ -352,7 +371,7 @@ qboolean E_HireEmployee(base_t* base, employeeType_t type, int idx)
 	employee_t* employee;
 	employee = E_GetUnhiredEmployee(type, idx);
 	if (employee) {
-		/* now uses quarter space */
+		/* Now uses quarter space. */
 		employee->hired = qtrue;
 		employee->baseIDHired = base->idx;
 		return qtrue;
