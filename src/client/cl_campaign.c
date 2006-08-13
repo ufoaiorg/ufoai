@@ -1276,7 +1276,8 @@ static void CL_GameSaveCmd(void)
 	char *arg;
 
 	/* get argument */
-	if (Cmd_Argc() < 2) {		Com_Printf("Usage: game_save <filename> <comment>\n");
+	if (Cmd_Argc() < 2) {		
+		Com_Printf("Usage: game_save <filename> <comment>\n");
 		return;
 	}
 
@@ -2138,7 +2139,7 @@ static void CL_GameResultsCmd(void)
 	}
 
 	/* check for win */
-	if (Cmd_Argc() < 1) {
+	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: game_results <won>\n");
 		return;
 	}
@@ -2954,6 +2955,7 @@ static void CP_CampaignsClick_f(void)
 	int num;
 
 	if (Cmd_Argc() < 2)
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
 
 	/*which building? */

@@ -733,6 +733,7 @@ void B_BuildingClick_f(void)
 	building_t *building = NULL;
 
 	if (Cmd_Argc() < 2 || !baseCurrent)
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
 
 	/*which building? */
