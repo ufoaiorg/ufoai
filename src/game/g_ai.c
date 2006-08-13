@@ -419,7 +419,7 @@ void AI_Run(void)
  *
  * TODO: choose between multiple ammo for the same weapon
  */
-int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJDEFS])
+int G_PackAmmoAndWeapon(inventory_t *inv, const int weapon, const byte equip[MAX_OBJDEFS])
 {
 	int ammo;
 	item_t item = {1,NONE,NONE};
@@ -453,7 +453,7 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
 
 				mun.t = ammo;
 				/* ammo to backpack; belt reserved for knives and grenades */
-				Com_TryAddToInventory(&ent->i, mun, gi.csi->idBackpack);
+				Com_TryAddToInventory(inv, mun, gi.csi->idBackpack);
 				/* no problem if no space left --- one ammo already loaded */
 			}
 		} else
@@ -464,11 +464,11 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
 	}
 	/* now try to pack the weapon */
 	return
-		Com_TryAddToInventory(&ent->i, item, gi.csi->idRight)
-		|| Com_TryAddToInventory(&ent->i, item, gi.csi->idLeft)
-		|| Com_TryAddToInventory(&ent->i, item, gi.csi->idBelt)
-		|| Com_TryAddToInventory(&ent->i, item, gi.csi->idHolster)
-		|| Com_TryAddToInventory(&ent->i, item, gi.csi->idBackpack);
+		Com_TryAddToInventory(inv, item, gi.csi->idRight)
+		|| Com_TryAddToInventory(inv, item, gi.csi->idLeft)
+		|| Com_TryAddToInventory(inv, item, gi.csi->idBelt)
+		|| Com_TryAddToInventory(inv, item, gi.csi->idHolster)
+		|| Com_TryAddToInventory(inv, item, gi.csi->idBackpack);
 }
 
 #define AKIMBO_CHANCE		0.2
@@ -491,7 +491,7 @@ int G_PackAmmoAndWeapon(edict_t *ent, const int weapon, const byte equip[MAX_OBJ
  * (of course this would result in random number of initial weapons),
  * though there is already CL_CheckInventory in cl_team.c.
  */
-void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
+void G_EquipAIPlayer(inventory_t *inv, const byte equip[MAX_OBJDEFS])
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
@@ -519,7 +519,7 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 			if ( equip[weapon] >= 8 * frand() ) {
 				/* not decrementing equip[weapon]
 				 * so that we get more possible squads */
-				has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
+				has_weapon += G_PackAmmoAndWeapon(inv, weapon, equip);
 				if (has_weapon) {
 					primary_tachyon =
 						(gi.csi->ods[weapon].fd[0].dmgtype
@@ -551,7 +551,7 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 			if (has_weapon) {
 				/* already got primary weapon */
 				if ( equip[weapon] >= 8 * frand() ) {
-					if ( G_PackAmmoAndWeapon(ent, weapon, equip) ) {
+					if ( G_PackAmmoAndWeapon(inv, weapon, equip) ) {
 						max_price = 0; /* then one sidearm is enough */
 					}
 				}
@@ -559,12 +559,12 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 				/* no primary weapon */
 				if ( equip[weapon] 
 					 >= 8 * frand() - WEAPONLESS_BONUS * frand() ) {
-					has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
+					has_weapon += G_PackAmmoAndWeapon(inv, weapon, equip);
 					if (has_weapon) {
 						/* try to get the second akimbo pistol */
 						if ( !gi.csi->ods[weapon].twohanded
 							 && frand() < AKIMBO_CHANCE ) {
-							G_PackAmmoAndWeapon(ent, weapon, equip);
+							G_PackAmmoAndWeapon(inv, weapon, equip);
 						}
 						max_price = 0; /* enough sidearms */
 					}
@@ -594,7 +594,7 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 
 			num = equip[weapon] / 8 + (equip[weapon] % 8 >= 8 * frand());
 			while (num--)
-				has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
+				has_weapon += G_PackAmmoAndWeapon(inv, weapon, equip);
 		}
 	} while (max_price);
 
@@ -613,7 +613,7 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 			}
 		}
 		if (max_price)
-			has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
+			has_weapon += G_PackAmmoAndWeapon(inv, weapon, equip);
 	}
 	/* if still no weapon, something is broken, or no blades in equip */
 	if (!has_weapon)
@@ -720,7 +720,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 				ent->morale = MAX_SKILL;
 
 			/* pack equipment */
-			G_EquipAIPlayer(ent, equip);
+			G_EquipAIPlayer(&ent->i, equip);
 
 			/* set model */
 			ent->chr.inv = &ent->i;
