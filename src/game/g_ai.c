@@ -419,7 +419,7 @@ void AI_Run(void)
  *
  * TODO: choose between multiple ammo for the same weapon
  */
-int G_PackAmmoAndWeapon(inventory_t *inv, const int weapon, const byte equip[MAX_OBJDEFS])
+int G_PackAmmoAndWeapon(inventory_t *inv, const int weapon, const int equip[MAX_OBJDEFS])
 {
 	int ammo;
 	item_t item = {1,NONE,NONE};
@@ -491,7 +491,7 @@ int G_PackAmmoAndWeapon(inventory_t *inv, const int weapon, const byte equip[MAX
  * (of course this would result in random number of initial weapons),
  * though there is already CL_CheckInventory in cl_team.c.
  */
-void G_EquipAIPlayer(inventory_t *inv, const byte equip[MAX_OBJDEFS])
+void G_EquipAIPlayer(inventory_t *inv, const int equip[MAX_OBJDEFS])
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
@@ -618,6 +618,31 @@ void G_EquipAIPlayer(inventory_t *inv, const byte equip[MAX_OBJDEFS])
 	/* if still no weapon, something is broken, or no blades in equip */
 	if (!has_weapon)
 		Com_DPrintf("G_EquipAIPlayer: cannot add any weapon to AI; no secondary weapon without reload detected for equipment '%s'.\n", gi.cvar_string("ai_equipment"));
+
+	/* armor */
+	max_price = INT_MAX;
+	do {
+		prev_price = max_price;
+		max_price = 0;
+		for (i = 0; i < gi.csi->numODs; i++) {
+			obj = gi.csi->ods[i];
+			if ( equip[i] && obj.buytype == 3 ) {
+				if ( obj.price > max_price && obj.price < prev_price ) {
+					max_price = obj.price;
+					weapon = i;
+				}
+			}
+		}
+		if (max_price) {
+			if ( equip[weapon] >= 8 * frand() ) {
+				item_t item = {1,NONE,NONE};
+				
+				item.t = weapon;
+				if (Com_TryAddToInventory(inv, item, gi.csi->idArmor))
+					max_price = 0; /* one armor is enough */
+			}
+		}
+	} while (max_price);
 }
 
 
@@ -633,7 +658,7 @@ static int spawnPoints[MAX_SPAWNPOINTS];
 static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 {
 	edict_t *ent;
-	byte equip[MAX_OBJDEFS];
+	equipDef_t *ed;
 	int i, j, numPoints, team;
 
 	/* search spawn points */
@@ -651,7 +676,6 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 	/* prepare equipment */
 	if (team != TEAM_CIVILIAN) {
-		equipDef_t *ed;
 		char name[MAX_VAR];
 
 		Q_strncpyz(name, gi.cvar_string("ai_equipment"), MAX_VAR);
@@ -660,11 +684,6 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 				break;
 		if (i == gi.csi->numEDs)
 			ed = &gi.csi->eds[0];
-		else
-			ed = &gi.csi->eds[i];
-
-		for (i = 0; i < gi.csi->numODs; i++)
-			equip[i] = ed->num[i];
 	}
 
 	/* spawn players */
@@ -720,7 +739,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 				ent->morale = MAX_SKILL;
 
 			/* pack equipment */
-			G_EquipAIPlayer(&ent->i, equip);
+			G_EquipAIPlayer(&ent->i, ed->num);
 
 			/* set model */
 			ent->chr.inv = &ent->i;

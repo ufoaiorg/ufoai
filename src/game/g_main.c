@@ -170,7 +170,7 @@ void InitGame(void)
 	ai_alien = gi.cvar("ai_alien", "alien", 0);
 	ai_armor = gi.cvar("ai_armor", "", 0);
 	ai_civilian = gi.cvar("ai_civilian", "civilian", 0);
-	ai_equipment = gi.cvar("ai_equipment", "standard", 0);
+	ai_equipment = gi.cvar("ai_equipment", "human_phalanx_initial", 0);
 	/* aliens in singleplayer (can differ each mission) */
 	ai_numaliens = gi.cvar("ai_numaliens", "8", 0);
 	/* civilians for singleplayer */
