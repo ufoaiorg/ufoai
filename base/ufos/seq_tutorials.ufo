@@ -6,6 +6,30 @@ tutorial gameplay
 
 sequence tut_gameplay
 {
+	// ==============================================
+	// precache the screenshots
+	precache pics
+	{
+		tutorial/gameplay1a
+		tutorial/gameplay1b
+		tutorial/gameplay1c
+		tutorial/gameplay2a
+		tutorial/gameplay2b
+		tutorial/gameplay2c
+		tutorial/gameplay3a
+		tutorial/gameplay4a
+		tutorial/gameplay4b
+		tutorial/gameplay4c
+		tutorial/gameplay5a
+		tutorial/gameplay5b
+		tutorial/gameplay5c
+		tutorial/gameplay6a
+		tutorial/gameplay6b
+		tutorial/gameplay7a
+		tutorial/gameplay8a
+		tutorial/gameplay8b
+	}
+
 	2dobj gameplay_welcome
 	{
 		text	"_Some notes about the gameplay"
@@ -15,11 +39,20 @@ sequence tut_gameplay
 		speed	"0 10"
 		font	f_big
 	}
+	2dobj gameplay_continue_txt
+	{
+		text	"_Click to exit"
+		pos	"512 750"
+		align	uc
+		color	"0 0.6 0 1"
+		font	f_small
+	}
 	wait 4
-	2dobj gameplay_welcome { speed	"0 0" }
-	wait 2
+	2dobj gameplay_welcome { speed "0 0" }
 
-	2dobj gameplay_base_txt
+// ========================================
+
+	2dobj gameplay_txt1
 	{
 		text	"_Set up a base"
 		pos	"512 100"
@@ -27,69 +60,261 @@ sequence tut_gameplay
 		color	"1 1 1 1"
 		font	f_big
 	}
-	wait 2
-	2dobj gameplay_hire_txt
+	wait 1
+
+	2dobj gameplay_pic1a
 	{
-		text	"_Hire your employees"
-		pos	"512 120"
+		image	tutorial/gameplay1a
+		align	ul
+		pos	"64 140"
+	}
+	wait 2
+	2dobj gameplay_pic1b
+	{
+		image	tutorial/gameplay1b
+		align	ul
+		pos	"384 140"
+	}
+	wait 2
+	2dobj gameplay_pic1c
+	{
+		image	tutorial/gameplay1c
+		align	ul
+		pos	"704 140"
+	}
+	wait 4
+	rem gameplay_pic1a
+	wait 0.5
+	rem gameplay_pic1b
+	wait 0.5
+	rem gameplay_pic1c
+	wait 0.5
+
+	2dobj gameplay_txt2
+	{
+		text	"_Hire employees: scientists, soldiers"
+		pos	"512 125"
 		align	uc
-		color	"1 1 1 1"
+		color	"0 1 1 1"
 		font	f_big
 	}
 	wait 2
-	2dobj gameplay_equip_txt
+	2dobj gameplay_pic2a
+	{
+		image	tutorial/gameplay2a
+		align	ul
+		pos	"64 165"
+	}
+	wait 2
+	2dobj gameplay_pic2b
+	{
+		image	tutorial/gameplay2b
+		align	ul
+		pos	"384 165"
+	}
+	wait 2
+	2dobj gameplay_pic2c
+	{
+		image	tutorial/gameplay2c
+		align	ul
+		pos	"704 165"
+	}
+	wait 4
+	rem gameplay_pic2a
+	wait 0.5
+	rem gameplay_pic2b
+	wait 0.5
+	rem gameplay_pic2c
+	wait 0.5
+
+	2dobj gameplay_txt3
+	{
+		text	"_Start some research"
+		pos	"512 150"
+		align	uc
+		color	"1 0 1 1"
+		font	f_big
+	}
+	wait 1
+	2dobj gameplay_pic3a
+	{
+		image	tutorial/gameplay3a
+		align	ul
+		pos	"384 190"
+	}
+	wait 4
+	rem gameplay_pic3a
+	wait 0.5
+
+	2dobj gameplay_txt4
+	{
+		text	"_Buy weapons and equipment"
+		pos	"512 175"
+		align	uc
+		color	"0 0 1 1"
+		font	f_big
+	}
+	wait 1
+	2dobj gameplay_pic4a
+	{
+		image	tutorial/gameplay4a
+		align	ul
+		pos	"64 215"
+	}
+	wait 2
+	2dobj gameplay_pic4b
+	{
+		image	tutorial/gameplay4b
+		align	ul
+		pos	"384 215"
+	}
+	wait 2
+	2dobj gameplay_pic4c
+	{
+		image	tutorial/gameplay4c
+		align	ul
+		pos	"704 215"
+	}
+	wait 4
+	rem gameplay_pic4a
+	wait 0.5
+	rem gameplay_pic4b
+	wait 0.5
+	rem gameplay_pic4c
+	wait 0.5
+
+	2dobj gameplay_txt5
 	{
 		text	"_Equip your aircraft with soldiers and weapons"
-		pos	"512 140"
-		align	uc
-		color	"1 1 1 1"
-		font	f_big
-	}
-	wait 3
-	2dobj gameplay_geoscape_txt
-	{
-		text	"_Speed up time on geoscape until first alien mission appears"
-		pos	"512 160"
-		align	uc
-		color	"1 1 1 1"
-		font	f_big
-	}
-	wait 3
-	2dobj gameplay_send_aircraft_txt
-	{
-		text	"_Select the mission (doubleclick) and choose aircraft from list"
-		pos	"512 180"
-		align	uc
-		color	"1 1 1 1"
-		font	f_big
-	}
-	wait 4
-	2dobj gameplay_enter_mission_txt
-	{
-		text	"_Hit start or auto mission button to fight the aliens"
 		pos	"512 200"
 		align	uc
-		color	"1 1 1 1"
+		color	"1 1 0 1"
 		font	f_big
 	}
-	wait 4
-	2dobj gameplay_tac_mission_txt
+	wait 2
+	2dobj gameplay_pic5a
 	{
-		text	"_For further instruction watch the tactical mission tutorial"
+		image	tutorial/gameplay5a
+		align	ul
+		pos	"64 240"
+	}
+	wait 2
+	2dobj gameplay_pic5b
+	{
+		image	tutorial/gameplay5b
+		align	ul
+		pos	"384 240"
+	}
+	wait 2
+	2dobj gameplay_pic5c
+	{
+		image	tutorial/gameplay5c
+		align	ul
+		pos	"704 240"
+	}
+	wait 4
+	rem gameplay_pic5a
+	wait 0.5
+	rem gameplay_pic5b
+	wait 0.5
+	rem gameplay_pic5c
+	wait 0.5
+
+//%%
+	2dobj gameplay_txt6
+	{
+		text	"_Speed up time on geoscape until the first alien mission appears"
+		pos	"512 225"
+		align	uc
+		color	"0 1 0 1"
+		font	f_big
+	}
+	wait 2
+	2dobj gameplay_pic6a
+	{
+		image	tutorial/gameplay6a
+		align	ul
+		pos	"172 265"
+	}
+	wait 2
+	2dobj gameplay_pic6b
+	{
+		image	tutorial/gameplay6b
+		align	ul
+		pos	"600 265"
+	}
+	wait 4
+	rem gameplay_pic6a
+	wait 0.5
+	rem gameplay_pic6b
+	wait 0.5
+
+	2dobj gameplay_txt7
+	{
+		text	"_Select the mission (doubleclick) and choose aircraft from list"
 		pos	"512 250"
 		align	uc
 		color	"1 1 1 1"
 		font	f_big
 	}
+	wait 2
+	2dobj gameplay_pic7a
+	{
+		image	tutorial/gameplay7a
+		align	ul
+		pos	"384 290"
+	}
+	wait 4
+	rem gameplay_pic7a
+	wait 0.5
 
-	wait 6
-	rem gameplay_tac_mission_txt
-	rem gameplay_enter_mission_txt
-	rem gameplay_send_aircraft_txt
-	rem gameplay_geoscape_txt
-	rem gameplay_equip_txt
-	rem gameplay_hire_txt
-	rem gameplay_base_txt
+	2dobj gameplay_txt8
+	{
+		text	"_Hit the start or auto-mission button to fight the aliens"
+		pos	"512 275"
+		align	uc
+		color	"1 0 0 1"
+		font	f_big
+	}
+	wait 2
+	2dobj gameplay_pic8a
+	{
+		image	tutorial/gameplay8a
+		align	ul
+		pos	"172 315"
+	}
+	wait 2
+	2dobj gameplay_pic8b
+	{
+		image	tutorial/gameplay8b
+		align	ul
+		pos	"600 315"
+	}
+	wait 4
+
+
+	2dobj gameplay_txt9
+	{
+		text	"_For further instructions watch the tactical mission tutorial"
+		pos	"512 550"
+		align	uc
+		color	"0 0.6 0 1"
+		font	f_big
+	}
+	wait 300
+
+	rem gameplay_pic8a
+	rem gameplay_pic8b
+	rem gameplay_gameplay_txt9
+	rem gameplay_gameplay_txt8
+	rem gameplay_gameplay_txt7
+	rem gameplay_gameplay_txt6
+	rem gameplay_gameplay_txt5
+	rem gameplay_gameplay_txt4
+	rem gameplay_gameplay_txt3
+	rem gameplay_gameplay_txt2
+	rem gameplay_gameplay_txt1
+	rem gameplay_continue_txt
 	rem gameplay_welcome
 }
 
@@ -109,7 +334,7 @@ sequence tut_tacticalmission
 	{
 		tutorial/tactical1
 	}
-	// ==============================================
+
 
 	// ==============================================
 	// welcome message
@@ -126,7 +351,7 @@ sequence tut_tacticalmission
 	2dobj tactical_welcome { speed	"0 0" }
 	wait 2
 	rem tactical_welcome
-	// ==============================================
+
 
 	// ==============================================
 	// background image
@@ -145,7 +370,6 @@ sequence tut_tacticalmission
 		bgcolor	"0 0 0 0.7"
 		color	"1 1 1 1"
 	}
-	// ==============================================
 
 
 	// ==============================================
@@ -202,6 +426,7 @@ sequence tut_tacticalmission
 	rem current_soldier_hover
 	rem current_soldier_text
 
+
 	// ==============================================
 	// switch soldier
 	2dobj soldier_hover
@@ -234,6 +459,7 @@ sequence tut_tacticalmission
 	wait 5
 	rem switch_soldier_text2
 
+
 	// ==============================================
 	// soldier stats
 	2dobj stats_hover
@@ -254,6 +480,7 @@ sequence tut_tacticalmission
 	wait 5
 	rem stats_hover
 	rem stats_text
+
 
 	// ==============================================
 	// stats bars
@@ -276,6 +503,7 @@ sequence tut_tacticalmission
 	rem bars_hover
 	rem bars_text
 
+
 	// ==============================================
 	// inventory
 	2dobj inventory_hover
@@ -296,6 +524,7 @@ sequence tut_tacticalmission
 	wait 5
 	rem inventory_hover
 	rem inventory_text
+
 
 	// ==============================================
 	// weapon
@@ -326,6 +555,7 @@ sequence tut_tacticalmission
 	rem weapon_hover2
 	rem weapon_text
 
+
 	// ==============================================
 	// ammo remaining
 	2dobj ammo_hover
@@ -346,6 +576,7 @@ sequence tut_tacticalmission
 	wait 5
 	rem ammo_hover
 	rem ammo_text
+
 
 	// ==============================================
 	// reload
@@ -377,6 +608,7 @@ sequence tut_tacticalmission
 	rem reload_hover2
 	rem reload_text
 
+
 	// ==============================================
 	// primary attack
 	2dobj primary_attack_hover
@@ -405,6 +637,7 @@ sequence tut_tacticalmission
 	rem primary_attack_hover
 	rem primary_attack_hover2
 	rem primary_attack_text
+
 
 	// ==============================================
 	// secondary attack
@@ -435,6 +668,7 @@ sequence tut_tacticalmission
 	rem secondary_attack_hover2
 	rem secondary_attack_text
 
+
 	// ==============================================
 	// reaction shots
 	2dobj reaction_hover
@@ -455,6 +689,7 @@ sequence tut_tacticalmission
 	wait 5
 	rem reaction_hover
 	rem reaction_text
+
 
 	// ==============================================
 	// kneel / stand up
@@ -477,6 +712,7 @@ sequence tut_tacticalmission
 	rem crouch_hover
 	rem crouch_text
 
+
 	// ==============================================
 	// visible aliens
 	2dobj visible_aliens_hover
@@ -497,6 +733,7 @@ sequence tut_tacticalmission
 	wait 5
 	rem visible_aliens_hover
 	rem switch_visible_aliens_text
+
 
 	// ==============================================
 	// end round
