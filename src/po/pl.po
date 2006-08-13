@@ -1512,7 +1512,7 @@ msgid "Asian Commonwealth"
 msgstr ""
 
 #: ../base/ufos/nations.ufo:59
-msgid "Arab Emirates"
+msgid "United Arab Republic"
 msgstr ""
 
 #: ../base/ufos/nations.ufo:70
@@ -1524,7 +1524,7 @@ msgid "Russian Federation"
 msgstr ""
 
 #: ../base/ufos/nations.ufo:92
-msgid "Australia"
+msgid "Oceania"
 msgstr ""
 
 #: ../base/ufos/research.ufo:58

@@ -52,9 +52,10 @@ static int maskWidth, maskHeight;
 /* extern in client.h */
 stats_t stats;
 
-extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission);
-extern void CL_AircraftsNotifyMissionRemoved(const actMis_t* mission);
+extern qboolean CL_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
+extern void CL_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 static void CL_GameExit(void);
+
 /*
 ============================================================================
 
@@ -502,6 +503,7 @@ static void CL_CampaignEndStage(char *name)
 static void CL_CampaignAddMission(setState_t * set)
 {
 	actMis_t *mis;
+
 	/* maybe the mission is already on geoscape */
 	mission_t *misTemp;
 	int i;
@@ -538,27 +540,27 @@ static void CL_CampaignAddMission(setState_t * set)
 		baseCurrent = &gd.bases[rand() % gd.numBases];
 		/* the first founded base is more likely to be attacked */
 		if (!baseCurrent->founded) {
-			for (i=0; i<MAX_BASES;i++) {
+			for (i = 0; i < MAX_BASES; i++) {
 				if (gd.bases[i].founded) {
 					baseCurrent = &gd.bases[i];
 					break;
 				}
 			}
-			 /* at this point there should be at least one base */
-			if (i==MAX_BASES || !baseCurrent)
+			/* at this point there should be at least one base */
+			if (i == MAX_BASES || !baseCurrent)
 				Sys_Error("No bases found\n");
 		}
 
 		mis->realPos[0] = baseCurrent->pos[0];
 		mis->realPos[1] = baseCurrent->pos[1];
 		/* Add message to message-system. */
-		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base %s is under attack."), baseCurrent->name );
+		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base %s is under attack."), baseCurrent->name);
 		MN_AddNewMessage(_("Base Attack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
 
 		Cbuf_ExecuteText(EXEC_NOW, va("base_attack %i", baseCurrent->idx));
 	} else {
 		/* A mission must not be very near a base */
-		for(i=0 ; i < gd.numBases ; i++) {
+		for (i = 0; i < gd.numBases; i++) {
 #if (0)
 			/* To check multi selection */
 			{
@@ -566,9 +568,9 @@ static void CL_CampaignAddMission(setState_t * set)
 			if (CP_GetDistance(mis->def->pos, gd.bases[i].pos) < DIST_MIN_BASE_MISSION) {
 #endif
 				f = frand();
-				mis->def->pos[0] = gd.bases[i].pos[0] + (gd.bases[i].pos[0] < 0	? f * DIST_MIN_BASE_MISSION	: -f * DIST_MIN_BASE_MISSION);
+				mis->def->pos[0] = gd.bases[i].pos[0] + (gd.bases[i].pos[0] < 0 ? f * DIST_MIN_BASE_MISSION : -f * DIST_MIN_BASE_MISSION);
 				f = sin(acos(f));
-				mis->def->pos[1] = gd.bases[i].pos[1] +	(gd.bases[i].pos[1] < 0 ? f* DIST_MIN_BASE_MISSION	: -f * DIST_MIN_BASE_MISSION);
+				mis->def->pos[1] = gd.bases[i].pos[1] + (gd.bases[i].pos[1] < 0 ? f * DIST_MIN_BASE_MISSION : -f * DIST_MIN_BASE_MISSION);
 				break;
 			}
 		}
@@ -578,7 +580,7 @@ static void CL_CampaignAddMission(setState_t * set)
 		CL_MapMaskFind(mis->def->mask, mis->realPos);
 
 		/* Add message to message-system. */
-		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Alien activity has been reported: '%s'"), mis->def->location );
+		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Alien activity has been reported: '%s'"), mis->def->location);
 		MN_AddNewMessage(_("Alien activity"), messageBuffer, qfalse, MSG_TERRORSITE, NULL);
 		Com_DPrintf("Alien activity at long: %.0f lat: %0.f\n", mis->realPos[0], mis->realPos[1]);
 	}
@@ -673,37 +675,36 @@ static void CL_BuildingAircraftList_f(void)
   *
   * if expires is true a mission expires without any reaction
   * this will cost money and decrease nation support for this area
-  * TODO: Use mis->pos to determine the position on the geoscape and get the nation
-  * TODO: Use colors for nations
   */
-static void CL_HandleNationData(qboolean expires, actMis_t * mis)
+static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
 {
-/* TODO: please change formatting and whitespace to agree with coding guidlines
-   a discussion is pending about the nation and happiness flags */
-#if 0
 	int i;
-	mission_t* mission=mis->def;
-	char* nation_name=mission->nation;
+	float civilianRatio = (float)civiliansSurvived / (float)(civiliansKilled+civiliansSurvived);
+	float alienRatio = (float)aliensSurvived / (float)(aliensKilled+aliensSurvived);
+	float performance = 0.5 + civilianRatio * 0.25 + alienRatio * 0.25;
+	mission_t *mission = mis->def;
+	char *nation_name = mission->nation;
 
-	for (i=0; i<numNations; i++) {
-		nation_t* nation=&nations[i];
-		if (expires) {
+	for (i = 0; i < numNations; i++) {
+		nation_t *nation = &nations[i];
+
+		if (lost) {
 			if (!Q_strcmp(nation->name, nation_name)) {
 				/* Strong negative reaction */
-				nation->happiness *= nation->alienFriendly/100;
+				nation->happiness *= performance * nation->alienFriendly / 100;
 			} else {
 				/* Minor negative reaction */
-				nation->happiness *= 1 - pow(1 - nation->alienFriendly/100, 5);
+				nation->happiness *= 1 - pow(1 - performance * nation->alienFriendly / 100, 5);
 			}
 		} else {
 			if (!Q_strcmp(nation->name, nation_name)) {
 				/* Strong positive reaction */
-				nation->happiness /= 1 - nation->alienFriendly/100;
-				nation->happiness += nation->alienFriendly/100 / 10;
+				nation->happiness /= 1 - performance * nation->alienFriendly / 100;
+				nation->happiness += performance * nation->alienFriendly / 100 / 10;
 			} else {
 				/* Minor positive reaction */
-				nation->happiness /= pow(1 - nation->alienFriendly/100, 0.2);
-				nation->happiness += nation->alienFriendly/100 / 50;
+				nation->happiness /= pow(1 - performance * nation->alienFriendly / 100, 0.2);
+				nation->happiness += performance * nation->alienFriendly / 100 / 50;
 			}
 			if (nation->happiness > 1.0) {
 				/* Can't be more than 100% happy with you. */
@@ -711,7 +712,6 @@ static void CL_HandleNationData(qboolean expires, actMis_t * mis)
 			}
 		}
 	}
-#endif
 }
 
 
@@ -746,12 +746,8 @@ void CL_CampaignCheckEvents(void)
 	/* let missions expire */
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++)
 		if (mis->expire.day && Date_LaterThan(ccs.date, mis->expire)) {
-			/* ok, waiting and not doing a mission will costs money */
-			int lose = mis->def->cr_win + mis->def->civilians * mis->def->cr_civilian;
-
-			CL_UpdateCredits(ccs.credits - lose);
-			CL_HandleNationData(qtrue, mis);
-			Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died. You've lost %i credits."), mis->def->civilians, lose), MAX_MESSAGE_TEXT);
+			CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
+			Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died."), mis->def->civilians), MAX_MESSAGE_TEXT);
 			MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 			/* Remove mission from the map. */
 			CL_CampaignRemoveMission(mis);
@@ -812,27 +808,16 @@ char *CL_DateGetMonthName(int month)
  * @sa CL_CampaignRun
  * @sa B_CreateEmployee
  */
-#define NATION_PROBABILITY 0.3
 static void CL_UpdateNationData(void)
 {
 	int i, j;
 	char message[1024];
-#if 0
 	char happiness_str[1024];
 	int funding;
-#endif
 	nation_t *nation;
 
 	for (i = 0; i < numNations; i++) {
-		/* maybe we don't get fund of this nation */
-		if ( frand() <= NATION_PROBABILITY )
-			continue;
 		nation = &nations[i];
-		Com_sprintf(message, sizeof(message), _("Gained %i credits from nation %s"), nation->funding, _(nation->name));
-
-
-/* TODO: a new code to be discussed */
-#if 0
 		funding = nation->funding * nation->happiness;
 
 		if (nation->happiness < 0.015)
@@ -861,20 +846,16 @@ static void CL_UpdateNationData(void)
 		Com_sprintf(message, sizeof(message), _("Gained %i credits from nation %s (%s)"), funding, _(nation->name), happiness_str);
 
 		CL_UpdateCredits(ccs.credits + funding);
-#endif
 
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-		CL_UpdateCredits(ccs.credits + nation->funding);
-		/* maybe we don't get scientists of this nation */
-		if ( frand() <= NATION_PROBABILITY )
-			continue;
-		for (j=0; j<nation->scientists; j++) {
+
+		CL_UpdateCredits(ccs.credits + funding);
+		for (j = 0; j < nation->scientists; j++) {
 			/* Create one free scientist. */
 			E_CreateEmployee(EMPL_SCIENTIST);
 			/* Hire one free scientist. gd.numBases is always (at least) 1 at this point. */
 			E_HireEmployee(&gd.bases[rand() % gd.numBases], EMPL_SCIENTIST, -1);
 		}
-		/* TODO: soldiers */
 	}
 }
 
@@ -889,6 +870,7 @@ static void CL_UpdateNationData(void)
   * @sa CL_CampaignRunAircraft
   * @sa CL_CampaignCheckEvents
   */
+
 void CL_CampaignRun(void)
 {
 	/* advance time */
@@ -948,6 +930,7 @@ static gameLapse_t lapse[NUM_TIMELAPSE] = {
 };
 
 int gameLapse;
+
 /**
   * @brief Stop game time speed
   */
@@ -1013,7 +996,7 @@ void CL_GameTimeFast(void)
 void CL_UpdateCredits(int credits)
 {
 	/* credits */
-	if ( credits > MAX_CREDITS )
+	if (credits > MAX_CREDITS)
 		credits = MAX_CREDITS;
 	ccs.credits = credits;
 	Cvar_Set("mn_credits", va("%i c", ccs.credits));
@@ -1046,7 +1029,7 @@ void CL_Stats_Update(void)
   * @sa CL_SaveEquipment
   */
 #if 0
-void CL_LoadEquipment ( sizebuf_t *buf, base_t* base )
+void CL_LoadEquipment(sizebuf_t * buf, base_t * base)
 {
 	item_t item;
 	int container, x, y;
@@ -1083,7 +1066,7 @@ void CL_LoadEquipment ( sizebuf_t *buf, base_t* base )
   * @sa CL_LoadEquipment
   */
 #if 0
-void CL_SaveEquipment ( sizebuf_t *buf, character_t *team, const int num )
+void CL_SaveEquipment(sizebuf_t * buf, character_t * team, const int num)
 {
 	invList_t *ic;
 	int i, j;
@@ -1106,9 +1089,10 @@ void CL_SaveEquipment ( sizebuf_t *buf, character_t *team, const int num )
  * @sa CL_GameSave
  * @sa MN_AddNewMessage
  */
-void CL_MessageSave(sizebuf_t* sb, message_t* message)
+void CL_MessageSave(sizebuf_t * sb, message_t * message)
 {
 	int idx = -1;
+
 	if (!message)
 		return;
 	/* bottom up */
@@ -1131,6 +1115,35 @@ void CL_MessageSave(sizebuf_t* sb, message_t* message)
 }
 
 /**
+  * @brief Load what the nations think of your performance.
+  * @sa CL_GameLoad
+  * @sa CL_SaveNationStats
+  */
+void CL_LoadNationStats(sizebuf_t * buf)
+{
+	int i;
+
+	/* link the inventory in after load */
+	for (i = 0; i < numNations; i++) {
+		nations[i].happiness = MSG_ReadFloat(buf);
+	}
+}
+
+/**
+  * @brief Stores what the nations think of your performance.
+  * @sa CL_LoadNationStats
+  */
+void CL_SaveNationStats(sizebuf_t * buf)
+{
+	int i;
+
+	/* link the inventory in after load */
+	for (i = 0; i < numNations; i++) {
+		MSG_WriteFloat(buf, nations[i].happiness);
+	}
+}
+
+/**
   * @brief
   * @sa CL_GameLoad
   */
@@ -1150,9 +1163,9 @@ void CL_GameSave(char *filename, char *comment)
 		return;
 	}
 
-	Com_sprintf(savegame, MAX_OSPATH, "%s/save/%s.sav", FS_Gamedir(), filename );
+	Com_sprintf(savegame, MAX_OSPATH, "%s/save/%s.sav", FS_Gamedir(), filename);
 
-	buf = (byte*)malloc(sizeof(byte)*MAX_GAMESAVESIZE);
+	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
 	/* create data */
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
 
@@ -1182,7 +1195,7 @@ void CL_GameSave(char *filename, char *comment)
 	SZ_Write(&sb, &gd, sizeof(globalData_t));
 
 	/* store message system items */
-	for ( i = 0, message = messageStack; message; i++, message = message->next );
+	for (i = 0, message = messageStack; message; i++, message = message->next);
 	Com_DPrintf("CL_GameSave: Saving %i messages from message stack\n", i);
 	MSG_WriteByte(&sb, i);
 	CL_MessageSave(&sb, messageStack);
@@ -1236,6 +1249,9 @@ void CL_GameSave(char *filename, char *comment)
 		MSG_WriteLong(&sb, mis->expire.day);
 		MSG_WriteLong(&sb, mis->expire.sec);
 	}
+	
+	/* store nation happiness */
+	CL_SaveNationStats(&sb);
 
 	/* save all the stats */
 	SZ_Write(&sb, &stats, sizeof(stats));
@@ -1260,8 +1276,7 @@ static void CL_GameSaveCmd(void)
 	char *arg;
 
 	/* get argument */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: game_save <filename> <comment>\n");
+	if (Cmd_Argc() < 2) {		Com_Printf("Usage: game_save <filename> <comment>\n");
 		return;
 	}
 
@@ -1290,7 +1305,7 @@ static void CL_GameSaveCmd(void)
 void CL_UpdatePointersInGlobalData(void)
 {
 	int i, j, p;
-	base_t* base;
+	base_t *base;
 	aircraft_t *aircraft;
 
 	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
@@ -1349,7 +1364,7 @@ int CL_GameLoad(char *filename)
 		return 1;
 	}
 
-	buf = (byte*)malloc(sizeof(byte)*MAX_GAMESAVESIZE);
+	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
 
 	/* read data */
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
@@ -1379,7 +1394,7 @@ int CL_GameLoad(char *filename)
 	if (curCampaign)
 		CL_GameExit();
 
-	memset(&gd,0,sizeof(gd));
+	memset(&gd, 0, sizeof(gd));
 	CL_ReadSinglePlayerData();
 
 	/* read comment */
@@ -1432,7 +1447,7 @@ int CL_GameLoad(char *filename)
 	/* how many message items */
 	i = MSG_ReadByte(&sb);
 	Com_DPrintf("%i messages on messagestack");
-	for (;i--;) {
+	for (; i--;) {
 		title = MSG_ReadString(&sb);
 		text = MSG_ReadString(&sb);
 		Com_DPrintf("CL_GameLoad: Load message '%s' - '%s'\n", title, text);
@@ -1547,6 +1562,9 @@ int CL_GameLoad(char *filename)
 /*	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
 		CL_LoadEquipment( &sb, base );*/
 
+	/* store nation happiness */
+	CL_LoadNationStats(&sb);
+
 	/* load the stats */
 	memcpy(&stats, sb.data + sb.readcount, sizeof(stats_t));
 	sb.readcount += sizeof(stats_t);
@@ -1555,7 +1573,7 @@ int CL_GameLoad(char *filename)
 
 	CL_GameInit();
 
-	Cvar_Set("mn_main", "singleplayermission");
+	Cvar_Set("mn_main", "singleplayer");
 	Cvar_Set("mn_active", "map");
 	Cbuf_AddText("disconnect\n");
 	ccs.singleplayer = qtrue;
@@ -1665,7 +1683,7 @@ static void CL_GameGo(void)
 	mission_t *mis;
 	char expanded[MAX_QPATH];
 	char timeChar;
-	aircraft_t* aircraft;
+	aircraft_t *aircraft;
 
 	if (!curCampaign || gd.interceptAircraft < 0) {
 		Com_DPrintf("curCampaign: %p, selMis: %p, interceptAircraft: %i\n", curCampaign, selMis, gd.interceptAircraft);
@@ -1690,7 +1708,7 @@ static void CL_GameGo(void)
 	assert(baseCurrent && mis && aircraft);
 
 	if (!ccs.singleplayer && B_GetNumOnTeam() == 0) {
-	/* multiplayer */
+		/* multiplayer */
 		MN_Popup(_("Note"), _("Assemble or load a team"));
 		return;
 	} else if (ccs.singleplayer && (!mis->active || !*(aircraft->teamSize))) {
@@ -1714,6 +1732,11 @@ static void CL_GameGo(void)
 
 	/* check inventory */
 	ccs.eMission = ccs.eCampaign;
+	
+	/* Zero out kill counters */
+	ccs.civiliansKilled = 0;
+	ccs.aliensKilled = 0;
+
 	CL_CheckInventory(&ccs.eMission, 0);
 
 	/* prepare */
@@ -1746,7 +1769,8 @@ static void CL_GameGo(void)
 		Cbuf_AddText(va("map %s%c %s\n", mis->map, timeChar, mis->param));
 	else
 		Cbuf_AddText(va("map %s %s\n", mis->map, mis->param));
-
+        fprintf(stderr, "9\n");
+        fflush(stderr);
 
 }
 
@@ -1796,15 +1820,14 @@ static void CL_GameAutoCheck(void)
 /**
   * @brief
   *
-  * TODO: Remove recruits when a mission was lost
   * @sa CL_GameAutoCheck
   * @sa CL_GameGo
   */
 void CL_GameAutoGo(void)
 {
 	mission_t *mis;
-	int won, i;
-	aircraft_t* aircraft;
+	int won;
+	aircraft_t *aircraft;
 
 	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
 		Com_DPrintf("No update after automission\n");
@@ -1830,22 +1853,15 @@ void CL_GameAutoGo(void)
 
 	/* FIXME: This needs work */
 	won = mis->aliens * (int) difficulty->value > *(aircraft->teamSize) ? 0 : 1;
-
+		
 	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int) difficulty->value, *(aircraft->teamSize));
-
-	/* give reward */
+	
+	/* update nation opinions */
 	if (won) {
-		CL_UpdateCredits(ccs.credits + mis->cr_win + (mis->cr_alien * mis->aliens));
-		CL_HandleNationData(0, selMis);
+		CL_HandleNationData(0, mis->civilians, 0, 0, mis->aliens, selMis);
 	} else {
-		CL_UpdateCredits(ccs.credits + mis->cr_win - (mis->cr_civilian * mis->civilians));
-		CL_HandleNationData(0, selMis);
+		CL_HandleNationData(1, 0, mis->civilians, mis->aliens, 0, selMis);
 	}
-
-	/* add recruits */
-	if (won && mis->recruits)
-		for (i = 0; i < mis->recruits; i++)
-			E_CreateEmployee(EMPL_SOLDIER);
 
 	/* campaign effects */
 	selMis->cause->done++;
@@ -1956,7 +1972,7 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 		ccs.eMission.num[weapon->item.t]++;
 
 	tech = csi.ods[weapon->item.t].tech;
-	if ( !tech )
+	if (!tech)
 		Sys_Error("No tech for %s\n", csi.ods[weapon->item.t].name);
 	tech->statusCollected++;
 
@@ -2040,7 +2056,7 @@ void CL_UpdateCharacterStats(int won)
 	int i, j;
 
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
-	for (i=0; i<gd.numEmployees[EMPL_SOLDIER]; i++)
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
 			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			assert(chr);
@@ -2085,10 +2101,11 @@ void CL_DebugFullCredits (void)
 static void CL_DebugChangeCharacterStats_f(void)
 {
 	int i, j;
-	character_t* chr;
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER];i++) {
+	character_t *chr;
+
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
-		for (j=0; j<KILLED_NUM_TYPES; j++)
+		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			chr->kills[j]++;
 	}
 	CL_UpdateCharacterStats(1);
@@ -2103,12 +2120,14 @@ static void CL_DebugChangeCharacterStats_f(void)
 static void CL_GameResultsCmd(void)
 {
 	int won;
+	int civilians_killed;
+	int aliens_killed;
 	int i;
 	int tempMask;
 	employee_t* employee;
 
 	/* multiplayer? */
-	if (!curCampaign || !selMis || !baseCurrent )
+	if (!curCampaign || !selMis || !baseCurrent)
 		return;
 
 	/* check for replay */
@@ -2119,23 +2138,23 @@ static void CL_GameResultsCmd(void)
 	}
 
 	/* check for win */
-	if (Cmd_Argc() < 2) {
+	if (Cmd_Argc() < 1) {
 		Com_Printf("Usage: game_results <won>\n");
 		return;
 	}
 	won = atoi(Cmd_Argv(1));
-	CL_HandleNationData(won, selMis);
+	civilians_killed = ccs.civiliansKilled;
+	aliens_killed = ccs.aliensKilled;
+	/* fprintf(stderr, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n", won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed); */
+  	CL_HandleNationData(won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed, selMis);
 
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
 
-	/* give reward, change equipment */
-	CL_UpdateCredits(ccs.credits + ccs.reward);
-
 	/* remove the dead (and their item preference) */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER];) {
 		if (baseCurrent->deathMask & (1 << i)) {
-			Com_DPrintf("CL_GameResultsCmd - remove player %i - he died\n", i);
+			Com_DPrintf("CL_GameResultsCmd - remove player %i - dead\n", i);
 			baseCurrent->deathMask >>= 1;
 			tempMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent] >> 1;
 			baseCurrent->teamMask[baseCurrent->aircraftCurrent] =
@@ -2150,11 +2169,6 @@ static void CL_GameResultsCmd(void)
 			i++;
 	}
 	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n", i);
-
-	/* add recruits */
-	if (won && selMis->def->recruits)
-		for (i = 0; i < selMis->def->recruits; i++)
-			E_CreateEmployee(EMPL_SOLDIER);
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won);
@@ -2179,7 +2193,9 @@ static value_t mission_vals[] = {
 	,
 	{"type", V_TRANSLATION_STRING, offsetof(mission_t, type)}
 	,
-	{"text", V_TRANSLATION_STRING, 0} /* max length is 128 */
+	{"text", V_TRANSLATION_STRING, 0}	/* max length is 128 */
+	,
+	{"nation", V_TRANSLATION_STRING, offsetof(mission_t, nation)}
 	,
 	{"map", V_STRING, offsetof(mission_t, map)}
 	,
@@ -2189,13 +2205,13 @@ static value_t mission_vals[] = {
 	,
 	{"pos", V_POS, offsetof(mission_t, pos)}
 	,
-	{"mask", V_RGBA, offsetof(mission_t, mask)} /* color values from map mask this mission needs */
+	{"mask", V_RGBA, offsetof(mission_t, mask)}	/* color values from map mask this mission needs */
 	,
 	{"aliens", V_INT, offsetof(mission_t, aliens)}
 	,
 	{"maxugv", V_INT, offsetof(mission_t, ugv)}
 	,
-	{"commands", V_STRING, offsetof(mission_t, cmds)} /* commands that are excuted when this mission gets active */
+	{"commands", V_STRING, offsetof(mission_t, cmds)}	/* commands that are excuted when this mission gets active */
 	,
 	{"onwin", V_STRING, offsetof(mission_t, onwin)}
 	,
@@ -2211,15 +2227,7 @@ static value_t mission_vals[] = {
 	,
 	{"civteam", V_STRING, offsetof(mission_t, civTeam)}
 	,
-	{"recruits", V_INT, offsetof(mission_t, recruits)}
-	,
 	{"storyrelated", V_BOOL, offsetof(mission_t, storyRelated)}
-	,
-	{"$win", V_INT, offsetof(mission_t, cr_win)}
-	,
-	{"$alien", V_INT, offsetof(mission_t, cr_alien)}
-	,
-	{"$civilian", V_INT, offsetof(mission_t, cr_civilian)}
 	,
 	{NULL, 0, 0}
 	,
@@ -2235,7 +2243,7 @@ static char *mtp = missionTexts;
  * @param[in] name valid mission name
  * @return ms is the mission_t pointer of the mission to add
  */
-mission_t* CL_AddMission(char *name)
+mission_t *CL_AddMission(char *name)
 {
 	int i;
 	mission_t *ms;
@@ -2337,9 +2345,9 @@ void CL_ParseMission(char *name, char **text)
 
 	} while (*text);
 #ifdef DEBUG
-	if ( abs(ms->pos[0]) > 180.0f )
+	if (abs(ms->pos[0]) > 180.0f)
 		Com_Printf("Longitude for mission '%s' is bigger than 180 EW (%.0f)\n", ms->name, ms->pos[0]);
-	if ( abs(ms->pos[1]) > 90.0f )
+	if (abs(ms->pos[1]) > 90.0f)
 		Com_Printf("Latitude for mission '%s' is bigger than 90 NS (%.0f)\n", ms->name, ms->pos[1]);
 #endif
 }
@@ -2628,6 +2636,8 @@ static value_t nation_vals[] = {
 	,
 	{"funding", V_INT, offsetof(nation_t, funding)}
 	,
+	{"happiness", V_FLOAT, offsetof(nation_t, happiness)}
+	,
 	{"alien_friendly", V_FLOAT, offsetof(nation_t, alienFriendly)}
 	,
 	{"soldiers", V_INT, offsetof(nation_t, soldiers)}
@@ -2796,7 +2806,7 @@ static void CL_GameExit(void)
 /**
   * @brief Called at new game and load game
   */
-void CL_GameInit ( void )
+void CL_GameInit(void)
 {
 	cmdList_t *commands;
 
@@ -2838,7 +2848,7 @@ static void CL_GameNew(void)
 		CL_GameExit();
 	ccs.singleplayer = qtrue;
 
-	memset(&gd,0,sizeof(gd));
+	memset(&gd, 0, sizeof(gd));
 	CL_ReadSinglePlayerData();
 
 	/* get campaign */
@@ -2919,7 +2929,7 @@ static void CP_GetCampaigns_f(void)
 
 	*campaignText = *campaignDesc = '\0';
 	for (i = 0; i < numCampaigns; i++) {
-		if ( campaigns[i].visible )
+		if (campaigns[i].visible)
 			Q_strcat(campaignText, va("%s\n", campaigns[i].name), MAXCAMPAIGNTEXT);
 	}
 	/* default campaign */
@@ -2929,7 +2939,8 @@ static void CP_GetCampaigns_f(void)
 	/* select main as default */
 	for (i = 0; i < numCampaigns; i++)
 		if (!Q_strncmp("main", campaigns[i].id, MAX_VAR)) {
-			Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i\nCredits: %ic\nDifficulty: %s\n%s\n"), campaigns[i].team, campaigns[i].soldiers, campaigns[i].credits, CL_ToDifficultyName(campaigns[i].difficulty), _(campaigns[i].text));
+			Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i\nDifficulty: %s\n%s\n"), campaigns[i].team,
+						campaigns[i].soldiers, CL_ToDifficultyName(campaigns[i].difficulty), _(campaigns[i].text));
 			break;
 		}
 
@@ -2949,9 +2960,9 @@ static void CP_CampaignsClick_f(void)
 	num = atoi(Cmd_Argv(1));
 
 	/* jump over all invisible campaigns */
-	while ( !campaigns[num].visible ) {
+	while (!campaigns[num].visible) {
 		num++;
-		if ( num >= numCampaigns )
+		if (num >= numCampaigns)
 			return;
 	}
 
@@ -2960,7 +2971,8 @@ static void CP_CampaignsClick_f(void)
 
 	Cvar_Set("campaign", campaigns[num].id);
 	/* FIXME: Translate the race to the name of a race */
-	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i\nCredits: %ic\nDifficulty: %s\n%s\n"), campaigns[num].team, campaigns[num].soldiers, campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty), _(campaigns[num].text));
+	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i\nCredits: %ic\nDifficulty: %s\n%s\n"), campaigns[num].team, campaigns[num].soldiers,
+				campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty), _(campaigns[num].text));
 	menuText[TEXT_STANDARD] = campaignDesc;
 }
 
@@ -2968,14 +2980,14 @@ static void CP_CampaignsClick_f(void)
   * @brief Will clear most of the parsed singleplayer data
   * @sa Com_InitInventory
   */
-void CL_ResetSinglePlayerData ( void )
+void CL_ResetSinglePlayerData(void)
 {
 	numNations = numStageSets = numStages = numMissions = 0;
-	memset(missions, 0, sizeof(mission_t)*MAX_MISSIONS);
-	memset(nations, 0, sizeof(nation_t)*MAX_NATIONS);
-	memset(stageSets, 0, sizeof(stageSet_t)*MAX_STAGESETS);
-	memset(stages, 0, sizeof(stage_t)*MAX_STAGES);
-	memset(&invList,0,sizeof(invList));
+	memset(missions, 0, sizeof(mission_t) * MAX_MISSIONS);
+	memset(nations, 0, sizeof(nation_t) * MAX_NATIONS);
+	memset(stageSets, 0, sizeof(stageSet_t) * MAX_STAGESETS);
+	memset(stages, 0, sizeof(stage_t) * MAX_STAGES);
+	memset(&invList, 0, sizeof(invList));
 	E_ResetEmployees();
 	Com_InitInventory(invList);
 }
@@ -2985,12 +2997,12 @@ void CL_ResetSinglePlayerData ( void )
   *
   * call this function via campaign_stats
   */
-static void CP_CampaignStats ( void )
+static void CP_CampaignStats(void)
 {
 	setState_t *set;
 	int i;
 
-	if ( !curCampaign ) {
+	if (!curCampaign) {
 		Com_Printf("No campaign active\n");
 		return;
 	}
@@ -2999,7 +3011,7 @@ static void CP_CampaignStats ( void )
 	Com_Printf("..equipment: %s\n", curCampaign->equipment);
 	Com_Printf("..team: %s\n", curCampaign->team);
 
-	Com_Printf("..active stage: %s\n", testStage->name );
+	Com_Printf("..active stage: %s\n", testStage->name);
 	for (i = 0, set = &ccs.set[testStage->first]; i < testStage->num; i++, set++) {
 		Com_Printf("....name: %s\n", set->def->name);
 		Com_Printf("......needed: %s\n", set->def->needed);
@@ -3019,7 +3031,7 @@ void CL_ResetCampaign(void)
 	menuText[TEXT_CAMPAIGN_LIST] = campaignText;
 
 	/* commands */
-	Cmd_AddCommand("campaign_stats", CP_CampaignStats );
+	Cmd_AddCommand("campaign_stats", CP_CampaignStats);
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f);
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f);
 	Cmd_AddCommand("game_new", CL_GameNew);

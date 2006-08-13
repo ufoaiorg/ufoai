@@ -1713,8 +1713,8 @@ msgid "Asian Commonwealth"
 msgstr "Aasia ühendus"
 
 #: ../base/ufos/nations.ufo:59
-msgid "Arab Emirates"
-msgstr "Araabia emiraadid"
+msgid "United Arab Republic"
+msgstr "Araabia Ühendriigid Vabariik"
 
 #: ../base/ufos/nations.ufo:70
 msgid "African Union"
@@ -1725,8 +1725,8 @@ msgid "Russian Federation"
 msgstr "Vene Föderatsioon"
 
 #: ../base/ufos/nations.ufo:92
-msgid "Australia"
-msgstr "Austraalia"
+msgid "Oceania"
+msgstr "Oceania"
 
 #: ../base/ufos/research.ufo:58
 msgid "Technologies & Discoveries"

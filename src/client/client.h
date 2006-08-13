@@ -705,7 +705,7 @@ extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 
 /* SAVEGAMES */
 #ifndef SAVE_FILE_VERSION
-#define SAVE_FILE_VERSION 4
+#define SAVE_FILE_VERSION 5
 #endif							/* SAVE_FILE_VERSION */
 
 #include "cl_aircraft.h"

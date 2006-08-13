@@ -55,6 +55,7 @@ typedef struct mission_s {
 	char map[MAX_VAR];
 	char param[MAX_VAR];
 	char location[MAX_VAR];
+	char nation[MAX_VAR];
 	char type[MAX_VAR];
 	char music[MAX_VAR];
 	char alienTeam[MAX_VAR];
@@ -71,8 +72,6 @@ typedef struct mission_s {
 	vec2_t pos;
 	byte mask[4];
 	int aliens, civilians;
-	int recruits;
-	int cr_win, cr_alien, cr_civilian;
 } mission_t;
 
 typedef struct stageSet_s {
@@ -146,6 +145,7 @@ typedef struct nation_s {
 	char id[MAX_VAR];
 	char name[MAX_VAR];
 	int funding;
+	float happiness;
 	vec4_t color;
 	float alienFriendly;
 	int soldiers;
@@ -166,7 +166,8 @@ typedef struct ccs_s {
 	qboolean singleplayer;
 
 	int credits;
-	int reward;
+	int civiliansKilled;
+	int aliensKilled;
 	date_t date;
 	float timer;
 

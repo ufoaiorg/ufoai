@@ -1574,8 +1574,8 @@ msgid "Asian Commonwealth"
 msgstr "Азиатское Содружество"
 
 #: ../base/ufos/nations.ufo:59
-msgid "Arab Emirates"
-msgstr "Арабские Эмираты"
+msgid "United Arab Republic"
+msgstr "Соединенная Арабская Республика"
 
 #: ../base/ufos/nations.ufo:70
 msgid "African Union"
@@ -1586,8 +1586,8 @@ msgid "Russian Federation"
 msgstr "Российская Федерация"
 
 #: ../base/ufos/nations.ufo:92
-msgid "Australia"
-msgstr "Австралия"
+msgid "Oceania"
+msgstr ""
 
 #: ../base/ufos/research.ufo:58
 msgid "Technologies & Discoveries"

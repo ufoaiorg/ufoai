@@ -1317,6 +1317,7 @@ void CL_ParseResults(sizebuf_t * buf)
 		Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Aliens killed\t%i\n"), kills);
 	else
 		Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Enemies killed\t%i\n"), kills);
+	ccs.aliensKilled+=kills;
 
 	for (i = 1, res = 0; i < num; i++)
 		res += (i == we) ? 0 : num_alive[i];
@@ -1347,6 +1348,7 @@ void CL_ParseResults(sizebuf_t * buf)
 		Q_strcat(resultText, va(_("Civilians killed by the Enemies\t%i\n"), res), sizeof(resultText));
 	Q_strcat(resultText, va(_("Civilians killed by your Team\t%i\n"), num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
 	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n\n"), num_alive[TEAM_CIVILIAN]), sizeof(resultText));
+	ccs.civiliansKilled += res + num_kills[we][TEAM_CIVILIAN];
 
 	MN_PopMenu(qtrue);
 	/* the mission was started via console? */
@@ -1362,27 +1364,6 @@ void CL_ParseResults(sizebuf_t * buf)
 		Cvar_Set("mn_main", "singleplayer");
 		Cvar_Set("mn_active", "map");
 		MN_PushMenu("map");
-
-		/* show money stats */
-		ms = selMis->def;
-		ccs.reward = 0;
-		if (winner == we) {
-			Q_strcat(resultText, va(_("Collected alien technology\t%i c\n"), ms->cr_win), sizeof(resultText));
-			ccs.reward += ms->cr_win;
-		}
-		if (kills) {
-			Q_strcat(resultText, va(_("Aliens killed\t%i c\n"), kills * ms->cr_alien), sizeof(resultText));
-			ccs.reward += kills * ms->cr_alien;
-		}
-		if (winner == we && num_alive[TEAM_CIVILIAN]) {
-			Q_strcat(resultText, va(_("Civilians saved\t%i c\n"), num_alive[TEAM_CIVILIAN] * ms->cr_civilian), sizeof(resultText));
-			ccs.reward += num_alive[TEAM_CIVILIAN] * ms->cr_civilian;
-		}
-		Q_strcat(resultText, va(_("Total reward\t%i c\n\n\n"), ccs.reward), sizeof(resultText));
-
-		/* recruits */
-		if (winner == we && ms->recruits)
-			Q_strcat(resultText, va(_("New Recruits\t%i\n"), ms->recruits), sizeof(resultText));
 
 		/* loot the battlefield */
 		CL_CollectItems(winner == we);

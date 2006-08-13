@@ -13,10 +13,7 @@ mission stadium
 	alienequip	stage3_soldiers
 	civilians	2
 	civteam		european
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -36,10 +33,7 @@ mission terrain
 	alienequip	stage3_soldiers
 	civilians	2
 	civteam		european
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
+	nation          "_Greater European Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -59,10 +53,7 @@ mission spedition
 	alienequip	stage3_soldiers
 	civilians	2
 	civteam		european
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
+	nation          "_Greater European Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -82,10 +73,7 @@ mission pdi
 	alienequip	stage3_soldiers
 	civilians	2
 	civteam     tourist
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
+	nation          "_Greater European Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -105,10 +93,7 @@ mission mart
 	alienequip	stage1_workers
 	civilians	6
 	civteam		european
-	recruits	2
-	$win		1200
-	$alien		100
-	$civilian	500
+	nation          "_Greater European Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -128,10 +113,7 @@ mission mine_crash
 	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
-	recruits	2
-	$win		1200
-	$alien		100
-	$civilian	500
+	nation          "_African Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -151,10 +133,7 @@ mission mine
 	alienequip	stage1_workers_explosive
 	civilians	3
 	civteam		european
-	recruits	6
-	$win		800
-	$alien		200
-	$civilian	100
+	nation          "_Oceania"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -174,10 +153,7 @@ mission office
 	alienequip	stage3_soldiers
 	civilians	2
 	civteam		scientist
-	recruits	3
-	$win		3000
-	$alien		100
-	$civilian	300
+	nation          "_Oceania"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -197,10 +173,7 @@ mission africa
 	alienequip	stage2_soldiers_melee
 	civilians	6
 	civteam		oriental
-	recruits	3
-	$win		1200
-	$alien		100
-	$civilian	500
+	nation          "_African Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -220,10 +193,7 @@ mission bunker
 	alienequip	stage1_workers_explosive
 	civilians	6
 	civteam		scientist
-	recruits	6
-	$win		1200
-	$alien		100
-	$civilian	500
+	nation          "_Greater European Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -243,10 +213,7 @@ mission city
 	alienequip	stage3_soldiers
 	civilians	6
 	civteam		mexican
-	recruits	6
-	$win		1200
-	$alien		100
-	$civilian	500
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -266,10 +233,7 @@ mission construction
 	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
-	recruits	3
-	$win		2000
-	$alien		100
-	$civilian	500
+	nation          "_Greater European Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -289,10 +253,7 @@ mission africa_excavation
 	alienequip	stage1_workers
 	civilians	6
 	civteam		oriental
-	recruits	4
-	$win		750
-	$alien		200
-	$civilian	100
+	nation          "_African Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -312,10 +273,7 @@ mission italy
 	alienequip	stage1_soldiers
 	civilians	6
 	civteam		european
-	recruits	3
-	$win		1900
-	$alien		100
-	$civilian	500
+	nation          "_Greater European Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -335,10 +293,7 @@ mission subway
 	alienequip	stage3_soldiers
 	civilians	2
 	civteam		americans
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -359,10 +314,7 @@ mission vil_lille
 	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
-	recruits	4
-	$win		2000
-	$alien		100
-	$civilian	500
+	nation          "_Greater European Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -382,10 +334,7 @@ mission harbor
 	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
-	recruits	3
-	$win		1900
-	$alien		100
-	$civilian	500
+	nation          "_Asian Commonwealth"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -405,10 +354,7 @@ mission japan
 	alienequip	stage2_soldiers_melee
 	civilians	6
 	civteam		european
-	recruits	4
-	$win		2500
-	$alien		100
-	$civilian	500
+	nation          "_Asian Commonwealth"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -429,10 +375,7 @@ mission falconcrash
 	alienequip	stage3_soldiers
 	civilians	3
 	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -451,10 +394,7 @@ mission farm
 	alienequip	stage1_workers
 	civilians	3
 	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -474,10 +414,7 @@ mission frozen_groenland
 	alienequip	stage3_soldiers
 	civilians	3
 	civteam		european
-	recruits	6
-	$win		1000
-	$alien		100
-	$civilian	500
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -497,10 +434,7 @@ mission frozen_small
 	alienequip	stage3_soldiers
 	civilians	3
 	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -520,10 +454,7 @@ mission frozen_landingnature
 	alienequip	stage3_soldiers
 	civilians	3
 	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
+	nation          "_Oceania"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -543,10 +474,7 @@ mission frozen_industrial
 	alienequip	stage3_soldiers
 	civilians	3
 	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -566,10 +494,7 @@ mission frozen_alienlandingindustrial
 	alienequip	stage3_soldiers
 	civilians	3
 	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
+	nation          "_Oceania"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -588,10 +513,7 @@ mission gasstation
 	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
-	recruits	3
-	$win		1900
-	$alien		100
-	$civilian	500
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -610,10 +532,7 @@ mission lake
 	alienequip	stage3_soldiers
 	civilians	5
 	civteam		european
-	recruits	2
-	$win		1600
-	$alien		100
-	$civilian	500
+	nation          "_Russian Federation"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -632,10 +551,7 @@ mission oriental
 	alienequip	stage1_soldiers
 	civilians	6
 	civteam		oriental
-	recruits	3
-	$win		1200
-	$alien		100
-	$civilian	500
+	nation          "_African Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -676,10 +592,7 @@ mission or_asyut
 	alienequip	stage3_soldiers
 	civilians	6
 	civteam		oriental
-	recruits	3
-	$win		4000
-	$alien		100
-	$civilian	1200
+	nation          "_United Arab Republic"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -698,10 +611,7 @@ mission or_tabelbala
 	alienequip	stage3_soldiers
 	civilians	6
 	civteam		oriental
-	recruits	3
-	$win		4000
-	$alien		100
-	$civilian	1200
+	nation          "_United Arab Republic"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -718,11 +628,8 @@ mission or_tabelbala
 //	pos			"308 412"
 //	aliens		4
 //	civilians	2
+//	nation          "_United Americas"
 //	alienequip	stage3_soldiers
-//	recruits	4
-//	$win		400
-//	$alien		250
-//	$civilian	200
 //	onlose		""
 //	onwin		""
 //	storyrelated	true
@@ -742,10 +649,7 @@ mission tower
 	alienequip	stage3_soldiers
 	civilians	2
 	civteam		european
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -764,10 +668,7 @@ mission transport
 	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
-	recruits	3
-	$win		1000
-	$alien		100
-	$civilian	500
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -788,10 +689,7 @@ mission tropic_river
 	alienequip	stage3_soldiers
 	civilians	2
 	civteam		oriental
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -811,10 +709,7 @@ mission tropic_drug
 	alienequip	stage3_soldiers
 	civilians	2
 	civteam		european
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -833,10 +728,7 @@ mission village
 	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
-	recruits	3
-	$win		1000
-	$alien		100
-	$civilian	500
+	nation          "_United Americas"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -856,10 +748,7 @@ mission vil_grenchen
 	alienequip	stage3_soldiers
 	civilians	7
 	civteam		european
-	recruits	2
-	$win		1000
-	$alien		100
-	$civilian	500
+	nation          "_Greater European Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -879,10 +768,7 @@ mission vil_albany
 	alienequip	stage3_soldiers
 	civilians	7
 	civteam		european
-	recruits	3
-	$win		2000
-	$alien		100
-	$civilian	500
+	nation          "_Greater European Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -902,10 +788,7 @@ mission vil_shannon
 	alienequip	stage3_soldiers
 	civilians	4
 	civteam		european
-	recruits	3
-	$win		4000
-	$alien		100
-	$civilian	1200
+	nation          "_Greater European Union"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -924,10 +807,7 @@ mission baseattack
 	alienequip	stage3_soldiers
 	civilians	12
 	civteam		scientist
-	recruits	12
-	$win		400
-	$alien		250
-	$civilian	200
+	nation          "_None"
 	onlose		""
 	onwin		""
 	storyrelated	true
