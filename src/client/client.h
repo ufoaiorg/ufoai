@@ -313,6 +313,7 @@ extern cvar_t *cl_numnames;
 
 extern cvar_t *difficulty;
 extern cvar_t *cl_start_employees;
+extern cvar_t *cl_initial_equipment;
 extern cvar_t *cl_start_buildings;
 
 extern cvar_t *mn_active;

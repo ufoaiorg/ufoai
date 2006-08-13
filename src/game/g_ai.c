@@ -410,241 +410,6 @@ void AI_Run(void)
 		}
 }
 
-
-/**
- * @brief Pack a weapon, possibly with some ammo
- * @param[in] ent The actor that will get the weapon
- * @param[in] weapon The weapon type index in gi.csi->ods
- * @param[in] equip The equipment that shows how many clips to pack
- *
- * TODO: choose between multiple ammo for the same weapon
- */
-int G_PackAmmoAndWeapon(inventory_t *inv, const int weapon, const int equip[MAX_OBJDEFS])
-{
-	int ammo;
-	item_t item = {1,NONE,NONE};
-
-#ifdef PARANOID
-	if (weapon < 0) {
-		Com_Printf("Error in G_PackAmmoAndWeapon - weapon is %i\n", weapon);
-	}
-#endif
-
-	item.t = weapon;
-	if ( gi.csi->ods[weapon].reload ) {
-		for (ammo = 0; ammo < gi.csi->numODs; ammo++)
-			if ( equip[ammo] && gi.csi->ods[ammo].link == weapon )
-				break;
-		if (ammo < gi.csi->numODs) {
-			int num;
-
-			/* load ammo */
-			item.a = gi.csi->ods[weapon].ammo;
-			item.m = ammo;
-
-			/* pack some more ammo */
-			num =
-				equip[ammo] / equip[weapon]
-				+ (equip[ammo] % equip[weapon]
-				   > rand() % equip[weapon]);
-			num = (num > 3) ? 3 : num;
-			while (--num) {
-				item_t mun = {1,NONE,NONE};
-
-				mun.t = ammo;
-				/* ammo to backpack; belt reserved for knives and grenades */
-				Com_TryAddToInventory(inv, mun, gi.csi->idBackpack);
-				/* no problem if no space left --- one ammo already loaded */
-			}
-		} else
-			Com_Printf("G_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", gi.csi->ods[weapon].kurz, gi.cvar_string("ai_equipment"));
-	} else {
-		item.m = item.t; /* no ammo needed, so fire definition are in t */
-	}
-	/* now try to pack the weapon */
-	return
-		Com_TryAddToInventory(inv, item, gi.csi->idRight)
-		|| Com_TryAddToInventory(inv, item, gi.csi->idLeft)
-		|| Com_TryAddToInventory(inv, item, gi.csi->idBelt)
-		|| Com_TryAddToInventory(inv, item, gi.csi->idHolster)
-		|| Com_TryAddToInventory(inv, item, gi.csi->idBackpack);
-}
-
-#define AKIMBO_CHANCE		0.2
-#define WEAPONLESS_BONUS	3.0
-
-/**
- * @brief Fully equip one AI player
- * @param[in] ent The actor that will get the weapons
- * @param[in] equip The equipment that shows what is available
- * @note The code below is a complete implementation
- * of the scheme sketched at the beginning of equipment_missions.ufo.
- * However, aliens cannot yet swap weapons,
- * so only the weapon(s) in hands will be used.
- * The rest will be just player's loot.
- * If two weapons in the same category have the same price,
- * only one will be considered for inventory.
- *
- * TODO: try and see if this creates a tolerable
- * initial equipment for human players
- * (of course this would result in random number of initial weapons),
- * though there is already CL_CheckInventory in cl_team.c.
- */
-void G_EquipAIPlayer(inventory_t *inv, const int equip[MAX_OBJDEFS])
-{
-	int weapon = -1; /* this variable is never used before being set */
-	int i, max_price, prev_price;
-	int has_weapon = 0, primary_tachyon = 0;
-	objDef_t obj;
-
-	/* primary weapons */
-	max_price = INT_MAX;
-	do {
-		/* search for the most expensive primary weapon in the equipment */
-		prev_price = max_price;
-		max_price = 0;
-		for (i = 0; i < gi.csi->numODs; i++) {
-			obj = gi.csi->ods[i];
-			if ( equip[i] && obj.weapon && obj.buytype == 0 ) {
-				if ( obj.price > max_price && obj.price < prev_price ) {
-					max_price = obj.price;
-					weapon = i;
-				}
-			}
-		}
-		/* see if there is any */
-		if (max_price) {
-			/* see if the AI picks it */
-			if ( equip[weapon] >= 8 * frand() ) {
-				/* not decrementing equip[weapon]
-				 * so that we get more possible squads */
-				has_weapon += G_PackAmmoAndWeapon(inv, weapon, equip);
-				if (has_weapon) {
-					primary_tachyon =
-						(gi.csi->ods[weapon].fd[0].dmgtype
-						 == gi.csi->damTachyon);
-					max_price = 0; /* one primary weapon is enough */
-				}
-			}
-		}
-	} while (max_price);
-
-	/* sidearms (secondary weapons with reload) */
-	max_price = primary_tachyon ? 0 : INT_MAX;
-	do {
-		prev_price = max_price;
-		/* if primary is a tachyon weapon, we pick cheapest sidearms first */
-		max_price = primary_tachyon ? INT_MAX : 0;
-		for (i = 0; i < gi.csi->numODs; i++) {
-			obj = gi.csi->ods[i];
-			if ( equip[i] && obj.weapon && obj.buytype == 1 && obj.reload ) {
-				if ( primary_tachyon
-					 ? obj.price < max_price && obj.price > prev_price
-					 : obj.price > max_price && obj.price < prev_price ) {
-					max_price = obj.price;
-					weapon = i;
-				}
-			}
-		}
-		if ( !(max_price == (primary_tachyon ? INT_MAX : 0)) ) {
-			if (has_weapon) {
-				/* already got primary weapon */
-				if ( equip[weapon] >= 8 * frand() ) {
-					if ( G_PackAmmoAndWeapon(inv, weapon, equip) ) {
-						max_price = 0; /* then one sidearm is enough */
-					}
-				}
-			} else {
-				/* no primary weapon */
-				if ( equip[weapon]
-					 >= 8 * frand() - WEAPONLESS_BONUS * frand() ) {
-					has_weapon += G_PackAmmoAndWeapon(inv, weapon, equip);
-					if (has_weapon) {
-						/* try to get the second akimbo pistol */
-						if ( !gi.csi->ods[weapon].twohanded
-							 && frand() < AKIMBO_CHANCE ) {
-							G_PackAmmoAndWeapon(inv, weapon, equip);
-						}
-						max_price = 0; /* enough sidearms */
-					}
-				}
-			}
-		}
-	} while ( !(max_price == (primary_tachyon ? INT_MAX : 0)) );
-
-	/* misc items and secondary weapons without reload */
-	max_price = INT_MAX;
-	do {
-		prev_price = max_price;
-		max_price = 0;
-		for (i = 0; i < gi.csi->numODs; i++) {
-			obj = gi.csi->ods[i];
-			if ( equip[i]
-				 && ((obj.weapon && obj.buytype == 1 && !obj.reload)
-					 || obj.buytype == 2) ) {
-				if ( obj.price > max_price && obj.price < prev_price ) {
-					max_price = obj.price;
-					weapon = i;
-				}
-			}
-		}
-		if (max_price) {
-			int num;
-
-			num = equip[weapon] / 8 + (equip[weapon] % 8 >= 8 * frand());
-			while (num--)
-				has_weapon += G_PackAmmoAndWeapon(inv, weapon, equip);
-		}
-	} while (max_price);
-
-	/* if no weapon at all, bad guys will always find a blade to wield */
-	if (!has_weapon) {
-		Com_DPrintf("G_EquipAIPlayer: no weapon picked for an AI in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", gi.cvar_string("ai_equipment"));
-		max_price = 0;
-		for (i = 0; i < gi.csi->numODs; i++) {
-			obj = gi.csi->ods[i];
-			if ( equip[i]
-				 && obj.weapon && obj.buytype == 1 && !obj.reload ) {
-				if ( obj.price > max_price && obj.price < prev_price ) {
-					max_price = obj.price;
-					weapon = i;
-				}
-			}
-		}
-		if (max_price)
-			has_weapon += G_PackAmmoAndWeapon(inv, weapon, equip);
-	}
-	/* if still no weapon, something is broken, or no blades in equip */
-	if (!has_weapon)
-		Com_DPrintf("G_EquipAIPlayer: cannot add any weapon to AI; no secondary weapon without reload detected for equipment '%s'.\n", gi.cvar_string("ai_equipment"));
-
-	/* armor */
-	max_price = INT_MAX;
-	do {
-		prev_price = max_price;
-		max_price = 0;
-		for (i = 0; i < gi.csi->numODs; i++) {
-			obj = gi.csi->ods[i];
-			if ( equip[i] && obj.buytype == 3 ) {
-				if ( obj.price > max_price && obj.price < prev_price ) {
-					max_price = obj.price;
-					weapon = i;
-				}
-			}
-		}
-		if (max_price) {
-			if ( equip[weapon] >= 8 * frand() ) {
-				item_t item = {1,NONE,NONE};
-
-				item.t = weapon;
-				if (Com_TryAddToInventory(inv, item, gi.csi->idArmor))
-					max_price = 0; /* one armor is enough */
-			}
-		}
-	} while (max_price);
-}
-
-
 #define MAX_SPAWNPOINTS		64
 static int spawnPoints[MAX_SPAWNPOINTS];
 
@@ -659,6 +424,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 	edict_t *ent;
 	equipDef_t *ed;
 	int i, j, numPoints, team;
+	char name[MAX_VAR];
 
 	/* search spawn points */
 	team = player->pers.team;
@@ -675,7 +441,6 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 	/* prepare equipment */
 	if (team != TEAM_CIVILIAN) {
-		char name[MAX_VAR];
 
 		Q_strncpyz(name, gi.cvar_string("ai_equipment"), MAX_VAR);
 		for (i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++)
@@ -738,7 +503,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 				ent->morale = MAX_SKILL;
 
 			/* pack equipment */
-			G_EquipAIPlayer(&ent->i, ed->num);
+			Com_EquipActor(&ent->i, ed->num, name);
 
 			/* set model */
 			ent->chr.inv = &ent->i;

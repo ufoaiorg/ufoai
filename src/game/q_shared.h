@@ -1114,6 +1114,7 @@ void Com_EmptyContainer(inventory_t * i, int container);
 void Com_DestroyInventory(inventory_t * i);
 void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py);
 int Com_TryAddToInventory(inventory_t * inv, item_t item, int container);
+void Com_EquipActor(inventory_t *inv, const int equip[MAX_OBJDEFS],  char *name);
 
 /* =========================================================== */
 

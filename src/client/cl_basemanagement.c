@@ -1308,6 +1308,40 @@ void B_SelectBase(void)
 	Cvar_Set("mn_base_title", baseCurrent->name);
 }
 
+
+/**
+  * @brief Assigns initial soldier equipment for the first base
+  */
+static void B_PackInitialEquipmentCmd(void)
+{
+	int i;
+	equipDef_t *ed;
+	character_t *cp;
+
+	/* check syntax */
+	if (Cmd_Argc() > 1) {
+		Com_Printf("Usage: pack_initial\n");
+		return;
+	}
+
+	if (!baseCurrent) 
+		return;
+
+	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
+		if (!Q_strncmp(cl_initial_equipment->string, ed->name, MAX_VAR))
+			break;
+	if (i == csi.numEDs) {
+		Com_DPrintf("B_PackInitialEquipmentCmd: Initial Phalanx equipment %s not found.\n", cl_initial_equipment->string);
+	} else {
+		for (i = 0; i < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; i++) {
+			cp = baseCurrent->curTeam[i];
+			/* pack equipment */
+			Com_DPrintf("B_PackInitialEquipmentCmd: Packing initial equipment for %s.\n", cp->name);
+			Com_EquipActor(cp->inv, ed->num, cl_initial_equipment->string);
+		}
+	}
+}
+
 /* FIXME: This value is in menu_geoscape, too */
 /*       make this variable?? */
 #define BASE_COSTS 100000
@@ -1326,8 +1360,6 @@ void B_BuildBase(void)
 
 	if (ccs.credits - BASE_COSTS > 0) {
 		if (CL_NewBase(newBasePos)) {
-			int i;
-
 			Com_DPrintf("B_BuildBase: numBases: %i\n", gd.numBases);
 			baseCurrent->idx = gd.numBases - 1;
 			baseCurrent->founded = qtrue;
@@ -1341,9 +1373,14 @@ void B_BuildBase(void)
 			Q_strncpyz(messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string), MAX_MESSAGE_TEXT);
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			Radar_Initialise(&(baseCurrent->radar), 0);
+
 			if (gd.numBases == 1 && cl_start_employees->value) {
+				int i;
+
 				for (i = MAX_TEAMLIST; --i >= 0;)
 					Cbuf_AddText(va("team_hire %i\n", i));
+
+/*					Cbuf_AddText(va("pack_initial\n")); */
 			}
 			return;
 		}
@@ -1615,6 +1652,7 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent);
 	Cmd_AddCommand("baselist", B_BaseList_f);
 	Cmd_AddCommand("buildinglist", B_BuildingList_f);
+	Cmd_AddCommand("pack_initial", B_PackInitialEquipmentCmd);
 }
 
 /**
