@@ -3,19 +3,19 @@ equipment campaign_player
 	assault			1
 	assault_ammo	3
 	sniper			1
-	sniper_ammo		3
+	sniper_ammo		2
 	pistol			3
-	pistol_ammo		6
+	pistol_ammo		5
 	smg				1
-	smg_ammo		3
+	smg_ammo		4
 	shotgun			1
-	shotgun_ammo	3
+	shotgun_ammo	2
 	flamer			1
 	flamer_ammo		2
 	rpg				1
 	rpg_ammo		4
 	fraggrenade		3
-	knife			2
+	knife			3
 	light			0
 }
 

@@ -246,17 +246,17 @@ equipment human_phalanx_initial
 	assault_ammo		3
 	sniper				3
 	sniper_ammo			3
-	pistol				4
-	pistol_ammo			11
-	smg 				2
-	smg_ammo			7
-	shotgun				3
-	shotgun_ammo		8
+	pistol				5
+	pistol_ammo			13
+	smg 				3
+	smg_ammo			11
+	shotgun				5
+	shotgun_ammo		12
 	flamer				2
 	flamer_ammo			2
-	rpg				    2
-	rpg_ammo			5
-	fraggrenade			13
+	rpg				    1
+	rpg_ammo			3
+	fraggrenade			20
 	knife				5
 	light	    		5
 }
