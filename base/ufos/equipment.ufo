@@ -114,7 +114,7 @@ equipment campaign_market
 	plasblade			10
 	light				5
 	medium				6
-	heavy				6
+//	heavy				6
 }
 
 equipment testing_and_tweaking
@@ -170,5 +170,5 @@ equipment testing_and_tweaking
 	plasblade			6
 	light				6
 	medium				6
-	heavy				6
+//	heavy				6
 }

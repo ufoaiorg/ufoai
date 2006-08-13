@@ -84,42 +84,40 @@ item medium //weights 120
 	}
 }
 
-item heavy //weights 320
-{
-	name		"_Heavy Nano Armor"
-	image		armor/medium
-	model		soldiers/malemedium/body
+//item heavy //weights 320
+//{
+//	name		"_Heavy Nano Armor"
 //	image		armor/heavy
 //	model		soldiers/maleheavy/body
-	type		armor
-	category	3
-	shape		"0 0 3 4"
-	center		"0 0 -5"
-	scale		0.7
-	price		18000
-	buytype		3
-
-	protection
-	{
-		normal	50
-		blast	70
-		fire	75
-		shock	35
-		laser	35
-		plasma	70
-		tachyon	28
-		stun	97
-	}
-	hardness
-	{
-		normal	18
-		blast	30
-		fire	30
-		shock	30
-		laser	48
-		plasma	6
-		tachyon	100
-		stun	100
-	}
-}
+//	type		armor
+//	category	3
+//	shape		"0 0 3 4"
+//	center		"0 0 -5"
+//	scale		0.7
+//	price		18000
+//	buytype		3
+//
+//	protection
+//	{
+//		normal	50
+//		blast	70
+//		fire	75
+//		shock	35
+//		laser	35
+//		plasma	70
+//		tachyon	28
+//		stun	97
+//	}
+//	hardness
+//	{
+//		normal	18
+//		blast	30
+//		fire	30
+//		shock	30
+//		laser	48
+//		plasma	6
+//		tachyon	100
+//		stun	100
+//	}
+//}
 
