@@ -2534,9 +2534,19 @@ void Com_EquipActor(inventory_t *inv, const int equip[MAX_OBJDEFS], char *name)
 				 * so that we get more possible squads */
 				has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, name);
 				if (has_weapon) {
-					primary_tachyon =
-						(CSI->ods[weapon].fd[0].dmgtype
-						 == CSI->damTachyon);
+					int ammo;
+
+					for (ammo = 0; ammo < CSI->numODs; ammo++)
+						if ( equip[ammo] && CSI->ods[ammo].link == weapon )
+							break;
+					if (ammo < CSI->numODs) {
+						primary_tachyon =
+							(CSI->ods[ammo].fd[0].dmgtype
+							 == CSI->damTachyon)
+							/* a hack to avoid SMG + Assault Rifle */
+							|| (CSI->ods[ammo].fd[0].dmgtype
+								== CSI->damNormal);
+					}
 					max_price = 0; /* one primary weapon is enough */
 				}
 			}
@@ -2565,7 +2575,8 @@ void Com_EquipActor(inventory_t *inv, const int equip[MAX_OBJDEFS], char *name)
 				/* already got primary weapon */
 				if ( equip[weapon] >= 8 * frand() ) {
 					if ( Com_PackAmmoAndWeapon(inv, weapon, equip, name) ) {
-						max_price = 0; /* then one sidearm is enough */
+						/* then one sidearm is enough */
+						max_price = primary_tachyon ? INT_MAX : 0;
 					}
 				}
 			} else {
@@ -2579,7 +2590,8 @@ void Com_EquipActor(inventory_t *inv, const int equip[MAX_OBJDEFS], char *name)
 							 && frand() < AKIMBO_CHANCE ) {
 							Com_PackAmmoAndWeapon(inv, weapon, equip, name);
 						}
-						max_price = 0; /* enough sidearms */
+						/* enough sidearms */
+						max_price = primary_tachyon ? INT_MAX : 0;
 					}
 				}
 			}
