@@ -645,7 +645,7 @@ item grenl
 	scale		1.1
 	ammo		6
 	reload		14
-	price		2050
+	price		2450
 	buytype		0
 }
 
@@ -658,7 +658,7 @@ item grenl_ammo
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		0.7
-	price		35
+	price		65
 	buytype		0
 
 	primary
@@ -731,7 +731,7 @@ item bolterrifle
 	scale           1.2
 	ammo            50
 	reload          15
-	price           2800
+	price           3700
 	buytype         0
 }
 
@@ -801,7 +801,7 @@ item stunrod
 	shape	"0 0 5 2"
 	center	"3.2 0 2"
 	scale		1.22
-	price		3000
+	price		2400
 	buytype	1
 	ammo	1
 	thrown	false
