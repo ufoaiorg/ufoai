@@ -53,7 +53,7 @@ static void E_EmployeeList (void)
 		return;
 	}
 	employeeCategory = atoi(Cmd_Argv(1));
-	if (employeeCategory > MAX_EMPL || employeeCategory < 0)
+	if (employeeCategory >= MAX_EMPL || employeeCategory < 0)
 		employeeCategory = EMPL_SOLDIER;
 
 	employeesInCurrentList = 0;
@@ -150,35 +150,35 @@ qboolean E_EmployeeIsFree(employee_t * employee)
 employee_t* E_GetEmployee(base_t* base, employeeType_t type, int idx)
 {
 	int i;
+	
+	if ( !base || type >= MAX_EMPL || type < 0 || idx < 0 )
+		return NULL;
+
 	for (i=0; i<gd.numEmployees[type]; i++) {
 		if (i == idx && (!gd.employees[type][i].hired || gd.employees[type][i].baseIDHired == base->idx))
 			return &gd.employees[type][i];
 	}
+
 	return NULL;
 }
 
 /**
  * @brief Reset the hired flag for all employees of a given type in a given base
- * @param[in] base Which base the employee should be hired in
- * @param[in] type Which employee type do we search
+ * @param[in] base Which base the employee should be fired from.
+ * @param[in] type Which employee type do we search.
  */
 void E_UnhireAllEmployees(base_t* base, employeeType_t type)
 {
 	int i;
 	employee_t *employee;
 
+	if ( !base || type > MAX_EMPL || type < 0 )
+		return;
+
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->baseIDHired == base->idx) {
-			/* TODO: Destroy inventory */
-			employee->hired = qfalse;
-			employee->buildingID = -1;
-			employee->baseIDHired = -1;
-		}
-	}
-	if (type == EMPL_SCIENTIST) {
-		/* TODO: Scientists needs to be handled seperate
-		   because there may be a tech they are working on */
+		if (employee->baseIDHired == base->idx)
+			E_UnhireEmployee(base, type, i);
 	}
 }
 
