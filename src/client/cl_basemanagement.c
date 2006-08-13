@@ -244,10 +244,6 @@ void B_SetUpBase(void)
 				Com_DPrintf("B_SetUpBase: %s %i;\n", building->onConstruct, baseCurrent->idx);
 				Cbuf_AddText(va("%s %i;", building->onConstruct, baseCurrent->idx));
 			}
-
-			if (cl_start_employees->value)
-				B_HireForBuilding(building, -1);
-
 			/*
 			   if ( building->moreThanOne
 			   && building->howManyOfThisType < BASE_SIZE*BASE_SIZE )
@@ -256,6 +252,9 @@ void B_SetUpBase(void)
 
 			/* update the building-list */
 			B_BuildingInit();
+
+			if (cl_start_employees->value)
+				B_HireForBuilding(building, -1);				
 		}
 	}
 }
@@ -1327,6 +1326,8 @@ void B_BuildBase(void)
 
 	if (ccs.credits - BASE_COSTS > 0) {
 		if (CL_NewBase(newBasePos)) {
+			int i;
+
 			Com_DPrintf("B_BuildBase: numBases: %i\n", gd.numBases);
 			baseCurrent->idx = gd.numBases - 1;
 			baseCurrent->founded = qtrue;
@@ -1340,6 +1341,10 @@ void B_BuildBase(void)
 			Q_strncpyz(messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string), MAX_MESSAGE_TEXT);
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			Radar_Initialise(&(baseCurrent->radar), 0);
+			if (gd.numBases == 1 && cl_start_employees->value) {
+				for (i = MAX_TEAMLIST; --i >= 0;)
+					Cbuf_AddText(va("team_hire %i\n", i));
+			}
 			return;
 		}
 	} else {

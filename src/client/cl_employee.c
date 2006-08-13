@@ -459,7 +459,7 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 		E_UnhireEmployee(&gd.bases[employee->baseIDHired], type, employee->idx);
 
 	/* remove the employee from the global list */
-	for (i = 0; i < gd.numEmployees[type] - 1; i++) {
+	for (i = 0; i < gd.numEmployees[type]; i++) {
 		if (gd.employees[type][i].idx == employee->idx) {
 			/* TODO: delete this employee */
 			gd.employees[type][i].inv.c[csi.idFloor] = NULL;

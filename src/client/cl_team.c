@@ -717,7 +717,7 @@ static void CL_HireActorCmd(void)
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: hire <num>\n");
+		Com_Printf("Usage: team_hire <num>\n");
 		return;
 	}
 	num = atoi(Cmd_Argv(1));
