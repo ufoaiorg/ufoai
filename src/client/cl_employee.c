@@ -458,19 +458,22 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 	if (employee->baseIDHired >= 0)
 		E_UnhireEmployee(&gd.bases[employee->baseIDHired], type, employee->idx);
 
-	/* remove the employee from the global list */
+	/* Remove the employee from the global list. */
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		if (gd.employees[type][i].idx == employee->idx) {
-			/* TODO: delete this employee */
+			/* Delete this employee. */
 			gd.employees[type][i].inv.c[csi.idFloor] = NULL;
 			Com_DestroyInventory(&gd.employees[type][i].inv);
 			memset(&gd.employees[type][i].inv, 0, sizeof(inventory_t));
 			found = qtrue;
 		}
 		if (found) {
-			gd.employees[type][i] = gd.employees[type][i + 1];
-			gd.employees[type][i].idx = i;
-			gd.employees[type][i].chr.empl_idx = i;
+			if ( i < MAX_EMPLOYEES-1) { /* Just in case we have _that much_ employees. :) */
+				/* Move all the following employees in the list one place forward and correct its index. */
+				gd.employees[type][i] = gd.employees[type][i + 1];
+				gd.employees[type][i].idx = i;
+				gd.employees[type][i].chr.empl_idx = i;
+			}
 		}
 	}
 
