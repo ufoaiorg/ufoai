@@ -149,9 +149,9 @@ tech rs_craft_ufo_tech
 	//image_top  xxxxx
 }
 
-//=====================================
-// Weapons & Misc Equipment Initial
-//=====================================
+//=================================
+// Human Weapons & Misc Equipment
+//=================================
 
 tech rs_weapon_assault
 {
@@ -321,6 +321,30 @@ tech rs_weapon_rpg_ammo
 	researched	true
 }
 
+tech rs_weapon_rpg_incendiary_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_rpg_incendiary_ammo_txt"
+
+	requires	"rs_damage_fire rs_weapon_rpg rs_weapon_alienincgrenade"
+	provides	rpg_incendiary_ammo
+	time	10
+	researched	false
+}
+
+tech rs_weapon_rpg_tachyon_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_rpg_tachyon_ammo_txt"
+
+	requires	"rs_damage_tachyon rs_weapon_rpg"
+	provides	rpg_tachyon_ammo
+	time	40
+	researched	false
+}
+
 tech rs_weapon_fraggren
 {
 	type	weapon
@@ -356,10 +380,6 @@ tech rs_weapon_combatknife
 	time	0
 	researched	true
 }
-
-//=======================================
-// Weapons & Misc Equipment Unresearched
-//=======================================
 
 tech rs_weapon_stunrod
 {
@@ -397,18 +417,6 @@ tech rs_irgoggles
 	researched	false
 }
 
-tech rs_weapon_alienincgrenade
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_alienincgrenade_txt"
-
-	requires	"rs_skill_explosive rs_damage_fire"
-	provides	alienincgrenade
-	time	10
-	researched	false
-}
-
 tech rs_weapon_stungren
 {
 	type	weapon
@@ -419,56 +427,6 @@ tech rs_weapon_stungren
 	provides	stungrenade
 	time	20
 	researched	false
-}
-
-tech rs_weapon_plasmagren
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_plasmagren_txt"
-
-	requires	"rs_skill_explosive rs_damage_plasma"
-	provides	plasmagrenade
-	time	30
-	researched	false
-	needscollected	false
-}
-
-tech rs_weapon_rpg_incendiary_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_rpg_incendiary_ammo_txt"
-
-	requires	"rs_damage_fire rs_weapon_rpg rs_weapon_alienincgrenade"
-	provides	rpg_incendiary_ammo
-	time	10
-	researched	false
-}
-
-tech rs_weapon_rpg_tachyon_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_rpg_tachyon_ammo_txt"
-
-	requires	"rs_damage_tachyon rs_weapon_rpg"
-	provides	rpg_tachyon_ammo
-	time	40
-	researched	false
-}
-
-tech rs_weapon_kerrblade
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_kerrblade_txt"
-
-	requires	"rs_skill_close rs_damage_normal"
-	provides	kerrblade
-	time	10
-	researched	false
-	needscollected	true
 }
 
 tech rs_weapon_bolterrifle
@@ -601,6 +559,48 @@ tech rs_weapon_heavylaser_ammo
 	provides	heavylaser_ammo
 	time	0
 	researched	false
+}
+
+//=================================
+// Alien Weapons & Misc Equipment
+//=================================
+
+tech rs_weapon_alienincgrenade
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_alienincgrenade_txt"
+
+	requires	"rs_skill_explosive rs_damage_fire"
+	provides	alienincgrenade
+	time	10
+	researched	false
+}
+
+tech rs_weapon_plasmagren
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasmagren_txt"
+
+	requires	"rs_skill_explosive rs_damage_plasma"
+	provides	plasmagrenade
+	time	30
+	researched	false
+	needscollected	false
+}
+
+tech rs_weapon_kerrblade
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_kerrblade_txt"
+
+	requires	"rs_skill_close rs_damage_normal"
+	provides	kerrblade
+	time	10
+	researched	false
+	needscollected	true
 }
 
 tech rs_weapon_plasblade
