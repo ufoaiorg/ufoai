@@ -78,11 +78,9 @@ MISC
 */
 
 
-/*
-=============
-MakeBackplanes
-=============
-*/
+/**
+ * @brief
+ */
 void MakeBackplanes (void)
 {
 	int		i;
@@ -93,14 +91,12 @@ void MakeBackplanes (void)
 	}
 }
 
-int		leafparents[MAX_MAP_LEAFS];
-int		nodeparents[MAX_MAP_NODES];
+int leafparents[MAX_MAP_LEAFS];
+int nodeparents[MAX_MAP_NODES];
 
-/*
-=============
-MakeParents
-=============
-*/
+/**
+ * @brief
+ */
 void MakeParents (int nodenum, int parent)
 {
 	int		i, j;
@@ -119,11 +115,9 @@ void MakeParents (int nodenum, int parent)
 }
 
 
-/*
-=============
-CalcVertexNormals
-=============
-*/
+/**
+ * @brief
+ */
 void CalcVertexNormals ( int vnum )
 {
 	qboolean	found;
@@ -178,6 +172,9 @@ TRANSFER SCALES
 ===================================================================
 */
 
+/**
+ * @brief
+ */
 int	PointInLeafnum (vec3_t point)
 {
 	int nodenum;
@@ -200,6 +197,9 @@ int	PointInLeafnum (vec3_t point)
 }
 
 
+/**
+ * @brief
+ */
 dleaf_t *PointInLeafRad (vec3_t point)
 {
 	int num;
@@ -209,14 +209,10 @@ dleaf_t *PointInLeafRad (vec3_t point)
 }
 
 
-/*
-=============
-MakeTransfers
-
-=============
-*/
-int	total_transfer;
-
+static int total_transfer;
+/**
+ * @brief
+ */
 void MakeTransfers (int i)
 {
 	int			j;
@@ -315,11 +311,9 @@ void MakeTransfers (int i)
 }
 
 
-/*
-=============
-FreeTransfers
-=============
-*/
+/**
+ * @brief
+ */
 void FreeTransfers (void)
 {
 	int		i;
@@ -333,11 +327,9 @@ void FreeTransfers (void)
 
 /*=================================================================== */
 
-/*
-=============
-WriteWorld
-=============
-*/
+/**
+ * @brief
+ */
 void WriteWorld (char *name)
 {
 	int		i, j;
@@ -367,11 +359,9 @@ void WriteWorld (char *name)
 	fclose (out);
 }
 
-/*
-=============
-WriteGlView
-=============
-*/
+/**
+ * @brief
+ */
 void WriteGlView (void)
 {
 	char	name[1024];
@@ -410,11 +400,9 @@ void WriteGlView (void)
 
 /*============================================================== */
 
-/*
-=============
-CollectLight
-=============
-*/
+/**
+ * @brief
+ */
 float CollectLight (void)
 {
 	int		i, j;
@@ -437,14 +425,10 @@ float CollectLight (void)
 }
 
 
-/*
-=============
-ShootLight
-
-Send light out to other patches
-  Run multi-threaded
-=============
-*/
+/**
+ * @brief Send light out to other patches
+ * @note Run multi-threaded
+ */
 void ShootLight (int patchnum)
 {
 	int			k, l;
@@ -463,18 +447,15 @@ void ShootLight (int patchnum)
 	trans = patch->transfers;
 	num = patch->numtransfers;
 
-	for (k=0 ; k<num ; k++, trans++)
-	{
+	for (k=0 ; k<num ; k++, trans++) {
 		for (l=0 ; l<3 ; l++)
 			illumination[trans->patch][l] += send[l]*trans->transfer;
 	}
 }
 
-/*
-=============
-BounceLight
-=============
-*/
+/**
+ * @brief
+ */
 void BounceLight (void)
 {
 	int		i, j;
@@ -482,24 +463,20 @@ void BounceLight (void)
 	char	name[64];
 	patch_t	*p;
 
-	for (i=0 ; i<num_patches ; i++)
-	{
+	for (i=0 ; i<num_patches ; i++) {
 		p = &patches[i];
-		for (j=0 ; j<3 ; j++)
-		{
+		for (j=0 ; j<3 ; j++) {
 /*			p->totallight[j] = p->samplelight[j]; */
 			radiosity[i][j] = p->samplelight[j] * p->reflectivity[j] * p->area;
 		}
 	}
 
-	for (i=0 ; i<numbounce ; i++)
-	{
+	for (i=0 ; i<numbounce ; i++) {
 		RunThreadsOnIndividual (num_patches, qfalse, ShootLight);
 		added = CollectLight ();
 
 		qprintf ("bounce:%i added:%f\n", i, added);
-		if ( dumppatches && (i==0 || i == numbounce-1) )
-		{
+		if ( dumppatches && (i==0 || i == numbounce-1) ) {
 			sprintf (name, "bounce%i.txt", i);
 			WriteWorld (name);
 		}
@@ -510,24 +487,24 @@ void BounceLight (void)
 
 /*============================================================== */
 
+/**
+ * @brief
+ */
 void CheckPatches (void)
 {
 	int		i;
 	patch_t	*patch;
 
-	for (i=0 ; i<num_patches ; i++)
-	{
+	for (i=0 ; i<num_patches ; i++) {
 		patch = &patches[i];
 		if (patch->totallight[0] < 0 || patch->totallight[1] < 0 || patch->totallight[2] < 0)
 			Error ("negative patch totallight\n");
 	}
 }
 
-/*
-=============
-RadWorld
-=============
-*/
+/**
+ * @brief
+ */
 void RadWorld (void)
 {
 	if (numnodes == 0 || numfaces == 0)
@@ -553,8 +530,7 @@ void RadWorld (void)
 	/* build initial facelights */
 	RunThreadsOnIndividual (numfaces, qtrue, BuildFacelights);
 
-	if (numbounce > 0)
-	{
+	if (numbounce > 0) {
 		/* build transfer lists */
 		RunThreadsOnIndividual (num_patches, qtrue, MakeTransfers);
 		qprintf ("transfer lists: %5.1f megs\n"

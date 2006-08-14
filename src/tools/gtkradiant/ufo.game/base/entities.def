@@ -53,6 +53,10 @@ Non-displayed light.
 "style"		"1-32"
 "_color"	Color for the light RGB
 "light"		intensity 0-255
+"target"	entity target name (info_null)
+"_cone"
+"origin"
+"angle"
 */
 
 
@@ -62,6 +66,7 @@ Only for editor convenience.
 
 /*QUAKED func_breakable (0 0 0) ? level1 level2 level3 level4 level5 level6 level7 level8
 "health"	damage until destroyed
+"particle"	particle id
 */
 
 
@@ -75,4 +80,9 @@ Only used for the world.
 "maxlevel"	highest selectable level
 "fog"	activate fog
 "fogcolor"	fogcolor (rgb)
+*/
+
+/*QUAKED info_null (0 0.5 0) (-4 -4 -4) (4 4 4)
+Used as a positional target for spotlights, etc.
+"targetname"	target name
 */

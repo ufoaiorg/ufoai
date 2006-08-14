@@ -105,7 +105,7 @@ typedef struct
 /**
   *	@brief
   */
-triangulation_t	*AllocTriangulation (dplane_t *plane)
+triangulation_t *AllocTriangulation (dplane_t *plane)
 {
 	triangulation_t	*t;
 
@@ -133,7 +133,7 @@ void FreeTriangulation (triangulation_t *tr)
 /**
   *	@brief
   */
-triedge_t	*FindEdge (triangulation_t *trian, int p0, int p1)
+triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 {
 	triedge_t	*e, *be;
 	vec3_t		v1;
@@ -175,7 +175,7 @@ triedge_t	*FindEdge (triangulation_t *trian, int p0, int p1)
 /**
   *	@brief
   */
-triangle_t	*AllocTriangle (triangulation_t *trian)
+triangle_t *AllocTriangle (triangulation_t *trian)
 {
 	triangle_t	*t;
 
@@ -290,7 +290,7 @@ void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 /**
   *	@brief
   */
-void	LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t color)
+void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t color)
 {
 	patch_t		*p1, *p2, *p3;
 	vec3_t		base, d1, d2;
@@ -451,10 +451,7 @@ typedef struct
 
 
 /**
-  *	@brief
-  *
-  * Fills in s->texmins[] and s->texsize[]
-  * also sets exactmins[] and exactmaxs[]
+  *	@brief Fills in s->texmins[] and s->texsize[], also sets exactmins[] and exactmaxs[]
   */
 void CalcFaceExtents (lightinfo_t *l)
 {
@@ -506,9 +503,7 @@ void CalcFaceExtents (lightinfo_t *l)
 }
 
 /**
-  *	@brief
-  *
-  * Fills in texorg, worldtotex. and textoworld
+  *	@brief Fills in texorg, worldtotex. and textoworld
   */
 void CalcFaceVectors (lightinfo_t *l)
 {
@@ -579,9 +574,7 @@ void CalcFaceVectors (lightinfo_t *l)
 }
 
 /**
-  *	@brief
-  *
-  * For each texture aligned grid point, back project onto the plane
+  *	@brief For each texture aligned grid point, back project onto the plane
   * to get the world xyz value of the sample point
   */
 void CalcPoints (lightinfo_t *l, float sofs, float tofs)
@@ -857,7 +850,7 @@ void CreateDirectLights (void)
 /**
   *	@brief
   *
-  * Lightscale is the normalizer for multisampling
+  * @param[in] lightscale is the normalizer for multisampling
   */
 void GatherSampleLight (vec3_t pos, vec3_t normal,
 			float **styletable, int offset, int mapsize, float lightscale)
@@ -946,9 +939,7 @@ skipadd: ;
 }
 
 /**
-  *	@brief
-  *
-  * Take the sample's collected light and
+  *	@brief Take the sample's collected light and
   * add it back into the apropriate patch
   * for the radiosity pass.
   *
@@ -1083,9 +1074,7 @@ void BuildFacelights (int facenum)
 
 
 /**
-  *	@brief
-  *
-  * Add the indirect lighting on top of the direct
+  *	@brief Add the indirect lighting on top of the direct
   * lighting and save into final map format
   */
 void FinalLightFace (int facenum)
@@ -1175,8 +1164,7 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 
 	dest = &dlightdata[f->lightofs];
 
-	if (fl->numstyles > MAXLIGHTMAPS)
-	{
+	if (fl->numstyles > MAXLIGHTMAPS) {
 		fl->numstyles = MAXLIGHTMAPS;
 		printf ("face with too many lightstyles: (%f %f %f)\n",
 			face_patches[facenum]->origin[0],
@@ -1185,14 +1173,11 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 			);
 	}
 
-	for (st=0 ; st<fl->numstyles ; st++)
-	{
+	for (st=0 ; st<fl->numstyles ; st++) {
 		f->styles[st] = fl->stylenums[st];
-		for (j=0 ; j<fl->numsamples ; j++)
-		{
+		for (j=0 ; j<fl->numsamples ; j++) {
 			VectorCopy ( (fl->samples[st]+j*3), lb);
-			if (numbounce > 0 && st == 0)
-			{
+			if (numbounce > 0 && st == 0) {
 				vec3_t	add;
 
 				SampleTriangulation (fl->origins + j*3, trian, add);
