@@ -2704,6 +2704,22 @@ qboolean CL_OnBattlescape(void)
 	return qfalse;
 }
 
+/**
+ * @brief Scriptfunction to list all parsed nations with their current values
+ */
+void CL_NationList (void)
+{
+	int i;
+	for (i=0; i<gd.numNations;i++) {
+		Com_Printf("Nation ID: %s\n", gd.nations[i].id);
+		Com_Printf("...funding %i c\n", gd.nations[i].funding);
+		Com_Printf("...alienFriendly %0.2f\n", gd.nations[i].alienFriendly);
+		Com_Printf("...happiness %0.2f\n", gd.nations[i].happiness);
+		Com_Printf("...soldiers %i\n", gd.nations[i].soldiers);
+		Com_Printf("...scientists %i\n", gd.nations[i].scientists);
+	}
+}
+
 /* ===================================================================== */
 
 /* these commands are only available in singleplayer */
@@ -2755,6 +2771,8 @@ static cmdList_t game_commands[] = {
 	{"dec_sensor", B_SetSensor}
 	,
 	{"mn_mapaction_reset", MAP_ResetAction}
+	,
+	{"nationlist", CL_NationList}
 	,
 #ifdef DEBUG
 	{"debug_fullcredits", CL_DebugFullCredits}
