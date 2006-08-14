@@ -1,0 +1,9 @@
+The original model "heli_parented.blend" has be released under the GPL and CC-by-sa.
+
+Author: Ingo Ruhnke <grumbel@gmx.de>
+
+Source:
+http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=eadd9d5937d5374e55f001e4689e2d2e
+
+Any modifications made so far are by Werner Hoehrer and under the same licenses.
+
