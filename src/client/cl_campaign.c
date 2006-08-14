@@ -31,9 +31,6 @@ static mission_t missions[MAX_MISSIONS];
 static int numMissions;
 actMis_t *selMis;
 
-nation_t nations[MAX_NATIONS];
-int numNations = 0;
-
 static campaign_t campaigns[MAX_CAMPAIGNS];
 static int numCampaigns = 0;
 
@@ -682,14 +679,12 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
 	float civilianRatio = (float)civiliansSurvived / (float)(civiliansKilled+civiliansSurvived);
 	float alienRatio = (float)aliensSurvived / (float)(aliensKilled+aliensSurvived);
 	float performance = 0.5 + civilianRatio * 0.25 + alienRatio * 0.25;
-	mission_t *mission = mis->def;
-	char *nation_name = mission->nation;
 
-	for (i = 0; i < numNations; i++) {
-		nation_t *nation = &nations[i];
+	for (i = 0; i < gd.numNations; i++) {
+		nation_t *nation = &gd.nations[i];
 
 		if (lost) {
-			if (!Q_strcmp(nation->name, nation_name)) {
+			if (!Q_strcmp(nation->id, mis->def->nation)) {
 				/* Strong negative reaction */
 				nation->happiness *= performance * nation->alienFriendly / 100;
 			} else {
@@ -697,7 +692,7 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
 				nation->happiness *= 1 - pow(1 - performance * nation->alienFriendly / 100, 5);
 			}
 		} else {
-			if (!Q_strcmp(nation->name, nation_name)) {
+			if (!Q_strcmp(nation->id, mis->def->nation)) {
 				/* Strong positive reaction */
 				nation->happiness /= 1 - performance * nation->alienFriendly / 100;
 				nation->happiness += performance * nation->alienFriendly / 100 / 10;
@@ -818,8 +813,8 @@ static void CL_HandleBudget(void)
 	nation_t *nation;
 	int initial_credits = ccs.credits;
 
-	for (i = 0; i < numNations; i++) {
-		nation = &nations[i];
+	for (i = 0; i < gd.numNations; i++) {
+		nation = &gd.nations[i];
 		funding = nation->funding * nation->happiness;
 
 		if (nation->happiness < 0.015)
@@ -856,7 +851,7 @@ static void CL_HandleBudget(void)
 			}
 		}
 	}
-	
+
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 		cost += 300 + gd.employees[EMPL_SOLDIER][i].chr.rank * 50;
@@ -1107,67 +1102,6 @@ void CL_Stats_Update(void)
 }
 
 /**
-  * @brief
-  * @sa CL_GameLoad
-  * @sa CL_SaveEquipment
-  */
-#if 0
-void CL_LoadEquipment(sizebuf_t * buf, base_t * base)
-{
-	item_t item;
-	int container, x, y;
-	int i, j;
-	character_t *chr = NULL;
-
-	assert(base);
-
-	/* link the inventory in after load */
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-		gd.employees[EMPL_SOLDIER][i].chr.inv = &(gd.employees[EMPL_SOLDIER][i].inv);
-
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-		chr = &(gd.employees[EMPL_SOLDIER][i].chr);
-		for (j = 0; j < MAX_CONTAINERS; j++)
-			chr->inv->c[j] = NULL;
-		item.t = MSG_ReadByte(buf);
-		while (item.t != NONE) {
-			/* read info */
-			MSG_ReadFormat(buf, "bbbbb", &item.a, &item.m, &container, &x, &y);
-
-			/* check info and add item if ok */
-			Com_AddToInventory(chr->inv, item, container, x, y);
-
-			/* get next item */
-			item.t = MSG_ReadByte(buf);
-		}
-	}
-}
-#endif
-
-/**
-  * @brief Stores the equipment for a game
-  * @sa CL_LoadEquipment
-  */
-#if 0
-void CL_SaveEquipment(sizebuf_t * buf, character_t * team, const int num)
-{
-	invList_t *ic;
-	int i, j;
-	character_t *chr = team;
-
-	for (i = 0; i < num; chr++, i++) {
-		/* equipment */
-		for (j = 0; j < csi.numIDs; j++)
-			for (ic = chr->inv->c[j]; ic; ic = ic->next)
-				CL_SendItem(buf, ic->item, j, ic->x, ic->y);
-
-		/* terminate list */
-		MSG_WriteByte(buf, NONE);
-	}
-}
-#endif
-
-/**
  * @brief Saved the complete message stack
  * @sa CL_GameSave
  * @sa MN_AddNewMessage
@@ -1195,35 +1129,6 @@ void CL_MessageSave(sizebuf_t * sb, message_t * message)
 	MSG_WriteLong(sb, message->h);
 	MSG_WriteLong(sb, message->min);
 	MSG_WriteLong(sb, message->s);
-}
-
-/**
-  * @brief Load what the nations think of your performance.
-  * @sa CL_GameLoad
-  * @sa CL_SaveNationStats
-  */
-void CL_LoadNationStats(sizebuf_t * buf)
-{
-	int i;
-
-	/* link the inventory in after load */
-	for (i = 0; i < numNations; i++) {
-		nations[i].happiness = MSG_ReadFloat(buf);
-	}
-}
-
-/**
-  * @brief Stores what the nations think of your performance.
-  * @sa CL_LoadNationStats
-  */
-void CL_SaveNationStats(sizebuf_t * buf)
-{
-	int i;
-
-	/* link the inventory in after load */
-	for (i = 0; i < numNations; i++) {
-		MSG_WriteFloat(buf, nations[i].happiness);
-	}
 }
 
 /**
@@ -1332,9 +1237,6 @@ void CL_GameSave(char *filename, char *comment)
 		MSG_WriteLong(&sb, mis->expire.day);
 		MSG_WriteLong(&sb, mis->expire.sec);
 	}
-	
-	/* store nation happiness */
-	CL_SaveNationStats(&sb);
 
 	/* save all the stats */
 	SZ_Write(&sb, &stats, sizeof(stats));
@@ -1359,7 +1261,7 @@ static void CL_GameSaveCmd(void)
 	char *arg;
 
 	/* get argument */
-	if (Cmd_Argc() < 2) {		
+	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: game_save <filename> <comment>\n");
 		return;
 	}
@@ -1643,12 +1545,6 @@ int CL_GameLoad(char *filename)
 		}
 	}
 
-/*	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
-		CL_LoadEquipment( &sb, base );*/
-
-	/* store nation happiness */
-	CL_LoadNationStats(&sb);
-
 	/* load the stats */
 	memcpy(&stats, sb.data + sb.readcount, sizeof(stats_t));
 	sb.readcount += sizeof(stats_t);
@@ -1816,7 +1712,7 @@ static void CL_GameGo(void)
 
 	/* check inventory */
 	ccs.eMission = ccs.eCampaign;
-	
+
 	/* Zero out kill counters */
 	ccs.civiliansKilled = 0;
 	ccs.aliensKilled = 0;
@@ -1937,9 +1833,9 @@ void CL_GameAutoGo(void)
 
 	/* FIXME: This needs work */
 	won = mis->aliens * (int) difficulty->value > *(aircraft->teamSize) ? 0 : 1;
-		
+
 	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int) difficulty->value, *(aircraft->teamSize));
-	
+
 	/* update nation opinions */
 	if (won) {
 		CL_HandleNationData(0, mis->civilians, 0, 0, mis->aliens, selMis);
@@ -2279,7 +2175,7 @@ static value_t mission_vals[] = {
 	,
 	{"text", V_TRANSLATION_STRING, 0}	/* max length is 128 */
 	,
-	{"nation", V_TRANSLATION_STRING, offsetof(mission_t, nation)}
+	{"nation", V_STRING, offsetof(mission_t, nation)}
 	,
 	{"map", V_STRING, offsetof(mission_t, map)}
 	,
@@ -2745,13 +2641,13 @@ void CL_ParseNations(char *name, char **text)
 	value_t *vp;
 	char *token;
 
-	if (numNations >= MAX_NATIONS) {
+	if (gd.numNations >= MAX_NATIONS) {
 		Com_Printf("CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
 	/* initialize the menu */
-	nation = &nations[numNations++];
+	nation = &gd.nations[gd.numNations++];
 	memset(nation, 0, sizeof(nation_t));
 
 	Com_DPrintf("...found nation %s\n", name);
@@ -2762,7 +2658,7 @@ void CL_ParseNations(char *name, char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseNations: nation def \"%s\" without body ignored\n", name);
-		numNations--;
+		gd.numNations--;
 		return;
 	}
 
@@ -3067,9 +2963,8 @@ static void CP_CampaignsClick_f(void)
   */
 void CL_ResetSinglePlayerData(void)
 {
-	numNations = numStageSets = numStages = numMissions = 0;
+	numStageSets = numStages = numMissions = 0;
 	memset(missions, 0, sizeof(mission_t) * MAX_MISSIONS);
-	memset(nations, 0, sizeof(nation_t) * MAX_NATIONS);
 	memset(stageSets, 0, sizeof(stageSet_t) * MAX_STAGESETS);
 	memset(stages, 0, sizeof(stage_t) * MAX_STAGES);
 	memset(&invList, 0, sizeof(invList));

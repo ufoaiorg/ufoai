@@ -118,6 +118,9 @@ typedef struct globalData_s
 	/* The number of entries in the list above. */
 	int numRanks;
 
+	nation_t nations[MAX_NATIONS];
+	int numNations;
+
 	ugv_t ugvs[MAX_UGV];
 	int numUGV;
 
