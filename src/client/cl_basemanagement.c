@@ -1461,6 +1461,7 @@ void B_AssembleMap(void)
 
 	if (setUnderAttack) {
 		base->baseStatus = BASE_UNDER_ATTACK;
+		gd.mapAction = MA_BASEATTACK;
 		Com_DPrintf("Set base %i under attack\n", base->idx);
 	}
 

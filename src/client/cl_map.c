@@ -115,8 +115,8 @@ CLIC ON MAP and MULTI SELECTION FUNCTIONS
 */
 
 /**
-  * @ brief Add an element in the multiselection list
-  */
+ * @brief Add an element in the multiselection list
+ */
 static void MAP_MultiSelectListAddItem(multiSelectType_t item_type, int item_id,
 	const char* item_description, const char* item_name)
 {
@@ -127,9 +127,9 @@ static void MAP_MultiSelectListAddItem(multiSelectType_t item_type, int item_id,
 }
 
 /**
-  * @brief Execute action for 1 element of the multi selection
-  * Param Cmd_Argv(1) is the element selected in the popup_multi_selection menu
-  */
+ * @brief Execute action for 1 element of the multi selection
+ * Param Cmd_Argv(1) is the element selected in the popup_multi_selection menu
+ */
 static void MAP_MultiSelectExecuteAction_f(void)
 {
 	int selected, id;
@@ -215,7 +215,7 @@ static void MAP_MultiSelectExecuteAction_f(void)
 			selectedUfo = aircraft;
 		}
 		break;
-		
+
 	case MULTISELECT_TYPE_NONE :	/* Selection of an element that has been removed */
 		break;
 	default:
@@ -260,17 +260,17 @@ static void MAP_MultiSelectNotifyUfoDisappeared(const aircraft_t* ufo)
 {
 	MAP_MultiSelectNotifyUfoRemoved(ufo);
 }
-	
-/*
+
+/**
  * @brief: Click on the 3D map/geoscape
-*/
+ */
 extern void MAP_3DMapClick(const menuNode_t* node, int x, int y)
 {
 }
 
 #define MN_MAP_DIST_SELECTION 15
 
-/*
+/**
  * @brief Click on the map/geoscape
  */
 extern void MAP_MapClick(const menuNode_t* node, int x, int y)
@@ -325,7 +325,7 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 			if (aircraft->status > AIR_HOME && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
 	}
-	
+
 	/* Get selected ufos */
 	for (aircraft = gd.ufos + gd.numUfos - 1 ; aircraft >= gd.ufos ; aircraft--)
 		if (aircraft->visible
@@ -366,8 +366,8 @@ GEOSCAPE DRAWING AND COORDINATES
 */
 
 /**
-  * @brief Tell if the specified position is considered clicked
-  */
+ * @brief Tell if the specified position is considered clicked
+ */
 #define MN_MAP_DIST_SELECTION 15
 static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y) {
 	int msx, msy;
@@ -381,8 +381,8 @@ static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, in
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
@@ -405,8 +405,8 @@ extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
 {
 	pos[0] = (((node->pos[0] - x) / node->size[0] + 0.5) / ccs.zoom - (ccs.center[0] - 0.5)) * 360.0;
@@ -419,8 +419,8 @@ static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PolarToVec(const vec2_t a, vec3_t v)
 {
 	float p, t;
@@ -431,8 +431,8 @@ static void PolarToVec(const vec2_t a, vec3_t v)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void VecToPolar(const vec3_t v, vec2_t a)
 {
 	a[0] = 180 / M_PI * atan2(v[1], v[0]);
@@ -440,8 +440,8 @@ static void VecToPolar(const vec3_t v, vec2_t a)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line)
 {
 	vec3_t s, e, v;
@@ -513,8 +513,8 @@ extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* lin
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line)
 {
 	vec4_t color = {1, 0.5, 0.5, 1};
@@ -555,7 +555,7 @@ static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line)
 	re.DrawColor(NULL);
 }
 
-/*
+/**
  * @brief
  */
 static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float longitude)
@@ -605,7 +605,7 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
 		}
 }
 
-/*
+/**
  * @brief
  */
 static void MAP_DrawMapMarkers(const menuNode_t* node)
@@ -666,7 +666,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 				/* Draw selected aircraft */
 				if (aircraft == selectedAircraft) {
 					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
-						
+
 					/* Draw ufo purchased by selected aircraft */
 					if (aircraft->status == AIR_UFO && MAP_MapToScreen(node, (gd.ufos + aircraft->ufo)->pos, &x, &y))
 						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
@@ -689,13 +689,13 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 			continue;
 		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, aircraft->image);
 		if (aircraft == selectedUfo)
-			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");	
+			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
 	}
 }
 
 /**
-  * @brief Draw the geoscape
-  */
+ * @brief Draw the geoscape
+ */
 extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 {
 	float q;
@@ -756,8 +756,8 @@ extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 }
 
 /**
-  * @brief No more special action in geoscape
-  */
+ * @brief No more special action in geoscape
+ */
 extern void MAP_ResetAction(void)
 {
 	/* don't allow a reset when no base is set up */
@@ -805,7 +805,7 @@ extern void MAP_NotifyMissionRemoved(const actMis_t* mission)
 		MAP_ResetAction();
 	else if (selMis > mission)
 		selMis--;
-	
+
 	/* Notify the multi selection popup */
 	MAP_MultiSelectNotifyMissionRemoved(mission);
 }
