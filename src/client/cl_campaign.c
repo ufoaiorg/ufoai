@@ -808,13 +808,15 @@ char *CL_DateGetMonthName(int month)
  * @sa CL_CampaignRun
  * @sa B_CreateEmployee
  */
-static void CL_UpdateNationData(void)
+static void CL_HandleBudget(void)
 {
 	int i, j;
 	char message[1024];
 	char happiness_str[1024];
 	int funding;
+	int cost;
 	nation_t *nation;
+	int initial_credits = ccs.credits;
 
 	for (i = 0; i < numNations; i++) {
 		nation = &nations[i];
@@ -844,18 +846,99 @@ static void CL_UpdateNationData(void)
 			Q_strncpyz(happiness_str, _("Exuberant"), sizeof(happiness_str));
 
 		Com_sprintf(message, sizeof(message), _("Gained %i credits from nation %s (%s)"), funding, _(nation->name), happiness_str);
-
-		CL_UpdateCredits(ccs.credits + funding);
-
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-
 		CL_UpdateCredits(ccs.credits + funding);
+
 		for (j = 0; j < nation->scientists; j++) {
-			/* Create one free scientist. */
-			E_CreateEmployee(EMPL_SCIENTIST);
-			/* Hire one free scientist. gd.numBases is always (at least) 1 at this point. */
-			E_HireEmployee(&gd.bases[rand() % gd.numBases], EMPL_SCIENTIST, -1);
+			if (gd.numEmployees[EMPL_SCIENTIST] < 16) {
+				/* Create one free scientist, but don't auto-hire them. */
+				E_CreateEmployee(EMPL_SCIENTIST);
+			}
 		}
+	}
+	
+	cost = 0;
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+		cost += 300 + gd.employees[EMPL_SOLDIER][i].chr.rank * 50;
+	}
+
+	Com_sprintf(message, sizeof(message), _("Paid %i credits to soldiers"), cost);
+	CL_UpdateCredits(ccs.credits - cost);
+	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+
+	cost = 0;
+	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
+		cost += 300 + gd.employees[EMPL_WORKER][i].chr.rank * 50;
+	}
+
+	Com_sprintf(message, sizeof(message), _("Paid %i credits to workers"), cost);
+	CL_UpdateCredits(ccs.credits - cost);
+	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+
+	cost = 0;
+	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
+		cost += 300 + gd.employees[EMPL_SCIENTIST][i].chr.rank * 50;
+	}
+
+	Com_sprintf(message, sizeof(message), _("Paid %i credits to scientists"), cost);
+	CL_UpdateCredits(ccs.credits - cost);
+	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+
+	cost = 0;
+	for (i = 0; i < gd.numEmployees[EMPL_MEDIC]; i++) {
+		cost += 300 + gd.employees[EMPL_MEDIC][i].chr.rank * 50;
+	}
+
+	Com_sprintf(message, sizeof(message), _("Paid %i credits to medics"), cost);
+	CL_UpdateCredits(ccs.credits - cost);
+	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+
+	cost = 0;
+	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
+		cost += 750 + gd.employees[EMPL_ROBOT][i].chr.rank * 150;
+	}
+
+	if (cost != 0) {
+		Com_sprintf(message, sizeof(message), _("Paid %i credits for robots"), cost);
+		CL_UpdateCredits(ccs.credits - cost);
+		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+	}
+
+	cost = 0;
+	for (i = 0; i < gd.numBases; i++) {
+		for (j = 0; j < gd.bases[i].numAircraftInBase; j++) {
+			cost += gd.bases[i].aircraft[j].price / 100;
+		}
+	}
+
+	if (cost != 0) {
+		Com_sprintf(message, sizeof(message), _("Paid %i credits for aircraft"), cost);
+		CL_UpdateCredits(ccs.credits - cost);
+		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+	}
+
+	for (i = 0; i < gd.numBases; i++) {
+		cost = 2000;	/* base cost */
+		for (j = 0; j < gd.numBuildings[i]; j++) {
+			cost += gd.buildings[i][j].varCosts;
+		}
+
+		Com_sprintf(message, sizeof(message), _("Paid %i credits for upkeep of base %s"), cost, gd.bases[i].name);
+		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+		CL_UpdateCredits(ccs.credits - cost);
+	}
+
+	cost = ((gd.numEmployees[EMPL_SOLDIER] + gd.numEmployees[EMPL_MEDIC] + gd.numEmployees[EMPL_WORKER] + gd.numEmployees[EMPL_SCIENTIST] + 2 * gd.numEmployees[EMPL_ROBOT] + 24) / 25) * 150 + 550;
+	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
+	CL_UpdateCredits(ccs.credits - cost);
+	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+
+        if (initial_credits < 0) {
+        	float interest = initial_credits * 0.005;
+		cost = ceil(interest);
+		Com_sprintf(message, sizeof(message), _("Paid %i credits in interest on your debt."), cost);
+		CL_UpdateCredits(ccs.credits - cost);
+		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 	}
 }
 
@@ -865,7 +948,7 @@ static void CL_UpdateNationData(void)
   * Called for node types MN_MAP and MN_3DMAP
   *
   * @sa MN_DrawMenus
-  * @sa CL_UpdateNationData
+  * @sa CL_HandleBudget
   * @sa B_UpdateBaseData
   * @sa CL_CampaignRunAircraft
   * @sa CL_CampaignCheckEvents
@@ -899,7 +982,7 @@ void CL_CampaignRun(void)
 		CL_DateConvert(&ccs.date, &day, &month);
 		/* every first day of a month */
 		if (day == 1 && gd.fund != qfalse && gd.numBases) {
-			CL_UpdateNationData();
+			CL_HandleBudget();
 			gd.fund = qfalse;
 		} else if (day > 1)
 			gd.fund = qtrue;

@@ -79,7 +79,7 @@ building building_storage
 	fixcosts	75000
 	depends		building_entrance // storage base needs just entrance
 	build_time	5
-	varcosts	10
+	varcosts	200
 	map_name	"storage"
 	pedia		rs_building_storage
 	firstbase	true
@@ -94,7 +94,7 @@ building building_teamroom
 	fixcosts	30000
 	depends		building_entrance // a cheap building to shield powerplant
 	build_time	3
-	varcosts	7
+	varcosts	140
 	map_name	"teamroom"
 	pedia		rs_building_teamroom
 }
@@ -106,7 +106,7 @@ building building_powerplant
 	fixcosts	90000
 	depends		building_entrance
 	build_time	2
-	varcosts	150
+	varcosts	3000
 	map_name	"powerplant"
 	pedia		rs_building_powerplant
 	firstbase	true
@@ -121,7 +121,7 @@ building building_quarters
 	fixcosts	80000
 	depends		building_powerplant // so that they don't freeze
 	build_time	4
-	varcosts	10
+	varcosts	200
 	map_name	"quarters"
 	pedia		rs_building_quarters
 	firstbase	true
@@ -138,7 +138,7 @@ building building_workshop
 	fixcosts	230000
 	depends		building_powerplant // construction plans uploaded over net
 	build_time	7
-	varcosts	400
+	varcosts	8000
 	map_name	"workshop"
 	pedia		rs_building_workshop
 	firstbase	true
@@ -164,7 +164,7 @@ building building_hangar
 	fixcosts	310000
 	depends		building_powerplant // slow dropship operations can be coordinated from another base, so no Command Center needed
 	build_time	6
-	varcosts	130
+	varcosts	2600
 	map_name	"drop"
 	pedia		rs_building_hangar
 	firstbase	true
@@ -190,7 +190,7 @@ building building_radar
 	fixcosts	270000 // a major cost to prevent 10 radars in initial base
 	depends		building_powerplant // operated via net
 	build_time	10
-	varcosts	30
+	varcosts	1600
 	map_name	"radar"
 	pedia		rs_building_radar
 	firstbase	true
@@ -207,7 +207,7 @@ building building_command
 	fixcosts	740000 // next stage in base costs
 	depends		building_powerplant
 	build_time	4
-	varcosts	50
+	varcosts	1000
 	map_name	"commando"
 	pedia		rs_building_command
 	firstbase	true
@@ -221,7 +221,7 @@ building building_intercept
 	fixcosts	330000
 	depends		building_command // no interceptions without supervision
 	build_time	5
-	varcosts	210
+	varcosts	4200
 	map_name	"intercept"
 	pedia		rs_building_intercept
 	firstbase	true
@@ -239,7 +239,7 @@ building building_lab
 	fixcosts	1200000 // next stage in base costs
 	depends		building_command // scientists need supervision, or...
 	build_time	14
-	varcosts	300
+	varcosts	6000
 	map_name	"lab"
 	pedia		rs_building_lab
 	firstbase	true
@@ -256,7 +256,7 @@ building building_hospital
 	fixcosts	750000
 	depends		building_lab // all those analyses and x-rays for free
 	build_time	9
-	varcosts	500
+	varcosts	10000
 	map_name	"hospital"
 	pedia		rs_building_hospital
 	firstbase	false //the luxury of your veterans back in combat costs extra
@@ -272,7 +272,7 @@ building building_ufo_hangar
 	fixcosts	940000
 	depends		building_lab
 	build_time	12
-	varcosts	280
+	varcosts	5600
 	map_name	"ufohangar"
 	pedia		rs_building_ufo_hangar
 	more_than_one	true
@@ -346,6 +346,6 @@ aircraft craft_ufo_big
 	building	building_ufo_hangar
 	fuel	1000000
 	fuelsize	1000000
-	price	1000000
+	price	4000000
 	image	air_ufo
 }

@@ -67,9 +67,9 @@ void PR_ProductionRun(void)
 #endif
 		gd.productions[i].timeLeft--;
 		if (gd.productions[i].timeLeft <= 0) {
+			CL_UpdateCredits(ccs.credits - (od->price*PRODUCE_FACTOR));
 			gd.productions[i].timeLeft = t->produceTime;
 			gd.productions[i].amount--;
-			CL_UpdateCredits(ccs.credits - (od->price*PRODUCE_FACTOR));
 			/* switch to no running production */
 			if (gd.productions[i].amount<=0) {
 				gd.productions[i].objID = -1;
