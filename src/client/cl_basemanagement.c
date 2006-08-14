@@ -254,7 +254,7 @@ void B_SetUpBase(void)
 			B_BuildingInit();
 
 			if (cl_start_employees->value)
-				B_HireForBuilding(building, -1);				
+				B_HireForBuilding(building, -1);
 		}
 	}
 }
@@ -1325,7 +1325,7 @@ static void B_PackInitialEquipmentCmd(void)
 		return;
 	}
 
-	if (!baseCurrent) 
+	if (!baseCurrent)
 		return;
 
 	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
@@ -1659,8 +1659,7 @@ void B_ResetBaseManagement(void)
 
 /**
  * @brief Counts the number of bases.
- *
- * @return The number of found bases.
+ * @return The number of founded bases.
  */
 int B_GetCount(void)
 {

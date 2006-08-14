@@ -1701,6 +1701,20 @@ void CL_StartMissionMap(mission_t* mission)
 	case '+':
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.ump", mission->map + 1, timeChar);
 		break;
+	/* base attack */
+	/* maps starts with a dot */
+	case '.':
+		if (baseCurrent && baseCurrent->baseStatus != BASE_UNDER_ATTACK) {
+			Com_Printf("Base is not under attack\n");
+			return;
+		} else if (!baseCurrent) {
+			Com_DPrintf("Warning: Baseattack with no baseCurrent\n");
+			return;
+		}
+		/* check whether are there founded bases */
+		if (B_GetCount() > 0)
+			Cbuf_AddText(va("base_assemble %i", baseCurrent->idx));
+		return;
 	default:
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.bsp", mission->map, timeChar);
 		break;
@@ -1777,16 +1791,6 @@ static void CL_GameGo(void)
 	baseCurrent->deathMask = 0;
 	MN_PopMenu(qtrue);
 	Cvar_Set("mn_main", "singleplayermission");
-
-	/* base attack */
-	/* maps starts with a dot */
-	if (mis->map[0] == '.') {
-		if (B_GetCount() > 0 && baseCurrent && baseCurrent->baseStatus == BASE_UNDER_ATTACK) {
-			Cbuf_AddText(va("base_assemble %i", baseCurrent->idx));
-			return;
-		} else
-			return;
-	}
 
 	CL_StartMissionMap(mis);
 }
