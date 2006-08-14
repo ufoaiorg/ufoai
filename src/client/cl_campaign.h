@@ -221,7 +221,7 @@ mission_t* CL_AddMission(char *name);
 void CL_ParseStage(char *name, char **text);
 void CL_ParseCampaign(char *name, char **text);
 void CL_ParseNations(char *name, char **text);
-void CL_CollectAliens(mission_t * mission);
+void CL_CollectAliens(void);
 void CL_CollectItems(int won);
 void CL_UpdateCharacterStats(int won);
 void CL_UpdateCredits(int credits);

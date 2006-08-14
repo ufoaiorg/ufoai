@@ -1358,8 +1358,6 @@ void CL_ParseResults(sizebuf_t * buf)
 		Cvar_Set("mn_active", "");
 		MN_PushMenu("main");
 	} else {
-		mission_t *ms;
-
 		/* get correct menus */
 		Cvar_Set("mn_main", "singleplayer");
 		Cvar_Set("mn_active", "map");
@@ -1370,7 +1368,7 @@ void CL_ParseResults(sizebuf_t * buf)
 
 		/* check for stunned aliens */
 		if (winner == we)
-			CL_CollectAliens(ms);
+			CL_CollectAliens();
 
 		/* update stats */
 		CL_UpdateCharacterStats(winner == we);

@@ -1876,13 +1876,11 @@ void CL_GameAbort(void)
 /**
   * @brief Collect aliens from battlefield (e.g. for autopsy)
   *
-  * @param[in] mission
-  *
   * loop through all entities and put the ones that are stunned
   * as living aliens into our labs
   * TODO: put them into the labs
   */
-void CL_CollectAliens(mission_t * mission)
+void CL_CollectAliens(void)
 {
 	int i, j;
 	le_t *le = NULL;
