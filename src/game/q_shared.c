@@ -2426,13 +2426,14 @@ CHARACTER GENERATION AND HANDLING
 */
 
 /**
- * @brief Pack a weapon, possibly with some ammo
- * @param[in] ent The actor that will get the weapon
- * @param[in] weapon The weapon type index in gi.csi->ods
- * @param[in] equip The equipment that shows how many clips to pack
- *
- * TODO: choose between multiple ammo for the same weapon
- */
+  * @brief Pack a weapon, possibly with some ammo
+  * @param[in] inv The inventory that will get the weapon
+  * @param[in] weapon The weapon type index in gi.csi->ods
+  * @param[in] equip The equipment that shows how many clips to pack
+  * @param[in] name The name of the equipment for debug messages
+  *
+  * TODO: choose between multiple ammo for the same weapon
+  */
 int Com_PackAmmoAndWeapon(inventory_t *inv, const int weapon, const int equip[MAX_OBJDEFS], char *name)
 {
 	int ammo;
@@ -2488,22 +2489,18 @@ int Com_PackAmmoAndWeapon(inventory_t *inv, const int weapon, const int equip[MA
 #define WEAPONLESS_BONUS	3.0
 
 /**
- * @brief Fully equip one actor
- * @param[in] ent The actor that will get the weapons
- * @param[in] equip The equipment that shows what is available
- * @note The code below is a complete implementation
- * of the scheme sketched at the beginning of equipment_missions.ufo.
- * However, aliens cannot yet swap weapons,
- * so in their case only the weapon(s) in hands will be used.
- * The rest will be just player's loot.
- * If two weapons in the same category have the same price,
- * only one will be considered for inventory.
- *
- * TODO: try and see if this creates a tolerable
- * initial equipment for human players
- * (of course this would result in random number of initial weapons),
- * though there is already CL_CheckInventory in cl_team.c.
- */
+  * @brief Fully equip one actor
+  * @param[in] inv The inventory that will get the weapon
+  * @param[in] equip The equipment that shows what is available
+  * @param[in] name The name of the equipment for debug messages
+  * @note The code below is a complete implementation
+  * of the scheme sketched at the beginning of equipment_missions.ufo.
+  * However, aliens cannot yet swap weapons,
+  * so in their case only the weapon(s) in hands will be used.
+  * The rest will be just player's loot.
+  * If two weapons in the same category have the same price,
+  * only one will be considered for inventory.
+  */
 void Com_EquipActor(inventory_t *inv, const int equip[MAX_OBJDEFS], char *name)
 {
 	int weapon = -1; /* this variable is never used before being set */
