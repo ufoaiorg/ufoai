@@ -1,4 +1,3 @@
-
 // ================
 // PLASMA ATOMIZER
 // ================
@@ -142,60 +141,6 @@ item plasrifle_ammo
 		rof		21
 		time	22
 		damage	"12 2"
-		dmgtype plasma
-	}
-}
-
-
-// =======================
-// PLASMA BLADE
-// =======================
-item plasblade
-{
-	name		"_Plasma Blade"
-	model		weapons/plasblade/plasblade
-	weapon		true
-	type		melee
-	category	2
-	shape		"0 0 1 2"
-	center		"-6 -13 0.5"
-	scale  		0.77
-	price		710
-	buytype		1
-	ammo		1
-	thrown		true
-
-	primary
-	{
-		name	"_Stab"
-		skill	close
-		projtl	null
-		impact	plasmaImpactCharged
-		hitbody	plasmaImpactCharged
-		firesnd	weapons/plasma_blade.wav
-		speed	0
-		range	1.5
-		shots	1
-		time	4
-		damage	"100 10"
-		dmgtype plasma
-	}
-	secondary
-	{
-		name	"_Throw"
-		skill	close
-		projtl	plasblade
-		impact	plasmaImpactCharged
-		hitbody	plasmaImpactCharged
-		impsnd	misc/klonk03.wav
-		bodysnd weapons/plasma_blade.wav
-		speed	320
-		range	10
-		spread	"7 7"
-		shots	1
-		ammo	1
-		time	10
-		damage	"100 10"
 		dmgtype plasma
 	}
 }
