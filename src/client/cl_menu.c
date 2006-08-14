@@ -795,32 +795,34 @@ static void MN_Drag(menuNode_t * node, int x, int y)
 			invList_t *i = NULL;
 			int et = -1, sel;
 
-			/* sort equipment (tiny hack) */
 			if (node->mousefx == csi.idEquip) {
-				/* special item sorting for equipment */
+				/* a hack to add the equipment correctly into buy categories;
+				   it is valid only due to the following property: */
+				assert (MAX_CONTAINERS >= NUM_BUYTYPES);
+
 				i = Com_SearchInInventory(menuInventory, dragFrom, dragFromX, dragFromY);
 				if (i) {
 					et = csi.ods[i->item.t].buytype;
 					if (et != baseCurrent->equipType) {
-						menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[et];
+						menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[et];
 						Com_FindSpace(menuInventory, i->item.t, csi.idEquip, &px, &py);
 						if (px >= 32 && py >= 16) {
-							menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[baseCurrent->equipType];
+							menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[baseCurrent->equipType];
 							return;
 						}
 					}
 				}
 			}
 
-			/* move the item */
+			/* move the item, this is highly broken, e.g. the NULLs */
 			Com_MoveInInventory(menuInventory, dragFrom, dragFromX, dragFromY, node->mousefx, px, py, NULL, NULL);
 
 			/* end of hack */
 			if (i && et != baseCurrent->equipType) {
-				baseCurrent->equipment.c[et] = menuInventory->c[csi.idEquip];
-				menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[baseCurrent->equipType];
+				baseCurrent->equipByBuyType.c[et] = menuInventory->c[csi.idEquip];
+				menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[baseCurrent->equipType];
 			} else
-				baseCurrent->equipment.c[baseCurrent->equipType] = menuInventory->c[csi.idEquip];
+				baseCurrent->equipByBuyType.c[baseCurrent->equipType] = menuInventory->c[csi.idEquip];
 
 			/* update character info (for armor changes) */
 			sel = cl_selected->value;

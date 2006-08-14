@@ -375,7 +375,7 @@ void CL_CleanTempInventory(void)
 	if (!baseCurrent)
 		return;
 
-	Com_DestroyInventory(&baseCurrent->equipment);
+	Com_DestroyInventory(&baseCurrent->equipByBuyType);
 	for (i = 0; i < MAX_EMPLOYEES; i++)
 		for (k = 0; k < csi.numIDs; k++)
 			if (k == csi.idEquip)
@@ -397,7 +397,6 @@ static void CL_GenerateEquipmentCmd(void)
 	equipDef_t unused;
 	char *name;
 	int i, p;
-	int x, y;
 
 	assert(baseCurrent);
 
@@ -464,23 +463,16 @@ static void CL_GenerateEquipmentCmd(void)
 
 	/* manage inventory */
 	CL_CheckInventory(&unused, 0);
+	
+	/* a 'tiny hack' to add the equipment correctly into buy categories;
+	   it is valid only due to the following property: */
+	assert (MAX_CONTAINERS >= NUM_BUYTYPES);
 
 	for (i = 0; i < csi.numODs; i++)
-		while (unused.num[i]) {
-			/* 'tiny hack' to add the equipment correctly into buy categories */
-			baseCurrent->equipment.c[csi.idEquip] = baseCurrent->equipment.c[csi.ods[i].buytype];
-
-			Com_FindSpace(&baseCurrent->equipment, i, csi.idEquip, &x, &y);
-			if (x >= 32 && y >= 16)
+		while (unused.num[i])
+			if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, i), csi.ods[i].buytype))
 				break;
-			Com_AddToInventory(&baseCurrent->equipment, CL_AddWeaponAmmo(&unused, i), csi.idEquip, x, y);
-
-			baseCurrent->equipment.c[csi.ods[i].buytype] = baseCurrent->equipment.c[csi.idEquip];
-		}
-
-	baseCurrent->equipment.c[csi.idEquip] = NULL;
 }
-
 
 /**
   * @brief
@@ -502,7 +494,7 @@ static void CL_EquipTypeCmd(void)
 	/* display new items */
 	baseCurrent->equipType = num;
 	if (menuInventory)
-		menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[num];
+		menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[num];
 }
 
 /**

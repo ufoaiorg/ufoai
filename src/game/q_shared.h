@@ -1105,7 +1105,7 @@ char *Com_CharGetHead(character_t * chr);
 
 void Com_InitCSI(csi_t * import);
 void Com_InitInventory(invList_t * invChain);
-qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, int y);
+qboolean Com_CheckToInventory(const inventory_t * i, const int item, const int container, int x, int y);
 invList_t *Com_SearchInInventory(inventory_t * i, int container, int x, int y);
 invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x, int y);
 qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y);
@@ -1114,6 +1114,7 @@ void Com_EmptyContainer(inventory_t * i, int container);
 void Com_DestroyInventory(inventory_t * i);
 void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py);
 int Com_TryAddToInventory(inventory_t * inv, item_t item, int container);
+int Com_TryAddToBuyType(inventory_t * inv, item_t item, int container);
 void Com_EquipActor(inventory_t *inv, const int equip[MAX_OBJDEFS],  char *name);
 
 /* =========================================================== */

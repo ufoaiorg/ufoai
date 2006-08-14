@@ -185,14 +185,17 @@ typedef struct base_s {
 	/* building_radar increases the sensor width */
 	radar_t	radar;
 
-	/* equipment in base */
-	inventory_t equipment;
+	/* weapons, etc. stored in base */
+	equipDef_t storage;
+
+	/* idEquip sorted by buytype;
+	   a hack based on assertion (MAX_CONTAINERS >= NUM_BUYTYPES) */
+	inventory_t equipByBuyType;
+	int equipType;
 
 	/* set in CL_GenerateEquipmentCmd and CL_LoadTeam */
 	character_t *curTeam[MAX_ACTIVETEAM];
 	character_t *curChr;
-
-	int equipType;
 
 	/* needed if there is another buildingpart to build (link to gd.buildingTypes) */
 	int buildingToBuild;

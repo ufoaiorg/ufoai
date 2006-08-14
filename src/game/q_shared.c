@@ -2028,16 +2028,17 @@ void Com_InitInventory(invList_t * invList)
 	}
 }
 
+static int cache_Com_CheckToInventory = 0;
 
 /**
  * @brief
  * @param
  * @sa
  */
-qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, int y)
+qboolean Com_CheckToInventory(const inventory_t * i, const int item, const int container, int x, int y)
 {
 	invList_t *ic;
-	int mask[16];
+	static int mask[16];
 	int j;
 
 	assert(i);
@@ -2083,14 +2084,16 @@ qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, i
 	if (x < 0 || y < 0 || x >= 32 || y >= 16)
 		return qfalse;
 
-	/* extract shape info */
-	for (j = 0; j < 16; j++)
-		mask[j] = ~CSI->ids[container].shape[j];
-
-	/* add other items to mask */
-	for (ic = i->c[container]; ic; ic = ic->next)
-		for (j = 0; j < 4 && ic->y + j < 16; j++)
-			mask[ic->y + j] |= ((CSI->ods[ic->item.t].shape >> (j * 8)) & 0xFF) << ic->x;
+	if (!cache_Com_CheckToInventory) {
+		/* extract shape info */
+		for (j = 0; j < 16; j++)
+			mask[j] = ~CSI->ids[container].shape[j];
+		
+		/* add other items to mask */
+		for (ic = i->c[container]; ic; ic = ic->next)
+			for (j = 0; j < 4 && ic->y + j < 16; j++)
+				mask[ic->y + j] |= ((CSI->ods[ic->item.t].shape >> (j * 8)) & 0xFF) << ic->x;
+	}
 
 	/* test for collisions with newly generated mask */
 	for (j = 0; j < 4; j++)
@@ -2373,7 +2376,7 @@ void Com_DestroyInventory(inventory_t * i)
 }
 
 /**
- * @brief
+ * @brief Finds space for item in inv at container
  * @param
  * @sa
  */
@@ -2382,15 +2385,20 @@ void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py)
 	int x, y;
 
 	assert(inv);
+	assert (!cache_Com_CheckToInventory);
 
-	/* this can be done more efficiently, using container shape info */
 	for (y = 0; y < 16; y++)
 		for (x = 0; x < 32; x++)
 			if (Com_CheckToInventory(inv, item, container, x, y)) {
+				cache_Com_CheckToInventory = 0;
 				*px = x;
 				*py = y;
 				return;
+			} else {
+				cache_Com_CheckToInventory = 1;
 			}
+	cache_Com_CheckToInventory = 0;
+
 #ifdef PARANOID
 	Com_DPrintf("Com_FindSpace: no space for %s: %s in %s\n", CSI->ods[item].type, CSI->ods[item].kurz, CSI->ids[container].name);
 #endif
@@ -2398,7 +2406,7 @@ void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py)
 }
 
 /**
- * @brief
+ * @brief Tries to add item to inventory inv at container
  * @param[in] inv Inventory pointer to add the item
  * @param[in] item Item to add to inventory
  * @param[in] container Container id
@@ -2415,6 +2423,32 @@ int Com_TryAddToInventory(inventory_t * inv, item_t item, int container)
 		return 0;
 	} else {
 		Com_AddToInventory(inv, item, container, x, y);
+		return 1;
+	}
+}
+
+/**
+ * @brief Tries to add item to buytype inventory inv at container
+ * @param[in] inv Inventory pointer to add the item
+ * @param[in] item Item to add to inventory
+ * @param[in] container Container id
+ * @sa Com_FindSpace
+ * @sa Com_AddToInventory
+ */
+int Com_TryAddToBuyType(inventory_t * inv, item_t item, int container)
+{
+	int x, y;
+	inventory_t hackInv;
+
+	hackInv.c[CSI->idEquip] = inv->c[container];
+
+	Com_FindSpace(&hackInv, item.t, CSI->idEquip, &x, &y);
+	if (x == NONE) {
+		assert (y == NONE);
+		return 0;
+	} else {
+		Com_AddToInventory(&hackInv, item, CSI->idEquip, x, y);
+		inv->c[container] = hackInv.c[CSI->idEquip];
 		return 1;
 	}
 }
