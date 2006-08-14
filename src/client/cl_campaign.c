@@ -1705,19 +1705,17 @@ static void CL_GameGo(void)
 	Cvar_Set("ai_equipment", mis->alienEquipment);
 	Cvar_Set("ai_armor", mis->alienArmor);
 	Cvar_Set("music", mis->music);
-	Cvar_Set("equip", curCampaign->equipment);
 	/* TODO: Map assembling to get the current used dropship in the map is not fully implemented */
 	/* but can be done via the map assembling part of the random map assembly */
 	Cvar_Set("map_dropship", aircraft->id);
 
 	/* check inventory */
 	ccs.eMission = ccs.eCampaign;
+	CL_CheckInventory(&ccs.eMission, 0);
 
 	/* Zero out kill counters */
 	ccs.civiliansKilled = 0;
 	ccs.aliensKilled = 0;
-
-	CL_CheckInventory(&ccs.eMission, 0);
 
 	/* prepare */
 	baseCurrent->deathMask = 0;
@@ -1935,7 +1933,7 @@ void CL_CollectAliens(void)
   * Called from CL_CollectItems.
   * Put every item to the market inventory list
   */
-void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
+void CL_CollectItemAmmo(invList_t * weapon, int left_hand)
 {
 	technology_t *tech = NULL;
 
@@ -1944,10 +1942,7 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 	/* twohanded weapons and container is left hand container */
 	assert (!(left_hand && csi.ods[weapon->item.t].twohanded));
 
-	if (market)
-		ccs.eMarket.num[weapon->item.t]++;
-	else
-		ccs.eMission.num[weapon->item.t]++;
+	ccs.eMission.num[weapon->item.t]++;
 
 	tech = csi.ods[weapon->item.t].tech;
 	if (!tech)
@@ -1956,18 +1951,11 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 
 	if (!csi.ods[weapon->item.t].reload || weapon->item.m == NONE)
 		return;
-	if (market) {
-		ccs.eMarket.num_loose[weapon->item.m] += weapon->item.a;
-		if (ccs.eMarket.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
-			ccs.eMarket.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
-			ccs.eMarket.num[weapon->item.m]++;
-		}
-	} else {
-		ccs.eMission.num_loose[weapon->item.m] += weapon->item.a;
-		if (ccs.eMission.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
-			ccs.eMission.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
-			ccs.eMission.num[weapon->item.m]++;
-		}
+
+	ccs.eMission.num_loose[weapon->item.m] += weapon->item.a;
+	if (ccs.eMission.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
+		ccs.eMission.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
+		ccs.eMission.num[weapon->item.m]++;
 	}
 }
 
@@ -2000,19 +1988,19 @@ void CL_CollectItems(int won)
 		switch (le->type) {
 		case ET_ITEM:
 			for (item = FLOOR(le); item; item = item->next)
-				CL_CollectItemAmmo(item, 0, qtrue);
+				CL_CollectItemAmmo(item, 0);
 			break;
 		case ET_ACTOR:
 		case ET_UGV:
-			/* the items are already dropped to floor and are available */
-			/* as ET_ITEM */
 			/* TODO: Does a stunned actor lose his inventory, too? */
 			if (le->state & STATE_DEAD)
+				/* the items are already dropped to floor and are available
+				   as ET_ITEM */
 				break;
 			/* living actor */
 			for (container = 0; container < csi.numIDs; container++)
 				for (item = le->i.c[container]; item; item = item->next)
-					CL_CollectItemAmmo(item, (container == csi.idLeft), qfalse);
+					CL_CollectItemAmmo(item, (container == csi.idLeft));
 			break;
 		default:
 			break;

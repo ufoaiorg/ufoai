@@ -48,28 +48,12 @@ equipment campaign_market
 	laserrifle_ammo		20
 	heavylaser			2
 	heavylaser_ammo			30
-	plaspistol			1
-	plaspistol_ammo			14
-	plasrifle			1
-	plasrifle_ammo			14
-	plasblaster			1
-	plasblaster_ammo		14
-	tachyonpistol			1
-	tachyonpistol_ammo		12
-	tachyonrifle		1
-	tachyonrifle_ammo	12
-	tachyonsniper		1
-	tachyonsniper_ammo	12
 	fraggrenade			24
 	knife				8
 	irgoggles		3
 	medikit				6
 	stunrod			5
 	stungrenade			20
-	alienincgrenade			20
-	plasmagrenade			20
-	kerrblade                       5
-	plasblade			10
 	light				5
 	medium				6
 //	heavy				6

@@ -358,7 +358,6 @@ void CL_NewAircraft(base_t *base, char *name)
 		/* NOTE: when we send the aircraft to another base this has to be changed, too */
 		aircraft->idxInBase = base->numAircraftInBase;
 		/* link the teamSize pointer in */
-		/* NOTE: when we load a savegame, this has to be updated, too */
 		aircraft->teamSize = &base->numOnTeam[base->numAircraftInBase];
 		Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
