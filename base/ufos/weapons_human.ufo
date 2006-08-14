@@ -574,6 +574,64 @@ item rpg_incendiary_ammo
 	}
 }
 
+item rpg_tachyon_ammo
+{
+	name	"_Tachyon-Beam Rocket"
+	model	weapons/rpg/rpg_tachyon_ammo
+	type	ammo
+	category	0
+	shape	"0 0 1 2"
+	center	"0 0 0"
+	scale	1.1
+	price	1400
+	buytype	0
+
+	primary
+	{
+		name	"_Snap Shot"
+		skill	explosive
+		projtl	rocket_tachyon
+		impact	tachyonBigImpact
+		hitbody	tachyonBigImpact
+		firesnd	weapons/rpg.wav
+		impsnd	weapons/tachyon_beam_rocket.wav
+		bodysnd	weapons/tachyon_beam_rocket.wav
+		speed	250
+		spread	"5 5"
+		crouch	0.8
+		range	40
+		shots	1
+		ammo	1
+		time	12
+		damage	"20 20"
+		spldmg	"140 10"
+		splrad	3
+		dmgtype	tachyon
+	}
+	secondary
+	{
+		name	"_Aimed Shot"
+		skill	explosive
+		projtl	rocket_tachyon
+		impact	tachyonBigImpact
+		hitbody	tachyonBigImpact
+		firesnd	weapons/rpg.wav
+		impsnd	weapons/tachyon_beam_rocket.wav
+		bodysnd	weapons/tachyon_beam_rocket.wav
+		speed	250
+		spread	"2.5 2.5"
+		crouch	0.6
+		range   40
+		shots	1
+		ammo	1
+		time	18
+		damage	"20 20"
+		spldmg	"140 10"
+		splrad	3
+		dmgtype	tachyon
+	}
+}
+
 
 // =======================
 // COMBAT KNIFE
@@ -711,6 +769,71 @@ item grenl_ammo
 		spldmg	"70 20"
 		splrad	4
 		dmgtype blast
+	}
+}
+
+item grenl_plasma_ammo
+{
+	name		"_Plasma Grenade Shells"
+	model		weapons/grenl/grenl_plasma_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		0.7
+	price		140
+	buytype		0
+
+	primary
+	{
+		name	"_Single Shot"
+		skill	explosive
+		projtl	grenl_plasma_ammo
+		impact	plasmaBigExplosion
+		hitbody plasmaBigExplosion
+// code fix needed		firesnd	weapons/grenade_launcher.wav
+		impsnd	weapons/plasma_grenade.wav
+		bodysnd	weapons/plasma_grenade.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"5 5"
+		range	15
+		shots	1
+		ammo	1
+		rof		1
+		time	8
+		spldmg	"100 20"
+		splrad	5
+		dmgtype plasma
+	}
+
+	secondary
+	{
+		name	"_Single Shot"
+		skill	explosive
+		projtl	grenl_plasma_ammo
+		impact	plasmaBigExplosion
+		hitbody plasmaBigExplosion
+// code fix needed		firesnd	weapons/grenade_launcher.wav
+		impsnd	weapons/plasma_grenade.wav
+		bodysnd	weapons/plasma_grenade.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"5 5"
+		range	15
+		shots	1
+		ammo	1
+		rof		1
+		time	8
+		spldmg	"100 20"
+		splrad	5
+		dmgtype plasma
 	}
 }
 
