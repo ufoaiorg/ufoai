@@ -1701,19 +1701,19 @@ void CL_StartMissionMap(mission_t* mission)
 	case '+':
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.ump", mission->map + 1, timeChar);
 		break;
-	/* base attack */
-	/* maps starts with a dot */
+	/* base attack maps starts with a dot */
 	case '.':
-		if (baseCurrent && baseCurrent->baseStatus != BASE_UNDER_ATTACK) {
-			Com_Printf("Base is not under attack\n");
+		if (!baseCurrent) {
+			/* assemble a random base and set the base status to BASE_UNDER_ATTACK */
+			Cbuf_AddText("base_assemble_rand 1;");
 			return;
-		} else if (!baseCurrent) {
-			Com_DPrintf("Warning: Baseattack with no baseCurrent\n");
+		} else if (baseCurrent->baseStatus != BASE_UNDER_ATTACK) {
+			Com_Printf("Base is not under attack\n");
 			return;
 		}
 		/* check whether are there founded bases */
 		if (B_GetCount() > 0)
-			Cbuf_AddText(va("base_assemble %i", baseCurrent->idx));
+			Cbuf_AddText(va("base_assemble %i 1;", baseCurrent->idx));
 		return;
 	default:
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.bsp", mission->map, timeChar);

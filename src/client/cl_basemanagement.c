@@ -1438,17 +1438,37 @@ void B_AssembleMap(void)
 	building_t *entry;
 	char maps[2024];
 	char coords[2048];
+	int setUnderAttack = 0, baseID = 0;
+	base_t* base = baseCurrent;
 
-	*maps = '\0';
-	*coords = '\0';
+	if (Cmd_Argc() < 2)
+		Com_DPrintf("Usage: %s <baseID> <setUnderAttack>\n", Cmd_Argv(0));
+	else {
+		if (Cmd_Argc() == 3)
+			setUnderAttack = atoi(Cmd_Argv(2));
+		baseID = atoi(Cmd_Argv(2));
+		if (baseID < 0 || baseID >= gd.numBases) {
+			Com_DPrintf("Invalid baseID: %i\n", baseID);
+			return;
+		}
+		base = &gd.bases[baseID];
+	}
 
-	if (!baseCurrent) {
+	if (!base) {
 		Com_Printf("B_AssembleMap: No base to assemble\n");
 		return;
 	}
 
+	if (setUnderAttack) {
+		base->baseStatus = BASE_UNDER_ATTACK;
+		Com_DPrintf("Set base %i under attack\n", base->idx);
+	}
+
 	/* reset menu text */
 	menuText[TEXT_STANDARD] = NULL;
+
+	*maps = '\0';
+	*coords = '\0';
 
 	/* reset the used flag */
 	for (row = 0; row < BASE_SIZE; row++)
@@ -1518,7 +1538,19 @@ void B_NewBases(void)
  */
 static void B_AssembleRandomBase(void)
 {
-	Cbuf_AddText(va("base_assemble %i", rand() % gd.numBases));
+	int setUnderAttack = 0;
+	int randomBase = rand() % gd.numBases;
+	if (Cmd_Argc() < 2)
+		Com_DPrintf("Usage: %s <setUnderAttack>\n", Cmd_Argv(0));
+	else
+		setUnderAttack = atoi(Cmd_Argv(1));
+
+	if (!gd.bases[randomBase].founded) {
+		Com_Printf("Base with id %i was not founded or already destroyed\n", randomBase);
+		return;
+	}
+
+	Cbuf_AddText(va("base_assemble %i %i", randomBase, setUnderAttack));
 }
 
 /**
