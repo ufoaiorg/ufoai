@@ -1652,17 +1652,76 @@ static void CL_GameContinue(void)
 	}
 }
 
+/**
+ * @brief Set some needed cvars from mission definition
+ * @param[in] mission mission definition pointer with the needed data to set the cvars to
+ * @sa CL_StartMission_f
+ * @sa CL_GameGo
+ */
+void CL_SetMissionCvars(mission_t* mission)
+{
+	/* start the map */
+	Cvar_SetValue("ai_numaliens", (float) mission->aliens);
+	Cvar_SetValue("ai_numcivilians", (float) mission->civilians);
+	Cvar_Set("ai_alien", mission->alienTeam);
+	Cvar_Set("ai_civilian", mission->civTeam);
+	Cvar_Set("ai_equipment", mission->alienEquipment);
+	Cvar_Set("ai_armor", mission->alienArmor);
+	Cvar_Set("music", mission->music);
+	Com_DPrintf("CL_SetMissionCvars:\n");
+
+	Com_DPrintf("..numAliens: %i\n..numCivilians: %i\n..alienTeam: '%s'\n..civTeam: '%s'\n..alienEquip: '%s'\n..alienArmor: '%s'\n..music: '%s'\n",
+		mission->aliens,
+		mission->civilians,
+		mission->alienTeam,
+		mission->civTeam,
+		mission->alienEquipment,
+		mission->alienArmor,
+		mission->music);
+}
+
+/**
+ * @brief Select the mission type and start the map from mission definition
+ * @param[in] mission Mission definition to start the map from
+ * @sa CL_GameGo
+ * @sa CL_StartMission_f
+ */
+void CL_StartMissionMap(mission_t* mission)
+{
+	char expanded[MAX_QPATH];
+	char timeChar;
+
+	/* get appropriate map */
+	if (CL_MapIsNight(mission->pos))
+		timeChar = 'n';
+	else
+		timeChar = 'd';
+
+	switch (mission->map[0]) {
+	case '+':
+		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.ump", mission->map + 1, timeChar);
+		break;
+	default:
+		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.bsp", mission->map, timeChar);
+		break;
+	}
+
+	if (FS_LoadFile(expanded, NULL) != -1)
+		Cbuf_AddText(va("map %s%c %s\n", mission->map, timeChar, mission->param));
+	else
+		Cbuf_AddText(va("map %s %s\n", mission->map, mission->param));
+}
 
 /**
   * @brief Starts a selected mission
   *
-  * Checks whether a dropship is near the landing zone and whether it has a team on board
+  * @note Checks whether a dropship is near the landing zone and whether it has a team on board
+  * @sa CL_SetMissionCvars
+  * @sa CL_StartMission_f
   */
 static void CL_GameGo(void)
 {
 	mission_t *mis;
-	char expanded[MAX_QPATH];
-	char timeChar;
 	aircraft_t *aircraft;
 
 	if (!curCampaign || gd.interceptAircraft < 0) {
@@ -1697,14 +1756,11 @@ static void CL_GameGo(void)
 		return;
 	}
 
-	/* start the map */
-	Cvar_SetValue("ai_numaliens", (float) mis->aliens);
-	Cvar_SetValue("ai_numcivilians", (float) mis->civilians);
-	Cvar_Set("ai_alien", mis->alienTeam);
-	Cvar_Set("ai_civilian", mis->civTeam);
-	Cvar_Set("ai_equipment", mis->alienEquipment);
-	Cvar_Set("ai_armor", mis->alienArmor);
-	Cvar_Set("music", mis->music);
+	CL_SetMissionCvars(mis);
+
+	/* This cvar is for multiplayer only - nevertheless check this */
+/*	Cvar_Set("equip", curCampaign->equipment);*/
+
 	/* TODO: Map assembling to get the current used dropship in the map is not fully implemented */
 	/* but can be done via the map assembling part of the random map assembly */
 	Cvar_Set("map_dropship", aircraft->id);
@@ -1722,12 +1778,6 @@ static void CL_GameGo(void)
 	MN_PopMenu(qtrue);
 	Cvar_Set("mn_main", "singleplayermission");
 
-	/* get appropriate map */
-	if (CL_MapIsNight(mis->pos))
-		timeChar = 'n';
-	else
-		timeChar = 'd';
-
 	/* base attack */
 	/* maps starts with a dot */
 	if (mis->map[0] == '.') {
@@ -1738,18 +1788,7 @@ static void CL_GameGo(void)
 			return;
 	}
 
-	if (mis->map[0] == '+')
-		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.ump", mis->map + 1, timeChar);
-	else
-		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.bsp", mis->map, timeChar);
-
-	if (FS_LoadFile(expanded, NULL) != -1)
-		Cbuf_AddText(va("map %s%c %s\n", mis->map, timeChar, mis->param));
-	else
-		Cbuf_AddText(va("map %s %s\n", mis->map, mis->param));
-        fprintf(stderr, "9\n");
-        fflush(stderr);
-
+	CL_StartMissionMap(mis);
 }
 
 /**
@@ -2691,6 +2730,40 @@ qboolean CL_OnBattlescape(void)
 }
 
 /**
+ * @brief Starts a given mission
+ * @note Mainly for testing
+ * @sa CL_SetMissionCvars
+ * @sa CL_GameGo
+ */
+void CL_StartMission_f (void)
+{
+	int i;
+	char *missionID;
+	mission_t* mission = NULL;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: mission <missionID>\n");
+		return;
+	}
+
+	missionID = Cmd_Argv(1);
+
+	for (i=0; i<numMissions; i++) {
+		mission = &missions[i];
+		if (!Q_strncmp(missions[i].name, missionID, sizeof(missions[i].name))) {
+			break;
+		}
+	}
+	if (i==numMissions) {
+		Com_Printf("Mission with id '%s' was not found\n", missionID);
+		return;
+	}
+
+	CL_SetMissionCvars(mission);
+	CL_StartMissionMap(mission);
+}
+
+/**
  * @brief Scriptfunction to list all parsed nations with their current values
  */
 void CL_NationList (void)
@@ -2759,6 +2832,8 @@ static cmdList_t game_commands[] = {
 	{"mn_mapaction_reset", MAP_ResetAction}
 	,
 	{"nationlist", CL_NationList}
+	,
+	{"mission", CL_StartMission_f}
 	,
 #ifdef DEBUG
 	{"debug_fullcredits", CL_DebugFullCredits}
