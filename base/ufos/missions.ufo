@@ -570,11 +570,7 @@ mission dam
 	alienequip	stage1_soldiers
 	civilians	6
 	civteam		scientist
-	recruits	3
 	nation		"todo"
-	$win		1200
-	$alien		100
-	$civilian	500
 	onlose		""
 	onwin		""
 	storyrelated	true
