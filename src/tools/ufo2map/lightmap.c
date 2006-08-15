@@ -624,12 +624,10 @@ void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	starts = l->texmins[0]*step;
 	startt = l->texmins[1]*step;
 
-
 	for (t=0 ; t<h ; t++) {
 		for (s=0 ; s<w ; s++, surf+=3) {
 			us = starts + (s+sofs)*step;
 			ut = startt + (t+tofs)*step;
-
 
 			/* if a line can be traced from surf to facemid, the point is good */
 			for (i=0 ; i<6 ; i++) {
@@ -669,7 +667,6 @@ void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 			}
 		}
 	}
-
 }
 
 
@@ -794,8 +791,7 @@ void CreateDirectLights (void)
 		dl->type = emit_point;
 
 		target = ValueForKey (e, "target");
-
-		if (!strcmp (name, "light_spot") || target[0]) {
+		if (target[0]) {
 			dl->type = emit_spotlight;
 			dl->stopdot = FloatForKey (e, "_cone");
 			if (!dl->stopdot)
@@ -1080,11 +1076,9 @@ void BuildFacelights (int facenum)
 
 	/* the light from DIRECT_LIGHTS is sent out, but the */
 	/* texture itself should still be full bright */
-
 	if (face_patches[facenum]->baselight[0] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[1] >= DIRECT_LIGHT ||
-		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT
-		) {
+		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT) {
 		spot = fl->samples[0];
 		for (i=0 ; i<l[0].numsurfpt ; i++, spot+=3)
 			VectorAdd (spot, face_patches[facenum]->baselight, spot);
@@ -1223,15 +1217,13 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 			newmax = max;
 			if (newmax < 0)
 				newmax = 0;		/* roundoff problems */
-			if (newmax < minlight)
-			{
+			if (newmax < minlight) {
 				newmax = minlight + (rand()%48);
 			}
 			if (newmax > maxlight)
 				newmax = maxlight;
 
-			for (k=0 ; k<3 ; k++)
-			{
+			for (k=0 ; k<3 ; k++) {
 				*dest++ = lb[k]*newmax/max;
 			}
 		}
