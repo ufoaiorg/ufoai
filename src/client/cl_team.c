@@ -388,7 +388,6 @@ void CL_CleanTempInventory(void)
 /**
   * @brief
   * @note This function is called everytime the equipment screen for the team pops up
-  * TODO: Make this faster
   * @sa CL_UpdatePointersInGlobalData
   */
 static void CL_GenerateEquipmentCmd(void)
@@ -457,9 +456,9 @@ static void CL_GenerateEquipmentCmd(void)
 			Com_Printf("Equipment '%s' not found!\n", name);
 			return;
 		}
-		unused = *ed;
+		unused = *ed; /* copied, including the arrays inside! */
 	} else
-		unused = ccs.eCampaign;
+		unused = ccs.eCampaign; /* copied, including the arrays inside! */ 
 
 	/* manage inventory */
 	CL_CheckInventory(&unused, 0);

@@ -2222,9 +2222,9 @@ int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int t
 	invList_t *ic;
 	int time;
 
-	assert((from >= 0) && (from < MAX_INVDEFS));
+	assert(from >= 0 && from < CSI->numIDs);
 #ifdef DEBUG
-	if ((from < 0) || (from >= MAX_INVDEFS))
+	if (from < 0 || from >= CSI->numIDs)
 		return 0;	/* never reached. need for code analyst. */
 #endif
 

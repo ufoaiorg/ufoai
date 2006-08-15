@@ -814,7 +814,7 @@ static void MN_Drag(menuNode_t * node, int x, int y)
 				}
 			}
 
-			/* move the item, this is highly broken, e.g. the NULLs */
+			/* move the item */
 			Com_MoveInInventory(menuInventory, dragFrom, dragFromX, dragFromY, node->mousefx, px, py, NULL, NULL);
 
 			/* end of hack */
