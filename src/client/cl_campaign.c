@@ -2165,6 +2165,14 @@ static void CL_GameResultsCmd(void)
 		Com_Printf("Usage: game_results <won>\n");
 		return;
 	}
+
+	/* TODO: */
+	/* base attack mission */
+	/* if we've lost a base attack mission we lose all employees in this base */
+	/* we even might lose some buildings and might be thrown back in research because we've also lost */
+	/* our research results */
+	/* the killed civilians are base employees - they have to be removed after defending the base */
+
 	won = atoi(Cmd_Argv(1));
 	civilians_killed = ccs.civiliansKilled;
 	aliens_killed = ccs.aliensKilled;
@@ -3032,7 +3040,7 @@ static void CP_CampaignsClick_f(void)
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
-		return; 
+		return;
 	}
 
 	/*which building? */
