@@ -3030,9 +3030,10 @@ static void CP_CampaignsClick_f(void)
 {
 	int num;
 
-	if (Cmd_Argc() < 2)
+	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
-		return;
+		return; 
+	}
 
 	/*which building? */
 	num = atoi(Cmd_Argv(1));

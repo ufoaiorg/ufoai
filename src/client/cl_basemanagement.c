@@ -732,9 +732,10 @@ void B_BuildingClick_f(void)
 	int num;
 	building_t *building = NULL;
 
-	if (Cmd_Argc() < 2 || !baseCurrent)
+	if (Cmd_Argc() < 2 || !baseCurrent) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
+	}
 
 	/*which building? */
 	num = atoi(Cmd_Argv(1));

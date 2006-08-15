@@ -579,9 +579,10 @@ void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 	if ( baseCurrent->aircraftCurrent < 0 )
 		return;
 
-	if (Cmd_Argc() < 2)
+	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: airequip_weapons_click <arg>\n");
 		return;
+	}
 
 	/* which weapon? */
 	num = atoi(Cmd_Argv(1));
@@ -626,9 +627,10 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 	if ( baseCurrent->aircraftCurrent < 0 )
 		return;
 
-	if (Cmd_Argc() < 2)
+	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: airequip_shields_click <arg>\n");
 		return;
+	}
 
 	/* which shield? */
 	num = atoi(Cmd_Argv(1));

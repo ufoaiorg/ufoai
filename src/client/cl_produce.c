@@ -123,9 +123,10 @@ static void PR_ProductionListRightClick_f (void)
 		return;
 
 	/* not enough parameters */
-	if (Cmd_Argc() < 2)
+	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
+	}
 
 	/* clicked which item? */
 	num = atoi(Cmd_Argv(1));
@@ -166,9 +167,10 @@ static void PR_ProductionListClick_f (void)
 	}
 
 	/* not enough parameters */
-	if (Cmd_Argc() < 2)
+	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
+	}
 
 	/* clicked which item? */
 	num = atoi(Cmd_Argv(1));
