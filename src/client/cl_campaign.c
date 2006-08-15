@@ -533,28 +533,29 @@ static void CL_CampaignAddMission(setState_t * set)
 	if (set->def->expire.day)
 		mis->expire = Date_Add(ccs.date, set->def->expire);
 
+	/* there can be more than one baseattack mission */
+	/* just use baseattack1, baseattack2 and so on as mission names */
 	if (!Q_strncmp(mis->def->name, "baseattack", 10)) {
-		baseCurrent = &gd.bases[rand() % gd.numBases];
+		i = rand() % gd.numBases;
 		/* the first founded base is more likely to be attacked */
-		if (!baseCurrent->founded) {
+		if (!gd.bases[i].founded) {
 			for (i = 0; i < MAX_BASES; i++) {
-				if (gd.bases[i].founded) {
-					baseCurrent = &gd.bases[i];
+				if (gd.bases[i].founded)
 					break;
-				}
 			}
 			/* at this point there should be at least one base */
-			if (i == MAX_BASES || !baseCurrent)
+			if (i == MAX_BASES)
 				Sys_Error("No bases found\n");
 		}
 
-		mis->realPos[0] = baseCurrent->pos[0];
-		mis->realPos[1] = baseCurrent->pos[1];
-		/* Add message to message-system. */
-		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base %s is under attack."), baseCurrent->name);
-		MN_AddNewMessage(_("Base Attack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
+		B_BaseAttack(&gd.bases[i]);
+		mis->realPos[0] = gd.bases[i].pos[0];
+		mis->realPos[1] = gd.bases[i].pos[1];
+		Q_strncpyz(mis->def->location, gd.bases[i].name, MAX_VAR);
 
-		Cbuf_ExecuteText(EXEC_NOW, va("base_attack %i", baseCurrent->idx));
+		/* Add message to message-system. */
+		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base %s is under attack."), gd.bases[i].name);
+		MN_AddNewMessage(_("Base Attack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
 	} else {
 		/* A mission must not be very near a base */
 		for (i = 0; i < gd.numBases; i++) {

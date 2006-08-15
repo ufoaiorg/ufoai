@@ -166,6 +166,8 @@ static void MAP_MultiSelectExecuteAction_f(void)
 		if (gd.mapAction == MA_INTERCEPT && selMis && selMis == ccs.mission + id)
 			return CL_DisplayPopupIntercept(selMis, NULL);
 		else if (gd.mapAction == MA_BASEATTACK && selMis && selMis == ccs.mission + id) {
+			/* FIXME: Check whether aircraft 0 has recruits */
+			gd.interceptAircraft = 0;
 			MN_PushMenu("popup_baseattack");
 			return;
 		}
@@ -174,9 +176,10 @@ static void MAP_MultiSelectExecuteAction_f(void)
 		selMis = ccs.mission + id;
 
 		if (!Q_strncmp(selMis->def->name, "baseattack", 10)) {
-			gd.mapAction = MA_BASEATTACK;
 			/* we need no dropship in our base */
 			selMis->def->active = qtrue;
+			gd.mapAction = MA_BASEATTACK;
+			Com_DPrintf("Base attack: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
 		} else {
 			Com_DPrintf("Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
 			gd.mapAction = MA_INTERCEPT;
@@ -628,9 +631,8 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 			}
 		}
 
-
 	/* draw bases pics */
-	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--) {
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
 		if (! base->founded || ! MAP_MapToScreen(node, base->pos, &x, &y))
 			continue;
 
@@ -641,7 +643,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
 
 		/* draw aircrafts of base */
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ; aircraft >= base->aircraft ; aircraft--)
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft ; aircraft--)
 			if (aircraft->status > AIR_HOME && MAP_MapToScreen(node, aircraft->pos, &x, &y)) {
 
 				/* Draw aircraft radar */
@@ -676,7 +678,6 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 
 	/* draws ufos */
 	for (aircraft = gd.ufos + gd.numUfos - 1 ; aircraft >= gd.ufos ; aircraft --) {
-
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
 		if (Cvar_VariableValue("showufos")) {
@@ -797,6 +798,7 @@ extern void MAP_SelectMission(actMis_t* mission)
 
 /**
  * @brief Notify that a mission has been removed
+ * TODO: Destroy base after removing a baseattack mission??
  */
 extern void MAP_NotifyMissionRemoved(const actMis_t* mission)
 {

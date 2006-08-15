@@ -1392,11 +1392,26 @@ void B_BuildBase(void)
 	}
 }
 
+/**
+ * @brief Initiates an attack on a base.
+ * @sa B_BaseAttack_f
+ * @param[in] base Which base is under attack?
+ */
+void B_BaseAttack (base_t* base)
+{
+	assert(base);
+	base->baseStatus = BASE_UNDER_ATTACK;
+#if 0							/*TODO: run eventhandler for each building in base */
+	if (b->onAttack)
+		Cbuf_AddText(va("%s %i", b->onAttack, b->id));
+#endif
+}
 
 /**
  * @brief Initiates an attack on a base.
+ * @sa B_BaseAttack
  */
-void B_BaseAttack(void)
+static void B_BaseAttack_f(void)
 {
 	int whichBaseID;
 
@@ -1408,17 +1423,8 @@ void B_BaseAttack(void)
 	whichBaseID = atoi(Cmd_Argv(1));
 
 	if (whichBaseID >= 0 && whichBaseID < gd.numBases) {
-		gd.bases[whichBaseID].baseStatus = BASE_UNDER_ATTACK;
-		/* TODO: New menu for: */
-		/*      defend -> call AssembleBase for this base */
-		/*      continue -> return to geoscape */
-		gd.mapAction = MA_BASEATTACK;
+		B_BaseAttack(&gd.bases[whichBaseID]);
 	}
-#if 0							/*TODO: run eventhandler for each building in base */
-	if (b->onAttack)
-		Cbuf_AddText(va("%s %i", b->onAttack, b->id));
-#endif
-
 }
 
 /**
@@ -1446,7 +1452,7 @@ void B_AssembleMap(void)
 	else {
 		if (Cmd_Argc() == 3)
 			setUnderAttack = atoi(Cmd_Argv(2));
-		baseID = atoi(Cmd_Argv(2));
+		baseID = atoi(Cmd_Argv(1));
 		if (baseID < 0 || baseID >= gd.numBases) {
 			Com_DPrintf("Invalid baseID: %i\n", baseID);
 			return;
@@ -1675,7 +1681,7 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("set_building", B_SetBuilding);
 	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle);
 	Cmd_AddCommand("rename_base", B_RenameBase);
-	Cmd_AddCommand("base_attack", B_BaseAttack);
+	Cmd_AddCommand("base_attack", B_BaseAttack_f);
 	Cmd_AddCommand("base_changename", B_ChangeBaseNameCmd);
 	Cmd_AddCommand("base_init", B_BaseInit);
 	Cmd_AddCommand("base_assemble", B_AssembleMap);

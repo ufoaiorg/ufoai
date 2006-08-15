@@ -5,7 +5,7 @@ stage intro
 		seq			intro
 		delay		"0 1 0"
 		frame		"0 3 0"
-		missions	"farm"
+		missions	"baseattack"
 		number		1
 		expire		"0 3 0"
 		quota		0

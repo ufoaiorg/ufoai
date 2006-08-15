@@ -569,10 +569,25 @@ menu popup_baseattack
 		pos		"256 256"
 	}
 
+
+	string title
+	{
+		string	"_Base attack"
+		pos	"290 276"
+		font	f_big
+	}
+
+	string name_label
+	{
+		string	"_What to do?"
+		pos	"290 320"
+	}
+
 	pic bt_cancel
 	{
+		tooltip	"_Close this dialog"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"180 64"
 		texl	"0 33"
 		pos	"310 450"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -581,7 +596,6 @@ menu popup_baseattack
 	}
 	string string_cancel
 	{
-		tooltip	"_Close this dialog"
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
@@ -594,7 +608,7 @@ menu popup_baseattack
 		tooltip	"_Enter the battlefield"
 		image	menu/multi_buttons3
 		pos	"530 450"
-		texh	"256 64"
+		texh	"180 64"
 		texl	"0 33"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
 		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
@@ -614,8 +628,8 @@ menu popup_baseattack
 		if	"game_autogo == 1"
 		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
-		pos	"530 420"
-		texh	"256 64"
+		pos	"530 410"
+		texh	"180 64"
 		texl	"0 33"
 		out	{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
 		in	{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
@@ -626,14 +640,14 @@ menu popup_baseattack
 		if	"game_autogo == 1"
 		font	f_menu
 		color	"0 0.5 0 1"
-		string	"_Auto"
-		pos	"620 418"
+		string	"_Auto mission"
+		pos	"620 408"
 		align	uc
 	}
 
 	func init
 	{
-		cmd "aircraft_list"
+		cmd "game_timestop;"
 	}
 }
 
@@ -646,7 +660,7 @@ menu popup_multi_selection
 {
 	zone popup
 	{
-		invis true
+		invis	true
 	}
 	pic back
 	{
@@ -673,16 +687,14 @@ menu popup_multi_selection
 		pos	"440 320"
 	}
 
-
 	text multi_select
 	{
-		pos             "290 340"
-		size    "420 110"
-		format  "20 150"
+		pos		"290 340"
+		size	"420 110"
+		format	"20 150"
 		num	14
-		mousefx true
-		click { cmd "multi_select;" }
-
+		mousefx	true
+		click	{ cmd "multi_select;" }
 	}
 
 	pic bt_cancel

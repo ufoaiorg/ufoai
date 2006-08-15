@@ -793,7 +793,7 @@ mission vil_shannon
 
 mission baseattack
 {
-	location	"*cvar mn_base_attack_name"
+	location	""
 	type		"_Base Attack"
 	text		"_Aliens attacked one of our home bases"
 // 	. means that they attack a random base (only the first char counts)
