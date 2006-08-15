@@ -1,3 +1,28 @@
+/**
+ * @file tree.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 #include "qbsp.h"
 
 extern	int	c_nodes;
@@ -9,8 +34,7 @@ node_t *NodeForPoint (node_t *node, vec3_t origin)
 	plane_t	*plane;
 	vec_t	d;
 
-	while (node->planenum != PLANENUM_LEAF)
-	{
+	while (node->planenum != PLANENUM_LEAF) {
 		plane = &mapplanes[node->planenum];
 		d = DotProduct (origin, plane->normal) - plane->dist;
 		if (d >= 0)
@@ -35,15 +59,13 @@ void FreeTreePortals_r (node_t *node)
 	int			s;
 
 	/* free children */
-	if (node->planenum != PLANENUM_LEAF)
-	{
+	if (node->planenum != PLANENUM_LEAF) {
 		FreeTreePortals_r (node->children[0]);
 		FreeTreePortals_r (node->children[1]);
 	}
 
 	/* free portals */
-	for (p=node->portals ; p ; p=nextp)
-	{
+	for (p=node->portals ; p ; p=nextp) {
 		s = (p->nodes[1] == node);
 		nextp = p->next[s];
 
@@ -63,8 +85,7 @@ void FreeTree_r (node_t *node)
 	face_t		*f, *nextf;
 
 	/* free children */
-	if (node->planenum != PLANENUM_LEAF)
-	{
+	if (node->planenum != PLANENUM_LEAF) {
 		FreeTree_r (node->children[0]);
 		FreeTree_r (node->children[1]);
 	}
@@ -73,8 +94,7 @@ void FreeTree_r (node_t *node)
 	FreeBrushList (node->brushlist);
 
 	/* free faces */
-	for (f=node->faces ; f ; f=nextf)
-	{
+	for (f=node->faces ; f ; f=nextf) {
 		nextf = f->next;
 		FreeFace (f);
 	}
@@ -111,12 +131,10 @@ void PrintTree_r (node_t *node, int depth)
 
 	for (i=0 ; i<depth ; i++)
 		printf ("  ");
-	if (node->planenum == PLANENUM_LEAF)
-	{
+	if (node->planenum == PLANENUM_LEAF) {
 		if (!node->brushlist)
 			printf ("NULL\n");
-		else
-		{
+		else {
 			for (bb=node->brushlist ; bb ; bb=bb->next)
 				printf ("%i ", bb->original->brushnum);
 			printf ("\n");
@@ -157,8 +175,7 @@ void PruneNodes_r (node_t *node)
 	PruneNodes_r (node->children[1]);
 
 	if ( (node->children[0]->contents & CONTENTS_SOLID)
-	&& (node->children[1]->contents & CONTENTS_SOLID) )
-	{
+	&& (node->children[1]->contents & CONTENTS_SOLID) ) {
 		if (node->faces)
 			Error ("node->faces seperating CONTENTS_SOLID");
 		if (node->children[0]->faces || node->children[1]->faces)
@@ -175,8 +192,7 @@ void PruneNodes_r (node_t *node)
 		/* combine brush lists */
 		node->brushlist = node->children[1]->brushlist;
 
-		for (b=node->children[0]->brushlist ; b ; b=next)
-		{
+		for (b=node->children[0]->brushlist ; b ; b=next) {
 			next = b->next;
 			b->next = node->brushlist;
 			node->brushlist = b;
@@ -194,5 +210,3 @@ void PruneNodes (node_t *node)
 	PruneNodes_r (node);
 	qprintf ("%5i pruned nodes\n", c_pruned);
 }
-
-/*=========================================================== */

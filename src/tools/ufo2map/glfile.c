@@ -1,3 +1,28 @@
+/**
+ * @file glfile.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 
 #include "qbsp.h"
 
@@ -34,8 +59,7 @@ void OutputWinding (winding_t *w, FILE *glview)
 	fprintf (glview, "%i\n", w->numpoints);
 	level+=28;
 	light = (level&255)/255.0;
-	for (i=0 ; i<w->numpoints ; i++)
-	{
+	for (i=0 ; i<w->numpoints ; i++) {
 		fprintf (glview, "%6.3f %6.3f %6.3f %6.3f %6.3f %6.3f\n",
 			w->p[i][0],
 			w->p[i][1],
@@ -83,22 +107,18 @@ void WriteGLView_r (node_t *node, FILE *glview)
 {
 	portal_t	*p, *nextp;
 
-	if (node->planenum != PLANENUM_LEAF)
-	{
+	if (node->planenum != PLANENUM_LEAF) {
 		WriteGLView_r (node->children[0], glview);
 		WriteGLView_r (node->children[1], glview);
 		return;
 	}
 
 	/* write all the portals */
-	for (p=node->portals ; p ; p=nextp)
-	{
-		if (p->nodes[0] == node)
-		{
+	for (p=node->portals ; p ; p=nextp) {
+		if (p->nodes[0] == node) {
 			OutputPortal (p, glview);
 			nextp = p->next[0];
-		}
-		else
+		} else
 			nextp = p->next[1];
 	}
 }

@@ -1,3 +1,27 @@
+/**
+ * @file bspfile.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
 
 #include "cmdlib.h"
 #include "mathlib.h"
@@ -81,29 +105,23 @@ byte *CompressRouting( byte *dataStart, byte *destStart, int l )
 	data = dataStart;
 	dend = dataStart + l;
 
-	while ( data < dend )
-	{
-		if ( data+1 < dend && *data == *(data+1) )
-		{
+	while ( data < dend ) {
+		if ( data+1 < dend && *data == *(data+1) ) {
 			/* repetitions */
 			val = *data++;
 			c = 0;
-			while ( data+1 < dend && *data == *(data+1) )
-			{
+			while ( data+1 < dend && *data == *(data+1) ) {
 				if ( c >= 0x7F ) break;
 				data++;
 				c++;
 			}
 			*dest_p++ = c | 0x80;
 			*dest_p++ = val;
-		}
-		else
-		{
+		} else {
 			/* identities */
 			count_p = dest_p++;
 			c = 0;
-			while ( (data+1 < dend && *data != *(data+1)) || data == dend-1 )
-			{
+			while ( (data+1 < dend && *data != *(data+1)) || data == dend-1 ) {
 				if ( c >= 0x7F ) break;
 				*dest_p++ = *data++;
 				c++;
@@ -127,20 +145,18 @@ int DeCompressRouting( byte **source, byte *dataStart )
 	data_p = dataStart;
 	src = *source;
 
-	while ( *src )
-	{
-		if ( *src & 0x80 )
-		{
+	while ( *src ) {
+		if ( *src & 0x80 ) {
 			/* repetitions */
 			c = *src++ & ~0x80;
-			for ( i = 0; i < c+1; i++ ) *data_p++ = *src;
+			for ( i = 0; i < c+1; i++ )
+				*data_p++ = *src;
 			src++;
-		}
-		else
-		{
+		} else {
 			/* identities */
 			c = *src++;
-			for ( i = 0; i < c; i++ ) *data_p++ = *src++;
+			for ( i = 0; i < c; i++ )
+				*data_p++ = *src++;
 		}
 	}
 
@@ -149,84 +165,6 @@ int DeCompressRouting( byte **source, byte *dataStart )
 
 	return data_p - dataStart;
 }
-
-/*
-===============
-CompressVis
-
-===============
-*/
-#if 0
-int CompressVis (byte *vis, byte *dest)
-{
-	int		j;
-	int		rep;
-	int		visrow;
-	byte	*dest_p;
-
-	dest_p = dest;
-	/* visrow = (r_numvisleafs + 7)>>3; */
-	visrow = (dvis->numclusters + 7)>>3;
-
-	for (j=0 ; j<visrow ; j++)
-	{
-		*dest_p++ = vis[j];
-		if (vis[j])
-			continue;
-
-		rep = 1;
-		for ( j++; j<visrow ; j++)
-			if (vis[j] || rep == 255)
-				break;
-			else
-				rep++;
-		*dest_p++ = rep;
-		j--;
-	}
-
-	return dest_p - dest;
-}
-#endif
-
-
-/*
-===================
-DecompressVis
-===================
-*/
-#if 0
-void DecompressVis (byte *in, byte *decompressed)
-{
-	int		c;
-	byte	*out;
-	int		row;
-
-	/* row = (r_numvisleafs+7)>>3;	 */
-	row = (dvis->numclusters+7)>>3;
-	out = decompressed;
-
-	do
-	{
-		if (*in)
-		{
-			*out++ = *in++;
-			continue;
-		}
-
-		c = in[1];
-		if (!c)
-			Error ("DecompressVis: 0 repeat");
-		in += 2;
-		while (c)
-		{
-			*out++ = 0;
-			c--;
-		}
-	} while (out - decompressed < row);
-}
-#endif
-
-/*============================================================================= */
 
 /**
  * @brief Byte swaps all data in a bsp file.
@@ -245,8 +183,7 @@ void SwapBSPFile (qboolean todisk)
 		d->numfaces = LittleLong (d->numfaces);
 		d->headnode = LittleLong (d->headnode);
 
-		for (j=0 ; j<3 ; j++)
-		{
+		for (j=0 ; j<3 ; j++) {
 			d->mins[j] = LittleFloat(d->mins[j]);
 			d->maxs[j] = LittleFloat(d->maxs[j]);
 			d->origin[j] = LittleFloat(d->origin[j]);
@@ -393,7 +330,7 @@ int CopyLump (int lump, void *dest, int size)
 LoadBSPFile
 =============
 */
-void	LoadBSPFile (char *filename)
+void LoadBSPFile (char *filename)
 {
 	int			i;
 
@@ -496,7 +433,7 @@ void AddLump (int lumpnum, void *data, int len)
 /**
  * @brief Swaps the bsp file in place, so it should not be referenced again
  */
-void	WriteBSPFile (char *filename)
+void WriteBSPFile (char *filename)
 {
 	header = &outheader;
 	memset (header, 0, sizeof(dheader_t));

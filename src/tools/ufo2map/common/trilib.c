@@ -111,8 +111,7 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 
 				/* Else (count == 0) this is the start of a group, and */
 				/* no texture name is present. */
-			}
-			else if (start == FLOAT_END) {
+			} else if (start == FLOAT_END) {
 				/* End of an object or group. Yes, the name should be */
 				/* obvious from context, but it is in here just to be */
 				/* safe and to provide a little extra information for */

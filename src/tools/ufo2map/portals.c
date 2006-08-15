@@ -1,3 +1,28 @@
+/**
+ * @file portals.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 
 #include "qbsp.h"
 
@@ -38,14 +63,9 @@ void FreePortal (portal_t *p)
 
 /*============================================================== */
 
-/*
-==============
-VisibleContents
-
-Returns the single content bit of the
-strongest visible content present
-==============
-*/
+/**
+ * @brief Returns the single content bit of the strongest visible content present
+ */
 int VisibleContents (int contents)
 {
 	int		i;
@@ -81,16 +101,12 @@ int ClusterContents (node_t *node)
 	return c;
 }
 
-/*
-=============
-Portal_VisFlood
-
-Returns true if the portal is empty or translucent, allowing
-the PVS calculation to see through it.
-The nodes on either side of the portal may actually be clusters,
-not leafs, so all contents should be ored together
-=============
-*/
+/**
+ * @brief Returns true if the portal is empty or translucent, allowing
+ * the PVS calculation to see through it.
+ * The nodes on either side of the portal may actually be clusters,
+ * not leafs, so all contents should be ored together
+ */
 qboolean Portal_VisFlood (portal_t *p)
 {
 	int		c1, c2;
@@ -121,15 +137,11 @@ qboolean Portal_VisFlood (portal_t *p)
 }
 
 
-/*
-===============
-Portal_EntityFlood
-
-The entity flood determines which areas are
-"outside" on the map, which are then filled in.
-Flowing from side s to side !s
-===============
-*/
+/**
+ * @brief The entity flood determines which areas are
+ * "outside" on the map, which are then filled in.
+ * Flowing from side s to side !s
+ */
 qboolean Portal_EntityFlood (portal_t *p, int s)
 {
 	if (p->nodes[0]->planenum != PLANENUM_LEAF
@@ -181,8 +193,7 @@ void RemovePortalFromNode (portal_t *portal, node_t *l)
 
 	/* remove reference to the current portal */
 	pp = &l->portals;
-	while (1)
-	{
+	while (1) {
 		t = *pp;
 		if (!t)
 			Error ("RemovePortalFromNode: portal not in leaf");
@@ -198,13 +209,10 @@ void RemovePortalFromNode (portal_t *portal, node_t *l)
 			Error ("RemovePortalFromNode: portal not bounding leaf");
 	}
 
-	if (portal->nodes[0] == l)
-	{
+	if (portal->nodes[0] == l) {
 		*pp = portal->next[0];
 		portal->nodes[0] = NULL;
-	}
-	else if (portal->nodes[1] == l)
-	{
+	} else if (portal->nodes[1] == l) {
 		*pp = portal->next[1];
 		portal->nodes[1] = NULL;
 	}
@@ -223,13 +231,9 @@ void PrintPortal (portal_t *p)
 		, w->p[i][1], w->p[i][2]);
 }
 
-/*
-================
-MakeHeadnodePortals
-
-The created portals will face the global outside_node
-================
-*/
+/**
+ * @brief The created portals will face the global outside_node
+ */
 #define	SIDESPACE	8
 void MakeHeadnodePortals (tree_t *tree)
 {
@@ -242,8 +246,7 @@ void MakeHeadnodePortals (tree_t *tree)
 	node = tree->headnode;
 
 	/* pad with some space so there will never be null volume leafs */
-	for (i=0 ; i<3 ; i++)
-	{
+	for (i=0 ; i<3 ; i++) {
 		bounds[0][i] = tree->mins[i] - SIDESPACE;
 		bounds[1][i] = tree->maxs[i] + SIDESPACE;
 	}
@@ -254,8 +257,7 @@ void MakeHeadnodePortals (tree_t *tree)
 	tree->outside_node.contents = 0;
 
 	for (i=0 ; i<3 ; i++)
-		for (j=0 ; j<2 ; j++)
-		{
+		for (j=0 ; j<2 ; j++) {
 			n = j*3 + i;
 
 			p = AllocPortal ();
@@ -263,13 +265,10 @@ void MakeHeadnodePortals (tree_t *tree)
 
 			pl = &bplanes[n];
 			memset (pl, 0, sizeof(*pl));
-			if (j)
-			{
+			if (j) {
 				pl->normal[i] = -1;
 				pl->dist = -bounds[j][i];
-			}
-			else
-			{
+			} else {
 				pl->normal[i] = 1;
 				pl->dist = bounds[j][i];
 			}
@@ -279,10 +278,8 @@ void MakeHeadnodePortals (tree_t *tree)
 		}
 
 	/* clip the basewindings by all the other planes */
-	for (i=0 ; i<6 ; i++)
-	{
-		for (j=0 ; j<6 ; j++)
-		{
+	for (i=0 ; i<6 ; i++) {
+		for (j=0 ; j<6 ; j++) {
 			if (j == i)
 				continue;
 			ChopWindingInPlace (&portals[i]->winding, bplanes[j].normal, bplanes[j].dist, ON_EPSILON);
@@ -313,16 +310,12 @@ winding_t	*BaseWindingForNode (node_t *node)
 		, mapplanes[node->planenum].dist);
 
 	/* clip by all the parents */
-	for (n=node->parent ; n && w ; )
-	{
+	for (n=node->parent ; n && w ; ) {
 		plane = &mapplanes[n->planenum];
 
-		if (n->children[0] == node)
-		{	/* take front */
+		if (n->children[0] == node) {	/* take front */
 			ChopWindingInPlace (&w, plane->normal, plane->dist, BASE_WINDING_EPSILON);
-		}
-		else
-		{	/* take back */
+		} else {	/* take back */
 			VectorSubtract (vec3_origin, plane->normal, normal);
 			dist = -plane->dist;
 			ChopWindingInPlace (&w, normal, dist, BASE_WINDING_EPSILON);
@@ -338,14 +331,10 @@ winding_t	*BaseWindingForNode (node_t *node)
 
 qboolean WindingIsTiny (winding_t *w);
 
-/*
-==================
-MakeNodePortal
-
-create the new portal by taking the full plane winding for the cutting plane
-and clipping it by all of parents of this node
-==================
-*/
+/**
+ * @brief Create the new portal by taking the full plane winding for the cutting plane
+ * and clipping it by all of parents of this node
+ */
 void MakeNodePortal (node_t *node)
 {
 	portal_t	*new_portal, *p;
@@ -357,33 +346,25 @@ void MakeNodePortal (node_t *node)
 	w = BaseWindingForNode (node);
 
 	/* clip the portal by all the other portals in the node */
-	for (p = node->portals ; p && w; p = p->next[side])
-	{
-		if (p->nodes[0] == node)
-		{
+	for (p = node->portals ; p && w; p = p->next[side]) {
+		if (p->nodes[0] == node) {
 			side = 0;
 			VectorCopy (p->plane.normal, normal);
 			dist = p->plane.dist;
-		}
-		else if (p->nodes[1] == node)
-		{
+		} else if (p->nodes[1] == node) {
 			side = 1;
 			VectorSubtract (vec3_origin, p->plane.normal, normal);
 			dist = -p->plane.dist;
-		}
-		else
+		} else
 			Error ("CutNodePortals_r: mislinked portal");
 
 		ChopWindingInPlace (&w, normal, dist, 0.1);
 	}
 
 	if (!w)
-	{
 		return;
-	}
 
-	if (WindingIsTiny (w))
-	{
+	if (WindingIsTiny (w)) {
 		c_tinyportals++;
 		FreeWinding (w);
 		return;
@@ -398,14 +379,10 @@ void MakeNodePortal (node_t *node)
 }
 
 
-/*
-==============
-SplitNodePortals
-
-Move or split the portals that bound node so that the node's
-children have portals instead of node.
-==============
-*/
+/**
+ * @brief Move or split the portals that bound node so that the node's
+ * children have portals instead of node.
+ */
 void SplitNodePortals (node_t *node)
 {
 	portal_t	*p, *next_portal, *new_portal;
@@ -418,8 +395,7 @@ void SplitNodePortals (node_t *node)
 	f = node->children[0];
 	b = node->children[1];
 
-	for (p = node->portals ; p ; p = next_portal)
-	{
+	for (p = node->portals ; p ; p = next_portal) {
 		if (p->nodes[0] == node)
 			side = 0;
 		else if (p->nodes[1] == node)
@@ -642,8 +618,7 @@ qboolean FloodEntities (tree_t *tree)
 
 		/* nudge playerstart around if needed so clipping hulls allways */
 		/* have a vlaid point */
-		if (!strcmp (cl, "info_player_start"))
-		{
+		if (!strcmp (cl, "info_player_start")) {
 			int	x, y;
 
 			for (x=-16 ; x<=16 ; x += 16) {

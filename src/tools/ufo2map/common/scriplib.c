@@ -1,4 +1,28 @@
-/* scriplib.c */
+/**
+ * @file scriptlib.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 
 #include "cmdlib.h"
 #include "scriplib.h"
@@ -90,20 +114,14 @@ void ParseFromMemory (char *buffer, int size)
 }
 
 
-/*
-==============
-UnGetToken
-
-Signals that the current token was not used, and should be reported
-for the next GetToken.  Note that
-
-GetToken (qtrue);
-UnGetToken ();
-GetToken (qfalse);
-
-could cross a line boundary.
-==============
-*/
+/**
+ * @brief Signals that the current token was not used, and should be reported for the next GetToken.
+ * @note that
+ * GetToken (qtrue);
+ * UnGetToken ();
+ * GetToken (qfalse);
+ * could cross a line boundary.
+ */
 void UnGetToken (void)
 {
 	tokenready = qtrue;
@@ -115,15 +133,13 @@ qboolean EndOfScript (qboolean crossline)
 	if (!crossline)
 		Error ("Line %i is incomplete\n",scriptline);
 
-	if (!strcmp (script->filename, "memory buffer"))
-	{
+	if (!strcmp (script->filename, "memory buffer")) {
 		endofscript = qtrue;
 		return qfalse;
 	}
 
 	free (script->buffer);
-	if (script == scriptstack+1)
-	{
+	if (script == scriptstack+1) {
 		endofscript = qtrue;
 		return qfalse;
 	}
@@ -141,9 +157,8 @@ GetToken
 qboolean GetToken (qboolean crossline)
 {
 	char    *token_p;
-
-	if (tokenready)                         /* is a token allready waiting? */
-	{
+	/* is a token allready waiting? */
+	if (tokenready) {
 		tokenready = qfalse;
 		return qtrue;
 	}
@@ -153,12 +168,10 @@ qboolean GetToken (qboolean crossline)
 
 	/* skip space */
 skipspace:
-	while (*script->script_p <= 32)
-	{
+	while (*script->script_p <= 32) {
 		if (script->script_p >= script->end_p)
 			return EndOfScript (crossline);
-		if (*script->script_p++ == '\n')
-		{
+		if (*script->script_p++ == '\n') {
 			if (!crossline)
 				Error ("Line %i is incomplete\n",scriptline);
 			scriptline = script->line++;
@@ -170,8 +183,7 @@ skipspace:
 
 	/* ; # // comments */
 	if (*script->script_p == ';' || *script->script_p == '#'
-		|| ( script->script_p[0] == '/' && script->script_p[1] == '/') )
-	{
+		|| ( script->script_p[0] == '/' && script->script_p[1] == '/') ) {
 		if (!crossline)
 			Error ("Line %i is incomplete\n",scriptline);
 		while (*script->script_p++ != '\n')
@@ -181,13 +193,11 @@ skipspace:
 	}
 
 	/* c-style comments */
-	if (script->script_p[0] == '/' && script->script_p[1] == '*')
-	{
+	if (script->script_p[0] == '/' && script->script_p[1] == '*') {
 		if (!crossline)
 			Error ("Line %i is incomplete\n",scriptline);
 		script->script_p+=2;
-		while (script->script_p[0] != '*' && script->script_p[1] != '/')
-		{
+		while (script->script_p[0] != '*' && script->script_p[1] != '/') {
 			script->script_p++;
 			if (script->script_p >= script->end_p)
 				return EndOfScript (crossline);

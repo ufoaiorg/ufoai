@@ -1,4 +1,27 @@
-/* l3dslib.c: library for loading triangles from an Alias triangle file */
+/**
+ * @file l3dslib.c
+ * @brief library for loading triangles from an Alias triangle file
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
 
 #include <stdio.h>
 #include "cmdlib.h"
@@ -38,12 +61,9 @@ void StoreAliasTriangles (void)
 	if ((totaltris + numtris) > MAXTRIANGLES)
 		Error ("Error: Too many triangles");
 
-	for (i=0; i<numtris ; i++)
-	{
-		for (j=0 ; j<3 ; j++)
-		{
-			for (k=0 ; k<3 ; k++)
-			{
+	for (i=0; i<numtris ; i++) {
+		for (j=0 ; j<3 ; j++) {
+			for (k=0 ; k<3 ; k++) {
 				ptri[i+totaltris].verts[j][k] = fverts[tris[i].v[j]][k];
 			}
 		}
@@ -77,10 +97,8 @@ int ParseVertexL (FILE *input)
 	if (numverts > MAXVERTS)
 		Error ("Error: Too many vertices");
 
-	for (i=0 ; i<numverts ; i++)
-	{
-		for (j=0 ; j<3 ; j++)
-		{
+	for (i=0 ; i<numverts ; i++) {
+		for (j=0 ; j<3 ; j++) {
 			if (feof(input))
 				Error ("Error: unexpected end of file");
 
@@ -118,10 +136,8 @@ int ParseFaceL1 (FILE *input)
 	if (numtris > MAXTRIANGLES)
 		Error ("Error: Too many triangles");
 
-	for (i=0 ; i<numtris ; i++)
-	{
-		for (j=0 ; j<4 ; j++)
-		{
+	for (i=0 ; i<numtris ; i++) {
+		for (j=0 ; j<4 ; j++) {
 			if (feof(input))
 				Error ("Error: unexpected end of file");
 
@@ -148,14 +164,14 @@ int ParseChunk (FILE *input)
 	level++;
 	retval = 0;
 
-/* chunk type */
+	/* chunk type */
 	if (feof(input))
 		Error ("Error: unexpected end of file");
 
 	fread(&type, sizeof(type), 1, input);
 	bytesread += sizeof(type);
 
-/* chunk length */
+	/* chunk length */
 	if (feof(input))
 		Error ("Error: unexpected end of file");
 
@@ -163,9 +179,8 @@ int ParseChunk (FILE *input)
 	bytesread += sizeof(length);
 	w = length - 6;
 
-/* process chunk if we care about it, otherwise skip it */
-	switch (type)
-	{
+	/* process chunk if we care about it, otherwise skip it */
+	switch (type) {
 	case TRI_VERTEXL:
 		w -= ParseVertexL (input);
 		goto ParseSubchunk;
@@ -175,11 +190,10 @@ int ParseChunk (FILE *input)
 		goto ParseSubchunk;
 
 	case EDIT_OBJECT:
-	/* read the name */
+		/* read the name */
 		i = 0;
 
-		do
-		{
+		do {
 			if (feof(input))
 				Error ("Error: unexpected end of file");
 
@@ -194,8 +208,7 @@ int ParseChunk (FILE *input)
 	case EDIT3DS:
 	/* parse through subchunks */
 ParseSubchunk:
-		while (w > 0)
-		{
+		while (w > 0) {
 			w -= ParseChunk (input);
 		}
 
@@ -204,8 +217,7 @@ ParseSubchunk:
 
 	default:
 	/* skip other chunks */
-		while (w > 0)
-		{
+		while (w > 0) {
 			t = w;
 
 			if (t > BLOCK_SIZE)
@@ -249,22 +261,22 @@ void Load3DSTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 
 	fread(&tshort, sizeof(tshort), 1, input);
 
-/* should only be MAIN3DS, but some files seem to start with EDIT3DS, with */
-/* no MAIN3DS */
+	/* should only be MAIN3DS, but some files seem to start with EDIT3DS, with */
+	/* no MAIN3DS */
 	if ((tshort != MAIN3DS) && (tshort != EDIT3DS)) {
 		fprintf(stderr,"File is not a 3DS file.\n");
 		exit(0);
 	}
 
-/* back to top of file so we can parse the first chunk descriptor */
+	/* back to top of file so we can parse the first chunk descriptor */
 	fseek(input, 0, SEEK_SET);
 
 	ptri = malloc (MAXTRIANGLES * sizeof(triangle_t));
 
 	*pptri = ptri;
 
-/* parse through looking for the relevant chunk tree (MAIN3DS | EDIT3DS | EDIT_OBJECT | */
-/* OBJ_TRIMESH | {TRI_VERTEXL, TRI_FACEL1}) and skipping other chunks */
+	/* parse through looking for the relevant chunk tree (MAIN3DS | EDIT3DS | EDIT_OBJECT | */
+	/* OBJ_TRIMESH | {TRI_VERTEXL, TRI_FACEL1}) and skipping other chunks */
 	ParseChunk (input);
 
 	if (vertsfound || trisfound)

@@ -1,4 +1,28 @@
-/* routing.c */
+/**
+ * @file routing.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 
 #include "qbsp.h"
 
@@ -9,7 +33,7 @@
 #define QUANT	4
 #define PH		(UH-16)
 #define SH_BIG	9
-#define SH_LOW	2		
+#define SH_LOW	2
 
 const vec3_t dup = {0, 0, PH-UH/2};
 const vec3_t dwn = {0, 0, -UH/2};
@@ -49,8 +73,7 @@ void CheckUnit_Thread (int unitnum)
 
 	/* test bounds */
 	if ( x > wpMaxs[0] || y > wpMaxs[1] || z > wpMaxs[2]
-			|| x < wpMins[0] || y < wpMins[1] || z < wpMins[2] )
-	{
+			|| x < wpMins[0] || y < wpMins[1] || z < wpMins[2] ) {
 		/* don't enter */
 		fall[y][x] |= 1 << z;
 		return;
@@ -61,7 +84,7 @@ void CheckUnit_Thread (int unitnum)
 	PosToVec( pos, end );
 
 	/* step height check */
-	if ( TestContents( end ) ) 
+	if ( TestContents( end ) )
 		step[y][x] |= 1 << z;
 
 	/* prepare fall down check */
@@ -70,16 +93,14 @@ void CheckUnit_Thread (int unitnum)
 	end[2]   -= UH/2+4;
 
 	/* test for fall down */
-	if ( TestLineMask( start, end, 2 ) )
-	{
+	if ( TestLineMask( start, end, 2 ) ) {
 		PosToVec( pos, end );
 		VectorAdd( end, dup, start );
 		VectorAdd( end, dwn, end );
 		height = 0;
 
 		/* test for ground with a "middled" height */
-		for ( i = 0; i < 5; i++ )
-		{
+		for ( i = 0; i < 5; i++ ) {
 			VectorAdd( start, testvec[i], tvs );
 			VectorAdd( end, testvec[i], tve );
 			TestLineDM( tvs, tve, tr_end, 2 );
@@ -87,15 +108,15 @@ void CheckUnit_Thread (int unitnum)
 
 			/* stop if it's totally blocked somewhere */
 			/* and try a higher starting point */
-			if ( VectorCompare( tvs, tr_end ) ) break;
+			if ( VectorCompare( tvs, tr_end ) )
+				break;
 		}
 
 		/* tr_end[0] & [1] are correct (testvec[4]) */
 		height += tr_end[2];
 		tr_end[2] = height / 6.0;
 
-		if ( i == 5 && !VectorCompare( start, tr_end ) )
-		{
+		if ( i == 5 && !VectorCompare( start, tr_end ) ) {
 			/* found a possibly valid ground */
 			height = PH - (start[2]-tr_end[2]);
 			end[2] = start[2] + height;
@@ -104,9 +125,7 @@ void CheckUnit_Thread (int unitnum)
 				area[z][y][x] = ((height+QUANT/2)/QUANT < 0) ? 0 : (height+QUANT/2)/QUANT;
 			else
 				filled[y][x] |= 1 << z; /* don't enter */
-		}
-		else
-		{
+		} else {
 /*			printf( "." ); */
 			/* elevated a lot */
 			end[2] = start[2];
@@ -114,8 +133,7 @@ void CheckUnit_Thread (int unitnum)
 			height = 0;
 
 			/* test for ground with a "middled" height */
-			for ( i = 0; i < 5; i++ )
-			{
+			for ( i = 0; i < 5; i++ ) {
 				VectorAdd( start, testvec[i], tvs );
 				VectorAdd( end, testvec[i], tve );
 				TestLineDM( tvs, tve, tr_end, 2 );
@@ -124,13 +142,10 @@ void CheckUnit_Thread (int unitnum)
 			/* tr_end[0] & [1] are correct (testvec[4]) */
 			height += tr_end[2];
 			tr_end[2] = height / 6.0;
-			
-			if ( VectorCompare( start, tr_end ) )
-			{
+
+			if ( VectorCompare( start, tr_end ) ) {
 				filled[y][x] |= 1<<z; /* don't enter */
-			}
-			else 
-			{
+			} else {
 				/* found a possibly valid elevated ground */
 				end[2] = start[2] + PH - (start[2]-tr_end[2]);
 				height = UH - (start[2]-tr_end[2]);
@@ -143,9 +158,7 @@ void CheckUnit_Thread (int unitnum)
 					filled[y][x] |= 1 << z; /* don't enter */
 			}
 		}
-	}
-	else 
-	{
+	} else {
 		/* fall down */
 		area[z][y][x] = 0;
 		fall[y][x] |= 1 << z;
@@ -171,7 +184,7 @@ void CheckConnections_Thread (int unitnum)
 	x = unitnum % WIDTH;
 
 	/* totally blocked unit */
-	if ( filled[y][x] & (1<<z) ) 
+	if ( filled[y][x] & (1<<z) )
 		return;
 
 	h = (area[z][y][x] & 0xF);
@@ -187,11 +200,12 @@ void CheckConnections_Thread (int unitnum)
 	h = (h + sh) % 0x10;
 
 	/* range check */
-	if ( sz >= 8 ) { sz = 7; h = 0x0F; }
+	if ( sz >= 8 ) {
+		sz = 7; h = 0x0F;
+	}
 
 	/* test connections */
-	for ( i = 0; i < 4; i++ )
-	{
+	for ( i = 0; i < 4; i++ ) {
 		/* range check and test height */
 		if ( i == 0 && (x >= 255 || (filled[y][x+1] & (1<<sz)) || (area[sz][y][x+1]&0x0F) > h) ) continue;
 		if ( i == 1 && (x <=   0 || (filled[y][x-1] & (1<<sz)) || (area[sz][y][x-1]&0x0F) > h) ) continue;
@@ -242,8 +256,7 @@ void DoRouting(void)
 
 	/* reset */
 	for ( y = 0; y < WIDTH; y++ )
-		for ( x = 0; x < WIDTH; x++ )
-		{
+		for ( x = 0; x < WIDTH; x++ ) {
 			fall[y][x] = 0;
 			filled[y][x] = 0;
 		}
@@ -255,8 +268,7 @@ void DoRouting(void)
 	VecToPos( worldMaxs, wpMaxs );
 	VectorAdd( wpMaxs, v_epsilon, wpMaxs );
 
-	for ( i = 0; i < 3; i++ )
-	{
+	for ( i = 0; i < 3; i++ ) {
 		if ( wpMins[i] <   0 ) wpMins[i] = 0;
 		if ( wpMaxs[i] > 255 ) wpMaxs[i] = 255;
 	}
