@@ -34,12 +34,12 @@ char *teamSkinNames[NUM_TEAMSKINS] = {
 };
 
 /**
-  * @brief Test the names in team_*.ufo
-  *
-  * This is a console command to test the names that were defined in team_*.ufo
-  * Usage: givename <gender> <category> [num]
-  * valid genders are male, female, neutral
-  */
+ * @brief Test the names in team_*.ufo
+ *
+ * This is a console command to test the names that were defined in team_*.ufo
+ * Usage: givename <gender> <category> [num]
+ * valid genders are male, female, neutral
+ */
 static void CL_GiveNameCmd(void)
 {
 	char *name;
@@ -171,9 +171,9 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 
 
 /**
-  * @brief
-  * @sa CL_GenerateCharacter
-  */
+ * @brief
+ * @sa CL_GenerateCharacter
+ */
 void CL_ResetCharacters(base_t* const base)
 {
 	int i;
@@ -198,8 +198,8 @@ void CL_ResetCharacters(base_t* const base)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void CL_GenerateNamesCmd(void)
 {
 	Cbuf_AddText("disconnect\ngame_exit\n");
@@ -207,8 +207,8 @@ static void CL_GenerateNamesCmd(void)
 
 
 /**
-  * @brief Change the name of the selected actor
-  */
+ * @brief Change the name of the selected actor
+ */
 static void CL_ChangeNameCmd(void)
 {
 	int sel;
@@ -225,8 +225,8 @@ static void CL_ChangeNameCmd(void)
 
 
 /**
-  * @brief Change the skin of the selected actor
-  */
+ * @brief Change the skin of the selected actor
+ */
 static void CL_ChangeSkinCmd(void)
 {
 	int sel, newSkin;
@@ -245,8 +245,8 @@ static void CL_ChangeSkinCmd(void)
 }
 
 /**
-  * @brief Reads tha comments from team files
-  */
+ * @brief Reads tha comments from team files
+ */
 static void CL_TeamCommentsCmd(void)
 {
 	char comment[MAX_VAR];
@@ -269,8 +269,8 @@ static void CL_TeamCommentsCmd(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 item_t CL_AddWeaponAmmo(equipDef_t * ed, int type)
 {
 	item_t item = {0, NONE, NONE};
@@ -326,8 +326,8 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, int type)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_CheckInventory(equipDef_t * equip, int initial)
 {
 	character_t *cp;
@@ -366,8 +366,8 @@ void CL_CheckInventory(equipDef_t * equip, int initial)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_CleanTempInventory(void)
 {
 	int i, k;
@@ -386,10 +386,10 @@ void CL_CleanTempInventory(void)
 }
 
 /**
-  * @brief
-  * @note This function is called everytime the equipment screen for the team pops up
-  * @sa CL_UpdatePointersInGlobalData
-  */
+ * @brief
+ * @note This function is called everytime the equipment screen for the team pops up
+ * @sa CL_UpdatePointersInGlobalData
+ */
 static void CL_GenerateEquipmentCmd(void)
 {
 	equipDef_t *ed;
@@ -474,8 +474,8 @@ static void CL_GenerateEquipmentCmd(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void CL_EquipTypeCmd(void)
 {
 	int num;
@@ -497,10 +497,10 @@ static void CL_EquipTypeCmd(void)
 }
 
 /**
-  * @brief
-  * @note This function has various console commands:
-  * team_select, soldier_select, equip_select
-  */
+ * @brief
+ * @note This function has various console commands:
+ * team_select, soldier_select, equip_select
+ */
 static void CL_SelectCmd(void)
 {
 	char *arg;
@@ -577,8 +577,8 @@ static void CL_SelectCmd(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_UpdateHireVar(void)
 {
 	int i, p;
@@ -612,13 +612,13 @@ void CL_UpdateHireVar(void)
 }
 
 /**
-  * @brief only for multiplayer when setting up a new team
-  * @sa E_ResetEmployees
-  * @sa CL_CleanTempInventory
-  * @note We need baseCurrent to point to gd.bases[0] here
-  * @note available via script command team_reset
-  * @note called when initializing the multiplayer menu (for init node and new team button)
-  */
+ * @brief only for multiplayer when setting up a new team
+ * @sa E_ResetEmployees
+ * @sa CL_CleanTempInventory
+ * @note We need baseCurrent to point to gd.bases[0] here
+ * @note available via script command team_reset
+ * @note called when initializing the multiplayer menu (for init node and new team button)
+ */
 void CL_ResetTeamInBase(void)
 {
 	employee_t* employee;
@@ -644,9 +644,9 @@ void CL_ResetTeamInBase(void)
 }
 
 /**
-  * @brief Init the teamlist checkboxes
-  * @sa CL_UpdateHireVar
-  */
+ * @brief Init the teamlist checkboxes
+ * @sa CL_UpdateHireVar
+ */
 static void CL_MarkTeamCmd(void)
 {
 	int i, j, k = 0, cnt = 0;
@@ -706,8 +706,8 @@ static void CL_MarkTeamCmd(void)
 
 
 /**
-  * @brief Hires an actor or drop an actor
-  */
+ * @brief Hires an actor or drop an actor
+ */
 static void CL_HireActorCmd(void)
 {
 	int num, i, cnt = 0;
@@ -775,14 +775,14 @@ static void CL_HireActorCmd(void)
 
 
 /**
-  * @brief Calls script function on cvar change
-  *
-  * This is for inline editing of cvar values
-  * The cvarname_changed function are called,
-  * the editing is activated and ended here
-  *
-  * Done by the script command msgmenu [?|!|:][cvarname]
-  */
+ * @brief Calls script function on cvar change
+ *
+ * This is for inline editing of cvar values
+ * The cvarname_changed function are called,
+ * the editing is activated and ended here
+ *
+ * Done by the script command msgmenu [?|!|:][cvarname]
+ */
 static void CL_MessageMenuCmd(void)
 {
 	static char nameBackup[MAX_VAR];
@@ -820,8 +820,8 @@ static void CL_MessageMenuCmd(void)
 }
 
 /**
-  * @brief Saves a team
-  */
+ * @brief Saves a team
+ */
 void CL_SaveTeam(char *filename)
 {
 	sizebuf_t sb;
@@ -859,8 +859,8 @@ void CL_SaveTeam(char *filename)
 }
 
 /**
-  * @brief Stores a team in a specified teamslot (multiplayer)
-  */
+ * @brief Stores a team in a specified teamslot (multiplayer)
+ */
 static void CL_SaveTeamSlotCmd(void)
 {
 	char filename[MAX_QPATH];
@@ -871,9 +871,9 @@ static void CL_SaveTeamSlotCmd(void)
 }
 
 /**
-  * @brief Load a team member for multiplayer
-  * @sa CL_LoadTeam
-  */
+ * @brief Load a team member for multiplayer
+ * @sa CL_LoadTeam
+ */
 void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 {
 	item_t item;
@@ -922,10 +922,10 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 }
 
 /**
-  * @brief Load a multiplayer team
-  * @sa CL_LoadTeam
-  * @sa CL_SaveTeam
-  */
+ * @brief Load a multiplayer team
+ * @sa CL_LoadTeam
+ * @sa CL_SaveTeam
+ */
 void CL_LoadTeamMultiplayer(char *filename)
 {
 	sizebuf_t sb;
@@ -984,8 +984,8 @@ void CL_LoadTeamMultiplayer(char *filename)
 }
 
 /**
-  * @brief Loads the selected teamslot
-  */
+ * @brief Loads the selected teamslot
+ */
 static void CL_LoadTeamSlotCmd(void)
 {
 	char filename[MAX_QPATH];
@@ -1003,8 +1003,8 @@ static void CL_LoadTeamSlotCmd(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ResetTeams(void)
 {
 	Cmd_AddCommand("givename", CL_GiveNameCmd);
@@ -1026,18 +1026,18 @@ void CL_ResetTeams(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
 {
 	MSG_WriteFormat(buf, "bbbbbb", item.t, item.a, item.m, container, x, y);
 }
 
 /**
-  * @brief Stores the wholeTeam info to buffer (which might be a network buffer, too)
-  *
-  * Called by CL_SaveTeam to store the team info
-  */
+ * @brief Stores the wholeTeam info to buffer (which might be a network buffer, too)
+ *
+ * Called by CL_SaveTeam to store the team info
+ */
 void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 {
 	character_t *chr;
@@ -1091,10 +1091,10 @@ void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 }
 
 /**
-  * @brief Stores the curTteam info to buffer (which might be a network buffer, too)
-  *
-  * Called in cl_main.c CL_Precache_f to send the team info to server
-  */
+ * @brief Stores the curTteam info to buffer (which might be a network buffer, too)
+ *
+ * Called in cl_main.c CL_Precache_f to send the team info to server
+ */
 void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
 {
 	character_t *chr;
@@ -1196,11 +1196,11 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 
 
 /**
-  * @brief Reads mission result data from server
-  * See EV_RESULTS
-  * @sa G_EndGame
-  * @sa CL_GameResultsCmd
-  */
+ * @brief Reads mission result data from server
+ * See EV_RESULTS
+ * @sa G_EndGame
+ * @sa CL_GameResultsCmd
+ */
 void CL_ParseResults(sizebuf_t * buf)
 {
 	static char resultText[MAX_MENUTEXTLEN];
@@ -1329,8 +1329,8 @@ static value_t rankValues[] =
 };
 
 /**
-  * @brief Parse medals and ranks defined in the medals.ufo file.
-  */
+ * @brief Parse medals and ranks defined in the medals.ufo file.
+ */
 void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 {
 	rank_t		*rank = NULL;
@@ -1393,8 +1393,8 @@ static value_t ugvValues[] =
 };
 
 /**
-  * @brief Parse UGVs
-  */
+ * @brief Parse UGVs
+ */
 void CL_ParseUGVs(char *title, char **text)
 {
 	char	*errhead = "Com_ParseUGVs: unexptected end of file (ugv ";

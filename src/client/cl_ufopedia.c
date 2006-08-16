@@ -38,11 +38,11 @@ static char	upText[MAX_UPTEXT];
 static char	upBuffer[MAX_UPTEXT];
 
 /**
-  * @brief Translate a weaponSkill int to a translated string
-  *
-  * The weaponSkills were defined in q_shared.h at abilityskills_t
-  * @sa abilityskills_t
-  */
+ * @brief Translate a weaponSkill int to a translated string
+ *
+ * The weaponSkills were defined in q_shared.h at abilityskills_t
+ * @sa abilityskills_t
+ */
 char* CL_WeaponSkillToName(int weaponSkill)
 {
 	switch (weaponSkill) {
@@ -227,9 +227,9 @@ void UP_BuildingDescription ( technology_t* t )
 }
 
 /**
-  * @brief Prints the ufopedia description for aircraft
-  * @sa UP_DrawEntry
-  */
+ * @brief Prints the ufopedia description for aircraft
+ * @sa UP_DrawEntry
+ */
 void UP_AircraftDescription ( technology_t* t )
 {
 	aircraft_t* aircraft = CL_GetAircraft ( t->provides );
