@@ -1034,7 +1034,7 @@ int gameLapse;
 void CL_GameTimeStop(void)
 {
 	/* don't allow time scale in tactical mode */
-	if (!Com_ServerState()) {
+	if (!CL_OnBattlescape()) {
 		gameLapse = 0;
 		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
 		gd.gameTimeScale = lapse[gameLapse].scale;
@@ -1050,7 +1050,7 @@ void CL_GameTimeStop(void)
 void CL_GameTimeSlow(void)
 {
 	/* don't allow time scale in tactical mode */
-	if (!Com_ServerState()) {
+	if (!CL_OnBattlescape()) {
 		/*first we have to set up a home base */
 		if (!gd.numBases)
 			CL_GameTimeStop();
@@ -1071,7 +1071,7 @@ void CL_GameTimeSlow(void)
 void CL_GameTimeFast(void)
 {
 	/* don't allow time scale in tactical mode */
-	if (!Com_ServerState()) {
+	if (!CL_OnBattlescape()) {
 		/*first we have to set up a home base */
 		if (!gd.numBases)
 			CL_GameTimeStop();
@@ -2759,7 +2759,8 @@ void CL_ParseNations(char *name, char **text)
 
 
 /**
-  * @brief
+  * @brief Check whether we are in a tactical mission as server or as client
+  * @note handles mutliplayer and singleplayer
   *
   * @return true when we are not in battlefield
   * TODO: Check cvar mn_main for value
@@ -2768,8 +2769,13 @@ qboolean CL_OnBattlescape(void)
 {
 	/* sv.state is set to zero on every battlefield shutdown */
 	if (Com_ServerState() > 0)
+		return qtrue; /* server */
+
+	/* client */
+	if (cls.state >= ca_connected)
 		return qtrue;
 
+	Com_Printf("No connected\n");
 	return qfalse;
 }
 

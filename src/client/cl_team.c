@@ -522,7 +522,7 @@ static void CL_SelectCmd(void)
 
  	if (!Q_strncmp(command, "soldier", 7)) {
  		/* check whether we are connected (tactical mission) */
-		if (Com_ServerState()) {
+		if (CL_OnBattlescape()) {
 			CL_ActorSelectList(num);
 			return;
 		/* we are still in the menu */

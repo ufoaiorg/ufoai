@@ -407,7 +407,7 @@ cvar_t *cl_anglespeedkey;
   */
 void CL_LevelUp(void)
 {
-	if (!Com_ServerState())
+	if (!CL_OnBattlescape())
 		return;
 	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
 		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->value < map_maxlevel-1) ? cl_worldlevel->value + 1.0f : map_maxlevel-1);
@@ -418,7 +418,7 @@ void CL_LevelUp(void)
   */
 void CL_LevelDown(void)
 {
-	if (!Com_ServerState())
+	if (!CL_OnBattlescape())
 		return;
 	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
 		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->value > 0.0f) ? cl_worldlevel->value - 1.0f : 0.0f);

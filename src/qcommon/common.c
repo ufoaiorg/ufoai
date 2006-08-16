@@ -276,7 +276,7 @@ void Com_Quit(void)
 
 
 /**
- * @brief
+ * @brief Check whether we are the server or have a singleplayer tactical mission
  */
 int Com_ServerState(void)
 {

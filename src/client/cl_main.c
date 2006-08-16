@@ -210,7 +210,7 @@ void CL_ForwardToServer_f(void)
   */
 void CL_Pause_f(void)
 {
-	/* never pause in multiplayer */
+	/* never pause in multiplayer (as client - server is allowed) */
 	if (!ccs.singleplayer || !Com_ServerState()) {
 		Cvar_SetValue("paused", 0);
 		return;
@@ -229,9 +229,7 @@ void CL_Quit_f(void)
 }
 
 /**
-  * @brief
-  *
-  * Called after an ERR_DROP was thrown
+  * @brief Called after an ERR_DROP was thrown
   */
 void CL_Drop(void)
 {
@@ -249,10 +247,7 @@ void CL_Drop(void)
 
 
 /**
-  * @brief
-  *
-  * We have gotten a challenge from the server, so try and
-  * connect.
+  * @brief We have gotten a challenge from the server, so try and connect.
   */
 void CL_SendConnectPacket(void)
 {
@@ -274,9 +269,7 @@ void CL_SendConnectPacket(void)
 }
 
 /**
-  * @brief
-  *
-  * Resend a connect message if the last one has timed out
+  * @brief Resend a connect message if the last one has timed out
   */
 void CL_CheckForResend(void)
 {

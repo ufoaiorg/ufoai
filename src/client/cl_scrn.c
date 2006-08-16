@@ -525,7 +525,8 @@ void SCR_BeginLoadingPlaque(void)
 	if (developer->value)
 		return;
 	if (cls.state == ca_disconnected)
-		return;					/* if at console, don't bring up the plaque */
+		return;
+	/* if at console, don't bring up the plaque */
 	if (cls.key_dest == key_console)
 		return;
 

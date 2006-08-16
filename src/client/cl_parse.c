@@ -256,13 +256,9 @@ void CL_RegisterSounds (void)
 =====================================================================
 */
 
-/*
-==================
-CL_ParseServerData
-
-Written by SV_New_f in sv_user.c
-==================
-*/
+/**
+ * @brief Written by SV_New_f in sv_user.c
+ */
 void CL_ParseServerData (void)
 {
 	extern cvar_t	*fs_gamedirvar;
