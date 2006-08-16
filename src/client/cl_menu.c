@@ -1292,12 +1292,18 @@ static menuModel_t *MN_GetMenuModel(char *menuModel)
 
 /**
  * @brief Return the font for a specific node or default font
- * @reutrn char pointer with font name
+ * @param[in] m The current menu pointer - if NULL we will use the current menuStack
+ * @param[in] n The node to get the font for - if NULL f_small is returned
+ * @return char pointer with font name (default is f_small)
  */
-static char *MN_GetFont(menu_t * m, menuNode_t * n)
+char *MN_GetFont(menu_t *m, const menuNode_t *n)
 {
-	if (n->data[1])
+	if (!n || n->data[1]) {
+		if (!m) {
+			m = menuStack[menuStackPos-1];
+		}
 		return MN_GetReferenceString(m, n->data[1]);
+	}
 	return "f_small";
 }
 

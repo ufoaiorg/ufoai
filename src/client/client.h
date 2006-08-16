@@ -895,6 +895,7 @@ menuNode_t* MN_GetNodeFromCurrentMenu(char*name);
 void MN_SetNewNodePos (menuNode_t* node, int x, int y);
 menuNode_t *MN_GetNode(menu_t * menu, char *name);
 menu_t *MN_GetMenu(char *name);
+char *MN_GetFont(menu_t *m, const menuNode_t *n);
 
 void MN_ResetMenus(void);
 void MN_Shutdown(void);
