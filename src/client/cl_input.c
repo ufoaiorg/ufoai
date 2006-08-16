@@ -588,14 +588,18 @@ void CL_SelectUp(void)
 }
 
 /**
-  * @brief
+  * @brief Mouse click
   */
 void CL_ActionDown(void)
 {
-	if (mouseSpace == MS_WORLD)
+	switch (mouseSpace) {
+	case MS_WORLD:
 		CL_ActorActionMouse();
-	else if (mouseSpace == MS_MENU)
+		break;
+	case MS_MENU:
 		MN_RightClick(mx, my);
+		break;
+	}
 }
 
 /**

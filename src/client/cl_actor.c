@@ -1279,6 +1279,7 @@ void CL_ActorSelectMouse(void)
 
 /**
  * @brief initiates action with mouse.
+ * @sa CL_ActionDown
  */
 void CL_ActorActionMouse(void)
 {

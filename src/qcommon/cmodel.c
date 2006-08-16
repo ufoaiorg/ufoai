@@ -176,9 +176,7 @@ static qboolean trace_ispoint;			/* optimized case */
 static tnode_t *tnode_p;
 static byte stf;
 static byte tfList[HEIGHT][WIDTH][WIDTH];
-#ifndef DEDICATED_ONLY
 static byte tf;
-#endif
 
 /* just to fix warnings */
 /*void CL_ResetMouseLastPos(void);*/ /* FIXME: Don't belong here */
@@ -2367,7 +2365,6 @@ void Grid_MoveMark(struct routing_s *map, int x, int y, int z, int dv, int h, in
 }
 
 
-#ifndef DEDICATED_ONLY
 /**
  * @brief
  * @param
@@ -2396,7 +2393,6 @@ static void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, in
 						Grid_MoveMark(map, x, y, z, dv, h, l);
 				}
 }
-#endif
 
 /**
  * @brief
@@ -2405,7 +2401,6 @@ static void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, in
  */
 void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_list, int fb_length)
 {
-#ifndef DEDICATED_ONLY
 	int xl, xh, yl, yh;
 	int i;
 
@@ -2447,7 +2442,6 @@ void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_
 	/* FIXME: This does not belong here */
 	/* reset the mouse position, for the purposes of CL_ActorMouseTrace */
 	/*CL_ResetMouseLastPos();*/
-#endif
 }
 
 

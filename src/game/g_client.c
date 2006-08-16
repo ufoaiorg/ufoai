@@ -1000,11 +1000,9 @@ static qboolean G_CheckMoveBlock(pos3_t from, int dv)
 }
 
 
-/*
-=================
-G_ClientMove
-=================
-*/
+/**
+ * @sa CL_ActorStartMove
+ */
 void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean stop)
 {
 	edict_t *ent;
@@ -1128,7 +1126,6 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 			gi.EndEvents();
 		}
 	}
-
 }
 
 
@@ -1474,8 +1471,8 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 	int stun = dmgtype == gi.csi->damStun;
 
 	assert (ent);
-	assert (ent->type == ET_ACTOR 
-			|| ent->type == ET_UGV 
+	assert (ent->type == ET_ACTOR
+			|| ent->type == ET_UGV
 			|| ent->type == ET_BREAKABLE);
 
 	/* breakables are immune to stun damage */
@@ -1717,7 +1714,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 				if (G_TeamPointVis(i, newPos))
 					mask |= 1 << i;
 
-			if 
+			if
 				/* enough bouncing around */
 				(VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0 || bounce > fd->bounce
 				 /* or we have sensors that tell us enemy is near */
@@ -2127,7 +2124,7 @@ qboolean G_ReactionFire(edict_t * target)
 				if (target->team == TEAM_CIVILIAN || target->team == ent->team)
 					if (!(ent->state & (STATE_SHAKEN & ~STATE_REACTION)) || (float) ent->morale / mor_shaken->value > frand())
 						continue;
-				/*if reaction fire is triggered by a friendly unit 
+				/*if reaction fire is triggered by a friendly unit
 				  and the shooter is still sane, don't shoot;
 				  well, if the shooter isn't sane anymore... */
 
@@ -2196,7 +2193,6 @@ void G_ClientAction(player_t * player)
 	/* read the header */
 	action = gi.ReadByte();
 	num = gi.ReadShort();
-
 	switch (action) {
 	case PA_NULL:
 		/* do nothing on a null action */
