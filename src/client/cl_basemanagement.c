@@ -1404,6 +1404,18 @@ void B_BuildBase(void)
 }
 
 /**
+ * @brief Sets the baseStatus to BASE_NOT_USED
+ * @param[in] base Which base should be resetted?
+ */
+void B_BaseResetStatus (base_t* base)
+{
+	assert(base);
+	base->baseStatus = BASE_NOT_USED;
+	if (gd.mapAction == MA_BASEATTACK)
+		gd.mapAction = MA_NONE;
+}
+
+/**
  * @brief Initiates an attack on a base.
  * @sa B_BaseAttack_f
  * @param[in] base Which base is under attack?

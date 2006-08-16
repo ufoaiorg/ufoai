@@ -552,6 +552,10 @@ static void CL_CampaignAddMission(setState_t * set)
 		mis->realPos[0] = gd.bases[i].pos[0];
 		mis->realPos[1] = gd.bases[i].pos[1];
 		Q_strncpyz(mis->def->location, gd.bases[i].name, MAX_VAR);
+		/* set the mission type to base attack and store the base in data pointer */
+		/* this is useful if the mission expires and we want to know which base it was */
+		mis->def->missionType = MIS_BASEATTACK;
+		mis->def->data = (void*)&gd.bases[i];
 
 		/* Add message to message-system. */
 		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base %s is under attack."), gd.bases[i].name);
@@ -720,6 +724,7 @@ void CL_CampaignCheckEvents(void)
 	stageState_t *stage;
 	setState_t *set;
 	actMis_t *mis;
+	base_t* base;
 	int i, j;
 
 	/* check campaign events */
@@ -744,7 +749,16 @@ void CL_CampaignCheckEvents(void)
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++)
 		if (mis->expire.day && Date_LaterThan(ccs.date, mis->expire)) {
 			CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
-			Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died."), mis->def->civilians), MAX_MESSAGE_TEXT);
+			switch (mis->def->missionType) {
+				case MIS_BASEATTACK:
+					base = (base_t*)mis->def->data;
+					B_BaseResetStatus(base);
+					Q_strncpyz(messageBuffer, _("The aliens killed all employees in your base."), MAX_MESSAGE_TEXT);
+					break;
+				default:
+					Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died."), mis->def->civilians), MAX_MESSAGE_TEXT);
+					break;
+			}
 			MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 			/* Remove mission from the map. */
 			CL_CampaignRemoveMission(mis);

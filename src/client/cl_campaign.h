@@ -49,6 +49,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* blue (not water) 128, 128, 255 */
 /* blue (not water, too) 0, 0, 255 */
 
+typedef enum missionType_s {
+	MIS_INTERCEPT, /* default */
+	MIS_BASEATTACK,
+
+	MIS_MAX
+} missionType_t;
+
 typedef struct mission_s {
 	char *text;
 	char name[MAX_VAR];
@@ -69,6 +76,8 @@ typedef struct mission_s {
 	qboolean active;			/* aircraft at place? */
 	qboolean onGeoscape;		/* already on geoscape - don't add it twice */
 	qboolean storyRelated;		/* auto mission play disabled when true */
+	missionType_t missionType;	/* type of mission */
+	void* data;					/* may be related to mission type */
 	vec2_t pos;
 	byte mask[4];
 	int aliens, civilians;
