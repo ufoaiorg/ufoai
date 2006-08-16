@@ -34,17 +34,17 @@ static int buyCategory;
 
 
 /**
-  * @brief Prints general information about aircraft for buy/sell menu
-  * TODO
-  */
+ * @brief Prints general information about aircraft for buy/sell menu
+ * TODO
+ */
 static void CL_MarketAircraftDescription (int aircraftID)
 {
 	menuText[TEXT_STANDARD] = NULL;
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void CL_BuySelectCmd(void)
 {
 	int num;
@@ -106,8 +106,8 @@ static void AIR_GetStorageSupplyCount(char *airCharId, int *const storage, int *
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void CL_BuyType(void)
 {
 	objDef_t *od;
@@ -206,9 +206,9 @@ static void CL_BuyType(void)
 
 
 /**
-  * @brief
-  * @sa CL_SellItem
-  */
+ * @brief
+ * @sa CL_SellItem
+ */
 static void CL_BuyItem(void)
 {
 	int num, item;
@@ -243,9 +243,9 @@ static void CL_BuyItem(void)
 }
 
 /**
-  * @brief
-  * @sa CL_BuyItem
-  */
+ * @brief
+ * @sa CL_BuyItem
+ */
 static void CL_SellItem(void)
 {
 	int num, item;
@@ -275,9 +275,9 @@ static void CL_SellItem(void)
 }
 
 /**
-  * @brief
-  * @sa CL_SellAircraft
-  */
+ * @brief
+ * @sa CL_SellAircraft
+ */
 static void CL_BuyAircraft(void)
 {
 	int num, aircraftID;
@@ -305,13 +305,13 @@ static void CL_BuyAircraft(void)
 
 
 /**
-  * @brief
-  *
-  * FIXME: This needs work in reassigning the base aircraft array
-  * or the other functions need to check whether the aircraft
-  * at current arraypos is valid
-  * @sa CL_BuyAircraft
-  */
+ * @brief
+ *
+ * FIXME: This needs work in reassigning the base aircraft array
+ * or the other functions need to check whether the aircraft
+ * at current arraypos is valid
+ * @sa CL_BuyAircraft
+ */
 static void CL_SellAircraft(void)
 {
 	int num, aircraftID, i, j;
@@ -366,8 +366,8 @@ static void CL_SellAircraft(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ResetMarket(void)
 {
 	Cmd_AddCommand("buy_type", CL_BuyType);

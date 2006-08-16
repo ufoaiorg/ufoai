@@ -33,7 +33,7 @@ static int employeesInCurrentList = 0;
 
 /*****************************************************
  * VISUAL/GUI STUFF
-  *****************************************************/
+ *****************************************************/
 
 /**
  * @brief Will fill the list with employees
@@ -720,8 +720,8 @@ void E_EmployeeHire_f (void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void E_EmployeeSelect_f(void)
 {
 	int num;
@@ -746,10 +746,10 @@ static void E_EmployeeSelect_f(void)
 }
 
 /**
-  * @brief This is more or less the initial
-  * Bind some of the functions in this file to console-commands that you can call ingame.
-  * Called from MN_ResetMenus resp. CL_InitLocal
-  */
+ * @brief This is more or less the initial
+ * Bind some of the functions in this file to console-commands that you can call ingame.
+ * Called from MN_ResetMenus resp. CL_InitLocal
+ */
 void E_Reset(void)
 {
 	/* add commands */

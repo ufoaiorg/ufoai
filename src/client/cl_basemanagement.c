@@ -1296,8 +1296,8 @@ void B_SelectBase(void)
 
 
 /**
-  * @brief Assigns initial soldier equipment for the first base
-  */
+ * @brief Assigns initial soldier equipment for the first base
+ */
 static void B_PackInitialEquipmentCmd(void)
 {
 	int i;

@@ -2038,11 +2038,11 @@ static void MN_ModifyString_f(void)
 
 
 /**
-  * @brief
-  *
-  * Shows the corresponding strings in menu
-  * Example: Optionsmenu - fullscreen: yes
-  */
+ * @brief
+ *
+ * Shows the corresponding strings in menu
+ * Example: Optionsmenu - fullscreen: yes
+ */
 static void MN_Translate_f(void)
 {
 	qboolean next;
@@ -2518,10 +2518,10 @@ qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 }
 
 /**
-  * @brief Hides a given menu node
-  *
-  * Sanity check whether node is null included
-  */
+ * @brief Hides a given menu node
+ *
+ * Sanity check whether node is null included
+ */
 void MN_HideNode ( menuNode_t* node )
 {
 	if ( node && node->invis == qtrue )
@@ -2529,10 +2529,10 @@ void MN_HideNode ( menuNode_t* node )
 }
 
 /**
-  * @brief Unhides a given menu node
-  *
-  * Sanity check whether node is null included
-  */
+ * @brief Unhides a given menu node
+ *
+ * Sanity check whether node is null included
+ */
 void MN_UnHideNode ( menuNode_t* node )
 {
 	if ( node && node->invis == qfalse )

@@ -132,10 +132,10 @@ centity_t cl_entities[MAX_EDICTS];
 /*====================================================================== */
 
 /**
-  * @brief adds the current command line as a clc_stringcmd to the client message.
-  * things like action, turn, etc, are commands directed to the server,
-  * so when they are typed in at the console, they will need to be forwarded.
-  */
+ * @brief adds the current command line as a clc_stringcmd to the client message.
+ * things like action, turn, etc, are commands directed to the server,
+ * so when they are typed in at the console, they will need to be forwarded.
+ */
 void Cmd_ForwardToServer(void)
 {
 	char *cmd;
@@ -155,8 +155,8 @@ void Cmd_ForwardToServer(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_Setenv_f(void)
 {
 	int argc = Cmd_Argc();
@@ -186,8 +186,8 @@ void CL_Setenv_f(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ForwardToServer_f(void)
 {
 	if (cls.state != ca_connected && cls.state != ca_active) {
@@ -204,8 +204,8 @@ void CL_ForwardToServer_f(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_Pause_f(void)
 {
 	/* never pause in multiplayer (as client - server is allowed) */
@@ -218,8 +218,8 @@ void CL_Pause_f(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_Quit_f(void)
 {
 	CL_Disconnect();
@@ -227,9 +227,9 @@ void CL_Quit_f(void)
 }
 
 /**
-  * @brief
-  * @note Called after an ERR_DROP was thrown
-  */
+ * @brief
+ * @note Called after an ERR_DROP was thrown
+ */
 void CL_Drop(void)
 {
 	if (cls.state == ca_uninitialized)
@@ -246,8 +246,8 @@ void CL_Drop(void)
 
 
 /**
-  * @brief We have gotten a challenge from the server, so try and connect.
-  */
+ * @brief We have gotten a challenge from the server, so try and connect.
+ */
 void CL_SendConnectPacket(void)
 {
 	netadr_t adr;
@@ -268,8 +268,8 @@ void CL_SendConnectPacket(void)
 }
 
 /**
-  * @brief Resend a connect message if the last one has timed out
-  */
+ * @brief Resend a connect message if the last one has timed out
+ */
 void CL_CheckForResend(void)
 {
 	netadr_t adr;
@@ -308,10 +308,10 @@ void CL_CheckForResend(void)
 }
 
 /**
-  * @brief
-  *
-  * FIXME: Spectator needs no team
-  */
+ * @brief
+ *
+ * FIXME: Spectator needs no team
+ */
 void CL_Connect_f(void)
 {
 	char *server;
@@ -347,11 +347,11 @@ void CL_Connect_f(void)
 
 
 /**
-  * @brief
-  *
-  * Send the rest of the command line over as
-  * an unconnected command.
-  */
+ * @brief
+ *
+ * Send the rest of the command line over as
+ * an unconnected command.
+ */
 void CL_Rcon_f(void)
 {
 	char message[1024];
@@ -399,8 +399,8 @@ void CL_Rcon_f(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ClearState(void)
 {
 	S_StopAllSounds();
@@ -420,12 +420,12 @@ void CL_ClearState(void)
 }
 
 /**
-  * @brief
-  *
-  * Goes from a connected state to full screen console state
-  * Sends a disconnect message to the server
-  * This is also called on Com_Error, so it shouldn't cause any errors
-  */
+ * @brief
+ *
+ * Goes from a connected state to full screen console state
+ * Sends a disconnect message to the server
+ * This is also called on Com_Error, so it shouldn't cause any errors
+ */
 void CL_Disconnect(void)
 {
 	byte final[32];
@@ -467,8 +467,8 @@ void CL_Disconnect(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_Disconnect_f(void)
 {
 	Com_Drop();
@@ -476,11 +476,11 @@ void CL_Disconnect_f(void)
 
 
 /**
-  * @brief
-  *
-  * packet [destination] [contents]
-  * Contents allows \n escape character
-  */
+ * @brief
+ *
+ * packet [destination] [contents]
+ * Contents allows \n escape character
+ */
 void CL_Packet_f(void)
 {
 	char send[2048];
@@ -522,11 +522,11 @@ void CL_Packet_f(void)
 }
 
 /**
-  * @brief
-  *
-  * Just sent as a hint to the client that they should
-  * drop to full console
-  */
+ * @brief
+ *
+ * Just sent as a hint to the client that they should
+ * drop to full console
+ */
 void CL_Changing_f(void)
 {
 	SCR_BeginLoadingPlaque();
@@ -536,10 +536,10 @@ void CL_Changing_f(void)
 
 
 /**
-  * @brief
-  *
-  * The server is changing levels
-  */
+ * @brief
+ *
+ * The server is changing levels
+ */
 void CL_Reconnect_f(void)
 {
 	S_StopAllSounds();
@@ -564,10 +564,10 @@ void CL_Reconnect_f(void)
 }
 
 /**
-  * @brief
-  *
-  * Handle a reply from a ping
-  */
+ * @brief
+ *
+ * Handle a reply from a ping
+ */
 #define MAX_SERVERLIST 32
 char serverText[1024];
 int serverListLength;
@@ -587,10 +587,10 @@ void CL_ParseStatusMessage(void)
 }
 
 /**
-  * @brief Serverbrowser text
-  *
-  * This function fills the network browser server information with text
-  */
+ * @brief Serverbrowser text
+ *
+ * This function fills the network browser server information with text
+ */
 static char serverInfoText[MAX_MESSAGE_TEXT];
 void CL_ParseServerInfoMessage(void)
 {
@@ -655,11 +655,11 @@ void CL_ParseServerInfoMessage(void)
 }
 
 /**
-  * @brief
-  *
-  * called via server_connect
-  * FIXME: Spectator needs no team
-  */
+ * @brief
+ *
+ * called via server_connect
+ * FIXME: Spectator needs no team
+ */
 static void CL_ServerConnect_f(void)
 {
 	char *ip = Cvar_VariableString("mn_server_ip");
@@ -676,10 +676,10 @@ static void CL_ServerConnect_f(void)
 }
 
 /**
-  * @brief Print all bookmarks
-  *
-  * bookmarks are saved in cvar adr[0-15]
-  */
+ * @brief Print all bookmarks
+ *
+ * bookmarks are saved in cvar adr[0-15]
+ */
 static char bookmarkText[MAX_MESSAGE_TEXT];
 static void CL_BookmarkPrint_f(void)
 {
@@ -695,10 +695,10 @@ static void CL_BookmarkPrint_f(void)
 }
 
 /**
-  * @brief Add a new bookmark
-  *
-  * bookmarks are saved in cvar adr[0-15]
-  */
+ * @brief Add a new bookmark
+ *
+ * bookmarks are saved in cvar adr[0-15]
+ */
 static void CL_BookmarkAdd_f(void)
 {
 	int i;
@@ -732,8 +732,8 @@ static void CL_BookmarkAdd_f(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_BookmarkListClick_f(void)
 {
 	int num;
@@ -761,8 +761,8 @@ void CL_BookmarkListClick_f(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ServerListClick_f(void)
 {
 	int num;
@@ -781,8 +781,8 @@ void CL_ServerListClick_f(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_PingServers_f(void)
 {
 	netadr_t adr;
@@ -815,10 +815,10 @@ void CL_PingServers_f(void)
 
 
 /**
-  * @brief
-  *
-  * Responses to broadcasts, etc
-  */
+ * @brief
+ *
+ * Responses to broadcasts, etc
+ */
 void CL_ConnectionlessPacket(void)
 {
 	char *s;
@@ -896,11 +896,11 @@ void CL_ConnectionlessPacket(void)
 
 
 /**
-  * @brief
-  *
-  * A vain attempt to help bad TCP stacks that cause problems
-  * when they overflow
-  */
+ * @brief
+ *
+ * A vain attempt to help bad TCP stacks that cause problems
+ * when they overflow
+ */
 void CL_DumpPackets(void)
 {
 	while (NET_GetPacket(NS_CLIENT, &net_from, &net_message))
@@ -908,8 +908,8 @@ void CL_DumpPackets(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ReadPackets(void)
 {
 	while (NET_GetPacket(NS_CLIENT, &net_from, &net_message)) {
@@ -956,8 +956,8 @@ void CL_ReadPackets(void)
 /*============================================================================= */
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_Userinfo_f(void)
 {
 	Com_Printf("User info settings:\n");
@@ -965,11 +965,11 @@ void CL_Userinfo_f(void)
 }
 
 /**
-  * @brief Restart the sound subsystem so it can pick up new parameters and flush all sounds
-  * @sa S_Shutdown
-  * @sa S_Init
-  * @sa CL_RegisterSounds
-  */
+ * @brief Restart the sound subsystem so it can pick up new parameters and flush all sounds
+ * @sa S_Shutdown
+ * @sa S_Init
+ * @sa CL_RegisterSounds
+ */
 void CL_Snd_Restart_f(void)
 {
 	S_Shutdown();
@@ -978,8 +978,8 @@ void CL_Snd_Restart_f(void)
 }
 
 /**
-  * @brief The server will send this command right before allowing the client into the server
-  */
+ * @brief The server will send this command right before allowing the client into the server
+ */
 void CL_Precache_f(void)
 {
 	/* stop sound, back to the console */
@@ -1002,10 +1002,10 @@ void CL_Precache_f(void)
 }
 
 /**
-  * @brief Called at client startup
-  *
-  * parses all *.ufos that are needed for single- and multiplayer
-  */
+ * @brief Called at client startup
+ *
+ * parses all *.ufos that are needed for single- and multiplayer
+ */
 void CL_ParseClientData ( char *type, char *name, char **text )
 {
 	if ( !Q_strncmp( type, "shader", 6 ) ) CL_ParseShaders(name, text);
@@ -1021,12 +1021,12 @@ void CL_ParseClientData ( char *type, char *name, char **text )
 }
 
 /**
-  * @brief
-  *
-  * parsed if we are no dedicated server
-  * first stage parses all the main data into their struct
-  * see CL_ParseScriptSecond for more details about parsing stages
-  */
+ * @brief
+ *
+ * parsed if we are no dedicated server
+ * first stage parses all the main data into their struct
+ * see CL_ParseScriptSecond for more details about parsing stages
+ */
 void CL_ParseScriptFirst(char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
@@ -1051,13 +1051,13 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
 }
 
 /**
-  * @brief
-  *
-  * parsed if we are no dedicated server
-  * second stage links all the parsed data from first stage
-  * example: we need a techpointer in a building - in the second stage the buildings and the
-  * techs are already parsed - so now we can link them
-  */
+ * @brief
+ *
+ * parsed if we are no dedicated server
+ * second stage links all the parsed data from first stage
+ * example: we need a techpointer in a building - in the second stage the buildings and the
+ * techs are already parsed - so now we can link them
+ */
 void CL_ParseScriptSecond(char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
@@ -1068,10 +1068,10 @@ void CL_ParseScriptSecond(char *type, char *name, char **text)
 }
 
 /**
-  * @brief Read the data into gd for singleplayer campaigns
-  * @sa CL_GameLoad
-  * @sa CL_GameNew
-  */
+ * @brief Read the data into gd for singleplayer campaigns
+ * @sa CL_GameLoad
+ * @sa CL_GameNew
+ */
 void CL_ReadSinglePlayerData( void )
 {
 	char *type, *name, *text;
@@ -1097,8 +1097,8 @@ void CL_ReadSinglePlayerData( void )
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_InitLocal(void)
 {
 	cls.state = ca_disconnected;
@@ -1267,8 +1267,8 @@ void CL_InitLocal(void)
 
 
 /**
-  * @brief Writes key bindings and archived cvars to config.cfg
-  */
+ * @brief Writes key bindings and archived cvars to config.cfg
+ */
 void CL_WriteConfiguration(void)
 {
 	char path[MAX_QPATH];
@@ -1282,8 +1282,8 @@ void CL_WriteConfiguration(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 typedef struct {
 	char *name;
 	char *value;
@@ -1333,8 +1333,8 @@ void CL_FixCvarCheats(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_SendCmd(void)
 {
 	/* send a userinfo update if needed */
@@ -1352,8 +1352,8 @@ void CL_SendCmd(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_SendCommand(void)
 {
 	/* get new key events */
@@ -1377,8 +1377,8 @@ void CL_SendCommand(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_AddMapParticle(char *ptl, vec3_t origin, vec2_t wait, char *info, int levelflags)
 {
 	mp_t *mp;
@@ -1437,8 +1437,8 @@ char* CL_ToDifficultyName(int difficulty)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_CvarCheck(void)
 {
 	int v;
@@ -1473,8 +1473,8 @@ void CL_CvarCheck(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 #define NUM_DELTA_FRAMES	20
 void CL_Frame(int msec)
 {
@@ -1623,8 +1623,8 @@ void CL_Frame(int msec)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_Init(void)
 {
 	if (dedicated->value)
@@ -1661,11 +1661,11 @@ void CL_Init(void)
 
 
 /**
-  * @brief
-  *
-  * FIXME: this is a callback from Sys_Quit and Com_Error.  It would be better
-  * to run quit through here before the final handoff to the sys code.
-  */
+ * @brief
+ *
+ * FIXME: this is a callback from Sys_Quit and Com_Error.  It would be better
+ * to run quit through here before the final handoff to the sys code.
+ */
 void CL_Shutdown(void)
 {
 	static qboolean isdown = qfalse;
