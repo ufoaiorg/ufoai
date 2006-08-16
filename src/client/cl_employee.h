@@ -86,6 +86,6 @@ int E_CountHired(const base_t* const base, employeeType_t type);
 int E_CountUnhired(const base_t* const base, employeeType_t type);
 int E_CountUnassigned(const base_t* const base, employeeType_t type);
 void E_UnhireAllEmployees(const base_t* const base, employeeType_t type);
-
+void E_DeleteAllEmployees(const base_t* const base);
 
 #endif /* CLIENT_CL_EMPLOYEE */

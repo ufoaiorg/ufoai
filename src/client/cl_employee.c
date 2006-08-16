@@ -42,7 +42,7 @@ static int employeesInCurrentList = 0;
 static void E_EmployeeList (void)
 {
 	int i, j;
-	employee_t* employee;
+	employee_t* employee = NULL;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent || !curCampaign)
@@ -173,7 +173,7 @@ employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int idx
 void E_UnhireAllEmployees(const base_t* const base, employeeType_t type)
 {
 	int i;
-	employee_t *employee;
+	employee_t *employee = NULL;
 
 	if ( !base || type > MAX_EMPL || type < 0 )
 		return;
@@ -324,7 +324,7 @@ qboolean E_EmployeeIsUnassigned(employee_t * employee)
 employee_t * E_GetAssignedEmployee(const base_t* const base, employeeType_t type)
 {
 	int i;
-	employee_t *employee;
+	employee_t *employee = NULL;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
@@ -347,7 +347,7 @@ employee_t * E_GetAssignedEmployee(const base_t* const base, employeeType_t type
 employee_t * E_GetUnassignedEmployee(const base_t* const base, employeeType_t type)
 {
 	int i;
-	employee_t *employee;
+	employee_t *employee = NULL;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
@@ -368,7 +368,7 @@ employee_t * E_GetUnassignedEmployee(const base_t* const base, employeeType_t ty
  */
 qboolean E_HireEmployee(const base_t* const base, employeeType_t type, int idx)
 {
-	employee_t* employee;
+	employee_t* employee = NULL;
 	employee = E_GetUnhiredEmployee(type, idx);
 	if (employee) {
 		/* Now uses quarter space. */
@@ -388,7 +388,7 @@ qboolean E_HireEmployee(const base_t* const base, employeeType_t type, int idx)
  */
 qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx)
 {
-	employee_t* employee;
+	employee_t* employee = NULL;
 	employee = E_GetHiredEmployee(base, type, idx);
 	if (employee) {
 		if (employee->buildingID >= 0 ) {
@@ -415,7 +415,7 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
  */
 employee_t* E_CreateEmployee(employeeType_t type)
 {
-	employee_t* employee;
+	employee_t* employee = NULL;
 
 	if (type == MAX_EMPL)
 		return NULL;
@@ -506,6 +506,30 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 	return qtrue;
 }
 
+/**
+ * @brief Removes all employees completely from the game (buildings + global list) from a given base.
+ * @note Used if the base e.g is destroyed by the aliens.
+ * @param[in] base Which base the employee should be fired from.
+ * @todo BUGBUG Doesn't really delete _all_ employees yet.
+ */
+void E_DeleteAllEmployees(const base_t* const base)
+{
+	int i;
+	employeeType_t type;
+	employee_t *employee = NULL;
+
+	if ( !base )
+		return;
+
+	for ( type = 0; type < MAX_EMPL; type++ ) {
+		for ( i = 0; i < gd.numEmployees[type]; i++) {
+			employee = &gd.employees[type][i];
+			if (employee->baseIDHired == base->idx)
+				E_DeleteEmployee(employee, type);
+		}
+	}
+}
+
 #if 0
 /************************
 TODO: Will later on be used in e.g RS_AssignScientist_f
@@ -593,7 +617,7 @@ qboolean E_RemoveEmployeeFromBuilding(employee_t *employee)
 int E_CountHired(const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
-	employee_t *employee;
+	employee_t *employee = NULL;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
@@ -613,7 +637,7 @@ int E_CountHired(const base_t* const base, employeeType_t type)
 int E_CountUnhired(const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
-	employee_t *employee;
+	employee_t *employee = NULL;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
@@ -631,7 +655,7 @@ int E_CountUnhired(const base_t* const base, employeeType_t type)
 int E_CountUnassigned(const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
-	employee_t *employee;
+	employee_t *employee = NULL;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];

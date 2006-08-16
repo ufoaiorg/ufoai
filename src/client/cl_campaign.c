@@ -721,9 +721,11 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
   */
 void CL_CampaignCheckEvents(void)
 {
-	stageState_t *stage;
-	setState_t *set;
-	actMis_t *mis;
+	stageState_t *stage = NULL;
+	setState_t *set = NULL;;
+	actMis_t *mis = NULL;
+	base_t *base = NULL;
+	
 	int i, j;
 
 	/* check campaign events */
@@ -741,21 +743,27 @@ void CL_CampaignCheckEvents(void)
 						CL_CampaignExecute(set);
 				}
 
-	/* check UFOs events */
+	/* Check UFOs events. */
 	UFO_CampaignCheckEvents();
 
-	/* let missions expire */
+	/* Let missions expire. */
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++)
 		if (mis->expire.day && Date_LaterThan(ccs.date, mis->expire)) {
-			CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
+			/* Mission is expired. Calculating penalties for the various mission types. */
 			switch (mis->def->missionType) {
 				case MIS_BASEATTACK:
-					B_BaseResetStatus((base_t*)mis->def->data);
-					/* TODO */
-					/* delete all employees and destroy assigned equipment - maybe also revert some running researches */
-					Q_strncpyz(messageBuffer, _("The aliens killed all employees in your base."), MAX_MESSAGE_TEXT);
+					/* Base attack */
+					base = (base_t*)mis->def->data;
+					B_BaseResetStatus(base);
+					/* Delete all employees from the base & the global list. */
+					E_DeleteAllEmployees(base);
+					/* TODO: Maybe reset running researches ... needs playbalance .. maybe another value in technology_t to remember researched time from other bases? */
+					/* TODO: Destroy some random buildings. */
+					Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("The aliens killed all employees in your base '%s'."), base->name );
 					break;
 				case MIS_INTERCEPT:
+					/* Normal ground mission. */
+					CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
 					Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died."), mis->def->civilians), MAX_MESSAGE_TEXT);
 					break;
 				default:
