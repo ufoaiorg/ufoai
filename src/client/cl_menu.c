@@ -239,7 +239,7 @@ menu_t *MN_GetMenu(char *name)
 /**
  * @brief Searches all nodes in the given menu for a given nodename
  */
-menuNode_t *MN_GetNode(menu_t * menu, char *name)
+menuNode_t *MN_GetNode(const menu_t* const menu, char *name)
 {
 	menuNode_t *node;
 
@@ -272,7 +272,7 @@ void MN_SetNewNodePos (menuNode_t* node, int x, int y)
 /**
  * @brief
  */
-static char *MN_GetReferenceString(menu_t * menu, char *ref)
+static char *MN_GetReferenceString(const menu_t* const menu, char *ref)
 {
 	if (!ref)
 		return NULL;
@@ -331,7 +331,7 @@ static char *MN_GetReferenceString(menu_t * menu, char *ref)
 /**
  * @brief
  */
-static float MN_GetReferenceFloat(menu_t * menu, void *ref)
+static float MN_GetReferenceFloat(const menu_t* const menu, void *ref)
 {
 	if (!ref)
 		return 0.0;
@@ -415,10 +415,13 @@ static void MN_StartServer(void)
 
 /**
  * @brief Will merge the second shape (=itemshape) into the first one on the position x/y
+ * @param[in] shape Pointer to 'int shape[16]'
+ * @param[in] itemshape
+ * @param[in] x
+ * @param[in] y
  */
-static void Com_MergeShapes(int *shape, int itemshape, int x, int y)
+static void Com_MergeShapes(int* const shape, int itemshape, int x, int y)
 {
-	/*TODO-security: needs some checks for max-values! */
 	int i;
 
 	for (i = 0; (i < 4) && (y + i < 16); i++)
@@ -427,6 +430,10 @@ static void Com_MergeShapes(int *shape, int itemshape, int x, int y)
 
 /**
  * @brief Checks the shape if there is a 1-bit on the position x/y.
+ * @param[in] shape
+ * @param[in] x
+ * @param[in] y
+ * @note Make sure, that y is not bigger than 15
  */
 static qboolean Com_CheckShape(int shape[16], int x, int y)
 {
@@ -491,8 +498,8 @@ static void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
 						if (Com_CheckShape(free, x, y))
 							MN_DrawFree(node->pos[0] + x * C_UNIT, node->pos[1] + y * C_UNIT, C_UNIT, C_UNIT);
 					}
-				}				/* for x */
-			}					/* for y */
+				}	/* for x */
+			}	/* for y */
 		}
 	}
 }
@@ -512,7 +519,7 @@ void MN_Popup(const char *title, const char *text)
 /**
  * @brief
  */
-static void MN_ExecuteActions(menu_t * menu, menuAction_t * first)
+static void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first)
 {
 	menuAction_t *action;
 	byte *data;
@@ -597,7 +604,7 @@ MENU ZONE DETECTION
 /**
  * @brief
  */
-static void MN_FindContainer(menuNode_t * node)
+static void MN_FindContainer(menuNode_t* const node)
 {
 	invDef_t *id;
 	int i, j;
@@ -629,7 +636,7 @@ static void MN_FindContainer(menuNode_t * node)
 /**
  * @brief
  */
-static qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
+static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
 {
 	int sx, sy, tx, ty;
 
@@ -757,7 +764,7 @@ qboolean MN_CursorOnMenu(int x, int y)
  * @brief
  * @note: node->mousefx is the container id
  */
-static void MN_Drag(menuNode_t * node, int x, int y)
+static void MN_Drag(const menuNode_t* const node, int x, int y)
 {
 	int px, py;
 
@@ -1296,7 +1303,7 @@ static menuModel_t *MN_GetMenuModel(char *menuModel)
  * @param[in] n The node to get the font for - if NULL f_small is returned
  * @return char pointer with font name (default is f_small)
  */
-char *MN_GetFont(menu_t *m, const menuNode_t *n)
+char *MN_GetFont(const menu_t *m, const menuNode_t *const n)
 {
 	if (!n || n->data[1]) {
 		if (!m) {

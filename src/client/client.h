@@ -893,9 +893,9 @@ void MN_UnHideNode ( menuNode_t* node );
 void MN_HideNode ( menuNode_t* node );
 menuNode_t* MN_GetNodeFromCurrentMenu(char*name);
 void MN_SetNewNodePos (menuNode_t* node, int x, int y);
-menuNode_t *MN_GetNode(menu_t * menu, char *name);
+menuNode_t *MN_GetNode(const menu_t* const menu, char *name);
 menu_t *MN_GetMenu(char *name);
-char *MN_GetFont(menu_t *m, const menuNode_t *n);
+char *MN_GetFont(const menu_t *m, const menuNode_t *const n);
 
 void MN_ResetMenus(void);
 void MN_Shutdown(void);

@@ -1098,24 +1098,24 @@ typedef struct character_s {
 } character_t;
 
 void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility, int minSkill, int maxSkill);
-char *Com_CharGetBody(character_t * chr);
-char *Com_CharGetHead(character_t * chr);
+char *Com_CharGetBody(character_t* const chr);
+char *Com_CharGetHead(character_t* const chr);
 
 /* =========================================================== */
 
 void Com_InitCSI(csi_t * import);
 void Com_InitInventory(invList_t * invChain);
-qboolean Com_CheckToInventory(const inventory_t * i, const int item, const int container, int x, int y);
-invList_t *Com_SearchInInventory(inventory_t * i, int container, int x, int y);
-invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x, int y);
-qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y);
-int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp);
-void Com_EmptyContainer(inventory_t * i, int container);
-void Com_DestroyInventory(inventory_t * i);
-void Com_FindSpace(const inventory_t *inv, const int item, const int container, int *px, int *py);
-int Com_TryAddToInventory(inventory_t *inv, item_t item, int container);
-int Com_TryAddToBuyType(inventory_t *inv, item_t item, int container);
-void Com_EquipActor(inventory_t *inv, const int equip[MAX_OBJDEFS],  char *name);
+qboolean Com_CheckToInventory(const inventory_t* const i, const int item, const int container, int x, int y);
+invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y);
+invList_t *Com_AddToInventory(inventory_t* const i, item_t item, int container, int x, int y);
+qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y);
+int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp);
+void Com_EmptyContainer(inventory_t* const i, int container);
+void Com_DestroyInventory(inventory_t* const i);
+void Com_FindSpace(const inventory_t* const inv, const int item, const int container, int * const px, int * const py);
+int Com_TryAddToInventory(inventory_t* const inv, item_t item, int container);
+int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int container);
+void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS],  char *name);
 
 /* =========================================================== */
 

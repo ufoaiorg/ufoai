@@ -2108,7 +2108,7 @@ qboolean Com_CheckToInventory(const inventory_t * i, const int item, const int c
 /**
   * @brief Searches a suitable place in container of a given inventory
   */
-invList_t *Com_SearchInInventory(inventory_t * i, int container, int x, int y)
+invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y)
 {
 	invList_t *ic;
 
@@ -2168,7 +2168,7 @@ invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x
  * @param
  * @sa
  */
-qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
+qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y)
 {
 	invList_t *ic, *old;
 
@@ -2217,7 +2217,7 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
  * @param
  * @sa
  */
-int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp)
+int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp)
 {
 	invList_t *ic;
 	int time;
@@ -2326,7 +2326,7 @@ int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int t
  * @param
  * @sa
  */
-void Com_EmptyContainer(inventory_t * i, const int container)
+void Com_EmptyContainer(inventory_t* const i, const int container)
 {
 	invList_t *ic, *old;
 
@@ -2364,7 +2364,7 @@ void Com_EmptyContainer(inventory_t * i, const int container)
  * @param
  * @sa
  */
-void Com_DestroyInventory(inventory_t * i)
+void Com_DestroyInventory(inventory_t* const i)
 {
 	int k;
 
@@ -2380,7 +2380,7 @@ void Com_DestroyInventory(inventory_t * i)
  * @param
  * @sa
  */
-void Com_FindSpace(const inventory_t *inv, const int item, const int container, int *px, int *py)
+void Com_FindSpace(const inventory_t* const inv, const int item, const int container, int* const px, int* const py)
 {
 	int x, y;
 
@@ -2413,7 +2413,7 @@ void Com_FindSpace(const inventory_t *inv, const int item, const int container, 
  * @sa Com_FindSpace
  * @sa Com_AddToInventory
  */
-int Com_TryAddToInventory(inventory_t * inv, item_t item, int container)
+int Com_TryAddToInventory(inventory_t* const inv, item_t item, int container)
 {
 	int x, y;
 
@@ -2435,7 +2435,7 @@ int Com_TryAddToInventory(inventory_t * inv, item_t item, int container)
  * @sa Com_FindSpace
  * @sa Com_AddToInventory
  */
-int Com_TryAddToBuyType(inventory_t * inv, item_t item, int container)
+int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int container)
 {
 	int x, y;
 	inventory_t hackInv;
@@ -2468,7 +2468,7 @@ CHARACTER GENERATION AND HANDLING
   *
   * TODO: choose between multiple ammo for the same weapon
   */
-int Com_PackAmmoAndWeapon(inventory_t *inv, const int weapon, const int equip[MAX_OBJDEFS], char *name)
+int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], char *name)
 {
 	int ammo;
 	item_t item = {1,NONE,NONE};
@@ -2535,7 +2535,7 @@ int Com_PackAmmoAndWeapon(inventory_t *inv, const int weapon, const int equip[MA
   * If two weapons in the same category have the same price,
   * only one will be considered for inventory.
   */
-void Com_EquipActor(inventory_t *inv, const int equip[MAX_OBJDEFS], char *name)
+void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *name)
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
