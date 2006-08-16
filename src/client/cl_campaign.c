@@ -757,6 +757,8 @@ void CL_CampaignCheckEvents(void)
 					B_BaseResetStatus(base);
 					/* Delete all employees from the base & the global list. */
 					E_DeleteAllEmployees(base);
+					/* TODO: Destroy all items in storage. */
+					/* TODO: Aircrafts? */
 					/* TODO: Maybe reset running researches ... needs playbalance .. maybe another value in technology_t to remember researched time from other bases? */
 					/* TODO: Destroy some random buildings. */
 					Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("The aliens killed all employees in your base '%s'."), base->name );

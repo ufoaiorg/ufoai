@@ -847,32 +847,6 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 					token = COM_EParse(text, errhead, id);
 					if (!*text)
 						return;
-#if 0
-/* I think hiring _and_ _creating_ employees for the first base is too much
-   just hire those that are already there... */
-			} else
-				if (!Q_strncmp(token, "employees", MAX_VAR)) {
-				token = COM_EParse(text, errhead, id);
-				if (!*text)
-					return;
-				if (*token) {
-					split = strstr(token, " ");
-					if (!split) {
-						Sys_Error("Wrong 'employees' line: [amount] [type] ('%s')\n", token);
-						/* never reached */
-						return;
-					}
-					*split++ = '\0';
-					employeesAmount = atoi(token);
-					Com_DPrintf("Add %i employees '%s'\n", employeesAmount, split);
-					for (i=0; i<employeesAmount;i++) {
-						employee = E_CreateEmployee(E_GetEmployeeType(split));
-						if (!employee)
-							Sys_Error("Could not create employee '%s'\n", split);
-					}
-					building->employees = employeesAmount;
-				}
-#endif
 				} else {
 				for (edp = valid_vars; edp->string; edp++)
 					if (!Q_strncmp(token, edp->string, sizeof(edp->string))) {

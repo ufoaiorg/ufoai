@@ -417,7 +417,7 @@ employee_t* E_CreateEmployee(employeeType_t type)
 {
 	employee_t* employee = NULL;
 
-	if (type == MAX_EMPL)
+	if ( type >= MAX_EMPL || type < 0 )
 		return NULL;
 
 	if (gd.numEmployees[type] >= MAX_EMPLOYEES) {
@@ -518,16 +518,31 @@ void E_DeleteAllEmployees(const base_t* const base)
 	employeeType_t type;
 	employee_t *employee = NULL;
 
+	character_t *chr = NULL; /* DEBUG */
+
 	if ( !base )
 		return;
-
-	for ( type = 0; type < MAX_EMPL; type++ ) {
+	Com_DPrintf("E_DeleteAllEmployees: starting ...\n");
+	for ( type = EMPL_SOLDIER; type < MAX_EMPL; type++ ) {
+		Com_DPrintf("E_DeleteAllEmployees: Removing empl-type %i | num %i\n", type, gd.numEmployees[type]);
 		for ( i = 0; i < gd.numEmployees[type]; i++) {
+			Com_DPrintf("E_DeleteAllEmployees: %i\n", i);
 			employee = &gd.employees[type][i];
-			if (employee->baseIDHired == base->idx)
+			if (employee) {
+				chr = &employee->chr;
+				Com_DPrintf("E_DeleteAllEmployees:   Removing empl ... %s\n", chr->name);
+			} else {
+				Com_DPrintf("E_DeleteAllEmployees:   NULL\n");
+			}
+			if (employee->baseIDHired == base->idx) {
 				E_DeleteEmployee(employee, type);
+				Com_DPrintf("E_DeleteAllEmployees:   Removing empl.\n");
+			} else if (employee->baseIDHired >= 0) {
+				Com_DPrintf("E_DeleteAllEmployees:   Not removing empl.\n");
+			}
 		}
 	}
+	Com_DPrintf("E_DeleteAllEmployees: ... finished\n");
 }
 
 #if 0
