@@ -369,7 +369,7 @@ static void RS_ResearchDisplayInfo(void)
 	tech = researchList[researchListPos];
 
 	/* Display total number of free labs in current base. */
-	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), E_CountUnassinged(baseCurrent, EMPL_SCIENTIST)));
+	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), E_CountUnassigned(baseCurrent, EMPL_SCIENTIST)));
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
 	/* Display the base this tech is researched in. */
@@ -472,8 +472,8 @@ void RS_AssignScientist(technology_t* tech)
 		base = baseCurrent;
 	}
 
-	employee = E_GetUnassingedEmployee(base, EMPL_SCIENTIST);
-	
+	employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
+
 	if (!employee) {
 		/* No scientists are free in this base. */
 		return;
@@ -545,7 +545,7 @@ static void RS_RemoveScientist_f(void)
 		return;
 
 	if (researchList[num]->scientists > 0) {
-		employee = E_GetAssingedEmployee(&gd.bases[researchList[num]->base_idx], EMPL_SCIENTIST);
+		employee = E_GetAssignedEmployee(&gd.bases[researchList[num]->base_idx], EMPL_SCIENTIST);
 		if (employee) {
 			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
 			researchList[num]->scientists--;
@@ -661,7 +661,7 @@ void RS_UpdateData(void)
 	Cbuf_AddText("research_clear\n");
 
 	for (i=0; i < gd.numBases; i++) {
-		available[i] = E_CountUnassinged(&gd.bases[i], EMPL_SCIENTIST);
+		available[i] = E_CountUnassigned(&gd.bases[i], EMPL_SCIENTIST);
 	}
 
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
@@ -1555,6 +1555,6 @@ technology_t *RS_GetTechWithMostScientists( int base_idx )
 			}
 		}
 	}
-	
+
 	return tech;
 }

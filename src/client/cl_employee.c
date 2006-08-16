@@ -133,12 +133,12 @@ void E_ResetEmployees(void)
  *
  * @param[in] employee The employee_t pointer to check
  * @return qboolean
- * @sa E_EmployeeIsUnassinged
+ * @sa E_EmployeeIsUnassigned
  */
 qboolean E_EmployeeIsFree(employee_t * employee)
 {
 	if ( !employee )
-		Sys_Error("E_EmployeeIsUnassinged: Employee is NULL.\n");
+		Sys_Error("E_EmployeeIsUnassigned: Employee is NULL.\n");
 
 	return (employee->buildingID < 0 && employee->hired);
 }
@@ -150,10 +150,10 @@ qboolean E_EmployeeIsFree(employee_t * employee)
  * @param[in] idx Which employee id (in global employee array)
  * @return employee_t pointer or NULL
  */
-employee_t* E_GetEmployee(base_t* base, employeeType_t type, int idx)
+employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int idx)
 {
 	int i;
-	
+
 	if ( !base || type >= MAX_EMPL || type < 0 || idx < 0 )
 		return NULL;
 
@@ -170,7 +170,7 @@ employee_t* E_GetEmployee(base_t* base, employeeType_t type, int idx)
  * @param[in] base Which base the employee should be fired from.
  * @param[in] type Which employee type do we search.
  */
-void E_UnhireAllEmployees(base_t* base, employeeType_t type)
+void E_UnhireAllEmployees(const base_t* const base, employeeType_t type)
 {
 	int i;
 	employee_t *employee;
@@ -192,7 +192,7 @@ void E_UnhireAllEmployees(base_t* base, employeeType_t type)
  * @param[in] idx Which employee id (in global employee array)
  * @return character_t pointer or NULL
  */
-character_t* E_GetCharacter(base_t* base, employeeType_t type, int idx)
+character_t* E_GetCharacter(const base_t* const base, employeeType_t type, int idx)
 {
 	employee_t* employee = E_GetEmployee(base, type, idx); /* Parameter sanity is checked here. */
 	if (employee)
@@ -215,7 +215,7 @@ employee_t* E_GetUnhiredEmployee(employeeType_t type, int idx)
 	int i = 0;
 	int j = -1;	/* The number of found unhired employees. Ignore the minus. */
 	employee_t *employee = NULL;
-	
+
 	if ( type >= MAX_EMPL || type < 0 ) {
 		Com_Printf("E_GetUnhiredEmployee: Unknown EmployeeType: %i\n", type );
 		return NULL;
@@ -250,12 +250,12 @@ employee_t* E_GetUnhiredEmployee(employeeType_t type, int idx)
  * @sa E_HireEmployee
  * @sa E_UnhireEmployee
  */
-employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int idx)
+employee_t* E_GetHiredEmployee(const base_t* const base, employeeType_t type, int idx)
 {
 	int i = 0;
 	int j = -1;	/* The number of found hired employees. Ignore the minus. */
 	employee_t *employee = NULL;
-	
+
 	if ( !base)
 		return NULL;
 
@@ -288,7 +288,7 @@ employee_t* E_GetHiredEmployee(base_t* base, employeeType_t type, int idx)
  * @param[in] idx Which employee id (in global employee array)
  * @return character_t pointer or NULL
  */
-character_t* E_GetHiredCharacter(base_t* base, employeeType_t type, int idx)
+character_t* E_GetHiredCharacter(const base_t* const base, employeeType_t type, int idx)
 {
 	employee_t* employee = E_GetHiredEmployee(base, type, idx);  /* Parameter sanity is checked here. */
 	if (employee)
@@ -304,10 +304,10 @@ character_t* E_GetHiredCharacter(base_t* base, employeeType_t type, int idx)
  * @return qboolean
  * @sa E_EmployeeIsFree
  */
-qboolean E_EmployeeIsUnassinged(employee_t * employee)
+qboolean E_EmployeeIsUnassigned(employee_t * employee)
 {
 	if ( !employee )
-		Sys_Error("E_EmployeeIsUnassinged: Employee is NULL.\n");
+		Sys_Error("E_EmployeeIsUnassigned: Employee is NULL.\n");
 
 	return (employee->buildingID < 0);
 }
@@ -317,11 +317,11 @@ qboolean E_EmployeeIsUnassinged(employee_t * employee)
  *
  * @param[in] type The type of employee to search.
  * @return employee_t
- * @sa E_EmployeeIsUnassinged
+ * @sa E_EmployeeIsUnassigned
  * @sa E_EmployeesInBase
  * @note assigned is not hired - they are already hired in a base, in a quarter _and_ working in another building.
  */
-employee_t * E_GetAssingedEmployee(base_t* base, employeeType_t type)
+employee_t * E_GetAssignedEmployee(const base_t* const base, employeeType_t type)
 {
 	int i;
 	employee_t *employee;
@@ -329,7 +329,7 @@ employee_t * E_GetAssingedEmployee(base_t* base, employeeType_t type)
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
 		if ( employee->baseIDHired == base->idx
-			 && !E_EmployeeIsUnassinged(employee) )
+			 && !E_EmployeeIsUnassigned(employee) )
 			return employee;
 	}
 	return NULL;
@@ -340,11 +340,11 @@ employee_t * E_GetAssingedEmployee(base_t* base, employeeType_t type)
  *
  * @param[in] type The type of employee to search.
  * @return employee_t
- * @sa E_EmployeeIsUnassinged
+ * @sa E_EmployeeIsUnassigned
  * @sa E_EmployeesInBase
  * @note unassigned is not unhired - they are already hired in a base but are at quarters
  */
-employee_t * E_GetUnassingedEmployee(base_t* base, employeeType_t type)
+employee_t * E_GetUnassignedEmployee(const base_t* const base, employeeType_t type)
 {
 	int i;
 	employee_t *employee;
@@ -352,7 +352,7 @@ employee_t * E_GetUnassingedEmployee(base_t* base, employeeType_t type)
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
 		if ( employee->baseIDHired == base->idx
-			 && E_EmployeeIsUnassinged(employee) )
+			 && E_EmployeeIsUnassigned(employee) )
 			return employee;
 	}
 	return NULL;
@@ -366,7 +366,7 @@ employee_t * E_GetUnassingedEmployee(base_t* base, employeeType_t type)
  * @todo Check for quarter space
  * @sa E_UnhireEmployee
  */
-qboolean E_HireEmployee(base_t* base, employeeType_t type, int idx)
+qboolean E_HireEmployee(const base_t* const base, employeeType_t type, int idx)
 {
 	employee_t* employee;
 	employee = E_GetUnhiredEmployee(type, idx);
@@ -386,7 +386,7 @@ qboolean E_HireEmployee(base_t* base, employeeType_t type, int idx)
  * @param[in] idx Which employee id (in global employee array) See E_GetHiredEmployee for usage.
  * @sa E_HireEmployee
  */
-qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int idx)
+qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx)
 {
 	employee_t* employee;
 	employee = E_GetHiredEmployee(base, type, idx);
@@ -526,7 +526,7 @@ qboolean E_AssignEmployeeToBuilding(building_t *building, employeeType_t type)
 	case EMPL_SOLDIER:
 		break;
 	case EMPL_SCIENTIST:
-		employee = E_GetUnassingedEmployee(&gd.bases[building->base_idx], type);
+		employee = E_GetUnassignedEmployee(&gd.bases[building->base_idx], type);
 		if (employee) {
 			employee->buildingID = building->idx;
 		} else {
@@ -590,7 +590,7 @@ qboolean E_RemoveEmployeeFromBuilding(employee_t *employee)
  * @param[in] base The base where we count
  * @return count of hired employees of a given type in a given base
  */
-int E_CountHired(base_t* base, employeeType_t type)
+int E_CountHired(const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
 	employee_t *employee;
@@ -610,7 +610,7 @@ int E_CountHired(base_t* base, employeeType_t type)
  * @param[in] base The base where we count
  * @return count of hired employees of a given type in a given base
  */
-int E_CountUnhired(base_t* base, employeeType_t type)
+int E_CountUnhired(const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
 	employee_t *employee;
@@ -628,7 +628,7 @@ int E_CountUnhired(base_t* base, employeeType_t type)
  * @param[in] type The type of employee to search.
  * @param[in] base The base where we count
  */
-int E_CountUnassinged(base_t* base, employeeType_t type)
+int E_CountUnassigned(const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
 	employee_t *employee;

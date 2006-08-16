@@ -68,24 +68,24 @@ typedef struct employee_s {
 void E_ResetEmployees(void);
 employee_t * E_CreateEmployee(employeeType_t type);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
-qboolean E_HireEmployee(base_t* base, employeeType_t type, int num);
-qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int num);
+qboolean E_HireEmployee(const base_t* const base, employeeType_t type, int num);
+qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int num);
 qboolean E_RemoveEmployeeFromBuilding(employee_t *employee);
 
 employeeType_t E_GetEmployeeType(char* type);
-int E_EmployeesInBase(base_t* base, employeeType_t type, qboolean free_only);
+int E_EmployeesInBase(const base_t* const base, employeeType_t type, qboolean free_only);
 
-employee_t * E_GetEmployee(base_t* base, employeeType_t type, int num);
-character_t * E_GetCharacter(base_t* base, employeeType_t type, int num);
-employee_t * E_GetHiredEmployee(base_t* base, employeeType_t type, int num);
-character_t * E_GetHiredCharacter(base_t* base, employeeType_t type, int num);
-employee_t * E_GetUnassingedEmployee(base_t* base, employeeType_t type);
-employee_t * E_GetAssingedEmployee(base_t* base, employeeType_t type);
+employee_t * E_GetEmployee(const base_t* const base, employeeType_t type, int num);
+character_t * E_GetCharacter(const base_t* const base, employeeType_t type, int num);
+employee_t * E_GetHiredEmployee(const base_t* const base, employeeType_t type, int num);
+character_t * E_GetHiredCharacter(const base_t* const base, employeeType_t type, int num);
+employee_t * E_GetUnassignedEmployee(const base_t* const base, employeeType_t type);
+employee_t * E_GetAssignedEmployee(const base_t* const base, employeeType_t type);
 
-int E_CountHired(base_t* base, employeeType_t type);
-int E_CountUnhired(base_t* base, employeeType_t type);
-int E_CountUnassinged(base_t* base, employeeType_t type);
-void E_UnhireAllEmployees(base_t* base, employeeType_t type);
+int E_CountHired(const base_t* const base, employeeType_t type);
+int E_CountUnhired(const base_t* const base, employeeType_t type);
+int E_CountUnassigned(const base_t* const base, employeeType_t type);
+void E_UnhireAllEmployees(const base_t* const base, employeeType_t type);
 
 
 #endif /* CLIENT_CL_EMPLOYEE */
