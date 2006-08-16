@@ -166,14 +166,14 @@ static qboolean CheckAND(char **s)
 }
 
 /**
-  * @brief Boolean expression parser
-  *
-  * @param[in] expr
-  * @param[in] varFuncParam Function pointer
-  * @return qboolean
-  * @sa CheckOR
-  * @sa CheckAND
-  */
+ * @brief Boolean expression parser
+ *
+ * @param[in] expr
+ * @param[in] varFuncParam Function pointer
+ * @return qboolean
+ * @sa CheckOR
+ * @sa CheckAND
+ */
 static qboolean CheckBEP(char *expr, qboolean(*varFuncParam) (char *var))
 {
 	qboolean result;
@@ -212,8 +212,8 @@ static qboolean CheckBEP(char *expr, qboolean(*varFuncParam) (char *var))
 /* =========================================================== */
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2)
 {
 	int a, b, c;
@@ -226,8 +226,8 @@ extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 extern qboolean CL_MapIsNight(vec2_t pos)
 {
 	float p, q, a, root, x;
@@ -243,8 +243,8 @@ extern qboolean CL_MapIsNight(vec2_t pos)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static qboolean Date_LaterThan(date_t now, date_t compare)
 {
 	if (now.day > compare.day)
@@ -258,8 +258,8 @@ static qboolean Date_LaterThan(date_t now, date_t compare)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static date_t Date_Add(date_t a, date_t b)
 {
 	a.sec += b.sec;
@@ -270,8 +270,8 @@ static date_t Date_Add(date_t a, date_t b)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static date_t Date_Random(date_t frame)
 {
 	frame.sec = (frame.day * 3600 * 24 + frame.sec) * frand();
@@ -285,8 +285,8 @@ static date_t Date_Random(date_t frame)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static qboolean CL_MapMaskFind(byte * color, vec2_t polar)
 {
 	byte *c;
@@ -322,10 +322,10 @@ static qboolean CL_MapMaskFind(byte * color, vec2_t polar)
 }
 
 /**
-  * @brief Returns the color value from geoscape of maskPic at a given position
-  * @param[in] pos vec2_t value of position on map to get the color value from
-  * @return the color value at given position
-  */
+ * @brief Returns the color value from geoscape of maskPic at a given position
+ * @param[in] pos vec2_t value of position on map to get the color value from
+ * @return the color value at given position
+ */
 extern byte *CL_GetmapColor(vec2_t pos)
 {
 	int x, y;
@@ -342,8 +342,8 @@ extern byte *CL_GetmapColor(vec2_t pos)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 extern qboolean CL_NewBase(vec2_t pos)
 {
 	byte *color;
@@ -387,10 +387,10 @@ extern qboolean CL_NewBase(vec2_t pos)
 
 
 /**
-  * @brief Checks wheter a stage set exceeded the quota
-  *
-  * @return qboolean
-  */
+ * @brief Checks wheter a stage set exceeded the quota
+ *
+ * @return qboolean
+ */
 static stage_t *testStage;
 
 static qboolean CL_StageSetDone(char *name)
@@ -412,8 +412,8 @@ static qboolean CL_StageSetDone(char *name)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void CL_CampaignActivateStageSets(stage_t * stage)
 {
 	setState_t *set;
@@ -435,8 +435,8 @@ static void CL_CampaignActivateStageSets(stage_t * stage)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
 {
 	stage_t *stage;
@@ -475,8 +475,8 @@ static stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void CL_CampaignEndStage(char *name)
 {
 	stageState_t *state;
@@ -493,9 +493,9 @@ static void CL_CampaignEndStage(char *name)
 
 
 /**
-  * @brief
-  * @sa CL_CampaignRemoveMission
-  */
+ * @brief
+ * @sa CL_CampaignRemoveMission
+ */
 #define DIST_MIN_BASE_MISSION 4
 static void CL_CampaignAddMission(setState_t * set)
 {
@@ -600,9 +600,9 @@ static void CL_CampaignAddMission(setState_t * set)
 }
 
 /**
-  * @brief
-  * @sa CL_CampaignAddMission
-  */
+ * @brief
+ * @sa CL_CampaignAddMission
+ */
 static void CL_CampaignRemoveMission(actMis_t * mis)
 {
 	int i, num;
@@ -630,8 +630,8 @@ static void CL_CampaignRemoveMission(actMis_t * mis)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void CL_CampaignExecute(setState_t * set)
 {
 	/* handle stages, execute commands */
@@ -649,8 +649,8 @@ static void CL_CampaignExecute(setState_t * set)
 }
 
 /**
-  * @brief Builds the aircraft list for textfield with id
-  */
+ * @brief Builds the aircraft list for textfield with id
+ */
 static void CL_BuildingAircraftList_f(void)
 {
 	char *s;
@@ -674,11 +674,11 @@ static void CL_BuildingAircraftList_f(void)
 }
 
 /**
-  * @brief
-  *
-  * if expires is true a mission expires without any reaction
-  * this will cost money and decrease nation support for this area
-  */
+ * @brief
+ *
+ * if expires is true a mission expires without any reaction
+ * this will cost money and decrease nation support for this area
+ */
 static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
 {
 	int i;
@@ -717,15 +717,15 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_CampaignCheckEvents(void)
 {
 	stageState_t *stage = NULL;
 	setState_t *set = NULL;;
 	actMis_t *mis = NULL;
 	base_t *base = NULL;
-	
+
 	int i, j;
 
 	/* check campaign events */
@@ -799,8 +799,8 @@ char *monthNames[12] = {
 int monthLength[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_DateConvert(date_t * date, int *day, int *month)
 {
 	int i, d;
@@ -816,8 +816,8 @@ void CL_DateConvert(date_t * date, int *day, int *month)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 char *CL_DateGetMonthName(int month)
 {
 	return _(monthNames[month]);
@@ -970,16 +970,16 @@ static void CL_HandleBudget(void)
 }
 
 /**
-  * @brief Called every frame when we are in geoscape view
-  *
-  * Called for node types MN_MAP and MN_3DMAP
-  *
-  * @sa MN_DrawMenus
-  * @sa CL_HandleBudget
-  * @sa B_UpdateBaseData
-  * @sa CL_CampaignRunAircraft
-  * @sa CL_CampaignCheckEvents
-  */
+ * @brief Called every frame when we are in geoscape view
+ *
+ * Called for node types MN_MAP and MN_3DMAP
+ *
+ * @sa MN_DrawMenus
+ * @sa CL_HandleBudget
+ * @sa B_UpdateBaseData
+ * @sa CL_CampaignRunAircraft
+ * @sa CL_CampaignCheckEvents
+ */
 
 void CL_CampaignRun(void)
 {
@@ -1042,8 +1042,8 @@ static gameLapse_t lapse[NUM_TIMELAPSE] = {
 int gameLapse;
 
 /**
-  * @brief Stop game time speed
-  */
+ * @brief Stop game time speed
+ */
 void CL_GameTimeStop(void)
 {
 	/* don't allow time scale in tactical mode */
@@ -1056,10 +1056,10 @@ void CL_GameTimeStop(void)
 
 
 /**
-  * @brief Decrease game time speed
-  *
-  * Decrease game time speed - only works when there is already a base available
-  */
+ * @brief Decrease game time speed
+ *
+ * Decrease game time speed - only works when there is already a base available
+ */
 void CL_GameTimeSlow(void)
 {
 	/* don't allow time scale in tactical mode */
@@ -1077,10 +1077,10 @@ void CL_GameTimeSlow(void)
 }
 
 /**
-  * @brief Increase game time speed
-  *
-  * Increase game time speed - only works when there is already a base available
-  */
+ * @brief Increase game time speed
+ *
+ * Increase game time speed - only works when there is already a base available
+ */
 void CL_GameTimeFast(void)
 {
 	/* don't allow time scale in tactical mode */
@@ -1098,10 +1098,10 @@ void CL_GameTimeFast(void)
 }
 
 /**
-  * @brief Sets credits and update mn_credits cvar
-  *
-  * Checks whether credits are bigger than MAX_CREDITS
-  */
+ * @brief Sets credits and update mn_credits cvar
+ *
+ * Checks whether credits are bigger than MAX_CREDITS
+ */
 #define MAX_CREDITS 10000000
 void CL_UpdateCredits(int credits)
 {
@@ -1116,10 +1116,10 @@ void CL_UpdateCredits(int credits)
 
 #define MAX_STATS_BUFFER 1024
 /**
-  * @brief
-  *
-  * Shows the current stats from stats_t stats
-  */
+ * @brief
+ *
+ * Shows the current stats from stats_t stats
+ */
 void CL_Stats_Update(void)
 {
 	static char statsBuffer[MAX_STATS_BUFFER];
@@ -1164,9 +1164,9 @@ void CL_MessageSave(sizebuf_t * sb, message_t * message)
 }
 
 /**
-  * @brief
-  * @sa CL_GameLoad
-  */
+ * @brief
+ * @sa CL_GameLoad
+ */
 void CL_GameSave(char *filename, char *comment)
 {
 	stageState_t *state;
@@ -1285,8 +1285,8 @@ void CL_GameSave(char *filename, char *comment)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void CL_GameSaveCmd(void)
 {
 	char comment[MAX_COMMENTLENGTH];
@@ -1350,16 +1350,16 @@ void CL_UpdatePointersInGlobalData(void)
 }
 
 /**
-  * @brief Loads a savegame from file
-  *
-  * @param filename Savegame to load (relative to writepath/save)
-  *
-  * @sa CL_GameLoadCmd
-  * @sa CL_GameSave
-  * @sa CL_MessageSave
-  * @sa CL_ReadSinglePlayerData
-  * @sa CL_UpdatePointersInGlobalData
-  */
+ * @brief Loads a savegame from file
+ *
+ * @param filename Savegame to load (relative to writepath/save)
+ *
+ * @sa CL_GameLoadCmd
+ * @sa CL_GameSave
+ * @sa CL_MessageSave
+ * @sa CL_ReadSinglePlayerData
+ * @sa CL_UpdatePointersInGlobalData
+ */
 int CL_GameLoad(char *filename)
 {
 	actMis_t *mis;
@@ -1599,10 +1599,10 @@ int CL_GameLoad(char *filename)
 
 
 /**
-  * @brief Console command to load a savegame
-  *
-  * @sa CL_GameLoad
-  */
+ * @brief Console command to load a savegame
+ *
+ * @sa CL_GameLoad
+ */
 static void CL_GameLoadCmd(void)
 {
 	/* get argument */
@@ -1619,14 +1619,14 @@ static void CL_GameLoadCmd(void)
 
 
 /**
-  * @brief Console commands to read the comments from savegames
-  *
-  * The comment is the part of the savegame that you type in at saving
-  * for reidentifying the savegame
-  *
-  * @sa CL_GameLoadCmd
-  * @sa CL_GameLoad
-  */
+ * @brief Console commands to read the comments from savegames
+ *
+ * The comment is the part of the savegame that you type in at saving
+ * for reidentifying the savegame
+ *
+ * @sa CL_GameLoadCmd
+ * @sa CL_GameLoad
+ */
 static void CL_GameCommentsCmd(void)
 {
 	char comment[MAX_VAR];
@@ -1662,11 +1662,11 @@ static void CL_GameCommentsCmd(void)
 
 
 /**
-  * @brief Loads the last saved game
-  *
-  * @note At saving the archive cvar mn_lastsave was set to the latest savegame
-  * @sa CL_GameLoad
-  */
+ * @brief Loads the last saved game
+ *
+ * @note At saving the archive cvar mn_lastsave was set to the latest savegame
+ * @sa CL_GameLoad
+ */
 static void CL_GameContinue(void)
 {
 	if (cls.state == ca_active) {
@@ -1759,12 +1759,12 @@ void CL_StartMissionMap(mission_t* mission)
 }
 
 /**
-  * @brief Starts a selected mission
-  *
-  * @note Checks whether a dropship is near the landing zone and whether it has a team on board
-  * @sa CL_SetMissionCvars
-  * @sa CL_StartMission_f
-  */
+ * @brief Starts a selected mission
+ *
+ * @note Checks whether a dropship is near the landing zone and whether it has a team on board
+ * @sa CL_SetMissionCvars
+ * @sa CL_StartMission_f
+ */
 static void CL_GameGo(void)
 {
 	mission_t *mis;
@@ -1828,13 +1828,13 @@ static void CL_GameGo(void)
 }
 
 /**
-  * @brief Executes console commands after a mission
-  *
-  * @param m Pointer to mission_t
-  * @param won Int value that is one when you've won the game, and zero when the game was lost
-  * Can execute console commands (triggers) on win and lose
-  * This can be used for story dependent missions
-  */
+ * @brief Executes console commands after a mission
+ *
+ * @param m Pointer to mission_t
+ * @param won Int value that is one when you've won the game, and zero when the game was lost
+ * Can execute console commands (triggers) on win and lose
+ * This can be used for story dependent missions
+ */
 static void CP_ExecuteMissionTrigger(mission_t * m, int won)
 {
 	if (won && *m->onwin)
@@ -1844,13 +1844,13 @@ static void CP_ExecuteMissionTrigger(mission_t * m, int won)
 }
 
 /**
-  * @brief Checks whether you have to play this mission
-  *
-  * You can mark a mission as story related.
-  * If a mission is story related the cvar game_autogo is set to 0
-  * If this cvar is 1 - the mission dialog will have a auto mission button
-  * @sa CL_GameAutoGo
-  */
+ * @brief Checks whether you have to play this mission
+ *
+ * You can mark a mission as story related.
+ * If a mission is story related the cvar game_autogo is set to 0
+ * If this cvar is 1 - the mission dialog will have a auto mission button
+ * @sa CL_GameAutoGo
+ */
 static void CL_GameAutoCheck(void)
 {
 	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
@@ -1871,11 +1871,11 @@ static void CL_GameAutoCheck(void)
 }
 
 /**
-  * @brief
-  *
-  * @sa CL_GameAutoCheck
-  * @sa CL_GameGo
-  */
+ * @brief
+ *
+ * @sa CL_GameAutoCheck
+ * @sa CL_GameGo
+ */
 void CL_GameAutoGo(void)
 {
 	mission_t *mis;
@@ -1936,8 +1936,8 @@ void CL_GameAutoGo(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_GameAbort(void)
 {
 	/* aborting means letting the aliens win */
@@ -1947,12 +1947,12 @@ void CL_GameAbort(void)
 /* =========================================================== */
 
 /**
-  * @brief Collect aliens from battlefield (e.g. for autopsy)
-  *
-  * loop through all entities and put the ones that are stunned
-  * as living aliens into our labs
-  * TODO: put them into the labs
-  */
+ * @brief Collect aliens from battlefield (e.g. for autopsy)
+ *
+ * loop through all entities and put the ones that are stunned
+ * as living aliens into our labs
+ * TODO: put them into the labs
+ */
 void CL_CollectAliens(void)
 {
 	int i, j;
@@ -1999,15 +1999,15 @@ void CL_CollectAliens(void)
 }
 
 /**
-  * @brief Do the real collection of the items
-  *
-  * @param[in] weapon Which weapon
-  * @param[in] left_hand Determines whether the container is the left hand container
-  * @param[in] market Add it to market or mission equipment
-  *
-  * Called from CL_CollectItems.
-  * Put every item to the market inventory list
-  */
+ * @brief Do the real collection of the items
+ *
+ * @param[in] weapon Which weapon
+ * @param[in] left_hand Determines whether the container is the left hand container
+ * @param[in] market Add it to market or mission equipment
+ *
+ * Called from CL_CollectItems.
+ * Put every item to the market inventory list
+ */
 void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 {
 	technology_t *tech = NULL;
@@ -2048,14 +2048,14 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 }
 
 /**
-  * @brief Collect items from battlefield
-  *
-  * @param[in] won Determines whether we have won the match or not
-  *
-  * collects all items from battlefield (if we've won the match)
-  * and put them back to inventory. Calls CL_CollectItemAmmo which
-  * does the real collecting
-  */
+ * @brief Collect items from battlefield
+ *
+ * @param[in] won Determines whether we have won the match or not
+ *
+ * collects all items from battlefield (if we've won the match)
+ * and put them back to inventory. Calls CL_CollectItemAmmo which
+ * does the real collecting
+ */
 void CL_CollectItems(int won)
 {
 	int i;
@@ -2099,10 +2099,10 @@ void CL_CollectItems(int won)
 }
 
 /**
-  * @brief
-  *
-  * FIXME: See TODO and FIXME included
-  */
+ * @brief
+ *
+ * FIXME: See TODO and FIXME included
+ */
 void CL_UpdateCharacterStats(int won)
 {
 	character_t *chr = NULL;
@@ -2167,10 +2167,10 @@ static void CL_DebugChangeCharacterStats_f(void)
 #endif
 
 /**
-  * @brief
-  * @sa CL_ParseResults
-  * @sa CL_ParseCharacterData
-  */
+ * @brief
+ * @sa CL_ParseResults
+ * @sa CL_ParseCharacterData
+ */
 static void CL_GameResultsCmd(void)
 {
 	int won;
@@ -2331,8 +2331,8 @@ mission_t *CL_AddMission(char *name)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ParseMission(char *name, char **text)
 {
 	char *errhead = "CL_ParseMission: unexptected end of file (mission ";
@@ -2444,8 +2444,8 @@ static value_t stageset_vals[] = {
 };
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void CL_ParseStageSet(char *name, char **text)
 {
 	char *errhead = "CL_ParseStageSet: unexptected end of file (stageset ";
@@ -2528,8 +2528,8 @@ static void CL_ParseStageSet(char *name, char **text)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ParseStage(char *name, char **text)
 {
 	char *errhead = "CL_ParseStage: unexptected end of file (stage ";
@@ -2623,8 +2623,8 @@ static value_t campaign_vals[] = {
 };
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ParseCampaign(char *id, char **text)
 {
 	char *errhead = "CL_ParseCampaign: unexptected end of file (campaign ";
@@ -2714,8 +2714,8 @@ static value_t nation_vals[] = {
 };
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ParseNations(char *name, char **text)
 {
 	char *errhead = "CL_ParseNations: unexptected end of file (aircraft ";
@@ -2772,12 +2772,12 @@ void CL_ParseNations(char *name, char **text)
 
 
 /**
-  * @brief Check whether we are in a tactical mission as server or as client
-  * @note handles mutliplayer and singleplayer
-  *
-  * @return true when we are not in battlefield
-  * TODO: Check cvar mn_main for value
-  */
+ * @brief Check whether we are in a tactical mission as server or as client
+ * @note handles mutliplayer and singleplayer
+ *
+ * @return true when we are not in battlefield
+ * TODO: Check cvar mn_main for value
+ */
 qboolean CL_OnBattlescape(void)
 {
 	/* sv.state is set to zero on every battlefield shutdown */
@@ -2906,8 +2906,8 @@ static cmdList_t game_commands[] = {
 };
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void CL_GameExit(void)
 {
 	cmdList_t *commands;
@@ -2926,8 +2926,8 @@ static void CL_GameExit(void)
 }
 
 /**
-  * @brief Called at new game and load game
-  */
+ * @brief Called at new game and load game
+ */
 void CL_GameInit(void)
 {
 	cmdList_t *commands;
@@ -2952,8 +2952,8 @@ void CL_GameInit(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void CL_GameNew(void)
 {
 	equipDef_t *ed;
@@ -3040,8 +3040,8 @@ static void CL_GameNew(void)
 }
 
 /**
-  * @brief fill a list with available campaigns
-  */
+ * @brief fill a list with available campaigns
+ */
 #define MAXCAMPAIGNTEXT 4096
 static char campaignText[MAXCAMPAIGNTEXT];
 static char campaignDesc[MAXCAMPAIGNTEXT];
@@ -3069,8 +3069,8 @@ static void CP_GetCampaigns_f(void)
 }
 
 /**
-  * @brief Script function to select a campaign from campaign list
-  */
+ * @brief Script function to select a campaign from campaign list
+ */
 static void CP_CampaignsClick_f(void)
 {
 	int num;
@@ -3101,9 +3101,9 @@ static void CP_CampaignsClick_f(void)
 }
 
 /**
-  * @brief Will clear most of the parsed singleplayer data
-  * @sa Com_InitInventory
-  */
+ * @brief Will clear most of the parsed singleplayer data
+ * @sa Com_InitInventory
+ */
 void CL_ResetSinglePlayerData(void)
 {
 	numStageSets = numStages = numMissions = 0;
@@ -3116,10 +3116,10 @@ void CL_ResetSinglePlayerData(void)
 }
 
 /**
-  * @brief Show campaign stats in console
-  *
-  * call this function via campaign_stats
-  */
+ * @brief Show campaign stats in console
+ *
+ * call this function via campaign_stats
+ */
 static void CP_CampaignStats(void)
 {
 	setState_t *set;
@@ -3144,8 +3144,8 @@ static void CP_CampaignStats(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ResetCampaign(void)
 {
 	/* reset some vars */
