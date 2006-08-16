@@ -114,7 +114,7 @@ void CL_ParseAircraft(char *name, char **text);
 extern void CL_AircraftReturnToBase(aircraft_t *aircraft);
 extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
 extern void CL_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);
-extern void CL_AircraftsNotifyUfoRemoved(const aircraft_t* ufo);
-extern void CL_AircraftsUfoDisappear(const aircraft_t* ufo);
+extern void CL_AircraftsNotifyUfoRemoved(const aircraft_t *const ufo);
+extern void CL_AircraftsUfoDisappear(const aircraft_t *const ufo);
 
 #endif

@@ -1008,7 +1008,7 @@ building_t *B_GetLab(int base_idx)
  * @sa CL_ResetCharacters
  * @sa CL_GenerateCharacter
  */
-void B_ClearBase(base_t * base)
+void B_ClearBase(base_t *const base)
 {
 	int row, col, i;
 
@@ -1407,7 +1407,7 @@ void B_BuildBase(void)
  * @brief Sets the baseStatus to BASE_NOT_USED
  * @param[in] base Which base should be resetted?
  */
-void B_BaseResetStatus (base_t* base)
+void B_BaseResetStatus (base_t* const base)
 {
 	assert(base);
 	base->baseStatus = BASE_NOT_USED;
@@ -1420,7 +1420,7 @@ void B_BaseResetStatus (base_t* base)
  * @sa B_BaseAttack_f
  * @param[in] base Which base is under attack?
  */
-void B_BaseAttack (base_t* base)
+void B_BaseAttack (base_t* const base)
 {
 	assert(base);
 	base->baseStatus = BASE_UNDER_ATTACK;

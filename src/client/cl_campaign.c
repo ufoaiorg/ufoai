@@ -724,7 +724,6 @@ void CL_CampaignCheckEvents(void)
 	stageState_t *stage;
 	setState_t *set;
 	actMis_t *mis;
-	base_t* base;
 	int i, j;
 
 	/* check campaign events */
@@ -751,12 +750,16 @@ void CL_CampaignCheckEvents(void)
 			CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
 			switch (mis->def->missionType) {
 				case MIS_BASEATTACK:
-					base = (base_t*)mis->def->data;
-					B_BaseResetStatus(base);
+					B_BaseResetStatus((base_t*)mis->def->data);
+					/* TODO */
+					/* delete all employees and destroy assigned equipment - maybe also revert some running researches */
 					Q_strncpyz(messageBuffer, _("The aliens killed all employees in your base."), MAX_MESSAGE_TEXT);
 					break;
-				default:
+				case MIS_INTERCEPT:
 					Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died."), mis->def->civilians), MAX_MESSAGE_TEXT);
+					break;
+				default:
+					Sys_Error("Unknown missionType for '%s'\n", mis->def->name);
 					break;
 			}
 			MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);

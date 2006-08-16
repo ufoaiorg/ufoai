@@ -813,7 +813,7 @@ void CL_ParseAircraft(char *name, char **text)
 /**
  * @brief Notify that a mission has been removed
  */
-extern void CL_AircraftsNotifyMissionRemoved(const actMis_t* mission)
+extern void CL_AircraftsNotifyMissionRemoved(const actMis_t *const mission)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
@@ -833,7 +833,7 @@ extern void CL_AircraftsNotifyMissionRemoved(const actMis_t* mission)
 /**
  * @brief Notify that an ufo has been removed
  */
-extern void CL_AircraftsNotifyUfoRemoved(const aircraft_t* ufo)
+extern void CL_AircraftsNotifyUfoRemoved(const aircraft_t *const ufo)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
@@ -853,7 +853,7 @@ extern void CL_AircraftsNotifyUfoRemoved(const aircraft_t* ufo)
 /**
  * @brief Notify that an ufo disappear from radars
  */
-extern void CL_AircraftsUfoDisappear(const aircraft_t* ufo)
+extern void CL_AircraftsUfoDisappear(const aircraft_t *const ufo)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
