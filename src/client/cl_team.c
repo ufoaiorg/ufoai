@@ -858,27 +858,6 @@ void CL_SaveTeam(char *filename)
 		Com_Printf("Team '%s' not saved.\n", filename);
 }
 
-
-/**
-  * @brief Saves a team from commandline (multiplayer)
-  *
-  * Call CL_SaveTeam to store the team to a given filename
-  */
-static void CL_SaveTeamCmd(void)
-{
-	char filename[MAX_QPATH];
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: saveteam <filename>\n");
-		return;
-	}
-
-	/* save */
-	Com_sprintf(filename, MAX_QPATH, "%s/save/%s.mpt", FS_Gamedir(), Cmd_Argv(1));
-	CL_SaveTeam(filename);
-}
-
-
 /**
   * @brief Stores a team in a specified teamslot (multiplayer)
   */
@@ -942,50 +921,6 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 	}
 }
 
-
-/**
-  * @brief Loads a team for multiplayer
-  * @sa CL_LoadTeamMultiplayer
-  */
-void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
-{
-	character_t *chr;
-	employee_t *employee;
-	int i, p, num;
-
-	/* reset data */
-	CL_ResetCharacters(base);
-
-	/* read whole team list */
-	MSG_ReadByte(sb);
-	num = MSG_ReadByte(sb);
-	Com_DPrintf("load %i teammembers\n", num);
-	E_ResetEmployees();
-	for (i=0; i<num; i++) {
-		/* New employee */
-		employee = E_CreateEmployee(EMPL_SOLDIER);
-		employee->hired = qtrue;
-		employee->baseIDHired = base->idx;
-		chr = &employee->chr;
-		CL_LoadTeamMember(sb, chr);
-	}
-
-	/* get assignement */
-	MSG_ReadFormat(sb, "bl", &base->numOnTeam[0], &base->teamMask[0]);
-
-	for (i = 0, p = 0; i < num; i++)
-		if (base->teamMask[base->aircraftCurrent] & (1 << i))
-			base->curTeam[p++] = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
-
-	base->numHired = p;
-
-	Com_DPrintf("Load team with %i members and %i slots\n", base->numHired, num);
-
-	for (;p<MAX_ACTIVETEAM;p++)
-		base->curTeam[p] = NULL;
-}
-
-
 /**
   * @brief Load a multiplayer team
   * @sa CL_LoadTeam
@@ -996,6 +931,9 @@ void CL_LoadTeamMultiplayer(char *filename)
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
 	FILE *f;
+	character_t *chr;
+	employee_t *employee;
+	int i, p, num;
 
 	/* open file */
 	f = fopen(filename, "rb");
@@ -1013,34 +951,37 @@ void CL_LoadTeamMultiplayer(char *filename)
 	Cvar_Set("mn_teamname", MSG_ReadString(&sb));
 
 	/* load the team */
-	CL_LoadTeam(&sb, &gd.bases[0], SAVE_FILE_VERSION);
-}
+	/* reset data */
+	CL_ResetCharacters(&gd.bases[0]);
 
-
-/**
-  * @brief Loads a team from commandline (multiplayer)
-  */
-static void CL_LoadTeamCmd(void)
-{
-	char filename[MAX_QPATH];
-
-	if (ccs.singleplayer) {
-		Com_Printf("Only for multiplayer\n");
-		return;
+	/* read whole team list */
+	MSG_ReadByte(&sb);
+	num = MSG_ReadByte(&sb);
+	Com_DPrintf("load %i teammembers\n", num);
+	E_ResetEmployees();
+	for (i=0; i<num; i++) {
+		/* New employee */
+		employee = E_CreateEmployee(EMPL_SOLDIER);
+		employee->hired = qtrue;
+		employee->baseIDHired = gd.bases[0].idx;
+		chr = &employee->chr;
+		CL_LoadTeamMember(&sb, chr);
 	}
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: loadteam <filename>\n");
-		return;
-	}
+	/* get assignement */
+	MSG_ReadFormat(&sb, "bl", &gd.bases[0].numOnTeam[0], &gd.bases[0].teamMask[0]);
 
-	/* load */
-	Com_sprintf(filename, MAX_QPATH, "%s/save/%s.mpt", FS_Gamedir(), Cmd_Argv(1));
-	CL_LoadTeamMultiplayer(filename);
+	for (i = 0, p = 0; i < num; i++)
+		if (gd.bases[0].teamMask[gd.bases[0].aircraftCurrent] & (1 << i))
+			gd.bases[0].curTeam[p++] = E_GetHiredCharacter(&gd.bases[0], EMPL_SOLDIER, i);
 
-	Com_Printf("Team '%s' loaded.\n", Cmd_Argv(1));
+	gd.bases[0].numHired = p;
+
+	Com_DPrintf("Load team with %i members and %i slots\n", gd.bases[0].numHired, num);
+
+	for (;p<MAX_ACTIVETEAM;p++)
+		gd.bases[0].curTeam[p] = NULL;
 }
-
 
 /**
   * @brief Loads the selected teamslot
@@ -1079,9 +1020,7 @@ void CL_ResetTeams(void)
 	Cmd_AddCommand("team_comments", CL_TeamCommentsCmd);
 	Cmd_AddCommand("equip_select", CL_SelectCmd);
 	Cmd_AddCommand("soldier_select", CL_SelectCmd);
-	Cmd_AddCommand("saveteam", CL_SaveTeamCmd);
 	Cmd_AddCommand("saveteamslot", CL_SaveTeamSlotCmd);
-	Cmd_AddCommand("loadteam", CL_LoadTeamCmd);
 	Cmd_AddCommand("loadteamslot", CL_LoadTeamSlotCmd);
 	Cmd_AddCommand("msgmenu", CL_MessageMenuCmd);
 }
