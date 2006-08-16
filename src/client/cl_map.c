@@ -647,7 +647,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 
 		/* Draw base */
 		if (base->baseStatus == BASE_UNDER_ATTACK)
-			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circleactive");
+			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "baseattack");
 		else
 			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
 
