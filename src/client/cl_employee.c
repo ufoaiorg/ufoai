@@ -510,7 +510,6 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
  * @brief Removes all employees completely from the game (buildings + global list) from a given base.
  * @note Used if the base e.g is destroyed by the aliens.
  * @param[in] base Which base the employee should be fired from.
- * @todo BUGBUG Doesn't really delete _all_ employees yet.
  */
 void E_DeleteAllEmployees(const base_t* const base)
 {
@@ -518,27 +517,23 @@ void E_DeleteAllEmployees(const base_t* const base)
 	employeeType_t type;
 	employee_t *employee = NULL;
 
-	character_t *chr = NULL; /* DEBUG */
-
 	if ( !base )
 		return;
 	Com_DPrintf("E_DeleteAllEmployees: starting ...\n");
 	for ( type = EMPL_SOLDIER; type < MAX_EMPL; type++ ) {
 		Com_DPrintf("E_DeleteAllEmployees: Removing empl-type %i | num %i\n", type, gd.numEmployees[type]);
-		for ( i = 0; i < gd.numEmployees[type]; i++) {
+		/* Attention:
+			gd.numEmployees[type] is changed in E_DeleteAllEmployees!  (it's decreased by 1 per call)
+			For this reason we start this loop from the back of the empl-list. toward 0.
+		*/
+		for ( i = gd.numEmployees[type]-1; i >= 0 ; i--) {
 			Com_DPrintf("E_DeleteAllEmployees: %i\n", i);
 			employee = &gd.employees[type][i];
-			if (employee) {
-				chr = &employee->chr;
-				Com_DPrintf("E_DeleteAllEmployees:   Removing empl ... %s\n", chr->name);
-			} else {
-				Com_DPrintf("E_DeleteAllEmployees:   NULL\n");
-			}
 			if (employee->baseIDHired == base->idx) {
 				E_DeleteEmployee(employee, type);
 				Com_DPrintf("E_DeleteAllEmployees:   Removing empl.\n");
 			} else if (employee->baseIDHired >= 0) {
-				Com_DPrintf("E_DeleteAllEmployees:   Not removing empl.\n");
+				Com_DPrintf("E_DeleteAllEmployees:   Not removing empl. (other base)\n");
 			}
 		}
 	}
