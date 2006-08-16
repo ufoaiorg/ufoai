@@ -174,7 +174,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
   * @brief
   * @sa CL_GenerateCharacter
   */
-void CL_ResetCharacters(base_t * base)
+void CL_ResetCharacters(base_t* const base)
 {
 	int i;
 	character_t *chr;
@@ -458,11 +458,11 @@ static void CL_GenerateEquipmentCmd(void)
 		}
 		unused = *ed; /* copied, including the arrays inside! */
 	} else
-		unused = ccs.eCampaign; /* copied, including the arrays inside! */ 
+		unused = ccs.eCampaign; /* copied, including the arrays inside! */
 
 	/* manage inventory */
 	CL_CheckInventory(&unused, 0);
-	
+
 	/* a 'tiny hack' to add the equipment correctly into buy categories;
 	   it is valid only due to the following property: */
 	assert (MAX_CONTAINERS >= NUM_BUYTYPES);
@@ -860,7 +860,7 @@ void CL_SaveTeam(char *filename)
 
 
 /**
-  * @brief Saves a team from commandline
+  * @brief Saves a team from commandline (multiplayer)
   *
   * Call CL_SaveTeam to store the team to a given filename
   */
@@ -880,7 +880,7 @@ static void CL_SaveTeamCmd(void)
 
 
 /**
-  * @brief Stores a team in a specified teamslot
+  * @brief Stores a team in a specified teamslot (multiplayer)
   */
 static void CL_SaveTeamSlotCmd(void)
 {
@@ -892,7 +892,8 @@ static void CL_SaveTeamSlotCmd(void)
 }
 
 /**
-  * @brief Load team members
+  * @brief Load a team member for multiplayer
+  * @sa CL_LoadTeam
   */
 void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 {
@@ -943,10 +944,8 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 
 
 /**
-  * @brief Loads a team
-  *
-  * for singleplayer loading the function is called directly
-  * for multiplayer this function is called by CL_LoadTeamMultiplayer
+  * @brief Loads a team for multiplayer
+  * @sa CL_LoadTeamMultiplayer
   */
 void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 {
@@ -974,11 +973,13 @@ void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 	/* get assignement */
 	MSG_ReadFormat(sb, "bl", &base->numOnTeam[0], &base->teamMask[0]);
 
-	Com_DPrintf("Load team with %i members and %i slots\n", base->numHired, num);
-
 	for (i = 0, p = 0; i < num; i++)
 		if (base->teamMask[base->aircraftCurrent] & (1 << i))
 			base->curTeam[p++] = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
+
+	base->numHired = p;
+
+	Com_DPrintf("Load team with %i members and %i slots\n", base->numHired, num);
 
 	for (;p<MAX_ACTIVETEAM;p++)
 		base->curTeam[p] = NULL;
@@ -995,16 +996,6 @@ void CL_LoadTeamMultiplayer(char *filename)
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
 	FILE *f;
-
-	/* set base for multiplayer */
-	baseCurrent = &gd.bases[0];
-	gd.numBases = 1;
-
-	/* remove all employees and generate new ones */
-	CL_ResetTeamInBase();
-
-	/* now add a dropship where we can place our soldiers in */
-	CL_NewAircraft(baseCurrent, "craft_dropship");
 
 	/* open file */
 	f = fopen(filename, "rb");
@@ -1027,11 +1018,16 @@ void CL_LoadTeamMultiplayer(char *filename)
 
 
 /**
-  * @brief Loads a team from commandline
+  * @brief Loads a team from commandline (multiplayer)
   */
 static void CL_LoadTeamCmd(void)
 {
 	char filename[MAX_QPATH];
+
+	if (ccs.singleplayer) {
+		Com_Printf("Only for multiplayer\n");
+		return;
+	}
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: loadteam <filename>\n");
@@ -1052,6 +1048,11 @@ static void CL_LoadTeamCmd(void)
 static void CL_LoadTeamSlotCmd(void)
 {
 	char filename[MAX_QPATH];
+
+	if (ccs.singleplayer) {
+		Com_Printf("Only for multiplayer\n");
+		return;
+	}
 
 	/* load */
 	Com_sprintf(filename, MAX_QPATH, "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
