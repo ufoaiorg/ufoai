@@ -28,15 +28,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_BUYLIST		32
 
-byte buyList[MAX_BUYLIST];
-int buyListLength;
-int buyCategory;
+static byte buyList[MAX_BUYLIST];
+static int buyListLength;
+static int buyCategory;
 
 
 /**
   * @brief Prints general information about aircraft for buy/sell menu
+  * TODO
   */
-void CL_MarketAircraftDescription ( int aircraftID )
+static void CL_MarketAircraftDescription (int aircraftID)
 {
 	menuText[TEXT_STANDARD] = NULL;
 }
@@ -83,7 +84,7 @@ static void CL_BuySelectCmd(void)
  *
  * @sa CL_BuyType
  */
-static void AIR_GetStorageSupplyCount(char *airCharId, int *storage, int *supply)
+static void AIR_GetStorageSupplyCount(char *airCharId, int *const storage, int *const supply)
 {
 	base_t *base;
 	aircraft_t *aircraft;
@@ -206,6 +207,7 @@ static void CL_BuyType(void)
 
 /**
   * @brief
+  * @sa CL_SellItem
   */
 static void CL_BuyItem(void)
 {
@@ -242,6 +244,7 @@ static void CL_BuyItem(void)
 
 /**
   * @brief
+  * @sa CL_BuyItem
   */
 static void CL_SellItem(void)
 {
@@ -273,6 +276,7 @@ static void CL_SellItem(void)
 
 /**
   * @brief
+  * @sa CL_SellAircraft
   */
 static void CL_BuyAircraft(void)
 {
@@ -306,6 +310,7 @@ static void CL_BuyAircraft(void)
   * FIXME: This needs work in reassigning the base aircraft array
   * or the other functions need to check whether the aircraft
   * at current arraypos is valid
+  * @sa CL_BuyAircraft
   */
 static void CL_SellAircraft(void)
 {
