@@ -2743,7 +2743,7 @@ void CL_ParseNations(char *name, char **text)
 /**
   * @brief
   *
-  * returns true when we are not in battlefield
+  * @return true when we are not in battlefield
   * TODO: Check cvar mn_main for value
   */
 qboolean CL_OnBattlescape(void)
