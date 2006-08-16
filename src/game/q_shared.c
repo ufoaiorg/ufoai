@@ -2088,7 +2088,7 @@ qboolean Com_CheckToInventory(const inventory_t * i, const int item, const int c
 		/* extract shape info */
 		for (j = 0; j < 16; j++)
 			mask[j] = ~CSI->ids[container].shape[j];
-		
+
 		/* add other items to mask */
 		for (ic = i->c[container]; ic; ic = ic->next)
 			for (j = 0; j < 4 && ic->y + j < 16; j++)
@@ -2254,7 +2254,7 @@ int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int t
 	/*check if the target is a blocked inv-armor and source!=dest */
 	if (CSI->ids[to].armor && from != to && !Com_CheckToInventory(i, cacheItem.t, to, tx, ty)) {
 		item_t cacheItem2;
-		
+
 		/* save/cache (source) item */
 		cacheItem2 = cacheItem;
 		/* move the destination item to the source */
@@ -2265,9 +2265,9 @@ int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int t
 		ic = Com_SearchInInventory(i, to, tx, ty);
 
 		if (ic && CSI->ods[cacheItem.t].link == ic->item.t) {
-			if (ic->item.a >= CSI->ods[ic->item.t].ammo 
+			if (ic->item.a >= CSI->ods[ic->item.t].ammo
 				&& ic->item.m == cacheItem.t) {
-				/* weapon already loaded with the same ammunition 
+				/* weapon already loaded with the same ammunition
 				   - back to source location */
 				Com_AddToInventory(i, cacheItem, from, fx, fy);
 				return IA_NORELOAD;
@@ -2326,7 +2326,7 @@ int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int t
  * @param
  * @sa
  */
-void Com_EmptyContainer(inventory_t * i, int container)
+void Com_EmptyContainer(inventory_t * i, const int container)
 {
 	invList_t *ic, *old;
 
@@ -2380,12 +2380,12 @@ void Com_DestroyInventory(inventory_t * i)
  * @param
  * @sa
  */
-void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py)
+void Com_FindSpace(const inventory_t *inv, const int item, const int container, int *px, int *py)
 {
 	int x, y;
 
 	assert(inv);
-	assert (!cache_Com_CheckToInventory);
+	assert(!cache_Com_CheckToInventory);
 
 	for (y = 0; y < 16; y++)
 		for (x = 0; x < 32; x++)

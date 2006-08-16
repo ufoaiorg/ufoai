@@ -1112,9 +1112,9 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y);
 int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp);
 void Com_EmptyContainer(inventory_t * i, int container);
 void Com_DestroyInventory(inventory_t * i);
-void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py);
-int Com_TryAddToInventory(inventory_t * inv, item_t item, int container);
-int Com_TryAddToBuyType(inventory_t * inv, item_t item, int container);
+void Com_FindSpace(const inventory_t *inv, const int item, const int container, int *px, int *py);
+int Com_TryAddToInventory(inventory_t *inv, item_t item, int container);
+int Com_TryAddToBuyType(inventory_t *inv, item_t item, int container);
 void Com_EquipActor(inventory_t *inv, const int equip[MAX_OBJDEFS],  char *name);
 
 /* =========================================================== */
