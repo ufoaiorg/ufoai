@@ -1093,7 +1093,7 @@ void CL_ReadSinglePlayerData( void )
 	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 )
 		CL_ParseScriptSecond( type, name, &text );
 
-	Com_Printf( "Global data loaded\n" );
+	Com_Printf( "Global data loaded - size %d bytes\n", sizeof(gd) );
 }
 
 /**
