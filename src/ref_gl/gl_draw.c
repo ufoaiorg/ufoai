@@ -95,6 +95,8 @@ void Draw_Char(int x, int y, int num)
 /**
  * @brief Change the color to given value
  * @param[in] rgba A pointer to a vec4_t with rgba color value
+ * @note To reset the color let rgba be NULL
+ * @note Enables openGL blend if alpha value is lower than 1.0
  */
 void Draw_Color(const float *rgba)
 {

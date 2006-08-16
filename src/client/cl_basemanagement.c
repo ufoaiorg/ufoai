@@ -1300,12 +1300,22 @@ void B_SelectBase(void)
 			gd.mapAction = MA_NONE;
 			MN_PushMenu("bases");
 			CL_AircraftSelect();
+			switch (baseCurrent->baseStatus) {
+			case BASE_UNDER_ATTACK:
+				Cvar_Set("mn_base_status_name", _("Base is under attack"));
+				Cbuf_ExecuteText(EXEC_NOW, "set_base_under_attack");
+				break;
+			default:
+				Cbuf_ExecuteText(EXEC_NOW, "set_base_to_normal");
+				break;
+			}
 		} else {
 			gd.mapAction = MA_NEWBASE;
 		}
 	} else
 		baseCurrent = &gd.bases[0];
 
+	Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
 	Cvar_SetValue("mn_base_id", baseCurrent->idx);
 	Cvar_Set("mn_base_title", baseCurrent->name);
 }

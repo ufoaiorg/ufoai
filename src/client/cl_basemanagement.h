@@ -57,6 +57,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* allocate memory for menuText[TEXT_STANDARD] contained the information about a building */
 char buildingText[MAX_LIST_CHAR];
 
+/* NOTE: Don't change the order or you have to change the basemenu scriptfiles, too */
 typedef enum {
 	BASE_NOT_USED,
 	BASE_UNDER_ATTACK,

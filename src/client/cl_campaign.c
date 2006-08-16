@@ -556,6 +556,7 @@ static void CL_CampaignAddMission(setState_t * set)
 		/* Add message to message-system. */
 		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base %s is under attack."), gd.bases[i].name);
 		MN_AddNewMessage(_("Base Attack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
+		gd.mapAction = MA_BASEATTACK;
 	} else {
 		/* A mission must not be very near a base */
 		for (i = 0; i < gd.numBases; i++) {
