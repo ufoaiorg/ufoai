@@ -703,6 +703,6 @@ menu employees
 	func init
 	{
 		employee_clear
-		cmd "employee_init 0"
+		empl_soldiers
 	}
 }

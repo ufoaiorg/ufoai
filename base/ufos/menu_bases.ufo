@@ -68,6 +68,8 @@ menu bases
 
 	pic buildings
 	{
+		// only if base is not under attack
+		if "mn_base_status_id != 1"
 		tooltip	"_Build base-facilities"
 		image	menu/button
 		pos	"755 130"
@@ -80,6 +82,16 @@ menu bases
 		}
 		out		{ *txt_building color "0 0.8 0 1" *buildings texl "0 0" *buildings texh "230 64" }
 		in		{ *txt_building color "1 1 1 1" *buildings texl "230 0" *buildings texh "460 64" }
+	}
+	pic buildings_na
+	{
+		// only if base is not under attack
+		if "mn_base_status_id == 1"
+		tooltip	"_Build base-facilities"
+		image	menu/button
+		pos	"755 130"
+		texl	"0 64"
+		texh	"230 128"
 	}
 	string txt_building
 	{
@@ -116,6 +128,8 @@ menu bases
 
 	pic buysell
 	{
+		// only if base is not under attack
+		if "mn_base_status_id != 1"
 		tooltip	"_Buy/Sell equipment"
 		image	menu/button
 		pos	"755 270"
@@ -128,6 +142,16 @@ menu bases
 		}
 		out		{ *txt_buysell color "0 0.8 0 1" *buysell texl "0 0" *buysell texh "230 64" }
 		in		{ *txt_buysell color "1 1 1 1" *buysell texl "230 0" *buysell texh "460 64" }
+	}
+	pic buysell_na
+	{
+		// only if base is not under attack
+		if "mn_base_status_id == 1"
+		tooltip	"_Build base-facilities"
+		image	menu/button
+		pos	"755 270"
+		texl	"0 64"
+		texh	"230 128"
 	}
 	string txt_buysell
 	{
@@ -164,6 +188,8 @@ menu bases
 
 	pic research
 	{
+		// only if base is not under attack
+		if "mn_base_status_id != 1"
 		tooltip	"_Research new technology"
 		image	menu/button
 		pos	"755 410"
@@ -177,6 +203,16 @@ menu bases
 		out		{ *txt_research color "0 0.8 0 1" *research texl "0 0" *research texh "230 64" }
 		in		{ *txt_research color "1 1 1 1" *research texl "230 0" *research texh "460 64" }
 	}
+	pic research_na
+	{
+		// only if base is not under attack
+		if "mn_base_status_id == 1"
+		tooltip	"_Build base-facilities"
+		image	menu/button
+		pos	"755 410"
+		texl	"0 64"
+		texh	"230 128"
+	}
 	string txt_research
 	{
 		string	"_Research"
@@ -188,6 +224,8 @@ menu bases
 
 	pic production
 	{
+		// only if base is not under attack
+		if "mn_base_status_id != 1"
 		tooltip	"_Produce new equipment"
 		image	menu/button
 		pos	"755 480"
@@ -201,6 +239,16 @@ menu bases
 		out		{ *txt_production color "0 0.8 0 1" *production texl "0 0" *production texh "230 64" }
 		in		{ *txt_production color "1 1 1 1" *production texl "230 0" *production texh "460 64" }
 	}
+	pic production_na
+	{
+		// only if base is not under attack
+		if "mn_base_status_id == 1"
+		tooltip	"_Build base-facilities"
+		image	menu/button
+		pos	"755 480"
+		texl	"0 64"
+		texh	"230 128"
+	}
 	string txt_production
 	{
 		string	"_Production"
@@ -212,6 +260,8 @@ menu bases
 
 	pic hire
 	{
+		// only if base is not under attack
+		if "mn_base_status_id != 1"
 		tooltip	"_Hire employees"
 		image	menu/button
 		pos	"755 550"
@@ -224,6 +274,16 @@ menu bases
 		}
 		out		{ *txt_hire color "0 0.8 0 1" *hire texl "0 0" *hire texh "230 64" }
 		in		{ *txt_hire color "1 1 1 1" *hire texl "230 0" *hire texh "460 64" }
+	}
+	pic hire_na
+	{
+		// only if base is not under attack
+		if "mn_base_status_id == 1"
+		tooltip	"_Build base-facilities"
+		image	menu/button
+		pos	"755 550"
+		texl	"0 64"
+		texh	"230 128"
 	}
 	string txt_hire
 	{
@@ -303,6 +363,36 @@ menu bases
 		texl	"16 0"
 		texh	"32 16"
 		click	{ cmd "mn_next_base" }
+	}
+
+	string base_status
+	{
+		if "mn_base_status_id == 1"
+		string	"*cvar mn_base_status_name"
+		color	"1 1 1 1"
+		pos	"512 370"
+		font	f_menu
+		align	uc
+	}
+
+	confunc set_base_under_attack
+	{
+		*base_status color "1 0 0 1"
+		*txt_hire color "0.5 0.5 0.5 1"
+		*txt_research color "0.5 0.5 0.5 1"
+		*txt_building color "0.5 0.5 0.5 1"
+		*txt_buysell color "0.5 0.5 0.5 1"
+		*txt_production color "0.5 0.5 0.5 1"
+	}
+
+	confunc set_base_to_normal
+	{
+		*base_status color "1 1 1 1"
+		*txt_hire color "0 0.8 0 1"
+		*txt_research color "0 0.8 0 1"
+		*txt_building color "0 0.8 0 1"
+		*txt_buysell color "0 0.8 0 1"
+		*txt_production color "0 0.8 0 1"
 	}
 
 	func init

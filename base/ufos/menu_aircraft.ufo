@@ -65,8 +65,8 @@ menu aircraft
 		tooltip	"_Hire your team first"
 		image   menu/button
 		pos	"45 100"
-		texl	"0 0"
-		texh	"230 64"
+		texl	"0 64"
+		texh	"230 128"
 		mousefx true
 	}
 	string txt_squad
@@ -81,8 +81,8 @@ menu aircraft
 	string txt_no_squad
 	{
 		if "mn_soldiers_in_base <= 0"
-		string	"_Not available"
-		color	"0 0.8 0 1"
+		string	"_Assign your squad"
+		color	"0.5 0.5 0.5 1"
 		pos	"160 116"
 		font	f_menu
 		align	uc
