@@ -1148,7 +1148,7 @@ void CL_InitLocal(void)
 	cl_camyawspeed = Cvar_Get("cl_camyawspeed", "160", 0);
 	cl_campitchspeed = Cvar_Get("cl_campitchspeed", "0.5", 0);
 	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.25", 0);
-	cl_centerview = Cvar_Get("cl_centerview", "1", 0);
+	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE);
 
 	cl_run = Cvar_Get("cl_run", "0", CVAR_ARCHIVE);
 	freelook = Cvar_Get("freelook", "0", CVAR_ARCHIVE);

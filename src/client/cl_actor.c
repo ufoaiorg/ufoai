@@ -848,6 +848,8 @@ int CL_TraceMove(pos3_t to)
  * @brief Starts moving actor.
  * @param[in] le
  * @param[in] to
+ * @sa CL_ActorActionMouse
+ * @sa CL_ActorSelectMouse
  */
 void CL_ActorStartMove(le_t * le, pos3_t to)
 {
@@ -1280,6 +1282,7 @@ void CL_ActorSelectMouse(void)
 /**
  * @brief initiates action with mouse.
  * @sa CL_ActionDown
+ * @sa CL_ActorStartMove
  */
 void CL_ActorActionMouse(void)
 {
