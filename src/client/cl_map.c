@@ -617,8 +617,14 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 	actMis_t *ms;
 	int x, y;
 	base_t* base;
+	char* font = NULL;
 
 	assert(node);
+
+	/* font color on geoscape */
+	re.DrawColor(node->color);
+	/* default font */
+	font = MN_GetFont(NULL, node);
 
 	/* draw mission pics */
 	Cvar_Set("mn_mapdaytime", "");
@@ -640,8 +646,12 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 		RADAR_DrawInMap(node, &(base->radar), x, y, base->pos);
 
 		/* Draw base */
-		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
+		if (base->baseStatus == BASE_UNDER_ATTACK)
+			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circleactive");
+		else
+			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
 
+		re.FontDrawString(font, ALIGN_UL, x, y+10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name);
 		/* draw aircrafts of base */
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft ; aircraft--)
 			if (aircraft->status > AIR_HOME && MAP_MapToScreen(node, aircraft->pos, &x, &y)) {
@@ -692,6 +702,9 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 		if (aircraft == selectedUfo)
 			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
 	}
+
+	/* reset color */
+	re.DrawColor(NULL);
 }
 
 /**
