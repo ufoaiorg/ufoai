@@ -1499,12 +1499,20 @@ void CL_Frame(int msec)
 			selMis = NULL;
 			baseCurrent = &gd.bases[0];
 			B_ClearBase(&gd.bases[0]);
+			gd.numBases = 1;
+			/* remove all employees and generate new ones */
+			CL_ResetTeamInBase();
+
+			/* now add a dropship where we can place our soldiers in */
+			CL_NewAircraft(baseCurrent, "craft_dropship");
+
 			Com_Printf("Changing to Multiplayer\n");
-			/* no campaign equipment but standard */
-			Cvar_Set("equip", "human_phalanx_initial");
+			/* no campaign equipment but for multiplayer */
+			Cvar_Set("equip", "multiplayer");
 			Cvar_Set("map_dropship", "craft_dropship");
 		} else {
 			ccs.singleplayer = qtrue;
+			Cvar_Set("equip", "human_phalanx_initial");
 			Com_Printf("Changing to Singleplayer\n");
 		}
 		sv_maxclients->modified = qfalse;
