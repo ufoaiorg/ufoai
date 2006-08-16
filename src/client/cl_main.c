@@ -227,7 +227,8 @@ void CL_Quit_f(void)
 }
 
 /**
-  * @brief Called after an ERR_DROP was thrown
+  * @brief
+  * @note Called after an ERR_DROP was thrown
   */
 void CL_Drop(void)
 {
@@ -1501,6 +1502,7 @@ void CL_Frame(int msec)
 			/* no campaign equipment but for multiplayer */
 			Cvar_Set("equip", "multiplayer");
 			Cvar_Set("map_dropship", "craft_dropship");
+			CL_Disconnect();
 		} else {
 			ccs.singleplayer = qtrue;
 			Cvar_Set("equip", "human_phalanx_initial");
