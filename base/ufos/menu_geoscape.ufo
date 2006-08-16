@@ -569,7 +569,6 @@ menu popup_baseattack
 		pos		"256 256"
 	}
 
-
 	string title
 	{
 		string	"_Base attack"
@@ -620,28 +619,6 @@ menu popup_baseattack
 		color	"0 0.5 0 1"
 		string	"_Enter"
 		pos	"620 448"
-		align	uc
-	}
-
-	pic bt_auto_go
-	{
-		if	"game_autogo == 1"
-		tooltip	"_Automatically finish mission"
-		image	menu/multi_buttons3
-		pos	"530 410"
-		texh	"180 64"
-		texl	"0 33"
-		out	{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
-		in	{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
-		click	{ cmd "game_auto_go;" }
-	}
-	string string_auto_go
-	{
-		if	"game_autogo == 1"
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Auto mission"
-		pos	"620 408"
 		align	uc
 	}
 
