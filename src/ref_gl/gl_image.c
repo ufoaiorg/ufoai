@@ -1835,6 +1835,7 @@ image_t *GL_FindImageForShader(char *name)
 
 /**
  * @brief Finds or loads the given image
+ * @sa Draw_FindPic
  */
 image_t *GL_FindImage(char *pname, imagetype_t type)
 {

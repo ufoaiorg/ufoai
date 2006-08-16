@@ -93,7 +93,8 @@ void Draw_Char(int x, int y, int num)
 }
 
 /**
- * @brief
+ * @brief Change the color to given value
+ * @param[in] rgba A pointer to a vec4_t with rgba color value
  */
 void Draw_Color(const float *rgba)
 {
@@ -108,7 +109,12 @@ void Draw_Color(const float *rgba)
 }
 
 /**
- * @brief
+ * @brief Searches for an image in the image array
+ * @param[in] name The name of the image
+ * @note the imagename can contain a / or \ (relative to gamedir/) - otherwise it's relative to gamedir/pics
+ * @note name may not be null and has to be longer than 4 chars
+ * @return NULL on error or image_t pointer on success
+ * @sa GL_FindImage
  */
 image_t *Draw_FindPic(char *name)
 {
@@ -125,7 +131,12 @@ image_t *Draw_FindPic(char *name)
 }
 
 /**
- * @brief
+ * @brief Fills w and h with the width and height of a given pic
+ * @note if w and h are -1 the pic was not found
+ * @param[out] w Pointer to int value for width
+ * @param[out] h Pointer to int value for height
+ * @param[in] pic The name of the pic to get the values for
+ * @sa Draw_FindPic
  */
 void Draw_GetPicSize(int *w, int *h, char *pic)
 {
