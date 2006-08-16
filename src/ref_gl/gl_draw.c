@@ -95,7 +95,7 @@ void Draw_Char(int x, int y, int num)
 /**
  * @brief
  */
-void Draw_Color(float *rgba)
+void Draw_Color(const float *rgba)
 {
 	if (rgba) {
 		if (rgba[3] < 1.0f)

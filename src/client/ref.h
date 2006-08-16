@@ -300,7 +300,7 @@ typedef struct {
 	int (*FontDrawString) (char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c);
 	void (*DrawTileClear) (int x, int y, int w, int h, char *name);
 	void (*DrawFill) (int x, int y, int w, int h, int style, vec4_t color);
-	void (*DrawColor) (float *rgba);
+	void (*DrawColor) (const float *rgba);
 	void (*DrawFadeScreen) (void);
 	void (*DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
 	void (*DrawLineStrip) (int points, int *verts);
