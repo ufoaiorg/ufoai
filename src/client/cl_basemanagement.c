@@ -1012,9 +1012,9 @@ void B_ClearBase(base_t *const base)
 {
 	int row, col, i;
 
-	memset(base, 0, sizeof(base_t));
-
 	CL_ResetCharacters(base);
+
+	memset(base, 0, sizeof(base_t));
 
 	/* only go further if we have a active campaign */
 	if (!curCampaign)
