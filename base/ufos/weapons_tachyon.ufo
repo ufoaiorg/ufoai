@@ -9,9 +9,9 @@ item tachyonpistol
 	type		pistol
 	category	2
 	twohanded	false
-	shape		"0 0 3 2"
-	center		"1.3 0 1.5"
-	scale		1.6
+	shape		"0 0 2 2"
+	center		"1.2 0 1.5"
+	scale		1.18
 	ammo		24
 	reload		4
 	price		3800
@@ -26,7 +26,7 @@ item tachyonpistol_ammo
 	category	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
-	scale		1.1
+	scale		0.97
 	price		250
 	buytype		1
 
@@ -171,8 +171,8 @@ item tachyonsniper_ammo
 	type		ammo
 	category	0
 	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		1.0
+	center		"0 0 -0.3"
+	scale		1.1
 	price		350
 	buytype		0
 
