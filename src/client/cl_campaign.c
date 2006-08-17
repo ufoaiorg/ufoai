@@ -1849,7 +1849,7 @@ static void CL_GameGo(void)
 
 	/* check inventory */
 	ccs.eMission = ccs.eCampaign; /* copied, including the arrays inside! */
-	CL_CheckInventory(&ccs.eMission, 0); /* remove carried weapons */
+	CL_CheckInventory(&ccs.eMission); /* remove carried weapons */
 
 	/* Zero out kill counters */
 	ccs.civiliansKilled = 0;

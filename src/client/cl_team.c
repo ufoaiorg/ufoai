@@ -271,6 +271,30 @@ static void CL_TeamCommentsCmd(void)
 /**
  * @brief
  */
+void CL_AddCarriedToEq(equipDef_t * equip)
+{
+	character_t *cp;
+	invList_t *ic, *next;
+	int p, container;
+
+	assert(baseCurrent);
+
+	for (container = 0; container < csi.numIDs; container++) {
+		for (p = 0; p < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; p++) {
+			cp = baseCurrent->curTeam[p];
+			for (ic = cp->inv->c[container]; ic; ic = next) {
+				next = ic->next;
+				equip->num[ic->item.t]++;
+				if (csi.ods[ic->item.t].reload)
+					equip->num[ic->item.m]++;
+			}
+		}
+	}
+}
+
+/**
+ * @brief
+ */
 item_t CL_AddWeaponAmmo(equipDef_t * ed, int type)
 {
 	item_t item = {0, NONE, NONE};
@@ -324,11 +348,10 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, int type)
 	return item;
 }
 
-
 /**
  * @brief
  */
-void CL_CheckInventory(equipDef_t * equip, int initial)
+void CL_CheckInventory(equipDef_t * equip)
 {
 	character_t *cp;
 	invList_t *ic, *next;
@@ -350,17 +373,12 @@ void CL_CheckInventory(equipDef_t * equip, int initial)
 			cp = baseCurrent->curTeam[p];
 			for (ic = cp->inv->c[container]; ic; ic = next) {
 				next = ic->next;
-				if (initial) {
-					equip->num[ic->item.t]++;
-					if (csi.ods[ic->item.t].reload)
-						equip->num[ic->item.m]++;
+				if (equip->num[ic->item.t] > 0) {
+					ic->item = CL_AddWeaponAmmo(equip, ic->item.t);
 				} else {
-					if (equip->num[ic->item.t] > 0)
-						ic->item = CL_AddWeaponAmmo(equip, ic->item.t);
-					else
-						/* remove the ammo used for reloading */
-						assert (csi.ods[ic->item.t].link);
-						Com_RemoveFromInventory(cp->inv, container, ic->x, ic->y);
+					/* remove the ammo used for reloading */
+					assert (csi.ods[ic->item.t].link);
+					Com_RemoveFromInventory(cp->inv, container, ic->x, ic->y);
 				}
 			}
 		}
@@ -450,7 +468,7 @@ static void CL_GenerateEquipmentCmd(void)
 		unused = ccs.eCampaign; /* copied, including the arrays inside! */
 
 	/* manage inventory */
-	CL_CheckInventory(&unused, 0); /* reload and remove carried weapons */
+	CL_CheckInventory(&unused); /* reload and remove carried weapons */
 
 	/* a 'tiny hack' to add the remaining equipment (not carried)
 	   correctly into buy categories, reloading at the same time;

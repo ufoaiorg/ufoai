@@ -1349,9 +1349,9 @@ static void B_PackInitialEquipmentCmd(void)
 			Com_EquipActor(cp->inv, ed->num, name);
 		}
 		if (!curCampaign)
-			CL_CheckInventory(&ccs.eMission, 1);
+			CL_AddCarriedToEq(&ccs.eMission);
 		else
-			CL_CheckInventory(&ccs.eCampaign, 1);
+			CL_AddCarriedToEq(&ccs.eCampaign);
 	}
 }
 
