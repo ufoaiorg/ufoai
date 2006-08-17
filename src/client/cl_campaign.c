@@ -761,10 +761,11 @@ void CL_CampaignCheckEvents(void)
 					B_BaseResetStatus(base);
 					/* Delete all employees from the base & the global list. */
 					E_DeleteAllEmployees(base);
-					/* TODO: Destroy all items in storage
-					Com_RemoveFromInventory(inv, container, ic->x, ic->y); <--- TODO: i think we need a "Com_RemoveAllFromInventory function containing this.
-					Com_DestroyInventory(&base->equipByBuyType);	TODO: Check if this is working as expected ..... nope.
-					*/
+					/* Destroy all items in storage */
+					/* TODO: check how this works with multiple bases */
+					for ( item = 0; item < csi.numODs; item++ ) {
+						ccs.eCampaign.num[item] = 0;
+					}
 					/* TODO: Aircrafts? */
 					/* TODO: Maybe reset running researches ... needs playbalance .. maybe another value in technology_t to remember researched time from other bases? */
 					/* TODO: Destroy some random buildings. */
