@@ -623,6 +623,10 @@ static void CL_CampaignRemoveMission(actMis_t * mis)
 	for (i = num; i < ccs.numMissions; i++)
 		ccs.mission[i] = ccs.mission[i + 1];
 
+	if (mis->def->missionType == MIS_BASEATTACK) {
+		/* TODO */
+	}
+
 	/* Notifications */
 	MAP_NotifyMissionRemoved(mis);
 	CL_AircraftsNotifyMissionRemoved(mis);
@@ -781,22 +785,7 @@ void CL_CampaignCheckEvents(void)
 		}
 }
 
-char *monthNames[12] = {
-	"Jan",
-	"Feb",
-	"Mar",
-	"Apr",
-	"May",
-	"Jun",
-	"Jul",
-	"Aug",
-	"Sep",
-	"Oct",
-	"Nov",
-	"Dec"
-};
-
-int monthLength[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+static int monthLength[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 /**
  * @brief
@@ -816,22 +805,49 @@ void CL_DateConvert(date_t * date, int *day, int *month)
 }
 
 /**
- * @brief
+ * @brief Returns the monatname to the given month index
+ * @param[in] month The month index - starts at 0 - ends at 11
+ * @return month name as char*
  */
 char *CL_DateGetMonthName(int month)
 {
-	return _(monthNames[month]);
+	switch (month) {
+		case 0:
+			return _("Jan");
+		case 1:
+			return _("Feb");
+		case 2:
+			return _("Mar");
+		case 3:
+			return _("Apr");
+		case 4:
+			return _("May");
+		case 5:
+			return _("Jun");
+		case 6:
+			return _("Jul");
+		case 7:
+			return _("Aug");
+		case 8:
+			return _("Sep");
+		case 9:
+			return _("Oct");
+		case 10:
+			return _("Nov");
+		case 11:
+			return _("Dec");
+		default:
+			return "Error";
+	}
 }
 
 /**
- * @brief
- *
- * Update the nation data from all parsed nation each month
- * give us nation support by:
+ * @brief Update the nation data from all parsed nation each month
+ * @note give us nation support by:
  * * credits
  * * new soldiers
  * * new scientists
- * Called from CL_CampaignRun
+ * @note Called from CL_CampaignRun
  * @sa CL_CampaignRun
  * @sa B_CreateEmployee
  */
@@ -2192,6 +2208,7 @@ static void CL_DebugChangeCharacterStats_f(void)
  * @brief
  * @sa CL_ParseResults
  * @sa CL_ParseCharacterData
+ * @sa CL_GameAbort
  */
 static void CL_GameResultsCmd(void)
 {
@@ -2810,7 +2827,6 @@ qboolean CL_OnBattlescape(void)
 	if (cls.state >= ca_connected)
 		return qtrue;
 
-	Com_Printf("No connected\n");
 	return qfalse;
 }
 
@@ -3077,14 +3093,12 @@ static void CP_GetCampaigns_f(void)
 			Q_strcat(campaignText, va("%s\n", campaigns[i].name), MAXCAMPAIGNTEXT);
 	}
 	/* default campaign */
-	Cvar_Set("campaign", "main");
 	menuText[TEXT_STANDARD] = campaignDesc;
 
 	/* select main as default */
 	for (i = 0; i < numCampaigns; i++)
 		if (!Q_strncmp("main", campaigns[i].id, MAX_VAR)) {
-			Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i\nDifficulty: %s\n%s\n"), campaigns[i].team,
-						campaigns[i].soldiers, CL_ToDifficultyName(campaigns[i].difficulty), _(campaigns[i].text));
+			Cbuf_ExecuteText(EXEC_NOW, va("campaignlist_click %i;", i));
 			break;
 		}
 
@@ -3117,7 +3131,7 @@ static void CP_CampaignsClick_f(void)
 
 	Cvar_Set("campaign", campaigns[num].id);
 	/* FIXME: Translate the race to the name of a race */
-	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i\nCredits: %ic\nDifficulty: %s\n%s\n"), campaigns[num].team, campaigns[num].soldiers,
+	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i - Scientists: %i - Workers: %i\nCredits: %ic\nDifficulty: %s\n%s\n"), campaigns[num].team, campaigns[num].soldiers, campaigns[num].scientists, campaigns[num].workers,
 				campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty), _(campaigns[num].text));
 	menuText[TEXT_STANDARD] = campaignDesc;
 }

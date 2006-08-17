@@ -1262,6 +1262,7 @@ void B_SelectBase(void)
 			baseCurrent = &gd.bases[baseID];
 			baseCurrent->idx = baseID;
 			Com_DPrintf("B_SelectBase: baseID is valid for base: %s\n", baseCurrent->name);
+			Cbuf_ExecuteText(EXEC_NOW, "set_base_to_normal");
 		} else {
 			Com_Printf("MaxBases reached\n");
 			/* select the first base in list */
@@ -1287,7 +1288,7 @@ void B_SelectBase(void)
 			gd.mapAction = MA_NEWBASE;
 		}
 	} else
-		baseCurrent = &gd.bases[0];
+		return;
 
 	Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
 	Cvar_SetValue("mn_base_id", baseCurrent->idx);
