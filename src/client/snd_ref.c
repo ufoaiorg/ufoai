@@ -60,12 +60,11 @@ void S_StartOGG(void);
 
 #define		SOUND_LOOPATTENUATE	0.003
 
-int s_registration_sequence;
+static int s_registration_sequence;
 
 channel_t channels[MAX_CHANNELS];
 
-qboolean snd_initialized = qfalse;
-int sound_started = 0;
+static int sound_started = 0;
 
 dma_t dma;
 
@@ -74,9 +73,9 @@ vec3_t listener_forward;
 vec3_t listener_right;
 vec3_t listener_up;
 
-qboolean s_registering;
+static qboolean s_registering;
 
-int soundtime;					/* sample PAIRS */
+static int soundtime;					/* sample PAIRS */
 int paintedtime;				/* sample PAIRS */
 
 /* during registration it is possible to have more sounds */
@@ -84,15 +83,15 @@ int paintedtime;				/* sample PAIRS */
 /* because we don't want to free anything until we are */
 /* sure we won't need it. */
 #define		MAX_SFX		(MAX_SOUNDS*2)
-sfx_t known_sfx[MAX_SFX];
-int num_sfx;
+static sfx_t known_sfx[MAX_SFX];
+static int num_sfx;
 
 #define		MAX_PLAYSOUNDS	128
-playsound_t s_playsounds[MAX_PLAYSOUNDS];
-playsound_t s_freeplays;
+static playsound_t s_playsounds[MAX_PLAYSOUNDS];
+static playsound_t s_freeplays;
 playsound_t s_pendingplays;
 
-int s_beginofs;
+static int s_beginofs;
 
 cvar_t *snd_volume;
 cvar_t *snd_testsound;
@@ -105,7 +104,7 @@ cvar_t *ov_volume;
 cvar_t *ov_loop;
 
 cvar_t *snd_ref;
-qboolean snd_ref_active;
+static qboolean snd_ref_active;
 
 int s_rawend;
 portable_samplepair_t s_rawsamples[MAX_RAW_SAMPLES];
@@ -196,9 +195,9 @@ void S_Init(void)
 
 	cv = Cvar_Get("snd_init", "1", 0);
 
-	if (!cv->value)
+	if (!cv->value) {
 		Com_Printf("not initializing.\n");
-	else {
+	} else {
 		snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE);
 		snd_khz = Cvar_Get("snd_khz", "48", CVAR_ARCHIVE);
 		snd_loadas8bit = Cvar_Get("snd_loadas8bit", "0", CVAR_ARCHIVE);
