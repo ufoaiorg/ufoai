@@ -337,13 +337,13 @@ void CL_CheckInventory(equipDef_t * equip, int initial)
 	assert(baseCurrent);
 
 	/* Iterate through in container order (right hand, left hand, belt, */
-	/* armor, backpack) at the top level, i.e. each squad member fills */
-	/* their right hand, then each fills their left hand, etc.  The effect */
+	/* holster, backpack) at the top level, i.e. each squad member reloads */
+	/* her right hand, then each reloads his left hand, etc. The effect */
 	/* of this is that when things are tight, everyone has the opportunity */
-	/* to get their preferred weapon(s) loaded and in their hands before */
-	/* anyone fills their backpack with spares.  We don't want the first */
-	/* person in the squad filling their backpack with spare ammo leaving */
-	/* others with unloaded guns in their hands. */
+	/* to get their preferred weapon(s) loaded before anyone is allowed */
+	/* to keep her spares in the backpack or on the floor. We don't want */
+	/* the first person in the squad filling their backpack with spare ammo */
+	/* leaving others with unloaded guns in their hands... */
 	Com_DPrintf("NumOnTeam in aircraft %i: %i\n", baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] );
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; p++) {
@@ -358,6 +358,8 @@ void CL_CheckInventory(equipDef_t * equip, int initial)
 					if (equip->num[ic->item.t] > 0)
 						ic->item = CL_AddWeaponAmmo(equip, ic->item.t);
 					else
+						/* remove the ammo used for reloading */
+						assert (csi.ods[ic->item.t].link);
 						Com_RemoveFromInventory(cp->inv, container, ic->x, ic->y);
 				}
 			}
@@ -448,9 +450,10 @@ static void CL_GenerateEquipmentCmd(void)
 		unused = ccs.eCampaign; /* copied, including the arrays inside! */
 
 	/* manage inventory */
-	CL_CheckInventory(&unused, 0);
+	CL_CheckInventory(&unused, 0); /* reload and remove carried weapons */
 
-	/* a 'tiny hack' to add the equipment correctly into buy categories;
+	/* a 'tiny hack' to add the remaining equipment (not carried)
+	   correctly into buy categories, reloading at the same time;
 	   it is valid only due to the following property: */
 	assert (MAX_CONTAINERS >= NUM_BUYTYPES);
 
@@ -1311,7 +1314,7 @@ void CL_ParseResults(sizebuf_t * buf)
 		/* update stats */
 		CL_UpdateCharacterStats(winner == we);
 
-		ccs.eCampaign = ccs.eMission;
+		ccs.eCampaign = ccs.eMission; /* copied, including the arrays inside!*/
 	}
 
 	/* disconnect and show win screen */

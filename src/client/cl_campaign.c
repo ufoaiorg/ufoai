@@ -1848,8 +1848,8 @@ static void CL_GameGo(void)
 	Cvar_Set("map_dropship", aircraft->id);
 
 	/* check inventory */
-	ccs.eMission = ccs.eCampaign;
-	CL_CheckInventory(&ccs.eMission, 0);
+	ccs.eMission = ccs.eCampaign; /* copied, including the arrays inside! */
+	CL_CheckInventory(&ccs.eMission, 0); /* remove carried weapons */
 
 	/* Zero out kill counters */
 	ccs.civiliansKilled = 0;
@@ -2988,7 +2988,7 @@ void CL_GameInit(void)
 }
 
 /**
- * @brief
+ * @brief Starts a new single-player game
  */
 static void CL_GameNew(void)
 {
@@ -3054,14 +3054,14 @@ static void CL_GameNew(void)
 		if (!Q_strncmp(curCampaign->equipment, ed->name, MAX_VAR))
 			break;
 	if (i != csi.numEDs)
-		ccs.eCampaign = *ed;
+		ccs.eCampaign = *ed; /* copied, including the arrays inside! */
 
 	/* market */
 	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
 		if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR))
 			break;
 	if (i != csi.numEDs)
-		ccs.eMarket = *ed;
+		ccs.eMarket = *ed; /* copied, including the arrays inside! */
 
 	/* stage setup */
 	CL_CampaignActivateStage(curCampaign->firststage, qtrue);
