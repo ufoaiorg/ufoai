@@ -730,7 +730,7 @@ void CL_CampaignCheckEvents(void)
 	actMis_t *mis = NULL;
 	base_t *base = NULL;
 
-	int i, j;
+	int i, j, item;
 
 	/* check campaign events */
 	for (i = 0, stage = ccs.stage; i < numStages; i++, stage++)
