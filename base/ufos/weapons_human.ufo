@@ -153,9 +153,9 @@ item pistol
 	type		pistol
 	category	2
 	twohanded	false
-	shape		"0 0 3 2"
+	shape		"0 0 2 2"
 	center		"2 0 1"
-	scale		1.6
+	scale		1.35
 	ammo		12
 	reload		5
 	price		300
@@ -169,8 +169,8 @@ item pistol_ammo
 	type		ammo
 	category	0
 	shape		"0 0 1 1"
-	center		"0 0 -0.2"
-	scale		1.6
+	center		"0 0 -0.21"
+	scale		1.57
 	price		40
 	buytype		1
 
