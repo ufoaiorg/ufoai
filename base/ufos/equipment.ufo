@@ -77,7 +77,7 @@ equipment multiplayer
 	flamer_ammo			4
 	rpg				2
 	rpg_ammo			4
-	rpg_incendiary_ammo		4
+//	rpg_incendiary_ammo		4
 	rpg_tachyon_ammo		4
 	grenl				2
 	grenl_ammo			4
@@ -88,6 +88,8 @@ equipment multiplayer
 	laserpistol_ammo		4
 	laserrifle			2
 	laserrifle_ammo			4
+//	heavylaser			2
+//	heavylaser_ammo			4
 	plaspistol			2
 	plaspistol_ammo			4
 	plasrifle			2
@@ -104,8 +106,13 @@ equipment multiplayer
 	knife				2
 	irgoggles			1
 	medikit				2
+//	alienincgrenade			6
+	plasmagrenade			6
+	kerrblade                       2
+	plasblade			2
 	light				2
 	medium				2
+//	heavy				1
 }
 
 equipment testing_and_tweaking

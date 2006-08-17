@@ -384,7 +384,7 @@ menu mp_team
 
 	func init
 	{
-		cmd	"set mn_slot 0;team_comments;team_reset"
+		cmd	"set mn_slot 0;team_comments"// ;team_reset --- called 2nd time
 		teamslot0
 	}
 

@@ -1492,8 +1492,9 @@ void CL_Frame(int msec)
 			baseCurrent = &gd.bases[0];
 			B_ClearBase(&gd.bases[0]);
 			gd.numBases = 1;
-			/* remove all employees and generate new ones */
-			CL_ResetTeamInBase();
+			/* remove all employees and generate new ones 
+			   --- called many times, breaks autoequip */
+/*			CL_ResetTeamInBase(); */
 
 			/* now add a dropship where we can place our soldiers in */
 			CL_NewAircraft(baseCurrent, "craft_dropship");

@@ -1325,7 +1325,26 @@ static void B_PackInitialEquipmentCmd(void)
 			Com_DPrintf("B_PackInitialEquipmentCmd: Packing initial equipment for %s.\n", cp->name);
 			Com_EquipActor(cp->inv, ed->num, cl_initial_equipment->string);
 		}
-		CL_CheckInventory(&ccs.eCampaign, 1);
+		/* a hack for multiplayer */
+		if (!curCampaign) {
+			equipDef_t *ed;
+			char *name;
+
+			/* search equipment definition */
+			name = Cvar_VariableString("equip");
+			Com_DPrintf("CL_GenerateEquipmentCmd: no curCampaign - using cvar equip '%s'\n", name);
+			for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
+				if (!Q_strncmp(name, ed->name, MAX_VAR))
+					break;
+			}
+			if (i == csi.numEDs) {
+				Com_Printf("Equipment '%s' not found!\n", name);
+				return;
+			}
+			CL_CheckInventory(ed, 1);
+		} else {
+			CL_CheckInventory(&ccs.eCampaign, 1);
+		}
 	}
 }
 
