@@ -1208,7 +1208,7 @@ void CL_InitLocal(void)
 	name = Cvar_Get("name", _("Unnamed"), CVAR_USERINFO | CVAR_ARCHIVE);
 	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE);
 	team = Cvar_Get("team", "human", CVAR_USERINFO | CVAR_ARCHIVE);
-	equip = Cvar_Get("equip", "human_phalanx_initial", CVAR_USERINFO | CVAR_ARCHIVE);
+	equip = Cvar_Get("equip", "multiplayer", CVAR_USERINFO | CVAR_ARCHIVE);
 	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE);
 	campaign = Cvar_Get("campaign", "main", 0);
 	rate = Cvar_Get("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE);	/* FIXME */
@@ -1501,12 +1501,10 @@ void CL_Frame(int msec)
 
 			Com_Printf("Changing to Multiplayer\n");
 			/* no campaign equipment but for multiplayer */
-			Cvar_Set("equip", "multiplayer");
 			Cvar_Set("map_dropship", "craft_dropship");
 			CL_Disconnect();
 		} else {
 			ccs.singleplayer = qtrue;
-			Cvar_Set("equip", "human_phalanx_initial");
 			Com_Printf("Changing to Singleplayer\n");
 		}
 		sv_maxclients->modified = qfalse;

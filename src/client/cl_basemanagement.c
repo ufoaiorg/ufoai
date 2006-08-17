@@ -1295,9 +1295,8 @@ void B_SelectBase(void)
 	Cvar_Set("mn_base_title", baseCurrent->name);
 }
 
-
 /**
- * @brief Assigns initial team of soldiers to aircraft
+ * @brief Assigns initial team of soldiers with equipment to aircraft
  */
 static void B_AssignInitialCmd(void)
 {
@@ -1314,8 +1313,9 @@ static void B_AssignInitialCmd(void)
 
 	for (i = MAX_TEAMLIST; --i >= 0;)
 		Cbuf_AddText(va("team_hire %i\n", i));
-}
 
+	Cbuf_AddText(va("pack_initial\n"));
+}
 
 /**
  * @brief Assigns initial soldier equipment for the first base
@@ -1325,6 +1325,7 @@ static void B_PackInitialEquipmentCmd(void)
 	int i;
 	equipDef_t *ed;
 	character_t *cp;
+	char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
 
 	/* check syntax */
 	if (Cmd_Argc() > 1) {
@@ -1336,37 +1337,21 @@ static void B_PackInitialEquipmentCmd(void)
 		return;
 
 	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
-		if (!Q_strncmp(cl_initial_equipment->string, ed->name, MAX_VAR))
+		if (!Q_strncmp(name, ed->name, MAX_VAR))
 			break;
 	if (i == csi.numEDs) {
-		Com_DPrintf("B_PackInitialEquipmentCmd: Initial Phalanx equipment %s not found.\n", cl_initial_equipment->string);
+		Com_DPrintf("B_PackInitialEquipmentCmd: Initial Phalanx equipment %s not found.\n", name);
 	} else {
 		for (i = 0; i < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; i++) {
 			cp = baseCurrent->curTeam[i];
 			/* pack equipment */
 			Com_DPrintf("B_PackInitialEquipmentCmd: Packing initial equipment for %s.\n", cp->name);
-			Com_EquipActor(cp->inv, ed->num, cl_initial_equipment->string);
+			Com_EquipActor(cp->inv, ed->num, name);
 		}
-		/* a hack for multiplayer */
-		if (!curCampaign) {
-			equipDef_t *ed;
-			char *name;
-
-			/* search equipment definition */
-			name = Cvar_VariableString("equip");
-			Com_DPrintf("CL_GenerateEquipmentCmd: no curCampaign - using cvar equip '%s'\n", name);
-			for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
-				if (!Q_strncmp(name, ed->name, MAX_VAR))
-					break;
-			}
-			if (i == csi.numEDs) {
-				Com_Printf("Equipment '%s' not found!\n", name);
-				return;
-			}
-			CL_CheckInventory(ed, 1);
-		} else {
+		if (!curCampaign)
+			CL_CheckInventory(&ccs.eMission, 1);
+		else
 			CL_CheckInventory(&ccs.eCampaign, 1);
-		}
 	}
 }
 
@@ -1402,10 +1387,8 @@ void B_BuildBase(void)
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			Radar_Initialise(&(baseCurrent->radar), 0);
 
-			if (gd.numBases == 1 && cl_start_employees->value) {
+			if (gd.numBases == 1 && cl_start_employees->value)
 				Cbuf_AddText(va("assign_initial\n"));
-				Cbuf_AddText(va("pack_initial\n"));
-			}
 			return;
 		}
 	} else {

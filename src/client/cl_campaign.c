@@ -1843,9 +1843,6 @@ static void CL_GameGo(void)
 
 	CL_SetMissionCvars(mis);
 
-	/* This cvar is for multiplayer only - nevertheless check this */
-/*	Cvar_Set("equip", curCampaign->equipment);*/
-
 	/* TODO: Map assembling to get the current used dropship in the map is not fully implemented */
 	/* but can be done via the map assembling part of the random map assembly */
 	Cvar_Set("map_dropship", aircraft->id);

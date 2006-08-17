@@ -392,9 +392,7 @@ void CL_CleanTempInventory(void)
  */
 static void CL_GenerateEquipmentCmd(void)
 {
-	equipDef_t *ed;
 	equipDef_t unused;
-	char *name;
 	int i, p;
 
 	assert(baseCurrent);
@@ -444,22 +442,10 @@ static void CL_GenerateEquipmentCmd(void)
 	Cvar_Set("mn_ammo", "");
 	menuText[TEXT_STANDARD] = NULL;
 
-	if (!curCampaign) {
-		/* search equipment definition */
-		name = Cvar_VariableString("equip");
-		Com_DPrintf("CL_GenerateEquipmentCmd: no curCampaign - using cvar equip '%s'\n", name);
-		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
-			if (!Q_strncmp(name, ed->name, MAX_VAR))
-				break;
-		}
-		if (i == csi.numEDs) {
-			Com_Printf("Equipment '%s' not found!\n", name);
-			return;
-		}
-		unused = *ed; /* copied, including the arrays inside! */
-	} else {
+	if (!curCampaign)
+		unused = ccs.eMission; /* copied, including the arrays inside! */
+	else
 		unused = ccs.eCampaign; /* copied, including the arrays inside! */
-	}
 
 	/* manage inventory */
 	CL_CheckInventory(&unused, 0);
@@ -641,6 +627,26 @@ void CL_ResetTeamInBase(void)
 		employee->hired = qtrue;
 		employee->baseIDHired = baseCurrent->idx;
 		Com_DPrintf("B_ClearBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
+	}
+
+	/* reset the multiplayer inventory; stored in ccs.eMission */
+	{
+		equipDef_t *ed;
+		char *name;
+		int i;
+
+		/* search equipment definition */
+		name = Cvar_VariableString("equip");
+		Com_DPrintf("CL_GenerateEquipmentCmd: no curCampaign - using cvar equip '%s'\n", name);
+		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
+			if (!Q_strncmp(name, ed->name, MAX_VAR))
+				break;
+		}
+		if (i == csi.numEDs) {
+			Com_Printf("Equipment '%s' not found!\n", name);
+			return;
+		}
+		ccs.eMission = *ed; /* copied, including the arrays inside! */
 	}
 }
 

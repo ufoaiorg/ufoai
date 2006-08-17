@@ -339,7 +339,7 @@ menu mp_team
 		in	{ *string_auto color "1 1 1 1" *button_auto texl "0 64" *button_auto texh "128 128" }
 		click
 		{
-			cmd "team_reset; assign_initial; cl_initial_equipment multiplayer; pack_initial; cl_initial_equipment human_phalanx_initial; set mn_teamname NewTeam;gennames;mn_push team;"
+			cmd "team_reset; assign_initial; set mn_teamname NewTeam;gennames;mn_push team;"
 		}
 	}
 
