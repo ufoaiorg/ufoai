@@ -876,10 +876,32 @@ static void CL_HandleBudget(void)
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 		CL_UpdateCredits(ccs.credits + funding);
 
-		for (j = 0; j < nation->scientists; j++) {
+		/* TODO: ", as well as an offer to hire 1 scientist and 2 soldier(s)." */
+		for (j = 0; 0.25 + j < nation->scientists * nation->happiness * nation->happiness; j++) {
 			if (gd.numEmployees[EMPL_SCIENTIST] < 16) {
-				/* Create one free scientist, but don't auto-hire them. */
+				/* Create a scientist, but don't auto-hire her. */
 				E_CreateEmployee(EMPL_SCIENTIST);
+			}
+		}
+
+		for (j = 0; 0.25 + j * 3 < nation->scientists * nation->happiness; j++) {
+			if (gd.numEmployees[EMPL_MEDIC] < 16) {
+				/* Create a medic. */
+				E_CreateEmployee(EMPL_MEDIC);
+			}
+		}
+
+		for (j = 0; 0.25 + j < nation->soldiers * nation->happiness * nation->happiness * nation->happiness; j++) {
+			if (gd.numEmployees[EMPL_SOLDIER] < 16) {
+				/* Create a soldier. */
+				E_CreateEmployee(EMPL_SOLDIER);
+			}
+		}
+
+		for (j = 0; 0.25 + j * 2 < nation->soldiers * nation->happiness; j++) {
+			if (gd.numEmployees[EMPL_WORKER] < 16) {
+				/* Create a worker. */
+				E_CreateEmployee(EMPL_WORKER);
 			}
 		}
 	}
