@@ -1297,6 +1297,27 @@ void B_SelectBase(void)
 
 
 /**
+ * @brief Assigns initial team of soldiers to aircraft
+ */
+static void B_AssignInitialCmd(void)
+{
+	int i;
+
+	/* check syntax */
+	if (Cmd_Argc() > 1) {
+		Com_Printf("Usage: assign_initial\n");
+		return;
+	}
+
+	if (!baseCurrent)
+		return;
+
+	for (i = MAX_TEAMLIST; --i >= 0;)
+		Cbuf_AddText(va("team_hire %i\n", i));
+}
+
+
+/**
  * @brief Assigns initial soldier equipment for the first base
  */
 static void B_PackInitialEquipmentCmd(void)
@@ -1382,12 +1403,8 @@ void B_BuildBase(void)
 			Radar_Initialise(&(baseCurrent->radar), 0);
 
 			if (gd.numBases == 1 && cl_start_employees->value) {
-				int i;
-
-				for (i = MAX_TEAMLIST; --i >= 0;)
-					Cbuf_AddText(va("team_hire %i\n", i));
-
-					Cbuf_AddText(va("pack_initial\n"));
+				Cbuf_AddText(va("assign_initial\n"));
+				Cbuf_AddText(va("pack_initial\n"));
 			}
 			return;
 		}
@@ -1711,6 +1728,7 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("baselist", B_BaseList_f);
 	Cmd_AddCommand("buildinglist", B_BuildingList_f);
 	Cmd_AddCommand("pack_initial", B_PackInitialEquipmentCmd);
+	Cmd_AddCommand("assign_initial", B_AssignInitialCmd);
 }
 
 /**

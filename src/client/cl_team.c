@@ -642,17 +642,6 @@ void CL_ResetTeamInBase(void)
 		employee->baseIDHired = baseCurrent->idx;
 		Com_DPrintf("B_ClearBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
 	}
-	/* autoequip for multiplayer --- a hack */
-	if (cl_start_employees->value) {
-		int i;
-				
-		for (i = MAX_TEAMLIST; --i >= 0;)
-			Cbuf_AddText(va("team_hire %i\n", i));
-
-		Cbuf_AddText(va("cl_initial_equipment multiplayer\n"));
-		Cbuf_AddText(va("pack_initial\n"));
-		Cbuf_AddText(va("cl_initial_equipment human_phalanx_initial\n"));
-	}
 }
 
 /**

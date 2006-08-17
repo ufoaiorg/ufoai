@@ -328,6 +328,30 @@ menu mp_team
 		align	uc
 	}
 
+	pic button_auto
+	{
+		image	menu/multi_buttons2
+		pos	"780 490"
+		tooltip	"_Generate a team automatically"
+		texl	"0 0"
+		texh	"128 64"
+		out	{ *string_auto color "0 0.5 0 1" *button_auto texl "0 0" *button_auto texh "128 64" }
+		in	{ *string_auto color "1 1 1 1" *button_auto texl "0 64" *button_auto texh "128 128" }
+		click
+		{
+			cmd "team_reset; assign_initial; cl_initial_equipment multiplayer; pack_initial; cl_initial_equipment human_phalanx_initial; set mn_teamname NewTeam;gennames;mn_push team;"
+		}
+	}
+
+	string string_auto
+	{
+		font	f_menusmall
+		color	"0 0.5 0 1"
+		string	"_Auto"
+		pos	"844 505"
+		align	uc
+	}
+
 	string race_str
 	{
 		string	"_Race:"
