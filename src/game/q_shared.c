@@ -2459,19 +2459,23 @@ CHARACTER GENERATION AND HANDLING
 ==============================================================================
 */
 
+#define AKIMBO_CHANCE		0.2
+#define WEAPONLESS_BONUS	3.0
+#define PROB_COMPENSATION   0.5
+
 /**
   * @brief Pack a weapon, possibly with some ammo
   * @param[in] inv The inventory that will get the weapon
   * @param[in] weapon The weapon type index in gi.csi->ods
   * @param[in] equip The equipment that shows how many clips to pack
   * @param[in] name The name of the equipment for debug messages
-  *
-  * TODO: choose between multiple ammo for the same weapon
   */
 int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], char *name)
 {
-	int ammo;
+	int ammo = -1; /* this variable is never used before being set */
 	item_t item = {1,NONE,NONE};
+	int i, max_price, prev_price;
+	objDef_t obj;
 
 #ifdef PARANOID
 	if (weapon < 0) {
@@ -2480,35 +2484,56 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 #endif
 
 	item.t = weapon;
-	if ( CSI->ods[weapon].reload ) {
-		for (ammo = 0; ammo < CSI->numODs; ammo++)
-			if ( equip[ammo] && CSI->ods[ammo].link == weapon )
-				break;
-		if (ammo < CSI->numODs) {
-			int num;
-
-			/* load ammo */
-			item.a = CSI->ods[weapon].ammo;
-			item.m = ammo;
-
-			/* pack some more ammo */
-			num =
-				equip[ammo] / equip[weapon]
-				+ (equip[ammo] % equip[weapon]
-				   > rand() % equip[weapon]);
-			num = (num > 3) ? 3 : num;
-			while (--num) {
-				item_t mun = {1,NONE,NONE};
-
-				mun.t = ammo;
-				/* ammo to backpack; belt reserved for knives and grenades */
-				Com_TryAddToInventory(inv, mun, CSI->idBackpack);
-				/* no problem if no space left --- one ammo already loaded */
-			}
-		} else
-			Com_Printf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].kurz, name);
+	if (!CSI->ods[weapon].reload) {
+		item.m = item.t; /* no ammo needed, so fire definitions are in t */
 	} else {
-		item.m = item.t; /* no ammo needed, so fire definition are in t */
+		max_price = INT_MAX;
+		do {
+			/* search for the most expensive matching ammo in the equipment */
+			prev_price = max_price;
+			max_price = 0;
+			for (i = 0; i < CSI->numODs; i++) {
+				obj = CSI->ods[i];
+				if ( equip[i] && obj.link == weapon ) {
+					if ( obj.price > max_price && obj.price < prev_price ) {
+						max_price = obj.price;
+						ammo = i;
+					}
+				}
+			}
+			/* see if there is any */
+			if (max_price) {
+				int num;
+
+				/* how many clips? */
+				num =
+					equip[ammo] / equip[weapon] 
+					+ (equip[ammo] % equip[weapon]
+						  > rand() % equip[weapon])
+					+ (PROB_COMPENSATION > 8 * frand());
+
+				/* load ammo, but avoid reloading with cheaper ammo */
+				if (item.m == NONE) {
+					item.a = CSI->ods[weapon].ammo;
+					item.m = ammo;
+					num--;
+				}
+
+				assert (num >= 0);
+				/* pack some more ammo */
+				while (num--) {
+					item_t mun = {1,NONE,NONE};
+					
+					mun.t = ammo;
+					/* ammo to backpack; belt is for knives and grenades */
+					Com_TryAddToInventory(inv, mun, CSI->idBackpack);
+					/* no problem if no space left; one ammo already loaded */
+				}
+			}
+		} while (max_price);
+
+		if (item.m == NONE)
+			Com_Printf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].kurz, name);
 	}
 	/* now try to pack the weapon */
 	return
@@ -2519,8 +2544,6 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 		|| Com_TryAddToInventory(inv, item, CSI->idBackpack);
 }
 
-#define AKIMBO_CHANCE		0.2
-#define WEAPONLESS_BONUS	3.0
 
 /**
   * @brief Fully equip one actor
@@ -2530,16 +2553,17 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
   * @note The code below is a complete implementation
   * of the scheme sketched at the beginning of equipment_missions.ufo.
   * However, aliens cannot yet swap weapons,
-  * so in their case only the weapon(s) in hands will be used.
+  * so in their case only the weapon in the right hand will be used.
   * The rest will be just player's loot.
-  * If two weapons in the same category have the same price,
+  * Beware: if two weapons in the same category have the same price,
   * only one will be considered for inventory.
   */
 void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *name)
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
-	int has_weapon = 0, primary_tachyon = 0;
+	int has_weapon = 0; 
+	int primary = 2; /* 0 tachyon or normal, 1 other, 2 no primary weapon */
 	objDef_t obj;
 
 	/* primary weapons */
@@ -2560,23 +2584,26 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 		/* see if there is any */
 		if (max_price) {
 			/* see if the actor picks it */
-			if ( equip[weapon] >= 8 * frand() ) {
+			if ( equip[weapon] 
+				 >= 8 * frand() - PROB_COMPENSATION * frand() ) {
 				/* not decrementing equip[weapon]
 				 * so that we get more possible squads */
 				has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, name);
 				if (has_weapon) {
 					int ammo;
 
+					/* find the first possible ammo to check damage type */
 					for (ammo = 0; ammo < CSI->numODs; ammo++)
 						if ( equip[ammo] && CSI->ods[ammo].link == weapon )
 							break;
 					if (ammo < CSI->numODs) {
-						primary_tachyon =
-							(CSI->ods[ammo].fd[0].dmgtype
-							 == CSI->damTachyon)
-							/* a hack to avoid SMG + Assault Rifle */
-							|| (CSI->ods[ammo].fd[0].dmgtype
-								== CSI->damNormal);
+						primary =
+							/* to avoid two tachyon weapons */
+							!(CSI->ods[ammo].fd[0].dmgtype
+							  == CSI->damTachyon)
+							/* to avoid SMG + Assault Rifle */
+							&& !(CSI->ods[ammo].fd[0].dmgtype
+								 == CSI->damNormal);
 					}
 					max_price = 0; /* one primary weapon is enough */
 				}
@@ -2585,29 +2612,30 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 	} while (max_price);
 
 	/* sidearms (secondary weapons with reload) */
-	max_price = primary_tachyon ? 0 : INT_MAX;
+	max_price = primary ? INT_MAX : 0;
 	do {
 		prev_price = max_price;
-		/* if primary is a tachyon weapon, we pick cheapest sidearms first */
-		max_price = primary_tachyon ? INT_MAX : 0;
+		/* if primary is a tachyon or normal damage weapon, 
+		   we pick cheapest sidearms first */
+		max_price = primary ? 0 : INT_MAX;
 		for (i = 0; i < CSI->numODs; i++) {
 			obj = CSI->ods[i];
 			if ( equip[i] && obj.weapon && obj.buytype == 1 && obj.reload ) {
-				if ( primary_tachyon
-					 ? obj.price < max_price && obj.price > prev_price
-					 : obj.price > max_price && obj.price < prev_price ) {
+				if ( primary
+					 ? obj.price > max_price && obj.price < prev_price
+					 : obj.price < max_price && obj.price > prev_price ) {
 					max_price = obj.price;
 					weapon = i;
 				}
 			}
 		}
-		if ( !(max_price == (primary_tachyon ? INT_MAX : 0)) ) {
+		if ( !(max_price == (primary ? 0 : INT_MAX)) ) {
 			if (has_weapon) {
 				/* already got primary weapon */
 				if ( equip[weapon] >= 8 * frand() ) {
 					if ( Com_PackAmmoAndWeapon(inv, weapon, equip, name) ) {
 						/* then one sidearm is enough */
-						max_price = primary_tachyon ? INT_MAX : 0;
+						max_price = primary ? 0 : INT_MAX;
 					}
 				}
 			} else {
@@ -2622,12 +2650,12 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 							Com_PackAmmoAndWeapon(inv, weapon, equip, name);
 						}
 						/* enough sidearms */
-						max_price = primary_tachyon ? INT_MAX : 0;
+						max_price = primary ? 0 : INT_MAX;
 					}
 				}
 			}
 		}
-	} while ( !(max_price == (primary_tachyon ? INT_MAX : 0)) );
+	} while ( !(max_price == (primary ? 0 : INT_MAX)) );
 
 	/* misc items and secondary weapons without reload */
 	max_price = INT_MAX;
@@ -2648,7 +2676,11 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 		if (max_price) {
 			int num;
 
-			num = equip[weapon] / 8 + (equip[weapon] % 8 >= 8 * frand());
+			num = 
+				equip[weapon] / 8 
+				+ (equip[weapon] % 8 >= 8 * frand())
+				+ (PROB_COMPENSATION > 8 * frand())
+				+ (primary == 2) * (WEAPONLESS_BONUS > 8 * frand());
 			while (num--)
 				has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, name);
 		}
@@ -2690,7 +2722,9 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			}
 		}
 		if (max_price) {
-			if ( equip[weapon] >= 8 * frand() ) {
+			if ( equip[weapon] 
+				 >= (8 * frand() 
+					 - (primary == 2) * WEAPONLESS_BONUS * frand()) ) {
 				item_t item = {1,NONE,NONE};
 
 				item.t = weapon;

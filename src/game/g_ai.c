@@ -482,8 +482,6 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 					else
 						Com_Printf("No valid alien armor '%s'\n", ref);
 				}
-			} else {
-				Com_Printf("Could not find alien armor '%s'\n", ref);
 			}
 
 			/* FIXME: chr.name should be Alien: Ortnok e.g. */

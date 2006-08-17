@@ -15,7 +15,7 @@ equipment campaign_player
 	flamer			1
 	flamer_ammo		2
 	rpg				1
-	rpg_ammo		4
+	rpg_ammo		3
 	fraggrenade		3
 	knife			3
 	light			0
@@ -63,52 +63,52 @@ equipment campaign_market
 
 equipment multiplayer
 {
-	assault				2
-	assault_ammo			4
-	sniper				2
-	sniper_ammo			4
+	assault				1
+	assault_ammo		3
+	sniper				1
+	sniper_ammo			3
 	pistol				2
-	pistol_ammo			4
-	smg				2
-	smg_ammo			4
+	pistol_ammo			5
+	smg				    2
+	smg_ammo			5
 	shotgun				2
-	shotgun_ammo			4
-	flamer				2
-	flamer_ammo			4
-	rpg				2
-	rpg_ammo			4
-//	rpg_incendiary_ammo		4
-	rpg_tachyon_ammo		4
-	grenl				2
-	grenl_ammo			4
-	grenl_plasma_ammo		4
-	bolterrifle			2
-	bolterrifle_ammo		4
+	shotgun_ammo		5
+	flamer				1
+	flamer_ammo			3
+	rpg				    1
+	rpg_ammo			3
+//	rpg_incendiary_ammo	3
+	rpg_tachyon_ammo	3
+	grenl				1
+	grenl_ammo			5
+	grenl_plasma_ammo	3
+	bolterrifle			1
+	bolterrifle_ammo	3
 	laserpistol			2
-	laserpistol_ammo		4
-	laserrifle			2
-	laserrifle_ammo			4
-//	heavylaser			2
-//	heavylaser_ammo			4
+	laserpistol_ammo	5
+	laserrifle			1
+	laserrifle_ammo		3
+//	heavylaser			1
+//	heavylaser_ammo		3
 	plaspistol			2
-	plaspistol_ammo			4
-	plasrifle			2
-	plasrifle_ammo			4
-	plasblaster			2
-	plasblaster_ammo		4
-	tachyonpistol			2
-	tachyonpistol_ammo		4
-	tachyonrifle			2
-	tachyonrifle_ammo		4
-	tachyonsniper			2
-	tachyonsniper_ammo		4
+	plaspistol_ammo		5
+	plasrifle			1
+	plasrifle_ammo		3
+	plasblaster			1
+	plasblaster_ammo	3
+	tachyonpistol		2
+	tachyonpistol_ammo	5
+	tachyonrifle		1
+	tachyonrifle_ammo	3
+	tachyonsniper		1
+	tachyonsniper_ammo	3
 	fraggrenade			6
-	knife				2
+	knife				1
 	irgoggles			1
-	medikit				2
-//	alienincgrenade			6
-	plasmagrenade			6
-	kerrblade                       2
+	medikit				1
+//	alienincgrenade		6
+	plasmagrenade		6
+	kerrblade           5 // bulky, will rarely get into the backpack
 	plasblade			2
 	light				2
 	medium				2

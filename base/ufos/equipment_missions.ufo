@@ -44,14 +44,14 @@
 //     will start picking sidarm with plaspistol, not tachyonpistol;
 //     keep the total <= 8, likewise
 // 3. get the following number of ammo for each weapon separately:
-//      (#ammo/#weapon) randomly rounded up or down
+//      (#ammo/#weapon) slightly randomly increased
 //    with probability depending on the fractional part,
 //    where #ammo and #weapon are the numbers of that particular
 //    ammo and weapon in the equipment definition;
-//    #ammo/#weapon should be greater than 1 and less than 3
+//    #ammo/#weapon should be greater than 1
 // 4. for each misc item (alienincgrenade or plasmagrenade)
 //    and secondary weapon without reload (kerrblade or plasblade) get
-//      (#item/8) randomly rounded up or down
+//      (#item/8) slightly randomly increased
 //    with probability depending on the fractional part
 //    for each alien (as long as it fits in the backpack);
 //    the order is from the most expensive to the least expensive;
@@ -255,10 +255,10 @@ equipment human_phalanx_initial
 	flamer				2
 	flamer_ammo			2
 	rpg				    1
-	rpg_ammo			3
+	rpg_ammo			4
 	fraggrenade			20
 	knife				5
-	light	    		5
+	light	    		4
 }
 
 equipment human_farmers // some may be weaponless
