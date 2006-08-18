@@ -904,15 +904,17 @@ static void CL_AssignSoldierCmd(void)
 
 	employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, -(num+1));
 	if (!employee)
-		Sys_Error("CL_HireActorCmd: Could not get employee %i\n", num);
+		Sys_Error("CL_AssignSoldierCmd: Could not get employee %i\n", num);
 
-	Com_DPrintf("CL_HireActorCmd: employee with idx %i selected\n", employee->idx);
-	if ( CL_SoldierInAircraft(baseCurrent->aircraftCurrent, employee->idx) ) {
+	Com_DPrintf("CL_AssignSoldierCmd: employee with idx %i selected\n", employee->idx);
+	if ( CL_SoldierInAircraft(employee->idx, baseCurrent->aircraftCurrent) ) {
+		Com_DPrintf("CL_AssignSoldierCmd: removing\n");
 		/* Remove soldier from aircraft/team. */
 		Cbuf_AddText(va("listdel%i\n", num));
 		CL_RemoveSoldier(employee->idx, baseCurrent->aircraftCurrent);
 		Cbuf_AddText(va("listholdsnoequip%i\n", num));
 	} else {
+		Com_DPrintf("CL_AssignSoldierCmd: assigning\n");
 		/* Assign soldier to aircraft/team. */
 		if (CL_AssignSoldier(employee->idx ,baseCurrent->aircraftCurrent)) {
 			Cbuf_AddText(va("listadd%i\n", num));
