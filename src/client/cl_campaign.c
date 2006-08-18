@@ -723,11 +723,11 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
 void CL_CampaignCheckEvents(void)
 {
 	stageState_t *stage = NULL;
-	setState_t *set = NULL;;
+	setState_t *set = NULL;
 	actMis_t *mis = NULL;
 	base_t *base = NULL;
 
-	int i, j, item;
+	int i, j, item, ac;
 
 	/* check campaign events */
 	for (i = 0, stage = ccs.stage; i < numStages; i++, stage++)
@@ -756,17 +756,24 @@ void CL_CampaignCheckEvents(void)
 					/* Base attack */
 					base = (base_t*)mis->def->data;
 					B_BaseResetStatus(base);
+
 					/* Delete all employees from the base & the global list. */
 					E_DeleteAllEmployees(base);
-					/* Destroy all items in storage */
-					/* TODO: check how this works with multiple bases */
+
+					/* Destroy all items in storage */ /* TODO: check how/if this works with multiple bases */
 					for ( item = 0; item < csi.numODs; item++ ) {
 						ccs.eCampaign.num[item] = 0;
 					}
-					/* TODO: Aircrafts? */
+
+					/* Remove all aircrafts from the base. */
+					for ( ac = base->numAircraftInBase; ac > 0; ac-- ) {
+						CL_DeleteAircraft(&base->aircraft[ac]);
+					}
+
 					/* TODO: Maybe reset running researches ... needs playbalance .. maybe another value in technology_t to remember researched time from other bases? */
-					/* TODO: Destroy some random buildings. */
-					Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("The aliens killed all employees in your base '%s'."), base->name );
+					/* TODO: Destroy (or better: just damage) some random buildings. */
+
+					Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("The aliens killed all employees and destroyed all equipment in your base '%s'."), base->name );
 					break;
 				case MIS_INTERCEPT:
 					/* Normal ground mission. */
@@ -2267,7 +2274,7 @@ static void CL_GameResultsCmd(void)
 			if (!employee)
 				Sys_Error("Could not get hired employee %i from base %i\n", i, baseCurrent->idx);
 			E_DeleteEmployee(employee, EMPL_SOLDIER);
-			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
+			baseCurrent->teamNum[baseCurrent->aircraftCurrent]--;
 		} else
 			i++;
 	}

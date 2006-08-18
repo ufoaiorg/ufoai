@@ -104,6 +104,7 @@ char *CL_AircraftStatusToName(aircraft_t * aircraft);
 void CL_AircraftInit(void);
 void CL_AircraftSelect(void);
 void CL_NewAircraft_f(void);
+void CL_DeleteAircraft(aircraft_t *aircraft);
 
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *CL_GetAircraft(char *name);
