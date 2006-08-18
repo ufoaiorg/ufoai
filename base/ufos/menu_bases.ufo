@@ -104,6 +104,8 @@ menu bases
 
 	pic aircraft
 	{
+		// only if base has at least one aircraft
+		if "mn_base_num_aircraft >= 1"
 		tooltip	"_Manage your aircraft"
 		image	menu/button
 		pos	"755 200"
@@ -116,6 +118,16 @@ menu bases
 		}
 		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft texl "0 0" *aircraft texh "230 64" }
 		in		{ *txt_aircraft color "1 1 1 1" *aircraft texl "230 0" *aircraft texh "460 64" }
+	}
+	pic aircraft_na
+	{
+		// only if base has at least one aircraft
+		if "mn_base_num_aircraft <= 0"
+		tooltip	"_Manage your aircraft"
+		image	menu/button
+		pos	"755 200"
+		texl	"0 64"
+		texh	"230 128"
 	}
 	string txt_aircraft
 	{
@@ -393,6 +405,16 @@ menu bases
 		*txt_building color "0 0.8 0 1"
 		*txt_buysell color "0 0.8 0 1"
 		*txt_production color "0 0.8 0 1"
+	}
+
+	confunc set_base_no_aircraft
+	{
+		*txt_aircraft color "0.5 0.5 0.5 1"
+	}
+
+	confunc set_base_aircraft
+	{
+		*txt_aircraft color "0 0.8 0 1"
 	}
 
 	func init
