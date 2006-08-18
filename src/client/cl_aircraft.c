@@ -90,7 +90,7 @@ void CL_AircraftStart_f(void)
 
 	assert(baseCurrent);
 
-	if (baseCurrent->aircraftCurrent < 0) {
+	if (baseCurrent->aircraftCurrent < 0 || baseCurrent->aircraftCurrent >= baseCurrent->numAircraftInBase) {
 		Com_DPrintf("Error - there is no aircraftCurrent in this base\n");
 		return;
 	}

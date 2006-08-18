@@ -376,9 +376,6 @@ extern qboolean CL_NewBase(vec2_t pos)
 	/* set up the base with buildings that have the autobuild flag set */
 	B_SetUpBase();
 
-	/* set up the aircraft */
-	CL_NewAircraft(baseCurrent, "craft_dropship");
-
 	return qtrue;
 }
 
@@ -2081,7 +2078,7 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 			ccs.eMission.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
 			ccs.eMission.num[weapon->item.m]++;
 		}
-		/* The guys keep their weapons (half-)loaded. Auto-reaload 
+		/* The guys keep their weapons (half-)loaded. Auto-reaload
 		   will happen at equip screen or at the start of next mission,
 		   but fully loaded weapons will not be reloaded even then. */
 	}
