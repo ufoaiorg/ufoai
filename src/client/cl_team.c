@@ -280,7 +280,7 @@ void CL_AddCarriedToEq(equipDef_t * ed)
 
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; p++) {
-			for (ic = baseCurrent->curTeam[p]->inv->c[container]; 
+			for (ic = baseCurrent->curTeam[p]->inv->c[container];
 				 ic; ic = next) {
 				item_t item = ic->item;
 				int type = item.t;
@@ -324,7 +324,7 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 			return item;
 		} else {
 			/* your clip has been sold; give it back */
-			item.a = 0; 
+			item.a = 0;
 			return item;
 		}
 	}
@@ -333,7 +333,7 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 		/* Put the previously loaded ammo into storage */
 		assert (item.m != NONE);
 		ed->num_loose[item.m] += item.a;
-		item.a = 0; 
+		item.a = 0;
 		/* See if we have enough loose ammo to fill the clip */
 		if (ed->num_loose[item.m] >= csi.ods[type].ammo) {
 			ed->num_loose[item.m] -= csi.ods[type].ammo;
@@ -341,7 +341,7 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 			return item;
 		}
 	}
-		
+
 	/* Check for complete clips of the same kind */
 	if (item.m != NONE && ed->num[item.m] > 0) {
 		ed->num[item.m]--;
@@ -462,7 +462,7 @@ static void CL_GenerateEquipmentCmd(void)
 
 	assert(baseCurrent);
 
-	
+
 	/* Popup if no soldiers are assigned to the current aircraft. */
 	/* if ( !baseCurrent->numHired) { */
 	if ( !baseCurrent->teamNum[baseCurrent->aircraftCurrent] ) {
@@ -791,22 +791,21 @@ static void CL_MarkTeamCmd(void)
 qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
 {
 	int i;
-	
+
 	if ( employee_idx < 0 )
 		return qfalse;
-	
+
 	if ( aircraft_idx < 0) {
 		/* Search if he is in _any_ aircraft and return true if it's the case. */
 		for ( i = 0; i < MAX_AIRCRAFT; i++ ) {
 			if ( CL_SoldierInAircraft(employee_idx, i) )
 				return qtrue;
 		}
-		
-	} 
-	
+	}
+
 	if ( aircraft_idx < 0 )
 		return qfalse;
-	
+
 	return baseCurrent->teamMask[aircraft_idx] & (1 << employee_idx);
 }
 
@@ -819,7 +818,7 @@ void CL_RemoveSoldier(int employee_idx, int aircraft_idx)
 {
 	int i, cnt = 0;
 	invList_t *ic = NULL;
-	
+
 	if ( employee_idx < 0 )
 		return;
 
@@ -831,12 +830,11 @@ void CL_RemoveSoldier(int employee_idx, int aircraft_idx)
 				break;
 			}
 		}
-		
-	} 
+	}
 
 	if ( aircraft_idx < 0 )
 		return;
-	
+
 	for (i = 0; i < csi.numIDs; i++) {
 		for (ic = gd.employees[EMPL_SOLDIER][employee_idx].inv.c[i]; ic; ic = ic->next) {
 			if (i != csi.idFloor && i != csi.idEquip)
@@ -846,7 +844,6 @@ void CL_RemoveSoldier(int employee_idx, int aircraft_idx)
 	if (cnt) {
 		gd.employees[EMPL_SOLDIER][employee_idx].inv.c[csi.idFloor] = NULL;
 		Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][employee_idx].inv);
-		
 	}
 	baseCurrent->teamMask[aircraft_idx] &= ~(1 << employee_idx);
 	baseCurrent->teamNum[aircraft_idx]--;
@@ -864,16 +861,16 @@ static qboolean CL_AssignSoldier(int employee_idx, int aircraft_idx)
 	aircraft_t *aircraft = NULL;
 	if ( employee_idx < 0 || aircraft_idx < 0 )
 		return qfalse;
-	
+
 	if (baseCurrent->teamNum[aircraft_idx] < MAX_ACTIVETEAM) {
 		aircraft = &baseCurrent->aircraft[aircraft_idx];
 		/* Check whether the soldier is already on another aircraft */
 		if ( CL_SoldierInAircraft(employee_idx, -1) )
 			return qfalse;
-		
+
 		/* Assign the soldier to the aircraft. */
 		if (aircraft->size > baseCurrent->teamNum[aircraft_idx]) {
-			
+
 			/* baseCurrent->numHired++; */
 			baseCurrent->teamMask[aircraft_idx] |= (1 << employee_idx);
 			/*baseCurrent->numOnTeam[aircraft_idx]++; */
