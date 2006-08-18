@@ -37,7 +37,6 @@ char *svc_strings[256] =
 {
 	"svc_bad",
 
-	"svc_layout",
 	"svc_inventory",
 
 	"svc_nop",
@@ -442,6 +441,7 @@ void CL_Reset( sizebuf_t *sb )
 		et->next = last;
 	}
 	etUnused = et;
+/*	Com_Printf("et: etUnused = %p\n", etUnused);*/
 	etCurrent = NULL;
 	cl.eventTime = 0;
 	nextTime = 0;
@@ -1094,6 +1094,7 @@ void CL_ParseEvent( void )
 				Com_Error( ERR_DROP, "CL_ParseEvent: timetable overflow\n" );
 			cur = etUnused;
 			etUnused = cur->next;
+/*			Com_Printf("cur->next: etUnused = %p\n", etUnused);*/
 
 			cur->start = time;
 			cur->pos = evWp - evBuf;
@@ -1135,7 +1136,7 @@ void CL_Events( void )
 
 #if 0
 		/* check if eType is valid */
-		if ( eType < 0 || eType >= EV_NUM_EVENTS )
+		if ( eType >= EV_NUM_EVENTS )
 			Com_Error( ERR_DROP, "CL_Events: invalid event %i\n", eType );
 #endif
 
@@ -1144,6 +1145,7 @@ void CL_Events( void )
 		etCurrent = etCurrent->next;
 		last->next = etUnused;
 		etUnused = last;
+/*		Com_Printf("last: etUnused = %p\n", etUnused);*/
 
 		/* call function */
 		CL_LogEvent( eType );
@@ -1236,7 +1238,6 @@ void CL_ParseServerMessage (void)
 			break;
 
 		case svc_centerprint:
-
 			SCR_CenterPrint (MSG_ReadString (&net_message));
 			break;
 
@@ -1259,13 +1260,8 @@ void CL_ParseServerMessage (void)
 			CL_ParseStartSoundPacket();
 			break;
 
-		case svc_layout:
-			s = MSG_ReadString (&net_message);
-			Q_strncpyz(cl.layout, s, sizeof(cl.layout));
-			break;
-
 		case svc_event:
-			CL_ParseEvent ();
+			CL_ParseEvent();
 			break;
 
 		default:

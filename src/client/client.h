@@ -157,9 +157,6 @@ typedef struct {
 	int numTeamList;
 	int numAliensSpotted;
 
-	/* transient data from server */
-	char layout[1024];			/* general 2D overlay */
-
 	/* non-gameserver infornamtion */
 	/* FIXME: move this cinematic stuff into the cin_t structure */
 	FILE *cinematic_file;
@@ -403,8 +400,6 @@ void CL_RegisterLocalModels(void);
 void CL_Quit_f(void);
 
 void IN_Accumulate(void);
-
-void CL_ParseLayout(void);
 
 /* cl_sequence.c (avi stuff) */
 qboolean CL_OpenAVIForWriting(char *filename);
