@@ -1759,6 +1759,10 @@ void CL_StartMissionMap(mission_t* mission)
 	char expanded[MAX_QPATH];
 	char timeChar;
 
+	/* prepare */
+	MN_PopMenu(qtrue);
+	Cvar_Set("mn_main", "singleplayermission");
+
 	/* get appropriate map */
 	if (CL_MapIsNight(mission->pos))
 		timeChar = 'n';
@@ -1852,11 +1856,6 @@ static void CL_GameGo(void)
 	/* Zero out kill counters */
 	ccs.civiliansKilled = 0;
 	ccs.aliensKilled = 0;
-
-	/* prepare */
-	/* baseCurrent->deathMask = 0; */
-	MN_PopMenu(qtrue);
-	Cvar_Set("mn_main", "singleplayermission");
 
 	CL_StartMissionMap(mis);
 }
