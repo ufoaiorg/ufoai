@@ -137,7 +137,6 @@ enum svc_ops_e {
 	svc_bad,
 
 	/* these ops are known to the game dll */
-	svc_layout,
 	svc_inventory,
 
 	/* the rest are private to the client and server */

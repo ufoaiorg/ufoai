@@ -1532,7 +1532,6 @@ float Qcommon_Frame(int msec)
 	if (host_speeds->value)
 		time_after = Sys_Milliseconds();
 
-
 	if (host_speeds->value) {
 		int all, sv, gm, cl, rf;
 
