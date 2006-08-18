@@ -1863,6 +1863,9 @@ static void CL_GameGo(void)
 	/* Zero out kill counters */
 	ccs.civiliansKilled = 0;
 	ccs.aliensKilled = 0;
+	
+	/* Reset all soldiers to alive.2 */
+	baseCurrent->deathMask = 0;
 
 	CL_StartMissionMap(mis);
 }
@@ -2220,11 +2223,10 @@ static void CL_GameResultsCmd(void)
 	int won;
 	int civilians_killed;
 	int aliens_killed;
-#if 0
+
 	int i;
 	int tempMask;
 	employee_t* employee;
-#endif
 
 	/* multiplayer? */
 	if (!curCampaign || !selMis || !baseCurrent)
@@ -2259,12 +2261,11 @@ static void CL_GameResultsCmd(void)
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
 
-	/* remove the dead (and their item preference) */
-#if 0
-	/* Should already be done. ... see cl_actor.c */;
+	/* Remove the dead (and their item preference). */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER];) {
 		if (baseCurrent->deathMask & (1 << i)) {
 			Com_DPrintf("CL_GameResultsCmd - remove player %i - dead\n", i);
+			/* TODO: This bit-manipulating below needs some _serious_ documentation and/or sub-functions. I'm not even touching this with a 5 meter long stick. */
 			baseCurrent->deathMask >>= 1;
 			tempMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent] >> 1;
 			baseCurrent->teamMask[baseCurrent->aircraftCurrent] =
@@ -2279,7 +2280,6 @@ static void CL_GameResultsCmd(void)
 			i++;
 	}
 	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n", i);
-#endif
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won);

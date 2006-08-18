@@ -173,7 +173,7 @@ typedef struct base_s {
 	/* see cl_numnames cvars */
 	int teamMask[MAX_AIRCRAFT];	/* Soldiers assigned to a specific aircraft. */
 	int teamNum[MAX_AIRCRAFT];		/* Number if soldiers assigned to a specific aircraft. */
-	/* int deathMask;				mask of soldiers (relative to gd.employees) that have died */
+	int deathMask;				/* Mask of soldiers (relative to gd.employees) that have died in the current mission. Needed so soldiers are resurrected on mission-retry. */
 
 	/* these should not be bigger than MAX_ACTIVETEAM */
 	/*int numHired;

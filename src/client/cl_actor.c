@@ -625,8 +625,8 @@ void CL_RemoveActorFromTeamList(le_t * le)
 
 			for (j = 0; j < gd.numEmployees[EMPL_SOLDIER]; j++) {
 				if (baseCurrent->curTeam[i]->ucn == gd.employees[EMPL_SOLDIER][j].chr.ucn) {
-					E_DeleteEmployee(&gd.employees[EMPL_SOLDIER][j], EMPL_SOLDIER);
-					/* baseCurrent->deathMask |= 1 << j; */
+					/* Mark the soldier as dead, but do not delete him ... just in case there is a mission-retry. See CL_GameResultsCmd for more.*/
+					baseCurrent->deathMask |= 1 << j;
 					break;
 				}
 			}
