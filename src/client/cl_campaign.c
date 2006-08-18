@@ -1381,7 +1381,7 @@ void CL_UpdatePointersInGlobalData(void)
 
 		/* now fix the curTeam pointers */
 		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-			if (base->teamMask[base->aircraftCurrent] & (1 << i)) {
+			if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
 				/* maybe we already have soldiers in this base */
 				base->curTeam[p] = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
 				p++;
@@ -2154,7 +2154,7 @@ void CL_UpdateCharacterStats(int won)
 
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
+		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
 			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			assert(chr);
 			chr->assigned_missions++;
