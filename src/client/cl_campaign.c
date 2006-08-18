@@ -766,7 +766,7 @@ void CL_CampaignCheckEvents(void)
 					}
 
 					/* Remove all aircrafts from the base. */
-					for ( ac = base->numAircraftInBase; ac > 0; ac-- ) {
+					for ( ac = base->numAircraftInBase-1; ac >= 0; ac-- ) {
 						CL_DeleteAircraft(&base->aircraft[ac]);
 					}
 
@@ -2168,6 +2168,7 @@ void CL_UpdateCharacterStats(int won)
 					chr->skills[j]++;
 
 			/* Check if the soldier meets the requirements for a higher rank -> Promotion */
+			/* TODO: Check if it's really "> 0" or rather ">= 0" */
 			if (gd.numRanks >= 2) {
 				for (j = gd.numRanks - 1; j > 0; j--) {
 					rank = &gd.ranks[j];
@@ -2261,8 +2262,7 @@ static void CL_GameResultsCmd(void)
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
 
-	/* Remove the dead (and their item preference). */
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER];) {
+	for (i = gd.numEmployees[EMPL_SOLDIER]-1; i >= 0 ; i-- ) {
 		/* if employee is marked as dead */
 		if (baseCurrent->deathMask & (1 << i)) {
 			Com_DPrintf("CL_GameResultsCmd - remove player %i - dead\n", i);
@@ -2301,7 +2301,7 @@ static void CL_GameResultsCmd(void)
 			baseCurrent->teamNum[baseCurrent->aircraftCurrent]--;
 		} else
 			/* otherwise go to next employee */
-			i++;
+			i--;
 	}
 	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n", i);
 
