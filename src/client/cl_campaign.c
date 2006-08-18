@@ -2755,7 +2755,10 @@ static value_t nation_vals[] = {
 };
 
 /**
- * @brief
+ * @brief Parse the nation data from script file
+ * @param[in] name Name or ID of the found nation
+ * @param[in] text The text of the nation node
+ * @sa nation_vals
  */
 void CL_ParseNations(char *name, char **text)
 {
