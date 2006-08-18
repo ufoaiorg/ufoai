@@ -206,7 +206,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 
 		((struct sockaddr_in *)sadr)->sin_port = 0;
 
-		strcpy (copy, s);
+		Q_strncpyz(copy, s, sizeof(copy));
 		/* strip off a trailing :port if present */
 		for (colon = copy ; *colon ; colon++)
 			if (*colon == ':') {

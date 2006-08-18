@@ -102,18 +102,22 @@ qboolean NET_CompareBaseAdr (netadr_t a, netadr_t b)
 	if (a.type != b.type)
 		return qfalse;
 
-	if (a.type == NA_LOOPBACK)
+	switch (a.type) {
+#ifndef DEDICATED_ONLY
+	case NA_LOOPBACK:
 		return qtrue;
+#endif
 
-	if (a.type == NA_IP) {
+	case NA_IP:
 		if (a.ip[0] == b.ip[0] && a.ip[1] == b.ip[1] && a.ip[2] == b.ip[2] && a.ip[3] == b.ip[3])
 			return qtrue;
 		return qfalse;
-	}
 
-	if (a.type == NA_IPX) {
+	case NA_IPX:
 		if ((memcmp(a.ipx, b.ipx, 10) == 0))
 			return qtrue;
+		return qfalse;
+	default:
 		return qfalse;
 	}
 	return qfalse;
@@ -159,7 +163,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 
 	((struct sockaddr_in *)sadr)->sin_port = 0;
 
-	strcpy (copy, s);
+	Q_strncpyz(copy, s, sizeof(copy));
 	/* strip off a trailing :port if present */
 	for (colon = copy ; *colon ; colon++)
 		if (*colon == ':') {
@@ -193,11 +197,13 @@ qboolean NET_StringToAdr (char *s, netadr_t *a)
 {
 	struct sockaddr_in sadr;
 
+#ifndef DEDICATED_ONLY
 	if (!strcmp (s, "localhost")) {
 		memset (a, 0, sizeof(*a));
 		a->type = NA_LOOPBACK;
 		return qtrue;
 	}
+#endif
 
 	if (!NET_StringToSockaddr (s, (struct sockaddr *)&sadr))
 		return qfalse;
@@ -318,10 +324,12 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	struct sockaddr_in	addr;
 	int		net_socket;
 
+#ifndef DEDICATED_ONLY
 	if ( to.type == NA_LOOPBACK ) {
 		NET_SendLoopPacket (sock, length, data, to);
 		return;
 	}
+#endif
 
 	if (to.type == NA_BROADCAST) {
 		net_socket = ip_sockets[sock];
