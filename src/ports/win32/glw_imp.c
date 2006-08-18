@@ -112,7 +112,8 @@ void WG_CheckHardwareGamma( void )
 qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 {
 	WNDCLASS		wc;
-	RECT			r;
+	HWND			desktop;
+	RECT			r, desktopRect;
 	cvar_t			*vid_xpos, *vid_ypos;
 	int				stylebits;
 	int				x, y, w, h;
@@ -185,6 +186,13 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 
 	SetForegroundWindow( glw_state.hWnd );
 	SetFocus( glw_state.hWnd );
+
+	desktop = GetDesktopWindow();
+	GetWindowRect(desktop, &desktopRect);
+
+	ri.Con_Printf( PRINT_ALL, "Desktop resolution: %i:%i\n",
+		desktopRect.right - desktopRect.left,
+		desktopRect.bottom - desktopRect.top);
 
 	/* let the sound and input subsystems know about the new window */
 	ri.Vid_NewWindow (width, height);
