@@ -262,13 +262,9 @@ void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 
 
 
-/*
-=================
-G_FrustomVis
-
-checks wheter a point is visible from the edicts position
-=================
-*/
+/**
+ * @brief Checks wheter a point is visible from the edicts position
+ */
 qboolean G_FrustomVis(edict_t * from, vec3_t point)
 {
 	/* view frustom check */
