@@ -745,12 +745,14 @@ void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int t
 		return;
 
 	if ( ( ia = Com_MoveInInventory(&ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic) ) != 0 ) {
+		item_t *item = &ic->item;
+
 		switch (ia) {
 		case IA_NOTIME:
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not enough TUs!\n"));
 			return;
 		case IA_NORELOAD:
-			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - weapon already loaded!\n"));
+			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - weapon already fully loaded with the same ammunition!\n")); /* TODO: "or not researched" */
 			return;
 		}
 
@@ -787,7 +789,7 @@ void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int t
 		/* send tu's */
 		G_SendStats(ent);
 
-		if (ia == IA_RELOAD) {
+		if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP ) {
 			/* reload */
 			if (to == gi.csi->idFloor)
 				mask = G_VisToPM(floor->visflags);
@@ -798,12 +800,20 @@ void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int t
 			gi.AddEvent(mask, EV_INV_AMMO);
 			gi.WriteShort(to == gi.csi->idFloor ? floor->number : ent->number);
 			gi.WriteByte(gi.csi->ods[ic->item.t].ammo);
+			gi.WriteByte(ic->item.m);
 			gi.WriteByte(to);
 			gi.WriteByte(ic->x);
 			gi.WriteByte(ic->y);
+		}
 
+		if (ia == IA_RELOAD) {
 			gi.EndEvents();
 			return;
+		} else if (ia == IA_RELOAD_SWAP ) {
+			to = from;
+			tx = fx;
+			ty = fy;
+			item = &Com_SearchInInventory(&ent->i, from, fx, fy)->item;
 		}
 
 		/* add it */
@@ -817,7 +827,7 @@ void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int t
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
 				gi.WriteShort(2+6);
 				gi.WriteShort(floor->number);
-				G_WriteItem(&ic->item);
+				G_WriteItem(item);
 				gi.WriteByte(to);
 				gi.WriteByte(tx);
 				gi.WriteByte(ty);
@@ -826,7 +836,7 @@ void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int t
 			gi.AddEvent(G_TeamToPM(ent->team), EV_INV_ADD);
 			gi.WriteShort(2+6);
 			gi.WriteShort(num);
-			G_WriteItem(&ic->item);
+			G_WriteItem(item);
 			gi.WriteByte(to);
 			gi.WriteByte(tx);
 			gi.WriteByte(ty);
@@ -846,7 +856,7 @@ void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int t
 				gi.AddEvent(mask, EV_INV_ADD);
 				gi.WriteShort(2+6);
 				gi.WriteShort(num);
-				G_WriteItem(&ic->item);
+				G_WriteItem(item);
 				gi.WriteByte(to);
 				gi.WriteByte(tx);
 				gi.WriteByte(ty);
@@ -1968,6 +1978,7 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_AMMO);
 			gi.WriteShort(num);
 			gi.WriteByte(ammo);
+			gi.WriteByte(weapon->m);
 			weapon->a = ammo;
 			if (type < ST_LEFT_PRIMARY)
 				gi.WriteByte(gi.csi->idRight);

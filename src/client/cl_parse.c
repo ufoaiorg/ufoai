@@ -99,7 +99,7 @@ char *ev_format[] =
 
 	"n",				/* EV_INV_ADD */
 	"sbbb",				/* EV_INV_DEL */
-	"sbbbb",			/* EV_INV_AMMO */
+	"sbbbbb",			/* EV_INV_AMMO */
 
 	"s",				/* EV_MODEL_PERISH */
 	"s",				/* EV_MODEL_EXPLODE */
@@ -906,10 +906,10 @@ void CL_InvAmmo( sizebuf_t *sb )
 	invList_t	*ic;
 	le_t	*le;
 	int		number;
-	int		ammo, container, x, y;
+	int		ammo, type, container, x, y;
 
 	MSG_ReadFormat( sb, ev_format[EV_INV_AMMO],
-		&number, &ammo, &container, &x, &y );
+		&number, &ammo, &type, &container, &x, &y );
 
 	le = LE_Get( number );
 	if ( !le ) {
@@ -925,9 +925,12 @@ void CL_InvAmmo( sizebuf_t *sb )
 		return;
 
 	/* if we're reloading and the displaced clip had any remaining */
-	/* bullets, store them as loose */
-	if ( curCampaign && le->team == cls.team &&
-			ammo == csi.ods[ic->item.t].ammo && ic->item.a > 0 ) {
+	/* bullets, store them as loose, unless the removed clip was full */
+	if ( curCampaign 
+		 && le->team == cls.team 
+		 &&	ammo == csi.ods[ic->item.t].ammo 
+		 && ic->item.a > 0
+		 && ic->item.a != csi.ods[ic->item.t].ammo ) {
 		ccs.eMission.num_loose[ic->item.m] += ic->item.a;
 		/* Accumulate loose ammo into clips (only accessable post-mission) */
 		if (ccs.eMission.num_loose[ic->item.m] >= csi.ods[ic->item.t].ammo) {
@@ -938,6 +941,7 @@ void CL_InvAmmo( sizebuf_t *sb )
 
 	/* set new ammo */
 	ic->item.a = ammo;
+	ic->item.m = type;
 
 	if ( ic && csi.ods[ic->item.t].ammo == ammo && le->team != TEAM_ALIEN )
 		S_StartLocalSound( "weapons/verschluss.wav" );

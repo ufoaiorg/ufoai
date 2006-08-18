@@ -2265,23 +2265,40 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 		ic = Com_SearchInInventory(i, to, tx, ty);
 
 		if (ic && CSI->ods[cacheItem.t].link == ic->item.t) {
+			/* TODO (or do this in two places in cl_menu.c):
+			if ( !RS_ItemIsResearched(CSI->ods[ic->item.t].kurz)
+				 || !RS_ItemIsResearched(CSI->ods[cacheItem.t].kurz) ) {
+				return IA_NORELOAD;
+			} */
 			if (ic->item.a >= CSI->ods[ic->item.t].ammo
 				&& ic->item.m == cacheItem.t) {
-				/* weapon already loaded with the same ammunition
-				   - back to source location */
+				/* weapon already fully loaded with the same ammunition
+				   --- back to source location */
 				Com_AddToInventory(i, cacheItem, from, fx, fy);
 				return IA_NORELOAD;
 			}
-
 			time += CSI->ods[ic->item.t].reload;
 			if (!TU || *TU >= time) {
 				if (TU)
 					*TU -= time;
-				ic->item.a = CSI->ods[ic->item.t].ammo;
-				ic->item.m = cacheItem.t;
-				if (icp)
-					*icp = ic;
-				return IA_RELOAD;
+				if (ic->item.a >= CSI->ods[ic->item.t].ammo) {
+					/* exchange ammo */
+					item_t item = {0,NONE,ic->item.m};
+
+					Com_AddToInventory(i, item, from, fx, fy);
+
+					ic->item.m = cacheItem.t;
+					if (icp)
+						*icp = ic;
+					return IA_RELOAD_SWAP;
+				} else {
+					ic->item.m = cacheItem.t;
+					/* loose ammo of type ic->item.m saved on server side */
+					ic->item.a = CSI->ods[ic->item.t].ammo;
+					if (icp)
+						*icp = ic;
+					return IA_RELOAD;
+				}
 			}
 			/* not enough time - back to source location */
 			Com_AddToInventory(i, cacheItem, from, fx, fy);

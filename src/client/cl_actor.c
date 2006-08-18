@@ -931,10 +931,10 @@ void CL_ActorReload(int hand)
 	}
 
 	if (weapon == NONE)
-		return;
+		return; /* TODO: assert? */
 
 	if (!RS_ItemIsResearched(csi.ods[weapon].kurz)) {
-		CL_DisplayHudMessage(_("You cannot load this unknown item.\nYou need to research it first.\n"), 2000);
+		CL_DisplayHudMessage(_("You cannot reload this unknown item.\nYou need to research it and its ammunition first.\n"), 2000);
 		return;
 	}
 
@@ -945,7 +945,8 @@ void CL_ActorReload(int hand)
 			/* retrieve the ammo from them than the one we've already */
 			/* found. */
 			for (ic = inv->c[container]; ic; ic = ic->next)
-				if (csi.ods[ic->item.t].link == weapon) {
+				if ( csi.ods[ic->item.t].link == weapon 
+					 && RS_ItemIsResearched(csi.ods[ic->item.t].kurz) ) {
 					x = ic->x;
 					y = ic->y;
 					tu = csi.ids[container].out;
@@ -959,7 +960,7 @@ void CL_ActorReload(int hand)
 	if (bestContainer != NONE)
 		MSG_WriteFormat(&cls.netchan.message, "bbsbbbbbb", clc_action, PA_INVMOVE, selActor->entnum, bestContainer, x, y, hand, 0, 0);
 	else
-		Com_Printf("No clip left.\n");
+		Com_Printf("No (researched) clip left.\n");
 }
 
 

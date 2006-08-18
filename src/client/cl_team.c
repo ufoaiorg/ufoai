@@ -307,7 +307,7 @@ void CL_AddCarriedToEq(equipDef_t * ed)
  */
 item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 {
-	int i, type = item.t;
+	int i = -1, type = item.t;
 
 	assert (ed->num[type] > 0);
 	ed->num[type]--;
@@ -328,20 +328,7 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 			return item;
 		}
 	}
-
-	if (item.a > 0) {
-		/* Put the previously loaded ammo into storage */
-		assert (item.m != NONE);
-		ed->num_loose[item.m] += item.a;
-		item.a = 0;
-		/* See if we have enough loose ammo to fill the clip */
-		if (ed->num_loose[item.m] >= csi.ods[type].ammo) {
-			ed->num_loose[item.m] -= csi.ods[type].ammo;
-			item.a = csi.ods[type].ammo;
-			return item;
-		}
-	}
-
+	
 	/* Check for complete clips of the same kind */
 	if (item.m != NONE && ed->num[item.m] > 0) {
 		ed->num[item.m]--;
@@ -364,9 +351,19 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 	/* TODO: on return from a mission with no clips left
 	   and one weapon half-loaded wielded by soldier
 	   and one empty in equip, on the first opening of equip,
-	   the empty weapon will be in soldier hands, the half-full in equip */
-	assert (item.a == 0);
-	/* Failed to find a complete clip - see if there's any loose ammo */
+	   the empty weapon will be in soldier hands, the half-full in equip;
+	   this should be the other way around. */
+
+	/* Failed to find a complete clip - see if there's any loose ammo
+	   of the same kind; if so, gather it all in this weapon. */
+	if (item.m != NONE && ed->num_loose[item.m] > 0) {
+		item.a = ed->num_loose[item.m];
+		ed->num_loose[item.m] = 0;
+		return item;
+	}
+	
+	/* See if there's any loose ammo */
+	item.a = 0;
 	for (i = 0; i < csi.numODs; i++) {
 		if (csi.ods[i].link == type && ed->num_loose[i] > item.a) {
 			if (item.a > 0) {
@@ -377,7 +374,7 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 				assert (item.m != NONE);
 				ed->num_loose[item.m] = item.a;
 				/* We don't have to accumulate loose ammo into clips
-				   because we used all of it previously */
+				   because we did it previously and we create no new ammo */
 			}
 			/* Found some loose ammo to load the weapon with */
 			item.a = ed->num_loose[i];
@@ -527,7 +524,7 @@ static void CL_GenerateEquipmentCmd(void)
 
 			assert (unused.num[i] > 0);
 			if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), csi.ods[i].buytype))
-				break;
+				break; /* no space left in menu */
 		}
 }
 
