@@ -811,8 +811,7 @@ qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
  */
 void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
 {
-	int i, cnt = 0;
-	invList_t *ic = NULL;
+	int i = 0;
 
 	if ( employee_idx < 0 )
 		return;
@@ -830,16 +829,9 @@ void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
 	if ( aircraft_idx < 0 )
 		return;
 
-	for (i = 0; i < csi.numIDs; i++) {
-		for (ic = gd.employees[EMPL_SOLDIER][employee_idx].inv.c[i]; ic; ic = ic->next) {
-			if (i != csi.idFloor && i != csi.idEquip)
-				cnt++;
-		}
-	}
-	if (cnt) {
-		gd.employees[EMPL_SOLDIER][employee_idx].inv.c[csi.idFloor] = NULL;
-		Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][employee_idx].inv);
-	}
+	gd.employees[EMPL_SOLDIER][employee_idx].inv.c[csi.idFloor] = NULL;
+	Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][employee_idx].inv);
+
 	/* Switch the bit for the employee in the mask to 0.*/
 	baseCurrent->teamMask[aircraft_idx] &= ~(1 << employee_idx);
 	baseCurrent->teamNum[aircraft_idx]--;
