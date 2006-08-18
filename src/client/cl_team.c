@@ -812,7 +812,7 @@ qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
  * @param[in] employee_idx The index of the soldier in the global list.
  * @param[in] aircraft_idx The index of aircraft in the base. Use -1 to remove the soldier from any aircraft.
  */
-void CL_RemoveSoldier(int employee_idx, int aircraft_idx)
+void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
 {
 	int i, cnt = 0;
 	invList_t *ic = NULL;
@@ -849,12 +849,35 @@ void CL_RemoveSoldier(int employee_idx, int aircraft_idx)
 }
 
 /**
+ * @brief Removes all soldiers from an aircraft.
+ * @param[in] aircraft_idx The index of aircraft in the base.
+ * @param[in] base_idx The index of the base the aircraft is located in.
+ */
+void CL_RemoveSoldiersFromAircraft(int aircraft_idx, int base_idx)
+{
+	int i = 0;
+	base_t *base = NULL;
+	aircraft_t *aircraft = NULL;
+	
+	if ( aircraft_idx < 0 || base_idx < 0)
+		return;
+	
+	base = &gd.bases[base_idx];
+	aircraft = &base->aircraft[aircraft_idx];
+
+	/* Counting backwards because teamNum[aircraft->idx] is changed in CL_RemoveSoldierFromAircraft */
+	for ( i = base->teamNum[aircraft->idx]; i > 0; i-- ) {
+		 CL_RemoveSoldierFromAircraft(i, aircraft->idx);
+	}
+}
+
+/**
  * @brief Assigns a soldier to an aircraft.
  * @param[in] employee_idx The index of the soldier in the global list.
  * @param[in] aircraft_idx The index of aircraft in the base.
  * @return returns true if a soldier could be assigned to the aircraft.
  */
-static qboolean CL_AssignSoldier(int employee_idx, int aircraft_idx)
+static qboolean CL_AssignSoldierToAircraft(int employee_idx, int aircraft_idx)
 {
 	aircraft_t *aircraft = NULL;
 	if ( employee_idx < 0 || aircraft_idx < 0 )
@@ -905,12 +928,12 @@ static void CL_AssignSoldierCmd(void)
 		Com_DPrintf("CL_AssignSoldierCmd: removing\n");
 		/* Remove soldier from aircraft/team. */
 		Cbuf_AddText(va("listdel%i\n", num));
-		CL_RemoveSoldier(employee->idx, baseCurrent->aircraftCurrent);
+		CL_RemoveSoldierFromAircraft(employee->idx, baseCurrent->aircraftCurrent);
 		Cbuf_AddText(va("listholdsnoequip%i\n", num));
 	} else {
 		Com_DPrintf("CL_AssignSoldierCmd: assigning\n");
 		/* Assign soldier to aircraft/team. */
-		if (CL_AssignSoldier(employee->idx ,baseCurrent->aircraftCurrent)) {
+		if (CL_AssignSoldierToAircraft(employee->idx ,baseCurrent->aircraftCurrent)) {
 			Cbuf_AddText(va("listadd%i\n", num));
 		}
 	}

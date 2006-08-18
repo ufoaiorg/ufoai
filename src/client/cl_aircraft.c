@@ -376,6 +376,43 @@ void CL_NewAircraft(base_t *base, char *name)
 }
 
 /**
+ * @brief Removes an aircraft from its base and the game.
+ * @param[in] base Pointer to aircraft that should be removed.
+ * @note The assigned soldiers are removed from the aircraft ... not fired. If you wan them fired/deleted do it before calling this function.
+*/
+void CL_DeleteAircraft(aircraft_t *aircraft)
+{
+	int i = 0;
+	base_t *base = NULL;
+	aircraft_t *aircraft_temp = NULL;
+	
+	if (aircraft) {
+		base = &gd.bases[aircraft->idxBase];
+		/* Remove all soldiers from the aircraft (the employees are still hired after this) */
+		CL_RemoveSoldiersFromAircraft(aircraft->idx, aircraft->idxInBase );
+	
+		/* Remove aircraft and rearrange the aircraft-list (in base), */
+		base->numAircraftInBase--;
+		for ( i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
+			aircraft_temp = &base->aircraft[i];
+			memcpy(aircraft_temp, &base->aircraft[i+1], sizeof(aircraft_t));
+			aircraft_temp->idxInBase = i;
+		}
+
+		/* Reduce number of total (global) aircraft. */
+		gd.numAircraft--;
+
+		/* Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT); 
+		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
+
+		/* now update the aircraft list - maybe there is a popup active */
+		Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
+	} else {
+		Com_DPrintf("CL_DeleteAircraft: no aircraft given (NULL)\n");
+	}
+}
+
+/**
   * @brief Set pos to a random position on geoscape
   * @param[in] pos Pointer to vec2_t for aircraft position
   * @note Used to place UFOs on geoscape

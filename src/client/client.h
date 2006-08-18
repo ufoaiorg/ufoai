@@ -675,7 +675,8 @@ void CL_CleanTempInventory(void);
 void CL_AddCarriedToEq(equipDef_t * equip);
 void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
 qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx);
-void CL_RemoveSoldier(int employee_idx, int aircraft_idx);
+void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx);
+void CL_RemoveSoldiersFromAircraft(int aircraft_idx, int base_idx);
 
 /* cl_radar.c */
 #define MAX_UFOONGEOSCAPE	8
