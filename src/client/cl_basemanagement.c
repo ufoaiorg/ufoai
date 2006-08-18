@@ -1195,6 +1195,8 @@ void B_RenameBase(void)
 
 /**
  * @brief Cycles to the next base.
+ * @sa B_PrevBase
+ * @sa B_SelectBase
  */
 void B_NextBase(void)
 {
@@ -1216,6 +1218,8 @@ void B_NextBase(void)
 
 /**
  * @brief Cycles to the previous base.
+ * @sa B_NextBase
+ * @sa B_SelectBase
  */
 void B_PrevBase(void)
 {
@@ -1290,7 +1294,14 @@ void B_SelectBase(void)
 	} else
 		return;
 
+	/* activate or deactivate the aircraft button */
+	if (baseCurrent->numAircraftInBase <= 0)
+		Cbuf_ExecuteText(EXEC_NOW, "set_base_no_aircraft");
+	else
+		Cbuf_ExecuteText(EXEC_NOW, "set_base_aircraft");
+
 	Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
+	Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
 	Cvar_SetValue("mn_base_id", baseCurrent->idx);
 	Cvar_Set("mn_base_title", baseCurrent->name);
 }
@@ -1361,8 +1372,6 @@ static void B_PackInitialEquipmentCmd(void)
 
 /**
  * @brief Constructs a new base.
- *
- * @todo First base needs to be constructed automatically.
  */
 void B_BuildBase(void)
 {
@@ -1380,15 +1389,13 @@ void B_BuildBase(void)
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - BASE_COSTS);
 			Q_strncpyz(baseCurrent->name, mn_base_title->string, sizeof(baseCurrent->name));
-			Cvar_SetValue("mn_base_id", baseCurrent->idx);
-			Cvar_Set("mn_base_title", baseCurrent->name);
-			Cbuf_AddText("mn_push bases\n");
 			Q_strncpyz(messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string), MAX_MESSAGE_TEXT);
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			Radar_Initialise(&(baseCurrent->radar), 0);
 
 			if (gd.numBases == 1 && cl_start_employees->value)
-				Cbuf_AddText(va("assign_initial\n"));
+				Cbuf_AddText("assign_initial;");
+			Cbuf_AddText(va("mn_select_base %i;", baseCurrent->idx));
 			return;
 		}
 	} else {
@@ -1635,6 +1642,7 @@ static void B_BaseList_f(void)
 		Com_Printf("Base id %i\n", base->idx);
 		Com_Printf("Base title %s\n", base->name);
 		Com_Printf("Base founded %i\n", base->founded);
+		Com_Printf("Base numAircraftInBase %i\n", base->numAircraftInBase);
 		Com_Printf("Base sensorWidth %i\n", base->radar.range);
 		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUfos);
 		Com_Printf("Base aircraft %i\n", base->numAircraftInBase);
