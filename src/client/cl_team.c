@@ -855,7 +855,7 @@ void CL_RemoveSoldiersFromAircraft(int aircraft_idx, int base_idx)
 	aircraft = &base->aircraft[aircraft_idx];
 
 	/* Counting backwards because teamNum[aircraft->idx] is changed in CL_RemoveSoldierFromAircraft */
-	for ( i = base->teamNum[aircraft->idx]; i > 0; i-- ) {
+	for ( i = base->teamNum[aircraft->idx]-1; i > 0; i-- ) {
 		 CL_RemoveSoldierFromAircraft(i, aircraft->idx);
 	}
 }
