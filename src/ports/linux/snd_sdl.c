@@ -55,6 +55,7 @@ qboolean SND_Init (struct sndinfo *s)
 	SDL_AudioSpec desired, obtained;
 	int desired_bits;
 	char drivername[128];
+	SDL_version version;
 
 	if (si)
 		return qtrue;
@@ -64,6 +65,8 @@ qboolean SND_Init (struct sndinfo *s)
 	snd_inited = 0;
 
 	si->Com_Printf("Soundsystem: SDL.\n");
+	SDL_VERSION(&version);
+	si->Com_Printf("SDL version: %i.%i.%i\n", version.major, version.minor, version.patch);
 
 	if (!SDL_WasInit(SDL_INIT_AUDIO))
 		if (SDL_Init(SDL_INIT_AUDIO) == -1) {

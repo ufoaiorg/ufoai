@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL.h>
 /*#include <SDL_opengl.h>*/
+#include <SDL_syswm.h>
 
 #include "../../client/keys.h"
 #include "rw_linux.h"
@@ -464,8 +465,23 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 {
 	int flags;
 	int stencil_bits;
+	int width = 0;
+	int height = 0;
+
+	SDL_SysWMinfo info;
+	SDL_VERSION(&info.version);
+	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
 
 	have_stencil = qfalse;
+	if (SDL_GetWMInfo(&info) > 0 ) {
+		if (info.subsystem == SDL_SYSWM_X11) {
+			info.info.x11.lock_func();
+			width = DisplayWidth(info.info.x11.display, DefaultScreen(info.info.x11.display));
+			height = DisplayHeight(info.info.x11.display, DefaultScreen(info.info.x11.display));
+			info.info.x11.unlock_func();
+			Com_Printf("Desktop resolution: %i:%i\n", width, height);
+		}
+	}
 
 	/* Just toggle fullscreen if that's all that has been changed */
 	if (surface && (surface->w == vid.width) && (surface->h == vid.height)) {
