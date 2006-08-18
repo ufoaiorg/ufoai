@@ -104,6 +104,9 @@ void CL_AircraftStart_f(void)
 	aircraft->status = AIR_IDLE;
 
 	MAP_SelectAircraft(aircraft);
+	/* return to geoscape */
+	MN_PopMenu(qfalse);
+	MN_PopMenu(qfalse);
 }
 
 /**
@@ -280,7 +283,7 @@ void CL_AircraftSelect(void)
 	static char aircraftInfo[256];
 
 	/* calling from console? with no baseCurrent? */
-	if (!baseCurrent)
+	if (!baseCurrent || !baseCurrent->numAircraftInBase)
 		return;
 
 	/* selecting the first aircraft in base (every base has at least one aircraft) */
@@ -344,7 +347,7 @@ void CL_NewAircraft(base_t *base, char *name)
 	base->aircraftCurrent = 0;
 
 	aircraft = CL_GetAircraft(name);
-	if (aircraft) {
+	if (aircraft && base->numAircraftInBase < MAX_AIRCRAFT) {
 		/* copy from global aircraft list to base aircraft list */
 		/* we do this because every aircraft can have its own parameters */
 		memcpy(&base->aircraft[base->numAircraftInBase], aircraft, sizeof(aircraft_t));
