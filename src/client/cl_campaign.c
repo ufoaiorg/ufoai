@@ -2262,17 +2262,13 @@ static void CL_GameResultsCmd(void)
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
 
+	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
 	for (i = gd.numEmployees[EMPL_SOLDIER]-1; i >= 0 ; i-- ) {
 		/* if employee is marked as dead */
 		if (baseCurrent->deathMask & (1 << i)) {
 			Com_DPrintf("CL_GameResultsCmd - remove player %i - dead\n", i);
-			/* TODO: This bit-manipulating below needs some _serious_ documentation and/or sub-functions. I'm not even touching this with a 5 meter long stick. */
-			/* we have to shift the mask because we will delete the employee below */
+			/* We have to shift the mask because we will delete the employee below */
 			/* if we increased i at this point we jump over one employee (the next after the deleted employee) */
-			/* but by shifting the deathMask we check whether the next employee was marked as dead without incrementing i */
-			/* thus we hit all employees in the list */
-			baseCurrent->deathMask >>= 1;
-			/* also shift the teamMask (see above) */
 			tempMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent] >> 1;
 
 			/* set new teamMask */
@@ -2292,17 +2288,16 @@ static void CL_GameResultsCmd(void)
 			employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
 			if (!employee)
 				Sys_Error("Could not get hired employee %i from base %i\n", i, baseCurrent->idx);
-			/* delete the employee */
+			/* Delete the employee. */
 			/* sideeffect: gd.numEmployees[EMPL_SOLDIER] is decremented by one, too */
 			E_DeleteEmployee(employee, EMPL_SOLDIER);
 			/* because this employee is removed completly from employee list we don't increment i !! */
 
 			/* now decrement the amount of teammembers for this aircraft by one */
 			baseCurrent->teamNum[baseCurrent->aircraftCurrent]--;
-		} else
-			/* otherwise go to next employee */
-			i--;
+		}
 	}
+	baseCurrent->deathMask = 0; /* Just in case. */
 	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n", i);
 
 	/* onwin and onlose triggers */
