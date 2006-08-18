@@ -625,7 +625,8 @@ void CL_RemoveActorFromTeamList(le_t * le)
 
 			for (j = 0; j < gd.numEmployees[EMPL_SOLDIER]; j++) {
 				if (baseCurrent->curTeam[i]->ucn == gd.employees[EMPL_SOLDIER][j].chr.ucn) {
-					baseCurrent->deathMask |= 1 << j;
+					E_DeleteEmployee(&gd.employees[EMPL_SOLDIER][j], EMPL_SOLDIER);
+					/* baseCurrent->deathMask |= 1 << j; */
 					break;
 				}
 			}

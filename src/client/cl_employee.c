@@ -396,6 +396,13 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
 			E_RemoveEmployeeFromBuilding(employee);
 			/* E_AssignEmployee(employee, building_rom_unhired_employee); */
 		}
+		if (type == EMPL_SOLDIER ) {
+			/* Remove soldier from aircraft/team if he was assigned to one. */
+			if ( CL_SoldierInAircraft(employee->idx, -1) ){
+				CL_RemoveSoldier(employee->idx, -1);
+				
+			}
+ 		}
 		employee->hired = qfalse;
 		employee->baseIDHired = -1;
 		employee->inv.c[csi.idFloor] = NULL;

@@ -674,6 +674,8 @@ void CL_ReloadAndRemoveCarried(equipDef_t * equip);
 void CL_CleanTempInventory(void);
 void CL_AddCarriedToEq(equipDef_t * equip);
 void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
+qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx);
+void CL_RemoveSoldier(int employee_idx, int aircraft_idx);
 
 /* cl_radar.c */
 #define MAX_UFOONGEOSCAPE	8
@@ -692,7 +694,7 @@ extern void Radar_NotifyUfoRemoved(radar_t* radar, const struct aircraft_s* ufo)
 extern void RADAR_ChangeRange(radar_t* radar, int change);
 extern void Radar_Initialise(radar_t* radar, int range);
 extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
-	const struct aircraft_s* ufo, qboolean wasUfoSensored);
+const struct aircraft_s* ufo, qboolean wasUfoSensored);
 
 /* cl_research.c */
 #include "cl_research.h"

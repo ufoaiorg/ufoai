@@ -1342,7 +1342,7 @@ static void B_PackInitialEquipmentCmd(void)
 	if (i == csi.numEDs) {
 		Com_DPrintf("B_PackInitialEquipmentCmd: Initial Phalanx equipment %s not found.\n", name);
 	} else {
-		for (i = 0; i < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; i++) {
+		for (i = 0; i < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; i++) {
 			cp = baseCurrent->curTeam[i];
 			/* pack equipment */
 			Com_DPrintf("B_PackInitialEquipmentCmd: Packing initial equipment for %s.\n", cp->name);
@@ -1804,11 +1804,11 @@ base_t *B_GetBase(int idx)
 }
 
 /**
- * @brief Counts the number of soldiers in a team?
+ * @brief Counts the number of soldiers in a current aircraft/team.
  */
 int B_GetNumOnTeam(void)
 {
 	if (!baseCurrent)
 		return 0;
-	return baseCurrent->numOnTeam[baseCurrent->aircraftCurrent];
+	return baseCurrent->teamNum[baseCurrent->aircraftCurrent];
 }

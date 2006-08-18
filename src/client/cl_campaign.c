@@ -1371,7 +1371,7 @@ void CL_UpdatePointersInGlobalData(void)
 
 		/* fix aircraft homepage and teamsize pointers */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
-			aircraft->teamSize = &base->numOnTeam[aircraft->idxInBase];
+			aircraft->teamSize = &base->teamNum[aircraft->idxInBase];
 			aircraft->homebase = &gd.bases[aircraft->idxBase];
 		}
 
@@ -1857,7 +1857,7 @@ static void CL_GameGo(void)
 	ccs.aliensKilled = 0;
 
 	/* prepare */
-	baseCurrent->deathMask = 0;
+	/* baseCurrent->deathMask = 0; */
 	MN_PopMenu(qtrue);
 	Cvar_Set("mn_main", "singleplayermission");
 
@@ -2217,9 +2217,11 @@ static void CL_GameResultsCmd(void)
 	int won;
 	int civilians_killed;
 	int aliens_killed;
+#if 0
 	int i;
 	int tempMask;
 	employee_t* employee;
+#endif
 
 	/* multiplayer? */
 	if (!curCampaign || !selMis || !baseCurrent)
@@ -2255,6 +2257,8 @@ static void CL_GameResultsCmd(void)
 	CL_ParseCharacterData(NULL, qtrue);
 
 	/* remove the dead (and their item preference) */
+#if 0
+	/* Should already be done. ... see cl_actor.c */;
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER];) {
 		if (baseCurrent->deathMask & (1 << i)) {
 			Com_DPrintf("CL_GameResultsCmd - remove player %i - dead\n", i);
@@ -2272,6 +2276,7 @@ static void CL_GameResultsCmd(void)
 			i++;
 	}
 	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n", i);
+#endif
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won);

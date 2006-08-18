@@ -131,7 +131,7 @@ void CL_AircraftInit(void)
 		} else
 			 air_samp->shield = NULL;
 		air_samp->homebase = &gd.bases[air_samp->idxBase]; /* TODO: looks like a nonsense */
-		air_samp->teamSize = &gd.bases[air_samp->idxBase].numOnTeam[air_samp->idxInBase];
+		air_samp->teamSize = &gd.bases[air_samp->idxBase].teamNum[air_samp->idxInBase];
 	}
 
 	Com_Printf("...aircraft inited\n");
@@ -358,7 +358,7 @@ void CL_NewAircraft(base_t *base, char *name)
 		/* NOTE: when we send the aircraft to another base this has to be changed, too */
 		aircraft->idxInBase = base->numAircraftInBase;
 		/* link the teamSize pointer in */
-		aircraft->teamSize = &base->numOnTeam[base->numAircraftInBase];
+		aircraft->teamSize = &base->teamNum[base->numAircraftInBase];
 		Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf("Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
