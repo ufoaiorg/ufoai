@@ -168,10 +168,6 @@ typedef struct base_s {
 
 	baseStatus_t baseStatus;
 
-	/* these are max. 19bits - see cvar cl_numnames */
-	/* hiredMask is teamMask from current selected aircraft */
-	int hiredMask;				/* hired mask for all soldiers in base */
-
 	/* these are 31bit masks FIXME: still? */
 	/* NOTE: we only use the first 19 (because we can only select from 19 soldiers) */
 	/* see cl_numnames cvars */

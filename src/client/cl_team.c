@@ -473,8 +473,8 @@ static void CL_GenerateEquipmentCmd(void)
 	/* Store hired names. */
 	Cvar_ForceSet("cl_selected", "0");
 	for (i = 0, p = 0; i < (int)cl_numnames->value; i++)
-		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
-			/* maybe we already have soldiers in this base */
+		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
+			/* maybe we already have soldiers in this aircraft */
 			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
 			if (!baseCurrent->curTeam[p])
 				Sys_Error("CL_GenerateNamesCmd: Could not get employee character with idx: %i\n", p);
@@ -646,8 +646,6 @@ void CL_UpdateHireVar(void)
 
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	Cvar_Set("mn_hired", va(_("%i of %i"), baseCurrent->teamNum[baseCurrent->aircraftCurrent], aircraft->size));
-	/* now update the mask for display the hired soldiers */
-	baseCurrent->hiredMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent];
 
 	/* update curTeam list */
 	for (i = 0, p = 0; i < (int)cl_numnames->value; i++)
@@ -684,14 +682,14 @@ void CL_ResetTeamInBase(void)
 	if (ccs.singleplayer)
 		return;
 
-	Com_DPrintf("Reset of baseCurrent team flags like hiredMask\n");
+	Com_DPrintf("Reset of baseCurrent team flags.\n");
 	if (!baseCurrent) {
 		Com_DPrintf("CL_ResetTeamInBase: No baseCurrent\n");
 		return;
 	}
 
 	CL_CleanTempInventory();
-	baseCurrent->teamMask[0] = baseCurrent->hiredMask = baseCurrent->teamNum[0] = 0;
+	baseCurrent->teamMask[0] = baseCurrent->teamNum[0] = 0;
 	E_ResetEmployees();
 	while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->value) {
 		employee = E_CreateEmployee(EMPL_SOLDIER);
@@ -751,12 +749,12 @@ static void CL_MarkTeamCmd(void)
 			if (j==baseCurrent->aircraftCurrent)
 				continue;
 			/* already on another aircraft */
-			if (baseCurrent->teamMask[j] & (1 << i))
+			if (CL_SoldierInAircraft(i, j) )
 				alreadyInOtherShip = qtrue;
 		}
 		Cvar_ForceSet(va("mn_name%i", k), gd.employees[EMPL_SOLDIER][i].chr.name);
 		/* change the buttons */
-		if (!alreadyInOtherShip && baseCurrent->hiredMask & (1 << i))
+		if (!alreadyInOtherShip && CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent))
 			Cbuf_AddText(va("listadd%i\n", k));
 		/* disable the button - the soldier is already on another aircraft */
 		else if (alreadyInOtherShip)
@@ -845,9 +843,9 @@ void CL_RemoveSoldier(int employee_idx, int aircraft_idx)
 		gd.employees[EMPL_SOLDIER][employee_idx].inv.c[csi.idFloor] = NULL;
 		Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][employee_idx].inv);
 	}
+	/* Switch the bit for the employee in the mask to 0.*/
 	baseCurrent->teamMask[aircraft_idx] &= ~(1 << employee_idx);
 	baseCurrent->teamNum[aircraft_idx]--;
-	/* baseCurrent->numOnTeam[aircraft_idx]--; */
 }
 
 /**
@@ -871,9 +869,8 @@ static qboolean CL_AssignSoldier(int employee_idx, int aircraft_idx)
 		/* Assign the soldier to the aircraft. */
 		if (aircraft->size > baseCurrent->teamNum[aircraft_idx]) {
 
-			/* baseCurrent->numHired++; */
+			/* Switch the bit for the employee in the mask to 1.*/
 			baseCurrent->teamMask[aircraft_idx] |= (1 << employee_idx);
-			/*baseCurrent->numOnTeam[aircraft_idx]++; */
 			baseCurrent->teamNum[aircraft_idx]++;
 			return qtrue;
 		}
@@ -1121,7 +1118,7 @@ void CL_LoadTeamMultiplayer(char *filename)
 	MSG_ReadFormat(&sb, "bl", &gd.bases[0].teamNum[0], &gd.bases[0].teamMask[0]);
 
 	for (i = 0, p = 0; i < num; i++)
-		if (gd.bases[0].teamMask[gd.bases[0].aircraftCurrent] & (1 << i))
+		if ( CL_SoldierInAircraft(i, gd.bases[0].aircraftCurrent) )
 			gd.bases[0].curTeam[p++] = E_GetHiredCharacter(&gd.bases[0], EMPL_SOLDIER, i);
 
 	/* gd.bases[0].numHired = p; */
