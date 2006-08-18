@@ -651,7 +651,7 @@ void CL_UpdateHireVar(void)
 
 	/* update curTeam list */
 	for (i = 0, p = 0; i < (int)cl_numnames->value; i++)
-		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
+		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
 		}
@@ -848,7 +848,7 @@ void CL_RemoveSoldier(int employee_idx, int aircraft_idx)
 		Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][employee_idx].inv);
 		
 	}
-	baseCurrent->teamMask[aircraft_idx] &= ~(1 << aircraft_idx);
+	baseCurrent->teamMask[aircraft_idx] &= ~(1 << employee_idx);
 	baseCurrent->teamNum[aircraft_idx]--;
 	/* baseCurrent->numOnTeam[aircraft_idx]--; */
 }
