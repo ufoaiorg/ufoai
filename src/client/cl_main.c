@@ -1492,7 +1492,7 @@ void CL_Frame(int msec)
 			baseCurrent = &gd.bases[0];
 			B_ClearBase(&gd.bases[0]);
 			gd.numBases = 1;
-			/* remove all employees and generate new ones 
+			/* remove all employees and generate new ones
 			   --- called many times, breaks autoequip */
 /*			CL_ResetTeamInBase(); */
 
@@ -1598,7 +1598,6 @@ void CL_Frame(int msec)
 	CDAudio_Update();
 
 	/* advance local effects for next frame */
-/*	CL_RunDLights();*/
 	CL_RunLightStyles();
 	SCR_RunConsole();
 
