@@ -9,7 +9,7 @@
 // 1: xxx xxx xxx Int Rdr
 // 2: xxx xxx xxx xxx Ent
 // 3: xxx xxx Lab xxx Str
-// 4: Wrk-shp Cmd Qrt Pwr 
+// 4: Wrk-shp Cmd Qrt Pwr
 //
 //
 // Common envisioned base types:
@@ -172,6 +172,7 @@ building building_hangar
 	more_than_one	true
 	type	    hangar
 	needs		building_hangar2
+	onconstruct "aircraft_new craft_dropship"
 	max_employees	8
 }
 
@@ -229,7 +230,7 @@ building building_intercept
 	more_than_one	true
 	onconstruct	"aircraft_new craft_interceptor"
 //	ondestroy	???
-	type        hangar 
+	type        hangar
 }
 
 building building_lab
