@@ -253,7 +253,7 @@ static void CL_RefreshWeaponButtons(int time)
 
 	weapon = RIGHT(selActor);
 
-	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time) {
+	if (!weapon || weapon->item.a == 0 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time) {
 		if (primary_right != 0) {
 			Cbuf_AddText("dispr\n");
 			primary_right = 0;
@@ -263,7 +263,7 @@ static void CL_RefreshWeaponButtons(int time)
 		primary_right = 1;
 	}
 
-	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time) {
+	if (!weapon || weapon->item.a == 0 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time) {
 		if (secondary_right != 0) {
 			Cbuf_AddText("dissr\n");
 			secondary_right = 0;
@@ -277,7 +277,7 @@ static void CL_RefreshWeaponButtons(int time)
 	if (!weapon || !csi.ods[weapon->item.t].twohanded)
 		weapon = LEFT(selActor);
 
-	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time) {
+	if (!weapon || weapon->item.a == 0 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time) {
 		if (primary_left != 0) {
 			Cbuf_AddText("displ\n");
 			primary_left = 0;
@@ -287,7 +287,7 @@ static void CL_RefreshWeaponButtons(int time)
 		primary_left = 1;
 	}
 
-	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time) {
+	if (!weapon || weapon->item.a == 0 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time) {
 		if (secondary_left != 0) {
 			Cbuf_AddText("dissl\n");
 			secondary_left = 0;

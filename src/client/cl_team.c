@@ -271,9 +271,8 @@ static void CL_TeamCommentsCmd(void)
 /**
  * @brief
  */
-void CL_AddCarriedToEq(equipDef_t * equip)
+void CL_AddCarriedToEq(equipDef_t * ed)
 {
-	character_t *cp;
 	invList_t *ic, *next;
 	int p, container;
 
@@ -281,12 +280,23 @@ void CL_AddCarriedToEq(equipDef_t * equip)
 
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; p++) {
-			cp = baseCurrent->curTeam[p];
-			for (ic = cp->inv->c[container]; ic; ic = next) {
+			for (ic = baseCurrent->curTeam[p]->inv->c[container]; 
+				 ic; ic = next) {
+				item_t item = ic->item;
+				int type = item.t;
+
 				next = ic->next;
-				equip->num[ic->item.t]++;
-				if (csi.ods[ic->item.t].reload)
-					equip->num[ic->item.m]++;
+				ed->num[type]++;
+				if (csi.ods[type].reload)
+					if (item.a > 0) {
+						assert (item.m != NONE);
+						ed->num_loose[item.m] += item.a;
+						/* Accumulate loose ammo into clips */
+						if (ed->num_loose[item.m] >= csi.ods[type].ammo) {
+							ed->num_loose[item.m] -= csi.ods[type].ammo;
+							ed->num[item.m]++;
+						}
+					}
 			}
 		}
 	}
@@ -295,54 +305,84 @@ void CL_AddCarriedToEq(equipDef_t * equip)
 /**
  * @brief
  */
-item_t CL_AddWeaponAmmo(equipDef_t * ed, int type)
+item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 {
-	item_t item = {0, NONE, NONE};
-	int i;
+	int i, type = item.t;
 
-	if (ed->num[type] <= 0)
-		return item;
-
+	assert (ed->num[type] > 0);
 	ed->num[type]--;
-	item.t = type;
 
 	if (!csi.ods[type].reload) {
-		item.a = 1;
+		item.a = 1; /* TODO: remove this hack */
 		item.m = item.t;
 		return item;
 	} else if (item.a == csi.ods[type].ammo) {
-		/* fully loaded, no need to reload */
+		/* fully loaded, no need to reload, but mark the ammo as used. */
+		assert (item.m != NONE);
+		if (ed->num[item.m] > 0) {
+			ed->num[item.m]--;
+			return item;
+		} else {
+			/* your clip has been sold; give it back */
+			item.a = 0; 
+			return item;
+		}
+	}
+
+	if (item.a > 0) {
+		/* Put the previously loaded ammo into storage */
+		assert (item.m != NONE);
+		ed->num_loose[item.m] += item.a;
+		item.a = 0; 
+		/* See if we have enough loose ammo to fill the clip */
+		if (ed->num_loose[item.m] >= csi.ods[type].ammo) {
+			ed->num_loose[item.m] -= csi.ods[type].ammo;
+			item.a = csi.ods[type].ammo;
+			return item;
+		}
+	}
+		
+	/* Check for complete clips of the same kind */
+	if (item.m != NONE && ed->num[item.m] > 0) {
+		ed->num[item.m]--;
+		item.a = csi.ods[type].ammo;
 		return item;
 	}
 
 	/* Search for any complete clips */
 	for (i = 0; i < csi.numODs; i++) {
 		if (csi.ods[i].link == type) {
-			item.m = i;
 			if (ed->num[i] > 0) {
 				ed->num[i]--;
 				item.a = csi.ods[type].ammo;
+				item.m = i;
 				return item;
 			}
 		}
 	}
+
+	/* TODO: on return from a mission with no clips left
+	   and one weapon half-loaded wielded by soldier
+	   and one empty in equip, on the first opening of equip,
+	   the empty weapon will be in soldier hands, the half-full in equip */
+	assert (item.a == 0);
 	/* Failed to find a complete clip - see if there's any loose ammo */
 	for (i = 0; i < csi.numODs; i++) {
-		if (csi.ods[i].link == type && ed->num_loose[i] > 0) {
-			if (item.m != NONE && ed->num_loose[i] > item.a) {
+		if (csi.ods[i].link == type && ed->num_loose[i] > item.a) {
+			if (item.a > 0) {
 				/* We previously found some ammo, but we've now found other */
 				/* loose ammo of a different (but appropriate) type with */
 				/* more bullets.  Put the previously found ammo back, so */
 				/* we'll take the new type. */
+				assert (item.m != NONE);
 				ed->num_loose[item.m] = item.a;
-				item.m = NONE;
+				/* We don't have to accumulate loose ammo into clips
+				   because we used all of it previously */
 			}
-			if (item.m == NONE) {
-				/* Found some loose ammo to load the weapon with */
-				item.a = ed->num_loose[i];
-				ed->num_loose[i] = 0;
-				item.m = i;
-			}
+			/* Found some loose ammo to load the weapon with */
+			item.a = ed->num_loose[i];
+			ed->num_loose[i] = 0;
+			item.m = i;
 		}
 	}
 	return item;
@@ -351,7 +391,7 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, int type)
 /**
  * @brief
  */
-void CL_CheckInventory(equipDef_t * equip)
+void CL_ReloadAndRemoveCarried(equipDef_t * ed)
 {
 	character_t *cp;
 	invList_t *ic, *next;
@@ -373,8 +413,8 @@ void CL_CheckInventory(equipDef_t * equip)
 			cp = baseCurrent->curTeam[p];
 			for (ic = cp->inv->c[container]; ic; ic = next) {
 				next = ic->next;
-				if (equip->num[ic->item.t] > 0) {
-					ic->item = CL_AddWeaponAmmo(equip, ic->item.t);
+				if (ed->num[ic->item.t] > 0) {
+					ic->item = CL_AddWeaponAmmo(ed, ic->item);
 				} else {
 					/* remove the ammo used for reloading */
 					assert (csi.ods[ic->item.t].link);
@@ -398,11 +438,16 @@ void CL_CleanTempInventory(void)
 	Com_DestroyInventory(&baseCurrent->equipByBuyType);
 	for (i = 0; i < MAX_EMPLOYEES; i++)
 		for (k = 0; k < csi.numIDs; k++)
+			if (csi.ids[k].temp)
+				/* idFloor and idEquip are temp */
+				gd.employees[EMPL_SOLDIER][i].inv.c[k] = NULL;
+
+/* Old version below looks dangerous:
 			if (k == csi.idEquip)
 				gd.employees[EMPL_SOLDIER][i].inv.c[k] = NULL;
-			/* idFloor and idEquip are temp */
 			else if (csi.ids[k].temp)
 				Com_EmptyContainer(&gd.employees[EMPL_SOLDIER][i].inv, k);
+*/
 }
 
 /**
@@ -421,9 +466,6 @@ static void CL_GenerateEquipmentCmd(void)
 		MN_PopMenu(qfalse);
 		return;
 	}
-
-	/* clean equipment */
-	CL_CleanTempInventory();
 
 	/* store hired names */
 	Cvar_ForceSet("cl_selected", "0");
@@ -462,13 +504,14 @@ static void CL_GenerateEquipmentCmd(void)
 	Cvar_Set("mn_ammo", "");
 	menuText[TEXT_STANDARD] = NULL;
 
+	/* manage inventory */
 	if (!curCampaign)
 		unused = ccs.eMission; /* copied, including the arrays inside! */
 	else
 		unused = ccs.eCampaign; /* copied, including the arrays inside! */
 
-	/* manage inventory */
-	CL_CheckInventory(&unused); /* reload and remove carried weapons */
+	CL_CleanTempInventory();
+	CL_ReloadAndRemoveCarried(&unused);
 
 	/* a 'tiny hack' to add the remaining equipment (not carried)
 	   correctly into buy categories, reloading at the same time;
@@ -476,9 +519,13 @@ static void CL_GenerateEquipmentCmd(void)
 	assert (MAX_CONTAINERS >= NUM_BUYTYPES);
 
 	for (i = 0; i < csi.numODs; i++)
-		while (unused.num[i])
-			if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, i), csi.ods[i].buytype))
+		while (unused.num[i]) {
+			item_t item = {0, NONE, i};
+
+			assert (unused.num[i] > 0);
+			if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), csi.ods[i].buytype))
 				break;
+		}
 }
 
 /**
@@ -770,6 +817,7 @@ static void CL_HireActorCmd(void)
 		}
 
 		if (cnt) {
+			gd.employees[EMPL_SOLDIER][num].inv.c[csi.idFloor] = NULL;
 			Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][num].inv);
 			Cbuf_AddText(va("listholdsnoequip%i\n", num));
 		}

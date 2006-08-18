@@ -2137,11 +2137,11 @@ qboolean G_ReactionFire(edict_t * target)
 				team = level.activeTeam;
 				level.activeTeam = ent->team;
 
-				if (RIGHT(ent) && RIGHT(ent)->item.a && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin)) {
+				if (RIGHT(ent) && (RIGHT(ent)->item.m != NONE) && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin)) {
 					G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY);
 					ent->state &= ~STATE_SHAKEN;
 					fired = qtrue;
-				} else if (LEFT(ent) && LEFT(ent)->item.a && gi.csi->ods[LEFT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin)) {
+				} else if (LEFT(ent) && (LEFT(ent)->item.m != NONE) && gi.csi->ods[LEFT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin)) {
 					G_ClientShoot(player, ent->number, target->pos, ST_LEFT_PRIMARY);
 					ent->state &= ~STATE_SHAKEN;	/* STATE_SHAKEN includes STATE_REACTION */
 					fired = qtrue;

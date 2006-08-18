@@ -2473,7 +2473,7 @@ CHARACTER GENERATION AND HANDLING
 int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], char *name)
 {
 	int ammo = -1; /* this variable is never used before being set */
-	item_t item = {1,NONE,NONE};
+	item_t item = {0,NONE,NONE};
 	int i, max_price, prev_price;
 	objDef_t obj;
 
@@ -2486,6 +2486,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 	item.t = weapon;
 	if (!CSI->ods[weapon].reload) {
 		item.m = item.t; /* no ammo needed, so fire definitions are in t */
+		item.a = 1; /* TODO: remove this hack */
 	} else {
 		max_price = INT_MAX;
 		do {
@@ -2522,7 +2523,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 				assert (num >= 0);
 				/* pack some more ammo */
 				while (num--) {
-					item_t mun = {1,NONE,NONE};
+					item_t mun = {0,NONE,NONE};
 					
 					mun.t = ammo;
 					/* ammo to backpack; belt is for knives and grenades */
@@ -2725,7 +2726,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			if ( equip[weapon] 
 				 >= (8 * frand() 
 					 - (primary == 2) * WEAPONLESS_BONUS * frand()) ) {
-				item_t item = {1,NONE,NONE};
+				item_t item = {1,NONE,NONE}; /* TODO: remove this hack: 1 */
 
 				item.t = weapon;
 				if (Com_TryAddToInventory(inv, item, CSI->idArmor))

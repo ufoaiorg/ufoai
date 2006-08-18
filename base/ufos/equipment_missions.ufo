@@ -257,7 +257,7 @@ equipment human_phalanx_initial
 	rpg				    1
 	rpg_ammo			4
 	fraggrenade			20
-	knife				5
+	knife				4
 	light	    		4
 }
 

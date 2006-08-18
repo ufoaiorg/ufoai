@@ -897,6 +897,8 @@ void CL_InvDel( sizebuf_t *sb )
 /*
 =====================
 CL_InvAmmo
+
+TODO: check this out, only 2 invocations: as EV_INV_AMMO in g_client.c
 =====================
 */
 void CL_InvAmmo( sizebuf_t *sb )

@@ -1847,9 +1847,10 @@ static void CL_GameGo(void)
 	/* but can be done via the map assembling part of the random map assembly */
 	Cvar_Set("map_dropship", aircraft->id);
 
-	/* check inventory */
+	/* manage inventory */
 	ccs.eMission = ccs.eCampaign; /* copied, including the arrays inside! */
-	CL_CheckInventory(&ccs.eMission); /* remove carried weapons */
+	CL_CleanTempInventory();
+	CL_ReloadAndRemoveCarried(&ccs.eMission);
 
 	/* Zero out kill counters */
 	ccs.civiliansKilled = 0;
@@ -2080,6 +2081,9 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 			ccs.eMission.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
 			ccs.eMission.num[weapon->item.m]++;
 		}
+		/* The guys keep their weapons (half-)loaded. Auto-reaload 
+		   will happen at equip screen or at the start of next mission,
+		   but fully loaded weapons will not be reloaded even then. */
 	}
 }
 
