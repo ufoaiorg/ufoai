@@ -1863,7 +1863,7 @@ static void CL_GameGo(void)
 	/* Zero out kill counters */
 	ccs.civiliansKilled = 0;
 	ccs.aliensKilled = 0;
-	
+
 	/* Reset all soldiers to alive.2 */
 	baseCurrent->deathMask = 0;
 
@@ -2263,20 +2263,44 @@ static void CL_GameResultsCmd(void)
 
 	/* Remove the dead (and their item preference). */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER];) {
+		/* if employee is marked as dead */
 		if (baseCurrent->deathMask & (1 << i)) {
 			Com_DPrintf("CL_GameResultsCmd - remove player %i - dead\n", i);
 			/* TODO: This bit-manipulating below needs some _serious_ documentation and/or sub-functions. I'm not even touching this with a 5 meter long stick. */
+			/* we have to shift the mask because we will delete the employee below */
+			/* if we increased i at this point we jump over one employee (the next after the deleted employee) */
+			/* but by shifting the deathMask we check whether the next employee was marked as dead without incrementing i */
+			/* thus we hit all employees in the list */
 			baseCurrent->deathMask >>= 1;
+			/* also shift the teamMask (see above) */
 			tempMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent] >> 1;
-			baseCurrent->teamMask[baseCurrent->aircraftCurrent] =
-				(baseCurrent->teamMask[baseCurrent->aircraftCurrent] & ((1 << i) - 1)) | (tempMask & ~((1 << i) - 1));
 
+			/* set new teamMask */
+			baseCurrent->teamMask[baseCurrent->aircraftCurrent] =
+				/* example: teammask 11111101 - deathMask: 0000100 - 1b << 2d = 100b - 1d = 011b */
+				/* ^^means, we have hired recruit 1-8 except the second one - the third recruit died in battle */
+				/* set teamMask to 00000001 */
+				  (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & ((1 << i) - 1))
+				/* 00000001 | (01111110) & (11111100)  */
+				/* teamM &  | tempM      & ~((1<<i)-1) */
+				/* 00000001 | (01111100) */
+				/* 01111101 */
+				| (tempMask & ~((1 << i) - 1));
+			/* now we eliminated the dead employee bit position and got a mask with one employee less */
+
+			/* get the ith employee from the list - that is marked as dead */
 			employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
 			if (!employee)
 				Sys_Error("Could not get hired employee %i from base %i\n", i, baseCurrent->idx);
+			/* delete the employee */
+			/* sideeffect: gd.numEmployees[EMPL_SOLDIER] is decremented by one, too */
 			E_DeleteEmployee(employee, EMPL_SOLDIER);
+			/* because this employee is removed completly from employee list we don't increment i !! */
+
+			/* now decrement the amount of teammembers for this aircraft by one */
 			baseCurrent->teamNum[baseCurrent->aircraftCurrent]--;
 		} else
+			/* otherwise go to next employee */
 			i++;
 	}
 	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n", i);
