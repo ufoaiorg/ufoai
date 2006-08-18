@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -65,8 +65,7 @@ void *Hunk_Alloc (int size)
 	/* commit pages as needed */
 /*	buf = VirtualAlloc (membase+cursize, size, MEM_COMMIT, PAGE_READWRITE); */
 	buf = VirtualAlloc (membase, cursize+size, MEM_COMMIT, PAGE_READWRITE);
-	if (!buf)
-	{
+	if (!buf) {
 		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) &buf, 0, NULL);
 		Sys_Error ("VirtualAlloc commit failed.\n%s", buf);
 	}
@@ -80,7 +79,6 @@ void *Hunk_Alloc (int size)
 
 int Hunk_End (void)
 {
-
 	/* free the remaining unused virtual memory */
 #if 0
 	void	*buf;
@@ -92,7 +90,7 @@ int Hunk_End (void)
 #endif
 
 	hunkcount++;
-/*Com_Printf ("hunkcount: %i\n", hunkcount); */
+/*	Com_Printf ("hunkcount: %i\n", hunkcount); */
 	return cursize;
 }
 
@@ -122,8 +120,7 @@ int Sys_Milliseconds (void)
 	static int		base;
 	static qboolean	initialized = qfalse;
 
-	if (!initialized)
-	{	/* let base retain 16 bits of effectively random data */
+	if (!initialized) {	/* let base retain 16 bits of effectively random data */
 		base = timeGetTime() & 0xffff0000;
 		initialized = qtrue;
 	}
@@ -209,6 +206,3 @@ void Sys_FindClose (void)
 		_findclose (findhandle);
 	findhandle = 0;
 }
-
-
-/*============================================ */

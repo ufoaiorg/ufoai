@@ -1,3 +1,8 @@
+/**
+ * @file sys_linux.c
+ * @brief main function and system functions
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -383,8 +388,9 @@ int main (int argc, char **argv)
 	}
 
 	oldtime = Sys_Milliseconds ();
-	while (1)
-	{
+	while (1) {
+		if (dedicated && dedicated->value)
+			usleep(1);
 		/* find time spent rendering last frame */
 		do {
 			newtime = Sys_Milliseconds ();
