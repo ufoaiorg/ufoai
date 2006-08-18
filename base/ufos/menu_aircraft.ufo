@@ -128,7 +128,7 @@ menu aircraft
 		mousefx true
 		click
 		{
-			cmd "aircraft_start;mn_pop;mn_pop;"
+			cmd "aircraft_start;"
 		}
 		out		{ *txt_start color "0 0.8 0 1" *button_start texl "0 0" *button_start texh "230 64" }
 		in		{ *txt_start color "1 1 1 1" *button_start texl "230 0" *button_start texh "460 64" }
