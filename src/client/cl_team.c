@@ -722,8 +722,7 @@ void CL_ResetTeamInBase(void)
  */
 static void CL_MarkTeamCmd(void)
 {
-	int i, j, k = 0, cnt = 0;
-	invList_t* ic;
+	int i, j, k = 0;
 	qboolean alreadyInOtherShip = qfalse;
 
 	/* check if we are allowed to be here? */
@@ -737,7 +736,6 @@ static void CL_MarkTeamCmd(void)
 	CL_UpdateHireVar();
 
 	for (i = 0; i < (int)cl_numnames->value; i++) {
-		cnt = 0;
 		alreadyInOtherShip = qfalse;
 		/* don't show other base's recruits */
 		if (!gd.employees[EMPL_SOLDIER][i].hired || gd.employees[EMPL_SOLDIER][i].baseIDHired != baseCurrent->idx)
@@ -758,12 +756,13 @@ static void CL_MarkTeamCmd(void)
 			Cbuf_AddText(va("listdisable%i\n", k));
 
 		for (j = 0; j < csi.numIDs; j++) {
-			for (ic = gd.employees[EMPL_SOLDIER][i].inv.c[j]; ic; ic = ic->next) {
-				if (j != csi.idFloor && j != csi.idEquip)
-					cnt++;
-			}
+			if ( j != csi.idFloor 
+				 && j != csi.idEquip
+				 && gd.employees[EMPL_SOLDIER][i].inv.c[j] )
+				break;
 		}
-		if (cnt)
+
+		if (j < csi.numIDs)
 			Cbuf_AddText(va("listholdsequip%i\n", k));
 		else
 			Cbuf_AddText(va("listholdsnoequip%i\n", k));
@@ -811,7 +810,7 @@ qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
  */
 void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
 {
-	int i = 0;
+	int i;
 
 	if ( employee_idx < 0 )
 		return;
