@@ -897,8 +897,6 @@ void CL_InvDel( sizebuf_t *sb )
 /*
 =====================
 CL_InvAmmo
-
-TODO: check this out, only 2 invocations: as EV_INV_AMMO in g_client.c
 =====================
 */
 void CL_InvAmmo( sizebuf_t *sb )
@@ -932,7 +930,7 @@ void CL_InvAmmo( sizebuf_t *sb )
 		 && ic->item.a > 0
 		 && ic->item.a != csi.ods[ic->item.t].ammo ) {
 		ccs.eMission.num_loose[ic->item.m] += ic->item.a;
-		/* Accumulate loose ammo into clips (only accessable post-mission) */
+		/* Accumulate loose ammo into clips (only accessible post-mission) */
 		if (ccs.eMission.num_loose[ic->item.m] >= csi.ods[ic->item.t].ammo) {
 			ccs.eMission.num_loose[ic->item.m] -= csi.ods[ic->item.t].ammo;
 			ccs.eMission.num[ic->item.m]++;

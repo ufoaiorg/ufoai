@@ -1521,11 +1521,11 @@ int CL_GameLoad(char *filename)
 
 	/* how many message items */
 	i = MSG_ReadByte(&sb);
-	Com_DPrintf("%i messages on messagestack");
+	Com_DPrintf("CL_GameLoad: %i messages on messagestack.\n", i);
 	for (; i--;) {
 		title = MSG_ReadString(&sb);
 		text = MSG_ReadString(&sb);
-		Com_DPrintf("CL_GameLoad: Load message '%s' - '%s'\n", title, text);
+		Com_DPrintf("Load message '%s' - '%s'\n", title, text);
 		mess = MN_AddNewMessage(title, text, qfalse, MSG_ReadByte(&sb), RS_GetTechByIDX(MSG_ReadLong(&sb)));
 		mess->d = MSG_ReadLong(&sb);
 		mess->m = MSG_ReadLong(&sb);
