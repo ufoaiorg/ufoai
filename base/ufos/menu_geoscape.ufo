@@ -203,6 +203,7 @@ menu map
 
 	pic bt_base
 	{
+		if "mn_base_count < 8"
 		tooltip	"_Create base"
 		image	menu/b_geobuttons
 		pos	"242 544"
@@ -471,7 +472,7 @@ menu popup_newbase
 
 	func init
 	{
-		cmd "mn_setbasetitle"
+		cmd "mn_setbasetitle;bases_check_max;"
 	}
 }
 
