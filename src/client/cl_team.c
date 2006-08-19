@@ -329,7 +329,7 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 			return item;
 		}
 	}
-	
+
 	/* Check for complete clips of the same kind */
 	if (item.m != NONE && ed->num[item.m] > 0) {
 		ed->num[item.m]--;
@@ -362,7 +362,7 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 		ed->num_loose[item.m] = 0;
 		return item;
 	}
-	
+
 	/* See if there's any loose ammo */
 	item.a = 0;
 	for (i = 0; i < csi.numODs; i++) {
@@ -756,7 +756,7 @@ static void CL_MarkTeamCmd(void)
 			Cbuf_AddText(va("listdisable%i\n", k));
 
 		for (j = 0; j < csi.numIDs; j++) {
-			if ( j != csi.idFloor 
+			if ( j != csi.idFloor
 				 && j != csi.idEquip
 				 && gd.employees[EMPL_SOLDIER][i].inv.c[j] )
 				break;
@@ -846,16 +846,16 @@ void CL_RemoveSoldiersFromAircraft(int aircraft_idx, int base_idx)
 	int i = 0;
 	base_t *base = NULL;
 	aircraft_t *aircraft = NULL;
-	
+
 	if ( aircraft_idx < 0 || base_idx < 0)
 		return;
-	
+
 	base = &gd.bases[base_idx];
 	aircraft = &base->aircraft[aircraft_idx];
 
 	/* Counting backwards because teamNum[aircraft->idx] is changed in CL_RemoveSoldierFromAircraft */
 	for ( i = base->teamNum[aircraft->idx]-1; i >= 0; i-- ) {
-		 CL_RemoveSoldierFromAircraft(i, aircraft->idx);
+		CL_RemoveSoldierFromAircraft(i, aircraft->idx);
 	}
 }
 

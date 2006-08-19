@@ -1329,7 +1329,7 @@ void MN_DrawMenus(void)
 	char *anim;					/* model anim state */
 	char source[MAX_VAR];
 	int sp, pp;
-    item_t item = {1,NONE,NONE}; /* 1 so it's not reddish; fake item anyway */
+	item_t item = {1,NONE,NONE}; /* 1 so it's not reddish; fake item anyway */
 	vec4_t color;
 	int mouseOver = 0;
 	char *cur, *tab, *end;
