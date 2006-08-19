@@ -2266,7 +2266,18 @@ static void CL_GameResultsCmd(void)
 	for (i = gd.numEmployees[EMPL_SOLDIER]-1; i >= 0 ; i-- ) {
 		/* if employee is marked as dead */
 		if (baseCurrent->deathMask & (1 << i)) {
+			Com_DPrintf("CL_GameResultsCmd - %i\n", baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
 			Com_DPrintf("CL_GameResultsCmd - remove player %i - dead\n", i);
+
+			/* get the ith employee from the list - that is marked as dead */
+			employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
+			if (!employee)
+				Sys_Error("Could not get hired employee %i from base %i\n", i, baseCurrent->idx);
+			/* Delete the employee. */
+			/* sideeffect: gd.numEmployees[EMPL_SOLDIER] is decremented by one, too */
+			E_DeleteEmployee(employee, EMPL_SOLDIER);
+			/* because this employee is removed completly from employee list we don't increment i !! */
+
 			/* We have to shift the mask because we will delete the employee below */
 			/* if we increased i at this point we jump over one employee (the next after the deleted employee) */
 			tempMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent] >> 1;
@@ -2283,18 +2294,10 @@ static void CL_GameResultsCmd(void)
 				/* 01111101 */
 				| (tempMask & ~((1 << i) - 1));
 			/* now we eliminated the dead employee bit position and got a mask with one employee less */
-
-			/* get the ith employee from the list - that is marked as dead */
-			employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
-			if (!employee)
-				Sys_Error("Could not get hired employee %i from base %i\n", i, baseCurrent->idx);
-			/* Delete the employee. */
-			/* sideeffect: gd.numEmployees[EMPL_SOLDIER] is decremented by one, too */
-			E_DeleteEmployee(employee, EMPL_SOLDIER);
-			/* because this employee is removed completly from employee list we don't increment i !! */
-
+			
 			/* now decrement the amount of teammembers for this aircraft by one */
 			baseCurrent->teamNum[baseCurrent->aircraftCurrent]--;
+			Com_DPrintf("CL_GameResultsCmd - %i\n", baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
 		}
 	}
 #ifdef PARANOID
