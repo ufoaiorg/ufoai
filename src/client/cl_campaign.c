@@ -2072,7 +2072,7 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 		Sys_Error("No tech for %s\n", csi.ods[weapon->item.t].name);
 	tech->statusCollected++;
 
-	if (!csi.ods[weapon->item.t].reload || weapon->item.m == NONE)
+	if (!csi.ods[weapon->item.t].reload || weapon->item.a == 0)
 		return;
 	if (market) {
 		ccs.eMarket.num_loose[weapon->item.m] += weapon->item.a;

@@ -2503,7 +2503,6 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 	item.t = weapon;
 	if (!CSI->ods[weapon].reload) {
 		item.m = item.t; /* no ammo needed, so fire definitions are in t */
-		item.a = 1; /* TODO: remove this hack */
 	} else {
 		max_price = INT_MAX;
 		do {
@@ -2743,7 +2742,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			if ( equip[weapon] 
 				 >= (8 * frand() 
 					 - (primary == 2) * WEAPONLESS_BONUS * frand()) ) {
-				item_t item = {1,NONE,NONE}; /* TODO: remove this hack: 1 */
+				item_t item = {0,NONE,NONE};
 
 				item.t = weapon;
 				if (Com_TryAddToInventory(inv, item, CSI->idArmor))

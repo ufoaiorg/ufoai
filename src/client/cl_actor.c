@@ -253,7 +253,9 @@ static void CL_RefreshWeaponButtons(int time)
 
 	weapon = RIGHT(selActor);
 
-	if (!weapon || weapon->item.a == 0 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time) {
+	if ( !weapon || weapon->item.m == NONE
+		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0) 
+		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time ) {
 		if (primary_right != 0) {
 			Cbuf_AddText("dispr\n");
 			primary_right = 0;
@@ -263,7 +265,9 @@ static void CL_RefreshWeaponButtons(int time)
 		primary_right = 1;
 	}
 
-	if (!weapon || weapon->item.a == 0 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time) {
+	if ( !weapon || weapon->item.m == NONE
+		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
+		 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time ) {
 		if (secondary_right != 0) {
 			Cbuf_AddText("dissr\n");
 			secondary_right = 0;
@@ -277,7 +281,9 @@ static void CL_RefreshWeaponButtons(int time)
 	if (!weapon || !csi.ods[weapon->item.t].twohanded)
 		weapon = LEFT(selActor);
 
-	if (!weapon || weapon->item.a == 0 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time) {
+	if ( !weapon || weapon->item.m == NONE
+		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
+		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time ) {
 		if (primary_left != 0) {
 			Cbuf_AddText("displ\n");
 			primary_left = 0;
@@ -287,7 +293,9 @@ static void CL_RefreshWeaponButtons(int time)
 		primary_left = 1;
 	}
 
-	if (!weapon || weapon->item.a == 0 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time) {
+	if ( !weapon || weapon->item.m == NONE
+		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
+		 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time ) {
 		if (secondary_left != 0) {
 			Cbuf_AddText("dissl\n");
 			secondary_left = 0;
@@ -1190,11 +1198,11 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 	if (!le)
 		return;
 
-	/* erase one-time weapons from storage --- TODO: broken? */
+	/* erase one-time weapons from storage --- which ones?
 	if (curCampaign && le->team == cls.team && !csi.ods[type].ammo) {
 		if (ccs.eMission.num[type])
 			ccs.eMission.num[type]--;
-	}
+	} */
 
 	/* animate */
 	re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
@@ -1881,7 +1889,7 @@ void CL_AddTargeting(void)
 			if (!CL_TraceMove(mousePos))
 				cl.cmode = M_MOVE;
 	} else {
-		if (!selActor)
+		if (!selActor || !selFD)
 			return;
 
 		if (!selFD->gravity)

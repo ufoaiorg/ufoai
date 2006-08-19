@@ -1672,7 +1672,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 	target[2] -= 9;
 
 	/* calculate parabola */
-	dt = gi.GrenadeTarget(last, target, startV);
+	dt = gi.GrenadeTarget(last, target, startV); /* TODO: improve trow down */
 	if (!dt) {
 		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - impossible throw!\n"));
 		return;
@@ -1914,6 +1914,12 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 		weapon = &LEFT(ent)->item;
 		container = gi.csi->idLeft;
 	}
+
+	if (weapon->m == NONE) {
+		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - object not activable!\n"));
+		return;
+	}
+
 	fd = &gi.csi->ods[weapon->m].fd[type & 1];
 	wi = weapon->m | ((type % 2/*filter out hand*/) << 7/*move to byte end*/);
 	ammo = weapon->a;
@@ -1922,14 +1928,14 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 	if (!G_ActionCheck(player, ent, fd->time))
 		return;
 
-	if (!ammo && fd->ammo) {
+	if (!ammo && fd->ammo && !gi.csi->ods[weapon->t].thrown) {
 		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - no ammo!\n"));
 		return;
 	}
 
 	/* fire shots */
 	shots = fd->shots;
-	if (fd->ammo) {
+	if (fd->ammo && !gi.csi->ods[weapon->t].thrown) {
 		if (ammo < fd->ammo) {
 			shots = fd->shots * ammo / fd->ammo;
 			ammo = 0;
@@ -1974,7 +1980,8 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 
 	/* ammo... */
 	if (fd->ammo) {
-		if (ammo > 0 || !gi.csi->ods[weapon->t].thrown) {
+		if ( ammo > 0 /* why not sending message about empty clip? */
+			 || !gi.csi->ods[weapon->t].thrown ) {
 			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_AMMO);
 			gi.WriteShort(num);
 			gi.WriteByte(ammo);

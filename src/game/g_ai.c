@@ -452,7 +452,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 	/* spawn players */
 	for (j = 0; j < numSpawn; j++) {
-		item_t item = {1,NONE,NONE}; /* TODO: remove this hack: 1 */
+		item_t item = {0,NONE,NONE};
 		char *ref = NULL;
 
 		assert (numPoints > 0);

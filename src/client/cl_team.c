@@ -312,9 +312,10 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 	assert (ed->num[type] > 0);
 	ed->num[type]--;
 
-	if (!csi.ods[type].reload) {
-		item.a = 1; /* TODO: remove this hack */
-		item.m = item.t;
+	if (csi.ods[type].link != NONE) {
+		return item;
+	} else if (!csi.ods[type].reload) {
+		item.m = item.t; /* no ammo needed, so fire definitions are in t */
 		return item;
 	} else if (item.a == csi.ods[type].ammo) {
 		/* fully loaded, no need to reload, but mark the ammo as used. */
@@ -413,8 +414,7 @@ void CL_ReloadAndRemoveCarried(equipDef_t * ed)
 				if (ed->num[ic->item.t] > 0) {
 					ic->item = CL_AddWeaponAmmo(ed, ic->item);
 				} else {
-					/* remove the ammo used for reloading */
-					assert (csi.ods[ic->item.t].link);
+					/* drop ammo used for reloading and sold carried weapons */
 					Com_RemoveFromInventory(cp->inv, container, ic->x, ic->y);
 				}
 			}

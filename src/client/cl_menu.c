@@ -1187,7 +1187,7 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 		mi.backlerp = 0;
 
 		Vector4Copy(color, col);
-		if (od->weapon && od->ammo && !item.a) {
+		if (od->weapon && od->reload && !item.a) {
 			col[1] *= 0.5;
 			col[2] *= 0.5;
 		}
@@ -1329,7 +1329,7 @@ void MN_DrawMenus(void)
 	char *anim;					/* model anim state */
 	char source[MAX_VAR];
 	int sp, pp;
-	item_t item = {1,NONE,NONE}; /* 1 not to be shown reddish */
+    item_t item = {1,NONE,NONE}; /* 1 so it's not reddish; fake item anyway */
 	vec4_t color;
 	int mouseOver = 0;
 	char *cur, *tab, *end;
