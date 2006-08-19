@@ -323,6 +323,19 @@ void UP_OpenWith ( char *name )
 }
 
 /**
+ * @brief Opens the ufopedia with the entry given through name, not deleting copies
+ * @param name Ufopedia entry id
+ * @sa UP_FindEntry_f
+ */
+void UP_OpenCopyWith ( char *name )
+{
+	Cbuf_AddText( "mn_push_copy ufopedia\n" );
+	Cbuf_Execute();
+	Cbuf_AddText( va( "ufopedia %s\n", name ) );
+}
+
+
+/**
  * @brief Search and open the ufopedia
  *
  * Usage: ufopedia <id>
@@ -532,6 +545,41 @@ void UP_Click_f( void )
 }
 
 /**
+ * @brief
+ * @param
+ * @sa
+ */
+void UP_TechTreeClick_f( void )
+{
+	int num;
+	stringlist_t *required = NULL;
+	technology_t *techRequired = NULL;
+
+	if ( Cmd_Argc() < 2 )
+		return;
+	num = atoi( Cmd_Argv( 1 ) );
+
+	if (!upCurrent)
+		return;
+
+	required = &upCurrent->requires;
+
+	if (!Q_strncmp(required->string[num], "nothing", MAX_VAR)
+		|| !Q_strncmp(required->string[num], "initial", MAX_VAR))
+		return;
+
+	if (num >= required->numEntries)
+		return;
+
+	techRequired = RS_GetTechByID(required->string[num]);
+	if (!techRequired)
+		Sys_Error("Could not find the tech for '%s'\n", required->string[num]);
+
+	UP_OpenCopyWith(techRequired->id);
+}
+
+
+/**
  * @brief Shows available ufopedia entries
  * TODO: Implement me
  */
@@ -556,6 +604,8 @@ void UP_ResetUfopedia( void )
 	Cmd_AddCommand( "mn_upnext", UP_Next_f );
 	Cmd_AddCommand( "ufopedia", UP_FindEntry_f );
 	Cmd_AddCommand( "ufopedia_click", UP_Click_f );
+	Cmd_AddCommand( "techtree_click", UP_TechTreeClick_f);
+
 }
 
 /**

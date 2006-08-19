@@ -1841,14 +1841,15 @@ menu_t* MN_ActiveMenu(void)
  * @param[in] name Name of the menu to push onto menu stack
  * @return pointer to menu_t
  */
-menu_t* MN_PushMenu(char *name)
+menu_t* MN_PushMenuDelete(char *name, qboolean delete)
 {
 	int i;
 
 	for (i = 0; i < numMenus; i++)
 		if (!Q_strncmp(menus[i].name, name, MAX_VAR)) {
 			/* found the correct add it to stack or bring it on top */
-			MN_DeleteMenu(&menus[i]);
+			if (delete)
+				MN_DeleteMenu(&menus[i]);
 
 			if (menuStackPos < MAX_MENUSTACK)
 				menuStack[menuStackPos++] = &menus[i];
@@ -1869,6 +1870,16 @@ menu_t* MN_PushMenu(char *name)
 }
 
 /**
+ * @brief Push a menu onto the menu stack
+ * @param[in] name Name of the menu to push onto menu stack
+ * @return pointer to menu_t
+ */
+menu_t* MN_PushMenu(char *name)
+{
+	return MN_PushMenuDelete(name, qtrue);
+}
+
+/**
  * @brief Console function to push a menu onto the menu stack
  * @sa MN_PushMenu
  */
@@ -1878,6 +1889,20 @@ static void MN_PushMenu_f(void)
 		MN_PushMenu(Cmd_Argv(1));
 	else
 		Com_Printf("usage: mn_push <name>\n");
+}
+
+/**
+ * @brief Console function to push a menu, without deleting its copies
+ * @sa MN_PushMenu
+ */
+static void MN_PushCopyMenu_f(void)
+{
+	if (Cmd_Argc() > 1) {
+		Cvar_SetValue("mn_escpop", mn_escpop->value + 1);
+		MN_PushMenuDelete(Cmd_Argv(1), qfalse);
+	} else {
+		Com_Printf("usage: mn_push_copy <name>\n");
+	}
 }
 
 
@@ -1924,15 +1949,16 @@ void MN_PopMenu(qboolean all)
  */
 static void MN_PopMenu_f(void)
 {
-	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3))
+	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3) || !mn_escpop->value) {
 		MN_PopMenu(qfalse);
+	}
 	else {
 		int i;
 
 		for (i = 0; i < (int) mn_escpop->value; i++)
 			MN_PopMenu(qfalse);
-		Cvar_Set("mn_escpop", "1");
 	}
+	Cvar_Set("mn_escpop", "0");
 }
 
 
@@ -2180,6 +2206,7 @@ void MN_ResetMenus(void)
 	Cmd_AddCommand("mn_nextmap", MN_NextMap);
 	Cmd_AddCommand("mn_prevmap", MN_PrevMap);
 	Cmd_AddCommand("mn_push", MN_PushMenu_f);
+	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f);
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f);
 	Cmd_AddCommand("mn_modify", MN_Modify_f);
 	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f);

@@ -122,15 +122,13 @@ menu ufopedia
 		format	"20 0"
 	}
 
-	// TODO: this will be the place where we print the techtree
-	// as clickable list of course
 	text techtree
 	{
 		pos		"440 495"
 		size	"350 250"
 		format	"20 0"
 		num	1
-		click { }
+		click
 		mousefx true
 	}
 
