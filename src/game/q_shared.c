@@ -1775,8 +1775,20 @@ void Q_strncpyz(char *dest, const char *src, size_t destsize)
 	if (destsize < 1)
 		Sys_Error("Q_strncpyz: destsize < 1 (%s, %i)", file, line);
 #endif
+
+#if 0
 	strncpy(dest, src, destsize - 1);
 	dest[destsize - 1] = 0;
+#else
+	/* space for \0 terminating */
+	while ( *src && destsize-1 ) {
+		*dest++ = *src++;
+		destsize--;
+	}
+	/* the rest is filled with null */
+	while ( destsize-- )
+		*dest++ = 0;
+#endif
 }
 
 /**
@@ -2524,7 +2536,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 
 				/* how many clips? */
 				num =
-					equip[ammo] / equip[weapon] 
+					equip[ammo] / equip[weapon]
 					+ (equip[ammo] % equip[weapon]
 						  > rand() % equip[weapon])
 					+ (PROB_COMPENSATION > 8 * frand());
@@ -2540,7 +2552,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 				/* pack some more ammo */
 				while (num--) {
 					item_t mun = {0,NONE,NONE};
-					
+
 					mun.t = ammo;
 					/* ammo to backpack; belt is for knives and grenades */
 					Com_TryAddToInventory(inv, mun, CSI->idBackpack);
@@ -2579,7 +2591,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
-	int has_weapon = 0; 
+	int has_weapon = 0;
 	int primary = 2; /* 0 tachyon or normal, 1 other, 2 no primary weapon */
 	objDef_t obj;
 
@@ -2601,7 +2613,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 		/* see if there is any */
 		if (max_price) {
 			/* see if the actor picks it */
-			if ( equip[weapon] 
+			if ( equip[weapon]
 				 >= 8 * frand() - PROB_COMPENSATION * frand() ) {
 				/* not decrementing equip[weapon]
 				 * so that we get more possible squads */
@@ -2632,7 +2644,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 	max_price = primary ? INT_MAX : 0;
 	do {
 		prev_price = max_price;
-		/* if primary is a tachyon or normal damage weapon, 
+		/* if primary is a tachyon or normal damage weapon,
 		   we pick cheapest sidearms first */
 		max_price = primary ? 0 : INT_MAX;
 		for (i = 0; i < CSI->numODs; i++) {
@@ -2693,8 +2705,8 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 		if (max_price) {
 			int num;
 
-			num = 
-				equip[weapon] / 8 
+			num =
+				equip[weapon] / 8
 				+ (equip[weapon] % 8 >= 8 * frand())
 				+ (PROB_COMPENSATION > 8 * frand())
 				+ (primary == 2) * (WEAPONLESS_BONUS > 8 * frand());
@@ -2739,8 +2751,8 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			}
 		}
 		if (max_price) {
-			if ( equip[weapon] 
-				 >= (8 * frand() 
+			if ( equip[weapon]
+				 >= (8 * frand()
 					 - (primary == 2) * WEAPONLESS_BONUS * frand()) ) {
 				item_t item = {0,NONE,NONE};
 
