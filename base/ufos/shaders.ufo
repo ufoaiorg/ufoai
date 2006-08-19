@@ -3,3 +3,14 @@ shader test
 	filename "arb/test.vp"
 	frag true
 }
+
+shader exterior/ext_road01a
+{
+	emboss true
+}
+
+shader exterior/ext_conc03
+{
+	emboss true
+	embossmode add
+}
