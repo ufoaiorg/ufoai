@@ -343,10 +343,21 @@ extern byte *CL_GetmapColor(vec2_t pos)
 
 /**
  * @brief
+ * @sa B_BuildBase
  */
 extern qboolean CL_NewBase(vec2_t pos)
 {
 	byte *color;
+
+	assert(baseCurrent);
+
+	if (baseCurrent->founded) {
+		Com_DPrintf("CL_NewBase: base already founded: %i\n", baseCurrent->idx);
+		return qfalse;
+	} else if (gd.numBases == MAX_BASES) {
+		Com_DPrintf("CL_NewBase: max base limit hit\n");
+		return qfalse;
+	}
 
 	color = CL_GetmapColor(pos);
 

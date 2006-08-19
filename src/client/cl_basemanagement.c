@@ -30,7 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 vec2_t newBasePos;
-cvar_t *mn_base_title;
+static cvar_t *mn_base_title;
+static cvar_t *mn_base_count;
 
 static int BuildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
@@ -220,6 +221,9 @@ void B_SetUpBase(void)
 	B_BuildingInit();
 	Com_DPrintf("Set up for %i\n", baseCurrent->idx);
 
+	/* this cvar is used for disabling the base build button on geoscape if MAX_BASES (8) was reached */
+	Cvar_SetValue("mn_base_count", mn_base_count->value + 1.0f);
+
 	for (i = 0; i < gd.numBuildingTypes; i++) {
 		if (gd.buildingTypes[i].autobuild
 			|| (gd.numBases == 1
@@ -235,6 +239,7 @@ void B_SetUpBase(void)
 			building->base_idx = baseCurrent->idx;
 			Com_DPrintf("Base %i new building:%s (%i) at (%.0f:%.0f)\n", baseCurrent->idx, building->id, i, building->pos[0], building->pos[1]);
 			baseCurrent->buildingCurrent = building;
+			/* fake a click to basemap */
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			building->buildingStatus = B_STATUS_WORKING;
 
@@ -1271,6 +1276,7 @@ void B_SelectBase(void)
 			Com_Printf("MaxBases reached\n");
 			/* select the first base in list */
 			baseCurrent = &gd.bases[0];
+			gd.mapAction = MA_NONE;
 		}
 	} else if (baseID < MAX_BASES) {
 		Com_DPrintf("B_SelectBase: select base with id %i\n", baseID);
@@ -1372,6 +1378,7 @@ static void B_PackInitialEquipmentCmd(void)
 
 /**
  * @brief Constructs a new base.
+ * @sa CL_NewBase
  */
 void B_BuildBase(void)
 {
@@ -1689,6 +1696,13 @@ static void B_ChangeBaseNameCmd(void)
 	Q_strncpyz(baseCurrent->name, Cvar_VariableString("mn_base_title"), MAX_VAR);
 }
 
+void B_CheckMaxBases_f(void)
+{
+	if (gd.numBases >= MAX_BASES) {
+		MN_PopMenu(qfalse);
+	}
+}
+
 /**
  * @brief Resets console commands.
  * @sa MN_ResetMenus
@@ -1705,6 +1719,7 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("new_building", B_NewBuildingFromList);
 	Cmd_AddCommand("set_building", B_SetBuilding);
 	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle);
+	Cmd_AddCommand("bases_check_max", B_CheckMaxBases_f);
 	Cmd_AddCommand("rename_base", B_RenameBase);
 	Cmd_AddCommand("base_attack", B_BaseAttack_f);
 	Cmd_AddCommand("base_changename", B_ChangeBaseNameCmd);
@@ -1720,6 +1735,7 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("buildinglist", B_BuildingList_f);
 	Cmd_AddCommand("pack_initial", B_PackInitialEquipmentCmd);
 	Cmd_AddCommand("assign_initial", B_AssignInitialCmd);
+	mn_base_count = Cvar_Get("mn_base_count", "0", 0);
 }
 
 /**
