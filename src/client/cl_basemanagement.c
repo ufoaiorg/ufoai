@@ -1368,7 +1368,7 @@ static void B_PackInitialEquipmentCmd(void)
 		if (!curCampaign)
 			CL_AddCarriedToEq(&ccs.eMission);
 		else
-			CL_AddCarriedToEq(&ccs.eCampaign);
+			CL_AddCarriedToEq(&baseCurrent->storage);
 	}
 }
 
@@ -1400,8 +1400,22 @@ void B_BuildBase(void)
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			Radar_Initialise(&(baseCurrent->radar), 0);
 
+			/* initial base equipment */
+			if (gd.numBases == 1) {
+				int i;
+				equipDef_t *ed;
+
+				for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
+					if (!Q_strncmp(curCampaign->equipment, ed->name, MAX_VAR))
+						break;
+				if (i != csi.numEDs)
+					baseCurrent->storage = *ed; /* copied, including arrays! */
+			}
+
+			/* initial soldiers and their equipment */
 			if (gd.numBases == 1 && cl_start_employees->value)
 				Cbuf_AddText("assign_initial;");
+
 			Cbuf_AddText(va("mn_select_base %i;", baseCurrent->idx));
 			return;
 		}

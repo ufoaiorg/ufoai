@@ -459,7 +459,6 @@ static void CL_GenerateEquipmentCmd(void)
 
 	assert(baseCurrent);
 
-
 	/* Popup if no soldiers are assigned to the current aircraft. */
 	/* if ( !baseCurrent->numHired) { */
 	if ( !baseCurrent->teamNum[baseCurrent->aircraftCurrent] ) {
@@ -508,7 +507,7 @@ static void CL_GenerateEquipmentCmd(void)
 	if (!curCampaign)
 		unused = ccs.eMission; /* copied, including the arrays inside! */
 	else
-		unused = ccs.eCampaign; /* copied, including the arrays inside! */
+		unused = baseCurrent->storage; /* copied, including arrays inside! */
 
 	CL_CleanTempInventory();
 	CL_ReloadAndRemoveCarried(&unused);
@@ -1461,7 +1460,8 @@ void CL_ParseResults(sizebuf_t * buf)
 		/* update stats */
 		CL_UpdateCharacterStats(winner == we);
 
-		ccs.eCampaign = ccs.eMission; /* copied, including the arrays inside!*/
+		baseCurrent = CL_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
+		baseCurrent->storage = ccs.eMission; /* copied, including the arrays inside!*/
 	}
 
 	/* disconnect and show win screen */

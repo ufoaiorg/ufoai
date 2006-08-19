@@ -165,7 +165,7 @@ typedef struct nation_s {
 #define MAX_NATIONS 8
 
 typedef struct ccs_s {
-	equipDef_t eCampaign, eMission, eMarket;
+	equipDef_t eMission, eMarket;
 
 	stageState_t stage[MAX_STAGES];
 	setState_t set[MAX_STAGESETS];

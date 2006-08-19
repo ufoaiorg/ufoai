@@ -771,9 +771,9 @@ void CL_CampaignCheckEvents(void)
 					/* Delete all employees from the base & the global list. */
 					E_DeleteAllEmployees(base);
 
-					/* Destroy all items in storage */ /* TODO: check how/if this works with multiple bases */
+					/* Destroy all items in storage */
 					for ( item = 0; item < csi.numODs; item++ ) {
-						ccs.eCampaign.num[item] = 0;
+						base->storage.num[item] = 0;
 					}
 
 					/* Remove all aircrafts from the base. */
@@ -1231,6 +1231,7 @@ void CL_GameSave(char *filename, char *comment)
 	byte *buf;
 	int res;
 	int i, j;
+	base_t *base;
 
 	if (!curCampaign) {
 		Com_Printf("No campaign active.\n");
@@ -1278,10 +1279,11 @@ void CL_GameSave(char *filename, char *comment)
 	MSG_WriteLong(&sb, ccs.credits);
 
 	/* store equipment */
-	for (i = 0; i < MAX_OBJDEFS; i++) {
-		MSG_WriteLong(&sb, ccs.eCampaign.num[i]);
-		MSG_WriteByte(&sb, ccs.eCampaign.num_loose[i]);
-	}
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
+		for (i = 0; i < MAX_OBJDEFS; i++) {
+			MSG_WriteLong(&sb, base->storage.num[i]);
+			MSG_WriteByte(&sb, base->storage.num_loose[i]);
+		}
 
 	/* store market */
 	for (i = 0; i < MAX_OBJDEFS; i++)
@@ -1428,6 +1430,7 @@ int CL_GameLoad(char *filename)
 	int i, j, num;
 	char val[32];
 	message_t *mess;
+	base_t *base;
 
 	/* open file */
 	f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
@@ -1536,15 +1539,11 @@ int CL_GameLoad(char *filename)
 	CL_UpdateCredits(MSG_ReadLong(&sb));
 
 	/* read equipment */
-	for (i = 0; i < MAX_OBJDEFS; i++) {
-		if (version == 0) {
-			ccs.eCampaign.num[i] = MSG_ReadByte(&sb);
-			ccs.eCampaign.num_loose[i] = 0;
-		} else if (version >= 1) {
-			ccs.eCampaign.num[i] = MSG_ReadLong(&sb);
-			ccs.eCampaign.num_loose[i] = MSG_ReadByte(&sb);
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
+		for (i = 0; i < MAX_OBJDEFS; i++) {
+			base->storage.num[i] = MSG_ReadLong(&sb);
+			base->storage.num_loose[i] = MSG_ReadByte(&sb);
 		}
-	}
 
 	/* read market */
 	for (i = 0; i < MAX_OBJDEFS; i++) {
@@ -1867,7 +1866,7 @@ static void CL_GameGo(void)
 	Cvar_Set("map_dropship", aircraft->id);
 
 	/* manage inventory */
-	ccs.eMission = ccs.eCampaign; /* copied, including the arrays inside! */
+	ccs.eMission = baseCurrent->storage; /* copied, including arrays inside! */
 	CL_CleanTempInventory();
 	CL_ReloadAndRemoveCarried(&ccs.eMission);
 
@@ -2151,7 +2150,7 @@ void CL_CollectItems(int won)
 			break;
 		}
 	}
-/*	RS_MarkCollected();*/
+/*	RS_MarkCollected(&ccs.eMission); not needed due to statusCollected above */
 	RS_MarkResearchable();
 }
 
@@ -3100,13 +3099,6 @@ static void CL_GameNew(void)
 	ccs.zoom = 1.0;
 
 	CL_UpdateCredits(curCampaign->credits);
-
-	/* equipment */
-	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
-		if (!Q_strncmp(curCampaign->equipment, ed->name, MAX_VAR))
-			break;
-	if (i != csi.numEDs)
-		ccs.eCampaign = *ed; /* copied, including the arrays inside! */
 
 	/* market */
 	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)

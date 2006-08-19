@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int produceCategory = 0;
 
 /**
- * @TODO: When we have the production facility in basemanagement.ufo
+ * @TODO: Now that we have the Workshop in basemanagement.ufo
  * we need to check whether the player has already set this building up
  * otherwise he won't be allowed to produce more equipment stuff
  */
@@ -78,7 +78,7 @@ void PR_ProductionRun(void)
 			}
 			/* now add it to equipment */
 			/* FIXME: overflow possible */
-			ccs.eCampaign.num[gd.productions[i].objID]++;
+			gd.bases[i].storage.num[gd.productions[i].objID]++;
 		}
 	}
 }
@@ -220,7 +220,7 @@ static void PR_ProductionList (void)
 		/* we can produce what was researched before */
 		if (od->buytype == produceCategory && RS_IsResearched_ptr(od->tech)) {
 			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
-			Q_strcat(productionAmount, va("%i\n", ccs.eCampaign.num[i]), sizeof(productionAmount));
+			Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[i]), sizeof(productionAmount));
 		}
 	}
 	/* bind the menu text to our static char array */

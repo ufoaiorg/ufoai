@@ -71,12 +71,12 @@ void RS_MarkOneCollected(char *id)
  * Should be run after items have been collected/looted from the
  * battlefield (cl_campaign.c -> "CL_CollectItems") and after techtree/inventory init (for all).
  */
-void RS_MarkCollected(void)
+void RS_MarkCollected(equipDef_t *ed)
 {
 	int i;
 
 	for (i = 0; i < MAX_OBJDEFS; i++) {
-		if (ccs.eCampaign.num[i]) {
+		if (ed->num[i]) {
 			Com_DPrintf("RS_MarkCollected: %s marked as collected.\n", csi.ods[i].kurz);
 			RS_MarkOneCollected(csi.ods[i].kurz);
 		}
@@ -311,7 +311,10 @@ void RS_InitTree(void)
 			break;
 		} /* switch */
 	}
-	RS_MarkCollected();
+	for (i = 0; i < gd.numBases; i++)
+		if (gd.bases[i].founded)
+			RS_MarkCollected(&gd.bases[i].storage);
+
 	RS_MarkResearchable();
 
 	memset(&curRequiredList, 0, sizeof(stringlist_t));

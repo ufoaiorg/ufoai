@@ -123,6 +123,9 @@ static void CL_BuyType(void)
 	num = atoi(Cmd_Argv(1));
 	buyCategory = num;
 
+	if (!baseCurrent)
+		return;
+
 	CL_UpdateCredits(ccs.credits);
 
 	/* 'normal' items */
@@ -133,12 +136,12 @@ static void CL_BuyType(void)
 			/* is researched OR collected */
 			if (!tech || RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
 				/* check primary, secondary, misc, armor and available amount */
-				if (od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i])) {
+				if (od->buytype == num && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
 					Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
 					Cvar_Set(str, _(od->name));
 
 					Q_strncpyz(str, va("mn_storage%i", j), MAX_VAR);
-					Cvar_SetValue(str, ccs.eCampaign.num[i]);
+					Cvar_SetValue(str, baseCurrent->storage.num[i]);
 
 					Q_strncpyz(str, va("mn_supply%i", j), MAX_VAR);
 					Cvar_SetValue(str, ccs.eMarket.num[i]);
@@ -218,6 +221,9 @@ static void CL_BuyItem(void)
 		return;
 	}
 
+	if (!baseCurrent)
+		return;
+
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= buyListLength)
 		return;
@@ -232,13 +238,13 @@ static void CL_BuyItem(void)
 		CL_ItemDescription(item);
 		Com_DPrintf("CL_BuyItem: item %i\n", item);
 		if (ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item]) {
-			Cvar_SetValue(va("mn_storage%i", num), ++ccs.eCampaign.num[item]);
+			Cvar_SetValue(va("mn_storage%i", num), ++baseCurrent->storage.num[item]);
 			Cvar_SetValue(va("mn_supply%i", num), --ccs.eMarket.num[item]);
 			CL_UpdateCredits(ccs.credits - csi.ods[item].price);
 		}
 	}
 
-	RS_MarkCollected();
+	RS_MarkCollected(&baseCurrent->storage);
 	RS_MarkResearchable();
 }
 
@@ -255,6 +261,9 @@ static void CL_SellItem(void)
 		return;
 	}
 
+	if (!baseCurrent)
+		return;
+
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= buyListLength)
 		return;
@@ -266,8 +275,8 @@ static void CL_SellItem(void)
 		/* TODO: Sell aircraft */
 	} else {
 		CL_ItemDescription(item);
-		if (ccs.eCampaign.num[item]) {
-			Cvar_SetValue(va("mn_storage%i", num), --ccs.eCampaign.num[item]);
+		if (baseCurrent->storage.num[item]) {
+			Cvar_SetValue(va("mn_storage%i", num), --baseCurrent->storage.num[item]);
 			Cvar_SetValue(va("mn_supply%i", num), ++ccs.eMarket.num[item]);
 			CL_UpdateCredits(ccs.credits + csi.ods[item].price);
 		}
@@ -287,6 +296,9 @@ static void CL_BuyAircraft(void)
 		return;
 	}
 
+	if (!baseCurrent)
+		return;
+
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= buyListLength)
 		return;
@@ -296,7 +308,7 @@ static void CL_BuyAircraft(void)
 
 #if 0
 	if (ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item]) {
-		Cvar_SetValue(va("mn_storage%i", num), ++ccs.eCampaign.num[item]);
+		Cvar_SetValue(va("mn_storage%i", num), ++baseCurrent->storage.num[item]);
 		Cvar_SetValue(va("mn_supply%i", num), --ccs.eMarket.num[item]);
 		CL_UpdateCredits(ccs.credits - csi.ods[item].price);
 	}
