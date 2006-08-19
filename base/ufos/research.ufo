@@ -423,7 +423,7 @@ tech rs_weapon_stungren
 	up_chapter	weapons
 	description	"_stungren_txt"
 
-	requires	"rs_skill_explosive rs_damage_stun"
+	requires	"rs_skill_explosive rs_damage_stun rs_weapon_stunrod"
 	provides	stungrenade
 	time	20
 	researched	false
@@ -575,6 +575,7 @@ tech rs_weapon_alienincgrenade
 	provides	alienincgrenade
 	time	10
 	researched	false
+	needscollected	true
 }
 
 tech rs_weapon_plasmagren
