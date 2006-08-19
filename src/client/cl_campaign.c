@@ -2228,6 +2228,7 @@ static void CL_GameResultsCmd(void)
 	int i;
 	int tempMask;
 	employee_t* employee;
+	int numberofsoldiers = 0; /* DEBUG */
 
 	/* multiplayer? */
 	if (!curCampaign || !selMis || !baseCurrent)
@@ -2265,18 +2266,11 @@ static void CL_GameResultsCmd(void)
 	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
 	for (i = gd.numEmployees[EMPL_SOLDIER]-1; i >= 0 ; i-- ) {
 		/* if employee is marked as dead */
+		if (CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) )	/* DEBUG */
+			numberofsoldiers++;
 		if (baseCurrent->deathMask & (1 << i)) {
 			Com_DPrintf("CL_GameResultsCmd - %i\n", baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
 			Com_DPrintf("CL_GameResultsCmd - remove player %i - dead\n", i);
-
-			/* get the ith employee from the list - that is marked as dead */
-			employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
-			if (!employee)
-				Sys_Error("Could not get hired employee %i from base %i\n", i, baseCurrent->idx);
-			/* Delete the employee. */
-			/* sideeffect: gd.numEmployees[EMPL_SOLDIER] is decremented by one, too */
-			E_DeleteEmployee(employee, EMPL_SOLDIER);
-			/* because this employee is removed completly from employee list we don't increment i !! */
 
 			/* We have to shift the mask because we will delete the employee below */
 			/* if we increased i at this point we jump over one employee (the next after the deleted employee) */
@@ -2294,17 +2288,24 @@ static void CL_GameResultsCmd(void)
 				/* 01111101 */
 				| (tempMask & ~((1 << i) - 1));
 			/* now we eliminated the dead employee bit position and got a mask with one employee less */
-			
+
+			/* get the ith employee from the list - that is marked as dead */
+			employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
+			if (!employee)
+				Sys_Error("Could not get hired employee %i from base %i\n", i, baseCurrent->idx);
+			/* Delete the employee. */
+			/* sideeffect: gd.numEmployees[EMPL_SOLDIER] is decremented by one, too */
+			E_DeleteEmployee(employee, EMPL_SOLDIER);
+			/* because this employee is removed completly from employee list we don't increment i !! */
+
 			/* now decrement the amount of teammembers for this aircraft by one */
 			baseCurrent->teamNum[baseCurrent->aircraftCurrent]--;
 			Com_DPrintf("CL_GameResultsCmd - %i\n", baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
 		}
 	}
-#ifdef PARANOID
-	if (baseCurrent->deathMask != 0)
-		Com_Printf("CL_GameResultsCmd: baseCurrent->deathMask != 0 (%i)\n", baseCurrent->deathMask);
-#endif
-	baseCurrent->deathMask = 0; /* Just in case. */
+	Com_DPrintf("CL_GameResultsCmd - num %i\n", numberofsoldiers); /* DEBUG */
+
+	baseCurrent->deathMask = 0; /* Just in case. This isn't needed later on anyway. */
 	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n", i);
 
 	/* onwin and onlose triggers */
