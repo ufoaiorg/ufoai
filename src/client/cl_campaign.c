@@ -2297,6 +2297,10 @@ static void CL_GameResultsCmd(void)
 			baseCurrent->teamNum[baseCurrent->aircraftCurrent]--;
 		}
 	}
+#ifdef PARANOID
+	if (baseCurrent->deathMask != 0)
+		Com_Printf("CL_GameResultsCmd: baseCurrent->deathMask != 0 (%i)\n", baseCurrent->deathMask);
+#endif
 	baseCurrent->deathMask = 0; /* Just in case. */
 	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n", i);
 
@@ -2597,6 +2601,7 @@ static void CL_ParseStageSet(char *name, char **text)
 
 /**
  * @brief
+ * @sa CL_ParseStageSet
  */
 void CL_ParseStage(char *name, char **text)
 {
