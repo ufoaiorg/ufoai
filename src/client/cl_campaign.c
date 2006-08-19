@@ -2269,14 +2269,23 @@ static void CL_GameResultsCmd(void)
 		if (CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) )	/* DEBUG */
 			numberofsoldiers++;
 		if (baseCurrent->deathMask & (1 << i)) {
-			Com_DPrintf("CL_GameResultsCmd - %i\n", baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
 			Com_DPrintf("CL_GameResultsCmd - remove player %i - dead\n", i);
+			Com_DPrintf("CL_GameResultsCmd - team %i\n", baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
+			Com_DPrintf("CL_GameResultsCmd - dead %i\n", baseCurrent->deathMask);
 
-			/* We have to shift the mask because we will delete the employee below */
-			/* if we increased i at this point we jump over one employee (the next after the deleted employee) */
+			/* Get the i-th employee from the list - that is marked as dead */
+			employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
+			if (!employee)
+				Sys_Error("Could not get hired employee %i from base %i\n", i, baseCurrent->idx);
+
+			/* Delete the employee. */
+			/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. The teamMask entry is set to zero. */
+			E_DeleteEmployee(employee, EMPL_SOLDIER);
+
+			/* We have to shift the mask because just deleted the employee. */
 			tempMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent] >> 1;
 
-			/* set new teamMask */
+			/* Set new teamMask. */
 			baseCurrent->teamMask[baseCurrent->aircraftCurrent] =
 				/* example: teammask 11111101 - deathMask: 0000100 - 1b << 2d = 100b - 1d = 011b */
 				/* ^^means, we have hired recruit 1-8 except the second one - the third recruit died in battle */
@@ -2287,19 +2296,8 @@ static void CL_GameResultsCmd(void)
 				/* 00000001 | (01111100) */
 				/* 01111101 */
 				| (tempMask & ~((1 << i) - 1));
-			/* now we eliminated the dead employee bit position and got a mask with one employee less */
+			/* Now we eliminated the dead employee bit position and got a mask with one employee less. */
 
-			/* get the ith employee from the list - that is marked as dead */
-			employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
-			if (!employee)
-				Sys_Error("Could not get hired employee %i from base %i\n", i, baseCurrent->idx);
-			/* Delete the employee. */
-			/* sideeffect: gd.numEmployees[EMPL_SOLDIER] is decremented by one, too */
-			E_DeleteEmployee(employee, EMPL_SOLDIER);
-			/* because this employee is removed completly from employee list we don't increment i !! */
-
-			/* now decrement the amount of teammembers for this aircraft by one */
-			baseCurrent->teamNum[baseCurrent->aircraftCurrent]--;
 			Com_DPrintf("CL_GameResultsCmd - %i\n", baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
 		}
 	}
