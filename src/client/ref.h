@@ -135,6 +135,9 @@ typedef struct shader_s {
 
 	qboolean frag;				/* fragment-shader */
 	qboolean vertex;			/* vertex-shader */
+
+	qboolean emboss;			/* active emboss mapping */
+	int embossMode;			/* default is GL_MODULATE */
 	/* TODO: */
 
 	/* vpid and fpid are vertexpid and fragmentpid for binding */

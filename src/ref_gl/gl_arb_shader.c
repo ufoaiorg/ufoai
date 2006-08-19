@@ -30,6 +30,24 @@ unsigned int SH_LoadProgram_ARB_FP(char *path);
 unsigned int SH_LoadProgram_ARB_VP(char *path);
 
 /**
+ * @brief Compares the shader titles with the image name
+ * @param[in] image Image name
+ * @return shader_t pointer if image name and shader title match otherwise NULL
+ */
+shader_t* GL_GetShaderForImage(char* image)
+{
+	int i = 0;
+	shader_t *s;
+
+	for (i = 0; i < r_newrefdef.num_shaders; i++) {
+		s = &r_newrefdef.shaders[i];
+		if (!Q_strcmp(s->title, image))
+			return s;
+	}
+	return NULL;
+}
+
+/**
  * @brief Cycle through all parsed shaders and compile them
  */
 void GL_ShaderInit(void)

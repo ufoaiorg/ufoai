@@ -299,7 +299,13 @@ void GL_ImageList_f(void)
 		}
 
 		ri.Con_Printf(PRINT_ALL, " %3i %3i %s: %s - shader: %s\n",
-					  image->upload_width, image->upload_height, palstrings[image->paletted], image->name, (image->shader ? image->shader->title : "NONE"));
+					  image->upload_width, image->upload_height, palstrings[image->paletted], image->name,
+#ifdef SHADERS
+					  (image->shader ? image->shader->title : "NONE")
+#else
+					  "NO SHADER SUPPORT"
+#endif
+			);
 	}
 	ri.Con_Printf(PRINT_ALL, "Total texel count (not counting mipmaps): %i\n", texels);
 }
@@ -1410,28 +1416,21 @@ void R_FilterTexture(int filterindex, unsigned int *data, int width, int height,
 				float SrcData = ((float) ((byte *) & data[y * width + x])[i]) / 255.0;
 
 				switch (GLBlendOperator) {
-				case GL_ADD:
+				case BLEND_ADD:
 					TempTarget = rgbFloat[i] + SrcData;
 					break;
 
-				case GL_BLEND:
+				case BLEND_BLEND:
 					/* default is FUNC_ADD here */
 					/* CsS + CdD works out as Src * Dst * 2 */
 					TempTarget = rgbFloat[i] * SrcData * 2.0;
 					break;
 
-				case GL_DECAL:
-					/* same as GL_REPLACE unless there's alpha, which we ignore for this */
-				case GL_REPLACE:
+				case BLEND_REPLACE:
 					TempTarget = rgbFloat[i];
 					break;
 
-#ifndef _WIN32
-				case GL_ADD_SIGNED:
-					TempTarget = (rgbFloat[i] + SrcData) - 0.5;
-					break;
-#endif
-				case GL_MODULATE:
+				case BLEND_FILTER:
 					/* same as default */
 				default:
 					TempTarget = rgbFloat[i] * SrcData;
@@ -1519,9 +1518,6 @@ qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qbo
 			break;
 		}
 	}
-	/*emboss filter */
-	if (gl_embossfilter->value && type != it_skin)
-		R_FilterTexture(EMBOSS_FILTER, data, width, height, 1, 128, qtrue, GL_MODULATE);
 
 	if (scaled_width == width && scaled_height == height) {
 		if (!mipmap) {
@@ -1786,7 +1782,12 @@ image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t t
 		image->tl = 0;
 		image->th = 1;
 	}
-
+#ifdef SHADERS
+	image->shader = GL_GetShaderForImage(image->name);
+	/* emboss filter */
+	if (gl_embossfilter->value && image->shader && image->shader->emboss)
+		R_FilterTexture(EMBOSS_FILTER, (unsigned *)pic, width, height, 1, 128, qtrue, image->shader->embossMode);
+#endif
 	return image;
 }
 

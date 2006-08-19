@@ -1078,7 +1078,7 @@ void R_Register(void)
 	gl_shadow_debug_shade = ri.Cvar_Get("r_shadow_debug_shade", "0", CVAR_ARCHIVE);
 	r_ati_separate_stencil = ri.Cvar_Get("r_ati_separate_stencil", "1", CVAR_ARCHIVE);
 	r_stencil_two_side = ri.Cvar_Get("r_stencil_two_side", "1", CVAR_ARCHIVE);
-	gl_embossfilter = ri.Cvar_Get("gl_embossfilter", "0", CVAR_ARCHIVE);
+	gl_embossfilter = ri.Cvar_Get("gl_embossfilter", "1", CVAR_ARCHIVE);
 	gl_dynamic = ri.Cvar_Get("gl_dynamic", "1", 0);
 	gl_nobind = ri.Cvar_Get("gl_nobind", "0", 0);
 	gl_round_down = ri.Cvar_Get("gl_round_down", "1", 0);

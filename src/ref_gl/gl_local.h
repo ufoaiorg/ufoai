@@ -109,8 +109,9 @@ typedef struct image_s {
 	float sl, tl, sh, th;		/* 0,0 - 1,1 unless part of the scrap */
 	qboolean scrap;
 	qboolean has_alpha;
+#ifdef SHADERS
 	shader_t *shader;			/* pointer to shader from refdef_t */
-
+#endif
 	qboolean paletted;
 } image_t;
 

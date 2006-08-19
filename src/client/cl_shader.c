@@ -45,16 +45,17 @@ static value_t shader_values[] = {
 	{"filename",	V_STRING,	offsetof( shader_t, filename)},
 	{"frag",	V_BOOL,	offsetof( shader_t, frag)},
 	{"vertex",	V_BOOL,	offsetof( shader_t, vertex)},
+	{"emboss",	V_BOOL,	offsetof( shader_t, emboss)},
+	{"embossmode",	V_BLEND,	offsetof( shader_t, embossMode)},
+
 	{NULL, 0, 0}
 };
 
-/*
-======================
-CL_ParseShaders
-
-Called from CL_ParseScriptSecond
-======================
-*/
+/**
+ * @brief Parses all shader script from ufo script files
+ * @note Called from CL_ParseScriptSecond
+ * @sa CL_ParseScriptSecond
+ */
 void CL_ParseShaders(char *title, char **text)
 {
 	shader_t *entry;
@@ -72,6 +73,10 @@ void CL_ParseShaders(char *title, char **text)
 	/* new entry */
 	entry = &r_shaders[r_numshaders++];
 	memset(entry, 0, sizeof(shader_t));
+
+	/* default value */
+	entry->embossMode = BLEND_FILTER;
+
 	Q_strncpyz(entry->title, title, MAX_VAR);
 	do {
 		/* get the name type */
@@ -100,6 +105,9 @@ void CL_ParseShaders(char *title, char **text)
 	} while (*text);
 }
 
+/**
+ * @brief List all loaded shaders via console
+ */
 void CL_ShaderList_f(void)
 {
 	int i;
@@ -109,6 +117,8 @@ void CL_ShaderList_f(void)
 		Com_Printf("..filename: %s\n", r_shaders[i].filename);
 		Com_Printf("..frag %i\n", (int) r_shaders[i].frag);
 		Com_Printf("..vertex %i\n", (int) r_shaders[i].vertex);
+		Com_Printf("..emboss %i\n", (int) r_shaders[i].emboss);
+		Com_Printf("..embossMode '%s'\n", Com_ValueToStr(&r_shaders[i], V_BLEND, offsetof( shader_t, embossMode)));
 		Com_Printf("\n");
 	}
 }
