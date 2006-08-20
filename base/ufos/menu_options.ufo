@@ -389,6 +389,44 @@ menu options_video
 		}
 	}
 
+	string imagefilter_str
+	{
+		string	"_Image Filter:"
+		pos		"500 350"
+	}
+	string imagefilter_value
+	{
+		string	"*cvar mn_imagefilter"
+		pos		"840 350"
+		align	ur
+	}
+	pic imagefilter_dec
+	{
+		image	menu/buttons_small
+		pos		"868 354"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modify gl_imagefilter -1 0 1;"
+			cmd "mn_translate gl_imagefilter mn_imagefilter 0:No,1:Yes;"
+		}
+	}
+	pic imagefilter_inc
+	{
+		image	menu/buttons_small
+		pos		"884 354"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modify gl_imagefilter +1 0 1;"
+			cmd "mn_translate gl_imagefilter mn_imagefilter 0:No,1:Yes;"
+		}
+	}
+
 	string gamma_str
 	{
 		string	"_Gamma:"
@@ -416,6 +454,7 @@ menu options_video
 		cmd "copy mn_glmode gl_mode;"
 		cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
 		cmd "mn_translate cl_fps mn_fps 0:No,1:Yes;"
+		cmd "mn_translate gl_imagefilter mn_imagefilter 0:No,1:Yes;"
 		cmd "mn_translate r_texture_lod mn_lod 0:No,1:Yes;"
 		cmd "mn_translate gl_ext_texture_compression mn_compression 0:No,1:Yes;"
 		cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:High,2048:Excellent;"
@@ -561,7 +600,7 @@ menu options_game
 		image	menu/buttons_small
 		pos		"884 109"
 		texl	"16 0"
-		texh	"32 16" 
+		texh	"32 16"
 		mousefx	true
 		tooltip	"_Employees already hired at campaign start"
 		click
@@ -604,7 +643,7 @@ menu options_game
 		image	menu/buttons_small
 		pos		"884 134"
 		texl	"16 0"
-		texh	"32 16" 
+		texh	"32 16"
 		mousefx	true
 		tooltip	"_Buildings already built in the initial base"
 		click

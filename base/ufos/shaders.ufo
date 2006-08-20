@@ -4,13 +4,17 @@ shader test
 	frag true
 }
 
-shader exterior/ext_road01a
+shader textures/exterior/ext_road01a
 {
 	emboss true
 }
 
-shader exterior/ext_conc03
+shader textures/exterior/ext_conc03
 {
 	emboss true
-	embossmode add
 }
+
+//shader textures/tex_streets/street001
+//{
+//	emboss true
+//}
