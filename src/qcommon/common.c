@@ -480,15 +480,11 @@ void MSG_WriteDir(sizebuf_t * sb, vec3_t dir)
 
 
 /**
- * @brief
+ * @brief Writes to buffer according to format; version without syntactic sugar for variable arguments, to call it from other functions with variable arguments
  */
-void MSG_WriteFormat(sizebuf_t * sb, char *format, ...)
+void MSG_V_WriteFormat(sizebuf_t * sb, char *format, va_list ap)
 {
-	va_list ap;
 	char typeID;
-
-	/* initialize ap */
-	va_start(ap, format);
 
 	Com_DPrintf("MSG_WriteFormat: %s\n", format);
 
@@ -552,7 +548,16 @@ void MSG_WriteFormat(sizebuf_t * sb, char *format, ...)
 			Com_Error(ERR_DROP, "WriteFormat: Unknown type!\n");
 		}
 	}
+}
 
+/**
+ * @brief The user-friendly version of MSG_WriteFormat that writes variable arguments to buffer according to format
+ */
+void MSG_WriteFormat(sizebuf_t * sb, char *format, ...)
+{
+	va_list ap;
+	va_start(ap, format);
+	MSG_V_WriteFormat(sb, format, ap);
 	va_end(ap);
 }
 
@@ -781,15 +786,11 @@ void MSG_ReadDir(sizebuf_t * sb, vec3_t dir)
 
 
 /**
- * @brief
+ * @brief Reads from a buffer according to format; version without syntactic sugar for variable arguments, to call it from other functions with variable arguments
  */
-void MSG_ReadFormat(sizebuf_t * msg_read, char *format, ...)
+void MSG_V_ReadFormat(sizebuf_t * msg_read, char *format, va_list ap)
 {
-	va_list ap;
 	char typeID;
-
-	/* initialize ap */
-	va_start(ap, format);
 
 	while (*format) {
 		typeID = *format++;
@@ -848,7 +849,16 @@ void MSG_ReadFormat(sizebuf_t * msg_read, char *format, ...)
 			Com_Error(ERR_DROP, "ReadFormat: Unknown type!\n");
 		}
 	}
+}
 
+/**
+ * @brief The user-friendly version of MSG_ReadFormat that reads variable arguments from a buffer according to format
+ */
+void MSG_ReadFormat(sizebuf_t * msg_read, char *format, ...)
+{
+	va_list ap;
+	va_start(ap, format);
+	MSG_V_ReadFormat(msg_read, format, ap);
 	va_end(ap);
 }
 

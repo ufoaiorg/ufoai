@@ -202,6 +202,7 @@ typedef struct {
 	void (*ReadDir) (vec3_t vector);
 	float (*ReadAngle) (void);
 	void (*ReadData) (void *buffer, int size);
+	void (*ReadFormat) (char *format, ...);
 
 	/* misc functions */
 	int (*GetModelAndName) (char *team, character_t *chr);

@@ -290,6 +290,14 @@ static void PF_WriteAngle(float f)
 	MSG_WriteAngle(&sv.multicast, f);
 }
 
+static void PF_WriteFormat(char *format, ...)
+{
+	va_list ap;
+	va_start(ap, format);
+	MSG_V_WriteFormat(&sv.multicast, format, ap);
+	va_end(ap);
+}
+
 static byte *pf_save;
 /**
   * @brief
@@ -396,6 +404,13 @@ static void PF_ReadData(void *buffer, int size)
 	MSG_ReadData(&net_message, buffer, size);
 }
 
+static void PF_ReadFormat(char *format, ...)
+{
+	va_list ap;
+	va_start(ap, format);
+	MSG_V_ReadFormat(&net_message, format, ap);
+	va_end(ap);
+}
 
 static qboolean pfe_pending = qfalse;
 static int pfe_mask = 0;
@@ -506,7 +521,7 @@ void SV_InitGameProgs(void)
 	import.WriteGPos = PF_WriteGPos;
 	import.WriteDir = PF_WriteDir;
 	import.WriteAngle = PF_WriteAngle;
-/*	import.WriteFormat = PF_WriteFormat; */
+	import.WriteFormat = PF_WriteFormat;
 
 	import.WriteNewSave = PF_WriteNewSave;
 	import.WriteToSave = PF_WriteToSave;
@@ -525,6 +540,7 @@ void SV_InitGameProgs(void)
 	import.ReadDir = PF_ReadDir;
 	import.ReadAngle = PF_ReadAngle;
 	import.ReadData = PF_ReadData;
+	import.ReadFormat = PF_ReadFormat;
 
 	import.GetModelAndName = Com_GetModelAndName;
 

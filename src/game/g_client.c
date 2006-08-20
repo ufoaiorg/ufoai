@@ -33,6 +33,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LEFT(e)  e->i.c[gi.csi->idLeft]
 #define FLOOR(e) e->i.c[gi.csi->idFloor]
 
+char *pa_format[] =
+{
+	"",					/* PA_NULL */
+	"b",				/* PA_TURN */
+	"g",				/* PA_MOVE */
+	"s",				/* PA_STATE */
+	"gb",				/* PA_SHOOT */
+	"bbbbbb"			/* PA_INVMOVE */
+};
 
 /**
  * @brief Generates the player mask
@@ -2203,6 +2212,7 @@ void G_ClientAction(player_t * player)
 	int action;
 	int num;
 	pos3_t pos;
+	byte dv;
 
 	/* read the header */
 	action = gi.ReadByte();
@@ -2213,7 +2223,8 @@ void G_ClientAction(player_t * player)
 		break;
 
 	case PA_TURN:
-		G_ClientTurn(player, num, gi.ReadByte());
+		gi.ReadFormat(pa_format[PA_TURN], &dv);
+		G_ClientTurn(player, num, dv);
 		break;
 
 	case PA_MOVE:

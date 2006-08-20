@@ -40,8 +40,8 @@ void MSG_WriteGPos(sizebuf_t * sb, pos3_t pos);
 void MSG_WriteAngle(sizebuf_t * sb, float f);
 void MSG_WriteAngle16(sizebuf_t * sb, float f);
 void MSG_WriteDir(sizebuf_t * sb, vec3_t vector);
+void MSG_V_WriteFormat(sizebuf_t * sb, char *format, va_list ap);
 void MSG_WriteFormat(sizebuf_t * sb, char *format, ...);
-
 
 void MSG_BeginReading(sizebuf_t * sb);
 
@@ -61,6 +61,7 @@ float MSG_ReadAngle16(sizebuf_t * sb);
 void MSG_ReadDir(sizebuf_t * sb, vec3_t vector);
 
 void MSG_ReadData(sizebuf_t * sb, void *buffer, int size);
+void MSG_V_ReadFormat(sizebuf_t * sb, char *format, va_list ap);
 void MSG_ReadFormat(sizebuf_t * sb, char *format, ...);
 
 int MSG_LengthFormat(sizebuf_t * sb, char *format);
