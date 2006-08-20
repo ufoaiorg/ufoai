@@ -1339,7 +1339,7 @@ static void B_AssignInitialCmd(void)
  */
 static void B_PackInitialEquipmentCmd(void)
 {
-	int i;
+	int i, price = 0;
 	equipDef_t *ed;
 	character_t *cp;
 	char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
@@ -1366,6 +1366,11 @@ static void B_PackInitialEquipmentCmd(void)
 			Com_EquipActor(cp->inv, ed->num, name);
 		}
 		CL_AddCarriedToEq(&baseCurrent->storage);
+
+		/* pay for the initial equipment */
+		for (i = 0; i < csi.numODs; i++)
+			price += baseCurrent->storage.num[i] * csi.ods[i].price;
+		CL_UpdateCredits(ccs.credits - price);
 	}
 }
 
@@ -1399,7 +1404,7 @@ void B_BuildBase(void)
 
 			/* initial base equipment */
 			if (gd.numBases == 1) {
-				int i;
+				int i, price = 0;
 				equipDef_t *ed;
 
 				for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
@@ -1421,9 +1426,12 @@ void B_BuildBase(void)
 						Com_DPrintf("B_BuildBase: Initial Phalanx equipment %s not found.\n", name);
 					} else {
 						for (i = 0; i < csi.numODs; i++)
-							baseCurrent->storage.num[i] = 
-								baseCurrent->storage.num[i] + ed->num[i];
+							baseCurrent->storage.num[i] += ed->num[i];
 					}
+					/* pay for the initial equipment */
+					for (i = 0; i < csi.numODs; i++)
+						price += baseCurrent->storage.num[i] * csi.ods[i].price;
+					CL_UpdateCredits(ccs.credits - price);
 				}
 			}
 
