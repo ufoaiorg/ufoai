@@ -1,3 +1,10 @@
+//
+// valid flags:
+// filename (only when frag or vertex are true): filename to shader file
+// frag, vertex, emboss, blur, light, edge : boolean
+// glmode replace, blend, add, filter (default), invfilter
+//
+
 shader test
 {
 	filename "arb/test.vp"
