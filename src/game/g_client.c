@@ -719,10 +719,12 @@ edict_t *G_GetFloorItems(edict_t * ent)
 
 /*
 =================
-G_InventoryMove
+G_ClientInvMove
+
+* see event PA_INVMOVE
 =================
 */
-void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction)
+void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction)
 {
 	edict_t *ent, *floor;
 	invList_t *ic;
@@ -1345,9 +1347,9 @@ static void G_MoralePanic(edict_t * ent, qboolean sanity)
 	/* drop items in hands */
 	if (!sanity) {
 		if (RIGHT(ent))
-			G_InventoryMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
+			G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
 		if (LEFT(ent))
-			G_InventoryMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
+			G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
 	}
 
 	/* get up */
@@ -2183,25 +2185,6 @@ qboolean G_ReactionFire(edict_t * target)
 }
 
 
-/**
- * @brief
- * see event PA_INVMOVE
- */
-void G_ClientInvMove(player_t * player, int num)
-{
-	int from, fx, fy, to, tx, ty;
-
-	from = gi.ReadByte();
-	fx = gi.ReadByte();
-	fy = gi.ReadByte();
-	to = gi.ReadByte();
-	tx = gi.ReadByte();
-	ty = gi.ReadByte();
-
-	G_InventoryMove(player, num, from, fx, fy, to, tx, ty, qtrue);
-}
-
-
 /*
 =================
 G_ClientAction
@@ -2212,7 +2195,8 @@ void G_ClientAction(player_t * player)
 	int action;
 	int num;
 	pos3_t pos;
-	byte dv;
+	int i;
+	int from, fx, fy, to, tx, ty;
 
 	/* read the header */
 	action = gi.ReadByte();
@@ -2223,26 +2207,28 @@ void G_ClientAction(player_t * player)
 		break;
 
 	case PA_TURN:
-		gi.ReadFormat(pa_format[PA_TURN], &dv);
-		G_ClientTurn(player, num, dv);
+		gi.ReadFormat(pa_format[PA_TURN], &i);
+		G_ClientTurn(player, num, i);
 		break;
 
 	case PA_MOVE:
-		gi.ReadGPos(pos);
+		gi.ReadFormat(pa_format[PA_MOVE], &pos);
 		G_ClientMove(player, player->pers.team, num, pos, qtrue);
 		break;
 
 	case PA_STATE:
-		G_ClientStateChange(player, num, gi.ReadShort());
+		gi.ReadFormat(pa_format[PA_STATE], &i);
+		G_ClientStateChange(player, num, i);
 		break;
 
 	case PA_SHOOT:
-		gi.ReadGPos(pos);
-		G_ClientShoot(player, num, pos, gi.ReadByte());
+		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i);
+		G_ClientShoot(player, num, pos, i);
 		break;
 
 	case PA_INVMOVE:
-		G_ClientInvMove(player, num);
+		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
+		G_ClientInvMove(player, num, from, fx, fy, to, tx, ty, qtrue);
 		break;
 
 	default:
