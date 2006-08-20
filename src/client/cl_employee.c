@@ -385,6 +385,7 @@ qboolean E_HireEmployee(const base_t* const base, employeeType_t type, int idx)
  * @param[in] type Which employee type do we search
  * @param[in] idx Which employee id (in global employee array) See E_GetHiredEmployee for usage.
  * @sa E_HireEmployee
+ * @todo Make sure the inventory-items are moved to the base-storage ... if one wants to destroy them instead this can be done before unhiring/deleting them.
  */
 qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx)
 {
@@ -407,6 +408,7 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
 		employee->baseIDHired = -1;
 		employee->inv.c[csi.idFloor] = NULL;
 		Com_DestroyInventory(&employee->inv);
+		memset(&employee->inv, 0, sizeof(inventory_t)); 
 		return qtrue;
 	} else
 		Com_Printf("Could not get hired employee '%i' from base '%i'\n", idx, base->idx);
@@ -480,19 +482,17 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 	if (!employee)
 		return qfalse;
 
-	/* Fire the employee. This will also remove him from buildings&work. */
+	/* Fire the employee. This will also:
+		1) remove him from buildings&work
+		2) remove his inventory
+	*/
 	if (employee->baseIDHired >= 0)
 		E_UnhireEmployee(&gd.bases[employee->baseIDHired], type, employee->idx);
 
 	/* Remove the employee from the global list. */
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		if (gd.employees[type][i].idx == employee->idx) {
-			/* Delete this employee. */
-			gd.employees[type][i].inv.c[csi.idFloor] = NULL;
-			/* Com_DestroyInventory(&gd.employees[type][i].inv); Should have been done in UnhireEmployee */
-			memset(&gd.employees[type][i].inv, 0, sizeof(inventory_t));
+		if (gd.employees[type][i].idx == employee->idx)
 			found = qtrue;
-		}
 		if (found) {
 			if ( i < MAX_EMPLOYEES-1) { /* Just in case we have _that much_ employees. :) */
 				/* Move all the following employees in the list one place forward and correct its index. */
