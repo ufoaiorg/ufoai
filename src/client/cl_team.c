@@ -1362,6 +1362,8 @@ void CL_ParseResults(sizebuf_t * buf)
 	byte num_kills[MAX_TEAMS][MAX_TEAMS];
 	byte winner, we;
 	int i, j, num, res, kills;
+	static equipDef_t *eSupplies = NULL;
+	equipDef_t *ed;
 
 	/* get number of teams */
 	num = MSG_ReadByte(buf);
@@ -1459,6 +1461,20 @@ void CL_ParseResults(sizebuf_t * buf)
 
 		baseCurrent = CL_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
 		baseCurrent->storage = ccs.eMission; /* copied, including the arrays inside!*/
+		/* market is stirring at the news of our fight */
+		if (!eSupplies) {
+			for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
+				if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR))
+					break;
+			assert (i != csi.numEDs);
+			eSupplies = ed;
+		}
+		for (i = 0; i < csi.numODs; i++) {
+			if ( eSupplies->num[i] + 10 
+				 > (rand() % 50 
+					+ frand () * ccs.eMarket.num[i]) ) /* supply-demand */
+				ccs.eMarket.num[i] += frand() * eSupplies->num[i];
+		}
 	}
 
 	/* disconnect and show win screen */
