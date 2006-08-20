@@ -489,7 +489,7 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 		if (gd.employees[type][i].idx == employee->idx) {
 			/* Delete this employee. */
 			gd.employees[type][i].inv.c[csi.idFloor] = NULL;
-			Com_DestroyInventory(&gd.employees[type][i].inv);
+			/* Com_DestroyInventory(&gd.employees[type][i].inv); Should have been done in UnhireEmployee */
 			memset(&gd.employees[type][i].inv, 0, sizeof(inventory_t));
 			found = qtrue;
 		}
