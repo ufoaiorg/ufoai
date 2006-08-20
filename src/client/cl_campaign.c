@@ -1386,6 +1386,9 @@ void CL_UpdatePointersInGlobalData(void)
 		if (!base->founded)
 			continue;
 
+		/* some functions needs the baseCurrent pointer set */
+		baseCurrent = base;
+
 		/* fix aircraft homepage and teamsize pointers */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			aircraft->teamSize = &base->teamNum[aircraft->idxInBase];
@@ -1394,7 +1397,7 @@ void CL_UpdatePointersInGlobalData(void)
 
 		/* now fix the curTeam pointers */
 		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-			if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
+			if ( CL_SoldierInAircraft(i, base->aircraftCurrent) ) {
 				/* maybe we already have soldiers in this base */
 				base->curTeam[p] = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
 				p++;
@@ -1515,9 +1518,6 @@ int CL_GameLoad(char *filename)
 	sb.readcount += sizeof(globalData_t);
 
 	CL_UpdatePointersInGlobalData();
-
-	/* we start not in base view */
-	baseCurrent = NULL;
 
 	/* how many message items */
 	i = MSG_ReadByte(&sb);
