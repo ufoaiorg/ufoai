@@ -10,6 +10,12 @@
 
 // The fonts are marked as translatble to let the translators decide which font they want to use
 
+font f_verysmall
+{
+	font	"_media/DejaVuSans.ttf"
+	size	11
+}
+
 font f_small
 {
 	font	"_media/DejaVuSans.ttf"

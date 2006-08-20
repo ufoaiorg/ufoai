@@ -860,9 +860,10 @@ menu buy
 
 	text description
 	{
-		pos		"630 357"
-		size	"326 200"
+		pos		"620 357"
+		size	"336 155"
 		format	"20 0"
+		font	"f_verysmall"
 	}
 
 	// ==================
