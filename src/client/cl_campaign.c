@@ -1850,7 +1850,7 @@ static void CL_GameGo(void)
 	assert(baseCurrent && mis && aircraft);
 
 	if (!ccs.singleplayer && B_GetNumOnTeam() == 0) {
-		/* multiplayer */
+		/* multiplayer; but we never reach this far! */
 		MN_Popup(_("Note"), _("Assemble or load a team"));
 		return;
 	} else if (ccs.singleplayer && (!mis->active || !*(aircraft->teamSize))) {
@@ -1874,7 +1874,7 @@ static void CL_GameGo(void)
 	ccs.civiliansKilled = 0;
 	ccs.aliensKilled = 0;
 
-	/* Reset all soldiers to alive.2 */
+	/* Reset all soldiers to alive. */
 	baseCurrent->deathMask = 0;
 
 	CL_StartMissionMap(mis);

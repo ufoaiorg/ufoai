@@ -1496,7 +1496,7 @@ menu equipment
 		pos		"940 720"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd "mn_pop;saveteam current" }
+		click	{ cmd "mn_pop;saveteamslot current" }
 	}
 
 	func init

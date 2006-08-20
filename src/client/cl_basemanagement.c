@@ -1365,10 +1365,7 @@ static void B_PackInitialEquipmentCmd(void)
 			Com_DPrintf("B_PackInitialEquipmentCmd: Packing initial equipment for %s.\n", cp->name);
 			Com_EquipActor(cp->inv, ed->num, name);
 		}
-		if (!curCampaign)
-			CL_AddCarriedToEq(&ccs.eMission);
-		else
-			CL_AddCarriedToEq(&baseCurrent->storage);
+		CL_AddCarriedToEq(&baseCurrent->storage);
 	}
 }
 

@@ -504,10 +504,7 @@ static void CL_GenerateEquipmentCmd(void)
 	menuText[TEXT_STANDARD] = NULL;
 
 	/* manage inventory */
-	if (!curCampaign)
-		unused = ccs.eMission; /* copied, including the arrays inside! */
-	else
-		unused = baseCurrent->storage; /* copied, including arrays inside! */
+	unused = baseCurrent->storage; /* copied, including arrays inside! */
 
 	CL_CleanTempInventory();
 	CL_ReloadAndRemoveCarried(&unused);
@@ -694,7 +691,7 @@ void CL_ResetTeamInBase(void)
 		Com_DPrintf("B_ClearBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
 	}
 
-	/* reset the multiplayer inventory; stored in ccs.eMission */
+	/* reset the multiplayer inventory; stored in baseCurrent->storage */
 	{
 		equipDef_t *ed;
 		char *name;
@@ -711,7 +708,7 @@ void CL_ResetTeamInBase(void)
 			Com_Printf("Equipment '%s' not found!\n", name);
 			return;
 		}
-		ccs.eMission = *ed; /* copied, including the arrays inside! */
+		baseCurrent->storage = *ed; /* copied, including the arrays inside! */
 	}
 }
 
