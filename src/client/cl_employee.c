@@ -385,7 +385,6 @@ qboolean E_HireEmployee(const base_t* const base, employeeType_t type, int idx)
  * @param[in] type Which employee type do we search
  * @param[in] idx Which employee id (in global employee array) See E_GetHiredEmployee for usage.
  * @sa E_HireEmployee
- * @todo Make sure the inventory-items are moved to the base-storage ... if one wants to destroy them instead this can be done before unhiring/deleting them.
  */
 qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx)
 {
@@ -393,9 +392,11 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
 	employee = E_GetHiredEmployee(base, type, idx);
 	if (employee) {
 		if (employee->buildingID >= 0 ) {
-			/* TODO: Remove employee from building (and tech) and assign new one if available. */
+			/* Remove employee from building (and tech/production). */
 			E_RemoveEmployeeFromBuilding(employee);
-			/* E_AssignEmployee(employee, building_rom_unhired_employee); */
+			/* TODO: Assign a new employee to the tech/production) if one is available.
+			E_AssignEmployee(employee, building_rom_unhired_employee);
+			*/
 		}
 		if (type == EMPL_SOLDIER ) {
 			/* Remove soldier from aircraft/team if he was assigned to one. */
@@ -404,8 +405,10 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
 				
 			}
  		}
+		/* Set all employee-tags to 'unhired'. */
 		employee->hired = qfalse;
 		employee->baseIDHired = -1;
+		/* Destroy the inventory of the Emplyoee (contained items will remain in the base->storage */
 		employee->inv.c[csi.idFloor] = NULL;
 		Com_DestroyInventory(&employee->inv);
 		memset(&employee->inv, 0, sizeof(inventory_t)); 
