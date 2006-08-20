@@ -381,7 +381,7 @@ qboolean E_HireEmployee(const base_t* const base, employeeType_t type, int idx)
 
 /**
  * @brief Fires an employee.
- * @param[in] base Which base the employee should be hired in
+ * @param[in] base Which base the employee was hired in
  * @param[in] type Which employee type do we search
  * @param[in] idx Which employee id (in global employee array) See E_GetHiredEmployee for usage.
  * @sa E_HireEmployee
@@ -398,6 +398,7 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
 			E_AssignEmployee(employee, building_rom_unhired_employee);
 			*/
 		}
+		/* why not merge it with E_RemoveEmployeeFromBuilding, where the building is Dropship Hangar (unless handgar can hold more than one aircraft... */
 		if (type == EMPL_SOLDIER ) {
 			/* Remove soldier from aircraft/team if he was assigned to one. */
 			if ( CL_SoldierInAircraft(employee->idx, -1) ){
@@ -408,10 +409,12 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
 		/* Set all employee-tags to 'unhired'. */
 		employee->hired = qfalse;
 		employee->baseIDHired = -1;
-		/* Destroy the inventory of the Emplyoee (contained items will remain in the base->storage */
-		employee->inv.c[csi.idFloor] = NULL;
+		/* Destroy the inventory of the employee (carried items will remain in base->storage) */
+		employee->inv.c[csi.idFloor] = NULL; /* for battlescape */
+		employee->inv.c[csi.idEquip] = NULL; /* for geoscape */
 		Com_DestroyInventory(&employee->inv);
-		memset(&employee->inv, 0, sizeof(inventory_t)); 
+		/* unneeded, Com_DestroyInventory does this (more or less)
+		memset(&employee->inv, 0, sizeof(inventory_t)); */
 		return qtrue;
 	} else
 		Com_Printf("Could not get hired employee '%i' from base '%i'\n", idx, base->idx);
