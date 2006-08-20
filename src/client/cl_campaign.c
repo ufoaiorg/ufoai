@@ -3043,7 +3043,6 @@ void CL_GameInit(void)
  */
 static void CL_GameNew(void)
 {
-	equipDef_t *ed;
 	char *name;
 	int i;
 	char val[32];
@@ -3099,13 +3098,6 @@ static void CL_GameNew(void)
 	ccs.zoom = 1.0;
 
 	CL_UpdateCredits(curCampaign->credits);
-
-	/* market */
-	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
-		if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR))
-			break;
-	if (i != csi.numEDs)
-		ccs.eMarket = *ed; /* copied, including the arrays inside! */
 
 	/* stage setup */
 	CL_CampaignActivateStage(curCampaign->firststage, qtrue);
