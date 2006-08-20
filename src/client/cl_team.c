@@ -1472,8 +1472,8 @@ void CL_ParseResults(sizebuf_t * buf)
 		for (i = 0; i < csi.numODs; i++) {
 			if ( eSupplies->num[i]
 				 > (rand() % 60 
-					+ ccs.eMarket.num[i] * frand()) ) /* supply-demand */
-				ccs.eMarket.num[i] += (3.0 + eSupplies->num[i] / 3) * frand();
+					+ ccs.eMarket.num[i] * 10 * frand()) ) /* supply-demand */
+				ccs.eMarket.num[i] += (2.0 + eSupplies->num[i] / 3.0) * frand();
 		}
 	}
 

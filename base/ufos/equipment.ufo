@@ -23,40 +23,40 @@ equipment campaign_player
 
 equipment campaign_market
 {
-	assault			       3
-	assault_ammo	       30
-	sniper			       2
-	sniper_ammo		       20
-	pistol			       3
-	pistol_ammo		       30
-	smg				       2
-	smg_ammo		       30
-	shotgun			       2
-	shotgun_ammo	       20
-	flamer			       2
-	flamer_ammo		       20
-	rpg				       2
-	rpg_ammo		       30
-	rpg_incendiary_ammo	   10
-	rpg_tachyon_ammo	   5
+	assault			       4
+	assault_ammo	       40
+	sniper			       3
+	sniper_ammo		       40
+	pistol			       4
+	pistol_ammo		       40
+	smg				       3
+	smg_ammo		       40
+	shotgun			       3
+	shotgun_ammo	       30
+	flamer			       3
+	flamer_ammo		       30
+	rpg				       3
+	rpg_ammo		       40
+	rpg_incendiary_ammo	   20
+	rpg_tachyon_ammo	   10
 	grenl			       2
-	grenl_ammo		       10
-	grenl_plasma_ammo	   5
+	grenl_ammo		       20
+	grenl_plasma_ammo	   10
 	bolterrifle			   2
-	bolterrifle_ammo	   10
+	bolterrifle_ammo	   20
 	laserpistol			   1
-	laserpistol_ammo	   10
+	laserpistol_ammo	   20
 	laserrifle			   1
-	laserrifle_ammo		   7
+	laserrifle_ammo		   10
 	heavylaser			   1
-	heavylaser_ammo		   4
-	fraggrenade			   30
-	knife				   10
-	irgoggles		       1
-	medikit				   1
+	heavylaser_ammo		   5
+	fraggrenade			   40
+	knife				   20
+	irgoggles		       2
+	medikit				   2
 	stunrod			       2
 	stungrenade			   10
-	light				   15
+	light				   20
 	medium				   5
 //	heavy				   1
 }
