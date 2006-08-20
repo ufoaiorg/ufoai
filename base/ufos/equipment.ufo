@@ -3,62 +3,62 @@
 equipment campaign_player
 {
 	assault			1
-	assault_ammo	3
+	assault_ammo	1
 	sniper			1
-	sniper_ammo		2
-	pistol			3
-	pistol_ammo		5
+	sniper_ammo		1
+	pistol			1
+	pistol_ammo		1
 	smg				1
-	smg_ammo		4
+	smg_ammo		1
 	shotgun			1
-	shotgun_ammo	2
+	shotgun_ammo	1
 	flamer			1
-	flamer_ammo		2
+	flamer_ammo		1
 	rpg				1
-	rpg_ammo		3
+	rpg_ammo		4
 	fraggrenade		3
-	knife			3
+	knife			1
 	light			0
 }
 
 equipment campaign_market
 {
-	assault			2
-	assault_ammo	24
-	sniper			2
-	sniper_ammo		16
-	pistol			3
-	pistol_ammo		20
-	smg				2
-	smg_ammo		30
-	shotgun			3
-	shotgun_ammo	18
-	flamer			1
-	flamer_ammo		12
-	rpg				1
-	rpg_ammo		50
-	rpg_incendiary_ammo		50
-	rpg_tachyon_ammo		50
-	grenl			2
-	grenl_ammo		8
-	grenl_plasma_ammo		8
-	bolterrifle			2
-	bolterrifle_ammo	16
-	laserpistol			2
-	laserpistol_ammo	16
-	laserrifle			2
-	laserrifle_ammo		20
-	heavylaser			2
-	heavylaser_ammo			30
-	fraggrenade			24
-	knife				8
-	irgoggles		3
-	medikit				6
-	stunrod			5
-	stungrenade			20
-	light				5
-	medium				6
-//	heavy				6
+	assault			       3
+	assault_ammo	       30
+	sniper			       2
+	sniper_ammo		       20
+	pistol			       3
+	pistol_ammo		       30
+	smg				       2
+	smg_ammo		       30
+	shotgun			       2
+	shotgun_ammo	       20
+	flamer			       2
+	flamer_ammo		       20
+	rpg				       2
+	rpg_ammo		       30
+	rpg_incendiary_ammo	   10
+	rpg_tachyon_ammo	   5
+	grenl			       2
+	grenl_ammo		       10
+	grenl_plasma_ammo	   5
+	bolterrifle			   2
+	bolterrifle_ammo	   10
+	laserpistol			   1
+	laserpistol_ammo	   10
+	laserrifle			   1
+	laserrifle_ammo		   7
+	heavylaser			   1
+	heavylaser_ammo		   4
+	fraggrenade			   30
+	knife				   10
+	irgoggles		       1
+	medikit				   1
+	stunrod			       2
+	stungrenade			   10
+	light				   5
+	medium				   3
+//	heavy				   1
 }
 
 equipment multiplayer
