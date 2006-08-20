@@ -1756,9 +1756,11 @@ image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t t
 	if (type == it_skin && bits == 8)
 		R_FloodFillSkin(pic, width, height);
 
+#ifdef SHADERS
 	image->shader = GL_GetShaderForImage(image->name);
 	if (image->shader)
 		Com_DPrintf("GL_LoadPic: Shader found: '%s'\n", image->name);
+#endif
 
 	/* load little pics into the scrap */
 	if (image->type == it_pic && bits == 8 && image->width < 64 && image->height < 64) {
