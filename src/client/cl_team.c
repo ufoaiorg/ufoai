@@ -1470,10 +1470,10 @@ void CL_ParseResults(sizebuf_t * buf)
 			eSupplies = ed;
 		}
 		for (i = 0; i < csi.numODs; i++) {
-			if ( eSupplies->num[i] + 10 
-				 > (rand() % 50 
-					+ frand () * ccs.eMarket.num[i]) ) /* supply-demand */
-				ccs.eMarket.num[i] += frand() * eSupplies->num[i];
+			if ( eSupplies->num[i]
+				 > (rand() % 60 
+					+ ccs.eMarket.num[i] * frand()) ) /* supply-demand */
+				ccs.eMarket.num[i] += (3.0 + eSupplies->num[i] / 3) * frand();
 		}
 	}
 

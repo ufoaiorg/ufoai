@@ -56,8 +56,8 @@ equipment campaign_market
 	medikit				   1
 	stunrod			       2
 	stungrenade			   10
-	light				   5
-	medium				   3
+	light				   15
+	medium				   5
 //	heavy				   1
 }
 

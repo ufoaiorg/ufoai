@@ -258,7 +258,7 @@ equipment human_phalanx_initial
 	rpg_ammo			4
 	fraggrenade			20
 	knife				4
-	light	    		4
+	light	    		3
 }
 
 equipment human_farmers // some may be weaponless
