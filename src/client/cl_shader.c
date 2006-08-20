@@ -45,8 +45,11 @@ static value_t shader_values[] = {
 	{"filename",	V_STRING,	offsetof( shader_t, filename)},
 	{"frag",	V_BOOL,	offsetof( shader_t, frag)},
 	{"vertex",	V_BOOL,	offsetof( shader_t, vertex)},
+	{"glmode",	V_BLEND,	offsetof( shader_t, glMode)},
 	{"emboss",	V_BOOL,	offsetof( shader_t, emboss)},
-	{"embossmode",	V_BLEND,	offsetof( shader_t, embossMode)},
+	{"blur",	V_BOOL,	offsetof( shader_t, blur)},
+	{"light",	V_BOOL,	offsetof( shader_t, light)},
+	{"edge",	V_BOOL,	offsetof( shader_t, edge)},
 
 	{NULL, 0, 0}
 };
@@ -75,7 +78,7 @@ void CL_ParseShaders(char *title, char **text)
 	memset(entry, 0, sizeof(shader_t));
 
 	/* default value */
-	entry->embossMode = BLEND_FILTER;
+	entry->glMode = BLEND_FILTER;
 
 	Q_strncpyz(entry->title, title, MAX_VAR);
 	do {
@@ -118,7 +121,10 @@ void CL_ShaderList_f(void)
 		Com_Printf("..frag %i\n", (int) r_shaders[i].frag);
 		Com_Printf("..vertex %i\n", (int) r_shaders[i].vertex);
 		Com_Printf("..emboss %i\n", (int) r_shaders[i].emboss);
-		Com_Printf("..embossMode '%s'\n", Com_ValueToStr(&r_shaders[i], V_BLEND, offsetof( shader_t, embossMode)));
+		Com_Printf("..blur %i\n", (int) r_shaders[i].blur);
+		Com_Printf("..light blur %i\n", (int) r_shaders[i].light);
+		Com_Printf("..edge %i\n", (int) r_shaders[i].edge);
+		Com_Printf("..glMode '%s'\n", Com_ValueToStr(&r_shaders[i], V_BLEND, offsetof( shader_t, glMode)));
 		Com_Printf("\n");
 	}
 }

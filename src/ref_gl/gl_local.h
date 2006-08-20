@@ -339,6 +339,7 @@ void R_Shutdown(void);
 struct model_s *R_RegisterModelShort(char *name);
 
 void R_RenderView(refdef_t * fd);
+void R_SetRefreshDefinition(refdef_t * fd);
 void GL_ScreenShot_f(void);
 void R_InterpolateTransform(animState_t * as, int numframes, float *tag, float *interpolated);
 void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, char *tag);

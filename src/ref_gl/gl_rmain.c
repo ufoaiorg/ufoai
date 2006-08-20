@@ -124,7 +124,7 @@ cvar_t *gl_shadow_debug_shade;
 cvar_t *r_ati_separate_stencil;
 cvar_t *r_stencil_two_side;
 
-cvar_t *gl_embossfilter;
+cvar_t *gl_imagefilter;
 cvar_t *gl_mode;
 cvar_t *gl_dynamic;
 cvar_t *gl_monolightmap;
@@ -923,6 +923,16 @@ void R_Flash(void)
 	R_PolyBlend();
 }
 
+/**
+ * @brief r_newrefdef must be set before the first call
+ */
+void R_SetRefreshDefinition(refdef_t * fd)
+{
+	if (r_norefresh->value)
+		return;
+
+	r_newrefdef = *fd;
+}
 
 /**
  * @brief r_newrefdef must be set before the first call
@@ -1078,7 +1088,7 @@ void R_Register(void)
 	gl_shadow_debug_shade = ri.Cvar_Get("r_shadow_debug_shade", "0", CVAR_ARCHIVE);
 	r_ati_separate_stencil = ri.Cvar_Get("r_ati_separate_stencil", "1", CVAR_ARCHIVE);
 	r_stencil_two_side = ri.Cvar_Get("r_stencil_two_side", "1", CVAR_ARCHIVE);
-	gl_embossfilter = ri.Cvar_Get("gl_embossfilter", "1", CVAR_ARCHIVE);
+	gl_imagefilter = ri.Cvar_Get("gl_imagefilter", "1", CVAR_ARCHIVE);
 	gl_dynamic = ri.Cvar_Get("gl_dynamic", "1", 0);
 	gl_nobind = ri.Cvar_Get("gl_nobind", "0", 0);
 	gl_round_down = ri.Cvar_Get("gl_round_down", "1", 0);
@@ -1732,6 +1742,7 @@ refexport_t GetRefAPI(refimport_t rimp)
 	re.EndRegistration = R_EndRegistration;
 
 	re.RenderFrame = R_RenderFrame;
+	re.SetRefDef = R_SetRefreshDefinition;
 
 	re.DrawModelDirect = R_DrawModelDirect;
 	re.DrawGetPicSize = Draw_GetPicSize;

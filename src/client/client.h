@@ -968,6 +968,7 @@ extern vec3_t map_dropship_coord;
 
 void V_Init(void);
 void V_RenderView(float stereo_separation);
+void V_UpdateRefDef(void);
 void V_AddEntity(entity_t * ent);
 void V_AddLight(vec3_t org, float intensity, float r, float g, float b);
 void V_AddLightStyle(int style, float r, float g, float b);

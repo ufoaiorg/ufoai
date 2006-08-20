@@ -137,7 +137,10 @@ typedef struct shader_s {
 	qboolean vertex;			/* vertex-shader */
 
 	qboolean emboss;			/* active emboss mapping */
-	int embossMode;			/* default is GL_MODULATE */
+	qboolean blur;
+	qboolean light;
+	qboolean edge;
+	int glMode;
 	/* TODO: */
 
 	/* vpid and fpid are vertexpid and fragmentpid for binding */
@@ -291,6 +294,7 @@ typedef struct {
 	void (*EndRegistration) (void);
 
 	void (*RenderFrame) (refdef_t * fd);
+	void (*SetRefDef) (refdef_t * fd);
 
 	void (*DrawModelDirect) (modelInfo_t * mi, modelInfo_t * pmi, char *tag);
 	void (*DrawGetPicSize) (int *w, int *h, char *name);	/* will return 0 0 if not found */

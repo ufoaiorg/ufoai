@@ -34,12 +34,12 @@ static byte intensitytable[256];
 static byte gammatable[256];
 
 cvar_t *intensity;
-extern cvar_t *gl_embossfilter;
+extern cvar_t *gl_imagefilter;
 
 unsigned d_8to24table[256];
 
-qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type);
-qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type);
+qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image);
+qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image);
 
 int gl_solid_format = GL_RGB;
 int gl_alpha_format = GL_RGBA;
@@ -380,7 +380,7 @@ void Scrap_Upload(void)
 {
 	scrap_uploads++;
 	GL_Bind(TEXNUM_SCRAPS);
-	GL_Upload8(scrap_texels[0], BLOCK_WIDTH, BLOCK_HEIGHT, qfalse, it_pic);
+	GL_Upload8(scrap_texels[0], BLOCK_WIDTH, BLOCK_HEIGHT, qfalse, it_pic, NULL);
 	scrap_dirty = qfalse;
 }
 
@@ -1460,14 +1460,14 @@ void R_FilterTexture(int filterindex, unsigned int *data, int width, int height,
 	free(temp);
 }
 
-int upload_width, upload_height;
-unsigned scaled_buffer[1024 * 1024];
+static int upload_width, upload_height;
+static unsigned scaled_buffer[1024 * 1024];
 
 /**
  * @brief
  * @return has_alpha
  */
-qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type)
+qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image)
 {
 	unsigned *scaled;
 	int samples;
@@ -1518,6 +1518,21 @@ qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qbo
 			break;
 		}
 	}
+
+#ifdef SHADERS
+	/* emboss filter */
+	if (gl_imagefilter->value && image && image->shader) {
+		Com_Printf("Using image filter %s\n", image->shader->title);
+		if (image->shader->emboss)
+			R_FilterTexture(EMBOSS_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
+		if (image->shader->blur)
+			R_FilterTexture(BLUR_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
+		if (image->shader->light)
+			R_FilterTexture(LIGHT_BLUR, data, width, height, 1, 128, qtrue, image->shader->glMode);
+		if (image->shader->edge)
+			R_FilterTexture(EDGE_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
+	}
+#endif
 
 	if (scaled_width == width && scaled_height == height) {
 		if (!mipmap) {
@@ -1580,7 +1595,7 @@ qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qbo
  * @brief
  * @return has_alpha
  */
-qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type)
+qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image)
 {
 	unsigned *trans;
 	size_t trans_size = 512 * 256 * sizeof(trans[0]);
@@ -1622,7 +1637,7 @@ qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagety
 		}
 	}
 
-	ret = GL_Upload32(trans, width, height, mipmap, qtrue, type);
+	ret = GL_Upload32(trans, width, height, mipmap, qtrue, type, image);
 	free(trans);
 
 	return ret;
@@ -1741,6 +1756,10 @@ image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t t
 	if (type == it_skin && bits == 8)
 		R_FloodFillSkin(pic, width, height);
 
+	image->shader = GL_GetShaderForImage(image->name);
+	if (image->shader)
+		Com_DPrintf("GL_LoadPic: Shader found: '%s'\n", image->name);
+
 	/* load little pics into the scrap */
 	if (image->type == it_pic && bits == 8 && image->width < 64 && image->height < 64) {
 		int x, y;
@@ -1770,10 +1789,10 @@ image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t t
 		image->texnum = TEXNUM_IMAGES + (image - gltextures);
 		GL_Bind(image->texnum);
 		if (bits == 8)
-			image->has_alpha = GL_Upload8(pic, width, height, (image->type != it_pic), image->type);
+			image->has_alpha = GL_Upload8(pic, width, height, (image->type != it_pic), image->type, image);
 		else
 			image->has_alpha = GL_Upload32((unsigned *) pic, width, height,
-										   (image->type != it_pic && image->type != it_wrappic), image->type == it_pic, image->type);
+										   (image->type != it_pic && image->type != it_wrappic), image->type == it_pic, image->type, image);
 		image->upload_width = upload_width;	/* after power of 2 and scales */
 		image->upload_height = upload_height;
 		image->paletted = qfalse;
@@ -1782,12 +1801,6 @@ image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t t
 		image->tl = 0;
 		image->th = 1;
 	}
-#ifdef SHADERS
-	image->shader = GL_GetShaderForImage(image->name);
-	/* emboss filter */
-	if (gl_embossfilter->value && image->shader && image->shader->emboss)
-		R_FilterTexture(EMBOSS_FILTER, (unsigned *)pic, width, height, 1, 128, qtrue, image->shader->embossMode);
-#endif
 	return image;
 }
 

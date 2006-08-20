@@ -624,12 +624,49 @@ static void CL_DrawGrid(void)
 }
 
 /**
+ * @brief Updates the cl.refdef
+ */
+void V_UpdateRefDef(void)
+{
+	/* setup refdef */
+	cl.refdef.worldlevel = cl_worldlevel->value;
+	cl.refdef.num_entities = r_numentities;
+	cl.refdef.entities = r_entities;
+	cl.refdef.num_particles = r_numparticles;
+	cl.refdef.particles = r_particles;
+	cl.refdef.num_shaders = r_numshaders;
+	cl.refdef.shaders = r_shaders;
+	cl.refdef.num_dlights = r_numdlights;
+	cl.refdef.dlights = r_dlights;
+	cl.refdef.lightstyles = r_lightstyles;
+	cl.refdef.fog = map_fog;
+	cl.refdef.fogColor = map_fogColor;
+
+	cl.refdef.num_ptls = numPtls;
+	cl.refdef.ptls = ptl;
+	cl.refdef.ptl_art = ptlArt;
+
+	cl.refdef.sun = &map_sun;
+	if (cls.state == ca_sequence)
+		cl.refdef.num_lights = 0;
+	else {
+		cl.refdef.ll = map_lights;
+		cl.refdef.num_lights = map_numlights;
+	}
+}
+
+/**
  * @brief
  * @param stereo_separation
  * @sa SCR_UpdateScreen
  */
 void V_RenderView(float stereo_separation)
 {
+	V_UpdateRefDef();
+
+	/* set ref def - do this even in non 3d mode - we need shaders at loading time */
+	re.SetRefDef(&cl.refdef);
+
 	if (cls.state != ca_active && cls.state != ca_sequence)
 		return;
 
@@ -667,32 +704,6 @@ void V_RenderView(float stereo_separation)
 
 		VectorScale(cl.cam.axis[1], stereo_separation, tmp);
 		VectorAdd(cl.refdef.vieworg, tmp, cl.refdef.vieworg);
-	}
-
-	/* setup refdef */
-	cl.refdef.worldlevel = cl_worldlevel->value;
-	cl.refdef.num_entities = r_numentities;
-	cl.refdef.entities = r_entities;
-	cl.refdef.num_particles = r_numparticles;
-	cl.refdef.particles = r_particles;
-	cl.refdef.num_shaders = r_numshaders;
-	cl.refdef.shaders = r_shaders;
-	cl.refdef.num_dlights = r_numdlights;
-	cl.refdef.dlights = r_dlights;
-	cl.refdef.lightstyles = r_lightstyles;
-	cl.refdef.fog = map_fog;
-	cl.refdef.fogColor = map_fogColor;
-
-	cl.refdef.num_ptls = numPtls;
-	cl.refdef.ptls = ptl;
-	cl.refdef.ptl_art = ptlArt;
-
-	cl.refdef.sun = &map_sun;
-	if (cls.state == ca_sequence)
-		cl.refdef.num_lights = 0;
-	else {
-		cl.refdef.ll = map_lights;
-		cl.refdef.num_lights = map_numlights;
 	}
 
 	/* render the frame */
