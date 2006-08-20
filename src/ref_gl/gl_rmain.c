@@ -872,10 +872,11 @@ void R_SetupGL(void)
 
 	if (gl_fog->value && r_newrefdef.fog && gl_state.fog_coord) {
 		qglEnable(GL_FOG);
-		qglFogi(GL_FOG_MODE, GL_LINEAR);
+		qglFogi(GL_FOG_MODE, GL_EXP2);
 		qglFogf(GL_FOG_START, 0.1 * r_newrefdef.fog);
 		qglFogf(GL_FOG_END, r_newrefdef.fog);
-/*		qglFogDensity( GL_FOG_DENSITY, 0.01 * r_newrefdef.fog ); */
+		qglHint(GL_FOG_HINT, GL_DONT_CARE);
+		qglFogf(GL_FOG_DENSITY, 0.005 * r_newrefdef.fog );
 		qglFogfv(GL_FOG_COLOR, r_newrefdef.fogColor);
 	}
 }

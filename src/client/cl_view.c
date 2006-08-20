@@ -391,7 +391,6 @@ void CL_ParseEntitystring(char *es)
 			dlight_t *newlight;
 
 			/* add light to list */
-
 			if (map_numlights >= MAX_MAP_LIGHTS)
 				Com_Error(ERR_DROP, "Too many lights...\n");
 
