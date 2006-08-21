@@ -415,6 +415,7 @@ void SCR_DrawCursor(void)
 {
 	int icon_offset_x = 16;	/* Offset of the first icon on the x-axis. */
 	int icon_offset_y = 16;	/* Offset of the first icon on the y-axis. */
+	int icon_spacing = 2;	/* the space between different icons. */
 	
 	if (!cursor->value)
 		return;
@@ -433,19 +434,22 @@ void SCR_DrawCursor(void)
 		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
 			if (cls.team != cl.actTeam) {
 				re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
-				icon_offset_y += 32; /* Height of 'wait' icon. ... just in case we add further icons below.*/
+				icon_offset_y += 32;	/* Height of 'wait' icon. ... just in case we add further icons below.*/
+				icon_offset_y += icon_spacing;
 			}
 			else if (selActor){
 				/* Display 'crouch' icon if actor is crouched. */
-				if (selActor->state & STATE_CROUCHED) {
+				if (selActor->state & STATE_CROUCHED)
 					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
-					icon_offset_y += 16; /* Height of 'crouched' icon. */
-				}
+				icon_offset_y += 16;	/* Height of 'crouched' icon. */
+				icon_offset_y += icon_spacing;
+				
 				/* Display 'Reaction shot' icon if actor has it activated. */
-				if (selActor->state & STATE_REACTION) {
+				if (selActor->state & STATE_REACTION)
 					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfire");
-					icon_offset_y += 16; /* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
-				}
+				icon_offset_y += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
+				icon_offset_y += icon_spacing;
+				
 				/* TODO: Display weaponmode (text) here. */
 			}
 			
