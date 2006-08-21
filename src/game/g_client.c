@@ -33,15 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LEFT(e)  e->i.c[gi.csi->idLeft]
 #define FLOOR(e) e->i.c[gi.csi->idFloor]
 
-char *pa_format[] =
-{
-	"",					/* PA_NULL */
-	"b",				/* PA_TURN */
-	"g",				/* PA_MOVE */
-	"s",				/* PA_STATE */
-	"gb",				/* PA_SHOOT */
-	"bbbbbb"			/* PA_INVMOVE */
-};
 
 /**
  * @brief Generates the player mask

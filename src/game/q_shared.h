@@ -853,6 +853,9 @@ typedef enum {
 } inventory_action_t;
 
 
+extern char *pa_format[128];
+
+
 /* =========================================================== */
 
 /* this is the absolute max for now */

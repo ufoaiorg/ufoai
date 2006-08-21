@@ -618,6 +618,8 @@ extern invList_t invList[MAX_INVLIST];
 extern byte *fb_list[MAX_FB_LIST];
 extern int fb_length;
 
+void MSG_Write_PA(player_action_t player_action, int num, ...);
+
 void CL_CharacterCvars(character_t * chr);
 void CL_UGVCvars(character_t *chr);
 void CL_ActorUpdateCVars(void);

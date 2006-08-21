@@ -796,7 +796,7 @@ static void MN_Drag(const menuNode_t* const node, int x, int y)
 
 		/* tactical mission */
 		if (selActor)
-			MSG_WriteFormat(&cls.netchan.message, "bbsbbbbbb", clc_action, PA_INVMOVE, selActor->entnum, dragFrom, dragFromX, dragFromY, node->mousefx, px, py);
+			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragFrom, dragFromX, dragFromY, node->mousefx, px, py);
 		/* menu */
 		else {
 			invList_t *i = NULL;

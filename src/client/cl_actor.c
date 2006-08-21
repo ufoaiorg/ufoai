@@ -38,6 +38,20 @@ invList_t invList[MAX_INVLIST];
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
 
+
+/**
+ * @brief Writes player action with its data
+ */
+void MSG_Write_PA(player_action_t player_action, int num, ...)
+{
+	va_list ap;
+	va_start(ap, num);
+	MSG_WriteFormat(&cls.netchan.message, "bbs", clc_action, player_action, num);
+	MSG_V_WriteFormat(&cls.netchan.message, pa_format[player_action], ap);
+	va_end(ap);
+}
+
+
 /*
 ==============================================================
 ACTOR MENU UPDATING
@@ -874,9 +888,8 @@ void CL_ActorStartMove(le_t * le, pos3_t to)
 		return;
 	}
 
-	/* move seems to be possible */
-	/* send request to server */
-	MSG_WriteFormat(&cls.netchan.message, "bbsg", clc_action, PA_MOVE, le->entnum, to);
+	/* move seems to be possible; send request to server */
+	MSG_Write_PA(PA_MOVE, le->entnum, to);
 }
 
 
