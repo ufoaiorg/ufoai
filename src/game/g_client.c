@@ -1996,6 +1996,7 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
 			gi.WriteShort(num);
 			gi.WriteByte(container);
+			assert (gi.csi->ids[container].single);
 			Com_EmptyContainer(&ent->i, container);
 		}
 		/* x and y value */
