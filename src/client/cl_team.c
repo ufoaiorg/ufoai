@@ -777,6 +777,7 @@ static void CL_MarkTeamCmd(void)
  * @param[in] employee_idx The index of the soldier in the global list.
  * @param[in] aircraft_idx The index of aircraft in the base. use -1 to check if the soldier is in _any_ aircraft.
  * @return qboolean qtrue if the soldier was found in the aircraft(s) else: qfalse.
+ * @pre Needs baseCurrent set to the base the aircraft is located in.
  */
 qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
 {
@@ -803,6 +804,7 @@ qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
  * @brief Removes a soldier from an aircraft.
  * @param[in] employee_idx The index of the soldier in the global list.
  * @param[in] aircraft_idx The index of aircraft in the base. Use -1 to remove the soldier from any aircraft.
+ * @pre Needs baseCurrent set to the base the aircraft is located in.
  */
 void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
 {
