@@ -73,6 +73,7 @@ char cursor_pic[MAX_QPATH];
 
 void SCR_TimeRefresh_f(void);
 void SCR_Loading_f(void);
+void SCR_DrawString(int x, int y, char *string);
 
 
 /*
@@ -450,7 +451,10 @@ void SCR_DrawCursor(void)
 				icon_offset_y += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
 				icon_offset_y += icon_spacing;
 				
-				/* TODO: Display weaponmode (text) here. */
+				/* Display weaponmode (text) here. */
+				if ( menuText[TEXT_MOUSECURSOR_RIGHT] ) {
+					SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_RIGHT] );
+				}
 			}
 			
 		}

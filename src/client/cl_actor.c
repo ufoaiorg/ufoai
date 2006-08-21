@@ -333,6 +333,7 @@ static void CL_RefreshWeaponButtons(int time)
 void CL_ActorUpdateCVars(void)
 {
 	static char infoText[MAX_MENUTEXTLEN];
+	static char mousetext[MAX_MENUTEXTLEN];
 	qboolean refresh;
 	char *name;
 	int time;
@@ -354,6 +355,8 @@ void CL_ActorUpdateCVars(void)
 	Cvar_Set("mn_rweapon", "");
 	Cvar_Set("mn_lweapon", "");
 
+	menuText[TEXT_MOUSECURSOR_RIGHT] = "";
+	
 	if (selActor) {
 		invList_t *selWeapon;
 
@@ -419,9 +422,11 @@ void CL_ActorUpdateCVars(void)
 				if (selWeapon && selFD) {
 					Com_sprintf(infoText, MAX_MENUTEXTLEN,
 								"%s\n%s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
+					menuText[TEXT_MOUSECURSOR_RIGHT] = infoText;	/* Save the text for later display next to the cursor. */
 					time = selFD->time;
 				} else if (selWeapon) {
 					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
+					menuText[TEXT_MOUSECURSOR_RIGHT] = infoText;	/* Save the text for later display next to the cursor. */
 				} else {
 					cl.cmode = M_MOVE;
 				}
@@ -434,6 +439,11 @@ void CL_ActorUpdateCVars(void)
 				if (actorMoveLength < 0xFF) {
 					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\nMove %i\n"), selActor->AP, selActor->morale, actorMoveLength);
 					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
+					if ( actorMoveLength <= selActor->TU )
+						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "%i (%i)\n", actorMoveLength, selActor->TU);
+					else
+						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "- (-)\n" );
+					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
 				} else {
 					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
 					CL_RefreshWeaponButtons(selActor->TU);
