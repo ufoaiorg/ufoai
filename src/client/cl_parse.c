@@ -545,9 +545,9 @@ void CL_EntPerish( sizebuf_t *sb )
 	if ( (le->type == ET_ACTOR || le->type == ET_UGV) && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN )
 		cl.numAliensSpotted--;
 
-	if (le->type == ET_ACTOR)
-		le->i.c[csi.idFloor] = NULL;
-	Com_DestroyInventory( &le->i );
+	if (le->type != ET_ACTOR)
+		Com_EmptyContainer(&le->i, csi.idFloor);
+	Com_DestroyInventory(&le->i);
 
 	if ( le->type == ET_ITEM ) {
 		le_t *actor;

@@ -184,7 +184,6 @@ void CL_ResetCharacters(base_t* const base)
 		chr = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
 		if (!chr)
 			continue;
-		chr->inv->c[csi.idFloor] = NULL;
 		Com_DestroyInventory(chr->inv);
 	}
 
@@ -438,13 +437,6 @@ void CL_CleanTempInventory(void)
 			if (csi.ids[k].temp)
 				/* idFloor and idEquip are temp */
 				gd.employees[EMPL_SOLDIER][i].inv.c[k] = NULL;
-
-/* Old version below looks dangerous:
-			if (k == csi.idEquip)
-				gd.employees[EMPL_SOLDIER][i].inv.c[k] = NULL;
-			else if (csi.ids[k].temp)
-				Com_EmptyContainer(&gd.employees[EMPL_SOLDIER][i].inv, k);
-*/
 }
 
 /**
@@ -826,7 +818,6 @@ void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
 	if ( aircraft_idx < 0 )
 		return;
 
-	gd.employees[EMPL_SOLDIER][employee_idx].inv.c[csi.idFloor] = NULL;
 	Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][employee_idx].inv);
 
 	/* Switch the bit for the employee in the mask to 0.*/

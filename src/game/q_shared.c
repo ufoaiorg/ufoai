@@ -2413,7 +2413,10 @@ void Com_DestroyInventory(inventory_t* const i)
 		return;
 
 	for (k = 0; k < CSI->numIDs; k++)
-		Com_EmptyContainer(i, k);
+		if (CSI->ids[k].temp)
+			i->c[k] = NULL;
+		else
+			Com_EmptyContainer(i, k);
 }
 
 /**

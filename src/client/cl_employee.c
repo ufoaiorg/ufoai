@@ -410,8 +410,6 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
 		employee->hired = qfalse;
 		employee->baseIDHired = -1;
 		/* Destroy the inventory of the employee (carried items will remain in base->storage) */
-		employee->inv.c[csi.idFloor] = NULL; /* for battlescape */
-		employee->inv.c[csi.idEquip] = NULL; /* for geoscape */
 		Com_DestroyInventory(&employee->inv);
 		/* unneeded, Com_DestroyInventory does this (more or less)
 		memset(&employee->inv, 0, sizeof(inventory_t)); */
