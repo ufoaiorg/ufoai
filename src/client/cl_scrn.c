@@ -408,14 +408,14 @@ void SCR_DrawLoading(void)
 	re.DrawPic((viddef.width - w) / 2, (viddef.height - h) / 2, "loading");
 }
 
-
-/*
-=================
-SCR_DrawCursor
-=================
-*/
+/**
+ * @brief Draws the 3D-cursor in battlemode and the icons/info next to it.
+ */
 void SCR_DrawCursor(void)
 {
+	int icon_offset_x = 16;	/* Offset of the first icon on the x-axis. */
+	int icon_offset_y = 16;	/* Offset of the first icon on the y-axis. */
+	
 	if (!cursor->value)
 		return;
 
@@ -431,10 +431,24 @@ void SCR_DrawCursor(void)
 		re.DrawNormPic(mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
 
 		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
-			if (cls.team != cl.actTeam)
-				re.DrawNormPic(mx + 16, my + 16, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
-			else if (selActor && selActor->state & STATE_CROUCHED)
-				re.DrawNormPic(mx + 16, my + 16, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
+			if (cls.team != cl.actTeam) {
+				re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
+				icon_offset_y += 32; /* Height of 'wait' icon. ... just in case we add further icons below.*/
+			}
+			else if (selActor){
+				/* Display 'crouch' icon if actor is crouched. */
+				if (selActor->state & STATE_CROUCHED) {
+					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
+					icon_offset_y += 16; /* Height of 'crouched' icon. */
+				}
+				/* Display 'Reaction shot' icon if actor has it activated. */
+				if (selActor->state & STATE_REACTION) {
+					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfire");
+					icon_offset_y += 16; /* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
+				}
+				/* TODO: Display weaponmode (text) here. */
+			}
+			
 		}
 	} else {
 		vec3_t scale = { 3.5, 3.5, 3.5 };
