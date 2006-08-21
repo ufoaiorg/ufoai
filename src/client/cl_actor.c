@@ -923,7 +923,7 @@ void CL_ActorShoot(le_t * le, pos3_t at)
 	if (mode >= ST_LEFT_PRIMARY && !LEFT(le))
 		mode -= 2;
 
-	MSG_WriteFormat(&cls.netchan.message, "bbsgb", clc_action, PA_SHOOT, le->entnum, at, mode);
+	MSG_Write_PA(PA_SHOOT, le->entnum, at, mode);
 }
 
 
@@ -989,7 +989,7 @@ void CL_ActorReload(int hand)
 
 	/* send request */
 	if (bestContainer != NONE)
-		MSG_WriteFormat(&cls.netchan.message, "bbsbbbbbb", clc_action, PA_INVMOVE, selActor->entnum, bestContainer, x, y, hand, 0, 0);
+		MSG_Write_PA(PA_INVMOVE, selActor->entnum, bestContainer, x, y, hand, 0, 0);
 	else
 		Com_Printf("No (researched) clip left.\n");
 }
@@ -1047,7 +1047,7 @@ void CL_ActorTurnMouse(void)
 	dv = AngleToDV((int) (atan2(div[1], div[0]) * 180 / M_PI));
 
 	/* send message to server */
-	MSG_WriteFormat(&cls.netchan.message, "bbsb", clc_action, PA_TURN, selActor->entnum, dv);
+	MSG_Write_PA(PA_TURN, selActor->entnum, dv);
 }
 
 
@@ -1086,7 +1086,7 @@ void CL_ActorStandCrouch(void)
 	if (selActor->fieldSize == ACTOR_SIZE_UGV )
 		return;
 	/* send message to server */
-	MSG_WriteFormat(&cls.netchan.message, "bbss", clc_action, PA_STATE, selActor->entnum, selActor->state ^ STATE_CROUCHED);
+	MSG_Write_PA(PA_STATE, selActor->entnum, selActor->state ^ STATE_CROUCHED);
 }
 
 
@@ -1103,7 +1103,7 @@ void CL_ActorStun(void)
 		return;
 
 	/* send message to server */
-	MSG_WriteFormat(&cls.netchan.message, "bbss", clc_action, PA_STATE, selActor->entnum, selActor->state ^ STATE_STUN);
+	MSG_Write_PA(PA_STATE, selActor->entnum, selActor->state ^ STATE_STUN);
 }
 
 
@@ -1116,7 +1116,7 @@ void CL_ActorToggleReaction(void)
 		return;
 
 	/* send message to server */
-	MSG_WriteFormat(&cls.netchan.message, "bbss", clc_action, PA_STATE, selActor->entnum, selActor->state ^ STATE_REACTION);
+	MSG_Write_PA(PA_STATE, selActor->entnum, selActor->state ^ STATE_REACTION);
 }
 
 /**
