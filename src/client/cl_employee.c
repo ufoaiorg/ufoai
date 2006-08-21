@@ -503,6 +503,7 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 				gd.employees[type][i] = gd.employees[type][i + 1];
 				gd.employees[type][i].idx = i;
 				gd.employees[type][i].chr.empl_idx = i;
+				gd.employees[type][i].chr.inv = &gd.employees[type][i].inv;
 			}
 		}
 	}
