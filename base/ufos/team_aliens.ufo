@@ -342,6 +342,11 @@ team alien
 // 	cyborg_ortnok
 }
 
+team antarean
+{
+	antarean
+}
+
 team ortnok
 {
 	ortnok
