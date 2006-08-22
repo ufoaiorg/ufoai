@@ -187,19 +187,19 @@ typedef struct base_s {
 	/* weapons, etc. stored in base */
 	equipDef_t storage;
 
-	/* idEquip sorted by buytype;
+	/* idEquip sorted by buytype; needen't be saved;
 	   a hack based on assertion (MAX_CONTAINERS >= NUM_BUYTYPES) */
 	inventory_t equipByBuyType;
 	int equipType;
 
 	/* set in CL_GenerateEquipmentCmd and CL_LoadTeam */
 	character_t *curTeam[MAX_ACTIVETEAM];
-	character_t *curChr;
+	character_t *curChr; /* needn't be saved */
 
 	/* needed if there is another buildingpart to build (link to gd.buildingTypes) */
 	int buildingToBuild;
 
-	struct building_s *buildingCurrent;
+	struct building_s *buildingCurrent; /* needn't be saved */
 } base_t;
 
 /* Currently displayed/accessed base. */

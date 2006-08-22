@@ -111,7 +111,7 @@ typedef struct globalData_s
 	int nextUCN;
 
 	/* == Aircraft == */
-	/* UFOs on geoscape */
+	/* UFOs on geoscape: TODO update their inner pointers if needed */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUfos;
 } globalData_t;

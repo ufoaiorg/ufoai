@@ -1230,8 +1230,9 @@ void CL_GameSave(char *filename, char *comment)
 	message_t *message;
 	byte *buf;
 	int res;
-	int i, j;
+	int i, j, type;
 	base_t *base;
+	invList_t *ic;
 
 	if (!curCampaign) {
 		Com_Printf("No campaign active.\n");
@@ -1268,6 +1269,16 @@ void CL_GameSave(char *filename, char *comment)
 	/* when size of globalData_t in savegame differs from actual size of globalData_t we won't even load the game */
 	Com_DPrintf("CL_GameSave: sizeof globalData_t: %i max.gamedatasize: %i\n", sizeof(globalData_t), MAX_GAMESAVESIZE);
 	SZ_Write(&sb, &gd, sizeof(globalData_t));
+
+	/* store inventories */
+	for (type = 0; i < MAX_EMPL; type++)
+		for (i = 0; i < gd.numEmployees[type]; i++) {
+			for (j = 0; j < csi.numIDs; j++)
+				for (ic = gd.employees[type][i].inv.c[j]; ic; ic = ic->next)
+					CL_SendItem(&sb, ic->item, j, ic->x, ic->y);
+			/* terminate list for one employee*/
+			MSG_WriteByte(&sb, NONE);
+			}
 
 	/* store message system items */
 	for (i = 0, message = messageStack; message; i++, message = message->next);
@@ -1378,9 +1389,13 @@ static void CL_GameSaveCmd(void)
  */
 void CL_UpdatePointersInGlobalData(void)
 {
-	int i, j, p;
+	int i, j, p, type;
 	base_t *base;
 	aircraft_t *aircraft;
+
+	for (type = 0; i < MAX_EMPL; type++)
+		for (i = 0; i < gd.numEmployees[type]; i++)
+			gd.employees[type][i].chr.inv = &gd.employees[type][i].inv;
 
 	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
 		if (!base->founded)
@@ -1389,7 +1404,7 @@ void CL_UpdatePointersInGlobalData(void)
 		/* some functions needs the baseCurrent pointer set */
 		baseCurrent = base;
 
-		/* fix aircraft homepage and teamsize pointers */
+		/* fix aircraft homepage and teamsize pointers; TODO: what about next, mission, weapon and shield pointers? */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			aircraft->teamSize = &base->teamNum[aircraft->idxInBase];
 			aircraft->homebase = &gd.bases[aircraft->idxBase];
@@ -1430,7 +1445,7 @@ int CL_GameLoad(char *filename)
 	char *name, *title, *text;
 	FILE *f;
 	int version, dataSize;
-	int i, j, num;
+	int i, j, num, type;
 	char val[32];
 	message_t *mess;
 	base_t *base;
@@ -1518,7 +1533,36 @@ int CL_GameLoad(char *filename)
 	sb.readcount += sizeof(globalData_t);
 
 	CL_UpdatePointersInGlobalData();
+	/* lots of inventory pointers if gd, so we have to do the hack below;
+	   some serialization library would be much better for gd, though */
+	/* store inventories */
+	for (type = 0; i < MAX_EMPL; type++)
+		for (i = 0; i < gd.numEmployees[type]; i++) {
+			item_t item;
+			int container, x, y;
 
+			/* clear the mess of stray loaded pointers */
+			memset(&gd.employees[type][i].inv, 0, sizeof(inventory_t));
+
+			item.t = MSG_ReadByte(&sb);
+			while (item.t != NONE) {
+
+				/* read info */
+				item.a = MSG_ReadByte(&sb);
+				item.m = MSG_ReadByte(&sb);
+				if (item.m == NONE - 1) /* an ugly hack */
+					item.m = NONE;
+				container = MSG_ReadByte(&sb);
+				x = MSG_ReadByte(&sb);
+				y = MSG_ReadByte(&sb);
+
+				Com_AddToInventory(&gd.employees[type][i].inv, item, container, x, y);
+				
+				/* get next item */
+				item.t = MSG_ReadByte(&sb);
+			}
+		}
+	
 	/* how many message items */
 	i = MSG_ReadByte(&sb);
 	Com_DPrintf("CL_GameLoad: %i messages on messagestack.\n", i);
