@@ -93,7 +93,27 @@ stage alienbase
 	}
 }
 
-campaign heavy
+campaign veryhard
+{
+	name		"_Very Hard Campaign"
+	text		"_txt_veryhard_campaign"
+	team		human
+	soldiers	6
+	scientists	2
+	workers		1
+	medics		0
+	difficulty	4
+	equipment	campaign_player
+	market		campaign_market
+	credits		3500000
+	map		    map_earth
+	visible		true
+
+	date		"2084 0 7"
+	firststage	intro
+}
+
+campaign hard
 {
 	name		"_Hard Campaign"
 	text		"_txt_hard_campaign"
@@ -102,31 +122,11 @@ campaign heavy
 	scientists	3
 	workers		2
 	medics		1
-	difficulty	3
+	difficulty	2
 	equipment	campaign_player
 	market		campaign_market
-	credits		3500000
-	map		map_earth
-	visible		true
-
-	date		"2084 0 7"
-	firststage	intro
-}
-
-campaign easy
-{
-	name		"_Easy Campaign"
-	text		"_txt_easy_campaign"
-	team		human
-	soldiers	12
-	scientists	9
-	workers		6
-	medics		3
-	difficulty	-3
-	equipment	campaign_player
-	market		campaign_market
-	credits		6000000
-	map		map_earth
+	credits		3700000
+	map		    map_earth
 	visible		true
 
 	date		"2084 0 7"
@@ -147,7 +147,47 @@ campaign main
 	equipment	campaign_player
 	market		campaign_market
 	credits		4000000
-	map		map_earth
+	map		    map_earth
+	visible		true
+
+	date		"2084 0 7"
+	firststage	intro
+}
+
+campaign easy
+{
+	name		"_Easy Campaign"
+	text		"_txt_easy_campaign"
+	team		human
+	soldiers	12
+	scientists	9
+	workers		6
+	medics		3
+	difficulty	-2
+	equipment	campaign_player
+	market		campaign_market
+	credits		4500000
+	map		    map_earth
+	visible		true
+
+	date		"2084 0 7"
+	firststage	intro
+}
+
+campaign veryeasy
+{
+	name		"_Very Easy Campaign"
+	text		"_txt_veryeasy_campaign"
+	team		human
+	soldiers	15
+	scientists	12
+	workers		9
+	medics		4
+	difficulty	-4
+	equipment	campaign_player
+	market		campaign_market
+	credits		6000000
+	map		    map_earth
 	visible		true
 
 	date		"2084 0 7"
@@ -164,11 +204,10 @@ campaign test
 	workers		11
 	medics		11
 	difficulty	0
-//	ugvs	2
 	equipment	testing_and_tweaking
 	market		testing_and_tweaking
 	credits		100000000
-	map		map_earth
+	map		    map_earth
 	visible		false
 
 	date		"2084 0 7"

@@ -3113,10 +3113,10 @@ static void CL_GameNew(void)
 	}
 
 	/* difficulty */
-	if ((int) difficulty->value < -3)
-		Cvar_ForceSet("difficulty", "-3");
-	else if ((int) difficulty->value > 3)
-		Cvar_ForceSet("difficulty", "3");
+	if ((int) difficulty->value < -4)
+		Cvar_ForceSet("difficulty", "-4");
+	else if ((int) difficulty->value > 4)
+		Cvar_ForceSet("difficulty", "4");
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
 	Cvar_ForceSet("difficulty", val);
 
