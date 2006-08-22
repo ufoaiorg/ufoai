@@ -33,8 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LEFT(e)  e->i.c[gi.csi->idLeft]
 #define FLOOR(e) e->i.c[gi.csi->idFloor]
 
-#define MAX_TEAMLIST	8	/* Also defined in client.h */
-int TU_REACTIONS[MAX_TEAMLIST];
+int TU_REACTIONS[MAX_EDICTS];
 
 /**
  * @brief Generates the player mask
@@ -1245,9 +1244,10 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 				} else if ( TU_REACTIONS[ent->number] < 0) {
 					/* No TUs where used for activation. */
 					/* Don't give TUs back because none where used up (reaction fire was already active from previous turn) */
-				} else { /* U_REACTIONS[ent->number] == 0 */
-					/* This should never be the case. */
-					Com_DPrintf("G_ClientStateChange: 0 value saved for reaction whuile reaction is acivated.\n");
+				} else { 
+					/* TU_REACTIONS[ent->number] == 0) */
+					/* This should never be the case.  */
+					Com_DPrintf("G_ClientStateChange: 0 value saved for reaction while reaction is activated.\n");
 				}
 			}
 		} else if (G_ActionCheck(player, ent, TU_REACTION)) {
@@ -1261,8 +1261,11 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 				/* Reaction fire was not triggered in the last turn. */
 				ent->TU -= TU_REACTION;
 				TU_REACTIONS[ent->number] = TU_REACTION;
-			}  else { /* U_REACTIONS[ent->number] < 0 */
-				/* Reaction fire was triggered in the last turn, and has used 0 TU from this one. Can be activated without TU-loss. */
+			}  else { 
+				/* TU_REACTIONS[ent->number] < 0 */
+				/* Reaction fire was triggered in the last turn, 
+				   and has used 0 TU from this one. 
+				   Can be activated without TU-loss. */
 			}
 		}
 	}
