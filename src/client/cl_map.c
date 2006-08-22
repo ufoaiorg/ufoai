@@ -608,7 +608,8 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
 }
 
 /**
- * @brief
+ * @brief Draws all ufos, aircraft, bases and so on to the geoscape map
+ * @sa MAP_DrawMap
  */
 static void MAP_DrawMapMarkers(const menuNode_t* node)
 {
@@ -708,6 +709,10 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 
 /**
  * @brief Draw the geoscape
+ * @param[in] node The map menu node
+ * @param[in] map3D Draw the map as flat map or as globe?
+ * @sa MAP_DrawMapMarkers
+ * @sa MAP_Draw3DMapMarkers
  */
 extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 {
