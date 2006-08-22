@@ -292,7 +292,7 @@ item smg_ammo
 // =======================
 item shotgun
 {
-	name		"_Shotgun"
+	name		"_Riot Shotgun"
 	model		weapons/shotgun/shotgun
 	weapon		true
 	type		biggun
@@ -331,12 +331,12 @@ item shotgun_ammo
 		speed	0
 		spread	"5 5"
 		crouch	1.0
-		range	10
+		range	9
 		shots	8
 		ammo	1
 		rof		0
 		time	7
-		damage	"7 2"
+		damage	"8 2"
 		dmgtype blast
 	}
 
@@ -352,12 +352,12 @@ item shotgun_ammo
 		speed	0
 		spread	"8 8"
 		crouch	1.0
-		range	8
+		range	7
 		shots	16
 		ammo	2
 		rof		0
 		time	11
-		damage	"7 2"
+		damage	"8 2"
 		dmgtype blast
 	}
 }
