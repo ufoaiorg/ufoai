@@ -73,7 +73,7 @@ char cursor_pic[MAX_QPATH];
 
 void SCR_TimeRefresh_f(void);
 void SCR_Loading_f(void);
-void SCR_DrawString(int x, int y, char *string);
+void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont);
 
 
 /*
@@ -417,7 +417,7 @@ void SCR_DrawCursor(void)
 	int icon_offset_x = 16;	/* Offset of the first icon on the x-axis. */
 	int icon_offset_y = 16;	/* Offset of the first icon on the y-axis. */
 	int icon_spacing = 2;	/* the space between different icons. */
-	
+
 	if (!cursor->value)
 		return;
 
@@ -444,19 +444,18 @@ void SCR_DrawCursor(void)
 					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
 				icon_offset_y += 16;	/* Height of 'crouched' icon. */
 				icon_offset_y += icon_spacing;
-				
+
 				/* Display 'Reaction shot' icon if actor has it activated. */
 				if (selActor->state & STATE_REACTION)
 					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfire");
 				icon_offset_y += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
 				icon_offset_y += icon_spacing;
-				
+
 				/* Display weaponmode (text) here. */
-				if ( menuText[TEXT_MOUSECURSOR_RIGHT] ) {
-					SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_RIGHT] );
-				}
+				if ( menuText[TEXT_MOUSECURSOR_RIGHT] )
+					SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
 			}
-			
+
 		}
 	} else {
 		vec3_t scale = { 3.5, 3.5, 3.5 };
@@ -660,14 +659,18 @@ void SCR_TouchPics(void)
 
 /**
  * @brief
+ * @sa Font_DrawString
  */
-void SCR_DrawString(int x, int y, char *string)
+void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont)
 {
-	while (*string) {
-		re.DrawChar(x, y, *string);
-		x += 8;
-		string++;
-	}
+	if (bitmapFont) {
+		while (*string) {
+			re.DrawChar(x, y, *string);
+			x += 8;
+			string++;
+		}
+	} else
+		re.FontDrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, viddef.width, viddef.height, 12, string);
 }
 
 /**
@@ -735,7 +738,7 @@ void SCR_UpdateScreen(void)
 			SCR_CheckDrawCenterString();
 
 			if (cl_fps->value)
-				SCR_DrawString(viddef.width - 80, 4, va("fps: %3.1f", cls.framerate));
+				SCR_DrawString(viddef.width - 80, 4, va("fps: %3.1f", cls.framerate), qtrue);
 
 			if (scr_timegraph->value)
 				SCR_DebugGraph(cls.frametime * 300, 0);
