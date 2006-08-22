@@ -1401,6 +1401,9 @@ void CL_UpdatePointersInGlobalData(void)
 		if (!base->founded)
 			continue;
 
+		/* clear the mess of stray loaded pointers */
+		memset(&base->equipByBuyType, 0, sizeof(inventory_t));
+
 		/* some functions needs the baseCurrent pointer set */
 		baseCurrent = base;
 
