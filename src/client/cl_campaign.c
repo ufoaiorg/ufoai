@@ -1550,8 +1550,6 @@ int CL_GameLoad(char *filename)
 				/* read info */
 				item.a = MSG_ReadByte(&sb);
 				item.m = MSG_ReadByte(&sb);
-				if (item.m == NONE - 1) /* an ugly hack */
-					item.m = NONE;
 				container = MSG_ReadByte(&sb);
 				x = MSG_ReadByte(&sb);
 				y = MSG_ReadByte(&sb);

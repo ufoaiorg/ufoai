@@ -1055,8 +1055,6 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 		/* read info */
 		item.a = MSG_ReadByte(sb);
 		item.m = MSG_ReadByte(sb);
-		if (item.m == NONE - 1) /* an ugly hack */
-			item.m = NONE;
 		container = MSG_ReadByte(sb);
 		x = MSG_ReadByte(sb);
 		y = MSG_ReadByte(sb);
@@ -1178,15 +1176,7 @@ void CL_ResetTeams(void)
  */
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
 {
-	if (item.m == NONE) /* an ugly hack */
-		item.m = NONE - 1;
-
-	assert (item.a != NONE);
 	assert (item.t != NONE);
-	assert (container != NONE);
-	assert (x != NONE);
-	assert (y != NONE);
-
 	MSG_WriteFormat(buf, "bbbbbb", item.t, item.a, item.m, container, x, y);
 }
 

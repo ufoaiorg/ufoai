@@ -2371,8 +2371,6 @@ void G_ClientTeamInfo(player_t * player)
 				/* read info */
 				item.a = gi.ReadByte();
 				item.m = gi.ReadByte();
-				if (item.m == NONE - 1) /* an ugly hack */
-					item.m = NONE;
 				container = gi.ReadByte();
 				x = gi.ReadByte();
 				y = gi.ReadByte();
