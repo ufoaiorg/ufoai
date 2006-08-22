@@ -57,7 +57,7 @@ extern tutorial_t tutorials[MAX_TUTORIALS];
 
 /*============================================================================= */
 
-#define MAX_TEAMLIST	8
+#define MAX_TEAMLIST	8	/* Also defined in g_client.c. */
 
 #define RIGHT(e) ((e)->i.c[csi.idRight])
 #define LEFT(e)  ((e)->i.c[csi.idLeft])
