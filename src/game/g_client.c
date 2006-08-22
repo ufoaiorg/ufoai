@@ -260,8 +260,6 @@ void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 }
 
 
-
-
 /**
  * @brief Checks wheter a point is visible from the edicts position
  */
@@ -765,10 +763,10 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 			return;	/* never reached. need for code analyst. */
 #endif
 
-		/* successful inventory change */
+		/* successful inventory change; remove the item in clients */
 		if (from == gi.csi->idFloor) {
-			FLOOR(floor) = FLOOR(ent);
-			if (FLOOR(floor)) {
+			if ( FLOOR(ent) ) { /* floor not totally emptied */
+				FLOOR(floor) = FLOOR(ent);
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
 				gi.WriteShort(floor->number);
 				gi.WriteByte(from);
@@ -777,7 +775,6 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 			} else {
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
 				gi.WriteShort(floor->number);
-				FLOOR(ent) = NULL;
 				G_FreeEdict(floor);
 			}
 		} else {
@@ -865,7 +862,6 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 			}
 		}
 		gi.EndEvents();
-		G_GetFloorItems(ent);
 	}
 }
 
@@ -905,28 +901,33 @@ void G_InventoryToFloor(edict_t * ent)
 			continue;
 		/* now cycle through all items for the container of the character (or the entity) */
 		for (ic = ent->i.c[k]; ic; ic = next) {
-			/* Save the next inv-list before it gets overwritten below. Do not put this in the "for" statement, unless you want an endless loop. ;) */
+			int x, y;
+
+			/* Save the next inv-list before it gets overwritten below. 
+			   Do not put this in the "for" statement, 
+			   unless you want an endless loop. ;) */
 			next = ic->next;
 			/* find the coordinates for the current item on floor */
-			Com_FindSpace(&floor->i, ic->item.t, gi.csi->idFloor, &ic->x, &ic->y);
-			if (ic->x == NONE || ic->y == NONE) {
-				/* Run out of space on the floor - destroy remaining inventory. */
-				/* TODO should really just spill into adjacent locations... */
-				ent->i.c[k] = ic;
-				Com_DestroyInventory(&ent->i);
-				gi.dprintf("G_InventoryToFloor: Error: could not drop item to floor: %s\n", gi.csi->ods[ic->item.t].kurz);
-				gi.dprintf("G_InventoryToFloor: Destroy remaining inventory\n");
-				/* send item info to the clients */
-				G_CheckVis(floor, qtrue);
-				return;
-#ifdef PARANOID
+			Com_FindSpace(&floor->i, ic->item.t, gi.csi->idFloor, &x, &y);
+			if (x == NONE) {
+				assert (y == NONE);
+				/* Run out of space on the floor or the item is armor
+				   --- destroy the offending item.
+				   TODO: for items other than armor we should really 
+				   just spill into adjacent locations */
+				if (Q_strncmp(gi.csi->ods[ic->item.t].type, "armor", MAX_VAR))
+					gi.dprintf("G_InventoryToFloor: Warning: could not drop item to floor: %s\n", gi.csi->ods[ic->item.t].kurz);
+				if (!Com_RemoveFromInventory(&ent->i, k, ic->x, ic->y))
+					gi.dprintf("G_InventoryToFloor: Error: could not remove item: %s\n", gi.csi->ods[ic->item.t].kurz);
 			} else {
+				ic->x = x;
+				ic->y = y;
+				ic->next = FLOOR(floor);
+				FLOOR(floor) = ic;
+#ifdef PARANOID
 				gi.dprintf("G_InventoryToFloor: item to floor: %s\n", gi.csi->ods[ic->item.t].kurz);
 #endif
 			}
-
-			ic->next = FLOOR(floor);
-			FLOOR(floor) = ic;
 		}
 		/* destroy link */
 		ent->i.c[k] = NULL;
