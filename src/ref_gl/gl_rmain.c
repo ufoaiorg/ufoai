@@ -1300,9 +1300,7 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	if (gl_config.renderer == GL_RENDERER_MCD)
 		ri.Cvar_SetValue("gl_finish", 1);
 
-	/*
-	 ** grab extensions
-	 */
+	/* grab extensions */
 	if (strstr(gl_config.extensions_string, "GL_EXT_compiled_vertex_array") || strstr(gl_config.extensions_string, "GL_SGI_compiled_vertex_array")) {
 		ri.Con_Printf(PRINT_ALL, "...enabling GL_EXT_compiled_vertex_array\n");
 		qglLockArraysEXT = (void (APIENTRY *) (int, int)) qwglGetProcAddress("glLockArraysEXT");
@@ -1480,8 +1478,6 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 		qglGetProgramStringARB = (void *) qwglGetProcAddress("glGetProgramStringARB");
 		qglIsProgramARB = (void *) qwglGetProcAddress("glIsProgramARB");
 
-		GL_ShaderInit();
-
 /*		water_shader = LoadProgram_ARB_FP("arb_water"); */
 /*		water_shader = CompileWaterShader(); */
 	} else {
@@ -1566,14 +1562,10 @@ void R_Shutdown(void)
 #endif
 	Font_Shutdown();
 
-	/*
-	 ** shut down OS specific OpenGL stuff like contexts, etc.
-	 */
+	/* shut down OS specific OpenGL stuff like contexts, etc. */
 	GLimp_Shutdown();
 
-	/*
-	 ** shutdown our QGL subsystem
-	 */
+	/* shutdown our QGL subsystem */
 	QGL_Shutdown();
 }
 
@@ -1584,7 +1576,6 @@ void R_Shutdown(void)
  */
 void R_BeginFrame(float camera_separation)
 {
-
 	gl_state.camera_separation = camera_separation;
 
 	/* change modes if necessary */

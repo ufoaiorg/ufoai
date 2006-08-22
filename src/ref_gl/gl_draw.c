@@ -169,6 +169,11 @@ void Draw_StretchPic(int x, int y, int w, int h, char *pic)
 	if (scrap_dirty)
 		Scrap_Upload();
 
+#ifdef SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qfalse);
+#endif
+
 	GL_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(gl->sl, gl->tl);
@@ -180,6 +185,11 @@ void Draw_StretchPic(int x, int y, int w, int h, char *pic)
 	qglTexCoord2f(gl->sl, gl->th);
 	qglVertex2f(x, y + h);
 	qglEnd();
+
+#ifdef SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qtrue);
+#endif
 }
 
 
@@ -252,6 +262,11 @@ void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float 
 	if (blend)
 		qglEnable(GL_BLEND);
 
+#ifdef SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qfalse);
+#endif
+
 	GL_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(sl, tl);
@@ -266,6 +281,11 @@ void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float 
 
 	if (blend)
 		qglDisable(GL_BLEND);
+
+#ifdef SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qtrue);
+#endif
 }
 
 
@@ -285,6 +305,10 @@ void Draw_Pic(int x, int y, char *pic)
 	if (scrap_dirty)
 		Scrap_Upload();
 
+#ifdef SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qfalse);
+#endif
 	GL_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(gl->sl, gl->tl);
@@ -296,6 +320,10 @@ void Draw_Pic(int x, int y, char *pic)
 	qglTexCoord2f(gl->sl, gl->th);
 	qglVertex2f(x, y + gl->height);
 	qglEnd();
+#ifdef SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qtrue);
+#endif
 }
 
 /**

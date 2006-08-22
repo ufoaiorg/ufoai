@@ -137,6 +137,9 @@ typedef struct shader_s {
 	qboolean vertex;			/* vertex-shader */
 
 	qboolean emboss;			/* active emboss mapping */
+	qboolean embossHigh;
+	qboolean embossLow;
+	qboolean emboss2;
 	qboolean blur;
 	qboolean light;
 	qboolean edge;

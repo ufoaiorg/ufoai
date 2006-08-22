@@ -47,6 +47,9 @@ static value_t shader_values[] = {
 	{"vertex",	V_BOOL,	offsetof( shader_t, vertex)},
 	{"glmode",	V_BLEND,	offsetof( shader_t, glMode)},
 	{"emboss",	V_BOOL,	offsetof( shader_t, emboss)},
+	{"emboss_high",	V_BOOL,	offsetof( shader_t, embossHigh)},
+	{"emboss_low",	V_BOOL,	offsetof( shader_t, embossLow)},
+	{"emboss_2",	V_BOOL,	offsetof( shader_t, emboss2)},
 	{"blur",	V_BOOL,	offsetof( shader_t, blur)},
 	{"light",	V_BOOL,	offsetof( shader_t, light)},
 	{"edge",	V_BOOL,	offsetof( shader_t, edge)},
@@ -121,6 +124,9 @@ void CL_ShaderList_f(void)
 		Com_Printf("..frag %i\n", (int) r_shaders[i].frag);
 		Com_Printf("..vertex %i\n", (int) r_shaders[i].vertex);
 		Com_Printf("..emboss %i\n", (int) r_shaders[i].emboss);
+		Com_Printf("..emboss low %i\n", (int) r_shaders[i].embossLow);
+		Com_Printf("..emboss high %i\n", (int) r_shaders[i].embossHigh);
+		Com_Printf("..emboss #2 %i\n", (int) r_shaders[i].emboss2);
 		Com_Printf("..blur %i\n", (int) r_shaders[i].blur);
 		Com_Printf("..light blur %i\n", (int) r_shaders[i].light);
 		Com_Printf("..edge %i\n", (int) r_shaders[i].edge);

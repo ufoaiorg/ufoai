@@ -1301,11 +1301,14 @@ void GL_MipMap(byte * in, int width, int height)
 #define LIGHT_BLUR	1
 #define EDGE_FILTER	2
 #define EMBOSS_FILTER	3
+#define EMBOSS_FILTER_LOW	4
+#define EMBOSS_FILTER_HIGH	5
+#define EMBOSS_FILTER_2	6
 
 /**
  * @brief
  */
-float FilterMatrix[][FILTER_SIZE][FILTER_SIZE] = {
+static const float FilterMatrix[][FILTER_SIZE][FILTER_SIZE] = {
 	/* regular blur */
 	{
 	 {0, 0, 0, 0, 0},
@@ -1337,7 +1340,31 @@ float FilterMatrix[][FILTER_SIZE][FILTER_SIZE] = {
 	 {-1, -1, 0, 1, 1},
 	 {-1, 0, 1, 1, 1},
 	 {0, 1, 1, 1, 1},
-	 }
+	 },
+	/* emboss_low */
+	{
+	 {-0.7, -0.7, -0.7, -0.7, 0},
+	 {-0.7, -0.7, -0.7,  0, 0.7},
+	 {-0.7, -0.7,  0,  0.7, 0.7},
+	 {-0.7,  0,  0.7,  0.7, 0.7},
+	 { 0,  0.7,  0.7,  0.7, 0.7},
+	 },
+	/* emboss_high */
+	{
+	 {-2, -2, -2, -2, 0},
+	 {-2, -2, -2, 0, 2},
+	 {-2, -1, 0, 2, 2},
+	 {-2, 0, 2, 2, 2},
+	 {0, 2, 2, 2, 2},
+	 },
+	/* emboss2 */
+	{
+	 {1, 1, 1, 1, 0},
+	 {1, 1, 1, 0, -1},
+	 {1, 1, 0, -1, -1},
+	 {1, 0, -1, -1, -1},
+	 {0, -1, -1, -1, -1},
+	 },
 };
 
 /**
@@ -1348,7 +1375,7 @@ float FilterMatrix[][FILTER_SIZE][FILTER_SIZE] = {
  * Filtering algorithm from http://www.student.kuleuven.ac.be/~m0216922/CG/filtering.html
  * All credit due
  */
-void R_FilterTexture(int filterindex, unsigned int *data, int width, int height, float factor, float bias, qboolean greyscale, GLenum GLBlendOperator)
+static void R_FilterTexture(int filterindex, unsigned int *data, int width, int height, float factor, float bias, qboolean greyscale, int blend)
 {
 	int i;
 	int x;
@@ -1415,7 +1442,7 @@ void R_FilterTexture(int filterindex, unsigned int *data, int width, int height,
 				float TempTarget;
 				float SrcData = ((float) ((byte *) & data[y * width + x])[i]) / 255.0;
 
-				switch (GLBlendOperator) {
+				switch (blend) {
 				case BLEND_ADD:
 					TempTarget = rgbFloat[i] + SrcData;
 					break;
@@ -1452,10 +1479,13 @@ void R_FilterTexture(int filterindex, unsigned int *data, int width, int height,
 		}
 	}
 
+#if 0
 	/* copy temp back to data */
 	for (i = 0; i < (width * height); i++)
 		data[i] = temp[i];
-
+#else
+	memcpy(data, temp, width * height * 4);
+#endif
 	/* release the temp buffer */
 	free(temp);
 }
@@ -1522,9 +1552,15 @@ qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qbo
 #ifdef SHADERS
 	/* emboss filter */
 	if (gl_imagefilter->value && image && image->shader) {
-		Com_Printf("Using image filter %s\n", image->shader->title);
+		Com_DPrintf("Using image filter %s\n", image->shader->title);
 		if (image->shader->emboss)
 			R_FilterTexture(EMBOSS_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
+		if (image->shader->emboss2)
+			R_FilterTexture(EMBOSS_FILTER_2, data, width, height, 1, 128, qtrue, image->shader->glMode);
+		if (image->shader->embossHigh)
+			R_FilterTexture(EMBOSS_FILTER_HIGH, data, width, height, 1, 128, qtrue, image->shader->glMode);
+		if (image->shader->embossLow)
+			R_FilterTexture(EMBOSS_FILTER_LOW, data, width, height, 1, 128, qtrue, image->shader->glMode);
 		if (image->shader->blur)
 			R_FilterTexture(BLUR_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
 		if (image->shader->light)
