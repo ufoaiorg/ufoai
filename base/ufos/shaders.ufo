@@ -8,11 +8,11 @@
 //       can be set more than once for one shader - init ths image at shader load time and
 //       assign the shader
 
-shader pics/menu/main_ur
-{
-	filename "shaders/water.fp"
-	frag true
-}
+//shader pics/menu/main_ur
+//{
+//	filename "shaders/water.fp"
+//	frag true
+//}
 
 shader textures/exterior/ext_road01a
 {
