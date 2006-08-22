@@ -188,7 +188,7 @@ char *Sys_GetHomeDirectory (void)
 		return NULL;
 
 	Q_strncpyz(path, szPath, sizeof(path));
-	Q_strcat(path, sizeof(path), "\\UFOAI");
+	Q_strcat(path, "\\UFOAI", sizeof(path));
 	if (!CreateDirectory(path, NULL)) {
 		if (GetLastError() != ERROR_ALREADY_EXISTS) {
 			Com_Printf("Unable to create directory \"%s\"\n", path);

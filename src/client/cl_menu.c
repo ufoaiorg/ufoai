@@ -2956,13 +2956,9 @@ void MN_PrevMap(void)
 	MN_MapInfo();
 }
 
-/*
-================
-CL_ShowMessagesOnStack
-
-Script command to show all messages on the stack
-================
-*/
+/**
+ * @brief Script command to show all messages on the stack
+ */
 void CL_ShowMessagesOnStack(void)
 {
 	message_t *m = messageStack;
@@ -2973,13 +2969,16 @@ void CL_ShowMessagesOnStack(void)
 	}
 }
 
-/*
-================
-MN_AddNewMessage
-
-TODO: This needs saving
-================
-*/
+/**
+ * @brief Adds a new message to message stack
+ * @note These are the messages that are displayed at geoscape
+ * @param[in] title
+ * @param[in] text
+ * @param[in] popup
+ * @param[in] type
+ * @param[in] pedia
+ * @return message_t pointer
+ */
 message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia)
 {
 	message_t *mess;
@@ -3010,6 +3009,26 @@ message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup,
 	/* they need to be translated already */
 	if (popup)
 		MN_Popup(title, text);
+
+	switch (type) {
+	case MSG_DEBUG:
+	case MSG_STANDARD:
+	case MSG_TRANSFERFINISHED:
+	case MSG_PROMOTION:
+	case MSG_DEATH:
+		break;
+	case MSG_RESEARCH:
+	case MSG_CONSTRUCTION:
+	case MSG_UFOSPOTTED:
+	case MSG_TERRORSITE:
+	case MSG_BASEATTACK:
+	case MSG_PRODUCTION:
+		/*TODO: S_StartLocalSound(); */
+		break;
+	default:
+		Com_Printf("Warning: Unhandled message type: %i\n", type);
+	}
+
 	return mess;
 }
 
