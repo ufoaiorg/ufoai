@@ -69,7 +69,6 @@ void PR_ProductionRun(void)
 		if (gd.productions[i].timeLeft <= 0) {
 			CL_UpdateCredits(ccs.credits - (od->price*PRODUCE_FACTOR));
 			gd.productions[i].timeLeft = t->produceTime;
-			gd.productions[i].amount--;
 			/* switch to no running production */
 			if (gd.productions[i].amount<=0) {
 				gd.productions[i].objID = -1;
@@ -79,6 +78,7 @@ void PR_ProductionRun(void)
 			/* now add it to equipment */
 			/* FIXME: overflow possible */
 			gd.bases[i].storage.num[gd.productions[i].objID]++;
+			gd.productions[i].amount--;
 		}
 	}
 }
