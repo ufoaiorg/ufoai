@@ -181,6 +181,7 @@ Sys_GetHomeDirectory
 */
 char *Sys_GetHomeDirectory (void)
 {
+#if 0
 	TCHAR szPath[MAX_PATH];
 	static char path[MAX_OSPATH];
 
@@ -196,6 +197,9 @@ char *Sys_GetHomeDirectory (void)
 		}
 	}
 	return path;
+#else
+	return NULL;
+#endif
 }
 
 /*
