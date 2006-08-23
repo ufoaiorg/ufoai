@@ -2483,7 +2483,7 @@ void G_ClientTeamInfo(player_t * player)
 			}
 		}
 
-		/* find actors */
+		/* find actors --- this does nothing; should it do anything? */
 		for (; j < globals.num_edicts; j++, ent++)
 			if (ent->type == ET_ACTORSPAWN && player->pers.team == ent->team)
 				break;
