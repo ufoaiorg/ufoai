@@ -452,7 +452,7 @@ void SCR_DrawCursor(void)
 				icon_offset_y += icon_spacing;
 
 				/* Display weaponmode (text) here. */
-				if ( menuText[TEXT_MOUSECURSOR_RIGHT] )
+				if ( menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->value )
 					SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
 			}
 

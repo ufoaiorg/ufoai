@@ -268,7 +268,7 @@ static void CL_RefreshWeaponButtons(int time)
 	weapon = RIGHT(selActor);
 
 	if ( !weapon || weapon->item.m == NONE
-		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0) 
+		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
 		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time ) {
 		if (primary_right != 0) {
 			Cbuf_AddText("dispr\n");
@@ -356,7 +356,7 @@ void CL_ActorUpdateCVars(void)
 	Cvar_Set("mn_lweapon", "");
 
 	menuText[TEXT_MOUSECURSOR_RIGHT] = "";
-	
+
 	if (selActor) {
 		invList_t *selWeapon;
 
@@ -424,9 +424,9 @@ void CL_ActorUpdateCVars(void)
 								"%s\n%s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
 					Com_sprintf(mousetext, MAX_MENUTEXTLEN,
 								"%s: %s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
-					
+
 					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
-					
+
 					time = selFD->time;
 				} else if (selWeapon) {
 					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
@@ -979,7 +979,7 @@ void CL_ActorReload(int hand)
 			/* retrieve the ammo from them than the one we've already */
 			/* found. */
 			for (ic = inv->c[container]; ic; ic = ic->next)
-				if ( csi.ods[ic->item.t].link == weapon 
+				if ( csi.ods[ic->item.t].link == weapon
 					 && RS_ItemIsResearched(csi.ods[ic->item.t].kurz) ) {
 					x = ic->x;
 					y = ic->y;
@@ -1625,6 +1625,7 @@ qboolean CL_AddUGV(le_t * le, entity_t * ent)
 	add.model = le->model2;
 	add.skinnum = le->skinnum;
 
+	/* FIXME */
 	add.tagent = V_GetEntity() + 1;
 	add.tagname = "tag_head";
 

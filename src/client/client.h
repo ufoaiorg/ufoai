@@ -261,13 +261,6 @@ extern cvar_t *cl_stereo;
 extern cvar_t *cl_aviFrameRate;
 extern cvar_t *cl_aviMotionJpeg;
 
-extern cvar_t *cl_add_blend;
-extern cvar_t *cl_add_lights;
-extern cvar_t *cl_add_particles;
-extern cvar_t *cl_add_entities;
-extern cvar_t *cl_predict;
-extern cvar_t *cl_noskins;
-extern cvar_t *cl_autoskins;
 extern cvar_t *cl_markactors;
 
 extern cvar_t *cl_camrotspeed;
@@ -285,6 +278,7 @@ extern cvar_t *cl_anglespeedkey;
 extern cvar_t *cl_fps;
 extern cvar_t *cl_shownet;
 extern cvar_t *cl_show_tooltips;
+extern cvar_t *cl_show_cursor_tooltips;
 
 extern cvar_t *lookspring;
 extern cvar_t *lookstrafe;
@@ -882,7 +876,7 @@ typedef enum {
 	TEXT_PRODUCTION_INFO,
 	TEXT_EMPLOYEE,
 	TEXT_MOUSECURSOR_RIGHT,
-	
+
 	MAX_MENUTEXTS
 } texts_t;
 
