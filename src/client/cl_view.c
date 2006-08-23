@@ -532,7 +532,6 @@ void CL_PrepRefresh(void)
 		Com_Printf("client %i\n", i);
 		SCR_UpdateScreen();
 		Sys_SendKeyEvents();	/* pump message loop */
-/*		CL_ParseClientinfo (i); */
 		Com_Printf("                                     \r");
 	}
 
@@ -546,9 +545,6 @@ void CL_PrepRefresh(void)
 	SCR_UpdateScreen();
 	cl.refresh_prepped = qtrue;
 	cl.force_refdef = qtrue;	/* make sure we have a valid refdef */
-
-	/* start the cd track */
-	CDAudio_Play(atoi(cl.configstrings[CS_CDTRACK]), qtrue);
 }
 
 /**
