@@ -57,8 +57,9 @@ extern tutorial_t tutorials[MAX_TUTORIALS];
 
 /*============================================================================= */
 
-#define MAX_TEAMLIST	8	/* Also defined in g_client.c. */
+#define MAX_TEAMLIST	8
 
+/* Macros for faster access to the inventory-container. */
 #define RIGHT(e) ((e)->i.c[csi.idRight])
 #define LEFT(e)  ((e)->i.c[csi.idLeft])
 #define FLOOR(e) ((e)->i.c[csi.idFloor])
