@@ -8415,7 +8415,7 @@
 {
 ( -640 72 64 ) ( -640 72 128 ) ( -640 64 128 ) exterior/ext_brik03g 0 0 0 0.25 0.25 512 0 0
 ( -640 64 64 ) ( -640 64 128 ) ( -624 64 128 ) exterior/ext_brik03g 0 0 0 0.25 0.25 512 0 0
-( -624 64 64 ) ( -624 64 128 ) ( -624 72 128 ) exterior/ext_brik03g 0 0 0 0.25 0.25 512 0 0
+( -632 64 64 ) ( -632 64 128 ) ( -632 72 128 ) exterior/ext_brik03g 0 0 0 0.25 0.25 512 0 0
 ( -624 80 64 ) ( -624 80 128 ) ( -640 80 128 ) exterior/ext_brik03g 0 0 0 0.25 0.25 512 0 0
 ( -624 64 128 ) ( -640 64 128 ) ( -640 72 128 ) tex_buildings/floor003 0 16 0 0.5 0.5 512 0 0
 ( -640 72 68 ) ( -640 64 68 ) ( -624 64 68 ) tex_buildings/floor003 0 136 0 0.5 0.5 512 0 0
@@ -8431,12 +8431,12 @@
 }
 // brush 936
 {
-( -640 -88 64 ) ( -640 -88 128 ) ( -640 -96 128 ) exterior/ext_brik03g 128 0 0 0.25 0.25 512 0 0
-( -640 -96 64 ) ( -640 -96 128 ) ( -624 -96 128 ) exterior/ext_brik03g 64 0 0 0.25 0.25 512 0 0
-( -624 -96 64 ) ( -624 -96 128 ) ( -624 -88 128 ) exterior/ext_brik03g 128 0 0 0.25 0.25 512 0 0
-( -624 -80 64 ) ( -624 -80 128 ) ( -640 -80 128 ) exterior/ext_brik03g 64 0 0 0.25 0.25 512 0 0
-( -624 -96 128 ) ( -640 -96 128 ) ( -640 -88 128 ) tex_buildings/floor003 0 -48 0 0.5 0.5 512 0 0
-( -640 -88 68 ) ( -640 -96 68 ) ( -624 -96 68 ) tex_buildings/floor003 0 72 0 0.5 0.5 512 0 0
+( -648 -88 64 ) ( -648 -88 128 ) ( -648 -96 128 ) exterior/ext_brik03g 128 0 0 0.25 0.25 512 0 0
+( -648 -96 64 ) ( -648 -96 128 ) ( -632 -96 128 ) exterior/ext_brik03g 96 0 0 0.25 0.25 512 0 0
+( -632 -96 64 ) ( -632 -96 128 ) ( -632 -88 128 ) exterior/ext_brik03g 128 0 0 0.25 0.25 512 0 0
+( -632 -80 64 ) ( -632 -80 128 ) ( -648 -80 128 ) exterior/ext_brik03g 96 0 0 0.25 0.25 512 0 0
+( -632 -96 128 ) ( -648 -96 128 ) ( -648 -88 128 ) tex_buildings/floor003 16 208 0 0.5 0.5 512 0 0
+( -648 -88 68 ) ( -648 -96 68 ) ( -632 -96 68 ) tex_buildings/floor003 16 72 0 0.5 0.5 512 0 0
 }
 // brush 937
 {
@@ -15914,7 +15914,7 @@
 // entity 215
 {
 "classname" "info_civilian_start"
-"origin" "-628 -52 96"
+"origin" "-688 -144 96"
 }
 // entity 216
 {
@@ -16020,4 +16020,39 @@
 "classname" "info_player_start"
 "team" "1"
 "origin" "-304 112 92"
+}
+// entity 235
+{
+"classname" "info_civilian_start"
+"origin" "-592 272 28"
+"angle" "180"
+}
+// entity 236
+{
+"classname" "info_civilian_start"
+"origin" "560 -112 156"
+"angle" "180"
+}
+// entity 237
+{
+"classname" "info_civilian_start"
+"origin" "-272 752 92"
+"angle" "180"
+}
+// entity 238
+{
+"classname" "info_civilian_start"
+"origin" "592 496 156"
+"angle" "180"
+}
+// entity 239
+{
+"classname" "info_civilian_start"
+"origin" "720 112 156"
+"angle" "180"
+}
+// entity 240
+{
+"classname" "info_civilian_start"
+"origin" "-624 -48 96"
 }
