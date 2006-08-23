@@ -3,21 +3,30 @@ stage intro
 	set first
 	{
 		seq			intro
-		delay		"0 1 0"
-		frame		"0 3 0"
+		delay		"0 0 10"
+		frame		"0 1 0"
+		expire		"0 3 0"
 		missions	"farm"
 		number		1
-		expire		"0 3 0"
-		quota		0
 	}
 	set terror_only
 	{
 		needed		first
+		delay		"0 3 7"
+		frame		"0 12 0"
+		expire		"0 2 0"
+		missions	"africa_excavation transport mine mart italy oriental"
+		quota		4
+	}
+	set ultimate_terror
+	{
+		needed		terror_only
 		delay		"0 0 1"
-		frame		"0 10 0"
-		expire		"0 3 0"
-		missions	"africa_excavation bunker mine mart italy japan oriental"
-		quota		6
+		frame		"0 7 0"
+		expire		"0 7 0"
+		missions	"bunker japan dam"
+		number		3
+		quota		2
 		nextstage	ufos_are_coming
 	}
 	set stop
@@ -40,7 +49,7 @@ stage ufos_are_coming
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"transport mine_crash construction farm office harbor"
+		missions	"mine_crash construction farm2 office harbor"
 		quota		4
 		nextstage	invasion
 	}

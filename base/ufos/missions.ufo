@@ -10,7 +10,7 @@ mission stadium
 	pos			"74 41"
 	aliens		4
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	2
 	civteam		european
 	nation		"ua"
@@ -30,7 +30,7 @@ mission terrain
 	pos			"-9 46"
 	aliens		4
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	2
 	civteam		european
 	nation		"geu"
@@ -50,7 +50,7 @@ mission spedition
 	pos			"-10 60"
 	aliens		4
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	2
 	civteam		european
 	nation		"geu"
@@ -70,7 +70,7 @@ mission pdi
 	pos			"-30 36"
 	aliens		4
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	2
 	civteam     tourist
 	nation		"geu"
@@ -84,12 +84,12 @@ mission mart
 {
 	location	"_Berlin"
 	type		"_Terror Attack"
-	text		"_Protect inhabitants"
+	text		"_Protect civilians"
 	map			mart05
 	music		mission
 	pos			"-13 52"
 	aliens		6
-	alienteam	alien
+	alienteam	antarean
 	alienequip	stage1_workers
 	civilians	6
 	civteam		european
@@ -102,15 +102,15 @@ mission mart
 // South africa
 mission mine_crash
 {
-	location	"_Gobabis"
+	location	"_Gwanda" //change name and coordinates
 	type		"_Crash Site"
 	text		"_Secure Area"
 	map			mine_crash05
 	music		mission
-	pos			"-20 -23"
+	pos			"-62 25"
 	aliens		7
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	6
 	civteam		european
 	nation		"au"
@@ -126,10 +126,10 @@ mission mine
 	type		"_Terror Attack"
 	text		"_There are rumors of a mine being\overrun by aliens. Although this\source of information is doubtful,\you'll need to investigate."
 	map			mine01
-	music		mission4
+	music		mission3
 	pos			"-174 -41"
-	aliens		5
-	alienteam	alien
+	aliens		7
+	alienteam	ortnok
 	alienequip	stage1_workers_explosive
 	civilians	3
 	civteam		european
@@ -150,7 +150,7 @@ mission office
 	pos			"-149 -21"
 	aliens		8
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	2
 	civteam		scientist
 	nation		"australia"
@@ -184,14 +184,14 @@ mission bunker
 {
 	location	"_Bristol"
 	type		"_Terror Attack"
-	text		"_Protect inhabitants"
+	text		"_Protect the military installation crew"
 	map			bunker01
-	music		mission
+	music		dawn
 	pos			"2 51"
-	aliens		5
+	aliens		8
 	alienteam	alien
 	alienequip	stage1_workers_explosive
-	civilians	6
+	civilians	7
 	civteam		scientist
 	nation		"geu"
 	onlose		""
@@ -210,7 +210,7 @@ mission city
 	pos			"96 19"
 	aliens		5
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	6
 	civteam		mexican
 	nation		"ua"
@@ -230,7 +230,7 @@ mission construction
 	pos			"-17 60"
 	aliens		6
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	6
 	civteam		european
 	nation		"geu"
@@ -244,12 +244,12 @@ mission africa_excavation
 {
 	location	"_Gwanda"
 	type		"_Terror Attack"
-	text		"_Some aliens have escaped from the\mine, and their tracks lead south,\towards a nearby excavation site.\Protect that site at all cost."
+	text		"_Protect the excavation site at all cost."
 	map			excavation06
 	music		mission4
 	pos			"-29 -20"
-	aliens		4
-	alienteam	alien
+	aliens		5
+	alienteam	ortnok
 	alienequip	stage1_workers
 	civilians	6
 	civteam		oriental
@@ -268,10 +268,10 @@ mission italy
 	map			italy05
 	music		mission2
 	pos			"-18 40"
-	aliens		8
-	alienteam	alien
+	aliens		3
+	alienteam	antarean
 	alienequip	stage1_soldiers
-	civilians	6
+	civilians	8
 	civteam		european
 	nation		"geu"
 	onlose		""
@@ -290,7 +290,7 @@ mission subway
 	pos			"74 40"
 	aliens		4
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	2
 	civteam		americans
 	nation		"ua"
@@ -311,7 +311,7 @@ mission vil_lille
 	pos			"-3 50"
 	aliens		7
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	6
 	civteam		european
 	nation		"geu"
@@ -331,7 +331,7 @@ mission harbor
 	pos			"-129 35"
 	aliens		8
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	6
 	civteam		european
 	nation		"ac"
@@ -350,9 +350,9 @@ mission japan
 	music		mission3
 	pos			"-141 39"
 	aliens		10
-	alienteam	alien
+	alienteam	antarean
 	alienequip	stage2_soldiers_melee
-	civilians	6
+	civilians	3
 	civteam		european
 	nation		"ac"
 	onlose		""
@@ -372,7 +372,7 @@ mission falconcrash
 	pos			"116 52"
 	aliens		7
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
 	nation		"ua"
@@ -390,9 +390,28 @@ mission farm
 	music		mission
 	pos			"116 52"
 	aliens  	4
-	alienteam	alien
+	alienteam	antarean
 	alienequip	stage1_workers
 	civilians	3
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission farm2
+{
+	location	"_Revelstoke"
+	type		"_Landed Alien Ship"
+	text		"_Secure Alien Ship"
+	map			farm08
+	music		mission
+	pos			"116 52"
+	aliens  	5
+	alienteam	alien
+	alienequip	stage3_workers
+	civilians	4
 	civteam		european
 	nation		"ua"
 	onlose		""
@@ -411,7 +430,7 @@ mission frozen_groenland
 	pos			"47 -42"
 	aliens		6
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
 	nation		"ua"
@@ -431,7 +450,7 @@ mission frozen_small
 	pos			"116 52"
 	aliens		7
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
 	nation		"ua"
@@ -451,7 +470,7 @@ mission frozen_landingnature
 	pos			"32 -66"
 	aliens		7
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
 	nation		"australia"
@@ -471,7 +490,7 @@ mission frozen_industrial
 	pos			"54 75"
 	aliens		7
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
 	nation		"ua"
@@ -491,7 +510,7 @@ mission frozen_alienlandingindustrial
 	pos			"25 -64"
 	aliens		7
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
 	nation		"australia"
@@ -510,7 +529,7 @@ mission gasstation
 	pos			"-111 21"
 	aliens		8
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	6
 	civteam		european
 	nation		"ua"
@@ -529,7 +548,7 @@ mission lake
 	pos			"-77 67"
 	aliens		6
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	5
 	civteam		european
 	nation		"russia"
@@ -540,16 +559,16 @@ mission lake
 
 mission oriental
 {
-	location	"_Gwanda"
+	location	"_Gobabis"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			oriental06
 	music		mission
-	pos			"-62 25"
-	aliens		5
-	alienteam	alien
+	pos			"-20 -23"
+	aliens		4
+	alienteam	ortnok
 	alienequip	stage1_soldiers
-	civilians	6
+	civilians	7
 	civteam		oriental
 	nation		"au"
 	onlose		""
@@ -563,12 +582,12 @@ mission dam
 	type		"_Terror Attack"
 	text		"_Secure Dam"
 	map			dam01
-	music		mission
+	music		mission4
 	pos			"-62 25"
-	aliens		5
+	aliens		7
 	alienteam	alien
 	alienequip	stage1_soldiers
-	civilians	6
+	civilians	3
 	civteam		scientist
 	nation		"todo"
 	onlose		""
@@ -586,7 +605,7 @@ mission or_asyut
 	pos			"-31 27"
 	aliens		7
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	6
 	civteam		oriental
 	nation		"ae"
@@ -605,7 +624,7 @@ mission or_tabelbala
 	pos			"3 28"
 	aliens		7
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	6
 	civteam		oriental
 	nation		"ae"
@@ -626,7 +645,7 @@ mission or_tabelbala
 //	aliens		4
 //	civilians	2
 //	nation		"ua"
-//	alienequip	stage3_soldiers
+//	alienequip	stage4_soldiers
 //	onlose		""
 //	onwin		""
 //	storyrelated	true
@@ -635,7 +654,7 @@ mission or_tabelbala
 // America
 mission tower
 {
-	location	"_San Fransisco"
+	location	"_San Francisco"
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map			tower06
@@ -643,7 +662,7 @@ mission tower
 	pos			"119 34"
 	aliens		4
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	2
 	civteam		european
 	nation		"ua"
@@ -658,11 +677,11 @@ mission transport
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			transport06
-	music		mission
+	music		mission4
 	pos			"97 47"
-	aliens		4
+	aliens		3
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage1_soldiers
 	civilians	6
 	civteam		european
 	nation		"ua"
@@ -683,7 +702,7 @@ mission tropic_river
 	pos			"90 10"
 	aliens		4
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	2
 	civteam		oriental
 	nation		"ua"
@@ -703,7 +722,7 @@ mission tropic_drug
 	pos			"77 18"
 	aliens		4
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	2
 	civteam		european
 	nation		"ua"
@@ -722,7 +741,7 @@ mission village
 	pos			"97 47"
 	aliens		4
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	6
 	civteam		european
 	nation		"ua"
@@ -742,7 +761,7 @@ mission vil_grenchen
 	pos			"-7 47"
 	aliens		3
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	7
 	civteam		european
 	nation		"geu"
@@ -762,7 +781,7 @@ mission vil_albany
 	pos			"84 32"
 	aliens		8
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	7
 	civteam		european
 	nation		"geu"
@@ -782,7 +801,7 @@ mission vil_shannon
 	pos			"9 52"
 	aliens		18
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	4
 	civteam		european
 	nation		"geu"
@@ -801,7 +820,7 @@ mission baseattack
 	music		base
 	aliens		12
 	alienteam	alien
-	alienequip	stage3_soldiers
+	alienequip	stage4_soldiers
 	civilians	12
 	civteam		scientist
 	nation		"baseTODO"

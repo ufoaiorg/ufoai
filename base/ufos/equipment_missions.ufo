@@ -97,10 +97,10 @@ equipment stage1_soldiers
 {
 	plaspistol			5
 	plaspistol_ammo		11
-	plasrifle			5
+	plasrifle			6
 	plasrifle_ammo		9
-	plasblaster			1
-	plasblaster_ammo	1
+	plasblaster			2
+	plasblaster_ammo	2
 	kerrblade			7
 	plasblade			1
 }
@@ -120,8 +120,6 @@ equipment stage2_soldiers_melee
 {
 	plasrifle			1
 	plasrifle_ammo		1
-	plasblaster			1
-	plasblaster_ammo	1
 	tachyonpistol		1
 	tachyonpistol_ammo	1
 	kerrblade			20
@@ -133,10 +131,10 @@ equipment stage2_soldiers
 {
 	plaspistol			7
 	plaspistol_ammo		15
-	plasrifle			5
+	plasrifle			6
 	plasrifle_ammo		9
-	plasblaster			3
-	plasblaster_ammo	4
+	plasblaster			2
+	plasblaster_ammo	3
 	kerrblade			7
 	plasblade			2
 	alienincgrenade		12
