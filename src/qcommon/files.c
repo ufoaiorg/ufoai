@@ -288,7 +288,7 @@ int FS_FOpenFile(const char *filename, FILE ** file)
 
 	/* nothing corresponding found */
 	if (result == -1)
-		Com_DPrintf("FindFile: can't find %s\n", filename);
+		Com_Printf("FindFile: can't find %s\n", filename);
 
 	return result;
 }
