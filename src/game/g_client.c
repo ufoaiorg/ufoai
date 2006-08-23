@@ -25,18 +25,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+#define VIS_APPEAR	1
+#define VIS_PERISH	2
+
+/* Timeunits for the various actions. */
 #define TU_REACTION		7
 #define TU_CROUCH		1
 #define TU_TURN		1
 
-#define VIS_APPEAR	1
-#define VIS_PERISH	2
-
+/* Macros for faster access to the inventory-container. */
 #define RIGHT(e) e->i.c[gi.csi->idRight]
 #define LEFT(e)  e->i.c[gi.csi->idLeft]
 #define FLOOR(e) e->i.c[gi.csi->idFloor]
 
-int TU_REACTIONS[MAX_EDICTS];	/* Stores the used TUs for Reaction fire for each player. */
+/* Stores the used TUs for Reaction fire for each player. */
+int TU_REACTIONS[MAX_EDICTS];
 
 /**
  * @brief Generates the player mask
