@@ -26,6 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 #define TU_REACTION		7
+#define TU_CROUCH		1
+#define TU_TURN		1
+
 #define VIS_APPEAR	1
 #define VIS_PERISH	2
 
@@ -33,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LEFT(e)  e->i.c[gi.csi->idLeft]
 #define FLOOR(e) e->i.c[gi.csi->idFloor]
 
-int TU_REACTIONS[MAX_EDICTS];
+int TU_REACTIONS[MAX_EDICTS];	/* Stores the used TUs for Reaction fire for each player. */
 
 /**
  * @brief Generates the player mask
@@ -129,11 +132,13 @@ void G_GiveTimeUnits(int team)
 }
 
 
-/*
-=================
-G_ResetReactionFire
-=================
-*/
+/**
+ * @brief Stores the TUs for reaction fire that are used (if any).
+ * @note Normally called on end of turn.
+ * @todo Comment on the AddEvent code.
+ * @sa G_ClientStateChange
+ * @param[in] team Index of team to loop through.
+ */
 void G_ResetReactionFire(int team)
 {
 	edict_t *ent;
@@ -1169,7 +1174,7 @@ static void G_ClientTurn(player_t * player, int num, int dv)
 	ent = g_edicts + num;
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, 1))
+	if (!G_ActionCheck(player, ent, TU_TURN))
 		return;
 
 	/* check if we're already facing that direction */
@@ -1182,7 +1187,7 @@ static void G_ClientTurn(player_t * player, int num, int dv)
 
 	/* do the turn */
 	G_DoTurn(ent, (byte) dv);
-	ent->TU--;
+	ent->TU -= TU_TURN;
 
 	/* send the turn */
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
@@ -1197,11 +1202,12 @@ static void G_ClientTurn(player_t * player, int num, int dv)
 }
 
 
-/*
-=================
-G_ClientStateChange
-=================
-*/
+/**
+ * @brief Changes the thate of a player/soldier.
+ * @input[in,out] player TODO Writeme
+ * @input[in] num TODO Writeme
+ * @input[in] newState The bit-map of the new states.
+ */
 static void G_ClientStateChange(player_t * player, int num, int newState)
 {
 	edict_t *ent;
@@ -1209,7 +1215,7 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 
 	ent = g_edicts + num;
 
-	/* check if any action is possible */
+	/* Check if any action is possible. */
 	if (!G_ActionCheck(player, ent, 0))
 		return;
 
@@ -1218,11 +1224,11 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 		return;
 
 	if (changeState & STATE_CROUCHED)
-		/* check if player has enough TUs (1 TU for crouch/uncrouch) */
-		if (G_ActionCheck(player, ent, 1)) {
+		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
+		if (G_ActionCheck(player, ent, TU_CROUCH)) {
 			ent->state ^= STATE_CROUCHED;
-			ent->TU -= 1;
-			/* link it */
+			ent->TU -= TU_CROUCH;
+			/* Link it. */
 			if (ent->state & STATE_CROUCHED)
 				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
 			else
@@ -1270,19 +1276,19 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 		}
 	}
 
-	/* send the state change */
+	/* Send the state change. */
 	G_SendState(G_VisToPM(ent->visflags), ent);
 
-	/* check if the player appears/perishes, seen from other teams */
+	/* Check if the player appears/perishes, seen from other teams. */
 	G_CheckVis(ent, qtrue);
 
-	/* calc new vis for this player */
+	/* Calc new vis for this player. */
 	G_CheckVisTeam(ent->team, NULL, qfalse);
 
-	/* send the new TUs */
+	/* Send the new TUs. */
 	G_SendStats(ent);
 
-	/* end the event */
+	/* End the event. */
 	gi.EndEvents();
 }
 
