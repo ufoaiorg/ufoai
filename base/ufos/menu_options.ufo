@@ -818,6 +818,49 @@ menu options_game
 	}
 
 	// ===================
+	// CURSOR TOOLTIPS
+	// ===================
+	string c_tooltip_str
+	{
+		string	"_Cursor tooltips:"
+		pos		"500 255"
+	}
+	string c_tooltip_value
+	{
+		string	"*cvar mn_show_cursor_tooltips"
+		pos		"840 255"
+		align	ur
+	}
+	pic c_tooltip_dec
+	{
+		image	menu/buttons_small
+		pos		"868 259"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		tooltip	"_Deactivates cursor tooltips"
+		click
+		{
+			cmd "mn_modify cl_show_cursor_tooltips -1 0 1;"
+			cmd "mn_translate cl_show_cursor_tooltips mn_show_cursor_tooltips 0:No,1:Yes;"
+		}
+	}
+	pic c_tooltip_inc
+	{
+		image	menu/buttons_small
+		pos		"884 259"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		tooltip	"_Activates cursor tooltips"
+		click
+		{
+			cmd "mn_modify cl_show_cursor_tooltips +1 0 1;"
+			cmd "mn_translate cl_show_cursor_tooltips mn_show_cursor_tooltips 0:No,1:Yes;"
+		}
+	}
+
+	// ===================
 	// CAMERA
 	// ===================
 	string camspeed_str
@@ -894,6 +937,7 @@ menu options_game
 		cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
 		cmd "mn_translate cl_centerview mn_centerview 0:No,1:Yes;"
 		cmd "mn_translate cl_show_tooltips mn_show_tooltips 0:No,1:Yes;"
+		cmd "mn_translate cl_show_cursor_tooltips mn_show_cursor_tooltips 0:No,1:Yes;"
 		cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes;"
 	}
 }

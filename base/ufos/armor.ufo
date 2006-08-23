@@ -10,7 +10,8 @@ damagetypes standard
 	"_stun"
 }
 
-item light //weights 100
+//weights 100
+item light
 {
 	name		"_Kevlar Vest"
 	image		armor/light
@@ -47,7 +48,8 @@ item light //weights 100
 	}
 }
 
-item medium //weights 120
+//weights 120
+item medium
 {
 	name		"_Nano Armor"
 	image		armor/medium
@@ -83,8 +85,8 @@ item medium //weights 120
 		stun	100
 	}
 }
-
-//item heavy //weights 320
+//weights 320
+//item heavy
 //{
 //	name		"_Heavy Nano Armor"
 //	image		armor/heavy

@@ -672,7 +672,8 @@ item grenl_ammo
 		projtl	grenl_ammo
 		impact	frag_explosion
 		hitbody frag_explosion
-// code fix needed		firesnd	weapons/grenade_launcher.wav
+		// code fix needed
+		firesnd	weapons/grenade_launcher.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
@@ -698,7 +699,8 @@ item grenl_ammo
 		projtl	grenl_ammo
 		impact	frag_explosion
 		hitbody frag_explosion
-// code fix needed		firesnd	weapons/grenade_launcher.wav
+		// code fix needed
+		firesnd	weapons/grenade_launcher.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
@@ -737,7 +739,8 @@ item grenl_plasma_ammo
 		projtl	grenl_plasma_ammo
 		impact	plasmaBigExplosion
 		hitbody plasmaBigExplosion
-// code fix needed		firesnd	weapons/grenade_launcher.wav
+		// code fix needed
+		firesnd	weapons/grenade_launcher.wav
 		impsnd	weapons/plasma_grenade.wav
 		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
@@ -763,7 +766,8 @@ item grenl_plasma_ammo
 		projtl	grenl_plasma_ammo
 		impact	plasmaBigExplosion
 		hitbody plasmaBigExplosion
-// code fix needed		firesnd	weapons/grenade_launcher.wav
+		// code fix needed
+		firesnd	weapons/grenade_launcher.wav
 		impsnd	weapons/plasma_grenade.wav
 		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav

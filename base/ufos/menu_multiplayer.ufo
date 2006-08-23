@@ -108,7 +108,7 @@ menu multiplayer
 	pic button_exit
 	{
 		pos	"80 450"
-		click	{ cmd "mn_pop esc" }
+		click	{ cmd "mn_escpop 5; mn_pop esc;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
@@ -127,8 +127,7 @@ menu multiplayer
 
 	func init
 	{
-		cmd "mn_escpop 5;"
-		cmd "mn_push mp_join_lan;maxclients 2"
+		cmd "mn_escpop 5;mn_push mp_join_lan;maxclients 2;"
 	}
 }
 
@@ -408,7 +407,7 @@ menu mp_team
 
 	func init
 	{
-		cmd	"set mn_slot 0;team_comments"// ;team_reset --- called 2nd time
+		cmd	"set mn_slot 0;team_comments;"
 		teamslot0
 	}
 
@@ -514,7 +513,7 @@ menu serverinfo
 	pic button_back
 	{
 		pos	"80 450"
-		click	{ cmd "mn_escpop 1;mn_pop esc;mn_escpop 3;" }
+		click	{ cmd "mn_pop;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
