@@ -80,7 +80,7 @@ extern void R_BuildLightMap(msurface_t * surf, byte * dest, int stride);
 /**
  * @brief Returns the proper texture for a given time and base texture
  */
-image_t *R_TextureAnimation(mtexinfo_t * tex)
+static image_t *R_TextureAnimation(mtexinfo_t * tex)
 {
 	int c;
 
@@ -99,7 +99,7 @@ image_t *R_TextureAnimation(mtexinfo_t * tex)
 /**
  * @brief
  */
-void DrawGLPoly(glpoly_t * p)
+static void DrawGLPoly(glpoly_t * p)
 {
 	int i;
 	float *v;
@@ -116,7 +116,7 @@ void DrawGLPoly(glpoly_t * p)
 /**
  * @brief version of DrawGLPoly that handles scrolling texture
  */
-void DrawGLFlowingPoly(msurface_t * fa)
+static void DrawGLFlowingPoly(msurface_t * fa)
 {
 	int i;
 	float *v;
@@ -178,7 +178,7 @@ void R_DrawTriangleOutlines(void)
 /**
  * @brief
  */
-void DrawGLPolyChain(glpoly_t * p, float soffset, float toffset)
+static void DrawGLPolyChain(glpoly_t * p, float soffset, float toffset)
 {
 	if (soffset == 0 && toffset == 0) {
 		for (; p != 0; p = p->chain) {
@@ -213,7 +213,7 @@ void DrawGLPolyChain(glpoly_t * p, float soffset, float toffset)
  * @brief This routine takes all the given light mapped surfaces in the world and
  * blends them into the framebuffer.
  */
-void R_BlendLightmaps(void)
+static void R_BlendLightmaps(void)
 {
 	int i;
 	msurface_t *surf, *newdrawsurf = 0;
@@ -353,7 +353,7 @@ void R_BlendLightmaps(void)
 /**
  * @brief
  */
-void R_RenderBrushPoly(msurface_t * fa)
+static void R_RenderBrushPoly(msurface_t * fa)
 {
 	int maps;
 	image_t *image;
@@ -472,66 +472,6 @@ void R_DrawAlphaSurfaces(void)
 
 	r_alpha_surfaces = NULL;
 }
-
-/**
- * @brief
- */
-void DrawTextureChains(void)
-{
-	int i;
-	msurface_t *s;
-	image_t *image;
-
-	c_visible_textures = 0;
-
-	if (!qglSelectTextureSGIS && !qglActiveTextureARB) {
-		for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
-			if (!image->registration_sequence)
-				continue;
-			s = image->texturechain;
-			if (!s)
-				continue;
-			c_visible_textures++;
-
-			for (; s; s = s->texturechain)
-				R_RenderBrushPoly(s);
-
-			image->texturechain = NULL;
-		}
-	} else {
-		for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
-			if (!image->registration_sequence)
-				continue;
-			if (!image->texturechain)
-				continue;
-			c_visible_textures++;
-
-			for (s = image->texturechain; s; s = s->texturechain) {
-				if (!(s->flags & SURF_DRAWTURB))
-					R_RenderBrushPoly(s);
-			}
-		}
-
-		GL_EnableMultitexture(qfalse);
-		for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
-			if (!image->registration_sequence)
-				continue;
-			s = image->texturechain;
-			if (!s)
-				continue;
-
-			for (; s; s = s->texturechain) {
-				if (s->flags & SURF_DRAWTURB)
-					R_RenderBrushPoly(s);
-			}
-
-			image->texturechain = NULL;
-		}
-	}
-
-	GL_TexEnv(GL_REPLACE);
-}
-
 
 /**
  * @brief
@@ -666,7 +606,7 @@ static void GL_RenderLightmappedPoly(msurface_t * surf)
 /**
  * @brief
  */
-void R_DrawInlineBModel(void)
+static void R_DrawInlineBModel(void)
 {
 	int i, k;
 	cplane_t *pplane;
@@ -799,8 +739,9 @@ void R_DrawBrushModel(entity_t * e)
 
 /**
  * @brief
+ * @sa R_DrawWorld
  */
-void R_RecursiveWorldNode(mnode_t * node)
+static void R_RecursiveWorldNode(mnode_t * node)
 {
 	int c, side, sidebit;
 	cplane_t *plane;
@@ -881,8 +822,9 @@ void R_RecursiveWorldNode(mnode_t * node)
 
 /**
  * @brief
+ * @sa R_RecursiveWorldNode
  */
-void R_DrawWorld(mnode_t * nodes)
+static void R_DrawWorld(mnode_t * nodes)
 {
 	entity_t ent;
 
@@ -930,7 +872,7 @@ void R_DrawWorld(mnode_t * nodes)
 /**
  * @brief
  */
-void R_FindModelNodes_r(mnode_t * node)
+static void R_FindModelNodes_r(mnode_t * node)
 {
 	if (!node->plane) {
 		R_FindModelNodes_r(node->children[0]);
