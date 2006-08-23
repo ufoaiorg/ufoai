@@ -52,23 +52,16 @@ cvar_t *cl_stereo;
 cvar_t *rcon_client_password;
 cvar_t *rcon_address;
 
-cvar_t *cl_noskins;
-cvar_t *cl_autoskins;
 cvar_t *cl_timeout;
-cvar_t *cl_predict;
 
 /*cvar_t	*cl_minfps; */
 cvar_t *cl_maxfps;
 cvar_t *cl_markactors;
 
-cvar_t *cl_add_particles;
-cvar_t *cl_add_lights;
-cvar_t *cl_add_entities;
-cvar_t *cl_add_blend;
-
 cvar_t *cl_fps;
 cvar_t *cl_shownet;
 cvar_t *cl_show_tooltips;
+cvar_t *cl_show_cursor_tooltips;
 
 cvar_t *cl_paused;
 cvar_t *cl_timedemo;
@@ -982,12 +975,14 @@ void CL_Snd_Restart_f(void)
  */
 void CL_Precache_f(void)
 {
+	Com_Printf("CL_Precache_f\n");
 	/* stop sound, back to the console */
 	S_StopAllSounds();
 	MN_PopMenu(qtrue);
 
 	CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
 
+	Com_Printf("LoadMap\n");
 	CL_RegisterSounds();
 	CL_PrepRefresh();
 
@@ -999,6 +994,7 @@ void CL_Precache_f(void)
 	/* send begin */
 	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
 	MSG_WriteString(&cls.netchan.message, va("begin %i\n", atoi(Cmd_Argv(1))));
+	Com_Printf("begin\n");
 }
 
 /**
@@ -1131,16 +1127,10 @@ void CL_InitLocal(void)
 	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE);
 	cl_stereo = Cvar_Get("cl_stereo", "0", 0);
 
-	cl_add_blend = Cvar_Get("cl_blend", "1", 0);
-	cl_add_lights = Cvar_Get("cl_lights", "1", 0);
-	cl_add_particles = Cvar_Get("cl_particles", "1", 0);
-	cl_add_entities = Cvar_Get("cl_entities", "1", 0);
-	cl_noskins = Cvar_Get("cl_noskins", "0", 0);
-	cl_autoskins = Cvar_Get("cl_autoskins", "0", 0);
-	cl_predict = Cvar_Get("cl_predict", "1", 0);
 /*	cl_minfps = Cvar_Get ("cl_minfps", "5", 0); */
 	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0);
 	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE);
+	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE);
 
 	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", 0);
 	cl_camrotaccel = Cvar_Get("cl_camrotaccel", "400", 0);
@@ -1281,33 +1271,30 @@ void CL_WriteConfiguration(void)
 }
 
 
-/**
- * @brief
- */
 typedef struct {
 	char *name;
 	char *value;
 	cvar_t *var;
 } cheatvar_t;
 
-cheatvar_t cheatvars[] = {
-/*	{"timescale", "1"}, */
+static cheatvar_t cheatvars[] = {
 	{"timedemo", "0"},
 	{"r_drawworld", "1"},
 	{"cl_testlights", "0"},
 	{"r_fullbright", "0"},
-/*	{"r_drawflat", "0"}, */
 	{"paused", "0"},
 	{"fixedtime", "0"},
-/*	{"sw_draworder", "0"}, */
 	{"gl_lightmap", "0"},
 	{"gl_wire", "0"},
 	{"gl_saturatelighting", "0"},
 	{NULL, NULL}
 };
 
-int numcheatvars;
+static int numcheatvars = 0;
 
+/**
+ * @brief
+ */
 void CL_FixCvarCheats(void)
 {
 	int i;
