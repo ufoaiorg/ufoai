@@ -9606,7 +9606,7 @@
 // entity 49
 {
 "classname" "info_alien_start"
-"origin" "784 1328 92"
+"origin" "-48 1424 92"
 }
 // entity 50
 {
@@ -11768,4 +11768,44 @@
 ( 705 767 156 ) ( 705 831 156 ) ( 705 831 148 ) tex_material/wood002 0 12 -90 0.5 0.25 3072 0 0
 ( 705 835 156 ) ( 673 835 156 ) ( 673 835 148 ) tex_material/wood002 0 48 90 0.5 0.5 3072 0 0
 }
+}
+// entity 183
+{
+"classname" "info_alien_start"
+"origin" "784 1328 92"
+}
+// entity 184
+{
+"classname" "info_alien_start"
+"origin" "656 1264 92"
+}
+// entity 185
+{
+"classname" "info_alien_start"
+"origin" "528 1424 92"
+}
+// entity 186
+{
+"classname" "info_alien_start"
+"origin" "432 1360 92"
+}
+// entity 187
+{
+"classname" "info_alien_start"
+"origin" "304 1424 92"
+}
+// entity 188
+{
+"classname" "info_alien_start"
+"origin" "208 1360 92"
+}
+// entity 189
+{
+"classname" "info_alien_start"
+"origin" "16 1328 92"
+}
+// entity 190
+{
+"classname" "info_alien_start"
+"origin" "-80 1360 92"
 }
