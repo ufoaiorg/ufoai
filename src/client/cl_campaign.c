@@ -1271,7 +1271,7 @@ void CL_GameSave(char *filename, char *comment)
 	SZ_Write(&sb, &gd, sizeof(globalData_t));
 
 	/* store inventories */
-	for (type = 0; i < MAX_EMPL; type++)
+	for (type = 0, i = 0; i < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
 			for (j = 0; j < csi.numIDs; j++)
 				for (ic = gd.employees[type][i].inv.c[j]; ic; ic = ic->next)
@@ -1393,7 +1393,7 @@ void CL_UpdatePointersInGlobalData(void)
 	base_t *base;
 	aircraft_t *aircraft;
 
-	for (type = 0; i < MAX_EMPL; type++)
+	for (type = 0, i = 0; i < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++)
 			gd.employees[type][i].chr.inv = &gd.employees[type][i].inv;
 
@@ -1558,12 +1558,12 @@ int CL_GameLoad(char *filename)
 				y = MSG_ReadByte(&sb);
 
 				Com_AddToInventory(&gd.employees[type][i].inv, item, container, x, y);
-				
+
 				/* get next item */
 				item.t = MSG_ReadByte(&sb);
 			}
 		}
-	
+
 	/* how many message items */
 	i = MSG_ReadByte(&sb);
 	Com_DPrintf("CL_GameLoad: %i messages on messagestack.\n", i);
