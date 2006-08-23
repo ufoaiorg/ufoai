@@ -258,30 +258,6 @@ extern cvar_t *difficulty;
 #define FFL_SPAWNTEMP		1
 #define FFL_NOSPAWN			2
 
-typedef enum {
-	F_INT,
-	F_FLOAT,
-	F_LSTRING,					/* string on disk, pointer in memory, TAG_LEVEL */
-	F_GSTRING,					/* string on disk, pointer in memory, TAG_GAME */
-	F_VECTOR,
-	F_ANGLEHACK,
-	F_EDICT,					/* index on disk, pointer in memory */
-/*	F_ITEM,				// index on disk, pointer in memory */
-	F_CLIENT,					/* index on disk, pointer in memory */
-	F_FUNCTION,
-	F_IGNORE
-} fieldtype_t;
-
-typedef struct {
-	char *name;
-	size_t ofs;
-	fieldtype_t type;
-	int flags;
-} field_t;
-
-
-extern field_t fields[];
-
 
 /* g_cmds.c */
 void Cmd_Help_f(edict_t * ent);
@@ -297,7 +273,6 @@ edict_t *G_PickTarget(char *targetname);
 void G_UseTargets(edict_t * ent, edict_t * activator);
 void G_SetMovedir(vec3_t angles, vec3_t movedir);
 
-void G_InitEdict(edict_t * e);
 edict_t *G_Spawn(void);
 void G_FreeEdict(edict_t * e);
 

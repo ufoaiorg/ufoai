@@ -33,6 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+/**
+ * @brief
+ */
 void G_ProjectSource(vec3_t point, vec3_t distance, vec3_t forward, vec3_t right, vec3_t result)
 {
 	result[0] = point[0] + forward[0] * distance[0] + right[0] * distance[1];
@@ -40,13 +43,9 @@ void G_ProjectSource(vec3_t point, vec3_t distance, vec3_t forward, vec3_t right
 	result[2] = point[2] + forward[2] * distance[0] + right[2] * distance[1] + distance[2];
 }
 
-/*
-=================
-G_FreeEdict
-
-Marks the edict as free
-=================
-*/
+/**
+ * @brief Marks the edict as free
+ */
 void G_FreeEdict(edict_t * ed)
 {
 	/* unlink from world */
@@ -59,18 +58,13 @@ void G_FreeEdict(edict_t * ed)
 }
 
 
-/*
-=============
-G_Find
-
-Searches all active entities for the next one that holds
-the matching string at fieldofs (use the offsetof() macro) in the structure.
-
-Searches beginning at the edict after from, or the beginning if NULL
-NULL will be returned if the end of the list is reached.
-
-=============
-*/
+/**
+ * @brief Searches all active entities for the next one that holds
+ * the matching string at fieldofs (use the offsetof() macro) in the structure.
+ *
+ * @note Searches beginning at the edict after from, or the beginning if NULL
+ * @return NULL will be returned if the end of the list is reached.
+ */
 edict_t *G_Find(edict_t * from, int fieldofs, char *match)
 {
 	char *s;
@@ -94,15 +88,12 @@ edict_t *G_Find(edict_t * from, int fieldofs, char *match)
 }
 
 
-/*
-=================
-findradius
-
-Returns entities that have origins within a spherical area
-
-findradius (origin, radius)
-=================
-*/
+/**
+ * @brief Returns entities that have origins within a spherical area
+ * @param[in] from The origin that is the center of the circle
+ * @param[in] org origin
+ * @param[in] rad radius to search an edict in
+ */
 edict_t *findradius(edict_t * from, vec3_t org, float rad)
 {
 	vec3_t eorg;
@@ -128,18 +119,13 @@ edict_t *findradius(edict_t * from, vec3_t org, float rad)
 }
 
 
-/*
-=============
-G_PickTarget
-
-Searches all active entities for the next one that holds
-the matching string at fieldofs (use the offsetof() macro) in the structure.
-
-Searches beginning at the edict after from, or the beginning if NULL
-NULL will be returned if the end of the list is reached.
-
-=============
-*/
+/**
+ * @brief Searches all active entities for the next one that holds
+ * the matching string at fieldofs (use the offsetof() macro) in the structure.
+ *
+ * @note Searches beginning at the edict after from, or the beginning if NULL
+ * @return NULL will be returned if the end of the list is reached.
+ */
 #define MAXCHOICES	8
 
 edict_t *G_PickTarget(char *targetname)
@@ -170,22 +156,18 @@ edict_t *G_PickTarget(char *targetname)
 	return choice[rand() % num_choices];
 }
 
-
-
+/**
+ * @brief
+ */
 void Think_Delay(edict_t * ent)
 {
 /*	G_UseTargets (ent, ent->activator); */
 /*	G_FreeEdict (ent); */
 }
 
-/*
-=============
-TempVector
-
-This is just a convenience function
-for making temporary vectors for function calls
-=============
-*/
+/**
+ * @brief This is just a convenience function for making temporary vectors for function calls
+ */
 float *tv(float x, float y, float z)
 {
 	static int index;
@@ -205,14 +187,9 @@ float *tv(float x, float y, float z)
 }
 
 
-/*
-=============
-VectorToString
-
-This is just a convenience function
-for printing vectors
-=============
-*/
+/**
+ * @brief This is just a convenience function for printing vectors
+ */
 char *vtos(vec3_t v)
 {
 	static int index;
@@ -229,11 +206,14 @@ char *vtos(vec3_t v)
 }
 
 
-vec3_t VEC_UP = { 0, -1, 0 };
-vec3_t MOVEDIR_UP = { 0, 0, 1 };
-vec3_t VEC_DOWN = { 0, -2, 0 };
-vec3_t MOVEDIR_DOWN = { 0, 0, -1 };
+static const vec3_t VEC_UP = { 0, -1, 0 };
+static const vec3_t MOVEDIR_UP = { 0, 0, 1 };
+static const vec3_t VEC_DOWN = { 0, -2, 0 };
+static const vec3_t MOVEDIR_DOWN = { 0, 0, -1 };
 
+/**
+ * @brief
+ */
 void G_SetMovedir(vec3_t angles, vec3_t movedir)
 {
 	if (VectorCompare(angles, VEC_UP))
@@ -266,7 +246,9 @@ float vectoyaw(vec3_t vec)
 	return yaw;
 }
 
-
+/**
+ * @brief Allocates memory in TAG_LEVEL context for edicts
+ */
 char *G_CopyString(char *in)
 {
 	char *out;
@@ -277,25 +259,25 @@ char *G_CopyString(char *in)
 	return out;
 }
 
-
-void G_InitEdict(edict_t * e)
+/**
+ * @brief
+ * @sa G_Spawn
+ */
+static void G_InitEdict(edict_t * e)
 {
 	e->inuse = qtrue;
 	e->classname = "noclass";
 	e->number = e - g_edicts;
 }
 
-/*
-=================
-G_Spawn
-
-Either finds a free edict, or allocates a new one.
-Try to avoid reusing an entity that was recently freed, because it
-can cause the player to think the entity morphed into something else
-instead of being removed and recreated, which can cause interpolated
-angles and bad trails.
-=================
-*/
+/**
+ * @brief Either finds a free edict, or allocates a new one.
+ * @note Try to avoid reusing an entity that was recently freed, because it
+ * can cause the player to think the entity morphed into something else
+ * instead of being removed and recreated, which can cause interpolated
+ * angles and bad trails.
+ * @sa G_InitEdict
+ */
 edict_t *G_Spawn(void)
 {
 	int i;
@@ -317,14 +299,14 @@ edict_t *G_Spawn(void)
 }
 
 
-/*
-============
-G_RecalcRouting
-============
-*/
 #define ENTLIST_LENGTH 256
-char *entList[ENTLIST_LENGTH];
+static char *entList[ENTLIST_LENGTH];
 
+/**
+ * @brief
+ * @sa G_CompleteRecalcRouting
+ * @sa Grid_RecalcRouting
+ */
 void G_RecalcRouting(edict_t * self)
 {
 	int i;
@@ -340,11 +322,10 @@ void G_RecalcRouting(edict_t * self)
 	gi.GridRecalcRouting(gi.map, self->model, entList);
 }
 
-/*
-============
-G_CompleteRecalcRouting
-============
-*/
+/**
+ * @brief
+ * @sa G_RecalcRouting
+ */
 void G_CompleteRecalcRouting(void)
 {
 	int i;
