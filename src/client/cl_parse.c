@@ -304,11 +304,10 @@ void CL_ParseServerData (void)
 	}
 }
 
-/*
-================
-CL_ParseConfigString
-================
-*/
+/**
+ * @brief
+ * @sa PF_Configstring
+ */
 void CL_ParseConfigString (void)
 {
 	int		i;
@@ -323,6 +322,10 @@ void CL_ParseConfigString (void)
 
 	/* there may be overflows in i==CS_TILES - but thats ok */
 	/* see definition of configstrings and MAX_TILESTRINGS */
+#ifdef PARANOID
+	if (strlen(s) >= MAX_TOKEN_CHARS)
+		Com_Printf("Warning: possible overflow in cl.configstrings[%i] (allowed: %i - used %i)\n", i, MAX_TOKEN_CHARS, strlen(s));
+#endif
 	strcpy (cl.configstrings[i], s);
 
 	/* do something apropriate */
@@ -924,9 +927,9 @@ void CL_InvAmmo( sizebuf_t *sb )
 
 	/* if we're reloading and the displaced clip had any remaining */
 	/* bullets, store them as loose, unless the removed clip was full */
-	if ( curCampaign 
-		 && le->team == cls.team 
-		 &&	ammo == csi.ods[ic->item.t].ammo 
+	if ( curCampaign
+		 && le->team == cls.team
+		 &&	ammo == csi.ods[ic->item.t].ammo
 		 && ic->item.a > 0
 		 && ic->item.a != csi.ods[ic->item.t].ammo ) {
 		ccs.eMission.num_loose[ic->item.m] += ic->item.a;
