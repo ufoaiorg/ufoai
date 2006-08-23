@@ -322,11 +322,15 @@ void CL_ParseConfigString (void)
 
 	/* there may be overflows in i==CS_TILES - but thats ok */
 	/* see definition of configstrings and MAX_TILESTRINGS */
-#ifdef PARANOID
-	if (strlen(s) >= MAX_TOKEN_CHARS)
-		Com_Printf("Warning: possible overflow in cl.configstrings[%i] (allowed: %i - used %i)\n", i, MAX_TOKEN_CHARS, strlen(s));
-#endif
-	strcpy (cl.configstrings[i], s);
+	switch (i) {
+	case CS_TILES:
+	case CS_POSITIONS:
+		Q_strncpyz(cl.configstrings[i], s, MAX_TOKEN_CHARS*MAX_TILESTRINGS);
+		break;
+	default:
+		Q_strncpyz(cl.configstrings[i], s, MAX_TOKEN_CHARS);
+		break;
+	}
 
 	/* do something apropriate */
 	if (i >= CS_LIGHTS && i < CS_LIGHTS+MAX_LIGHTSTYLES)

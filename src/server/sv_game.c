@@ -174,6 +174,7 @@ static void PF_SetModel(edict_t * ent, char *name)
 
 /**
   * @brief
+  * @sa CL_ParseConfigString
   */
 static void PF_Configstring(int index, char *val)
 {
@@ -184,7 +185,17 @@ static void PF_Configstring(int index, char *val)
 		val = "";
 
 	/* change the string in sv */
-	Q_strncpyz(sv.configstrings[index], val, MAX_TOKEN_CHARS);
+	/* there may be overflows in i==CS_TILES - but thats ok */
+	/* see definition of configstrings and MAX_TILESTRINGS */
+	switch (index) {
+	case CS_TILES:
+	case CS_POSITIONS:
+		Q_strncpyz(sv.configstrings[index], val, MAX_TOKEN_CHARS*MAX_TILESTRINGS);
+		break;
+	default:
+		Q_strncpyz(sv.configstrings[index], val, MAX_TOKEN_CHARS);
+		break;
+	}
 
 	if (sv.state != ss_loading) {	/* send the update to everyone */
 		SZ_Clear(&sv.multicast);
