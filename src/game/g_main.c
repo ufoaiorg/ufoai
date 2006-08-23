@@ -341,14 +341,12 @@ void Com_DPrintf(char *msg, ...)
 
 
 /**
- * @brief
+ * @brief If password or spectator_password has changed, update needpass as needed
  */
 void CheckNeedPass(void)
 {
 	int need;
 
-	/* if password or spectator_password has changed, update needpass */
-	/* as needed */
 	if (password->modified || spectator_password->modified) {
 		password->modified = spectator_password->modified = qfalse;
 
@@ -496,7 +494,7 @@ void G_RunFrame(void)
 	/* check for intermission */
 	if (level.intermissionTime && level.time > level.intermissionTime) {
 		G_EndGame(level.winningTeam);
-#if 0 
+#if 0
 /* It still happens that game resulsts are send twice --- dangerous */
 
 		/* if the message gets lost, the game will not end
