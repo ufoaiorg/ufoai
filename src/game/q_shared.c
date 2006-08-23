@@ -2015,7 +2015,7 @@ INVENTORY MANAGEMENT
 
 static csi_t *CSI;
 static invList_t *invUnused;
-static item_t cacheItem = {-1,-1,-1}; /* to crash as soon as possible */
+static item_t cacheItem = {NONE,NONE,NONE}; /* to crash as soon as possible */
 
 /**
  * @brief

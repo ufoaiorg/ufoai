@@ -97,6 +97,8 @@ void G_SendStats(edict_t * ent)
  */
 void G_WriteItem(item_t * item)
 {
+	assert (item->t != NONE);
+
 	gi.WriteByte(item->t);
 	gi.WriteByte(item->a);
 	gi.WriteByte(item->m);
@@ -248,15 +250,19 @@ void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 			gi.WriteByte(check->pnum);
 			gi.WriteGPos(check->pos);
 			gi.WriteByte(check->dir);
-			if (RIGHT(check))
+			if (RIGHT(check)) {
+				assert (RIGHT(check)->item.t != NONE);
 				gi.WriteByte(RIGHT(check)->item.t);
-			else
+			} else {
 				gi.WriteByte(NONE);
+			}
 
-			if (LEFT(check))
+			if (LEFT(check)) {
+				assert (LEFT(check)->item.t != NONE);
 				gi.WriteByte(LEFT(check)->item.t);
-			else
+			} else {
 				gi.WriteByte(NONE);
+			}
 
 			gi.WriteShort(check->body);
 			gi.WriteShort(check->head);
