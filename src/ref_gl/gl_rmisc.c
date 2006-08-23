@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-static byte dottexture[8][8] = {
+static const byte dottexture[8][8] = {
 	{0, 0, 0, 0, 0, 0, 0, 0},
 	{0, 0, 1, 1, 0, 0, 0, 0},
 	{0, 1, 1, 1, 1, 0, 0, 0},
@@ -36,7 +36,7 @@ static byte dottexture[8][8] = {
 	{0, 0, 0, 0, 0, 0, 0, 0},
 };
 
-static byte gridtexture[8][8] = {
+static const byte gridtexture[8][8] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},
 	{1, 0, 0, 0, 0, 0, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 1},
