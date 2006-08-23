@@ -2356,9 +2356,10 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 	if (icp)
 		*icp = ic;
 
-	if (to == CSI->idArmor)
+	if (to == CSI->idArmor) {
+		assert(!Q_strcmp(CSI->ods[cacheItem.t].type, "armor"));
 		return IA_ARMOR;
-	else
+	} else
 		return IA_MOVE;
 }
 
@@ -2529,6 +2530,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 	}
 #endif
 
+	assert(Q_strcmp(CSI->ods[weapon].type, "armor"));
 	item.t = weapon;
 	if (!CSI->ods[weapon].reload) {
 		item.m = item.t; /* no ammo needed, so fire definitions are in t */

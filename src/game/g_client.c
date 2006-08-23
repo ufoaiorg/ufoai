@@ -1607,9 +1607,8 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		ent->HP -= damage > ent->HP ? ent->HP : damage;
 
 	/* check death/knockouth */
-	if (ent->HP == 0 || ent->HP <= ent->STUN) {
-
-		G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN);
+	if (ent->HP <= 0 || ent->HP <= ent->STUN) {
+		G_ActorDie(ent, ent->HP <= 0 ? STATE_DEAD : STATE_STUN);
 
 		/* apply morale changes */
 		if (mor_panic->value)
@@ -1628,9 +1627,7 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 
 		/* check for win conditions */
 		G_CheckEndGame();
-
 	} else {
-
 		if (damage > 0 && mor_panic->value) {
 			G_Morale(ML_WOUND, ent, attacker, damage);
 		}
