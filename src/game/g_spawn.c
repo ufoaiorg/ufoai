@@ -66,7 +66,28 @@ static spawn_t spawns[] = {
 	{NULL, NULL}
 };
 
-field_t fields[] = {
+typedef enum {
+	F_INT,
+	F_FLOAT,
+	F_LSTRING,					/* string on disk, pointer in memory, TAG_LEVEL */
+	F_GSTRING,					/* string on disk, pointer in memory, TAG_GAME */
+	F_VECTOR,
+	F_ANGLEHACK,
+	F_EDICT,					/* index on disk, pointer in memory */
+/*	F_ITEM,				// index on disk, pointer in memory */
+	F_CLIENT,					/* index on disk, pointer in memory */
+	F_FUNCTION,
+	F_IGNORE
+} fieldtype_t;
+
+typedef struct {
+	char *name;
+	size_t ofs;
+	fieldtype_t type;
+	int flags;
+} field_t;
+
+static field_t fields[] = {
 	{"classname", offsetof(edict_t, classname), F_LSTRING},
 	{"model", offsetof(edict_t, model), F_LSTRING},
 	{"spawnflags", offsetof(edict_t, spawnflags), F_INT},
@@ -211,7 +232,7 @@ static void ED_ParseField(char *key, char *value, edict_t * ent)
 			return;
 		}
 	}
-/*	gi.dprintf ("%s is not a field\n", key); */
+	gi.dprintf ("ED_ParseField: %s is not a valid field\n", key);
 }
 
 /**
@@ -275,7 +296,7 @@ void SpawnEntities(char *mapname, char *entities)
 	gi.FreeTags(TAG_LEVEL);
 
 	memset(&level, 0, sizeof(level));
-	memset(g_edicts, 0, game.maxentities * sizeof(g_edicts[0]));
+	memset(g_edicts, 0, game.maxentities * sizeof(edict_t));
 
 	Q_strncpyz(level.mapname, mapname, sizeof(level.mapname));
 
