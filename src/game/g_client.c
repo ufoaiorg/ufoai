@@ -2455,6 +2455,7 @@ void G_ClientTeamInfo(player_t * player)
 				ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 		} else {
 			/* just do nothing with the info */
+			gi.ReadByte();
 			gi.ReadShort();
 			for (k = 0; k < 4; k++)
 				gi.ReadString();
@@ -2464,7 +2465,15 @@ void G_ClientTeamInfo(player_t * player)
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
 				gi.ReadShort();
 			gi.ReadShort();
-			while (gi.ReadByte() != NONE);
+			item.t = gi.ReadByte();
+			while (item.t != NONE) {
+				gi.ReadByte();
+				gi.ReadByte();
+				gi.ReadByte();
+				gi.ReadByte();
+				gi.ReadByte();
+				item.t = gi.ReadByte();
+			}
 		}
 
 		/* find actors */
