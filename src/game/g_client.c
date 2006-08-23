@@ -164,7 +164,7 @@ void G_ResetReactionFire(int team)
 					/* No TUs at all available. */
 					TU_REACTIONS[ent->number] = -1;
 				}
-				
+
 				ent->state &= ~STATE_SHAKEN;	/* STATE_SHAKEN includes STATE_REACTION */
 				ent->state |= STATE_REACTION;	/* re-set STATE_REACTION */
 			} else {
@@ -937,8 +937,8 @@ void G_InventoryToFloor(edict_t * ent)
 		for (ic = ent->i.c[k]; ic; ic = next) {
 			int x, y;
 
-			/* Save the next inv-list before it gets overwritten below. 
-			   Do not put this in the "for" statement, 
+			/* Save the next inv-list before it gets overwritten below.
+			   Do not put this in the "for" statement,
 			   unless you want an endless loop. ;) */
 			next = ic->next;
 			/* find the coordinates for the current item on floor */
@@ -947,7 +947,7 @@ void G_InventoryToFloor(edict_t * ent)
 				assert (y == NONE);
 				/* Run out of space on the floor or the item is armor
 				   --- destroy the offending item.
-				   TODO: for items other than armor we should really 
+				   TODO: for items other than armor we should really
 				   just spill into adjacent locations */
 				if (Q_strncmp(gi.csi->ods[ic->item.t].type, "armor", MAX_VAR))
 					gi.dprintf("G_InventoryToFloor: Warning: could not drop item to floor: %s\n", gi.csi->ods[ic->item.t].kurz);
@@ -1252,14 +1252,14 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 			else {
 				/* Turn off reaction fire and give the soldier back his TUs if it used some. */
 				ent->state &= ~STATE_REACTION;
-				
+
 				if ( TU_REACTIONS[ent->number] > 0) {
 					/* TUs where used for activation. */
 					ent->TU += TU_REACTIONS[ent->number];
 				} else if ( TU_REACTIONS[ent->number] < 0) {
 					/* No TUs where used for activation. */
 					/* Don't give TUs back because none where used up (reaction fire was already active from previous turn) */
-				} else { 
+				} else {
 					/* TU_REACTIONS[ent->number] == 0) */
 					/* This should never be the case.  */
 					Com_DPrintf("G_ClientStateChange: 0 value saved for reaction while reaction is activated.\n");
@@ -1268,7 +1268,7 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 		} else if (G_ActionCheck(player, ent, TU_REACTION)) {
 			/* Turn on reaction fire and save the used TUs to the list. */
 			ent->state |= STATE_REACTION;
-			
+
 			if ( TU_REACTIONS[ent->number] > 0) {
 				/* TUs where saved for this turn (either the full TU_REACTION or some remaining TUs from the shot. This was done either in the last turn or this one. */
 				ent->TU -= TU_REACTIONS[ent->number];
@@ -1276,10 +1276,10 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 				/* Reaction fire was not triggered in the last turn. */
 				ent->TU -= TU_REACTION;
 				TU_REACTIONS[ent->number] = TU_REACTION;
-			}  else { 
+			}  else {
 				/* TU_REACTIONS[ent->number] < 0 */
-				/* Reaction fire was triggered in the last turn, 
-				   and has used 0 TU from this one. 
+				/* Reaction fire was triggered in the last turn,
+				   and has used 0 TU from this one.
 				   Can be activated without TU-loss. */
 			}
 		}
@@ -2415,6 +2415,13 @@ void G_ClientTeamInfo(player_t * player)
 			Q_strncpyz(ent->chr.body, gi.ReadString(), MAX_VAR);
 			Q_strncpyz(ent->chr.head, gi.ReadString(), MAX_VAR);
 			ent->chr.skin = gi.ReadByte();
+#ifdef PARANOID
+			gi.dprintf("G_ClientTeamInfo: name: %s\n", ent->chr.name);
+			gi.dprintf("G_ClientTeamInfo: path: %s\n", ent->chr.path);
+			gi.dprintf("G_ClientTeamInfo: body: %s\n", ent->chr.body);
+			gi.dprintf("G_ClientTeamInfo: head: %s\n", ent->chr.head);
+			gi.dprintf("G_ClientTeamInfo: skin: %i\n", ent->chr.skin);
+#endif
 
 			/* new attributes */
 			for (k = 0; k < SKILL_NUM_TYPES; k++)
@@ -2455,16 +2462,16 @@ void G_ClientTeamInfo(player_t * player)
 				ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 		} else {
 			/* just do nothing with the info */
-			gi.ReadByte();
-			gi.ReadShort();
+			gi.ReadByte(); /* fieldSize */
+			gi.ReadShort(); /* ucn */
 			for (k = 0; k < 4; k++)
-				gi.ReadString();
-			gi.ReadByte();
+				gi.ReadString(); /* name, path, body, head */
+			gi.ReadByte(); /* skin */
 			for (k = 0; k < SKILL_NUM_TYPES; k++)
-				gi.ReadByte();
+				gi.ReadByte(); /* skills */
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
-				gi.ReadShort();
-			gi.ReadShort();
+				gi.ReadShort(); /* kills */
+			gi.ReadShort(); /* assigned missions */
 			item.t = gi.ReadByte();
 			while (item.t != NONE) {
 				gi.ReadByte();
