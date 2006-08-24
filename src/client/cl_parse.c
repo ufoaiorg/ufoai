@@ -815,11 +815,9 @@ void CL_PlaceItem( le_t *le )
 }
 
 
-/*
-=====================
-CL_InvAdd
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_InvAdd( sizebuf_t *sb )
 {
 	item_t	item;

@@ -1278,7 +1278,7 @@ void CL_GameSave(char *filename, char *comment)
 					CL_SendItem(&sb, ic->item, j, ic->x, ic->y);
 			/* terminate list for one employee*/
 			MSG_WriteByte(&sb, NONE);
-			}
+		}
 
 	/* store message system items */
 	for (i = 0, message = messageStack; message; i++, message = message->next);
