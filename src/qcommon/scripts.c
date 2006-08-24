@@ -547,7 +547,7 @@ char *Com_GiveName(int gender, char *category)
 
 /**
  * @brief
- * @param[in] type
+ * @param[in] type MODEL_PATH, MODEL_BODY, MODEL_HEAD, MODEL_SKIN (path, body, head, skin - see team_*.ufo)
  * @param[in] gender 1 (female) or 2 (male)
  * @param[in] category country strings like: spanish_italian, german, russian and so on
  * @sa Com_GetModelAndName
@@ -566,7 +566,9 @@ char *Com_GiveModel(int type, int gender, char *category)
 				Com_Printf("Com_GiveModel: no models defined for gender %i and category '%s'\n", gender, category);
 				return NULL;
 			}
-			num = (rand() % nc->numModels[gender]) * 4;
+			/* search one of the model definitions */
+			num = (rand() % nc->numModels[gender]) * MODEL_NUM_TYPES;
+			/* now go to the type entry from team_*.ufo */
 			num += type;
 
 			/* skip models and unwanted info */
@@ -626,40 +628,31 @@ int Com_GetModelAndName(char *team, character_t * chr)
 			category = (int) td->cats[rand() % td->num];
 
 		/* get name */
-		if (chr->name) {
-			str = Com_GiveName(gender, nameCat[category].title);
-			if (!str)
-				continue;
-			Q_strncpyz(chr->name, str, MAX_VAR);
-			Q_strcat(chr->name, " ", MAX_VAR);
-
-			str = Com_GiveName(gender + LASTNAME, nameCat[category].title);
-			if (!str)
-				continue;
-			Q_strcat(chr->name, str, MAX_VAR);
-		}
+		str = Com_GiveName(gender, nameCat[category].title);
+		if (!str)
+			continue;
+		Q_strncpyz(chr->name, str, MAX_VAR);
+		Q_strcat(chr->name, " ", MAX_VAR);
+		str = Com_GiveName(gender + LASTNAME, nameCat[category].title);
+		if (!str)
+			continue;
+		Q_strcat(chr->name, str, MAX_VAR);
 
 		/* get model */
-		if (chr->path) {
-			str = Com_GiveModel(MODEL_PATH, gender, nameCat[category].title);
-			if (!str)
-				continue;
-			Q_strncpyz(chr->path, str, MAX_VAR);
-		}
+		str = Com_GiveModel(MODEL_PATH, gender, nameCat[category].title);
+		if (!str)
+			continue;
+		Q_strncpyz(chr->path, str, MAX_VAR);
 
-		if (chr->body) {
-			str = Com_GiveModel(MODEL_BODY, gender, nameCat[category].title);
-			if (!str)
-				continue;
-			Q_strncpyz(chr->body, str, MAX_VAR);
-		}
+		str = Com_GiveModel(MODEL_BODY, gender, nameCat[category].title);
+		if (!str)
+			continue;
+		Q_strncpyz(chr->body, str, MAX_VAR);
 
-		if (chr->head) {
-			str = Com_GiveModel(MODEL_HEAD, gender, nameCat[category].title);
-			if (!str)
-				continue;
-			Q_strncpyz(chr->head, str, MAX_VAR);
-		}
+		str = Com_GiveModel(MODEL_HEAD, gender, nameCat[category].title);
+		if (!str)
+			continue;
+		Q_strncpyz(chr->head, str, MAX_VAR);
 
 		str = Com_GiveModel(MODEL_SKIN, gender, nameCat[category].title);
 		if (!str)
