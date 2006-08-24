@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -45,11 +45,6 @@ void CL_Frame (int msec)
 
 void CL_ParseClientData (char *type, char *name, char **text)
 {
-}
-
-int CL_GetModelInTeam ( char *team, char *body, char *head )
-{
-    return 0;
 }
 
 void Con_Print (char *text)
