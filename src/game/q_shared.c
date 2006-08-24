@@ -2179,6 +2179,7 @@ invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x
 	invUnused = invUnused->next;
 	i->c[container]->next = ic;
 	ic = i->c[container];
+	Com_Printf("Add to container %i: %s\n", container, CSI->ods[item.t].kurz);
 
 	/* set the data */
 	ic->item = item;
@@ -2888,9 +2889,11 @@ char *Com_CharGetBody(character_t * chr)
 #endif
 
 	/* models of UGVs don't change - because they are already armored */
-	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL)
+	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
+		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmor]->item.t].type, "armor"));
+		Com_Printf("Com_CharGetBody: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz);
 		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->body);
-	else
+	} else
 		Com_sprintf(returnModel, MAX_VAR, "%s/%s", chr->path, chr->body);
 	return returnModel;
 }
@@ -2915,9 +2918,11 @@ char *Com_CharGetHead(character_t * chr)
 #endif
 
 	/* models of UGVs don't change - because they are already armored */
-	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL)
+	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
+		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmor]->item.t].type, "armor"));
+		Com_Printf("Com_CharGetHead: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz);
 		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->head);
-	else
+	} else
 		Com_sprintf(returnModel, MAX_VAR, "%s/%s", chr->path, chr->head);
 	return returnModel;
 }

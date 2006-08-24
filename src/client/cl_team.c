@@ -1177,6 +1177,7 @@ void CL_ResetTeams(void)
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
 {
 	assert (item.t != NONE);
+	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].kurz, container, item.t, item.a, item.m, x, y);
 	MSG_WriteFormat(buf, "bbbbbb", item.t, item.a, item.m, container, x, y);
 }
 
@@ -1465,7 +1466,7 @@ void CL_ParseResults(sizebuf_t * buf)
 		}
 		for (i = 0; i < csi.numODs; i++) {
 			if ( eSupplies->num[i]
-				 > (rand() % 60 
+				 > (rand() % 60
 					+ ccs.eMarket.num[i] * 10 * frand()) ) /* supply-demand */
 				ccs.eMarket.num[i] += (2.0 + eSupplies->num[i] / 3.0) * frand();
 		}

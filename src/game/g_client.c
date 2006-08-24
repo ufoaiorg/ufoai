@@ -2439,10 +2439,13 @@ void G_ClientTeamInfo(player_t * player)
 				item.a = gi.ReadByte();
 				item.m = gi.ReadByte();
 				container = gi.ReadByte();
+				assert(container < gi.csi->numIDs);
 				x = gi.ReadByte();
 				y = gi.ReadByte();
+				gi.dprintf("G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y);
 
 				Com_AddToInventory(&ent->i, item, container, x, y);
+				gi.dprintf("G_ClientTeamInfo: add %s to inventory (container %i - idArmor: %i)\n", gi.csi->ods[ent->i.c[container]->item.t].kurz, container, gi.csi->idArmor);
 
 				/* get next item */
 				item.t = gi.ReadByte();
