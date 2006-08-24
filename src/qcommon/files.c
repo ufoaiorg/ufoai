@@ -747,7 +747,7 @@ char **FS_ListFiles(char *findname, int *numfiles, unsigned musthave, unsigned c
 		if (s[strlen(s) - 1] != '.') {
 			Q_strncpyz(tempList[nfiles], s, MAX_OSPATH);
 #ifdef _WIN32
-			Q_strlwr(list[nfiles]);
+			Q_strlwr(tempList[nfiles]);
 #endif
 			nfiles++;
 		}
