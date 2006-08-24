@@ -120,6 +120,9 @@ static cvar_t *freelook;
 /* stencilbuffer shadows */
 qboolean have_stencil = qfalse;
 
+/**
+ * @brief
+ */
 static Cursor CreateNullCursor(Display *display, Window root)
 {
 	Pixmap cursormask;
@@ -142,6 +145,10 @@ static Cursor CreateNullCursor(Display *display, Window root)
 	return cursor;
 }
 
+/**
+ * @brief
+ * @sa uninstall_grabs
+ */
 static void install_grabs(void)
 {
 	/* inviso cursor */
@@ -183,6 +190,10 @@ static void install_grabs(void)
 	XSync(dpy, True);
 }
 
+/**
+ * @brief
+ * @sa install_grabs
+ */
 static void uninstall_grabs(void)
 {
 	if (!dpy || !win)
@@ -204,6 +215,10 @@ static void uninstall_grabs(void)
 	mouse_active = qfalse;
 }
 
+/**
+ * @brief
+ * @sa RW_IN_Shutdown
+ */
 void RW_IN_Init(in_state_t *in_state_p)
 {
 	in_state = in_state_p;
@@ -229,6 +244,10 @@ void RW_IN_Init(in_state_t *in_state_p)
 	mouse_avail = qtrue;
 }
 
+/**
+ * @brief
+ * @sa RW_IN_Init
+ */
 void RW_IN_Shutdown(void)
 {
 	RW_IN_Activate (qfalse);
@@ -872,15 +891,12 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	return rserr_ok;
 }
 
-/*
-** GLimp_Shutdown
-**
-** This routine does all OS specific shutdown procedures for the OpenGL
-** subsystem.  Under OpenGL this means NULLing out the current DC and
-** HGLRC, deleting the rendering context, and releasing the DC acquired
-** for the window.  The state structure is also nulled out.
-**
-*/
+/**
+ * @brief This routine does all OS specific shutdown procedures for the OpenGL subsystem.
+ * @note Under OpenGL this means NULLing out the current DC and
+ * HGLRC, deleting the rendering context, and releasing the DC acquired
+ * for the window.  The state structure is also nulled out.
+ */
 void GLimp_Shutdown( void )
 {
 	uninstall_grabs();
@@ -907,13 +923,12 @@ void GLimp_Shutdown( void )
 	ctx = NULL;
 }
 
-/*
-** XErrorHandler (ioq3)
-**   the default X error handler exits the application
-**   I found out that on some hosts some operations would raise X errors (GLXUnsupportedPrivateRequest)
-**   but those don't seem to be fatal .. so the default would be to just ignore them
-**   our implementation mimics the default handler behaviour (not completely cause I'm lazy)
-*/
+/**
+ * @brief the default X error handler exits the application
+ * @note I found out that on some hosts some operations would raise X errors (GLXUnsupportedPrivateRequest)
+ * but those don't seem to be fatal .. so the default would be to just ignore them
+ * our implementation mimics the default handler behaviour (not completely cause I'm lazy)
+ */
 int qXErrorHandler(Display *dpy, XErrorEvent *ev)
 {
 	static char buf[1024];
@@ -925,6 +940,10 @@ int qXErrorHandler(Display *dpy, XErrorEvent *ev)
 	return 0;
 }
 
+/**
+ * @brief
+ * @sa InitSig
+ */
 static void signal_handler(int sig)
 {
 	printf("Received signal %d, exiting...\n", sig);
@@ -932,6 +951,9 @@ static void signal_handler(int sig)
 	exit(0);
 }
 
+/**
+ * @brief
+ */
 void InitSig(void)
 {
 	signal(SIGHUP, signal_handler);
@@ -945,12 +967,9 @@ void InitSig(void)
 	signal(SIGTERM, signal_handler);
 }
 
-/*
-** GLimp_Init
-**
-** This routine is responsible for initializing the OS specific portions
-** of OpenGL.
-*/
+/**
+ * @brief This routine is responsible for initializing the OS specific portions of OpenGL.
+ */
 qboolean GLimp_Init( void *hinstance, void *wndproc )
 {
 	InitSig();
@@ -961,29 +980,26 @@ qboolean GLimp_Init( void *hinstance, void *wndproc )
 	return qtrue;
 }
 
-/*
-** GLimp_BeginFrame
-*/
+/**
+ * @brief
+ */
 void GLimp_BeginFrame( float camera_seperation )
 {
 }
 
-/*
-** GLimp_EndFrame
-**
-** Responsible for doing a swapbuffers and possibly for other stuff
-** as yet to be determined.  Probably better not to make this a GLimp
-** function and instead do a call to GLimp_SwapBuffers.
-*/
+/**
+ * @brief Responsible for doing a swapbuffers and possibly for other stuff as yet to be determined.
+ * @note Probably better not to make this a GLimp function and instead do a call to GLimp_SwapBuffers.
+ */
 void GLimp_EndFrame (void)
 {
 	qglFlush();
 	qglXSwapBuffers(dpy, win);
 }
 
-/*
-** GLimp_SetGamma
-*/
+/**
+ * @brief
+ */
 void GLimp_SetGamma(void)
 {
 #ifdef HAVE_XF86_VIDMODE
@@ -999,9 +1015,9 @@ void GLimp_SetGamma(void)
 #endif /* HAVE_XF86_VIDMODE */
 }
 
-/*
-** GLimp_AppActivate
-*/
+/**
+ * @brief
+ */
 void GLimp_AppActivate( qboolean active )
 {
 }

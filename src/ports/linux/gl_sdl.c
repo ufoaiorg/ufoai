@@ -38,8 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 glwstate_t glw_state;
 
-/*****************************************************************************/
-
 static qboolean SDL_active = qfalse;
 
 qboolean have_stencil = qfalse;
@@ -82,10 +80,16 @@ int mx, my, mouse_buttonstate;
 
 /* this is inside the renderer shared lib, so these are called from vid_so */
 
+/**
+ * @brief
+ */
 void RW_IN_PlatformInit( void )
 {
 }
 
+/**
+ * @brief
+ */
 void RW_IN_Activate(qboolean active)
 {
 	mouse_active = qtrue;
@@ -281,6 +285,9 @@ int SDLateKey(SDL_KeyboardEvent sdlke)
 	return key;
 }
 
+/**
+ * @brief
+ */
 void GetEvent(SDL_Event *event)
 {
 	unsigned int key;
@@ -378,12 +385,18 @@ void GetEvent(SDL_Event *event)
 }
 
 #if 0
+/**
+ * @brief
+ */
 void *GLimp_GetProcAddress(const char *func)
 {
 	return SDL_GL_GetProcAddress(func);
 }
 #endif
 
+/**
+ * @brief
+ */
 static void signal_handler(int sig)
 {
 	printf("Received signal %d, exiting...\n", sig);
@@ -391,6 +404,9 @@ static void signal_handler(int sig)
 	exit(0);
 }
 
+/**
+ * @brief
+ */
 void InitSig(void)
 {
 	signal(SIGHUP, signal_handler);
@@ -404,6 +420,9 @@ void InitSig(void)
 	signal(SIGTERM, signal_handler);
 }
 
+/**
+ * @brief
+ */
 qboolean GLimp_Init( void *hInstance, void *wndProc )
 {
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_CDROM|SDL_INIT_VIDEO) == 0) {
@@ -426,6 +445,9 @@ qboolean GLimp_Init( void *hInstance, void *wndProc )
 	return qtrue;
 }
 
+/**
+ * @brief
+ */
 static void SetSDLIcon( void )
 {
 #include "ufoicon.xbm"
@@ -537,18 +559,24 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 	return qtrue;
 }
 
+/**
+ * @brief
+ */
 void GLimp_BeginFrame( float camera_seperation )
 {
 }
 
+/**
+ * @brief
+ */
 void GLimp_EndFrame (void)
 {
 	SDL_GL_SwapBuffers();
 }
 
-/*
-** GLimp_SetMode
-*/
+/**
+ * @brief
+ */
 rserr_t GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen )
 {
 	ri.Con_Printf (PRINT_ALL, "setting mode %d:", mode );
@@ -568,9 +596,9 @@ rserr_t GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, qb
 	return rserr_ok;
 }
 
-/*
-** GLimp_SetGamma
-*/
+/**
+ * @brief
+ */
 void GLimp_SetGamma(void)
 {
 	float g;
@@ -579,6 +607,9 @@ void GLimp_SetGamma(void)
 	SDL_SetGamma(g, g, g);
 }
 
+/**
+ * @brief
+ */
 void GLimp_Shutdown( void )
 {
 	if (surface)
@@ -595,11 +626,12 @@ void GLimp_Shutdown( void )
 	SDL_active = qfalse;
 }
 
+/**
+ * @brief
+ */
 void GLimp_AppActivate( qboolean active )
 {
 }
-
-/*=============================================================================== */
 
 /*****************************************************************************/
 /* KEYBOARD                                                                  */
@@ -607,12 +639,19 @@ void GLimp_AppActivate( qboolean active )
 
 Key_Event_fp_t Key_Event_fp;
 
+/**
+ * @brief
+ * @sa KBD_Close
+ */
 void KBD_Init(Key_Event_fp_t fp)
 {
 	Key_Event_fp = fp;
 	RW_IN_PlatformInit();
 }
 
+/**
+ * @brief
+ */
 void KBD_Update(void)
 {
 	SDL_Event event;
@@ -651,6 +690,10 @@ void KBD_Update(void)
 	KBD_Update_Flag = 0;
 }
 
+/**
+ * @brief
+ * @sa KBD_Close
+ */
 void KBD_Close(void)
 {
 	keyq_head = 0;
@@ -659,6 +702,10 @@ void KBD_Close(void)
 	memset(keyq, 0, sizeof(keyq));
 }
 
+/**
+ * @brief
+ * @sa RW_IN_Shutdown
+ */
 void RW_IN_Init(in_state_t *in_state_p)
 {
 	in_state = in_state_p;
@@ -680,6 +727,10 @@ void RW_IN_Init(in_state_t *in_state_p)
 	mouse_avail = qtrue;
 }
 
+/**
+ * @brief
+ * @sa RW_IN_Init
+ */
 void RW_IN_Shutdown(void)
 {
 	RW_IN_Activate (qfalse);
@@ -688,26 +739,25 @@ void RW_IN_Shutdown(void)
 		mouse_avail = qfalse;
 }
 
-/*
-===========
-IN_Commands
-===========
-*/
+/**
+ * @brief
+ */
 void RW_IN_Commands (void)
 {
 }
 
-/*
-===========
-IN_GetMousePos
-===========
-*/
+/**
+ * @brief
+ */
 void RW_IN_GetMousePos (int *x, int *y)
 {
 	*x = mx / vid.rx;
 	*y = my / vid.ry;
 }
 
+/**
+ * @brief
+ */
 void RW_IN_Frame (void)
 {
 }
