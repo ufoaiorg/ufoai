@@ -142,6 +142,7 @@ typedef uint8_t byte;
 
 #define	MAX_QPATH			64	/* max length of a quake game pathname */
 #define	MAX_OSPATH			128	/* max length of a filesystem pathname */
+#define MAX_FILES			512 /* max files in a directory */
 
 /* per-level limits */
 /* 25 - bases are 5*5 */
@@ -348,6 +349,8 @@ int Q_strcmp(char *s1, char *s2);
 int Q_stricmp(char *s1, char *s2);
 int Q_strcasecmp(char *s1, char *s2);
 int Q_strncasecmp(char *s1, char *s2, size_t n);
+
+int Q_StringSort(const void *string1, const void *string2);
 
 #ifndef DEBUG
 void Q_strncpyz(char *dest, const char *src, size_t destsize);

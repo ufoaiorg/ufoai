@@ -67,6 +67,30 @@ char *pa_format[] =
 /*===========================================================================*/
 
 /**
+ * @brief Sorts some strings
+ * @note sort function pointer for qsort
+ */
+int Q_StringSort(const void *string1, const void *string2)
+{
+	if(*(char *)string1 < *(char *)string2)
+		return -1;
+	else if(*(char *)string1 == *(char *)string2) {
+		while(*(char *)string1) {
+			string1++;
+			string2++;
+			if(*(char *)string1 < *(char *)string2)
+				return -1;
+			else if(*(char *)string1 == *(char *)string2) {
+				;
+			} else
+				return 1;
+		}
+		return 0;
+	} else
+		return 1;
+}
+
+/**
  * @brief
  */
 int AngleToDV(int angle)

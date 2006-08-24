@@ -1,3 +1,11 @@
+/**
+ * @file files.c
+ * @brief All of Quake's data access is through a hierchal file system, but the contents of the file system can be transparently merged from several sources.
+ * The "base directory" is the path to the directory holding the quake.exe and all game directories.  The sys_* files pass this to host_init in quakeparms_t->basedir.  This can be overridden with the "-basedir" command line parm to allow code debugging in a different directory.  The base directory is
+ * only used during filesystem initialization.
+ * The "game directory" is the first tree on the search path and directory that all generated files (savegames, screenshots, demos, config files) will be saved to.  This can be overridden with the "-game" command line parameter.  The game directory can never be changed while quake is executing.  This is a precacution against having a malicious server instruct clients to write files over areas they shouldn't.
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -58,20 +66,9 @@ searchpath_t *fs_searchpaths;
 searchpath_t *fs_base_searchpaths;	/* without gamedirs */
 
 
-/*
-
-All of Quake's data access is through a hierchal file system, but the contents of the file system can be transparently merged from several sources.
-
-The "base directory" is the path to the directory holding the quake.exe and all game directories.  The sys_* files pass this to host_init in quakeparms_t->basedir.  This can be overridden with the "-basedir" command line parm to allow code debugging in a different directory.  The base directory is
-only used during filesystem initialization.
-
-The "game directory" is the first tree on the search path and directory that all generated files (savegames, screenshots, demos, config files) will be saved to.  This can be overridden with the "-game" command line parameter.  The game directory can never be changed while quake is executing.  This is a precacution against having a malicious server instruct clients to write files over areas they shouldn't.
-
-*/
-
-/*
-** wildcard string comparing
-*/
+/**
+ * @brief
+ */
 qboolean strwildcomp(const char *string, const char *pattern)
 {
 	const char *s = 0;
@@ -111,19 +108,18 @@ qboolean strwildcomp(const char *string, const char *pattern)
 	}
 }
 
-/*
-** write paths in a normal form
-*/
+/**
+ * @brief
+ * @sa Sys_NormPath
+ */
 void FS_NormPath(char *path)
 {
 	Sys_NormPath(path);
 }
 
-/*
-================
-FS_filelength
-================
-*/
+/**
+ * @brief
+ */
 int FS_filelength(FILE * f)
 {
 	int pos;
@@ -137,13 +133,10 @@ int FS_filelength(FILE * f)
 	return end;
 }
 
-/*
-============
-FS_CreatePath
-
-Creates any directories needed to store the given filename
-============
-*/
+/**
+ * @brief Creates any directories needed to store the given filename
+ * @sa Sys_Mkdir
+ */
 void FS_CreatePath(char *path)
 {
 	char *ofs;
@@ -158,39 +151,28 @@ void FS_CreatePath(char *path)
 	}
 }
 
-/*
-==============
-FS_FCloseFile
-
-For some reason, other dll's can't just cal fclose()
-on files returned by FS_FOpenFile...
-==============
-*/
+/**
+ * @brief For some reason, other dll's can't just call fclose()
+ * on files returned by FS_FOpenFile...
+ */
 void FS_FCloseFile(FILE * f)
 {
 	fclose(f);
 }
 
-/*
-==============
-Developer_searchpath
-==============
-*/
+/**
+ * @brief
+ */
 int Developer_searchpath(int who)
 {
 	return (0);
 }
 
-/*
-===========
-FS_FOpenFileSingle
-
-Finds the file in the search path.
-returns filesize and an open FILE *
-Used for streaming data out of either a pak file or
-a seperate file.
-===========
-*/
+/**
+ * @brief Finds the file in the search path.
+ * @return filesize and an open FILE *
+ * @note Used for streaming data out of either a pak file or a seperate file.
+ */
 int file_from_pak = 0;
 int FS_FOpenFileSingle(const char *filename, FILE ** file)
 {
@@ -249,12 +231,9 @@ int FS_FOpenFileSingle(const char *filename, FILE ** file)
 	return -1;
 }
 
-/*
-=================
-FS_Seek
-
-=================
-*/
+/**
+ * @brief
+ */
 int FS_Seek(FILE * f, long offset, int origin)
 {
 	int _origin;
@@ -277,6 +256,9 @@ int FS_Seek(FILE * f, long offset, int origin)
 	return fseek(f, offset, _origin);
 }
 
+/**
+ * @brief
+ */
 int FS_FOpenFile(const char *filename, FILE ** file)
 {
 	int result, len;
@@ -293,11 +275,9 @@ int FS_FOpenFile(const char *filename, FILE ** file)
 	return result;
 }
 
-/*
-===========
-FS_SV_FOpenFileRead
-===========
-*/
+/**
+ * @brief
+ */
 int FS_FOpenFileRead(const char *filename, FILE ** f)
 {
 	char *ospath = NULL;
@@ -314,11 +294,9 @@ int FS_FOpenFileRead(const char *filename, FILE ** f)
 }
 
 
-/*
-===========
-FS_FOpenFileWrite
-===========
-*/
+/**
+ * @brief
+ */
 int FS_FOpenFileWrite(const char *filename, FILE ** f)
 {
 	int len;
@@ -331,14 +309,10 @@ int FS_FOpenFileWrite(const char *filename, FILE ** f)
 }
 
 
-/*
-=================
-FS_CheckFile
-
-Just returns the filelength and -1 if the file wasn't found
-Won't print any errors
-=================
-*/
+/**
+ * @brief Just returns the filelength and -1 if the file wasn't found
+ * @note Won't print any errors
+ */
 int FS_CheckFile(const char *filename)
 {
 	int result;
@@ -351,16 +325,12 @@ int FS_CheckFile(const char *filename)
 	return result;
 }
 
-/*
-=================
-FS_Read
-
-Properly handles partial reads
-=================
-*/
 void CDAudio_Stop(void);
 
 #define	MAX_READ	0x10000		/* read in blocks of 64k */
+/**
+ * @brief Properly handles partial reads
+ */
 void FS_Read(void *buffer, int len, FILE * f)
 {
 	int block, remaining;
@@ -397,15 +367,11 @@ void FS_Read(void *buffer, int len, FILE * f)
 	}
 }
 
-/*
-============
-FS_LoadFile
-
-Filename are reletive to the quake search path
-a null buffer will just return the file length without loading
-a -1 length means that the file is not present
-============
-*/
+/**
+ * @briefFilename are reletive to the quake search path
+ * a null buffer will just return the file length without loading
+ * a -1 length means that the file is not present
+ */
 int FS_LoadFile(char *path, void **buffer)
 {
 	FILE *h;
@@ -438,26 +404,20 @@ int FS_LoadFile(char *path, void **buffer)
 	return len;
 }
 
-/*
-=============
-FS_FreeFile
-=============
-*/
+/**
+ * @brief
+ */
 void FS_FreeFile(void *buffer)
 {
 	Z_Free(buffer);
 }
 
-/*
-=================
-FS_LoadPackFile
-
-Takes an explicit (not game tree related) path to a pak file.
-
-Loads the header and directory, adding the files at the beginning
-of the list so they override previous pack files.
-=================
-*/
+/**
+ * @brief Takes an explicit (not game tree related) path to a pak file.
+ *
+ * Loads the header and directory, adding the files at the beginning
+ * of the list so they override previous pack files.
+ */
 pack_t *FS_LoadPackFile(char *packfile)
 {
 	dpak3header_t temp;
@@ -618,13 +578,9 @@ void FS_AddGameDirectory(char *dir)
 	}
 }
 
-/*
-============
-FS_Gamedir
-
-Called to find where to write a file (demos, savegames, etc)
-============
-*/
+/**
+ * @brief Called to find where to write a file (demos, savegames, etc)
+ */
 char *FS_Gamedir(void)
 {
 	if (*fs_gamedir)
@@ -633,14 +589,11 @@ char *FS_Gamedir(void)
 		return BASEDIRNAME;
 }
 
-/*================
-FS_AddHomeAsGameDirectory
-
-Use ~/.ufoai/dir as fs_gamedir
-
-TODO: Put this in each port dir
-================
-*/
+/**
+ * @brief
+ * @note e.g. *nix: Use ~/.ufoai/dir as fs_gamedir
+ * @sa Sys_GetHomeDirectory
+ */
 void FS_AddHomeAsGameDirectory(char *dir)
 {
 	char gdir[MAX_OSPATH];
@@ -657,13 +610,9 @@ void FS_AddHomeAsGameDirectory(char *dir)
 	}
 }
 
-
-
-/*
-=============
-FS_ExecAutoexec
-=============
-*/
+/**
+ * @brief
+ */
 void FS_ExecAutoexec(void)
 {
 	char *dir;
@@ -680,13 +629,9 @@ void FS_ExecAutoexec(void)
 }
 
 
-/*
-================
-FS_SetGamedir
-
-Sets the gamedir and path to a different directory.
-================
-*/
+/**
+ * @brief Sets the gamedir and path to a different directory.
+ */
 void FS_SetGamedir(char *dir)
 {
 	searchpath_t *next;
@@ -726,13 +671,9 @@ void FS_SetGamedir(char *dir)
 }
 
 
-/*
-================
-FS_Link_f
-
-Creates a filelink_t
-================
-*/
+/**
+ * @brief Creates a filelink_t
+ */
 void FS_Link_f(void)
 {
 	filelink_t *l, **prev;
@@ -769,14 +710,18 @@ void FS_Link_f(void)
 }
 
 
-/*
-** FS_ListFiles
-*/
+/**
+ * @brief Builds a qsorted filelist
+ * @sa Sys_FindFirst
+ * @sa Sys_FindNext
+ * @sa Sys_FindClose
+ */
 char **FS_ListFiles(char *findname, int *numfiles, unsigned musthave, unsigned canthave)
 {
 	char *s;
-	int nfiles = 0;
-	char **list = 0;
+	int nfiles = 0, i;
+	char **list = NULL;
+	char tempList[MAX_FILES][MAX_OSPATH];
 
 	s = Sys_FindFirst(findname, musthave, canthave);
 	while (s) {
@@ -789,17 +734,18 @@ char **FS_ListFiles(char *findname, int *numfiles, unsigned musthave, unsigned c
 	if (!nfiles)
 		return NULL;
 
-	nfiles++;					/* add space for a guard */
+	nfiles++; /* add space for a guard */
 	*numfiles = nfiles;
 
-	list = malloc(sizeof(char *) * nfiles);
-	memset(list, 0, sizeof(char *) * nfiles);
+	list = malloc(sizeof(char*)*nfiles);
+	memset(list, 0, sizeof(char*)*nfiles);
+	memset(tempList, 0, sizeof(tempList));
 
 	s = Sys_FindFirst(findname, musthave, canthave);
 	nfiles = 0;
 	while (s) {
 		if (s[strlen(s) - 1] != '.') {
-			list[nfiles] = Q_strdup(s);
+			Q_strncpyz(tempList[nfiles], s, MAX_OSPATH);
 #ifdef _WIN32
 			Q_strlwr(list[nfiles]);
 #endif
@@ -809,12 +755,17 @@ char **FS_ListFiles(char *findname, int *numfiles, unsigned musthave, unsigned c
 	}
 	Sys_FindClose();
 
+	qsort(tempList, nfiles, MAX_OSPATH, Q_StringSort);
+	for (i=0; i<nfiles; i++) {
+		list[i] = Q_strdup(tempList[i]);
+	}
+
 	return list;
 }
 
-/*
-** FS_Dir_f
-*/
+/**
+ * @brief
+ */
 void FS_Dir_f(void)
 {
 	char *path = NULL;
@@ -850,12 +801,9 @@ void FS_Dir_f(void)
 	};
 }
 
-/*
-============
-FS_Path_f
-
-============
-*/
+/**
+ * @brief
+ */
 void FS_Path_f(void)
 {
 	searchpath_t *s;
@@ -876,13 +824,9 @@ void FS_Path_f(void)
 		Com_Printf("%s : %s\n", l->from, l->to);
 }
 
-/*
-================
-FS_NextPath
-
-Allows enumerating all of the directories in the search path
-================
-*/
+/**
+ * @brief Allows enumerating all of the directories in the search path
+ */
 char *FS_NextPath(char *prevpath)
 {
 	searchpath_t *s;
@@ -904,11 +848,9 @@ char *FS_NextPath(char *prevpath)
 }
 
 
-/*
-================
-FS_InitFilesystem
-================
-*/
+/**
+ * @brief
+ */
 void FS_InitFilesystem(void)
 {
 	Cmd_AddCommand("path", FS_Path_f);
@@ -935,11 +877,6 @@ void FS_InitFilesystem(void)
 }
 
 
-/*
-================
-FS_BuildFileList
-================
-*/
 #define FL_BLOCKSIZE	1024
 typedef struct listBlock_s {
 	char path[MAX_QPATH];
@@ -947,8 +884,12 @@ typedef struct listBlock_s {
 	struct listBlock_s *next;
 } listBlock_t;
 
-listBlock_t *fs_blocklist = NULL;
+static listBlock_t *fs_blocklist = NULL;
 
+/**
+ * @brief Build a filelist
+ * @param[in] fileList e.g. ufos\*.ufo to get all ufo files in the gamedir/ufos dir
+ */
 void FS_BuildFileList(char *fileList)
 {
 	listBlock_t *block, *tblock;
@@ -1061,11 +1002,9 @@ void FS_BuildFileList(char *fileList)
 }
 
 
-/*
-================
-FS_SkipBlock
-================
-*/
+/**
+ * @brief
+ */
 void FS_SkipBlock(char **text)
 {
 	char *token;
@@ -1082,11 +1021,9 @@ void FS_SkipBlock(char **text)
 	} while (depth && *text);
 }
 
-/*
-================
-FS_NextScriptHeader
-================
-*/
+/**
+ * @brief
+ */
 static char lastList[MAX_QPATH] = "";
 listBlock_t *lBlock;
 char *lFile = NULL;
@@ -1095,6 +1032,9 @@ char *lBuffer = NULL;
 static char headerType[32];
 static char headerName[32];
 
+/**
+ * @brief
+ */
 char *FS_NextScriptHeader(char *files, char **name, char **text)
 {
 	listBlock_t *block;
@@ -1186,12 +1126,10 @@ int anzInstalledMaps = 0;
 qboolean mapsInstalledInit = qfalse;
 int mapInstalledIndex = 0;
 
-/*
-================
-FS_GetMaps
-================
-*/
 #define MAX_MAPNAME_LENGTH 256
+/**
+ * @brief
+ */
 void FS_GetMaps(void)
 {
 	char name[MAX_OSPATH];
@@ -1232,13 +1170,9 @@ void FS_GetMaps(void)
 	Sys_FindClose();
 }
 
-/*
-=================
-FS_Write
-
-Properly handles partial writes
-=================
-*/
+/**
+ * @brief Properly handles partial writes
+ */
 int FS_Write(const void *buffer, int len, FILE * f)
 {
 	int block, remaining;
@@ -1278,11 +1212,9 @@ int FS_Write(const void *buffer, int len, FILE * f)
 }
 
 
-/*
-=================
-FS_WriteFile
-=================
-*/
+/**
+ * @brief
+ */
 int FS_WriteFile(const void *buffer, int len, const char *filename)
 {
 	FILE *f;
@@ -1299,13 +1231,9 @@ int FS_WriteFile(const void *buffer, int len, const char *filename)
 	return 0;
 }
 
-/*
-=================
-FS_GetCwd
-
-Return current working dir
-=================
-*/
+/**
+ * @brief Return current working dir
+ */
 char *FS_GetCwd(void)
 {
 	static char buf[MAX_QPATH];
@@ -1319,11 +1247,9 @@ char *FS_GetCwd(void)
 	}
 }
 
-/*
-==============
-FS_FileExists
-==============
-*/
+/**
+ * @brief
+ */
 qboolean FS_FileExists(char *filename)
 {
 #ifdef _WIN32
