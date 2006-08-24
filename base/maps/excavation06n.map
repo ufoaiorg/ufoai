@@ -11825,3 +11825,28 @@
 "_color" "1 1 1"
 "origin" "-48 1264 92"
 }
+// entity 193
+{
+"classname" "info_civilian_start"
+"origin" "848 -176 90"
+}
+// entity 194
+{
+"classname" "info_civilian_start"
+"origin" "-16 16 90"
+}
+// entity 195
+{
+"classname" "info_civilian_start"
+"origin" "624 152 90"
+}
+// entity 196
+{
+"classname" "info_civilian_start"
+"origin" "-16 720 90"
+}
+// entity 197
+{
+"classname" "info_civilian_start"
+"origin" "592 528 90"
+}
