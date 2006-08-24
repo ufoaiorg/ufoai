@@ -530,13 +530,38 @@ static void RS_AssignScientist_f(void)
 
 
 /**
+ * @brief Remove a scientist from a technology.
+ * @param[in] tech The technology you want to remove the scientist from.
+ * @sa RS_RemoveScientist_f
+ * @sa RS_AssignScientist
+ */
+static void RS_RemoveScientist(technology_t* tech)
+{
+	employee_t *employee = NULL;
+	
+	assert(tech);
+	
+	if (tech->scientists > 0) {
+		employee = E_GetAssignedEmployee(&gd.bases[tech->base_idx], EMPL_SCIENTIST);
+		if (employee) {
+			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
+			tech->scientists--;
+		}
+	}
+
+	if (tech->scientists == 0) {
+		tech->base_idx = -1;
+	}
+}
+
+/**
  * @brief Script function to remove a scientist from the technology entry in the research-list.
  * @sa RS_AssignScientist_f
+ * @sa RS_RemoveScientist
  */
 static void RS_RemoveScientist_f(void)
 {
 	int num;
-	employee_t *employee = NULL;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: mn_rs_remove <num_in_list>\n");
@@ -547,17 +572,7 @@ static void RS_RemoveScientist_f(void)
 	if (num < 0 || num > researchListLength)
 		return;
 
-	if (researchList[num]->scientists > 0) {
-		employee = E_GetAssignedEmployee(&gd.bases[researchList[num]->base_idx], EMPL_SCIENTIST);
-		if (employee) {
-			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
-			researchList[num]->scientists--;
-		}
-	}
-
-	if (researchList[num]->scientists == 0) {
-		researchList[num]->base_idx = -1;
-	}
+	RS_RemoveScientist(researchList[num]);
 
 	/* Update display-list and display-info. */
 	RS_ResearchDisplayInfo();
@@ -836,9 +851,10 @@ void CL_CheckResearchStatus(void)
 				Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Research of %s finished\n"), tech->name);
 				MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech);
 
-/*				B_ClearBuilding(&gd.buildings[tech->base_idx][tech->lab]);*/
-				tech->base_idx = -1;
-				tech->scientists = 0;
+				/* Remove all scientists from the technology. */
+				while (tech->scientists > 0)
+					RS_RemoveScientist(tech);
+
 				RS_MarkResearched(tech->id);
 				researchListPos = 0;
 				newResearch++;
