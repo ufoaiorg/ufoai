@@ -46,6 +46,8 @@ typedef void* HINSTANCE;
 typedef void* WNDPROC;
 #endif
 
+#define GAME_TITLE "UFO:AI"
+#define GAME_TITLE_LONG "UFO:Alien Invasion"
 
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768

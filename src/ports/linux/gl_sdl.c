@@ -521,7 +521,7 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 		return qfalse;
 	}
 
-	SDL_WM_SetCaption("UFO:AI", "UFO:Alien Invasion");
+	SDL_WM_SetCaption(GAME_TITLE, GAME_TITLE_LONG);
 
 	SDL_ShowCursor( SDL_DISABLE );
 

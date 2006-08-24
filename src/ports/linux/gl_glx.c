@@ -237,20 +237,16 @@ void RW_IN_Shutdown(void)
 		mouse_avail = qfalse;
 }
 
-/*
-===========
-IN_Commands
-===========
-*/
+/**
+ * @brief
+ */
 void RW_IN_Commands (void)
 {
 }
 
-/*
-===========
-IN_GetMousePos
-===========
-*/
+/**
+ * @brief
+ */
 void RW_IN_GetMousePos (int *x, int *y)
 {
 	if ( mx < 1 )
@@ -265,6 +261,9 @@ void RW_IN_GetMousePos (int *x, int *y)
 	*y = my / vid.ry;
 }
 
+/**
+ * @brief
+ */
 static void IN_DeactivateMouse( void )
 {
 	if (!mouse_avail || !dpy || !win)
@@ -276,6 +275,9 @@ static void IN_DeactivateMouse( void )
 	}
 }
 
+/**
+ * @brief
+ */
 static void IN_ActivateMouse( void )
 {
 	if (!mouse_avail || !dpy || !win)
@@ -289,10 +291,16 @@ static void IN_ActivateMouse( void )
 	}
 }
 
+/**
+ * @brief
+ */
 void RW_IN_Frame (void)
 {
 }
 
+/**
+ * @brief
+ */
 void RW_IN_Activate(qboolean active)
 {
 	if (active || vidmode_active)
@@ -305,6 +313,9 @@ void RW_IN_Activate(qboolean active)
 /* KEYBOARD                                                                  */
 /*****************************************************************************/
 
+/**
+ * @brief Translates the glx key events to ufo key events
+ */
 static int XLateKey(XKeyEvent *ev)
 {
 	int key = 0;
@@ -473,6 +484,9 @@ static int XLateKey(XKeyEvent *ev)
 }
 
 
+/**
+ * @brief
+ */
 static void HandleEvents(void)
 {
 	XEvent event;
@@ -604,30 +618,36 @@ static void HandleEvents(void)
 
 Key_Event_fp_t Key_Event_fp;
 
+/**
+ * @brief
+ */
 void KBD_Init(Key_Event_fp_t fp)
 {
 	Key_Event_fp = fp;
 }
 
+/**
+ * @brief
+ */
 void KBD_Update(void)
 {
 	/* get events from x server */
 	HandleEvents();
 }
 
+/**
+ * @brief
+ */
 void KBD_Close(void)
 {
 }
 
-/*****************************************************************************/
-
-/* static qboolean GLimp_SwitchFullscreen( int width, int height ); */
 
 qboolean GLimp_InitGL (void);
 
-/*
-** GLimp_SetMode
-*/
+/**
+ * @brief
+ */
 rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen )
 {
 	int width, height;
@@ -820,7 +840,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	win = XCreateWindow(dpy, root, 0, 0, width, height,
 						0, visinfo->depth, InputOutput,
 						visinfo->visual, mask, &attr);
-	XStoreName(dpy, win, "UFO:AI");
+	XStoreName(dpy, win, GAME_TITLE);
 
 	wmDeleteWindow = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
 	XSetWMProtocols(dpy, win, &wmDeleteWindow, 1);

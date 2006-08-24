@@ -1,3 +1,14 @@
+/**
+ * @file glw_imp.c
+ * @brief This file contains ALL Win32 specific stuff having to do with the OpenGL refresh.
+ * @note When a port is being made the following functions must be implemented by the port:
+ ** GLimp_EndFrame
+ ** GLimp_Init
+ ** GLimp_Shutdown
+ ** GLimp_SwitchFullscreen
+ ** GLimp_SetGamma
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,19 +28,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/*
-** GLW_IMP.C
-**
-** This file contains ALL Win32 specific stuff having to do with the
-** OpenGL refresh.  When a port is being made the following functions
-** must be implemented by the port:
-**
-** GLimp_EndFrame
-** GLimp_Init
-** GLimp_Shutdown
-** GLimp_SwitchFullscreen
-** GLimp_SetGamma
-*/
+
 #include <assert.h>
 #include <windows.h>
 #include "../../ref_gl/gl_local.h"
@@ -45,6 +44,9 @@ extern cvar_t *vid_fullscreen;
 extern cvar_t *vid_ref;
 extern cvar_t *vid_grabmouse;
 
+/**
+ * @brief
+ */
 static qboolean VerifyDriver( void )
 {
 	char buffer[1024];
@@ -62,11 +64,9 @@ qboolean have_stencil = qfalse;
 
 static unsigned short s_oldHardwareGamma[3][256];
 
-/*
-** WG_CheckHardwareGamma
-**
-** Determines if the underlying hardware supports the Win32 gamma correction API.
-*/
+/**
+ * @brief  Determines if the underlying hardware supports the Win32 gamma correction API.
+ */
 void WG_CheckHardwareGamma( void )
 {
 	HDC hDC;
@@ -104,11 +104,9 @@ void WG_CheckHardwareGamma( void )
 	}
 }
 
-/*
-** VID_CreateWindow
-*/
-#define	WINDOW_CLASS_NAME	"UFO: AI"
-
+/**
+ * @brief
+ */
 qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 {
 	WNDCLASS		wc;
@@ -129,7 +127,7 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 	wc.hCursor       = LoadCursor (NULL,IDC_ARROW);
 	wc.hbrBackground = (void *)COLOR_GRAYTEXT;
 	wc.lpszMenuName  = 0;
-	wc.lpszClassName = WINDOW_CLASS_NAME;
+	wc.lpszClassName = GAME_TITLE;
 
 	if (!RegisterClass (&wc) )
 		ri.Sys_Error (ERR_FATAL, "Couldn't register window class");
@@ -163,8 +161,8 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 
 	glw_state.hWnd = CreateWindowEx (
 		exstyle,
-		WINDOW_CLASS_NAME,
-		"UFO: AI",
+		GAME_TITLE,
+		GAME_TITLE_LONG,
 		stylebits,
 		x, y, w, h,
 		NULL,
@@ -201,9 +199,9 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 }
 
 
-/*
-** GLimp_SetMode
-*/
+/**
+ * @brief
+ */
 rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen )
 {
 	int width, height;
@@ -334,15 +332,12 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	return rserr_ok;
 }
 
-/*
-** GLimp_Shutdown
-**
-** This routine does all OS specific shutdown procedures for the OpenGL
-** subsystem.  Under OpenGL this means NULLing out the current DC and
-** HGLRC, deleting the rendering context, and releasing the DC acquired
-** for the window.  The state structure is also nulled out.
-**
-*/
+/**
+ * @brief This routine does all OS specific shutdown procedures for the OpenGL subsystem.
+ * @note Under OpenGL this means NULLing out the current DC and
+ * HGLRC, deleting the rendering context, and releasing the DC acquired
+ * for the window.  The state structure is also nulled out.
+ */
 void GLimp_Shutdown( void )
 {
 	if (!qwglMakeCurrent)
@@ -373,7 +368,7 @@ void GLimp_Shutdown( void )
 		glw_state.log_fp = 0;
 	}
 
-	UnregisterClass (WINDOW_CLASS_NAME, glw_state.hInstance);
+	UnregisterClass (GAME_TITLE, glw_state.hInstance);
 
 	if (gl_state.fullscreen) {
 		ChangeDisplaySettings( 0, 0 );
@@ -382,13 +377,10 @@ void GLimp_Shutdown( void )
 }
 
 
-/*
-** GLimp_Init
-**
-** This routine is responsible for initializing the OS specific portions
-** of OpenGL.  Under Win32 this means dealing with the pixelformats and
-** doing the wgl interface stuff.
-*/
+/**
+ * @brief This routine is responsible for initializing the OS specific portions of OpenGL.
+ * @note Under Win32 this means dealing with the pixelformats and doing the wgl interface stuff.
+ */
 qboolean GLimp_Init( HINSTANCE hinstance, WNDPROC wndproc )
 {
 #define OSR2_BUILD_NUMBER 1111
@@ -422,6 +414,9 @@ qboolean GLimp_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	return qtrue;
 }
 
+/**
+ * @brief
+ */
 qboolean GLimp_InitGL (void)
 {
 	PIXELFORMATDESCRIPTOR pfd = {
@@ -562,9 +557,9 @@ fail:
 	return qfalse;
 }
 
-/*
-** GLimp_BeginFrame
-*/
+/**
+ * @brief
+ */
 void GLimp_BeginFrame( float camera_separation )
 {
 	if (gl_bitdepth->modified) {
@@ -583,13 +578,11 @@ void GLimp_BeginFrame( float camera_separation )
 		qglDrawBuffer( GL_BACK );
 }
 
-/*
-** GLimp_EndFrame
-**
-** Responsible for doing a swapbuffers and possibly for other stuff
-** as yet to be determined.  Probably better not to make this a GLimp
-** function and instead do a call to GLimp_SwapBuffers.
-*/
+/**
+ * @brief Responsible for doing a swapbuffers and possibly for other stuff
+ * as yet to be determined.  Probably better not to make this a GLimp
+ * function and instead do a call to GLimp_SwapBuffers.
+ */
 void GLimp_EndFrame (void)
 {
 	int		err;
@@ -617,11 +610,9 @@ void GLimp_AppActivate( qboolean active )
 	}
 }
 
-/*
-** GLimp_SetGamma
-**
-** This routine should only be called if gl_state.hwgamma is TRUE
-*/
+/**
+ * @brief This routine should only be called if gl_state.hwgamma is TRUE
+ */
 void GLimp_SetGamma(void)
 {
 	int o, i, ret;
@@ -651,9 +642,9 @@ void GLimp_SetGamma(void)
 	}
 }
 
-/*
-** WG_RestoreGamma
-*/
+/**
+ * @brief
+ */
 void WG_RestoreGamma( void )
 {
 	HDC hDC;
