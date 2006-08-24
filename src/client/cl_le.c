@@ -40,12 +40,10 @@ int numLEs;
 static char *lmList[MAX_LOCALMODELS + 1];
 
 
-/*
-==================
-LM_GenerateList
-==================
-*/
-void LM_GenerateList(void)
+/**
+ * @brief
+ */
+static void LM_GenerateList(void)
 {
 	lm_t *lm;
 	int i, l;
@@ -58,11 +56,9 @@ void LM_GenerateList(void)
 }
 
 
-/*
-==============
-LM_AddToScene
-==============
-*/
+/**
+ * @brief
+ */
 void LM_AddToScene(void)
 {
 	lm_t *lm;
@@ -98,12 +94,10 @@ void LM_AddToScene(void)
 }
 
 
-/*
-==============
-LM_Find
-==============
-*/
-lm_t *LM_Find(int num)
+/**
+ * @brief
+ */
+static lm_t *LM_Find(int num)
 {
 	int i;
 
@@ -116,12 +110,10 @@ lm_t *LM_Find(int num)
 }
 
 
-/*
-==============
-LM_Delete
-==============
-*/
-void LM_Delete(lm_t * lm)
+/**
+ * @brief
+ */
+static void LM_Delete(lm_t * lm)
 {
 	lm_t backup;
 
@@ -136,11 +128,9 @@ void LM_Delete(lm_t * lm)
 }
 
 
-/*
-==============
-LM_Perish
-==============
-*/
+/**
+ * @brief
+ */
 void LM_Perish(sizebuf_t * sb)
 {
 	lm_t *lm;
@@ -153,11 +143,9 @@ void LM_Perish(sizebuf_t * sb)
 }
 
 
-/*
-==============
-LM_Explode
-==============
-*/
+/**
+ * @brief
+ */
 void LM_Explode(sizebuf_t * sb)
 {
 	lm_t *lm;
@@ -181,11 +169,9 @@ void LM_Explode(sizebuf_t * sb)
 }
 
 
-/*
-==================
-CL_RegisterLocalModels
-==================
-*/
+/**
+ * @brief
+ */
 void CL_RegisterLocalModels(void)
 {
 	lm_t *lm;
@@ -268,11 +254,13 @@ void LE_Status(void)
 	}
 }
 
-/*
-==============
-LE_Think
-==============
-*/
+/**
+ * @brief Calls the le think function
+ * @sa LET_StartIdle
+ * @sa LET_PathMove
+ * @sa LET_StartPathMove
+ * @sa LET_Projectile
+ */
 void LE_Think(void)
 {
 	le_t *le;
@@ -289,13 +277,11 @@ void LE_Think(void)
  LE think functions
 =========================================================================== */
 
-char retAnim[MAX_VAR];
+static char retAnim[MAX_VAR];
 
-/*
-==============
-LE_GetAnim
-==============
-*/
+/**
+ * @brief
+ */
 char *LE_GetAnim(char *anim, int right, int left, int state)
 {
 	char *mod;
@@ -348,11 +334,10 @@ char *LE_GetAnim(char *anim, int right, int left, int state)
 }
 
 
-/*
-==============
-LET_StartIdle
-==============
-*/
+/**
+ * @brief
+ * @note Think function
+ */
 void LET_StartIdle(le_t * le)
 {
 	if (le->state & STATE_DEAD)
@@ -366,12 +351,11 @@ void LET_StartIdle(le_t * le)
 }
 
 
-/*
-==============
-LET_PathMove
-==============
-*/
-void LET_PathMove(le_t * le)
+/**
+ * @brief
+ * @note Think function
+ */
+static void LET_PathMove(le_t * le)
 {
 	byte dv;
 	float frac;
@@ -435,11 +419,10 @@ void LET_PathMove(le_t * le)
 	VectorMA(start, frac, delta, le->origin);
 }
 
-/*
-==============
-LET_StartPathMove
-==============
-*/
+/**
+ * @brief
+ * @note Think function
+ */
 void LET_StartPathMove(le_t * le)
 {
 	re.AnimChange(&le->as, le->model1, LE_GetAnim("walk", le->right, le->left, le->state));
@@ -449,12 +432,11 @@ void LET_StartPathMove(le_t * le)
 }
 
 
-/*
-==============
-LET_Projectile
-==============
-*/
-void LET_Projectile(le_t * le)
+/**
+ * @brief
+ * @note Think function
+ */
+static void LET_Projectile(le_t * le)
 {
 	if (cl.time >= le->endTime) {
 		le->ptl->inuse = qfalse;
@@ -475,6 +457,9 @@ void LET_Projectile(le_t * le)
  LE Special Effects
 =========================================================================== */
 
+/**
+ * @brief
+ */
 void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal)
 {
 	le_t *le;
@@ -532,7 +517,7 @@ void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, i
 	if (flags & SF_BODY) {
 		le->ref1 = fd->hitBody;
 		le->ref2 = fd->hitBodySound;
-	} else if (flags & SF_IMPACT || (fd->splrad && !fd-> bounce)) {
+	} else if (flags & SF_IMPACT || (fd->splrad && !fd->bounce)) {
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
 	} else {
@@ -546,6 +531,9 @@ void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, i
 }
 
 
+/**
+ * @brief
+ */
 void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 {
 	le_t *le;
@@ -591,11 +579,9 @@ void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 =========================================================================== */
 
 
-/*
-==============
-LE_Add
-==============
-*/
+/**
+ * @brief
+ */
 le_t *LE_Add(int entnum)
 {
 	int i;
@@ -625,11 +611,9 @@ le_t *LE_Add(int entnum)
 	return le;
 }
 
-/*
-==============
-LE_Get
-==============
-*/
+/**
+ * @brief
+ */
 le_t *LE_Get(int entnum)
 {
 	int i;
@@ -645,11 +629,9 @@ le_t *LE_Get(int entnum)
 }
 
 
-/*
-==============
-LE_Find
-==============
-*/
+/**
+ * @brief
+ */
 le_t *LE_Find(int type, pos3_t pos)
 {
 	int i;
@@ -665,11 +647,9 @@ le_t *LE_Find(int type, pos3_t pos)
 }
 
 
-/*
-==============
-LE_AddToScene
-==============
-*/
+/**
+ * @brief
+ */
 void LE_AddToScene(void)
 {
 	le_t *le;
@@ -733,12 +713,10 @@ typedef struct {
 } moveclip_t;
 
 
-/*
-====================
-CL_ClipMoveToLEs
-====================
-*/
-void CL_ClipMoveToLEs(moveclip_t * clip)
+/**
+ * @brief
+ */
+static void CL_ClipMoveToLEs(moveclip_t * clip)
 {
 	int i;
 	le_t *le;
@@ -770,12 +748,11 @@ void CL_ClipMoveToLEs(moveclip_t * clip)
 }
 
 
-/*
-==================
-CL_TraceBounds
-==================
-*/
-void CL_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
+/**
+ * @brief
+ * @sa CL_Trace
+ */
+static void CL_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
 {
 	int i;
 
@@ -793,6 +770,7 @@ void CL_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t b
 /**
  * @brief Moves the given mins/maxs volume through the world from start to end.
  * @note Passedict and edicts owned by passedict are explicitly not checked.
+ * @sa CL_TraceBounds
  */
 trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * passle, int contentmask)
 {

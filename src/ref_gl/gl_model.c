@@ -986,7 +986,6 @@ void Mod_LoadAliasModel(model_t * mod, void *buffer)
 		}
 		/* verts are all 8 bit, so no swapping needed */
 		memcpy(poutframe->verts, pinframe->verts, pheader->num_xyz * sizeof(dtrivertx_t));
-
 	}
 
 	mod->type = mod_alias;
