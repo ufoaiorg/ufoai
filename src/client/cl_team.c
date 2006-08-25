@@ -1022,8 +1022,6 @@ static void CL_SaveTeamSlotCmd(void)
  */
 void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 {
-	item_t item;
-	int container, x, y;
 	int i;
 
 	/* unique character number */
@@ -1050,20 +1048,17 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 
 	/* inventory */
 	Com_DestroyInventory(chr->inv);
-	item.t = MSG_ReadByte(sb);
-	while (item.t != NONE) {
-		/* read info */
-		item.a = MSG_ReadByte(sb);
-		item.m = MSG_ReadByte(sb);
-		container = MSG_ReadByte(sb);
-		x = MSG_ReadByte(sb);
-		y = MSG_ReadByte(sb);
+	{
+		int nr = MSG_ReadShort(sb) / 6;
 
-		/* check info and add item if ok */
-		Com_AddToInventory(chr->inv, item, container, x, y);
-
-		/* get next item */
-		item.t = MSG_ReadByte(sb);
+		for (; nr-- > 0;) {
+			item_t item;
+			int container, x, y;
+			
+			CL_ReceiveItem(sb, &item, &container, &x, &y);
+			
+			Com_AddToInventory(chr->inv, item, container, x, y);
+		}
 	}
 }
 
@@ -1238,18 +1233,25 @@ void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 			MSG_WriteShort(buf, chr->kills[j]);
 		MSG_WriteShort(buf, chr->assigned_missions);
 
-		/* equipment */
-		for (j = 0; j < csi.numIDs; j++)
-			for (ic = chr->inv->c[j]; ic; ic = ic->next)
-				CL_SendItem(buf, ic->item, j, ic->x, ic->y);
+		/* inventory */
+		{
+			int nr = 0;
 
-		/* terminate list */
-		MSG_WriteByte(buf, NONE);
+			for (j = 0; j < csi.numIDs; j++)
+				for (ic = chr->inv->c[j]; ic; ic = ic->next)
+					nr++;
+
+			MSG_WriteShort(buf, nr * 6);
+			for (j = 0; j < csi.numIDs; j++)
+				for (ic = chr->inv->c[j]; ic; ic = ic->next)
+					CL_SendItem(buf, ic->item, j, ic->x, ic->y);
+		}
 	}
 }
 
 /**
  * @brief Stores the curTteam info to buffer (which might be a network buffer, too)
+ * see G_ClientTeamInfo
  *
  * Called in cl_main.c CL_Precache_f to send the team info to server
  */
@@ -1292,13 +1294,19 @@ void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
 			MSG_WriteShort(buf, chr->kills[j]);
 		MSG_WriteShort(buf, chr->assigned_missions);
 
-		/* equipment */
-		for (j = 0; j < csi.numIDs; j++)
-			for (ic = chr->inv->c[j]; ic; ic = ic->next)
-				CL_SendItem(buf, ic->item, j, ic->x, ic->y);
+		/* inventory */
+		{
+			int nr = 0;
 
-		/* terminate list */
-		MSG_WriteByte(buf, NONE);
+			for (j = 0; j < csi.numIDs; j++)
+				for (ic = chr->inv->c[j]; ic; ic = ic->next)
+					nr++;
+
+			MSG_WriteShort(buf, nr * 6);
+			for (j = 0; j < csi.numIDs; j++)
+				for (ic = chr->inv->c[j]; ic; ic = ic->next)
+					CL_SendItem(buf, ic->item, j, ic->x, ic->y);
+		}
 	}
 }
 

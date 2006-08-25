@@ -1272,7 +1272,7 @@ void CL_GameSave(char *filename, char *comment)
 	SZ_Write(&sb, &gd, sizeof(globalData_t));
 
 	/* store inventories */
-	for (type = 0, type < MAX_EMPL; type++)
+	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
 			int nr = 0;
 				

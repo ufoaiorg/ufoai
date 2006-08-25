@@ -2377,6 +2377,7 @@ void G_GetTeam(player_t * player)
 =================
 G_ClientTeamInfo
 
+see CL_SendTeamInfo
 FIXME: Check size (fieldSize here)
 =================
 */
@@ -2446,23 +2447,16 @@ void G_ClientTeamInfo(player_t * player)
 			ent->chr.assigned_missions = gi.ReadShort();
 
 			/* inventory */
-			item.t = gi.ReadByte();
-			while (item.t != NONE) {
-				/* read info */
-				item.a = gi.ReadByte();
-				item.m = gi.ReadByte();
-				container = gi.ReadByte();
-				assert(container < gi.csi->numIDs);
-				x = gi.ReadByte();
-				y = gi.ReadByte();
-
-/*				gi.dprintf("G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y);*/
+			{
+				int nr = gi.ReadShort() / 6;
+				
+				for (; nr-- > 0;) {
+					gi.ReadFormat("bbbbbb", &item.t, &item.a, &item.m, &container, &x, &y);
+					/*				gi.dprintf("G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y);*/
 
 				Com_AddToInventory(&ent->i, item, container, x, y);
 /*				gi.dprintf("G_ClientTeamInfo: add %s to inventory (container %i - idArmor: %i)\n", gi.csi->ods[ent->i.c[container]->item.t].kurz, container, gi.csi->idArmor);*/
-
-				/* get next item */
-				item.t = gi.ReadByte();
+				}
 			}
 
 			/* set models */
@@ -2489,15 +2483,10 @@ void G_ClientTeamInfo(player_t * player)
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
 				gi.ReadShort(); /* kills */
 			gi.ReadShort(); /* assigned missions */
-			item.t = gi.ReadByte();
-			while (item.t != NONE) {
-				gi.ReadByte();
-				gi.ReadByte();
-				gi.ReadByte();
-				gi.ReadByte();
-				gi.ReadByte();
-				item.t = gi.ReadByte();
-			}
+			j = gi.ReadShort();
+			/* TODO: skip j bytes instead of reading and ignoring */
+			for (k = 0; k < j; k++)
+				gi.ReadByte(); /* inventory */
 		}
 
 		/* find actors */

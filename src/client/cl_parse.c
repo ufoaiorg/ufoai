@@ -1133,7 +1133,7 @@ void CL_ParseEvent( void )
 				}
 			}
 			if (!correct)
-				Com_DPrintf ("Warning: message for event %s has wrong lenght %i, should be %i.\n", ev_names[eType], net_message.readcount - oldCount, length);
+				Com_Printf ("Warning: message for event %s has wrong lenght %i, should be %i.\n", ev_names[eType], net_message.readcount - oldCount, length);
 			net_message.readcount = oldCount + length;
 		}
 	}
