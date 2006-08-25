@@ -40,8 +40,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 game_export_t *ge;
 
 /**
-  * @brief Sends the contents of the mutlicast buffer to a single client
-  */
+ * @brief Sends the contents of the mutlicast buffer to a single client
+ */
 static void PF_Unicast(player_t * player)
 {
 	client_t *client;
@@ -61,8 +61,8 @@ static void PF_Unicast(player_t * player)
 
 
 /**
-  * @brief Debug print to server console
-  */
+ * @brief Debug print to server console
+ */
 static void PF_dprintf(char *fmt, ...)
 {
 	char msg[1024];
@@ -77,8 +77,8 @@ static void PF_dprintf(char *fmt, ...)
 
 
 /**
-  * @brief Print to a single client
-  */
+ * @brief Print to a single client
+ */
 static void PF_cprintf(player_t * player, int level, char *fmt, ...)
 {
 	char msg[1024];
@@ -104,8 +104,8 @@ static void PF_cprintf(player_t * player, int level, char *fmt, ...)
 
 
 /**
-  * @brief Centerprint to a single client
-  */
+ * @brief Centerprint to a single client
+ */
 static void PF_centerprintf(player_t * player, char *fmt, ...)
 {
 	char msg[1024];
@@ -130,8 +130,8 @@ static void PF_centerprintf(player_t * player, char *fmt, ...)
 
 
 /**
-  * @brief Abort the server with a game error
-  */
+ * @brief Abort the server with a game error
+ */
 static void PF_error(char *fmt, ...)
 {
 	char msg[1024];
@@ -150,9 +150,9 @@ static void PF_error(char *fmt, ...)
 
 
 /**
-  * @brief
-  * Also sets mins and maxs for inline bmodels
-  */
+ * @brief
+ * Also sets mins and maxs for inline bmodels
+ */
 static void PF_SetModel(edict_t * ent, char *name)
 {
 	cmodel_t *mod;
@@ -173,9 +173,9 @@ static void PF_SetModel(edict_t * ent, char *name)
 }
 
 /**
-  * @brief
-  * @sa CL_ParseConfigString
-  */
+ * @brief
+ * @sa CL_ParseConfigString
+ */
 static void PF_Configstring(int index, char *val)
 {
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
@@ -208,16 +208,16 @@ static void PF_Configstring(int index, char *val)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_WriteChar(int c)
 {
 	MSG_WriteChar(&sv.multicast, c);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 #ifdef DEBUG
 static void PF_WriteByte(int c, char* file, int line)
 {
@@ -231,8 +231,8 @@ static void PF_WriteByte(int c)
 #endif
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 #ifdef DEBUG
 static void PF_WriteShort(int c, char* file, int line)
 {
@@ -246,56 +246,56 @@ static void PF_WriteShort(int c)
 #endif
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_WriteLong(int c)
 {
 	MSG_WriteLong(&sv.multicast, c);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_WriteFloat(float f)
 {
 	MSG_WriteFloat(&sv.multicast, f);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_WriteString(char *s)
 {
 	MSG_WriteString(&sv.multicast, s);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_WritePos(vec3_t pos)
 {
 	MSG_WritePos(&sv.multicast, pos);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_WriteGPos(pos3_t pos)
 {
 	MSG_WriteGPos(&sv.multicast, pos);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_WriteDir(vec3_t dir)
 {
 	MSG_WriteDir(&sv.multicast, dir);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_WriteAngle(float f)
 {
 	MSG_WriteAngle(&sv.multicast, f);
@@ -326,8 +326,8 @@ static void PF_WriteNewSave(int c)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_WriteToSave(int c)
 {
 #ifdef PARANOID
@@ -340,88 +340,88 @@ static void PF_WriteToSave(int c)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static int PF_ReadChar(void)
 {
 	return MSG_ReadChar(&net_message);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static int PF_ReadByte(void)
 {
 	return MSG_ReadByte(&net_message);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static int PF_ReadShort(void)
 {
 	return MSG_ReadShort(&net_message);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static int PF_ReadLong(void)
 {
 	return MSG_ReadLong(&net_message);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static float PF_ReadFloat(void)
 {
 	return MSG_ReadFloat(&net_message);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static char *PF_ReadString(void)
 {
 	return MSG_ReadString(&net_message);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_ReadPos(vec3_t pos)
 {
 	MSG_ReadPos(&net_message, pos);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_ReadGPos(pos3_t pos)
 {
 	MSG_ReadGPos(&net_message, pos);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_ReadDir(vec3_t vector)
 {
 	MSG_ReadDir(&net_message, vector);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static float PF_ReadAngle(void)
 {
 	return MSG_ReadAngle(&net_message);
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_ReadData(void *buffer, int size)
 {
 	MSG_ReadData(&net_message, buffer, size);
@@ -439,8 +439,8 @@ static qboolean pfe_pending = qfalse;
 static int pfe_mask = 0;
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_EndEvents(void)
 {
 	if (!pfe_pending)
@@ -453,8 +453,8 @@ static void PF_EndEvents(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_AddEvent(int mask, int eType)
 {
 	if (!pfe_pending || mask != pfe_mask) {
@@ -474,8 +474,8 @@ static void PF_AddEvent(int mask, int eType)
 }
 
 /**
-  * @brief Called when either the entire server is being killed, or it is changing to a different game directory.
-  */
+ * @brief Called when either the entire server is being killed, or it is changing to a different game directory.
+ */
 void SV_ShutdownGameProgs(void)
 {
 	if (!ge)
@@ -491,8 +491,8 @@ void SV_ShutdownGameProgs(void)
 void SCR_DebugGraph(float value, int color);
 
 /**
-  * @brief Init the game subsystem for a new map
-  */
+ * @brief Init the game subsystem for a new map
+ */
 void SV_InitGameProgs(void)
 {
 	game_import_t import;

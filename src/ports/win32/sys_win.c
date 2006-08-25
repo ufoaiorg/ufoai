@@ -1,3 +1,8 @@
+/**
+ * @file sys_win.c
+ * @brief
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* sys_win.h */
 
 #include "../../qcommon/qcommon.h"
 #include "../../game/game.h"
@@ -60,13 +64,14 @@ char		*argv[MAX_NUM_ARGVS];
 
 /*
 ===============================================================================
-
 SYSTEM IO
-
 ===============================================================================
 */
 
 
+/**
+ * @brief
+ */
 void Sys_Error (char *error, ...)
 {
 	va_list		argptr;
@@ -94,6 +99,9 @@ void Sys_Error (char *error, ...)
 	exit (1);
 }
 
+/**
+ * @brief
+ */
 void Sys_Quit (void)
 {
 	timeEndPeriod( 1 );
@@ -111,6 +119,9 @@ void Sys_Quit (void)
 }
 
 
+/**
+ * @brief
+ */
 void WinError (void)
 {
 	LPVOID lpMsgBuf;
@@ -132,6 +143,9 @@ void WinError (void)
 	LocalFree( lpMsgBuf );
 }
 
+/**
+ * @brief Get current user
+ */
 char *Sys_GetCurrentUser( void )
 {
 	static char s_userName[1024];
@@ -146,11 +160,9 @@ char *Sys_GetCurrentUser( void )
 	return s_userName;
 }
 
-/*
-==============
-Sys_Cwd
-==============
-*/
+/**
+ * @brief Get current working dir
+ */
 char *Sys_Cwd( void )
 {
 	static char cwd[MAX_OSPATH];
@@ -161,6 +173,9 @@ char *Sys_Cwd( void )
 	return cwd;
 }
 
+/**
+ * @brief Normalize path (remove all \\ )
+ */
 void Sys_NormPath(char* path)
 {
 	char *tmp = path;
@@ -174,11 +189,10 @@ void Sys_NormPath(char* path)
 	}
 }
 
-/*
-=================
-Sys_GetHomeDirectory
-=================
-*/
+/**
+ * @brief Get the home directory in Application Data
+ * @note Currently disabled
+ */
 char *Sys_GetHomeDirectory (void)
 {
 #if 0
@@ -202,11 +216,9 @@ char *Sys_GetHomeDirectory (void)
 #endif
 }
 
-/*
-================
-Sys_Init
-================
-*/
+/**
+ * @brief
+ */
 void Sys_Init (void)
 {
 	OSVERSIONINFO	vinfo;
@@ -262,11 +274,9 @@ void Sys_Init (void)
 static char	console_text[256];
 static int	console_textlen;
 
-/*
-================
-Sys_ConsoleInput
-================
-*/
+/**
+ * @brief
+ */
 char *Sys_ConsoleInput (void)
 {
 	INPUT_RECORD	recs[1024];
@@ -275,7 +285,6 @@ char *Sys_ConsoleInput (void)
 
 	if (!dedicated || !dedicated->value)
 		return NULL;
-
 
 	for ( ;; ) {
 		if (!GetNumberOfConsoleInputEvents (hinput, &numevents))
@@ -330,13 +339,9 @@ char *Sys_ConsoleInput (void)
 }
 
 
-/*
-================
-Sys_ConsoleOutput
-
-Print text to the dedicated console
-================
-*/
+/**
+ * @brief Print text to the dedicated console
+ */
 void Sys_ConsoleOutput (char *string)
 {
 	DWORD	dummy;
@@ -360,13 +365,9 @@ void Sys_ConsoleOutput (char *string)
 }
 
 
-/*
-================
-Sys_SendKeyEvents
-
-Send Key_Event calls
-================
-*/
+/**
+ * @brief Send Key_Event calls
+ */
 void Sys_SendKeyEvents (void)
 {
 	MSG        msg;
@@ -384,13 +385,9 @@ void Sys_SendKeyEvents (void)
 }
 
 
-
-/*
-================
-Sys_GetClipboardData
-
-================
-*/
+/**
+ * @brief
+ */
 char *Sys_GetClipboardData( void )
 {
 	char *data = NULL;
@@ -413,17 +410,13 @@ char *Sys_GetClipboardData( void )
 
 /*
 ==============================================================================
-
- WINDOWS CRAP
-
+WINDOWS CRAP
 ==============================================================================
 */
 
-/*
-=================
-Sys_AppActivate
-=================
-*/
+/**
+ * @brief
+ */
 void Sys_AppActivate (void)
 {
 	ShowWindow ( cl_hwnd, SW_RESTORE);
@@ -432,19 +425,15 @@ void Sys_AppActivate (void)
 
 /*
 ========================================================================
-
 GAME DLL
-
 ========================================================================
 */
 
 static HINSTANCE	game_library;
 
-/*
-=================
-Sys_UnloadGame
-=================
-*/
+/**
+ * @brief
+ */
 void Sys_UnloadGame (void)
 {
 	if (!FreeLibrary (game_library))
@@ -452,13 +441,9 @@ void Sys_UnloadGame (void)
 	game_library = NULL;
 }
 
-/*
-=================
-Sys_GetGameAPI
-
-Loads the game dll
-=================
-*/
+/**
+ * @brief Loads the game dll
+ */
 game_export_t *Sys_GetGameAPI (game_import_t *parms)
 {
 	GetGameApi_t GetGameAPI;
@@ -469,21 +454,21 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 #if defined _M_IX86
 
 #ifndef DEBUG
-const char *gamename = "game32.dll";
-const char *debugdir = "src/release/bin/win32";
+	const char *gamename = "game32.dll";
+	const char *debugdir = "src/release/bin/win32";
 #else
-const char *gamename = "game32d.dll";
-const char *debugdir = "src/debug/bin/win32";
+	const char *gamename = "game32d.dll";
+	const char *debugdir = "src/debug/bin/win32";
 #endif
 
 #elif defined _M_X64
 
 #ifndef DEBUG
-const char *gamename = "game64.dll";
-const char *debugdir = "src/release/bin/x64";
+	const char *gamename = "game64.dll";
+	const char *debugdir = "src/release/bin/x64";
 #else
-const char *gamename = "game64d.dll";
-const char *debugdir = "src/debug/bin/x64";
+	const char *gamename = "game64d.dll";
+	const char *debugdir = "src/debug/bin/x64";
 #endif
 
 #elif defined _M_ALPHA
@@ -491,11 +476,11 @@ const char *debugdir = "src/debug/bin/x64";
 #error Update DEC ALPHA platform project configuration
 
 #ifndef DEBUG
-const char *gamename = "game???.dll";
-const char *debugdir = "src/release/bin/alpha";
+	const char *gamename = "game???.dll";
+	const char *debugdir = "src/release/bin/alpha";
 #else
-const char *gamename = "game???d.dll";
-const char *debugdir = "src/debug/bin/alpha";
+	const char *gamename = "game???d.dll";
+	const char *debugdir = "src/debug/bin/alpha";
 #endif
 
 #else
@@ -559,22 +544,16 @@ const char *debugdir = "src/debug/bin/alpha";
 	return GetGameAPI (parms);
 }
 
-/*======================================================================= */
 
-
-/*
-==================
-ParseCommandLine
-
-==================
-*/
+/**
+ * @brief
+ */
 void ParseCommandLine (LPSTR lpCmdLine)
 {
 	argc = 1;
 	argv[0] = "exe";
 
-	while (*lpCmdLine && (argc < MAX_NUM_ARGVS))
-	{
+	while (*lpCmdLine && (argc < MAX_NUM_ARGVS)) {
 		while (*lpCmdLine && ((*lpCmdLine <= 32) || (*lpCmdLine > 126)))
 			lpCmdLine++;
 
@@ -589,20 +568,16 @@ void ParseCommandLine (LPSTR lpCmdLine)
 				*lpCmdLine = 0;
 				lpCmdLine++;
 			}
-
 		}
 	}
 
 }
 
-/*
-==================
-WinMain
-
-==================
-*/
 HINSTANCE	global_hInstance;
 
+/**
+ * @brief
+ */
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	MSG			msg;
