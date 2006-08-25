@@ -436,7 +436,7 @@ void G_EndGame(int team)
 
 	/* how many */
 	Com_DPrintf("Sending results with %i alive actors.\n", j);
-	gi.WriteByte((KILLED_NUM_TYPES + 1) * j * 2);
+	gi.WriteShort((KILLED_NUM_TYPES + 1) * j * 2);
 
 	if (j) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)

@@ -539,7 +539,7 @@ void MSG_V_WriteFormat(sizebuf_t * sb, char *format, va_list ap)
 				n = va_arg(ap, int);
 
 				p = va_arg(ap, byte *);
-				MSG_WriteByte(sb, n);
+				MSG_WriteShort(sb, n);
 				for (i = 0; i < n; i++)
 					MSG_WriteByte(sb, *p++);
 			}
@@ -840,7 +840,7 @@ void MSG_V_ReadFormat(sizebuf_t * msg_read, char *format, va_list ap)
 				int i, n;
 				byte *p;
 
-				n = MSG_ReadByte(msg_read);
+				n = MSG_ReadShort(msg_read);
 				*va_arg(ap, int *) = n;
 				p = va_arg(ap, void *);
 
@@ -882,7 +882,6 @@ int MSG_LengthFormat(sizebuf_t * sb, char *format)
 	int oldCount;
 
 	length = 0;
-	delta = 0;
 	oldCount = sb->readcount;
 
 	while (*format) {
@@ -917,10 +916,11 @@ int MSG_LengthFormat(sizebuf_t * sb, char *format)
 			delta = 1;
 			break;
 		case '!':
+			delta = 0;
 			break;
 		case '*':
-			delta = MSG_ReadByte(sb);
-			length++;
+			delta = MSG_ReadShort(sb);
+			length += 2;
 			break;
 		case '&':
 			delta = 0;

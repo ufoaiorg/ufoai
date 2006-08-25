@@ -1329,7 +1329,7 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 		}
 		num = 0;
 	} else {
-		num = MSG_ReadByte(buf) / (2 * (KILLED_NUM_TYPES + 1));
+		num = MSG_ReadShort(buf) / (2 * (KILLED_NUM_TYPES + 1));
 		if (num > MAX_EMPLOYEES)
 			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
 		else if (num < 0)

@@ -1558,7 +1558,7 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 				gi.WriteShort(ent->spawnflags);
 				gi.WriteGPos(ent->pos);
-				gi.WriteByte((int)strlen(ent->particle));
+				gi.WriteShort((int)strlen(ent->particle));
 				gi.WriteString(ent->particle);
 			}
 			gi.unlinkentity(ent);

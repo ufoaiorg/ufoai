@@ -67,10 +67,10 @@ char *svc_strings[256] =
 /* d	| dir		| 1 */
 /* a	| angle		| 1 */
 /* !	| do not read	| 1 */
-/* *	| read from va	| */
-/* &	| read bytes 	| */
-/* n	| pascal string type - SIZE+DATA | 2 + sizeof(DATA) */
-/*	| until NONE	| */
+/* *	| pascal string type - SIZE+DATA, SIZE can be read from va_arg 
+                        | 2 + sizeof(DATA) */
+/* &	| read bytes
+	      until NONE	| */
 char *ev_format[] =
 {
 	"",					/* EV_NULL */
@@ -90,14 +90,14 @@ char *ev_format[] =
 	"!sb",				/* EV_ACTOR_TURN */
 	"!s*",				/* EV_ACTOR_MOVE */
 	"!sbgg",			/* EV_ACTOR_START_SHOOT */
-	"!sbbppb",			/* EV_ACTOR_SHOOT */
+	"!sbbppb",			/* EV_ACTOR_SHOOT the last 'b' cannot be 'd' */
 	"bb",				/* EV_ACTOR_SHOOT_HIDDEN */
 	"sbbpp",			/* EV_ACTOR_THROW */
 	"!ss",				/* EV_ACTOR_DIE */
 	"!sbbbbb",			/* EV_ACTOR_STATS */
 	"!ss",				/* EV_ACTOR_STATECHANGE */
 
-	"n",				/* EV_INV_ADD */
+	"*",				/* EV_INV_ADD */
 	"sbbb",				/* EV_INV_DEL */
 	"sbbbbb",			/* EV_INV_AMMO */
 
@@ -978,8 +978,7 @@ void CL_ParseEvent( void )
 {
 	evTimes_t *et, *last, *cur;
 	qboolean now;
-	int oldCount;
-	int length;
+	int oldCount, length;
 	int eType;
 	int time;
 
@@ -998,14 +997,13 @@ void CL_ParseEvent( void )
 
 		/* check if eType is valid */
 		if ( eType < 0 || eType >= EV_NUM_EVENTS )
-			Com_Error( ERR_DROP, "CL_ParseEvent: invalid event %i\n", eType );
+			Com_Error( ERR_DROP, "CL_ParseEvent: invalid event %s\n", ev_names[eType] );
 
 		if ( !ev_func[eType] )
 			Com_Error( ERR_DROP, "CL_ParseEvent: no handling function for event %i\n", eType );
 
 		oldCount = net_message.readcount;
-		length = (ev_format[eType][0] == 'n') ? MSG_ReadShort( &net_message ) + 2 :
-												MSG_LengthFormat( &net_message, ev_format[eType] );
+		length = MSG_LengthFormat( &net_message, ev_format[eType] );
 
 		if ( now ) {
 			/* log and call function */
@@ -1042,7 +1040,9 @@ void CL_ParseEvent( void )
 					flags = MSG_ReadByte( &net_message );
 					if ( !flags ) {
 						fireDef_t *fd;
-						fd = GET_FIREDEF( MSG_ReadByte( &net_message ) );
+						int type;
+						type = MSG_ReadByte(&net_message);
+						fd = GET_FIREDEF(type);
 						if ( fd->rof )
 							nextTime += 1000 / fd->rof;
 					} else nextTime += 500;
@@ -1061,6 +1061,7 @@ void CL_ParseEvent( void )
 					flags = MSG_ReadByte( &net_message );
 					MSG_ReadPos( &net_message, muzzle );
 					MSG_ReadPos( &net_message, impact );
+					MSG_ReadByte( &net_message );
 
 					fd = GET_FIREDEF( type );
 					if ( !(flags & SF_BOUNCED) ) {
@@ -1117,8 +1118,36 @@ void CL_ParseEvent( void )
 			memcpy( evWp, net_message.data + oldCount, length );
 			evWp += length;
 		}
+		if (net_message.readcount - oldCount != length) {
+			int correct;
 
-		net_message.readcount = oldCount + length;
+			if (now) {
+				correct = 0;
+			} else { 
+				switch ( eType ) {
+				case EV_ACTOR_APPEAR:
+				case EV_ACTOR_START_SHOOT:
+					correct = (net_message.readcount == oldCount);
+					break;
+				case EV_ACTOR_SHOOT_HIDDEN:
+					correct = (net_message.readcount == oldCount + 1);
+					break;
+				case EV_ACTOR_SHOOT:
+					correct = 0;
+					break;
+				case EV_ACTOR_THROW:
+					correct = (net_message.readcount == oldCount + 2);
+					break;
+				default:
+					correct = (net_message.readcount == oldCount);
+				}
+			}
+			if (!correct)
+				/* || (net_message.readcount == oldCount + 2 
+				       && Q_strncmp("!s", ev_format[eType], 2)) */
+				Com_DPrintf ("Warning: message for event %s has wrong lenght %i, should be %i.\n", ev_names[eType], net_message.readcount - oldCount, length);
+			net_message.readcount = oldCount + length;
+		}
 	}
 }
 
