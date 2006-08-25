@@ -35,9 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 ===============================================================================
-
 ENTITY AREA CHECKING
-
 FIXME: this use of "area" is different from the bsp file use
 ===============================================================================
 */
@@ -60,13 +58,13 @@ typedef struct areanode_s {
 #define	AREA_DEPTH	4
 #define	AREA_NODES	32
 
-areanode_t sv_areanodes[AREA_NODES];
-int sv_numareanodes;
+static areanode_t sv_areanodes[AREA_NODES];
+static int sv_numareanodes;
 
-float *area_mins, *area_maxs;
-edict_t **area_list;
-int area_count, area_maxcount;
-int area_type;
+static float *area_mins, *area_maxs;
+static edict_t **area_list;
+static int area_count, area_maxcount;
+static int area_type;
 
 int SV_HullForEntity(edict_t * ent, int *tile);
 
@@ -311,7 +309,6 @@ typedef struct {
 } moveclip_t;
 
 
-
 /**
  * @brief Returns a headnode that can be used for testing or clipping an
  * object of mins/maxs size.
@@ -338,8 +335,6 @@ int SV_HullForEntity(edict_t * ent, int *tile)
 	return CM_HeadnodeForBox(0, ent->mins, ent->maxs);
 }
 
-
-/*=========================================================================== */
 
 /**
  * @brief

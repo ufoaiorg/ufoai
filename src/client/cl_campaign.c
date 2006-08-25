@@ -2959,6 +2959,8 @@ void CL_StartMission_f (void)
 		return;
 	}
 
+	selMis = ccs.mission + i;
+
 	CL_SetMissionCvars(mission);
 	CL_StartMissionMap(mission);
 }

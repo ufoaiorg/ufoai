@@ -1,3 +1,9 @@
+/**
+ * @file vid_dll.c
+ * @brief Main windowed and fullscreen graphics interface module.
+ * @note This module is used for the OpenGL rendering versions of the UFO refresh engine.
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,9 +23,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* Main windowed and fullscreen graphics interface module. This module */
-/* is used for both the software and OpenGL rendering versions of the */
-/* Quake refresh engine. */
+
 #include <assert.h>
 #include <float.h>
 
@@ -66,11 +70,11 @@ static qboolean s_alttab_disabled;
 
 extern unsigned sys_msg_time;
 
-/*
-** WIN32 helper functions
-*/
 extern qboolean s_win95;
 
+/**
+ * @brief
+ */
 static void WIN_DisableAltTab( void )
 {
 	if ( s_alttab_disabled )
@@ -86,6 +90,9 @@ static void WIN_DisableAltTab( void )
 	s_alttab_disabled = qtrue;
 }
 
+/**
+ * @brief
+ */
 static void WIN_EnableAltTab( void )
 {
 	if ( s_alttab_disabled ) {
@@ -102,18 +109,18 @@ static void WIN_EnableAltTab( void )
 
 /*
 ==========================================================================
-
 DLL GLUE
-
 ==========================================================================
 */
 
 #define	MAXPRINTMSG	4096
+/**
+ * @brief
+ */
 void VID_Printf (int print_level, char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-/*	static qboolean	inupdate; */
 
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
@@ -129,6 +136,9 @@ void VID_Printf (int print_level, char *fmt, ...)
 	}
 }
 
+/**
+ * @brief
+ */
 void VID_Error (int err_level, char *fmt, ...)
 {
 	va_list		argptr;
@@ -148,7 +158,7 @@ void VID_Error (int err_level, char *fmt, ...)
 /*========================================================================== */
 
 /* FIXME; use 256 for shift +key and get rid of the transformation in client/keys.c */
-static byte scantokey[128] =
+static const byte scantokey[128] =
 					{
 /*  0           1       2       3       4       5       6       7 */
 /*  8           9       A       B       C       D       E       F */
@@ -170,13 +180,9 @@ static byte scantokey[128] =
 	0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0         /* 7 */
 };
 
-/*
-=======
-MapKey
-
-Map from windows to quake keynums
-=======
-*/
+/**
+ * @brief Map from windows to ufo keynums
+ */
 int MapKey (int key)
 {
 	int result;
@@ -229,6 +235,9 @@ int MapKey (int key)
 	}
 }
 
+/**
+ * @brief
+ */
 void AppActivate(BOOL fActive, BOOL minimize)
 {
 	Minimized = minimize;
@@ -258,13 +267,9 @@ void AppActivate(BOOL fActive, BOOL minimize)
 	}
 }
 
-/*
-====================
-MainWndProc
-
-main window procedure
-====================
-*/
+/**
+ * @brief main window procedure
+ */
 LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 {
 	LRESULT lRet = 0;
@@ -413,30 +418,29 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }
 
-/*
-============
-VID_Restart_f
-
-Console command to re-start the video mode and refresh DLL. We do this
-simply by setting the modified flag for the vid_ref variable, which will
-cause the entire video mode and refresh DLL to be reset on the next frame.
-============
-*/
+/**
+ * @brief Console command to re-start the video mode and refresh DLL. We do this
+ * simply by setting the modified flag for the vid_ref variable, which will
+ * cause the entire video mode and refresh DLL to be reset on the next frame.
+ */
 void VID_Restart_f (void)
 {
 	vid_ref->modified = qtrue;
 }
 
+/**
+ * @brief
+ */
 void VID_Front_f( void )
 {
 	SetWindowLong( cl_hwnd, GWL_EXSTYLE, WS_EX_TOPMOST );
 	SetForegroundWindow( cl_hwnd );
 }
 
-/*
-** VID_GetModeInfo
-*/
-vidmode_t vid_modes[] =
+/**
+ * @brief
+ */
+const vidmode_t vid_modes[] =
 {
 	{ 320, 240,   0 },
 	{ 400, 300,   1 },
@@ -461,6 +465,9 @@ vidmode_t vid_modes[] =
 	{ 1400, 1050, 20 }
 };
 
+/**
+ * @brief
+ */
 qboolean VID_GetModeInfo( int *width, int *height, int mode )
 {
 	if ( mode < 0 || mode >= VID_NUM_MODES )
@@ -472,9 +479,9 @@ qboolean VID_GetModeInfo( int *width, int *height, int mode )
 	return qtrue;
 }
 
-/*
-** VID_UpdateWindowPosAndSize
-*/
+/**
+ * @brief
+ */
 void VID_UpdateWindowPosAndSize( int x, int y )
 {
 	RECT r;
@@ -495,9 +502,9 @@ void VID_UpdateWindowPosAndSize( int x, int y )
 	MoveWindow( cl_hwnd, vid_xpos->value, vid_ypos->value, w, h, TRUE );
 }
 
-/*
-** VID_NewWindow
-*/
+/**
+ * @brief
+ */
 void VID_NewWindow ( int width, int height)
 {
 	viddef.width  = width;
@@ -508,6 +515,9 @@ void VID_NewWindow ( int width, int height)
 	cl.force_refdef = qtrue;		/* can't use a paused refdef */
 }
 
+/**
+ * @brief
+ */
 void VID_FreeReflib (void)
 {
 	if ( !FreeLibrary( reflib_library ) )
@@ -517,11 +527,9 @@ void VID_FreeReflib (void)
 	reflib_active  = qfalse;
 }
 
-/*
-==============
-VID_LoadRefresh
-==============
-*/
+/**
+ * @brief
+ */
 qboolean VID_LoadRefresh( char *name )
 {
 	refimport_t	ri;
@@ -589,15 +597,11 @@ qboolean VID_LoadRefresh( char *name )
 	return qtrue;
 }
 
-/*
-============
-VID_CheckChanges
-
-This function gets called once just before drawing each frame, and it's sole purpose in life
-is to check to see if any of the video mode parameters have changed, and if they have to
-update the rendering DLL and/or video mode to match.
-============
-*/
+/**
+ * @brief This function gets called once just before drawing each frame, and it's sole purpose in life
+ * is to check to see if any of the video mode parameters have changed, and if they have to
+ * update the rendering DLL and/or video mode to match.
+ */
 void VID_CheckChanges (void)
 {
 	char name[100];
@@ -656,11 +660,10 @@ void VID_CheckChanges (void)
 	}
 }
 
-/*
-============
-VID_Init
-============
-*/
+/**
+ * @brief
+ * @sa VID_Shutdown
+ */
 void VID_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
@@ -679,11 +682,10 @@ void VID_Init (void)
 	VID_CheckChanges();
 }
 
-/*
-============
-VID_Shutdown
-============
-*/
+/**
+ * @brief
+ * @sa VID_Init
+ */
 void VID_Shutdown (void)
 {
 	if ( reflib_active ) {

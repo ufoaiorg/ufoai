@@ -1,3 +1,11 @@
+/**
+ * @file qgl_linux.c
+ * @brief  This file implements the operating system binding of GL to QGL function pointers
+ * @note When doing a port of Quake2 you must implement the following two functions:
+ ** QGL_Init() - loads libraries, assigns function pointers, etc.
+ ** QGL_Shutdown() - unloads libraries, NULLs function pointers
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,16 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/*
-** QGL_WIN.C
-**
-** This file implements the operating system binding of GL to QGL function
-** pointers.  When doing a port of Quake2 you must implement the following
-** two functions:
-**
-** QGL_Init() - loads libraries, assigns function pointers, etc.
-** QGL_Shutdown() - unloads libraries, NULLs function pointers
-*/
+
 #include <float.h>
 #include "../../ref_gl/gl_local.h"
 #include "glw_linux.h"
@@ -2662,15 +2661,12 @@ static void APIENTRY logViewport(GLint x, GLint y, GLsizei width, GLsizei height
 	dllViewport( x, y, width, height );
 }
 
-/*
-** QGL_Shutdown
-**
-** Unloads the specified DLL then nulls out all the proc pointers.
-*/
+/**
+ * @brief Unloads the specified DLL then nulls out all the proc pointers.
+ */
 void QGL_Shutdown( void )
 {
-	if ( glw_state.OpenGLLib )
-	{
+	if (glw_state.OpenGLLib) {
 		dlclose ( glw_state.OpenGLLib );
 		glw_state.OpenGLLib = NULL;
 	}
@@ -3049,7 +3045,7 @@ void QGL_Shutdown( void )
 	qglProgramLocalParameter4dvARB   = NULL;
 	qglProgramLocalParameter4fARB    = NULL;
 	qglProgramLocalParameter4fvARB   = NULL;
-        qglGetProgramEnvParameterdvARB   = NULL;
+	qglGetProgramEnvParameterdvARB   = NULL;
 	qglGetProgramEnvParameterfvARB   = NULL;
 	qglGetProgramLocalParameterdvARB = NULL;
 	qglGetProgramLocalParameterfvARB = NULL;
@@ -3064,6 +3060,9 @@ void QGL_Shutdown( void )
 
 #define GPA( a ) dlsym( glw_state.OpenGLLib, a )
 
+/**
+ * @brief
+ */
 void *qwglGetProcAddress(char *symbol)
 {
 	if (glw_state.OpenGLLib)
@@ -3071,17 +3070,9 @@ void *qwglGetProcAddress(char *symbol)
 	return NULL;
 }
 
-/*
-** QGL_Init
-**
-** This is responsible for binding our qgl function pointers to
-** the appropriate GL stuff.  In Windows this means doing a
-** LoadLibrary and a bunch of calls to GetProcAddress.  On other
-** operating systems we need to do the right thing, whatever that
-** might be.
-**
-*/
-
+/**
+ * @brief This is responsible for binding our qgl function pointers to the appropriate GL stuff
+ */
 qboolean QGL_Init( const char *dllname )
 {
 	if ( ( glw_state.OpenGLLib = dlopen( dllname, RTLD_LAZY | RTLD_GLOBAL ) ) == 0 ) {
@@ -3479,7 +3470,7 @@ qboolean QGL_Init( const char *dllname )
 	qglProgramLocalParameter4dvARB = 0;
 	qglProgramLocalParameter4fARB = 0;
 	qglProgramLocalParameter4fvARB = 0;
-        qglGetProgramEnvParameterdvARB = 0;
+	qglGetProgramEnvParameterdvARB = 0;
 	qglGetProgramEnvParameterfvARB = 0;
 	qglGetProgramLocalParameterdvARB = 0;
 	qglGetProgramLocalParameterfvARB = 0;
@@ -3494,12 +3485,13 @@ qboolean QGL_Init( const char *dllname )
 	return qtrue;
 }
 
+/**
+ * @brief
+ */
 void GLimp_EnableLogging( qboolean enable )
 {
-	if ( enable )
-	{
-		if ( !glw_state.log_fp )
-		{
+	if (enable) {
+		if (!glw_state.log_fp) {
 			struct tm *newtime;
 			time_t aclock;
 			char buffer[1024];
@@ -3851,10 +3843,7 @@ void GLimp_EnableLogging( qboolean enable )
 		qglVertex4sv                 = 	logVertex4sv                 ;
 		qglVertexPointer             = 	logVertexPointer             ;
 		qglViewport                  = 	logViewport                  ;
-	}
-	else
-	{
-
+	} else {
 		qglAccum                     = dllAccum;
 		qglAlphaFunc                 = dllAlphaFunc;
 		qglAreTexturesResident       = dllAreTexturesResident;
@@ -4194,7 +4183,9 @@ void GLimp_EnableLogging( qboolean enable )
 	}
 }
 
-
+/**
+ * @brief
+ */
 void GLimp_LogNewFrame( void )
 {
 	fprintf( glw_state.log_fp, "*** R_BeginFrame ***\n" );

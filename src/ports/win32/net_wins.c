@@ -52,8 +52,9 @@ int			ipx_sockets[2];
 
 char *NET_ErrorString (void);
 
-/*============================================================================= */
-
+/**
+ * @brief
+ */
 void NetadrToSockadr (netadr_t *a, struct sockaddr *s)
 {
 	memset (s, 0, sizeof(*s));
@@ -79,6 +80,9 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr *s)
 	}
 }
 
+/**
+ * @brief
+ */
 void SockadrToNetadr (struct sockaddr *s, netadr_t *a)
 {
 	if (s->sa_family == AF_INET) {
@@ -94,6 +98,9 @@ void SockadrToNetadr (struct sockaddr *s, netadr_t *a)
 }
 
 
+/**
+ * @brief
+ */
 qboolean NET_CompareAdr (netadr_t a, netadr_t b)
 {
 	if (a.type != b.type)
@@ -145,6 +152,9 @@ qboolean NET_CompareBaseAdr (netadr_t a, netadr_t b)
 	return qfalse;
 }
 
+/**
+ * @brief
+ */
 char *NET_AdrToString (netadr_t a)
 {
 	static	char	s[64];
@@ -159,24 +169,15 @@ char *NET_AdrToString (netadr_t a)
 	return s;
 }
 
-
-/*
-=============
-NET_StringToAdr
-
-localhost
-idnewt
-idnewt:28000
-192.246.40.70
-192.246.40.70:28000
-=============
-*/
 #define DO(src,dest)	\
 	copy[0] = s[src];	\
 	copy[1] = s[src + 1];	\
 	sscanf (copy, "%x", &val);	\
 	((struct sockaddr_ipx *)sadr)->dest = val
 
+/**
+ * @brief
+ */
 qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 {
 	struct hostent	*h;
@@ -228,17 +229,14 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 
 #undef DO
 
-/*
-=============
-NET_StringToAdr
-
-localhost
-idnewt
-idnewt:28000
-192.246.40.70
-192.246.40.70:28000
-=============
-*/
+/**
+ * @brief
+ * localhost
+ * idnewt
+ * idnewt:28000
+ * 192.246.40.70
+ * 192.246.40.70:28000
+ */
 qboolean NET_StringToAdr (char *s, netadr_t *a)
 {
 	struct sockaddr sadr;
@@ -258,6 +256,9 @@ qboolean NET_StringToAdr (char *s, netadr_t *a)
 }
 
 
+/**
+ * @brief
+ */
 qboolean NET_IsLocalAddress (netadr_t adr)
 {
 	return adr.type == NA_LOOPBACK;
@@ -265,12 +266,13 @@ qboolean NET_IsLocalAddress (netadr_t adr)
 
 /*
 =============================================================================
-
 LOOPBACK BUFFERS FOR LOCAL PLAYER
-
 =============================================================================
 */
 
+/**
+ * @brief
+ */
 qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int		i;
@@ -296,6 +298,9 @@ qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_me
 }
 
 
+/**
+ * @brief
+ */
 void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 {
 	int		i;
@@ -310,8 +315,9 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	loop->msgs[i].datalen = length;
 }
 
-/*============================================================================= */
-
+/**
+ * @brief
+ */
 qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int 	ret;
@@ -367,8 +373,9 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 	return qfalse;
 }
 
-/*============================================================================= */
-
+/**
+ * @brief
+ */
 void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 {
 	int		ret;
@@ -424,14 +431,9 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 }
 
 
-/*============================================================================= */
-
-
-/*
-====================
-NET_Socket
-====================
-*/
+/**
+ * @brief
+ */
 int NET_IPSocket (char *net_interface, int port)
 {
 	int					newsocket;
@@ -481,11 +483,9 @@ int NET_IPSocket (char *net_interface, int port)
 }
 
 
-/*
-====================
-NET_OpenIP
-====================
-*/
+/**
+ * @brief
+ */
 void NET_OpenIP (void)
 {
 	cvar_t	*ip;
@@ -527,12 +527,9 @@ void NET_OpenIP (void)
 	}
 }
 
-
-/*
-====================
-IPX_Socket
-====================
-*/
+/**
+ * @brief
+ */
 int NET_IPXSocket (int port)
 {
 	int					newsocket;
@@ -577,11 +574,9 @@ int NET_IPXSocket (int port)
 }
 
 
-/*
-====================
-NET_OpenIPX
-====================
-*/
+/**
+ * @brief
+ */
 void NET_OpenIPX (void)
 {
 	int		port;
@@ -684,11 +679,9 @@ void NET_Sleep(int msec)
 
 static WSADATA		winsockdata;
 
-/*
-====================
-NET_Init
-====================
-*/
+/**
+ * @brief
+ */
 void NET_Init (void)
 {
 	WORD	wVersionRequested;
@@ -710,31 +703,25 @@ void NET_Init (void)
 }
 
 
-/*
-====================
-NET_Shutdown
-====================
-*/
+/**
+ * @brief
+ */
 void NET_Shutdown (void)
 {
 	NET_Config (qfalse);	/* close sockets */
-
 	WSACleanup ();
 }
 
 
-/*
-====================
-NET_ErrorString
-====================
-*/
+/**
+ * @brief
+ */
 char *NET_ErrorString (void)
 {
 	int		code;
 
 	code = WSAGetLastError ();
-	switch (code)
-	{
+	switch (code) {
 	case WSAEINTR: return "WSAEINTR";
 	case WSAEBADF: return "WSAEBADF";
 	case WSAEACCES: return "WSAEACCES";

@@ -1,3 +1,8 @@
+/**
+ * @file q_shwin.c
+ * @brief Windows system functions
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -27,10 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <io.h>
 #include <conio.h>
 
-/*=============================================================================== */
 
 int		hunkcount;
-
 
 byte	*membase;
 int		hunkmaxsize;
@@ -38,6 +41,9 @@ int		cursize;
 
 #define	VIRTUAL_ALLOC
 
+/**
+ * @brief
+ */
 void *Hunk_Begin (int maxsize)
 {
 	/* reserve a huge chunk of memory, but don't commit any yet */
@@ -54,6 +60,9 @@ void *Hunk_Begin (int maxsize)
 	return (void *)membase;
 }
 
+/**
+ * @brief
+ */
 void *Hunk_Alloc (int size)
 {
 	void	*buf;
@@ -77,6 +86,9 @@ void *Hunk_Alloc (int size)
 	return (void *)(membase+cursize-size);
 }
 
+/**
+ * @brief
+ */
 int Hunk_End (void)
 {
 	/* free the remaining unused virtual memory */
@@ -94,6 +106,9 @@ int Hunk_End (void)
 	return cursize;
 }
 
+/**
+ * @brief
+ */
 void Hunk_Free (void *base)
 {
 	if ( base )
@@ -106,15 +121,10 @@ void Hunk_Free (void *base)
 	hunkcount--;
 }
 
-/*=============================================================================== */
-
-
-/*
-================
-Sys_Milliseconds
-================
-*/
 int	curtime;
+/**
+ * @brief
+ */
 int Sys_Milliseconds (void)
 {
 	static int		base;
@@ -129,17 +139,21 @@ int Sys_Milliseconds (void)
 	return curtime;
 }
 
+/**
+ * @brief
+ */
 void Sys_Mkdir (char *path)
 {
 	_mkdir (path);
 }
 
-/*============================================ */
+static char findbase[MAX_OSPATH];
+static char findpath[MAX_OSPATH];
+static int findhandle;
 
-char	findbase[MAX_OSPATH];
-char	findpath[MAX_OSPATH];
-int		findhandle;
-
+/**
+ * @brief
+ */
 static qboolean CompareAttributes( unsigned found, unsigned musthave, unsigned canthave )
 {
 	if ( ( found & _A_RDONLY ) && ( canthave & SFF_RDONLY ) )
@@ -167,6 +181,9 @@ static qboolean CompareAttributes( unsigned found, unsigned musthave, unsigned c
 	return qtrue;
 }
 
+/**
+ * @brief
+ */
 char *Sys_FindFirst (char *path, unsigned musthave, unsigned canthave )
 {
 	struct _finddata_t findinfo;
@@ -185,6 +202,9 @@ char *Sys_FindFirst (char *path, unsigned musthave, unsigned canthave )
 	return findpath;
 }
 
+/**
+ * @brief
+ */
 char *Sys_FindNext ( unsigned musthave, unsigned canthave )
 {
 	struct _finddata_t findinfo;
@@ -200,6 +220,9 @@ char *Sys_FindNext ( unsigned musthave, unsigned canthave )
 	return findpath;
 }
 
+/**
+ * @brief
+ */
 void Sys_FindClose (void)
 {
 	if (findhandle != -1)

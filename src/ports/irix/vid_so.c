@@ -78,13 +78,14 @@ void Real_IN_Init (void);
 
 /*
 ==========================================================================
-
 DLL GLUE
-
 ==========================================================================
 */
 
 #define	MAXPRINTMSG	4096
+/**
+ * @brief
+ */
 void VID_Printf (int print_level, char *fmt, ...)
 {
 	va_list		argptr;
@@ -101,6 +102,9 @@ void VID_Printf (int print_level, char *fmt, ...)
 		Com_DPrintf ("%s", msg);
 }
 
+/**
+ * @brief
+ */
 void VID_Error (int err_level, char *fmt, ...)
 {
 	va_list		argptr;
@@ -114,26 +118,20 @@ void VID_Error (int err_level, char *fmt, ...)
 	Com_Error (err_level,"%s", msg);
 }
 
-/*========================================================================== */
-
-/*
-============
-VID_Restart_f
-
-Console command to re-start the video mode and refresh DLL. We do this
-simply by setting the modified flag for the vid_ref variable, which will
-cause the entire video mode and refresh DLL to be reset on the next frame.
-============
-*/
+/**
+ * @brief Console command to re-start the video mode and refresh DLL. We do this
+ * simply by setting the modified flag for the vid_ref variable, which will
+ * cause the entire video mode and refresh DLL to be reset on the next frame.
+ */
 void VID_Restart_f (void)
 {
 	vid_ref->modified = qtrue;
 }
 
-/*
-** VID_GetModeInfo
-*/
-vidmode_t vid_modes[] =
+/**
+ * @brief
+ */
+const vidmode_t vid_modes[] =
 {
 	{ 320, 240,   0 },
 	{ 400, 300,   1 },
@@ -158,6 +156,9 @@ vidmode_t vid_modes[] =
 	{ 1400, 1050, 20 }
 };
 
+/**
+ * @brief
+ */
 qboolean VID_GetModeInfo( int *width, int *height, int mode )
 {
 	if ( mode < 0 || mode >= VID_NUM_MODES )
@@ -169,9 +170,9 @@ qboolean VID_GetModeInfo( int *width, int *height, int mode )
 	return qtrue;
 }
 
-/*
-** VID_NewWindow
-*/
+/**
+ * @brief
+ */
 void VID_NewWindow ( int width, int height)
 {
 	viddef.width  = width;
@@ -181,6 +182,9 @@ void VID_NewWindow ( int width, int height)
 	viddef.ry = (float)height / VID_NORM_HEIGHT;
 }
 
+/**
+ * @brief
+ */
 void VID_FreeReflib (void)
 {
 	if (reflib_library) {
@@ -208,11 +212,9 @@ void VID_FreeReflib (void)
 	reflib_active  = qfalse;
 }
 
-/*
-==============
-VID_LoadRefresh
-==============
-*/
+/**
+ * @brief
+ */
 qboolean VID_LoadRefresh( char *name )
 {
 	refimport_t	ri;
@@ -370,15 +372,11 @@ qboolean VID_LoadRefresh( char *name )
 	return qtrue;
 }
 
-/*
-============
-VID_CheckChanges
-
-This function gets called once just before drawing each frame, and it's sole purpose in life
-is to check to see if any of the video mode parameters have changed, and if they have to
-update the rendering DLL and/or video mode to match.
-============
-*/
+/**
+ * @brief This function gets called once just before drawing each frame, and it's sole purpose in life
+ *is to check to see if any of the video mode parameters have changed, and if they have to
+ * update the rendering DLL and/or video mode to match.
+ */
 void VID_CheckChanges (void)
 {
 	char name[100];
@@ -389,19 +387,15 @@ void VID_CheckChanges (void)
 		S_StopAllSounds();
 	}
 
-	while (vid_ref->modified)
-	{
-		/*
-		** refresh has changed
-		*/
+	while (vid_ref->modified) {
+		/* refresh has changed */
 		vid_ref->modified = qfalse;
 		vid_fullscreen->modified = qtrue;
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
 
 		sprintf( name, "ref_%s.so", vid_ref->string );
-		if ( !VID_LoadRefresh( name ) )
-		{
+		if ( !VID_LoadRefresh( name ) ) {
 			Cmd_ExecuteString( "condump gl_debug" );
 			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
 		}
@@ -410,11 +404,9 @@ void VID_CheckChanges (void)
 
 }
 
-/*
-============
-VID_Init
-============
-*/
+/**
+ * @brief
+ */
 void VID_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
@@ -431,11 +423,9 @@ void VID_Init (void)
 	VID_CheckChanges();
 }
 
-/*
-============
-VID_Shutdown
-============
-*/
+/**
+ * @brief
+ */
 void VID_Shutdown (void)
 {
 	if ( reflib_active ) {
@@ -455,46 +445,70 @@ void VID_Shutdown (void)
 /* INPUT                                                                     */
 /*****************************************************************************/
 
+/**
+ * @brief
+ */
 void IN_Init ( void )
 {
 }
 
+/**
+ * @brief
+ */
 void Real_IN_Init (void)
 {
 	if (RW_IN_Init_fp)
 		RW_IN_Init_fp(&in_state);
 }
 
+/**
+ * @brief
+ */
 void IN_Shutdown (void)
 {
 	if (RW_IN_Shutdown_fp)
 		RW_IN_Shutdown_fp();
 }
 
+/**
+ * @brief
+ */
 void IN_Commands (void)
 {
 	if (RW_IN_Commands_fp)
 		RW_IN_Commands_fp();
 }
 
+/**
+ * @brief
+ */
 void IN_Move (usercmd_t *cmd)
 {
 	if (RW_IN_Move_fp)
 		RW_IN_Move_fp(cmd);
 }
 
+/**
+ * @brief
+ */
 void IN_Frame (void)
 {
 	if (RW_IN_Frame_fp)
 		RW_IN_Frame_fp();
 }
 
+/**
+ * @brief
+ */
 void IN_Activate (qboolean active)
 {
 	if (RW_IN_Activate_fp)
 		RW_IN_Activate_fp(active);
 }
 
+/**
+ * @brief
+ */
 void Do_Key_Event(int key, qboolean down)
 {
 	Key_Event(key, down, Sys_Milliseconds());

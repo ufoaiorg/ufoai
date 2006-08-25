@@ -295,8 +295,7 @@ void Com_SetServerState(int state)
 
 /*
 ==============================================================================
-
-			MESSAGE IO FUNCTIONS
+MESSAGE IO FUNCTIONS
 
 Handles byte ordering and avoids alignment errors
 ==============================================================================
@@ -564,8 +563,6 @@ void MSG_WriteFormat(sizebuf_t * sb, char *format, ...)
 	va_end(ap);
 }
 
-
-/*============================================================ */
 
 /* reading functions */
 
@@ -881,7 +878,7 @@ void MSG_ReadFormat(sizebuf_t * msg_read, char *format, ...)
 int MSG_LengthFormat(sizebuf_t * sb, char *format)
 {
 	char typeID;
-	int length, delta;
+	int length, delta = 0;
 	int oldCount;
 
 	length = 0;

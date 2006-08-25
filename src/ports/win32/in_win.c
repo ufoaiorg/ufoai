@@ -1,3 +1,9 @@
+/**
+ * @file in_win.c
+ * @brief windows 95 mouse code
+ * 02/21/97 JCB Added extended DirectInput code to support external controllers.
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,8 +23,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* in_win.c -- windows 95 mouse code */
-/* 02/21/97 JCB Added extended DirectInput code to support external controllers. */
 
 #include "../../client/client.h"
 #include "winquake.h"
@@ -31,14 +35,12 @@ qboolean in_appactive;
 
 /*
 ============================================================
-
-  MOUSE CONTROL
-
+MOUSE CONTROL
 ============================================================
 */
 
 /* mouse variables */
-cvar_t	*m_filter;
+cvar_t *m_filter;
 
 int mouse_buttons;
 int mouse_oldbuttonstate;
@@ -57,13 +59,9 @@ int window_center_x, window_center_y;
 RECT window_rect;
 
 
-/*
-===========
-IN_ActivateMouse
-
-Called when the window gains focus or changes in some way
-===========
-*/
+/**
+ * @brief Called when the window gains focus or changes in some way
+ */
 void IN_ActivateMouse (void)
 {
 	int width, height;
@@ -112,13 +110,9 @@ void IN_ActivateMouse (void)
 }
 
 
-/*
-===========
-IN_DeactivateMouse
-
-Called when the window loses focus
-===========
-*/
+/**
+ * @brief Called when the window loses focus
+ */
 void IN_DeactivateMouse (void)
 {
 	if (!mouseinitialized)
@@ -140,12 +134,9 @@ void IN_DeactivateMouse (void)
 }
 
 
-
-/*
-===========
-IN_StartupMouse
-===========
-*/
+/**
+ * @brief
+ */
 void IN_StartupMouse (void)
 {
 	cvar_t		*cv;
@@ -159,11 +150,9 @@ void IN_StartupMouse (void)
 	mouse_buttons = 3;
 }
 
-/*
-===========
-IN_MouseEvent
-===========
-*/
+/**
+ * @brief
+ */
 void IN_MouseEvent (int mstate)
 {
 	int		i;
@@ -184,11 +173,9 @@ void IN_MouseEvent (int mstate)
 }
 
 
-/*
-===========
-IN_GetMousePos
-===========
-*/
+/**
+ * @brief
+ */
 void IN_GetMousePos (int *mx, int *my)
 {
 	if (!mouseactive || !GetCursorPos(&current_pos) ) {
@@ -203,21 +190,16 @@ void IN_GetMousePos (int *mx, int *my)
 
 /*
 =========================================================================
-
 VIEW CENTERING
-
 =========================================================================
 */
 
 cvar_t	*v_centermove;
 cvar_t	*v_centerspeed;
 
-
-/*
-===========
-IN_Init
-===========
-*/
+/**
+ * @brief
+ */
 void IN_Init (void)
 {
 	/* mouse variables */
@@ -231,26 +213,19 @@ void IN_Init (void)
 	IN_StartupMouse ();
 }
 
-/*
-===========
-IN_Shutdown
-===========
-*/
+/**
+ * @brief
+ */
 void IN_Shutdown (void)
 {
 	IN_DeactivateMouse ();
 }
 
 
-/*
-===========
-IN_Activate
-
-Called when the main window gains or loses focus.
-The window may have been destroyed and recreated
-between a deactivate and an activate.
-===========
-*/
+/**
+ * @brief Called when the main window gains or loses focus.
+ * @note The window may have been destroyed and recreated between a deactivate and an activate.
+ */
 void IN_Activate (qboolean active)
 {
 	in_appactive = active;
@@ -258,13 +233,9 @@ void IN_Activate (qboolean active)
 }
 
 
-/*
-==================
-IN_Frame
-
-Called every frame, even if not generating commands
-==================
-*/
+/**
+ * @brief Called every frame, even if not generating commands
+ */
 void IN_Frame (void)
 {
 	if (!mouseinitialized)
@@ -289,22 +260,19 @@ void IN_Frame (void)
 	IN_ActivateMouse ();
 }
 
-/*
-===================
-IN_ClearStates
-===================
-*/
+/**
+ * @brief
+ */
 void IN_ClearStates (void)
 {
 	mx_accum = 0;
 	my_accum = 0;
 	mouse_oldbuttonstate = 0;
 }
-/*
-===========
-IN_Commands
-===========
-*/
+
+/**
+ * @brief
+ */
 void IN_Commands (void)
 {
 }

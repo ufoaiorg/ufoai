@@ -65,7 +65,7 @@ qboolean have_stencil = qfalse;
 static unsigned short s_oldHardwareGamma[3][256];
 
 /**
- * @brief  Determines if the underlying hardware supports the Win32 gamma correction API.
+ * @brief Determines if the underlying hardware supports the Win32 gamma correction API.
  */
 void WG_CheckHardwareGamma( void )
 {
@@ -585,10 +585,16 @@ void GLimp_BeginFrame( float camera_separation )
  */
 void GLimp_EndFrame (void)
 {
+#ifdef DEBUG
 	int		err;
-
 	err = qglGetError();
-	assert( err == GL_NO_ERROR );
+#ifdef PARANOID
+	if (err!=GL_NO_ERROR)
+		Com_Printf("GLimp_EndFrame: glGetError: %i\n", err);
+#else
+	assert(err == GL_NO_ERROR);
+#endif /*PARANOID*/
+#endif /*DEBUG*/
 
 	if ( Q_stricmp( gl_drawbuffer->string, "GL_BACK" ) == 0 ) {
 		if ( !qwglSwapBuffers( glw_state.hDC ) )
@@ -596,9 +602,9 @@ void GLimp_EndFrame (void)
 	}
 }
 
-/*
-** GLimp_AppActivate
-*/
+/**
+ * @brief
+ */
 void GLimp_AppActivate( qboolean active )
 {
 	if ( active ) {

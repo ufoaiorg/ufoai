@@ -22,6 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+
 #include <unistd.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -58,6 +59,11 @@ unsigned	sys_frame_time;
 uid_t saved_euid;
 qboolean stdin_active = qtrue;
 
+static void *game_library;
+
+/**
+ * @brief
+ */
 char *Sys_GetCurrentUser( void )
 {
 	struct passwd *p;
@@ -68,6 +74,9 @@ char *Sys_GetCurrentUser( void )
 	return p->pw_name;
 }
 
+/**
+ * @brief
+ */
 char *Sys_Cwd( void )
 {
 	static char cwd[MAX_OSPATH];
@@ -78,21 +87,20 @@ char *Sys_Cwd( void )
 	return cwd;
 }
 
+/**
+ * @brief
+ */
 void Sys_NormPath(char* path)
 {
 }
 
-/*
-=================
-Sys_BinName
-
-This resolves any symlinks to the binary. It's disabled for debug
-builds because there are situations where you are likely to want
-to symlink to binaries and /not/ have the links resolved.
-This way you can make a link in /usr/bin and the data-files are still
-found in e.g. /usr/local/games/ufoai
-=================
-*/
+/**
+ * @brief This resolves any symlinks to the binary. It's disabled for debug
+ * builds because there are situations where you are likely to want
+ * to symlink to binaries and /not/ have the links resolved.
+ * This way you can make a link in /usr/bin and the data-files are still
+ * found in e.g. /usr/local/games/ufoai
+ */
 char *Sys_BinName( const char *arg0 )
 {
 #ifndef DEBUG
@@ -126,11 +134,9 @@ char *Sys_BinName( const char *arg0 )
 	return dst;
 }
 
-/*
-=================
-Sys_GetHomeDirectory
-=================
-*/
+/**
+ * @brief
+ */
 char *Sys_GetHomeDirectory (void)
 {
 	return getenv ( "HOME" );
@@ -141,6 +147,9 @@ char *Sys_GetHomeDirectory (void)
 /* General routines */
 /* ======================================================================= */
 
+/**
+ * @brief
+ */
 void Sys_ConsoleOutput (char *string)
 {
 	if (nostdout && nostdout->value)
@@ -149,6 +158,9 @@ void Sys_ConsoleOutput (char *string)
 	fputs(string, stdout);
 }
 
+/**
+ * @brief
+ */
 void Sys_Printf (char *fmt, ...)
 {
 	va_list		argptr;
@@ -174,6 +186,9 @@ void Sys_Printf (char *fmt, ...)
 	}
 }
 
+/**
+ * @brief
+ */
 void Sys_Quit (void)
 {
 	CL_Shutdown ();
@@ -182,6 +197,9 @@ void Sys_Quit (void)
 	exit(0);
 }
 
+/**
+ * @brief
+ */
 void Sys_Init(void)
 {
 	Cvar_Get("sys_os", "linux", 0);
@@ -190,6 +208,9 @@ void Sys_Init(void)
 #endif
 }
 
+/**
+ * @brief
+ */
 void Sys_Error (char *error, ...)
 {
 	va_list     argptr;
@@ -209,6 +230,9 @@ void Sys_Error (char *error, ...)
 	exit (1);
 }
 
+/**
+ * @brief
+ */
 void Sys_Warn (char *warning, ...)
 {
 	va_list     argptr;
@@ -220,13 +244,10 @@ void Sys_Warn (char *warning, ...)
 	fprintf(stderr, "Warning: %s", string);
 }
 
-/*
-============
-Sys_FileTime
-
-returns -1 if not present
-============
-*/
+/**
+ * @brief
+ * @return -1 if not present
+ */
 int Sys_FileTime (char *path)
 {
 	struct	stat	buf;
@@ -237,12 +258,18 @@ int Sys_FileTime (char *path)
 	return buf.st_mtime;
 }
 
+/**
+ * @brief
+ */
 void floating_point_exception_handler(int whatever)
 {
 /*	Sys_Warn("floating point exception\n"); */
 	signal(SIGFPE, floating_point_exception_handler);
 }
 
+/**
+ * @brief
+ */
 char *Sys_ConsoleInput(void)
 {
 	static char text[256];
@@ -276,15 +303,9 @@ char *Sys_ConsoleInput(void)
 	return text;
 }
 
-/*****************************************************************************/
-
-static void *game_library;
-
-/*
-=================
-Sys_UnloadGame
-=================
-*/
+/**
+ * @brief
+ */
 void Sys_UnloadGame (void)
 {
 	if (game_library)
@@ -292,13 +313,9 @@ void Sys_UnloadGame (void)
 	game_library = NULL;
 }
 
-/*
-=================
-Sys_GetGameAPI
-
-Loads the game dll
-=================
-*/
+/**
+ * @brief Loads the game dll
+ */
 game_export_t *Sys_GetGameAPI (game_import_t *parms)
 {
 	void	*(*GetGameAPI) (void *);
@@ -319,15 +336,13 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 
 	/* now run through the search paths */
 	path = NULL;
-	while (1)
-	{
+	while (1) {
 		path = FS_NextPath (path);
 		if (!path)
 			return NULL;		/* couldn't find one anywhere */
 		Com_sprintf (name, MAX_OSPATH, "%s/%s/game.so", curpath, path);
 		game_library = dlopen (name, RTLD_LAZY );
-		if (game_library)
-		{
+		if (game_library) {
 			Com_Printf ("LoadLibrary (%s)\n", name);
 			break;
 		} else {
@@ -337,8 +352,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	}
 
 	GetGameAPI = (void *)dlsym (game_library, "GetGameAPI");
-	if (!GetGameAPI)
-	{
+	if (!GetGameAPI) {
 		Sys_UnloadGame ();
 		return NULL;
 	}
@@ -346,12 +360,16 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	return GetGameAPI (parms);
 }
 
-/*****************************************************************************/
-
+/**
+ * @brief
+ */
 void Sys_AppActivate (void)
 {
 }
 
+/**
+ * @brief
+ */
 void Sys_SendKeyEvents (void)
 {
 #ifndef DEDICATED_ONLY
@@ -363,13 +381,17 @@ void Sys_SendKeyEvents (void)
 	sys_frame_time = Sys_Milliseconds();
 }
 
-/*****************************************************************************/
-
+/**
+ * @brief
+ */
 char *Sys_GetClipboardData(void)
 {
 	return NULL;
 }
 
+/**
+ * @brief
+ */
 int main (int argc, char **argv)
 {
 	int 	time, oldtime, newtime;

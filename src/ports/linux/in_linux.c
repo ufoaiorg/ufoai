@@ -1,3 +1,8 @@
+/**
+ * @file in_linux.c
+ * @brief
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -22,23 +27,38 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t	*in_mouse;
 
+/**
+ * @brief
+ */
 void IN_Init (void)
 {
 	in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
 }
 
+/**
+ * @brief
+ */
 void IN_Shutdown (void)
 {
 }
 
+/**
+ * @brief
+ */
 void IN_Commands (void)
 {
 }
 
+/**
+ * @brief
+ */
 void IN_Move (usercmd_t *cmd)
 {
 }
 
+/**
+ * @brief
+ */
 void IN_Activate (qboolean active)
 {
 }
