@@ -663,6 +663,7 @@ void CL_AddTargeting(void);
 extern char *teamSkinNames[NUM_TEAMSKINS];
 
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y);
+void CL_ReceiveItem(sizebuf_t * buf, item_t * item, int * container, int * x, int * y);
 void CL_ResetTeams(void);
 void CL_ParseResults(sizebuf_t * buf);
 void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num);

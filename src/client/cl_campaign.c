@@ -1272,13 +1272,18 @@ void CL_GameSave(char *filename, char *comment)
 	SZ_Write(&sb, &gd, sizeof(globalData_t));
 
 	/* store inventories */
-	for (type = 0, i = 0; i < MAX_EMPL; type++)
+	for (type = 0, type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
+			int nr = 0;
+				
+			for (j = 0; j < csi.numIDs; j++)
+				for (ic = gd.employees[type][i].inv.c[j]; ic; ic = ic->next)
+					nr++;
+
+			MSG_WriteShort(&sb, nr * 6);
 			for (j = 0; j < csi.numIDs; j++)
 				for (ic = gd.employees[type][i].inv.c[j]; ic; ic = ic->next)
 					CL_SendItem(&sb, ic->item, j, ic->x, ic->y);
-			/* terminate list for one employee*/
-			MSG_WriteByte(&sb, NONE);
 		}
 
 	/* store message system items */
@@ -1539,29 +1544,22 @@ int CL_GameLoad(char *filename)
 	CL_UpdatePointersInGlobalData();
 	/* lots of inventory pointers if gd, so we have to do the hack below;
 	   some serialization library would be much better for gd, though */
-	/* store inventories */
-	for (type = 0; i < MAX_EMPL; type++)
+
+	/* load inventories */
+	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
-			item_t item;
-			int container, x, y;
+			int nr = MSG_ReadShort(&sb) / 6;
 
 			/* clear the mess of stray loaded pointers */
 			memset(&gd.employees[type][i].inv, 0, sizeof(inventory_t));
 
-			item.t = MSG_ReadByte(&sb);
-			while (item.t != NONE) {
+			for (; nr-- > 0;) {
+				item_t item;
+				int container, x, y;
 
-				/* read info */
-				item.a = MSG_ReadByte(&sb);
-				item.m = MSG_ReadByte(&sb);
-				container = MSG_ReadByte(&sb);
-				x = MSG_ReadByte(&sb);
-				y = MSG_ReadByte(&sb);
-
+				CL_ReceiveItem(&sb, &item, &container, &x, &y);
+				
 				Com_AddToInventory(&gd.employees[type][i].inv, item, container, x, y);
-
-				/* get next item */
-				item.t = MSG_ReadByte(&sb);
 			}
 		}
 
