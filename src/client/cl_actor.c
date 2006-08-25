@@ -440,7 +440,7 @@ void CL_ActorUpdateCVars(void)
 					actorMoveLength = 0xFF;
 
 				if (actorMoveLength < 0xFF) {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\nMove %i\n"), selActor->AP, selActor->morale, actorMoveLength);
+					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
 					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
 					if ( actorMoveLength <= selActor->TU )
 						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "%i (%i)\n", actorMoveLength, selActor->TU);
