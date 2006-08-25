@@ -60,8 +60,6 @@ viddef_t	viddef;				/* global video state; used by other modules */
 HINSTANCE	reflib_library;		/* Handle to refresh DLL */
 qboolean	reflib_active = 0;
 
-HWND        cl_hwnd;            /* Main window handle for life of program */
-
 #define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
 
 LRESULT WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );

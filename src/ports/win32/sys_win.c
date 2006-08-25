@@ -54,6 +54,7 @@ static HANDLE		hinput, houtput;
 unsigned	sys_msg_time;
 unsigned	sys_frame_time;
 
+HWND        cl_hwnd;            /* Main window handle for life of program */
 
 static HANDLE		qwclsemaphore;
 
@@ -137,7 +138,7 @@ void WinError (void)
 	);
 
 	/* Display the string. */
-	MessageBox( NULL, lpMsgBuf, "GetLastError", MB_OK|MB_ICONINFORMATION );
+	MessageBox( NULL, (char*)lpMsgBuf, "GetLastError", MB_OK|MB_ICONINFORMATION );
 
 	/* Free the buffer. */
 	LocalFree( lpMsgBuf );
@@ -397,8 +398,8 @@ char *Sys_GetClipboardData( void )
 		HANDLE hClipboardData;
 
 		if ( ( hClipboardData = GetClipboardData( CF_TEXT ) ) != 0 ) {
-			if ( ( cliptext = GlobalLock( hClipboardData ) ) != 0 ) {
-				data = malloc( GlobalSize( hClipboardData ) + 1 );
+			if ( ( cliptext = (char*)GlobalLock( hClipboardData ) ) != 0 ) {
+				data = (char*)malloc( GlobalSize( hClipboardData ) + 1 );
 				strcpy( data, cliptext );
 				GlobalUnlock( hClipboardData );
 			}
@@ -618,7 +619,6 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		} while (time < 1);
 
 		_controlfp( _PC_24, _MCW_PC );
-
 		timescale = Qcommon_Frame (time);
 		oldtime = newtime;
 	}
