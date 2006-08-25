@@ -38,8 +38,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LEFT(e)  e->i.c[gi.csi->idLeft]
 #define FLOOR(e) e->i.c[gi.csi->idFloor]
 
-/* Stores the used TUs for Reaction fire for each player. */
-static int TU_REACTIONS[MAX_EDICTS];
+/*
+ * 0: Stores the used TUs for Reaction fire for each edict.
+ * 1: Stores if the edict has fired in rection.
+*/
+static int TU_REACTIONS[MAX_EDICTS][2];
 
 /**
  * @brief Generates the player mask
@@ -151,24 +154,25 @@ void G_ResetReactionFire(int team)
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == team) {
+			TU_REACTIONS[ent->number][1]  = 0;	/* reset 'RF used' flag */
 			if ( ent->state & STATE_REACTION ) {
 				if (ent->TU >= TU_REACTION ) {
 					/* Enough TUs for reaction fire available. */
 					ent->TU -= TU_REACTION;
-					TU_REACTIONS[ent->number] = TU_REACTION;	/* Save the used TUs for possible later re-adding. */
+					TU_REACTIONS[ent->number][0] = TU_REACTION;	/* Save the used TUs for possible later re-adding. */
 				} else if (ent->TU > 0) {
 					/* Not enough TUs for reaction fire available. */
-					TU_REACTIONS[ent->number] = ent->TU;	/* Save the used TUs for possible later re-adding. */
+					TU_REACTIONS[ent->number][0] = ent->TU;	/* Save the used TUs for possible later re-adding. */
 					ent->TU = 0;
 				} else {
 					/* No TUs at all available. */
-					TU_REACTIONS[ent->number] = -1;
+					TU_REACTIONS[ent->number][0] = -1;
 				}
 
 				ent->state &= ~STATE_SHAKEN;	/* STATE_SHAKEN includes STATE_REACTION */
 				ent->state |= STATE_REACTION;	/* re-set STATE_REACTION */
 			} else {
-				TU_REACTIONS[ent->number] = 0;	/* Reset saved TUs. */
+				TU_REACTIONS[ent->number][0] = 0;	/* Reset saved TUs. */
 				ent->state &= ~STATE_SHAKEN;	/* STATE_SHAKEN includes STATE_REACTION */
 			}
 			gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
@@ -1208,10 +1212,10 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 				/* Turn off reaction fire and give the soldier back his TUs if it used some. */
 				ent->state &= ~STATE_REACTION;
 
-				if ( TU_REACTIONS[ent->number] > 0) {
+				if ( TU_REACTIONS[ent->number][0] > 0) {
 					/* TUs where used for activation. */
-					ent->TU += TU_REACTIONS[ent->number];
-				} else if ( TU_REACTIONS[ent->number] < 0) {
+					ent->TU += TU_REACTIONS[ent->number][0];
+				} else if ( TU_REACTIONS[ent->number][0] < 0) {
 					/* No TUs where used for activation. */
 					/* Don't give TUs back because none where used up (reaction fire was already active from previous turn) */
 				} else {
@@ -1224,15 +1228,15 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 			/* Turn on reaction fire and save the used TUs to the list. */
 			ent->state |= STATE_REACTION;
 
-			if ( TU_REACTIONS[ent->number] > 0) {
+			if ( TU_REACTIONS[ent->number][0] > 0) {
 				/* TUs where saved for this turn (either the full TU_REACTION or some remaining TUs from the shot. This was done either in the last turn or this one. */
-				ent->TU -= TU_REACTIONS[ent->number];
-			} else if ( TU_REACTIONS[ent->number] == 0) {
+				ent->TU -= TU_REACTIONS[ent->number][0];
+			} else if ( TU_REACTIONS[ent->number][0] == 0) {
 				/* Reaction fire was not triggered in the last turn. */
 				ent->TU -= TU_REACTION;
-				TU_REACTIONS[ent->number] = TU_REACTION;
+				TU_REACTIONS[ent->number][0] = TU_REACTION;
 			}  else {
-				/* TU_REACTIONS[ent->number] < 0 */
+				/* TU_REACTIONS[ent->number][0] < 0 */
 				/* Reaction fire was triggered in the last turn,
 				   and has used 0 TU from this one.
 				   Can be activated without TU-loss. */
@@ -2121,7 +2125,8 @@ void G_KillTeam(void)
 }
 
 /**
- * @brief
+ * @brief	Checks if an edict has reaction fire enabled and sees the target. Then fire at him.
+ * @param[in,out] target The edict that will be fired on.
  */
 qboolean G_ReactionFire(edict_t * target)
 {
@@ -2133,42 +2138,49 @@ qboolean G_ReactionFire(edict_t * target)
 
 	fired = qfalse;
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN)) {
+		if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN) && !TU_REACTIONS[ent->number][1] ) {
+			/* TODO: After implementing the 3-state button for Reaction Fire: && ( ( togglebutton == morethanone ) || ( (togglebutton == onlyone) && !TU_REACTIONS[ent->number][1] ) ) */
 			actorVis = G_ActorVis(ent->origin, target, qtrue);
 			frustom = G_FrustomVis(ent, target->origin);
 			if (actorVis > 0.4 && frustom) {
 				if (target->team == TEAM_CIVILIAN || target->team == ent->team)
 					if (!(ent->state & (STATE_SHAKEN & ~STATE_REACTION)) || (float) ent->morale / mor_shaken->value > frand())
 						continue;
-				/*if reaction fire is triggered by a friendly unit
-				  and the shooter is still sane, don't shoot;
-				  well, if the shooter isn't sane anymore... */
+				/* If reaction fire is triggered by a friendly unit
+				   and the shooter is still sane, don't shoot;
+				   well, if the shooter isn't sane anymore... */
 
-				/* get player */
+				/* Get player. */
 				player = game.players + ent->pnum;
 				if (!player)
 					continue;
 
-				/* change active team for this shot only */
+				/* Change active team for this shot only. */
 				team = level.activeTeam;
 				level.activeTeam = ent->team;
 
-				if (RIGHT(ent) && (RIGHT(ent)->item.m != NONE) && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin)) {
+				/* Fire the first weapon in hands if everything is ok. */
+				if ( RIGHT(ent) && (RIGHT(ent)->item.m != NONE) && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
 					G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY);
-					ent->state &= ~STATE_SHAKEN;
-					ent->state |= STATE_REACTION;	/* re-set STATE_REACTION */
 					fired = qtrue;
-				} else if (LEFT(ent) && (LEFT(ent)->item.m != NONE) && gi.csi->ods[LEFT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin)) {
+				} else if ( LEFT(ent) && (LEFT(ent)->item.m != NONE) && gi.csi->ods[LEFT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
 					G_ClientShoot(player, ent->number, target->pos, ST_LEFT_PRIMARY);
-					ent->state &= ~STATE_SHAKEN;	/* STATE_SHAKEN includes STATE_REACTION */
-					ent->state |= STATE_REACTION;	/* re-set STATE_REACTION */
 					fired = qtrue;
 				}
 
-				/* revert active team */
+				/* Revert active team. */
 				level.activeTeam = team;
 
-				/* check for death of the target */
+				if ( fired ) {
+					/* Update reaction data if fired. */
+					ent->state &= ~STATE_SHAKEN;	/* STATE_SHAKEN includes STATE_REACTION */
+					ent->state |= STATE_REACTION;	/* re-set STATE_REACTION */
+#if 0
+					TU_REACTIONS[ent->number][1]  += 1;	/* Save the fact that the ent has fired. */
+#endif
+				}
+
+				/* Check for death of the target. */
 				if (target->state & STATE_DEAD)
 					return fired;
 			}
