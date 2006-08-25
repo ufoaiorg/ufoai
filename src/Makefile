@@ -87,6 +87,8 @@ SOLARIS_DIR=$(MOUNT_DIR)/ports/solaris
 IRIX_DIR=$(MOUNT_DIR)/ports/irix
 
 BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
+# this may fix prediction errors
+# -ffloat-store -mfpmath=sse
 # Put this in when it is fixed
 # -ansi -pedantic
 TOOLSCFLAGS=
