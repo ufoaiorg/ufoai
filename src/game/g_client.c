@@ -1842,28 +1842,27 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
  */
 void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at, int mask)
 {
-	vec3_t dir;		/* Direction from the location of the gun muzzle ("from") to the target ("at") */
+	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
 	vec3_t cur_loc;	/* The current location of the projectile. */
 	vec3_t impact;	/* The location of the target (-center?) */
 	vec3_t temp;
-	trace_t tr;		/* ?? TODO */
-	float acc;		/* Accuracy modifier for the angle of the shot. */
+	trace_t tr;	/* ?? TODO */
+	float acc;	/* Accuracy modifier for the angle of the shot. */
 	float range;	/* ?? TODO */
-	int bounce;		/* ?? TODO */
+	int bounce;	/* ?? TODO */
 	int damage;	/* The damage to be dealt to the target. */
-	byte flags;		/* ?? TODO */
+	byte flags;	/* ?? TODO */
 	int i;
 
 	/* Calc direction of the shot. */
-	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the grid-cell. */
-	VectorCopy(from, cur_loc);			/* Set current location of the projectile to the starting (muzzle) location. */
+	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used temporary)*/
+	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
-	VectorNormalize(dir);				/* Normalize the vector i.e. make length 1.0 */
-	VectorMA(cur_loc, 8, dir, cur_loc);		/* ?? */
-	VecToAngles(dir, angles);			/* Get the angles of the direction vector. */
+	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
+	VectorMA(cur_loc, 8, dir, cur_loc);	/* ?? TODO: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid. Might need some change to reflect 2x2 units. Also might need a check if the distace is bigger than the one to the impact location.*/
+	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
-	
 	/* Get accuracy value for this attacker. */
 	acc = GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.skills[fd->weaponSkill] : 0);
 
@@ -1883,7 +1882,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 	bounce = 0;
 	flags = 0;
 	do {
-		/* calc impact vector */
+		/* Calc impact vector (cur_loc+range*dir) Overwrites the temporary 'impact' vector used in the dir-calculation above.*/
 		VectorMA(cur_loc, range, dir, impact);
 
 		/* do the trace */
@@ -1950,7 +1949,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		VectorAdd(temp, dir, dir);
 		flags = SF_BOUNCED;
 	}
-	while (bounce <= fd->bounce);
+	while (bounce <= fd->bounce);	/* TODO: What exactly is 'bounce' checked for here? */
 }
 
 
