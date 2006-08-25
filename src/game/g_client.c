@@ -1831,32 +1831,43 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 }
 
 
-/*
-=================
-G_ShootSingle
-=================
-*/
+/**
+ * @brief Fires straight shots.
+ * @param[in] ent The attacker.
+ * @param[in] fd ?? TODO
+ * @param[in] type ?? TODO
+ * @param[in] from Location of the gun muzzle.
+ * @param[in] at Grid coordinate of the target.
+ * @param[in] mask ?? TODO Visibility bit-mask of the others?
+ */
 void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at, int mask)
 {
-	vec3_t dir, angles;
-	vec3_t muzzle, impact, temp;
-	float acc, range;
-	byte flags;
-	int i, bounce;
-	int damage;
-	trace_t tr;
+	vec3_t dir;		/* Direction from the location of the gun muzzle ("from") to the target ("at") */
+	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
+	vec3_t cur_loc;	/* The current location of the projectile. */
+	vec3_t impact;	/* The location of the target (-center?) */
+	vec3_t temp;
+	trace_t tr;		/* ?? TODO */
+	float acc;		/* Accuracy modifier for the angle of the shot. */
+	float range;	/* ?? TODO */
+	int bounce;		/* ?? TODO */
+	int damage;	/* The damage to be dealt to the target. */
+	byte flags;		/* ?? TODO */
+	int i;
 
-	/* calc dir */
-	gi.GridPosToVec(gi.map, at, impact);
-	VectorCopy(from, muzzle);
-	VectorSubtract(impact, muzzle, dir);
-	VectorNormalize(dir);
-	VectorMA(muzzle, 8, dir, muzzle);
-	VecToAngles(dir, angles);
+	/* Calc direction of the shot. */
+	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the grid-cell. */
+	VectorCopy(from, cur_loc);			/* Set current location of the projectile to the starting (muzzle) location. */
+	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
+	VectorNormalize(dir);				/* Normalize the vector i.e. make length 1.0 */
+	VectorMA(cur_loc, 8, dir, cur_loc);		/* ?? */
+	VecToAngles(dir, angles);			/* Get the angles of the direction vector. */
 
-	/* add random effects and get new dir */
+	
+	/* Get accuracy value for this attacker. */
 	acc = GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.skills[fd->weaponSkill] : 0);
 
+	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
 	if ((ent->state & STATE_CROUCHED) && fd->crouch) {
 		angles[PITCH] += crand() * fd->spread[0] * fd->crouch * acc;
 		angles[YAW] += crand() * fd->spread[1] * fd->crouch * acc;
@@ -1864,6 +1875,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		angles[PITCH] += crand() * fd->spread[0] * acc;
 		angles[YAW] += crand() * fd->spread[1] * acc;
 	}
+	/* Convert changed angles into new direction. */
 	AngleVectors(angles, dir, NULL, NULL);
 
 	/* shoot and bounce */
@@ -1872,10 +1884,10 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 	flags = 0;
 	do {
 		/* calc impact vector */
-		VectorMA(muzzle, range, dir, impact);
+		VectorMA(cur_loc, range, dir, impact);
 
 		/* do the trace */
-		tr = gi.trace(muzzle, NULL, NULL, impact, ent, MASK_SHOT);
+		tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
 		VectorCopy(tr.endpos, impact);
 
 		/* set flags */
@@ -1904,7 +1916,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		gi.WriteShort(ent->number);
 		gi.WriteByte(type);
 		gi.WriteByte(flags);
-		gi.WritePos(muzzle);
+		gi.WritePos(cur_loc);
 		gi.WritePos(impact);
 		gi.WriteDir(tr.plane.normal);
 
@@ -1932,7 +1944,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 			break;
 
 		range -= tr.fraction * range;
-		VectorCopy(impact, muzzle);
+		VectorCopy(impact, cur_loc);
 		VectorScale(tr.plane.normal, -DotProduct(tr.plane.normal, dir), temp);
 		VectorAdd(temp, dir, dir);
 		VectorAdd(temp, dir, dir);
