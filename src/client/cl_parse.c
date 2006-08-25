@@ -79,7 +79,7 @@ char *ev_format[] =
 	"b",				/* EV_ENDROUND */
 
 	/* Beware: data for '&' MUST NOT have values == NONE (0xFF). */
-	"bb&*",				/* EV_RESULTS */
+	"bb***",			/* EV_RESULTS */
 	"g",				/* EV_CENTERVIEW */
 
 	"sbg",				/* EV_ENT_APPEAR */

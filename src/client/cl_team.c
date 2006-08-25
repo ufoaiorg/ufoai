@@ -1369,20 +1369,18 @@ void CL_ParseResults(sizebuf_t * buf)
 	winner = MSG_ReadByte(buf);
 	we = cls.team;
 
+	MSG_ReadShort(buf); /* size */
 	/* get spawn and alive count */
 	for (i = 0; i < num; i++) {
 		num_spawned[i] = MSG_ReadByte(buf);
 		num_alive[i] = MSG_ReadByte(buf);
 	}
 
+	MSG_ReadShort(buf); /* size */
 	/* get kills */
 	for (i = 0; i < num; i++)
 		for (j = 0; j < num; j++)
 			num_kills[i][j] = MSG_ReadByte(buf);
-
-	/* read terminator */
-	if (MSG_ReadByte(buf) != NONE)
-		Com_Printf("WARNING: bad result message\n");
 
 	CL_ParseCharacterData(buf, qfalse);
 

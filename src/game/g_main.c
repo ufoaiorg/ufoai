@@ -396,6 +396,7 @@ void G_EndGame(int team)
 	edict_t *ent;
 	int i, j = 0;
 	player_t* player;
+	int	number_of_teams;
 
 	/* Make everything visible to anyone who can't already see it */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
@@ -408,24 +409,22 @@ void G_EndGame(int team)
 	/* send results */
 	Com_DPrintf("Sending results for game won by team %i.\n", team);
 	gi.AddEvent(PM_ALL, EV_RESULTS);
-	gi.WriteByte(MAX_TEAMS);
+	number_of_teams = MAX_TEAMS; /* TODO:why not the actual number of teams? */
+	gi.WriteByte(number_of_teams);
 	gi.WriteByte(team);
 
-	for (i = 0; i < MAX_TEAMS; i++) {
-		assert (level.num_spawned[i] != NONE);
+	gi.WriteShort(2 * number_of_teams);
+	for (i = 0; i < number_of_teams; i++) {
 		gi.WriteByte(level.num_spawned[i]);
-		assert (level.num_alive[i] != NONE);
 		gi.WriteByte(level.num_alive[i]);
 	}
 
-	for (i = 0; i < MAX_TEAMS; i++)
-		for (j = 0; j < MAX_TEAMS; j++) {
-			assert (level.num_kills[i][j] != NONE);
+	gi.WriteShort(number_of_teams * number_of_teams);
+	for (i = 0; i < number_of_teams; i++)
+		for (j = 0; j < number_of_teams; j++) {
 			gi.WriteByte(level.num_kills[i][j]);
 		}
-
 	/* end of spawn, alive and kill counts */
-	gi.WriteByte(NONE);
 
 	player = game.players + ent->pnum;
 	for (j = 0, i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
