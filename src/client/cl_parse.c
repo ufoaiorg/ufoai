@@ -69,8 +69,6 @@ char *svc_strings[256] =
 /* !	| do not read	| 1 */
 /* *	| pascal string type - SIZE+DATA, SIZE can be read from va_arg 
                         | 2 + sizeof(DATA) */
-/* &	| read bytes
-	      until NONE	| */
 char *ev_format[] =
 {
 	"",					/* EV_NULL */
@@ -78,7 +76,6 @@ char *ev_format[] =
 	"",					/* EV_START */
 	"b",				/* EV_ENDROUND */
 
-	/* Beware: data for '&' MUST NOT have values == NONE (0xFF). */
 	"bb***",			/* EV_RESULTS */
 	"g",				/* EV_CENTERVIEW */
 
