@@ -232,7 +232,7 @@ static void ED_ParseField(char *key, char *value, edict_t * ent)
 			return;
 		}
 	}
-	gi.dprintf ("ED_ParseField: %s is not a valid field\n", key);
+/*	gi.dprintf ("ED_ParseField: %s is not a valid field\n", key);*/
 }
 
 /**
