@@ -309,14 +309,20 @@ static void PF_WriteFormat(char *format, ...)
 	va_end(ap);
 }
 
-static int *pf_save;
+static byte *pf_save;
 /**
-  * @brief
-  */
+ * @brief
+ */
 static void PF_WriteNewSave(int c)
 {
-	pf_save = (ptrdiff_t*)(sv.multicast.data + sv.multicast.cursize);
+#ifdef PARANOID
+	if (c < SHRT_MIN || c > USHRT_MAX)
+		Com_Printf("MSG_WriteShort: range error %i.\n", c);
+#endif
+
+ 	pf_save = sv.multicast.data + sv.multicast.cursize;
 	MSG_WriteShort(&sv.multicast, c);
+
 }
 
 /**
@@ -324,7 +330,13 @@ static void PF_WriteNewSave(int c)
   */
 static void PF_WriteToSave(int c)
 {
-	*pf_save = c;
+#ifdef PARANOID
+	if (c < SHRT_MIN || c > USHRT_MAX)
+		Com_Printf("MSG_WriteShort: range error %i.\n", c);
+#endif
+
+	pf_save[0] = c & UCHAR_MAX; /* a hack, see MSG_WriteShort */
+ 	pf_save[1] = (c >> 8) & UCHAR_MAX;
 }
 
 /**
