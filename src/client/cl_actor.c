@@ -1136,13 +1136,13 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 	le_t *le;
 	int type;
 	vec3_t muzzle, impact;
-	int flags, normal;
-
-	/* get le */
-	le = LE_Get(MSG_ReadShort(sb));
+	int flags, normal, number;
 
 	/* read data */
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &type, &flags, &muzzle, &impact, &normal);
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &number, &type, &flags, &muzzle, &impact, &normal);
+
+	/* get le */
+	le = LE_Get(number);
 
 	/* get the fire def */
 	fd = GET_FIREDEF(type);

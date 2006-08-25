@@ -85,19 +85,19 @@ char *ev_format[] =
 	"!sbg",				/* EV_ENT_APPEAR */
 	"!s",				/* EV_ENT_PERISH */
 
-	"!sbbgbbbssbsb",		/* EV_ACTOR_APPEAR */
+	"!sbbgbbbssbsb",	/* EV_ACTOR_APPEAR */
 	"!s",				/* EV_ACTOR_START_MOVE */
 	"!sb",				/* EV_ACTOR_TURN */
 	"!s*",				/* EV_ACTOR_MOVE */
 	"!sbgg",			/* EV_ACTOR_START_SHOOT */
-	"!sbbppb",			/* EV_ACTOR_SHOOT the last 'b' cannot be 'd' */
+	"sbbppb",			/* EV_ACTOR_SHOOT the last 'b' cannot be 'd' */
 	"bb",				/* EV_ACTOR_SHOOT_HIDDEN */
 	"sbbpp",			/* EV_ACTOR_THROW */
 	"!ss",				/* EV_ACTOR_DIE */
 	"!sbbbbb",			/* EV_ACTOR_STATS */
 	"!ss",				/* EV_ACTOR_STATECHANGE */
 
-	"*",				/* EV_INV_ADD */
+	"s*",				/* EV_INV_ADD */
 	"sbbb",				/* EV_INV_DEL */
 	"sbbbbb",			/* EV_INV_AMMO */
 
@@ -457,8 +457,7 @@ void CL_Reset( sizebuf_t *sb )
 	blockEvents = qfalse;
 
 	/* set the active player */
-	cls.team = MSG_ReadByte( sb );
-	cl.actTeam = MSG_ReadByte( sb );
+	MSG_ReadFormat(sb, ev_format[EV_RESET], &cls.team, &cl.actTeam);
 	Com_Printf( "(player %i) It's team %i's round\n", cl.pnum, cl.actTeam );
 }
 
@@ -504,8 +503,8 @@ void CL_CenterView( sizebuf_t *sb )
 {
 	pos3_t	pos;
 
-	MSG_ReadGPos( sb, pos );
-	V_CenterView( pos );
+	MSG_ReadFormat(sb, ev_format[EV_CENTERVIEW], &pos);
+	V_CenterView(pos);
 }
 
 
@@ -528,8 +527,7 @@ void CL_EntAppear( sizebuf_t *sb )
 	else
 		Com_Printf( "Entity appearing already visible... overwriting the old one\n" );
 
-	le->type = MSG_ReadByte( sb );
-	MSG_ReadGPos( sb, le->pos );
+	MSG_ReadFormat(sb, ev_format[EV_ENT_APPEAR], &le->type, &le->pos);
 	Grid_PosToVec( &clMap, le->pos, le->origin );
 }
 
@@ -681,9 +679,6 @@ void CL_ActorAppear( sizebuf_t *sb )
 /*
 =====================
 CL_ActorStats
-
-Why, on Earth, is this duplicated with the EV_ACTOR_STATS format above?
-Aaaaaaaaaaaaa! (* Bandobras goes crazy)
 =====================
 */
 void CL_ActorStats( sizebuf_t *sb )
@@ -699,11 +694,8 @@ void CL_ActorStats( sizebuf_t *sb )
 		return;
 	}
 
-	le->TU = MSG_ReadByte( sb );
-	le->HP = MSG_ReadByte( sb );
-	le->STUN = MSG_ReadByte( sb );
-	le->AP = MSG_ReadByte( sb );
-	le->morale = MSG_ReadByte( sb );
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_STATS], &le->TU, &le->HP, &le->STUN, &le->AP, &le->morale);
+
 	if ( le->TU > le->maxTU )
 		le->maxTU = le->TU;
 	if ( le->HP > le->maxHP )
@@ -731,7 +723,8 @@ void CL_ActorStateChange( sizebuf_t *sb )
 		return;
 	}
 
-	le->state = MSG_ReadShort( sb );
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_STATECHANGE], &le->state);
+
 	le->think = LET_StartIdle;
 }
 
@@ -747,8 +740,7 @@ void CL_ActorShootHidden( sizebuf_t *sb )
 	qboolean	first;
 	int		type;
 
-	first = MSG_ReadByte( sb );
-	type = MSG_ReadByte( sb );
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &type);
 
 	/* get the fire def */
 	fd = GET_FIREDEF( type );
@@ -826,8 +818,8 @@ void CL_InvAdd( sizebuf_t *sb )
 	int		size;
 	byte	container, x, y;
 
-	size = MSG_ReadShort( sb );
 	number = MSG_ReadShort( sb );
+	size = MSG_ReadShort( sb );
 
 	le = LE_Get( number );
 	if ( !le ) {
@@ -835,7 +827,7 @@ void CL_InvAdd( sizebuf_t *sb )
 		return;
 	}
 
-	for ( size -= 2; size > 0; size -= 6 ) {
+	for (; size > 0; size -= 6 ) {
 		item.t = MSG_ReadByte( sb );
 		item.a = MSG_ReadByte( sb );
 		item.m = MSG_ReadByte( sb );
@@ -1036,32 +1028,29 @@ void CL_ParseEvent( void )
 				break;
 			case EV_ACTOR_SHOOT_HIDDEN:
 				{
-					int flags;
-					flags = MSG_ReadByte( &net_message );
+					int flags, type;
+					fireDef_t *fd;
+
+					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &flags, &type);
+
 					if ( !flags ) {
-						fireDef_t *fd;
-						int type;
-						type = MSG_ReadByte(&net_message);
 						fd = GET_FIREDEF(type);
 						if ( fd->rof )
 							nextTime += 1000 / fd->rof;
-					} else nextTime += 500;
-						shootTime = nextTime;
+					} else { 
+						nextTime += 500;
+					}
+					shootTime = nextTime;
 					break;
 				}
 			case EV_ACTOR_SHOOT:
 				{
 					fireDef_t	*fd;
-					int		type, flags;
+					int		type, flags, dummy;
 					vec3_t	muzzle, impact;
 
 					/* read data */
-					MSG_ReadShort( &net_message );
-					type = MSG_ReadByte( &net_message );
-					flags = MSG_ReadByte( &net_message );
-					MSG_ReadPos( &net_message, muzzle );
-					MSG_ReadPos( &net_message, impact );
-					MSG_ReadByte( &net_message );
+					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT], &dummy, &type, &flags, &muzzle, &impact, &dummy);
 
 					fd = GET_FIREDEF( type );
 					if ( !(flags & SF_BOUNCED) ) {
@@ -1125,13 +1114,7 @@ void CL_ParseEvent( void )
 				correct = 0;
 			} else { 
 				switch ( eType ) {
-				case EV_ACTOR_APPEAR:
-				case EV_ACTOR_START_SHOOT:
-					correct = (net_message.readcount == oldCount);
-					break;
 				case EV_ACTOR_SHOOT_HIDDEN:
-					correct = (net_message.readcount == oldCount + 1);
-					break;
 				case EV_ACTOR_SHOOT:
 					correct = 0;
 					break;

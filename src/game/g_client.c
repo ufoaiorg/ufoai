@@ -216,10 +216,10 @@ void G_SendInventory(int player_mask, edict_t * ent)
 		for (ic = ent->i.c[k]; ic; ic = ic->next)
 			nr++;
 
-	/* size of inventory */
-	gi.WriteShort(2+nr*6);
-
 	gi.WriteShort(ent->number);
+
+	/* size of inventory */
+	gi.WriteShort(nr*6);
 	for (k = 0; k < gi.csi->numIDs; k++)
 		for (ic = ent->i.c[k]; ic; ic = ic->next) {
 			/* send a single item */
@@ -858,8 +858,8 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 			} else {
 				/* add the item */
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
-				gi.WriteShort(2+6);
 				gi.WriteShort(floor->number);
+				gi.WriteShort(6);
 				G_WriteItem(item);
 				gi.WriteByte(to);
 				gi.WriteByte(tx);
@@ -867,8 +867,8 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 			}
 		} else {
 			gi.AddEvent(G_TeamToPM(ent->team), EV_INV_ADD);
-			gi.WriteShort(2+6);
 			gi.WriteShort(num);
+			gi.WriteShort(6);
 			G_WriteItem(item);
 			gi.WriteByte(to);
 			gi.WriteByte(tx);
@@ -887,8 +887,8 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 			}
 			if (to == gi.csi->idRight || to == gi.csi->idLeft) {
 				gi.AddEvent(mask, EV_INV_ADD);
-				gi.WriteShort(2+6);
 				gi.WriteShort(num);
+				gi.WriteShort(6);
 				G_WriteItem(item);
 				gi.WriteByte(to);
 				gi.WriteByte(tx);
