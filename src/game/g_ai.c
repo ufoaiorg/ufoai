@@ -138,6 +138,13 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 						dist = VectorDist(ent->origin, check->origin);
 						if (dist > fd->range)
 							continue;
+#if 0
+						/* TODO: Check whether radius and power of fd are to to big for dist */
+						/* TODO: Check whether the alien will die when shooting */
+						/* don't shoot - we are to close */
+						if (dist < fd->splrad)
+							continue;
+#endif
 
 						/* check FF */
 						if (AI_CheckFF(ent, check->origin, fd->spread[0]) && !(ent->state & STATE_INSANE))
