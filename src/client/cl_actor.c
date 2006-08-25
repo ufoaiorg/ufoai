@@ -1061,15 +1061,18 @@ void CL_ActorTurnMouse(void)
 void CL_ActorDoTurn(sizebuf_t *sb)
 {
 	le_t *le;
+	int entnum, dir;
+
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_TURN], &entnum, &dir);
 
 	/* get le */
-	le = LE_Get(MSG_ReadShort(sb));
+	le = LE_Get(entnum);
 	if (!le) {
 		Com_Printf("Can't turn, LE doesn't exist\n");
 		return;
 	}
 
-	le->dir = MSG_ReadByte(sb);
+	le->dir = dir;
 	le->angles[YAW] = dangle[le->dir];
 
 	/* calculate possible moves */
@@ -1206,12 +1209,10 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 	pos3_t from, target;
 	int number, type;
 
-	number = MSG_ReadShort(sb);
-	type = MSG_ReadByte(sb);
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_SHOOT], &number, &type, &from, &target);
+
 	fd = GET_FIREDEF(type);
 	le = LE_Get(number);
-	MSG_ReadGPos(sb, from);
-	MSG_ReadGPos(sb, target);
 
 	/* center view (if wanted) */
 	if ((int) cl_centerview->value && cl.actTeam != cls.team)
@@ -1242,9 +1243,12 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 void CL_ActorDie(sizebuf_t * sb)
 {
 	le_t *le;
+	int number, state;
+	
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_DIE], &number, &state);
 
 	/* get le */
-	le = LE_Get(MSG_ReadShort(sb));
+	le = LE_Get(number);
 	if (!le)
 		return;
 
@@ -1256,7 +1260,7 @@ void CL_ActorDie(sizebuf_t * sb)
 	le->i.c[csi.idFloor] = NULL;
 	le->HP = 0;
 	le->STUN = 0;
-	le->state = MSG_ReadShort(sb);
+	le->state = state;
 
 	/* play animation */
 	le->think = NULL;

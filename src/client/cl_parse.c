@@ -82,20 +82,20 @@ char *ev_format[] =
 	"bb&*",				/* EV_RESULTS */
 	"g",				/* EV_CENTERVIEW */
 
-	"!sbg",				/* EV_ENT_APPEAR */
-	"!s",				/* EV_ENT_PERISH */
+	"sbg",				/* EV_ENT_APPEAR */
+	"s",				/* EV_ENT_PERISH */
 
-	"!sbbgbbbssbsb",	/* EV_ACTOR_APPEAR */
-	"!s",				/* EV_ACTOR_START_MOVE */
-	"!sb",				/* EV_ACTOR_TURN */
-	"!s*",				/* EV_ACTOR_MOVE */
-	"!sbgg",			/* EV_ACTOR_START_SHOOT */
-	"sbbppb",			/* EV_ACTOR_SHOOT the last 'b' cannot be 'd' */
+	"!sbbgbbbssbsb",	/* EV_ACTOR_APPEAR; beware of the '!' */
+	"s",				/* EV_ACTOR_START_MOVE */
+	"sb",				/* EV_ACTOR_TURN */
+	"!s*",				/* EV_ACTOR_MOVE; beware of the '!' */
+	"sbgg",			    /* EV_ACTOR_START_SHOOT */
+	"sbbppb",			/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
 	"bb",				/* EV_ACTOR_SHOOT_HIDDEN */
 	"sbbpp",			/* EV_ACTOR_THROW */
-	"!ss",				/* EV_ACTOR_DIE */
-	"!sbbbbb",			/* EV_ACTOR_STATS */
-	"!ss",				/* EV_ACTOR_STATECHANGE */
+	"ss",				/* EV_ACTOR_DIE */
+	"!sbbbbb",			/* EV_ACTOR_STATS; beware of the '!' */
+	"ss",				/* EV_ACTOR_STATECHANGE */
 
 	"s*",				/* EV_INV_ADD */
 	"sbbb",				/* EV_INV_DEL */
@@ -501,7 +501,7 @@ CL_CenterView
 */
 void CL_CenterView( sizebuf_t *sb )
 {
-	pos3_t	pos;
+	pos3_t pos;
 
 	MSG_ReadFormat(sb, ev_format[EV_CENTERVIEW], &pos);
 	V_CenterView(pos);
@@ -516,18 +516,22 @@ CL_EntAppear
 void CL_EntAppear( sizebuf_t *sb )
 {
 	le_t	*le;
-	int		entnum;
+	int		entnum, type;
+	pos3_t	pos;
+
+	MSG_ReadFormat(sb, ev_format[EV_ENT_APPEAR], &entnum, &type, &pos);
 
 	/* check if the ent is already visible */
-	entnum = MSG_ReadShort( sb );
-	le = LE_Get( entnum );
-
+	le = LE_Get(entnum);
 	if ( !le )
-		le = LE_Add( entnum );
+		le = LE_Add(entnum);
 	else
-		Com_Printf( "Entity appearing already visible... overwriting the old one\n" );
+		Com_Printf("Entity appearing already visible... overwriting the old one\n");
 
-	MSG_ReadFormat(sb, ev_format[EV_ENT_APPEAR], &le->type, &le->pos);
+	le->type = type;
+	le->pos[0] = pos[0]; /* how to write this more elegantly? */
+	le->pos[1] = pos[1];
+	le->pos[2] = pos[2];
 	Grid_PosToVec( &clMap, le->pos, le->origin );
 }
 
@@ -537,9 +541,12 @@ void CL_EntAppear( sizebuf_t *sb )
  */
 void CL_EntPerish( sizebuf_t *sb )
 {
+	int		entnum;
 	le_t	*le;
 
-	le = LE_Get( MSG_ReadShort( sb ) );
+	MSG_ReadFormat(sb, ev_format[EV_ENT_PERISH], &entnum);
+
+	le = LE_Get(entnum);
 
 	if ( !le ) {
 		Com_Printf( "Delete request ignored... LE not found\n" );
@@ -584,7 +591,11 @@ le_t	*lastMoving;
 
 void CL_ActorDoStartMove( sizebuf_t *sb )
 {
-	lastMoving = LE_Get( MSG_ReadShort( sb ) );
+	int	entnum;
+
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_MOVE], &entnum);
+
+	lastMoving = LE_Get(entnum);
 }
 
 
@@ -713,18 +724,17 @@ CL_ActorStateChange
 void CL_ActorStateChange( sizebuf_t *sb )
 {
 	le_t	*le;
-	int		number;
+	int		number, state;
 
-	number = MSG_ReadShort( sb );
-	le = LE_Get( number );
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_STATECHANGE], &number, &state);
 
+	le = LE_Get(number);
 	if ( !le ) {
 		Com_Printf( "StateChange message ignored... LE not found\n" );
 		return;
 	}
 
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_STATECHANGE], &le->state);
-
+	le->state = state;
 	le->think = LET_StartIdle;
 }
 
@@ -1126,8 +1136,6 @@ void CL_ParseEvent( void )
 				}
 			}
 			if (!correct)
-				/* || (net_message.readcount == oldCount + 2 
-				       && Q_strncmp("!s", ev_format[eType], 2)) */
 				Com_DPrintf ("Warning: message for event %s has wrong lenght %i, should be %i.\n", ev_names[eType], net_message.readcount - oldCount, length);
 			net_message.readcount = oldCount + length;
 		}
