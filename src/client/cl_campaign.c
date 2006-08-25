@@ -430,6 +430,7 @@ static void CL_CampaignActivateStageSets(stage_t * stage)
 	testStage = stage;
 	for (i = 0, set = &ccs.set[stage->first]; i < stage->num; i++, set++)
 		if (!set->active && !set->done && !set->num) {
+			assert(set->def);
 			/* check needed sets */
 			if (set->def->needed[0] && !CheckBEP(set->def->needed, CL_StageSetDone))
 				continue;
@@ -2632,6 +2633,10 @@ static void CL_ParseStageSet(char *name, char **text)
 			misp = missionstr;
 
 			/* add mission options */
+			if (sp->numMissions) {
+				Sys_Error("CL_ParseStageSet: Double mission tag in set '%s'\n", sp->name);
+				return; /* code analyst */
+			}
 			sp->numMissions = 0;
 			do {
 				token = COM_Parse(&misp);
@@ -2645,14 +2650,16 @@ static void CL_ParseStageSet(char *name, char **text)
 					}
 
 				if (j == numMissions)
-					Com_Printf("Com_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n", token, name);
-			}
-			while (misp && sp->numMissions < MAX_SETMISSIONS);
+					Com_Printf("Com_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n", token, sp->name);
+			} while (sp->numMissions < MAX_SETMISSIONS);
 			continue;
 		}
-
 		Com_Printf("Com_ParseStageSet: unknown token \"%s\" ignored (stageset %s)\n", token, name);
 	} while (*text);
+	if (sp->numMissions && !sp->number && !sp->quota) {
+		sp->quota = (int)(sp->numMissions / 2)+1;
+		Com_Printf("Com_ParseStageSet: Set quota to %i for stage set '%s' with %i missions\n", sp->quota, sp->name, sp->numMissions);
+	}
 }
 
 
@@ -3253,7 +3260,8 @@ static void CP_CampaignStats(void)
 	for (i = 0, set = &ccs.set[testStage->first]; i < testStage->num; i++, set++) {
 		Com_Printf("....name: %s\n", set->def->name);
 		Com_Printf("......needed: %s\n", set->def->needed);
-		Com_Printf("......quote: %i\n", set->def->quota);
+		Com_Printf("......quota: %i\n", set->def->quota);
+		Com_Printf("......number: %i\n", set->def->number);
 		Com_Printf("......done: %i\n", set->done);
 	}
 }

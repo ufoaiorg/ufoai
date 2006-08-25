@@ -309,13 +309,13 @@ static void PF_WriteFormat(char *format, ...)
 	va_end(ap);
 }
 
-static short *pf_save;
+static int *pf_save;
 /**
   * @brief
   */
 static void PF_WriteNewSave(int c)
 {
-	pf_save = sv.multicast.data + sv.multicast.cursize;
+	pf_save = (ptrdiff_t*)(sv.multicast.data + sv.multicast.cursize);
 	MSG_WriteShort(&sv.multicast, c);
 }
 
