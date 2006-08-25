@@ -760,7 +760,10 @@ float MSG_ReadAngle(sizebuf_t * msg_read)
  */
 float MSG_ReadAngle16(sizebuf_t * msg_read)
 {
-	return (float) SHORT2ANGLE(MSG_ReadShort(msg_read));
+	short s;
+
+	s = MSG_ReadShort(msg_read);
+	return (float) SHORT2ANGLE(s);
 }
 
 /**
