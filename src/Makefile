@@ -1275,3 +1275,6 @@ docs:
 
 maps:
 	cd ../base/maps; PATH=$(PATH):../../debugi386/; make
+
+rsync:
+	export RSYNC_PROXY=rsync-svn.sourceforge.net:80; rsync -a rsync-svn-u::svn/ufoai/* /var/lib/svn/
