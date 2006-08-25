@@ -1856,7 +1856,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 	int i;
 
 	/* Calc direction of the shot. */
-	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used temporary)*/
+	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
 	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
@@ -1882,11 +1882,13 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 	bounce = 0;
 	flags = 0;
 	do {
-		/* Calc impact vector (cur_loc+range*dir) Overwrites the temporary 'impact' vector used in the dir-calculation above.*/
+		/* Calc 'impact' vector that is located at the end of the range defined by the fireDef_t.
+		   This is not really the impact location, but rather the 'endofrange' location. impact is used temporary again.*/
 		VectorMA(cur_loc, range, dir, impact);
 
-		/* do the trace */
+		/* Do the trace from current position of the projectile to the end_of_range location.*/
 		tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
+		/* _Now_ we copy the correct impact location. */
 		VectorCopy(tr.endpos, impact);
 
 		/* set flags */
