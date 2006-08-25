@@ -1275,7 +1275,7 @@ void CL_GameSave(char *filename, char *comment)
 	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
 			int nr = 0;
-				
+
 			for (j = 0; j < csi.numIDs; j++)
 				for (ic = gd.employees[type][i].inv.c[j]; ic; ic = ic->next)
 					nr++;
@@ -1558,7 +1558,7 @@ int CL_GameLoad(char *filename)
 				int container, x, y;
 
 				CL_ReceiveItem(&sb, &item, &container, &x, &y);
-				
+
 				Com_AddToInventory(&gd.employees[type][i].inv, item, container, x, y);
 			}
 		}
@@ -2958,8 +2958,6 @@ void CL_StartMission_f (void)
 		Com_Printf("Mission with id '%s' was not found\n", missionID);
 		return;
 	}
-
-	selMis = ccs.mission + i;
 
 	CL_SetMissionCvars(mission);
 	CL_StartMissionMap(mission);
