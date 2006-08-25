@@ -26,12 +26,32 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-char *teamSkinNames[NUM_TEAMSKINS] = {
-	"Urban",
-	"Jungle",
-	"Desert",
-	"Arctic"
-};
+/**
+ * @brief Translate the skin id to skin name
+ * @param[in] id The id of the skin
+ * @return Translated skin name
+ */
+char* CL_GetTeamSkinName(int id)
+{
+	switch(id) {
+	case 0:
+		return _("Urban");
+		break;
+	case 1:
+		return _("Jungle");
+		break;
+	case 2:
+		return _("Desert");
+		break;
+	case 3:
+		return _("Arctic");
+		break;
+	default:
+		Sys_Error("CL_GetTeamSkinName: Unknown skin id %i - max is %i\n", id, NUM_TEAMSKINS-1);
+		break;
+	}
+	return NULL; /* never reached */
+}
 
 /**
  * @brief Test the names in team_*.ufo
@@ -239,7 +259,7 @@ static void CL_ChangeSkinCmd(void)
 		baseCurrent->curTeam[sel]->skin = newSkin;
 
 		Cvar_SetValue("mn_skin", newSkin);
-		Cvar_Set("mn_skinname", _(teamSkinNames[newSkin]));
+		Cvar_Set("mn_skinname", CL_GetTeamSkinName(newSkin));
 	}
 }
 
@@ -1054,9 +1074,9 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 		for (; nr-- > 0;) {
 			item_t item;
 			int container, x, y;
-			
+
 			CL_ReceiveItem(sb, &item, &container, &x, &y);
-			
+
 			Com_AddToInventory(chr->inv, item, container, x, y);
 		}
 	}
@@ -1173,7 +1193,7 @@ void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
 {
 	assert (item.t != NONE);
 /*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].kurz, container, item.t, item.a, item.m, x, y);*/
-	MSG_WriteFormat(buf, "bbbbbb", 
+	MSG_WriteFormat(buf, "bbbbbb",
 					item.t, item.a, item.m, container, x, y);
 }
 
@@ -1182,7 +1202,7 @@ void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
  */
 void CL_ReceiveItem(sizebuf_t * buf, item_t * item, int * container, int * x, int * y)
 {
-	MSG_ReadFormat(buf, "bbbbbb", 
+	MSG_ReadFormat(buf, "bbbbbb",
 				   &item->t, &item->a, &item->m, container, x, y);
 }
 

@@ -115,7 +115,7 @@ void CL_CharacterCvars(character_t *chr)
 	Cvar_ForceSet("mn_body", Com_CharGetBody(chr));
 	Cvar_ForceSet("mn_head", Com_CharGetHead(chr));
 	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
-	Cvar_ForceSet("mn_skinname", _(teamSkinNames[chr->skin]));
+	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
 
 	Cvar_Set("mn_chrmis", va("%i", chr->assigned_missions));
 	Cvar_Set("mn_chrkillalien", va("%i", chr->kills[KILLED_ALIENS]));
@@ -172,7 +172,7 @@ void CL_UGVCvars(character_t *chr)
 	Cvar_ForceSet("mn_body", Com_CharGetBody(chr));
 	Cvar_ForceSet("mn_head", Com_CharGetHead(chr));
 	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
-	Cvar_ForceSet("mn_skinname", _(teamSkinNames[chr->skin]));
+	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
 
 	Cvar_Set("mn_chrmis", va("%i", chr->assigned_missions));
 	Cvar_Set("mn_chrkillalien", va("%i", chr->kills[KILLED_ALIENS]));
@@ -1244,7 +1244,7 @@ void CL_ActorDie(sizebuf_t * sb)
 {
 	le_t *le;
 	int number, state;
-	
+
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_DIE], &number, &state);
 
 	/* get le */

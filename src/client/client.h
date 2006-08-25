@@ -660,8 +660,6 @@ void CL_AddTargeting(void);
 #define NUM_BUYTYPES	4
 #define NUM_TEAMSKINS	4
 
-extern char *teamSkinNames[NUM_TEAMSKINS];
-
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y);
 void CL_ReceiveItem(sizebuf_t * buf, item_t * item, int * container, int * x, int * y);
 void CL_ResetTeams(void);
@@ -727,6 +725,7 @@ void CL_UpdateHireVar(void);
 void CL_ResetCharacters(base_t* const base);
 void CL_ResetTeamInBase(void);
 void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeType_t employeeType);
+char* CL_GetTeamSkinName(int id);
 
 void MN_BuildNewBase(vec2_t pos);
 
