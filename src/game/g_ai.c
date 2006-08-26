@@ -109,7 +109,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	if (ent->i.c[gi.csi->idRight] && ent->i.c[gi.csi->idRight]->item.m != NONE)
 		od = &gi.csi->ods[ent->i.c[gi.csi->idRight]->item.m];
 	else if (ent->i.c[gi.csi->idLeft] && ent->i.c[gi.csi->idLeft]->item.m != NONE)
-		od = &gi.csi->ods[ent->i.c[gi.csi->ifLeft]->item.m];
+		od = &gi.csi->ods[ent->i.c[gi.csi->idLeft]->item.m];
 	else
 		od = NULL;
 
