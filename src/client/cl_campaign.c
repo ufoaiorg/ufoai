@@ -1420,6 +1420,7 @@ void CL_UpdatePointersInGlobalData(void)
 			aircraft->homebase = &gd.bases[aircraft->idxBase];
 			aircraft->shield = RS_GetTechByID(aircraft->shield_string);
 			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
+			aircraft->mission = NULL;
 		}
 
 		/* now fix the curTeam pointers */
