@@ -911,28 +911,28 @@ static void CL_HandleBudget(void)
 
 		/* TODO: ", as well as an offer to hire 1 scientist and 2 soldier(s)." */
 		for (j = 0; 0.25 + j < nation->scientists * nation->happiness * nation->happiness; j++) {
-			if (gd.numEmployees[EMPL_SCIENTIST] < 16) {
+			if (gd.numEmployees[EMPL_SCIENTIST] < 19) {
 				/* Create a scientist, but don't auto-hire her. */
 				E_CreateEmployee(EMPL_SCIENTIST);
 			}
 		}
 
 		for (j = 0; 0.25 + j * 3 < nation->scientists * nation->happiness; j++) {
-			if (gd.numEmployees[EMPL_MEDIC] < 16) {
+			if (gd.numEmployees[EMPL_MEDIC] < 19) {
 				/* Create a medic. */
 				E_CreateEmployee(EMPL_MEDIC);
 			}
 		}
 
 		for (j = 0; 0.25 + j < nation->soldiers * nation->happiness * nation->happiness * nation->happiness; j++) {
-			if (gd.numEmployees[EMPL_SOLDIER] < 16) {
+			if (gd.numEmployees[EMPL_SOLDIER] < 19) {
 				/* Create a soldier. */
 				E_CreateEmployee(EMPL_SOLDIER);
 			}
 		}
 
 		for (j = 0; 0.25 + j * 2 < nation->soldiers * nation->happiness; j++) {
-			if (gd.numEmployees[EMPL_WORKER] < 16) {
+			if (gd.numEmployees[EMPL_WORKER] < 19) {
 				/* Create a worker. */
 				E_CreateEmployee(EMPL_WORKER);
 			}
