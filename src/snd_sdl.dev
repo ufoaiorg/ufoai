@@ -9,7 +9,7 @@ CppCompiler=_@@_
 Includes=
 Linker=-lkernel32 -luser32 -lwinmm_@@_--export-all-symbols_@@_-lSDL_@@_
 Libs=
-UnitCount=2
+UnitCount=3
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=
@@ -59,6 +59,16 @@ BuildCmd=$(CC) -c snd_sdl.c -o snd_sdl.o $(CFLAGS)
 
 [Unit2]
 FileName=client\snd_loc.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit3]
+FileName=ports\linux\snd_sdl.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
