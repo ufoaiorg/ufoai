@@ -1343,6 +1343,12 @@ void CL_GameSave(char *filename, char *comment)
 		MSG_WriteLong(&sb, mis->expire.sec);
 	}
 
+	/* stores the select mission on geoscape */
+	if (selMis)
+		MSG_WriteLong(&sb, ccs.mission - selMis);
+	else
+		MSG_WriteLong(&sb, -1);
+
 	/* save all the stats */
 	SZ_Write(&sb, &stats, sizeof(stats));
 
@@ -1420,7 +1426,6 @@ void CL_UpdatePointersInGlobalData(void)
 			aircraft->homebase = &gd.bases[aircraft->idxBase];
 			aircraft->shield = RS_GetTechByID(aircraft->shield_string);
 			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
-			aircraft->mission = NULL;
 		}
 
 		/* now fix the curTeam pointers */
@@ -1462,6 +1467,7 @@ int CL_GameLoad(char *filename)
 	char val[32];
 	message_t *mess;
 	base_t *base;
+	int selectedMission;
 
 	/* open file */
 	f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
@@ -1675,6 +1681,26 @@ int CL_GameLoad(char *filename)
 			mis--;
 			i--;
 			ccs.numMissions--;
+		}
+	}
+
+	/* stores the select mission on geoscape */
+	selectedMission = MSG_ReadLong(&sb);
+	if (selectedMission >= 0)
+		selMis = ccs.mission + selectedMission;
+	else
+		selMis = NULL;
+
+	/* and now fix the mission pointers or let the aircraft return to base */
+	for (i=0; i<gd.numBases; i++) {
+		base = &gd.bases[i];
+		for (j=0; j<base->numAircraftInBase; j++) {
+			if (base->aircraft[j].status == AIR_MISSION) {
+				if (selMis)
+					base->aircraft[j].mission = selMis;
+				else
+					CL_AircraftReturnToBase(&(base->aircraft[j]));
+			}
 		}
 	}
 
