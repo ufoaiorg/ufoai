@@ -450,6 +450,32 @@ void G_EndGame(int team)
 	gi.EndEvents();
 }
 
+
+#if 0
+/**
+ * @brief checks for a mission objective
+ * @param[in] activeTeams The number of teams with living actors
+ * @return 1 if objective successful
+ * @return 0 if objective unsuccessful
+ * @return -1 if objective state unclear
+ */
+int G_MissionObjective (int activeTeams)
+{
+	/* TODO: put objective flag to level */
+	switch (level.objective) {
+	/* TODO: enum for objectives */
+	case OBJ_RESCUE_CIVILIANS:
+		if (!level.num_alive[TEAM_CIVILIAN])
+			return 0;
+		if (!level.num_alive[TEAM_ALIEN])
+			return 1;
+	/* TODO: More objectives */
+	default:
+		return -1;
+	}
+}
+#endif
+
 /**
  * @brief Checks whether there are still actors to fight with left
  * @sa G_EndGame
@@ -469,7 +495,7 @@ void G_CheckEndGame(void)
 		}
 
 	/* prepare for sending results */
-	if (activeTeams < 2) {
+	if (activeTeams < 2 /* || G_MissionObjective(activeTeams) == 1*/ ) {
 		if (activeTeams == 0)
 			level.winningTeam = 0;
 		else if (activeTeams == 1)
