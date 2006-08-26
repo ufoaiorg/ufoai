@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-08-25 17:41+0200\n"
+"POT-Creation-Date: 2006-08-26 09:29+0200\n"
 "PO-Revision-Date: 2006-07-24 09:50+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: inzenir <simon.cedula@guest.arnes.si>\n"
@@ -155,7 +155,7 @@ msgstr "Transportna ladja"
 msgid "Interceptor"
 msgstr "Prestreznik"
 
-#: ../base/ufos/basemanagement.ufo:329
+#: ../base/ufos/basemanagement.ufo:329 client/cl_map.c:339
 msgid "UFO"
 msgstr "NLP"
 
@@ -415,7 +415,7 @@ msgid "Manage your aircraft"
 msgstr "Uredi svoje plovilo"
 
 #: ../base/ufos/menu_bases.ufo:134 ../base/ufos/menu_geoscape.ufo:719
-#: ../base/ufos/research.ufo:57
+#: ../base/ufos/research.ufo:57 client/cl_map.c:328
 msgid "Aircraft"
 msgstr "Plovilo"
 
@@ -3093,7 +3093,7 @@ msgstr ""
 #, c-format
 msgid ""
 "Armor  %i\tMorale  %i\n"
-"Move %i\n"
+"Move %i (%i TU left)\n"
 msgstr ""
 
 #: client/cl_actor.c:451
@@ -3122,6 +3122,135 @@ msgstr ""
 msgid "Your round started!\n"
 msgstr "Ti si na vrsti!\n"
 
+#: client/cl_aircraft.c:103
+msgid "Aircraft started"
+msgstr "Plovilo pripravljeno"
+
+#: client/cl_aircraft.c:103 client/cl_aircraft.c:366 client/cl_aircraft.c:514
+#: client/cl_aircraft.c:730 client/cl_basemanagement.c:406
+#: client/cl_basemanagement.c:1713 client/cl_campaign.c:372
+#: client/cl_campaign.c:799 client/cl_campaign.c:909 client/cl_campaign.c:949
+#: client/cl_campaign.c:958 client/cl_campaign.c:967 client/cl_campaign.c:976
+#: client/cl_campaign.c:986 client/cl_campaign.c:999 client/cl_campaign.c:1009
+#: client/cl_campaign.c:1016 client/cl_campaign.c:1023
+#: client/cl_campaign.c:1995 client/cl_campaign.c:2027
+#: client/cl_campaign.c:2029 client/cl_map.c:302 client/cl_research.c:497
+#: client/cl_research.c:606 client/cl_research.c:609 client/cl_research.c:613
+#: client/cl_research.c:626 client/cl_research.c:652 client/cl_research.c:656
+#: client/cl_research.c:784
+msgid "Notice"
+msgstr "Obvestilo"
+
+#: client/cl_aircraft.c:152
+msgid "Nothing - should not be displayed"
+msgstr "Nič - naj ne bi bilo prikazano"
+
+#: client/cl_aircraft.c:154
+msgid "At homebase"
+msgstr "V domači bazi"
+
+#: client/cl_aircraft.c:156
+msgid "Refuel"
+msgstr "Natoči gorivo"
+
+#: client/cl_aircraft.c:158
+msgid "Idle"
+msgstr "Mirujoč"
+
+#: client/cl_aircraft.c:160
+msgid "On transit"
+msgstr ""
+
+#: client/cl_aircraft.c:162
+#, fuzzy
+msgid "Moving to mission"
+msgstr "Samodejna misija"
+
+#: client/cl_aircraft.c:164
+msgid "Purchasing an UFO"
+msgstr ""
+
+#: client/cl_aircraft.c:166
+msgid "Ready for drop down"
+msgstr "Pripravljen za spust"
+
+#: client/cl_aircraft.c:168
+msgid "On interception"
+msgstr "Prestreza"
+
+#: client/cl_aircraft.c:170
+msgid "Transportmission"
+msgstr "Prenaša"
+
+#: client/cl_aircraft.c:172
+#, fuzzy
+msgid "Back to base"
+msgstr "Nazaj na zemljevid baze"
+
+#: client/cl_aircraft.c:310 client/cl_map.c:768 client/cl_ufopedia.c:239
+#, c-format
+msgid "Speed:\t%.0f\n"
+msgstr "Hitrost:\t%.0f\n"
+
+#: client/cl_aircraft.c:311 client/cl_map.c:769
+#, c-format
+msgid "Fuel:\t%i/%i\n"
+msgstr "Gorivo:\t%i/%i\n"
+
+#: client/cl_aircraft.c:312 client/cl_aircraft.c:313 client/cl_ufopedia.c:220
+#: client/cl_ufopedia.c:241 client/cl_ufopedia.c:242
+msgid "None"
+msgstr "Nič"
+
+#: client/cl_aircraft.c:312 client/cl_ufopedia.c:241
+#, c-format
+msgid "Weapon:\t%s\n"
+msgstr "Orožje:\t%s\n"
+
+#: client/cl_aircraft.c:313
+#, fuzzy, c-format
+msgid "Shield:\t%s"
+msgstr "Ščit:\t%s\n"
+
+#: client/cl_aircraft.c:365
+#, c-format
+msgid "You've got a new aircraft (a %s) in base %s"
+msgstr "Imaš novo plovilo ( %s) v bazi %s"
+
+#: client/cl_aircraft.c:514
+msgid "Your dropship has low fuel and returns to base"
+msgstr "Tvoje plovilo ima malo goriva in se vrača v bazo"
+
+#: client/cl_aircraft.c:553 client/cl_aircraft.c:560
+#, fuzzy
+msgid "Interception"
+msgstr "Prestreznik"
+
+#: client/cl_aircraft.c:553 client/cl_campaign.c:2027
+msgid "You've won the battle"
+msgstr "V bitki si zmagal"
+
+#: client/cl_aircraft.c:560 client/cl_campaign.c:2029
+msgid "You've lost the battle"
+msgstr "V bitki si izgubil"
+
+#: client/cl_aircraft.c:583 client/cl_aircraft.c:594
+#, fuzzy
+msgid "None\n"
+msgstr "Nič"
+
+#: client/cl_aircraft.c:634
+msgid "No weapon assigned"
+msgstr ""
+
+#: client/cl_aircraft.c:683
+msgid "No shield assigned"
+msgstr ""
+
+#: client/cl_aircraft.c:730
+msgid "Assign a team to aircraft"
+msgstr "Plovilu določi ekipo"
+
 #: client/cl_basemanagement.c:137
 msgid "Not set"
 msgstr "Ni nastavljeno"
@@ -3146,19 +3275,6 @@ msgstr "Ustavljeno"
 #: client/cl_basemanagement.c:406
 msgid "Not enough credits to build this\n"
 msgstr "Nimaš dovolj denarja, da bi zgradil\n"
-
-#: client/cl_basemanagement.c:406 client/cl_basemanagement.c:1713
-#: client/cl_campaign.c:372 client/cl_campaign.c:799 client/cl_campaign.c:909
-#: client/cl_campaign.c:949 client/cl_campaign.c:958 client/cl_campaign.c:967
-#: client/cl_campaign.c:976 client/cl_campaign.c:986 client/cl_campaign.c:999
-#: client/cl_campaign.c:1009 client/cl_campaign.c:1016
-#: client/cl_campaign.c:1023 client/cl_campaign.c:1995
-#: client/cl_campaign.c:2027 client/cl_campaign.c:2029
-#: client/cl_research.c:497 client/cl_research.c:606 client/cl_research.c:609
-#: client/cl_research.c:613 client/cl_research.c:626 client/cl_research.c:652
-#: client/cl_research.c:656 client/cl_research.c:784
-msgid "Notice"
-msgstr "Obvestilo"
 
 #: client/cl_basemanagement.c:534
 #, c-format
@@ -3211,7 +3327,7 @@ msgstr "Grajenje %s je končano v bazi %s."
 msgid "Building finished"
 msgstr "Zgradba končana"
 
-#: client/cl_campaign.c:372
+#: client/cl_campaign.c:372 client/cl_map.c:302
 msgid "Could not set up your base at this location"
 msgstr "Na tem mestu ne moreš zgraditi baze"
 
@@ -3423,14 +3539,6 @@ msgstr "Opomba"
 msgid "Your dropship is not near the landing zone"
 msgstr "Tvoje plovilo je v bližini točke pristanka"
 
-#: client/cl_campaign.c:2027
-msgid "You've won the battle"
-msgstr "V bitki si zmagal"
-
-#: client/cl_campaign.c:2029
-msgid "You've lost the battle"
-msgstr "V bitki si izgubil"
-
 #: client/cl_campaign.c:2234
 #, c-format
 msgid "%s has been promoted to %s.\n"
@@ -3440,7 +3548,7 @@ msgstr "%s je bil povišan v %s.\n"
 msgid "Soldier promoted"
 msgstr "Vojak povišan"
 
-#: client/cl_campaign.c:3220
+#: client/cl_campaign.c:3218
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -3552,6 +3660,69 @@ msgstr ""
 msgid "Insane"
 msgstr "neimenovan"
 
+#: client/cl_map.c:290
+msgid "Click"
+msgstr "Klik"
+
+#: client/cl_map.c:322
+#, fuzzy
+msgid "Base"
+msgstr "Baza:"
+
+#: client/cl_map.c:636
+#, fuzzy
+msgid "Day"
+msgstr "Dan "
+
+#: client/cl_map.c:636
+msgid "Night"
+msgstr "Noč"
+
+#: client/cl_map.c:740
+msgid ""
+"Select the desired location of the\n"
+"new base on the map.\n"
+msgstr ""
+"Izberi lokacijo na karti\n"
+"za novo bazo.\n"
+
+#: client/cl_map.c:745
+msgid ""
+"Aliens are attacking our base\n"
+"at this very moment.\n"
+msgstr ""
+"V tem trenutku nezemljani\n"
+"napadajo našo bazo.\n"
+
+#: client/cl_map.c:750
+msgid "Select ufo or mission on map\n"
+msgstr "Na karti izberi nalogo ali NLP\n"
+
+#: client/cl_map.c:755
+msgid "UFO in radar range\n"
+msgstr "NLP v dosegu radarja\n"
+
+#: client/cl_map.c:761
+#, c-format
+msgid ""
+"Location: %s\n"
+"Type: %s\n"
+"Objective: %s\n"
+msgstr ""
+"Lokacija: %s\n"
+"Tip: %s\n"
+"Naloga: %s\n"
+
+#: client/cl_map.c:766
+#, fuzzy, c-format
+msgid "Name:\t%s (%i/%i)\n"
+msgstr "Poškodbe:\t%i / %i\n"
+
+#: client/cl_map.c:767
+#, fuzzy, c-format
+msgid "Status:\t%s\n"
+msgstr "Stanje:"
+
 #: client/cl_menu.c:409
 msgid "Set playersoldiers lower than teamsoldiers"
 msgstr "Nastavi manj igralčevih vojakok kot vojakov v ekipi"
@@ -3571,6 +3742,44 @@ msgstr "Nasprotnik odkrit!\n"
 #: client/cl_parse.c:675
 msgid "Civilian spotted!\n"
 msgstr "Odkrit civil!\n"
+
+#: client/cl_popup.c:232
+#, fuzzy, c-format
+msgid "Back to base\t%s\n"
+msgstr "Nazaj na zemljevid baze"
+
+#: client/cl_popup.c:234
+msgid "Stop\n"
+msgstr ""
+
+#: client/cl_popup.c:241
+#, c-format
+msgid "Mission\t%s (%s)\n"
+msgstr ""
+
+#: client/cl_produce.c:75
+#, fuzzy, c-format
+msgid "Production of %s finished"
+msgstr "Zgradba končana"
+
+#: client/cl_produce.c:76
+#, fuzzy
+msgid "Production finished"
+msgstr "Zgradba končana"
+
+#: client/cl_produce.c:102
+#, c-format
+msgid "Costs per item\t%i c\n"
+msgstr ""
+
+#: client/cl_produce.c:105
+msgid "No running productions"
+msgstr ""
+
+#: client/cl_produce.c:260
+#, fuzzy
+msgid "Production started"
+msgstr "Plovilo pripravljeno"
 
 #: client/cl_research.c:375
 #, c-format
@@ -3699,17 +3908,17 @@ msgstr "%i od %i"
 msgid "NewTeam"
 msgstr "Nova Ekipa"
 
-#: client/cl_team.c:1434
+#: client/cl_team.c:1438
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Ubiti nezemljani:\t%i\n"
 
-#: client/cl_team.c:1436
+#: client/cl_team.c:1440
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Ubiti nasprotniki:\t%i\n"
 
-#: client/cl_team.c:1443
+#: client/cl_team.c:1447
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -3718,7 +3927,7 @@ msgstr ""
 "Preživeli nezemljani\t%i\n"
 "\n"
 
-#: client/cl_team.c:1445
+#: client/cl_team.c:1449
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -3727,17 +3936,17 @@ msgstr ""
 "Preživeli nasprotniki\t%i\n"
 "\n"
 
-#: client/cl_team.c:1448
+#: client/cl_team.c:1452
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Žrtve v ekipi\t%i\n"
 
-#: client/cl_team.c:1449
+#: client/cl_team.c:1453
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Žrtve prijateljskega ognja\t%i\n"
 
-#: client/cl_team.c:1450
+#: client/cl_team.c:1454
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -3746,22 +3955,22 @@ msgstr ""
 "Preživeli v ekipi\t%i\n"
 "\n"
 
-#: client/cl_team.c:1463
+#: client/cl_team.c:1467
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civili, ubiti od nezemljanov\t%i\n"
 
-#: client/cl_team.c:1465
+#: client/cl_team.c:1469
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civili, ubiti od nasprotnikovs\t%i\n"
 
-#: client/cl_team.c:1466
+#: client/cl_team.c:1470
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civili, ubiti od tvoje ekipe\t%i\n"
 
-#: client/cl_team.c:1467
+#: client/cl_team.c:1471
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -3896,10 +4105,6 @@ msgstr "Napaka - ne najdem zgradbe"
 msgid "Depends:\t%s\n"
 msgstr "Odvisno od:\t%s\n"
 
-#: client/cl_ufopedia.c:220 client/cl_ufopedia.c:241 client/cl_ufopedia.c:242
-msgid "None"
-msgstr "Nič"
-
 #: client/cl_ufopedia.c:221
 #, c-format
 msgid "Buildtime:\t%i day(s)\n"
@@ -3919,20 +4124,10 @@ msgstr "Tekoči stroški:\t%i c\n"
 msgid "Error - could not find aircraft"
 msgstr "Napaka - ne najdem plovila"
 
-#: client/cl_ufopedia.c:239
-#, c-format
-msgid "Speed:\t%.0f\n"
-msgstr "Hitrost:\t%.0f\n"
-
 #: client/cl_ufopedia.c:240
 #, c-format
 msgid "Fuel:\t%i\n"
 msgstr "Gorivo:\t%i\n"
-
-#: client/cl_ufopedia.c:241
-#, c-format
-msgid "Weapon:\t%s\n"
-msgstr "Orožje:\t%s\n"
 
 #: client/cl_ufopedia.c:242
 #, c-format
@@ -3943,87 +4138,87 @@ msgstr "Ščit:\t%s\n"
 msgid "Ufopedia Content"
 msgstr "Vsebina NLPedije"
 
-#: game/g_ai.c:488
+#: game/g_ai.c:495
 msgid "Alien"
 msgstr "Nezemljan"
 
-#: game/g_client.c:623
+#: game/g_client.c:627
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Nemorem izvesti dejanja - nisi na vrsti!\n"
 
-#: game/g_client.c:628
+#: game/g_client.c:632
 msgid "Can't perform action - object not present!\n"
 msgstr "Nemorem izvesti dejanja - ni objekta!\n"
 
-#: game/g_client.c:633
+#: game/g_client.c:637
 msgid "Can't perform action - not an actor!\n"
 msgstr "Nemorem izvesti dejanja - ni igralec!\n"
 
-#: game/g_client.c:638
+#: game/g_client.c:642
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Nemorem izvesti dejanja - igralec je omamljen!\n"
 
-#: game/g_client.c:643
+#: game/g_client.c:647
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Nemorem izvesti dejanja - igralec je mrtev!\n"
 
-#: game/g_client.c:648
+#: game/g_client.c:652
 msgid "Can't perform action - not on same team!\n"
 msgstr "Nemorem izvesti dejanja - ni v enaki ekipi!\n"
 
-#: game/g_client.c:653
+#: game/g_client.c:657
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Ne morem izvesti dejanja - nimaš oblasti nad zavezniškimi igralci!\n"
 
-#: game/g_client.c:658 game/g_client.c:748
+#: game/g_client.c:662 game/g_client.c:752
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Ne morem izvesti dejanja - ni dovolj korakov!\n"
 
-#: game/g_client.c:751
+#: game/g_client.c:755
 #, fuzzy
 msgid ""
 "Can't perform action - weapon already fully loaded with the same "
 "ammunition!\n"
 msgstr "Ne morem izvesti dejanja - orožje je že napolnjeno!\n"
 
-#: game/g_client.c:1206
+#: game/g_client.c:1210
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "Trenutno pretresen, še vedno pazljiv.\n"
 
-#: game/g_client.c:1343
+#: game/g_client.c:1347
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s paničari!\n"
 
-#: game/g_client.c:1396
+#: game/g_client.c:1400
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s je trenutno v naletu.\n"
 
-#: game/g_client.c:1398
+#: game/g_client.c:1402
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s je ponorel!\n"
 
-#: game/g_client.c:1451
+#: game/g_client.c:1455
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s je trenutno pretresen.\n"
 
-#: game/g_client.c:1675
+#: game/g_client.c:1679
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Nemorem izvesti dejanja - ni mogoče vreči!\n"
 
-#: game/g_client.c:1926
+#: game/g_client.c:1930
 #, fuzzy
 msgid "Can't perform action - object not activable!\n"
 msgstr "Nemorem izvesti dejanja - ni objekta!\n"
 
-#: game/g_client.c:1939
+#: game/g_client.c:1943
 msgid "Can't perform action - no ammo!\n"
 msgstr "Nemorem izvesti dejanja - ni streliva!\n"
 
-#: game/g_client.c:1952
+#: game/g_client.c:1956
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Nemorem izvesti dejanja - ni dovolj streliva!\n"
 
@@ -4117,82 +4312,11 @@ msgstr "Nemorem izvesti dejanja - ni dovolj streliva!\n"
 #~ msgid "Reload"
 #~ msgstr "Napolni orožje"
 
-#~ msgid "Assign a team to aircraft"
-#~ msgstr "Plovilu določi ekipo"
-
-#~ msgid "Click"
-#~ msgstr "Klik"
-
 #~ msgid "Base\t%s\n"
 #~ msgstr "Baza\t%s\n"
-
-#~ msgid ""
-#~ "Location: %s\n"
-#~ "Type: %s\n"
-#~ "Objective: %s\n"
-#~ msgstr ""
-#~ "Lokacija: %s\n"
-#~ "Tip: %s\n"
-#~ "Naloga: %s\n"
-
-#~ msgid "Night"
-#~ msgstr "Noč"
-
-#~ msgid ""
-#~ "Select the desired location of the\n"
-#~ "new base on the map.\n"
-#~ msgstr ""
-#~ "Izberi lokacijo na karti\n"
-#~ "za novo bazo.\n"
-
-#~ msgid ""
-#~ "Aliens are attacking our base\n"
-#~ "at this very moment.\n"
-#~ msgstr ""
-#~ "V tem trenutku nezemljani\n"
-#~ "napadajo našo bazo.\n"
-
-#~ msgid "Select ufo or mission on map\n"
-#~ msgstr "Na karti izberi nalogo ali NLP\n"
-
-#~ msgid "UFO in radar range\n"
-#~ msgstr "NLP v dosegu radarja\n"
 
 #~ msgid "Precise"
 #~ msgstr "Natančno"
 
-#~ msgid "Aircraft started"
-#~ msgstr "Plovilo pripravljeno"
-
-#~ msgid "Nothing - should not be displayed"
-#~ msgstr "Nič - naj ne bi bilo prikazano"
-
-#~ msgid "At homebase"
-#~ msgstr "V domači bazi"
-
-#~ msgid "Refuel"
-#~ msgstr "Natoči gorivo"
-
-#~ msgid "Idle"
-#~ msgstr "Mirujoč"
-
-#~ msgid "Ready for drop down"
-#~ msgstr "Pripravljen za spust"
-
-#~ msgid "On interception"
-#~ msgstr "Prestreza"
-
-#~ msgid "Transportmission"
-#~ msgstr "Prenaša"
-
 #~ msgid "Returning to homebase"
 #~ msgstr "Vrača se v bazo"
-
-#~ msgid "Fuel:\t%i/%i\n"
-#~ msgstr "Gorivo:\t%i/%i\n"
-
-#~ msgid "You've got a new aircraft (a %s) in base %s"
-#~ msgstr "Imaš novo plovilo ( %s) v bazi %s"
-
-#~ msgid "Your dropship has low fuel and returns to base"
-#~ msgstr "Tvoje plovilo ima malo goriva in se vrača v bazo"

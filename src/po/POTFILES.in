@@ -16,6 +16,13 @@
 ./client/cl_view.c
 ./client/cl_parse.c
 ./client/cl_fx.c
+./client/cl_map.c
+./client/cl_popup.c
+./client/cl_employee.c
+./client/cl_aircraft.c
+./client/cl_radar.c
+./client/cl_inventory.c
+./client/cl_produce.c
 ./client/cl_main.c
 ./client/cl_basemanagement.c
 ./client/cl_particle.c
