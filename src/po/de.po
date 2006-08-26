@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-08-25 17:41+0200\n"
-"PO-Revision-Date: 2006-08-26 09:08+0100\n"
+"PO-Revision-Date: 2006-08-26 09:23+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1918,7 +1918,7 @@ msgstr "Rüstungen"
 
 #: ../base/ufos/research.ufo:61
 msgid "Damage Types"
-msgstr ""
+msgstr "Schadensarten"
 
 #: ../base/ufos/research.ufo:62
 msgid "Soldier Skills"
@@ -1978,7 +1978,7 @@ msgstr "Nano Techologie"
 
 #: ../base/ufos/research.ufo:115
 msgid "nano_txt"
-msgstr "Nanotechnolgoy opens up a wide field of new production methods especially in the design and production of armor and fabric.By using nanotechnology it will be possible to create materials nearly completely made of fullerenes (geodesic domes at an atomic level) and use them fabricate armor that is more robust and has higher heat resistance than any known material before. Not also that, but these materials would also be lighter than comperable conventional ones."
+msgstr ""
 
 #: ../base/ufos/research.ufo:125
 msgid "Advanced Armor Fabrics"
@@ -2009,7 +2009,7 @@ msgstr "Das AR-80 ist die Standardwaffe der Phalanx. Durch die verbesserte Munit
 #: ../base/ufos/research.ufo:184
 #: ../base/ufos/research.ufo:196
 msgid "sniper_txt"
-msgstr "Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the most deadly weapons employed by Phalanx forces. Powered by a advanced version of the 0.5 cartridge, it is capable to easily penetrate the engine block of a vehicle at 150 meters. However, the weapon is very bulky and requires many precious seconds to aim, therefore the WE-78 is definitly not suitable for close combat."
+msgstr ""
 
 #: ../base/ufos/research.ufo:208
 #: ../base/ufos/research.ufo:220
@@ -2039,12 +2039,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:304
 msgid "rpg_txt"
 msgstr ""
-"The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. Phalanx weapon scientists and\n"
-"engineers developed a new tracking system not only capable to fight airborne but also ground\n"
-"targets. The RL-1056's rockets use a combination of laser guidance and high speed cameras to\n"
-"identify the target. Despite a good accuracy when the tracking system had enough time to\n"
-"correctly lock on the target, this rocket launcher is of limited value if it has to be used in\n"
-"snapshot mode."
 
 #: ../base/ufos/research.ufo:316
 #, fuzzy
@@ -2237,13 +2231,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:662
 msgid "plasrifle_txt"
 msgstr ""
-"The Plasma Rifle is the weapon most often used by ... warriors. The plasma fired by this weapon\n"
-"easly cuts through almost every known material. Therefore the standard Phalanx kevlar vest only\n"
-"provides minor protection. Soldiers wounded by a Plasma Rifle's beam suffer of extensive burns\n"
-"which are in many cases instantly lethal. The overheated highly energetic xenon gas plasma is\n"
-"stored inside a intense magnetic field integrated in the weapon's clip. If the trigger is used,\n"
-"the magnetic field is reconfigured so that a continuous plasma beam is formed. This beam is\n"
-"focused by a second magnetic field and finally propelled to the front end of the Plasma Rifle."
 
 #: ../base/ufos/research.ufo:674
 #: ../base/ufos/research.ufo:687
@@ -2259,31 +2246,16 @@ msgstr ""
 #: ../base/ufos/research.ufo:712
 msgid "tachyonpistol_txt"
 msgstr ""
-"This weapon is powered by a miniaturized version of the tachyon accelerator. Therefore the\n"
-"Tachyon Pistol has a lower rate of fire as well as a diminished accuracy compared to the other\n"
-"two tachyon weapons. The major advantage of the Tachyon Pistol is its low weight and its small\n"
-"dimensions which makes it a valuable sidearm."
 
 #: ../base/ufos/research.ufo:724
 #: ../base/ufos/research.ufo:737
 msgid "tachyonrifle_txt"
 msgstr ""
-"Although our engineers not fully understand the principles of altering the tachyons on a\n"
-"subatomic level, they were able to reproduce the tachyon accelerator technology. Apparently the\n"
-"tachyons are given a defined spin inside the accelerator so they are able to interact with any\n"
-"material. They still tend to infiltrate easily through any known armor and lose their particle\n"
-"energy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon\n"
-"charge suffers only minor superficial injury but is heavily wounded in his viscera."
 
 #: ../base/ufos/research.ufo:749
 #: ../base/ufos/research.ufo:762
 msgid "tachyonsniper_txt"
 msgstr ""
-"The Tachyon Sniper Rifle uses also the newly discovered tachyon accelerator technology, first\n"
-"found in a Ortnok scout spaceship. Unlike the Tachyon Rifle, this weapon has a low rate of fire\n"
-"because the tachyon particles are intensely charged before they are fired. This means that the\n"
-"shots fired by the Tachyon Sniper Rifle are more focused and hence have a greater accuracy as\n"
-"well as a bigger penetrating power."
 
 #: ../base/ufos/research.ufo:778
 #, fuzzy
@@ -2307,7 +2279,7 @@ msgstr "Das H-92 Transporter ist der Haupttruppentransporter der Phalanx-Eingrei
 
 #: ../base/ufos/research.ufo:817
 msgid "Normal Damage Type"
-msgstr ""
+msgstr "Normaler Schaden"
 
 #: ../base/ufos/research.ufo:819
 #, fuzzy
@@ -2320,7 +2292,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:830
 msgid "Blast Damage Type"
-msgstr ""
+msgstr "Explosion"
 
 #: ../base/ufos/research.ufo:832
 #, fuzzy
@@ -2333,7 +2305,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:843
 msgid "Fire Damage Type"
-msgstr ""
+msgstr "Feuer"
 
 #: ../base/ufos/research.ufo:845
 #, fuzzy
@@ -2345,7 +2317,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:856
 msgid "Shock Damage Type"
-msgstr ""
+msgstr "Schock"
 
 #: ../base/ufos/research.ufo:858
 #, fuzzy
@@ -2359,7 +2331,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:869
 msgid "Laser Damage Type"
-msgstr ""
+msgstr "Laser"
 
 #: ../base/ufos/research.ufo:871
 #, fuzzy
@@ -2386,7 +2358,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:895
 msgid "Tachyon Damage Type"
-msgstr ""
+msgstr "Tachyon"
 
 #: ../base/ufos/research.ufo:897
 #, fuzzy
@@ -2401,7 +2373,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:908
 msgid "Stun Damage Type"
-msgstr ""
+msgstr "Betäubung"
 
 #: ../base/ufos/research.ufo:910
 #, fuzzy
@@ -2415,7 +2387,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:925
 msgid "Power Attribute"
-msgstr ""
+msgstr "Stärke"
 
 #: ../base/ufos/research.ufo:927
 #, fuzzy
@@ -2423,9 +2395,8 @@ msgid "power_skill_txt"
 msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:938
-#, fuzzy
 msgid "Speed Attribute"
-msgstr "Zeit beschleunigen"
+msgstr "Schnelligkeit"
 
 #: ../base/ufos/research.ufo:940
 #, fuzzy
@@ -2434,7 +2405,7 @@ msgstr "Erste-Hilfe-Kasten"
 
 #: ../base/ufos/research.ufo:951
 msgid "Accuracy Attribute"
-msgstr ""
+msgstr "Genauigkeit"
 
 #: ../base/ufos/research.ufo:953
 msgid "accuracy_skill_txt"
@@ -2442,7 +2413,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:964
 msgid "Mind Attribute"
-msgstr ""
+msgstr "Intelligenz"
 
 #: ../base/ufos/research.ufo:966
 #, fuzzy
@@ -2463,9 +2434,8 @@ msgstr ""
 "limited."
 
 #: ../base/ufos/research.ufo:990
-#, fuzzy
 msgid "Heavy Weapons Proficiency"
-msgstr "Schwere Waffen:"
+msgstr "Schwere Waffen"
 
 #: ../base/ufos/research.ufo:992
 #, fuzzy
@@ -2477,9 +2447,8 @@ msgstr ""
 "limited."
 
 #: ../base/ufos/research.ufo:1003
-#, fuzzy
 msgid "Assault Guns Proficiency"
-msgstr "Sturmgewehre:"
+msgstr "Sturmgewehre"
 
 #: ../base/ufos/research.ufo:1005
 #, fuzzy
@@ -2487,9 +2456,8 @@ msgid "assault_skill_txt"
 msgstr "Das AR-80 ist die Standardwaffe der Phalanx. Durch die verbesserte Munition und ein revolutionäres Design richtet diese Waffe mehr Schaden als alle vergleichbaren Sturmgewehre an. Das rückwärtig abgebrachte Magazin erhöht die Genauigkeit der Waffe indem die Kugel einen längeren Weg bis zur Mündung zurücklegen muss. Darüber hinaus kann sie einfacher repariert werden, denn sie ist in Modulen zusammengebaut. Zum Beispiel kann der Feuermechanismus direkt im Einsatz ausgetauscht werden, indem man einfach das defekte hintere Ende aus der Waffe herauszieht und austauscht. Dieser Vorgang dauert nur Minuten."
 
 #: ../base/ufos/research.ufo:1016
-#, fuzzy
 msgid "Sniper Rifles Proficiency"
-msgstr "Scharfschützengewehr Munition"
+msgstr "Scharfschützengewehre"
 
 #: ../base/ufos/research.ufo:1018
 #, fuzzy
@@ -2497,9 +2465,8 @@ msgid "sniper_skill_txt"
 msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:1029
-#, fuzzy
 msgid "High-Explosives Proficiency"
-msgstr "Rakete"
+msgstr "Granaten"
 
 #: ../base/ufos/research.ufo:1031
 #, fuzzy
@@ -2525,11 +2492,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1069
 msgid "b_powerplant_txt"
-msgstr "TEXT"
+msgstr ""
 
 #: ../base/ufos/research.ufo:1081
 msgid "b_quarters_txt"
-msgstr "TEXT"
+msgstr ""
 
 #: ../base/ufos/research.ufo:1093
 #, fuzzy
@@ -2548,7 +2515,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1117
 msgid "b_hangar_txt"
-msgstr "TEXT"
+msgstr ""
 
 #: ../base/ufos/research.ufo:1129
 msgid "b_radar_txt"
@@ -2565,7 +2532,7 @@ msgstr "Hangar für Abfangjäger"
 
 #: ../base/ufos/research.ufo:1165
 msgid "b_lab_txt"
-msgstr "TEXT"
+msgstr ""
 
 #: ../base/ufos/research.ufo:1177
 #, fuzzy
@@ -2728,15 +2695,6 @@ msgstr "Ortnok Krieger"
 #: ../base/ufos/research.ufo:1382
 msgid "ortnok_medium_txt"
 msgstr ""
-"Having the same genetical features as the regular Ortnoks, the Ortnok Warriors have been\n"
-"extensively modified with cybernetic implants. All these additional implants obviously aim to\n"
-"achieve a better performance in combat. Therefore the legs and arms have been almost completely\n"
-"replaced by cybernetic prostheses which allow a physical strength far beyond the potential of a\n"
-"human beeing. The claw shaped hands are designed to handle extreme weights. The chest area is\n"
-"covered with a thick steel plating which is almost impenetrable for regular rifle ammunition.\n"
-"The face mask serves as a protection against hazardous gases as well as a augmentation of the\n"
-"upper airways to allow a better lung function. The disadvantage of this massive cybernetic\n"
-"augmentation is the increased vulnerability to electromagnetic pulses (EMP)."
 
 #: ../base/ufos/research.ufo:1400
 msgid "Antarean - Combat notes"
@@ -3401,7 +3359,6 @@ msgid "Full Auto"
 msgstr "Vollautomatisch"
 
 #: ../base/ufos/weapons_human.ufo:295
-#, fuzzy
 msgid "Riot Shotgun"
 msgstr "Schrotflinte"
 
@@ -3470,7 +3427,7 @@ msgstr "Bolzen Munition"
 
 #: ../base/ufos/weapons_human.ufo:844
 msgid "Cannonade"
-msgstr ""
+msgstr "Beschießung"
 
 #: ../base/ufos/weapons_laser.ufo:6
 msgid "Laser Pistol"
@@ -3509,9 +3466,8 @@ msgid "Heavy Laser Charge"
 msgstr "Plasmawerfermunition"
 
 #: ../base/ufos/weapons_laser.ufo:199
-#, fuzzy
 msgid "Overload"
-msgstr "Nachladen"
+msgstr "Überladen"
 
 #: ../base/ufos/weapons_melee.ufo:6
 msgid "Combat Knife"
@@ -3583,9 +3539,8 @@ msgid "Plasma Blaster Charge"
 msgstr "Plasmawerfermunition"
 
 #: ../base/ufos/weapons_plasma.ufo:183
-#, fuzzy
 msgid "Charged Ball"
-msgstr "Geladener Impuls"
+msgstr ""
 
 #: ../base/ufos/weapons_plasma.ufo:205
 msgid "Continuous Beam"
@@ -3627,7 +3582,7 @@ msgstr "Tachyonenscharfschützenmunition"
 
 #: client/cl_actor.c:75
 msgid "Pathetic"
-msgstr ""
+msgstr "Erbärmlich"
 
 #: client/cl_actor.c:77
 msgid "Very Poor"
@@ -3638,9 +3593,8 @@ msgid "Poor"
 msgstr "Schlecht"
 
 #: client/cl_actor.c:81
-#, fuzzy
 msgid "Mediocre"
-msgstr "Mittlere Panzerung"
+msgstr "Mittelmäßig"
 
 #: client/cl_actor.c:83
 msgid "Good"
@@ -3652,19 +3606,19 @@ msgstr "Sehr gut"
 
 #: client/cl_actor.c:87
 msgid "Excellent"
-msgstr ""
+msgstr "Exzellent"
 
 #: client/cl_actor.c:89
 msgid "Amazing"
-msgstr ""
+msgstr "Hervorragend"
 
 #: client/cl_actor.c:91
 msgid "Superhuman"
-msgstr ""
+msgstr "Übernatürlich"
 
 #: client/cl_actor.c:93
 msgid "Godlike"
-msgstr ""
+msgstr "Göttlich"
 
 #: client/cl_actor.c:127
 #, c-format
@@ -3912,34 +3866,31 @@ msgstr ""
 
 #: client/cl_campaign.c:888
 msgid "Furious"
-msgstr ""
+msgstr "Wütend"
 
 #: client/cl_campaign.c:890
 msgid "Angry"
 msgstr "Verärgert"
 
 #: client/cl_campaign.c:892
-#, fuzzy
 msgid "Mad"
-msgstr "Map"
+msgstr "Tobend"
 
 #: client/cl_campaign.c:894
 msgid "Upset"
-msgstr ""
+msgstr "Aufgeregt"
 
 #: client/cl_campaign.c:896
-#, fuzzy
 msgid "Tolerant"
-msgstr "Kraftwerk"
+msgstr "Großzügig"
 
 #: client/cl_campaign.c:898
 msgid "Neutral"
 msgstr "Neutral"
 
 #: client/cl_campaign.c:900
-#, fuzzy
 msgid "Content"
-msgstr "Verbinde"
+msgstr "Zufrieden"
 
 #: client/cl_campaign.c:902
 msgid "Pleased"
@@ -3951,7 +3902,7 @@ msgstr "Glücklich"
 
 #: client/cl_campaign.c:906
 msgid "Exuberant"
-msgstr ""
+msgstr "Überschäumend"
 
 #: client/cl_campaign.c:908
 #, c-format
