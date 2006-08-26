@@ -459,7 +459,7 @@ void G_EndGame(int team)
  * @return 0 if objective unsuccessful
  * @return -1 if objective state unclear
  */
-int G_MissionObjective (int activeTeams)
+int G_MissionObjective (int activeTeams, int* winningTeam)
 {
 	/* TODO: put objective flag to level */
 	switch (level.objective) {
@@ -488,14 +488,16 @@ void G_CheckEndGame(void)
 	if (level.intermissionTime) /* already decided */
 		return;
 
+	/* FIXME: count from 0 to get the civilians for objectives */
 	for (i = 1, activeTeams = 0, last = 0; i < MAX_TEAMS; i++)
 		if (level.num_alive[i]) {
 			last = i;
 			activeTeams++;
 		}
 
+	/* TODO: < 2 does not work when we count civilians */
 	/* prepare for sending results */
-	if (activeTeams < 2 /* || G_MissionObjective(activeTeams) == 1*/ ) {
+	if (activeTeams < 2 /* || G_MissionObjective(activeTeams, &level.winningTeam) != -1*/ ) {
 		if (activeTeams == 0)
 			level.winningTeam = 0;
 		else if (activeTeams == 1)
