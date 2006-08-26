@@ -72,17 +72,16 @@ Section "Game" SEC01
   File "..\..\..\base\*.cfg"
   File "..\..\..\base\*.dll"
   SetOutPath "$INSTDIR\base\i18n"
-  SetOutPath "$INSTDIR\base\i18n\en"
-  SetOutPath "$INSTDIR\base\i18n\en\LC_MESSAGES"
-  File "..\..\..\base\i18n\en_GB\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\de\LC_MESSAGES"
-  File "..\..\..\base\i18n\de\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\ru\LC_MESSAGES"
-  File "..\..\..\base\i18n\ru\LC_MESSAGES\*.mo"
   SetOutPath "$INSTDIR\base\i18n\cs\LC_MESSAGES"
   File "..\..\..\base\i18n\cs\LC_MESSAGES\*.mo"
   SetOutPath "$INSTDIR\base\i18n\da\LC_MESSAGES"
   File "..\..\..\base\i18n\da\LC_MESSAGES\*.mo"
+  SetOutPath "$INSTDIR\base\i18n\de\LC_MESSAGES"
+  File "..\..\..\base\i18n\de\LC_MESSAGES\*.mo"
+  SetOutPath "$INSTDIR\base\i18n\en\LC_MESSAGES"
+  File "..\..\..\base\i18n\en\LC_MESSAGES\*.mo"
+  SetOutPath "$INSTDIR\base\i18n\es\LC_MESSAGES"
+  File "..\..\..\base\i18n\es\LC_MESSAGES\*.mo"
   SetOutPath "$INSTDIR\base\i18n\est\LC_MESSAGES"
   File "..\..\..\base\i18n\est\LC_MESSAGES\*.mo"
   SetOutPath "$INSTDIR\base\i18n\fr\LC_MESSAGES"
@@ -91,10 +90,12 @@ Section "Game" SEC01
   File "..\..\..\base\i18n\it\LC_MESSAGES\*.mo"
   SetOutPath "$INSTDIR\base\i18n\pl\LC_MESSAGES"
   File "..\..\..\base\i18n\pl\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\slo\LC_MESSAGES"
-  File "..\..\..\base\i18n\slo\LC_MESSAGES\*.mo"
   SetOutPath "$INSTDIR\base\i18n\pt_BR\LC_MESSAGES"
   File "..\..\..\base\i18n\pt_BR\LC_MESSAGES\*.mo"
+  SetOutPath "$INSTDIR\base\i18n\ru\LC_MESSAGES"
+  File "..\..\..\base\i18n\ru\LC_MESSAGES\*.mo"
+  SetOutPath "$INSTDIR\base\i18n\slo\LC_MESSAGES"
+  File "..\..\..\base\i18n\slo\LC_MESSAGES\*.mo"
 
 ; models
   SetOutPath "$INSTDIR\base\models"
@@ -227,6 +228,12 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\models\objects\base\radar"
   File "..\..\..\base\models\objects\base\radar\*.jpg"
   File "..\..\..\base\models\objects\base\radar\*.md2"
+;======================================================================
+; models/objects/base/minicrane
+;======================================================================
+  SetOutPath "$INSTDIR\base\models\objects\base\minicrane"
+  File "..\..\..\base\models\objects\base\minicrane\*.jpg"
+  File "..\..\..\base\models\objects\base\minicrane\*.md2"
 
 ;======================================================================
 ; models/objects/cars
@@ -261,6 +268,13 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\models\objects\city\powerline"
   File "..\..\..\base\models\objects\city\powerline\*.jpg"
   File "..\..\..\base\models\objects\city\powerline\*.md2"
+
+;======================================================================
+; models/objects/boat
+;======================================================================
+  SetOutPath "$INSTDIR\base\models\objects\boat"
+  File "..\..\..\base\models\objects\boat\*.jpg"
+  File "..\..\..\base\models\objects\boat\*.md2"
 
 ;======================================================================
 ; models/objects/furniture
@@ -440,9 +454,15 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\models\weapons\pistol"
   File "..\..\..\base\models\weapons\pistol\*.jpg"
   File "..\..\..\base\models\weapons\pistol\*.md2"
+  SetOutPath "$INSTDIR\base\models\weapons\plasblade"
+  File "..\..\..\base\models\weapons\plasblade\*.jpg"
+  File "..\..\..\base\models\weapons\plasblade\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\plasblaster"
   File "..\..\..\base\models\weapons\plasblaster\*.jpg"
   File "..\..\..\base\models\weapons\plasblaster\*.md2"
+  SetOutPath "$INSTDIR\base\models\weapons\plasmagren"
+  File "..\..\..\base\models\weapons\plasmagren\*.jpg"
+  File "..\..\..\base\models\weapons\plasmagren\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\plaspistol"
   File "..\..\..\base\models\weapons\plaspistol\*.jpg"
   File "..\..\..\base\models\weapons\plaspistol\*.md2"
@@ -458,6 +478,9 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\models\weapons\smg"
   File "..\..\..\base\models\weapons\smg\*.jpg"
   File "..\..\..\base\models\weapons\smg\*.md2"
+  SetOutPath "$INSTDIR\base\models\weapons\smokegren"
+  File "..\..\..\base\models\weapons\smokegren\*.jpg"
+  File "..\..\..\base\models\weapons\smokegren\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\sniper"
   File "..\..\..\base\models\weapons\sniper\*.jpg"
   File "..\..\..\base\models\weapons\sniper\*.md2"
@@ -523,6 +546,14 @@ Section "Game" SEC01
   File "..\..\..\base\pics\sfx\*.jpg"
 
 ;======================================================================
+; shaders
+;======================================================================
+  SetOutPath "$INSTDIR\base\shaders"
+  File "..\..\..\base\shaders\*.fp"
+;  File "..\..\..\base\shaders\*.glsl"
+;  File "..\..\..\base\shaders\*.vp"
+
+;======================================================================
 ; save
 ;======================================================================
   SetOutPath "$INSTDIR\base\save"
@@ -531,6 +562,8 @@ Section "Game" SEC01
 ; sounds
 ;======================================================================
   SetOutPath "$INSTDIR\base\sound"
+  SetOutPath "$INSTDIR\base\sound\aliens"
+  File "..\..\..\base\sound\aliens\*.wav"
   SetOutPath "$INSTDIR\base\sound\misc"
   File "..\..\..\base\sound\misc\*.wav"
   SetOutPath "$INSTDIR\base\sound\ambience"
