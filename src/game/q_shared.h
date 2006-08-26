@@ -769,6 +769,7 @@ char *Com_ValueToStr(void *base, int type, int ofs);
 */
 
 #define TEAM_CIVILIAN	0
+#define TEAM_PHALANX	1
 #define TEAM_ALIEN		7
 
 /* add this flag for instant event execution */

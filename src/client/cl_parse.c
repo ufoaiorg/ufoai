@@ -733,8 +733,11 @@ void CL_ActorStateChange( sizebuf_t *sb )
 
 	le->state = state;
 	le->think = LET_StartIdle;
-}
 
+	/* killed by the server: no animation is played, etc. */
+	if (state & STATE_DEAD)
+		CL_RemoveActorFromTeamList(le);
+}
 
 /*
 =====================

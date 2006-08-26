@@ -1371,7 +1371,7 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 		if (num > MAX_EMPLOYEES)
 			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
 		else if (num < 0)
-			Sys_Error("CL_ParseCharacterData: MSG_ReadByte error (%i)\n", num);
+			Sys_Error("CL_ParseCharacterData: MSG_ReadShort error (%i)\n", num);
 		for (i=0; i<num; i++) {
 			updateCharacterArray[i].ucn = MSG_ReadShort(buf);
 			for (j=0; j<KILLED_NUM_TYPES; j++)
@@ -1445,9 +1445,9 @@ void CL_ParseResults(sizebuf_t * buf)
 		Q_strcat(resultText, va(_("Enemy survivors\t%i\n\n"), res), sizeof(resultText));
 
 	/* team stats */
-	Q_strcat(resultText, va(_("Team losses\t%i\n"), num_spawned[we] - num_alive[we]), sizeof(resultText));
-	Q_strcat(resultText, va(_("Friendly fire losses\t%i\n"), num_kills[we][we]), sizeof(resultText));
-	Q_strcat(resultText, va(_("Team survivors\t%i\n\n"), num_alive[we]), sizeof(resultText));
+	Q_strcat(resultText, va(_("Phalanx soldiers killed by Aliens\t%i\n"), num_spawned[we] - num_alive[we] - num_kills[we][we] - num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
+	Q_strcat(resultText, va(_("Phalanx friendly fire losses\t%i\n"), num_kills[we][we] + num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
+	Q_strcat(resultText, va(_("Phalanx survivors\t%i\n\n"), num_alive[we]), sizeof(resultText));
 
 	/* kill civilians on campaign, if not won */
 	if (curCampaign && num_alive[TEAM_CIVILIAN] && winner != we) {
@@ -1460,10 +1460,10 @@ void CL_ParseResults(sizebuf_t * buf)
 		res += (i == we) ? 0 : num_kills[i][TEAM_CIVILIAN];
 
 	if (curCampaign)
-		Q_strcat(resultText, va(_("Civilians killed by the Aliens\t%i\n"), res), sizeof(resultText));
+		Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), res), sizeof(resultText));
 	else
-		Q_strcat(resultText, va(_("Civilians killed by the Enemies\t%i\n"), res), sizeof(resultText));
-	Q_strcat(resultText, va(_("Civilians killed by your Team\t%i\n"), num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
+		Q_strcat(resultText, va(_("Civilians killed by Enemies\t%i\n"), res), sizeof(resultText));
+	Q_strcat(resultText, va(_("Civilians killed by Phalanx\t%i\n"), num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
 	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n\n"), num_alive[TEAM_CIVILIAN]), sizeof(resultText));
 	ccs.civiliansKilled += res + num_kills[we][TEAM_CIVILIAN];
 

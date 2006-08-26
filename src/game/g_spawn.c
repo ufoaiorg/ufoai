@@ -436,7 +436,7 @@ static void SP_human_start(edict_t * ent)
 		G_FreeEdict(ent);
 		return;
 	}
-	ent->team = 1;
+	ent->team = TEAM_PHALANX;
 	ent->STUN = 0;
 	ent->HP = 100;
 	ent->AP = 100;

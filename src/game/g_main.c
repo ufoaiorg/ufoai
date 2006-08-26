@@ -395,8 +395,20 @@ void G_EndGame(int team)
 {
 	edict_t *ent;
 	int i, j = 0;
-	player_t* player;
 	int	number_of_teams;
+
+	/* if aliens won, make sure every soldier dies */
+	if (team == TEAM_ALIEN) {
+		level.num_alive[TEAM_PHALANX] = 0;
+		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) 
+				 && !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX ) {
+				ent->state = STATE_DEAD;
+				gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
+				gi.WriteShort(ent->number);
+				gi.WriteShort(STATE_DEAD);
+			}
+	}
 
 	/* Make everything visible to anyone who can't already see it */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
@@ -409,7 +421,7 @@ void G_EndGame(int team)
 	/* send results */
 	Com_DPrintf("Sending results for game won by team %i.\n", team);
 	gi.AddEvent(PM_ALL, EV_RESULTS);
-	number_of_teams = MAX_TEAMS; /* TODO:why not the actual number of teams? */
+	number_of_teams = MAX_TEAMS;
 	gi.WriteByte(number_of_teams);
 	gi.WriteByte(team);
 
@@ -424,16 +436,14 @@ void G_EndGame(int team)
 		for (j = 0; j < number_of_teams; j++) {
 			gi.WriteByte(level.num_kills[i][j]);
 		}
-	/* end of spawn, alive and kill counts */
 
-	player = game.players + ent->pnum;
+	/* how many alive actors */
 	for (j = 0, i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
 			&& !(ent->state & STATE_DEAD)
-			&& ent->team == player->pers.team)
+			&& ent->team == TEAM_PHALANX)
 			j++;
 
-	/* how many */
 	Com_DPrintf("Sending results with %i alive actors.\n", j);
 	gi.WriteShort((KILLED_NUM_TYPES + 1) * j * 2);
 
@@ -441,7 +451,7 @@ void G_EndGame(int team)
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
 				 && !(ent->state & STATE_DEAD)
-				 && ent->team == player->pers.team ) {
+				 && ent->team == TEAM_PHALANX ) {
 				Com_DPrintf("Sending results for actor %i.\n", i);
 				G_SendCharacterData(ent);
 			}
