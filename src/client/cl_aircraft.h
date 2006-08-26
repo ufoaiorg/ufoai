@@ -78,7 +78,6 @@ typedef struct aircraft_s {
 	char building[MAX_VAR];		/* id of the building needed as hangar */
 
 	int numUpgrades;
-	struct aircraft_s *next;	/* just for linking purposes - not needed in general */
 
 	struct actMis_s* mission;	/* The mission the aircraft is moving to */
 	int ufo;				/* Ufo's id the aircraft is purchasing (gd.ufos + id) */

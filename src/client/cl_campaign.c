@@ -1414,7 +1414,7 @@ void CL_UpdatePointersInGlobalData(void)
 		baseCurrent = base;
 
 		/* fix aircraft homebase and teamsize pointers */
-		/* TODO: what about next and mission pointers? */
+		/* TODO: what about mission pointer? */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			aircraft->teamSize = &base->teamNum[aircraft->idxInBase];
 			aircraft->homebase = &gd.bases[aircraft->idxBase];
