@@ -2,6 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "UFO:Alien Invasion"
+!define PRODUCT_NAME_DEDICATED "UFO:Alien Invasion Dedicated Server"
 !define PRODUCT_VERSION "2.0-RC4"
 !define PRODUCT_PUBLISHER "UFO:AI Team"
 !define PRODUCT_WEB_SITE "http://www.ufoai.net"
@@ -14,10 +15,14 @@ SetCompressor bzip2
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
 
+
+ShowInstDetails "nevershow"
+ShowUninstDetails "nevershow"
+
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
-!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
+!define MUI_ICON "..\..\ports\win32\ufo.ico"
+!define MUI_UNICON "..\..\ports\win32\ufo.ico"
 
 ; Language Selection Dialog Settings
 !define MUI_LANGDLL_REGISTRY_ROOT "${PRODUCT_UNINST_ROOT_KEY}"
@@ -659,6 +664,7 @@ Section "Game" SEC01
 
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "" "$INSTDIR\ufo.exe" 0
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME_DEDICATED}.lnk" "$INSTDIR\ufo_ded.exe" "" "$INSTDIR\ufo.exe_ded" 0
   CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe"
 SectionEnd
 
