@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-08-25 17:41+0200\n"
-"PO-Revision-Date: 2006-08-25 17:50+0100\n"
+"PO-Revision-Date: 2006-08-26 09:08+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3238,7 +3238,7 @@ msgstr "Schalte Reactionfire ein/aus"
 
 #: ../base/ufos/seq_tutorials.ufo:705
 msgid "Crouch (kneel down) or stand up"
-msgstr ""
+msgstr "Ducken oder aufstehen"
 
 #: ../base/ufos/seq_tutorials.ufo:727
 msgid "Cycle through visible enemies"
@@ -3630,14 +3630,12 @@ msgid "Pathetic"
 msgstr ""
 
 #: client/cl_actor.c:77
-#, fuzzy
 msgid "Very Poor"
-msgstr "Sehr schwer"
+msgstr "Sehr schlecht"
 
 #: client/cl_actor.c:79
-#, fuzzy
 msgid "Poor"
-msgstr "Boden"
+msgstr "Schlecht"
 
 #: client/cl_actor.c:81
 #, fuzzy
@@ -3706,7 +3704,7 @@ msgstr ""
 #: client/cl_actor.c:451
 #, c-format
 msgid "Armor  %i\tMorale  %i\n"
-msgstr "Rüstung %i\tMoral%i\n"
+msgstr "Rüstung %i\tMoral %i\n"
 
 #: client/cl_actor.c:831
 msgid "Nobody selected\n"
@@ -3717,7 +3715,6 @@ msgid "This isn't your round\n"
 msgstr "Du bist nicht dran\n"
 
 #: client/cl_actor.c:971
-#, fuzzy
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -3748,7 +3745,7 @@ msgstr "Arbeitet: 100%"
 
 #: client/cl_basemanagement.c:155
 msgid "Down"
-msgstr "Erledigt"
+msgstr ""
 
 #: client/cl_basemanagement.c:406
 msgid "Not enough credits to build this\n"
@@ -4285,16 +4282,15 @@ msgstr ""
 
 #: client/cl_team.c:41
 msgid "Jungle"
-msgstr ""
+msgstr "Jungeltarnung"
 
 #: client/cl_team.c:44
 msgid "Desert"
-msgstr ""
+msgstr "Wüstentarnung"
 
 #: client/cl_team.c:47
-#, fuzzy
 msgid "Arctic"
-msgstr "Antarktis"
+msgstr "Schneetarnung"
 
 #: client/cl_team.c:653
 #, c-format
