@@ -3215,8 +3215,7 @@ static void CP_CampaignsClick_f(void)
 
 	Cvar_Set("campaign", campaigns[num].id);
 	/* FIXME: Translate the race to the name of a race */
-	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i - Scientists: %i - Workers: %i\nCredits: %ic\nDifficulty: %s\n%s\n"), campaigns[num].team, campaigns[num].soldiers, campaigns[num].scientists, campaigns[num].workers,
-				campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty), _(campaigns[num].text));
+	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i soldiers, %i scientists, %i workers, %i medics\nCredits: %ic\nDifficulty: %s\n%s\n"), campaigns[num].team, campaigns[num].soldiers, campaigns[num].scientists, campaigns[num].workers, campaigns[num].medics, campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty), _(campaigns[num].text));
 	menuText[TEXT_STANDARD] = campaignDesc;
 }
 
