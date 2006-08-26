@@ -1,5 +1,5 @@
-#include <SDL.h>
-#include <SDL_version.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_version.h>
 
 #include "../../client/client.h"
 #include "../../client/snd_loc.h"
