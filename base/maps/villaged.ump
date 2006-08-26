@@ -161,6 +161,17 @@ a      +c     a
 0      c      0
 }
 
+
+// cross street connection
+tile +s15
+{
+3 3
+
+0      c      0
+b      +bc    b
+0      c      0
+}
+
 // ########################################
 // ########## Dummy+Filler tiles ##########
 
@@ -366,96 +377,6 @@ a     +a     +a     a
 }
 
 // ########################################
-
-// *** Small maps for testing ***
-
-// Horizontal street north of dropship:
-assembly tiny
-{
-size "3 3"
-+s02 "0 1"
-+s12 "0 1"
-+s13 "0 1"
-+s05 "1 1"
-+r03 "0 1"
-+d01 "0 1"
-+d02 "0 1"
-+d03 "0 1"
-+d05 "0 1"
-+drop "1 1"
-}
-
-// Short vertical street east of dropship:
-assembly tiny1
-{
-size "4 2"
-+s04  "1 1"
-+s03 "0 1"
-+s09 "0 1"
-+s10 "0 1"
-+s11 "0 1"
-+s14 "0 1"
-+drop "1 1"
-}
-
-// Small wood around dropship:
-assembly wood
-{
-size "4 3"
-+d02 "1 2"
-+d03 "1 2"
-+d04 "0 1"
-+d05 "1 2"
-+d06 "0 1"
-+d07 "0 1"
-+r03 "0 1"
-+d01 "1 1"
-+drop "1 1"
-}
-
-
-// Vertical street with corner :
-assembly street1
-{
-size "4 3"
-+s03 "0 2"
-+s09 "0 2"
-+s10 "0 2"
-+s11 "0 2"
-+s14 "0 2"
-+s04  "1 1"
-+r03 "0 3"
-+d01 "0 3"
-+d02 "0 1"
-+d03 "0 1"
-+d05 "0 1"
-+drop "1 1"
-}
-
-// Streets on two sides of dropship:
-assembly street2
-{
-size "4 3"
-+d01  "0 2"
-+d02 "0 1"
-+d03 "0 1"
-+d05 "0 1"
-+r03  "0 2"
-+s02 "0 2"
-+s12 "0 2"
-+s13 "1 2"
-+s06  "1 1"
-+s03 "0 1"
-+s08 "0 1"
-+s09 "1 1"
-+s10 "0 1"
-+s11 "0 1"
-+s14 "0 1"
-+drop "1 1"
-}
-
-// ########################################
-
 // *** Maps for playing the game ***
 
 assembly residential
@@ -596,151 +517,3 @@ size "10 10"
 +c03 "0 2"
 +drop "1 1"
 }
-
-// ########################################
-
-// *** Single tiles for screenshots ***
-
-assembly drop
-{
-size "3 2"
-+drop "1 1"
-}
-
-
-// Playground
-assembly r01
-{
-size "2 2"
-+r01 "1 1"
-}
-
-// Park
-assembly r02
-{
-size "3 2"
-+r02 "1 1"
-}
-
-// Fountain
-assembly r03
-{
-size "1 1"
-+r03 "1 1"
-}
-
-
-// Shop + flat on first floor
-assembly c01
-{
-size "2 3"
-+c01 "1 1"
-}
-
-// Gas-station, red + white car / tree as filler
-assembly c02
-{
-size "3 3"
-+c02 "1 1"
-+d02 "0 1"
-}
-
-// Gas-station, white car / tree as filler
-assembly c03
-{
-size "3 3"
-+c03 "1 1"
-+d03 "0 1"
-}
-
-// snack/bar
-assembly c04
-{
-size "2 2"
-+c04 "1 1"
-}
-
-
-// Big house
-assembly h01
-{
-size "2 2"
-+h01 "1 1"
-}
-
-// Garage
-assembly h02
-{
-size "2 1"
-+h02 "1 1"
-}
-
-// Small house - tree as filler
-assembly h03
-{
-size "2 2"
-+h03 "1 1"
-+d05 "0 1"
-}
-
-
-// Long street corner NW -  trees as filler
-assembly s01
-{
-size "2 3"
-+s01 "1 1"
-+d02 "0 1"
-+d03 "0 1"
-}
-
-// Trees
-assembly trees
-{
-size "2 2"
-+d02 "1 1"
-+d03 "1 1"
-+d05 "1 1"
-+d01 "0 1"
-}
-
-
-// ---------- Bug:
-
-
-// Picnic ??
-assembly d01
-{
-size "1 1"
-+d01 "1 1"
-}
-
-// Junk ??
-assembly junk
-{
-size "2 2"
-+d04 "1 1"
-+d06 "1 1"
-+d07 "1 1"
-+d01 "0 9"
-}
-
-// Junk ??
-assembly junk13
-{
-size "1 3"
-+d04 "1 1"
-+d06 "1 1"
-+d07 "1 1"
-+d01 "0 9"
-}
-
-// Trees ??
-assembly tree31
-{
-size "3 1"
-+d02 "1 1"
-+d03 "1 1"
-+d05 "1 1"
-+d01 "0 9"
-}
-

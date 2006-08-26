@@ -146,6 +146,17 @@ a      +c     a
 0      c      0
 }
 
+
+// cross street connection
+tile +s15
+{
+3 3
+
+0      c      0
+b      +bc    b
+0      c      0
+}
+
 // ---------------------------------
 tile +d01
 {
