@@ -385,12 +385,12 @@ void CL_DeleteAircraft(aircraft_t *aircraft)
 	int i = 0;
 	base_t *base = NULL;
 	aircraft_t *aircraft_temp = NULL;
-	
+
 	if (aircraft) {
 		base = &gd.bases[aircraft->idxBase];
 		/* Remove all soldiers from the aircraft (the employees are still hired after this) */
 		CL_RemoveSoldiersFromAircraft(aircraft->idx, aircraft->idxInBase );
-	
+
 		/* Remove aircraft and rearrange the aircraft-list (in base), */
 		base->numAircraftInBase--;
 		for ( i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
@@ -402,7 +402,7 @@ void CL_DeleteAircraft(aircraft_t *aircraft)
 		/* Reduce number of total (global) aircraft. */
 		gd.numAircraft--;
 
-		/* Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT); 
+		/* Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
 
 		/* now update the aircraft list - maybe there is a popup active */
@@ -642,6 +642,7 @@ void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 			/* found it */
 			if (num <= 0) {
 				aircraft->weapon = *list;
+				Q_strncpyz(aircraft->weapon_string, (*list)->id, MAX_VAR);
 				Com_sprintf(weaponDesc, sizeof(weaponDesc), (*list)->name);
 				CL_AircraftSelect();
 				CL_AircraftEquipmenuMenuInit_f();
@@ -691,6 +692,7 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 			/* found it */
 			if (num <= 0) {
 				aircraft->shield = *list;
+				Q_strncpyz(aircraft->shield_string, (*list)->id, MAX_VAR);
 				Com_sprintf(shieldDesc, sizeof(shieldDesc), (*list)->name);
 				CL_AircraftSelect();
 				CL_AircraftEquipmenuMenuInit_f();

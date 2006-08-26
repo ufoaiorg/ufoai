@@ -1413,10 +1413,13 @@ void CL_UpdatePointersInGlobalData(void)
 		/* some functions needs the baseCurrent pointer set */
 		baseCurrent = base;
 
-		/* fix aircraft homepage and teamsize pointers; TODO: what about next, mission, weapon and shield pointers? */
+		/* fix aircraft homebase and teamsize pointers */
+		/* TODO: what about next and mission pointers? */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			aircraft->teamSize = &base->teamNum[aircraft->idxInBase];
 			aircraft->homebase = &gd.bases[aircraft->idxBase];
+			aircraft->shield = RS_GetTechByID(aircraft->shield_string);
+			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
 		}
 
 		/* now fix the curTeam pointers */
