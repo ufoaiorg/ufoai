@@ -2418,8 +2418,13 @@ static void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, in
 
 /**
  * @brief
- * @param
+ * @param[in] map
+ * @param[in] from
+ * @param[in] distance
+ * @param[in] fb_list Forbidden list
+ * @param[in] fb_length Length of forbidden list
  * @sa Grid_MoveMarkRoute
+ * @sa G_MoveCalc
  */
 void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_list, int fb_length)
 {
@@ -2467,7 +2472,7 @@ void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_
 /**
  * @brief Caches the calculated move
  * @param
- * @sa
+ * @sa AI_ActorThink
  */
 void Grid_MoveStore(struct routing_s *map)
 {
@@ -2477,8 +2482,9 @@ void Grid_MoveStore(struct routing_s *map)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] map
+ * @param[in] to
+ * @param[in] stored
  * @return 0xFF if the move isn't possible
  * @return length of move otherwise
  */
@@ -2493,8 +2499,11 @@ int Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] map
+ * @param[in] pos
+ * @param[in] sz
+ * @param[in] l
+ * @sa Grid_MoveNext
  */
 int Grid_MoveCheck(struct routing_s *map, pos3_t pos, int sz, int l)
 {
@@ -2556,8 +2565,9 @@ int Grid_MoveCheck(struct routing_s *map, pos3_t pos, int sz, int l)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] map
+ * @param[in] from
+ * @sa Grid_MoveCheck
  */
 int Grid_MoveNext(struct routing_s *map, pos3_t from)
 {
