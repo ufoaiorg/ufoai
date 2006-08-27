@@ -469,6 +469,8 @@ void RS_AssignScientist(technology_t* tech)
 	employee_t *employee = NULL;
 	base_t *base = NULL;
 
+	Com_DPrintf("RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
+	
 	if  (tech->base_idx >= 0) {
 		base = &gd.bases[tech->base_idx];
 	} else {
@@ -525,6 +527,7 @@ static void RS_AssignScientist_f(void)
 	if (num < 0 || num > researchListLength)
 		return;
 
+	Com_DPrintf("RS_AssignScientist_f: num %i\n", num);
 	RS_AssignScientist(researchList[num]);
 }
 
@@ -666,7 +669,8 @@ static void RS_ResearchStop(void)
 
 /**
  * @brief Loops trough the research-list and updates the displayed text+color of each research-item according to it's status.
- * See menu_research.ufo for the layout/called functions.
+ * @note See menu_research.ufo for the layout/called functions.
+ * @todo Display free space in all labs in the current base for each item.
  */
 void RS_UpdateData(void)
 {
@@ -686,22 +690,30 @@ void RS_UpdateData(void)
 		tech = &gd.technologies[i];
 		Com_sprintf(name, MAX_VAR, tech->name);
 
-		/* An unresearched collected item that cannot yet be researched. */
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
+			/* An unresearched collected item that cannot yet be researched. */
+			
 			Q_strcat(name, _(" [not yet researchable]"), MAX_VAR);
 			/* Color the item 'unresearchable' */
 			Cbuf_AddText(va("researchunresearchable%i\n", j));
 			/* Display the concated text in the correct list-entry. */
 			Cvar_Set(va("mn_researchitem%i", j), name);
+
+			Cvar_Set(va("mn_researchassigned%i", j), "--");
+			Cvar_Set(va("mn_researchavailable%i", j), "--");
+			Cvar_Set(va("mn_researchmax%i", j), "--");
+			
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */
 			researchList[j] = &gd.technologies[i];
 			/* counting the numbers of display-list entries. */
 			j++;
 		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
+			/* An item that can be researched. */
+			
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
 			if ((tech->base_idx == baseCurrent->idx) || (tech->base_idx < 0) ) {
-				/* Maximal available scientists in the base the tech is reseearched. */
+				/* Maximal available scientists in the base the tech is researched. */
 				Cvar_SetValue(va("mn_researchavailable%i", j), available[baseCurrent->idx]);
 			} else {
 				/* Display available scientists of other base here. */
@@ -856,6 +868,7 @@ void CL_CheckResearchStatus(void)
 					RS_RemoveScientist(tech);
 
 				RS_MarkResearched(tech->id);
+				researchListLength = 0;
 				researchListPos = 0;
 				newResearch++;
 				tech->time = 0;
