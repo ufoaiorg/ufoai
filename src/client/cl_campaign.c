@@ -2125,6 +2125,9 @@ void CL_CollectAliens(void)
 	}
 }
 
+equipDef_t eTempMarket; /* a terrible hack so that "abort;try again" works */
+int eTempCredits;
+
 /**
  * @brief Do the real collection of the items
  *
@@ -2145,8 +2148,8 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 	assert (!(left_hand && csi.ods[weapon->item.t].twohanded));
 
 	if (market) {
-		ccs.eMarket.num[weapon->item.t]++;
-		CL_UpdateCredits(ccs.credits + csi.ods[weapon->item.t].price);
+		eTempMarket.num[weapon->item.t]++;
+			eTempCredits += csi.ods[weapon->item.t].price;
 	} else {
 		ccs.eMission.num[weapon->item.t]++;
 	}
@@ -2159,11 +2162,11 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 	if (!csi.ods[weapon->item.t].reload || weapon->item.a == 0)
 		return;
 	if (market) {
-		ccs.eMarket.num_loose[weapon->item.m] += weapon->item.a;
-		if (ccs.eMarket.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
-			ccs.eMarket.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
-			ccs.eMarket.num[weapon->item.m]++;
-			CL_UpdateCredits(ccs.credits + csi.ods[weapon->item.m].price);
+		eTempMarket.num_loose[weapon->item.m] += weapon->item.a;
+		if (eTempMarket.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
+			eTempMarket.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
+			eTempMarket.num[weapon->item.m]++;
+			eTempCredits += csi.ods[weapon->item.m].price;
 		}
 	} else {
 		ccs.eMission.num_loose[weapon->item.m] += weapon->item.a;
@@ -2192,6 +2195,9 @@ void CL_CollectItems(int won)
 	le_t *le;
 	invList_t *item;
 	int container;
+
+	eTempMarket = ccs.eMarket;
+	eTempCredits = ccs.credits;
 
 	/* only call this when the match was won */
 	if (!won)
@@ -2225,6 +2231,7 @@ void CL_CollectItems(int won)
 		}
 	}
 /*	RS_MarkCollected(&ccs.eMission); not needed due to statusCollected above */
+	/* TODO: make this reversible, like eTempMarket */
 	RS_MarkResearchable();
 }
 
@@ -2313,6 +2320,8 @@ static void CL_GameResultsCmd(void)
 	int tempMask;
 	employee_t* employee;
 	int numberofsoldiers = 0; /* DEBUG */
+	static equipDef_t *eSupplies = NULL;
+	equipDef_t *ed;
 
 	/* multiplayer? */
 	if (!curCampaign || !selMis || !baseCurrent)
@@ -2320,7 +2329,7 @@ static void CL_GameResultsCmd(void)
 
 	/* check for replay */
 	if ((int) Cvar_VariableValue("game_tryagain")) {
-		/* don't update the character stats because we retry the mission */
+		/* don't collect things and update stats --- we retry the mission */
 		CL_GameGo();
 		return;
 	}
@@ -2330,6 +2339,32 @@ static void CL_GameResultsCmd(void)
 		Com_Printf("Usage: game_results <won>\n");
 		return;
 	}
+	won = atoi(Cmd_Argv(1));
+
+	/* update stats */
+	CL_UpdateCharacterStats(won);
+	
+	baseCurrent = CL_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
+
+	/* add the looted goods to base storage and market */
+	baseCurrent->storage = ccs.eMission; /* copied, including the arrays! */
+	ccs.eMarket = eTempMarket; /* copied, including the arrays! */
+	CL_UpdateCredits(eTempCredits);
+
+	/* our economical connections are stirring at the news of our fight */
+	if (!eSupplies) {
+		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
+			if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR))
+				break;
+		assert (i != csi.numEDs);
+		eSupplies = ed;
+	}
+	for (i = 0; i < csi.numODs; i++) {
+		if ( eSupplies->num[i]
+			 > (rand() % 60
+				+ ccs.eMarket.num[i] * 10 * frand()) ) /* supply-demand */
+			ccs.eMarket.num[i] += (2.0 + eSupplies->num[i] / 3.0) * frand();
+	}
 
 	/* TODO: */
 	/* base attack mission */
@@ -2338,7 +2373,6 @@ static void CL_GameResultsCmd(void)
 	/* our research results */
 	/* the killed civilians are base employees - they have to be removed after defending the base */
 
-	won = atoi(Cmd_Argv(1));
 	civilians_killed = ccs.civiliansKilled;
 	aliens_killed = ccs.aliensKilled;
 	/* fprintf(stderr, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n", won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed); */

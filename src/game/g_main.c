@@ -404,7 +404,7 @@ void G_EndGame(int team)
 			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) 
 				 && !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX ) {
 				ent->state = STATE_DEAD;
-				gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
+				gi.AddEvent(PM_ALL, EV_ACTOR_STATECHANGE);
 				gi.WriteShort(ent->number);
 				gi.WriteShort(STATE_DEAD);
 			}
