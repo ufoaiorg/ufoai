@@ -173,19 +173,27 @@ static keyname_t keynames[] = {
   */
 static void Key_CompleteCommand(void)
 {
-	char *cmd, *s;
+	char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
+	int cntCmd = 0, cntCvar = 0;
 
 	s = key_lines[edit_line] + 1;
 	if (*s == '\\' || *s == '/')
 		s++;
 
-	cmd = Cmd_CompleteCommand(s);
-	if (!cmd)
-		cmd = Cvar_CompleteVariable(s);
-	if (cmd) {
+	cntCmd = Cmd_CompleteCommand(s, &cmd);
+	cntCvar = Cvar_CompleteVariable(s, &cvar);
+
+	if (cntCmd == 1 && !cntCvar)
+		use = cmd;
+	else if (!cntCmd && cntCvar == 1)
+		use = cvar;
+	else
+		Com_Printf("\n");
+
+	if (use) {
 		key_lines[edit_line][1] = '/';
-		Q_strncpyz(key_lines[edit_line] + 2, cmd, MAXCMDLINE - 2);
-		key_linepos = strlen(cmd) + 2;
+		Q_strncpyz(key_lines[edit_line] + 2, use, MAXCMDLINE - 2);
+		key_linepos = strlen(use) + 2;
 		key_lines[edit_line][key_linepos] = ' ';
 		key_linepos++;
 		key_lines[edit_line][key_linepos] = 0;

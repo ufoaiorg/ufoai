@@ -47,7 +47,7 @@ char *Cvar_VariableString(char *var_name);
 
 /* returns an empty string if not defined */
 
-char *Cvar_CompleteVariable(char *partial);
+int Cvar_CompleteVariable(char *partial, char **match);
 
 /* attempts to match a partial variable name for command line completion */
 /* returns NULL if nothing fits */

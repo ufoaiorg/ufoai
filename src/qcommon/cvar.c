@@ -115,31 +115,28 @@ char *Cvar_VariableString(char *var_name)
  * @sa Cmd_CompleteCommand
  * @sa Key_CompleteCommand
  */
-char *Cvar_CompleteVariable(char *partial)
+int Cvar_CompleteVariable(char *partial, char **match)
 {
 	cvar_t *cvar;
-	char *match = NULL;
+	char *localMatch = NULL;
 	int len, matches = 0;
 
 	len = strlen(partial);
 
 	if (!len)
-		return NULL;
-
-	/* check for exact match */
-	for (cvar = cvar_vars; cvar; cvar = cvar->next)
-		if (!Q_strncmp(partial, cvar->name, sizeof(cvar->name)))
-			return cvar->name;
+		return 0;
 
 	/* check for partial matches */
 	for (cvar = cvar_vars; cvar; cvar = cvar->next)
 		if (!Q_strncmp(partial, cvar->name, len)) {
 			Com_Printf("[var] %s\n", cvar->name);
-			match = cvar->name;
+			localMatch = cvar->name;
 			matches++;
 		}
 
-	return matches == 1 ? match : NULL;
+	if (matches==1)
+		*match = localMatch;
+	return matches;
 }
 
 /**

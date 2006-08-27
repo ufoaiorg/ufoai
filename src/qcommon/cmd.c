@@ -705,42 +705,29 @@ qboolean Cmd_Exists(char *cmd_name)
 	return qfalse;
 }
 
-
-
 /**
   * @brief Unix like tab completion for console commands
   * @param partial The beginning of the command we try to complete
   * @sa Cvar_CompleteVariable
   * @sa Key_CompleteCommand
   */
-char *Cmd_CompleteCommand(char *partial)
+int Cmd_CompleteCommand(char *partial, char **match)
 {
 	cmd_function_t *cmd;
 	cmdalias_t *a;
-
-	char *match = NULL;
+	char *localMatch = NULL;
 	int len, matches = 0;
 
 	len = strlen(partial);
 
 	if (!len)
-		return NULL;
-
-	/* check for exact match in commands */
-	for (cmd = cmd_functions; cmd; cmd = cmd->next)
-		if (!Q_strncmp(partial, cmd->name, sizeof(cmd->name)))
-			return cmd->name;
-
-	/* and then aliases */
-	for (a = cmd_alias; a; a = a->next)
-		if (!Q_strncmp(partial, a->name, len))
-			return a->name;
+		return 0;
 
 	/* check for partial matches in commands */
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
 		if (!Q_strncmp(partial, cmd->name, len)) {
 			Com_Printf("[cmd] %s\n", cmd->name);
-			match = cmd->name;
+			localMatch = cmd->name;
 			matches++;
 		}
 	}
@@ -749,12 +736,14 @@ char *Cmd_CompleteCommand(char *partial)
 	for (a = cmd_alias; a; a = a->next) {
 		if (strstr(a->name, partial)) {
 			Com_Printf("[ali] %s\n", a->name);
-			match = a->name;
+			localMatch = a->name;
 			matches++;
 		}
 	}
 
-	return matches == 1 ? match : NULL;
+	if (matches == 1)
+		*match = localMatch;
+	return matches;
 }
 
 
@@ -815,7 +804,8 @@ void Cmd_ExecuteString(char *text)
 void Cmd_List_f(void)
 {
 	cmd_function_t *cmd;
-	int i, c, l = 0;
+	cmdalias_t *alias;
+	int i = 0, j = 0, c, l = 0;
 	char *token = NULL;
 
 	c = Cmd_Argc();
@@ -825,15 +815,23 @@ void Cmd_List_f(void)
 		l = strlen(token);
 	}
 
-	i = 0;
 	for (cmd = cmd_functions; cmd; cmd = cmd->next, i++) {
 		if (c == 2 && Q_strncmp(cmd->name, token, l)) {
 			i--;
 			continue;
 		}
-		Com_Printf("%s\n", cmd->name);
+		Com_Printf("C %s\n", cmd->name);
+	}
+	/* check alias */
+	for (alias = cmd_alias; alias; alias = alias->next, j++) {
+		if (c == 2 && Q_strncmp(alias->name, token, l)) {
+			j--;
+			continue;
+		}
+		Com_Printf("M %s\n", alias->name);
 	}
 	Com_Printf("%i commands\n", i);
+	Com_Printf("%i macros\n", j);
 }
 
 /**

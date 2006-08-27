@@ -97,7 +97,7 @@ qboolean Cmd_Exists(char *cmd_name);
 
 /* used by the cvar code to check for cvar / command name overlap */
 
-char *Cmd_CompleteCommand(char *partial);
+int Cmd_CompleteCommand(char *partial, char **match);
 
 /* attempts to match a partial command for automatic command line completion */
 /* returns NULL if nothing fits */

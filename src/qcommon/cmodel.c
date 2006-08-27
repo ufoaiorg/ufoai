@@ -3,8 +3,6 @@
  * @brief model loading and grid oriented movement and scanning
  */
 
-/* TODO: Put the grid stuff to another file (grid.c) */
-
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
