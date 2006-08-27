@@ -2,6 +2,10 @@
 ufoai-*
 *.map
 src
+*.wings
+*.png
+*.obj
+*.mtl
 *.bak
 *.o
 *.old
@@ -11,6 +15,11 @@ src
 *.max
 *.diff
 *.out
+*.test
+*.mb
+*.xcf
+*.orig
+*.rej
 *.blend
 debug*
 release*

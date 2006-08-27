@@ -1,0 +1,58 @@
+
+    UFO: Alien Invasion: multilanguage version ERSION
+    (http://www.ufoai.net)
+
+===============================================================
+
+ABOUT
+=======
+
+	UFO: Alien Invasion is a strategy game featuring tactical
+	combat against hostile alien forces which are about to
+	infiltrate earth at this very moment. You are in command of
+	a small special unit which has been founded to face the
+	alien strike force.
+
+SYSTEM REQUIREMENTS
+====================
+
+	You need the following package versions to run the game
+
+	glibc >= 2.3.5
+	SDL >= 1.2.7
+	SDL_ttf >= 2.0.6
+	ogg >= 1.1
+	vorbis >= 1.1
+	libjpeg >= 6.2
+
+RUNNING THE GAME
+==================
+
+	run "ufoai" to play
+
+NOTES
+======
+
+	- UFO:AI uses SDL for sound output by default. If
+	  you want to use OSS or something else, edit the
+	  startscript "ufoai" where you installed the game.
+
+	  See http://icculus.org/lgfaq/#setthatdriver
+	  for more information.
+
+	- You can set the keyboard to US layout for better
+	  compatibility. Uncomment the line with USLAYOUT if
+	  you want to use it.
+
+	- You are able to start the game on a second X server
+	  with the LIFLG start script. Uncomment the three
+	  variables (XSERVER, XSERVER_OPTIONS, XSERVER_DISPLAY)
+	  to activate it. The server will terminate if you leave
+	  the game.
+
+TECHNICAL SUPPORT
+===================
+
+	Website: http://www.ufoai.net/
+
+The UFO:AI Team
