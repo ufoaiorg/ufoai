@@ -14,7 +14,8 @@ stage intro
 		needed		first
 		delay		"0 3 7"
 		frame		"0 12 0"
-		expire		"0 2 0"
+		expire		"0 4 0" // so that simultaneous missions can be won
+// TODO: make it so that the same mission is not repeated too soon
 		missions	"africa_excavation transport mine mart italy oriental"
 		quota		4
 	}
@@ -24,6 +25,9 @@ stage intro
 		delay		"0 0 1"
 		frame		"0 7 0"
 		expire		"0 7 0"
+// TODO: make it so that a mission in this stage is never repeated
+// checking equality with the last mission and the one before
+// should be enough for both TODOs
 		missions	"bunker japan dam"
 		number		3
 		quota		2
