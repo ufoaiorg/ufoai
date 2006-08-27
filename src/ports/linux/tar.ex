@@ -29,3 +29,5 @@ release*
 build*
 debian
 Makefile*
+*UVW*
+*misc_source_files*
