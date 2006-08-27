@@ -2,10 +2,12 @@
 ufoai-*
 *.map
 src
-*.wings
-*.png
+*.blend
 *.obj
 *.mtl
+*.wings
+*.bmp
+*.png
 *.bak
 *.o
 *.old
@@ -20,7 +22,8 @@ src
 *.xcf
 *.orig
 *.rej
-*.blend
+*.bz2
+*.gz
 debug*
 release*
 build*
