@@ -88,8 +88,6 @@ static qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
  */
 static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 {
-	objDef_t *od;
-	fireDef_t *fd;
 	edict_t *check;
 	int move, delta, tu;
 	int i, fm, shots;
@@ -106,83 +104,86 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 
 	move = gi.MoveLength(gi.map, to, qtrue);
 	tu = ent->TU - move;
-	if (ent->i.c[gi.csi->idRight] && ent->i.c[gi.csi->idRight]->item.m != NONE)
-		od = &gi.csi->ods[ent->i.c[gi.csi->idRight]->item.m];
-	else if (ent->i.c[gi.csi->idLeft] && ent->i.c[gi.csi->idLeft]->item.m != NONE)
-		od = &gi.csi->ods[ent->i.c[gi.csi->idLeft]->item.m];
-	else
-		od = NULL;
 
 	/* test for time */
 	if (tu < 0)
 		return 0.0;
 
 	/* shooting */
-	if (od) {
-		maxDmg = 0.0;
-		for (fm = 0; fm < 2; fm++) {
-			fd = &od->fd[fm];
-			if (!fd->time)
-				continue;
+	maxDmg = 0.0;
+	for (fm = 0; fm < 4; fm++) {
+		objDef_t *od;
+		fireDef_t *fd;
+		
+		if (fm < ST_LEFT_PRIMARY && ent->i.c[gi.csi->idRight] && ent->i.c[gi.csi->idRight]->item.m != NONE)
+			od = &gi.csi->ods[ent->i.c[gi.csi->idRight]->item.m];
+		else if (fm >= ST_LEFT_PRIMARY && ent->i.c[gi.csi->idLeft] && ent->i.c[gi.csi->idLeft]->item.m != NONE)
+			od = &gi.csi->ods[ent->i.c[gi.csi->idLeft]->item.m];
+		else
+			continue;
 
-			nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill) / 2);
-			shots = tu / fd->time;
-			if (shots) {
-				/* search best target */
-				for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-					if (check->inuse && check->type == ET_ACTOR && ent != check && (check->team != ent->team || ent->state & STATE_INSANE)
-						&& !(check->state & STATE_DEAD)) {
-						/* don't shoot civilians in mp */
-						if (check->team == TEAM_CIVILIAN && (int) sv_maxclients->value > 1 && !(ent->state & STATE_INSANE))
-							continue;
+		fd = &od->fd[fm % 2];
+		if (!fd->time)
+			continue;
 
-						/* check range */
-						dist = VectorDist(ent->origin, check->origin);
-						if (dist > fd->range)
-							continue;
-						/* TODO: Check whether radius and power of fd are to to big for dist */
-						/* TODO: Check whether the alien will die when shooting */
-						/* don't shoot - we are to close */
-						if (dist < fd->splrad)
-							continue;
+		nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill) / 2);
+		shots = tu / fd->time;
+		if (shots) {
+			/* search best target */
+			for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
+				if (check->inuse && check->type == ET_ACTOR && ent != check 
+					&& (check->team != ent->team || ent->state & STATE_INSANE)
+					&& !(check->state & STATE_DEAD)) {
 
-						/* check FF */
-						if (AI_CheckFF(ent, check->origin, fd->spread[0]) && !(ent->state & STATE_INSANE))
-							continue;
+					/* don't shoot civilians in mp */
+					if (check->team == TEAM_CIVILIAN && (int) sv_maxclients->value > 1 && !(ent->state & STATE_INSANE))
+						continue;
 
-						/* calculate expected damage */
-						dmg = G_ActorVis(ent->origin, check, qtrue);
-						if (dmg == 0.0)
-							continue;
+					/* check range */
+					dist = VectorDist(ent->origin, check->origin);
+					if (dist > fd->range)
+						continue;
+					/* TODO: Check whether radius and power of fd are to to big for dist */
+					/* TODO: Check whether the alien will die when shooting */
+					/* don't shoot - we are to close */
+					if (dist < fd->splrad)
+						continue;
+					
+					/* check FF */
+					if (AI_CheckFF(ent, check->origin, fd->spread[0]) && !(ent->state & STATE_INSANE))
+						continue;
 
-						/* TODO: take into account armor */
-						dmg *= fd->damage[0] * fd->shots * shots;
-						if (nspread && dist > nspread)
-							dmg *= nspread / dist;
+					/* calculate expected damage */
+					dmg = G_ActorVis(ent->origin, check, qtrue);
+					if (dmg == 0.0)
+						continue;
 
-						/* add kill bonus */
-						if (dmg > check->HP)
-							dmg = check->HP + GUETE_KILL;
+					/* TODO: take into account armor */
+					dmg *= fd->damage[0] * fd->shots * shots;
+					if (nspread && dist > nspread)
+						dmg *= nspread / dist;
 
-						/* civilian malus */
-						if (check->team == TEAM_CIVILIAN && !(ent->state & STATE_INSANE))
-							dmg *= GUETE_CIV_FACTOR;
+					/* add kill bonus */
+					if (dmg > check->HP)
+						dmg = check->HP + GUETE_KILL;
 
-						/* check if most damage can be done here */
-						if (dmg > maxDmg) {
-							maxDmg = dmg;
-							aia->mode = fm;
-							aia->shots = shots;
-							aia->target = check;
-						}
+					/* civilian malus */
+					if (check->team == TEAM_CIVILIAN && !(ent->state & STATE_INSANE))
+						dmg *= GUETE_CIV_FACTOR;
+
+					/* check if most damage can be done here */
+					if (dmg > maxDmg) {
+						maxDmg = dmg;
+						aia->mode = fm;
+						aia->shots = shots;
+						aia->target = check;
 					}
-			}
-		}
-
+				}
 		/* add damage to guete */
-		if (aia->target) {
-			guete += maxDmg;
-			tu -= od->fd[aia->mode].time * aia->shots;
+			if (aia->target) {
+				guete += maxDmg;
+				tu -= od->fd[aia->mode % 2].time * aia->shots;
+			}
 		}
 	}
 
