@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-08-26 09:29+0200\n"
-"PO-Revision-Date: 2006-08-26 09:30+0100\n"
+"POT-Creation-Date: 2006-08-27 08:17+0200\n"
+"PO-Revision-Date: 2006-08-27 08:17+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3379,7 +3379,7 @@ msgstr "Aircraft started"
 #: client/cl_aircraft.c:103
 #: client/cl_aircraft.c:366
 #: client/cl_aircraft.c:514
-#: client/cl_aircraft.c:730
+#: client/cl_aircraft.c:732
 #: client/cl_basemanagement.c:406
 #: client/cl_basemanagement.c:1713
 #: client/cl_campaign.c:372
@@ -3394,9 +3394,9 @@ msgstr "Aircraft started"
 #: client/cl_campaign.c:1009
 #: client/cl_campaign.c:1016
 #: client/cl_campaign.c:1023
-#: client/cl_campaign.c:1995
-#: client/cl_campaign.c:2027
-#: client/cl_campaign.c:2029
+#: client/cl_campaign.c:2025
+#: client/cl_campaign.c:2057
+#: client/cl_campaign.c:2059
 #: client/cl_map.c:302
 #: client/cl_research.c:497
 #: client/cl_research.c:606
@@ -3500,12 +3500,12 @@ msgid "Interception"
 msgstr "Interception"
 
 #: client/cl_aircraft.c:553
-#: client/cl_campaign.c:2027
+#: client/cl_campaign.c:2057
 msgid "You've won the battle"
 msgstr "You've won the battle"
 
 #: client/cl_aircraft.c:560
-#: client/cl_campaign.c:2029
+#: client/cl_campaign.c:2059
 msgid "You've lost the battle"
 msgstr "You've lost the battle"
 
@@ -3518,11 +3518,11 @@ msgstr "None\n"
 msgid "No weapon assigned"
 msgstr "No weapon assigned"
 
-#: client/cl_aircraft.c:683
+#: client/cl_aircraft.c:684
 msgid "No shield assigned"
 msgstr "No shield assigned"
 
-#: client/cl_aircraft.c:730
+#: client/cl_aircraft.c:732
 msgid "Assign a team to aircraft"
 msgstr "Assign a team to aircraft"
 
@@ -3791,38 +3791,38 @@ msgstr ""
 "Bases:\n"
 "build:\t%i\tattacked:\t%i\n"
 
-#: client/cl_campaign.c:1898
+#: client/cl_campaign.c:1928
 msgid "Assemble or load a team"
 msgstr "Assemble or load a team"
 
-#: client/cl_campaign.c:1898
+#: client/cl_campaign.c:1928
 msgid "Note"
 msgstr "Note"
 
-#: client/cl_campaign.c:1995
+#: client/cl_campaign.c:2025
 msgid "Your dropship is not near the landing zone"
 msgstr "Your dropship is not near the landing zone"
 
-#: client/cl_campaign.c:2234
+#: client/cl_campaign.c:2264
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s has been promoted to %s.\n"
 
-#: client/cl_campaign.c:2235
+#: client/cl_campaign.c:2265
 msgid "Soldier promoted"
 msgstr "Soldier promoted"
 
-#: client/cl_campaign.c:3218
+#: client/cl_campaign.c:3248
 #, c-format
 msgid ""
 "Race: %s\n"
-"Recruits: %i - Scientists: %i - Workers: %i\n"
+"Recruits: %i soldiers, %i scientists, %i workers, %i medics\n"
 "Credits: %ic\n"
 "Difficulty: %s\n"
 "%s\n"
 msgstr ""
 "Race: %s\n"
-"Recruits: %i - Scientists: %i - Workers: %i\n"
+"Recruits: %i soldiers, %i scientists, %i workers, %i medics\n"
 "Credits: %ic\n"
 "Difficulty: %s\n"
 "%s\n"
@@ -4167,17 +4167,17 @@ msgstr "%i of %i"
 msgid "NewTeam"
 msgstr "NewTeam"
 
-#: client/cl_team.c:1438
+#: client/cl_team.c:1434
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens killed\t%i\n"
 
-#: client/cl_team.c:1440
+#: client/cl_team.c:1436
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Enemies killed\t%i\n"
 
-#: client/cl_team.c:1447
+#: client/cl_team.c:1443
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -4185,51 +4185,51 @@ msgid ""
 msgstr ""
 "Alien survivors\t%i\n"
 "\n"
+
+#: client/cl_team.c:1445
+#, c-format
+msgid ""
+"Enemy survivors\t%i\n"
+"\n"
+msgstr ""
+"Enemy survivors\t%i\n"
+"\n"
+
+#: client/cl_team.c:1448
+#, c-format
+msgid "Phalanx soldiers killed by Aliens\t%i\n"
+msgstr "Phalanx soldiers killed by Aliens\t%i\n"
 
 #: client/cl_team.c:1449
 #, c-format
-msgid ""
-"Enemy survivors\t%i\n"
-"\n"
-msgstr ""
-"Enemy survivors\t%i\n"
-"\n"
+msgid "Phalanx friendly fire losses\t%i\n"
+msgstr "Phalanx friendly fire losses\t%i\n"
 
-#: client/cl_team.c:1452
-#, c-format
-msgid "Team losses\t%i\n"
-msgstr "Team losses\t%i\n"
-
-#: client/cl_team.c:1453
-#, c-format
-msgid "Friendly fire losses\t%i\n"
-msgstr "Friendly fire losses\t%i\n"
-
-#: client/cl_team.c:1454
+#: client/cl_team.c:1450
 #, c-format
 msgid ""
-"Team survivors\t%i\n"
+"Phalanx survivors\t%i\n"
 "\n"
 msgstr ""
-"Team survivors\t%i\n"
+"Phalanx survivors\t%i\n"
 "\n"
+
+#: client/cl_team.c:1463
+#, c-format
+msgid "Civilians killed by Aliens\t%i\n"
+msgstr "Civilians killed by Aliens\t%i\n"
+
+#: client/cl_team.c:1465
+#, c-format
+msgid "Civilians killed by Enemies\t%i\n"
+msgstr "Civilians killed by Enemies\t%i\n"
+
+#: client/cl_team.c:1466
+#, c-format
+msgid "Civilians killed by Phalanx\t%i\n"
+msgstr "Civilians killed by Phalanx\t%i\n"
 
 #: client/cl_team.c:1467
-#, c-format
-msgid "Civilians killed by the Aliens\t%i\n"
-msgstr "Civilians killed by the Aliens\t%i\n"
-
-#: client/cl_team.c:1469
-#, c-format
-msgid "Civilians killed by the Enemies\t%i\n"
-msgstr "Civilians killed by the Enemies\t%i\n"
-
-#: client/cl_team.c:1470
-#, c-format
-msgid "Civilians killed by your Team\t%i\n"
-msgstr "Civilians killed by your Team\t%i\n"
-
-#: client/cl_team.c:1471
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -4476,6 +4476,16 @@ msgstr "Can't perform action - no ammo!\n"
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Can't perform action - not enough ammo!\n"
 
+#~ msgid "Team losses\t%i\n"
+#~ msgstr "Team losses\t%i\n"
+#~ msgid ""
+#~ "Team survivors\t%i\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Team survivors\t%i\n"
+#~ "\n"
+#~ msgid "Civilians killed by your Team\t%i\n"
+#~ msgstr "Civilians killed by your Team\t%i\n"
 #~ msgid ""
 #~ "Some aliens have escaped from the\\mine, and their tracks lead south,"
 #~ "\\towards a nearby excavation site.\\Protect that site at all cost."
