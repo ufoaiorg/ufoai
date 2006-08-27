@@ -1487,7 +1487,7 @@ void CL_ParseResults(sizebuf_t * buf)
 	
 		/* alien deaths */
 		for (i = 0, kills = 0; i < num; i++)
-			kills += (i == we) ? 0 : num_kills[i][TEAM_ALIEN];
+			kills += num_kills[i][TEAM_ALIEN];
 		
 		/* needs to be cleared and then append to it */
 		Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Aliens killed\t%i\n"), kills);
