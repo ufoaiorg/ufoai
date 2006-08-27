@@ -6674,15 +6674,6 @@
 }
 // brush 719
 {
-( 638 836 4 ) ( 578 836 4 ) ( 578 732 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
-( 578 731 68 ) ( 578 835 68 ) ( 638 835 68 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
-( 578 673 40 ) ( 638 673 40 ) ( 638 673 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
-( 638 732 40 ) ( 638 836 40 ) ( 638 836 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
-( 638 832 40 ) ( 578 832 40 ) ( 578 832 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
-( 578 773 40 ) ( 578 669 40 ) ( 578 669 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
-}
-// brush 720
-{
 ( 144 576 64 ) ( 128 576 64 ) ( 128 556 64 ) tex_material/c_orange2 0 -0 0 0.5 0.5 65536 0 0
 ( 128 556 128 ) ( 128 576 128 ) ( 144 576 128 ) tex_material/c_orange2 0 -0 0 0.5 0.5 65536 0 0
 ( 128 544 128 ) ( 144 544 128 ) ( 144 544 64 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
@@ -6690,7 +6681,7 @@
 ( 144 572 128 ) ( 128 572 128 ) ( 128 572 64 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
 ( 128 576 128 ) ( 128 556 128 ) ( 128 556 64 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
 }
-// brush 721
+// brush 720
 {
 ( 176 576 64 ) ( 160 576 64 ) ( 160 556 64 ) tex_material/c_orange2 -0 0 0 0.5 0.5 65536 0 0
 ( 160 556 128 ) ( 160 576 128 ) ( 176 576 128 ) tex_material/c_orange2 -0 0 0 0.5 0.5 65536 0 0
@@ -6699,7 +6690,7 @@
 ( 176 560 128 ) ( 160 560 128 ) ( 160 560 64 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
 ( 160 576 128 ) ( 160 556 128 ) ( 160 556 64 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
 }
-// brush 722
+// brush 721
 {
 ( 240 576 64 ) ( 224 576 64 ) ( 224 556 64 ) tex_material/c_orange2 -0 0 0 0.5 0.5 65536 0 0
 ( 224 556 128 ) ( 224 576 128 ) ( 240 576 128 ) tex_material/c_orange2 -0 0 0 0.5 0.5 65536 0 0
@@ -6708,7 +6699,7 @@
 ( 236 608 128 ) ( 220 608 128 ) ( 220 608 64 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
 ( 224 576 128 ) ( 224 556 128 ) ( 224 556 64 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
 }
-// brush 723
+// brush 722
 {
 ( 300 576 64 ) ( 284 576 64 ) ( 284 556 64 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
 ( 284 556 128 ) ( 284 576 128 ) ( 300 576 128 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
@@ -6716,6 +6707,45 @@
 ( 348 564 128 ) ( 348 584 128 ) ( 348 584 64 ) tex_material/c_orange2 -0 0 0 0.5 0.5 65536 0 0
 ( 296 608 128 ) ( 280 608 128 ) ( 280 608 64 ) tex_material/c_orange2 -0 0 0 0.5 0.5 65536 0 0
 ( 284 576 128 ) ( 284 556 128 ) ( 284 556 64 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
+}
+// brush 723
+{
+( 635 836 4 ) ( 575 836 4 ) ( 575 732 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
+( 575 731 68 ) ( 575 835 68 ) ( 635 835 68 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
+( 575 673 40 ) ( 635 673 40 ) ( 635 673 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
+( 635 732 40 ) ( 635 836 40 ) ( 635 836 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
+( 635 832 40 ) ( 575 832 40 ) ( 575 832 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
+( 575 773 40 ) ( 575 669 40 ) ( 575 669 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
+}
+// brush 724
+{
+( 635 838 42 ) ( 575 838 42 ) ( 575 734 42 ) tex_material/c_yellow 0 4 0 0.5 0.5 0 128 0
+( 575 729 66 ) ( 575 833 66 ) ( 635 833 66 ) tex_material/c_yellow 0 12 0 0.5 0.5 0 128 0
+( 633 732 66 ) ( 633 836 66 ) ( 633 836 30 ) tex_material/c_yellow 0 4 0 0.5 0.5 0 128 0
+( 635 802 66 ) ( 575 802 66 ) ( 575 802 30 ) tex_material/c_yellow 0 4 0 0.5 0.5 0 128 0
+( 575 773 66 ) ( 575 669 66 ) ( 575 669 30 ) tex_material/c_yellow 0 4 0 0.5 0.5 0 128 0
+( -64 782 66 ) ( -64 802 50 ) ( 64 782 66 ) tex_material/c_yellow 0 0 0 1 1
+( -64 674 42 ) ( -64 684 66 ) ( 64 674 42 ) tex_material/c_yellow 0 0 0 1 1
+( 627 64 66 ) ( 633 64 45 ) ( 627 -64 66 ) tex_material/c_yellow 0 0 0 1 1
+( 575 64 46 ) ( 581 64 66 ) ( 575 -64 46 ) tex_material/c_yellow 0 0 0 1 1
+}
+// brush 725
+{
+( 635 838 42 ) ( 575 838 42 ) ( 575 734 42 ) tex_material/c_yellow 0 4 0 0.5 0.5 0 128 0
+( 575 802 42 ) ( 635 802 42 ) ( 635 802 6 ) tex_material/c_yellow 0 4 0 0.5 0.5 0 128 0
+( 575 773 40 ) ( 575 669 40 ) ( 575 669 4 ) tex_material/c_yellow 0 0 0 0.5 0.5 0 128 0
+( -64 802 50 ) ( -64 824 46 ) ( 64 802 50 ) tex_material/c_yellow 0 0 0 1 1
+( -64 818 47 ) ( -64 824 42 ) ( 64 818 47 ) tex_material/c_yellow 0 0 0 1 1
+( 632 64 50 ) ( 634 64 42 ) ( 632 -64 50 ) tex_material/c_yellow 0 0 0 1 1
+}
+// brush 726
+{
+( 635 838 16 ) ( 575 838 16 ) ( 575 734 16 ) tex_material/c_yellow 0 4 0 0.5 0.5 0 128 0
+( 575 729 42 ) ( 575 833 42 ) ( 635 833 42 ) tex_material/c_yellow 0 12 0 0.5 0.5 0 128 0
+( 575 673 40 ) ( 635 673 40 ) ( 635 673 4 ) tex_material/c_yellow 0 0 0 0.5 0.5 0 128 0
+( 634 732 40 ) ( 634 836 40 ) ( 634 836 4 ) tex_material/c_yellow 0 0 0 0.5 0.5 0 128 0
+( 635 826 40 ) ( 575 826 40 ) ( 575 826 4 ) tex_material/c_yellow 0 0 0 0.5 0.5 0 128 0
+( 575 773 40 ) ( 575 669 40 ) ( 575 669 4 ) tex_material/c_yellow 0 0 0 0.5 0.5 0 128 0
 }
 }
 // entity 1
@@ -10244,21 +10274,21 @@
 // entity 168
 {
 "classname" "misc_model"
-"origin" "607 728 36"
-"model" "models/objects/cars/van/van1.md2"
-"spawnflags" "255"
+"origin" "504 288 38"
+"model" "models/animals/cow/cow.md2"
+"spawnflags" "1"
 }
 // entity 169
 {
 "classname" "misc_model"
-"origin" "607 728 36"
-"model" "models/objects/cars/van/van1t.md2"
+"origin" "604 728 36"
+"model" "models/objects/cars/van/van1.md2"
 "spawnflags" "255"
 }
 // entity 170
 {
 "classname" "misc_model"
-"origin" "504 288 38"
-"model" "models/animals/cow/cow.md2"
-"spawnflags" "1"
+"origin" "604 728 36"
+"model" "models/objects/cars/van/van1t.md2"
+"spawnflags" "255"
 }
