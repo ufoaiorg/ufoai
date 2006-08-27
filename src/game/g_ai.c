@@ -114,7 +114,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	for (fm = 0; fm < 4; fm++) {
 		objDef_t *od;
 		fireDef_t *fd;
-		
+
 		if (fm < ST_LEFT_PRIMARY && ent->i.c[gi.csi->idRight] && ent->i.c[gi.csi->idRight]->item.m != NONE)
 			od = &gi.csi->ods[ent->i.c[gi.csi->idRight]->item.m];
 		else if (fm >= ST_LEFT_PRIMARY && ent->i.c[gi.csi->idLeft] && ent->i.c[gi.csi->idLeft]->item.m != NONE)
@@ -131,7 +131,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		if (shots) {
 			/* search best target */
 			for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-				if (check->inuse && check->type == ET_ACTOR && ent != check 
+				if (check->inuse && check->type == ET_ACTOR && ent != check
 					&& (check->team != ent->team || ent->state & STATE_INSANE)
 					&& !(check->state & STATE_DEAD)) {
 
@@ -148,7 +148,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 					/* don't shoot - we are to close */
 					if (dist < fd->splrad)
 						continue;
-					
+
 					/* check FF */
 					if (AI_CheckFF(ent, check->origin, fd->spread[0]) && !(ent->state & STATE_INSANE))
 						continue;
@@ -179,7 +179,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 						aia->target = check;
 					}
 				}
-		/* add damage to guete */
+			/* add damage to guete */
 			if (aia->target) {
 				guete += maxDmg;
 				tu -= od->fd[aia->mode % 2].time * aia->shots;
