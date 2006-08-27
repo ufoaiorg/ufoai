@@ -193,7 +193,7 @@ void CM_InitBoxHull(void);
 
 /**
  * @brief
- * @param
+ * @param[in] l
  * @sa CM_AddMapTile
  */
 static void CMod_LoadSubmodels(lump_t * l)
@@ -233,7 +233,7 @@ static void CMod_LoadSubmodels(lump_t * l)
 
 /**
  * @brief
- * @param
+ * @param[in] l
  * @sa CM_AddMapTile
  */
 static void CMod_LoadSurfaces(lump_t * l)
@@ -268,7 +268,7 @@ static void CMod_LoadSurfaces(lump_t * l)
 
 /**
  * @brief
- * @param
+ * @param[in] l
  * @sa CM_AddMapTile
  */
 static void CMod_LoadNodes(lump_t * l)
@@ -313,7 +313,7 @@ static void CMod_LoadNodes(lump_t * l)
 
 /**
  * @brief
- * @param
+ * @param[in] l
  * @sa CM_AddMapTile
  */
 static void CMod_LoadBrushes(lump_t * l)
@@ -345,7 +345,7 @@ static void CMod_LoadBrushes(lump_t * l)
 
 /**
  * @brief
- * @param
+ * @param[in] l
  * @sa CM_AddMapTile
  */
 static void CMod_LoadLeafs(lump_t * l)
@@ -394,7 +394,7 @@ static void CMod_LoadLeafs(lump_t * l)
 
 /**
  * @brief
- * @param
+ * @param[in] l
  * @sa CM_AddMapTile
  */
 static void CMod_LoadPlanes(lump_t * l)
@@ -442,7 +442,7 @@ static void CMod_LoadPlanes(lump_t * l)
 
 /**
  * @brief
- * @param
+ * @param[in] l
  * @sa CM_AddMapTile
  */
 static void CMod_LoadLeafBrushes(lump_t * l)
@@ -475,7 +475,7 @@ static void CMod_LoadLeafBrushes(lump_t * l)
 
 /**
  * @brief
- * @param
+ * @param[in] l
  * @sa CM_AddMapTile
  */
 static void CMod_LoadBrushSides(lump_t * l)
@@ -586,8 +586,11 @@ int CheckBSPFile(char *filename)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] start
+ * @param[in] stop
+ * @sa CM_TestLine
+ * @sa CM_InlineModel
+ * @sa CM_TransformedBoxTrace
  */
 int CM_EntTestLine(vec3_t start, vec3_t stop)
 {
@@ -620,8 +623,11 @@ int CM_EntTestLine(vec3_t start, vec3_t stop)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] start
+ * @param[in] stop
+ * @param[in] end
+ * @sa CM_TestLineDM
+ * @sa CM_TransformedBoxTrace
  */
 int CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 {
@@ -660,8 +666,12 @@ int CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] map
+ * @param[in] x
+ * @param[in] y
+ * @param[in] z
+ * @param[in] dir
+ * @param[in] fill
  */
 qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboolean fill)
 {
@@ -714,8 +724,10 @@ qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboole
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] map
+ * @param[in] x
+ * @param[in] y
+ * @param[in] z
  */
 void CM_CheckUnit(routing_t * map, int x, int y, int z)
 {
@@ -811,8 +823,7 @@ void CM_CheckUnit(routing_t * map, int x, int y, int z)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] map
  */
 void CMod_GetMapSize(routing_t * map)
 {
@@ -849,7 +860,10 @@ void CMod_GetMapSize(routing_t * map)
 
 /**
  * @brief
- * @param
+ * @param[in] l
+ * @param[in] sX
+ * @param[in] sY
+ * @param[in] sZ
  * @sa CM_AddMapTile
  */
 void CMod_LoadRouting(lump_t * l, int sX, int sY, int sZ)
@@ -920,7 +934,7 @@ void CMod_LoadRouting(lump_t * l, int sX, int sY, int sZ)
 
 /**
  * @brief
- * @param
+ * @param[in] l
  * @sa CM_AddMapTile
  */
 void CMod_LoadEntityString(lump_t * l)
@@ -999,8 +1013,7 @@ void CMod_LoadEntityString(lump_t * l)
 
 /**
  * @brief Frees a map tile
- * @param
- * @sa
+ * @param[in] tile
  */
 void CM_FreeTile(mapTile_t * tile)
 {
@@ -1144,8 +1157,7 @@ void CM_LoadMap(char *tiles, char *pos)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] name
  */
 cmodel_t *CM_InlineModel(char *name)
 {
@@ -1169,8 +1181,6 @@ cmodel_t *CM_InlineModel(char *name)
 
 /**
  * @brief
- * @param
- * @sa
  */
 int CM_NumInlineModels(void)
 {
@@ -1179,8 +1189,6 @@ int CM_NumInlineModels(void)
 
 /**
  * @brief
- * @param
- * @sa
  */
 char *CM_EntityString(void)
 {
@@ -1189,8 +1197,7 @@ char *CM_EntityString(void)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] leafnum
  */
 int CM_LeafContents(int leafnum)
 {
@@ -1269,8 +1276,7 @@ void CM_InitBoxHull(void)
 
 
 /**
- * @brief
- * To keep everything totally uniform, bounding boxes are turned into small
+ * @brief To keep everything totally uniform, bounding boxes are turned into small
  * BSP trees instead of being compared directly.
  */
 int CM_HeadnodeForBox(int tile, vec3_t mins, vec3_t maxs)
@@ -1296,8 +1302,8 @@ int CM_HeadnodeForBox(int tile, vec3_t mins, vec3_t maxs)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] p
+ * @param[in] num
  */
 int CM_PointLeafnum_r(vec3_t p, int num)
 {
@@ -1326,8 +1332,8 @@ int CM_PointLeafnum_r(vec3_t p, int num)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] p
+ * @sa CM_PointLeafnum_r
  */
 int CM_PointLeafnum(vec3_t p)
 {
@@ -1372,7 +1378,6 @@ void CM_BoxLeafnums_r(int nodenum)
 			CM_BoxLeafnums_r(node->children[0]);
 			nodenum = node->children[1];
 		}
-
 	}
 }
 
@@ -1559,7 +1564,7 @@ void CM_ClipBoxToBrush(vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t *
 /**
  * @brief
  * @param
- * @sa
+ * @sa CM_TraceToLeaf
  */
 void CM_TestBoxInBrush(vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cbrush_t * brush)
 {
@@ -1607,8 +1612,8 @@ void CM_TestBoxInBrush(vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cbr
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] leafnum
+ * @sa CM_ClipBoxToBrush
  */
 void CM_TraceToLeaf(int leafnum)
 {
@@ -1640,8 +1645,8 @@ void CM_TraceToLeaf(int leafnum)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] leafnum
+ * @sa CM_TestBoxInBrush
  */
 void CM_TestInLeaf(int leafnum)
 {
@@ -1673,8 +1678,11 @@ void CM_TestInLeaf(int leafnum)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] num
+ * @param[in] p1f
+ * @param[in] p2f
+ * @param[in] p1
+ * @param[in] p2
  */
 void CM_RecursiveHullCheck(int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
 {
@@ -1781,8 +1789,15 @@ void CM_RecursiveHullCheck(int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] start
+ * @param[in] end
+ * @param[in] mins
+ * @param[in] max
+ * @param[in] tile
+ * @param[in] headnode
+ * @param[in] brushmask
+ * @sa CM_TransformedBoxTrace
+ * @sa CM_CompleteBoxTrace
  */
 trace_t CM_BoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask)
 {
@@ -1861,7 +1876,7 @@ trace_t CM_BoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile
 
 /**
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
- * @sa
+ * @sa CM_BoxTrace
  */
 trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask, vec3_t origin, vec3_t angles)
 {
@@ -2063,6 +2078,7 @@ void BuildTnode_r(int node)
 
 /**
  * @brief Loads the node structure out of a .bsp file to be used for light occlusion
+ * @sa BuildTnode_r
  */
 void CM_MakeTnodes(void)
 {
@@ -2095,8 +2111,11 @@ void CM_MakeTnodes(void)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] node Node index
+ * @param[in] start
+ * @param[in] stop
+ * @sa TestLineDist_r
+ * @sa CM_TestLine
  */
 int TestLine_r(int node, vec3_t start, vec3_t stop)
 {
@@ -2160,8 +2179,11 @@ int TestLine_r(int node, vec3_t start, vec3_t stop)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] node Node index
+ * @param[in] start
+ * @param[in] stop
+ * @sa TestLine_r
+ * @sa CM_TestLineDM
  */
 int TestLineDist_r(int node, vec3_t start, vec3_t stop)
 {
@@ -2244,8 +2266,9 @@ int TestLineDist_r(int node, vec3_t start, vec3_t stop)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] start
+ * @param[in] stop
+ * @sa TestLine_r
  */
 int CM_TestLine(vec3_t start, vec3_t stop)
 {
@@ -2263,8 +2286,10 @@ int CM_TestLine(vec3_t start, vec3_t stop)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] start
+ * @param[in] stop
+ * @param[in] end
+ * @sa CM_TestLine
  */
 int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 {
@@ -2287,9 +2312,6 @@ int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 		return 1;
 }
 
-
-/*==================================================================================== */
-
 /*
 ==========================================================
   GRID ORIENTED MOVEMENT AND SCANNING
@@ -2299,7 +2321,7 @@ int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 /**
  * @brief
  * @param
- * @sa
+ * @sa Grid_MoveMark
  */
 qboolean Grid_CheckForbidden(struct routing_s * map, int x, int y, int z)
 {
@@ -2316,7 +2338,7 @@ qboolean Grid_CheckForbidden(struct routing_s * map, int x, int y, int z)
 /**
  * @brief
  * @param
- * @sa
+ * @sa Grid_CheckForbidden
  */
 void Grid_MoveMark(struct routing_s *map, int x, int y, int z, int dv, int h, int ol)
 {
@@ -2368,7 +2390,7 @@ void Grid_MoveMark(struct routing_s *map, int x, int y, int z, int dv, int h, in
 /**
  * @brief
  * @param
- * @sa
+ * @sa Grid_MoveMark
  */
 static void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, int yh)
 {
@@ -2397,7 +2419,7 @@ static void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, in
 /**
  * @brief
  * @param
- * @sa
+ * @sa Grid_MoveMarkRoute
  */
 void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_list, int fb_length)
 {
@@ -2439,9 +2461,6 @@ void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_
 		stf = tf;
 		tf ^= 3;
 	}
-	/* FIXME: This does not belong here */
-	/* reset the mouse position, for the purposes of CL_ActorMouseTrace */
-	/*CL_ResetMouseLastPos();*/
 }
 
 
@@ -2593,22 +2612,22 @@ int Grid_Fall(struct routing_s *map, pos3_t pos)
 	return z;
 }
 
-/*
-============
-Grid_PosToVec
-============
-*/
+/**
+ * @brief
+ * @sa Grid_Height
+ */
 void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec)
 {
 	PosToVec(pos, vec);
 	vec[2] += Grid_Height(map, pos);
 }
 
-/*
-=================
-Grid_RecalcRouting
-=================
-*/
+/**
+ * @brief
+ * @sa CM_InlineModel
+ * @sa CM_CheckUnit
+ * @sa CM_TestConnection
+ */
 void Grid_RecalcRouting(struct routing_s *map, char *name, char **list)
 {
 	cmodel_t *model;
@@ -2659,12 +2678,13 @@ void Grid_RecalcRouting(struct routing_s *map, char *name, char **list)
 
 /*
 ==============================================================================
-
 TARGETING FUNCTIONS
-
 ==============================================================================
 */
 
+/**
+ * @brief
+ */
 float Com_GrenadeTarget(vec3_t from, vec3_t at, vec3_t v0)
 {
 	vec3_t delta;
