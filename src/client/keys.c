@@ -161,16 +161,16 @@ static keyname_t keynames[] = {
 
 /*
 ==============================================================================
-
-			LINE TYPING INTO THE CONSOLE
-
+LINE TYPING INTO THE CONSOLE
 ==============================================================================
 */
 
 /**
-  * @brief Console completion for command and variables
-  * @sa Key_Console
-  */
+ * @brief Console completion for command and variables
+ * @sa Key_Console
+ * @sa Cmd_CompleteCommand
+ * @sa Cvar_CompleteVariable
+ */
 static void Key_CompleteCommand(void)
 {
 	char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
@@ -202,9 +202,9 @@ static void Key_CompleteCommand(void)
 }
 
 /**
-  * @brief Interactive line editing and console scrollback
-  * @param[in] key
-  */
+ * @brief Interactive line editing and console scrollback
+ * @param[in] key
+ */
 static void Key_Console(int key)
 {
 	switch (key) {
@@ -624,11 +624,10 @@ void Key_Bindlist_f(void)
 }
 
 
-/*
-===================
-Key_Init
-===================
-*/
+/**
+ * @brief
+ * @todo Fix this crappy shift key assignment for win32 and sdl (no _)
+ */
 void Key_Init(void)
 {
 	int i;
@@ -847,11 +846,9 @@ void Key_Event(int key, qboolean down, unsigned time)
 	}
 }
 
-/*
-===================
-Key_ClearStates
-===================
-*/
+/**
+ * @brief
+ */
 void Key_ClearStates(void)
 {
 	int i;
@@ -867,11 +864,9 @@ void Key_ClearStates(void)
 }
 
 
-/*
-===================
-Key_GetKey
-===================
-*/
+/**
+ * @brief
+ */
 int Key_GetKey(void)
 {
 	key_waiting = -1;
