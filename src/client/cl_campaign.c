@@ -1220,14 +1220,14 @@ void CL_UpdateCredits(int credits)
 }
 
 
-#define MAX_STATS_BUFFER 256
+#define MAX_STATS_BUFFER 512
 /**
  * @brief Shows the current stats from stats_t stats
  */
 void CL_Stats_Update(void)
 {
 	static char statsBuffer[MAX_STATS_BUFFER];
-	int i = 0;
+	int i = 0, length = 0;
 
 	/* delete buffer */
 	*statsBuffer = '\0';
@@ -1236,10 +1236,12 @@ void CL_Stats_Update(void)
 	Com_sprintf(statsBuffer, MAX_STATS_BUFFER, _("Missions:\nwon:\t%i\tlost:\t%i\nBases:\nbuild:\t%i\tattacked:\t%i\n"),
 				stats.missionsWon, stats.missionsLost, stats.basesBuild, stats.basesAttacked);
 	menuText[TEXT_STATS_1] = statsBuffer;
-	menuText[TEXT_STATS_2] = statsBuffer + strlen(statsBuffer) + 1;
 
+	/* now do the nations stuff */
+	length = strlen(statsBuffer) + 1;
+	menuText[TEXT_STATS_2] = statsBuffer + length;
 	for (i=0; i<gd.numNations;i++) {
-		Q_strcat(menuText[TEXT_STATS_2], va("%s\t%s\n", gd.nations[i].name, CL_GetNationHapinessString(&gd.nations[i])), sizeof(statsBuffer));
+		Q_strcat(menuText[TEXT_STATS_2], va("%s\t%s\n", gd.nations[i].name, CL_GetNationHapinessString(&gd.nations[i])), sizeof(statsBuffer) - length);
 	}
 }
 
