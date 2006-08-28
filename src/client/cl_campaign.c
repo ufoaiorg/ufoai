@@ -430,10 +430,16 @@ static void CL_CampaignActivateStageSets(stage_t * stage)
 	testStage = stage;
 	for (i = 0, set = &ccs.set[stage->first]; i < stage->num; i++, set++)
 		if (!set->active && !set->done && !set->num) {
+
+			Com_Printf("CL_CampaignActivateStageSets: i = %i, stage->first = %i, stage->num = %i, stage->name = %s\n", i, stage->first, stage->num, stage->name);
 			assert(set->def);
+
 			/* check needed sets */
 			if (set->def->needed[0] && !CheckBEP(set->def->needed, CL_StageSetDone))
 				continue;
+
+			Com_Printf("Activated: set->def->name = %s.\n", set->def->name);
+
 
 			/* activate it */
 			set->active = qtrue;
@@ -463,7 +469,7 @@ static stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
 			/* add stage sets */
 			for (j = stage->first; j < stage->first + stage->num; j++) {
 				memset(&ccs.set[j], 0, sizeof(setState_t));
-				ccs.set[j].stage = &stage[j];
+				ccs.set[j].stage = stage;
 				ccs.set[j].def = &stageSets[j];
 				if (*stageSets[j].sequence && sequence)
 					Cbuf_ExecuteText(EXEC_APPEND, va("seq_start %s;\n", stageSets[j].sequence));

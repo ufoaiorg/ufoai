@@ -5,14 +5,14 @@ stage intro
 		seq			intro
 		delay		"0 0 10"
 		frame		"0 1 0"
-		expire		"0 3 0"
+		expire		"0 2 0"
 		missions	"farm"
-		number		1
+		number		1 // no quota --- give scared newbies some slack...
 	}
 	set terror_only
 	{
-		needed		first
-		delay		"0 3 7"
+		needed		first // does nothing, because no quota for first
+		delay		"0 4 7" // starts 21h after first expires, at worst
 		frame		"0 12 0"
 		expire		"0 4 0" // so that simultaneous missions can be won
 // TODO: make it so that the same mission is not repeated too soon
@@ -35,7 +35,7 @@ stage intro
 	}
 	set stop
 	{
-		needed		terror_only
+		needed		terror_only //should be ultimate_terror, but wait until the crash bug is confirmed to be fixed, so that tests can be made with the same setup...
 		delay		"0 20 0"
 		endstage	intro
 	}
