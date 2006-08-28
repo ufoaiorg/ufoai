@@ -304,7 +304,6 @@ int		Sys_CheckSpecialKeys (int theKey);
 void		Sys_Sleep (void);
 
 static	void	Sys_HideApplication_f (void);
-static	void 	Sys_CheckForCDDirectory (void);
 static	void	Sys_CheckForIDDirectory (void);
 static	void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType);
 
@@ -540,22 +539,15 @@ void Sys_AppActivate (void)
     // not used!
 }
 
-//________________________________________________________________________________________________Sys_CopyProtect()
-
-void Sys_CopyProtect (void)
+/**
+ * @brief
+ */
+void Sys_Init (void)
 {
-    // check for the CD here!
-}
-
-//_______________________________________________________________________________________________________Sys_Init()
-
-void	Sys_Init (void)
-{
+	Cvar_Get("sys_os", "maxosx", 0);
 #ifndef DEDICATED_ONLY
-
-    gSysIsMinimized = Cvar_Get ("_miniwindow", "0", 0);
-    Cmd_AddCommand ("sys_hide", Sys_HideApplication_f);
-
+	gSysIsMinimized = Cvar_Get("_miniwindow", "0", 0);
+	Cmd_AddCommand("sys_hide", Sys_HideApplication_f);
 #endif /* !DEDICATED_ONLY */
 }
 
@@ -657,57 +649,6 @@ int	Sys_CheckSpecialKeys (int theKey)
 
     // paste [CMD-V] already checked inside "keys.c"!
     return (0);
-}
-
-//________________________________________________________________________________________Sys_CheckForCDDirectory()
-
-void 	Sys_CheckForCDDirectory (void)
-{
-    UInt8	i;
-    NSString	*myCurrentPath;
-    char	**myNewArgValues,
-                *myCDPath = NULL;
-
-    // cd command already issued?
-    if (gSysArgCount >= 4)
-    {
-        for (i = 0; i < gSysArgCount - 2; i++)
-        {
-            if (strcmp (gSysArgValues[i], SYS_SET_COMMAND) == 0 &&
-                strcmp (gSysArgValues[i + 1], SYS_CDDIR_COMMAND) == 0)
-            {
-                return;
-            }
-        }
-    }
-
-    // is the cd mounted?
-    for (i = 0; gSysCDPath[i] != NULL; i++)
-    {
-        myCurrentPath = [[NSString stringWithCString: gSysCDPath[i]] stringByAppendingString: @"/baseq2/pak0.pak"];
-        if ([[NSFileManager defaultManager] fileExistsAtPath: myCurrentPath])
-        {
-            myCDPath = gSysCDPath[i];
-            break;
-        }
-    }
-    if (myCDPath == NULL)
-    {
-        return;
-    }
-
-    // insert "+set cddir path" to the command line:
-    gSysArgCount += 3;
-    myNewArgValues = malloc (sizeof(char *) * gSysArgCount);
-    SYS_CHECK_MALLOC (myNewArgValues);
-    for (i = 0; i < gSysArgCount - 3; i++)
-    {
-        myNewArgValues[i] = gSysArgValues[i];
-    }
-    gSysArgValues = myNewArgValues;
-    gSysArgValues[i++] = SYS_SET_COMMAND;
-    gSysArgValues[i++] = SYS_CDDIR_COMMAND;
-    gSysArgValues[i] = SYS_CD_PATH;
 }
 
 //________________________________________________________________________________________Sys_CheckForIDDirectory()
@@ -1243,8 +1184,6 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
         gSysDenyDrag = YES;
 
         Sys_CheckForIDDirectory ();
-
-        Sys_CheckForCDDirectory ();
 
         // check if the user has pressed the Option key on startup:
         [self checkForOptionKey];
