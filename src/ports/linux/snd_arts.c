@@ -67,7 +67,7 @@ qboolean SND_Init(struct sndinfo *s)
 	else
 		si->dma->speed = 11025;
 
-	si->dma->snd_channels=(si->Cvar_Get("snd_channels", "2", CVAR_ARCHIVE))->value;
+	si->dma->channels=(int)si->channels->value;
 
 	if (si->dma->speed == 44100)
 		si->dma->samples = (2048 * si->dma->channels);
