@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_UFOPEDIA_H
 #define CLIENT_CL_UFOPEDIA_H
 
-#include "client.h"
-
 #define MAX_PEDIACHAPTERS	16
 
 typedef struct pediaChapter_s
@@ -42,5 +40,7 @@ typedef struct pediaChapter_s
 void UP_ResetUfopedia( void );
 void UP_ParseUpChapters( char *title, char **text );
 void UP_OpenWith ( char *name );
+void UP_OpenCopyWith ( char *name );
+void CL_ItemDescription(int item);
 
 #endif /* CLIENT_CL_UFOPEDIA_H */

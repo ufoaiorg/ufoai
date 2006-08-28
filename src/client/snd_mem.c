@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -33,8 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "snd_loc.h"
-
-int cache_full_cycle;
 
 byte *S_Alloc(int size);
 
@@ -64,7 +62,7 @@ void ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data)
 		sc->loopstart = sc->loopstart / stepscale;
 
 	sc->speed = dma.speed;
-	if (s_loadas8bit->value)
+	if (snd_loadas8bit->value)
 		sc->width = 1;
 	else
 		sc->width = inwidth;
@@ -154,7 +152,6 @@ sfxcache_t *S_LoadSound(sfx_t * s)
 	len = info.samples / stepscale;
 
 	len = len * info.width * info.channels;
-
 	sc = s->cache = Z_Malloc(len + sizeof(sfxcache_t));
 	if (!sc) {
 		FS_FreeFile(data);
@@ -185,12 +182,11 @@ WAV loading
 */
 
 
-byte *data_p;
-byte *iff_end;
-byte *last_chunk;
-byte *iff_data;
-int iff_chunk_len;
-
+static byte *data_p;
+static byte *iff_end;
+static byte *last_chunk;
+static byte *iff_data;
+static int iff_chunk_len;
 
 short GetLittleShort(void)
 {

@@ -1,0 +1,69 @@
+[Project]
+FileName=snd_dx.dev
+Name=snd_dx
+Ver=1
+IsCpp=1
+Type=3
+Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DDEBUG -D_WINDOWS -DDEVCPP -DC_ONLY_@@_
+CppCompiler=_@@_
+Includes="C:\Program Files (x86)\Microsoft DirectX SDK (February 2006)\Include";"C:\Programme\Microsoft DirectX SDK (June 2006)\Include"
+Linker=-lkernel32 -luser32 -lwinmm_@@_--export-all-symbols_@@__@@_
+Libs="C:\Program Files (x86)\Microsoft DirectX SDK (February 2006)\Lib\x86";"C:\Programme\Microsoft DirectX SDK (June 2006)\Lib\x86"
+UnitCount=2
+Folders="Header Files","Resource Files","Source Files"
+ObjFiles=
+PrivateResource=
+ResourceIncludes=
+MakeIncludes=
+Icon=
+ExeOutput=..
+ObjectOutput=
+OverrideOutput=1
+OverrideOutputName=snd_dx.dll
+HostApplication=
+CommandLine=
+UseCustomMakefile=0
+CustomMakefile=
+IncludeVersionInfo=0
+SupportXPThemes=0
+CompilerSet=0
+CompilerSettings=0000000000000000000000
+
+[VersionInfo]
+Major=0
+Minor=1
+Release=1
+Build=1
+LanguageID=1033
+CharsetID=1252
+CompanyName=
+FileVersion=0.1
+FileDescription=Developed using the Dev-C++ IDE
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=game.exe
+ProductName=game
+ProductVersion=0.1
+AutoIncBuildNr=0
+
+[Unit1]
+FileName=ports\win32\snd_dx.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c snd_dx.c -o snd_dx.o $(CFLAGS)
+
+[Unit2]
+FileName=client\snd_loc.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+

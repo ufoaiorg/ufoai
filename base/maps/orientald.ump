@@ -1,10 +1,21 @@
-// **************
-// VILLAGE DESERT
-// **************
+// ********************
+// VILLAGE DESERT - Day
+// ********************
 
 base orientald/or_
 
-// ---------------------------------
+// or_drop - Dropship
+tile +drop
+{
+5 4
+
+0      a      a	    a	  0
+a      +a     +a    +a    a
+a      +a     +a    +a    a
+0      a      a     a     0
+}
+
+// or_h01 - Small house: 2 rooms, outside stairs to roof
 tile +h01
 {
 4 3
@@ -14,6 +25,7 @@ a      +a     +a     a
 0      a      a      0
 }
 
+// or_h02 - Two small storage buildings
 tile +h02
 {
 4 4
@@ -24,6 +36,7 @@ a      +a     +a     a
 0      a      a      0
 }
 
+// or_h03 - T-shaped house with shop, stairs to first floor, carpet on roof
 tile +h03
 {
 4 4
@@ -34,6 +47,7 @@ a      +a     a      a
 0      a      a      0
 }
 
+// or_h04 - L-shaped house, with first floor
 tile +h04
 {
 4 4
@@ -44,35 +58,39 @@ a      +a     +a     a
 0      a      a      0
 }
 
+// ########################################
 
+// or_h05 - Small well
 tile +h05
 {
 3 3
 
-0      a      0 
+0      a      0
 a      +a     a
-0      a      0  
+0      a      0
 }
 
+// or_h06 - 4 palm-trees
 tile +h06
 {
 3 3
 
-0      a      0 
+0      a      0
 a      +a     a
-0      a      0  
+0      a      0
 }
 
+// or_h07 - Small square house, 2 rooms, outside stairs to roof
 tile +h07
 {
 3 3
 
-0      a      0 
+0      a      0
 a      +a     a
-0      a      0  
+0      a      0
 }
 
-
+// or_h08 - Big house with fence
 tile +h08
 {
 4 4
@@ -80,77 +98,79 @@ tile +h08
 0      a      a	     0
 a      +a     +a     a
 a      +a     +a     a
-0      a      a      0  
+0      a      a      0
 }
 
-tile +drop
-{
-5 4
-
-0      a      a	    a	  0
-a      +a     +a    +a    a
-a      +a     +a    +a    a
-0      a      a     a     0  
-}
-
+// or_h09 - Fruitstand
 tile +h09
 {
 3 3
 
-0      a      0 
+0      a      0
 a      +a     a
-0      a      0  
+0      a      0
 }
 
+// or_h10 - Fruitstand
 tile +h10
 {
 3 3
 
-0      a      0 
+0      a      0
 a      +a     a
-0      a      0  
+0      a      0
 }
 
+// or_h11 - Big house with fence, car in yard
 tile +h11
 {
 4 4
 
-0      a      a		0 
+0      a      a		0
 a      +a     +a	a
 a      +a     +a	a
 0      a      a		0
 }
 
-
+// or_h12 - Small square house, 1 room
 tile +h12
 {
 3 3
 
-0      a      0 
+0      a      0
 a      +a     a
-0      a      0  
+0      a      0
 }
 
+// ########################################
+
+// *** Test-Maps ***
+
+// short-range weapon-testing :-)
+assembly test
+{
+size "3 3"
++h05 "0 2"
++h06 "0 2"
++h09 "0 2"
++h10 "0 2"
++drop "1 1"
+}
+
+assembly tiny
+{
+size "3 3"
++h01 "0 1"
++h07 "0 1"
++h05 "0 2"
++h06 "0 2"
++h09 "0 2"
++h10 "0 2"
++drop "1 1"
+}
 
 // *********************************
-assembly big
-{
-size "7 7"
-+h01 "1 3"
-+h02 "1 3"
-+h03 "1 3"
-+h04 "1 3"
-+h05 "1 3"
-+h06 "0 10"
-+h07 "0 5"
-+h08 "1 3"
-+h09 "0 10"
-+h10 "0 10"
-+h11 "1 3"
-+h12 "0 3"
-+drop "1 1"
-
-}
+// *** Game-Maps ***
 
 assembly small
 {
@@ -182,6 +202,24 @@ size "5 6"
 +h06 "0 5"
 +h07 "0 3"
 +h08 "1 2"
++h09 "0 10"
++h10 "0 10"
++h11 "1 3"
++h12 "0 3"
++drop "1 1"
+}
+
+assembly big
+{
+size "7 7"
++h01 "1 3"
++h02 "1 3"
++h03 "1 3"
++h04 "1 3"
++h05 "1 3"
++h06 "0 10"
++h07 "0 5"
++h08 "1 3"
 +h09 "0 10"
 +h10 "0 10"
 +h11 "1 3"

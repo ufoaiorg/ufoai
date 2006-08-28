@@ -23,7 +23,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -38,26 +38,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define		MAXCMDLINE	256
 char key_lines[32][MAXCMDLINE];
 int key_linepos;
-int shift_down = qfalse;
-int anykeydown;
+static qboolean shift_down = qfalse;
+static int anykeydown;
 
 int edit_line = 0;
-int history_line = 0;
+static int history_line = 0;
 
-int key_waiting;
-char *keybindings[256];
-qboolean consolekeys[256];		/* if true, can't be rebound while in console */
-qboolean menubound[256];		/* if true, can't be rebound while in menu */
-int keyshift[256];				/* key to map to if shift held down in console */
-int key_repeats[256];			/* if > 1, it is autorepeating */
-qboolean keydown[256];
+int msg_mode;
+char msg_buffer[MAXCMDLINE];
+int msg_bufferlen = 0;
+
+static int key_waiting;
+static char *keybindings[256];
+static qboolean consolekeys[256];		/* if true, can't be rebound while in console */
+static qboolean menubound[256];		/* if true, can't be rebound while in menu */
+static int keyshift[256];				/* key to map to if shift held down in console */
+static int key_repeats[256];			/* if > 1, it is autorepeating */
+static qboolean keydown[256];
 
 typedef struct {
 	char *name;
 	int keynum;
 } keyname_t;
 
-keyname_t keynames[] = {
+static keyname_t keynames[] = {
 	{"TAB", K_TAB},
 	{"ENTER", K_ENTER},
 	{"ESCAPE", K_ESCAPE},
@@ -157,27 +161,39 @@ keyname_t keynames[] = {
 
 /*
 ==============================================================================
-
-			LINE TYPING INTO THE CONSOLE
-
+LINE TYPING INTO THE CONSOLE
 ==============================================================================
 */
 
-void CompleteCommand(void)
+/**
+ * @brief Console completion for command and variables
+ * @sa Key_Console
+ * @sa Cmd_CompleteCommand
+ * @sa Cvar_CompleteVariable
+ */
+static void Key_CompleteCommand(void)
 {
-	char *cmd, *s;
+	char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
+	int cntCmd = 0, cntCvar = 0;
 
 	s = key_lines[edit_line] + 1;
 	if (*s == '\\' || *s == '/')
 		s++;
 
-	cmd = Cmd_CompleteCommand(s);
-	if (!cmd)
-		cmd = Cvar_CompleteVariable(s);
-	if (cmd) {
+	cntCmd = Cmd_CompleteCommand(s, &cmd);
+	cntCvar = Cvar_CompleteVariable(s, &cvar);
+
+	if (cntCmd == 1 && !cntCvar)
+		use = cmd;
+	else if (!cntCmd && cntCvar == 1)
+		use = cvar;
+	else
+		Com_Printf("\n");
+
+	if (use) {
 		key_lines[edit_line][1] = '/';
-		Q_strncpyz(key_lines[edit_line] + 2, cmd, MAXCMDLINE - 2);
-		key_linepos = strlen(cmd) + 2;
+		Q_strncpyz(key_lines[edit_line] + 2, use, MAXCMDLINE - 2);
+		key_linepos = strlen(use) + 2;
 		key_lines[edit_line][key_linepos] = ' ';
 		key_linepos++;
 		key_lines[edit_line][key_linepos] = 0;
@@ -185,16 +201,12 @@ void CompleteCommand(void)
 	}
 }
 
-/*
-====================
-Key_Console
-
-Interactive line editing and console scrollback
-====================
-*/
-void Key_Console(int key)
+/**
+ * @brief Interactive line editing and console scrollback
+ * @param[in] key
+ */
+static void Key_Console(int key)
 {
-
 	switch (key) {
 	case K_KP_SLASH:
 		key = '/';
@@ -255,7 +267,7 @@ void Key_Console(int key)
 
 			if (i > 0) {
 				cbd[i] = 0;
-				strcat(key_lines[edit_line], cbd);
+				Q_strcat(key_lines[edit_line], cbd, MAXCMDLINE);
 				key_linepos += i;
 			}
 			free(cbd);
@@ -288,18 +300,19 @@ void Key_Console(int key)
 		return;
 	}
 
-	if (key == K_TAB) {			/* command completion */
-		CompleteCommand();
+	/* command completion */
+	if (key == K_TAB) {
+		Key_CompleteCommand();
 		return;
 	}
 
-	if ((key == K_BACKSPACE) || (key == K_LEFTARROW) || (key == K_KP_LEFTARROW) || ((key == 'h') && (keydown[K_CTRL]))) {
+	if (key == K_BACKSPACE || key == K_LEFTARROW || key == K_KP_LEFTARROW || ((key == 'h') && (keydown[K_CTRL]))) {
 		if (key_linepos > 1)
 			key_linepos--;
 		return;
 	}
 
-	if (key == K_MWHEELUP || (key == K_UPARROW) || (key == K_KP_UPARROW) || ((tolower(key) == 'p') && keydown[K_CTRL])) {
+	if (key == K_UPARROW || key == K_KP_UPARROW || ((tolower(key) == 'p') && keydown[K_CTRL])) {
 		do {
 			history_line = (history_line - 1) & 31;
 		} while (history_line != edit_line && !key_lines[history_line][1]);
@@ -310,7 +323,7 @@ void Key_Console(int key)
 		return;
 	}
 
-	if (key == K_MWHEELDOWN || (key == K_DOWNARROW) || (key == K_KP_DOWNARROW) || ((tolower(key) == 'n') && keydown[K_CTRL])) {
+	if (key == K_DOWNARROW || key == K_KP_DOWNARROW || ((tolower(key) == 'n') && keydown[K_CTRL])) {
 		if (history_line == edit_line)
 			return;
 		do {
@@ -327,12 +340,12 @@ void Key_Console(int key)
 		return;
 	}
 
-	if (key == K_PGUP || key == K_KP_PGUP) {
+	if (key == K_PGUP || key == K_KP_PGUP || key == K_MWHEELUP) {
 		con.display -= 2;
 		return;
 	}
 
-	if (key == K_PGDN || key == K_KP_PGDN) {
+	if (key == K_PGDN || key == K_KP_PGDN || key == K_MWHEELDOWN) {
 		con.display += 2;
 		if (con.display > con.current)
 			con.display = con.current;
@@ -357,21 +370,18 @@ void Key_Console(int key)
 		key_linepos++;
 		key_lines[edit_line][key_linepos] = 0;
 	}
-
 }
 
-/*============================================================================ */
-
-int msg_mode;
-char msg_buffer[MAXCMDLINE];
-int msg_bufferlen = 0;
-
+/**
+ * @brief Handles input when cls.key_dest == key_message
+ * @note Used for chatting and cvar editing via menu
+ * @sa Key_Event
+ */
 void Key_Message(int key)
 {
 	if (key == K_ENTER || key == K_KP_ENTER) {
-		qboolean send;
+		qboolean send = qtrue;
 
-		send = qtrue;
 		switch (msg_mode) {
 		case MSG_SAY:
 			if (msg_buffer[0])
@@ -432,18 +442,14 @@ void Key_Message(int key)
 		Cbuf_AddText(va("msgmenu \"%s\"\n", msg_buffer));
 }
 
-/*============================================================================ */
 
-
-/*
-===================
-Key_StringToKeynum
-
-Returns a key number to be used to index keybindings[] by looking at
-the given string.  Single ascii characters return themselves, while
-the K_* names are matched up.
-===================
-*/
+/**
+ * @brief Convert to given string to keynum
+ * @param[in] str The keystring to convert to keynum
+ * @return a key number to be used to index keybindings[] by looking at
+ * the given string.  Single ascii characters return themselves, while
+ * the K_* names are matched up.
+ */
 int Key_StringToKeynum(char *str)
 {
 	keyname_t *kn;
@@ -460,15 +466,12 @@ int Key_StringToKeynum(char *str)
 	return -1;
 }
 
-/*
-===================
-Key_KeynumToString
-
-Returns a string (either a single ascii char, or a K_* name) for the
-given keynum.
-FIXME: handle quote special (general escape sequence?)
-===================
-*/
+/**
+ * @brief Convert a given keynum to string
+ * @param[in] keynum The keynum to convert to string
+ * @return a string (either a single ascii char, or a K_* name) for the given keynum.
+ * FIXME: handle quote special (general escape sequence?)
+ */
 char *Key_KeynumToString(int keynum)
 {
 	keyname_t *kn;
@@ -490,11 +493,13 @@ char *Key_KeynumToString(int keynum)
 }
 
 
-/*
-===================
-Key_SetBinding
-===================
-*/
+/**
+ * @brief Bind a keynum to script command
+ * @param[in] keynum Converted from string to keynum
+ * @param[in] binding The script command to bind keynum to
+ * @sa Key_Bind_f
+ * @sa Key_StringToKeynum
+ */
 void Key_SetBinding(int keynum, char *binding)
 {
 	char *new;
@@ -516,11 +521,10 @@ void Key_SetBinding(int keynum, char *binding)
 	keybindings[keynum] = new;
 }
 
-/*
-===================
-Key_Unbind_f
-===================
-*/
+/**
+ * @brief Unbind a given key binding
+ * @sa Key_SetBinding
+ */
 void Key_Unbind_f(void)
 {
 	int b;
@@ -539,6 +543,10 @@ void Key_Unbind_f(void)
 	Key_SetBinding(b, "");
 }
 
+/**
+ * @brief Unbind all key bindings
+ * @sa Key_SetBinding
+ */
 void Key_Unbindall_f(void)
 {
 	int i;
@@ -549,11 +557,10 @@ void Key_Unbindall_f(void)
 }
 
 
-/*
-===================
-Key_Bind_f
-===================
-*/
+/**
+ * @brief Binds a key to a given script command
+ * @sa Key_SetBinding
+ */
 void Key_Bind_f(void)
 {
 	int i, c, b;
@@ -590,13 +597,10 @@ void Key_Bind_f(void)
 	Key_SetBinding(b, cmd);
 }
 
-/*
-============
-Key_WriteBindings
-
-Writes lines containing "bind key value"
-============
-*/
+/**
+ * @brief Writes lines containing "bind key value"
+ * @param[in] f Filehandle to print the keybinding too
+ */
 void Key_WriteBindings(FILE * f)
 {
 	int i;
@@ -607,12 +611,9 @@ void Key_WriteBindings(FILE * f)
 }
 
 
-/*
-============
-Key_Bindlist_f
-
-============
-*/
+/**
+ * @brief List all binded keys with its function
+ */
 void Key_Bindlist_f(void)
 {
 	int i;
@@ -623,11 +624,10 @@ void Key_Bindlist_f(void)
 }
 
 
-/*
-===================
-Key_Init
-===================
-*/
+/**
+ * @brief
+ * @todo Fix this crappy shift key assignment for win32 and sdl (no _)
+ */
 void Key_Init(void)
 {
 	int i;
@@ -638,9 +638,7 @@ void Key_Init(void)
 	}
 	key_linepos = 1;
 
-	/* */
 	/* init ascii characters in console mode */
-	/* */
 	for (i = 32; i < 128; i++)
 		consolekeys[i] = qtrue;
 	consolekeys[K_ENTER] = qtrue;
@@ -682,7 +680,7 @@ void Key_Init(void)
 	for (i = 'a'; i <= 'z'; i++)
 		keyshift[i] = i - 'a' + 'A';
 
-#ifdef _WIN32
+#if _WIN32
 	keyshift['1'] = '!';
 	keyshift['2'] = '@';
 	keyshift['3'] = '#';
@@ -710,23 +708,18 @@ void Key_Init(void)
 	for (i = 0; i < 12; i++)
 		menubound[K_F1 + i] = qtrue;
 
-	/* */
 	/* register our functions */
-	/* */
 	Cmd_AddCommand("bind", Key_Bind_f);
 	Cmd_AddCommand("unbind", Key_Unbind_f);
 	Cmd_AddCommand("unbindall", Key_Unbindall_f);
 	Cmd_AddCommand("bindlist", Key_Bindlist_f);
 }
 
-/*
-===================
-Key_Event
-
-Called by the system between frames for both key up and key down events
-Should NOT be called during an interrupt!
-===================
-*/
+/**
+ * @brief Called by the system between frames for both key up and key down events
+ * @note Should NOT be called during an interrupt!
+ * @sa Key_Message
+ */
 void Key_Event(int key, qboolean down, unsigned time)
 {
 	char *kb;
@@ -776,7 +769,7 @@ void Key_Event(int key, qboolean down, unsigned time)
 			Key_Message(key);
 			break;
 		case key_game:
-			Cbuf_AddText("mn_pop esc");
+			Cbuf_AddText("mn_pop esc;");
 			break;
 		case key_console:
 			Con_ToggleConsole_f();
@@ -798,13 +791,11 @@ void Key_Event(int key, qboolean down, unsigned time)
 			anykeydown = 0;
 	}
 
-	/* */
 	/* key up events only generate commands if the game key binding is */
 	/* a button command (leading + sign).  These will occur even in console mode, */
 	/* to keep the character from continuing an action started before a console */
 	/* switch.  Button commands include the kenum as a parameter, so multiple */
 	/* downs can be matched with ups */
-	/* */
 	if (!down) {
 		kb = keybindings[key];
 		if (kb && kb[0] == '+') {
@@ -821,9 +812,7 @@ void Key_Event(int key, qboolean down, unsigned time)
 		return;
 	}
 
-	/* */
 	/* if not a consolekey, send to the interpreter no matter what mode is */
-	/* */
 	if (cls.key_dest == key_game) {	/*&& !consolekeys[key] ) */
 		kb = keybindings[key];
 		if (kb) {
@@ -857,11 +846,9 @@ void Key_Event(int key, qboolean down, unsigned time)
 	}
 }
 
-/*
-===================
-Key_ClearStates
-===================
-*/
+/**
+ * @brief
+ */
 void Key_ClearStates(void)
 {
 	int i;
@@ -877,11 +864,9 @@ void Key_ClearStates(void)
 }
 
 
-/*
-===================
-Key_GetKey
-===================
-*/
+/**
+ * @brief
+ */
 int Key_GetKey(void)
 {
 	key_waiting = -1;

@@ -21,9 +21,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GL_ARB_SHADER_H__
 #define __GL_ARB_SHADER_H__
 
-void GL_ShutdownShaders( void );
-void GL_ShaderInit( void );
-void SH_UseShader(shader_t* shader);
+shader_t* GL_GetShaderForImage(char* image);
+void GL_ShutdownShaders(void);
+void GL_ShaderInit(void);
+void SH_UseShader(shader_t * shader, qboolean deactivate);
 #endif
 
-#endif /* SHADERS */
+#endif							/* SHADERS */

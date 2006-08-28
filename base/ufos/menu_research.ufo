@@ -199,7 +199,7 @@ menu research
 	confunc researchunresearchable25 { *txt_item25 color ".27 .27 .27 1" *img_status25 texl	"48 16"	*img_status25 texh	"64 32" }
 	confunc researchunresearchable26 { *txt_item26 color ".27 .27 .27 1" *img_status26 texl	"48 16"	*img_status26 texh	"64 32" }
 	confunc researchunresearchable27 { *txt_item27 color ".27 .27 .27 1" *img_status27 texl	"48 16"	*img_status27 texh	"64 32" }
-	
+
 	pic img_status0	{ tooltip "*cvar mn_researchstatus0"	pos	"30 40"	image menu/buttons_small	mousefx true	texl	"32 16"	texh	"48 32" }
 	string txt_item0	{ string "*cvar mn_researchitem0"		pos "50 40"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 0" } }
 	string txt_assigned0	{ string "*cvar mn_researchassigned0"	pos "345 40"	color "0 .78 0 1" }
@@ -841,7 +841,7 @@ menu research
 		pos "645 260"
 		color "0 .78 0 1"
 	}
-	
+
 	// ==================
 	// Informations on research progress and technology details
 	// ==================
@@ -856,7 +856,7 @@ menu research
 		pos "645 320"
 		color "0 .78 0 1"
 	}
-	
+
 	//The base this research item is researched in
 	string txt_selected_base
 	{
@@ -864,7 +864,7 @@ menu research
 		pos "645 350"
 		color "0 .78 0 1"
 	}
-	
+
 	string txt_selected_time
 	{
 		string "*cvar mn_research_seltime"
@@ -879,6 +879,18 @@ menu research
 		color "0 .78 0 1"
 	}
 
+	text research_dependencies
+	{
+		pos	"645 440"
+		format	"22 0"
+		color	"0 .78 0 1"
+		num	6
+		click
+		mousefx	true
+		color	"1 1 1 1"
+//		bgcolor "1 1 1 0.4"
+		size	"300 180"
+	}
 
 	// ==================
 	// General info
@@ -968,14 +980,6 @@ menu research
 		string	"*cvar mn_researchammo"
 		pos		"930 288"
 		scale	"7 7 7"
-	}
-
-	text description
-	{
-		pos		"630 357"
-		size	"326 200"
-		format	"20 0"
-		num	6
 	}
 
 	// ==================

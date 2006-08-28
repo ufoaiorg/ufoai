@@ -354,7 +354,7 @@ dist2: stamp-po $(DISTFILES)
 update-po: Makefile
 	$(MAKE) $(DOMAIN).pot-update
 	test -z "$(UPDATEPOFILES)" || $(MAKE) $(UPDATEPOFILES)
-	$(MAKE) update-gmo
+# in UFO:AI we have this in a different dir:	$(MAKE) update-gmo
 
 # General rule for creating PO files.
 

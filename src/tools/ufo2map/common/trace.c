@@ -1,4 +1,28 @@
-/* trace.c */
+/**
+ * @file trace.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 
 #include "cmdlib.h"
 #include "mathlib.h"
@@ -26,13 +50,9 @@ int		neededContents = (CONTENTS_SOLID | CONTENTS_STEPON | CONTENTS_PLAYERCLIP);
 int		forbiddenContents = (CONTENTS_PASSABLE);
 vec3_t	tr_end;
 
-/*
-==============
-MakeTnode
-
-Converts the disk node structure into the efficient tracing structure
-==============
-*/
+/**
+ * @brief Converts the disk node structure into the efficient tracing structure
+ */
 void MakeTnode (int nodenum)
 {
 	tnode_t			*t;
@@ -49,18 +69,14 @@ void MakeTnode (int nodenum)
 	VectorCopy (plane->normal, t->normal);
 	t->dist = plane->dist;
 
-	for (i=0 ; i<2 ; i++)
-	{
-		if (node->children[i] < 0)
-		{
+	for (i=0 ; i<2 ; i++) {
+		if (node->children[i] < 0) {
 			contents = dleafs[-node->children[i] - 1].contents & ~(1<<31);
 			if ( (contents & neededContents) && !(contents & forbiddenContents) )
 				t->children[i] = 1 | (1<<31); /*-node->children[i] | (1<<31); // leaf+1 */
 			else
 				t->children[i] = (1<<31);
-		}
-		else
-		{
+		} else {
 			t->children[i] = tnode_p - tnodes;
 			MakeTnode (node->children[i]);
 		}
@@ -76,8 +92,7 @@ BuildTnode_r
 */
 void BuildTnode_r( int node )
 {
-	if ( dnodes[node].planenum == -1 )
-	{
+	if ( dnodes[node].planenum == -1 ) {
 		dnode_t *n;
 		tnode_t *t;
 		vec3_t	c0maxs, c1mins;
@@ -99,8 +114,7 @@ void BuildTnode_r( int node )
 		/*		(int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] ); */
 
 		for ( i = 0; i < 2; i++ )
-			if ( c0maxs[i] <= c1mins[i] )
-			{
+			if ( c0maxs[i] <= c1mins[i] ) {
 				/* create a separation plane */
 				t->type = i;
 				t->normal[0] = i;
@@ -118,27 +132,19 @@ void BuildTnode_r( int node )
 		/* can't construct such a separation plane */
 		t->type = PLANE_NONE;
 
-		for ( i = 0; i < 2; i++ )
-		{
+		for ( i = 0; i < 2; i++ ) {
 			t->children[i] = tnode_p - tnodes;
 			BuildTnode_r( n->children[i] );
 		}
-
-	}
-	else
-	{
+	} else {
 		MakeTnode( node );
 	}
 }
 
 
-/*
-=============
-MakeTnodes
-
-Loads the node structure out of a .bsp file to be used for light occlusion
-=============
-*/
+/**
+ * @brief Loads the node structure out of a .bsp file to be used for light occlusion
+ */
 void MakeTnodes ( int levels )
 {
 	int		i;
@@ -153,8 +159,7 @@ void MakeTnodes ( int levels )
 	tnode_p = tnodes;
 	numtheads = 0;
 
-	for ( i = 0; i < levels; i++ )
-	{
+	for ( i = 0; i < levels; i++ ) {
 		if ( !dmodels[i].numfaces )
 			continue;
 
@@ -182,8 +187,7 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 		return node & ~(1<<31);	/* leaf node */
 
 	tnode = &tnodes[node];
-	switch (tnode->type)
-	{
+	switch (tnode->type) {
 	case PLANE_X:
 		front = start[0] - tnode->dist;
 		back = stop[0] - tnode->dist;
@@ -238,16 +242,14 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 	int		side;
 	int		r;
 
-	if (node & (1<<31))
-	{
+	if (node & (1<<31)) {
 		r = node & ~(1<<31);
 		if ( r ) VectorCopy( start, tr_end );
 		return r;	/* leaf node */
 	}
 
 	tnode = &tnodes[node];
-	switch (tnode->type)
-	{
+	switch (tnode->type) {
 	case PLANE_X:
 		front = start[0] - tnode->dist;
 		back = stop[0] - tnode->dist;
@@ -264,23 +266,18 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 		r = TestLineDist_r (tnode->children[0], start, stop);
 		if ( r ) VectorCopy( tr_end, mid );
 		side = TestLineDist_r (tnode->children[1], start, stop);
-		if ( side && r )
-		{
-			if ( VectorNearer( mid, tr_end, start ) )
-			{
+		if (side && r) {
+			if ( VectorNearer( mid, tr_end, start ) ) {
 				VectorCopy( mid, tr_end );
 				return r;
 			}
 			else return side;
 		}
-		if ( r )
-		{
+		if (r) {
 			VectorCopy( mid, tr_end );
 			return r;
 		}
-
 		return side;
-
 		break;
 	default:
 		front = (start[0]*tnode->normal[0] + start[1]*tnode->normal[1] + start[2]*tnode->normal[2]) - tnode->dist;
@@ -311,41 +308,36 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 
 int TestLine (vec3_t start, vec3_t stop)
 {
-	int		i;
+	int i;
 
-	for ( i = 0; i < numtheads; i++ )
-	{
+	for ( i = 0; i < numtheads; i++ ) {
 		if ( TestLine_r( thead[i], start, stop ) )
 			return 1;
-
 	}
 	return 0;
 }
 
 int TestLineMask (vec3_t start, vec3_t stop, int levels)
 {
-	int		i;
+	int i;
 
-	for ( i = 0; i < numtheads; i++ )
-	{
+	for (i = 0; i < numtheads; i++) {
 		if ( theadlevel[i] > 255 + levels )
 			continue;
 
 		if ( TestLine_r( thead[i], start, stop ) )
 			return 1;
-
 	}
 	return 0;
 }
 
 int TestLineDM (vec3_t start, vec3_t stop, vec3_t end, int levels)
 {
-	int		i;
+	int i;
 
 	VectorCopy( stop, end );
 
-	for ( i = 0; i < numtheads; i++ )
-	{
+	for (i = 0; i < numtheads; i++) {
 		if ( theadlevel[i] > 255 + levels )
 			continue;
 
@@ -354,8 +346,10 @@ int TestLineDM (vec3_t start, vec3_t stop, vec3_t end, int levels)
 				VectorCopy( tr_end, end );
 	}
 
-	if ( VectorCompare( end, stop ) ) return 0;
-	else return 1;
+	if ( VectorCompare( end, stop ) )
+		return 0;
+	else
+		return 1;
 }
 
 
@@ -375,8 +369,7 @@ int TestContents_r (int node, vec3_t pos)
 		return node & ~(1<<31);	/* leaf node */
 
 	tnode = &tnodes[node];
-	switch (tnode->type)
-	{
+	switch (tnode->type) {
 	case PLANE_X:
 		front = pos[0] - tnode->dist;
 		break;
@@ -405,16 +398,14 @@ int TestContents_r (int node, vec3_t pos)
 
 int TestContents (vec3_t pos)
 {
-	int		i;
+	int i;
 
-	for ( i = numtheads-1; i >= 0; i-- )
-	{
+	for (i = numtheads-1; i >= 0; i--) {
 		if ( theadlevel[i] != 258 )
 			continue;
 
 		if ( TestContents_r( thead[i], pos ) )
 			return 1;
-
 		break;
 	}
 	return 0;

@@ -34,28 +34,34 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-#define	SHADERFS(x)	(int)&(((shader_t *)0)->x)
-
+/* extern in client.h */
 int r_numshaders;
 
 /* shader_t is in client/ref.h */
 /* r_shaders is external and is linked to cl.refdef.shaders in cl_view.c V_RenderView */
 shader_t r_shaders[MAX_SHADERS];
 
-value_t shader_values[] = {
-	{"filename", V_STRING, SHADERFS(filename)},
-	{"frag", V_BOOL, SHADERFS(frag)},
-	{"vertex", V_BOOL, SHADERFS(vertex)},
+static value_t shader_values[] = {
+	{"filename",	V_STRING,	offsetof( shader_t, filename)},
+	{"frag",	V_BOOL,	offsetof( shader_t, frag)},
+	{"vertex",	V_BOOL,	offsetof( shader_t, vertex)},
+	{"glmode",	V_BLEND,	offsetof( shader_t, glMode)},
+	{"emboss",	V_BOOL,	offsetof( shader_t, emboss)},
+	{"emboss_high",	V_BOOL,	offsetof( shader_t, embossHigh)},
+	{"emboss_low",	V_BOOL,	offsetof( shader_t, embossLow)},
+	{"emboss_2",	V_BOOL,	offsetof( shader_t, emboss2)},
+	{"blur",	V_BOOL,	offsetof( shader_t, blur)},
+	{"light",	V_BOOL,	offsetof( shader_t, light)},
+	{"edge",	V_BOOL,	offsetof( shader_t, edge)},
+
 	{NULL, 0, 0}
 };
 
-/*
-======================
-CL_ParseShaders
-
-Called from CL_ParseScriptSecond
-======================
-*/
+/**
+ * @brief Parses all shader script from ufo script files
+ * @note Called from CL_ParseScriptSecond
+ * @sa CL_ParseScriptSecond
+ */
 void CL_ParseShaders(char *title, char **text)
 {
 	shader_t *entry;
@@ -73,6 +79,10 @@ void CL_ParseShaders(char *title, char **text)
 	/* new entry */
 	entry = &r_shaders[r_numshaders++];
 	memset(entry, 0, sizeof(shader_t));
+
+	/* default value */
+	entry->glMode = BLEND_FILTER;
+
 	Q_strncpyz(entry->title, title, MAX_VAR);
 	do {
 		/* get the name type */
@@ -101,6 +111,9 @@ void CL_ParseShaders(char *title, char **text)
 	} while (*text);
 }
 
+/**
+ * @brief List all loaded shaders via console
+ */
 void CL_ShaderList_f(void)
 {
 	int i;
@@ -110,6 +123,14 @@ void CL_ShaderList_f(void)
 		Com_Printf("..filename: %s\n", r_shaders[i].filename);
 		Com_Printf("..frag %i\n", (int) r_shaders[i].frag);
 		Com_Printf("..vertex %i\n", (int) r_shaders[i].vertex);
+		Com_Printf("..emboss %i\n", (int) r_shaders[i].emboss);
+		Com_Printf("..emboss low %i\n", (int) r_shaders[i].embossLow);
+		Com_Printf("..emboss high %i\n", (int) r_shaders[i].embossHigh);
+		Com_Printf("..emboss #2 %i\n", (int) r_shaders[i].emboss2);
+		Com_Printf("..blur %i\n", (int) r_shaders[i].blur);
+		Com_Printf("..light blur %i\n", (int) r_shaders[i].light);
+		Com_Printf("..edge %i\n", (int) r_shaders[i].edge);
+		Com_Printf("..glMode '%s'\n", Com_ValueToStr(&r_shaders[i], V_BLEND, offsetof( shader_t, glMode)));
 		Com_Printf("\n");
 	}
 }

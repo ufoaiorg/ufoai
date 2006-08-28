@@ -1,10 +1,25 @@
-// *********************************
-// MIDDLE EUROPEAN VILLAGE
-// *********************************
+// *****************************
+// MIDDLE EUROPEAN VILLAGE - Day
+// *****************************
 
 base villaged/vil_
 
-// ---------------------------------
+// Dropship on grass with 5 trees
+tile +drop
+{
+5 4
+
+0      ab     ab     ab     0
+ac     +a     +a     +a     ac
+ac     +a     +a     +a     ac
+0      ab     ab     ab     0
+}
+
+
+// ########################
+// ##### Street tiles #####
+
+// Long street corner: NW / 2 free tiles "a"
 tile +s01
 {
 4 5
@@ -16,7 +31,7 @@ b      +b     +a     a
 0      a      a      0
 }
 
-// ---------------------------------
+// Horizontal street with 2 billboards "VS-red", "Weapon"
 tile +s02
 {
 3 3
@@ -26,7 +41,7 @@ b      +b     b
 0      a      0
 }
 
-// ---------------------------------
+// Vertical street, with billboard "terragen"
 tile +s03
 {
 3 3
@@ -36,7 +51,7 @@ a      +c     a
 0      c      0
 }
 
-// ---------------------------------
+// Street corner: SE
 tile +s04
 {
 3 3
@@ -46,7 +61,7 @@ a      +bc    b
 0      c      0
 }
 
-// ---------------------------------
+// Street corner: NW
 tile +s05
 {
 3 3
@@ -56,7 +71,7 @@ b      +bc    a
 0      a      0
 }
 
-// ---------------------------------
+// T-shaped street connection
 tile +s06
 {
 3 3
@@ -66,7 +81,7 @@ b      +bc    a
 0      c      0
 }
 
-// ---------------------------------
+// Horizontal street with truck
 tile +s07
 {
 3 3
@@ -76,7 +91,7 @@ b      +b     b
 0      a      0
 }
 
-// ---------------------------------
+// Vertical street with white car
 tile +s08
 {
 3 3
@@ -86,7 +101,7 @@ a      +c     a
 0      c      0
 }
 
-// ---------------------------------
+// Vertical street, with billboard "Afterwards"
 tile +s09
 {
 3 3
@@ -96,7 +111,7 @@ a      +c     a
 0      c      0
 }
 
-// ---------------------------------
+// Vertical street, with billboard "Polycount"
 tile +s10
 {
 3 3
@@ -106,7 +121,7 @@ a      +c     a
 0      c      0
 }
 
-// ---------------------------------
+// Vertical street, with billboard "Swim sale"
 tile +s11
 {
 3 3
@@ -116,7 +131,7 @@ a      +c     a
 0      c      0
 }
 
-// ---------------------------------
+// Horizontal street with billboard "Extreme Players"
 tile +s12
 {
 3 3
@@ -126,7 +141,7 @@ b      +b     b
 0      a      0
 }
 
-// ---------------------------------
+// Horizontal street with billboards "AIDAaura", "Maspalomas"
 tile +s13
 {
 3 3
@@ -136,7 +151,7 @@ b      +b     b
 0      a      0
 }
 
-// ---------------------------------
+// Vertical street, with big billboard "WOP"
 tile +s14
 {
 3 3
@@ -146,7 +161,21 @@ a      +c     a
 0      c      0
 }
 
-// ---------------------------------
+
+// cross street connection
+tile +s15
+{
+3 3
+
+0      c      0
+b      +bc    b
+0      c      0
+}
+
+// ########################################
+// ########## Dummy+Filler tiles ##########
+
+// Picnic-table with benches
 tile +d01
 {
 3 3
@@ -156,7 +185,7 @@ ac     +a     ac
 0      ab     0
 }
 
-// ---------------------------------
+// Tree
 tile +d02
 {
 3 3
@@ -166,7 +195,7 @@ ac     +a     ac
 0      ab     0
 }
 
-// ---------------------------------
+// Tree
 tile +d03
 {
 3 3
@@ -176,7 +205,7 @@ ac     +a     ac
 0      ab     0
 }
 
-// ---------------------------------
+// Junk: 2 cardboards, 2 barrels
 tile +d04
 {
 3 3
@@ -186,7 +215,7 @@ ac     +a     ac
 0      ab     0
 }
 
-// ---------------------------------
+// Tree
 tile +d05
 {
 3 3
@@ -196,7 +225,7 @@ ac     +a     ac
 0      ab     0
 }
 
-// ---------------------------------
+// Junk: 1 cardboard, 2 trashcans
 tile +d06
 {
 3 3
@@ -206,7 +235,7 @@ ac     +a     ac
 0      ab     0
 }
 
-// ---------------------------------
+// 3 trashcans
 tile +d07
 {
 3 3
@@ -217,7 +246,10 @@ ac     +a     ac
 }
 
 
-// ---------------------------------
+// ########################################
+// ########## Recreational tiles ##########
+
+// Playground
 tile +r01
 {
 4 4
@@ -228,7 +260,7 @@ ac     +a     +a     ac
 0      ab     ab     0
 }
 
-// ---------------------------------
+// Park with 5 benches
 tile +r02
 {
 5 4
@@ -239,7 +271,7 @@ ac     +a     +a     +a     ac
 0      ab     ab     ab     0
 }
 
-// ---------------------------------
+// Water-fountain with 4 benches
 tile +r03
 {
 3 3
@@ -249,7 +281,10 @@ abc     +a     abc
 0      abc     0
 }
 
-// ---------------------------------
+// ##############################
+// ########## House tiles #######
+
+// Big house with fence, bedroom on 1st floor
 tile +h01
 {
 4 4
@@ -260,7 +295,7 @@ ac     +a     +a     ac
 0      ab     ab     0
 }
 
-// ---------------------------------
+// Empty garage at vertical street
 tile +h02
 {
 4 3
@@ -270,7 +305,7 @@ a      +c     +a     ac
 0      c      a      0
 }
 
-// ---------------------------------
+// L-shaped small house, no bedroom
 tile +h03
 {
 4 4
@@ -281,7 +316,20 @@ ac     +a     +a     ac
 0      0      ab     0
 }
 
-// ---------------------------------
+// Empty garage at horizontal street
+tile +h04
+{
+3 4
+
+0      ac     0
+a      +a     a
+c      +c     c
+0      a      0
+}
+// ########################################
+// ########## 'Commercial' tiles ##########
+
+// Shop + flat on first floor
 tile +c01
 {
 4 5
@@ -293,7 +341,7 @@ b      +b     +b     b
 0      a      a      0
 }
 
-// ---------------------------------
+// Gas-station on vertical street, red + white car
 tile +c02
 {
 5 5
@@ -305,7 +353,7 @@ a      +c     +a     +a     ac
 0      c      a      ab     0
 }
 
-// ---------------------------------
+// Gas-station on vertical street, billboards, white car
 tile +c03
 {
 5 5
@@ -317,7 +365,7 @@ a      +c     +a     +a     ac
 0      c      a      ab     0
 }
 
-// ---------------------------------
+// Snack/bar
 tile +c04
 {
 4 4
@@ -328,18 +376,9 @@ a     +a     +a     a
 0      a     a      0
 }
 
-// ---------------------------------
-tile +drop
-{
-5 4
+// ########################################
+// *** Maps for playing the game ***
 
-0      ab     ab     ab     0
-ac     +a     +a     +a     ac
-ac     +a     +a     +a     ac
-0      ab     ab     ab     0
-}
-
-// *********************************
 assembly residential
 {
 size "6 6"
@@ -357,6 +396,7 @@ size "6 6"
 +s12 "0 4"
 +s13 "0 4"
 +s14 "0 4"
++s15 "0 2"
 +d01 "0 1"
 +d02 "0 2"
 +d03 "0 2"
@@ -373,6 +413,41 @@ size "6 6"
 +c01 "0 1"
 +c02 "0 1"
 +c04 "0 1"
++drop "1 1"
+}
+
+assembly recreational
+{
+size "6 6"
++s01 "0 1"
++s02 "0 4"
++s03 "0 4"
++s04 "0 4"
++s05 "0 4"
++s06 "0 4"
++s09 "0 4"
++s10 "0 8"
++s11 "0 8"
++s12 "0 8"
++s13 "0 8"
++s14 "0 8"
++s15 "0 2"
++d01 "0 1"
++d02 "0 2"
++d03 "0 2"
++d04 "0 2"
++d05 "0 2"
++d06 "0 1"
++d07 "0 1"
++r01 "1 2"
++r02 "1 2"
++r03 "0 4"
++h01 "0 1"
++h02 "0 1"
++h03 "0 1"
++c01 "0 1"
++c02 "0 1"
++c03 "0 1"
 +drop "1 1"
 }
 
@@ -393,6 +468,7 @@ size "7 7"
 +s12 "0 8"
 +s13 "0 8"
 +s14 "0 8"
++s15 "0 2"
 +d02 "0 1"
 +d03 "0 1"
 +d04 "0 1"
@@ -409,40 +485,6 @@ size "7 7"
 +c02 "0 1"
 +c03 "1 1"
 +c04 "1 2"
-+drop "1 1"
-}
-
-assembly recreational
-{
-size "6 6"
-+s01 "0 1"
-+s02 "0 4"
-+s03 "0 4"
-+s04 "0 4"
-+s05 "0 4"
-+s06 "0 4"
-+s09 "0 4"
-+s10 "0 8"
-+s11 "0 8"
-+s12 "0 8"
-+s13 "0 8"
-+s14 "0 8"
-+d01 "0 1"
-+d02 "0 2"
-+d03 "0 2"
-+d04 "0 2"
-+d05 "0 2"
-+d06 "0 1"
-+d07 "0 1"
-+r01 "1 2"
-+r02 "1 2"
-+r03 "0 4"
-+h01 "0 1"
-+h02 "0 1"
-+h03 "0 1"
-+c01 "0 1"
-+c02 "0 1"
-+c03 "0 1"
 +drop "1 1"
 }
 
@@ -463,6 +505,7 @@ size "10 10"
 +s12 "0 8"
 +s13 "0 8"
 +s14 "0 8"
++s15 "0 2"
 +d01 "0 8"
 +d02 "0 8"
 +d03 "0 8"

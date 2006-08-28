@@ -4,126 +4,81 @@
 char source[1024];
 char name[1024];
 
+/**
+ * @brief Check for bsping command line parameters
+ * @note Some are also used for radiosity (e.g. threads)
+ */
 void Check_BSP_Parameter ( int argc, char **argv )
 {
 	int i;
-	for (i=1 ; i<argc ; i++)
-	{
-		if (!strcmp(argv[i],"-threads"))
-		{
+	for (i=1 ; i<argc ; i++) {
+		if (!strcmp(argv[i],"-threads")) {
 			numthreads = atoi (argv[i+1]);
 			i++;
-		}
-		else if (!strcmp(argv[i],"-glview"))
-		{
+		} else if (!strcmp(argv[i],"-glview"))
 			glview = qtrue;
-		}
-		else if (!strcmp(argv[i], "-v"))
-		{
+		else if (!strcmp(argv[i], "-v")) {
 			printf ("verbose = true\n");
 			verbose = qtrue;
-		}
-		else if (!strcmp(argv[i], "-draw"))
-		{
+		} else if (!strcmp(argv[i], "-draw")) {
 			printf ("drawflag = true\n");
 			drawflag = qtrue;
-		}
-		else if (!strcmp(argv[i], "-noweld"))
-		{
+		} else if (!strcmp(argv[i], "-noweld")) {
 			printf ("noweld = true\n");
 			noweld = qtrue;
-		}
-		else if (!strcmp(argv[i], "-nocsg"))
-		{
+		} else if (!strcmp(argv[i], "-nocsg")) {
 			printf ("nocsg = true\n");
 			nocsg = qtrue;
-		}
-		else if (!strcmp(argv[i], "-noshare"))
-		{
+		} else if (!strcmp(argv[i], "-noshare")) {
 			printf ("noshare = true\n");
 			noshare = qtrue;
-		}
-		else if (!strcmp(argv[i], "-notjunc"))
-		{
+		} else if (!strcmp(argv[i], "-notjunc")) {
 			printf ("notjunc = true\n");
 			notjunc = qtrue;
-		}
-		else if (!strcmp(argv[i], "-nowater"))
-		{
+		} else if (!strcmp(argv[i], "-nowater")) {
 			printf ("nowater = true\n");
 			nowater = qtrue;
-		}
-		else if (!strcmp(argv[i], "-noopt"))
-		{
+		} else if (!strcmp(argv[i], "-noopt")) {
 			printf ("noopt = true\n");
 			noopt = qtrue;
-		}
-		else if (!strcmp(argv[i], "-noprune"))
-		{
+		} else if (!strcmp(argv[i], "-noprune")) {
 			printf ("noprune = true\n");
 			noprune = qtrue;
-		}
-		else if (!strcmp(argv[i], "-nofill"))
-		{
+		} else if (!strcmp(argv[i], "-nofill")) {
 			printf ("nofill = true\n");
 			nofill = qtrue;
-		}
-		else if (!strcmp(argv[i], "-nomerge"))
-		{
+		} else if (!strcmp(argv[i], "-nomerge")) {
 			printf ("nomerge = true\n");
 			nomerge = qtrue;
-		}
-		else if (!strcmp(argv[i], "-nosubdiv"))
-		{
+		} else if (!strcmp(argv[i], "-nosubdiv")) {
 			printf ("nosubdiv = true\n");
 			nosubdiv = qtrue;
-		}
-		else if (!strcmp(argv[i], "-nodetail"))
-		{
+		} else if (!strcmp(argv[i], "-nodetail")) {
 			printf ("nodetail = true\n");
 			nodetail = qtrue;
-		}
-		else if (!strcmp(argv[i], "-fulldetail"))
-		{
+		} else if (!strcmp(argv[i], "-fulldetail")) {
 			printf ("fulldetail = true\n");
 			fulldetail = qtrue;
-		}
-		else if (!strcmp(argv[i], "-onlyents"))
-		{
+		} else if (!strcmp(argv[i], "-onlyents")) {
 			printf ("onlyents = true\n");
 			onlyents = qtrue;
-		}
-		else if (!strcmp(argv[i], "-micro"))
-		{
+		} else if (!strcmp(argv[i], "-micro")) {
 			microvolume = atof(argv[i+1]);
 			printf ("microvolume = %f\n", microvolume);
 			i++;
-		}
-		else if (!strcmp(argv[i], "-leaktest"))
-		{
-			printf ("leaktest = true\n");
-			leaktest = qtrue;
-		}
-		else if (!strcmp(argv[i], "-verboseentities"))
-		{
+		} else if (!strcmp(argv[i], "-verboseentities")) {
 			printf ("verboseentities = true\n");
 			verboseentities = qtrue;
-		}
-		else if (!strcmp(argv[i], "-chop"))
-		{
+		} else if (!strcmp(argv[i], "-chop")) {
 			subdivide_size = atof(argv[i+1]);
 			printf ("subdivide_size = %f\n", subdivide_size);
 			i++;
-		}
-		else if (!strcmp(argv[i], "-block"))
-		{
+		} else if (!strcmp(argv[i], "-block")) {
 			block_xl = block_xh = atoi(argv[i+1]);
 			block_yl = block_yh = atoi(argv[i+2]);
 			printf ("block: %i,%i\n", block_xl, block_yl);
 			i+=2;
-		}
-		else if (!strcmp(argv[i], "-blocks"))
-		{
+		} else if (!strcmp(argv[i], "-blocks")) {
 			block_xl = atoi(argv[i+1]);
 			block_yl = atoi(argv[i+2]);
 			block_xh = atoi(argv[i+3]);
@@ -131,114 +86,72 @@ void Check_BSP_Parameter ( int argc, char **argv )
 			printf ("blocks: %i,%i to %i,%i\n",
 				block_xl, block_yl, block_xh, block_yh);
 			i+=4;
-		}
-		else if (!strcmp (argv[i],"-tmpout"))
-		{
+		} else if (!strcmp (argv[i],"-tmpout"))
 			strcpy (outbase, "/tmp");
-		}
-		else if (!strcmp (argv[i],"-norouting"))
-		{
+		else if (!strcmp (argv[i],"-norouting")) {
 			printf ("norouting = true\n");
 			norouting = qtrue;
-		}
-		else if (!strcmp(argv[i], "-nobackclip"))
-		{
+		} else if (!strcmp(argv[i], "-nobackclip")) {
 			printf ("nobackclip = true\n");
 			nobackclip = qtrue;
-		}
-		else
+		} else
 			break;
 	}
 }
 
-
+/**
+ * @brief Check for radiosity command line parameters
+ */
 void Check_RAD_Parameter( int argc, char** argv )
 {
 	int i;
-	for (i=1 ; i<argc ; i++)
-	{
+	for (i=1 ; i<argc ; i++) {
 		if (!strcmp(argv[i],"-dump"))
 			dumppatches = qtrue;
-		else if (!strcmp(argv[i],"-bounce"))
-		{
+		else if (!strcmp(argv[i],"-bounce")) {
 			numbounce = atoi (argv[i+1]);
 			i++;
-		}
-		else if (!strcmp(argv[i],"-v"))
-		{
-			verbose = qtrue;
-		}
-		else if (!strcmp(argv[i],"-extra"))
-		{
+		} else if (!strcmp(argv[i],"-extra")) {
 			extrasamples = qtrue;
 			printf ("extrasamples = true\n");
-		}
-		else if (!strcmp(argv[i],"-threads"))
-		{
-			numthreads = atoi (argv[i+1]);
-			i++;
-		}
-		else if (!strcmp(argv[i],"-chop"))
-		{
+		} else if (!strcmp(argv[i],"-chop")) {
 			subdiv = atoi (argv[i+1]);
 			i++;
-		}
-		else if (!strcmp(argv[i],"-quant"))
-		{
+		} else if (!strcmp(argv[i],"-quant")) {
 			lightquant = atoi (argv[i+1]);
-			if ( lightquant < 1 || lightquant > 6 ) lightquant = 3;
+			if ( lightquant < 1 || lightquant > 6 )
+				lightquant = 3;
 			i++;
-		}
-		else if (!strcmp(argv[i],"-scale"))
-		{
+		} else if (!strcmp(argv[i],"-scale")) {
 			lightscale = atof (argv[i+1]);
 			i++;
-		}
-		else if (!strcmp(argv[i],"-direct"))
-		{
+		} else if (!strcmp(argv[i],"-direct")) {
 			direct_scale *= atof(argv[i+1]);
 			printf ("direct light scaling at %f\n", direct_scale);
 			i++;
-		}
-		else if (!strcmp(argv[i],"-entity"))
-		{
+		} else if (!strcmp(argv[i],"-entity")) {
 			entity_scale *= atof(argv[i+1]);
 			printf ("entity light scaling at %f\n", entity_scale);
 			i++;
-		}
-		else if (!strcmp(argv[i],"-glview"))
-		{
-			glview = qtrue;
-			printf ("glview = true\n");
-		}
-		else if (!strcmp(argv[i],"-nopvs"))
-		{
+		} else if (!strcmp(argv[i],"-nopvs")) {
 			nopvs = qtrue;
 			printf ("nopvs = true\n");
-		}
-		else if (!strcmp(argv[i],"-maxlight"))
-		{
+		} else if (!strcmp(argv[i],"-maxlight")) {
 			maxlight = atof (argv[i+1]) * 128;
 			i++;
-		}
-		else if (!strcmp (argv[i],"-tmpin"))
-			strcpy (inbase, "/tmp");
-		else if (!strcmp (argv[i],"-tmpout"))
-			strcpy (outbase, "/tmp");
-		else
+		} else
 			break;
 	}
 }
 
-/*
-============
-main
-============
-*/
+/**
+ * @brief
+ */
 int main (int argc, char **argv)
 {
-	double		begin, start, end;
-	char		path[1024];
+	double begin, start, end;
+	char path[1024];
+	char out[1024];
 
 	printf ("---- ufo2map ----\n");
 
@@ -246,7 +159,7 @@ int main (int argc, char **argv)
 	Check_RAD_Parameter( argc, argv );
 
 	if (argc < 2)
-		Error ("usage: ufo2map [-threads num] [-glview] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-leaktest] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] mapfile");
+		Error ("usage: ufo2map [-threads num] [-glview] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] mapfile");
 
 	start = I_FloatTime ();
 
@@ -264,16 +177,12 @@ int main (int argc, char **argv)
 	remove (path);
 
 	strcpy (name, ExpandArg (argv[argc-1]));
-	DefaultExtension (name, ".map");	/* might be .reg */
+	DefaultExtension (name, ".map");
 
-	/* */
+	sprintf (out, "%s.bsp", source);
+
 	/* if onlyents, just grab the entites and resave */
-	/* */
-	if (onlyents)
-	{
-		char out[1024];
-
-		sprintf (out, "%s.bsp", source);
+	if (onlyents) {
 		LoadBSPFile (out);
 		num_entities = 0;
 
@@ -284,12 +193,8 @@ int main (int argc, char **argv)
 		UnparseEntities ();
 
 		WriteBSPFile (out);
-	}
-	else
-	{
-		/* */
+	} else {
 		/* start from scratch */
-		/* */
 		LoadMapFile (name);
 		SetModelNumbers ();
 		SetLightStyles ();
@@ -300,8 +205,7 @@ int main (int argc, char **argv)
 	end = I_FloatTime ();
 	printf ("%5.0f seconds elapsed\n", end-start);
 
-	if (!onlyents)
-	{
+	if (!onlyents) {
 		printf ("----- Radiosity ----\n");
 
 		begin = start;
@@ -312,9 +216,6 @@ int main (int argc, char **argv)
 /*		ReadLightFile (); */
 
 		sprintf (name, "%s%s", inbase, source);
-		printf ("reading %s\n", name);
-		LoadBSPFile (name);
-		ParseEntities ();
 		CalcTextureReflectivity ();
 
 		RadWorld ();

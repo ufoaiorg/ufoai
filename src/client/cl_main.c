@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "cl_global.h"
 
 cvar_t *freelook;
 
@@ -51,27 +52,16 @@ cvar_t *cl_stereo;
 cvar_t *rcon_client_password;
 cvar_t *rcon_address;
 
-cvar_t *cl_noskins;
-cvar_t *cl_autoskins;
-cvar_t *cl_footsteps;
 cvar_t *cl_timeout;
-cvar_t *cl_predict;
 
 /*cvar_t	*cl_minfps; */
 cvar_t *cl_maxfps;
-cvar_t *cl_gun;
 cvar_t *cl_markactors;
-
-cvar_t *cl_add_particles;
-cvar_t *cl_add_lights;
-cvar_t *cl_add_entities;
-cvar_t *cl_add_blend;
 
 cvar_t *cl_fps;
 cvar_t *cl_shownet;
-cvar_t *cl_showmiss;
-cvar_t *cl_showclamp;
 cvar_t *cl_show_tooltips;
+cvar_t *cl_show_cursor_tooltips;
 
 cvar_t *cl_paused;
 cvar_t *cl_timedemo;
@@ -95,8 +85,6 @@ cvar_t *cl_centerview;
 cvar_t *cl_worldlevel;
 cvar_t *cl_selected;
 
-cvar_t *cl_lightlevel;
-
 cvar_t *cl_numnames;
 
 cvar_t *mn_main;
@@ -106,6 +94,10 @@ cvar_t *mn_hud;
 cvar_t *mn_lastsave;
 
 cvar_t *difficulty;
+cvar_t *cl_start_employees;
+cvar_t *cl_initial_equipment;
+cvar_t *cl_start_buildings;
+
 cvar_t *confirm_actions;
 
 cvar_t *cl_precachemenus;
@@ -133,12 +125,10 @@ centity_t cl_entities[MAX_EDICTS];
 /*====================================================================== */
 
 /**
-  * @brief
-  *
-  * adds the current command line as a clc_stringcmd to the client message.
-  * things like godmode, noclip, etc, are commands directed to the server,
-  * so when they are typed in at the console, they will need to be forwarded.
-  */
+ * @brief adds the current command line as a clc_stringcmd to the client message.
+ * things like action, turn, etc, are commands directed to the server,
+ * so when they are typed in at the console, they will need to be forwarded.
+ */
 void Cmd_ForwardToServer(void)
 {
 	char *cmd;
@@ -158,8 +148,8 @@ void Cmd_ForwardToServer(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_Setenv_f(void)
 {
 	int argc = Cmd_Argc();
@@ -169,11 +159,11 @@ void CL_Setenv_f(void)
 		int i;
 
 		Q_strncpyz(buffer, Cmd_Argv(1), sizeof(buffer));
-		Q_strcat(buffer, sizeof(buffer), "=");
+		Q_strcat(buffer, "=", sizeof(buffer));
 
 		for (i = 2; i < argc; i++) {
-			Q_strcat(buffer, sizeof(buffer), Cmd_Argv(i));
-			Q_strcat(buffer, sizeof(buffer), " ");
+			Q_strcat(buffer, Cmd_Argv(i), sizeof(buffer));
+			Q_strcat(buffer, " ", sizeof(buffer));
 		}
 
 		Q_putenv(buffer);
@@ -189,8 +179,8 @@ void CL_Setenv_f(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ForwardToServer_f(void)
 {
 	if (cls.state != ca_connected && cls.state != ca_active) {
@@ -207,11 +197,11 @@ void CL_ForwardToServer_f(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_Pause_f(void)
 {
-	/* never pause in multiplayer */
+	/* never pause in multiplayer (as client - server is allowed) */
 	if (!ccs.singleplayer || !Com_ServerState()) {
 		Cvar_SetValue("paused", 0);
 		return;
@@ -221,8 +211,8 @@ void CL_Pause_f(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_Quit_f(void)
 {
 	CL_Disconnect();
@@ -230,10 +220,9 @@ void CL_Quit_f(void)
 }
 
 /**
-  * @brief
-  *
-  * Called after an ERR_DROP was thrown
-  */
+ * @brief
+ * @note Called after an ERR_DROP was thrown
+ */
 void CL_Drop(void)
 {
 	if (cls.state == ca_uninitialized)
@@ -250,11 +239,8 @@ void CL_Drop(void)
 
 
 /**
-  * @brief
-  *
-  * We have gotten a challenge from the server, so try and
-  * connect.
-  */
+ * @brief We have gotten a challenge from the server, so try and connect.
+ */
 void CL_SendConnectPacket(void)
 {
 	netadr_t adr;
@@ -275,10 +261,8 @@ void CL_SendConnectPacket(void)
 }
 
 /**
-  * @brief
-  *
-  * Resend a connect message if the last one has timed out
-  */
+ * @brief Resend a connect message if the last one has timed out
+ */
 void CL_CheckForResend(void)
 {
 	netadr_t adr;
@@ -317,10 +301,10 @@ void CL_CheckForResend(void)
 }
 
 /**
-  * @brief
-  *
-  * FIXME: Spectator needs no team
-  */
+ * @brief
+ *
+ * FIXME: Spectator needs no team
+ */
 void CL_Connect_f(void)
 {
 	char *server;
@@ -356,11 +340,11 @@ void CL_Connect_f(void)
 
 
 /**
-  * @brief
-  *
-  * Send the rest of the command line over as
-  * an unconnected command.
-  */
+ * @brief
+ *
+ * Send the rest of the command line over as
+ * an unconnected command.
+ */
 void CL_Rcon_f(void)
 {
 	char message[1024];
@@ -381,14 +365,14 @@ void CL_Rcon_f(void)
 	/* allow remote */
 	NET_Config(qtrue);
 
-	Q_strcat(message, sizeof(message), "rcon ");
+	Q_strcat(message, "rcon ", sizeof(message));
 
-	Q_strcat(message, sizeof(message), rcon_client_password->string);
-	Q_strcat(message, sizeof(message), " ");
+	Q_strcat(message, rcon_client_password->string, sizeof(message));
+	Q_strcat(message, " ", sizeof(message));
 
 	for (i = 1; i < Cmd_Argc(); i++) {
-		Q_strcat(message, sizeof(message), Cmd_Argv(i));
-		Q_strcat(message, sizeof(message), " ");
+		Q_strcat(message, Cmd_Argv(i), sizeof(message));
+		Q_strcat(message, " ", sizeof(message));
 	}
 
 	if (cls.state >= ca_connected)
@@ -408,8 +392,8 @@ void CL_Rcon_f(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ClearState(void)
 {
 	S_StopAllSounds();
@@ -429,12 +413,12 @@ void CL_ClearState(void)
 }
 
 /**
-  * @brief
-  *
-  * Goes from a connected state to full screen console state
-  * Sends a disconnect message to the server
-  * This is also called on Com_Error, so it shouldn't cause any errors
-  */
+ * @brief
+ *
+ * Goes from a connected state to full screen console state
+ * Sends a disconnect message to the server
+ * This is also called on Com_Error, so it shouldn't cause any errors
+ */
 void CL_Disconnect(void)
 {
 	byte final[32];
@@ -476,8 +460,8 @@ void CL_Disconnect(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_Disconnect_f(void)
 {
 	Com_Drop();
@@ -485,11 +469,11 @@ void CL_Disconnect_f(void)
 
 
 /**
-  * @brief
-  *
-  * packet <destination> <contents>
-  * Contents allows \n escape character
-  */
+ * @brief
+ *
+ * packet [destination] [contents]
+ * Contents allows \n escape character
+ */
 void CL_Packet_f(void)
 {
 	char send[2048];
@@ -531,11 +515,11 @@ void CL_Packet_f(void)
 }
 
 /**
-  * @brief
-  *
-  * Just sent as a hint to the client that they should
-  * drop to full console
-  */
+ * @brief
+ *
+ * Just sent as a hint to the client that they should
+ * drop to full console
+ */
 void CL_Changing_f(void)
 {
 	SCR_BeginLoadingPlaque();
@@ -545,10 +529,10 @@ void CL_Changing_f(void)
 
 
 /**
-  * @brief
-  *
-  * The server is changing levels
-  */
+ * @brief
+ *
+ * The server is changing levels
+ */
 void CL_Reconnect_f(void)
 {
 	S_StopAllSounds();
@@ -573,10 +557,10 @@ void CL_Reconnect_f(void)
 }
 
 /**
-  * @brief
-  *
-  * Handle a reply from a ping
-  */
+ * @brief
+ *
+ * Handle a reply from a ping
+ */
 #define MAX_SERVERLIST 32
 char serverText[1024];
 int serverListLength;
@@ -591,16 +575,16 @@ void CL_ParseStatusMessage(void)
 		return;
 
 	serverList[serverListLength++] = net_from;
-	Q_strcat(serverText, sizeof(serverText), s);
+	Q_strcat(serverText, s, sizeof(serverText));
 	menuText[TEXT_LIST] = serverText;
 }
 
 /**
-  * @brief Serverbrowser text
-  *
-  * This function fills the network browser server information with text
-  */
-char serverInfoText[MAX_MESSAGE_TEXT];
+ * @brief Serverbrowser text
+ *
+ * This function fills the network browser server information with text
+ */
+static char serverInfoText[MAX_MESSAGE_TEXT];
 void CL_ParseServerInfoMessage(void)
 {
 	char *s = MSG_ReadString(&net_message);
@@ -637,26 +621,26 @@ void CL_ParseServerInfoMessage(void)
 				Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value));
 
 			Cvar_ForceSet("mapname", value);
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Map:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Map:\t%s\n"), value), sizeof(serverInfoText));
 		} else if (!Q_strncmp(var, "version", 7))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Version:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Version:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "hostname", 8))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Servername:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Servername:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "sv_enablemorale", 15))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Moralestates:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Moralestates:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "sv_teamplay", 11))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Teamplay:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Teamplay:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxplayers", 10))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. players per team:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Max. players per team:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxclients", 10))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. clients:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Max. clients:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxsoldiersperplayer", 20))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. soldiers per player:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Max. soldiers per player:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxsoldiers", 11))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. soldiers per team:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Max. soldiers per team:\t%s\n"), value), sizeof(serverInfoText));
 #ifdef DEBUG
 		else
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va("%s\t%s\n", var, value));
+			Q_strcat(serverInfoText, va("%s\t%s\n", var, value), sizeof(serverInfoText));
 #endif
 	} while (s != NULL);
 	menuText[TEXT_STANDARD] = serverInfoText;
@@ -664,12 +648,12 @@ void CL_ParseServerInfoMessage(void)
 }
 
 /**
-  * @brief
-  *
-  * called via server_connect
-  * FIXME: Spectator needs no team
-  */
-void CL_ServerConnect_f(void)
+ * @brief
+ *
+ * called via server_connect
+ * FIXME: Spectator needs no team
+ */
+static void CL_ServerConnect_f(void)
 {
 	char *ip = Cvar_VariableString("mn_server_ip");
 
@@ -685,12 +669,12 @@ void CL_ServerConnect_f(void)
 }
 
 /**
-  * @brief Print all bookmarks
-  *
-  * bookmarks are saved in cvar adr[0-15]
-  */
-char bookmarkText[MAX_MESSAGE_TEXT];
-void CL_BookmarkPrint_f(void)
+ * @brief Print all bookmarks
+ *
+ * bookmarks are saved in cvar adr[0-15]
+ */
+static char bookmarkText[MAX_MESSAGE_TEXT];
+static void CL_BookmarkPrint_f(void)
 {
 	int i;
 
@@ -698,17 +682,17 @@ void CL_BookmarkPrint_f(void)
 	bookmarkText[0] = '\0';
 
 	for (i = 0; i < 16; i++) {
-		Q_strcat(bookmarkText, MAX_MESSAGE_TEXT, va("%s\n", Cvar_VariableString(va("adr%i", i))));
+		Q_strcat(bookmarkText, va("%s\n", Cvar_VariableString(va("adr%i", i))), sizeof(bookmarkText));
 	}
 	menuText[TEXT_LIST] = bookmarkText;
 }
 
 /**
-  * @brief Add a new bookmark
-  *
-  * bookmarks are saved in cvar adr[0-15]
-  */
-void CL_BookmarkAdd_f(void)
+ * @brief Add a new bookmark
+ *
+ * bookmarks are saved in cvar adr[0-15]
+ */
+static void CL_BookmarkAdd_f(void)
 {
 	int i;
 	char *bookmark = NULL;
@@ -741,8 +725,8 @@ void CL_BookmarkAdd_f(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_BookmarkListClick_f(void)
 {
 	int num;
@@ -770,9 +754,8 @@ void CL_BookmarkListClick_f(void)
 }
 
 /**
-  * @brief
-  */
-char serverInfoText[MAX_MESSAGE_TEXT];
+ * @brief
+ */
 void CL_ServerListClick_f(void)
 {
 	int num;
@@ -791,8 +774,8 @@ void CL_ServerListClick_f(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief The first function called when entering the multiplayer menu, then CL_Frame takes over
+ */
 void CL_PingServers_f(void)
 {
 	netadr_t adr;
@@ -825,10 +808,10 @@ void CL_PingServers_f(void)
 
 
 /**
-  * @brief
-  *
-  * Responses to broadcasts, etc
-  */
+ * @brief
+ *
+ * Responses to broadcasts, etc
+ */
 void CL_ConnectionlessPacket(void)
 {
 	char *s;
@@ -906,11 +889,11 @@ void CL_ConnectionlessPacket(void)
 
 
 /**
-  * @brief
-  *
-  * A vain attempt to help bad TCP stacks that cause problems
-  * when they overflow
-  */
+ * @brief
+ *
+ * A vain attempt to help bad TCP stacks that cause problems
+ * when they overflow
+ */
 void CL_DumpPackets(void)
 {
 	while (NET_GetPacket(NS_CLIENT, &net_from, &net_message))
@@ -918,8 +901,8 @@ void CL_DumpPackets(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ReadPackets(void)
 {
 	while (NET_GetPacket(NS_CLIENT, &net_from, &net_message)) {
@@ -966,8 +949,8 @@ void CL_ReadPackets(void)
 /*============================================================================= */
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_Userinfo_f(void)
 {
 	Com_Printf("User info settings:\n");
@@ -975,11 +958,11 @@ void CL_Userinfo_f(void)
 }
 
 /**
-  * @brief
-  *
-  * Restart the sound subsystem so it can pick up
-  * new parameters and flush all sounds
-  */
+ * @brief Restart the sound subsystem so it can pick up new parameters and flush all sounds
+ * @sa S_Shutdown
+ * @sa S_Init
+ * @sa CL_RegisterSounds
+ */
 void CL_Snd_Restart_f(void)
 {
 	S_Shutdown();
@@ -988,33 +971,37 @@ void CL_Snd_Restart_f(void)
 }
 
 /**
-  * @brief
-  *
-  * The server will send this command right
-  * before allowing the client into the server
-  */
+ * @brief The server will send this command right before allowing the client into the server
+ */
 void CL_Precache_f(void)
 {
+	Com_Printf("CL_Precache_f\n");
 	/* stop sound, back to the console */
 	S_StopAllSounds();
 	MN_PopMenu(qtrue);
 
+	CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
+
+	Com_Printf("LoadMap\n");
 	CL_RegisterSounds();
 	CL_PrepRefresh();
 
-	/* send team info */
-	CL_SendTeamInfo(&cls.netchan.message, baseCurrent->curTeam, B_GetNumOnTeam());
+	/* maybe we start the map directly from commandline for testing */
+	if ( baseCurrent )
+		/* send team info */
+		CL_SendCurTeamInfo(&cls.netchan.message, baseCurrent->curTeam, B_GetNumOnTeam());
 
 	/* send begin */
 	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
 	MSG_WriteString(&cls.netchan.message, va("begin %i\n", atoi(Cmd_Argv(1))));
+	Com_Printf("begin\n");
 }
 
 /**
-  * @brief Called at client startup
-  *
-  * parses all *.ufos that are needed for single- and multiplayer
-  */
+ * @brief Called at client startup
+ *
+ * parses all *.ufos that are needed for single- and multiplayer
+ */
 void CL_ParseClientData ( char *type, char *name, char **text )
 {
 	if ( !Q_strncmp( type, "shader", 6 ) ) CL_ParseShaders(name, text);
@@ -1030,12 +1017,12 @@ void CL_ParseClientData ( char *type, char *name, char **text )
 }
 
 /**
-  * @brief
-  *
-  * parsed if we are no dedicated server
-  * first stage parses all the main data into their struct
-  * see CL_ParseScriptSecond for more details about parsing stages
-  */
+ * @brief
+ *
+ * parsed if we are no dedicated server
+ * first stage parses all the main data into their struct
+ * see CL_ParseScriptSecond for more details about parsing stages
+ */
 void CL_ParseScriptFirst(char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
@@ -1060,13 +1047,13 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
 }
 
 /**
-  * @brief
-  *
-  * parsed if we are no dedicated server
-  * second stage links all the parsed data from first stage
-  * example: we need a techpointer in a building - in the second stage the buildings and the
-  * techs are already parsed - so now we can link them
-  */
+ * @brief
+ *
+ * parsed if we are no dedicated server
+ * second stage links all the parsed data from first stage
+ * example: we need a techpointer in a building - in the second stage the buildings and the
+ * techs are already parsed - so now we can link them
+ */
 void CL_ParseScriptSecond(char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
@@ -1077,8 +1064,10 @@ void CL_ParseScriptSecond(char *type, char *name, char **text)
 }
 
 /**
-  * @brief Read the data into gd for singleplayer campaigns
-  */
+ * @brief Read the data into gd for singleplayer campaigns
+ * @sa CL_GameLoad
+ * @sa CL_GameNew
+ */
 void CL_ReadSinglePlayerData( void )
 {
 	char *type, *name, *text;
@@ -1089,7 +1078,7 @@ void CL_ReadSinglePlayerData( void )
 	text = NULL;
 
 	CL_ResetSinglePlayerData();
-	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 )
 		CL_ParseScriptFirst( type, name, &text );
 
 	/* stage two parsing */
@@ -1097,15 +1086,15 @@ void CL_ReadSinglePlayerData( void )
 	text = NULL;
 
 	Com_DPrintf( "Second stage parsing started...\n" );
-	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 )
 		CL_ParseScriptSecond( type, name, &text );
 
-	Com_Printf( "Global data loaded\n" );
+	Com_Printf( "Global data loaded - size %d bytes\n", sizeof(gd) );
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_InitLocal(void)
 {
 	cls.state = ca_disconnected;
@@ -1138,18 +1127,10 @@ void CL_InitLocal(void)
 	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE);
 	cl_stereo = Cvar_Get("cl_stereo", "0", 0);
 
-	cl_add_blend = Cvar_Get("cl_blend", "1", 0);
-	cl_add_lights = Cvar_Get("cl_lights", "1", 0);
-	cl_add_particles = Cvar_Get("cl_particles", "1", 0);
-	cl_add_entities = Cvar_Get("cl_entities", "1", 0);
-	cl_gun = Cvar_Get("cl_gun", "1", 0);
-	cl_footsteps = Cvar_Get("cl_footsteps", "1", 0);
-	cl_noskins = Cvar_Get("cl_noskins", "0", 0);
-	cl_autoskins = Cvar_Get("cl_autoskins", "0", 0);
-	cl_predict = Cvar_Get("cl_predict", "1", 0);
 /*	cl_minfps = Cvar_Get ("cl_minfps", "5", 0); */
 	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0);
 	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE);
+	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE);
 
 	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", 0);
 	cl_camrotaccel = Cvar_Get("cl_camrotaccel", "400", 0);
@@ -1158,7 +1139,7 @@ void CL_InitLocal(void)
 	cl_camyawspeed = Cvar_Get("cl_camyawspeed", "160", 0);
 	cl_campitchspeed = Cvar_Get("cl_campitchspeed", "0.5", 0);
 	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.25", 0);
-	cl_centerview = Cvar_Get("cl_centerview", "1", 0);
+	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE);
 
 	cl_run = Cvar_Get("cl_run", "0", CVAR_ARCHIVE);
 	freelook = Cvar_Get("freelook", "0", CVAR_ARCHIVE);
@@ -1179,8 +1160,6 @@ void CL_InitLocal(void)
 
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE);
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE);
-	cl_showmiss = Cvar_Get("cl_showmiss", "0", 0);
-	cl_showclamp = Cvar_Get("showclamp", "0", 0);
 	cl_timeout = Cvar_Get("cl_timeout", "120", 0);
 	cl_paused = Cvar_Get("paused", "0", 0);
 	cl_timedemo = Cvar_Get("timedemo", "0", 0);
@@ -1194,12 +1173,14 @@ void CL_InitLocal(void)
 	cl_worldlevel->modified = qfalse;
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET);
 
-/*	cl_lightlevel = Cvar_Get ("r_lightlevel", "0", 0); */
-
+	/* only 19 soldiers in soldier selection list */
 	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET);
 
-	difficulty = Cvar_Get("difficulty", "3", CVAR_ARCHIVE | CVAR_LATCH);
-	difficulty->modified = qfalse;
+	difficulty = Cvar_Get("difficulty", "0", CVAR_NOSET);
+	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE);
+	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "human_phalanx_initial", CVAR_ARCHIVE);
+
+	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE);
 
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE);
 
@@ -1214,13 +1195,10 @@ void CL_InitLocal(void)
 	/* userinfo */
 	info_password = Cvar_Get("password", "", CVAR_USERINFO);
 	info_spectator = Cvar_Get("spectator", "0", CVAR_USERINFO);
-	name = Cvar_Get("name", _("unnamed"), CVAR_USERINFO | CVAR_ARCHIVE);
-#ifndef _WIN32
-	/* set alsa as default */
-	s_system = Cvar_Get("s_system", "2", CVAR_USERINFO | CVAR_ARCHIVE);
-#endif
+	name = Cvar_Get("name", _("Unnamed"), CVAR_USERINFO | CVAR_ARCHIVE);
+	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE);
 	team = Cvar_Get("team", "human", CVAR_USERINFO | CVAR_ARCHIVE);
-	equip = Cvar_Get("equip", "standard", CVAR_USERINFO | CVAR_ARCHIVE);
+	equip = Cvar_Get("equip", "multiplayer", CVAR_USERINFO | CVAR_ARCHIVE);
 	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE);
 	campaign = Cvar_Get("campaign", "main", 0);
 	rate = Cvar_Get("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE);	/* FIXME */
@@ -1239,10 +1217,6 @@ void CL_InitLocal(void)
 	Cmd_AddCommand("bookmarks_click", CL_BookmarkListClick_f);
 	Cmd_AddCommand("bookmarks_print", CL_BookmarkPrint_f);
 	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f);
-
-	/* text id is ships in menu_geoscape.ufo */
-	Cmd_AddCommand("ships_click", CL_SelectAircraft_f);
-	Cmd_AddCommand("ships_rclick", CL_OpenAircraft_f);
 
 	Cmd_AddCommand("userinfo", CL_Userinfo_f);
 	Cmd_AddCommand("snd_restart", CL_Snd_Restart_f);
@@ -1283,8 +1257,8 @@ void CL_InitLocal(void)
 
 
 /**
-  * @brief Writes key bindings and archived cvars to config.cfg
-  */
+ * @brief Writes key bindings and archived cvars to config.cfg
+ */
 void CL_WriteConfiguration(void)
 {
 	char path[MAX_QPATH];
@@ -1297,33 +1271,30 @@ void CL_WriteConfiguration(void)
 }
 
 
-/**
-  * @brief
-  */
 typedef struct {
 	char *name;
 	char *value;
 	cvar_t *var;
 } cheatvar_t;
 
-cheatvar_t cheatvars[] = {
-/*	{"timescale", "1"}, */
+static cheatvar_t cheatvars[] = {
 	{"timedemo", "0"},
 	{"r_drawworld", "1"},
 	{"cl_testlights", "0"},
 	{"r_fullbright", "0"},
-/*	{"r_drawflat", "0"}, */
 	{"paused", "0"},
 	{"fixedtime", "0"},
-/*	{"sw_draworder", "0"}, */
 	{"gl_lightmap", "0"},
 	{"gl_wire", "0"},
 	{"gl_saturatelighting", "0"},
 	{NULL, NULL}
 };
 
-int numcheatvars;
+static int numcheatvars = 0;
 
+/**
+ * @brief
+ */
 void CL_FixCvarCheats(void)
 {
 	int i;
@@ -1349,8 +1320,8 @@ void CL_FixCvarCheats(void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_SendCmd(void)
 {
 	/* send a userinfo update if needed */
@@ -1368,8 +1339,8 @@ void CL_SendCmd(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_SendCommand(void)
 {
 	/* get new key events */
@@ -1393,8 +1364,8 @@ void CL_SendCommand(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_AddMapParticle(char *ptl, vec3_t origin, vec2_t wait, char *info, int levelflags)
 {
 	mp_t *mp;
@@ -1417,20 +1388,46 @@ void CL_AddMapParticle(char *ptl, vec3_t origin, vec2_t wait, char *info, int le
 	Com_DPrintf("Adding map particle %s (%i) with levelflags %i\n", ptl, numMPs, levelflags);
 }
 
-/* FIXME: Howto mark them for gettext? */
-char *difficulty_names[] = {
-	"Chickenhearted",
-	"Very Easy",
-	"Easy",
-	"Normal",
-	"Hard",
-	"Very Hard",
-	"Insane"
-};
+/**
+ * @brief Translate the difficulty int to a translated string
+ * @param difficulty the difficulty integer value
+ */
+char* CL_ToDifficultyName(int difficulty)
+{
+	switch (difficulty) {
+	case -4:
+		return _("Chicken-hearted");
+		break;
+	case -3:
+		return _("Very Easy");
+		break;
+	case -2:
+	case -1:
+		return _("Easy");
+		break;
+	case 0:
+		return _("Normal");
+		break;
+	case 1:
+	case 2:
+		return _("Hard");
+		break;
+	case 3:
+		return _("Very Hard");
+		break;
+	case 4:
+		return _("Insane");
+		break;
+	default:
+		Sys_Error("Unknown difficulty id %i\n", difficulty);
+		break;
+	}
+	return NULL;
+}
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_CvarCheck(void)
 {
 	int v;
@@ -1441,8 +1438,8 @@ void CL_CvarCheck(void)
 
 		if ((int) cl_worldlevel->value >= map_maxlevel - 1)
 			Cvar_SetValue("cl_worldlevel", map_maxlevel - 1);
-		else if ((int) cl_worldlevel->value < 0)
-			Cvar_Set("cl_worldlevel", "0");
+		else if ((int) cl_worldlevel->value < 0.0f)
+			Cvar_SetValue("cl_worldlevel", 0.0f);
 		for (i = 0; i < map_maxlevel; i++)
 			Cbuf_AddText(va("deselfloor%i\n", i));
 		for (; i < 8; i++)
@@ -1451,16 +1448,6 @@ void CL_CvarCheck(void)
 		cl_worldlevel->modified = qfalse;
 	}
 
-	/* difficulty */
-	if (difficulty->modified) {
-		v = (int) difficulty->value;
-
-		if (v < 0)
-			v = 0;
-		else if (v > 6)
-			v = 6;
-		Cvar_Set("mn_difficulty", _(difficulty_names[v]));
-	}
 #ifdef HAVE_GETTEXT
 	/* language */
 	if (s_language->modified)
@@ -1475,8 +1462,8 @@ void CL_CvarCheck(void)
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 #define NUM_DELTA_FRAMES	20
 void CL_Frame(int msec)
 {
@@ -1489,11 +1476,19 @@ void CL_Frame(int msec)
 	if (sv_maxclients->modified) {
 		if ((int) sv_maxclients->value > 1) {
 			ccs.singleplayer = qfalse;
-			Com_Printf("Changing to Multiplayer\n");
-			/* no campaign equipment but standard */
-			Cvar_Set("equip", "standard");
-			Cvar_Set("map_dropship", "craft_dropship");
+			curCampaign = NULL;
+			selMis = NULL;
+			baseCurrent = &gd.bases[0];
+			B_ClearBase(&gd.bases[0]);
+			gd.numBases = 1;
 
+			/* now add a dropship where we can place our soldiers in */
+			CL_NewAircraft(baseCurrent, "craft_dropship");
+
+			Com_Printf("Changing to Multiplayer\n");
+			/* no campaign equipment but for multiplayer */
+			Cvar_Set("map_dropship", "craft_dropship");
+			CL_Disconnect();
 		} else {
 			ccs.singleplayer = qtrue;
 			Com_Printf("Changing to Singleplayer\n");
@@ -1589,7 +1584,6 @@ void CL_Frame(int msec)
 	CDAudio_Update();
 
 	/* advance local effects for next frame */
-	CL_RunDLights();
 	CL_RunLightStyles();
 	SCR_RunConsole();
 
@@ -1613,8 +1607,8 @@ void CL_Frame(int msec)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_Init(void)
 {
 	if (dedicated->value)
@@ -1642,7 +1636,7 @@ void CL_Init(void)
 	CL_InitLocal();
 	IN_Init();
 
-	Cbuf_AddText("exec autoexec.cfg\n");
+/*	Cbuf_AddText("exec autoexec.cfg\n"); --- already called in FS_ExecAutoexec */
 	/* FIXME: Maybe we should activate this again when all savegames issues are solved */
 /*	Cbuf_AddText( "loadteam current\n" ); */
 	FS_ExecAutoexec();
@@ -1651,11 +1645,11 @@ void CL_Init(void)
 
 
 /**
-  * @brief
-  *
-  * FIXME: this is a callback from Sys_Quit and Com_Error.  It would be better
-  * to run quit through here before the final handoff to the sys code.
-  */
+ * @brief
+ *
+ * FIXME: this is a callback from Sys_Quit and Com_Error.  It would be better
+ * to run quit through here before the final handoff to the sys code.
+ */
 void CL_Shutdown(void)
 {
 	static qboolean isdown = qfalse;

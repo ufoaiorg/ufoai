@@ -24,7 +24,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -46,6 +46,8 @@ typedef void* HINSTANCE;
 typedef void* WNDPROC;
 #endif
 
+#define GAME_TITLE "UFO:AI"
+#define GAME_TITLE_LONG "UFO:Alien Invasion"
 
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
@@ -135,6 +137,15 @@ typedef struct shader_s {
 
 	qboolean frag;				/* fragment-shader */
 	qboolean vertex;			/* vertex-shader */
+
+	qboolean emboss;			/* active emboss mapping */
+	qboolean embossHigh;
+	qboolean embossLow;
+	qboolean emboss2;
+	qboolean blur;
+	qboolean light;
+	qboolean edge;
+	int glMode;
 	/* TODO: */
 
 	/* vpid and fpid are vertexpid and fragmentpid for binding */
@@ -256,9 +267,7 @@ typedef struct {
 
 #define	API_VERSION		4
 
-/* */
 /* these are the functions exported by the refresh module */
-/* */
 typedef struct {
 	/* if api_version is different, the dll cannot be used */
 	int api_version;
@@ -273,11 +282,11 @@ typedef struct {
 	/* registered before rendering any frames to prevent disk hits, */
 	/* but they can still be registered at a later time */
 	/* if necessary. */
-	/* */
+
 	/* EndRegistration will free any remaining data that wasn't registered. */
 	/* Any model_s or skin_s pointers from before the BeginRegistration */
 	/* are no longer valid after EndRegistration. */
-	/* */
+
 	/* Skins and images need to be differentiated, because skins */
 	/* are flood filled to eliminate mip map edge errors, and pics have */
 	/* an implicit "pics/" prepended to the name. (a pic name that starts with a */
@@ -290,6 +299,7 @@ typedef struct {
 	void (*EndRegistration) (void);
 
 	void (*RenderFrame) (refdef_t * fd);
+	void (*SetRefDef) (refdef_t * fd);
 
 	void (*DrawModelDirect) (modelInfo_t * mi, modelInfo_t * pmi, char *tag);
 	void (*DrawGetPicSize) (int *w, int *h, char *name);	/* will return 0 0 if not found */
@@ -299,10 +309,10 @@ typedef struct {
 	void (*DrawChar) (int x, int y, int c);
 	void (*FontRegister) (char *name, int size, char *path, char *style);
 	void (*FontLength) (char *font, char *c, int *width, int *height);
-	int (*FontDrawString) (char *font, int align, int x, int y, int width, char *c);
+	int (*FontDrawString) (char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c);
 	void (*DrawTileClear) (int x, int y, int w, int h, char *name);
 	void (*DrawFill) (int x, int y, int w, int h, int style, vec4_t color);
-	void (*DrawColor) (float *rgba);
+	void (*DrawColor) (const float *rgba);
 	void (*DrawFadeScreen) (void);
 	void (*DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
 	void (*DrawLineStrip) (int points, int *verts);
@@ -329,9 +339,7 @@ typedef struct {
 	void (*TakeVideoFrame) (int h, int w, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg);
 } refexport_t;
 
-/* */
 /* these are the functions imported by the refresh module */
-/* */
 typedef struct {
 	void (*Sys_Error) (int err_level, char *str, ...);
 
@@ -353,10 +361,6 @@ typedef struct {
 	void (*FS_FreeFile) (void *buf);
 	int (*FS_CheckFile) (const char *name);
 	char **(*FS_ListFiles) (char *findname, int *numfiles, unsigned musthave, unsigned canthave);
-
-	/* dynamic memory allocator for things that need to be freed */
-/*	void	*(*Malloc)( int bytes ); */
-/*	void	(*Free)( void *buf ); */
 
 	/* will return the size and the path for each font */
 	void (*CL_GetFontData) (char *name, int *size, char *path);

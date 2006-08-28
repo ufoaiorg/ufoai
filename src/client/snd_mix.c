@@ -1,6 +1,6 @@
 /**
  * @file snd_mix.c
- * @brief Portable code to mix sounds for snd_dma.c.
+ * @brief Portable code to mix sounds for snd_ref.c.
  */
 
 /*
@@ -35,11 +35,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "snd_loc.h"
 
 #define	PAINTBUFFER_SIZE	2048
-portable_samplepair_t paintbuffer[PAINTBUFFER_SIZE];
-int snd_scaletable[32][256];
-int *snd_p, snd_linear_count, snd_vol;
-short *snd_out;
+static portable_samplepair_t paintbuffer[PAINTBUFFER_SIZE];
+static int snd_scaletable[32][256];
+static int *snd_p, snd_linear_count, snd_vol;
+static short *snd_out;
 
+/**
+ * @brief
+ */
 void S_WriteLinearBlastStereo16(void)
 {
 	int i;
@@ -64,6 +67,9 @@ void S_WriteLinearBlastStereo16(void)
 	}
 }
 
+/**
+ * @brief
+ */
 void S_TransferStereo16(unsigned long *pbuf, int endtime)
 {
 	int lpos;
@@ -95,12 +101,9 @@ void S_TransferStereo16(unsigned long *pbuf, int endtime)
 	}
 }
 
-/*
-===================
-S_TransferPaintBuffer
-
-===================
-*/
+/**
+ * @brief
+ */
 void S_TransferPaintBuffer(int endtime)
 {
 	int out_idx;
@@ -113,7 +116,7 @@ void S_TransferPaintBuffer(int endtime)
 
 	pbuf = (unsigned long *) dma.buffer;
 
-	if (s_testsound->value) {
+	if (snd_testsound->value) {
 		int i;
 		int count;
 
@@ -172,9 +175,71 @@ CHANNEL MIXING
 ===============================================================================
 */
 
-void S_PaintChannelFrom8(channel_t * ch, sfxcache_t * sc, int endtime, int offset);
-void S_PaintChannelFrom16(channel_t * ch, sfxcache_t * sc, int endtime, int offset);
 
+/**
+ * @brief
+ */
+void S_PaintChannelFrom8(channel_t * ch, sfxcache_t * sc, int count, int offset)
+{
+	int data;
+	int *lscale, *rscale;
+	byte *sfx;
+	int i;
+	portable_samplepair_t *samp;
+
+	if (ch->leftvol > 255)
+		ch->leftvol = 255;
+	if (ch->rightvol > 255)
+		ch->rightvol = 255;
+
+	/*ZOID-- >>11 has been changed to >>3, >>11 didn't make much sense */
+	/*as it would always be zero. */
+	lscale = snd_scaletable[ch->leftvol >> 3];
+	rscale = snd_scaletable[ch->rightvol >> 3];
+	sfx = (byte *) sc->data + ch->pos;
+
+	samp = &paintbuffer[offset];
+
+	for (i = 0; i < count; i++, samp++) {
+		data = sfx[i];
+		samp->left += lscale[data];
+		samp->right += rscale[data];
+	}
+
+	ch->pos += count;
+}
+
+/**
+ * @brief
+ */
+void S_PaintChannelFrom16(channel_t * ch, sfxcache_t * sc, int count, int offset)
+{
+	int data;
+	int left, right;
+	int leftvol, rightvol;
+	signed short *sfx;
+	int i;
+	portable_samplepair_t *samp;
+
+	leftvol = ch->leftvol * snd_vol;
+	rightvol = ch->rightvol * snd_vol;
+	sfx = (signed short *) sc->data + ch->pos;
+
+	samp = &paintbuffer[offset];
+	for (i = 0; i < count; i++, samp++) {
+		data = sfx[i];
+		left = (data * leftvol) >> 8;
+		right = (data * rightvol) >> 8;
+		samp->left += left;
+		samp->right += right;
+	}
+
+	ch->pos += count;
+}
+
+/**
+ * @brief
+ */
 void S_PaintChannels(int endtime)
 {
 	int i = 0;
@@ -184,7 +249,7 @@ void S_PaintChannels(int endtime)
 	int ltime, count;
 	playsound_t *ps;
 
-	snd_vol = s_volume->value * 256;
+	snd_vol = snd_volume->value * 256;
 
 /*	Com_Printf ("%i to %i\n", paintedtime, endtime); */
 	while (paintedtime < endtime) {
@@ -232,7 +297,6 @@ void S_PaintChannels(int endtime)
 				paintbuffer[i - paintedtime].left = paintbuffer[i - paintedtime].right = 0;
 			}
 		}
-
 
 		/* paint in the channels. */
 		ch = channels;
@@ -285,71 +349,18 @@ void S_PaintChannels(int endtime)
 	}
 }
 
+/**
+ * @brief
+ */
 void S_InitScaletable(void)
 {
 	int i, j;
 	int scale;
 
-	s_volume->modified = qfalse;
+	snd_volume->modified = qfalse;
 	for (i = 0; i < 32; i++) {
-		scale = i * 8 * 256 * s_volume->value;
+		scale = i * 8 * 256 * snd_volume->value;
 		for (j = 0; j < 256; j++)
 			snd_scaletable[i][j] = ((signed char) j) * scale;
 	}
-}
-
-
-void S_PaintChannelFrom8(channel_t * ch, sfxcache_t * sc, int count, int offset)
-{
-	int data;
-	int *lscale, *rscale;
-	byte *sfx;
-	int i;
-	portable_samplepair_t *samp;
-
-	if (ch->leftvol > 255)
-		ch->leftvol = 255;
-	if (ch->rightvol > 255)
-		ch->rightvol = 255;
-
-	/*ZOID-- >>11 has been changed to >>3, >>11 didn't make much sense */
-	/*as it would always be zero. */
-	lscale = snd_scaletable[ch->leftvol >> 3];
-	rscale = snd_scaletable[ch->rightvol >> 3];
-	sfx = (byte *) sc->data + ch->pos;
-
-	samp = &paintbuffer[offset];
-
-	for (i = 0; i < count; i++, samp++) {
-		data = sfx[i];
-		samp->left += lscale[data];
-		samp->right += rscale[data];
-	}
-
-	ch->pos += count;
-}
-
-void S_PaintChannelFrom16(channel_t * ch, sfxcache_t * sc, int count, int offset)
-{
-	int data;
-	int left, right;
-	int leftvol, rightvol;
-	signed short *sfx;
-	int i;
-	portable_samplepair_t *samp;
-
-	leftvol = ch->leftvol * snd_vol;
-	rightvol = ch->rightvol * snd_vol;
-	sfx = (signed short *) sc->data + ch->pos;
-
-	samp = &paintbuffer[offset];
-	for (i = 0; i < count; i++, samp++) {
-		data = sfx[i];
-		left = (data * leftvol) >> 8;
-		right = (data * rightvol) >> 8;
-		samp->left += left;
-		samp->right += right;
-	}
-
-	ch->pos += count;
 }

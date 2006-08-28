@@ -1,0 +1,268 @@
+#
+# Quake2 Makefile for Solaris
+#
+# Nov '97 by Zoid <zoid@idsoftware.com>
+#
+# ELF only
+#
+
+VERSION=3.20
+
+ifneq (,$(findstring i86pc,$(shell uname -m)))
+ARCH=i386
+else
+ARCH=sparc
+endif
+
+MOUNT_DIR=/grog/Projects/ufo/code
+
+BUILD_DEBUG_DIR=debug$(ARCH)
+BUILD_RELEASE_DIR=release$(ARCH)
+CLIENT_DIR=$(MOUNT_DIR)/client
+SERVER_DIR=$(MOUNT_DIR)/server
+COMMON_DIR=$(MOUNT_DIR)/qcommon
+SOLARIS_DIR=$(MOUNT_DIR)/ports/solaris
+GAME_DIR=$(MOUNT_DIR)/game
+NULL_DIR=$(MOUNT_DIR)/ports/null
+
+CC=gcc
+BASE_CFLAGS=-Dstricmp=strcasecmp -DC_ONLY -DDEDICATED_ONLY
+RELEASE_CFLAGS=$(BASE_CFLAGS) -ffast-math -funroll-loops \
+	-fomit-frame-pointer -fexpensive-optimizations
+
+DEBUG_CFLAGS=$(BASE_CFLAGS) -g
+LDFLAGS=-ldl -lm -lsocket -lnsl
+
+SHLIBEXT=so
+
+SHLIBCFLAGS=-fPIC
+SHLIBLDFLAGS=-shared
+
+DO_CC=$(CC) $(CFLAGS) -o $@ -c $<
+DO_SHLIB_CC=$(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
+
+#############################################################################
+# SETUP AND BUILD
+#############################################################################
+
+TARGETS=$(BUILDDIR)/ufoded \
+	$(BUILDDIR)/game.$(SHLIBEXT)
+
+build_debug:
+	@-mkdir $(BUILD_DEBUG_DIR) \
+		$(BUILD_DEBUG_DIR)/client \
+		$(BUILD_DEBUG_DIR)/game
+	$(MAKE) targets BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS)"
+
+build_release:
+	@-mkdir $(BUILD_RELEASE_DIR) \
+		$(BUILD_RELEASE_DIR)/client \
+		$(BUILD_RELEASE_DIR)/game
+	$(MAKE) targets BUILDDIR=$(BUILD_RELEASE_DIR) CFLAGS="$(RELEASE_CFLAGS)"
+
+all: build_debug build_release
+
+targets: $(TARGETS)
+
+#############################################################################
+# CLIENT/SERVER
+#############################################################################
+
+QUAKE2_OBJS = \
+	\
+	$(BUILDDIR)/client/cmd.o \
+	$(BUILDDIR)/client/cmodel.o \
+	$(BUILDDIR)/client/common.o \
+	$(BUILDDIR)/client/crc.o \
+	$(BUILDDIR)/client/cvar.o \
+	$(BUILDDIR)/client/files.o \
+	$(BUILDDIR)/client/md4.o \
+	$(BUILDDIR)/client/net_chan.o \
+	\
+	$(BUILDDIR)/client/sv_ccmds.o \
+	$(BUILDDIR)/client/sv_ents.o \
+	$(BUILDDIR)/client/sv_game.o \
+	$(BUILDDIR)/client/sv_init.o \
+	$(BUILDDIR)/client/sv_main.o \
+	$(BUILDDIR)/client/sv_send.o \
+	$(BUILDDIR)/client/sv_user.o \
+	$(BUILDDIR)/client/sv_world.o \
+	\
+	$(BUILDDIR)/client/q_shsolaris.o \
+	$(BUILDDIR)/client/sys_solaris.o \
+	$(BUILDDIR)/client/glob.o \
+	$(BUILDDIR)/client/net_udp.o \
+	\
+	$(BUILDDIR)/client/q_shared.o \
+	$(BUILDDIR)/client/pmove.o \
+	\
+	$(BUILDDIR)/client/cl_null.o \
+	$(BUILDDIR)/client/cd_null.o
+
+$(BUILDDIR)/ufoded : $(QUAKE2_OBJS)
+	$(CC) $(CFLAGS) -o $@ $(QUAKE2_OBJS) $(LDFLAGS)
+
+$(BUILDDIR)/client/cmd.o :        $(COMMON_DIR)/cmd.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cmodel.o :     $(COMMON_DIR)/cmodel.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/common.o :     $(COMMON_DIR)/common.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/crc.o :        $(COMMON_DIR)/crc.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cvar.o :       $(COMMON_DIR)/cvar.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/files.o :      $(COMMON_DIR)/files.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/md4.o :        $(COMMON_DIR)/md4.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/net_chan.o :   $(COMMON_DIR)/net_chan.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/q_shared.o :   $(GAME_DIR)/q_shared.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/pmove.o :      $(COMMON_DIR)/pmove.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/sv_ccmds.o :   $(SERVER_DIR)/sv_ccmds.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/sv_ents.o :    $(SERVER_DIR)/sv_ents.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/sv_game.o :    $(SERVER_DIR)/sv_game.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/sv_init.o :    $(SERVER_DIR)/sv_init.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/sv_main.o :    $(SERVER_DIR)/sv_main.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/sv_send.o :    $(SERVER_DIR)/sv_send.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/sv_user.o :    $(SERVER_DIR)/sv_user.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/sv_world.o :   $(SERVER_DIR)/sv_world.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/q_shsolaris.o :  $(SOLARIS_DIR)/q_shsolaris.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/sys_solaris.o :  $(SOLARIS_DIR)/sys_solaris.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/glob.o :       $(SOLARIS_DIR)/glob.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/net_udp.o :    $(SOLARIS_DIR)/net_udp.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cd_null.o     : $(NULL_DIR)/cd_null.c    
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_null.o     : $(NULL_DIR)/cl_null.c    
+	$(DO_CC)
+
+#############################################################################
+# GAME
+#############################################################################
+
+GAME_OBJS = \
+	$(BUILDDIR)/game/g_ai.o \
+	$(BUILDDIR)/game/p_client.o \
+	$(BUILDDIR)/game/g_cmds.o \
+	$(BUILDDIR)/game/g_svcmds.o \
+	$(BUILDDIR)/game/g_main.o \
+	$(BUILDDIR)/game/g_misc.o \
+	$(BUILDDIR)/game/g_spawn.o \
+	$(BUILDDIR)/game/g_utils.o \
+	$(BUILDDIR)/game/q_shared.o
+
+$(BUILDDIR)/game.$(SHLIBEXT) : $(GAME_OBJS)
+	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(GAME_OBJS)
+
+$(BUILDDIR)/game/g_ai.o :        $(GAME_DIR)/g_ai.c
+	$(DO_SHLIB_CC)
+
+$(BUILDDIR)/game/p_client.o :    $(GAME_DIR)/p_client.c
+	$(DO_SHLIB_CC)
+
+$(BUILDDIR)/game/g_cmds.o :      $(GAME_DIR)/g_cmds.c
+	$(DO_SHLIB_CC)
+
+$(BUILDDIR)/game/g_svcmds.o :    $(GAME_DIR)/g_svcmds.c
+	$(DO_SHLIB_CC)
+
+$(BUILDDIR)/game/g_func.o :      $(GAME_DIR)/g_func.c
+	$(DO_SHLIB_CC)
+
+$(BUILDDIR)/game/g_main.o :      $(GAME_DIR)/g_main.c
+	$(DO_SHLIB_CC)
+
+$(BUILDDIR)/game/g_misc.o :      $(GAME_DIR)/g_misc.c
+	$(DO_SHLIB_CC)
+
+$(BUILDDIR)/game/g_spawn.o :     $(GAME_DIR)/g_spawn.c
+	$(DO_SHLIB_CC)
+
+$(BUILDDIR)/game/g_utils.o :     $(GAME_DIR)/g_utils.c
+	$(DO_SHLIB_CC)
+
+$(BUILDDIR)/game/g_weapon.o :    $(GAME_DIR)/g_weapon.c
+	$(DO_SHLIB_CC)
+
+$(BUILDDIR)/game/q_shared.o :    $(GAME_DIR)/q_shared.c
+	$(DO_SHLIB_CC)
+
+#############################################################################
+# TAR
+#############################################################################
+
+# Make RPMs.  You need to be root to make this work
+RPMDIR = /var/tmp/ufoded-$(VERSION)
+
+tar:
+	if [ ! -d archives ];then mkdir archives;fi
+	$(MAKE) copyfiles COPYDIR=$(RPMDIR)
+	cd $(RPMDIR); tar cvf ufoded-$(VERSION)-$(ARCH)-sun-solaris2.5.1.tar *
+	cd $(RPMDIR); compress ufoded-$(VERSION)-$(ARCH)-sun-solaris2.5.1.tar
+	mv $(RPMDIR)/*.tar.Z archives/.
+	rm -rf $(RPMDIR)
+
+copyfiles:
+	-mkdirhier $(COPYDIR)
+	cp $(BUILD_RELEASE_DIR)/ufoded $(COPYDIR)
+	strip $(COPYDIR)/ufoded
+	chmod 755 $(COPYDIR)/ufoded
+	-mkdir $(COPYDIR)/base
+	chmod 755 $(COPYDIR)/base
+	cp $(BUILD_RELEASE_DIR)/game.$(SHLIBEXT) $(COPYDIR)/base
+	chmod 755 $(COPYDIR)/base/game.$(SHLIBEXT)
+	cp $(MOUNT_DIR)/ports/solaris/readme.solaris $(COPYDIR)/README
+
+
+#############################################################################
+# MISC
+#############################################################################
+
+clean: clean-debug clean-release
+
+clean-debug:
+	$(MAKE) clean2 BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS)"
+
+clean-release:
+	$(MAKE) clean2 BUILDDIR=$(BUILD_RELEASE_DIR) CFLAGS="$(DEBUG_CFLAGS)"
+
+clean2:
+	-rm -f $(QUAKE2_OBJS) $(GAME_OBJS)

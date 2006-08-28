@@ -1,3 +1,6 @@
+NOTE: This is outdated - see the wiki for up-to-date texts
+
+
 ﻿This are drafts of technology descriptions that will mostly probably get into the game.
 
 The "researchtime" given is the time that one scientist would need to research the item i.e. the maximum time to complete the research with no pauses.

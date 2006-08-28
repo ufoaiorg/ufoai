@@ -20,7 +20,7 @@ SHARED_SRC1 = game/q_shared.c
 
 SHARED_SRC2 = win32/q_shwin.c
 
-CLIENT_SRC = client/cl_actor.c client/cl_basemanagement.c client/cl_campaign.c client/cl_cin.c client/cl_fx.c client/cl_input.c client/cl_le.c client/cl_main.c client/cl_market.c client/cl_menu.c client/cl_parse.c client/cl_particle.c client/cl_research.c client/cl_scrn.c client/cl_sequence.c client/cl_shader.c client/cl_team.c client/cl_ufopedia.c client/cl_view.c client/console.c client/keys.c client/snd_dma.c client/snd_mem.c client/snd_mix.c client/x86.c
+CLIENT_SRC = client/cl_actor.c client/cl_basemanagement.c client/cl_campaign.c client/cl_cin.c client/cl_fx.c client/cl_input.c client/cl_le.c client/cl_main.c client/cl_market.c client/cl_menu.c client/cl_parse.c client/cl_particle.c client/cl_research.c client/cl_scrn.c client/cl_sequence.c client/cl_shader.c client/cl_team.c client/cl_ufopedia.c client/cl_view.c client/console.c client/keys.c client/snd_ref.c client/snd_mem.c client/snd_mix.c client/x86.c
 
 QCOMMON_SRC = qcommon/cmd.c qcommon/cmodel.c qcommon/common.c qcommon/crc.c qcommon/cvar.c qcommon/files.c qcommon/md4.c qcommon/net_chan.c qcommon/scripts.c
 

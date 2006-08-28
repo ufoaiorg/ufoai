@@ -42,7 +42,7 @@ typedef enum ea_s {
 	EA_NUM_EVENTACTION
 } ea_t;
 
-char *ea_strings[EA_NUM_EVENTACTION] = {
+static char *ea_strings[EA_NUM_EVENTACTION] = {
 	"",
 	"cmd",
 
@@ -51,7 +51,7 @@ char *ea_strings[EA_NUM_EVENTACTION] = {
 	"&"
 };
 
-int ea_values[EA_NUM_EVENTACTION] = {
+static int ea_values[EA_NUM_EVENTACTION] = {
 	V_NULL,
 	V_LONGSTRING,
 
@@ -73,7 +73,7 @@ typedef enum ne_s {
 	NE_NUM_NODEEVENT
 } ne_t;
 
-char *ne_strings[NE_NUM_NODEEVENT] = {
+static char *ne_strings[NE_NUM_NODEEVENT] = {
 	"",
 	"click",
 	"rclick",
@@ -82,35 +82,35 @@ char *ne_strings[NE_NUM_NODEEVENT] = {
 	"out"
 };
 
-int ne_values[NE_NUM_NODEEVENT] = {
+size_t ne_values[NE_NUM_NODEEVENT] = {
 	0,
-	NOFS(click),
-	NOFS(rclick),
-	NOFS(mclick),
-	NOFS(mouseIn),
-	NOFS(mouseOut)
+	offsetof(menuNode_t, click),
+	offsetof(menuNode_t, rclick),
+	offsetof(menuNode_t, mclick),
+	offsetof(menuNode_t, mouseIn),
+	offsetof(menuNode_t, mouseOut)
 };
 
 /* =========================================================== */
 
-value_t nps[] = {
-	{"invis", V_BOOL, NOFS(invis)},
-	{"mousefx", V_BOOL, NOFS(mousefx)},
-	{"blend", V_BOOL, NOFS(blend)},
-	{"pos", V_POS, NOFS(pos)},
-	{"size", V_POS, NOFS(size)},
-	{"texh", V_POS, NOFS(texh)},
-	{"texl", V_POS, NOFS(texl)},
-	{"format", V_POS, NOFS(texh)},
-	{"origin", V_VECTOR, NOFS(origin)},
-	{"center", V_VECTOR, NOFS(center)},
-	{"scale", V_VECTOR, NOFS(scale)},
-	{"angles", V_VECTOR, NOFS(angles)},
-	{"num", V_INT, NOFS(num)},
-	{"height", V_INT, NOFS(height)},
-	{"text_scroll", V_INT, NOFS(textScroll)},
-	{"timeout", V_INT, NOFS(timeOut)},
-	{"bgcolor", V_COLOR, NOFS(bgcolor)},
+static value_t nps[] = {
+	{"invis", V_BOOL, offsetof(menuNode_t, invis)},
+	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx)},
+	{"blend", V_BOOL, offsetof(menuNode_t, blend)},
+	{"texh", V_POS, offsetof(menuNode_t, texh)},
+	{"texl", V_POS, offsetof(menuNode_t, texl)},
+	{"pos", V_POS, offsetof(menuNode_t, pos)},
+	{"size", V_POS, offsetof(menuNode_t, size)},
+	{"format", V_POS, offsetof(menuNode_t, texh)},
+	{"origin", V_VECTOR, offsetof(menuNode_t, origin)},
+	{"center", V_VECTOR, offsetof(menuNode_t, center)},
+	{"scale", V_VECTOR, offsetof(menuNode_t, scale)},
+	{"angles", V_VECTOR, offsetof(menuNode_t, angles)},
+	{"num", V_INT, offsetof(menuNode_t, num)},
+	{"height", V_INT, offsetof(menuNode_t, height)},
+	{"text_scroll", V_INT, offsetof(menuNode_t, textScroll)},
+	{"timeout", V_INT, offsetof(menuNode_t, timeOut)},
+	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor)},
 	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
 	{"tooltip", V_STRING, -5},	/* translated in MN_Tooltip */
 	{"image", V_STRING, 0},
@@ -125,23 +125,23 @@ value_t nps[] = {
 	{"min", V_FLOAT, -1},
 	{"current", V_FLOAT, -2},
 	{"weapon", V_STRING, 0},
-	{"color", V_COLOR, NOFS(color)},
-	{"align", V_ALIGN, NOFS(align)},
-	{"if", V_IF, NOFS(depends)},
+	{"color", V_COLOR, offsetof(menuNode_t, color)},
+	{"align", V_ALIGN, offsetof(menuNode_t, align)},
+	{"if", V_IF, offsetof(menuNode_t, depends)},
 
 	{NULL, V_NULL, 0},
 };
 
-value_t menuModelValues[] = {
-	{"model", V_STRING, MENUMODELFS(model)},
+static value_t menuModelValues[] = {
+	{"model", V_STRING, offsetof(menuModel_t, model)},
 	{"need", V_NULL, 0},
-	{"anim", V_STRING, MENUMODELFS(anim)},
-	{"skin", V_INT, MENUMODELFS(skin)},
-	{"origin", V_VECTOR, MENUMODELFS(origin)},
-	{"center", V_VECTOR, MENUMODELFS(center)},
-	{"scale", V_VECTOR, MENUMODELFS(scale)},
-	{"angles", V_VECTOR, MENUMODELFS(angles)},
-	{"color", V_COLOR, MENUMODELFS(color)},
+	{"anim", V_STRING, offsetof(menuModel_t, anim)},
+	{"skin", V_INT, offsetof(menuModel_t, skin)},
+	{"origin", V_VECTOR, offsetof(menuModel_t, origin)},
+	{"center", V_VECTOR, offsetof(menuModel_t, center)},
+	{"scale", V_VECTOR, offsetof(menuModel_t, scale)},
+	{"angles", V_VECTOR, offsetof(menuModel_t, angles)},
+	{"color", V_COLOR, offsetof(menuModel_t, color)},
 
 	{NULL, V_NULL, 0},
 };
@@ -168,7 +168,7 @@ typedef enum mn_s {
 	MN_NUM_NODETYPE
 } mn_t;
 
-char *nt_strings[MN_NUM_NODETYPE] = {
+static char *nt_strings[MN_NUM_NODETYPE] = {
 	"",
 	"confunc",
 	"cvarfunc",
@@ -190,27 +190,28 @@ char *nt_strings[MN_NUM_NODETYPE] = {
 /* =========================================================== */
 
 
-menuModel_t menuModels[MAX_MENUMODELS];
-menuAction_t menuActions[MAX_MENUACTIONS];
-menuNode_t menuNodes[MAX_MENUNODES];
-menu_t menus[MAX_MENUS];
+static menuModel_t menuModels[MAX_MENUMODELS];
+static menuAction_t menuActions[MAX_MENUACTIONS];
+static menuNode_t menuNodes[MAX_MENUNODES];
+static menu_t menus[MAX_MENUS];
 
-int numActions;
-int numNodes;
-int numMenus;
-int numMenuModels;
-int numTutorials;
+static int numActions;
+static int numNodes;
+static int numMenus;
+static int numMenuModels;
+static int numTutorials;
 
-byte *adata, *curadata;
-int adataize = 0;
+static byte *adata, *curadata;
+static int adataize = 0;
 
-menu_t *menuStack[MAX_MENUSTACK];
-int menuStackPos;
+static menu_t *menuStack[MAX_MENUSTACK];
+static int menuStackPos;
 
 inventory_t *menuInventory = NULL;
 char *menuText[MAX_MENUTEXTS];
 
 cvar_t *mn_escpop;
+
 
 /*
 ==============================================================
@@ -220,12 +221,25 @@ ACTION EXECUTION
 ==============================================================
 */
 
-/*
-=================
-MN_GetNode
-=================
-*/
-menuNode_t *MN_GetNode(menu_t * menu, char *name)
+/**
+ * @brief Searches all menus for the specified one
+ */
+menu_t *MN_GetMenu(char *name)
+{
+	int i;
+
+	for (i = 0; i < numMenus; i++)
+		if (!Q_strncmp(menus[i].name, name, MAX_VAR))
+			return &menus[i];
+
+	Sys_Error("Could not find menu '%s'\n", name);
+	return NULL;
+}
+
+/**
+ * @brief Searches all nodes in the given menu for a given nodename
+ */
+menuNode_t *MN_GetNode(const menu_t* const menu, char *name)
 {
 	menuNode_t *node;
 
@@ -236,13 +250,29 @@ menuNode_t *MN_GetNode(menu_t * menu, char *name)
 	return node;
 }
 
+/**
+ * @brief Searches a given node in the current menu
+ */
+menuNode_t* MN_GetNodeFromCurrentMenu(char*name)
+{
+	return MN_GetNode(menuStack[menuStackPos-1], name);
+}
 
-/*
-=================
-MN_GetReferenceString
-=================
-*/
-char *MN_GetReferenceString(menu_t * menu, char *ref)
+/**
+ * @brief Sets new x and y coordinates for a given node
+ */
+void MN_SetNewNodePos (menuNode_t* node, int x, int y)
+{
+	if (node) {
+		node->pos[0] = x;
+		node->pos[1] = y;
+	}
+}
+
+/**
+ * @brief
+ */
+static char *MN_GetReferenceString(const menu_t* const menu, char *ref)
 {
 	if (!ref)
 		return NULL;
@@ -282,10 +312,11 @@ char *MN_GetReferenceString(menu_t * menu, char *ref)
 				return NULL;
 
 			/* get the string */
-			if (val->ofs > 0)
+			/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
+			if ((val->ofs > 0) && (val->ofs < (size_t)-5))
 				return Com_ValueToStr(refNode, val->type, val->ofs);
 			else
-				return Com_ValueToStr(refNode->data[-val->ofs], val->type, 0);
+				return Com_ValueToStr(refNode->data[-(val->ofs)], val->type, 0);
 		}
 	} else if (*ref == '_') {
 		ref++;
@@ -297,12 +328,10 @@ char *MN_GetReferenceString(menu_t * menu, char *ref)
 }
 
 
-/*
-=================
-MN_GetReferenceFloat
-=================
-*/
-float MN_GetReferenceFloat(menu_t * menu, void *ref)
+/**
+ * @brief
+ */
+static float MN_GetReferenceFloat(const menu_t* const menu, void *ref)
 {
 	if (!ref)
 		return 0.0;
@@ -342,10 +371,11 @@ float MN_GetReferenceFloat(menu_t * menu, void *ref)
 				return 0.0;
 
 			/* get the string */
-			if (val->ofs > 0)
+			/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
+			if ((val->ofs > 0) && (val->ofs < (size_t)-5))
 				return *(float *) ((byte *) refNode + val->ofs);
 			else
-				return *(float *) refNode->data[-val->ofs];
+				return *(float *) refNode->data[-(val->ofs)];
 		}
 	} else {
 		/* just get the data */
@@ -353,14 +383,11 @@ float MN_GetReferenceFloat(menu_t * menu, void *ref)
 	}
 }
 
-/*=================
-MN_StartServer
-
-starts a server and checks if the server
-loads a team unless he is a dedicated
-server admin
-=================*/
-void MN_StartServer(void)
+/**
+ * @brief Starts a server and checks if the server loads a team unless he is a dedicated
+ * server admin
+ */
+static void MN_StartServer(void)
 {
 	if (Cmd_Argc() <= 1) {
 		Com_Printf("Usage: mn_startserver <name>\n");
@@ -370,6 +397,7 @@ void MN_StartServer(void)
 
 	if (Cvar_VariableValue("dedicated") > 0)
 		Com_DPrintf("Dedicated server needs no team\n");
+	/* FIXME: Spectator */
 	else if (!B_GetNumOnTeam()) {
 		MN_Popup(_("Error"), _("Assemble a team first"));
 		return;
@@ -385,24 +413,29 @@ void MN_StartServer(void)
 	Cbuf_ExecuteText(EXEC_NOW, va("map %s\n", Cmd_Argv(1)));
 }
 
-/*
-* Com_MergeShapes
-* Will merge the second shape (=itemshape) into the first one on the position x/y
-*/
-void Com_MergeShapes(int *shape, int itemshape, int x, int y)
+/**
+ * @brief Will merge the second shape (=itemshape) into the first one on the position x/y
+ * @param[in] shape Pointer to 'int shape[16]'
+ * @param[in] itemshape
+ * @param[in] x
+ * @param[in] y
+ */
+static void Com_MergeShapes(int* const shape, int itemshape, int x, int y)
 {
-	/*TODO-security: needs some checks for max-values! */
 	int i;
 
 	for (i = 0; (i < 4) && (y + i < 16); i++)
 		shape[y + i] |= ((itemshape >> i * 8) & 0xFF) << x;
 }
 
-/*
-* Com_CheckShape
-* Checks the shape if there is a 1-bit on the position x/y.
-*/
-qboolean Com_CheckShape(int shape[16], int x, int y)
+/**
+ * @brief Checks the shape if there is a 1-bit on the position x/y.
+ * @param[in] shape
+ * @param[in] x
+ * @param[in] y
+ * @note Make sure, that y is not bigger than 15
+ */
+static qboolean Com_CheckShape(int shape[16], int x, int y)
 {
 	int row = shape[y];
 	int position = pow(2, x);
@@ -413,22 +446,20 @@ qboolean Com_CheckShape(int shape[16], int x, int y)
 		return qtrue;
 }
 
-/*
-* MN_DrawFree
-* Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel).
-*/
-void MN_DrawFree(int posx, int posy, int sizex, int sizey)
+/**
+ * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
+ */
+static void MN_DrawFree(int posx, int posy, int sizex, int sizey)
 {
 	static vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
 	re.DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
 	re.DrawColor(NULL);
 }
 
-/*
-* MN_InvDrawFree
-* Draws the free and useable inventory positions when dragging an item.
-*/
-void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
+/**
+ * @brief Draws the free and useable inventory positions when dragging an item.
+ */
+static void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
 {
 	/* get the 'type' of the dragged item */
 	int item = dragItem.t;
@@ -467,18 +498,16 @@ void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
 						if (Com_CheckShape(free, x, y))
 							MN_DrawFree(node->pos[0] + x * C_UNIT, node->pos[1] + y * C_UNIT, C_UNIT, C_UNIT);
 					}
-				}				/* for x */
-			}					/* for y */
+				}	/* for x */
+			}	/* for y */
 		}
 	}
 }
 
 
-/*=================
-MN_Popup
-
-Popup in geoscape
-=================*/
+/**
+ * @brief Popup in geoscape
+ */
 void MN_Popup(const char *title, const char *text)
 {
 	menuText[TEXT_POPUP] = (char *) title;
@@ -487,12 +516,10 @@ void MN_Popup(const char *title, const char *text)
 	MN_PushMenu("popup");
 }
 
-/*
-=================
-MN_ExecuteActions
-=================
-*/
-void MN_ExecuteActions(menu_t * menu, menuAction_t * first)
+/**
+ * @brief
+ */
+static void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first)
 {
 	menuAction_t *action;
 	byte *data;
@@ -532,7 +559,8 @@ void MN_ExecuteActions(menu_t * menu, menuAction_t * first)
 					break;
 				}
 
-				if (nps[np].ofs > 0)
+				/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
+				if ((nps[np].ofs > 0) && (nps[np].ofs < (size_t)-5))
 					Com_SetValue(node, (char *) data, nps[np].type, nps[np].ofs);
 				else
 					node->data[-(nps[np].ofs)] = data;
@@ -545,12 +573,10 @@ void MN_ExecuteActions(menu_t * menu, menuAction_t * first)
 }
 
 
-/*
-=================
-MN_Command
-=================
-*/
-void MN_Command(void)
+/**
+ * @brief
+ */
+static void MN_Command(void)
 {
 	menuNode_t *node;
 	char *name;
@@ -575,209 +601,10 @@ MENU ZONE DETECTION
 ==============================================================
 */
 
-/*
-=================
-MN_MapToScreen
-=================
-*/
-qboolean MN_MapToScreen(menuNode_t * node, vec2_t pos, int *x, int *y)
-{
-	float sx;
-
-	/* get "raw" position */
-	sx = pos[0] / 360 + ccs.center[0] - 0.5;
-
-	/* shift it on screen */
-	if (sx < -0.5)
-		sx += 1.0;
-	else if (sx > +0.5)
-		sx -= 1.0;
-
-	*x = node->pos[0] + 0.5 * node->size[0] - sx * node->size[0] * ccs.zoom;
-	*y = node->pos[1] + 0.5 * node->size[1] - (pos[1] / 180 + ccs.center[1] - 0.5) * node->size[1] * ccs.zoom;
-
-	if (*x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
-		return qfalse;
-	return qtrue;
-}
-
-
-/*
-=================
-MN_ScreenToMap
-=================
-*/
-void MN_ScreenToMap(menuNode_t * node, int x, int y, vec2_t pos)
-{
-	pos[0] = (((node->pos[0] - x) / node->size[0] + 0.5) / ccs.zoom - (ccs.center[0] - 0.5)) * 360.0;
-	pos[1] = (((node->pos[1] - y) / node->size[1] + 0.5) / ccs.zoom - (ccs.center[1] - 0.5)) * 180.0;
-
-	while (pos[0] > 180.0)
-		pos[0] -= 360.0;
-	while (pos[0] < -180.0)
-		pos[0] += 360.0;
-}
-
-
-/*
-=================
-PolarToVec
-=================
-*/
-void PolarToVec(vec2_t a, vec3_t v)
-{
-	float p, t;
-
-	p = a[0] * M_PI / 180;
-	t = a[1] * M_PI / 180;
-	VectorSet(v, cos(p) * cos(t), sin(p) * cos(t), sin(t));
-}
-
-
-/*
-=================
-VecToPolar
-=================
-*/
-void VecToPolar(vec3_t v, vec2_t a)
-{
-	a[0] = 180 / M_PI * atan2(v[1], v[0]);
-	a[1] = 90 - 180 / M_PI * acos(v[2]);
-}
-
-
-/*
-=================
-MN_MapCalcLine
-=================
-*/
-void MN_MapCalcLine(vec2_t start, vec2_t end, mapline_t * line)
-{
-	vec3_t s, e, v;
-	vec3_t normal;
-	vec2_t trafo, sa, ea;
-	float cosTrafo, sinTrafo;
-	float phiStart, phiEnd, dPhi, phi;
-	float *p, *last;
-	int i, n;
-
-	/* get plane normal */
-	PolarToVec(start, s);
-	PolarToVec(end, e);
-	CrossProduct(s, e, normal);
-	VectorNormalize(normal);
-
-	/* get transformation */
-	VecToPolar(normal, trafo);
-	cosTrafo = cos(trafo[1] * M_PI / 180);
-	sinTrafo = sin(trafo[1] * M_PI / 180);
-
-	sa[0] = start[0] - trafo[0];
-	sa[1] = start[1];
-	PolarToVec(sa, s);
-	ea[0] = end[0] - trafo[0];
-	ea[1] = end[1];
-	PolarToVec(ea, e);
-
-	phiStart = atan2(s[1], cosTrafo * s[2] - sinTrafo * s[0]);
-	phiEnd = atan2(e[1], cosTrafo * e[2] - sinTrafo * e[0]);
-
-	/* get waypoints */
-	if (phiEnd < phiStart - M_PI)
-		phiEnd += 2 * M_PI;
-	if (phiEnd > phiStart + M_PI)
-		phiEnd -= 2 * M_PI;
-
-	n = (phiEnd - phiStart) / M_PI * LINE_MAXSEG;
-	if (n > 0)
-		n = n + 1;
-	else
-		n = -n + 1;
-
-/*	Com_Printf( "#(%3.1f %3.1f) -> (%3.1f %3.1f)\n", start[0], start[1], end[0], end[1] ); */
-
-	line->dist = fabs(phiEnd - phiStart) / n * 180 / M_PI;
-	line->n = n + 1;
-	dPhi = (phiEnd - phiStart) / n;
-	p = NULL;
-	for (phi = phiStart, i = 0; i <= n; phi += dPhi, i++) {
-		last = p;
-		p = line->p[i];
-		VectorSet(v, -sinTrafo * cos(phi), sin(phi), cosTrafo * cos(phi));
-		VecToPolar(v, p);
-		p[0] += trafo[0];
-
-		if (!last) {
-			while (p[0] < -180.0)
-				p[0] += 360.0;
-			while (p[0] > +180.0)
-				p[0] -= 360.0;
-		} else {
-			while (p[0] - last[0] > +180.0)
-				p[0] -= 360.0;
-			while (p[0] - last[0] < -180.0)
-				p[0] += 360.0;
-		}
-	}
-}
-
-
-/*
-=================
-MN_MapDrawLine
-=================
-*/
-void MN_MapDrawLine(menuNode_t * node, mapline_t * line)
-{
-	vec4_t color;
-	int pts[LINE_MAXPTS * 2];
-	int *p;
-	int i, start, old;
-
-	/* set color */
-	VectorSet(color, 1.0f, 0.5f, 0.5f);
-	color[3] = 1.0f;
-	re.DrawColor(color);
-
-	/* draw */
-	start = 0;
-	old = 512;
-	for (i = 0, p = pts; i < line->n; i++, p += 2) {
-		MN_MapToScreen(node, line->p[i], p, p + 1);
-
-		if (i > start && abs(p[0] - old) > 512) {
-			/* shift last point */
-			int diff;
-
-			if (p[0] - old > 512)
-				diff = -node->size[0] * ccs.zoom;
-			else
-				diff = node->size[0] * ccs.zoom;
-			p[0] += diff;
-
-			/* wrap around screen border */
-			re.DrawLineStrip(i - start + 1, pts);
-
-			/* shift first point, continue drawing */
-			start = --i;
-			pts[0] = p[-2] - diff;
-			pts[1] = p[-1];
-			p = pts;
-		}
-		old = p[0];
-	}
-
-	re.DrawLineStrip(i - start, pts);
-	re.DrawColor(NULL);
-}
-
-
-/*
-=================
-MN_FindContainer
-=================
-*/
-void MN_FindContainer(menuNode_t * node)
+/**
+ * @brief
+ */
+static void MN_FindContainer(menuNode_t* const node)
 {
 	invDef_t *id;
 	int i, j;
@@ -806,14 +633,45 @@ void MN_FindContainer(menuNode_t * node)
 	node->size[1] = C_UNIT * (i + 1) + 0.01;
 }
 
-/*
-=================
-MN_CheckNodeZone
-=================
-*/
-qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
+/**
+ * @brief
+ */
+static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
 {
 	int sx, sy, tx, ty;
+
+	if (*node->depends.var) {
+		/* menuIfCondition_t */
+		switch (node->depends.cond) {
+		case IF_EQ:
+			if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0)->value)
+				return qfalse;
+			break;
+		case IF_LE:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value > atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_GE:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value < atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_GT:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value <= atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_LT:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value >= atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_NE:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value == atof(node->depends.value))
+				return qfalse;
+			break;
+		default:
+			Sys_Error("Unknown condition for if statement: %i\n", node->depends.cond);
+			break;
+		}
+	}
 
 	/* containers */
 	if (node->type == MN_CONTAINER) {
@@ -863,18 +721,17 @@ qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
 		return qfalse;
 
 	/* on the node */
-	if (node->type == MN_TEXT)
+	if (node->type == MN_TEXT) {
+		assert(node->texh[0]);
 		return (int) (ty / node->texh[0]) + 1;
-	else
+	} else
 		return qtrue;
 }
 
 
-/*
-=================
-MN_CursorOnMenu
-=================
-*/
+/**
+ * @brief
+ */
 qboolean MN_CursorOnMenu(int x, int y)
 {
 	menuNode_t *node;
@@ -904,12 +761,11 @@ qboolean MN_CursorOnMenu(int x, int y)
 }
 
 
-/*=================
-MN_Drag
-
-NOTE: node->mousefx is the container id
-=================*/
-void MN_Drag(menuNode_t * node, int x, int y)
+/**
+ * @brief
+ * @note: node->mousefx is the container id
+ */
+static void MN_Drag(const menuNode_t* const node, int x, int y)
 {
 	int px, py;
 
@@ -941,23 +797,25 @@ void MN_Drag(menuNode_t * node, int x, int y)
 
 		/* tactical mission */
 		if (selActor)
-			MSG_WriteFormat(&cls.netchan.message, "bbsbbbbbb", clc_action, PA_INVMOVE, selActor->entnum, dragFrom, dragFromX, dragFromY, node->mousefx, px, py);
+			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragFrom, dragFromX, dragFromY, node->mousefx, px, py);
 		/* menu */
 		else {
 			invList_t *i = NULL;
 			int et = -1, sel;
 
-			/* sort equipment (tiny hack) */
 			if (node->mousefx == csi.idEquip) {
-				/* special item sorting for equipment */
+				/* a hack to add the equipment correctly into buy categories;
+				   it is valid only due to the following property: */
+				assert (MAX_CONTAINERS >= NUM_BUYTYPES);
+
 				i = Com_SearchInInventory(menuInventory, dragFrom, dragFromX, dragFromY);
 				if (i) {
 					et = csi.ods[i->item.t].buytype;
 					if (et != baseCurrent->equipType) {
-						menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[et];
+						menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[et];
 						Com_FindSpace(menuInventory, i->item.t, csi.idEquip, &px, &py);
 						if (px >= 32 && py >= 16) {
-							menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[baseCurrent->equipType];
+							menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[baseCurrent->equipType];
 							return;
 						}
 					}
@@ -969,18 +827,18 @@ void MN_Drag(menuNode_t * node, int x, int y)
 
 			/* end of hack */
 			if (i && et != baseCurrent->equipType) {
-				baseCurrent->equipment.c[et] = menuInventory->c[csi.idEquip];
-				menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[baseCurrent->equipType];
+				baseCurrent->equipByBuyType.c[et] = menuInventory->c[csi.idEquip];
+				menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[baseCurrent->equipType];
 			} else
-				baseCurrent->equipment.c[baseCurrent->equipType] = menuInventory->c[csi.idEquip];
+				baseCurrent->equipByBuyType.c[baseCurrent->equipType] = menuInventory->c[csi.idEquip];
 
 			/* update character info (for armor changes) */
 			sel = cl_selected->value;
-			if (sel >= 0 && sel < baseCurrent->numWholeTeam) {
-				if ( baseCurrent->curTeam[sel].fieldSize == ACTOR_SIZE_NORMAL )
-					CL_CharacterCvars(&baseCurrent->curTeam[sel]);
+			if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
+				if ( baseCurrent->curTeam[sel]->fieldSize == ACTOR_SIZE_NORMAL )
+					CL_CharacterCvars(baseCurrent->curTeam[sel]);
 				else
-					CL_UGVCvars(&baseCurrent->curTeam[sel]);
+					CL_UGVCvars(baseCurrent->curTeam[sel]);
 			}
 		}
 	}
@@ -988,12 +846,10 @@ void MN_Drag(menuNode_t * node, int x, int y)
 }
 
 
-/*
-=================
-MN_BarClick
-=================
-*/
-void MN_BarClick(menu_t * menu, menuNode_t * node, int x)
+/**
+ * @brief
+ */
+static void MN_BarClick(menu_t * menu, menuNode_t * node, int x)
 {
 	char var[MAX_VAR];
 	float frac, min;
@@ -1010,112 +866,23 @@ void MN_BarClick(menu_t * menu, menuNode_t * node, int x)
 	Cvar_SetValue(&var[6], min + frac * (MN_GetReferenceFloat(menu, node->data[0]) - min));
 }
 
-/*
-======================
-MN_3DMapClick
-======================
-*/
-void MN_3DMapClick(menuNode_t * node, int x, int y)
-{
-}
-
-/*
-======================
-MN_MapClick
-======================
-*/
-void MN_MapClick(menuNode_t * node, int x, int y)
-{
-	aircraft_t *air;
-	actMis_t *ms;
-	int i, j, msx, msy;
-	vec2_t pos;
-
-	/* get map position */
-	MN_ScreenToMap(node, x, y, pos);
-
-	/* new base construction */
-	if (gd.mapAction == MA_NEWBASE) {
-		if (!MapIsWater(CL_GetmapColor(pos))) {
-			newBasePos[0] = pos[0];
-			newBasePos[1] = pos[1];
-			MN_PushMenu("popup_newbase");
-			return;
-		} else {
-			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL);
-		}
-	} else if (gd.mapAction == MA_INTERCEPT && selMis)
-		MN_PushMenu("popup_intercept");
-	else if (gd.mapAction == MA_BASEATTACK && selMis)
-		MN_PushMenu("popup_baseattack");
-	else if (gd.mapAction == MA_UFORADAR) {
-		MN_PushMenu("popup_intercept_ufo");
-		/* TODO: Select aircraft - follow ufo - fight */
-		/* if shoot down - we have a new crashsite mission if color != water */
-	}
-
-	/* mission selection */
-	for (i = 0, ms = ccs.mission; i < ccs.numMissions; i++, ms++) {
-		if (!MN_MapToScreen(node, ms->realPos, &msx, &msy))
-			continue;
-		if (x >= msx - 8 && x <= msx + 8 && y >= msy - 8 && y <= msy + 8) {
-			selMis = ms;
-			if (!Q_strncmp(selMis->def->name, "baseattack", 10)) {
-				gd.mapAction = MA_BASEATTACK;
-				/* we need no dropship in our base */
-				selMis->def->active = qtrue;
-			} else {
-				Com_DPrintf("Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
-				gd.mapAction = MA_INTERCEPT;
-			}
-			return;
-		}
-	}
-
-	/* base selection */
-	for (i = 0; i < gd.numBases; i++) {
-		if (!MN_MapToScreen(node, gd.bases[i].pos, &msx, &msy))
-			continue;
-		if (x >= msx - 8 && x <= msx + 8 && y >= msy - 8 && y <= msy + 8) {
-			Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i", i));
-			MN_PushMenu("bases");
-			return;
-		}
-	}
-
-	/* draw aircraft */
-	for (i = 0; i < gd.numBases; i++) {
-		for (j = 0, air = gd.bases[i].aircraft; j < gd.bases[i].numAircraftInBase; j++, air++) {
-			if (air->status > AIR_HOME && air->fuel > 0) {
-				MN_MapCalcLine(air->pos, pos, &air->route);
-				air->status = AIR_TRANSIT;
-				air->time = air->point = 0;
-			}
-		}
-	}
-}
-
-
-/*
-======================
-MN_BaseMapClick
-======================
-*/
-void MN_BaseMapClick(menuNode_t * node, int x, int y)
+/**
+ * @brief
+ */
+static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 {
 	int row, col;
-	building_t *b, *entry;
+	building_t	*entry;
 
 	assert(baseCurrent);
 
-	b = baseCurrent->buildingCurrent;
-
-	if (b && b->buildingStatus == B_STATUS_NOT_SET) {
+	if (baseCurrent->buildingCurrent && baseCurrent->buildingCurrent->buildingStatus == B_STATUS_NOT_SET) {
 		for (row = 0; row < BASE_SIZE; row++)
 			for (col = 0; col < BASE_SIZE; col++)
 				if (baseCurrent->map[row][col] == -1 && x >= baseCurrent->posX[row][col]
 					&& x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE && y >= baseCurrent->posY[row][col]
 					&& y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE) {
+					/* Set position for a new building */
 					B_SetBuildingByClick(row, col);
 					return;
 				}
@@ -1132,51 +899,65 @@ void MN_BaseMapClick(menuNode_t * node, int x, int y)
 
 				if (*entry->onClick)
 					Cbuf_ExecuteText(EXEC_NOW, entry->onClick);
+#if 0
+				else {
+					/* Click on building : display its properties in the building menu */
+					MN_PushMenu("buildings");
+					baseCurrent->buildingCurrent = entry;
+					B_BuildingStatus();
+				}
+#else
 				else
 					UP_OpenWith(entry->pedia);
-
+#endif
 				return;
 			}
 }
 
 
-/*
-=================
-MN_ModelClick
-=================
-*/
-void MN_ModelClick(menuNode_t * node)
+/**
+ * @brief
+ */
+static void MN_ModelClick(menuNode_t * node)
 {
 	mouseSpace = MS_ROTATE;
 	rotateAngles = node->angles;
 }
 
 
-/*
-=================
-MN_TextClick
-=================
-*/
-void MN_TextClick(menuNode_t * node, int mouseOver)
+/**
+ * @brief Calls the script command for a text node that is clickable
+ * @note The node must have the click parameter
+ * @sa MN_TextRightClick
+ */
+static void MN_TextClick(menuNode_t * node, int mouseOver)
 {
 	Cbuf_AddText(va("%s_click %i\n", node->name, mouseOver - 1));
 }
 
-/*
-=================
-MN_TextRightClick
-=================
-*/
-void MN_TextRightClick(menuNode_t * node, int mouseOver)
+/**
+ * @brief Calls the script command for a text node that is clickable via right mouse button
+ * @note The node must have the rclick parameter
+ * @sa MN_TextClick
+ */
+static void MN_TextRightClick(menuNode_t * node, int mouseOver)
 {
 	Cbuf_AddText(va("%s_rclick %i\n", node->name, mouseOver - 1));
 }
 
-/*
-=================
-MN_Click
-=================
-*/
+/**
+ * @brief
+ * @sa MN_ModelClick
+ * @sa MN_TextRightClick
+ * @sa MN_TextClick
+ * @sa MN_Drag
+ * @sa MN_BarClick
+ * @sa MN_BaseMapClick
+ * @sa MAP_3DMapClick
+ * @sa MAP_MapClick
+ * @sa MN_ExecuteActions
+ * @sa MN_RightClick
+ */
 void MN_Click(int x, int y)
 {
 	menuNode_t *node;
@@ -1193,6 +974,7 @@ void MN_Click(int x, int y)
 
 			/* check whether mouse is over this node */
 			mouseOver = MN_CheckNodeZone(node, x, y);
+
 			if (!mouseOver)
 				continue;
 
@@ -1208,10 +990,10 @@ void MN_Click(int x, int y)
 				MN_BaseMapClick(node, x, y);
 				break;
 			case MN_MAP:
-				MN_MapClick(node, x, y);
+				MAP_MapClick(node, x, y);
 				break;
 			case MN_3DMAP:
-				MN_3DMapClick(node, x, y);
+				MAP_3DMapClick(node, x, y);
 				break;
 			case MN_MODEL:
 				MN_ModelClick(node);
@@ -1232,11 +1014,13 @@ void MN_Click(int x, int y)
 }
 
 
-/*
-=================
-MN_RightClick
-=================
-*/
+/**
+ * @brief
+ * @sa MAP_ResetAction
+ * @sa MN_TextRightClick
+ * @sa MN_ExecuteActions
+ * @sa MN_Click
+ */
 void MN_RightClick(int x, int y)
 {
 	menuNode_t *node;
@@ -1260,11 +1044,11 @@ void MN_RightClick(int x, int y)
 			/* found a node -> do actions */
 			switch (node->type) {
 			case MN_MAP:
-				CL_MapActionReset();
+				MAP_ResetAction();
 				mouseSpace = MS_SHIFTMAP;
 				break;
 			case MN_3DMAP:
-				CL_MapActionReset();
+				MAP_ResetAction();
 				mouseSpace = MS_SHIFT3DMAP;
 				break;
 			case MN_TEXT:
@@ -1283,11 +1067,9 @@ void MN_RightClick(int x, int y)
 }
 
 
-/*
-=================
-MN_MiddleClick
-=================
-*/
+/**
+ * @brief
+ */
 void MN_MiddleClick(int x, int y)
 {
 	menuNode_t *node;
@@ -1329,41 +1111,29 @@ void MN_MiddleClick(int x, int y)
 }
 
 
-/*
-=================
-MN_SetViewRect
-=================
-*/
-void MN_SetViewRect(void)
+/**
+ * @brief Determine the position and size of render
+ * @param[in] menu : use its position and size properties
+ */
+void MN_SetViewRect(const menu_t* menu)
 {
-	menuNode_t *rn;
-	int sp;
+	menuNode_t* menuNode = menu ? (menu->renderNode ? menu->renderNode : (menu->popupNode ? menu->popupNode : NULL)): NULL;
 
-	sp = menuStackPos;
-
-	while (sp > 0) {
-		rn = menuStack[--sp]->renderNode;
-		if (rn) {
-			if (rn->invis) {
-				/* don't draw the scene */
-				memset(&scr_vrect, 0, sizeof(scr_vrect));
-				return;
-			}
-
-			/* the menu has a view size specified */
-			scr_vrect.x = rn->pos[0] * viddef.rx;
-			scr_vrect.y = rn->pos[1] * viddef.ry;
-			scr_vrect.width = rn->size[0] * viddef.rx;
-			scr_vrect.height = rn->size[1] * viddef.ry;
-			return;
-		}
+	if (!menuNode) {
+		/* render the full screen */
+		scr_vrect.x = scr_vrect.y = 0;
+		scr_vrect.width = viddef.width;
+		scr_vrect.height = viddef.height;
+	} else if (menuNode->invis) {
+		/* don't draw the scene */
+		memset(&scr_vrect, 0, sizeof(scr_vrect));
+	} else {
+		/* the menu has a view size specified */
+		scr_vrect.x = menuNode->pos[0] * viddef.rx;
+		scr_vrect.y = menuNode->pos[1] * viddef.ry;
+		scr_vrect.width = menuNode->size[0] * viddef.rx;
+		scr_vrect.height = menuNode->size[1] * viddef.ry;
 	}
-
-	/* no menu in stack has a render node */
-	/* render the full screen */
-	scr_vrect.x = scr_vrect.y = 0;
-	scr_vrect.width = viddef.width;
-	scr_vrect.height = viddef.height;
 }
 
 
@@ -1375,11 +1145,21 @@ MENU DRAWING
 ==============================================================
 */
 
-/*
-=================
-MN_DrawItem
-=================
-*/
+/**
+ * @brief Draws an item to the screen
+ *
+ * @param[in] org Node position on the screen (pixel)
+ * @param[in] item The item to draw
+ * @param[in] sx Size in x direction (no pixel but container space)
+ * @param[in] sy Size in y direction (no pixel but container space)
+ * @param[in] x Position in container
+ * @param[in] y Position in container
+ * @param[in] scale
+ * @param[in] color
+ *
+ * Used to draw an item to the equipment containers. First look whether the objDef_t
+ * includes an image - if there is none then draw the model
+ */
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color)
 {
 	modelInfo_t mi;
@@ -1396,8 +1176,10 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 
 	if (od->image[0]) {
 		/* draw the image */
-		/* fix fixed size */
-		re.DrawNormPic(org[0] + C_UNIT / 2.0 * sx + C_UNIT * x, org[1] + C_UNIT / 2.0 * sy + C_UNIT * y, 80, 80, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
+		re.DrawNormPic(
+			org[0] + C_UNIT / 2.0 * sx + C_UNIT * x,
+			org[1] + C_UNIT / 2.0 * sy + C_UNIT * y,
+			C_UNIT * sx, C_UNIT * sy, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
 	} else if (od->model[0]) {
 		/* draw model, if there is no image */
 		mi.name = od->model;
@@ -1425,7 +1207,7 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 		mi.backlerp = 0;
 
 		Vector4Copy(color, col);
-		if (od->weapon && od->ammo && !item.a) {
+		if (od->weapon && od->reload && !item.a) {
 			col[1] *= 0.5;
 			col[2] *= 0.5;
 		}
@@ -1437,151 +1219,12 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 	}
 }
 
-/*
-=================
-MN_Draw3DMapMarkers
-=================
-*/
-void MN_Draw3DMapMarkers(menuNode_t * node, float latitude, float longitude)
-{
-	aircraft_t *air;
-	actMis_t *ms;
-	int i, j, x, y;
 
-	/* draw mission pics */
-	menuText[TEXT_STANDARD] = NULL;
-	Cvar_Set("mn_mapdaytime", "");
-	for (i = 0; i < ccs.numMissions; i++) {
-		ms = &ccs.mission[i];
-		if (!MN_MapToScreen(node, ms->realPos, &x, &y))
-			continue;
-		re.Draw3DMapMarkers(latitude, longitude, "cross");
 
-		if (ms == selMis) {
-			menuText[TEXT_STANDARD] = ms->def->text;
-			if (selMis->def->active)
-				re.Draw3DMapMarkers(latitude, longitude, "circleactive");
-			else
-				re.Draw3DMapMarkers(latitude, longitude, "circle");
-
-/*			if ( CL_3DMapIsNight( ms->realPos ) ) Cvar_Set( "mn_mapdaytime", _("Night") );
-			else Cvar_Set( "mn_mapdaytime", _("Day") ); */
-		}
-	}
-
-	/* draw base pics */
-	for (j = 0; j < gd.numBases; j++)
-		if (gd.bases[j].founded) {
-			if (!MN_MapToScreen(node, gd.bases[j].pos, &x, &y))
-				continue;
-			re.Draw3DMapMarkers(latitude, longitude, "base");
-		}
-
-	/* draw aircraft */
-	for (j = 0; j < gd.numBases; j++)
-		if (gd.bases[j].founded) {
-			for (i = 0, air = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, air++)
-				if (air->status != AIR_HOME) {
-					if (!MN_MapToScreen(node, air->pos, &x, &y))
-						continue;
-					re.Draw3DMapMarkers(latitude, longitude, air->image);
-
-					if (air->status >= AIR_TRANSIT) {
-						mapline_t path;
-
-						path.n = air->route.n - air->point;
-						memcpy(path.p + 1, air->route.p + air->point + 1, (path.n - 1) * sizeof(vec2_t));
-						memcpy(path.p, air->pos, sizeof(vec2_t));
-						re.Draw3DMapLine(path.n, path.dist, path.p);
-					}
-				}
-		}
-}
-
-/*
-=================
-MN_DrawMapMarkers
-=================
-*/
-void MN_DrawMapMarkers(menuNode_t * node)
-{
-	aircraft_t *air;
-	actMis_t *ms;
-	int i, j, x, y;
-
-	/* draw mission pics */
-	menuText[TEXT_STANDARD] = NULL;
-	Cvar_Set("mn_mapdaytime", "");
-	for (i = 0; i < ccs.numMissions; i++) {
-		ms = &ccs.mission[i];
-		if (!MN_MapToScreen(node, ms->realPos, &x, &y))
-			continue;
-		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
-		if (ms == selMis) {
-			menuText[TEXT_STANDARD] = ms->def->text;
-			if (selMis->def->active) {
-				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circleactive");
-			} else
-				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
-
-			if (CL_MapIsNight(ms->realPos))
-				Cvar_Set("mn_mapdaytime", _("Night"));
-			else
-				Cvar_Set("mn_mapdaytime", _("Day"));
-		}
-	}
-
-	/* draw base pics */
-	for (j = 0; j < gd.numBases; j++)
-		if (gd.bases[j].founded) {
-			if (!MN_MapToScreen(node, gd.bases[j].pos, &x, &y))
-				continue;
-			i = gd.bases[j].sensorWidth;
-			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
-			if (gd.bases[j].drawSensor)
-				re.DrawNormPic(x, y, i, i, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor");
-		}
-
-	/* draw aircraft */
-	for (j = 0; j < gd.numBases; j++)
-		if (gd.bases[j].founded) {
-			for (i = 0, air = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, air++)
-				if (air->status != AIR_HOME) {
-					if (!MN_MapToScreen(node, air->pos, &x, &y))
-						continue;
-					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, air->image);
-
-					if (air->status >= AIR_TRANSIT) {
-						mapline_t path;
-
-						path.n = air->route.n - air->point;
-						memcpy(path.p + 1, air->route.p + air->point + 1, (path.n - 1) * sizeof(vec2_t));
-						memcpy(path.p, air->pos, sizeof(vec2_t));
-						MN_MapDrawLine(node, &path);
-					}
-				}
-		}
-
-	for (j = 0; j < ccs.numUfoOnGeoscape; j++) {
-		/* if not AIR_UFOMOVE - the ufo is not in radar width */
-#ifdef DEBUG
-		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
-		if (Cvar_VariableValue("showufos"))
-			MN_MapToScreen(node, ufoOnGeoscape[j]->pos, &x, &y);
-		else
-#endif
-		if (ufoOnGeoscape[j]->status != AIR_UFOMOVE || !MN_MapToScreen(node, ufoOnGeoscape[j]->pos, &x, &y))
-			continue;
-		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, ufoOnGeoscape[j]->image);
-	}
-}
-
-/*=================
-MN_DrawTooltip
-
-generic tooltip function
-=================*/
-void MN_DrawTooltip(char *font, char *string, int x, int y)
+/**
+ * @brief Generic tooltip function
+ */
+static void MN_DrawTooltip(char *font, char *string, int x, int y)
 {
 	int width = 0, height = 0;
 
@@ -1595,18 +1238,14 @@ void MN_DrawTooltip(char *font, char *string, int x, int y)
 		x -= (width + 10);
 	re.DrawFill(x - 1, y - 1, width, height, 0, tooltipBG);
 	re.DrawColor(tooltipColor);
-	re.FontDrawString(font, 0, x + 1, y + 1, width, string);
+	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, width, 0, height, string);
 	re.DrawColor(NULL);
 }
 
-/*
-=================
-MN_Tooltip
-
-Wrapper for menu tooltips
-=================
-*/
-void MN_Tooltip(menuNode_t * node, int x, int y)
+/**
+ * @brief Wrapper for menu tooltips
+ */
+static void MN_Tooltip(menuNode_t * node, int x, int y)
 {
 	char *tooltip;
 
@@ -1621,11 +1260,9 @@ void MN_Tooltip(menuNode_t * node, int x, int y)
 	}
 }
 
-/*
-=================
-MN_PrecacheMenus
-=================
-*/
+/**
+ * @brief
+ */
 void MN_PrecacheMenus(void)
 {
 	int i;
@@ -1662,14 +1299,12 @@ void MN_PrecacheMenus(void)
 	}
 }
 
-/*
-=================
-MN_GetMenuModel
-
-returns pointer to menu model
-=================
-*/
-menuModel_t *MN_GetMenuModel(char *menuModel)
+/**
+ * @brief Returns pointer to menu model
+ * @param[in] menuModel menu model id from script files
+ * @return menuModel_t pointer
+ */
+static menuModel_t *MN_GetMenuModel(char *menuModel)
 {
 	int i;
 	menuModel_t *m;
@@ -1682,28 +1317,31 @@ menuModel_t *MN_GetMenuModel(char *menuModel)
 	return NULL;
 }
 
-/*
-=================
-MN_GetFont
-
-Return the font for a specific node or default font
-=================
-*/
-char *MN_GetFont(menu_t * m, menuNode_t * n)
+/**
+ * @brief Return the font for a specific node or default font
+ * @param[in] m The current menu pointer - if NULL we will use the current menuStack
+ * @param[in] n The node to get the font for - if NULL f_small is returned
+ * @return char pointer with font name (default is f_small)
+ */
+char *MN_GetFont(const menu_t *m, const menuNode_t *const n)
 {
-	if (n->data[1])
+	if (!n || n->data[1]) {
+		if (!m) {
+			m = menuStack[menuStackPos-1];
+		}
 		return MN_GetReferenceString(m, n->data[1]);
+	}
 	return "f_small";
 }
 
-/*
-=================
-MN_DrawMenus
-=================
-*/
+/**
+ * @brief Draws the menu stack
+ * @sa SCR_UpdateScreen
+ */
 void MN_DrawMenus(void)
 {
-	modelInfo_t mi, pmi;
+	modelInfo_t mi = {0, };
+	modelInfo_t pmi;
 	menuNode_t *node;
 	menu_t *menu;
 	animState_t *as;
@@ -1711,11 +1349,11 @@ void MN_DrawMenus(void)
 	char *anim;					/* model anim state */
 	char source[MAX_VAR];
 	int sp, pp;
-	item_t item;
+	item_t item = {1,NONE,NONE}; /* 1 so it's not reddish; fake item anyway */
 	vec4_t color;
 	int mouseOver = 0;
-	char *pos, *tab, *end;
-	int y, line, x, len;
+	char *cur, *tab, *end;
+	int y, line, x;
 	message_t *message;
 	menuModel_t *menuModel = NULL;
 	int width, height;
@@ -1739,8 +1377,38 @@ void MN_DrawMenus(void)
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP
 					|| node->type == MN_3DMAP)) {
 				/* if construct */
-				if (*node->depends.var && Q_stricmp(node->depends.value, (Cvar_Get(node->depends.var, node->depends.value, 0))->string))
-					continue;
+				if (*node->depends.var) {
+					/* menuIfCondition_t */
+					switch (node->depends.cond) {
+					case IF_EQ:
+						if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0)->value)
+							continue;
+						break;
+					case IF_LE:
+						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value > atof(node->depends.value))
+							continue;
+						break;
+					case IF_GE:
+						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value < atof(node->depends.value))
+							continue;
+						break;
+					case IF_GT:
+						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value <= atof(node->depends.value))
+							continue;
+						break;
+					case IF_LT:
+						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value >= atof(node->depends.value))
+							continue;
+						break;
+					case IF_NE:
+						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value == atof(node->depends.value))
+							continue;
+						break;
+					default:
+						Sys_Error("Unknown condition for if statement: %i\n", node->depends.cond);
+						break;
+					}
+				}
 
 				/* mouse effects */
 				if (sp > pp) {
@@ -1798,16 +1466,17 @@ void MN_DrawMenus(void)
 						node->texl[0] = -(int) (0.01 * (node->name[4] - 'a') * cl.time) % 64;
 						node->texh[0] = node->texl[0] + node->size[0];
 					}
-					re.DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
-								   node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
+					if (*ref)
+						re.DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
+								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
 					break;
 
 				case MN_STRING:
 					font = MN_GetFont(menu, node);
 					if (!node->mousefx || cl.time % 1000 < 500)
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->size[0], ref);
+						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], ref);
 					else
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->size[0], va("%s*\n", ref));
+						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref));
 					break;
 
 				case MN_TEXT:
@@ -1815,56 +1484,64 @@ void MN_DrawMenus(void)
 						char textCopy[MAX_MENUTEXTLEN];
 
 						Q_strncpyz(textCopy, menuText[node->num], MAX_MENUTEXTLEN);
-						len = strlen(textCopy);
-
 						font = MN_GetFont(menu, node);
 
-						pos = textCopy;
+						cur = textCopy;
 						y = node->pos[1];
-						line = 0;
+						line = 0; /* these are lines only in one-line texts! */
+						/* but it's easy to fix, just change FontDrawString
+							so that it returns a pair, #lines and height
+							and add that to variable line; the only other file
+							using FontDrawString result is client/cl_sequence.c
+							and there just ignore #lines */
 						do {
 							line++;
 							/* have a look that the maxline value defined in menu via */
 							/* the height parameter is not exceeded here */
 							/* TODO: Draw the scrollbars */
+							/* this is currently broken: */
+#if 0
 							if (node->height > 0 && line >= node->height)
 								break;
 							/* maybe due to scrolling this line is not visible */
 							if (line < node->textScroll)
 								break;
-
-							/* new line starts from node x pos */
+#endif
+							/* new line starts from node x position */
 							x = node->pos[0];
 
-							end = strchr(pos, '\n');
+							end = strchr(cur, '\n');
 							if (end)
 								*end++ = '\0';
+
+							/* only works with one-line texts right now: */
 							if (node->mousefx && line == mouseOver)
 								re.DrawColor(color);
 
+							/* we assume all the tabs fit on a single line */
 							do {
-								tab = strchr(pos, '\t');
+								tab = strchr(cur, '\t');
 								if (!tab)
 									break;
 
 								*tab++ = '\0';
-								re.FontDrawString(font, node->align, x, y, node->size[0], pos);
+								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur);
 								if (!node->texh[1])
 									x += (node->size[0] / 3);
 								else
 									x += node->texh[1];
-								pos = tab;
+								cur = tab;
 							} while (1);
 
-							re.FontDrawString(font, node->align, x, y, node->size[0], pos);
+							/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
+							y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], (*cur ? cur : " "));
 
 							if (node->mousefx && line == mouseOver)
-								re.DrawColor(node->color);
+								 re.DrawColor(node->color); /* why is this repeated? */
 
-							pos = end;
-							y += node->texh[0];
+							cur = end;
 						}
-						while (pos);
+						while (cur);
 					} else if (node->num == TEXT_MESSAGESYSTEM) {
 						if (node->data[1])
 							font = MN_GetReferenceString(menu, node->data[1]);
@@ -1892,23 +1569,21 @@ void MN_DrawMenus(void)
 									tab = message->text;
 									while ((end = strstr(tab, "\\")) != NULL) {
 										*end++ = '\0';
-										re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->size[0], tab);
+										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab);
 										tab = end;
 										line++;
 										if (line >= node->height)
 											break;
-										y += node->texh[0];
 									}
 								} else {
 									/* newline to space - we don't need this */
 									while ((end = strstr(message->text, "\\")) != NULL)
 										*end = ' ';
 
-									re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->size[0], message->text);
+									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], message->text);
 								}
 							}
 
-							y += node->texh[0];
 							message = message->next;
 						}
 					}
@@ -1926,10 +1601,9 @@ void MN_DrawMenus(void)
 
 				case MN_CONTAINER:
 					if (menuInventory) {
-						vec3_t scale;
+						vec3_t scale = {3.5, 3.5, 3.5};
 						invList_t *ic;
 
-						VectorSet(scale, 3.5, 3.5, 3.5);
 						color[0] = color[1] = color[2] = 0.5;
 						color[3] = 1;
 
@@ -1950,8 +1624,9 @@ void MN_DrawMenus(void)
 											color);
 						} else {
 							/* standard container */
-							for (ic = menuInventory->c[node->mousefx]; ic; ic = ic->next)
+							for (ic = menuInventory->c[node->mousefx]; ic; ic = ic->next) {
 								MN_DrawItem(node->pos, ic->item, csi.ods[ic->item.t].sx, csi.ods[ic->item.t].sy, ic->x, ic->y, scale, color);
+							}
 						}
 						/* draw free space if dragging - but not for idEquip */
 						if (node->mousefx != csi.idEquip)
@@ -1975,8 +1650,6 @@ void MN_DrawMenus(void)
 							break;
 					if (item.t == csi.numODs || item.t == NONE)
 						break;
-
-					item.a = 1;
 
 					MN_DrawItem(node->pos, item, 0, 0, 0, 0, node->scale, color);
 					break;
@@ -2122,74 +1795,10 @@ void MN_DrawMenus(void)
 					break;
 
 				case MN_3DMAP:
-					{
-						float q;
-
-						/* advance time */
-						if (!curCampaign)
-							break;
-						CL_CampaignRun();
-
-						/* draw the map */
-						q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
-						re.Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / (3600 * 24), q,
-									   ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
-
-						/* draw markers */
-						/* FIXME: */
-						MN_Draw3DMapMarkers(node, 0.0, 0.0);
-
-						/* display text */
-						switch (gd.mapAction) {
-						case MA_NEWBASE:
-							menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
-							break;
-						case MA_BASEATTACK:
-							if (!selMis)
-								menuText[TEXT_STANDARD] = _("Aliens are attacking our base\nat this very moment.\n");
-							break;
-						case MA_INTERCEPT:
-							if (!selMis)
-								menuText[TEXT_STANDARD] = _("Select ufo or mission on map\n");
-							break;
-						}
-					}
-					break;
 				case MN_MAP:
-					{
-						float q;
-
-						/* advance time */
-						if (!curCampaign)
-							break;
-						CL_CampaignRun();
-
-						/* draw the map */
-						q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
-						re.DrawDayAndNight(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / (3600 * 24), q,
-										   ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
-
-						/* draw markers */
-						MN_DrawMapMarkers(node);
-
-						/* display text */
-						switch (gd.mapAction) {
-						case MA_NEWBASE:
-							menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
-							break;
-						case MA_BASEATTACK:
-							if (!selMis)
-								menuText[TEXT_STANDARD] = _("Aliens are attacking our base\nat this very moment.\n");
-							break;
-						case MA_INTERCEPT:
-							if (!selMis)
-								menuText[TEXT_STANDARD] = _("Select ufo or mission on map\n");
-							break;
-						case MA_UFORADAR:
-							if (!selMis)
-								menuText[TEXT_STANDARD] = _("UFO in radar range\n");
-							break;
-						}
+					if (curCampaign) {
+						CL_CampaignRun();	/* advance time */
+						MAP_DrawMap(node, node->type == MN_3DMAP); /* Draw geoscape */
 					}
 					break;
 
@@ -2220,12 +1829,10 @@ GENERIC MENU FUNCTIONS
 ==============================================================
 */
 
-/*
-=================
-MN_DeleteMenu
-=================
-*/
-void MN_DeleteMenu(menu_t * menu)
+/**
+ * @brief
+ */
+static void MN_DeleteMenu(menu_t * menu)
 {
 	int i;
 
@@ -2237,20 +1844,32 @@ void MN_DeleteMenu(menu_t * menu)
 		}
 }
 
+/**
+ * @brief Get the current active menu
+ * @return menu_t pointer from menu stack
+ */
+menu_t* MN_ActiveMenu(void)
+{
+	if (menuStack >= 0)
+		return menuStack[menuStackPos-1];
 
-/*
-=================
-MN_PushMenu
-=================
-*/
-void MN_PushMenu(char *name)
+	return NULL;
+}
+
+/**
+ * @brief Push a menu onto the menu stack
+ * @param[in] name Name of the menu to push onto menu stack
+ * @return pointer to menu_t
+ */
+menu_t* MN_PushMenuDelete(char *name, qboolean delete)
 {
 	int i;
 
 	for (i = 0; i < numMenus; i++)
 		if (!Q_strncmp(menus[i].name, name, MAX_VAR)) {
 			/* found the correct add it to stack or bring it on top */
-			MN_DeleteMenu(&menus[i]);
+			if (delete)
+				MN_DeleteMenu(&menus[i]);
 
 			if (menuStackPos < MAX_MENUSTACK)
 				menuStack[menuStackPos++] = &menus[i];
@@ -2258,18 +1877,32 @@ void MN_PushMenu(char *name)
 				Com_Printf("Menu stack overflow\n");
 
 			/* initialize it */
-
 			if (menus[i].initNode)
 				MN_ExecuteActions(&menus[i], menus[i].initNode->click);
 
 			cls.key_dest = key_game;
-			return;
+			return menus + i;
 		}
 
 	Com_Printf("Didn't find menu \"%s\"\n", name);
+	return NULL;
 }
 
-void MN_PushMenu_f(void)
+/**
+ * @brief Push a menu onto the menu stack
+ * @param[in] name Name of the menu to push onto menu stack
+ * @return pointer to menu_t
+ */
+menu_t* MN_PushMenu(char *name)
+{
+	return MN_PushMenuDelete(name, qtrue);
+}
+
+/**
+ * @brief Console function to push a menu onto the menu stack
+ * @sa MN_PushMenu
+ */
+static void MN_PushMenu_f(void)
 {
 	if (Cmd_Argc() > 1)
 		MN_PushMenu(Cmd_Argv(1));
@@ -2277,12 +1910,26 @@ void MN_PushMenu_f(void)
 		Com_Printf("usage: mn_push <name>\n");
 }
 
+/**
+ * @brief Console function to push a menu, without deleting its copies
+ * @sa MN_PushMenu
+ */
+static void MN_PushCopyMenu_f(void)
+{
+	if (Cmd_Argc() > 1) {
+		Cvar_SetValue("mn_escpop", mn_escpop->value + 1);
+		MN_PushMenuDelete(Cmd_Argv(1), qfalse);
+	} else {
+		Com_Printf("usage: mn_push_copy <name>\n");
+	}
+}
 
-/*
-=================
-MN_PopMenu
-=================
-*/
+
+/**
+ * @brief Pops a menu from the menu stack
+ * @param[in] all If true pop all menus from stack
+ * @sa MN_PopMenu_f
+ */
 void MN_PopMenu(qboolean all)
 {
 	if (all)
@@ -2315,26 +1962,31 @@ void MN_PopMenu(qboolean all)
 	cls.key_dest = key_game;
 }
 
-void MN_PopMenu_f(void)
+/**
+ * @brief Console function to pop a menu from the menu stack
+ * @sa MN_PopMenu
+ * @note The cvar mn_escpop defined how often the MN_PopMenu function is called.
+ * This is useful for e.g. nodes that doesn't have a render node (for example: video options)
+ */
+static void MN_PopMenu_f(void)
 {
-	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3))
+	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3)) {
 		MN_PopMenu(qfalse);
-	else {
+	} else {
 		int i;
 
 		for (i = 0; i < (int) mn_escpop->value; i++)
 			MN_PopMenu(qfalse);
+
 		Cvar_Set("mn_escpop", "1");
 	}
 }
 
 
-/*
-=================
-MN_Modify_f
-=================
-*/
-void MN_Modify_f(void)
+/**
+ * @brief
+ */
+static void MN_Modify_f(void)
 {
 	float value;
 
@@ -2352,12 +2004,10 @@ void MN_Modify_f(void)
 }
 
 
-/*
-=================
-MN_ModifyWrap_f
-=================
-*/
-void MN_ModifyWrap_f(void)
+/**
+ * @brief
+ */
+static void MN_ModifyWrap_f(void)
 {
 	float value;
 
@@ -2375,12 +2025,10 @@ void MN_ModifyWrap_f(void)
 }
 
 
-/*
-=================
-MN_ModifyString_f
-=================
-*/
-void MN_ModifyString_f(void)
+/**
+ * @brief
+ */
+static void MN_ModifyString_f(void)
 {
 	qboolean next;
 	char *current, *list, *tp;
@@ -2436,13 +2084,13 @@ void MN_ModifyString_f(void)
 }
 
 
-/*
- * MN_Translate_f
+/**
+ * @brief
  *
  * Shows the corresponding strings in menu
  * Example: Optionsmenu - fullscreen: yes
-**/
-void MN_Translate_f(void)
+ */
+static void MN_Translate_f(void)
 {
 	qboolean next;
 	char *current, *list, *orig, *trans;
@@ -2492,7 +2140,7 @@ static void MN_GetTutorials_f(void)
 	tutorialList[0] = 0;
 	for (i = 0; i < numTutorials; i++) {
 		t = &tutorials[i];
-		Q_strcat(tutorialList, MAX_TUTORIALLIST, va("%s\n", t->name));
+		Q_strcat(tutorialList, va("%s\n", t->name), sizeof(tutorialList));
 	}
 }
 
@@ -2579,6 +2227,7 @@ void MN_ResetMenus(void)
 	Cmd_AddCommand("mn_nextmap", MN_NextMap);
 	Cmd_AddCommand("mn_prevmap", MN_PrevMap);
 	Cmd_AddCommand("mn_push", MN_PushMenu_f);
+	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f);
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f);
 	Cmd_AddCommand("mn_modify", MN_Modify_f);
 	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f);
@@ -2603,6 +2252,10 @@ void MN_ResetMenus(void)
 	UP_ResetUfopedia();
 	B_ResetBaseManagement();
 	RS_ResetResearch();
+	PR_ResetProduction();
+	E_Reset();
+	MAP_ResetAction();
+	UFO_Reset();
 }
 
 /*
@@ -2703,6 +2356,7 @@ qboolean MN_ParseAction(menuAction_t * action, char **text, char **token)
 
 				/* get the node name */
 				action->data = curadata;
+
 				strcpy((char *) curadata, &(*token)[1]);
 				curadata += strlen((char *) curadata) + 1;
 
@@ -2841,7 +2495,8 @@ qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 /*						Com_Printf( " %s", *token ); */
 
 						/* get the value */
-						if (val->ofs > 0)
+						/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
+						if ((val->ofs > 0) && (val->ofs < (size_t)-5))
 							Com_ParseValue(node, *token, val->type, val->ofs);
 						else {
 							/* a reference to data is handled like this */
@@ -2910,6 +2565,27 @@ qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 	return qfalse;
 }
 
+/**
+ * @brief Hides a given menu node
+ *
+ * Sanity check whether node is null included
+ */
+void MN_HideNode ( menuNode_t* node )
+{
+	if ( node && node->invis == qtrue )
+		node->invis = qfalse;
+}
+
+/**
+ * @brief Unhides a given menu node
+ *
+ * Sanity check whether node is null included
+ */
+void MN_UnHideNode ( menuNode_t* node )
+{
+	if ( node && node->invis == qfalse )
+		node->invis = qtrue;
+}
 
 /*
 =================
@@ -2954,6 +2630,8 @@ qboolean MN_ParseMenuBody(menu_t * menu, char **text)
 
 					/* initialize node */
 					if (!node) {
+						if (numNodes>=MAX_MENUNODES)
+							Sys_Error("MAX_MENUNODES exceeded\n");
 						node = &menuNodes[numNodes++];
 						memset(node, 0, sizeof(menuNode_t));
 						Q_strncpyz(node->name, token, MAX_VAR);
@@ -3040,7 +2718,7 @@ qboolean MN_ParseMenuBody(menu_t * menu, char **text)
 			return qtrue;
 		} else {
 			/* unknown token, print message and continue */
-			Com_Printf("MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n", *token, menu->name);
+			Com_Printf("MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n", token, menu->name);
 		}
 
 	} while (*text);
@@ -3299,13 +2977,9 @@ void MN_PrevMap(void)
 	MN_MapInfo();
 }
 
-/*
-================
-CL_ShowMessagesOnStack
-
-Script command to show all messages on the stack
-================
-*/
+/**
+ * @brief Script command to show all messages on the stack
+ */
 void CL_ShowMessagesOnStack(void)
 {
 	message_t *m = messageStack;
@@ -3316,14 +2990,17 @@ void CL_ShowMessagesOnStack(void)
 	}
 }
 
-/*
-================
-MN_AddNewMessage
-
-TODO: This needs saving
-================
-*/
-void MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia)
+/**
+ * @brief Adds a new message to message stack
+ * @note These are the messages that are displayed at geoscape
+ * @param[in] title
+ * @param[in] text
+ * @param[in] popup
+ * @param[in] type
+ * @param[in] pedia
+ * @return message_t pointer
+ */
+message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia)
 {
 	message_t *mess;
 
@@ -3348,11 +3025,32 @@ void MN_AddNewMessage(const char *title, const char *text, qboolean popup, messa
 	Q_strncpyz(mess->text, va("%02i %s %04i, %02i:%02i:%02i:\t", mess->d, CL_DateGetMonthName(mess->m), mess->y, mess->h, mess->min, mess->s),
 		MAX_MESSAGE_TEXT);
 
-	Q_strcat(mess->text, MAX_MESSAGE_TEXT, text);
+	Q_strcat(mess->text, text, sizeof(mess->text));
 
 	/* they need to be translated already */
 	if (popup)
 		MN_Popup(title, text);
+
+	switch (type) {
+	case MSG_DEBUG:
+	case MSG_STANDARD:
+	case MSG_TRANSFERFINISHED:
+	case MSG_PROMOTION:
+	case MSG_DEATH:
+		break;
+	case MSG_RESEARCH:
+	case MSG_CONSTRUCTION:
+	case MSG_UFOSPOTTED:
+	case MSG_TERRORSITE:
+	case MSG_BASEATTACK:
+	case MSG_PRODUCTION:
+		/*TODO: S_StartLocalSound(); */
+		break;
+	default:
+		Com_Printf("Warning: Unhandled message type: %i\n", type);
+	}
+
+	return mess;
 }
 
 /*
@@ -3424,12 +3122,10 @@ font_t fonts[MAX_FONTS];
 font_t *fontBig;
 font_t *fontSmall;
 
-#define	FONTFS(x)		(int)&(((font_t *)0)->x)
-
-value_t fontValues[] = {
-	{"font", V_TRANSLATION2_STRING, FONTFS(path)},
-	{"size", V_INT, FONTFS(size)},
-	{"style", V_STRING, FONTFS(style)},
+static value_t fontValues[] = {
+	{"font", V_TRANSLATION2_STRING, offsetof(font_t, path)},
+	{"size", V_INT, offsetof(font_t, size)},
+	{"style", V_STRING, offsetof(font_t, style)},
 
 	{NULL, V_NULL, 0},
 };
@@ -3547,12 +3243,10 @@ void CL_InitFonts(void)
 
 /* ===================== USE_SDL_TTF stuff end ====================== */
 
-#define	PARSETUT(x)	(int)&(((tutorial_t *)0)->x)
-
-value_t tutValues[] = {
-	{"name", V_TRANSLATION_STRING, PARSETUT(name)}
+static value_t tutValues[] = {
+	{"name", V_TRANSLATION_STRING, offsetof(tutorial_t, name)}
 	,
-	{"sequence", V_STRING, PARSETUT(sequence)}
+	{"sequence", V_STRING, offsetof(tutorial_t, sequence)}
 	,
 	{NULL, 0, 0}
 };
@@ -3577,7 +3271,7 @@ void MN_ParseTutorials(char *title, char **text)
 		return;
 	}
 
-	/* parse ranks */
+	/* parse tutorials */
 	if (numTutorials >= MAX_TUTORIALS) {
 		Com_Printf("Too many tutorials, '%s' ignored.\n", title);
 		numTutorials = MAX_TUTORIALS;

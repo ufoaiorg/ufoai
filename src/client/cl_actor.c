@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #include "client.h"
+#include "cl_global.h"
 
 /* public */
 le_t *selActor;
@@ -37,63 +38,100 @@ invList_t invList[MAX_INVLIST];
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
 
+
+/**
+ * @brief Writes player action with its data
+ */
+void MSG_Write_PA(player_action_t player_action, int num, ...)
+{
+	va_list ap;
+	va_start(ap, num);
+	MSG_WriteFormat(&cls.netchan.message, "bbs", clc_action, player_action, num);
+	MSG_V_WriteFormat(&cls.netchan.message, pa_format[player_action], ap);
+	va_end(ap);
+}
+
+
 /*
 ==============================================================
-
 ACTOR MENU UPDATING
-
 ==============================================================
 */
 
 /**
- * @brief Array containing the descriptions of skill levels.
+ * @brief Return the skill string for the given skill level
+ * @return skill string
+ * @param[in] skill a skill value between 0 and MAX_SKILL (TODO: 0? never reached?)
  */
-static char *skill_strings[10] = {
-	"Poor",
-	"Medicore",
-	"Fair",
-	"Good",
-	"Excellent",
-	"Perfect",
-	"Superhuman",
-	"Beyond Human",
-	"Immortal",
-	"Godlike"
-};
-
-/**
- * @brief Used to extract skill-level description from skill_strings[].
- */
-#define SKILL_TO_STRING(x)	_(skill_strings[x * 10/MAX_SKILL])
+static char *CL_GetSkillString(const int skill)
+{
+#ifdef DEBUG
+	if (skill > MAX_SKILL) {
+		Com_Printf("CL_GetSkillString: Skill is bigger than max allowed skill value\n");
+	}
+#endif
+	switch (skill*10/MAX_SKILL) {
+	case 0:
+		return _("Pathetic");
+	case 1:
+		return _("Very Poor");
+	case 2:
+		return _("Poor");
+	case 3:
+		return _("Mediocre");
+	case 4:
+		return _("Good");
+	case 5:
+		return _("Very Good");
+	case 6:
+		return _("Excellent");
+	case 7:
+		return _("Amazing");
+	case 8:
+		return _("Superhuman");
+	case 9:
+		return _("Godlike");
+	default:
+		Com_Printf("CL_GetSkillString: Unknown skill: %i (index: %i)\n", skill, skill*10/MAX_SKILL);
+		return "";
+	}
+}
 
 /**
  * @brief Updates the character cvars for the given character.
  *
+ * The models and stats that are displayed in the menu are stored in cvars.
+ * These cvars are updated here when you select another character.
  *
+ * @param chr Pointer to character_t (may not be null)
+ * @sa CL_UGVCvars
+ * @sa CL_ActorSelect
  */
 void CL_CharacterCvars(character_t *chr)
 {
-	rank_t *rank = NULL;
-
 	assert(chr);
-	rank = chr->rank;
 
 	Cvar_ForceSet("mn_name", chr->name);
 	Cvar_ForceSet("mn_body", Com_CharGetBody(chr));
 	Cvar_ForceSet("mn_head", Com_CharGetHead(chr));
 	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
-	Cvar_ForceSet("mn_skinname", _(teamSkinNames[chr->skin]));
+	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
 
 	Cvar_Set("mn_chrmis", va("%i", chr->assigned_missions));
 	Cvar_Set("mn_chrkillalien", va("%i", chr->kills[KILLED_ALIENS]));
 	Cvar_Set("mn_chrkillcivilian", va("%i", chr->kills[KILLED_CIVILIANS]));
 	Cvar_Set("mn_chrkillteam", va("%i", chr->kills[KILLED_TEAM]));
-	Cvar_Set("mn_chrrank_img", "");
-	/*TODO: Doesn't work yet */
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Rank: %s"), rank->name);
-	Cvar_Set("mn_chrrank", messageBuffer);
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), "%s", rank->image);
-	Cvar_Set("mn_chrrank_img", messageBuffer);
+
+	/* Display rank if not in multiplayer (numRanks==0) and the character has one. */
+	if (chr->rank >= 0 && gd.numRanks) {
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Rank: %s"), gd.ranks[chr->rank].name);
+		Cvar_Set("mn_chrrank", messageBuffer);
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), "%s", gd.ranks[chr->rank].image);
+		Cvar_Set("mn_chrrank_img", messageBuffer);
+	} else {
+		Cvar_Set("mn_chrrank", "");
+		Cvar_Set("mn_chrrank_img", "");
+	}
 
 	Cvar_Set("mn_vpwr", va("%i", chr->skills[ABILITY_POWER]));
 	Cvar_Set("mn_vspd", va("%i", chr->skills[ABILITY_SPEED]));
@@ -102,24 +140,29 @@ void CL_CharacterCvars(character_t *chr)
 	Cvar_Set("mn_vcls", va("%i", chr->skills[SKILL_CLOSE]));
 	Cvar_Set("mn_vhvy", va("%i", chr->skills[SKILL_HEAVY]));
 	Cvar_Set("mn_vass", va("%i", chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_vprc", va("%i", chr->skills[SKILL_PRECISE]));
+	Cvar_Set("mn_vsnp", va("%i", chr->skills[SKILL_SNIPER]));
 	Cvar_Set("mn_vexp", va("%i", chr->skills[SKILL_EXPLOSIVE]));
 
-	Cvar_Set("mn_tpwr", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
-	Cvar_Set("mn_tspd", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_SPEED]), chr->skills[ABILITY_SPEED]));
-	Cvar_Set("mn_tacc", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_ACCURACY]), chr->skills[ABILITY_ACCURACY]));
-	Cvar_Set("mn_tmnd", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_MIND]), chr->skills[ABILITY_MIND]));
-	Cvar_Set("mn_tcls", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
-	Cvar_Set("mn_thvy", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
-	Cvar_Set("mn_tass", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_tprc", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_PRECISE]), chr->skills[SKILL_PRECISE]));
-	Cvar_Set("mn_texp", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_tpwr", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
+	Cvar_Set("mn_tspd", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_SPEED]), chr->skills[ABILITY_SPEED]));
+	Cvar_Set("mn_tacc", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_ACCURACY]), chr->skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_tmnd", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_MIND]), chr->skills[ABILITY_MIND]));
+	Cvar_Set("mn_tcls", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
+	Cvar_Set("mn_thvy", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
+	Cvar_Set("mn_tass", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_tsnp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_SNIPER]), chr->skills[SKILL_SNIPER]));
+	Cvar_Set("mn_texp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
 }
 
 /**
  * @brief Updates the UGV cvars for the given "character".
  *
+ * The models and stats that are displayed in the menu are stored in cvars.
+ * These cvars are updated here when you select another character.
  *
+ * @param chr Pointer to character_t (may not be null)
+ * @sa CL_CharacterCvars
+ * @sa CL_ActorSelect
  */
 void CL_UGVCvars(character_t *chr)
 {
@@ -129,7 +172,7 @@ void CL_UGVCvars(character_t *chr)
 	Cvar_ForceSet("mn_body", Com_CharGetBody(chr));
 	Cvar_ForceSet("mn_head", Com_CharGetHead(chr));
 	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
-	Cvar_ForceSet("mn_skinname", _(teamSkinNames[chr->skin]));
+	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
 
 	Cvar_Set("mn_chrmis", va("%i", chr->assigned_missions));
 	Cvar_Set("mn_chrkillalien", va("%i", chr->kills[KILLED_ALIENS]));
@@ -146,24 +189,22 @@ void CL_UGVCvars(character_t *chr)
 	Cvar_Set("mn_vcls", va("%i", chr->skills[SKILL_CLOSE]));
 	Cvar_Set("mn_vhvy", va("%i", chr->skills[SKILL_HEAVY]));
 	Cvar_Set("mn_vass", va("%i", chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_vprc", va("%i", chr->skills[SKILL_PRECISE]));
+	Cvar_Set("mn_vsnp", va("%i", chr->skills[SKILL_SNIPER]));
 	Cvar_Set("mn_vexp", va("%i", chr->skills[SKILL_EXPLOSIVE]));
 
-	Cvar_Set("mn_tpwr", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
-	Cvar_Set("mn_tspd", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_SPEED]), chr->skills[ABILITY_SPEED]));
-	Cvar_Set("mn_tacc", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_ACCURACY]), chr->skills[ABILITY_ACCURACY]));
-	Cvar_Set("mn_tmnd", va("%s (0)", SKILL_TO_STRING(chr->skills[ABILITY_MIND])));
-	Cvar_Set("mn_tcls", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
-	Cvar_Set("mn_thvy", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
-	Cvar_Set("mn_tass", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_tprc", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_PRECISE]), chr->skills[SKILL_PRECISE]));
-	Cvar_Set("mn_texp", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_tpwr", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
+	Cvar_Set("mn_tspd", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_SPEED]), chr->skills[ABILITY_SPEED]));
+	Cvar_Set("mn_tacc", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_ACCURACY]), chr->skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_tmnd", va("%s (0)", CL_GetSkillString(chr->skills[ABILITY_MIND])));
+	Cvar_Set("mn_tcls", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
+	Cvar_Set("mn_thvy", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
+	Cvar_Set("mn_tass", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_tsnp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_SNIPER]), chr->skills[SKILL_SNIPER]));
+	Cvar_Set("mn_texp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
 }
 
 /**
  * @brief Updates the global character cvars.
- *
- *
  */
 void CL_ActorGlobalCVars(void)
 {
@@ -186,6 +227,8 @@ void CL_ActorGlobalCVars(void)
 			Cvar_Set(va("mn_tumax%i", i), str);
 			Com_sprintf(str, MAX_VAR, "%i", le->STUN);
 			Cvar_Set(va("mn_stun%i", i), str);
+			Com_sprintf(str, MAX_VAR, "%i", le->AP);
+			Cvar_Set(va("mn_ap%i", i), str);
 		} else {
 			Cvar_Set(va("mn_head%i", i), "");
 			Cvar_Set(va("mn_hp%i", i), "0");
@@ -193,12 +236,16 @@ void CL_ActorGlobalCVars(void)
 			Cvar_Set(va("mn_tu%i", i), "0");
 			Cvar_Set(va("mn_tumax%i", i), "1");
 			Cvar_Set(va("mn_stun%i", i), "0");
+			Cvar_Set(va("mn_ap%i", i), "0");
 		}
 	}
 }
 
 /**
  * @brief Refreshes the buttons on the UI?
+ *
+ * @warning selActor may not be null in most cases
+ * @sa CL_ActorUpdateCVars
  */
 static void CL_RefreshWeaponButtons(int time)
 {
@@ -220,7 +267,9 @@ static void CL_RefreshWeaponButtons(int time)
 
 	weapon = RIGHT(selActor);
 
-	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time) {
+	if ( !weapon || weapon->item.m == NONE
+		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
+		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time ) {
 		if (primary_right != 0) {
 			Cbuf_AddText("dispr\n");
 			primary_right = 0;
@@ -230,7 +279,9 @@ static void CL_RefreshWeaponButtons(int time)
 		primary_right = 1;
 	}
 
-	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time) {
+	if ( !weapon || weapon->item.m == NONE
+		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
+		 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time ) {
 		if (secondary_right != 0) {
 			Cbuf_AddText("dissr\n");
 			secondary_right = 0;
@@ -244,7 +295,9 @@ static void CL_RefreshWeaponButtons(int time)
 	if (!weapon || !csi.ods[weapon->item.t].twohanded)
 		weapon = LEFT(selActor);
 
-	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time) {
+	if ( !weapon || weapon->item.m == NONE
+		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
+		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time ) {
 		if (primary_left != 0) {
 			Cbuf_AddText("displ\n");
 			primary_left = 0;
@@ -254,7 +307,9 @@ static void CL_RefreshWeaponButtons(int time)
 		primary_left = 1;
 	}
 
-	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time) {
+	if ( !weapon || weapon->item.m == NONE
+		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
+		 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time ) {
 		if (secondary_left != 0) {
 			Cbuf_AddText("dissl\n");
 			secondary_left = 0;
@@ -266,15 +321,19 @@ static void CL_RefreshWeaponButtons(int time)
 }
 
 /**
- * @brief Used in CL_ActorUpdateCVars.
- */
-static char infoText[MAX_MENUTEXTLEN];
-
-/**
  * @brief Updates console vars for an actor.
+ *
+ * This function updates the cvars for the hud (battlefield)
+ * unlike CL_CharacterCvars and CL_UGVCvars which updates them for
+ * diplaying the data in the menu system
+ *
+ * @sa CL_CharacterCvars
+ * @sa CL_UGVCvars
  */
 void CL_ActorUpdateCVars(void)
 {
+	static char infoText[MAX_MENUTEXTLEN];
+	static char mousetext[MAX_MENUTEXTLEN];
 	qboolean refresh;
 	char *name;
 	int time;
@@ -296,6 +355,8 @@ void CL_ActorUpdateCVars(void)
 	Cvar_Set("mn_rweapon", "");
 	Cvar_Set("mn_lweapon", "");
 
+	menuText[TEXT_MOUSECURSOR_RIGHT] = "";
+
 	if (selActor) {
 		invList_t *selWeapon;
 
@@ -307,6 +368,7 @@ void CL_ActorUpdateCVars(void)
 		Cvar_Set("mn_hp", va("%i", selActor->HP));
 		Cvar_Set("mn_hpmax", va("%i", selActor->maxHP));
 		Cvar_Set("mn_stun", va("%i", selActor->STUN));
+		Cvar_Set("mn_ap", va("%i", selActor->AP));
 
 		/* animation and weapons */
 		name = re.AnimGetName(&selActor->as, selActor->model1);
@@ -319,9 +381,9 @@ void CL_ActorUpdateCVars(void)
 
 		/* get weapon */
 		if (cl.cmode > M_PEND_MOVE) {
-			selWeapon = (cl.cmode - M_PEND_FIRE_PR) / 2 ? LEFT(selActor) : RIGHT(selActor);
+			selWeapon = ((cl.cmode - M_PEND_FIRE_PR) / 2) ? LEFT(selActor) : RIGHT(selActor);
 		} else {
-			selWeapon = (cl.cmode - M_FIRE_PR) / 2 ? LEFT(selActor) : RIGHT(selActor);
+			selWeapon = ((cl.cmode - M_FIRE_PR) / 2) ? LEFT(selActor) : RIGHT(selActor);
 		}
 
 		if (!selWeapon && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].twohanded)
@@ -349,8 +411,8 @@ void CL_ActorUpdateCVars(void)
 			Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Currently panics!\n"));
 		} else {
 			/* in multiplayer we should be able to use the aliens weapons */
-			if (ccs.singleplayer && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE && selWeapon && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].kurz)
-				) {
+			if (ccs.singleplayer && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE && selWeapon
+			&& !RS_ItemIsResearched(csi.ods[selWeapon->item.t].kurz) ) {
 				CL_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
 				cl.cmode = M_MOVE;
 			}
@@ -360,6 +422,11 @@ void CL_ActorUpdateCVars(void)
 				if (selWeapon && selFD) {
 					Com_sprintf(infoText, MAX_MENUTEXTLEN,
 								"%s\n%s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
+					Com_sprintf(mousetext, MAX_MENUTEXTLEN,
+								"%s: %s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
+
+					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
+
 					time = selFD->time;
 				} else if (selWeapon) {
 					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
@@ -373,10 +440,15 @@ void CL_ActorUpdateCVars(void)
 					actorMoveLength = 0xFF;
 
 				if (actorMoveLength < 0xFF) {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Health\t%i\nMove\t%i\n"), selActor->HP, actorMoveLength);
+					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
 					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
+					if ( actorMoveLength <= selActor->TU )
+						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "%i (%i)\n", actorMoveLength, selActor->TU);
+					else
+						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "- (-)\n" );
+					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
 				} else {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Health\t%i\n"), selActor->HP);
+					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
 					CL_RefreshWeaponButtons(selActor->TU);
 				}
 				time = actorMoveLength;
@@ -420,8 +492,6 @@ void CL_ActorUpdateCVars(void)
 				Cbuf_AddText("stopreaction\n");
 			}
 
-			/* set info text */
-			menuText[TEXT_STANDARD] = infoText;
 		} else {
 			/* no actor selected, reset cvars */
 			/* TODO: this overwrites the correct values a bit to often.
@@ -435,6 +505,7 @@ void CL_ActorUpdateCVars(void)
 			Cvar_Set("mn_ammoright", "");
 			Cvar_Set("mn_ammoleft", "");
 			Cvar_Set("mn_stun", "0");
+			Cvar_Set("mn_ap", "0");
 			*/
 			if (refresh)
 				Cbuf_AddText("tostand\n");
@@ -443,11 +514,19 @@ void CL_ActorUpdateCVars(void)
 			if (cl.time < cl.msgTime) {
 				/* special message */
 				Com_sprintf(infoText, MAX_MENUTEXTLEN, cl.msgText);
-				menuText[TEXT_STANDARD] = infoText;
-			} else {
-				menuText[TEXT_STANDARD] = NULL;
 			}
 		}
+		menuText[TEXT_STANDARD] = infoText;
+	/* this will stop the drawing of the bars over the hole screen when we test maps */
+	} else if (!cl.numTeamList) {
+		Cvar_SetValue("mn_tu", 0);
+		Cvar_SetValue("mn_tumax", 100);
+		Cvar_SetValue("mn_morale", 0);
+		Cvar_SetValue("mn_moralemax", 100);
+		Cvar_SetValue("mn_hp", 0);
+		Cvar_SetValue("mn_hpmax", 100);
+		Cvar_SetValue("mn_stun", 0);
+		Cvar_SetValue("mn_ap", 100);
 	}
 
 	/* mode */
@@ -506,6 +585,9 @@ ACTOR SELECTION AND TEAM LIST
 
 /**
  * @brief Adds the actor the the team list.
+ *
+ * @sa CL_RemoveActorFromTeamList
+ * @param le Pointer to local entity struct
  */
 void CL_AddActorToTeamList(le_t * le)
 {
@@ -539,7 +621,10 @@ void CL_AddActorToTeamList(le_t * le)
 
 /**
  * @brief Removes an actor from the team list.
-*/
+ *
+ * @sa CL_AddActorToTeamList
+ * @param le Pointer to local entity struct
+ */
 void CL_RemoveActorFromTeamList(le_t * le)
 {
 	int i, j;
@@ -573,15 +658,16 @@ void CL_RemoveActorFromTeamList(le_t * le)
 			if (!curCampaign)
 				return;
 
-			for (j = 0; j < baseCurrent->numWholeTeam; j++) {
-				if (baseCurrent->curTeam[i].ucn == baseCurrent->wholeTeam[j].ucn) {
+			for (j = 0; j < gd.numEmployees[EMPL_SOLDIER]; j++) {
+				if (baseCurrent->curTeam[i]->ucn == gd.employees[EMPL_SOLDIER][j].chr.ucn) {
+					/* Mark the soldier as dead, but do not delete him ... just in case there is a mission-retry. See CL_GameResultsCmd for more.*/
 					baseCurrent->deathMask |= 1 << j;
 					break;
 				}
 			}
 #ifdef DEBUG
-			if ( j == baseCurrent->numWholeTeam )
-				Com_Printf("CL_RemoveActorFromTeamList: could not mask as dead - ucn: %i\n", baseCurrent->curTeam[i].ucn);
+			if ( j == gd.numEmployees[EMPL_SOLDIER] )
+				Com_Printf("CL_RemoveActorFromTeamList: could not mask as dead - ucn: %i; team:%i.\n", baseCurrent->curTeam[i]->ucn, i);
 #endif
 			return;
 		}
@@ -591,6 +677,11 @@ void CL_RemoveActorFromTeamList(le_t * le)
 
 /**
  * @brief Selects an actor.
+ *
+ * @param le Pointer to local entity struct
+ *
+ * @sa CL_UGVCvars
+ * @sa CL_CharacterCvars
  */
 qboolean CL_ActorSelect(le_t * le)
 {
@@ -603,8 +694,7 @@ qboolean CL_ActorSelect(le_t * le)
 	/* select him */
 	if (selActor)
 		selActor->selected = qfalse;
-	if (le)
-		le->selected = qtrue;
+	le->selected = qtrue;
 	selActor = le;
 	menuInventory = &selActor->i;
 
@@ -613,10 +703,10 @@ qboolean CL_ActorSelect(le_t * le)
 			/* console commands, update cvars */
 			Cvar_ForceSet("cl_selected", va("%i", i));
 			if ( le->fieldSize == ACTOR_SIZE_NORMAL ) {
-				selChr = &baseCurrent->curTeam[i];
+				selChr = baseCurrent->curTeam[i];
 				CL_CharacterCvars(selChr);
 			} else {
-				selChr = &baseCurrent->curTeam[i];
+				selChr = baseCurrent->curTeam[i];
 				CL_UGVCvars(selChr);
 			}
 
@@ -638,11 +728,17 @@ qboolean CL_ActorSelect(le_t * le)
 }
 
 
-/*
-=================
-CL_ActorSelectList
-=================
-*/
+/**
+ * @brief Selects an actor from a list.
+ *
+ * This function is used to select an actor from the lists that are
+ * used in equipment and team assemble screens
+ *
+ * @param num The index value from the list of actors
+ *
+ * @sa CL_ActorSelect
+ * @return qtrue if selection was possible otherwise qfalse
+ */
 qboolean CL_ActorSelectList(int num)
 {
 	le_t *le;
@@ -656,8 +752,9 @@ qboolean CL_ActorSelectList(int num)
 	if (!CL_ActorSelect(le))
 		return qfalse;
 
-	/* center view */
-	VectorCopy(le->origin, cl.cam.reforg);
+	/* center view (if wanted) */
+	if ((int)cl_centerview->value)
+		VectorCopy(le->origin, cl.cam.reforg);
 	/* change to worldlevel were actor is right now */
 	Cvar_SetValue("cl_worldlevel", le->pos[2]);
 
@@ -722,14 +819,13 @@ void CL_BuildForbiddenList(void)
 		Com_Error(ERR_DROP, "CL_BuildForbiddenList: list too long");
 }
 
-
 /**
  * @brief Checks that an action is valid.
- *
- * TODO: This probably belongs in the core logic.
  */
 int CL_CheckAction(void)
 {
+	static char infoText[MAX_MENUTEXTLEN];
+
 	if (!selActor) {
 		Com_Printf("Nobody selected.\n");
 		Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Nobody selected\n"));
@@ -752,7 +848,7 @@ int CL_CheckAction(void)
 
 /**
  * @brief Draws the way to walk when confirm actions is activated.
- *
+ * @param[in] to
  */
 int CL_TraceMove(pos3_t to)
 {
@@ -786,8 +882,10 @@ int CL_TraceMove(pos3_t to)
 
 /**
  * @brief Starts moving actor.
- *
- * TODO: This probably belongs in the core logic.
+ * @param[in] le
+ * @param[in] to
+ * @sa CL_ActorActionMouse
+ * @sa CL_ActorSelectMouse
  */
 void CL_ActorStartMove(le_t * le, pos3_t to)
 {
@@ -803,16 +901,15 @@ void CL_ActorStartMove(le_t * le, pos3_t to)
 		return;
 	}
 
-	/* move seems to be possible */
-	/* send request to server */
-	MSG_WriteFormat(&cls.netchan.message, "bbsg", clc_action, PA_MOVE, le->entnum, to);
+	/* move seems to be possible; send request to server */
+	MSG_Write_PA(PA_MOVE, le->entnum, to);
 }
 
 
 /**
  * @brief Shoot with actor.
- *
- * TODO: This probably belongs in the core logic.
+ * @param[in] le
+ * @param[in] at
  */
 void CL_ActorShoot(le_t * le, pos3_t at)
 {
@@ -829,14 +926,14 @@ void CL_ActorShoot(le_t * le, pos3_t at)
 	if (mode >= ST_LEFT_PRIMARY && !LEFT(le))
 		mode -= 2;
 
-	MSG_WriteFormat(&cls.netchan.message, "bbsgb", clc_action, PA_SHOOT, le->entnum, at, mode);
+	MSG_Write_PA(PA_SHOOT, le->entnum, at, mode);
 }
 
 
 /**
  * @brief Reload weapon with actor.
- *
- * TODO: This probably belongs in the core logic.
+ * @param[in] hand
+ * @sa CL_CheckAction
  */
 void CL_ActorReload(int hand)
 {
@@ -851,7 +948,7 @@ void CL_ActorReload(int hand)
 	/* check weapon */
 	inv = &selActor->i;
 
-	/* search for clips and select the one that is available easely */
+	/* search for clips and select the one that is available easily */
 	x = 0;
 	y = 0;
 	tu = 100;
@@ -868,10 +965,10 @@ void CL_ActorReload(int hand)
 	}
 
 	if (weapon == NONE)
-		return;
+		return; /* TODO: assert? */
 
 	if (!RS_ItemIsResearched(csi.ods[weapon].kurz)) {
-		CL_DisplayHudMessage(_("You cannot load this unknown item.\nYou need to research it first.\n"), 2000);
+		CL_DisplayHudMessage(_("You cannot reload this unknown item.\nYou need to research it and its ammunition first.\n"), 2000);
 		return;
 	}
 
@@ -882,7 +979,8 @@ void CL_ActorReload(int hand)
 			/* retrieve the ammo from them than the one we've already */
 			/* found. */
 			for (ic = inv->c[container]; ic; ic = ic->next)
-				if (csi.ods[ic->item.t].link == weapon) {
+				if ( csi.ods[ic->item.t].link == weapon
+					 && RS_ItemIsResearched(csi.ods[ic->item.t].kurz) ) {
 					x = ic->x;
 					y = ic->y;
 					tu = csi.ids[container].out;
@@ -894,22 +992,19 @@ void CL_ActorReload(int hand)
 
 	/* send request */
 	if (bestContainer != NONE)
-		MSG_WriteFormat(&cls.netchan.message, "bbsbbbbbb", clc_action, PA_INVMOVE, selActor->entnum, bestContainer, x, y, hand, 0, 0);
+		MSG_Write_PA(PA_INVMOVE, selActor->entnum, bestContainer, x, y, hand, 0, 0);
 	else
-		Com_Printf("No clip left.\n");
+		Com_Printf("No (researched) clip left.\n");
 }
 
 
 /**
  * @brief Moves actor.
- *
- * TODO: This probably belongs in the core logic.
+ * @param[in] sb
  */
 void CL_ActorDoMove(sizebuf_t * sb)
 {
 	le_t *le;
-
-/*	int		i; */
 
 	/* get le */
 	le = LE_Get(MSG_ReadShort(sb));
@@ -955,30 +1050,30 @@ void CL_ActorTurnMouse(void)
 	dv = AngleToDV((int) (atan2(div[1], div[0]) * 180 / M_PI));
 
 	/* send message to server */
-	MSG_WriteFormat(&cls.netchan.message, "bbsb", clc_action, PA_TURN, selActor->entnum, dv);
+	MSG_Write_PA(PA_TURN, selActor->entnum, dv);
 }
 
 
 /**
  * @brief Turns actor.
- *
- * TODO: This probably belongs in the core logic.
+ * @param[in] sb
  */
 void CL_ActorDoTurn(sizebuf_t *sb)
 {
 	le_t *le;
+	int entnum, dir;
+
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_TURN], &entnum, &dir);
 
 	/* get le */
-	le = LE_Get(MSG_ReadShort(sb));
+	le = LE_Get(entnum);
 	if (!le) {
 		Com_Printf("Can't turn, LE doesn't exist\n");
 		return;
 	}
 
-	le->dir = MSG_ReadByte(sb);
+	le->dir = dir;
 	le->angles[YAW] = dangle[le->dir];
-
-/* 	cl.cmode = M_MOVE; */
 
 	/* calculate possible moves */
 	CL_BuildForbiddenList();
@@ -988,8 +1083,6 @@ void CL_ActorDoTurn(sizebuf_t *sb)
 
 /**
  * @brief Stands or crouches actor.
- *
- * TODO: This probably belongs in the core logic.
  */
 void CL_ActorStandCrouch(void)
 {
@@ -999,7 +1092,7 @@ void CL_ActorStandCrouch(void)
 	if (selActor->fieldSize == ACTOR_SIZE_UGV )
 		return;
 	/* send message to server */
-	MSG_WriteFormat(&cls.netchan.message, "bbss", clc_action, PA_STATE, selActor->entnum, selActor->state ^ STATE_CROUCHED);
+	MSG_Write_PA(PA_STATE, selActor->entnum, selActor->state ^ STATE_CROUCHED);
 }
 
 
@@ -1007,9 +1100,8 @@ void CL_ActorStandCrouch(void)
  * @brief Stuns an actor.
  *
  * Stunning is handled as a dead actor but afterwards in CL_CollectAliens we only collect aliens with STATE_STUN
- * remember: we can do this because STATE_STUN is 0x43 and STATE_DEAD is 0x03 (checking for STATE_DEAD is also true when STATE_STUN was set)
- * NOTE: Do we really need this as a script command? Currently there is no binding - but who knows?
- * TODO: This probably belongs in the core logic.
+ * @note: we can do this because STATE_STUN is 0x43 and STATE_DEAD is 0x03 (checking for STATE_DEAD is also true when STATE_STUN was set)
+ * @note: Do we really need this as a script command? Currently there is no binding - but who knows?
  */
 void CL_ActorStun(void)
 {
@@ -1017,14 +1109,12 @@ void CL_ActorStun(void)
 		return;
 
 	/* send message to server */
-	MSG_WriteFormat(&cls.netchan.message, "bbss", clc_action, PA_STATE, selActor->entnum, selActor->state ^ STATE_STUN);
+	MSG_Write_PA(PA_STATE, selActor->entnum, selActor->state ^ STATE_STUN);
 }
 
 
 /**
  * @brief Toggles reaction fire.
- *
- * TODO: This probably belongs in the core logic.
  */
 void CL_ActorToggleReaction(void)
 {
@@ -1032,13 +1122,11 @@ void CL_ActorToggleReaction(void)
 		return;
 
 	/* send message to server */
-	MSG_WriteFormat(&cls.netchan.message, "bbss", clc_action, PA_STATE, selActor->entnum, selActor->state ^ STATE_REACTION);
+	MSG_Write_PA(PA_STATE, selActor->entnum, selActor->state ^ STATE_REACTION);
 }
 
 /**
  * @brief Records if shot is first shot.
- *
- * TODO: This looks very out of place. Code probably needs reworking.
  */
 static qboolean firstShot = qfalse;
 
@@ -1051,13 +1139,13 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 	le_t *le;
 	int type;
 	vec3_t muzzle, impact;
-	int flags, normal;
-
-	/* get le */
-	le = LE_Get(MSG_ReadShort(sb));
+	int flags, normal, number;
 
 	/* read data */
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &type, &flags, &muzzle, &impact, &normal);
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &number, &type, &flags, &muzzle, &impact, &normal);
+
+	/* get le */
+	le = LE_Get(number);
 
 	/* get the fire def */
 	fd = GET_FIREDEF(type);
@@ -1084,6 +1172,7 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 
 /**
  * @brief Throw item with actor.
+ * @param[in] sb
  */
 void CL_ActorDoThrow(sizebuf_t * sb)
 {
@@ -1111,8 +1200,7 @@ void CL_ActorDoThrow(sizebuf_t * sb)
 
 /**
  * @brief Starts shooting with actor.
- *
- * TODO: This probably belongs in core logic.
+ * @param[in] sb
  */
 void CL_ActorStartShoot(sizebuf_t * sb)
 {
@@ -1121,12 +1209,10 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 	pos3_t from, target;
 	int number, type;
 
-	number = MSG_ReadShort(sb);
-	type = MSG_ReadByte(sb);
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_SHOOT], &number, &type, &from, &target);
+
 	fd = GET_FIREDEF(type);
 	le = LE_Get(number);
-	MSG_ReadGPos(sb, from);
-	MSG_ReadGPos(sb, target);
 
 	/* center view (if wanted) */
 	if ((int) cl_centerview->value && cl.actTeam != cls.team)
@@ -1139,11 +1225,11 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 	if (!le)
 		return;
 
-	/* erase one-time weapons from storage */
+	/* erase one-time weapons from storage --- which ones?
 	if (curCampaign && le->team == cls.team && !csi.ods[type].ammo) {
 		if (ccs.eMission.num[type])
 			ccs.eMission.num[type]--;
-	}
+	} */
 
 	/* animate */
 	re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
@@ -1152,15 +1238,17 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 
 /**
  * @brief Kills actor.
- *
- * This probably belongs in core logic.
+ * @param[in] sb
  */
 void CL_ActorDie(sizebuf_t * sb)
 {
 	le_t *le;
+	int number, state;
+
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_DIE], &number, &state);
 
 	/* get le */
-	le = LE_Get(MSG_ReadShort(sb));
+	le = LE_Get(number);
 	if (!le)
 		return;
 
@@ -1169,9 +1257,10 @@ void CL_ActorDie(sizebuf_t * sb)
 		cl.numAliensSpotted--;
 
 	/* set relevant vars */
+	le->i.c[csi.idFloor] = NULL;
 	le->HP = 0;
 	le->STUN = 0;
-	le->state = MSG_ReadShort(sb);
+	le->state = state;
 
 	/* play animation */
 	le->think = NULL;
@@ -1181,8 +1270,13 @@ void CL_ActorDie(sizebuf_t * sb)
 	/* calculate possible moves */
 	CL_BuildForbiddenList();
 	Grid_MoveCalc(&clMap, le->pos, MAX_ROUTE, fb_list, fb_length);
+	/* this is only needed when we are in confirm actions mode */
+	/* without this call the move tracer will be drawn from the killed le */
+	if (selActor && confirm_actions->value)
+		Grid_MoveCalc(&clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length);
 
-	CL_RemoveActorFromTeamList(le);
+/*	if (le->team == cls.team)*/
+		CL_RemoveActorFromTeamList(le);
 }
 
 
@@ -1227,6 +1321,8 @@ void CL_ActorSelectMouse(void)
 
 /**
  * @brief initiates action with mouse.
+ * @sa CL_ActionDown
+ * @sa CL_ActorStartMove
  */
 void CL_ActorActionMouse(void)
 {
@@ -1251,8 +1347,6 @@ ROUND MANAGEMENT
 
 /**
  * @brief Finishes the current round of the player in battlescape and starts the round for the next team.
- *
- * TODO: This probably belongs in core logic.
  */
 void CL_NextRound(void)
 {
@@ -1275,8 +1369,8 @@ void CL_NextRound(void)
 /**
  * @brief Displays a message on the hud.
  *
- * @time is a ms values
- * @text is already translated here
+ * @param[in] time is a ms values
+ * @param[in] text text is already translated here
  */
 void CL_DisplayHudMessage(char *text, int time)
 {
@@ -1286,6 +1380,7 @@ void CL_DisplayHudMessage(char *text, int time)
 
 /**
  * @brief Performs end-of-turn processing.
+ * @param[in] sb
  */
 void CL_DoEndRound(sizebuf_t * sb)
 {
@@ -1377,11 +1472,11 @@ void CL_ActorMouseTrace(void)
 		return;
 
 	/* get position */
-	mousePos[2] = end[2] / UH;
+	mousePos[2] = end[2] / UNIT_HEIGHT;
 	if (mousePos[2] > cl_worldlevel->value)
 		mousePos[2] = cl_worldlevel->value;
 
-	stop[2] = (mousePos[2] + 0.5) * UH;
+	stop[2] = (mousePos[2] + 0.5) * UNIT_HEIGHT;
 	stop[0] = end[0] + forward[0] * (end[2] - stop[2]);
 	stop[1] = end[1] + forward[1] * (end[2] - stop[2]);
 
@@ -1419,6 +1514,9 @@ ACTOR GRAPHICS
 
 /**
  * @brief Adds an actor.
+ * @param[in] le
+ * @param[in] ent
+ * @sa CL_AddUGV
  */
 qboolean CL_AddActor(le_t * le, entity_t * ent)
 {
@@ -1486,6 +1584,9 @@ qboolean CL_AddActor(le_t * le, entity_t * ent)
 
 /**
  * @brief Adds an UGV.
+ * @param[in] le
+ * @param[in] ent
+ * @sa CL_AddActor
  */
 qboolean CL_AddUGV(le_t * le, entity_t * ent)
 {
@@ -1528,6 +1629,7 @@ qboolean CL_AddUGV(le_t * le, entity_t * ent)
 	add.model = le->model2;
 	add.skinnum = le->skinnum;
 
+	/* FIXME */
 	add.tagent = V_GetEntity() + 1;
 	add.tagname = "tag_head";
 
@@ -1561,8 +1663,7 @@ TARGETING GRAPHICS
 
 /**
  * @brief Calculates chance to hit.
- *
- * TODO: This almost certainly belongs in the core logic!
+ * @param[in] toPos
  */
 float CL_TargetingToHit(pos3_t toPos)
 {
@@ -1585,7 +1686,7 @@ float CL_TargetingToHit(pos3_t toPos)
 	VectorCopy(selActor->origin, shooter);
 	VectorCopy(le->origin, target);
 
-	/*Calculate HitZone: */
+	/* Calculate HitZone: */
 	distx = fabs(shooter[0] - target[0]);
 	disty = fabs(shooter[1] - target[1]);
 	distance = sqrt(distx * distx + disty * disty);
@@ -1596,8 +1697,11 @@ float CL_TargetingToHit(pos3_t toPos)
 	width = 2 * PLAYER_WIDTH * pseudosin;
 	height = ((le->state & STATE_CROUCHED) ? PLAYER_CROUCH : PLAYER_STAND) - PLAYER_MIN;
 
-	acc = M_PI / 180 * GET_ACC(selChr->skills[ABILITY_ACCURACY], selFD->weaponSkill ? selChr->skills[selFD->weaponSkill]
-							   : 0);
+	acc = M_PI / 180
+		* GET_ACC(selChr->skills[ABILITY_ACCURACY],
+			selFD->weaponSkill
+			? selChr->skills[selFD->weaponSkill]
+			: 0);
 
 	if ((selActor->state & STATE_CROUCHED) && selFD->crouch)
 		acc *= selFD->crouch;
@@ -1664,6 +1768,8 @@ float CL_TargetingToHit(pos3_t toPos)
 
 /**
  * @brief Draws line to target.
+ * @param[in] fromPos
+ * @param[in] toPos
  */
 void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 {
@@ -1693,12 +1799,12 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 }
 
 
-#define GRENADE_THROWSPEED	420.0
 #define GRENADE_PARTITIONS	20
 
 /**
  * @brief Shows targetting for a grenade.
- *
+ * @param[in] fromPos
+ * @param[in] toPos
  */
 void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 {
@@ -1722,7 +1828,7 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 		CL_ParticleSpawn("cross_no", 0, at, NULL, NULL);
 		return;
 	}
-	if (VectorLength(v0) > GRENADE_THROWSPEED)
+	if (VectorLength(v0) > selFD->range)
 		CL_ParticleSpawn("cross_no", 0, at, NULL, NULL);
 	else
 		CL_ParticleSpawn("cross", 0, at, NULL, NULL);
@@ -1738,7 +1844,11 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 		VectorAdd(from, ds, next);
 		next[2] += dt * (vz - 0.5 * GRAVITY * dt);
 		vz -= GRAVITY * dt;
-		CL_ParticleSpawn("inRangeTracer", 0, from, next, NULL);
+		VectorScale(v0, (i + 1.0) / GRENADE_PARTITIONS, at);
+		if (VectorLength(at) > selFD->range)
+			CL_ParticleSpawn("longRangeTracer", 0, from, next, NULL);
+		else
+			CL_ParticleSpawn("inRangeTracer", 0, from, next, NULL);
 		VectorCopy(next, from);
 	}
 	selToHit = 100 * CL_TargetingToHit(toPos);
@@ -1747,13 +1857,14 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 
 /**
  * @brief field marker box
- * TODO: This looks out of place.
  */
 const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT };
 #define BoxSize(i,source,target) (target[0]=i*source[0],target[1]=i*source[1],target[2]=source[2])
 /**
- * @brief Adds a target.
-*/
+  * @brief Adds a target.
+  *
+  * Draws the tracer (red, yellow, green box) on the grid
+  */
 void CL_AddTargeting(void)
 {
 	vec3_t realBoxSize;
@@ -1786,9 +1897,11 @@ void CL_AddTargeting(void)
 			if (mouseActor->team != cls.team)
 				switch (mouseActor->team) {
 				case TEAM_CIVILIAN:
+					/* civilians are yellow */
 					VectorSet(ent.angles, 1, 1, 0);
 					break;
 				default:
+					/* aliens (and players not in our team [multiplayer]) are red */
 					VectorSet(ent.angles, 1, 0, 0);
 					break;
 				}
@@ -1811,7 +1924,7 @@ void CL_AddTargeting(void)
 			if (!CL_TraceMove(mousePos))
 				cl.cmode = M_MOVE;
 	} else {
-		if (!selActor)
+		if (!selActor || !selFD)
 			return;
 
 		if (!selFD->gravity)

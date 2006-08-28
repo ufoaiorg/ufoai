@@ -1,154 +1,172 @@
-equipment standard
-{
-	assault				2
-	assault_ammo		3
-	sniper				1
-	sniper_ammo			2
-	pistol				2
-	pistol_ammo			3
-	smg					2
-	smg_ammo			4
-	shotgun				1
-	shotgun_ammo		2
-	flamer				2
-	flamer_ammo			3
-	rpg					1
-	rpg_ammo			3
-	tachyonrifle		1
-	tachyonrifle_ammo	2
-	tachyonsniper		1
-	tachyonsniper_ammo	2
-	plasblaster			1
-	plasblaster_ammo	2
-	laserpistol			1
-	laserpistol_ammo	2
-	laserrifle			1
-	laserrifle_ammo		2
-	plaspistol			1
-	plaspistol_ammo		2
-	plasrifle			1
-	plasrifle_ammo		2
-	fraggrenade			6
-	knife				3
-	irgoggles			1
-	medikit				3
-	light				2
-	medium				1
-	smokegrenade		2
-	stunrod				1
-	stungrenade			1
-	flaregrenade		1
-	grenl				1
-	grenl_ammo			4
-}
+// if you modify something in here - your savegames and multiplayer team may be broken
 
 equipment campaign_player
 {
-	assault			2
-	assault_ammo	5
+	assault			1
+	assault_ammo	1
 	sniper			1
-	sniper_ammo		3
-	pistol			3
-	pistol_ammo		6
+	sniper_ammo		1
+	pistol			1
+	pistol_ammo		1
 	smg				1
-	smg_ammo		3
+	smg_ammo		1
 	shotgun			1
-	shotgun_ammo	3
+	shotgun_ammo	1
 	flamer			1
-	flamer_ammo		2
+	flamer_ammo		1
 	rpg				1
 	rpg_ammo		4
-	grenl			1
-	grenl_ammo		4
 	fraggrenade		3
-	smokegrenade	1
-	knife			2
-	medikit			1
-	light			3
-	irgoggles		1
+	knife			1
+	light			0
 }
 
 equipment campaign_market
 {
-	assault			2
-	assault_ammo	24
-	sniper			2
-	sniper_ammo		16
-	pistol			3
-	pistol_ammo		20
-	smg				2
-	smg_ammo		30
-	shotgun			3
-	shotgun_ammo	18
-	flamer			1
-	flamer_ammo		12
-	rpg				1
-	rpg_ammo		50
-	tachyonrifle		1
-	tachyonrifle_ammo	12
-	tachyonsniper		1
-	tachyonsniper_ammo	12
-	laserrifle			2
-	laserrifle_ammo		20
-	laserpistol			2
-	laserpistol_ammo	16
+	assault			       4
+	assault_ammo	       40
+	sniper			       3
+	sniper_ammo		       40
+	pistol			       4
+	pistol_ammo		       40
+	smg				       3
+	smg_ammo		       40
+	shotgun			       3
+	shotgun_ammo	       30
+	flamer			       3
+	flamer_ammo		       30
+	rpg				       3
+	rpg_ammo		       40
+	rpg_incendiary_ammo	   20
+	rpg_tachyon_ammo	   10
+	grenl			       2
+	grenl_ammo		       20
+	grenl_plasma_ammo	   10
+	bolterrifle			   2
+	bolterrifle_ammo	   20
+	laserpistol			   1
+	laserpistol_ammo	   20
+	laserrifle			   1
+	laserrifle_ammo		   10
+	heavylaser			   1
+	heavylaser_ammo		   5
+	fraggrenade			   40
+	knife				   20
+	irgoggles		       2
+	medikit				   2
+	stunrod			       2
+	stungrenade			   10
+	light				   20
+	medium				   5
+//	heavy				   1
+}
+
+equipment multiplayer
+{
+	assault				1
+	assault_ammo		3
+	sniper				1
+	sniper_ammo			3
+	pistol				2
+	pistol_ammo			5
+	smg				    2
+	smg_ammo			5
+	shotgun				2
+	shotgun_ammo		5
+	flamer				1
+	flamer_ammo			3
+	rpg				    1
+	rpg_ammo			3
+//	rpg_incendiary_ammo	3
+	rpg_tachyon_ammo	3
+	grenl				1
+	grenl_ammo			5
+	grenl_plasma_ammo	3
 	bolterrifle			1
-	bolterrifle_ammo	16
-	fraggrenade			14
-	smokegrenade		14
-	stunrod			1
-	knife				8
-	irgoggles		2
-	medikit				5
-	light				6
-	medium				4
-}
-
-equipment campaign_alien
-{
-	plasblaster		1
-	plasblaster_ammo	12
-	plasrifle		6
-	plasrifle_ammo	8
-	plaspistol		12
-	plaspistol_ammo	18
-}
-
-equipment alien_mine
-{
-	plaspistol			2
-	plaspistol_ammo		4
+	bolterrifle_ammo	3
+	laserpistol			2
+	laserpistol_ammo	5
 	laserrifle			1
-	laserrifle_ammo		2
-}
-
-equipment alien_excavation
-{
+	laserrifle_ammo		3
+//	heavylaser			1
+//	heavylaser_ammo		3
 	plaspistol			2
-	plaspistol_ammo		4
-	laserrifle			3
-	laserrifle_ammo		6
-	rpg			1
-	rpg_ammo		3
+	plaspistol_ammo		5
+	plasrifle			1
+	plasrifle_ammo		3
+	plasblaster			1
+	plasblaster_ammo	3
+	tachyonpistol		2
+	tachyonpistol_ammo	5
+	tachyonrifle		1
+	tachyonrifle_ammo	3
+	tachyonsniper		1
+	tachyonsniper_ammo	3
+	fraggrenade			6
+	knife				1
+	irgoggles			1
+	medikit				1
+//	alienincgrenade		6
+	plasmagrenade		6
+	kerrblade           5 // bulky, will rarely get into the backpack
+	plasblade			2
+	light				2
+	medium				2
+//	heavy				1
 }
 
-equipment alien_spedition
+equipment testing_and_tweaking
 {
+	assault				2
+	assault_ammo			4
+	sniper				2
+	sniper_ammo			4
+	pistol				2
+	pistol_ammo			4
+	smg				2
+	smg_ammo			4
+	shotgun				2
+	shotgun_ammo			4
+	flamer				2
+	flamer_ammo			4
+	rpg				2
+	rpg_ammo			4
+	rpg_incendiary_ammo		4
+	rpg_tachyon_ammo		4
+	grenl				2
+	grenl_ammo			4
+	grenl_plasma_ammo		4
+	bolterrifle			2
+	bolterrifle_ammo		4
+	laserpistol			2
+	laserpistol_ammo		4
+	laserrifle			2
+	laserrifle_ammo			4
+	heavylaser			2
+	heavylaser_ammo			4
 	plaspistol			2
-	plaspistol_ammo		4
-	laserrifle			2
-	laserrifle_ammo		8
-	tachyonrifle		2
-	tachyonrifle_ammo		8
-}
-
-equipment alien_crash
-{
-	plasrifle			4
-	plasrifle_ammo			8
-	laserrifle			2
-	laserrifle_ammo			8
+	plaspistol_ammo			4
+	plasrifle			2
+	plasrifle_ammo			4
+	plasblaster			2
+	plasblaster_ammo		4
+	tachyonpistol			2
+	tachyonpistol_ammo		4
 	tachyonrifle			2
-	tachyonrifle_ammo		8
+	tachyonrifle_ammo		4
+	tachyonsniper			2
+	tachyonsniper_ammo		4
+	fraggrenade			6
+	knife				6
+	irgoggles			6
+	medikit				6
+	stunrod				6
+	stungrenade			6
+	alienincgrenade			6
+	plasmagrenade			6
+	kerrblade                       6
+	plasblade			6
+	light				6
+	medium				6
+//	heavy				6
 }
-

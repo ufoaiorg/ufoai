@@ -29,10 +29,10 @@ tile +n03
 {
 3 4
 
-0      a      0      
-a      +a     a      
-a      +a     a     
-0      a      0      
+0      a      0
+a      +a     a
+a      +a     a
+0      a      0
 }
 
 
@@ -80,29 +80,29 @@ tile +h03
 {
 4 3
 
-0      a      a      0     
-a      +a     +a     a	   
-0      a      a      0	   
+0      a      a      0
+a      +a     +a     a
+0      a      a      0
 }
 
 tile +h04
 {
 3 4
 
-0      a      0           
-a      +a     a 
-a      +a     a    	   
-0      a      0      	   
+0      a      0
+a      +a     a
+a      +a     a
+0      a      0
 }
 
 tile +h05
 {
 3 4
 
-0      a      0           
-a      +a     a 
-a      +a     a    	   
-0      a      0      	   
+0      a      0
+a      +a     a
+a      +a     a
+0      a      0
 }
 
 tile +i01
@@ -112,7 +112,7 @@ tile +i01
 0      a      a      a 	  a     0
 a      +a     +a     +a	  +a	a
 a      +a     +a     +a	  +a 	a
-0      a      a      a	  0    	0 	   
+0      a      a      a	  0    	0
 }
 
 tile +i02
@@ -122,7 +122,7 @@ tile +i02
 0      a      0
 a      +a     a
 a      +a     a
-0      a      0   
+0      a      0
 }
 
 tile +i03
@@ -151,8 +151,8 @@ tile +i05
 {
 3 3
 
-0      a      0 
-a      +a     a 
+0      a      0
+a      +a     a
 a      a      0
 
 }
@@ -174,20 +174,20 @@ tile +drop
 {
 5 4
 
-0      a      a      a 	  0    
+0      a      a      a 	  0
 a      +a     +a     +a	  a
-a      +a     +a     +a	  a 
-0      a      a      a	  0 
+a      +a     +a     +a	  a
+0      a      a      a	  0
 }
 
 tile +aliensmall
 {
 4 4
 
-0      a      a      0 	      
-a      +a     +a     a	  
-a      +a     +a     a	   
-0      a      a      0	   
+0      a      a      0
+a      +a     +a     a
+a      +a     +a     a
+0      a      a      0
 }
 
 
@@ -249,6 +249,7 @@ size "8 8"
 +n02 "0 8"
 +n03 "0 8"
 +n04 "0 8"
++n05 "0 8"
 +h02 "0 2"
 +i01 "1 1"
 +i02 "1 4"

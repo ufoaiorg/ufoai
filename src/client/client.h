@@ -35,14 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CLIENT_H
 #define CLIENT_CLIENT_H
 
-#include <math.h>
-#include <string.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <limits.h>
-
 #include "ref.h"
 #include "vid.h"
 #include "screen.h"
@@ -51,7 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "keys.h"
 #include "console.h"
 #include "cdaudio.h"
-#include "cl_ufopedia.h"
 #include "cl_market.h"
 
 /*============================================================================= */
@@ -68,6 +59,7 @@ extern tutorial_t tutorials[MAX_TUTORIALS];
 
 #define MAX_TEAMLIST	8
 
+/* Macros for faster access to the inventory-container. */
 #define RIGHT(e) ((e)->i.c[csi.idRight])
 #define LEFT(e)  ((e)->i.c[csi.idLeft])
 #define FLOOR(e) ((e)->i.c[csi.idFloor])
@@ -165,9 +157,6 @@ typedef struct {
 	struct le_s *teamList[MAX_TEAMLIST];
 	int numTeamList;
 	int numAliensSpotted;
-
-	/* transient data from server */
-	char layout[1024];			/* general 2D overlay */
 
 	/* non-gameserver infornamtion */
 	/* FIXME: move this cinematic stuff into the cin_t structure */
@@ -272,15 +261,6 @@ extern cvar_t *cl_stereo;
 extern cvar_t *cl_aviFrameRate;
 extern cvar_t *cl_aviMotionJpeg;
 
-extern cvar_t *cl_gun;
-extern cvar_t *cl_add_blend;
-extern cvar_t *cl_add_lights;
-extern cvar_t *cl_add_particles;
-extern cvar_t *cl_add_entities;
-extern cvar_t *cl_predict;
-extern cvar_t *cl_footsteps;
-extern cvar_t *cl_noskins;
-extern cvar_t *cl_autoskins;
 extern cvar_t *cl_markactors;
 
 extern cvar_t *cl_camrotspeed;
@@ -297,9 +277,8 @@ extern cvar_t *cl_anglespeedkey;
 
 extern cvar_t *cl_fps;
 extern cvar_t *cl_shownet;
-extern cvar_t *cl_showmiss;
-extern cvar_t *cl_showclamp;
 extern cvar_t *cl_show_tooltips;
+extern cvar_t *cl_show_cursor_tooltips;
 
 extern cvar_t *lookspring;
 extern cvar_t *lookstrafe;
@@ -314,8 +293,6 @@ extern cvar_t *freelook;
 
 extern cvar_t *cl_logevents;
 
-extern cvar_t *cl_lightlevel;	/* FIXME HACK */
-
 extern cvar_t *cl_paused;
 extern cvar_t *cl_timedemo;
 
@@ -327,6 +304,9 @@ extern cvar_t *cl_selected;
 extern cvar_t *cl_numnames;
 
 extern cvar_t *difficulty;
+extern cvar_t *cl_start_employees;
+extern cvar_t *cl_initial_equipment;
+extern cvar_t *cl_start_buildings;
 
 extern cvar_t *mn_active;
 extern cvar_t *mn_main;
@@ -334,10 +314,7 @@ extern cvar_t *mn_sequence;
 extern cvar_t *mn_hud;
 extern cvar_t *mn_lastsave;
 
-/*the new soundsystem cvar 0-3 by now */
-#ifndef _WIN32
-extern cvar_t *s_system;
-#endif /* _WIN32 */
+extern cvar_t *snd_ref;
 
 extern cvar_t *confirm_actions;
 
@@ -360,18 +337,7 @@ extern cdlight_t cl_dlights[MAX_DLIGHTS];
 
 extern netadr_t net_from;
 
-/*extern	sizebuf_t	net_message; */
-
-void DisplayString(int x, int y, char *s);
-void DrawAltString(int x, int y, char *s);	/* toggle high bit */
-
 void CL_AddNetgraph(void);
-
-void CL_ParticleEffect(vec3_t org, vec3_t dir, int color, int count);
-void CL_ParticleEffect2(vec3_t org, vec3_t dir, int color, int count);
-
-/* RAFAEL */
-void CL_ParticleEffect3(vec3_t org, vec3_t dir, int color, int count);
 
 /*================================================= */
 /* shader stuff */
@@ -404,39 +370,21 @@ typedef struct particle_s {
 
 #define	PARTICLE_GRAVITY	40
 #define BLASTER_PARTICLE_COLOR		0xe0
-/* PMM */
-#define INSTANT_PARTICLE	-10000.0
-/* PGM */
-/* ======== */
 
 void CL_ClearEffects(void);
 void CL_ClearTEnts(void);
-void CL_BlasterTrail(vec3_t start, vec3_t end);
-void CL_QuadTrail(vec3_t start, vec3_t end);
-void CL_RailTrail(vec3_t start, vec3_t end);
-void CL_BubbleTrail(vec3_t start, vec3_t end);
-void CL_FlagTrail(vec3_t start, vec3_t end, float color);
-
-/* RAFAEL */
-void CL_IonripperTrail(vec3_t start, vec3_t end);
 
 int CL_ParseEntityBits(unsigned *bits);
 
 void CL_ParseTEnt(void);
 void CL_ParseConfigString(void);
-void CL_ParseMuzzleFlash(void);
-void CL_ParseMuzzleFlash2(void);
-void SmokeAndFlash(vec3_t origin);
 
 void CL_SetLightstyle(int i);
-
-void CL_RunDLights(void);
 void CL_RunLightStyles(void);
+void CL_AddLightStyles(void);
 
 void CL_AddEntities(void);
-void CL_AddDLights(void);
 void CL_AddTEnts(void);
-void CL_AddLightStyles(void);
 
 /*================================================= */
 
@@ -447,8 +395,6 @@ void CL_RegisterLocalModels(void);
 void CL_Quit_f(void);
 
 void IN_Accumulate(void);
-
-void CL_ParseLayout(void);
 
 /* cl_sequence.c (avi stuff) */
 qboolean CL_OpenAVIForWriting(char *filename);
@@ -461,7 +407,8 @@ void CL_StopVideo_f(void);
 void CL_Video_f(void);
 
 /* cl_main */
-extern refexport_t re;			/* interface to refresh .dll */
+/* interface to refresh lib */
+extern refexport_t re;
 
 void CL_Init(void);
 void CL_ReadSinglePlayerData( void );
@@ -474,6 +421,7 @@ void CL_PingServers_f(void);
 void CL_Snd_Restart_f(void);
 void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank );
 void CL_ParseUGVs(char *title, char **text);
+char* CL_ToDifficultyName(int difficulty);
 
 /* cl_input */
 typedef struct {
@@ -542,7 +490,8 @@ typedef struct le_s {
 	int TU, maxTU;
 	int morale, maxMorale;
 	int HP, maxHP;
-	int STUN;					/* 0 stunned - state STATE_STUN */
+	int STUN;					/* if stunned - state STATE_STUN */
+	int AP;
 	int state;
 
 	float angles[3];
@@ -624,8 +573,10 @@ extern int numMPs;
 extern le_t LEs[MAX_EDICTS];
 extern int numLEs;
 
-extern vec3_t player_mins;
-extern vec3_t player_maxs;
+static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, -PLAYER_MIN };
+static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
+/*extern vec3_t player_mins;
+extern vec3_t player_maxs;*/
 
 void LE_Status(void);
 void LE_Think(void);
@@ -652,6 +603,7 @@ trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * pass
 lm_t *CL_AddLocalModel(char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags);
 void CL_AddMapParticle(char *particle, vec3_t origin, vec2_t wait, char *info, int levelflags);
 void CL_ParticleCheckRounds(void);
+void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb);
 
 /* cl_actor.c */
 extern le_t *selActor;
@@ -660,6 +612,8 @@ extern invList_t invList[MAX_INVLIST];
 
 extern byte *fb_list[MAX_FB_LIST];
 extern int fb_length;
+
+void MSG_Write_PA(player_action_t player_action, int num, ...);
 
 void CL_CharacterCvars(character_t * chr);
 void CL_UGVCvars(character_t *chr);
@@ -706,27 +660,58 @@ void CL_AddTargeting(void);
 #define NUM_BUYTYPES	4
 #define NUM_TEAMSKINS	4
 
-extern char *teamSkinNames[NUM_TEAMSKINS];
-
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y);
+void CL_ReceiveItem(sizebuf_t * buf, item_t * item, int * container, int * x, int * y);
 void CL_ResetTeams(void);
 void CL_ParseResults(sizebuf_t * buf);
-void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num);
-void CL_CheckInventory(equipDef_t * equip);
-void CL_ItemDescription(int item);
+void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num);
+void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num);
+void CL_ReloadAndRemoveCarried(equipDef_t * equip);
+void CL_CleanTempInventory(void);
+void CL_AddCarriedToEq(equipDef_t * equip);
+void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
+qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx);
+void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx);
+void CL_RemoveSoldiersFromAircraft(int aircraft_idx, int base_idx);
+
+/* cl_radar.c */
+#define MAX_UFOONGEOSCAPE	8
+struct aircraft_s;
+struct menuNode_s;
+
+typedef struct radar_s {
+	int range;						/* Range of radar */
+	int ufos[MAX_UFOONGEOSCAPE];	/* Ufos id sensored by radar (gd.ufos[id]) */
+	int numUfos;					/* Num ufos sensored by radar */
+} radar_t;
+
+extern void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, int x, int y, vec2_t pos);
+extern void RADAR_RemoveUfo(radar_t* radar, const struct aircraft_s* ufo);
+extern void Radar_NotifyUfoRemoved(radar_t* radar, const struct aircraft_s* ufo);
+extern void RADAR_ChangeRange(radar_t* radar, int change);
+extern void Radar_Initialise(radar_t* radar, int range);
+extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
+const struct aircraft_s* ufo, qboolean wasUfoSensored);
 
 /* cl_research.c */
 #include "cl_research.h"
 
+/* cl_produce.c */
+#include "cl_produce.h"
+
 /* SAVEGAMES */
 #ifndef SAVE_FILE_VERSION
-#define SAVE_FILE_VERSION 4
+#define SAVE_FILE_VERSION 5
 #endif							/* SAVE_FILE_VERSION */
+
+#include "cl_aircraft.h"
 
 /* cl_basemanagment.c */
 /* needs the MAX_ACTIVETEAM definition from above. */
 #include "cl_basemanagement.h"
 
+/* cl_employee.c */
+#include "cl_employee.h"
 
 /* MISC */
 /* TODO: needs to be sorted (e.g what file is it defined?) */
@@ -737,8 +722,10 @@ void CL_ItemDescription(int item);
 void CL_LoadTeam(sizebuf_t *sb, base_t *base, int version);
 void CL_UpdateHireVar(void);
 
-void CL_ResetCharacters(base_t *base);
-void CL_GenerateCharacter(char *team, base_t *base, int type);
+void CL_ResetCharacters(base_t* const base);
+void CL_ResetTeamInBase(void);
+void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeType_t employeeType);
+char* CL_GetTeamSkinName(int id);
 
 void MN_BuildNewBase(vec2_t pos);
 
@@ -774,6 +761,7 @@ extern stats_t stats;
 
 /* message systems */
 typedef enum {
+	MSG_DEBUG,
 	MSG_STANDARD,
 	MSG_RESEARCH,
 	MSG_CONSTRUCTION,
@@ -782,6 +770,7 @@ typedef enum {
 	MSG_BASEATTACK,
 	MSG_TRANSFERFINISHED,
 	MSG_PROMOTION,
+	MSG_PRODUCTION,
 	MSG_DEATH
 } messagetype_t;
 
@@ -799,18 +788,15 @@ char messageBuffer[MAX_MESSAGE_TEXT];
 
 message_t *messageStack;
 
-void MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia);
+message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia);
 void MN_RemoveMessage(char *title);
 void CL_InitMessageSystem(void);
 
 #include "cl_campaign.h"
 
 /* cl_menu.c */
-#define	NOFS(x)		(int)&(((menuNode_t *)0)->x)
-#define	MENUMODELFS(x)		(int)&(((menuModel_t *)0)->x)
-
 #define MAX_MENUS			64
-#define MAX_MENUNODES		2048
+#define MAX_MENUNODES		4096
 #define MAX_MENUACTIONS		4096
 #define MAX_MENUSTACK		16
 #define MAX_MENUMODELS		128
@@ -818,10 +804,11 @@ void CL_InitMessageSystem(void);
 #define MAX_MENU_COMMAND	32
 #define MAX_MENU_PICLINK	64
 
+/* one unit in the containers is 25x25 */
 #define C_UNIT				25
 #define C_UNDEFINED			0xFE
 
-#define MAX_MENUTEXTLEN		1024
+#define MAX_MENUTEXTLEN		4096
 
 
 typedef struct menuModel_s {
@@ -841,11 +828,6 @@ typedef struct menuAction_s {
 	void *data;
 	struct menuAction_s *next;
 } menuAction_t;
-
-typedef struct menuDepends_s {
-	char var[MAX_VAR];
-	char value[MAX_VAR];
-} menuDepends_t;
 
 typedef struct menuNode_s {
 	void *data[6];				/* needs to be first */
@@ -888,6 +870,15 @@ typedef enum {
 	TEXT_AIRCRAFT_INFO,
 	TEXT_MESSAGESYSTEM,			/* just a dummy for messagesystem - we use the stack */
 	TEXT_CAMPAIGN_LIST,
+	TEXT_MULTISELECTION,
+	TEXT_PRODUCTION_LIST = 15,
+	TEXT_PRODUCTION_AMOUNT,
+	TEXT_PRODUCTION_INFO,
+	TEXT_EMPLOYEE,
+	TEXT_MOUSECURSOR_RIGHT,
+	TEXT_STATS_1 = 20,
+	TEXT_STATS_2,
+	TEXT_STATS_3,
 
 	MAX_MENUTEXTS
 } texts_t;
@@ -896,25 +887,30 @@ qboolean MN_CursorOnMenu(int x, int y);
 void MN_Click(int x, int y);
 void MN_RightClick(int x, int y);
 void MN_MiddleClick(int x, int y);
-void MN_SetViewRect(void);
-void MN_Command(void);
+void MN_SetViewRect(const menu_t* menu);
 void MN_DrawMenus(void);
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color);
 void MN_ShutdownMessageSystem(void);
+void MN_UnHideNode ( menuNode_t* node );
+void MN_HideNode ( menuNode_t* node );
+menuNode_t* MN_GetNodeFromCurrentMenu(char*name);
+void MN_SetNewNodePos (menuNode_t* node, int x, int y);
+menuNode_t *MN_GetNode(const menu_t* const menu, char *name);
+menu_t *MN_GetMenu(char *name);
+char *MN_GetFont(const menu_t *m, const menuNode_t *const n);
 
 void MN_ResetMenus(void);
 void MN_Shutdown(void);
 void MN_ParseMenu(char *name, char **text);
 void MN_ParseMenuModel(char *name, char **text);
-void MN_PushMenu(char *name);
+menu_t* MN_PushMenu(char *name);
 void MN_PopMenu(qboolean all);
+menu_t* MN_ActiveMenu(void);
 void MN_Popup(const char *title, const char *text);
-void MN_DrawTooltip(char *font, char *string, int x, int y);
 void MN_ParseTutorials(char *title, char **text);
 
 void B_DrawBase(menuNode_t * node);
 
-extern int numMenus;
 extern inventory_t *menuInventory;
 extern char *menuText[MAX_MENUTEXTS];
 
@@ -973,8 +969,8 @@ extern vec3_t map_dropship_coord;
 
 void V_Init(void);
 void V_RenderView(float stereo_separation);
+void V_UpdateRefDef(void);
 void V_AddEntity(entity_t * ent);
-void V_AddParticle(vec3_t org, int color, float alpha);
 void V_AddLight(vec3_t org, float intensity, float r, float g, float b);
 void V_AddLightStyle(int style, float r, float g, float b);
 entity_t *V_GetEntity(void);
@@ -990,15 +986,7 @@ void CL_ParseSequence(char *name, char **text);
 
 /* cl_fx.c */
 cdlight_t *CL_AllocDlight(int key);
-void CL_BigTeleportParticles(vec3_t org);
-void CL_RocketTrail(vec3_t start, vec3_t end, centity_t * old);
-void CL_DiminishingTrail(vec3_t start, vec3_t end, centity_t * old, int flags);
-void CL_FlyEffect(centity_t * ent, vec3_t origin);
-void CL_BfgParticles(entity_t * ent);
 void CL_AddParticles(void);
-
-/* RAFAEL */
-void CL_TrapParticles(entity_t * ent);
 
 
 #if id386
@@ -1007,5 +995,33 @@ void x86_TimerStop(void);
 void x86_TimerInit(unsigned long smallest, unsigned longest);
 unsigned long *x86_TimerGetHistogram(void);
 #endif /* id386 */
+
+/* cl_map.c */
+extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
+extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
+extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D);
+extern void MAP_MapClick(const menuNode_t * node, int x, int y);
+extern void MAP_3DMapClick(const menuNode_t* node, int x, int y);
+extern void MAP_ResetAction(void);
+extern void MAP_SelectAircraft(aircraft_t* aircraft);
+extern void MAP_SelectMission(actMis_t* mission);
+extern void MAP_NotifyMissionRemoved(const actMis_t* mission);
+extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo);
+extern void MAP_NotifyUfoDisappear(const aircraft_t* ufo);
+extern void MAP_GameInit(void);
+
+/* cl_ufo.c */
+extern void UFO_CampaignRunUfos(int dt);
+extern void UFO_CampaignCheckEvents(void);
+extern void UFO_Reset(void);
+extern void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo);
+
+/* cl_popup.c */
+extern void CL_PopupInit(void);
+extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission);
+extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
+extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
+extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
+extern void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
 
 #endif /* CLIENT_CLIENT_H */

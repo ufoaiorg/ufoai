@@ -1,5 +1,30 @@
-shader test
+//
+// valid flags:
+// filename (only when frag or vertex are true): filename to shader file
+// frag, vertex, emboss (emboss_2, emboss_low, emboss_high), blur, light, edge : boolean
+// glmode replace, blend, add, filter (default), invfilter
+//
+// TODO: To bind one shader to more than one image we should introduce a image variable than
+//       can be set more than once for one shader - init ths image at shader load time and
+//       assign the shader
+
+//shader pics/menu/main_ur
+//{
+//	filename "shaders/water.fp"
+//	frag true
+//}
+
+shader textures/exterior/ext_road01a
 {
-	filename "arb/test.vp"
-	frag true
+	emboss true
+}
+
+shader textures/exterior/ext_conc03
+{
+	emboss true
+}
+
+shader textures/tex_material/c_blue
+{
+	emboss_low true
 }

@@ -1,0 +1,283 @@
+// ==================
+// PRODUCTION MENU
+// ==================
+menu production
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/prod_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/prod_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/prod_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/prod_lr
+		pos		"512 512"
+	}
+
+	// ==================
+	// credits
+	// ==================
+
+	string txt_credits_caption
+	{
+		string	"_CREDIT"
+		pos	"650 70"
+		font	f_big
+		align	ul
+	}
+
+	string txt_credits
+	{
+		font	"f_big"
+		string	"*cvar mn_credits"
+		pos		"944 70"
+		align	ur
+	}
+
+	// ==================
+	// list
+	// ==================
+
+	text prodlist
+	{
+		pos		"40 30"
+		size	"286 710"
+//		bgcolor "1 1 1 0.5"
+		format	"22 0"
+		num	15
+		click
+		rclick
+		mousefx	true
+	}
+
+	text prodlist_amount
+	{
+		pos		"336 30"
+		size	"114 710"
+//		bgcolor "1 1 1 0.5"
+		format	"22 0"
+		num	16
+		mousefx	true
+	}
+
+	pic prod_inc
+	{
+		image	menu/buttons_small
+		pos		"810 355"
+		tooltip "_Increase production by 1"
+		texl	"16 0"
+		texh	"32 16"
+		click	{ cmd "prod_inc" }
+	}
+
+	pic prod_stop_2
+	{
+		image	menu/buttons_small
+		pos		"794 355"
+		tooltip "_Stop production"
+		texl	"0 0"
+		texh	"16 16"
+	}
+	pic prod_stop
+	{
+		image	menu/buttons_small
+		pos		"794 355"
+		tooltip "_Stop production"
+		texl	"16 0"
+		texh	"32 16"
+		click	{ cmd "prod_stop" }
+	}
+
+	pic prod_dec
+	{
+		image	menu/buttons_small
+		pos		"778 355"
+		tooltip "_Decrease production by 1"
+		texl	"0 0"
+		texh	"16 16"
+		click	{ cmd "prod_dec" }
+	}
+
+	pic prod_inc2
+	{
+		image	menu/buttons_small
+		pos		"830 355"
+		tooltip "_Increase production by 10"
+		texl	"16 0"
+		texh	"32 16"
+		click	{ cmd "prod_inc 10" }
+	}
+
+	pic prod_dec2
+	{
+		image	menu/buttons_small
+		pos		"760 355"
+		tooltip "_Decrease production by 10"
+		texl	"0 0"
+		texh	"16 16"
+		click	{ cmd "prod_dec 10" }
+	}
+
+	// ==================
+	// item description
+	// ==================
+
+	text description
+	{
+		pos		"610 428"
+//		bgcolor "1 1 1 0.5"
+		size	"366 80"
+		format	"20 260"
+		num 17
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	confunc prod_reset
+	{
+		*s_primary		color "1 1 1 0.6"
+		*s_secondary	color "1 1 1 0.6"
+		*s_misc			color "1 1 1 0.6"
+		*s_armor		color "1 1 1 0.6"
+	}
+	confunc prod_primary	{ cmd "prod_init 0;" prod_reset *s_primary	color "1 1 1 1" }
+	confunc prod_secondary	{ cmd "prod_init 1;" prod_reset *s_secondary	color "1 1 1 1" }
+	confunc prod_misc		{ cmd "prod_init 2;" prod_reset *s_misc	color "1 1 1 1" }
+	confunc prod_armor		{ cmd "prod_init 3;" prod_reset *s_armor	color "1 1 1 1" }
+
+	pic bt_primary
+	{
+		tooltip	"_Show only primary weapons"
+		image	menu/button_blue
+		mousefx	true
+		pos		"615 585"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ prod_primary }
+	}
+
+	string s_primary
+	{
+		pos	"679 595"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Primary"
+	}
+
+	pic bt_secondary
+	{
+		tooltip	"_Show only secondary weapons"
+		image	menu/button_blue
+		mousefx	true
+		pos		"615 655"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ prod_secondary }
+	}
+
+	string s_secondary
+	{
+		pos	"679 665"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Secondary"
+	}
+
+	pic bt_misc
+	{
+		tooltip	"_Show other equipment"
+		image	menu/button_blue
+		mousefx	true
+		pos		"765 585"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ prod_misc }
+	}
+
+	string s_misc
+	{
+		pos	"829 595"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Misc"
+	}
+
+	pic bt_armor
+	{
+		tooltip	"_Show only armor"
+		image	menu/button_blue
+		mousefx	true
+		pos		"765 655"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ prod_armor }
+	}
+
+	string s_armor
+	{
+		pos	"829 665"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Armor"
+	}
+
+	// ITEMS
+	item itemmodel
+	{
+		string	"*cvar mn_item"
+		pos		"793 288"
+		scale	"7 7 7"
+	}
+
+	pic bt_continue
+	{
+		tooltip	"_Back to baseview"
+		image	hud/buttons2
+		mousefx	true
+		pos		"940 686"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop }
+	}
+
+	// ==================
+	// init function
+	// ==================
+
+	func init
+	{
+		cmd "prod_primary"
+	}
+}

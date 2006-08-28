@@ -1,4 +1,17 @@
+/**
+ * @file sv_game.c
+ * @brief Interface to the game library.
+ */
+
 /*
+All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
+26/06/06, Eddy Cullen (ScreamingWithNoSound):
+	Reformatted to agreed style.
+	Added doxygen file comment.
+	Updated copyright notice.
+
+Original file from Quake 2 v3.21: quake2-2.31/server/sv_game.c
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -17,23 +30,21 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* sv_game.c -- interface to the game dll */
 
 #include "server.h"
 
-game_export_t	*ge;
+#if defined DEBUG && defined _MSC_VER
+#include <intrin.h>
+#endif
 
+game_export_t *ge;
 
-/*
-===============
-PF_Unicast
-
-Sends the contents of the mutlicast buffer to a single client
-===============
-*/
-void PF_Unicast (player_t *player)
+/**
+ * @brief Sends the contents of the mutlicast buffer to a single client
+ */
+static void PF_Unicast(player_t * player)
 {
-	client_t	*client;
+	client_t *client;
 
 	if (!player || !player->inuse)
 		return;
@@ -43,272 +54,452 @@ void PF_Unicast (player_t *player)
 
 	client = svs.clients + player->num;
 
-	SZ_Write (&client->netchan.message, sv.multicast.data, sv.multicast.cursize);
+	SZ_Write(&client->netchan.message, sv.multicast.data, sv.multicast.cursize);
 
-	SZ_Clear (&sv.multicast);
+	SZ_Clear(&sv.multicast);
 }
 
 
-/*
-===============
-PF_dprintf
-
-Debug print to server console
-===============
-*/
-void PF_dprintf (char *fmt, ...)
+/**
+ * @brief Debug print to server console
+ */
+static void PF_dprintf(char *fmt, ...)
 {
-	char		msg[1024];
-	va_list		argptr;
+	char msg[1024];
+	va_list argptr;
 
-	va_start (argptr,fmt);
-	vsprintf (msg, fmt, argptr);
-	va_end (argptr);
+	va_start(argptr, fmt);
+	vsprintf(msg, fmt, argptr);
+	va_end(argptr);
 
-	Com_Printf ("%s", msg);
+	Com_Printf("%s", msg);
 }
 
 
-/*
-===============
-PF_cprintf
-
-Print to a single client
-===============
-*/
-void PF_cprintf (player_t *player, int level, char *fmt, ...)
+/**
+ * @brief Print to a single client
+ */
+static void PF_cprintf(player_t * player, int level, char *fmt, ...)
 {
-	char		msg[1024];
-	va_list		argptr;
-	int			n;
+	char msg[1024];
+	va_list argptr;
+	int n;
 
 	n = 0;
-	if (player)
-	{
+	if (player) {
 		n = player->num;
 		if (n < 0 || n >= ge->max_players)
 			return;
 	}
 
-	va_start (argptr,fmt);
-	vsprintf (msg, fmt, argptr);
-	va_end (argptr);
+	va_start(argptr, fmt);
+	vsprintf(msg, fmt, argptr);
+	va_end(argptr);
 
 	if (player)
-		SV_ClientPrintf (svs.clients+n, level, "%s", msg);
+		SV_ClientPrintf(svs.clients + n, level, "%s", msg);
 	else
-		Com_Printf ("%s", msg);
+		Com_Printf("%s", msg);
 }
 
 
-/*
-===============
-PF_centerprintf
-
-centerprint to a single client
-===============
-*/
-void PF_centerprintf (player_t *player, char *fmt, ...)
+/**
+ * @brief Centerprint to a single client
+ */
+static void PF_centerprintf(player_t * player, char *fmt, ...)
 {
-	char		msg[1024];
-	va_list		argptr;
-	int			n;
+	char msg[1024];
+	va_list argptr;
+	int n;
 
-	if ( !player )
+	if (!player)
 		return;
 
 	n = player->num;
 	if (n < 0 || n >= ge->max_players)
 		return;
 
-	va_start (argptr,fmt);
-	vsprintf (msg, fmt, argptr);
-	va_end (argptr);
+	va_start(argptr, fmt);
+	vsprintf(msg, fmt, argptr);
+	va_end(argptr);
 
-	MSG_WriteByte (&sv.multicast,svc_centerprint);
-	MSG_WriteString (&sv.multicast,msg);
-	PF_Unicast (player);
+	MSG_WriteByte(&sv.multicast, svc_centerprint);
+	MSG_WriteString(&sv.multicast, msg);
+	PF_Unicast(player);
 }
 
 
-/*
-===============
-PF_error
-
-Abort the server with a game error
-===============
-*/
-void PF_error (char *fmt, ...)
+/**
+ * @brief Abort the server with a game error
+ */
+static void PF_error(char *fmt, ...)
 {
-	char		msg[1024];
-	va_list		argptr;
+	char msg[1024];
+	va_list argptr;
 
-	va_start (argptr,fmt);
-	vsprintf (msg, fmt, argptr);
-	va_end (argptr);
+#if defined DEBUG && defined _MSC_VER
+	__debugbreak();	/* break execution before game shutdown */
+#endif
 
-	Com_Error (ERR_DROP, "Game Error: %s", msg);
+	va_start(argptr, fmt);
+	vsprintf(msg, fmt, argptr);
+	va_end(argptr);
+
+	Com_Error(ERR_DROP, "Game Error: %s", msg);
 }
 
 
-/*
-=================
-PF_setmodel
-
-Also sets mins and maxs for inline bmodels
-=================
-*/
-void PF_SetModel (edict_t *ent, char *name)
+/**
+ * @brief
+ * Also sets mins and maxs for inline bmodels
+ */
+static void PF_SetModel(edict_t * ent, char *name)
 {
-	cmodel_t	*mod;
+	cmodel_t *mod;
 
 	if (!name)
-		Com_Error (ERR_DROP, "PF_setmodel: NULL");
+		Com_Error(ERR_DROP, "PF_setmodel: NULL");
 
-	ent->modelindex = SV_ModelIndex (name);
+	ent->modelindex = SV_ModelIndex(name);
 
 	/* if it is an inline model, get the size information for it */
-	if (name[0] == '*')
-	{
-		mod = CM_InlineModel (name);
-		VectorCopy (mod->mins, ent->mins);
-		VectorCopy (mod->maxs, ent->maxs);
+	if (name[0] == '*') {
+		mod = CM_InlineModel(name);
+		VectorCopy(mod->mins, ent->mins);
+		VectorCopy(mod->maxs, ent->maxs);
 		ent->solid = SOLID_BSP;
-		SV_LinkEdict (ent);
+		SV_LinkEdict(ent);
 	}
-
 }
 
-
-/*
-===============
-PF_Configstring
-
-===============
-*/
-void PF_Configstring (int index, char *val)
+/**
+ * @brief
+ * @sa CL_ParseConfigString
+ */
+static void PF_Configstring(int index, char *val)
 {
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error (ERR_DROP, "configstring: bad index %i\n", index);
+		Com_Error(ERR_DROP, "configstring: bad index %i\n", index);
 
 	if (!val)
 		val = "";
 
 	/* change the string in sv */
-	Q_strncpyz (sv.configstrings[index], val, MAX_TOKEN_CHARS);
+	/* there may be overflows in i==CS_TILES - but thats ok */
+	/* see definition of configstrings and MAX_TILESTRINGS */
+	switch (index) {
+	case CS_TILES:
+	case CS_POSITIONS:
+		Q_strncpyz(sv.configstrings[index], val, MAX_TOKEN_CHARS*MAX_TILESTRINGS);
+		break;
+	default:
+		Q_strncpyz(sv.configstrings[index], val, MAX_TOKEN_CHARS);
+		break;
+	}
 
-	if (sv.state != ss_loading)
-	{	/* send the update to everyone */
-		SZ_Clear (&sv.multicast);
-		MSG_WriteChar (&sv.multicast, svc_configstring);
-		MSG_WriteShort (&sv.multicast, index);
-		MSG_WriteString (&sv.multicast, val);
+	if (sv.state != ss_loading) {	/* send the update to everyone */
+		SZ_Clear(&sv.multicast);
+		MSG_WriteChar(&sv.multicast, svc_configstring);
+		MSG_WriteShort(&sv.multicast, index);
+		MSG_WriteString(&sv.multicast, val);
 
-		SV_Multicast( ~0 );
+		SV_Multicast(~0);
 	}
 }
 
-
-void PF_WriteChar (int c) {MSG_WriteChar (&sv.multicast, c);}
-void PF_WriteByte (int c) {MSG_WriteByte (&sv.multicast, c);}
-void PF_WriteShort (int c) {MSG_WriteShort (&sv.multicast, c);}
-void PF_WriteLong (int c) {MSG_WriteLong (&sv.multicast, c);}
-void PF_WriteFloat (float f) {MSG_WriteFloat (&sv.multicast, f);}
-void PF_WriteString (char *s) {MSG_WriteString (&sv.multicast, s);}
-void PF_WritePos (vec3_t pos) {MSG_WritePos (&sv.multicast, pos);}
-void PF_WriteGPos (pos3_t pos) {MSG_WriteGPos (&sv.multicast, pos);}
-void PF_WriteDir (vec3_t dir) {MSG_WriteDir (&sv.multicast, dir);}
-void PF_WriteAngle (float f) {MSG_WriteAngle (&sv.multicast, f);}
-
-byte *pf_save;
-void PF_WriteNewSave( int c ) {pf_save = sv.multicast.data+sv.multicast.cursize; MSG_WriteByte( &sv.multicast, c );}
-void PF_WriteToSave( int c ) {*pf_save = c;}
-
-int	PF_ReadChar ( void ) {return MSG_ReadChar( &net_message );}
-int	PF_ReadByte ( void ) {return MSG_ReadByte( &net_message );}
-int	PF_ReadShort ( void ) {return MSG_ReadShort( &net_message );}
-int	PF_ReadLong ( void ) {return MSG_ReadLong( &net_message );}
-float	PF_ReadFloat ( void ) {return MSG_ReadFloat( &net_message );}
-char	*PF_ReadString ( void ) {return MSG_ReadString( &net_message );}
-void	PF_ReadPos ( vec3_t pos) {MSG_ReadPos( &net_message, pos );}
-void	PF_ReadGPos ( pos3_t pos) {MSG_ReadGPos( &net_message, pos );}
-void	PF_ReadDir ( vec3_t vector) {MSG_ReadDir( &net_message, vector );}
-float	PF_ReadAngle ( void ) {return MSG_ReadAngle( &net_message );}
-
-void	PF_ReadData ( void *buffer, int size) {MSG_ReadData( &net_message, buffer, size );}
-
-
-/*============================================== */
-
-qboolean	pfe_pending = qfalse;
-int		pfe_mask;
-
-void PF_EndEvents( void )
+/**
+ * @brief
+ */
+static void PF_WriteChar(int c)
 {
-	if ( !pfe_pending )
+	MSG_WriteChar(&sv.multicast, c);
+}
+
+/**
+ * @brief
+ */
+#ifdef DEBUG
+static void PF_WriteByte(int c, char* file, int line)
+{
+	MSG_WriteByteDebug(&sv.multicast, c, file, line);
+}
+#else
+static void PF_WriteByte(int c)
+{
+	MSG_WriteByte(&sv.multicast, c);
+}
+#endif
+
+/**
+ * @brief
+ */
+#ifdef DEBUG
+static void PF_WriteShort(int c, char* file, int line)
+{
+	MSG_WriteShortDebug(&sv.multicast, c, file, line);
+}
+#else
+static void PF_WriteShort(int c)
+{
+	MSG_WriteShort(&sv.multicast, c);
+}
+#endif
+
+/**
+ * @brief
+ */
+static void PF_WriteLong(int c)
+{
+	MSG_WriteLong(&sv.multicast, c);
+}
+
+/**
+ * @brief
+ */
+static void PF_WriteFloat(float f)
+{
+	MSG_WriteFloat(&sv.multicast, f);
+}
+
+/**
+ * @brief
+ */
+static void PF_WriteString(char *s)
+{
+	MSG_WriteString(&sv.multicast, s);
+}
+
+/**
+ * @brief
+ */
+static void PF_WritePos(vec3_t pos)
+{
+	MSG_WritePos(&sv.multicast, pos);
+}
+
+/**
+ * @brief
+ */
+static void PF_WriteGPos(pos3_t pos)
+{
+	MSG_WriteGPos(&sv.multicast, pos);
+}
+
+/**
+ * @brief
+ */
+static void PF_WriteDir(vec3_t dir)
+{
+	MSG_WriteDir(&sv.multicast, dir);
+}
+
+/**
+ * @brief
+ */
+static void PF_WriteAngle(float f)
+{
+	MSG_WriteAngle(&sv.multicast, f);
+}
+
+static void PF_WriteFormat(char *format, ...)
+{
+	va_list ap;
+	va_start(ap, format);
+	MSG_V_WriteFormat(&sv.multicast, format, ap);
+	va_end(ap);
+}
+
+static byte *pf_save;
+/**
+ * @brief
+ */
+static void PF_WriteNewSave(int c)
+{
+#ifdef PARANOID
+	if (c < SHRT_MIN || c > USHRT_MAX)
+		Com_Printf("MSG_WriteShort: range error %i.\n", c);
+#endif
+
+ 	pf_save = sv.multicast.data + sv.multicast.cursize;
+	MSG_WriteShort(&sv.multicast, c);
+
+}
+
+/**
+ * @brief
+ */
+static void PF_WriteToSave(int c)
+{
+#ifdef PARANOID
+	if (c < SHRT_MIN || c > USHRT_MAX)
+		Com_Printf("MSG_WriteShort: range error %i.\n", c);
+#endif
+
+	pf_save[0] = c & UCHAR_MAX; /* a hack, see MSG_WriteShort */
+ 	pf_save[1] = (c >> 8) & UCHAR_MAX;
+}
+
+/**
+ * @brief
+ */
+static int PF_ReadChar(void)
+{
+	return MSG_ReadChar(&net_message);
+}
+
+/**
+ * @brief
+ */
+static int PF_ReadByte(void)
+{
+	return MSG_ReadByte(&net_message);
+}
+
+/**
+ * @brief
+ */
+static int PF_ReadShort(void)
+{
+	return MSG_ReadShort(&net_message);
+}
+
+/**
+ * @brief
+ */
+static int PF_ReadLong(void)
+{
+	return MSG_ReadLong(&net_message);
+}
+
+/**
+ * @brief
+ */
+static float PF_ReadFloat(void)
+{
+	return MSG_ReadFloat(&net_message);
+}
+
+/**
+ * @brief
+ */
+static char *PF_ReadString(void)
+{
+	return MSG_ReadString(&net_message);
+}
+
+/**
+ * @brief
+ */
+static void PF_ReadPos(vec3_t pos)
+{
+	MSG_ReadPos(&net_message, pos);
+}
+
+/**
+ * @brief
+ */
+static void PF_ReadGPos(pos3_t pos)
+{
+	MSG_ReadGPos(&net_message, pos);
+}
+
+/**
+ * @brief
+ */
+static void PF_ReadDir(vec3_t vector)
+{
+	MSG_ReadDir(&net_message, vector);
+}
+
+/**
+ * @brief
+ */
+static float PF_ReadAngle(void)
+{
+	return MSG_ReadAngle(&net_message);
+}
+
+/**
+ * @brief
+ */
+static void PF_ReadData(void *buffer, int size)
+{
+	MSG_ReadData(&net_message, buffer, size);
+}
+
+static void PF_ReadFormat(char *format, ...)
+{
+	va_list ap;
+	va_start(ap, format);
+	MSG_V_ReadFormat(&net_message, format, ap);
+	va_end(ap);
+}
+
+static qboolean pfe_pending = qfalse;
+static int pfe_mask = 0;
+
+/**
+ * @brief
+ */
+static void PF_EndEvents(void)
+{
+	if (!pfe_pending)
 		return;
 
-	PF_WriteByte( EV_NULL );
-	SV_Multicast( pfe_mask );
+	MSG_WriteByte(&sv.multicast, EV_NULL);
+	SV_Multicast(pfe_mask);
 /*	SV_SendClientMessages(); */
 	pfe_pending = qfalse;
 }
 
-void PF_AddEvent( int mask, int eType )
+/**
+ * @brief
+ */
+static void PF_AddEvent(int mask, int eType)
 {
-	if ( !pfe_pending || mask != pfe_mask )
-	{
+	if (!pfe_pending || mask != pfe_mask) {
 		/* the target clients have changed or nothing is pending */
-		if ( pfe_pending )
+		if (pfe_pending)
 			/* finish the last event chain */
 			PF_EndEvents();
 
 		/* start the new event */
 		pfe_pending = qtrue;
 		pfe_mask = mask;
-		PF_WriteByte( svc_event );
+		MSG_WriteByte(&sv.multicast, svc_event);
 	}
 
 	/* write header */
-	PF_WriteByte( eType );
+	MSG_WriteByte(&sv.multicast, eType);
 }
 
-/*============================================== */
-
-/*
-===============
-SV_ShutdownGameProgs
-
-Called when either the entire server is being killed, or
-it is changing to a different game directory.
-===============
-*/
-void SV_ShutdownGameProgs (void)
+/**
+ * @brief Called when either the entire server is being killed, or it is changing to a different game directory.
+ */
+void SV_ShutdownGameProgs(void)
 {
 	if (!ge)
 		return;
-	ge->Shutdown ();
-	Sys_UnloadGame ();
+	ge->Shutdown();
+	Sys_UnloadGame();
 	ge = NULL;
 }
 
-/*
-===============
-SV_InitGameProgs
+/**
+ * @brief
+ */
+void SCR_DebugGraph(float value, int color);
 
-Init the game subsystem for a new map
-===============
-*/
-void SCR_DebugGraph (float value, int color);
-
-void SV_InitGameProgs (void)
+/**
+ * @brief Init the game subsystem for a new map
+ */
+void SV_InitGameProgs(void)
 {
-	game_import_t	import;
+	game_import_t import;
 
 	/* unload anything we have now */
 	if (ge)
-		SV_ShutdownGameProgs ();
-
+		SV_ShutdownGameProgs();
 
 	/* load a new game dll */
 	import.multicast = SV_Multicast;
@@ -320,7 +511,6 @@ void SV_InitGameProgs (void)
 	import.error = PF_error;
 
 	import.trace = SV_Trace;
-	import.pointcontents = SV_PointContents;
 	import.linkentity = SV_LinkEdict;
 	import.unlinkentity = SV_UnlinkEdict;
 
@@ -354,7 +544,7 @@ void SV_InitGameProgs (void)
 	import.WriteGPos = PF_WriteGPos;
 	import.WriteDir = PF_WriteDir;
 	import.WriteAngle = PF_WriteAngle;
-/*	import.WriteFormat = PF_WriteFormat; */
+	import.WriteFormat = PF_WriteFormat;
 
 	import.WriteNewSave = PF_WriteNewSave;
 	import.WriteToSave = PF_WriteToSave;
@@ -373,6 +563,7 @@ void SV_InitGameProgs (void)
 	import.ReadDir = PF_ReadDir;
 	import.ReadAngle = PF_ReadAngle;
 	import.ReadData = PF_ReadData;
+	import.ReadFormat = PF_ReadFormat;
 
 	import.GetModelAndName = Com_GetModelAndName;
 
@@ -396,16 +587,14 @@ void SV_InitGameProgs (void)
 
 	import.seed = Sys_Milliseconds();
 	import.csi = &csi;
-	import.map = (void*)&svMap;
+	import.map = (void *) &svMap;
 
-	ge = Sys_GetGameAPI (&import);
+	ge = Sys_GetGameAPI(&import);
 
 	if (!ge)
-		Com_Error (ERR_DROP, "failed to load game library");
+		Com_Error(ERR_DROP, "failed to load game library");
 	if (ge->apiversion != GAME_API_VERSION)
-		Com_Error (ERR_DROP, "game is version %i, not %i", ge->apiversion,
-		GAME_API_VERSION);
+		Com_Error(ERR_DROP, "game is version %i, not %i", ge->apiversion, GAME_API_VERSION);
 
-	ge->Init ();
+	ge->Init();
 }
-

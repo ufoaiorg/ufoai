@@ -1,3 +1,6 @@
+NOTE: This is outdated - see the wiki for up-to-date texts
+
+
 Most of this is tentative and serves as a "proposed" outline of the weapon hierarchy. Descriptions in the UFOpaedia should be longer than the ones given here. Balancing tentative, other than the vague comparisons given here. It also implies changes to the tactical combat simulator (smoke, fire, stealth, etc).
 I abstract from the ammo clips that are appropriate for each weapon. Note that even Laser weapons use ammo, unlike in UFO:EU.
 I abstract from alien armor.

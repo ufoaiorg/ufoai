@@ -95,10 +95,11 @@ menu ufopedia
 
 	text ufopedia
 	{
-		pos		"40 86"
-		size	"400 550"
+		pos		"35 85"
+		size	"700 390"
 		num		2
-		click { }
+		format	"24 0"
+		click
 	}
 
 	confunc mn_upfbig
@@ -117,9 +118,19 @@ menu ufopedia
 
 	text description
 	{
-		pos		"40 500"
-		size	"326 200"
+		pos		"35 495"
+		size	"380 200"
 		format	"20 0"
+	}
+
+	text techtree
+	{
+		pos		"440 495"
+		size	"350 250"
+		format	"20 0"
+		num	1
+		click
+		mousefx true
 	}
 
 	string title
@@ -135,39 +146,37 @@ menu ufopedia
 		md2	"*cvar mn_upmodel_top"
 		angles	"0 0 120"
 		color	"0.5 0.5 0.5 1"
-		origin	"770 250 0"
-		pos	"650 130"
+		origin	"870 205 0"
+		pos	"750 85"
 		size	"240 240"
 		mousefx	true
-		click
-	}
-
-	model mdl_bottom
-	{
-		md2	"*cvar mn_upmodel_bottom"
-		origin	"770 570 0"
-		angles	"0 0 120"
-		color	"0.5 0.5 0.5 1"
-		pos	"650 440"
-		size	"240 240"
-		scale	"6 6 6"
 		click
 	}
 
 	pic image_top
 	{
 		image	"*cvar mn_upimage_top"
-		pos	"570 220"
+		pos	"750 85"
 		size	"240 240"
+	}
+
+	model mdl_bottom
+	{
+		md2	"*cvar mn_upmodel_bottom"
+		origin	"870 415 0"
+		angles	"0 0 120"
+		color	"0.5 0.5 0.5 1"
+		pos	"790 335"
+		size	"140 140"
+		scale	"6 6 6"
 		click
 	}
 
 	pic image_bottom
 	{
 		image   "*cvar mn_upimage_bottom"
-		pos	"570 500"
+		pos	"810 550"
 		size	"120 120"
-		click { }
 	}
 
 	func init

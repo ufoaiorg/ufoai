@@ -26,7 +26,7 @@ item laserpistol_ammo
 	category	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
-	scale		1.5
+	scale		1.6
 	price		100
 	buytype		1
 
@@ -39,9 +39,9 @@ item laserpistol_ammo
 		hitbody	laserImpact
 		firesnd	weapons/laser.wav
 		speed	0
-		spread	"2.8 3.6"
+		spread	"2.5 2.5"
 		crouch	0.8
-		range	600
+		range	20
 		shots	1
 		ammo	1
 		time	9
@@ -57,14 +57,14 @@ item laserpistol_ammo
 		hitbody	laserImpact
 		firesnd	weapons/laser.wav
 		speed	0
-		spread	"5 7"
+		spread	"3.5 5.5"
 		crouch	1.0
-		range	600
+		range	18
 		shots	4
 		ammo	4
 		rof		6
 		time	17
-		damage	"26 4"
+		damage	"24 4"
 		dmgtype laser
 	}
 }
@@ -82,8 +82,8 @@ item laserrifle
 	category	1
 	twohanded	true
 	shape		"0 0 5 2"
-	center		"5 0 1.5"
-	scale		1.2
+	center		"4.5 0 1.5"
+	scale		1.26
 	ammo		16
 	reload		8
 	price		3200
@@ -105,15 +105,15 @@ item laserrifle_ammo
 	primary
 	{
 		name	"_Single Pulse"
-		skill 	precise
+		skill 	sniper
 		projtl	laserPulse
 		impact	laserImpact
 		hitbody	laserImpact
 		firesnd	weapons/laser.wav
 		speed	0
-		spread	"1.4 1.9"
+		spread	"1.5 1.5"
 		crouch	0.7
-		range	900
+		range	35
 		shots	1
 		ammo	1
 		time	11
@@ -129,14 +129,87 @@ item laserrifle_ammo
 		hitbody	laserImpact
 		firesnd	weapons/laser.wav
 		speed	0
-		spread	"2.4 3.5"
+		spread	"2.5 3.5"
 		crouch	1.0
-		range	900
+		range	30
 		shots	4
 		ammo	4
 		rof		6
 		time	22
-		damage	"36 6"
+		damage	"34 6"
+		dmgtype laser
+	}
+}
+
+
+// =======================
+// HEAVY LASER
+// =======================
+item heavylaser
+{
+	name		"_Heavy Laser"
+	model		weapons/laserrifle/laserrifle
+//	model		weapons/heavylaser/heavylaser
+	weapon		true
+	type		biggun
+	category	3
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"4.5 0 1.5"
+	scale		1.26
+	ammo		6
+	reload		12
+	price		4400
+	buytype		0
+}
+
+item heavylaser_ammo
+{
+	name		"_Heavy Laser Charge"
+	model		weapons/laserrifle/laserrifle_clip
+//	model		weapons/heavylaser/heavylaser_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.8
+	price		170
+	buytype		0
+
+	primary
+	{
+		name	"_Single Pulse"
+		skill	heavy
+		projtl	laserPulse
+		impact	laserImpact
+		hitbody	laserImpact
+		firesnd	weapons/laser.wav
+		speed	0
+		spread	"2 2"
+		crouch	0.7
+		range	35
+		shots	1
+		ammo	1
+		time	13
+		damage	"72 6"
+		dmgtype laser
+	}
+	secondary
+	{
+		name	"_Overload"
+		skill	heavy
+		projtl	laserOverload
+		impact	laserImpact
+		hitbody	laserImpact
+		firesnd	weapons/heavy_laser.wav
+		speed	0
+		spread	"3.5 3.5"
+		crouch	0.7
+		range	45
+		shots	1
+		ammo	5
+		time	31
+		damage	"196 6"
 		dmgtype laser
 	}
 }

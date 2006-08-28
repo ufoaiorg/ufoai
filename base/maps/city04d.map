@@ -5228,7 +5228,7 @@
 "model" "models/aircraft/dropship/dropship_glass.md2"
 "origin" "-191 -32 32"
 "spawnflags" "255"
-"angles" "0 180 0"
+"angles" "0 180"
 }
 // entity 3
 {

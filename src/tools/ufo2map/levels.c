@@ -1,4 +1,27 @@
-/* levels.c */
+/**
+ * @file levels.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
 
 #include "qbsp.h"
 
@@ -61,18 +84,14 @@ int BuildNodeChildren( vec3_t mins, vec3_t maxs, int n[3] )
 
 	node = -1;
 
-	for ( i = 0; i < 3; i++ )
-	{
+	for ( i = 0; i < 3; i++ ) {
 		if ( n[i] == -1 )
 			continue;
 
-		if ( node == -1 ) 
-		{
+		if ( node == -1 ) {
 			/* store the valid node */
 			node = n[i];
-		}
-		else
-		{
+		} else {
 			dnode_t		*newnode;
 			vec3_t		newmins, newmaxs;
 			vec3_t		addvec;
@@ -135,17 +154,16 @@ int	ConstructLevelNodes_r( int levelnum, vec3_t cmins, vec3_t cmaxs )
 /*		(int)cmins[0], (int)cmins[1], (int)cmaxs[0], (int)cmaxs[1], */
 /*		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1] ); */
 
-	if ( diff[0] > 256 || diff[1] > 256 )
-	{
+	if ( diff[0] > 256 || diff[1] > 256 ) {
 		/* continue subdivision */
 		/* split the remaining hull at the middle of */
 		/* the longer axis */
 		vec3_t		nmins, nmaxs;
 		int			n;
 
-		if ( diff[1] > diff[0] ) 
+		if ( diff[1] > diff[0] )
 			n = 1;
-		else 
+		else
 			n = 0;
 
 		VectorCopy( bmins, nmins );
@@ -159,9 +177,7 @@ int	ConstructLevelNodes_r( int levelnum, vec3_t cmins, vec3_t cmaxs )
 		nmaxs[n] += diff[n]/2;
 /*		printf( "    (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1] ); */
 		nn[1] = ConstructLevelNodes_r( levelnum, nmins, nmaxs );
-	}
-	else
-	{
+	} else {
 		/* no children */
 		nn[0] = -1;
 		nn[1] = -1;
@@ -174,10 +190,9 @@ int	ConstructLevelNodes_r( int levelnum, vec3_t cmins, vec3_t cmaxs )
 	VectorAdd( bmaxs, v_epsilon, bmaxs );
 
 	list = MakeBspBrushList( brush_start, brush_end, levelnum, bmins, bmaxs);
-	if ( !list )
-	{
+	if ( !list ) {
 		nn[2] = -1;
-		return BuildNodeChildren( bmins, bmaxs, nn ); 
+		return BuildNodeChildren( bmins, bmaxs, nn );
 	}
 
 	if (!nocsg)
@@ -207,7 +222,7 @@ int	ConstructLevelNodes_r( int levelnum, vec3_t cmins, vec3_t cmaxs )
 	return BuildNodeChildren( bmins, bmaxs, nn );
 }
 
-	
+
 /*
 ============
 ProcessLevel

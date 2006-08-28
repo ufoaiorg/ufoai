@@ -26,7 +26,8 @@ nation ua
 	name "_United Americas"
 //	color TODO
 	names "english_american spanish_italian french german scandinavian"
-	funding	1100000
+	funding	110000
+	happiness 0.5
 	alien_friendly	40
 	soldiers 5
 	scientists 2
@@ -37,7 +38,8 @@ nation geu
 	name "_Greater European Union"
 //	color TODO
 	names "german spanish_italian french english_american scandinavian"
-	funding	900000
+	funding	75000
+	happiness 0.5
 	alien_friendly	45
 	soldiers 3
 	scientists 3
@@ -48,7 +50,8 @@ nation ac
 	name "_Asian Commonwealth"
 //	color TODO
 	names "chinese japanese"
-	funding	1200000
+	funding	120000
+	happiness 0.5
 	alien_friendly	30
 	soldiers 5
 	scientists 1
@@ -56,10 +59,11 @@ nation ac
 
 nation ae
 {
-	name "_Arab Emirates"
+	name "_United Arab Republic"
 //	color TODO
 	names "arabic"
-	funding	1500000
+	funding	45000
+	happiness 0.5
 	alien_friendly	25
 	soldiers 1
 	scientists 3
@@ -70,7 +74,8 @@ nation au
 	name "_African Union"
 //	color TODO
 	names "african"
-	funding	900000
+	funding	60000
+	happiness 0.5
 	alien_friendly	25
 	soldiers 6
 	scientists 1
@@ -81,7 +86,8 @@ nation russia
 	name "_Russian Federation"
 //	color TODO
 	names "russian"
-	funding	1400000
+	funding	50000
+	happiness 0.5
 	alien_friendly	30
 	soldiers 5
 	scientists 5
@@ -89,10 +95,11 @@ nation russia
 
 nation australia
 {
-	name "_Australia"
+	name "_Oceania"
 //	color TODO
 	names "english_american"
-	funding	1100000
+	funding	90000
+	happiness 0.5
 	alien_friendly	45
 	soldiers 4
 	scientists 2

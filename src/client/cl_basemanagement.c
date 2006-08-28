@@ -3,7 +3,7 @@
  * @brief Handles everything that is located in or accessed trough a base.
  *
  * See "base/ufos/basemanagement.ufo", "base/ufos/menu_bases.ufo" and "base/ufos/menu_buildings.ufo" for the underlying content.
- * TODO: new game does not reset basemangagement
+ * @todo New game does not reset basemangagement
  */
 
 /*
@@ -29,45 +29,57 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-building_t *B_GetFreeBuildingType(buildingType_t type);
-int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx);
-
 vec2_t newBasePos;
-cvar_t *mn_base_title;
+static cvar_t *mn_base_title;
+static cvar_t *mn_base_count;
 
 static int BuildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
+
+
+/**
+ * @brief Resets the currently selected building.
+ *
+ * Is called e.g. when leaving the build-menu but also several times from cl_basemanagement.c.
+ */
+void B_ResetBuildingCurrent(void)
+{
+	if (baseCurrent) {
+		baseCurrent->buildingCurrent = NULL;
+		baseCurrent->buildingToBuild = -1;
+	}
+}
 
 /**
  * @brief Holds the names of valid entries in the basemanagement.ufo file.
  *
  * The valid definition names for BUILDINGS (building_t) in the basemagagement.ufo file.
- * NOTE: the BSFS macro (see cl_basemanagement.h) assignes the values from scriptfile
  * to the appropriate values in the corresponding struct
  */
-value_t valid_vars[] = {
-	{"map_name", V_STRING, BSFS(mapPart)},	/**< Name of the map file for generating basemap. */
-	{"more_than_one", V_BOOL, BSFS(moreThanOne)},	/**< Is the building allowed to be build more the one time? */
-	{"name", V_TRANSLATION_STRING, BSFS(name)},	/**< The displayed building name. */
-	{"pedia", V_STRING, BSFS(pedia)},	/**< The pedia-id string for the associated pedia entry. */
-	{"status", V_INT, BSFS(buildingStatus)},	/**< The current status of the building. */
-	{"image", V_STRING, BSFS(image)},	/**< Identifies the image for the building. */
-	{"visible", V_BOOL, BSFS(visible)}, /**< Determines whether a building should be listed in the construction list. Set the first part of a building to 1 all others to 0 otherwise all building-parts will be on the list */
-	{"needs", V_STRING, BSFS(needs)},	/**<  For buildings with more than one part; the other parts of the building needed.*/
-	{"fixcosts", V_FLOAT, BSFS(fixCosts)},	/**< Cost to build. */
-	{"varcosts", V_FLOAT, BSFS(varCosts)},	/**< Costs that will come up by using the building. */
-	{"build_time", V_INT, BSFS(buildTime)},	/**< How many days it takes to construct the building. */
+static value_t valid_vars[] = {
+	{"map_name", V_STRING, offsetof(building_t, mapPart)},	/**< Name of the map file for generating basemap. */
+	{"more_than_one", V_BOOL, offsetof(building_t, moreThanOne)},	/**< Is the building allowed to be build more the one time? */
+	{"name", V_TRANSLATION_STRING, offsetof(building_t, name)},	/**< The displayed building name. */
+	{"pedia", V_STRING, offsetof(building_t, pedia)},	/**< The pedia-id string for the associated pedia entry. */
+	{"status", V_INT, offsetof(building_t, buildingStatus)},	/**< The current status of the building. */
+	{"image", V_STRING, offsetof(building_t, image)},	/**< Identifies the image for the building. */
+	{"visible", V_BOOL, offsetof(building_t, visible)}, /**< Determines whether a building should be listed in the construction list. Set the first part of a building to 1 all others to 0 otherwise all building-parts will be on the list */
+	{"needs", V_STRING, offsetof(building_t, needs)},	/**<  For buildings with more than one part; the other parts of the building needed.*/
+	{"fixcosts", V_FLOAT, offsetof(building_t, fixCosts)},	/**< Cost to build. */
+	{"varcosts", V_FLOAT, offsetof(building_t, varCosts)},	/**< Costs that will come up by using the building. */
+	{"build_time", V_INT, offsetof(building_t, buildTime)},	/**< How many days it takes to construct the building. */
+	{"max_employees", V_INT, offsetof(building_t, maxEmployees)},	/**< How many employees to hire on construction in the first base. */
 
 	/*event handler functions */
-	{"onconstruct", V_STRING, BSFS(onConstruct)}, /**< Event handler. */
-	{"onattack", V_STRING, BSFS(onAttack)}, /**< Event handler. */
-	{"ondestroy", V_STRING, BSFS(onDestroy)}, /**< Event handler. */
-	{"onupgrade", V_STRING, BSFS(onUpgrade)}, /**< Event handler. */
-	{"onrepair", V_STRING, BSFS(onRepair)}, /**< Event handler. */
-	{"onclick", V_STRING, BSFS(onClick)}, /**< Event handler. */
-	{"pos", V_POS, BSFS(pos)}, /**< Place of a building. Needed for flag autobuild */
-	{"autobuild", V_BOOL, BSFS(autobuild)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
-	{"firstbase", V_BOOL, BSFS(firstbase)}, /**< Automatically construct this building for the first base you build. Must also set the pos-flag. */
+	{"onconstruct", V_STRING, offsetof(building_t, onConstruct)}, /**< Event handler. */
+	{"onattack", V_STRING, offsetof(building_t, onAttack)}, /**< Event handler. */
+	{"ondestroy", V_STRING, offsetof(building_t, onDestroy)}, /**< Event handler. */
+	{"onupgrade", V_STRING, offsetof(building_t, onUpgrade)}, /**< Event handler. */
+	{"onrepair", V_STRING, offsetof(building_t, onRepair)}, /**< Event handler. */
+	{"onclick", V_STRING, offsetof(building_t, onClick)}, /**< Event handler. */
+	{"pos", V_POS, offsetof(building_t, pos)}, /**< Place of a building. Needed for flag autobuild */
+	{"autobuild", V_BOOL, offsetof(building_t, autobuild)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
+	{"firstbase", V_BOOL, offsetof(building_t, firstbase)}, /**< Automatically construct this building for the first base you build. Must also set the pos-flag. */
 	{NULL, 0, 0}
 };
 
@@ -81,6 +93,7 @@ void B_SetSensor(void)
 {
 	int i = 0;
 	int amount = 0;
+	base_t* base;
 
 	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <amount> <baseID>\n", Cmd_Argv(0));
@@ -93,17 +106,14 @@ void B_SetSensor(void)
 		return;
 	}
 	amount = atoi(Cmd_Argv(1));
+	base = gd.bases + i;
 
-	if (!Q_strncmp(Cmd_Argv(0), "inc", 3)) {	/* inc_sensor */
-		gd.bases[i].sensorWidth += amount;
-	} else if (!Q_strncmp(Cmd_Argv(0), "dec", 3)) {	/* dec_sensor */
-		gd.bases[i].sensorWidth -= amount;
-		if (gd.bases[i].sensorWidth < 0) {
-			gd.bases[i].sensorWidth = 0;
-			gd.bases[i].drawSensor = qfalse;
-		}
-	}
+	if (!Q_strncmp(Cmd_Argv(0), "inc", 3))
+		RADAR_ChangeRange(&(base->radar), amount);	/* inc_sensor */
+	else if (!Q_strncmp(Cmd_Argv(0), "dec", 3))
+		RADAR_ChangeRange(&(base->radar), -amount);	/* dec_sensor */
 }
+
 
 /**
  * @brief Displays the status of a building for baseview.
@@ -111,7 +121,7 @@ void B_SetSensor(void)
  * updates the cvar mn_building_status which is used in some menus to display
  * the building status
  */
-static void B_BuildingStatus(void)
+extern void B_BuildingStatus(void)
 {
 	int daysLeft;
 	int NumberOfBuildings = 0;
@@ -150,6 +160,55 @@ static void B_BuildingStatus(void)
 }
 
 /**
+ * @brief  Hires some employees of appropriate type for a building
+ * @param building  in which building
+ * @param num  how many employees, if -1, hire building->maxEmployees
+ *
+ * @sa B_SetUpBase
+ */
+void B_HireForBuilding (building_t * building, int num)
+{
+	employeeType_t employeeType;
+
+	assert(baseCurrent);
+
+	if (num < 0)
+		num = building->maxEmployees;
+
+	if (num) {
+		switch (building->buildingType) {
+		case B_WORKSHOP:
+			employeeType = EMPL_WORKER;
+			break;
+		case B_LAB:
+			employeeType = EMPL_SCIENTIST;
+			break;
+		case B_HOSPITAL:
+			employeeType = EMPL_MEDIC;
+			break;
+		case B_HANGAR: /* the Dropship Hangar */
+			employeeType = EMPL_SOLDIER;
+			break;
+		case B_QUARTERS:
+			return;
+		case B_MISC:
+			Com_DPrintf("B_HireForBuilding: Misc bulding type: %s with employees: %i.\n", building->buildingType, num);
+			return;
+		default:
+			Com_DPrintf("B_HireForBuilding: Unknown bulding type: %s.\n", building->buildingType);
+			return;
+		}
+		if (num > gd.numEmployees[employeeType])
+			num = gd.numEmployees[employeeType];
+		for (;num--;)
+			if (!E_HireEmployee(baseCurrent, employeeType, -1)) {
+				Com_DPrintf("B_HireForBuilding: Hiring %i employee(s) of type %i failed.\n", num, employeeType);
+				return;
+			}
+	}
+}
+
+/**
  * @brief Setup new base?
  */
 void B_SetUpBase(void)
@@ -162,9 +221,14 @@ void B_SetUpBase(void)
 	B_BuildingInit();
 	Com_DPrintf("Set up for %i\n", baseCurrent->idx);
 
+	/* this cvar is used for disabling the base build button on geoscape if MAX_BASES (8) was reached */
+	Cvar_SetValue("mn_base_count", mn_base_count->value + 1.0f);
+
 	for (i = 0; i < gd.numBuildingTypes; i++) {
-		if ((gd.numBases == 1 && gd.buildingTypes[i].firstbase)
-			|| gd.buildingTypes[i].autobuild) {
+		if (gd.buildingTypes[i].autobuild
+			|| (gd.numBases == 1
+				&& gd.buildingTypes[i].firstbase
+				&& cl_start_buildings->value)) {
 			/* TODO: implement check for moreThanOne */
 			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 			memcpy(building, &gd.buildingTypes[i], sizeof(building_t));
@@ -175,8 +239,16 @@ void B_SetUpBase(void)
 			building->base_idx = baseCurrent->idx;
 			Com_DPrintf("Base %i new building:%s (%i) at (%.0f:%.0f)\n", baseCurrent->idx, building->id, i, building->pos[0], building->pos[1]);
 			baseCurrent->buildingCurrent = building;
+			/* fake a click to basemap */
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			building->buildingStatus = B_STATUS_WORKING;
+
+			/* now call the onconstruct trigger */
+			if (*building->onConstruct) {
+				baseCurrent->buildingCurrent = building;
+				Com_DPrintf("B_SetUpBase: %s %i;\n", building->onConstruct, baseCurrent->idx);
+				Cbuf_AddText(va("%s %i;", building->onConstruct, baseCurrent->idx));
+			}
 			/*
 			   if ( building->moreThanOne
 			   && building->howManyOfThisType < BASE_SIZE*BASE_SIZE )
@@ -185,6 +257,9 @@ void B_SetUpBase(void)
 
 			/* update the building-list */
 			B_BuildingInit();
+
+			if (cl_start_employees->value)
+				B_HireForBuilding(building, -1);
 		}
 	}
 }
@@ -230,30 +305,52 @@ static void B_RemoveBuilding(void)
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 		building->buildingStatus = B_STATUS_NOT_SET;
 /*		baseCurrent->map[building->pos[0]][building->pos[1]] = -1; */
-/* 		if ( building->dependsBuilding >= 0) */
-/* 			baseCurrent->map[building->dependsBuilding->pos[0]][building->dependsBuilding->pos[1]] = -1; */
+/*		if ( building->dependsBuilding >= 0) */
+/*			baseCurrent->map[building->dependsBuilding->pos[0]][building->dependsBuilding->pos[1]] = -1; */
 		B_BuildingStatus();
 	}
 }
 
 /**
+ * @brief Checks whether you have enough credits to build this building
+ * @param costs buildcosts of the building
+ * @return qboolean true - enough credits
+ * @return qboolean false - not enough credits
+ *
+ * @sa B_ConstructBuilding
+ * @sa B_NewBuilding
+ * Checks whether the given costs are bigger than the current available credits
+ */
+static qboolean B_CheckCredits( int costs )
+{
+	if (costs > ccs.credits)
+		return qfalse;
+	return qtrue;
+}
+
+/**
  * @brief Builds new building.
  *
- * Checks whether the player has enough credits to construct the current selected building before starting construction.
+ * @sa B_CheckCredits
+ * @sa CL_UpdateCredits
+ * @return qboolean
+ *
+ * Checks whether the player has enough credits to construct the current selected
+ * building before starting construction.
  */
-static void B_ConstructBuilding(void)
+static qboolean B_ConstructBuilding(void)
 {
 	building_t *building_to_build = NULL;
 
 	/*maybe someone call this command before the buildings are parsed?? */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
-		return;
+		return qfalse;
 
 	/*enough credits to build this? */
-	if (ccs.credits - baseCurrent->buildingCurrent->fixCosts < 0) {
-		MN_Popup(_("Notice"), _("Not enough credits to build this\n"));
+	if ( !B_CheckCredits(baseCurrent->buildingCurrent->fixCosts) ) {
 		Com_DPrintf("B_ConstructBuilding: Not enough credits to build: '%s'\n", baseCurrent->buildingCurrent->id);
-		return;
+		B_ResetBuildingCurrent();
+		return qfalse;
 	}
 
 	Com_DPrintf("Construction of %s is starting\n", baseCurrent->buildingCurrent->id);
@@ -269,17 +366,7 @@ static void B_ConstructBuilding(void)
 	baseCurrent->buildingCurrent->timeStart = ccs.date.day;
 
 	CL_UpdateCredits(ccs.credits - baseCurrent->buildingCurrent->fixCosts);
-}
-
-/**
- * @brief Resets the currently selected building.
- *
- * Is called e.g. when leaving the build-menu but also several times from cl_basemanagement.c.
- */
-void B_ResetBuildingCurrent(void)
-{
-	if (baseCurrent)
-		baseCurrent->buildingCurrent = NULL;
+	return qtrue;
 }
 
 /**
@@ -292,24 +379,33 @@ void B_NewBuilding(void)
 		return;
 
 	if (baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
-		B_ConstructBuilding();
-
-	B_BuildingStatus();
-	Com_DPrintf("B_NewBuilding: buildingCurrent->buildingStatus = %i\n", baseCurrent->buildingCurrent->buildingStatus);
+		if ( B_ConstructBuilding() ) {
+			B_BuildingStatus();
+			Com_DPrintf("B_NewBuilding: buildingCurrent->buildingStatus = %i\n", baseCurrent->buildingCurrent->buildingStatus);
+		}
 }
 
 /**
  * @brief Set the currently selected building.
+ *
+ * @param[in] row Set building (baseCurrent->buildingCurrent) to row
+ * @param[in] col Set building (baseCurrent->buildingCurrent) to col
  */
 void B_SetBuildingByClick(int row, int col)
 {
 	building_t *building = NULL;
 	building_t *secondBuildingPart = NULL;
 
+#ifdef DEBUG
 	if (!baseCurrent)
 		Sys_Error("no current base\n");
 	if (!baseCurrent->buildingCurrent)
 		Sys_Error("no current building\n");
+#endif
+	if (!B_CheckCredits(baseCurrent->buildingCurrent->fixCosts)) {
+		MN_Popup(_("Notice"), _("Not enough credits to build this\n"));
+		return;
+	}
 
 	/*TODO: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTypes at all ... it's just not logical) */
 	/* if the building is in gd.buildingTypes[] */
@@ -327,7 +423,7 @@ void B_SetBuildingByClick(int row, int col)
 
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
 		if (baseCurrent->map[row][col] < 0) {
-			if (*baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible)
+			if (*baseCurrent->buildingCurrent->needs)
 				secondBuildingPart = B_GetBuildingType(baseCurrent->buildingCurrent->needs);
 			if (secondBuildingPart) {
 				if (col + 1 == BASE_SIZE) {
@@ -349,14 +445,16 @@ void B_SetBuildingByClick(int row, int col)
 			} else {
 				baseCurrent->buildingToBuild = -1;
 			}
-			if (baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
-				B_NewBuilding();
+			B_NewBuilding();
 
 			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->idx;
 
 			switch (baseCurrent->buildingCurrent->buildingType) {
 			case B_LAB:
 				baseCurrent->hasLab = 1;
+				break;
+			case B_HOSPITAL:
+				baseCurrent->hasHospital = 1;
 				break;
 			case B_HANGAR:
 				baseCurrent->hasHangar = 1;
@@ -418,7 +516,6 @@ static void B_NewBuildingFromList(void)
 static void B_DrawBuilding(void)
 {
 	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
 
 	/*maybe someone call this command before the buildings are parsed?? */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
@@ -428,7 +525,6 @@ static void B_DrawBuilding(void)
 	*menuText[TEXT_BUILDING_INFO] = '\0';
 
 	building = baseCurrent->buildingCurrent;
-	employees_in_building = &building->assigned_employees;
 
 	B_BuildingStatus();
 
@@ -437,13 +533,14 @@ static void B_DrawBuilding(void)
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
 		Com_sprintf(menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.0f c\n"), building->fixCosts);
 
-	Q_strcat(menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("%i Day(s) to build\n"), building->buildTime));
+	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION)
+		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("%i Day(s) to build\n"), building->buildTime), MAX_LIST_CHAR );
 
 	if (building->varCosts)
-		Q_strcat(menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("Running Costs:\t%1.0f c\n"), building->varCosts));
+		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Running Costs:\t%1.0f c\n"), building->varCosts), MAX_LIST_CHAR);
 
-	if (employees_in_building->numEmployees)
-		Q_strcat(menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("Workers:\t%i\n"), employees_in_building->numEmployees));
+/*	if (employees_in_building->numEmployees)
+		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Employees:\t%i\n"), employees_in_building->numEmployees), MAX_LIST_CHAR);*/
 
 	/* FIXME: Rename mn_building_name and mn_building_title */
 	if (building->id)
@@ -456,6 +553,7 @@ static void B_DrawBuilding(void)
 /**
  * @brief Handles the list of constructable buildings.
  *
+ * @param[in] building Add this building to the construction list
  * Called everytime a building was constructed and thus maybe other buildings get available.
  * menuText[TEXT_BUILDINGS] is a pointer to baseCurrent->allBuildingsList which will be displayed in the build-screen.
  * This way every base can hold its own building list.
@@ -465,13 +563,16 @@ void B_BuildingAddToList(building_t * building)
 {
 	assert(baseCurrent);
 
-	Q_strcat(menuText[TEXT_BUILDINGS], MAX_LIST_CHAR, va("%s\n", _(building->name)));
+	Q_strcat(menuText[TEXT_BUILDINGS], va("%s\n", _(building->name)), MAX_LIST_CHAR);
 	BuildingConstructionList[numBuildingConstructionList] = building->type_idx;
 	numBuildingConstructionList++;
 }
 
 /**
  * @brief Counts the number of buildings of a particular type in a base.
+ *
+ * @param[in] base_idx Which base
+ * @param[in] type_idx Which buildingtype
  */
 int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx)
 {
@@ -488,14 +589,19 @@ int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx)
 		if (gd.buildings[base_idx][i].type_idx == type_idx)
 			NumberOfBuildings++;
 	}
-	Com_DPrintf("B_GetNumberOfB...Type: '%s' - type_idx: %i - num_b: %i\n", gd.bases[base_idx].name, gd.buildingTypes[type_idx].id, NumberOfBuildings);
+	Com_DPrintf("B_GetNumOfBuildType: base: '%s' - num_b: %i - type_idx: %s\n", gd.bases[base_idx].name, NumberOfBuildings, gd.buildingTypes[type_idx].id);
 	return NumberOfBuildings;
 }
 
 /**
  * @brief Get the maximum status of a building.
  *
- * TODO: I have no idea what this does or is for.
+ * This function is mostly used to check if the construction of a building with a given type is finished.
+ * e.g.: "if (B_GetMaximumBuildingStatus(base_idx, B_LAB) >= B_STATUS_CONSTRUCTION_FINISHED) { ... }"
+ *
+ * @param[in] base_idx Which base
+ * @param[in] buildingType Which buildingtype
+ * @return The max./highest building status found.
  */
 buildingStatus_t B_GetMaximumBuildingStatus(int base_idx, buildingType_t buildingType)
 {
@@ -554,7 +660,6 @@ void B_BuildingInit(void)
 
 			/* if the building is researched add it to the list */
 			if (RS_IsResearched_idx(buildingType->tech)) {
-				/* TODO: check if this out-commented code is still needed */
 				if (buildingType->dependsBuilding < 0
 					|| B_GetMaximumBuildingStatus(baseCurrent->idx, buildingType->buildingType) >= B_STATUS_CONSTRUCTION_FINISHED) {
 					B_BuildingAddToList(buildingType);
@@ -571,6 +676,9 @@ void B_BuildingInit(void)
 
 /**
  * @brief Gets the type of building by its index.
+ *
+ * @param[in] idx The index of the building in gd.buildings[]
+ * @return buildings_t pointer to gd.buildings[idx]
  */
 building_t *B_GetBuildingByIdx(int idx)
 {
@@ -584,10 +692,34 @@ building_t *B_GetBuildingByIdx(int idx)
 }
 
 /**
+ * @brief Gets the building in a given base by its index
+ *
+ * @param[in] base Pointer to base_t (base has to be founded already)
+ * @param[in] buildingID Pointer to char
+ * @return buildings_t pointer to gd.buildings
+ */
+building_t *B_GetBuildingInBase(base_t* base, char* buildingID)
+{
+	int row, col;
+
+	if (base || !base->founded)
+		return NULL;
+
+	for (row = 0; row < BASE_SIZE; row++)
+		for (col = 0; col < BASE_SIZE; col++)
+			if (!Q_strncmp(gd.buildings[base->idx][base->map[row][col]].id, buildingID, MAX_VAR))
+				return &gd.buildings[base->idx][base->map[row][col]];
+
+	Com_Printf("B_GetBuildingInBase: Building '%s' not found\n", buildingID);
+	/* just that there are no warnings */
+	return NULL;
+}
+
+/**
  * @brief Opens up the 'pedia if you right click on a building in the list.
  *
- * TODO: really only do this on rightclick.
- * TODO: left click should show building-status.
+ * @todo Really only do this on rightclick.
+ * @todo Left click should show building-status.
  */
 void B_BuildingInfoClick_f(void)
 {
@@ -605,8 +737,10 @@ void B_BuildingClick_f(void)
 	int num;
 	building_t *building = NULL;
 
-	if (Cmd_Argc() < 2 || !baseCurrent)
+	if (Cmd_Argc() < 2 || !baseCurrent) {
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
+	}
 
 	/*which building? */
 	num = atoi(Cmd_Argv(1));
@@ -631,22 +765,21 @@ void B_BuildingClick_f(void)
  *
  * @param[in] id Unique test-id of a building_t. This is parsed from "building xxx" -> id=xxx.
  * @param[in] text TODO: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
+ * @param[in] link Bool value that decides whether to link the tech pointer in or not
  */
 void B_ParseBuildings(char *id, char **text, qboolean link)
 {
 	building_t *building = NULL;
 	building_t *dependsBuilding = NULL;
-	employees_t *employees_in_building = NULL;
 	technology_t *tech_link = NULL;
-	employee_t *employee = NULL;
 	value_t *edp = NULL;
 	char *errhead = "B_ParseBuildings: unexptected end of file (names ";
 	char *token = NULL;
-
-	/*int   i = 0; */
-	/*int   j = 0; */
-	int numEmployees_temp = 0;
-
+#if 0
+	char *split = NULL;
+	int employeesAmount = 0, i;
+	employee_t* employee;
+#endif
 	/* get id list body */
 	token = COM_Parse(text);
 	if (!*text || *token != '{') {
@@ -692,6 +825,8 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 
 				if (!Q_strncmp(token, "lab", MAX_VAR)) {
 					building->buildingType = B_LAB;
+				} else if (!Q_strncmp(token, "hospital", MAX_VAR)) {
+					building->buildingType = B_HOSPITAL;
 				} else if (!Q_strncmp(token, "hangar", MAX_VAR)) {
 					building->buildingType = B_HANGAR;
 				} else if (!Q_strncmp(token, "quarters", MAX_VAR)) {
@@ -699,42 +834,25 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 				} else if (!Q_strncmp(token, "workshop", MAX_VAR)) {
 					building->buildingType = B_WORKSHOP;
 				}
-			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
+/*			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
 				employees_in_building = &building->assigned_employees;
 
-				employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
-				if (*token) {
+				if (*token)
 					employees_in_building->maxEmployees = atoi(token);
-				}
+				else {
+					employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
+					Com_Printf("Set max employees to %i for building '%s'\n", MAX_EMPLOYEES_IN_BUILDING, building->id);
+				}*/
 			} else
 				/* no linking yet */
-			if (!Q_strncmp(token, "depends", MAX_VAR)) {
-				token = COM_EParse(text, errhead, id);
-				if (!*text)
-					return;
-			} else if (!Q_strncmp(token, "employees_firstbase", MAX_VAR)) {
-				token = COM_EParse(text, errhead, id);
-				if (!*text)
-					return;
-				if (*token) {
-					employees_in_building = &building->assigned_employees;
-					if (employees_in_building->maxEmployees <= 0)
-						employees_in_building->maxEmployees = atoi(token);
-					numEmployees_temp = atoi(token);
-					for (employees_in_building->numEmployees = 0; employees_in_building->numEmployees < numEmployees_temp;) {
-						/* assign random employee infos. */
-						employees_in_building->assigned[employees_in_building->numEmployees] = gd.numEmployees;	/* link this employee in the building to the global employee-list. */
-						employee = &gd.employees[gd.numEmployees];
-						memset(employee, 0, sizeof(employee_t));
-						employee->idx = gd.numEmployees;
-						employees_in_building->numEmployees++;
-						gd.numEmployees++;
-					}
-				}
-			} else
+				if (!Q_strncmp(token, "depends", MAX_VAR)) {
+					token = COM_EParse(text, errhead, id);
+					if (!*text)
+						return;
+				} else {
 				for (edp = valid_vars; edp->string; edp++)
 					if (!Q_strncmp(token, edp->string, sizeof(edp->string))) {
 						/* found a definition */
@@ -745,6 +863,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 						Com_ParseValue(building, token, edp->type, edp->ofs);
 						break;
 					}
+				}
 
 			if (!edp->string)
 				Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, id);
@@ -759,8 +878,9 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 		if (tech_link) {
 			building->tech = tech_link->idx;
 		} else {
-			/* TODO: are the techs already parsed? */
-			Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", id);
+			if (building->visible)
+				/* TODO: are the techs already parsed? */
+				Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", id);
 		}
 
 		do {
@@ -779,96 +899,8 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 				if (!*text)
 					return;
 			}
-
 		} while (*text);
-
 	}
-}
-
-/**
- * @brief Reads in information about employees and assigns them to the correct rooms in a base.
- *
- * This should be called after setting up the first base.
- * TODO: This right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
- */
-void B_InitEmployees(void)
-{
-	int i, j;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
-	employee_t *employee = NULL;
-
-	/* Loop trough the buildings to assign the type of employee. */
-	/* TODO: this right now assumes that there are not more employees than free quarter space ... but it will not puke if there are. */
-
-	for (i = 0; i < gd.numBuildingTypes; i++) {
-		Com_DPrintf("B_InitEmployees: 1 type %i\n", i);
-		building = &gd.buildingTypes[i];
-		employees_in_building = &building->assigned_employees;
-		/* TODO: fixed value right now, needs a configureable one. */
-		employees_in_building->cost_per_employee = 100;
-		if (employees_in_building->maxEmployees <= 0)
-			employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
-		for (j = 0; j < employees_in_building->numEmployees; j++) {
-			employee = &gd.employees[employees_in_building->assigned[j]];
-			switch (building->buildingType) {
-			case B_QUARTERS:
-				employee->type = EMPL_SOLDIER;
-				break;
-			case B_LAB:
-				employee->type = EMPL_SCIENTIST;
-				break;
-			case B_WORKSHOP:
-				employee->type = EMPL_WORKER;
-				break;
-				/*EMPL_MEDIC */
-				/*EMPL_ROBOT */
-			default:
-				break;
-			}
-		}
-	}
-
-	building = NULL;
-	/* Generate stats for employees and assign the quarter-less to quarters. */
-	for (i = 0; i < gd.numEmployees; i++) {
-		employee = &gd.employees[i];
-		switch (employee->type) {
-		case EMPL_SOLDIER:
-			/* TODO: create random data for the employees depending on type and skill-min/max */
-			/* employee->combat_stats = */
-			break;
-		case EMPL_SCIENTIST:
-		case EMPL_WORKER:
-			employee->lab = -1;
-			employee->workshop = -1;
-			if (employee->type == EMPL_SCIENTIST) {
-				/* TODO: create random data for the employees depending on type and skill-min/max */
-				employee->speed = 100;
-			} else {
-				/* TODO: create random data for the employees depending on type and skill-min/max */
-				employee->speed = 100;
-			}
-			building = B_GetFreeBuildingType(B_QUARTERS);
-			employees_in_building = &building->assigned_employees;
-			employees_in_building->assigned[employees_in_building->numEmployees++] = employee->idx;
-			break;
-			/*case EMPL_MEDIC: break; */
-			/*case EMPL_ROBOT: break; */
-		default:
-			break;
-		}
-	}
-
-	/* Remove them all from their assigned buildings except quarters .. this was just needed for firstbase. */
-	for (i = 0; i < gd.numBuildingTypes; i++) {
-		building = &gd.buildingTypes[i];
-		employees_in_building = &building->assigned_employees;
-		if (building->buildingType != B_QUARTERS) {
-			employees_in_building->numEmployees = 0;
-		}
-	}
-
 }
 
 /**
@@ -902,21 +934,27 @@ building_t *B_GetFreeBuilding(int base_idx, buildingType_t type)
 }
 #endif
 
+/**
+ * @brief Gets a free (with no assigned workers) building of the given type.
+ *
+ * @param[in] type Which type of building to search for.
+ *
+ * @return The (empty) building.
+ */
 building_t *B_GetFreeBuildingType(buildingType_t type)
 {
 	int i;
 	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
 
 	for (i = 0; i < gd.numBuildingTypes; i++) {
 		building = &gd.buildingTypes[i];
 		if (building->buildingType == type) {
 			/* found correct building-type */
-			employees_in_building = &building->assigned_employees;
-			if (employees_in_building->numEmployees < employees_in_building->maxEmployees) {
+/*			employees_in_building = &building->assigned_employees;
+			if (employees_in_building->numEmployees < employees_in_building->maxEmployees) {*/
 				/* the bulding has free space for employees */
-				return building;
-			}
+				/*return building;
+			}*/
 		}
 	}
 	/* no buildings available at all, no correct building type found or no building free */
@@ -924,345 +962,61 @@ building_t *B_GetFreeBuildingType(buildingType_t type)
 }
 
 /**
- * @brief Gets a lab in the given base with no research running.
+ * @brief Gets a lab in the given base
+ * @note You can run more than one research in a lab
  *
  * @param[in] base_id The number/id of the base to search in.
  *
- * @return The (unused) lab.
+ * @return The lab or NULL if base has no lab
  */
-building_t *B_GetUnusedLab(int base_idx)
-{
-	int i, j;
-	building_t *building = NULL;
-	technology_t *tech = NULL;
-	qboolean used = qfalse;
-
-	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
-		building = &gd.buildings[base_idx][i];
-		if (building->buildingType == B_LAB) {
-			used = qfalse;
-			/* check in research tree if the lab is used */
-			for (j = 0; j < gd.numTechnologies; j++) {
-				tech = &gd.technologies[j];
-				if (tech->lab == building->idx) {
-					used = qtrue;
-					break;
-				}
-			}
-			if (!used)
-				return building;
-		}
-		building = NULL;
-	}
-	return building;
-}
-
-/**
- * @brief Gets the number of unused labs (no assigned workers, no research) in the given base of the given type.
- *
- * @param[in] base_id The number/id of the base to search in.
- *
- * @return Number of found (empty) building.
- */
-int B_GetUnusedLabs(int base_idx)
-{
-	int i, j;
-	building_t *building = NULL;
-	technology_t *tech = NULL;
-	qboolean used = qfalse;
-
-	int numFreeLabs = 0;
-
-	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
-		building = &gd.buildings[base_idx][i];
-		if (building->buildingType == B_LAB) {
-			used = qfalse;
-			/* check in research tree if the lab is used */
-			for (j = 0; j < gd.numTechnologies; j++) {
-				tech = &gd.technologies[j];
-				if (tech->lab == building->idx) {
-					used = qtrue;
-					break;
-				}
-			}
-			if (!used) {
-				/*Com_DPrintf("B_GetUnusedLabs: %s is unused in base %i\n", building->id, base_idx ); */
-				numFreeLabs++;
-			} else {
-				/*Com_DPrintf("B_GetUnusedLabs: %s is used in base %i\n", building->id, base_idx ); */
-			}
-		}
-	}
-	return numFreeLabs;
-}
-
-/**
- * @brief Removes all assigned scientists from a building.
- *
- * TODO: If the building is of type "B_QUARTERS" before it's cleared all other buildings need to be checked if there is an employees there that also is in the qarter. These employees need to be removed from those buildings.
- */
-void B_ClearBuilding(building_t * building)
+building_t *B_GetLab(int base_idx)
 {
 	int i;
-	employees_t *employees_in_building = NULL;
-	employee_t *employee = NULL;
-
-	if (!building)
-		return;
-
-	employees_in_building = &building->assigned_employees;
-	switch (building->buildingType) {
-	case B_QUARTERS:
-		/*TODO: ignored for now, will surely be usefull later on. */
-		break;
-	case B_LAB:
-		for (i = 0; i < employees_in_building->numEmployees; i++) {
-			employee = &gd.employees[employees_in_building->assigned[i]];
-			employee->lab = -1;
-		}
-		employees_in_building->numEmployees = 0;
-		break;
-	case B_WORKSHOP:
-		for (i = 0; i < employees_in_building->numEmployees; i++) {
-			employee = &gd.employees[employees_in_building->assigned[i]];
-			employee->workshop = -1;
-		}
-		employees_in_building->numEmployees = 0;
-		break;
-		/* TODO:
-		   EMPL_MEDIC
-		   EMPL_ROBOT
-		 */
-	default:
-		break;
-	}
-}
-
-/**
- * @brief Returns true if the employee is only assigned to quarters.
- */
-qboolean B_EmployeeIsFree(employee_t * employee)
-{
-	return ((employee->lab < 0) && (employee->workshop < 0));
-}
-
-/**
- * @brief Add a free employee from the quarters to building_dest. (the employee will be linked to both of them)
- *
- * TODO: Add check for destination building vs. employee_type and abort if they do not match.
- * TODO: Possibility to add employees to quarters (from the global list)
- *
- * @param[in] building_dest Which building to assign the employee to.
- * @param[in] employee_type	What type of employee to assign to the building.
- *
- * @return Returns true if adding was possible/sane otherwise false.
- */
-qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_type)
-{
-	int i, j;
-	employee_t *employee = NULL;
-	building_t *building_source = NULL;
-	employees_t *employees_in_building_dest = NULL;
-	employees_t *employees_in_building_source = NULL;
-
-	if (!baseCurrent) {
-		Com_DPrintf("B_AssignEmployee: No Base set\n");
-		return qfalse;
-	}
-
-	if (building_dest->buildingType == B_QUARTERS) {
-		Com_DPrintf("B_AssignEmployee: No need to move from quarters to quarters.\n");
-		return qfalse;
-	}
-
-	employees_in_building_dest = &building_dest->assigned_employees;
-	employee = NULL;
-	/* check if there is enough space to add one employee in the destination building. */
-	if (employees_in_building_dest->numEmployees < employees_in_building_dest->maxEmployees) {
-		/* get free employee from quarters in current base */
-		for (i = 0; i < gd.numBuildings[building_dest->base_idx]; i++) {
-			building_source = &gd.buildings[building_dest->base_idx][i];
-
-			/* check if there is a free employee in the quarters. */
-			if (building_source->buildingType == B_QUARTERS) {
-				employees_in_building_source = &building_source->assigned_employees;
-				for (j = 0; j < employees_in_building_source->numEmployees; j++) {
-					employee = &gd.employees[employees_in_building_source->assigned[j]];
-					if ((employee->type == employee_type) && B_EmployeeIsFree(employee))
-						break;
-					else
-						employee = NULL;
-				}
-			}
-		}
-		/* if an employee was found add it to to the destination building */
-		if (employee) {
-			employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee->idx;
-			employee->lab = building_dest->idx;
-			return qtrue;
-		} else {
-			Com_Printf("No employee available in this base.\n");
-		}
-	} else {
-		Com_Printf("No free room in destination building \"%s\".\n", building_dest->id);
-	}
-	return qfalse;
-}
-
-/**
- * @brief Remove one employee from building.
- *
- * TODO: Add check for destination building vs. employee_type and abort if they do not match.
- *
- * @param[in] building Which building to remove the employee from. Can be any type of building that has employees in it. If quarters are given the employee will be removed from every other building as well.
- *
- * @return Returns true if adding was possible/sane otherwise false.
- */
-qboolean B_RemoveEmployee(building_t * building)
-{
-	/* TODO
-	   int i;
-	 */
-	employee_t *employee = NULL;
-	employees_t *employees_in_building = NULL;
-
-	/* TODO
-	   building_t *building_temp = NULL;
-	   qboolean found = qfalse;
-	 */
-
-	employees_in_building = &building->assigned_employees;
-
-	if (employees_in_building->numEmployees <= 0) {
-		Com_DPrintf("B_RemoveEmployee: No employees in building. Can't remove one. %s\n", building->id);
-		return qfalse;
-	}
-
-	/* Check where else (which buildings) the employee needs to be removed. */
-	switch (building->buildingType) {
-#if 0
-		/* TODO */
-	case B_QUARTERS:
-		/* unlink the employee from quarters and every other building. (he is now only stored in the global list) */
-		employee->quarters = NULL;
-
-		/*remove the employee from the other buildings (i.e their employee-list) they are listed as well before unlinking them. */
-		if (employee->lab) {
-			building_temp = employee->lab;
-			employees_in_building = &building_temp->assigned_employees;
-			found = qfalse;
-			for (i = 0; i < (employees_in_building->numEmployees - 1); i++) {
-				if ((employees_in_building->assigned[i] == employee) || found) {
-					employees_in_building->assigned[i] = employees_in_building->assigned[i + 1];
-					found = qtrue;
-				}
-			}
-			if (found)
-				employees_in_building->numEmployees--;
-			employee->lab = NULL;
-		}
-
-		/* TODO */
-		/*  if ( employee->workshop ) { */
-		/*  } */
-
-		return qtrue;
-		/*break; */
-#endif
-	case B_LAB:
-		employees_in_building->numEmployees--;	/* remove the employee from the list of assigned workers in the building. */
-		employee = &gd.employees[employees_in_building->assigned[employees_in_building->numEmployees]];	/* get the last employee in the building. */
-		Com_DPrintf("B_RemoveEmployee: %s\n", building->id);
-		/* unlink the employee from lab (the current building). */
-		employee->lab = -1;
-		Com_DPrintf("B_RemoveEmployee: %s 2\n", building->id);
-		return qtrue;
-		/* break; */
-#if 0
-		/* TODO */
-	case B_WORKSHOP:
-		/* unlink the employee from workshop (the current building). */
-		employee->workshop = NULL;
-		return qtrue;
-		break;
-		EMPL_MEDIC EMPL_ROBOT
-#endif
-	default:
-		break;
-	}
-
-	return qfalse;
-}
-
-/**
- * @brief Returns the number of employees in the given base (in the quaters) of the given type.
- *
- * You can choose (free_only) if you want the number of free employees or the total number.
- * If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
- */
-int B_EmployeesInBase2(int base_idx, employeeType_t employee_type, qboolean free_only)
-{
-	int i, j;
-	int numEmployeesInBase = 0;
 	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
-	employee_t *employee = NULL;
-
-	if (!baseCurrent) {
-		Com_DPrintf("B_EmployeesInBase2: No Base set.\n");
-		return 0;
-	}
 
 	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
 		building = &gd.buildings[base_idx][i];
-		if (building->buildingType == B_QUARTERS) {
-			/* quarters found */
-			employees_in_building = &building->assigned_employees;
-
-			/*loop trough building and add to numEmployeesInBase if a match is found. */
-			for (j = 0; j < employees_in_building->numEmployees; j++) {
-				employee = &gd.employees[employees_in_building->assigned[j]];
-				if (((employee_type == employee->type) || (employee_type == MAX_EMPL))
-					&& (B_EmployeeIsFree(employee) || !free_only))
-					numEmployeesInBase++;
-			}
-		}
+		if (building->buildingType == B_LAB)
+			return building;
 	}
-	return numEmployeesInBase;
+	return NULL;
 }
 
 /**
- * @brief Returns the number of employees in the given base (in the quaters) of the given type.
- *
- * If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
+ * @brief Clears a base with all its characters
+ * @sa CL_ResetCharacters
+ * @sa CL_GenerateCharacter
  */
-int B_EmployeesInBase(int base_idx, employeeType_t employee_type)
-{
-	return B_EmployeesInBase2(base_idx, employee_type, qfalse);
-}
-
-/**
- * @brief Clears a base?
- */
-void B_ClearBase(base_t * base)
+void B_ClearBase(base_t *const base)
 {
 	int row, col, i;
 
-	memset(base, 0, sizeof(base_t));
-
 	CL_ResetCharacters(base);
 
+	memset(base, 0, sizeof(base_t));
+
+	/* only go further if we have a active campaign */
+	if (!curCampaign)
+		return;
+
 	/* setup team */
-	if (!curCampaign) {
-		/* should be multiplayer */
-		while (base->numWholeTeam < cl_numnames->value)
-			CL_GenerateCharacter(Cvar_VariableString("team"), base, ET_ACTOR);
-	} else {
+	if (!E_CountUnhired(base, EMPL_SOLDIER)) {
 		/* should be multiplayer (campaignmode TODO) or singleplayer */
+		Com_DPrintf("B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
 		for (i = 0; i < curCampaign->soldiers; i++)
-			CL_GenerateCharacter(curCampaign->team, base, ET_ACTOR);
+			E_CreateEmployee(EMPL_SOLDIER);
+		Com_DPrintf("B_ClearBase: create %i scientists\n", curCampaign->scientists);
+		for (i = 0; i < curCampaign->scientists; i++)
+			E_CreateEmployee(EMPL_SCIENTIST);
+		Com_DPrintf("B_ClearBase: create %i robots\n", curCampaign->ugvs);
 		for (i = 0; i < curCampaign->ugvs; i++)
-			CL_GenerateCharacter("ugv", base, ET_UGV);
+			E_CreateEmployee(EMPL_ROBOT);
+		Com_DPrintf("B_ClearBase: create %i workers\n", curCampaign->workers);
+		for (i = 0; i < curCampaign->workers; i++)
+			E_CreateEmployee(EMPL_WORKER);
+		Com_DPrintf("B_ClearBase: create %i medics\n", curCampaign->medics);
+		for (i = 0; i < curCampaign->medics; i++)
+			E_CreateEmployee(EMPL_MEDIC);
 	}
 
 	for (row = BASE_SIZE - 1; row >= 0; row--)
@@ -1272,6 +1026,7 @@ void B_ClearBase(base_t * base)
 
 /**
  * @brief Reads information about bases.
+ * @sa CL_ParseScriptFirst
  */
 void B_ParseBases(char *title, char **text)
 {
@@ -1399,7 +1154,7 @@ void B_DrawBase(menuNode_t * node)
 					break;
 				case B_STATUS_UNDER_CONSTRUCTION:
 					time = building->buildTime - (ccs.date.day - building->timeStart);
-					re.FontDrawString("f_small", 0, x + 10, y + 10, node->size[0], va(_("%i days left"), time));
+					re.FontDrawString("f_small", 0, x + 10, y + 10, x + 10, y + 10, node->size[0], 0, node->texh[0], va(_("%i days left"), time));
 					break;
 				default:
 					break;
@@ -1409,7 +1164,7 @@ void B_DrawBase(menuNode_t * node)
 	}
 	if (hoverBuilding) {
 		re.DrawColor(color);
-		re.FontDrawString("f_small", 0, mx + 3, my, node->size[0], hoverBuilding->name);
+		re.FontDrawString("f_small", 0, mx + 3, my, mx + 3, my, node->size[0], 0, node->texh[0], hoverBuilding->name);
 		re.DrawColor(NULL);
 	}
 }
@@ -1423,8 +1178,8 @@ void B_BaseInit(void)
 
 	baseCurrent = &gd.bases[baseID];
 
-	/*these are the workers you can set on buildings */
-	Cvar_SetValue("mn_available_workers", 0);
+	Cvar_SetValue("mn_soldiers_in_base", E_CountHired(baseCurrent, EMPL_SOLDIER));
+	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
 
 	Cvar_Set("mn_credits", va("%i c", ccs.credits));
 }
@@ -1445,6 +1200,8 @@ void B_RenameBase(void)
 
 /**
  * @brief Cycles to the next base.
+ * @sa B_PrevBase
+ * @sa B_SelectBase
  */
 void B_NextBase(void)
 {
@@ -1466,6 +1223,8 @@ void B_NextBase(void)
 
 /**
  * @brief Cycles to the previous base.
+ * @sa B_NextBase
+ * @sa B_SelectBase
  */
 void B_PrevBase(void)
 {
@@ -1512,10 +1271,12 @@ void B_SelectBase(void)
 			baseCurrent = &gd.bases[baseID];
 			baseCurrent->idx = baseID;
 			Com_DPrintf("B_SelectBase: baseID is valid for base: %s\n", baseCurrent->name);
+			Cbuf_ExecuteText(EXEC_NOW, "set_base_to_normal");
 		} else {
 			Com_Printf("MaxBases reached\n");
 			/* select the first base in list */
 			baseCurrent = &gd.bases[0];
+			gd.mapAction = MA_NONE;
 		}
 	} else if (baseID < MAX_BASES) {
 		Com_DPrintf("B_SelectBase: select base with id %i\n", baseID);
@@ -1524,14 +1285,93 @@ void B_SelectBase(void)
 			gd.mapAction = MA_NONE;
 			MN_PushMenu("bases");
 			CL_AircraftSelect();
+			switch (baseCurrent->baseStatus) {
+			case BASE_UNDER_ATTACK:
+				Cvar_Set("mn_base_status_name", _("Base is under attack"));
+				Cbuf_ExecuteText(EXEC_NOW, "set_base_under_attack");
+				break;
+			default:
+				Cbuf_ExecuteText(EXEC_NOW, "set_base_to_normal");
+				break;
+			}
 		} else {
 			gd.mapAction = MA_NEWBASE;
 		}
 	} else
-		baseCurrent = &gd.bases[0];
+		return;
 
+	/* activate or deactivate the aircraft button */
+	if (baseCurrent->numAircraftInBase <= 0)
+		Cbuf_ExecuteText(EXEC_NOW, "set_base_no_aircraft");
+	else
+		Cbuf_ExecuteText(EXEC_NOW, "set_base_aircraft");
+
+	Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
+	Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
 	Cvar_SetValue("mn_base_id", baseCurrent->idx);
 	Cvar_Set("mn_base_title", baseCurrent->name);
+}
+
+/**
+ * @brief Assigns initial team of soldiers with equipment to aircraft
+ */
+static void B_AssignInitialCmd(void)
+{
+	int i;
+
+	/* check syntax */
+	if (Cmd_Argc() > 1) {
+		Com_Printf("Usage: assign_initial\n");
+		return;
+	}
+
+	if (!baseCurrent)
+		return;
+
+	for (i = MAX_TEAMLIST; --i >= 0;)
+		Cbuf_AddText(va("team_hire %i\n", i));
+
+	Cbuf_AddText(va("pack_initial\n"));
+}
+
+/**
+ * @brief Assigns initial soldier equipment for the first base
+ */
+static void B_PackInitialEquipmentCmd(void)
+{
+	int i, price = 0;
+	equipDef_t *ed;
+	character_t *cp;
+	char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
+
+	/* check syntax */
+	if (Cmd_Argc() > 1) {
+		Com_Printf("Usage: pack_initial\n");
+		return;
+	}
+
+	if (!baseCurrent)
+		return;
+
+	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
+		if (!Q_strncmp(name, ed->name, MAX_VAR))
+			break;
+	if (i == csi.numEDs) {
+		Com_DPrintf("B_PackInitialEquipmentCmd: Initial Phalanx equipment %s not found.\n", name);
+	} else {
+		for (i = 0; i < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; i++) {
+			cp = baseCurrent->curTeam[i];
+			/* pack equipment */
+			Com_DPrintf("B_PackInitialEquipmentCmd: Packing initial equipment for %s.\n", cp->name);
+			Com_EquipActor(cp->inv, ed->num, name);
+		}
+		CL_AddCarriedToEq(&baseCurrent->storage);
+
+		/* pay for the initial equipment */
+		for (i = 0; i < csi.numODs; i++)
+			price += baseCurrent->storage.num[i] * csi.ods[i].price;
+		CL_UpdateCredits(ccs.credits - price);
+	}
 }
 
 /* FIXME: This value is in menu_geoscape, too */
@@ -1540,8 +1380,7 @@ void B_SelectBase(void)
 
 /**
  * @brief Constructs a new base.
- *
- * TODO: First base needs to be constructed automatically.
+ * @sa CL_NewBase
  */
 void B_BuildBase(void)
 {
@@ -1559,11 +1398,44 @@ void B_BuildBase(void)
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - BASE_COSTS);
 			Q_strncpyz(baseCurrent->name, mn_base_title->string, sizeof(baseCurrent->name));
-			Cvar_SetValue("mn_base_id", baseCurrent->idx);
-			Cvar_Set("mn_base_title", baseCurrent->name);
-			Cbuf_AddText("mn_push bases\n");
 			Q_strncpyz(messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string), MAX_MESSAGE_TEXT);
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+			Radar_Initialise(&(baseCurrent->radar), 0);
+
+			/* initial base equipment */
+			if (gd.numBases == 1) {
+				int i, price = 0;
+				equipDef_t *ed;
+
+				for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
+					if (!Q_strncmp(curCampaign->equipment, ed->name, MAX_VAR))
+						break;
+				if (i != csi.numEDs)
+					baseCurrent->storage = *ed; /* copied, including arrays! */
+
+				/* initial soldiers and their equipment */
+				if (cl_start_employees->value) {
+					Cbuf_AddText("assign_initial;");
+				} else {
+					char *name = cl_initial_equipment->string;
+
+					for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
+						if (!Q_strncmp(name, ed->name, MAX_VAR))
+							break;
+					if (i == csi.numEDs) {
+						Com_DPrintf("B_BuildBase: Initial Phalanx equipment %s not found.\n", name);
+					} else {
+						for (i = 0; i < csi.numODs; i++)
+							baseCurrent->storage.num[i] += ed->num[i];
+					}
+					/* pay for the initial equipment */
+					for (i = 0; i < csi.numODs; i++)
+						price += baseCurrent->storage.num[i] * csi.ods[i].price;
+					CL_UpdateCredits(ccs.credits - price);
+				}
+			}
+
+			Cbuf_AddText(va("mn_select_base %i;", baseCurrent->idx));
 			return;
 		}
 	} else {
@@ -1572,11 +1444,38 @@ void B_BuildBase(void)
 	}
 }
 
+/**
+ * @brief Sets the baseStatus to BASE_NOT_USED
+ * @param[in] base Which base should be resetted?
+ */
+void B_BaseResetStatus (base_t* const base)
+{
+	assert(base);
+	base->baseStatus = BASE_NOT_USED;
+	if (gd.mapAction == MA_BASEATTACK)
+		gd.mapAction = MA_NONE;
+}
 
 /**
  * @brief Initiates an attack on a base.
+ * @sa B_BaseAttack_f
+ * @param[in] base Which base is under attack?
  */
-void B_BaseAttack(void)
+void B_BaseAttack (base_t* const base)
+{
+	assert(base);
+	base->baseStatus = BASE_UNDER_ATTACK;
+#if 0							/*TODO: run eventhandler for each building in base */
+	if (b->onAttack)
+		Cbuf_AddText(va("%s %i", b->onAttack, b->id));
+#endif
+}
+
+/**
+ * @brief Initiates an attack on a base.
+ * @sa B_BaseAttack
+ */
+static void B_BaseAttack_f(void)
 {
 	int whichBaseID;
 
@@ -1588,25 +1487,19 @@ void B_BaseAttack(void)
 	whichBaseID = atoi(Cmd_Argv(1));
 
 	if (whichBaseID >= 0 && whichBaseID < gd.numBases) {
-		gd.bases[whichBaseID].baseStatus = BASE_UNDER_ATTACK;
-		/* TODO: New menu for: */
-		/*      defend -> call AssembleBase for this base */
-		/*      continue -> return to geoscape */
-		gd.mapAction = MA_BASEATTACK;
+		B_BaseAttack(&gd.bases[whichBaseID]);
 	}
-#if 0							/*TODO: run eventhandler for each building in base */
-	if (b->onAttack)
-		Cbuf_AddText(va("%s %i", b->onAttack, b->id));
-#endif
-
 }
 
 /**
  * @brief Builds a base map for tactical combat.
- *
- * NOTE: Do we need day and night maps here, too?
- * TODO: Search a empty field and add a alien craft there.
- * FIXME: We need to get rid of the tunnels to nivana.
+ * @sa SV_AssembleMap
+ * @sa B_BaseAttack
+ * @note Do we need day and night maps here, too? Sure!
+ * @todo Search a empty field and add a alien craft there, also add alien
+ * spawn points around the craft, also some trees, etc. for their cover
+ * @todo Add soldier spawn points, the best place is quarters.
+ * @todo We need to get rid of the tunnels to nirvana.
  */
 void B_AssembleMap(void)
 {
@@ -1615,17 +1508,38 @@ void B_AssembleMap(void)
 	building_t *entry;
 	char maps[2024];
 	char coords[2048];
+	int setUnderAttack = 0, baseID = 0;
+	base_t* base = baseCurrent;
 
-	*maps = '\0';
-	*coords = '\0';
+	if (Cmd_Argc() < 2)
+		Com_DPrintf("Usage: %s <baseID> <setUnderAttack>\n", Cmd_Argv(0));
+	else {
+		if (Cmd_Argc() == 3)
+			setUnderAttack = atoi(Cmd_Argv(2));
+		baseID = atoi(Cmd_Argv(1));
+		if (baseID < 0 || baseID >= gd.numBases) {
+			Com_DPrintf("Invalid baseID: %i\n", baseID);
+			return;
+		}
+		base = &gd.bases[baseID];
+	}
 
-	if (!baseCurrent) {
+	if (!base) {
 		Com_Printf("B_AssembleMap: No base to assemble\n");
 		return;
 	}
 
+	if (setUnderAttack) {
+		base->baseStatus = BASE_UNDER_ATTACK;
+		gd.mapAction = MA_BASEATTACK;
+		Com_DPrintf("Set base %i under attack\n", base->idx);
+	}
+
 	/* reset menu text */
 	menuText[TEXT_STANDARD] = NULL;
+
+	*maps = '\0';
+	*coords = '\0';
 
 	/* reset the used flag */
 	for (row = 0; row < BASE_SIZE; row++)
@@ -1663,10 +1577,10 @@ void B_AssembleMap(void)
 				Q_strncpyz(baseMapPart, va("b/%c/empty", baseCurrent->mapChar), sizeof(baseMapPart));
 
 			if (*baseMapPart) {
-				Q_strcat(maps, sizeof(maps), baseMapPart);
-				Q_strcat(maps, sizeof(maps), " ");
+				Q_strcat(maps, baseMapPart, sizeof(maps));
+				Q_strcat(maps, " ", sizeof(maps));
 				/* basetiles are 16 units in each direction */
-				Q_strcat(coords, sizeof(coords), va("%i %i ", col * 16, row * 16));
+				Q_strcat(coords, va("%i %i ", col * 16, (BASE_SIZE - row - 1) * 16), sizeof(coords));
 			}
 		}
 	Cbuf_AddText(va("map \"%s\" \"%s\"\n", maps, coords));
@@ -1691,18 +1605,30 @@ void B_NewBases(void)
 /**
  * @brief Builds a random base
  *
- * call B_AssembleMap with a random base over script command 'base_assemble'
+ * call B_AssembleMap with a random base over script command 'base_assemble_rand'
  */
 static void B_AssembleRandomBase(void)
 {
-	Cbuf_AddText(va("base_assemble %i", rand() % gd.numBases));
+	int setUnderAttack = 0;
+	int randomBase = rand() % gd.numBases;
+	if (Cmd_Argc() < 2)
+		Com_DPrintf("Usage: %s <setUnderAttack>\n", Cmd_Argv(0));
+	else
+		setUnderAttack = atoi(Cmd_Argv(1));
+
+	if (!gd.bases[randomBase].founded) {
+		Com_Printf("Base with id %i was not founded or already destroyed\n", randomBase);
+		return;
+	}
+
+	Cbuf_AddText(va("base_assemble %i %i", randomBase, setUnderAttack));
 }
 
 /**
- * @param Just lists all buildings with their data
+ * @brief Just lists all buildings with their data
  *
  * Just for debugging purposes - not needed in game
- * TODO: To be extended for load/save purposes
+ * @todo To be extended for load/save purposes
  */
 static void B_BuildingList_f(void)
 {
@@ -1745,7 +1671,7 @@ static void B_BuildingList_f(void)
  * @brief Just lists all bases with their data
  *
  * Just for debugging purposes - not needed in game
- * TODO: To be extended for load/save purposes
+ * @todo To be extended for load/save purposes
  */
 static void B_BaseList_f(void)
 {
@@ -1755,8 +1681,10 @@ static void B_BaseList_f(void)
 	for (i = 0, base = gd.bases; i < MAX_BASES; i++, base++) {
 		Com_Printf("Base id %i\n", base->idx);
 		Com_Printf("Base title %s\n", base->name);
-		Com_Printf("Base sensorWidth %s\n", base->sensorWidth);
-		Com_Printf("Base drawSensor %s\n", base->drawSensor);
+		Com_Printf("Base founded %i\n", base->founded);
+		Com_Printf("Base numAircraftInBase %i\n", base->numAircraftInBase);
+		Com_Printf("Base sensorWidth %i\n", base->radar.range);
+		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUfos);
 		Com_Printf("Base aircraft %i\n", base->numAircraftInBase);
 		for (j = 0; j < base->numAircraftInBase; j++) {
 			Com_Printf("Base aircraft-team %i\n", *(base->aircraft[j].teamSize));
@@ -1789,6 +1717,8 @@ static void B_SetBaseTitle(void)
 
 /**
  * @brief Creates console command to change the name of a base.
+ * Copies the value of the cvar mn_base_title over as the name of the
+ * current selected base
  */
 static void B_ChangeBaseNameCmd(void)
 {
@@ -1799,8 +1729,16 @@ static void B_ChangeBaseNameCmd(void)
 	Q_strncpyz(baseCurrent->name, Cvar_VariableString("mn_base_title"), MAX_VAR);
 }
 
+void B_CheckMaxBases_f(void)
+{
+	if (gd.numBases >= MAX_BASES) {
+		MN_PopMenu(qfalse);
+	}
+}
+
 /**
  * @brief Resets console commands.
+ * @sa MN_ResetMenus
  */
 void B_ResetBaseManagement(void)
 {
@@ -1814,12 +1752,9 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("new_building", B_NewBuildingFromList);
 	Cmd_AddCommand("set_building", B_SetBuilding);
 	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle);
-	/* TODO: change to employee-list
-	   Cmd_AddCommand( "add_workers", B_BuildingAddWorkers_f );
-	   Cmd_AddCommand( "remove_workers", B_BuildingRemoveWorkers );
-	 */
+	Cmd_AddCommand("bases_check_max", B_CheckMaxBases_f);
 	Cmd_AddCommand("rename_base", B_RenameBase);
-	Cmd_AddCommand("base_attack", B_BaseAttack);
+	Cmd_AddCommand("base_attack", B_BaseAttack_f);
 	Cmd_AddCommand("base_changename", B_ChangeBaseNameCmd);
 	Cmd_AddCommand("base_init", B_BaseInit);
 	Cmd_AddCommand("base_assemble", B_AssembleMap);
@@ -1831,12 +1766,14 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent);
 	Cmd_AddCommand("baselist", B_BaseList_f);
 	Cmd_AddCommand("buildinglist", B_BuildingList_f);
+	Cmd_AddCommand("pack_initial", B_PackInitialEquipmentCmd);
+	Cmd_AddCommand("assign_initial", B_AssignInitialCmd);
+	mn_base_count = Cvar_Get("mn_base_count", "0", 0);
 }
 
 /**
  * @brief Counts the number of bases.
- *
- * @return The number of found bases.
+ * @return The number of founded bases.
  */
 int B_GetCount(void)
 {
@@ -1852,9 +1789,9 @@ int B_GetCount(void)
 }
 
 /**
- * @brief Updates base data?
- *
- * Called from the running campaign
+ * @brief Updates base data
+ * @sa CL_CampaignRun
+ * @note called every "day"
  */
 void B_UpdateBaseData(void)
 {
@@ -1893,23 +1830,18 @@ int B_CheckBuildingConstruction(building_t * building, int base_idx)
 		if (building->timeStart && (building->timeStart + building->buildTime) <= ccs.date.day) {
 			building->buildingStatus = B_STATUS_WORKING;
 
-			if (building->onConstruct)
-				Cbuf_AddText(va("%s %i", building->onConstruct, base_idx));
-
-			/*
-			   if ( building->minWorkers )
-			   B_BuildingAddWorkers( building, building->minWorkers );
-			 */
+			if (*building->onConstruct) {
+				gd.bases[base_idx].buildingCurrent = building;
+				Com_DPrintf("B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, base_idx);
+				Cbuf_AddText(va("%s %i;", building->onConstruct, base_idx));
+			}
 
 			newBuilding++;
 		}
 	}
-#if 0
-	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION && building->timeStart + building->buildTime < ccs.date.day)
-		building->buildingStatus = B_STATUS_CONSTRUCTION_FINISHED;
-#endif
 	if (newBuilding)
-		B_BuildingInit();		/*update the building-list */
+		/*update the building-list */
+		B_BuildingInit();
 
 	return newBuilding;
 }
@@ -1929,11 +1861,11 @@ base_t *B_GetBase(int idx)
 }
 
 /**
- * @brief Counts the number of soldiers in a team?
+ * @brief Counts the number of soldiers in a current aircraft/team.
  */
 int B_GetNumOnTeam(void)
 {
 	if (!baseCurrent)
 		return 0;
-	return baseCurrent->numOnTeam[baseCurrent->aircraftCurrent];
+	return baseCurrent->teamNum[baseCurrent->aircraftCurrent];
 }

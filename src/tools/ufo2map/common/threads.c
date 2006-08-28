@@ -1,3 +1,28 @@
+/**
+ * @file threads.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 
 #include "cmdlib.h"
 #include "threads.h"
@@ -14,7 +39,6 @@ qboolean	threaded;
 /*
 =============
 GetThreadWork
-
 =============
 */
 int	GetThreadWork (void)
@@ -24,18 +48,18 @@ int	GetThreadWork (void)
 
 	ThreadLock ();
 
-	if (dispatch == workcount)
-	{
+	if (dispatch == workcount) {
 		ThreadUnlock ();
 		return -1;
 	}
 
 	f = 10*dispatch / workcount;
-	if (f != oldf)
-	{
+	if (f != oldf) {
 		oldf = f;
-		if (pacifier)
-			printf ("%i...", f);
+		if (pacifier) {
+			fprintf (stdout, "%i...", f);
+			fflush(stdout);
+		}
 	}
 
 	r = dispatch;
@@ -52,8 +76,7 @@ void ThreadWorkerFunction (int threadnum)
 {
 	int		work;
 
-	while (1)
-	{
+	while (1) {
 		work = GetThreadWork ();
 		if (work == -1)
 			break;
@@ -92,8 +115,7 @@ void ThreadSetDefault (void)
 {
 	SYSTEM_INFO info;
 
-	if (numthreads == -1)	/* not set manually */
-	{
+	if (numthreads == -1) {	/* not set manually */
 		GetSystemInfo (&info);
 		numthreads = info.dwNumberOfProcessors;
 		if (numthreads < 1 || numthreads > 32)
@@ -143,19 +165,13 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	pacifier = showpacifier;
 	threaded = qtrue;
 
-	/* */
 	/* run threads in parallel */
-	/* */
 	InitializeCriticalSection (&crit);
 
-	if (numthreads == 1)
-	{	/* use same thread */
+	if (numthreads == 1) {	/* use same thread */
 		func (0);
-	}
-	else
-	{
-		for (i=0 ; i<numthreads ; i++)
-		{
+	} else {
+		for (i=0 ; i<numthreads ; i++) {
 			threadhandle[i] = CreateThread(
 			   NULL,	/* LPSECURITY_ATTRIBUTES lpsa, */
 			   0,		/* DWORD cbStack, */
@@ -190,12 +206,11 @@ OSF1
 #ifdef __osf__
 #define	USED
 
-int		numthreads = 4;
+int numthreads = 4;
 
 void ThreadSetDefault (void)
 {
-	if (numthreads == -1)	/* not set manually */
-	{
+	if (numthreads == -1) {	/* not set manually */
 		numthreads = 4;
 	}
 }
@@ -242,8 +257,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	if (pacifier)
 		setbuf (stdout, NULL);
 
-	if (!my_mutex)
-	{
+	if (!my_mutex) {
 		my_mutex = malloc (sizeof(*my_mutex));
 		if (pthread_mutexattr_create (&mattrib) == -1)
 			Error ("pthread_mutex_attr_create failed");
@@ -257,16 +271,14 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 		Error ("pthread_attr_create failed");
 	if (pthread_attr_setstacksize (&attrib, 0x100000) == -1)
 		Error ("pthread_attr_setstacksize failed");
-	
-	for (i=0 ; i<numthreads ; i++)
-	{
+
+	for (i=0 ; i<numthreads ; i++) {
   		if (pthread_create(&work_threads[i], attrib
 		, (pthread_startroutine_t)func, (pthread_addr_t)i) == -1)
 			Error ("pthread_create failed");
 	}
-		
-	for (i=0 ; i<numthreads ; i++)
-	{
+
+	for (i=0 ; i<numthreads ; i++) {
 		if (pthread_join (work_threads[i], &status) == -1)
 			Error ("pthread_join failed");
 	}
@@ -289,7 +301,7 @@ IRIX
 ===================================================================
 */
 
-#ifdef _MIPS_ISA 
+#ifdef _MIPS_ISA
 #define	USED
 
 #include <task.h>
@@ -298,15 +310,14 @@ IRIX
 #include <sys/prctl.h>
 
 
-int		numthreads = -1;
-abilock_t		lck;
+int numthreads = -1;
+abilock_t lck;
 
 void ThreadSetDefault (void)
 {
 	if (numthreads == -1)
 		numthreads = prctl(PR_MAXPPROCS);
 	printf ("%i threads\n", numthreads);
-/*@@ */
 	usconfig (CONF_INITUSERS, numthreads);
 }
 
@@ -345,21 +356,19 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 
 	init_lock (&lck);
 
-	for (i=0 ; i<numthreads-1 ; i++)
-	{
+	for (i=0 ; i<numthreads-1 ; i++) {
 		pid[i] = sprocsp ( (void (*)(void *, size_t))func, PR_SALL, (void *)i
 			, NULL, 0x100000);
 /*		pid[i] = sprocsp ( (void (*)(void *, size_t))func, PR_SALL, (void *)i */
 /*			, NULL, 0x80000); */
-		if (pid[i] == -1)
-		{
+		if (pid[i] == -1) {
 			perror ("sproc");
 			Error ("sproc failed");
 		}
 	}
-		
+
 	func(i);
-			
+
 	for (i=0 ; i<numthreads-1 ; i++)
 		wait (NULL);
 
@@ -411,7 +420,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	workcount = workcnt;
 	oldf = -1;
 	pacifier = showpacifier;
-	start = I_FloatTime (); 
+	start = I_FloatTime ();
 #ifdef NeXT
 	if (pacifier)
 		setbuf (stdout, NULL);

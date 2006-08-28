@@ -267,7 +267,7 @@ menu hud
 		texl	"0 0"
 		texh	"28 36"
 		mousefx true
-		click { cmd "hud_select 0" }
+		click { cmd "soldier_select 0" }
 	}
 	pic bt_actor1
 	{
@@ -276,7 +276,7 @@ menu hud
 		texl	"32 0"
 		texh	"60 36"
 		mousefx true
-		click { cmd "hud_select 1" }
+		click { cmd "soldier_select 1" }
 	}
 	pic bt_actor2
 	{
@@ -285,7 +285,7 @@ menu hud
 		texl	"64 0"
 		texh	"92 36"
 		mousefx true
-		click { cmd "hud_select 2" }
+		click { cmd "soldier_select 2" }
 	}
 	pic bt_actor3
 	{
@@ -294,7 +294,7 @@ menu hud
 		texl	"96 0"
 		texh	"124 36"
 		mousefx true
-		click { cmd "hud_select 3" }
+		click { cmd "soldier_select 3" }
 	}
 	pic bt_actor4
 	{
@@ -303,7 +303,7 @@ menu hud
 		texl	"0 38"
 		texh	"28 74"
 		mousefx true
-		click { cmd "hud_select 4" }
+		click { cmd "soldier_select 4" }
 	}
 	pic bt_actor5
 	{
@@ -312,7 +312,7 @@ menu hud
 		texl	"32 38"
 		texh	"60 74"
 		mousefx true
-		click { cmd "hud_select 5" }
+		click { cmd "soldier_select 5" }
 	}
 	pic bt_actor6
 	{
@@ -321,7 +321,7 @@ menu hud
 		texl	"64 38"
 		texh	"92 74"
 		mousefx true
-		click { cmd "hud_select 6" }
+		click { cmd "soldier_select 6" }
 	}
 	pic bt_actor7
 	{
@@ -330,7 +330,7 @@ menu hud
 		texl	"96 38"
 		texh	"124 74"
 		mousefx true
-		click { cmd "hud_select 7" }
+		click { cmd "soldier_select 7" }
 	}
 
 	// ==================
@@ -550,6 +550,65 @@ menu hud
 		pos		"960 128"
 	}
 
+	// ==================
+	// CHAT BUTTONS
+	// ==================
+	pic bar_chat
+	{
+		if	"maxclients >= 2"
+		image	hud/bar_chat
+		pos		"1024 64"
+		align	"ur"
+		out	{
+				*bar_chat image hud/bar_chat
+				*bar_chat size "64 64"
+				cmd "mn_showchatbuttons 0"
+			}
+		in	{
+				*bar_chat image hud/bar_chat_choice
+				*bar_chat size "128 64"
+				cmd "mn_showchatbuttons 1"
+			}
+	}
+	pic bar_chat_all
+	{
+		if	"mn_showchatbuttons == 1"
+		tooltip	"_Chat"
+		image	hud/button_chat
+		pos		"976 76"
+		align	"ur"
+		texl	"0 0"
+		texh	"32 32"
+		click {
+				cmd	"messagesay"
+			}
+	}
+	pic bar_chat_team
+	{
+		if	"mn_showchatbuttons == 1"
+		tooltip	"_Teamchat"
+		image	hud/button_chat
+		pos		"938 76"
+		align	"ur"
+		texl	"32 0"
+		texh	"64 32"
+		click {
+				cmd	"messagesayteam"
+			}
+	}
+
+	pic button_chat
+	{
+		if	"maxclients >= 2"
+		tooltip	"_Chat messages"
+		image	menu/event_log
+		texl	"0 0"
+		texh	"32 36"
+		pos	"985 70"
+		mousefx false
+		in
+	}
+
 	pic bt_game
 	{
 		tooltip	"_Options"
@@ -653,11 +712,22 @@ menu hud
 		max		"*cvar mn_hpmax"
 		align	uc
 	}
+
+	bar stun
+	{
+		pos		"422 682"
+		size	"305 6"
+		color	".3 .3 .3 .9"
+		current	"*cvar mn_stun"
+		max		"*cvar mn_hpmax"
+		align	uc
+	}
+
 	text infoscreen
 	{
 		pos		"425 702"
 		size	"260 50"
-		format	"20 0"
+		format	"20 100"
 	}
 
 	// ==================
@@ -668,6 +738,7 @@ menu hud
 	{
 		cmd "set hud_refresh 1;"
 		cmd "ov_start;"
+		cmd "set mn_showchatbuttons 0"
 	}
 }
 
@@ -920,12 +991,12 @@ menu physdata
 	pic ass_rahmen { pos "477 343" image menu/bar_rahmen }
 	bar ass_bar    { pos "486 348" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string prc_lbl { pos "480 360" string "_Sniper Rifles:" }
-	string prc_val { pos "745 360" string "*cvar mn_tprc" align ur }
-	pic prc_rahmen { pos "477 373" image menu/bar_rahmen }
-	bar prc_bar    { pos "486 378" current "*cvar mn_vprc" size "245 6" color "0 .8 0 1" max 256 align uc }
+	string snp_lbl { pos "480 360" string "_Sniper Rifles:" }
+	string snp_val { pos "745 360" string "*cvar mn_tsnp" align ur }
+	pic snp_rahmen { pos "477 373" image menu/bar_rahmen }
+	bar snp_bar    { pos "486 378" current "*cvar mn_vsnp" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string exp_lbl { pos "480 390" string "_High Explosives:" }
+	string exp_lbl { pos "480 390" string "_High-Explosives:" }
 	string exp_val { pos "745 390" string "*cvar mn_texp" align ur }
 	pic exp_rahmen { pos "477 403" image menu/bar_rahmen }
 	bar exp_bar    { pos "486 408" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }

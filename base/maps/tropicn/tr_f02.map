@@ -1,0 +1,111 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"angles" "40 20 0"
+"light" "30"
+"ambient" "0.4 0.4 0.4"
+"_color" "1 1 0.9"
+// brush 0
+{
+( 152 128 0 ) ( 0 128 0 ) ( 0 0 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 0 0 0
+( 0 0 4 ) ( 0 128 4 ) ( 152 128 4 ) tex_nature/jungle002 0 0 0 0.5 0.5 0 0 0
+( 0 0 8 ) ( 152 0 8 ) ( 152 0 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 0 0 0
+( 256 8 8 ) ( 256 136 8 ) ( 256 136 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 0 0 0
+( 176 256 8 ) ( 24 256 8 ) ( 24 256 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 0 0 0
+( 0 128 8 ) ( 0 0 8 ) ( 0 0 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 0 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic03.md2"
+"origin" "112 116 10"
+"angles" "0 60 0"
+}
+// entity 2
+{
+"classname" "misc_model"
+"origin" "180 208 12"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"spawnflags" "255"
+}
+// entity 3
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "160 40 12"
+}
+// entity 4
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "184 88 12"
+}
+// entity 5
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "44 208 12"
+"angles" "0 70 0"
+}
+// entity 6
+{
+"classname" "misc_model"
+"angles" "0 70 0"
+"origin" "136 212 12"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"spawnflags" "255"
+}
+// entity 7
+{
+"classname" "misc_model"
+"angles" "0 70 0"
+"origin" "92 172 12"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"spawnflags" "255"
+}
+// entity 8
+{
+"classname" "misc_model"
+"angles" "0 70 0"
+"origin" "224 172 12"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"spawnflags" "255"
+}
+// entity 9
+{
+"classname" "misc_model"
+"angles" "0 70 0"
+"origin" "224 48 12"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"spawnflags" "255"
+}
+// entity 10
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "48 156 12"
+"angles" "0 170 0"
+}
+// entity 11
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "80 40 12"
+"angles" "0 170 0"
+}
+// entity 12
+{
+"classname" "misc_model"
+"angles" "0 50 0"
+"origin" "72 46 12"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"spawnflags" "255"
+}

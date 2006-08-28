@@ -1,0 +1,7 @@
+EXPORTS
+	SND_Init
+	SND_Shutdown
+	SND_GetDMAPos
+	SND_BeginPainting
+	SND_Submit
+	SND_Activate

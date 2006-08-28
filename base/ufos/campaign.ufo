@@ -1,759 +1,56 @@
-// ==================
-// CAMPAIGN: STANDARD
-// ==================
-// stage values
-// =========================================================
-// delay	V_DATE (year, day, hour)	delay after getting activated
-// frame	V_DATE (year, day, hour)	only day and hour are used to randomize the activation
-// expire	V_DATE (year, day, hour)	time after which the mission expires
-// seq		V_STRING	sequence id to play
-// missions	V_STRING	string of missions included in this stage
-// number	V_INT		how many missions needs to appear on geoscape until next set is called
-// quota	V_INT		how many missions needs to be done until next set is called
-// needed	V_STRING	need another stage to be finished?
-// nextstage	V_STRING	which is the next stage we should enter?
-// endstage	V_STRING
-// commands	V_STRING	console command
-//
-// mission values
-// =========================================================
-// text		V_TRANSLATION_STRING	"_translated"	(marked with _ to let the parser detect the string as translatable)
-// map		V_STRING		africa04	a valid map file without d or n (for day and night map - last char of mapname)
-//							this string may contain a + as first char - this means that this is a random assembled map (see *.ump)
-//							with . as first char we have a base attack map
-// param	V_STRING		commercial	this if for maps with + as first char - sets the map style (see *.ump)
-// music	V_STRING		mission		music from base/music *.ogg
-// pos		V_POS			"-82 125"	x, y
-// aliens	V_INT			5		how many aliens in this mission?
-// alienteam	V_STRING		alien		which alienrace?
-// alienequip	V_STRING				campaign_alien	which equipment the alien uses in this mission
-// civilians	V_INT			6		how many civilians will be in the mission?
-// civteam	V_STRING		oriental	which race of civilians
-// recruits	V_INT			3		how many recruits/soldiers you are allowed to carry to battle
-// $win		V_INT			1200		how much credits you will get on win
-// $alien	V_INT			100		how much credits for each killed alien
-// $civilian	V_INT			500		how much you will lose for each killed civilian
-//
-// campaign values
-// =========================================================
-// name		V_STRING	"_Standard Campaign"		name of campaign
-// text		V_STRING	"_txt_standard_campaign"	campaign description
-// team		V_STRING	human				which team?
-// soldiers	V_INT		12				how many soldiers in this campaign?
-// equipment	V_STRING	campaign_player			which equipment to use
-// market	V_STRING	campaign_market			which market definition to use
-// credits	V_INT		500000				how much credits at start
-// map		V_STRING	map_earth			which map to use for geoscape
-// visible	V_BOOL		true				is this campaign visible in campaign list
-// date		V_DATE		"2000 0 7"			starting date
-// firststage	V_STRING	intro				first stage to enter
-//
-//
-//
-//
-mission africa
-{
-	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
-	map			africa04
-	music		mission
-	pos			"-82 125"
-	aliens		5
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		oriental
-	recruits	3
-	$win		1200
-	$alien		100
-	$civilian	500
-}
-
-mission baseattack
-{
-	text		"_Aliens attacked one of our home bases"
-// 	. means that they attack a random base (only the first char counts)
-	map		".base"
-	music		base
-	alienteam	alien
-	aliens		12
-	civilians	12
-	civteam		scientist
-	alienequip	campaign_alien
-	recruits	12
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
-mission bunker
-{
-	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
-	map			bunker01
-	music		mission
-	pos			"-82 125"
-	aliens		5
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		scientist
-	recruits	6
-	$win		1200
-	$alien		100
-	$civilian	500
-}
-
-mission city
-{
-	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
-	map			city04
-	music		mission
-	pos			"-82 125"
-	aliens		5
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		scientist
-	recruits	6
-	$win		1200
-	$alien		100
-	$civilian	500
-}
-
-//no day and night
-mission colon
-{
-	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
-	map			colon04
-	music		mission
-	pos			"-82 125"
-	aliens		5
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		scientist
-	recruits	6
-	$win		1200
-	$alien		100
-	$civilian	500
-}
-
-mission construction
-{
-	text		"_Location: Uppsala\Type: Terror Attack\Objective: Protect inhabitants"
-	map			const05
-	music		mission
-	pos			"-17 60"
-	aliens		6
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	3
-	$win		2000
-	$alien		100
-	$civilian	500
-}
-
-mission excavation
-{
-	text		"_Some aliens have escaped from the\mine, and their tracks lead south,\towards a nearby excavation site.\Protect that site at all cost.\"
-	map		excavation06
-	music		mission4
-	pos		"310 400"
-	aliens		4
-	civilians	6
-	alienequip	alien_excavation
-	recruits	4
-	$win		750
-	$alien		200
-	$civilian		100
-}
-
-mission falconcrash
-{
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
-	map			falcon_crash04
-	music		mission
-	pos			"116 52"
-	aliens		7
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	3
-	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
-}
-
-mission farm
-{
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
-	map			farm08
-	music		mission
-	pos			"116 52"
-	aliens		7
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	3
-	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
-}
-
-// no day and night version
-mission frozen_small
-{
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
-	map			"+frozen"
-	param	small
-	music		mission
-	pos			"116 52"
-	aliens		7
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	3
-	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
-}
-
-// no day and night version
-mission frozen_landingnature
-{
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
-	map			"+frozen"
-	param	alienlandingnature
-	music		mission
-	pos			"116 52"
-	aliens		7
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	3
-	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
-}
-
-// no day and night version
-mission frozen_industrial
-{
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
-	map			"+frozen"
-	param	industrial
-	music		mission
-	pos			"116 52"
-	aliens		7
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	3
-	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
-}
-
-// no day and night version
-mission frozen_alienlandingindustrial
-{
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
-	map			"+frozen"
-	param	alienlandingindustrial
-	music		mission
-	pos			"116 52"
-	aliens		7
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	3
-	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
-}
-
-mission gasstation
-{
-	text		"_Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
-	map			gasstation05
-	music		mission2
-	pos			"-18 40"
-	aliens		8
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	3
-	$win		1900
-	$alien		100
-	$civilian	500
-}
-
-mission harbour
-{
-	text		"_Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
-	map			harbour07
-	music		mission2
-	pos			"-18 40"
-	aliens		8
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	3
-	$win		1900
-	$alien		100
-	$civilian	500
-}
-
-mission italy
-{
-	text		"_Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
-	map			italy05
-	music		mission2
-	pos			"-18 40"
-	aliens		8
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	3
-	$win		1900
-	$alien		100
-	$civilian	500
-}
-
-mission japan
-{
-	text		"_Location: Morioka\Type: Alien Hideout\Objective: Eliminate intruders"
-	map			japan06
-	music		mission3
-	pos			"-141 40"
-	aliens		10
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	4
-	$win		2500
-	$alien		100
-	$civilian	500
-}
-
-mission lake
-{
-	text		"_Location: Tazovskij\Type: Terror Attack\Objective: Protect inhabitants"
-	map			lake03
-	music		mission2
-	pos			"-77 67"
-	aliens		6
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	5
-	civteam		european
-	recruits	2
-	$win		1600
-	$alien		100
-	$civilian	500
-}
-
-mission mart
-{
-	text		"_Location: Gobabis\Type: Crash Site\Objective: Secure Area"
-	map		mart05
-	music		mission
-	pos		"-20 -23"
-	aliens		3
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	2
-	$win		1200
-	$alien		100
-	$civilian	500
-}
-
-mission mine_crash
-{
-	text		"_Location: Gobabis\Type: Crash Site\Objective: Secure Area"
-	map		mine_crash05
-	music		mission
-	pos		"-20 -23"
-	aliens		3
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	2
-	$win		1200
-	$alien		100
-	$civilian	500
-}
-
-mission mine
-{
-	text		"_There are rumors of a mine being\overrun by aliens. Altough this\source of information is doubtful,\you'll need to investigate.\"
-	map		mine01
-	music		mission4
-	pos		"315 398"
-	aliens		5
-	civilians	3
-	alienequip	alien_mine
-	recruits	6
-	$win		800
-	$alien		200
-	$civilian	100
-}
-
-mission office
-{
-	text		"_Location: Mackay\Type: Terror Attack\Objective: Protect inhabitants"
-	map			office06
-	music		mission3
-	pos			"-149 -21"
-	aliens		8
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	2
-	civteam		scientist
-	recruits	3
-	$win		3000
-	$alien		100
-	$civilian	300
-}
-
-mission oriental
-{
-	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
-	map			oriental06
-	music		mission
-	pos			"-62 25"
-	aliens		5
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		oriental
-	recruits	3
-	$win		1200
-	$alien		100
-	$civilian	500
-}
-
-mission or_asyut
-{
-	text		"_Location: Asyut\Type: Terror Attack\Objective: Protect inhabitants"
-	map			"+oriental"
-	music		mission2
-	pos			"-31 27"
-	aliens		7
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		oriental
-	recruits	3
-	$win		4000
-	$alien		100
-	$civilian	1200
-}
-
-mission or_tabelbala
-{
-	text		"_Location: Tabelbala\Type: Terror Attack\Objective: Protect inhabitants"
-	map			"+oriental"
-	music		mission
-	pos			"3 28"
-	aliens		7
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		oriental
-	recruits	3
-	$win		4000
-	$alien		100
-	$civilian	1200
-}
-
-mission pdi
-{
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
-	map		pdi08
-	music		mission3
-	pos		"308 412"
-	aliens		4
-	civilians	2
-	alienequip	alien_spedition
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
-// this map is not finished right now
-mission rocketsilo
-{
-	text		"_The Aliens have tacken over a rocket silo. Go and capture it again."
-	map		rocketsilo06
-	music		mission3
-	pos		"308 412"
-	aliens		4
-	civilians	2
-	alienequip	alien_spedition
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
-mission spedition
-{
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
-	map		spedition06
-	music		mission3
-	pos		"308 412"
-	aliens		4
-	civilians	2
-	alienequip	alien_spedition
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
-//no day and night
-mission stadium
-{
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
-	map		stadium06
-	music		mission3
-	pos		"308 412"
-	aliens		4
-	civilians	2
-	alienequip	campaign_alien
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
-mission subway
-{
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
-	map		subway07
-	music		mission3
-	pos		"308 412"
-	aliens		4
-	civilians	2
-	alienequip	campaign_alien
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
-mission terrain
-{
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
-	map		terrain08
-	music		mission3
-	pos		"308 412"
-	aliens		4
-	civilians	2
-	alienequip	campaign_alien
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
-//no day and night
-mission tower
-{
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
-	map		tower06
-	music		mission3
-	pos		"308 412"
-	aliens		4
-	civilians	2
-	alienequip	campaign_alien
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
-mission transport
-{
-	text		"_Location: Fargo\Type: Terror Attack\Objective: Protect inhabitants"
-	map			transport06
-	music		mission
-	pos			"97 47"
-	aliens		4
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	3
-	$win		1000
-	$alien		100
-	$civilian	500
-}
-
-//no day and night
-mission tropic_river
-{
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
-	map		"+tropic"
-	param	river
-	music		mission3
-	pos		"308 412"
-	aliens		4
-	civilians	2
-	alienequip	campaign_alien
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
-//no day and night
-mission tropic_drug
-{
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
-	map		"+tropic"
-	param	drug
-	music		mission3
-	pos		"308 412"
-	aliens		4
-	civilians	2
-	alienequip	campaign_alien
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
-mission village
-{
-	text		"_Location: Fargo\Type: Terror Attack\Objective: Protect inhabitants"
-	map			village07
-	music		mission
-	pos			"97 47"
-	aliens		4
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	3
-	$win		1000
-	$alien		100
-	$civilian	500
-}
-
-mission vil_grenchen
-{
-	text		"_Location: Grenchen\Type: Terror Attack\Objective: Protect inhabitants"
-	map			"+village"
-	param		residential
-	music		mission2
-	pos			"-7 47"
-	aliens		3
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	7
-	civteam		european
-	recruits	2
-	$win		1000
-	$alien		100
-	$civilian	500
-	storyrelated	true
-}
-
-mission vil_lille
-{
-	text		"_Location: Lille\Type: Terror Attack\Objective: Protect inhabitants"
-	map			"+village"
-	param		recreational
-	music		mission2
-	pos			"-3 50"
-	aliens		7
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	4
-	$win		2000
-	$alien		100
-	$civilian	500
-}
-
-mission vil_albany
-{
-	text		"_Location: Albany\Type: Terror Attack\Objective: Protect inhabitants"
-	map			"+village"
-	param		commercial
-	music		mission
-	pos			"84 32"
-	aliens		8
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	7
-	civteam		european
-	recruits	3
-	$win		2000
-	$alien		100
-	$civilian	500
-}
-
-mission vil_shannon
-{
-	text		"_Location: Shannon\Type: Major Alien Intrusion\Objective: Stop them"
-	map			"+village"
-	param		big
-	music		mission3
-	pos			"9 52"
-	aliens		18
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	4
-	civteam		european
-	recruits	3
-	$win		4000
-	$alien		100
-	$civilian	1200
-}
-
 stage intro
 {
 	set first
 	{
-		seq	intro
-		delay		"0 1 0"
-		frame		"0 3 0"
-		missions	"vil_grenchen"
-		number		1
-		quota		0
+		seq			intro
+			      // y d h
+		delay		"0 0 10" // time in comments is given as elapsed game time
+		frame		"0 3 0"  // mission starts between 0d 10h and 1d 10h
+		expire		"0 6 0"  // expires not sooner than 2d 10h
+			                 // and not later than 5d 10h
+		missions	"farm"
+		number		1 // no quota --- give scared newbies some slack...
 	}
 	set terror_only
 	{
 		needed		first
-		delay		"0 0 1"
-		frame		"0 10 0"
-		expire		"0 3 0"
-		missions	"or_tabelbala italy japan oriental vil_lille vil_albany"
+		delay		"0 2 12" // set starts not sooner than 2d 22h 
+			                 // and not later than 7d 22h 
+		frame		"0 6 0"  // 1st mission starts not sooner than 4d 22h 
+			                 // and not later than 11d 22h 
+		expire		"0 5 0"  // average expire time is 2.5d
+			                 // minimum interval between missions is 2d
+			                 // so you have less than 1.5 on geoscape any time
+		missions	"africa_excavation transport mine mart italy"
+// TODO: mine does not really fit there, because civilians are safe
+// please add some spawn points down there or move this to another stage
+// the same for city
+		number		11 // don't torment the player with the same missions
 		quota		4
+	}
+	set soldier_terror
+	{
+		needed		terror_only
+		delay		"0 3 7"
+		frame		"0 9 0" // big missions, but less traffic
+		expire		"0 17 0" // three at geoscape, but lots of time to do them
+		missions	"bunker japan dam"
+		number		3 // no mission will get repeated
+		quota		2
+	}
+	set ultimate_terror // stage2 equipment start here
+	{
+		needed		soldier_terror
+		delay		"0 5 7"
+		frame		"0 6 0"
+		expire		"0 5 0"
+		missions	"oriental city subway gasstation tower village"
+		quota		3 // torment the player until he's done
 		nextstage	ufos_are_coming
 	}
 	set stop
 	{
-		needed		terror_only
+		needed		ultimate_terror
 		delay		"0 20 0"
 		endstage	intro
 	}
@@ -763,16 +60,22 @@ stage ufos_are_coming
 {
 	set first
 	{
-		seq	ufos_are_coming
-		commands	"addufo"
+		seq			ufos_are_coming
+		delay		"0 2 7"
+		frame		"0 3 0"
+		expire		"0 7 0"
+		commands	"addufo;"
+		missions	"mine_crash"
+		quota		1
 	}
-	set crashed_and_landed
+	set crashed_and_landed // stage3 equipment start here
 	{
+		needed		first
 		delay		"0 0 1"
 		frame		"0 10 0"
-		expire		"0 3 0"
-		missions	"transport mine_crash construction farm office or_asyut"
-		quota		4
+		expire		"0 8 0"
+		missions	"construction pdi farm2 office harbor"
+		quota		3
 		nextstage	invasion
 	}
 	set stop
@@ -785,22 +88,19 @@ stage ufos_are_coming
 
 stage invasion
 {
-	set first
+	set first // stage4 equipment start here
 	{
 		seq	invasion
-	}
-	set baseinvasion
-	{
-		delay		"0 0 1"
+		delay		"0 5 1"
 		frame		"0 10 0"
-		expire		"0 3 0"
-		missions	"baseattack"
+		expire		"0 7 0"
+		missions	"africa terrain baseattack lake"
 		quota		4
 		nextstage	alienbase
 	}
 	set stop
 	{
-		needed		baseinvasion
+		needed		first
 		delay		"0 110 0"
 		endstage	invasion
 	}
@@ -811,48 +111,58 @@ stage alienbase
 	set first
 	{
 		seq	alienbase
-	}
-	set aliencolony
-	{
+		delay		"0 110 0"
+		// aliencolony mission here
 
+		commands	"mn_push enddemo;" // until aliencolony is done
 	}
 	set stop
 	{
-		needed		aliencolony
+		needed		first
 		delay		"0 110 0"
-		commands	"mn_push enddemo;"
+		endstage	alienbase
+//		commands	"mn_push enddemo;"
 	}
 }
 
-campaign heavy
+
+campaign veryhard
 {
-	name		"_Heavy Campaign"
-	text		"_txt_heavy_campaign"
+	name		"_Very Hard Campaign"
+	text		"_txt_veryhard_campaign"
 	team		human
-	soldiers	4
+	soldiers	6
+	scientists	2
+	workers		1
+	medics		0
+	difficulty	4
 	equipment	campaign_player
 	market		campaign_market
 	credits		3500000
-	map		map_earth
+	map		    map_earth
 	visible		true
 
-	date		"2048 0 7"
+	date		"2084 0 7"
 	firststage	intro
 }
 
-campaign easy
+campaign hard
 {
-	name		"_Easy Campaign"
-	text		"_txt_easy_campaign"
+	name		"_Hard Campaign"
+	text		"_txt_hard_campaign"
 	team		human
-	soldiers	20
+	soldiers	7
+	scientists	3
+	workers		2
+	medics		1
+	difficulty	2
 	equipment	campaign_player
 	market		campaign_market
-	credits		6000000
-	map		map_earth
+	credits		3700000
+	map		    map_earth
 	visible		true
 
-	date		"2048 0 7"
+	date		"2084 0 7"
 	firststage	intro
 }
 
@@ -861,14 +171,78 @@ campaign main
 	name		"_Standard Campaign"
 	text		"_txt_standard_campaign"
 	team		human
-	soldiers	12
-	ugvs	2
+	soldiers	9
+	scientists	6
+	workers		4
+	medics		2
+	difficulty	0
+//	ugvs	2
 	equipment	campaign_player
 	market		campaign_market
 	credits		4000000
-	map		map_earth
+	map		    map_earth
 	visible		true
 
-	date		"2048 0 7"
+	date		"2084 0 7"
 	firststage	intro
+}
+
+campaign easy
+{
+	name		"_Easy Campaign"
+	text		"_txt_easy_campaign"
+	team		human
+	soldiers	12
+	scientists	9
+	workers		6
+	medics		3
+	difficulty	-2
+	equipment	campaign_player
+	market		campaign_market
+	credits		4500000
+	map		    map_earth
+	visible		true
+
+	date		"2084 0 7"
+	firststage	intro
+}
+
+campaign veryeasy
+{
+	name		"_Very Easy Campaign"
+	text		"_txt_veryeasy_campaign"
+	team		human
+	soldiers	15
+	scientists	12
+	workers		9
+	medics		4
+	difficulty	-4
+	equipment	campaign_player
+	market		campaign_market
+	credits		6000000
+	map		    map_earth
+	visible		true
+
+	date		"2084 0 7"
+	firststage	intro
+}
+
+campaign test
+{
+	name		"_Testing and Tweaking Campaign --- Please Ignore"
+	text		"_txt_standard_campaign"
+	team		human
+	soldiers	11
+	scientists	11
+	workers		11
+	medics		11
+	difficulty	0
+	equipment	testing_and_tweaking
+	market		testing_and_tweaking
+	credits		100000000
+	map		    map_earth
+	visible		false
+
+	date		"2084 0 7"
+	firststage	ufos_are_coming
 }

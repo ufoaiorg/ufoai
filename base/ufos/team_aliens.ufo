@@ -199,20 +199,6 @@ actors hovernet
 	}
 }
 
-
-// ==================
-// TEAMS
-// ==================
-
-team alien
-{
-	ortnok
-	antarean
-	shevaar
-	hovernet
-	cyborg_ortnok
-}
-
 // ==================
 // TEAM DESCRIPTIONS
 //
@@ -343,61 +329,47 @@ actors ortnok
 	}
 }
 
-//==================
-// blue
-//==================
+// ==================
+// TEAMS
+// ==================
 
-names blue
+team alien
 {
-	neutral
-	{
-	Akrokk
-	Mkeek
-	Rniuk
-	Tranok
-	Kronuk
-	Trenakk
-	Zrokk
-	Kraerak
-	Mnookk
-	Zmolukk
-	Abtrenek
-	Uonak
-	Ktrukk
-	Onukark
-	Ebnuzuk
-	Krrnaak
-	Zmuknesk
-	}
-
-	lastname
-	{
-	"Uk Kronok"
-	"Np Zlrok"
-	"T Zruujk"
-	"Kr Zrrosk"
-	"Mt Trekluk"
-	"H Hrkakk"
-	"Pt Mrlkuk"
-	"Tsk Hrekk"
-	"Kkr Kraukk"
-	"Tkr Hruk"
-	"Ts Srulok"
-	"K Krokk"
-	"Zt Hrmokuk"
-	"H Nhrokekk"
-	"Tt Treknk"
-	"Ok Orokk"
-	"Sk Trevuk"
-	"Zr Znaztrk"
-	}
+	ortnok
+	antarean
+// 	shevaar
+// 	hovernet
+// 	cyborg_ortnok
 }
 
-actors blue
+team antarean
 {
-	neutral
-	{
-		aliens/blue body01 head01 0
-		aliens/blue body01 head01 1
-	}
+	antarean
 }
+
+team ortnok
+{
+	ortnok
+}
+
+team cyborg_ortnok
+{
+	cyborg_ortnok
+}
+
+team ortnok_all
+{
+	ortnok
+	cyborg_ortnok
+}
+
+// team shevaar
+// {
+// 	shevaar
+// }
+
+// team hovernet
+// {
+// 	hovernet
+// }
+

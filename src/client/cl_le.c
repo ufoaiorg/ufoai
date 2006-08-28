@@ -25,35 +25,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-/* */
 lm_t LMs[MAX_LOCALMODELS];
 int numLMs;
 
-/* */
+
 le_t LEs[MAX_EDICTS];
 int numLEs;
 
-/* */
 
-vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, -PLAYER_MIN };
-vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
+/*===========================================================================
+ LM handling
+=========================================================================== */
 
-
-/*=========================================================================== */
-/* */
-/* LM handling */
-/* */
-/*=========================================================================== */
-
-char *lmList[MAX_LOCALMODELS + 1];
+static char *lmList[MAX_LOCALMODELS + 1];
 
 
-/*
-==================
-LM_GenerateList
-==================
-*/
-void LM_GenerateList(void)
+/**
+ * @brief
+ */
+static void LM_GenerateList(void)
 {
 	lm_t *lm;
 	int i, l;
@@ -66,11 +56,9 @@ void LM_GenerateList(void)
 }
 
 
-/*
-==============
-LM_AddToScene
-==============
-*/
+/**
+ * @brief
+ */
 void LM_AddToScene(void)
 {
 	lm_t *lm;
@@ -106,12 +94,10 @@ void LM_AddToScene(void)
 }
 
 
-/*
-==============
-LM_Find
-==============
-*/
-lm_t *LM_Find(int num)
+/**
+ * @brief
+ */
+static lm_t *LM_Find(int num)
 {
 	int i;
 
@@ -124,12 +110,10 @@ lm_t *LM_Find(int num)
 }
 
 
-/*
-==============
-LM_Delete
-==============
-*/
-void LM_Delete(lm_t * lm)
+/**
+ * @brief
+ */
+static void LM_Delete(lm_t * lm)
 {
 	lm_t backup;
 
@@ -144,11 +128,9 @@ void LM_Delete(lm_t * lm)
 }
 
 
-/*
-==============
-LM_Perish
-==============
-*/
+/**
+ * @brief
+ */
 void LM_Perish(sizebuf_t * sb)
 {
 	lm_t *lm;
@@ -161,11 +143,9 @@ void LM_Perish(sizebuf_t * sb)
 }
 
 
-/*
-==============
-LM_Explode
-==============
-*/
+/**
+ * @brief
+ */
 void LM_Explode(sizebuf_t * sb)
 {
 	lm_t *lm;
@@ -189,11 +169,9 @@ void LM_Explode(sizebuf_t * sb)
 }
 
 
-/*
-==================
-CL_RegisterLocalModels
-==================
-*/
+/**
+ * @brief
+ */
 void CL_RegisterLocalModels(void)
 {
 	lm_t *lm;
@@ -216,11 +194,9 @@ void CL_RegisterLocalModels(void)
 }
 
 
-/*
-==================
-CL_AddLocalModel
-==================
-*/
+/**
+ * @brief
+ */
 lm_t *CL_AddLocalModel(char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags)
 {
 	lm_t *lm;
@@ -246,20 +222,13 @@ lm_t *CL_AddLocalModel(char *model, char *particle, vec3_t origin, vec3_t angles
 }
 
 
-/*=========================================================================== */
-/* */
-/* LE thinking */
-/* */
-/*=========================================================================== */
+/*===========================================================================
+LE thinking
+=========================================================================== */
 
-/*
-==============
-LE_Status
-
-Checks whether there are soldiers alive
-if not - end round automatically
-==============
-*/
+/**
+ * @brief Checks whether there are soldiers alive if not - end round automatically
+ */
 void LE_Status(void)
 {
 	le_t *le;
@@ -285,11 +254,13 @@ void LE_Status(void)
 	}
 }
 
-/*
-==============
-LE_Think
-==============
-*/
+/**
+ * @brief Calls the le think function
+ * @sa LET_StartIdle
+ * @sa LET_PathMove
+ * @sa LET_StartPathMove
+ * @sa LET_Projectile
+ */
 void LE_Think(void)
 {
 	le_t *le;
@@ -302,19 +273,15 @@ void LE_Think(void)
 }
 
 
-/*=========================================================================== */
-/* */
-/* LE think functions */
-/* */
-/*=========================================================================== */
+/*===========================================================================
+ LE think functions
+=========================================================================== */
 
-char retAnim[MAX_VAR];
+static char retAnim[MAX_VAR];
 
-/*
-==============
-LE_GetAnim
-==============
-*/
+/**
+ * @brief
+ */
 char *LE_GetAnim(char *anim, int right, int left, int state)
 {
 	char *mod;
@@ -337,7 +304,9 @@ char *LE_GetAnim(char *anim, int right, int left, int state)
 		if (left == NONE)
 			type = "item";
 		else {
-			akimbo = qtrue;
+			/* left hand grenades look OK with deafult anim; others don't */
+			if (Q_strncmp(csi.ods[left].type, "grenade", 7))
+				akimbo = qtrue;
 			type = csi.ods[left].type;
 		}
 	} else {
@@ -354,21 +323,21 @@ char *LE_GetAnim(char *anim, int right, int left, int state)
 		*mod++ = 0;
 	} else {
 		Q_strncpyz(mod, anim, MAX_VAR);
-		Q_strcat(mod, MAX_VAR, "_");
-		Q_strcat(mod, MAX_VAR, type);
+		Q_strcat(mod, "_", MAX_VAR);
 		if (akimbo)
-			Q_strcat(mod, MAX_VAR, "_d");
+			Q_strcat(mod, "pistol_d", MAX_VAR);
+		else
+			Q_strcat(mod, type, MAX_VAR);
 	}
 
 	return retAnim;
 }
 
 
-/*
-==============
-LET_StartIdle
-==============
-*/
+/**
+ * @brief
+ * @note Think function
+ */
 void LET_StartIdle(le_t * le)
 {
 	if (le->state & STATE_DEAD)
@@ -382,66 +351,11 @@ void LET_StartIdle(le_t * le)
 }
 
 
-/*
-==============
-LET_DoAppear
-==============
-*/
-/*#define APPEAR_TIME		1000
-
-void LET_DoAppear( le_t *le )
-{
-	if ( cl.time > le->startTime + APPEAR_TIME )
-	{
-		le->alpha = 1.0;
-		le->think = NULL;
-		return;
-	}
-
-	le->alpha = (float)(cl.time - le->startTime) / APPEAR_TIME;
-}*/
-
-
-/*
-==============
-LET_Appear
-==============
-*/
-/*void LET_Appear( le_t *le )
-{
-	LET_StartIdle( le );
-
-	le->startTime = cl.time;
-	le->think = LET_DoAppear;
-	le->think( le );
-}*/
-
-
-/*
-==============
-LET_Perish
-==============
-*/
-/*#define PERISH_TIME		1000
-
-void LET_Perish( le_t *le )
-{
-	if ( cl.time > le->startTime + PERISH_TIME )
-	{
-		le->inuse = qfalse;
-		return;
-	}
-
-	le->alpha = 1.0 - (float)(cl.time - le->startTime) / PERISH_TIME;
-}*/
-
-
-/*
-==============
-LET_PathMove
-==============
-*/
-void LET_PathMove(le_t * le)
+/**
+ * @brief
+ * @note Think function
+ */
+static void LET_PathMove(le_t * le)
 {
 	byte dv;
 	float frac;
@@ -462,7 +376,7 @@ void LET_PathMove(le_t * le)
 			le->dir = dv & 7;
 			le->angles[YAW] = dangle[le->dir];
 			le->startTime = le->endTime;
-			le->endTime += ((dv & 7) > 3 ? US * 1.41 : US) * 1000 / le->speed;
+			le->endTime += ((dv & 7) > 3 ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
 			if (le->team == cls.team && le == selActor && (int) cl_worldlevel->value == le->oldPos[2] && le->pos[2] != le->oldPos[2]) {
 				/*PosToVec( le->pos, dest ); */
 				/*VectorCopy( dest, cl.cam.reforg ); */
@@ -505,11 +419,10 @@ void LET_PathMove(le_t * le)
 	VectorMA(start, frac, delta, le->origin);
 }
 
-/*
-==============
-LET_StartPathMove
-==============
-*/
+/**
+ * @brief
+ * @note Think function
+ */
 void LET_StartPathMove(le_t * le)
 {
 	re.AnimChange(&le->as, le->model1, LE_GetAnim("walk", le->right, le->left, le->state));
@@ -519,12 +432,11 @@ void LET_StartPathMove(le_t * le)
 }
 
 
-/*
-==============
-LET_Projectile
-==============
-*/
-void LET_Projectile(le_t * le)
+/**
+ * @brief
+ * @note Think function
+ */
+static void LET_Projectile(le_t * le)
 {
 	if (cl.time >= le->endTime) {
 		le->ptl->inuse = qfalse;
@@ -541,12 +453,13 @@ void LET_Projectile(le_t * le)
 	}
 }
 
-/*=========================================================================== */
-/* */
-/* LE Special Effects */
-/* */
-/*=========================================================================== */
+/*===========================================================================
+ LE Special Effects
+=========================================================================== */
 
+/**
+ * @brief
+ */
 void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal)
 {
 	le_t *le;
@@ -578,7 +491,7 @@ void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, i
 		le->inuse = qfalse;
 		le->ptl->size[0] = dist;
 		VectorMA(muzzle, 0.5, delta, le->ptl->s);
-		if (flags & (SF_IMPACT | SF_BODY) || fd->selfDetonate) {
+		if (flags & (SF_IMPACT | SF_BODY) || (fd->splrad && !fd-> bounce)) {
 			ptl = NULL;
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0])
@@ -604,7 +517,7 @@ void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, i
 	if (flags & SF_BODY) {
 		le->ref1 = fd->hitBody;
 		le->ref2 = fd->hitBodySound;
-	} else if (flags & SF_IMPACT || fd->selfDetonate) {
+	} else if (flags & SF_IMPACT || (fd->splrad && !fd->bounce)) {
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
 	} else {
@@ -618,6 +531,9 @@ void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, i
 }
 
 
+/**
+ * @brief
+ */
 void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 {
 	le_t *le;
@@ -642,7 +558,7 @@ void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 	if (flags & SF_BODY) {
 		le->ref1 = fd->hitBody;
 		le->ref2 = fd->hitBodySound;
-	} else if (flags & SF_IMPACT || fd->selfDetonate) {
+	} else if (flags & SF_IMPACT || (fd->splrad && !fd-> bounce)) {
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
 	} else {
@@ -658,19 +574,14 @@ void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 }
 
 
-/*=========================================================================== */
-/* */
-/* LE Management functions */
-/* */
-/*=========================================================================== */
+/*===========================================================================
+ LE Management functions
+=========================================================================== */
 
 
-/*
-==============
-
-LE_Add
-==============
-*/
+/**
+ * @brief
+ */
 le_t *LE_Add(int entnum)
 {
 	int i;
@@ -700,11 +611,9 @@ le_t *LE_Add(int entnum)
 	return le;
 }
 
-/*
-==============
-LE_Get
-==============
-*/
+/**
+ * @brief
+ */
 le_t *LE_Get(int entnum)
 {
 	int i;
@@ -720,11 +629,9 @@ le_t *LE_Get(int entnum)
 }
 
 
-/*
-==============
-LE_Find
-==============
-*/
+/**
+ * @brief
+ */
 le_t *LE_Find(int type, pos3_t pos)
 {
 	int i;
@@ -740,11 +647,9 @@ le_t *LE_Find(int type, pos3_t pos)
 }
 
 
-/*
-==============
-LE_AddToScene
-==============
-*/
+/**
+ * @brief
+ */
 void LE_AddToScene(void)
 {
 	le_t *le;
@@ -792,11 +697,9 @@ void LE_AddToScene(void)
 }
 
 
-/*=========================================================================== */
-/* */
-/* LE Tracing */
-/* */
-/*=========================================================================== */
+/*===========================================================================
+ LE Tracing
+=========================================================================== */
 
 
 typedef struct {
@@ -810,13 +713,10 @@ typedef struct {
 } moveclip_t;
 
 
-/*
-====================
-CL_ClipMoveToLEs
-
-====================
-*/
-void CL_ClipMoveToLEs(moveclip_t * clip)
+/**
+ * @brief
+ */
+static void CL_ClipMoveToLEs(moveclip_t * clip)
 {
 	int i;
 	le_t *le;
@@ -848,12 +748,11 @@ void CL_ClipMoveToLEs(moveclip_t * clip)
 }
 
 
-/*
-==================
-CL_TraceBounds
-==================
-*/
-void CL_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
+/**
+ * @brief
+ * @sa CL_Trace
+ */
+static void CL_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
 {
 	int i;
 
@@ -868,16 +767,11 @@ void CL_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t b
 	}
 }
 
-/*
-==================
-CL_Trace
-
-Moves the given mins/maxs volume through the world from start to end.
-
-Passedict and edicts owned by passedict are explicitly not checked.
-
-==================
-*/
+/**
+ * @brief Moves the given mins/maxs volume through the world from start to end.
+ * @note Passedict and edicts owned by passedict are explicitly not checked.
+ * @sa CL_TraceBounds
+ */
 trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * passle, int contentmask)
 {
 	moveclip_t clip;

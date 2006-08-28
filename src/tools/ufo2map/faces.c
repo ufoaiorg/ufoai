@@ -1,14 +1,32 @@
-/* faces.c */
-
-#include "qbsp.h"
+/**
+ * @file faces.c
+ * @brief
+ * @note some faces will be removed before saving, but still form nodes:
+ * meeting planes of different water current volumes
+ */
 
 /*
+Copyright (C) 1997-2001 Id Software, Inc.
 
-  some faces will be removed before saving, but still form nodes:
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
 
-  meeting planes of different water current volumes
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+
+
+#include "qbsp.h"
 
 /* undefine for dumb linear searches */
 #define	USE_HASHING
@@ -91,7 +109,7 @@ unsigned HashVec (vec3_t vec)
 /**
   * @brief
   *
-  * Uses hashing
+  * @note Uses hashing
   */
 int	GetVertexnum (vec3_t in)
 {
@@ -139,9 +157,7 @@ int	GetVertexnum (vec3_t in)
 }
 #else
 /**
-  * @brief
-  *
-  * Dumb linear search
+  * @brief Dumb linear search
   */
 int	GetVertexnum (vec3_t v)
 {
@@ -183,16 +199,14 @@ int	GetVertexnum (vec3_t v)
 
 
 /**
-  * @brief
-  *
-  * The faces vertexes have beeb added to the superverts[] array,
+  * @brief The faces vertexes have been added to the superverts[] array,
   * and there may be more there than can be held in a face (MAXEDGES).
   *
   * If less, the faces vertexnums[] will be filled in, otherwise
   * face will reference a tree of split[] faces until all of the
   * vertexnums can be added.
   *
-  * superverts[base] will become face->vertexnums[0], and the others
+  * @note superverts[base] will become face->vertexnums[0], and the others
   * will be circularly filled in.
   */
 void FaceFromSuperverts (node_t *node, face_t *f, int base)
@@ -283,9 +297,7 @@ void EmitVertexes_r (node_t *node)
 
 #ifdef USE_HASHING
 /**
-  * @brief
-  *
-  * Uses the hash tables to cut down to a small number
+  * @brief Uses the hash tables to cut down to a small number
   */
 void FindEdgeVerts (vec3_t v1, vec3_t v2)
 {
@@ -317,9 +329,7 @@ void FindEdgeVerts (vec3_t v1, vec3_t v2)
 
 #else
 /**
-  * @brief
-  *
-  * Forced a dumb check of everything
+  * @brief Forced a dumb check of everything
   */
 void FindEdgeVerts (vec3_t v1, vec3_t v2)
 {
@@ -333,8 +343,7 @@ void FindEdgeVerts (vec3_t v1, vec3_t v2)
 
 /**
   * @brief
-  *
-  * Can be recursively reentered
+  * @note Can be recursively reentered
   */
 void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 {
@@ -540,8 +549,8 @@ void FreeFace (face_t *f)
 /**
   * @brief
   *
-  * Called by writebsp.
-  * Don't allow four way edges
+  * @note Called by writebsp.
+  * @note Don't allow four way edges
   */
 int GetEdge2 (int v1, int v2,  face_t *f)
 {
@@ -586,13 +595,11 @@ FACE MERGING
 #define	CONTINUOUS_EPSILON	0.001
 
 /**
-  * @brief
-  *
-  * If two polygons share a common edge and the edges that meet at the
+  * @brief If two polygons share a common edge and the edges that meet at the
   * common points are both inside the other polygons, merge them
   *
-  * Returns NULL if the faces couldn't be merged, or the new face.
-  * The originals will NOT be freed.
+  * @return NULL if the faces couldn't be merged, or the new face.
+  * @note The originals will NOT be freed.
 =============
 */
 winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
@@ -612,8 +619,7 @@ winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
 	for (i=0 ; i<f1->numpoints ; i++) {
 		p1 = f1->p[i];
 		p2 = f1->p[(i+1)%f1->numpoints];
-		for (j=0 ; j<f2->numpoints ; j++)
-		{
+		for (j=0 ; j<f2->numpoints ; j++) {
 			p3 = f2->p[j];
 			p4 = f2->p[(j+1)%f2->numpoints];
 			for (k=0 ; k<3 ; k++) {
@@ -685,13 +691,11 @@ winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
 }
 
 /**
-  * @brief
-  *
-  * If two polygons share a common edge and the edges that meet at the
+  * @brief If two polygons share a common edge and the edges that meet at the
   * common points are both inside the other polygons, merge them
   *
-  * Returns NULL if the faces couldn't be merged, or the new face.
-  * The originals will NOT be freed.
+  * @return NULL if the faces couldn't be merged, or the new face.
+  * @note The originals will NOT be freed.
   */
 face_t *TryMerge (face_t *f1, face_t *f2, vec3_t planenormal)
 {
@@ -758,9 +762,7 @@ void MergeNodeFaces (node_t *node)
 /*===================================================================== */
 
 /**
-  * @brief
-  *
-  * Chop up faces that are larger than we want in the surface cache
+  * @brief Chop up faces that are larger than we want in the surface cache
   */
 void SubdivideFace (node_t *node, face_t *f)
 {
@@ -888,10 +890,7 @@ face_t *FaceFromPortal (portal_t *p, int pside)
 
 
 /**
-  * @brief
-  *
-  * If a portal will make a visible face,
-  * mark the side that originally created it
+  * @brief If a portal will make a visible face, mark the side that originally created it
   * - solid / empty : solid
   * - solid / water : solid
   * - water / empty : water

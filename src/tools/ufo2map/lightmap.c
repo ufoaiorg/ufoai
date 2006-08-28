@@ -3,6 +3,27 @@
  * @brief
  */
 
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
+
 #include "qrad.h"
 
 #define	MAX_LSTYLES	256
@@ -105,7 +126,7 @@ typedef struct
 /**
   *	@brief
   */
-triangulation_t	*AllocTriangulation (dplane_t *plane)
+triangulation_t *AllocTriangulation (dplane_t *plane)
 {
 	triangulation_t	*t;
 
@@ -133,7 +154,7 @@ void FreeTriangulation (triangulation_t *tr)
 /**
   *	@brief
   */
-triedge_t	*FindEdge (triangulation_t *trian, int p0, int p1)
+triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 {
 	triedge_t	*e, *be;
 	vec3_t		v1;
@@ -175,7 +196,7 @@ triedge_t	*FindEdge (triangulation_t *trian, int p0, int p1)
 /**
   *	@brief
   */
-triangle_t	*AllocTriangle (triangulation_t *trian)
+triangle_t *AllocTriangle (triangulation_t *trian)
 {
 	triangle_t	*t;
 
@@ -290,7 +311,7 @@ void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 /**
   *	@brief
   */
-void	LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t color)
+void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t color)
 {
 	patch_t		*p1, *p2, *p3;
 	vec3_t		base, d1, d2;
@@ -451,10 +472,7 @@ typedef struct
 
 
 /**
-  *	@brief
-  *
-  * Fills in s->texmins[] and s->texsize[]
-  * also sets exactmins[] and exactmaxs[]
+  *	@brief Fills in s->texmins[] and s->texsize[], also sets exactmins[] and exactmaxs[]
   */
 void CalcFaceExtents (lightinfo_t *l)
 {
@@ -506,9 +524,7 @@ void CalcFaceExtents (lightinfo_t *l)
 }
 
 /**
-  *	@brief
-  *
-  * Fills in texorg, worldtotex. and textoworld
+  *	@brief Fills in texorg, worldtotex. and textoworld
   */
 void CalcFaceVectors (lightinfo_t *l)
 {
@@ -579,9 +595,7 @@ void CalcFaceVectors (lightinfo_t *l)
 }
 
 /**
-  *	@brief
-  *
-  * For each texture aligned grid point, back project onto the plane
+  *	@brief For each texture aligned grid point, back project onto the plane
   * to get the world xyz value of the sample point
   */
 void CalcPoints (lightinfo_t *l, float sofs, float tofs)
@@ -610,12 +624,10 @@ void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	starts = l->texmins[0]*step;
 	startt = l->texmins[1]*step;
 
-
 	for (t=0 ; t<h ; t++) {
 		for (s=0 ; s<w ; s++, surf+=3) {
 			us = starts + (s+sofs)*step;
 			ut = startt + (t+tofs)*step;
-
 
 			/* if a line can be traced from surf to facemid, the point is good */
 			for (i=0 ; i<6 ; i++) {
@@ -655,7 +667,6 @@ void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 			}
 		}
 	}
-
 }
 
 
@@ -780,8 +791,7 @@ void CreateDirectLights (void)
 		dl->type = emit_point;
 
 		target = ValueForKey (e, "target");
-
-		if (!strcmp (name, "light_spot") || target[0]) {
+		if (target[0]) {
 			dl->type = emit_spotlight;
 			dl->stopdot = FloatForKey (e, "_cone");
 			if (!dl->stopdot)
@@ -857,7 +867,7 @@ void CreateDirectLights (void)
 /**
   *	@brief
   *
-  * Lightscale is the normalizer for multisampling
+  * @param[in] lightscale is the normalizer for multisampling
   */
 void GatherSampleLight (vec3_t pos, vec3_t normal,
 			float **styletable, int offset, int mapsize, float lightscale)
@@ -946,9 +956,7 @@ skipadd: ;
 }
 
 /**
-  *	@brief
-  *
-  * Take the sample's collected light and
+  *	@brief Take the sample's collected light and
   * add it back into the apropriate patch
   * for the radiosity pass.
   *
@@ -1068,11 +1076,9 @@ void BuildFacelights (int facenum)
 
 	/* the light from DIRECT_LIGHTS is sent out, but the */
 	/* texture itself should still be full bright */
-
 	if (face_patches[facenum]->baselight[0] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[1] >= DIRECT_LIGHT ||
-		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT
-		) {
+		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT) {
 		spot = fl->samples[0];
 		for (i=0 ; i<l[0].numsurfpt ; i++, spot+=3)
 			VectorAdd (spot, face_patches[facenum]->baselight, spot);
@@ -1083,9 +1089,7 @@ void BuildFacelights (int facenum)
 
 
 /**
-  *	@brief
-  *
-  * Add the indirect lighting on top of the direct
+  *	@brief Add the indirect lighting on top of the direct
   * lighting and save into final map format
   */
 void FinalLightFace (int facenum)
@@ -1175,8 +1179,7 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 
 	dest = &dlightdata[f->lightofs];
 
-	if (fl->numstyles > MAXLIGHTMAPS)
-	{
+	if (fl->numstyles > MAXLIGHTMAPS) {
 		fl->numstyles = MAXLIGHTMAPS;
 		printf ("face with too many lightstyles: (%f %f %f)\n",
 			face_patches[facenum]->origin[0],
@@ -1185,14 +1188,11 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 			);
 	}
 
-	for (st=0 ; st<fl->numstyles ; st++)
-	{
+	for (st=0 ; st<fl->numstyles ; st++) {
 		f->styles[st] = fl->stylenums[st];
-		for (j=0 ; j<fl->numsamples ; j++)
-		{
+		for (j=0 ; j<fl->numsamples ; j++) {
 			VectorCopy ( (fl->samples[st]+j*3), lb);
-			if (numbounce > 0 && st == 0)
-			{
+			if (numbounce > 0 && st == 0) {
 				vec3_t	add;
 
 				SampleTriangulation (fl->origins + j*3, trian, add);
@@ -1217,15 +1217,13 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 			newmax = max;
 			if (newmax < 0)
 				newmax = 0;		/* roundoff problems */
-			if (newmax < minlight)
-			{
+			if (newmax < minlight) {
 				newmax = minlight + (rand()%48);
 			}
 			if (newmax > maxlight)
 				newmax = maxlight;
 
-			for (k=0 ; k<3 ; k++)
-			{
+			for (k=0 ; k<3 ; k++) {
 				*dest++ = lb[k]*newmax/max;
 			}
 		}

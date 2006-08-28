@@ -4,10 +4,10 @@ Name=ref_gl
 Ver=1
 IsCpp=1
 Type=3
-Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DUSE_SDL_@@_-DSHADERS_@@_-DHAVE_GETTEXT_@@_-DUSE_SDL_SOUND_@@_
+Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DSHADERS_@@_-DHAVE_GETTEXT_@@_
 CppCompiler=
 Includes=
-Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lSDL_ttf_@@_-lSDL_@@_../win32/intl.lib_@@_-def ref_gl.def_@@_
+Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lSDL_ttf_@@_-lSDL_@@_../ports/win32/intl.lib_@@_-def ref_gl.def_@@_
 Libs=
 UnitCount=32
 Folders="Header Files","Resource Files","Source Files"
@@ -130,7 +130,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit11]
-FileName=..\win32\glw_imp.c
+FileName=..\ports\win32\glw_imp.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -150,7 +150,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit13]
-FileName=..\win32\q_shwin.c
+FileName=..\ports\win32\q_shwin.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -160,7 +160,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit14]
-FileName=..\win32\qgl_win.c
+FileName=..\ports\win32\qgl_win.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -210,7 +210,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit19]
-FileName=..\win32\glw_win.h
+FileName=..\ports\win32\glw_win.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -260,7 +260,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit26]
-FileName=..\win32\winquake.h
+FileName=..\ports\win32\winquake.h
 Folder=Header Files
 Compile=1
 CompileCpp=1

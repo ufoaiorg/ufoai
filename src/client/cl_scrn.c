@@ -28,7 +28,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -53,9 +53,7 @@ cvar_t *scr_viewsize;
 cvar_t *scr_conspeed;
 cvar_t *scr_consize;
 cvar_t *scr_centertime;
-cvar_t *scr_showturtle;
 cvar_t *scr_showpause;
-cvar_t *scr_printspeed;
 
 cvar_t *scr_netgraph;
 cvar_t *scr_timegraph;
@@ -75,6 +73,7 @@ char cursor_pic[MAX_QPATH];
 
 void SCR_TimeRefresh_f(void);
 void SCR_Loading_f(void);
+void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont);
 
 
 /*
@@ -151,9 +150,7 @@ void SCR_DrawDebugGraph(void)
 	float v;
 	vec4_t color = { 0.0, 0.0, 0.0, 1.0 };
 
-	/* */
 	/* draw the graph */
-	/* */
 	w = scr_vrect.width;
 
 	x = scr_vrect.x;
@@ -181,11 +178,11 @@ CENTER PRINTING
 ===============================================================================
 */
 
-char scr_centerstring[1024];
-float scr_centertime_start;		/* for slow victory printing */
-float scr_centertime_off;
-int scr_center_lines;
-int scr_erase_center;
+static char scr_centerstring[1024];
+static float scr_centertime_start;		/* for slow victory printing */
+static float scr_centertime_off;
+static int scr_center_lines;
+static int scr_erase_center;
 
 /*
 ==============
@@ -255,7 +252,7 @@ void SCR_DrawCenterString(void)
 	int x, y;
 	int remaining;
 
-/* the finale prints the characters one at a time */
+	/* the finale prints the characters one at a time */
 	remaining = 9999;
 
 	scr_erase_center = 0;
@@ -340,10 +337,8 @@ void SCR_Init(void)
 	scr_viewsize = Cvar_Get("viewsize", "100", CVAR_ARCHIVE);
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0);
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0);
-	scr_showturtle = Cvar_Get("scr_showturtle", "0", 0);
 	scr_showpause = Cvar_Get("scr_showpause", "1", 0);
 	scr_centertime = Cvar_Get("scr_centertime", "2.5", 0);
-	scr_printspeed = Cvar_Get("scr_printspeed", "8", 0);
 	scr_netgraph = Cvar_Get("netgraph", "0", 0);
 	scr_timegraph = Cvar_Get("timegraph", "0", 0);
 	scr_debuggraph = Cvar_Get("debuggraph", "0", 0);
@@ -352,9 +347,7 @@ void SCR_Init(void)
 	scr_graphshift = Cvar_Get("graphshift", "0", 0);
 	scr_drawall = Cvar_Get("scr_drawall", "0", 0);
 
-	/* */
 	/* register our commands */
-	/* */
 	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f);
 	Cmd_AddCommand("loading", SCR_Loading_f);
 	Cmd_AddCommand("sizeup", SCR_SizeUp_f);
@@ -416,14 +409,15 @@ void SCR_DrawLoading(void)
 	re.DrawPic((viddef.width - w) / 2, (viddef.height - h) / 2, "loading");
 }
 
-
-/*
-=================
-SCR_DrawCursor
-=================
-*/
+/**
+ * @brief Draws the 3D-cursor in battlemode and the icons/info next to it.
+ */
 void SCR_DrawCursor(void)
 {
+	int icon_offset_x = 16;	/* Offset of the first icon on the x-axis. */
+	int icon_offset_y = 16;	/* Offset of the first icon on the y-axis. */
+	int icon_spacing = 2;	/* the space between different icons. */
+
 	if (!cursor->value)
 		return;
 
@@ -439,10 +433,29 @@ void SCR_DrawCursor(void)
 		re.DrawNormPic(mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
 
 		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
-			if (cls.team != cl.actTeam)
-				re.DrawNormPic(mx + 16, my + 16, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
-			else if (selActor && selActor->state & STATE_CROUCHED)
-				re.DrawNormPic(mx + 16, my + 16, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
+			if (cls.team != cl.actTeam) {
+				re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
+				icon_offset_y += 32;	/* Height of 'wait' icon. ... just in case we add further icons below.*/
+				icon_offset_y += icon_spacing;
+			}
+			else if (selActor){
+				/* Display 'crouch' icon if actor is crouched. */
+				if (selActor->state & STATE_CROUCHED)
+					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
+				icon_offset_y += 16;	/* Height of 'crouched' icon. */
+				icon_offset_y += icon_spacing;
+
+				/* Display 'Reaction shot' icon if actor has it activated. */
+				if (selActor->state & STATE_REACTION)
+					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfire");
+				icon_offset_y += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
+				icon_offset_y += icon_spacing;
+
+				/* Display weaponmode (text) here. */
+				if ( menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->value )
+					SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
+			}
+
 		}
 	} else {
 		vec3_t scale = { 3.5, 3.5, 3.5 };
@@ -489,11 +502,12 @@ void SCR_RunConsole(void)
 
 }
 
-/*
-==================
-SCR_DrawConsole
-==================
-*/
+/**
+ * @brief
+ * @sa SCR_UpdateScreen
+ * @sa Con_DrawConsole
+ * @sa Con_DrawNotify
+ */
 void SCR_DrawConsole(void)
 {
 	Con_CheckResize();
@@ -510,28 +524,20 @@ void SCR_DrawConsole(void)
 		Con_DrawConsole(1.0);
 		return;
 	}
-#if 0
-	if ((cls.state != ca_active && cls.state != ca_sequence) || !cl.refresh_prepped) {	/* connected, but can't render */
-		Con_DrawConsole(0.5);
-		re.DrawFill(0, viddef.height / 2, viddef.width, viddef.height / 2, 0, vec4_origin);
-		return;
-	}
-#endif
+
 	if (scr_con_current) {
 		Con_DrawConsole(scr_con_current);
 	} else {
 		if ((cls.key_dest == key_game || cls.key_dest == key_message) && cls.state != ca_sequence)
-			Con_DrawNotify();	/* only draw notify in game */
+			Con_DrawNotify(); /* only draw notify in game */
 	}
 }
 
-/*============================================================================= */
-
-/*
-================
-SCR_BeginLoadingPlaque
-================
-*/
+/**
+ * @brief
+ * @sa SCR_UpdateScreen
+ * @sa SCR_EndLoadingPlaque
+ */
 void SCR_BeginLoadingPlaque(void)
 {
 	S_StopAllSounds();
@@ -540,7 +546,8 @@ void SCR_BeginLoadingPlaque(void)
 	if (developer->value)
 		return;
 	if (cls.state == ca_disconnected)
-		return;					/* if at console, don't bring up the plaque */
+		return;
+	/* if at console, don't bring up the plaque */
 	if (cls.key_dest == key_console)
 		return;
 
@@ -551,32 +558,29 @@ void SCR_BeginLoadingPlaque(void)
 	cls.disable_servercount = cl.servercount;
 }
 
-/*
-================
-SCR_EndLoadingPlaque
-================
-*/
+/**
+ * @brief
+ * @sa SCR_BeginLoadingPlaque
+ */
 void SCR_EndLoadingPlaque(void)
 {
 	cls.disable_screen = 0;
 	Con_ClearNotify();
 }
 
-/*
-================
-SCR_Loading_f
-================
-*/
+/**
+ * @brief
+ * @sa SCR_BeginLoadingPlaque
+ * @sa SCR_EndLoadingPlaque
+ */
 void SCR_Loading_f(void)
 {
 	SCR_BeginLoadingPlaque();
 }
 
-/*
-================
-SCR_TimeRefresh_f
-================
-*/
+/**
+ * @brief
+ */
 void SCR_TimeRefresh_f(void)
 {
 	int i;
@@ -610,11 +614,10 @@ void SCR_TimeRefresh_f(void)
 	Com_Printf("%f seconds (%f fps)\n", time, 128 / time);
 }
 
-/*
-=================
-SCR_AddDirtyPoint
-=================
-*/
+/**
+ * @brief
+ * @sa SCR_DirtyScreen
+ */
 void SCR_AddDirtyPoint(int x, int y)
 {
 	if (x < scr_dirty.x1)
@@ -627,21 +630,19 @@ void SCR_AddDirtyPoint(int x, int y)
 		scr_dirty.y2 = y;
 }
 
+/**
+ * @brief
+ * @sa SCR_AddDirtyPoint
+ */
 void SCR_DirtyScreen(void)
 {
 	SCR_AddDirtyPoint(0, 0);
 	SCR_AddDirtyPoint(viddef.width - 1, viddef.height - 1);
 }
 
-/*=============================================================== */
-
-/*
-===============
-SCR_TouchPics
-
-Allows rendering code to cache all needed sbar graphics
-===============
-*/
+/**
+ * @brief Allows rendering code to cache all needed sbar graphics
+ */
 void SCR_TouchPics(void)
 {
 	if (cursor->value) {
@@ -656,31 +657,29 @@ void SCR_TouchPics(void)
 	}
 }
 
-
-/*
-================
-SCR_DrawString
-================
-*/
-void SCR_DrawString(int x, int y, char *string)
+/**
+ * @brief
+ * @sa Font_DrawString
+ */
+void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont)
 {
-	while (*string) {
-		re.DrawChar(x, y, *string);
-		x += 8;
-		string++;
-	}
+	if (bitmapFont) {
+		while (*string) {
+			re.DrawChar(x, y, *string);
+			x += 8;
+			string++;
+		}
+	} else
+		re.FontDrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, viddef.width, viddef.height, 12, string);
 }
 
-/*======================================================= */
-
-/*
-==================
-SCR_UpdateScreen
-
-This is called every frame, and can also be called explicitly to flush
-text to the screen.
-==================
-*/
+/**
+ * @brief This is called every frame, and can also be called explicitly to flush text to the screen
+ * @sa MN_DrawMenus
+ * @sa V_RenderView
+ * @sa SCR_DrawConsole
+ * @sa SCR_DrawCursor
+ */
 void SCR_UpdateScreen(void)
 {
 	int numframes;
@@ -727,19 +726,19 @@ void SCR_UpdateScreen(void)
 			SCR_DrawLoading();
 			continue;
 		} else {
-			/* do 3D refresh drawing, and then update the screen */
-			MN_SetViewRect();
+			MN_SetViewRect(MN_ActiveMenu());
 
+			/* draw scene */
 			V_RenderView(separation[i]);
 
-			/* draw the menus */
+			/* draw the menus on top of the render view (for hud and so on) */
 			MN_DrawMenus();
 
 			SCR_DrawNet();
 			SCR_CheckDrawCenterString();
 
 			if (cl_fps->value)
-				SCR_DrawString(viddef.width - 80, 4, va("fps: %3.1f", cls.framerate));
+				SCR_DrawString(viddef.width - 80, 4, va("fps: %3.1f", cls.framerate), qtrue);
 
 			if (scr_timegraph->value)
 				SCR_DebugGraph(cls.frametime * 300, 0);

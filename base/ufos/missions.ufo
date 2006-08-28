@@ -1,0 +1,830 @@
+// TODO: no night version
+// America
+mission stadium
+{
+	location	"_New York"
+	type		"_Terror Attack"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
+	map			stadium06
+	music		mission3
+	pos			"74 41"
+	aliens		4
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	2
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Switzerland
+mission terrain
+{
+	location	"_Altdorf"
+	type		"_Terror Attack"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
+	map			terrain08
+	music		mission3
+	pos			"-9 46"
+	aliens		4
+	alienteam	alien
+	alienequip	stage4_soldiers_plasma
+	civilians	2
+	civteam		european
+	nation		"geu"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Norway
+mission spedition
+{
+	location	"_Oslo"
+	type		"_Terror Attack"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
+	map			spedition06
+	music		mission3
+	pos			"-10 60"
+	aliens		4
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	2
+	civteam		european
+	nation		"geu"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Turkey
+mission pdi
+{
+	location	"_Antalya"
+	type		"_Terror Attack"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
+	map			pdi08
+	music		mission3
+	pos			"-30 36"
+	aliens		4
+	alienteam	alien
+	alienequip	stage3_workers_explosive
+	civilians	2
+	civteam     tourist
+	nation		"geu"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Germany
+mission mart
+{
+	location	"_Berlin"
+	type		"_Terror Attack"
+	text		"_Protect civilians"
+	map			mart05
+	music		mission
+	pos			"-13 52"
+	aliens		6
+	alienteam	antarean
+	alienequip	stage1_workers
+	civilians	6
+	civteam		european
+	nation		"geu"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// South africa
+mission mine_crash
+{
+	location	"_Gwanda" //change name and coordinates
+	type		"_Crash Site"
+	text		"_Secure Area"
+	map			mine_crash05
+	music		mission
+	pos			"-62 25"
+	aliens		7
+	alienteam	alien
+	alienequip	stage2_soldiers
+	civilians	6
+	civteam		european
+	nation		"au"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// New Zealand
+mission mine
+{
+	location	"_Wellington"
+	type		"_Terror Attack"
+	text		"_There are rumors of a mine being\overrun by aliens. Although this\source of information is doubtful,\you'll need to investigate."
+	map			mine01
+	music		mission3
+	pos			"-174 -41"
+	aliens		7
+	alienteam	ortnok
+	alienequip	stage1_workers_explosive
+	civilians	3
+	civteam		european
+	nation		"australia"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Australia
+mission office
+{
+	location	"_Mackay"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			office06
+	music		dawn
+	pos			"-149 -21"
+	aliens		8
+	alienteam	antarean
+	alienequip	stage3_soldiers
+	civilians	2
+	civteam		scientist
+	nation		"australia"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Africa
+mission africa
+{
+	location	"_Dongola"
+	type		"_Crashed Alien Ship"
+	text		"_Secure area"
+	map			africa04
+	music		mission
+	pos			"-30 18"
+	aliens		10
+	alienteam	alien
+	alienequip	stage4_workers
+	civilians	6
+	civteam		oriental
+	nation		"au"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// England
+mission bunker
+{
+	location	"_Bristol"
+	type		"_Terror Attack"
+	text		"_Protect the military installation crew"
+	map			bunker01
+	music		dawn
+	pos			"2 51"
+	aliens		8
+	alienteam	alien
+	alienequip	stage1_workers_explosive
+	civilians	7
+	civteam		scientist
+	nation		"geu"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Mexico
+mission city
+{
+	location	"_Veracruz"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			city04
+	music		mission
+	pos			"96 19"
+	aliens		6
+	alienteam	antarean
+	alienequip	stage2_workers
+	civilians	3
+	civteam		mexican
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Sweden
+mission construction
+{
+	location	"_Uppsala"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			const05
+	music		dawn
+	pos			"-17 60"
+	aliens		6
+	alienteam	alien
+	alienequip	stage3_soldiers
+	civilians	6
+	civteam		european
+	nation		"geu"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Africa (South)
+mission africa_excavation
+{
+	location	"_Gwanda"
+	type		"_Terror Attack"
+	text		"_Protect the excavation site at all cost."
+	map			excavation06
+	music		mission4
+	pos			"-29 -20"
+	aliens		5
+	alienteam	ortnok
+	alienequip	stage1_workers
+	civilians	6
+	civteam		oriental
+	nation		"au"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Italy
+mission italy
+{
+	location	"_Marina Serra"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			italy05
+	music		mission2
+	pos			"-18 40"
+	aliens		3
+	alienteam	antarean
+	alienequip	stage1_soldiers
+	civilians	8
+	civteam		european
+	nation		"geu"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// America
+mission subway
+{
+	location	"_New York"
+	type		"_Terror Attack"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
+	map			subway07
+	music		mission3
+	pos			"74 40"
+	aliens		6
+	alienteam	alien
+	alienequip	stage2_workers
+	civilians	8
+	civteam		americans
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// France
+mission vil_lille
+{
+	location	"_Lille"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			"+village"
+	param		recreational
+	music		mission2
+	pos			"-3 50"
+	aliens		7
+	alienteam	ortnok
+	alienequip	stage2_workers
+	civilians	6
+	civteam		european
+	nation		"geu"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Korea
+mission harbor
+{
+	location	"_Busan"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			harbor07
+	music		mission2
+	pos			"-129 35"
+	aliens		8
+	alienteam	ortnok
+	alienequip	stage3_workers
+	civilians	6
+	civteam		european
+	nation		"ac"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Japan
+mission japan
+{
+	location	"_Morioka"
+	type		"_Alien Hideout"
+	text		"_Eliminate intruders"
+	map			japan06
+	music		mission3
+	pos			"-141 39"
+	aliens		10
+	alienteam	antarean
+	alienequip	stage2_soldiers_melee
+	civilians	3
+	civteam		european
+	nation		"ac"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// TODO: Mission below need more work
+
+mission falconcrash
+{
+	location	"_Revelstoke"
+	type		"_Crashed Alien Ship"
+	text		"_Secure Alien Ship"
+	map			falcon_crash04
+	music		mission
+	pos			"116 52"
+	aliens		7
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	3
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission farm
+{
+	location	"_Revelstoke"
+	type		"_Landed Alien Ship"
+	text		"_Secure Alien Ship before Liftoff"
+	map			farm08
+	music		mission
+	pos			"116 52"
+	aliens  	4
+	alienteam	antarean
+	alienequip	stage1_workers
+	civilians	3
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission farm2
+{
+	location	"_Revelstoke"
+	type		"_Landed Alien Ship"
+	text		"_Secure Alien Ship"
+	map			farm08
+	music		mission
+	pos			"116 52"
+	aliens  	5
+	alienteam	alien
+	alienequip	stage3_workers
+	civilians	4
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission frozen_groenland
+{
+	location	"_Nuuk"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			"+frozen"
+	param		small
+	music		mission
+	pos			"47 -42"
+	aliens		6
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	3
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission frozen_small
+{
+	location	"_Revelstoke"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			"+frozen"
+	param		small
+	music		mission
+	pos			"116 52"
+	aliens		7
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	3
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission frozen_landingnature
+{
+	location	"_Antarctic"
+	type		"_Landed Alien Ship"
+	text		"_Secure Alien Ship before Liftoff"
+	map			"+frozen"
+	param		alienlandingnature
+	music		mission
+	pos			"32 -66"
+	aliens		7
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	3
+	civteam		european
+	nation		"australia"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission frozen_industrial
+{
+	location	"_Agpat"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			"+frozen"
+	param		industrial
+	music		mission
+	pos			"54 75"
+	aliens		7
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	3
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission frozen_alienlandingindustrial
+{
+	location	"_Dunholm"
+	type		"_Landed Alien Ship"
+	text		"_Secure Alien Ship before Liftoff"
+	map			"+frozen"
+	param		alienlandingindustrial
+	music		mission
+	pos			"25 -64"
+	aliens		7
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	3
+	civteam		european
+	nation		"australia"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission gasstation
+{
+	location	"_La Paz"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			gasstation05
+	music		mission2
+	pos			"-111 21"
+	aliens		4
+	alienteam	antareans
+	alienequip	stage2_soldiers
+	civilians	6
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission lake
+{
+	location	"_Tazovskij"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			lake03
+	music		mission2
+	pos			"-77 67"
+	aliens		6
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	5
+	civteam		european
+	nation		"russia"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission oriental
+{
+	location	"_Gobabis"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			oriental06
+	music		mission
+	pos			"-20 -23"
+	aliens		5
+	alienteam	ortnok
+	alienequip	stage2_soldiers
+	civilians	7
+	civteam		oriental
+	nation		"au"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission dam
+{
+	location	"_TODO"
+	type		"_Terror Attack"
+	text		"_Secure Dam"
+	map			dam01
+	music		mission4
+	pos			"-62 25"
+	aliens		7
+	alienteam	alien
+	alienequip	stage1_soldiers
+	civilians	3
+	civteam		scientist
+	nation		"todo"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission or_asyut
+{
+	location	"_Asyut"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			"+oriental"
+	music		mission2
+	pos			"-31 27"
+	aliens		7
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	6
+	civteam		oriental
+	nation		"ae"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission or_tabelbala
+{
+	location	"_Tabelbala"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			"+oriental"
+	music		mission
+	pos			"3 28"
+	aliens		7
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	6
+	civteam		oriental
+	nation		"ae"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// this map is not finished right now
+//mission rocketsilo
+//{
+//	location	"_TODO"
+//	type		"_Terror Attack"
+//	text		"_The Aliens have taken over a rocket silo. Go and capture it again."
+//	map			rocketsilo06
+//	music		mission3
+//	pos			"308 412"
+//	aliens		4
+//	civilians	2
+//	nation		"ua"
+//	alienequip	stage4_soldiers
+//	onlose		""
+//	onwin		""
+//	storyrelated	true
+//}
+
+// America
+mission tower
+{
+	location	"_San Francisco"
+	type		"_Terror Attack"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
+	map			tower06
+	music		mission3
+	pos			"119 34"
+	aliens		6
+	alienteam	alien
+	alienequip	stage2_soldiers
+	civilians	8
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission transport
+{
+	location	"_TODO"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			transport06
+	music		mission4
+	pos			"97 47"
+	aliens		3
+	alienteam	alien
+	alienequip	stage1_soldiers
+	civilians	6
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission tropic_river
+{
+	location	"_TODO"
+	type		"_Terror Attack"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
+	map			"+tropic"
+	param		river
+	music		mission3
+//	alienarmor	light
+	pos			"90 10"
+	aliens		4
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	2
+	civteam		oriental
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission tropic_drug
+{
+	location	"_TODO"
+	type		"_Terror Attack"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
+	map			"+tropic"
+	param		drug
+	music		mission3
+	pos			"77 18"
+	aliens		4
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	2
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission village
+{
+	location	"_Fargo"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			village07
+	music		mission
+	pos			"97 47"
+	aliens		4
+	alienteam	ortnok
+	alienequip	stage4_soldiers
+	civilians	6
+	civteam		european
+	nation		"ua"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission vil_grenchen
+{
+	location	"_Grenchen"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			"+village"
+	param		residential
+	music		mission2
+	pos			"-7 47"
+	aliens		3
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	7
+	civteam		european
+	nation		"geu"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission vil_albany
+{
+	location	"_Albany"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			"+village"
+	param		commercial
+	music		mission
+	pos			"84 32"
+	aliens		8
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	7
+	civteam		european
+	nation		"geu"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission vil_shannon
+{
+	location	"_Shannon"
+	type		"_Major Alien Intrusion"
+	text		"_Stop them"
+	map			"+village"
+	param		big
+	music		mission3
+	pos			"9 52"
+	aliens		18
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	4
+	civteam		european
+	nation		"geu"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission baseattack
+{
+	location	""
+	type		"_Base Attack"
+	text		"_Aliens attacked one of our home bases"
+// 	. means that they attack a random base (only the first char counts)
+	map			".base"
+	music		base
+	aliens		12
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	12
+	civteam		scientist
+	nation		"baseTODO"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}

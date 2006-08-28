@@ -19,7 +19,7 @@ void Cmd_Spritename (void);
 
 /*
 ==============
-FinishSprite	
+FinishSprite
 ==============
 */
 void FinishSprite (void)
@@ -34,7 +34,7 @@ void FinishSprite (void)
 
 	if (!strlen(spritename))
 		Error ("Didn't name sprite file");
-		
+
 	sprintf (savename, "%s%s.sp2", gamedir, spritename);
 
 	if (g_release)
@@ -53,23 +53,17 @@ void FinishSprite (void)
 	CreatePath (savename);
 	spriteouthandle = SafeOpenWrite (savename);
 
-
-/* */
-/* write out the sprite header */
-/* */
+	/* write out the sprite header */
 	spritetemp.ident = LittleLong (IDSPRITEHEADER);
 	spritetemp.version = LittleLong (SPRITE_VERSION);
 	spritetemp.numframes = LittleLong (sprite.numframes);
 
 	SafeWrite (spriteouthandle, &spritetemp, 12);
 
-/* */
-/* write out the frames */
-/* */
+	/* write out the frames */
 	curframe = 0;
 
-	for (i=0 ; i<sprite.numframes ; i++)
-	{
+	for (i=0 ; i<sprite.numframes ; i++) {
 		frames[i].width = LittleLong(frames[i].width);
 		frames[i].height = LittleLong(frames[i].height);
 		frames[i].origin_x = LittleLong(frames[i].origin_x);
@@ -78,7 +72,7 @@ void FinishSprite (void)
 	SafeWrite (spriteouthandle, frames, sizeof(frames[0])*sprite.numframes);
 
 	fclose (spriteouthandle);
-	
+
 	spritename[0] = 0;		/* clear for a new sprite */
 	sprite.numframes = 0;
 }
@@ -102,9 +96,9 @@ void Cmd_Load (void)
 
 	/* load the image */
 	printf ("loading %s\n", name);
-	Load256Image (name, &byteimage, &lbmpalette, 
+	Load256Image (name, &byteimage, &lbmpalette,
 		&byteimagewidth, &byteimageheight);
-	RemapZero (byteimage, lbmpalette, 
+	RemapZero (byteimage, lbmpalette,
 		byteimagewidth, byteimageheight);
 }
 
@@ -132,15 +126,12 @@ void Cmd_SpriteFrame (void)
 	h = atoi (token);
 
 	/* origin offset is optional */
-	if (TokenAvailable ())
-	{
+	if (TokenAvailable ()) {
 		GetToken (qfalse);
 		ox = atoi (token);
 		GetToken (qfalse);
-		oy = atoi (token);		
-	}
-	else
-	{
+		oy = atoi (token);
+	} else {
 		ox = w/2;
 		oy = h/2;
 	}
@@ -166,16 +157,14 @@ void Cmd_SpriteFrame (void)
 	sprintf (savename, "%s%s_%i.pcx", gamedir, spritename, sprite.numframes);
 	sprite.numframes++;
 
-	if (g_release)
-	{
+	if (g_release) {
 		ReleaseFile (pframe->name);
 		return;
 	}
 
 	/* crop it to the proper size */
 	cropped = malloc (w*h);
-	for (y=0 ; y<h ; y++)
-	{
+	for (y=0 ; y<h ; y++) {
 		memcpy (cropped+y*w, byteimage+(y+yl)*byteimagewidth+xl, w);
 	}
 

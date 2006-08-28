@@ -39,8 +39,8 @@ build: build-stamp
 build-stamp: configure
 	dh_testdir
 
-	$(MAKE) -C linux
-	$(MAKE) -C tools
+#	$(MAKE) release BUILD_RELEASE_DIR=build
+	$(MAKE) build_debug BUILD_DEBUG_DIR=build
 
 	touch build-stamp
 
@@ -49,9 +49,8 @@ clean:
 	dh_testroot
 	rm -f build-stamp
 
-	-$(MAKE) -C linux clean
-	-$(MAKE) -C tools clean
-	rm -rf linux/debug*-glibc
+	-$(MAKE) clean BUILD_RELEASE_DIR=build
+	rm -rf build
 
 	set -e; if [ -d .svn ]; then \
 	  SRCVER=$(shell $(vercmd)) ;\

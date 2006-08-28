@@ -1,4 +1,27 @@
-/* mathlib.c -- math primitives */
+/**
+ * @file mathlib.c
+ * @brief math primitives
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
 
 #include "cmdlib.h"
 #include "mathlib.h"
@@ -10,7 +33,7 @@ double VectorLength(vec3_t v)
 {
 	int		i;
 	double	length;
-	
+
 	length = 0;
 	for (i=0 ; i< 3 ; i++)
 		length += v[i]*v[i];
@@ -22,22 +45,22 @@ double VectorLength(vec3_t v)
 qboolean VectorCompare (vec3_t v1, vec3_t v2)
 {
 	int		i;
-	
+
 	for (i=0 ; i<3 ; i++)
 		if (fabs(v1[i]-v2[i]) > EQUAL_EPSILON)
 			return qfalse;
-			
+
 	return qtrue;
 }
 
 qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp)
 {
 	int		i;
-	
+
 	for (i=0 ; i<3 ; i++)
 		if (fabs(v1[i]-comp[i]) < fabs(v2[i]-comp[i]) )
 			return qtrue;
-			
+
 	return qfalse;
 }
 
@@ -98,8 +121,7 @@ vec_t VectorNormalize (vec3_t in, vec3_t out)
 	vec_t	length, ilength;
 
 	length = sqrt (in[0]*in[0] + in[1]*in[1] + in[2]*in[2]);
-	if (length == 0)
-	{
+	if (length == 0) {
 		VectorClear (out);
 		return 0;
 	}
@@ -152,8 +174,7 @@ void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs)
 	int		i;
 	vec_t	val;
 
-	for (i=0 ; i<3 ; i++)
-	{
+	for (i=0 ; i<3 ; i++) {
 		val = v[i];
 		if (val < mins[i])
 			mins[i] = val;

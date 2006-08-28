@@ -1,4 +1,27 @@
-/* lbmlib.c */
+/**
+ * @file lmblib.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
 
 #include "cmdlib.h"
 #include "lbmlib.h"
@@ -69,13 +92,10 @@ int    Align (int l)
 
 
 
-/*
-================
-LBMRLEdecompress
-
-Source must be evenly aligned!
-================
-*/
+/**
+ * @brief
+ * @note Source must be evenly aligned!
+ */
 byte  *LBMRLEDecompress (byte *source,byte *unpacked, int bpwidth)
 {
 	int     count;
@@ -83,34 +103,27 @@ byte  *LBMRLEDecompress (byte *source,byte *unpacked, int bpwidth)
 
 	count = 0;
 
-	do
-	{
+	do {
 		rept = *source++;
 
-		if (rept > 0x80)
-		{
+		if (rept > 0x80) {
 			rept = (rept^0xff)+2;
 			b = *source++;
 			memset(unpacked,b,rept);
 			unpacked += rept;
-		}
-		else if (rept < 0x80)
-		{
+		} else if (rept < 0x80) {
 			rept++;
 			memcpy(unpacked,source,rept);
 			unpacked += rept;
 			source += rept;
-		}
-		else
+		} else
 			rept = 0;               /* rept of 0x80 is NOP */
 
 		count += rept;
-
 	} while (count<bpwidth);
 
 	if (count>bpwidth)
 		Error ("Decompression exceeded width!\n");
-
 
 	return source;
 }
@@ -132,18 +145,14 @@ void LoadLBM (char *filename, byte **picture, byte **palette)
 	int    formtype,formlength;
 	int    chunktype,chunklength;
 
-/* qiet compiler warnings */
+	/* qiet compiler warnings */
 	picbuffer = NULL;
 	cmapbuffer = NULL;
 
-/* */
-/* load the LBM */
-/* */
+	/* load the LBM */
 	LoadFile (filename, (void **)&LBMbuffer);
 
-/* */
-/* parse the LBM header */
-/* */
+	/* parse the LBM header */
 	LBM_P = LBMbuffer;
 	if ( *(int *)LBMbuffer != LittleLong(FORMID) )
 	   Error ("No FORM ID at start of file!\n");
@@ -161,19 +170,14 @@ void LoadLBM (char *filename, byte **picture, byte **palette)
 
 	LBM_P += 4;
 
-/* */
-/* parse chunks */
-/* */
-
-	while (LBM_P < LBMEND_P)
-	{
+	/* parse chunks */
+	while (LBM_P < LBMEND_P) {
 		chunktype = LBM_P[0] + (LBM_P[1]<<8) + (LBM_P[2]<<16) + (LBM_P[3]<<24);
 		LBM_P += 4;
 		chunklength = LBM_P[3] + (LBM_P[2]<<8) + (LBM_P[1]<<16) + (LBM_P[0]<<24);
 		LBM_P += 4;
 
-		switch ( chunktype )
-		{
+		switch (chunktype) {
 		case BMHDID:
 			memcpy (&bmhd,LBM_P,sizeof(bmhd));
 			bmhd.w = BigShort(bmhd.w);
@@ -194,29 +198,19 @@ void LoadLBM (char *filename, byte **picture, byte **palette)
 			body_p = LBM_P;
 
 			pic_p = picbuffer = malloc (bmhd.w*bmhd.h);
-			if (formtype == PBMID)
-			{
-			/* */
-			/* unpack PBM */
-			/* */
-				for (y=0 ; y<bmhd.h ; y++, pic_p += bmhd.w)
-				{
+			if (formtype == PBMID) {
+				/* unpack PBM */
+				for (y=0 ; y<bmhd.h ; y++, pic_p += bmhd.w) {
 					if (bmhd.compression == cm_rle1)
 						body_p = LBMRLEDecompress ((byte *)body_p
 						, pic_p , bmhd.w);
-					else if (bmhd.compression == cm_none)
-					{
+					else if (bmhd.compression == cm_none) {
 						memcpy (pic_p,body_p,bmhd.w);
 						body_p += Align(bmhd.w);
 					}
 				}
-
-			}
-			else
-			{
-			/* */
-			/* unpack ILBM */
-			/* */
+			} else {
+				/* unpack ILBM */
 				Error ("%s is an interlaced LBM, not packed", filename);
 			}
 			break;
@@ -257,9 +251,7 @@ void WriteLBMfile (char *filename, byte *data,
 
 	lbm = lbmptr = malloc (width*height+1000);
 
-/* */
-/* start FORM */
-/* */
+	/* start FORM */
 	*lbmptr++ = 'F';
 	*lbmptr++ = 'O';
 	*lbmptr++ = 'R';
@@ -273,9 +265,7 @@ void WriteLBMfile (char *filename, byte *data,
 	*lbmptr++ = 'M';
 	*lbmptr++ = ' ';
 
-/* */
-/* write BMHD */
-/* */
+	/* write BMHD */
 	*lbmptr++ = 'B';
 	*lbmptr++ = 'M';
 	*lbmptr++ = 'H';
@@ -301,9 +291,7 @@ void WriteLBMfile (char *filename, byte *data,
 	if (length&1)
 		*lbmptr++ = 0;          /* pad chunk to even offset */
 
-/* */
-/* write CMAP */
-/* */
+	/* write CMAP */
 	*lbmptr++ = 'C';
 	*lbmptr++ = 'M';
 	*lbmptr++ = 'A';
@@ -320,9 +308,7 @@ void WriteLBMfile (char *filename, byte *data,
 	if (length&1)
 		*lbmptr++ = 0;          /* pad chunk to even offset */
 
-/* */
-/* write BODY */
-/* */
+	/* write BODY */
 	*lbmptr++ = 'B';
 	*lbmptr++ = 'O';
 	*lbmptr++ = 'D';
@@ -339,17 +325,13 @@ void WriteLBMfile (char *filename, byte *data,
 	if (length&1)
 		*lbmptr++ = 0;          /* pad chunk to even offset */
 
-/* */
-/* done */
-/* */
+	/* done */
 	length = lbmptr-(byte *)formlength-4;
 	*formlength = BigLong(length);
 	if (length&1)
 		*lbmptr++ = 0;          /* pad chunk to even offset */
 
-/* */
-/* write output file */
-/* */
+	/* write output file */
 	SaveFile (filename, lbm, lbmptr-lbm);
 	free (lbm);
 }
@@ -365,19 +347,19 @@ LOAD PCX
 
 typedef struct
 {
-    char	manufacturer;
-    char	version;
-    char	encoding;
-    char	bits_per_pixel;
-    unsigned short	xmin,ymin,xmax,ymax;
-    unsigned short	hres,vres;
-    unsigned char	palette[48];
-    char	reserved;
-    char	color_planes;
-    unsigned short	bytes_per_line;
-    unsigned short	palette_type;
-    char	filler[58];
-    unsigned char	data;			/* unbounded */
+	char manufacturer;
+	char version;
+	char encoding;
+	char bits_per_pixel;
+	unsigned short xmin,ymin,xmax,ymax;
+	unsigned short hres,vres;
+	unsigned char palette[48];
+	char reserved;
+	char color_planes;
+	unsigned short bytes_per_line;
+	unsigned short palette_type;
+	char filler[58];
+	unsigned char data;			/* unbounded */
 } pcx_t;
 
 
@@ -395,14 +377,10 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 	int		dataByte, runLength;
 	byte	*out, *pix;
 
-	/* */
 	/* load the file */
-	/* */
 	len = LoadFile (filename, (void **)&raw);
 
-	/* */
 	/* parse the PCX file */
-	/* */
 	pcx = (pcx_t *)raw;
 	raw = &pcx->data;
 
@@ -423,8 +401,7 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 		|| pcx->ymax >= 480)
 		Error ("Bad pcx file %s", filename);
 
-	if (palette)
-	{
+	if (palette) {
 		*palette = malloc(768);
 		memcpy (*palette, (byte *)pcx + len - 768, 768);
 	}
@@ -445,24 +422,19 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 
 	pix = out;
 
-	for (y=0 ; y<=pcx->ymax ; y++, pix += pcx->xmax+1)
-	{
-		for (x=0 ; x<=pcx->xmax ; )
-		{
+	for (y=0 ; y<=pcx->ymax ; y++, pix += pcx->xmax+1) {
+		for (x=0 ; x<=pcx->xmax ; ) {
 			dataByte = *raw++;
 
-			if((dataByte & 0xC0) == 0xC0)
-			{
+			if((dataByte & 0xC0) == 0xC0) {
 				runLength = dataByte & 0x3F;
 				dataByte = *raw++;
-			}
-			else
+			} else
 				runLength = 1;
 
 			while(runLength-- > 0)
 				pix[x++] = dataByte;
 		}
-
 	}
 
 	if ( raw - (byte *)pcx > len)
@@ -503,14 +475,11 @@ void WritePCXfile (char *filename, byte *data,
 	/* pack the image */
 	pack = &pcx->data;
 
-	for (i=0 ; i<height ; i++)
-	{
-		for (j=0 ; j<width ; j++)
-		{
+	for (i=0 ; i<height ; i++) {
+		for (j=0 ; j<width ; j++) {
 			if ( (*data & 0xc0) != 0xc0)
 				*pack++ = *data++;
-			else
-			{
+			else {
 				*pack++ = 0xc1;
 				*pack++ = *data++;
 			}
@@ -522,7 +491,7 @@ void WritePCXfile (char *filename, byte *data,
 	for (i=0 ; i<768 ; i++)
 		*pack++ = *palette++;
 
-/* write output file */
+	/* write output file */
 	length = pack - (byte *)pcx;
 	SaveFile (filename, pcx, length);
 
@@ -538,44 +507,32 @@ LOAD IMAGE
 ============================================================================
 */
 
-/*
-==============
-Load256Image
-
-Will load either an lbm or pcx, depending on extension.
-Any of the return pointers can be NULL if you don't want them.
-==============
-*/
+/**
+ * @brief Will load either an lbm or pcx, depending on extension.
+ * @note Any of the return pointers can be NULL if you don't want them.
+ */
 void Load256Image (char *name, byte **pixels, byte **palette,
 				   int *width, int *height)
 {
 	char	ext[128];
 
 	ExtractFileExtension (name, ext);
-	if (!Q_strcasecmp (ext, "lbm"))
-	{
+	if (!Q_strcasecmp (ext, "lbm")) {
 		LoadLBM (name, pixels, palette);
 		if (width)
 			*width = bmhd.w;
 		if (height)
 			*height = bmhd.h;
-	}
-	else if (!Q_strcasecmp (ext, "pcx"))
-	{
+	} else if (!Q_strcasecmp (ext, "pcx")) {
 		LoadPCX (name, pixels, palette, width, height);
-	}
-	else
+	} else
 		Error ("%s doesn't have a known image extension", name);
 }
 
 
-/*
-==============
-Save256Image
-
-Will save either an lbm or pcx, depending on extension.
-==============
-*/
+/**
+ * @brief Will save either an lbm or pcx, depending on extension.
+ */
 void Save256Image (char *name, byte *pixels, byte *palette,
 				   int width, int height)
 {
@@ -583,13 +540,9 @@ void Save256Image (char *name, byte *pixels, byte *palette,
 
 	ExtractFileExtension (name, ext);
 	if (!Q_strcasecmp (ext, "lbm"))
-	{
 		WriteLBMfile (name, pixels, width, height, palette);
-	}
 	else if (!Q_strcasecmp (ext, "pcx"))
-	{
 		WritePCXfile (name, pixels, width, height, palette);
-	}
 	else
 		Error ("%s doesn't have a known image extension", name);
 }
@@ -691,9 +644,9 @@ void LoadTGA (char *name, byte **pixels, int *width, int *height)
 		fseek(fin, targa_header.id_length, SEEK_CUR);  /* skip TARGA image comment */
 
 	if (targa_header.image_type==2) {  /* Uncompressed, RGB images */
-		for(row=rows-1; row>=0; row--) {
+		for (row=rows-1; row>=0; row--) {
 			pixbuf = targa_rgba + row*columns*4;
-			for(column=0; column<columns; column++) {
+			for (column=0; column<columns; column++) {
 				unsigned char red,green,blue,alphabyte;
 				switch (targa_header.pixel_size) {
 					case 24:
@@ -719,13 +672,12 @@ void LoadTGA (char *name, byte **pixels, int *width, int *height)
 				}
 			}
 		}
-	}
-	else if (targa_header.image_type==10) {   /* Runlength encoded RGB images */
+	} else if (targa_header.image_type==10) {   /* Runlength encoded RGB images */
 		unsigned char red,green,blue,alphabyte,packetHeader,packetSize,j;
 		red=green=blue=alphabyte=0;
-		for(row=rows-1; row>=0; row--) {
+		for (row=rows-1; row>=0; row--) {
 			pixbuf = targa_rgba + row*columns*4;
-			for(column=0; column<columns; ) {
+			for (column=0; column<columns; ) {
 				packetHeader=getc(fin);
 				packetSize = 1 + (packetHeader & 0x7f);
 				if (packetHeader & 0x80) {        /* run-length packet */
@@ -744,7 +696,7 @@ void LoadTGA (char *name, byte **pixels, int *width, int *height)
 								break;
 					}
 
-					for(j=0;j<packetSize;j++) {
+					for (j=0;j<packetSize;j++) {
 						*pixbuf++=red;
 						*pixbuf++=green;
 						*pixbuf++=blue;
@@ -759,9 +711,8 @@ void LoadTGA (char *name, byte **pixels, int *width, int *height)
 							pixbuf = targa_rgba + row*columns*4;
 						}
 					}
-				}
-				else {                            /* non run-length packet */
-					for(j=0;j<packetSize;j++) {
+				} else {                            /* non run-length packet */
+					for (j=0;j<packetSize;j++) {
 						switch (targa_header.pixel_size) {
 							case 24:
 									blue = getc(fin);

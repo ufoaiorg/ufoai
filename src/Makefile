@@ -15,8 +15,10 @@
 BUILD_SDLUFO=YES	# use SDL for cdrom, sound and maybe renderer (selectable)
 BUILD_GLX=YES		# X11 GLX driver
 BUILD_DEDICATED=YES	# build a dedicated ufo server
-BUILD_ALSA=YES		# build with alsa-support
-BUILD_WITH_SHADER=NO	# build with shader support
+BUILD_ALSA=YES		# build alsa sound driver
+BUILD_OSS=YES		# build oss sound driver
+BUILD_ARTS=NO		# build arts sound driver
+BUILD_WITH_SHADER=YES	# build with shader support
 HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
 BUILD_WITH_DGA=NO	# dga support compiled in
@@ -74,13 +76,19 @@ CLIENT_DIR=$(MOUNT_DIR)/client
 SERVER_DIR=$(MOUNT_DIR)/server
 REF_GL_DIR=$(MOUNT_DIR)/ref_gl
 COMMON_DIR=$(MOUNT_DIR)/qcommon
-LINUX_DIR=$(MOUNT_DIR)/linux
-MACOSX_DIR=$(MOUNT_DIR)/macosx
-UNIX_DIR=$(MOUNT_DIR)/unix
 GAME_DIR=$(MOUNT_DIR)/game
-NULL_DIR=$(MOUNT_DIR)/null
+LINUX_DIR=$(MOUNT_DIR)/ports/linux
+MACOSX_DIR=$(MOUNT_DIR)/ports/macosx
+UNIX_DIR=$(MOUNT_DIR)/ports/unix
+NULL_DIR=$(MOUNT_DIR)/ports/null
+# TODO: Add targets for these plattforms
+WIN32_DIR=$(MOUNT_DIR)/ports/win32
+SOLARIS_DIR=$(MOUNT_DIR)/ports/solaris
+IRIX_DIR=$(MOUNT_DIR)/ports/irix
 
 BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
+# this may fix prediction errors
+# -ffloat-store -mfpmath=sse
 # Put this in when it is fixed
 # -ansi -pedantic
 TOOLSCFLAGS=
@@ -106,7 +114,9 @@ ifeq ($(OSTYPE),Darwin)
 	BUILD_SDLUFO=NO	# use SDL for cdrom, sound and maybe renderer (selectable)
 	BUILD_GLX=NO		# X11 GLX driver
 	BUILD_DEDICATED=YES	# build a dedicated ufo server
-	BUILD_ALSA=NO		# build with alsa-support
+	BUILD_ALSA=YES		# build alsa sound driver
+	BUILD_OSS=YES		# build oss sound driver
+	BUILD_ARTS=NO		# build arts sound driver
 	BUILD_WITH_SHADER=NO	# build with shader support
 	HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 	HAVE_GETTEXT=YES	# Compile with multilanguage-support?
@@ -135,7 +145,7 @@ ifeq ($(strip $(BUILD_WITH_DGA)),YES)
 endif
 
 ifeq ($(strip $(BUILD_WITH_MMX)),YES)
-	BASE_CFLAGS+=-DQ2_MMX_ENABLED
+	BASE_CFLAGS+=-DQ2_MMX_ENABLED -msse
 endif
 
 ifeq ($(strip $(BUILD_WITH_VIDMODE)),YES)
@@ -179,12 +189,12 @@ ifeq ($(ARCH),sparc)
 endif
 
 ifeq ($(ARCH),i386)
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -O3 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing -DNDEBUG -fweb
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing -DNDEBUG
 endif
 
 ifeq ($(ARCH),x86_64)
 	_LIB := 64
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing -DNDEBUG -fweb
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing -DNDEBUG
 endif
 
 #ifeq ($(ARCH),mipsEE)
@@ -224,7 +234,7 @@ endif
 GLXLDFLAGS+=-ljpeg
 SDLLDFLAGS+=-ljpeg
 
-DEBUG_CFLAGS=$(BASE_CFLAGS) -g -O0 -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS) -fweb
+DEBUG_CFLAGS=$(BASE_CFLAGS) -ggdb -O0 -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS) -fno-inline
 
 ifeq ($(strip $(BUILD_PARANOID)),YES)
 	DEBUG_CFLAGS+=-DPARANOID
@@ -237,6 +247,7 @@ DO_JPEG_CC=echo " * [JPG] $@"; $(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c $<
 DO_O_CC=echo " * [OPT] $@"; $(CC) $(CFLAGS) -O -o $@ -c $<
 DO_SHLIB_CC=echo " * [LIB] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
 DO_GL_SHLIB_CC=echo " * [REF] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) $(GLXCFLAGS) -o $@ -c $<
+DO_SND_SHLIB_CC=echo " * [SND] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
 DO_AS=echo " * [AS.] $@"; $(CC) $(CFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
 DO_SHLIB_AS=echo " * [ASL] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
 
@@ -251,12 +262,28 @@ POFILES = $(wildcard $(WORKSPACE)/po/*.po)
 # SETUP AND BUILD
 #############################################################################
 
-.PHONY : targets build_debug build_release clean clean-debug clean-release clean2 docs
+.PHONY : targets build_debug build_release clean clean-debug clean-release clean2 docs echo_info
 
 TARGETS=$(BUILDDIR)/ufo $(BUILDDIR)/game.$(SHLIBEXT)
 
 ifeq ($(strip $(BUILD_DEDICATED)),YES)
 	TARGETS += $(BUILDDIR)/ufoded
+endif
+
+ifeq ($(strip $(BUILD_ALSA)),YES)
+	TARGETS += $(BUILDDIR)/snd_alsa.$(SHLIBEXT)
+endif
+
+ifeq ($(strip $(BUILD_OSS)),YES)
+	TARGETS += $(BUILDDIR)/snd_oss.$(SHLIBEXT)
+endif
+
+ifeq ($(strip $(BUILD_ARTS)),YES)
+	TARGETS += $(BUILDDIR)/snd_arts.$(SHLIBEXT)
+endif
+
+ifeq ($(strip $(BUILD_SDLUFO)),YES)
+	TARGETS += $(BUILDDIR)/snd_sdl.$(SHLIBEXT)
 endif
 
 ifeq ($(ARCH),axp)
@@ -308,35 +335,37 @@ ifeq ($(strip $(BUILD_COMPILETOOLS)),YES)
 	TARGETS += $(BUILDDIR)/ufo2map
 endif
 
-debug: build_debug copy_debug
+debug: build_debug copy_debug echo_info
 all: build_debug build_release lang
-installer: win32installer linuxinstaller
+lazy: lang build_debug copy_debug maps
+installer: win32installer linuxinstaller sourcearchive
 mappack:
-	tar -cvjp --exclude-from=linux/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ../base/maps
+	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ../base/maps
 
 win32installer:
-	makensis win32/installer.nsi
+	makensis ports/win32/installer.nsi
 
 linuxinstaller:
-	tar -cvjp --exclude-from=linux/tar.ex -f ufoai-$(VERSION)-linux.tar.bz2 ../
+	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-linux.tar.bz2 ../
 
-links:
-	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so ../ufoded
-	ln -s src/$(BUILD_DEBUG_DIR)/ufoded ../ufoded
-	ln -s src/$(BUILD_DEBUG_DIR)/ufo ../ufo
-	ln -s src/$(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
-	ln -s src/$(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_sdl.so
-	ln -s src/$(BUILD_DEBUG_DIR)/ref_glx.so ../ref_glx.so
-	ln -s ../src/$(BUILD_DEBUG_DIR)/game.so ../base/game.so
+sourcearchive:
+	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-source.tar.bz2 ./
+
+deb:
+	debuild binary
 
 copy_debug:
-	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so ../ufoded
-	cp $(BUILD_DEBUG_DIR)/ufoded ../ufoded
-	cp $(BUILD_DEBUG_DIR)/ufo ../ufo
-	cp $(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
-	cp $(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_sdl.so
-	cp $(BUILD_DEBUG_DIR)/ref_glx.so ../ref_glx.so
-	cp $(BUILD_DEBUG_DIR)/game.so ../base/game.so
+	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
+	@if test -f $(BUILD_DEBUG_DIR)/ufoded; then cp $(BUILD_DEBUG_DIR)/ufoded ../ufoded; fi
+	@if test -f $(BUILD_DEBUG_DIR)/ufo; then cp $(BUILD_DEBUG_DIR)/ufo ../ufo; fi
+	@if test -f $(BUILD_DEBUG_DIR)/ufo2map; then cp $(BUILD_DEBUG_DIR)/ufo2map ../ufo2map; fi
+	@if test -f $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT) ../ref_glx.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT) ../snd_sdl.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT) ../base/game.$(SHLIBEXT); fi
 
 release: build_release
 
@@ -351,6 +380,7 @@ build_debug:
 		$(BUILD_DEBUG_DIR)/tools/ufo2map/common
 	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS) -DLINUX_VERSION='\"$(VERSION) Debug\"'"
 
+echo_info:
 	@echo
 	@echo "CFLAGS"
 	@echo "-----------------------"
@@ -392,6 +422,7 @@ build_debug:
 	@echo "-----------------------"
 	@echo "Type 'make' in base/maps to compile the maps"
 	@echo
+	@echo Build for $(ARCH)
 
 build_release:
 	@-mkdir -p $(BUILD_RELEASE_DIR) \
@@ -577,6 +608,13 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/cl_research.o \
 	$(BUILDDIR)/client/cl_market.o \
 	$(BUILDDIR)/client/cl_campaign.o \
+	$(BUILDDIR)/client/cl_ufo.o \
+	$(BUILDDIR)/client/cl_radar.o \
+	$(BUILDDIR)/client/cl_popup.o \
+	$(BUILDDIR)/client/cl_produce.o \
+	$(BUILDDIR)/client/cl_employee.o \
+	$(BUILDDIR)/client/cl_map.o \
+	$(BUILDDIR)/client/cl_aircraft.o \
 	$(BUILDDIR)/client/cl_fx.o \
 	$(BUILDDIR)/client/cl_input.o \
 	$(BUILDDIR)/client/cl_le.o \
@@ -593,7 +631,7 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/cl_view.o \
 	$(BUILDDIR)/client/console.o \
 	$(BUILDDIR)/client/keys.o \
-	$(BUILDDIR)/client/snd_dma.o \
+	$(BUILDDIR)/client/snd_ref.o \
 	$(BUILDDIR)/client/snd_mem.o \
 	$(BUILDDIR)/client/snd_mix.o \
 	\
@@ -623,9 +661,7 @@ ifeq ($(OSTYPE),Linux)
 	$(BUILDDIR)/client/vid_so.o \
 	$(BUILDDIR)/client/sys_linux.o \
 	$(BUILDDIR)/client/glob.o \
-	$(BUILDDIR)/client/$(NET_UDP).o \
-	$(BUILDDIR)/client/snd_linux.o \
-	$(BUILDDIR)/client/snd_oss.o
+	$(BUILDDIR)/client/$(NET_UDP).o
 endif
 
 ifeq ($(OSTYPE),Darwin)
@@ -641,7 +677,7 @@ ifeq ($(OSTYPE),Darwin)
 endif
 
 ifeq ($(strip $(BUILD_SDLUFO)),YES)
-	QUAKE2_OBJS+=$(BUILDDIR)/client/snd_sdl.o $(BUILDDIR)/client/cd_sdl.o
+	QUAKE2_OBJS+=$(BUILDDIR)/client/cd_sdl.o
 else
 	ifeq ($(OSTYPE),Linux)
 		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_linux.o
@@ -649,10 +685,6 @@ else
 	ifeq ($(OSTYPE),Darwin)
 		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_osx.o
 	endif
-endif
-
-ifeq ($(strip $(BUILD_ALSA)),YES)
-	QUAKE2_OBJS+=$(BUILDDIR)/client/snd_alsa.o
 endif
 
 $(BUILDDIR)/ufo : $(QUAKE2_OBJS) $(QUAKE2_LNX_OBJS)
@@ -663,6 +695,27 @@ $(BUILDDIR)/client/cl_actor.o :    $(CLIENT_DIR)/cl_actor.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_campaign.o : $(CLIENT_DIR)/cl_campaign.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_ufo.o : $(CLIENT_DIR)/cl_ufo.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_radar.o : $(CLIENT_DIR)/cl_radar.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_popup.o : $(CLIENT_DIR)/cl_popup.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_produce.o : $(CLIENT_DIR)/cl_produce.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_employee.o : $(CLIENT_DIR)/cl_employee.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_map.o : $(CLIENT_DIR)/cl_map.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_aircraft.o : $(CLIENT_DIR)/cl_aircraft.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_basemanagement.o : $(CLIENT_DIR)/cl_basemanagement.c
@@ -722,16 +775,13 @@ $(BUILDDIR)/client/console.o :     $(CLIENT_DIR)/console.c
 $(BUILDDIR)/client/keys.o :        $(CLIENT_DIR)/keys.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/snd_dma.o :     $(CLIENT_DIR)/snd_dma.c
+$(BUILDDIR)/client/snd_ref.o :     $(CLIENT_DIR)/snd_ref.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/snd_mem.o :     $(CLIENT_DIR)/snd_mem.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/snd_mix.o :     $(CLIENT_DIR)/snd_mix.c
-	$(DO_CC)
-
-$(BUILDDIR)/client/snd_alsa.o :     $(LINUX_DIR)/snd_alsa.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cmd.o :         $(COMMON_DIR)/cmd.c
@@ -791,15 +841,6 @@ $(BUILDDIR)/client/q_shlinux.o :   $(LINUX_DIR)/q_shlinux.c
 $(BUILDDIR)/client/vid_so.o :      $(LINUX_DIR)/vid_so.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/snd_linux.o :   $(LINUX_DIR)/snd_linux.c
-	$(DO_CC)
-
-$(BUILDDIR)/client/snd_oss.o :   $(LINUX_DIR)/snd_oss.c
-	$(DO_CC)
-
-#$(BUILDDIR)/client/snd_mixa.o :    $(LINUX_DIR)/snd_mixa.s
-#	$(DO_AS)
-
 $(BUILDDIR)/client/sys_linux.o :   $(LINUX_DIR)/sys_linux.c
 	$(DO_CC)
 
@@ -815,10 +856,7 @@ $(BUILDDIR)/client/net_udp.o :    $(UNIX_DIR)/net_udp.c
 $(BUILDDIR)/client/net_udp6.o :    $(UNIX_DIR)/net_udp6.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/cd_sdl.o :     $(LINUX_DIR)/cd_sdl.c
-	$(DO_CC)
-
-$(BUILDDIR)/client/snd_sdl.o :     $(LINUX_DIR)/snd_sdl.c
+$(BUILDDIR)/client/cd_sdl.o :     $(UNIX_DIR)/cd_sdl.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cd_osx.o :    $(MACOSX_DIR)/cd_osx.m
@@ -1125,6 +1163,47 @@ $(BUILDDIR)/ref_gl/gl_sdl.o :         $(LINUX_DIR)/gl_sdl.c
 $(BUILDDIR)/ps2/gl_ps2mesa.o :        $(LINUX_DIR)/gl_ps2mesa.c
 	$(DO_GL_SHLIB_CC)
 
+
+#############################################################################
+# MISC
+#############################################################################
+
+SND_SDL_OBJS = $(BUILDDIR)/client/snd_sdl.o
+
+SND_ALSA_OBJS = $(BUILDDIR)/client/snd_alsa.o
+
+SND_OSS_OBJS = $(BUILDDIR)/client/snd_oss.o
+
+SND_ARTS_OBJS = $(BUILDDIR)/client/snd_arts.o
+
+$(BUILDDIR)/client/snd_oss.o :   $(LINUX_DIR)/snd_oss.c
+	$(DO_SND_SHLIB_CC)
+
+$(BUILDDIR)/client/snd_arts.o :   $(LINUX_DIR)/snd_arts.c
+	$(DO_SND_SHLIB_CC) $(shell artsc-config --cflags)
+
+$(BUILDDIR)/client/snd_sdl.o :     $(LINUX_DIR)/snd_sdl.c
+	$(DO_SND_SHLIB_CC)
+
+$(BUILDDIR)/client/snd_alsa.o :     $(LINUX_DIR)/snd_alsa.c
+	$(DO_SND_SHLIB_CC)
+
+$(BUILDDIR)/snd_oss.$(SHLIBEXT) : $(SND_OSS_OBJS)
+	@echo " * [OSS] ...linking";
+	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(SND_OSS_OBJS)
+
+$(BUILDDIR)/snd_arts.$(SHLIBEXT) : $(SND_ARTS_OBJS)
+	@echo " * [ART] ...linking";
+	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) $(shell artsc-config --libs) -o $@ $(SND_ARTS_OBJS)
+
+$(BUILDDIR)/snd_alsa.$(SHLIBEXT) : $(SND_ALSA_OBJS)
+	@echo " * [ALS] ...linking";
+	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(SND_ALSA_OBJS)
+
+$(BUILDDIR)/snd_sdl.$(SHLIBEXT) : $(SND_SDL_OBJS)
+	@echo " * [SDL] ...linking";
+	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(SND_SDL_OBJS)
+
 #############################################################################
 # MISC
 #############################################################################
@@ -1139,8 +1218,14 @@ cleanrenderer2:
 	$(REF_GL_OBJS) \
 	$(REF_GLX_OBJS) \
 	$(REF_SDL_OBJS) \
+	$(SND_SDL_OBJS) \
+	$(SND_OSS_OBJS) \
+	$(SND_ALSA_OBJS) \
 	$(BUILDDIR)/ref_sdl.$(SHLIBEXT) \
-	$(BUILDDIR)/ref_glx.$(SHLIBEXT)
+	$(BUILDDIR)/ref_glx.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_sdl.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_oss.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_alsa.$(SHLIBEXT)
 
 clean-debug:
 	$(MAKE) clean2 BUILDDIR=$(BUILD_DEBUG_DIR)
@@ -1158,10 +1243,17 @@ clean2:
 	$(REF_GLX_OBJS) \
 	$(REF_SDL_OBJS) \
 	$(Q2DED_OBJS) \
+	$(SND_SDL_OBJS) \
+	$(SND_OSS_OBJS) \
+	$(SND_ALSA_OBJS) \
 	$(BUILDDIR)/ufo \
+	$(BUILDDIR)/ufo2map \
 	$(BUILDDIR)/game.$(SHLIBEXT) \
 	$(BUILDDIR)/ref_sdl.$(SHLIBEXT) \
 	$(BUILDDIR)/ref_glx.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_sdl.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_oss.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_alsa.$(SHLIBEXT) \
 	$(BUILDDIR)/ufoded
 
 distclean:
@@ -1180,3 +1272,9 @@ lang:
 
 docs:
 	doxygen docs/doxyall
+
+maps:
+	cd ../base/maps; PATH=$(PATH):../../debugi386/; make
+
+rsync:
+	export RSYNC_PROXY=rsync-svn.sourceforge.net:80; rsync -a rsync-svn-u::svn/ufoai/* /var/lib/svn/

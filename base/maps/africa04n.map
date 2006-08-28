@@ -11149,3 +11149,27 @@
 "team" "2"
 "angle" "180"
 }
+// entity 166
+{
+"classname" "info_alien_start"
+"origin" "1808 -784 28"
+"angle" "-135"
+}
+// entity 167
+{
+"classname" "info_alien_start"
+"origin" "1968 16 28"
+"angle" "-135"
+}
+// entity 168
+{
+"classname" "info_alien_start"
+"origin" "2000 -48 28"
+"angle" "-135"
+}
+// entity 169
+{
+"classname" "info_alien_start"
+"origin" "2000 -240 28"
+"angle" "-135"
+}

@@ -28,7 +28,7 @@ menu map
 	text messagesystem
 	{
 		pos	"0 99"
-		size	"1024 20"
+		size	"1024 22"
 		bgcolor	"0 0 0 .5"
 		format	"20 0"
 		height	1
@@ -149,7 +149,7 @@ menu map
 
 	text description
 	{
-		pos		"34 658"
+		pos		"34 632"
 		size	"400 100"
 		format	"20 0"
 		height	"8"
@@ -164,24 +164,6 @@ menu map
 	// ==================
 	// buttons
 	// ==================
-
-	pic bt_intercept
-	{
-		tooltip	"_Intercept alien craft or visit alien (crash) site."
-		image	menu/b_geobuttons
-		pos	"32 544"
-		texl	"0 64"
-		texh	"63 127"
-		out	{
-				*bt_intercept texl "0 64"
-				*bt_intercept texh "63 127"
-			}
-		in	{
-				*bt_intercept texl "0 0"
-				*bt_intercept texh "63 63"
-			}
-		click	{ cmd "game_go;" }
-	}
 
 	pic bt_stats
 	{
@@ -221,6 +203,7 @@ menu map
 
 	pic bt_base
 	{
+		if "mn_base_count < 8"
 		tooltip	"_Create base"
 		image	menu/b_geobuttons
 		pos	"242 544"
@@ -267,14 +250,14 @@ menu map
 		out	{
 				*messagesystem_show texl "0 0"
 				*messagesystem_show texh "32 36"
-				*messagesystem size "1024 20"
+				*messagesystem size "1024 22"
 				*messagesystem height "1"
 			}
 		in	{
 				*messagesystem_show texl "0 37"
 				*messagesystem_show texh "32 73"
 				*messagesystem size "1024 400"
-				*messagesystem height "20"
+				*messagesystem height "25"
 			}
 	}
 
@@ -374,7 +357,7 @@ menu popup_intercept_ready
 
 	pic bt_auto_go
 	{
-		if	"game_autogo 1.0"
+		if	"game_autogo == 1"
 		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
 		pos	"530 410"
@@ -386,7 +369,7 @@ menu popup_intercept_ready
 	}
 	string string_auto_go
 	{
-		if	"game_autogo 1.0"
+		if	"game_autogo == 1"
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Auto mission"
@@ -443,7 +426,7 @@ menu popup_newbase
 	}
 	string cost
 	{
-		string "_100000 c"
+		string "100000 c"
 		pos	"290 390"
 		font	f_big
 	}
@@ -489,7 +472,7 @@ menu popup_newbase
 
 	func init
 	{
-		cmd "mn_setbasetitle"
+		cmd "mn_setbasetitle;bases_check_max;"
 	}
 }
 
@@ -587,10 +570,24 @@ menu popup_baseattack
 		pos		"256 256"
 	}
 
+	string title
+	{
+		string	"_Base attack"
+		pos	"290 276"
+		font	f_big
+	}
+
+	string name_label
+	{
+		string	"_What to do?"
+		pos	"290 320"
+	}
+
 	pic bt_cancel
 	{
+		tooltip	"_Close this dialog"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"180 64"
 		texl	"0 33"
 		pos	"310 450"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -599,7 +596,6 @@ menu popup_baseattack
 	}
 	string string_cancel
 	{
-		tooltip	"_Close this dialog"
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
@@ -612,7 +608,7 @@ menu popup_baseattack
 		tooltip	"_Enter the battlefield"
 		image	menu/multi_buttons3
 		pos	"530 450"
-		texh	"256 64"
+		texh	"180 64"
 		texl	"0 33"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
 		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
@@ -627,32 +623,146 @@ menu popup_baseattack
 		align	uc
 	}
 
-	pic bt_auto_go
+	func init
 	{
-		if	"game_autogo 1.0"
-		tooltip	"_Automatically finish mission"
+		cmd "game_timestop;"
+	}
+}
+
+
+// =====================
+// POPUP MULTI SELECTION
+// =====================
+
+menu popup_multi_selection
+{
+	zone popup
+	{
+		invis	true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+
+	string title
+	{
+		string	"_Select item"
+		pos	"290 276"
+		font	f_big
+	}
+
+	string type_label
+	{
+		string	"_Type:"
+		pos	"290 320"
+	}
+
+	string name_label
+	{
+		string	"_Name:"
+		pos	"440 320"
+	}
+
+	text multi_select
+	{
+		pos		"290 340"
+		size	"420 110"
+		format	"20 150"
+		num	14
+		mousefx	true
+		click	{ cmd "multi_select;" }
+	}
+
+	pic bt_cancel
+	{
+		tooltip	"_Close this dialog"
 		image	menu/multi_buttons3
-		pos	"530 420"
 		texh	"256 64"
 		texl	"0 33"
-		out	{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
-		in	{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
-		click	{ cmd "game_auto_go;" }
+		pos	"290 450"
+		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
-	string string_auto_go
+	string string_cancel
 	{
-		if	"game_autogo 1.0"
 		font	f_menu
 		color	"0 0.5 0 1"
-		string	"_Auto"
-		pos	"620 418"
+		string	"_Cancel"
+		pos	"380 448"
 		align	uc
 	}
 
-	func init
+}
+
+
+// =====================
+// POPUP AIRCRAFT
+// =====================
+
+menu popup_aircraft
+{
+	zone popup
 	{
-		cmd "aircraft_list"
+		invis true
 	}
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+
+	string title
+	{
+		string	"_Aircraft"
+		pos	"290 276"
+		font	f_big
+	}
+
+	string action_label
+	{
+		string	"_Action:"
+		pos	"290 320"
+	}
+
+	string description_label
+	{
+		string	"_Description:"
+		pos	"440 320"
+	}
+
+	text popup_aircraft_action
+	{
+		pos             "290 340"
+		size    "420 110"
+		format  "20 150"
+		num	7
+		mousefx true
+		click { }
+	}
+
+	pic bt_cancel
+	{
+		tooltip	"_Close this dialog"
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 33"
+		pos	"290 450"
+		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;" }
+	}
+	string string_cancel
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Cancel"
+		pos	"380 448"
+		align	uc
+	}
+
 }
 
 menu popup

@@ -1,0 +1,433 @@
+// ==================
+// AIRCRAFT MENU
+// ==================
+menu aircraft
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/air_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/air_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/air_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/air_lr
+		pos		"512 512"
+	}
+
+	// ===============
+	// equip squad
+	// ===============
+	pic button_squad
+	{
+		if "mn_soldiers_in_base > 0"
+		tooltip	"_Assign your squad"
+		image   menu/button
+		pos	"45 100"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "mn_push team"
+		}
+		out		{ *txt_squad color "0 0.8 0 1" *button_squad texl "0 0" *button_squad texh "230 64" }
+		in		{ *txt_squad color "1 1 1 1" *button_squad texl "230 0" *button_squad texh "460 64" }
+	}
+	pic button_no_squad
+	{
+		if "mn_soldiers_in_base <= 0"
+		tooltip	"_Hire your team first"
+		image   menu/button
+		pos	"45 100"
+		texl	"0 64"
+		texh	"230 128"
+		mousefx true
+	}
+	string txt_squad
+	{
+		if "mn_soldiers_in_base > 0"
+		string	"_Equip Aircraft"
+		color	"0 0.8 0 1"
+		pos	"160 116"
+		font	f_menu
+		align	uc
+	}
+	string txt_no_squad
+	{
+		if "mn_soldiers_in_base <= 0"
+		string	"_Assign your squad"
+		color	"0.5 0.5 0.5 1"
+		pos	"160 116"
+		font	f_menu
+		align	uc
+	}
+
+	// ===============
+	// buy/sell aircraft
+	// ===============
+	pic button_buysell
+	{
+		tooltip	"_Buy/Sell aircraft"
+		image	menu/button
+		pos	"45 170"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "mn_push buyaircraft"
+		}
+		out		{ *txt_buysell color "0 0.8 0 1" *button_buysell texl "0 0" *button_buysell texh "230 64" }
+		in		{ *txt_buysell color "1 1 1 1" *button_buysell texl "230 0" *button_buysell texh "460 64" }
+	}
+	string txt_buysell
+	{
+		string	"_Buy/Sell Aircraft"
+		color	"0 0.8 0 1"
+		pos	"160 186"
+		font	f_menu
+		align	uc
+	}
+
+	// ===============
+	// transfer
+	// ===============
+	pic button_start
+	{
+		tooltip	"_Start your aircraft"
+		image	menu/button
+		pos	"45 240"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "aircraft_start;"
+		}
+		out		{ *txt_start color "0 0.8 0 1" *button_start texl "0 0" *button_start texh "230 64" }
+		in		{ *txt_start color "1 1 1 1" *button_start texl "230 0" *button_start texh "460 64" }
+	}
+	string txt_start
+	{
+		string	"_Start Aircraft"
+		color	"0 0.8 0 1"
+		pos	"160 256"
+		font	f_menu
+		align	uc
+	}
+
+	// ===============
+	// transfer
+	// ===============
+	pic button_transfer
+	{
+		tooltip	"_Transfer equipment or personnel"
+		image	menu/button
+		pos	"45 310"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "mn_push transfer"
+		}
+		out		{ *txt_transfer color "0 0.8 0 1" *button_transfer texl "0 0" *button_transfer texh "230 64" }
+		in		{ *txt_transfer color "1 1 1 1" *button_transfer texl "230 0" *button_transfer texh "460 64" }
+	}
+	string txt_transfer
+	{
+		string	"_Transfer"
+		color	"0 0.8 0 1"
+		pos	"160 326"
+		font	f_menu
+		align	uc
+	}
+
+	// ===============
+	// transfer
+	// ===============
+	pic button_equip
+	{
+		tooltip	"_Equip weapons and shields"
+		image	menu/button
+		pos	"45 380"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "mn_push aircraft_equip"
+		}
+		out		{ *txt_equip color "0 0.8 0 1" *button_equip texl "0 0" *button_equip texh "230 64" }
+		in		{ *txt_equip color "1 1 1 1" *button_equip texl "230 0" *button_equip texh "460 64" }
+	}
+	string txt_equip
+	{
+		string	"_Equip"
+		color	"0 0.8 0 1"
+		pos	"160 396"
+		font	f_menu
+		align	uc
+	}
+
+	// ==================
+	// aircraft
+	// ==================
+
+	model aircraft
+	{
+		md2		"*cvar mn_aircraft_model"
+		origin	"690 240 0"
+		angles	"-20 -40 120"
+		scale	"1.1 1.1 1.1"
+		color	"0.5 0.5 0.5 1"
+	}
+
+	string aircraft_name
+	{
+		string	"*cvar mn_aircraftname"
+		pos		"720 400"
+		align	uc
+	}
+
+	string aircraft_status
+	{
+		string	"*cvar mn_aircraftstatus"
+		pos		"720 420"
+		align	uc
+	}
+
+	// ==================
+	// additional stuff
+	// ==================
+
+	pic button_leave
+	{
+		tooltip	"_Done"
+		image	hud/buttons2
+		mousefx	true
+		pos		"940 720"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd "mn_pop"  }
+	}
+
+	pic prev_aircraft
+	{
+		tooltip	"_Switch to the previous aircraft"
+		image	menu/buttons_small
+		pos	"500 410"
+		mousefx true
+		texl	"0 0"
+		texh	"16 16"
+		click	{ cmd "mn_prev_aircraft" }
+	}
+
+	pic next_aircraft
+	{
+		tooltip	"_Switch to the next aircraft"
+		image	menu/buttons_small
+		pos	"970 410"
+		mousefx	true
+		texl	"16 0"
+		texh	"32 16"
+		click	{ cmd "mn_next_aircraft" }
+	}
+
+	pic aircraft_return
+	{
+		tooltip	"_Call back"
+		image	menu/buttons_small
+		pos	"550 410"
+		mousefx false
+		texl	"0 32"
+		texh	"16 48"
+		click	{ cmd "aircraft_return" }
+		out		{ *aircraft_return texl "0 32" *aircraft_return texh "16 48" }
+		in		{ *aircraft_return texl "16 32" *aircraft_return texh "32 48" }
+	}
+
+	string team_members
+	{
+		string	"_Team Members:"
+		pos		"480 486"
+	}
+
+	string team_hired
+	{
+		string	"*cvar mn_hired"
+		pos		"480 508"
+	}
+
+	text aircraftinfo
+	{
+		pos		"480 540"
+		size	"300 200"
+		format	"20 120"
+		num	11
+	}
+
+	func init
+	{
+		cmd "aircraft_select"
+	}
+}
+
+menu aircraft_equip
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic equipback_ul
+	{
+		image	menu/airequip_ul
+		pos		"0 0"
+	}
+
+	pic equipback_ur
+	{
+		image	menu/airequip_ur
+		pos		"512 0"
+	}
+
+	pic equipback_ll
+	{
+		image	menu/airequip_ll
+		pos		"0 512"
+	}
+
+	pic equipback_lr
+	{
+		image	menu/airequip_lr
+		pos		"512 512"
+	}
+
+	// ==================
+	// aircraft model
+	// ==================
+
+	model aircraftequip
+	{
+		md2		"*cvar mn_aircraft_model"
+		origin	"228 384 0"
+		angles	"90 0 180"
+		scale	"1.1 1.1 1.1"
+		color	"0.5 0.5 0.5 1"
+		pos	"20 20"
+		size	"415 728"
+//		bgcolor	"1 1 1 0.5"
+	}
+	pic aircraftshield
+	{
+		tooltip	"_Shield"
+		pos	"40 40"
+		size	"128 128"
+		image "*cvar mn_aircraft_shield_img"
+		click
+	}
+	pic aircraftweapon
+	{
+		tooltip	"_Weapon"
+		pos	"267 40"
+		size	"128 128"
+		image "*cvar mn_aircraft_weapon_img"
+		click
+	}
+	string airequip_available
+	{
+		string	"_Available equipment:"
+		pos		"740 86"
+		font	f_big
+		align	uc
+	}
+	text airequip_selected_description
+	{
+		pos	"474 474"
+		size	"530 150"
+		format	"20 0"
+//		bgcolor	"1 1 1 0.5"
+	}
+	text airequip_shields
+	{
+		pos	"474 134"
+		size	"256 300"
+//		bgcolor	"1 1 1 0.5"
+		format	"20 0"
+		num	1
+		mousefx	true
+		click
+	}
+	text airequip_weapons
+	{
+		pos	"742 134"
+		size	"260 300"
+//		bgcolor	"1 1 1 0.5"
+		format	"20 0"
+		num	9
+		mousefx	true
+		click
+	}
+	pic airequip_button_leave
+	{
+		tooltip	"_Done"
+		image	hud/buttons2
+		mousefx	true
+		pos		"940 600"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd "mn_pop"  }
+	}
+	text aircraft_description
+	{
+		pos	"474 665"
+		size	"530 85"
+		format	"20 0"
+//		bgcolor	"1 1 1 0.5"
+		num 11
+	}
+
+	// ==================
+	// init function
+	// ==================
+
+	func init
+	{
+		cmd "airequip_init"
+	}
+}

@@ -1,4 +1,17 @@
+/**
+ * @file g_main.c
+ * @brief Main game functions.
+ */
+
 /*
+All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
+26/06/06, Eddy Cullen (ScreamingWithNoSound):
+	Reformatted to agreed style.
+	Added doxygen file comment.
+	Updated copyright notice.
+
+Original file from Quake 2 v3.21: quake2-2.31/game/g_main.c
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -20,233 +33,240 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-game_locals_t	game;
-level_locals_t	level;
-game_import_t	gi;
-game_export_t	globals;
+#if defined DEBUG && defined _MSC_VER
+#include <intrin.h>
+#endif
 
-int	snd_fry;
+game_locals_t game;
+level_locals_t level;
+game_import_t gi;
+game_export_t globals;
+
+int snd_fry;
 int meansOfDeath;
 
-edict_t		*g_edicts;
+edict_t *g_edicts;
 
-cvar_t	*password;
-cvar_t	*spectator_password;
-cvar_t	*needpass;
-cvar_t	*maxplayers;
-cvar_t	*maxsoldiers;
-cvar_t	*maxsoldiersperplayer;
-cvar_t	*sv_enablemorale;
-cvar_t	*maxspectators;
-cvar_t	*maxentities;
-cvar_t	*g_select_empty;
-cvar_t	*dedicated;
+cvar_t *password;
+cvar_t *spectator_password;
+cvar_t *needpass;
+cvar_t *maxplayers;
+cvar_t *maxsoldiers;
+cvar_t *maxsoldiersperplayer;
+cvar_t *sv_enablemorale;
+cvar_t *maxspectators;
+cvar_t *maxentities;
+cvar_t *g_select_empty;
+cvar_t *dedicated;
+cvar_t *developer;
 
-cvar_t	*filterban;
+cvar_t *filterban;
 
-cvar_t	*sv_gravity;
+cvar_t *sv_gravity;
 
-cvar_t	*sv_cheats;
+cvar_t *sv_cheats;
 
-cvar_t	*flood_msgs;
-cvar_t	*flood_persecond;
-cvar_t	*flood_waitdelay;
+cvar_t *flood_msgs;
+cvar_t *flood_persecond;
+cvar_t *flood_waitdelay;
 
-cvar_t	*sv_maplist;
+cvar_t *sv_maplist;
 
-cvar_t	*sv_ai;
-cvar_t	*sv_teamplay;
-cvar_t	*sv_maxclients;
+cvar_t *sv_ai;
+cvar_t *sv_teamplay;
+cvar_t *sv_maxclients;
 
-cvar_t	*ai_alien;
-cvar_t	*ai_civilian;
-cvar_t	*ai_equipment;
-cvar_t	*ai_numaliens;
-cvar_t	*ai_numcivilians;
-cvar_t	*ai_numactors;
-cvar_t	*ai_autojoin;
+cvar_t *ai_alien;
+cvar_t *ai_armor;
+cvar_t *ai_civilian;
+cvar_t *ai_equipment;
+cvar_t *ai_numaliens;
+cvar_t *ai_numcivilians;
+cvar_t *ai_numactors;
+cvar_t *ai_autojoin;
 
 /* morale cvars */
-cvar_t	*mob_death;
-cvar_t	*mob_wound;
-cvar_t	*mof_watching;
-cvar_t	*mof_teamkill;
-cvar_t	*mof_civilian;
-cvar_t	*mof_enemy;
-cvar_t	*mor_pain;
+cvar_t *mob_death;
+cvar_t *mob_wound;
+cvar_t *mof_watching;
+cvar_t *mof_teamkill;
+cvar_t *mof_civilian;
+cvar_t *mof_enemy;
+cvar_t *mor_pain;
+
 /*everyone gets this times morale damage */
-cvar_t	*mor_default;
+cvar_t *mor_default;
+
 /*at this distance the following two get halfed (exponential scale) */
-cvar_t	*mor_distance;
+cvar_t *mor_distance;
+
 /*at this distance the following two get halfed (exponential scale) */
-cvar_t	*mor_victim;
+cvar_t *mor_victim;
+
 /*at this distance the following two get halfed (exponential scale) */
-cvar_t	*mor_attacker;
+cvar_t *mor_attacker;
+
 /* how much the morale depends on the size of the damaged team */
-cvar_t	*mon_teamfactor;
+cvar_t *mon_teamfactor;
 
-cvar_t	*mor_regeneration;
-cvar_t	*mor_shaken;
-cvar_t	*mor_panic;
+cvar_t *mor_regeneration;
+cvar_t *mor_shaken;
+cvar_t *mor_panic;
 
-cvar_t	*m_sanity;
-cvar_t	*m_rage;
-cvar_t	*m_rage_stop;
-cvar_t	*m_panic_stop;
+cvar_t *m_sanity;
+cvar_t *m_rage;
+cvar_t *m_rage_stop;
+cvar_t *m_panic_stop;
 
-cvar_t	*difficulty;
+cvar_t *difficulty;
 
-extern void SpawnEntities (char *mapname, char *entities);
-extern void G_RunFrame (void);
+extern void SpawnEntities(char *mapname, char *entities);
+extern void G_RunFrame(void);
 
-invList_t	invChain[MAX_INVLIST];
+invList_t invChain[MAX_INVLIST];
 
 
 /*=================================================================== */
 
 
-/*
-============
-InitGame
-
-This will be called when the dll is first loaded, which
-only happens when a new game is started or a save game
-is loaded.
-============
-*/
-void InitGame (void)
+/**
+ * @brief This will be called when the dll is first loaded
+ * @note only happens when a new game is started or a save game is loaded.
+ */
+void InitGame(void)
 {
-	gi.dprintf ("==== InitGame ====\n");
+	gi.dprintf("==== InitGame ====\n");
 
 	/* noset vars */
-	dedicated = gi.cvar ("dedicated", "0", CVAR_SERVERINFO|CVAR_NOSET);
+	dedicated = gi.cvar("dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET);
 
 	/* latched vars */
-	sv_cheats = gi.cvar ("cheats", "0", CVAR_SERVERINFO|CVAR_LATCH);
-	gi.cvar ("gamename", GAMEVERSION , CVAR_SERVERINFO | CVAR_LATCH);
-	gi.cvar ("gamedate", __DATE__ , CVAR_SERVERINFO | CVAR_LATCH);
+	sv_cheats = gi.cvar("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH);
+	gi.cvar("gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_LATCH);
+	gi.cvar("gamedate", __DATE__, CVAR_SERVERINFO | CVAR_LATCH);
+	developer = gi.cvar("developer", "0", 0);
 
 	/* max. players per team (original quake) */
-	maxplayers = gi.cvar ("maxplayers", "8", CVAR_SERVERINFO | CVAR_LATCH);
+	maxplayers = gi.cvar("maxplayers", "8", CVAR_SERVERINFO | CVAR_LATCH);
 	/* max. soldiers per team */
-	maxsoldiers = gi.cvar ("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
+	maxsoldiers = gi.cvar("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
 	/* max soldiers per player */
-	maxsoldiersperplayer = gi.cvar ("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
+	maxsoldiersperplayer = gi.cvar("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
 	/* enable moralestates in multiplayer */
-	sv_enablemorale = gi.cvar ("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
-	maxspectators = gi.cvar ("maxspectators", "8", CVAR_SERVERINFO|CVAR_LATCH);
-	maxentities = gi.cvar ("maxentities", "1024", CVAR_LATCH);
+	sv_enablemorale = gi.cvar("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
+	maxspectators = gi.cvar("maxspectators", "8", CVAR_SERVERINFO | CVAR_LATCH);
+	maxentities = gi.cvar("maxentities", "1024", CVAR_LATCH);
 
 	/* change anytime vars */
-	password = gi.cvar ("password", "", CVAR_USERINFO);
-	spectator_password = gi.cvar ("spectator_password", "", CVAR_USERINFO);
-	needpass = gi.cvar ("needpass", "0", CVAR_SERVERINFO);
-	filterban = gi.cvar ("filterban", "1", 0);
-	sv_ai = gi.cvar ("sv_ai", "1", 0);
-	sv_teamplay = gi.cvar ("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_SERVERINFO);
+	password = gi.cvar("password", "", CVAR_USERINFO);
+	spectator_password = gi.cvar("spectator_password", "", CVAR_USERINFO);
+	needpass = gi.cvar("needpass", "0", CVAR_SERVERINFO);
+	filterban = gi.cvar("filterban", "1", 0);
+	sv_ai = gi.cvar("sv_ai", "1", 0);
+	sv_teamplay = gi.cvar("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_SERVERINFO);
 	/* how many connected clients */
-	sv_maxclients = gi.cvar ("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH);
+	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH);
 
-	ai_alien = gi.cvar ("ai_alien", "alien", 0);
-	ai_civilian = gi.cvar ("ai_civilian", "civilian", 0);
-	ai_equipment = gi.cvar ("ai_equipment", "standard", 0);
+	ai_alien = gi.cvar("ai_alien", "alien", 0);
+	ai_armor = gi.cvar("ai_armor", "", 0);
+	ai_civilian = gi.cvar("ai_civilian", "civilian", 0);
+	ai_equipment = gi.cvar("ai_equipment", "human_phalanx_initial", 0);
 	/* aliens in singleplayer (can differ each mission) */
-	ai_numaliens = gi.cvar ("ai_numaliens", "8", 0 );
+	ai_numaliens = gi.cvar("ai_numaliens", "8", 0);
 	/* civilians for singleplayer */
-	ai_numcivilians = gi.cvar ("ai_numcivilians", "8", 0 );
+	ai_numcivilians = gi.cvar("ai_numcivilians", "8", 0);
 	/* aliens in multiplayer */
-	ai_numactors = gi.cvar ("ai_numactors", "8", CVAR_ARCHIVE );
+	ai_numactors = gi.cvar("ai_numactors", "8", CVAR_ARCHIVE);
 	/* autojoin aliens */
-	ai_autojoin = gi.cvar ("ai_autojoin", "0", 0 );
+	ai_autojoin = gi.cvar("ai_autojoin", "0", 0);
 
 	/* FIXME: Apply CVAR_NOSET after balancing */
-	mob_death = gi.cvar ("mob_death", "10", CVAR_LATCH );
-	mob_wound = gi.cvar ("mob_wound", "0.1", CVAR_LATCH );
-	mof_watching = gi.cvar ("mof_watching", "1.7", CVAR_LATCH );
-	mof_teamkill = gi.cvar ("mof_watching", "2.0", CVAR_LATCH );
-	mof_civilian = gi.cvar ("mof_watching", "0.3", CVAR_LATCH );
-	mof_enemy = gi.cvar ("mof_watching", "0.5", CVAR_LATCH );
-	mor_pain = gi.cvar ("mof_watching", "3.6", CVAR_LATCH );
+	mob_death = gi.cvar("mob_death", "10", CVAR_LATCH);
+	mob_wound = gi.cvar("mob_wound", "0.1", CVAR_LATCH);
+	mof_watching = gi.cvar("mof_watching", "1.7", CVAR_LATCH);
+	mof_teamkill = gi.cvar("mof_teamkill", "2.0", CVAR_LATCH);
+	mof_civilian = gi.cvar("mof_civilian", "0.3", CVAR_LATCH);
+	mof_enemy = gi.cvar("mof_ememy", "0.5", CVAR_LATCH);
+	mor_pain = gi.cvar("mof_pain", "3.6", CVAR_LATCH);
 	/*everyone gets this times morale damage */
-	mor_default = gi.cvar ("mof_watching", "0.3", CVAR_LATCH );
+	mor_default = gi.cvar("mor_default", "0.3", CVAR_LATCH);
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_distance = gi.cvar ("mof_watching", "120", CVAR_LATCH );
+	mor_distance = gi.cvar("mor_distance", "120", CVAR_LATCH);
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_victim = gi.cvar ("mof_watching", "0.7", CVAR_LATCH );
+	mor_victim = gi.cvar("mor_victim", "0.7", CVAR_LATCH);
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_attacker = gi.cvar ("mof_watching", "0.3", CVAR_LATCH );
+	mor_attacker = gi.cvar("mor_attacker", "0.3", CVAR_LATCH);
 	/* how much the morale depends on the size of the damaged team */
-	mon_teamfactor = gi.cvar ("mof_watching", "0.6", CVAR_LATCH );
+	mon_teamfactor = gi.cvar("mon_teamfactor", "0.6", CVAR_LATCH);
 
-	mor_regeneration = gi.cvar ("mor_regeneration", "15", CVAR_LATCH );
-	mor_shaken = gi.cvar ("mor_shaken", "50", CVAR_LATCH );
-	mor_panic = gi.cvar ("mor_panic", "30", CVAR_LATCH );
+	mor_regeneration = gi.cvar("mor_regeneration", "15", CVAR_LATCH);
+	mor_shaken = gi.cvar("mor_shaken", "50", CVAR_LATCH);
+	mor_panic = gi.cvar("mor_panic", "30", CVAR_LATCH);
 
-	m_sanity = gi.cvar ("m_sanity", "1.0", CVAR_LATCH );
-	m_rage = gi.cvar ("m_rage", "0.6", CVAR_LATCH );
-	m_rage_stop = gi.cvar ("r_rage_stop", "2.0", CVAR_LATCH );
-	m_panic_stop = gi.cvar ("m_panic_stop", "1.0", CVAR_LATCH );
+	m_sanity = gi.cvar("m_sanity", "1.0", CVAR_LATCH);
+	m_rage = gi.cvar("m_rage", "0.6", CVAR_LATCH);
+	m_rage_stop = gi.cvar("r_rage_stop", "2.0", CVAR_LATCH);
+	m_panic_stop = gi.cvar("m_panic_stop", "1.0", CVAR_LATCH);
 
-	difficulty = gi.cvar ("difficulty", "-1", CVAR_ARCHIVE | CVAR_LATCH);
+	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET);
 
-	g_select_empty = gi.cvar ("g_select_empty", "0", CVAR_ARCHIVE);
+	g_select_empty = gi.cvar("g_select_empty", "0", CVAR_ARCHIVE);
 
 	/* flood control */
-	flood_msgs = gi.cvar ("flood_msgs", "4", 0);
-	flood_persecond = gi.cvar ("flood_persecond", "4", 0);
-	flood_waitdelay = gi.cvar ("flood_waitdelay", "10", 0);
+	flood_msgs = gi.cvar("flood_msgs", "4", 0);
+	flood_persecond = gi.cvar("flood_persecond", "4", 0);
+	flood_waitdelay = gi.cvar("flood_waitdelay", "10", 0);
 
 	/* dm map list */
-	sv_maplist = gi.cvar ("sv_maplist", "", 0);
+	sv_maplist = gi.cvar("sv_maplist", "", 0);
 
-	Com_sprintf (game.helpmessage1, sizeof(game.helpmessage1), "");
+	Com_sprintf(game.helpmessage1, sizeof(game.helpmessage1), "");
 
-	Com_sprintf (game.helpmessage2, sizeof(game.helpmessage2), "");
+	Com_sprintf(game.helpmessage2, sizeof(game.helpmessage2), "");
 
 	game.maxentities = maxentities->value;
 	game.maxplayers = maxplayers->value;
 
 	/* initialize all entities for this game */
-	g_edicts =  gi.TagMalloc (game.maxentities * sizeof(g_edicts[0]), TAG_GAME);
+	g_edicts = gi.TagMalloc(game.maxentities * sizeof(g_edicts[0]), TAG_GAME);
 	globals.edicts = g_edicts;
 	globals.max_edicts = game.maxentities;
 	globals.num_edicts = game.maxplayers;
 
 	/* initialize all players for this game */
-	game.players = gi.TagMalloc (game.maxplayers * 2 * sizeof(game.players[0]), TAG_GAME);
+	game.players = gi.TagMalloc(game.maxplayers * 2 * sizeof(game.players[0]), TAG_GAME);
 	globals.players = game.players;
 	globals.max_players = game.maxplayers;
 
 	/* init csi and inventory */
-	Com_InitCSI( gi.csi );
-	Com_InitInventory( invChain );
+	Com_InitCSI(gi.csi);
+	Com_InitInventory(invChain);
 }
 
 
 /*=================================================================== */
 
 
-void ShutdownGame (void)
+/**
+ * @brief Free the tags TAG_LEVEL and TAG_GAME
+ * @sa Z_FreeTags
+ */
+void ShutdownGame(void)
 {
-	gi.dprintf ("==== ShutdownGame ====\n");
+	gi.dprintf("==== ShutdownGame ====\n");
 
-	gi.FreeTags (TAG_LEVEL);
-	gi.FreeTags (TAG_GAME);
+	gi.FreeTags(TAG_LEVEL);
+	gi.FreeTags(TAG_GAME);
 }
 
 
-/*
-=================
-GetGameAPI
-
-Returns a pointer to the structure with all entry points
-and global variables
-=================
-*/
-game_export_t *GetGameAPI (game_import_t *import)
+/**
+ * @brief Returns a pointer to the structure with all entry points and global variables
+ */
+game_export_t *GetGameAPI(game_import_t * import)
 {
 	gi = *import;
-	srand( gi.seed );
+	srand(gi.seed);
 
 	globals.apiversion = GAME_API_VERSION;
 	globals.Init = InitGame;
@@ -274,45 +294,59 @@ game_export_t *GetGameAPI (game_import_t *import)
 
 #ifndef GAME_HARD_LINKED
 /* this is only here so the functions in q_shared.c and q_shwin.c can link */
-void Sys_Error (char *error, ...)
+void Sys_Error(char *error, ...)
 {
-	va_list		argptr;
-	char		text[1024];
+	va_list argptr;
+	char text[1024];
 
-	va_start (argptr, error);
-	vsprintf (text, error, argptr);
-	va_end (argptr);
+#if defined DEBUG && defined _MSC_VER
+	__debugbreak();	/* break execution before game shutdown */
+#endif
 
-	gi.error (ERR_FATAL, "%s", text);
+	va_start(argptr, error);
+	vsprintf(text, error, argptr);
+	va_end(argptr);
+
+	gi.error(ERR_FATAL, "%s", text);
 }
 
-void Com_Printf (char *msg, ...)
+void Com_Printf(char *msg, ...)
 {
-	va_list		argptr;
-	char		text[1024];
+	va_list argptr;
+	char text[1024];
 
-	va_start (argptr, msg);
-	vsprintf (text, msg, argptr);
-	va_end (argptr);
+	va_start(argptr, msg);
+	vsprintf(text, msg, argptr);
+	va_end(argptr);
 
-	gi.dprintf ("%s", text);
+	gi.dprintf("%s", text);
+}
+
+void Com_DPrintf(char *msg, ...)
+{
+	va_list argptr;
+	char text[1024];
+
+	if (!developer->value)
+		return;
+	va_start(argptr, msg);
+	vsprintf(text, msg, argptr);
+	va_end(argptr);
+
+	gi.dprintf("%s", text);
 }
 #endif
 
 /*====================================================================== */
 
 
-/*
-=================
-CheckNeedPass
-=================
-*/
-void CheckNeedPass (void)
+/**
+ * @brief If password or spectator_password has changed, update needpass as needed
+ */
+void CheckNeedPass(void)
 {
 	int need;
 
-	/* if password or spectator_password has changed, update needpass */
-	/* as needed */
 	if (password->modified || spectator_password->modified) {
 		password->modified = spectator_password->modified = qfalse;
 
@@ -327,94 +361,187 @@ void CheckNeedPass (void)
 	}
 }
 
-/*
-=============
-ExitLevel
-=============
-*/
-void ExitLevel (void)
+/**
+  * @brief Sends character stats like assigned missions and kills back to client
+  *
+  * @note first short is the ucn to allow the client to identify the character
+  * @note parsed in CL_ParseCharacterData
+  * @sa CL_ParseCharacterData
+  * @sa G_EndGame
+  */
+static void G_SendCharacterData( edict_t* ent )
 {
-	char	command [256];
+	int k;
 
-	Com_sprintf (command, sizeof(command), "gamemap \"%s\"\n", level.changemap);
-	gi.AddCommandString (command);
-	level.changemap = NULL;
+	assert(ent);
+#ifdef DEBUG
+	if (!ent)
+		return;	/* never reached. need for code analyst. */
+#endif
+
+	/* write character number */
+	gi.WriteShort(ent->chr.ucn);
+	/* scores */
+	for (k = 0; k < KILLED_NUM_TYPES; k++)
+		gi.WriteShort(ent->chr.kills[k]);
 }
 
-/*
-=================
-G_EndGame
-=================
-*/
-void G_EndGame( int team )
+/**
+  * @brief Handles the end of a game
+  * @note Called by game_abort command (or sv win [team])
+  * @sa G_RunFrame
+  */
+void G_EndGame(int team)
 {
 	edict_t *ent;
-	int i, j;
+	int i, j = 0;
+	int	number_of_teams;
+
+	/* if aliens won, make sure every soldier dies */
+	if (team == TEAM_ALIEN) {
+		level.num_alive[TEAM_PHALANX] = 0;
+		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) 
+				 && !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX ) {
+				ent->state = STATE_DEAD;
+				gi.AddEvent(PM_ALL, EV_ACTOR_STATECHANGE);
+				gi.WriteShort(ent->number);
+				gi.WriteShort(STATE_DEAD);
+			}
+	}
 
 	/* Make everything visible to anyone who can't already see it */
-	for ( i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-		if ( ent->inuse ) {
-			G_AppearPerishEvent( G_VisToPM( ~ent->visflags ), 1, ent );
-			if ( (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) )
-				G_SendInventory( PM_ALL ^ G_TeamToPM( ent->team ), ent );
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
+		if (ent->inuse) {
+			G_AppearPerishEvent(G_VisToPM(~ent->visflags), 1, ent);
+			if ((ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD))
+				G_SendInventory(PM_ALL ^ G_TeamToPM(ent->team), ent);
 		}
 
 	/* send results */
-	gi.AddEvent( PM_ALL, EV_RESULTS );
-	gi.WriteByte( MAX_TEAMS );
-	gi.WriteByte( team );
+	Com_DPrintf("Sending results for game won by team %i.\n", team);
+	gi.AddEvent(PM_ALL, EV_RESULTS);
+	number_of_teams = MAX_TEAMS;
+	gi.WriteByte(number_of_teams);
+	gi.WriteByte(team);
 
-	for ( i = 0; i < MAX_TEAMS; i++ ) {
-		gi.WriteByte( level.num_spawned[i] );
-		gi.WriteByte( level.num_alive[i] );
+	gi.WriteShort(2 * number_of_teams);
+	for (i = 0; i < number_of_teams; i++) {
+		gi.WriteByte(level.num_spawned[i]);
+		gi.WriteByte(level.num_alive[i]);
 	}
 
-	for ( i = 0; i < MAX_TEAMS; i++ )
-		for ( j = 0; j < MAX_TEAMS; j++ )
-			gi.WriteByte( level.num_kills[i][j] );
+	gi.WriteShort(number_of_teams * number_of_teams);
+	for (i = 0; i < number_of_teams; i++)
+		for (j = 0; j < number_of_teams; j++) {
+			gi.WriteByte(level.num_kills[i][j]);
+		}
 
-	gi.WriteByte( NONE );
+	/* how many alive actors */
+	for (j = 0, i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+			&& !(ent->state & STATE_DEAD)
+			&& ent->team == TEAM_PHALANX)
+			j++;
+
+	Com_DPrintf("Sending results with %i alive actors.\n", j);
+	gi.WriteShort((KILLED_NUM_TYPES + 1) * j * 2);
+
+	if (j) {
+		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
+			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+				 && !(ent->state & STATE_DEAD)
+				 && ent->team == TEAM_PHALANX ) {
+				Com_DPrintf("Sending results for actor %i.\n", i);
+				G_SendCharacterData(ent);
+			}
+	}
+
 	gi.EndEvents();
 }
 
-/*
-=================
-G_CheckEndGame
-=================
-*/
-void G_CheckEndGame( void )
+
+#if 0
+/**
+ * @brief checks for a mission objective
+ * @param[in] activeTeams The number of teams with living actors
+ * @return 1 if objective successful
+ * @return 0 if objective unsuccessful
+ * @return -1 if objective state unclear
+ */
+int G_MissionObjective (int activeTeams, int* winningTeam)
+{
+	/* TODO: put objective flag to level */
+	switch (level.objective) {
+	/* TODO: enum for objectives */
+	case OBJ_RESCUE_CIVILIANS:
+		if (!level.num_alive[TEAM_CIVILIAN])
+			return 0;
+		if (!level.num_alive[TEAM_ALIEN])
+			return 1;
+	/* TODO: More objectives */
+	default:
+		return -1;
+	}
+}
+#endif
+
+/**
+ * @brief Checks whether there are still actors to fight with left
+ * @sa G_EndGame
+ */
+void G_CheckEndGame(void)
 {
 	int activeTeams;
 	int i, last;
 
-	for ( i = 1, activeTeams = 0, last = 0; i < MAX_TEAMS; i++ )
-		if ( level.num_alive[i] ) {
+	if (level.intermissionTime) /* already decided */
+		return;
+
+	/* FIXME: count from 0 to get the civilians for objectives */
+	for (i = 1, activeTeams = 0, last = 0; i < MAX_TEAMS; i++)
+		if (level.num_alive[i]) {
 			last = i;
 			activeTeams++;
 		}
 
+	/* TODO: < 2 does not work when we count civilians */
 	/* prepare for sending results */
-	if ( activeTeams < 2 ) {
-		level.intermissionTime = level.time + 4.0;
-		if ( activeTeams == 0 ) level.winningTeam = 0;
-		else if ( activeTeams == 1 ) level.winningTeam = last;
+	if (activeTeams < 2 /* || G_MissionObjective(activeTeams, &level.winningTeam) != -1*/ ) {
+		if (activeTeams == 0)
+			level.winningTeam = 0;
+		else if (activeTeams == 1)
+			level.winningTeam = last;
+		level.intermissionTime = level.time + (last == TEAM_ALIEN ? 10.0 : 3.0);
 	}
 }
 
-/*
-================
-G_RunFrame
-================
-*/
-void G_RunFrame (void)
+/**
+ * @brief
+ * @sa SV_RunGameFrame
+ * @sa G_EndGame
+ * @sa AI_Run
+ */
+void G_RunFrame(void)
 {
 	level.framenum++;
-	level.time = level.framenum*FRAMETIME;
+	level.time = level.framenum * FRAMETIME;
 /*	Com_Printf( "frame: %i   time: %f\n", level.framenum, level.time ); */
 
 	/* check for intermission */
-	if ( level.intermissionTime && level.time > level.intermissionTime )
-		G_EndGame( level.winningTeam );
+	if (level.intermissionTime && level.time > level.intermissionTime) {
+		G_EndGame(level.winningTeam);
+#if 0
+/* It still happens that game resulsts are send twice --- dangerous */
+
+		/* if the message gets lost, the game will not end
+		   until you kill someone else, so we'll try again later,
+		   but much later, so that the intermission animations can end */
+		level.intermissionTime = level.time + 10.0;
+#endif
+		level.intermissionTime = 0.0;
+		return;
+	}
 
 	/* run ai */
 	AI_Run();

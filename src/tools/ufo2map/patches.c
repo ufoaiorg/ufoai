@@ -2,6 +2,27 @@
  * @file patches.c
  * @brief
  */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 #include "qrad.h"
 
 vec3_t	texture_reflectivity[MAX_MAP_TEXINFO];
@@ -272,11 +293,9 @@ void FinishSplit (patch_t *patch, patch_t *newp)
 }
 
 /**
-  *	@brief
-  *
-  * Chops the patch only if its local bounds exceed the max size
+  *	@brief Chops the patch only if its local bounds exceed the max size
   */
-void	SubdividePatch (patch_t *patch)
+void SubdividePatch (patch_t *patch)
 {
 	winding_t *w, *o1, *o2;
 	vec3_t	mins, maxs, total;
@@ -331,11 +350,9 @@ void	SubdividePatch (patch_t *patch)
 
 
 /**
-  *	@brief
-  *
-  * Chops the patch by a global grid
-  */
-void	DicePatch (patch_t *patch)
+ *	@brief Chops the patch by a global grid
+ */
+void DicePatch (patch_t *patch)
 {
 	winding_t *w, *o1, *o2;
 	vec3_t	mins, maxs;
@@ -353,17 +370,13 @@ void	DicePatch (patch_t *patch)
 	if (i == 3)
 		return;
 
-	/* */
 	/* split the winding */
-	/* */
 	VectorCopy (vec3_origin, split);
 	split[i] = 1;
 	dist = subdiv*(1+floor((mins[i]+1)/subdiv));
 	ClipWindingEpsilon (w, split, dist, ON_EPSILON, &o1, &o2);
 
-	/* */
 	/* create a new patch */
-	/* */
 	if (num_patches == MAX_PATCHES)
 		Error ("MAX_PATCHES");
 	newp = &patches[num_patches];

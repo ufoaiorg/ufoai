@@ -1,8 +1,28 @@
+/**
+ * @file qfiles.h
+ * @brief quake file formats
+ * @note This file must be identical in the quake and utils directories
+ */
 
-/* */
-/* qfiles.h: quake file formats */
-/* This file must be identical in the quake and utils directories */
-/* */
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
 
 /*
 ========================================================================
@@ -81,7 +101,7 @@ typedef struct
 	short	t;
 } dstvert_t;
 
-typedef struct 
+typedef struct
 {
 	short	index_xyz[3];
 	short	index_st[3];
@@ -137,7 +157,7 @@ typedef struct
 	int			ofs_st;			/* byte offset from start for stverts */
 	int			ofs_tris;		/* offset for dtriangles */
 	int			ofs_frames;		/* offset for first frame */
-	int			ofs_glcmds;	
+	int			ofs_glcmds;
 	int			ofs_end;		/* end of file */
 
 } dmdl_t;
@@ -266,7 +286,7 @@ typedef struct
 typedef struct
 {
 	int			ident;
-	int			version;	
+	int			version;
 	lump_t		lumps[HEADER_LUMPS];
 } dheader_t;
 
@@ -404,7 +424,7 @@ typedef struct
 	short		side;
 
 	int			firstedge;		/* we must support > 64k edges */
-	short		numedges;	
+	short		numedges;
 	short		texinfo;
 
 /* lighting info */

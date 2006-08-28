@@ -36,23 +36,21 @@ void RS_GetFirstRequired(int tech_idx, stringlist_t * required);
 qboolean RS_TechIsResearchable(technology_t * t);
 
 /* A (local) list of displayed technology-entries (the research list in the base) */
-technology_t *researchList[MAX_RESEARCHLIST];
+static technology_t *researchList[MAX_RESEARCHLIST];
 
 /* The number of entries in the above list. */
-int researchListLength;
+static int researchListLength;
 
 /* The currently selected entry in the above list. */
-int researchListPos;
+static int researchListPos;
+
+static stringlist_t curRequiredList;
 
 
-/*======================
-RS_MarkOneCollected
-
-Marks one tech as 'collected'  if an item it 'provides' (= id) has been collected.
-
-IN
-	id:	unique id of a provided item (can be item/building/craft/etc..)
-======================*/
+/**
+ * @brief Marks one tech as 'collected'  if an item it 'provides' (= id) has been collected.
+ * @param id unique id of a provided item (can be item/building/craft/etc..)
+ */
 void RS_MarkOneCollected(char *id)
 {
 	int i;
@@ -68,46 +66,38 @@ void RS_MarkOneCollected(char *id)
 	Com_Printf("RS_MarkOneCollected: \"%s\" not found. No tech provides this.\n", id);
 }
 
-/*======================
-RS_MarkCollected
-
-Marks all techs if an item they 'provide' have been collected.
-Should be run after items have been collected/looted from the
-battlefield (cl_campaign.c -> "CL_CollectItems") and after techtree/inventory init (for all).
-======================*/
-void RS_MarkCollected(void)
+/**
+ * @brief Marks all techs if an item they 'provide' have been collected.
+ * Should be run after items have been collected/looted from the
+ * battlefield (cl_campaign.c -> "CL_CollectItems") and after techtree/inventory init (for all).
+ */
+void RS_MarkCollected(equipDef_t *ed)
 {
 	int i;
 
 	for (i = 0; i < MAX_OBJDEFS; i++) {
-		if (ccs.eCampaign.num[i]) {
+		if (ed->num[i]) {
 			Com_DPrintf("RS_MarkCollected: %s marked as collected.\n", csi.ods[i].kurz);
 			RS_MarkOneCollected(csi.ods[i].kurz);
 		}
 	}
 }
 
-/*======================
-RS_MarkOneResearchable
-
-Marks one tech as researchedable.
-
-IN
-	id:	unique id of a technology_t
-======================*/
+/**
+ * @brief Marks one tech as researchedable.
+ * @param id unique id of a technology_t
+ */
 void RS_MarkOneResearchable(int tech_idx)
 {
 	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", gd.technologies[tech_idx].id);
 	gd.technologies[tech_idx].statusResearchable = qtrue;
 }
 
-/*======================
-RS_MarkResearchable
-
-Marks all the techs that can be researched.
-Should be called when a new item is researched (RS_MarkResearched) and after
-the tree-initialisation (RS_InitTree)
-======================*/
+/**
+ * @brief Marks all the techs that can be researched.
+ * Should be called when a new item is researched (RS_MarkResearched) and after
+ * the tree-initialisation (RS_InitTree)
+ */
 void RS_MarkResearchable(void)
 {
 	int i, j;
@@ -115,7 +105,6 @@ void RS_MarkResearchable(void)
 	stringlist_t firstrequired;
 	stringlist_t *required = NULL;
 	byte required_are_researched;
-
 
 	/* set all entries to initial value */
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -174,34 +163,29 @@ void RS_MarkResearchable(void)
 	Com_DPrintf("RS_MarkResearchable: Done.\n");
 }
 
-
-/*======================
-Com_AddObjectTechs
-======================*/
+/**
+ * @brief Link the tech pointers to object definitions
+ */
 void RS_AddObjectTechs(void)
 {
 	objDef_t *od;
 	int i;
 
-	/* add weapon link to ammo */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		od->tech = RS_GetTechByProvided(od->kurz);
 #ifdef DEBUG
 		if (!od->tech)
 			Sys_Error("Com_AddObjectTechs: Could not find a valid tech for item %s\n", od->kurz);
-#endif							/* DEBUG */
+#endif /* DEBUG */
 	}
 }
 
-/*======================
-RS_InitTree
-
-Gets all needed names/file-paths/etc... for each technology entry.
-Should be executed after the parsing of _all_ the ufo files and e.g. the
-research tree/inventory/etc... are initialised.
-
-TODO: add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
-======================*/
+/**
+ * @brief Gets all needed names/file-paths/etc... for each technology entry.
+ * Should be executed after the parsing of _all_ the ufo files and e.g. the
+ * research tree/inventory/etc... are initialised.
+ * TODO: add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
+ */
 void RS_InitTree(void)
 {
 	int i, j, k;
@@ -211,7 +195,7 @@ void RS_InitTree(void)
 	objDef_t *item = NULL;
 	objDef_t *item_ammo = NULL;
 	building_t *building = NULL;
-	aircraft_t *ac = NULL;
+	aircraft_t *air_samp = NULL;
 	byte found;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -232,6 +216,11 @@ void RS_InitTree(void)
 
 		/* Search in correct data/.ufo */
 		switch (tech->type) {
+		case RS_CRAFTWEAPON:
+		case RS_CRAFTSHIELD:
+			if (!*tech->name)
+				Com_DPrintf("RS_InitTree: \"%s\" A type craftshield or craftweapon item needs to have a 'name\txxx' defined.", tech->id);
+			break;
 		case RS_TECH:
 			if (!*tech->name)
 				Com_DPrintf("RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", tech->id);
@@ -266,7 +255,6 @@ void RS_InitTree(void)
 					/* Should return to CASE RS_xxx. */
 					break;
 				}
-
 			}
 			/*no id found in csi.ods */
 			if (!found) {
@@ -297,16 +285,16 @@ void RS_InitTree(void)
 			break;
 		case RS_CRAFT:
 			found = qfalse;
-			for (j = 0; j < numAircraft; j++) {
-				ac = &aircraft[j];
+			for (j = 0; j < numAircraft_samples; j++) {
+				air_samp = &aircraft_samples[j];
 				/* This aircraft has been 'provided'  -> get the correct data. */
-				if (!Q_strncmp(tech->provides, ac->id, MAX_VAR)) {
+				if (!Q_strncmp(tech->provides, air_samp->id, MAX_VAR)) {
 					found = qtrue;
 					if (!*tech->name)
-						Com_sprintf(tech->name, MAX_VAR, ac->name);
+						Com_sprintf(tech->name, MAX_VAR, air_samp->name);
 					if (!*tech->mdl_top) {	/* DEBUG testing */
-						Com_sprintf(tech->mdl_top, MAX_VAR, ac->model);
-						Com_DPrintf("RS_InitTree: aircraft model \"%s\" \n", ac->model);
+						Com_sprintf(tech->mdl_top, MAX_VAR, air_samp->model);
+						Com_DPrintf("RS_InitTree: aircraft model \"%s\" \n", air_samp->model);
 					}
 					/* Should return to CASE RS_xxx. */
 					break;
@@ -321,26 +309,25 @@ void RS_InitTree(void)
 		case RS_UGV:
 			/* TODO: Implement me */
 			break;
-		}						/* switch */
+		} /* switch */
 	}
-	RS_MarkCollected();
+	for (i = 0; i < gd.numBases; i++)
+		if (gd.bases[i].founded)
+			RS_MarkCollected(&gd.bases[i].storage);
+
 	RS_MarkResearchable();
+
+	memset(&curRequiredList, 0, sizeof(stringlist_t));
+
 	Com_DPrintf("RS_InitTree: Technology tree initialised. %i entries found.\n", i);
 }
 
-/*======================
-RS_GetName
-
-Return "name" if present, otherwise enter the correct .ufo file and
-get it from the definition there.
-
-IN
-	id:	unique id of a technology_t
-
-OUT
-	name:	Full name of this technology_t (technology_t->name).
-			Defaults to id if nothing is found.
-======================*/
+/**
+ * @brief Return "name" if present, otherwise enter the correct .ufo file and get it from the definition there.
+ * @param[in] id unique id of a technology_t
+ * @param[out] name Full name of this technology_t (technology_t->name) - defaults to id if nothing is found.
+ * @note name has a maxlength of MAX_VAR
+ */
 void RS_GetName(char *id, char *name)
 {
 	technology_t *tech = NULL;
@@ -363,20 +350,17 @@ void RS_GetName(char *id, char *name)
 	}
 }
 
-/*======================
-RS_ResearchDisplayInfo
-
-Displays the informations of the current selected technology in the description-area.
-See menu_research.ufo for the layout/called functions.
-======================*/
+/**
+ * @brief Displays the informations of the current selected technology in the description-area.
+ * See menu_research.ufo for the layout/called functions.
+ */
 static void RS_ResearchDisplayInfo(void)
 {
 	int i;
 	technology_t *tech = NULL;
 	base_t *base = NULL;
-	char dependencies[MAX_VAR];
+	static char dependencies[256];
 	char tempstring[MAX_VAR];
-	stringlist_t req_temp;
 
 	/* we are not in base view */
 	if (!baseCurrent)
@@ -388,32 +372,29 @@ static void RS_ResearchDisplayInfo(void)
 	tech = researchList[researchListPos];
 
 	/* Display total number of free labs in current base. */
-	Cvar_Set("mn_research_labs", va(_("Free labs in this base: %i"), B_GetUnusedLabs(baseCurrent->idx)));
-	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue)));
+	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), E_CountUnassigned(baseCurrent, EMPL_SCIENTIST)));
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
 	/* Display the base this tech is researched in. */
-	if (tech->lab >= 0) {
+	if (tech->scientists >= 0) {
 		if (tech->base_idx != baseCurrent->idx) {
 			base = &gd.bases[tech->base_idx];
 			Cvar_Set("mn_research_selbase", va(_("Researched in %s"), base->name));
-		} else {
+		} else
 			Cvar_Set("mn_research_selbase", _("Researched in this base."));
-		}
 	}
 
-	Cvar_Set("mn_research_selname", tech->name);
+	Cvar_Set("mn_research_selname", _(tech->name));
 	if (tech->overalltime) {
 		if (tech->time > tech->overalltime) {
 			Com_Printf("RS_ResearchDisplayInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", tech->id, tech->time,
-					   tech->overalltime);
+					tech->overalltime);
 			/* just in case the values got messed up */
 			tech->time = tech->overalltime;
 		}
 		Cvar_Set("mn_research_seltime", va(_("Progress: %.1f%%"), 100 - (tech->time * 100 / tech->overalltime)));
-	} else {
+	} else
 		Cvar_Set("mn_research_seltime", _("Progress: Not available."));
-	}
 
 	switch (tech->statusResearch) {
 	case RS_RUNNING:
@@ -432,30 +413,27 @@ static void RS_ResearchDisplayInfo(void)
 		break;
 	}
 
-	req_temp.numEntries = 0;
-	RS_GetFirstRequired(tech->idx, &req_temp);
-	Com_sprintf(dependencies, MAX_VAR, _("Dependencies: "));
-	if (req_temp.numEntries > 0) {
-		for (i = 0; i < req_temp.numEntries; i++) {
-			/* name_temp gets initialised in getname. */
-			RS_GetName(req_temp.string[i], tempstring);
-			Q_strcat(dependencies, MAX_VAR, tempstring);
+	memset(&curRequiredList, 0, sizeof(stringlist_t));
+	RS_GetFirstRequired(tech->idx, &curRequiredList);
 
-			if (i < req_temp.numEntries - 1)
-				Q_strcat(dependencies, MAX_VAR, ", ");
-		}
-	} else {
-		*dependencies = '\0';
+	/* clear the list */
+	*dependencies = '\0';
+
+	for (i = 0; i < curRequiredList.numEntries; i++) {
+		/* name_temp gets initialised in getname. */
+		RS_GetName(curRequiredList.string[i], tempstring);
+		Q_strcat(dependencies, tempstring, sizeof(dependencies));
+		Q_strcat(dependencies, "\n", sizeof(dependencies));
 	}
-	Cvar_Set("mn_research_seldep", dependencies);
+
+	menuText[TEXT_RESEARCH_INFO] = dependencies;
+	Cvar_Set("mn_research_seldep", _("Dependencies"));
 }
 
-/*======================
-CL_ResearchSelectCmd
-
-Changes the active research-list entry to the currently selected.
-See menu_research.ufo for the layout/called functions.
-======================*/
+/**
+ * @brief Changes the active research-list entry to the currently selected.
+ * See menu_research.ufo for the layout/called functions.
+ */
 static void CL_ResearchSelectCmd(void)
 {
 	int num;
@@ -479,52 +457,51 @@ static void CL_ResearchSelectCmd(void)
 	RS_UpdateData();
 }
 
-/*======================
-RS_AssignScientist + RS_AssignScientist2
-
-Assigns scientist to the selected research-project.
-======================*/
-static void RS_AssignScientist2(int num)
+/**
+ * @brief Assigns scientist to the selected research-project.
+ * @note The lab will be automatically selected (the first one that has still free space).
+ * @param[in] tech What technology you want to assign the scientist to.
+ * @sa RS_AssignScientist_f
+ */
+void RS_AssignScientist(technology_t* tech)
 {
-	technology_t *tech = NULL;
 	building_t *building = NULL;
+	employee_t *employee = NULL;
+	base_t *base = NULL;
 
-	if (num >= researchListLength) {
-		menuText[TEXT_STANDARD] = NULL;
-		return;
+	Com_DPrintf("RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
+
+	if  (tech->base_idx >= 0) {
+		base = &gd.bases[tech->base_idx];
+	} else {
+		base = baseCurrent;
 	}
 
-	tech = researchList[num];
+	employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
 
-	if ( B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue) <= 0 ) {
-		/* no scientists are free in this base */
+	if (!employee) {
+		/* No scientists are free in this base. */
 		return;
 	}
 
 	if (tech->statusResearchable) {
-		/* Check if the tech already has been assigned to a lab. */
-		if (tech->lab < 0) {
-			/* Check if there is a free lab available. */
-			/* Get a free lab from the currently active base. */
-			building = B_GetUnusedLab(baseCurrent->idx);
-			if (building) {
-				/* Assign the tech to a lab&base. */
-				tech->lab = building->idx;
-				tech->base_idx = building->base_idx;
-			} else {
-				MN_Popup(_("Notice"),
-						 _
-						 ("There is no free lab available.\\You need to build one or free another\\in order to assign scientists to research this technology.\n"));
-				return;
-			}
+		/* Get a free lab from the base. */
+		building = B_GetLab(base->idx);
+		if (building) {
+			/* Assign the tech to a lab&base. */
+			tech->scientists++;
+			tech->base_idx = building->base_idx;
+			employee->buildingID = building->idx;
+			/* TODO: use
+			E_AssignEmployeeToBuilding(employee, building);
+			instead. */
+		} else {
+			MN_Popup(_("Notice"),
+				_("There is no free lab available.\nYou need to build one or free another\nin order to assign scientists to research this technology.\n"));
+			return;
 		}
 
-		/* Assign a scientists to the lab. */
-		if (B_AssignEmployee(&gd.buildings[baseCurrent->idx][tech->lab], EMPL_SCIENTIST)) {
-			tech->statusResearch = RS_RUNNING;
-		} else {
-			Com_Printf("Can't add scientist from the lab.\n");
-		}
+		tech->statusResearch = RS_RUNNING;
 
 		/* Update display-list and display-info. */
 		RS_ResearchDisplayInfo();
@@ -532,7 +509,12 @@ static void RS_AssignScientist2(int num)
 	}
 }
 
-static void RS_AssignScientist(void)
+/**
+ * @brief Script function to add a scientist to  the technology entry in the research-list.
+ * @sa RS_AssignScientist
+ * @sa RS_RemoveScientist_f
+ */
+static void RS_AssignScientist_f(void)
 {
 	int num;
 
@@ -542,56 +524,45 @@ static void RS_AssignScientist(void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-
-	RS_AssignScientist2(num);
-}
-
-
-
-/*======================
-RS_RemoveScientist + RS_RemoveScientist2
-
-Remove scientist from the selected research-project.
-======================*/
-static void RS_RemoveScientist2(int num)
-{
-	technology_t *tech = NULL;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
-
-	if (num >= researchListLength) {
-		menuText[TEXT_STANDARD] = NULL;
+	if (num < 0 || num > researchListLength)
 		return;
-	}
 
-	tech = researchList[num];
-
-	/* TODO: remove scientists from research-item */
-	Com_DPrintf("RS_RemoveScientist: %s\n", tech->id);
-	if (tech->lab >= 0) {
-		building = &gd.buildings[tech->base_idx][tech->lab];
-		Com_DPrintf("RS_RemoveScientist: %s\n", building->name);
-		if (B_RemoveEmployee(building)) {
-			Com_DPrintf("RS_RemoveScientist: Removal done.\n");
-			employees_in_building = &building->assigned_employees;
-			if (employees_in_building->numEmployees == 0) {
-				tech->lab = -1;
-				tech->base_idx = -1;
-				tech->statusResearch = RS_PAUSED;
-			}
-		} else {
-			Com_DPrintf("Can't remove scientist from the lab.\n");
-		}
-	} else {
-		Com_DPrintf("This tech is not researched in any lab.\n");
-	}
-
-	/* Update display-list and display-info. */
-	RS_ResearchDisplayInfo();
-	RS_UpdateData();
+	Com_DPrintf("RS_AssignScientist_f: num %i\n", num);
+	RS_AssignScientist(researchList[num]);
 }
 
-static void RS_RemoveScientist(void)
+
+/**
+ * @brief Remove a scientist from a technology.
+ * @param[in] tech The technology you want to remove the scientist from.
+ * @sa RS_RemoveScientist_f
+ * @sa RS_AssignScientist
+ */
+static void RS_RemoveScientist(technology_t* tech)
+{
+	employee_t *employee = NULL;
+
+	assert(tech);
+
+	if (tech->scientists > 0) {
+		employee = E_GetAssignedEmployee(&gd.bases[tech->base_idx], EMPL_SCIENTIST);
+		if (employee) {
+			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
+			tech->scientists--;
+		}
+	}
+
+	if (tech->scientists == 0) {
+		tech->base_idx = -1;
+	}
+}
+
+/**
+ * @brief Script function to remove a scientist from the technology entry in the research-list.
+ * @sa RS_AssignScientist_f
+ * @sa RS_RemoveScientist
+ */
+static void RS_RemoveScientist_f(void)
 {
 	int num;
 
@@ -601,22 +572,23 @@ static void RS_RemoveScientist(void)
 	}
 
 	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num > researchListLength)
+		return;
 
-	RS_RemoveScientist2(num);
+	RS_RemoveScientist(researchList[num]);
+
+	/* Update display-list and display-info. */
+	RS_ResearchDisplayInfo();
+	RS_UpdateData();
 }
 
-/*======================
-RS_ResearchStart
-
-Starts the research of the selected research-list entry.
-
-TODO: Check if laboratory is available
-======================*/
+/**
+ * @brief Starts the research of the selected research-list entry.
+ * TODO: Check if laboratory is available
+ */
 static void RS_ResearchStart(void)
 {
 	technology_t *tech = NULL;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
 
 	/* We are not in base view. */
 	if (!baseCurrent)
@@ -644,35 +616,25 @@ static void RS_ResearchStart(void)
 			MN_Popup(_("Notice"), _("The research on this item is complete."));
 			break;
 		case RS_NONE:
-			if (tech->lab < 0) {
+			if (tech->scientists <= 0) {
 				/* Add scientists to tech. */
-				RS_AssignScientist2(researchListPos);
-			} else {
-				building = &gd.buildings[tech->base_idx][tech->lab];
-				employees_in_building = &building->assigned_employees;
-				if (employees_in_building->numEmployees < 1) {
-					/* add scientists to tech */
-					RS_AssignScientist2(researchListPos);
-				}
+				RS_AssignScientist(tech);
 			}
 			tech->statusResearch = RS_RUNNING;
 			break;
 		default:
 			break;
 		}
-	} else {
+	} else
 		MN_Popup(_("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first."));
-	}
+
 	RS_UpdateData();
 }
 
-/*======================
-RS_ResearchStop
-
-Pauses the research of the selected research-list entry.
-
-TODO: Check if laboratory is available
-======================*/
+/**
+ * @brief Pauses the research of the selected research-list entry.
+ * TODO: Check if laboratory is available
+ */
 static void RS_ResearchStop(void)
 {
 	technology_t *tech = NULL;
@@ -684,14 +646,12 @@ static void RS_ResearchStop(void)
 	/* get the currently selected research-item */
 	tech = researchList[researchListPos];
 
-	/* TODO: remove lab from technology and scientists from lab */
-
 	switch (tech->statusResearch) {
 	case RS_RUNNING:
+		/* TODO: remove lab from technology and scientists from lab */
 		tech->statusResearch = RS_PAUSED;
 		break;
 	case RS_PAUSED:
-		MN_Popup(_("Notice"), _("The research on this item continues."));
 		tech->statusResearch = RS_RUNNING;
 		break;
 	case RS_FINISH:
@@ -706,64 +666,61 @@ static void RS_ResearchStop(void)
 	RS_UpdateData();
 }
 
-/*======================
-RS_UpdateData
-
-Loops trough the research-list and updates the displayed text+color
-of each research-item according to it's status.
-See menu_research.ufo for the layout/called functions.
-======================*/
+/**
+ * @brief Loops trough the research-list and updates the displayed text+color of each research-item according to it's status.
+ * @note See menu_research.ufo for the layout/called functions.
+ * @todo Display free space in all labs in the current base for each item.
+ */
 void RS_UpdateData(void)
 {
 	char name[MAX_VAR];
 	int i, j;
+	int available[MAX_BASES];
 	technology_t *tech = NULL;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
-	char tempstring[MAX_VAR];
-
-	*name = '\0';				/* init temp-name */
 
 	/* Make everything the same (predefined in the ufo-file) color. */
 	Cbuf_AddText("research_clear\n");
+
+	for (i=0; i < gd.numBases; i++) {
+		available[i] = E_CountUnassigned(&gd.bases[i], EMPL_SCIENTIST);
+	}
 
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 		Com_sprintf(name, MAX_VAR, tech->name);
 
-		/* An unresearched collected item that cannot yet be researched. */
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
-			Q_strcat(name, MAX_VAR, _(" [not yet researchable]"));
+			/* An unresearched collected item that cannot yet be researched. */
+
+			Q_strcat(name, _(" [not yet researchable]"), MAX_VAR);
 			/* Color the item 'unresearchable' */
 			Cbuf_AddText(va("researchunresearchable%i\n", j));
 			/* Display the concated text in the correct list-entry. */
 			Cvar_Set(va("mn_researchitem%i", j), name);
+
+			Cvar_Set(va("mn_researchassigned%i", j), "--");
+			Cvar_Set(va("mn_researchavailable%i", j), "--");
+			Cvar_Set(va("mn_researchmax%i", j), "--");
+
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */
 			researchList[j] = &gd.technologies[i];
 			/* counting the numbers of display-list entries. */
 			j++;
 		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
-			/*TODO: */
-			Cvar_Set(va("mn_researchassigned%i", j), "as.");
-			Cvar_Set(va("mn_researchavailable%i", j), "av.");
-			Cvar_Set(va("mn_researchmax%i", j), "mx.");
+			/* An item that can be researched. */
 
-			if (tech->lab >= 0) {
-				/* Display the assigned/free/max numbers of scientists for this tech. */
-				building = &gd.buildings[tech->base_idx][tech->lab];
-				employees_in_building = &building->assigned_employees;
-				Com_sprintf(tempstring, MAX_VAR, _("%i max.\n"), employees_in_building->maxEmployees);
-				/* Maximum number of employees in this base. */
-				Cvar_Set(va("mn_researchmax%i", j), tempstring);
-				Com_sprintf(tempstring, MAX_VAR, "%i\n", employees_in_building->numEmployees);
-				/* Assigned employees to the technology. */
-				Cvar_Set(va("mn_researchassigned%i", j), tempstring);
-				Com_sprintf(tempstring, MAX_VAR, "%i\n", B_EmployeesInBase2(building->base_idx, EMPL_SCIENTIST, qtrue));
-				/* Maximal available scientists in the base the tech is reseearched. */
-				Cvar_Set(va("mn_researchavailable%i", j), tempstring);
+			/* How many scis are assigned to this tech. */
+			Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
+			if ((tech->base_idx == baseCurrent->idx) || (tech->base_idx < 0) ) {
+				/* Maximal available scientists in the base the tech is researched. */
+				Cvar_SetValue(va("mn_researchavailable%i", j), available[baseCurrent->idx]);
+			} else {
+				/* Display available scientists of other base here. */
+				Cvar_SetValue(va("mn_researchavailable%i", j), available[tech->base_idx]);
 			}
-
-
+			/* TODO: Free space in all labs in this base. */
+			/* Cvar_SetValue(va("mn_researchmax%i", j), available); */
+			Cvar_Set(va("mn_researchmax%i", j), "mx.");
 			/* Set the text of the research items and mark them if they are currently researched. */
 			switch (tech->statusResearch) {
 			case RS_RUNNING:
@@ -822,11 +779,10 @@ void RS_UpdateData(void)
 	RS_ResearchDisplayInfo();
 }
 
-/*======================
-CL_ResearchType
-
-TODO: document this
-======================*/
+/**
+ * @brief
+ * TODO: document this
+ */
 void CL_ResearchType(void)
 {
 	/* Update and display the list. */
@@ -839,18 +795,12 @@ void CL_ResearchType(void)
 		MN_Popup(_("Notice"), _("Build a laboratory first"));
 }
 
-/*======================
-RS_DependsOn
-
-Checks if the research item id1 depends on (requires) id2
-
-IN
-	id1:	Unique id of a technology_t that may or may not depend on id2.
-	id2:	Unique id of a technology_t
-
-OUT
-	boolean	RS_DependsOn
-======================*/
+/**
+ * @brief Checks if the research item id1 depends on (requires) id2
+ * @param[in] id1 Unique id of a technology_t that may or may not depend on id2.
+ * @param[in] id2 Unique id of a technology_t
+ * @return qboolean
+ */
 static qboolean RS_DependsOn(char *id1, char *id2)
 {
 	int i;
@@ -871,14 +821,10 @@ static qboolean RS_DependsOn(char *id1, char *id2)
 	return qfalse;
 }
 
-/*======================
-RS_MarkResearched
-
-Mark technologies as researched. This includes techs that depends in "id" and have time=0
-
-IN
-	id:	Unique id of a technology_t.
-======================*/
+/**
+ * @brief Mark technologies as researched. This includes techs that depends in "id" and have time=0
+ * @param[in] id Unique id of a technology_t
+ */
 void RS_MarkResearched(char *id)
 {
 	int i;
@@ -897,17 +843,15 @@ void RS_MarkResearched(char *id)
 	RS_MarkResearchable();
 }
 
-/*======================
-CL_CheckResearchStatus
-
-TODO: document this
-======================*/
+/**
+ * @brief Checks the research status
+ * @todo Needs to check on the exact time that elapsed since the last check fo the status.
+ *
+ */
 void CL_CheckResearchStatus(void)
 {
 	int i, newResearch = 0;
 	technology_t *tech = NULL;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
 
 	if (!researchListLength)
 		return;
@@ -915,42 +859,27 @@ void CL_CheckResearchStatus(void)
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 		if (tech->statusResearch == RS_RUNNING) {
-			if (tech->time <= 0) {
-				if (!newResearch)
+			if ( ( tech->time > 0 ) && ( tech->scientists >= 0 ) ) {
+				Com_DPrintf("timebefore %.2f\n", tech->time);
+				Com_DPrintf("timedelta %.2f\n", tech->scientists * 0.8);
+				/* TODO: Just for testing, better formular may be needed. */
+				tech->time -= tech->scientists * 0.8;
+				Com_DPrintf("timeafter %.2f\n", tech->time);
+				/* TODO include employee-skill in calculation. */
+				/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
+				if (tech->time <= 0) {
 					Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Research of %s finished\n"), tech->name);
-				else
-					Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("%i researches finished\n"), newResearch + 1);
-				MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech);
+					MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech);
 
-				B_ClearBuilding(&gd.buildings[tech->base_idx][tech->lab]);
-				tech->base_idx = -1;
-				tech->lab = -1;
-				RS_MarkResearched(tech->id);
-				researchListPos = 0;
-				newResearch++;
-				tech->time = 0;
-			} else {
-				if (tech->lab >= 0) {
-					building = &gd.buildings[tech->base_idx][tech->lab];
-					Com_DPrintf("building found %s\n", building->name);
-					employees_in_building = &building->assigned_employees;
-					if (employees_in_building->numEmployees > 0) {
-						Com_DPrintf("employees are there\n");
-#if 0
-						/* OLD */
-						/* reduce one time-unit */
-						tech->time--;
-#endif
-						Com_DPrintf("timebefore %.2f\n", tech->time);
-						Com_DPrintf("timedelta %.2f\n", employees_in_building->numEmployees * 0.8);
-						/* TODO: Just for testing, better formular may be needed. */
-						tech->time -= employees_in_building->numEmployees * 0.8;
-						Com_DPrintf("timeafter %.2f\n", tech->time);
-						/* TODO include employee-skill in calculation. */
-						/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
-						if (tech->time < 0)
-							tech->time = 0;
-					}
+					/* Remove all scientists from the technology. */
+					while (tech->scientists > 0)
+						RS_RemoveScientist(tech);
+
+					RS_MarkResearched(tech->id);
+					researchListLength = 0;
+					researchListPos = 0;
+					newResearch++;
+					tech->time = 0;
 				}
 			}
 		}
@@ -963,13 +892,10 @@ void CL_CheckResearchStatus(void)
 }
 
 #ifdef DEBUG
-/*======================
-RS_TechnologyList_f
-
-List all parsed technologies and their attributes in commandline/console.
-
-Command to call this: techlist
-======================*/
+/**
+ * @brief List all parsed technologies and their attributes in commandline/console.
+ * Command to call this: techlist
+ */
 static void RS_TechnologyList_f(void)
 {
 	int i, j;
@@ -1000,6 +926,12 @@ static void RS_TechnologyList_f(void)
 			break;
 		case RS_CRAFT:
 			Com_Printf("craft");
+			break;
+		case RS_CRAFTWEAPON:
+			Com_Printf("craftweapon");
+			break;
+		case RS_CRAFTSHIELD:
+			Com_Printf("craftshield");
 			break;
 		case RS_ARMOR:
 			Com_Printf("armor");
@@ -1049,25 +981,23 @@ static void RS_TechnologyList_f(void)
 }
 #endif
 
-/*======================
-MN_ResearchInit
-
-Command to call this: research_init
-
-Should be called whenever the research menu
-gets active
-======================*/
+/**
+ * @brief
+ * Command to call this: research_init
+ *
+ * Should be called whenever the research menu
+ * gets active
+ */
 void MN_ResearchInit(void)
 {
 	CL_ResearchType();
 }
 
 #ifdef DEBUG
-/*======================
-RS_DebugResearchAll
-
-call this function if you already hold a tech pointer
-======================*/
+/**
+ * @brief Set all item to researched
+ * @note Just for debugging purposes
+ */
 static void RS_DebugResearchAll(void)
 {
 	int i;
@@ -1081,13 +1011,30 @@ static void RS_DebugResearchAll(void)
 }
 #endif
 
-/*======================
-RS_ResetResearch
+/**
+ * @brief Opens UFOpedia by clicking dependency list
+ */
+void RS_DependenciesClick_f (void)
+{
+	int num;
 
-This is more or less the initial
-Bind some of the functions in htis file to console-commands that you can call ingame.
-Called from MN_ResetMenus resp. CL_InitLocal
-======================*/
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: research_dependencies_click <num>\n");
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	if (num >= curRequiredList.numEntries)
+		return;
+
+	UP_OpenWith(curRequiredList.string[num]);
+}
+
+/**
+ * @brief This is more or less the initial
+ * Bind some of the functions in this file to console-commands that you can call ingame.
+ * Called from MN_ResetMenus resp. CL_InitLocal
+ */
 void RS_ResetResearch(void)
 {
 	researchListLength = 0;
@@ -1097,47 +1044,43 @@ void RS_ResetResearch(void)
 	Cmd_AddCommand("research_type", CL_ResearchType);
 	Cmd_AddCommand("mn_start_research", RS_ResearchStart);
 	Cmd_AddCommand("mn_stop_research", RS_ResearchStop);
-	Cmd_AddCommand("mn_rs_add", RS_AssignScientist);
-	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist);
+	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f);
+	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f);
 	Cmd_AddCommand("research_update", RS_UpdateData);
 	Cmd_AddCommand("invlist", Com_InventoryList_f);
+	Cmd_AddCommand("research_dependencies_click", RS_DependenciesClick_f);
 #ifdef DEBUG
 	Cmd_AddCommand("techlist", RS_TechnologyList_f);
 	Cmd_AddCommand("research_all", RS_DebugResearchAll);
 #endif
 }
 
-/*======================
-The valid definition names in the research.ufo file.
-NOTE: the TECHFS macro assignes the values from scriptfile
-to the appropriate values in the corresponding struct
-======================*/
-value_t valid_tech_vars[] = {
+/**
+ * @brief The valid definition names in the research.ufo file.
+ */
+static value_t valid_tech_vars[] = {
 	/*name of technology */
-	{"name", V_TRANSLATION2_STRING, TECHFS(name)},
-	{"description", V_TRANSLATION2_STRING, TECHFS(description)},
+	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name)},
+	{"description", V_TRANSLATION2_STRING, offsetof(technology_t, description)},
 	/*what does this research provide */
-	{"provides", V_STRING, TECHFS(provides)},
+	{"provides", V_STRING, offsetof(technology_t, provides)},
 	/* to be able to research this tech zou need all "required" and at least one collected "provides" item. */
-	{"needscollected", V_BOOL, TECHFS(needsCollected)},
+	{"needscollected", V_BOOL, offsetof(technology_t, needsCollected)},
 	/*how long will this research last */
-	{"time", V_FLOAT, TECHFS(time)},
-	{"image_top", V_STRING, TECHFS(image_top)},
-	{"image_bottom", V_STRING, TECHFS(image_bottom)},
-	{"mdl_top", V_STRING, TECHFS(mdl_top)},
-	{"mdl_bottom", V_STRING, TECHFS(mdl_bottom)},
+	{"producetime", V_INT, offsetof(technology_t, produceTime)},
+	{"time", V_FLOAT, offsetof(technology_t, time)},
+	{"image_top", V_STRING, offsetof(technology_t, image_top)},
+	{"image_bottom", V_STRING, offsetof(technology_t, image_bottom)},
+	{"mdl_top", V_STRING, offsetof(technology_t, mdl_top)},
+	{"mdl_bottom", V_STRING, offsetof(technology_t, mdl_bottom)},
 	{NULL, 0, 0}
 };
 
-/*======================
-RS_ParseTechnologies
-
-Parses one "tech" entry in the research.ufo file and writes it into the next free entry in technologies (technology_t).
-
-IN
-	id:	Unique id of a technology_t. This is parsed from "tech xxx" -> id=xxx
-	text:	TODO document this ... it appears to be the whole following text that is part of the "tech" item definition in research.ufo.
-======================*/
+/**
+ * @brief Parses one "tech" entry in the research.ufo file and writes it into the next free entry in technologies (technology_t).
+ * @param[in] id Unique id of a technology_t. This is parsed from "tech xxx" -> id=xxx
+ * @param[in] text the whole following text that is part of the "tech" item definition in research.ufo.
+ */
 void RS_ParseTechnologies(char *id, char **text)
 {
 	value_t *var = NULL;
@@ -1183,9 +1126,10 @@ void RS_ParseTechnologies(char *id, char **text)
 	tech->statusCollected = 0;
 	tech->time = 0;
 	tech->overalltime = 0;
-	tech->lab = -1;
+	tech->scientists = 0;
 	tech->prev = -1;
 	tech->next = -1;
+	tech->base_idx = -1;
 
 
 	do {
@@ -1210,6 +1154,10 @@ void RS_ParseTechnologies(char *id, char **text)
 				tech->type = RS_ARMOR;
 			else if (!Q_strncmp(token, "craft", MAX_VAR))
 				tech->type = RS_CRAFT;
+			else if (!Q_strncmp(token, "craftweapon", MAX_VAR))
+				tech->type = RS_CRAFTWEAPON;
+			else if (!Q_strncmp(token, "craftshield", MAX_VAR))
+				tech->type = RS_CRAFTSHIELD;
 			else if (!Q_strncmp(token, "building", MAX_VAR))
 				tech->type = RS_BUILDING;
 			else if (!Q_strncmp(token, "alien", MAX_VAR))
@@ -1239,7 +1187,6 @@ void RS_ParseTechnologies(char *id, char **text)
 
 				}
 				while (misp && required->numEntries < MAX_TECHLINKS);
-				continue;
 			} else if (!Q_strncmp(token, "researched", MAX_VAR)) {
 				/* tech alreadyy researched? */
 				token = COM_EParse(text, errhead, id);
@@ -1299,20 +1246,12 @@ void RS_ParseTechnologies(char *id, char **text)
 	} while (*text);
 }
 
-/*======================
-RS_GetRequired
-
-Returns the list of required (by id) items.
-
-IN
-	id:	Unique id of a technology_t.
-
-OUT
-	required: a list of strings with the unique ids of items/buildings/etc..
-
-TODO: out of order ... seems to produce garbage
-======================*/
-
+/**
+ * @brief Returns the list of required (by id) items.
+ * @param[in] id Unique id of a technology_t.
+ * @param[out] required a list of strings with the unique ids of items/buildings/etc..
+ * TODO: out of order ... seems to produce garbage
+ */
 void RS_GetRequired(char *id, stringlist_t * required)
 {
 	technology_t *tech = NULL;
@@ -1326,11 +1265,10 @@ void RS_GetRequired(char *id, stringlist_t * required)
 }
 
 
-/*======================
-RS_IsResearched_idx
-
-call this function if you already hold a tech pointer
-======================*/
+/**
+ * @brief Checks whether an item is already researched
+ * @sa RS_IsResearched_ptr
+ */
 qboolean RS_IsResearched_idx(int idx)
 {
 	if (ccs.singleplayer == qfalse)
@@ -1340,11 +1278,11 @@ qboolean RS_IsResearched_idx(int idx)
 	return qfalse;
 }
 
-/*======================
-RS_IsResearched_ptr
-
-call this function if you already hold a tech pointer
-======================*/
+/**
+ * @brief Checks whether an item is already researched
+ * @sa RS_IsResearched_idx
+ * Call this function if you already hold a tech pointer
+ */
 qboolean RS_IsResearched_ptr(technology_t * tech)
 {
 	if (ccs.singleplayer == qfalse)
@@ -1354,17 +1292,12 @@ qboolean RS_IsResearched_ptr(technology_t * tech)
 	return qfalse;
 }
 
-/*======================
-RS_ItemIsResearched
-
-Checks if the item (as listed in "provides") has been researched
-
-IN
-	id_provided:	Unique id of an item/building/etc.. that is provided by a technology_t
-
-OUT
-	boolean	RS_ItemIsResearched
-======================*/
+/**
+ * @brief Checks if the item (as listed in "provides") has been researched
+ * @param[in] id_provided Unique id of an item/building/etc.. that is provided by a technology_t
+ * @return qboolean
+ * @sa RS_IsResearched_ptr
+ */
 qboolean RS_ItemIsResearched(char *id_provided)
 {
 	int i;
@@ -1380,11 +1313,11 @@ qboolean RS_ItemIsResearched(char *id_provided)
 	return qtrue;
 }
 
-/*======================
-RS_Collected_
-
-call this function if you already hold a tech pointer
-======================*/
+/**
+ * @brief
+ * @sa RS_ItemCollected
+ * call this function if you already hold a tech pointer
+ */
 int RS_Collected_(technology_t * tech)
 {
 	if (tech)
@@ -1394,17 +1327,13 @@ int RS_Collected_(technology_t * tech)
 	return -1;
 }
 
-/*======================
-RS_ItemCollected
-
-Returns the number of collected ("provided") items.
-
-IN
-	id_provided:	Unique id of an item/building/etc.. that is provided by a technology_t
-
-OUT
-	int	RS_ItemIsResearched	Number of the collected items.
-======================*/
+/**
+ * @brief Returns the number of collected ("provided") items.
+ * @param[in] id_provided Unique id of an item/building/etc.. that is provided by a technology_t
+ * @return qboolean
+ * @sa RS_TechIsResearched
+ * @sa RS_TechIsResearchable
+ */
 qboolean RS_ItemCollected(char *id_provided)
 {
 	int i = 0;
@@ -1420,17 +1349,11 @@ qboolean RS_ItemCollected(char *id_provided)
 	return qfalse;
 }
 
-/*======================
-RS_TechIsResearched
-
-Checks if the technology (tech-id) has been researched.
-
-IN
-	tech_idx:	index of the technology.
-
-OUT
-	boolean	RS_TechIsResearched
-======================*/
+/**
+ * @brief Checks if the technology (tech-id) has been researched.
+ * @param[in] tech_idx index of the technology.
+ * @return qboolean
+ */
 qboolean RS_TechIsResearched(int tech_idx)
 {
 	if (tech_idx < 0)
@@ -1451,17 +1374,12 @@ qboolean RS_TechIsResearched(int tech_idx)
 	return qfalse;
 }
 
-/*======================
-RS_TechIsResearchable
-
-Checks if the technology (tech-id) is researchable.
-
-IN
-	tech:	pointer to technology_t.
-
-OUT
-	boolean	RS_TechIsResearchable
-======================*/
+/**
+ * @brief Checks if the technology (tech-id) is researchable.
+ * @param[in] tech pointer to technology_t.
+ * @return qboolean
+ * @sa RS_TechIsResearched
+ */
 qboolean RS_TechIsResearchable(technology_t * tech)
 {
 	int i;
@@ -1489,12 +1407,10 @@ qboolean RS_TechIsResearchable(technology_t * tech)
 
 }
 
-/*======================
-RS_GetFirstRequired + RS_GetFirstRequired2
-
-Returns the first required (yet unresearched) technologies that are needed by "tech_idx".
-That means you need to research the result to be able to research (and maybe use) "id".
-======================*/
+/**
+ * @brief Returns the first required (yet unresearched) technologies that are needed by "tech_idx".
+ * That means you need to research the result to be able to research (and maybe use) "id".
+ */
 static void RS_GetFirstRequired2(int tech_idx, int first_tech_idx, stringlist_t * required)
 {
 	int i;
@@ -1520,6 +1436,7 @@ static void RS_GetFirstRequired2(int tech_idx, int first_tech_idx, stringlist_t 
 	}
 	for (i = 0; i < required_temp->numEntries; i++) {
 		tech = RS_GetTechByID(required_temp->string[i]);
+		assert(tech); /* here we are in singleplayer and no hacks, please */
 		if (RS_IsResearched_ptr(tech)) {
 			if (required->numEntries < MAX_TECHLINKS) {
 				required->idx[required->numEntries] = tech->idx;
@@ -1533,18 +1450,21 @@ static void RS_GetFirstRequired2(int tech_idx, int first_tech_idx, stringlist_t 
 	}
 }
 
+/**
+ * @brief
+ * @param
+ * @sa RS_GetTechByProvided
+ * @sa RS_GetRequired
+ */
 void RS_GetFirstRequired(int tech_idx, stringlist_t * required)
 {
 	RS_GetFirstRequired2(tech_idx, tech_idx, required);
 }
 
-/*======================
-RS_GetProvided
-
-TODO
-Returns a list of .ufo items that are produceable when this item has been researched (=provided)
-This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
-======================*/
+/**
+ * @brief Returns a list of .ufo items that are produceable when this item has been researched (=provided)
+ * This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
+ */
 #if 0
 void RS_GetProvided(char *id, char *provided)
 {
@@ -1569,17 +1489,28 @@ void RS_GetProvided(char *id, char *provided)
 }
 #endif
 
-/*======================
-RS_GetTechByID
 
-return a pointer to the technology
-identified by given id string
-======================*/
+/**
+ * @brief Returns the tech pointer
+ * @param id unique id of a technology_t
+ */
+technology_t* RS_GetTechByIDX(int tech_idx)
+{
+	if (tech_idx < 0 || tech_idx >= gd.numTechnologies)
+		return NULL;
+	else
+		return &gd.technologies[tech_idx];
+}
+
+
+/**
+ * @brief return a pointer to the technology identified by given id string
+ */
 technology_t *RS_GetTechByID(const char *id)
 {
 	int i = 0;
 
-	if (!id)
+	if (!id || !*id)
 		return NULL;
 
 	if (!Q_strncmp((char *) id, "nothing", MAX_VAR)
@@ -1594,11 +1525,9 @@ technology_t *RS_GetTechByID(const char *id)
 	return NULL;
 }
 
-/*======================
-RS_GetTechByProvided
-
-returns a pointer to the item tech (as listed in "provides")
-======================*/
+/**
+ * @brief returns a pointer to the item tech (as listed in "provides")
+ */
 technology_t *RS_GetTechByProvided(const char *id_provided)
 {
 	int i;
@@ -1607,6 +1536,57 @@ technology_t *RS_GetTechByProvided(const char *id_provided)
 		if (!Q_strncmp((char *) id_provided, gd.technologies[i].provides, MAX_VAR))
 			return &gd.technologies[i];
 
-	Com_DPrintf("RS_GetTechByProvided: Could not find a technology that provides \"%s\" (%i)\n", id_provided, gd.numTechnologies);
+	/* if a building, probably needs another building */
+	/* if not a building, catch NULL where function is called! */
 	return NULL;
+}
+
+/**
+ * @brief Returns a list of technologies for the given type
+ * @note this list is terminated by a NULL pointer
+ */
+technology_t **RS_GetTechsByType(researchType_t type)
+{
+	static technology_t *techList[MAX_TECHNOLOGIES];
+	int i, j = 0;
+
+	for (i=0; i<gd.numTechnologies;i++) {
+		if (gd.technologies[i].type == type ) {
+			techList[j] = &gd.technologies[i];
+			j++;
+			/* j+1 because last item have to be NULL */
+			if ( j+1 >= MAX_TECHNOLOGIES ) {
+				Com_Printf("RS_GetTechsByType: MAX_TECHNOLOGIES limit hit\n");
+				break;
+			}
+		}
+	}
+	techList[j] = NULL;
+	Com_DPrintf("techlist with %i entries\n", j);
+	return techList;
+}
+
+/**
+ * @brief Searches for the technology that has teh most scientists assigned in a given base.
+ * @param[in] base_idx In what base the tech shoudl be researched.
+ * @sa E_RemoveEmployeeFromBuilding
+ */
+technology_t *RS_GetTechWithMostScientists( int base_idx )
+{
+	technology_t *tech = NULL;
+	technology_t *tech_temp = NULL;
+	int i = 0;
+	int max = 0;
+
+	for (i=0; i<gd.numTechnologies;i++) {
+		tech_temp = &gd.technologies[i];
+		if ( (tech_temp->statusResearch == RS_RUNNING) && (tech_temp->base_idx == base_idx) ) {
+			if (tech_temp->scientists > max) {
+				tech = tech_temp;
+				max = tech->scientists;
+			}
+		}
+	}
+
+	return tech;
 }

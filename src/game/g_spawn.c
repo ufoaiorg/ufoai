@@ -1,4 +1,17 @@
+/**
+ * @file g_spawn.c
+ * @brief Brings new objects into the world.
+ */
+
 /*
+All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
+26/06/06, Eddy Cullen (ScreamingWithNoSound):
+	Reformatted to agreed style.
+	Added doxygen file comment.
+	Updated copyright notice.
+
+Original file from Quake 2 v3.21: quake2-2.31/game/g_spawn.c
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -18,27 +31,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+
 #include "g_local.h"
 
-spawn_temp_t	st;
+spawn_temp_t st;
 
-void SP_light (edict_t *ent);
-void SP_misc_dummy (edict_t *ent);
-void SP_player_start (edict_t *ent);
-void SP_human_start (edict_t *ent);
-void SP_alien_start (edict_t *ent);
-void SP_civilian_start (edict_t *ent);
-void SP_func_breakable (edict_t *ent);
-void SP_worldspawn (edict_t *ent);
-void SP_ugv_start (edict_t *ent);
+static void SP_light(edict_t * ent);
+static void SP_misc_dummy(edict_t * ent);
+static void SP_player_start(edict_t * ent);
+static void SP_human_start(edict_t * ent);
+static void SP_alien_start(edict_t * ent);
+static void SP_civilian_start(edict_t * ent);
+static void SP_func_breakable(edict_t * ent);
+static void SP_worldspawn(edict_t * ent);
+static void SP_ugv_start(edict_t * ent);
 
-typedef struct
-{
-	char	*name;
-	void	(*spawn)(edict_t *ent);
+typedef struct {
+	char *name;
+	void (*spawn) (edict_t * ent);
 } spawn_t;
 
-spawn_t	spawns[] = {
+static spawn_t spawns[] = {
 	{"worldspawn", SP_worldspawn},
 	{"light", SP_light},
 	{"misc_model", SP_misc_dummy},
@@ -53,60 +66,78 @@ spawn_t	spawns[] = {
 	{NULL, NULL}
 };
 
-field_t fields[] = {
-	{"classname", FOFS(classname), F_LSTRING},
-	{"model", FOFS(model), F_LSTRING},
-	{"spawnflags", FOFS(spawnflags), F_INT},
-	{"speed", FOFS(speed), F_FLOAT},
-	{"accel", FOFS(accel), F_FLOAT},
-	{"decel", FOFS(decel), F_FLOAT},
-	{"target", FOFS(target), F_LSTRING},
-	{"targetname", FOFS(targetname), F_LSTRING},
-	{"team", FOFS(team), F_INT},
-	{"size", FOFS(fieldSize), F_INT},
-	{"wait", FOFS(wait), F_FLOAT},
-	{"delay", FOFS(delay), F_FLOAT},
-	{"random", FOFS(random), F_FLOAT},
-	{"style", FOFS(style), F_INT},
-	{"count", FOFS(count), F_INT},
-	{"health", FOFS(HP), F_INT},
-	{"sounds", FOFS(sounds), F_INT},
+typedef enum {
+	F_INT,
+	F_FLOAT,
+	F_LSTRING,					/* string on disk, pointer in memory, TAG_LEVEL */
+	F_GSTRING,					/* string on disk, pointer in memory, TAG_GAME */
+	F_VECTOR,
+	F_ANGLEHACK,
+	F_EDICT,					/* index on disk, pointer in memory */
+/*	F_ITEM,				// index on disk, pointer in memory */
+	F_CLIENT,					/* index on disk, pointer in memory */
+	F_FUNCTION,
+	F_IGNORE
+} fieldtype_t;
+
+typedef struct {
+	char *name;
+	size_t ofs;
+	fieldtype_t type;
+	int flags;
+} field_t;
+
+static field_t fields[] = {
+	{"classname", offsetof(edict_t, classname), F_LSTRING},
+	{"model", offsetof(edict_t, model), F_LSTRING},
+	{"spawnflags", offsetof(edict_t, spawnflags), F_INT},
+	{"speed", offsetof(edict_t, speed), F_FLOAT},
+	{"accel", offsetof(edict_t, accel), F_FLOAT},
+	{"decel", offsetof(edict_t, decel), F_FLOAT},
+	{"target", offsetof(edict_t, target), F_LSTRING},
+	{"targetname", offsetof(edict_t, targetname), F_LSTRING},
+	{"particle", offsetof(edict_t, particle), F_LSTRING},
+	{"team", offsetof(edict_t, team), F_INT},
+	{"size", offsetof(edict_t, fieldSize), F_INT},
+	{"wait", offsetof(edict_t, wait), F_FLOAT},
+	{"delay", offsetof(edict_t, delay), F_FLOAT},
+	{"random", offsetof(edict_t, random), F_FLOAT},
+	{"style", offsetof(edict_t, style), F_INT},
+	{"count", offsetof(edict_t, count), F_INT},
+	{"health", offsetof(edict_t, HP), F_INT},
+	{"sounds", offsetof(edict_t, sounds), F_INT},
 	{"light", 0, F_IGNORE},
-	{"dmg", FOFS(dmg), F_INT},
-	{"origin", FOFS(origin), F_VECTOR},
-	{"angles", FOFS(angles), F_VECTOR},
-	{"angle", FOFS(angle), F_FLOAT},
+	{"dmg", offsetof(edict_t, dmg), F_INT},
+	{"origin", offsetof(edict_t, origin), F_VECTOR},
+	{"angles", offsetof(edict_t, angles), F_VECTOR},
+	{"angle", offsetof(edict_t, angle), F_FLOAT},
 
 	/*need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves */
-	{"gravity", STOFS(gravity), F_LSTRING, FFL_SPAWNTEMP},
-	{"minyaw", STOFS(minyaw), F_FLOAT, FFL_SPAWNTEMP},
-	{"maxyaw", STOFS(maxyaw), F_FLOAT, FFL_SPAWNTEMP},
-	{"minpitch", STOFS(minpitch), F_FLOAT, FFL_SPAWNTEMP},
-	{"maxpitch", STOFS(maxpitch), F_FLOAT, FFL_SPAWNTEMP},
-	{"nextmap", STOFS(nextmap), F_LSTRING, FFL_SPAWNTEMP},
+	{"gravity", offsetof(spawn_temp_t, gravity), F_LSTRING, FFL_SPAWNTEMP},
+	{"minyaw", offsetof(spawn_temp_t, minyaw), F_FLOAT, FFL_SPAWNTEMP},
+	{"maxyaw", offsetof(spawn_temp_t, maxyaw), F_FLOAT, FFL_SPAWNTEMP},
+	{"minpitch", offsetof(spawn_temp_t, minpitch), F_FLOAT, FFL_SPAWNTEMP},
+	{"maxpitch", offsetof(spawn_temp_t, maxpitch), F_FLOAT, FFL_SPAWNTEMP},
+	{"nextmap", offsetof(spawn_temp_t, nextmap), F_LSTRING, FFL_SPAWNTEMP},
 
 	{0, 0, 0, 0}
 
 };
 
-/*
-===============
-ED_CallSpawn
-
-Finds the spawn function for the entity and calls it
-===============
-*/
-void ED_CallSpawn (edict_t *ent)
+/**
+ * @brief Finds the spawn function for the entity and calls it
+ */
+static void ED_CallSpawn(edict_t * ent)
 {
-	spawn_t	*s;
+	spawn_t *s;
 
 	if (!ent->classname) {
-		gi.dprintf ("ED_CallSpawn: NULL classname\n");
+		gi.dprintf("ED_CallSpawn: NULL classname\n");
 		return;
 	}
 
 	/* check normal spawn functions */
-	for (s=spawns ; s->name ; s++) {
+	for (s = spawns; s->name; s++) {
 		/* found it */
 		if (!Q_strcmp(s->name, ent->classname)) {
 			s->spawn(ent);
@@ -114,28 +145,27 @@ void ED_CallSpawn (edict_t *ent)
 		}
 	}
 
-	gi.dprintf ("%s doesn't have a spawn function\n", ent->classname);
+	gi.dprintf("%s doesn't have a spawn function\n", ent->classname);
 	ent->inuse = qfalse;
 }
 
-/*
-=============
-ED_NewString
-=============
-*/
-char *ED_NewString (char *string)
+/**
+ * @brief
+ */
+static char *ED_NewString(char *string)
 {
-	char	*newb, *new_p;
-	int		i,l;
+	char *newb, *new_p;
+	int i;
+	size_t l;
 
 	l = strlen(string) + 1;
 
-	newb = gi.TagMalloc (l, TAG_LEVEL);
+	newb = gi.TagMalloc(l, TAG_LEVEL);
 
 	new_p = newb;
 
-	for (i=0 ; i< l ; i++) {
-		if (string[i] == '\\' && i < l-1) {
+	for (i = 0; i < l; i++) {
+		if (string[i] == '\\' && i < l - 1) {
 			i++;
 			if (string[i] == 'n')
 				*new_p++ = '\n';
@@ -148,50 +178,45 @@ char *ED_NewString (char *string)
 	return newb;
 }
 
-/*
-===============
-ED_ParseField
-
-Takes a key/value pair and sets the binary values
-in an edict
-===============
-*/
-void ED_ParseField (char *key, char *value, edict_t *ent)
+/**
+ * @brief Takes a key/value pair and sets the binary values in an edict
+ */
+static void ED_ParseField(char *key, char *value, edict_t * ent)
 {
-	field_t	*f;
-	byte	*b;
-	float	v;
-	vec3_t	vec;
+	field_t *f;
+	byte *b;
+	float v;
+	vec3_t vec;
 
-	for (f=fields ; f->name ; f++) {
+	for (f = fields; f->name; f++) {
 		if (!(f->flags & FFL_NOSPAWN) && !Q_stricmp(f->name, key)) {
 			/* found it */
 			if (f->flags & FFL_SPAWNTEMP)
-				b = (byte *)&st;
+				b = (byte *) & st;
 			else
-				b = (byte *)ent;
+				b = (byte *) ent;
 
 			switch (f->type) {
 			case F_LSTRING:
-				*(char **)(b+f->ofs) = ED_NewString (value);
+				*(char **) (b + f->ofs) = ED_NewString(value);
 				break;
 			case F_VECTOR:
-				sscanf (value, "%f %f %f", &vec[0], &vec[1], &vec[2]);
-				((float *)(b+f->ofs))[0] = vec[0];
-				((float *)(b+f->ofs))[1] = vec[1];
-				((float *)(b+f->ofs))[2] = vec[2];
+				sscanf(value, "%f %f %f", &vec[0], &vec[1], &vec[2]);
+				((float *) (b + f->ofs))[0] = vec[0];
+				((float *) (b + f->ofs))[1] = vec[1];
+				((float *) (b + f->ofs))[2] = vec[2];
 				break;
 			case F_INT:
-				*(int *)(b+f->ofs) = atoi(value);
+				*(int *) (b + f->ofs) = atoi(value);
 				break;
 			case F_FLOAT:
-				*(float *)(b+f->ofs) = atof(value);
+				*(float *) (b + f->ofs) = atof(value);
 				break;
 			case F_ANGLEHACK:
 				v = atof(value);
-				((float *)(b+f->ofs))[0] = 0;
-				((float *)(b+f->ofs))[1] = v;
-				((float *)(b+f->ofs))[2] = 0;
+				((float *) (b + f->ofs))[0] = 0;
+				((float *) (b + f->ofs))[1] = v;
+				((float *) (b + f->ofs))[2] = 0;
 				break;
 			case F_IGNORE:
 				break;
@@ -207,44 +232,40 @@ void ED_ParseField (char *key, char *value, edict_t *ent)
 			return;
 		}
 	}
-/*	gi.dprintf ("%s is not a field\n", key); */
+/*	gi.dprintf ("ED_ParseField: %s is not a valid field\n", key);*/
 }
 
-/*
-====================
-ED_ParseEdict
-
-Parses an edict out of the given string, returning the new position
-ed should be a properly initialized empty edict.
-====================
-*/
-char *ED_ParseEdict (char *data, edict_t *ent)
+/**
+ * @brief Parses an edict out of the given string, returning the new position
+ * @param[in] ent should be a properly initialized empty edict.
+ */
+static char *ED_ParseEdict(char *data, edict_t * ent)
 {
-	qboolean	init;
-	char		keyname[256];
-	char		*com_token;
+	qboolean init;
+	char keyname[256];
+	char *com_token;
 
 	init = qfalse;
-	memset (&st, 0, sizeof(st));
+	memset(&st, 0, sizeof(st));
 
 	/* go through all the dictionary pairs */
 	while (1) {
 		/* parse key */
-		com_token = COM_Parse (&data);
+		com_token = COM_Parse(&data);
 		if (com_token[0] == '}')
 			break;
 		if (!data)
-			gi.error ("ED_ParseEntity: EOF without closing brace");
+			gi.error("ED_ParseEntity: EOF without closing brace");
 
-		Q_strncpyz (keyname, com_token, sizeof(keyname));
+		Q_strncpyz(keyname, com_token, sizeof(keyname));
 
 		/* parse value */
-		com_token = COM_Parse (&data);
+		com_token = COM_Parse(&data);
 		if (!data)
-			gi.error ("ED_ParseEntity: EOF without closing brace");
+			gi.error("ED_ParseEntity: EOF without closing brace");
 
 		if (com_token[0] == '}')
-			gi.error ("ED_ParseEntity: closing brace without data");
+			gi.error("ED_ParseEntity: closing brace without data");
 
 		init = qtrue;
 
@@ -253,35 +274,31 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 		if (keyname[0] == '_')
 			continue;
 
-		ED_ParseField (keyname, com_token, ent);
+		ED_ParseField(keyname, com_token, ent);
 	}
 
 	if (!init)
-		memset (ent, 0, sizeof(*ent));
+		memset(ent, 0, sizeof(*ent));
 
 	return data;
 }
 
-/*
-==============
-SpawnEntities
-
-Creates a server's entity / program execution context by
-parsing textual entity definitions out of an ent file.
-==============
-*/
-void SpawnEntities (char *mapname, char *entities)
+/**
+ * @brief Creates a server's entity / program execution context
+ * by parsing textual entity definitions out of an ent file.
+ */
+void SpawnEntities(char *mapname, char *entities)
 {
-	edict_t		*ent;
-	int		entnum;
-	char		*com_token;
+	edict_t *ent;
+	int entnum;
+	char *com_token;
 
-	gi.FreeTags (TAG_LEVEL);
+	gi.FreeTags(TAG_LEVEL);
 
-	memset (&level, 0, sizeof(level));
-	memset (g_edicts, 0, game.maxentities * sizeof (g_edicts[0]));
+	memset(&level, 0, sizeof(level));
+	memset(g_edicts, 0, game.maxentities * sizeof(edict_t));
 
-	Q_strncpyz (level.mapname, mapname, sizeof(level.mapname));
+	Q_strncpyz(level.mapname, mapname, sizeof(level.mapname));
 
 	ent = NULL;
 	level.activeTeam = -1;
@@ -290,43 +307,43 @@ void SpawnEntities (char *mapname, char *entities)
 	entnum = 0;
 	while (1) {
 		/* parse the opening brace */
-		com_token = COM_Parse (&entities);
+		com_token = COM_Parse(&entities);
 		if (!entities)
 			break;
 		if (com_token[0] != '{')
-			gi.error ("ED_LoadFromFile: found %s when expecting {",com_token);
+			gi.error("ED_LoadFromFile: found %s when expecting {", com_token);
 
 		if (!ent)
 			ent = g_edicts;
 		else
 			ent = G_Spawn();
-		entities = ED_ParseEdict (entities, ent);
+		entities = ED_ParseEdict(entities, ent);
 
-		VecToPos( ent->origin, ent->pos );
-		gi.GridPosToVec( gi.map, ent->pos, ent->origin );
+		VecToPos(ent->origin, ent->pos);
+		gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 
 		ent->mapNum = entnum++;
 		ED_CallSpawn(ent);
 	}
 
 	/* spawn ai players, if needed */
-	if ( level.num_spawnpoints[TEAM_CIVILIAN] )
-		AI_CreatePlayer( TEAM_CIVILIAN );
-	if ( (int)sv_maxclients->value == 1 && level.num_spawnpoints[TEAM_ALIEN] )
-		AI_CreatePlayer( TEAM_ALIEN );
+	if (level.num_spawnpoints[TEAM_CIVILIAN])
+		AI_CreatePlayer(TEAM_CIVILIAN);
+	if ((int) sv_maxclients->value == 1 && level.num_spawnpoints[TEAM_ALIEN])
+		AI_CreatePlayer(TEAM_ALIEN);
 }
 
 
 /*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8)
 */
-void SP_light (edict_t *self)
+static void SP_light(edict_t * self)
 {
 	/* lights aren't client-server communicated items */
 	/* they are completely client side */
-	G_FreeEdict( self );
+	G_FreeEdict(self);
 }
 
-void G_ActorSpawn( edict_t *ent )
+static void G_ActorSpawn(edict_t * ent)
 {
 	/* set properties */
 	level.num_spawnpoints[ent->team]++;
@@ -335,23 +352,23 @@ void G_ActorSpawn( edict_t *ent )
 	ent->fieldSize = ACTOR_SIZE_NORMAL;
 
 	/* fall to ground */
-	ent->pos[2] = gi.GridFall( gi.map, ent->pos );
-	gi.GridPosToVec( gi.map, ent->pos, ent->origin );
+	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
+	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 
 	/* link it for collision detection */
-	ent->dir = AngleToDV( ent->angle );
+	ent->dir = AngleToDV(ent->angle);
 	ent->solid = SOLID_BBOX;
 	/* maybe this is already set in one of the spawn functions */
-	if ( ent->maxs[0] == 0 )
-		VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
-	if ( ent->mins[0] == 0 )
-		VectorSet( ent->mins,-PLAYER_WIDTH,-PLAYER_WIDTH, PLAYER_MIN );
+	if (ent->maxs[0] == 0)
+		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
+	if (ent->mins[0] == 0)
+		VectorSet(ent->mins, -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN);
 }
 
 /**
   * @brief Spawn an singleplayer UGV
   */
-void G_UGVSpawn( edict_t *ent )
+static void G_UGVSpawn(edict_t * ent)
 {
 	/* set properties */
 	level.num_ugvspawnpoints[ent->team]++;
@@ -360,11 +377,11 @@ void G_UGVSpawn( edict_t *ent )
 	ent->fieldSize = ACTOR_SIZE_UGV;
 
 	/* fall to ground */
-	ent->pos[2] = gi.GridFall( gi.map, ent->pos );
-	gi.GridPosToVec( gi.map, ent->pos, ent->origin );
+	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
+	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 
 	/* link it for collision detection */
-	ent->dir = AngleToDV( ent->angle );
+	ent->dir = AngleToDV(ent->angle);
 	ent->solid = SOLID_BBOX;
 }
 
@@ -373,143 +390,137 @@ Starting point for a player.
 "team"	the number of the team for this player starting point
 "0" is reserved for civilians and critters (use info_civilian_start instead)
 */
-void SP_player_start (edict_t *ent)
+static void SP_player_start(edict_t * ent)
 {
 	static int soldierCount = 0;
+
 	/* only used in multi player */
-	if ( sv_maxclients->value == 1 ) {
-		G_FreeEdict( ent );
+	if (sv_maxclients->value == 1) {
+		G_FreeEdict(ent);
 		return;
 	}
 
 	/* mapchange? */
-	if ( ! level.num_spawnpoints[ent->team] )
+	if (!level.num_spawnpoints[ent->team])
 		soldierCount = 0;
 
 	/* in teamplay mode check whether the player has reached */
 	/* the max allowed soldiers per player */
-	if ( (int)maxsoldiersperplayer->value
-	  && soldierCount >= (int)maxsoldiersperplayer->value
-	  && (int)sv_teamplay->value ) {
-		gi.dprintf ("Only %i/%i soldiers per player allowed\n", (int)maxsoldiersperplayer->value, soldierCount );
-		G_FreeEdict( ent );
+	if ((int) maxsoldiersperplayer->value && soldierCount >= (int) maxsoldiersperplayer->value && (int) sv_teamplay->value) {
+		gi.dprintf("Only %i/%i soldiers per player allowed\n", (int) maxsoldiersperplayer->value, soldierCount);
+		G_FreeEdict(ent);
 		return;
 	}
 
 	/* maybe there are already the max soldiers allowed per team connected */
-	if ( (int)(maxsoldiers->value) > level.num_spawnpoints[ent->team] ) {
-		ent->STUN = 100;
+	if ((int) (maxsoldiers->value) > level.num_spawnpoints[ent->team]) {
+		ent->STUN = 0;
 		ent->HP = 100;
 		ent->AP = 100;
-		G_ActorSpawn( ent );
+		G_ActorSpawn(ent);
 		soldierCount++;
-	} else if ( soldierCount <= 0 ) {
-		gi.dprintf ("No free soldier slots available - please choose another team\n");
-		G_FreeEdict( ent );
+	} else if (soldierCount <= 0) {
+		gi.dprintf("No free soldier slots available - please choose another team\n");
+		G_FreeEdict(ent);
 	} else
-		G_FreeEdict( ent );
+		G_FreeEdict(ent);
 }
 
 /*QUAKED info_human_start (1 0 0) (-16 -16 -24) (16 16 32)
 Starting point for a single player human.
 */
-void SP_human_start (edict_t *ent)
+static void SP_human_start(edict_t * ent)
 {
 	/* only used in single player */
-	if ( sv_maxclients->value > 1 ) {
-		G_FreeEdict( ent );
+	if (sv_maxclients->value > 1) {
+		G_FreeEdict(ent);
 		return;
 	}
-	ent->team = 1;
-	/* only the first time */
-	if ( !ent->chr.assigned_missions ) {
-		ent->STUN = 100;
-		ent->HP = 100;
-		ent->AP = 100;
-	}
-	/* count mission */
-	ent->chr.assigned_missions++;
-	G_ActorSpawn( ent );
+	ent->team = TEAM_PHALANX;
+	ent->STUN = 0;
+	ent->HP = 100;
+	ent->AP = 100;
+	G_ActorSpawn(ent);
 }
 
 
 /*QUAKED info_ugv_start (1 1 0) (-32 -32 -24) (32 32 32)
 Starting point for a ugv.
 */
-void SP_ugv_start (edict_t *ent)
+static void SP_ugv_start(edict_t * ent)
 {
 	/* no ugv in multiplayer */
-	if ( sv_maxclients->value > 1 ) {
-		G_FreeEdict( ent );
+	if (sv_maxclients->value > 1) {
+		G_FreeEdict(ent);
 		return;
 	}
 	/* set stats */
-	ent->STUN = 100;
+	ent->STUN = 0;
 	ent->HP = 100;
 	ent->AP = 100;
 
 	/* these units are bigger */
-	VectorSet( ent->maxs, PLAYER_WIDTH*2, PLAYER_WIDTH*2, PLAYER_STAND );
-	VectorSet( ent->mins,-(PLAYER_WIDTH*2),-(PLAYER_WIDTH*2), PLAYER_MIN );
+	VectorSet(ent->maxs, PLAYER_WIDTH * 2, PLAYER_WIDTH * 2, PLAYER_STAND);
+	VectorSet(ent->mins, -(PLAYER_WIDTH * 2), -(PLAYER_WIDTH * 2), PLAYER_MIN);
 
 	/* spawn singleplayer ugv */
-	G_UGVSpawn( ent );
+	G_UGVSpawn(ent);
 }
 
 /*QUAKED info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
 Starting point for a single player alien.
 */
-void SP_alien_start (edict_t *ent)
+static void SP_alien_start(edict_t * ent)
 {
 	/* only used in single player */
-	if ( sv_maxclients->value > 1 ) {
-		G_FreeEdict( ent );
+	if (sv_maxclients->value > 1) {
+		G_FreeEdict(ent);
 		return;
 	}
 	ent->team = TEAM_ALIEN;
 	/* set stats */
-	ent->STUN = 100;
+	ent->STUN = 0;
 	ent->HP = 100;
 	ent->AP = 100;
 
-	G_ActorSpawn( ent );
+	G_ActorSpawn(ent);
 }
 
 
 /*QUAKED info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
 Starting point for a civilian.
 */
-void SP_civilian_start (edict_t *ent)
+static void SP_civilian_start(edict_t * ent)
 {
 	ent->team = TEAM_CIVILIAN;
 	/* set stats */
-	ent->STUN = 1;
+	ent->STUN = 99;
 	ent->HP = 100;
 	ent->AP = 100;
-	G_ActorSpawn( ent );
+	G_ActorSpawn(ent);
 }
 
 
 /*
 a dummy to get rid of local entities
 */
-void SP_misc_dummy (edict_t *self)
+static void SP_misc_dummy(edict_t * self)
 {
-	/* models aren't client-server communicated items */
+	/* models and particles aren't client-server communicated items */
 	/* they are completely client side */
-	G_FreeEdict( self );
+	G_FreeEdict(self);
 }
 
 
 /*QUAKED func_breakable (0.3 0.3 0.3) ?
 Used for breakable objects.
 */
-void SP_func_breakable (edict_t *self)
+static void SP_func_breakable(edict_t * self)
 {
 	self->type = ET_BREAKABLE;
 
-	VectorSet( self->origin, 0, 0, 0 );
-	gi.setmodel( self, self->model );
+	VectorSet(self->origin, 0, 0, 0);
+	gi.setmodel(self, self->model);
 
 /*	Com_Printf( "model (%s) num: %i mins: %i %i %i maxs: %i %i %i\n", */
 /*		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2], */
@@ -525,31 +536,31 @@ Only used for the world.
 "message"	text to print at user logon
 "maxlevel"	max. level to use in the map
 */
-void SP_worldspawn (edict_t *ent)
+static void SP_worldspawn(edict_t * ent)
 {
 	ent->solid = SOLID_BSP;
 	/* since the world doesn't use G_Spawn() */
 	ent->inuse = qtrue;
 
 	if (st.nextmap)
-		Q_strncpyz (level.nextmap, st.nextmap, MAX_QPATH);
+		Q_strncpyz(level.nextmap, st.nextmap, MAX_QPATH);
 
 	/* make some data visible to the server */
 	if (ent->message && ent->message[0]) {
-		gi.configstring (CS_NAME, ent->message);
-		Q_strncpyz (level.level_name, ent->message, MAX_QPATH);
+		gi.configstring(CS_NAME, ent->message);
+		Q_strncpyz(level.level_name, ent->message, MAX_QPATH);
 	} else
-		Q_strncpyz (level.level_name, level.mapname, MAX_QPATH);
+		Q_strncpyz(level.level_name, level.mapname, MAX_QPATH);
 
-	gi.configstring (CS_CDTRACK, va("%i", ent->sounds) );
+	gi.configstring(CS_CDTRACK, va("%i", ent->sounds));
 
-	gi.configstring (CS_MAXCLIENTS, va("%i", (int)(maxplayers->value) ) );
+	gi.configstring(CS_MAXCLIENTS, va("%i", (int) (maxplayers->value)));
 
 	/* only used in multi player */
-	if ( sv_maxclients->value >= 2 ) {
-		gi.configstring (CS_MAXSOLDIERS, va("%i", (int)(maxsoldiers->value) ) );
-		gi.configstring (CS_MAXSOLDIERSPERPLAYER, va("%i", (int)(maxsoldiersperplayer->value) ) );
-		gi.configstring (CS_ENABLEMORALE, va("%i", (int)(sv_enablemorale->value) ) );
+	if (sv_maxclients->value >= 2) {
+		gi.configstring(CS_MAXSOLDIERS, va("%i", (int) (maxsoldiers->value)));
+		gi.configstring(CS_MAXSOLDIERSPERPLAYER, va("%i", (int) (maxsoldiersperplayer->value)));
+		gi.configstring(CS_ENABLEMORALE, va("%i", (int) (sv_enablemorale->value)));
 	}
 	/*--------------- */
 
@@ -561,44 +572,43 @@ void SP_worldspawn (edict_t *ent)
 	/* Setup light animation tables. 'a' is total darkness, 'z' is doublebright. */
 
 	/* 0 normal */
-	gi.configstring(CS_LIGHTS+0, "m");
+	gi.configstring(CS_LIGHTS + 0, "m");
 
 	/* 1 FLICKER (first variety) */
-	gi.configstring(CS_LIGHTS+1, "mmnmmommommnonmmonqnmmo");
+	gi.configstring(CS_LIGHTS + 1, "mmnmmommommnonmmonqnmmo");
 
 	/* 2 SLOW STRONG PULSE */
-	gi.configstring(CS_LIGHTS+2, "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba");
+	gi.configstring(CS_LIGHTS + 2, "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba");
 
 	/* 3 CANDLE (first variety) */
-	gi.configstring(CS_LIGHTS+3, "mmmmmaaaaammmmmaaaaaabcdefgabcdefg");
+	gi.configstring(CS_LIGHTS + 3, "mmmmmaaaaammmmmaaaaaabcdefgabcdefg");
 
 	/* 4 FAST STROBE */
-	gi.configstring(CS_LIGHTS+4, "mamamamamama");
+	gi.configstring(CS_LIGHTS + 4, "mamamamamama");
 
 	/* 5 GENTLE PULSE 1 */
-	gi.configstring(CS_LIGHTS+5,"jklmnopqrstuvwxyzyxwvutsrqponmlkj");
+	gi.configstring(CS_LIGHTS + 5, "jklmnopqrstuvwxyzyxwvutsrqponmlkj");
 
 	/* 6 FLICKER (second variety) */
-	gi.configstring(CS_LIGHTS+6, "nmonqnmomnmomomno");
+	gi.configstring(CS_LIGHTS + 6, "nmonqnmomnmomomno");
 
 	/* 7 CANDLE (second variety) */
-	gi.configstring(CS_LIGHTS+7, "mmmaaaabcdefgmmmmaaaammmaamm");
+	gi.configstring(CS_LIGHTS + 7, "mmmaaaabcdefgmmmmaaaammmaamm");
 
 	/* 8 CANDLE (third variety) */
-	gi.configstring(CS_LIGHTS+8, "mmmaaammmaaammmabcdefaaaammmmabcdefmmmaaaa");
+	gi.configstring(CS_LIGHTS + 8, "mmmaaammmaaammmabcdefaaaammmmabcdefmmmaaaa");
 
 	/* 9 SLOW STROBE (fourth variety) */
-	gi.configstring(CS_LIGHTS+9, "aaaaaaaazzzzzzzz");
+	gi.configstring(CS_LIGHTS + 9, "aaaaaaaazzzzzzzz");
 
 	/* 10 FLUORESCENT FLICKER */
-	gi.configstring(CS_LIGHTS+10, "mmamammmmammamamaaamammma");
+	gi.configstring(CS_LIGHTS + 10, "mmamammmmammamamaaamammma");
 
 	/* 11 SLOW PULSE NOT FADE TO BLACK */
-	gi.configstring(CS_LIGHTS+11, "abcdefghijklmnopqrrqponmlkjihgfedcba");
+	gi.configstring(CS_LIGHTS + 11, "abcdefghijklmnopqrrqponmlkjihgfedcba");
 
 	/* styles 32-62 are assigned by the light program for switchable lights */
 
 	/* 63 testing */
-	gi.configstring(CS_LIGHTS+63, "a");
+	gi.configstring(CS_LIGHTS + 63, "a");
 }
-

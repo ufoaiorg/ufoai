@@ -22,7 +22,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -71,16 +71,12 @@ typedef struct vidmode_s {
 	int mode;
 } vidmode_t;
 
-extern vidmode_t vid_modes[];
+extern const vidmode_t vid_modes[];
 extern viddef_t viddef;			/* global video state */
 
 /* Video module initialisation etc */
 void VID_Init(void);
 void VID_Shutdown(void);
 void VID_CheckChanges(void);
-
-void VID_MenuInit(void);
-void VID_MenuDraw(void);
-const char *VID_MenuKey(int);
 
 #endif /* CLIENT_VID_H */

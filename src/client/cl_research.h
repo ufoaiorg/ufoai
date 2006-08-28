@@ -47,6 +47,8 @@ typedef enum researchType_s {
 	RS_WEAPON,
 	RS_ARMOR,
 	RS_CRAFT,
+	RS_CRAFTWEAPON,
+	RS_CRAFTSHIELD,
 	RS_BUILDING,
 	RS_ALIEN,
 	RS_UGV
@@ -65,16 +67,13 @@ typedef struct technology_s {
 	char description[MAX_VAR];	/* Just a short text-id to get this via gettext. */
 	researchType_t type;
 
-
 	stringlist_t requires;
 	char provides[MAX_VAR];		/* The item that this technology enables. */
 	float overalltime, time;	/* The time that is needed to research this tech. (in days) */
 	researchStatus_t statusResearch;
 
 	int base_idx;				/* The base this tech is researched in. */
-	int lab;					/* Where this techology is currently researched. */
-	/*int workshop; // Where the 'provided' item is currently produced. */
-
+	int scientists;					/* How many scientists are researching this tech. */
 
 	char image_top[MAX_VAR];
 	char image_bottom[MAX_VAR];
@@ -85,13 +84,13 @@ typedef struct technology_s {
 	byte needsCollected;		/* Is a collected item neccessary to research this item? */
 	byte statusResearchable;	/* Is this item researchable? */
 
+	int produceTime;			/* how many days for self production */
+
 	/* Pedia info */
 	int up_chapter;				/* pedia chapter as stored in research.ufo. */
 	int prev;					/* Previous tech in pedia. */
 	int next;					/* Next tech in pedia. */
 } technology_t;
-
-#define	TECHFS(x)	(int)&(((technology_t *)0)->x)
 
 /* use this for saving and allocating */
 /*extern	technology_t	technologies[MAX_TECHNOLOGIES]; */
@@ -110,9 +109,17 @@ qboolean RS_ItemCollected(char *id_provided);
 
 void RS_AddObjectTechs(void);
 void RS_InitTree(void);
-void RS_MarkCollected(void);
+void RS_MarkCollected(equipDef_t *ed);
 void RS_MarkResearchable(void);
+void RS_AssignScientist(technology_t* tech);
 technology_t *RS_GetTechByID(const char *id);
 technology_t *RS_GetTechByProvided(const char *id_provided);
+technology_t **RS_GetTechsByType(researchType_t type);
+technology_t* RS_GetTechByIDX(int tech_idx);
+technology_t *RS_GetTechWithMostScientists( int base_idx );
 
-#endif							/* CLIENT_CL_RESEARCH_H */
+
+/* ufopedia function - but needs technology_t */
+void UP_DrawEntry( technology_t* tech );
+
+#endif /* CLIENT_CL_RESEARCH_H */

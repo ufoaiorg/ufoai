@@ -1,3 +1,8 @@
+/**
+ * @file gl_arb_shader.c
+ * @brief
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -21,136 +26,173 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef SHADERS
 #include "gl_local.h"
 
-unsigned int SH_LoadProgram_ARB_FP(char *path);
-unsigned int SH_LoadProgram_ARB_VP(char *path);
-/*
-============
-GL_ShaderInit
+static unsigned int SH_LoadProgram_ARB_FP(char *path);
+static unsigned int SH_LoadProgram_ARB_VP(char *path);
+static qboolean shaderInited = qfalse;
 
-Cycle through all parsed shaders and compile them
-TODO:
-============
-*/
-void GL_ShaderInit( void )
+/**
+ * @brief Cycle through all parsed shaders and compile them
+ * @sa GL_ShutdownShaders
+ */
+void GL_ShaderInit(void)
 {
 	int i = 0;
-	shader_t* s;
-	image_t* image;
-	for ( i = 0; i < r_newrefdef.num_shaders; i++ )
-	{
-		s = &r_newrefdef.shaders[i];
-		if ( s->frag )
-			s->fpid = SH_LoadProgram_ARB_FP(s->filename);
-		else if ( s->vertex )
-			s->vpid = SH_LoadProgram_ARB_VP(s->filename);
+	shader_t *s;
 
-		image = GL_FindImageForShader ( s->title );
-		if ( image )
-		{
-			ri.Con_Printf( PRINT_DEVELOPER, "...bind shader to image %s\n", s->title );
-			image->shader = s;
+	Com_DPrintf("Init shaders (num_shaders: %i)\n", r_newrefdef.num_shaders);
+	for (i = 0; i < r_newrefdef.num_shaders; i++) {
+		s = &r_newrefdef.shaders[i];
+		if (s->frag)
+			s->fpid = SH_LoadProgram_ARB_FP(s->filename);
+		else if (s->vertex)
+			s->vpid = SH_LoadProgram_ARB_VP(s->filename);
+	}
+	shaderInited = qtrue;
+}
+
+/**
+ * @brief Compares the shader titles with the image name
+ * @param[in] image Image name
+ * @return shader_t pointer if image name and shader title match otherwise NULL
+ */
+shader_t* GL_GetShaderForImage(char* image)
+{
+	int i = 0;
+	shader_t *s;
+
+	/* init the shaders */
+	if (!shaderInited && r_newrefdef.num_shaders)
+		GL_ShaderInit();
+
+	/* search for shader title and check whether it matches an image name */
+	for (i = 0; i < r_newrefdef.num_shaders; i++) {
+		s = &r_newrefdef.shaders[i];
+		if (!Q_strcmp(s->title, image))
+			return s;
+	}
+	return NULL;
+}
+
+/**
+ * @brief Delete all ARB shader programs at shutdown
+ * GL_ShaderInit
+ */
+void GL_ShutdownShaders(void)
+{
+	int i = 0;
+	shader_t *s;
+
+	/* init the shaders */
+	if (!shaderInited && r_newrefdef.num_shaders)
+		GL_ShaderInit();
+
+	ri.Con_Printf(PRINT_DEVELOPER, "Shader shutdown\n");
+	/* search for shader title and check whether it matches an image name */
+	for (i = 0; i < r_newrefdef.num_shaders; i++) {
+		s = &r_newrefdef.shaders[i];
+		if (s->fpid) {
+			ri.Con_Printf(PRINT_DEVELOPER, "..unload shader %s\n", s->filename);
+			qglDeleteProgramsARB(1, &s->fpid);
 		}
-		else
-			image->shader = NULL;
+		if (s->vpid) {
+			ri.Con_Printf(PRINT_DEVELOPER, "..unload shader %s\n", s->filename);
+			qglDeleteProgramsARB(1, &s->vpid);
+		}
+		s->fpid = s->vpid = 0;
 	}
 }
 
-/*
-============
-GL_ShutdownShaders
-============
-*/
-void GL_ShutdownShaders( void )
-{
-}
-
-/*
-============
-LoadProgram_ARB_FP
-
-Load and link files containing shaders
-============
-*/
+/**
+ * @brief Loads fragment program shader
+ * @param[in] path The shader file path (relative to game-dir)
+ * @return fpid - id of shader
+ */
 unsigned int SH_LoadProgram_ARB_FP(char *path)
 {
-	char			*fbuf, *buf;
-	unsigned int	size;
+	char *fbuf, *buf;
+	unsigned int size;
 
 	const unsigned char *errors;
 	int error_pos;
-	unsigned int	fpid;
+	unsigned int fpid;
 
-	size = ri.FS_LoadFile (path, (void **)&fbuf);
+	size = ri.FS_LoadFile(path, (void **) &fbuf);
 
 	if (!fbuf) {
-		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
+		ri.Con_Printf(PRINT_ALL, "Could not load shader %s\n", path);
 		return -1;
 	}
 
 	if (size < 16) {
-		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
-		ri.FS_FreeFile (fbuf);
+		ri.Con_Printf(PRINT_ALL, "Could not load invalid shader with size %i: %s\n", size, path);
+		ri.FS_FreeFile(fbuf);
 		return -1;
 	}
 
-	buf = (char *)malloc(size+1);
-	memcpy (buf, fbuf, size);
+	buf = (char *) malloc(size + 1);
+	memcpy(buf, fbuf, size);
 	buf[size] = 0;
-	ri.FS_FreeFile (fbuf);
+	ri.FS_FreeFile(fbuf);
 
-	qglGenProgramsARB(1,&fpid);
+	qglGenProgramsARB(1, &fpid);
 	qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, fpid);
 	qglProgramStringARB(GL_FRAGMENT_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, buf);
 
 	errors = qglGetString(GL_PROGRAM_ERROR_STRING_ARB);
 
 	qglGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB, &error_pos);
-	if(error_pos != -1) {
-		ri.Con_Printf(PRINT_DEVELOPER,"!! FP error at position %d in %s\n", error_pos, path);
-		ri.Con_Printf(PRINT_DEVELOPER,"!! Error: %s\n", (char *)errors);
+	if (error_pos != -1) {
+		ri.Con_Printf(PRINT_ALL, "!! FP error at position %d in %s\n", error_pos, path);
+		ri.Con_Printf(PRINT_ALL, "!! Error: %s\n", (char *) errors);
 		qglDeleteProgramsARB(1, &fpid);
 		free(buf);
 		return 0;
 	}
 	free(buf);
+	ri.Con_Printf(PRINT_DEVELOPER, "...loaded fragment shader %s (pid: %i)\n", path, fpid);
 	return fpid;
 }
 
+/**
+ * @brief Loads vertex program shader
+ * @param[in] path The shader file path (relative to game-dir)
+ * @return vpid - id of shader
+ */
 unsigned int SH_LoadProgram_ARB_VP(char *path)
 {
-	char			*fbuf, *buf;
-	unsigned int	size, vpid;
+	char *fbuf, *buf;
+	unsigned int size, vpid;
 
-	size = ri.FS_LoadFile (path, (void **)&fbuf);
+	size = ri.FS_LoadFile(path, (void **) &fbuf);
 
 	if (!fbuf) {
-		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
+		ri.Con_Printf(PRINT_ALL, "Could not load shader %s\n", path);
 		return -1;
 	}
 
 	if (size < 16) {
-		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
-		ri.FS_FreeFile (fbuf);
+		ri.Con_Printf(PRINT_ALL, "Could not load invalid shader with size %i: %s\n", size, path);
+		ri.FS_FreeFile(fbuf);
 		return -1;
 	}
 
-	buf = (char *)malloc(size+1);
-	memcpy (buf, fbuf, size);
+	buf = (char *) malloc(size + 1);
+	memcpy(buf, fbuf, size);
 	buf[size] = 0;
-	ri.FS_FreeFile (fbuf);
+	ri.FS_FreeFile(fbuf);
 
-	qglGenProgramsARB(1,&vpid);
+	qglGenProgramsARB(1, &vpid);
 	qglBindProgramARB(GL_VERTEX_PROGRAM_ARB, vpid);
 	qglProgramStringARB(GL_VERTEX_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, buf);
 
 	{
-		const unsigned char *errors=qglGetString(GL_PROGRAM_ERROR_STRING_ARB);
+		const unsigned char *errors = qglGetString(GL_PROGRAM_ERROR_STRING_ARB);
 		int error_pos;
 
 		qglGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB, &error_pos);
-		if(error_pos != -1) {
-			ri.Con_Printf(PRINT_DEVELOPER,"!! VP error at position %d in %s\n", error_pos, path);
-			ri.Con_Printf(PRINT_DEVELOPER,"!! Error: %s\n", (char *)errors);
+		if (error_pos != -1) {
+			ri.Con_Printf(PRINT_ALL, "!! VP error at position %d in %s\n", error_pos, path);
+			ri.Con_Printf(PRINT_ALL, "!! Error: %s\n", (char *) errors);
 
 			qglDeleteProgramsARB(1, &vpid);
 			free(buf);
@@ -158,80 +200,67 @@ unsigned int SH_LoadProgram_ARB_VP(char *path)
 		}
 	}
 	free(buf);
+	ri.Con_Printf(PRINT_DEVELOPER, "...loaded vertex shader %s (pid: %i)\n", path, vpid);
 	return vpid;
 }
 
-/*
-============
-UseProgram_ARB_FP
-
-Activate Shaders
-============
-*/
+/**
+ * @brief Activate fragment shaders
+ * @param[in] fpid the shader id
+ * @sa SH_LoadProgram_ARB_FP
+ */
 void SH_UseProgram_ARB_FP(unsigned int fpid)
 {
-	if (fpid>0) {
-		qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, fpid);
+	if (fpid > 0) {
 		qglEnable(GL_FRAGMENT_PROGRAM_ARB);
+		qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, fpid);
 	} else {
 		qglDisable(GL_FRAGMENT_PROGRAM_ARB);
 	}
 }
 
+/**
+ * @brief Activate vertex shader
+ * @param[in] vpid the shader id
+ * @sa SH_LoadProgram_ARB_VP
+ */
 void SH_UseProgram_ARB_VP(unsigned int vpid)
 {
-	if (vpid>0) {
-		qglBindProgramARB(GL_VERTEX_PROGRAM_ARB, vpid);
+	if (vpid > 0) {
 		qglEnable(GL_VERTEX_PROGRAM_ARB);
+		qglBindProgramARB(GL_VERTEX_PROGRAM_ARB, vpid);
 	} else {
 		qglDisable(GL_VERTEX_PROGRAM_ARB);
 	}
 }
 
-void SH_UseShader(shader_t* shader)
+/**
+ * @brief Use a shader if arg fragment program are supported
+ * @sa SH_UseProgram_ARB_FP
+ * @sa SH_UseProgram_ARB_VP
+ * @param[in] shader Shader pointer (see image_t)
+ */
+void SH_UseShader(shader_t * shader, qboolean deactivate)
 {
 	assert(shader);
 	/* no shaders supported */
-	if ( gl_state.arb_fragment_program == qfalse )
+	if (gl_state.arb_fragment_program == qfalse)
 		return;
-	if ( shader->fpid > 0 )
-		SH_UseProgram_ARB_FP(shader->fpid);
-	if ( shader->vpid > 0 )
-		SH_UseProgram_ARB_VP(shader->vpid);
-}
-
-/*
-================================
-Shaders
-================================
-*/
-
-/*
-=================
-ABR Water Shader
-=================
-*/
-const char *arb_water =
-"!!ARBfp1.0\n"
-"OPTION ARB_precision_hint_fastest;\n"
-"PARAM c[1] = { { 2.75 } };\n"
-"TEMP R0;\n"
-"TEX R0.zw, fragment.texcoord[1], texture[1], 2D;\n"
-"MUL R0.xy, -R0.zwzw, fragment.color.primary.x;\n"
-"ADD R0.xy, R0, fragment.texcoord[0];\n"
-"TEX R0, R0, texture[0], 2D;\n"
-"MUL R0, R0, fragment.color.primary;\n"
-"MUL result.color, R0, c[0].x;\n"
-"END\n";
-
-
-unsigned int SH_CompileWaterShader(unsigned int arb_water_id)
-{
-	qglGenProgramsARB(1, &arb_water_id);
-	qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, arb_water_id);
-	qglProgramStringARB ( GL_FRAGMENT_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, strlen ( arb_water ), arb_water );
-	return arb_water_id;
-/*	qglDeleteProgramsARB(1, &arb_water_id); */
+	if (shader->fpid > 0) {
+		if (deactivate)
+			SH_UseProgram_ARB_FP(-1);
+		else {
+			qglActiveTextureARB(GL_TEXTURE0_ARB);
+			SH_UseProgram_ARB_FP(shader->fpid);
+		}
+	} else if (shader->vpid > 0) {
+		if (deactivate)
+			SH_UseProgram_ARB_VP(-1);
+		else {
+			qglActiveTextureARB(GL_TEXTURE0_ARB);
+			SH_UseProgram_ARB_VP(shader->vpid);
+		}
+	}
 }
 
 #endif /* SHADERS */

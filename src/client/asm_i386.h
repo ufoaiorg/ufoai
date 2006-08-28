@@ -127,4 +127,4 @@ portable_samplepair_t structure
 */
 #define TRANSPARENT_COLOR	255
 
-#endif /* #define CLIENT_ASM_I386_H */
+#endif /* CLIENT_ASM_I386_H */

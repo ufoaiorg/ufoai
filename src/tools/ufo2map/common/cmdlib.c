@@ -1,4 +1,27 @@
-/* cmdlib.c */
+/**
+ * @file cmdlib.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
 
 #include "cmdlib.h"
 #include <sys/types.h>
@@ -88,13 +111,9 @@ void ExpandWildcards (int *argc, char ***argv)
 
 #ifdef WIN_ERROR
 #include <windows.h>
-/*
-=================
-Error
-
-For abnormal program terminations in windowed apps
-=================
-*/
+/**
+ * @brief For abnormal program terminations in windowed apps
+ */
 void Error (char *error, ...)
 {
 	va_list argptr;
@@ -115,13 +134,9 @@ void Error (char *error, ...)
 }
 
 #else
-/*
-=================
-Error
-
-For abnormal program terminations in console apps
-=================
-*/
+/**
+ * @brief For abnormal program terminations in console apps
+ */
 void Error (char *error, ...)
 {
 	va_list argptr;
@@ -172,8 +187,7 @@ void SetQdirFromPath (char *path)
 	char	c[1024];
 	int pathlength = 0;
 
-	if (!(path[0] == '/' || path[0] == '\\' || path[1] == ':'))
-	{	/* path is partial */
+	if (!(path[0] == '/' || path[0] == '\\' || path[1] == ':')) {	/* path is partial */
 		Q_getwd (temp);
 		strcat (temp, path);
 		path = temp;
@@ -203,8 +217,7 @@ char *ExpandArg (char *path)
 {
 	static char full[1024];
 
-	if (path[0] != '/' && path[0] != '\\' && path[1] != ':')
-	{
+	if (path[0] != '/' && path[0] != '\\' && path[1] != ':') {
 		Q_getwd (full);
 		strcat (full, path);
 	}
@@ -231,8 +244,7 @@ char *ExpandPathAndArchive (char *path)
 
 	expanded = ExpandPath (path);
 
-	if (archive)
-	{
+	if (archive) {
 		sprintf (archivename, "%s/%s", archivedir, path);
 		QCopyFile (expanded, archivename);
 	}
@@ -270,8 +282,7 @@ double I_FloatTime (void)
 
 	gettimeofday(&tp, &tzp);
 
-	if (!secbase)
-	{
+	if (!secbase) {
 		secbase = tp.tv_sec;
 		return tp.tv_usec/1000000.0;
 	}
@@ -305,13 +316,10 @@ void Q_mkdir (char *path)
 		Error ("mkdir %s: %s",path, strerror(errno));
 }
 
-/*
-============
-FileTime
-
-returns -1 if not present
-============
-*/
+/**
+ * @brief
+ * @return -1 if not present
+ */
 int	FileTime (char *path)
 {
 	struct	stat	buf;
@@ -324,13 +332,9 @@ int	FileTime (char *path)
 
 
 
-/*
-==============
-COM_Parse
-
-Parse a token out of a string
-==============
-*/
+/**
+ * @brief Parse a token out of a string
+ */
 char *COM_Parse (char *data)
 {
 	int		c;
@@ -342,36 +346,30 @@ char *COM_Parse (char *data)
 	if (!data)
 		return NULL;
 
-/* skip whitespace */
+	/* skip whitespace */
 skipwhite:
-	while ( (c = *data) <= ' ')
-	{
-		if (c == 0)
-		{
+	while ( (c = *data) <= ' ') {
+		if (c == 0) {
 			com_eof = qtrue;
 			return NULL;			/* end of file; */
 		}
 		data++;
 	}
 
-/* skip // comments */
-	if (c=='/' && data[1] == '/')
-	{
+	/* skip // comments */
+	if (c=='/' && data[1] == '/') {
 		while (*data && *data != '\n')
 			data++;
 		goto skipwhite;
 	}
 
 
-/* handle quoted strings specially */
-	if (c == '\"')
-	{
+	/* handle quoted strings specially */
+	if (c == '\"') {
 		data++;
-		do
-		{
+		do {
 			c = *data++;
-			if (c=='\"')
-			{
+			if (c=='\"') {
 				com_token[len] = 0;
 				return data;
 			}
@@ -380,18 +378,16 @@ skipwhite:
 		} while (1);
 	}
 
-/* parse single characters */
-	if (c=='{' || c=='}'|| c==')'|| c=='(' || c=='\'' || c==':')
-	{
+	/* parse single characters */
+	if (c=='{' || c=='}'|| c==')'|| c=='(' || c=='\'' || c==':') {
 		com_token[len] = c;
 		len++;
 		com_token[len] = 0;
 		return data+1;
 	}
 
-/* parse a regular word */
-	do
-	{
+	/* parse a regular word */
+	do {
 		com_token[len] = c;
 		data++;
 		len++;
@@ -407,18 +403,16 @@ skipwhite:
 
 int Q_strncasecmp (char *s1, char *s2, int n)
 {
-	int		c1, c2;
+	int c1, c2;
 
-	do
-	{
+	do {
 		c1 = *s1++;
 		c2 = *s2++;
 
 		if (!n--)
 			return 0;		/* strings are equal until end point */
 
-		if (c1 != c2)
-		{
+		if (c1 != c2) {
 			if (c1 >= 'a' && c1 <= 'z')
 				c1 -= ('a' - 'A');
 			if (c2 >= 'a' && c2 <= 'z')
@@ -441,8 +435,7 @@ char *strupr (char *start)
 {
 	char	*in;
 	in = start;
-	while (*in)
-	{
+	while (*in) {
 		*in = toupper(*in);
 		in++;
 	}
@@ -453,8 +446,7 @@ char *strlower (char *start)
 {
 	char	*in;
 	in = start;
-	while (*in)
-	{
+	while (*in) {
 		*in = tolower(*in);
 		in++;
 	}
@@ -471,20 +463,15 @@ char *strlower (char *start)
 */
 
 
-/*
-=================
-CheckParm
-
-Checks for the given parameter in the program's command line arguments
-Returns the argument number (1 to argc-1) or 0 if not present
-=================
-*/
+/**
+ * @brief Checks for the given parameter in the program's command line arguments
+ * @return the argument number (1 to argc-1) or 0 if not present
+ */
 int CheckParm (char *check)
 {
 	int             i;
 
-	for (i = 1;i<myargc;i++)
-	{
+	for (i = 1;i<myargc;i++) {
 		if ( !Q_strcasecmp(check, myargv[i]) )
 			return i;
 	}
@@ -557,7 +544,7 @@ void SafeWrite (FILE *f, void *buffer, int count)
 FileExists
 ==============
 */
-qboolean	FileExists (char *filename)
+qboolean FileExists (char *filename)
 {
 	FILE	*f;
 
@@ -573,7 +560,7 @@ qboolean	FileExists (char *filename)
 LoadFile
 ==============
 */
-int    LoadFile (char *filename, void **bufferptr)
+int LoadFile (char *filename, void **bufferptr)
 {
 	FILE	*f;
 	int    length;
@@ -591,13 +578,10 @@ int    LoadFile (char *filename, void **bufferptr)
 }
 
 
-/*
-==============
-TryLoadFile
-
-Allows failure
-==============
-*/
+/**
+ * @brief
+ * @note Allows failure
+ */
 int    TryLoadFile (char *filename, void **bufferptr)
 {
 	FILE	*f;
@@ -625,7 +609,7 @@ int    TryLoadFile (char *filename, void **bufferptr)
 SaveFile
 ==============
 */
-void    SaveFile (char *filename, void *buffer, int count)
+void SaveFile (char *filename, void *buffer, int count)
 {
 	FILE	*f;
 
@@ -639,14 +623,11 @@ void    SaveFile (char *filename, void *buffer, int count)
 void DefaultExtension (char *path, char *extension)
 {
 	char    *src;
-/* */
-/* if path doesnt have a .EXT, append extension */
-/* (extension should include the .) */
-/* */
+	/* if path doesnt have a .EXT, append extension */
+	/* (extension should include the .) */
 	src = path + strlen(path) - 1;
 
-	while (*src != PATHSEPERATOR && src != path)
-	{
+	while (*src != PATHSEPERATOR && src != path) {
 		if (*src == '.')
 			return;                 /* it has an extension */
 		src--;
@@ -668,7 +649,7 @@ void DefaultPath (char *path, char *basepath)
 }
 
 
-void    StripFilename (char *path)
+void StripFilename (char *path)
 {
 	int             length;
 
@@ -678,13 +659,12 @@ void    StripFilename (char *path)
 	path[length] = 0;
 }
 
-void    StripExtension (char *path)
+void StripExtension (char *path)
 {
 	int             length;
 
 	length = strlen(path)-1;
-	while (length > 0 && path[length] != '.')
-	{
+	while (length > 0 && path[length] != '.') {
 		length--;
 		if (path[length] == '/')
 			return;		/* no extension */
@@ -707,9 +687,7 @@ void ExtractFilePath (char *path, char *dest)
 
 	src = path + strlen(path) - 1;
 
-/* */
-/* back up until a \ or the start */
-/* */
+	/* back up until a \ or the start */
 	while (src != path && *(src-1) != '\\' && *(src-1) != '/')
 		src--;
 
@@ -723,14 +701,11 @@ void ExtractFileBase (char *path, char *dest)
 
 	src = path + strlen(path) - 1;
 
-/* */
-/* back up until a \ or the start */
-/* */
+	/* back up until a \ or the start */
 	while (src != path && *(src-1) != PATHSEPERATOR)
 		src--;
 
-	while (*src && *src != '.')
-	{
+	while (*src && *src != '.') {
 		*dest++ = *src++;
 	}
 	*dest = 0;
@@ -742,13 +717,10 @@ void ExtractFileExtension (char *path, char *dest)
 
 	src = path + strlen(path) - 1;
 
-/* */
-/* back up until a . or the start */
-/* */
+	/* back up until a . or the start */
 	while (src != path && *(src-1) != '.')
 		src--;
-	if (src == path)
-	{
+	if (src == path) {
 		*dest = 0;	/* no extension */
 		return;
 	}
@@ -770,8 +742,7 @@ int ParseHex (char *hex)
 	num = 0;
 	str = hex;
 
-	while (*str)
-	{
+	while (*str) {
 		num <<= 4;
 		if (*str >= '0' && *str <= '9')
 			num += *str-'0';
@@ -813,7 +784,7 @@ int ParseNum (char *str)
 
 #ifdef __BIG_ENDIAN__
 
-short   LittleShort (short l)
+short LittleShort (short l)
 {
 	byte    b1,b2;
 
@@ -823,15 +794,15 @@ short   LittleShort (short l)
 	return (b1<<8) + b2;
 }
 
-short   BigShort (short l)
+short BigShort (short l)
 {
 	return l;
 }
 
 
-int    LittleLong (int l)
+int LittleLong (int l)
 {
-	byte    b1,b2,b3,b4;
+	byte b1,b2,b3,b4;
 
 	b1 = l&255;
 	b2 = (l>>8)&255;
@@ -841,13 +812,13 @@ int    LittleLong (int l)
 	return ((int)b1<<24) + ((int)b2<<16) + ((int)b3<<8) + b4;
 }
 
-int    BigLong (int l)
+int BigLong (int l)
 {
 	return l;
 }
 
 
-float	LittleFloat (float l)
+float LittleFloat (float l)
 {
 	union {byte b[4]; float f;} in, out;
 
@@ -860,7 +831,7 @@ float	LittleFloat (float l)
 	return out.f;
 }
 
-float	BigFloat (float l)
+float BigFloat (float l)
 {
 	return l;
 }
@@ -869,9 +840,9 @@ float	BigFloat (float l)
 #else
 
 
-short   BigShort (short l)
+short BigShort (short l)
 {
-	byte    b1,b2;
+	byte b1,b2;
 
 	b1 = l&255;
 	b2 = (l>>8)&255;
@@ -879,15 +850,15 @@ short   BigShort (short l)
 	return (b1<<8) + b2;
 }
 
-short   LittleShort (short l)
+short LittleShort (short l)
 {
 	return l;
 }
 
 
-int    BigLong (int l)
+int BigLong (int l)
 {
-	byte    b1,b2,b3,b4;
+	byte b1,b2,b3,b4;
 
 	b1 = l&255;
 	b2 = (l>>8)&255;
@@ -897,12 +868,12 @@ int    BigLong (int l)
 	return ((int)b1<<24) + ((int)b2<<16) + ((int)b3<<8) + b4;
 }
 
-int    LittleLong (int l)
+int LittleLong (int l)
 {
 	return l;
 }
 
-float	BigFloat (float l)
+float BigFloat (float l)
 {
 	union {byte b[4]; float f;} in, out;
 
@@ -915,7 +886,7 @@ float	BigFloat (float l)
 	return out.f;
 }
 
-float	LittleFloat (float l)
+float LittleFloat (float l)
 {
 	return l;
 }
@@ -993,18 +964,16 @@ unsigned short CRC_Value(unsigned short crcvalue)
 CreatePath
 ============
 */
-void	CreatePath (char *path)
+void CreatePath (char *path)
 {
 	char	*ofs, c;
 
 	if (path[1] == ':')
 		path += 2;
 
-	for (ofs = path+1 ; *ofs ; ofs++)
-	{
+	for (ofs = path+1 ; *ofs ; ofs++) {
 		c = *ofs;
-		if (c == '/' || c == '\\')
-		{	/* create the directory */
+		if (c == '/' || c == '\\') {	/* create the directory */
 			*ofs = 0;
 			Q_mkdir (path);
 			*ofs = c;
@@ -1013,13 +982,9 @@ void	CreatePath (char *path)
 }
 
 
-/*
-============
-QCopyFile
-
-  Used to archive source files
-============
-*/
+/**
+ * @brief Used to archive source files
+ */
 void QCopyFile (char *from, char *to)
 {
 	void	*buffer;

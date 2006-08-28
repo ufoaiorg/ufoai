@@ -323,7 +323,7 @@
 			<Option target="Win32 Debug Alpha"/>
 			<Option target="Win32 Release Alpha"/>
 		</Unit>
-		<Unit filename="client\snd_dma.c">
+		<Unit filename="client\snd_ref.c">
 			<Option compilerVar="CC"/>
 			<Option target="Win32 Release"/>
 			<Option target="Win32 Debug"/>

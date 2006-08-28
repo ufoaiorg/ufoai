@@ -1,3 +1,23 @@
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 #include "qdata.h"
 
 qboolean	g_compress_pak;
@@ -57,7 +77,7 @@ void BeginPak (char *outname)
 
 	/* leave space for header */
 	SafeWrite (pakfile, &pakheader, sizeof(pakheader));
-	
+
 	pf = pfiles;
 }
 
@@ -152,17 +172,17 @@ void FinishPak (void)
 	dirlen = (byte *)pf - (byte *)pfiles;
 	pakheader.dirofs = LittleLong(ftell(pakfile));
 	pakheader.dirlen = LittleLong(dirlen);
-	
+
 	checksum = Com_BlockChecksum ( (void *)pfiles, dirlen );
 
 	SafeWrite (pakfile, pfiles, dirlen);
 
 	i = ftell (pakfile);
-	 
+
 	fseek (pakfile, 0, SEEK_SET);
 	SafeWrite (pakfile, &pakheader, sizeof(pakheader));
-	fclose (pakfile);	
-	
+	fclose (pakfile);
+
 	d = pf - pfiles;
 	printf ("%i files packed in %i bytes\n",d, i);
 	printf ("checksum: 0x%x\n", checksum);
@@ -214,7 +234,7 @@ void PackDirectory_r (char *dir)
 			continue;
 		}
 		/* copy or pack the file */
-		ReleaseFile (filename);		
+		ReleaseFile (filename);
 	} while (_findnext( handle, &fileinfo ) != -1);
 
 	_findclose (handle);
@@ -242,21 +262,21 @@ void PackDirectory_r (char *dir)
 	char		fullname[1024];
 	char		dirstring[1024];
 	char		*name;
-	
+
 	sprintf (dirstring, "%s%s", gamedir, dir);
 	count = scandir(dirstring, &namelist, NULL, NULL);
-	
+
 	for (i=0 ; i<count ; i++)
 	{
-		ent = namelist[i];	
+		ent = namelist[i];
 		name = ent->d_name;
 
 		if (name[0] == '.')
 			continue;
-	
+
 		sprintf (fullname, "%s/%s", dir, name);
 		sprintf (dirstring, "%s%s/%s", gamedir, dir, name);
-		
+
 		if (stat (dirstring, &st) == -1)
 			Error ("fstating %s", pf->name);
 		if (st.st_mode & S_IFDIR)
@@ -266,7 +286,7 @@ void PackDirectory_r (char *dir)
 		}
 
 		/* copy or pack the file */
-		ReleaseFile (fullname);		
+		ReleaseFile (fullname);
 	}
 }
 #endif
@@ -283,7 +303,7 @@ release build (sounds, etc)
 void Cmd_Dir (void)
 {
 	GetToken (qfalse);
-	PackDirectory_r (token);	
+	PackDirectory_r (token);
 }
 
 /*======================================================================== */
@@ -360,14 +380,12 @@ void ParseScript (void)
 			if (endofscript)
 				return;
 			if (token[0] == '$')
-				break;				
+				break;
 			while (TokenAvailable())
 				GetToken (qfalse);
 		} while (1);
-	
-		/* */
+
 		/* model commands */
-		/* */
 		if (!strcmp (token, "$modelname"))
 			Cmd_Modelname ();
 		else if (!strcmp (token, "$base"))
@@ -384,18 +402,14 @@ void ParseScript (void)
 			Cmd_Skin ();
 		else if (!strcmp (token, "$skinsize"))
 			Cmd_Skinsize ();
-		/* */
 		/* sprite commands */
-		/* */
 		else if (!strcmp (token, "$spritename"))
 			Cmd_SpriteName ();
 		else if (!strcmp (token, "$load"))
 			Cmd_Load ();
 		else if (!strcmp (token, "$spriteframe"))
 			Cmd_SpriteFrame ();
-		/* */
 		/* image commands */
-		/* */
 		else if (!strcmp (token, "$grab"))
 			Cmd_Grab ();
 		else if (!strcmp (token, "$raw"))
@@ -410,14 +424,10 @@ void ParseScript (void)
 			Cmd_Mip ();
 		else if (!strcmp (token, "$environment"))
 			Cmd_Environment ();
-		/* */
 		/* video */
-		/* */
 		else if (!strcmp (token, "$video"))
 			Cmd_Video ();
-		/* */
 		/* misc */
-		/* */
 		else if (!strcmp (token, "$file"))
 			Cmd_File ();
 		else if (!strcmp (token, "$dir"))
@@ -447,48 +457,35 @@ int main (int argc, char **argv)
 
 	ExpandWildcards (&argc, &argv);
 
-	for (i=1 ; i<argc ; i++)
-	{
-		if (!strcmp(argv[i], "-archive"))
-		{
+	for (i=1 ; i<argc ; i++) {
+		if (!strcmp(argv[i], "-archive")) {
 			/* -archive f:/quake2/release/dump_11_30 */
 			archive = qtrue;
 			strcpy (archivedir, argv[i+1]);
 			printf ("Archiving source to: %s\n", archivedir);
 			i++;
-		}
-		else if (!strcmp(argv[i], "-release"))
-		{
+		} else if (!strcmp(argv[i], "-release")) {
 			g_release = qtrue;
 			strcpy (g_releasedir, argv[i+1]);
 			printf ("Copy output to: %s\n", g_releasedir);
 			i++;
-		}
-		else if (!strcmp(argv[i], "-compress"))
-		{
+		} else if (!strcmp(argv[i], "-compress")) {
 			g_compress_pak = qtrue;
 			printf ("Compressing pakfile\n");
-		}
-		else if (!strcmp(argv[i], "-pak"))
-		{
+		} else if (!strcmp(argv[i], "-pak")) {
 			g_release = qtrue;
 			g_pak = qtrue;
 			printf ("Building pakfile: %s\n", argv[i+1]);
 			BeginPak (argv[i+1]);
 			i++;
-		}
-		else if (!strcmp(argv[i], "-only"))
-		{
+		} else if (!strcmp(argv[i], "-only")) {
 			strcpy (g_only, argv[i+1]);
 			printf ("Only grabbing %s\n", g_only);
 			i++;
-		}
-		else if (!strcmp(argv[i], "-3ds"))
-		{
+		} else if (!strcmp(argv[i], "-3ds")) {
 			do3ds = qtrue;
 			printf ("loading .3ds files\n");
-		}
-		else if (argv[i][0] == '-')
+		} else if (argv[i][0] == '-')
 			Error ("Unknown option \"%s\"", argv[i]);
 		else
 			break;
@@ -502,18 +499,15 @@ int main (int argc, char **argv)
 	else
 		trifileext = ext_tri;
 
-	for ( ; i<argc ; i++)
-	{
+	for ( ; i<argc ; i++) {
 		printf ("--------------- %s ---------------\n", argv[i]);
 		/* load the script */
 		strcpy (path, argv[i]);
 		DefaultExtension (path, ".qdt");
 		SetQdirFromPath (path);
 		LoadScriptFile (ExpandArg(path));
-		
-		/* */
+
 		/* parse it */
-		/* */
 		ParseScript ();
 
 		/* write out the last model */

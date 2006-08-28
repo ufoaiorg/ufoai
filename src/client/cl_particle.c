@@ -25,16 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-/* =========================================================== */
-
-/* */
 mp_t MPs[MAX_MAPPARTICLES];
 int numMPs;
-
-/* */
-
-#define	PFOFS(x)	(int)&(((ptlDef_t *)0)->x)
-#define	PPOFS(x)	(int)&(((ptl_t *)0)->x)
 
 #define RADR(x)		((x < 0) ? (byte*)p-x : (byte*)pcmdData+x)
 #define RSTACK		-0xFFF0
@@ -61,16 +53,16 @@ typedef enum pf_s {
 	PF_NUM_PTLFUNCS
 } pf_t;
 
-char *pf_strings[PF_NUM_PTLFUNCS] = {
+static char *pf_strings[PF_NUM_PTLFUNCS] = {
 	"init",
 	"run",
 	"think"
 };
 
-int pf_values[PF_NUM_PTLFUNCS] = {
-	PFOFS(init),
-	PFOFS(run),
-	PFOFS(think)
+static size_t pf_values[PF_NUM_PTLFUNCS] = {
+	offsetof(ptlDef_t, init),
+	offsetof(ptlDef_t, run),
+	offsetof(ptlDef_t, think)
 };
 
 
@@ -90,7 +82,7 @@ typedef enum pc_s {
 	PC_NUM_PTLCMDS
 } pc_t;
 
-char *pc_strings[PC_NUM_PTLCMDS] = {
+static char *pc_strings[PC_NUM_PTLCMDS] = {
 	"end",
 
 	"push", "pop", "kpop",
@@ -108,7 +100,7 @@ char *pc_strings[PC_NUM_PTLCMDS] = {
 #define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
 #define ONLY		(1<<31)
 
-int pc_types[PC_NUM_PTLCMDS] = {
+static int pc_types[PC_NUM_PTLCMDS] = {
 	0,
 
 	V_UNTYPED, V_UNTYPED, V_UNTYPED,
@@ -122,37 +114,37 @@ int pc_types[PC_NUM_PTLCMDS] = {
 	ONLY | V_STRING, ONLY | V_STRING
 };
 
-value_t pps[] = {
-	{"image", V_STRING, PPOFS(pic)},
-	{"model", V_STRING, PPOFS(model)},
-	{"blend", V_BLEND, PPOFS(blend)},
-	{"style", V_STYLE, PPOFS(style)},
-	{"tfade", V_FADE, PPOFS(thinkFade)},
-	{"ffade", V_FADE, PPOFS(frameFade)},
-	{"size", V_POS, PPOFS(size)},
-	{"scale", V_VECTOR, PPOFS(scale)},
-	{"color", V_COLOR, PPOFS(color)},
-	{"a", V_VECTOR, PPOFS(a)},
-	{"v", V_VECTOR, PPOFS(v)},
-	{"s", V_VECTOR, PPOFS(s)},
+static value_t pps[] = {
+	{"image", V_STRING, offsetof(ptl_t, pic)},
+	{"model", V_STRING, offsetof(ptl_t, model)},
+	{"blend", V_BLEND, offsetof(ptl_t, blend)},
+	{"style", V_STYLE, offsetof(ptl_t, style)},
+	{"tfade", V_FADE, offsetof(ptl_t, thinkFade)},
+	{"ffade", V_FADE, offsetof(ptl_t, frameFade)},
+	{"size", V_POS, offsetof(ptl_t, size)},
+	{"scale", V_VECTOR, offsetof(ptl_t, scale)},
+	{"color", V_COLOR, offsetof(ptl_t, color)},
+	{"a", V_VECTOR, offsetof(ptl_t, a)},
+	{"v", V_VECTOR, offsetof(ptl_t, v)},
+	{"s", V_VECTOR, offsetof(ptl_t, s)},
 
 	/* t and dt are not specified in particle definitions */
 	/* but they can be used as references */
-	{"t", V_FLOAT, PPOFS(t)},
-	{"dt", V_FLOAT, PPOFS(dt)},
+	{"t", V_FLOAT, offsetof(ptl_t, t)},
+	{"dt", V_FLOAT, offsetof(ptl_t, dt)},
 
-	{"rounds", V_INT, PPOFS(rounds)},
-	{"angles", V_VECTOR, PPOFS(angles)},
-	{"omega", V_VECTOR, PPOFS(omega)},
-	{"life", V_FLOAT, PPOFS(life)},
-	{"tps", V_FLOAT, PPOFS(tps)},
-	{"lastthink", V_FLOAT, PPOFS(lastThink)},
-	{"frame", V_INT, PPOFS(frame)},
-	{"endframe", V_INT, PPOFS(endFrame)},
-	{"fps", V_FLOAT, PPOFS(fps)},
-	{"lastframe", V_FLOAT, PPOFS(lastFrame)},
-	{"levelflags", V_INT, PPOFS(levelFlags)},
-	{"light", V_BOOL, PPOFS(light)},
+	{"rounds", V_INT, offsetof(ptl_t, rounds)},
+	{"angles", V_VECTOR, offsetof(ptl_t, angles)},
+	{"omega", V_VECTOR, offsetof(ptl_t, omega)},
+	{"life", V_FLOAT, offsetof(ptl_t, life)},
+	{"tps", V_FLOAT, offsetof(ptl_t, tps)},
+	{"lastthink", V_FLOAT, offsetof(ptl_t, lastThink)},
+	{"frame", V_INT, offsetof(ptl_t, frame)},
+	{"endframe", V_INT, offsetof(ptl_t, endFrame)},
+	{"fps", V_FLOAT, offsetof(ptl_t, fps)},
+	{"lastframe", V_FLOAT, offsetof(ptl_t, lastFrame)},
+	{"levelflags", V_INT, offsetof(ptl_t, levelFlags)},
+	{"light", V_BOOL, offsetof(ptl_t, light)},
 
 	{NULL, 0, 0}
 };
@@ -168,23 +160,23 @@ typedef enum art_s {
 #define		MAX_PTLDEFS		256
 #define		MAX_PTLCMDS		(MAX_PTLDEFS*32)
 
-ptlDef_t ptlDef[MAX_PTLDEFS];
-ptlCmd_t ptlCmd[MAX_PTLCMDS];
+static ptlDef_t ptlDef[MAX_PTLDEFS];
+static ptlCmd_t ptlCmd[MAX_PTLCMDS];
 
-int numPtlDefs;
-int numPtlCmds;
+static int numPtlDefs;
+static int numPtlCmds;
 
 #define		MAX_PCMD_DATA	(MAX_PTLCMDS*8)
 
-byte pcmdData[MAX_PCMD_DATA];
-int pcmdPos;
+static byte pcmdData[MAX_PCMD_DATA];
+static int pcmdPos;
 
 #define		MAX_STACK_DEPTH	8
 #define		MAX_STACK_DATA	512
 
-byte cmdStack[MAX_STACK_DATA];
-void *stackPtr[MAX_STACK_DEPTH];
-byte stackType[MAX_STACK_DEPTH];
+static byte cmdStack[MAX_STACK_DATA];
+static void *stackPtr[MAX_STACK_DEPTH];
+static byte stackType[MAX_STACK_DEPTH];
 
 ptlArt_t ptlArt[MAX_PTL_ART];
 ptl_t ptl[MAX_PTLS];
@@ -218,7 +210,7 @@ void CL_ParticleRegisterArt(void)
 			a->art = (char *) re.RegisterModel(a->name);
 			break;
 		default:
-			Sys_Error("CL_ParticleGetArt: Unknown art type\n");
+			Sys_Error("CL_ParticleRegisterArt: Unknown art type\n");
 		}
 	}
 }
@@ -229,7 +221,7 @@ void CL_ParticleRegisterArt(void)
 CL_ParticleGetArt
 ======================
 */
-int CL_ParticleGetArt(char *name, int frame, char type)
+static int CL_ParticleGetArt(char *name, int frame, char type)
 {
 	ptlArt_t *a;
 	int i;
@@ -350,14 +342,14 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 				Com_Error(ERR_FATAL, "CL_ParticleFunction: stack underflow\n");
 
 			/* get pics and models */
-			if (PPOFS(pic) == -cmd->ref) {
+			if (offsetof(ptl_t, pic) == -cmd->ref) {
 				if (stackType[--s] != V_STRING)
 					Sys_Error("Bad type '%s' for pic (particle %s)\n", vt_names[stackType[s - 1]], p->ctrl->name);
 				p->pic = CL_ParticleGetArt((char *) stackPtr[s], p->frame, ART_PIC);
 				e = (byte *) stackPtr[s] - cmdStack;
 				break;
 			}
-			if (PPOFS(model) == -cmd->ref) {
+			if (offsetof(ptl_t, model) == -cmd->ref) {
 				if (stackType[--s] != V_STRING)
 					Sys_Error("Bad type '%s' for model (particle %s)\n", vt_names[stackType[s - 1]], p->ctrl->name);
 				p->model = CL_ParticleGetArt((char *) stackPtr[s], 0, ART_MODEL);
@@ -601,6 +593,29 @@ ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a
 	return p;
 }
 
+/**
+ * @brief Spawn a particle given by EV_SPAWN_PARTICLE event
+ * @param[in] sb sizebuf that holds the network transfer
+ */
+void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb)
+{
+	char *particle;
+	int levelflags, i;
+	pos3_t originPos;
+	vec3_t origin;
+
+	levelflags = MSG_ReadShort(sb);
+	MSG_ReadGPos(sb, originPos);
+	for (i=0;i<3;i++)
+		origin[i] = (float)originPos[i];
+
+	MSG_ReadByte(sb); /* for stringlength */
+	particle = MSG_ReadString(sb);
+
+	if (particle && Q_strcmp(particle, "null")) {
+		CL_ParticleSpawn(particle, levelflags, origin, NULL, NULL);
+	}
+}
 
 /*
 ======================
@@ -991,6 +1006,27 @@ void CL_ParsePtlCmds(char *name, char **text)
 	memset(pc, 0, sizeof(ptlCmd_t));
 }
 
+/**
+ * @brief Searches for the particle index in ptlDef array
+ * @param[in] name Name of the particle
+ * @return id of the particle in ptlDef array
+ */
+int CL_GetParticleIndex(char *name)
+{
+	int i;
+
+	/* search for menus with same name */
+	for (i = 0; i < numPtlDefs; i++)
+		if (!Q_strncmp(name, ptlDef[i].name, MAX_VAR))
+			break;
+
+	if (i >= numPtlDefs) {
+		Com_Printf("CL_GetParticleIndex: unknown particle '%s'\n", name);
+		return -1;
+	}
+
+	return i;
+}
 
 /*
 ======================

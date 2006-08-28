@@ -22,7 +22,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef __linux__
 #include "/usr/include/vorbis/vorbisfile.h"
 #else
-#include "../win32/vorbisfile.h"
+#include "../ports/win32/vorbisfile.h"
 #endif
 
 /* !!! if this is changed, the asm code must change !!! */
@@ -120,13 +120,17 @@ typedef struct {
 struct sndinfo {
 	dma_t *dma;
 	cvar_t *bits;
-	cvar_t *speed;
 	cvar_t *channels;
 	cvar_t *device;
-	cvar_t *s_khz;
+	cvar_t *khz;
 
 	void (*Com_Printf) (char *fmt, ...);
 	void (*S_PaintChannels) (int);
+	cvar_t* (*Cvar_Get)(char *var_name, char *value, int flags);
+	int *paintedtime;
+#ifdef _WIN32
+	HWND cl_hwnd;
+#endif
 };
 
 /*
@@ -136,17 +140,6 @@ struct sndinfo {
 
 ====================================================================
 */
-
-/* initializes cycling through a DMA buffer and returns information on it */
-qboolean SNDDMA_Init(struct sndinfo *s);
-
-/* gets the current DMA position */
-int SNDDMA_GetDMAPos(void);
-
-/* shutdown the DMA xfer. */
-void SNDDMA_Shutdown(void);
-void SNDDMA_BeginPainting(void);
-void SNDDMA_Submit(void);
 
 qboolean OGG_Open(char *filename);
 void OGG_Stop(void);
@@ -171,14 +164,13 @@ extern playsound_t s_pendingplays;
 #define	MAX_RAW_SAMPLES	8192
 extern portable_samplepair_t s_rawsamples[MAX_RAW_SAMPLES];
 
-extern cvar_t *s_volume;
-extern cvar_t *s_nosound;
-extern cvar_t *s_loadas8bit;
-extern cvar_t *s_khz;
-extern cvar_t *s_show;
-extern cvar_t *s_mixahead;
-extern cvar_t *s_testsound;
-extern cvar_t *s_primary;
+extern cvar_t *snd_volume;
+extern cvar_t *snd_nosound;
+extern cvar_t *snd_loadas8bit;
+extern cvar_t *snd_khz;
+extern cvar_t *snd_show;
+extern cvar_t *snd_mixahead;
+extern cvar_t *snd_testsound;
 extern cvar_t *ov_volume;
 extern cvar_t *ov_loop;
 

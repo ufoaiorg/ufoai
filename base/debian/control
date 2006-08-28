@@ -2,7 +2,7 @@ Source: ufoai-data
 Section: non-free/games
 Priority: optional
 Maintainer: Yann Dirson <dirson@debian.org>
-Build-Depends: debhelper (>= 4.0.0), ufoai-tools
+Build-Depends: debhelper (>= 4.0.0), ufoai-tools (>= 0.0.svn2120)
 Standards-Version: 3.6.1
 
 Package: ufoai-data

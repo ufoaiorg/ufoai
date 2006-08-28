@@ -1,15 +1,14 @@
-
-// =======================
-// PLASMA PISTOL
-// =======================
+// ================
+// PLASMA ATOMIZER
+// ================
 item plaspistol
 {
-	name		"_Plasma Pistol"
+	name		"_Plasma Atomizer"
 	model		weapons/plaspistol/plaspistol
 	weapon		true
 	type		pistol
 	category	2
-	twohanded	false
+	twohanded	true
 	shape		"0 0 3 2"
 	center		"1 0 0.3"
 	scale		1.5
@@ -21,13 +20,13 @@ item plaspistol
 
 item plaspistol_ammo
 {
-	name		"_Plasma Pistol Charge"
+	name		"_Plasma Atomizer Charge"
 	model		weapons/plaspistol/plaspistol_clip
 	type		ammo
 	category	0
 	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		1.2
+	center		"0 0 -0.2"
+	scale		1.1
 	price		170
 	buytype		1
 
@@ -35,23 +34,24 @@ item plaspistol_ammo
 	{
 		name	"_Charged Pulse"
 		skill 	assault
-		projtl	plasmaChargedPulse
+		projtl	plasmaMiniBall
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
 		firesnd	weapons/plasma_s.wav
-		speed	0
+		speed	800
 		spread	"4 4"
 		crouch	0.8
-		range	500
-		shots	1
+		range	15
+		shots	5
 		ammo	1
-		time	12
-		damage	"50 10"
+		rof		6
+		time	11
+		damage	"12 5"
 		dmgtype plasma
 	}
 	secondary
 	{
-		name	"_Continuous Beam"
+		name	"_Continuous Stream"
 		skill 	heavy
 		projtl	plasmaContinuous
 		impact	plasmaImpact
@@ -59,14 +59,14 @@ item plaspistol_ammo
 		firesnd	weapons/plasma_c.wav
 		sndonce true
 		speed	0
-		spread	"14 5"
+		spread	"15 5"
 		crouch	1.0
-		range	350
-		shots	35
+		range	10
+		shots	46
 		ammo	2
-		rof		25
-		time	22
-		damage	"7 2"
+		rof		32
+		time	15
+		damage	"6 2"
 		dmgtype plasma
 	}
 }
@@ -84,8 +84,8 @@ item plasrifle
 	category	1
 	twohanded	true
 	shape		"0 0 5 2"
-	center		"9 0 1.5"
-	scale		1.3
+	center		"9.3 0 1.5"
+	scale		1.25
 	ammo		8
 	reload		8
 	price		4000
@@ -99,127 +99,76 @@ item plasrifle_ammo
 	type		ammo
 	category	0
 	shape		"0 0 2 1"
-	center		"0 0 0"
-	scale		1.4
+	center		"0 0 -0.1"
+	scale		1.25
 	price		200
 	buytype		0
 
 	primary
 	{
 		name	"_Charged Pulse"
-		skill 	precise
-		projtl	plasmaChargedPulse
+		skill 	assault
+		projtl	plasmaBall
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
 		firesnd	weapons/plasma_s.wav
-		speed	0
-		spread	"2.7 2.7"
+		speed	700
+		spread	"3 3"
 		crouch	0.7
-		range	700
-		shots	1
+		range	22
+		shots	5
 		ammo	1
+		rof		5
 		time	13
-		damage	"60 15"
+		damage	"14 5"
 		dmgtype plasma
 	}
 	secondary
 	{
-		name	"_Continuous Beam"
+		name	"_Continuous Stream"
 		skill 	heavy
 		projtl	plasmaContinuous
 		impact	plasmaImpact
 		hitbody	plasmaImpact
-		firesnd	weapons/plasma_c.wav
+		firesnd	weapons/plasma_big.wav
 		sndonce true
 		speed	0
 		spread	"9 5"
 		crouch	1.0
-		range	500
-		shots	35
+		range	18
+		shots	30
 		ammo	3
-		rof		25
-		time	24
-		damage	"9 2"
+		rof		21
+		time	22
+		damage	"12 2"
 		dmgtype plasma
 	}
 }
 
-// =======================
-// PLASMABLADE
-// =======================
-item plasblade
-{
-	name		"_Plasmablade"
-	model		weapons/plasblade/plasblade
-	weapon		true
-	type		melee
-	category	2
-	shape		"0 0 1 2"
-	center		"-6 -13 0"
-	scale  0.8
-	price		210
-	buytype		2
-	ammo		1
-	thrown		true
-
-	primary
-	{
-		name	"_Stab"
-		skill	close
-		projtl	null
-		impact	plasmaImpactCharged
-		hitbody	plasmaImpactCharged
-		firesnd	misc/klonk03.wav
-		speed	0
-		range	55
-		shots	1
-		time	8
-		damage	"100 10"
-		dmgtype normal
-	}
-	secondary
-	{
-		name	"_Throw"
-		skill	close
-		projtl	plasblade
-		impact	plasmaImpactCharged
-		hitbody	plasmaImpactCharged
-		impsnd	misc/klonk03.wav
-		bodysnd misc/klonk01.wav
-		speed	320
-		range	500
-		spread	"7 7"
-		shots	1
-		ammo	1
-		time	10
-		damage	"70 10"
-		dmgtype normal
-	}
-}
 
 // =======================
-// PLASMABLASTER
+// PLASMA BLASTER
 // =======================
 item plasblaster
 {
-	name		"_Plasmablaster"
+	name		"_Plasma Blaster"
 	model		weapons/plasblaster/plasblaster
 	weapon		true
-	type		rpg
-	category	3
+	type		biggun
+	category	1
 	twohanded	true
 	shape		"0 0 5 2"
-	center		"7 0 2"
-	scale		1.0
-	ammo		4
-	reload		6
+	center		"7 0 1.4"
+	scale		1.06
+	ammo		12
+	reload		10
 	price		5800
 	buytype		0
 }
 
 item plasblaster_ammo
 {
-	name		"_Plasmablaster Charge"
+	name		"_Plasma Blaster Charge"
 	model		weapons/plasblaster/plasblaster_clip
 	type		ammo
 	category	0
@@ -231,44 +180,45 @@ item plasblaster_ammo
 
 	primary
 	{
-		name	"_Snap Shot"
+		name	"_Charged Ball"
 		skill 	explosive
-		projtl	plasmaBall
-		impact	plasmaImpact
-		hitbody	plasmaImpact
+		projtl	plasmaBigBall
+		impact	plasmaBigImpact
+		hitbody	plasmaBigImpact
 		firesnd	weapons/plasma_s.wav
-		selfdet true
-		speed	800
-		spread	"5 5"
-		crouch	0.8
-		range	1200
+		impsnd	weapons/plasma_grenade.wav
+		bodysnd	weapons/plasma_grenade.wav
+		gravity	true
+		spread	"4 4"
+		range	17
 		shots	1
-		ammo	1
-		time	14
-		damage	"45 10"
-		spldmg	"100 30"
-		splrad	120
+		ammo	4
+		rof		1
+		time	16
+		damage	"60 10"
+		spldmg	"120 20"
+		splrad	5
 		dmgtype plasma
 	}
 	secondary
 	{
-		name	"_Aimed Shot"
-		skill 	explosive
-		projtl	plasmaBall
+		name	"_Continuous Beam"
+		skill 	heavy
+		projtl	plasmaContinuous
 		impact	plasmaImpact
 		hitbody	plasmaImpact
-		firesnd	weapons/plasma_c.wav
-		selfdet true
-		speed	800
-		spread	"2.6 2.6"
-		crouch	0.6
-		range	1200
-		shots	1
-		ammo	1
-		time	20
-		damage	"45 10"
-		spldmg	"100 30"
-		splrad	120
+		firesnd	weapons/plasma_big.wav
+		sndonce true
+		speed	0
+		spread	"11 5"
+		crouch	1.0
+		range	15
+		shots	22
+		ammo	3
+		rof		15
+		time	26
+		damage	"21 6"
 		dmgtype plasma
 	}
 }
+
