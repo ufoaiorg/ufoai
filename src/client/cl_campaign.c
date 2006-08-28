@@ -1088,7 +1088,6 @@ static void CL_HandleBudget(void)
  * @sa CL_CampaignRunAircraft
  * @sa CL_CampaignCheckEvents
  */
-
 void CL_CampaignRun(void)
 {
 	/* advance time */
@@ -1221,7 +1220,7 @@ void CL_UpdateCredits(int credits)
 }
 
 
-#define MAX_STATS_BUFFER 1024
+#define MAX_STATS_BUFFER 256
 /**
  * @brief Shows the current stats from stats_t stats
  */
@@ -1236,12 +1235,12 @@ void CL_Stats_Update(void)
 	/* TODO: implement me */
 	Com_sprintf(statsBuffer, MAX_STATS_BUFFER, _("Missions:\nwon:\t%i\tlost:\t%i\nBases:\nbuild:\t%i\tattacked:\t%i\n"),
 				stats.missionsWon, stats.missionsLost, stats.basesBuild, stats.basesAttacked);
+	menuText[TEXT_STATS_1] = statsBuffer;
+	menuText[TEXT_STATS_2] = statsBuffer + strlen(statsBuffer) + 1;
 
-	Q_strcat(statsBuffer, "\n\n", sizeof(statsBuffer));
 	for (i=0; i<gd.numNations;i++) {
-		Q_strcat(statsBuffer, va("%s\t%s\n", gd.nations[i].name, CL_GetNationHapinessString(&gd.nations[i])), sizeof(statsBuffer));
+		Q_strcat(menuText[TEXT_STATS_2], va("%s\t%s\n", gd.nations[i].name, CL_GetNationHapinessString(&gd.nations[i])), sizeof(statsBuffer));
 	}
-	menuText[TEXT_STANDARD] = statsBuffer;
 }
 
 /**
