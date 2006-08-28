@@ -564,9 +564,6 @@ typedef struct cmodel_s {
 	int headnode;
 } cmodel_t;
 
-/*extern int			numcmodels; */
-/*extern cmodel_t	map_cmodels[1024]; */
-
 typedef struct csurface_s {
 	char name[16];
 	int flags;
@@ -635,9 +632,7 @@ typedef struct {
 
 /*
 ==============================================================
-
 SCRIPT VALUE PARSING
-
 ==============================================================
 */
 
@@ -762,9 +757,7 @@ char *Com_ValueToStr(void *base, int type, int ofs);
 
 /*
 ==========================================================
-
-  ELEMENTS COMMUNICATED ACROSS THE NET
-
+ELEMENTS COMMUNICATED ACROSS THE NET
 ==========================================================
 */
 
@@ -845,8 +838,6 @@ typedef enum {
 
 extern char *pa_format[128];
 
-
-/* =========================================================== */
 
 /* this is the absolute max for now */
 #define MAX_OBJDEFS		128
@@ -979,7 +970,6 @@ typedef struct csi_s {
 	int numDTs;
 } csi_t;
 
-/* =========================================================== */
 
 /* TODO: Medals. Still subject to (major) changes. */
 
@@ -1187,11 +1177,9 @@ typedef enum {
 
 void Com_InventoryList_f(void);
 
-/*============================================== */
-
 /* g_spawn.c */
 
-/* NOTE: this only allows quadratic units? */
+/* NOTE: this only allows quadratic units */
 typedef enum {
 	ACTOR_SIZE_NORMAL = 1,
 	ACTOR_SIZE_UGV

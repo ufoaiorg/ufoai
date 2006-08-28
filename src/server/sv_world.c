@@ -344,7 +344,7 @@ void SV_ClipMoveToEntities(moveclip_t * clip)
 	int i, num;
 	edict_t *touchlist[MAX_EDICTS], *touch;
 	trace_t trace;
-	int tile, headnode;
+	int tile = 0, headnode = 0;
 
 	num = SV_AreaEdicts(clip->boxmins, clip->boxmaxs, touchlist, MAX_EDICTS, AREA_SOLID);
 
@@ -368,7 +368,6 @@ void SV_ClipMoveToEntities(moveclip_t * clip)
 #endif
 		/* might intersect, so do an exact clip */
 		headnode = SV_HullForEntity(touch, &tile);
-
 
 		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, touch->origin, vec3_origin);
 

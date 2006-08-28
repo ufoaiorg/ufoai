@@ -2361,7 +2361,7 @@ void G_ClientTeamInfo(player_t * player)
 			Q_strncpyz(ent->chr.body, gi.ReadString(), MAX_VAR);
 			Q_strncpyz(ent->chr.head, gi.ReadString(), MAX_VAR);
 			ent->chr.skin = gi.ReadByte();
-#ifdef PARANOID
+#if 0
 			gi.dprintf("G_ClientTeamInfo: name: %s\n", ent->chr.name);
 			gi.dprintf("G_ClientTeamInfo: path: %s\n", ent->chr.path);
 			gi.dprintf("G_ClientTeamInfo: body: %s\n", ent->chr.body);
