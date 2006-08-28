@@ -1,6 +1,14 @@
 /**
  * @file cmd.c
  * @brief Script command processing module
+ * Command text buffering. Any number of commands can be added in a frame, from several different sources.
+ * Most commands come from either keybindings or console line input, but remote
+ * servers can also send across commands and entire text files can be accessed.
+ *
+ * The + command line options are also added to the command buffer.
+ *
+ * Command execution takes a null terminated string, breaks it into tokens,
+ * then searches for a command or variable that matches the first token.
  */
 
 /*
@@ -43,8 +51,6 @@ static qboolean cmd_wait, cmd_closed;
 static int alias_count;				/* for detecting runaway loops */
 
 
-/*============================================================================= */
-
 /**
  * @brief Reopens the command buffer for writing
  * @sa Cmd_Close_f
@@ -80,9 +86,7 @@ void Cmd_Wait_f(void)
 
 /*
 =============================================================================
-
-						COMMAND BUFFER
-
+COMMAND BUFFER
 =============================================================================
 */
 
@@ -93,6 +97,7 @@ static char defer_text_buf[8192];
 
 /**
  * @brief
+ * @note The initial buffer will grow as needed.
  */
 void Cbuf_Init(void)
 {
@@ -101,6 +106,7 @@ void Cbuf_Init(void)
 
 /**
  * @brief Adds command text at the end of the buffer
+ * @note Normally when a command is generate from the console or keybinings, it will be added to the end of the command buffer.
  */
 void Cbuf_AddText(char *text)
 {
@@ -155,7 +161,10 @@ void Cbuf_InsertText(char *text)
 
 
 /**
- * @brief
+ * @brief Defers any outstanding commands.
+ *
+ * Used when loading a map, for example.
+ * Copies then clears the command buffer to a temporary area.
  */
 void Cbuf_CopyToDefer(void)
 {
@@ -165,7 +174,7 @@ void Cbuf_CopyToDefer(void)
 }
 
 /**
- * @brief
+ * @brief Copies back any deferred commands.
  */
 void Cbuf_InsertFromDefer(void)
 {
@@ -175,7 +184,12 @@ void Cbuf_InsertFromDefer(void)
 
 
 /**
- * @brief
+ * @brief Adds a command to the buffer.
+ * @param[in] text The command string to execute.
+ * @param[in] exec_when Defines when the command should be executed. One of EXEC_NOW, EXEC_INSERT or EXEC_APPEND.
+ * @sa EXEC_NOW
+ * @sa EXEC_INSERT
+ * @sa EXEC_APPEND
  */
 void Cbuf_ExecuteText(int exec_when, char *text)
 {
@@ -197,6 +211,9 @@ void Cbuf_ExecuteText(int exec_when, char *text)
 /**
  * @brief
  * @sa Cmd_ExecuteString
+ * Pulls off \n terminated lines of text from the command buffer and sends them through Cmd_ExecuteString, stopping when the buffer is empty.
+ * Normally called once per frame, but may be explicitly invoked.
+ * @note Do not call inside a command function!
  */
 void Cbuf_Execute(void)
 {
@@ -284,7 +301,7 @@ void Cbuf_AddEarlyCommands(qboolean clear)
 /**
  * @brief Adds command line parameters as script statements
  * @note Commands lead with a + and continue until another + or -
- * @Return true if any late commands were added, which will keep the demoloop from immediately starting
+ * @return true if any late commands were added, which will keep the demoloop from immediately starting
  */
 qboolean Cbuf_AddLateCommands(void)
 {
