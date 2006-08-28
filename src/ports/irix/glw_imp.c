@@ -644,7 +644,7 @@ int XLateKey(XKeyEvent *ev)
 
 		case 0x026: key = '7';break;/* [&] */
 		case 0x02a: key = '8';break;/* [*] */
-		case 0x028: key = '9';;break;/* [(] */
+		case 0x028: key = '9';break;/* [(] */
 		case 0x029: key = '0';break;/* [)] */
 		case 0x05f: key = '-';break;/* [_] */
 		case 0x02b: key = '=';break;/* [+] */

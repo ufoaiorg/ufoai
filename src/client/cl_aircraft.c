@@ -518,7 +518,7 @@ void CL_CampaignRunAircraft(int dt)
 				/* Aircraft purchasing ufo */
 				if (aircraft->status == AIR_UFO) {
 					aircraft_t* ufo = NULL;
-					mission_t* ms = NULL;;
+					mission_t* ms = NULL;
 
 					ufo = gd.ufos + aircraft->ufo;
 					if (abs(ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
