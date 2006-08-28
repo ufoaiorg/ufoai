@@ -21,19 +21,31 @@ stage intro
 		expire		"0 5 0"  // average expire time is 2.5d
 			                 // minimum interval between missions is 2d
 			                 // so you have less than 1.5 on geoscape any time
-// TODO: make it so that the same mission is not repeated too soon
-		missions	"africa_excavation transport mine mart italy oriental"
+		missions	"africa_excavation transport mine mart italy"
+// TODO: mine does not really fit there, because civilians are safe
+// please add some spawn points down there or move this to another stage
+// the same for city
 		number		11 // don't torment the player with the same missions
 		quota		4
 	}
-	set ultimate_terror
+	set soldier_terror
 	{
 		needed		terror_only
 		delay		"0 3 7"
 		frame		"0 9 0" // big missions, but less traffic
-		expire		"0 14 0" // three at geoscape, but lots of time to do them
-		missions	"bunker japan dam city subway gasstation tower village"
-		quota		6 // torment the player until he's done
+		expire		"0 17 0" // three at geoscape, but lots of time to do them
+		missions	"bunker japan dam"
+		number		3 // no mission will get repeated
+		quota		2
+	}
+	set ultimate_terror // stage2 equipment start here
+	{
+		needed		soldier_terror
+		delay		"0 5 7"
+		frame		"0 6 0"
+		expire		"0 5 0"
+		missions	"oriental city subway gasstation tower village"
+		quota		3 // torment the player until he's done
 		nextstage	ufos_are_coming
 	}
 	set stop
@@ -49,17 +61,21 @@ stage ufos_are_coming
 	set first
 	{
 		seq			ufos_are_coming
+		delay		"0 2 7"
+		frame		"0 3 0"
+		expire		"0 7 0"
 		commands	"addufo;"
 		missions	"mine_crash"
 		quota		1
 	}
-	set crashed_and_landed
+	set crashed_and_landed // stage3 equipment start here
 	{
+		needed		first
 		delay		"0 0 1"
 		frame		"0 10 0"
-		expire		"0 3 0"
+		expire		"0 8 0"
 		missions	"construction pdi farm2 office harbor"
-		quota		4
+		quota		3
 		nextstage	invasion
 	}
 	set stop
@@ -72,12 +88,12 @@ stage ufos_are_coming
 
 stage invasion
 {
-	set first
+	set first // stage4 equipment start here
 	{
 		seq	invasion
-		delay		"0 0 1"
+		delay		"0 5 1"
 		frame		"0 10 0"
-		expire		"0 3 0"
+		expire		"0 7 0"
 		missions	"africa terrain baseattack lake"
 		quota		4
 		nextstage	alienbase
@@ -95,6 +111,7 @@ stage alienbase
 	set first
 	{
 		seq	alienbase
+		delay		"0 110 0"
 		// aliencolony mission here
 
 		commands	"mn_push enddemo;" // until aliencolony is done

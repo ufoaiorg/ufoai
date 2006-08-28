@@ -30,7 +30,7 @@ mission terrain
 	pos			"-9 46"
 	aliens		4
 	alienteam	alien
-	alienequip	stage4_soldiers
+	alienequip	stage4_soldiers_plasma
 	civilians	2
 	civteam		european
 	nation		"geu"
@@ -70,7 +70,7 @@ mission pdi
 	pos			"-30 36"
 	aliens		4
 	alienteam	alien
-	alienequip	stage4_soldiers
+	alienequip	stage3_workers_explosive
 	civilians	2
 	civteam     tourist
 	nation		"geu"
@@ -110,7 +110,7 @@ mission mine_crash
 	pos			"-62 25"
 	aliens		7
 	alienteam	alien
-	alienequip	stage4_soldiers
+	alienequip	stage2_soldiers
 	civilians	6
 	civteam		european
 	nation		"au"
@@ -149,8 +149,8 @@ mission office
 	music		dawn
 	pos			"-149 -21"
 	aliens		8
-	alienteam	alien
-	alienequip	stage4_soldiers
+	alienteam	antarean
+	alienequip	stage3_soldiers
 	civilians	2
 	civteam		scientist
 	nation		"australia"
@@ -168,9 +168,9 @@ mission africa
 	map			africa04
 	music		mission
 	pos			"-30 18"
-	aliens		5
+	aliens		10
 	alienteam	alien
-	alienequip	stage2_soldiers_melee
+	alienequip	stage4_workers
 	civilians	6
 	civteam		oriental
 	nation		"au"
@@ -208,10 +208,10 @@ mission city
 	map			city04
 	music		mission
 	pos			"96 19"
-	aliens		5
-	alienteam	alien
-	alienequip	stage4_soldiers
-	civilians	6
+	aliens		6
+	alienteam	antarean
+	alienequip	stage2_workers
+	civilians	3
 	civteam		mexican
 	nation		"ua"
 	onlose		""
@@ -230,7 +230,7 @@ mission construction
 	pos			"-17 60"
 	aliens		6
 	alienteam	alien
-	alienequip	stage4_soldiers
+	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
 	nation		"geu"
@@ -288,10 +288,10 @@ mission subway
 	map			subway07
 	music		mission3
 	pos			"74 40"
-	aliens		4
+	aliens		6
 	alienteam	alien
-	alienequip	stage4_soldiers
-	civilians	2
+	alienequip	stage2_workers
+	civilians	8
 	civteam		americans
 	nation		"ua"
 	onlose		""
@@ -310,8 +310,8 @@ mission vil_lille
 	music		mission2
 	pos			"-3 50"
 	aliens		7
-	alienteam	alien
-	alienequip	stage4_soldiers
+	alienteam	ortnok
+	alienequip	stage2_workers
 	civilians	6
 	civteam		european
 	nation		"geu"
@@ -330,8 +330,8 @@ mission harbor
 	music		mission2
 	pos			"-129 35"
 	aliens		8
-	alienteam	alien
-	alienequip	stage4_soldiers
+	alienteam	ortnok
+	alienequip	stage3_workers
 	civilians	6
 	civteam		european
 	nation		"ac"
@@ -527,9 +527,9 @@ mission gasstation
 	map			gasstation05
 	music		mission2
 	pos			"-111 21"
-	aliens		8
-	alienteam	alien
-	alienequip	stage4_soldiers
+	aliens		4
+	alienteam	antareans
+	alienequip	stage2_soldiers
 	civilians	6
 	civteam		european
 	nation		"ua"
@@ -565,9 +565,9 @@ mission oriental
 	map			oriental06
 	music		mission
 	pos			"-20 -23"
-	aliens		4
+	aliens		5
 	alienteam	ortnok
-	alienequip	stage1_soldiers
+	alienequip	stage2_soldiers
 	civilians	7
 	civteam		oriental
 	nation		"au"
@@ -660,10 +660,10 @@ mission tower
 	map			tower06
 	music		mission3
 	pos			"119 34"
-	aliens		4
+	aliens		6
 	alienteam	alien
-	alienequip	stage4_soldiers
-	civilians	2
+	alienequip	stage2_soldiers
+	civilians	8
 	civteam		european
 	nation		"ua"
 	onlose		""
@@ -740,7 +740,7 @@ mission village
 	music		mission
 	pos			"97 47"
 	aliens		4
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	6
 	civteam		european
