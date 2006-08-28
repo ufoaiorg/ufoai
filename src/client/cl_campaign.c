@@ -432,8 +432,9 @@ static void CL_CampaignActivateStageSets(stage_t *stage)
 		Sys_Error("CL_CampaignActivateStageSets '%s' (first: %i, num: %i)\n", stage->name, stage->first, stage->num);
 #endif
 	for (i = 0, set = &ccs.set[stage->first]; i < stage->num; i++, set++)
-		if (!set->active && !set->done && !set->num) {
+		if (!set->active && !set->num) {
 			Com_DPrintf("CL_CampaignActivateStageSets: i = %i, stage->first = %i, stage->num = %i, stage->name = %s\n", i, stage->first, stage->num, stage->name);
+			assert(!set->done); /* if not started, not done, as well */
 			assert(set->stage);
 			assert(set->def);
 
@@ -504,6 +505,26 @@ static void CL_CampaignEndStage(char *name)
 		}
 
 	Com_Printf("CL_CampaignEndStage: stage '%s' not found.\n", name);
+}
+
+
+/**
+ * @brief
+ */
+static void CL_CampaignExecute(setState_t * set)
+{
+	/* handle stages, execute commands */
+	if (*set->def->nextstage)
+		CL_CampaignActivateStage(set->def->nextstage);
+
+	if (*set->def->endstage)
+		CL_CampaignEndStage(set->def->endstage);
+
+	if (*set->def->cmds)
+		Cbuf_AddText(set->def->cmds);
+
+	/* activate new sets in old stage */
+	CL_CampaignActivateStageSets(set->stage);
 }
 
 
@@ -605,10 +626,12 @@ static void CL_CampaignAddMission(setState_t * set)
 
 	/* prepare next event (if any) */
 	set->num++;
-	if (set->def->number && set->num >= set->def->number)
+	if (set->def->number && set->num >= set->def->number) {
 		set->active = qfalse;
-	else
+		CL_CampaignExecute(set);
+	} else {
 		set->event = Date_Add(ccs.date, Date_Random(set->def->frame));
+	}
 
 	/* stop time */
 	CL_GameTimeStop();
@@ -646,25 +669,6 @@ static void CL_CampaignRemoveMission(actMis_t * mis)
 	MAP_NotifyMissionRemoved(mis);
 	CL_AircraftsNotifyMissionRemoved(mis);
 	CL_PopupNotifyMIssionRemoved(mis);
-}
-
-/**
- * @brief
- */
-static void CL_CampaignExecute(setState_t * set)
-{
-	/* handle stages, execute commands */
-	if (*set->def->nextstage)
-		CL_CampaignActivateStage(set->def->nextstage);
-
-	if (*set->def->endstage)
-		CL_CampaignEndStage(set->def->endstage);
-
-	if (*set->def->cmds)
-		Cbuf_AddText(set->def->cmds);
-
-	/* activate new sets in old stage */
-	CL_CampaignActivateStageSets(set->stage);
 }
 
 /**
@@ -2051,8 +2055,10 @@ void CL_GameAutoGo(void)
 
 	/* campaign effects */
 	selMis->cause->done++;
-	if (selMis->cause->done >= selMis->cause->def->quota)
+	if (selMis->cause->def->quota && selMis->cause->done >= selMis->cause->def->quota) {
+		selMis->cause->active = qfalse;
 		CL_CampaignExecute(selMis->cause);
+	}
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won);
@@ -2438,8 +2444,10 @@ static void CL_GameResultsCmd(void)
 
 	/* campaign effects */
 	selMis->cause->done++;
-	if (selMis->cause->done >= selMis->cause->def->quota)
+	if (selMis->cause->def->quota && selMis->cause->done >= selMis->cause->def->quota) {
+		selMis->cause->active = qfalse;
 		CL_CampaignExecute(selMis->cause);
+	}
 
 	/* remove mission from list */
 	CL_CampaignRemoveMission(selMis);
