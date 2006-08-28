@@ -384,7 +384,7 @@ static void RS_ResearchDisplayInfo(void)
 			Cvar_Set("mn_research_selbase", _("Researched in this base."));
 	}
 
-	Cvar_Set("mn_research_selname", tech->name);
+	Cvar_Set("mn_research_selname", _(tech->name));
 	if (tech->overalltime) {
 		if (tech->time > tech->overalltime) {
 			Com_Printf("RS_ResearchDisplayInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", tech->id, tech->time,
@@ -470,7 +470,7 @@ void RS_AssignScientist(technology_t* tech)
 	base_t *base = NULL;
 
 	Com_DPrintf("RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
-	
+
 	if  (tech->base_idx >= 0) {
 		base = &gd.bases[tech->base_idx];
 	} else {
@@ -541,9 +541,9 @@ static void RS_AssignScientist_f(void)
 static void RS_RemoveScientist(technology_t* tech)
 {
 	employee_t *employee = NULL;
-	
+
 	assert(tech);
-	
+
 	if (tech->scientists > 0) {
 		employee = E_GetAssignedEmployee(&gd.bases[tech->base_idx], EMPL_SCIENTIST);
 		if (employee) {
@@ -692,7 +692,7 @@ void RS_UpdateData(void)
 
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
 			/* An unresearched collected item that cannot yet be researched. */
-			
+
 			Q_strcat(name, _(" [not yet researchable]"), MAX_VAR);
 			/* Color the item 'unresearchable' */
 			Cbuf_AddText(va("researchunresearchable%i\n", j));
@@ -702,14 +702,14 @@ void RS_UpdateData(void)
 			Cvar_Set(va("mn_researchassigned%i", j), "--");
 			Cvar_Set(va("mn_researchavailable%i", j), "--");
 			Cvar_Set(va("mn_researchmax%i", j), "--");
-			
+
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */
 			researchList[j] = &gd.technologies[i];
 			/* counting the numbers of display-list entries. */
 			j++;
 		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
 			/* An item that can be researched. */
-			
+
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
 			if ((tech->base_idx == baseCurrent->idx) || (tech->base_idx < 0) ) {
