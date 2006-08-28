@@ -28,14 +28,13 @@ stage intro
 // TODO: make it so that a mission in this stage is never repeated
 // checking equality with the last mission and the one before
 // should be enough for both TODOs
-		missions	"bunker japan dam"
-		number		3
-		quota		2
+		missions	"bunker japan dam city subway gasstation tower village"
+		quota		6
 		nextstage	ufos_are_coming
 	}
 	set stop
 	{
-		needed		terror_only //should be ultimate_terror, but wait until the crash bug is confirmed to be fixed, so that tests can be made with the same setup...
+		needed		ultimate_terror
 		delay		"0 20 0"
 		endstage	intro
 	}
@@ -46,14 +45,16 @@ stage ufos_are_coming
 	set first
 	{
 		seq			ufos_are_coming
-		commands	"addufo"
+		commands	"addufo;"
+		missions	"mine_crash"
+		quota		1
 	}
 	set crashed_and_landed
 	{
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"mine_crash construction farm2 office harbor"
+		missions	"construction pdi farm2 office harbor"
 		quota		4
 		nextstage	invasion
 	}
@@ -76,7 +77,7 @@ stage invasion
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"africa terrain subway baseattack lake"
+		missions	"africa terrain baseattack lake"
 		quota		4
 		nextstage	alienbase
 	}
