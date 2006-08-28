@@ -407,13 +407,9 @@ static qboolean CL_StageSetDone(char *name)
 		if (!Q_strncmp(name, set->def->name, MAX_VAR)) {
 			if (set->def->number && set->num >= set->def->number)
 				return qtrue;
-			if (set->done >= set->def->quota)
+			if (set->def->quota && set->done >= set->def->quota)
 				return qtrue;
-			else
-				return qfalse;
 		}
-
-	/* didn't find set */
 	return qfalse;
 }
 
@@ -457,7 +453,7 @@ static void CL_CampaignActivateStageSets(stage_t *stage)
 /**
  * @brief
  */
-static stageState_t *CL_CampaignActivateStage(char *name)
+static stageState_t *CL_CampaignActivateStage(char *name, qboolean setsToo)
 {
 	stage_t *stage;
 	stageState_t *state;
@@ -479,8 +475,9 @@ static stageState_t *CL_CampaignActivateStage(char *name)
 				ccs.set[j].def = &stageSets[j];
 			}
 			/* activate stage sets */
-			CL_CampaignActivateStageSets(stage);
-
+			if (setsToo)
+				CL_CampaignActivateStageSets(stage);
+			
 			return state;
 		}
 	}
@@ -515,7 +512,7 @@ static void CL_CampaignExecute(setState_t * set)
 {
 	/* handle stages, execute commands */
 	if (*set->def->nextstage)
-		CL_CampaignActivateStage(set->def->nextstage);
+		CL_CampaignActivateStage(set->def->nextstage, qtrue);
 
 	if (*set->def->endstage)
 		CL_CampaignEndStage(set->def->endstage);
@@ -626,13 +623,11 @@ static void CL_CampaignAddMission(setState_t * set)
 
 	/* prepare next event (if any) */
 	set->num++;
-	if (set->def->number && set->num >= set->def->number) {
+	if (set->def->number && set->num >= set->def->number)
 		set->active = qfalse;
-		CL_CampaignExecute(set);
-	} else {
+	else
 		set->event = Date_Add(ccs.date, Date_Random(set->def->frame));
-	}
-
+	
 	/* stop time */
 	CL_GameTimeStop();
 }
@@ -651,15 +646,8 @@ static void CL_CampaignRemoveMission(actMis_t * mis)
 		return;
 	}
 
-	ccs.numMissions--;
-
-	Com_DPrintf("%i missions left\n", ccs.numMissions);
-
 	/* allow respawn on geoscape */
 	mis->def->onGeoscape = qfalse;
-
-	for (i = num; i < ccs.numMissions; i++)
-		ccs.mission[i] = ccs.mission[i + 1];
 
 	if (mis->def->missionType == MIS_BASEATTACK) {
 		/* TODO */
@@ -669,6 +657,11 @@ static void CL_CampaignRemoveMission(actMis_t * mis)
 	MAP_NotifyMissionRemoved(mis);
 	CL_AircraftsNotifyMissionRemoved(mis);
 	CL_PopupNotifyMIssionRemoved(mis);
+
+	ccs.numMissions--;
+	Com_DPrintf("%i missions left\n", ccs.numMissions);
+	for (i = num; i < ccs.numMissions; i++)
+		ccs.mission[i] = ccs.mission[i + 1];
 }
 
 /**
@@ -808,6 +801,8 @@ void CL_CampaignCheckEvents(void)
 			}
 			MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 			/* Remove mission from the map. */
+			if (mis->cause->def->number && mis->cause->num >= mis->cause->def->number)
+				CL_CampaignExecute(mis->cause);
 			CL_CampaignRemoveMission(mis);
 		}
 }
@@ -1620,7 +1615,7 @@ int CL_GameLoad(char *filename)
 	/* read campaign data */
 	name = MSG_ReadString(&sb);
 	while (*name) {
-		state = CL_CampaignActivateStage(name);
+		state = CL_CampaignActivateStage(name, qfalse);
 		if (!state) {
 			Com_Printf("Unable to load campaign '%s', unknown stage '%s'\n", filename, name);
 			curCampaign = NULL;
@@ -2055,7 +2050,10 @@ void CL_GameAutoGo(void)
 
 	/* campaign effects */
 	selMis->cause->done++;
-	if (selMis->cause->def->quota && selMis->cause->done >= selMis->cause->def->quota) {
+	if ( (selMis->cause->def->quota 
+		  && selMis->cause->done >= selMis->cause->def->quota)
+		 || (selMis->cause->def->number 
+			 && selMis->cause->num >= selMis->cause->def->number) ) {
 		selMis->cause->active = qfalse;
 		CL_CampaignExecute(selMis->cause);
 	}
@@ -2444,7 +2442,10 @@ static void CL_GameResultsCmd(void)
 
 	/* campaign effects */
 	selMis->cause->done++;
-	if (selMis->cause->def->quota && selMis->cause->done >= selMis->cause->def->quota) {
+	if ( (selMis->cause->def->quota 
+		  && selMis->cause->done >= selMis->cause->def->quota)
+		 || (selMis->cause->def->number 
+			 && selMis->cause->num >= selMis->cause->def->number) ) {
 		selMis->cause->active = qfalse;
 		CL_CampaignExecute(selMis->cause);
 	}
@@ -3228,7 +3229,7 @@ static void CL_GameNew(void)
 	CL_UpdateCredits(curCampaign->credits);
 
 	/* stage setup */
-	CL_CampaignActivateStage(curCampaign->firststage);
+	CL_CampaignActivateStage(curCampaign->firststage, qtrue);
 
 	MN_PopMenu(qtrue);
 	MN_PushMenu("map");
