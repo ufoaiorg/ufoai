@@ -155,10 +155,10 @@ void S_ModifySndRef_f (void)
 {
 	if (!Q_strcmp(snd_ref->string, "sdl")) {
 #ifdef _WIN32
-		Cvar_Set("snd_ref", "dx");
-	} else if (!Q_strcmp(snd_ref->string, "dx")) {
 		Cvar_Set("snd_ref", "wapi");
 	} else if (!Q_strcmp(snd_ref->string, "wapi")) {
+		Cvar_Set("snd_ref", "dx");
+	} else if (!Q_strcmp(snd_ref->string, "dx")) {
 #else
 		Cvar_Set("snd_ref", "alsa");
 	} else if (!Q_strcmp(snd_ref->string, "alsa")) {
