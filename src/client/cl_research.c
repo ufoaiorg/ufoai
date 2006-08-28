@@ -652,7 +652,6 @@ static void RS_ResearchStop(void)
 		tech->statusResearch = RS_PAUSED;
 		break;
 	case RS_PAUSED:
-		MN_Popup(_("Notice"), _("The research on this item continues."));
 		tech->statusResearch = RS_RUNNING;
 		break;
 	case RS_FINISH:
