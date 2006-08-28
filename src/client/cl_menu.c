@@ -1877,7 +1877,6 @@ menu_t* MN_PushMenuDelete(char *name, qboolean delete)
 				Com_Printf("Menu stack overflow\n");
 
 			/* initialize it */
-
 			if (menus[i].initNode)
 				MN_ExecuteActions(&menus[i], menus[i].initNode->click);
 
@@ -1966,13 +1965,14 @@ void MN_PopMenu(qboolean all)
 /**
  * @brief Console function to pop a menu from the menu stack
  * @sa MN_PopMenu
+ * @note The cvar mn_escpop defined how often the MN_PopMenu function is called.
+ * This is useful for e.g. nodes that doesn't have a render node (for example: video options)
  */
 static void MN_PopMenu_f(void)
 {
 	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3)) {
 		MN_PopMenu(qfalse);
-	}
-	else {
+	} else {
 		int i;
 
 		for (i = 0; i < (int) mn_escpop->value; i++)

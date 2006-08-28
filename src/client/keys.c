@@ -769,7 +769,7 @@ void Key_Event(int key, qboolean down, unsigned time)
 			Key_Message(key);
 			break;
 		case key_game:
-			Cbuf_AddText("mn_pop esc");
+			Cbuf_AddText("mn_pop esc;");
 			break;
 		case key_console:
 			Con_ToggleConsole_f();
