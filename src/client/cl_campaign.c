@@ -46,6 +46,10 @@ base_t *baseCurrent;
 static byte *maskPic;
 static int maskWidth, maskHeight;
 
+#if 0
+static int ever4hours;
+#endif
+
 /* extern in client.h */
 stats_t stats;
 
@@ -1099,6 +1103,17 @@ void CL_CampaignRun(void)
 		dt = floor(ccs.timer);
 		ccs.date.sec += dt;
 		ccs.timer -= dt;
+		
+#if 0
+/* Prepared code so we can check research status more often. Requires a change to CL_CheckResearchStatus so it checks for the elapsed time. */
+		every4hours += dt;
+		if (dt > 3600 * 4) {
+			/* check for research status every 4 hours */
+			CL_CheckResearchStatus();
+			every4hours = 0;
+		}
+#endif
+		
 		while (ccs.date.sec > 3600 * 24) {
 			ccs.date.sec -= 3600 * 24;
 			ccs.date.day++;

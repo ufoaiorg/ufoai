@@ -845,6 +845,7 @@ void RS_MarkResearched(char *id)
 
 /**
  * @brief Checks the research status
+ * @todo Needs to check on the exact time that elapsed since the last check fo the status.
  *
  */
 void CL_CheckResearchStatus(void)
