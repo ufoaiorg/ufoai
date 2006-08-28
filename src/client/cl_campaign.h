@@ -75,6 +75,7 @@ typedef struct mission_s {
 	int ugv;					/* uncontrolled ground units (entity: info_ugv_start) */
 	qboolean active;			/* aircraft at place? */
 	qboolean onGeoscape;		/* already on geoscape - don't add it twice */
+	date_t dateOnGeoscape;		/* last time the mission was on geoscape */
 	qboolean storyRelated;		/* auto mission play disabled when true */
 	missionType_t missionType;	/* type of mission */
 	void* data;					/* may be related to mission type */
@@ -88,16 +89,15 @@ typedef struct stageSet_s {
 	char needed[MAX_VAR];
 	char nextstage[MAX_VAR];
 	char endstage[MAX_VAR];
-	char cmds[MAX_VAR];
-	/* play a sequence when entering a new stage? */
-	char sequence[MAX_VAR];
+	char cmds[MAX_VAR];			/* script commands to execute when stageset gets activated */
+	char sequence[MAX_VAR];		/* play a sequence when entering a new stage? */
 	date_t delay;
 	date_t frame;
 	date_t expire;
-	int number;
-	int quota;
-	byte numMissions;
-	int missions[MAX_SETMISSIONS];
+	int number;					/* number of missions until set is deactivated (they only need to appear on geoscape) */
+	int quota;					/* number of successfully ended missions until set gets deactivated */
+	byte numMissions;			/* number of missions in this set */
+	int missions[MAX_SETMISSIONS];	/* mission names in this set */
 } stageSet_t;
 
 typedef struct stage_s {
@@ -137,28 +137,31 @@ typedef struct campaign_s {
 	char text[MAX_VAR];			/* placeholder for gettext stuff */
 	char map[MAX_VAR];			/* geoscape map */
 	char firststage[MAX_VAR];
-	int soldiers;
-	int scientists;
-	int workers;
-	int medics;
-	int ugvs;
-	int credits;
+	int soldiers;				/* start with x soldiers */
+	int scientists;				/* start with x scientists */
+	int workers;				/* start with x workers */
+	int medics;					/* start with x medics */
+	int ugvs;					/* start with x ugvs (robots) */
+	int credits;				/* start with x credits */
 	int num;
-	signed int difficulty;
-	qboolean visible;
-	date_t date;
+	signed int difficulty;		/* difficulty level -4 - 4 */
+	qboolean visible;			/* visible in campaign menu? */
+	date_t date;				/* starting date for this campaign */
 	qboolean finished;
 } campaign_t;
 
 typedef struct nation_s {
 	char id[MAX_VAR];
 	char name[MAX_VAR];
-	int funding;
+	int funding;		/* how many (monthly) credits */
 	float happiness;
 	vec4_t color;
 	float alienFriendly;
-	int soldiers;
-	int scientists;
+	int soldiers;		/* how many (monthly) soldiers */
+	int scientists;		/* how many (monthly) scientists */
+	int workers;		/* how many (monthly) workers */
+	int medics;			/* how many (monthly) medics */
+	int ugvs;			/* how many (monthly) ugvs (robots) */
 	char names[MAX_VAR];
 } nation_t;
 
@@ -172,12 +175,12 @@ typedef struct ccs_s {
 	actMis_t mission[MAX_ACTMISSIONS];
 	int numMissions;
 
-	qboolean singleplayer;
+	qboolean singleplayer;	/* singleplayer or multiplayer */
 
-	int credits;
-	int civiliansKilled;
-	int aliensKilled;
-	date_t date;
+	int credits;			/* actual credits amount */
+	int civiliansKilled;	/* how many civilians were killed already */
+	int aliensKilled;		/* how many aliens were killed already */
+	date_t date;			/* current date */
 	float timer;
 
 	vec2_t center;
@@ -187,7 +190,7 @@ typedef struct ccs_s {
 typedef enum mapAction_s {
 	MA_NONE,
 	MA_NEWBASE,					/* build a new base */
-	MA_INTERCEPT,				/* intercept TODO: */
+	MA_INTERCEPT,				/* intercept */
 	MA_BASEATTACK,				/* base attacking */
 	MA_UFORADAR					/* ufos are in our radar */
 } mapAction_t;
