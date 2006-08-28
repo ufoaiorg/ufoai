@@ -721,9 +721,10 @@ static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
 		return qfalse;
 
 	/* on the node */
-	if (node->type == MN_TEXT)
+	if (node->type == MN_TEXT) {
+		assert(node->texh[0]);
 		return (int) (ty / node->texh[0]) + 1;
-	else
+	} else
 		return qtrue;
 }
 
@@ -931,7 +932,6 @@ static void MN_ModelClick(menuNode_t * node)
  */
 static void MN_TextClick(menuNode_t * node, int mouseOver)
 {
-	Com_Printf("%i\n", mouseOver - 1);
 	Cbuf_AddText(va("%s_click %i\n", node->name, mouseOver - 1));
 }
 
@@ -974,6 +974,7 @@ void MN_Click(int x, int y)
 
 			/* check whether mouse is over this node */
 			mouseOver = MN_CheckNodeZone(node, x, y);
+
 			if (!mouseOver)
 				continue;
 
