@@ -519,6 +519,7 @@ menu options_sound
 		mousefx true
 		click	{ }
 	}
+
 	string mix_str
 	{
 		string	"_Mixing Rate:"
@@ -553,6 +554,36 @@ menu options_sound
 		texh	"32 16"
 		mousefx	true
 		click	{ cmd "modifykhz +;" }
+	}
+
+	string snd_ref_str
+	{
+		string	"_Sound renderer:"
+		pos		"500 260"
+	}
+	string snd_ref_value
+	{
+		string	"*cvar snd_ref"
+		pos		"840 260"
+		align	ur
+	}
+	pic snd_ref_dec
+	{
+		image	menu/buttons_small
+		pos		"868 264"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "modifysnd_ref;" }
+	}
+	pic snd_ref_inc
+	{
+		image	menu/buttons_small
+		pos		"884 264"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "modifysnd_ref;" }
 	}
 
 	func init
