@@ -31,3 +31,4 @@ debian
 Makefile*
 *UVW*
 *misc_source_files*
+*.run

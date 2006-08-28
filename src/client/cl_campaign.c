@@ -507,7 +507,7 @@ static stageState_t *CL_CampaignActivateStage(char *name, qboolean setsToo)
 			/* activate stage sets */
 			if (setsToo)
 				CL_CampaignActivateStageSets(stage);
-			
+
 			return state;
 		}
 	}
@@ -668,7 +668,7 @@ static void CL_CampaignAddMission(setState_t * set)
 		set->active = qfalse;
 	else
 		set->event = Date_Add(ccs.date, Date_Random_Middle(set->def->frame));
-	
+
 	/* stop time */
 	CL_GameTimeStop();
 }
@@ -905,6 +905,37 @@ char *CL_DateGetMonthName(int month)
 }
 
 /**
+ * @brief Translates the nation happiness float value to a string
+ * @param[in] nation
+ * @return Translated happiness string
+ */
+char* CL_GetNationHapinessString(nation_t* nation)
+{
+	if (nation->happiness < 0.015)
+		return _("Giving up");
+	else if (nation->happiness < 0.025)
+		return _("Furious");
+	else if (nation->happiness < 0.04)
+		return _("Angry");
+	else if (nation->happiness < 0.06)
+		return _("Mad");
+	else if (nation->happiness < 0.1)
+		return _("Upset");
+	else if (nation->happiness < 0.15)
+		return _("Tolerant");
+	else if (nation->happiness < 0.25)
+		return _("Neutral");
+	else if (nation->happiness < 0.35)
+		return _("Content");
+	else if (nation->happiness < 0.60)
+		return _("Pleased");
+	else if (nation->happiness < 1.0)
+		return _("Happy");
+	else
+		return _("Exuberant");
+}
+
+/**
  * @brief Update the nation data from all parsed nation each month
  * @note give us nation support by:
  * * credits
@@ -918,7 +949,6 @@ static void CL_HandleBudget(void)
 {
 	int i, j;
 	char message[1024];
-	char happiness_str[1024];
 	int funding;
 	int cost;
 	nation_t *nation;
@@ -928,30 +958,7 @@ static void CL_HandleBudget(void)
 		nation = &gd.nations[i];
 		funding = nation->funding * nation->happiness;
 
-		if (nation->happiness < 0.015)
-			Q_strncpyz(happiness_str, _("Giving up"), sizeof(happiness_str));
-		else if (nation->happiness < 0.025)
-			Q_strncpyz(happiness_str, _("Furious"), sizeof(happiness_str));
-		else if (nation->happiness < 0.04)
-			Q_strncpyz(happiness_str, _("Angry"), sizeof(happiness_str));
-		else if (nation->happiness < 0.06)
-			Q_strncpyz(happiness_str, _("Mad"), sizeof(happiness_str));
-		else if (nation->happiness < 0.1)
-			Q_strncpyz(happiness_str, _("Upset"), sizeof(happiness_str));
-		else if (nation->happiness < 0.15)
-			Q_strncpyz(happiness_str, _("Tolerant"), sizeof(happiness_str));
-		else if (nation->happiness < 0.25)
-			Q_strncpyz(happiness_str, _("Neutral"), sizeof(happiness_str));
-		else if (nation->happiness < 0.35)
-			Q_strncpyz(happiness_str, _("Content"), sizeof(happiness_str));
-		else if (nation->happiness < 0.60)
-			Q_strncpyz(happiness_str, _("Pleased"), sizeof(happiness_str));
-		else if (nation->happiness < 1.0)
-			Q_strncpyz(happiness_str, _("Happy"), sizeof(happiness_str));
-		else
-			Q_strncpyz(happiness_str, _("Exuberant"), sizeof(happiness_str));
-
-		Com_sprintf(message, sizeof(message), _("Gained %i credits from nation %s (%s)"), funding, _(nation->name), happiness_str);
+		Com_sprintf(message, sizeof(message), _("Gained %i credits from nation %s (%s)"), funding, _(nation->name), CL_GetNationHapinessString(nation));
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 		CL_UpdateCredits(ccs.credits + funding);
 
@@ -1213,17 +1220,15 @@ void CL_UpdateCredits(int credits)
 	Cvar_Set("mn_credits", va("%i c", ccs.credits));
 }
 
-/* =========================================================== */
 
 #define MAX_STATS_BUFFER 1024
 /**
- * @brief
- *
- * Shows the current stats from stats_t stats
+ * @brief Shows the current stats from stats_t stats
  */
 void CL_Stats_Update(void)
 {
 	static char statsBuffer[MAX_STATS_BUFFER];
+	int i = 0;
 
 	/* delete buffer */
 	*statsBuffer = '\0';
@@ -1231,6 +1236,11 @@ void CL_Stats_Update(void)
 	/* TODO: implement me */
 	Com_sprintf(statsBuffer, MAX_STATS_BUFFER, _("Missions:\nwon:\t%i\tlost:\t%i\nBases:\nbuild:\t%i\tattacked:\t%i\n"),
 				stats.missionsWon, stats.missionsLost, stats.basesBuild, stats.basesAttacked);
+
+	Q_strcat(statsBuffer, "\n\n", sizeof(statsBuffer));
+	for (i=0; i<gd.numNations;i++) {
+		Q_strcat(statsBuffer, va("%s\t%s\n", gd.nations[i].name, CL_GetNationHapinessString(&gd.nations[i])), sizeof(statsBuffer));
+	}
 	menuText[TEXT_STANDARD] = statsBuffer;
 }
 
@@ -2091,9 +2101,9 @@ void CL_GameAutoGo(void)
 
 	/* campaign effects */
 	selMis->cause->done++;
-	if ( (selMis->cause->def->quota 
+	if ( (selMis->cause->def->quota
 		  && selMis->cause->done >= selMis->cause->def->quota)
-		 || (selMis->cause->def->number 
+		 || (selMis->cause->def->number
 			 && selMis->cause->num >= selMis->cause->def->number) ) {
 		selMis->cause->active = qfalse;
 		CL_CampaignExecute(selMis->cause);
@@ -2483,9 +2493,9 @@ static void CL_GameResultsCmd(void)
 
 	/* campaign effects */
 	selMis->cause->done++;
-	if ( (selMis->cause->def->quota 
+	if ( (selMis->cause->def->quota
 		  && selMis->cause->done >= selMis->cause->def->quota)
-		 || (selMis->cause->def->number 
+		 || (selMis->cause->def->number
 			 && selMis->cause->num >= selMis->cause->def->number) ) {
 		selMis->cause->active = qfalse;
 		CL_CampaignExecute(selMis->cause);
