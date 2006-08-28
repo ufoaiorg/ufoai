@@ -19,26 +19,26 @@ menu stats
 
 	pic back_ul
 	{
-		image   menu/ufopedia_ul
-		pos             "0 0"
+		image	menu/stats_ul
+		pos	"0 0"
 	}
 
 	pic back_ur
 	{
-		image   menu/ufopedia_ur
-		pos             "512 0"
+		image	menu/stats_ur
+		pos	"512 0"
 	}
 
 	pic back_ll
 	{
-		image   menu/ufopedia_ll
-		pos             "0 512"
+		image	menu/stats_ll
+		pos	"0 512"
 	}
 
 	pic back_lr
 	{
-		image   menu/ufopedia_lr
-		pos             "512 512"
+		image	menu/stats_lr
+		pos	"512 512"
 	}
 	pic button_exit
 	{
@@ -61,12 +61,23 @@ menu stats
 	text description
 	{
 		pos		"40 86"
-		size	"940 600"
-		format  "40 250"
+		size	"940 200"
+//		bgcolor	"0.5 0.5 0.5 0.5"
+		format  "22 100"
+		num		"20"
+	}
+
+	text nation_stats
+	{
+		pos		"40 300"
+//		bgcolor	"0.5 0.5 0.5 0.5"
+		size	"940 400"
+		format  "22 250"
+		num		"21"
 	}
 
 	func init
 	{
-		cmd stats_update;
+		cmd "stats_update;"
 	}
 }
