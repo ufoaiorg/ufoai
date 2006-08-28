@@ -1,8 +1,13 @@
+/**
+ * @file cd_sdl.c
+ * @brief SDL code for audio cd
+ */
+
 /*
 snd_sdl.c
 
 CD code taken from SDLQuake and modified to work with Quake2
-Robert Bäuml 2001-12-25
+Robert Bml 2001-12-25
 W.P. van Paassen 2002-01-06
 
 This program is free software; you can redistribute it and/or
@@ -22,10 +27,11 @@ along with this program; if not, write to:
 Free Software Foundation, Inc.
 59 Temple Place - Suite 330
 Boston, MA  02111-1307, USA
+
 */
 
 #include <stdio.h>
-#include <SDL.h>
+#include <SDL/SDL.h>
 #include "../../client/client.h"
 
 static qboolean	cdValid = qfalse;
@@ -42,6 +48,9 @@ cvar_t	*cd_dev;
 
 static void CD_f( void );
 
+/**
+ * @brief Ejects the CD
+ */
 static void CDAudio_Eject( void )
 {
 	if (!cd_id || !enabled)
@@ -51,6 +60,9 @@ static void CDAudio_Eject( void )
 		Com_DPrintf("Unable to eject CD-ROM tray.\n");
 }
 
+/**
+ * @brief
+ */
 void CDAudio_Play(int track, qboolean looping)
 {
 	CDstatus cd_stat;
@@ -60,35 +72,36 @@ void CDAudio_Play(int track, qboolean looping)
 	if (!cd_id || !enabled)
 		return;
 
-	cd_stat=SDL_CDStatus(cd_id);
+	cd_stat = SDL_CDStatus(cd_id);
 
-	if (!cdValid)
-	{
+	if (!cdValid) {
 		if(!CD_INDRIVE(cd_stat) ||(!cd_id->numtracks)) return;
 		cdValid = qtrue;
 	}
 
-	if ((track < 1) || (track >= cd_id->numtracks))
-	{
+	if ((track < 1) || (track >= cd_id->numtracks)) {
 		Com_DPrintf("CDAudio: Bad track number: %d\n",track);
 		return;
 	}
-	track--; /* Convert track from person to SDL value */
-	if (cd_stat == CD_PLAYING)
-	{
-		if(cd_id->cur_track == track) return;
+	/* Convert track from person to SDL value */
+	track--;
+
+	if (cd_stat == CD_PLAYING) {
+		if (cd_id->cur_track == track)
+			return;
 		CDAudio_Stop();
 	}
 
-	if (SDL_CDPlay(cd_id,cd_id->track[track].offset,
-			  cd_id->track[track].length))
-	{
+	if (SDL_CDPlay(cd_id,cd_id->track[track].offset, cd_id->track[track].length)) {
 		Com_DPrintf("CDAudio_Play: Unable to play track: %d (%s)\n",track+1, SDL_GetError());
 		return;
 	}
 	playLooping = looping;
 }
 
+/**
+ * @brief
+ */
 void CDAudio_RandomPlay(void)
 {
 	int track, i = 0, free_tracks = 0;
@@ -106,68 +119,57 @@ void CDAudio_RandomPlay(void)
 
 	/*create array of available audio tracknumbers */
 
-	for (; i < cd_id->numtracks; i++)
-	{
+	for (; i < cd_id->numtracks; i++) {
 		track_bools[i] = cd_id->track[i].type == SDL_AUDIO_TRACK;
 		free_tracks += track_bools[i];
 	}
 
-	if (!free_tracks)
-	{
+	if (!free_tracks) {
 		Com_DPrintf("CDAudio_RandomPlay: Unable to find and play a random audio track, insert an audio cd please");
 		goto free_end;
 	}
 
 	/*choose random audio track */
-	do
-	{
-		do
-		{
+	do {
+		do {
 			f = ((float)rand()) / ((float)RAND_MAX + 1.0);
 			track = (int)(cd_id->numtracks  * f);
-		}
-		while (!track_bools[track]);
+		} while (!track_bools[track]);
 
 		lastTrack = track+1;
 
 		cd_stat=SDL_CDStatus(cd_id);
 
-		if (!cdValid)
-		{
-			if (!CD_INDRIVE(cd_stat) ||(!cd_id->numtracks))
-			{
+		if (!cdValid) {
+			if (!CD_INDRIVE(cd_stat) ||(!cd_id->numtracks)) {
 				goto free_end;
 			}
 			cdValid = qtrue;
 		}
 
-		if (cd_stat == CD_PLAYING)
-		{
-			if (cd_id->cur_track == track + 1)
-			{
+		if (cd_stat == CD_PLAYING) {
+			if (cd_id->cur_track == track + 1) {
 				goto free_end;
 			}
 			CDAudio_Stop();
 		}
 
-		if (SDL_CDPlay(cd_id,cd_id->track[track].offset,
-				cd_id->track[track].length))
-		{
+		if (SDL_CDPlay(cd_id,cd_id->track[track].offset, cd_id->track[track].length)) {
 			track_bools[track] = 0;
 			free_tracks--;
-		}
-		else
-		{
+		} else {
 			playLooping = qtrue;
 			break;
 		}
-	}
-	while (free_tracks > 0);
+	} while (free_tracks > 0);
 
 	free_end:
 	free((void*)track_bools);
 }
 
+/**
+ * @brief
+ */
 void CDAudio_Stop( void )
 {
 	int cdstate;
@@ -184,6 +186,9 @@ void CDAudio_Stop( void )
 	playLooping = 0;
 }
 
+/**
+ * @brief
+ */
 void CDAudio_Pause( void )
 {
 	if (!cd_id || !enabled)
@@ -195,7 +200,9 @@ void CDAudio_Pause( void )
 		Com_DPrintf("CDAudio_Pause: Failed to pause track.\n");
 }
 
-
+/**
+ * @brief
+ */
 void CDAudio_Resume( void )
 {
 	if (!cd_id || !enabled)
@@ -208,20 +215,19 @@ void CDAudio_Resume( void )
 		Com_DPrintf("CDAudio_Resume: Failed to resume track.\n");
 }
 
+/**
+ * @brief
+ */
 void CDAudio_Update( void )
 {
 	if (!cd_id || !enabled)
 		return;
 
-	if (cd_volume && cd_volume->value != cdvolume)
-	{
-		if (cdvolume)
-		{
+	if (cd_volume && cd_volume->value != cdvolume) {
+		if (cdvolume) {
 			Cvar_SetValue("cd_volume",0.0);
 			CDAudio_Pause();
-		}
-		else
-		{
+		} else {
 			Cvar_SetValue("cd_volume",1.0);
 			CDAudio_Resume();
 		}
@@ -229,20 +235,21 @@ void CDAudio_Update( void )
 		return;
 	}
 
-	if (cd_nocd->value)
-	{
+	if (cd_nocd->value) {
 		CDAudio_Stop();
 		return;
 	}
 
 	if (playLooping &&
 	   (SDL_CDStatus(cd_id) != CD_PLAYING) &&
-	   (SDL_CDStatus(cd_id) != CD_PAUSED))
-	{
+	   (SDL_CDStatus(cd_id) != CD_PAUSED)) {
 		CDAudio_Play(lastTrack,qtrue);
 	}
 }
 
+/**
+ * @brief
+ */
 int CDAudio_Init( void )
 {
 	cvar_t *cv;
@@ -273,8 +280,7 @@ int CDAudio_Init( void )
 	}
 
 	cd_id = SDL_CDOpen(0);
-	if (!cd_id)
-	{
+	if (!cd_id) {
 		Com_Printf("CDAudio_Init: Unable to open default CD-ROM drive: %s\n",
 			SDL_GetError());
 		return -1;
@@ -284,13 +290,11 @@ int CDAudio_Init( void )
 	enabled = qtrue;
 	cdValid = qtrue;
 
-	if (!CD_INDRIVE(SDL_CDStatus(cd_id)))
-	{
+	if (!CD_INDRIVE(SDL_CDStatus(cd_id))) {
 		Com_Printf("CDAudio_Init: No CD in drive.\n");
 		cdValid = qfalse;
 	}
-	if (!cd_id->numtracks)
-	{
+	if (!cd_id->numtracks) {
 		Com_Printf("CDAudio_Init: CD contains no audio tracks.\n");
 		cdValid = qfalse;
 	}
@@ -299,7 +303,9 @@ int CDAudio_Init( void )
 	return 0;
 }
 
-
+/**
+ * @brief
+ */
 void CDAudio_Shutdown( void )
 {
 	if(!cd_id)
@@ -317,6 +323,9 @@ void CDAudio_Shutdown( void )
 	initialized = qfalse;
 }
 
+/**
+ * @brief
+ */
 static void CD_f( void )
 {
 	char	*command;
@@ -325,12 +334,10 @@ static void CD_f( void )
 		return;
 
 	command = Cmd_Argv(1);
-	if (!Q_strcasecmp(command,"on"))
-	{
+	if (!Q_strcasecmp(command,"on")) {
 		enabled = qtrue;
 	}
-	if (!Q_strcasecmp(command,"off"))
-	{
+	if (!Q_strcasecmp(command,"off")) {
 		if(!cd_id) return;
 		cdstate = SDL_CDStatus(cd_id);
 		if((cdstate == CD_PLAYING) || (cdstate == CD_PAUSED))
@@ -338,45 +345,37 @@ static void CD_f( void )
 		enabled = qfalse;
 		return;
 	}
-	if (!Q_strcasecmp(command,"play"))
-	{
+	if (!Q_strcasecmp(command,"play")) {
 		CDAudio_Play((byte)atoi(Cmd_Argv(2)),qfalse);
 		return;
 	}
-	if (!Q_strcasecmp(command,"loop"))
-	{
+	if (!Q_strcasecmp(command,"loop")) {
 		CDAudio_Play((byte)atoi(Cmd_Argv(2)),qtrue);
 		return;
 	}
-	if (!Q_strcasecmp(command,"stop"))
-	{
+	if (!Q_strcasecmp(command,"stop")) {
 		CDAudio_Stop();
 		return;
 	}
-	if (!Q_strcasecmp(command,"pause"))
-	{
+	if (!Q_strcasecmp(command,"pause")) {
 		CDAudio_Pause();
 		return;
 	}
-	if (!Q_strcasecmp(command,"resume"))
-	{
+	if (!Q_strcasecmp(command,"resume")) {
 		CDAudio_Resume();
 		return;
 	}
-	if (!Q_strcasecmp(command,"eject"))
-	{
+	if (!Q_strcasecmp(command,"eject")) {
 		CDAudio_Eject();
 		return;
 	}
-	if (!Q_strcasecmp(command,"info"))
-	{
+	if (!Q_strcasecmp(command,"info")) {
 		if(!cd_id)
 			return;
 
 		cdstate = SDL_CDStatus(cd_id);
 		Com_Printf("%d tracks\n",cd_id->numtracks);
-		switch ( cdstate )
-		{
+		switch ( cdstate ) {
 		case CD_PLAYING:
 			Com_Printf("Currently %s track %d\n",
 				playLooping ? "looping" : "playing",
@@ -392,6 +391,9 @@ static void CD_f( void )
 	}
 }
 
+/**
+ * @brief
+ */
 void CDAudio_Activate (qboolean active)
 {
 	if (active)

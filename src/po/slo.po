@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-08-26 09:29+0200\n"
+"POT-Creation-Date: 2006-08-28 15:10+0200\n"
 "PO-Revision-Date: 2006-07-24 09:50+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: inzenir <simon.cedula@guest.arnes.si>\n"
@@ -163,53 +163,53 @@ msgstr "NLP"
 msgid "UFO - Destroyer class"
 msgstr "NLP - klasa Uničevalec"
 
-#: ../base/ufos/campaign.ufo:107
+#: ../base/ufos/campaign.ufo:112
 #, fuzzy
 msgid "Very Hard Campaign"
 msgstr "Težka misija"
 
-#: ../base/ufos/campaign.ufo:108
+#: ../base/ufos/campaign.ufo:113
 #, fuzzy
 msgid "txt_veryhard_campaign"
 msgstr "Začni misijo"
 
-#: ../base/ufos/campaign.ufo:127
+#: ../base/ufos/campaign.ufo:132
 #, fuzzy
 msgid "Hard Campaign"
 msgstr "Težka misija"
 
-#: ../base/ufos/campaign.ufo:128
+#: ../base/ufos/campaign.ufo:133
 #, fuzzy
 msgid "txt_hard_campaign"
 msgstr "Začni misijo"
 
-#: ../base/ufos/campaign.ufo:147
+#: ../base/ufos/campaign.ufo:152
 msgid "Standard Campaign"
 msgstr "Običajna misija"
 
-#: ../base/ufos/campaign.ufo:148 ../base/ufos/campaign.ufo:209
+#: ../base/ufos/campaign.ufo:153 ../base/ufos/campaign.ufo:214
 msgid "txt_standard_campaign"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:168
+#: ../base/ufos/campaign.ufo:173
 msgid "Easy Campaign"
 msgstr "Lahka misija"
 
-#: ../base/ufos/campaign.ufo:169
+#: ../base/ufos/campaign.ufo:174
 msgid "txt_easy_campaign"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:188
+#: ../base/ufos/campaign.ufo:193
 #, fuzzy
 msgid "Very Easy Campaign"
 msgstr "Lahka misija"
 
-#: ../base/ufos/campaign.ufo:189
+#: ../base/ufos/campaign.ufo:194
 #, fuzzy
 msgid "txt_veryeasy_campaign"
 msgstr "Začni misijo"
 
-#: ../base/ufos/campaign.ufo:208
+#: ../base/ufos/campaign.ufo:213
 msgid "Testing and Tweaking Campaign --- Please Ignore"
 msgstr "Testiranje misije --- Prosim ignoriraj"
 
@@ -451,7 +451,7 @@ msgstr ""
 #: ../base/ufos/menu_bases.ufo:315 ../base/ufos/menu_buildings.ufo:76
 #: ../base/ufos/menu_buy.ufo:708 ../base/ufos/menu_buy.ufo:1143
 #: ../base/ufos/menu_geoscape.ufo:86 ../base/ufos/menu_production.ufo:49
-#: ../base/ufos/menu_research.ufo:899
+#: ../base/ufos/menu_research.ufo:900
 msgid "CREDIT"
 msgstr "DENAR "
 
@@ -477,7 +477,7 @@ msgstr "Pojdi na naslednjo bazo"
 
 #: ../base/ufos/menu_buildings.ufo:58 ../base/ufos/menu_buy.ufo:820
 #: ../base/ufos/menu_hire.ufo:690 ../base/ufos/menu_production.ufo:266
-#: ../base/ufos/menu_research.ufo:944
+#: ../base/ufos/menu_research.ufo:945
 msgid "Back to baseview"
 msgstr "Nazaj na zemljevid baze"
 
@@ -627,13 +627,13 @@ msgstr "Plovilo doseglo željeno lokacijo - kaj sedaj?"
 
 #: ../base/ufos/menu_geoscape.ufo:320 ../base/ufos/menu_geoscape.ufo:436
 #: ../base/ufos/menu_geoscape.ufo:533 ../base/ufos/menu_geoscape.ufo:588
-#: ../base/ufos/menu_geoscape.ufo:680 ../base/ufos/menu_geoscape.ufo:749
+#: ../base/ufos/menu_geoscape.ufo:680 ../base/ufos/menu_geoscape.ufo:748
 msgid "Close this dialog"
 msgstr "Zapri pogovor "
 
 #: ../base/ufos/menu_geoscape.ufo:333 ../base/ufos/menu_geoscape.ufo:460
 #: ../base/ufos/menu_geoscape.ufo:546 ../base/ufos/menu_geoscape.ufo:601
-#: ../base/ufos/menu_geoscape.ufo:693 ../base/ufos/menu_geoscape.ufo:762
+#: ../base/ufos/menu_geoscape.ufo:693 ../base/ufos/menu_geoscape.ufo:761
 msgid "Cancel"
 msgstr "Prekliči "
 
@@ -1338,11 +1338,11 @@ msgstr "Odstrani znanstvenika"
 msgid "Base Info"
 msgstr "Podatki o bazi"
 
-#: ../base/ufos/menu_research.ufo:919
+#: ../base/ufos/menu_research.ufo:920
 msgid "Stop research"
 msgstr "Ustavi raziskavo"
 
-#: ../base/ufos/menu_research.ufo:930
+#: ../base/ufos/menu_research.ufo:931
 msgid "Start research"
 msgstr "Začni raziskavo"
 
@@ -1692,7 +1692,7 @@ msgstr "Večja akcija nezemljanov"
 msgid "Stop them"
 msgstr "Ustavi jih"
 
-#: ../base/ufos/missions.ufo:816 client/cl_campaign.c:571
+#: ../base/ufos/missions.ufo:816 client/cl_campaign.c:595
 msgid "Base Attack"
 msgstr "Napad na bazo"
 
@@ -3127,17 +3127,17 @@ msgid "Aircraft started"
 msgstr "Plovilo pripravljeno"
 
 #: client/cl_aircraft.c:103 client/cl_aircraft.c:366 client/cl_aircraft.c:514
-#: client/cl_aircraft.c:730 client/cl_basemanagement.c:406
+#: client/cl_aircraft.c:732 client/cl_basemanagement.c:406
 #: client/cl_basemanagement.c:1713 client/cl_campaign.c:372
-#: client/cl_campaign.c:799 client/cl_campaign.c:909 client/cl_campaign.c:949
-#: client/cl_campaign.c:958 client/cl_campaign.c:967 client/cl_campaign.c:976
-#: client/cl_campaign.c:986 client/cl_campaign.c:999 client/cl_campaign.c:1009
-#: client/cl_campaign.c:1016 client/cl_campaign.c:1023
-#: client/cl_campaign.c:1995 client/cl_campaign.c:2027
-#: client/cl_campaign.c:2029 client/cl_map.c:302 client/cl_research.c:497
-#: client/cl_research.c:606 client/cl_research.c:609 client/cl_research.c:613
-#: client/cl_research.c:626 client/cl_research.c:652 client/cl_research.c:656
-#: client/cl_research.c:784
+#: client/cl_campaign.c:802 client/cl_campaign.c:914 client/cl_campaign.c:954
+#: client/cl_campaign.c:963 client/cl_campaign.c:972 client/cl_campaign.c:981
+#: client/cl_campaign.c:991 client/cl_campaign.c:1004
+#: client/cl_campaign.c:1014 client/cl_campaign.c:1021
+#: client/cl_campaign.c:1028 client/cl_campaign.c:2030
+#: client/cl_campaign.c:2067 client/cl_campaign.c:2069 client/cl_map.c:302
+#: client/cl_research.c:499 client/cl_research.c:609 client/cl_research.c:612
+#: client/cl_research.c:616 client/cl_research.c:629 client/cl_research.c:658
+#: client/cl_research.c:795
 msgid "Notice"
 msgstr "Obvestilo"
 
@@ -3226,11 +3226,11 @@ msgstr "Tvoje plovilo ima malo goriva in se vrača v bazo"
 msgid "Interception"
 msgstr "Prestreznik"
 
-#: client/cl_aircraft.c:553 client/cl_campaign.c:2027
+#: client/cl_aircraft.c:553 client/cl_campaign.c:2067
 msgid "You've won the battle"
 msgstr "V bitki si zmagal"
 
-#: client/cl_aircraft.c:560 client/cl_campaign.c:2029
+#: client/cl_aircraft.c:560 client/cl_campaign.c:2069
 msgid "You've lost the battle"
 msgstr "V bitki si izgubil"
 
@@ -3243,11 +3243,11 @@ msgstr "Nič"
 msgid "No weapon assigned"
 msgstr ""
 
-#: client/cl_aircraft.c:683
+#: client/cl_aircraft.c:684
 msgid "No shield assigned"
 msgstr ""
 
-#: client/cl_aircraft.c:730
+#: client/cl_aircraft.c:732
 msgid "Assign a team to aircraft"
 msgstr "Plovilu določi ekipo"
 
@@ -3331,189 +3331,189 @@ msgstr "Zgradba končana"
 msgid "Could not set up your base at this location"
 msgstr "Na tem mestu ne moreš zgraditi baze"
 
-#: client/cl_campaign.c:570
+#: client/cl_campaign.c:594
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "Napadajo bazo %s."
 
-#: client/cl_campaign.c:595
+#: client/cl_campaign.c:619
 #, c-format
 msgid "Alien activity has been reported: '%s'"
 msgstr "Opažena je bila nezemeljska aktivnost: '%s'"
 
-#: client/cl_campaign.c:596
+#: client/cl_campaign.c:620
 msgid "Alien activity"
 msgstr "Nezemeljska aktivnost"
 
-#: client/cl_campaign.c:788
+#: client/cl_campaign.c:791
 #, c-format
 msgid ""
 "The aliens killed all employees and destroyed all equipment in your base '%"
 "s'."
 msgstr ""
 
-#: client/cl_campaign.c:793
+#: client/cl_campaign.c:796
 #, fuzzy, c-format
 msgid "The mission expired and %i civilians died."
 msgstr "Zamudil si nalogo, %i civilov je umrlo. Izgubil si %i denarja."
 
-#: client/cl_campaign.c:833
+#: client/cl_campaign.c:838
 msgid "Jan"
 msgstr ""
 
-#: client/cl_campaign.c:835
+#: client/cl_campaign.c:840
 msgid "Feb"
 msgstr ""
 
-#: client/cl_campaign.c:837
+#: client/cl_campaign.c:842
 #, fuzzy
 msgid "Mar"
 msgstr "Zemljevid:"
 
-#: client/cl_campaign.c:839
+#: client/cl_campaign.c:844
 msgid "Apr"
 msgstr ""
 
-#: client/cl_campaign.c:841
+#: client/cl_campaign.c:846
 #, fuzzy
 msgid "May"
 msgstr "Dan "
 
-#: client/cl_campaign.c:843
+#: client/cl_campaign.c:848
 msgid "Jun"
 msgstr ""
 
-#: client/cl_campaign.c:845
+#: client/cl_campaign.c:850
 msgid "Jul"
 msgstr ""
 
-#: client/cl_campaign.c:847
+#: client/cl_campaign.c:852
 msgid "Aug"
 msgstr ""
 
-#: client/cl_campaign.c:849
+#: client/cl_campaign.c:854
 msgid "Sep"
 msgstr ""
 
-#: client/cl_campaign.c:851
+#: client/cl_campaign.c:856
 msgid "Oct"
 msgstr ""
 
-#: client/cl_campaign.c:853
+#: client/cl_campaign.c:858
 #, fuzzy
 msgid "Nov"
 msgstr "Ne"
 
-#: client/cl_campaign.c:855
+#: client/cl_campaign.c:860
 msgid "Dec"
 msgstr ""
 
-#: client/cl_campaign.c:886
+#: client/cl_campaign.c:891
 msgid "Giving up"
 msgstr ""
 
-#: client/cl_campaign.c:888
+#: client/cl_campaign.c:893
 msgid "Furious"
 msgstr ""
 
-#: client/cl_campaign.c:890
+#: client/cl_campaign.c:895
 msgid "Angry"
 msgstr ""
 
-#: client/cl_campaign.c:892
+#: client/cl_campaign.c:897
 #, fuzzy
 msgid "Mad"
 msgstr "Zemljevid:"
 
-#: client/cl_campaign.c:894
+#: client/cl_campaign.c:899
 msgid "Upset"
 msgstr ""
 
-#: client/cl_campaign.c:896
+#: client/cl_campaign.c:901
 #, fuzzy
 msgid "Tolerant"
 msgstr "Elektrarna"
 
-#: client/cl_campaign.c:898
+#: client/cl_campaign.c:903
 #, fuzzy
 msgid "Neutral"
 msgstr "Učenje"
 
-#: client/cl_campaign.c:900
+#: client/cl_campaign.c:905
 #, fuzzy
 msgid "Content"
 msgstr "Poveži"
 
-#: client/cl_campaign.c:902
+#: client/cl_campaign.c:907
 #, fuzzy
 msgid "Pleased"
 msgstr "laser"
 
-#: client/cl_campaign.c:904
+#: client/cl_campaign.c:909
 #, fuzzy
 msgid "Happy"
 msgstr "Težko"
 
-#: client/cl_campaign.c:906
+#: client/cl_campaign.c:911
 msgid "Exuberant"
 msgstr ""
 
-#: client/cl_campaign.c:908
+#: client/cl_campaign.c:913
 #, fuzzy, c-format
 msgid "Gained %i credits from nation %s (%s)"
 msgstr "Dobil si %i denarja. Darovala je %s"
 
-#: client/cl_campaign.c:947
+#: client/cl_campaign.c:952
 #, fuzzy, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Dobil si %i denarja. Darovala je %s"
 
-#: client/cl_campaign.c:956
+#: client/cl_campaign.c:961
 #, fuzzy, c-format
 msgid "Paid %i credits to workers"
 msgstr "Dobil si %i denarja. Darovala je %s"
 
-#: client/cl_campaign.c:965
+#: client/cl_campaign.c:970
 #, fuzzy, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Dobil si %i denarja. Darovala je %s"
 
-#: client/cl_campaign.c:974
+#: client/cl_campaign.c:979
 #, fuzzy, c-format
 msgid "Paid %i credits to medics"
 msgstr "Dobil si %i denarja. Darovala je %s"
 
-#: client/cl_campaign.c:984
+#: client/cl_campaign.c:989
 #, fuzzy, c-format
 msgid "Paid %i credits for robots"
 msgstr "Dobil si %i denarja. Darovala je %s"
 
-#: client/cl_campaign.c:997
+#: client/cl_campaign.c:1002
 #, fuzzy, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Dobil si %i denarja. Darovala je %s"
 
-#: client/cl_campaign.c:1008
+#: client/cl_campaign.c:1013
 #, fuzzy, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "Dobil si %i denarja. Darovala je %s"
 
-#: client/cl_campaign.c:1014
+#: client/cl_campaign.c:1019
 #, fuzzy, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Dobil si %i denarja. Darovala je %s"
 
-#: client/cl_campaign.c:1021
+#: client/cl_campaign.c:1026
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr ""
 
-#: client/cl_campaign.c:1072
+#: client/cl_campaign.c:1077
 #, c-format
 msgid "%02i:%i%i"
 msgstr "%02i:%i%i"
 
-#: client/cl_campaign.c:1186
+#: client/cl_campaign.c:1191
 #, c-format
 msgid ""
 "Missions:\n"
@@ -3526,33 +3526,33 @@ msgstr ""
 "Baze:\n"
 "zgrajene:\t%i\tnapadene:\t%i\n"
 
-#: client/cl_campaign.c:1898
+#: client/cl_campaign.c:1933
 msgid "Assemble or load a team"
 msgstr "Sestavi ali opremi ekipo"
 
-#: client/cl_campaign.c:1898
+#: client/cl_campaign.c:1933
 msgid "Note"
 msgstr "Opomba"
 
-#: client/cl_campaign.c:1995
+#: client/cl_campaign.c:2030
 #, fuzzy
 msgid "Your dropship is not near the landing zone"
 msgstr "Tvoje plovilo je v bližini točke pristanka"
 
-#: client/cl_campaign.c:2234
+#: client/cl_campaign.c:2281
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s je bil povišan v %s.\n"
 
-#: client/cl_campaign.c:2235
+#: client/cl_campaign.c:2282
 msgid "Soldier promoted"
 msgstr "Vojak povišan"
 
-#: client/cl_campaign.c:3218
+#: client/cl_campaign.c:3297
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
-"Recruits: %i - Scientists: %i - Workers: %i\n"
+"Recruits: %i soldiers, %i scientists, %i workers, %i medics\n"
 "Credits: %ic\n"
 "Difficulty: %s\n"
 "%s\n"
@@ -3829,7 +3829,7 @@ msgstr "Stanje: neznana tehnologija"
 msgid "Dependencies"
 msgstr "Odvisnosti:"
 
-#: client/cl_research.c:498
+#: client/cl_research.c:500
 #, fuzzy
 msgid ""
 "There is no free lab available.\n"
@@ -3839,21 +3839,21 @@ msgstr ""
 "Ni prostih laboratorijev.\\zgradi novega ali pa enega izprazni,\\če želiš, "
 "da znanstveniki raziščejo to tehnologijo.\n"
 
-#: client/cl_research.c:606
+#: client/cl_research.c:609
 msgid "This item is already under research by your scientists."
 msgstr "Ta predmet tvoji zannstveniki že raziskujejo."
 
-#: client/cl_research.c:609 client/cl_research.c:652
+#: client/cl_research.c:612
 msgid "The research on this item continues."
 msgstr "Raziskava predmeta se nadaljuje."
 
-#: client/cl_research.c:613 client/cl_research.c:656
+#: client/cl_research.c:616 client/cl_research.c:658
 msgid "The research on this item is complete."
 msgstr ""
 "Raziskava tega predmeta ni mogoča.\n"
 "Najprej razišči predhodne različice te tehnologije."
 
-#: client/cl_research.c:626
+#: client/cl_research.c:629
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -3861,24 +3861,24 @@ msgstr ""
 "Raziskava tega predmeta ni mogoča.\n"
 "Najprej razišči predhodne različice te tehnologije."
 
-#: client/cl_research.c:691
+#: client/cl_research.c:695
 msgid " [not yet researchable]"
 msgstr "[ni možno raziskati]"
 
-#: client/cl_research.c:784
+#: client/cl_research.c:795
 msgid "Build a laboratory first"
 msgstr "Najprej zgradi v laboratoriju"
 
-#: client/cl_research.c:851
+#: client/cl_research.c:862
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Raziskava %s končana\n"
 
-#: client/cl_research.c:852
+#: client/cl_research.c:863
 msgid "Research finished"
 msgstr "Raziskovanje končano"
 
-#: client/cl_research.c:1104
+#: client/cl_research.c:1119
 msgid "No description available."
 msgstr "Opis ni na voljo."
 
@@ -3908,17 +3908,17 @@ msgstr "%i od %i"
 msgid "NewTeam"
 msgstr "Nova Ekipa"
 
-#: client/cl_team.c:1438
+#: client/cl_team.c:1437 client/cl_team.c:1493
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Ubiti nezemljani:\t%i\n"
 
-#: client/cl_team.c:1440
+#: client/cl_team.c:1439
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Ubiti nasprotniki:\t%i\n"
 
-#: client/cl_team.c:1447
+#: client/cl_team.c:1446 client/cl_team.c:1496
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -3927,7 +3927,7 @@ msgstr ""
 "Preživeli nezemljani\t%i\n"
 "\n"
 
-#: client/cl_team.c:1449
+#: client/cl_team.c:1448
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -3936,17 +3936,17 @@ msgstr ""
 "Preživeli nasprotniki\t%i\n"
 "\n"
 
-#: client/cl_team.c:1452
+#: client/cl_team.c:1451
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Žrtve v ekipi\t%i\n"
 
-#: client/cl_team.c:1453
+#: client/cl_team.c:1452
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Žrtve prijateljskega ognja\t%i\n"
 
-#: client/cl_team.c:1454
+#: client/cl_team.c:1453
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -3955,22 +3955,22 @@ msgstr ""
 "Preživeli v ekipi\t%i\n"
 "\n"
 
-#: client/cl_team.c:1467
+#: client/cl_team.c:1466
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civili, ubiti od nezemljanov\t%i\n"
 
-#: client/cl_team.c:1469
+#: client/cl_team.c:1468
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civili, ubiti od nasprotnikovs\t%i\n"
 
-#: client/cl_team.c:1470
+#: client/cl_team.c:1469
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civili, ubiti od tvoje ekipe\t%i\n"
 
-#: client/cl_team.c:1471
+#: client/cl_team.c:1470 client/cl_team.c:1511
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -3980,6 +3980,35 @@ msgstr ""
 "Rešeni civili\t%i\n"
 "\n"
 "\n"
+
+#: client/cl_team.c:1499
+#, fuzzy, c-format
+msgid "Phalanx soldiers killed by Aliens\t%i\n"
+msgstr "Civili, ubiti od nezemljanov\t%i\n"
+
+#: client/cl_team.c:1500
+#, fuzzy, c-format
+msgid "Phalanx friendly fire losses\t%i\n"
+msgstr "Žrtve prijateljskega ognja\t%i\n"
+
+#: client/cl_team.c:1501
+#, fuzzy, c-format
+msgid ""
+"Phalanx survivors\t%i\n"
+"\n"
+msgstr ""
+"Preživeli nezemljani\t%i\n"
+"\n"
+
+#: client/cl_team.c:1509
+#, fuzzy, c-format
+msgid "Civilians killed by Aliens\t%i\n"
+msgstr "Civili, ubiti od nezemljanov\t%i\n"
+
+#: client/cl_team.c:1510
+#, fuzzy, c-format
+msgid "Civilians killed by friendly fire\t%i\n"
+msgstr "Civili, ubiti od nezemljanov\t%i\n"
 
 #: client/cl_ufopedia.c:50
 msgid "Close"
@@ -4134,11 +4163,11 @@ msgstr "Gorivo:\t%i\n"
 msgid "Shield:\t%s\n"
 msgstr "Ščit:\t%s\n"
 
-#: client/cl_ufopedia.c:424
+#: client/cl_ufopedia.c:425
 msgid "Ufopedia Content"
 msgstr "Vsebina NLPedije"
 
-#: game/g_ai.c:495
+#: game/g_ai.c:496
 msgid "Alien"
 msgstr "Nezemljan"
 

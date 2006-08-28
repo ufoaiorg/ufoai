@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-08-26 09:29+0200\n"
+"POT-Creation-Date: 2006-08-28 15:10+0200\n"
 "PO-Revision-Date: 2006-05-25 22:19+0200\n"
 "Last-Translator: Karel Volný <kavol@seznam.cz>\n"
 "Language-Team:  <cs@li.org>\n"
@@ -166,55 +166,55 @@ msgstr "UFO"
 msgid "UFO - Destroyer class"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:107
+#: ../base/ufos/campaign.ufo:112
 #, fuzzy
 msgid "Very Hard Campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:108
+#: ../base/ufos/campaign.ufo:113
 #, fuzzy
 msgid "txt_veryhard_campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:127
+#: ../base/ufos/campaign.ufo:132
 #, fuzzy
 msgid "Hard Campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:128
+#: ../base/ufos/campaign.ufo:133
 #, fuzzy
 msgid "txt_hard_campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:147
+#: ../base/ufos/campaign.ufo:152
 msgid "Standard Campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:148 ../base/ufos/campaign.ufo:209
+#: ../base/ufos/campaign.ufo:153 ../base/ufos/campaign.ufo:214
 msgid "txt_standard_campaign"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:168
+#: ../base/ufos/campaign.ufo:173
 #, fuzzy
 msgid "Easy Campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:169
+#: ../base/ufos/campaign.ufo:174
 #, fuzzy
 msgid "txt_easy_campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:188
+#: ../base/ufos/campaign.ufo:193
 #, fuzzy
 msgid "Very Easy Campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:189
+#: ../base/ufos/campaign.ufo:194
 #, fuzzy
 msgid "txt_veryeasy_campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:208
+#: ../base/ufos/campaign.ufo:213
 msgid "Testing and Tweaking Campaign --- Please Ignore"
 msgstr ""
 
@@ -459,7 +459,7 @@ msgstr ""
 #: ../base/ufos/menu_bases.ufo:315 ../base/ufos/menu_buildings.ufo:76
 #: ../base/ufos/menu_buy.ufo:708 ../base/ufos/menu_buy.ufo:1143
 #: ../base/ufos/menu_geoscape.ufo:86 ../base/ufos/menu_production.ufo:49
-#: ../base/ufos/menu_research.ufo:899
+#: ../base/ufos/menu_research.ufo:900
 msgid "CREDIT"
 msgstr "PENÍZE"
 
@@ -485,7 +485,7 @@ msgstr "Přejít na další základnu"
 
 #: ../base/ufos/menu_buildings.ufo:58 ../base/ufos/menu_buy.ufo:820
 #: ../base/ufos/menu_hire.ufo:690 ../base/ufos/menu_production.ufo:266
-#: ../base/ufos/menu_research.ufo:944
+#: ../base/ufos/menu_research.ufo:945
 msgid "Back to baseview"
 msgstr "Zpět na zobrazení základny"
 
@@ -644,13 +644,13 @@ msgstr "Letoun dosáhl cíle - co nyní?"
 
 #: ../base/ufos/menu_geoscape.ufo:320 ../base/ufos/menu_geoscape.ufo:436
 #: ../base/ufos/menu_geoscape.ufo:533 ../base/ufos/menu_geoscape.ufo:588
-#: ../base/ufos/menu_geoscape.ufo:680 ../base/ufos/menu_geoscape.ufo:749
+#: ../base/ufos/menu_geoscape.ufo:680 ../base/ufos/menu_geoscape.ufo:748
 msgid "Close this dialog"
 msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:333 ../base/ufos/menu_geoscape.ufo:460
 #: ../base/ufos/menu_geoscape.ufo:546 ../base/ufos/menu_geoscape.ufo:601
-#: ../base/ufos/menu_geoscape.ufo:693 ../base/ufos/menu_geoscape.ufo:762
+#: ../base/ufos/menu_geoscape.ufo:693 ../base/ufos/menu_geoscape.ufo:761
 msgid "Cancel"
 msgstr ""
 
@@ -1371,11 +1371,11 @@ msgstr "Odebrat vědce"
 msgid "Base Info"
 msgstr "Informace o základně"
 
-#: ../base/ufos/menu_research.ufo:919
+#: ../base/ufos/menu_research.ufo:920
 msgid "Stop research"
 msgstr "Zastavit výzkum"
 
-#: ../base/ufos/menu_research.ufo:930
+#: ../base/ufos/menu_research.ufo:931
 msgid "Start research"
 msgstr "Začít výzkum"
 
@@ -1732,7 +1732,7 @@ msgstr ""
 msgid "Stop them"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:816 client/cl_campaign.c:571
+#: ../base/ufos/missions.ufo:816 client/cl_campaign.c:595
 #, fuzzy
 msgid "Base Attack"
 msgstr "Útok na základnu"
@@ -3179,17 +3179,17 @@ msgid "Aircraft started"
 msgstr "Letoun odstartován"
 
 #: client/cl_aircraft.c:103 client/cl_aircraft.c:366 client/cl_aircraft.c:514
-#: client/cl_aircraft.c:730 client/cl_basemanagement.c:406
+#: client/cl_aircraft.c:732 client/cl_basemanagement.c:406
 #: client/cl_basemanagement.c:1713 client/cl_campaign.c:372
-#: client/cl_campaign.c:799 client/cl_campaign.c:909 client/cl_campaign.c:949
-#: client/cl_campaign.c:958 client/cl_campaign.c:967 client/cl_campaign.c:976
-#: client/cl_campaign.c:986 client/cl_campaign.c:999 client/cl_campaign.c:1009
-#: client/cl_campaign.c:1016 client/cl_campaign.c:1023
-#: client/cl_campaign.c:1995 client/cl_campaign.c:2027
-#: client/cl_campaign.c:2029 client/cl_map.c:302 client/cl_research.c:497
-#: client/cl_research.c:606 client/cl_research.c:609 client/cl_research.c:613
-#: client/cl_research.c:626 client/cl_research.c:652 client/cl_research.c:656
-#: client/cl_research.c:784
+#: client/cl_campaign.c:802 client/cl_campaign.c:914 client/cl_campaign.c:954
+#: client/cl_campaign.c:963 client/cl_campaign.c:972 client/cl_campaign.c:981
+#: client/cl_campaign.c:991 client/cl_campaign.c:1004
+#: client/cl_campaign.c:1014 client/cl_campaign.c:1021
+#: client/cl_campaign.c:1028 client/cl_campaign.c:2030
+#: client/cl_campaign.c:2067 client/cl_campaign.c:2069 client/cl_map.c:302
+#: client/cl_research.c:499 client/cl_research.c:609 client/cl_research.c:612
+#: client/cl_research.c:616 client/cl_research.c:629 client/cl_research.c:658
+#: client/cl_research.c:795
 msgid "Notice"
 msgstr "Poznámka"
 
@@ -3277,11 +3277,11 @@ msgstr "Transportér má málo paliva a vrací se na základnu"
 msgid "Interception"
 msgstr "Stíhačka"
 
-#: client/cl_aircraft.c:553 client/cl_campaign.c:2027
+#: client/cl_aircraft.c:553 client/cl_campaign.c:2067
 msgid "You've won the battle"
 msgstr "Vyhrál jsi bitvu"
 
-#: client/cl_aircraft.c:560 client/cl_campaign.c:2029
+#: client/cl_aircraft.c:560 client/cl_campaign.c:2069
 msgid "You've lost the battle"
 msgstr "Prohrál jsi bitvu"
 
@@ -3294,11 +3294,11 @@ msgstr "Žádný"
 msgid "No weapon assigned"
 msgstr ""
 
-#: client/cl_aircraft.c:683
+#: client/cl_aircraft.c:684
 msgid "No shield assigned"
 msgstr ""
 
-#: client/cl_aircraft.c:730
+#: client/cl_aircraft.c:732
 msgid "Assign a team to aircraft"
 msgstr "Přiděl k letounu tým"
 
@@ -3383,189 +3383,189 @@ msgstr "Stavba dokončena - základna %s"
 msgid "Could not set up your base at this location"
 msgstr "Na tomto místě nelze vybudovat základnu"
 
-#: client/cl_campaign.c:570
+#: client/cl_campaign.c:594
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "Probíhá útok na základnu »%s«."
 
-#: client/cl_campaign.c:595
+#: client/cl_campaign.c:619
 #, fuzzy, c-format
 msgid "Alien activity has been reported: '%s'"
 msgstr "Byla hlášena cizácká aktivita."
 
-#: client/cl_campaign.c:596
+#: client/cl_campaign.c:620
 msgid "Alien activity"
 msgstr "Cizácká činnost"
 
-#: client/cl_campaign.c:788
+#: client/cl_campaign.c:791
 #, c-format
 msgid ""
 "The aliens killed all employees and destroyed all equipment in your base '%"
 "s'."
 msgstr ""
 
-#: client/cl_campaign.c:793
+#: client/cl_campaign.c:796
 #, fuzzy, c-format
 msgid "The mission expired and %i civilians died."
 msgstr "Možnost zásahu vypršela a %i civilistů zemřel. Přišel jsi o %i c."
 
-#: client/cl_campaign.c:833
+#: client/cl_campaign.c:838
 msgid "Jan"
 msgstr ""
 
-#: client/cl_campaign.c:835
+#: client/cl_campaign.c:840
 msgid "Feb"
 msgstr ""
 
-#: client/cl_campaign.c:837
+#: client/cl_campaign.c:842
 #, fuzzy
 msgid "Mar"
 msgstr "Mapa"
 
-#: client/cl_campaign.c:839
+#: client/cl_campaign.c:844
 msgid "Apr"
 msgstr ""
 
-#: client/cl_campaign.c:841
+#: client/cl_campaign.c:846
 #, fuzzy
 msgid "May"
 msgstr "Den"
 
-#: client/cl_campaign.c:843
+#: client/cl_campaign.c:848
 msgid "Jun"
 msgstr ""
 
-#: client/cl_campaign.c:845
+#: client/cl_campaign.c:850
 msgid "Jul"
 msgstr ""
 
-#: client/cl_campaign.c:847
+#: client/cl_campaign.c:852
 msgid "Aug"
 msgstr ""
 
-#: client/cl_campaign.c:849
+#: client/cl_campaign.c:854
 msgid "Sep"
 msgstr ""
 
-#: client/cl_campaign.c:851
+#: client/cl_campaign.c:856
 msgid "Oct"
 msgstr ""
 
-#: client/cl_campaign.c:853
+#: client/cl_campaign.c:858
 #, fuzzy
 msgid "Nov"
 msgstr "Ne"
 
-#: client/cl_campaign.c:855
+#: client/cl_campaign.c:860
 msgid "Dec"
 msgstr ""
 
-#: client/cl_campaign.c:886
+#: client/cl_campaign.c:891
 msgid "Giving up"
 msgstr ""
 
-#: client/cl_campaign.c:888
+#: client/cl_campaign.c:893
 msgid "Furious"
 msgstr ""
 
-#: client/cl_campaign.c:890
+#: client/cl_campaign.c:895
 msgid "Angry"
 msgstr ""
 
-#: client/cl_campaign.c:892
+#: client/cl_campaign.c:897
 #, fuzzy
 msgid "Mad"
 msgstr "Mapa"
 
-#: client/cl_campaign.c:894
+#: client/cl_campaign.c:899
 msgid "Upset"
 msgstr ""
 
-#: client/cl_campaign.c:896
+#: client/cl_campaign.c:901
 #, fuzzy
 msgid "Tolerant"
 msgstr "Elektrárna"
 
-#: client/cl_campaign.c:898
+#: client/cl_campaign.c:903
 #, fuzzy
 msgid "Neutral"
 msgstr "Školičky"
 
-#: client/cl_campaign.c:900
+#: client/cl_campaign.c:905
 #, fuzzy
 msgid "Content"
 msgstr "Připojit se na IP"
 
-#: client/cl_campaign.c:902
+#: client/cl_campaign.c:907
 #, fuzzy
 msgid "Pleased"
 msgstr "laser"
 
-#: client/cl_campaign.c:904
+#: client/cl_campaign.c:909
 #, fuzzy
 msgid "Happy"
 msgstr "Ošetřit"
 
-#: client/cl_campaign.c:906
+#: client/cl_campaign.c:911
 msgid "Exuberant"
 msgstr ""
 
-#: client/cl_campaign.c:908
+#: client/cl_campaign.c:913
 #, c-format
 msgid "Gained %i credits from nation %s (%s)"
 msgstr ""
 
-#: client/cl_campaign.c:947
+#: client/cl_campaign.c:952
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr ""
 
-#: client/cl_campaign.c:956
+#: client/cl_campaign.c:961
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr ""
 
-#: client/cl_campaign.c:965
+#: client/cl_campaign.c:970
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr ""
 
-#: client/cl_campaign.c:974
+#: client/cl_campaign.c:979
 #, c-format
 msgid "Paid %i credits to medics"
 msgstr ""
 
-#: client/cl_campaign.c:984
+#: client/cl_campaign.c:989
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr ""
 
-#: client/cl_campaign.c:997
+#: client/cl_campaign.c:1002
 #, fuzzy, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Odstartovat letoun"
 
-#: client/cl_campaign.c:1008
+#: client/cl_campaign.c:1013
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr ""
 
-#: client/cl_campaign.c:1014
+#: client/cl_campaign.c:1019
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr ""
 
-#: client/cl_campaign.c:1021
+#: client/cl_campaign.c:1026
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr ""
 
-#: client/cl_campaign.c:1072
+#: client/cl_campaign.c:1077
 #, c-format
 msgid "%02i:%i%i"
 msgstr ""
 
-#: client/cl_campaign.c:1186
+#: client/cl_campaign.c:1191
 #, c-format
 msgid ""
 "Missions:\n"
@@ -3578,33 +3578,33 @@ msgstr ""
 "Základny:\n"
 "vybudované:\t%i\tnapadené:\t%i\n"
 
-#: client/cl_campaign.c:1898
+#: client/cl_campaign.c:1933
 msgid "Assemble or load a team"
 msgstr "Sestav nebo nahraj tým"
 
-#: client/cl_campaign.c:1898
+#: client/cl_campaign.c:1933
 msgid "Note"
 msgstr "Poznámka"
 
-#: client/cl_campaign.c:1995
+#: client/cl_campaign.c:2030
 #, fuzzy
 msgid "Your dropship is not near the landing zone"
 msgstr "Transportér není v blízkosti přistávacího prostoru"
 
-#: client/cl_campaign.c:2234
+#: client/cl_campaign.c:2281
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s byl povýšen na %s.\n"
 
-#: client/cl_campaign.c:2235
+#: client/cl_campaign.c:2282
 msgid "Soldier promoted"
 msgstr "Voják povýšen"
 
-#: client/cl_campaign.c:3218
+#: client/cl_campaign.c:3297
 #, c-format
 msgid ""
 "Race: %s\n"
-"Recruits: %i - Scientists: %i - Workers: %i\n"
+"Recruits: %i soldiers, %i scientists, %i workers, %i medics\n"
 "Credits: %ic\n"
 "Difficulty: %s\n"
 "%s\n"
@@ -3874,7 +3874,7 @@ msgstr "Stav: Neznámá technologie"
 msgid "Dependencies"
 msgstr "Závisí na:"
 
-#: client/cl_research.c:498
+#: client/cl_research.c:500
 #, fuzzy
 msgid ""
 "There is no free lab available.\n"
@@ -3884,19 +3884,19 @@ msgstr ""
 "Není k disposici volná laboratoř.\\Je třeba vybudovat novou nebo nějakou\\ "
 "uvolnit, aby bylo možno přidělit vědce na výzkum této technologie.\n"
 
-#: client/cl_research.c:606
+#: client/cl_research.c:609
 msgid "This item is already under research by your scientists."
 msgstr "Tato položka již je vědci zkoumána."
 
-#: client/cl_research.c:609 client/cl_research.c:652
+#: client/cl_research.c:612
 msgid "The research on this item continues."
 msgstr "Výzkum této položky pokračuje."
 
-#: client/cl_research.c:613 client/cl_research.c:656
+#: client/cl_research.c:616 client/cl_research.c:658
 msgid "The research on this item is complete."
 msgstr "Výzkum této položky je dokončen."
 
-#: client/cl_research.c:626
+#: client/cl_research.c:629
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -3904,24 +3904,24 @@ msgstr ""
 "Výzkum této položky zatím není možný.\n"
 "Nejprve je třeba vyzkoumat technologie, na kterých je založena."
 
-#: client/cl_research.c:691
+#: client/cl_research.c:695
 msgid " [not yet researchable]"
 msgstr " [zatím nelze zkoumat]"
 
-#: client/cl_research.c:784
+#: client/cl_research.c:795
 msgid "Build a laboratory first"
 msgstr "Nejprve vybuduj laboratoř"
 
-#: client/cl_research.c:851
+#: client/cl_research.c:862
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Dokončen výzkum »%s«\n"
 
-#: client/cl_research.c:852
+#: client/cl_research.c:863
 msgid "Research finished"
 msgstr "Výzkum dokončen"
 
-#: client/cl_research.c:1104
+#: client/cl_research.c:1119
 msgid "No description available."
 msgstr "Popis není dostupný."
 
@@ -3951,17 +3951,17 @@ msgstr "%i z %i"
 msgid "NewTeam"
 msgstr "NovýTým"
 
-#: client/cl_team.c:1438
+#: client/cl_team.c:1437 client/cl_team.c:1493
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Cizáků zabito\t%i\n"
 
-#: client/cl_team.c:1440
+#: client/cl_team.c:1439
 #, fuzzy, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "%s zabil\t%i\n"
 
-#: client/cl_team.c:1447
+#: client/cl_team.c:1446 client/cl_team.c:1496
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -3970,7 +3970,7 @@ msgstr ""
 "Přeživší cizáci\t%i\n"
 "\n"
 
-#: client/cl_team.c:1449
+#: client/cl_team.c:1448
 #, fuzzy, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -3979,17 +3979,17 @@ msgstr ""
 "%s survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1452
+#: client/cl_team.c:1451
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Ztráty\t%i\n"
 
-#: client/cl_team.c:1453
+#: client/cl_team.c:1452
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1454
+#: client/cl_team.c:1453
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -3998,22 +3998,22 @@ msgstr ""
 "Přeživší vojáci\t%i\n"
 "\n"
 
-#: client/cl_team.c:1467
+#: client/cl_team.c:1466
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:1469
+#: client/cl_team.c:1468
 #, fuzzy, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:1470
+#: client/cl_team.c:1469
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civilistů zabitých tvým týmem\t%i\n"
 
-#: client/cl_team.c:1471
+#: client/cl_team.c:1470 client/cl_team.c:1511
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -4023,6 +4023,35 @@ msgstr ""
 "Zachráněných civilistů\t%i\n"
 "\n"
 "\n"
+
+#: client/cl_team.c:1499
+#, fuzzy, c-format
+msgid "Phalanx soldiers killed by Aliens\t%i\n"
+msgstr "Civilistů zabitých cizáky\t%i\n"
+
+#: client/cl_team.c:1500
+#, c-format
+msgid "Phalanx friendly fire losses\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:1501
+#, fuzzy, c-format
+msgid ""
+"Phalanx survivors\t%i\n"
+"\n"
+msgstr ""
+"Přeživší cizáci\t%i\n"
+"\n"
+
+#: client/cl_team.c:1509
+#, fuzzy, c-format
+msgid "Civilians killed by Aliens\t%i\n"
+msgstr "Civilistů zabitých cizáky\t%i\n"
+
+#: client/cl_team.c:1510
+#, fuzzy, c-format
+msgid "Civilians killed by friendly fire\t%i\n"
+msgstr "Civilistů zabitých cizáky\t%i\n"
 
 #: client/cl_ufopedia.c:50
 #, fuzzy
@@ -4184,12 +4213,12 @@ msgstr "Palivo:\t%i\n"
 msgid "Shield:\t%s\n"
 msgstr "Štít:\t%s\n"
 
-#: client/cl_ufopedia.c:424
+#: client/cl_ufopedia.c:425
 msgid "Ufopedia Content"
 msgstr "Obsah ufopedie"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: game/g_ai.c:495
+#: game/g_ai.c:496
 msgid "Alien"
 msgstr "Cizák"
 

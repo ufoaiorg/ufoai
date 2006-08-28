@@ -856,7 +856,7 @@ $(BUILDDIR)/client/net_udp.o :    $(UNIX_DIR)/net_udp.c
 $(BUILDDIR)/client/net_udp6.o :    $(UNIX_DIR)/net_udp6.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/cd_sdl.o :     $(LINUX_DIR)/cd_sdl.c
+$(BUILDDIR)/client/cd_sdl.o :     $(UNIX_DIR)/cd_sdl.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cd_osx.o :    $(MACOSX_DIR)/cd_osx.m
