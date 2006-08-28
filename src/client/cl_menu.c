@@ -1969,7 +1969,7 @@ void MN_PopMenu(qboolean all)
  */
 static void MN_PopMenu_f(void)
 {
-	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3) || !mn_escpop->value) {
+	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3)) {
 		MN_PopMenu(qfalse);
 	}
 	else {
@@ -1977,8 +1977,9 @@ static void MN_PopMenu_f(void)
 
 		for (i = 0; i < (int) mn_escpop->value; i++)
 			MN_PopMenu(qfalse);
+
+		Cvar_Set("mn_escpop", "1");
 	}
-	Cvar_Set("mn_escpop", "0");
 }
 
 
