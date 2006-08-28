@@ -51,9 +51,11 @@ void S_StopAllSounds(void);
 void S_PlayOGG(void);
 void S_StartOGG(void);
 
-/* ======================================================================= */
-/* Internal sound data & structures */
-/* ======================================================================= */
+/*
+=======================================================================
+Internal sound data & structures
+=======================================================================
+*/
 
 /* only begin attenuating sound volumes when outside the FULLVOLUME range */
 #define		SOUND_FULLVOLUME	80
@@ -126,9 +128,9 @@ SND_BeginPainting_t SND_BeginPainting;
 SND_Submit_t SND_Submit;
 SND_Activate_t SND_Activate;
 
-/* ==================================================================== */
-/* User-setable variables */
-/* ==================================================================== */
+/**
+ * @brief Prints sound variables
+ */
 void S_SoundInfo_f(void)
 {
 	if (!sound_started) {
@@ -143,6 +145,30 @@ void S_SoundInfo_f(void)
 	Com_Printf("%5d submission_chunk\n", dma.submission_chunk);
 	Com_Printf("%5d speed\n", dma.speed);
 	Com_Printf("0x%x dma buffer\n", dma.buffer);
+}
+
+/**
+ * @brief Lists all sound renderers for options menu
+ * @note Sound renderer differers from os to os
+ */
+void S_ModifySndRef_f (void)
+{
+	if (!Q_strcmp(snd_ref->string, "sdl")) {
+#ifdef _WIN32
+		Cvar_Set("snd_ref", "dx");
+	} else if (!Q_strcmp(snd_ref->string, "dx")) {
+		Cvar_Set("snd_ref", "wapi");
+	} else if (!Q_strcmp(snd_ref->string, "wapi")) {
+#else
+		Cvar_Set("snd_ref", "alsa");
+	} else if (!Q_strcmp(snd_ref->string, "alsa")) {
+		Cvar_Set("snd_ref", "oss");
+	} else if (!Q_strcmp(snd_ref->string, "oss")) {
+		Cvar_Set("snd_ref", "arts");
+	} else if (!Q_strcmp(snd_ref->string, "arts")) {
+#endif
+		Cvar_Set("snd_ref", "sdl");
+	}
 }
 
 /**
@@ -285,6 +311,7 @@ void S_Init(void)
 		Cmd_AddCommand("ov_start", S_StartOGG);
 		Cmd_AddCommand("ov_stop", OGG_Stop);
 
+		Cmd_AddCommand("modifysnd_ref", S_ModifySndRef_f);
 		Cmd_AddCommand("modifykhz", S_ModifyKhz_f);
 
 		S_InitScaletable();
@@ -307,9 +334,11 @@ void S_Init(void)
 }
 
 
-/* ======================================================================= */
-/* Shutdown sound engine */
-/* ======================================================================= */
+/*
+=======================================================================
+Shutdown sound engine
+======================================================================
+*/
 
 /**
  * @brief
@@ -369,16 +398,15 @@ void S_Shutdown(void)
 }
 
 
-/* ======================================================================= */
-/* Load a sound */
-/* ======================================================================= */
-
 /*
-==================
-S_FindName
-
-==================
+=======================================================================
+Load a sound
+=======================================================================
 */
+
+/**
+ * @brief
+ */
 sfx_t *S_FindName(char *name, qboolean create)
 {
 	int i;
@@ -422,12 +450,9 @@ sfx_t *S_FindName(char *name, qboolean create)
 }
 
 
-/*
-==================
-S_AliasName
-
-==================
-*/
+/**
+ * @brief
+ */
 sfx_t *S_AliasName(char *aliasname, char *truename)
 {
 	sfx_t *sfx;
@@ -459,24 +484,18 @@ sfx_t *S_AliasName(char *aliasname, char *truename)
 }
 
 
-/*
-=====================
-S_BeginRegistration
-
-=====================
-*/
+/**
+ * @brief
+ */
 void S_BeginRegistration(void)
 {
 	s_registration_sequence++;
 	s_registering = qtrue;
 }
 
-/*
-==================
-S_RegisterSound
-
-==================
-*/
+/**
+ * @brief
+ */
 sfx_t *S_RegisterSound(char *name)
 {
 	sfx_t *sfx;
@@ -494,12 +513,9 @@ sfx_t *S_RegisterSound(char *name)
 }
 
 
-/*
-=====================
-S_EndRegistration
-
-=====================
-*/
+/**
+ * @brief
+ */
 void S_EndRegistration(void)
 {
 	int i;
@@ -534,13 +550,9 @@ void S_EndRegistration(void)
 }
 
 
-/*============================================================================= */
-
-/*
-=================
-S_PickChannel
-=================
-*/
+/**
+ * @brief
+ */
 channel_t *S_PickChannel(int entnum, int entchannel)
 {
 	int ch_idx;
@@ -720,9 +732,11 @@ void S_IssuePlaysound(playsound_t * ps)
 	S_FreePlaysound(ps);
 }
 
-/* ======================================================================= */
-/* Start a sound effect */
-/* ======================================================================= */
+/*
+=======================================================================
+Start a sound effect
+=======================================================================
+*/
 
 /**
  * @brief Validates the parms and ques the sound up
@@ -958,8 +972,6 @@ void S_AddLoopSounds(void)
 }
 #endif /* 0 */
 
-/*============================================================================= */
-
 /**
  * @brief Cinematic streaming and voice over network
  */
@@ -1029,8 +1041,6 @@ void S_RawSamples(int samples, int rate, int width, int channels, byte * data, f
 		}
 	}
 }
-
-/*============================================================================= */
 
 /**
  * @brief Called once each time through the main loop
@@ -1185,9 +1195,7 @@ void S_Update_(void)
 
 /*
 ==========================================================
-
-  OGG Vorbis decoding
-
+OGG Vorbis decoding
 ==========================================================
 */
 
@@ -1305,9 +1313,7 @@ void S_StartOGG(void)
 
 /*
 ===============================================================================
-
 console functions
-
 ===============================================================================
 */
 
