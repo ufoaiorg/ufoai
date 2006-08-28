@@ -646,9 +646,9 @@ static void RS_ResearchStop(void)
 	/* get the currently selected research-item */
 	tech = researchList[researchListPos];
 
-	/* TODO: remove lab from technology and scientists from lab */
 	switch (tech->statusResearch) {
 	case RS_RUNNING:
+		/* TODO: remove lab from technology and scientists from lab */
 		tech->statusResearch = RS_PAUSED;
 		break;
 	case RS_PAUSED:
@@ -1013,6 +1013,9 @@ static void RS_DebugResearchAll(void)
 }
 #endif
 
+/**
+ * @brief Opens UFOpedia by clicking dependency list
+ */
 void RS_DependenciesClick_f (void)
 {
 	int num;

@@ -931,6 +931,7 @@ static void MN_ModelClick(menuNode_t * node)
  */
 static void MN_TextClick(menuNode_t * node, int mouseOver)
 {
+	Com_Printf("%i\n", mouseOver - 1);
 	Cbuf_AddText(va("%s_click %i\n", node->name, mouseOver - 1));
 }
 
