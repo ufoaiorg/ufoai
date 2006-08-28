@@ -428,6 +428,10 @@ static void CL_CampaignActivateStageSets(stage_t * stage)
 	int i;
 
 	testStage = stage;
+#ifdef PARANOID
+	if (stage->first + stage->num >= MAX_STAGESETS)
+		Sys_Error("CL_CampaignActivateStageSets '%s' (first: %i, num: %i)\n", stage->name, stage->first, stage->num);
+#endif
 	for (i = 0, set = &ccs.set[stage->first]; i < stage->num; i++, set++)
 		if (!set->active && !set->done && !set->num) {
 
@@ -439,7 +443,6 @@ static void CL_CampaignActivateStageSets(stage_t * stage)
 				continue;
 
 			Com_Printf("Activated: set->def->name = %s.\n", set->def->name);
-
 
 			/* activate it */
 			set->active = qtrue;
@@ -516,7 +519,6 @@ static void CL_CampaignAddMission(setState_t * set)
 {
 	actMis_t *mis;
 
-	/* maybe the mission is already on geoscape */
 	mission_t *misTemp;
 	int i;
 	float f;
@@ -528,6 +530,7 @@ static void CL_CampaignAddMission(setState_t * set)
 	}
 
 	misTemp = &missions[set->def->missions[rand() % set->def->numMissions]];
+	/* maybe the mission is already on geoscape */
 	if (misTemp->onGeoscape) {
 		Com_DPrintf("Mission is already on geoscape\n");
 		return;
@@ -2349,7 +2352,7 @@ static void CL_GameResultsCmd(void)
 
 	/* update stats */
 	CL_UpdateCharacterStats(won);
-	
+
 	baseCurrent = CL_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
 
 	/* add the looted goods to base storage and market */
