@@ -98,7 +98,8 @@ menu ufopedia
 		pos		"35 85"
 		size	"700 390"
 		num		2
-		click { }
+		format	"24 0"
+		click
 	}
 
 	confunc mn_upfbig

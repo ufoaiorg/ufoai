@@ -733,7 +733,6 @@ menu popup_aircraft
 		pos	"440 320"
 	}
 
-
 	text popup_aircraft_action
 	{
 		pos             "290 340"
