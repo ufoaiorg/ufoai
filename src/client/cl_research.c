@@ -858,30 +858,27 @@ void CL_CheckResearchStatus(void)
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 		if (tech->statusResearch == RS_RUNNING) {
-			if (tech->time <= 0) {
-				Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Research of %s finished\n"), tech->name);
-				MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech);
+			if ( ( tech->time > 0 ) && ( tech->scientists >= 0 ) ) {
+				Com_DPrintf("timebefore %.2f\n", tech->time);
+				Com_DPrintf("timedelta %.2f\n", tech->scientists * 0.8);
+				/* TODO: Just for testing, better formular may be needed. */
+				tech->time -= tech->scientists * 0.8;
+				Com_DPrintf("timeafter %.2f\n", tech->time);
+				/* TODO include employee-skill in calculation. */
+				/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
+				if (tech->time <= 0) {
+					Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Research of %s finished\n"), tech->name);
+					MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech);
 
-				/* Remove all scientists from the technology. */
-				while (tech->scientists > 0)
-					RS_RemoveScientist(tech);
+					/* Remove all scientists from the technology. */
+					while (tech->scientists > 0)
+						RS_RemoveScientist(tech);
 
-				RS_MarkResearched(tech->id);
-				researchListLength = 0;
-				researchListPos = 0;
-				newResearch++;
-				tech->time = 0;
-			} else {
-				if (tech->scientists >= 0) {
-					Com_DPrintf("timebefore %.2f\n", tech->time);
-					Com_DPrintf("timedelta %.2f\n", tech->scientists * 0.8);
-					/* TODO: Just for testing, better formular may be needed. */
-					tech->time -= tech->scientists * 0.8;
-					Com_DPrintf("timeafter %.2f\n", tech->time);
-					/* TODO include employee-skill in calculation. */
-					/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
-					if (tech->time < 0)
-						tech->time = 0;
+					RS_MarkResearched(tech->id);
+					researchListLength = 0;
+					researchListPos = 0;
+					newResearch++;
+					tech->time = 0;
 				}
 			}
 		}
