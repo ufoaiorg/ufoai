@@ -925,7 +925,9 @@ static void MN_ModelClick(menuNode_t * node)
 
 
 /**
- * @brief
+ * @brief Calls the script command for a text node that is clickable
+ * @note The node must have the click parameter
+ * @sa MN_TextRightClick
  */
 static void MN_TextClick(menuNode_t * node, int mouseOver)
 {
@@ -933,7 +935,9 @@ static void MN_TextClick(menuNode_t * node, int mouseOver)
 }
 
 /**
- * @brief
+ * @brief Calls the script command for a text node that is clickable via right mouse button
+ * @note The node must have the rclick parameter
+ * @sa MN_TextClick
  */
 static void MN_TextRightClick(menuNode_t * node, int mouseOver)
 {
@@ -942,6 +946,16 @@ static void MN_TextRightClick(menuNode_t * node, int mouseOver)
 
 /**
  * @brief
+ * @sa MN_ModelClick
+ * @sa MN_TextRightClick
+ * @sa MN_TextClick
+ * @sa MN_Drag
+ * @sa MN_BarClick
+ * @sa MN_BaseMapClick
+ * @sa MAP_3DMapClick
+ * @sa MAP_MapClick
+ * @sa MN_ExecuteActions
+ * @sa MN_RightClick
  */
 void MN_Click(int x, int y)
 {
@@ -1000,6 +1014,10 @@ void MN_Click(int x, int y)
 
 /**
  * @brief
+ * @sa MAP_ResetAction
+ * @sa MN_TextRightClick
+ * @sa MN_ExecuteActions
+ * @sa MN_Click
  */
 void MN_RightClick(int x, int y)
 {
