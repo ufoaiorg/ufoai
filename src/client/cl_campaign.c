@@ -391,16 +391,13 @@ extern qboolean CL_NewBase(vec2_t pos)
 }
 
 
-/* =========================================================== */
-
+static stage_t *testStage;
 
 /**
  * @brief Checks wheter a stage set exceeded the quota
- *
+ * @param[in] name Stage set name from script file
  * @return qboolean
  */
-static stage_t *testStage;
-
 static qboolean CL_StageSetDone(char *name)
 {
 	setState_t *set;
@@ -408,6 +405,8 @@ static qboolean CL_StageSetDone(char *name)
 
 	for (i = 0, set = &ccs.set[testStage->first]; i < testStage->num; i++, set++)
 		if (!Q_strncmp(name, set->def->name, MAX_VAR)) {
+			if (set->def->number && set->num >= set->def->number)
+				return qtrue;
 			if (set->done >= set->def->quota)
 				return qtrue;
 			else
@@ -422,7 +421,7 @@ static qboolean CL_StageSetDone(char *name)
 /**
  * @brief
  */
-static void CL_CampaignActivateStageSets(stage_t * stage)
+static void CL_CampaignActivateStageSets(stage_t *stage)
 {
 	setState_t *set;
 	int i;
@@ -434,20 +433,22 @@ static void CL_CampaignActivateStageSets(stage_t * stage)
 #endif
 	for (i = 0, set = &ccs.set[stage->first]; i < stage->num; i++, set++)
 		if (!set->active && !set->done && !set->num) {
-
-			Com_Printf("CL_CampaignActivateStageSets: i = %i, stage->first = %i, stage->num = %i, stage->name = %s\n", i, stage->first, stage->num, stage->name);
+			Com_DPrintf("CL_CampaignActivateStageSets: i = %i, stage->first = %i, stage->num = %i, stage->name = %s\n", i, stage->first, stage->num, stage->name);
+			assert(set->stage);
 			assert(set->def);
 
 			/* check needed sets */
 			if (set->def->needed[0] && !CheckBEP(set->def->needed, CL_StageSetDone))
 				continue;
 
-			Com_Printf("Activated: set->def->name = %s.\n", set->def->name);
+			Com_DPrintf("Activated: set->def->name = %s.\n", set->def->name);
 
 			/* activate it */
 			set->active = qtrue;
 			set->start = Date_Add(ccs.date, set->def->delay);
 			set->event = Date_Add(set->start, Date_Random(set->def->frame));
+			if (*(set->def->sequence))
+				Cbuf_ExecuteText(EXEC_APPEND, va("seq_start %s;\n", set->def->sequence));
 		}
 }
 
@@ -455,7 +456,7 @@ static void CL_CampaignActivateStageSets(stage_t * stage)
 /**
  * @brief
  */
-static stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
+static stageState_t *CL_CampaignActivateStage(char *name)
 {
 	stage_t *stage;
 	stageState_t *state;
@@ -463,6 +464,7 @@ static stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
 
 	for (i = 0, stage = stages; i < numStages; i++, stage++) {
 		if (!Q_strncmp(stage->name, name, MAX_VAR)) {
+			Com_Printf("Activate stage %s\n", stage->name);
 			/* add it to the list */
 			state = &ccs.stage[i];
 			state->active = qtrue;
@@ -474,14 +476,9 @@ static stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
 				memset(&ccs.set[j], 0, sizeof(setState_t));
 				ccs.set[j].stage = stage;
 				ccs.set[j].def = &stageSets[j];
-				if (*stageSets[j].sequence && sequence)
-					Cbuf_ExecuteText(EXEC_APPEND, va("seq_start %s;\n", stageSets[j].sequence));
 			}
-
 			/* activate stage sets */
 			CL_CampaignActivateStageSets(stage);
-
-			Com_DPrintf("Activate stage %s\n", stage->name);
 
 			return state;
 		}
@@ -658,7 +655,7 @@ static void CL_CampaignExecute(setState_t * set)
 {
 	/* handle stages, execute commands */
 	if (*set->def->nextstage)
-		CL_CampaignActivateStage(set->def->nextstage, qtrue);
+		CL_CampaignActivateStage(set->def->nextstage);
 
 	if (*set->def->endstage)
 		CL_CampaignEndStage(set->def->endstage);
@@ -1619,7 +1616,7 @@ int CL_GameLoad(char *filename)
 	/* read campaign data */
 	name = MSG_ReadString(&sb);
 	while (*name) {
-		state = CL_CampaignActivateStage(name, qfalse);
+		state = CL_CampaignActivateStage(name);
 		if (!state) {
 			Com_Printf("Unable to load campaign '%s', unknown stage '%s'\n", filename, name);
 			curCampaign = NULL;
@@ -3223,7 +3220,7 @@ static void CL_GameNew(void)
 	CL_UpdateCredits(curCampaign->credits);
 
 	/* stage setup */
-	CL_CampaignActivateStage(curCampaign->firststage, qtrue);
+	CL_CampaignActivateStage(curCampaign->firststage);
 
 	MN_PopMenu(qtrue);
 	MN_PushMenu("map");
