@@ -176,15 +176,13 @@ static byte stf;
 static byte tfList[HEIGHT][WIDTH][WIDTH];
 static byte tf;
 
-/* just to fix warnings */
-/*void CL_ResetMouseLastPos(void);*/ /* FIXME: Don't belong here */
 void CM_MakeTnodes(void);
 void CM_InitBoxHull(void);
 
 
 /*
 ===============================================================================
- MAP LOADING
+MAP LOADING
 ===============================================================================
 */
 
