@@ -1844,7 +1844,11 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 		VectorAdd(from, ds, next);
 		next[2] += dt * (vz - 0.5 * GRAVITY * dt);
 		vz -= GRAVITY * dt;
-		CL_ParticleSpawn("inRangeTracer", 0, from, next, NULL);
+		VectorScale(v0, (float) i / GRENADE_PARTITIONS, at);
+		if (VectorLength(at) > selFD->range)
+			CL_ParticleSpawn("longRangeTracer", 0, from, next, NULL);
+		else
+			CL_ParticleSpawn("inRangeTracer", 0, from, next, NULL);
 		VectorCopy(next, from);
 	}
 	selToHit = 100 * CL_TargetingToHit(toPos);
