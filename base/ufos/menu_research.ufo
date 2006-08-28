@@ -882,13 +882,14 @@ menu research
 	text research_dependencies
 	{
 		pos	"645 440"
+		format	"22 0"
 		color	"0 .78 0 1"
 		num	6
 		click
 		mousefx	true
 		color	"1 1 1 1"
 //		bgcolor "1 1 1 0.4"
-		size	"300 200"
+		size	"300 180"
 	}
 
 	// ==================
