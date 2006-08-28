@@ -268,13 +268,43 @@ static date_t Date_Add(date_t a, date_t b)
 	return a;
 }
 
-
+#if (0)
 /**
  * @brief
  */
 static date_t Date_Random(date_t frame)
 {
 	frame.sec = (frame.day * 3600 * 24 + frame.sec) * frand();
+	frame.day = frame.sec / (3600 * 24);
+	frame.sec = frame.sec % (3600 * 24);
+	return frame;
+}
+#endif
+
+/**
+ * @brief
+ */
+static date_t Date_Random_Begin(date_t frame)
+{
+	int sec = frame.day * 3600 * 24 + frame.sec;
+
+	/* first 1/3 of the frame */
+	frame.sec = sec * frand() / 3;
+	frame.day = frame.sec / (3600 * 24);
+	frame.sec = frame.sec % (3600 * 24);
+	return frame;
+}
+
+
+/**
+ * @brief
+ */
+static date_t Date_Random_Middle(date_t frame)
+{
+	int sec = frame.day * 3600 * 24 + frame.sec;
+
+	/* middle 1/3 of the frame */
+	frame.sec = sec / 3 + sec * frand() / 3 ;
 	frame.day = frame.sec / (3600 * 24);
 	frame.sec = frame.sec % (3600 * 24);
 	return frame;
@@ -443,7 +473,7 @@ static void CL_CampaignActivateStageSets(stage_t *stage)
 			/* activate it */
 			set->active = qtrue;
 			set->start = Date_Add(ccs.date, set->def->delay);
-			set->event = Date_Add(set->start, Date_Random(set->def->frame));
+			set->event = Date_Add(set->start, Date_Random_Begin(set->def->frame));
 			if (*(set->def->sequence))
 				Cbuf_ExecuteText(EXEC_APPEND, va("seq_start %s;\n", set->def->sequence));
 		}
@@ -534,6 +564,9 @@ static void CL_CampaignAddMission(setState_t * set)
 {
 	actMis_t *mis;
 
+	static mission_t *oldMis1 = NULL;
+	static mission_t *oldMis2 = NULL;
+
 	mission_t *misTemp;
 	int i;
 	float f;
@@ -544,8 +577,14 @@ static void CL_CampaignAddMission(setState_t * set)
 		return;
 	}
 
-	misTemp = &missions[set->def->missions[rand() % set->def->numMissions]];
-	/* maybe the mission is already on geoscape */
+	while (1) {
+		misTemp = &missions[set->def->missions[rand() % set->def->numMissions]];
+		if ((misTemp != oldMis1 && misTemp != oldMis2)
+			|| set->def->numMissions < 3)
+			break;
+	}
+
+	/* maybe the mission is already on geoscape --- e.g. one-mission sets */
 	if (misTemp->onGeoscape) {
 		Com_DPrintf("Mission is already on geoscape\n");
 		return;
@@ -558,13 +597,15 @@ static void CL_CampaignAddMission(setState_t * set)
 	/* set relevant info */
 	mis->def = misTemp;
 	mis->cause = set;
+	oldMis2 = oldMis1;
+	oldMis1 = misTemp;
 
 	/* execute mission commands */
 	if (*mis->def->cmds)
 		Cbuf_ExecuteText(EXEC_NOW, mis->def->cmds);
 
 	if (set->def->expire.day)
-		mis->expire = Date_Add(ccs.date, set->def->expire);
+		mis->expire = Date_Add(ccs.date, Date_Random_Middle(set->def->expire));
 
 	/* there can be more than one baseattack mission */
 	/* just use baseattack1, baseattack2 and so on as mission names */
@@ -626,7 +667,7 @@ static void CL_CampaignAddMission(setState_t * set)
 	if (set->def->number && set->num >= set->def->number)
 		set->active = qfalse;
 	else
-		set->event = Date_Add(ccs.date, Date_Random(set->def->frame));
+		set->event = Date_Add(ccs.date, Date_Random_Middle(set->def->frame));
 	
 	/* stop time */
 	CL_GameTimeStop();

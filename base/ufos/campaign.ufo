@@ -3,33 +3,37 @@ stage intro
 	set first
 	{
 		seq			intro
-		delay		"0 0 10"
-		frame		"0 1 0"
-		expire		"0 2 0"
+			      // y d h
+		delay		"0 0 10" // time in comments is given as elapsed game time
+		frame		"0 3 0"  // mission starts between 0d 10h and 1d 10h
+		expire		"0 6 0"  // expires not sooner than 2d 10h
+			                 // and not later than 5d 10h
 		missions	"farm"
 		number		1 // no quota --- give scared newbies some slack...
 	}
 	set terror_only
 	{
-		needed		first // does nothing, because no quota for first
-		delay		"0 4 7" // starts 21h after first expires, at worst
-		frame		"0 12 0"
-		expire		"0 4 0" // so that simultaneous missions can be won
+		needed		first
+		delay		"0 2 12" // set starts not sooner than 2d 22h 
+			                 // and not later than 7d 22h 
+		frame		"0 6 0"  // 1st mission starts not sooner than 4d 22h 
+			                 // and not later than 11d 22h 
+		expire		"0 5 0"  // average expire time is 2.5d
+			                 // minimum interval between missions is 2d
+			                 // so you have less than 1.5 on geoscape any time
 // TODO: make it so that the same mission is not repeated too soon
 		missions	"africa_excavation transport mine mart italy oriental"
+		number		11 // don't torment the player with the same missions
 		quota		4
 	}
 	set ultimate_terror
 	{
 		needed		terror_only
-		delay		"0 0 1"
-		frame		"0 7 0"
-		expire		"0 7 0"
-// TODO: make it so that a mission in this stage is never repeated
-// checking equality with the last mission and the one before
-// should be enough for both TODOs
+		delay		"0 3 7"
+		frame		"0 9 0" // big missions, but less traffic
+		expire		"0 14 0" // three at geoscape, but lots of time to do them
 		missions	"bunker japan dam city subway gasstation tower village"
-		quota		6
+		quota		6 // torment the player until he's done
 		nextstage	ufos_are_coming
 	}
 	set stop
@@ -71,9 +75,6 @@ stage invasion
 	set first
 	{
 		seq	invasion
-	}
-	set baseinvasion
-	{
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
@@ -83,7 +84,7 @@ stage invasion
 	}
 	set stop
 	{
-		needed		baseinvasion
+		needed		first
 		delay		"0 110 0"
 		endstage	invasion
 	}
@@ -94,18 +95,19 @@ stage alienbase
 	set first
 	{
 		seq	alienbase
-	}
-	set aliencolony
-	{
+		// aliencolony mission here
 
+		commands	"mn_push enddemo;" // until aliencolony is done
 	}
 	set stop
 	{
-		needed		aliencolony
+		needed		first
 		delay		"0 110 0"
-		commands	"mn_push enddemo;"
+		endstage	alienbase
+//		commands	"mn_push enddemo;"
 	}
 }
+
 
 campaign veryhard
 {
