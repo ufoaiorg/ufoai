@@ -257,34 +257,35 @@ void UP_AircraftDescription ( technology_t* t )
 void UP_DrawEntry( technology_t* tech )
 {
 	int i;
-	if ( ! tech )
+	if (!tech)
 		return;
 
 	menuText[TEXT_LIST] = NULL;
-	Cvar_Set( "mn_uptitle", _(tech->name) );
+	Cvar_Set("mn_uptitle", _(tech->name));
 	menuText[TEXT_UFOPEDIA] = _(tech->description);
-	Cvar_Set( "mn_upmodel_top", "" );
-	Cvar_Set( "mn_upmodel_bottom", "" );
-	Cvar_Set( "mn_upimage_top", "base/empty" );
-	Cvar_Set( "mn_upimage_bottom", "base/empty" );
-	if ( *tech->mdl_top )
-		Cvar_Set( "mn_upmodel_top", tech->mdl_top );
-	if ( *tech->mdl_bottom )
-		Cvar_Set( "mn_upmodel_bottom", tech->mdl_bottom );
-	if ( !*tech->mdl_top && *tech->image_top )
-		Cvar_Set( "mn_upimage_top", tech->image_top );
-	if ( !*tech->mdl_bottom && *tech->mdl_bottom )
-		Cvar_Set( "mn_upimage_bottom", tech->image_bottom );
-	Cbuf_AddText( "mn_upfsmall\n" );
+	Cvar_Set("mn_upmodel_top", "");
+	Cvar_Set("mn_upmodel_bottom", "");
+	Cvar_Set("mn_upimage_top", "base/empty");
+	Cvar_Set("mn_upimage_bottom", "base/empty");
+	if (*tech->mdl_top)
+		Cvar_Set("mn_upmodel_top", tech->mdl_top);
+	if (*tech->mdl_bottom )
+		Cvar_Set("mn_upmodel_bottom", tech->mdl_bottom);
+	if (!*tech->mdl_top && *tech->image_top)
+		Cvar_Set("mn_upimage_top", tech->image_top);
+	if (!*tech->mdl_bottom && *tech->mdl_bottom)
+		Cvar_Set("mn_upimage_bottom", tech->image_bottom);
+	/* confunc */
+	Cbuf_AddText("mn_upfsmall\n");
 
-	if ( upCurrent) {
+	if (upCurrent) {
 		menuText[TEXT_STANDARD] = NULL;
 		switch ( tech->type ) {
 		case RS_ARMOR:
 			UP_ArmorDescription( tech );
 			break;
 		case RS_WEAPON:
-			for ( i = 0; i < csi.numODs; i++ ) {
+			for (i = 0; i < csi.numODs; i++) {
 				if ( !Q_strncmp( tech->provides, csi.ods[i].kurz, MAX_VAR ) ) {
 					CL_ItemDescription( i );
 					UP_DisplayTechTree(tech);
@@ -317,9 +318,9 @@ void UP_DrawEntry( technology_t* tech )
  */
 void UP_OpenWith ( char *name )
 {
-	Cbuf_AddText( "mn_push ufopedia\n" );
+	Cbuf_AddText("mn_push ufopedia\n");
 	Cbuf_Execute();
-	Cbuf_AddText( va( "ufopedia %s\n", name ) );
+	Cbuf_AddText(va("ufopedia %s\n", name));
 }
 
 /**
@@ -329,9 +330,9 @@ void UP_OpenWith ( char *name )
  */
 void UP_OpenCopyWith ( char *name )
 {
-	Cbuf_AddText( "mn_push_copy ufopedia\n" );
+	Cbuf_AddText("mn_push_copy ufopedia\n");
 	Cbuf_Execute();
-	Cbuf_AddText( va( "ufopedia %s\n", name ) );
+	Cbuf_AddText(va("ufopedia %s\n", name));
 }
 
 
@@ -416,13 +417,14 @@ void UP_Content_f( void )
 	upCurrent = NULL;
 	menuText[TEXT_STANDARD] = NULL;
 	menuText[TEXT_UFOPEDIA] = upText;
-	Cvar_Set( "mn_upmodel_top", "" );
-	Cvar_Set( "mn_upmodel_bottom", "" );
-	Cvar_Set( "mn_upmodel_big", "" );
-	Cvar_Set( "mn_upimage_top", "base/empty" );
-	Cvar_Set( "mn_upimage_bottom", "base/empty" );
-	Cvar_Set( "mn_uptitle", _("Ufopedia Content") );
-	Cbuf_AddText( "mn_upfbig\n" );
+	Cvar_Set("mn_upmodel_top", "");
+	Cvar_Set("mn_upmodel_bottom", "");
+	Cvar_Set("mn_upmodel_big", "");
+	Cvar_Set("mn_upimage_top", "base/empty");
+	Cvar_Set("mn_upimage_bottom", "base/empty");
+	Cvar_Set("mn_uptitle", _("Ufopedia Content"));
+	/* confunc */
+	Cbuf_AddText("mn_upfbig\n");
 }
 
 
@@ -598,14 +600,13 @@ void UP_ResetUfopedia( void )
 	/*numEntries = 0; */
 
 	/* add commands and cvars */
-	Cmd_AddCommand( "ufopedialist", UP_List_f );
-	Cmd_AddCommand( "mn_upcontent", UP_Content_f );
-	Cmd_AddCommand( "mn_upprev", UP_Prev_f );
-	Cmd_AddCommand( "mn_upnext", UP_Next_f );
-	Cmd_AddCommand( "ufopedia", UP_FindEntry_f );
-	Cmd_AddCommand( "ufopedia_click", UP_Click_f );
-	Cmd_AddCommand( "techtree_click", UP_TechTreeClick_f);
-
+	Cmd_AddCommand("ufopedialist", UP_List_f);
+	Cmd_AddCommand("mn_upcontent", UP_Content_f);
+	Cmd_AddCommand("mn_upprev", UP_Prev_f);
+	Cmd_AddCommand("mn_upnext", UP_Next_f);
+	Cmd_AddCommand("ufopedia", UP_FindEntry_f);
+	Cmd_AddCommand("ufopedia_click", UP_Click_f);
+	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f);
 }
 
 /**
