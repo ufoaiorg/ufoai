@@ -6,9 +6,9 @@ IsCpp=1
 Type=3
 Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DDEBUG -D_WINDOWS -DDEVCPP -DC_ONLY_@@_
 CppCompiler=_@@_
-Includes="C:\Program Files (x86)\Microsoft DirectX SDK (February 2006)\Include"
+Includes="C:\Program Files (x86)\Microsoft DirectX SDK (February 2006)\Include";"C:\Programme\Microsoft DirectX SDK (June 2006)\Include"
 Linker=-lkernel32 -luser32 -lwinmm_@@_--export-all-symbols_@@__@@_
-Libs="C:\Program Files (x86)\Microsoft DirectX SDK (February 2006)\Lib\x86"
+Libs="C:\Program Files (x86)\Microsoft DirectX SDK (February 2006)\Lib\x86";"C:\Programme\Microsoft DirectX SDK (June 2006)\Lib\x86"
 UnitCount=2
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
