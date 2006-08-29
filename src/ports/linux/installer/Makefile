@@ -4,6 +4,8 @@ ROOTDIR=../../../../
 
 VERSION=$(shell grep UFO_VERSION $(ROOTDIR)src/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/')
 
+VERSION=$(shell echo $VERSION | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
+
 BINARIES = \
 	$(ROOTDIR)ufo \
 	$(ROOTDIR)ufoded \
@@ -24,4 +26,4 @@ update_installer_data:
 	sed "s/@VERSION@/$VERSION/g" README.in > data/setup.data/README
 
 makeself:
-	./makeself.sh --nocomp data/ ufoai_$(VERSION).run "UFO:Alien Invasion $(VERSION) Installer" sh setup.sh
+	./makeself.sh --nocomp data/ ufoai-$(VERSION)-linux.run "UFO:Alien Invasion $(VERSION) Installer" sh setup.sh
