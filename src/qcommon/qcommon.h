@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/q_shared.h"
 #include "../game/game.h"
 
-#define UFO_VERSION "2.0-RC4"
+#define UFO_VERSION "2.0-RC5"
 
 #define	BASEDIRNAME	"base"
 
