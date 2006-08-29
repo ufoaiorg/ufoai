@@ -24,4 +24,4 @@ update_installer_data:
 	sed "s/@VERSION@/$VERSION/g" README.in > data/setup.data/README
 
 makeself:
-	./makeself.sh --nocomp data/ ufoai_$(VERSION).run "UFO:Alien Invasion $(VERSION) Installer" sh setup.sh
+	./makeself.sh --nocomp data/ ufoai-$(VERSION)-linux.run "UFO:Alien Invasion $(VERSION) Installer" sh setup.sh
