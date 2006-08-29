@@ -2,9 +2,9 @@ all: packdata update_installer_data makeself
 
 ROOTDIR=../../../../
 
-VERSION=$(shell grep UFO_VERSION $(ROOTDIR)src/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/')
+VERSION_UC=$(shell grep UFO_VERSION $(ROOTDIR)src/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/' | sed -e 's/\"//g')
 
-VERSION=$(shell echo $VERSION | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
+VERSION_LC=$(shell echo $(VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
 
 BINARIES = \
 	$(ROOTDIR)ufo \
@@ -22,8 +22,8 @@ packdata:
 	tar -cvjp --exclude-from=../tar.ex -f data/data.tar.bz2 ../../../../base
 
 update_installer_data:
-	sed "s/@VERSION@/$VERSION/g" setup.xml.in > data/setup.data/setup.xml
-	sed "s/@VERSION@/$VERSION/g" README.in > data/setup.data/README
+	sed 's/@VERSION@/$(VERSION_UC)/g' setup.xml.in > data/setup.data/setup.xml
+	sed 's/@VERSION@/$(VERSION_UC)/g' README.in > data/setup.data/README
 
 makeself:
-	./makeself.sh --nocomp data/ ufoai-$(VERSION)-linux.run "UFO:Alien Invasion $(VERSION) Installer" sh setup.sh
+	./makeself.sh --nocomp data/ ufoai-$(VERSION_LC)-linux.run "UFO:Alien Invasion $(VERSION_UC) Installer" sh setup.sh
