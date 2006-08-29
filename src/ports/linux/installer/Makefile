@@ -4,6 +4,8 @@ ROOTDIR=../../../../
 
 VERSION=$(shell grep UFO_VERSION $(ROOTDIR)src/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/')
 
+VERSION=$(shell echo $VERSION | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
+
 BINARIES = \
 	$(ROOTDIR)ufo \
 	$(ROOTDIR)ufoded \
