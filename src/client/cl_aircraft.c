@@ -529,7 +529,7 @@ void CL_CampaignRunAircraft(int dt)
 						battleStatus = AIR_Fight(aircraft, ufo);
 
 						if (battleStatus) {
-							color = CL_GetmapColor(ufo->pos);
+							color = CL_GetMapColor(ufo->pos, MAPTYPE_CLIMAZONE);
 							if (!MapIsWater(color) && frand() <= GROUND_MISSION ) {
 								/* spawn new mission */
 								/* some random data like alien race, alien count (also depends on ufo-size) */

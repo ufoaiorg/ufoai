@@ -997,6 +997,7 @@ unsigned long *x86_TimerGetHistogram(void);
 #endif /* id386 */
 
 /* cl_map.c */
+extern nation_t* MAP_GetNation(const vec2_t pos);
 extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
 extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D);

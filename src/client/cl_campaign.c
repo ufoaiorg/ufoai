@@ -46,6 +46,9 @@ base_t *baseCurrent;
 static byte *maskPic;
 static int maskWidth, maskHeight;
 
+static byte *nationsPic;
+static int nationsWidth, nationsHeight;
+
 #if 0
 static int ever4hours;
 #endif
@@ -360,9 +363,26 @@ static qboolean CL_MapMaskFind(byte * color, vec2_t polar)
  * @param[in] pos vec2_t value of position on map to get the color value from
  * @return the color value at given position
  */
-extern byte *CL_GetmapColor(vec2_t pos)
+extern byte *CL_GetMapColor(const vec2_t pos, mapType_t type)
 {
 	int x, y;
+	int width, height;
+	byte *mask;
+
+	switch (type) {
+		case MAPTYPE_CLIMAZONE:
+			mask = maskPic;
+			width = maskWidth;
+			height = maskHeight;
+			break;
+		case MAPTYPE_NATIONS:
+			mask = nationsPic;
+			width = nationsWidth;
+			height = nationsHeight;
+			break;
+		default:
+			Sys_Error("Unknown maptype %i\n", type);
+	}
 
 	/* get coordinates */
 	x = (180 - pos[0]) / 360 * maskWidth;
@@ -393,7 +413,7 @@ extern qboolean CL_NewBase(vec2_t pos)
 		return qfalse;
 	}
 
-	color = CL_GetmapColor(pos);
+	color = CL_GetMapColor(pos, MAPTYPE_CLIMAZONE);
 
 	if (MapIsDesert(color)) {
 		Com_DPrintf("Desertbase\n");
@@ -1103,7 +1123,7 @@ void CL_CampaignRun(void)
 		dt = floor(ccs.timer);
 		ccs.date.sec += dt;
 		ccs.timer -= dt;
-		
+
 #if 0
 /* Prepared code so we can check research status more often. Requires a change to CL_CheckResearchStatus so it checks for the elapsed time. */
 		every4hours += dt;
@@ -1113,7 +1133,7 @@ void CL_CampaignRun(void)
 			every4hours = 0;
 		}
 #endif
-		
+
 		while (ccs.date.sec > 3600 * 24) {
 			ccs.date.sec -= 3600 * 24;
 			ccs.date.day++;
@@ -1604,6 +1624,10 @@ int CL_GameLoad(char *filename)
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
 	if (!maskPic)
 		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
+
+	re.LoadTGA(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
+	if (!nationsPic)
+		Sys_Error("Couldn't load map mask %s_nations.tga in pics/menu\n", curCampaign->map);
 
 	/* reset */
 	MAP_ResetAction();
@@ -2975,6 +2999,8 @@ void CL_ParseCampaign(char *id, char **text)
 static value_t nation_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(nation_t, name)}
 	,
+	{"pos", V_POS, offsetof(nation_t, pos)}
+	,
 	{"color", V_COLOR, offsetof(nation_t, color)}
 	,
 	{"funding", V_INT, offsetof(nation_t, funding)}
@@ -3122,6 +3148,8 @@ void CL_NationList (void)
 		Com_Printf("...happiness %0.2f\n", gd.nations[i].happiness);
 		Com_Printf("...soldiers %i\n", gd.nations[i].soldiers);
 		Com_Printf("...scientists %i\n", gd.nations[i].scientists);
+		Com_Printf("...color r:%i g:%i b:%i a:%i\n", gd.nations[i].color[0], gd.nations[i].color[1], gd.nations[i].color[2], gd.nations[i].color[3]);
+		Com_Printf("...pos x:%i y:%i\n", gd.nations[i].pos[0], gd.nations[i].pos[1]);
 	}
 }
 

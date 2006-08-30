@@ -29,9 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 ==============================================================
-
 MULTI SELECTION DEFINITION
-
 ==============================================================
 */
 
@@ -281,6 +279,7 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 	actMis_t *ms;
 	int i;
 	vec2_t pos;
+	nation_t* nation;
 	char clickBuffer[30];
 
 	/* get map position */
@@ -293,9 +292,12 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 
 	/* new base construction */
 	if (gd.mapAction == MA_NEWBASE) {
-		if (!MapIsWater(CL_GetmapColor(pos))) {
+		if (!MapIsWater(CL_GetMapColor(pos, MAPTYPE_CLIMAZONE))) {
 			newBasePos[0] = pos[0];
 			newBasePos[1] = pos[1];
+			nation = MAP_GetNation(pos);
+			if (nation)
+				Com_Printf("MAP_MapClick: Build base in nation '%s'\n", nation->id);
 			MN_PushMenu("popup_newbase");
 			return;
 		} else {
@@ -615,7 +617,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 {
 	aircraft_t *aircraft;
 	actMis_t *ms;
-	int x, y;
+	int x, y, i;
 	base_t* base;
 	char* font = NULL;
 
@@ -701,6 +703,13 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, aircraft->image);
 		if (aircraft == selectedUfo)
 			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
+	}
+
+	for (i=0; i<gd.numNations; i++) {
+		/* font color for nations */
+		re.DrawColor(gd.nations[i].color);
+		MAP_MapToScreen(node, gd.nations[i].pos, &x, &y);
+		re.FontDrawString(font, ALIGN_UL,x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], gd.nations[i].name);
 	}
 
 	/* reset color */
@@ -842,6 +851,32 @@ extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo)
 
 	/* Notify the multi selection popup */
 	MAP_MultiSelectNotifyUfoRemoved(ufo);
+}
+
+/**
+ * @brief Translate nation map color to nation
+ * @sa CL_GetMapColor
+ * @param[in] pos Map Coordinates to get the nation from
+ * @return returns the nation pointer with the given color on nationPic at given pos
+ * @return NULL if no nation with the given color value was found
+ * @note The coodinates already have to be transfored to map coordinates via MAP_ScreenToMap
+ */
+extern nation_t* MAP_GetNation(const vec2_t pos)
+{
+	int i;
+	nation_t* nation;
+	byte* color = CL_GetMapColor(pos, MAPTYPE_NATIONS);
+#ifdef PARANOID
+	Com_DPrintf("MAP_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
+#endif
+	for (i = 0; i < gd.numNations; i++) {
+		nation = &gd.nations[i];
+		/* compare the first three color values with color value at pos */
+		if (VectorCompare(nation->color, color))
+			return nation;
+	}
+	Com_DPrintf("MAP_GetNation: No nation found at %.0f:%.0f\n", pos[0], pos[1]);
+	return NULL;
 }
 
 /**

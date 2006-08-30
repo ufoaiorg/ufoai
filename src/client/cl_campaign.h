@@ -49,6 +49,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* blue (not water) 128, 128, 255 */
 /* blue (not water, too) 0, 0, 255 */
 
+typedef enum mapType_s {
+	MAPTYPE_CLIMAZONE,
+	MAPTYPE_NATIONS,
+
+	MAPTYPE_MAX
+} mapType_t;
+
 typedef enum missionType_s {
 	MIS_INTERCEPT, /* default */
 	MIS_BASEATTACK,
@@ -156,6 +163,7 @@ typedef struct nation_s {
 	int funding;		/* how many (monthly) credits */
 	float happiness;
 	vec4_t color;
+	vec2_t pos;			/* nation name position on geoscape */
 	float alienFriendly;
 	int soldiers;		/* how many (monthly) soldiers */
 	int scientists;		/* how many (monthly) scientists */
@@ -226,7 +234,7 @@ void CL_DateConvert(date_t * date, int *day, int *month);
 char *CL_DateGetMonthName(int month);
 void CL_CampaignRun(void);
 void CL_GameTimeStop(void);
-extern byte *CL_GetmapColor(vec2_t pos);
+extern byte *CL_GetMapColor(const vec2_t pos, mapType_t type);
 extern qboolean CL_NewBase(vec2_t pos);
 void CL_ParseMission(char *name, char **text);
 mission_t* CL_AddMission(char *name);
