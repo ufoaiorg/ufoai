@@ -1062,6 +1062,7 @@ static value_t valid_tech_vars[] = {
 	/*name of technology */
 	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name)},
 	{"description", V_TRANSLATION2_STRING, offsetof(technology_t, description)},
+	{"description-pre", V_TRANSLATION2_STRING, offsetof(technology_t, description_pre)},
 	/*what does this research provide */
 	{"provides", V_STRING, offsetof(technology_t, provides)},
 	/* to be able to research this tech zou need all "required" and at least one collected "provides" item. */
@@ -1115,6 +1116,7 @@ void RS_ParseTechnologies(char *id, char **text)
 	tech->idx = gd.numTechnologies - 1;
 	Com_sprintf(tech->id, MAX_VAR, id);
 	Com_sprintf(tech->description, MAX_VAR, _("No description available."));
+	/* tech->description_pre should be NULL in the beginning so we can check on that. TODO: this may change int he future.*/
 	*tech->provides = '\0';
 	*tech->image_top = '\0';
 	*tech->image_bottom = '\0';
