@@ -743,8 +743,10 @@ static void CL_BuildingAircraftList_f(void)
 static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
 {
 	int i;
-	float civilianRatio = (float)civiliansSurvived / (float)(civiliansKilled+civiliansSurvived);
-	float alienRatio = (float)aliensSurvived / (float)(aliensKilled+aliensSurvived);
+	float civilianSum = civiliansKilled + civiliansSurvived;
+	float civilianRatio = civilianSum ? civiliansSurvived / civilianSum : 0;
+	float alienSum = aliensKilled + aliensSurvived;
+	float alienRatio = alienSum ? aliensKilled / alienSum : 0;
 	float performance = 0.5 + civilianRatio * 0.25 + alienRatio * 0.25;
 
 	for (i = 0; i < gd.numNations; i++) {
