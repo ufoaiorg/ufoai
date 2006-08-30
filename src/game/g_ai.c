@@ -287,7 +287,8 @@ static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	guete += GUETE_RUN_AWAY * minDist / RUN_AWAY_DIST;
 
 	/* add laziness */
-	guete += GUETE_CIV_LAZINESS * tu / ent->TU;
+	if (ent->TU)
+		guete += GUETE_CIV_LAZINESS * tu / ent->TU;
 
 	/* add random effects */
 	guete += GUETE_CIV_RANDOM * frand();
