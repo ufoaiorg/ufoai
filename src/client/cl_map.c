@@ -363,9 +363,7 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 
 /*
 ==============================================================
-
 GEOSCAPE DRAWING AND COORDINATES
-
 ==============================================================
 */
 
@@ -373,7 +371,8 @@ GEOSCAPE DRAWING AND COORDINATES
  * @brief Tell if the specified position is considered clicked
  */
 #define MN_MAP_DIST_SELECTION 15
-static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y) {
+static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y)
+{
 	int msx, msy;
 
 	if (MAP_MapToScreen(node, pos, &msx, &msy))
@@ -705,11 +704,14 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
 	}
 
-	for (i=0; i<gd.numNations; i++) {
-		/* font color for nations */
-		re.DrawColor(gd.nations[i].color);
-		MAP_MapToScreen(node, gd.nations[i].pos, &x, &y);
-		re.FontDrawString(font, ALIGN_UL,x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], gd.nations[i].name);
+	if (ccs.zoom >= 3.0f) {
+		/* TODO: Draw nation borders */
+		for (i=0; i<gd.numNations; i++) {
+			/* font color for nations */
+			re.DrawColor(gd.nations[i].color);
+			MAP_MapToScreen(node, gd.nations[i].pos, &x, &y);
+			re.FontDrawString("f_big", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], gd.nations[i].name);
+		}
 	}
 
 	/* reset color */
