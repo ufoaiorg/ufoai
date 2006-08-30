@@ -87,18 +87,6 @@ building building_storage
 	more_than_one	true
 }
 
-building building_teamroom
-{
-	name		"_Team Room"
-	image		base/teamroom
-	fixcosts	30000
-	depends		building_entrance // a cheap building to shield powerplant
-	build_time	3
-	varcosts	140
-	map_name	"teamroom"
-	pedia		rs_building_teamroom
-}
-
 building building_powerplant
 {
 	name		"_Power Plant"
@@ -112,6 +100,21 @@ building building_powerplant
 	firstbase	true
 	pos		    "4 4"
 	more_than_one	false // are we sure? this is boring now...
+}
+
+
+building building_command
+{
+	name		"_Command Center"
+	image		base/commando
+	fixcosts	740000 // next stage in base costs
+	depends		building_powerplant
+	build_time	4
+	varcosts	1000
+	map_name	"commando"
+	pedia		rs_building_command
+	firstbase	true
+	pos		    "4 2"
 }
 
 building building_quarters
@@ -131,30 +134,22 @@ building building_quarters
 	max_employees	20
 }
 
-building building_workshop
+building building_intercept
 {
-	name		"_Workshop"
-	image		base/workshop2
-	fixcosts	230000
-	depends		building_powerplant // construction plans uploaded over net
-	build_time	7
-	varcosts	8000
-	map_name	"workshop"
-	pedia		rs_building_workshop
+	name		"_Interceptor Hangar"
+	image		base/intercept
+	fixcosts	330000
+	depends		building_powerplant	// slow interceptions can be coordinated from another base, so no Command Center needed
+	build_time	5
+	varcosts	4200
+	map_name	"intercept"
+	pedia		rs_building_intercept
 	firstbase	true
-	pos		    "4 0"
+	pos		    "1 3"
 	more_than_one	true
-	type	    workshop
-	max_employees	10
-	needs		building_workshop2
-}
-
-building building_workshop2
-{
-	name		"_Workshop"
-	image		base/workshop1
-	pedia		rs_building_workshop
-	visible		false // no 'needs' field here!
+	onconstruct	"aircraft_new craft_interceptor"
+//	ondestroy	???
+	type        hangar
 }
 
 building building_hangar
@@ -184,12 +179,64 @@ building building_hangar2
 	visible		false // no 'needs' field here!
 }
 
+building building_ufo_hangar
+{
+	name		"_UFO Hangar"
+	image		base/adrop
+	fixcosts	940000
+	depends		building_powerplant
+	build_time	12
+	varcosts	5600
+	map_name	"ufohangar"
+	pedia		rs_building_ufo_hangar
+	more_than_one	true
+    type    	hangar
+}
+
+building building_teamroom
+{
+	name		"_Team Room"
+	image		base/teamroom
+	fixcosts	30000
+	depends		building_command
+	build_time	3
+	varcosts	140
+	map_name	"teamroom"
+	pedia		rs_building_teamroom
+}
+
+building building_workshop
+{
+	name		"_Workshop"
+	image		base/workshop2
+	fixcosts	230000
+	depends		building_command
+	build_time	7
+	varcosts	8000
+	map_name	"workshop"
+	pedia		rs_building_workshop
+	firstbase	true
+	pos		    "4 0"
+	more_than_one	true
+	type	    workshop
+	max_employees	10
+	needs		building_workshop2
+}
+
+building building_workshop2
+{
+	name		"_Workshop"
+	image		base/workshop1
+	pedia		rs_building_workshop
+	visible		false // no 'needs' field here!
+}
+
 building building_radar
 {
 	name		"_Radar"
 	image		base/radar
 	fixcosts	270000 // a major cost to prevent 10 radars in initial base
-	depends		building_powerplant // operated via net
+	depends		building_command
 	build_time	10
 	varcosts	1600
 	map_name	"radar"
@@ -199,38 +246,6 @@ building building_radar
 	more_than_one	true
 	onconstruct	"inc_sensor 30"
 	ondestroy	"dec_sensor 30"
-}
-
-building building_command
-{
-	name		"_Command Center"
-	image		base/commando
-	fixcosts	740000 // next stage in base costs
-	depends		building_powerplant
-	build_time	4
-	varcosts	1000
-	map_name	"commando"
-	pedia		rs_building_command
-	firstbase	true
-	pos		    "4 2"
-}
-
-building building_intercept
-{
-	name		"_Interceptor Hangar"
-	image		base/intercept
-	fixcosts	330000
-	depends		building_command // no interceptions without supervision
-	build_time	5
-	varcosts	4200
-	map_name	"intercept"
-	pedia		rs_building_intercept
-	firstbase	true
-	pos		    "1 3"
-	more_than_one	true
-	onconstruct	"aircraft_new craft_interceptor"
-//	ondestroy	???
-	type        hangar
 }
 
 building building_lab
@@ -255,7 +270,7 @@ building building_hospital
 	name		"_Hospital"
 	image		base/hospital
 	fixcosts	750000
-	depends		building_lab // all those analyses and x-rays for free
+	depends		building_command // medics need supervision, or...
 	build_time	9
 	varcosts	10000
 	map_name	"hospital"
@@ -264,20 +279,6 @@ building building_hospital
 	more_than_one	true
 	type	    hospital
 	max_employees	10
-}
-
-building building_ufo_hangar
-{
-	name		"_UFO Hangar"
-	image		base/adrop
-	fixcosts	940000
-	depends		building_lab
-	build_time	12
-	varcosts	5600
-	map_name	"ufohangar"
-	pedia		rs_building_ufo_hangar
-	more_than_one	true
-    type    	hangar
 }
 
 base main
