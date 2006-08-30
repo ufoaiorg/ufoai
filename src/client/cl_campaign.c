@@ -753,20 +753,20 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
 		if (lost) {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
 				/* Strong negative reaction */
-				nation->happiness *= performance * nation->alienFriendly / 100;
+				nation->happiness *= performance * nation->alienFriendly / 100.0;
 			} else {
 				/* Minor negative reaction */
-				nation->happiness *= 1 - pow(1 - performance * nation->alienFriendly / 100, 5);
+				nation->happiness *= 1.0 - pow(1.0 - performance * nation->alienFriendly / 100.0, 5.0);
 			}
 		} else {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
 				/* Strong positive reaction */
-				nation->happiness /= 1 - performance * nation->alienFriendly / 100;
-				nation->happiness += performance * nation->alienFriendly / 100 / 10;
+				nation->happiness /= 1.0 - performance * nation->alienFriendly / 100.0;
+				nation->happiness += performance * nation->alienFriendly / 100.0 / 10.0;
 			} else {
 				/* Minor positive reaction */
-				nation->happiness /= pow(1 - performance * nation->alienFriendly / 100, 0.2);
-				nation->happiness += performance * nation->alienFriendly / 100 / 50;
+				nation->happiness /= pow(1.0 - performance * nation->alienFriendly / 100.0, 0.2);
+				nation->happiness += performance * nation->alienFriendly / 100.0 / 50.0;
 			}
 			if (nation->happiness > 1.0) {
 				/* Can't be more than 100% happy with you. */
@@ -967,28 +967,28 @@ static void CL_HandleBudget(void)
 		CL_UpdateCredits(ccs.credits + funding);
 
 		/* TODO: ", as well as an offer to hire 1 scientist and 2 soldier(s)." */
-		for (j = 0; 0.25 + j < nation->scientists * nation->happiness * nation->happiness; j++) {
+		for (j = 0; 0.25 + j < (float) nation->scientists * nation->happiness * nation->happiness; j++) {
 			if (gd.numEmployees[EMPL_SCIENTIST] < 19) {
 				/* Create a scientist, but don't auto-hire her. */
 				E_CreateEmployee(EMPL_SCIENTIST);
 			}
 		}
 
-		for (j = 0; 0.25 + j * 3 < nation->scientists * nation->happiness; j++) {
+		for (j = 0; 0.25 + j * 3 < (float) nation->scientists * nation->happiness; j++) {
 			if (gd.numEmployees[EMPL_MEDIC] < 19) {
 				/* Create a medic. */
 				E_CreateEmployee(EMPL_MEDIC);
 			}
 		}
 
-		for (j = 0; 0.25 + j < nation->soldiers * nation->happiness * nation->happiness * nation->happiness; j++) {
+		for (j = 0; 0.25 + j < (float) nation->soldiers * nation->happiness * nation->happiness * nation->happiness; j++) {
 			if (gd.numEmployees[EMPL_SOLDIER] < 19) {
 				/* Create a soldier. */
 				E_CreateEmployee(EMPL_SOLDIER);
 			}
 		}
 
-		for (j = 0; 0.25 + j * 2 < nation->soldiers * nation->happiness; j++) {
+		for (j = 0; 0.25 + j * 2 < (float) nation->soldiers * nation->happiness; j++) {
 			if (gd.numEmployees[EMPL_WORKER] < 19) {
 				/* Create a worker. */
 				E_CreateEmployee(EMPL_WORKER);
@@ -2335,7 +2335,7 @@ void CL_UpdateCharacterStats(int won)
 				if (chr->skills[j] < MAX_SKILL)
 					chr->skills[j]++;
 
-			/* Check if the soldier meets the requirements for a higher rank -> Promotion */
+			/* Check if the soldier meets the requirements for a higher rank -> Promotion; also, perhaps use "won" in some way */
 			/* TODO: Check if it's really "> 0" or rather ">= 0" */
 			if (gd.numRanks >= 2) {
 				for (j = gd.numRanks - 1; j > 0; j--) {
