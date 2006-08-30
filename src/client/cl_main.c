@@ -975,14 +975,14 @@ void CL_Snd_Restart_f(void)
  */
 void CL_Precache_f(void)
 {
-	Com_Printf("CL_Precache_f\n");
 	/* stop sound, back to the console */
 	S_StopAllSounds();
 	MN_PopMenu(qtrue);
 
-	CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
+	/* for singleplayer game this is already loaded in our local server */
+	if (!ccs.singleplayer)
+		CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
 
-	Com_Printf("LoadMap\n");
 	CL_RegisterSounds();
 	CL_PrepRefresh();
 
@@ -994,7 +994,6 @@ void CL_Precache_f(void)
 	/* send begin */
 	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
 	MSG_WriteString(&cls.netchan.message, va("begin %i\n", atoi(Cmd_Argv(1))));
-	Com_Printf("begin\n");
 }
 
 /**
