@@ -262,7 +262,7 @@ void UP_DrawEntry( technology_t* tech )
 
 	menuText[TEXT_LIST] = NULL;
 	Cvar_Set("mn_uptitle", _(tech->name));
-	menuText[TEXT_UFOPEDIA] = _(tech->description);
+
 	Cvar_Set("mn_upmodel_top", "");
 	Cvar_Set("mn_upmodel_bottom", "");
 	Cvar_Set("mn_upimage_top", "base/empty");
@@ -278,36 +278,49 @@ void UP_DrawEntry( technology_t* tech )
 	/* confunc */
 	Cbuf_AddText("mn_upfsmall\n");
 
-	if (upCurrent) {
-		menuText[TEXT_STANDARD] = NULL;
-		switch ( tech->type ) {
-		case RS_ARMOR:
-			UP_ArmorDescription( tech );
-			break;
-		case RS_WEAPON:
-			for (i = 0; i < csi.numODs; i++) {
-				if ( !Q_strncmp( tech->provides, csi.ods[i].kurz, MAX_VAR ) ) {
-					CL_ItemDescription( i );
-					UP_DisplayTechTree(tech);
-					break;
+	if ( RS_IsResearched_ptr(tech) ) {
+		/* Is research -> display research text */
+
+		menuText[TEXT_UFOPEDIA] = _(tech->description);
+
+		if (upCurrent) {
+			menuText[TEXT_STANDARD] = NULL;
+			switch ( tech->type ) {
+			case RS_ARMOR:
+				UP_ArmorDescription( tech );
+				break;
+			case RS_WEAPON:
+				for (i = 0; i < csi.numODs; i++) {
+					if ( !Q_strncmp( tech->provides, csi.ods[i].kurz, MAX_VAR ) ) {
+						CL_ItemDescription( i );
+						UP_DisplayTechTree(tech);
+						break;
+					}
 				}
+				break;
+			case RS_TECH:
+				UP_TechDescription( tech );
+				break;
+			case RS_CRAFT:
+				UP_AircraftDescription( tech );
+				break;
+			case RS_BUILDING:
+				UP_BuildingDescription( tech );
+				break;
+			default:
+				break;
 			}
-			break;
-		case RS_TECH:
-			UP_TechDescription( tech );
-			break;
-		case RS_CRAFT:
-			UP_AircraftDescription( tech );
-			break;
-		case RS_BUILDING:
-			UP_BuildingDescription( tech );
-			break;
-		default:
-			break;
 		}
-	}
-	else {
-		menuText[TEXT_STANDARD] = NULL;
+		else {
+			menuText[TEXT_STANDARD] = NULL;
+		}
+	} else if ( RS_Collected_(tech) ) {
+		/* Not researched but some items collected -> display pre-research text if available. */
+
+		if ( tech->description_pre ) 
+			menuText[TEXT_UFOPEDIA] = _(tech->description_pre);
+		else
+			menuText[TEXT_UFOPEDIA] = _("No pre-research description available.");
 	}
 }
 

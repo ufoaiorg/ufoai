@@ -5,7 +5,7 @@
 //=== Description ==============================
 //
 //	tech rs_xxx
-//		The _unique_ name of the research item in the tree is xxx
+//		The _unique_ name of the research item in the tree is xxx.
 //	type
 //		Just says where to look for more information (this is internal information and will not be displayed anywhere, but is needed to check/find information)
 //		tech
@@ -13,12 +13,15 @@
 //		everything else (weapon, craft, building, alien, etc...)
 //			See the correct .ufo file.
 //	name
-//		self-explaining i hope :) Only needed when type=tech
+//		Self-explaining I hope :) Only needed when type=tech
 //	up_chapter
 //		Defines in which chapter of the ufopedia this item will show up.
 //	description
-//		A short string that is used by gettext to be translateable (e.g "_itemname_txt").
-//		This needs to be a unique string in all desciptions. See the po files in the source directory (src/po/*.po)
+//		The full description to be displayed after research.
+//		A short string that is used by gettext to be translatable (e.g. "description _itemname_txt").
+//		This needs to be a unique string in all descriptions. See the po files in the source directory (src/po/*.po)
+//	description_pre
+//		The description to be displayed when an item has been collected, but it's not yet researched. Usage is the same as 'description'
 //	requires
 //		If you get an alien-item everything that it requires is made available for research (tree top/down)
 //		e.g.
@@ -32,7 +35,7 @@
 //		The given names are _not_ "tech" items.
 //		This items can be produced once the "tech" item has been finished.
 //	time
-//		time the research needs.
+//		Time the research needs to be finished. Consider that this value doesn't reflect _real_ time, but it will depend on the number of scientists working on the item.
 //		If time is 0 the item can be produced at the same time all the "required" items are finished.
 //		[Default] 0
 //	researched
@@ -47,6 +50,7 @@
 //		Same as the image but for 3d-models.
 //		It overrides the image-definitions if it is provided.
 //==========================================
+
 
 //========================
 // Ufopedia categories

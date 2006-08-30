@@ -1062,7 +1062,7 @@ static value_t valid_tech_vars[] = {
 	/*name of technology */
 	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name)},
 	{"description", V_TRANSLATION2_STRING, offsetof(technology_t, description)},
-	{"description-pre", V_TRANSLATION2_STRING, offsetof(technology_t, description_pre)},
+	{"description_pre", V_TRANSLATION2_STRING, offsetof(technology_t, description_pre)},
 	/*what does this research provide */
 	{"provides", V_STRING, offsetof(technology_t, provides)},
 	/* to be able to research this tech zou need all "required" and at least one collected "provides" item. */
