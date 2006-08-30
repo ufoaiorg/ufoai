@@ -562,9 +562,9 @@ void CL_Reconnect_f(void)
  * Handle a reply from a ping
  */
 #define MAX_SERVERLIST 32
-char serverText[1024];
-int serverListLength;
-netadr_t serverList[MAX_SERVERLIST];
+static char serverText[1024];
+static int serverListLength;
+static netadr_t serverList[MAX_SERVERLIST];
 void CL_ParseStatusMessage(void)
 {
 	char *s = MSG_ReadString(&net_message);
