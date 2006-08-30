@@ -565,7 +565,7 @@ void CL_Reconnect_f(void)
 static char serverText[1024];
 static int serverListLength;
 static netadr_t serverList[MAX_SERVERLIST];
-void CL_ParseStatusMessage(void)
+static void CL_ParseStatusMessage(void)
 {
 	char *s = MSG_ReadString(&net_message);
 
@@ -585,7 +585,7 @@ void CL_ParseStatusMessage(void)
  * This function fills the network browser server information with text
  */
 static char serverInfoText[MAX_MESSAGE_TEXT];
-void CL_ParseServerInfoMessage(void)
+static void CL_ParseServerInfoMessage(void)
 {
 	char *s = MSG_ReadString(&net_message);
 	char *var = NULL;
@@ -657,6 +657,7 @@ static void CL_ServerConnect_f(void)
 {
 	char *ip = Cvar_VariableString("mn_server_ip");
 
+	/* TODO: if we are in multiplayer auto generate a team */
 	if (!B_GetNumOnTeam()) {
 		MN_Popup(_("Error"), _("Assemble a team first"));
 		return;
@@ -751,6 +752,33 @@ void CL_BookmarkListClick_f(void)
 		Cvar_Set("mn_server_ip", bookmark);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "status %i", PROTOCOL_VERSION);
 	}
+}
+
+/**
+ * @brief
+ */
+void CL_ServerInfo_f (void)
+{
+	char ip[MAX_VAR];
+	netadr_t adr;
+
+	if (Cmd_Argc() < 2) {
+		Com_DPrintf("usage: server_info <ip>\n");
+		Q_strncpyz(ip, Cvar_VariableString("mn_server_ip"), sizeof(ip));
+		Com_Printf("ip: %s\n", ip);
+	} else {
+		Q_strncpyz(ip, Cmd_Argv(1), sizeof(ip));
+		Cvar_Set("mn_server_ip",ip);
+	}
+	if (!NET_StringToAdr(ip, &adr)) {
+		Com_Printf("Bad address: %s\n", ip);
+		return;
+	}
+
+	if (adr.port == 0)
+		adr.port = BigShort(PORT_SERVER);
+
+	Netchan_OutOfBandPrint(NS_CLIENT, adr, "status %i", PROTOCOL_VERSION);
 }
 
 /**
@@ -1211,6 +1239,7 @@ void CL_InitLocal(void)
 	Cmd_AddCommand("pingservers", CL_PingServers_f);
 
 	/* text id is servers in menu_multiplayer.ufo */
+	Cmd_AddCommand("server_info", CL_ServerInfo_f);
 	Cmd_AddCommand("servers_click", CL_ServerListClick_f);
 	Cmd_AddCommand("server_connect", CL_ServerConnect_f);
 	Cmd_AddCommand("bookmarks_click", CL_BookmarkListClick_f);
