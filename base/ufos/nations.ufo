@@ -1,54 +1,53 @@
 //=================================================
-//
 // NATIONS	- A list of nations funding the Phalanx project.
-//
 //=================================================
 // Description
 //
 // funding	(credits)
 //	Initial funding per month of this faction.
 // color
-//	TODO: Defines the color used to seperate the nations in the geoscape (internally)
+//	Defines the color used to seperate the nations in the geoscape (internally)
 // names
 //	TODO: Defines what "type" of names should be used. They are defined in team_human.ufo.
 // alien_friendly (percentage 0-100)
-//	TODO: Indicated the friendlyness (political and civilan) towards the aliens and influence the chance that this country stops it's funding after some time.
+//	Indicated the friendlyness (political and civilan) towards the aliens and influence the chance that this country stops it's funding after some time.
 //	TODO This value should be changed according to Phalanx' performance on it's territory and the terror missions of the aliens.
 // soldiers,scientists (number of people)
-//	TODO: The number of people (the best of the best ;)) you can hire (additionally) from this nation each month.
+//	The number of people (the best of the best ;)) you can hire (additionally) from this nation each month.
 //=================================================
-// TODO: Update of these values each month.
 // TODO: Logging this data in a seperate list so a statistic can be calculated.
 //=================================================
 
 nation ua
 {
 	name "_United Americas"
-//	color TODO
+	color "128 255 0 1"
 	names "english_american spanish_italian french german scandinavian"
 	funding	110000
 	happiness 0.5
 	alien_friendly	40
 	soldiers 5
 	scientists 2
+	pos "100 100"
 }
 
 nation geu
 {
 	name "_Greater European Union"
-//	color TODO
+	color "128 128 0 1"
 	names "german spanish_italian french english_american scandinavian"
 	funding	75000
 	happiness 0.5
 	alien_friendly	45
 	soldiers 3
 	scientists 3
+	pos "10 10"
 }
 
 nation ac
 {
 	name "_Asian Commonwealth"
-//	color TODO
+	color "255 128 0 1"
 	names "chinese japanese"
 	funding	120000
 	happiness 0.5
@@ -60,7 +59,7 @@ nation ac
 nation ae
 {
 	name "_United Arab Republic"
-//	color TODO
+	color "255 0 0 1"
 	names "arabic"
 	funding	45000
 	happiness 0.5
@@ -72,7 +71,7 @@ nation ae
 nation au
 {
 	name "_African Union"
-//	color TODO
+	color "0 255 0 1"
 	names "african"
 	funding	60000
 	happiness 0.5
@@ -84,7 +83,7 @@ nation au
 nation russia
 {
 	name "_Russian Federation"
-//	color TODO
+	color "0 0 255 1"
 	names "russian"
 	funding	50000
 	happiness 0.5
@@ -96,7 +95,7 @@ nation russia
 nation australia
 {
 	name "_Oceania"
-//	color TODO
+	color "255 255 128 1"
 	names "english_american"
 	funding	90000
 	happiness 0.5
