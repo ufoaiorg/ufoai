@@ -1511,8 +1511,11 @@ void MN_DrawMenus(void)
 							/* new line starts from node x position */
 							x = node->pos[0];
 
+							/* get the position of the next newline - otherwise end will be null */
 							end = strchr(cur, '\n');
 							if (end)
+								/* set the \n to \0 to draw only this part (before the \n) with our font renderer */
+								/* let end point to the next char after the \n (or \0 now) */
 								*end++ = '\0';
 
 							/* FIXME: only works with one-line texts right now: */
@@ -1522,15 +1525,20 @@ void MN_DrawMenus(void)
 							/* we assume all the tabs fit on a single line */
 							do {
 								tab = strchr(cur, '\t');
+								/* if this string does not contain any tabstops break this do while ... */
 								if (!tab)
 									break;
-
+								/* ... otherwise set the \t to \0 and increase the tab pointer to the next char */
+								/* after the tab (needed for the next loop in this (the inner) do while) */
 								*tab++ = '\0';
 								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur);
+								/* increase the x value as given via menu definition format string */
+								/* or use 1/3 of the node size (width) */
 								if (!node->texh[1])
 									x += (node->size[0] / 3);
 								else
 									x += node->texh[1];
+								/* now set cur to the first char after the \t */
 								cur = tab;
 							} while (1);
 
@@ -1540,9 +1548,9 @@ void MN_DrawMenus(void)
 							if (node->mousefx && line == mouseOver)
 								re.DrawColor(node->color); /* why is this repeated? */
 
+							/* now set cur to the next char after the \n (see above) */
 							cur = end;
-						}
-						while (cur);
+						} while (cur);
 					} else if (node->num == TEXT_MESSAGESYSTEM) {
 						if (node->data[1])
 							font = MN_GetReferenceString(menu, node->data[1]);
