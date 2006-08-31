@@ -1066,28 +1066,20 @@ static void MN_TextScroll_f(void)
 {
 	int offset = 0;
 	menuNode_t *node = NULL;
-	menu_t *menu = NULL;
 	
-	if (Cmd_Argc() < 4) {
-		Com_Printf("Usage: textscroll <menu> <node> <+/-offset>\n");
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: textscroll <nodename> <+/-offset>\n");
 		return;
 	}
 
-	menu = MN_GetMenu(Cmd_Argv(1));
-	
-	if ( !menu ) {
-		Com_DPrintf("MN_TextScroll_f: Menu '%s' not found.\n", Cmd_Argv(1));
-		return;
-	}
-	
-	node = MN_GetNode(menu, Cmd_Argv(2));
+	node = MN_GetNodeFromCurrentMenu(Cmd_Argv(1));
 	
 	if ( !node ) {
-		Com_DPrintf("MN_TextScroll_f: Node '%s' not found.\n", Cmd_Argv(2));
+		Com_DPrintf("MN_TextScroll_f: Node '%s' not found.\n", Cmd_Argv(1));
 		return;
 	}
 		
-	offset = atoi(Cmd_Argv(3));
+	offset = atoi(Cmd_Argv(2));
 	
 	if ( offset == 0 )
 		return;
