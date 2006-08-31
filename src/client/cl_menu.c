@@ -1574,13 +1574,15 @@ void MN_DrawMenus(void)
 							/* the height parameter is not exceeded here */
 							/* TODO: Draw the scrollbars */
 							/* this is currently broken: */
-#if 0
+
 							if (node->height > 0 && line >= node->height)
+								/* Due to scrolling this line is not visible */
 								break;
-							/* maybe due to scrolling this line is not visible */
+							
 							if (line < node->textScroll)
+								/* Due to scrolling this line is not visible */
 								break;
-#endif
+
 							/* new line starts from node x position */
 							x = node->pos[0];
 
