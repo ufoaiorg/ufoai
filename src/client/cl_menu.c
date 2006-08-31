@@ -1581,7 +1581,7 @@ void MN_DrawMenus(void)
 							
 							if (line < node->textScroll)
 								/* Due to scrolling this line is not visible */
-								break;
+								continue;
 
 							/* new line starts from node x position */
 							x = node->pos[0];
