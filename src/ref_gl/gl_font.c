@@ -338,10 +338,12 @@ static fontCache_t *Font_GenerateCache(const char *s, const char *fontString, fo
 	SDL_SetAlpha(textSurface, 0, 0);
 
 	SDL_LowerBlit(textSurface, &rect, openGLSurface, &rect);
+	w = textSurface->w;
+	h = textSurface->h;
 	SDL_FreeSurface(textSurface);
 
 /* 	SDL_SaveBMP( openGLSurface, buffer ); */
-	return Font_AddToCache(fontString, openGLSurface, textSurface->w, textSurface->h);
+	return Font_AddToCache(fontString, openGLSurface, w, h);
 }
 
 /**
