@@ -1021,34 +1021,36 @@ void MN_Click(int x, int y)
  */
 static qboolean MN_TextScroll(menuNode_t *node, int offset)
 {
-	int numlines = 1;
+	int numlines = 0;
 	int textScroll_new;
-	char textCopy[MAX_MENUTEXTLEN];
 	char *cur = NULL;
 
-	if ( !node )
+	if (!node)
 		return qfalse;
 
-	if ( abs(offset) >= node->height) {
+	if (abs(offset) >= node->height) {
 		/* Offset value is bigger than textbox height. */
 		node->textScroll = 0;
 		return qfalse;
 	}
 
 	/* Count overall lines. */
-	Q_strncpyz(textCopy, menuText[node->num], MAX_MENUTEXTLEN);
-	cur = textCopy;
-	while ( (cur = strchr(cur, '\n')) != NULL)
+	cur = menuText[node->num];
+	while (cur) {
 		numlines++;
+		cur = strchr(cur, '\n');
+		if (cur)
+			cur++;
+	};
 
 	textScroll_new = node->textScroll + offset;
 
-	if ( textScroll_new <= 0) {
+	if (textScroll_new <= 0) {
 		/* Goto top line, no matter how big the offset was. */
 		node->textScroll = 0;
 		return qtrue;
 
-	} else if ( textScroll_new >= (numlines - node->height) ) {
+	} else if (textScroll_new >= (numlines - node->height)) {
 		/* Goto last possible line line, no matter how big the offset was. */
 		node->textScroll = numlines - node->height;
 		return qtrue;
@@ -1066,21 +1068,21 @@ static void MN_TextScroll_f(void)
 {
 	int offset = 0;
 	menuNode_t *node = NULL;
-	
+
 	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: textscroll <nodename> <+/-offset>\n");
 		return;
 	}
 
 	node = MN_GetNodeFromCurrentMenu(Cmd_Argv(1));
-	
+
 	if ( !node ) {
 		Com_DPrintf("MN_TextScroll_f: Node '%s' not found.\n", Cmd_Argv(1));
 		return;
 	}
-		
+
 	offset = atoi(Cmd_Argv(2));
-	
+
 	if ( offset == 0 )
 		return;
 
@@ -1578,7 +1580,7 @@ void MN_DrawMenus(void)
 							if (node->height > 0 && line >= node->height)
 								/* Due to scrolling this line is not visible */
 								break;
-							
+
 							if (line < node->textScroll)
 								/* Due to scrolling this line is not visible */
 								continue;
@@ -2300,7 +2302,7 @@ void MN_ResetMenus(void)
 	mn_escpop = Cvar_Get("mn_escpop", "1", 0);
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_sequence", "sequence");
-	
+
 	/* textbox */
 	Cmd_AddCommand("textscroll", MN_TextScroll_f);
 
