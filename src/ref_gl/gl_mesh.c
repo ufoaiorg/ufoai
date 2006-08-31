@@ -182,6 +182,7 @@ static qboolean R_CullAliasModel(entity_t * e)
 	if (r_isometric->value)
 		return qfalse;
 
+	assert (currentmodel->type == mod_alias);
 	paliashdr = (dmdl_t *) currentmodel->extradata;
 
 	pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
@@ -367,6 +368,7 @@ void R_DrawAliasModel(entity_t * e)
 	dmdl_t *paliashdr;
 	image_t *skin;
 
+	assert (currentmodel->type == mod_alias);
 	paliashdr = (dmdl_t *) currentmodel->extradata;
 
 	/* check animations */
@@ -576,6 +578,7 @@ void R_TransformModelDirect(modelInfo_t * mi)
 		int i;
 
 		/* get model data */
+		assert (mi->model->type == mod_alias);
 		paliashdr = (dmdl_t *) mi->model->extradata;
 		pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames);
 

@@ -234,6 +234,7 @@ void R_DrawSpriteModel(entity_t * e)
 
 	/* don't even bother culling, because it's just a single */
 	/* polygon without a surface cache */
+	assert (currentmodel->type == mod_sprite);
 	psprite = (dsprite_t *) currentmodel->extradata;
 
 #if 0

@@ -1205,6 +1205,7 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 		mi.frame = 0;
 		mi.oldframe = 0;
 		mi.backlerp = 0;
+		mi.skin = 0;
 
 		Vector4Copy(color, col);
 		if (od->weapon && od->reload && !item.a) {

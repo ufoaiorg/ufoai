@@ -1175,9 +1175,13 @@ signed int Mod_GetTris(short p1, short p2, dtriangle_t * side1, dmdl_t * hdr)
  */
 void Mod_FindSharedEdges(model_t * mod)
 {
-	dmdl_t *hdr = (dmdl_t *) mod->extradata;
-	dtriangle_t *tris = (dtriangle_t *) ((unsigned char *) hdr + hdr->ofs_tris);
+	dmdl_t *hdr;
+	dtriangle_t *tris;
 	int i, o;
+
+	assert (mod->type == mod_alias);
+	hdr = (dmdl_t *) mod->extradata;
+	tris = (dtriangle_t *) ((unsigned char *) hdr + hdr->ofs_tris);
 
 	mod->noshadow = qfalse;
 
