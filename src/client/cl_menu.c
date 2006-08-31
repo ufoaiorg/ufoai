@@ -1013,6 +1013,87 @@ void MN_Click(int x, int y)
 	}
 }
 
+/**
+ * @brief Scrolls the text in a textbox up/down.
+ * @param[in] node The node of the text to be scrolled.
+ * @param[in] offset Number of lines to scroll. Positive values scroll down, negative up.
+ * @return Returns qtrue if scrolling was possible otherwise qfalse.
+ */
+static qboolean MN_TextScroll(menuNode_t *node, int offset)
+{
+	int numlines = 1;
+	int textScroll_new;
+	char textCopy[MAX_MENUTEXTLEN];
+	char *cur = NULL;
+
+	if ( !node )
+		return qfalse;
+
+	if ( abs(offset) >= node->height) {
+		/* Offset value is bigger than textbox height. */
+		node->textScroll = 0;
+		return qfalse;
+	}
+
+	/* Count overall lines. */
+	Q_strncpyz(textCopy, menuText[node->num], MAX_MENUTEXTLEN);
+	cur = textCopy;
+	while ( (cur = strchr(cur, '\n')) != NULL)
+		numlines++;
+
+	textScroll_new = node->textScroll + offset;
+
+	if ( textScroll_new <= 0) {
+		/* Goto top line, no matter how big the offset was. */
+		node->textScroll = 0;
+		return qtrue;
+
+	} else if ( textScroll_new >= (numlines - node->height) ) {
+		/* Goto last possible line line, no matter how big the offset was. */
+		node->textScroll = numlines - node->height;
+		return qtrue;
+
+	} else {
+		node->textScroll = textScroll_new;
+		return qtrue;
+	}
+}
+
+/**
+ * @brief Scriptfunction that gets the wanted text node and scrolls the text.
+ */
+static void MN_TextScroll_f(void)
+{
+	int offset = 0;
+	menuNode_t *node = NULL;
+	menu_t *menu = NULL;
+	
+	if (Cmd_Argc() < 4) {
+		Com_Printf("Usage: textscroll <menu> <node> <+/-offset>\n");
+		return;
+	}
+
+	menu = MN_GetMenu(Cmd_Argv(1));
+	
+	if ( !menu ) {
+		Com_DPrintf("MN_TextScroll_f: Menu '%s' not found.\n", Cmd_Argv(1));
+		return;
+	}
+	
+	node = MN_GetNode(menu, Cmd_Argv(2));
+	
+	if ( !node ) {
+		Com_DPrintf("MN_TextScroll_f: Node '%s' not found.\n", Cmd_Argv(2));
+		return;
+	}
+		
+	offset = atoi(Cmd_Argv(3));
+	
+	if ( offset == 0 )
+		return;
+
+	MN_TextScroll(node, offset);
+}
 
 /**
  * @brief
@@ -2225,6 +2306,9 @@ void MN_ResetMenus(void)
 	mn_escpop = Cvar_Get("mn_escpop", "1", 0);
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_sequence", "sequence");
+	
+	/* textbox */
+	Cmd_AddCommand("textscroll", MN_TextScroll_f);
 
 	/* tutorial stuff */
 	Cmd_AddCommand("listtutorials", MN_ListTutorials_f);
