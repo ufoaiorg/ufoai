@@ -1515,7 +1515,7 @@ void MN_DrawMenus(void)
 							if (end)
 								*end++ = '\0';
 
-							/* only works with one-line texts right now: */
+							/* FIXME: only works with one-line texts right now: */
 							if (node->mousefx && line == mouseOver)
 								re.DrawColor(color);
 
@@ -1538,7 +1538,7 @@ void MN_DrawMenus(void)
 							y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], (*cur ? cur : " "));
 
 							if (node->mousefx && line == mouseOver)
-								 re.DrawColor(node->color); /* why is this repeated? */
+								re.DrawColor(node->color); /* why is this repeated? */
 
 							cur = end;
 						}
