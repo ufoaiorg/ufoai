@@ -481,6 +481,7 @@ void R_DrawShadow(entity_t * e)
 	if (currententity->flags & (RF_SHELL_GREEN | RF_SHELL_RED | RF_SHELL_BLUE))
 		return;
 
+	assert (currentmodel->type == mod_alias);
 	paliashdr = (dmdl_t *) currentmodel->extradata;
 
 	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
@@ -553,6 +554,7 @@ void R_DrawShadowVolume(entity_t * e)
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
+	assert (currentmodel->type == mod_alias);
 	paliashdr = (dmdl_t *) currentmodel->extradata;
 
 	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
