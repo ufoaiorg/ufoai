@@ -1782,6 +1782,9 @@ int CL_GameLoad(char *filename)
 	memcpy(&stats, sb.data + sb.readcount, sizeof(stats_t));
 	sb.readcount += sizeof(stats_t);
 
+        /* ensure research correctly initialised */
+        RS_UpdateData();
+
 	Com_Printf("Campaign '%s' loaded.\n", filename);
 
 	CL_GameInit();
