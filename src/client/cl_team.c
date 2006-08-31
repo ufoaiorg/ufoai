@@ -53,6 +53,63 @@ char* CL_GetTeamSkinName(int id)
 	return NULL; /* never reached */
 }
 
+
+/**
+ * @brief
+ */
+void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
+{
+	assert (item.t != NONE);
+/*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].kurz, container, item.t, item.a, item.m, x, y);*/
+	MSG_WriteFormat(buf, "bbbbbb",
+					item.t, item.a, item.m, container, x, y);
+}
+
+/**
+ * @brief
+ */
+void CL_SendInventory(sizebuf_t * buf, inventory_t * i)
+{
+	int j, nr = 0;
+	invList_t *ic;
+
+	for (j = 0; j < csi.numIDs; j++)
+		for (ic = i->c[j]; ic; ic = ic->next)
+			nr++;
+
+	MSG_WriteShort(buf, nr * 6);
+	for (j = 0; j < csi.numIDs; j++)
+		for (ic = i->c[j]; ic; ic = ic->next)
+			CL_SendItem(buf, ic->item, j, ic->x, ic->y);
+}
+
+/**
+ * @brief
+ */
+void CL_ReceiveItem(sizebuf_t * buf, item_t * item, int * container, int * x, int * y)
+{
+	MSG_ReadFormat(buf, "bbbbbb",
+				   &item->t, &item->a, &item->m, container, x, y);
+}
+
+/**
+ * @brief
+ */
+void CL_ReceiveInventory(sizebuf_t * buf, inventory_t * i)
+{
+	item_t item;
+	int container, x, y;
+	int nr = MSG_ReadShort(buf) / 6;
+
+	for (; nr-- > 0;) {
+
+		CL_ReceiveItem(buf, &item, &container, &x, &y);
+
+		Com_AddToInventory(i, item, container, x, y);
+	}
+}
+
+
 /**
  * @brief Test the names in team_*.ufo
  *
@@ -1068,18 +1125,7 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 
 	/* inventory */
 	Com_DestroyInventory(chr->inv);
-	{
-		int nr = MSG_ReadShort(sb) / 6;
-
-		for (; nr-- > 0;) {
-			item_t item;
-			int container, x, y;
-
-			CL_ReceiveItem(sb, &item, &container, &x, &y);
-
-			Com_AddToInventory(chr->inv, item, container, x, y);
-		}
-	}
+	CL_ReceiveInventory(sb, chr->inv);
 }
 
 /**
@@ -1186,25 +1232,6 @@ void CL_ResetTeams(void)
 	Cmd_AddCommand("msgmenu", CL_MessageMenuCmd);
 }
 
-/**
- * @brief
- */
-void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
-{
-	assert (item.t != NONE);
-/*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].kurz, container, item.t, item.a, item.m, x, y);*/
-	MSG_WriteFormat(buf, "bbbbbb",
-					item.t, item.a, item.m, container, x, y);
-}
-
-/**
- * @brief
- */
-void CL_ReceiveItem(sizebuf_t * buf, item_t * item, int * container, int * x, int * y)
-{
-	MSG_ReadFormat(buf, "bbbbbb",
-				   &item->t, &item->a, &item->m, container, x, y);
-}
 
 /**
  * @brief Stores the wholeTeam info to buffer (which might be a network buffer, too)
@@ -1214,7 +1241,6 @@ void CL_ReceiveItem(sizebuf_t * buf, item_t * item, int * container, int * x, in
 void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 {
 	character_t *chr;
-	invList_t *ic;
 	int i, j;
 
 	/* clean temp inventory */
@@ -1254,18 +1280,7 @@ void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 		MSG_WriteShort(buf, chr->assigned_missions);
 
 		/* inventory */
-		{
-			int nr = 0;
-
-			for (j = 0; j < csi.numIDs; j++)
-				for (ic = chr->inv->c[j]; ic; ic = ic->next)
-					nr++;
-
-			MSG_WriteShort(buf, nr * 6);
-			for (j = 0; j < csi.numIDs; j++)
-				for (ic = chr->inv->c[j]; ic; ic = ic->next)
-					CL_SendItem(buf, ic->item, j, ic->x, ic->y);
-		}
+		CL_SendInventory(buf, chr->inv);
 	}
 }
 
@@ -1278,7 +1293,6 @@ void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
 {
 	character_t *chr;
-	invList_t *ic;
 	int i, j;
 
 	/* clean temp inventory */
@@ -1315,18 +1329,7 @@ void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
 		MSG_WriteShort(buf, chr->assigned_missions);
 
 		/* inventory */
-		{
-			int nr = 0;
-
-			for (j = 0; j < csi.numIDs; j++)
-				for (ic = chr->inv->c[j]; ic; ic = ic->next)
-					nr++;
-
-			MSG_WriteShort(buf, nr * 6);
-			for (j = 0; j < csi.numIDs; j++)
-				for (ic = chr->inv->c[j]; ic; ic = ic->next)
-					CL_SendItem(buf, ic->item, j, ic->x, ic->y);
-		}
+		CL_SendInventory(buf, chr->inv);
 	}
 }
 
