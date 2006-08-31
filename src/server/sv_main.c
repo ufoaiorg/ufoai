@@ -489,7 +489,7 @@ void SV_CalcPings(void)
 			cl->ping = 0;
 		else
 #if 0
-			cl->ping = total * 100 / count - 100;
+			cl->ping = total * 100 / count - 100; /* div by zero! */
 #else
 			cl->ping = total / count;
 #endif
