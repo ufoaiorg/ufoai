@@ -200,8 +200,6 @@ void RS_InitTree(void)
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
-		/* set the overall reseach time (now fixed) to the one given in the ufo-file. */
-		tech->overalltime = tech->time;
 
 		/* link idx entries to tech provided by id */
 		required = &tech->requires;
@@ -1246,6 +1244,9 @@ void RS_ParseTechnologies(char *id, char **text)
 			}
 		}
 	} while (*text);
+
+	/* set the overall reseach time to the one given in the ufo-file. */
+	tech->overalltime = tech->time;
 }
 
 /**
