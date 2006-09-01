@@ -440,6 +440,7 @@ typedef enum {
 	MS_ZOOMMAP,
 	MS_SHIFT3DMAP,
 	MS_ZOOM3DMAP,
+	MS_SCROLLTEXTNODE,
 	MS_WORLD
 } mouseSpace_t;
 

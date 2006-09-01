@@ -1036,10 +1036,11 @@ void CL_CameraRoute(pos3_t from, pos3_t target)
 	blockEvents = qtrue;
 }
 
-/**
- * @brief
- */
 #define ROTATE_SPEED	0.5
+/**
+ * @brief Called every frame to parse the input
+ * @sa CL_Frame
+ */
 void CL_ParseInput(void)
 {
 	int i, oldx, oldy;
