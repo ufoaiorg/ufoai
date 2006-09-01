@@ -1583,6 +1583,9 @@ void B_AssembleMap(void)
 				Q_strcat(coords, va("%i %i ", col * 16, (BASE_SIZE - row - 1) * 16), sizeof(coords));
 			}
 		}
+	/* set maxlevel for base attacks to 5 */
+	map_maxlevel_base = 5;
+
 	Cbuf_AddText(va("map \"%s\" \"%s\"\n", maps, coords));
 }
 

@@ -39,6 +39,7 @@ cvar_t *cursor;
 cvar_t *map_dropship;
 vec3_t map_dropship_coord;
 int map_maxlevel;
+int map_maxlevel_base = 0;
 sun_t map_sun;
 
 char cl_weaponmodels[MAX_CLIENTWEAPONMODELS][MAX_QPATH];
@@ -240,7 +241,7 @@ void CL_ParseEntitystring(char *es)
 	vec3_t color, ambient, origin, angles, lightangles, dropship_coord;
 	vec2_t wait;
 	int spawnflags;
-	int maxlevel;
+	int maxlevel = 8;
 	int entnum;
 	int nosmooth;
 	int skin;
@@ -261,6 +262,9 @@ void CL_ParseEntitystring(char *es)
 	VectorSet(map_fogColor, 0.5f, 0.5f, 0.5f);
 	map_fogColor[3] = 1.0f;
 	map_maxlevel = 8;
+	if (map_maxlevel_base >= 1) {
+		map_maxlevel = maxlevel = map_maxlevel_base;
+	}
 	map_numlights = 0;
 	map_fog = 0.0;
 	entnum = 0;
@@ -281,7 +285,6 @@ void CL_ParseEntitystring(char *es)
 		particle[0] = 0;
 		nosmooth = 0;
 		skin = 0;
-		maxlevel = 8;
 
 		/* parse the opening brace */
 		com_token = COM_Parse(&es);

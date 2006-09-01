@@ -967,6 +967,7 @@ void CL_Events(void);
 /* cl_view.c */
 extern sun_t map_sun;
 extern int map_maxlevel;
+extern int map_maxlevel_base;
 extern cvar_t *map_dropship;
 extern vec3_t map_dropship_coord;
 
