@@ -698,7 +698,7 @@ static void CL_CampaignRemoveMission(actMis_t * mis)
 	/* Clear base-attack status if required */
 	if (mis->def->missionType == MIS_BASEATTACK) {
 		base = (base_t*)mis->def->data;
-                B_BaseResetStatus(base);
+		B_BaseResetStatus(base);
 	}
 
 	/* Notifications */
@@ -781,6 +781,39 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
 	}
 }
 
+/**
+ * @brief Deletes employees from a base along with all base equipment.
+ * Called when invading forces overrun a base after a base-attack mission 
+ * @param[in] *base base_t base to be ransacked
+ */
+void CL_BaseRansacked(base_t *base) 
+{
+	int item, ac;
+
+	if (!base)
+		return;
+    
+	/* Delete all employees from the base & the global list. */
+	E_DeleteAllEmployees(base);
+
+	/* Destroy all items in storage */
+	for ( item = 0; item < csi.numODs; item++ )
+		base->storage.num[item] = 0;
+
+	/* Remove all aircrafts from the base. */
+	for ( ac = base->numAircraftInBase-1; ac >= 0; ac-- )
+		CL_DeleteAircraft(&base->aircraft[ac]);
+
+	/* TODO: Maybe reset research in progress. ... needs playbalance 
+	 *       need another value in technology_t to remember researched 
+	 *       time from other bases? 
+	 * TODO: Destroy (or better: just damage) some random buildings. */
+
+	Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base: %s has been ransacked! All employees killed and all equipment destroyed."), base->name);
+	MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+	CL_GameTimeStop();
+}
+
 
 /**
  * @brief
@@ -792,7 +825,7 @@ void CL_CampaignCheckEvents(void)
 	actMis_t *mis = NULL;
 	base_t *base = NULL;
 
-	int i, j, item, ac;
+	int i, j;
 
 	/* check campaign events */
 	for (i = 0, stage = ccs.stage; i < numStages; i++, stage++)
@@ -818,38 +851,21 @@ void CL_CampaignCheckEvents(void)
 			/* Mission is expired. Calculating penalties for the various mission types. */
 			switch (mis->def->missionType) {
 				case MIS_BASEATTACK:
-					/* Base attack */
+					/* Base attack mission never attended to, so
+					 * invaders had plenty of time to ransack it */
 					base = (base_t*)mis->def->data;
-					B_BaseResetStatus(base);
-
-					/* Delete all employees from the base & the global list. */
-					E_DeleteAllEmployees(base);
-
-					/* Destroy all items in storage */
-					for ( item = 0; item < csi.numODs; item++ ) {
-						base->storage.num[item] = 0;
-					}
-
-					/* Remove all aircrafts from the base. */
-					for ( ac = base->numAircraftInBase-1; ac >= 0; ac-- ) {
-						CL_DeleteAircraft(&base->aircraft[ac]);
-					}
-
-					/* TODO: Maybe reset running researches ... needs playbalance .. maybe another value in technology_t to remember researched time from other bases? */
-					/* TODO: Destroy (or better: just damage) some random buildings. */
-
-					Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("The aliens killed all employees and destroyed all equipment in your base '%s'."), base->name );
+					CL_BaseRansacked(base);
 					break;
 				case MIS_INTERCEPT:
 					/* Normal ground mission. */
 					CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
 					Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died."), mis->def->civilians), MAX_MESSAGE_TEXT);
+					MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 					break;
 				default:
 					Sys_Error("Unknown missionType for '%s'\n", mis->def->name);
 					break;
 			}
-			MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 			/* Remove mission from the map. */
 			if (mis->cause->def->number && mis->cause->num >= mis->cause->def->number)
 				CL_CampaignExecute(mis->cause);
@@ -2388,6 +2404,7 @@ static void CL_GameResultsCmd(void)
 	int numberofsoldiers = 0; /* DEBUG */
 	static equipDef_t *eSupplies = NULL;
 	equipDef_t *ed;
+	base_t *attackedbase = NULL;
 
 	/* multiplayer? */
 	if (!curCampaign || !selMis || !baseCurrent)
@@ -2431,13 +2448,6 @@ static void CL_GameResultsCmd(void)
 				+ ccs.eMarket.num[i] * 10 * frand()) ) /* supply-demand */
 			ccs.eMarket.num[i] += (2.0 + eSupplies->num[i] / 3.0) * frand();
 	}
-
-	/* TODO: */
-	/* base attack mission */
-	/* if we've lost a base attack mission we lose all employees in this base */
-	/* we even might lose some buildings and might be thrown back in research because we've also lost */
-	/* our research results */
-	/* the killed civilians are base employees - they have to be removed after defending the base */
 
 	civilians_killed = ccs.civiliansKilled;
 	aliens_killed = ccs.aliensKilled;
@@ -2504,6 +2514,16 @@ static void CL_GameResultsCmd(void)
 			 && selMis->cause->num >= selMis->cause->def->number) ) {
 		selMis->cause->active = qfalse;
 		CL_CampaignExecute(selMis->cause);
+	}
+
+	/* handle base attack mission */
+	if (selMis->def->missionType == MIS_BASEATTACK) {
+		attackedbase = (base_t*)selMis->def->data;
+		if (won) {
+			Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Defense of base: %s successful!"), attackedbase->name);
+			MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+		} else
+			CL_BaseRansacked(attackedbase);
 	}
 
 	/* remove mission from list */
