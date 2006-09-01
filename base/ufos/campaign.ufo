@@ -14,13 +14,13 @@ stage intro
 	set terror_only
 	{
 		needed		first
-		delay		"0 2 12" // set starts not sooner than 2d 22h 
-			                 // and not later than 7d 22h 
-		frame		"0 6 0"  // 1st mission starts not sooner than 4d 22h 
-			                 // and not later than 11d 22h 
-		expire		"0 5 0"  // average expire time is 2.5d
-			                 // minimum interval between missions is 2d
-			                 // so you have less than 1.5 on geoscape any time
+		delay		"0 5 12" // set starts not sooner than 5d 22h 
+			                 // and not later than 10d 22h 
+		frame		"0 9 0"  // 1st mission starts not sooner than 8d 22h 
+			                 // and not later than 16d 22h 
+		expire		"0 8 0"  // average expire time is 4d
+			                 // minimum interval between missions is 3d
+			                 // so you have 2 or less on geoscape any time
 		missions	"africa_excavation transport mine mart italy"
 // TODO: mine does not really fit there, because civilians are safe
 // please add some spawn points down there or move this to another stage
@@ -32,8 +32,8 @@ stage intro
 	{
 		needed		terror_only
 		delay		"0 3 7"
-		frame		"0 9 0" // big missions, but less traffic
-		expire		"0 17 0" // three at geoscape, but lots of time to do them
+		frame		"0 15 0" // big missions, but less traffic
+		expire		"0 45 0" // three at geoscape, but lots of time to do them
 		missions	"bunker japan dam"
 		number		3 // no mission will get repeated
 		quota		2
@@ -41,11 +41,11 @@ stage intro
 	set ultimate_terror // stage2 equipment start here
 	{
 		needed		soldier_terror
-		delay		"0 5 7"
-		frame		"0 6 0"
+		delay		"0 15 7"
+		frame		"0 6 0" // change of pace --- quick ones
 		expire		"0 5 0"
 		missions	"oriental city subway gasstation tower village"
-		quota		3 // torment the player until he's done
+		quota		4 // torment the player until he's done
 		nextstage	ufos_are_coming
 	}
 	set stop
@@ -74,7 +74,7 @@ stage ufos_are_coming
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 8 0"
-		missions	"construction pdi farm2 office harbor"
+		missions	"construction farm2 office harbor" // pdi is broken
 		quota		3
 		nextstage	invasion
 	}
