@@ -1581,10 +1581,6 @@ void MN_DrawMenus(void)
 								/* Due to scrolling this line is not visible */
 								break;
 
-							if (line < node->textScroll)
-								/* Due to scrolling this line is not visible */
-								continue;
-
 							/* new line starts from node x position */
 							x = node->pos[0];
 
@@ -1594,6 +1590,12 @@ void MN_DrawMenus(void)
 								/* set the \n to \0 to draw only this part (before the \n) with our font renderer */
 								/* let end point to the next char after the \n (or \0 now) */
 								*end++ = '\0';
+
+							if (line < node->textScroll) {
+								cur = end;
+								/* Due to scrolling this line is not visible */
+								continue;
+							}
 
 							/* FIXME: only works with one-line texts right now: */
 							if (node->mousefx && line == mouseOver)
