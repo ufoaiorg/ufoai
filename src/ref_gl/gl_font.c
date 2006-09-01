@@ -204,9 +204,12 @@ void Font_CleanCache(void)
 
 	/* free the surfaces */
 	for (; i < numInCache; i++)
-		for (font = &fontCache[i]; font; font = font->next)
+/* this double-freed, but without this there is a 700MB leak:
+        for (font = &fontCache[i]; font; font = font->next)
 			if (font->pixel)
-				SDL_FreeSurface(font->pixel);
+*/
+		if (fontCache[i].pixel)
+			SDL_FreeSurface(font->pixel);
 
 	memset(fontCache, 0, sizeof(fontCache));
 	memset(hash, 0, sizeof(hash));
@@ -225,7 +228,6 @@ void Font_ListCache_f(void)
 	ri.Con_Printf(PRINT_ALL, "Font cache info\n========================\n");
 	ri.Con_Printf(PRINT_ALL, "...font cache size: %i - used %i\n", MAX_FONT_CACHE, numInCache);
 
-	/* free the surfaces */
 	for (; i < numInCache; i++) {
 		f = &fontCache[i];
 		if (!f) {
