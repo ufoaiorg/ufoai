@@ -661,7 +661,9 @@ void CL_AddTargeting(void);
 #define NUM_TEAMSKINS	4
 
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y);
+void CL_SendInventory(sizebuf_t * buf, inventory_t * i);
 void CL_ReceiveItem(sizebuf_t * buf, item_t * item, int * container, int * x, int * y);
+void CL_ReceiveInventory(sizebuf_t * buf, inventory_t * i);
 void CL_ResetTeams(void);
 void CL_ParseResults(sizebuf_t * buf);
 void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num);

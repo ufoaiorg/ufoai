@@ -82,6 +82,7 @@ static void Font_TextureCleanCache(void)
 
 	for (i = firstTextureCache; i != lastTextureCache; i++, i %= MAX_TEXTURE_CACHE) {
 		qglDeleteTextures(1, &textureCache[i].texture);
+		SDL_FreeSurface(textureCache[i].surface);
 		textureCache[i].surface = 0;
 		textureCache[i].texture = 0;
 	}
@@ -196,14 +197,16 @@ void Font_Length(char *font, char *c, int *width, int *height)
 void Font_CleanCache(void)
 {
 	int i = 0;
+	fontCache_t *font;
 
 	if (numInCache < MAX_FONT_CACHE / 2)
 		return;
 
 	/* free the surfaces */
 	for (; i < numInCache; i++)
-		if (fontCache[i].pixel)
-			SDL_FreeSurface(fontCache[i].pixel);
+		for (font = &fontCache[i]; font; font = font->next)
+			if (font->pixel)
+				SDL_FreeSurface(font->pixel);
 
 	memset(fontCache, 0, sizeof(fontCache));
 	memset(hash, 0, sizeof(hash));

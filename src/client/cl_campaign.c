@@ -1330,7 +1330,6 @@ void CL_GameSave(char *filename, char *comment)
 	int res;
 	int i, j, type;
 	base_t *base;
-	invList_t *ic;
 
 	if (!curCampaign) {
 		Com_Printf("No campaign active.\n");
@@ -1370,18 +1369,8 @@ void CL_GameSave(char *filename, char *comment)
 
 	/* store inventories */
 	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < gd.numEmployees[type]; i++) {
-			int nr = 0;
-
-			for (j = 0; j < csi.numIDs; j++)
-				for (ic = gd.employees[type][i].inv.c[j]; ic; ic = ic->next)
-					nr++;
-
-			MSG_WriteShort(&sb, nr * 6);
-			for (j = 0; j < csi.numIDs; j++)
-				for (ic = gd.employees[type][i].inv.c[j]; ic; ic = ic->next)
-					CL_SendItem(&sb, ic->item, j, ic->x, ic->y);
-		}
+		for (i = 0; i < gd.numEmployees[type]; i++)
+			CL_SendInventory(&sb, &gd.employees[type][i].inv);
 
 	/* store message system items */
 	for (i = 0, message = messageStack; message; i++, message = message->next);
@@ -1659,19 +1648,11 @@ int CL_GameLoad(char *filename)
 	/* load inventories */
 	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
-			int nr = MSG_ReadShort(&sb) / 6;
 
 			/* clear the mess of stray loaded pointers */
 			memset(&gd.employees[type][i].inv, 0, sizeof(inventory_t));
 
-			for (; nr-- > 0;) {
-				item_t item;
-				int container, x, y;
-
-				CL_ReceiveItem(&sb, &item, &container, &x, &y);
-
-				Com_AddToInventory(&gd.employees[type][i].inv, item, container, x, y);
-			}
+			CL_ReceiveInventory(&sb, &gd.employees[type][i].inv);
 		}
 
 	/* how many message items */

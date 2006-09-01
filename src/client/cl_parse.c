@@ -822,14 +822,10 @@ void CL_PlaceItem( le_t *le )
  */
 void CL_InvAdd( sizebuf_t *sb )
 {
-	item_t	item;
-	le_t	*le;
 	int		number;
-	int		size;
-	byte	container, x, y;
+	le_t	*le;
 
 	number = MSG_ReadShort( sb );
-	size = MSG_ReadShort( sb );
 
 	le = LE_Get( number );
 	if ( !le ) {
@@ -837,18 +833,22 @@ void CL_InvAdd( sizebuf_t *sb )
 		return;
 	}
 
-	for (; size > 0; size -= 6 ) {
-		item.t = MSG_ReadByte( sb );
-		item.a = MSG_ReadByte( sb );
-		item.m = MSG_ReadByte( sb );
-		container = MSG_ReadByte( sb );
-		x = MSG_ReadByte( sb );
-		y = MSG_ReadByte( sb );
-		Com_AddToInventory( &le->i, item, container, x, y );
-		if ( container == csi.idRight )
-			le->right = item.t;
-		else if ( container == csi.idLeft )
-			le->left = item.t;
+	{
+		item_t item;
+		int container, x, y;
+		int nr = MSG_ReadShort(sb) / 6;
+
+		for (; nr-- > 0;) {
+
+			CL_ReceiveItem(sb, &item, &container, &x, &y);
+
+			Com_AddToInventory(&le->i, item, container, x, y);
+
+			if ( container == csi.idRight )
+				le->right = item.t;
+			else if ( container == csi.idLeft )
+				le->left = item.t;
+		}
 	}
 
 	switch ( le->type ) {

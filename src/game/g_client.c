@@ -98,13 +98,21 @@ void G_SendStats(edict_t * ent)
 /**
  * @brief Write an item to the network buffer
  */
-void G_WriteItem(item_t * item)
+void G_WriteItem(item_t item, int container, int x, int y)
 {
-	assert (item->t != NONE);
+	assert (item.t != NONE);
 
-	gi.WriteByte(item->t);
-	gi.WriteByte(item->a);
-	gi.WriteByte(item->m);
+	gi.WriteFormat("bbbbbb", 
+				   item.t, item.a, item.m, container, x, y);
+}
+
+/**
+ * @brief Read item from the network buffer
+ */
+void G_ReadItem(item_t * item, int * container, int * x, int * y)
+{
+	gi.ReadFormat("bbbbbb", 
+				   &item->t, &item->a, &item->m, container, x, y);
 }
 
 
@@ -204,7 +212,7 @@ void G_SendInventory(int player_mask, edict_t * ent)
 {
 	invList_t *ic;
 	unsigned short nr = 0;
-	int k;
+	int j;
 
 	/* test for pointless player mask */
 	if (!player_mask)
@@ -212,21 +220,18 @@ void G_SendInventory(int player_mask, edict_t * ent)
 
 	gi.AddEvent(player_mask, EV_INV_ADD);
 
-	for (k = 0; k < gi.csi->numIDs; k++)
-		for (ic = ent->i.c[k]; ic; ic = ic->next)
-			nr++;
-
 	gi.WriteShort(ent->number);
+
+	for (j = 0; j < gi.csi->numIDs; j++)
+		for (ic = ent->i.c[j]; ic; ic = ic->next)
+			nr++;
 
 	/* size of inventory */
 	gi.WriteShort(nr*6);
-	for (k = 0; k < gi.csi->numIDs; k++)
-		for (ic = ent->i.c[k]; ic; ic = ic->next) {
+	for (j = 0; j < gi.csi->numIDs; j++)
+		for (ic = ent->i.c[j]; ic; ic = ic->next) {
 			/* send a single item */
-			G_WriteItem(&ic->item);
-			gi.WriteByte(k);
-			gi.WriteByte(ic->x);
-			gi.WriteByte(ic->y);
+			G_WriteItem(ic->item, j, ic->x, ic->y);
 		}
 }
 
@@ -745,7 +750,7 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 		return;
 
 	if ( ( ia = Com_MoveInInventory(&ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic) ) != 0 ) {
-		item_t *item = &ic->item;
+		item_t item = ic->item;
 
 		switch (ia) {
 		case IA_NOTIME:
@@ -812,7 +817,7 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 			to = from;
 			tx = fx;
 			ty = fy;
-			item = &Com_SearchInInventory(&ent->i, from, fx, fy)->item;
+			item = Com_SearchInInventory(&ent->i, from, fx, fy)->item;
 		}
 
 		/* add it */
@@ -826,19 +831,13 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
 				gi.WriteShort(floor->number);
 				gi.WriteShort(6);
-				G_WriteItem(item);
-				gi.WriteByte(to);
-				gi.WriteByte(tx);
-				gi.WriteByte(ty);
+				G_WriteItem(item, to, tx, ty);
 			}
 		} else {
 			gi.AddEvent(G_TeamToPM(ent->team), EV_INV_ADD);
 			gi.WriteShort(num);
 			gi.WriteShort(6);
-			G_WriteItem(item);
-			gi.WriteByte(to);
-			gi.WriteByte(tx);
-			gi.WriteByte(ty);
+			G_WriteItem(item, to, tx, ty);
 		}
 
 		/* other players receive weapon info only */
@@ -855,10 +854,7 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 				gi.AddEvent(mask, EV_INV_ADD);
 				gi.WriteShort(num);
 				gi.WriteShort(6);
-				G_WriteItem(item);
-				gi.WriteByte(to);
-				gi.WriteByte(tx);
-				gi.WriteByte(ty);
+				G_WriteItem(item, to, tx, ty);
 			}
 		}
 		gi.EndEvents();
@@ -2383,11 +2379,11 @@ void G_ClientTeamInfo(player_t * player)
 				int nr = gi.ReadShort() / 6;
 
 				for (; nr-- > 0;) {
-					gi.ReadFormat("bbbbbb", &item.t, &item.a, &item.m, &container, &x, &y);
-					/*				gi.dprintf("G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y);*/
+					G_ReadItem (&item, &container, &x, &y);
+					/* gi.dprintf("G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y); */
 
-				Com_AddToInventory(&ent->i, item, container, x, y);
-/*				gi.dprintf("G_ClientTeamInfo: add %s to inventory (container %i - idArmor: %i)\n", gi.csi->ods[ent->i.c[container]->item.t].kurz, container, gi.csi->idArmor);*/
+					Com_AddToInventory(&ent->i, item, container, x, y);
+					/* gi.dprintf("G_ClientTeamInfo: add %s to inventory (container %i - idArmor: %i)\n", gi.csi->ods[ent->i.c[container]->item.t].kurz, container, gi.csi->idArmor); */
 				}
 			}
 
