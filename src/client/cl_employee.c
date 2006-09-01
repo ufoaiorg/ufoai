@@ -461,7 +461,6 @@ employee_t* E_CreateEmployee(employeeType_t type)
 			break;
 		case EMPL_ROBOT:
 			CL_GenerateCharacter(employee, Cvar_VariableString("team"), ET_UGV, type);
-			employee->speed = 100;
 			break;
 		default:
 			break;
