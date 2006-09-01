@@ -30,7 +30,7 @@ static const SDL_Color color = { 255, 255, 255, 0 };	/* The 4. value is unused *
 
 /* holds the gettext string */
 static char buf[BUF_SIZE];
-static int numInCache;
+static int numInCache = 0;
 static int firstTextureCache = 0;
 static int lastTextureCache = 0;
 fontRenderStyle_t fontStyle[] = {
@@ -603,6 +603,15 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 void Font_Init(void)
 {
 	numFonts = 0;
+	memset(fonts, 0, sizeof(fonts));
+
+	numInCache = 0;
+	memset(fontCache, 0, sizeof(fontCache));
+	memset(hash, 0, sizeof(hash));
+
+	firstTextureCache = 0;
+	lastTextureCache = 0;
+	memset(textureCache, 0, sizeof(textureCache));
 
 	/* init the truetype font engine */
 	if (TTF_Init())
