@@ -1531,10 +1531,12 @@ void CL_UpdatePointersInGlobalData(void)
 		}
 
 		/* now fix the curTeam pointers */
+		/* FIXME: EMPL_ROBOTS => ugvs */
 		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 			if ( CL_SoldierInAircraft(i, base->aircraftCurrent) ) {
 				/* maybe we already have soldiers in this base */
 				base->curTeam[p] = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
+				assert(base->curTeam[p]);
 				p++;
 			}
 		/* rest will be null */
