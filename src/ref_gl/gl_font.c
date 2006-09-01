@@ -197,9 +197,6 @@ void Font_CleanCache(void)
 {
 	int i = 0;
 
-	if (numInCache < MAX_FONT_CACHE / 2)
-		return;
-
 	/* free the surfaces */
 	for (; i < numInCache; i++)
 		if (fontCache[i].pixel)
