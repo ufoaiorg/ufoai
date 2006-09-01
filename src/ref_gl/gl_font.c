@@ -197,18 +197,12 @@ void Font_Length(char *font, char *c, int *width, int *height)
 void Font_CleanCache(void)
 {
 	int i = 0;
-/*	fontCache_t *font; */
 
 	if (numInCache < MAX_FONT_CACHE / 2)
 		return;
 
 	/* free the surfaces */
 	for (; i < numInCache; i++)
-/* this double-freed, but without this there is a 700MB leak:
-        for (font = &fontCache[i]; font; font = font->next)
-			if (font->pixel)
-			SDL_FreeSurface(font->pixel);
-*/
 		if (fontCache[i].pixel)
 			SDL_FreeSurface(fontCache[i].pixel);
 
