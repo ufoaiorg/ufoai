@@ -281,8 +281,10 @@ static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 	int hashValue;
 	fontCache_t *font = NULL;
 
-	if (numInCache >= MAX_FONT_CACHE)
+	if (numInCache >= MAX_FONT_CACHE) {
 		Font_CleanCache();
+		Font_TextureCleanCache();
+	}
 
 	hashValue = Font_Hash(s, MAX_HASH_STRING);
 	if (hash[hashValue]) {
