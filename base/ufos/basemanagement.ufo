@@ -299,7 +299,7 @@ aircraft craft_dropship
 	name	"_Dropship"
 	type	transporter
 	model	"dropship"
-	price	100000
+	price	3500000
 	building	building_hangar
 	size	8
 	fuel	100000
@@ -316,7 +316,7 @@ aircraft craft_interceptor
 	fuel	60000
 	fuelsize	60000
 	size	1
-	price	100000
+	price	2000000
 	building	building_intercept
 	image	air_interceptor
 	// FIXME: This is just testing
@@ -332,7 +332,7 @@ aircraft craft_ufo_small
 	model	"ufo1"
 	size	4
 	building	building_ufo_hangar
-	price	1000000
+	price	3000000
 	fuel	100000
 	fuelsize	100000
 	image	air_ufo
