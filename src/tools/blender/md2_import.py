@@ -1,10 +1,10 @@
 #!BPY
 
 """
-Name: 'MD2'
-Blender: 240
+Name: 'MD2 (.md2)'
+Blender: 239
 Group: 'Import'
-Tooltip: 'Import from Quake file format. (.md2)'
+Tooltip: 'Import from Quake file format (.md2).'
 """
 
 __author__ = 'Bob Holcomb'
@@ -22,8 +22,7 @@ and animations into blender for editing.  Loader is based on MD2 loader from www
 
 # ***** BEGIN GPL LICENSE BLOCK *****
 #
-# Script copyright (C) 2003, 2004: Jean-Michel Soler 
-# Additionnal entries in the original data base (c) 2004 by Bart (bart@neeneenee.de)
+# Script copyright (C) Bob Holcomb
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
