@@ -39,7 +39,7 @@ static int buyCategory;
  */
 static void CL_MarketAircraftDescription (int aircraftID)
 {
-	menuText[TEXT_STANDARD] = NULL;
+	menuText[TEXT_STANDARD] = "NULL";
 }
 
 /**
@@ -67,11 +67,8 @@ static void CL_BuySelectCmd(void)
 
 #define MAX_AIRCRAFT_STORAGE 8
 /**
- * @brief
- *
- * set storage and supply to the values of aircraft
- * in use - and the value of aircraft available for
- * buying
+ * @brief set storage and supply to the values of aircraft
+ * in use - and the value of aircraft available for buying
  *
  * @param aircraft Aircraft ID from scriptfile
  * @param storage Pointer to int value which will hold the amount of aircraft
@@ -81,7 +78,6 @@ static void CL_BuySelectCmd(void)
  * for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++)
  *   AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
  * @endcode
- *
  * @sa CL_BuyType
  */
 static void AIR_GetStorageSupplyCount(char *airCharId, int *const storage, int *const supply)
@@ -165,28 +161,32 @@ static void CL_BuyType(void)
 	/* aircraft */
 	else if (buyCategory == NUM_BUYTYPES) {
 		for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++) {
-			AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
-			Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
-			Cvar_Set(str, _(air_samp->name));
+			tech = RS_GetTechByProvided(air_samp->id);
+			assert(tech);
+			if (!tech || RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
+				AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
+				Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
+				Cvar_Set(str, _(air_samp->name));
 
-			Q_strncpyz(str, va("mn_storage%i", j), MAX_VAR);
-			Cvar_SetValue(str, storage);
+				Q_strncpyz(str, va("mn_storage%i", j), MAX_VAR);
+				Cvar_SetValue(str, storage);
 
-			Q_strncpyz(str, va("mn_supply%i", j), MAX_VAR);
-			Cvar_SetValue(str, supply);
+				Q_strncpyz(str, va("mn_supply%i", j), MAX_VAR);
+				Cvar_SetValue(str, supply);
 
-			Q_strncpyz(str, va("mn_price%i", j), MAX_VAR);
-			Cvar_Set(str, va("%i c", air_samp->price));
+				Q_strncpyz(str, va("mn_price%i", j), MAX_VAR);
+				Cvar_Set(str, va("%i c", air_samp->price));
 
-			buyList[j] = i;
-			j++;
+				buyList[j] = i;
+				j++;
+			}
 		}
 		buyListLength = j;
 		for (; j < 10; j++) {
-			Cvar_Set(va("mn_item%i", j), "");
-			Cvar_Set(va("mn_storage%i", j), "");
-			Cvar_Set(va("mn_supply%i", j), "");
-			Cvar_Set(va("mn_price%i", j), "");
+			Cvar_Set(va("mn_item%i", j), "-");
+			Cvar_Set(va("mn_storage%i", j), "-");
+			Cvar_Set(va("mn_supply%i", j), "-");
+			Cvar_Set(va("mn_price%i", j), "-");
 		}
 	}
 
@@ -304,15 +304,11 @@ static void CL_BuyAircraft(void)
 		return;
 
 	aircraftID = buyList[num];
-	Cbuf_AddText(va("buyselect%i\n", num));
-
-#if 0
-	if (ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item]) {
-		Cvar_SetValue(va("mn_storage%i", num), ++baseCurrent->storage.num[item]);
-		Cvar_SetValue(va("mn_supply%i", num), --ccs.eMarket.num[item]);
-		CL_UpdateCredits(ccs.credits - csi.ods[item].price);
+	Cbuf_AddText(va("buyselect%i\n;", num));
+	if (ccs.credits >= aircraft_samples[aircraftID].price) {
+		CL_UpdateCredits(ccs.credits-aircraft_samples[aircraftID].price);
+		Cbuf_AddText(va("aircraft_new %s %i;buy_type 4;", aircraft_samples[aircraftID].id, baseCurrent->idx));
 	}
-#endif
 }
 
 
@@ -322,6 +318,7 @@ static void CL_BuyAircraft(void)
  * FIXME: This needs work in reassigning the base aircraft array
  * or the other functions need to check whether the aircraft
  * at current arraypos is valid
+ * FIXME: Remove all soldiers and put equipment back to base
  * @sa CL_BuyAircraft
  */
 static void CL_SellAircraft(void)
