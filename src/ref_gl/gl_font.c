@@ -82,7 +82,6 @@ static void Font_TextureCleanCache(void)
 
 	for (i = firstTextureCache; i != lastTextureCache; i++, i %= MAX_TEXTURE_CACHE) {
 		qglDeleteTextures(1, &textureCache[i].texture);
-		SDL_FreeSurface(textureCache[i].surface);
 		textureCache[i].surface = 0;
 		textureCache[i].texture = 0;
 	}
