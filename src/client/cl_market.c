@@ -164,6 +164,7 @@ static void CL_BuyType(void)
 			tech = RS_GetTechByProvided(air_samp->id);
 			assert(tech);
 			if (!tech || RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
+				storage = supply = 0;
 				AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
 				Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
 				Cvar_Set(str, _(air_samp->name));
