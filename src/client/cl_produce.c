@@ -266,6 +266,20 @@ void PR_ProductionIncrease(void)
 }
 
 /**
+ * @brief Stops the current running production
+ */
+void PR_ProductionStop(void)
+{
+	if (!baseCurrent)
+		return;
+	if (gd.productions[baseCurrent->idx].amount <= 0) {
+		gd.productions[baseCurrent->idx].amount = 0;
+		gd.productions[baseCurrent->idx].objID = -1;
+		PR_ProductionInfo();
+	}
+}
+
+/**
  * @brief Decrease the production amount by given parameter
  */
 void PR_ProductionDecrease(void)
@@ -281,7 +295,7 @@ void PR_ProductionDecrease(void)
 	if (gd.productions[baseCurrent->idx].objID >= 0) {
 		gd.productions[baseCurrent->idx].amount -= amount;
 		if (gd.productions[baseCurrent->idx].amount <= 0) {
-			gd.productions[baseCurrent->idx].objID = -1;
+			PR_ProductionStop();
 		}
 	}
 	PR_ProductionInfo();
@@ -300,5 +314,6 @@ void PR_ResetProduction(void)
 	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f);
 	Cmd_AddCommand("prod_inc", PR_ProductionIncrease);
 	Cmd_AddCommand("prod_dec", PR_ProductionDecrease);
+	Cmd_AddCommand("prod_stop", PR_ProductionStop);
 }
 

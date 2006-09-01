@@ -67,7 +67,7 @@ menu production
 	text prodlist
 	{
 		pos		"40 30"
-		size	"286 710"
+		size	"402 710"
 //		bgcolor "1 1 1 0.5"
 		format	"22 0"
 		num	15
@@ -78,8 +78,8 @@ menu production
 
 	text prodlist_amount
 	{
-		pos		"336 30"
-		size	"114 710"
+		pos		"465 30"
+		size	"80 710"
 //		bgcolor "1 1 1 0.5"
 		format	"22 0"
 		num	16
@@ -96,21 +96,13 @@ menu production
 		click	{ cmd "prod_inc" }
 	}
 
-	pic prod_stop_2
-	{
-		image	menu/buttons_small
-		pos		"794 355"
-		tooltip "_Stop production"
-		texl	"0 0"
-		texh	"16 16"
-	}
 	pic prod_stop
 	{
 		image	menu/buttons_small
 		pos		"794 355"
 		tooltip "_Stop production"
-		texl	"16 0"
-		texh	"32 16"
+		texl	"48 16"
+		texh	"64 32"
 		click	{ cmd "prod_stop" }
 	}
 
