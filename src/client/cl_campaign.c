@@ -684,6 +684,7 @@ static void CL_CampaignAddMission(setState_t * set)
 static void CL_CampaignRemoveMission(actMis_t * mis)
 {
 	int i, num;
+	base_t *base;
 
 	num = mis - ccs.mission;
 	if (num >= ccs.numMissions) {
@@ -694,8 +695,10 @@ static void CL_CampaignRemoveMission(actMis_t * mis)
 	/* allow respawn on geoscape */
 	mis->def->onGeoscape = qfalse;
 
+	/* Clear base-attack status if required */
 	if (mis->def->missionType == MIS_BASEATTACK) {
-		/* TODO */
+		base = (base_t*)mis->def->data;
+                B_BaseResetStatus(base);
 	}
 
 	/* Notifications */
