@@ -299,6 +299,9 @@ menu aircraft
 	}
 }
 
+// ===================
+// AIRCRAFT EQUIP MENU
+// ===================
 menu aircraft_equip
 {
 	// ==================

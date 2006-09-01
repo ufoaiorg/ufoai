@@ -876,7 +876,10 @@ menu buy
 	}
 }
 
-menu buyaircraftDEACTIVATED
+// ==================
+// AIRCRAFT BUY MENU
+// ==================
+menu buyaircraft
 {
 	// ==================
 	// don't render
