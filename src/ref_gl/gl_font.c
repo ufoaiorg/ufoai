@@ -197,9 +197,6 @@ void Font_CleanCache(void)
 {
 	int i = 0;
 
-	if (numInCache < MAX_FONT_CACHE / 2)
-		return;
-
 	/* free the surfaces */
 	for (; i < numInCache; i++)
 		if (fontCache[i].pixel)
@@ -281,8 +278,10 @@ static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 	int hashValue;
 	fontCache_t *font = NULL;
 
-	if (numInCache >= MAX_FONT_CACHE)
+	if (numInCache >= MAX_FONT_CACHE) {
 		Font_CleanCache();
+		Font_TextureCleanCache();
+	}
 
 	hashValue = Font_Hash(s, MAX_HASH_STRING);
 	if (hash[hashValue]) {
