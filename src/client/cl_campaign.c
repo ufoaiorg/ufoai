@@ -813,8 +813,6 @@ void CL_BaseRansacked(base_t *base)
 	if (!base)
 		return;
     
-	Com_Printf("CL_BaseRansacked called!!!!!!!!!!!!\n");
-
 	/* Delete all employees from the base & the global list. */
 	E_DeleteAllEmployees(base);
 
