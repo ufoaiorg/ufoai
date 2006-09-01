@@ -758,10 +758,10 @@ static void CL_BuildingAircraftList_f(void)
 }
 
 /**
- * @brief
- *
- * if expires is true a mission expires without any reaction
- * this will cost money and decrease nation support for this area
+ * @brief Updates each nation's happiness and mission win/loss stats.
+ * Should be called at the completion or expiration of every mission.
+ * The nation where the mission took place will be most affected,
+ * surrounding nations will be less affected.
  */
 static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
 {
@@ -771,6 +771,11 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
 	float alienSum = aliensKilled + aliensSurvived;
 	float alienRatio = alienSum ? aliensKilled / alienSum : 0;
 	float performance = 0.5 + civilianRatio * 0.25 + alienRatio * 0.25;
+
+	if (lost)
+		stats.missionsLost++;
+	else
+		stats.missionsWon++;
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation_t *nation = &gd.nations[i];
@@ -874,6 +879,7 @@ void CL_CampaignCheckEvents(void)
 					/* Base attack mission never attended to, so
 					 * invaders had plenty of time to ransack it */
 					base = (base_t*)mis->def->data;
+					CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
 					CL_BaseRansacked(base);
 					break;
 				case MIS_INTERCEPT:
@@ -2479,7 +2485,7 @@ static void CL_GameResultsCmd(void)
 	civilians_killed = ccs.civiliansKilled;
 	aliens_killed = ccs.aliensKilled;
 	/* fprintf(stderr, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n", won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed); */
-  	CL_HandleNationData(won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed, selMis);
+  	CL_HandleNationData(!won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed, selMis);
 
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
