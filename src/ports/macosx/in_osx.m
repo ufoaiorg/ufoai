@@ -2,9 +2,9 @@
 // "in_osx.c" - MacOS X mouse input functions.
 //
 // Written by:	awe				[mailto:awe@fruitz-of-dojo.de].
-//		©2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de].
+//		2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de].
 //
-// Quake IIª is copyrighted by id software	[http://www.idsoftware.com].
+// Quake II is copyrighted by id software	[http://www.idsoftware.com].
 //
 // Version History:
 // v1.0.8: F12 eject is now disabled while Quake II is running and if a key is bound to F12.
@@ -29,29 +29,24 @@
 
 #pragma mark =Variables=
 
-extern BOOL		gSysIsDeactivated;
-extern cvar_t		*gSysIsMinimized;
-extern cvar_t		*vid_fullscreen;
+extern BOOL gSysIsDeactivated;
+extern cvar_t *gSysIsMinimized;
+extern cvar_t *vid_fullscreen;
 
-cvar_t			*in_joystick, *in_mouse, *_windowed_mouse;
-                        
-static BOOL		gInMLooking = NO;
-static cvar_t		*m_filter,
-                          *gInSensitivity;
+cvar_t *in_joystick, *in_mouse, *_windowed_mouse;
+
+static BOOL gInMLooking = NO;
+static cvar_t
+			*m_filter,
+			*gInSensitivity;
 extern cvar_t
-                        *gInSensitivity,
-                        *lookstrafe,
-                        *m_side,
-                        *m_yaw,
-                        *m_pitch,
-                        *m_forward,
-                        *freelook;
+			*gInSensitivity;
 static CGMouseDelta	gInMouseX,
-                        gInMouseY,
-                        gInMouseNewX,
-                        gInMouseNewY,
-                        gInMouseOldX,
-                        gInMouseOldY;
+			gInMouseY,
+			gInMouseNewX,
+			gInMouseNewY,
+			gInMouseOldX,
+			gInMouseOldY;
 
 #pragma mark -
 
@@ -104,12 +99,12 @@ void	IN_SetKeyboardRepeatEnabled (BOOL theState)
     static double	myOriginalKeyboardRepeatInterval;
     static double	myOriginalKeyboardRepeatThreshold;
     NXEventHandle	myEventStatus;
-    
+
     if (theState == myKeyboardRepeatEnabled)
         return;
     if (!(myEventStatus = NXOpenEventStatus ()))
         return;
-        
+
     if (theState == YES)
     {
         NXSetKeyRepeatInterval (myEventStatus, myOriginalKeyboardRepeatInterval);
@@ -123,7 +118,7 @@ void	IN_SetKeyboardRepeatEnabled (BOOL theState)
         NXSetKeyRepeatInterval (myEventStatus, 3456000.0f);
         NXSetKeyRepeatThreshold (myEventStatus, 3456000.0f);
     }
-    
+
     NXCloseEventStatus (myEventStatus);
     myKeyboardRepeatEnabled = theState;
 }
@@ -135,7 +130,7 @@ void	IN_SetF12EjectEnabled (qboolean theState)
     static BOOL		myF12KeyIsEnabled = YES;
     static UInt32	myOldValue;
     io_connect_t	myIOHandle = NULL;
-    
+
     // Do we have a state change?
     if (theState == myF12KeyIsEnabled)
     {
@@ -155,7 +150,7 @@ void	IN_SetF12EjectEnabled (qboolean theState)
         UInt32		myValue = 0x00;
         IOByteCount	myCount;
         kern_return_t	myStatus;
-        
+
         myStatus = IOHIDGetParameter (myIOHandle,
                                       CFSTR (kIOHIDF12EjectDelayKey),
                                       sizeof (UInt32),
@@ -180,7 +175,7 @@ void	IN_SetF12EjectEnabled (qboolean theState)
         }
         theState = YES;
     }
-    
+
     myF12KeyIsEnabled = theState;
     IOServiceClose (myIOHandle);
 }
@@ -198,7 +193,7 @@ void	IN_SetMouseScalingEnabled (BOOL theState)
     {
         return;
     }
-    
+
     // Get the IOKit handle:
     myIOHandle = IN_GetIOHandle ();
     if (myIOHandle == NULL)
@@ -223,20 +218,20 @@ void	IN_SetMouseScalingEnabled (BOOL theState)
         {
             theState = YES;
         }
-        
+
         // change only the settings, if we were successfull!
         if (myStatus != kIOReturnSuccess)
         {
             theState = YES;
         }
-        
+
         // finally disable the acceleration:
         if (theState == NO)
         {
             IOHIDSetAccelerationWithKey (myIOHandle,  CFSTR (kIOHIDMouseAccelerationType), -1.0);
         }
     }
-    
+
     myMouseScalingEnabled = theState;
     IOServiceClose (myIOHandle);
 }
@@ -299,11 +294,11 @@ void	IN_CenterCursor (void)
         {
             myCenterY = 0.0f;
         }
-        
+
         // calculate the window center:
         myCenterX += (float) (viddef.width >> 1);
         myCenterY += (float) CGDisplayPixelsHigh (kCGDirectMainDisplay) - (float) (viddef.height >> 1);
-        
+
         myCenter = CGPointMake (myCenterX, myCenterY);
     }
     else
@@ -325,13 +320,7 @@ void	IN_Init (void)
     m_filter		= Cvar_Get ("m_filter", "0", 0);
     in_mouse		= Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
     in_joystick		= Cvar_Get ("in_joystick", "0", CVAR_ARCHIVE);
-    freelook		= Cvar_Get( "freelook", "0", 0 );
-    lookstrafe		= Cvar_Get ("lookstrafe", "0", 0);
     gInSensitivity	= Cvar_Get ("sensitivity", "3", 0);
-    m_pitch		= Cvar_Get ("m_pitch", "0.022", 0);
-    m_yaw		= Cvar_Get ("m_yaw", "0.022", 0);
-    m_forward		= Cvar_Get ("m_forward", "1", 0);
-    m_side		= Cvar_Get ("m_side", "0.8", 0);
 
 //    Cmd_AddCommand ("+mlook", IN_MLookDown_f);
 //    Cmd_AddCommand ("-mlook", IN_MLookUp_f);
@@ -353,15 +342,15 @@ void	IN_Shutdown (void)
 
 //_________________________________________________________________________________________________IN_MLookDown_f()
 
-void	IN_MLookDown_f (void) 
-{ 
-    gInMLooking = true; 
+void	IN_MLookDown_f (void)
+{
+    gInMLooking = true;
 }
 
 //___________________________________________________________________________________________________IN_MLookUp_f()
 
 /*
-void	IN_MLookUp_f (void) 
+void	IN_MLookUp_f (void)
 {
     gInMLooking = false;
     IN_CenterView ();
@@ -437,27 +426,12 @@ void	IN_Move (usercmd_t *cmd)
     gInMouseX *= gInSensitivity->value;
     gInMouseY *= gInSensitivity->value;
 
-    if ((in_strafe.state & 1) || (lookstrafe->value && gInMLooking))
-    {
-        cmd->sidemove += m_side->value * gInMouseX;
-    }
-    else
-    {
-        cl.viewangles[YAW] -= m_yaw->value * gInMouseX;
-    }
+    cl.viewangles[YAW] -= m_yaw->value * gInMouseX;
 
-    if ((gInMLooking || freelook->value) && !(in_strafe.state & 1))
-    {
-        cl.viewangles[PITCH] += m_pitch->value * gInMouseY;
-    }
-    else
-    {
-        cmd->forwardmove -= m_forward->value * gInMouseY;
-    }
+    cl.viewangles[PITCH] += m_pitch->value * gInMouseY;
 
     // force the mouse to the center, so there's room to move:
-    if (myMouseX != 0 || myMouseY != 0)
-    {
+    if (myMouseX != 0 || myMouseY != 0) {
         IN_CenterCursor ();
     }
 }

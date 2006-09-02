@@ -200,9 +200,7 @@ extern const byte dvleft[8];
 
 /*
 ==============================================================
-
 MATHLIB
-
 ==============================================================
 */
 
@@ -390,9 +388,7 @@ qboolean Info_Validate(char *s);
 
 /*
 ==============================================================
-
 SYSTEM SPECIFIC
-
 ==============================================================
 */
 
@@ -415,9 +411,7 @@ int Hunk_End(void);
 #define SFF_SUBDIR  0x08
 #define SFF_SYSTEM  0x10
 
-/*
-** pass in an attribute mask of things you wish to REJECT
-*/
+/* pass in an attribute mask of things you wish to REJECT */
 char *Sys_FindFirst(char *path, unsigned musthave, unsigned canthave);
 char *Sys_FindNext(unsigned musthave, unsigned canthave);
 void Sys_FindClose(void);
@@ -431,9 +425,7 @@ void Com_DPrintf(char *msg, ...);
 
 /*
 ==========================================================
-
 CVARS (console variables)
-
 ==========================================================
 */
 
@@ -464,9 +456,7 @@ cvar_t *Cvar_Get(char *var_name, char *value, int flags);
 
 /*
 ==============================================================
-
 COLLISION DETECTION
-
 ==============================================================
 
 */
@@ -506,17 +496,13 @@ COLLISION DETECTION
 #define	CONTENTS_STEPON			0x40000000	/* marks areas elevated passable areas */
 
 
-
 #define	SURF_LIGHT		0x1		/* value will hold the light strength */
-
 #define	SURF_SLICK		0x2		/* effects game physics */
-
 #define	SURF_WARP		0x8		/* turbulent water warp */
 #define	SURF_TRANS33	0x10
 #define	SURF_TRANS66	0x20
 #define	SURF_FLOWING	0x40	/* scroll towards angle */
 #define	SURF_NODRAW		0x80	/* don't bother referencing the texture */
-
 
 
 /* content masks */
@@ -531,10 +517,8 @@ COLLISION DETECTION
 #define MASK_CURRENT			(CONTENTS_CURRENT_0|CONTENTS_CURRENT_90|CONTENTS_CURRENT_180|CONTENTS_CURRENT_270|CONTENTS_CURRENT_UP|CONTENTS_CURRENT_DOWN)
 
 
-/* gi.BoxEdicts() can return a list of either solid or trigger entities */
 /* FIXME: eliminate AREA_ distinction? */
 #define	AREA_SOLID		1
-#define	AREA_TRIGGERS	2
 
 
 /* plane_t structure */
@@ -1131,7 +1115,6 @@ typedef enum {
 /* private */
 #define STATE_REACTION		0x0100
 #define STATE_SHAKEN		0x0300	/* forced reaction fire */
-
 
 
 #define	ANGLE2SHORT(x)	((int)((x)*65536/360) & 65535)

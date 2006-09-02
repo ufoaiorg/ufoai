@@ -34,8 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-cvar_t *freelook;
-
 cvar_t *adr0;
 cvar_t *adr1;
 cvar_t *adr2;
@@ -69,14 +67,7 @@ cvar_t *cl_timedemo;
 cvar_t *cl_aviFrameRate;
 cvar_t *cl_aviMotionJpeg;
 
-cvar_t *lookspring;
-cvar_t *lookstrafe;
 cvar_t *sensitivity;
-
-cvar_t *m_pitch;
-cvar_t *m_yaw;
-cvar_t *m_forward;
-cvar_t *m_side;
 
 cvar_t *cl_logevents;
 
@@ -112,10 +103,6 @@ cvar_t *teamnum;
 cvar_t *campaign;
 cvar_t *rate;
 cvar_t *msg;
-
-#ifndef _WIN32
-cvar_t *soundsystem;
-#endif
 
 client_static_t cls;
 client_state_t cl;
@@ -197,7 +184,7 @@ void CL_ForwardToServer_f(void)
 
 
 /**
- * @brief
+ * @brief Allow server (singleplayer and multiplayer) to pause the game
  */
 void CL_Pause_f(void)
 {
@@ -1140,19 +1127,10 @@ void CL_InitLocal(void)
 	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.25", 0);
 	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE);
 
-	cl_run = Cvar_Get("cl_run", "0", CVAR_ARCHIVE);
-	freelook = Cvar_Get("freelook", "0", CVAR_ARCHIVE);
-	lookspring = Cvar_Get("lookspring", "0", CVAR_ARCHIVE);
-	lookstrafe = Cvar_Get("lookstrafe", "0", CVAR_ARCHIVE);
 	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE);
 	cl_markactors = Cvar_Get("cl_markactors", "1", CVAR_ARCHIVE);
 
 	cl_precachemenus = Cvar_Get("cl_precachemenus", "0", CVAR_ARCHIVE);
-
-	m_pitch = Cvar_Get("m_pitch", "0.022", CVAR_ARCHIVE);
-	m_yaw = Cvar_Get("m_yaw", "0.022", 0);
-	m_forward = Cvar_Get("m_forward", "1", 0);
-	m_side = Cvar_Get("m_side", "1", 0);
 
 	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "25", CVAR_ARCHIVE);
 	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE);

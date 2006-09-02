@@ -271,8 +271,6 @@ extern cvar_t *cl_camyawspeed;
 extern cvar_t *cl_campitchspeed;
 extern cvar_t *cl_camzoomquant;
 
-extern cvar_t *cl_run;
-
 extern cvar_t *cl_anglespeedkey;
 
 extern cvar_t *cl_fps;
@@ -280,16 +278,7 @@ extern cvar_t *cl_shownet;
 extern cvar_t *cl_show_tooltips;
 extern cvar_t *cl_show_cursor_tooltips;
 
-extern cvar_t *lookspring;
-extern cvar_t *lookstrafe;
 extern cvar_t *sensitivity;
-
-extern cvar_t *m_pitch;
-extern cvar_t *m_yaw;
-extern cvar_t *m_forward;
-extern cvar_t *m_side;
-
-extern cvar_t *freelook;
 
 extern cvar_t *cl_logevents;
 
@@ -450,9 +439,7 @@ extern item_t dragItem;
 extern float *rotateAngles;
 
 extern kbutton_t in_mlook, in_klook;
-extern kbutton_t in_strafe;
-extern kbutton_t in_speed;
-extern float MIN_ZOOM, MAX_ZOOM;
+extern const float MIN_ZOOM, MAX_ZOOM;
 
 void CL_InitInput(void);
 void CL_CameraMove(void);
