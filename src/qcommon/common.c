@@ -41,10 +41,7 @@ csi_t csi;
 int com_argc;
 char *com_argv[MAX_NUM_ARGVS + 1];
 
-int realtime;
-
 jmp_buf abortframe;				/* an ERR_DROP occured, exit the entire frame */
-
 
 FILE *log_stats_file;
 
@@ -70,9 +67,7 @@ int time_after_ref;
 
 /*
 ============================================================================
-
 CLIENT / SERVER interactions
-
 ============================================================================
 */
 
