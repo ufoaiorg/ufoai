@@ -118,11 +118,9 @@ equipment stage2_workers
 
 equipment stage2_soldiers_melee
 {
-	plasrifle			1
-	plasrifle_ammo		1
 	tachyonpistol		1
 	tachyonpistol_ammo	1
-	kerrblade			20
+	kerrblade			3
 	plasblade			28
 	alienincgrenade		7
 }
