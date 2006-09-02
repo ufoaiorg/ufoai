@@ -388,7 +388,7 @@ static aircraft_t* CL_PopupInterceptGetAircraft(void)
 	if (popupIntercept.idBaseAircraft[num] >= gd.numBases
 		|| popupIntercept.idInBaseAircraft[num] >= gd.bases[popupIntercept.idBaseAircraft[num]].numAircraftInBase)
 		return NULL;
-	return gd.bases[popupIntercept.idBaseAircraft[num]].aircraft + popupIntercept.idBaseAircraft[num];
+	return gd.bases[popupIntercept.idBaseAircraft[num]].aircraft + num;
 }
 
 /**
