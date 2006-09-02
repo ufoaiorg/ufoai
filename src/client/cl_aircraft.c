@@ -487,6 +487,10 @@ void CL_CampaignRunAircraft(int dt)
 							/* Aircraft reach its mission */
 							aircraft->mission->def->active = qtrue;
 							aircraft->status = AIR_DROP;
+							/* set baseCurrent information so the
+							 * correct team goes to the mission */
+							baseCurrent = aircraft->homebase;
+							baseCurrent->aircraftCurrent = i;
 							MAP_SelectMission(aircraft->mission);
 							gd.interceptAircraft = aircraft->idx;
 							Com_DPrintf("gd.interceptAircraft: %i\n", gd.interceptAircraft);

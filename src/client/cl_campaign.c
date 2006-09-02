@@ -1983,6 +1983,7 @@ static void CL_GameGo(void)
 {
 	mission_t *mis;
 	aircraft_t *aircraft;
+	int i, p;
 
 	if (!curCampaign || gd.interceptAircraft < 0) {
 		Com_DPrintf("curCampaign: %p, selMis: %p, interceptAircraft: %i\n", curCampaign, selMis, gd.interceptAircraft);
@@ -2021,6 +2022,13 @@ static void CL_GameGo(void)
 	/* TODO: Map assembling to get the current used dropship in the map is not fully implemented */
 	/* but can be done via the map assembling part of the random map assembly */
 	Cvar_Set("map_dropship", aircraft->id);
+
+	/* retrieve the correct team */
+	for (i = 0, p = 0; i < (int)cl_numnames->value; i++)
+		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
+			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
+			p++;
+		}
 
 	/* manage inventory */
 	ccs.eMission = baseCurrent->storage; /* copied, including arrays inside! */
