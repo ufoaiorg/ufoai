@@ -34,8 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 
 extern unsigned sys_frame_time;
-unsigned frame_msec;
-unsigned old_sys_frame_time;
 
 int mouseSpace;
 int mx, my;
@@ -348,7 +346,7 @@ float CL_KeyState(kbutton_t * key)
 		Com_Printf("%i ", msec);
 #endif
 
-	val = (float) msec / frame_msec;
+	val = (float) msec;
 	if (val < 0)
 		val = 0;
 	if (val > 1)
