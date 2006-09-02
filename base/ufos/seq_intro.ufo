@@ -43,6 +43,30 @@ sequence intro
 		speed	"0 -30"
 		relative	true
 	}
+	2dobj i_sentence6
+	{
+		text	"_intro_sentence6"
+		pos		"512 610"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -30"
+		relative	true
+	}
+	2dobj i_sentence7
+	{
+		text	"_intro_sentence7"
+		pos		"512 635"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -30"
+		relative	true
+	}
+	2dobj i_sentence8
+	{
+		text	"_intro_sentence8"
+		pos		"512 660"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -30"
+		relative	true
+	}
 	wait 200.0
 
 	rem i_sentence1
@@ -50,6 +74,9 @@ sequence intro
 	rem i_sentence3
 	rem i_sentence4
 	rem i_sentence5
+	rem i_sentence6
+	rem i_sentence7
+	rem i_sentence8
 }
 
 sequence prolog
