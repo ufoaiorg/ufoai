@@ -223,10 +223,10 @@ static qboolean CheckBEP(char *expr, qboolean(*varFuncParam) (char *var))
  */
 extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2)
 {
-	int a, b, c;
+	float a, b, c;
 
-	a = abs(pos1[0] - pos2[0]);
-	b = abs(pos1[1] - pos2[1]);
+	a = fabs(pos1[0] - pos2[0]);
+	b = fabs(pos1[1] - pos2[1]);
 	c = (a * a) + (b * b);
 	return sqrt(c);
 }
@@ -243,7 +243,7 @@ extern qboolean CL_MapIsNight(vec2_t pos)
 	q = (ccs.date.day + p) * 2 * M_PI / 365.25 - M_PI;
 	p = (0.5 + pos[0] / 360 - p) * 2 * M_PI - q;
 	a = sin(pos[1] * M_PI / 180);
-	root = sqrt(1 - a * a);
+	root = sqrt(1. - a * a);
 	x = sin(p) * root * sin(q) - (a * SIN_ALPHA + cos(p) * root * COS_ALPHA) * cos(q);
 	return (x > 0);
 }
@@ -352,8 +352,8 @@ static qboolean CL_MapMaskFind(byte * color, vec2_t polar)
 
 	/* transform to polar coords */
 	res = (c - maskPic) / 4;
-	polar[0] = 180 - 360 * ((float) (res % maskWidth) + 0.5) / maskWidth;
-	polar[1] = 90 - 180 * ((float) (res / maskWidth) + 0.5) / maskHeight;
+	polar[0] = 180. - 360. * ((float) (res % maskWidth) + 0.5) / maskWidth;
+	polar[1] = 90. - 180. * ((float) (res / maskWidth) + 0.5) / maskHeight;
 	Com_DPrintf("Set new coords for mission to %.0f:%.0f\n", polar[0], polar[1]);
 	return qtrue;
 }
@@ -766,10 +766,10 @@ static void CL_BuildingAircraftList_f(void)
 static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
 {
 	int i;
-	float civilianSum = civiliansKilled + civiliansSurvived;
-	float civilianRatio = civilianSum ? civiliansSurvived / civilianSum : 0;
-	float alienSum = aliensKilled + aliensSurvived;
-	float alienRatio = alienSum ? aliensKilled / alienSum : 0;
+	int civilianSum = civiliansKilled + civiliansSurvived;
+	float civilianRatio = civilianSum ? (float)civiliansSurvived / (float)civilianSum : 0.;
+	int alienSum = aliensKilled + aliensSurvived;
+	float alienRatio = alienSum ? (float)aliensKilled / (float)alienSum : 0.;
 	float performance = 0.5 + civilianRatio * 0.25 + alienRatio * 0.25;
 
 	if (lost)
@@ -1121,7 +1121,7 @@ static void CL_HandleBudget(void)
 
         if (initial_credits < 0) {
         	float interest = initial_credits * 0.005;
-		cost = ceil(interest);
+		cost = (int)ceil(interest);
 		Com_sprintf(message, sizeof(message), _("Paid %i credits in interest on your debt."), cost);
 		CL_UpdateCredits(ccs.credits - cost);
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
@@ -1147,7 +1147,7 @@ void CL_CampaignRun(void)
 		/* calculate new date */
 		int dt, day, month;
 
-		dt = floor(ccs.timer);
+		dt = (int)floor(ccs.timer);
 		ccs.date.sec += dt;
 		ccs.timer -= dt;
 
