@@ -69,10 +69,6 @@ cvar_t *cl_aviMotionJpeg;
 
 cvar_t *sensitivity;
 
-cvar_t *m_pitch;
-cvar_t *m_yaw;
-cvar_t *m_forward;
-
 cvar_t *cl_logevents;
 
 cvar_t *cl_centerview;
@@ -107,10 +103,6 @@ cvar_t *teamnum;
 cvar_t *campaign;
 cvar_t *rate;
 cvar_t *msg;
-
-#ifndef _WIN32
-cvar_t *soundsystem;
-#endif
 
 client_static_t cls;
 client_state_t cl;
@@ -192,7 +184,7 @@ void CL_ForwardToServer_f(void)
 
 
 /**
- * @brief
+ * @brief Allow server (singleplayer and multiplayer) to pause the game
  */
 void CL_Pause_f(void)
 {
@@ -1167,10 +1159,6 @@ void CL_InitLocal(void)
 	cl_markactors = Cvar_Get("cl_markactors", "1", CVAR_ARCHIVE);
 
 	cl_precachemenus = Cvar_Get("cl_precachemenus", "0", CVAR_ARCHIVE);
-
-	m_pitch = Cvar_Get("m_pitch", "0.022", CVAR_ARCHIVE);
-	m_yaw = Cvar_Get("m_yaw", "0.022", 0);
-	m_forward = Cvar_Get("m_forward", "1", 0);
 
 	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "25", CVAR_ARCHIVE);
 	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE);

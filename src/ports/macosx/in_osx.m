@@ -40,10 +40,7 @@ static cvar_t
 			*m_filter,
 			*gInSensitivity;
 extern cvar_t
-			*gInSensitivity,
-			*m_yaw,
-			*m_pitch,
-			*m_forward;
+			*gInSensitivity;
 static CGMouseDelta	gInMouseX,
 			gInMouseY,
 			gInMouseNewX,
@@ -324,9 +321,6 @@ void	IN_Init (void)
     in_mouse		= Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
     in_joystick		= Cvar_Get ("in_joystick", "0", CVAR_ARCHIVE);
     gInSensitivity	= Cvar_Get ("sensitivity", "3", 0);
-    m_pitch		= Cvar_Get ("m_pitch", "0.022", 0);
-    m_yaw		= Cvar_Get ("m_yaw", "0.022", 0);
-    m_forward		= Cvar_Get ("m_forward", "1", 0);
 
 //    Cmd_AddCommand ("+mlook", IN_MLookDown_f);
 //    Cmd_AddCommand ("-mlook", IN_MLookUp_f);

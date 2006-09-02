@@ -280,10 +280,6 @@ extern cvar_t *cl_show_cursor_tooltips;
 
 extern cvar_t *sensitivity;
 
-extern cvar_t *m_pitch;
-extern cvar_t *m_yaw;
-extern cvar_t *m_forward;
-
 extern cvar_t *cl_logevents;
 
 extern cvar_t *cl_paused;

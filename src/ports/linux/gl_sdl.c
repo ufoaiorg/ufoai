@@ -49,9 +49,6 @@ static cvar_t	*in_mouse;
 static in_state_t *in_state;
 
 static cvar_t *sensitivity;
-static cvar_t *m_yaw;
-static cvar_t *m_pitch;
-static cvar_t *m_forward;
 static qboolean mouse_avail;
 
 static SDL_Surface *surface;
@@ -712,10 +709,6 @@ void RW_IN_Init(in_state_t *in_state_p)
 	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
 
 	sensitivity = ri.Cvar_Get ("sensitivity", "2", CVAR_ARCHIVE);
-	m_pitch = ri.Cvar_Get ("m_pitch", "0.022", 0);
-
-	m_yaw = ri.Cvar_Get ("m_yaw", "0.022", 0);
-	m_forward = ri.Cvar_Get ("m_forward", "1", 0);
 
 	mx = my = 0.0;
 	mouse_avail = qtrue;
