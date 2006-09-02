@@ -147,7 +147,7 @@ equipment stage3_workers
 	plasrifle_ammo		1
 	tachyonpistol		4
 	tachyonpistol_ammo	5
-	kerrblade			3
+	kerrblade			1
 	plasblade			4
 	alienincgrenade		4
 	plasmagrenade		4
@@ -194,7 +194,7 @@ equipment stage4_workers
 	tachyonpistol_ammo	15
 	tachyonrifle		2
 	tachyonrifle_ammo	3
-	kerrblade			3
+	kerrblade			1
 	plasblade			5
 	alienincgrenade		7
 	plasmagrenade		7
