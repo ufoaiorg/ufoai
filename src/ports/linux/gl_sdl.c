@@ -49,12 +49,10 @@ static cvar_t	*in_mouse;
 static in_state_t *in_state;
 
 static cvar_t *sensitivity;
-static cvar_t *lookstrafe;
 static cvar_t *m_side;
 static cvar_t *m_yaw;
 static cvar_t *m_pitch;
 static cvar_t *m_forward;
-static cvar_t *freelook;
 static qboolean mouse_avail;
 
 static SDL_Surface *surface;
@@ -714,8 +712,6 @@ void RW_IN_Init(in_state_t *in_state_p)
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
 	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
 
-	freelook = ri.Cvar_Get( "freelook", "0", 0 );
-	lookstrafe = ri.Cvar_Get ("lookstrafe", "0", 0);
 	sensitivity = ri.Cvar_Get ("sensitivity", "2", CVAR_ARCHIVE);
 	m_pitch = ri.Cvar_Get ("m_pitch", "0.022", 0);
 

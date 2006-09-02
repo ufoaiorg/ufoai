@@ -110,12 +110,10 @@ static qboolean dgamouse = qfalse;
 static in_state_t	*in_state;
 
 static cvar_t *sensitivity;
-static cvar_t *lookstrafe;
 static cvar_t *m_side;
 static cvar_t *m_yaw;
 static cvar_t *m_pitch;
 static cvar_t *m_forward;
-static cvar_t *freelook;
 
 /* stencilbuffer shadows */
 qboolean have_stencil = qfalse;
@@ -231,8 +229,6 @@ void RW_IN_Init(in_state_t *in_state_p)
 #else
 	in_dgamouse = ri.Cvar_Get ("in_dgamouse", "0", CVAR_ARCHIVE);
 #endif
-	freelook = ri.Cvar_Get( "freelook", "0", 0 );
-	lookstrafe = ri.Cvar_Get ("lookstrafe", "0", 0);
 	sensitivity = ri.Cvar_Get ("sensitivity", "2", 0);
 	m_pitch = ri.Cvar_Get ("m_pitch", "0.022", 0);
 

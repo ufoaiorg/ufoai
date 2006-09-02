@@ -317,9 +317,7 @@ void CL_CameraModeChange(camera_mode_t new_camera_mode)
 }
 
 /**
- * @brief
- *
- * print the time long integer value
+ * @brief Print the time long integer value
  */
 void CL_Time_f(void)
 {
@@ -327,9 +325,7 @@ void CL_Time_f(void)
 }
 
 /**
- * @brief
- *
- * Returns the fraction of the frame that the key was down
+ * @brief Returns the fraction of the frame that the key was down
  */
 float CL_KeyState(kbutton_t * key)
 {
@@ -364,8 +360,8 @@ float CL_KeyState(kbutton_t * key)
 
 /*========================================================================== */
 
-float MIN_ZOOM = 0.5;
-float MAX_ZOOM = 3.0;
+const float MIN_ZOOM = 0.5;
+const float MAX_ZOOM = 3.0;
 
 cvar_t *cl_camrotspeed;
 cvar_t *cl_camrotaccel;
@@ -374,8 +370,6 @@ cvar_t *cl_cammoveaccel;
 cvar_t *cl_camyawspeed;
 cvar_t *cl_campitchspeed;
 cvar_t *cl_camzoomquant;
-
-cvar_t *cl_run;
 
 cvar_t *cl_anglespeedkey;
 
@@ -388,8 +382,6 @@ cvar_t *cl_anglespeedkey;
 #define MAX_CAMMOVE_SPEED	3000
 #define MAX_CAMMOVE_ACCEL	3000
 #define ZOOM_SPEED			1.4
-/*#define MIN_ZOOM            0.5 */
-/*#define MAX_ZOOM			3.0 */
 #define MIN_CAMZOOM_QUANT	0.2
 #define MAX_CAMZOOM_QUANT	1.0
 #define LEVEL_SPEED			3.0

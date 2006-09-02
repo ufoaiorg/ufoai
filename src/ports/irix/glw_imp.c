@@ -103,12 +103,10 @@ static int p_mouse_x, p_mouse_y;
 static cvar_t	*_windowed_mouse;
 
 static cvar_t *sensitivity;
-static cvar_t *lookstrafe;
 static cvar_t *m_side;
 static cvar_t *m_yaw;
 static cvar_t *m_pitch;
 static cvar_t *m_forward;
-static cvar_t *freelook;
 
 int config_notify=0;
 int config_notify_width;
@@ -815,9 +813,7 @@ void RW_IN_Init(in_state_t *in_state_p)
 	/* mouse variables */
 	_windowed_mouse = ri.Cvar_Get ("_windowed_mouse", "0", CVAR_ARCHIVE);
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
-        in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
-	freelook = ri.Cvar_Get( "freelook", "0", 0 );
-	lookstrafe = ri.Cvar_Get ("lookstrafe", "0", 0);
+	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
 	sensitivity = ri.Cvar_Get ("sensitivity", "2", 0);
 	m_pitch = ri.Cvar_Get ("m_pitch", "0.022", 0);
 	m_yaw = ri.Cvar_Get ("m_yaw", "0.022", 0);
@@ -874,8 +870,7 @@ void RW_IN_Move (usercmd_t *cmd)
 	if (!mouse_avail)
 		return;
 
-	if (m_filter->value)
-	{
+	if (m_filter->value) {
 		mouse_x = (mx + old_mouse_x) * 0.5;
 		mouse_y = (my + old_mouse_y) * 0.5;
 	} else {
@@ -893,19 +888,11 @@ void RW_IN_Move (usercmd_t *cmd)
 	mouse_y *= sensitivity->value;
 
 	/* add mouse X/Y movement to cmd */
-	if ( (*in_state->in_strafe_state & 1) ||
-		(lookstrafe->value && mlooking ))
-		cmd->sidemove += m_side->value * mouse_x;
-	else
-		in_state->viewangles[YAW] -= m_yaw->value * mouse_x;
+	in_state->viewangles[YAW] -= m_yaw->value * mouse_x;
 
-	if ( (mlooking || freelook->value) &&
-		!(*in_state->in_strafe_state & 1))
-	{
+	if (mlooking) {
 		in_state->viewangles[PITCH] += m_pitch->value * mouse_y;
-	}
-	else
-	{
+	} else {
 		cmd->forwardmove -= m_forward->value * mouse_y;
 	}
 	mx = my = 0;

@@ -304,7 +304,6 @@ qboolean VID_LoadRefresh( char *name )
 	/* Init IN (Mouse) */
 	in_state.Key_Event_fp = Do_Key_Event;
 	in_state.viewangles = cl.viewangles;
-	in_state.in_strafe_state = &in_strafe.state;
 
 #ifndef REF_HARD_LINKED
 	if ((RW_IN_Init_fp = dlsym(reflib_library, "RW_IN_Init")) == NULL ||

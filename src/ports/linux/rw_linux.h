@@ -36,8 +36,6 @@ typedef struct in_state {
 	void (*IN_CenterView_fp)(void);
 	Key_Event_fp_t Key_Event_fp;
 	vec_t *viewangles;
-	int *in_strafe_state;
-	int *in_speed_state;
 } in_state_t;
 
 void InitSig(void);

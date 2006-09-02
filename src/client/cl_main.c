@@ -34,8 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-cvar_t *freelook;
-
 cvar_t *adr0;
 cvar_t *adr1;
 cvar_t *adr2;
@@ -69,8 +67,6 @@ cvar_t *cl_timedemo;
 cvar_t *cl_aviFrameRate;
 cvar_t *cl_aviMotionJpeg;
 
-cvar_t *lookspring;
-cvar_t *lookstrafe;
 cvar_t *sensitivity;
 
 cvar_t *m_pitch;
@@ -1168,10 +1164,6 @@ void CL_InitLocal(void)
 	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.25", 0);
 	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE);
 
-	cl_run = Cvar_Get("cl_run", "0", CVAR_ARCHIVE);
-	freelook = Cvar_Get("freelook", "0", CVAR_ARCHIVE);
-	lookspring = Cvar_Get("lookspring", "0", CVAR_ARCHIVE);
-	lookstrafe = Cvar_Get("lookstrafe", "0", CVAR_ARCHIVE);
 	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE);
 	cl_markactors = Cvar_Get("cl_markactors", "1", CVAR_ARCHIVE);
 
