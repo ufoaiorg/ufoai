@@ -72,7 +72,6 @@ cvar_t *sensitivity;
 cvar_t *m_pitch;
 cvar_t *m_yaw;
 cvar_t *m_forward;
-cvar_t *m_side;
 
 cvar_t *cl_logevents;
 
@@ -1172,7 +1171,6 @@ void CL_InitLocal(void)
 	m_pitch = Cvar_Get("m_pitch", "0.022", CVAR_ARCHIVE);
 	m_yaw = Cvar_Get("m_yaw", "0.022", 0);
 	m_forward = Cvar_Get("m_forward", "1", 0);
-	m_side = Cvar_Get("m_side", "1", 0);
 
 	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "25", CVAR_ARCHIVE);
 	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE);

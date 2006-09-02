@@ -41,7 +41,6 @@ static cvar_t
 			*gInSensitivity;
 extern cvar_t
 			*gInSensitivity,
-			*m_side,
 			*m_yaw,
 			*m_pitch,
 			*m_forward;
@@ -328,7 +327,6 @@ void	IN_Init (void)
     m_pitch		= Cvar_Get ("m_pitch", "0.022", 0);
     m_yaw		= Cvar_Get ("m_yaw", "0.022", 0);
     m_forward		= Cvar_Get ("m_forward", "1", 0);
-    m_side		= Cvar_Get ("m_side", "0.8", 0);
 
 //    Cmd_AddCommand ("+mlook", IN_MLookDown_f);
 //    Cmd_AddCommand ("-mlook", IN_MLookUp_f);

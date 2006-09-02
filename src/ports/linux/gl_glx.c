@@ -110,7 +110,6 @@ static qboolean dgamouse = qfalse;
 static in_state_t	*in_state;
 
 static cvar_t *sensitivity;
-static cvar_t *m_side;
 static cvar_t *m_yaw;
 static cvar_t *m_pitch;
 static cvar_t *m_forward;
@@ -234,7 +233,6 @@ void RW_IN_Init(in_state_t *in_state_p)
 
 	m_yaw = ri.Cvar_Get ("m_yaw", "0.022", 0);
 	m_forward = ri.Cvar_Get ("m_forward", "1", 0);
-	m_side = ri.Cvar_Get ("m_side", "0.8", 0);
 
 	mx = my = 0.0;
 	mouse_avail = qtrue;
