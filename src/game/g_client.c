@@ -723,6 +723,7 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 	edict_t *ent, *floor;
 	invList_t *ic;
 	qboolean newFloor;
+	item_t item;
 	int mask;
 	int ia;
 
@@ -750,8 +751,6 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 		return;
 
 	if ( ( ia = Com_MoveInInventory(&ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic) ) != 0 ) {
-		item_t item = ic->item;
-
 		switch (ia) {
 		case IA_NOTIME:
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not enough TUs!\n"));
@@ -792,6 +791,8 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 
 		/* send tu's */
 		G_SendStats(ent);
+
+		item = ic->item;
 
 		if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP ) {
 			/* reload */
