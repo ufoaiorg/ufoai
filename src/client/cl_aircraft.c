@@ -215,7 +215,7 @@ void MN_NextAircraft_f(void)
 	if (!baseCurrent)
 		return;
 
-	if ((int) Cvar_VariableValue("mn_aircraft_id") < baseCurrent->numAircraftInBase) {
+	if ((int) Cvar_VariableValue("mn_aircraft_id") < baseCurrent->numAircraftInBase - 1) {
 		Cvar_SetValue("mn_aircraft_id", (float) Cvar_VariableValue("mn_aircraft_id") + 1.0f);
 		CL_AircraftSelect();
 	} else
