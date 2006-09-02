@@ -27,7 +27,7 @@ item knife
 		range	1.5
 		shots	1
 		time	4
-		damage	"40 7"
+		damage	"50 5"
 		dmgtype normal
 	}
 	secondary
@@ -45,7 +45,7 @@ item knife
 		shots	1
 		ammo	1
 		time	8
-		damage	"40 7"
+		damage	"30 10"
 		dmgtype normal
 	}
 }
@@ -130,8 +130,8 @@ item kerrblade
 		speed	0
 		range	1.5
 		shots	1
-		time	8
-		damage	"120 30"
+		time	5
+		damage	"110 10"
 		dmgtype normal
 	}
 	secondary
@@ -145,12 +145,12 @@ item kerrblade
 		impsnd	misc/klonk02.wav
 		bodysnd weapons/kerrblade.wav
 		speed	320
-		range	10
-		spread	"5 5"
+		range	5
+		spread	"10 10"
 		shots	1
 		ammo	1
 		time	12
-		damage	"170 50"
+		damage	"80 20"
 		dmgtype normal
 	}
 }
@@ -184,8 +184,8 @@ item plasblade
 		speed	0
 		range	1.5
 		shots	1
-		time	4
-		damage	"100 10"
+		time	10
+		damage	"150 20"
 		dmgtype plasma
 	}
 	secondary
@@ -198,12 +198,12 @@ item plasblade
 		impsnd	misc/klonk03.wav
 		bodysnd weapons/plasma_blade.wav
 		speed	320
-		range	10
+		range	7
 		spread	"7 7"
 		shots	1
 		ammo	1
 		time	10
-		damage	"100 10"
+		damage	"130 40"
 		dmgtype plasma
 	}
 }
