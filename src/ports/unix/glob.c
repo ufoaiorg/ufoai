@@ -1,3 +1,8 @@
+/**
+ * @file glob.c
+ * @brief
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -21,7 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdio.h>
 #include "glob.h"
 
-/* Like glob_match, but match PATTERN against any final segment of TEXT.  */
+/**
+ * @brief Like glob_match, but match PATTERN against any final segment of TEXT.
+ */
 static int glob_match_after_star(char *pattern, char *text)
 {
 	register char *p = pattern, *t = text;
@@ -47,24 +54,20 @@ static int glob_match_after_star(char *pattern, char *text)
 	}
 }
 
-/* Match the pattern PATTERN against the string TEXT;
-   return 1 if it matches, 0 otherwise.
-
-   A match means the entire string TEXT is used up in matching.
-
-   In the pattern string, `*' matches any sequence of characters,
-   `?' matches any character, [SET] matches any character in the specified set,
-   [!SET] matches any character not in the specified set.
-
-   A set is composed of characters or ranges; a range looks like
-   character hyphen character (as in 0-9 or A-Z).
-   [0-9a-zA-Z_] is the set of characters allowed in C identifiers.
-   Any other character in the pattern must be matched exactly.
-
-   To suppress the special syntactic significance of any of `[]*?!-\',
-   and match the character exactly, precede it with a `\'.
-*/
-
+/**
+ * @brief Match the pattern PATTERN against the string TEXT;
+ * @return 1 if it matches, 0 otherwise.
+ * @note A match means the entire string TEXT is used up in matching.
+ * @note In the pattern string, `*' matches any sequence of characters,
+ * `?' matches any character, [SET] matches any character in the specified set,
+ * [!SET] matches any character not in the specified set.
+ * @note A set is composed of characters or ranges; a range looks like
+ * character hyphen character (as in 0-9 or A-Z).
+ * [0-9a-zA-Z_] is the set of characters allowed in C identifiers.
+ * Any other character in the pattern must be matched exactly.
+ * @note To suppress the special syntactic significance of any of `[]*?!-\',
+ * and match the character exactly, precede it with a `\'.
+ */
 int glob_match(char *pattern, char *text)
 {
 	register char *p = pattern, *t = text;
@@ -151,4 +154,3 @@ int glob_match(char *pattern, char *text)
 
 	return *t == '\0';
 }
-
