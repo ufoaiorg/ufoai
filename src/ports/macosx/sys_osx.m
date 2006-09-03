@@ -544,7 +544,7 @@ void Sys_AppActivate (void)
  */
 void Sys_Init (void)
 {
-	Cvar_Get("sys_os", "maxosx", 0);
+	Cvar_Get("sys_os", "maxosx", CVAR_SERVERINFO);
 #ifndef DEDICATED_ONLY
 	gSysIsMinimized = Cvar_Get("_miniwindow", "0", 0);
 	Cmd_AddCommand("sys_hide", Sys_HideApplication_f);
