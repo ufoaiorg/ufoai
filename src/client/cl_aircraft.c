@@ -186,14 +186,14 @@ void CL_NewAircraft_f(void)
 	base_t *b = NULL;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: aircraft_new <type>\n");
+		Com_Printf("Usage: aircraft_new <type> <baseID>\n");
 		return;
 	}
 
-	if (!baseCurrent) {
-		if (Cmd_Argc() == 3)
-			i = atoi(Cmd_Argv(2));
+	if (Cmd_Argc() == 3)
+		i = atoi(Cmd_Argv(2));
 
+	if (!baseCurrent || (i >= 0)) {
 		if (i < 0 || i > MAX_BASES)
 			return;
 
