@@ -5,9 +5,9 @@
 /*        To enable it define "QGL_ENABLE_ARB_EXT" at the targets/GL Renderer Module compiler options. */
 
 /* Written by:	awe				[mailto:awe@fruitz-of-dojo.de]. */
-/*		©2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de]. */
+/*		2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de]. */
 
-/* Quake IIª is copyrighted by id software	[http://www.idsoftware.com]. */
+/* Quake II is copyrighted by id software	[http://www.idsoftware.com]. */
 
 /* Version History: */
 /* v1.0.6: OpenGL framework is now dynamically loaded. */
@@ -2126,7 +2126,7 @@ static void APIENTRY logMap1f(GLenum target, GLfloat u1, GLfloat u2, GLint strid
 
 /*_______________________________________________________________________________________________________logMap2d() */
 
-static void APIENTRY logMap2d(GLenum target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, 
+static void APIENTRY logMap2d(GLenum target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1,
                               GLdouble v2, GLint vstride, GLint vorder, const GLdouble *points)
 {
 	SIG( "glMap2d" );
@@ -2135,7 +2135,7 @@ static void APIENTRY logMap2d(GLenum target, GLdouble u1, GLdouble u2, GLint ust
 
 /*_______________________________________________________________________________________________________logMap2f() */
 
-static void APIENTRY logMap2f(GLenum target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, 
+static void APIENTRY logMap2f(GLenum target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1,
                               GLfloat v2, GLint vstride, GLint vorder, const GLfloat *points)
 {
 	SIG( "glMap2f" );
@@ -3216,7 +3216,7 @@ static void APIENTRY logTexGeniv(GLenum coord, GLenum pname, const GLint *params
 
 /*__________________________________________________________________________________________________logTexImage1D() */
 
-static void APIENTRY logTexImage1D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLint border, 
+static void APIENTRY logTexImage1D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLint border,
                                    GLenum format, GLenum type, const void *pixels)
 
 {
@@ -3558,12 +3558,12 @@ void *	qglGetProcAddress (const char *theName, enum qglGetAdrMode theMode)
 
         free (mySymbolName);
     }
-    
+
     if (theMode == QGL_SAFE_SYMBOL && mySymbol == NULL)
     {
         ri.Sys_Error (ERR_FATAL, "Failed to import a required OpenGL function!\n");
     }
-    
+
     return ((mySymbol != NULL) ? NSAddressOfSymbol(mySymbol) : NULL);
 }
 
@@ -3583,7 +3583,7 @@ qboolean	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalF
     GLint	myWidth = -1;
     GLenum	myError,
                 myTarget;
-    
+
     /* flush existing errors: */
     glGetError ();
 
@@ -3594,13 +3594,13 @@ qboolean	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalF
         case GL_PROXY_TEXTURE_1D:
             myTarget = GL_PROXY_TEXTURE_1D;
             qglTexImageProxy1D (myTarget, theLevel, theInternalFormat, theWidth, theBorder, theFormat, theType,
-                                NULL); 
+                                NULL);
             break;
         case GL_TEXTURE_2D:
         case GL_PROXY_TEXTURE_2D:
             myTarget = GL_PROXY_TEXTURE_2D;
             qglTexImageProxy2D (myTarget, theLevel, theInternalFormat, theWidth, theHeight, theBorder, theFormat,
-                                theType, NULL); 
+                                theType, NULL);
             break;
 /*        case GL_TEXTURE_3D: */
 /*        case GL_PROXY_TEXTURE_3D: */
@@ -3611,7 +3611,7 @@ qboolean	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalF
         default:
             return (qfalse);
     }
-    
+
     myError = glGetError ();
 
     /* get the width of the texture [should be zero on failure]: */
@@ -3626,7 +3626,7 @@ qboolean	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalF
         ri.Cvar_Set ("vid_ref", "soft");
         return (qfalse);
     }
-    
+
     return (qtrue);
 }
 
@@ -3637,7 +3637,7 @@ void	QGL_SafeTexImage1D (GLenum theTarget, GLint theLevel, GLenum theInternalFor
 {
     qboolean	mySuccess = QGL_SafeTexImage (theTarget, theLevel, theInternalFormat, theWidth, 0, 0, theBorder,
                                               theFormat, theType);
-                                  
+
     if (mySuccess)
     {
         qglTexImageProxy1D (theTarget, theLevel, theInternalFormat, theWidth, theBorder, theFormat, theType,
@@ -3653,7 +3653,7 @@ void	QGL_SafeTexImage2D (GLenum theTarget, GLint theLevel, GLenum theInternalFor
 {
     qboolean	mySuccess = QGL_SafeTexImage (theTarget, theLevel, theInternalFormat, theWidth, theHeight, 0,
                                               theBorder, theFormat, theType);
-                                  
+
     if (mySuccess)
     {
         qglTexImageProxy2D (theTarget, theLevel, theInternalFormat, theWidth, theHeight, theBorder, theFormat,
@@ -4003,6 +4003,32 @@ void	QGL_Shutdown (void)
     qglVertex4sv                 = NULL;
     qglVertexPointer             = NULL;
     qglViewport                  = NULL;
+	qglActiveStencilFaceEXT      = NULL;
+	qglStencilOpSeparateATI      = NULL;
+	qglStencilFuncSeparateATI    = NULL;
+	qglProgramStringARB          = NULL;
+	qglBindProgramARB            = NULL;
+	qglDeleteProgramsARB         = NULL;
+	qglGenProgramsARB            = NULL;
+	qglProgramEnvParameter4dARB  = NULL;
+	qglProgramEnvParameter4dvARB = NULL;
+	qglProgramEnvParameter4fARB  = NULL;
+	qglProgramEnvParameter4fvARB = NULL;
+	qglProgramLocalParameter4dARB    = NULL;
+	qglProgramLocalParameter4dvARB   = NULL;
+	qglProgramLocalParameter4fARB    = NULL;
+	qglProgramLocalParameter4fvARB   = NULL;
+	qglGetProgramEnvParameterdvARB   = NULL;
+	qglGetProgramEnvParameterfvARB   = NULL;
+	qglGetProgramLocalParameterdvARB = NULL;
+	qglGetProgramLocalParameterfvARB = NULL;
+	qglGetProgramivARB           = NULL;
+	qglGetProgramStringARB       = NULL;
+	qglGetVertexAttribdvARB      = NULL;
+	qglGetVertexAttribfvARB      = NULL;
+	qglGetVertexAttribivARB      = NULL;
+	qglGetVertexAttribPointervARB = NULL;
+	qglIsProgramARB              = NULL;
 
     qglPointParameterfEXT	 = NULL;
     qglPointParameterfvEXT       = NULL;
@@ -4372,7 +4398,7 @@ qboolean QGL_Init (const char *dllname)
     qglClientActiveTextureARB    = NULL;
     qglPNTrianglesiATIX 	 = NULL;
     qglPNTrianglesfATIX 	 = NULL;
-    
+
     return (qtrue);
 }
 
@@ -4403,7 +4429,7 @@ void GLimp_EnableLogging (qboolean theEnable)
             myNewTime = localtime (&myClock);
 
             /* open the log file: */
-            Com_sprintf (myBuffer, MAX_OSPATH, "%s/gl.log", ri.FS_Gamedir ()); 
+            Com_sprintf (myBuffer, MAX_OSPATH, "%s/gl.log", ri.FS_Gamedir ());
             gQGLLogFile = fopen (myBuffer, "wt");
 
             /* write time to log file: */

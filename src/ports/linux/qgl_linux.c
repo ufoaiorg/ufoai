@@ -3023,6 +3023,7 @@ void QGL_Shutdown( void )
 	qglXMakeCurrent              = NULL;
 	qglXCopyContext              = NULL;
 	qglXSwapBuffers              = NULL;
+	qglXGetConfig                = NULL;
 
 	qglLockArraysEXT             = NULL;
 	qglUnlockArraysEXT           = NULL;
@@ -3032,6 +3033,10 @@ void QGL_Shutdown( void )
 	qglMTexCoord2fSGIS           = NULL;
 	qglActiveTextureARB          = NULL;
 	qglClientActiveTextureARB    = NULL;
+
+	qglActiveStencilFaceEXT		= NULL;
+	qglStencilOpSeparateATI		= NULL;
+	qglStencilFuncSeparateATI	= NULL;
 
 	qglProgramStringARB          = NULL;
 	qglBindProgramARB            = NULL;
@@ -3448,6 +3453,7 @@ qboolean QGL_Init( const char *dllname )
 	qglXMakeCurrent              =  GPA("glXMakeCurrent");
 	qglXCopyContext              =  GPA("glXCopyContext");
 	qglXSwapBuffers              =  GPA("glXSwapBuffers");
+	qglXGetConfig                =  GPA("glXGetConfig");
 
 	qglLockArraysEXT = 0;
 	qglUnlockArraysEXT = 0;
@@ -3457,6 +3463,10 @@ qboolean QGL_Init( const char *dllname )
 	qglMTexCoord2fSGIS = 0;
 	qglActiveTextureARB = 0;
 	qglClientActiveTextureARB = 0;
+
+	qglActiveStencilFaceEXT = 0;
+	qglStencilOpSeparateATI = 0;
+	qglStencilFuncSeparateATI = 0;
 
 	qglProgramStringARB = 0;
 	qglBindProgramARB = 0;

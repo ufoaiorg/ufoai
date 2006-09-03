@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -2965,18 +2965,43 @@ void QGL_Shutdown( void )
 	qglVertex4sv                 = NULL;
 	qglVertexPointer             = NULL;
 	qglViewport                  = NULL;
-
+	qglActiveStencilFaceEXT      = NULL;
+	qglStencilOpSeparateATI      = NULL;
+	qglStencilFuncSeparateATI    = NULL;
+	qglProgramStringARB          = NULL;
+	qglBindProgramARB            = NULL;
+	qglDeleteProgramsARB         = NULL;
+	qglGenProgramsARB            = NULL;
+	qglProgramEnvParameter4dARB  = NULL;
+	qglProgramEnvParameter4dvARB = NULL;
+	qglProgramEnvParameter4fARB  = NULL;
+	qglProgramEnvParameter4fvARB = NULL;
+	qglProgramLocalParameter4dARB    = NULL;
+	qglProgramLocalParameter4dvARB   = NULL;
+	qglProgramLocalParameter4fARB    = NULL;
+	qglProgramLocalParameter4fvARB   = NULL;
+	qglGetProgramEnvParameterdvARB   = NULL;
+	qglGetProgramEnvParameterfvARB   = NULL;
+	qglGetProgramLocalParameterdvARB = NULL;
+	qglGetProgramLocalParameterfvARB = NULL;
+	qglGetProgramivARB           = NULL;
+	qglGetProgramStringARB       = NULL;
+	qglGetVertexAttribdvARB      = NULL;
+	qglGetVertexAttribfvARB      = NULL;
+	qglGetVertexAttribivARB      = NULL;
+	qglGetVertexAttribPointervARB = NULL;
+	qglIsProgramARB              = NULL;
 }
 
 /*
 ** QGL_Init
 **
-** This is responsible for binding our qgl function pointers to 
-** the appropriate GL stuff.  In Windows this means doing a 
+** This is responsible for binding our qgl function pointers to
+** the appropriate GL stuff.  In Windows this means doing a
 ** LoadLibrary and a bunch of calls to GetProcAddress.  On other
 ** operating systems we need to do the right thing, whatever that
 ** might be.
-** 
+**
 */
 qboolean QGL_Init( const char *dllname )
 {
@@ -3338,7 +3363,7 @@ void GLimp_EnableLogging( qboolean enable )
 
 			asctime( newtime );
 
-			Com_sprintf( buffer, sizeof(buffer), "%s/gl.log", ri.FS_Gamedir() ); 
+			Com_sprintf( buffer, sizeof(buffer), "%s/gl.log", ri.FS_Gamedir() );
 			log_fp = fopen( buffer, "wt");
 
 			fprintf( log_fp, "%s\n", asctime( newtime ) );
