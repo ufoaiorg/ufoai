@@ -157,7 +157,7 @@ menu options_video
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		click	{ cmd "mn_modify mn_glmode -1 0 20;" }
+		click	{ cmd "mn_resolution_change -;" }
 	}
 	pic res_inc
 	{
@@ -166,7 +166,7 @@ menu options_video
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		click	{ cmd "mn_modify mn_glmode +1 0 20;" }
+		click	{ cmd "mn_resolution_change +;" }
 	}
 
 	string full_str
