@@ -97,7 +97,7 @@ void Sys_Quit (void)
 
 void Sys_Init(void)
 {
-	Cvar_Get("sys_os", "irix", 0);
+	Cvar_Get("sys_os", "irix", CVAR_SERVERINFO);
 #if id386
 /*	Sys_SetFPCW(); */
 #endif
@@ -317,7 +317,6 @@ int main (int argc, char **argv)
 	nostdout = Cvar_Get("nostdout", "0", 0);
 	if (!nostdout->value) {
 /* 		fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY); */
-/*		printf ("Linux Quake -- Version %0.3f\n", LINUX_VERSION); */
 	}
 
 	oldtime = Sys_Milliseconds ();

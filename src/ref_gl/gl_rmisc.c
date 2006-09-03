@@ -81,9 +81,7 @@ void R_InitParticleTexture(void)
 
 /*
 ==============================================================================
-
-						SCREEN SHOTS
-
+SCREEN SHOTS
 ==============================================================================
 */
 
@@ -147,19 +145,6 @@ void GL_ScreenShot_f(void)
 	if (!ri.FS_WriteFile(buffer, c, checkname))
 		ri.Con_Printf(PRINT_ALL, "Could not write screenshot file to %s\n", checkname);
 	free(buffer);
-}
-
-/**
- * @brief Prints some OpenGL strings
- */
-void GL_Strings_f(void)
-{
-	ri.Con_Printf(PRINT_ALL, "GL_VENDOR: %s\n", gl_config.vendor_string);
-	ri.Con_Printf(PRINT_ALL, "GL_RENDERER: %s\n", gl_config.renderer_string);
-	ri.Con_Printf(PRINT_ALL, "GL_VERSION: %s\n", gl_config.version_string);
-	ri.Con_Printf(PRINT_ALL, "MODE: %.0f, %d x %d FULLSCREEN: %.0f\n", gl_mode->value, vid.width, vid.height, vid_fullscreen->value);
-	ri.Con_Printf(PRINT_ALL, "GL_EXTENSIONS: %s\n", gl_config.extensions_string);
-	ri.Con_Printf(PRINT_ALL, "GL_MAX_TEXTURE_SIZE: %d\n", gl_config.maxTextureSize);
 }
 
 /**
@@ -237,9 +222,7 @@ void GL_UpdateSwapInterval(void)
 
 /*
 ==============================================================================
-
-						SOME DRAWING
-
+SOME DRAWING
 ==============================================================================
 */
 

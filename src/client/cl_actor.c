@@ -1477,6 +1477,7 @@ void CL_ActorMouseTrace(void)
 	if (mousePos[2] > cl_worldlevel->value)
 		mousePos[2] = cl_worldlevel->value;
 
+	/* FIXME: wrong values if cursor is not centered or outside the map */
 	stop[2] = (mousePos[2] + 0.5) * UNIT_HEIGHT;
 	stop[0] = end[0] + forward[0] * (end[2] - stop[2]);
 	stop[1] = end[1] + forward[1] * (end[2] - stop[2]);

@@ -27,9 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 =============================================================
-
-  PARTICLE DRAWING
-
+PARTICLE DRAWING
 =============================================================
 */
 
@@ -100,7 +98,7 @@ void R_DrawSprite(ptl_t * p)
 /**
  * @brief
  */
-void R_DrawPtlModel(ptl_t * p)
+static void R_DrawPtlModel(ptl_t * p)
 {
 	modelInfo_t mi;
 
@@ -119,7 +117,7 @@ void R_DrawPtlModel(ptl_t * p)
 /**
  * @brief
  */
-void R_DrawPtlLine(ptl_t * p)
+static void R_DrawPtlLine(ptl_t * p)
 {
 	qglDisable(GL_TEXTURE_2D);
 	qglEnable(GL_LINE_SMOOTH);
@@ -138,9 +136,7 @@ void R_DrawPtlLine(ptl_t * p)
 
 /*
 =============================================================
-
-  GENERIC PARTICLE FUNCTIONS
-
+GENERIC PARTICLE FUNCTIONS
 =============================================================
 */
 
@@ -148,7 +144,7 @@ static int blend_mode;
 /**
  * @brief
  */
-void GL_SetBlendMode(int mode)
+static void GL_SetBlendMode(int mode)
 {
 	if (blend_mode != mode) {
 		blend_mode = mode;

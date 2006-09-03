@@ -258,7 +258,7 @@ void Sys_Init (void)
 	else if ( vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS ) /* win95, 98, me */
 		s_win95 = qtrue;
 
-	Cvar_Get("sys_os", "win", 0);
+	Cvar_Get("sys_os", "win", CVAR_SERVERINFO);
 
 	if (dedicated->value) {
 		if (!AllocConsole ())

@@ -327,12 +327,7 @@ typedef struct {
 
 	void (*LoadTGA) (char *name, byte ** pic, int *width, int *height);
 
-	/* Draw images for cinematic rendering (which can have a different palette). Note that calls */
-	void (*DrawStretchRaw) (int x, int y, int w, int h, int cols, int rows, byte * data);
-
-	/*
-	 ** video mode and refresh state management entry points
-	 */
+	/* video mode and refresh state management entry points */
 	void (*BeginFrame) (float camera_separation);
 	void (*EndFrame) (void);
 	void (*AppActivate) (qboolean activate);

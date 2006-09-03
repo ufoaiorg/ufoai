@@ -202,7 +202,7 @@ void Sys_Quit (void)
  */
 void Sys_Init(void)
 {
-	Cvar_Get("sys_os", "linux", 0);
+	Cvar_Get("sys_os", "linux", CVAR_SERVERINFO);
 #if id386
 /*	Sys_SetFPCW(); */
 #endif

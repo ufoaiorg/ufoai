@@ -516,8 +516,8 @@ void Con_DrawConsole(float frac)
 	SCR_AddDirtyPoint(viddef.width - 1, lines - 1);
 
 	Com_sprintf(version, sizeof(version), "v%s", UFO_VERSION);
-	for (x = 0; x < 5; x++)
-		re.DrawChar(viddef.width - 44 + x * 8, lines - 12, 128 + version[x]);
+	for (x = 0; x < strlen(version); x++)
+		re.DrawChar(viddef.width - (strlen(version) * 8) + x * 8, lines - 12, 128 + version[x]);
 
 	/* draw the text */
 	con.vislines = lines;

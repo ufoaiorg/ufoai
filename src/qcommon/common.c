@@ -1409,8 +1409,8 @@ void Qcommon_Init(int argc, char **argv)
 #endif
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
-	Cvar_Get("version", s, CVAR_SERVERINFO | CVAR_NOSET);
-	Cvar_Get("ver", va("%4.2f", UFO_VERSION), CVAR_NOSET);
+	Cvar_Get("version", s, CVAR_NOSET);
+	Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET);
 
 	if (dedicated->value)
 		Cmd_AddCommand("quit", Com_Quit);
@@ -1438,6 +1438,9 @@ void Qcommon_Init(int argc, char **argv)
 	Qcommon_LocaleInit();
 #else
 	Com_Printf("..no gettext compiled into this binary\n");
+#endif
+#ifdef DEBUG
+	Com_Printf("...svn revision: %s\n", SVN);
 #endif
 
 	Com_ParseScripts();

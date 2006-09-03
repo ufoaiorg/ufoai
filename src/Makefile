@@ -67,6 +67,11 @@ CC=gcc
 
 VERSION=$(shell grep UFO_VERSION $(MOUNT_DIR)/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/')
 
+SVN_REV=
+ifeq ($(wildcard .svn),.svn)
+	SVN_REV=$(shell LANG=C svnversion .)
+endif
+
 MOUNT_DIR=.
 
 BUILD_DEBUG_DIR=../debug$(ARCH)
@@ -378,7 +383,7 @@ build_debug:
 		$(BUILD_DEBUG_DIR)/tools \
 		$(BUILD_DEBUG_DIR)/tools/ufo2map \
 		$(BUILD_DEBUG_DIR)/tools/ufo2map/common
-	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS) -DLINUX_VERSION='\"$(VERSION) Debug\"'"
+	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS) -DSVN='\"$(SVN_REV)\"'"
 
 echo_info:
 	@echo
@@ -423,6 +428,7 @@ echo_info:
 	@echo "Type 'make' in base/maps to compile the maps"
 	@echo
 	@echo Build for $(ARCH)
+	@echo
 
 build_release:
 	@-mkdir -p $(BUILD_RELEASE_DIR) \
@@ -433,7 +439,7 @@ build_release:
 		$(BUILD_RELEASE_DIR)/tools \
 		$(BUILD_RELEASE_DIR)/tools/ufo2map \
 		$(BUILD_RELEASE_DIR)/tools/ufo2map/common
-	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_RELEASE_DIR) CFLAGS="$(RELEASE_CFLAGS) -DLINUX_VERSION='\"$(VERSION)\"'"
+	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_RELEASE_DIR) CFLAGS="$(RELEASE_CFLAGS) -DSVN='\"$(SVN_REV)\"'"
 	@echo
 	@echo "CFLAGS"
 	@echo "-----------------------"

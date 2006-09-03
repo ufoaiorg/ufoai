@@ -173,8 +173,6 @@ typedef struct {
 #define BACKFACE_EPSILON	0.01
 
 #define	MAX_MOD_KNOWN	512
-extern model_t mod_inline[MAX_MOD_KNOWN];
-extern int numInline;
 
 /* entity transform */
 typedef struct {
@@ -216,13 +214,8 @@ extern vec3_t r_origin;
 /* screen size info */
 extern refdef_t r_newrefdef;
 
-extern cvar_t *r_norefresh;
-/*extern cvar_t *r_lefthand;*/
-extern cvar_t *r_drawentities;
 extern cvar_t *r_drawworld;
-extern cvar_t *r_speeds;
 extern cvar_t *r_fullbright;
-extern cvar_t *r_novis;
 extern cvar_t *r_nocull;
 extern cvar_t *r_isometric;
 extern cvar_t *r_lerpmodels;
@@ -249,7 +242,6 @@ extern cvar_t *gl_particle_att_a;
 extern cvar_t *gl_particle_att_b;
 extern cvar_t *gl_particle_att_c;
 
-extern cvar_t *gl_nosubimage;
 extern cvar_t *gl_bitdepth;
 extern cvar_t *gl_mode;
 extern cvar_t *gl_log;
@@ -258,7 +250,6 @@ extern cvar_t *gl_lightmap;
 /* shadow stuff */
 void R_ShadowBlend(void);
 void R_DrawShadowVolume(entity_t * e);
-void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm);
 void R_DrawShadow(entity_t * e);
 extern cvar_t *gl_shadows;
 extern cvar_t *gl_shadow_debug_shade;
@@ -283,7 +274,6 @@ extern cvar_t *gl_polyblend;
 extern cvar_t *gl_flashblend;
 extern cvar_t *gl_lightmaptype;
 extern cvar_t *gl_modulate;
-extern cvar_t *gl_playermip;
 extern cvar_t *gl_drawbuffer;
 extern cvar_t *gl_3dlabs_broken;
 extern cvar_t *gl_driver;
@@ -292,7 +282,6 @@ extern cvar_t *gl_texturemode;
 extern cvar_t *gl_texturealphamode;
 extern cvar_t *gl_texturesolidmode;
 extern cvar_t *gl_saturatelighting;
-extern cvar_t *gl_lockpvs;
 extern cvar_t *gl_wire;
 extern cvar_t *gl_fog;
 
@@ -333,13 +322,8 @@ extern int registration_sequence;
 
 void V_AddBlend(float r, float g, float b, float a, float *v_blend);
 
-qboolean R_Init(HINSTANCE hinstance, WNDPROC wndproc);
-void R_Shutdown(void);
-
 struct model_s *R_RegisterModelShort(char *name);
 
-void R_RenderView(refdef_t * fd);
-void R_SetRefreshDefinition(refdef_t * fd);
 void GL_ScreenShot_f(void);
 void R_InterpolateTransform(animState_t * as, int numframes, float *tag, float *interpolated);
 void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, char *tag);
@@ -347,7 +331,6 @@ void R_DrawModelParticle(modelInfo_t * mi);
 void R_DrawAliasModel(entity_t * e);
 void R_DrawBrushModel(entity_t * e);
 void R_DrawAllBrushModels(void);
-void R_DrawSpriteModel(entity_t * e);
 void R_DrawBeam(entity_t * e);
 void R_DrawBox(entity_t * e);
 void R_DrawLevelBrushes(void);
@@ -362,9 +345,6 @@ void R_RotateForEntity(entity_t * e);
 void EmitWaterPolys(msurface_t * fa);
 void R_DrawTriangleOutlines(void);
 void R_MarkLights(dlight_t * light, int bit, mnode_t * node);
-
-void R_SetGL2D(void);
-void R_LeaveGL2D(void);
 
 #include "gl_font.h"
 
@@ -382,15 +362,14 @@ void Draw_FadeScreen(void);
 void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
 void Draw_LineStrip(int points, int *verts);
 
-void Draw_StretchRaw(int x, int y, int w, int h, int cols, int rows, byte * data);
-
-/*void	Draw_Model (int x, int y, ); */
-
-void R_BeginFrame(float camera_separation);
 void R_SwapBuffers(int);
-void R_SetPalette(const unsigned char *palette);
 
 int Draw_GetPalette(void);
+
+void R_BeginRegistration(char *tiles, char *pos);
+void R_EndRegistration(void);
+struct image_s *Draw_FindPic(char *name);
+void LoadTGA(char *name, byte ** pic, int *width, int *height);
 
 void Anim_Append(animState_t * as, model_t * mod, char *name);
 void Anim_Change(animState_t * as, model_t * mod, char *name);
@@ -420,11 +399,6 @@ void GL_TextureAlphaMode(char *string);
 void GL_TextureSolidMode(char *string);
 
 void R_DrawPtls(void);
-
-/*
-** GL extension emulation functions
-*/
-void GL_DrawParticles(int n, const particle_t particles[], const unsigned colortable[768]);
 
 /*
 ** GL config stuff

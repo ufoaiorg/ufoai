@@ -26,12 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "gl_local.h"
 
 vec4_t s_lerped[MAX_VERTS];
-vec3_t shadevector;
+static vec3_t shadevector;
 float shadelight[3];
 
-extern qboolean nolight;
-int c_shadow_volumes = 0;
-int worldlight = 0;
+static int c_shadow_volumes = 0;
+static int worldlight = 0;
 
 /*
 =============================================
@@ -44,7 +43,7 @@ int worldlight = 0;
 /**
  * @brief
  */
-void vectoangles(vec3_t value1, vec3_t angles)
+static void vectoangles(vec3_t value1, vec3_t angles)
 {
 	float forward;
 	float yaw, pitch;
@@ -78,11 +77,11 @@ void vectoangles(vec3_t value1, vec3_t angles)
 	angles[ROLL] = 0;
 }
 
-qboolean nolight;
+static qboolean nolight;
 /**
  * @brief
  */
-void R_ShadowLight(vec3_t pos, vec3_t lightAdd)
+static void R_ShadowLight(vec3_t pos, vec3_t lightAdd)
 {
 	int i;
 	dlight_t *dl;
@@ -130,13 +129,15 @@ void R_ShadowLight(vec3_t pos, vec3_t lightAdd)
 }
 
 extern cvar_t *r_shading;
-dlight_t model_dlights[MAX_MODEL_DLIGHTS];
-int model_dlights_num;
+/*
+static dlight_t model_dlights[MAX_MODEL_DLIGHTS];
+static int model_dlights_num;
+*/
 
 /**
  * @brief
  */
-void GL_DrawAliasShadow(entity_t * e, dmdl_t * paliashdr, int posenum)
+static void GL_DrawAliasShadow(entity_t * e, dmdl_t * paliashdr, int posenum)
 {
 	dtrivertx_t *verts;
 	int *order;
@@ -211,7 +212,7 @@ void GL_DrawAliasShadow(entity_t * e, dmdl_t * paliashdr, int posenum)
 /**
  * @brief
  */
-void BuildShadowVolume(dmdl_t * hdr, vec3_t light, float projectdistance)
+static void BuildShadowVolume(dmdl_t * hdr, vec3_t light, float projectdistance)
 {
 	dtriangle_t *ot, *tris;
 	int i, j;
@@ -315,7 +316,7 @@ void BuildShadowVolume(dmdl_t * hdr, vec3_t light, float projectdistance)
 /**
  * @brief
  */
-void GL_RenderVolumes(dmdl_t * paliashdr, vec3_t lightdir, int projdist)
+static void GL_RenderVolumes(dmdl_t * paliashdr, vec3_t lightdir, int projdist)
 {
 	int incr = gl_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR;
 	int decr = gl_state.stencil_wrap ? GL_DECR_WRAP_EXT : GL_DECR;
@@ -349,7 +350,7 @@ void GL_RenderVolumes(dmdl_t * paliashdr, vec3_t lightdir, int projdist)
 /**
  * @brief
  */
-void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm)
+static void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm)
 {
 	int *order, i, o, dist;
 	vec3_t light, temp;
@@ -599,8 +600,10 @@ void R_DrawShadowVolume(entity_t * e)
 	}
 }
 
+#if 0
 /**
  * @brief
+ * @note currently not used
  */
 void R_ShadowBlend(void)
 {
@@ -648,3 +651,4 @@ void R_ShadowBlend(void)
 	else
 		qglColor4f(1, 1, 1, 1);
 }
+#endif
