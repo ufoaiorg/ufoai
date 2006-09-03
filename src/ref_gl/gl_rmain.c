@@ -1299,7 +1299,7 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	else
 		ri.Cvar_Set("scr_drawall", "0");
 
-#ifdef __linux__
+#if defined __linux__ || defined __FreeBSD__
 	ri.Cvar_SetValue("gl_finish", 1);
 #endif
 

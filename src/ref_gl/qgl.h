@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <GL/glext.h>
 #endif
 
-#ifdef __linux__
+#if defined __linux__ || defined __FreeBSD__
 #include <GL/glx.h>
 #endif
 
@@ -468,7 +468,7 @@ extern BOOL(WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, cons
 
 #endif
 
-#ifdef __linux__
+#if defined __linux__ || defined __FreeBSD__
 
 /* local function in dll */
 extern void *qwglGetProcAddress(char *symbol);
