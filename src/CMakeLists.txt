@@ -207,6 +207,8 @@ SET(TOOLS_SOURCEFILES
 )
 
 
+EXEC_PROGRAM(uname . ARGS "-m  | sed -e s/i.86/i386/ -e s/sun4u/sparc/ -e s/sparc64/sparc/ -e s/arm.*/arm/ -e s/sa110/arm/ -e s/alpha/axp/ -e 's/Power Macintosh/ppc/'" OUTPUT_VARIABLE ARCH )
+
 SET(SOURCEDIRS client game server qcommon)
 SET(EXTERNAL_LIBS "")
 SET(CMAKE_C_FLAGS_DEBUG, -Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89)
@@ -278,6 +280,10 @@ ENDIF (BUILD_WITH_DGA)
 IF (BUILD_WITH_MMX)
 	ADD_DEFINITIONS(-DQ2_MMX_ENABLED -msse)
 ENDIF(BUILD_WITH_MMX)
+
+IF (${ARCH} STREQUAL "i386")
+   ADD_DEFINITIONS(-DC_ONLY)
+ENDIF (${ARCH} STREQUAL "i386")
 
 IF (BUILD_SDLUFO)
    INCLUDE(FindSDL)
