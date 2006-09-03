@@ -71,9 +71,7 @@ extern void R_BuildLightMap(msurface_t * surf, byte * dest, int stride);
 
 /*
 =============================================================
-
-	BRUSH MODELS
-
+BRUSH MODELS
 =============================================================
 */
 
@@ -259,9 +257,7 @@ static void R_BlendLightmaps(void)
 	if (currentmodel == rTiles[0])
 		c_visible_lightmaps = 0;
 
-	/*
-	 ** render static lightmaps first
-	 */
+	/* render static lightmaps first */
 	for (i = 1; i < MAX_LIGHTMAPS; i++) {
 		if (gl_lms.lightmap_surfaces[i]) {
 			if (currentmodel == rTiles[0])
@@ -275,9 +271,7 @@ static void R_BlendLightmaps(void)
 		}
 	}
 
-	/*
-	 ** render dynamic lightmaps
-	 */
+	/* render dynamic lightmaps */
 	if (gl_dynamic->value) {
 		LM_InitBlock();
 
@@ -330,9 +324,7 @@ static void R_BlendLightmaps(void)
 			}
 		}
 
-		/*
-		 ** draw remainder of dynamic lightmaps that haven't been uploaded yet
-		 */
+		/* draw remainder of dynamic lightmaps that haven't been uploaded yet */
 		if (newdrawsurf)
 			LM_UploadBlock(qtrue);
 
@@ -342,9 +334,7 @@ static void R_BlendLightmaps(void)
 		}
 	}
 
-	/*
-	 ** restore state
-	 */
+	/* restore state */
 	qglDisable(GL_BLEND);
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglDepthMask(1);
@@ -371,11 +361,9 @@ static void R_RenderBrushPoly(msurface_t * fa)
 		qglColor4f(gl_state.inverse_intensity, gl_state.inverse_intensity, gl_state.inverse_intensity, 1.0F);
 		EmitWaterPolys(fa);
 		GL_TexEnv(GL_REPLACE);
-
 		return;
 	} else {
 		GL_Bind(image->texnum);
-
 		GL_TexEnv(GL_REPLACE);
 	}
 
@@ -384,9 +372,7 @@ static void R_RenderBrushPoly(msurface_t * fa)
 	else
 		DrawGLPoly(fa->polys);
 
-	/*
-	 ** check for lightmap modification
-	 */
+	/* check for lightmap modification */
 	for (maps = 0; maps < MAXLIGHTMAPS && fa->styles[maps] != 255; maps++) {
 		if (r_newrefdef.lightstyles[fa->styles[maps]].white != fa->cached_light[maps])
 			goto dynamic;
@@ -731,9 +717,7 @@ void R_DrawBrushModel(entity_t * e)
 
 /*
 =============================================================
-
-	WORLD MODEL
-
+WORLD MODEL
 =============================================================
 */
 
@@ -918,9 +902,7 @@ void R_DrawLevelBrushes(void)
 
 /*
 =============================================================================
-
-  LIGHTMAP ALLOCATION
-
+LIGHTMAP ALLOCATION
 =============================================================================
 */
 
@@ -1158,9 +1140,7 @@ void GL_BeginBuildingLightmaps(void)
 		gl_lms.internal_format = gl_solid_format;
 	}
 
-	/*
-	 ** initialize the dynamic lightmap texture
-	 */
+	/* initialize the dynamic lightmap texture */
 	GL_Bind(gl_state.lightmap_textures + 0);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
