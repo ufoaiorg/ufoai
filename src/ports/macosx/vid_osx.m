@@ -14,7 +14,7 @@
 #include <dlfcn.h>
 #include <stdio.h>
 
-#include "../client/client.h"
+#include "../../client/client.h"
 
 #pragma mark -
 

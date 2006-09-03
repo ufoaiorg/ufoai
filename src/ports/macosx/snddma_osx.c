@@ -174,7 +174,7 @@ qboolean SNDDMA_Init (struct sndinfo *si__) /* argument ignored */
     UInt32	myPropertySize;
 
     /* check sample bits: */
-    s_loadas8bit = Cvar_Get("s_loadas8bit", "16", CVAR_ARCHIVE);
+    cvar_t* s_loadas8bit = Cvar_Get("s_loadas8bit", "16", CVAR_ARCHIVE);
     if ((int) s_loadas8bit->value)
     {
 	dma.samplebits = 8;

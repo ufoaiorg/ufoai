@@ -21,7 +21,7 @@
 #import <IOKit/hidsystem/IOHIDParameter.h>
 #import <IOKit/hidsystem/event_status_driver.h>
 
-#include "../client/client.h"
+#include "../../client/client.h"
 
 #pragma mark -
 
@@ -145,7 +145,7 @@ void	IN_SetF12EjectEnabled (qboolean theState)
     }
 
     // Set the F12 key according to the current state:
-    if (theState == NO && keybindings[K_F12] != NULL && keybindings[K_F12][0] != 0x00)
+    if (theState == NO) // && keybindings[K_F12] != NULL && keybindings[K_F12][0] != 0x00)
     {
         UInt32		myValue = 0x00;
         IOByteCount	myCount;
