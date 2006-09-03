@@ -1306,6 +1306,10 @@ qboolean RS_ItemIsResearched(char *id_provided)
 	int i;
 	technology_t *tech = NULL;
 
+	/* in multiplaer everyting is researched */
+	if (!ccs.singleplayer)
+		return qtrue;
+
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 		/* Provided item found. */

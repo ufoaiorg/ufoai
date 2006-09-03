@@ -410,9 +410,10 @@ void CL_ActorUpdateCVars(void)
 			/* panic */
 			Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Currently panics!\n"));
 		} else {
-			/* in multiplayer we should be able to use the aliens weapons */
-			if (ccs.singleplayer && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE && selWeapon
-			&& !RS_ItemIsResearched(csi.ods[selWeapon->item.t].kurz) ) {
+			/* in multiplayer RS_ItemIsResearched always returns true, 
+			   so we are able to use the aliens weapons */
+			if ( cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE && selWeapon
+				 && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].kurz) ) {
 				CL_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
 				cl.cmode = M_MOVE;
 			}
@@ -975,9 +976,9 @@ void CL_ActorReload(int hand)
 	for (container = 0; container < csi.numIDs; container++) {
 		if (csi.ids[container].out < tu) {
 			/* Once we've found at least one clip, there's no point */
-			/* searching other containers if it would take longer to */
-			/* retrieve the ammo from them than the one we've already */
-			/* found. */
+			/* searching other containers if it would take longer */
+			/* to retrieve the ammo from them than the one */
+			/* we've already found. */
 			for (ic = inv->c[container]; ic; ic = ic->next)
 				if ( csi.ods[ic->item.t].link == weapon
 					 && RS_ItemIsResearched(csi.ods[ic->item.t].kurz) ) {
