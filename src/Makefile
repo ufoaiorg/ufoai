@@ -706,6 +706,9 @@ else
 	ifeq ($(OSTYPE),Linux)
 		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_linux.o
 	endif
+	ifeq ($(OSTYPE),FreeBSD)
+		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_linux.o
+	endif
 	ifeq ($(OSTYPE),Darwin)
 		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_osx.o
 	endif
@@ -931,6 +934,14 @@ Q2DED_OBJS = \
 	$(BUILDDIR)/ded/cd_null.o
 
 ifeq ($(OSTYPE),Linux)
+	Q2DED_OBJS += \
+	$(BUILDDIR)/ded/q_shlinux.o \
+	$(BUILDDIR)/ded/sys_linux.o \
+	$(BUILDDIR)/ded/glob.o \
+	$(BUILDDIR)/ded/$(NET_UDP).o
+endif
+
+ifeq ($(OSTYPE),FreeBSD)
 	Q2DED_OBJS += \
 	$(BUILDDIR)/ded/q_shlinux.o \
 	$(BUILDDIR)/ded/sys_linux.o \
