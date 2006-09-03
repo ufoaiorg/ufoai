@@ -108,6 +108,7 @@ endif
 
 ifeq ($(OSTYPE),FreeBSD)
 	LDFLAGS=-lm -lvorbisfile -lvorbis -lintl
+	BUILD_ALSA=NO
 endif
 
 ifeq ($(OSTYPE),Linux)
