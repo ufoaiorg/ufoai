@@ -123,17 +123,17 @@ tech rs_nano
 	researched	false
 }
 
-tech rs_advanced_armor
-{
-	type	tech
-	name	"_Advanced Armor Fabrics"
-	up_chapter	tech
-	description	"_armor_fabrics_txt"
-
-	requires	"rs_nano rs_tachyon"
-	time	400
-	researched	false
-}
+// tech rs_advanced_armor
+// {
+// 	type	tech
+// 	name	"_Advanced Armor Fabrics"
+// 	up_chapter	tech
+// 	description	"_armor_fabrics_txt"
+// 
+// 	requires	"rs_nano rs_tachyon"
+// 	time	400
+// 	researched	false
+// }
 
 // general ufo technology
 // FIXME: this should not be researched - but found via intercepter missions
@@ -799,17 +799,17 @@ tech rs_nano_armor
 	researched	false
 }
 
-tech rs_heavy_nano_armor
-{
-	type	armor
-	description	"_nano_heavy_armor_txt"
-	up_chapter	armors
-
-	requires	rs_advanced_armor
-	provides	heavy
-	time	400
-	researched	false
-}
+// tech rs_heavy_nano_armor
+// {
+// 	type	armor
+// 	description	"_nano_heavy_armor_txt"
+// 	up_chapter	armors
+// 
+// 	requires	rs_advanced_armor
+// 	provides	heavy
+// 	time	400
+// 	researched	false
+// }
 
 //========================
 // Damage Types
