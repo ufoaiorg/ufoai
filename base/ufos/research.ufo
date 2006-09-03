@@ -82,7 +82,7 @@ tech rs_laser
 	description	"_laser_txt"
 
 	requires	initial
-	time	30 // 60-from the techtree.txt file
+	time	60
 	researched	false
 	image_top	techs/laser
 }
@@ -95,7 +95,7 @@ tech rs_plasma
 	description	"_plasma_txt"
 
 	requires	nothing
-	time	30 // 90
+	time	90
 	researched	false
 }
 
@@ -107,7 +107,7 @@ tech rs_tachyon
 	description	"_tachyon_txt"
 
 	requires	nothing
-	time	50 // 120
+	time	120
 	researched	false
 }
 
@@ -119,7 +119,7 @@ tech rs_nano
 	description	"_nano_txt"
 
 	requires	"rs_laser rs_plasma"
-	time	30 // 80
+	time	100
 	researched	false
 }
 
@@ -131,7 +131,7 @@ tech rs_advanced_armor
 	description	"_armor_fabrics_txt"
 
 	requires	"rs_nano rs_tachyon"
-	time	120 // 300
+	time	400
 	researched	false
 }
 
@@ -333,7 +333,7 @@ tech rs_weapon_rpg_incendiary_ammo
 
 	requires	"rs_damage_fire rs_weapon_rpg rs_weapon_alienincgrenade"
 	provides	rpg_incendiary_ammo
-	time	10
+	time	40
 	researched	false
 }
 
@@ -345,7 +345,7 @@ tech rs_weapon_rpg_tachyon_ammo
 
 	requires	"rs_damage_tachyon rs_weapon_rpg"
 	provides	rpg_tachyon_ammo
-	time	40
+	time	120
 	researched	false
 }
 
@@ -393,7 +393,7 @@ tech rs_weapon_stunrod
 
 	requires	"rs_skill_close rs_damage_stun"
 	provides	stunrod
-	time	5
+	time	20
 	researched	false
 }
 
@@ -405,7 +405,7 @@ tech rs_medikit
 
 	requires	rs_skill_mind
 	provides	medikit
-	time	7
+	time	35
 	researched	false
 }
 
@@ -417,7 +417,7 @@ tech rs_irgoggles
 
 	requires	rs_skill_mind
 	provides	irgoggles
-	time	10
+	time	35
 	researched	false
 }
 
@@ -429,7 +429,7 @@ tech rs_weapon_stungren
 
 	requires	"rs_skill_explosive rs_damage_stun rs_weapon_stunrod"
 	provides	stungrenade
-	time	20
+	time	60
 	researched	false
 }
 
@@ -441,7 +441,7 @@ tech rs_weapon_bolterrifle
 
 	requires	rs_skill_heavy
 	provides	bolterrifle
-	time	10
+	time	20
 	researched	false
 }
 
@@ -465,7 +465,7 @@ tech rs_weapon_grenl
 
 	requires	rs_skill_explosive
 	provides	grenl
-	time	10
+	time	30
 	researched	false
 }
 
@@ -489,7 +489,7 @@ tech rs_weapon_grenl_plasma_ammo
 
 	requires	"rs_damage_plasma rs_weapon_grenl"
 	provides	grenl_plasma_ammo
-	time	20
+	time	50
 	researched	false
 }
 
@@ -501,7 +501,7 @@ tech rs_weapon_laserpistol
 
 	requires	"rs_skill_close rs_laser"
 	provides	laserpistol
-	time	20
+	time	40
 	researched	false
 }
 
@@ -525,7 +525,7 @@ tech rs_weapon_laserrifle
 
 	requires	"rs_skill_sniper rs_skill_assault rs_weapon_laserpistol"
 	provides	laserrifle
-	time	30
+	time	70
 	researched	false
 }
 
@@ -549,7 +549,7 @@ tech rs_weapon_heavylaser
 
 	requires	"rs_skill_sniper rs_skill_heavy rs_weapon_laserrifle"
 	provides	heavylaser
-	time	20
+	time	60
 	researched	false
 }
 
@@ -577,7 +577,7 @@ tech rs_weapon_alienincgrenade
 
 	requires	"rs_skill_explosive rs_damage_fire"
 	provides	alienincgrenade
-	time	10
+	time	20
 	researched	false
 	needscollected	true
 }
@@ -590,7 +590,7 @@ tech rs_weapon_plasmagren
 
 	requires	"rs_skill_explosive rs_damage_plasma"
 	provides	plasmagrenade
-	time	30
+	time	60
 	researched	false
 	needscollected	false
 }
@@ -603,7 +603,7 @@ tech rs_weapon_kerrblade
 
 	requires	"rs_skill_close rs_damage_normal"
 	provides	kerrblade
-	time	10
+	time	20
 	researched	false
 	needscollected	true
 }
@@ -616,7 +616,7 @@ tech rs_weapon_plasblade
 
 	requires	"rs_skill_close rs_damage_plasma"
 	provides	plasblade
-	time	10
+	time	40
 	researched	false
 	needscollected	true
 }
@@ -629,7 +629,7 @@ tech rs_weapon_plasatomizer
 
 	requires	"rs_skill_assault rs_skill_heavy rs_plasma"
 	provides	plaspistol
-	time	40
+	time	80
 	researched	false
 	needscollected	true
 }
@@ -654,7 +654,7 @@ tech rs_weapon_plasrifle
 
 	requires	"rs_skill_assault rs_skill_heavy rs_plasma"
 	provides	plasrifle
-	time	50
+	time	130
 	researched	false
 	needscollected	true
 }
@@ -679,7 +679,7 @@ tech rs_weapon_plasblaster
 
 	requires	"rs_skill_explosive rs_skill_heavy rs_plasma"
 	provides	plasblaster
-	time	70
+	time	220
 	researched	false
 	needscollected	true
 }
@@ -704,7 +704,7 @@ tech rs_weapon_tachyonpistol
 
 	requires	"rs_skill_close rs_tachyon"
 	provides	tachyonpistol
-	time	50
+	time	150
 	researched	false
 	needscollected	true
 }
@@ -729,7 +729,7 @@ tech rs_weapon_tachyonrifle
 
 	requires	"rs_skill_explosive rs_skill_assault rs_tachyon"
 	provides	tachyonrifle
-	time	70
+	time	240
 	researched	false
 	needscollected	true
 }
@@ -754,7 +754,7 @@ tech rs_weapon_tachyonsniper
 
 	requires	"rs_skill_sniper rs_tachyon"
 	provides	tachyonsniper
-	time	80
+	time	310
 	researched	false
 	needscollected	true
 }
@@ -795,7 +795,7 @@ tech rs_nano_armor
 
 	requires	rs_nano
 	provides	medium
-	time	30
+	time	100
 	researched	false
 }
 
@@ -807,7 +807,7 @@ tech rs_heavy_nano_armor
 
 	requires	rs_advanced_armor
 	provides	heavy
-	time	120
+	time	400
 	researched	false
 }
 
