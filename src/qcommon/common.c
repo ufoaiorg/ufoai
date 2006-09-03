@@ -1439,7 +1439,7 @@ void Qcommon_Init(int argc, char **argv)
 #else
 	Com_Printf("..no gettext compiled into this binary\n");
 #endif
-#ifdef DEBUG
+#ifdef SVN
 	Com_Printf("...svn revision: %s\n", SVN);
 #endif
 
