@@ -15,6 +15,26 @@ msgstr ""
 msgid "normal"
 msgstr "Normal"
 
+#: ../base/ufos/menu_bases.ufo:126
+msgid "Buy a new aircraft"
+msgstr "Buy a new aircraft"
+
+#: ../base/ufos/menu_options.ufo:561
+msgid "Sound renderer:"
+msgstr "Sound renderer:"
+
+#: ../base/ufos/nations.ufo:24
+msgid "South America"
+msgstr "South America"
+
+#: ../base/ufos/nations.ufo:38
+msgid "North America"
+msgstr "North America"
+
+#: client/cl_ufopedia.c:323
+msgid "No pre-research description available."
+msgstr "No pre-research description available."
+
 #: ../base/ufos/armor.ufo:4
 msgid "blast"
 msgstr "Blast"
