@@ -615,6 +615,9 @@ static void R_DrawInlineBModel(void)
 		GL_TexEnv(GL_MODULATE);
 	}
 
+	/* set r_alpha_surfaces = NULL to ensure psurf->texturechain terminates */
+	r_alpha_surfaces = NULL;
+
 	/* draw texture */
 	for (i = 0; i < currentmodel->nummodelsurfaces; i++, psurf++) {
 		/* find which side of the node we are on */
