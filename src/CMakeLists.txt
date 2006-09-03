@@ -25,7 +25,11 @@ OPTION(BUILD_WITH_SHADER "build with shader support" ON)
 OPTION(HAVE_IPV6 "Compile with IPv6 (protocol independent API). Tested on FreeBSD" OFF)
 OPTION(HAVE_GETTEXT "Compile with multilanguage-support?" ON)
 OPTION(BUILD_WITH_DGA, "dga support compiled in" OFF)
-
+OPTION(BUILD_WITH_VIDMODE "vidmode support" ON)
+OPTION(BUILD_WITH_MMX "MMX support" OFF)
+OPTION(BUILD_PARANOID "paranoid mode (extra runtime checks) for debug" OFF)
+OPTION(BUILD_FOR_PROFILING, "build with -pg option for profiling via gprof" OFF)
+OPTION(BUILD_COMPILETOOLS "build ufo2map bsp compile tool" ON)
 
 #
 # Recurse into these subdirs
@@ -172,6 +176,37 @@ SET(UFODED_SOURCEFILES
 	ports/null/cd_null.c
 )
 
+SET(TOOLS_SOURCEFILES
+	tools/ufo2map/ufo2map.c
+	tools/ufo2map/qrad3.c
+	tools/ufo2map/qbsp3.c
+	tools/ufo2map/brushbsp.c
+	tools/ufo2map/csg.c
+	tools/ufo2map/faces.c
+	tools/ufo2map/glfile.c
+	tools/ufo2map/levels.c
+	tools/ufo2map/lightmap.c
+	tools/ufo2map/map.c
+	tools/ufo2map/nodraw.c
+	tools/ufo2map/patches.c
+	tools/ufo2map/portals.c
+	tools/ufo2map/routing.c
+	tools/ufo2map/textures.c
+	tools/ufo2map/tree.c
+	tools/ufo2map/writebsp.c
+	tools/ufo2map/common/bspfile.c
+	tools/ufo2map/common/cmdlib.c
+	tools/ufo2map/common/l3dslib.c
+	tools/ufo2map/common/lbmlib.c
+	tools/ufo2map/common/mathlib.c
+	tools/ufo2map/common/polylib.c
+	tools/ufo2map/common/scriplib.c
+	tools/ufo2map/common/threads.c
+	tools/ufo2map/common/trace.c
+	tools/ufo2map/common/trilib.c
+)
+
+
 SET(SOURCEDIRS client game server qcommon)
 SET(EXTERNAL_LIBS "")
 SET(CMAKE_C_FLAGS_DEBUG, -Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89)
@@ -202,6 +237,14 @@ IF (${CMAKE_SYSTEM_NAME} STREQUAL Linux)
 			MESSAGE(FATAL_ERROR "X11 coult not be found")
 			SET(BUILD_SDLUFO, OFF)
 		ENDIF (X11_FOUND)
+		IF (BUILD_WITH_DGA)
+		    FIND_LIBRARY(LIB_Xxf86dga Xxf86dga)
+			TARGET_LINK_LIBRARIES(ref_glx ${LIB_Xxf86dga})
+		ENDIF (BUILD_WITH_DGA)
+		IF (BUILD_WITH_VIDMODE)
+		    FIND_LIBRARY(LIB_Xxf86vm Xxf86vm)
+			TARGET_LINK_LIBRARIES(ref_glx ${LIB_Xxf86dga})
+		ENDIF (BUILD_WITH_VIDMODE)
 	ENDIF(BUILD_GLX)
 ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
 
@@ -232,6 +275,9 @@ IF (BUILD_WITH_DGA)
    ADD_DEFINITIONS(-DHAVE_DGA)
 ENDIF (BUILD_WITH_DGA)
 
+IF (BUILD_WITH_MMX)
+	ADD_DEFINITIONS(-DQ2_MMX_ENABLED -msse)
+ENDIF(BUILD_WITH_MMX)
 
 IF (BUILD_SDLUFO)
    INCLUDE(FindSDL)
@@ -242,31 +288,43 @@ IF (BUILD_SDLUFO)
 		ADD_DEFINITIONS(-DUSE_SDL)
         INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIR})
    ELSE(SDL_FOUND)
-        MESSAGE("SDL could not be found, but BUILD_SDLUFO was specified. Turning off BUILD_SDLUFO")
-        SET(BUILD_SDLUFO, OFF)
+		MESSAGE("SDL could not be found, but BUILD_SDLUFO was specified. Turning off BUILD_SDLUFO")
+		SET(BUILD_SDLUFO, OFF)
    ENDIF (SDL_FOUND)
 ENDIF (BUILD_SDLUFO)
 
 IF (BUILD_ALSA)
-   ADD_DEFINITIONS(-DUSE_ALSA)
-   LIST(APPEND EXTERNAL_LIBS asound)
-   ADD_LIBRARY(snd_alsa SHARED ports/linux/snd_alsa.c)
-   SET_TARGET_PROPERTIES(snd_alsa PROPERTIES PREFIX "")
+	ADD_DEFINITIONS(-DUSE_ALSA)
+	LIST(APPEND EXTERNAL_LIBS asound)
+	ADD_LIBRARY(snd_alsa SHARED ports/linux/snd_alsa.c)
+	SET_TARGET_PROPERTIES(snd_alsa PROPERTIES PREFIX "")
 ENDIF (BUILD_ALSA)
 
 IF (BUILD_OSS)
-   ADD_LIBRARY(snd_oss SHARED ports/linux/snd_oss.c)
-   SET_TARGET_PROPERTIES(snd_oss PROPERTIES PREFIX "")
+	ADD_LIBRARY(snd_oss SHARED ports/linux/snd_oss.c)
+	SET_TARGET_PROPERTIES(snd_oss PROPERTIES PREFIX "")
 ENDIF (BUILD_OSS)
 
 IF (BUILD_ARTS)
-   ADD_LIBRARY(snd_arts SHARED ports/linux/snd_arts.c)
-   SET_TARGET_PROPERTIES(snd_arts PROPERTIES PREFIX "")
+	ADD_LIBRARY(snd_arts SHARED ports/linux/snd_arts.c)
+	SET_TARGET_PROPERTIES(snd_arts PROPERTIES PREFIX "")
 ENDIF (BUILD_ARTS)
+
+IF (BUILD_WITH_VIDMODE)
+	ADD_DEFINITIONS(-DHAVE_VIDMODE)
+ENDIF (BUILD_WITH_VIDMODE)
+
+IF (BUILD_PARANOID)
+	ADD_DEFINITIONS(-DPARANOID)
+ENDIF(BUILD_PARANOID)
+
+IF (BUILD_FOR_PROFILING)
+	ADD_DEFINITIONS(-pg -DPROFILING -fprofile-arcs -ftest-coverage)
+ENDIF(BUILD_FOR_PROFILING)
 
 SET(EXTERNAL_LIBS_FOUND "")
 FOREACH(LIB ${EXTERNAL_LIBS})
-   FIND_LIBRARY(lib_${LIB} ${LIB})
+   FIND_LIBRARY(LIB_${LIB} ${LIB})
    LIST(APPEND EXTERNAL_LIBS_FOUND ${LIB})
 ENDFOREACH(LIB)
 
@@ -286,3 +344,7 @@ IF (BUILD_DEDICATED)
    SET_TARGET_PROPERTIES(ufoded PROPERTIES  COMPILE_FLAGS -DDEDICATED_ONLY DEBUG_OUTPUT_NAME ded/ RELEASE_OUTPUT_NAME ded/)
 ENDIF (BUILD_DEDICATED)
 
+IF (BUILD_COMPILETOOLS)
+  ADD_EXECUTABLE(ufo2map ${TOOLS_SOURCEFILES})
+  TARGET_LINK_LIBRARIES(ufo2map m)
+ENDIF(BUILD_COMPILETOOLS)
