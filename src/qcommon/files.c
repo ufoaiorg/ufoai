@@ -1163,11 +1163,10 @@ void FS_GetMaps(void)
 				Com_Printf("invalid mapstatus: %i (%s)\n", status, found);
 			found = Sys_FindNext(0, 0);
 		}
+		Sys_FindClose();
 	}
 
 	mapsInstalledInit = qtrue;
-
-	Sys_FindClose();
 }
 
 /**
