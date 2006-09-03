@@ -31,9 +31,7 @@ static int r_dlightframecount;
 
 /*
 =============================================================================
-
 DYNAMIC LIGHTS BLEND RENDERING
-
 =============================================================================
 */
 
@@ -108,9 +106,7 @@ void R_RenderDlights(void)
 
 /*
 =============================================================================
-
 DYNAMIC LIGHTS
-
 =============================================================================
 */
 
@@ -166,9 +162,7 @@ void R_MarkLights(dlight_t * light, int bit, mnode_t * node)
 
 /*
 =============================================================================
-
 LIGHT SAMPLING
-
 =============================================================================
 */
 
@@ -177,7 +171,7 @@ static float s_blocklights[34 * 34 * 3];
 /**
  * @brief
  */
-void R_AddDynamicLights(msurface_t * surf)
+static void R_AddDynamicLights(msurface_t * surf)
 {
 	int lnum;
 	int sd, td;
@@ -497,9 +491,9 @@ void R_BuildLightMap(msurface_t * surf, byte * dest, int stride)
 	}
 }
 
-vec3_t pointcolor;
-cplane_t *lightplane;			/* used as shadow plane */
-vec3_t lightspot;
+static vec3_t pointcolor;
+static cplane_t *lightplane;			/* used as shadow plane */
+static vec3_t lightspot;
 
 /**
  * @brief

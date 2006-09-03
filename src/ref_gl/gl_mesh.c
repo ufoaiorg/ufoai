@@ -40,19 +40,13 @@ float r_avertexnormals[NUMVERTEXNORMALS][3] = {
 };
 
 static vec4_t s_lerped[MAX_VERTS];
-float normalArray[MAX_VERTS * 3];
-
-/*static	vec3_t	lerped[MAX_VERTS]; */
-
-vec3_t shadevector;
+static float normalArray[MAX_VERTS * 3];
 
 /* precalculated dot products for quantized angles */
 #define SHADEDOT_QUANT 16
 float r_avertexnormal_dots[SHADEDOT_QUANT][256] =
 #include "anormtab.h"
 	;
-
-float *shadedots = r_avertexnormal_dots[0];
 
 /**
  * @brief
@@ -72,7 +66,7 @@ void GL_LerpVerts(int nverts, dtrivertx_t * v, dtrivertx_t * ov, dtrivertx_t * v
  * @brief interpolates between two frames and origins
  * FIXME: batch lerp all vertexes
  */
-void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp, int framenum, int oldframenum)
+static void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp, int framenum, int oldframenum)
 {
 	daliasframe_t *frame, *oldframe;
 	dtrivertx_t *v, *ov, *verts;
@@ -157,7 +151,6 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp, int framenum, int
 			order += 2;
 
 			qglArrayElement(*order++);
-
 		} while (--count);
 
 		qglEnd();
@@ -278,7 +271,7 @@ static qboolean R_CullAliasModel(entity_t * e)
 /**
  * @brief
  */
-void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lightambient)
+static void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lightambient)
 {
 	dlight_t *light;
 	vec3_t delta;
@@ -554,7 +547,7 @@ void R_DrawAliasModel(entity_t * e)
 /**
  * @brief
  */
-void R_TransformModelDirect(modelInfo_t * mi)
+static void R_TransformModelDirect(modelInfo_t * mi)
 {
 	/* translate and rotate */
 	qglTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);

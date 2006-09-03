@@ -30,8 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <intrin.h>
 #endif
 
-void R_Clear(void);
-
 viddef_t vid;
 
 refimport_t ri;
@@ -58,8 +56,6 @@ int c_brush_polys, c_alias_polys;
 
 float v_blend[4];				/* final blending color */
 
-void GL_Strings_f(void);
-
 /* entity transform */
 transform_t trafo[MAX_ENTITIES];
 
@@ -77,12 +73,11 @@ refdef_t r_newrefdef;
 
 int r_viewcluster, r_viewcluster2, r_oldviewcluster, r_oldviewcluster2;
 
-cvar_t *r_norefresh;
-cvar_t *r_drawentities;
+static cvar_t *r_norefresh;
+static cvar_t *r_drawentities;
+static cvar_t *r_speeds;
 cvar_t *r_drawworld;
-cvar_t *r_speeds;
 cvar_t *r_fullbright;
-cvar_t *r_novis;
 cvar_t *r_nocull;
 cvar_t *r_isometric;
 cvar_t *r_lerpmodels;
@@ -92,7 +87,6 @@ cvar_t *r_anisotropic;
 cvar_t *r_ext_max_anisotropy;
 cvar_t *r_texture_lod;			/* lod_bias */
 
-cvar_t *gl_nosubimage;
 cvar_t *gl_allow_software;
 
 cvar_t *gl_vertex_arrays;
@@ -140,13 +134,11 @@ cvar_t *gl_clear;
 cvar_t *gl_cull;
 cvar_t *gl_polyblend;
 cvar_t *gl_flashblend;
-cvar_t *gl_playermip;
 cvar_t *gl_saturatelighting;
 cvar_t *gl_swapinterval;
 cvar_t *gl_texturemode;
 cvar_t *gl_texturealphamode;
 cvar_t *gl_texturesolidmode;
-cvar_t *gl_lockpvs;
 cvar_t *gl_wire;
 cvar_t *gl_fog;
 
@@ -158,9 +150,24 @@ cvar_t *vid_ref;
 cvar_t *vid_grabmouse;
 
 /**
- * @brief
+ * @brief Prints some OpenGL strings
  */
-void R_CastShadow(void)
+static void GL_Strings_f(void)
+{
+	ri.Con_Printf(PRINT_ALL, "GL_VENDOR: %s\n", gl_config.vendor_string);
+	ri.Con_Printf(PRINT_ALL, "GL_RENDERER: %s\n", gl_config.renderer_string);
+	ri.Con_Printf(PRINT_ALL, "GL_VERSION: %s\n", gl_config.version_string);
+	ri.Con_Printf(PRINT_ALL, "MODE: %.0f, %d x %d FULLSCREEN: %.0f\n", gl_mode->value, vid.width, vid.height, vid_fullscreen->value);
+	ri.Con_Printf(PRINT_ALL, "GL_EXTENSIONS: %s\n", gl_config.extensions_string);
+	ri.Con_Printf(PRINT_ALL, "GL_MAX_TEXTURE_SIZE: %d\n", gl_config.maxTextureSize);
+}
+
+#if 0
+/**
+ * @brief
+ * @note currently not used - see gl_shadows cvar
+ */
+static void R_CastShadow(void)
 {
 	int i;
 
@@ -181,6 +188,7 @@ void R_CastShadow(void)
 			R_DrawShadow(currententity);
 	}
 }
+#endif
 
 /**
  * @brief Returns true if the box is completely outside the frustom
@@ -214,9 +222,7 @@ void R_RotateForEntity(entity_t * e)
 
 /*
 =============================================================
-
-  SPRITE MODELS
-
+SPRITE MODELS
 =============================================================
 */
 
@@ -224,7 +230,7 @@ void R_RotateForEntity(entity_t * e)
 /**
  * @brief
  */
-void R_DrawSpriteModel(entity_t * e)
+static void R_DrawSpriteModel(entity_t * e)
 {
 	float alpha = 1.0F;
 	vec3_t point;
@@ -315,7 +321,7 @@ void R_DrawSpriteModel(entity_t * e)
 /**
  * @brief
  */
-void R_DrawNullModel(void)
+static void R_DrawNullModel(void)
 {
 	vec3_t shadelight;
 	int i;
@@ -397,7 +403,7 @@ void R_InterpolateTransform(animState_t * as, int numframes, float *tag, float *
 /**
  * @brief
  */
-float *R_CalcTransform(entity_t * e)
+static float *R_CalcTransform(entity_t * e)
 {
 	vec3_t angles;
 	transform_t *t;
@@ -487,7 +493,7 @@ float *R_CalcTransform(entity_t * e)
 /**
  * @brief
  */
-void R_TransformEntitiesOnList(void)
+static void R_TransformEntitiesOnList(void)
 {
 	int i;
 
@@ -510,7 +516,7 @@ void R_TransformEntitiesOnList(void)
 /**
  * @brief
  */
-void R_DrawEntitiesOnList(void)
+static void R_DrawEntitiesOnList(void)
 {
 	int i;
 
@@ -595,7 +601,7 @@ void R_DrawEntitiesOnList(void)
 /**
  * @brief
  */
-void GL_DrawParticles(int num_particles, const particle_t particles[], const unsigned colortable[768])
+static void GL_DrawParticles(int num_particles, const particle_t particles[], const unsigned colortable[768])
 {
 	const particle_t *p;
 	int i;
@@ -646,7 +652,7 @@ void GL_DrawParticles(int num_particles, const particle_t particles[], const uns
 /**
  * @brief
  */
-void R_DrawParticles(void)
+static void R_DrawParticles(void)
 {
 	if (gl_ext_pointparameters->value && qglPointParameterfEXT) {
 		int i;
@@ -682,7 +688,7 @@ void R_DrawParticles(void)
 /**
  * @brief
  */
-void R_PolyBlend(void)
+static void R_PolyBlend(void)
 {
 	if (!gl_polyblend->value)
 		return;
@@ -720,7 +726,7 @@ void R_PolyBlend(void)
 /**
  * @brief
  */
-int SignbitsForPlane(cplane_t * out)
+static int SignbitsForPlane(cplane_t * out)
 {
 	int bits, j;
 
@@ -736,7 +742,7 @@ int SignbitsForPlane(cplane_t * out)
 /**
  * @brief
  */
-void R_SetFrustum(void)
+static void R_SetFrustum(void)
 {
 	int i;
 
@@ -773,7 +779,7 @@ void R_SetFrustum(void)
 /**
  * @brief
  */
-void R_SetupFrame(void)
+static void R_SetupFrame(void)
 {
 	int i;
 
@@ -802,7 +808,7 @@ void R_SetupFrame(void)
 /**
  * @brief
  */
-void MYgluPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)
+static void MYgluPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)
 {
 	GLdouble xmin, xmax, ymin, ymax;
 
@@ -825,7 +831,7 @@ void MYgluPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble z
 /**
  * @brief
  */
-void R_SetupGL(void)
+static void R_SetupGL(void)
 {
 	float screenaspect;
 	int x, x2, y2, y, w, h;
@@ -885,7 +891,7 @@ void R_SetupGL(void)
 /**
  * @brief
  */
-void R_Clear(void)
+static void R_Clear(void)
 {
 	if (gl_ztrick->value) {
 		static int trickframe;
@@ -919,7 +925,7 @@ void R_Clear(void)
 /**
  * @brief
  */
-void R_Flash(void)
+static void R_Flash(void)
 {
 /*	R_ShadowBlend(); */
 	R_PolyBlend();
@@ -928,7 +934,7 @@ void R_Flash(void)
 /**
  * @brief r_newrefdef must be set before the first call
  */
-void R_SetRefreshDefinition(refdef_t * fd)
+static void R_SetRefreshDefinition(refdef_t * fd)
 {
 	if (r_norefresh->value)
 		return;
@@ -939,7 +945,7 @@ void R_SetRefreshDefinition(refdef_t * fd)
 /**
  * @brief r_newrefdef must be set before the first call
  */
-void R_RenderView(refdef_t * fd)
+static void R_RenderView(refdef_t * fd)
 {
 	if (r_norefresh->value)
 		return;
@@ -993,9 +999,11 @@ void R_RenderView(refdef_t * fd)
 	}
 }
 
-
+#if 0
 /**
  * @brief
+ * @note Currently unused
+ * @sa R_SetGL2D
  */
 void R_LeaveGL2D(void)
 {
@@ -1007,11 +1015,13 @@ void R_LeaveGL2D(void)
 
 	qglPopAttrib();
 }
+#endif
 
 /**
  * @brief
+ * @sa R_LeaveGL2D
  */
-void R_SetGL2D(void)
+static void R_SetGL2D(void)
 {
 	/* set 2D virtual screen size */
 	qglViewport(0, 0, vid.width, vid.height);
@@ -1032,7 +1042,7 @@ void R_SetGL2D(void)
 /**
  * @brief
  */
-void R_RenderFrame(refdef_t * fd)
+static void R_RenderFrame(refdef_t * fd)
 {
 	R_RenderView(fd);
 	R_SetGL2D();
@@ -1051,7 +1061,7 @@ static cmdList_t r_commands[] = {
 /**
  * @brief
  */
-void R_Register(void)
+static void R_Register(void)
 {
 	cmdList_t *commands;
 
@@ -1060,17 +1070,15 @@ void R_Register(void)
 	r_fullbright = ri.Cvar_Get("r_fullbright", "0", 0);
 	r_drawentities = ri.Cvar_Get("r_drawentities", "1", 0);
 	r_drawworld = ri.Cvar_Get("r_drawworld", "1", 0);
-	r_novis = ri.Cvar_Get("r_novis", "0", 0);
-	r_nocull = ri.Cvar_Get("r_nocull", "0", 0);
 	r_isometric = ri.Cvar_Get("r_isometric", "0", 0);
 	r_lerpmodels = ri.Cvar_Get("r_lerpmodels", "1", 0);
+	r_nocull = ri.Cvar_Get("r_nocull", "0", 0);
 	r_speeds = ri.Cvar_Get("r_speeds", "0", 0);
 	r_displayrefresh = ri.Cvar_Get("r_displayrefresh", "0", CVAR_ARCHIVE);
 	r_anisotropic = ri.Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE);
 	r_ext_max_anisotropy = ri.Cvar_Get("r_ext_max_anisotropy", "0", 0);
 	r_texture_lod = ri.Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE);
 
-	gl_nosubimage = ri.Cvar_Get("gl_nosubimage", "0", 0);
 	gl_allow_software = ri.Cvar_Get("gl_allow_software", "0", 0);
 
 	gl_particle_min_size = ri.Cvar_Get("gl_particle_min_size", "2", CVAR_ARCHIVE);
@@ -1103,7 +1111,6 @@ void R_Register(void)
 	gl_cull = ri.Cvar_Get("gl_cull", "1", 0);
 	gl_polyblend = ri.Cvar_Get("gl_polyblend", "1", 0);
 	gl_flashblend = ri.Cvar_Get("gl_flashblend", "0", 0);
-	gl_playermip = ri.Cvar_Get("gl_playermip", "0", 0);
 	gl_monolightmap = ri.Cvar_Get("gl_monolightmap", "0", 0);
 #if defined(_WIN32)
 	gl_driver = ri.Cvar_Get("gl_driver", "opengl32", CVAR_ARCHIVE);
@@ -1115,7 +1122,6 @@ void R_Register(void)
 	gl_texturemode = ri.Cvar_Get("gl_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE);
 	gl_texturealphamode = ri.Cvar_Get("gl_texturealphamode", "default", CVAR_ARCHIVE);
 	gl_texturesolidmode = ri.Cvar_Get("gl_texturesolidmode", "default", CVAR_ARCHIVE);
-	gl_lockpvs = ri.Cvar_Get("gl_lockpvs", "0", 0);
 	gl_wire = ri.Cvar_Get("gl_wire", "0", 0);
 	gl_fog = ri.Cvar_Get("gl_fog", "1", CVAR_ARCHIVE);
 	gl_vertex_arrays = ri.Cvar_Get("gl_vertex_arrays", "0", CVAR_ARCHIVE);
@@ -1156,7 +1162,7 @@ void R_Register(void)
 /**
  * @brief
  */
-qboolean R_SetMode (void)
+static qboolean R_SetMode (void)
 {
 	rserr_t err;
 	qboolean fullscreen;
@@ -1194,7 +1200,7 @@ qboolean R_SetMode (void)
 /**
  * @brief
  */
-qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
+static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 {
 	char renderer_buffer[1000];
 	char vendor_buffer[1000];
@@ -1533,7 +1539,6 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	GL_SetDefaultState();
 
 	GL_InitImages();
-	Mod_Init();
 	R_InitParticleTexture();
 	Draw_InitLocal();
 
@@ -1548,7 +1553,7 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
  * @brief
  * @sa R_Init
  */
-void R_Shutdown(void)
+static void R_Shutdown(void)
 {
 	cmdList_t *commands;
 
@@ -1575,7 +1580,7 @@ void R_Shutdown(void)
 /**
  * @brief
  */
-void R_BeginFrame(float camera_separation)
+static void R_BeginFrame(float camera_separation)
 {
 	gl_state.camera_separation = camera_separation;
 
@@ -1648,39 +1653,10 @@ void R_BeginFrame(float camera_separation)
 	R_Clear();
 }
 
-unsigned r_rawpalette[256];
 /**
  * @brief
  */
-void R_SetPalette(const unsigned char *palette)
-{
-	int i;
-
-	byte *rp = (byte *) r_rawpalette;
-
-	if (palette) {
-		for (i = 0; i < 256; i++) {
-			rp[i * 4 + 0] = palette[i * 3 + 0];
-			rp[i * 4 + 1] = palette[i * 3 + 1];
-			rp[i * 4 + 2] = palette[i * 3 + 2];
-			rp[i * 4 + 3] = 0xff;
-		}
-	} else {
-		for (i = 0; i < 256; i++) {
-			rp[i * 4 + 0] = LittleLong(d_8to24table[i]) & 0xff;
-			rp[i * 4 + 1] = LittleLong((d_8to24table[i]) >> 8) & 0xff;
-			rp[i * 4 + 2] = LittleLong((d_8to24table[i]) >> 16) & 0xff;
-			rp[i * 4 + 3] = 0xff;
-		}
-	}
-
-	qglClear(GL_COLOR_BUFFER_BIT);
-}
-
-/**
- * @brief
- */
-void R_TakeVideoFrame(int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
+static void R_TakeVideoFrame(int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
 {
 	int frameSize;
 	int i;
@@ -1699,23 +1675,6 @@ void R_TakeVideoFrame(int w, int h, byte * captureBuffer, byte * encodeBuffer, q
 
 	ri.CL_WriteAVIVideoFrame(encodeBuffer, frameSize);
 }
-
-
-
-void R_BeginRegistration(char *tiles, char *pos);
-struct model_s *R_RegisterModelShort(char *name);
-struct image_s *R_RegisterSkin(char *name);
-void R_EndRegistration(void);
-
-void R_RenderFrame(refdef_t * fd);
-
-struct image_s *Draw_FindPic(char *name);
-
-void Draw_Char(int x, int y, int c);
-void Draw_TileClear(int x, int y, int w, int h, char *name);
-void Draw_FadeScreen(void);
-
-void LoadTGA(char *name, byte ** pic, int *width, int *height);
 
 /**
  * @brief
@@ -1762,8 +1721,6 @@ refexport_t GetRefAPI(refimport_t rimp)
 	re.AnimGetName = Anim_GetName;
 
 	re.LoadTGA = LoadTGA;
-
-	re.DrawStretchRaw = Draw_StretchRaw;
 
 	re.Init = R_Init;
 	re.Shutdown = R_Shutdown;

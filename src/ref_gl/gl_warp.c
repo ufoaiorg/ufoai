@@ -35,7 +35,7 @@ static msurface_t *warpface;
 /**
  * @brief
  */
-void BoundPoly(int numverts, float *verts, vec3_t mins, vec3_t maxs)
+static void BoundPoly(int numverts, float *verts, vec3_t mins, vec3_t maxs)
 {
 	int i, j;
 	float *v;
@@ -55,7 +55,7 @@ void BoundPoly(int numverts, float *verts, vec3_t mins, vec3_t maxs)
 /**
  * @brief
  */
-void SubdividePolygon(int numverts, float *verts)
+static void SubdividePolygon(int numverts, float *verts)
 {
 	int i, j, k;
 	vec3_t mins, maxs;

@@ -121,7 +121,6 @@ static field_t fields[] = {
 	{"nextmap", offsetof(spawn_temp_t, nextmap), F_LSTRING, FFL_SPAWNTEMP},
 
 	{0, 0, 0, 0}
-
 };
 
 /**
@@ -329,6 +328,7 @@ void SpawnEntities(char *mapname, char *entities)
 	/* spawn ai players, if needed */
 	if (level.num_spawnpoints[TEAM_CIVILIAN])
 		AI_CreatePlayer(TEAM_CIVILIAN);
+	/* FIXME: Check multiplayer coop */
 	if ((int) sv_maxclients->value == 1 && level.num_spawnpoints[TEAM_ALIEN])
 		AI_CreatePlayer(TEAM_ALIEN);
 }
@@ -562,7 +562,6 @@ static void SP_worldspawn(edict_t * ent)
 		gi.configstring(CS_MAXSOLDIERSPERPLAYER, va("%i", (int) (maxsoldiersperplayer->value)));
 		gi.configstring(CS_ENABLEMORALE, va("%i", (int) (sv_enablemorale->value)));
 	}
-	/*--------------- */
 
 	if (!st.gravity)
 		gi.cvar_set("sv_gravity", "800");

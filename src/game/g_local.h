@@ -53,37 +53,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define P_MASK(p)		(p->num < game.maxplayers ? 1<<(p->num) : 0)
 #define PM_ALL			0xFFFFFFFF
 
-/* edict->spawnflags */
-/* these are set with checkboxes on each entity in the map editor */
-#define	SPAWNFLAG_NOT_EASY			0x00000100
-#define	SPAWNFLAG_NOT_MEDIUM		0x00000200
-#define	SPAWNFLAG_NOT_HARD			0x00000400
-#define	SPAWNFLAG_NOT_DEATHMATCH	0x00000800
-#define	SPAWNFLAG_NOT_COOP			0x00001000
-
-/* edict->flags */
-#define	FL_FLY					0x00000001
-#define	FL_SWIM					0x00000002	/* implied immunity to drowining */
-#define FL_IMMUNE_LASER			0x00000004
-#define	FL_INWATER				0x00000008
-#define	FL_GODMODE				0x00000010
-#define	FL_NOTARGET				0x00000020
-#define FL_IMMUNE_SLIME			0x00000040
-#define FL_IMMUNE_LAVA			0x00000080
-#define	FL_PARTIALGROUND		0x00000100	/* not all corners are valid */
-#define	FL_WATERJUMP			0x00000200	/* player jumping out of water */
-#define	FL_TEAMSLAVE			0x00000400	/* not the first on the team */
-#define FL_NO_KNOCKBACK			0x00000800
-#define FL_POWER_ARMOR			0x00001000	/* power armor (if any) is active */
-#define FL_RESPAWN				0x80000000	/* used for item respawning */
-
-
 #define	FRAMETIME		0.1
 
 /* memory tags to allow dynamic memory to be cleaned up */
 #define	TAG_GAME	765			/* clear when unloading the dll */
 #define	TAG_LEVEL	766			/* clear when loading a new level */
-
 
 
 /* this structure is left intact through an entire game */
@@ -174,7 +148,6 @@ extern cvar_t *maxentities;
 extern cvar_t *password;
 extern cvar_t *spectator_password;
 extern cvar_t *needpass;
-extern cvar_t *g_select_empty;
 extern cvar_t *dedicated;
 
 extern cvar_t *filterban;
@@ -189,12 +162,6 @@ extern cvar_t *maxsoldiers;
 extern cvar_t *maxsoldiersperplayer;
 extern cvar_t *sv_enablemorale;
 extern cvar_t *maxspectators;
-
-extern cvar_t *flood_msgs;
-extern cvar_t *flood_persecond;
-extern cvar_t *flood_waitdelay;
-
-extern cvar_t *sv_maplist;
 
 extern cvar_t *sv_ai;
 extern cvar_t *sv_teamplay;

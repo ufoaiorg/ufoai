@@ -42,9 +42,6 @@ level_locals_t level;
 game_import_t gi;
 game_export_t globals;
 
-int snd_fry;
-int meansOfDeath;
-
 edict_t *g_edicts;
 
 cvar_t *password;
@@ -56,7 +53,6 @@ cvar_t *maxsoldiersperplayer;
 cvar_t *sv_enablemorale;
 cvar_t *maxspectators;
 cvar_t *maxentities;
-cvar_t *g_select_empty;
 cvar_t *dedicated;
 cvar_t *developer;
 
@@ -65,12 +61,6 @@ cvar_t *filterban;
 cvar_t *sv_gravity;
 
 cvar_t *sv_cheats;
-
-cvar_t *flood_msgs;
-cvar_t *flood_persecond;
-cvar_t *flood_waitdelay;
-
-cvar_t *sv_maplist;
 
 cvar_t *sv_ai;
 cvar_t *sv_teamplay;
@@ -209,16 +199,6 @@ void InitGame(void)
 	m_panic_stop = gi.cvar("m_panic_stop", "1.0", CVAR_LATCH);
 
 	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET);
-
-	g_select_empty = gi.cvar("g_select_empty", "0", CVAR_ARCHIVE);
-
-	/* flood control */
-	flood_msgs = gi.cvar("flood_msgs", "4", 0);
-	flood_persecond = gi.cvar("flood_persecond", "4", 0);
-	flood_waitdelay = gi.cvar("flood_waitdelay", "10", 0);
-
-	/* dm map list */
-	sv_maplist = gi.cvar("sv_maplist", "", 0);
 
 	Com_sprintf(game.helpmessage1, sizeof(game.helpmessage1), "");
 
@@ -401,7 +381,7 @@ void G_EndGame(int team)
 	if (team == TEAM_ALIEN) {
 		level.num_alive[TEAM_PHALANX] = 0;
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) 
+			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
 				 && !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX ) {
 				ent->state = STATE_DEAD;
 				gi.AddEvent(PM_ALL, EV_ACTOR_STATECHANGE);
