@@ -9,6 +9,13 @@ names european
 	lastname { c }
 }
 
+names americans
+{
+	female { a }
+	male { b }
+	lastname { c }
+}
+
 names oriental
 {
 	female { a }

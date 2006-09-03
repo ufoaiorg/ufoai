@@ -212,7 +212,7 @@ mission city
 	alienteam	antarean
 	alienequip	stage2_workers
 	civilians	3
-	civteam		mexican
+	civteam		americans
 	nation		"ua"
 	onlose		""
 	onwin		""
