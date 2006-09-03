@@ -107,7 +107,7 @@ ifneq ($(ARCH),i386)
 endif
 
 ifeq ($(OSTYPE),FreeBSD)
-	LDFLAGS=-lm -lvorbisfile -lvorbis -lasound
+	LDFLAGS=-lm -lvorbisfile -lvorbis -lintl
 endif
 
 ifeq ($(OSTYPE),Linux)
