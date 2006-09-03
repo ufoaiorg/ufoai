@@ -1462,7 +1462,11 @@ void CL_CvarCheck(void)
 
 	/* gl_mode and fullscreen */
 	v = Cvar_VariableValue("mn_glmode");
-	/* FIXME: Check whether this mode exists */
+	if (v < 0 || v >= maxVidModes) {
+		Com_Printf("Max gl_mode mode is %i (%i)\n", maxVidModes, v);
+		v = Cvar_VariableValue("gl_mode");
+		Cvar_SetValue("mn_glmode", v);
+	}
 	Cvar_Set("mn_glmodestr", va("%i*%i", vid_modes[v].width, vid_modes[v].height));
 }
 

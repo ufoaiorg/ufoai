@@ -211,9 +211,16 @@ endif
 #	GLLDFLAGS=-L/usr/X11R6/lib -L/usr/local/lib -L$(MESA_DIR)/lib -lX11 -lXext -lvga -lm
 #endif
 
+ifeq ($(OSTYPE),FreeBSD)
+	SDLLDFLAGS=$(shell sdl11-config --libs) -lSDL_ttf
+	GLXCFLAGS=-I/usr/X11R6/include $(shell sdl11-config --cflags)
+	GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext $(shell sdl11-config --libs) -lSDL_ttf
+else
+	SDLLDFLAGS=$(shell sdl-config --libs) -lSDL_ttf
+	GLXCFLAGS=-I/usr/X11R6/include $(shell sdl-config --cflags)
+	GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext $(shell sdl-config --libs) -lSDL_ttf
+endif
 
-GLXCFLAGS=-I/usr/X11R6/include $(shell sdl-config --cflags)
-GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext $(shell sdl-config --libs) -lSDL_ttf
 ifeq ($(strip $(BUILD_WITH_DGA)),YES)
 	GLXLDFLAGS+=-lXxf86dga
 endif
@@ -221,8 +228,6 @@ endif
 ifeq ($(strip $(BUILD_WITH_VIDMODE)),YES)
 	GLXLDFLAGS+=-lXxf86vm
 endif
-
-SDLLDFLAGS=$(shell sdl-config --libs) -lSDL_ttf
 
 ifeq ($(OSTYPE),Darwin)
 SHLIBEXT=dylib

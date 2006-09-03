@@ -52,8 +52,6 @@ viddef_t	viddef;				/* global video state; used by other modules */
 void		*reflib_library;		/* Handle to refresh DLL */
 qboolean	reflib_active = qfalse;
 
-#define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
-
 const char so_file[] = "/etc/ufo.conf";
 
 /** KEYBOARD **************************************************************/
@@ -128,6 +126,7 @@ void VID_Restart_f (void)
 	vid_ref->modified = qtrue;
 }
 
+int maxVidModes;
 /**
  * @brief
  */
@@ -150,10 +149,10 @@ const vidmode_t vid_modes[] =
 	{ 640,  400, 14 }, /* generic 16:10 widescreen*/
 	{ 800,  500, 15 }, /* as found modern */
 	{ 1024,  640, 16 }, /* notebooks    */
- 	{ 1280,  800, 17 },
- 	{ 1680, 1050, 18 },
- 	{ 1920, 1200, 19 },
- 	{ 1400, 1050, 20 }, /* samsung x20 */
+	{ 1280,  800, 17 },
+	{ 1680, 1050, 18 },
+	{ 1920, 1200, 19 },
+	{ 1400, 1050, 20 }, /* samsung x20 */
 };
 
 /**
@@ -400,6 +399,7 @@ void VID_Init (void)
 
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();
+	maxVidModes = VID_NUM_MODES;
 }
 
 /**

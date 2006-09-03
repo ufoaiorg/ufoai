@@ -160,10 +160,12 @@ void VID_NewWindow (int theWidth, int theHeight)
 	viddef.height = theHeight;
 }
 
+int maxVidModes;
+
 /*=======================
 VID_GetModeInfo
 =======================*/
-vidmode_t vid_modes[] =
+const vidmode_t vid_modes[] =
 {
 	{ 320, 240,   0 },
 	{ 400, 300,   1 },
@@ -233,6 +235,7 @@ void VID_Init (void)
 
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();
+	maxVidModes = VID_NUM_MODES;
 }
 
 /*=======================

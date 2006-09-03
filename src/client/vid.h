@@ -72,11 +72,14 @@ typedef struct vidmode_s {
 } vidmode_t;
 
 extern const vidmode_t vid_modes[];
+extern int maxVidModes;
 extern viddef_t viddef;			/* global video state */
 
 /* Video module initialisation etc */
 void VID_Init(void);
 void VID_Shutdown(void);
 void VID_CheckChanges(void);
+
+#define VID_NUM_MODES ( sizeof(vid_modes) / sizeof(vidmode_t) )
 
 #endif /* CLIENT_VID_H */

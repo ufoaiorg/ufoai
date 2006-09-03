@@ -86,6 +86,7 @@ void VID_NewWindow (int width, int height)
 	viddef.ry = (float)height / VID_NORM_HEIGHT;
 }
 
+int maxVidModes;
 /**
  * @brief
  */
@@ -112,7 +113,6 @@ const vidmode_t vid_modes[] =
 	{ 1680, 1050, 18 },
 	{ 1920, 1200, 19 }
 };
-#define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
 
 /**
  * @brief
@@ -172,6 +172,7 @@ void VID_Init (void)
 	/* call the init function */
 	if (re.Init (NULL, NULL) == -1)
 		Com_Error (ERR_FATAL, "Couldn't start refresh");
+	maxVidModes = VID_NUM_MODES;
 }
 
 /**
