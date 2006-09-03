@@ -679,6 +679,15 @@ ifeq ($(OSTYPE),Linux)
 	$(BUILDDIR)/client/$(NET_UDP).o
 endif
 
+ifeq ($(OSTYPE),FreeBSD)
+	QUAKE2_OBJS+= \
+	$(BUILDDIR)/client/q_shlinux.o \
+	$(BUILDDIR)/client/vid_so.o \
+	$(BUILDDIR)/client/sys_linux.o \
+	$(BUILDDIR)/client/glob.o \
+	$(BUILDDIR)/client/$(NET_UDP).o
+endif
+
 ifeq ($(OSTYPE),Darwin)
 	QUAKE2_OBJS+= \
 	$(BUILDDIR)/client/sys_osx.o \
