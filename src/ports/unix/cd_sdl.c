@@ -31,7 +31,11 @@ Boston, MA  02111-1307, USA
 */
 
 #include <stdio.h>
+#if defined (__FreeBSD__)
+#include <SDL11/SDL.h>
+#else
 #include <SDL/SDL.h>
+#endif
 #include "../../client/client.h"
 
 static qboolean	cdValid = qfalse;
