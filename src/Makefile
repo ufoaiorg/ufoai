@@ -63,7 +63,7 @@ ifneq ($(ARCH),x86_64)
 	endif
 endif
 
-CC=gcc
+CC?=gcc
 
 VERSION=$(shell grep UFO_VERSION $(MOUNT_DIR)/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/')
 
@@ -143,7 +143,7 @@ endif
 ifeq ($(OSTYPE),FreeBSD)
 	ifeq ($(strip $(BUILD_SDLUFO)),YES)
 		LDFLAGS+=$(shell sdl11-config --libs)
-		BASE_CFLAGS+=$(shell sdl11-config --cflags)
+		BASE_CFLAGS+=$(CFLAGS) $(shell sdl11-config --cflags)
 	endif
 	SDLLDFLAGS=$(shell sdl11-config --libs) -lSDL_ttf
 	GLXCFLAGS=-I/usr/X11R6/include $(shell sdl11-config --cflags)
@@ -212,13 +212,22 @@ ifeq ($(ARCH),sparc)
 endif
 
 ifeq ($(ARCH),i386)
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing -DNDEBUG
+	ifeq ($(OSTYPE),FreeBSD)
+		RELEASE_CFLAGS=$(BASE_CFLAGS) -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing -DNDEBUG
+	else
+		RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing -DNDEBUG
+	endif
 endif
 
 ifeq ($(ARCH),x86_64)
 	_LIB := 64
 	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing -DNDEBUG
 endif
+
+# FreeBSD only
+ifeq ($(ARCH),amd64)
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing -DNDEBUG
+.endif
 
 #ifeq ($(ARCH),mipsEE)
 #	GLCFLAGS=-I$(MESA_DIR)/include -I/usr/X11R6/include
