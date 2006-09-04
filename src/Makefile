@@ -143,7 +143,7 @@ endif
 ifeq ($(OSTYPE),FreeBSD)
 	ifeq ($(strip $(BUILD_SDLUFO)),YES)
 		LDFLAGS+=$(shell sdl11-config --libs)
-		BASE_CFLAGS+=$(CFLAGS) $(shell sdl11-config --cflags)
+		BASE_CFLAGS+=$(shell sdl11-config --cflags)
 	endif
 	SDLLDFLAGS=$(shell sdl11-config --libs) -lSDL_ttf
 	GLXCFLAGS=-I/usr/X11R6/include $(shell sdl11-config --cflags)
