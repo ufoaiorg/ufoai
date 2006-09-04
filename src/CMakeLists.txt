@@ -211,9 +211,16 @@ SET(TOOLS_SOURCEFILES
 
 EXEC_PROGRAM(uname . ARGS "-m  | sed -e s/i.86/i386/ -e s/sun4u/sparc/ -e s/sparc64/sparc/ -e s/arm.*/arm/ -e s/sa110/arm/ -e s/alpha/axp/ -e 's/Power Macintosh/ppc/'" OUTPUT_VARIABLE ARCH )
 
+EXEC_PROGRAM(svnversion ARGS "." OUTPUT_VARIABLE SVN_OUTPUT)
+
 SET(SOURCEDIRS client game server qcommon)
 SET(EXTERNAL_LIBS "")
-ADD_DEFINITIONS(-Wall -pipe -Dstricmp=strcasecmp -DC_ONLY -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89 -ggdb -O0 -D_FORTIFY_SOURCE=2 -DDEBUG -fno-inline -DPARANOID -DSVN='"3267:3277M"')
+SET(CMAKE_C_FLAGS_DEBUG "-Wall -pipe -Dstricmp=strcasecmp -DC_ONLY -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89 -ggdb -O0 -D_FORTIFY_SOURCE=2 -DDEBUG  -fno-inline -DPARANOID")
+SET(CMAKE_C_FLAGS_RELEASE "-Wall -pipe -Dstricmp=strcasecmp -DC_ONLY -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -DNDEBUG")
+SET(CMAKE_C_FLAGS ${CMAKE_C_FLAGS_DEBUG})
+
+ADD_DEFINITIONS("-DSVN='\"${SVN_OUTPUT}\"'")
+
 
 IF (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
 	LIST(APPEND EXTERNAL_LIBS m vorbisfile vorbis asound)
@@ -272,8 +279,6 @@ ELSE(BUILD_SDLUFO)
 # 		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_osx.o
 # 	endif
 ENDIF(BUILD_SDLUFO)
-
-ADD_DEFINITIONS(-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -D_REENTRANT -std=c89)
 
 IF (BUILD_WITH_SHADER)
    ADD_DEFINITIONS(-DSHADERS)
