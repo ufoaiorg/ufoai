@@ -189,7 +189,6 @@ void VID_FreeReflib (void)
 {
 	if (reflib_library) {
 		if (KBD_Close_fp)
-
 			KBD_Close_fp();
 		if (RW_IN_Shutdown_fp)
 			RW_IN_Shutdown_fp();
@@ -224,7 +223,7 @@ qboolean VID_LoadRefresh( char *name )
 	extern uid_t saved_euid;
 	FILE *fp;
 
-	if ( reflib_active ) {
+	if (reflib_active) {
 		if (KBD_Close_fp)
 			KBD_Close_fp();
 		if (RW_IN_Shutdown_fp)
@@ -306,7 +305,6 @@ qboolean VID_LoadRefresh( char *name )
 		(RW_IN_Activate_fp = dlsym(reflib_library, "RW_IN_Activate")) == NULL ||
 		(RW_IN_Commands_fp = dlsym(reflib_library, "RW_IN_Commands")) == NULL ||
 		(RW_IN_GetMousePos_fp = dlsym(reflib_library, "RW_IN_GetMousePos")) == NULL ||
-
 		(RW_IN_Frame_fp = dlsym(reflib_library, "RW_IN_Frame")) == NULL)
 		Sys_Error("No RW_IN functions in REF.\n");
 

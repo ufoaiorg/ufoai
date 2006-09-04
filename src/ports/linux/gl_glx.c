@@ -747,7 +747,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	gl_state.hwgamma = qfalse;
 
 	/* do some pantsness */
-	if ( qglXGetConfig ) {
+	if (qglXGetConfig) {
 		int red_bits, blue_bits, green_bits, depth_bits, alpha_bits;
 
 		qglXGetConfig(dpy, visinfo, GLX_RED_SIZE, &red_bits);
@@ -764,7 +764,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	}
 
 	/* stencilbuffer shadows */
-	if ( qglXGetConfig ) {
+	if (qglXGetConfig) {
 		int stencil_bits;
 
 		if (!qglXGetConfig(dpy, visinfo, GLX_STENCIL_SIZE, &stencil_bits)) {
