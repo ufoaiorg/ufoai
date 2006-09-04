@@ -1652,6 +1652,9 @@ int CL_GameLoad(char *filename)
 
 	memset(&ccs, 0, sizeof(ccs_t));
 
+	/* set ccs.singleplayer to true (gameloading is singleplayer only) */
+	ccs.singleplayer = qtrue;
+
 	/* read date */
 	ccs.date.day = MSG_ReadLong(&sb);
 	ccs.date.sec = MSG_ReadLong(&sb);
@@ -1824,7 +1827,6 @@ int CL_GameLoad(char *filename)
 	Cvar_Set("mn_main", "singleplayer");
 	Cvar_Set("mn_active", "map");
 	Cbuf_AddText("disconnect\n");
-	ccs.singleplayer = qtrue;
 
 	MN_PopMenu(qtrue);
 	MN_PushMenu("map");
