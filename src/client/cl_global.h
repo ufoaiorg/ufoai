@@ -77,6 +77,8 @@ typedef struct globalData_s
 	building_t buildings[MAX_BASES][MAX_BUILDINGS];
 	/* Total number of buildings per base. */
 	int numBuildings[MAX_BASES];
+	/* governs zero build time for first base if empty base option chosen */
+	int instant_build;
 
 	/* == misc == */
 	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
