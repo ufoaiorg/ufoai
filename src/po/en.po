@@ -1309,10 +1309,6 @@ msgstr "Music:"
 msgid "Mixing Rate:"
 msgstr "Mixing Rate:"
 
-#: ../base/ufos/menu_options.ufo:561
-msgid "Sound renderer:"
-msgstr "Sound renderer:"
-
 #: ../base/ufos/menu_options.ufo:606
 msgid "Start with employees:"
 msgstr "Start with employees:"
