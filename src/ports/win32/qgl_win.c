@@ -98,7 +98,7 @@ qboolean QGL_Init( const char *dllname )
 		return qfalse;
 	}
 
-	QGL_Init();
+	QGL_Link();
 	return qtrue;
 }
 
