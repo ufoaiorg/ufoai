@@ -1271,9 +1271,9 @@ void CL_ActorDie(sizebuf_t * sb)
 	/* calculate possible moves */
 	CL_BuildForbiddenList();
 	Grid_MoveCalc(&clMap, le->pos, MAX_ROUTE, fb_list, fb_length);
-	/* this is only needed when we are in confirm actions mode */
+
 	/* without this call the move tracer will be drawn from the killed le */
-	if (selActor && confirm_actions->value)
+	if (selActor)
 		Grid_MoveCalc(&clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length);
 
 /*	if (le->team == cls.team)*/
