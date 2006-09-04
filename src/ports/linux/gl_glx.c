@@ -27,7 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <termios.h>
 #include <sys/ioctl.h>
 #include <sys/stat.h>
+#if defined(__FreeBSD__)
+#else
 #include <sys/vt.h>
+#endif
 #include <signal.h>
 #include <dlfcn.h>
 #include <X11/Xlib.h>
