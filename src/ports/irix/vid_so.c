@@ -53,8 +53,6 @@ viddef_t	viddef;				/* global video state; used by other modules */
 void		*reflib_library;		/* Handle to refresh DLL */
 qboolean	reflib_active = 0;
 
-#define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
-
 /** KEYBOARD **************************************************************/
 
 void Do_Key_Event(int key, qboolean down);
@@ -128,6 +126,7 @@ void VID_Restart_f (void)
 	vid_ref->modified = qtrue;
 }
 
+int maxVidModes;
 /**
  * @brief
  */
@@ -153,7 +152,8 @@ const vidmode_t vid_modes[] =
 	{ 1280,  800, 17 },
 	{ 1680, 1050, 18 },
 	{ 1920, 1200, 19 },
-	{ 1400, 1050, 20 }
+	{ 1400, 1050, 20 },
+	{ 1440, 900, 21 }
 };
 
 /**
@@ -295,8 +295,7 @@ qboolean VID_LoadRefresh( char *name )
 #endif
 	re = GetRefAPI( ri );
 
-	if (re.api_version != API_VERSION)
-	{
+	if (re.api_version != API_VERSION) {
 		VID_FreeReflib ();
 		Com_Error (ERR_FATAL, "%s has incompatible api_version", name);
 	}
@@ -331,8 +330,7 @@ qboolean VID_LoadRefresh( char *name )
 	}
 #endif
 
-	if ( re.Init( 0, 0 ) == -1 )
-	{
+	if ( re.Init( 0, 0 ) == -1 ) {
 		re.Shutdown();
 		VID_FreeReflib ();
 		return qfalse;
@@ -382,9 +380,7 @@ void VID_CheckChanges (void)
 	cvar_t *sw_mode;
 
 	if ( vid_ref->modified )
-	{
 		S_StopAllSounds();
-	}
 
 	while (vid_ref->modified) {
 		/* refresh has changed */
@@ -409,7 +405,7 @@ void VID_CheckChanges (void)
 void VID_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
-        vid_ref = Cvar_Get ("vid_ref", "soft", CVAR_ARCHIVE);
+	vid_ref = Cvar_Get ("vid_ref", "soft", CVAR_ARCHIVE);
 	vid_xpos = Cvar_Get ("vid_xpos", "3", CVAR_ARCHIVE);
 	vid_ypos = Cvar_Get ("vid_ypos", "22", CVAR_ARCHIVE);
 	vid_fullscreen = Cvar_Get ("vid_fullscreen", "0", CVAR_ARCHIVE);
@@ -420,6 +416,7 @@ void VID_Init (void)
 
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();
+	maxVidModes = VID_NUM_MODES;
 }
 
 /**

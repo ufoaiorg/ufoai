@@ -75,7 +75,7 @@ void *Hunk_Alloc (int size)
 
 int Hunk_End (void)
 {
-	byte *n;
+	byte *n = NULL;
 #if defined(__FreeBSD__)
 	size_t old_size = maxhunksize;
 	size_t new_size = curhunksize + sizeof(int);
@@ -85,7 +85,7 @@ int Hunk_End (void)
 	new_size = round_page(new_size);
 	old_size = round_page(old_size);
 	if (new_size > old_size)
-		n = 0; /* error */
+		n = NULL; /* error */
 	else if (new_size < old_size) {
 		unmap_base = (caddr_t)(membase + new_size);
 		unmap_len = old_size - new_size;

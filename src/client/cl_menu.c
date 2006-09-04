@@ -2127,11 +2127,11 @@ static void MN_Translate_f(void)
 	Cvar_Set(Cmd_Argv(2), _(current));
 }
 
-/*=================
-MN_GetTutorials_f
-=================*/
 #define MAX_TUTORIALLIST 512
 static char tutorialList[MAX_TUTORIALLIST];
+/**
+ * @brief
+ */
 static void MN_GetTutorials_f(void)
 {
 	int i;
@@ -2145,9 +2145,9 @@ static void MN_GetTutorials_f(void)
 	}
 }
 
-/*=================
-MN_ListTutorials_f
-=================*/
+/**
+ * @brief
+ */
 static void MN_ListTutorials_f(void)
 {
 	int i;
@@ -2159,12 +2159,9 @@ static void MN_ListTutorials_f(void)
 	}
 }
 
-/*=================
-MN_TutorialListClick_f
-
-click function for text tutoriallist
-in menu_tutorials.ufo
-=================*/
+/**
+ * @brief click function for text tutoriallist in menu_tutorials.ufo
+ */
 static void MN_TutorialListClick_f(void)
 {
 	int num;
@@ -2181,11 +2178,9 @@ static void MN_TutorialListClick_f(void)
 	Cbuf_ExecuteText(EXEC_NOW, va("seq_start %s", tutorials[num].sequence));
 }
 
-/*
-=================
-MN_ListMenuModels_f
-=================
-*/
+/**
+ * @brief
+ */
 static void MN_ListMenuModels_f(void)
 {
 	int i;
@@ -2196,11 +2191,31 @@ static void MN_ListMenuModels_f(void)
 		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", menuModels[i].id, menuModels[i].model, menuModels[i].need);
 }
 
-/*
-=================
-MN_ResetMenus
-=================
-*/
+/**
+ * @brief
+ */
+void MN_ResolutionChange_f (void)
+{
+	char* action;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: mn_resolution_change [-|+]\n");
+		return;
+	}
+	action = Cmd_Argv(1);
+	switch (*action) {
+	case '+':
+		Cbuf_ExecuteText(EXEC_NOW, va("mn_modify mn_glmode 1 0 %i;", maxVidModes-1));
+		break;
+	case '-':
+		Cbuf_ExecuteText(EXEC_NOW, va("mn_modify mn_glmode -1 0 %i;", maxVidModes-1));
+		break;
+	}
+}
+
+/**
+ * @brief
+ */
 void MN_ResetMenus(void)
 {
 	int i;
@@ -2217,6 +2232,8 @@ void MN_ResetMenus(void)
 	mn_escpop = Cvar_Get("mn_escpop", "1", 0);
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_sequence", "sequence");
+
+	Cmd_AddCommand("mn_resolution_change", MN_ResolutionChange_f);
 
 	/* tutorial stuff */
 	Cmd_AddCommand("listtutorials", MN_ListTutorials_f);
@@ -2259,11 +2276,9 @@ void MN_ResetMenus(void)
 	UFO_Reset();
 }
 
-/*
-=================
-MN_Shutdown
-=================
-*/
+/**
+ * @brief
+ */
 void MN_Shutdown(void)
 {
 	/* free the memory */
@@ -2273,17 +2288,13 @@ void MN_Shutdown(void)
 
 /*
 ==============================================================
-
 MENU PARSING
-
 ==============================================================
 */
 
-/*
-=================
-MN_ParseAction
-=================
-*/
+/**
+ * @brief
+ */
 qboolean MN_ParseAction(menuAction_t * action, char **text, char **token)
 {
 	char *errhead = "MN_ParseAction: unexpected end of file (in event)";
@@ -2444,11 +2455,9 @@ qboolean MN_ParseAction(menuAction_t * action, char **text, char **token)
 	return qfalse;
 }
 
-/*
-=================
-MN_ParseNodeBody
-=================
-*/
+/**
+ * @brief
+ */
 qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 {
 	char *errhead = "MN_ParseNodeBody: unexpected end of file (node";
@@ -2568,8 +2577,7 @@ qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 
 /**
  * @brief Hides a given menu node
- *
- * Sanity check whether node is null included
+ * @note Sanity check whether node is null included
  */
 void MN_HideNode ( menuNode_t* node )
 {
@@ -2579,8 +2587,7 @@ void MN_HideNode ( menuNode_t* node )
 
 /**
  * @brief Unhides a given menu node
- *
- * Sanity check whether node is null included
+ * @note Sanity check whether node is null included
  */
 void MN_UnHideNode ( menuNode_t* node )
 {
@@ -2588,11 +2595,9 @@ void MN_UnHideNode ( menuNode_t* node )
 		node->invis = qtrue;
 }
 
-/*
-=================
-MN_ParseMenuBody
-=================
-*/
+/**
+ * @brief
+ */
 qboolean MN_ParseMenuBody(menu_t * menu, char **text)
 {
 	char *errhead = "MN_ParseMenuBody: unexpected end of file (menu";
@@ -2727,14 +2732,9 @@ qboolean MN_ParseMenuBody(menu_t * menu, char **text)
 	return qfalse;
 }
 
-/*
-=================
-MN_ParseMenuModel
-
-parses the models.ufo and all files
-where menu_models are defined
-=================
-*/
+/**
+ * @brief parses the models.ufo and all files where menu_models are defined
+ */
 void MN_ParseMenuModel(char *name, char **text)
 {
 	menuModel_t *menuModel;
@@ -2807,11 +2807,9 @@ void MN_ParseMenuModel(char *name, char **text)
 	} while (*text);
 }
 
-/*
-=================
-MN_ParseMenu
-=================
-*/
+/**
+ * @brief
+ */
 void MN_ParseMenu(char *name, char **text)
 {
 	menu_t *menu;
@@ -2859,11 +2857,9 @@ void MN_ParseMenu(char *name, char **text)
 	Com_DPrintf("Nodes: %4i Menu data: %i\n", numNodes, curadata - adata);
 }
 
-/*
-================
-CL_ListMaps_f
-================
-*/
+/**
+ * @brief
+ */
 void CL_ListMaps_f(void)
 {
 	int i;
@@ -2875,11 +2871,9 @@ void CL_ListMaps_f(void)
 		Com_Printf("%s\n", maps[i]);
 }
 
-/*
-================
-MN_MapInfo
-================
-*/
+/**
+ * @brief
+ */
 void MN_MapInfo(void)
 {
 	char normalizedName[MAX_VAR];
@@ -2937,11 +2931,9 @@ void MN_MapInfo(void)
 	}
 }
 
-/*
-================
-MN_GetMaps_f
-================
-*/
+/**
+ * @brief
+ */
 void MN_GetMaps_f(void)
 {
 	if (!mapsInstalledInit)
@@ -2950,11 +2942,9 @@ void MN_GetMaps_f(void)
 	MN_MapInfo();
 }
 
-/*
-================
-MN_NextMap
-================
-*/
+/**
+ * @brief
+ */
 void MN_NextMap(void)
 {
 	if (mapInstalledIndex < anzInstalledMaps - 1)
@@ -2964,11 +2954,9 @@ void MN_NextMap(void)
 	MN_MapInfo();
 }
 
-/*
-================
-MN_PrevMap
-================
-*/
+/**
+ * @brief
+ */
 void MN_PrevMap(void)
 {
 	if (mapInstalledIndex > 0)
@@ -3054,13 +3042,10 @@ message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup,
 	return mess;
 }
 
-/*
-================
-MN_ShutdownMessageSystem
-
-FIXME: This needs to be called at shutdown
-================
-*/
+/**
+ * @brief
+ * FIXME: This needs to be called at shutdown
+ */
 void MN_ShutdownMessageSystem(void)
 {
 	message_t *m = messageStack;
@@ -3073,11 +3058,9 @@ void MN_ShutdownMessageSystem(void)
 	}
 }
 
-/*
-================
-MN_RemoveMessage
-================
-*/
+/**
+ * @brief
+ */
 void MN_RemoveMessage(char *title)
 {
 	message_t *m = messageStack;
@@ -3096,14 +3079,9 @@ void MN_RemoveMessage(char *title)
 	Com_Printf("Could not remove message from stack - %s was not found\n", title);
 }
 
-/*
-================
-CL_InitMessageSystem
-
-Inits the message system
-with no messages
-================
-*/
+/**
+ * @brief Inits the message system with no messages
+ */
 void CL_InitMessageSystem(void)
 {
 	/* no messages on stack */
@@ -3131,6 +3109,9 @@ static value_t fontValues[] = {
 	{NULL, V_NULL, 0},
 };
 
+/**
+ * @brief
+ */
 void CL_GetFontData(char *name, int *size, char *path)
 {
 	int i;
@@ -3145,14 +3126,9 @@ void CL_GetFontData(char *name, int *size, char *path)
 	Com_Printf("Font: %s not found\n", name);
 }
 
-/*
-=================
-CL_ParseFont
-
-this is here even if we don't want to have SDL_ttf support to prevent warnings
-about unknown tokens for the font definitions
-=================
-*/
+/**
+ * @brief
+ */
 void CL_ParseFont(char *name, char **text)
 {
 	font_t *font;
@@ -3226,13 +3202,9 @@ void CL_ParseFont(char *name, char **text)
 	re.FontRegister(font->name, font->size, _(font->path), font->style);
 }
 
-/*
-=================
-CL_InitFonts
-
-after a vid restart we have to reinit the fonts
-=================
-*/
+/**
+ * @brief after a vid restart we have to reinit the fonts
+ */
 void CL_InitFonts(void)
 {
 	int i;
@@ -3254,9 +3226,9 @@ static value_t tutValues[] = {
 
 tutorial_t tutorials[MAX_TUTORIALS];
 
-/*======================
-MN_ParseTutorials
-======================*/
+/**
+ * @brief
+ */
 void MN_ParseTutorials(char *title, char **text)
 {
 	tutorial_t *t = NULL;
@@ -3301,5 +3273,3 @@ void MN_ParseTutorials(char *title, char **text)
 			Com_Printf("MN_ParseTutorials: unknown token \"%s\" ignored (tutorial %s)\n", token, title);
 	} while (*text);
 }
-
-/* ============================================================ */

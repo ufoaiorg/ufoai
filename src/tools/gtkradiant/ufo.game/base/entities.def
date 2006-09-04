@@ -35,6 +35,7 @@ Set the level flags correctly!
 Use angles [pitch yaw roll] to rotate the model. pitch (up/down), yaw (left/right) and roll (fall over)
 "model"		arbitrary .md2 file to display
 "angles"	direction of the model [pitch yaw roll]
+"skin"		skin nummer (default 0)
 */
 
 

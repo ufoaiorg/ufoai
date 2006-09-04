@@ -60,8 +60,6 @@ viddef_t	viddef;				/* global video state; used by other modules */
 HINSTANCE	reflib_library;		/* Handle to refresh DLL */
 qboolean	reflib_active = 0;
 
-#define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
-
 LRESULT WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
 static qboolean s_alttab_disabled;
@@ -435,6 +433,7 @@ void VID_Front_f( void )
 	SetForegroundWindow( cl_hwnd );
 }
 
+int maxVidModes;
 /**
  * @brief
  */
@@ -460,7 +459,8 @@ const vidmode_t vid_modes[] =
 	{ 1280,  800, 17 },
 	{ 1680, 1050, 18 },
 	{ 1920, 1200, 19 },
-	{ 1400, 1050, 20 }
+	{ 1400, 1050, 20 },
+	{ 1440, 900, 21 }
 };
 
 /**
@@ -678,6 +678,7 @@ void VID_Init (void)
 
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();
+	maxVidModes = VID_NUM_MODES;
 }
 
 /**

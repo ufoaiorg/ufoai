@@ -107,11 +107,12 @@ ifneq ($(ARCH),i386)
 endif
 
 ifeq ($(OSTYPE),FreeBSD)
-	LDFLAGS=-lm -lvorbisfile -lvorbis -lasound
+	LDFLAGS=-lm -lvorbisfile -lvorbis -lintl
+	BUILD_ALSA=NO
 endif
 
 ifeq ($(OSTYPE),Linux)
-	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis -lasound
+	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis
 endif
 
 ifeq ($(OSTYPE),Darwin)
@@ -135,9 +136,22 @@ ifeq ($(OSTYPE),Darwin)
 	BASE_CFLAGS+=-I/sw/include
 endif
 
-ifeq ($(strip $(BUILD_SDLUFO)),YES)
-	LDFLAGS+=$(shell sdl-config --libs)
-	BASE_CFLAGS+=$(shell sdl-config --cflags) -DUSE_SDL
+ifeq ($(OSTYPE),FreeBSD)
+	ifeq ($(strip $(BUILD_SDLUFO)),YES)
+		LDFLAGS+=$(shell sdl11-config --libs)
+		BASE_CFLAGS+=$(shell sdl11-config --cflags)
+	endif
+	SDLLDFLAGS=$(shell sdl11-config --libs) -lSDL_ttf
+	GLXCFLAGS=-I/usr/X11R6/include $(shell sdl11-config --cflags)
+	GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext $(shell sdl11-config --libs) -lSDL_ttf
+else
+	ifeq ($(strip $(BUILD_SDLUFO)),YES)
+		LDFLAGS+=$(shell sdl-config --libs)
+		BASE_CFLAGS+=$(shell sdl-config --cflags)
+	endif
+	SDLLDFLAGS=$(shell sdl-config --libs) -lSDL_ttf
+	GLXCFLAGS=-I/usr/X11R6/include $(shell sdl-config --cflags)
+	GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext $(shell sdl-config --libs) -lSDL_ttf
 endif
 
 ifeq ($(strip $(BUILD_ALSA)),YES)
@@ -211,9 +225,6 @@ endif
 #	GLLDFLAGS=-L/usr/X11R6/lib -L/usr/local/lib -L$(MESA_DIR)/lib -lX11 -lXext -lvga -lm
 #endif
 
-
-GLXCFLAGS=-I/usr/X11R6/include $(shell sdl-config --cflags)
-GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext $(shell sdl-config --libs) -lSDL_ttf
 ifeq ($(strip $(BUILD_WITH_DGA)),YES)
 	GLXLDFLAGS+=-lXxf86dga
 endif
@@ -221,8 +232,6 @@ endif
 ifeq ($(strip $(BUILD_WITH_VIDMODE)),YES)
 	GLXLDFLAGS+=-lXxf86vm
 endif
-
-SDLLDFLAGS=$(shell sdl-config --libs) -lSDL_ttf
 
 ifeq ($(OSTYPE),Darwin)
 SHLIBEXT=dylib
@@ -670,6 +679,15 @@ ifeq ($(OSTYPE),Linux)
 	$(BUILDDIR)/client/$(NET_UDP).o
 endif
 
+ifeq ($(OSTYPE),FreeBSD)
+	QUAKE2_OBJS+= \
+	$(BUILDDIR)/client/q_shlinux.o \
+	$(BUILDDIR)/client/vid_so.o \
+	$(BUILDDIR)/client/sys_linux.o \
+	$(BUILDDIR)/client/glob.o \
+	$(BUILDDIR)/client/$(NET_UDP).o
+endif
+
 ifeq ($(OSTYPE),Darwin)
 	QUAKE2_OBJS+= \
 	$(BUILDDIR)/client/sys_osx.o \
@@ -686,6 +704,9 @@ ifeq ($(strip $(BUILD_SDLUFO)),YES)
 	QUAKE2_OBJS+=$(BUILDDIR)/client/cd_sdl.o
 else
 	ifeq ($(OSTYPE),Linux)
+		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_linux.o
+	endif
+	ifeq ($(OSTYPE),FreeBSD)
 		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_linux.o
 	endif
 	ifeq ($(OSTYPE),Darwin)
@@ -913,6 +934,14 @@ Q2DED_OBJS = \
 	$(BUILDDIR)/ded/cd_null.o
 
 ifeq ($(OSTYPE),Linux)
+	Q2DED_OBJS += \
+	$(BUILDDIR)/ded/q_shlinux.o \
+	$(BUILDDIR)/ded/sys_linux.o \
+	$(BUILDDIR)/ded/glob.o \
+	$(BUILDDIR)/ded/$(NET_UDP).o
+endif
+
+ifeq ($(OSTYPE),FreeBSD)
 	Q2DED_OBJS += \
 	$(BUILDDIR)/ded/q_shlinux.o \
 	$(BUILDDIR)/ded/sys_linux.o \
