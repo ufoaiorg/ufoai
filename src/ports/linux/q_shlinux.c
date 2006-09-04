@@ -21,9 +21,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <errno.h>
 #include <stdio.h>
 #include <dirent.h>
+#include <sys/stat.h>
 #include <unistd.h>
 #include <sys/mman.h>
-#include <sys/stat.h>
 #include <sys/time.h>
 #include <ctype.h>
 
@@ -75,28 +75,34 @@ void *Hunk_Alloc (int size)
 
 int Hunk_End (void)
 {
-	byte *n = NULL;
 #if defined(__FreeBSD__)
-	size_t old_size = maxhunksize;
-	size_t new_size = curhunksize + sizeof(int);
-	void * unmap_base;
-	size_t unmap_len;
+	long pgsz, newsz, modsz;
 
-	new_size = round_page(new_size);
-	old_size = round_page(old_size);
-	if (new_size > old_size)
-		n = NULL; /* error */
-	else if (new_size < old_size) {
-		unmap_base = (caddr_t)(membase + new_size);
-		unmap_len = old_size - new_size;
-		n = munmap(unmap_base, unmap_len) + membase;
-	}
+	pgsz = sysconf(_SC_PAGESIZE);
+	if (pgsz == -1)
+		Sys_Error("Hunk_End: Sysconf() failed: %s", strerror(errno));
+
+	newsz = curhunksize + sizeof(int);
+
+	if (newsz > maxhunksize)
+		Sys_Error("Hunk_End Overflow");
+	else if (newsz < maxhunksize) {
+		modsz = newsz % pgsz;
+		if (modsz) newsz += pgsz - modsz;
+
+		if (munmap(membase + newsz, maxhunksize - newsz) == -1)
+			Sys_Error("Hunk_End: munmap() failed: %s", strerror(errno));
+        }
 #endif
 #if defined(__linux__)
+	byte *n = NULL;
+
 	n = mremap(membase, maxhunksize, curhunksize + sizeof(int), 0);
-#endif
+
 	if (n != membase)
 		Sys_Error("Hunk_End:  Could not remap virtual block (%d)", errno);
+#endif
+
 	*((int *)membase) = curhunksize + sizeof(int);
 
 	return curhunksize;
