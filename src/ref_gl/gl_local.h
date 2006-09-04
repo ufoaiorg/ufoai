@@ -47,8 +47,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_arb_shader.h"
 
+#if defined (__FreeBSD__)
+#include <SDL.h>
+#include <SDL_ttf.h>
+#else
 #include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
+#include <SDL/SDL_ttf.h
+#endif
 void GL_ShutdownSDLFonts(void);	/* gl_draw.c */
 
 #include "qgl.h"
