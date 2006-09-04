@@ -742,6 +742,7 @@ static void CL_BuildingAircraftList_f(void)
  * Should be called at the completion or expiration of every mission.
  * The nation where the mission took place will be most affected,
  * surrounding nations will be less affected.
+ * TODO: nations react way too much; independently, an asymptotic reaction near 0.0 and 1.0 would be nice; high alienFriendly factor seems to increase happiness, instead of decreasing it.
  */
 static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
 {
@@ -984,43 +985,41 @@ static void CL_HandleBudget(void)
 	int cost;
 	nation_t *nation;
 	int initial_credits = ccs.credits;
+	int new_scientists, new_medics, new_soldiers, new_workers; 
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
 		funding = nation->funding * nation->happiness;
-
-		Com_sprintf(message, sizeof(message), _("Gained %i credits from nation %s (%s)"), funding, _(nation->name), CL_GetNationHapinessString(nation));
-		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 		CL_UpdateCredits(ccs.credits + funding);
 
-		/* TODO: ", as well as an offer to hire 1 scientist and 2 soldier(s)." */
+		new_scientists = new_medics = new_soldiers = new_workers = 0;
+
 		for (j = 0; 0.25 + j < (float) nation->scientists * nation->happiness * nation->happiness; j++) {
-			if (gd.numEmployees[EMPL_SCIENTIST] < 19) {
-				/* Create a scientist, but don't auto-hire her. */
-				E_CreateEmployee(EMPL_SCIENTIST);
-			}
+			/* Create a scientist, but don't auto-hire her. */
+			E_CreateEmployee(EMPL_SCIENTIST);
+			new_scientists++;
 		}
 
 		for (j = 0; 0.25 + j * 3 < (float) nation->scientists * nation->happiness; j++) {
-			if (gd.numEmployees[EMPL_MEDIC] < 19) {
-				/* Create a medic. */
-				E_CreateEmployee(EMPL_MEDIC);
-			}
+			/* Create a medic. */
+			E_CreateEmployee(EMPL_MEDIC);
+			new_medics++;
 		}
 
 		for (j = 0; 0.25 + j < (float) nation->soldiers * nation->happiness * nation->happiness * nation->happiness; j++) {
-			if (gd.numEmployees[EMPL_SOLDIER] < 19) {
-				/* Create a soldier. */
-				E_CreateEmployee(EMPL_SOLDIER);
-			}
+			/* Create a soldier. */
+			E_CreateEmployee(EMPL_SOLDIER);
+			new_soldiers++;
 		}
 
 		for (j = 0; 0.25 + j * 2 < (float) nation->soldiers * nation->happiness; j++) {
-			if (gd.numEmployees[EMPL_WORKER] < 19) {
-				/* Create a worker. */
-				E_CreateEmployee(EMPL_WORKER);
-			}
+			/* Create a worker. */
+			E_CreateEmployee(EMPL_WORKER);
+			new_workers++;
 		}
+
+		Com_sprintf(message, sizeof(message), _("Gained %i credits, %i scientists, %i medics, %i soldiers and %i workers from nation %s (%s)"), funding, new_scientists, new_medics, new_soldiers, new_workers, _(nation->name), CL_GetNationHapinessString(nation));
+		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 	}
 
 	cost = 0;
@@ -1093,14 +1092,15 @@ static void CL_HandleBudget(void)
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 		CL_UpdateCredits(ccs.credits - cost);
 	}
-
+	
 	cost = ((gd.numEmployees[EMPL_SOLDIER] + gd.numEmployees[EMPL_MEDIC] + gd.numEmployees[EMPL_WORKER] + gd.numEmployees[EMPL_SCIENTIST] + 2 * gd.numEmployees[EMPL_ROBOT] + 24) / 25) * 150 + 550;
 	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
 	CL_UpdateCredits(ccs.credits - cost);
 	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 
-        if (initial_credits < 0) {
-        	float interest = initial_credits * 0.005;
+	if (initial_credits < 0) {
+		float interest = initial_credits * 0.005;
+
 		cost = (int)ceil(interest);
 		Com_sprintf(message, sizeof(message), _("Paid %i credits in interest on your debt."), cost);
 		CL_UpdateCredits(ccs.credits - cost);
