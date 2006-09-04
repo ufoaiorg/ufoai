@@ -37,13 +37,12 @@ HDC   ( WINAPI * qwglGetCurrentDC)(VOID);
 PROC  ( WINAPI * qwglGetProcAddress)(LPCSTR);
 BOOL  ( WINAPI * qwglMakeCurrent)(HDC, HGLRC);
 BOOL  ( WINAPI * qwglShareLists)(HGLRC, HGLRC);
-BOOL  ( WINAPI * qwglUseFontBitmaps)(HDC, DWORD, DWORD, DWORD);
-BOOL  ( WINAPI * qwglUseFontOutlines)(HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
-BOOL ( WINAPI * qwglDescribeLayerPlane)(HDC, int, int, UINT, LPLAYERPLANEDESCRIPTOR);
 int  ( WINAPI * qwglSetLayerPaletteEntries)(HDC, int, int, int, CONST COLORREF *);
 int  ( WINAPI * qwglGetLayerPaletteEntries)(HDC, int, int, int, COLORREF *);
 BOOL ( WINAPI * qwglRealizeLayerPalette)(HDC, int, BOOL);
-BOOL ( WINAPI * qwglSwapLayerBuffers)(HDC, UINT);
+BOOL(WINAPI * qwglSwapIntervalEXT) (int interval);
+BOOL(WINAPI * qwglGetDeviceGammaRampEXT) (unsigned char *pRed, unsigned char *pGreen, unsigned char *pBlue);
+BOOL(WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, const unsigned char *pGreen, const unsigned char *pBlue);
 
 /**
  * @brief Unloads the specified DLL then nulls out all the proc pointers.
@@ -66,7 +65,6 @@ void QGL_Shutdown( void )
 	qwglCreateContext            = NULL;
 	qwglCreateLayerContext       = NULL;
 	qwglDeleteContext            = NULL;
-	qwglDescribeLayerPlane       = NULL;
 	qwglGetCurrentContext        = NULL;
 	qwglGetCurrentDC             = NULL;
 	qwglGetLayerPaletteEntries   = NULL;
@@ -75,9 +73,6 @@ void QGL_Shutdown( void )
 	qwglRealizeLayerPalette      = NULL;
 	qwglSetLayerPaletteEntries   = NULL;
 	qwglShareLists               = NULL;
-	qwglSwapLayerBuffers         = NULL;
-	qwglUseFontBitmaps           = NULL;
-	qwglUseFontOutlines          = NULL;
 	qwglChoosePixelFormat        = NULL;
 	qwglDescribePixelFormat      = NULL;
 	qwglGetPixelFormat           = NULL;

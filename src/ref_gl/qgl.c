@@ -30,7 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <GL/glx.h>
 #include <dlfcn.h>
 #elif defined _WIN32
+#include "../ports/win32/glw_win.h"
 #elif defined __MACOSX__
+/* TODO */
 #endif
 
 void ( APIENTRY * qglAccum )(GLenum op, GLfloat value);
@@ -5247,7 +5249,6 @@ void QGL_Link(void)
 	qwglCreateContext            = GPA("wglCreateContext");
 	qwglCreateLayerContext       = GPA("wglCreateLayerContext");
 	qwglDeleteContext            = GPA("wglDeleteContext");
-	qwglDescribeLayerPlane       = GPA("wglDescribeLayerPlane");
 	qwglGetCurrentContext        = GPA("wglGetCurrentContext");
 	qwglGetCurrentDC             = GPA("wglGetCurrentDC");
 	qwglGetLayerPaletteEntries   = GPA("wglGetLayerPaletteEntries");
@@ -5256,9 +5257,6 @@ void QGL_Link(void)
 	qwglRealizeLayerPalette      = GPA("wglRealizeLayerPalette");
 	qwglSetLayerPaletteEntries   = GPA("wglSetLayerPaletteEntries");
 	qwglShareLists               = GPA("wglShareLists");
-	qwglSwapLayerBuffers         = GPA("wglSwapLayerBuffers");
-	qwglUseFontBitmaps           = GPA("wglUseFontBitmapsA");
-	qwglUseFontOutlines          = GPA("wglUseFontOutlinesA");
 	qwglChoosePixelFormat        = GPA("wglChoosePixelFormat");
 	qwglDescribePixelFormat      = GPA("wglDescribePixelFormat");
 	qwglGetPixelFormat           = GPA("wglGetPixelFormat");
