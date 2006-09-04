@@ -1111,6 +1111,7 @@ REF_GL_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_arb_shader.o \
 	$(BUILDDIR)/ref_gl/gl_shadows.o \
 	\
+	$(BUILDDIR)/ref_gl/qgl.o \
 	$(BUILDDIR)/ref_gl/qgl_linux.o \
 	$(BUILDDIR)/ref_gl/q_shared.o \
 	$(BUILDDIR)/ref_gl/q_shlinux.o \
@@ -1182,6 +1183,9 @@ $(BUILDDIR)/ref_gl/gl_warp.o :        $(REF_GL_DIR)/gl_warp.c
 	$(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_gl/qgl_linux.o :      $(LINUX_DIR)/qgl_linux.c
+	$(DO_GL_SHLIB_CC)
+
+$(BUILDDIR)/ref_gl/qgl.o :      $(REF_GL_DIR)/qgl.c
 	$(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_gl/q_shared.o :       $(GAME_DIR)/q_shared.c

@@ -44,4 +44,12 @@ typedef struct
 
 extern glwstate_t glw_state;
 
+#ifdef _MSC_VER
+#	pragma warning (disable : 4113 4133 4047 )
+#	define GPA( a ) GetProcAddress( glw_state.hinstOpenGL, a )
+#else
+#	define GPA( a ) (void *)GetProcAddress( glw_state.hinstOpenGL, a )
+#endif
+#define SIG( x ) fprintf( glw_state.log_fp, x "\n" )
+
 #endif
