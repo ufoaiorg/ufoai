@@ -137,6 +137,7 @@ SET(REF_GL_SOURCEFULES
 	ref_gl/gl_particle.c
 	ref_gl/gl_arb_shader.c
 	ref_gl/gl_shadows.c
+	ref_gl/qgl.c
 	
 	ports/linux/qgl_linux.c
 	game/q_shared.c
