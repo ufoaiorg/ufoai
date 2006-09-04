@@ -4869,6 +4869,7 @@ void QGL_UnLink(void)
 	qglActiveStencilFaceEXT      = NULL;
 	qglStencilOpSeparateATI      = NULL;
 	qglStencilFuncSeparateATI    = NULL;
+#ifdef SHADERS
 	qglProgramStringARB          = NULL;
 	qglBindProgramARB            = NULL;
 	qglDeleteProgramsARB         = NULL;
@@ -4892,6 +4893,7 @@ void QGL_UnLink(void)
 	qglGetVertexAttribivARB       = NULL;
 	qglGetVertexAttribPointervARB = NULL;
 	qglIsProgramARB               = NULL;
+#endif
 }
 
 /**
