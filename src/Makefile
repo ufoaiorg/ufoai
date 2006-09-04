@@ -227,7 +227,7 @@ endif
 # FreeBSD only
 ifeq ($(ARCH),amd64)
 	RELEASE_CFLAGS=$(BASE_CFLAGS) -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing -DNDEBUG
-.endif
+endif
 
 #ifeq ($(ARCH),mipsEE)
 #	GLCFLAGS=-I$(MESA_DIR)/include -I/usr/X11R6/include
