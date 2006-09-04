@@ -36,7 +36,6 @@ static cvar_t *mn_base_count;
 static int BuildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
 
-
 /**
  * @brief Resets the currently selected building.
  *
@@ -44,6 +43,15 @@ static int numBuildingConstructionList;
  */
 void B_ResetBuildingCurrent(void)
 {
+
+	if (Cmd_Argc() > 2) {
+		Com_Printf("Usage: reset_building_current [arg]\n");
+		return;
+	}
+
+	if (Cmd_Argc() > 1) 
+		gd.instant_build = atoi(Cmd_Argv(1));
+
 	if (baseCurrent) {
 		baseCurrent->buildingCurrent = NULL;
 		baseCurrent->buildingToBuild = -1;
@@ -262,6 +270,9 @@ void B_SetUpBase(void)
 				B_HireForBuilding(building, -1);
 		}
 	}
+	/* if no autobuild, set up zero build time for the first base */
+	if (gd.numBases == 1 && !cl_start_buildings->value)
+		gd.instant_build = 1;
 }
 
 /**
@@ -361,9 +372,12 @@ static qboolean B_ConstructBuilding(void)
 		building_to_build->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
 		baseCurrent->buildingToBuild = -1;
 	}
-
-	baseCurrent->buildingCurrent->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-	baseCurrent->buildingCurrent->timeStart = ccs.date.day;
+	if (!gd.instant_build) {
+		baseCurrent->buildingCurrent->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
+		baseCurrent->buildingCurrent->timeStart = ccs.date.day;
+	} else {
+		baseCurrent->buildingCurrent->buildingStatus = B_STATUS_WORKING;
+	}
 
 	CL_UpdateCredits(ccs.credits - baseCurrent->buildingCurrent->fixCosts);
 	return qtrue;
