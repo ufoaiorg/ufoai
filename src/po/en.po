@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-09-03 14:51+0200\n"
-"PO-Revision-Date: 2006-09-03 15:46+0100\n"
+"POT-Creation-Date: 2006-09-04 07:05+0200\n"
+"PO-Revision-Date: 2006-09-04 07:05+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -14,26 +14,6 @@ msgstr ""
 #: ../base/ufos/armor.ufo:3
 msgid "normal"
 msgstr "Normal"
-
-#: ../base/ufos/menu_bases.ufo:126
-msgid "Buy a new aircraft"
-msgstr "Buy a new aircraft"
-
-#: ../base/ufos/menu_options.ufo:561
-msgid "Sound renderer:"
-msgstr "Sound renderer:"
-
-#: ../base/ufos/nations.ufo:24
-msgid "South America"
-msgstr "South America"
-
-#: ../base/ufos/nations.ufo:38
-msgid "North America"
-msgstr "North America"
-
-#: client/cl_ufopedia.c:323
-msgid "No pre-research description available."
-msgstr "No pre-research description available."
 
 #: ../base/ufos/armor.ufo:4
 msgid "blast"
@@ -173,6 +153,51 @@ msgstr "UFO"
 #: ../base/ufos/basemanagement.ufo:344
 msgid "UFO - Destroyer class"
 msgstr "UFO - Destroyer class"
+
+#: ../base/ufos/campaign.ufo:131
+msgid "Very Hard Campaign"
+msgstr "Very Hard Campaign"
+
+#: ../base/ufos/campaign.ufo:132
+msgid "txt_veryhard_campaign"
+msgstr "Same as standard campaign but less recruits and less credits"
+
+#: ../base/ufos/campaign.ufo:151
+msgid "Hard Campaign"
+msgstr "Hard Campaign"
+
+#: ../base/ufos/campaign.ufo:152
+msgid "txt_hard_campaign"
+msgstr "Same as standard campaign but less recruits and less credits"
+
+#: ../base/ufos/campaign.ufo:171
+msgid "Standard Campaign"
+msgstr "Standard Campaign"
+
+#: ../base/ufos/campaign.ufo:172
+#: ../base/ufos/campaign.ufo:233
+msgid "txt_standard_campaign"
+msgstr "The aliens' homeworld is a small planet orbiting the star Antares. They have evolved in a similar fashion as humans, developing from single-celled life-forms into organisms, then into amphibians, then mammals, and eventually developing the opposing thumb. Today, their technology has entered the fusion age, where the power of stars is harnessed in devices small enough to carry around. They have also discovered a form of faster-than-light travel, though an interstellar trip still takes years, and the crew must be put in stasis for the duration. In terms of technological advances therefore, the Antareans are a few hundred years ahead; in terms of society, however, they are several hundred years behind. Their society resembles the feudal system during Earth's middle ages. The Antarean King is the highest authority, and all defer to his will. The Antareans are a warlike species. They have already conquered several other worlds, enslaving their indigenous populations and, in the case of the Ortnoks, compelling them to fight for their cause. Now, the Antarean warlords have set their sights on Earth. But unlike the inhabitants of their previous targets, humans turned out to be an intellectual match for the Antareans. Earth may well prove to be a tougher nut to crack than the Antarean warlords had originally thought..."
+
+#: ../base/ufos/campaign.ufo:192
+msgid "Easy Campaign"
+msgstr "Easy Campaign"
+
+#: ../base/ufos/campaign.ufo:193
+msgid "txt_easy_campaign"
+msgstr "Same as standard campaign but more recruits and more credits"
+
+#: ../base/ufos/campaign.ufo:212
+msgid "Very Easy Campaign"
+msgstr "Very Easy Campaign"
+
+#: ../base/ufos/campaign.ufo:213
+msgid "txt_veryeasy_campaign"
+msgstr "Same as standard campaign but more recruits and more credits"
+
+#: ../base/ufos/campaign.ufo:232
+msgid "Testing and Tweaking Campaign --- Please Ignore"
+msgstr "Testing and Tweaking Campaign --- Please Ignore"
 
 #: ../base/ufos/events.ufo:21
 msgid "Devastating alien terror attack on Mumbai"
@@ -1558,6 +1583,22 @@ msgstr "Object Info"
 msgid "Actor Abilities"
 msgstr "Actor Abilities"
 
+#: ../base/ufos/menu_ufopedia.ufo:50
+msgid "Previous entry"
+msgstr "Previous entry"
+
+#: ../base/ufos/menu_ufopedia.ufo:61
+msgid "Next entry"
+msgstr "Next entry"
+
+#: ../base/ufos/menu_ufopedia.ufo:72
+msgid "Back to content"
+msgstr "Back to content"
+
+#: ../base/ufos/menu_ufopedia.ufo:83
+msgid "Leave Ufopedia"
+msgstr "Leave Ufopedia"
+
 #: ../base/ufos/missions.ufo:5
 #: ../base/ufos/missions.ufo:285
 msgid "New York"
@@ -1936,14 +1977,6 @@ msgstr "Nano Technology"
 msgid "nano_txt"
 msgstr "Nano technology opens up a wide field of new production methods especially in the design and production of armor and fabric. Prototype production lines based on advanced laser technology make it possible to create materials nearly completely composed of fullerenes (geodesic domes at an atomic level) and use them to fabricate armor that is more robust and has higher heat resistance than any known protection tested before. In particular, the recently analyzed charged plasma beams are reported to dissipate on the surface of the nano-material, consuming some of the fullerene fabric, but not passing through. Not only that, but the nano-fabric is promising to also be lighter than similar conventional materials."
 
-#: ../base/ufos/research.ufo:129
-msgid "Advanced Armor Fabrics"
-msgstr "Advanced Armor Fabrics"
-
-#: ../base/ufos/research.ufo:131
-msgid "armor_fabrics_txt"
-msgstr "We have developed a set of new fabrics that, when combined, can make a excellent armor. An armor that can tolerate high temperature, fire, high-speed particles and even decrease the damage received from alien plasma and tachyon weaponry. The problems, however, are that the fabrics are difficult to make, even more difficult to combine and finally, they are all quite weighty. Consequently, the armor becomes too heavy for weaker people, such as the tester of our lab."
-
 #: ../base/ufos/research.ufo:143
 msgid "General UFO technology"
 msgstr "General UFO technology"
@@ -2181,13 +2214,6 @@ msgstr ""
 "Using a light-weight fabric woven of linked fullerene rings like nano-scale chain-mail, this armor is virtually indestructible. Physical impacts will be spread across the surrounding area, reducing the overall damage done to the wearer. Energy attacks, especially the plasma attacks recently analyzed by scientists, will be rapidly dissipated away from the point of impact and spread across the surface of the suit, then gradually radiated away. Unfortunately, in case of plasma the radiation is known to disintegrate outer layers of the fabric away.\n"
 "\n"
 "Battle Implications:A stronger armor offering decent protection against almost every damage kind and generally more durable than Kevlar armors. The nano-materials are very hard, but their outer layers melt easily on contact with plasma. The fullerene rings are actually lighter than Kevlar and the fabric is thinner than that of the Kevlar Vest, but the armor covers most of the soldier's body and so weights a little more. Still, even weak soldiers should be able to wear it without problems. "
-
-#: ../base/ufos/research.ufo:805
-msgid "nano_heavy_armor_txt"
-msgstr ""
-"An armor that completely surrounds the soldier's body, effectively quarantining the soldier from his or her environment. The fabric of the armor consists of three plies, of which the first and the third are made of fullerene nano-material. In the middle our scientists put a special heavy screen shielding against tachyon particles --- for the first time in this war our soldiers receive a protection from this deadly exotic radiation. Its effectiveness in diffusing tachyon radiation is estimated to be comparable to that of the aliens armor types. The internal life support and the hardness of the armor render any form of stun agents ineffective, be it ultra-high frequency sound waves, drug-injecting projectiles, stun gas, or just toxic fumes.\n"
-"\n"
-"Battle Implications: The two plies of fabric woven of linked fullerene rings offer great protection, but their outer layers still melt relatively easily on contact with plasma. However, the armor is designed to withstand prolonged exposition to any harsh conditions, including open fire and medium intensity plasma beams. The price of this robustness is that the suit is very heavy, so that only very powerful soldiers will be able to wear it comfortably. "
 
 #: ../base/ufos/research.ufo:821
 msgid "Normal Damage Type"
@@ -2735,31 +2761,46 @@ msgstr "Nobody knows where they come from. An attempt at diplomacy is made, but 
 msgid "intro_sentence5"
 msgstr "Charged with countering the alien threat, this combat unit is funded by all seven of the political powers, and draws its soldiers from the elite of their armies. Whether PHALANX is able to face up to the challenge remains to be seen..."
 
-#: ../base/ufos/seq_intro.ufo:62
+#: ../base/ufos/seq_intro.ufo:48
+#, fuzzy
+msgid "intro_sentence6"
+msgstr "2084 - A time of relative peace has finally come to Earth. Old wars have been fought out, old borders have been broken and new ones established, and governments have stabilized. Former nations and super-nations have coalesced into major political powers and the remaining lone nations are working together closely. Prosperity is no longer a stranger to many of the peoples of Earth as it once was in the 20th century, and the population now trusts its leaders to maintain the balance of power and carry them forward into a tranquil, thriving 22nd century."
+
+#: ../base/ufos/seq_intro.ufo:56
+#, fuzzy
+msgid "intro_sentence7"
+msgstr "2084 - A time of relative peace has finally come to Earth. Old wars have been fought out, old borders have been broken and new ones established, and governments have stabilized. Former nations and super-nations have coalesced into major political powers and the remaining lone nations are working together closely. Prosperity is no longer a stranger to many of the peoples of Earth as it once was in the 20th century, and the population now trusts its leaders to maintain the balance of power and carry them forward into a tranquil, thriving 22nd century."
+
+#: ../base/ufos/seq_intro.ufo:64
+#, fuzzy
+msgid "intro_sentence8"
+msgstr "2084 - A time of relative peace has finally come to Earth. Old wars have been fought out, old borders have been broken and new ones established, and governments have stabilized. Former nations and super-nations have coalesced into major political powers and the remaining lone nations are working together closely. Prosperity is no longer a stranger to many of the peoples of Earth as it once was in the 20th century, and the population now trusts its leaders to maintain the balance of power and carry them forward into a tranquil, thriving 22nd century."
+
+#: ../base/ufos/seq_intro.ufo:89
 msgid "prolog_sentence1"
 msgstr "Prolog:"
 
-#: ../base/ufos/seq_intro.ufo:72
+#: ../base/ufos/seq_intro.ufo:99
 msgid "prolog_sentence2"
 msgstr "Welcome, Commander. You have been given command over PHALANX. Your mission: protect the citizens of Earth, and avert the alien threat. How you accomplish this is up to you, but know that failure is not an option."
 
-#: ../base/ufos/seq_intro.ufo:81
+#: ../base/ufos/seq_intro.ufo:108
 msgid "prolog_sentence3"
 msgstr "Your first order of business is to set up your headquarters. Choose the location wisely, because it will have great influence on the success of the PHALANX project."
 
-#: ../base/ufos/seq_intro.ufo:90
+#: ../base/ufos/seq_intro.ufo:117
 msgid "prolog_sentence4"
 msgstr "A recent analysis of the attack on Mumbai revealed that around that time alien sightings increased in the most densely populated regions of Earth, including the central parts of America, Europe, Asia, Africa and Australia. You should consider increasing your field of operations to include these territories."
 
-#: ../base/ufos/seq_intro.ufo:99
+#: ../base/ufos/seq_intro.ufo:126
 msgid "prolog_sentence5"
 msgstr "Once you have established your first base, you must prepare your soldiers. The recruits that were transferred to PHALANX must be assigned to your craft, then equipped for battle. "
 
-#: ../base/ufos/seq_intro.ufo:108
+#: ../base/ufos/seq_intro.ufo:135
 msgid "prolog_sentence6"
 msgstr "And don't forget to protect them as well. A living soldier kills more aliens than a dead one."
 
-#: ../base/ufos/seq_intro.ufo:117
+#: ../base/ufos/seq_intro.ufo:144
 msgid "prolog_sentence7"
 msgstr "That is all, Commander. Good luck."
 
@@ -3290,7 +3331,7 @@ msgstr "Rang: %s"
 msgid "Currently panics!\n"
 msgstr "Currently panics!\n"
 
-#: client/cl_actor.c:416
+#: client/cl_actor.c:417
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -3298,7 +3339,7 @@ msgstr ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
 
-#: client/cl_actor.c:432
+#: client/cl_actor.c:433
 #, c-format
 msgid ""
 "%s\n"
@@ -3307,7 +3348,7 @@ msgstr ""
 "%s\n"
 "(empty)\n"
 
-#: client/cl_actor.c:443
+#: client/cl_actor.c:444
 #, c-format
 msgid ""
 "Armor  %i\tMorale  %i\n"
@@ -3316,20 +3357,20 @@ msgstr ""
 "Armor  %i\tMorale  %i\n"
 "Move %i (%i TU left)\n"
 
-#: client/cl_actor.c:451
+#: client/cl_actor.c:452
 #, c-format
 msgid "Armor  %i\tMorale  %i\n"
 msgstr "Armor  %i\tMorale  %i\n"
 
-#: client/cl_actor.c:831
+#: client/cl_actor.c:832
 msgid "Nobody selected\n"
 msgstr "Nobody selected\n"
 
-#: client/cl_actor.c:842
+#: client/cl_actor.c:843
 msgid "This isn't your round\n"
 msgstr "This isn't your round\n"
 
-#: client/cl_actor.c:971
+#: client/cl_actor.c:972
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -3337,7 +3378,7 @@ msgstr ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
 
-#: client/cl_actor.c:1402
+#: client/cl_actor.c:1403
 msgid "Your round started!\n"
 msgstr "Your round started!\n"
 
@@ -3364,10 +3405,10 @@ msgstr "Aircraft started"
 #: client/cl_campaign.c:1113
 #: client/cl_campaign.c:1120
 #: client/cl_campaign.c:1127
-#: client/cl_campaign.c:2143
-#: client/cl_campaign.c:2180
+#: client/cl_campaign.c:2145
 #: client/cl_campaign.c:2182
-#: client/cl_campaign.c:2565
+#: client/cl_campaign.c:2184
+#: client/cl_campaign.c:2567
 #: client/cl_map.c:304
 #: client/cl_research.c:497
 #: client/cl_research.c:607
@@ -3470,12 +3511,12 @@ msgid "Interception"
 msgstr "Interception"
 
 #: client/cl_aircraft.c:557
-#: client/cl_campaign.c:2180
+#: client/cl_campaign.c:2182
 msgid "You've won the battle"
 msgstr "You've won the battle"
 
 #: client/cl_aircraft.c:564
-#: client/cl_campaign.c:2182
+#: client/cl_campaign.c:2184
 msgid "You've lost the battle"
 msgstr "You've lost the battle"
 
@@ -3761,33 +3802,33 @@ msgstr ""
 "Bases:\n"
 "build:\t%i\tattacked:\t%i\n"
 
-#: client/cl_campaign.c:2039
+#: client/cl_campaign.c:2041
 msgid "Assemble or load a team"
 msgstr "Assemble or load a team"
 
-#: client/cl_campaign.c:2039
+#: client/cl_campaign.c:2041
 msgid "Note"
 msgstr "Note"
 
-#: client/cl_campaign.c:2143
+#: client/cl_campaign.c:2145
 msgid "Your dropship is not near the landing zone"
 msgstr "Your dropship is not near the landing zone"
 
-#: client/cl_campaign.c:2394
+#: client/cl_campaign.c:2396
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s has been promoted to %s.\n"
 
-#: client/cl_campaign.c:2395
+#: client/cl_campaign.c:2397
 msgid "Soldier promoted"
 msgstr "Soldier promoted"
 
-#: client/cl_campaign.c:2564
+#: client/cl_campaign.c:2566
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Defense of base: %s successful!"
 
-#: client/cl_campaign.c:3418
+#: client/cl_campaign.c:3420
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -4486,55 +4527,38 @@ msgstr "Can't perform action - no ammo!\n"
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Can't perform action - not enough ammo!\n"
 
-#~ msgid "Very Hard Campaign"
-#~ msgstr "Very Hard Campaign"
-#~ msgid "txt_veryhard_campaign"
-#~ msgstr "Same as standard campaign but less recruits and less credits"
-#~ msgid "Hard Campaign"
-#~ msgstr "Hard Campaign"
-#~ msgid "txt_hard_campaign"
-#~ msgstr "Same as standard campaign but less recruits and less credits"
-#~ msgid "Standard Campaign"
-#~ msgstr "Standard Campaign"
-#~ msgid "txt_standard_campaign"
+#~ msgid "Advanced Armor Fabrics"
+#~ msgstr "Advanced Armor Fabrics"
+#~ msgid "armor_fabrics_txt"
 #~ msgstr ""
-#~ "The aliens' homeworld is a small planet orbiting the star Antares. They "
-#~ "have evolved in a similar fashion as humans, developing from single-"
-#~ "celled life-forms into organisms, then into amphibians, then mammals, and "
-#~ "eventually developing the opposing thumb. Today, their technology has "
-#~ "entered the fusion age, where the power of stars is harnessed in devices "
-#~ "small enough to carry around. They have also discovered a form of faster-"
-#~ "than-light travel, though an interstellar trip still takes years, and the "
-#~ "crew must be put in stasis for the duration. In terms of technological "
-#~ "advances therefore, the Antareans are a few hundred years ahead; in terms "
-#~ "of society, however, they are several hundred years behind. Their society "
-#~ "resembles the feudal system during Earth's middle ages. The Antarean King "
-#~ "is the highest authority, and all defer to his will. The Antareans are a "
-#~ "warlike species. They have already conquered several other worlds, "
-#~ "enslaving their indigenous populations and, in the case of the Ortnoks, "
-#~ "compelling them to fight for their cause. Now, the Antarean warlords have "
-#~ "set their sights on Earth. But unlike the inhabitants of their previous "
-#~ "targets, humans turned out to be an intellectual match for the Antareans. "
-#~ "Earth may well prove to be a tougher nut to crack than the Antarean "
-#~ "warlords had originally thought..."
-#~ msgid "Easy Campaign"
-#~ msgstr "Easy Campaign"
-#~ msgid "txt_easy_campaign"
-#~ msgstr "Same as standard campaign but more recruits and more credits"
-#~ msgid "Very Easy Campaign"
-#~ msgstr "Very Easy Campaign"
-#~ msgid "txt_veryeasy_campaign"
-#~ msgstr "Same as standard campaign but more recruits and more credits"
-#~ msgid "Testing and Tweaking Campaign --- Please Ignore"
-#~ msgstr "Testing and Tweaking Campaign --- Please Ignore"
-#~ msgid "Previous entry"
-#~ msgstr "Previous entry"
-#~ msgid "Next entry"
-#~ msgstr "Next entry"
-#~ msgid "Back to content"
-#~ msgstr "Back to content"
-#~ msgid "Leave Ufopedia"
-#~ msgstr "Leave Ufopedia"
+#~ "We have developed a set of new fabrics that, when combined, can make a "
+#~ "excellent armor. An armor that can tolerate high temperature, fire, high-"
+#~ "speed particles and even decrease the damage received from alien plasma "
+#~ "and tachyon weaponry. The problems, however, are that the fabrics are "
+#~ "difficult to make, even more difficult to combine and finally, they are "
+#~ "all quite weighty. Consequently, the armor becomes too heavy for weaker "
+#~ "people, such as the tester of our lab."
+#~ msgid "nano_heavy_armor_txt"
+#~ msgstr ""
+#~ "An armor that completely surrounds the soldier's body, effectively "
+#~ "quarantining the soldier from his or her environment. The fabric of the "
+#~ "armor consists of three plies, of which the first and the third are made "
+#~ "of fullerene nano-material. In the middle our scientists put a special "
+#~ "heavy screen shielding against tachyon particles --- for the first time "
+#~ "in this war our soldiers receive a protection from this deadly exotic "
+#~ "radiation. Its effectiveness in diffusing tachyon radiation is estimated "
+#~ "to be comparable to that of the aliens armor types. The internal life "
+#~ "support and the hardness of the armor render any form of stun agents "
+#~ "ineffective, be it ultra-high frequency sound waves, drug-injecting "
+#~ "projectiles, stun gas, or just toxic fumes.\n"
+#~ "\n"
+#~ "Battle Implications: The two plies of fabric woven of linked fullerene "
+#~ "rings offer great protection, but their outer layers still melt "
+#~ "relatively easily on contact with plasma. However, the armor is designed "
+#~ "to withstand prolonged exposition to any harsh conditions, including open "
+#~ "fire and medium intensity plasma beams. The price of this robustness is "
+#~ "that the suit is very heavy, so that only very powerful soldiers will be "
+#~ "able to wear it comfortably. "
 #~ msgid ""
 #~ "The aliens killed all employees and destroyed all equipment in your base "
 #~ "'%s'."
