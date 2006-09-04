@@ -272,11 +272,9 @@ void PR_ProductionStop(void)
 {
 	if (!baseCurrent)
 		return;
-	if (gd.productions[baseCurrent->idx].amount <= 0) {
-		gd.productions[baseCurrent->idx].amount = 0;
-		gd.productions[baseCurrent->idx].objID = -1;
-		PR_ProductionInfo();
-	}
+	gd.productions[baseCurrent->idx].amount = 0;
+	gd.productions[baseCurrent->idx].objID = -1;
+	PR_ProductionInfo();
 }
 
 /**
