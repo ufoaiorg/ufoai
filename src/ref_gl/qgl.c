@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #if defined (__linux__) || defined (__FreeBSD__)
 #include "../ports/linux/glw_linux.h"
-#include <GL/glx.h>
-#include <dlfcn.h>
 #elif defined _WIN32
 #include "../ports/win32/glw_win.h"
 #elif defined __MACOSX__
