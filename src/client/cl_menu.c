@@ -1031,6 +1031,12 @@ static qboolean MN_TextScroll(menuNode_t *node, int offset)
 		node->textScroll = 0;
 		return qfalse;
 	}
+	
+	if (node->textLines <= node->height ) {
+		/* Number of lines are less tehan the height of the textbox. */
+		node->textScroll = 0;
+		return qfalse;
+	}
 
 	textScroll_new = node->textScroll + offset;
 
