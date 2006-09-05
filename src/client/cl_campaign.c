@@ -1324,7 +1324,7 @@ void CL_MessageSave(sizebuf_t * sb, message_t * message)
 	if (message->pedia)
 		idx = message->pedia->idx;
 
-	Com_DPrintf("CL_MessageSave: Save '%s' - '%s'\n", message->title, message->text);
+	Com_DPrintf("CL_MessageSave: Save '%s' - '%s'; type = %i; idx = %i\n", message->title, message->text, message->type, idx);
 	MSG_WriteString(sb, message->title);
 	MSG_WriteString(sb, message->text);
 	MSG_WriteByte(sb, message->type);
@@ -1445,6 +1445,7 @@ void CL_GameSave(char *filename, char *comment)
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++) {
 		MSG_WriteString(&sb, mis->def->name);
 		MSG_WriteString(&sb, mis->cause->def->name);
+
 		MSG_WriteFloat(&sb, mis->realPos[0]);
 		MSG_WriteFloat(&sb, mis->realPos[1]);
 		MSG_WriteLong(&sb, mis->expire.day);
@@ -1458,7 +1459,7 @@ void CL_GameSave(char *filename, char *comment)
 		MSG_WriteLong(&sb, -1);
 
 	/* save all the stats */
-	SZ_Write(&sb, &stats, sizeof(stats));
+	SZ_Write(&sb, &stats, sizeof(stats_t));
 
 	/* write data */
 	res = FS_WriteFile(buf, sb.cursize, savegame);
@@ -1572,7 +1573,7 @@ int CL_GameLoad(char *filename)
 	byte *buf;
 	char *name, *title, *text;
 	FILE *f;
-	int version, dataSize;
+	int version, dataSize, mtype, idx;
 	int i, j, num, type;
 	char val[32];
 	message_t *mess;
@@ -1682,14 +1683,17 @@ int CL_GameLoad(char *filename)
 			CL_ReceiveInventory(&sb, &gd.employees[type][i].inv);
 		}
 
+	CL_InitMessageSystem();
 	/* how many message items */
 	i = MSG_ReadByte(&sb);
 	Com_DPrintf("CL_GameLoad: %i messages on messagestack.\n", i);
 	for (; i--;) {
 		title = MSG_ReadString(&sb);
 		text = MSG_ReadString(&sb);
-		Com_DPrintf("Load message '%s' - '%s'\n", title, text);
-		mess = MN_AddNewMessage(title, text, qfalse, MSG_ReadByte(&sb), RS_GetTechByIDX(MSG_ReadLong(&sb)));
+		mtype = MSG_ReadByte(&sb);
+		idx = MSG_ReadLong(&sb);
+		Com_DPrintf("Load message '%s' - '%s'; type = %i; idx = %i\n", title, text, mtype, idx);
+		mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
 		mess->d = MSG_ReadLong(&sb);
 		mess->m = MSG_ReadLong(&sb);
 		mess->y = MSG_ReadLong(&sb);
@@ -1709,12 +1713,8 @@ int CL_GameLoad(char *filename)
 		}
 
 	/* read market */
-	for (i = 0; i < MAX_OBJDEFS; i++) {
-		if (version == 0)
-			ccs.eMarket.num[i] = MSG_ReadByte(&sb);
-		else if (version >= 1)
-			ccs.eMarket.num[i] = MSG_ReadLong(&sb);
-	}
+	for (i = 0; i < MAX_OBJDEFS; i++)
+		ccs.eMarket.num[i] = MSG_ReadLong(&sb);
 
 	/* read campaign data */
 	name = MSG_ReadString(&sb);
@@ -1731,6 +1731,7 @@ int CL_GameLoad(char *filename)
 		state->start.day = MSG_ReadLong(&sb);
 		state->start.sec = MSG_ReadLong(&sb);
 		num = MSG_ReadByte(&sb);
+		assert (num == state->def->num);
 		for (i = 0; i < num; i++) {
 			name = MSG_ReadString(&sb);
 			for (j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++)
@@ -1770,6 +1771,7 @@ int CL_GameLoad(char *filename)
 
 		/* get mission definition */
 		name = MSG_ReadString(&sb);
+
 		for (j = 0; j < numStageSets; j++)
 			if (!Q_strncmp(name, stageSets[j].name, MAX_VAR)) {
 				mis->cause = &ccs.set[j];
@@ -1783,6 +1785,7 @@ int CL_GameLoad(char *filename)
 		mis->realPos[1] = MSG_ReadFloat(&sb);
 		mis->expire.day = MSG_ReadLong(&sb);
 		mis->expire.sec = MSG_ReadLong(&sb);
+		mis->def->onGeoscape = qtrue;
 
 		/* ignore incomplete info */
 		if (!mis->def || !mis->cause) {
@@ -1817,8 +1820,8 @@ int CL_GameLoad(char *filename)
 	memcpy(&stats, sb.data + sb.readcount, sizeof(stats_t));
 	sb.readcount += sizeof(stats_t);
 
-        /* ensure research correctly initialised */
-        RS_UpdateData();
+	/* ensure research correctly initialised */
+	RS_UpdateData();
 
 	Com_Printf("Campaign '%s' loaded.\n", filename);
 
