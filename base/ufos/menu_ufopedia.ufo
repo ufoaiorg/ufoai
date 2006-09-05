@@ -76,7 +76,6 @@ menu ufopedia
 		texl	"0 74"
 		texh	"64 111"
 		click	{ cmd mn_upcontent; }
-		//click	{ cmd "textscroll description 1;" }
 	}
 
 	pic button_exit
@@ -90,6 +89,28 @@ menu ufopedia
 		click	{ cmd mn_pop; }
 	}
 
+	pic button_scrollup
+	{
+		tooltip "_Scroll up"
+		image	menu/buttons_small
+		mousefx true
+		pos		"15 100"
+		texl	"32 32"
+		texh	"48 48"
+		click	{ cmd "textscroll description -1"; }
+	}
+	
+	pic button_scrolldown
+	{
+		tooltip "_Scroll down"
+		image	menu/buttons_small
+		mousefx true
+		pos		"15 150"
+		texl	"32 48"
+		texh	"48 64"
+		click	{ cmd "textscroll description 1"; }
+	}
+	
 	// ==================
 	// text and info
 	// ==================
@@ -119,10 +140,10 @@ menu ufopedia
 
 	text description
 	{
-		pos		"35 495"
+		pos		"45 495"
 		size	"380 200"
 		format	"20 0"
-		height	"2"
+		height	"5"
 	}
 
 	text techtree
