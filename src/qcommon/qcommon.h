@@ -83,7 +83,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CPUSTRING "sparc"
 #endif							/* __i386__ */
 
-#elif defined MACOS_X			/* _WIN32 */
+#elif defined (__APPLE__) || defined (MACOSX)			/* _WIN32 */
 
 #define BUILDSTRING "MacOSX"
 

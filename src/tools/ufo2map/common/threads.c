@@ -96,9 +96,7 @@ void RunThreadsOnIndividual (int workcnt, qboolean showpacifier, void(*func)(int
 
 /*
 ===================================================================
-
 WIN32
-
 ===================================================================
 */
 #ifdef _WIN32
