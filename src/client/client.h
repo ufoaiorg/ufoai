@@ -635,6 +635,7 @@ void CL_NextRound(void);
 void CL_DoEndRound(sizebuf_t * sb);
 
 void CL_ResetMouseLastPos(void);
+void CL_ResetActorMoveLength(void);
 void CL_ActorMouseTrace(void);
 
 qboolean CL_AddActor(le_t * le, entity_t * ent);
