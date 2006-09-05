@@ -26,12 +26,9 @@ typedef struct fontCache_s {
 } fontCache_t;
 
 typedef struct textureCache_s
- {
-
-SDL_Surface * surface;
-
-GLuint texture;
-
+{
+	SDL_Surface * surface;
+	GLuint texture;
 } textureCache_t;
 
 textureCache_t textureCache[MAX_TEXTURE_CACHE];
@@ -46,7 +43,7 @@ typedef struct {
 #define NUM_FONT_STYLES (sizeof(fontStyle) / sizeof (fontRenderStyle_t))
 
 /* public */
-int Font_DrawString(char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c);
+int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line);
 void Font_Length(char *font, char *c, int *width, int *height);
 void Font_CleanCache(void);
 void Font_Shutdown(void);
