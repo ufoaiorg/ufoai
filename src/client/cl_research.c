@@ -364,7 +364,7 @@ static void RS_ResearchDisplayInfo(void)
 	if (!baseCurrent)
 		return;
 
-	if (researchListLength <= 0)
+	if (researchListLength <= 0 || researchListPos >= researchListLength)
 		return;
 
 	tech = researchList[researchListPos];

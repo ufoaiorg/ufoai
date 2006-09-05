@@ -58,19 +58,19 @@ stage intro
 
 stage ufos_are_coming
 {
-	set first
+	set first_coming // set names have to be unique for game saving
 	{
 		seq			ufos_are_coming
 		delay		"0 2 7"
-		frame		"0 3 0"
-		expire		"0 7 0"
+		frame		"0 12 0"
+		expire		"0 5 0"
 		commands	"addufo;"
 		missions	"mine_crash"
 		quota		1
 	}
 	set crashed_and_landed // stage3 equipment start here
 	{
-		needed		first
+		needed		first_coming
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 8 0"
@@ -78,7 +78,7 @@ stage ufos_are_coming
 		quota		3
 		nextstage	invasion
 	}
-	set stop
+	set stop_coming
 	{
 		needed		crashed_and_landed
 		delay		"0 110 0"
@@ -88,7 +88,7 @@ stage ufos_are_coming
 
 stage invasion
 {
-	set first // stage4 equipment start here
+	set first_invasion // stage4 equipment start here
 	{
 		seq	invasion
 		delay		"0 5 1"
@@ -98,9 +98,9 @@ stage invasion
 		quota		4
 		nextstage	alienbase
 	}
-	set stop
+	set stop_invasion
 	{
-		needed		first
+		needed		first_invasion
 		delay		"0 110 0"
 		endstage	invasion
 	}
@@ -108,7 +108,7 @@ stage invasion
 
 stage alienbase
 {
-	set first
+	set first_alienbase
 	{
 		seq	alienbase
 		delay		"0 110 0"
@@ -116,9 +116,9 @@ stage alienbase
 
 		commands	"mn_push enddemo;" // until aliencolony is done
 	}
-	set stop
+	set stop_alienbase
 	{
-		needed		first
+		needed		first_alienbase
 		delay		"0 110 0"
 		endstage	alienbase
 //		commands	"mn_push enddemo;"
