@@ -26,12 +26,9 @@ typedef struct fontCache_s {
 } fontCache_t;
 
 typedef struct textureCache_s
- {
-
-SDL_Surface * surface;
-
-GLuint texture;
-
+{
+	SDL_Surface * surface;
+	GLuint texture;
 } textureCache_t;
 
 textureCache_t textureCache[MAX_TEXTURE_CACHE];
