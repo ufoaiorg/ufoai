@@ -328,11 +328,10 @@ void G_RecalcRouting(edict_t * self)
  */
 void G_CompleteRecalcRouting(void)
 {
-	int i;
 	edict_t *ent;
 
 	/* generate entity list */
-	for (i = 0, ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
+	for (ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
 		if (ent->inuse && ent->model && *ent->model == '*')
 			G_RecalcRouting(ent);
 }

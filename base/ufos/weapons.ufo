@@ -13,6 +13,7 @@ item medikit
 	scale		1.1
 	price		1700
 	buytype		2
+	thrown		true
 
 	primary
 	{
@@ -29,16 +30,20 @@ item medikit
 	}
 	secondary
 	{
-		name	"_Heal"
-		projtl	null
-		impact	null
-		hitbody null
-		firesnd	misc/klonk01.wav
-		speed	0
-		range	1.5
+		name	"_Throw"
+		skill	close
+		projtl	medikit
+		impsnd	misc/klonk03.wav
+		bodysnd misc/klonk01.wav
+		gravity	true
+		speed	220
+		range	8
+		spread	"7 7"
 		shots	1
-		time	20
-		damage	"-40 10"
+		ammo	1
+		time	15
+		damage	"1 1"
+		dmgtype normal
 	}
 }
 
@@ -58,6 +63,7 @@ item irgoggles
 	scale		0.85
 	price		18700
 	buytype		2
+	thrown		true
 
 	primary
 	{
@@ -71,13 +77,20 @@ item irgoggles
 	}
 	secondary
 	{
-		name	"_Scan"
-		firesnd	misc/plopp03.wav
-		splrad	10
-		range	1.5
-		time	25
+		name	"_Throw"
+		skill	close
+		projtl	irgoggles
+		impsnd	misc/klonk03.wav
+		bodysnd misc/klonk01.wav
+		gravity	true
+		speed	220
+		range	10
+		spread	"7 7"
 		shots	1
-		irgoggles	true
+		ammo	1
+		time	12
+		damage	"1 2"
+		dmgtype normal
 	}
 }
 
