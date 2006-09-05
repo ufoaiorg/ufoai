@@ -1021,9 +1021,7 @@ void MN_Click(int x, int y)
  */
 static qboolean MN_TextScroll(menuNode_t *node, int offset)
 {
-	int numlines = 0;
 	int textScroll_new;
-	char *cur = NULL;
 
 	if (!node)
 		return qfalse;
@@ -1034,15 +1032,6 @@ static qboolean MN_TextScroll(menuNode_t *node, int offset)
 		return qfalse;
 	}
 
-	/* Count overall lines. */
-	cur = menuText[node->num];
-	while (cur) {
-		numlines++;
-		cur = strchr(cur, '\n');
-		if (cur)
-			cur++;
-	};
-
 	textScroll_new = node->textScroll + offset;
 
 	if (textScroll_new <= 0) {
@@ -1050,9 +1039,9 @@ static qboolean MN_TextScroll(menuNode_t *node, int offset)
 		node->textScroll = 0;
 		return qtrue;
 
-	} else if (textScroll_new >= (numlines - node->height)) {
+	} else if (textScroll_new >= (node->textLines + 1 - node->height)) {
 		/* Goto last possible line line, no matter how big the offset was. */
-		node->textScroll = numlines - node->height;
+		node->textScroll = node->textLines + 1 - node->height;
 		return qtrue;
 
 	} else {
@@ -1429,7 +1418,7 @@ void MN_DrawMenus(void)
 	vec4_t color;
 	int mouseOver = 0;
 	char *cur, *tab, *end;
-	int y, line, x;
+	int y, x;
 	message_t *message;
 	menuModel_t *menuModel = NULL;
 	int width, height;
@@ -1564,24 +1553,13 @@ void MN_DrawMenus(void)
 
 						cur = textCopy;
 						y = node->pos[1];
-						line = 0; /* these are lines only in one-line texts! */
+						node->textLines = 0; /* these are lines only in one-line texts! */
 						/* but it's easy to fix, just change FontDrawString
 							so that it returns a pair, #lines and height
 							and add that to variable line; the only other file
 							using FontDrawString result is client/cl_sequence.c
 							and there just ignore #lines */
 						do {
-#if 0
-							line++;
-							/* have a look that the maxline value defined in menu via */
-							/* the height parameter is not exceeded here */
-							/* TODO: Draw the scrollbars */
-							/* this is currently broken: */
-
-							if (node->height > 0 && line >= node->height)
-								/* Due to scrolling this line is not visible */
-								break;
-#endif
 							/* new line starts from node x position */
 							x = node->pos[0];
 
@@ -1591,15 +1569,9 @@ void MN_DrawMenus(void)
 								/* set the \n to \0 to draw only this part (before the \n) with our font renderer */
 								/* let end point to the next char after the \n (or \0 now) */
 								*end++ = '\0';
-#if 0
-							if (line < node->textScroll) {
-								cur = end;
-								/* Due to scrolling this line is not visible */
-								continue;
-							}
-#endif
+
 							/* FIXME: only works with one-line texts right now: */
-							if (node->mousefx && line == mouseOver)
+							if (node->mousefx && node->textLines == mouseOver)
 								re.DrawColor(color);
 
 							/* we assume all the tabs fit on a single line */
@@ -1611,7 +1583,7 @@ void MN_DrawMenus(void)
 								/* ... otherwise set the \t to \0 and increase the tab pointer to the next char */
 								/* after the tab (needed for the next loop in this (the inner) do while) */
 								*tab++ = '\0';
-								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur, node->height, node->textScroll, &line );
+								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur, node->height, node->textScroll, &node->textLines );
 								/* increase the x value as given via menu definition format string */
 								/* or use 1/3 of the node size (width) */
 								if (!node->texh[1])
@@ -1625,7 +1597,7 @@ void MN_DrawMenus(void)
 							/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
 							y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], (*cur ? cur : " "),0,0,NULL);
 
-							if (node->mousefx && line == mouseOver)
+							if (node->mousefx && node->textLines == mouseOver)
 								re.DrawColor(node->color); /* why is this repeated? */
 
 							/* now set cur to the next char after the \n (see above) */
@@ -1638,17 +1610,17 @@ void MN_DrawMenus(void)
 							font = "f_small";
 
 						y = node->pos[1];
-						line = 0;
+						node->textLines = 0;
 						message = messageStack;
 						while (message) {
-							if (line >= node->height) {
+							if (node->textLines >= node->height) {
 								/* TODO: Draw the scrollbars */
 								break;
 							}
-							line++;
+							node->textLines++;
 
 							/* maybe due to scrolling this line is not visible */
-							if (line > node->textScroll) {
+							if (node->textLines > node->textScroll) {
 								re.FontLength(font, message->text, &width, &height);
 								if (!width)
 									break;
@@ -1660,8 +1632,8 @@ void MN_DrawMenus(void)
 										*end++ = '\0';
 										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab,0,0,NULL);
 										tab = end;
-										line++;
-										if (line >= node->height)
+										node->textLines++;
+										if (node->textLines >= node->height)
 											break;
 									}
 								} else {

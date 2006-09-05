@@ -530,6 +530,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	do {
 		skipline = qfalse;
 		if (cur_line) {
+			/* ri.Con_Printf(PRINT_ALL, "h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
 			(*cur_line)++; /* Increment the number of processed lines (overall). */
 			if (box_height > 0 && *cur_line >= box_height)
 				/* Due to scrolling this line and the following are not visible */
