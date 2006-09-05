@@ -76,6 +76,7 @@ menu ufopedia
 		texl	"0 74"
 		texh	"64 111"
 		click	{ cmd mn_upcontent; }
+		//click	{ cmd "textscroll description 1;" }
 	}
 
 	pic button_exit
@@ -121,6 +122,7 @@ menu ufopedia
 		pos		"35 495"
 		size	"380 200"
 		format	"20 0"
+		height	"2"
 	}
 
 	text techtree

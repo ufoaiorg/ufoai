@@ -670,7 +670,7 @@ void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont)
 			string++;
 		}
 	} else
-		re.FontDrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, viddef.width, viddef.height, 12, string);
+		re.FontDrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, viddef.width, viddef.height, 12, string,0,0,NULL);
 }
 
 /**

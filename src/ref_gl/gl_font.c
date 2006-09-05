@@ -486,7 +486,7 @@ static void Font_ConvertChars(char *buffer)
 /**
  * @brief
  */
-int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c)
+int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line)
 {
 	int w = 0, h = 0, locX;
 	float returnHeight = 0; /* rounding errors break mouse-text corelation */
@@ -497,6 +497,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	static char searchString[MAX_FONTNAME + MAX_HASH_STRING];
 	int max = 0;				/* calculated maxWidth */
 	float texh0, fh, fy; /* rounding errors break mouse-text corelation */
+	qboolean skipline = qfalse;
 
 	/* transform from 1024x768 coordinates for drawing */
 	absX = (float) absX *vid.rx;
@@ -527,6 +528,19 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	locX = x;
 
 	do {
+		skipline = qfalse;
+		if (cur_line) {
+			(*cur_line)++; /* Increment the number of processed lines (overall). */
+			if (box_height > 0 && *cur_line >= box_height)
+				/* Due to scrolling this line and the following are not visible */
+				break;
+			
+			if (*cur_line < scroll_pos) {
+				/* Due to scrolling this line is not visible. See if (!skipline)" code below.*/
+				skipline = qtrue;
+			}
+		}
+		
 		/* TTF does not like empty strings... */
 		if (!strlen(buffer))
 			return returnHeight / vid.ry;
@@ -569,19 +583,21 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 			}
 		}
 
-		/* This will cut down the string to 160 chars */
-		/* NOTE: There can be a non critical overflow in Com_sprintf */
-		Com_sprintf(searchString, MAX_FONTNAME + MAX_HASH_STRING, "%s%s", fontID, buffer);
+		if (!skipline)	{
+			/* This will cut down the string to 160 chars */
+			/* NOTE: There can be a non critical overflow in Com_sprintf */
+			Com_sprintf(searchString, MAX_FONTNAME + MAX_HASH_STRING, "%s%s", fontID, buffer);
 
-		cache = Font_GetFromCache(searchString);
-		if (!cache)
-			cache = Font_GenerateCache(buffer, searchString, f);
+			cache = Font_GetFromCache(searchString);
+			if (!cache)
+				cache = Font_GenerateCache(buffer, searchString, f);
 
-		if (!cache)
-			ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n");
+			if (!cache)
+				ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n");
 
-		Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
-
+			Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
+		}
+		
 		/* skip for next line */
 		fy += fh;
 		buffer = pos;
