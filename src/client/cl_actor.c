@@ -1268,16 +1268,14 @@ void CL_ActorDie(sizebuf_t * sb)
 	re.AnimChange(&le->as, le->model1, va("death%i", le->state & STATE_DEAD));
 	re.AnimAppend(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
 
+	CL_RemoveActorFromTeamList(le);
+
 	/* calculate possible moves */
 	CL_BuildForbiddenList();
-	Grid_MoveCalc(&clMap, le->pos, MAX_ROUTE, fb_list, fb_length);
-
-	/* without this call the move tracer will be drawn from the killed le */
-	if (selActor)
+	if (selActor) {
 		Grid_MoveCalc(&clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length);
-
-/*	if (le->team == cls.team)*/
-		CL_RemoveActorFromTeamList(le);
+		CL_ResetActorMoveLength();
+	}
 }
 
 
@@ -1429,6 +1427,15 @@ void CL_ResetMouseLastPos(void)
 }
 
 /**
+ * @brief Recalculates the currently selected Actor's move length.
+ * */
+void CL_ResetActorMoveLength(void) {
+	actorMoveLength = Grid_MoveLength(&clMap, mousePos, qfalse);
+	if (selActor->state & STATE_CROUCHED)
+		actorMoveLength *= 1.5;
+}
+
+/**
  * @brief Selects the actor on the battlescape.
  *
  * Sets global var mouseActor to current selected le
@@ -1496,9 +1503,7 @@ void CL_ActorMouseTrace(void)
 	/* calculate move length */
 	if (selActor && !VectorCompare(mousePos, mouseLastPos)) {
 		VectorCopy(mousePos, mouseLastPos);
-		actorMoveLength = Grid_MoveLength(&clMap, mousePos, qfalse);
-		if (selActor->state & STATE_CROUCHED)
-			actorMoveLength *= 1.5;
+		CL_ResetActorMoveLength();
 	}
 
 	/* mouse is in the world */

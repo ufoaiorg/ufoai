@@ -390,8 +390,10 @@ static void LET_PathMove(le_t * le)
 
 			/* calculate next possible moves */
 			CL_BuildForbiddenList();
-			if (selActor == le)
-				Grid_MoveCalc(&clMap, le->pos, MAX_ROUTE, fb_list, fb_length);
+			if (selActor) {
+				Grid_MoveCalc(&clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length);
+				CL_ResetActorMoveLength();
+			}
 
 			floor = LE_Find(ET_ITEM, le->pos);
 			if (floor)
