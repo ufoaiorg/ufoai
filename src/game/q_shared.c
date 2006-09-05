@@ -2300,6 +2300,10 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 
 	assert(i);
 
+#ifdef PARANOID
+		if (CSI->ods[cacheItem.t].twohanded)
+			Com_Printf("Com_MoveInInventory: move twohanded item to container: %s\n", CSI->ids[to].name);
+#endif
 	/* if weapon is twohanded and is moved from hand to hand do nothing. */
 	/* twohanded weapon are only in CSI->idRight */
 	if (CSI->ods[cacheItem.t].twohanded && to == CSI->idLeft && from == CSI->idRight)
@@ -2366,35 +2370,25 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 		/* impossible move - back to source location */
 		Com_AddToInventory(i, cacheItem, from, fx, fy);
 		return IA_NONE;
+	} else {
+		/* successful */
+		if (TU)
+			*TU -= time;
+
+		ic = Com_AddToInventory(i, cacheItem, to, tx, ty);
+		
+		/* return data */
+		if (icp)
+			*icp = ic;
+		
+		if (to == CSI->idArmor) {
+			assert(!Q_strcmp(CSI->ods[cacheItem.t].type, "armor"));
+			return IA_ARMOR;
+		} else
+			return IA_MOVE;
 	}
-
-	/* twohanded exception - only CSI->idRight is allowed for twohanded weapons */
-	if (CSI->ods[cacheItem.t].twohanded && to == CSI->idLeft) {
-#ifdef DEBUG
-		Com_Printf("Com_MoveInInventory - don't move the item to CSI->idLeft it's twohanded\n");
-#endif
-		to = CSI->idRight;
-	}
-#ifdef PARANOID
-	else if (CSI->ods[cacheItem.t].twohanded)
-		Com_Printf("Com_MoveInInventory: move twohanded item to container: %s\n", CSI->ids[to].name);
-#endif
-
-	/* successful */
-	if (TU)
-		*TU -= time;
-
-	ic = Com_AddToInventory(i, cacheItem, to, tx, ty);
-
-	/* return data */
-	if (icp)
-		*icp = ic;
-
-	if (to == CSI->idArmor) {
-		assert(!Q_strcmp(CSI->ods[cacheItem.t].type, "armor"));
-		return IA_ARMOR;
-	} else
-		return IA_MOVE;
+	Sys_Error("Com_MoveInInventory invalid exit");
+	return -1;
 }
 
 /**
@@ -2830,7 +2824,6 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility, int minSkill, int maxSkill)
 {
 	float randomArray[SKILL_NUM_TYPES];
-	int total;
 	int i, retry;
 	float max, min, rand_avg;
 
@@ -2843,7 +2836,6 @@ void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility,
 	retry = MAX_GENCHARRETRIES;
 	do {
 		/* Abilities */
-		total = ABILITY_NUM_TYPES * (maxAbility - minAbility) / 2;
 		max = 0;
 		min = 1;
 		rand_avg = 0;
@@ -2865,7 +2857,6 @@ void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility,
 			chr->skills[i] = ((randomArray[i] - rand_avg) / min * (maxAbility - minAbility) + minAbility + maxAbility) / 2 + frand() * 3;
 
 		/* Skills */
-		total = (SKILL_NUM_TYPES - ABILITY_NUM_TYPES) * (maxSkill - minSkill) / 2;
 		max = 0;
 		min = 1;
 		rand_avg = 0;

@@ -742,8 +742,9 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 	if (to == gi.csi->idFloor && !floor) {
 		floor = G_SpawnFloor(ent->pos);
 		newFloor = qtrue;
-	} else
+	} else {
 		newFloor = qfalse;
+	}
 
 	/* search for space */
 	if (tx == NONE || ty == NONE) {
@@ -773,6 +774,7 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 
 		/* successful inventory change; remove the item in clients */
 		if (from == gi.csi->idFloor) {
+			assert (!newFloor);
 			if ( FLOOR(ent) ) { /* floor not totally emptied */
 				FLOOR(floor) = FLOOR(ent);
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
@@ -800,16 +802,22 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 
 		if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP ) {
 			/* reload */
-			if (to == gi.csi->idFloor)
+			if (to == gi.csi->idFloor) {
+				assert (!newFloor);
+				assert (FLOOR(floor) == FLOOR(ent));
 				mask = G_VisToPM(floor->visflags);
-			else
+			} else {
 				mask = G_TeamToPM(ent->team);
+			}
 
 			/* send ammo */
 			gi.AddEvent(mask, EV_INV_AMMO);
-			gi.WriteShort(to == gi.csi->idFloor ? floor->number : ent->number);
-			gi.WriteByte(gi.csi->ods[ic->item.t].ammo);
-			gi.WriteByte(ic->item.m);
+			/* is this condition below needed? or is 'num' enough?
+			   probably needed so that red rifle on the floor changes color, 
+			   but this needs testing. */
+			gi.WriteShort(to == gi.csi->idFloor ? floor->number : num);
+			gi.WriteByte(gi.csi->ods[item.t].ammo);
+			gi.WriteByte(item.m);
 			gi.WriteByte(to);
 			gi.WriteByte(ic->x);
 			gi.WriteByte(ic->y);
@@ -827,12 +835,14 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 
 		/* add it */
 		if (to == gi.csi->idFloor) {
-			FLOOR(floor) = FLOOR(ent);
 			if (newFloor) {
+				assert (FLOOR(ent));
+				FLOOR(floor) = FLOOR(ent);
 				/* send item info to the clients */
 				G_CheckVis(floor, qtrue);
 			} else {
-				/* add the item */
+				/* add the item; update floor, because we add at beginning */
+				FLOOR(floor) = FLOOR(ent);
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
 				gi.WriteShort(floor->number);
 				gi.WriteShort(6);
@@ -933,6 +943,8 @@ void G_InventoryToFloor(edict_t * ent)
 		/* destroy link */
 		ent->i.c[k] = NULL;
 	}
+
+	FLOOR(ent) = FLOOR(floor);
 
 	/* send item info to the clients */
 	G_CheckVis(floor, qtrue);
@@ -1658,7 +1670,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 /**
  * @brief
  */
-void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at)
+void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at, item_t * weapon)
 {
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
@@ -1743,8 +1755,45 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 				tr.endpos[2] += 10;
 
 				/* check if this is a stone, ammor clip or grenade */
-				if (fd->splrad)
+				if (fd->splrad) {
 					G_SplashDamage(ent, fd, tr.endpos);
+				} else {
+					/* spawn the stone on the floor */
+					if (fd->ammo && !fd->splrad && gi.csi->ods[weapon->t].thrown) {
+						pos3_t drop;
+						edict_t *floor, *actor;
+		
+						VecToPos(tr.endpos, drop);
+
+						for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
+							if (floor->inuse 
+								&& floor->type == ET_ITEM
+								&& VectorCompare(drop, floor->pos))
+								break;
+						}
+
+						if (floor == &g_edicts[globals.num_edicts]) {
+							floor = G_SpawnFloor(drop);
+
+							for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++) {
+								if (actor->inuse 
+									&& (actor->type == ET_ACTOR || actor->type == ET_UGV)
+									&& VectorCompare(drop, actor->pos))
+									break;
+							}
+							if (actor != &g_edicts[globals.num_edicts])
+								FLOOR(actor) = FLOOR(floor);
+						} else {
+							gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
+							gi.WriteShort(floor->number);
+							floor->visflags = 0;
+						}
+						Com_TryAddToInventory(&floor->i, *weapon, gi.csi->idFloor);
+
+						/* send item info to the clients */
+						G_CheckVis(floor, qtrue);
+					}
+				}
 				return;
 			}
 			/* send */
@@ -1783,7 +1832,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
  * @param[in] at Grid coordinate of the target.
  * @param[in] mask ?? TODO Visibility bit-mask of the others?
  */
-void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at, int mask)
+void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at, int mask, item_t * weapon)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
@@ -1825,11 +1874,13 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 	bounce = 0;
 	flags = 0;
 	do {
-		/* Calc 'impact' vector that is located at the end of the range defined by the fireDef_t.
-		   This is not really the impact location, but rather the 'endofrange' location. impact is used temporary again.*/
+		/* Calc 'impact' vector that is located at the end of the range 
+		   defined by the fireDef_t. This is not really the impact location, 
+		   but rather the 'endofrange' location, see below for another use.*/
 		VectorMA(cur_loc, range, dir, impact);
 
-		/* Do the trace from current position of the projectile to the end_of_range location.*/
+		/* Do the trace from current position of the projectile 
+		   to the end_of_range location.*/
 		tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
 		/* _Now_ we copy the correct impact location. */
 		VectorCopy(tr.endpos, impact);
@@ -1882,7 +1933,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 			break;
 		}
 
-		/* bounce */
+		/* bounce is checked here to see if the rubber rocket hit walls enought times to wear out*/
 		bounce++;
 		if (bounce > fd->bounce || tr.fraction >= 1.0)
 			break;
@@ -1894,7 +1945,48 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		VectorAdd(temp, dir, dir);
 		flags = SF_BOUNCED;
 	}
-	while (bounce <= fd->bounce);	/* TODO: What exactly is 'bounce' checked for here? */
+	while (1);
+
+	/* spawn the knife on the floor */
+	if (fd->ammo && !fd->splrad && gi.csi->ods[weapon->t].thrown) {
+		pos3_t drop;
+		edict_t *floor, *actor;
+		
+		if (VectorCompare(ent->pos, at)) { /* throw under his own feet */
+			VectorCopy(at, drop);
+		} else {
+			impact[2] -= 20; /* a hack: no-gravity items are flying high */
+			VecToPos(impact, drop);
+		}
+
+		for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
+			if (floor->inuse 
+				&& floor->type == ET_ITEM
+				&& VectorCompare(drop, floor->pos))
+				break;
+		}
+
+		if (floor == &g_edicts[globals.num_edicts]) {
+			floor = G_SpawnFloor(drop);
+
+			for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++) {
+				if (actor->inuse 
+					&& (actor->type == ET_ACTOR || actor->type == ET_UGV)
+					&& VectorCompare(drop, actor->pos))
+					break;
+			}
+			if (actor != &g_edicts[globals.num_edicts])
+				FLOOR(actor) = FLOOR(floor);
+		} else {
+			gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
+			gi.WriteShort(floor->number);
+			floor->visflags = 0;
+		}
+		Com_TryAddToInventory(&floor->i, *weapon, gi.csi->idFloor);
+
+		/* send item info to the clients */
+		G_CheckVis(floor, qtrue);
+	}
 }
 
 /**
@@ -1929,7 +2021,7 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 
 	if (weapon->m == NONE) {
 		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - object not activable!\n"));
-		return;
+		return; /* TODO: do G_ShootGrenade with that ammo clip */
 	}
 
 	fd = &gi.csi->ods[weapon->m].fd[type & 1];
@@ -1951,7 +2043,7 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 		if (ammo < fd->ammo) {
 			shots = fd->shots * ammo / fd->ammo;
 			ammo = 0;
-		} else if (!player->pers.ai)
+		} else if (!player->pers.ai) /* TODO: implement reload for AI */
 			ammo -= fd->ammo;
 		if (shots < 1) {
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not enough ammo!\n"));
@@ -1992,7 +2084,7 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 
 	/* ammo... */
 	if (fd->ammo) {
-		if ( ammo > 0 /* why not sending message about empty clip? */
+		if ( ammo > 0
 			 || !gi.csi->ods[weapon->t].thrown ) {
 			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_AMMO);
 			gi.WriteShort(num);
@@ -2003,7 +2095,7 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 				gi.WriteByte(gi.csi->idRight);
 			else
 				gi.WriteByte(gi.csi->idLeft);
-		} else {
+		} else { /* delete the knife or the rifle without ammo */
 			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
 			gi.WriteShort(num);
 			gi.WriteByte(container);
@@ -2035,9 +2127,9 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 	/* fire all shots */
 	for (i = 0; i < shots; i++)
 		if (fd->gravity)
-			G_ShootGrenade(player, ent, fd, wi, shotOrigin, at);
+			G_ShootGrenade(player, ent, fd, wi, shotOrigin, at, weapon);
 		else
-			G_ShootSingle(ent, fd, wi, shotOrigin, at, mask);
+			G_ShootSingle(ent, fd, wi, shotOrigin, at, mask, weapon);
 
 	/* send TUs */
 	if (ent->inuse) {

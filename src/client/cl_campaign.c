@@ -2347,9 +2347,12 @@ void CL_CollectItems(int won)
 				   as ET_ITEM */
 				break;
 			/* living actor */
-			for (container = 0; container < csi.numIDs; container++)
+			for (container = 0; container < csi.numIDs; container++) {
+				if (csi.ids[container].temp) /* collected above */
+					continue;
 				for (item = le->i.c[container]; item; item = item->next)
 					CL_CollectItemAmmo(item, (container == csi.idLeft), qfalse);
+			}
 			break;
 		default:
 			break;

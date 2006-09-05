@@ -813,6 +813,24 @@ particle grenl_plasma_ammo
 // GRENADE EFFECTS
 // ==================
 
+particle medikit
+{
+	init
+	{
+		model  weapons/medikit/medikit
+		color  ".5 .5 .5 1"
+	}
+}
+
+particle irgoggles
+{
+	init
+	{
+		model  weapons/irgoggles/irgoggles
+		color  ".5 .5 .5 1"
+	}
+}
+
 particle fraggren
 {
 	init
@@ -844,8 +862,7 @@ particle plasmagren
 {
 	init
 	{
-		model  weapons/smokegren/smokegren
-//		model  weapons/plasmagren/plasmagren
+		model  weapons/plasmagren/plasmagren
 		color  ".5 .5 .5 1"
 	}
 }

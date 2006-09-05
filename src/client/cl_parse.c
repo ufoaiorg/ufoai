@@ -550,23 +550,26 @@ void CL_EntPerish( sizebuf_t *sb )
 		return;
 	}
 
-	/* count spotted aliens */
+	/* decrease the count of spotted aliens */
 	if ( (le->type == ET_ACTOR || le->type == ET_UGV) && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN )
 		cl.numAliensSpotted--;
 
-	if (le->type != ET_ACTOR)
-		Com_EmptyContainer(&le->i, csi.idFloor);
-	Com_DestroyInventory(&le->i);
-
 	if ( le->type == ET_ITEM ) {
 		le_t *actor;
+
+		Com_EmptyContainer(&le->i, csi.idFloor);
+
 		actor = LE_Find( ET_ACTOR, le->pos );
+		if ( !actor )
+			actor = LE_Find( ET_UGV, le->pos );
 		if ( actor )
 			actor->i.c[csi.idFloor] = NULL;
+	} else {
+		Com_DestroyInventory(&le->i);
 	}
 
 	/* FIXME: Check whether this call is needed */
-	/* the actor die event should handle this already - don't it */
+	/* the actor die event should handle this already - doesn't it? */
 #if 0
 	if ( le->type == ET_ACTOR || le->type == ET_UGV )
 		CL_RemoveActorFromTeamList( le );
@@ -792,18 +795,17 @@ void CL_PlaceItem( le_t *le )
 	le_t *actor;
 	int	biggest;
 
-/*		if ( !le->state ) */
-	{
-		/* search an owner */
-		actor = LE_Find( ET_ACTOR, le->pos );
-		if ( actor ) {
+	/* search an owner */
+	actor = LE_Find( ET_ACTOR, le->pos );
+	if ( !actor )
+		actor = LE_Find( ET_UGV, le->pos );
+	if ( actor ) {
 
 #if PARANOID
-			Com_Printf("CL_PlaceItem: shared container: '%p'\n", le->i.c[csi.idFloor] );
+		Com_Printf("CL_PlaceItem: shared container: '%p'\n", le->i.c[csi.idFloor] );
 #endif
 
-			actor->i.c[csi.idFloor] = le->i.c[csi.idFloor];
-		}
+		actor->i.c[csi.idFloor] = le->i.c[csi.idFloor];
 	}
 	if ( le->i.c[csi.idFloor] ) {
 		biggest = CL_BiggestItem( le->i.c[csi.idFloor] );
