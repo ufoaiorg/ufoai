@@ -161,7 +161,7 @@ char *CL_AircraftStatusToName(aircraft_t * aircraft)
 	case AIR_MISSION:
 		return _("Moving to mission");
 	case AIR_UFO:
-		return _("Purchasing an UFO");
+		return _("Pursuing a UFO");
 	case AIR_DROP:
 		return _("Ready for drop down");
 	case AIR_INTERCEPT:
