@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include <kde/artsc/artsc.h>
+#include <artsc.h>
 
 #include "../../client/client.h"
 #include "../../client/snd_loc.h"
@@ -49,7 +49,7 @@ qboolean SND_Init(struct sndinfo *s)
 
 	errorcode = arts_init();
 
-	if(errorcode)
+	if (errorcode)
 		Com_Printf ("aRts: %s\n", arts_error_text(errorcode));
 
 	si->dma->samplebits=(si->Cvar_Get("snd_bits", "16", CVAR_ARCHIVE))->value;
@@ -99,7 +99,7 @@ qboolean SND_Init(struct sndinfo *s)
  */
 int SND_GetDMAPos(void)
 {
-	if(snd_inited)
+	if (snd_inited)
 		return si->dma->samplepos;
 	else
 		Com_Printf ("Sound not inizialized\n");
