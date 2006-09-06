@@ -71,14 +71,18 @@ use constant FORMAT => (
 #######################################
 # MAIN
 #######################################
-
+#use Data::Dumper;
 my $tagfile = "";
+my $verbose = 0;
 
 # parse commandline paarameters (tag-filenames)
 if ( $#ARGV < 0 ) {
-	die "Usage:\tmd2_tag.pl [tagfile]\n";
+	die "Usage:\tmd2_tag.pl [tagfile] [verbose]\n";
 } elsif ( $#ARGV == 0 ) {
 	$tagfile = $ARGV[0];
+} elsif ( $#ARGV == 1 ) {
+	$tagfile = $ARGV[0];
+	$verbose = 1;
 }
 
 # read .md2 file
@@ -96,14 +100,14 @@ for (my $i = 0; $i < $md2tag_file->NumTags; $i++) {
 	print "- ".$md2tag_file->TagName->[$i][0]."\n";
 }
 
-print "Coords:\n";
-for (my $tags = 0; $tags < $md2tag_file->NumTags; $tags++) {
-	print "# tag:". $md2tag_file->TagName->[$tags][0]."\n";
-	for (my $j = $tags * $md2tag_file->NumFrames; $j < ($tags+1) * $md2tag_file->NumFrames; $j++) {
-# FIXME:
-#		for (my $i = 0; $i < 12; $i++) {
-#			print "  ".$#{$md2tag_file->Data->[$j]}."\n";
-#		}
+if ($verbose) {
+	print "Coords:\n";
+	for (my $tags = 0; $tags < $md2tag_file->NumTags; $tags++) {
+		print "# tag:". $md2tag_file->TagName->[$tags][0]."\n";
+#		print Dumper($md2tag_file->Data);
+		for (my $j = $tags * $md2tag_file->NumFrames; $j < ($tags+1) * $md2tag_file->NumFrames; $j++) {
+			print "  ".$md2tag_file->Data->[$j][0]."\n";
+		}
 	}
 }
 
