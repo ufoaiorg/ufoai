@@ -13,7 +13,7 @@ mission stadium
 	alienequip	stage4_soldiers
 	civilians	2
 	civteam		european
-	nation		"ua"
+	nation		"states"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -33,7 +33,7 @@ mission terrain
 	alienequip	stage4_soldiers_plasma
 	civilians	2
 	civteam		european
-	nation		"geu"
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -53,7 +53,7 @@ mission spedition
 	alienequip	stage4_soldiers
 	civilians	2
 	civteam		european
-	nation		"geu"
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -73,7 +73,7 @@ mission pdi
 	alienequip	stage3_workers_explosive
 	civilians	2
 	civteam     tourist
-	nation		"geu"
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -93,7 +93,7 @@ mission mart
 	alienequip	stage1_workers
 	civilians	6
 	civteam		european
-	nation		"geu"
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -113,7 +113,7 @@ mission mine_crash
 	alienequip	stage2_soldiers
 	civilians	6
 	civteam		european
-	nation		"au"
+	nation		"africa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -133,7 +133,7 @@ mission mine
 	alienequip	stage1_workers_explosive
 	civilians	3
 	civteam		european
-	nation		"australia"
+	nation		"oceania"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -153,7 +153,7 @@ mission office
 	alienequip	stage3_soldiers
 	civilians	2
 	civteam		scientist
-	nation		"australia"
+	nation		"oceania"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -173,7 +173,7 @@ mission africa
 	alienequip	stage4_workers
 	civilians	6
 	civteam		oriental
-	nation		"au"
+	nation		"africa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -193,7 +193,7 @@ mission bunker
 	alienequip	stage1_workers_explosive
 	civilians	7
 	civteam		scientist
-	nation		"geu"
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -213,7 +213,7 @@ mission city
 	alienequip	stage2_workers
 	civilians	3
 	civteam		americans
-	nation		"ua"
+	nation		"latin"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -233,7 +233,7 @@ mission construction
 	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
-	nation		"geu"
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -253,7 +253,7 @@ mission africa_excavation
 	alienequip	stage1_workers
 	civilians	6
 	civteam		oriental
-	nation		"au"
+	nation		"africa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -273,7 +273,7 @@ mission italy
 	alienequip	stage1_soldiers
 	civilians	8
 	civteam		european
-	nation		"geu"
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -293,7 +293,7 @@ mission subway
 	alienequip	stage2_workers
 	civilians	8
 	civteam		americans
-	nation		"ua"
+	nation		"states"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -314,7 +314,7 @@ mission vil_lille
 	alienequip	stage2_workers
 	civilians	6
 	civteam		european
-	nation		"geu"
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -334,7 +334,7 @@ mission harbor
 	alienequip	stage3_workers
 	civilians	6
 	civteam		european
-	nation		"ac"
+	nation		"asia"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -354,7 +354,7 @@ mission japan
 	alienequip	stage2_soldiers_melee
 	civilians	3
 	civteam		european
-	nation		"ac"
+	nation		"asia"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -375,7 +375,7 @@ mission falconcrash
 	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
-	nation		"ua"
+	nation		"states"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -394,7 +394,7 @@ mission farm
 	alienequip	stage1_workers
 	civilians	3
 	civteam		european
-	nation		"ua"
+	nation		"states"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -413,7 +413,7 @@ mission farm2
 	alienequip	stage3_workers
 	civilians	4
 	civteam		european
-	nation		"ua"
+	nation		"states"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -433,7 +433,7 @@ mission frozen_groenland
 	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
-	nation		"ua"
+	nation		"states"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -453,7 +453,7 @@ mission frozen_small
 	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
-	nation		"ua"
+	nation		"states"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -473,7 +473,7 @@ mission frozen_landingnature
 	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
-	nation		"australia"
+	nation		"oceania"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -493,7 +493,7 @@ mission frozen_industrial
 	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
-	nation		"ua"
+	nation		"latin"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -513,7 +513,7 @@ mission frozen_alienlandingindustrial
 	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
-	nation		"australia"
+	nation		"oceania"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -532,7 +532,7 @@ mission gasstation
 	alienequip	stage2_soldiers
 	civilians	6
 	civteam		european
-	nation		"ua"
+	nation		"latin"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -570,7 +570,7 @@ mission oriental
 	alienequip	stage2_soldiers
 	civilians	7
 	civteam		oriental
-	nation		"au"
+	nation		"africa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -589,7 +589,7 @@ mission dam
 	alienequip	stage1_soldiers
 	civilians	3
 	civteam		scientist
-	nation		"todo"
+	nation		"russia"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -608,7 +608,7 @@ mission or_asyut
 	alienequip	stage4_soldiers
 	civilians	6
 	civteam		oriental
-	nation		"ae"
+	nation		"middle"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -627,7 +627,7 @@ mission or_tabelbala
 	alienequip	stage4_soldiers
 	civilians	6
 	civteam		oriental
-	nation		"ae"
+	nation		"middle"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -644,7 +644,7 @@ mission or_tabelbala
 //	pos			"308 412"
 //	aliens		4
 //	civilians	2
-//	nation		"ua"
+//	nation		"states"
 //	alienequip	stage4_soldiers
 //	onlose		""
 //	onwin		""
@@ -665,7 +665,7 @@ mission tower
 	alienequip	stage2_soldiers
 	civilians	8
 	civteam		european
-	nation		"ua"
+	nation		"states"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -684,7 +684,7 @@ mission transport
 	alienequip	stage1_soldiers
 	civilians	6
 	civteam		european
-	nation		"ua"
+	nation		"states"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -705,7 +705,7 @@ mission tropic_river
 	alienequip	stage4_soldiers
 	civilians	2
 	civteam		oriental
-	nation		"ua"
+	nation		"latin"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -725,7 +725,7 @@ mission tropic_drug
 	alienequip	stage4_soldiers
 	civilians	2
 	civteam		european
-	nation		"ua"
+	nation		"latin"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -744,7 +744,7 @@ mission village
 	alienequip	stage4_soldiers
 	civilians	6
 	civteam		european
-	nation		"ua"
+	nation		"states"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -764,7 +764,7 @@ mission vil_grenchen
 	alienequip	stage4_soldiers
 	civilians	7
 	civteam		european
-	nation		"geu"
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -784,7 +784,7 @@ mission vil_albany
 	alienequip	stage4_soldiers
 	civilians	7
 	civteam		european
-	nation		"geu"
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -804,7 +804,7 @@ mission vil_shannon
 	alienequip	stage4_soldiers
 	civilians	4
 	civteam		european
-	nation		"geu"
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
