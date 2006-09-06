@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lSDL_ttf_@@_-lSDL_@@_../ports/win32/intl.lib_@@_-def ref_gl.def_@@_
 Libs=
-UnitCount=33
+UnitCount=35
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=
@@ -386,4 +386,24 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c qgl.c -o qgl.o $(CFLAGS)
+
+[Unit34]
+FileName=gl_md3.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit35]
+FileName=gl_drawmd3.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c gl_drawmd3.c -o gl_drawmd3.o $(CFLAGS)
 

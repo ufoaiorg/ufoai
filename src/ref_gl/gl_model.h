@@ -160,7 +160,7 @@ typedef struct manim_s {
 
 /* Whole model */
 
-typedef enum { mod_bad, mod_brush, mod_sprite, mod_alias } modtype_t;
+typedef enum {mod_bad, mod_brush, mod_sprite, mod_alias, mod_alias_md3 } modtype_t;
 
 typedef struct model_s {
 	/* the name needs to be the first entry in the struct */

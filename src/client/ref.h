@@ -119,6 +119,14 @@ typedef struct entity_s {
 	int flags;
 
 	animState_t as;
+	
+	/*
+	 ** wanted by MD3
+	 */
+
+	int frame;
+	int oldframe;
+	int backlerp;
 } entity_t;
 
 #define ENTITY_FLAGS  68
@@ -173,6 +181,7 @@ typedef struct {
 	vec3_t origin;
 	vec3_t color;
 	float intensity;
+    vec3_t direction;   /* used by MD3 */
 } dlight_t;
 
 typedef struct {

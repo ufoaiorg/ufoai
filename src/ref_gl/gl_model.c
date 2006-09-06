@@ -24,12 +24,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "gl_local.h"
+#include "gl_md3.h"
 
 model_t *loadmodel;
 static int modfilelen;
 
 static void Mod_LoadSpriteModel(model_t * mod, void *buffer);
-static void Mod_LoadAliasModel(model_t * mod, void *buffer);
+static void Mod_LoadAliasModel(model_t * mod, void *buffer);	/* Load MD2 Model. */
+static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer);	/* Load MD3 Model. */
 
 model_t mod_known[MAX_MOD_KNOWN];
 static int mod_numknown;
@@ -124,12 +126,16 @@ static model_t *Mod_ForName(char *name, qboolean crash)
 
 	/* call the apropriate loader */
 	switch (LittleLong(*(unsigned *) buf)) {
-/* 	case MD3_IDENT: */
-/* 		Mod_LoadMd3Model (mod, buf); */
-/* 		break; */
 	case IDALIASHEADER:
+		/* MD2 header */
 		loadmodel->extradata = Hunk_Begin(0x400000);
 		Mod_LoadAliasModel(mod, buf);
+		break;
+
+	case IDMD3HEADER:
+		/* MD3 header */
+		loadmodel->extradata = Hunk_Begin (0x800000);
+		Mod_LoadAliasMD3Model (mod, buf);
 		break;
 
 	case IDSPRITEHEADER:
@@ -859,9 +865,14 @@ static void Mod_LoadAnims(model_t * mod, void *buffer)
 /*	ri.Con_Printf( PRINT_ALL, "anims: %i\n", mod->numanims ); */
 }
 
+/*
+==============================================================================
+MD2 ALIAS MODELS
+==============================================================================
+*/
 
 /**
- * @brief
+ * @brief Load MD2 models from file.
  */
 static void Mod_LoadAliasModel(model_t * mod, void *buffer)
 {
@@ -983,6 +994,307 @@ static void Mod_LoadAliasModel(model_t * mod, void *buffer)
 		ri.FS_FreeFile(animbuf);
 	}
 }
+
+/*
+==============================================================================
+MD3 ALIAS MODELS
+==============================================================================
+*/
+
+/**
+ * @brief
+ */
+int R_FindTriangleWithEdge ( index_t *indexes, int numtris, index_t start, index_t end, int ignore)
+{
+	int i;
+	int match, count;
+	
+	count = 0;
+	match = -1;
+	
+	for (i = 0; i < numtris; i++, indexes += 3)
+	{
+		if ( (indexes[0] == start && indexes[1] == end)
+			|| (indexes[1] == start && indexes[2] == end)
+			|| (indexes[2] == start && indexes[0] == end) ) {
+			if (i != ignore)
+				match = i;
+			count++;
+		} else if ( (indexes[1] == start && indexes[0] == end)
+			|| (indexes[2] == start && indexes[1] == end)
+			|| (indexes[0] == start && indexes[2] == end) ) {
+			count++;
+		}
+	}
+
+	/* detect edges shared by three triangles and make them seams */
+	if (count > 2)
+		match = -1;
+
+	return match;
+}
+
+/**
+ * @brief
+ */
+void R_BuildTriangleNeighbors ( int *neighbors, index_t *indexes, int numtris )
+{
+	int i, *n;
+	index_t *index;
+
+	for (i = 0, index = indexes, n = neighbors; i < numtris; i++, index += 3, n += 3)
+	{
+		n[0] = R_FindTriangleWithEdge (indexes, numtris, index[1], index[0], i);
+		n[1] = R_FindTriangleWithEdge (indexes, numtris, index[2], index[1], i);
+		n[2] = R_FindTriangleWithEdge (indexes, numtris, index[0], index[2], i);
+	}
+}
+
+/**
+ * @brief Load MD3 models from file.
+ * @note Some Vic code here not fully used
+ */
+void Mod_LoadAliasMD3Model ( model_t *mod, void *buffer )
+{
+	int					version, i, j, l;
+	dmd3_t				*pinmodel;
+	dmd3frame_t			*pinframe;
+	dmd3tag_t			*pintag;
+	dmd3mesh_t			*pinmesh;
+	dmd3skin_t			*pinskin;
+	dmd3coord_t			*pincoord;
+	dmd3vertex_t		*pinvert;
+	index_t				*pinindex, *poutindex;
+	maliasvertex_t		*poutvert;
+	maliascoord_t		*poutcoord;
+	maliasskin_t		*poutskin;
+	maliasmesh_t		*poutmesh;
+	maliastag_t			*pouttag;
+	maliasframe_t		*poutframe;
+	maliasmodel_t		*poutmodel;
+	char				name[MAX_QPATH];
+	float				lat, lng;
+
+	pinmodel = ( dmd3_t * )buffer;
+	version = LittleLong( pinmodel->version );
+
+	if ( version != MD3_ALIAS_VERSION )
+	{
+		ri.Sys_Error (ERR_DROP, "%s has wrong version number (%i should be %i)",
+				 mod->name, version, MD3_ALIAS_VERSION);
+	}
+
+	poutmodel = Hunk_Alloc (sizeof(maliasmodel_t));
+
+	/* byte swap the header fields and sanity check */
+	poutmodel->num_frames = LittleLong ( pinmodel->num_frames );
+	poutmodel->num_tags = LittleLong ( pinmodel->num_tags );
+	poutmodel->num_meshes = LittleLong ( pinmodel->num_meshes );
+	poutmodel->num_skins = 0;
+
+	if ( poutmodel->num_frames <= 0 )
+	{
+		ri.Sys_Error ( ERR_DROP, "model %s has no frames", mod->name );
+	} 
+	else if ( poutmodel->num_frames > MD3_MAX_FRAMES )
+	{
+		ri.Sys_Error ( ERR_DROP, "model %s has too many frames", mod->name );
+	}
+
+	if ( poutmodel->num_tags > MD3_MAX_TAGS )
+	{
+		ri.Sys_Error ( ERR_DROP, "model %s has too many tags", mod->name );
+	}
+	else if ( poutmodel->num_tags < 0 ) 
+	{
+		ri.Sys_Error ( ERR_DROP, "model %s has invalid number of tags", mod->name );
+	}
+
+	if ( poutmodel->num_meshes <= 0 )
+	{
+		ri.Sys_Error ( ERR_DROP, "model %s has no meshes", mod->name );
+	}
+	else if ( poutmodel->num_meshes > MD3_MAX_MESHES )
+	{
+		ri.Sys_Error ( ERR_DROP, "model %s has too many meshes", mod->name );
+	}
+
+/*
+ * load the frames
+ */
+
+	pinframe = (dmd3frame_t *)((byte *)pinmodel + LittleLong (pinmodel->ofs_frames));
+	poutframe = poutmodel->frames = Hunk_Alloc ( sizeof(maliasframe_t) * poutmodel->num_frames);
+
+	mod->radius = 0;
+	ClearBounds ( mod->mins, mod->maxs );
+
+	for ( i = 0; i < poutmodel->num_frames; i++, pinframe++, poutframe++ )
+	{
+		for ( j = 0; j < 3; j++ )
+		{
+			poutframe->mins[j] = LittleFloat ( pinframe->mins[j] );
+			poutframe->maxs[j] = LittleFloat ( pinframe->maxs[j] );
+			poutframe->translate[j] = LittleFloat ( pinframe->translate[j] );
+		}
+
+		/* TODO: fix max function
+		poutframe->radius = LittleFloat ( pinframe->radius );
+		*/
+
+		mod->radius = max ( mod->radius, poutframe->radius );
+		AddPointToBounds ( poutframe->mins, mod->mins, mod->maxs );
+		AddPointToBounds ( poutframe->maxs, mod->mins, mod->maxs );
+	}
+
+/*
+ * load the tags
+ */
+
+	pintag = (dmd3tag_t *)((byte *)pinmodel + LittleLong (pinmodel->ofs_tags));
+	pouttag = poutmodel->tags = Hunk_Alloc( sizeof(maliastag_t) * poutmodel->num_frames * poutmodel->num_tags);
+
+	for ( i = 0; i < poutmodel->num_frames; i++ )
+	{
+		for ( l = 0; l < poutmodel->num_tags; l++, pintag++, pouttag++ )
+		{
+			memcpy ( pouttag->name, pintag->name, MD3_MAX_PATH );
+			for ( j = 0; j < 3; j++ ) {
+				pouttag->orient.origin[j] = LittleFloat ( pintag->orient.origin[j] );
+				pouttag->orient.axis[0][j] = LittleFloat ( pintag->orient.axis[0][j] );
+				pouttag->orient.axis[1][j] = LittleFloat ( pintag->orient.axis[1][j] );
+				pouttag->orient.axis[2][j] = LittleFloat ( pintag->orient.axis[2][j] );
+			}
+			ri.Con_Printf (PRINT_ALL, "X: (%f %f %f) Y: (%f %f %f) Z: (%f %f %f)\n", pouttag->orient.axis[0][0], pouttag->orient.axis[0][1], pouttag->orient.axis[0][2], pouttag->orient.axis[1][0], pouttag->orient.axis[1][1], pouttag->orient.axis[1][2], pouttag->orient.axis[2][0], pouttag->orient.axis[2][1], pouttag->orient.axis[2][2]);
+		}
+	}
+
+/*
+ * load the meshes
+ */
+
+	pinmesh = (dmd3mesh_t *)((byte *)pinmodel + LittleLong (pinmodel->ofs_meshes));
+	poutmesh = poutmodel->meshes = Hunk_Alloc ( sizeof(maliasmesh_t)*poutmodel->num_meshes);
+
+	for ( i = 0; i < poutmodel->num_meshes; i++, poutmesh++)
+	{
+		memcpy (poutmesh->name, pinmesh->name, MD3_MAX_PATH);
+
+		if ( strncmp ((const char *)pinmesh->id, "IDP3", 4))
+		{
+			ri.Sys_Error ( ERR_DROP, "mesh %s in model %s has wrong id (%i should be %i)",
+					 poutmesh->name, mod->name, LittleLong (pinmesh->id), IDMD3HEADER );
+		}
+
+		poutmesh->num_tris = LittleLong ( pinmesh->num_tris );
+		poutmesh->num_skins = LittleLong ( pinmesh->num_skins );
+		poutmesh->num_verts = LittleLong ( pinmesh->num_verts );
+
+		if ( poutmesh->num_skins <= 0 )
+		{
+			ri.Sys_Error ( ERR_DROP, "mesh %i in model %s has no skins", i, mod->name );
+		}
+		else if ( poutmesh->num_skins > MD3_MAX_SHADERS )
+		{
+			ri.Sys_Error ( ERR_DROP, "mesh %i in model %s has too many skins", i, mod->name );
+		}
+
+		if ( poutmesh->num_tris <= 0 )
+		{
+			ri.Sys_Error ( ERR_DROP, "mesh %i in model %s has no triangles", i, mod->name );
+		}
+		else if ( poutmesh->num_tris > MD3_MAX_TRIANGLES )
+		{
+			ri.Sys_Error ( ERR_DROP, "mesh %i in model %s has too many triangles", i, mod->name );
+		}
+
+		if ( poutmesh->num_verts <= 0 )
+		{
+			ri.Sys_Error ( ERR_DROP, "mesh %i in model %s has no vertices", i, mod->name );
+		}
+		else if ( poutmesh->num_verts > MD3_MAX_VERTS )
+		{
+			ri.Sys_Error ( ERR_DROP, "mesh %i in model %s has too many vertices", i, mod->name );
+		}
+
+		/* register all skins */
+
+		pinskin = (dmd3skin_t *)((byte *)pinmesh + LittleLong (pinmesh->ofs_skins));
+		poutskin = poutmesh->skins = Hunk_Alloc( sizeof(maliasskin_t) * poutmesh->num_skins);
+
+		for ( j = 0; j < poutmesh->num_skins; j++, pinskin++, poutskin++ )
+		{
+			memcpy (name, pinskin->name, MD3_MAX_PATH);
+			if (name[1] == 'o')
+				name[0] = 'm';
+			if (name[1] == 'l')
+				name[0] = 'p';
+			memcpy (poutskin->name, name, MD3_MAX_PATH);
+			mod->skins[i] = GL_FindImage (name, it_skin);
+		}
+
+		/*
+		 * load the indexes
+		 */
+
+		pinindex = (index_t *)((byte *)pinmesh + LittleLong (pinmesh->ofs_tris));
+		poutindex = poutmesh->indexes = Hunk_Alloc( sizeof(index_t) * poutmesh->num_tris * 3);
+
+		for ( j = 0; j < poutmesh->num_tris; j++, pinindex += 3, poutindex += 3 )
+		{
+			poutindex[0] = (index_t)LittleLong ( pinindex[0] );
+			poutindex[1] = (index_t)LittleLong ( pinindex[1] );
+			poutindex[2] = (index_t)LittleLong ( pinindex[2] );
+		}
+
+		/*
+		 * load the texture coordinates
+		 */
+
+		pincoord = (dmd3coord_t *)((byte *)pinmesh + LittleLong (pinmesh->ofs_tcs));
+		poutcoord = poutmesh->stcoords = Hunk_Alloc( sizeof(maliascoord_t) * poutmesh->num_verts);
+
+		for ( j = 0; j < poutmesh->num_verts; j++, pincoord++, poutcoord++ )
+		{
+			poutcoord->st[0] = LittleFloat ( pincoord->st[0] );
+			poutcoord->st[1] = LittleFloat ( pincoord->st[1] );
+		}
+
+		/*
+		 * load the vertexes and normals
+		 */
+
+		pinvert = (dmd3vertex_t *)((byte *)pinmesh + LittleLong (pinmesh->ofs_verts));
+		poutvert = poutmesh->vertexes = Hunk_Alloc(poutmodel->num_frames * poutmesh->num_verts * sizeof(maliasvertex_t));
+
+		for ( l = 0; l < poutmodel->num_frames; l++ )
+		{
+			for ( j = 0; j < poutmesh->num_verts; j++, pinvert++, poutvert++ )
+			{
+				poutvert->point[0] = (float)LittleShort ( pinvert->point[0] ) * MD3_XYZ_SCALE;
+				poutvert->point[1] = (float)LittleShort ( pinvert->point[1] ) * MD3_XYZ_SCALE;
+				poutvert->point[2] = (float)LittleShort ( pinvert->point[2] ) * MD3_XYZ_SCALE;
+
+				lat = (pinvert->norm >> 8) & 0xff;
+				lng = (pinvert->norm & 0xff);
+				
+				lat *= M_PI/128;
+				lng *= M_PI/128;
+
+				poutvert->normal[0] = cos(lat) * sin(lng);
+				poutvert->normal[1] = sin(lat) * sin(lng);
+				poutvert->normal[2] = cos(lng);
+			}
+		}
+		pinmesh = (dmd3mesh_t *)((byte *)pinmesh + LittleLong (pinmesh->meshsize));
+
+		poutmesh->trneighbors = Hunk_Alloc ( sizeof(int) * poutmesh->num_tris * 3);
+		R_BuildTriangleNeighbors ( poutmesh->trneighbors, poutmesh->indexes, poutmesh->num_tris );
+		
+	}
+	mod->type = mod_alias_md3;
+}
+
 
 /*
 ==============================================================================
@@ -1157,6 +1469,7 @@ struct model_s *R_RegisterModel(char *name)
 	int i;
 	dsprite_t *sprout;
 	dmdl_t *pheader;
+	maliasmodel_t	*pheader3;
 
 	mod = Mod_ForName(name, qfalse);
 	if (mod) {
@@ -1186,6 +1499,17 @@ struct model_s *R_RegisterModel(char *name)
 			mod->numframes = pheader->num_frames;
 			if (gl_shadows->value == 2)
 				Mod_FindSharedEdges(mod);
+		} else if (mod->type == mod_alias_md3) {
+			int	k;
+
+			pheader3 = (maliasmodel_t *)mod->extradata;
+
+			for (i=0; i<pheader3->num_meshes; i++)
+			{
+				for (k=0; k<pheader3->meshes[i].num_skins; k++)
+					mod->skins[i] = GL_FindImage(pheader3->meshes[i].skins[k].name, it_skin);
+			}
+			mod->numframes = pheader3->num_frames;
 		} else if (mod->type == mod_brush) {
 			for (i = 0; i < mod->numtexinfo; i++)
 				mod->texinfo[i].image->registration_sequence = registration_sequence;

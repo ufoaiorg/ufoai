@@ -40,7 +40,8 @@ void light_md3_model(vec3_t normal, vec3_t color)
 
 void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mesh, float backlerp)
 {
-	int i,j,k;
+	int i,j;
+	/*int k;*/
 	maliasframe_t	*frame, *oldframe;
 	vec3_t	move, delta, vectors[3];
 	maliasvertex_t	*v, *ov;
@@ -48,9 +49,11 @@ void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mesh, floa
 	vec3_t	tempNormalsArray[4096];
 	vec3_t	color1,color2,color3;
 	float	alpha;
+	/*
 	vec3_t	coss, forward1, forward2, norm;
 	float	diff1, diff2, diff3, diff;
 	vec3_t	lightpoint;
+	*/
 	float	frontlerp;
 	vec3_t	tempangle;
 
@@ -108,9 +111,9 @@ void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mesh, floa
 		/* use color instead of shadelight_md3... maybe */
 		if (gl_shading->value == 2)
 		{
-			light_md3_model(tempNormalsArray[mesh.indexes[3*j+0]], &color1);
-			light_md3_model(tempNormalsArray[mesh.indexes[3*j+1]], &color2);
-			light_md3_model(tempNormalsArray[mesh.indexes[3*j+2]], &color3);
+			light_md3_model(tempNormalsArray[mesh.indexes[3*j+0]], color1);
+			light_md3_model(tempNormalsArray[mesh.indexes[3*j+1]], color2);
+			light_md3_model(tempNormalsArray[mesh.indexes[3*j+2]], color3);
 		}
 
 		qglColor4f (shadelight_md3[0], shadelight_md3[1], shadelight_md3[2], alpha);
@@ -127,11 +130,12 @@ void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mesh, floa
 	}
 	qglEnd ();
 
-	if ( currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM) )
+	/* if ( currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM) ) */
+	if ( currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE ) )
 		qglEnable( GL_TEXTURE_2D );
 }
 
-void R_LightPointDynamics (vec3_t p, vec3_t color, m_dlight_t *list, int *amount, int max);
+void R_LightPointDynamics (vec3_t p, vec3_t color, dlight_t *list, int *amount, int max);
 
 void R_DrawAliasMD3Model (entity_t *e)
 {
@@ -141,10 +145,11 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	paliashdr = (maliasmodel_t *)currentmodel->extradata;
 
-
-	if ( e->flags & ( RF_SHELL_HALF_DAM | RF_SHELL_GREEN | RF_SHELL_RED | RF_SHELL_BLUE | RF_SHELL_DOUBLE ) )
+	/* if ( e->flags & ( RF_SHELL_HALF_DAM | RF_SHELL_GREEN | RF_SHELL_RED | RF_SHELL_BLUE | RF_SHELL_DOUBLE ) ) */
+	if ( e->flags & ( RF_SHELL_GREEN | RF_SHELL_RED | RF_SHELL_BLUE ) )
 	{
 		VectorClear (shadelight_md3);
+		/*
 		if (e->flags & RF_SHELL_HALF_DAM)
 		{
 				shadelight_md3[0] = 0.56;
@@ -156,6 +161,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 			shadelight_md3[0] = 0.9;
 			shadelight_md3[1] = 0.7;
 		}
+		*/
 		if ( e->flags & RF_SHELL_RED )
 			shadelight_md3[0] = 1.0;
 		if ( e->flags & RF_SHELL_GREEN )
@@ -184,6 +190,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 			 * pick the greatest component, which should be the same
 			 * as the mono value returned by software
 			 */
+			/*
 			if (shadelight_md3[0] > shadelight_md3[1])
 			{
 				if (shadelight_md3[0] > shadelight_md3[2])
@@ -198,7 +205,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 				else
 					r_lightlevel->value = 150*shadelight_md3[2];
 			}
-
+			*/
 		}
 		if ( gl_monolightmap->string[0] != '0' )
 		{
@@ -244,7 +251,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	if (e->flags & RF_DEPTHHACK) /* hack the depth range to prevent view model from poking into walls */
 		qglDepthRange (gldepthmin, gldepthmin + 0.3*(gldepthmax-gldepthmin));
-
+	/*
 	if ( ( e->flags & RF_WEAPONMODEL ) && ( r_lefthand->value == 1.0F ) )
 	{
 		extern void MYgluPerspective( GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar );
@@ -264,6 +271,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		if ( r_lefthand->value == 2 )
 			return;
 	}
+	*/
 
 	for(i=0; i < paliashdr->num_meshes; i++)
 	{
@@ -311,7 +319,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		GL_Bind(skin->texnum);
 		GL_DrawAliasMD3FrameLerp (paliashdr, paliashdr->meshes[i], e->backlerp);
 	}
-
+	/*
 	if ( ( e->flags & RF_WEAPONMODEL ) && ( r_lefthand->value == 1.0F ) )
 	{
 		qglMatrixMode( GL_PROJECTION );
@@ -319,7 +327,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		qglMatrixMode( GL_MODELVIEW );
 		qglCullFace( GL_FRONT );
 	}
-
+	*/
 	if ( e->flags & RF_TRANSLUCENT )
 	{
 		qglDisable (GL_BLEND);

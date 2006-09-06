@@ -63,3 +63,5 @@ typedef struct maliasmodel_s
 	int				num_skins;
 	maliasskin_t	*skins;
 } maliasmodel_t;
+
+void R_DrawAliasMD3Model (entity_t *e);
