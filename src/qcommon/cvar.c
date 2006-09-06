@@ -158,6 +158,8 @@ cvar_t *Cvar_Get(char *var_name, char *var_value, int flags, char* desc)
 	var = Cvar_FindVar(var_name);
 	if (var) {
 		var->flags |= flags;
+		if (desc)
+			var->description = desc;
 		return var;
 	}
 
@@ -506,7 +508,7 @@ void Cvar_List_f(void)
 			Com_Printf(" ");
 		Com_Printf(" %s \"%s\"\n", var->name, var->string);
 		if (var->description)
-			Com_Printf(" - %s\n", var->description);
+			Com_Printf("%c - %s\n", 2, var->description);
 	}
 	Com_Printf("%i cvars\n", i);
 }

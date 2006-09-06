@@ -1,10 +1,7 @@
 /*
 ==============================================================
-
 CMD
-
 Command text buffering and command execution
-
 ==============================================================
 */
 
@@ -80,6 +77,7 @@ typedef void (*xcommand_t) (void);
 typedef struct cmdList_s {
 	char *name;
 	xcommand_t function;
+	char *description;
 } cmdList_t;
 
 void Cmd_Init(void);

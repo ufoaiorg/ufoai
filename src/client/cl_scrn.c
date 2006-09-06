@@ -78,19 +78,13 @@ void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont);
 
 /*
 ===============================================================================
-
 BAR GRAPHS
-
 ===============================================================================
 */
 
-/*
-==============
-CL_AddNetgraph
-
-A new packet was just parsed
-==============
-*/
+/**
+ * @brief A new packet was just parsed
+ */
 void CL_AddNetgraph(void)
 {
 	int i;
@@ -127,11 +121,9 @@ typedef struct {
 static int current;
 static graphsamp_t values[1024];
 
-/*
-==============
-SCR_DebugGraph
-==============
-*/
+/**
+ * @brief
+ */
 void SCR_DebugGraph(float value, int color)
 {
 	values[current & 1023].value = value;
@@ -139,11 +131,9 @@ void SCR_DebugGraph(float value, int color)
 	current++;
 }
 
-/*
-==============
-SCR_DrawDebugGraph
-==============
-*/
+/**
+ * @brief
+ */
 void SCR_DrawDebugGraph(void)
 {
 	int a, x, y, w, i, h;
@@ -172,9 +162,7 @@ void SCR_DrawDebugGraph(void)
 
 /*
 ===============================================================================
-
 CENTER PRINTING
-
 ===============================================================================
 */
 
@@ -184,14 +172,9 @@ static float scr_centertime_off;
 static int scr_center_lines;
 static int scr_erase_center;
 
-/*
-==============
-SCR_CenterPrint
-
-Called for important messages that should stay in the center of the screen
-for a few moments
-==============
-*/
+/**
+ * @brief Called for important messages that should stay in the center of the screen for a few moments
+ */
 void SCR_CenterPrint(char *str)
 {
 	char *s;
@@ -210,9 +193,6 @@ void SCR_CenterPrint(char *str)
 			scr_center_lines++;
 		s++;
 	}
-
-	/* echo it to the console */
-	Com_Printf("\n\n\35\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\37\n\n");
 
 	s = str;
 	do {
@@ -239,11 +219,12 @@ void SCR_CenterPrint(char *str)
 			break;
 		s++;					/* skip the \n */
 	} while (1);
-	Com_Printf("\n\n\35\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\37\n\n");
 	Con_ClearNotify();
 }
 
-
+/**
+ * @brief
+ */
 void SCR_DrawCenterString(void)
 {
 	char *start;
@@ -288,6 +269,9 @@ void SCR_DrawCenterString(void)
 	} while (1);
 }
 
+/**
+ * @brief
+ */
 void SCR_CheckDrawCenterString(void)
 {
 	scr_centertime_off -= cls.frametime;
@@ -298,34 +282,24 @@ void SCR_CheckDrawCenterString(void)
 	SCR_DrawCenterString();
 }
 
-/*============================================================================= */
-
-/*
-=================
-SCR_SizeUp_f
-
-Keybinding command
-=================
-*/
+/**
+ * @brief
+ * @note Keybinding command
+ */
 void SCR_SizeUp_f(void)
 {
 	Cvar_SetValue("viewsize", scr_viewsize->value + 10);
 }
 
 
-/*
-=================
-SCR_SizeDown_f
-
-Keybinding command
-=================
-*/
+/**
+ * @brief
+ * @note Keybinding command
+ */
 void SCR_SizeDown_f(void)
 {
 	Cvar_SetValue("viewsize", scr_viewsize->value - 10);
 }
-
-/*============================================================================ */
 
 /**
  * @brief
@@ -447,7 +421,6 @@ void SCR_DrawCursor(void)
 				if ( menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->value )
 					SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
 			}
-
 		}
 	} else {
 		vec3_t scale = { 3.5, 3.5, 3.5 };
@@ -464,15 +437,9 @@ void SCR_DrawCursor(void)
 }
 
 
-/*============================================================================= */
-
-/*
-==================
-SCR_RunConsole
-
-Scroll it up or down
-==================
-*/
+/**
+ * @brief Scroll it up or down
+ */
 void SCR_RunConsole(void)
 {
 	/* decide on the height of the console */

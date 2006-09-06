@@ -462,15 +462,14 @@ void Cmd_Alias_f(void)
 
 /*
 =============================================================================
-
-					COMMAND EXECUTION
-
+COMMAND EXECUTION
 =============================================================================
 */
 
 typedef struct cmd_function_s {
 	struct cmd_function_s *next;
 	char *name;
+	char *description;
 	xcommand_t function;
 } cmd_function_t;
 
@@ -676,6 +675,7 @@ void Cmd_AddCommand(char *cmd_name, xcommand_t function, char *desc)
 
 	cmd = Z_Malloc(sizeof(cmd_function_t));
 	cmd->name = cmd_name;
+	cmd->description = desc;
 	cmd->function = function;
 	cmd->next = cmd_functions;
 	cmd_functions = cmd;
@@ -838,6 +838,8 @@ void Cmd_List_f(void)
 			continue;
 		}
 		Com_Printf("C %s\n", cmd->name);
+		if (cmd->description)
+			Com_Printf("%c - %s\n", 2, cmd->description);
 	}
 	/* check alias */
 	for (alias = cmd_alias; alias; alias = alias->next, j++) {

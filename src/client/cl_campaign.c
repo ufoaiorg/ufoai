@@ -3198,63 +3198,63 @@ void CL_NationList (void)
 
 /* these commands are only available in singleplayer */
 static cmdList_t game_commands[] = {
-	{"aircraft_start", CL_AircraftStart_f}
+	{"aircraft_start", CL_AircraftStart_f, NULL}
 	,
-	{"aircraftlist", CL_ListAircraft_f}
+	{"aircraftlist", CL_ListAircraft_f, NULL}
 	,
-	{"aircraft_select", CL_AircraftSelect}
+	{"aircraft_select", CL_AircraftSelect, NULL}
 	,
-	{"aircraft_init", CL_AircraftInit}
+	{"aircraft_init", CL_AircraftInit, NULL}
 	,
-	{"airequip_init", CL_AircraftEquipmenuMenuInit_f}
+	{"airequip_init", CL_AircraftEquipmenuMenuInit_f, NULL}
 	,
-	{"airequip_weapons_click", CL_AircraftEquipmenuMenuWeaponsClick_f}
+	{"airequip_weapons_click", CL_AircraftEquipmenuMenuWeaponsClick_f, NULL}
 	,
-	{"airequip_shields_click", CL_AircraftEquipmenuMenuShieldsClick_f}
+	{"airequip_shields_click", CL_AircraftEquipmenuMenuShieldsClick_f, NULL}
 	,
-	{"mn_next_aircraft", MN_NextAircraft_f}
+	{"mn_next_aircraft", MN_NextAircraft_f, NULL}
 	,
-	{"mn_prev_aircraft", MN_PrevAircraft_f}
+	{"mn_prev_aircraft", MN_PrevAircraft_f, NULL}
 	,
-	{"aircraft_new", CL_NewAircraft_f}
+	{"aircraft_new", CL_NewAircraft_f, NULL}
 	,
-	{"aircraft_return", CL_AircraftReturnToBase_f}
+	{"aircraft_return", CL_AircraftReturnToBase_f, NULL}
 	,
-	{"aircraft_list", CL_BuildingAircraftList_f}
+	{"aircraft_list", CL_BuildingAircraftList_f, NULL}
 	,
-	{"stats_update", CL_Stats_Update}
+	{"stats_update", CL_Stats_Update, NULL}
 	,
-	{"game_go", CL_GameGo}
+	{"game_go", CL_GameGo, NULL}
 	,
-	{"game_auto_check", CL_GameAutoCheck}
+	{"game_auto_check", CL_GameAutoCheck, NULL}
 	,
-	{"game_auto_go", CL_GameAutoGo}
+	{"game_auto_go", CL_GameAutoGo, NULL}
 	,
-	{"game_abort", CL_GameAbort}
+	{"game_abort", CL_GameAbort, NULL}
 	,
-	{"game_results", CL_GameResultsCmd}
+	{"game_results", CL_GameResultsCmd, NULL}
 	,
-	{"game_timestop", CL_GameTimeStop}
+	{"game_timestop", CL_GameTimeStop, NULL}
 	,
-	{"game_timeslow", CL_GameTimeSlow}
+	{"game_timeslow", CL_GameTimeSlow, NULL}
 	,
-	{"game_timefast", CL_GameTimeFast}
+	{"game_timefast", CL_GameTimeFast, NULL}
 	,
-	{"inc_sensor", B_SetSensor}
+	{"inc_sensor", B_SetSensor, NULL}
 	,
-	{"dec_sensor", B_SetSensor}
+	{"dec_sensor", B_SetSensor, NULL}
 	,
-	{"mn_mapaction_reset", MAP_ResetAction}
+	{"mn_mapaction_reset", MAP_ResetAction, NULL}
 	,
-	{"nationlist", CL_NationList}
+	{"nationlist", CL_NationList, NULL}
 	,
-	{"mission", CL_StartMission_f}
+	{"mission", CL_StartMission_f, NULL}
 	,
 #ifdef DEBUG
-	{"debug_fullcredits", CL_DebugFullCredits}
+	{"debug_fullcredits", CL_DebugFullCredits, NULL}
 	,
 #endif
-	{NULL, NULL}
+	{NULL, NULL, NULL}
 };
 
 /**
@@ -3285,7 +3285,7 @@ void CL_GameInit(void)
 	cmdList_t *commands;
 
 	for (commands = game_commands; commands->name; commands++)
-		Cmd_AddCommand(commands->name, commands->function, NULL);
+		Cmd_AddCommand(commands->name, commands->function, commands->description);
 
 	CL_GameTimeStop();
 
