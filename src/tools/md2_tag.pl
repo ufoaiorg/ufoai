@@ -43,7 +43,7 @@ use constant FORMAT => (
 	OffsetExtractEnd	=> 'I',	# offset
 
 	TagName			=> ['a64', '{$NumTags}', 1 ],	# 64chars * NumTags
-	Data			=> ['a16', '{$NumTags*$NumFrames}', 1 ]	# 4chars * 4 * NumTags * NumFrames
+	Data			=> ['f12', '{$NumTags*$NumFrames}', 1 ]	# 12 floats * NumTags * NumFrames
 );
 
 package TagName;
@@ -52,7 +52,20 @@ use constant FORMAT => ('a64');
 
 package Data;
 use base 'Parse::Binary';
-use constant FORMAT => ('a16');
+use constant FORMAT => (
+	Row1_x => 'f',
+	Row1_y => 'f',
+	Row1_z => 'f',
+	Row2_x => 'f',
+	Row2_y => 'f',
+	Row2_z => 'f',
+	Row3_x => 'f',
+	Row3_y => 'f',
+	Row3_z => 'f',
+	Row4_x => 'f',
+	Row4_y => 'f',
+	Row4_z => 'f',
+);
 
 
 #######################################
@@ -81,6 +94,17 @@ print "Tagnames:\n";
 
 for (my $i = 0; $i < $md2tag_file->NumTags; $i++) {
 	print "- ".$md2tag_file->TagName->[$i][0]."\n";
+}
+
+print "Coords:\n";
+for (my $tags = 0; $tags < $md2tag_file->NumTags; $tags++) {
+	print "# tag:". $md2tag_file->TagName->[$tags][0]."\n";
+	for (my $j = $tags * $md2tag_file->NumFrames; $j < ($tags+1) * $md2tag_file->NumFrames; $j++) {
+# FIXME:
+#		for (my $i = 0; $i < 12; $i++) {
+#			print "  ".$#{$md2tag_file->Data->[$j]}."\n";
+#		}
+	}
 }
 
 __END__
