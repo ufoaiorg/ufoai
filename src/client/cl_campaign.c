@@ -746,7 +746,7 @@ static void CL_BuildingAircraftList_f(void)
  */
 static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
 {
-	int i;
+	int i, is_on_Earth = 0;
 	int civilianSum = civiliansKilled + civiliansSurvived;
 	float civilianRatio = civilianSum ? (float)civiliansSurvived / (float)civilianSum : 0.;
 	int alienSum = aliensKilled + aliensSurvived;
@@ -760,31 +760,38 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation_t *nation = &gd.nations[i];
+		float alienHostile = 1.0 - (float) nation->alienFriendly / 100.0;
+		float happiness = nation->happiness;
 
 		if (lost) {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
 				/* Strong negative reaction */
-				nation->happiness *= performance * nation->alienFriendly / 100.0;
+				happiness *= performance * alienHostile;
+				is_on_Earth++;
 			} else {
 				/* Minor negative reaction */
-				nation->happiness *= 1.0 - pow(1.0 - performance * nation->alienFriendly / 100.0, 5.0);
+				happiness *= 1.0 - pow(1.0 - performance * alienHostile, 5.0);
 			}
 		} else {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
 				/* Strong positive reaction */
-				nation->happiness /= 1.0 - performance * nation->alienFriendly / 100.0;
-				nation->happiness += performance * nation->alienFriendly / 100.0 / 10.0;
+				happiness += performance * alienHostile / 5.0;
+				is_on_Earth++;
 			} else {
 				/* Minor positive reaction */
-				nation->happiness /= pow(1.0 - performance * nation->alienFriendly / 100.0, 0.2);
-				nation->happiness += performance * nation->alienFriendly / 100.0 / 50.0;
+				happiness += performance * alienHostile / 50.0;
 			}
 			if (nation->happiness > 1.0) {
 				/* Can't be more than 100% happy with you. */
-				nation->happiness = 1.0;
+				happiness = 1.0;
 			}
 		}
+		nation->happiness = nation->happiness * 0.40 + happiness * 0.60;
 	}
+	if (!is_on_Earth)
+		Com_DPrintf("CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->def->name, mis->def->nation);
+	else if (is_on_Earth > 1)
+		Com_DPrintf("CL_HandleNationData: Error, mission '%s' located in many countries '%s'.\n", mis->def->name, mis->def->nation);
 }
 
 /**
@@ -951,15 +958,15 @@ char* CL_GetNationHapinessString(nation_t* nation)
 		return _("Angry");
 	else if (nation->happiness < 0.06)
 		return _("Mad");
-	else if (nation->happiness < 0.1)
+	else if (nation->happiness < 0.10)
 		return _("Upset");
-	else if (nation->happiness < 0.15)
+	else if (nation->happiness < 0.20)
 		return _("Tolerant");
-	else if (nation->happiness < 0.25)
+	else if (nation->happiness < 0.30)
 		return _("Neutral");
-	else if (nation->happiness < 0.35)
+	else if (nation->happiness < 0.50)
 		return _("Content");
-	else if (nation->happiness < 0.60)
+	else if (nation->happiness < 0.70)
 		return _("Pleased");
 	else if (nation->happiness < 1.0)
 		return _("Happy");

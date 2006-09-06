@@ -1,106 +1,126 @@
 //=================================================
-//
 // NATIONS	- A list of nations funding the Phalanx project.
-//
 //=================================================
 // Description
 //
 // funding	(credits)
 //	Initial funding per month of this faction.
 // color
-//	TODO: Defines the color used to seperate the nations in the geoscape (internally)
+//	Defines the color used to seperate the nations in the geoscape (internally)
 // names
 //	TODO: Defines what "type" of names should be used. They are defined in team_human.ufo.
 // alien_friendly (percentage 0-100)
-//	TODO: Indicated the friendlyness (political and civilan) towards the aliens and influence the chance that this country stops it's funding after some time.
+//	Indicated the friendlyness (political and civilan) towards the aliens and influence the chance that this country stops it's funding after some time.
 //	TODO This value should be changed according to Phalanx' performance on it's territory and the terror missions of the aliens.
 // soldiers,scientists (number of people)
-//	TODO: The number of people (the best of the best ;)) you can hire (additionally) from this nation each month.
+//	The number of people (the best of the best ;)) you can hire (additionally) from this nation each month.
 //=================================================
-// TODO: Update of these values each month.
 // TODO: Logging this data in a seperate list so a statistic can be calculated.
 //=================================================
 
-nation ua
+
+// TODO: tweak all parameters realistically, according to the wiki descriptions
+
+// For balance reason please leave happiness of 'states' at 0.44
+// and several other nations at a similar level
+// also please vary alien_friendly from 10 to 90
+// and soldiers/scientists/etc. from 1 to 5
+
+nation latin
 {
-	name "_United Americas"
-//	color TODO
-	names "english_american spanish_italian french german scandinavian"
-	funding	110000
-	happiness 0.5
-	alien_friendly	40
-	soldiers 5
-	scientists 2
+	name "_The Revolutionary Countries"
+	color "0 255 128 1"
+	names "english_american spanish_italian german"
+	funding	50000
+	happiness 0.44
+	alien_friendly	15
+	soldiers 4
+	scientists 1
+	pos "100 100"
 }
 
-nation geu
+nation states
 {
-	name "_Greater European Union"
-//	color TODO
+	name "_United America"
+	color "0 128 0 1"
+	names "english_american spanish_italian french german scandinavian"
+	funding	90000
+	happiness 0.44
+	alien_friendly	40
+	soldiers 4
+	scientists 2
+	pos "100 100"
+}
+
+nation europa
+{
+	name "_The Greater European Union"
+	color "0 128 255 1"
 	names "german spanish_italian french english_american scandinavian"
 	funding	75000
-	happiness 0.5
+	happiness 0.44
 	alien_friendly	45
 	soldiers 3
 	scientists 3
+	pos "10 10"
 }
 
-nation ac
+nation asia
 {
-	name "_Asian Commonwealth"
-//	color TODO
+	name "_The Asian Republic"
+	color "128 128 0 1"
 	names "chinese japanese"
 	funding	120000
-	happiness 0.5
+	happiness 0.44
 	alien_friendly	30
 	soldiers 5
 	scientists 1
 }
 
-nation ae
+nation middle
 {
-	name "_United Arab Republic"
-//	color TODO
+	name "_The Middle-Eastern Alliance"
+	color "255 255 0 1"
 	names "arabic"
 	funding	45000
-	happiness 0.5
+	happiness 0.44
 	alien_friendly	25
 	soldiers 1
 	scientists 3
 }
 
-nation au
+nation africa
 {
-	name "_African Union"
-//	color TODO
+	name "_New Africa"
+	color "255 128 64 1"
 	names "african"
 	funding	60000
-	happiness 0.5
+	happiness 0.44
 	alien_friendly	25
-	soldiers 6
+	soldiers 5
 	scientists 1
 }
 
 nation russia
 {
-	name "_Russian Federation"
-//	color TODO
+	name "_Russia"
+	color "128 0 0 1"
 	names "russian"
 	funding	50000
-	happiness 0.5
-	alien_friendly	30
+	happiness 0.44
+	alien_friendly	70
 	soldiers 5
 	scientists 5
 }
 
-nation australia
+nation oceania
 {
-	name "_Oceania"
-//	color TODO
+	name "_The Commonwealth of Oceania"
+	color "128 0 128 1"
 	names "english_american"
 	funding	90000
-	happiness 0.5
-	alien_friendly	45
+	happiness 0.44
+	alien_friendly	85
 	soldiers 4
 	scientists 2
 }
