@@ -1384,7 +1384,7 @@ void CL_GameSave(char *filename, char *comment)
 	/* store message system items */
 	for (i = 0, message = messageStack; message; i++, message = message->next);
 	Com_DPrintf("CL_GameSave: Saving %i messages from message stack\n", i);
-	MSG_WriteByte(&sb, i);
+	MSG_WriteLong(&sb, i);
 	CL_MessageSave(&sb, messageStack);
 
 	/* store credits */
@@ -1666,7 +1666,7 @@ int CL_GameLoad(char *filename)
 
 	CL_InitMessageSystem();
 	/* how many message items */
-	i = MSG_ReadByte(&sb);
+	i = MSG_ReadLong(&sb);
 	Com_DPrintf("CL_GameLoad: %i messages on messagestack.\n", i);
 	for (; i--;) {
 		title = MSG_ReadString(&sb);
