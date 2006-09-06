@@ -77,11 +77,10 @@ die "File has wrong format version \"".$md2tag_file->Version."\".\n" unless ($md
 
 print $md2tag_file->NumTags, " Tags found\n";
 print $md2tag_file->NumFrames, " Frames found\n";
-print $md2tag_file->NumFrames, " Tagnames:\n";
+print "Tagnames:\n";
 
 for (my $i = 0; $i < $md2tag_file->NumTags; $i++) {
-	print "- $md2tag_file->TagData->[$i][0]\n"; #only debug
-	print "- ".$md2tag_file->TagData->[$i][0]."\n";
+	print "- ".$md2tag_file->TagName->[$i][0]."\n";
 }
 
 __END__
