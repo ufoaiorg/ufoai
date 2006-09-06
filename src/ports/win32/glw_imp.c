@@ -153,8 +153,8 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 	if (fullscreen)
 		x = y = 0;
 	else {
-		vid_xpos = ri.Cvar_Get ("vid_xpos", "0", 0);
-		vid_ypos = ri.Cvar_Get ("vid_ypos", "0", 0);
+		vid_xpos = ri.Cvar_Get ("vid_xpos", "0", 0, NULL);
+		vid_ypos = ri.Cvar_Get ("vid_ypos", "0", 0, NULL);
 		x = vid_xpos->value;
 		y = vid_ypos->value;
 	}
@@ -446,7 +446,7 @@ qboolean GLimp_InitGL (void)
 	int  pixelformat;
 	cvar_t *stereo;
 
-	stereo = ri.Cvar_Get( "cl_stereo", "0", 0 );
+	stereo = ri.Cvar_Get("cl_stereo", "0", 0, NULL);
 
 	/*
 	** set PFD_STEREO if necessary

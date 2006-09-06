@@ -442,9 +442,9 @@ int CDAudio_Init(void)
 	MCI_SET_PARMS	mciSetParms;
 	int				n;
 
-	cd_nocd = Cvar_Get ("cd_nocd", "0", CVAR_ARCHIVE );
-	cd_loopcount = Cvar_Get ("cd_loopcount", "4", 0);
-	cd_looptrack = Cvar_Get ("cd_looptrack", "11", 0);
+	cd_nocd = Cvar_Get ("cd_nocd", "0", CVAR_ARCHIVE, NULL);
+	cd_loopcount = Cvar_Get ("cd_loopcount", "4", 0, NULL);
+	cd_looptrack = Cvar_Get ("cd_looptrack", "11", 0, NULL);
 	if ( cd_nocd->value)
 		return -1;
 
@@ -474,7 +474,7 @@ int CDAudio_Init(void)
 		enabled = qfalse;
 	}
 
-	Cmd_AddCommand ("cd", CD_f);
+	Cmd_AddCommand ("cd", CD_f, NULL);
 
 	Com_Printf("CD Audio Initialized\n");
 
