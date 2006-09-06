@@ -3335,6 +3335,8 @@ static void CL_GameNew(void)
 		return;
 	}
 
+	Cvar_Set("team", curCampaign->team);
+
 	/* difficulty */
 	if ((int) difficulty->value < -4)
 		Cvar_ForceSet("difficulty", "-4");
