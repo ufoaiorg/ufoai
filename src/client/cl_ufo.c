@@ -211,9 +211,9 @@ extern void UFO_CampaignCheckEvents(void)
   */
 extern void UFO_Reset(void)
 {
-	Cmd_AddCommand("addufo", UFO_NewUfoOnGeoscape);
-	Cmd_AddCommand("removeufo", UFO_RemoveUfoFromGeoscape_f);
+	Cmd_AddCommand("addufo", UFO_NewUfoOnGeoscape, NULL);
+	Cmd_AddCommand("removeufo", UFO_RemoveUfoFromGeoscape_f, NULL);
 #ifdef DEBUG
-	Cmd_AddCommand("listufo", UFO_ListUfosOnGeoscape);
+	Cmd_AddCommand("listufo", UFO_ListUfosOnGeoscape, NULL);
 #endif
 }

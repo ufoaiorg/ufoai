@@ -307,11 +307,11 @@ void PR_ProductionDecrease(void)
 void PR_ResetProduction(void)
 {
 	/* add commands */
-	Cmd_AddCommand("prod_init", PR_ProductionList);
-	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f);
-	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f);
-	Cmd_AddCommand("prod_inc", PR_ProductionIncrease);
-	Cmd_AddCommand("prod_dec", PR_ProductionDecrease);
-	Cmd_AddCommand("prod_stop", PR_ProductionStop);
+	Cmd_AddCommand("prod_init", PR_ProductionList, NULL);
+	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
+	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
+	Cmd_AddCommand("prod_inc", PR_ProductionIncrease, NULL);
+	Cmd_AddCommand("prod_dec", PR_ProductionDecrease, NULL);
+	Cmd_AddCommand("prod_stop", PR_ProductionStop, NULL);
 }
 

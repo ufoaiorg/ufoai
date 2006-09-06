@@ -1037,19 +1037,19 @@ void RS_ResetResearch(void)
 {
 	researchListLength = 0;
 	/* add commands and cvars */
-	Cmd_AddCommand("research_init", MN_ResearchInit);
-	Cmd_AddCommand("research_select", CL_ResearchSelectCmd);
-	Cmd_AddCommand("research_type", CL_ResearchType);
-	Cmd_AddCommand("mn_start_research", RS_ResearchStart);
-	Cmd_AddCommand("mn_stop_research", RS_ResearchStop);
-	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f);
-	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f);
-	Cmd_AddCommand("research_update", RS_UpdateData);
-	Cmd_AddCommand("invlist", Com_InventoryList_f);
-	Cmd_AddCommand("research_dependencies_click", RS_DependenciesClick_f);
+	Cmd_AddCommand("research_init", MN_ResearchInit, NULL);
+	Cmd_AddCommand("research_select", CL_ResearchSelectCmd, NULL);
+	Cmd_AddCommand("research_type", CL_ResearchType, NULL);
+	Cmd_AddCommand("mn_start_research", RS_ResearchStart, NULL);
+	Cmd_AddCommand("mn_stop_research", RS_ResearchStop, NULL);
+	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f, NULL);
+	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f, NULL);
+	Cmd_AddCommand("research_update", RS_UpdateData, NULL);
+	Cmd_AddCommand("invlist", Com_InventoryList_f, NULL);
+	Cmd_AddCommand("research_dependencies_click", RS_DependenciesClick_f, NULL);
 #ifdef DEBUG
-	Cmd_AddCommand("techlist", RS_TechnologyList_f);
-	Cmd_AddCommand("research_all", RS_DebugResearchAll);
+	Cmd_AddCommand("techlist", RS_TechnologyList_f, NULL);
+	Cmd_AddCommand("research_all", RS_DebugResearchAll, NULL);
 #endif
 }
 

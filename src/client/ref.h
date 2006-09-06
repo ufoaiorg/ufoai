@@ -338,7 +338,7 @@ typedef struct {
 typedef struct {
 	void (*Sys_Error) (int err_level, char *str, ...);
 
-	void (*Cmd_AddCommand) (char *name, void (*cmd) (void));
+	void (*Cmd_AddCommand) (char *name, void (*cmd) (void), char *desc);
 	void (*Cmd_RemoveCommand) (char *name);
 	int (*Cmd_Argc) (void);
 	char *(*Cmd_Argv) (int i);
@@ -365,7 +365,7 @@ typedef struct {
 	char *(*FS_Gamedir) (void);
 	char *(*FS_NextPath) (char *prevpath);
 
-	cvar_t *(*Cvar_Get) (char *name, char *value, int flags);
+	cvar_t *(*Cvar_Get) (char *name, char *value, int flags, char* desc);
 	cvar_t *(*Cvar_Set) (char *name, char *value);
 	void (*Cvar_SetValue) (char *name, float value);
 

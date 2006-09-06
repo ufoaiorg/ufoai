@@ -403,7 +403,7 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
 			/* Remove soldier from aircraft/team if he was assigned to one. */
 			if ( CL_SoldierInAircraft(employee->idx, -1) ){
 				CL_RemoveSoldierFromAircraft(employee->idx, -1);
-				
+
 			}
  		}
 		/* Set all employee-tags to 'unhired'. */
@@ -764,7 +764,7 @@ static void E_EmployeeSelect_f(void)
 void E_Reset(void)
 {
 	/* add commands */
-	Cmd_AddCommand("employee_init", E_EmployeeList);
-	Cmd_AddCommand("employee_hire", E_EmployeeHire_f);
-	Cmd_AddCommand("employee_select", E_EmployeeSelect_f);
+	Cmd_AddCommand("employee_init", E_EmployeeList, NULL);
+	Cmd_AddCommand("employee_hire", E_EmployeeHire_f, NULL);
+	Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
 }

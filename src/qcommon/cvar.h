@@ -1,8 +1,6 @@
 /*
 ==============================================================
-
 CVAR
-
 ==============================================================
 */
 
@@ -19,7 +17,7 @@ Cvars are restricted from having the same names as commands to keep this
 interface from being ambiguous.
 */
 
-cvar_t *Cvar_Get(char *var_name, char *value, int flags);
+cvar_t *Cvar_Get(char *var_name, char *value, int flags, char* desc);
 
 /* creates the variable if it doesn't exist, or returns the existing one */
 /* if it exists, the value will not be changed, but flags will be ORed in */

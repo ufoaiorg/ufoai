@@ -816,16 +816,16 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
 
 /**
  * @brief Deletes employees from a base along with all base equipment.
- * Called when invading forces overrun a base after a base-attack mission 
+ * Called when invading forces overrun a base after a base-attack mission
  * @param[in] *base base_t base to be ransacked
  */
-void CL_BaseRansacked(base_t *base) 
+void CL_BaseRansacked(base_t *base)
 {
 	int item, ac;
 
 	if (!base)
 		return;
-    
+
 	/* Delete all employees from the base & the global list. */
 	E_DeleteAllEmployees(base);
 
@@ -837,9 +837,9 @@ void CL_BaseRansacked(base_t *base)
 	for ( ac = base->numAircraftInBase-1; ac >= 0; ac-- )
 		CL_DeleteAircraft(&base->aircraft[ac]);
 
-	/* TODO: Maybe reset research in progress. ... needs playbalance 
-	 *       need another value in technology_t to remember researched 
-	 *       time from other bases? 
+	/* TODO: Maybe reset research in progress. ... needs playbalance
+	 *       need another value in technology_t to remember researched
+	 *       time from other bases?
 	 * TODO: Destroy (or better: just damage) some random buildings. */
 
 	Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base: %s has been ransacked! All employees killed and all equipment destroyed."), base->name);
@@ -1012,7 +1012,7 @@ static void CL_HandleBudget(void)
 	int cost;
 	nation_t *nation;
 	int initial_credits = ccs.credits;
-	int new_scientists, new_medics, new_soldiers, new_workers; 
+	int new_scientists, new_medics, new_soldiers, new_workers;
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
@@ -1119,7 +1119,7 @@ static void CL_HandleBudget(void)
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 		CL_UpdateCredits(ccs.credits - cost);
 	}
-	
+
 	cost = ((gd.numEmployees[EMPL_SOLDIER] + gd.numEmployees[EMPL_MEDIC] + gd.numEmployees[EMPL_WORKER] + gd.numEmployees[EMPL_SCIENTIST] + 2 * gd.numEmployees[EMPL_ROBOT] + 24) / 25) * 150 + 550;
 	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
 	CL_UpdateCredits(ccs.credits - cost);
@@ -1482,7 +1482,7 @@ void CL_GameSave(char *filename, char *comment)
 /**
  * @brief
  */
-static void CL_GameSaveCmd(void)
+static void CL_GameSave_f(void)
 {
 	char comment[MAX_COMMENTLENGTH];
 	char *arg;
@@ -1564,7 +1564,7 @@ void CL_UpdatePointersInGlobalData(void)
  *
  * @param filename Savegame to load (relative to writepath/save)
  *
- * @sa CL_GameLoadCmd
+ * @sa CL_GameLoad_f
  * @sa CL_GameSave
  * @sa CL_MessageSave
  * @sa CL_ReadSinglePlayerData
@@ -1851,7 +1851,7 @@ int CL_GameLoad(char *filename)
  *
  * @sa CL_GameLoad
  */
-static void CL_GameLoadCmd(void)
+static void CL_GameLoad_f(void)
 {
 	/* get argument */
 	if (Cmd_Argc() < 2) {
@@ -1872,10 +1872,10 @@ static void CL_GameLoadCmd(void)
  * The comment is the part of the savegame that you type in at saving
  * for reidentifying the savegame
  *
- * @sa CL_GameLoadCmd
+ * @sa CL_GameLoad_f
  * @sa CL_GameLoad
  */
-static void CL_GameCommentsCmd(void)
+static void CL_GameComments_f(void)
 {
 	char comment[MAX_VAR];
 	FILE *f;
@@ -3285,7 +3285,7 @@ void CL_GameInit(void)
 	cmdList_t *commands;
 
 	for (commands = game_commands; commands->name; commands++)
-		Cmd_AddCommand(commands->name, commands->function);
+		Cmd_AddCommand(commands->name, commands->function, NULL);
 
 	CL_GameTimeStop();
 
@@ -3489,16 +3489,16 @@ void CL_ResetCampaign(void)
 	menuText[TEXT_CAMPAIGN_LIST] = campaignText;
 
 	/* commands */
-	Cmd_AddCommand("campaign_stats", CP_CampaignStats);
-	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f);
-	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f);
-	Cmd_AddCommand("game_new", CL_GameNew);
-	Cmd_AddCommand("game_continue", CL_GameContinue);
-	Cmd_AddCommand("game_exit", CL_GameExit);
-	Cmd_AddCommand("game_save", CL_GameSaveCmd);
-	Cmd_AddCommand("game_load", CL_GameLoadCmd);
-	Cmd_AddCommand("game_comments", CL_GameCommentsCmd);
+	Cmd_AddCommand("campaign_stats", CP_CampaignStats, NULL);
+	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);
+	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, NULL);
+	Cmd_AddCommand("game_new", CL_GameNew, NULL);
+	Cmd_AddCommand("game_continue", CL_GameContinue, NULL);
+	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
+	Cmd_AddCommand("game_save", CL_GameSave_f, NULL);
+	Cmd_AddCommand("game_load", CL_GameLoad_f, NULL);
+	Cmd_AddCommand("game_comments", CL_GameComments_f, NULL);
 #ifdef DEBUG
-	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f);
+	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, NULL);
 #endif
 }

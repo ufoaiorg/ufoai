@@ -1300,7 +1300,7 @@ void Qcommon_LocaleInit(void)
 #ifdef _WIN32
 	char languageID[32];
 #endif
-	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE);
+	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, NULL);
 	s_language->modified = qfalse;
 
 #ifdef _WIN32
@@ -1392,28 +1392,28 @@ void Qcommon_Init(int argc, char **argv)
 	Cbuf_Execute();
 
 	/* init commands and vars */
-	Cmd_AddCommand("z_stats", Z_Stats_f);
-	Cmd_AddCommand("error", Com_Error_f);
+	Cmd_AddCommand("z_stats", Z_Stats_f, NULL);
+	Cmd_AddCommand("error", Com_Error_f, NULL);
 
-	host_speeds = Cvar_Get("host_speeds", "0", 0);
-	log_stats = Cvar_Get("log_stats", "0", 0);
-	developer = Cvar_Get("developer", "0", 0);
-	timescale = Cvar_Get("timescale", "1", 0);
-	fixedtime = Cvar_Get("fixedtime", "0", 0);
-	logfile_active = Cvar_Get("logfile", "1", 0);
-	showtrace = Cvar_Get("showtrace", "0", 0);
+	host_speeds = Cvar_Get("host_speeds", "0", 0, NULL);
+	log_stats = Cvar_Get("log_stats", "0", 0, NULL);
+	developer = Cvar_Get("developer", "0", 0, NULL);
+	timescale = Cvar_Get("timescale", "1", 0, NULL);
+	fixedtime = Cvar_Get("fixedtime", "0", 0, NULL);
+	logfile_active = Cvar_Get("logfile", "1", 0, NULL);
+	showtrace = Cvar_Get("showtrace", "0", 0, NULL);
 #ifdef DEDICATED_ONLY
-	dedicated = Cvar_Get("dedicated", "1", CVAR_NOSET);
+	dedicated = Cvar_Get("dedicated", "1", CVAR_NOSET, NULL);
 #else
-	dedicated = Cvar_Get("dedicated", "0", CVAR_NOSET);
+	dedicated = Cvar_Get("dedicated", "0", CVAR_NOSET, NULL);
 #endif
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
-	Cvar_Get("version", s, CVAR_NOSET);
-	Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET);
+	Cvar_Get("version", s, CVAR_NOSET, NULL);
+	Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, NULL);
 
 	if (dedicated->value)
-		Cmd_AddCommand("quit", Com_Quit);
+		Cmd_AddCommand("quit", Com_Quit, NULL);
 
 	Sys_Init();
 

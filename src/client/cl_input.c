@@ -705,58 +705,58 @@ void CL_MakeBaseMapShot(void)
  */
 void CL_InitInput(void)
 {
-	Cmd_AddCommand("+turnleft", IN_TurnLeftDown);
-	Cmd_AddCommand("-turnleft", IN_TurnLeftUp);
-	Cmd_AddCommand("+turnright", IN_TurnRightDown);
-	Cmd_AddCommand("-turnright", IN_TurnRightUp);
-	Cmd_AddCommand("+turnup", IN_TurnUpDown);
-	Cmd_AddCommand("-turnup", IN_TurnUpUp);
-	Cmd_AddCommand("+turndown", IN_TurnDownDown);
-	Cmd_AddCommand("-turndown", IN_TurnDownUp);
-	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown);
-	Cmd_AddCommand("-shiftleft", IN_ShiftLeftUp);
-	Cmd_AddCommand("+shiftright", IN_ShiftRightDown);
-	Cmd_AddCommand("-shiftright", IN_ShiftRightUp);
-	Cmd_AddCommand("+shiftup", IN_ShiftUpDown);
-	Cmd_AddCommand("-shiftup", IN_ShiftUpUp);
-	Cmd_AddCommand("+shiftdown", IN_ShiftDownDown);
-	Cmd_AddCommand("-shiftdown", IN_ShiftDownUp);
-	Cmd_AddCommand("+zoomin", IN_ZoomInDown);
-	Cmd_AddCommand("-zoomin", IN_ZoomInUp);
-	Cmd_AddCommand("+zoomout", IN_ZoomOutDown);
-	Cmd_AddCommand("-zoomout", IN_ZoomOutUp);
+	Cmd_AddCommand("+turnleft", IN_TurnLeftDown, NULL);
+	Cmd_AddCommand("-turnleft", IN_TurnLeftUp, NULL);
+	Cmd_AddCommand("+turnright", IN_TurnRightDown, NULL);
+	Cmd_AddCommand("-turnright", IN_TurnRightUp, NULL);
+	Cmd_AddCommand("+turnup", IN_TurnUpDown, NULL);
+	Cmd_AddCommand("-turnup", IN_TurnUpUp, NULL);
+	Cmd_AddCommand("+turndown", IN_TurnDownDown, NULL);
+	Cmd_AddCommand("-turndown", IN_TurnDownUp, NULL);
+	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown, NULL);
+	Cmd_AddCommand("-shiftleft", IN_ShiftLeftUp, NULL);
+	Cmd_AddCommand("+shiftright", IN_ShiftRightDown, NULL);
+	Cmd_AddCommand("-shiftright", IN_ShiftRightUp, NULL);
+	Cmd_AddCommand("+shiftup", IN_ShiftUpDown, NULL);
+	Cmd_AddCommand("-shiftup", IN_ShiftUpUp, NULL);
+	Cmd_AddCommand("+shiftdown", IN_ShiftDownDown, NULL);
+	Cmd_AddCommand("-shiftdown", IN_ShiftDownUp, NULL);
+	Cmd_AddCommand("+zoomin", IN_ZoomInDown, NULL);
+	Cmd_AddCommand("-zoomin", IN_ZoomInUp, NULL);
+	Cmd_AddCommand("+zoomout", IN_ZoomOutDown, NULL);
+	Cmd_AddCommand("-zoomout", IN_ZoomOutUp, NULL);
 
-	Cmd_AddCommand("impulse", IN_Impulse);
+	Cmd_AddCommand("impulse", IN_Impulse, NULL);
 
-	Cmd_AddCommand("+select", CL_SelectDown);
-	Cmd_AddCommand("-select", CL_SelectUp);
-	Cmd_AddCommand("+action", CL_ActionDown);
-	Cmd_AddCommand("-action", CL_ActionUp);
-	Cmd_AddCommand("+turn", CL_TurnDown);
-	Cmd_AddCommand("-turn", CL_TurnUp);
-	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch);
-	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction);
-	Cmd_AddCommand("nextalien", CL_NextAlien);
-	Cmd_AddCommand("firerp", CL_FireRightPrimary);
-	Cmd_AddCommand("firers", CL_FireRightSecondary);
-	Cmd_AddCommand("firelp", CL_FireLeftPrimary);
-	Cmd_AddCommand("firels", CL_FireLeftSecondary);
-	Cmd_AddCommand("reloadleft", CL_ReloadLeft);
-	Cmd_AddCommand("reloadright", CL_ReloadRight);
-	Cmd_AddCommand("nextround", CL_NextRound);
-	Cmd_AddCommand("levelup", CL_LevelUp);
-	Cmd_AddCommand("leveldown", CL_LevelDown);
-	Cmd_AddCommand("zoominquant", CL_ZoomInQuant);
-	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant);
-	Cmd_AddCommand("confirmaction", CL_ConfirmAction);
+	Cmd_AddCommand("+select", CL_SelectDown, NULL);
+	Cmd_AddCommand("-select", CL_SelectUp, NULL);
+	Cmd_AddCommand("+action", CL_ActionDown, NULL);
+	Cmd_AddCommand("-action", CL_ActionUp, NULL);
+	Cmd_AddCommand("+turn", CL_TurnDown, NULL);
+	Cmd_AddCommand("-turn", CL_TurnUp, NULL);
+	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch, NULL);
+	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction, NULL);
+	Cmd_AddCommand("nextalien", CL_NextAlien, NULL);
+	Cmd_AddCommand("firerp", CL_FireRightPrimary, NULL);
+	Cmd_AddCommand("firers", CL_FireRightSecondary, NULL);
+	Cmd_AddCommand("firelp", CL_FireLeftPrimary, NULL);
+	Cmd_AddCommand("firels", CL_FireLeftSecondary, NULL);
+	Cmd_AddCommand("reloadleft", CL_ReloadLeft, NULL);
+	Cmd_AddCommand("reloadright", CL_ReloadRight, NULL);
+	Cmd_AddCommand("nextround", CL_NextRound, NULL);
+	Cmd_AddCommand("levelup", CL_LevelUp, NULL);
+	Cmd_AddCommand("leveldown", CL_LevelDown, NULL);
+	Cmd_AddCommand("zoominquant", CL_ZoomInQuant, NULL);
+	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant, NULL);
+	Cmd_AddCommand("confirmaction", CL_ConfirmAction, NULL);
 
 #ifdef DEBUG
-	Cmd_AddCommand("camangles", CL_CamPrintAngles);
+	Cmd_AddCommand("camangles", CL_CamPrintAngles, NULL);
 #endif /* DEBUG */
-	Cmd_AddCommand("camsetangles", CL_CamSetAngles);
-	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot);
+	Cmd_AddCommand("camsetangles", CL_CamSetAngles, NULL);
+	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot, NULL);
 
-	Cmd_AddCommand("cameramode", CL_CameraMode);
+	Cmd_AddCommand("cameramode", CL_CameraMode, NULL);
 }
 
 

@@ -128,77 +128,77 @@ void InitGame(void)
 	gi.dprintf("==== InitGame ====\n");
 
 	/* noset vars */
-	dedicated = gi.cvar("dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET);
+	dedicated = gi.cvar("dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, NULL);
 
 	/* latched vars */
-	sv_cheats = gi.cvar("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH);
-	gi.cvar("gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_LATCH);
-	gi.cvar("gamedate", __DATE__, CVAR_SERVERINFO | CVAR_LATCH);
-	developer = gi.cvar("developer", "0", 0);
+	sv_cheats = gi.cvar("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	gi.cvar("gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	gi.cvar("gamedate", __DATE__, CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	developer = gi.cvar("developer", "0", 0, NULL);
 
 	/* max. players per team (original quake) */
-	maxplayers = gi.cvar("maxplayers", "8", CVAR_SERVERINFO | CVAR_LATCH);
+	maxplayers = gi.cvar("maxplayers", "8", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	/* max. soldiers per team */
-	maxsoldiers = gi.cvar("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
+	maxsoldiers = gi.cvar("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	/* max soldiers per player */
-	maxsoldiersperplayer = gi.cvar("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
+	maxsoldiersperplayer = gi.cvar("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	/* enable moralestates in multiplayer */
-	sv_enablemorale = gi.cvar("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
-	maxspectators = gi.cvar("maxspectators", "8", CVAR_SERVERINFO | CVAR_LATCH);
-	maxentities = gi.cvar("maxentities", "1024", CVAR_LATCH);
+	sv_enablemorale = gi.cvar("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	maxspectators = gi.cvar("maxspectators", "8", CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	maxentities = gi.cvar("maxentities", "1024", CVAR_LATCH, NULL);
 
 	/* change anytime vars */
-	password = gi.cvar("password", "", CVAR_USERINFO);
-	spectator_password = gi.cvar("spectator_password", "", CVAR_USERINFO);
-	needpass = gi.cvar("needpass", "0", CVAR_SERVERINFO);
-	filterban = gi.cvar("filterban", "1", 0);
-	sv_ai = gi.cvar("sv_ai", "1", 0);
-	sv_teamplay = gi.cvar("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_SERVERINFO);
+	password = gi.cvar("password", "", CVAR_USERINFO, NULL);
+	spectator_password = gi.cvar("spectator_password", "", CVAR_USERINFO, NULL);
+	needpass = gi.cvar("needpass", "0", CVAR_SERVERINFO, NULL);
+	filterban = gi.cvar("filterban", "1", 0, NULL);
+	sv_ai = gi.cvar("sv_ai", "1", 0, NULL);
+	sv_teamplay = gi.cvar("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
 	/* how many connected clients */
-	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH);
+	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 
-	ai_alien = gi.cvar("ai_alien", "alien", 0);
-	ai_armor = gi.cvar("ai_armor", "", 0);
-	ai_civilian = gi.cvar("ai_civilian", "civilian", 0);
-	ai_equipment = gi.cvar("ai_equipment", "human_phalanx_initial", 0);
+	ai_alien = gi.cvar("ai_alien", "alien", 0, NULL);
+	ai_armor = gi.cvar("ai_armor", "", 0, NULL);
+	ai_civilian = gi.cvar("ai_civilian", "civilian", 0, NULL);
+	ai_equipment = gi.cvar("ai_equipment", "human_phalanx_initial", 0, NULL);
 	/* aliens in singleplayer (can differ each mission) */
-	ai_numaliens = gi.cvar("ai_numaliens", "8", 0);
+	ai_numaliens = gi.cvar("ai_numaliens", "8", 0, NULL);
 	/* civilians for singleplayer */
-	ai_numcivilians = gi.cvar("ai_numcivilians", "8", 0);
+	ai_numcivilians = gi.cvar("ai_numcivilians", "8", 0, NULL);
 	/* aliens in multiplayer */
-	ai_numactors = gi.cvar("ai_numactors", "8", CVAR_ARCHIVE);
+	ai_numactors = gi.cvar("ai_numactors", "8", CVAR_ARCHIVE, NULL);
 	/* autojoin aliens */
-	ai_autojoin = gi.cvar("ai_autojoin", "0", 0);
+	ai_autojoin = gi.cvar("ai_autojoin", "0", 0, NULL);
 
 	/* FIXME: Apply CVAR_NOSET after balancing */
-	mob_death = gi.cvar("mob_death", "10", CVAR_LATCH);
-	mob_wound = gi.cvar("mob_wound", "0.1", CVAR_LATCH);
-	mof_watching = gi.cvar("mof_watching", "1.7", CVAR_LATCH);
-	mof_teamkill = gi.cvar("mof_teamkill", "2.0", CVAR_LATCH);
-	mof_civilian = gi.cvar("mof_civilian", "0.3", CVAR_LATCH);
-	mof_enemy = gi.cvar("mof_ememy", "0.5", CVAR_LATCH);
-	mor_pain = gi.cvar("mof_pain", "3.6", CVAR_LATCH);
+	mob_death = gi.cvar("mob_death", "10", CVAR_LATCH, NULL);
+	mob_wound = gi.cvar("mob_wound", "0.1", CVAR_LATCH, NULL);
+	mof_watching = gi.cvar("mof_watching", "1.7", CVAR_LATCH, NULL);
+	mof_teamkill = gi.cvar("mof_teamkill", "2.0", CVAR_LATCH, NULL);
+	mof_civilian = gi.cvar("mof_civilian", "0.3", CVAR_LATCH, NULL);
+	mof_enemy = gi.cvar("mof_ememy", "0.5", CVAR_LATCH, NULL);
+	mor_pain = gi.cvar("mof_pain", "3.6", CVAR_LATCH, NULL);
 	/*everyone gets this times morale damage */
-	mor_default = gi.cvar("mor_default", "0.3", CVAR_LATCH);
+	mor_default = gi.cvar("mor_default", "0.3", CVAR_LATCH, NULL);
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_distance = gi.cvar("mor_distance", "120", CVAR_LATCH);
+	mor_distance = gi.cvar("mor_distance", "120", CVAR_LATCH, NULL);
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_victim = gi.cvar("mor_victim", "0.7", CVAR_LATCH);
+	mor_victim = gi.cvar("mor_victim", "0.7", CVAR_LATCH, NULL);
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_attacker = gi.cvar("mor_attacker", "0.3", CVAR_LATCH);
+	mor_attacker = gi.cvar("mor_attacker", "0.3", CVAR_LATCH, NULL);
 	/* how much the morale depends on the size of the damaged team */
-	mon_teamfactor = gi.cvar("mon_teamfactor", "0.6", CVAR_LATCH);
+	mon_teamfactor = gi.cvar("mon_teamfactor", "0.6", CVAR_LATCH, NULL);
 
-	mor_regeneration = gi.cvar("mor_regeneration", "15", CVAR_LATCH);
-	mor_shaken = gi.cvar("mor_shaken", "50", CVAR_LATCH);
-	mor_panic = gi.cvar("mor_panic", "30", CVAR_LATCH);
+	mor_regeneration = gi.cvar("mor_regeneration", "15", CVAR_LATCH, NULL);
+	mor_shaken = gi.cvar("mor_shaken", "50", CVAR_LATCH, NULL);
+	mor_panic = gi.cvar("mor_panic", "30", CVAR_LATCH, NULL);
 
-	m_sanity = gi.cvar("m_sanity", "1.0", CVAR_LATCH);
-	m_rage = gi.cvar("m_rage", "0.6", CVAR_LATCH);
-	m_rage_stop = gi.cvar("r_rage_stop", "2.0", CVAR_LATCH);
-	m_panic_stop = gi.cvar("m_panic_stop", "1.0", CVAR_LATCH);
+	m_sanity = gi.cvar("m_sanity", "1.0", CVAR_LATCH, NULL);
+	m_rage = gi.cvar("m_rage", "0.6", CVAR_LATCH, NULL);
+	m_rage_stop = gi.cvar("r_rage_stop", "2.0", CVAR_LATCH, NULL);
+	m_panic_stop = gi.cvar("m_panic_stop", "1.0", CVAR_LATCH, NULL);
 
-	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET);
+	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET, NULL);
 
 	Com_sprintf(game.helpmessage1, sizeof(game.helpmessage1), "");
 

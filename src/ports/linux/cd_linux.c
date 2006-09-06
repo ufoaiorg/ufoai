@@ -608,17 +608,17 @@ int CDAudio_Init(void)
 	if (initialized)
 		return 0;
 
-	cv = Cvar_Get ("nocdaudio", "0", CVAR_NOSET);
+	cv = Cvar_Get ("nocdaudio", "0", CVAR_NOSET, NULL);
 	if (cv->value)
 		return -1;
 
-	cd_nocd = Cvar_Get ("cd_nocd", "0", CVAR_ARCHIVE );
+	cd_nocd = Cvar_Get ("cd_nocd", "0", CVAR_ARCHIVE, NULL);
 	if ( cd_nocd->value)
 		return -1;
 
-	cd_volume = Cvar_Get ("cd_volume", "1", CVAR_ARCHIVE);
+	cd_volume = Cvar_Get ("cd_volume", "1", CVAR_ARCHIVE, NULL);
 
-	cd_dev = Cvar_Get("cd_dev", "/dev/cdrom", CVAR_ARCHIVE);
+	cd_dev = Cvar_Get("cd_dev", "/dev/cdrom", CVAR_ARCHIVE, NULL);
 
 	seteuid(saved_euid);
 
@@ -643,7 +643,7 @@ int CDAudio_Init(void)
 		cdValid = qfalse;
 	}
 
-	Cmd_AddCommand ("cd", CD_f);
+	Cmd_AddCommand ("cd", CD_f, NULL);
 
 	Com_Printf("CD Audio Initialized\n");
 

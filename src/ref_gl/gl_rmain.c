@@ -1065,98 +1065,98 @@ static void R_Register(void)
 {
 	cmdList_t *commands;
 
-/*	r_lefthand = ri.Cvar_Get("hand", "0", CVAR_USERINFO | CVAR_ARCHIVE);*/
-	r_norefresh = ri.Cvar_Get("r_norefresh", "0", 0);
-	r_fullbright = ri.Cvar_Get("r_fullbright", "0", 0);
-	r_drawentities = ri.Cvar_Get("r_drawentities", "1", 0);
-	r_drawworld = ri.Cvar_Get("r_drawworld", "1", 0);
-	r_isometric = ri.Cvar_Get("r_isometric", "0", 0);
-	r_lerpmodels = ri.Cvar_Get("r_lerpmodels", "1", 0);
-	r_nocull = ri.Cvar_Get("r_nocull", "0", 0);
-	r_speeds = ri.Cvar_Get("r_speeds", "0", 0);
-	r_displayrefresh = ri.Cvar_Get("r_displayrefresh", "0", CVAR_ARCHIVE);
-	r_anisotropic = ri.Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE);
-	r_ext_max_anisotropy = ri.Cvar_Get("r_ext_max_anisotropy", "0", 0);
-	r_texture_lod = ri.Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE);
+/*	r_lefthand = ri.Cvar_Get("hand", "0", CVAR_USERINFO | CVAR_ARCHIVE, NULL);*/
+	r_norefresh = ri.Cvar_Get("r_norefresh", "0", 0, NULL);
+	r_fullbright = ri.Cvar_Get("r_fullbright", "0", 0, NULL);
+	r_drawentities = ri.Cvar_Get("r_drawentities", "1", 0, NULL);
+	r_drawworld = ri.Cvar_Get("r_drawworld", "1", 0, NULL);
+	r_isometric = ri.Cvar_Get("r_isometric", "0", 0, NULL);
+	r_lerpmodels = ri.Cvar_Get("r_lerpmodels", "1", 0, NULL);
+	r_nocull = ri.Cvar_Get("r_nocull", "0", 0, NULL);
+	r_speeds = ri.Cvar_Get("r_speeds", "0", 0, NULL);
+	r_displayrefresh = ri.Cvar_Get("r_displayrefresh", "0", CVAR_ARCHIVE, NULL);
+	r_anisotropic = ri.Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
+	r_ext_max_anisotropy = ri.Cvar_Get("r_ext_max_anisotropy", "0", 0, NULL);
+	r_texture_lod = ri.Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
 
-	gl_allow_software = ri.Cvar_Get("gl_allow_software", "0", 0);
+	gl_allow_software = ri.Cvar_Get("gl_allow_software", "0", 0, NULL);
 
-	gl_particle_min_size = ri.Cvar_Get("gl_particle_min_size", "2", CVAR_ARCHIVE);
-	gl_particle_max_size = ri.Cvar_Get("gl_particle_max_size", "40", CVAR_ARCHIVE);
-	gl_particle_size = ri.Cvar_Get("gl_particle_size", "40", CVAR_ARCHIVE);
-	gl_particle_att_a = ri.Cvar_Get("gl_particle_att_a", "0.01", CVAR_ARCHIVE);
-	gl_particle_att_b = ri.Cvar_Get("gl_particle_att_b", "0.0", CVAR_ARCHIVE);
-	gl_particle_att_c = ri.Cvar_Get("gl_particle_att_c", "0.01", CVAR_ARCHIVE);
+	gl_particle_min_size = ri.Cvar_Get("gl_particle_min_size", "2", CVAR_ARCHIVE, NULL);
+	gl_particle_max_size = ri.Cvar_Get("gl_particle_max_size", "40", CVAR_ARCHIVE, NULL);
+	gl_particle_size = ri.Cvar_Get("gl_particle_size", "40", CVAR_ARCHIVE, NULL);
+	gl_particle_att_a = ri.Cvar_Get("gl_particle_att_a", "0.01", CVAR_ARCHIVE, NULL);
+	gl_particle_att_b = ri.Cvar_Get("gl_particle_att_b", "0.0", CVAR_ARCHIVE, NULL);
+	gl_particle_att_c = ri.Cvar_Get("gl_particle_att_c", "0.01", CVAR_ARCHIVE, NULL);
 
-	gl_modulate = ri.Cvar_Get("gl_modulate", "1", CVAR_ARCHIVE);
-	gl_log = ri.Cvar_Get("gl_log", "0", 0);
-	gl_bitdepth = ri.Cvar_Get("gl_bitdepth", "0", CVAR_ARCHIVE);
-	gl_mode = ri.Cvar_Get("gl_mode", "3", CVAR_ARCHIVE);
-	gl_lightmap = ri.Cvar_Get("gl_lightmap", "0", 0);
-	gl_shadows = ri.Cvar_Get("gl_shadows", "1", CVAR_ARCHIVE);
-	gl_shadow_debug_volume = ri.Cvar_Get("r_shadow_debug_volume", "0", CVAR_ARCHIVE);
-	gl_shadow_debug_shade = ri.Cvar_Get("r_shadow_debug_shade", "0", CVAR_ARCHIVE);
-	r_ati_separate_stencil = ri.Cvar_Get("r_ati_separate_stencil", "1", CVAR_ARCHIVE);
-	r_stencil_two_side = ri.Cvar_Get("r_stencil_two_side", "1", CVAR_ARCHIVE);
-	gl_imagefilter = ri.Cvar_Get("gl_imagefilter", "1", CVAR_ARCHIVE);
-	gl_dynamic = ri.Cvar_Get("gl_dynamic", "1", 0);
-	gl_nobind = ri.Cvar_Get("gl_nobind", "0", 0);
-	gl_round_down = ri.Cvar_Get("gl_round_down", "1", 0);
-	gl_picmip = ri.Cvar_Get("gl_picmip", "0", 0);
-	gl_maxtexres = ri.Cvar_Get("gl_maxtexres", "2048", CVAR_ARCHIVE);
-	gl_showtris = ri.Cvar_Get("gl_showtris", "0", 0);
-	gl_ztrick = ri.Cvar_Get("gl_ztrick", "0", 0);
-	gl_finish = ri.Cvar_Get("gl_finish", "0", CVAR_ARCHIVE);
-	gl_clear = ri.Cvar_Get("gl_clear", "1", 0);
-	gl_cull = ri.Cvar_Get("gl_cull", "1", 0);
-	gl_polyblend = ri.Cvar_Get("gl_polyblend", "1", 0);
-	gl_flashblend = ri.Cvar_Get("gl_flashblend", "0", 0);
-	gl_monolightmap = ri.Cvar_Get("gl_monolightmap", "0", 0);
+	gl_modulate = ri.Cvar_Get("gl_modulate", "1", CVAR_ARCHIVE, NULL);
+	gl_log = ri.Cvar_Get("gl_log", "0", 0, NULL);
+	gl_bitdepth = ri.Cvar_Get("gl_bitdepth", "0", CVAR_ARCHIVE, NULL);
+	gl_mode = ri.Cvar_Get("gl_mode", "3", CVAR_ARCHIVE, NULL);
+	gl_lightmap = ri.Cvar_Get("gl_lightmap", "0", 0, NULL);
+	gl_shadows = ri.Cvar_Get("gl_shadows", "1", CVAR_ARCHIVE, NULL);
+	gl_shadow_debug_volume = ri.Cvar_Get("r_shadow_debug_volume", "0", CVAR_ARCHIVE, NULL);
+	gl_shadow_debug_shade = ri.Cvar_Get("r_shadow_debug_shade", "0", CVAR_ARCHIVE, NULL);
+	r_ati_separate_stencil = ri.Cvar_Get("r_ati_separate_stencil", "1", CVAR_ARCHIVE, NULL);
+	r_stencil_two_side = ri.Cvar_Get("r_stencil_two_side", "1", CVAR_ARCHIVE, NULL);
+	gl_imagefilter = ri.Cvar_Get("gl_imagefilter", "1", CVAR_ARCHIVE, NULL);
+	gl_dynamic = ri.Cvar_Get("gl_dynamic", "1", 0, NULL);
+	gl_nobind = ri.Cvar_Get("gl_nobind", "0", 0, NULL);
+	gl_round_down = ri.Cvar_Get("gl_round_down", "1", 0, NULL);
+	gl_picmip = ri.Cvar_Get("gl_picmip", "0", 0, NULL);
+	gl_maxtexres = ri.Cvar_Get("gl_maxtexres", "2048", CVAR_ARCHIVE, NULL);
+	gl_showtris = ri.Cvar_Get("gl_showtris", "0", 0, NULL);
+	gl_ztrick = ri.Cvar_Get("gl_ztrick", "0", 0, NULL);
+	gl_finish = ri.Cvar_Get("gl_finish", "0", CVAR_ARCHIVE, NULL);
+	gl_clear = ri.Cvar_Get("gl_clear", "1", 0, NULL);
+	gl_cull = ri.Cvar_Get("gl_cull", "1", 0, NULL);
+	gl_polyblend = ri.Cvar_Get("gl_polyblend", "1", 0, NULL);
+	gl_flashblend = ri.Cvar_Get("gl_flashblend", "0", 0, NULL);
+	gl_monolightmap = ri.Cvar_Get("gl_monolightmap", "0", 0, NULL);
 #if defined(_WIN32)
-	gl_driver = ri.Cvar_Get("gl_driver", "opengl32", CVAR_ARCHIVE);
+	gl_driver = ri.Cvar_Get("gl_driver", "opengl32", CVAR_ARCHIVE, NULL);
 #elif defined (__APPLE__) || defined (MACOSX)
-	gl_driver = ri.Cvar_Get("gl_driver", "/System/Library/Frameworks/OpenGL.framework/Libraries/libGL.dylib", CVAR_ARCHIVE);
+	gl_driver = ri.Cvar_Get("gl_driver", "/System/Library/Frameworks/OpenGL.framework/Libraries/libGL.dylib", CVAR_ARCHIVE, NULL);
 #else
-	gl_driver = ri.Cvar_Get("gl_driver", "libGL.so.1", CVAR_ARCHIVE);
+	gl_driver = ri.Cvar_Get("gl_driver", "libGL.so.1", CVAR_ARCHIVE, NULL);
 #endif
-	gl_texturemode = ri.Cvar_Get("gl_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE);
-	gl_texturealphamode = ri.Cvar_Get("gl_texturealphamode", "default", CVAR_ARCHIVE);
-	gl_texturesolidmode = ri.Cvar_Get("gl_texturesolidmode", "default", CVAR_ARCHIVE);
-	gl_wire = ri.Cvar_Get("gl_wire", "0", 0);
-	gl_fog = ri.Cvar_Get("gl_fog", "1", CVAR_ARCHIVE);
-	gl_vertex_arrays = ri.Cvar_Get("gl_vertex_arrays", "0", CVAR_ARCHIVE);
+	gl_texturemode = ri.Cvar_Get("gl_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
+	gl_texturealphamode = ri.Cvar_Get("gl_texturealphamode", "default", CVAR_ARCHIVE, NULL);
+	gl_texturesolidmode = ri.Cvar_Get("gl_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
+	gl_wire = ri.Cvar_Get("gl_wire", "0", 0, NULL);
+	gl_fog = ri.Cvar_Get("gl_fog", "1", CVAR_ARCHIVE, NULL);
+	gl_vertex_arrays = ri.Cvar_Get("gl_vertex_arrays", "0", CVAR_ARCHIVE, NULL);
 
-	gl_ext_swapinterval = ri.Cvar_Get("gl_ext_swapinterval", "1", CVAR_ARCHIVE);
-	gl_ext_palettedtexture = ri.Cvar_Get("gl_ext_palettedtexture", "1", CVAR_ARCHIVE);
-	gl_ext_multitexture = ri.Cvar_Get("gl_ext_multitexture", "1", CVAR_ARCHIVE);
-	gl_ext_combine = ri.Cvar_Get("gl_ext_combine", "1", CVAR_ARCHIVE);
-	gl_ext_pointparameters = ri.Cvar_Get("gl_ext_pointparameters", "1", CVAR_ARCHIVE);
-	gl_ext_compiled_vertex_array = ri.Cvar_Get("gl_ext_compiled_vertex_array", "1", CVAR_ARCHIVE);
-	gl_ext_texture_compression = ri.Cvar_Get("gl_ext_texture_compression", "0", CVAR_ARCHIVE);
-	gl_ext_s3tc_compression = ri.Cvar_Get("gl_ext_s3tc_compression", "1", CVAR_ARCHIVE);
+	gl_ext_swapinterval = ri.Cvar_Get("gl_ext_swapinterval", "1", CVAR_ARCHIVE, NULL);
+	gl_ext_palettedtexture = ri.Cvar_Get("gl_ext_palettedtexture", "1", CVAR_ARCHIVE, NULL);
+	gl_ext_multitexture = ri.Cvar_Get("gl_ext_multitexture", "1", CVAR_ARCHIVE, NULL);
+	gl_ext_combine = ri.Cvar_Get("gl_ext_combine", "1", CVAR_ARCHIVE, NULL);
+	gl_ext_pointparameters = ri.Cvar_Get("gl_ext_pointparameters", "1", CVAR_ARCHIVE, NULL);
+	gl_ext_compiled_vertex_array = ri.Cvar_Get("gl_ext_compiled_vertex_array", "1", CVAR_ARCHIVE, NULL);
+	gl_ext_texture_compression = ri.Cvar_Get("gl_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
+	gl_ext_s3tc_compression = ri.Cvar_Get("gl_ext_s3tc_compression", "1", CVAR_ARCHIVE, NULL);
 
-	gl_drawbuffer = ri.Cvar_Get("gl_drawbuffer", "GL_BACK", 0);
-	gl_swapinterval = ri.Cvar_Get("gl_swapinterval", "1", CVAR_ARCHIVE);
+	gl_drawbuffer = ri.Cvar_Get("gl_drawbuffer", "GL_BACK", 0, NULL);
+	gl_swapinterval = ri.Cvar_Get("gl_swapinterval", "1", CVAR_ARCHIVE, NULL);
 
-	gl_saturatelighting = ri.Cvar_Get("gl_saturatelighting", "0", 0);
+	gl_saturatelighting = ri.Cvar_Get("gl_saturatelighting", "0", 0, NULL);
 
-	gl_3dlabs_broken = ri.Cvar_Get("gl_3dlabs_broken", "1", CVAR_ARCHIVE);
+	gl_3dlabs_broken = ri.Cvar_Get("gl_3dlabs_broken", "1", CVAR_ARCHIVE, NULL);
 
-	vid_fullscreen = ri.Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE);
-	vid_gamma = ri.Cvar_Get("vid_gamma", "1.0", CVAR_ARCHIVE);
+	vid_fullscreen = ri.Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, NULL);
+	vid_gamma = ri.Cvar_Get("vid_gamma", "1.0", CVAR_ARCHIVE, NULL);
 #if defined(_WIN32)
-	vid_ref = ri.Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE);
+	vid_ref = ri.Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE, NULL);
 #elif defined (__APPLE__) || defined (MACOSX)
 	/* FIXME: Don't know the macosx driver, yet */
-	vid_ref = ri.Cvar_Get( "vid_ref", "glx", CVAR_ARCHIVE );
+	vid_ref = ri.Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, NULL);
 #else
-	vid_ref = ri.Cvar_Get( "vid_ref", "glx", CVAR_ARCHIVE );
+	vid_ref = ri.Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, NULL);
 #endif
-	vid_grabmouse = ri.Cvar_Get( "vid_grabmouse", "1", CVAR_ARCHIVE );
+	vid_grabmouse = ri.Cvar_Get("vid_grabmouse", "1", CVAR_ARCHIVE, NULL);
 	vid_grabmouse->modified = qfalse;
 
 	for (commands = r_commands; commands->name; commands++)
-		ri.Cmd_AddCommand(commands->name, commands->function);
+		ri.Cmd_AddCommand(commands->name, commands->function, NULL);
 }
 
 /**

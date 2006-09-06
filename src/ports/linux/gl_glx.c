@@ -221,14 +221,14 @@ void RW_IN_Init(in_state_t *in_state_p)
 	in_state = in_state_p;
 
 	/* mouse variables */
-	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
-	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
+	m_filter = ri.Cvar_Get ("m_filter", "0", 0, NULL);
+	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE, NULL);
 #ifdef HAVE_XF86_DGA
-	in_dgamouse = ri.Cvar_Get ("in_dgamouse", "1", CVAR_ARCHIVE);
+	in_dgamouse = ri.Cvar_Get ("in_dgamouse", "1", CVAR_ARCHIVE, NULL);
 #else
-	in_dgamouse = ri.Cvar_Get ("in_dgamouse", "0", CVAR_ARCHIVE);
+	in_dgamouse = ri.Cvar_Get ("in_dgamouse", "0", CVAR_ARCHIVE, NULL);
 #endif
-	sensitivity = ri.Cvar_Get ("sensitivity", "2", 0);
+	sensitivity = ri.Cvar_Get ("sensitivity", "2", 0, NULL);
 
 	mx = my = 0.0;
 	mouse_avail = qtrue;
@@ -691,7 +691,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 
 	srandom(getpid());
 
-	r_fakeFullscreen = ri.Cvar_Get( "r_fakeFullscreen", "0", CVAR_ARCHIVE);
+	r_fakeFullscreen = ri.Cvar_Get( "r_fakeFullscreen", "0", CVAR_ARCHIVE, NULL);
 
 	ri.Con_Printf( PRINT_ALL, "Initializing OpenGL display\n");
 

@@ -512,8 +512,8 @@ qboolean SND_InitWav (void)
 qboolean SND_Init(struct sndinfo *s)
 {
 	sndinitstat	stat;
-	s_wavonly = si->Cvar_Get("s_wavonly", "0", 0);
-	s_primary = si->Cvar_Get("s_primary", "0", CVAR_ARCHIVE);
+	s_wavonly = si->Cvar_Get("s_wavonly", "0", 0, NULL);
+	s_primary = si->Cvar_Get("s_primary", "0", CVAR_ARCHIVE, NULL);
 	dsound_init = wav_init = qfalse;
 
 	si = s;

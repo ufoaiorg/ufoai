@@ -387,14 +387,14 @@ void VID_CheckChanges (void)
 void VID_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
-	vid_ref = Cvar_Get ("vid_ref", "glx", CVAR_ARCHIVE);
-	vid_xpos = Cvar_Get ("vid_xpos", "3", CVAR_ARCHIVE);
-	vid_ypos = Cvar_Get ("vid_ypos", "22", CVAR_ARCHIVE);
-	vid_fullscreen = Cvar_Get ("vid_fullscreen", "1", CVAR_ARCHIVE);
-	vid_gamma = Cvar_Get( "vid_gamma", "1", CVAR_ARCHIVE );
+	vid_ref = Cvar_Get ("vid_ref", "glx", CVAR_ARCHIVE, NULL);
+	vid_xpos = Cvar_Get ("vid_xpos", "3", CVAR_ARCHIVE, NULL);
+	vid_ypos = Cvar_Get ("vid_ypos", "22", CVAR_ARCHIVE, NULL);
+	vid_fullscreen = Cvar_Get ("vid_fullscreen", "1", CVAR_ARCHIVE, NULL);
+	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, NULL);
 
 	/* Add some console commands that we want to handle */
-	Cmd_AddCommand ("vid_restart", VID_Restart_f);
+	Cmd_AddCommand ("vid_restart", VID_Restart_f, NULL);
 
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();

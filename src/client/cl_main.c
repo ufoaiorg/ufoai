@@ -806,14 +806,14 @@ void CL_PingServers_f(void)
 	serverText[0] = 0;
 	serverListLength = 0;
 
-	noudp = Cvar_Get("noudp", "0", CVAR_NOSET);
+	noudp = Cvar_Get("noudp", "0", CVAR_NOSET, NULL);
 	if (!noudp->value) {
 		adr.type = NA_BROADCAST;
 		adr.port = BigShort(PORT_SERVER);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
 	}
 
-	noipx = Cvar_Get("noipx", "0", CVAR_NOSET);
+	noipx = Cvar_Get("noipx", "0", CVAR_NOSET, NULL);
 	if (!noipx->value) {
 		adr.type = NA_BROADCAST_IPX;
 		adr.port = BigShort(PORT_SERVER);
@@ -1126,138 +1126,138 @@ void CL_InitLocal(void)
 	CL_ResetSequences();
 	CL_ResetTeams();
 
-	adr0 = Cvar_Get("adr0", "", CVAR_ARCHIVE);
-	adr1 = Cvar_Get("adr1", "", CVAR_ARCHIVE);
-	adr2 = Cvar_Get("adr2", "", CVAR_ARCHIVE);
-	adr3 = Cvar_Get("adr3", "", CVAR_ARCHIVE);
-	adr4 = Cvar_Get("adr4", "", CVAR_ARCHIVE);
-	adr5 = Cvar_Get("adr5", "", CVAR_ARCHIVE);
-	adr6 = Cvar_Get("adr6", "", CVAR_ARCHIVE);
-	adr7 = Cvar_Get("adr7", "", CVAR_ARCHIVE);
-	adr8 = Cvar_Get("adr8", "", CVAR_ARCHIVE);
-	map_dropship = Cvar_Get("map_dropship", "craft_dropship", 0);
+	adr0 = Cvar_Get("adr0", "", CVAR_ARCHIVE, NULL);
+	adr1 = Cvar_Get("adr1", "", CVAR_ARCHIVE, NULL);
+	adr2 = Cvar_Get("adr2", "", CVAR_ARCHIVE, NULL);
+	adr3 = Cvar_Get("adr3", "", CVAR_ARCHIVE, NULL);
+	adr4 = Cvar_Get("adr4", "", CVAR_ARCHIVE, NULL);
+	adr5 = Cvar_Get("adr5", "", CVAR_ARCHIVE, NULL);
+	adr6 = Cvar_Get("adr6", "", CVAR_ARCHIVE, NULL);
+	adr7 = Cvar_Get("adr7", "", CVAR_ARCHIVE, NULL);
+	adr8 = Cvar_Get("adr8", "", CVAR_ARCHIVE, NULL);
+	map_dropship = Cvar_Get("map_dropship", "craft_dropship", 0, NULL);
 
 	/* register our variables */
-	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE);
-	cl_stereo = Cvar_Get("cl_stereo", "0", 0);
+	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE, NULL);
+	cl_stereo = Cvar_Get("cl_stereo", "0", 0, NULL);
 
-/*	cl_minfps = Cvar_Get ("cl_minfps", "5", 0); */
-	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0);
-	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE);
-	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE);
+/*	cl_minfps = Cvar_Get ("cl_minfps", "5", 0, NULL); */
+	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
+	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE, NULL);
+	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, NULL);
 
-	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", 0);
-	cl_camrotaccel = Cvar_Get("cl_camrotaccel", "400", 0);
-	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "750", 0);
-	cl_cammoveaccel = Cvar_Get("cl_cammoveaccel", "1250", 0);
-	cl_camyawspeed = Cvar_Get("cl_camyawspeed", "160", 0);
-	cl_campitchspeed = Cvar_Get("cl_campitchspeed", "0.5", 0);
-	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.25", 0);
-	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE);
+	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", 0, NULL);
+	cl_camrotaccel = Cvar_Get("cl_camrotaccel", "400", 0, NULL);
+	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "750", 0, NULL);
+	cl_cammoveaccel = Cvar_Get("cl_cammoveaccel", "1250", 0, NULL);
+	cl_camyawspeed = Cvar_Get("cl_camyawspeed", "160", 0, NULL);
+	cl_campitchspeed = Cvar_Get("cl_campitchspeed", "0.5", 0, NULL);
+	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.25", 0, NULL);
+	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, NULL);
 
-	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE);
-	cl_markactors = Cvar_Get("cl_markactors", "1", CVAR_ARCHIVE);
+	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE, NULL);
+	cl_markactors = Cvar_Get("cl_markactors", "1", CVAR_ARCHIVE, NULL);
 
-	cl_precachemenus = Cvar_Get("cl_precachemenus", "0", CVAR_ARCHIVE);
+	cl_precachemenus = Cvar_Get("cl_precachemenus", "0", CVAR_ARCHIVE, NULL);
 
-	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "25", CVAR_ARCHIVE);
-	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE);
+	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "25", CVAR_ARCHIVE, NULL);
+	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE, NULL);
 
-	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE);
-	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE);
-	cl_timeout = Cvar_Get("cl_timeout", "120", 0);
-	cl_paused = Cvar_Get("paused", "0", 0);
-	cl_timedemo = Cvar_Get("timedemo", "0", 0);
+	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, NULL);
+	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
+	cl_timeout = Cvar_Get("cl_timeout", "120", 0, NULL);
+	cl_paused = Cvar_Get("paused", "0", 0, NULL);
+	cl_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
 
-	rcon_client_password = Cvar_Get("rcon_password", "", 0);
-	rcon_address = Cvar_Get("rcon_address", "", 0);
+	rcon_client_password = Cvar_Get("rcon_password", "", 0, NULL);
+	rcon_address = Cvar_Get("rcon_address", "", 0, NULL);
 
-	cl_logevents = Cvar_Get("cl_logevents", "0", 0);
+	cl_logevents = Cvar_Get("cl_logevents", "0", 0, NULL);
 
-	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0);
+	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, NULL);
 	cl_worldlevel->modified = qfalse;
-	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET);
+	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, NULL);
 
 	/* only 19 soldiers in soldier selection list */
-	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET);
+	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET, NULL);
 
-	difficulty = Cvar_Get("difficulty", "0", CVAR_NOSET);
-	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE);
-	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "human_phalanx_initial", CVAR_ARCHIVE);
+	difficulty = Cvar_Get("difficulty", "0", CVAR_NOSET, NULL);
+	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, NULL);
+	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "human_phalanx_initial", CVAR_ARCHIVE, NULL);
 
-	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE);
+	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, NULL);
 
-	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE);
+	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, NULL);
 
 	Cvar_Set("music", "");
 
-	mn_main = Cvar_Get("mn_main", "main", 0);
-	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0);
-	mn_active = Cvar_Get("mn_active", "", 0);
-	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE);
-	mn_lastsave = Cvar_Get("mn_lastsave", "", CVAR_ARCHIVE);
+	mn_main = Cvar_Get("mn_main", "main", 0, NULL);
+	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, NULL);
+	mn_active = Cvar_Get("mn_active", "", 0, NULL);
+	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, NULL);
+	mn_lastsave = Cvar_Get("mn_lastsave", "", CVAR_ARCHIVE, NULL);
 
 	/* userinfo */
-	info_password = Cvar_Get("password", "", CVAR_USERINFO);
-	info_spectator = Cvar_Get("spectator", "0", CVAR_USERINFO);
-	name = Cvar_Get("name", _("Unnamed"), CVAR_USERINFO | CVAR_ARCHIVE);
-	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE);
-	team = Cvar_Get("team", "human", CVAR_USERINFO | CVAR_ARCHIVE);
-	equip = Cvar_Get("equip", "multiplayer", CVAR_USERINFO | CVAR_ARCHIVE);
-	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE);
-	campaign = Cvar_Get("campaign", "main", 0);
-	rate = Cvar_Get("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE);	/* FIXME */
-	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE);
+	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
+	info_spectator = Cvar_Get("spectator", "0", CVAR_USERINFO, NULL);
+	name = Cvar_Get("name", _("Unnamed"), CVAR_USERINFO | CVAR_ARCHIVE, NULL);
+	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, NULL);
+	team = Cvar_Get("team", "human", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
+	equip = Cvar_Get("equip", "multiplayer", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
+	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
+	campaign = Cvar_Get("campaign", "main", 0, NULL);
+	rate = Cvar_Get("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE, NULL);	/* FIXME */
+	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 
-	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO);
+	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, NULL);
 
 	/* register our commands */
-	Cmd_AddCommand("cmd", CL_ForwardToServer_f);
-	Cmd_AddCommand("pause", CL_Pause_f);
-	Cmd_AddCommand("pingservers", CL_PingServers_f);
+	Cmd_AddCommand("cmd", CL_ForwardToServer_f, NULL);
+	Cmd_AddCommand("pause", CL_Pause_f, NULL);
+	Cmd_AddCommand("pingservers", CL_PingServers_f, NULL);
 
 	/* text id is servers in menu_multiplayer.ufo */
-	Cmd_AddCommand("server_info", CL_ServerInfo_f);
-	Cmd_AddCommand("servers_click", CL_ServerListClick_f);
-	Cmd_AddCommand("server_connect", CL_ServerConnect_f);
-	Cmd_AddCommand("bookmarks_click", CL_BookmarkListClick_f);
-	Cmd_AddCommand("bookmarks_print", CL_BookmarkPrint_f);
-	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f);
+	Cmd_AddCommand("server_info", CL_ServerInfo_f, NULL);
+	Cmd_AddCommand("servers_click", CL_ServerListClick_f, NULL);
+	Cmd_AddCommand("server_connect", CL_ServerConnect_f, NULL);
+	Cmd_AddCommand("bookmarks_click", CL_BookmarkListClick_f, NULL);
+	Cmd_AddCommand("bookmarks_print", CL_BookmarkPrint_f, NULL);
+	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, NULL);
 
-	Cmd_AddCommand("userinfo", CL_Userinfo_f);
-	Cmd_AddCommand("snd_restart", CL_Snd_Restart_f);
+	Cmd_AddCommand("userinfo", CL_Userinfo_f, NULL);
+	Cmd_AddCommand("snd_restart", CL_Snd_Restart_f, NULL);
 
-	Cmd_AddCommand("changing", CL_Changing_f);
-	Cmd_AddCommand("disconnect", CL_Disconnect_f);
+	Cmd_AddCommand("changing", CL_Changing_f, NULL);
+	Cmd_AddCommand("disconnect", CL_Disconnect_f, NULL);
 
-	Cmd_AddCommand("quit", CL_Quit_f);
+	Cmd_AddCommand("quit", CL_Quit_f, NULL);
 
-	Cmd_AddCommand("connect", CL_Connect_f);
-	Cmd_AddCommand("reconnect", CL_Reconnect_f);
+	Cmd_AddCommand("connect", CL_Connect_f, NULL);
+	Cmd_AddCommand("reconnect", CL_Reconnect_f, NULL);
 
-	Cmd_AddCommand("rcon", CL_Rcon_f);
+	Cmd_AddCommand("rcon", CL_Rcon_f, NULL);
 
 /* 	Cmd_AddCommand ("packet", CL_Packet_f); // this is dangerous to leave in */
 
-	Cmd_AddCommand("setenv", CL_Setenv_f);
+	Cmd_AddCommand("setenv", CL_Setenv_f, NULL);
 
-	Cmd_AddCommand("precache", CL_Precache_f);
+	Cmd_AddCommand("precache", CL_Precache_f, NULL);
 
-	Cmd_AddCommand("seq_start", CL_SequenceStart_f);
-	Cmd_AddCommand("seq_end", CL_SequenceEnd_f);
+	Cmd_AddCommand("seq_start", CL_SequenceStart_f, NULL);
+	Cmd_AddCommand("seq_end", CL_SequenceEnd_f, NULL);
 
-	Cmd_AddCommand("video", CL_Video_f);
-	Cmd_AddCommand("stopvideo", CL_StopVideo_f);
+	Cmd_AddCommand("video", CL_Video_f, NULL);
+	Cmd_AddCommand("stopvideo", CL_StopVideo_f, NULL);
 
 	/* forward to server commands */
 	/* the only thing this does is allow command completion */
 	/* to work -- all unknown commands are automatically */
 	/* forwarded to the server */
-	Cmd_AddCommand("say", NULL);
-	Cmd_AddCommand("say_team", NULL);
-	Cmd_AddCommand("info", NULL);
-	Cmd_AddCommand("playerlist", NULL);
-	Cmd_AddCommand("players", NULL);
+	Cmd_AddCommand("say", NULL, NULL);
+	Cmd_AddCommand("say_team", NULL, NULL);
+	Cmd_AddCommand("info", NULL, NULL);
+	Cmd_AddCommand("playerlist", NULL, NULL);
+	Cmd_AddCommand("players", NULL, NULL);
 }
 
 
@@ -1313,7 +1313,7 @@ void CL_FixCvarCheats(void)
 	/* find all the cvars if we haven't done it yet */
 	if (!numcheatvars) {
 		while (cheatvars[numcheatvars].name) {
-			cheatvars[numcheatvars].var = Cvar_Get(cheatvars[numcheatvars].name, cheatvars[numcheatvars].value, 0);
+			cheatvars[numcheatvars].var = Cvar_Get(cheatvars[numcheatvars].name, cheatvars[numcheatvars].value, 0, NULL);
 			numcheatvars++;
 		}
 	}

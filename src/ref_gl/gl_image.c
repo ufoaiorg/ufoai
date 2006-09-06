@@ -2077,7 +2077,7 @@ void GL_InitImages(void)
 	DaN = NULL;
 
 	/* init intensity conversions */
-	intensity = ri.Cvar_Get("intensity", "2", CVAR_ARCHIVE);
+	intensity = ri.Cvar_Get("intensity", "2", CVAR_ARCHIVE, NULL);
 
 	if (intensity->value <= 1)
 		ri.Cvar_Set("intensity", "1");

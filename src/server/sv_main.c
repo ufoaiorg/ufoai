@@ -801,27 +801,27 @@ void SV_Init(void)
 {
 	SV_InitOperatorCommands();
 
-	rcon_password = Cvar_Get("rcon_password", "", 0);
+	rcon_password = Cvar_Get("rcon_password", "", 0, NULL);
 /*	Cvar_Get ("skill", "1", 0); */
-	Cvar_Get("deathmatch", "0", CVAR_LATCH);
-	Cvar_Get("timelimit", "0", CVAR_SERVERINFO);
-	Cvar_Get("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH);
-	Cvar_Get("protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET);
-	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO);
-	hostname = Cvar_Get("hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE);
-	timeout = Cvar_Get("timeout", "125", 0);
-	zombietime = Cvar_Get("zombietime", "2", 0);
-	sv_showclamp = Cvar_Get("showclamp", "0", 0);
-	sv_paused = Cvar_Get("paused", "0", 0);
-	sv_timedemo = Cvar_Get("timedemo", "0", 0);
-	sv_enforcetime = Cvar_Get("sv_enforcetime", "0", 0);
-	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO);
-	maxsoldiers = Cvar_Get("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO);
-	maxsoldiersperplayer = Cvar_Get("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO);
+	Cvar_Get("deathmatch", "0", CVAR_LATCH, NULL);
+	Cvar_Get("timelimit", "0", CVAR_SERVERINFO, NULL);
+	Cvar_Get("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	Cvar_Get("protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
+	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, NULL);
+	hostname = Cvar_Get("hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE, NULL);
+	timeout = Cvar_Get("timeout", "125", 0, NULL);
+	zombietime = Cvar_Get("zombietime", "2", 0, NULL);
+	sv_showclamp = Cvar_Get("showclamp", "0", 0, NULL);
+	sv_paused = Cvar_Get("paused", "0", 0, NULL);
+	sv_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
+	sv_enforcetime = Cvar_Get("sv_enforcetime", "0", 0, NULL);
+	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
+	maxsoldiers = Cvar_Get("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
+	maxsoldiersperplayer = Cvar_Get("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
 
-	sv_noreload = Cvar_Get("sv_noreload", "0", 0);
-	public_server = Cvar_Get("public", "0", 0);
-	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE);
+	sv_noreload = Cvar_Get("sv_noreload", "0", 0, NULL);
+	public_server = Cvar_Get("public", "0", 0, NULL);
+	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, NULL);
 
 	if (dedicated->value)
 		Cvar_Set("maxclients", "8");

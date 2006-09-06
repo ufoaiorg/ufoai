@@ -32,7 +32,7 @@ cvar_t	*in_mouse;
  */
 void IN_Init (void)
 {
-	in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
+	in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE, NULL);
 }
 
 /**

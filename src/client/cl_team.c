@@ -1214,22 +1214,22 @@ static void CL_LoadTeamSlotCmd(void)
  */
 void CL_ResetTeams(void)
 {
-	Cmd_AddCommand("givename", CL_GiveNameCmd);
-	Cmd_AddCommand("gennames", CL_GenerateNamesCmd);
-	Cmd_AddCommand("team_reset", CL_ResetTeamInBase);
-	Cmd_AddCommand("genequip", CL_GenerateEquipmentCmd);
-	Cmd_AddCommand("equip_type", CL_EquipTypeCmd);
-	Cmd_AddCommand("team_mark", CL_MarkTeamCmd);
-	Cmd_AddCommand("team_hire", CL_AssignSoldierCmd);
-	Cmd_AddCommand("team_select", CL_SelectCmd);
-	Cmd_AddCommand("team_changename", CL_ChangeNameCmd);
-	Cmd_AddCommand("team_changeskin", CL_ChangeSkinCmd);
-	Cmd_AddCommand("team_comments", CL_TeamCommentsCmd);
-	Cmd_AddCommand("equip_select", CL_SelectCmd);
-	Cmd_AddCommand("soldier_select", CL_SelectCmd);
-	Cmd_AddCommand("saveteamslot", CL_SaveTeamSlotCmd);
-	Cmd_AddCommand("loadteamslot", CL_LoadTeamSlotCmd);
-	Cmd_AddCommand("msgmenu", CL_MessageMenuCmd);
+	Cmd_AddCommand("givename", CL_GiveNameCmd, NULL);
+	Cmd_AddCommand("gennames", CL_GenerateNamesCmd, NULL);
+	Cmd_AddCommand("team_reset", CL_ResetTeamInBase, NULL);
+	Cmd_AddCommand("genequip", CL_GenerateEquipmentCmd, NULL);
+	Cmd_AddCommand("equip_type", CL_EquipTypeCmd, NULL);
+	Cmd_AddCommand("team_mark", CL_MarkTeamCmd, NULL);
+	Cmd_AddCommand("team_hire", CL_AssignSoldierCmd, NULL);
+	Cmd_AddCommand("team_select", CL_SelectCmd, NULL);
+	Cmd_AddCommand("team_changename", CL_ChangeNameCmd, NULL);
+	Cmd_AddCommand("team_changeskin", CL_ChangeSkinCmd, NULL);
+	Cmd_AddCommand("team_comments", CL_TeamCommentsCmd, NULL);
+	Cmd_AddCommand("equip_select", CL_SelectCmd, NULL);
+	Cmd_AddCommand("soldier_select", CL_SelectCmd, NULL);
+	Cmd_AddCommand("saveteamslot", CL_SaveTeamSlotCmd, NULL);
+	Cmd_AddCommand("loadteamslot", CL_LoadTeamSlotCmd, NULL);
+	Cmd_AddCommand("msgmenu", CL_MessageMenuCmd, NULL);
 }
 
 
@@ -1441,10 +1441,10 @@ void CL_ParseResults(sizebuf_t * buf)
 		else
 			Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Enemies killed\t%i\n"), kills);
 		ccs.aliensKilled += kills;
-		
+
 		for (i = 1, res = 0; i < num; i++)
 			res += (i == we) ? 0 : num_alive[i];
-		
+
 		if (curCampaign)
 			Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), res), sizeof(resultText));
 		else
@@ -1454,17 +1454,17 @@ void CL_ParseResults(sizebuf_t * buf)
 		Q_strcat(resultText, va(_("Team losses\t%i\n"), num_spawned[we] - num_alive[we]), sizeof(resultText));
 		Q_strcat(resultText, va(_("Friendly fire losses\t%i\n"), num_kills[we][we]), sizeof(resultText));
 		Q_strcat(resultText, va(_("Team survivors\t%i\n\n"), num_alive[we]), sizeof(resultText));
-		
+
 		/* kill civilians on campaign, if not won */
 		if (curCampaign && num_alive[TEAM_CIVILIAN] && winner != we) {
 			num_kills[TEAM_ALIEN][TEAM_CIVILIAN] += num_alive[TEAM_CIVILIAN];
 			num_alive[TEAM_CIVILIAN] = 0;
 		}
-		
+
 		/* civilian stats */
 		for (i = 1, res = 0; i < num; i++)
 			res += (i == we) ? 0 : num_kills[i][TEAM_CIVILIAN];
-		
+
 		if (curCampaign)
 			Q_strcat(resultText, va(_("Civilians killed by the Aliens\t%i\n"), res), sizeof(resultText));
 		else
@@ -1482,27 +1482,27 @@ void CL_ParseResults(sizebuf_t * buf)
 
 		/* loot the battlefield */
 		CL_CollectItems(winner == we);
-	
-		/* check for stunned aliens; 
+
+		/* check for stunned aliens;
 		   TODO: make this reversible, like CL_CollectItems above */
 		if (winner == we)
 			CL_CollectAliens();
-	
+
 		/* alien deaths */
 		for (i = 0, kills = 0; i < num; i++)
 			kills += num_kills[i][TEAM_ALIEN];
-		
+
 		/* needs to be cleared and then append to it */
 		Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Aliens killed\t%i\n"), kills);
 		ccs.aliensKilled += kills;
-		
+
 		Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), num_alive[TEAM_ALIEN]), sizeof(resultText));
-		
+
 		/* team stats */
 		Q_strcat(resultText, va(_("Phalanx soldiers killed by Aliens\t%i\n"), num_spawned[we] - num_alive[we] - num_kills[we][we] - num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
 		Q_strcat(resultText, va(_("Phalanx friendly fire losses\t%i\n"), num_kills[we][we] + num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
 		Q_strcat(resultText, va(_("Phalanx survivors\t%i\n\n"), num_alive[we]), sizeof(resultText));
-		
+
 		/* kill civilians on campaign, if not won */
 		if (num_alive[TEAM_CIVILIAN] && winner != we) {
 			num_kills[TEAM_ALIEN][TEAM_CIVILIAN] += num_alive[TEAM_CIVILIAN];
@@ -1522,13 +1522,13 @@ void CL_ParseResults(sizebuf_t * buf)
 	}
 	/* show win screen */
 	if (winner == we)
-		MN_PushMenu("won"); 
+		MN_PushMenu("won");
 	else
 		MN_PushMenu("lost");
 
 	/* we can safely wipe all mission data now */
-	/* TODO: I don't understand how this works 
-	   and why, when I move this to CL_GameResultsCmd, 
+	/* TODO: I don't understand how this works
+	   and why, when I move this to CL_GameResultsCmd,
 	   the "won" menu get's garbled at "killteam 7" */
  	Cbuf_AddText("disconnect\n");
 	Cbuf_Execute();

@@ -445,25 +445,25 @@ void SV_ListMaps_f(void)
  */
 void SV_InitOperatorCommands(void)
 {
-	Cmd_AddCommand("heartbeat", SV_Heartbeat_f);
-	Cmd_AddCommand("kick", SV_Kick_f);
-	Cmd_AddCommand("status", SV_Status_f);
-	Cmd_AddCommand("serverinfo", SV_Serverinfo_f);
-	Cmd_AddCommand("dumpuser", SV_DumpUser_f);
+	Cmd_AddCommand("heartbeat", SV_Heartbeat_f, NULL);
+	Cmd_AddCommand("kick", SV_Kick_f, NULL);
+	Cmd_AddCommand("status", SV_Status_f, NULL);
+	Cmd_AddCommand("serverinfo", SV_Serverinfo_f, NULL);
+	Cmd_AddCommand("dumpuser", SV_DumpUser_f, NULL);
 
-	Cmd_AddCommand("map", SV_Map_f);
-/*	Cmd_AddCommand ("demomap", SV_DemoMap_f);*/
-	Cmd_AddCommand("maplist", SV_ListMaps_f);
+	Cmd_AddCommand("map", SV_Map_f, NULL);
+/*	Cmd_AddCommand ("demomap", SV_DemoMap_f, NULL);*/
+	Cmd_AddCommand("maplist", SV_ListMaps_f, NULL);
 
-	Cmd_AddCommand("setmaster", SV_SetMaster_f);
+	Cmd_AddCommand("setmaster", SV_SetMaster_f, NULL);
 
 	if (dedicated->value)
-		Cmd_AddCommand("say", SV_ConSay_f);
+		Cmd_AddCommand("say", SV_ConSay_f, NULL);
 
-	Cmd_AddCommand("serverrecord", SV_ServerRecord_f);
-	Cmd_AddCommand("serverstop", SV_ServerStop_f);
+	Cmd_AddCommand("serverrecord", SV_ServerRecord_f, NULL);
+	Cmd_AddCommand("serverstop", SV_ServerStop_f, NULL);
 
-	Cmd_AddCommand("killserver", SV_KillServer_f);
+	Cmd_AddCommand("killserver", SV_KillServer_f, NULL);
 
-	Cmd_AddCommand("sv", SV_ServerCommand_f);
+	Cmd_AddCommand("sv", SV_ServerCommand_f, NULL);
 }

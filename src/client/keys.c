@@ -709,10 +709,10 @@ void Key_Init(void)
 		menubound[K_F1 + i] = qtrue;
 
 	/* register our functions */
-	Cmd_AddCommand("bind", Key_Bind_f);
-	Cmd_AddCommand("unbind", Key_Unbind_f);
-	Cmd_AddCommand("unbindall", Key_Unbindall_f);
-	Cmd_AddCommand("bindlist", Key_Bindlist_f);
+	Cmd_AddCommand("bind", Key_Bind_f, NULL);
+	Cmd_AddCommand("unbind", Key_Unbind_f, NULL);
+	Cmd_AddCommand("unbindall", Key_Unbindall_f, NULL);
+	Cmd_AddCommand("bindlist", Key_Bindlist_f, NULL);
 }
 
 /**

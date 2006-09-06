@@ -656,7 +656,7 @@ void Cmd_TokenizeString(char *text, qboolean macroExpand)
  * @param[in] function The function pointer
  * @sa Cmd_RemoveCommand
  */
-void Cmd_AddCommand(char *cmd_name, xcommand_t function)
+void Cmd_AddCommand(char *cmd_name, xcommand_t function, char *desc)
 {
 	cmd_function_t *cmd;
 
@@ -857,11 +857,11 @@ void Cmd_List_f(void)
 void Cmd_Init(void)
 {
 	/* register our commands */
-	Cmd_AddCommand("cmdlist", Cmd_List_f);
-	Cmd_AddCommand("exec", Cmd_Exec_f);
-	Cmd_AddCommand("echo", Cmd_Echo_f);
-	Cmd_AddCommand("alias", Cmd_Alias_f);
-	Cmd_AddCommand("wait", Cmd_Wait_f);
-	Cmd_AddCommand("cmdclose", Cmd_Close_f);
-	Cmd_AddCommand("cmdopen", Cmd_Open_f);
+	Cmd_AddCommand("cmdlist", Cmd_List_f, NULL);
+	Cmd_AddCommand("exec", Cmd_Exec_f, NULL);
+	Cmd_AddCommand("echo", Cmd_Echo_f, NULL);
+	Cmd_AddCommand("alias", Cmd_Alias_f, NULL);
+	Cmd_AddCommand("wait", Cmd_Wait_f, NULL);
+	Cmd_AddCommand("cmdclose", Cmd_Close_f, NULL);
+	Cmd_AddCommand("cmdopen", Cmd_Open_f, NULL);
 }

@@ -49,7 +49,7 @@ void B_ResetBuildingCurrent(void)
 		return;
 	}
 
-	if (Cmd_Argc() > 1) 
+	if (Cmd_Argc() > 1)
 		gd.instant_build = atoi(Cmd_Argv(1));
 
 	if (baseCurrent) {
@@ -1091,7 +1091,7 @@ void B_ParseBases(char *title, char **text)
 		gd.numBaseNames++;
 	} while (*text);
 
-	mn_base_title = Cvar_Get("mn_base_title", "", 0);
+	mn_base_title = Cvar_Get("mn_base_title", "", 0, NULL);
 }
 
 /**
@@ -1329,7 +1329,7 @@ void B_SelectBase(void)
 /**
  * @brief Assigns initial team of soldiers with equipment to aircraft
  */
-static void B_AssignInitialCmd(void)
+static void B_AssignInitial_f(void)
 {
 	int i;
 
@@ -1351,7 +1351,7 @@ static void B_AssignInitialCmd(void)
 /**
  * @brief Assigns initial soldier equipment for the first base
  */
-static void B_PackInitialEquipmentCmd(void)
+static void B_PackInitialEquipment_f(void)
 {
 	int i, price = 0;
 	equipDef_t *ed;
@@ -1371,12 +1371,12 @@ static void B_PackInitialEquipmentCmd(void)
 		if (!Q_strncmp(name, ed->name, MAX_VAR))
 			break;
 	if (i == csi.numEDs) {
-		Com_DPrintf("B_PackInitialEquipmentCmd: Initial Phalanx equipment %s not found.\n", name);
+		Com_DPrintf("B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
 	} else {
 		for (i = 0; i < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; i++) {
 			cp = baseCurrent->curTeam[i];
 			/* pack equipment */
-			Com_DPrintf("B_PackInitialEquipmentCmd: Packing initial equipment for %s.\n", cp->name);
+			Com_DPrintf("B_PackInitialEquipment_f: Packing initial equipment for %s.\n", cp->name);
 			Com_EquipActor(cp->inv, ed->num, name);
 		}
 		CL_AddCarriedToEq(&baseCurrent->storage);
@@ -1737,7 +1737,7 @@ static void B_SetBaseTitle(void)
  * Copies the value of the cvar mn_base_title over as the name of the
  * current selected base
  */
-static void B_ChangeBaseNameCmd(void)
+static void B_ChangeBaseName_f(void)
 {
 	/* maybe called without base initialized or active */
 	if (!baseCurrent)
@@ -1762,30 +1762,30 @@ void B_ResetBaseManagement(void)
 	Com_DPrintf("Reset basemanagement\n");
 
 	/* add commands and cvars */
-	Cmd_AddCommand("mn_prev_base", B_PrevBase);
-	Cmd_AddCommand("mn_next_base", B_NextBase);
-	Cmd_AddCommand("mn_select_base", B_SelectBase);
-	Cmd_AddCommand("mn_build_base", B_BuildBase);
-	Cmd_AddCommand("new_building", B_NewBuildingFromList);
-	Cmd_AddCommand("set_building", B_SetBuilding);
-	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle);
-	Cmd_AddCommand("bases_check_max", B_CheckMaxBases_f);
-	Cmd_AddCommand("rename_base", B_RenameBase);
-	Cmd_AddCommand("base_attack", B_BaseAttack_f);
-	Cmd_AddCommand("base_changename", B_ChangeBaseNameCmd);
-	Cmd_AddCommand("base_init", B_BaseInit);
-	Cmd_AddCommand("base_assemble", B_AssembleMap);
-	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase);
-	Cmd_AddCommand("building_init", B_BuildingInit);
-	Cmd_AddCommand("building_status", B_BuildingStatus);
-	Cmd_AddCommand("buildinginfo_click", B_BuildingInfoClick_f);
-	Cmd_AddCommand("buildings_click", B_BuildingClick_f);
-	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent);
-	Cmd_AddCommand("baselist", B_BaseList_f);
-	Cmd_AddCommand("buildinglist", B_BuildingList_f);
-	Cmd_AddCommand("pack_initial", B_PackInitialEquipmentCmd);
-	Cmd_AddCommand("assign_initial", B_AssignInitialCmd);
-	mn_base_count = Cvar_Get("mn_base_count", "0", 0);
+	Cmd_AddCommand("mn_prev_base", B_PrevBase, NULL);
+	Cmd_AddCommand("mn_next_base", B_NextBase, NULL);
+	Cmd_AddCommand("mn_select_base", B_SelectBase, NULL);
+	Cmd_AddCommand("mn_build_base", B_BuildBase, NULL);
+	Cmd_AddCommand("new_building", B_NewBuildingFromList, NULL);
+	Cmd_AddCommand("set_building", B_SetBuilding, NULL);
+	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle, NULL);
+	Cmd_AddCommand("bases_check_max", B_CheckMaxBases_f, NULL);
+	Cmd_AddCommand("rename_base", B_RenameBase, NULL);
+	Cmd_AddCommand("base_attack", B_BaseAttack_f, NULL);
+	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, NULL);
+	Cmd_AddCommand("base_init", B_BaseInit, NULL);
+	Cmd_AddCommand("base_assemble", B_AssembleMap, NULL);
+	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase, NULL);
+	Cmd_AddCommand("building_init", B_BuildingInit, NULL);
+	Cmd_AddCommand("building_status", B_BuildingStatus, NULL);
+	Cmd_AddCommand("buildinginfo_click", B_BuildingInfoClick_f, NULL);
+	Cmd_AddCommand("buildings_click", B_BuildingClick_f, NULL);
+	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent, NULL);
+	Cmd_AddCommand("baselist", B_BaseList_f, NULL);
+	Cmd_AddCommand("buildinglist", B_BuildingList_f, NULL);
+	Cmd_AddCommand("pack_initial", B_PackInitialEquipment_f, NULL);
+	Cmd_AddCommand("assign_initial", B_AssignInitial_f, NULL);
+	mn_base_count = Cvar_Get("mn_base_count", "0", 0, NULL);
 }
 
 /**

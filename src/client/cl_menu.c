@@ -644,27 +644,27 @@ static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
 		/* menuIfCondition_t */
 		switch (node->depends.cond) {
 		case IF_EQ:
-			if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0)->value)
+			if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value)
 				return qfalse;
 			break;
 		case IF_LE:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value > atof(node->depends.value))
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value > atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_GE:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value < atof(node->depends.value))
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value < atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_GT:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value <= atof(node->depends.value))
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value <= atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_LT:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value >= atof(node->depends.value))
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value >= atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_NE:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value == atof(node->depends.value))
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value == atof(node->depends.value))
 				return qfalse;
 			break;
 		default:
@@ -1031,7 +1031,7 @@ static qboolean MN_TextScroll(menuNode_t *node, int offset)
 		node->textScroll = 0;
 		return qfalse;
 	}
-	
+
 	if (node->textLines <= node->height ) {
 		/* Number of lines are less tehan the height of the textbox. */
 		node->textScroll = 0;
@@ -1452,27 +1452,27 @@ void MN_DrawMenus(void)
 					/* menuIfCondition_t */
 					switch (node->depends.cond) {
 					case IF_EQ:
-						if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0)->value)
+						if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value)
 							continue;
 						break;
 					case IF_LE:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value > atof(node->depends.value))
+						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value > atof(node->depends.value))
 							continue;
 						break;
 					case IF_GE:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value < atof(node->depends.value))
+						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value < atof(node->depends.value))
 							continue;
 						break;
 					case IF_GT:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value <= atof(node->depends.value))
+						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value <= atof(node->depends.value))
 							continue;
 						break;
 					case IF_LT:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value >= atof(node->depends.value))
+						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value >= atof(node->depends.value))
 							continue;
 						break;
 					case IF_NE:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value == atof(node->depends.value))
+						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value == atof(node->depends.value))
 							continue;
 						break;
 					default:
@@ -2295,32 +2295,32 @@ void MN_ResetMenus(void)
 	numTutorials = 0;
 
 	/* add commands */
-	mn_escpop = Cvar_Get("mn_escpop", "1", 0);
+	mn_escpop = Cvar_Get("mn_escpop", "1", 0, NULL);
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_sequence", "sequence");
 
 	/* textbox */
-	Cmd_AddCommand("textscroll", MN_TextScroll_f);
+	Cmd_AddCommand("textscroll", MN_TextScroll_f, NULL);
 
-	Cmd_AddCommand("mn_resolution_change", MN_ResolutionChange_f);
+	Cmd_AddCommand("mn_resolution_change", MN_ResolutionChange_f, NULL);
 
 	/* tutorial stuff */
-	Cmd_AddCommand("listtutorials", MN_ListTutorials_f);
-	Cmd_AddCommand("gettutorials", MN_GetTutorials_f);
-	Cmd_AddCommand("tutoriallist_click", MN_TutorialListClick_f);
+	Cmd_AddCommand("listtutorials", MN_ListTutorials_f, NULL);
+	Cmd_AddCommand("gettutorials", MN_GetTutorials_f, NULL);
+	Cmd_AddCommand("tutoriallist_click", MN_TutorialListClick_f, NULL);
 
-	Cmd_AddCommand("getmaps", MN_GetMaps_f);
-	Cmd_AddCommand("mn_startserver", MN_StartServer);
-	Cmd_AddCommand("mn_nextmap", MN_NextMap);
-	Cmd_AddCommand("mn_prevmap", MN_PrevMap);
-	Cmd_AddCommand("mn_push", MN_PushMenu_f);
-	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f);
-	Cmd_AddCommand("mn_pop", MN_PopMenu_f);
-	Cmd_AddCommand("mn_modify", MN_Modify_f);
-	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f);
-	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f);
-	Cmd_AddCommand("mn_translate", MN_Translate_f);
-	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f);
+	Cmd_AddCommand("getmaps", MN_GetMaps_f, NULL);
+	Cmd_AddCommand("mn_startserver", MN_StartServer, NULL);
+	Cmd_AddCommand("mn_nextmap", MN_NextMap, NULL);
+	Cmd_AddCommand("mn_prevmap", MN_PrevMap, NULL);
+	Cmd_AddCommand("mn_push", MN_PushMenu_f, NULL);
+	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
+	Cmd_AddCommand("mn_pop", MN_PopMenu_f, NULL);
+	Cmd_AddCommand("mn_modify", MN_Modify_f, NULL);
+	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f, NULL);
+	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f, NULL);
+	Cmd_AddCommand("mn_translate", MN_Translate_f, NULL);
+	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 	/* get action data memory */
 	if (adataize)
 		memset(adata, 0, adataize);
@@ -2546,7 +2546,7 @@ qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 		memset(*action, 0, sizeof(menuAction_t));
 
 		if (node->type == MN_CONFUNC)
-			Cmd_AddCommand(node->name, MN_Command);
+			Cmd_AddCommand(node->name, MN_Command, NULL);
 
 		return MN_ParseAction(*action, text, token);
 	}

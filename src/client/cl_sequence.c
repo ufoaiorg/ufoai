@@ -396,7 +396,7 @@ void CL_SequenceStart_f(void)
 void CL_ResetSequences(void)
 {
 	/* reset counters */
-	seq_animspeed = Cvar_Get("seq_animspeed", "1000", 0);
+	seq_animspeed = Cvar_Get("seq_animspeed", "1000", 0, NULL);
 	numSequences = 0;
 	numSeqCmds = 0;
 	numSeqEnts = 0;

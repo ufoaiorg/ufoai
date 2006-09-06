@@ -327,31 +327,29 @@ void SCR_SizeDown_f(void)
 
 /*============================================================================ */
 
-/*
-==================
-SCR_Init
-==================
-*/
+/**
+ * @brief
+ */
 void SCR_Init(void)
 {
-	scr_viewsize = Cvar_Get("viewsize", "100", CVAR_ARCHIVE);
-	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0);
-	scr_consize = Cvar_Get("scr_consize", "1.0", 0);
-	scr_showpause = Cvar_Get("scr_showpause", "1", 0);
-	scr_centertime = Cvar_Get("scr_centertime", "2.5", 0);
-	scr_netgraph = Cvar_Get("netgraph", "0", 0);
-	scr_timegraph = Cvar_Get("timegraph", "0", 0);
-	scr_debuggraph = Cvar_Get("debuggraph", "0", 0);
-	scr_graphheight = Cvar_Get("graphheight", "32", 0);
-	scr_graphscale = Cvar_Get("graphscale", "1", 0);
-	scr_graphshift = Cvar_Get("graphshift", "0", 0);
-	scr_drawall = Cvar_Get("scr_drawall", "0", 0);
+	scr_viewsize = Cvar_Get("viewsize", "100", CVAR_ARCHIVE, NULL);
+	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, NULL);
+	scr_consize = Cvar_Get("scr_consize", "1.0", 0, NULL);
+	scr_showpause = Cvar_Get("scr_showpause", "1", 0, NULL);
+	scr_centertime = Cvar_Get("scr_centertime", "2.5", 0, NULL);
+	scr_netgraph = Cvar_Get("netgraph", "0", 0, NULL);
+	scr_timegraph = Cvar_Get("timegraph", "0", 0, NULL);
+	scr_debuggraph = Cvar_Get("debuggraph", "0", 0, NULL);
+	scr_graphheight = Cvar_Get("graphheight", "32", 0, NULL);
+	scr_graphscale = Cvar_Get("graphscale", "1", 0, NULL);
+	scr_graphshift = Cvar_Get("graphshift", "0", 0, NULL);
+	scr_drawall = Cvar_Get("scr_drawall", "0", 0, NULL);
 
 	/* register our commands */
-	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f);
-	Cmd_AddCommand("loading", SCR_Loading_f);
-	Cmd_AddCommand("sizeup", SCR_SizeUp_f);
-	Cmd_AddCommand("sizedown", SCR_SizeDown_f);
+	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f, NULL);
+	Cmd_AddCommand("loading", SCR_Loading_f, NULL);
+	Cmd_AddCommand("sizeup", SCR_SizeUp_f, NULL);
+	Cmd_AddCommand("sizedown", SCR_SizeDown_f, NULL);
 
 	SCR_TouchPics();
 
@@ -359,11 +357,9 @@ void SCR_Init(void)
 }
 
 
-/*
-==============
-SCR_DrawNet
-==============
-*/
+/**
+ * @brief
+ */
 void SCR_DrawNet(void)
 {
 	if (cls.netchan.outgoing_sequence - cls.netchan.incoming_acknowledged < CMD_BACKUP - 1)
@@ -372,11 +368,9 @@ void SCR_DrawNet(void)
 	re.DrawPic(scr_vrect.x + 64, scr_vrect.y, "net");
 }
 
-/*
-==============
-SCR_DrawPause
-==============
-*/
+/**
+ * @brief
+ */
 void SCR_DrawPause(void)
 {
 	int w, h;
@@ -392,11 +386,9 @@ void SCR_DrawPause(void)
 	re.DrawPic((viddef.width - w) / 2, viddef.height / 2 + 8, "pause");
 }
 
-/*
-==============
-SCR_DrawLoading
-==============
-*/
+/**
+ * @brief
+ */
 void SCR_DrawLoading(void)
 {
 	int w, h;

@@ -84,7 +84,7 @@ typedef struct cmdList_s {
 
 void Cmd_Init(void);
 
-void Cmd_AddCommand(char *cmd_name, xcommand_t function);
+void Cmd_AddCommand(char *cmd_name, xcommand_t function, char* desc);
 
 /* called by the init functions of other parts of the program to */
 /* register commands and functions to call for them. */

@@ -97,7 +97,7 @@ void Sys_Quit (void)
 
 void Sys_Init(void)
 {
-	Cvar_Get("sys_os", "irix", CVAR_SERVERINFO);
+	Cvar_Get("sys_os", "irix", CVAR_SERVERINFO, NULL);
 #if id386
 /*	Sys_SetFPCW(); */
 #endif
@@ -314,7 +314,7 @@ int main (int argc, char **argv)
 
 /* 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY); */
 
-	nostdout = Cvar_Get("nostdout", "0", 0);
+	nostdout = Cvar_Get("nostdout", "0", 0, NULL);
 	if (!nostdout->value) {
 /* 		fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY); */
 	}
