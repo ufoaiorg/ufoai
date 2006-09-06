@@ -43,13 +43,16 @@ use constant FORMAT => (
 	OffsetExtractEnd	=> 'I',	# offset
 
 	TagName			=> ['a64', '{$NumTags}', 1 ],	# 64chars * NumTags
-#	Data			=> ['a4', '{$NumTags*$NumFrames}', 1 ]	# 4chars * NumTags * NumFrames
-	Data			=> 'a*'		# the whole rest
+	Data			=> ['a16', '{$NumTags*$NumFrames}', 1 ]	# 4chars * 4 * NumTags * NumFrames
 );
 
 package TagName;
 use base 'Parse::Binary';
 use constant FORMAT => ('a64');
+
+package Data;
+use base 'Parse::Binary';
+use constant FORMAT => ('a16');
 
 
 #######################################
@@ -74,6 +77,12 @@ die "File has wrong format version \"".$md2tag_file->Version."\".\n" unless ($md
 
 print $md2tag_file->NumTags, " Tags found\n";
 print $md2tag_file->NumFrames, " Frames found\n";
+print $md2tag_file->NumFrames, " Tagnames:\n";
+
+for (my $i = 0; $i < $md2tag_file->NumTags; $i++) {
+	print "- $md2tag_file->TagData->[$i][0]\n"; #only debug
+	print "- ".$md2tag_file->TagData->[$i][0]."\n";
+}
 
 __END__
 
