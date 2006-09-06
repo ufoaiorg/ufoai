@@ -3304,13 +3304,16 @@ static void CL_GameNew(void)
 		return;
 	}
 
+	Cvar_Set("team", curCampaign->team);
+
 	/* difficulty */
+	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
+	Cvar_ForceSet("difficulty", val);
+
 	if ((int) difficulty->value < -4)
 		Cvar_ForceSet("difficulty", "-4");
 	else if ((int) difficulty->value > 4)
 		Cvar_ForceSet("difficulty", "4");
-	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
-	Cvar_ForceSet("difficulty", val);
 
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
 	if (!maskPic)
