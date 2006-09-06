@@ -1158,12 +1158,12 @@ void CL_InitLocal(void)
 	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE, NULL);
 	cl_markactors = Cvar_Get("cl_markactors", "1", CVAR_ARCHIVE, NULL);
 
-	cl_precachemenus = Cvar_Get("cl_precachemenus", "0", CVAR_ARCHIVE, NULL);
+	cl_precachemenus = Cvar_Get("cl_precachemenus", "0", CVAR_ARCHIVE, "Precache all menus at startup");
 
-	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "25", CVAR_ARCHIVE, NULL);
-	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE, NULL);
+	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "25", CVAR_ARCHIVE, "AVI recording - see video command");
+	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE, "AVI recording - see video command");
 
-	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, NULL);
+	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
 	cl_timeout = Cvar_Get("cl_timeout", "120", 0, NULL);
 	cl_paused = Cvar_Get("paused", "0", 0, NULL);
@@ -1212,7 +1212,7 @@ void CL_InitLocal(void)
 	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, NULL);
 
 	/* register our commands */
-	Cmd_AddCommand("cmd", CL_ForwardToServer_f, NULL);
+	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
 	Cmd_AddCommand("pause", CL_Pause_f, NULL);
 	Cmd_AddCommand("pingservers", CL_PingServers_f, NULL);
 
@@ -1225,15 +1225,15 @@ void CL_InitLocal(void)
 	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, NULL);
 
 	Cmd_AddCommand("userinfo", CL_Userinfo_f, NULL);
-	Cmd_AddCommand("snd_restart", CL_Snd_Restart_f, NULL);
+	Cmd_AddCommand("snd_restart", CL_Snd_Restart_f, "Restart the sound renderer");
 
 	Cmd_AddCommand("changing", CL_Changing_f, NULL);
 	Cmd_AddCommand("disconnect", CL_Disconnect_f, NULL);
 
-	Cmd_AddCommand("quit", CL_Quit_f, NULL);
+	Cmd_AddCommand("quit", CL_Quit_f, "Quits the game");
 
-	Cmd_AddCommand("connect", CL_Connect_f, NULL);
-	Cmd_AddCommand("reconnect", CL_Reconnect_f, NULL);
+	Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
+	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
 
 	Cmd_AddCommand("rcon", CL_Rcon_f, NULL);
 
@@ -1246,8 +1246,8 @@ void CL_InitLocal(void)
 	Cmd_AddCommand("seq_start", CL_SequenceStart_f, NULL);
 	Cmd_AddCommand("seq_end", CL_SequenceEnd_f, NULL);
 
-	Cmd_AddCommand("video", CL_Video_f, NULL);
-	Cmd_AddCommand("stopvideo", CL_StopVideo_f, NULL);
+	Cmd_AddCommand("video", CL_Video_f, "Enable AVI recording - see stopvideo");
+	Cmd_AddCommand("stopvideo", CL_StopVideo_f, "Disable AVI recording - see video");
 
 	/* forward to server commands */
 	/* the only thing this does is allow command completion */
