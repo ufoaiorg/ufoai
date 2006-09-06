@@ -461,9 +461,6 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 	/* spawn players */
 	for (j = 0; j < numSpawn; j++) {
-		item_t item = {0,NONE,NONE};
-		char *ref = NULL;
-
 		assert (numPoints > 0);
 		/* select spawnpoint */
 		while (ent->type != ET_ACTORSPAWN)
@@ -477,29 +474,13 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 		if (team != TEAM_CIVILIAN) {
 			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_alien"), &ent->chr);
 
-			/* search the armor definition */
-			ref = gi.cvar_string("ai_armor");
-			if (ref && *ref) {
-				for (item.t = 0; item.t < gi.csi->numODs; item.t++)
-					if (!Q_strncmp(ref, gi.csi->ods[item.t].kurz, MAX_VAR))
-						break;
-
-				/* found */
-				if (item.t < gi.csi->numODs && item.t != NONE) {
-					if (!Q_strncmp(gi.csi->ods[item.t].type, "armor", MAX_VAR))
-						Com_AddToInventory(&ent->i, item, gi.csi->idArmor, 0, 0);
-					else
-						Com_Printf("No valid alien armor '%s'\n", ref);
-				}
-			}
-
 			/* FIXME: chr.name should be Alien: Ortnok e.g. */
 			Q_strncpyz(ent->chr.name, _("Alien"), MAX_VAR);
 			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
 			gi.linkentity(ent);
 
-			/* skills */
+			/* skills; TODO: more power to Ortnoks, more mind to Antareans */
 			Com_CharGenAbilitySkills(&ent->chr, 0, 100, 0, 100);
 			ent->chr.skills[ABILITY_MIND] += 100;
 			if (ent->chr.skills[ABILITY_MIND] >= MAX_SKILL)
