@@ -2368,10 +2368,6 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 			Com_AddToInventory(i, cacheItem, from, fx, fy);
 			return IA_NOTIME;
 		}
-
-		/* impossible move - back to source location */
-		Com_AddToInventory(i, cacheItem, from, fx, fy);
-		return IA_NONE;
 	} else {
 		/* successful */
 		if (TU)
@@ -2389,8 +2385,10 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 		} else
 			return IA_MOVE;
 	}
-	Sys_Error("Com_MoveInInventory invalid exit");
-	return -1;
+
+	/* impossible move - back to source location */
+	Com_AddToInventory(i, cacheItem, from, fx, fy);
+	return IA_NONE;
 }
 
 /**
