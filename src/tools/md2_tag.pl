@@ -31,20 +31,26 @@ package MD2_tag;
 use base 'Parse::Binary';
 
 use constant FORMAT => (
-	Indent		=> 'I',		#
-	Version		=> 'I',		# tag version. must be equal to 1
+	Indent		=> 'I',			# should be 844121162
+	Version		=> 'I',			# tag version. must be equal to 1
 
-	NumTags		=> 'I',		# number of textures
+	NumTags		=> 'I',			# number of textures
 	NumFrames		=> 'I',		# number of vertices (x,y,z)
 
-	OffsetNames		=> 'I',		# offset to skin names (64 bytes each)
-	OffsetTags		=> 'I',		# offset to s-t texture coordinates
-	OffsetEnd		=> 'I',		# offset to triangles
-	OffsetExtractEnd	=> 'I',		# offset to frame data
+	OffsetNames		=> 'I',		# offset to tag names (64 bytes each)
+	OffsetTags		=> 'I',		# offset
+	OffsetEnd		=> 'I',		# offset
+	OffsetExtractEnd	=> 'I',	# offset
 
+	TagName			=> ['a64', '{$NumTags}', 1 ],	# 64chars * NumTags
 #	Data			=> ['a4', '{$NumTags*$NumFrames}', 1 ]	# 4chars * NumTags * NumFrames
 	Data			=> 'a*'		# the whole rest
 );
+
+package TagName;
+use base 'Parse::Binary';
+use constant FORMAT => ('a64');
+
 
 #######################################
 # MAIN
@@ -62,6 +68,7 @@ if ( $#ARGV < 0 ) {
 # read .md2 file
 my $md2tag_file = MD2_tag->new($tagfile);
 
+die "File has wrong magic number \"".$md2tag_file->Indent."\".\n" unless ($md2tag_file->Indent == 844121162);
 die "File has wrong format version \"".$md2tag_file->Version."\".\n" unless ($md2tag_file->Version == 1);
 
 
