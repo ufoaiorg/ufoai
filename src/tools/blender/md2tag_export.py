@@ -422,6 +422,13 @@ def validation(object):
 	#model is OK
 	return True
 """
+# Apply a matrix to a vert and return a tuple.
+def apply_transform(verts, matrix):
+	x, y, z = verts
+	return\
+	x*matrix[0][0] + y*matrix[1][0] + z*matrix[2][0] + matrix[3][0],\
+	x*matrix[0][1] + y*matrix[1][1] + z*matrix[2][1] + matrix[3][1],\
+	x*matrix[0][2] + y*matrix[1][2] + z*matrix[2][2] + matrix[3][2]
 
 ######################################################
 # Fill MD2 data structure
@@ -444,9 +451,7 @@ def fill_md2_tags(md2_tags, object):
 	#header information
 	md2_tags.ident=844121162
 	md2_tags.version=1	
-	#md2_tags.num_tags=1
-	#md2_tags.num_frames+=1 #TODO: fill with correct nubmer (global, not everytime a obejct is handled)
-	
+	md2_tags.num_tags+=1
 
 #	offset_names=0
 #	offset_tags=0
@@ -477,177 +482,18 @@ def fill_md2_tags(md2_tags, object):
 	
 		# TODO: get xyz from object
 		tag_frames[frame_counter].Row1 = object.loc
-		tag_frames[frame_counter].Row2 = (0.0, 0.0, 0.0)
-		tag_frames[frame_counter].Row3 = (0.0, 0.0, 0.0)
-		tag_frames[frame_counter].Row4 = (0.0, 0.0, 0.0)
+					
+		# calculate local axes ... starting from loc (see http://wiki.blenderpython.org/index.php/Python_Cookbook#Apply_Matrix)
+		# Scale is ignored right now.
+		matrix=object.getMatrix()
+		tag_frames[frame_counter].Row3 = apply_transform((1.0,0.0,0.0), matrix) #calculate point (loc + local-X * 1 )
+		tag_frames[frame_counter].Row3 = apply_transform((0.0,1.0,0.0), matrix) #calculate point (loc + local-Y * 1 )
+		tag_frames[frame_counter].Row4 = apply_transform((0.0,0.0,1.0), matrix) #calculate point (loc + local-Z * 1 )
 
 	md2_tags.tags.append(tag_frames)
 
-# TODO: see below
-"""
-
-#	md2.skins[0].name=g_texture_path.val+Blender.sys.basename(mesh_image.getFilename())
-	if len(md2.skins[0].name)>64:
-		print "Texture Path and name is more than 64 characters"
-		result=Blender.Draw.PupMenu("Texture path and name is more than 64 characters-Quitting")
-		return False
-
-	#put texture information in the md2 structure
-	#build UV coord dictionary (prevents double entries-saves space)
-	for face in mesh.faces:
-		for i in range(0,3):
-			t=(face.uv[i])
-			tex_key=(t[0],t[1])
-			if not tex_list.has_key(tex_key):
-				tex_list[tex_key]=tex_count
-				tex_count+=1
-	md2.num_tex_coords=tex_count #each vert has its own UV coord
-
-	for this_tex in range (0, md2.num_tex_coords):
-		md2.tex_coords.append(md2_tex_coord())
-	for coord, index in tex_list.iteritems():
-		#md2.tex_coords.append(md2_tex_coord())
-		md2.tex_coords[index].u=int(coord[0]*md2.skin_width)
-		md2.tex_coords[index].v=int((1-coord[1])*md2.skin_height)
-
-	#put faces in the md2 structure
-	#for each face in the model
-	for this_face in range(0, md2.num_faces):
-		md2.faces.append(md2_face())
-		for i in range(0,3):
-			#blender uses indexed vertexes so this works very well
-			md2.faces[this_face].vertex_index[i]=mesh.faces[this_face].verts[i].index
-			#lookup texture index in dictionary
-			uv_coord=(mesh.faces[this_face].uv[i])
-			tex_key=(uv_coord[0],uv_coord[1])
-			tex_index=tex_list[tex_key]
-			md2.faces[this_face].texture_index[i]=tex_index
-	
-	Blender.Window.DrawProgressBar(0.5, "Computing GL Commands")
-
-	#compute GL commands
-#	md2.num_GL_commands=build_GL_commands(md2)
-
-	#get the frame data
-	#calculate 1 frame size  + (1 vert size*num_verts)
-	md2.frame_size=40+(md2.num_vertices*4) #in bytes
-	
-	#get the frame list
-	#user_frame_list=get_frame_list()
-	md2.num_frames=198
-	
-	progress=0.5
-	progressIncrement=0.25/md2.num_frames
-
-	#fill in each frame with frame info and all the vertex data for that frame
-	for frame_counter in range(0,md2.num_frames):
-		
-		progress+=progressIncrement
-		Blender.Window.DrawProgressBar(progress, "Calculating Frame: "+str(frame_counter))
-			
-		#add a frame
-		md2.frames.append(md2_frame())
-		#update the mesh objects vertex positions for the animation
-		Blender.Set("curframe", frame_counter)  #set blender to the correct frame
-		mesh.getFromObject(object.name)  #update the mesh to make verts current
-		
-#each frame has a scale and transform value that gets the vertex value between 0-255
-#since the scale and transform are the same for the all the verts in the frame, we only need
-#to figure this out once per frame
-		
-		#we need to start with the bounding box
-		bounding_box=object.getBoundBox() #uses the object, not the mesh data
-		#initialize with the first vertex for both min and max.  X and Y are swapped for MD2 format
-		point=bounding_box[0]
-		frame_min_x=point[1]
-		frame_max_x=point[1]
-		frame_min_y=point[0]
-		frame_max_y=point[0]
-		frame_min_z=point[2]
-		frame_max_z=point[2]
-		#find min/max values
-		for point in bounding_box:
-			if frame_min_x>point[1]: frame_min_x=point[1]
-			if frame_max_x<point[1]: frame_max_x=point[1]
-			if frame_min_y>point[0]: frame_min_y=point[0]
-			if frame_max_y<point[0]: frame_max_y=point[0]
-			if frame_min_z>point[2]: frame_min_z=point[2]
-			if frame_max_z<point[2]: frame_max_z=point[2]
-
-		#the scale is the difference between the min and max (on that axis) / 255
-		frame_scale_x=(frame_max_x-frame_min_x)/255
-		frame_scale_y=(frame_max_y-frame_min_y)/255
-		frame_scale_z=(frame_max_z-frame_min_z)/255
-		
-		#translate value of the mesh to center it on the origin
-		frame_trans_x=frame_min_x
-		frame_trans_y=frame_min_y
-		frame_trans_z=frame_min_z
-		
-		#fill in the data
-		md2.frames[frame_counter].scale=(-frame_scale_x, frame_scale_y, frame_scale_z)
-		md2.frames[frame_counter].translate=(-frame_trans_x, frame_trans_y, frame_trans_z)
-		
-		#now for the vertices
-		for vert_counter in range(0, md2.num_vertices):
-			#add a vertex to the md2 structure
-			md2.frames[frame_counter].vertices.append(md2_point())
-			#figure out the new coords based on scale and transform
-			#then translates the point so it's not less than 0
-			#then scale it so it's between 0..255
-			new_x=int((mesh.verts[vert_counter].co[1]-frame_trans_x)/frame_scale_x)
-			new_y=int((mesh.verts[vert_counter].co[0]-frame_trans_y)/frame_scale_y)
-			new_z=int((mesh.verts[vert_counter].co[2]-frame_trans_z)/frame_scale_z)
-			#put them in the structure
-			md2.frames[frame_counter].vertices[vert_counter].vertices=(new_x, new_y, new_z)
-
-			#need to add the lookup table check here
-			maxdot = -999999.0;
-			maxdotindex = -1;
-
-			for j in range(0,162):
-				#dot = (x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
-				#swap y and x for difference in axis orientation 
-				x1=-mesh.verts[vert_counter].no[1]
-				y1=mesh.verts[vert_counter].no[0]
-				z1=mesh.verts[vert_counter].no[2]
-				dot = (x1*MD2_NORMALS[j][0]+
-				       y1*MD2_NORMALS[j][1]+
-							 z1*MD2_NORMALS[j][2]);
-				if (dot > maxdot):
-					maxdot = dot;
-					maxdotindex = j;
-			
-			md2.frames[frame_counter].vertices[vert_counter].lightnormalindex=maxdotindex
-			
-			del maxdot, maxdotindex
-			del new_x, new_y, new_z
-		del frame_max_x, frame_max_y, frame_max_z, frame_min_x, frame_min_y, frame_min_z
-		del frame_scale_x, frame_scale_y, frame_scale_z, frame_trans_x, frame_trans_y, frame_trans_z			
-			
-			
-	#output all the frame names-user_frame_list is loaded during the validation
-	for frame_set in user_frame_list:
-		for counter in range(frame_set[1]-1, frame_set[2]):
-			md2.frames[counter].name=frame_set[0]+"_"+str(counter-frame_set[1]+2)
-
-	#compute these after everthing is loaded into a md2 structure
-	header_size=17*4 #17 integers, and each integer is 4 bytes
-	skin_size=64*md2.num_skins #64 char per skin * number of skins
-	tex_coord_size=4*md2.num_tex_coords #2 short * number of texture coords
-	face_size=12*md2.num_faces #3 shorts for vertex index, 3 shorts for tex index
-	frames_size=(((12+12+16)+(4*md2.num_vertices)) * md2.num_frames) #frame info+verts per frame*num frames
-#	GL_command_size=md2.num_GL_commands*4 #each is an int or float, so 4 bytes per
-	
-	#fill in the info about offsets
-	md2.offset_skins=0+header_size
-	md2.offset_tex_coords=md2.offset_skins+skin_size
-	md2.offset_faces=md2.offset_tex_coords+tex_coord_size
-	md2.offset_frames=md2.offset_faces+face_size
-#	md2.offset_GL_commands=md2.offset_frames+frames_size
-#	md2.offset_end=md2.offset_GL_commands+GL_command_size
-
-"""
+	md2_tags.offset_tags += 64 # one string 64 bytes??? (see tag_name)
+	md2_tags.offset_end = md2_tags.offset_tags + (12 * 4 * md2_tags.num_frames) # 12 floats each 4 byte ??? for every frame
 
 """
 ######################################################
@@ -962,6 +808,10 @@ def save_md2_tags(filename):
 	md2_tags.num_frames=g_frames.val
 	print "Frames to export: ",md2_tags.num_frames
 	
+	header_size=8*4	#8 integers, and each integer is 4 bytes
+	md2_tags.offset_names=0+header_size
+	md2_tags.offset_tags=md2_tags.offset_names+0
+	
 	for object in mesh_objs:
 		#check if it's an "Empty" mesh object
 		if object.getType()!="Empty":
@@ -973,16 +823,40 @@ def save_md2_tags(filename):
 			#	print "Ignoring invalid 'Empty' object."
 			#else:
 			fill_md2_tags(md2_tags, object)
-			md2_tags.dump()
-			
+
 			Blender.Window.DrawProgressBar(1.0, "Writing to Disk")
-			
-			#actually write it to disk
-			file=open(filename,"wb")
-			md2_tags.save(file)
-			file.close()
-			
-			#cleanup
-			md2_tags=0
-			
-			print "Closed the file"
+
+	md2_tags.dump()
+	#actually write it to disk
+	file=open(filename,"wb")
+	md2_tags.save(file)
+	file.close()
+	
+	#cleanup
+	md2_tags=0
+	
+	print "Closed the file"
+
+"""
+	#output all the frame names-user_frame_list is loaded during the validation
+	for frame_set in user_frame_list:
+		for counter in range(frame_set[1]-1, frame_set[2]):
+			md2.frames[counter].name=frame_set[0]+"_"+str(counter-frame_set[1]+2)
+
+	#compute these after everthing is loaded into a md2 structure
+	header_size=17*4 #17 integers, and each integer is 4 bytes
+	skin_size=64*md2.num_skins #64 char per skin * number of skins
+	tex_coord_size=4*md2.num_tex_coords #2 short * number of texture coords
+	face_size=12*md2.num_faces #3 shorts for vertex index, 3 shorts for tex index
+	frames_size=(((12+12+16)+(4*md2.num_vertices)) * md2.num_frames) #frame info+verts per frame*num frames
+#	GL_command_size=md2.num_GL_commands*4 #each is an int or float, so 4 bytes per
+	
+	#fill in the info about offsets
+	md2.offset_skins=0+header_size
+	md2.offset_tex_coords=md2.offset_skins+skin_size
+	md2.offset_faces=md2.offset_tex_coords+tex_coord_size
+	md2.offset_frames=md2.offset_faces+face_size
+#	md2.offset_GL_commands=md2.offset_frames+frames_size
+#	md2.offset_end=md2.offset_GL_commands+GL_command_size
+
+"""
