@@ -117,6 +117,10 @@ typedef uint8_t byte;
 #define NULL ((void *)0)
 #endif
 
+#ifndef max
+#define max(a,b) ((a)>(b)?(a):(b))
+#endif
+
 /* NOTE: place this macro after stddef.h inclusion. */
 /*#if !defined offsetof*/
 /*#define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)*/
