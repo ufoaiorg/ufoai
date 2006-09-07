@@ -67,7 +67,17 @@ sequence intro
 		speed	"0 -30"
 		relative	true
 	}
-	wait 200.0
+
+	2dobj i_continue_txt
+	{
+		text	"_Click to continue"
+		pos	"950 750"
+		align	uc
+		color	"0 0.6 0 1"
+		font	f_small
+	}
+
+	wait 120.0
 
 	rem i_sentence1
 	rem i_sentence2
@@ -77,6 +87,7 @@ sequence intro
 	rem i_sentence6
 	rem i_sentence7
 	rem i_sentence8
+	rem i_continue_txt
 }
 
 sequence prolog
@@ -148,6 +159,16 @@ sequence prolog
 		speed	"0 -30"
 		relative	true
 	}
+
+	2dobj p_continue_txt
+	{
+		text	"_Click to continue"
+		pos	"950 750"
+		align	uc
+		color	"0 0.6 0 1"
+		font	f_small
+	}
+
 	wait 128.0
 
 	rem p_sentence1
@@ -157,4 +178,5 @@ sequence prolog
 	rem p_sentence5
 	rem p_sentence6
 	rem p_sentence7
+	rem p_continue_txt
 }
