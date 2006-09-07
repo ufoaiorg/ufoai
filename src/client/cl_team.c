@@ -525,6 +525,8 @@ static void CL_GenerateEquipmentCmd(void)
 {
 	equipDef_t unused;
 	int i, p;
+	/* t value will be set below - a and m are not changed here */
+	item_t item = {0, NONE, 0};
 
 	assert(baseCurrent);
 
@@ -585,7 +587,7 @@ static void CL_GenerateEquipmentCmd(void)
 
 	for (i = 0; i < csi.numODs; i++)
 		while (unused.num[i]) {
-			item_t item = {0, NONE, i};
+			item.t = i;
 
 			assert (unused.num[i] > 0);
 			if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), csi.ods[i].buytype))

@@ -163,8 +163,10 @@ static void MAP_MultiSelectExecuteAction_f(void)
 		if (id >= ccs.numMissions)
 			break;
 
-		if (gd.mapAction == MA_INTERCEPT && selMis && selMis == ccs.mission + id)
-			return CL_DisplayPopupIntercept(selMis, NULL);
+		if (gd.mapAction == MA_INTERCEPT && selMis && selMis == ccs.mission + id) {
+			CL_DisplayPopupIntercept(selMis, NULL);
+			return;
+		}
 
 		MAP_ResetAction();
 		selMis = ccs.mission + id;
