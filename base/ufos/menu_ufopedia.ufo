@@ -95,9 +95,9 @@ menu ufopedia
 		image	menu/buttons_small
 		mousefx true
 		pos		"15 100"
-		texl	"32 32"
 		texh	"48 48"
-		click	{ cmd "textscroll description -1"; }
+		texl	"32 32"
+		click	{ cmd "textscroll description -1;" }
 	}
 	
 	pic button_scrolldown
@@ -108,7 +108,7 @@ menu ufopedia
 		pos		"15 150"
 		texl	"32 48"
 		texh	"48 64"
-		click	{ cmd "textscroll description 1"; }
+		click	{ cmd "textscroll description 1;" }
 	}
 	
 	// ==================
