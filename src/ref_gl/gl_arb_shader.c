@@ -1,6 +1,7 @@
 /**
  * @file gl_arb_shader.c
- * @brief
+ * @brief Shader and image filter stuff
+ * @note This code is only active if SHADERS is true (see Makefile)
  */
 
 /*

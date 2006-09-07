@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
-#include "../qcommon/ufotypes.h"
 
 /*
 ==============================================================
@@ -62,9 +61,7 @@ static multiSelect_t multiSelect;	/**< Data to manage the multi selection */
 
 /*
 ==============================================================
-
 STATIC DEFINITION
-
 ==============================================================
 */
 
@@ -106,9 +103,7 @@ static aircraft_t *selectedUfo;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
 /*
 ==============================================================
-
-CLIC ON MAP and MULTI SELECTION FUNCTIONS
-
+CLICK ON MAP and MULTI SELECTION FUNCTIONS
 ==============================================================
 */
 
