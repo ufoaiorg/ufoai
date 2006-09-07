@@ -800,7 +800,7 @@ item bolterrifle
 	category        3
 	twohanded       true
 	shape           "0 0 5 2"
-	center          "7 0 1"
+	center          "4 0 1.1"
 	scale           1.2
 	ammo            50
 	reload          15
