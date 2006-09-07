@@ -166,7 +166,6 @@ void GL_SetDefaultState(void)
 	qglClearColor(0, 0, 0, 0);
 
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	qglShadeModel(GL_FLAT);
 
 	GL_TextureMode(gl_texturemode->string);
 	GL_TextureAlphaMode(gl_texturealphamode->string);

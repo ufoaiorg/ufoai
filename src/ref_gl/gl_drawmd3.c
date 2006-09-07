@@ -137,19 +137,15 @@ void R_DrawAliasMD3Model (entity_t *e)
 		c_alias_polys += paliashdr->meshes[i].num_tris;
 	}
 
-	qglPushMatrix ();
+	qglPushMatrix();
 	e->angles[PITCH] = -e->angles[PITCH];	/* sigh. */
 	e->angles[YAW] = e->angles[YAW] - 90;
 	R_RotateForEntity (e);
 	e->angles[PITCH] = -e->angles[PITCH];	/* sigh. */
 	e->angles[YAW] = e->angles[YAW] + 90;
 
-	qglShadeModel (GL_SMOOTH);
-
-	GL_TexEnv( GL_MODULATE );
-	if (e->flags & RF_TRANSLUCENT) {
+	if (e->flags & RF_TRANSLUCENT)
 		qglEnable (GL_BLEND);
-	}
 
 	if ((e->frame >= paliashdr->num_frames) || (e->frame < 0)) {
 		ri.Con_Printf (PRINT_ALL, "R_DrawAliasMD3Model %s: no such frame %d\n", currentmodel->name, e->frame);
@@ -205,17 +201,15 @@ void R_DrawAliasMD3Model (entity_t *e)
 		GL_DrawAliasMD3FrameLerp (paliashdr, paliashdr->meshes[i], e->backlerp);
 	}
 
-	if ( e->flags & RF_TRANSLUCENT ) {
+	qglDisableClientState(GL_COLOR_ARRAY);
+
+	if (e->flags & RF_TRANSLUCENT)
 		qglDisable (GL_BLEND);
-	}
 
 	if (e->flags & RF_DEPTHHACK)
 		qglDepthRange (gldepthmin, gldepthmax);
 
-	GL_TexEnv( GL_REPLACE );
-	qglShadeModel (GL_FLAT);
-
-	qglPopMatrix ();
+	qglPopMatrix();
 
 	if (gl_fog->value && r_newrefdef.fog)
 		qglEnable(GL_FOG);

@@ -88,7 +88,6 @@ void R_RenderDlights(void)
 	/*  advanced yet for this frame */
 	qglDepthMask(0);
 	qglDisable(GL_TEXTURE_2D);
-	qglShadeModel(GL_SMOOTH);
 	qglEnable(GL_BLEND);
 	qglBlendFunc(GL_ONE, GL_ONE);
 

@@ -433,9 +433,6 @@ void R_DrawAliasModel(entity_t * e)
 	/* draw it */
 	GL_Bind(skin->texnum);
 
-	if (!(e->flags & RF_NOSMOOTH))
-		qglShadeModel(GL_SMOOTH);
-
 	if (gl_combine) {
 		GL_TexEnv(gl_combine);
 		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, intensity->value);
@@ -450,9 +447,6 @@ void R_DrawAliasModel(entity_t * e)
 
 	GL_TexEnv(GL_REPLACE);
 	qglDisable(GL_LIGHTING);
-
-	if (!(e->flags & RF_NOSMOOTH))
-		qglShadeModel(GL_FLAT);
 
 	if ((e->flags & RF_TRANSLUCENT) || (skin && skin->has_alpha))
 		qglDisable(GL_BLEND);
@@ -680,7 +674,6 @@ void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, char *tagname)
 	/* draw it */
 	GL_Bind(skin->texnum);
 
-	qglShadeModel(GL_SMOOTH);
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
 
@@ -698,7 +691,6 @@ void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, char *tagname)
 	GL_DrawAliasFrameLerp(paliashdr, mi->backlerp, mi->frame, mi->oldframe);
 
 	GL_TexEnv(GL_MODULATE);
-	qglShadeModel(GL_FLAT);
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
 
@@ -761,7 +753,6 @@ void R_DrawModelParticle(modelInfo_t * mi)
 	/* draw it */
 	GL_Bind(skin->texnum);
 
-	qglShadeModel(GL_SMOOTH);
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
 
@@ -779,7 +770,6 @@ void R_DrawModelParticle(modelInfo_t * mi)
 	GL_DrawAliasFrameLerp(paliashdr, mi->backlerp, mi->frame, mi->oldframe);
 
 	GL_TexEnv(GL_REPLACE);
-	qglShadeModel(GL_FLAT);
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
 

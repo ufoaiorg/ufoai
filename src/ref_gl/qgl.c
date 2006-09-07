@@ -295,7 +295,6 @@ void ( APIENTRY * qglScaled )(GLdouble x, GLdouble y, GLdouble z);
 void ( APIENTRY * qglScalef )(GLfloat x, GLfloat y, GLfloat z);
 void ( APIENTRY * qglScissor )(GLint x, GLint y, GLsizei width, GLsizei height);
 void ( APIENTRY * qglSelectBuffer )(GLsizei size, GLuint *buffer);
-void ( APIENTRY * qglShadeModel )(GLenum mode);
 void ( APIENTRY * qglStencilFunc )(GLenum func, GLint ref, GLuint mask);
 void ( APIENTRY * qglStencilMask )(GLuint mask);
 void ( APIENTRY * qglStencilOp )(GLenum fail, GLenum zfail, GLenum zpass);
@@ -664,7 +663,6 @@ static void ( APIENTRY * dllScaled )(GLdouble x, GLdouble y, GLdouble z);
 static void ( APIENTRY * dllScalef )(GLfloat x, GLfloat y, GLfloat z);
 static void ( APIENTRY * dllScissor )(GLint x, GLint y, GLsizei width, GLsizei height);
 static void ( APIENTRY * dllSelectBuffer )(GLsizei size, GLuint *buffer);
-static void ( APIENTRY * dllShadeModel )(GLenum mode);
 static void ( APIENTRY * dllStencilFunc )(GLenum func, GLint ref, GLuint mask);
 static void ( APIENTRY * dllStencilMask )(GLuint mask);
 static void ( APIENTRY * dllStencilOp )(GLenum fail, GLenum zfail, GLenum zpass);
@@ -3067,15 +3065,6 @@ static void APIENTRY logSelectBuffer(GLsizei size, GLuint *buffer)
 /**
  * @brief
  */
-static void APIENTRY logShadeModel(GLenum mode)
-{
-	SIG( "glShadeModel" );
-	dllShadeModel( mode );
-}
-
-/**
- * @brief
- */
 static void APIENTRY logStencilFunc(GLenum func, GLint ref, GLuint mask)
 {
 	SIG( "glStencilFunc" );
@@ -4101,7 +4090,6 @@ void GLimp_EnableLogging( qboolean enable )
 		qglScalef                    = logScalef;
 		qglScissor                   = logScissor;
 		qglSelectBuffer              = logSelectBuffer;
-		qglShadeModel                = logShadeModel;
 		qglStencilFunc               = logStencilFunc;
 		qglStencilMask               = logStencilMask;
 		qglStencilOp                 = logStencilOp;
@@ -4437,7 +4425,6 @@ void GLimp_EnableLogging( qboolean enable )
 		qglScalef                    = dllScalef;
 		qglScissor                   = dllScissor;
 		qglSelectBuffer              = dllSelectBuffer;
-		qglShadeModel                = dllShadeModel;
 		qglStencilFunc               = dllStencilFunc;
 		qglStencilMask               = dllStencilMask;
 		qglStencilOp                 = dllStencilOp;
@@ -4781,7 +4768,6 @@ void QGL_UnLink(void)
 	qglScalef                    = NULL;
 	qglScissor                   = NULL;
 	qglSelectBuffer              = NULL;
-	qglShadeModel                = NULL;
 	qglStencilFunc               = NULL;
 	qglStencilMask               = NULL;
 	qglStencilOp                 = NULL;
@@ -5152,7 +5138,6 @@ void QGL_Link(void)
 	qglScalef                    = dllScalef                    = GPA("glScalef");
 	qglScissor                   = dllScissor                   = GPA("glScissor");
 	qglSelectBuffer              = dllSelectBuffer              = GPA("glSelectBuffer");
-	qglShadeModel                = dllShadeModel                = GPA("glShadeModel");
 	qglStencilFunc               = dllStencilFunc               = GPA("glStencilFunc");
 	qglStencilMask               = dllStencilMask               = GPA("glStencilMask");
 	qglStencilOp                 = dllStencilOp                 = GPA("glStencilOp");

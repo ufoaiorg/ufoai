@@ -303,7 +303,6 @@ extern void (APIENTRY * qglScaled) (GLdouble x, GLdouble y, GLdouble z);
 extern void (APIENTRY * qglScalef) (GLfloat x, GLfloat y, GLfloat z);
 extern void (APIENTRY * qglScissor) (GLint x, GLint y, GLsizei width, GLsizei height);
 extern void (APIENTRY * qglSelectBuffer) (GLsizei size, GLuint * buffer);
-extern void (APIENTRY * qglShadeModel) (GLenum mode);
 extern void (APIENTRY * qglStencilFunc) (GLenum func, GLint ref, GLuint mask);
 extern void (APIENTRY * qglStencilMask) (GLuint mask);
 extern void (APIENTRY * qglStencilOp) (GLenum fail, GLenum zfail, GLenum zpass);
