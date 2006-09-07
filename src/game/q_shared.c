@@ -2302,10 +2302,6 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 
 	assert(i);
 
-#ifdef PARANOID
-		if (CSI->ods[cacheItem.t].twohanded)
-			Com_Printf("Com_MoveInInventory: move twohanded item to container: %s\n", CSI->ids[to].name);
-#endif
 	/* if weapon is twohanded and is moved from hand to hand do nothing. */
 	/* twohanded weapon are only in CSI->idRight */
 	if (CSI->ods[cacheItem.t].twohanded && to == CSI->idLeft && from == CSI->idRight)
@@ -2368,27 +2364,39 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 			Com_AddToInventory(i, cacheItem, from, fx, fy);
 			return IA_NOTIME;
 		}
-	} else {
-		/* successful */
-		if (TU)
-			*TU -= time;
 
-		ic = Com_AddToInventory(i, cacheItem, to, tx, ty);
-		
-		/* return data */
-		if (icp)
-			*icp = ic;
-		
-		if (to == CSI->idArmor) {
-			assert(!Q_strcmp(CSI->ods[cacheItem.t].type, "armor"));
-			return IA_ARMOR;
-		} else
-			return IA_MOVE;
+		/* impossible move - back to source location */
+		Com_AddToInventory(i, cacheItem, from, fx, fy);
+		return IA_NONE;
 	}
 
-	/* impossible move - back to source location */
-	Com_AddToInventory(i, cacheItem, from, fx, fy);
-	return IA_NONE;
+	/* twohanded exception - only CSI->idRight is allowed for twohanded weapons */
+	if (CSI->ods[cacheItem.t].twohanded && to == CSI->idLeft) {
+#ifdef DEBUG
+		Com_Printf("Com_MoveInInventory - don't move the item to CSI->idLeft it's twohanded\n");
+#endif
+		to = CSI->idRight;
+	}
+#ifdef PARANOID
+	else if (CSI->ods[cacheItem.t].twohanded)
+		Com_Printf("Com_MoveInInventory: move twohanded item to container: %s\n", CSI->ids[to].name);
+#endif
+
+	/* successful */
+	if (TU)
+		*TU -= time;
+
+	ic = Com_AddToInventory(i, cacheItem, to, tx, ty);
+
+	/* return data */
+	if (icp)
+		*icp = ic;
+
+	if (to == CSI->idArmor) {
+		assert(!Q_strcmp(CSI->ods[cacheItem.t].type, "armor"));
+		return IA_ARMOR;
+	} else
+		return IA_MOVE;
 }
 
 /**

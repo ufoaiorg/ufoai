@@ -1790,6 +1790,7 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 		VectorSubtract(end, start, dir);
 		VectorNormalize(dir);
 		VectorMA(start, selFD->range, dir, mid);
+		/* TODO: set mid to the first obstacle if there is one */
 		CL_ParticleSpawn("inRangeTracer", 0, start, mid, NULL);
 		CL_ParticleSpawn("longRangeTracer", 0, mid, end, NULL);
 		CL_ParticleSpawn("cross_no", 0, end, NULL, NULL);
@@ -1849,6 +1850,7 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 		vz -= GRAVITY * dt;
 		VectorScale(v0, (i + 1.0) / GRENADE_PARTITIONS, at);
 		if (VectorLength(at) > selFD->range)
+			/* TODO: also check for obstacles in this condition */
 			CL_ParticleSpawn("longRangeTracer", 0, from, next, NULL);
 		else
 			CL_ParticleSpawn("inRangeTracer", 0, from, next, NULL);
