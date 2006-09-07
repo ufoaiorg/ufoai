@@ -355,6 +355,7 @@ void R_RotateForEntity(entity_t * e);
 void EmitWaterPolys(msurface_t * fa);
 void R_DrawTriangleOutlines(void);
 void R_MarkLights(dlight_t * light, int bit, mnode_t * node);
+void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lightambient);
 
 #include "gl_font.h"
 

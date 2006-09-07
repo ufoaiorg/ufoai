@@ -271,7 +271,7 @@ static qboolean R_CullAliasModel(entity_t * e)
 /**
  * @brief
  */
-static void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lightambient)
+void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lightambient)
 {
 	dlight_t *light;
 	vec3_t delta;
@@ -453,13 +453,6 @@ void R_DrawAliasModel(entity_t * e)
 
 	if (!(e->flags & RF_NOSMOOTH))
 		qglShadeModel(GL_FLAT);
-
-/*	if ((e->flags & RF_WEAPONMODEL) && (r_lefthand->value == 1.0F)) {
-		qglMatrixMode(GL_PROJECTION);
-		qglPopMatrix();
-		qglMatrixMode(GL_MODELVIEW);
-		qglCullFace(GL_FRONT);
-	}*/
 
 	if ((e->flags & RF_TRANSLUCENT) || (skin && skin->has_alpha))
 		qglDisable(GL_BLEND);

@@ -1234,7 +1234,6 @@ void Mod_LoadAliasMD3Model ( model_t *mod, void *buffer )
 
 		poutmesh->trneighbors = Hunk_Alloc ( sizeof(int) * poutmesh->num_tris * 3);
 		R_BuildTriangleNeighbors ( poutmesh->trneighbors, poutmesh->indexes, poutmesh->num_tris );
-
 	}
 	mod->type = mod_alias_md3;
 }
