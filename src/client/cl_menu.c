@@ -1139,9 +1139,7 @@ void MN_SetViewRect(const menu_t* menu)
 
 /*
 ==============================================================
-
 MENU DRAWING
-
 ==============================================================
 */
 
@@ -2295,7 +2293,7 @@ MENU PARSING
 /**
  * @brief
  */
-qboolean MN_ParseAction(menuAction_t * action, char **text, char **token)
+qboolean MN_ParseAction(menuNode_t * menuNode, menuAction_t * action, char **text, char **token)
 {
 	char *errhead = "MN_ParseAction: unexpected end of file (in event)";
 	menuAction_t *lastAction;
@@ -2448,7 +2446,7 @@ qboolean MN_ParseAction(menuAction_t * action, char **text, char **token)
 			return qtrue;
 		} else {
 			/* unknown token, print message and continue */
-			Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event)\n", *token);
+			Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, menuNode->name);
 		}
 	} while (*text);
 
@@ -2479,7 +2477,7 @@ qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 		if (node->type == MN_CONFUNC)
 			Cmd_AddCommand(node->name, MN_Command);
 
-		return MN_ParseAction(*action, text, token);
+		return MN_ParseAction(node, *action, text, token);
 	}
 
 	do {
@@ -2549,7 +2547,7 @@ qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 						return qfalse;
 
 					if (**token == '{') {
-						MN_ParseAction(*action, text, token);
+						MN_ParseAction(node, *action, text, token);
 
 						/* get next token */
 						*token = COM_EParse(text, errhead, node->name);
