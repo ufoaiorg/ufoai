@@ -59,7 +59,21 @@ void Mod_Modellist_f(void)
 	for (i = 0, mod = mod_known; i < mod_numknown; i++, mod++) {
 		if (!mod->name[0])
 			continue;
-		ri.Con_Printf(PRINT_ALL, "%8i : %s\n", mod->extradatasize, mod->name);
+		switch(mod->type) {
+		case mod_alias_md3:
+			ri.Con_Printf(PRINT_ALL, "MD3");
+			break;
+		case mod_alias:
+			ri.Con_Printf(PRINT_ALL, "MD2");
+			break;
+		case mod_sprite:
+			ri.Con_Printf(PRINT_ALL, "SP2");
+			break;
+		default:
+			ri.Con_Printf(PRINT_ALL, "%3i", mod->type);
+			break;
+		}
+		ri.Con_Printf(PRINT_ALL, " %8i : %s\n", mod->extradatasize, mod->name);
 		total += mod->extradatasize;
 	}
 	ri.Con_Printf(PRINT_ALL, "Total resident: %i\n", total);
