@@ -363,16 +363,16 @@ void CL_AddCarriedToEq(equipDef_t * ed)
 
 				next = ic->next;
 				ed->num[type]++;
-				if (csi.ods[type].reload)
-					if (item.a > 0) {
-						assert (item.m != NONE);
-						ed->num_loose[item.m] += item.a;
-						/* Accumulate loose ammo into clips */
-						if (ed->num_loose[item.m] >= csi.ods[type].ammo) {
-							ed->num_loose[item.m] -= csi.ods[type].ammo;
-							ed->num[item.m]++;
-						}
+				if (item.a) {
+					assert (csi.ods[type].reload);
+					assert (item.m != NONE);
+					ed->num_loose[item.m] += item.a;
+					/* Accumulate loose ammo into clips */
+					if (ed->num_loose[item.m] >= csi.ods[type].ammo) {
+						ed->num_loose[item.m] -= csi.ods[type].ammo;
+						ed->num[item.m]++;
 					}
+				}
 			}
 		}
 	}
@@ -388,21 +388,24 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 	assert (ed->num[type] > 0);
 	ed->num[type]--;
 
-	if (csi.ods[type].link != NONE) {
+	if (csi.ods[type].link != NONE) { /* ammo */
 		return item;
 	} else if (!csi.ods[type].reload) {
 		item.m = item.t; /* no ammo needed, so fire definitions are in t */
 		return item;
-	} else if (item.a == csi.ods[type].ammo) {
-		/* fully loaded, no need to reload, but mark the ammo as used. */
-		assert (item.m != NONE);
-		if (ed->num[item.m] > 0) {
-			ed->num[item.m]--;
-			return item;
-		} else {
-			/* your clip has been sold; give it back */
-			item.a = 0;
-			return item;
+	} else if (item.a) {
+		assert (item.m != NONE); /* was reloaded one time */
+		if (item.a == csi.ods[type].ammo) {
+			/* fully loaded, no need to reload, but mark the ammo as used. */
+			assert (item.m != NONE);
+			if (ed->num[item.m] > 0) {
+				ed->num[item.m]--;
+				return item;
+			} else {
+				/* your clip has been sold; give it back */
+				item.a = 0;
+				return item;
+			}
 		}
 	}
 
@@ -526,7 +529,7 @@ static void CL_GenerateEquipmentCmd(void)
 	equipDef_t unused;
 	int i, p;
 	/* t value will be set below - a and m are not changed here */
-	item_t item = {0, NONE, 0};
+	item_t item = {0,NONE,NONE};
 
 	assert(baseCurrent);
 

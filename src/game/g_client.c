@@ -33,11 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TU_CROUCH		1
 #define TU_TURN		1
 
-/* Macros for faster access to the inventory-container. */
-#define RIGHT(e) e->i.c[gi.csi->idRight]
-#define LEFT(e)  e->i.c[gi.csi->idLeft]
-#define FLOOR(e) e->i.c[gi.csi->idFloor]
-
 /*
  * 0: Stores the used TUs for Reaction fire for each edict.
  * 1: Stores if the edict has fired in rection.
@@ -258,14 +253,12 @@ void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 			gi.WriteGPos(check->pos);
 			gi.WriteByte(check->dir);
 			if (RIGHT(check)) {
-				assert (RIGHT(check)->item.t != NONE);
 				gi.WriteByte(RIGHT(check)->item.t);
 			} else {
 				gi.WriteByte(NONE);
 			}
 
 			if (LEFT(check)) {
-				assert (LEFT(check)->item.t != NONE);
 				gi.WriteByte(LEFT(check)->item.t);
 			} else {
 				gi.WriteByte(NONE);
@@ -747,13 +740,16 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 	}
 
 	/* search for space */
-	if (tx == NONE || ty == NONE) {
+	if (tx == NONE) {
+		assert (ty == NONE);
 		ic = Com_SearchInInventory(&ent->i, from, fx, fy);
 		if (ic)
 			Com_FindSpace(&ent->i, ic->item.t, to, &tx, &ty);
 	}
-	if (tx == NONE || ty == NONE)
+	if (tx == NONE) {
+		assert (ty == NONE);
 		return;
+	}
 
 	if ( ( ia = Com_MoveInInventory(&ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic) ) != 0 ) {
 		switch (ia) {
@@ -2253,10 +2249,10 @@ qboolean G_ReactionFire(edict_t * target)
 				level.activeTeam = ent->team;
 
 				/* Fire the first weapon in hands if everything is ok. */
-				if ( RIGHT(ent) && (RIGHT(ent)->item.m != NONE) && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
+				if ( RIGHT(ent) && (RIGHT(ent)->item.m != NONE) && gi.csi->ods[RIGHT(ent)->item.t].weapon && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
 					G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY);
 					fired = qtrue;
-				} else if ( LEFT(ent) && (LEFT(ent)->item.m != NONE) && gi.csi->ods[LEFT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
+				} else if ( LEFT(ent) && (LEFT(ent)->item.m != NONE) && gi.csi->ods[RIGHT(ent)->item.t].weapon && gi.csi->ods[LEFT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
 					G_ClientShoot(player, ent->number, target->pos, ST_LEFT_PRIMARY);
 					fired = qtrue;
 				}

@@ -397,7 +397,7 @@ static void LET_PathMove(le_t * le)
 
 			floor = LE_Find(ET_ITEM, le->pos);
 			if (floor)
-				le->i.c[csi.idFloor] = floor->i.c[csi.idFloor];
+				FLOOR(le) = FLOOR(floor);
 
 			blockEvents = qfalse;
 			le->think = LET_StartIdle;

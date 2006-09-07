@@ -955,18 +955,14 @@ void CL_ActorReload(int hand)
 	tu = 100;
 	bestContainer = NONE;
 
-	if (inv->c[hand])
+	if (inv->c[hand]) {
 		weapon = inv->c[hand]->item.t;
-	else {
+	} else if (hand == csi.idLeft 
+			   && csi.ods[inv->c[csi.idRight]->item.t].twohanded) {
 		/* Check for two-handed weapon */
-		hand = 1 - hand;
-		if (!inv->c[hand] || !csi.ods[inv->c[hand]->item.t].twohanded)
-			return;
+		hand = csi.idRight;
 		weapon = inv->c[hand]->item.t;
 	}
-
-	if (weapon == NONE)
-		return; /* TODO: assert? */
 
 	if (!RS_ItemIsResearched(csi.ods[weapon].kurz)) {
 		CL_DisplayHudMessage(_("You cannot reload this unknown item.\nYou need to research it and its ammunition first.\n"), 2000);
@@ -1018,7 +1014,7 @@ void CL_ActorDoMove(sizebuf_t * sb)
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_MOVE], &le->pathLength, le->path);
 
 	/* activate PathMove function */
-	le->i.c[csi.idFloor] = NULL;
+	FLOOR(le) = NULL;
 	le->think = LET_StartPathMove;
 	le->pathPos = 0;
 	le->startTime = cl.time;
@@ -1258,7 +1254,7 @@ void CL_ActorDie(sizebuf_t * sb)
 		cl.numAliensSpotted--;
 
 	/* set relevant vars */
-	le->i.c[csi.idFloor] = NULL;
+	FLOOR(le) = NULL;
 	le->HP = 0;
 	le->STUN = 0;
 	le->state = state;
