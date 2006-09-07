@@ -57,13 +57,13 @@ sequence view
 		origin  "0 0 0"
 	}
 
-	model cow
-	{
-		model	models/animals/cow/cow.md2
-		anim	walk0
-		origin	"0 0 0"
+//	model cow
+//	{
+//		model	models/animals/cow/cow.md2
+//		anim	walk0
+//		origin	"0 0 0"
 // 		tag	tag_floor
-	}
+//	}
 
 // 	model penguin
 // 	{
@@ -73,19 +73,46 @@ sequence view
 // 		tag	tag_floor
 // 	}
 
-// 	model model_body
-// 	{
-// 		model	models/civilians/female/body03.md2
-// 		skin	1
-// 		anim	walk0
-// 		origin	"0 0 0"
-// 	}
-// 	model model_head
-// 	{
-// 		model	models/civilians/female/head04c.md2
-// 		parent	model_body
-// 		tag		tag_head
-// 	}
+ 	model model_body
+ 	{
+ 		model	models/aliens/bluemedium/body01.md2
+ 		skin	1
+ 		anim	walk0
+ 		origin	"0 0 0"
+		omega "0 -30 0"
+//		speed "0 10 0"
+ 	}
+ 	model model_head
+ 	{
+ 		model	models/aliens/bluemedium/head01.md2
+ 		parent	model_body
+ 		tag		tag_head
+ 	}
 
-	wait 10.0
+ 	model model2_body
+ 	{
+ 		model	models/aliens/bluelight/body01.md2
+ 		skin	1
+ 		anim	walk0
+ 		origin	"0 -30 0"
+		omega "0 -30 0"
+//		speed "0 10 0"
+ 	}
+ 	model model2_head
+ 	{
+ 		model	models/aliens/bluelight/head01.md2
+ 		parent	model2_body
+ 		tag		tag_head
+ 	}
+
+
+
+
+	wait 20.0
+
+	rem model_head
+	rem model_body
+
+	rem model2_head
+	rem model2_body
 }
