@@ -62,7 +62,7 @@ g_filename=Create("export.tag")
 #g_filename_search=Create("")
 #g_frame_search=Create("default")
 
-user_frame_list=[]
+#user_frame_list=[]
 
 #Globals
 g_scale=Create(1.0)
@@ -170,44 +170,48 @@ class md2_tagname:
 		print ""
 
 class md2_tag:
-	vertices=[]
+	Row1	= []
+	Row2	= []
+	Row3	= []
+	Row4	= []
+
 	binary_format="<12BB"
 	def __init__(self):
 		self.vertices=[0]*12
 	def save(self, file):
 		temp_data=[0]*12
-		temp_data[0]=self.vertices[0]
-		temp_data[1]=self.vertices[1]
-		temp_data[2]=self.vertices[2]
+		temp_data[0]=self.Row1[0]
+		temp_data[1]=self.Row1[1]
+		temp_data[2]=self.Row1[2]
 		
-		temp_data[3]=self.vertices[3]
-		temp_data[4]=self.vertices[4]
-		temp_data[5]=self.vertices[5]
+		temp_data[3]=self.Row2[0]
+		temp_data[4]=self.Row2[1]
+		temp_data[5]=self.Row2[2]
 		
-		temp_data[6]=self.vertices[6]
-		temp_data[7]=self.vertices[7]
-		temp_data[8]=self.vertices[8]
+		temp_data[6]=self.Row3[0]
+		temp_data[7]=self.Row3[1]
+		temp_data[8]=self.Row3[2]
 		
-		temp_data[9]=self.vertices[9]
-		temp_data[10]=self.vertices[10]
-		temp_data[11]=self.vertices[11]
+		temp_data[9]=self.Row4[0]
+		temp_data[10]=self.Row4[1]
+		temp_data[11]=self.Row4[2]
 		
 		data=struct.pack(self.binary_format, temp_data[0], temp_data[1], temp_data[2], temp_data[3], temp_data[4], temp_data[5], temp_data[6], temp_data[7], temp_data[8])
 		file.write(data)
 	def dump(self):
 		print "MD2 Point Structure"
-		print "Row1_x: ", self.vertices[0]
-		print "Row1_y: ", self.vertices[1]
-		print "Row1_z: ", self.vertices[2]
-		print "Row2_x: ", self.vertices[3]
-		print "Row2_y: ", self.vertices[4]
-		print "Row2_z: ", self.vertices[5]
-		print "Row3_x: ", self.vertices[6]
-		print "Row3_y: ", self.vertices[7]
-		print "Row3_z: ", self.vertices[8]
-		print "Row4_x: ", self.vertices[9]
-		print "Row4_y: ", self.vertices[10]
-		print "Row4_z: ", self.vertices[11]
+		print "Row1_x: ", self.Row1[0]
+		print "Row1_y: ", self.Row1[1]
+		print "Row1_z: ", self.Row1[2]
+		print "Row2_x: ", self.Row2[0]
+		print "Row2_y: ", self.Row2[1]
+		print "Row2_z: ", self.Row2[2]
+		print "Row3_x: ", self.Row3[0]
+		print "Row3_y: ", self.Row3[1]
+		print "Row3_z: ", self.Row3[2]
+		print "Row4_x: ", self.Row4[0]
+		print "Row4_y: ", self.Row4[1]
+		print "Row4_z: ", self.Row4[2]
 		print ""
 
 """
@@ -424,12 +428,12 @@ def validation(object):
 ######################################################
 def fill_md2_tags(md2_tags, object):
 	#global defines
-	global user_frame_list
+	#global user_frame_list
 	
 	Blender.Window.DrawProgressBar(0.25,"Filling MD2 Data")
 	
 	#get a Mesh, not NMesh
-	mesh=object.getData(False, True)	
+	#mesh=object.getData(False, True)	
 	
 	#load up some intermediate data structures
 	tex_list={}
@@ -452,6 +456,32 @@ def fill_md2_tags(md2_tags, object):
 
 	#add a name node to the tagnames data structure
 	md2_tags.names.append(md2_tagname())
+	
+	
+	#add a listz of tags-positions (for esach frame)
+	tag_frames = []
+	
+	progress=0.5
+	progressIncrement=0.25 / md2_tags.num_frames
+
+	#fill in each frame with frame info and all the vertex data for that frame
+	for frame_counter in range(0,md2_tags.num_frames):
+		progress+=progressIncrement
+		Blender.Window.DrawProgressBar(progress, "Calculating Frame: "+str(frame_counter))
+			
+		#add a frame
+		tag_frames.append(md2_tag())
+		
+		#set blender to the correct frame (so the objects have their new positions)
+		Blender.Set("curframe", frame_counter)
+	
+		# TODO: get xyz from object
+		tag_frames[frame_counter].Row1 = object.loc
+		tag_frames[frame_counter].Row2 = (0.0, 0.0, 0.0)
+		tag_frames[frame_counter].Row3 = (0.0, 0.0, 0.0)
+		tag_frames[frame_counter].Row4 = (0.0, 0.0, 0.0)
+
+	md2_tags.tags.append(tag_frames)
 
 # TODO: see below
 """
@@ -929,7 +959,7 @@ def save_md2_tags(filename):
 		return
 	
 	# Set frame number.
-	md2_tags.num_frames=g_frames
+	md2_tags.num_frames=g_frames.val
 	print "Frames to export: ",md2_tags.num_frames
 	
 	for object in mesh_objs:
