@@ -167,6 +167,36 @@ void R_DrawAliasMD3Model (entity_t *e)
 	if (!r_lerpmodels->value)
 		e->backlerp = 0;
 
+	if (gl_shadows->value == 1 && (e->flags & RF_SHADOW)) {
+		if (!(e->flags & RF_TRANSLUCENT))
+			qglDepthMask(0);
+		qglEnable(GL_BLEND);
+
+		qglColor4f(1, 1, 1, 1);
+		GL_Bind(shadow->texnum);
+		qglBegin(GL_QUADS);
+
+		qglTexCoord2f(0.0, 1.0);
+		qglVertex3f(-18.0, 14.0, -28.5);
+		qglTexCoord2f(1.0, 1.0);
+		qglVertex3f(10.0, 14.0, -28.5);
+		qglTexCoord2f(1.0, 0.0);
+		qglVertex3f(10.0, -14.0, -28.5);
+		qglTexCoord2f(0.0, 0.0);
+		qglVertex3f(-18.0, -14.0, -28.5);
+
+		qglEnd();
+
+		qglDisable(GL_BLEND);
+		if (!(e->flags & RF_TRANSLUCENT))
+			qglDepthMask(1);
+	} else if (gl_shadows->value == 2 && (e->flags & RF_SHADOW)) {
+		R_DrawShadowVolume(e);
+	}
+
+	if (gl_fog->value && r_newrefdef.fog)
+		qglDisable(GL_FOG);
+
 	for (i=0; i < paliashdr->num_meshes; i++) {
 		skin = currentmodel->skins[e->skinnum];
 		if (!skin)
@@ -186,5 +216,9 @@ void R_DrawAliasMD3Model (entity_t *e)
 	qglShadeModel (GL_FLAT);
 
 	qglPopMatrix ();
+
+	if (gl_fog->value && r_newrefdef.fog)
+		qglEnable(GL_FOG);
+
 	qglColor4f (1,1,1,1);
 }
