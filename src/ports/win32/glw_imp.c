@@ -347,24 +347,24 @@ void GLimp_Shutdown( void )
 		WG_RestoreGamma();
 
 	if (qwglMakeCurrent && !qwglMakeCurrent(NULL, NULL))
-		ri.Con_Printf( PRINT_ALL, "ref_gl::R_Shutdown() - wglMakeCurrent failed\n");
+		ri.Con_Printf(PRINT_ALL, "ref_gl::R_Shutdown() - wglMakeCurrent failed\n");
 	if (glw_state.hGLRC) {
-		if (  qwglDeleteContext && !qwglDeleteContext( glw_state.hGLRC ) )
+		if (qwglDeleteContext && !qwglDeleteContext( glw_state.hGLRC) )
 			ri.Con_Printf( PRINT_ALL, "ref_gl::R_Shutdown() - wglDeleteContext failed\n");
 		glw_state.hGLRC = NULL;
 	}
 	if (glw_state.hDC) {
-		if ( !ReleaseDC( glw_state.hWnd, glw_state.hDC ) )
+		if (!ReleaseDC(glw_state.hWnd, glw_state.hDC))
 			ri.Con_Printf( PRINT_ALL, "ref_gl::R_Shutdown() - ReleaseDC failed\n" );
-		glw_state.hDC   = NULL;
+		glw_state.hDC = NULL;
 	}
 	if (glw_state.hWnd) {
-		DestroyWindow (	glw_state.hWnd );
+		DestroyWindow(glw_state.hWnd);
 		glw_state.hWnd = NULL;
 	}
 
 	if (glw_state.log_fp) {
-		fclose( glw_state.log_fp );
+		fclose(glw_state.log_fp);
 		glw_state.log_fp = 0;
 	}
 
@@ -448,9 +448,7 @@ qboolean GLimp_InitGL (void)
 
 	stereo = ri.Cvar_Get("cl_stereo", "0", 0, NULL);
 
-	/*
-	** set PFD_STEREO if necessary
-	*/
+	/* set PFD_STEREO if necessary */
 	if ( stereo->value != 0 ) {
 		ri.Con_Printf( PRINT_ALL, "...attempting to use stereo\n" );
 		pfd.dwFlags |= PFD_STEREO;
@@ -458,17 +456,13 @@ qboolean GLimp_InitGL (void)
 	} else
 		gl_state.stereo_enabled = qfalse;
 
-	/*
-	** figure out if we're running on a minidriver or not
-	*/
+	/* figure out if we're running on a minidriver or not */
 	if ( strstr( gl_driver->string, "opengl32" ) != 0 )
 		glw_state.minidriver = qfalse;
 	else
 		glw_state.minidriver = qtrue;
 
-	/*
-	** Get a DC for the specified window
-	*/
+	/* Get a DC for the specified window */
 	if ( glw_state.hDC != NULL )
 		ri.Con_Printf( PRINT_ALL, "GLimp_Init() - non-NULL DC exists\n" );
 
@@ -509,19 +503,14 @@ qboolean GLimp_InitGL (void)
 			glw_state.mcd_accelerated = qtrue;
 	}
 
-	/*
-	** report if stereo is desired but unavailable
-	*/
+	/* report if stereo is desired but unavailable */
 	if (!(pfd.dwFlags & PFD_STEREO) && (stereo->value != 0)) {
 		ri.Con_Printf( PRINT_ALL, "...failed to select stereo pixel format\n" );
 		ri.Cvar_SetValue( "cl_stereo", 0 );
 		gl_state.stereo_enabled = qfalse;
 	}
 
-	/*
-	** startup the OpenGL subsystem by creating a context and making
-	** it current
-	*/
+	/* startup the OpenGL subsystem by creating a context and making it current */
 	if ((glw_state.hGLRC = qwglCreateContext(glw_state.hDC)) == 0) {
 		ri.Con_Printf (PRINT_ALL, "GLimp_Init() - qwglCreateContext failed\n");
 		goto fail;
@@ -537,9 +526,7 @@ qboolean GLimp_InitGL (void)
 		goto fail;
 	}
 
-	/*
-	** print out PFD specifics
-	*/
+	/* print out PFD specifics */
 	ri.Con_Printf( PRINT_ALL, "GL PFD: color(%d-bits) Z(%d-bit)\n", ( int ) pfd.cColorBits, ( int ) pfd.cDepthBits );
 
 	return qtrue;

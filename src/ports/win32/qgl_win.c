@@ -23,26 +23,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../ref_gl/gl_local.h"
 #include "glw_win.h"
 
-int   ( WINAPI * qwglChoosePixelFormat )(HDC, CONST PIXELFORMATDESCRIPTOR *);
-int   ( WINAPI * qwglDescribePixelFormat) (HDC, int, UINT, LPPIXELFORMATDESCRIPTOR);
-int   ( WINAPI * qwglGetPixelFormat)(HDC);
-BOOL  ( WINAPI * qwglSetPixelFormat)(HDC, int, CONST PIXELFORMATDESCRIPTOR *);
-BOOL  ( WINAPI * qwglSwapBuffers)(HDC);
-BOOL  ( WINAPI * qwglCopyContext)(HGLRC, HGLRC, UINT);
+int ( WINAPI * qwglChoosePixelFormat )(HDC, CONST PIXELFORMATDESCRIPTOR *);
+int ( WINAPI * qwglDescribePixelFormat) (HDC, int, UINT, LPPIXELFORMATDESCRIPTOR);
+BOOL ( WINAPI * qwglSetPixelFormat)(HDC, int, CONST PIXELFORMATDESCRIPTOR *);
+BOOL ( WINAPI * qwglSwapBuffers)(HDC);
 HGLRC ( WINAPI * qwglCreateContext)(HDC);
+BOOL ( WINAPI * qwglDeleteContext)(HGLRC);
+PROC ( WINAPI * qwglGetProcAddress)(LPCSTR);
+BOOL ( WINAPI * qwglMakeCurrent)(HDC, HGLRC);
+BOOL (WINAPI * qwglSwapIntervalEXT) (int interval);
+
+/* not used */
+int ( WINAPI * qwglGetPixelFormat)(HDC);
+BOOL ( WINAPI * qwglCopyContext)(HGLRC, HGLRC, UINT);
 HGLRC ( WINAPI * qwglCreateLayerContext)(HDC, int);
-BOOL  ( WINAPI * qwglDeleteContext)(HGLRC);
 HGLRC ( WINAPI * qwglGetCurrentContext)(VOID);
-HDC   ( WINAPI * qwglGetCurrentDC)(VOID);
-PROC  ( WINAPI * qwglGetProcAddress)(LPCSTR);
-BOOL  ( WINAPI * qwglMakeCurrent)(HDC, HGLRC);
-BOOL  ( WINAPI * qwglShareLists)(HGLRC, HGLRC);
-int  ( WINAPI * qwglSetLayerPaletteEntries)(HDC, int, int, int, CONST COLORREF *);
-int  ( WINAPI * qwglGetLayerPaletteEntries)(HDC, int, int, int, COLORREF *);
+HDC ( WINAPI * qwglGetCurrentDC)(VOID);
+BOOL ( WINAPI * qwglShareLists)(HGLRC, HGLRC);
+int ( WINAPI * qwglSetLayerPaletteEntries)(HDC, int, int, int, CONST COLORREF *);
+int ( WINAPI * qwglGetLayerPaletteEntries)(HDC, int, int, int, COLORREF *);
 BOOL ( WINAPI * qwglRealizeLayerPalette)(HDC, int, BOOL);
-BOOL(WINAPI * qwglSwapIntervalEXT) (int interval);
-BOOL(WINAPI * qwglGetDeviceGammaRampEXT) (unsigned char *pRed, unsigned char *pGreen, unsigned char *pBlue);
-BOOL(WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, const unsigned char *pGreen, const unsigned char *pBlue);
+BOOL (WINAPI * qwglGetDeviceGammaRampEXT) (unsigned char *pRed, unsigned char *pGreen, unsigned char *pBlue);
+BOOL (WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, const unsigned char *pGreen, const unsigned char *pBlue);
 
 /**
  * @brief Unloads the specified DLL then nulls out all the proc pointers.
