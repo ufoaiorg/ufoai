@@ -486,6 +486,7 @@ void CL_Packet_f(void)
 
 	in = Cmd_Argv(2);
 	out = send + 4;
+	/* FIXME: Should be unsigned, don't it */
 	send[0] = send[1] = send[2] = send[3] = (char) 0xff;
 
 	l = strlen(in);

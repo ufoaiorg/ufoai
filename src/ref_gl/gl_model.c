@@ -1120,13 +1120,12 @@ void Mod_LoadAliasMD3Model ( model_t *mod, void *buffer )
 			poutframe->translate[j] = LittleFloat ( pinframe->translate[j] );
 		}
 
-		/* TODO: fix max function
+		/* TODO:
 		poutframe->radius = LittleFloat ( pinframe->radius );
 		*/
-
-		mod->radius = max ( mod->radius, poutframe->radius );
-		AddPointToBounds ( poutframe->mins, mod->mins, mod->maxs );
-		AddPointToBounds ( poutframe->maxs, mod->mins, mod->maxs );
+		mod->radius = max(mod->radius, poutframe->radius);
+		AddPointToBounds(poutframe->mins, mod->mins, mod->maxs);
+		AddPointToBounds(poutframe->maxs, mod->mins, mod->maxs);
 	}
 
 	/* load the tags */

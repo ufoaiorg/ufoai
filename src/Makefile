@@ -1114,6 +1114,7 @@ REF_GL_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_light.o \
 	$(BUILDDIR)/ref_gl/gl_mesh.o \
 	$(BUILDDIR)/ref_gl/gl_model.o \
+	$(BUILDDIR)/ref_gl/gl_drawmd3.o \
 	$(BUILDDIR)/ref_gl/gl_rmain.o \
 	$(BUILDDIR)/ref_gl/gl_rmisc.o \
 	$(BUILDDIR)/ref_gl/gl_rsurf.o \
@@ -1179,6 +1180,9 @@ $(BUILDDIR)/ref_gl/gl_mesh.o :        $(REF_GL_DIR)/gl_mesh.c
 	$(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_gl/gl_model.o :       $(REF_GL_DIR)/gl_model.c
+	$(DO_GL_SHLIB_CC)
+
+$(BUILDDIR)/ref_gl/gl_drawmd3.o :       $(REF_GL_DIR)/gl_drawmd3.c
 	$(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_gl/gl_rmain.o :       $(REF_GL_DIR)/gl_rmain.c
