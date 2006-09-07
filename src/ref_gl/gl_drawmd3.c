@@ -138,12 +138,13 @@ static void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mes
 
 	for(j=0; j < mesh.num_tris; j++) {
 		/* use color instead of shadelight_md3... maybe */
-		if (gl_shading->value == 2) {
+		/* TODO
+        if (gl_shading->value == 2) {
 			light_md3_model(tempNormalsArray[mesh.indexes[3*j+0]], color1);
 			light_md3_model(tempNormalsArray[mesh.indexes[3*j+1]], color2);
 			light_md3_model(tempNormalsArray[mesh.indexes[3*j+2]], color3);
 		}
-
+		*/
 		qglColor4f (shadelight_md3[0], shadelight_md3[1], shadelight_md3[2], alpha);
 		qglTexCoord2f (mesh.stcoords[mesh.indexes[3*j+0]].st[0], mesh.stcoords[mesh.indexes[3*j+0]].st[1]);
 		qglVertex3fv(tempVertexArray[mesh.indexes[3*j+0]]);
@@ -202,9 +203,10 @@ void R_DrawAliasMD3Model (entity_t *e)
 		for (i=0 ; i<3 ; i++)
 			shadelight_md3[i] = 1.0;
 	} else {
-		if (gl_shading->value < 2)
+		/* TODO
+        if (gl_shading->value < 2)
 			R_LightPoint (e->origin, shadelight_md3);
-/*		else
+/ *		else
 			R_LightPointDynamics (e->origin, shadelight_md3, model_dlights_md3, &model_dlights_num_md3, 8);
 */
 		if (gl_monolightmap->string[0] != '0') {
