@@ -67,7 +67,6 @@ cvar_t *sv_teamplay;
 cvar_t *sv_maxclients;
 
 cvar_t *ai_alien;
-cvar_t *ai_armor;
 cvar_t *ai_civilian;
 cvar_t *ai_equipment;
 cvar_t *ai_numaliens;
@@ -158,7 +157,6 @@ void InitGame(void)
 	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 
 	ai_alien = gi.cvar("ai_alien", "alien", 0, NULL);
-	ai_armor = gi.cvar("ai_armor", "", 0, NULL);
 	ai_civilian = gi.cvar("ai_civilian", "civilian", 0, NULL);
 	ai_equipment = gi.cvar("ai_equipment", "human_phalanx_initial", 0, NULL);
 	/* aliens in singleplayer (can differ each mission) */

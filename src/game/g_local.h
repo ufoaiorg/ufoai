@@ -171,7 +171,6 @@ extern cvar_t *sv_ai;
 extern cvar_t *sv_teamplay;
 
 extern cvar_t *ai_alien;
-extern cvar_t *ai_armor;
 extern cvar_t *ai_civilian;
 extern cvar_t *ai_equipment;
 extern cvar_t *ai_numaliens;

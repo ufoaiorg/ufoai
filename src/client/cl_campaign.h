@@ -74,7 +74,6 @@ typedef struct mission_s {
 	char music[MAX_VAR];
 	char alienTeam[MAX_VAR];
 	char alienEquipment[MAX_VAR];
-	char alienArmor[MAX_VAR];
 	char civTeam[MAX_VAR];
 	char cmds[MAX_VAR];
 	char onwin[MAX_VAR];
