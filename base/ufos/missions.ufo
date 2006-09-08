@@ -698,7 +698,6 @@ mission tropic_river
 	map			"+tropic"
 	param		river
 	music		mission3
-//	alienarmor	light
 	pos			"90 10"
 	aliens		4
 	alienteam	alien

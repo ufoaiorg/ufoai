@@ -1920,17 +1920,15 @@ void CL_SetMissionCvars(mission_t* mission)
 	Cvar_Set("ai_alien", mission->alienTeam);
 	Cvar_Set("ai_civilian", mission->civTeam);
 	Cvar_Set("ai_equipment", mission->alienEquipment);
-	Cvar_Set("ai_armor", mission->alienArmor);
 	Cvar_Set("music", mission->music);
 	Com_DPrintf("CL_SetMissionCvars:\n");
 
-	Com_DPrintf("..numAliens: %i\n..numCivilians: %i\n..alienTeam: '%s'\n..civTeam: '%s'\n..alienEquip: '%s'\n..alienArmor: '%s'\n..music: '%s'\n",
+	Com_DPrintf("..numAliens: %i\n..numCivilians: %i\n..alienTeam: '%s'\n..civTeam: '%s'\n..alienEquip: '%s'\n..music: '%s'\n",
 		mission->aliens,
 		mission->civilians,
 		mission->alienTeam,
 		mission->civTeam,
 		mission->alienEquipment,
-		mission->alienArmor,
 		mission->music);
 }
 
@@ -2592,8 +2590,6 @@ static value_t mission_vals[] = {
 	{"onlose", V_STRING, offsetof(mission_t, onlose)}
 	,
 	{"alienteam", V_STRING, offsetof(mission_t, alienTeam)}
-	,
-	{"alienarmor", V_STRING, offsetof(mission_t, alienArmor)}
 	,
 	{"alienequip", V_STRING, offsetof(mission_t, alienEquipment)}
 	,
