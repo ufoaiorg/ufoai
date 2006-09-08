@@ -339,9 +339,9 @@ def fill_md2_tags(md2_tags, object):
 		tag_frames[frame_counter].Row2 = apply_transform((1.0,0.0,0.0), matrix) #calculate point (loc + local-X * 1 )
 		tag_frames[frame_counter].Row3 = apply_transform((0.0,1.0,0.0), matrix) #calculate point (loc + local-Y * 1 )
 		tag_frames[frame_counter].Row4 = apply_transform((0.0,0.0,1.0), matrix) #calculate point (loc + local-Z * 1 )
-		tag_frames[frame_counter].Row2 = (1.0,0.0,0.0)
-		tag_frames[frame_counter].Row3 = (0.0,1.0,0.0)
-		tag_frames[frame_counter].Row4 = (0.0,0.0,1.0)
+		tag_frames[frame_counter].Row2 = (1.0,0.0,0.0)	# DEBUG - TODO: deleteme
+		tag_frames[frame_counter].Row3 = (0.0,1.0,0.0)	# DEBUG - TODO: deleteme
+		tag_frames[frame_counter].Row4 = (0.0,0.0,1.0)	# DEBUG - TODO: deleteme
 
 	md2_tags.tags.append(tag_frames)
 
@@ -349,7 +349,7 @@ def fill_md2_tags(md2_tags, object):
 	temp_tag = md2_tag();
 	md2_tags.offset_tags += temp_name.getSize();
 	md2_tags.offset_end = md2_tags.offset_tags + (temp_tag.getSize() * md2_tags.num_frames)
-	offset_extract_end=md2_tags.offset_end
+	md2_tags.offset_extract_end=md2_tags.offset_end
 
 ######################################################
 # Save MD2 TAGs Format
