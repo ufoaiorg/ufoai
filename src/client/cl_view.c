@@ -657,11 +657,6 @@ void V_UpdateRefDef(void)
  */
 void V_RenderView(float stereo_separation)
 {
-	V_UpdateRefDef();
-
-	/* set ref def - do this even in non 3d mode - we need shaders at loading time */
-	re.SetRefDef(&cl.refdef);
-
 	if (cls.state != ca_active && cls.state != ca_sequence)
 		return;
 
@@ -691,6 +686,8 @@ void V_RenderView(float stereo_separation)
 		CL_AddLightStyles();
 	}
 
+	/* update ref def - do this even in non 3d mode - we need shaders at loading time */
+	V_UpdateRefDef();
 	CL_CalcRefdef();
 
 	/* offset vieworg appropriately if we're doing stereo separation */
