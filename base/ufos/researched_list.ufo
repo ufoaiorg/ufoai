@@ -55,6 +55,33 @@ researched researched_human
 
 researched researched_alien
 {
+	rs_weapon_tachyonpistol
+	rs_weapon_tachyonpistol_ammo
+	rs_weapon_plaspistol
+	rs_weapon_plaspistol_ammo
+	rs_weapon_tachyonrifle
+	rs_weapon_tachyonrifle_ammo
+	rs_weapon_tachyonsniper
+	rs_weapon_tachyonsniper_ammo
+	rs_weapon_plasblade
+	rs_weapon_tachyonsniper
+	rs_weapon_tachyonsniper_ammo
+	// FIXME: Armor
+	rs_damage_normal
+	rs_damage_blast
+	rs_damage_fire
+	rs_damage_shock
+	rs_damage_stun
+	rs_skill_power
+	rs_skill_speed
+	rs_skill_accuracy
+	rs_skill_mind
+	rs_skill_close
+	rs_skill_heavy
+	rs_skill_assault
+	rs_skill_sniper
+	rs_skill_explosive
+	rs_craft_ufo_small
 }
 
 // TODO: Is this needed?
