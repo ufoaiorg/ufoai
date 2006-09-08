@@ -67,6 +67,7 @@ g_frames=Create(1)		# default value is set here.
 EVENT_NOEVENT=1
 EVENT_SAVE_MD2TAGS=2
 EVENT_CHOOSE_FILENAME=3
+EVENT_LOAD_MD2TAGS=4
 EVENT_EXIT=100
 
 ######################################################
@@ -86,7 +87,7 @@ def draw_gui():
 	global g_scale
 	global g_frames
 	global g_filename
-	global EVENT_NOEVENT,EVENT_SAVE_MD2TAGS,EVENT_CHOOSE_FILENAME,EVENT_EXIT
+	global EVENT_NOEVENT,EVENT_SAVE_MD2TAGS,EVENT_CHOOSE_FILENAME,EVENT_EXIT, EVENT_LOAD_MD2TAGS
 
 	########## Titles
 	glClear(GL_COLOR_BUFFER_BIT)
@@ -109,6 +110,7 @@ def draw_gui():
 
 	######### Draw and Exit Buttons
 	Button("Export",EVENT_SAVE_MD2TAGS , 10, 10, 80, 18)
+	Button("Import",EVENT_LOAD_MD2TAGS , 90, 10, 80, 18)
 	Button("Exit",EVENT_EXIT , 170, 10, 80, 18)
 
 def event(evt, val):
@@ -117,7 +119,7 @@ def event(evt, val):
 
 def bevent(evt):
 	global g_filename
-	global EVENT_NOEVENT,EVENT_SAVE_MD2TAGS,EVENT_EXIT
+	global EVENT_NOEVENT,EVENT_SAVE_MD2TAGS,EVENT_EXIT,EVENT_LOAD_MD2TAGS
 
 	######### Manages GUI events
 	if (evt==EVENT_EXIT):
@@ -131,6 +133,15 @@ def bevent(evt):
 			return
 		else:
 			save_md2_tags(g_filename.val)
+			Blender.Draw.Exit()
+			return
+	elif (evt==EVENT_LOAD_MD2TAGS):
+		if (g_filename.val == "model"):
+			load_md2_tags("blender.tag")
+			Blender.Draw.Exit()
+			return
+		else:
+			load_md2_tags(g_filename.val)
 			Blender.Draw.Exit()
 			return
 
@@ -151,6 +162,10 @@ class md2_tagname:
 		temp_data=self.name
 		data=struct.pack(self.binary_format, temp_data)
 		file.write(data)
+	def load(self, file):
+		temp_data = file.read(self.getSize())
+		name=struct.unpack(self.binary_format, temp_data)
+		return self
 	def dump (self):
 		print "MD2 tagname"
 		print "tag: ",self.name
@@ -185,6 +200,14 @@ class md2_tag:
 			temp_data[6], temp_data[7], temp_data[8],
 			temp_data[9], temp_data[10], temp_data[11])
 		file.write(data)
+	def load(self, file):
+		temp_data = file.read(self.getSize())
+		data=struct.unpack(self.binary_format, temp_data)
+		self.Row1 = (temp_data[0], temp_data[1], temp_data[2])
+		self.Row2 = (temp_data[3], temp_data[4], temp_data[5])
+		self.Row3 = (temp_data[6], temp_data[7], temp_data[8])
+		self.Row4 = (temp_data[9], temp_data[10], temp_data[11])
+		return self
 	def dump(self):
 		print "MD2 Point Structure"
 		print "Row1: ", self.Row1[0], " ",self.Row1[1] , " ",self.Row1[2]
@@ -250,7 +273,41 @@ class md2_tags_obj:
 				frame_count+=1
 				tag.save(file)
 			print "  Frames saved: ", frame_count
+	def load(self, file):
+		temp_data = file.read(self.getSize())
+		data=struct.unpack(self.binary_format, temp_data)
 
+		self.ident = temp_data[0]
+		self.version = temp_data[1]
+		
+		if (self.ident!=844121162 or self.version!=1):
+			print "Not a valid MD2 TAG file"
+			Exit()
+			
+		self.num_tags = temp_data[2] 
+		self.num_frames = temp_data[3]
+		self.offset_names = temp_data[4]
+		self.offset_tags = temp_data[5]
+		self.offset_end = temp_data[6]
+		self.offset_extract_end = temp_data[7]
+			
+		self.dump()
+		
+		# Read names data
+		for tag_counter in range(0,self.num_tags):
+			temp_name = md2_tagname("")
+			self.names.append(temp_name.load(file))
+		print "Reading of ", tag_counter, " names finished."
+
+		for tag_counter in range(0,self.num_tags):
+			frames  = []
+			for frame_counter in range(0,self.num_frames):
+				temp_tag = md2_tag()
+				frames.append(temp_name.load(file))
+			self.tags.append(frames)
+			print " Reading of ", frame_counter, " frames finished."
+		print "Reading of ", tag_counter, " framelists finished."
+		return self
 	def dump (self):
 		print "Header Information"
 		print "ident: ",		self.ident
@@ -286,6 +343,7 @@ class md2_tags_obj:
 
 ######################################################
 # Apply a matrix to a vert and return a tuple.
+#	http://en.wikibooks.org/wiki/Blender_3D:_Blending_Into_Python/Cookbook#Apply_Matrix
 ######################################################
 def apply_transform(verts, matrix):
 	x, y, z = verts
@@ -293,6 +351,38 @@ def apply_transform(verts, matrix):
 	x*matrix[0][0] + y*matrix[1][0] + z*matrix[2][0] + matrix[3][0],\
 	x*matrix[0][1] + y*matrix[1][1] + z*matrix[2][1] + matrix[3][1],\
 	x*matrix[0][2] + y*matrix[1][2] + z*matrix[2][2] + matrix[3][2]
+
+######################################################
+# Get Angle between 3 points
+#	Get the angle between line AB and BC where b is the elbo.
+#	http://en.wikibooks.org/wiki/Blender_3D:_Blending_Into_Python/Cookbook#Get_Angle_between_3_points
+######################################################
+import Blender
+AngleBetweenVecs = Blender.Mathutils.AngleBetweenVecs
+
+def getAng3pt3d(avec, bvec, cvec):
+        try:
+                ang = AngleBetweenVecs(avec - bvec,  cvec - bvec)
+                if ang != ang:
+                        raise  "ERROR angle between Vecs"
+                else:
+                        return ang
+        except:
+                print '\tAngleBetweenVecs failed, zero length?'
+                return 0
+
+######################################################
+# Get the rotation values (euler tuple) from a location and the axes-information
+######################################################
+def get_euler(loc, X,Y,Z):
+	locX = (loc[0]+1.0, loc[1], loc[2])
+	locY = (loc[0], loc[1]+1, loc[2])
+	locZ = (loc[0], loc[1], loc[2]+1)
+	
+	rotX = getAng3pt3d(locX,loc,X)
+	rotY = getAng3pt3d(locY,loc,Y)
+	rotZ = getAng3pt3d(locZ,loc,Z)
+	return (rotX, rotY, rotZ)
 
 ######################################################
 # Fill MD2 data structure
@@ -340,11 +430,8 @@ def fill_md2_tags(md2_tags, object):
 		tag_frames[frame_counter].Row2 = apply_transform((1.0,0.0,0.0), matrix) #calculate point (loc + local-X * 1 )
 		tag_frames[frame_counter].Row3 = apply_transform((0.0,1.0,0.0), matrix) #calculate point (loc + local-Y * 1 )
 		tag_frames[frame_counter].Row4 = apply_transform((0.0,0.0,1.0), matrix) #calculate point (loc + local-Z * 1 )
-		#tag_frames[frame_counter].Row2 = (1.0,0.0,0.0)	# DEBUG - TODO: deleteme
-		#tag_frames[frame_counter].Row3 = (0.0,1.0,0.0)	# DEBUG - TODO: deleteme
-		#tag_frames[frame_counter].Row4 = (0.0,0.0,1.0)	# DEBUG - TODO: deleteme
 		
-		# Apply scale if it was set in the export dialog
+		# Apply scale if it was set in the dialog
 		if (g_scale.val != 1.0):
 			tag_frames[frame_counter].Row1 = ( tag_frames[frame_counter].Row1[0]* g_scale.val, tag_frames[frame_counter].Row1[1]* g_scale.val, tag_frames[frame_counter].Row1[2]* g_scale.val)
 			tag_frames[frame_counter].Row2 = ( tag_frames[frame_counter].Row2[0]* g_scale.val, tag_frames[frame_counter].Row2[1]* g_scale.val, tag_frames[frame_counter].Row2[2]* g_scale.val)
@@ -410,35 +497,66 @@ def save_md2_tags(filename):
 	md2_tags.dump()
 	
 	# Actually write it to disk.
-	file=open(filename,"wb")
-	md2_tags.save(file)
-	file.close()
+	file_export=open(filename,"wb")
+	md2_tags.save(file_export)
+	file_export.close()
 
 	# Cleanup
 	md2_tags=0
 
 	print "Closed the file"
 
-"""
-	#output all the frame names-user_frame_list is loaded during the validation
-	for frame_set in user_frame_list:
-		for counter in range(frame_set[1]-1, frame_set[2]):
-			md2.frames[counter].name=frame_set[0]+"_"+str(counter-frame_set[1]+2)
+######################################################
+# Load&animate MD2 TAGs Format
+######################################################
+def load_md2_tags(filename):
+	global g_frames
 
-	#compute these after everthing is loaded into a md2 structure
-	header_size=17*4 #17 integers, and each integer is 4 bytes
-	skin_size=64*md2.num_skins #64 char per skin * number of skins
-	tex_coord_size=4*md2.num_tex_coords #2 short * number of texture coords
-	face_size=12*md2.num_faces #3 shorts for vertex index, 3 shorts for tex index
-	frames_size=(((12+12+16)+(4*md2.num_vertices)) * md2.num_frames) #frame info+verts per frame*num frames
-#	GL_command_size=md2.num_GL_commands*4 #each is an int or float, so 4 bytes per
+	print ""
+	print "***********************************"
+	print "MD2 TAG Import"
+	print "***********************************"
+	print ""
 
-	#fill in the info about offsets
-	md2.offset_skins=0+header_size
-	md2.offset_tex_coords=md2.offset_skins+skin_size
-	md2.offset_faces=md2.offset_tex_coords+tex_coord_size
-	md2.offset_frames=md2.offset_faces+face_size
-#	md2.offset_GL_commands=md2.offset_frames+frames_size
-#	md2.offset_end=md2.offset_GL_commands+GL_command_size
+	Blender.Window.DrawProgressBar(0.0,"Beginning MD2 TAG Import")
 
-"""
+
+	md2_tags=md2_tags_obj()  # Blank md2 object to load to.
+
+	print "Opening the file ..."
+	file_import=open(filename,"rb")
+	Blender.Window.DrawProgressBar(1.0, "Loading from Disk")
+	md2_tags.load(file_import)
+	file_import.close()
+	print "Closed the file."
+	
+	print ""
+	md2_tags.dump()
+	
+	for tag in range(0,md2_tags.num_tags):
+		tag_name = md2_tags.names[tag]
+		# TODO: create object.
+		for frame_counter in range(0,md2_tags.num_frames):
+			#set blender to the correct frame (so the objects' data will be set in this frame)
+			Blender.Set("curframe", frame_counter)
+
+			# Set object position.
+			object.loc = tag_frames[frame_counter].Row1
+			# Set object rotation,
+			euler_rotation=get_euler(
+				tag_frames[frame_counter].Row1,
+				tag_frames[frame_counter].Row2,
+				tag_frames[frame_counter].Row3,
+				tag_frames[frame_counter].Row4)
+			object.setEuler( euler_rotation[0], euler_rotation[1], euler_rotation[2])
+			
+			# (TODO: use the 'scale' value for the above operations "if (g_scale.val != 1.0):")
+			# (TODO: set object size)
+			
+			# TODO: Insert keyframe
+			object.insertKey(frame_counter,"absolute")
+			
+			# Set first coordiantes to the location of the empty.
+
+
+################
