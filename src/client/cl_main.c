@@ -1059,6 +1059,10 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
 		B_ParseBuildings(name, text, qfalse);
 	else if (!Q_strncmp(type, "researched", 10))
 		CL_ParseResearchedCampaignItems(name, text);
+	else if (!Q_strncmp(type, "researchable", 12))
+		CL_ParseResearchableCampaignStates(name, text, qtrue);
+	else if (!Q_strncmp(type, "notresearchable", 15))
+		CL_ParseResearchableCampaignStates(name, text, qfalse);
 	else if (!Q_strncmp(type, "tech", 4))
 		RS_ParseTechnologies(name, text);
 	else if (!Q_strncmp(type, "base", 4))

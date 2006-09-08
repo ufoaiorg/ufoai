@@ -60,15 +60,6 @@ extern qboolean CL_SendAircraftToMission(aircraft_t * aircraft, actMis_t * missi
 extern void CL_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 static void CL_GameExit(void);
 
-typedef struct researchCampaignItem_s {
-	char name[MAX_VAR]; /**< definition name */
-	int itemCount;	/**< item count in the items list */
-	int items[MAX_OBJDEFS]; /**< item id (csi.numODs) of item to research at campaign start */
-} researchCampaignItem_t;
-
-static researchCampaignItem_t researchCampaignItem[MAX_CAMPAIGNS];
-static int numResearchCampaignItemLists = 0;
-
 /*
 ============================================================================
 Boolean expression parser
@@ -2768,32 +2759,14 @@ void CL_ParseMission(char *name, char **text)
 void CL_ParseResearchedCampaignItems(char *name, char **text)
 {
 	char *errhead = "CL_ParseResearchedCampaignItems: unexptected end of file (equipment ";
-	researchCampaignItem_t *rslist;
 	char *token;
 	int i;
-
-	/* search for equipments with same name */
-	for (i = 0; i < numResearchCampaignItemLists; i++)
-		if (!Q_strncmp(name, researchCampaignItem[i].name, MAX_VAR))
-			break;
-
-	if (i < numResearchCampaignItemLists) {
-		Com_Printf("CL_ParseResearchedCampaignItems: researched def \"%s\" with same name found, second ignored\n", name);
-		return;
-	}
-
-	/* initialize the researched definition */
-	rslist = &researchCampaignItem[numResearchCampaignItemLists++];
-	memset(rslist, 0, sizeof(researchCampaignItem_t));
-
-	Q_strncpyz(rslist->name, name, MAX_VAR);
 
 	/* get it's body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseResearchedCampaignItems: equipment def \"%s\" without body ignored\n", name);
-		numResearchCampaignItemLists--;
 		return;
 	}
 
@@ -2812,6 +2785,46 @@ void CL_ParseResearchedCampaignItems(char *name, char **text)
 
 		if (i == gd.numTechnologies)
 			Com_Printf("CL_ParseResearchedCampaignItems: unknown token \"%s\" ignored (tech %s)\n", token, name);
+
+	} while (*text);
+}
+
+/**
+ * @brief This function parses a list of items that should be set to researched = true after campaign start
+ * @param researchable Mark them researchable or not researchable
+ */
+void CL_ParseResearchableCampaignStates(char *name, char **text, qboolean researchable)
+{
+	char *errhead = "CL_ParseResearchableCampaignStates: unexptected end of file (equipment ";
+	char *token;
+	int i;
+
+	/* get it's body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("CL_ParseResearchableCampaignStates: equipment def \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	Com_DPrintf("..campaign researchable list '%s'\n", name);
+	do {
+		token = COM_EParse(text, errhead, name);
+		if (!*text || *token == '}')
+			return;
+
+		for (i = 0; i < gd.numTechnologies; i++)
+			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
+				if (researchable)
+					RS_MarkOneResearchable(gd.technologies[i].idx);
+				else
+					Com_Printf("TODO: Mark unresearchable");
+				Com_DPrintf("...tech %s\n", gd.technologies[i].id);
+				break;
+			}
+
+		if (i == gd.numTechnologies)
+			Com_Printf("CL_ParseResearchableCampaignStates: unknown token \"%s\" ignored (tech %s)\n", token, name);
 
 	} while (*text);
 }
