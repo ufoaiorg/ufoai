@@ -59,6 +59,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	TAG_GAME	765			/* clear when unloading the dll */
 #define	TAG_LEVEL	766			/* clear when loading a new level */
 
+/* Macros for faster access to the inventory-container. */
+#define RIGHT(e) e->i.c[gi.csi->idRight]
+#define LEFT(e)  e->i.c[gi.csi->idLeft]
+#define FLOOR(e) e->i.c[gi.csi->idFloor]
 
 /* this structure is left intact through an entire game */
 /* it should be initialized at dll load time, and read/written to */

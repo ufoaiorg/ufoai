@@ -115,10 +115,10 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		objDef_t *od;
 		fireDef_t *fd;
 
-		if (fm < ST_LEFT_PRIMARY && ent->i.c[gi.csi->idRight] && ent->i.c[gi.csi->idRight]->item.m != NONE)
-			od = &gi.csi->ods[ent->i.c[gi.csi->idRight]->item.m];
-		else if (fm >= ST_LEFT_PRIMARY && ent->i.c[gi.csi->idLeft] && ent->i.c[gi.csi->idLeft]->item.m != NONE)
-			od = &gi.csi->ods[ent->i.c[gi.csi->idLeft]->item.m];
+		if (fm < ST_LEFT_PRIMARY && RIGHT(ent) && (RIGHT(ent)->item.m != NONE) && gi.csi->ods[RIGHT(ent)->item.t].weapon)
+			od = &gi.csi->ods[RIGHT(ent)->item.m];
+		else if (fm >= ST_LEFT_PRIMARY && LEFT(ent) && (LEFT(ent)->item.m != NONE) && gi.csi->ods[RIGHT(ent)->item.t].weapon)
+			od = &gi.csi->ods[LEFT(ent)->item.m];
 		else
 			continue;
 

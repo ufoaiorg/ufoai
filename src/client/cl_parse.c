@@ -562,7 +562,7 @@ void CL_EntPerish( sizebuf_t *sb )
 		if ( !actor )
 			actor = LE_Find( ET_UGV, le->pos );
 		if ( actor )
-			actor->i.c[csi.idFloor] = NULL;
+			FLOOR(actor) = NULL;
 	} else {
 		Com_DestroyInventory(&le->i);
 	}
@@ -804,10 +804,11 @@ void CL_PlaceItem( le_t *le )
 		Com_Printf("CL_PlaceItem: shared container: '%p'\n", le->i.c[csi.idFloor] );
 #endif
 
-		actor->i.c[csi.idFloor] = le->i.c[csi.idFloor];
+		FLOOR(actor) = FLOOR(le);
+
 	}
-	if ( le->i.c[csi.idFloor] ) {
-		biggest = CL_BiggestItem( le->i.c[csi.idFloor] );
+	if (FLOOR(le)) {
+		biggest = CL_BiggestItem(FLOOR(le));
 		le->model1 = cl.model_weapons[biggest];
 		Grid_PosToVec( &clMap, le->pos, le->origin );
 		VectorSubtract( le->origin, csi.ods[biggest].center, le->origin );

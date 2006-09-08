@@ -1237,9 +1237,7 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 	vec3_t size;
 	vec4_t col;
 
-	if (item.t == NONE)
-		return;
-
+	assert (item.t != NONE);
 	od = &csi.ods[item.t];
 
 	if (od->image[0]) {
@@ -1713,7 +1711,7 @@ void MN_DrawMenus(void)
 					for (item.t = 0; item.t < csi.numODs; item.t++)
 						if (!Q_strncmp(ref, csi.ods[item.t].kurz, MAX_VAR))
 							break;
-					if (item.t == csi.numODs || item.t == NONE)
+					if (item.t == csi.numODs)
 						break;
 
 					MN_DrawItem(node->pos, item, 0, 0, 0, 0, node->scale, color);
