@@ -101,7 +101,7 @@ void G_WriteItem(item_t item, int container, int x, int y)
 {
 	assert (item.t != NONE);
 
-	gi.WriteFormat("bbbbbb", 
+	gi.WriteFormat("bbbbbb",
 				   item.t, item.a, item.m, container, x, y);
 }
 
@@ -110,7 +110,7 @@ void G_WriteItem(item_t item, int container, int x, int y)
  */
 void G_ReadItem(item_t * item, int * container, int * x, int * y)
 {
-	gi.ReadFormat("bbbbbb", 
+	gi.ReadFormat("bbbbbb",
 				   &item->t, &item->a, &item->m, container, x, y);
 }
 
@@ -809,7 +809,7 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 			/* send ammo */
 			gi.AddEvent(mask, EV_INV_AMMO);
 			/* is this condition below needed? or is 'num' enough?
-			   probably needed so that red rifle on the floor changes color, 
+			   probably needed so that red rifle on the floor changes color,
 			   but this needs testing. */
 			gi.WriteShort(to == gi.csi->idFloor ? floor->number : num);
 			gi.WriteByte(gi.csi->ods[item.t].ammo);
@@ -1758,11 +1758,11 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 					if (fd->ammo && !fd->splrad && gi.csi->ods[weapon->t].thrown) {
 						pos3_t drop;
 						edict_t *floor, *actor;
-		
+
 						VecToPos(tr.endpos, drop);
 
 						for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
-							if (floor->inuse 
+							if (floor->inuse
 								&& floor->type == ET_ITEM
 								&& VectorCompare(drop, floor->pos))
 								break;
@@ -1772,7 +1772,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 							floor = G_SpawnFloor(drop);
 
 							for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++) {
-								if (actor->inuse 
+								if (actor->inuse
 									&& (actor->type == ET_ACTOR || actor->type == ET_UGV)
 									&& VectorCompare(drop, actor->pos))
 									break;
@@ -1870,12 +1870,12 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 	bounce = 0;
 	flags = 0;
 	do {
-		/* Calc 'impact' vector that is located at the end of the range 
-		   defined by the fireDef_t. This is not really the impact location, 
+		/* Calc 'impact' vector that is located at the end of the range
+		   defined by the fireDef_t. This is not really the impact location,
 		   but rather the 'endofrange' location, see below for another use.*/
 		VectorMA(cur_loc, range, dir, impact);
 
-		/* Do the trace from current position of the projectile 
+		/* Do the trace from current position of the projectile
 		   to the end_of_range location.*/
 		tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
 		/* _Now_ we copy the correct impact location. */
@@ -1947,7 +1947,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 	if (fd->ammo && !fd->splrad && gi.csi->ods[weapon->t].thrown) {
 		pos3_t drop;
 		edict_t *floor, *actor;
-		
+
 		if (VectorCompare(ent->pos, at)) { /* throw under his own feet */
 			VectorCopy(at, drop);
 		} else {
@@ -1956,7 +1956,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		}
 
 		for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
-			if (floor->inuse 
+			if (floor->inuse
 				&& floor->type == ET_ITEM
 				&& VectorCompare(drop, floor->pos))
 				break;
@@ -1966,7 +1966,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 			floor = G_SpawnFloor(drop);
 
 			for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++) {
-				if (actor->inuse 
+				if (actor->inuse
 					&& (actor->type == ET_ACTOR || actor->type == ET_UGV)
 					&& VectorCompare(drop, actor->pos))
 					break;
@@ -2039,8 +2039,8 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 		if (ammo < fd->ammo) {
 			shots = fd->shots * ammo / fd->ammo;
 			ammo = 0;
-		} else if (!player->pers.ai) /* TODO: implement reload for AI */
-			ammo -= fd->ammo;
+		}
+		ammo -= fd->ammo;
 		if (shots < 1) {
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not enough ammo!\n"));
 			return;
@@ -2138,6 +2138,61 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 
 	/* check for Reaction fire against the shooter */
 	G_ReactionFire(ent);
+}
+
+/**
+ * @brief Reload weapon with actor.
+ * @param[in] hand
+ * @sa AI_ActorThink
+ */
+void G_ClientReload(player_t *player, int entnum, shoot_types_t st)
+{
+	edict_t *ent;
+	invList_t *ic;
+	int hand;
+	int weapon, x, y, tu;
+	int container, bestContainer;
+
+	ent = g_edicts + entnum;
+
+	/* search for clips and select the one that is available easily */
+	x = 0;
+	y = 0;
+	tu = 100;
+	bestContainer = NONE;
+	hand = st == ST_RIGHT_RELOAD ? gi.csi->idRight : gi.csi->idLeft;
+
+	if (ent->i.c[hand]) {
+		weapon = ent->i.c[hand]->item.t;
+	} else if (hand == gi.csi->idLeft
+			   && gi.csi->ods[ent->i.c[gi.csi->idRight]->item.t].twohanded) {
+		/* Check for two-handed weapon */
+		hand = gi.csi->idRight;
+		weapon = ent->i.c[hand]->item.t;
+	}
+
+	/* LordHavoc: Check if item is researched when in singleplayer? I don't think this is really a cheat issue as in singleplayer there is no way to inject fake client commands in the virtual network buffer, and in multiplayer everything is researched */
+
+	for (container = 0; container < gi.csi->numIDs; container++) {
+		if (gi.csi->ids[container].out < tu) {
+			/* Once we've found at least one clip, there's no point */
+			/* searching other containers if it would take longer */
+			/* to retrieve the ammo from them than the one */
+			/* we've already found. */
+			for (ic = ent->i.c[container]; ic; ic = ic->next)
+				if ( gi.csi->ods[ic->item.t].link == weapon ) {
+					x = ic->x;
+					y = ic->y;
+					tu = gi.csi->ids[container].out;
+					bestContainer = container;
+					break;
+				}
+		}
+	}
+
+	/* send request */
+	if (bestContainer != NONE)
+		G_ClientInvMove(player, entnum, bestContainer, x, y, hand, 0, 0, qtrue);
 }
 
 /**
@@ -2249,10 +2304,20 @@ qboolean G_ReactionFire(edict_t * target)
 				level.activeTeam = ent->team;
 
 				/* Fire the first weapon in hands if everything is ok. */
-				if ( RIGHT(ent) && (RIGHT(ent)->item.m != NONE) && gi.csi->ods[RIGHT(ent)->item.t].weapon && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
+				if ( RIGHT(ent) 
+					 && (RIGHT(ent)->item.m != NONE) 
+					 && gi.csi->ods[RIGHT(ent)->item.t].weapon 
+					 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
+						 || RIGHT(ent)->item.a > 0)
+					 && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
 					G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY);
 					fired = qtrue;
-				} else if ( LEFT(ent) && (LEFT(ent)->item.m != NONE) && gi.csi->ods[RIGHT(ent)->item.t].weapon && gi.csi->ods[LEFT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
+				} else if ( LEFT(ent) 
+							&& (LEFT(ent)->item.m != NONE) 
+							&& gi.csi->ods[LEFT(ent)->item.t].weapon
+							&& (!gi.csi->ods[LEFT(ent)->item.t].reload
+								|| LEFT(ent)->item.a > 0)
+							&& gi.csi->ods[LEFT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
 					G_ClientShoot(player, ent->number, target->pos, ST_LEFT_PRIMARY);
 					fired = qtrue;
 				}
