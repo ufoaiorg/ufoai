@@ -1,0 +1,63 @@
+// List of researched items at campaign start
+researched researched_human
+{
+	rs_weapon_assault
+	rs_weapon_assault_ammo
+	rs_weapon_sniper
+	rs_weapon_sniper_ammo
+	rs_weapon_smg
+	rs_weapon_smg_ammo
+	rs_weapon_shotgun
+	rs_weapon_shotgun_ammo
+	rs_weapon_flamer
+	rs_weapon_flamer_ammo
+	rs_weapon_pistol
+	rs_weapon_pistol_ammo
+	rs_weapon_rpg
+	rs_weapon_rpg_ammo
+	rs_weapon_fraggren
+	rs_weapon_combatknife
+	rs_kevlar_armor
+	rs_damage_normal
+	rs_damage_blast
+	rs_damage_fire
+	rs_damage_shock
+	rs_damage_stun
+	rs_skill_power
+	rs_skill_speed
+	rs_skill_accuracy
+	rs_skill_mind
+	rs_skill_close
+	rs_skill_heavy
+	rs_skill_assault
+	rs_skill_sniper
+	rs_skill_explosive
+	rs_building_entrance
+	rs_building_storage
+	rs_building_powerplant
+	rs_building_quarters
+	rs_building_teamroom
+	rs_building_workshop
+	rs_building_hangar
+	rs_building_radar
+	rs_building_command
+	rs_building_intercept
+	rs_building_lab
+	rs_building_hospital
+	rs_building_ufo_hangar
+	rs_craft_dropship
+	rs_craft_interceptor
+	rs_ugv_phoenix
+	rs_ugv_triax
+	rs_craft_shield_light
+	rs_craft_weapon_flac
+}
+
+researched researched_alien
+{
+}
+
+// TODO: Is this needed?
+researched researched_multiplayer
+{
+}
