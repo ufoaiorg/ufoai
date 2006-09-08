@@ -31,7 +31,7 @@ stage intro
 	set soldier_terror
 	{
 		needed		terror_only
-		delay		"0 3 7"
+		delay		"0 10 7"
 		frame		"0 15 0" // big missions, but less traffic
 		expire		"0 45 0" // three at geoscape, but lots of time to do them
 		missions	"bunker japan dam"
