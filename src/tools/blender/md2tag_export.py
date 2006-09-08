@@ -245,6 +245,7 @@ class md2_tags_obj:
 			tag_count+=1
 			frame_count=0
 			print "Saving tag: ", tag_count
+
 			for tag in tag_frames:
 				frame_count+=1
 				tag.save(file)
@@ -342,6 +343,13 @@ def fill_md2_tags(md2_tags, object):
 		tag_frames[frame_counter].Row2 = (1.0,0.0,0.0)	# DEBUG - TODO: deleteme
 		tag_frames[frame_counter].Row3 = (0.0,1.0,0.0)	# DEBUG - TODO: deleteme
 		tag_frames[frame_counter].Row4 = (0.0,0.0,1.0)	# DEBUG - TODO: deleteme
+		
+		# Apply scale if it was set in the export dialog
+		if (g_scale.val != 1.0):
+			tag_frames[frame_counter].Row1 = ( tag_frames[frame_counter].Row1[0]* g_scale.val, tag_frames[frame_counter].Row1[1]* g_scale.val, tag_frames[frame_counter].Row1[2]* g_scale.val)
+			tag_frames[frame_counter].Row2 = ( tag_frames[frame_counter].Row2[0]* g_scale.val, tag_frames[frame_counter].Row2[1]* g_scale.val, tag_frames[frame_counter].Row2[2]* g_scale.val)
+			tag_frames[frame_counter].Row3 = ( tag_frames[frame_counter].Row3[0]* g_scale.val, tag_frames[frame_counter].Row3[1]* g_scale.val, tag_frames[frame_counter].Row3[2]* g_scale.val)
+			tag_frames[frame_counter].Row4 = ( tag_frames[frame_counter].Row4[0]* g_scale.val, tag_frames[frame_counter].Row4[1]* g_scale.val, tag_frames[frame_counter].Row4[2]* g_scale.val)
 
 	md2_tags.tags.append(tag_frames)
 
