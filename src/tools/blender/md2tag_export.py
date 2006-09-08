@@ -165,8 +165,8 @@ class md2_tagname:
 		file.write(data)
 	def load(self, file):
 		temp_data = file.read(self.getSize())
-		#name=struct.unpack(self.binary_format, temp_data)
-		name=temp_data
+		data=struct.unpack(self.binary_format, temp_data)
+		self.name=data[0]
 		return self
 	def dump (self):
 		print "MD2 tagname"
@@ -174,6 +174,7 @@ class md2_tagname:
 		print ""
 
 class md2_tag:
+	global g_scale
 	Row1	= []
 	Row2	= []
 	Row3	= []
@@ -405,18 +406,13 @@ def get_euler(loc, X,Y,Z):
 # Fill MD2 data structure
 ######################################################
 def fill_md2_tags(md2_tags, object):
+	global g_scale
 	Blender.Window.DrawProgressBar(0.25,"Filling MD2 Data")
 
 	# Set header information.
 	md2_tags.ident=844121162
 	md2_tags.version=1
 	md2_tags.num_tags+=1
-
-#	offset_names=0
-#	offset_tags=0
-#	offset_end=0
-#	offset_extract_end=0
-
 
 	# Add a name node to the tagnames data structure.
 	md2_tags.names.append(md2_tagname(object.name))	# TODO: cut to 64 chars
@@ -559,6 +555,8 @@ def load_md2_tags(filename):
 		tag_frames = md2_tags.tags[tag]
 		# Create object.
 		object = Object.New('Empty')
+		#object.setName("_",tag_name.name,"_")
+
 		# Link Object to current Scene
 		scene.link(object)
 		for frame_counter in range(0,md2_tags.num_frames):
