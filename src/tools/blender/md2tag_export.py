@@ -8,7 +8,7 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Höhrer'
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 __url__ = ["UFO: Aline Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufo.myexp.de/phpBB2/index.php", "blender", "elysiun"]
 __email__ = ["Werner Höhrer, bill_spam2:yahoo*de", "scripts"]
@@ -143,11 +143,10 @@ Register(draw_gui, event, bevent)
 class md2_tagname:
 	name=""
 	binary_format="<64s"
-	binary_size=struct.calcsize(binary_format)
 	def __init__(self, string):
 		self.name=string
 	def getSize(self):
-		return self.binary_size;
+		return struct.calcsize(self.binary_format)
 	def save(self, file):
 		temp_data=self.name
 		data=struct.pack(self.binary_format, temp_data)
@@ -164,15 +163,14 @@ class md2_tag:
 	Row4	= []
 	
 	binary_format="<12f"	#little-endian (<), 12 floats (12f)	| See http://docs.python.org/lib/module-struct.html for more info.
-	binary_size=struct.calcsize(binary_format)
-	
+
 	def __init__(self):
 		Row1	= (0.0, 0.0, 0.0)
 		Row2	= (0.0, 0.0, 0.0)
 		Row3	= (0.0, 0.0, 0.0)
 		Row4	= (0.0, 0.0, 0.0)
 	def getSize(self):
-		return self.binary_size;
+		return struct.calcsize(self.binary_format)
 	def save(self, file):
 		temp_data=(
 		self.Row1[0], self.Row1[1], self.Row1[2],
@@ -224,6 +222,8 @@ class md2_tags_obj:
 	def __init__ (self):
 		self.names=[]
 		self.tags=[]
+	def getSize(self):
+		return struct.calcsize(self.binary_format)
 	def save(self, file):
 		temp_data=[0]*8
 		temp_data[0]=self.ident
@@ -345,9 +345,6 @@ def fill_md2_tags(md2_tags, object):
 
 	md2_tags.tags.append(tag_frames)
 
-	temp_name = md2_tagname("");
-	md2_tags.offset_tags += temp_name.getSize();
-
 ######################################################
 # Save MD2 TAGs Format
 ######################################################
@@ -377,24 +374,24 @@ def save_md2_tags(filename):
 	# Set frame number.
 	md2_tags.num_frames=g_frames.val
 	print "Frames to export: ",md2_tags.num_frames
-	print ""
-
-	header_size=8*4	#8 integers, and each integer is 4 bytes
-	md2_tags.offset_names=0+header_size
-	md2_tags.offset_tags=md2_tags.offset_names+0
+	print ""	
 
 	for object in mesh_objs:
 		#check if it's an "Empty" mesh object
 		if object.getType()!="Empty":
 			print "Ignoring non-'Empty' object: ", object.getType()
 		else:
-			print "Found: ", object.getType()
-			#ok=validation(object)
-			#if ok==False:
-			#	print "Ignoring invalid 'Empty' object."
-			#else:
+			print "Found Empty with name ",object.name
 			fill_md2_tags(md2_tags, object)
 			Blender.Window.DrawProgressBar(1.0, "Writing to Disk")
+	
+	# Set offset of names
+	temp_header = md2_tags_obj();
+	md2_tags.offset_names= 0+temp_header.getSize();
+
+	# Set offset of tags
+	temp_name = md2_tagname("");
+	md2_tags.offset_tags = md2_tags.offset_names + temp_name.getSize() * md2_tags.num_tags;
 	
 	# Set EOF offest value.
 	temp_tag = md2_tag();
