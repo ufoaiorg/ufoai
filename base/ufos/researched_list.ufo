@@ -53,6 +53,18 @@ researched researched_human
 	rs_craft_weapon_flac
 }
 
+// mark these as researchable
+researchable researched_human
+{
+	// FIXME
+}
+
+// mark these explicit as not researchable
+notresearchable researched_human
+{
+	// FIXME
+}
+
 researched researched_alien
 {
 	rs_plasma
@@ -88,7 +100,19 @@ researched researched_alien
 	rs_craft_weapon_flac
 }
 
-// TODO: Is this needed?
-researched researched_multiplayer
+// mark these as researchable
+researchable researched_alien
 {
+	// FIXME
 }
+
+// mark these explicit as not researchable
+notresearchable researched_alien
+{
+	// FIXME
+}
+
+// TODO: Is this needed?
+//researched researched_multiplayer
+//{
+//}
