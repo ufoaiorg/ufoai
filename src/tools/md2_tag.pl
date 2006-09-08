@@ -31,24 +31,24 @@ package MD2_tag;
 use base 'Parse::Binary';
 
 use constant FORMAT => (
-	Indent		=> 'I',			# should be 844121162
-	Version		=> 'I',			# tag version. must be equal to 1
+	Indent		=> 'i',			# should be 844121162
+	Version		=> 'i',			# tag version. must be equal to 1
 
-	NumTags		=> 'I',			# number of textures
-	NumFrames		=> 'I',		# number of vertices (x,y,z)
+	NumTags		=> 'i',			# number of textures
+	NumFrames		=> 'i',		# number of vertices (x,y,z)
 
-	OffsetNames		=> 'I',		# offset to tag names (64 bytes each)
-	OffsetTags		=> 'I',		# offset
-	OffsetEnd		=> 'I',		# offset
-	OffsetExtractEnd	=> 'I',	# offset
+	OffsetNames		=> 'i',		# offset to tag names (64 bytes each)
+	OffsetTags		=> 'i',		# offset
+	OffsetEnd		=> 'i',		# offset
+	OffsetExtractEnd	=> 'i',	# offset
 
-	TagName			=> ['a64', '{$NumTags}', 1 ],	# 64chars * NumTags
+	TagName			=> ['A64', '{$NumTags}', 1 ],	# 64chars * NumTags
 	TagData			=> ['f12', '{$NumTags*$NumFrames}', 12 ]	# 12 floats * NumTags * NumFrames
 );
 
 package TagName;
 use base 'Parse::Binary';
-use constant FORMAT => ('a64');
+use constant FORMAT => ('A64');
 
 package TagData;
 use base 'Parse::Binary';
@@ -85,8 +85,8 @@ print "Tagnames:\n";
 
 for (my $i = 0; $i < $md2tag_file->NumTags; $i++) {
 	my $name = $md2tag_file->TagName->[$i][0];
-	$name =~ s/\0*//sg; # Remove all NUL from the string.
-	chomp($name);
+	#$name =~ s/\0*//sg; # Remove all NUL from the string.
+	#chomp($name);
 	print "- ",$name,"\n";
 }
 
@@ -95,7 +95,7 @@ if ($verbose) {
 	print Dumper($md2tag_file);
 	for (my $tags = 0; $tags < $md2tag_file->NumTags; $tags++) {
 		my $name = $md2tag_file->TagName->[$tags][0];
-		$name =~ s/\0*//sg; # Remove all NUL from the string.
+		#$name =~ s/\0*//sg; # Remove all NUL from the string.
 		print "# tag: ". $name."\n";
 		my $frame = 0;
 		for (my $j = $tags * $md2tag_file->NumFrames; $j < ($tags+1) * $md2tag_file->NumFrames; $j++) {
