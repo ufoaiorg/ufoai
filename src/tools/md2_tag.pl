@@ -43,7 +43,7 @@ use constant FORMAT => (
 	OffsetExtractEnd	=> 'i',	# offset
 
 	TagName			=> ['A64', '{$NumTags}', 1 ],	# 64chars * NumTags
-	TagData			=> ['f12', '{$NumTags*$NumFrames}', 12 ]	# 12 floats * NumTags * NumFrames
+	TagData			=> ['f12', '{$NumTags*$NumFrames*12}', 12 ]	# 12 floats * NumTags * NumFrames
 );
 
 package TagName;
@@ -58,7 +58,7 @@ use constant FORMAT => ('f12');
 #######################################
 # MAIN
 #######################################
-use Data::Dumper;
+use Data::Dumper; #DEBUG
 my $tagfile = "";
 my $verbose = 0;
 
@@ -84,18 +84,14 @@ print $md2tag_file->NumFrames, " Frames found\n";
 print "Tagnames:\n";
 
 for (my $i = 0; $i < $md2tag_file->NumTags; $i++) {
-	my $name = $md2tag_file->TagName->[$i][0];
-	#$name =~ s/\0*//sg; # Remove all NUL from the string.
-	#chomp($name);
-	print "- ",$name,"\n";
+	print "- ",$md2tag_file->TagName->[$i][0],"\n";
 }
 
 if ($verbose) {
 	print "Coords:\n";
-	print Dumper($md2tag_file);
+#	print Dumper($md2tag_file); #DEBUG
 	for (my $tags = 0; $tags < $md2tag_file->NumTags; $tags++) {
 		my $name = $md2tag_file->TagName->[$tags][0];
-		#$name =~ s/\0*//sg; # Remove all NUL from the string.
 		print "# tag: ". $name."\n";
 		my $frame = 0;
 		for (my $j = $tags * $md2tag_file->NumFrames; $j < ($tags+1) * $md2tag_file->NumFrames; $j++) {
