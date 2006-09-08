@@ -52,6 +52,12 @@ from Blender.Object import *
 import struct, string
 from types import *
 
+#returns the string from a null terminated string
+def asciiz (s):
+  n = 0
+  while (ord(s[n]) != 0):
+    n = n + 1
+  return s[0:n]
 
 
 ######################################################
@@ -166,7 +172,7 @@ class md2_tagname:
 	def load(self, file):
 		temp_data = file.read(self.getSize())
 		data=struct.unpack(self.binary_format, temp_data)
-		self.name=data[0]
+		self.name=asciiz(data[0])
 		return self
 	def dump (self):
 		print "MD2 tagname"
@@ -191,10 +197,10 @@ class md2_tag:
 		return struct.calcsize(self.binary_format)
 	def save(self, file):
 		temp_data=(
-		self.Row1[1], -self.Row1[0], self.Row1[2],
-		self.Row2[1], -self.Row2[0], self.Row2[2],
-		self.Row3[1], -self.Row3[0], self.Row3[2],
-		self.Row4[1], -self.Row4[0], self.Row4[2]
+		-self.Row1[1], self.Row1[0], self.Row1[2],
+		-self.Row2[1], self.Row2[0], self.Row2[2],
+		-self.Row3[1], self.Row3[0], self.Row3[2],
+		-self.Row4[1], self.Row4[0], self.Row4[2]
 		)
 
 		data=struct.pack(self.binary_format,
@@ -211,10 +217,10 @@ class md2_tag:
 		self.Row3 = (data[6], data[7], data[8])
 		self.Row4 = (data[9], data[10], data[11])
 		
-		self.Row1 = (-self.Row1[1], self.Row1[0], self.Row1[2]) 
-		self.Row2 = (-self.Row2[1], self.Row2[0], self.Row2[2]) 
-		self.Row3 = (-self.Row3[1], self.Row3[0], self.Row3[2]) 
-		self.Row4 = (-self.Row4[1], self.Row4[0], self.Row4[2]) 
+		self.Row1 = (self.Row1[1], -self.Row1[0], self.Row1[2]) 
+		self.Row2 = (self.Row2[1], -self.Row2[0], self.Row2[2]) 
+		self.Row3 = (self.Row3[1], -self.Row3[0], self.Row3[2]) 
+		self.Row4 = (self.Row4[1], -self.Row4[0], self.Row4[2]) 
 		
 		# it's saved like this:
 		#mesh.verts[j].co[0]=y
@@ -566,7 +572,7 @@ def load_md2_tags(filename):
 		tag_frames = md2_tags.tags[tag]
 		# Create object.
 		object = Object.New('Empty')
-		#object.setName("_",tag_name.name,"_")
+		object.setName(tag_name.name)
 
 		# Link Object to current Scene
 		scene.link(object)
