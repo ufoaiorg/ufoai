@@ -249,5 +249,6 @@ qboolean CL_OnBattlescape(void);
 void CL_GameInit (void);
 extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 void CL_NewAircraft(base_t * base, char *name);
+void CL_ParseResearchedCampaignItems(char *name, char **text);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */

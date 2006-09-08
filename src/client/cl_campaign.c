@@ -60,6 +60,15 @@ extern qboolean CL_SendAircraftToMission(aircraft_t * aircraft, actMis_t * missi
 extern void CL_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 static void CL_GameExit(void);
 
+typedef struct researchCampaignItem_s {
+	char name[MAX_VAR]; /**< definition name */
+	int itemCount;	/**< item count in the items list */
+	int items[MAX_OBJDEFS]; /**< item id (csi.numODs) of item to research at campaign start */
+} researchCampaignItem_t;
+
+static researchCampaignItem_t researchCampaignItem[MAX_CAMPAIGNS];
+static int numResearchCampaignItemLists = 0;
+
 /*
 ============================================================================
 Boolean expression parser
@@ -2796,7 +2805,7 @@ void CL_ParseResearchedCampaignItems(char *name, char **text)
 
 		for (i = 0; i < gd.numTechnologies; i++)
 			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
-				RS_MarkOneResearchable(i);
+				RS_MarkResearched(gd.technologies[i].id);
 				Com_DPrintf("...tech %s\n", gd.technologies[i].id);
 				break;
 			}
