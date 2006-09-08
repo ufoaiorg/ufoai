@@ -346,10 +346,7 @@ def fill_md2_tags(md2_tags, object):
 	md2_tags.tags.append(tag_frames)
 
 	temp_name = md2_tagname("");
-	temp_tag = md2_tag();
 	md2_tags.offset_tags += temp_name.getSize();
-	md2_tags.offset_end = md2_tags.offset_tags + (temp_tag.getSize() * md2_tags.num_frames)
-	md2_tags.offset_extract_end=md2_tags.offset_end
 
 ######################################################
 # Save MD2 TAGs Format
@@ -397,11 +394,16 @@ def save_md2_tags(filename):
 			#	print "Ignoring invalid 'Empty' object."
 			#else:
 			fill_md2_tags(md2_tags, object)
-
 			Blender.Window.DrawProgressBar(1.0, "Writing to Disk")
-
+	
+	# Set EOF offest value.
+	temp_tag = md2_tag();
+	md2_tags.offset_end = md2_tags.offset_tags + (temp_tag.getSize() * md2_tags.num_frames * md2_tags.num_tags)
+	md2_tags.offset_extract_end=md2_tags.offset_end
+	
 	print ""
 	md2_tags.dump()
+	
 	# Actually write it to disk.
 	file=open(filename,"wb")
 	md2_tags.save(file)
