@@ -191,10 +191,8 @@ extern client_state_t cl;
 
 /*
 ==================================================================
-
 the client_static_t structure is persistant through an arbitrary number
 of server connections
-
 ==================================================================
 */
 

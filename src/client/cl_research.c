@@ -84,7 +84,7 @@ void RS_MarkCollected(equipDef_t *ed)
 }
 
 /**
- * @brief Marks one tech as researchedable.
+ * @brief Marks one tech as researchable.
  * @param id unique id of a technology_t
  */
 void RS_MarkOneResearchable(int tech_idx)
@@ -689,7 +689,6 @@ void RS_UpdateData(void)
 
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
 			/* An unresearched collected item that cannot yet be researched. */
-
 			Q_strcat(name, _(" [not yet researchable]"), MAX_VAR);
 			/* Color the item 'unresearchable' */
 			Cbuf_AddText(va("researchunresearchable%i\n", j));
@@ -706,7 +705,6 @@ void RS_UpdateData(void)
 			j++;
 		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
 			/* An item that can be researched. */
-
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
 			if ((tech->base_idx == baseCurrent->idx) || (tech->base_idx < 0) ) {
@@ -1187,11 +1185,13 @@ void RS_ParseTechnologies(char *id, char **text)
 
 				}
 				while (misp && required->numEntries < MAX_TECHLINKS);
+#if 0
 			} else if (!Q_strncmp(token, "researched", MAX_VAR)) {
 				/* tech alreadyy researched? */
 				token = COM_EParse(text, errhead, id);
 				if (!Q_strncmp(token, "true", MAX_VAR) || *token == '1')
 					tech->statusResearch = RS_FINISH;
+#endif
 			} else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
 				/* ufopedia chapter */
 				token = COM_EParse(text, errhead, id);

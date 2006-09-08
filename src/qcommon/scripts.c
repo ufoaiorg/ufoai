@@ -193,9 +193,9 @@ void Com_ParseArmor(char *name, char **text, short *ad)
 }
 
 
-/*======================
-Com_ParseItem
-======================*/
+/**
+ * @brief
+ */
 static void Com_ParseItem(char *name, char **text)
 {
 	char *errhead = "Com_ParseItem: unexptected end of file (weapon ";
@@ -214,7 +214,7 @@ static void Com_ParseItem(char *name, char **text)
 		return;
 	}
 
-	/* initialize the menu */
+	/* initialize the object definition */
 	od = &csi.ods[csi.numODs++];
 	memset(od, 0, sizeof(objDef_t));
 
@@ -308,9 +308,9 @@ static value_t idps[] = {
 	{NULL, 0, 0}
 };
 
-/*======================
-Com_ParseInventory
-======================*/
+/**
+ * @brief
+ */
 static void Com_ParseInventory(char *name, char **text)
 {
 	char *errhead = "Com_ParseInventory: unexptected end of file (inventory ";
@@ -334,7 +334,7 @@ static void Com_ParseInventory(char *name, char **text)
 		return; /* never reached */
 	}
 
-	/* initialize the menu */
+	/* initialize the inventory definition */
 	id = &csi.ids[csi.numIDs++];
 	memset(id, 0, sizeof(invDef_t));
 
@@ -444,9 +444,9 @@ char *name_strings[NAME_NUM_TYPES] = {
 };
 
 
-/*======================
-Com_ParseEquipment
-======================*/
+/**
+ * @brief
+ */
 void Com_ParseEquipment(char *name, char **text)
 {
 	char *errhead = "Com_ParseEquipment: unexptected end of file (equipment ";
@@ -464,7 +464,7 @@ void Com_ParseEquipment(char *name, char **text)
 		return;
 	}
 
-	/* initialize the menu */
+	/* initialize the equipment definition */
 	ed = &csi.eds[csi.numEDs++];
 	memset(ed, 0, sizeof(equipDef_t));
 
@@ -504,11 +504,11 @@ void Com_ParseEquipment(char *name, char **text)
 }
 
 
-/*==============================================================================
-
-			NAME AND TEAM DEFINITION INTERPRETER
-
-==============================================================================*/
+/*
+==============================================================================
+NAME AND TEAM DEFINITION INTERPRETER
+==============================================================================
+*/
 
 /**
  * @brief
@@ -976,11 +976,11 @@ void Com_ParseTeam(char *title, char **text)
 	} while (*text);
 }
 
-/*==============================================================================
-
-			DAMAGE TYPES INTERPRETER
-
-==============================================================================*/
+/*
+==============================================================================
+DAMAGE TYPES INTERPRETER
+==============================================================================
+*/
 
 void Com_ParseDamageTypes(char *name, char **text)
 {
@@ -993,6 +993,7 @@ void Com_ParseDamageTypes(char *name, char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseTypes: damage type list \"%s\" without body ignored\n", name);
+		/* FIXME: Why is numODs decremented here? */
 		csi.numODs--;
 		return;
 	}
@@ -1083,9 +1084,9 @@ void Com_AddObjectLinks(void)
 	}
 }
 
-/*======================
-Com_ParseScripts
-======================*/
+/**
+ * @brief
+ */
 void Com_ParseScripts(void)
 {
 	char *type, *name, *text;

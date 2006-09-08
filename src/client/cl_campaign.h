@@ -138,6 +138,7 @@ typedef struct campaign_s {
 	char id[MAX_VAR];
 	char name[MAX_VAR];
 	char team[MAX_VAR];
+	char researched[MAX_VAR];
 	char equipment[MAX_VAR];
 	char market[MAX_VAR];
 	char text[MAX_VAR];			/* placeholder for gettext stuff */

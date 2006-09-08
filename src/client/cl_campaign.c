@@ -62,9 +62,7 @@ static void CL_GameExit(void);
 
 /*
 ============================================================================
-
 Boolean expression parser
-
 ============================================================================
 */
 
@@ -2754,6 +2752,62 @@ void CL_ParseMission(char *name, char **text)
 
 /* =========================================================== */
 
+/**
+ * @brief This function parses a list of items that should be set to researched = true after campaign start
+ * @TODO: Implement the use of this function
+ */
+void CL_ParseResearchedCampaignItems(char *name, char **text)
+{
+	char *errhead = "CL_ParseResearchedCampaignItems: unexptected end of file (equipment ";
+	researchCampaignItem_t *rslist;
+	char *token;
+	int i;
+
+	/* search for equipments with same name */
+	for (i = 0; i < numResearchCampaignItemLists; i++)
+		if (!Q_strncmp(name, researchCampaignItem[i].name, MAX_VAR))
+			break;
+
+	if (i < numResearchCampaignItemLists) {
+		Com_Printf("CL_ParseResearchedCampaignItems: researched def \"%s\" with same name found, second ignored\n", name);
+		return;
+	}
+
+	/* initialize the researched definition */
+	rslist = &researchCampaignItem[numResearchCampaignItemLists++];
+	memset(rslist, 0, sizeof(researchCampaignItem_t));
+
+	Q_strncpyz(rslist->name, name, MAX_VAR);
+
+	/* get it's body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("CL_ParseResearchedCampaignItems: equipment def \"%s\" without body ignored\n", name);
+		numResearchCampaignItemLists--;
+		return;
+	}
+
+	Com_Printf("..campaign research list '%s'\n", name);
+	do {
+		token = COM_EParse(text, errhead, name);
+		if (!*text || *token == '}')
+			return;
+
+		for (i = 0; i < gd.numTechnologies; i++)
+			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
+				RS_MarkOneResearchable(i);
+				Com_DPrintf("...tech %s\n", gd.technologies[i].id);
+				break;
+			}
+
+		if (i == gd.numTechnologies)
+			Com_Printf("CL_ParseResearchedCampaignItems: unknown token \"%s\" ignored (tech %s)\n", token, name);
+
+	} while (*text);
+}
+
+/* =========================================================== */
 
 static value_t stageset_vals[] = {
 	{"needed", V_STRING, offsetof(stageSet_t, needed)}
@@ -2946,6 +3000,8 @@ static value_t campaign_vals[] = {
 	,
 	{"market", V_STRING, offsetof(campaign_t, market)}
 	,
+	{"researched", V_STRING, offsetof(campaign_t, researched)}
+	,
 	{"difficulty", V_INT, offsetof(campaign_t, difficulty)}
 	,
 	{"firststage", V_STRING, offsetof(campaign_t, firststage)}
@@ -2992,11 +3048,15 @@ void CL_ParseCampaign(char *id, char **text)
 		return;
 	}
 
-	/* initialize the menu */
+	/* initialize the campaign */
 	cp = &campaigns[numCampaigns++];
 	memset(cp, 0, sizeof(campaign_t));
 
 	Q_strncpyz(cp->id, id, MAX_VAR);
+
+	/* some default values */
+	Q_strncpyz(cp->team, "human", MAX_VAR);
+	Q_strncpyz(cp->researched, "researched_human", MAX_VAR);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -3077,7 +3137,7 @@ void CL_ParseNations(char *name, char **text)
 		return;
 	}
 
-	/* initialize the menu */
+	/* initialize the nation */
 	nation = &gd.nations[gd.numNations++];
 	memset(nation, 0, sizeof(nation_t));
 
@@ -3466,6 +3526,7 @@ static void CP_CampaignStats(void)
 	}
 
 	Com_Printf("Campaign id: %s\n", curCampaign->id);
+	Com_Printf("..research list: %s\n", curCampaign->researched);
 	Com_Printf("..equipment: %s\n", curCampaign->equipment);
 	Com_Printf("..team: %s\n", curCampaign->team);
 

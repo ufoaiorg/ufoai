@@ -1019,16 +1019,26 @@ void CL_Precache_f(void)
  */
 void CL_ParseClientData ( char *type, char *name, char **text )
 {
-	if ( !Q_strncmp( type, "shader", 6 ) ) CL_ParseShaders(name, text);
-	else if ( !Q_strncmp( type, "font", 4 ) ) CL_ParseFont(name, text);
-	else if ( !Q_strncmp( type, "tutorial", 8 ) ) MN_ParseTutorials(name, text);
-	else if ( !Q_strncmp( type, "menu_model", 10 ) ) MN_ParseMenuModel(name, text);
-	else if ( !Q_strncmp( type, "menu", 4 ) ) MN_ParseMenu(name, text);
-	else if ( !Q_strncmp( type, "particle", 8 ) ) CL_ParseParticle(name, text);
-	else if ( !Q_strncmp( type, "sequence", 8 ) ) CL_ParseSequence(name, text);
-	else if ( !Q_strncmp(type, "aircraft", 8 ) ) CL_ParseAircraft(name, text);
-	else if ( !Q_strncmp(type, "campaign", 8 ) ) CL_ParseCampaign(name, text);
-	else if ( !Q_strncmp(type, "ugv", 3 ) ) CL_ParseUGVs(name, text);
+	if (!Q_strncmp(type, "shader", 6))
+		CL_ParseShaders(name, text);
+	else if (!Q_strncmp(type, "font", 4))
+		CL_ParseFont(name, text);
+	else if (!Q_strncmp(type, "tutorial", 8))
+		MN_ParseTutorials(name, text);
+	else if (!Q_strncmp(type, "menu_model", 10))
+		MN_ParseMenuModel(name, text);
+	else if (!Q_strncmp(type, "menu", 4))
+		MN_ParseMenu(name, text);
+	else if (!Q_strncmp(type, "particle", 8))
+		CL_ParseParticle(name, text);
+	else if (!Q_strncmp(type, "sequence", 8))
+		CL_ParseSequence(name, text);
+	else if (!Q_strncmp(type, "aircraft", 8))
+		CL_ParseAircraft(name, text);
+	else if (!Q_strncmp(type, "campaign", 8))
+		CL_ParseCampaign(name, text);
+	else if (!Q_strncmp(type, "ugv", 3))
+		CL_ParseUGVs(name, text);
 }
 
 /**
@@ -1047,6 +1057,8 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
 		UP_ParseUpChapters(name, text);
 	else if (!Q_strncmp(type, "building", 8))
 		B_ParseBuildings(name, text, qfalse);
+	else if (!Q_strncmp(type, "researched", 10))
+		CL_ParseResearchedCampaignItems(name, text);
 	else if (!Q_strncmp(type, "tech", 4))
 		RS_ParseTechnologies(name, text);
 	else if (!Q_strncmp(type, "base", 4))
