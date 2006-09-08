@@ -91,7 +91,7 @@ equipment stage1_workers_explosive
 	kerrblade			2
 	alienincgrenade		28
 	plasmagrenade		4
-	light               1
+	light_alien         1
 }
 
 equipment stage1_soldiers
@@ -104,7 +104,7 @@ equipment stage1_soldiers
 	plasblaster_ammo	2
 	kerrblade			7
 	plasblade			1
-	light               2
+	light_alien         2
 }
 
 equipment stage2_workers
@@ -116,8 +116,8 @@ equipment stage2_workers
 	kerrblade			6
 	plasblade			1
 	alienincgrenade		4
-	light               1
-	medium              2
+	light_alien         1
+	medium_alien        2
 }
 
 equipment stage2_soldiers_melee
@@ -127,8 +127,8 @@ equipment stage2_soldiers_melee
 	kerrblade			3
 	plasblade			28
 	alienincgrenade		7
-	light               2
-	medium              2
+	light_alien         2
+	medium_alien        2
 }
 
 equipment stage2_soldiers
@@ -143,8 +143,8 @@ equipment stage2_soldiers
 	plasblade			2
 	alienincgrenade		12
 	plasmagrenade		1
-	light               5
-	medium              1
+	light_alien         5
+	medium_alien        1
 }
 
 equipment stage3_workers
@@ -159,7 +159,7 @@ equipment stage3_workers
 	plasblade			4
 	alienincgrenade		4
 	plasmagrenade		4
-	medium              4
+	medium_alien        4
 }
 
 equipment stage3_workers_explosive
@@ -173,8 +173,8 @@ equipment stage3_workers_explosive
 	kerrblade			2
 	alienincgrenade		22
 	plasmagrenade		27
-	medium              3
-//  heavy               1
+	medium_alien        3
+//  heavy_alien         1
 }
 
 equipment stage3_soldiers
@@ -193,9 +193,9 @@ equipment stage3_soldiers
 	plasblade			10
 	alienincgrenade		7
 	plasmagrenade		7
-	light               3
-	medium              4
-//	heavy               1
+	light_alien         3
+	medium_alien        4
+//	heavy_alien         1
 }
 
 equipment stage4_workers
@@ -212,8 +212,8 @@ equipment stage4_workers
 	plasblade			5
 	alienincgrenade		7
 	plasmagrenade		7
-	medium              5 // 2
-//	heavy               3
+	medium_alien        5 // 2
+//	heavy_alien         3
 }
 
 equipment stage4_soldiers_plasma
@@ -228,8 +228,8 @@ equipment stage4_soldiers_plasma
 	plasblade			20
 	alienincgrenade		10
 	plasmagrenade		20
-	medium              8 // 1
-//	heavy               7
+	medium_alien        8 // 1
+//	heavy_alien         7
 }
 
 equipment stage4_soldiers
@@ -250,9 +250,9 @@ equipment stage4_soldiers
 	plasblade			14
 	alienincgrenade		14
 	plasmagrenade		14
-	light               1
-	medium              7 // 2
-//	heavy               5
+	light_alien         1
+	medium_alien        7 // 2
+//	heavy_alien         5
 }
 
 // human equipment

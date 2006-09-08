@@ -811,6 +811,33 @@ tech rs_nano_armor
 // 	researched	false
 // }
 
+//fake techs for alien armor
+tech rs_light_alien
+{
+	type	armor
+	up_chapter	armors
+	description	"SHOULD NEVER BE SEEN: Alien light armor"
+
+	requires	nothing
+	provides	light_alien
+	time	    1000
+	researched	false
+	needscollected	true
+}
+
+tech rs_medium_alien
+{
+	type	armor
+	description	"SHOULD NEVER BE SEEN: Alien medium armor"
+	up_chapter	armors
+
+	requires	nothing
+	provides	medium_alien
+	time	    1000
+	researched	false
+	needscollected	true
+}
+
 //========================
 // Damage Types
 //========================

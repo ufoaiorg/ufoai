@@ -2908,6 +2908,9 @@ static char returnModel[MAX_VAR];
  */
 char *Com_CharGetBody(character_t * chr)
 {
+	char kurz[MAX_VAR];
+	char *underline;
+
 	assert(chr);
 #ifdef DEBUG
 	if (!chr)
@@ -2924,7 +2927,14 @@ char *Com_CharGetBody(character_t * chr)
 	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
 		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmor]->item.t].type, "armor"));
 /*		Com_Printf("Com_CharGetBody: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz);*/
-		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->body);
+
+		/* check for the underline */
+		Q_strncpyz(kurz, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, MAX_VAR);
+		underline = strchr(kurz, '_');
+		if (underline)
+			*underline = 0;
+
+		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, kurz, chr->body);
 	} else
 		Com_sprintf(returnModel, MAX_VAR, "%s/%s", chr->path, chr->body);
 	return returnModel;
@@ -2937,6 +2947,9 @@ char *Com_CharGetBody(character_t * chr)
  */
 char *Com_CharGetHead(character_t * chr)
 {
+	char kurz[MAX_VAR];
+	char *underline;
+
 	assert(chr);
 #ifdef DEBUG
 	if (!chr)
@@ -2953,7 +2966,14 @@ char *Com_CharGetHead(character_t * chr)
 	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
 		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmor]->item.t].type, "armor"));
 /*		Com_Printf("Com_CharGetHead: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz);*/
-		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->head);
+
+		/* check for the underline */
+		Q_strncpyz(kurz, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, MAX_VAR);
+		underline = strchr(kurz, '_');
+		if (underline)
+			*underline = 0;
+
+		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, kurz, chr->head);
 	} else
 		Com_sprintf(returnModel, MAX_VAR, "%s/%s", chr->path, chr->head);
 	return returnModel;

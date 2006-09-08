@@ -68,7 +68,7 @@ item medium
 		blast	55
 		fire	20
 		shock	20
-		laser	20
+		laser	35
 		plasma	50
 		tachyon	3
 		stun	35
@@ -105,7 +105,7 @@ item medium
 //		blast	70
 //		fire	75
 //		shock	35
-//		laser	35
+//		laser	50
 //		plasma	70
 //		tachyon	28
 //		stun	97
@@ -123,3 +123,78 @@ item medium
 //	}
 //}
 
+//weights 100
+item light_alien
+{
+	name		"SHOULD NEVER BE SEEN: Alien light armor"
+	image		armor/light
+	model		soldiers/malelight/body
+	type		armor
+	category	3
+	shape		"0 0 3 4"
+	center		"0 0 -5"
+	scale		0.7
+	price		1400
+	buytype		3
+
+	protection
+	{
+		normal	27
+		blast	47
+		fire	15
+		shock	15
+		laser	22
+		plasma	45
+		tachyon	23
+		stun	27
+	}
+	hardness
+	{
+		normal	4
+		blast	7
+		fire	6
+		shock	9
+		laser	15
+		plasma	4
+		tachyon	100
+		stun	100
+	}
+}
+
+//weights 120
+item medium_alien
+{
+	name		"SHOULD NEVER BE SEEN: Alien medium armor"
+	image		armor/medium
+	model		soldiers/malemedium/body
+	type		armor
+	category	3
+	shape		"0 0 3 4"
+	center		"0 0 -5"
+	scale		0.7
+	price		7500
+	buytype		3
+
+	protection
+	{
+		normal	42
+		blast	62
+		fire	30
+		shock	30
+		laser	37
+		plasma	62
+		tachyon	27
+		stun	42
+	}
+	hardness
+	{
+		normal	12
+		blast	20
+		fire	20
+		shock	20
+		laser	20
+		plasma	8
+		tachyon	100
+		stun	100
+	}
+}
