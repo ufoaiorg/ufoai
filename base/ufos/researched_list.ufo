@@ -55,6 +55,8 @@ researched researched_human
 
 researched researched_alien
 {
+	rs_plasma
+	rs_tachyon
 	rs_weapon_tachyonpistol
 	rs_weapon_tachyonpistol_ammo
 	rs_weapon_plaspistol
@@ -82,6 +84,8 @@ researched researched_alien
 	rs_skill_sniper
 	rs_skill_explosive
 	rs_craft_ufo_small
+	rs_craft_shield_light
+	rs_craft_weapon_flac
 }
 
 // TODO: Is this needed?
