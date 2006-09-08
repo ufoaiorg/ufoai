@@ -8,7 +8,7 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Höhrer'
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 __url__ = ["UFO: Aline Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufo.myexp.de/phpBB2/index.php", "blender", "elysiun"]
 __email__ = ["Werner Höhrer, bill_spam2:yahoo*de", "scripts"]
@@ -111,7 +111,7 @@ def draw_gui():
 	Button("Export",EVENT_SAVE_MD2TAGS , 10, 10, 80, 18)
 	Button("Exit",EVENT_EXIT , 170, 10, 80, 18)
 
-def event(evt, val):	
+def event(evt, val):
 	if (evt == QKEY and not val):
 		Exit()
 
@@ -143,8 +143,8 @@ Register(draw_gui, event, bevent)
 class md2_tagname:
 	name=""
 	binary_format="<64s"
-	def __init__(self):
-		self.name=""
+	def __init__(self, string):
+		self.name=string
 	def save(self, file):
 		temp_data=self.name
 		data=struct.pack(self.binary_format, temp_data)
@@ -168,19 +168,19 @@ class md2_tag:
 		temp_data[0]=self.Row1[0]
 		temp_data[1]=self.Row1[1]
 		temp_data[2]=self.Row1[2]
-		
+
 		temp_data[3]=self.Row2[0]
 		temp_data[4]=self.Row2[1]
 		temp_data[5]=self.Row2[2]
-		
+
 		temp_data[6]=self.Row3[0]
 		temp_data[7]=self.Row3[1]
 		temp_data[8]=self.Row3[2]
-		
+
 		temp_data[9]=self.Row4[0]
 		temp_data[10]=self.Row4[1]
 		temp_data[11]=self.Row4[2]
-		
+
 		data=struct.pack(self.binary_format,
 			temp_data[0], temp_data[1], temp_data[2],
 			temp_data[3], temp_data[4], temp_data[5],
@@ -228,7 +228,7 @@ class md2_tags_obj:
 		(tag3_frame1, tag3_frame2, tag3_frame3, etc...)		# tag_frames3
 	)
 	"""
-	
+
 	def __init__ (self):
 		self.names=[]
 		self.tags=[]
@@ -244,7 +244,7 @@ class md2_tags_obj:
 		temp_data[7]=self.offset_extract_end
 		data=struct.pack(self.binary_format, temp_data[0],temp_data[1],temp_data[2],temp_data[3],temp_data[4],temp_data[5],temp_data[6],temp_data[7])
 		file.write(data)
-		
+
 		#write the names data
 		for name in self.names:
 			name.save(file)
@@ -261,7 +261,7 @@ class md2_tags_obj:
 		print "offset names: ",		self.offset_names
 		print "offset tags: ",		self.offset_tags
 		print "offset end: ",		self.offset_end
-		print "offset extract end: ",	self.offset_extract_end		
+		print "offset extract end: ",	self.offset_extract_end
 		print ""
 
 """
@@ -300,10 +300,10 @@ def apply_transform(verts, matrix):
 ######################################################
 def fill_md2_tags(md2_tags, object):
 	Blender.Window.DrawProgressBar(0.25,"Filling MD2 Data")
-	
+
 	# Set header information.
 	md2_tags.ident=844121162
-	md2_tags.version=1	
+	md2_tags.version=1
 	md2_tags.num_tags+=1
 
 #	offset_names=0
@@ -313,12 +313,11 @@ def fill_md2_tags(md2_tags, object):
 
 
 	# Add a name node to the tagnames data structure.
-	md2_tags.names.append(md2_tagname())
-	
-	
+	md2_tags.names.append(md2_tagname(object.name))	# TODO: cut to 64 chars
+
 	# Add a (empty) list of tags-positions (for each frame).
 	tag_frames = []
-	
+
 	progress=0.5
 	progressIncrement=0.25 / md2_tags.num_frames
 
@@ -329,10 +328,10 @@ def fill_md2_tags(md2_tags, object):
 
 		#add a frame
 		tag_frames.append(md2_tag())
-		
+
 		#set blender to the correct frame (so the objects have their new positions)
 		Blender.Set("curframe", frame_counter)
-	
+
 		# Set first coordiantes to the location of the empty.
 		tag_frames[frame_counter].Row1 = object.loc
 
@@ -354,15 +353,15 @@ def fill_md2_tags(md2_tags, object):
 ######################################################
 def save_md2_tags(filename):
 	global g_frames
-	
+
 	print ""
 	print "***********************************"
 	print "MD2 TAG Export"
 	print "***********************************"
 	print ""
-	
+
 	Blender.Window.DrawProgressBar(0.0,"Beginning MD2 TAG Export")
-	
+
 	md2_tags=md2_tags_obj()  #blank md2 object to save
 
 	#get the object
@@ -374,16 +373,16 @@ def save_md2_tags(filename):
 		print "Found nothing"
 		result=Blender.Draw.PupMenu("Must select an object to export%t|OK")
 		return
-	
+
 	# Set frame number.
 	md2_tags.num_frames=g_frames.val
 	print "Frames to export: ",md2_tags.num_frames
 	print ""
-	
+
 	header_size=8*4	#8 integers, and each integer is 4 bytes
 	md2_tags.offset_names=0+header_size
 	md2_tags.offset_tags=md2_tags.offset_names+0
-	
+
 	for object in mesh_objs:
 		#check if it's an "Empty" mesh object
 		if object.getType()!="Empty":
@@ -404,10 +403,10 @@ def save_md2_tags(filename):
 	file=open(filename,"wb")
 	md2_tags.save(file)
 	file.close()
-	
+
 	# Cleanup
 	md2_tags=0
-	
+
 	print "Closed the file"
 
 """
@@ -423,7 +422,7 @@ def save_md2_tags(filename):
 	face_size=12*md2.num_faces #3 shorts for vertex index, 3 shorts for tex index
 	frames_size=(((12+12+16)+(4*md2.num_vertices)) * md2.num_frames) #frame info+verts per frame*num frames
 #	GL_command_size=md2.num_GL_commands*4 #each is an int or float, so 4 bytes per
-	
+
 	#fill in the info about offsets
 	md2.offset_skins=0+header_size
 	md2.offset_tex_coords=md2.offset_skins+skin_size
