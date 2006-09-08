@@ -830,10 +830,10 @@ void RS_MarkResearched(char *id)
 		tech = &gd.technologies[i];
 		if (!Q_strncmp(id, tech->id, MAX_VAR)) {
 			tech->statusResearch = RS_FINISH;
-			Com_Printf("Research of \"%s\" finished.\n", tech->id);
+			Com_DPrintf("Research of \"%s\" finished.\n", tech->id);
 		} else if (RS_DependsOn(tech->id, id) && (tech->time <= 0)) {
 			tech->statusResearch = RS_FINISH;
-			Com_Printf("Depending tech \"%s\" has been researched as well.\n", tech->id);
+			Com_DPrintf("Depending tech \"%s\" has been researched as well.\n", tech->id);
 		}
 	}
 	RS_MarkResearchable();

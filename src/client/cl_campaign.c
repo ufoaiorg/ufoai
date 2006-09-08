@@ -2797,7 +2797,7 @@ void CL_ParseResearchedCampaignItems(char *name, char **text)
 		return;
 	}
 
-	Com_Printf("..campaign research list '%s'\n", name);
+	Com_DPrintf("..campaign research list '%s'\n", name);
 	do {
 		token = COM_EParse(text, errhead, name);
 		if (!*text || *token == '}')
