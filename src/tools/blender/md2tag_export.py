@@ -47,6 +47,7 @@ from Blender import *
 from Blender.Draw import *
 from Blender.BGL import *
 from Blender.Window import *
+from Blender.Object import *
 
 import struct, string
 from types import *
@@ -420,10 +421,10 @@ def fill_md2_tags(md2_tags, object):
 		tag_frames.append(md2_tag())
 
 		#set blender to the correct frame (so the objects have their new positions)
-		Blender.Set("curframe", frame_counter)
+		Blender.Set("curframe", frame_counter+1)
 
 		# Set first coordiantes to the location of the empty.
-		tag_frames[frame_counter].Row1 = object.loc
+		tag_frames[frame_counter].Row1 = object.getLocation()
 		print tag_frames[frame_counter].Row1[0], " ",tag_frames[frame_counter].Row1[1]," ",tag_frames[frame_counter].Row1[2]
 		# Calculate local axes ... starting from 'loc' (see http://wiki.blenderpython.org/index.php/Python_Cookbook#Apply_Matrix)
 		# The scale of the empty is ignored right now.
@@ -439,6 +440,7 @@ def fill_md2_tags(md2_tags, object):
 			tag_frames[frame_counter].Row3 = ( tag_frames[frame_counter].Row3[0]* g_scale.val, tag_frames[frame_counter].Row3[1]* g_scale.val, tag_frames[frame_counter].Row3[2]* g_scale.val)
 			tag_frames[frame_counter].Row4 = ( tag_frames[frame_counter].Row4[0]* g_scale.val, tag_frames[frame_counter].Row4[1]* g_scale.val, tag_frames[frame_counter].Row4[2]* g_scale.val)
 
+	Blender.Set("curframe", 1)
 	md2_tags.tags.append(tag_frames)
 
 ######################################################
@@ -546,11 +548,12 @@ def load_md2_tags(filename):
 		scene.link(object)
 		for frame_counter in range(0,md2_tags.num_frames):
 			#set blender to the correct frame (so the objects' data will be set in this frame)
-			Blender.Set("curframe", frame_counter)
+			print "frame",frame_counter
+			Blender.Set("curframe", frame_counter+1)
 
 			# Set object position.
 			object.setLocation(tag_frames[frame_counter].Row1[0], tag_frames[frame_counter].Row1[1], tag_frames[frame_counter].Row1[2])
-
+			print "frame",tag_frames[frame_counter].Row1[0], " ",tag_frames[frame_counter].Row1[1], " ",tag_frames[frame_counter].Row1[2]
 			# Set object rotation,
 			#euler_rotation=get_euler(
 			#	tag_frames[frame_counter].Row1,
@@ -564,11 +567,10 @@ def load_md2_tags(filename):
 			
 			# TODO: Insert keyframe
 			#object.insertKey(frame_counter,"absolute")
-			object.insertKey(frame_counter,Object.Pose.LOC)
-			#object.insertKey(frame_counter,Object.Pose.ROT)
-			#object.insertKey(frame_counter,Object.Pose.SIZE)	
-			
-			# Set first coordiantes to the location of the empty.
+			object.insertIpoKey(LOCROTSIZE)
+
+	Blender.Set("curframe", 1)
+	Blender.Window.RedrawAll()
 
 
 ################
