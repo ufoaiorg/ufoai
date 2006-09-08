@@ -57,6 +57,17 @@ sequence view
 		origin  "0 0 0"
 	}
 
+
+	model ballon
+	{
+		model	models/special/ballon.md3
+		origin	"0 0 0"
+		omega "0 -30 0"
+	}
+
+	wait 10.0
+	rem ballon
+
 //	model cow
 //	{
 //		model	models/animals/cow/cow.md2

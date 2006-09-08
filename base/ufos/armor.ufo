@@ -126,9 +126,9 @@ item medium
 //weights 100
 item light_alien
 {
-	name		"SHOULD NEVER BE SEEN: Alien light armor"
-	image		armor/light
-	model		soldiers/malelight/body
+	name		"_Light armor"
+	image		armor/blue_light
+	model		aliens/bluelight/body01
 	type		armor
 	category	3
 	shape		"0 0 3 4"
@@ -164,9 +164,9 @@ item light_alien
 //weights 120
 item medium_alien
 {
-	name		"SHOULD NEVER BE SEEN: Alien medium armor"
-	image		armor/medium
-	model		soldiers/malemedium/body
+	name		"_Medium armor"
+	image		armor/blue_medium
+	model		aliens/bluemedium/body01
 	type		armor
 	category	3
 	shape		"0 0 3 4"

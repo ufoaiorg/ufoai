@@ -14,10 +14,10 @@ stage intro
 	set terror_only
 	{
 		needed		first
-		delay		"0 5 12" // set starts not sooner than 5d 22h 
-			                 // and not later than 10d 22h 
-		frame		"0 9 0"  // 1st mission starts not sooner than 8d 22h 
-			                 // and not later than 16d 22h 
+		delay		"0 5 12" // set starts not sooner than 5d 22h
+			                 // and not later than 10d 22h
+		frame		"0 9 0"  // 1st mission starts not sooner than 8d 22h
+			                 // and not later than 16d 22h
 		expire		"0 8 0"  // average expire time is 4d
 			                 // minimum interval between missions is 3d
 			                 // so you have 2 or less on geoscape any time
@@ -136,6 +136,7 @@ campaign veryhard
 	workers		1
 	medics		0
 	difficulty	4
+	researched	researched_human
 	equipment	campaign_player
 	market		campaign_market
 	credits		3500000
@@ -156,6 +157,7 @@ campaign hard
 	workers		2
 	medics		1
 	difficulty	2
+	researched	researched_human
 	equipment	campaign_player
 	market		campaign_market
 	credits		3700000
@@ -176,6 +178,7 @@ campaign main
 	workers		4
 	medics		2
 	difficulty	0
+	researched	researched_human
 //	ugvs	2
 	equipment	campaign_player
 	market		campaign_market
@@ -197,6 +200,7 @@ campaign easy
 	workers		6
 	medics		3
 	difficulty	-2
+	researched	researched_human
 	equipment	campaign_player
 	market		campaign_market
 	credits		4500000
@@ -217,8 +221,30 @@ campaign veryeasy
 	workers		9
 	medics		4
 	difficulty	-4
+	researched	researched_human
 	equipment	campaign_player
 	market		campaign_market
+	credits		6000000
+	map		    map_earth
+	visible		true
+
+	date		"2084 0 7"
+	firststage	intro
+}
+
+campaign aliencampaign
+{
+	name		"_Play the aliens"
+	text		"_txt_alien_campaign"
+	team		alien
+	soldiers	15
+	scientists	12
+	workers		9
+	medics		4
+	difficulty	-4
+	researched	researched_alien
+	equipment	campaign_player_aliens
+	market		campaign_market_aliens
 	credits		6000000
 	map		    map_earth
 	visible		true
@@ -237,6 +263,7 @@ campaign test
 	workers		11
 	medics		11
 	difficulty	0
+	researched	researched_human
 	equipment	testing_and_tweaking
 	market		testing_and_tweaking
 	credits		100000000
