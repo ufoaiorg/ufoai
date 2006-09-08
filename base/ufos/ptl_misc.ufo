@@ -1,4 +1,4 @@
-// See the wiki page 
+// See the wiki page
 //   http://ufo.myexp.de/wiki/index.php/UFO-Scripts/ptl_%2A.ufo#Datatypes
 // for the description of the particle language
 
@@ -306,6 +306,90 @@ particle burnFlame
 	think { kill }
 }
 
+particle greenSmokeMap
+{
+	init
+	{
+		frame		6
+		endframe	7
+		image		+sfx/greenplas_
+		blend		blend
+		style		facing
+		tfade		out
+		rand		float 0.2
+		add			float 0.4
+		pop			*tps
+		crand		vector "20 20 20"
+		add			*s
+		pop			*s
+		crand		vector "150 150 1000"
+		add			*v
+	}
+	run
+	{
+		push		pos "20 20"
+		mul			*t
+		add			pos "10 10"
+		pop			*size
+	}
+	think { kill }
+}
+
+
+particle smokeRound
+{
+	init
+	{
+		image		sfx/smoke
+		blend		invfilter
+		style		facing
+		tfade		out
+		rand		float 0.2
+		add			float 0.4
+		pop			*tps
+		crand		vector "20 20 20"
+		add			*s
+		pop			*s
+		crand		vector "150 150 1000"
+		add			*v
+	}
+	run
+	{
+		push		pos "20 20"
+		mul			*t
+		add			pos "10 10"
+		pop			*size
+	}
+	think { kill }
+}
+
+particle smokeRound2
+{
+	init
+	{
+		image		sfx/smoke
+		blend		add
+		style		facing
+		tfade		out
+		rand		float 0.2
+		add			float 0.4
+		pop			*tps
+		crand		vector "20 20 20"
+		add			*s
+		pop			*s
+		crand		vector "150 150 1000"
+		add			*v
+	}
+	run
+	{
+		push		pos "20 20"
+		mul			*t
+		add			pos "10 10"
+		pop			*size
+	}
+	think { kill }
+}
+
 particle burnFlame2				// fuer falcon_crash
 {
 	init
@@ -388,6 +472,38 @@ particle fire
 	think
 	{
 		spawn  burnFlame
+	}
+}
+
+particle smoke2
+{
+	init
+	{
+		v      "0 0 0"
+		tps    2.0
+		spawn  smokeRound
+		v      "0 0 0"
+		tps    25.0
+		spawn  smokeRound2
+	}
+	think
+	{
+		spawn  smokeRound
+		spawn  smokeRound2
+	}
+}
+
+particle green_smoke
+{
+	init
+	{
+		v      "0 0 0"
+		tps    25.0
+		spawn  greenSmokeMap
+	}
+	think
+	{
+		spawn  greenSmokeMap
 	}
 }
 
