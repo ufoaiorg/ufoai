@@ -8,7 +8,7 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Höhrer'
-__version__ = '0.0.2'
+__version__ = '0.0.1'
 __url__ = ["UFO: Aline Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufo.myexp.de/phpBB2/index.php", "blender", "elysiun"]
 __email__ = ["Werner Höhrer, bill_spam2:yahoo*de", "scripts"]
@@ -143,8 +143,11 @@ Register(draw_gui, event, bevent)
 class md2_tagname:
 	name=""
 	binary_format="<64s"
+	binary_size=struct.calcsize(binary_format)
 	def __init__(self, string):
 		self.name=string
+	def getSize(self):
+		return self.binary_size;
 	def save(self, file):
 		temp_data=self.name
 		data=struct.pack(self.binary_format, temp_data)
@@ -159,27 +162,24 @@ class md2_tag:
 	Row2	= []
 	Row3	= []
 	Row4	= []
-
+	
 	binary_format="<12f"	#little-endian (<), 12 floats (12f)	| See http://docs.python.org/lib/module-struct.html for more info.
+	binary_size=struct.calcsize(binary_format)
+	
 	def __init__(self):
-		self.vertices=[0]*12
+		Row1	= (0.0, 0.0, 0.0)
+		Row2	= (0.0, 0.0, 0.0)
+		Row3	= (0.0, 0.0, 0.0)
+		Row4	= (0.0, 0.0, 0.0)
+	def getSize(self):
+		return self.binary_size;
 	def save(self, file):
-		temp_data=[0]*12
-		temp_data[0]=self.Row1[0]
-		temp_data[1]=self.Row1[1]
-		temp_data[2]=self.Row1[2]
-
-		temp_data[3]=self.Row2[0]
-		temp_data[4]=self.Row2[1]
-		temp_data[5]=self.Row2[2]
-
-		temp_data[6]=self.Row3[0]
-		temp_data[7]=self.Row3[1]
-		temp_data[8]=self.Row3[2]
-
-		temp_data[9]=self.Row4[0]
-		temp_data[10]=self.Row4[1]
-		temp_data[11]=self.Row4[2]
+		temp_data=(
+		self.Row1[0], self.Row1[1], self.Row1[2],
+		self.Row2[0], self.Row2[1], self.Row2[2],
+		self.Row3[0], self.Row3[1], self.Row3[2],
+		self.Row4[0], self.Row4[1], self.Row4[2]
+		)
 
 		data=struct.pack(self.binary_format,
 			temp_data[0], temp_data[1], temp_data[2],
@@ -189,18 +189,10 @@ class md2_tag:
 		file.write(data)
 	def dump(self):
 		print "MD2 Point Structure"
-		print "Row1_x: ", self.Row1[0]
-		print "Row1_y: ", self.Row1[1]
-		print "Row1_z: ", self.Row1[2]
-		print "Row2_x: ", self.Row2[0]
-		print "Row2_y: ", self.Row2[1]
-		print "Row2_z: ", self.Row2[2]
-		print "Row3_x: ", self.Row3[0]
-		print "Row3_y: ", self.Row3[1]
-		print "Row3_z: ", self.Row3[2]
-		print "Row4_x: ", self.Row4[0]
-		print "Row4_y: ", self.Row4[1]
-		print "Row4_z: ", self.Row4[2]
+		print "Row1: ", self.Row1[0], " ",self.Row1[1] , " ",self.Row1[2]
+		print "Row2: ", self.Row2[0], " ",self.Row2[1] , " ",self.Row2[2]
+		print "Row3: ", self.Row3[0], " ",self.Row3[1] , " ",self.Row3[2]
+		print "Row4: ", self.Row4[0], " ",self.Row4[1] , " ",self.Row4[2]
 		print ""
 
 
@@ -248,9 +240,15 @@ class md2_tags_obj:
 		#write the names data
 		for name in self.names:
 			name.save(file)
+		tag_count=0
 		for tag_frames in self.tags:
+			tag_count+=1
+			frame_count=0
+			print "Saving tag: ", tag_count
 			for tag in tag_frames:
+				frame_count+=1
 				tag.save(file)
+			print "  Frames saved: ", frame_count
 
 	def dump (self):
 		print "Header Information"
@@ -334,18 +332,23 @@ def fill_md2_tags(md2_tags, object):
 
 		# Set first coordiantes to the location of the empty.
 		tag_frames[frame_counter].Row1 = object.loc
-
+		print tag_frames[frame_counter].Row1[0], " ",tag_frames[frame_counter].Row1[1]," ",tag_frames[frame_counter].Row1[2]
 		# Calculate local axes ... starting from 'loc' (see http://wiki.blenderpython.org/index.php/Python_Cookbook#Apply_Matrix)
 		# The scale of the empty is ignored right now.
 		matrix=object.getMatrix()
 		tag_frames[frame_counter].Row2 = apply_transform((1.0,0.0,0.0), matrix) #calculate point (loc + local-X * 1 )
 		tag_frames[frame_counter].Row3 = apply_transform((0.0,1.0,0.0), matrix) #calculate point (loc + local-Y * 1 )
 		tag_frames[frame_counter].Row4 = apply_transform((0.0,0.0,1.0), matrix) #calculate point (loc + local-Z * 1 )
+		tag_frames[frame_counter].Row2 = (1.0,0.0,0.0)
+		tag_frames[frame_counter].Row3 = (0.0,1.0,0.0)
+		tag_frames[frame_counter].Row4 = (0.0,0.0,1.0)
 
 	md2_tags.tags.append(tag_frames)
 
-	md2_tags.offset_tags += 64 # one string 64 bytes??? (see tag_name)
-	md2_tags.offset_end = md2_tags.offset_tags + (12 * 4 * md2_tags.num_frames) # 12 floats each 4 byte ??? for every frame
+	temp_name = md2_tagname("");
+	temp_tag = md2_tag();
+	md2_tags.offset_tags += temp_name.getSize();
+	md2_tags.offset_end = md2_tags.offset_tags + (temp_tag.getSize() * md2_tags.num_frames)
 	offset_extract_end=md2_tags.offset_end
 
 ######################################################
