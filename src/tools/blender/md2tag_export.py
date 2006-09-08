@@ -191,10 +191,10 @@ class md2_tag:
 		return struct.calcsize(self.binary_format)
 	def save(self, file):
 		temp_data=(
-		self.Row1[0], self.Row1[1], self.Row1[2],
-		self.Row2[0], self.Row2[1], self.Row2[2],
-		self.Row3[0], self.Row3[1], self.Row3[2],
-		self.Row4[0], self.Row4[1], self.Row4[2]
+		self.Row1[1], -self.Row1[0], self.Row1[2],
+		self.Row2[1], -self.Row2[0], self.Row2[2],
+		self.Row3[1], -self.Row3[0], self.Row3[2],
+		self.Row4[1], -self.Row4[0], self.Row4[2]
 		)
 
 		data=struct.pack(self.binary_format,
@@ -210,6 +210,17 @@ class md2_tag:
 		self.Row2 = (data[3], data[4], data[5])
 		self.Row3 = (data[6], data[7], data[8])
 		self.Row4 = (data[9], data[10], data[11])
+		
+		self.Row1 = (-self.Row1[1], self.Row1[0], self.Row1[2]) 
+		self.Row2 = (-self.Row2[1], self.Row2[0], self.Row2[2]) 
+		self.Row3 = (-self.Row3[1], self.Row3[0], self.Row3[2]) 
+		self.Row4 = (-self.Row4[1], self.Row4[0], self.Row4[2]) 
+		
+		# it's saved like this:
+		#mesh.verts[j].co[0]=y
+		#mesh.verts[j].co[1]=-x
+		#mesh.verts[j].co[2]=z
+
 		if (g_scale.val != 1.0):
 			self.Row1 = ( self.Row1[0]* g_scale.val, self.Row1[1]* g_scale.val, self.Row1[2]* g_scale.val)
 			self.Row2 = ( self.Row2[0]* g_scale.val, self.Row2[1]* g_scale.val, self.Row2[2]* g_scale.val)
