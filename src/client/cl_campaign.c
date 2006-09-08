@@ -528,12 +528,14 @@ static void CL_CampaignEndStage(char *name)
 {
 	stageState_t *state;
 	int i;
-
-	for (i = 0, state = ccs.stage; i < numStages; i++, state++)
-		if (!Q_strncmp(state->def->name, name, MAX_VAR)) {
-			state->active = qfalse;
-			return;
+	for (i = 0, state = ccs.stage; i < numStages; i++, state++) {
+		if (state->def->name != NULL) {
+			if (!Q_strncmp(state->def->name, name, MAX_VAR)) {
+				state->active = qfalse;
+				return;
+			}
 		}
+	}
 
 	Com_Printf("CL_CampaignEndStage: stage '%s' not found.\n", name);
 }
@@ -763,7 +765,7 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
 		float alienHostile = 1.0 - (float) nation->alienFriendly / 100.0;
 		float happiness = nation->happiness;
 
-		if (lost) {
+		if (!lost) {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
 				/* Strong negative reaction */
 				happiness *= performance * alienHostile;
