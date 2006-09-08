@@ -164,7 +164,8 @@ class md2_tagname:
 		file.write(data)
 	def load(self, file):
 		temp_data = file.read(self.getSize())
-		name=struct.unpack(self.binary_format, temp_data)
+		#name=struct.unpack(self.binary_format, temp_data)
+		name=temp_data
 		return self
 	def dump (self):
 		print "MD2 tagname"
@@ -203,10 +204,10 @@ class md2_tag:
 	def load(self, file):
 		temp_data = file.read(self.getSize())
 		data=struct.unpack(self.binary_format, temp_data)
-		self.Row1 = (temp_data[0], temp_data[1], temp_data[2])
-		self.Row2 = (temp_data[3], temp_data[4], temp_data[5])
-		self.Row3 = (temp_data[6], temp_data[7], temp_data[8])
-		self.Row4 = (temp_data[9], temp_data[10], temp_data[11])
+		self.Row1 = (data[0], data[1], data[2])
+		self.Row2 = (data[3], data[4], data[5])
+		self.Row3 = (data[6], data[7], data[8])
+		self.Row4 = (data[9], data[10], data[11])
 		return self
 	def dump(self):
 		print "MD2 Point Structure"
@@ -277,19 +278,19 @@ class md2_tags_obj:
 		temp_data = file.read(self.getSize())
 		data=struct.unpack(self.binary_format, temp_data)
 
-		self.ident = temp_data[0]
-		self.version = temp_data[1]
+		self.ident = data[0]
+		self.version = data[1]
 		
 		if (self.ident!=844121162 or self.version!=1):
 			print "Not a valid MD2 TAG file"
 			Exit()
 			
-		self.num_tags = temp_data[2] 
-		self.num_frames = temp_data[3]
-		self.offset_names = temp_data[4]
+		self.num_tags = data[2] 
+		self.num_frames = data[3]
+		self.offset_names = data[4]
 		self.offset_tags = temp_data[5]
 		self.offset_end = temp_data[6]
-		self.offset_extract_end = temp_data[7]
+		self.offset_extract_end = data[7]
 			
 		self.dump()
 		
@@ -303,7 +304,7 @@ class md2_tags_obj:
 			frames  = []
 			for frame_counter in range(0,self.num_frames):
 				temp_tag = md2_tag()
-				frames.append(temp_name.load(file))
+				frames.append(temp_tag.load(file))
 			self.tags.append(frames)
 			print " Reading of ", frame_counter, " frames finished."
 		print "Reading of ", tag_counter, " framelists finished."
@@ -376,8 +377,8 @@ def getAng3pt3d(avec, bvec, cvec):
 ######################################################
 def get_euler(loc, X,Y,Z):
 	locX = (loc[0]+1.0, loc[1], loc[2])
-	locY = (loc[0], loc[1]+1, loc[2])
-	locZ = (loc[0], loc[1], loc[2]+1)
+	locY = (loc[0], loc[1]+1.0, loc[2])
+	locZ = (loc[0], loc[1], loc[2]+1.0)
 	
 	rotX = getAng3pt3d(locX,loc,X)
 	rotY = getAng3pt3d(locY,loc,Y)
@@ -532,29 +533,40 @@ def load_md2_tags(filename):
 	
 	print ""
 	md2_tags.dump()
-	
+
+	# Get current Scene.
+	scene = Scene.getCurrent()
+
 	for tag in range(0,md2_tags.num_tags):
 		tag_name = md2_tags.names[tag]
-		# TODO: create object.
+		tag_frames = md2_tags.tags[tag]
+		# Create object.
+		object = Object.New('Empty')
+		# Link Object to current Scene
+		scene.link(object)
 		for frame_counter in range(0,md2_tags.num_frames):
 			#set blender to the correct frame (so the objects' data will be set in this frame)
 			Blender.Set("curframe", frame_counter)
 
 			# Set object position.
-			object.loc = tag_frames[frame_counter].Row1
+			object.setLocation(tag_frames[frame_counter].Row1[0], tag_frames[frame_counter].Row1[1], tag_frames[frame_counter].Row1[2])
+
 			# Set object rotation,
-			euler_rotation=get_euler(
-				tag_frames[frame_counter].Row1,
-				tag_frames[frame_counter].Row2,
-				tag_frames[frame_counter].Row3,
-				tag_frames[frame_counter].Row4)
-			object.setEuler( euler_rotation[0], euler_rotation[1], euler_rotation[2])
+			#euler_rotation=get_euler(
+			#	tag_frames[frame_counter].Row1,
+			#	tag_frames[frame_counter].Row2,
+			#	tag_frames[frame_counter].Row3,
+			#	tag_frames[frame_counter].Row4)
+			#object.setEuler( euler_rotation[0], euler_rotation[1], euler_rotation[2])
 			
 			# (TODO: use the 'scale' value for the above operations "if (g_scale.val != 1.0):")
 			# (TODO: set object size)
 			
 			# TODO: Insert keyframe
-			object.insertKey(frame_counter,"absolute")
+			#object.insertKey(frame_counter,"absolute")
+			object.insertKey(frame_counter,Object.Pose.LOC)
+			#object.insertKey(frame_counter,Object.Pose.ROT)
+			#object.insertKey(frame_counter,Object.Pose.SIZE)	
 			
 			# Set first coordiantes to the location of the empty.
 
