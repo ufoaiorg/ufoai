@@ -209,6 +209,11 @@ class md2_tag:
 		self.Row2 = (data[3], data[4], data[5])
 		self.Row3 = (data[6], data[7], data[8])
 		self.Row4 = (data[9], data[10], data[11])
+		if (g_scale.val != 1.0):
+			self.Row1 = ( self.Row1[0]* g_scale.val, self.Row1[1]* g_scale.val, self.Row1[2]* g_scale.val)
+			self.Row2 = ( self.Row2[0]* g_scale.val, self.Row2[1]* g_scale.val, self.Row2[2]* g_scale.val)
+			self.Row3 = ( self.Row3[0]* g_scale.val, self.Row3[1]* g_scale.val, self.Row3[2]* g_scale.val)
+			self.Row4 = ( self.Row4[0]* g_scale.val, self.Row4[1]* g_scale.val, self.Row4[2]* g_scale.val)
 		return self
 	def dump(self):
 		print "MD2 Point Structure"
@@ -359,10 +364,9 @@ def apply_transform(verts, matrix):
 #	Get the angle between line AB and BC where b is the elbo.
 #	http://en.wikibooks.org/wiki/Blender_3D:_Blending_Into_Python/Cookbook#Get_Angle_between_3_points
 ######################################################
-import Blender
-AngleBetweenVecs = Blender.Mathutils.AngleBetweenVecs
 
 def getAng3pt3d(avec, bvec, cvec):
+	AngleBetweenVecs = Blender.Mathutils.AngleBetweenVecs
         try:
                 ang = AngleBetweenVecs(avec - bvec,  cvec - bvec)
                 if ang != ang:
@@ -377,13 +381,24 @@ def getAng3pt3d(avec, bvec, cvec):
 # Get the rotation values (euler tuple) from a location and the axes-information
 ######################################################
 def get_euler(loc, X,Y,Z):
-	locX = (loc[0]+1.0, loc[1], loc[2])
-	locY = (loc[0], loc[1]+1.0, loc[2])
-	locZ = (loc[0], loc[1], loc[2]+1.0)
+	loc=Mathutils.Vector(loc)
+	X=Mathutils.Vector(X)
+	Y=Mathutils.Vector(Y)
+	Z=Mathutils.Vector(Z)
+	#zero = (0.0,0.0,0.0)
+	#locX = (1.0, 0.0, 0.0)
+	#locY = (0.0, 1.0, 0.0)
+	#locZ = (0.0, 0.0, 1.0)
+	locX = Mathutils.Vector(loc[0]+1.0, loc[1], loc[2])
+	locY = Mathutils.Vector(loc[0], loc[1]+1.0, loc[2])
+	locZ = Mathutils.Vector(loc[0], loc[1], loc[2]+1.0)
 	
-	rotX = getAng3pt3d(locX,loc,X)
-	rotY = getAng3pt3d(locY,loc,Y)
-	rotZ = getAng3pt3d(locZ,loc,Z)
+	#rotX = getAng3pt3d(locX, zero, X-loc)
+	#rotY = getAng3pt3d(locY, zero, Y-loc)
+	#rotZ = getAng3pt3d(locZ, zero, Z-loc)
+	rotX = getAng3pt3d(locX, loc, X)
+	rotY = getAng3pt3d(locY, loc, Y)
+	rotZ = getAng3pt3d(locZ, loc, Z)
 	return (rotX, rotY, rotZ)
 
 ######################################################
@@ -548,19 +563,18 @@ def load_md2_tags(filename):
 		scene.link(object)
 		for frame_counter in range(0,md2_tags.num_frames):
 			#set blender to the correct frame (so the objects' data will be set in this frame)
-			print "frame",frame_counter
 			Blender.Set("curframe", frame_counter+1)
 
 			# Set object position.
 			object.setLocation(tag_frames[frame_counter].Row1[0], tag_frames[frame_counter].Row1[1], tag_frames[frame_counter].Row1[2])
-			print "frame",tag_frames[frame_counter].Row1[0], " ",tag_frames[frame_counter].Row1[1], " ",tag_frames[frame_counter].Row1[2]
+
 			# Set object rotation,
-			#euler_rotation=get_euler(
-			#	tag_frames[frame_counter].Row1,
-			#	tag_frames[frame_counter].Row2,
-			#	tag_frames[frame_counter].Row3,
-			#	tag_frames[frame_counter].Row4)
-			#object.setEuler( euler_rotation[0], euler_rotation[1], euler_rotation[2])
+			euler_rotation=get_euler(
+				tag_frames[frame_counter].Row1,
+				tag_frames[frame_counter].Row2,
+				tag_frames[frame_counter].Row3,
+				tag_frames[frame_counter].Row4)
+			object.setEuler( euler_rotation[0], euler_rotation[1], euler_rotation[2])
 			
 			# (TODO: use the 'scale' value for the above operations "if (g_scale.val != 1.0):")
 			# (TODO: set object size)
