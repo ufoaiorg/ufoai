@@ -252,4 +252,6 @@ void CL_NewAircraft(base_t * base, char *name);
 void CL_ParseResearchedCampaignItems(char *name, char **text);
 void CL_ParseResearchableCampaignStates(char *name, char **text, qboolean researchable);
 
+campaign_t* CL_GetCampaign(char* name);
+
 #endif /* CLIENT_CL_CAMPAIGN_H */

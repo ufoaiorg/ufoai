@@ -2761,12 +2761,24 @@ void CL_ParseResearchedCampaignItems(char *name, char **text)
 	char *errhead = "CL_ParseResearchedCampaignItems: unexptected end of file (equipment ";
 	char *token;
 	int i;
+	campaign_t* campaign = NULL;
+
+	campaign = CL_GetCampaign(Cvar_VariableString("campaign"));
+	if (!campaign) {
+		Com_Printf("CL_ParseResearchedCampaignItems: failed\n");
+		return;
+	}
 
 	/* get it's body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseResearchedCampaignItems: equipment def \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	if (Q_strncmp(campaign->researched, name, MAX_VAR)) {
+		Com_DPrintf("..don't use '%s' as researched list\n", name);
 		return;
 	}
 
@@ -2798,12 +2810,24 @@ void CL_ParseResearchableCampaignStates(char *name, char **text, qboolean resear
 	char *errhead = "CL_ParseResearchableCampaignStates: unexptected end of file (equipment ";
 	char *token;
 	int i;
+	campaign_t* campaign = NULL;
+
+	campaign = CL_GetCampaign(Cvar_VariableString("campaign"));
+	if (!campaign) {
+		Com_Printf("CL_ParseResearchableCampaignStates: failed\n");
+		return;
+	}
 
 	/* get it's body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseResearchableCampaignStates: equipment def \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	if (Q_strncmp(campaign->researched, name, MAX_VAR)) {
+		Com_DPrintf("..don't use '%s' as researchable list\n", name);
 		return;
 	}
 
@@ -3384,12 +3408,31 @@ void CL_GameInit(void)
 }
 
 /**
+ * @brief Returns the campaign pointer from global campaign array
+ * @param name Name of the campaign
+ * @return campaign_t pointer to campaign with name or NULL if not found
+ */
+campaign_t* CL_GetCampaign(char* name)
+{
+	campaign_t* campaign;
+	int i;
+
+	for (i = 0, campaign = campaigns; i < numCampaigns; i++, campaign++)
+		if (!Q_strncmp(name, campaign->id, MAX_VAR))
+			break;
+
+	if (i == numCampaigns) {
+		Com_Printf("CL_GetCampaign: Campaign \"%s\" doesn't exist.\n", name);
+		return NULL;
+	}
+	return campaign;
+}
+
+/**
  * @brief Starts a new single-player game
  */
 static void CL_GameNew(void)
 {
-	char *name;
-	int i;
 	char val[32];
 
 	Cvar_Set("mn_main", "singleplayer");
@@ -3405,15 +3448,9 @@ static void CL_GameNew(void)
 	CL_ReadSinglePlayerData();
 
 	/* get campaign */
-	name = Cvar_VariableString("campaign");
-	for (i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++)
-		if (!Q_strncmp(name, curCampaign->id, MAX_VAR))
-			break;
-
-	if (i == numCampaigns) {
-		Com_Printf("CL_GameNew: Campaign \"%s\" doesn't exist.\n", name);
+	curCampaign = CL_GetCampaign(Cvar_VariableString("campaign"));
+	if (!curCampaign)
 		return;
-	}
 
 	Cvar_Set("team", curCampaign->team);
 
