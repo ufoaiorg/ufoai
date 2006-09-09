@@ -225,6 +225,10 @@ void CL_ActorGlobalCVars(void)
 			Cvar_Set(va("mn_tu%i", i), str);
 			Com_sprintf(str, MAX_VAR, "%i", le->maxTU);
 			Cvar_Set(va("mn_tumax%i", i), str);
+			Com_sprintf(str, MAX_VAR, "%i", le->morale);
+			Cvar_Set(va("mn_morale%i",i), str);
+			Com_sprintf(str, MAX_VAR, "%i", le->maxMorale);
+			Cvar_Set(va("mn_moralemax%i",i), str);
 			Com_sprintf(str, MAX_VAR, "%i", le->STUN);
 			Cvar_Set(va("mn_stun%i", i), str);
 			Com_sprintf(str, MAX_VAR, "%i", le->AP);
@@ -235,6 +239,8 @@ void CL_ActorGlobalCVars(void)
 			Cvar_Set(va("mn_hpmax%i", i), "1");
 			Cvar_Set(va("mn_tu%i", i), "0");
 			Cvar_Set(va("mn_tumax%i", i), "1");
+			Cvar_Set(va("mn_morale%i",i), "0");
+			Cvar_Set(va("mn_moralemax%i",i), "1");
 			Cvar_Set(va("mn_stun%i", i), "0");
 			Cvar_Set(va("mn_ap%i", i), "0");
 		}
