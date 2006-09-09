@@ -113,7 +113,7 @@ item tachyonrifle_ammo
 		speed	0
 		spread	"4 4"
 		crouch	0.8
-		range	25
+		range	23
 		shots	1
 		ammo	10
 		time	20
@@ -133,7 +133,7 @@ item tachyonrifle_ammo
 		speed	0
 		spread	"3 3"
 		crouch	0.6
-		range	25
+		range	27
 		shots	4
 		ammo	4
 		rof		5
@@ -191,7 +191,7 @@ item tachyonsniper_ammo
 		shots	1
 		ammo	1
 		time	14
-		damage	"70 10"
+		damage	"95 10"
 		dmgtype tachyon
 	}
 	secondary
@@ -210,7 +210,7 @@ item tachyonsniper_ammo
 		ammo	4
 		rof		5
 		time	25
-		damage	"35 4"
+		damage	"40 4"
 		dmgtype tachyon
 	}
 }
