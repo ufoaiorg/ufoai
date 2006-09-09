@@ -772,8 +772,8 @@ void CL_ResetTeamInBase(void)
 		int i;
 
 		/* search equipment definition */
-		name = Cvar_VariableString("equip");
-		Com_DPrintf("CL_GenerateEquipmentCmd: no curCampaign - using cvar equip '%s'\n", name);
+		name = "multiplayer";
+		Com_DPrintf("CL_GenerateEquipmentCmd: no curCampaign - using equipment '%s'\n", name);
 		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
 			if (!Q_strncmp(name, ed->name, MAX_VAR))
 				break;

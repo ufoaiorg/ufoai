@@ -74,7 +74,6 @@ static qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 #define GUETE_SHOOT_HIDE	40
 #define GUETE_CLOSE_IN		8
 #define GUETE_KILL			30
-#define GUETE_RELOAD		25
 #define GUETE_RANDOM		10
 #define GUETE_CIV_FACTOR	0.25
 
@@ -82,42 +81,6 @@ static qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 #define SPREAD_FACTOR		8.0
 #define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*M_PI/180) : 0)
 #define HIDE_DIST			3
-
-/**
- * @brief
- * @sa AI_ActorThink
- */
-static float AI_ReloadCalcGuete(edict_t * ent, shoot_types_t st, ai_action_t * aia)
-{
-	aia->mode = 0;
-	aia->shots = 0;
-	aia->target = NULL;
-	VectorCopy(ent->pos, aia->to);
-	VectorCopy(ent->pos, aia->stop);
-
-	switch (st) {
-	case ST_RIGHT_RELOAD:
-		if ( RIGHT(ent) 
-			 && gi.csi->ods[RIGHT(ent)->item.t].reload
-			 && RIGHT(ent)->item.a == 0 ) {
-			aia->mode = st;
-			return GUETE_RELOAD;
-		}
-		break;
-	case ST_LEFT_RELOAD:
-		if ( LEFT(ent) 
-			 && gi.csi->ods[LEFT(ent)->item.t].reload
-			 && LEFT(ent)->item.a == 0 ) {
-			aia->mode = st;
-			return GUETE_RELOAD;
-		}
-		break;
-	default:
-		break;
-	}
-	return 0;
-}
-
 
 /**
  * @brief
@@ -148,25 +111,44 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 
 	/* shooting */
 	maxDmg = 0.0;
-	for (fm = 0; fm < 4; fm++) {
-		objDef_t *od;
+	for (fm = 0; fm < 8; fm++) {
+		objDef_t *od = NULL;
 		fireDef_t *fd;
 
-		if ( fm < ST_LEFT_PRIMARY 
-			 && RIGHT(ent) 
-			 && RIGHT(ent)->item.m != NONE 
-			 && gi.csi->ods[RIGHT(ent)->item.t].weapon 
-			 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
-				 || RIGHT(ent)->item.a > 0) )
-			od = &gi.csi->ods[RIGHT(ent)->item.m];
-		else if ( fm >= ST_LEFT_PRIMARY 
-				  && LEFT(ent) 
-				  && (LEFT(ent)->item.m != NONE) 
-				  && gi.csi->ods[LEFT(ent)->item.t].weapon
-				  && (!gi.csi->ods[LEFT(ent)->item.t].reload
-					  || LEFT(ent)->item.a > 0) )
-			od = &gi.csi->ods[LEFT(ent)->item.m];
-		else
+		switch (fm) {
+		case ST_RIGHT_PRIMARY:
+		case ST_RIGHT_SECONDARY:
+			if ( RIGHT(ent) 
+				 && RIGHT(ent)->item.m != NONE 
+				 && gi.csi->ods[RIGHT(ent)->item.t].weapon 
+				 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
+					 || RIGHT(ent)->item.a > 0) )
+				od = &gi.csi->ods[RIGHT(ent)->item.m];
+			break;
+		case ST_LEFT_PRIMARY:
+		case ST_LEFT_SECONDARY:
+			if ( LEFT(ent) 
+				 && (LEFT(ent)->item.m != NONE) 
+				 && gi.csi->ods[LEFT(ent)->item.t].weapon
+				 && (!gi.csi->ods[LEFT(ent)->item.t].reload
+					 || LEFT(ent)->item.a > 0) )
+				od = &gi.csi->ods[LEFT(ent)->item.m];
+			break;
+		case 4: /* grenade/knife toss from inventory using empty right hand */
+			if (RIGHT(ent))
+				continue;
+			/* TODO: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
+			continue;
+		case 5: /* grenade/knife toss from inventory using empty left hand */
+			if (LEFT(ent))
+				continue;
+			/* TODO: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
+			continue;
+		default:
+			continue;
+		}
+
+		if (!od)
 			continue;
 
 		fd = &od->fd[fm % 2];
@@ -363,7 +345,48 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	int i;
 	float guete, best;
 
-/*	Com_Printf( "AI_ActorThink (ent %i, frame %i)\n", ent->number, level.framenum ); */
+#ifdef PARANOID
+	Com_Printf( "AI_ActorThink (ent %i, frame %i)\n", ent->number, level.framenum );
+#endif
+
+	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
+	if (!(ent->state & STATE_PANIC)) {
+		if ( RIGHT(ent) && gi.csi->ods[RIGHT(ent)->item.t].reload && RIGHT(ent)->item.a == 0 ) {
+			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idRight)) {
+#ifdef PARANOID
+				Com_Printf("- Reloading right hand weapon\n");
+#endif
+				G_ClientReload(player, ent->number, ST_RIGHT_RELOAD);
+			} else {
+#ifdef PARANOID
+				Com_Printf("- Dropping right hand weapon\n");
+#endif
+				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
+			}
+		}
+		if ( LEFT(ent) && gi.csi->ods[LEFT(ent)->item.t].reload && LEFT(ent)->item.a == 0 ) {
+			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idLeft)) {
+#ifdef PARANOID
+				Com_Printf("- Reloading left hand weapon\n");
+#endif
+				G_ClientReload(player, ent->number, ST_LEFT_RELOAD);
+			} else {
+#ifdef PARANOID
+				Com_Printf("- Dropping left hand weapon\n");
+#endif
+				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
+			}
+		}
+	}
+
+#ifdef PARANOID
+	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
+	if (!LEFT(ent) && !RIGHT(ent)) {
+		G_ClientGetWeaponFromInventory(player, ent->number);
+		if (LEFT(ent) || RIGHT(ent))
+			Com_Printf("- Got weapon from inventory\n");
+	}
+#endif
 
 	aia.mode = 0;
 	aia.shots = 0;
@@ -390,21 +413,6 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	best = 0.0;
 	VectorCopy(ent->pos, oldPos);
 	VectorCopy(ent->origin, oldOrigin);
-
-	/* TODO: evaluate whether to switch weapons */
-	/* (including to ones that have no ammo loaded but can be reloaded) */
-
-	/* evaluate reloading action */
-	if (!(ent->state & STATE_PANIC)) {
-		for (i = 0;i < 2;i++) {
-			guete = AI_ReloadCalcGuete(ent, ST_RIGHT_RELOAD + i, &aia);
-
-			if (guete > best) {
-				bestAia = aia;
-				best = guete;
-			}
-		}
-	}
 
 	/* evaluate moving to every possible location in the search area, including combat considerations */
 	for (to[2] = 0; to[2] < HEIGHT; to[2]++)
@@ -442,8 +450,6 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 		for (i = 0; i < bestAia.shots; i++)
 			G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode);
 		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse);
-	} else if (bestAia.mode == ST_RIGHT_RELOAD || bestAia.mode == ST_LEFT_RELOAD) {
-		G_ClientReload(player, ent->number, bestAia.mode);
 	}
 }
 

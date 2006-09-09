@@ -107,6 +107,8 @@ cvar_t *m_rage;
 cvar_t *m_rage_stop;
 cvar_t *m_panic_stop;
 
+cvar_t *g_nodamage;
+
 cvar_t *difficulty;
 
 extern void SpawnEntities(char *mapname, char *entities);
@@ -195,6 +197,9 @@ void InitGame(void)
 	m_rage = gi.cvar("m_rage", "0.6", CVAR_LATCH, NULL);
 	m_rage_stop = gi.cvar("r_rage_stop", "2.0", CVAR_LATCH, NULL);
 	m_panic_stop = gi.cvar("m_panic_stop", "1.0", CVAR_LATCH, NULL);
+
+	/* TODO: add CVAR_DEVELOPER flag which if !COM_CheckParm("-developer") acts like CVAR_NOSET and hides the cvar from the console */
+	g_nodamage = gi.cvar("g_nodamage", "0", 0, NULL);
 
 	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET, NULL);
 

@@ -1220,12 +1220,11 @@ void CL_InitLocal(void)
 	name = Cvar_Get("name", _("Unnamed"), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
 	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer");
 	team = Cvar_Get("team", "human", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
-	equip = Cvar_Get("equip", "multiplayer", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
+	equip = Cvar_Get("equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 	campaign = Cvar_Get("campaign", "main", 0, NULL);
 	rate = Cvar_Get("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE, NULL);	/* FIXME */
 	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
-
 	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, NULL);
 
 	/* register our commands */
