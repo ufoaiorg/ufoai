@@ -27,8 +27,7 @@
 //		e.g.
 //			collect a plasrifle -> get the plasma technology but not the plasmpistol.
 //			The plasrifle itself will not be researchable until the plasmpistol has been researched.
-//		* "initial" - You can research (not produce) this tech from the beginning.
-//		* "nothing" - Similar to "initial", but you need to collect at least one item (that requires it directly or indirectly) to be able to research this.
+//		* "nothing" - You need to collect at least one item (that requires it directly or indirectly) to be able to research this.
 //		* everything else -> a "tech" item.
 //	provides yyy
 //		The item (only one allowed) name (yyy) in the correct ufo file or data-structure (e.g inventory).
@@ -78,7 +77,6 @@ tech rs_laser
 	up_chapter	tech
 	description	"_laser_txt"
 
-	requires	initial
 	time	60
 	image_top	techs/laser
 }
@@ -722,7 +720,6 @@ tech rs_kevlar_armor
 	up_chapter	armors
 	description	"_kevlar_armor_txt"
 
-	requires	initial
 	provides	light
 	time	0
 }
@@ -785,7 +782,6 @@ tech rs_damage_normal
 	up_chapter	damage
 	description	"_normal_damage_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/normal_damage
 }
@@ -797,7 +793,6 @@ tech rs_damage_blast
 	up_chapter	damage
 	description	"_blast_damage_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/blast_damage
 }
@@ -809,7 +804,6 @@ tech rs_damage_fire
 	up_chapter	damage
 	description	"_fire_damage_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/fire_damage
 }
@@ -821,7 +815,6 @@ tech rs_damage_shock
 	up_chapter	damage
 	description	"_shock_damage_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/shock_damage
 }
@@ -869,7 +862,6 @@ tech rs_damage_stun
 	up_chapter	damage
 	description	"_stun_damage_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/stun_damage
 }
@@ -885,7 +877,6 @@ tech rs_skill_power
 	up_chapter	skill
 	description	"_power_skill_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/power_skill
 }
@@ -897,7 +888,6 @@ tech rs_skill_speed
 	up_chapter	skill
 	description	"_speed_skill_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/speed_skill
 }
@@ -909,7 +899,6 @@ tech rs_skill_accuracy
 	up_chapter	skill
 	description	"_accuracy_skill_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/accuracy_skill
 }
@@ -921,7 +910,6 @@ tech rs_skill_mind
 	up_chapter	skill
 	description	"_mind_skill_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/mind_skill
 }
@@ -933,7 +921,6 @@ tech rs_skill_close
 	up_chapter	skill
 	description	"_close_skill_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/close_skill
 }
@@ -945,7 +932,6 @@ tech rs_skill_heavy
 	up_chapter	skill
 	description	"_heavy_skill_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/heavy_skill
 }
@@ -957,7 +943,6 @@ tech rs_skill_assault
 	up_chapter	skill
 	description	"_assault_skill_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/assault_skill
 }
@@ -969,7 +954,6 @@ tech rs_skill_sniper
 	up_chapter	skill
 	description	"_sniper_skill_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/sniper_skill
 }
@@ -981,7 +965,6 @@ tech rs_skill_explosive
 	up_chapter	skill
 	description	"_explosive_skill_txt"
 
-	requires	initial
 	time	0
 //	image_top	techs/explosive_skill
 }
@@ -995,7 +978,6 @@ tech rs_building_entrance
 	description	"_b_entrance_txt"
 	up_chapter	buildings
 
-	requires	initial
 	provides	building_entrance
 	time	0
 }
@@ -1141,7 +1123,6 @@ tech rs_craft_dropship
 	description	"_dropship_txt"
 	up_chapter	crafts
 
-	requires	initial
 	provides	craft_dropship
 	time	0
 
@@ -1155,7 +1136,6 @@ tech rs_craft_interceptor
 	description	"_interceptor_txt"
 	up_chapter	crafts
 
-	requires	initial
 	provides	craft_interceptor
 	time	0
 
@@ -1559,7 +1539,6 @@ tech rs_ugv_phoenix
 	name	"_UGV Phoenix"
 	description	"_ugv_phoenix_txt"
 
-	requires	initial
 	provides	ugv_phoenix
 	time	0
 	needscollected	false
@@ -1574,7 +1553,6 @@ tech rs_ugv_triax
 	name	"_UGV Triax"
 	description	"_ugv_triax_txt"
 
-	requires	initial
 	provides	ugv_triax
 	time	0
 	needscollected	false
@@ -1591,7 +1569,6 @@ tech rs_craft_shield_light
 	name	"_Light Shield"
 	description	"_craft_shield_light_txt"
 
-	requires	initial
 	// FIXME
 	provides	light
 	time	0
@@ -1639,7 +1616,6 @@ tech rs_craft_weapon_flac
 	name	"_Flac Cannon"
 	description	"_craft_weapon_flac_txt"
 
-	requires	initial
 	// FIXME
 	provides	assault
 	time	0

@@ -149,6 +149,7 @@ void RS_MarkResearchable(void)
 					tech->statusResearchable = qtrue;
 				}
 
+#if 0
 				/* If the tech is an initial one,  mark it as as researchable. */
 				for (j = 0; j < required->numEntries; j++) {
 					if (!Q_strncmp(required->string[j], "initial", MAX_VAR)) {
@@ -157,6 +158,7 @@ void RS_MarkResearchable(void)
 						break;
 					}
 				}
+#endif
 			}
 		}
 	}
@@ -1366,14 +1368,6 @@ qboolean RS_TechIsResearched(int tech_idx)
 	if (tech_idx < 0)
 		return qfalse;
 
-#if 0
-	/* DEBUG: still needed? */
-	/* initial and nothing are always researched. as they are just starting "technologys" that are never used. */
-	if (!Q_strncmp(gd.technologies[tech_idx].id, "initial", MAX_VAR)
-		|| !Q_strncmp(gd.technologies[tech_idx].id, "nothing", MAX_VAR))
-		return qtrue;
-#endif
-
 	/* research item found */
 	if (gd.technologies[tech_idx].statusResearch == RS_FINISH)
 		return qtrue;
@@ -1399,8 +1393,7 @@ qboolean RS_TechIsResearchable(technology_t * tech)
 	if (tech->statusResearch == RS_FINISH)
 		return qfalse;
 
-	if ((!Q_strncmp(tech->id, "initial", MAX_VAR))
-		|| (!Q_strncmp(tech->id, "nothing", MAX_VAR)))
+	if (tech->statusResearchable)
 		return qtrue;
 
 	required = &tech->requires;
@@ -1429,7 +1422,7 @@ static void RS_GetFirstRequired2(int tech_idx, int first_tech_idx, stringlist_t 
 
 	required_temp = &gd.technologies[tech_idx].requires;
 
-	if (!Q_strncmp(required_temp->string[0], "initial", MAX_VAR) || !Q_strncmp(required_temp->string[0], "nothing", MAX_VAR)) {
+	if (!Q_strncmp(required_temp->string[0], "nothing", MAX_VAR)) {
 		if (tech_idx == first_tech_idx)
 			return;
 		if (required->numEntries < MAX_TECHLINKS) {
@@ -1437,7 +1430,7 @@ static void RS_GetFirstRequired2(int tech_idx, int first_tech_idx, stringlist_t 
 			required->idx[required->numEntries] = tech_idx;
 			Q_strncpyz(required->string[required->numEntries], gd.technologies[tech_idx].id, MAX_VAR);
 			required->numEntries++;
-			Com_DPrintf("RS_GetFirstRequired2: \"%s\" - requirement 'initial' or 'nothing' found.\n", gd.technologies[tech_idx].id);
+			Com_DPrintf("RS_GetFirstRequired2: \"%s\" - requirement 'nothing' found.\n", gd.technologies[tech_idx].id);
 		}
 		return;
 	}
@@ -1520,8 +1513,7 @@ technology_t *RS_GetTechByID(const char *id)
 	if (!id || !*id)
 		return NULL;
 
-	if (!Q_strncmp((char *) id, "nothing", MAX_VAR)
-		|| !Q_strncmp((char *) id, "initial", MAX_VAR))
+	if (!Q_strncmp((char *) id, "nothing", MAX_VAR))
 		return NULL;
 
 	for (; i < gd.numTechnologies; i++) {
