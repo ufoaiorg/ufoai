@@ -1646,9 +1646,11 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 
 		/* FIXME: don't make aliens in back visible */
 		if (fd->irgoggles && (check->type == ET_ACTOR || check->type == ET_UGV)) {
-			G_AppearPerishEvent(G_VisToPM(~check->visflags), 1, check);
-			check->visflags |= ~check->visflags;
-			continue;
+			if (G_FrustomVis(ent, check->origin)) {
+				G_AppearPerishEvent(G_VisToPM(~check->visflags), 1, check);
+				check->visflags |= ~check->visflags;
+				continue;
+			}
 		}
 
 		/* check for walls */
@@ -2304,16 +2306,16 @@ qboolean G_ReactionFire(edict_t * target)
 				level.activeTeam = ent->team;
 
 				/* Fire the first weapon in hands if everything is ok. */
-				if ( RIGHT(ent) 
-					 && (RIGHT(ent)->item.m != NONE) 
-					 && gi.csi->ods[RIGHT(ent)->item.t].weapon 
+				if ( RIGHT(ent)
+					 && (RIGHT(ent)->item.m != NONE)
+					 && gi.csi->ods[RIGHT(ent)->item.t].weapon
 					 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
 						 || RIGHT(ent)->item.a > 0)
 					 && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
 					G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY);
 					fired = qtrue;
-				} else if ( LEFT(ent) 
-							&& (LEFT(ent)->item.m != NONE) 
+				} else if ( LEFT(ent)
+							&& (LEFT(ent)->item.m != NONE)
 							&& gi.csi->ods[LEFT(ent)->item.t].weapon
 							&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 								|| LEFT(ent)->item.a > 0)
