@@ -282,6 +282,7 @@ void G_ClientDisconnect(player_t * player);
 
 int G_TestVis(int team, edict_t * check, int flags);
 void G_ClientShoot(player_t * player, int num, pos3_t at, int type);
+void G_ClientReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientMove(player_t * player, int team, int num, pos3_t to, qboolean stop);
 void G_MoveCalc(int team, pos3_t from, int distance);
 qboolean G_ReactionFire(edict_t * target);

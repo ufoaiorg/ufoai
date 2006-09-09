@@ -1098,7 +1098,11 @@ typedef enum {
 	ST_LEFT_PRIMARY,
 	ST_LEFT_SECONDARY,
 
-	ST_NUM_SHOOT_TYPES
+	ST_NUM_SHOOT_TYPES,
+
+	/* 20060905 LordHavoc: added reload types */
+	ST_RIGHT_RELOAD,
+	ST_LEFT_RELOAD
 } shoot_types_t;
 
 /* shoot flags */
