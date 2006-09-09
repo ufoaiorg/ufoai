@@ -16,33 +16,33 @@
 //	alienincgrenade
 //	plasmagrenade
 //
-// The equipment approximately represent what an 8-alien team
+// The equipment approximately represent what an 40-alien team
 // will have on battlescape. This is also the loot you get
-// from auto-mission with 8 aliens. If there are n < 8 aliens,
-// you get only n/8 of each item number, rounded down
+// from auto-mission with 40 aliens. If there are n < 40 aliens,
+// you get only n/40 of each item number, rounded down
 // (the rounding down is the auto-mission penalty).
 //
-// Alien weapon assignment procedure.
+// Alien weapon assignment procedure, more or less (see q_shared.c):
 // For each alien, pick the following:
-// 1. the most expensive primary weapon W with probability #W/8
+// 1. the most expensive primary weapon W with probability #W/40
 //    where #W is the number of W weapons listed in equipment
 // 1a. if still no primary weapon,
-//     the second most expensive primary weapon X with probability #X/8
+//     the second most expensive primary weapon X with probability #X/40
 // etc. for all primary weapons (the order is essential);
-// keep the total <= 8 or the theoretical loot will
+// keep the total <= 40 or the theoretical loot will
 // be much higher than the actual loot
 // 2. similary, sidearms (secondary weapons with reload) based on price, 
 //    so in case of current weapons this is:
-//    tachyonpistol with probability #tachyonpistol/8
+//    tachyonpistol with probability #tachyonpistol/40
 // 2a. if still no sidearm,
-//     plaspistol with probability #plaspistol/8;
+//     plaspistol with probability #plaspistol/40;
 //     add some bonus to probability for those aliens
 //     that don't have primary weapons, yet,
 //     and some malus to those that already have,
 //     with decent probability of akimbo, too;
 //     moreover alien with tachyon primary weapon 
 //     will start picking sidarm with plaspistol, not tachyonpistol;
-//     keep the total <= 8, likewise
+//     keep the total <= 40, likewise
 // 3. get the following number of ammo for each weapon separately:
 //      (#ammo/#weapon) slightly randomly increased
 //    with probability depending on the fractional part,
@@ -51,7 +51,7 @@
 //    #ammo/#weapon should be greater than 1
 // 4. for each misc item (alienincgrenade or plasmagrenade)
 //    and secondary weapon without reload (kerrblade or plasblade) get
-//      (#item/8) slightly randomly increased
+//      (#item/40) slightly randomly increased
 //    with probability depending on the fractional part
 //    for each alien (as long as it fits in the backpack);
 //    the order is from the most expensive to the least expensive;
@@ -61,279 +61,370 @@
 
 // There is no problem if the number of assigned things
 // is bigger than the total in equipment --- on average it is OK.
-// For example, take 8-alien team, then 1 plasrifle
+// For example, take 40-alien team, then 1 plasrifle
 // makes it possible, though very unlikely, that each alien
-// will get a rifle. Take a 5-alien team with 8 plasrifles,
+// will get a rifle. Take a 30-alien team with 40 plasrifles,
 // this guarantees that each alien will get a primary weapon;
-// with 12 plasrifle_ammo, they will also get, on average, 1.5 ammo per alien.
-// but with 2-alien team, 7 plasrifle gives only high probability
+// with 60 plasrifle_ammo, they will also get, on average, 1.5 ammo per alien.
+// but with 2-alien team, 39 plasrifle gives only high probability
 // that there will be at least 1 plasrifle in the team, no certainty.
 // Each individual type of misc items and blades is assigned separately,
-// so e.g., 8 alienincgrenade and 8 plasmagrenade gives two grenades per alien,
-// on average, while 8 plaspistol and 8 tachyonpistol gives only 1 sidearm
-// (so 4 plaspistol and 4 tachyonpistol is a better idea in practice).
+// so, e.g., 40 alienincgrenade and 40 plasmagrenade 
+// gives two grenades per alien, on average, 
+// while 40 plaspistol and 40 tachyonpistol gives only 1 sidearm
+// (so 20 plaspistol and 20 tachyonpistol is a better idea in practice).
 
 equipment stage1_workers
 {
-	plaspistol			4
-	plaspistol_ammo		5
+	plaspistol			25
+	plaspistol_ammo		29
 	plasrifle			1
 	plasrifle_ammo		1
-	kerrblade			10
+	kerrblade			50
+	alienincgrenade		1
+	light_alien         1
 }
 
 equipment stage1_workers_explosive
 {
-	plaspistol			2
-	plaspistol_ammo		3
-	plasblaster			1
-	plasblaster_ammo	1
-	kerrblade			2
-	alienincgrenade		28
-	plasmagrenade		4
-	light_alien         1
+	plaspistol			7
+	plaspistol_ammo		10
+	plasblaster			2
+	plasblaster_ammo	3
+	kerrblade			10
+	alienincgrenade		125
+	plasmagrenade		20
+	light_alien         3
+	medium_alien        1
 }
 
 equipment stage1_soldiers
 {
-	plaspistol			5
-	plaspistol_ammo		11
-	plasrifle			6
-	plasrifle_ammo		9
-	plasblaster			2
-	plasblaster_ammo	2
-	kerrblade			7
+	plaspistol			25
+	plaspistol_ammo		55
+	plasrifle			30
+	plasrifle_ammo		45
+	plasblaster			7
+	plasblaster_ammo	7
+	kerrblade			35
 	plasblade			1
-	light_alien         2
+	alienincgrenade		1
+	light_alien         13
 }
 
 equipment stage2_workers
 {
-	plaspistol			6
-	plaspistol_ammo		7
-	plasrifle			1
-	plasrifle_ammo		1
-	kerrblade			6
+	plaspistol			30
+	plaspistol_ammo		35
+	plasrifle			2
+	plasrifle_ammo		3
+	kerrblade			30
 	plasblade			1
-	alienincgrenade		4
+	alienincgrenade		20
 	light_alien         1
-	medium_alien        2
+	medium_alien        7
 }
 
 equipment stage2_soldiers_melee
 {
+	plaspistol			1
+	plaspistol_ammo		1
+	plasrifle			1
+	plasrifle_ammo		1
 	tachyonpistol		1
 	tachyonpistol_ammo	1
-	kerrblade			3
-	plasblade			28
-	alienincgrenade		7
-	light_alien         2
-	medium_alien        2
+	tachyonsniper		1
+	tachyonsniper_ammo	1
+	kerrblade			15
+	plasblade			150
+	alienincgrenade		35
+	plasmagrenade		1
+	light_alien         7
+	medium_alien        10
+//  heavy_alien         1
 }
 
 equipment stage2_soldiers
 {
-	plaspistol			7
-	plaspistol_ammo		15
-	plasrifle			6
-	plasrifle_ammo		9
-	plasblaster			2
-	plasblaster_ammo	3
-	kerrblade			7
-	plasblade			2
-	alienincgrenade		12
+	plaspistol			35
+	plaspistol_ammo		75
+	plasrifle			30
+	plasrifle_ammo		45
+	plasblaster			10
+	plasblaster_ammo	15
+	tachyonpistol		1
+	tachyonpistol_ammo	1
+	kerrblade			35
+	plasblade			10
+	alienincgrenade		60
 	plasmagrenade		1
-	light_alien         5
-	medium_alien        1
+	light_alien         25
+	medium_alien        3
 }
 
 equipment stage3_workers
 {
-	plaspistol			1
-	plaspistol_ammo		2
-	plasrifle			1
-	plasrifle_ammo		1
-	tachyonpistol		4
-	tachyonpistol_ammo	5
-	kerrblade			1
-	plasblade			4
-	alienincgrenade		4
-	plasmagrenade		4
-	medium_alien        4
+	plaspistol			2
+	plaspistol_ammo		3
+	plasrifle			2
+	plasrifle_ammo		2
+	tachyonpistol		20
+	tachyonpistol_ammo	25
+	kerrblade			3
+	plasblade			20
+	alienincgrenade		20
+	plasmagrenade		20
+	light_alien         1
+	medium_alien        15
+//  heavy_alien         1
 }
 
 equipment stage3_workers_explosive
 {
-	plasblaster			2
-	plasblaster_ammo	3
+	plaspistol			1
+	plaspistol_ammo		1
+	plasblaster			3
+	plasblaster_ammo	4
 	tachyonpistol		2
-	tachyonpistol_ammo	2
-	tachyonrifle		1
-	tachyonrifle_ammo	1
-	kerrblade			2
-	alienincgrenade		22
-	plasmagrenade		27
-	medium_alien        3
+	tachyonpistol_ammo	3
+	tachyonrifle		3
+	tachyonrifle_ammo	4
+	kerrblade			10
+	plasblade			1
+	alienincgrenade		100
+	plasmagrenade		150
+	medium_alien        20
 //  heavy_alien         1
 }
 
 equipment stage3_soldiers
 {
-	plaspistol			3
-	plaspistol_ammo		5
-	plasrifle			3
-	plasrifle_ammo		5
-	plasblaster			3
-	plasblaster_ammo	7
-	tachyonpistol		4
-	tachyonpistol_ammo	9
-	tachyonsniper		1
-	tachyonsniper_ammo	1
-	kerrblade			2
-	plasblade			10
-	alienincgrenade		7
-	plasmagrenade		7
-	light_alien         3
-	medium_alien        4
-//	heavy_alien         1
+	plaspistol			15
+	plaspistol_ammo		25
+	plasrifle			15
+	plasrifle_ammo		25
+	plasblaster			15
+	plasblaster_ammo	35
+	tachyonpistol		20
+	tachyonpistol_ammo	45
+	tachyonsniper		2
+	tachyonsniper_ammo	3
+	kerrblade			10
+	plasblade			50
+	alienincgrenade		35
+	plasmagrenade		35
+	light_alien         15
+	medium_alien        20
+//	heavy_alien         2
 }
 
 equipment stage4_workers
 {
-	plaspistol			2
-	plaspistol_ammo		3
-	plasblaster			1
-	plasblaster_ammo	2
-	tachyonpistol		7
-	tachyonpistol_ammo	15
-	tachyonrifle		2
-	tachyonrifle_ammo	3
-	kerrblade			1
-	plasblade			5
-	alienincgrenade		7
-	plasmagrenade		7
-	medium_alien        5 // 2
-//	heavy_alien         3
+	plaspistol			10
+	plaspistol_ammo		15
+	plasrifle			1
+	plasrifle_ammo		1
+	plasblaster			3
+	plasblaster_ammo	6
+	tachyonpistol		35
+	tachyonpistol_ammo	75
+	tachyonrifle		10
+	tachyonrifle_ammo	15
+	kerrblade			2
+	plasblade			25
+	alienincgrenade		35
+	plasmagrenade		35
+	light_alien         1
+	medium_alien        25 // 10
+//	heavy_alien         15
 }
 
 equipment stage4_soldiers_plasma
 {
-	plaspistol			7
-	plaspistol_ammo		20
-	plasrifle			2
-	plasrifle_ammo		5
-	plasblaster			6
-	plasblaster_ammo	17
-	kerrblade			1
-	plasblade			20
-	alienincgrenade		10
-	plasmagrenade		20
-	medium_alien        8 // 1
-//	heavy_alien         7
+	plaspistol			35
+	plaspistol_ammo		100
+	plasrifle			10
+	plasrifle_ammo		25
+	plasblaster			30
+	plasblaster_ammo	85
+	kerrblade			3
+	plasblade			100
+	alienincgrenade		50
+	plasmagrenade		100
+	light_alien         1
+	medium_alien        38 // 5
+//	heavy_alien         34
 }
 
 equipment stage4_soldiers
 {
-	plaspistol			3
-	plaspistol_ammo		8
+	plaspistol			15
+	plaspistol_ammo		40
 	plasrifle			1
 	plasrifle_ammo		3
-	plasblaster			1
-	plasblaster_ammo	3
-	tachyonpistol		5
-	tachyonpistol_ammo	13
-	tachyonrifle		3
-	tachyonrifle_ammo	8
-	tachyonsniper		3
-	tachyonsniper_ammo	8
-	kerrblade			2 // bulky, will rarely get into the backpack
-	plasblade			14
-	alienincgrenade		14
-	plasmagrenade		14
+	plasblaster			2
+	plasblaster_ammo	5
+	tachyonpistol		25
+	tachyonpistol_ammo	65
+	tachyonrifle		15
+	tachyonrifle_ammo	40
+	tachyonsniper		15
+	tachyonsniper_ammo	40
+	kerrblade			10 // bulky, will rarely get into the backpack
+	plasblade			70
+	alienincgrenade		70
+	plasmagrenade		70
 	light_alien         1
-	medium_alien        7 // 2
-//	heavy_alien         5
+	medium_alien        38 // 10
+//	heavy_alien         29
 }
 
 // human equipment
 
 equipment human_phalanx_initial
 {
-	assault				3
-	assault_ammo		3
-	sniper				3
-	sniper_ammo			3
-	pistol				5
-	pistol_ammo			13
-	smg 				3
-	smg_ammo			11
-	shotgun				5
-	shotgun_ammo		12
-	flamer				2
-	flamer_ammo			2
-	rpg				    1
-	rpg_ammo			4
-	fraggrenade			20
-	knife				4
-	light	    		3
+	assault				14
+	assault_ammo		17
+	sniper				16
+	sniper_ammo			19
+	pistol				25
+	pistol_ammo			61
+	smg 				23
+	smg_ammo			55
+	shotgun				27
+	shotgun_ammo		55
+	flamer				8
+	flamer_ammo			9
+	rpg				    6
+	rpg_ammo			21
+	fraggrenade			100
+	knife				23
+	light	    		17
 }
 
-equipment human_farmers // some may be weaponless
+equipment human_farmers // some will be weaponless
 {
-	pistol				1
-	pistol_ammo			1
-	shotgun				1
-	shotgun_ammo		1
+	pistol				2
+	pistol_ammo			2
+	shotgun				5
+	shotgun_ammo		6
+	fraggrenade			1
 }
 
 equipment human_gang
 {
-	pistol				1
-	pistol_ammo			1
-	smg 				2
-	smg_ammo			10
+	assault				1
+	assault_ammo		1
+	pistol				3
+	pistol_ammo			4
+	shotgun				1
+	shotgun_ammo		1
+	smg 				10
+	smg_ammo			45
 	rpg				    1
 	rpg_ammo			1
 	fraggrenade			1
-	knife				5
+	knife				20
 }
 
 equipment human_police // some may be weaponless
 {
-	pistol				2
-	pistol_ammo			5
-	shotgun				1
-	shotgun_ammo		2
-	fraggrenade			1
-	light			    2
+	pistol				10
+	pistol_ammo			25
+	shotgun				5
+	shotgun_ammo		7
+	sniper				1
+	sniper_ammo			1
+	fraggrenade			2
+	light			    7
 }
 
 equipment human_antiterrorist
 {
-	assault				1
-	assault_ammo		2
-	sniper				3
-	sniper_ammo			7
-	smg 				3
-	smg_ammo			10
-	shotgun				1
-	shotgun_ammo		2
-	fraggrenade			5
-	knife				8
-	light			    7
+	assault				5
+	assault_ammo		12
+	sniper				15
+	sniper_ammo			35
+	rpg				    1
+	rpg_ammo			3
+	pistol				2
+	pistol_ammo			3
+	smg 				15
+	smg_ammo			50
+	shotgun				5
+	shotgun_ammo		12
+	fraggrenade			25
+	knife				40
+	light			    35
 }
 
 equipment human_army
 {
+	assault				25
+	assault_ammo		35
+	sniper				1
+	sniper_ammo			2
+	pistol				15
+	pistol_ammo			25
+	flamer				2
+	flamer_ammo			3
+	rpg  				3
+	rpg_ammo			7
+	fraggrenade			55
+	knife				40
+	light			    15
+}
+
+equipment multiplayer_initial
+{
 	assault				5
-	assault_ammo		7
-	pistol				3
-	pistol_ammo			5
-	flamer				1
-	flamer_ammo			2
-	rpg  				1
-	rpg_ammo			3
-	fraggrenade			11
-	knife				8
-	light			    3
+	assault_ammo		13
+	sniper				5
+	sniper_ammo			13
+	pistol				10
+	pistol_ammo			25
+	smg				    10
+	smg_ammo			25
+	shotgun				10
+	shotgun_ammo		25
+	flamer				5
+	flamer_ammo			13
+	rpg				    5
+	rpg_ammo			13
+//	rpg_incendiary_ammo	13
+	rpg_tachyon_ammo	13
+	grenl				5
+	grenl_ammo			23
+	grenl_plasma_ammo	13
+	bolterrifle			5
+	bolterrifle_ammo	13
+	laserpistol			10
+	laserpistol_ammo	25
+	laserrifle			5
+	laserrifle_ammo		13
+//	heavylaser			5
+//	heavylaser_ammo		13
+	plaspistol			10
+	plaspistol_ammo		25
+	plasrifle			5
+	plasrifle_ammo		13
+	plasblaster			5
+	plasblaster_ammo	13
+	tachyonpistol		10
+	tachyonpistol_ammo	25
+	tachyonrifle		5
+	tachyonrifle_ammo	13
+	tachyonsniper		5
+	tachyonsniper_ammo	13
+	fraggrenade			50
+	knife				5
+	irgoggles			5
+	medikit				5
+//	alienincgrenade		30
+	plasmagrenade		50
+	kerrblade           25 // bulky, will rarely get into the backpack
+	plasblade			20
+	light				10
+	medium				10
+//	heavy				5
 }

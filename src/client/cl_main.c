@@ -1175,7 +1175,7 @@ void CL_InitLocal(void)
 	name = Cvar_Get("name", _("Unnamed"), CVAR_USERINFO | CVAR_ARCHIVE);
 	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE);
 	team = Cvar_Get("team", "human", CVAR_USERINFO | CVAR_ARCHIVE);
-	equip = Cvar_Get("equip", "multiplayer", CVAR_USERINFO | CVAR_ARCHIVE);
+	equip = Cvar_Get("equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE);
 	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE);
 	campaign = Cvar_Get("campaign", "main", 0);
 	rate = Cvar_Get("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE);	/* FIXME */

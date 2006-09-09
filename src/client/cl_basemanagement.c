@@ -1440,13 +1440,13 @@ void B_BuildBase(void)
 						Com_DPrintf("B_BuildBase: Initial Phalanx equipment %s not found.\n", name);
 					} else {
 						for (i = 0; i < csi.numODs; i++)
-							baseCurrent->storage.num[i] += ed->num[i];
+							baseCurrent->storage.num[i] += ed->num[i] / 5;
 					}
-					/* pay for the initial equipment */
-					for (i = 0; i < csi.numODs; i++)
-						price += baseCurrent->storage.num[i] * csi.ods[i].price;
-					CL_UpdateCredits(ccs.credits - price);
 				}
+				/* pay for the initial equipment */
+				for (i = 0; i < csi.numODs; i++)
+					price += baseCurrent->storage.num[i] * csi.ods[i].price;
+				CL_UpdateCredits(ccs.credits - price);
 			}
 
 			Cbuf_AddText(va("mn_select_base %i;", baseCurrent->idx));
