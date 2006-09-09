@@ -210,6 +210,8 @@ extern cvar_t *m_rage;
 extern cvar_t *m_rage_stop;
 extern cvar_t *m_panic_stop;
 
+extern cvar_t *g_nodamage;
+
 extern cvar_t *difficulty;
 
 #define world	(&g_edicts[0])
@@ -283,9 +285,12 @@ void G_ClientDisconnect(player_t * player);
 int G_TestVis(int team, edict_t * check, int flags);
 void G_ClientShoot(player_t * player, int num, pos3_t at, int type);
 void G_ClientReload(player_t *player, int entnum, shoot_types_t st);
+qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
+void G_ClientGetWeaponFromInventory(player_t *player, int entnum);
 void G_ClientMove(player_t * player, int team, int num, pos3_t to, qboolean stop);
 void G_MoveCalc(int team, pos3_t from, int distance);
 qboolean G_ReactionFire(edict_t * target);
+void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction);
 
 float G_ActorVis(vec3_t from, edict_t * check, qboolean full);
 void G_ClearVisFlags(int team);

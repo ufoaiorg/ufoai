@@ -714,6 +714,7 @@ edict_t *G_GetFloorItems(edict_t * ent)
 /**
  * @brief
  * @sa event PA_INVMOVE
+ * @sa AI_ActorThink
  */
 void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction)
 {
@@ -1572,11 +1573,14 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		return;	/* never reached. need for code analyst. */
 #endif
 
-	/* hit */
-	if (stun)
-		ent->STUN += damage;
-	else
-		ent->HP -= damage > ent->HP ? ent->HP : damage;
+	if (g_nodamage != NULL && !g_nodamage->value)
+	{
+		/* hit */
+		if (stun)
+			ent->STUN += damage;
+		else
+			ent->HP -= damage > ent->HP ? ent->HP : damage;
+	}
 
 	/* check death/knockouth */
 	if (ent->HP <= 0 || ent->HP <= ent->STUN) {
@@ -2170,6 +2174,8 @@ void G_ClientReload(player_t *player, int entnum, shoot_types_t st)
 		hand = gi.csi->idRight;
 		weapon = ent->i.c[hand]->item.t;
 	}
+	else
+		return;
 
 	/* LordHavoc: Check if item is researched when in singleplayer? I don't think this is really a cheat issue as in singleplayer there is no way to inject fake client commands in the virtual network buffer, and in multiplayer everything is researched */
 
@@ -2181,6 +2187,84 @@ void G_ClientReload(player_t *player, int entnum, shoot_types_t st)
 			/* we've already found. */
 			for (ic = ent->i.c[container]; ic; ic = ic->next)
 				if ( gi.csi->ods[ic->item.t].link == weapon ) {
+					x = ic->x;
+					y = ic->y;
+					tu = gi.csi->ids[container].out;
+					bestContainer = container;
+					break;
+				}
+		}
+	}
+
+	/* send request */
+	if (bestContainer != NONE)
+		G_ClientInvMove(player, entnum, bestContainer, x, y, hand, 0, 0, qtrue);
+}
+
+/**
+ * @brief Returns true if actor can reload weapon
+ * @param[in] hand
+ * @sa AI_ActorThink
+ */
+qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st)
+{
+	edict_t *ent;
+	invList_t *ic;
+	int hand, weapon;
+	int container;
+
+	ent = g_edicts + entnum;
+
+	/* search for clips and select the one that is available easily */
+	hand = st == ST_RIGHT_RELOAD ? gi.csi->idRight : gi.csi->idLeft;
+
+	if (ent->i.c[hand]) {
+		weapon = ent->i.c[hand]->item.t;
+	} else if (hand == gi.csi->idLeft
+			   && gi.csi->ods[ent->i.c[gi.csi->idRight]->item.t].twohanded) {
+		/* Check for two-handed weapon */
+		hand = gi.csi->idRight;
+		weapon = ent->i.c[hand]->item.t;
+	}
+	else
+		return qfalse;
+
+	for (container = 0; container < gi.csi->numIDs; container++)
+		for (ic = ent->i.c[container]; ic; ic = ic->next)
+			if ( gi.csi->ods[ic->item.t].link == weapon )
+				return qtrue;
+	return qfalse;
+}
+
+/**
+ * @brief Retrieve weapon from backpack for actor
+ * @sa AI_ActorThink
+ */
+void G_ClientGetWeaponFromInventory(player_t *player, int entnum)
+{
+	edict_t *ent;
+	invList_t *ic;
+	int hand;
+	int x, y, tu;
+	int container, bestContainer;
+
+	ent = g_edicts + entnum;
+
+	/* search for weapons and select the one that is available easily */
+	x = 0;
+	y = 0;
+	tu = 100;
+	bestContainer = NONE;
+	hand = gi.csi->idRight;
+
+	for (container = 0; container < gi.csi->numIDs; container++) {
+		if (gi.csi->ids[container].out < tu) {
+			/* Once we've found at least one clip, there's no point */
+			/* searching other containers if it would take longer */
+			/* to retrieve the ammo from them than the one */
+			/* we've already found. */
+			for (ic = ent->i.c[container]; ic; ic = ic->next)
+				if ( gi.csi->ods[ic->item.t].weapon && (ic->item.a > 0 || !gi.csi->ods[ic->item.t].reload)) {
 					x = ic->x;
 					y = ic->y;
 					tu = gi.csi->ids[container].out;
@@ -2304,16 +2388,16 @@ qboolean G_ReactionFire(edict_t * target)
 				level.activeTeam = ent->team;
 
 				/* Fire the first weapon in hands if everything is ok. */
-				if ( RIGHT(ent) 
-					 && (RIGHT(ent)->item.m != NONE) 
-					 && gi.csi->ods[RIGHT(ent)->item.t].weapon 
+				if ( RIGHT(ent)
+					 && (RIGHT(ent)->item.m != NONE)
+					 && gi.csi->ods[RIGHT(ent)->item.t].weapon
 					 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
 						 || RIGHT(ent)->item.a > 0)
 					 && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
 					G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY);
 					fired = qtrue;
-				} else if ( LEFT(ent) 
-							&& (LEFT(ent)->item.m != NONE) 
+				} else if ( LEFT(ent)
+							&& (LEFT(ent)->item.m != NONE)
 							&& gi.csi->ods[LEFT(ent)->item.t].weapon
 							&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 								|| LEFT(ent)->item.a > 0)
