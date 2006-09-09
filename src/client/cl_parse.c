@@ -556,14 +556,17 @@ void CL_EntPerish( sizebuf_t *sb )
 
 	if ( le->type == ET_ITEM ) {
 		le_t *actor;
-
+		int i;
+		
 		Com_EmptyContainer(&le->i, csi.idFloor);
 
-		actor = LE_Find( ET_ACTOR, le->pos );
-		if ( !actor )
-			actor = LE_Find( ET_UGV, le->pos );
-		if ( actor )
-			FLOOR(actor) = NULL;
+		/* search owners (there can be many, some of them dead) */
+		for (i = 0, actor = LEs; i < numLEs; i++, actor++)
+			if ( actor->inuse 
+				 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
+				 && VectorCompare(actor->pos, le->pos) ) {
+				FLOOR(actor) = NULL;
+			}
 	} else {
 		Com_DestroyInventory(&le->i);
 	}
@@ -794,20 +797,19 @@ void CL_PlaceItem( le_t *le )
 {
 	le_t *actor;
 	int	biggest;
+	int i;
 
-	/* search an owner */
-	actor = LE_Find( ET_ACTOR, le->pos );
-	if ( !actor )
-		actor = LE_Find( ET_UGV, le->pos );
-	if ( actor ) {
-
+	/* search owners (there can be many, some of them dead) */
+	for (i = 0, actor = LEs; i < numLEs; i++, actor++)
+		if ( actor->inuse 
+			 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
+			 && VectorCompare(actor->pos, le->pos) ) {
 #if PARANOID
-		Com_Printf("CL_PlaceItem: shared container: '%p'\n", le->i.c[csi.idFloor] );
+		Com_Printf("CL_PlaceItem: shared container: '%p'\n", FLOOR(le));
 #endif
-
 		FLOOR(actor) = FLOOR(le);
-
-	}
+		}
+	
 	if (FLOOR(le)) {
 		biggest = CL_BiggestItem(FLOOR(le));
 		le->model1 = cl.model_weapons[biggest];

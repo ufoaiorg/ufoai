@@ -1775,14 +1775,11 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 						if (floor == &g_edicts[globals.num_edicts]) {
 							floor = G_SpawnFloor(drop);
 
-							for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++) {
-								if (actor->inuse
-									&& (actor->type == ET_ACTOR || actor->type == ET_UGV)
-									&& VectorCompare(drop, actor->pos))
-									break;
-							}
-							if (actor != &g_edicts[globals.num_edicts])
-								FLOOR(actor) = FLOOR(floor);
+							for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
+								if ( actor->inuse
+									 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
+									 && VectorCompare(drop, actor->pos) )
+									FLOOR(actor) = FLOOR(floor);
 						} else {
 							gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
 							gi.WriteShort(floor->number);
@@ -1969,14 +1966,11 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		if (floor == &g_edicts[globals.num_edicts]) {
 			floor = G_SpawnFloor(drop);
 
-			for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++) {
-				if (actor->inuse
-					&& (actor->type == ET_ACTOR || actor->type == ET_UGV)
-					&& VectorCompare(drop, actor->pos))
-					break;
-			}
-			if (actor != &g_edicts[globals.num_edicts])
-				FLOOR(actor) = FLOOR(floor);
+			for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
+				if ( actor->inuse
+					 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
+					 && VectorCompare(drop, actor->pos) )
+					FLOOR(actor) = FLOOR(floor);
 		} else {
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
 			gi.WriteShort(floor->number);
