@@ -2311,6 +2311,13 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 	if (!Com_RemoveFromInventory(i, from, fx, fy))
 		return IA_NONE;
 
+	/* if non-armor moved to an armor slot then */
+	/* move item back to source location and break */
+	if (CSI->ids[to].armor && Q_strcmp(CSI->ods[cacheItem.t].type, "armor")) {
+		Com_AddToInventory(i, cacheItem, from, fx, fy);
+		return IA_NONE;
+	}
+
 	/*check if the target is a blocked inv-armor and source!=dest */
 	if (CSI->ids[to].armor && from != to && !Com_CheckToInventory(i, cacheItem.t, to, tx, ty)) {
 		item_t cacheItem2;
