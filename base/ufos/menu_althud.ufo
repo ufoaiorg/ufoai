@@ -680,6 +680,15 @@ menu althud
 		align	uc
 	}
 
+	bar morale0
+	{
+		pos		"907 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale0"
+		max		"*cvar mn_moralemax0"
+		align	cc
+	}
 	bar health0
 	{
 		pos		"913 753"
@@ -696,6 +705,15 @@ menu althud
 		color	".2 .2 1 1"
 		current	"*cvar mn_tu0"
 		max		"*cvar mn_tumax0"
+		align	cc
+	}
+	bar morale1
+	{
+		pos		"827 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale1"
+		max		"*cvar mn_moralemax1"
 		align	cc
 	}
 	bar health1
@@ -716,6 +734,15 @@ menu althud
 		max		"*cvar mn_tumax1"
 		align	cc
 	}
+	bar morale2
+	{
+		pos		"747 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale2"
+		max		"*cvar mn_moralemax2"
+		align	cc
+	}
 	bar health2
 	{
 		pos		"753 753"
@@ -732,6 +759,15 @@ menu althud
 		color	".2 .2 1 1"
 		current	"*cvar mn_tu2"
 		max		"*cvar mn_tumax2"
+		align	cc
+	}
+	bar morale3
+	{
+		pos		"667 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale3"
+		max		"*cvar mn_moralemax3"
 		align	cc
 	}
 	bar health3
@@ -752,6 +788,15 @@ menu althud
 		max		"*cvar mn_tumax3"
 		align	cc
 	}
+	bar morale4
+	{
+		pos		"587 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale4"
+		max		"*cvar mn_moralemax4"
+		align	cc
+	}
 	bar health4
 	{
 		pos		"593 753"
@@ -768,6 +813,15 @@ menu althud
 		color	".2 .2 1 1"
 		current	"*cvar mn_tu4"
 		max		"*cvar mn_tumax4"
+		align	cc
+	}
+	bar morale5
+	{
+		pos		"507 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale5"
+		max		"*cvar mn_moralemax5"
 		align	cc
 	}
 	bar health5
@@ -788,6 +842,15 @@ menu althud
 		max		"*cvar mn_tumax5"
 		align	cc
 	}
+	bar morale6
+	{
+		pos		"427 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale6"
+		max		"*cvar mn_moralemax6"
+		align	cc
+	}
 	bar health6
 	{
 		pos		"433 753"
@@ -804,6 +867,15 @@ menu althud
 		color	".2 .2 1 1"
 		current	"*cvar mn_tu6"
 		max		"*cvar mn_tumax6"
+		align	cc
+	}
+	bar morale7
+	{
+		pos		"347 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale7"
+		max		"*cvar mn_moralemax7"
 		align	cc
 	}
 	bar health7
