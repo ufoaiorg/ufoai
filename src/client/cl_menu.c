@@ -1463,7 +1463,7 @@ void MN_DrawMenus(void)
 						node->texl[0] = -(int) (0.01 * (node->name[4] - 'a') * cl.time) % 64;
 						node->texh[0] = node->texl[0] + node->size[0];
 					}
-					if (*ref)
+					if (ref)
 						re.DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
 								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
 					break;

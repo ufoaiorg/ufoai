@@ -1374,27 +1374,20 @@ char* CL_ToDifficultyName(int difficulty)
 	switch (difficulty) {
 	case -4:
 		return _("Chicken-hearted");
-		break;
 	case -3:
 		return _("Very Easy");
-		break;
 	case -2:
 	case -1:
 		return _("Easy");
-		break;
 	case 0:
 		return _("Normal");
-		break;
 	case 1:
 	case 2:
 		return _("Hard");
-		break;
 	case 3:
 		return _("Very Hard");
-		break;
 	case 4:
 		return _("Insane");
-		break;
 	default:
 		Sys_Error("Unknown difficulty id %i\n", difficulty);
 		break;
