@@ -43,9 +43,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 float scr_con_current;			/* aproaches scr_conlines at scr_conspeed */
 float scr_conlines;				/* 0.0 to 1.0 lines of console to display */
 
-qboolean scr_initialized;		/* ready to draw */
+static qboolean scr_initialized;/* ready to draw */
 
-int scr_draw_loading;
+static int scr_draw_loading;
 
 vrect_t scr_vrect;				/* position of render window on screen */
 
@@ -347,7 +347,7 @@ void SCR_DrawNet(void)
  */
 void SCR_DrawPause(void)
 {
-	int w, h;
+	int w = 0, h = 0;
 
 	/* turn off for screenshots */
 	if (!scr_showpause->value)
@@ -365,7 +365,7 @@ void SCR_DrawPause(void)
  */
 void SCR_DrawLoading(void)
 {
-	int w, h;
+	int w = 0, h = 0;
 
 	if (!scr_draw_loading)
 		return;

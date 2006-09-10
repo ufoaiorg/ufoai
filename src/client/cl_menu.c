@@ -1913,7 +1913,7 @@ static void MN_DeleteMenu(menu_t * menu)
  */
 menu_t* MN_ActiveMenu(void)
 {
-	if (menuStack >= 0)
+	if (menuStackPos >= 0)
 		return menuStack[menuStackPos-1];
 
 	return NULL;

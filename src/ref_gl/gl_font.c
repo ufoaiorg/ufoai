@@ -535,13 +535,12 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 			if (box_height > 0 && *cur_line >= box_height)
 				/* Due to scrolling this line and the following are not visible */
 				break;
-			
 			if (*cur_line < scroll_pos) {
 				/* Due to scrolling this line is not visible. See if (!skipline)" code below.*/
 				skipline = qtrue;
 			}
 		}
-		
+
 		/* TTF does not like empty strings... */
 		if (!strlen(buffer))
 			return returnHeight / vid.ry;
@@ -584,7 +583,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 			}
 		}
 
-		if (!skipline)	{
+		if (!skipline && strlen(buffer))	{
 			/* This will cut down the string to 160 chars */
 			/* NOTE: There can be a non critical overflow in Com_sprintf */
 			Com_sprintf(searchString, MAX_FONTNAME + MAX_HASH_STRING, "%s%s", fontID, buffer);
@@ -594,7 +593,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 				cache = Font_GenerateCache(buffer, searchString, f);
 
 			if (!cache)
-				ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n");
+				ri.Sys_Error(ERR_FATAL, "...could not generate font surface '%s'\n", buffer);
 
 			Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
 		}
