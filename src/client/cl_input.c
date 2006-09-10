@@ -893,10 +893,13 @@ void CL_CameraMoveRemote(void)
 
 	cl.cam.omega[ROLL] = 0;
 	VectorMA(cl.cam.angles, cls.frametime, cl.cam.omega, cl.cam.angles);
+
+	/* clamp pitch ceiling to prevent apparent mouse inversion */
+	/* clamp pitch floor to prevent difficulty positioning cursor */
 	if (cl.cam.angles[PITCH] > 90.0)
 		cl.cam.angles[PITCH] = 90.0;
-	if (cl.cam.angles[PITCH] < 20.0)
-		cl.cam.angles[PITCH] = 20.0;
+	if (cl.cam.angles[PITCH] < 35.0)
+		cl.cam.angles[PITCH] = 35.0;
 
 	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
 
