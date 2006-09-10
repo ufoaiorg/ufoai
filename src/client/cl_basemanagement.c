@@ -1326,49 +1326,109 @@ void B_SelectBase(void)
 	Cvar_Set("mn_base_title", baseCurrent->name);
 }
 
-#define MAX_SWAPS_SKILL 5000
 #undef RIGHT
 #undef HOLSTER
 #define RIGHT(e) ((e)->inv->c[csi.idRight])
 #define HOLSTER(e) ((e)->inv->c[csi.idHolster])
-
+#define MAX(_abc,_bca) (((_abc)>(_bca))?_abc:_bca)
+#define MIN(_abc,_bca) (((_abc)<(_bca))?_abc:_bca)
 /**
  * @brief Swaps skills of the initial team of soldiers so that they match inventories
  */
 static void CL_SwapSkills(character_t *team[], int num)
 {
-	int skill, no1, no2, tmp, swaps = 0;
+	int i1, i2, skill, no1, no2, tmp1, tmp2;
 	character_t *cp1, *cp2;
 
-	swaps = MAX_SWAPS_SKILL;
-	while (swaps--) {
-		cp1 = team[rand() % num];
-		cp2 = team[rand() % num];
-		if (cp1 == cp2)
-			continue;
-		skill = (ABILITY_NUM_TYPES 
-				 + rand() % (SKILL_NUM_TYPES - ABILITY_NUM_TYPES));
+	for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++) {
+		for (i1 = 0; i1 < num - 1; i1++) {
+			cp1 = team[i1];
 
-		/* disregard left hand --- dual-wielding guys would be too good */
-		no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[FD_PRIMARY].weaponSkill)
-			+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[FD_SECONDARY].weaponSkill)
-			+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
-			   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[FD_PRIMARY].weaponSkill)
-			+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
-			   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[FD_SECONDARY].weaponSkill);
+			/* disregard left hand, or dual-wielding guys are too good */
+			no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[FD_PRIMARY].weaponSkill)
+				+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[FD_SECONDARY].weaponSkill)
+				+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
+				   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[FD_PRIMARY].weaponSkill)
+				+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
+				   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[FD_SECONDARY].weaponSkill);
 
-		no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[FD_PRIMARY].weaponSkill)
-			+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[FD_SECONDARY].weaponSkill)
-			+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
-			   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[FD_PRIMARY].weaponSkill)
-			+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
-			   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[FD_SECONDARY].weaponSkill);
+			for (i2 = i1 + 1 ; i2 < num; i2++) {
+				cp2 = team[i2];
 
-		if ( (no1 > no2 && cp1->skills[skill] < cp2->skills[skill])
-			 || (no1 < no2 && cp1->skills[skill] > cp2->skills[skill]) ) {
-			tmp = cp1->skills[skill];
-			cp1->skills[skill] = cp2->skills[skill];
-			cp2->skills[skill] = tmp;
+				no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[FD_PRIMARY].weaponSkill)
+					+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[FD_SECONDARY].weaponSkill)
+					+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
+					   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[FD_PRIMARY].weaponSkill)
+					+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
+					   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[FD_SECONDARY].weaponSkill);
+				
+				if ( no1 > no2 /* more use of this skill */
+					 || (no1 && no1 == no2)) { /* or earlier on the list */
+					tmp1 = cp1->skills[skill];
+					tmp2 = cp2->skills[skill];
+					cp1->skills[skill] = MAX (tmp1, tmp2);
+					cp2->skills[skill] = MIN (tmp1, tmp2);
+
+					switch (skill) {
+					case SKILL_CLOSE:
+						tmp1 = cp1->skills[ABILITY_SPEED];
+						tmp2 = cp2->skills[ABILITY_SPEED];
+						cp1->skills[ABILITY_SPEED] = MAX (tmp1, tmp2);
+						cp2->skills[ABILITY_SPEED] = MIN (tmp1, tmp2);
+						break;
+					case SKILL_HEAVY:
+						tmp1 = cp1->skills[ABILITY_POWER];
+						tmp2 = cp2->skills[ABILITY_POWER];
+						cp1->skills[ABILITY_POWER] = MAX (tmp1, tmp2);
+						cp2->skills[ABILITY_POWER] = MIN (tmp1, tmp2);
+						break;
+					case SKILL_SNIPER:
+						tmp1 = cp1->skills[ABILITY_ACCURACY];
+						tmp2 = cp2->skills[ABILITY_ACCURACY];
+						cp1->skills[ABILITY_ACCURACY] = MAX (tmp1, tmp2);
+						cp2->skills[ABILITY_ACCURACY] = MIN (tmp1, tmp2);
+						break;
+					case SKILL_EXPLOSIVE:
+						tmp1 = cp1->skills[ABILITY_MIND];
+						tmp2 = cp2->skills[ABILITY_MIND];
+						cp1->skills[ABILITY_MIND] = MAX (tmp1, tmp2);
+						cp2->skills[ABILITY_MIND] = MIN (tmp1, tmp2);
+						break;
+					}
+				} else if ( no1 < no2) {
+					tmp1 = cp1->skills[skill];
+					tmp2 = cp2->skills[skill];
+					cp2->skills[skill] = MAX (tmp1, tmp2);
+					cp1->skills[skill] = MIN (tmp1, tmp2);
+
+					switch (skill) {
+					case SKILL_CLOSE:
+						tmp1 = cp1->skills[ABILITY_SPEED];
+						tmp2 = cp2->skills[ABILITY_SPEED];
+						cp2->skills[ABILITY_SPEED] = MAX (tmp1, tmp2);
+						cp1->skills[ABILITY_SPEED] = MIN (tmp1, tmp2);
+						break;
+					case SKILL_HEAVY:
+						tmp1 = cp1->skills[ABILITY_POWER];
+						tmp2 = cp2->skills[ABILITY_POWER];
+						cp2->skills[ABILITY_POWER] = MAX (tmp1, tmp2);
+						cp1->skills[ABILITY_POWER] = MIN (tmp1, tmp2);
+						break;
+					case SKILL_SNIPER:
+						tmp1 = cp1->skills[ABILITY_ACCURACY];
+						tmp2 = cp2->skills[ABILITY_ACCURACY];
+						cp2->skills[ABILITY_ACCURACY] = MAX (tmp1, tmp2);
+						cp1->skills[ABILITY_ACCURACY] = MIN (tmp1, tmp2);
+						break;
+					case SKILL_EXPLOSIVE:
+						tmp1 = cp1->skills[ABILITY_MIND];
+						tmp2 = cp2->skills[ABILITY_MIND];
+						cp2->skills[ABILITY_MIND] = MAX (tmp1, tmp2);
+						cp1->skills[ABILITY_MIND] = MIN (tmp1, tmp2);
+						break;
+					}
+				}
+			}
 		}
 	}
 }
