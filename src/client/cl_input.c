@@ -895,8 +895,8 @@ void CL_CameraMoveRemote(void)
 	VectorMA(cl.cam.angles, cls.frametime, cl.cam.omega, cl.cam.angles);
 	if (cl.cam.angles[PITCH] > 90.0)
 		cl.cam.angles[PITCH] = 90.0;
-	if (cl.cam.angles[PITCH] < 50.0)
-		cl.cam.angles[PITCH] = 50.0;
+	if (cl.cam.angles[PITCH] < 20.0)
+		cl.cam.angles[PITCH] = 20.0;
 
 	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
 
