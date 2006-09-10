@@ -572,7 +572,6 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 		/* This will cut down the string to 160 chars */
 		/* NOTE: There can be a non critical overflow in Com_sprintf */
 		Com_sprintf(searchString, MAX_FONTNAME + MAX_HASH_STRING, "%s%s", fontID, buffer);
-
 		cache = Font_GetFromCache(searchString);
 		if (!cache)
 			cache = Font_GenerateCache(buffer, searchString, f);
