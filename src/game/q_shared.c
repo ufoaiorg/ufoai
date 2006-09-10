@@ -2549,7 +2549,7 @@ CHARACTER GENERATION AND HANDLING
 ==============================================================================
 */
 
-#define AKIMBO_CHANCE		0.2
+#define AKIMBO_CHANCE		0.3
 #define WEAPONLESS_BONUS	0.4
 #define PROB_COMPENSATION   3.0
 
