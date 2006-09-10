@@ -591,6 +591,8 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 		}
 	}
 
+	/* TODO: do CL_SwapSkills for aliens and civilians, too */
+
 	/* show visible actors */
 	G_ClearVisFlags(team);
 	G_CheckVis(NULL, qfalse);
