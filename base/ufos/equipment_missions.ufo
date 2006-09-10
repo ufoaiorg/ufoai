@@ -285,19 +285,19 @@ equipment human_phalanx_initial
 {
 	assault				14
 	assault_ammo		17
-	sniper				16
-	sniper_ammo			19
+	sniper				18
+	sniper_ammo			20
 	pistol				25
 	pistol_ammo			61
 	smg 				23
 	smg_ammo			55
 	shotgun				27
 	shotgun_ammo		55
-	flamer				8
-	flamer_ammo			9
-	rpg				    6
-	rpg_ammo			21
-	fraggrenade			100
+	flamer				9
+	flamer_ammo			11
+	rpg				    7
+	rpg_ammo			23
+	fraggrenade			70
 	knife				23
 	light	    		17
 }
@@ -377,40 +377,40 @@ equipment human_army
 
 equipment multiplayer_initial
 {
-	assault				5
+	assault				10
 	assault_ammo		13
-	sniper				5
+	sniper				12
 	sniper_ammo			13
-	pistol				10
+	pistol				8
 	pistol_ammo			25
 	smg				    10
 	smg_ammo			25
 	shotgun				10
 	shotgun_ammo		25
-	flamer				5
+	flamer				9
 	flamer_ammo			13
-	rpg				    5
+	rpg				    9
 	rpg_ammo			13
 //	rpg_incendiary_ammo	13
 	rpg_tachyon_ammo	13
-	grenl				5
+	grenl				10
 	grenl_ammo			23
 	grenl_plasma_ammo	13
-	bolterrifle			5
+	bolterrifle			8
 	bolterrifle_ammo	13
 	laserpistol			10
 	laserpistol_ammo	25
-	laserrifle			5
+	laserrifle			7
 	laserrifle_ammo		13
-//	heavylaser			5
+//	heavylaser			6
 //	heavylaser_ammo		13
 	plaspistol			10
 	plaspistol_ammo		25
-	plasrifle			5
+	plasrifle			6
 	plasrifle_ammo		13
 	plasblaster			5
 	plasblaster_ammo	13
-	tachyonpistol		10
+	tachyonpistol		8
 	tachyonpistol_ammo	25
 	tachyonrifle		5
 	tachyonrifle_ammo	13

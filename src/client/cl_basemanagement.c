@@ -1326,6 +1326,53 @@ void B_SelectBase(void)
 	Cvar_Set("mn_base_title", baseCurrent->name);
 }
 
+#define MAX_SWAPS_SKILL 5000
+#undef RIGHT
+#undef HOLSTER
+#define RIGHT(e) ((e)->inv->c[csi.idRight])
+#define HOLSTER(e) ((e)->inv->c[csi.idHolster])
+
+/**
+ * @brief Swaps skills of the initial team of soldiers so that they match inventories
+ */
+static void CL_SwapSkills(character_t *team[], int num)
+{
+	int skill, no1, no2, tmp, swaps = 0;
+	character_t *cp1, *cp2;
+
+	swaps = MAX_SWAPS_SKILL;
+	while (swaps--) {
+		cp1 = team[rand() % num];
+		cp2 = team[rand() % num];
+		if (cp1 == cp2)
+			continue;
+		skill = (ABILITY_NUM_TYPES 
+				 + rand() % (SKILL_NUM_TYPES - ABILITY_NUM_TYPES));
+
+		/* disregard left hand --- dual-wielding guys would be too good */
+		no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[FD_PRIMARY].weaponSkill)
+			+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[FD_SECONDARY].weaponSkill)
+			+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
+			   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[FD_PRIMARY].weaponSkill)
+			+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
+			   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[FD_SECONDARY].weaponSkill);
+
+		no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[FD_PRIMARY].weaponSkill)
+			+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[FD_SECONDARY].weaponSkill)
+			+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
+			   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[FD_PRIMARY].weaponSkill)
+			+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
+			   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[FD_SECONDARY].weaponSkill);
+
+		if ( (no1 > no2 && cp1->skills[skill] < cp2->skills[skill])
+			 || (no1 < no2 && cp1->skills[skill] > cp2->skills[skill]) ) {
+			tmp = cp1->skills[skill];
+			cp1->skills[skill] = cp2->skills[skill];
+			cp2->skills[skill] = tmp;
+		}
+	}
+}
+
 /**
  * @brief Assigns initial team of soldiers with equipment to aircraft
  */
@@ -1380,6 +1427,7 @@ static void B_PackInitialEquipment_f(void)
 			Com_EquipActor(cp->inv, ed->num, name);
 		}
 		CL_AddCarriedToEq(&baseCurrent->storage);
+		CL_SwapSkills(baseCurrent->curTeam, baseCurrent->teamNum[baseCurrent->aircraftCurrent]);
 
 		/* pay for the initial equipment */
 		for (i = 0; i < csi.numODs; i++)
