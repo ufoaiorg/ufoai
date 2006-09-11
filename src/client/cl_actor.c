@@ -1195,7 +1195,8 @@ void CL_ActorDoThrow(sizebuf_t * sb)
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime);
 
 	/* start the sound */
-	if ((!fd->soundOnce || firstShot) && fd->fireSound[0])
+	if ((!fd->soundOnce || firstShot) && fd->fireSound[0]
+		&& !(flags & SF_BOUNCED))
 		S_StartLocalSound(fd->fireSound);
 	firstShot = qfalse;
 }

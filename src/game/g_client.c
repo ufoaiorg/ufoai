@@ -1680,6 +1680,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 	trace_t tr;
 	int bounce;
 	int i, mask;
+	byte flags;
 
 	/* get positional data */
 	VectorCopy(from, last);
@@ -1713,6 +1714,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 	time = 0;
 	dt = 0;
 	bounce = 0;
+	flags = SF_BOUNCING;
 	mask = ent->visflags;
 	while (qtrue) {
 		/* kinematics */
@@ -1797,9 +1799,10 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
 			gi.WriteShort(dt * 1000);
 			gi.WriteByte(type);
-			gi.WriteByte(SF_BOUNCING);
+			gi.WriteByte(flags);
 			gi.WritePos(last);
 			gi.WritePos(startV);
+			flags |= SF_BOUNCED;
 
 			/* bounce */
 			VectorScale(curV, fd->bounceFac, curV);
@@ -1940,7 +1943,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		VectorScale(tr.plane.normal, -DotProduct(tr.plane.normal, dir), temp);
 		VectorAdd(temp, dir, dir);
 		VectorAdd(temp, dir, dir);
-		flags = SF_BOUNCED;
+		flags |= SF_BOUNCED;
 	}
 	while (1);
 
