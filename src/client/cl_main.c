@@ -1168,6 +1168,8 @@ void CL_InitLocal(void)
 	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "750", 0, NULL);
 	cl_cammoveaccel = Cvar_Get("cl_cammoveaccel", "1250", 0, NULL);
 	cl_camyawspeed = Cvar_Get("cl_camyawspeed", "160", 0, NULL);
+	cl_campitchmax = Cvar_Get("cl_campitchmax", "90", 0, "Max camera pitch - over 90 presents apparent mouse inversion");
+	cl_campitchmin = Cvar_Get("cl_campitchmin", "35", 0, "Min camera pitch - under 35 presents difficulty positioning cursor");
 	cl_campitchspeed = Cvar_Get("cl_campitchspeed", "0.5", 0, NULL);
 	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.25", 0, NULL);
 	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, NULL);

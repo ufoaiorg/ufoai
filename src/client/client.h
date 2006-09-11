@@ -266,6 +266,8 @@ extern cvar_t *cl_camrotaccel;
 extern cvar_t *cl_cammovespeed;
 extern cvar_t *cl_cammoveaccel;
 extern cvar_t *cl_camyawspeed;
+extern cvar_t *cl_campitchmax;
+extern cvar_t *cl_campitchmin;
 extern cvar_t *cl_campitchspeed;
 extern cvar_t *cl_camzoomquant;
 

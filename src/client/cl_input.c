@@ -366,6 +366,8 @@ cvar_t *cl_camrotaccel;
 cvar_t *cl_cammovespeed;
 cvar_t *cl_cammoveaccel;
 cvar_t *cl_camyawspeed;
+cvar_t *cl_campitchmax;
+cvar_t *cl_campitchmin;
 cvar_t *cl_campitchspeed;
 cvar_t *cl_camzoomquant;
 
@@ -894,12 +896,10 @@ void CL_CameraMoveRemote(void)
 	cl.cam.omega[ROLL] = 0;
 	VectorMA(cl.cam.angles, cls.frametime, cl.cam.omega, cl.cam.angles);
 
-	/* clamp pitch ceiling to prevent apparent mouse inversion */
-	/* clamp pitch floor to prevent difficulty positioning cursor */
-	if (cl.cam.angles[PITCH] > 90.0)
-		cl.cam.angles[PITCH] = 90.0;
-	if (cl.cam.angles[PITCH] < 35.0)
-		cl.cam.angles[PITCH] = 35.0;
+	if (cl.cam.angles[PITCH] > cl_campitchmax->value)
+		cl.cam.angles[PITCH] = cl_campitchmax->value;
+	if (cl.cam.angles[PITCH] < cl_campitchmin->value)
+		cl.cam.angles[PITCH] = cl_campitchmin->value;
 
 	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
 

@@ -1624,7 +1624,7 @@ void MN_DrawMenus(void)
 							/* maybe due to scrolling this line is not visible */
 							if (node->textLines > node->textScroll) {
 								char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
-								MN_TimestampedText(&text, sizeof(text), message);
+								MN_TimestampedText(text, sizeof(text), message);
 								re.FontLength(font, text, &width, &height);
 								if (!width)
 									break;
