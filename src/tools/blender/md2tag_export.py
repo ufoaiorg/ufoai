@@ -526,7 +526,8 @@ def save_md2_tags(filename):
 
 	# Cleanup
 	md2_tags=0
-
+	
+	Blender.Window.DrawProgressBar(1.0,"MD2 TAG Export")
 	print "Closed the file"
 
 ######################################################
@@ -546,8 +547,8 @@ def load_md2_tags(filename):
 	md2_tags=md2_tags_obj()	# Blank md2 object to load to.
 
 	print "Opening the file ..."
+	Blender.Window.DrawProgressBar(0.1, "Loading from Disk")
 	file_import=open(filename,"rb")
-	Blender.Window.DrawProgressBar(1.0, "Loading from Disk")
 	md2_tags.load(file_import)
 	file_import.close()
 	print "Closed the file."
@@ -558,7 +559,11 @@ def load_md2_tags(filename):
 	# Get current Scene.
 	scene = Scene.getCurrent()
 
-	# TODO: better progress indicator (DrawProgressBar)
+	Blender.Window.DrawProgressBar(0.2, "Reading md2 tag data")
+	
+	progress=0.3
+	progressIncrement=0.6 / (md2_tags.num_frames * md2_tags.num_tags)
+	
 	for tag in range(0,md2_tags.num_tags):
 		# Get name & frame-data of current tag.
 		tag_name = md2_tags.names[tag]
@@ -568,9 +573,15 @@ def load_md2_tags(filename):
 		object = Object.New('Empty')
 		object.setName(tag_name.name)
 
+		# Activate name-visibility for this object.
+		object.setDrawMode(object.getDrawMode() | 8)   # 8="drawname"
+
 		# Link Object to current Scene
 		scene.link(object)
+
 		for frame_counter in range(0,md2_tags.num_frames):
+			progress+=progressIncrement
+			Blender.Window.DrawProgressBar(progress, "Calculating Frame "+str(frame_counter)+" | "+tag_name.name)
 			#set blender to the correct frame (so the objects' data will be set in this frame)
 			Blender.Set("curframe", frame_counter+1)
 
@@ -590,6 +601,7 @@ def load_md2_tags(filename):
 			# Insert keyframe for current frame&object.
 			object.insertIpoKey(LOCROTSIZE)
 
+	Blender.Window.DrawProgressBar(1.0, "MD2 TAG Import")
 	Blender.Set("curframe", 1)
 	Blender.Window.RedrawAll()
 
