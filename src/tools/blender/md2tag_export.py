@@ -266,6 +266,7 @@ class md2_tag:
 	def getSize(self):
 		return struct.calcsize(self.binary_format)
 	def save(self, file):
+		# Prepare temp data for export with transformed axes.
 		temp_data=(
 		-self.Row1[1], self.Row1[0], self.Row1[2],
 		-self.Row2[1], self.Row2[0], self.Row2[2],
@@ -273,31 +274,56 @@ class md2_tag:
 		-self.Row4[1], self.Row4[0], self.Row4[2]
 		)
 
+		# Apply scale to tempdata if it was set in the dialog.
+		if (g_scale.val != 1.0):
+			temp_data=(
+			temp_data[0]*g_scale.val, temp_data[1]*g_scale.val, temp_data[2]*g_scale.val,
+			temp_data[3]*g_scale.val, temp_data[4]*g_scale.val, temp_data[5]*g_scale.val,
+			temp_data[6]*g_scale.val, temp_data[7]*g_scale.val, temp_data[8]*g_scale.val,
+			temp_data[9]*g_scale.val, temp_data[10]*g_scale.val, temp_data[11]*g_scale.val
+			)
+
+		# Prepare serialised data for writing.
 		data=struct.pack(self.binary_format,
 			temp_data[0], temp_data[1], temp_data[2],
 			temp_data[3], temp_data[4], temp_data[5],
 			temp_data[6], temp_data[7], temp_data[8],
 			temp_data[9], temp_data[10], temp_data[11])
+			
+		# Write it
 		file.write(data)
-	def load(self, file):
-		temp_data = file.read(self.getSize())
-		data=struct.unpack(self.binary_format, temp_data)
-		self.Row1 = (data[0], data[1], data[2])
-		self.Row2 = (data[3], data[4], data[5])
-		self.Row3 = (data[6], data[7], data[8])
-		self.Row4 = (data[9], data[10], data[11])
-		
-		self.Row1 = (self.Row1[1], -self.Row1[0], self.Row1[2]) 
-		self.Row2 = (self.Row2[1], -self.Row2[0], self.Row2[2]) 
-		self.Row3 = (self.Row3[1], -self.Row3[0], self.Row3[2]) 
-		self.Row4 = (self.Row4[1], -self.Row4[0], self.Row4[2]) 
 
+	def load(self, file):
+		# Read data from file with the defined size.
+		temp_data = file.read(self.getSize())
+		
+		# De-serialize the data.
+		data=struct.unpack(self.binary_format, temp_data)
+		
+		# Set the internal data-struct to the sata from the file.
+		#self.Row1 = (data[0], data[1], data[2])
+		#self.Row2 = (data[3], data[4], data[5])
+		#self.Row3 = (data[6], data[7], data[8])
+		#self.Row4 = (data[9], data[10], data[11])
+		self.Row1 = (data[1], -data[0], data[2])
+		self.Row2 = (data[4], -data[3], data[5])
+		self.Row3 = (data[7], -data[6], data[8])
+		self.Row4 = (data[10], -data[9], data[11])
+		
+		# Convert the orientation of the axes to the blender format.
+		#self.Row1 = (self.Row1[1], -self.Row1[0], self.Row1[2]) 
+		#self.Row2 = (self.Row2[1], -self.Row2[0], self.Row2[2]) 
+		#self.Row3 = (self.Row3[1], -self.Row3[0], self.Row3[2]) 
+		#self.Row4 = (self.Row4[1], -self.Row4[0], self.Row4[2]) 
+
+		# Apply scale to imported data if it was set in the dialog.
 		if (g_scale.val != 1.0):
 			self.Row1 = ( self.Row1[0]* g_scale.val, self.Row1[1]* g_scale.val, self.Row1[2]* g_scale.val)
 			self.Row2 = ( self.Row2[0]* g_scale.val, self.Row2[1]* g_scale.val, self.Row2[2]* g_scale.val)
 			self.Row3 = ( self.Row3[0]* g_scale.val, self.Row3[1]* g_scale.val, self.Row3[2]* g_scale.val)
 			self.Row4 = ( self.Row4[0]* g_scale.val, self.Row4[1]* g_scale.val, self.Row4[2]* g_scale.val)
 		return self
+
 	def dump(self):
 		print "MD2 Point Structure"
 		print "Row1: ", self.Row1[0], " ",self.Row1[1] , " ",self.Row1[2]
@@ -452,13 +478,6 @@ def fill_md2_tags(md2_tags, object):
 		tag_frames[frame_counter].Row2 = apply_transform((1.0,0.0,0.0), matrix) #calculate point (loc + local-X * 1 )
 		tag_frames[frame_counter].Row3 = apply_transform((0.0,1.0,0.0), matrix) #calculate point (loc + local-Y * 1 )
 		tag_frames[frame_counter].Row4 = apply_transform((0.0,0.0,1.0), matrix) #calculate point (loc + local-Z * 1 )
-		
-		# Apply scale if it was set in the dialog
-		if (g_scale.val != 1.0):
-			tag_frames[frame_counter].Row1 = ( tag_frames[frame_counter].Row1[0]* g_scale.val, tag_frames[frame_counter].Row1[1]* g_scale.val, tag_frames[frame_counter].Row1[2]* g_scale.val)
-			tag_frames[frame_counter].Row2 = ( tag_frames[frame_counter].Row2[0]* g_scale.val, tag_frames[frame_counter].Row2[1]* g_scale.val, tag_frames[frame_counter].Row2[2]* g_scale.val)
-			tag_frames[frame_counter].Row3 = ( tag_frames[frame_counter].Row3[0]* g_scale.val, tag_frames[frame_counter].Row3[1]* g_scale.val, tag_frames[frame_counter].Row3[2]* g_scale.val)
-			tag_frames[frame_counter].Row4 = ( tag_frames[frame_counter].Row4[0]* g_scale.val, tag_frames[frame_counter].Row4[1]* g_scale.val, tag_frames[frame_counter].Row4[2]* g_scale.val)
 
 	Blender.Set("curframe", 1)
 	md2_tags.tags.append(tag_frames)
