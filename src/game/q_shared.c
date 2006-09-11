@@ -1868,11 +1868,12 @@ int Q_strcasecmp(char *s1, char *s2)
 /**
  * @brief
  * @param
+ * @return false if overflowed - true otherwise
  * @sa
  */
-void Com_sprintf(char *dest, size_t size, char *fmt, ...)
+qboolean Com_sprintf(char *dest, size_t size, char *fmt, ...)
 {
-	int len;
+	size_t len;
 	va_list argptr;
 	static char bigbuffer[0x10000];
 
@@ -1883,11 +1884,14 @@ void Com_sprintf(char *dest, size_t size, char *fmt, ...)
 	len = vsprintf(bigbuffer, fmt, argptr);
 #endif
 	va_end(argptr);
+	if (len >= size) {
 #ifdef PARANOID
-	if (len >= size)
-		Com_Printf("Com_sprintf: overflow of %i in %Zu\n", len, size);
+		Com_Printf("Com_sprintf: overflow of %Zu in %Zu\n", len, size);
 #endif
+		return qfalse;
+	}
 	Q_strncpyz(dest, bigbuffer, size);
+	return qtrue;
 }
 
 /*
@@ -2703,7 +2707,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 	/* sidearms (secondary weapons with reload) */
 	if (!has_weapon)
 		repeat = WEAPONLESS_BONUS > frand ();
-	else 
+	else
 		repeat = 0;
 	do {
 		max_price = primary ? INT_MAX : 0;
@@ -2714,7 +2718,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			max_price = primary ? 0 : INT_MAX;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = CSI->ods[i];
-				if ( equip[i] && obj.weapon 
+				if ( equip[i] && obj.weapon
 					 && obj.buytype == 1 && obj.reload ) {
 					if ( primary
 						 ? obj.price > max_price && obj.price < prev_price
@@ -2745,7 +2749,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 	/* misc items and secondary weapons without reload */
 	if (!has_weapon)
 		repeat = WEAPONLESS_BONUS > frand ();
-	else 
+	else
 		repeat = 0;
 	do {
 		max_price = INT_MAX;
@@ -2799,7 +2803,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 	/* armor */
 	if (!has_weapon)
 		repeat = WEAPONLESS_BONUS > frand ();
-	else 
+	else
 		repeat = 0;
 	do {
 		max_price = INT_MAX;

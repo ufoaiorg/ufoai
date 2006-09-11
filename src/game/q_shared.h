@@ -339,7 +339,7 @@ char *COM_Parse(char **data_p);
 /* data is an in/out parm, returns a parsed out token */
 char *COM_EParse(char **text, char *errhead, char *errinfo);
 
-void Com_sprintf(char *dest, size_t size, char *fmt, ...);
+qboolean Com_sprintf(char *dest, size_t size, char *fmt, ...);
 
 void Com_PageInMemory(byte * buffer, int size);
 
