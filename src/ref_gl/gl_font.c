@@ -613,6 +613,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
  */
 void Font_Init(void)
 {
+#ifdef SDL_TTF_VERSION
 	SDL_version version;
 
 	SDL_TTF_VERSION(&version);
@@ -620,6 +621,7 @@ void Font_Init(void)
 		version.major,
 		version.minor,
 		version.patch);
+#endif
 
 	numFonts = 0;
 	memset(fonts, 0, sizeof(fonts));
