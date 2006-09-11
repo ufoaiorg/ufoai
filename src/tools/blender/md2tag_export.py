@@ -107,7 +107,7 @@ def get_euler(loc, X,Y,Z):
 	locX = Mathutils.Vector(loc[0]+1.0, loc[1], loc[2])
 	locY = Mathutils.Vector(loc[0], loc[1]+1.0, loc[2])
 	locZ = Mathutils.Vector(loc[0], loc[1], loc[2]+1.0)
-	
+
 	rotX = getAng3pt3d(locX, loc, X)
 	rotY = getAng3pt3d(locY, loc, Y)
 	rotZ = getAng3pt3d(locZ, loc, Z)
@@ -255,7 +255,7 @@ class md2_tag:
 	Row2	= []
 	Row3	= []
 	Row4	= []
-	
+
 	binary_format="<12f"	#little-endian (<), 12 floats (12f)	| See http://docs.python.org/lib/module-struct.html for more info.
 
 	def __init__(self):
@@ -289,32 +289,28 @@ class md2_tag:
 			temp_data[3], temp_data[4], temp_data[5],
 			temp_data[6], temp_data[7], temp_data[8],
 			temp_data[9], temp_data[10], temp_data[11])
-			
+
 		# Write it
 		file.write(data)
 
 	def load(self, file):
 		# Read data from file with the defined size.
 		temp_data = file.read(self.getSize())
-		
+
 		# De-serialize the data.
 		data=struct.unpack(self.binary_format, temp_data)
-		
+
 		# Set the internal data-struct to the sata from the file.
-		#self.Row1 = (data[0], data[1], data[2])
-		#self.Row2 = (data[3], data[4], data[5])
-		#self.Row3 = (data[6], data[7], data[8])
-		#self.Row4 = (data[9], data[10], data[11])
-		self.Row1 = (data[1], -data[0], data[2])
-		self.Row2 = (data[4], -data[3], data[5])
-		self.Row3 = (data[7], -data[6], data[8])
-		self.Row4 = (data[10], -data[9], data[11])
-		
+		self.Row1 = (data[0], data[1], data[2])
+		self.Row2 = (data[3], data[4], data[5])
+		self.Row3 = (data[6], data[7], data[8])
+		self.Row4 = (data[9], data[10], data[11])
+
 		# Convert the orientation of the axes to the blender format.
-		#self.Row1 = (self.Row1[1], -self.Row1[0], self.Row1[2]) 
-		#self.Row2 = (self.Row2[1], -self.Row2[0], self.Row2[2]) 
-		#self.Row3 = (self.Row3[1], -self.Row3[0], self.Row3[2]) 
-		#self.Row4 = (self.Row4[1], -self.Row4[0], self.Row4[2]) 
+		self.Row1 = (self.Row1[1], -self.Row1[0], self.Row1[2])
+		self.Row2 = (self.Row2[1], -self.Row2[0], self.Row2[2])
+		self.Row3 = (self.Row3[1], -self.Row3[0], self.Row3[2])
+		self.Row4 = (self.Row4[1], -self.Row4[0], self.Row4[2])
 
 		# Apply scale to imported data if it was set in the dialog.
 		if (g_scale.val != 1.0):
@@ -349,7 +345,7 @@ class md2_tags_obj:
 	#md2 tag data objects
 	names=[]
 	tags=[] # (consists of a number of frames)
-	
+
 	"""
 	"tags" example:
 	tags = (
@@ -396,20 +392,20 @@ class md2_tags_obj:
 
 		self.ident = data[0]
 		self.version = data[1]
-		
+
 		if (self.ident!=844121162 or self.version!=1):
 			print "Not a valid MD2 TAG file"
 			Exit()
-			
-		self.num_tags = data[2] 
+
+		self.num_tags = data[2]
 		self.num_frames = data[3]
 		self.offset_names = data[4]
 		self.offset_tags = temp_data[5]
 		self.offset_end = temp_data[6]
 		self.offset_extract_end = data[7]
-			
+
 		self.dump()
-		
+
 		# Read names data
 		for tag_counter in range(0,self.num_tags):
 			temp_name = md2_tagname("")
@@ -511,7 +507,7 @@ def save_md2_tags(filename):
 	# Set frame number.
 	md2_tags.num_frames=g_frames.val
 	print "Frames to export: ",md2_tags.num_frames
-	print ""	
+	print ""
 
 	for object in mesh_objs:
 		#check if it's an "Empty" mesh object
@@ -521,7 +517,7 @@ def save_md2_tags(filename):
 			print "Found Empty with name ",object.name
 			fill_md2_tags(md2_tags, object)
 			Blender.Window.DrawProgressBar(1.0, "Writing to Disk")
-	
+
 	# Set offset of names
 	temp_header = md2_tags_obj();
 	md2_tags.offset_names= 0+temp_header.getSize();
@@ -529,15 +525,15 @@ def save_md2_tags(filename):
 	# Set offset of tags
 	temp_name = md2_tagname("");
 	md2_tags.offset_tags = md2_tags.offset_names + temp_name.getSize() * md2_tags.num_tags;
-	
+
 	# Set EOF offest value.
 	temp_tag = md2_tag();
 	md2_tags.offset_end = md2_tags.offset_tags + (temp_tag.getSize() * md2_tags.num_frames * md2_tags.num_tags)
 	md2_tags.offset_extract_end=md2_tags.offset_end
-	
+
 	print ""
 	md2_tags.dump()
-	
+
 	# Actually write it to disk.
 	file_export=open(filename,"wb")
 	md2_tags.save(file_export)
@@ -545,7 +541,7 @@ def save_md2_tags(filename):
 
 	# Cleanup
 	md2_tags=0
-	
+
 	Blender.Window.DrawProgressBar(1.0,"MD2 TAG Export")
 	print "Closed the file"
 
@@ -571,7 +567,7 @@ def load_md2_tags(filename):
 	md2_tags.load(file_import)
 	file_import.close()
 	print "Closed the file."
-	
+
 	print ""
 	md2_tags.dump()
 
@@ -579,10 +575,10 @@ def load_md2_tags(filename):
 	scene = Scene.getCurrent()
 
 	Blender.Window.DrawProgressBar(0.2, "Reading md2 tag data")
-	
+
 	progress=0.3
 	progressIncrement=0.6 / (md2_tags.num_frames * md2_tags.num_tags)
-	
+
 	for tag in range(0,md2_tags.num_tags):
 		# Get name & frame-data of current tag.
 		tag_name = md2_tags.names[tag]
@@ -614,9 +610,9 @@ def load_md2_tags(filename):
 				tag_frames[frame_counter].Row3,
 				tag_frames[frame_counter].Row4)
 			object.setEuler( euler_rotation[0], euler_rotation[1], euler_rotation[2])
-			
+
 			# (TODO: set object size?)
-			
+
 			# Insert keyframe for current frame&object.
 			object.insertIpoKey(LOCROTSIZE)
 
