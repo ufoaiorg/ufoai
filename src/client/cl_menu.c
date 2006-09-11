@@ -1623,13 +1623,15 @@ void MN_DrawMenus(void)
 
 							/* maybe due to scrolling this line is not visible */
 							if (node->textLines > node->textScroll) {
-								re.FontLength(font, message->text, &width, &height);
+								char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
+								MN_TimestampedText(&text, sizeof(text), message);
+								re.FontLength(font, text, &width, &height);
 								if (!width)
 									break;
 								if (width > node->pos[0] + node->size[0]) {
 									/* TODO: not tested this.... */
 									/* we use a backslash to determine where to break the line */
-									tab = message->text;
+									tab = text;
 									while ((end = strstr(tab, "\\")) != NULL) {
 										*end++ = '\0';
 										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab,0,0,NULL);
@@ -1640,10 +1642,10 @@ void MN_DrawMenus(void)
 									}
 								} else {
 									/* newline to space - we don't need this */
-									while ((end = strstr(message->text, "\\")) != NULL)
+									while ((end = strstr(text, "\\")) != NULL)
 										*end = ' ';
 
-									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], message->text,0,0,NULL);
+									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], text,0,0,NULL);
 								}
 							}
 
@@ -3075,11 +3077,7 @@ message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup,
 	mess->s = (ccs.date.sec % 3600) / 60 % 10;
 
 	Q_strncpyz(mess->title, title, MAX_VAR);
-	/* add date string to message */
-	Q_strncpyz(mess->text, va("%02i %s %04i, %02i:%02i:%02i:\t", mess->d, CL_DateGetMonthName(mess->m), mess->y, mess->h, mess->min, mess->s),
-		MAX_MESSAGE_TEXT);
-
-	Q_strcat(mess->text, text, sizeof(mess->text));
+	Q_strncpyz(mess->text, text, sizeof(mess->text));
 
 	/* they need to be translated already */
 	if (popup)
@@ -3105,6 +3103,18 @@ message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup,
 	}
 
 	return mess;
+}
+
+/**
+ * @brief Prepends timestamps to the message text displayed in the geoscape
+ * @param[in] text Buffer to hold the final result
+ * @param[in] max_text Total size of the text buffer
+ * @param[in] message The message to convert into text
+ */
+void MN_TimestampedText(char *text, size_t max_text, message_t *message)
+{
+	Q_strncpyz(text, va(TIMESTAMP_FORMAT, message->d, CL_DateGetMonthName(message->m), message->y, message->h, message->min, message->s), max_text);
+	Q_strcat(text, message->text, max_text);
 }
 
 /**
