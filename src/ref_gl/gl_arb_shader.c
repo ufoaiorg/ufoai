@@ -24,9 +24,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifdef SHADERS
 #include "gl_local.h"
 
+#ifdef SHADERS
 static unsigned int SH_LoadProgram_ARB_FP(char *path);
 static unsigned int SH_LoadProgram_ARB_VP(char *path);
 static qboolean shaderInited = qfalse;
@@ -50,6 +50,7 @@ void GL_ShaderInit(void)
 	}
 	shaderInited = qtrue;
 }
+#endif
 
 /**
  * @brief Compares the shader titles with the image name
@@ -61,9 +62,11 @@ shader_t* GL_GetShaderForImage(char* image)
 	int i = 0;
 	shader_t *s;
 
+#ifdef SHADERS
 	/* init the shaders */
 	if (!shaderInited && r_newrefdef.num_shaders)
 		GL_ShaderInit();
+#endif
 
 	/* search for shader title and check whether it matches an image name */
 	for (i = 0; i < r_newrefdef.num_shaders; i++) {
@@ -74,6 +77,7 @@ shader_t* GL_GetShaderForImage(char* image)
 	return NULL;
 }
 
+#ifdef SHADERS
 /**
  * @brief Delete all ARB shader programs at shutdown
  * GL_ShaderInit

@@ -114,9 +114,7 @@ typedef struct image_s {
 	float sl, tl, sh, th;		/* 0,0 - 1,1 unless part of the scrap */
 	qboolean scrap;
 	qboolean has_alpha;
-#ifdef SHADERS
 	shader_t *shader;			/* pointer to shader from refdef_t */
-#endif
 	qboolean paletted;
 } image_t;
 
@@ -393,7 +391,6 @@ struct image_s *R_RegisterSkin(char *name);
 
 void WriteTGA(char *filename, byte * data, int width, int height);
 
-void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, int *height);
 image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t type, int bits);
 image_t *GL_FindImage(char *pname, imagetype_t type);
 image_t *GL_FindImageForShader(char *name);

@@ -328,9 +328,11 @@ extern netadr_t net_from;
 
 void CL_AddNetgraph(void);
 
-/*================================================= */
-/* shader stuff */
-/* ================================================= */
+/*
+=================================================
+shader stuff
+=================================================
+*/
 
 void CL_ShaderList_f(void);
 void CL_ParseShaders(char *title, char **text);
@@ -339,8 +341,6 @@ extern shader_t r_shaders[MAX_SHADERS];
 
 /* ================================================= */
 
-/* ======== */
-/* PGM */
 typedef struct particle_s {
 	struct particle_s *next;
 

@@ -299,13 +299,8 @@ void GL_ImageList_f(void)
 		}
 
 		ri.Con_Printf(PRINT_ALL, " %3i %3i %s: %s - shader: %s\n",
-					  image->upload_width, image->upload_height, palstrings[image->paletted], image->name,
-#ifdef SHADERS
-					  (image->shader ? image->shader->title : "NONE")
-#else
-					  "NO SHADER SUPPORT"
-#endif
-			);
+				image->upload_width, image->upload_height, palstrings[image->paletted], image->name,
+				(image->shader ? image->shader->title : "NONE"));
 	}
 	ri.Con_Printf(PRINT_ALL, "Total texel count (not counting mipmaps): %i\n", texels);
 }
@@ -313,12 +308,10 @@ void GL_ImageList_f(void)
 
 /*
 =============================================================================
+scrap allocation
 
-  scrap allocation
-
-  Allocate all the little status bar obejcts into a single texture
-  to crutch up inefficient hardware / drivers
-
+Allocate all the little status bar obejcts into a single texture
+to crutch up inefficient hardware / drivers
 =============================================================================
 */
 
@@ -326,15 +319,15 @@ void GL_ImageList_f(void)
 #define	BLOCK_WIDTH		256
 #define	BLOCK_HEIGHT	256
 
-int scrap_allocated[MAX_SCRAPS][BLOCK_WIDTH];
-byte scrap_texels[MAX_SCRAPS][BLOCK_WIDTH * BLOCK_HEIGHT];
+static int scrap_allocated[MAX_SCRAPS][BLOCK_WIDTH];
+static byte scrap_texels[MAX_SCRAPS][BLOCK_WIDTH * BLOCK_HEIGHT];
 qboolean scrap_dirty;
 
 /**
  * @brief
  * @return a texture number and the position inside it
  */
-int Scrap_AllocBlock(int w, int h, int *x, int *y)
+static int Scrap_AllocBlock(int w, int h, int *x, int *y)
 {
 	int i, j;
 	int best, best2;
@@ -386,9 +379,7 @@ void Scrap_Upload(void)
 
 /*
 =================================================================
-
 PCX LOADING
-
 =================================================================
 */
 
@@ -396,7 +387,7 @@ PCX LOADING
 /**
  * @brief
  */
-void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, int *height)
+static void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, int *height)
 {
 	byte *raw;
 	pcx_t *pcx;
@@ -1549,7 +1540,6 @@ qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qbo
 		}
 	}
 
-#ifdef SHADERS
 	/* emboss filter */
 	if (gl_imagefilter->value && image && image->shader) {
 		Com_DPrintf("Using image filter %s\n", image->shader->title);
@@ -1568,7 +1558,6 @@ qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qbo
 		if (image->shader->edge)
 			R_FilterTexture(EDGE_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
 	}
-#endif
 
 	if (scaled_width == width && scaled_height == height) {
 		if (!mipmap) {
@@ -1792,11 +1781,9 @@ image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t t
 	if (type == it_skin && bits == 8)
 		R_FloodFillSkin(pic, width, height);
 
-#ifdef SHADERS
 	image->shader = GL_GetShaderForImage(image->name);
 	if (image->shader)
 		Com_DPrintf("GL_LoadPic: Shader found: '%s'\n", image->name);
-#endif
 
 	/* load little pics into the scrap */
 	if (image->type == it_pic && bits == 8 && image->width < 64 && image->height < 64) {
