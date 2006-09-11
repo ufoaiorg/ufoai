@@ -459,6 +459,12 @@ void CL_PrepRefresh(void)
 	int i;
 	char name[37];
 
+	/* this is needed to get shaders/image filters in game */
+	/* the renderer needs to know them before the textures get loaded */
+	V_UpdateRefDef();
+	/* set ref def - do this even in non 3d mode - we need shaders at loading time */
+	re.SetRefDef(&cl.refdef);
+
 	if (!cl.configstrings[CS_TILES][0])
 		return;					/* no map loaded */
 
