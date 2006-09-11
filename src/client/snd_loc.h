@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_SND_LOC_H
 
 #if defined (__linux__) || defined (__FreeBSD__)
-#include "vorbis/vorbisfile.h"
+#include <vorbis/vorbisfile.h>
 #else
 #include "../ports/win32/vorbisfile.h"
 #endif

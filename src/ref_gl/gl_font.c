@@ -596,6 +596,18 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
  */
 void Font_Init(void)
 {
+#ifdef SDL_TTF_VERSION
+	SDL_version version;
+
+	SDL_TTF_VERSION(&version);
+	ri.Con_Printf(PRINT_ALL, "...SDL_ttf version %i.%i.%i - we need at least 2.0.7\n",
+		version.major,
+		version.minor,
+		version.patch);
+#else
+	ri.Con_Printf(PRINT_ALL, "...could not get SDL_ttf version - we need at least 2.0.7\n");
+#endif
+
 	numFonts = 0;
 	memset(fonts, 0, sizeof(fonts));
 
