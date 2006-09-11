@@ -97,6 +97,7 @@ char *ev_format[] =
 	"s*",				/* EV_INV_ADD */
 	"sbbb",				/* EV_INV_DEL */
 	"sbbbbb",			/* EV_INV_AMMO */
+	"sbbbbb",			/* EV_INV_RELOAD */
 
 	"s",				/* EV_MODEL_PERISH */
 	"s",				/* EV_MODEL_EXPLODE */
@@ -130,6 +131,7 @@ char *ev_names[] =
 	"EV_INV_ADD",
 	"EV_INV_DEL",
 	"EV_INV_AMMO",
+	"EV_INV_RELOAD",
 
 	"EV_MODEL_PERISH",
 	"EV_MODEL_EXPLODE",
@@ -150,6 +152,7 @@ void CL_ActorShootHidden( sizebuf_t *sb );
 void CL_InvAdd( sizebuf_t *sb );
 void CL_InvDel( sizebuf_t *sb );
 void CL_InvAmmo( sizebuf_t *sb );
+void CL_InvReload( sizebuf_t *sb );
 
 void (*ev_func[])( sizebuf_t *sb ) =
 {
@@ -179,6 +182,7 @@ void (*ev_func[])( sizebuf_t *sb ) =
 	CL_InvAdd,
 	CL_InvDel,
 	CL_InvAmmo,
+	CL_InvReload,
 
 	LM_Perish,
 	LM_Explode,
@@ -934,13 +938,48 @@ void CL_InvAmmo( sizebuf_t *sb )
 	if ( !ic )
 		return;
 
-	/* if we're reloading and the displaced clip had any remaining */
-	/* bullets, store them as loose, unless the removed clip was full */
+	/* set new ammo */
+	ic->item.a = ammo;
+	ic->item.m = type;
+}
+
+
+/*
+=====================
+CL_InvReload
+=====================
+*/
+void CL_InvReload( sizebuf_t *sb )
+{
+	invList_t	*ic;
+	le_t	*le;
+	int		number;
+	int		ammo, type, container, x, y;
+
+	MSG_ReadFormat( sb, ev_format[EV_INV_RELOAD],
+		&number, &ammo, &type, &container, &x, &y );
+
+	S_StartLocalSound( "weapons/verschluss.wav" );
+
+	le = LE_Get( number );
+	if ( !le ) {
+		Com_Printf( "InvReload message ignored... LE not found\n" );
+		return;
+	}
+
+	if ( le->team != cls.team )
+		return;
+
+	ic = Com_SearchInInventory( &le->i, container, x, y );
+	if ( !ic )
+		return;
+
+	/* if the displaced clip had any remaining bullets */
+	/* store them as loose, unless the removed clip was full */
 	if ( curCampaign
-		 && le->team == cls.team
-		 &&	ammo == csi.ods[ic->item.t].ammo
 		 && ic->item.a > 0
 		 && ic->item.a != csi.ods[ic->item.t].ammo ) {
+		assert (ammo == csi.ods[ic->item.t].ammo);
 		ccs.eMission.num_loose[ic->item.m] += ic->item.a;
 		/* Accumulate loose ammo into clips (only accessible post-mission) */
 		if (ccs.eMission.num_loose[ic->item.m] >= csi.ods[ic->item.t].ammo) {
@@ -952,9 +991,6 @@ void CL_InvAmmo( sizebuf_t *sb )
 	/* set new ammo */
 	ic->item.a = ammo;
 	ic->item.m = type;
-
-	if ( ic && csi.ods[ic->item.t].ammo == ammo && le->team != TEAM_ALIEN )
-		S_StartLocalSound( "weapons/verschluss.wav" );
 }
 
 
@@ -1036,6 +1072,10 @@ void CL_ParseEvent( void )
 			case EV_ACTOR_APPEAR:
 				if ( cls.state == ca_active && cl.actTeam != cls.team )
 					nextTime += 600;
+				break;
+			case EV_INV_RELOAD:
+				/* let the reload sound play */
+				nextTime += 600;
 				break;
 			case EV_ACTOR_START_SHOOT:
 				nextTime += 300;

@@ -807,8 +807,8 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 				mask = G_TeamToPM(ent->team);
 			}
 
-			/* send ammo */
-			gi.AddEvent(mask, EV_INV_AMMO);
+			/* send ammo message to all --- it's fun to hear that sound */
+			gi.AddEvent(PM_ALL, EV_INV_RELOAD);
 			/* is this condition below needed? or is 'num' enough?
 			   probably needed so that red rifle on the floor changes color,
 			   but this needs testing. */
