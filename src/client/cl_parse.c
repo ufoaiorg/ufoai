@@ -148,7 +148,6 @@ void CL_ActorDoStartMove( sizebuf_t *sb );
 void CL_ActorAppear( sizebuf_t *sb );
 void CL_ActorStats( sizebuf_t *sb );
 void CL_ActorStateChange( sizebuf_t *sb );
-void CL_ActorShootHidden( sizebuf_t *sb );
 void CL_InvAdd( sizebuf_t *sb );
 void CL_InvDel( sizebuf_t *sb );
 void CL_InvAmmo( sizebuf_t *sb );
@@ -748,27 +747,6 @@ void CL_ActorStateChange( sizebuf_t *sb )
 		CL_RemoveActorFromTeamList(le);
 }
 
-/*
-=====================
-CL_ActorShootHidden
-=====================
-*/
-void CL_ActorShootHidden( sizebuf_t *sb )
-{
-	fireDef_t	*fd;
-	qboolean	first;
-	int		type;
-
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &type);
-
-	/* get the fire def */
-	fd = GET_FIREDEF( type );
-
-	/* start the sound */
-	if ( fd->fireSound[0] && ( ( first && fd->soundOnce ) || ( !first && !fd->soundOnce ) ) )
-		S_StartLocalSound( fd->fireSound );
-}
-
 
 /*
 =====================
@@ -926,7 +904,7 @@ void CL_InvAmmo( sizebuf_t *sb )
 
 	le = LE_Get( number );
 	if ( !le ) {
-		Com_Printf( "InvAmmo message ignored... LE not found\n" );
+		Com_DPrintf( "InvAmmo message ignored... LE not found\n" );
 		return;
 	}
 
@@ -962,7 +940,7 @@ void CL_InvReload( sizebuf_t *sb )
 
 	le = LE_Get( number );
 	if ( !le ) {
-		Com_Printf( "InvReload message ignored... LE not found\n" );
+		Com_DPrintf( "InvReload message ignored... LE not found\n" );
 		return;
 	}
 
@@ -1058,15 +1036,17 @@ void CL_ParseEvent( void )
 			/* get event time */
 			if ( nextTime < cl.eventTime )
 				nextTime = cl.eventTime;
+			if ( impactTime < cl.eventTime )
+				impactTime = cl.eventTime;
 
 			if ( eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE )
 				time = impactTime;
-			else if ( eType == EV_ACTOR_SHOOT )
+			else if ( eType == EV_ACTOR_SHOOT || eType == EV_ACTOR_SHOOT_HIDDEN )
 				time = shootTime;
 			else
 				time = nextTime;
 
-			/* calculate next and shoot time */
+			/* calculate time interval before the next event */
 			switch ( eType ) {
 			case EV_ACTOR_APPEAR:
 				if ( cls.state == ca_active && cl.actTeam != cls.team )
@@ -1082,21 +1062,29 @@ void CL_ParseEvent( void )
 				break;
 			case EV_ACTOR_SHOOT_HIDDEN:
 				{
-					int flags, type;
 					fireDef_t *fd;
+					qboolean first;
+					int type;
 
-					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &flags, &type);
+					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &type);
 
-					if ( !flags ) {
-						fd = GET_FIREDEF(type);
-						if ( fd->rof )
-							nextTime += 1000 / fd->rof;
-					} else {
+					if (first) {
 						nextTime += 500;
+						impactTime = shootTime = nextTime;
+					} else { 
+						fd = GET_FIREDEF(type);
+/* TODO: not needed? and SF_BOUNCED?
+						if ( fd->speed )
+							impactTime = shootTime + 1000 * VectorDist( muzzle, impact ) / fd->speed;
+						else
+*/
+							impactTime = shootTime;
+						nextTime = shootTime + 1400;
+						if ( fd->rof )
+							shootTime += 1000 / fd->rof;
 					}
-					shootTime = nextTime;
-					break;
 				}
+				break;
 			case EV_ACTOR_SHOOT:
 				{
 					fireDef_t	*fd;
@@ -1122,14 +1110,16 @@ void CL_ParseEvent( void )
 					} else {
 						/* only a bounced shot */
 						time = impactTime;
-						if ( fd->speed )
+						if ( fd->speed ) {
 							impactTime += 1000 * VectorDist( muzzle, impact ) / fd->speed;
+							nextTime = impactTime;
+						}
 					}
 				}
 				break;
 			case EV_ACTOR_THROW:
 				nextTime += MSG_ReadShort( &net_message );
-				shootTime = impactTime = nextTime;
+				impactTime = shootTime = nextTime;
 				break;
 			}
 

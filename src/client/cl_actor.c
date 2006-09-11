@@ -1173,6 +1173,31 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 }
 
 
+/*
+=====================
+CL_ActorShootHidden
+=====================
+*/
+void CL_ActorShootHidden( sizebuf_t *sb )
+{
+	fireDef_t	*fd;
+	qboolean	first;
+	int		type;
+
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &type);
+
+	/* get the fire def */
+	fd = GET_FIREDEF( type );
+
+	/* start the sound; TODO: is check for SF_BOUNCED needed? */
+	if ( ((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0] )
+		S_StartLocalSound( fd->fireSound );
+
+	/* if the shooting becomes visibile, don't repeat sounds! */
+	firstShot = qfalse;
+}
+
+
 /**
  * @brief Throw item with actor.
  * @param[in] sb
@@ -1195,7 +1220,8 @@ void CL_ActorDoThrow(sizebuf_t * sb)
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime);
 
 	/* start the sound */
-	if ((!fd->soundOnce || firstShot) && fd->fireSound[0])
+	if ((!fd->soundOnce || firstShot) && fd->fireSound[0]
+		&& !(flags & SF_BOUNCED))
 		S_StartLocalSound(fd->fireSound);
 	firstShot = qfalse;
 }

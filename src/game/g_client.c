@@ -1651,7 +1651,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 		/* FIXME: don't make aliens in back visible */
 		if (fd->irgoggles && (check->type == ET_ACTOR || check->type == ET_UGV)) {
 			if (G_FrustomVis(ent, check->origin)) {
-				G_AppearPerishEvent(G_VisToPM(~check->visflags), 1, check);
+				G_AppearPerishEvent(~G_VisToPM(check->visflags), 1, check);
 				check->visflags |= ~check->visflags;
 				continue;
 			}
@@ -1672,7 +1672,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 /**
  * @brief
  */
-void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at, item_t * weapon)
+void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at, int mask, item_t * weapon)
 {
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
@@ -1681,7 +1681,8 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 	float acc;
 	trace_t tr;
 	int bounce;
-	int i, mask;
+/*	int i; */
+	byte flags;
 
 	/* get positional data */
 	VectorCopy(from, last);
@@ -1715,7 +1716,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 	time = 0;
 	dt = 0;
 	bounce = 0;
-	mask = ent->visflags;
+	flags = SF_BOUNCING;
 	while (qtrue) {
 		/* kinematics */
 		VectorMA(oldPos, GRENADE_DT, curV, newPos);
@@ -1730,12 +1731,16 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 			time += dt;
 			bounce++;
 
-			/* calculate additional visibility */
 			if (tr.fraction < 1.0)
 				VectorCopy(tr.endpos, newPos);
+
+#if 0
+/* please debug, currently it causes double sounds */
+			/* calculate additional visibility */
 			for (i = 0; i < MAX_TEAMS; i++)
 				if (G_TeamPointVis(i, newPos))
 					mask |= 1 << i;
+#endif
 
 			if
 				/* enough bouncing around */
@@ -1748,9 +1753,9 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 				gi.WriteShort(dt * 1000);
 				gi.WriteByte(type);
 				if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))
-					gi.WriteByte(SF_BODY);
+					gi.WriteByte(flags | SF_BODY);
 				else
-					gi.WriteByte(SF_IMPACT);
+					gi.WriteByte(flags | SF_IMPACT);
 				gi.WritePos(last);
 				gi.WritePos(startV);
 
@@ -1799,9 +1804,10 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
 			gi.WriteShort(dt * 1000);
 			gi.WriteByte(type);
-			gi.WriteByte(SF_BOUNCING);
+			gi.WriteByte(flags);
 			gi.WritePos(last);
 			gi.WritePos(startV);
+			flags |= SF_BOUNCED;
 
 			/* bounce */
 			VectorScale(curV, fd->bounceFac, curV);
@@ -1844,7 +1850,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 	int bounce;	/* ?? TODO */
 	int damage;	/* The damage to be dealt to the target. */
 	byte flags;	/* ?? TODO */
-	int i;
+/*	int i; */
 
 	/* Calc direction of the shot. */
 	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
@@ -1896,6 +1902,8 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 				flags |= SF_IMPACT;
 		}
 
+#if 0
+/* please debug, currently it causes double sounds */
 		/* calculate additional visibility */
 		for (i = 0; i < MAX_TEAMS; i++)
 			if (G_TeamPointVis(i, impact))
@@ -1904,6 +1912,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		/* victims see shots */
 		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))
 			mask |= 1 << tr.ent->team;
+#endif
 
 		/* send shot */
 		gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
@@ -1915,7 +1924,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		gi.WriteDir(tr.plane.normal);
 
 		/* send shot sound to the others */
-		gi.AddEvent(G_VisToPM(~mask), EV_ACTOR_SHOOT_HIDDEN);
+		gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 		gi.WriteByte(qfalse);
 		gi.WriteByte(type);
 
@@ -1942,7 +1951,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		VectorScale(tr.plane.normal, -DotProduct(tr.plane.normal, dir), temp);
 		VectorAdd(temp, dir, dir);
 		VectorAdd(temp, dir, dir);
-		flags = SF_BOUNCED;
+		flags |= SF_BOUNCED;
 	}
 	while (1);
 
@@ -2074,7 +2083,7 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 	gi.WriteGPos(at);
 
 	/* send shot sound to the others */
-	gi.AddEvent(G_VisToPM(~mask), EV_ACTOR_SHOOT_HIDDEN);
+	gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 	gi.WriteByte(qtrue);
 	gi.WriteByte(wi);
 
@@ -2123,7 +2132,7 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 	/* fire all shots */
 	for (i = 0; i < shots; i++)
 		if (fd->gravity)
-			G_ShootGrenade(player, ent, fd, wi, shotOrigin, at, weapon);
+			G_ShootGrenade(player, ent, fd, wi, shotOrigin, at, mask, weapon);
 		else
 			G_ShootSingle(ent, fd, wi, shotOrigin, at, mask, weapon);
 
