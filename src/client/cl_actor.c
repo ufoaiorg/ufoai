@@ -416,7 +416,7 @@ void CL_ActorUpdateCVars(void)
 			/* panic */
 			Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Currently panics!\n"));
 		} else {
-			/* in multiplayer RS_ItemIsResearched always returns true, 
+			/* in multiplayer RS_ItemIsResearched always returns true,
 			   so we are able to use the aliens weapons */
 			if ( cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE && selWeapon
 				 && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].kurz) ) {
@@ -963,12 +963,14 @@ void CL_ActorReload(int hand)
 
 	if (inv->c[hand]) {
 		weapon = inv->c[hand]->item.t;
-	} else if (hand == csi.idLeft 
+	} else if (hand == csi.idLeft
 			   && csi.ods[inv->c[csi.idRight]->item.t].twohanded) {
 		/* Check for two-handed weapon */
 		hand = csi.idRight;
 		weapon = inv->c[hand]->item.t;
-	}
+	} else
+		/* otherwise we could use weapon uninitialized */
+		return;
 
 	if (!RS_ItemIsResearched(csi.ods[weapon].kurz)) {
 		CL_DisplayHudMessage(_("You cannot reload this unknown item.\nYou need to research it and its ammunition first.\n"), 2000);
