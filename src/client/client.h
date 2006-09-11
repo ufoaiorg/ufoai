@@ -766,6 +766,8 @@ typedef enum {
 } messagetype_t;
 
 #define MAX_MESSAGE_TEXT 1024
+#define TIMESTAMP_FORMAT "%02i %s %04i, %02i:%02i:%02i:\t"
+#define TIMESTAMP_TEXT 23
 typedef struct message_s {
 	char title[MAX_VAR];
 	char text[MAX_MESSAGE_TEXT];
@@ -780,6 +782,7 @@ char messageBuffer[MAX_MESSAGE_TEXT];
 message_t *messageStack;
 
 message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia);
+void MN_TimestampedText(char *text, size_t max_text, message_t *message);
 void MN_RemoveMessage(char *title);
 void CL_InitMessageSystem(void);
 
