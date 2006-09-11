@@ -1426,7 +1426,7 @@ void Qcommon_Init(int argc, char **argv)
 	setlocale(LC_ALL, "C");
 	setlocale(LC_MESSAGES, "");
 	/* use system locale dir if we can't find in gamedir */
-	Com_sprintf(languagePath, MAX_QPATH, "%s/base/i18n/", FS_GetCwd());
+	Com_sprintf(languagePath, MAX_OSPATH, "%s/base/i18n/", FS_GetCwd());
 	Com_DPrintf("...using mo files from %s\n", languagePath);
 	bindtextdomain(TEXT_DOMAIN, languagePath);
 	bind_textdomain_codeset(TEXT_DOMAIN, "UTF-8");
