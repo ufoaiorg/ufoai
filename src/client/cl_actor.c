@@ -1422,11 +1422,10 @@ void CL_DoEndRound(sizebuf_t * sb)
 	cl.actTeam = MSG_ReadByte(sb);
 	Com_Printf(", team %i's round started!\n", cl.actTeam);
 
-	/* check whether a particle has to go */
-	CL_ParticleCheckRounds();
-
 	/* hud changes */
 	if (cls.team == cl.actTeam) {
+		/* check whether a particle has to go */
+		CL_ParticleCheckRounds();
 		Cbuf_AddText("startround\n");
 		CL_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart.wav");
