@@ -8,7 +8,7 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Höhrer'
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 __url__ = ["UFO: Aline Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufo.myexp.de/phpBB2/index.php", "blender", "elysiun"]
 __email__ = ["Werner Höhrer, bill_spam2:yahoo*de", "scripts"]
@@ -52,28 +52,86 @@ from Blender.Object import *
 import struct, string
 from types import *
 
-#returns the string from a null terminated string
-def asciiz (s):
-  n = 0
-  while (ord(s[n]) != 0):
-    n = n + 1
-  return s[0:n]
+######################################################
+# BEGIN ----------------------------------------------
+# Additional functions used by Ex- and Importer
+######################################################
 
+######################################################
+# Returns the string from a null terminated string.
+######################################################
+def asciiz (s):
+	n = 0
+	while (ord(s[n]) != 0):
+		n = n + 1
+	return s[0:n]
+
+######################################################
+# Apply a matrix to a vert and return a tuple.
+#	http://en.wikibooks.org/wiki/Blender_3D:_Blending_Into_Python/Cookbook#Apply_Matrix
+######################################################
+def apply_transform(verts, matrix):
+	x, y, z = verts
+	return\
+	x*matrix[0][0] + y*matrix[1][0] + z*matrix[2][0] + matrix[3][0],\
+	x*matrix[0][1] + y*matrix[1][1] + z*matrix[2][1] + matrix[3][1],\
+	x*matrix[0][2] + y*matrix[1][2] + z*matrix[2][2] + matrix[3][2]
+
+######################################################
+# Get Angle between 3 points
+#	Get the angle between line AB and BC where b is the elbo.
+#	http://en.wikibooks.org/wiki/Blender_3D:_Blending_Into_Python/Cookbook#Get_Angle_between_3_points
+######################################################
+
+def getAng3pt3d(avec, bvec, cvec):
+	AngleBetweenVecs = Blender.Mathutils.AngleBetweenVecs
+	try:
+		ang = AngleBetweenVecs(avec - bvec,  cvec - bvec)
+		if ang != ang:
+			raise  "ERROR angle between Vecs"
+		else:
+			return ang
+	except:
+		print '\tAngleBetweenVecs failed, zero length?'
+		return 0
+
+######################################################
+# Get the rotation values (euler tuple) from a location and the axes-information
+######################################################
+def get_euler(loc, X,Y,Z):
+	loc=Mathutils.Vector(loc)
+	X=Mathutils.Vector(X)
+	Y=Mathutils.Vector(Y)
+	Z=Mathutils.Vector(Z)
+
+	locX = Mathutils.Vector(loc[0]+1.0, loc[1], loc[2])
+	locY = Mathutils.Vector(loc[0], loc[1]+1.0, loc[2])
+	locZ = Mathutils.Vector(loc[0], loc[1], loc[2]+1.0)
+	
+	rotX = getAng3pt3d(locX, loc, X)
+	rotY = getAng3pt3d(locY, loc, Y)
+	rotZ = getAng3pt3d(locZ, loc, Z)
+	return (rotX, rotY, rotZ)
+
+######################################################
+# Additional functions used by Ex- and Importer
+# END ------------------------------------------------
+######################################################
 
 ######################################################
 # GUI Loader
 ######################################################
 
 # Export globals
-g_filename=Create("export.tag") # default value is set here.
+g_filename=Create("default.tag") # default value is set here.
 g_filename_search=Create("")
 g_scale=Create(1.0)		# default value is set here.
 g_frames=Create(1)		# default value is set here.
 
 # Events
 EVENT_NOEVENT=1
-EVENT_SAVE_MD2TAGS=2
-EVENT_CHOOSE_FILENAME=3
+EVENT_CHOOSE_FILENAME=2
+EVENT_SAVE_MD2TAGS=3
 EVENT_LOAD_MD2TAGS=4
 EVENT_EXIT=100
 
@@ -99,21 +157,21 @@ def draw_gui():
 	########## Titles
 	glClear(GL_COLOR_BUFFER_BIT)
 	glRasterPos2d(10, 120)
-	Text("MD2 TAGs Export")
+	Text("MD2 TAGs Export & Import")
 
 	######### Parameters GUI Buttons
 	######### MD2 Filename text entry
-	g_filename = String("MD2 TAGs file to save: ", EVENT_NOEVENT, 10, 75, 210, 18,
-			g_filename.val, 255, "MD2 TAGs file to save")
+	g_filename = String("MD2 TAGs file: ", EVENT_NOEVENT, 10, 95, 210, 18,
+			g_filename.val, 255, "MD2 TAGs file to load/save (Import/Export).")
 	########## MD2 TAGs File Search Button
-	Button("Search",EVENT_CHOOSE_FILENAME,220,75,80,18)
+	Button("Search",EVENT_CHOOSE_FILENAME,220,95,80,18)
 
 	########## Scale slider-default is 1/8 which is a good scale for md2->blender
-	g_scale= Slider("Scale Factor: ", EVENT_NOEVENT, 10, 95, 210, 18,
-			g_scale.val, 0.001, 20.0, 0, "Scale factor for MD2 TAGs");
+	g_scale= Slider("Scale Factor: ", EVENT_NOEVENT, 10, 75, 210, 18,
+			g_scale.val, 0.001, 20.0, 0, "Scale factor for MD2 TAGs (Import/Export)");
 
 	g_frames= Slider("NumFrames: ", EVENT_NOEVENT, 10, 55, 210, 18,
-			g_frames.val, 1, MD2_MAX_FRAMES, 0, "Number of exported frames");
+			g_frames.val, 1, MD2_MAX_FRAMES, 0, "Number of exported frames (Export)");
 
 	######### Draw and Exit Buttons
 	Button("Export",EVENT_SAVE_MD2TAGS , 10, 10, 80, 18)
@@ -180,6 +238,18 @@ class md2_tagname:
 		print ""
 
 class md2_tag:
+	####################################
+	# Save-function in MD2 exporter:
+	#	x1=-mesh.verts[vert_counter].no[1]
+	#	y1=mesh.verts[vert_counter].no[0]
+	#	z1=mesh.verts[vert_counter].no[2]
+	# => md2file(x,y,z) = blender(-y,x,z)
+	# Load-function in MD2 importer:
+	#	mesh.verts[j].co[0]=y
+	#	mesh.verts[j].co[1]=-x
+	#	mesh.verts[j].co[2]=z
+	# => blender(x,y,z) = md2file(y,-x,z)
+	####################################
 	global g_scale
 	Row1	= []
 	Row2	= []
@@ -221,11 +291,6 @@ class md2_tag:
 		self.Row2 = (self.Row2[1], -self.Row2[0], self.Row2[2]) 
 		self.Row3 = (self.Row3[1], -self.Row3[0], self.Row3[2]) 
 		self.Row4 = (self.Row4[1], -self.Row4[0], self.Row4[2]) 
-		
-		# it's saved like this:
-		#mesh.verts[j].co[0]=y
-		#mesh.verts[j].co[1]=-x
-		#mesh.verts[j].co[2]=z
 
 		if (g_scale.val != 1.0):
 			self.Row1 = ( self.Row1[0]* g_scale.val, self.Row1[1]* g_scale.val, self.Row1[2]* g_scale.val)
@@ -258,8 +323,9 @@ class md2_tags_obj:
 	#md2 tag data objects
 	names=[]
 	tags=[] # (consists of a number of frames)
+	
 	"""
-	Example:
+	"tags" example:
 	tags = (
 		(tag1_frame1, tag1_frame2, tag1_frame3, etc...),	# tag_frames1
 		(tag2_frame1, tag2_frame2, tag2_frame3, etc...),	# tag_frames2
@@ -325,7 +391,7 @@ class md2_tags_obj:
 		print "Reading of ", tag_counter, " names finished."
 
 		for tag_counter in range(0,self.num_tags):
-			frames  = []
+			frames = []
 			for frame_counter in range(0,self.num_frames):
 				temp_tag = md2_tag()
 				frames.append(temp_tag.load(file))
@@ -344,80 +410,6 @@ class md2_tags_obj:
 		print "offset end: ",		self.offset_end
 		print "offset extract end: ",	self.offset_extract_end
 		print ""
-
-"""
-########################
-		#write the skin data
-		for skin in self.skins:
-			skin.save(file)
-		#save the texture coordinates
-		for tex_coord in self.tex_coords:
-			tex_coord.save(file)
-		#save the face info
-		for face in self.faces:
-			face.save(file)
-		#save the frames
-		for frame in self.frames:
-			frame.save(file)
-			for vert in frame.vertices:
-				vert.save(file)
-		#save the GL command List
-#		for cmd in self.GL_commands:
-#			cmd.save(file)
-"""
-
-######################################################
-# Apply a matrix to a vert and return a tuple.
-#	http://en.wikibooks.org/wiki/Blender_3D:_Blending_Into_Python/Cookbook#Apply_Matrix
-######################################################
-def apply_transform(verts, matrix):
-	x, y, z = verts
-	return\
-	x*matrix[0][0] + y*matrix[1][0] + z*matrix[2][0] + matrix[3][0],\
-	x*matrix[0][1] + y*matrix[1][1] + z*matrix[2][1] + matrix[3][1],\
-	x*matrix[0][2] + y*matrix[1][2] + z*matrix[2][2] + matrix[3][2]
-
-######################################################
-# Get Angle between 3 points
-#	Get the angle between line AB and BC where b is the elbo.
-#	http://en.wikibooks.org/wiki/Blender_3D:_Blending_Into_Python/Cookbook#Get_Angle_between_3_points
-######################################################
-
-def getAng3pt3d(avec, bvec, cvec):
-	AngleBetweenVecs = Blender.Mathutils.AngleBetweenVecs
-        try:
-                ang = AngleBetweenVecs(avec - bvec,  cvec - bvec)
-                if ang != ang:
-                        raise  "ERROR angle between Vecs"
-                else:
-                        return ang
-        except:
-                print '\tAngleBetweenVecs failed, zero length?'
-                return 0
-
-######################################################
-# Get the rotation values (euler tuple) from a location and the axes-information
-######################################################
-def get_euler(loc, X,Y,Z):
-	loc=Mathutils.Vector(loc)
-	X=Mathutils.Vector(X)
-	Y=Mathutils.Vector(Y)
-	Z=Mathutils.Vector(Z)
-	#zero = (0.0,0.0,0.0)
-	#locX = (1.0, 0.0, 0.0)
-	#locY = (0.0, 1.0, 0.0)
-	#locZ = (0.0, 0.0, 1.0)
-	locX = Mathutils.Vector(loc[0]+1.0, loc[1], loc[2])
-	locY = Mathutils.Vector(loc[0], loc[1]+1.0, loc[2])
-	locZ = Mathutils.Vector(loc[0], loc[1], loc[2]+1.0)
-	
-	#rotX = getAng3pt3d(locX, zero, X-loc)
-	#rotY = getAng3pt3d(locY, zero, Y-loc)
-	#rotZ = getAng3pt3d(locZ, zero, Z-loc)
-	rotX = getAng3pt3d(locX, loc, X)
-	rotY = getAng3pt3d(locY, loc, Y)
-	rotZ = getAng3pt3d(locZ, loc, Z)
-	return (rotX, rotY, rotZ)
 
 ######################################################
 # Fill MD2 data structure
@@ -485,7 +477,7 @@ def save_md2_tags(filename):
 
 	Blender.Window.DrawProgressBar(0.0,"Beginning MD2 TAG Export")
 
-	md2_tags=md2_tags_obj()  #blank md2 object to save
+	md2_tags=md2_tags_obj()	# Blank md2 object to be saved.
 
 	#get the object
 	mesh_objs = Blender.Object.GetSelected()
@@ -551,8 +543,7 @@ def load_md2_tags(filename):
 
 	Blender.Window.DrawProgressBar(0.0,"Beginning MD2 TAG Import")
 
-
-	md2_tags=md2_tags_obj()  # Blank md2 object to load to.
+	md2_tags=md2_tags_obj()	# Blank md2 object to load to.
 
 	print "Opening the file ..."
 	file_import=open(filename,"rb")
@@ -567,9 +558,12 @@ def load_md2_tags(filename):
 	# Get current Scene.
 	scene = Scene.getCurrent()
 
+	# TODO: better progress indicator (DrawProgressBar)
 	for tag in range(0,md2_tags.num_tags):
+		# Get name & frame-data of current tag.
 		tag_name = md2_tags.names[tag]
 		tag_frames = md2_tags.tags[tag]
+
 		# Create object.
 		object = Object.New('Empty')
 		object.setName(tag_name.name)
@@ -591,15 +585,12 @@ def load_md2_tags(filename):
 				tag_frames[frame_counter].Row4)
 			object.setEuler( euler_rotation[0], euler_rotation[1], euler_rotation[2])
 			
-			# (TODO: use the 'scale' value for the above operations "if (g_scale.val != 1.0):")
-			# (TODO: set object size)
+			# (TODO: set object size?)
 			
-			# TODO: Insert keyframe
-			#object.insertKey(frame_counter,"absolute")
+			# Insert keyframe for current frame&object.
 			object.insertIpoKey(LOCROTSIZE)
 
 	Blender.Set("curframe", 1)
 	Blender.Window.RedrawAll()
-
 
 ################
