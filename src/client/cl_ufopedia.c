@@ -133,7 +133,25 @@ void CL_ItemDescription(int item)
 			/* TODO: Print protection */
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Armor\n") );
 		} else if (!Q_strncmp(od->type, "ammo", 4)) {
-			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Primary:\t%s\t(%s)\n"), od->fd[0].name, CL_WeaponSkillToName(od->fd[0].weaponSkill) );
+			Com_sprintf(itemText, MAX_MENUTEXTLEN, "");
+			/* more will be written below */
+		} else if (od->weapon && od->reload) {
+			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Ammo:\t%i\n"), (int) (od->ammo));
+			Q_strcat(itemText, va(_("Twohanded:\t%s"), (od->twohanded ? _("Yes") : _("No"))), sizeof(itemText));
+		} else if (od->weapon) {
+			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Twohanded:\t%s\n"), (od->twohanded ? _("Yes") : _("No")));
+			/* more will be written below */
+		} else {
+			/* just an item */
+			/* only primary definition */
+			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Action:\t%s\n"), od->fd[0].name);
+			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0].time), sizeof(itemText));
+			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0].range / 32.0), sizeof(itemText));
+		}
+
+		if ( !Q_strncmp(od->type, "ammo", 4)
+			 || (od->weapon && !od->reload) ) {
+			Q_strcat(itemText, va(_("Primary:\t%s\t(%s)\n"), od->fd[0].name, CL_WeaponSkillToName(od->fd[0].weaponSkill)), sizeof(itemText));
 			Q_strcat(itemText, va(_("Secondary:\t%s\t(%s)\n"), od->fd[1].name, CL_WeaponSkillToName(od->fd[1].weaponSkill)), sizeof(itemText));
 			Q_strcat(itemText,
 					va(_("Damage:\t%i / %i\n"), (int) (od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]),
@@ -142,16 +160,8 @@ void CL_ItemDescription(int item)
 			Q_strcat(itemText, va(_("Range:\t%g / %g\n"), od->fd[0].range / 32.0, od->fd[1].range / 32.0), sizeof(itemText));
 			Q_strcat(itemText,
 					va(_("Spreads:\t%g / %g\n"), (od->fd[0].spread[0] + od->fd[0].spread[1]) / 2, (od->fd[1].spread[0] + od->fd[1].spread[1]) / 2), sizeof(itemText));
-		} else if (od->weapon) {
-			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Ammo:\t%i\n"), (int) (od->ammo));
-			Q_strcat(itemText, va(_("Twohanded:\t%s"), (od->twohanded ? _("Yes") : _("No"))), sizeof(itemText));
-		} else {
-			/* just an item */
-			/* only primary definition */
-			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Action:\t%s\n"), od->fd[0].name);
-			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0].time), sizeof(itemText));
-			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0].range / 32.0), sizeof(itemText));
 		}
+
 		menuText[TEXT_STANDARD] = itemText;
 	} else {
 		Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Unknown - need to research this"));
