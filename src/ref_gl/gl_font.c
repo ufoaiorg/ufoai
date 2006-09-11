@@ -621,6 +621,8 @@ void Font_Init(void)
 		version.major,
 		version.minor,
 		version.patch);
+#else
+	ri.Con_Printf(PRINT_ALL, "...could not get SDL_ttf version - we need at least 2.0.7\n",
 #endif
 
 	numFonts = 0;
