@@ -346,7 +346,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	float guete, best;
 
 #ifdef PARANOID
-	Com_Printf( "AI_ActorThink (ent %i, frame %i)\n", ent->number, level.framenum );
+	Com_DPrintf( "AI_ActorThink: (ent %i, frame %i)\n", ent->number, level.framenum );
 #endif
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
@@ -354,12 +354,12 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 		if ( RIGHT(ent) && gi.csi->ods[RIGHT(ent)->item.t].reload && RIGHT(ent)->item.a == 0 ) {
 			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idRight)) {
 #ifdef PARANOID
-				Com_Printf("- Reloading right hand weapon\n");
+				Com_DPrintf("AI_ActorThink: Reloading right hand weapon\n");
 #endif
 				G_ClientReload(player, ent->number, ST_RIGHT_RELOAD);
 			} else {
 #ifdef PARANOID
-				Com_Printf("- Dropping right hand weapon\n");
+				Com_DPrintf("AI_ActorThink: Dropping right hand weapon\n");
 #endif
 				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
 			}
@@ -367,26 +367,24 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 		if ( LEFT(ent) && gi.csi->ods[LEFT(ent)->item.t].reload && LEFT(ent)->item.a == 0 ) {
 			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idLeft)) {
 #ifdef PARANOID
-				Com_Printf("- Reloading left hand weapon\n");
+				Com_DPrintf("AI_ActorThink: Reloading left hand weapon\n");
 #endif
 				G_ClientReload(player, ent->number, ST_LEFT_RELOAD);
 			} else {
 #ifdef PARANOID
-				Com_Printf("- Dropping left hand weapon\n");
+				Com_DPrintf("AI_ActorThink: Dropping left hand weapon\n");
 #endif
 				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
 			}
 		}
 	}
 
-#ifdef PARANOID
 	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
 	if (!LEFT(ent) && !RIGHT(ent)) {
 		G_ClientGetWeaponFromInventory(player, ent->number);
 		if (LEFT(ent) || RIGHT(ent))
-			Com_Printf("- Got weapon from inventory\n");
+			Com_DPrintf("AI_ActorThink: Got weapon from inventory\n");
 	}
-#endif
 
 	aia.mode = 0;
 	aia.shots = 0;
@@ -440,7 +438,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	/* do the first move */
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse);
 
-/*	Com_Printf( "(%i %i %i) (%i %i %i)\n", */
+/*	Com_DPrintf( "(%i %i %i) (%i %i %i)\n", */
 /*		(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2], */
 /*		(int)bestAia.stop[0], (int)bestAia.stop[1], (int)bestAia.stop[2] ); */
 

@@ -148,7 +148,6 @@ void CL_ActorDoStartMove( sizebuf_t *sb );
 void CL_ActorAppear( sizebuf_t *sb );
 void CL_ActorStats( sizebuf_t *sb );
 void CL_ActorStateChange( sizebuf_t *sb );
-void CL_ActorShootHidden( sizebuf_t *sb );
 void CL_InvAdd( sizebuf_t *sb );
 void CL_InvDel( sizebuf_t *sb );
 void CL_InvAmmo( sizebuf_t *sb );
@@ -749,27 +748,6 @@ void CL_ActorStateChange( sizebuf_t *sb )
 		CL_RemoveActorFromTeamList(le);
 }
 
-/*
-=====================
-CL_ActorShootHidden
-=====================
-*/
-void CL_ActorShootHidden( sizebuf_t *sb )
-{
-	fireDef_t	*fd;
-	qboolean	only_delay;
-	int		type;
-
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &only_delay, &type);
-
-	/* get the fire def */
-	fd = GET_FIREDEF( type );
-
-	/* start the sound; TODO: is check for SF_BOUNCED needed? */
-	if (!only_delay && fd->fireSound[0])
-		S_StartLocalSound( fd->fireSound );
-}
-
 
 /*
 =====================
@@ -927,7 +905,7 @@ void CL_InvAmmo( sizebuf_t *sb )
 
 	le = LE_Get( number );
 	if ( !le ) {
-		Com_Printf( "InvAmmo message ignored... LE not found\n" );
+		Com_DPrintf( "InvAmmo message ignored... LE not found\n" );
 		return;
 	}
 
@@ -963,7 +941,7 @@ void CL_InvReload( sizebuf_t *sb )
 
 	le = LE_Get( number );
 	if ( !le ) {
-		Com_Printf( "InvReload message ignored... LE not found\n" );
+		Com_DPrintf( "InvReload message ignored... LE not found\n" );
 		return;
 	}
 
@@ -1086,12 +1064,12 @@ void CL_ParseEvent( void )
 			case EV_ACTOR_SHOOT_HIDDEN:
 				{
 					fireDef_t *fd;
-					qboolean only_delay;
+					qboolean first;
 					int type;
 
-					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &only_delay, &type);
+					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &type);
 
-					if (only_delay) {
+					if (first) {
 						nextTime += 500;
 						impactTime = shootTime = nextTime;
 					} else { 
