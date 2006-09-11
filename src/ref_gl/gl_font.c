@@ -597,7 +597,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 
 			Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
 		}
-		
+
 		/* skip for next line */
 		fy += fh;
 		buffer = pos;
@@ -613,6 +613,14 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
  */
 void Font_Init(void)
 {
+	SDL_version version;
+
+	SDL_TTF_VERSION(&version);
+	ri.Con_Printf(PRINT_ALL, "...SDL_ttf version %i.%i.%i - we need at least 2.0.7\n",
+		version.major,
+		version.minor,
+		version.patch);
+
 	numFonts = 0;
 	memset(fonts, 0, sizeof(fonts));
 
