@@ -1,5 +1,5 @@
 // List of researched items at campaign start
-researched researched_human
+researched rslist_human
 {
 	rs_weapon_assault
 	rs_weapon_assault_ammo
@@ -54,7 +54,7 @@ researched researched_human
 }
 
 // mark these as researchable
-researchable researched_human
+researchable rslist_human
 {
 	rs_laser
 	rs_kevlar_armor
@@ -82,11 +82,11 @@ researchable researched_human
 }
 
 // mark these explicit as not researchable
-//notresearchable researched_human
+//notresearchable rslist_human
 //{
 //}
 
-researched researched_alien
+researched rslist_aliens
 {
 	rs_plasma
 	rs_tachyon
@@ -122,7 +122,7 @@ researched researched_alien
 }
 
 // mark these as researchable
-researchable researched_alien
+researchable rslist_alien
 {
 	rs_plasma
 	rs_tachyon
@@ -158,7 +158,7 @@ researchable researched_alien
 }
 
 // mark these explicit as not researchable
-// notresearchable researched_alien
+// notresearchable rslist_alien
 // {
 // }
 

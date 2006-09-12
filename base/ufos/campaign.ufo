@@ -136,7 +136,7 @@ campaign veryhard
 	workers		1
 	medics		0
 	difficulty	4
-	researched	researched_human
+	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
 	credits		3500000
@@ -157,7 +157,7 @@ campaign hard
 	workers		2
 	medics		1
 	difficulty	2
-	researched	researched_human
+	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
 	credits		3700000
@@ -178,7 +178,7 @@ campaign main
 	workers		4
 	medics		2
 	difficulty	0
-	researched	researched_human
+	researched rslist_human
 //	ugvs	2
 	equipment	campaign_player
 	market		campaign_market
@@ -200,7 +200,7 @@ campaign easy
 	workers		6
 	medics		3
 	difficulty	-2
-	researched	researched_human
+	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
 	credits		4500000
@@ -221,7 +221,7 @@ campaign veryeasy
 	workers		9
 	medics		4
 	difficulty	-4
-	researched	researched_human
+	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
 	credits		6000000
@@ -242,7 +242,7 @@ campaign aliencampaign
 	workers		9
 	medics		4
 	difficulty	-4
-	researched	researched_alien
+	researched	rslist_alien
 	equipment	campaign_player_aliens
 	market		campaign_market_aliens
 	credits		6000000
@@ -263,7 +263,7 @@ campaign test
 	workers		11
 	medics		11
 	difficulty	0
-	researched	researched_human
+	researched	rslist_human
 	equipment	testing_and_tweaking
 	market		testing_and_tweaking
 	credits		100000000
