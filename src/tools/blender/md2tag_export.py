@@ -108,10 +108,12 @@ def get_euler(loc, X,Y,Z):
 	locY = Mathutils.Vector(loc[0], loc[1]+1.0, loc[2])
 	locZ = Mathutils.Vector(loc[0], loc[1], loc[2]+1.0)
 
-	rotX = getAng3pt3d(locX, loc, X)
-	rotY = getAng3pt3d(locY, loc, Y)
-	rotZ = getAng3pt3d(locZ, loc, Z)
-	return (rotX, rotY, rotZ)
+	euler=Mathutils.Euler(
+		getAng3pt3d(locX, loc, X),
+		getAng3pt3d(locY, loc, Y),
+		getAng3pt3d(locZ, loc, Z)
+		)
+	return euler
 
 ######################################################
 # Additional functions used by Ex- and Importer
@@ -259,10 +261,10 @@ class md2_tag:
 	binary_format="<12f"	#little-endian (<), 12 floats (12f)	| See http://docs.python.org/lib/module-struct.html for more info.
 
 	def __init__(self):
-		Row1	= (0.0, 0.0, 0.0)
-		Row2	= (0.0, 0.0, 0.0)
-		Row3	= (0.0, 0.0, 0.0)
-		Row4	= (0.0, 0.0, 0.0)
+		Row1	= Mathutils.Vector(0.0, 0.0, 0.0)
+		Row2	= Mathutils.Vector(0.0, 0.0, 0.0)
+		Row3	= Mathutils.Vector(0.0, 0.0, 0.0)
+		Row4	= Mathutils.Vector(0.0, 0.0, 0.0)
 	def getSize(self):
 		return struct.calcsize(self.binary_format)
 	def save(self, file):
@@ -300,7 +302,7 @@ class md2_tag:
 		# De-serialize the data.
 		data=struct.unpack(self.binary_format, temp_data)
 
-		# Set the internal data-struct to the sata from the file.
+		# Set the internal data-struct to the data from the file.
 		self.Row1 = (data[0], data[1], data[2])
 		self.Row2 = (data[3], data[4], data[5])
 		self.Row3 = (data[6], data[7], data[8])
