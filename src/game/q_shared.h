@@ -1095,6 +1095,9 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS],  char 
 
 /* =========================================================== */
 
+#define FD_PRIMARY		0
+#define FD_SECONDARY		1
+
 typedef enum {
 	ST_RIGHT_PRIMARY,
 	ST_RIGHT_SECONDARY,
