@@ -13,6 +13,8 @@ medal coin
 //=======================
 // RANKS
 //
+// !!Higher ranks last!!
+//
 // mind
 //	Minimum "mind" value the soldier needs.
 // killed_enemies
