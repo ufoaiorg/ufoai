@@ -283,7 +283,7 @@ qboolean G_ClientConnect(player_t * player, char *userinfo);
 void G_ClientDisconnect(player_t * player);
 
 int G_TestVis(int team, edict_t * check, int flags);
-void G_ClientShoot(player_t * player, int num, pos3_t at, int type);
+qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type);
 void G_ClientReload(player_t *player, int entnum, shoot_types_t st);
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum);

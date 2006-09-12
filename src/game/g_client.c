@@ -1217,7 +1217,6 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 				gi.cprintf(player, PRINT_HIGH, _("Currently shaken, won't let it's guard down.\n"));
 			else {
 				/* Turn off reaction fire and give the soldier back his TUs if it used some. */
-				Com_DPrintf("G_ClientStateChange: Actor reaction state change: many -> none\n");
 				ent->state &= ~STATE_REACTION;
 
 				if ( TU_REACTIONS[ent->number][0] > 0) {
@@ -1233,12 +1232,10 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 				}
 			}
 		} else if (ent->state & STATE_REACTION_ONCE) {
-			Com_DPrintf("G_ClientStateChange: Actor reaction state change: once -> many\n");
 			ent->state &= ~STATE_REACTION;
 			ent->state |= STATE_REACTION_MANY;
 		} else if (G_ActionCheck(player, ent, TU_REACTION)) {
 			/* Turn on reaction fire and save the used TUs to the list. */
-			Com_DPrintf("G_ClientStateChange: Actor reaction state change: none -> once\n");
 			ent->state |= STATE_REACTION_ONCE;
 
 			if ( TU_REACTIONS[ent->number][0] > 0) {
@@ -1344,9 +1341,7 @@ static void G_Morale(int type, edict_t * victim, edict_t * attacker, int param)
 				ent->morale = 0;
 			else
 				ent->morale = newMorale;
-#ifdef PARANOID
-			Com_Printf("New morale is %i - entity morale is %i\n", newMorale, ent->morale);
-#endif
+
 			/* send phys data */
 			G_SendStats(ent);
 		}
@@ -1463,10 +1458,6 @@ static void G_MoraleBehaviour(int team)
 				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
 					ent->TU -= TU_REACTION;
 					/* shaken is later reset along with reaction fire */
-					if (!(ent->state & STATE_REACTION))
-						Com_DPrintf("G_MoraleBehaviour: Actor reaction state change: none -> many\n");
-					else if (ent->state & STATE_REACTION_ONCE)
-						Com_DPrintf("G_MoraleBehaviour: Actor reaction state change: once -> many\n");
 					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
 					G_SendState(G_VisToPM(ent->visflags), ent);
 					gi.cprintf(game.players + ent->pnum, PRINT_HIGH, _("%s is currently shaken.\n"), ent->chr.name);
@@ -2002,7 +1993,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 /**
  * @brief
  */
-void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
+qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 {
 	fireDef_t *fd;
 	edict_t *ent;
@@ -2019,19 +2010,19 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 
 	if (type < ST_LEFT_PRIMARY) {
 		if (!RIGHT(ent))
-			return;
+			return qfalse;
 		weapon = &RIGHT(ent)->item;
 		container = gi.csi->idRight;
 	} else {
 		if (!LEFT(ent))
-			return;
+			return qfalse;
 		weapon = &LEFT(ent)->item;
 		container = gi.csi->idLeft;
 	}
 
 	if (weapon->m == NONE) {
 		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - object not activable!\n"));
-		return; /* TODO: do G_ShootGrenade with that ammo clip */
+		return qfalse; /* TODO: do G_ShootGrenade with that ammo clip */
 	}
 
 	fd = &gi.csi->ods[weapon->m].fd[type & 1];
@@ -2040,11 +2031,11 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 
 	/* check if action is possible */
 	if (!G_ActionCheck(player, ent, fd->time))
-		return;
+		return qfalse;
 
 	if (!ammo && fd->ammo && !gi.csi->ods[weapon->t].thrown) {
 		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - no ammo!\n"));
-		return;
+		return qfalse;
 	}
 
 	/* fire shots */
@@ -2057,7 +2048,7 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 		ammo -= fd->ammo;
 		if (shots < 1) {
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not enough ammo!\n"));
-			return;
+			return qfalse;
 		}
 	}
 
@@ -2152,6 +2143,8 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 
 	/* check for Reaction fire against the shooter */
 	G_ReactionFire(ent);
+
+	return qtrue;
 }
 
 /**
@@ -2404,16 +2397,14 @@ qboolean G_ReactionFire(edict_t * target)
 					 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
 						 || RIGHT(ent)->item.a > 0)
 					 && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
-					G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY);
-					fired = qtrue;
+					fired = G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY);
 				} else if ( LEFT(ent)
 							&& (LEFT(ent)->item.m != NONE)
 							&& gi.csi->ods[LEFT(ent)->item.t].weapon
 							&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 								|| LEFT(ent)->item.a > 0)
 							&& gi.csi->ods[LEFT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
-					G_ClientShoot(player, ent->number, target->pos, ST_LEFT_PRIMARY);
-					fired = qtrue;
+					fired = G_ClientShoot(player, ent->number, target->pos, ST_LEFT_PRIMARY);
 				}
 
 				/* Revert active team. */
@@ -2470,7 +2461,7 @@ void G_ClientAction(player_t * player)
 
 	case PA_SHOOT:
 		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i);
-		G_ClientShoot(player, num, pos, i);
+		(void)G_ClientShoot(player, num, pos, i);
 		break;
 
 	case PA_INVMOVE:

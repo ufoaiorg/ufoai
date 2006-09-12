@@ -1131,12 +1131,9 @@ void CL_ActorToggleReaction(void)
 
 	state = selActor->state & ~STATE_REACTION;
 	if (selActor->state & STATE_REACTION_MANY) {
-		Com_DPrintf("CL_ActorToggleReaction: Actor reaction state change: many -> none\n");
 	} else if (selActor->state & STATE_REACTION_ONCE) {
-		Com_DPrintf("CL_ActorToggleReaction: Actor reaction state change: once -> many\n");
 		state |= STATE_REACTION_MANY;
 	} else {
-		Com_DPrintf("CL_ActorToggleReaction: Actor reaction state change: none -> once\n");
 		state |= STATE_REACTION_ONCE;
 	}
 
