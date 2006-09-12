@@ -187,8 +187,8 @@ item smokegrenade
 		projtl	smokegren
 		impact	smoke_explosion
 		hitbody smoke_explosion
-		impsnd	misc/smoke_grenade.wav
-		bodysnd	misc/smoke_grenade.wav
+		impsnd	weapons/smoke_grenade.wav
+		bodysnd	weapons/smoke_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -253,7 +253,7 @@ item stungrenade
 		skill	explosive
 		projtl	stungren
 		impact	coronaImpact
-		hitbody coronaImpact
+		hitbody	coronaImpact
 		impsnd	weapons/stun_grenade.wav
 		bodysnd	weapons/stun_grenade.wav
 		bncsnd	misc/klonk03.wav
@@ -277,7 +277,7 @@ item stungrenade
 		skill	explosive
 		projtl	stungren
 		impact	coronaImpact
-		hitbody coronaImpact
+		hitbody	coronaImpact
 		impsnd	weapons/stun_grenade.wav
 		bodysnd	weapons/stun_grenade.wav
 		bncsnd	misc/klonk03.wav
@@ -388,7 +388,7 @@ item plasmagrenade
 		skill	explosive
 		projtl	plasmagren
 		impact	plasmaBigExplosion
-		hitbody plasmaBigExplosion
+		hitbody	plasmaBigExplosion
 		impsnd	weapons/plasma_grenade.wav
 		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
@@ -412,7 +412,7 @@ item plasmagrenade
 		skill	explosive
 		projtl	plasmagren
 		impact	plasmaBigExplosion
-		hitbody plasmaBigExplosion
+		hitbody	plasmaBigExplosion
 		impsnd	weapons/plasma_grenade.wav
 		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav

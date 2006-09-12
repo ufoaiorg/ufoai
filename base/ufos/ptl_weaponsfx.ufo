@@ -849,6 +849,15 @@ particle incgren
 	}
 }
 
+particle smokegren
+{
+	init
+	{
+		model  weapons/smokegren/smokegren
+		color  ".5 .5 .5 1"
+	}
+}
+
 particle stungren
 {
 	init
@@ -882,6 +891,7 @@ particle smoke_explosion
 	}
 	round
 	{
+		tps		50.0
 	}
 }
 
@@ -896,30 +906,6 @@ particle frag_explosion
 		kill
 	}
 }
-
-//particle grenadeSmoke
-//{
-//	init
-//	{
-//		image  sfx/spark
-//		blend  add
-//		style  facing
-//		tfade  out
-//		size   "5 5"
-//
-//		crand  vector "160 160 160"
-//		pop    *v
-//
-//		crand  vector "15 15 15"
-//		add    *s
-//		pop    *s
-//
-//		rand   float 1.2
-//		add    float 1.2
-//		pop    *tps
-//	}
-//	think { kill }
-//}
 
 particle grenadeFragment
 {

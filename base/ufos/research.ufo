@@ -333,16 +333,16 @@ tech rs_weapon_fraggren
 	time	0
 }
 
-//tech rs_weapon_smokegren
-//{
-//	type	weapon
-//	up_chapter	weapons
-//	description	"_smokegren_txt"
-//
-//	requires	rs_skill_explosive
-//	provides	smokegrenade
-//	time	0
-//}
+tech rs_weapon_smokegren
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_smokegren_txt"
+
+	requires	rs_skill_explosive
+	provides	smokegrenade
+	time	0
+}
 
 tech rs_weapon_combatknife
 {

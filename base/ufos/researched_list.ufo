@@ -63,6 +63,7 @@ researchable rslist_human
 	rs_damage_fire
 	rs_damage_shock
 	rs_damage_stun
+	rs_weapon_smokegren
 	rs_skill_power
 	rs_skill_speed
 	rs_skill_accuracy

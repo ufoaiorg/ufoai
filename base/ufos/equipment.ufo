@@ -23,6 +23,7 @@ equipment campaign_player
 	fraggrenade		3
 	knife			1
 	light			0
+	smokegrenade	2
 }
 
 equipment campaign_market
@@ -55,6 +56,7 @@ equipment campaign_market
 	heavylaser				1
 	heavylaser_ammo			5
 	fraggrenade				40
+	smokegrenade			10
 	knife					20
 	irgoggles				2
 	medikit					2

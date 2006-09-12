@@ -262,24 +262,6 @@ particle smokesmall
 	think { kill }
 }
 
-particle smokebig
-{
-	init
-	{
-		image  sfx/smoke
-		blend  invfilter
-		style  rotated
-		rounds 2
-		tfade  out
-		v      "0 0 0"
-		a      "0 0 0"
-	}
-	run
-	{
-		spawn  smokesmall
-	}
-}
-
 particle burnFlame
 {
 	init
@@ -306,7 +288,7 @@ particle burnFlame
 	think { kill }
 }
 
-particle greenSmokeMap
+particle greensmokebig
 {
 	init
 	{
@@ -341,7 +323,7 @@ particle smokebig
 	init
 	{
 		image		sfx/smoke
-		blend		invfilter
+		blend		add
 		style		facing
 		tfade		out
 		rand		float 0.2
@@ -368,7 +350,7 @@ particle smokeRound2
 	init
 	{
 		image		sfx/smoke
-		blend		add
+		blend		invfilter
 		style		facing
 		tfade		out
 		rand		float 0.2
