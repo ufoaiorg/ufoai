@@ -2,6 +2,7 @@
  * @file gl_image.c
  * @brief
  */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -24,11 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-char glerrortex[MAX_GLERRORTEX];
-char *glerrortexend;
-image_t gltextures[MAX_GLTEXTURES];
-int numgltextures;
-int base_textureid;				/* gltextures[i] = base_textureid+i */
+static char glerrortex[MAX_GLERRORTEX];
+static char *glerrortexend;
+static image_t gltextures[MAX_GLTEXTURES];
+static int numgltextures;
 
 static byte intensitytable[256];
 static byte gammatable[256];
@@ -38,8 +38,8 @@ extern cvar_t *gl_imagefilter;
 
 unsigned d_8to24table[256];
 
-qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image);
-qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image);
+static qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image);
+static qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image);
 
 int gl_solid_format = GL_RGB;
 int gl_alpha_format = GL_RGBA;
@@ -473,9 +473,7 @@ static void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, in
 
 /*
 =========================================================
-
 TARGA LOADING
-
 =========================================================
 */
 
@@ -681,11 +679,8 @@ void LoadTGA(char *name, byte ** pic, int *width, int *height)
 
 /*
 =================================================================
-
 JPEG LOADING
-
 By Robert 'Heffo' Heffernan
-
 =================================================================
 */
 
@@ -872,8 +867,8 @@ void term_destination(j_compress_ptr cinfo)
 	hackSize = datacount;
 }
 
-/*
- * Empty the output buffer --- called whenever buffer fills up.
+/**
+ * @brief Empty the output buffer --- called whenever buffer fills up.
  *
  * In typical applications, this should write the entire output buffer
  * (ignoring the current state of next_output_byte & free_in_buffer),
@@ -894,14 +889,13 @@ void term_destination(j_compress_ptr cinfo)
  * Data beyond this point will be regenerated after resumption, so do not
  * write it out when emptying the buffer externally.
  */
-
 boolean empty_output_buffer(j_compress_ptr cinfo)
 {
 	return TRUE;
 }
 
-/*
- * Prepare for output to a stdio stream.
+/**
+ * @brief Prepare for output to a stdio stream.
  * The caller must have already opened the stream, and is responsible
  * for closing it after finishing compression.
  */
@@ -1105,9 +1099,7 @@ int SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_heigh
 
 /*
 ====================================================================
-
 IMAGE FLOOD FILLING
-
 ====================================================================
 */
 
@@ -1134,7 +1126,7 @@ typedef struct {
 /**
  * @brief Fill background pixels so mipmapping doesn't have haloes
  */
-void R_FloodFillSkin(byte * skin, int skinwidth, int skinheight)
+static void R_FloodFillSkin(byte * skin, int skinwidth, int skinheight)
 {
 	byte fillcolor = *skin;		/* assume this is the pixel to fill */
 	floodfill_t fifo[FLOODFILL_FIFO_SIZE];
@@ -1192,7 +1184,7 @@ void R_FloodFillSkin(byte * skin, int skinwidth, int skinheight)
 /**
  * @brief
  */
-void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
+static void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
 {
 	int i, j;
 	unsigned *inrow, *inrow2;
@@ -1238,7 +1230,7 @@ void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, 
 /**
  * @brief Scale up the pixel values in a texture to increase the lighting range
  */
-void GL_LightScaleTexture(unsigned *in, int inwidth, int inheight, qboolean only_gamma)
+static void GL_LightScaleTexture(unsigned *in, int inwidth, int inheight, qboolean only_gamma)
 {
 	if (gl_combine || only_gamma) {
 		int i, c;
@@ -1270,7 +1262,7 @@ void GL_LightScaleTexture(unsigned *in, int inwidth, int inheight, qboolean only
 /**
  * @brief Operates in place, quartering the size of the texture
  */
-void GL_MipMap(byte * in, int width, int height)
+static void GL_MipMap(byte * in, int width, int height)
 {
 	int i, j;
 	byte *out;
@@ -1488,7 +1480,7 @@ static unsigned scaled_buffer[1024 * 1024];
  * @brief
  * @return has_alpha
  */
-qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image)
+static qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image)
 {
 	unsigned *scaled;
 	int samples;
@@ -1620,7 +1612,7 @@ qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qbo
  * @brief
  * @return has_alpha
  */
-qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image)
+static qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image)
 {
 	unsigned *trans;
 	size_t trans_size = 512 * 256 * sizeof(trans[0]);
@@ -1674,7 +1666,7 @@ qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagety
 
 #define DAEMMERUNG	0.03
 
-byte DaNalpha[DAN_WIDTH * DAN_HEIGHT];
+static byte DaNalpha[DAN_WIDTH * DAN_HEIGHT];
 image_t *DaN;
 
 /**
@@ -1682,7 +1674,6 @@ image_t *DaN;
  */
 void GL_CalcDayAndNight(float q)
 {
-/* 	int start; */
 	int x, y;
 	float phi, dphi, a, da;
 	float sin_q, cos_q, root;
@@ -1875,6 +1866,8 @@ image_t *GL_FindImageForShader(char *name)
 /**
  * @brief Finds or loads the given image
  * @sa Draw_FindPic
+ * @param pname Image name
+ * @note the image name has to be at least 5 chars long
  */
 image_t *GL_FindImage(char *pname, imagetype_t type)
 {
