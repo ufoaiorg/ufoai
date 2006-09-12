@@ -1731,10 +1731,9 @@ void MN_DrawMenus(void)
 					} else
 						menuModel = node->menuModel;
 
-					if (Q_strncmp(oldSource, source, MAX_VAR)) {
+					if (!node->data[2] && Q_strncmp(oldSource, source, MAX_VAR)) {
 						Q_strncpyz(oldSource, source, MAX_VAR);
 						node->data[4] = NULL;
-						Com_Printf("Set null for model %s\n", source);
 					}
 					mi.name = source;
 
