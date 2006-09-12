@@ -2001,7 +2001,7 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 	edict_t *ent;
 	item_t *weapon;
 	vec3_t dir, center, target, shotOrigin;
-	int i, ammo, wi, shots;
+	int i, ammo, wi, reaction_leftover, shots;
 	int container, mask;
 
 	ent = g_edicts + num;
@@ -2010,7 +2010,7 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 	if (type >= ST_NUM_SHOOT_TYPES)
 		gi.error("G_ClientShoot: unknown shoot type %i.\n", type);
 
-	if (type < ST_LEFT_PRIMARY) {
+	if (IS_SHOT_RIGHT(type)) {
 		if (!RIGHT(ent))
 			return qfalse;
 		weapon = &RIGHT(ent)->item;
@@ -2027,12 +2027,13 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 		return qfalse; /* TODO: do G_ShootGrenade with that ammo clip */
 	}
 
-	fd = &gi.csi->ods[weapon->m].fd[type & 1];
-	wi = weapon->m | ((type % 2/*filter out hand*/) << 7/*move to byte end*/);
+	fd = &gi.csi->ods[weapon->m].fd[SHOT_FD_PRIO(type)];
+	wi = weapon->m | (SHOT_FD_PRIO(type) << 7/*move to byte end*/);
 	ammo = weapon->a;
+	reaction_leftover = IS_SHOT_REACTION(type) ? sv_reaction_leftover->value : 0;
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, fd->time))
+	if (!G_ActionCheck(player, ent, fd->time + reaction_leftover))
 		return qfalse;
 
 	if (!ammo && fd->ammo && !gi.csi->ods[weapon->t].thrown) {
@@ -2094,7 +2095,7 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 			gi.WriteByte(ammo);
 			gi.WriteByte(weapon->m);
 			weapon->a = ammo;
-			if (type < ST_LEFT_PRIMARY)
+			if (IS_SHOT_RIGHT(type))
 				gi.WriteByte(gi.csi->idRight);
 			else
 				gi.WriteByte(gi.csi->idLeft);
@@ -2399,14 +2400,14 @@ qboolean G_ReactionFire(edict_t * target)
 					 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
 						 || RIGHT(ent)->item.a > 0)
 					 && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
-					fired = G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY);
+					fired = G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY_REACTION);
 				} else if ( LEFT(ent)
 							&& (LEFT(ent)->item.m != NONE)
 							&& gi.csi->ods[LEFT(ent)->item.t].weapon
 							&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 								|| LEFT(ent)->item.a > 0)
 							&& gi.csi->ods[LEFT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
-					fired = G_ClientShoot(player, ent->number, target->pos, ST_LEFT_PRIMARY);
+					fired = G_ClientShoot(player, ent->number, target->pos, ST_LEFT_PRIMARY_REACTION);
 				}
 
 				/* Revert active team. */

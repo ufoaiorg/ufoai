@@ -161,6 +161,7 @@ extern cvar_t *sv_maxvelocity;
 
 extern cvar_t *sv_cheats;
 extern cvar_t *sv_maxclients;
+extern cvar_t *sv_reaction_leftover;
 extern cvar_t *maxplayers;
 extern cvar_t *maxsoldiers;
 extern cvar_t *maxsoldiersperplayer;

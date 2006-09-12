@@ -123,6 +123,17 @@ typedef enum {
 	M_PEND_FIRE_SL
 } cmodes_t;
 
+#define IS_MODE_FIRE_RIGHT(x)	((x) == M_FIRE_PR || (x) == M_FIRE_SR \
+				|| (x) == M_PEND_FIRE_PR || (x) == M_PEND_FIRE_SR)
+#define IS_MODE_FIRE_LEFT(x)	((x) == M_FIRE_PL || (x) == M_FIRE_SL \
+				|| (x) == M_PEND_FIRE_PL || (x) == M_PEND_FIRE_SL)
+#define IS_MODE_FIRE_PRIMARY(x)	((x) == M_FIRE_PR || (x) == M_FIRE_PL \
+				|| (x) == M_PEND_FIRE_PR || (x) == M_PEND_FIRE_PL)
+#define IS_MODE_FIRE_SECONDARY(x) \
+				((x) == M_FIRE_SR || (x) == M_FIRE_SL \
+				|| (x) == M_PEND_FIRE_SR || (x) == M_PEND_FIRE_SL)
+#define MODE_FD_PRIO(x)		(IS_MODE_FIRE_PRIMARY(x) ? FD_PRIMARY : FD_SECONDARY)
+
 /* the client_state_t structure is wiped completely at every */
 /* server map change */
 typedef struct {

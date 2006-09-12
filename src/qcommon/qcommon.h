@@ -243,6 +243,7 @@ extern cvar_t *dedicated;
 extern cvar_t *host_speeds;
 extern cvar_t *log_stats;
 extern cvar_t *sv_maxclients;
+extern cvar_t *sv_reaction_leftover;
 
 extern FILE *log_stats_file;
 
