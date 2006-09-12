@@ -303,10 +303,14 @@ class md2_tag:
 		data=struct.unpack(self.binary_format, temp_data)
 
 		# Set the internal data-struct to the data from the file.
-		self.Row1 = (data[0], data[1], data[2])
-		self.Row2 = (data[3], data[4], data[5])
-		self.Row3 = (data[6], data[7], data[8])
-		self.Row4 = (data[9], data[10], data[11])
+		#self.Row1 = (data[0], data[1], data[2])
+		#self.Row2 = (data[3], data[4], data[5])
+		#self.Row3 = (data[6], data[7], data[8])
+		#self.Row4 = (data[9], data[10], data[11])
+		self.Row4 = (data[0], data[1], data[2])
+		self.Row3 = (data[3], data[4], data[5])
+		self.Row2 = (data[6], data[7], data[8])
+		self.Row1 = (data[9], data[10], data[11])
 
 		# Convert the orientation of the axes to the blender format.
 		self.Row1 = (self.Row1[1], -self.Row1[0], self.Row1[2])
