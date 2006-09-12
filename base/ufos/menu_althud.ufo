@@ -481,7 +481,8 @@ menu althud
 		click	{ cmd firels; }
 	}
 
-	confunc startreactiona { *bt_reaction image althud/buttons_althud1a }
+	confunc startreactionmanya { *bt_reaction image althud/buttons_althud1b }
+	confunc startreactiononcea { *bt_reaction image althud/buttons_althud1a }
 	confunc stopreactiona  { *bt_reaction image althud/buttons_althud1 }
 
 	pic bt_reaction

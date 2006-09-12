@@ -175,13 +175,10 @@ void G_ResetReactionFire(int team)
 					/* No TUs at all available. */
 					TU_REACTIONS[ent->number][0] = -1;
 				}
-
-				ent->state &= ~STATE_SHAKEN;	/* STATE_SHAKEN includes STATE_REACTION */
-				ent->state |= STATE_REACTION;	/* re-set STATE_REACTION */
 			} else {
 				TU_REACTIONS[ent->number][0] = 0;	/* Reset saved TUs. */
-				ent->state &= ~STATE_SHAKEN;	/* STATE_SHAKEN includes STATE_REACTION */
 			}
+			ent->state &= ~STATE_SHAKEN;
 			gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(ent->state);
@@ -1215,11 +1212,12 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 		}
 
 	if (changeState & STATE_REACTION) {
-		if (ent->state & STATE_REACTION) {
-			if (ent->state & (STATE_SHAKEN & ~STATE_REACTION))
+		if (ent->state & STATE_REACTION_MANY) {
+			if (ent->state & STATE_SHAKEN)
 				gi.cprintf(player, PRINT_HIGH, _("Currently shaken, won't let it's guard down.\n"));
 			else {
 				/* Turn off reaction fire and give the soldier back his TUs if it used some. */
+				Com_DPrintf("G_ClientStateChange: Actor reaction state change: many -> none\n");
 				ent->state &= ~STATE_REACTION;
 
 				if ( TU_REACTIONS[ent->number][0] > 0) {
@@ -1234,9 +1232,14 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 					Com_DPrintf("G_ClientStateChange: 0 value saved for reaction while reaction is activated.\n");
 				}
 			}
+		} else if (ent->state & STATE_REACTION_ONCE) {
+			Com_DPrintf("G_ClientStateChange: Actor reaction state change: once -> many\n");
+			ent->state &= ~STATE_REACTION;
+			ent->state |= STATE_REACTION_MANY;
 		} else if (G_ActionCheck(player, ent, TU_REACTION)) {
 			/* Turn on reaction fire and save the used TUs to the list. */
-			ent->state |= STATE_REACTION;
+			Com_DPrintf("G_ClientStateChange: Actor reaction state change: none -> once\n");
+			ent->state |= STATE_REACTION_ONCE;
 
 			if ( TU_REACTIONS[ent->number][0] > 0) {
 				/* TUs where saved for this turn (either the full TU_REACTION or some remaining TUs from the shot. This was done either in the last turn or this one. */
@@ -1460,7 +1463,11 @@ static void G_MoraleBehaviour(int team)
 				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
 					ent->TU -= TU_REACTION;
 					/* shaken is later reset along with reaction fire */
-					ent->state |= STATE_SHAKEN;
+					if (!(ent->state & STATE_REACTION))
+						Com_DPrintf("G_MoraleBehaviour: Actor reaction state change: none -> many\n");
+					else if (ent->state & STATE_REACTION_ONCE)
+						Com_DPrintf("G_MoraleBehaviour: Actor reaction state change: once -> many\n");
+					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
 					G_SendState(G_VisToPM(ent->visflags), ent);
 					gi.cprintf(game.players + ent->pnum, PRINT_HIGH, _("%s is currently shaken.\n"), ent->chr.name);
 				} else {
@@ -2369,13 +2376,13 @@ qboolean G_ReactionFire(edict_t * target)
 
 	fired = qfalse;
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN) && !TU_REACTIONS[ent->number][1] ) {
-			/* TODO: After implementing the 3-state button for Reaction Fire: && ( ( togglebutton == morethanone ) || ( (togglebutton == onlyone) && !TU_REACTIONS[ent->number][1] ) ) */
+		if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) &&
+				(ent->state & STATE_SHAKEN || ent->state & STATE_REACTION_MANY || (ent->state & STATE_REACTION_ONCE && !TU_REACTIONS[ent->number][1]))) {
 			actorVis = G_ActorVis(ent->origin, target, qtrue);
 			frustom = G_FrustomVis(ent, target->origin);
 			if (actorVis > 0.4 && frustom) {
 				if (target->team == TEAM_CIVILIAN || target->team == ent->team)
-					if (!(ent->state & (STATE_SHAKEN & ~STATE_REACTION)) || (float) ent->morale / mor_shaken->value > frand())
+					if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand())
 						continue;
 				/* If reaction fire is triggered by a friendly unit
 				   and the shooter is still sane, don't shoot;
@@ -2413,12 +2420,8 @@ qboolean G_ReactionFire(edict_t * target)
 				level.activeTeam = team;
 
 				if ( fired ) {
-					/* Update reaction data if fired. */
-					ent->state &= ~STATE_SHAKEN;	/* STATE_SHAKEN includes STATE_REACTION */
-					ent->state |= STATE_REACTION;	/* re-set STATE_REACTION */
-#if 0
+					ent->state &= ~STATE_SHAKEN;
 					TU_REACTIONS[ent->number][1]  += 1;	/* Save the fact that the ent has fired. */
-#endif
 				}
 
 				/* Check for death of the target. */

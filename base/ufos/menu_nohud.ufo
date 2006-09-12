@@ -35,6 +35,7 @@ menu nohud
 	
 	confunc tostand { cmd tostands;tostanda; }
 	confunc tocrouch { cmd tocrouchs;tocroucha; }
-	confunc startreaction { cmd startreactions;startreactiona; }
+	confunc startreactionmany { cmd startreactionmanys;startreactionmanya; }
+	confunc startreactiononce { cmd startreactiononces;startreactiononcea; }
 	confunc stopreaction { cmd stopreactions;stopreactiona; }
 }

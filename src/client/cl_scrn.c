@@ -446,8 +446,10 @@ void SCR_DrawCursor(void)
 				icon_offset_y += icon_spacing;
 
 				/* Display 'Reaction shot' icon if actor has it activated. */
-				if (selActor->state & STATE_REACTION)
+				if (selActor->state & STATE_REACTION_ONCE)
 					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfire");
+				else if (selActor->state & STATE_REACTION_MANY)
+					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfiremany");
 				icon_offset_y += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
 				icon_offset_y += icon_spacing;
 
