@@ -267,7 +267,9 @@ void CL_ResetCharacters(base_t* const base)
 	/* reset hire info */
 	Cvar_ForceSet("cl_selected", "0");
 
-	E_UnhireAllEmployees(base, EMPL_SOLDIER);
+	for (i = 0; i < MAX_EMPL; i++)
+		E_UnhireAllEmployees(base, i);
+
 	for (i = 0; i < base->numAircraftInBase; i++)
 		base->teamMask[i] = base->teamNum[i] = 0;
 }
