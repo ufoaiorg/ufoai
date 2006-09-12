@@ -36,9 +36,19 @@ sequence ufos_are_coming
 		speed	"0 -30"
 		relative	true
 	}
+	2dobj uac_sentence2
+	{
+//		text	"_ufos_sentence2"
+		text	"_(Catch them with your Interceptor to shoot them down.)"
+		pos		"512 510"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -30"
+		relative	true
+	}
 	wait 20.0
 
 	rem uac_sentence1
+	rem uac_sentence2
 }
 
 sequence alienbase
@@ -48,9 +58,27 @@ sequence alienbase
 
 	2dobj ab_sentence1
 	{
-//		text	"_alienbase_sentence1"
+//		text	"_alienbase_sentence2"
 		text	"_Finally: The attack on the alien base ..."
 		pos		"512 485"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -30"
+		relative	true
+	}
+	2dobj ab_sentence2
+	{
+//		text	"_alienbase_sentence2"
+		text	"(Not implemented yet, just as many other features."
+		pos		"512 520"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -30"
+		relative	true
+	}
+	2dobj ab_sentence3
+	{
+//		text	"_alienbase_sentence3"
+		text	"Please contribute, e.g., mission names and definitions.)"
+		pos		"512 527"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -30"
 		relative	true
@@ -58,4 +86,6 @@ sequence alienbase
 	wait 20.0
 
 	rem ab_sentence1
+	rem ab_sentence2
+	rem ab_sentence3
 }

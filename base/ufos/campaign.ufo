@@ -81,6 +81,7 @@ stage ufos_are_coming
 		expire		"0 8 0"
 		missions	"construction farm2 office harbor" // pdi is broken
 		quota		3
+		commands	"addufo;"
 		nextstage	invasion
 	}
 	set stop_coming
