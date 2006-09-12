@@ -1,6 +1,6 @@
 /**
  * @file cl_main.c
- * @brief Client main loop
+ * @brief Primary functions for the client. NB: The main() is system-secific and can currently be found in ports/.
  */
 
 /*

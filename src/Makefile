@@ -37,6 +37,7 @@ ifneq ($(OSTYPE),Linux)
 	ifneq ($(OSTYPE),FreeBSD)
 		ifneq ($(OSTYPE),Darwin)
 			ifeq ($(OSTYPE),SunOS)
+# TODO: Update this Makefile to do Solaris.
 				$(error OS $(OSTYPE) detected, use "Makefile.Solaris" instead.)
 			else
 				$(error OS $(OSTYPE) is currently not supported)

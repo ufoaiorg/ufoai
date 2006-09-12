@@ -393,7 +393,11 @@ char *Sys_GetClipboardData(void)
 }
 
 /**
- * @brief
+ * @brief The entry point for linux server and client.
+ *
+ * Inits the the program and calls Qcommon in an infinite loop.
+ * FIXME: While this works, infinite loops are bad; one should not rely on exit() call; the program should be designed to fall through the bottom.
+ * FIXME: Why is there a sleep statement?
  */
 int main (int argc, char **argv)
 {

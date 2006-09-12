@@ -1,36 +1,16 @@
-DO_CC=echo " * [UFO] $@"; $(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c
+buildcommon?=$(BUILDDIR)/common
 
-.PHONY: all
+COMMON_HDR+=$(COMMON_SRC)/qcommon.h
 
-$(BUILDDIR)/common/%.o: %.c %.h $(COMMON_HDR)
-	@echo " * [UFO] $@"; $(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c $<
+commonobjs+=$(buildcommon)/cmd.o
+commonobjs+=$(buildcommon)/cmodel.o
+commonobjs+=$(buildcommon)/common.o
+commonobjs+=$(buildcommon)/crc.o
+commonobjs+=$(buildcommon)/cvar.o
+commonobjs+=$(buildcommon)/files.o
+commonobjs+=$(buildcommon)/md4.c
+commonobjs+=$(buildcommon)/net_chan.c
+commonobjs+=$(buildcommon)/scripts.c
 
-all: $(BUILDDIR)/common/cmd.o
-
-#$(BUILDDIR)/common/cmd.o: $(COMMON_HDR) cmd.c
-#	$(DO_CC) cmd.c
-
-$(BUILDDIR)/common/cmodel.o: $(COMMON_HDR) cmodel.c
-	$(DO_CC) cmodel.c
-
-$(BUILDDIR)/common/common.o: $(COMMON_HDR) common.c
-	$(DO_CC) common.c
-
-$(BUILDDIR)/common/crc.o: $(COMMON_HDR) crc.h crc.c
-	$(DO_CC) crc.c
-
-$(BUILDDIR)/common/cvar.o: $(COMMON_HDR) cvar.c
-	$(DO_CC) cvar.c
-
-$(BUILDDIR)/common/files.o: $(COMMON_HDR) files.c
-	$(DO_CC) files.c
-
-$(BUILDDIR)/common/md4.o: $(COMMON_HDR) md4.c
-	$(DO_CC) md4.c
-
-$(BUILDDIR)/common/net_chan.o: $(COMMON_HDR) net_chan.c
-	$(DO_CC) net_chan.c
-
-$(BUILDDIR)/common/scripts.o: $(COMMON_HDR) scripts.c
-	$(DO_CC) scripts.c
-
+$(buildcommon)/%.o: $(COMMON_SRC)/%.c $(COMMON_SRC)/%.h $(COMMON_HDR)
+	@echo " * [COMMON] $@"; $(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c $<
