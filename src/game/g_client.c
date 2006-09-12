@@ -1344,9 +1344,7 @@ static void G_Morale(int type, edict_t * victim, edict_t * attacker, int param)
 				ent->morale = 0;
 			else
 				ent->morale = newMorale;
-#ifdef PARANOID
-			Com_Printf("New morale is %i - entity morale is %i\n", newMorale, ent->morale);
-#endif
+
 			/* send phys data */
 			G_SendStats(ent);
 		}
