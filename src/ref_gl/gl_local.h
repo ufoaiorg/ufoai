@@ -305,6 +305,7 @@ void GL_MBind(GLenum target, int texnum);
 void GL_TexEnv(GLenum value);
 void GL_EnableMultitexture(qboolean enable);
 void GL_SelectTexture(GLenum);
+void GL_CalcDayAndNight(float q);
 
 void R_LightPoint(vec3_t p, vec3_t color);
 
