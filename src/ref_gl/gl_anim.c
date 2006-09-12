@@ -1,5 +1,5 @@
 /**
- * @file gl_arb_shader.c
+ * @file gl_anim.c
  * @brief animation parsing and playing
  */
 
@@ -38,7 +38,7 @@ manim_t *Anim_Get(model_t * mod, char *name)
 		return NULL;
 
 	for (i = 0, anim = mod->animdata; i < mod->numanims; i++, anim++)
-		if (!strcmp(name, anim->name))
+		if (!Q_strncmp(name, anim->name, MAX_ANIMNAME))
 			return anim;
 
 	ri.Con_Printf(PRINT_ALL, "model \"%s\" doesn't have animation \"%s\"\n", mod->name, name);
