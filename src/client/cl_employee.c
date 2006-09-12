@@ -451,16 +451,16 @@ employee_t* E_CreateEmployee(employeeType_t type)
 
 	switch (type) {
 		case EMPL_SOLDIER:
-			CL_GenerateCharacter(employee, Cvar_VariableString("team"), ET_ACTOR, type);
+			CL_GenerateCharacter(employee, Cvar_VariableString("team"), type);
 			break;
 		case EMPL_SCIENTIST:
 		case EMPL_MEDIC:
 		case EMPL_WORKER:
-			CL_GenerateCharacter(employee, Cvar_VariableString("team"), ET_ACTOR, type);
+			CL_GenerateCharacter(employee, Cvar_VariableString("team"), type);
 			employee->speed = 100;
 			break;
 		case EMPL_ROBOT:
-			CL_GenerateCharacter(employee, Cvar_VariableString("team"), ET_UGV, type);
+			CL_GenerateCharacter(employee, Cvar_VariableString("team"), type);
 			break;
 		default:
 			break;

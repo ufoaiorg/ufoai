@@ -174,14 +174,14 @@ static void CL_GiveNameCmd(void)
  * @sa CL_ResetCharacters
  * @param[in] employee The employee to create character data for.
  * @param[in] team Which team to use for creation.
- * @param[in] type ???
  * @todo fix the assignment of the inventory (assume that you do not know the base yet)
  * @todo fix the assignment of ucn??
  * @todo fix the WholeTeam stuff
  */
-void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeType_t employeeType)
+void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t employeeType)
 {
 	character_t *chr = NULL;
+	char teamDefName[MAX_VAR];
 
 	if (!employee)
 		return;
@@ -196,54 +196,62 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 	/* get ucn */
 	chr->ucn = gd.nextUCN++;
 
-	Com_DPrintf("Generate character for team: '%s' (type: %i)\n", team, employeeType);
+	Com_DPrintf("Generate character for team: '%s' (type: %i)\n", employeeType, employeeType);
 
-	/* Set the actor size. */
-	switch (type) {
-	case ET_ACTOR:
-		chr->fieldSize = ACTOR_SIZE_NORMAL;
-		break;
-	case ET_UGV:
-		chr->fieldSize = ACTOR_SIZE_UGV;
-		break;
-	default:
-		Sys_Error("CL_GenerateCharacter: Unknown character type (%i)\n", type);
-	}
+	/* Backlink from chr to employee struct. */
+	chr->empl_type = employeeType;
+	chr->empl_idx = employee->idx;
 
 	/* Generate character stats, moels & names. */
 	switch (employeeType) {
 	case EMPL_SOLDIER:
-		chr->rank = 0;
+		chr->rank = CL_GetRank("rookie");
 		/* Create attributes. */
 		Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
 		/* Get model and name. */
+		chr->fieldSize = ACTOR_SIZE_NORMAL;
 		chr->skin = Com_GetModelAndName(team, chr);
 		break;
 	case EMPL_SCIENTIST:
+		chr->rank = CL_GetRank("scientist");
+		/* Create attributes. */
+		Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
+		/* Get model and name. */
+		Com_sprintf(teamDefName, MAX_VAR, "%s_scientist", team);
+		chr->fieldSize = ACTOR_SIZE_NORMAL;
+		chr->skin = Com_GetModelAndName(teamDefName, chr);
+		break;
 	case EMPL_MEDIC:
+		chr->rank = CL_GetRank("medic");
+		/* Create attributes. */
+		Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
+		/* Get model and name. */
+		Com_sprintf(teamDefName, MAX_VAR, "%s_medic", team);
+		chr->fieldSize = ACTOR_SIZE_NORMAL;
+		chr->skin = Com_GetModelAndName(teamDefName, chr);
+		break;
 	case EMPL_WORKER:
-		chr->rank = -1;
+		chr->rank = CL_GetRank("worker");
 		/* Create attributes. */
 		Com_CharGenAbilitySkills(chr, 15, 50, 15, 50);
 		/* Get model and name. */
-		chr->skin = Com_GetModelAndName(team, chr);
+		Com_sprintf(teamDefName, MAX_VAR, "%s_worker", team);
+		chr->fieldSize = ACTOR_SIZE_NORMAL;
+		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
 	case EMPL_ROBOT:
-		chr->rank = -1;
-		/* FIXME: Check also if ET_UGV should be checked in 'default:' */
+		chr->rank = CL_GetRank("ugv");
 		/* Create attributes. */
 		Com_CharGenAbilitySkills(chr, 80, 80, 80, 80);
 		/* Get model and name. */
-		chr->skin = Com_GetModelAndName(team, chr);
+		chr->fieldSize = ACTOR_SIZE_UGV;
+		Com_sprintf(teamDefName, MAX_VAR, "%s_ugv", team);
+		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
 	default:
 		Sys_Error("Unknown employee type\n");
 		break;
 	}
-
-	/* Backlink from chr to employee struct. */
-	chr->empl_type = employeeType;
-	chr->empl_idx = employee->idx;
 }
 
 
@@ -267,7 +275,9 @@ void CL_ResetCharacters(base_t* const base)
 	/* reset hire info */
 	Cvar_ForceSet("cl_selected", "0");
 
-	E_UnhireAllEmployees(base, EMPL_SOLDIER);
+	for (i = 0; i < MAX_EMPL; i++)
+		E_UnhireAllEmployees(base, i);
+
 	for (i = 0; i < base->numAircraftInBase; i++)
 		base->teamMask[i] = base->teamNum[i] = 0;
 }
@@ -1541,6 +1551,20 @@ void CL_ParseResults(sizebuf_t * buf)
 
 /* ======= RANKS & MEDALS =========*/
 
+/**
+ * @brief Get the index number of the given rankID
+ */
+int CL_GetRank(char* rankID)
+{
+	int i;
+	for (i = 0; i < gd.numRanks; i++) {
+		if (!Q_strncmp(gd.ranks[i].id, rankID, MAX_VAR))
+			return i;
+	}
+	Com_Printf("Could not find rank '%s'\n", rankID);
+	return -1;
+}
+
 static value_t rankValues[] =
 {
 	{ "name",	V_TRANSLATION_STRING,	offsetof( rank_t, name ) },
@@ -1564,42 +1588,49 @@ void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 	/* get name list body body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' ) {
+	if (!*text || *token != '{') {
 		Com_Printf( "Com_ParseMedalsAndRanks: rank/medal \"%s\" without body ignored\n", title );
 		return;
 	}
 
-	if ( parserank) {
+	if (parserank) {
 		/* parse ranks */
-		if ( gd.numRanks >= MAX_RANKS ) {
+		if (gd.numRanks >= MAX_RANKS) {
 			Com_Printf( "Too many rank descriptions, '%s' ignored.\n", title );
 			gd.numRanks = MAX_RANKS;
 			return;
 		}
 
 		rank = &gd.ranks[gd.numRanks++];
-		memset( rank, 0, sizeof( rank_t ) );
+		memset(rank, 0, sizeof(rank_t));
+		Q_strncpyz(rank->id, title, MAX_VAR);
 
 		do {
 			/* get the name type */
-			token = COM_EParse( text, errhead, title );
-			if ( !*text )
+			token = COM_EParse(text, errhead, title);
+			if (!*text)
 				break;
-			if ( *token == '}' )
+			if (*token == '}')
 				break;
-			for ( v = rankValues; v->string; v++ )
-				if ( !Q_strncmp( token, v->string, sizeof(v->string) ) ) {
+			for (v = rankValues; v->string; v++)
+				if (!Q_strncmp(token, v->string, sizeof(v->string))) {
 					/* found a definition */
-					token = COM_EParse( text, errhead, title );
-					if ( !*text )
+					token = COM_EParse(text, errhead, title);
+					if (!*text)
 						return;
-					Com_ParseValue( rank, token, v->type, v->ofs );
+					Com_ParseValue(rank, token, v->type, v->ofs);
 					break;
 				}
 
-			if ( !v->string )
+			if (!Q_strncmp(token, "type", 4)) {
+				/* employeeType_t */
+				token = COM_EParse(text, errhead, title);
+				if (!*text)
+					return;
+				/* TODO: If we don't need this - remove this afterwards */
+			} else if (!v->string)
 				Com_Printf( "Com_ParseMedalsAndRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, title );
-		} while ( *text );
+		} while (*text);
 	} else {
 		/* parse medals */
 	}

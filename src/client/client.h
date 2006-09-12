@@ -409,6 +409,7 @@ void CL_GetChallengePacket(void);
 void CL_PingServers_f(void);
 void CL_Snd_Restart_f(void);
 void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank );
+int CL_GetRank(char* rankID);
 void CL_ParseUGVs(char *title, char **text);
 char* CL_ToDifficultyName(int difficulty);
 
@@ -716,7 +717,7 @@ void CL_UpdateHireVar(void);
 
 void CL_ResetCharacters(base_t* const base);
 void CL_ResetTeamInBase(void);
-void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeType_t employeeType);
+void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t employeeType);
 char* CL_GetTeamSkinName(int id);
 
 void MN_BuildNewBase(vec2_t pos);

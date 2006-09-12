@@ -1026,6 +1026,7 @@ typedef struct medals_s {
 } medals_t;
 
 typedef struct rank_s {
+	char id[MAX_VAR];
 	char name[MAX_MEDALTITLE];
 	char image[MAX_VAR];
 	int mind;

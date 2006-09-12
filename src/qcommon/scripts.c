@@ -1,11 +1,11 @@
 /* scripts.c -- ufo scripts used in client and server */
 #include "qcommon.h"
 
-/*==============================================================================
-
-			OBJECT DEFINITION INTERPRETER
-
-==============================================================================*/
+/*
+==============================================================================
+OBJECT DEFINITION INTERPRETER
+==============================================================================
+*/
 
 static char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
 	"close",
@@ -83,13 +83,11 @@ static value_t fdps[] = {
 	{NULL, 0, 0}
 };
 
-/* =========================================================== */
 
-
-/*======================
-Com_ParseFire
-======================*/
-void Com_ParseFire(char *name, char **text, fireDef_t * fd)
+/**
+ * @brief
+ */
+static void Com_ParseFire(char *name, char **text, fireDef_t * fd)
 {
 	value_t *fdp;
 	char *errhead = "Com_ParseFire: unexptected end of file";
@@ -153,10 +151,10 @@ void Com_ParseFire(char *name, char **text, fireDef_t * fd)
 }
 
 
-/*======================
-Com_ParseArmor
-======================*/
-void Com_ParseArmor(char *name, char **text, short *ad)
+/**
+ * @brief
+ */
+static void Com_ParseArmor(char *name, char **text, short *ad)
 {
 	char *errhead = "Com_ParseFire: unexptected end of file";
 	char *token;
@@ -278,11 +276,11 @@ static void Com_ParseItem(char *name, char **text)
 }
 
 
-/*==============================================================================
-
-			INVENTORY DEFINITION INTERPRETER
-
-==============================================================================*/
+/*
+==============================================================================
+INVENTORY DEFINITION INTERPRETER
+==============================================================================
+*/
 
 static value_t idps[] = {
 	{"shape", V_SHAPE_BIG, offsetof(invDef_t, shape)}
@@ -392,11 +390,11 @@ static void Com_ParseInventory(char *name, char **text)
 }
 
 
-/*==============================================================================
-
-			EQUIPMENT DEFINITION INTERPRETER
-
-==============================================================================*/
+/*
+==============================================================================
+EQUIPMENT DEFINITION INTERPRETER
+==============================================================================
+*/
 
 #define MAX_NAMECATS	64
 #define MAX_INFOSTRING	65536
@@ -426,12 +424,12 @@ typedef struct teamDef_s {
 
 teamDesc_t teamDesc[MAX_TEAMDEFS];
 
-nameCategory_t nameCat[MAX_NAMECATS];
-teamDef_t teamDef[MAX_TEAMDEFS];
-char infoStr[MAX_INFOSTRING];
-char *infoPos;
-int numNameCats = 0;
-int numTeamDefs = 0;
+static nameCategory_t nameCat[MAX_NAMECATS];
+static teamDef_t teamDef[MAX_TEAMDEFS];
+static char infoStr[MAX_INFOSTRING];
+static char *infoPos;
+static int numNameCats = 0;
+static int numTeamDefs = 0;
 int numTeamDesc = 0;
 
 char *name_strings[NAME_NUM_TYPES] = {
@@ -447,7 +445,7 @@ char *name_strings[NAME_NUM_TYPES] = {
 /**
  * @brief
  */
-void Com_ParseEquipment(char *name, char **text)
+static void Com_ParseEquipment(char *name, char **text)
 {
 	char *errhead = "Com_ParseEquipment: unexptected end of file (equipment ";
 	equipDef_t *ed;
@@ -606,6 +604,7 @@ int Com_GetModelAndName(char *team, character_t * chr)
 	if (i < numTeamDefs)
 		td = &teamDef[i];
 	else {
+		Com_DPrintf("Com_GetModelAndName: could not find team '%s' in team definitions - searching name definitions now\n", team);
 		/* search in name categories, if it isn't a team definition */
 		td = NULL;
 		for (i = 0; i < numNameCats; i++)
@@ -662,9 +661,9 @@ int Com_GetModelAndName(char *team, character_t * chr)
 	return 0;
 }
 
-/*======================
-Com_ParseNames
-======================*/
+/**
+ * @brief
+ */
 static void Com_ParseNames(char *title, char **text)
 {
 	nameCategory_t *nc;
@@ -746,9 +745,9 @@ static void Com_ParseNames(char *title, char **text)
 }
 
 
-/*======================
-Com_ParseActors
-======================*/
+/**
+ * @brief
+ */
 static void Com_ParseActors(char *title, char **text)
 {
 	nameCategory_t *nc;
@@ -852,12 +851,10 @@ static value_t teamDescValues[] = {
 };
 
 
-/*======================
-Com_ParseTeamDesc
-
-Parse the team descriptions (teamdesc) in the teams*.ufo files.
-======================*/
-void Com_ParseTeamDesc(char *title, char **text)
+/**
+ * @brief Parse the team descriptions (teamdesc) in the teams*.ufo files.
+ */
+static void Com_ParseTeamDesc(char *title, char **text)
 {
 	teamDesc_t *td;
 	char *errhead = "Com_ParseTeamDesc: unexptected end of file (teamdesc ";
@@ -913,10 +910,10 @@ void Com_ParseTeamDesc(char *title, char **text)
 	} while (*text);
 }
 
-/*======================
-Com_ParseTeam
-======================*/
-void Com_ParseTeam(char *title, char **text)
+/**
+ * @brief
+ */
+static void Com_ParseTeam(char *title, char **text)
 {
 	nameCategory_t *nc;
 	teamDef_t *td;
@@ -982,7 +979,10 @@ DAMAGE TYPES INTERPRETER
 ==============================================================================
 */
 
-void Com_ParseDamageTypes(char *name, char **text)
+/**
+ * @brief
+ */
+static void Com_ParseDamageTypes(char *name, char **text)
 {
 	char *errhead = "Com_ParseTypes: unexptected end of file (weapon ";
 	char *token;
@@ -1043,16 +1043,16 @@ void Com_ParseDamageTypes(char *name, char **text)
 }
 
 
-/*==============================================================================
+/*
+==============================================================================
+MAIN SCRIPT PARSING FUNCTION
+==============================================================================
+*/
 
-			MAIN SCRIPT PARSING FUNCTION
 
-==============================================================================*/
-
-
-/*======================
-Com_AddObjectLinks
-======================*/
+/**
+ * @brief
+ */
 void Com_AddObjectLinks(void)
 {
 	objDef_t *od;

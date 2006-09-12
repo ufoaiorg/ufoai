@@ -2773,7 +2773,7 @@ void CL_ParseResearchedCampaignItems(char *name, char **text)
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseResearchedCampaignItems: equipment def \"%s\" without body ignored\n", name);
+		Com_Printf("CL_ParseResearchedCampaignItems: equipment def \"%s\" without body ignored (%s)\n", name, token);
 		return;
 	}
 
