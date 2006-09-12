@@ -509,7 +509,8 @@ menu hud
 		click	{ cmd standcrouch }
 	}
 
-	confunc startreactions { *bt_reaction image hud/button_guarda }
+	confunc startreactionmanys { *bt_reaction image hud/button_guardb }
+	confunc startreactiononces { *bt_reaction image hud/button_guarda }
 	confunc stopreactions { *bt_reaction image hud/button_guard }
 
 	pic bt_reaction

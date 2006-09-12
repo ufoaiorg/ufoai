@@ -493,12 +493,13 @@ void CL_ActorUpdateCVars(void)
 				Cbuf_AddText("tostand\n");
 			}
 
-			if (selActor->state & STATE_REACTION) {
-				Cbuf_AddText("startreaction\n");
+			if (selActor->state & STATE_REACTION_ONCE) {
+				Cbuf_AddText("startreactiononce\n");
+			} else if (selActor->state & STATE_REACTION_MANY) {
+				Cbuf_AddText("startreactionmany\n");
 			} else {
 				Cbuf_AddText("stopreaction\n");
 			}
-
 		} else {
 			/* no actor selected, reset cvars */
 			/* TODO: this overwrites the correct values a bit to often.
@@ -1123,11 +1124,24 @@ void CL_ActorStun(void)
  */
 void CL_ActorToggleReaction(void)
 {
+	int state;
+
 	if (!CL_CheckAction())
 		return;
 
+	state = selActor->state & ~STATE_REACTION;
+	if (selActor->state & STATE_REACTION_MANY) {
+		Com_DPrintf("CL_ActorToggleReaction: Actor reaction state change: many -> none\n");
+	} else if (selActor->state & STATE_REACTION_ONCE) {
+		Com_DPrintf("CL_ActorToggleReaction: Actor reaction state change: once -> many\n");
+		state |= STATE_REACTION_MANY;
+	} else {
+		Com_DPrintf("CL_ActorToggleReaction: Actor reaction state change: none -> once\n");
+		state |= STATE_REACTION_ONCE;
+	}
+
 	/* send message to server */
-	MSG_Write_PA(PA_STATE, selActor->entnum, selActor->state ^ STATE_REACTION);
+	MSG_Write_PA(PA_STATE, selActor->entnum, state);
 }
 
 /**

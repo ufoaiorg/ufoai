@@ -1123,9 +1123,10 @@ typedef enum {
 #define STATE_INSANE		0x0030
 #define STATE_STUN		0x0043	/* stunned - includes death */
 /* private */
-#define STATE_REACTION		0x0100
-#define STATE_SHAKEN		0x0300	/* forced reaction fire */
-
+#define STATE_REACTION_ONCE	0x0100
+#define STATE_REACTION_MANY	0x0200
+#define STATE_REACTION		0x0300	/* reaction - once or many */
+#define STATE_SHAKEN		0x0400	/* forced reaction fire */
 
 #define	ANGLE2SHORT(x)	((int)((x)*65536/360) & 65535)
 #define	SHORT2ANGLE(x)	((x)*(360.0/65536))
