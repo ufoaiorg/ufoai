@@ -1217,7 +1217,6 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 				gi.cprintf(player, PRINT_HIGH, _("Currently shaken, won't let it's guard down.\n"));
 			else {
 				/* Turn off reaction fire and give the soldier back his TUs if it used some. */
-				Com_DPrintf("G_ClientStateChange: Actor reaction state change: many -> none\n");
 				ent->state &= ~STATE_REACTION;
 
 				if ( TU_REACTIONS[ent->number][0] > 0) {
@@ -1233,12 +1232,10 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 				}
 			}
 		} else if (ent->state & STATE_REACTION_ONCE) {
-			Com_DPrintf("G_ClientStateChange: Actor reaction state change: once -> many\n");
 			ent->state &= ~STATE_REACTION;
 			ent->state |= STATE_REACTION_MANY;
 		} else if (G_ActionCheck(player, ent, TU_REACTION)) {
 			/* Turn on reaction fire and save the used TUs to the list. */
-			Com_DPrintf("G_ClientStateChange: Actor reaction state change: none -> once\n");
 			ent->state |= STATE_REACTION_ONCE;
 
 			if ( TU_REACTIONS[ent->number][0] > 0) {
@@ -1461,10 +1458,6 @@ static void G_MoraleBehaviour(int team)
 				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
 					ent->TU -= TU_REACTION;
 					/* shaken is later reset along with reaction fire */
-					if (!(ent->state & STATE_REACTION))
-						Com_DPrintf("G_MoraleBehaviour: Actor reaction state change: none -> many\n");
-					else if (ent->state & STATE_REACTION_ONCE)
-						Com_DPrintf("G_MoraleBehaviour: Actor reaction state change: once -> many\n");
 					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
 					G_SendState(G_VisToPM(ent->visflags), ent);
 					gi.cprintf(game.players + ent->pnum, PRINT_HIGH, _("%s is currently shaken.\n"), ent->chr.name);
