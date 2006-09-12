@@ -109,9 +109,7 @@ typedef struct {
 
 /*
 ========================================================================
-
 .MD2 triangle model file format
-
 ========================================================================
 */
 
@@ -188,7 +186,6 @@ typedef struct {
 	int ofs_frames;				/* offset for first frame */
 	int ofs_glcmds;
 	int ofs_end;				/* end of file */
-
 } dmdl_t;
 
 
@@ -208,9 +205,7 @@ typedef struct {
 
 /*
 ========================================================================
-
 .MD3 model file format
-
 ========================================================================
 */
 
@@ -262,7 +257,7 @@ typedef struct
     char			creator[16];
 } dmd3frame_t;
 
-typedef struct 
+typedef struct
 {
 	vec3_t			origin;
 	float			axis[3][3];
@@ -274,7 +269,7 @@ typedef struct
 	dorientation_t	orient;
 } dmd3tag_t;
 
-typedef struct 
+typedef struct
 {
 	char			name[MD3_MAX_PATH];
 	int				unused;					/* shader */
@@ -346,9 +341,7 @@ typedef struct {
 
 /*
 ==============================================================================
-
-  .WAL texture file format
-
+.WAL texture file format
 ==============================================================================
 */
 
@@ -368,9 +361,7 @@ typedef struct miptex_s {
 
 /*
 ==============================================================================
-
-  .BSP file format
-
+.BSP file format
 ==============================================================================
 */
 

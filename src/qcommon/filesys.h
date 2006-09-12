@@ -1,8 +1,6 @@
 /*
 ==============================================================
-
 FILESYSTEM
-
 ==============================================================
 */
 #define MAX_MAPS 400
@@ -37,6 +35,7 @@ void FS_ExecAutoexec(void);
 char *FS_GetCwd(void);
 void FS_NormPath(char *path);
 qboolean FS_FileExists(char *filename);
+char* FS_GetBasePath(char* filename);
 
 void FS_GetMaps(void);
 

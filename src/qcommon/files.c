@@ -1257,3 +1257,24 @@ qboolean FS_FileExists(char *filename)
 	return (access(filename, R_OK) == 0);
 #endif
 }
+
+/**
+ * @brief Extract the path from a given filename
+ * @param[in] filename The complete filename
+ * @return pointer to start location of the base path
+ */
+char* FS_GetBasePath(char* filename)
+{
+	char* pathSep = filename;
+	char* endPos;
+
+	FS_NormPath(filename);
+	while ((pathSep = strstr(pathSep, "/")) != NULL) {
+		/* set to next / */
+		endPos = pathSep;
+	}
+	if (endPos)
+		endPos = '\0';
+
+	return filename;
+}
