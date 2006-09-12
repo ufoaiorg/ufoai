@@ -1415,6 +1415,7 @@ void MN_DrawMenus(void)
 	char *ref, *font;
 	char *anim;					/* model anim state */
 	char source[MAX_VAR];
+	static char oldSource[MAX_VAR] = "";
 	int sp, pp;
 	item_t item = {1,NONE,NONE}; /* 1 so it's not reddish; fake item anyway */
 	vec4_t color;
@@ -1730,6 +1731,11 @@ void MN_DrawMenus(void)
 					} else
 						menuModel = node->menuModel;
 
+					if (Q_strncmp(oldSource, source, MAX_VAR)) {
+						Q_strncpyz(oldSource, source, MAX_VAR);
+						node->data[4] = NULL;
+						Com_Printf("Set null for model %s\n", source);
+					}
 					mi.name = source;
 
 					mi.origin = node->origin;
