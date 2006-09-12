@@ -1296,6 +1296,121 @@ team human
 	african
 }
 
+// ======================
+// SCIENTISTS
+// FIXME
+// ======================
+
+names human_scientist
+{
+	female { a }
+	male { b }
+	lastname { c }
+}
+
+actors human_scientist
+{
+	female
+	{
+		// FIXME: this is a male model
+		civilians/male scientist01 sci_head01 0
+		civilians/male scientist01 sci_head02a 0
+		civilians/male scientist01 sci_head02b 0
+		civilians/male scientist01 sci_head03a 0
+		civilians/male scientist01 sci_head03b 0
+	}
+	male
+	{
+		civilians/male scientist01 sci_head01 0
+		civilians/male scientist01 sci_head02a 0
+		civilians/male scientist01 sci_head02b 0
+		civilians/male scientist01 sci_head03a 0
+		civilians/male scientist01 sci_head03b 0
+	}
+}
+
+// ======================
+// MEDICS
+// FIXME
+// ======================
+
+names human_medic
+{
+	female { a }
+	male { b }
+	lastname { c }
+}
+
+actors human_medic
+{
+	female
+	{
+		// FIXME: this is a male model
+		civilians/male scientist01 sci_head01 0
+		civilians/male scientist01 sci_head02a 0
+		civilians/male scientist01 sci_head02b 0
+		civilians/male scientist01 sci_head03a 0
+		civilians/male scientist01 sci_head03b 0
+	}
+	male
+	{
+		civilians/male scientist01 sci_head01 0
+		civilians/male scientist01 sci_head02a 0
+		civilians/male scientist01 sci_head02b 0
+		civilians/male scientist01 sci_head03a 0
+		civilians/male scientist01 sci_head03b 0
+	}
+}
+
+// ======================
+// WORKERS
+// FIXME
+// ======================
+
+names human_worker
+{
+	female { a }
+	male { b }
+	lastname { c }
+}
+
+actors human_worker
+{
+	female
+	{
+		civilians/female body01 head01a 0
+		civilians/female body01 head01a 1
+		civilians/female body01 head01a 2
+		civilians/female body02 head01a 0
+		civilians/female body02 head01a 1
+		civilians/female body01 head01b 0
+		civilians/female body01 head01b 1
+		civilians/female body01 head01b 2
+		civilians/female body02 head01b 0
+		civilians/female body02 head01b 1
+		civilians/female body01 head02a 0
+		civilians/female body01 head02a 1
+		civilians/female body01 head02a 2
+		civilians/female body02 head02a 0
+		civilians/female body02 head02a 1
+		civilians/female body01 head02b 0
+		civilians/female body01 head02b 1
+		civilians/female body01 head02b 2
+		civilians/female body02 head02b 0
+		civilians/female body02 head02b 1
+	}
+	male
+	{
+		civilians/male body01 head01 0
+		civilians/male body01 head01 1
+		civilians/male body01 head01 2
+	}
+}
+
+// ======================
+// UGVs
+// ======================
+
 names ugv_phoenix
 {
 	neutral
@@ -1336,7 +1451,7 @@ actors ugv_triax
 	}
 }
 
-team ugv
+team human_ugv
 {
 	ugv_triax
 	ugv_phoenix
