@@ -2400,7 +2400,7 @@ void CL_UpdateCharacterStats(int won)
 			if (gd.numRanks >= 2) {
 				for (j = gd.numRanks - 1; j > 0; j--) {
 					rank = &gd.ranks[j];
-					if ((chr->skills[ABILITY_MIND] >= rank->mind)
+					if (rank->type == EMPL_SOLDIER && (chr->skills[ABILITY_MIND] >= rank->mind)
 						&& (chr->kills[KILLED_ALIENS] >= rank->killed_enemies)
 						&& ((chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM]) <= rank->killed_others)) {
 						if (chr->rank != j) {

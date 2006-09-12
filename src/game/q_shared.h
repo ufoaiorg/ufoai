@@ -1029,6 +1029,7 @@ typedef struct rank_s {
 	char id[MAX_VAR];
 	char name[MAX_MEDALTITLE];
 	char image[MAX_VAR];
+	int type; /* employeeType_t */
 	int mind;
 	int killed_enemies;
 	int killed_others;

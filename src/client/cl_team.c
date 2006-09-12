@@ -1627,7 +1627,7 @@ void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 				token = COM_EParse(text, errhead, title);
 				if (!*text)
 					return;
-				/* TODO: If we don't need this - remove this afterwards */
+				rank->type = E_GetEmployeeType(token);
 			} else if (!v->string)
 				Com_Printf( "Com_ParseMedalsAndRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, title );
 		} while (*text);
