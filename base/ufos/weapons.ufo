@@ -166,30 +166,69 @@ item fraggrenade
 // =======================
 // SMOKE GRENADE
 // =======================
-//item smokegrenade
-//{
-//	name		"_Smoke Grenade"
-//	model		weapons/smokegren/smokegren
-//	weapon		true
-//	type		grenade
-//	category	0
-//	shape		"0 0 1 1"
-//	center		"0 0 -0.25"
-//	scale		1.5
-//	price		150
-//	buytype		2
-//	thrown		true
-//
-//	primary
-//	{
-//		name	"_Throw"
-//		skill	explosive
-//		projtl	smokegren
-//		impact	smoke_explosion
-//		hitbody smoke_explosion
-//		impsnd	misc/big_boom.wav
-//		bodysnd	misc/big_boom.wav
-//		bncsnd	misc/klonk03.wav
+item smokegrenade
+{
+	name		"_Smoke Grenade"
+	model		weapons/smokegren/smokegren
+	weapon		true
+	type		grenade
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 -0.25"
+	scale		1.5
+	price		150
+	buytype		2
+	thrown		true
+
+	primary
+	{
+		name	"_Throw"
+		skill	explosive
+		projtl	smokegren
+		impact	smoke_explosion
+		hitbody smoke_explosion
+		impsnd	misc/smoke_grenade.wav
+		bodysnd	misc/smoke_grenade.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	12
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"5 5"
+		splrad	4
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"_Throw"
+		skill	explosive
+		projtl	smokegren
+		impact	smoke_explosion
+		hitbody smoke_explosion
+		impsnd	weapons/smoke_grenade.wav
+		bodysnd	weapons/smoke_grenade.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	12
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"5 5"
+		splrad	4
+		dmgtype normal
+	}
+}
 
 // =======================
 // STUN GRENADE

@@ -1,4 +1,4 @@
-// See the wiki page 
+// See the wiki page
 //   http://ufo.myexp.de/wiki/index.php/UFO-Scripts/ptl_%2A.ufo#Datatypes
 // for the description of the particle language
 
@@ -867,17 +867,23 @@ particle plasmagren
 	}
 }
 
-//particle smoke_explosion
-//{
-//	init
-//	{
-//		spawn  smokebig
-//		spawn  smokebig
-//		push   int 25
-//		nspawn grenadeSmoke
-//		kill
-//	}
-//}
+particle smoke_explosion
+{
+	init
+	{
+		v		"0 0 0"
+		tps		25.0
+		spawn	smokebig
+		rounds	2
+	}
+	think
+	{
+		spawn	smokebig
+	}
+	round
+	{
+	}
+}
 
 particle frag_explosion
 {

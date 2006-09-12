@@ -336,7 +336,7 @@ particle greenSmokeMap
 }
 
 
-particle smokeRound
+particle smokebig
 {
 	init
 	{
