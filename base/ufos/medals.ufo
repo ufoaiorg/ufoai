@@ -13,21 +13,51 @@ medal coin
 //=======================
 // RANKS
 //
-// These ranks should be in order of lowest to highest rank.
-//
 // mind
 //	Minimum "mind" value the soldier needs.
 // killed_enemies
 //	Minimum number of _enemies_ killed by the soldier.
 // killed_others
 //	Maximum number of killed _civilian_ targets or _own soldiers_ killed by the soldier.
+// type
+//  employeeType_t
 //=======================
+
+rank scientist
+{
+	name "_Scientist"
+	image "hud/scientist_01"
+	type EMPL_SCIENTIST
+}
+
+rank medic
+{
+	name "_Medic"
+	image "hud/rank_medic"
+	type EMPL_MEDIC
+}
+
+rank ugv
+{
+	name "_UGV"
+	image "hud/rank_ugv"
+	type EMPL_ROBOT
+}
+
+rank worker
+{
+	name "_Worker"
+	image "hud/rank_worker"
+	type EMPL_WORKER
+}
 
 rank rookie
 {
 	name "_Rookie"
 	image "hud/rank_01"
+	type EMPL_SOLDIER
 }
+
 rank squadleader
 {
 	name "_Squad Leader"
@@ -35,7 +65,9 @@ rank squadleader
 	mind 75
 	killed_enemies	5
 	killed_others	3
+	type EMPL_SOLDIER
 }
+
 rank sergeant
 {
 	name "_Sergeant"
@@ -43,7 +75,9 @@ rank sergeant
 	mind 80
 	killed_enemies	20
 	killed_others	5
+	type EMPL_SOLDIER
 }
+
 rank captain
 {
 	name "_Captain"
@@ -51,4 +85,5 @@ rank captain
 	mind 80
 	killed_enemies	30
 	killed_others	7
+	type EMPL_SOLDIER
 }
