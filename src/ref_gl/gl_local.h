@@ -190,12 +190,6 @@ extern transform_t trafo[MAX_ENTITIES];
 
 extern image_t *shadow;
 
-extern char glerrortex[MAX_GLERRORTEX];
-extern char *glerrortexend;
-extern image_t gltextures[MAX_GLTEXTURES];
-extern int numgltextures;
-
-
 extern image_t *r_notexture;
 extern image_t *r_particletexture;
 extern entity_t *currententity;
@@ -385,8 +379,6 @@ void Anim_Change(animState_t * as, model_t * mod, char *name);
 void Anim_Run(animState_t * as, model_t * mod, int msec);
 char *Anim_GetName(animState_t * as, model_t * mod);
 
-void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight);
-
 struct image_s *R_RegisterSkin(char *name);
 
 void WriteTGA(char *filename, byte * data, int width, int height);
@@ -396,7 +388,6 @@ image_t *GL_FindImage(char *pname, imagetype_t type);
 image_t *GL_FindImageForShader(char *name);
 void GL_TextureMode(char *string);
 void GL_ImageList_f(void);
-void GL_CalcDayAndNight(float q);
 
 void GL_InitImages(void);
 void GL_ShutdownImages(void);
