@@ -111,47 +111,35 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 
 	/* shooting */
 	maxDmg = 0.0;
-	for (fm = 0; fm < 8; fm++) {
+	for (fm = 0; fm < ST_NUM_SHOOT_TYPES; fm++) {
 		objDef_t *od = NULL;
 		fireDef_t *fd;
 
-		switch (fm) {
-		case ST_RIGHT_PRIMARY:
-		case ST_RIGHT_SECONDARY:
-			if ( RIGHT(ent) 
-				 && RIGHT(ent)->item.m != NONE 
-				 && gi.csi->ods[RIGHT(ent)->item.t].weapon 
-				 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
-					 || RIGHT(ent)->item.a > 0) )
-				od = &gi.csi->ods[RIGHT(ent)->item.m];
-			break;
-		case ST_LEFT_PRIMARY:
-		case ST_LEFT_SECONDARY:
-			if ( LEFT(ent) 
-				 && (LEFT(ent)->item.m != NONE) 
-				 && gi.csi->ods[LEFT(ent)->item.t].weapon
-				 && (!gi.csi->ods[LEFT(ent)->item.t].reload
-					 || LEFT(ent)->item.a > 0) )
-				od = &gi.csi->ods[LEFT(ent)->item.m];
-			break;
-		case 4: /* grenade/knife toss from inventory using empty right hand */
-			if (RIGHT(ent))
-				continue;
+		/* optimization: reaction fire is automatic */;
+		if (IS_SHOT_REACTION(fm))
+			continue;
+
+		if (IS_SHOT_RIGHT(fm) && RIGHT(ent)
+			&& RIGHT(ent)->item.m != NONE 
+			&& gi.csi->ods[RIGHT(ent)->item.t].weapon 
+			&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
+				|| RIGHT(ent)->item.a > 0)) {
+			od = &gi.csi->ods[RIGHT(ent)->item.m];
+		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)
+			&& (LEFT(ent)->item.m != NONE) 
+			&& gi.csi->ods[LEFT(ent)->item.t].weapon
+			&& (!gi.csi->ods[LEFT(ent)->item.t].reload
+				|| LEFT(ent)->item.a > 0)) {
+			od = &gi.csi->ods[LEFT(ent)->item.m];
+		} else {
+			/* TODO: grenade/knife toss from inventory using empty hand */
 			/* TODO: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
-			continue;
-		case 5: /* grenade/knife toss from inventory using empty left hand */
-			if (LEFT(ent))
-				continue;
-			/* TODO: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
-			continue;
-		default:
-			continue;
 		}
 
 		if (!od)
 			continue;
 
-		fd = &od->fd[fm % 2];
+		fd = &od->fd[SHOT_FD_PRIO(fm)];
 		if (!fd->time)
 			continue;
 

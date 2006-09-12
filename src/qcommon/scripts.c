@@ -48,9 +48,6 @@ static value_t od_vals[] = {
 
 /* =========================================================== */
 
-#define FD_PRIMARY		0
-#define FD_SECONDARY	1
-
 static value_t fdps[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(fireDef_t, name)},
 	{"shotorg", V_POS, offsetof(fireDef_t, shotOrg)},

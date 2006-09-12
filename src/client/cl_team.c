@@ -859,12 +859,14 @@ qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
 {
 	int i;
 
+	assert(baseCurrent);
+
 	if ( employee_idx < 0 )
 		return qfalse;
 
 	if ( aircraft_idx < 0) {
 		/* Search if he is in _any_ aircraft and return true if it's the case. */
-		for ( i = 0; i < MAX_AIRCRAFT; i++ ) {
+		for ( i = 0; i < baseCurrent->numAircraftInBase; i++ ) {
 			if ( CL_SoldierInAircraft(employee_idx, i) )
 				return qtrue;
 		}

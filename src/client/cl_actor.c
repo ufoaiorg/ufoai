@@ -386,11 +386,7 @@ void CL_ActorUpdateCVars(void)
 			Cvar_Set("mn_lweapon", csi.ods[LEFT(selActor)->item.t].model);
 
 		/* get weapon */
-		if (cl.cmode > M_PEND_MOVE) {
-			selWeapon = ((cl.cmode - M_PEND_FIRE_PR) / 2) ? LEFT(selActor) : RIGHT(selActor);
-		} else {
-			selWeapon = ((cl.cmode - M_FIRE_PR) / 2) ? LEFT(selActor) : RIGHT(selActor);
-		}
+		selWeapon = IS_MODE_FIRE_LEFT(cl.cmode) ? LEFT(selActor) : RIGHT(selActor);
 
 		if (!selWeapon && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].twohanded)
 			selWeapon = RIGHT(selActor);
@@ -398,10 +394,8 @@ void CL_ActorUpdateCVars(void)
 		if (selWeapon) {
 			if (selWeapon->item.m == NONE) {
 				selFD = NULL;
-			} else if (cl.cmode > M_PEND_MOVE) {
-				selFD = &csi.ods[selWeapon->item.m].fd[(cl.cmode - M_PEND_FIRE_PR) % 2];
 			} else {
-				selFD = &csi.ods[selWeapon->item.m].fd[(cl.cmode - M_FIRE_PR) % 2];
+				selFD = &csi.ods[selWeapon->item.m].fd[MODE_FD_PRIO(cl.cmode)];
 			}
 		} else {
 			selFD = NULL;
@@ -921,20 +915,20 @@ void CL_ActorStartMove(le_t * le, pos3_t to)
  */
 void CL_ActorShoot(le_t * le, pos3_t at)
 {
-	int mode;
+	int shot_type;
 
 	if (!CL_CheckAction())
 		return;
 
-	/* send request to server */
-	if (cl.cmode > M_PEND_MOVE)
-		mode = cl.cmode - M_PEND_FIRE_PR;
-	else
-		mode = cl.cmode - M_FIRE_PR;
-	if (mode >= ST_LEFT_PRIMARY && !LEFT(le))
-		mode -= 2;
+	if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
+		shot_type = IS_MODE_FIRE_PRIMARY(cl.cmode)
+			? ST_LEFT_PRIMARY : ST_LEFT_SECONDARY;
+	} else {
+		shot_type = IS_MODE_FIRE_PRIMARY(cl.cmode)
+			? ST_RIGHT_PRIMARY : ST_RIGHT_SECONDARY;
+	}
 
-	MSG_Write_PA(PA_SHOOT, le->entnum, at, mode);
+	MSG_Write_PA(PA_SHOOT, le->entnum, at, shot_type);
 }
 
 

@@ -65,6 +65,7 @@ cvar_t *sv_cheats;
 cvar_t *sv_ai;
 cvar_t *sv_teamplay;
 cvar_t *sv_maxclients;
+cvar_t *sv_reaction_leftover;
 
 cvar_t *ai_alien;
 cvar_t *ai_civilian;
@@ -157,6 +158,8 @@ void InitGame(void)
 	sv_teamplay = gi.cvar("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_SERVERINFO);
 	/* how many connected clients */
 	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH);
+	/* reaction leftover is 0 for acceptance testing; should default to 13 */
+	sv_reaction_leftover = gi.cvar("sv_reaction_leftover", "0", CVAR_LATCH);
 
 	ai_alien = gi.cvar("ai_alien", "alien", 0);
 	ai_civilian = gi.cvar("ai_civilian", "civilian", 0);

@@ -243,6 +243,7 @@ extern cvar_t *dedicated;
 extern cvar_t *host_speeds;
 extern cvar_t *log_stats;
 extern cvar_t *sv_maxclients;
+extern cvar_t *sv_reaction_leftover;
 
 extern FILE *log_stats_file;
 
@@ -251,10 +252,6 @@ extern int time_before_game;
 extern int time_after_game;
 extern int time_before_ref;
 extern int time_after_ref;
-
-/* weapon definitions */
-#define FD_PRIMARY		0
-#define FD_SECONDARY		1
 
 extern csi_t csi;
 
