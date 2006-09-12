@@ -74,6 +74,7 @@ void PR_ProductionRun(void)
 				gd.productions[i].objID = -1;
 				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s finished"), od->name);
 				MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, t);
+				CL_GameTimeStop();
 			}
 			/* now add it to equipment */
 			/* FIXME: overflow possible */

@@ -36,13 +36,16 @@ stage intro
 		expire		"0 45 0" // three at geoscape, but lots of time to do them
 		missions	"bunker japan dam"
 		number		3 // no mission will get repeated
-		quota		2
+		quota		3
 	}
+// from this place on, due to not enough missions in RC5, 
+// and only 19 scientists total, I increase all "frame" settings
 	set ultimate_terror // stage2 equipment start here
 	{
 		needed		soldier_terror
 		delay		"0 15 7"
-		frame		"0 6 0" // change of pace --- quick ones
+//		frame		"0 6 0" // change of pace --- quick ones
+		frame		"0 27 0"
 		expire		"0 5 0"
 		missions	"oriental city subway gasstation tower village"
 		quota		4 // torment the player until he's done
@@ -62,7 +65,8 @@ stage ufos_are_coming
 	{
 		seq			ufos_are_coming
 		delay		"0 2 7"
-		frame		"0 12 0"
+//		frame		"0 12 0"
+		frame		"0 20 0"
 		expire		"0 5 0"
 		commands	"addufo;"
 		missions	"mine_crash"
@@ -72,16 +76,18 @@ stage ufos_are_coming
 	{
 		needed		first_coming
 		delay		"0 0 1"
-		frame		"0 10 0"
+//		frame		"0 10 0"
+		frame		"0 23 0"
 		expire		"0 8 0"
 		missions	"construction farm2 office harbor" // pdi is broken
 		quota		3
+		commands	"addufo;"
 		nextstage	invasion
 	}
 	set stop_coming
 	{
 		needed		crashed_and_landed
-		delay		"0 110 0"
+		delay		"0 11 0"
 		endstage	ufos_are_coming
 	}
 }
@@ -92,7 +98,8 @@ stage invasion
 	{
 		seq	invasion
 		delay		"0 5 1"
-		frame		"0 10 0"
+//		frame		"0 10 0"
+		frame		"0 30 0"
 		expire		"0 7 0"
 		missions	"africa terrain baseattack lake"
 		quota		4
@@ -101,7 +108,7 @@ stage invasion
 	set stop_invasion
 	{
 		needed		first_invasion
-		delay		"0 110 0"
+		delay		"0 11 0"
 		endstage	invasion
 	}
 }
@@ -111,7 +118,7 @@ stage alienbase
 	set first_alienbase
 	{
 		seq	alienbase
-		delay		"0 110 0"
+		delay		"0 11 0"
 		// aliencolony mission here
 
 		commands	"mn_push enddemo;" // until aliencolony is done
@@ -119,7 +126,7 @@ stage alienbase
 	set stop_alienbase
 	{
 		needed		first_alienbase
-		delay		"0 110 0"
+		delay		"0 12 0"
 		endstage	alienbase
 //		commands	"mn_push enddemo;"
 	}

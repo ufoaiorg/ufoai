@@ -1133,6 +1133,7 @@ static void CL_HandleBudget(void)
 		CL_UpdateCredits(ccs.credits - cost);
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 	}
+	CL_GameTimeStop();
 }
 
 /**
