@@ -1778,7 +1778,7 @@ image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t t
 
 	/* load little pics into the scrap */
 	if (image->type == it_pic && bits == 8 && image->width < 64 && image->height < 64) {
-		int x, y;
+		int x = 0, y = 0;
 		int i, j, k;
 		int texnum;
 
