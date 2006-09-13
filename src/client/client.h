@@ -1034,4 +1034,7 @@ extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
 extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
 extern void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
 
+/* keys.c */
+extern char *keybindings[256];
+
 #endif /* CLIENT_CLIENT_H */

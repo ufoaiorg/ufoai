@@ -736,8 +736,8 @@ void CL_InitInput(void)
 	Cmd_AddCommand("-action", CL_ActionUp, NULL);
 	Cmd_AddCommand("+turn", CL_TurnDown, NULL);
 	Cmd_AddCommand("-turn", CL_TurnUp, NULL);
-	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch, NULL);
-	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction, NULL);
+	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch, _("Toggle stand/crounch"));
+	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction, _("Toggle reaction fire"));
 	Cmd_AddCommand("nextalien", CL_NextAlien, NULL);
 	Cmd_AddCommand("firerp", CL_FireRightPrimary, NULL);
 	Cmd_AddCommand("firers", CL_FireRightSecondary, NULL);
@@ -745,7 +745,7 @@ void CL_InitInput(void)
 	Cmd_AddCommand("firels", CL_FireLeftSecondary, NULL);
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft, NULL);
 	Cmd_AddCommand("reloadright", CL_ReloadRight, NULL);
-	Cmd_AddCommand("nextround", CL_NextRound, NULL);
+	Cmd_AddCommand("nextround", CL_NextRound, _("Ends current round"));
 	Cmd_AddCommand("levelup", CL_LevelUp, NULL);
 	Cmd_AddCommand("leveldown", CL_LevelDown, NULL);
 	Cmd_AddCommand("zoominquant", CL_ZoomInQuant, NULL);

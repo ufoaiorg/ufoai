@@ -648,6 +648,35 @@ void Cmd_TokenizeString(char *text, qboolean macroExpand)
 
 }
 
+/**
+ * @brief Returns the command description for a given command
+ * @param[in] cmd_name Command id in global command array
+ * @note never returns a NULL pointer
+ * @todo - search alias, too
+ */
+char* Cmd_GetCommandDesc(char* cmd_name)
+{
+	cmd_function_t *cmd;
+	char searchName[MAX_VAR];
+
+	/* remove paramters */
+	Q_strncpyz(searchName, cmd_name, sizeof(searchName));
+	cmd_name = strstr(searchName, " ");
+	if (cmd_name)
+		*cmd_name = '\0';
+
+	/* fail if the command already exists */
+	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
+		if (!Q_strcmp(searchName, cmd->name)) {
+			if (cmd->description)
+				return cmd->description;
+			else
+				return "";
+		}
+	}
+	return "";
+}
+
 
 /**
  * @brief Add a new command to the script interface

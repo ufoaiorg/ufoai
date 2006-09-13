@@ -2285,6 +2285,25 @@ void MN_ResolutionChange_f (void)
 /**
  * @brief
  */
+void MN_InitKeyList_f (void)
+{
+	static char keylist[2048];
+	int i;
+
+	*keylist = '\0';
+
+	for (i = 0; i < 256; i++)
+		if (keybindings[i] && keybindings[i][0]) {
+			Com_Printf("%s - %s\n", Key_KeynumToString(i), keybindings[i]);
+			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(keybindings[i])), sizeof(keylist));
+		}
+
+	menuText[TEXT_STANDARD] = keylist;
+}
+
+/**
+ * @brief
+ */
 void MN_ResetMenus(void)
 {
 	int i;
@@ -2304,6 +2323,9 @@ void MN_ResetMenus(void)
 
 	/* textbox */
 	Cmd_AddCommand("textscroll", MN_TextScroll_f, NULL);
+
+	/* print the keybindings to menuText */
+	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);
 
 	Cmd_AddCommand("mn_resolution_change", MN_ResolutionChange_f, NULL);
 

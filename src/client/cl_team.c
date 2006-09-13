@@ -1243,7 +1243,7 @@ void CL_ResetTeams(void)
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkinCmd, NULL);
 	Cmd_AddCommand("team_comments", CL_TeamCommentsCmd, NULL);
 	Cmd_AddCommand("equip_select", CL_SelectCmd, NULL);
-	Cmd_AddCommand("soldier_select", CL_SelectCmd, NULL);
+	Cmd_AddCommand("soldier_select", CL_SelectCmd, _("Select a soldier from list"));
 	Cmd_AddCommand("saveteamslot", CL_SaveTeamSlotCmd, NULL);
 	Cmd_AddCommand("loadteamslot", CL_LoadTeamSlotCmd, NULL);
 	Cmd_AddCommand("msgmenu", CL_MessageMenuCmd, NULL);

@@ -125,3 +125,4 @@ void Cmd_ForwardToServer(void);
 /* so when they are typed in at the console, they will need to be forwarded. */
 
 
+char* Cmd_GetCommandDesc(char* command);

@@ -49,7 +49,7 @@ char msg_buffer[MAXCMDLINE];
 int msg_bufferlen = 0;
 
 static int key_waiting;
-static char *keybindings[256];
+char *keybindings[256];
 static qboolean consolekeys[256];		/* if true, can't be rebound while in console */
 static qboolean menubound[256];		/* if true, can't be rebound while in menu */
 static int keyshift[256];				/* key to map to if shift held down in console */
