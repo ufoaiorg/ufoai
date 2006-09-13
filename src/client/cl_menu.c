@@ -1588,8 +1588,8 @@ void MN_DrawMenus(void)
 								/* ... otherwise set the \t to \0 and increase the tab pointer to the next char */
 								/* after the tab (needed for the next loop in this (the inner) do while) */
 								*tab++ = '\0';
-								if (oldLines > 0 && node->textScroll <= node->textLines)
-									re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur, node->height, node->textScroll, NULL);
+								if (oldLines > 0 && node->textScroll <= oldLines)
+									re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur, 0, 0, NULL);
 								/* increase the x value as given via menu definition format string */
 								/* or use 1/3 of the node size (width) */
 								if (!node->texh[1])
@@ -1602,8 +1602,8 @@ void MN_DrawMenus(void)
 
 							/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
 							lineHeight = re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines);
-
-							y += lineHeight;
+							if (lineHeight >= 0)
+								y += lineHeight;
 
 							if (node->mousefx && node->textLines == mouseOver)
 								re.DrawColor(node->color); /* why is this repeated? */

@@ -517,6 +517,14 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 
 	cache = Font_GetFromCache(c);
 	if (cache) { /* TODO: check that cache.font = fontID and that texh0 was the same */
+		if (cur_line) {
+			/* ri.Con_Printf(PRINT_ALL, "h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
+			(*cur_line)++; /* Increment the number of processed lines (overall). */
+			if (box_height > 0 && *cur_line + scroll_pos > box_height)
+				/* Due to scrolling this line and the following are not visible */
+				return -1;
+		}
+
 		Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
 		return lineHeight;
 	}
@@ -532,7 +540,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 		if (cur_line) {
 			/* ri.Con_Printf(PRINT_ALL, "h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
 			(*cur_line)++; /* Increment the number of processed lines (overall). */
-			if (box_height > 0 && *cur_line + scroll_pos >= box_height)
+			if (box_height > 0 && *cur_line > box_height + scroll_pos)
 				/* Due to scrolling this line and the following are not visible */
 				return -1;
 			if (*cur_line < scroll_pos) {
@@ -549,7 +557,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 		fh = h;
 
 		if (texh0 > 0) {
-			if (fh > texh0)
+/*			if (fh > texh0)*/
 /* something is broken with that warning, please test
 				ri.Con_Printf(PRINT_DEVELOPER, "Warning: font %s height=%f bigger than allowed line height=%f.\n", fontID, fh, texh0);
 */
