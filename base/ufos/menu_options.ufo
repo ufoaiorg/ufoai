@@ -647,7 +647,32 @@ menu options_keys
 	{
 		size	"460 580"
 		pos	"480 110"
+		height	30
 //		bgcolor	"1 1 1 0.4"
+	}
+
+	pic scrollup
+	{
+		image menu/buttons_small
+		pos		"930 339"
+		texl	"32 32"
+		texh	"48 48"
+		mousefx	true
+		click	{ cmd "mn_textscroll keylist -1;" }
+		out	{ *scrollup texl "32 32" scrollup texh "48 48" }
+		in	{ *scrollup texl "48 32" scrollup texh "64 48" }
+	}
+
+	pic scrolldown
+	{
+		image menu/buttons_small
+		pos		"930 355"
+		texl	"32 48"
+		texh	"48 64"
+		mousefx	true
+		click	{ cmd "mn_textscroll keylist 1;" }
+		out	{ *scrolldown texl "32 48" scrolldown texh "48 64" }
+		in	{ *scrolldown texl "48 48" scrolldown texh "64 64" }
 	}
 
 	func init
