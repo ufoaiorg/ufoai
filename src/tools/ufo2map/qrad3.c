@@ -512,7 +512,6 @@ void RadWorld (void)
 	MakeBackplanes ();
 	MakeParents (0, -1);
 
-	forbiddenContents = CONTENTS_TRANSLUCENT;
 	MakeTnodes ( 256 );
 
 	/* turn each face into a single patch */

@@ -44,21 +44,17 @@ qboolean	verboseentities;
 qboolean	norouting;
 qboolean	nobackclip;
 
-char		outbase[32];
-int			block_xl = -8, block_xh = 7, block_yl = -8, block_yh = 7;
-int			entity_num;
-vec3_t		g_mins, g_maxs;
-node_t		*block_nodes[18][18];
-int			level;
+char outbase[32];
+int block_xl = -8, block_xh = 7, block_yl = -8, block_yh = 7;
+int entity_num;
+vec3_t g_mins, g_maxs;
+int level;
 
 
 
-/*
-============
-ProcessWorldModel
-
-============
-*/
+/**
+ * @brief
+ */
 void ProcessWorldModel (void)
 {
 	entity_t	*e;
@@ -100,12 +96,9 @@ void ProcessWorldModel (void)
 }
 
 
-/*
-============
-ProcessSubModel
-
-============
-*/
+/**
+ * @brief
+ */
 void ProcessSubModel (void)
 {
 	entity_t	*e;
@@ -142,11 +135,9 @@ void ProcessSubModel (void)
 }
 
 
-/*
-============
-ProcessModels
-============
-*/
+/**
+ * @brief
+ */
 void ProcessModels (void)
 {
 	BeginBSPFile ();

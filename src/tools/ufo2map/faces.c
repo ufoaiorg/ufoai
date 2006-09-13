@@ -90,8 +90,8 @@ face_t		*edgefaces[MAX_MAP_EDGES][2];
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 unsigned HashVec (vec3_t vec)
 {
 	int			x, y;
@@ -107,11 +107,11 @@ unsigned HashVec (vec3_t vec)
 
 #ifdef USE_HASHING
 /**
-  * @brief
-  *
-  * @note Uses hashing
-  */
-int	GetVertexnum (vec3_t in)
+ * @brief
+ *
+ * @note Uses hashing
+ */
+static int GetVertexnum (vec3_t in)
 {
 	int			h;
 	int			i;
@@ -157,9 +157,9 @@ int	GetVertexnum (vec3_t in)
 }
 #else
 /**
-  * @brief Dumb linear search
-  */
-int	GetVertexnum (vec3_t v)
+ * @brief Dumb linear search
+ */
+static int GetVertexnum (vec3_t v)
 {
 	int			i, j;
 	dvertex_t	*dv;
@@ -199,17 +199,17 @@ int	GetVertexnum (vec3_t v)
 
 
 /**
-  * @brief The faces vertexes have been added to the superverts[] array,
-  * and there may be more there than can be held in a face (MAXEDGES).
-  *
-  * If less, the faces vertexnums[] will be filled in, otherwise
-  * face will reference a tree of split[] faces until all of the
-  * vertexnums can be added.
-  *
-  * @note superverts[base] will become face->vertexnums[0], and the others
-  * will be circularly filled in.
-  */
-void FaceFromSuperverts (node_t *node, face_t *f, int base)
+ * @brief The faces vertexes have been added to the superverts[] array,
+ * and there may be more there than can be held in a face (MAXEDGES).
+ *
+ * If less, the faces vertexnums[] will be filled in, otherwise
+ * face will reference a tree of split[] faces until all of the
+ * vertexnums can be added.
+ *
+ * @note superverts[base] will become face->vertexnums[0], and the others
+ * will be circularly filled in.
+ */
+static void FaceFromSuperverts (node_t *node, face_t *f, int base)
 {
 	face_t	*newf;
 	int		remaining;
@@ -246,9 +246,9 @@ void FaceFromSuperverts (node_t *node, face_t *f, int base)
 
 
 /**
-  * @brief
-  */
-void EmitFaceVertexes (node_t *node, face_t *f)
+ * @brief
+ */
+static void EmitFaceVertexes (node_t *node, face_t *f)
 {
 	winding_t	*w;
 	int			i;
@@ -277,9 +277,9 @@ void EmitFaceVertexes (node_t *node, face_t *f)
 }
 
 /**
-  * @brief
-  */
-void EmitVertexes_r (node_t *node)
+ * @brief
+ */
+static void EmitVertexes_r (node_t *node)
 {
 	int		i;
 	face_t	*f;
@@ -297,9 +297,9 @@ void EmitVertexes_r (node_t *node)
 
 #ifdef USE_HASHING
 /**
-  * @brief Uses the hash tables to cut down to a small number
-  */
-void FindEdgeVerts (vec3_t v1, vec3_t v2)
+ * @brief Uses the hash tables to cut down to a small number
+ */
+static void FindEdgeVerts (vec3_t v1, vec3_t v2)
 {
 	int		x1, x2, y1, y2, t;
 	int		x, y;
@@ -329,9 +329,9 @@ void FindEdgeVerts (vec3_t v1, vec3_t v2)
 
 #else
 /**
-  * @brief Forced a dumb check of everything
-  */
-void FindEdgeVerts (vec3_t v1, vec3_t v2)
+ * @brief Forced a dumb check of everything
+ */
+static void FindEdgeVerts (vec3_t v1, vec3_t v2)
 {
 	int		i;
 
@@ -342,10 +342,10 @@ void FindEdgeVerts (vec3_t v1, vec3_t v2)
 #endif
 
 /**
-  * @brief
-  * @note Can be recursively reentered
-  */
-void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
+ * @brief
+ * @note Can be recursively reentered
+ */
+static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 {
 	int		j, k;
 	vec_t	dist;
@@ -393,9 +393,9 @@ void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 }
 
 /**
-  * @brief
-  */
-void FixFaceEdges (node_t *node, face_t *f)
+ * @brief
+ */
+static void FixFaceEdges (node_t *node, face_t *f)
 {
 	int		p1, p2;
 	int		i;
@@ -455,9 +455,9 @@ void FixFaceEdges (node_t *node, face_t *f)
 }
 
 /**
-  * @brief
-  */
-void FixEdges_r (node_t *node)
+ * @brief
+ */
+static void FixEdges_r (node_t *node)
 {
 	int		i;
 	face_t	*f;
@@ -473,9 +473,11 @@ void FixEdges_r (node_t *node)
 }
 
 /**
-  * @brief
-  */
-void FixTjuncs (node_t *headnode)
+ * @brief
+ * @sa ProcessSubModel
+ * @sa ConstructLevelNodes_r
+ */
+extern void FixTjuncs (node_t *headnode)
 {
 	/* snap and merge all vertexes */
 	qprintf ("---- snap verts ----\n");
@@ -507,8 +509,8 @@ void FixTjuncs (node_t *headnode)
 int		c_faces;
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 face_t *AllocFace (void)
 {
 	face_t	*f;
@@ -521,8 +523,8 @@ face_t *AllocFace (void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 face_t *NewFaceFromFace (face_t *f)
 {
 	face_t	*newf;
@@ -536,8 +538,8 @@ face_t *NewFaceFromFace (face_t *f)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void FreeFace (face_t *f)
 {
 	if (f->w)
@@ -547,11 +549,11 @@ void FreeFace (face_t *f)
 }
 
 /**
-  * @brief
-  *
-  * @note Called by writebsp.
-  * @note Don't allow four way edges
-  */
+ * @brief
+ *
+ * @note Called by writebsp.
+ * @note Don't allow four way edges
+ */
 int GetEdge2 (int v1, int v2,  face_t *f)
 {
 	dedge_t	*edge;
@@ -595,11 +597,11 @@ FACE MERGING
 #define	CONTINUOUS_EPSILON	0.001
 
 /**
-  * @brief If two polygons share a common edge and the edges that meet at the
-  * common points are both inside the other polygons, merge them
-  *
-  * @return NULL if the faces couldn't be merged, or the new face.
-  * @note The originals will NOT be freed.
+ * @brief If two polygons share a common edge and the edges that meet at the
+ * common points are both inside the other polygons, merge them
+ *
+ * @return NULL if the faces couldn't be merged, or the new face.
+ * @note The originals will NOT be freed.
 =============
 */
 winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
@@ -691,12 +693,12 @@ winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
 }
 
 /**
-  * @brief If two polygons share a common edge and the edges that meet at the
-  * common points are both inside the other polygons, merge them
-  *
-  * @return NULL if the faces couldn't be merged, or the new face.
-  * @note The originals will NOT be freed.
-  */
+ * @brief If two polygons share a common edge and the edges that meet at the
+ * common points are both inside the other polygons, merge them
+ *
+ * @return NULL if the faces couldn't be merged, or the new face.
+ * @note The originals will NOT be freed.
+ */
 face_t *TryMerge (face_t *f1, face_t *f2, vec3_t planenormal)
 {
 	face_t		*newf;
@@ -727,9 +729,9 @@ face_t *TryMerge (face_t *f1, face_t *f2, vec3_t planenormal)
 }
 
 /**
-  * @brief
-  */
-void MergeNodeFaces (node_t *node)
+ * @brief
+ */
+static void MergeNodeFaces (node_t *node)
 {
 	face_t	*f1, *f2, *end;
 	face_t	*merged;
@@ -762,8 +764,8 @@ void MergeNodeFaces (node_t *node)
 /*===================================================================== */
 
 /**
-  * @brief Chop up faces that are larger than we want in the surface cache
-  */
+ * @brief Chop up faces that are larger than we want in the surface cache
+ */
 void SubdivideFace (node_t *node, face_t *f)
 {
 	float		mins, maxs;
@@ -833,8 +835,8 @@ void SubdivideFace (node_t *node, face_t *f)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void SubdivideNodeFaces (node_t *node)
 {
 	face_t	*f;
@@ -849,8 +851,8 @@ int	c_nodefaces;
 
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 face_t *FaceFromPortal (portal_t *p, int pside)
 {
 	face_t	*f;
@@ -890,12 +892,12 @@ face_t *FaceFromPortal (portal_t *p, int pside)
 
 
 /**
-  * @brief If a portal will make a visible face, mark the side that originally created it
-  * - solid / empty : solid
-  * - solid / water : solid
-  * - water / empty : water
-  * - water / water : none
-  */
+ * @brief If a portal will make a visible face, mark the side that originally created it
+ * - solid / empty : solid
+ * - solid / water : solid
+ * - water / empty : water
+ * - water / water : none
+ */
 void MakeFaces_r (node_t *node)
 {
 	portal_t	*p;
@@ -933,8 +935,8 @@ void MakeFaces_r (node_t *node)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void MakeFaces (node_t *node)
 {
 	qprintf ("--- MakeFaces ---\n");

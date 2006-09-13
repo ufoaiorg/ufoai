@@ -42,13 +42,13 @@ typedef struct tnode_s
 
 tnode_t		*tnodes, *tnode_p;
 
-int		numtheads;
-int		thead[260];
-int		theadlevel[260];
+static int numtheads;
+static int thead[260];
+static int theadlevel[260];
 
-int		neededContents = (CONTENTS_SOLID | CONTENTS_STEPON | CONTENTS_PLAYERCLIP);
-int		forbiddenContents = (CONTENTS_PASSABLE);
-vec3_t	tr_end;
+static int neededContents = (CONTENTS_SOLID | CONTENTS_STEPON | CONTENTS_PLAYERCLIP);
+static int forbiddenContents = (CONTENTS_PASSABLE);
+static vec3_t tr_end;
 
 /**
  * @brief Converts the disk node structure into the efficient tracing structure

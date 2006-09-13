@@ -69,7 +69,7 @@ PLANE FINDING
 PlaneTypeForNormal
 =================
 */
-int	PlaneTypeForNormal (vec3_t normal)
+static int PlaneTypeForNormal (vec3_t normal)
 {
 	vec_t	ax, ay, az;
 
@@ -659,7 +659,7 @@ void ParseBrush (entity_t *mapent)
 	}
 
 	/* allow water brushes to be removed */
-	if (nowater && (b->contents & (CONTENTS_LAVA | CONTENTS_SLIME | CONTENTS_WATER)) ) {
+	if (nowater && (b->contents & (CONTENTS_SLIME | CONTENTS_WATER)) ) {
 		b->numsides = 0;
 		return;
 	}

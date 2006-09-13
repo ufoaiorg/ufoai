@@ -31,9 +31,7 @@ int		c_facenodes;
 
 /*
 =========================================================
-
 ONLY SAVE OUT PLANES THAT ARE ACTUALLY USED AS NODES
-
 =========================================================
 */
 
@@ -63,8 +61,9 @@ void EmitPlanes (void)
 }
 
 
-/*======================================================== */
-
+/**
+ * @brief
+ */
 void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
 {
 	int			i;
@@ -99,11 +98,9 @@ void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
 }
 
 
-/*
-==================
-EmitLeaf
-==================
-*/
+/**
+ * @brief
+ */
 void EmitLeaf (node_t *node)
 {
 	dleaf_t		*leaf_p;
@@ -165,11 +162,9 @@ void EmitLeaf (node_t *node)
 }
 
 
-/*
-==================
-EmitFace
-==================
-*/
+/**
+ * @brief
+ */
 void EmitFace (face_t *f)
 {
 	dface_t	*df;
@@ -210,11 +205,9 @@ void EmitFace (face_t *f)
 	}
 }
 
-/*
-============
-EmitDrawingNode_r
-============
-*/
+/**
+ * @brief
+ */
 int EmitDrawNode_r (node_t *node)
 {
 	dnode_t	*n;
@@ -268,14 +261,9 @@ int EmitDrawNode_r (node_t *node)
 	return n - dnodes;
 }
 
-/*========================================================= */
-
-
-/*
-============
-WriteBSP
-============
-*/
+/**
+ * @brief
+ */
 void WriteBSP (node_t *headnode)
 {
 	int		oldfaces;
@@ -294,13 +282,9 @@ void WriteBSP (node_t *headnode)
 	qprintf ("%5i faces\n", numfaces-oldfaces);
 }
 
-/*=========================================================== */
-
-/*
-============
-SetModelNumbers
-============
-*/
+/**
+ * @brief
+ */
 void SetModelNumbers (void)
 {
 	int		i;
@@ -318,12 +302,10 @@ void SetModelNumbers (void)
 
 }
 
-/*
-============
-SetLightStyles
-============
-*/
 #define	MAX_SWITCHED_LIGHTS	32
+/**
+ * @brief
+ */
 void SetLightStyles (void)
 {
 	int		stylenum;
@@ -332,7 +314,6 @@ void SetLightStyles (void)
 	int		i, j;
 	char	value[10];
 	char	lighttargets[MAX_SWITCHED_LIGHTS][64];
-
 
 	/* any light that is controlled (has a targetname) */
 	/* must have a unique style number generated for it */
@@ -364,13 +345,9 @@ void SetLightStyles (void)
 
 }
 
-/*=========================================================== */
-
-/*
-============
-EmitBrushes
-============
-*/
+/**
+ * @brief
+ */
 void EmitBrushes (void)
 {
 	int			i, j, bnum, s, x;
@@ -428,13 +405,10 @@ void EmitBrushes (void)
 	}
 }
 
-/*=========================================================== */
-
-/*
-==================
-BeginBSPFile
-==================
-*/
+/**
+ * @brief
+ * @sa EndBSPFile
+ */
 void BeginBSPFile (void)
 {
 	/* these values may actually be initialized */
@@ -460,11 +434,10 @@ void BeginBSPFile (void)
 }
 
 
-/*
-============
-EndBSPFile
-============
-*/
+/**
+ * @brief
+ * @sa BeginBSPFile
+ */
 void EndBSPFile (void)
 {
 	char	path[1024];
@@ -482,14 +455,12 @@ void EndBSPFile (void)
 }
 
 
-/*
-==================
-BeginModel
-==================
-*/
-int	firstmodleaf;
+static int firstmodleaf = 0;
 extern	int firstmodeledge;
 extern	int	firstmodelface;
+/**
+ * @brief
+ */
 void BeginModel (void)
 {
 	dmodel_t	*mod;
@@ -529,11 +500,9 @@ void BeginModel (void)
 }
 
 
-/*
-==================
-EndModel
-==================
-*/
+/**
+ * @brief
+ */
 void EndModel (void)
 {
 	dmodel_t	*mod;

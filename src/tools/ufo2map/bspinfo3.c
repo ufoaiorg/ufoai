@@ -28,6 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common/mathlib.h"
 #include "common/bspfile.h"
 
+/**
+ * @brief
+ * @sa LoadBSPFile
+ * @sa PrintBSPFileSizes
+ */
 int main (int argc, char **argv)
 {
 	int			i;
@@ -38,18 +43,15 @@ int main (int argc, char **argv)
 	if (argc == 1)
 		Error ("usage: bspinfo bspfile [bspfiles]");
 
-	for (i=1 ; i<argc ; i++)
-	{
+	for (i=1 ; i<argc ; i++) {
 		printf ("---------------------\n");
 		strcpy (source, argv[i]);
 		DefaultExtension (source, ".bsp");
 		f = fopen (source, "rb");
-		if (f)
-		{
+		if (f) {
 			size = Q_filelength (f);
 			fclose (f);
-		}
-		else
+		} else
 			size = 0;
 		printf ("%s: %i\n", source, size);
 

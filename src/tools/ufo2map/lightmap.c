@@ -34,17 +34,16 @@ typedef struct
 	qboolean	coplanar;
 } edgeshare_t;
 
-edgeshare_t	edgeshare[MAX_MAP_EDGES];
+static edgeshare_t	edgeshare[MAX_MAP_EDGES];
+static int facelinks[MAX_MAP_FACES];
+static int planelinks[2][MAX_MAP_PLANES];
 
-int			facelinks[MAX_MAP_FACES];
-int			planelinks[2][MAX_MAP_PLANES];
-
-vec3_t		vnormals[MAX_MAP_VERTS];
+vec3_t vnormals[MAX_MAP_VERTS];
 
 /**
-  *	@brief
-  */
-void LinkPlaneFaces (void)
+ * @brief
+ */
+extern void LinkPlaneFaces (void)
 {
 	int		i;
 	dface_t	*f;
@@ -57,9 +56,9 @@ void LinkPlaneFaces (void)
 }
 
 /**
-  *	@brief
-  */
-void PairEdges (void)
+ * @brief
+ */
+extern void PairEdges (void)
 {
 	int		i, j, k;
 	dface_t	*f;
@@ -88,9 +87,7 @@ void PairEdges (void)
 
 /*
 =================================================================
-
-  POINT TRIANGULATION
-
+POINT TRIANGULATION
 =================================================================
 */
 
@@ -124,9 +121,9 @@ typedef struct
 } triangulation_t;
 
 /**
-  *	@brief
-  */
-triangulation_t *AllocTriangulation (dplane_t *plane)
+ * @brief
+ */
+static triangulation_t *AllocTriangulation (dplane_t *plane)
 {
 	triangulation_t	*t;
 
@@ -143,18 +140,18 @@ triangulation_t *AllocTriangulation (dplane_t *plane)
 }
 
 /**
-  *	@brief
-  */
-void FreeTriangulation (triangulation_t *tr)
+ * @brief
+ */
+static void FreeTriangulation (triangulation_t *tr)
 {
 	free (tr);
 }
 
 
 /**
-  *	@brief
-  */
-triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
+ * @brief
+ */
+static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 {
 	triedge_t	*e, *be;
 	vec3_t		v1;
@@ -194,9 +191,9 @@ triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 }
 
 /**
-  *	@brief
-  */
-triangle_t *AllocTriangle (triangulation_t *trian)
+ * @brief
+ */
+static triangle_t *AllocTriangle (triangulation_t *trian)
 {
 	triangle_t	*t;
 
@@ -210,9 +207,9 @@ triangle_t *AllocTriangle (triangulation_t *trian)
 }
 
 /**
-  *	@brief
-  */
-void TriEdge_r (triangulation_t *trian, triedge_t *e)
+ * @brief
+ */
+static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 {
 	int		i, bestp = 0;
 	vec3_t	v1, v2;
@@ -259,9 +256,9 @@ void TriEdge_r (triangulation_t *trian, triedge_t *e)
 }
 
 /**
-  *	@brief
-  */
-void TriangulatePoints (triangulation_t *trian)
+ * @brief
+ */
+static void TriangulatePoints (triangulation_t *trian)
 {
 	vec_t	d, bestd;
 	vec3_t	v1;
@@ -295,11 +292,11 @@ void TriangulatePoints (triangulation_t *trian)
 }
 
 /**
-  *	@brief
-  */
-void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
+ * @brief
+ */
+static void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 {
-	int			pnum;
+	int pnum;
 
 	pnum = trian->numpoints;
 	if (pnum == MAX_TRI_POINTS)
@@ -309,9 +306,9 @@ void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 }
 
 /**
-  *	@brief
-  */
-void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t color)
+ * @brief
+ */
+static void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t color)
 {
 	patch_t		*p1, *p2, *p3;
 	vec3_t		base, d1, d2;
@@ -344,9 +341,9 @@ void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t c
 }
 
 /**
-  *	@brief
-  */
-qboolean PointInTriangle (vec3_t point, triangle_t *t)
+ * @brief
+ */
+static qboolean PointInTriangle (vec3_t point, triangle_t *t)
 {
 	int		i;
 	triedge_t	*e;
@@ -363,9 +360,9 @@ qboolean PointInTriangle (vec3_t point, triangle_t *t)
 }
 
 /**
-  *	@brief
-  */
-void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
+ * @brief
+ */
+static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
 {
 	triangle_t	*t;
 	triedge_t	*e;
@@ -440,9 +437,7 @@ void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
 
 /*
 =================================================================
-
-  LIGHTMAP SAMPLE GENERATION
-
+LIGHTMAP SAMPLE GENERATION
 =================================================================
 */
 
@@ -472,9 +467,9 @@ typedef struct
 
 
 /**
-  *	@brief Fills in s->texmins[] and s->texsize[], also sets exactmins[] and exactmaxs[]
-  */
-void CalcFaceExtents (lightinfo_t *l)
+ * @brief Fills in s->texmins[] and s->texsize[], also sets exactmins[] and exactmaxs[]
+ */
+static void CalcFaceExtents (lightinfo_t *l)
 {
 	dface_t *s;
 	vec_t	mins[2], maxs[2], val;
@@ -524,9 +519,9 @@ void CalcFaceExtents (lightinfo_t *l)
 }
 
 /**
-  *	@brief Fills in texorg, worldtotex. and textoworld
-  */
-void CalcFaceVectors (lightinfo_t *l)
+ * @brief Fills in texorg, worldtotex. and textoworld
+ */
+static void CalcFaceVectors (lightinfo_t *l)
 {
 	texinfo_t	*tex;
 	int			i, j;
@@ -595,10 +590,10 @@ void CalcFaceVectors (lightinfo_t *l)
 }
 
 /**
-  *	@brief For each texture aligned grid point, back project onto the plane
-  * to get the world xyz value of the sample point
-  */
-void CalcPoints (lightinfo_t *l, float sofs, float tofs)
+ * @brief For each texture aligned grid point, back project onto the plane
+ * to get the world xyz value of the sample point
+ */
+static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 {
 	int		i;
 	int		s, t, j;
@@ -684,19 +679,19 @@ typedef struct
 	float		*samples[MAX_STYLES];
 } facelight_t;
 
-directlight_t	*directlights;
-facelight_t		facelight[MAX_MAP_FACES];
-int				numdlights;
+static directlight_t *directlights;
+static facelight_t facelight[MAX_MAP_FACES];
+static int numdlights;
 
-vec3_t		sun_color;
-float		sun_intensity;
-float		sun_pitch, sun_yaw;
-vec3_t		sun_dir;
+static vec3_t sun_color;
+static float sun_intensity;
+static float sun_pitch, sun_yaw;
+static vec3_t sun_dir;
 
 /**
-  *	@brief
-  */
-entity_t *FindTargetEntity (char *target)
+ * @brief
+ */
+static entity_t *FindTargetEntity (char *target)
 {
 	int		i;
 	char	*n;
@@ -714,8 +709,8 @@ entity_t *FindTargetEntity (char *target)
 #define	DIRECT_LIGHT	3
 
 /**
-  *	@brief
-  */
+ * @brief
+ */
 void CreateDirectLights (void)
 {
 	int		i;
@@ -865,11 +860,10 @@ void CreateDirectLights (void)
 
 
 /**
-  *	@brief
-  *
-  * @param[in] lightscale is the normalizer for multisampling
-  */
-void GatherSampleLight (vec3_t pos, vec3_t normal,
+ * @brief
+ * @param[in] lightscale is the normalizer for multisampling
+ */
+static void GatherSampleLight (vec3_t pos, vec3_t normal,
 			float **styletable, int offset, int mapsize, float lightscale)
 {
 /*	int				i; */
@@ -956,15 +950,15 @@ skipadd: ;
 }
 
 /**
-  *	@brief Take the sample's collected light and
-  * add it back into the apropriate patch
-  * for the radiosity pass.
-  *
-  * The sample is added to all patches that might include
-  * any part of it.  They are counted and averaged, so it
-  * doesn't generate extra light.
-  */
-void AddSampleToPatch (vec3_t pos, vec3_t color, int facenum)
+ * @brief Take the sample's collected light and
+ * add it back into the apropriate patch
+ * for the radiosity pass.
+ *
+ * The sample is added to all patches that might include
+ * any part of it.  They are counted and averaged, so it
+ * doesn't generate extra light.
+ */
+static void AddSampleToPatch (vec3_t pos, vec3_t color, int facenum)
 {
 	patch_t	*patch;
 	vec3_t	mins, maxs;
@@ -992,11 +986,11 @@ nextpatch:;
 	}
 }
 
+static float sampleofs[5][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4}, {0.4, 0.4}, {-0.4, 0.4} };
 
 /**
-  *	@brief
-  */
-float sampleofs[5][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4}, {0.4, 0.4}, {-0.4, 0.4} };
+ * @brief
+ */
 void BuildFacelights (int facenum)
 {
 	dface_t	*f;
@@ -1089,9 +1083,9 @@ void BuildFacelights (int facenum)
 
 
 /**
-  *	@brief Add the indirect lighting on top of the direct
-  * lighting and save into final map format
-  */
+ * @brief Add the indirect lighting on top of the direct
+ * lighting and save into final map format
+ */
 void FinalLightFace (int facenum)
 {
 	dface_t		*f;

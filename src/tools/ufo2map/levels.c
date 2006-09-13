@@ -26,18 +26,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qbsp.h"
 
 
-vec3_t		v_epsilon = { 1, 1, 1 };
-int			brush_start, brush_end;
+vec3_t v_epsilon = { 1, 1, 1 };
+int brush_start, brush_end;
 
-vec3_t		worldMins, worldMaxs;
+vec3_t worldMins, worldMaxs;
 
-int		oldleafs, oldleaffaces, oldleafbrushes, oldplanes, oldvertexes, oldnodes, oldtexinfo, oldfaces, oldedges, oldsurfedges;
+static int oldleafs, oldleaffaces, oldleafbrushes, oldplanes, oldvertexes, oldnodes, oldtexinfo, oldfaces, oldedges, oldsurfedges;
 
-/*
-============
-PushInfo
-============
-*/
+/**
+ * @brief
+ */
 void PushInfo ( void )
 {
 	oldleafs = numleafs;
@@ -52,11 +50,9 @@ void PushInfo ( void )
 	oldsurfedges = numsurfedges;
 }
 
-/*
-============
-PopInfo
-============
-*/
+/**
+ * @brief
+ */
 void PopInfo ( void )
 {
 	numleafs = oldleafs;
@@ -72,11 +68,9 @@ void PopInfo ( void )
 }
 
 
-/*
-============
-BuildNodeChildren
-============
-*/
+/**
+ * @brief
+ */
 int BuildNodeChildren( vec3_t mins, vec3_t maxs, int n[3] )
 {
 	int		node;
@@ -96,8 +90,7 @@ int BuildNodeChildren( vec3_t mins, vec3_t maxs, int n[3] )
 			vec3_t		newmins, newmaxs;
 			vec3_t		addvec;
 
-			/* add a new "special" dnode */
-			/* and store it */
+			/* add a new "special" dnode and store it */
 			newnode = &dnodes[numnodes];
 			numnodes++;
 
@@ -127,11 +120,9 @@ int BuildNodeChildren( vec3_t mins, vec3_t maxs, int n[3] )
 }
 
 
-/*
-============
-ConstructLevelNodes_r
-============
-*/
+/**
+ * @brief
+ */
 int	ConstructLevelNodes_r( int levelnum, vec3_t cmins, vec3_t cmaxs )
 {
 	bspbrush_t	*list;
@@ -150,9 +141,9 @@ int	ConstructLevelNodes_r( int levelnum, vec3_t cmins, vec3_t cmaxs )
 
 	VectorSubtract( bmaxs, bmins, diff );
 
-/*	printf( "(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, (int)diff[0], (int)diff[1], */
-/*		(int)cmins[0], (int)cmins[1], (int)cmaxs[0], (int)cmaxs[1], */
-/*		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1] ); */
+/*	printf( "(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, (int)diff[0], (int)diff[1],
+		(int)cmins[0], (int)cmins[1], (int)cmaxs[0], (int)cmaxs[1],
+		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1] ); */
 
 	if ( diff[0] > 256 || diff[1] > 256 ) {
 		/* continue subdivision */
@@ -223,12 +214,9 @@ int	ConstructLevelNodes_r( int levelnum, vec3_t cmins, vec3_t cmaxs )
 }
 
 
-/*
-============
-ProcessLevel
-
-============
-*/
+/**
+ * @brief
+ */
 void ProcessLevel (int levelnum)
 {
 	vec3_t		mins, maxs;
@@ -255,9 +243,8 @@ void ProcessLevel (int levelnum)
 	dm->headnode = ConstructLevelNodes_r( levelnum, mins, maxs );
 	dm->numfaces = numfaces - dm->firstface;
 
-/*	if ( !dm->numfaces ) */
-/*	{ */
-/*		printf( "level: %i -> %i : f %i\n", levelnum, dm->headnode, dm->numfaces ); */
-/*	} */
+/*	if (!dm->numfaces)
+		printf( "level: %i -> %i : f %i\n", levelnum, dm->headnode, dm->numfaces );
+*/
 }
 

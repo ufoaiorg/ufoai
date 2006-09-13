@@ -239,25 +239,8 @@ typedef struct
 #define	MAX_MAP_TEXTURES	1024
 
 extern	textureref_t	textureref[MAX_MAP_TEXTURES];
-
 int	FindMiptex (char *name);
-
 int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin);
-
-/*============================================================================= */
-
-void FindGCD (int *v);
-
-mapbrush_t *Brush_LoadEntity (entity_t *ent);
-int	PlaneTypeForNormal (vec3_t normal);
-qboolean MakeBrushPlanes (mapbrush_t *b);
-int		FindIntPlane (int *inormal, int *iorigin);
-void	CreateBrush (int brushnum);
-
-
-
-
-/*============================================================================= */
 
 /* draw.c */
 
@@ -271,45 +254,23 @@ void GLS_BeginScene (void);
 void GLS_Winding (winding_t *w, int code);
 void GLS_EndScene (void);
 
-/*============================================================================= */
-
 /* csg */
 
-qboolean IsInLevel( int contents, int level );
-int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs,
-					  vec3_t mins, vec3_t maxs );
-bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level,
-		vec3_t clipmins, vec3_t clipmaxs);
+int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs );
+bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs);
 bspbrush_t *ChopBrushes (bspbrush_t *head);
-bspbrush_t *InitialBrushList (bspbrush_t *list);
-bspbrush_t *OptimizedBrushList (bspbrush_t *list);
-
-void WriteBrushMap (char *name, bspbrush_t *list);
-
-/*============================================================================= */
 
 /* brushbsp */
 
-void WriteBrushList (char *name, bspbrush_t *brush, qboolean onlyvis);
-
 bspbrush_t *CopyBrush (bspbrush_t *brush);
-
-void SplitBrush (bspbrush_t *brush, int planenum,
-	bspbrush_t **front, bspbrush_t **back);
-
-tree_t *AllocTree (void);
-node_t *AllocNode (void);
+void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back);
 bspbrush_t *AllocBrush (int numsides);
 int	CountBrushList (bspbrush_t *brushes);
 void FreeBrush (bspbrush_t *brushes);
-vec_t BrushVolume (bspbrush_t *brush);
 
-void BoundBrush (bspbrush_t *brush);
 void FreeBrushList (bspbrush_t *brushes);
 
 tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
-
-/*============================================================================= */
 
 /* portals.c */
 
@@ -318,8 +279,6 @@ int VisibleContents (int contents);
 void MakeHeadnodePortals (tree_t *tree);
 void MakeNodePortal (node_t *node);
 void SplitNodePortals (node_t *node);
-
-qboolean	Portal_VisFlood (portal_t *p);
 
 qboolean FloodEntities (tree_t *tree);
 void FillOutside (node_t *headnode);
@@ -330,11 +289,8 @@ void EmitAreaPortals (node_t *headnode);
 
 void MakeTreePortals (tree_t *tree);
 
-/*============================================================================= */
-
 /* glfile.c */
 
-void OutputWinding (winding_t *w, FILE *glview);
 void WriteGLView (tree_t *tree, char *source);
 
 /*============================================================================= */
@@ -352,31 +308,16 @@ void EndModel (void);
 void EmitBrushes (void);
 void EmitPlanes (void);
 
-/*============================================================================= */
-
 /* faces.c */
 
 void MakeFaces (node_t *headnode);
 void FixTjuncs (node_t *headnode);
 int GetEdge2 (int v1, int v2,  face_t *f);
-
-face_t	*AllocFace (void);
 void FreeFace (face_t *f);
-
-void MergeNodeFaces (node_t *node);
-
-/*============================================================================= */
 
 /* tree.c */
 
 void FreeTree (tree_t *tree);
-void FreeTree_r (node_t *node);
-void PrintTree_r (node_t *node, int depth);
-void FreeTreePortals_r (node_t *node);
-void PruneNodes_r (node_t *node);
-void PruneNodes (node_t *node);
-
-/*============================================================================= */
 
 /* trace.c */
 
@@ -386,8 +327,6 @@ int TestLineMask (vec3_t start, vec3_t stop, int levels);
 int TestLineDM (vec3_t start, vec3_t stop, vec3_t end, int levels);
 int TestContents (vec3_t pos);
 
-/*============================================================================= */
-
 /* levels.c */
 
 extern vec3_t	v_epsilon;
@@ -396,8 +335,6 @@ extern vec3_t	worldMins, worldMaxs;
 void PushInfo( void );
 void PopInfo( void );
 void ProcessLevel( int levelnum );
-
-/*============================================================================= */
 
 /* routing.c */
 
@@ -421,11 +358,7 @@ extern qboolean	norouting;
 extern qboolean	nobackclip;
 extern float subdivide_size;
 
-/*=============================================================================
- */
-
-/* qbsp3.c
- */
+/* qbsp3.c */
 
 void ProcessModels (void);
 void RadWorld (void);
