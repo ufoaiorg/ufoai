@@ -1298,14 +1298,59 @@ team human
 
 // ======================
 // SCIENTISTS
-// FIXME
 // ======================
 
 names human_scientist
 {
-	female { a }
-	male { b }
-	lastname { c }
+	female
+	{
+	Alexandra
+	Anna
+	Andrea
+	Barbara
+	Claudia
+	Denise
+	}
+
+	male
+	{
+	Adrian
+	Andreas
+	Anton
+	Axel
+	Bernhard
+	Boris
+	Christian
+	David
+	Emil
+	Klaus
+	Lukas
+	Martin
+	Markus
+	Mathias
+	Ralf
+	Rolf
+	Roman
+	Sonke
+	Ulrich
+	}
+
+	lastname
+	{
+	Allensbach
+	Benz
+	Berger
+	Baltner
+	Dorfer
+	Eitl
+	Maier
+	Meier
+	Niederer
+	Nipp
+	Schafer
+	Stein
+	Winter
+	}
 }
 
 actors human_scientist
@@ -1331,14 +1376,59 @@ actors human_scientist
 
 // ======================
 // MEDICS
-// FIXME
 // ======================
 
 names human_medic
 {
-	female { a }
-	male { b }
-	lastname { c }
+	female
+	{
+	Alexandra
+	Anna
+	Andrea
+	Barbara
+	Claudia
+	Denise
+	}
+
+	male
+	{
+	Adrian
+	Andreas
+	Anton
+	Axel
+	Bernhard
+	Boris
+	Christian
+	David
+	Emil
+	Klaus
+	Lukas
+	Martin
+	Markus
+	Mathias
+	Ralf
+	Rolf
+	Roman
+	Sonke
+	Ulrich
+	}
+
+	lastname
+	{
+	Allensbach
+	Benz
+	Berger
+	Baltner
+	Dorfer
+	Eitl
+	Maier
+	Meier
+	Niederer
+	Nipp
+	Schafer
+	Stein
+	Winter
+	}
 }
 
 actors human_medic
@@ -1364,14 +1454,59 @@ actors human_medic
 
 // ======================
 // WORKERS
-// FIXME
 // ======================
 
 names human_worker
 {
-	female { a }
-	male { b }
-	lastname { c }
+	female
+	{
+	Alexandra
+	Anna
+	Andrea
+	Barbara
+	Claudia
+	Denise
+	}
+
+	male
+	{
+	Adrian
+	Andreas
+	Anton
+	Axel
+	Bernhard
+	Boris
+	Christian
+	David
+	Emil
+	Klaus
+	Lukas
+	Martin
+	Markus
+	Mathias
+	Ralf
+	Rolf
+	Roman
+	Sonke
+	Ulrich
+	}
+
+	lastname
+	{
+	Allensbach
+	Benz
+	Berger
+	Baltner
+	Dorfer
+	Eitl
+	Maier
+	Meier
+	Niederer
+	Nipp
+	Schafer
+	Stein
+	Winter
+	}
 }
 
 actors human_worker
