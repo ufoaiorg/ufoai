@@ -532,9 +532,9 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 		if (cur_line) {
 			/* ri.Con_Printf(PRINT_ALL, "h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
 			(*cur_line)++; /* Increment the number of processed lines (overall). */
-			if (box_height > 0 && *cur_line >= box_height)
+			if (box_height > 0 && *cur_line + scroll_pos >= box_height)
 				/* Due to scrolling this line and the following are not visible */
-				break;
+				return -1;
 			if (*cur_line < scroll_pos) {
 				/* Due to scrolling this line is not visible. See if (!skipline)" code below.*/
 				skipline = qtrue;
@@ -583,7 +583,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 			}
 		}
 
-		if (!skipline && strlen(buffer))	{
+		if (!skipline && strlen(buffer)) {
 			/* This will cut down the string to 160 chars */
 			/* NOTE: There can be a non critical overflow in Com_sprintf */
 			Com_sprintf(searchString, MAX_FONTNAME + MAX_HASH_STRING, "%s%s", fontID, buffer);
@@ -596,12 +596,12 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 				ri.Sys_Error(ERR_FATAL, "...could not generate font surface '%s'\n", buffer);
 
 			Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
+			fy += fh;
+			returnHeight += (texh0 > 0) ? texh0 : h;
 		}
 
 		/* skip for next line */
-		fy += fh;
 		buffer = pos;
-		returnHeight += (texh0 > 0) ? texh0 : h;
 		x = locX;
 	} while (buffer);
 

@@ -1065,7 +1065,7 @@ static void MN_TextScroll_f(void)
 	menuNode_t *node = NULL;
 
 	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: textscroll <nodename> <+/-offset>\n");
+		Com_Printf("Usage: %s <nodename> <+/-offset>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1550,6 +1550,8 @@ void MN_DrawMenus(void)
 				case MN_TEXT:
 					if (menuText[node->num]) {
 						char textCopy[MAX_MENUTEXTLEN];
+						int oldLines = node->textLines;
+						int lineHeight = 0;
 
 						Q_strncpyz(textCopy, menuText[node->num], MAX_MENUTEXTLEN);
 						font = MN_GetFont(menu, node);
@@ -1586,7 +1588,8 @@ void MN_DrawMenus(void)
 								/* ... otherwise set the \t to \0 and increase the tab pointer to the next char */
 								/* after the tab (needed for the next loop in this (the inner) do while) */
 								*tab++ = '\0';
-								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur, node->height, node->textScroll, &node->textLines );
+								if (oldLines > 0 && node->textScroll <= node->textLines)
+									re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur, node->height, node->textScroll, NULL);
 								/* increase the x value as given via menu definition format string */
 								/* or use 1/3 of the node size (width) */
 								if (!node->texh[1])
@@ -1598,7 +1601,9 @@ void MN_DrawMenus(void)
 							} while (1);
 
 							/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
-							y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], (*cur ? cur : " "),0,0,NULL);
+							lineHeight = re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines);
+
+							y += lineHeight;
 
 							if (node->mousefx && node->textLines == mouseOver)
 								re.DrawColor(node->color); /* why is this repeated? */
@@ -2322,7 +2327,7 @@ void MN_ResetMenus(void)
 	Cvar_Set("mn_sequence", "sequence");
 
 	/* textbox */
-	Cmd_AddCommand("textscroll", MN_TextScroll_f, NULL);
+	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
 
 	/* print the keybindings to menuText */
 	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);
