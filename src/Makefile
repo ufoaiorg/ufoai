@@ -381,8 +381,14 @@ linuxinstaller:
 sourcearchive:
 	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-source.tar.bz2 ./
 
-deb:
+# build this first - install ufoai-tools and then build debdata
+debbinary:
 	debuild binary
+
+debdata:
+	cd ..; cd base; debuild binary
+
+deb: debbinary debdata
 
 copy_debug:
 	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
