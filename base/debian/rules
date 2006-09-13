@@ -23,7 +23,7 @@ configure:
 build: build-stamp
 build-stamp: configure
 	dh_testdir
-  # ensure the current dirname allows qrad3 to know where we are
+  # ensure the current dirname allows ufo2map to know where we are
 	expr $(shell basename `dirname $$PWD`) : ufo
 
 	$(MAKE) -C maps UFO2MAP=/usr/lib/games/ufoai/ufo2map
@@ -53,6 +53,12 @@ install: build
   # remove unwanted stuff: svn metadata and source files
 	find debian/ufoai-data -name .svn | xargs rm -rf
 	find debian/ufoai-data -name '*.map' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.xcf' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.blend' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.mb' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.max' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.obj' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.wings3d' | xargs --no-run-if-empty rm
 
   # add links to fonts
 	mkdir $(FONTDIR)

@@ -121,8 +121,7 @@ void ProcessSubModel (void)
 	start = e->firstbrush;
 	end = start + e->numbrushes;
 
-	if ( !strcmp ("func_detail", ValueForKey (e, "classname") ) )
-	{
+	if ( !strcmp ("func_detail", ValueForKey (e, "classname") ) ) {
 	}
 
 	mins[0] = mins[1] = mins[2] = -4096;

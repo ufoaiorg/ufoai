@@ -10,4 +10,18 @@ Architecture: all
 Depends: ${misc:Depends}, ttf-freefont, ttf-dejavu
 Recommends: ufoai
 Description: Data for UFO: Alien Invasion
- Maps, units, sound effects, etc.
+ Models, units, sound effects, etc.
+
+Package: ufoai-data-maps
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: ufoai
+Description: Data for UFO: Alien Invasion
+ Maps.
+
+Package: ufoai-data-music
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: ufoai
+Description: Data for UFO: Alien Invasion
+ Music.

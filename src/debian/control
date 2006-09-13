@@ -7,8 +7,8 @@ Standards-Version: 3.6.1
 
 Package: ufoai
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 0.0.cvs)
-Suggests: ufoai-music
+Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 0.0.svn), ufoai-data-maps (>= 0.0.svn)
+Suggests: ufoai-data-music
 Description: UFO: Alien Invasion - build your team and stop the aliens
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
@@ -30,6 +30,7 @@ Description: UFO: Alien Invasion - data-building tool
 Package: ufoai-server
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: ufoai-data-maps (>= 0.0.svn)
 Description: UFO: Alien Invasion - standalone game server
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
