@@ -659,8 +659,8 @@ menu options_keys
 		texh	"48 48"
 		mousefx	true
 		click	{ cmd "mn_textscroll keylist -1;" }
-		out	{ *scrollup texl "32 32" scrollup texh "48 48" }
-		in	{ *scrollup texl "48 32" scrollup texh "64 48" }
+		out	{ *scrollup texl "32 32" *scrollup texh "48 48" }
+		in	{ *scrollup texl "48 32" *scrollup texh "64 48" }
 	}
 
 	pic scrolldown
@@ -671,8 +671,8 @@ menu options_keys
 		texh	"48 64"
 		mousefx	true
 		click	{ cmd "mn_textscroll keylist 1;" }
-		out	{ *scrolldown texl "32 48" scrolldown texh "48 64" }
-		in	{ *scrolldown texl "48 48" scrolldown texh "64 64" }
+		out	{ *scrolldown texl "32 48" *scrolldown texh "48 64" }
+		in	{ *scrolldown texl "48 48" *scrolldown texh "64 64" }
 	}
 
 	func init
