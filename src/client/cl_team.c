@@ -196,7 +196,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t emplo
 	/* get ucn */
 	chr->ucn = gd.nextUCN++;
 
-	Com_DPrintf("Generate character for team: '%s' (type: %i)\n", employeeType, employeeType);
+	Com_DPrintf("Generate character for team: '%s' (type: %i)\n", team, employeeType);
 
 	/* Backlink from chr to employee struct. */
 	chr->empl_type = employeeType;
