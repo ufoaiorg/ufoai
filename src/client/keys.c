@@ -51,7 +51,6 @@ int msg_bufferlen = 0;
 static int key_waiting;
 char *keybindings[256];
 static qboolean consolekeys[256];		/* if true, can't be rebound while in console */
-static qboolean menubound[256];		/* if true, can't be rebound while in menu */
 static int keyshift[256];				/* key to map to if shift held down in console */
 static int key_repeats[256];			/* if > 1, it is autorepeating */
 qboolean keydown[256];
@@ -703,10 +702,6 @@ void Key_Init(void)
 	keyshift['`'] = '~';
 	keyshift['\\'] = '|';
 #endif
-
-	menubound[K_ESCAPE] = qtrue;
-	for (i = 0; i < 12; i++)
-		menubound[K_F1 + i] = qtrue;
 
 	/* register our functions */
 	Cmd_AddCommand("bind", Key_Bind_f, NULL);
