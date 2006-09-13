@@ -94,7 +94,7 @@ menu ufopedia
 		tooltip "_Scroll up"
 		image	menu/buttons_small
 		mousefx true
-		pos		"15 100"
+		pos		"25 85"
 		texh	"48 48"
 		texl	"32 32"
 		click	{ cmd "mn_textscroll ufopedia -1;" }
@@ -107,7 +107,7 @@ menu ufopedia
 		tooltip "_Scroll down"
 		image	menu/buttons_small
 		mousefx true
-		pos		"15 150"
+		pos		"25 117"
 		texl	"32 48"
 		texh	"48 64"
 		click	{ cmd "mn_textscroll ufopedia 1;" }
@@ -121,12 +121,12 @@ menu ufopedia
 
 	text ufopedia
 	{
-		pos		"35 85"
+		pos		"50 85"
 		size	"700 390"
 		num		2
 		format	"24 0"
 		click { cmd "mn_textscroll ufopedia 1;" }
-		height	"4" //DEBUG value
+		height	"24"
 	}
 
 	confunc mn_upfbig
