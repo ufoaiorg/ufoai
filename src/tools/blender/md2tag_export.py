@@ -48,7 +48,9 @@ from Blender.Draw import *
 from Blender.BGL import *
 from Blender.Window import *
 from Blender.Object import *
+from Blender.Mathutils import *
 
+import math
 import struct, string
 from types import *
 
@@ -81,10 +83,12 @@ def apply_transform(verts, matrix):
 # Get Angle between 3 points
 #	Get the angle between line AB and BC where b is the elbo.
 #	http://en.wikibooks.org/wiki/Blender_3D:_Blending_Into_Python/Cookbook#Get_Angle_between_3_points
+#	Uses Blender.Mathutils.AngleBetweenVecs and Blender.Mathutils.Vector
 ######################################################
 
 def getAng3pt3d(avec, bvec, cvec):
-	AngleBetweenVecs = Blender.Mathutils.AngleBetweenVecs
+	avec, bvec, cvec = Vector(avec), Vector(bvec), Vector(cvec)
+
 	try:
 		ang = AngleBetweenVecs(avec - bvec,  cvec - bvec)
 		if ang != ang:
@@ -97,22 +101,30 @@ def getAng3pt3d(avec, bvec, cvec):
 
 ######################################################
 # Get the rotation values (euler tuple) from a location and the axes-information
+# Uses Blender.Mathutils.Vector
 ######################################################
-def get_euler(loc, X,Y,Z):
-	loc=Mathutils.Vector(loc)
-	X=Mathutils.Vector(X)
-	Y=Mathutils.Vector(Y)
-	Z=Mathutils.Vector(Z)
+def get_euler(loc, X,Y,Z):	
+	loc=Vector(loc)
+	X=Vector(X)
+	Y=Vector(Y)
+	Z=Vector(Z)
 
-	locX = Mathutils.Vector(loc[0]+1.0, loc[1], loc[2])
-	locY = Mathutils.Vector(loc[0], loc[1]+1.0, loc[2])
-	locZ = Mathutils.Vector(loc[0], loc[1], loc[2]+1.0)
+	zero  = Vector(0.0, 0.0, 0.0)
+	axisX = Vector(1.0, 0.0, 0.0)
+	axisY = Vector(0.0, 1.0, 0.0)
+	axisZ = Vector(0.0, 0.0, 1.0)
+	
+	objX = (X-loc)
+	objY = (Y-loc)
+	objZ = (Z-loc)
 
+	
 	euler=Mathutils.Euler(
-		getAng3pt3d(locX, loc, X),
-		getAng3pt3d(locY, loc, Y),
-		getAng3pt3d(locZ, loc, Z)
+		getAng3pt3d(axisZ, zero, Vector(0.0, objZ[1], objZ[2]) ) * math.pi / 180,
+		getAng3pt3d(axisX, zero, Vector(objX[0], 0.0, objX[2]) ) * math.pi / 180,
+		getAng3pt3d(axisY, zero, Vector(objY[0], objY[1], 0.0) ) * math.pi / 180
 		)
+
 	return euler
 
 ######################################################
