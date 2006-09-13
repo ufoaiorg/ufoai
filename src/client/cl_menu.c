@@ -1057,6 +1057,20 @@ static qboolean MN_TextScroll(menuNode_t *node, int offset)
 }
 
 /**
+ * @brief Bind this function to a key to scroll the node given via cvar mn_scrollnode
+ */
+static void MN_TextScrollKeyBinding_f(void)
+{
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <+/-offset>\n", Cmd_Argv(0));
+		return;
+	}
+	if (!MN_GetNodeFromCurrentMenu(Cvar_VariableString("mn_scrollnode")))
+		return;
+	Cbuf_AddText(va("mn_textscroll %s %s", Cvar_VariableString("mn_scrollnode"), Cmd_Argv(1)));
+}
+
+/**
  * @brief Scriptfunction that gets the wanted text node and scrolls the text.
  */
 static void MN_TextScroll_f(void)
@@ -2328,6 +2342,7 @@ void MN_ResetMenus(void)
 
 	/* textbox */
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
+	Cmd_AddCommand("mn_textscroll_key", MN_TextScrollKeyBinding_f, NULL);
 
 	/* print the keybindings to menuText */
 	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);

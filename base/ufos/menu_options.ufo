@@ -677,7 +677,7 @@ menu options_keys
 
 	func init
 	{
-		cmd "mn_init_keylist;"
+		cmd "mn_init_keylist; set mn_scrollnode keylist;"
 	}
 }
 

@@ -208,6 +208,6 @@ menu ufopedia
 
 	func init
 	{
-		cmd mn_upcontent;
+		cmd "mn_upcontent; set mn_scrollnode ufopedia;"
 	}
 }
