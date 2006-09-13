@@ -154,11 +154,11 @@ CFLAGS_SHLIB=-fPIC
 
 # Setup basic LDFLAGS and LDLIBS
 
-LDLIBS=$(LDLIBS_SDL) $(LDLIBS_ARCH)
+LDLIBS=-lm -lvorbisfile -lvorbis $(LDLIBS_SDL) $(LDLIBS_ARCH) $(LDLIBS_OS)
 LDLIBS_SDL=-lSDL -lpthread -lSDL_ttf
 LDLIBS_ARCH=
 
-LDFLAGS=$(LDFLAGS_ARCH)
+LDFLAGS=$(LDFLAGS_ARCH) $(LDFLAGS_OS)
 LDFLAGS_ARCH=
 LDFLAGS_SHLIB=-shared
 LDFLAGS_NOTSHLIB=
@@ -245,9 +245,9 @@ default: all
 include $(src_common)/Makefile
 include $(src_ports)/Makefile
 include $(src_game)/Makefile
-include $(src_client)/Makefile
-include $(src_renderer)/Makefile
 include $(src_server)/Makefile
+include $(src_renderer)/Makefile
+include $(src_client)/Makefile
 include $(src_tools)/Makefile
 
 # =================================

@@ -13,6 +13,11 @@ EXT_BIN=
 # Configure arch-specific *FLAGS.
 # =================================
 
+ifeq ($(OSTYPE),FreeBSD)
+	LDFLAGS_OS=-lintl
+	BUILD_ALSA=NO
+endif
+
 ifeq ($(ARCH),axp)
   CFLAGS_ARCH_DEBUG=
   CFLAGS_ARCH_RELEASE=

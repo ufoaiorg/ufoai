@@ -25,14 +25,14 @@ ifeq ($(strip $(BUILD_SDLUFO)),YES)
 endif
 
 # Server specific
-obj_system_server+=$(build_server)/$(dirname_linux)/$(NET_UDP).o
+obj_system_server+=$(build_server)/$(dirname_unix)/$(NET_UDP).o
 
 # =================================
 # Implicit Rules
 # =================================
 
 # This is defined purely for prettification, don't rely on it outside this file!
-$(src_port_unix)=$(src_ports)/$(dirname_unix)
+src_port_unix=$(src_ports)/$(dirname_unix)
 
 $(build_client)/$(dirname_unix)/%.o: $(src_port_unix)/%.c $(src_port_unix)/%.h $(HDR_COMMON) $(hdr_client)
 	$(CC_CLIENT)

@@ -7,6 +7,7 @@
 # =================================
 
 build_client?=$(DIR_BUILD)/client
+mkdir_dir_list+=$(build_client)
 
 # =================================
 # Configure common client headers
@@ -51,13 +52,11 @@ obj_client+=$(build_client)/snd_mix.o
 obj_client+=$(build_client)/snd_ref.o
 obj_client+=$(build_client)/x86.o
 
-target_client=$(DIR_ROOT)/ufo
-
 # =================================
 # Implicit Rules
 # =================================
 
-$(build_client)/%.o: $(src_client)/%.c $(src_client)/%.h $(HDR_COMMON) $(hdr_client)
+$(build_client)/%.o: $(src_client)/%.c $(src_client)/%.h $(HDR_COMMON) $(hdr_client) $(hdr_game)
 	$(CC_CLIENT)
 
 # Fall-back option for source files without headers.
@@ -65,10 +64,9 @@ $(build_client)/%.o: $(src_client)/%.c $(src_client)/%.h $(HDR_COMMON) $(hdr_cli
 $(build_client)/%.o: $(src_client)/%.c $(HDR_COMMON) $(hdr_client)
 	$(CC_CLIENT)
 
-$(target_client): $(obj_client_main) $(obj_client) $(obj_common) $(obj_system) $(obj_system_client)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(obj_system) $(obj_system_client) $(obj_common) $(obj_client) $(obj_client_main) -o $(target_client)
-
 # =================================
 # Target-specific Rules
 # =================================
 
+$(target_client): $(obj_system) $(obj_system_client) $(obj_common) $(obj_client) $(obj_client_main)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) $(obj_system) $(obj_system_client) $(obj_common) $(obj_client) $(obj_client_main) -o $(target_client)

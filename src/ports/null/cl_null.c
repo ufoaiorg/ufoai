@@ -1,3 +1,10 @@
+/**
+ * @file cl_null.c
+ * @brief This file can stub out the entire client system for pure dedicated servers
+ * 
+ * FIXME: Calls to functions not required by the dedicated server should be surrounded by the DEDICATED_ONLY macro.
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,9 +24,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-
-/* cl_null.c -- this file can stub out the entire client system */
-/* for pure dedicated servers */
 
 #include "../../qcommon/qcommon.h"
 

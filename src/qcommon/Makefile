@@ -1,16 +1,60 @@
-buildcommon?=$(BUILDDIR)/common
+# =================================
+# Common Objects
+# =================================
 
-COMMON_HDR+=$(COMMON_SRC)/qcommon.h
+# =================================
+# Directories
+# =================================
 
-commonobjs+=$(buildcommon)/cmd.o
-commonobjs+=$(buildcommon)/cmodel.o
-commonobjs+=$(buildcommon)/common.o
-commonobjs+=$(buildcommon)/crc.o
-commonobjs+=$(buildcommon)/cvar.o
-commonobjs+=$(buildcommon)/files.o
-commonobjs+=$(buildcommon)/md4.c
-commonobjs+=$(buildcommon)/net_chan.c
-commonobjs+=$(buildcommon)/scripts.c
+build_common?=$(DIR_BUILD)/common
+mkdir_dir_list+=$(build_common)
 
-$(buildcommon)/%.o: $(COMMON_SRC)/%.c $(COMMON_SRC)/%.h $(COMMON_HDR)
-	@echo " * [COMMON] $@"; $(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c $<
+# =================================
+# Headers
+# =================================
+
+HDR_COMMON+=$(src_common)/qcommon.h
+HDR_COMMON+=$(src_common)/qfiles.h
+HDR_COMMON+=$(src_common)/ufotypes.h
+
+# =================================
+# Objects
+# =================================
+
+obj_common+=$(build_common)/cmd.o
+obj_common+=$(build_common)/cmodel.o
+obj_common+=$(build_common)/crc.o
+obj_common+=$(build_common)/cvar.o
+obj_common+=$(build_common)/files.o
+obj_common+=$(build_common)/md4.o
+obj_common+=$(build_common)/net_chan.o
+obj_common+=$(build_common)/scripts.o
+
+obj_client+=$(build_client)/common.o
+obj_server+=$(build_server)/common.o
+
+# =================================
+# Implicit Rules
+# =================================
+
+$(build_common)/%.o: $(src_common)/%.c $(src_common)/%.h $(HDR_COMMON)
+	$(CC_COMMON)
+
+$(build_common)/%.o: $(src_common)/%.c $(HDR_COMMON)
+	$(CC_COMMON)
+	
+$(build_client)/%.o: $(src_common)/%.c $(src_common)/%.h $(HDR_COMMON)
+	$(CC_CLIENT)
+
+$(build_client)/%.o: $(src_common)/%.c $(HDR_COMMON)
+	$(CC_CLIENT)
+
+$(build_server)/%.o: $(src_common)/%.c $(src_common)/%.h $(HDR_COMMON)
+	$(CC_SERVER)
+
+$(build_server)/%.o: $(src_common)/%.c $(HDR_COMMON)
+	$(CC_SERVER)
+
+# =================================
+# Target-specific rules.
+# =================================

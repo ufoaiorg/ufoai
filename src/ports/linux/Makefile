@@ -13,6 +13,8 @@ EXT_BIN=
 # Configure arch-specific *FLAGS.
 # =================================
 
+LDLIBS_OS=-ldl
+
 ifeq ($(ARCH),axp)
   CFLAGS_ARCH_DEBUG=
   CFLAGS_ARCH_RELEASE=
@@ -80,12 +82,12 @@ obj_system_server+=
 # =================================
 
 # This is defined purely for prettification, don't rely on it outside this file!
-$(src_port_linux)=$(src_ports)/$(dirname_linux)
+src_port_linux=$(src_ports)/$(dirname_linux)
 
 $(build_client)/$(dirname_linux)/%.o:  $(src_port_linux)/%.c $(src_port_linux)/%.h $(HDR_COMMON) $(hdr_client)
 	$(CC_CLIENT)
 
-$(build_client)/$(dirname_linux)/%.o:  $(src_ports_linux)/%.c
+$(build_client)/$(dirname_linux)/%.o:  $(src_port_linux)/%.c
 	$(CC_CLIENT)
 
 $(build_server)/$(dirname_linux)/%.o: $(src_port_linux)/%.c $(src_port_linux)/%.h $(HDR_COMMON) $(hdr_server)
