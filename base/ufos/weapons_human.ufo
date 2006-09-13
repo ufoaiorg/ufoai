@@ -255,14 +255,14 @@ item smg_ammo
 		hitbody blood
 		firesnd	weapons/smg.wav
 		speed	0
-		spread	"5 7"
+		spread	"3 7"
 		crouch	0.7
 		range	18
 		shots	6
 		ammo	6
 		rof		10
-		time	12
-		damage	"11 2"
+		time	10
+		damage	"9 2"
 		dmgtype normal
 	}
 	secondary
@@ -280,8 +280,8 @@ item smg_ammo
 		shots	18
 		ammo	18
 		rof		15
-		time	20
-		damage	"11 2"
+		time	16
+		damage	"9 2"
 		dmgtype normal
 	}
 }
@@ -329,14 +329,14 @@ item shotgun_ammo
 		firesnd	weapons/shotgun.wav
 		sndonce true
 		speed	0
-		spread	"5 5"
+		spread	"4 4"
 		crouch	1.0
 		range	9
 		shots	8
 		ammo	1
 		rof		0
 		time	7
-		damage	"8 2"
+		damage	"6 2"
 		dmgtype blast
 	}
 
@@ -350,14 +350,14 @@ item shotgun_ammo
 		firesnd	weapons/shotgun.wav
 		sndonce true
 		speed	0
-		spread	"8 8"
+		spread	"7 7"
 		crouch	1.0
 		range	7
 		shots	16
 		ammo	2
 		rof		0
 		time	11
-		damage	"8 2"
+		damage	"6 2"
 		dmgtype blast
 	}
 }
