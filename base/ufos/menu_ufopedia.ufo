@@ -97,9 +97,9 @@ menu ufopedia
 		pos		"15 100"
 		texh	"48 48"
 		texl	"32 32"
-		click	{ cmd "textscroll ufopedia -1;" }
+		click	{ cmd "mn_textscroll ufopedia -1;" }
 	}
-	
+
 	pic button_scrolldown
 	{
 		tooltip "_Scroll down"
@@ -108,9 +108,9 @@ menu ufopedia
 		pos		"15 150"
 		texl	"32 48"
 		texh	"48 64"
-		click	{ cmd "textscroll ufopedia 1;" }
+		click	{ cmd "mn_textscroll ufopedia 1;" }
 	}
-	
+
 	// ==================
 	// text and info
 	// ==================
@@ -121,7 +121,7 @@ menu ufopedia
 		size	"700 390"
 		num		2
 		format	"24 0"
-		click { cmd "textscroll ufopedia 1;" }
+		click { cmd "mn_textscroll ufopedia 1;" }
 		height	"4" //DEBUG value
 	}
 
