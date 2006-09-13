@@ -1497,6 +1497,9 @@ void CL_ParseResults(sizebuf_t * buf)
 		if (winner == we)
 			CL_CollectAliens();
 	
+		/* clear unused LE inventories */
+		LE_Cleanup();
+
 		/* alien deaths */
 		for (i = 0, kills = 0; i < num; i++)
 			kills += num_kills[i][TEAM_ALIEN];

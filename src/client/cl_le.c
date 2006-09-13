@@ -698,6 +698,29 @@ void LE_AddToScene(void)
 	}
 }
 
+/**
+ * @brief Cleanup unused LE inventories that the server sent to the client
+ */
+void LE_Cleanup(void)
+{
+    int i;
+    le_t *le;
+    inventory_t inv;
+
+    Com_DPrintf("LE_Cleanup: Clearing up to %i unused LE inventories\n", numLEs);
+    for (i = numLEs - 1, le = &LEs[numLEs - 1]; i >= 0; i--, le--) {
+        switch (le->type) {
+        case ET_ACTOR:
+        case ET_UGV:
+			inv = le->i;
+            Com_DestroyInventory(&inv);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
 
 /*===========================================================================
  LE Tracing
