@@ -1731,10 +1731,6 @@ void MN_DrawMenus(void)
 					} else
 						menuModel = node->menuModel;
 
-					if (!node->data[2] && Q_strncmp(oldSource, source, MAX_VAR)) {
-						Q_strncpyz(oldSource, source, MAX_VAR);
-						node->data[4] = NULL;
-					}
 					mi.name = source;
 
 					mi.origin = node->origin;
@@ -1792,6 +1788,10 @@ void MN_DrawMenus(void)
 							/* do animations */
 							if (node->data[1] && *(char *) node->data[1]) {
 								ref = MN_GetReferenceString(menu, node->data[1]);
+								if (!node->data[2] && Q_strncmp(oldSource, source, MAX_VAR)) {
+									Q_strncpyz(oldSource, source, MAX_VAR);
+									node->data[4] = NULL;
+								}
 								if (!node->data[4]) {
 									/* new anim state */
 									as = (animState_t *) curadata;
