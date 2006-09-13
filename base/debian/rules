@@ -53,6 +53,12 @@ install: build
   # remove unwanted stuff: svn metadata and source files
 	find debian/ufoai-data -name .svn | xargs rm -rf
 	find debian/ufoai-data -name '*.map' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.xcf' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.blend' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.mb' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.max' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.obj' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.wings3d' | xargs --no-run-if-empty rm
 
   # add links to fonts
 	mkdir $(FONTDIR)
