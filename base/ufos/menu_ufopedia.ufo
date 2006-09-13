@@ -97,7 +97,7 @@ menu ufopedia
 		pos		"15 100"
 		texh	"48 48"
 		texl	"32 32"
-		click	{ cmd "textscroll description -1;" }
+		click	{ cmd "textscroll ufopedia -1;" }
 	}
 	
 	pic button_scrolldown
@@ -108,7 +108,7 @@ menu ufopedia
 		pos		"15 150"
 		texl	"32 48"
 		texh	"48 64"
-		click	{ cmd "textscroll description 1;" }
+		click	{ cmd "textscroll ufopedia 1;" }
 	}
 	
 	// ==================
@@ -121,7 +121,8 @@ menu ufopedia
 		size	"700 390"
 		num		2
 		format	"24 0"
-		click
+		click { cmd "textscroll ufopedia 1;" }
+		height	"4" //DEBUG value
 	}
 
 	confunc mn_upfbig
@@ -143,7 +144,6 @@ menu ufopedia
 		pos		"45 495"
 		size	"380 200"
 		format	"20 0"
-		height	"5"
 	}
 
 	text techtree
