@@ -420,7 +420,7 @@ mipparm_t	mipparms[] =
 	/* utility content attributes */
 	{"water",	CONTENTS_WATER, pt_contents},
 	{"slime",	CONTENTS_SLIME, pt_contents},		/* mildly damaging */
-	{"lava",	CONTENTS_LAVA, pt_contents},		/* very damaging */
+	{"smoke",	CONTENTS_SMOKE, pt_contents},
 	{"window",	CONTENTS_WINDOW, pt_contents},	/* solid, but doesn't eat internal textures */
 	{"mist",	CONTENTS_MIST, pt_contents},	/* non-solid window */
 	{"origin",	CONTENTS_ORIGIN, pt_contents},	/* center of rotating brushes */
