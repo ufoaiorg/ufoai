@@ -47,7 +47,7 @@ menu options
 
 	pic button_video
 	{
-		pos	"80 220"
+		pos	"80 150"
 		click	{ cmd "mn_pop;mn_push options_video;" }
 		image	menu/button_big
 		texl	"0 0"
@@ -61,6 +61,26 @@ menu options
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Video"
+		pos	"208 160"
+		align	uc
+	}
+
+	pic button_keys
+	{
+		pos	"80 220"
+		click	{ cmd "mn_pop;mn_push options_keys;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_keys color "0 0.5 0 1" *button_keys texl "0 0"  *button_keys texh "256 64" }
+		in	{ *string_keys color "1 1 1 1" *button_keys texl "0 64" *button_keys texh "256 128" }
+	}
+	string string_keys
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Keys"
 		pos	"208 230"
 		align	uc
 	}
@@ -139,6 +159,14 @@ menu options
 
 menu options_video
 {
+	string showkeys
+	{
+		string	"_Video settings"
+		pos		"840 60"
+		align	ur
+		font	"f_menubig"
+	}
+
 	string res_str
 	{
 		string	"_Resolution:"
@@ -472,6 +500,14 @@ menu options_video
 
 menu options_sound
 {
+	string soundsettings
+	{
+		string	"_Sound settings"
+		pos		"840 60"
+		align	ur
+		font	"f_menubig"
+	}
+
 	string volume_str
 	{
 		string	"_Volume Control"
@@ -591,6 +627,36 @@ menu options_sound
 	}
 }
 
+// ==================
+// KEY OPTIONS MENU
+// ==================
+
+menu options_keys
+{
+	string showkeys
+	{
+		string	"_Show key bindings"
+		pos		"840 60"
+		align	ur
+		font	"f_menubig"
+	}
+
+	// only show the current binding - no support for changing them atm
+	// FIXME: Scrollable
+	text keylist
+	{
+		size	"460 580"
+		pos	"480 110"
+//		bgcolor	"1 1 1 0.4"
+	}
+
+	func init
+	{
+		cmd "mn_init_keylist;"
+	}
+}
+
+
 
 // ==================
 // GAME OPTIONS MENU
@@ -598,6 +664,14 @@ menu options_sound
 
 menu options_game
 {
+	string gamesettings
+	{
+		string	"_Game settings"
+		pos		"840 60"
+		align	ur
+		font	"f_menubig"
+	}
+
 	// =====================
 	// START WITH EMPLOYEES
 	// =====================
