@@ -2072,6 +2072,8 @@ static void CL_GameGo(void)
 	ccs.eMission = baseCurrent->storage; /* copied, including arrays inside! */
 	CL_CleanTempInventory();
 	CL_ReloadAndRemoveCarried(&ccs.eMission);
+	/* remove inventory of any old temporary LEs */
+	LE_Cleanup();
 
 	/* Zero out kill counters */
 	ccs.civiliansKilled = 0;
@@ -2468,6 +2470,7 @@ static void CL_GameResultsCmd(void)
 	/* check for replay */
 	if ((int) Cvar_VariableValue("game_tryagain")) {
 		/* don't collect things and update stats --- we retry the mission */
+		LE_Cleanup();
 		CL_GameGo();
 		return;
 	}
