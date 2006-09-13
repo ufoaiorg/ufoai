@@ -738,7 +738,7 @@ void CL_InitInput(void)
 	Cmd_AddCommand("-turn", CL_TurnUp, NULL);
 	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch, _("Toggle stand/crounch"));
 	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction, _("Toggle reaction fire"));
-	Cmd_AddCommand("nextalien", CL_NextAlien, NULL);
+	Cmd_AddCommand("nextalien", CL_NextAlien, _("Toogle to next alien"));
 	Cmd_AddCommand("firerp", CL_FireRightPrimary, NULL);
 	Cmd_AddCommand("firers", CL_FireRightSecondary, NULL);
 	Cmd_AddCommand("firelp", CL_FireLeftPrimary, NULL);
@@ -750,7 +750,7 @@ void CL_InitInput(void)
 	Cmd_AddCommand("leveldown", CL_LevelDown, NULL);
 	Cmd_AddCommand("zoominquant", CL_ZoomInQuant, NULL);
 	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant, NULL);
-	Cmd_AddCommand("confirmaction", CL_ConfirmAction, NULL);
+	Cmd_AddCommand("confirmaction", CL_ConfirmAction, _("Confirm the current action"));
 
 #ifdef DEBUG
 	Cmd_AddCommand("camangles", CL_CamPrintAngles, NULL);
