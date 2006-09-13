@@ -35,58 +35,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	POINT_EPSILON		0.5
 #define	OFF_EPSILON			0.5
 
-int	c_merge;
-int	c_subdivide;
-
-int	c_totalverts;
-int	c_uniqueverts;
-int	c_degenerate;
-int	c_tjunctions;
-int	c_faceoverflows;
-int	c_facecollapse;
-int	c_badstartverts;
+static int c_merge, c_subdivide, c_totalverts, c_uniqueverts, c_degenerate, c_tjunctions, c_faceoverflows, c_facecollapse, c_badstartverts;
 
 #define	MAX_SUPERVERTS	512
-int	superverts[MAX_SUPERVERTS];
-int	numsuperverts;
+static int superverts[MAX_SUPERVERTS];
+static int numsuperverts;
 
-face_t		*edgefaces[MAX_MAP_EDGES][2];
-int		firstmodeledge = 1;
-int		firstmodelface;
+face_t *edgefaces[MAX_MAP_EDGES][2];
+int firstmodeledge = 1;
+int firstmodelface;
 
-int	c_tryedges;
+static int	c_tryedges;
 
-vec3_t	edge_dir;
-vec3_t	edge_start;
-vec_t	edge_len;
+static vec3_t edge_dir;
+static vec3_t edge_start;
 
-int		num_edge_verts;
-int		edge_verts[MAX_MAP_VERTS];
+static int num_edge_verts;
+static int edge_verts[MAX_MAP_VERTS];
 
-
-float	subdivide_size = 240;
+float subdivide_size = 240;
 
 
 face_t *NewFaceFromFace (face_t *f);
 
-/*=========================================================================== */
-
-typedef struct hashvert_s
-{
-	struct hashvert_s	*next;
-	int		num;
-} hashvert_t;
-
-
 #define	HASH_SIZE	64
 
-
-int	vertexchain[MAX_MAP_VERTS];		/* the next vertex in a hash chain */
-int	hashverts[HASH_SIZE*HASH_SIZE];	/* a vertex number, or 0 for no verts */
-
-face_t		*edgefaces[MAX_MAP_EDGES][2];
-
-/*============================================================================ */
+static int vertexchain[MAX_MAP_VERTS];		/* the next vertex in a hash chain */
+static int hashverts[HASH_SIZE*HASH_SIZE];	/* a vertex number, or 0 for no verts */
 
 
 /**
@@ -108,7 +83,6 @@ unsigned HashVec (vec3_t vec)
 #ifdef USE_HASHING
 /**
  * @brief
- *
  * @note Uses hashing
  */
 static int GetVertexnum (vec3_t in)
