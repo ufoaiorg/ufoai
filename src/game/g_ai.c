@@ -36,7 +36,7 @@ typedef struct {
 /**
  * @brief
  */
-static qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
+qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 {
 	edict_t *check;
 	vec3_t dtarget, dcheck, back;
@@ -70,17 +70,18 @@ static qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 }
 
 
-#define GUETE_HIDE			30
-#define GUETE_SHOOT_HIDE	40
-#define GUETE_CLOSE_IN		8
+#define GUETE_HIDE			60
+#define GUETE_CLOSE_IN		20
 #define GUETE_KILL			30
-#define GUETE_RANDOM		10
+#define GUETE_RANDOM		5
+#define GUETE_REACTION_ERADICATION 30
+#define GUETE_REACTION_FEAR_FACTOR 20
 #define GUETE_CIV_FACTOR	0.25
 
 #define CLOSE_IN_DIST		1200.0
 #define SPREAD_FACTOR		8.0
 #define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*M_PI/180) : 0)
-#define HIDE_DIST			3
+#define HIDE_DIST			7
 
 /**
  * @brief
@@ -90,24 +91,50 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 {
 	edict_t *check;
 	int move, delta, tu;
-	int i, fm, shots;
+	int i, fm, shots, reaction_trap = 0;
 	float dist, minDist, nspread;
-	float guete, dmg, maxDmg;
+	float guete, dmg, maxDmg, best_time, vis;
+	objDef_t *ad;
+	int still_searching = 1;
 
-	/* set basic parameters */
 	guete = 0.0;
-	aia->target = NULL;
-	VectorCopy(to, ent->pos);
-	VectorCopy(to, aia->to);
-	VectorCopy(to, aia->stop);
-	gi.GridPosToVec(gi.map, to, ent->origin);
-
+	memset(aia, 0, sizeof(ai_action_t));
 	move = gi.MoveLength(gi.map, to, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
 	if (tu < 0)
-		return 0.0;
+		return -10000.0;
+
+	/* see if we are very well visible by a reacting enemy */
+	/* TODO: this is worthless now; need to check all squares along our way! */
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
+		if ( check->inuse && check->type == ET_ACTOR && ent != check
+			 && (check->team != ent->team || ent->state & STATE_INSANE)
+			 && !(check->state & STATE_DEAD) 
+			 /* also check if we are in range of the weapon's primary mode */
+			 && check->state & STATE_REACTION ) {
+			qboolean frustom;
+			float actorVis;
+
+			actorVis = G_ActorVis(check->origin, ent, qtrue);
+			frustom = G_FrustomVis(check, ent->origin);
+			if (actorVis > 0.6 
+				&& frustom
+				&& (VectorDistSqr(check->origin, ent->origin) 
+					> MAX_SPOT_DIST * MAX_SPOT_DIST))
+				reaction_trap++;
+		}
+	
+	/* don't waste TU's when in reaction fire trap */
+	/* learn to escape such traps if move == 2 || move == 3 */
+	guete -= move * reaction_trap * GUETE_REACTION_FEAR_FACTOR;
+
+	/* set basic parameters */
+	VectorCopy(to, ent->pos);
+	VectorCopy(to, aia->to);
+	VectorCopy(to, aia->stop);
+	gi.GridPosToVec(gi.map, to, ent->origin);
 
 	/* shooting */
 	maxDmg = 0.0;
@@ -140,8 +167,6 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 			continue;
 
 		fd = &od->fd[SHOT_FD_PRIO(fm)];
-		if (!fd->time)
-			continue;
 
 		nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill) / 2);
 		shots = tu / fd->time;
@@ -171,61 +196,72 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 						continue;
 
 					/* calculate expected damage */
-					dmg = G_ActorVis(ent->origin, check, qtrue);
-					if (dmg == 0.0)
+					vis = G_ActorVis(ent->origin, check, qtrue);
+					if (vis == 0.0)
 						continue;
-
-					/* TODO: take into account armor */
-					dmg *= fd->damage[0] * fd->shots * shots;
+					dmg = vis * fd->damage[0] * fd->shots * shots;
 					if (nspread && dist > nspread)
 						dmg *= nspread / dist;
 
-					/* add kill bonus */
-					if (dmg > check->HP)
+					/* take into account armor */
+					if (check->i.c[gi.csi->idArmor]) {
+						ad = &gi.csi->ods[check->i.c[gi.csi->idArmor]->item.t];
+						if (ad->protection[fd->dmgtype] > 0)
+							dmg *= 1.0 - ad->protection[fd->dmgtype] * check->AP * 0.0001;
+						else
+							dmg *= 1.0 - ad->protection[fd->dmgtype] * 0.01;
+					}						
+
+					if ( dmg > check->HP 
+						 && check->state & STATE_REACTION )
+					/* reaction shooters eradication bonus */
+						dmg = check->HP + GUETE_KILL 
+							+ GUETE_REACTION_ERADICATION;
+					else if (dmg > check->HP)
+					/* standard kill bonus */
 						dmg = check->HP + GUETE_KILL;
+
+					/* ammo is limited and shooting gives away your position */
+					if ((dmg < 25.0 && vis < 0.2) /* too hard to hit */
+						|| (dmg < 10.0 && vis < 0.6) /* uber-armor */
+						|| dmg < 0.1) /* at point blank hit even with a stick*/
+						continue;
 
 					/* civilian malus */
 					if (check->team == TEAM_CIVILIAN && !(ent->state & STATE_INSANE))
 						dmg *= GUETE_CIV_FACTOR;
 
+					/* add random effects */
+					dmg += GUETE_RANDOM * frand();
+
 					/* check if most damage can be done here */
 					if (dmg > maxDmg) {
 						maxDmg = dmg;
+						best_time = fd->time * shots;
 						aia->mode = fm;
 						aia->shots = shots;
 						aia->target = check;
 					}
 				}
-			/* add damage to guete */
-			if (aia->target) {
-				guete += maxDmg;
-				tu -= od->fd[aia->mode % 2].time * aia->shots;
-			}
 		}
 	}
-
-	/* close in */
-	minDist = CLOSE_IN_DIST;
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && check->team != ent->team && !(check->state & STATE_DEAD)) {
-			dist = VectorDist(ent->origin, check->origin);
-			if (dist < minDist)
-				minDist = dist;
-		}
-	guete += GUETE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
+	/* add damage to guete */
+	if (aia->target) {
+		guete += maxDmg;
+		tu -= best_time;
+	}
 
 	/* add random effects */
 	guete += GUETE_RANDOM * frand();
 
-	if (ent->state & STATE_RAGE)
-		return guete;
+  if (!(ent->state & STATE_RAGE)) {
 
 	/* hide */
 	if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTOM) & VIS_YES)) {
 		/* is a hiding spot */
 		guete += GUETE_HIDE;
 	} else if (aia->target && tu >= 2) {
-		/* search hiding spot after shooting */
+		/* search hiding spot */
 		byte minX, maxX, minY, maxY;
 
 		G_MoveCalc(0, to, HIDE_DIST);
@@ -241,22 +277,43 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 				delta = gi.MoveLength(gi.map, ent->pos, qfalse);
 				if (delta > tu)
 					continue;
-				tu -= delta;
 
 				/* visibility */
 				gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 				if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTOM) & VIS_YES)
 					continue;
 
-				/* found a hiding spot */
-				VectorCopy(ent->pos, aia->stop);
-				guete += GUETE_SHOOT_HIDE;
+				still_searching = 0;
 				break;
 			}
-			if (ent->pos[0] <= maxX)
+			if (!still_searching)
 				break;
 		}
 	}
+
+	if (still_searching) {
+		/* nothing found */
+		VectorCopy(to, ent->pos);
+		gi.GridPosToVec(gi.map, to, ent->origin);
+	} else {
+		/* found a hiding spot */
+		VectorCopy(ent->pos, aia->stop);
+		guete += GUETE_HIDE;
+		tu -= delta;
+		/* TODO: also add bonus for fleeing from reaction fire 
+		   and a huge malus if more than 1 move under reaction */
+	}
+  }
+
+	/* reward closing in */
+	minDist = CLOSE_IN_DIST;
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
+		if (check->inuse && check->team != ent->team && !(check->state & STATE_DEAD)) {
+			dist = VectorDist(ent->origin, check->origin);
+			if (dist < minDist)
+				minDist = dist;
+		}
+	guete += GUETE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
 
 	return guete;
 }
@@ -280,7 +337,7 @@ static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 
 	/* set basic parameters */
 	guete = 0.0;
-	aia->target = NULL;
+	memset(aia, 0, sizeof(ai_action_t));
 	VectorCopy(to, ent->pos);
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
@@ -291,7 +348,7 @@ static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 
 	/* test for time */
 	if (tu < 0)
-		return 0.0;
+		return -10000.0;
 
 	/* run away */
 	minDist = RUN_AWAY_DIST;
@@ -374,9 +431,6 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 			Com_DPrintf("AI_ActorThink: Got weapon from inventory\n");
 	}
 
-	aia.mode = 0;
-	aia.shots = 0;
-
 	/* calculate move table */
 	G_MoveCalc(0, ent->pos, MAX_ROUTE);
 	gi.MoveStore(gi.map);
@@ -396,15 +450,16 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 		yh = WIDTH;
 
 	/* search best action */
-	best = 0.0;
+	best = -10000.0;
 	VectorCopy(ent->pos, oldPos);
 	VectorCopy(ent->origin, oldOrigin);
 
-	/* evaluate moving to every possible location in the search area, including combat considerations */
+	/* evaluate moving to every possible location in the search area, 
+	   including combat considerations */
 	for (to[2] = 0; to[2] < HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++)
-				if (gi.MoveLength(gi.map, to, qtrue) < 0xFF) {
+				if (gi.MoveLength(gi.map, to, qtrue) <= ent->TU) {
 					if (ent->team == TEAM_CIVILIAN || ent->state & STATE_PANIC)
 						guete = AI_CivilianCalcGuete(ent, to, &aia);
 					else
@@ -420,7 +475,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	VectorCopy(oldOrigin, ent->origin);
 
 	/* nothing found to do */
-	if (best == 0.0)
+	if (best == -10000.0)
 		return;
 
 	/* do the first move */
@@ -432,7 +487,8 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 
 	/* shoot('n'hide) */
 	if (bestAia.target) {
-		/* TODO: check whether shoot is needed or enemy died already */
+		/* TODO: check whether shoot is needed or enemy died already;
+		   use the remaining TUs for reaction fire */
 		for (i = 0; i < bestAia.shots; i++)
 			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode);
 		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse);

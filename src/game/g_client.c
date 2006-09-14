@@ -292,7 +292,7 @@ void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 
 
 /**
- * @brief Checks whether a point is visible from the edicts position
+ * @brief Checks whether a point is "visible" from the edicts position
  */
 qboolean G_FrustomVis(edict_t * from, vec3_t point)
 {
@@ -315,7 +315,7 @@ qboolean G_FrustomVis(edict_t * from, vec3_t point)
 
 
 /**
- * @brief
+ * @brief test if point is "visible" from team
  */
 qboolean G_TeamPointVis(int team, vec3_t point)
 {
@@ -323,7 +323,7 @@ qboolean G_TeamPointVis(int team, vec3_t point)
 	vec3_t eye;
 	int i;
 
-	/* test if check is visible */
+	/* test if point is visible from team */
 	for (i = 0, from = g_edicts; i < globals.num_edicts; i++, from++)
 		if (from->inuse && (from->type == ET_ACTOR || from->type == ET_UGV) && !(from->state & STATE_DEAD) && from->team == team && G_FrustomVis(from, point)) {
 			/* get viewers eye height */
@@ -344,7 +344,7 @@ qboolean G_TeamPointVis(int team, vec3_t point)
 
 
 /**
- * @brief
+ * @brief calculate how much check is "visible" from from
  */
 float G_ActorVis(vec3_t from, edict_t * check, qboolean full)
 {
@@ -408,7 +408,8 @@ float G_ActorVis(vec3_t from, edict_t * check, qboolean full)
 
 
 /**
- * @brief
+ * @brief test if check is visible by from 
+ * from is from team team
  */
 float G_Vis(int team, edict_t * from, edict_t * check, int flags)
 {
@@ -467,7 +468,7 @@ float G_Vis(int team, edict_t * from, edict_t * check, int flags)
 
 
 /**
- * @brief
+ * @brief test if check is visible by team (or if visibility changed?)
  */
 int G_TestVis(int team, edict_t * check, int flags)
 {
@@ -739,13 +740,18 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 
 	/* search for space */
 	if (tx == NONE) {
-		assert (ty == NONE);
+/*		assert (ty == NONE); */
+		if (ty != NONE)
+			Com_Printf("G_ClientInvMove: Error: ty != NONE, it is %i.\n", ty);
+
 		ic = Com_SearchInInventory(&ent->i, from, fx, fy);
 		if (ic)
 			Com_FindSpace(&ent->i, ic->item.t, to, &tx, &ty);
 	}
 	if (tx == NONE) {
-		assert (ty == NONE);
+/*		assert (ty == NONE); */
+		if (ty != NONE)
+			Com_Printf("G_ClientInvMove: Error: ty != NONE, it is %i.\n", ty);
 		return;
 	}
 
@@ -1547,12 +1553,10 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 
 		totalDamage = damage;
 
-		if (ad->protection[dmgtype]) {
-			if (ad->protection[dmgtype] > 0)
-				damage *= 1.0 - ad->protection[dmgtype] * ent->AP * 0.0001;
-			else
-				damage *= 1.0 - ad->protection[dmgtype] * 0.01;
-		}
+		if (ad->protection[dmgtype] > 0)
+			damage *= 1.0 - ad->protection[dmgtype] * ent->AP * 0.0001;
+		else
+			damage *= 1.0 - ad->protection[dmgtype] * 0.01;
 
 		if (ad->hardness[dmgtype]) {
 			int armorDamage;
@@ -2047,8 +2051,9 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 		if (ammo < fd->ammo) {
 			shots = fd->shots * ammo / fd->ammo;
 			ammo = 0;
+		} else {
+			ammo -= fd->ammo;
 		}
-		ammo -= fd->ammo;
 		if (shots < 1) {
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not enough ammo!\n"));
 			return qfalse;
@@ -2374,9 +2379,11 @@ qboolean G_ReactionFire(edict_t * target)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) &&
 				(ent->state & STATE_SHAKEN || ent->state & STATE_REACTION_MANY || (ent->state & STATE_REACTION_ONCE && !TU_REACTIONS[ent->number][1]))) {
+			if (VectorDistSqr(ent->origin, target->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
+				continue;
 			actorVis = G_ActorVis(ent->origin, target, qtrue);
 			frustom = G_FrustomVis(ent, target->origin);
-			if (actorVis > 0.4 && frustom) {
+			if (actorVis > 0.6 && frustom) {
 				if (target->team == TEAM_CIVILIAN || target->team == ent->team)
 					if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand())
 						continue;
@@ -2399,15 +2406,19 @@ qboolean G_ReactionFire(edict_t * target)
 					 && gi.csi->ods[RIGHT(ent)->item.t].weapon
 					 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
 						 || RIGHT(ent)->item.a > 0)
-					 && gi.csi->ods[RIGHT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
-					fired = G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY_REACTION);
+					 && gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
+					/* check FF; TODO: still does not work */
+					if (!AI_CheckFF(ent, target->origin, gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].spread[0]) || ent->state & STATE_INSANE)
+						fired = G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY_REACTION);
 				} else if ( LEFT(ent)
 							&& (LEFT(ent)->item.m != NONE)
 							&& gi.csi->ods[LEFT(ent)->item.t].weapon
 							&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 								|| LEFT(ent)->item.a > 0)
-							&& gi.csi->ods[LEFT(ent)->item.m].fd[0].range > VectorDist(ent->origin, target->origin) ) {
-					fired = G_ClientShoot(player, ent->number, target->pos, ST_LEFT_PRIMARY_REACTION);
+							&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_SECONDARY].range > VectorDist(ent->origin, target->origin) ) {
+					/* check FF */
+					if (!AI_CheckFF(ent, target->origin, gi.csi->ods[LEFT(ent)->item.m].fd[FD_SECONDARY].spread[0]) || ent->state & STATE_INSANE)
+						fired = G_ClientShoot(player, ent->number, target->pos, ST_LEFT_PRIMARY_REACTION);
 				}
 
 				/* Revert active team. */

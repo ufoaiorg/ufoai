@@ -72,7 +72,7 @@ mission pdi
 	alienteam	alien
 	alienequip	stage3_workers_explosive
 	civilians	2
-	civteam     tourist
+	civteam     oriental
 	nation		"europa"
 	onlose		""
 	onwin		""
