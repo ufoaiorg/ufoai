@@ -2352,7 +2352,7 @@ void CL_CollectItems(int won)
 			/* TODO: Does a stunned actor lose his inventory, too? */
 			if (le->state & STATE_DEAD || le->team != cls.team)
 				/* the items are already dropped to floor and are available
-				   as ET_ITEM */
+				   as ET_ITEM; or the actor is not ours */
 				break;
 			/* living actor */
 			for (container = 0; container < csi.numIDs; container++) {
@@ -2467,7 +2467,6 @@ static void CL_GameResultsCmd(void)
 	/* check for replay */
 	if ((int) Cvar_VariableValue("game_tryagain")) {
 		/* don't collect things and update stats --- we retry the mission */
-		LE_Cleanup();
 		CL_GameGo();
 		return;
 	}
