@@ -2335,10 +2335,6 @@ void CL_CollectItems(int won)
 	eTempMarket = ccs.eMarket;
 	eTempCredits = ccs.credits;
 
-	/* only call this when the match was won */
-	if (!won)
-		return;
-
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		/* Winner collects everything on the floor, and everything carried */
 		/* by surviving actors.  Loser only gets what their living team */
@@ -2347,20 +2343,21 @@ void CL_CollectItems(int won)
 			continue;
 		switch (le->type) {
 		case ET_ITEM:
-			for (item = FLOOR(le); item; item = item->next)
-				CL_CollectItemAmmo(item, 0, qtrue);
+			if (won)
+				for (item = FLOOR(le); item; item = item->next)
+					CL_CollectItemAmmo(item, 0, qtrue);
 			break;
 		case ET_ACTOR:
 		case ET_UGV:
 			/* TODO: Does a stunned actor lose his inventory, too? */
-			if (le->state & STATE_DEAD)
+			if (le->state & STATE_DEAD || le->team != cls.team)
 				/* the items are already dropped to floor and are available
 				   as ET_ITEM */
 				break;
 			/* living actor */
 			for (container = 0; container < csi.numIDs; container++) {
 				if (csi.ids[container].temp) /* collected above */
-					continue;
+					break;
 				for (item = le->i.c[container]; item; item = item->next)
 					CL_CollectItemAmmo(item, (container == csi.idLeft), qfalse);
 			}
