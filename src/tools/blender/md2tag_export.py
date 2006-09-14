@@ -8,7 +8,7 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Höhrer'
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 __url__ = ["UFO: Aline Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufo.myexp.de/phpBB2/index.php", "blender", "elysiun"]
 __email__ = ["Werner Höhrer, bill_spam2:yahoo*de", "scripts"]
@@ -81,7 +81,7 @@ def apply_transform(verts, matrix):
 
 ######################################################
 # Get Angle between 3 points
-#	Get the angle between line AB and BC where b is the elbo.
+#	Get the angle between line AB and BC where B is the elbo.
 #	http://en.wikibooks.org/wiki/Blender_3D:_Blending_Into_Python/Cookbook#Get_Angle_between_3_points
 #	Uses Blender.Mathutils.AngleBetweenVecs and Blender.Mathutils.Vector
 ######################################################
@@ -103,29 +103,60 @@ def getAng3pt3d(avec, bvec, cvec):
 # Get the rotation values (euler tuple) from a location and the axes-information
 # Uses Blender.Mathutils.Vector
 ######################################################
-def get_euler(loc, X,Y,Z):	
-	loc=Vector(loc)
-	X=Vector(X)
-	Y=Vector(Y)
-	Z=Vector(Z)
+def get_euler(loc, X,Y,Z):
+	loc = Vector(loc)
+	X = Vector(X)
+	Y = Vector(Y)
+	Z = Vector(Z)
 
 	zero  = Vector(0.0, 0.0, 0.0)
 	axisX = Vector(1.0, 0.0, 0.0)
 	axisY = Vector(0.0, 1.0, 0.0)
 	axisZ = Vector(0.0, 0.0, 1.0)
 	
-	objX = (X-loc)
-	objY = (Y-loc)
-	objZ = (Z-loc)
+	objX = (X-loc).normalize()
+	objY = (Y-loc).normalize()
+	objZ = (Z-loc).normalize()
 
-	
+	# Get rotation of the Z axis.
+	rotZ = -getAng3pt3d(axisY ,zero,  (objY.x, objY.y, 0.0))
+	# Apply the  Z rotation to the points.
+	matX = RotationMatrix(-rotZ, 4, 'z')# * TranslationMatrix(objX)
+	matY = RotationMatrix(-rotZ, 4, 'z')# * TranslationMatrix(objY)
+	matZ = RotationMatrix(-rotZ, 4, 'z')# * TranslationMatrix(objZ)
+	objX = objX * matX
+	objY = objY * matY
+	objZ = objZ * matZ
+	print objX, objY,objZ
+
+	# Get rotation of the Y axis.
+	rotY = getAng3pt3d(axisX ,zero, (objX.x, 0.0, objX.z) )
+	# Apply the  Z rotation to the points.
+	matX = RotationMatrix(-rotY, 4, 'y')# * TranslationMatrix(objX)
+	matY = RotationMatrix(-rotY, 4, 'y')# * TranslationMatrix(objY)
+	matZ = RotationMatrix(-rotY, 4, 'y')# * TranslationMatrix(objZ)
+	objX = objX * matX
+	objY = objY * matY
+	objZ = objZ * matZ
+
+	# Get rotation of the X axis.
+	rotX = -getAng3pt3d(axisZ ,zero,  (0.0, objZ.y, objZ.z))
+	# Apply the  Z rotation to the points.
+	matX = RotationMatrix(-rotX, 4, 'x')# * TranslationMatrix(objX)
+	matY = RotationMatrix(-rotX, 4, 'x')# * TranslationMatrix(objY)
+	matZ = RotationMatrix(-rotX, 4, 'x')# * TranslationMatrix(objZ)
+	objX = objX * matX
+	objY = objY * matY
+	objZ = objZ * matZ
+
 	euler=Mathutils.Euler(
-		getAng3pt3d(axisZ, zero, Vector(0.0, objZ[1], objZ[2]) ) * math.pi / 180,
-		getAng3pt3d(axisX, zero, Vector(objX[0], 0.0, objX[2]) ) * math.pi / 180,
-		getAng3pt3d(axisY, zero, Vector(objY[0], objY[1], 0.0) ) * math.pi / 180
+		math.radians(rotX),
+		math.radians(rotY), 
+		math.radians(rotZ) 
 		)
 
 	return euler
+
 
 ######################################################
 # Additional functions used by Ex- and Importer
@@ -282,10 +313,10 @@ class md2_tag:
 	def save(self, file):
 		# Prepare temp data for export with transformed axes.
 		temp_data=(
-		-self.Row1[1], self.Row1[0], self.Row1[2],
-		-self.Row2[1], self.Row2[0], self.Row2[2],
+		-self.Row4[1], self.Row4[0], self.Row4[2],
 		-self.Row3[1], self.Row3[0], self.Row3[2],
-		-self.Row4[1], self.Row4[0], self.Row4[2]
+		-self.Row2[1], self.Row2[0], self.Row2[2],
+		-self.Row1[1], self.Row1[0], self.Row1[2]
 		)
 
 		# Apply scale to tempdata if it was set in the dialog.
