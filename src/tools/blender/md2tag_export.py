@@ -121,33 +121,27 @@ def get_euler(loc, X,Y,Z):
 	# Get rotation of the Z axis.
 	rotZ = -getAng3pt3d(axisY ,zero,  (objY.x, objY.y, 0.0))
 	# Apply the  Z rotation to the points.
-	matX = RotationMatrix(-rotZ, 4, 'z')# * TranslationMatrix(objX)
-	matY = RotationMatrix(-rotZ, 4, 'z')# * TranslationMatrix(objY)
-	matZ = RotationMatrix(-rotZ, 4, 'z')# * TranslationMatrix(objZ)
-	objX = objX * matX
-	objY = objY * matY
+	matZ = RotationMatrix(-rotZ, 4, 'z')
+	objX = objX * matZ
+	objY = objY * matZ
 	objZ = objZ * matZ
 	print objX, objY,objZ
 
 	# Get rotation of the Y axis.
 	rotY = getAng3pt3d(axisX ,zero, (objX.x, 0.0, objX.z) )
-	# Apply the  Z rotation to the points.
-	matX = RotationMatrix(-rotY, 4, 'y')# * TranslationMatrix(objX)
-	matY = RotationMatrix(-rotY, 4, 'y')# * TranslationMatrix(objY)
-	matZ = RotationMatrix(-rotY, 4, 'y')# * TranslationMatrix(objZ)
-	objX = objX * matX
+	# Apply the  Y rotation to the points.
+	matY = RotationMatrix(-rotY, 4, 'y')
+	objX = objX * matY
 	objY = objY * matY
-	objZ = objZ * matZ
+	objZ = objZ * matY
 
 	# Get rotation of the X axis.
 	rotX = -getAng3pt3d(axisZ ,zero,  (0.0, objZ.y, objZ.z))
-	# Apply the  Z rotation to the points.
-	matX = RotationMatrix(-rotX, 4, 'x')# * TranslationMatrix(objX)
-	matY = RotationMatrix(-rotX, 4, 'x')# * TranslationMatrix(objY)
-	matZ = RotationMatrix(-rotX, 4, 'x')# * TranslationMatrix(objZ)
+	# Apply the  X rotation to the points.
+	matX = RotationMatrix(-rotX, 4, 'x')
 	objX = objX * matX
-	objY = objY * matY
-	objZ = objZ * matZ
+	objY = objY * matX
+	objZ = objZ * matX
 
 	euler=Mathutils.Euler(
 		math.radians(rotX),
