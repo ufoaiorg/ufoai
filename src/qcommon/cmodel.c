@@ -2703,8 +2703,8 @@ float Com_GrenadeTarget(vec3_t from, vec3_t at, vec3_t v0)
 	d = VectorLength(delta);
 
 	/* get angle */
-	alpha = GRENADE_MINALPHA + GRENADE_ALPHAFAC * sqrt((h + 20) / d);
-	if (alpha < GRENADE_MINALPHA)
+	alpha = GRENADE_MINALPHA + GRENADE_ALPHAFAC * sqrt((abs(h) + 20.) / d);
+	if (alpha < GRENADE_MINALPHA || h < -20.1)
 		alpha = GRENADE_MINALPHA;
 	if (alpha > GRENADE_MAXALPHA)
 		alpha = GRENADE_MAXALPHA;
