@@ -1,0 +1,13 @@
+// character animations
+// frames_in_ufoai = frames_in_blender-1
+
+// name				start	end	fps
+
+walk0				0	32	22
+stand0				33	33	1
+stand_still			33	33	1
+stand_menu			33	33	1
+shoot_melee			34	55	22
+
+death1				56	83	22
+dead1				83	83	1
