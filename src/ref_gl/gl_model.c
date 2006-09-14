@@ -1018,7 +1018,7 @@ MD3 ALIAS MODELS
 /**
  * @brief
  */
-int R_FindTriangleWithEdge ( index_t *indexes, int numtris, index_t start, index_t end, int ignore)
+static int R_FindTriangleWithEdge ( index_t *indexes, int numtris, index_t start, index_t end, int ignore)
 {
 	int i;
 	int match, count;
@@ -1051,7 +1051,7 @@ int R_FindTriangleWithEdge ( index_t *indexes, int numtris, index_t start, index
 /**
  * @brief
  */
-void R_BuildTriangleNeighbors ( int *neighbors, index_t *indexes, int numtris )
+static void R_BuildTriangleNeighbors ( int *neighbors, index_t *indexes, int numtris )
 {
 	int i, *n;
 	index_t *index;
@@ -1068,7 +1068,7 @@ void R_BuildTriangleNeighbors ( int *neighbors, index_t *indexes, int numtris )
  * @brief Load MD3 models from file.
  * @note Some Vic code here not fully used
  */
-void Mod_LoadAliasMD3Model ( model_t *mod, void *buffer )
+static void Mod_LoadAliasMD3Model ( model_t *mod, void *buffer )
 {
 	int					version, i, j, l;
 	dmd3_t				*pinmodel;
