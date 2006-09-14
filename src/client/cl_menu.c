@@ -1590,7 +1590,7 @@ void MN_DrawMenus(void)
 								*end++ = '\0';
 
 							/* FIXME: only works with one-line texts right now: */
-							if (node->mousefx && node->textLines == mouseOver)
+							if (node->mousefx && node->textLines + 1 == mouseOver)
 								re.DrawColor(color);
 
 							/* we assume all the tabs fit on a single line */
@@ -1619,7 +1619,7 @@ void MN_DrawMenus(void)
 							if (lineHeight >= 0)
 								y += lineHeight;
 
-							if (node->mousefx && node->textLines == mouseOver)
+							if (node->mousefx)
 								re.DrawColor(node->color); /* why is this repeated? */
 
 							/* now set cur to the next char after the \n (see above) */
