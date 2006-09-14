@@ -486,7 +486,7 @@ static void Font_ConvertChars(char *buffer)
 /**
  * @brief
  */
-int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line)
+int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
 {
 	int w = 0, h = 0, locX;
 	float returnHeight = 0; /* rounding errors break mouse-text corelation */
@@ -496,6 +496,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	fontCache_t *cache;
 	static char searchString[MAX_FONTNAME + MAX_HASH_STRING];
 	int max = 0;				/* calculated maxWidth */
+	int line = 0;
 	float texh0, fh, fy; /* rounding errors break mouse-text corelation */
 	qboolean skipline = qfalse;
 
@@ -519,10 +520,14 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	if (cache) { /* TODO: check that cache.font = fontID and that texh0 was the same */
 		if (cur_line) {
 			/* ri.Con_Printf(PRINT_ALL, "h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
-			(*cur_line)++; /* Increment the number of processed lines (overall). */
-			if (box_height > 0 && *cur_line + scroll_pos > box_height)
+			if (increaseLine)
+				(*cur_line)++; /* Increment the number of processed lines (overall). */
+			line = *cur_line;
+
+			if (box_height > 0 && line > box_height + scroll_pos) {
 				/* Due to scrolling this line and the following are not visible */
 				return -1;
+			}
 		}
 
 		Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
@@ -539,13 +544,18 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 		skipline = qfalse;
 		if (cur_line) {
 			/* ri.Con_Printf(PRINT_ALL, "h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
-			(*cur_line)++; /* Increment the number of processed lines (overall). */
-			if (box_height > 0 && *cur_line > box_height + scroll_pos)
+			if (increaseLine)
+				(*cur_line)++; /* Increment the number of processed lines (overall). */
+			line = *cur_line;
+
+			if (box_height > 0 && line > box_height + scroll_pos) {
 				/* Due to scrolling this line and the following are not visible */
 				return -1;
-			if (*cur_line < scroll_pos) {
+			}
+			if (line < scroll_pos) {
 				/* Due to scrolling this line is not visible. See if (!skipline)" code below.*/
 				skipline = qtrue;
+				/*ri.Con_Printf(PRINT_ALL, "skipline line: %i scroll_pos: %i\n", line, scroll_pos);*/
 			}
 		}
 
@@ -594,7 +604,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 		if (!skipline && strlen(buffer)) {
 			/* This will cut down the string to 160 chars */
 			/* NOTE: There can be a non critical overflow in Com_sprintf */
-			Com_sprintf(searchString, MAX_FONTNAME + MAX_HASH_STRING, "%s%s", fontID, buffer);
+			Com_sprintf(searchString, sizeof(searchString), "%s%s", fontID, buffer);
 
 			cache = Font_GetFromCache(searchString);
 			if (!cache)

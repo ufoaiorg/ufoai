@@ -1319,7 +1319,7 @@ static void MN_DrawTooltip(char *font, char *string, int x, int y)
 		x -= (width + 10);
 	re.DrawFill(x - 1, y - 1, width, height, 0, tooltipBG);
 	re.DrawColor(tooltipColor);
-	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, width, 0, height, string,0,0,NULL);
+	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, width, 0, height, string, 0, 0, NULL, qfalse);
 	re.DrawColor(NULL);
 }
 
@@ -1556,15 +1556,14 @@ void MN_DrawMenus(void)
 				case MN_STRING:
 					font = MN_GetFont(menu, node);
 					if (!node->mousefx || cl.time % 1000 < 500)
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], ref,0,0,NULL);
+						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse);
 					else
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref),0,0,NULL);
+						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse);
 					break;
 
 				case MN_TEXT:
 					if (menuText[node->num]) {
 						char textCopy[MAX_MENUTEXTLEN];
-						int oldLines = node->textLines;
 						int lineHeight = 0;
 
 						Q_strncpyz(textCopy, menuText[node->num], MAX_MENUTEXTLEN);
@@ -1572,6 +1571,7 @@ void MN_DrawMenus(void)
 
 						cur = textCopy;
 						y = node->pos[1];
+						/*Com_Printf("\n\n\nnode->textLines: %i \n", node->textLines);*/
 						node->textLines = 0; /* these are lines only in one-line texts! */
 						/* but it's easy to fix, just change FontDrawString
 							so that it returns a pair, #lines and height
@@ -1589,7 +1589,8 @@ void MN_DrawMenus(void)
 								/* let end point to the next char after the \n (or \0 now) */
 								*end++ = '\0';
 
-							/* FIXME: only works with one-line texts right now: */
+							/* hightlight if mousefx is true */
+							/* FIXME: what about multiline text that should be highlighted completly? */
 							if (node->mousefx && node->textLines + 1 == mouseOver)
 								re.DrawColor(color);
 
@@ -1602,8 +1603,9 @@ void MN_DrawMenus(void)
 								/* ... otherwise set the \t to \0 and increase the tab pointer to the next char */
 								/* after the tab (needed for the next loop in this (the inner) do while) */
 								*tab++ = '\0';
-								if (oldLines > 0 && node->textScroll <= oldLines)
-									re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur, 0, 0, NULL);
+								/* now check whether we should draw this string */
+								/*Com_Printf("tab - first part - node->textLines: %i \n", node->textLines);*/
+								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse);
 								/* increase the x value as given via menu definition format string */
 								/* or use 1/3 of the node size (width) */
 								if (!node->texh[1])
@@ -1614,9 +1616,10 @@ void MN_DrawMenus(void)
 								cur = tab;
 							} while (1);
 
+							/*Com_Printf("until newline - node->textLines: %i\n", node->textLines);*/
 							/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
-							lineHeight = re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines);
-							if (lineHeight >= 0)
+							lineHeight = re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue);
+							if (lineHeight > 0)
 								y += lineHeight;
 
 							if (node->mousefx)
@@ -1654,7 +1657,7 @@ void MN_DrawMenus(void)
 									tab = text;
 									while ((end = strstr(tab, "\\")) != NULL) {
 										*end++ = '\0';
-										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab,0,0,NULL);
+										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab, 0, 0, NULL, qfalse);
 										tab = end;
 										node->textLines++;
 										if (node->textLines >= node->height)
@@ -1665,7 +1668,7 @@ void MN_DrawMenus(void)
 									while ((end = strstr(text, "\\")) != NULL)
 										*end = ' ';
 
-									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], text,0,0,NULL);
+									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], text, 0, 0, NULL, qfalse);
 								}
 							}
 
