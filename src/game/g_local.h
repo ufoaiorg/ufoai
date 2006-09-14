@@ -293,6 +293,7 @@ void G_MoveCalc(int team, pos3_t from, int distance);
 qboolean G_ReactionFire(edict_t * target);
 void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction);
 
+qboolean G_FrustomVis(edict_t * from, vec3_t point);
 float G_ActorVis(vec3_t from, edict_t * check, qboolean full);
 void G_ClearVisFlags(int team);
 int G_CheckVis(edict_t * check, qboolean perish);
@@ -307,6 +308,7 @@ int G_TeamToPM(int team);
 void AI_Run(void);
 void AI_ActorThink(player_t * player, edict_t * ent);
 player_t *AI_CreatePlayer(int team);
+qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread);
 
 /* g_svcmds.c */
 void ServerCommand(void);
