@@ -136,15 +136,16 @@ void CL_ItemDescription(int item)
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, "");
 			/* more will be written below */
 		} else if (od->weapon && od->reload) {
-			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Ammo:\t%i\n"), (int) (od->ammo));
-			Q_strcat(itemText, va(_("Twohanded:\t%s"), (od->twohanded ? _("Yes") : _("No"))), sizeof(itemText));
+			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("%s weapon with\n"), (od->twohanded ? _("Two-handed") : _("One-handed")));
+			Q_strcat(itemText, va(_("Max ammo:\t%i\n"), (int) (od->ammo)), sizeof(itemText));
 		} else if (od->weapon) {
-			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Twohanded:\t%s\n"), (od->twohanded ? _("Yes") : _("No")));
+			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("%s ammo-less weapon with\n"), (od->twohanded ? _("Two-handed") : _("One-handed")));
 			/* more will be written below */
 		} else {
 			/* just an item */
 			/* only primary definition */
-			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Action:\t%s\n"), od->fd[0].name);
+			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("%s suxiliary equipment with\n"), (od->twohanded ? _("Two-handed") : _("One-handed")));
+			Q_strcat(itemText, va(_("Action:\t%s\n"), od->fd[0].name), sizeof(itemText));
 			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0].time), sizeof(itemText));
 			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0].range / 32.0), sizeof(itemText));
 		}

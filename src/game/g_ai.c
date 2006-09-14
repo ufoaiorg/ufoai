@@ -73,7 +73,7 @@ qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 #define GUETE_HIDE			60
 #define GUETE_CLOSE_IN		20
 #define GUETE_KILL			30
-#define GUETE_RANDOM		5
+#define GUETE_RANDOM		10
 #define GUETE_REACTION_ERADICATION 30
 #define GUETE_REACTION_FEAR_FACTOR 20
 #define GUETE_CIV_FACTOR	0.25
@@ -93,7 +93,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	int move, delta, tu;
 	int i, fm, shots, reaction_trap = 0;
 	float dist, minDist, nspread;
-	float guete, dmg, maxDmg, best_time, vis;
+	float guete, dmg, maxDmg, best_time = -1, vis;
 	objDef_t *ad;
 	int still_searching = 1;
 
@@ -248,11 +248,9 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	/* add damage to guete */
 	if (aia->target) {
 		guete += maxDmg;
+		assert (best_time > 0);
 		tu -= best_time;
 	}
-
-	/* add random effects */
-	guete += GUETE_RANDOM * frand();
 
   if (!(ent->state & STATE_RAGE)) {
 
