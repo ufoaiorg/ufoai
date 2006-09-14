@@ -2300,7 +2300,7 @@ void MN_ResolutionChange_f (void)
 }
 
 /**
- * @brief
+ * @brief Prints a list of tab and newline seperated string to keylist char array that hold the key and the command desc
  */
 void MN_InitKeyList_f (void)
 {
