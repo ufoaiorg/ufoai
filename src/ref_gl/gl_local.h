@@ -173,7 +173,7 @@ typedef struct {
 } glvert_t;
 
 
-#define	MAX_LBM_HEIGHT		480
+#define	MAX_LBM_HEIGHT		1024	/* Was 480 (some standard?), but we used some higher textures now. */
 
 #define BACKFACE_EPSILON	0.01
 

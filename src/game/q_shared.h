@@ -82,6 +82,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <intl/libintl.h>
 #elif defined(_WIN32)
 #define snprintf _snprintf
+#ifdef _MSC_VER
+#ifndef LC_MESSAGES
+#define LC_MESSAGES 3
+#endif /* LC_MESSAGES */
+#endif /* _MSC_VER */
 #include "../ports/win32/libintl.h"
 #else
 #include <libintl.h>
@@ -89,7 +94,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* the used textdomain for gettext */
 #define TEXT_DOMAIN "ufoai"
-
 #include <locale.h>
 #define _(String) gettext(String)
 #define gettext_noop(String) String
