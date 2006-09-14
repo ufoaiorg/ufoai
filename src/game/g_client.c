@@ -408,7 +408,7 @@ float G_ActorVis(vec3_t from, edict_t * check, qboolean full)
 
 
 /**
- * @brief test if check is visible by from 
+ * @brief test if check is visible by from
  * from is from team team
  */
 float G_Vis(int team, edict_t * from, edict_t * check, int flags)

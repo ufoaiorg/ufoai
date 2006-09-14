@@ -89,7 +89,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* the used textdomain for gettext */
 #define TEXT_DOMAIN "ufoai"
-
+#ifdef _MSC_VER
+#ifndef LC_MESSAGES
+#define LC_MESSAGES 3
+#endif /* LC_MESSAGES */
+#endif /* _MSC_VER */
 #include <locale.h>
 #define _(String) gettext(String)
 #define gettext_noop(String) String
