@@ -93,7 +93,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	int move, delta, tu;
 	int i, fm, shots, reaction_trap = 0;
 	float dist, minDist, nspread;
-	float guete, dmg, maxDmg, best_time, vis;
+	float guete, dmg, maxDmg, best_time = 0, vis;
 	objDef_t *ad;
 	int still_searching = 1;
 
@@ -111,7 +111,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 		if ( check->inuse && check->type == ET_ACTOR && ent != check
 			 && (check->team != ent->team || ent->state & STATE_INSANE)
-			 && !(check->state & STATE_DEAD) 
+			 && !(check->state & STATE_DEAD)
 			 /* also check if we are in range of the weapon's primary mode */
 			 && check->state & STATE_REACTION ) {
 			qboolean frustom;
@@ -119,13 +119,13 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 
 			actorVis = G_ActorVis(check->origin, ent, qtrue);
 			frustom = G_FrustomVis(check, ent->origin);
-			if (actorVis > 0.6 
+			if (actorVis > 0.6
 				&& frustom
-				&& (VectorDistSqr(check->origin, ent->origin) 
+				&& (VectorDistSqr(check->origin, ent->origin)
 					> MAX_SPOT_DIST * MAX_SPOT_DIST))
 				reaction_trap++;
 		}
-	
+
 	/* don't waste TU's when in reaction fire trap */
 	/* learn to escape such traps if move == 2 || move == 3 */
 	guete -= move * reaction_trap * GUETE_REACTION_FEAR_FACTOR;
@@ -147,13 +147,13 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 			continue;
 
 		if (IS_SHOT_RIGHT(fm) && RIGHT(ent)
-			&& RIGHT(ent)->item.m != NONE 
-			&& gi.csi->ods[RIGHT(ent)->item.t].weapon 
+			&& RIGHT(ent)->item.m != NONE
+			&& gi.csi->ods[RIGHT(ent)->item.t].weapon
 			&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
 				|| RIGHT(ent)->item.a > 0)) {
 			od = &gi.csi->ods[RIGHT(ent)->item.m];
 		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)
-			&& (LEFT(ent)->item.m != NONE) 
+			&& (LEFT(ent)->item.m != NONE)
 			&& gi.csi->ods[LEFT(ent)->item.t].weapon
 			&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 				|| LEFT(ent)->item.a > 0)) {
@@ -210,12 +210,12 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 							dmg *= 1.0 - ad->protection[fd->dmgtype] * check->AP * 0.0001;
 						else
 							dmg *= 1.0 - ad->protection[fd->dmgtype] * 0.01;
-					}						
+					}
 
-					if ( dmg > check->HP 
-						 && check->state & STATE_REACTION )
-					/* reaction shooters eradication bonus */
-						dmg = check->HP + GUETE_KILL 
+					if ( dmg > check->HP
+						&& check->state & STATE_REACTION )
+						/* reaction shooters eradication bonus */
+						dmg = check->HP + GUETE_KILL
 							+ GUETE_REACTION_ERADICATION;
 					else if (dmg > check->HP)
 					/* standard kill bonus */
@@ -300,7 +300,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		VectorCopy(ent->pos, aia->stop);
 		guete += GUETE_HIDE;
 		tu -= delta;
-		/* TODO: also add bonus for fleeing from reaction fire 
+		/* TODO: also add bonus for fleeing from reaction fire
 		   and a huge malus if more than 1 move under reaction */
 	}
   }
@@ -454,7 +454,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	VectorCopy(ent->pos, oldPos);
 	VectorCopy(ent->origin, oldOrigin);
 
-	/* evaluate moving to every possible location in the search area, 
+	/* evaluate moving to every possible location in the search area,
 	   including combat considerations */
 	for (to[2] = 0; to[2] < HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
