@@ -45,8 +45,8 @@ item plaspistol_ammo
 		shots	5
 		ammo	1
 		rof		6
-		time	11
-		damage	"12 5"
+		time	10
+		damage	"11 5"
 		dmgtype plasma
 	}
 	secondary
@@ -59,7 +59,7 @@ item plaspistol_ammo
 		firesnd	weapons/plasma_c.wav
 		sndonce true
 		speed	0
-		spread	"15 5"
+		spread	"13 5"
 		crouch	1.0
 		range	10
 		shots	46
@@ -133,7 +133,7 @@ item plasrifle_ammo
 		firesnd	weapons/plasma_big.wav
 		sndonce true
 		speed	0
-		spread	"9 5"
+		spread	"8 4"
 		crouch	1.0
 		range	18
 		shots	30
@@ -210,7 +210,7 @@ item plasblaster_ammo
 		firesnd	weapons/plasma_big.wav
 		sndonce true
 		speed	0
-		spread	"11 5"
+		spread	"11 4"
 		crouch	1.0
 		range	15
 		shots	22
