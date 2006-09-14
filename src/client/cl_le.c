@@ -715,6 +715,9 @@ void LE_Cleanup(void)
 			inv = le->i;
             Com_DestroyInventory(&inv);
             break;
+        case ET_ITEM:
+			Com_EmptyContainer(&le->i, csi.idFloor);
+            break;
         default:
             break;
         }
