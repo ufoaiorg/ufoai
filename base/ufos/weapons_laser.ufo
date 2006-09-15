@@ -148,15 +148,15 @@ item laserrifle_ammo
 item heavylaser
 {
 	name		"_Heavy Laser"
-	model		weapons/laserrifle/laserrifle
-//	model		weapons/heavylaser/heavylaser
+//	model		weapons/laserrifle/laserrifle
+	model		weapons/laserheavy/laserheavy
 	weapon		true
 	type		biggun
 	category	3
 	twohanded	true
 	shape		"0 0 5 2"
-	center		"4.5 0 1.5"
-	scale		1.26
+	center		"8.5 0 1.5"
+	scale		1.15
 	ammo		6
 	reload		12
 	price		4400
@@ -167,7 +167,7 @@ item heavylaser_ammo
 {
 	name		"_Heavy Laser Charge"
 	model		weapons/laserrifle/laserrifle_clip
-//	model		weapons/heavylaser/heavylaser_clip
+//	model		weapons/laserheavy/laserheavy_clip
 	type		ammo
 	category	0
 	shape		"0 0 1 2"
