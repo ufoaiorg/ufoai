@@ -61,7 +61,7 @@ mkdir_dir_list+=$(build_render) $(build_sound) $(build_po) $(build_server) $(bui
 
 target_client=$(DIR_BUILD)/ufo$(EXT_BIN)
 target_server=$(DIR_BUILD)/ufoded$(EXT_BIN)
-target_ufo2map=$()/ufo2map$(EXT_BIN)
+target_ufo2map=$(DIR_BUILD)/ufo2map$(EXT_BIN)
 
 target_game=$(DIR_BUILD)/game$(EXT_SHLIB)
 target_render_glx=$(DIR_BUILD)/ref_glx$(EXT_SHLIB)
@@ -69,7 +69,6 @@ target_render_sdl=$(DIR_BUILD)/ref_sdl$(EXT_SHLIB)
 target_sound_oss=$(DIR_BUILD)/snd_oss$(EXT_SHLIB)
 target_sound_alsa=$(DIR_BUILD)/snd_alsa$(EXT_SHLIB)
 target_sound_sdl=$(DIR_BUILD)/snd_sdl$(EXT_SHLIB)
-
 
 # =================================
 # Build Environment
@@ -102,6 +101,7 @@ BUILD_COMPILETOOLS=YES	# build ufo2map bsp compile tool.
 # FIXME: These need to be adapted to allow cross-compilation.
 # Check OS type.
 # TODO: IRIX / IRIX64?
+
 OSTYPE := $(shell uname -s)
 ifneq ($(OSTYPE),Linux)
   ifneq ($(OSTYPE),FreeBSD)
