@@ -2519,7 +2519,7 @@ void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, in
  * @sa G_ShotTargetAtPos
  * @sa G_ShotProbability
  */
-qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type)
+static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type)
 {
 	edict_t *shooter, *target;
 	int ff, hit, maxff, minhit, self;
