@@ -1872,7 +1872,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
 	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
-	VectorMA(cur_loc, 8, dir, cur_loc);	/* ?? TODO: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid. Might need some change to reflect 2x2 units. Also might need a check if the distace is bigger than the one to the impact location.*/
+	VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);	/* ?? TODO: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid. Might need some change to reflect 2x2 units. Also might need a check if the distace is bigger than the one to the impact location.*/
 	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
 	/* Get accuracy value for this attacker. */
@@ -1945,7 +1945,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 
 		/* do splash damage */
 		if (tr.fraction < 1.0 && fd->splrad && !fd-> bounce) {
-			VectorMA(impact, 8, tr.plane.normal, impact);
+			VectorMA(impact, sv_shot_origin->value, tr.plane.normal, impact);
 			G_SplashDamage(ent, fd, impact);
 		}
 
@@ -2489,7 +2489,7 @@ edict_t *G_ShotTargetAtPos(edict_t *shooter, pos3_t at)
 }
 
 /* TODO: factor out key functions and share with G_ShootSingle */
-trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int mask, item_t *weapon)
+trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int mask, item_t *weapon, int debug_type)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
@@ -2503,7 +2503,7 @@ trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
 	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
-	VectorMA(cur_loc, 8, dir, cur_loc);	/* ?? TODO: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid. Might need some change to reflect 2x2 units. Also might need a check if the distace is bigger than the one to the impact location.*/
+	VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);	/* ?? TODO: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid. Might need some change to reflect 2x2 units. Also might need a check if the distace is bigger than the one to the impact location.*/
 	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
 	/* Get accuracy value for this attacker. */
@@ -2528,6 +2528,7 @@ trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int
 	/* Do the trace from current position of the projectile
 	   to the end_of_range location.*/
 	tr = gi.trace(cur_loc, NULL, NULL, impact, shooter, MASK_SHOT);
+
 	return tr;
 }
 
@@ -2535,7 +2536,7 @@ trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int
 /**
  * @brief Calculate probability of a hit
  */
-void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, int *ff)
+void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, int *ff, int *self)
 {
 	item_t *weapon;
 	trace_t tr;
@@ -2566,11 +2567,14 @@ void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, in
 
 	*hit = 0;
 	*ff = 0;
+	*self = 0;
 	for (i = 0; i < 100; i++) {
-		tr = G_TraceShot(shooter, fd, shotOrigin, target->pos, mask, weapon);
+		tr = G_TraceShot(shooter, fd, shotOrigin, target->pos, mask, weapon, type);
 		if (!tr.ent || !tr.ent->inuse || tr.ent->state & STATE_DEAD)
 			continue;
-		if (tr.ent->team == shooter->team || tr.ent->team == TEAM_CIVILIAN)
+		if (tr.ent->number == shooter->number)
+			*self += 1;
+		else if (tr.ent->team == shooter->team || tr.ent->team == TEAM_CIVILIAN)
 			*ff += 1;
 		else if ((tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV) && tr.ent == target)
 			*hit += 1;
@@ -2580,7 +2584,7 @@ void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, in
 qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type)
 {
 	edict_t *shooter, *target;
-	int ff, hit, maxff, minhit;
+	int ff, hit, maxff, minhit, self;
 	
 	/* use a read-only copy of the shooter so we can change its facing for probability tracing */
 	shooter = malloc(sizeof(*g_edicts));
@@ -2603,10 +2607,10 @@ qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type
 	else
 		maxff = 5;
 
-	G_ShotProbability(shooter, target, type, &hit, &ff);
+	G_ShotProbability(shooter, target, type, &hit, &ff, &self);
 	free(shooter);
 
-	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF: %d/%d.\n", hit, minhit, ff, maxff);
+	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF: %d/%d Self: %d.\n", hit, minhit, ff, maxff, self);
 
 	if (ff <= maxff && hit >= minhit)
 		return G_ClientShoot(player, num, at, type);
