@@ -257,8 +257,17 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	/* hide */
 	if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTOM) & VIS_YES)) {
 		/* is a hiding spot */
-		guete += GUETE_HIDE;
+		guete += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 	} else if (aia->target && tu >= 2) {
+		/* reward short walking to shooting spot, when seen by enemies;
+		   TODO: do this decently, only penalizing the visible part of walk
+		   and penalizing much more for reaction shooters around;
+		   now it may remove some tactical options from aliens, 
+		   e.g. they may now choose only the closer doors;
+		   however it's still better than going three times around soldier 
+		   and only then firing at him */
+		guete += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
+
 		/* search hiding spot */
 		byte minX, maxX, minY, maxY;
 
