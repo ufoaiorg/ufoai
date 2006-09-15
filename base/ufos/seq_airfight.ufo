@@ -1,0 +1,43 @@
+sequence airfight
+{
+	cmd "seq_animspeed 300;"
+
+	camera cam1
+	{
+		zoom	1.0
+		angles	"20 240 0"
+		dist	500
+	}
+	model ship_hull
+	{
+		model	models/aircraft/ufo_small/alienship1_hull.md2
+		origin	"0 -4000 0"
+		speed	"0 3000 0"
+	}
+	model ship_wings
+	{
+		model	models/aircraft/ufo_small/alienship1_wings.md2
+		origin	"0 -4000 0"
+		speed	"0 3000 0"
+	}
+	model ship_engine1
+	{
+		model	models/aircraft/ufo_small/alienship1_engines_1.md2
+		origin	"0 -4000 0"
+		speed	"0 3000 0"
+	}
+	model ship_engine2
+	{
+		model	models/aircraft/ufo_small/alienship1_engines_2.md2
+		origin	"0 -4000 0"
+		speed	"0 3000 0"
+	}
+	wait 2.0
+
+	rem ship_hull
+	rem ship_wings
+	rem ship_engine1
+	rem ship_engine2
+	wait 2.0
+
+}
