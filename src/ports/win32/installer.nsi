@@ -3,7 +3,7 @@
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "UFO:Alien Invasion"
 !define PRODUCT_NAME_DEDICATED "UFO:Alien Invasion Dedicated Server"
-!define PRODUCT_VERSION "2.0-RC4"
+!define PRODUCT_VERSION "2.1-dev"
 !define PRODUCT_PUBLISHER "UFO:AI Team"
 !define PRODUCT_WEB_SITE "http://www.ufoai.net"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\ufo.exe"
@@ -785,7 +785,7 @@ Section "SourceCode" SEC03
   File "..\..\ports\win32\*.h"
   File "..\..\ports\win32\*.c"
   SetOutPath "$INSTDIR\src\ports\macosx"
-  File "..\..\ports\macosx\*.h"
+;  File "..\..\ports\macosx\*.h"
   File "..\..\ports\macosx\*.m"
   File "..\..\ports\macosx\*.c"
   SetOutPath "$INSTDIR\src\ports\linux"
