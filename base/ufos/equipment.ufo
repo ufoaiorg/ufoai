@@ -154,7 +154,7 @@ equipment multiplayer
 	flamer_ammo			3
 	rpg					1
 	rpg_ammo			3
-//	rpg_incendiary_ammo	3
+	rpg_incendiary_ammo	3
 	rpg_tachyon_ammo	3
 	grenl				1
 	grenl_ammo			5
@@ -165,8 +165,8 @@ equipment multiplayer
 	laserpistol_ammo	5
 	laserrifle			1
 	laserrifle_ammo		3
-//	heavylaser			1
-//	heavylaser_ammo		3
+	heavylaser			1
+	heavylaser_ammo		3
 	plaspistol			2
 	plaspistol_ammo		5
 	plasrifle			1
@@ -180,9 +180,10 @@ equipment multiplayer
 	tachyonsniper		1
 	tachyonsniper_ammo	3
 	fraggrenade			6
+	smokegrenade		2
 	knife				1
 	irgoggles			1
-	medikit				1
+	medikit				2
 //	alienincgrenade		6
 	plasmagrenade		6
 	kerrblade			5 // bulky, will rarely get into the backpack
