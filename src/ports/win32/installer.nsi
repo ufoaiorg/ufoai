@@ -786,6 +786,7 @@ Section "SourceCode" SEC03
   File "..\..\ports\win32\*.c"
   SetOutPath "$INSTDIR\src\ports\macosx"
   File "..\..\ports\macosx\*.h"
+  File "..\..\ports\macosx\*.m"
   File "..\..\ports\macosx\*.c"
   SetOutPath "$INSTDIR\src\ports\linux"
   File "..\..\ports\linux\*.h"
