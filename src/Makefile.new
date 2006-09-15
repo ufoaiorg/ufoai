@@ -59,16 +59,16 @@ mkdir_dir_list+=$(build_render) $(build_sound) $(build_po) $(build_server) $(bui
 # Targets
 # =================================
 
-target_client=$(DIR_ROOT)/ufo$(EXT_BIN)
-target_server=$(DIR_ROOT)/ufoded$(EXT_BIN)
-target_ufo2map=$(ROOT_DIR)/ufo2map$(EXT_BIN)
+target_client=$(DIR_BUILD)/ufo$(EXT_BIN)
+target_server=$(DIR_BUILD)/ufoded$(EXT_BIN)
+target_ufo2map=$()/ufo2map$(EXT_BIN)
 
-target_game=$(DIR_ROOT)/game$(EXT_SHLIB)
-target_render_glx=$(DIR_ROOT)/ref_glx$(EXT_SHLIB)
-target_render_sdl=$(DIR_ROOT)/ref_sdl$(EXT_SHLIB)
-target_sound_oss=$(DIR_ROOT)/snd_oss$(EXT_SHLIB)
-target_sound_alsa=$(DIR_ROOT)/snd_alsa$(EXT_SHLIB)
-target_sound_sdl=$(DIR_ROOT)/snd_sdl$(EXT_SHLIB)
+target_game=$(DIR_BUILD)/game$(EXT_SHLIB)
+target_render_glx=$(DIR_BUILD)/ref_glx$(EXT_SHLIB)
+target_render_sdl=$(DIR_BUILD)/ref_sdl$(EXT_SHLIB)
+target_sound_oss=$(DIR_BUILD)/snd_oss$(EXT_SHLIB)
+target_sound_alsa=$(DIR_BUILD)/snd_alsa$(EXT_SHLIB)
+target_sound_sdl=$(DIR_BUILD)/snd_sdl$(EXT_SHLIB)
 
 
 # =================================
@@ -144,7 +144,7 @@ CFLAGS_BASE=-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=
 # Put this in when it is fixed
 # -ansi -pedantic
 CFLAGS_RELEASE=-ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -DNDEBUG $(CFLAGS_ARCH_RELEASE)
-CFLAGS_DEBUG=-g -O0 -D_FORTIFY_SOURCE=2 -DDEBUG $(CFLAGS_ARCH_DEBUG)
+CFLAGS_DEBUG=-g -O0 -D_FORTIFY_SOURCE=2 -DDEBUG -fno-inline $(CFLAGS_ARCH_DEBUG)
 CFLAGS_TOOLS=
 CFLAGS_PROFILER=-pg -DPROFILING -fprofile-arcs -ftest-coverage
 CFLAGS_ARCH_RELEASE=
@@ -219,17 +219,17 @@ endif
 
 # Commands
 
-CC_CLIENT    =@echo " * [CLIENT] $@"; $(CC) $(CFLAGS) $(NOTSHLIBCFLAGS) -o $@ -c $<
-CC_SERVER    =@echo " * [SERVER] $@"; $(CC) $(CFLAGS) $(NOTSHLIBCFLAGS) -DDEDICATED_ONLY -o $@ -c $<
-CC_COMMON    =@echo " * [COMMON] $@"; $(CC) $(CFLAGS) $(NOTSHLIBCFLAGS) -o $@ -c $<
-CC_TOOLS     =@echo " * [TOOLS]  $@"; $(CC) $(CFLAGS) $(NOTSHLIBCFLAGS) -o $@ -c $<
-CC_JPEG      =@echo " * [JPG]    $@"; $(CC) $(CFLAGS) $(NOTSHLIBCFLAGS) -o $@ -c $<
+CC_CLIENT    =@echo " * [CLIENT] $@"; $(CC) $(CFLAGS) -o $@ -c $<
+CC_SERVER    =@echo " * [SERVER] $@"; $(CC) $(CFLAGS) -DDEDICATED_ONLY -o $@ -c $<
+CC_COMMON    =@echo " * [COMMON] $@"; $(CC) $(CFLAGS) -o $@ -c $<
+CC_TOOLS     =@echo " * [TOOLS]  $@"; $(CC) $(CFLAGS) -o $@ -c $<
+CC_JPEG      =@echo " * [JPG]    $@"; $(CC) $(CFLAGS) -o $@ -c $<
 # CC_OPTIMISE=@echo " * [OPT]    $@"; $(CC) $(CFLAGS) -O -o $@ -c $<
-CC_SHLIB     =@echo " * [SHLIB]  $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
-CC_GL_SHLIB  =@echo " * [RENDER] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) $(GLXCFLAGS) -o $@ -c $<
-CC_SND_SHLIB =@echo " * [SOUND]  $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
+CC_SHLIB     =@echo " * [SHLIB]  $@"; $(CC) $(CFLAGS) $(CFLAGS_SHLIB) -o $@ -c $<
+CC_GL_SHLIB  =@echo " * [RENDER] $@"; $(CC) $(CFLAGS) $(CFLAGS_SHLIB) $(CFLAGS_GLX) -o $@ -c $<
+CC_SND_SHLIB =@echo " * [SOUND]  $@"; $(CC) $(CFLAGS) $(CFLAGS_SHLIB) -o $@ -c $<
 CC_AS        =@echo " * [AS]     $@"; $(CC) $(CFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
-CC_AS_SHLIB  =@echo " * [AS LIB] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
+CC_AS_SHLIB  =@echo " * [AS LIB] $@"; $(CC) $(CFLAGS) $(CFLAGS_SHLIB) -DELF -x assembler-with-cpp -o $@ -c $<
 
 
 # =================================

@@ -68,5 +68,10 @@ $(build_client)/%.o: $(src_client)/%.c $(HDR_COMMON) $(hdr_client)
 # Target-specific Rules
 # =================================
 
+.PHONY: client
+
+client: mkdirs $(target_client)
+
 $(target_client): $(obj_system) $(obj_system_client) $(obj_common) $(obj_client) $(obj_client_main)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) $(obj_system) $(obj_system_client) $(obj_common) $(obj_client) $(obj_client_main) -o $(target_client)
+	@echo " * [LINK]   $@"; $(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) $(obj_system) $(obj_system_client) $(obj_common) $(obj_client) $(obj_client_main) -o $(target_client)
+

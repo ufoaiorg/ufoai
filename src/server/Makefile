@@ -60,5 +60,9 @@ $(build_server)/cl_null.o: $(src_ports)/$(dirname_null)/cl_null.c
 $(build_server)/cd_null.o: $(src_ports)/$(dirname_null)/cd_null.c
 	$(CC_SERVER)
 
+.PHONY: server
+
+server: mkdirs $(target_server)
+
 $(target_server): $(obj_system) $(obj_system_server) $(obj_common) $(obj_server) $(obj_server_main)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) $(obj_system) $(obj_system_server) $(obj_common) $(obj_server) $(obj_server_main) -o $(target_server)
+	@echo " * [LINK]   $@"; $(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) $(obj_system) $(obj_system_server) $(obj_common) $(obj_server) $(obj_server_main) -o $(target_server)
