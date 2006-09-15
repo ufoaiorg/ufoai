@@ -527,7 +527,7 @@ void CL_CampaignRunAircraft(int dt)
 					ufo = gd.ufos + aircraft->ufo;
 					if (abs(ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
 						/* Display airfight sequence */
-						Cbuf_ExecuteText(EXEC_NOW, "seq_start airfight airfight");
+						Cbuf_ExecuteText(EXEC_NOW, "seq_start airfight;");
 
 						/* The aircraft can attack the ufo */
 						battleStatus = AIR_Fight(aircraft, ufo);
