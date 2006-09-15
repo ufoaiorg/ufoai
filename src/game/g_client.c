@@ -1996,6 +1996,53 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 	}
 }
 
+void G_GetShotOrigin(edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t shotOrigin)
+{
+	/* get weapon position */
+	gi.GridPosToVec(gi.map, shooter->pos, shotOrigin);
+	/* adjust height: */
+	shotOrigin[2] += fd->shotOrg[1];
+	/* adjust horizontal: */
+	if (fd->shotOrg[0] != 0) {
+		float x, y, length;
+
+		/* get "right" and "left" of a unit(rotate dir 90 on the x-y plane): */
+		x = dir[1];
+		y = -dir[0];
+		length = sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
+		/* assign adjustments: */
+		shotOrigin[0] += x * fd->shotOrg[0] / length;
+		shotOrigin[1] += y * fd->shotOrg[0] / length;
+	}
+}
+
+qboolean G_GetShotFromType(edict_t *ent, int type, item_t **weapon, int *container, fireDef_t **fd)
+{
+	if (type >= ST_NUM_SHOOT_TYPES)
+		gi.error("G_GetShotFromType: unknown shoot type %i.\n", type);
+
+	if (IS_SHOT_RIGHT(type)) {
+		if (!RIGHT(ent))
+			return qfalse;
+		*weapon = &RIGHT(ent)->item;
+		*container = gi.csi->idRight;
+	} else {
+		if (!LEFT(ent))
+			return qfalse;
+		*weapon = &LEFT(ent)->item;
+		*container = gi.csi->idLeft;
+	}
+
+	if ((*weapon)->m == NONE) {
+		*weapon = NULL;
+		return qfalse;
+	}
+	
+	*fd = &gi.csi->ods[(*weapon)->m].fd[SHOT_FD_PRIO(type)];
+
+	return qtrue;
+}
+
 /**
  * @brief
  */
@@ -2010,28 +2057,12 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 
 	ent = g_edicts + num;
 
-	/* test shoot type */
-	if (type >= ST_NUM_SHOOT_TYPES)
-		gi.error("G_ClientShoot: unknown shoot type %i.\n", type);
-
-	if (IS_SHOT_RIGHT(type)) {
-		if (!RIGHT(ent))
-			return qfalse;
-		weapon = &RIGHT(ent)->item;
-		container = gi.csi->idRight;
-	} else {
-		if (!LEFT(ent))
-			return qfalse;
-		weapon = &LEFT(ent)->item;
-		container = gi.csi->idLeft;
+	if (!G_GetShotFromType(ent, type, &weapon, &container, &fd)) {
+		if (!weapon)
+			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - object not activable!\n"));
+		return qfalse;
 	}
 
-	if (weapon->m == NONE) {
-		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - object not activable!\n"));
-		return qfalse; /* TODO: do G_ShootGrenade with that ammo clip */
-	}
-
-	fd = &gi.csi->ods[weapon->m].fd[SHOT_FD_PRIO(type)];
 	wi = weapon->m | (SHOT_FD_PRIO(type) << 7/*move to byte end*/);
 	ammo = weapon->a;
 	reaction_leftover = IS_SHOT_REACTION(type) ? sv_reaction_leftover->value : 0;
@@ -2116,22 +2147,7 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 		gi.WriteByte(0);
 	}
 
-	/* get weapon position */
-	gi.GridPosToVec(gi.map, ent->pos, shotOrigin);
-	/* adjust height: */
-	shotOrigin[2] += fd->shotOrg[1];
-	/* adjust horizontal: */
-	if (fd->shotOrg[0] != 0) {
-		float x, y, length;
-
-		/* get "right" and "left" of a unit(rotate dir 90 on the x-y plane): */
-		x = dir[1];
-		y = -dir[0];
-		length = sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
-		/* assign adjustments: */
-		shotOrigin[0] += x * fd->shotOrg[0] / length;
-		shotOrigin[1] += y * fd->shotOrg[0] / length;
-	}
+	G_GetShotOrigin(ent, fd, dir, shotOrigin);
 
 	/* fire all shots */
 	for (i = 0; i < shots; i++)
@@ -2363,6 +2379,156 @@ void G_KillTeam(void)
 	G_CheckEndGame();
 }
 
+edict_t *G_ShotTargetAtPos(edict_t *shooter, pos3_t at)
+{
+	edict_t *target;
+	int i;
+
+	target = NULL;
+	for (i = 0; i < globals.num_edicts; i++) {
+	       if (g_edicts[i].inuse
+		       && (g_edicts[i].type == ET_ACTOR || g_edicts[i].type == ET_UGV)
+		       && !(g_edicts[i].state & STATE_DEAD)
+			   && g_edicts[i].team != TEAM_CIVILIAN
+			   && g_edicts[i].team != shooter->team
+		       && VectorCompare(at, g_edicts[i].pos)) {
+		       target = &g_edicts[i];
+		       break;
+	       }
+	}
+
+	return target;
+}
+
+/* TODO: factor out key functions and share with G_ShootSingle */
+trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int mask, item_t *weapon)
+{
+	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
+	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
+	vec3_t cur_loc;	/* The current location of the projectile. */
+	vec3_t impact;	/* The location of the target (-center?) */
+	trace_t tr;	/* ?? TODO */
+	float acc;	/* Accuracy modifier for the angle of the shot. */
+
+	/* Calc direction of the shot. */
+	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
+	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
+	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
+	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
+	VectorMA(cur_loc, 8, dir, cur_loc);	/* ?? TODO: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid. Might need some change to reflect 2x2 units. Also might need a check if the distace is bigger than the one to the impact location.*/
+	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
+
+	/* Get accuracy value for this attacker. */
+	acc = GET_ACC(shooter->chr.skills[ABILITY_ACCURACY], fd->weaponSkill ? shooter->chr.skills[fd->weaponSkill] : 0);
+
+	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
+	if ((shooter->state & STATE_CROUCHED) && fd->crouch) {
+		angles[PITCH] += crand() * fd->spread[0] * fd->crouch * acc;
+		angles[YAW] += crand() * fd->spread[1] * fd->crouch * acc;
+	} else {
+		angles[PITCH] += crand() * fd->spread[0] * acc;
+		angles[YAW] += crand() * fd->spread[1] * acc;
+	}
+	/* Convert changed angles into new direction. */
+	AngleVectors(angles, dir, NULL, NULL);
+
+	/* Calc 'impact' vector that is located at the end of the range
+	   defined by the fireDef_t. This is not really the impact location,
+	   but rather the 'endofrange' location, see below for another use.*/
+	VectorMA(cur_loc, fd->range, dir, impact);
+
+	/* Do the trace from current position of the projectile
+	   to the end_of_range location.*/
+	tr = gi.trace(cur_loc, NULL, NULL, impact, shooter, MASK_SHOT);
+	return tr;
+}
+
+
+/**
+ * @brief Calculate probability of a hit
+ */
+void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, int *ff)
+{
+	item_t *weapon;
+	trace_t tr;
+	fireDef_t *fd;
+	vec3_t dir, center, target_vec, shotOrigin;
+	int container, i, mask;
+
+	if (!G_GetShotFromType(shooter, type, &weapon, &container, &fd)) {
+		*hit = -1000;
+		*ff = 1000;
+		return;
+	}
+
+	/* rotate the player - this is why we need a readonly copy of the shooter */
+	VectorSubtract(target->pos, shooter->pos, dir);
+	shooter->dir = AngleToDV((int) (atan2(dir[1], dir[0]) * 180 / M_PI));
+
+	/* calculate visibility */
+	gi.GridPosToVec(gi.map, target->pos, target_vec);
+	VectorSubtract(target_vec, shooter->origin, dir);
+	VectorMA(shooter->origin, 0.5, dir, center);
+	mask = 0;
+	for (i = 0; i < MAX_TEAMS; i++)
+		if (shooter->visflags & (1 << i) || G_TeamPointVis(i, target_vec) || G_TeamPointVis(i, center))
+			mask |= 1 << i;
+
+	G_GetShotOrigin(shooter, fd, dir, shotOrigin);
+
+	*hit = 0;
+	*ff = 0;
+	for (i = 0; i < 100; i++) {
+		tr = G_TraceShot(shooter, fd, shotOrigin, target->pos, mask, weapon);
+		if (!tr.ent || !tr.ent->inuse || tr.ent->state & STATE_DEAD)
+			continue;
+		if (tr.ent->team == shooter->team || tr.ent->team == TEAM_CIVILIAN)
+			*ff += 1;
+		else if ((tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV) && tr.ent == target)
+			*hit += 1;
+	}
+}
+
+qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type)
+{
+	edict_t *shooter, *target;
+	int ff, hit, maxff, minhit;
+	
+	/* use a read-only copy of the shooter so we can change its facing for probability tracing */
+	shooter = malloc(sizeof(*g_edicts));
+	memcpy(shooter, &(g_edicts[num]), sizeof(*g_edicts));
+	target = G_ShotTargetAtPos(shooter, at);
+	if (!target) {
+		free(shooter);
+		return qfalse;
+	}
+
+	minhit = shooter->reaction_minhit;
+	if (shooter->state & STATE_INSANE)
+		maxff = 100;
+	else if (shooter->state & STATE_RAGE)
+		maxff = 60;
+	else if (shooter->state & STATE_PANIC)
+		maxff = 30;
+	else if (shooter->state & STATE_SHAKEN)
+		maxff = 15;
+	else
+		maxff = 5;
+
+	G_ShotProbability(shooter, target, type, &hit, &ff);
+	free(shooter);
+
+
+#if 0
+	/* Causes race condition that produce: ERROR: CL_ParseServerMessage: Illegible server message 0 */
+	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF: %d/%d.\n", hit, minhit, ff, maxff);
+#endif
+	if (ff <= maxff && hit >= minhit)
+		return G_ClientShoot(player, num, at, type);
+	else
+		return qfalse;
+}
+
 /**
  * @brief	Checks if an edict has reaction fire enabled and sees the target. Then fire at him.
  * @param[in,out] target The edict that will be fired on.
@@ -2407,18 +2573,14 @@ qboolean G_ReactionFire(edict_t * target)
 					 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
 						 || RIGHT(ent)->item.a > 0)
 					 && gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
-					/* check FF; TODO: still does not work */
-					if (!AI_CheckFF(ent, target->origin, gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].spread[0]) || ent->state & STATE_INSANE)
-						fired = G_ClientShoot(player, ent->number, target->pos, ST_RIGHT_PRIMARY_REACTION);
+					fired = G_FireWithJudgementCall(player, ent->number, target->pos, ST_RIGHT_PRIMARY_REACTION);
 				} else if ( LEFT(ent)
 							&& (LEFT(ent)->item.m != NONE)
 							&& gi.csi->ods[LEFT(ent)->item.t].weapon
 							&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 								|| LEFT(ent)->item.a > 0)
 							&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_SECONDARY].range > VectorDist(ent->origin, target->origin) ) {
-					/* check FF */
-					if (!AI_CheckFF(ent, target->origin, gi.csi->ods[LEFT(ent)->item.m].fd[FD_SECONDARY].spread[0]) || ent->state & STATE_INSANE)
-						fired = G_ClientShoot(player, ent->number, target->pos, ST_LEFT_PRIMARY_REACTION);
+					fired = G_FireWithJudgementCall(player, ent->number, target->pos, ST_LEFT_PRIMARY_REACTION);
 				}
 
 				/* Revert active team. */
@@ -2652,6 +2814,7 @@ void G_ClientTeamInfo(player_t * player)
 			ent->STUN = 0;
 			if (ent->type == ET_ACTOR)
 				ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
+			ent->reaction_minhit = 30; /* TODO: allow later changes from GUI */
 		} else {
 			/* just do nothing with the info */
 			gi.ReadByte(); /* fieldSize */

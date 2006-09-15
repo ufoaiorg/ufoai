@@ -410,6 +410,8 @@ struct edict_s {
 
 	int state;					/* the player state - dead, shaken.... */
 
+	int reaction_minhit;				/* acceptable odds for reaction shots */
+
 	int team;					/* player of which team? */
 	int pnum;					/* the actual player slot */
 	/* the models (hud) */
