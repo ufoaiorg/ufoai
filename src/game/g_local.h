@@ -290,7 +290,7 @@ qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum);
 void G_ClientMove(player_t * player, int team, int num, pos3_t to, qboolean stop);
 void G_MoveCalc(int team, pos3_t from, int distance);
-qboolean G_ReactionFire(edict_t * target);
+qboolean G_ReactionFire(edict_t * target, qboolean testRun);
 void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction);
 
 qboolean G_FrustomVis(edict_t * from, vec3_t point);
@@ -308,7 +308,6 @@ int G_TeamToPM(int team);
 void AI_Run(void);
 void AI_ActorThink(player_t * player, edict_t * ent);
 player_t *AI_CreatePlayer(int team);
-qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread);
 
 /* g_svcmds.c */
 void ServerCommand(void);
@@ -409,6 +408,8 @@ struct edict_s {
 	int morale;					/* the current morale value */
 
 	int state;					/* the player state - dead, shaken.... */
+
+	int reaction_minhit;        /* acceptable odds for reaction shots */
 
 	int team;					/* player of which team? */
 	int pnum;					/* the actual player slot */

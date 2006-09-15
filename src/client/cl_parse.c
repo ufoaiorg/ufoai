@@ -706,8 +706,8 @@ void CL_ActorStats( sizebuf_t *sb )
 	number = MSG_ReadShort( sb );
 	le = LE_Get( number );
 
-	if ( !le ) {
-		Com_Printf( "Stats message ignored... LE not found\n" );
+	if ( !le || (le->type != ET_ACTOR && le->type != ET_UGV) ) {
+		Com_Printf( "Stats message ignored... LE not found or not an actor\n" );
 		return;
 	}
 
@@ -735,8 +735,8 @@ void CL_ActorStateChange( sizebuf_t *sb )
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_STATECHANGE], &number, &state);
 
 	le = LE_Get(number);
-	if ( !le ) {
-		Com_Printf( "StateChange message ignored... LE not found\n" );
+	if ( !le || (le->type != ET_ACTOR && le->type != ET_UGV) ) {
+		Com_Printf( "StateChange message ignored... LE not found or not an actor\n" );
 		return;
 	}
 
@@ -941,7 +941,7 @@ void CL_InvReload( sizebuf_t *sb )
 
 	le = LE_Get( number );
 	if ( !le ) {
-		Com_DPrintf( "InvReload message ignored... LE not found\n" );
+		Com_DPrintf( "CL_InvReload: only sound played\n" );
 		return;
 	}
 

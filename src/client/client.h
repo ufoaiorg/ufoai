@@ -491,6 +491,7 @@ typedef struct le_s {
 	int STUN;					/* if stunned - state STATE_STUN */
 	int AP;
 	int state;
+	int reaction_minhit;
 
 	float angles[3];
 	float sunfrac;
