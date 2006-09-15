@@ -89,7 +89,7 @@ void G_SendStats(edict_t * ent)
 	gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATS);
 	gi.WriteShort(ent->number);
 	gi.WriteByte(ent->TU);
-	gi.WriteByte(ent->HP);
+	gi.WriteShort(ent->HP);
 	gi.WriteByte(ent->STUN);
 	gi.WriteByte(ent->AP);
 	gi.WriteByte(ent->morale);
@@ -239,6 +239,8 @@ void G_SendInventory(int player_mask, edict_t * ent)
  */
 void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 {
+	int maxMorale;
+
 	sentAppearPerishEvent = qtrue;
 
 	if (appear) {
@@ -270,6 +272,12 @@ void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 			gi.WriteByte(check->skin);
 			gi.WriteShort(check->state & STATE_PUBLIC);
 			gi.WriteByte(check->fieldSize);
+			gi.WriteByte(GET_TU(check->chr.skills[ABILITY_SPEED]));
+			maxMorale = GET_MORALE(check->chr.skills[ABILITY_MIND]);
+			if (maxMorale >= MAX_SKILL)
+				maxMorale = MAX_SKILL;
+			gi.WriteByte(maxMorale);
+			gi.WriteShort(GET_HP(check->chr.skills[ABILITY_POWER]));
 
 			if (player_mask & G_TeamToPM(check->team)) {
 				gi.AddEvent(player_mask & G_TeamToPM(check->team), EV_ACTOR_STATECHANGE);
@@ -1596,11 +1604,12 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		if (stun)
 			ent->STUN += damage;
 		else
-			ent->HP -= damage > ent->HP ? ent->HP : damage;
+			ent->HP -= damage;
 	}
 
 	/* check death/knockouth */
 	if (ent->HP <= 0 || ent->HP <= ent->STUN) {
+		G_SendStats(ent);
 		G_ActorDie(ent, ent->HP <= 0 ? STATE_DEAD : STATE_STUN);
 
 		/* apply morale changes */
@@ -2408,7 +2417,6 @@ void G_ActorDie(edict_t * ent, int state)
 	gi.dprintf("G_ActorDie: kill actor on team %i\n", ent->team);
 	switch (state) {
 	case STATE_DEAD:
-		ent->HP = 0;
 		ent->state |= (1 + rand() % 3);
 		break;
 	case STATE_STUN:
@@ -2871,6 +2879,9 @@ void G_ClientTeamInfo(player_t * player)
 			gi.dprintf("G_ClientTeamInfo: skin: %i\n", ent->chr.skin);
 #endif
 
+			ent->chr.HP = gi.ReadShort();
+			ent->chr.morale = gi.ReadByte();
+
 			/* new attributes */
 			for (k = 0; k < SKILL_NUM_TYPES; k++)
 				ent->chr.skills[k] = gi.ReadByte();
@@ -2899,12 +2910,14 @@ void G_ClientTeamInfo(player_t * player)
 			ent->head = gi.modelindex(Com_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
 
-			/* set initial vital statistics */
+			/* set initial vital statistics
+			ent->HP = ent->chr.HP;
+			ent->morale = ent->chr.morale; */
+			/* for now, heal fully upon entering mission */
 			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
+			ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 			ent->AP = ent->i.c[gi.csi->idArmor] ? 100 : 0;
 			ent->STUN = 0;
-			if (ent->type == ET_ACTOR)
-				ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 			ent->reaction_minhit = 30; /* TODO: allow later changes from GUI */
 		} else {
 			/* just do nothing with the info */

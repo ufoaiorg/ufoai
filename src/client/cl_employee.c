@@ -290,7 +290,7 @@ employee_t* E_GetHiredEmployee(const base_t* const base, employeeType_t type, in
  */
 character_t* E_GetHiredCharacter(const base_t* const base, employeeType_t type, int idx)
 {
-	employee_t* employee = E_GetHiredEmployee(base, type, idx);  /* Parameter sanity is checked here. */
+	employee_t* employee = E_GetHiredEmployee(base, type, idx);	 /* Parameter sanity is checked here. */
 	if (employee)
 		return &(employee->chr);
 
@@ -404,7 +404,7 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
 			if ( CL_SoldierInAircraft(employee->idx, -1) ){
 				CL_RemoveSoldierFromAircraft(employee->idx, -1);
 			}
- 		}
+		}
 		/* Set all employee-tags to 'unhired'. */
 		employee->hired = qfalse;
 		employee->baseIDHired = -1;
@@ -479,24 +479,29 @@ employee_t* E_CreateEmployee(employeeType_t type)
  */
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 {
-	int i;
+	int i, idx;
 	qboolean found = qfalse;
 
 	if (!employee)
 		return qfalse;
 
+	idx=employee->idx;
 	/* Fire the employee. This will also:
 		1) remove him from buildings&work
 		2) remove his inventory
 	*/
-	if (employee->baseIDHired >= 0)
+
+	if (employee->baseIDHired >= 0)	{
 		E_UnhireEmployee(&gd.bases[employee->baseIDHired], type, employee->idx);
+	}
 
 	/* Remove the employee from the global list. */
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		if (gd.employees[type][i].idx == employee->idx)
+		if (gd.employees[type][i].idx == employee->idx)	{
 			found = qtrue;
+		}
 		if (found) {
+
 			if ( i < MAX_EMPLOYEES-1) { /* Just in case we have _that much_ employees. :) */
 				/* Move all the following employees in the list one place forward and correct its index. */
 				gd.employees[type][i] = gd.employees[type][i + 1];
@@ -506,9 +511,13 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 			}
 		}
 	}
-
 	if (found) {
 		gd.numEmployees[type]--;
+
+		if (type == EMPL_SOLDIER) {
+			for ( i = 0; i < MAX_AIRCRAFT; i++ ) 
+				CL_DecreaseAircraftTeamIdxGreaterThan(CL_AircraftGetFromIdx(i),idx);
+		}
 	} else {
 		Com_DPrintf("E_DeleteEmployee: Employee wasn't in the global list.\n");
 		return qfalse;
@@ -542,9 +551,9 @@ void E_DeleteAllEmployees(const base_t* const base)
 			employee = &gd.employees[type][i];
 			if (employee->baseIDHired == base->idx) {
 				E_DeleteEmployee(employee, type);
-				Com_DPrintf("E_DeleteAllEmployees:   Removing empl.\n");
+				Com_DPrintf("E_DeleteAllEmployees:	 Removing empl.\n");
 			} else if (employee->baseIDHired >= 0) {
-				Com_DPrintf("E_DeleteAllEmployees:   Not removing empl. (other base)\n");
+				Com_DPrintf("E_DeleteAllEmployees:	 Not removing empl. (other base)\n");
 			}
 		}
 	}
@@ -714,7 +723,7 @@ void E_EmployeeHire_f (void)
 	/* TODO: Should hired employees in another base be listed here at all? */
 	if (gd.employees[employeeCategory][num].hired
 	 && gd.employees[employeeCategory][num].baseIDHired != baseCurrent->idx)
-	 	return;
+		return;
 
 	if (gd.employees[employeeCategory][num].hired) {
 		if (!E_UnhireEmployee(&gd.bases[gd.employees[employeeCategory][num].baseIDHired], employeeCategory, num)) {

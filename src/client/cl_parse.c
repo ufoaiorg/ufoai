@@ -82,7 +82,7 @@ char *ev_format[] =
 	"sbg",				/* EV_ENT_APPEAR */
 	"s",				/* EV_ENT_PERISH */
 
-	"!sbbgbbbssbsb",	/* EV_ACTOR_APPEAR; beware of the '!' */
+	"!sbbgbbbssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
 	"!s*",				/* EV_ACTOR_MOVE; beware of the '!' */
@@ -91,7 +91,7 @@ char *ev_format[] =
 	"bb",				/* EV_ACTOR_SHOOT_HIDDEN */
 	"sbbpp",			/* EV_ACTOR_THROW */
 	"ss",				/* EV_ACTOR_DIE */
-	"!sbbbbb",			/* EV_ACTOR_STATS; beware of the '!' */
+	"!sbsbbb",	    	/* EV_ACTOR_STATS; beware of the '!' */
 	"ss",				/* EV_ACTOR_STATECHANGE */
 
 	"s*",				/* EV_INV_ADD */
@@ -629,10 +629,12 @@ void CL_ActorAppear( sizebuf_t *sb )
 	}
 
 	/* get the info */
-	MSG_ReadFormat( sb, ev_format[EV_ACTOR_APPEAR],
-		&le->team, &le->pnum, &le->pos, &le->dir,
-		&le->right, &le->left,
-		&modelnum1, &modelnum2, &le->skinnum, &le->state, &le->fieldSize );
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_APPEAR],
+				   &le->team, &le->pnum, &le->pos, 
+				   &le->dir, &le->right, &le->left,
+				   &modelnum1, &modelnum2, &le->skinnum, 
+				   &le->state, &le->fieldSize,
+				   &le->maxTU, &le->maxMorale, &le->maxHP);
 
 	if ( le->fieldSize == ACTOR_SIZE_NORMAL ) {
 		le->addFunc = CL_AddActor;

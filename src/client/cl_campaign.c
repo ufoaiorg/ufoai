@@ -2054,9 +2054,6 @@ static void CL_GameGo(void)
 	ccs.civiliansKilled = 0;
 	ccs.aliensKilled = 0;
 
-	/* Reset all soldiers to alive. */
-	baseCurrent->deathMask = 0;
-
 	CL_StartMissionMap(mis);
 }
 
@@ -2221,8 +2218,8 @@ void CL_CollectAliens(void)
 							tech->statusCollected++;
 					}
 				}
-			} else if (le->HP <= 0) {
-				/* a death actor */
+			} else if (le->HP <= 0) { /* TODO: <= -50, etc. */
+				/* a dead actor */
 				for (j = 0, td = teamDesc; j < numTeamDesc; j++) {
 					if (!Q_strncmp(td->id, selMis->def->alienTeam, MAX_VAR)) {
 						/* get autopsy tech */
@@ -2358,10 +2355,14 @@ void CL_UpdateCharacterStats(int won)
 	int i, j;
 
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
+
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
+
 		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
 			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
+
 			assert(chr);
+
 			chr->assigned_missions++;
 
 			/* FIXME: */
@@ -2387,6 +2388,7 @@ void CL_UpdateCharacterStats(int won)
 				}
 			}
 		}
+	Com_DPrintf("CL_UpdateCharacterStats: Done\n");
 }
 
 #ifdef DEBUG
@@ -2428,12 +2430,15 @@ static void CL_GameResultsCmd(void)
 	int aliens_killed;
 
 	int i;
-	int tempMask;
+
 	employee_t* employee;
 	int numberofsoldiers = 0; /* DEBUG */
 	static equipDef_t *eSupplies = NULL;
 	equipDef_t *ed;
 	base_t *attackedbase = NULL;
+	character_t *chr = NULL;
+
+	Com_Printf("CL_GameResultsCmd\n");
 
 	/* multiplayer? */
 	if (!curCampaign || !selMis || !baseCurrent)
@@ -2445,7 +2450,6 @@ static void CL_GameResultsCmd(void)
 		CL_GameGo();
 		return;
 	}
-
 	/* check for win */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: game_results <won>\n");
@@ -2491,42 +2495,26 @@ static void CL_GameResultsCmd(void)
 		/* if employee is marked as dead */
 		if (CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) )	/* DEBUG */
 			numberofsoldiers++;
-		if (baseCurrent->deathMask & (1 << i)) {
-			Com_DPrintf("CL_GameResultsCmd - remove player %i - dead\n", i);
-			Com_DPrintf("CL_GameResultsCmd - team %i\n", baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
-			Com_DPrintf("CL_GameResultsCmd - dead %i\n", baseCurrent->deathMask);
 
-			/* Get the i-th employee from the list - that is marked as dead */
-			employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
-			if (!employee)
-				Sys_Error("Could not get hired employee %i from base %i\n", i, baseCurrent->idx);
+		Com_DPrintf("CL_GameResultsCmd - try to get player %i \n", i);
+		employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
 
-			/* Delete the employee. */
-			/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. The teamMask entry is set to zero. */
-			E_DeleteEmployee(employee, EMPL_SOLDIER);
+		if (employee != NULL) {
+			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
+			assert(chr);
+			Com_DPrintf("CL_GameResultsCmd - idx %d hp %d\n",chr->ucn, chr->HP);
+			if (chr->HP <= 0) { /* TODO: <= -50, etc. */
+				Com_DPrintf("CL_GameResultsCmd - remove player %i - dead\n", i);
 
-			/* We have to shift the mask because just deleted the employee. */
-			tempMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent] >> 1;
+				/* Delete the employee. */
+				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
+				E_DeleteEmployee(employee, EMPL_SOLDIER);
 
-			/* Set new teamMask. */
-			baseCurrent->teamMask[baseCurrent->aircraftCurrent] =
-				/* example: teammask 11111101 - deathMask: 0000100 - 1b << 2d = 100b - 1d = 011b */
-				/* ^^means, we have hired recruit 1-8 except the second one - the third recruit died in battle */
-				/* set teamMask to 00000001 */
-				  (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & ((1 << i) - 1))
-				/* 00000001 | (01111110) & (11111100)  */
-				/* teamM &  | tempM      & ~((1<<i)-1) */
-				/* 00000001 | (01111100) */
-				/* 01111101 */
-				| (tempMask & ~((1 << i) - 1));
-			/* Now we eliminated the dead employee bit position and got a mask with one employee less. */
-
-			Com_DPrintf("CL_GameResultsCmd - %i\n", baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
-		}
-	}
+			} /* if dead */
+		} /* if employee != NULL */
+	} /* for */
 	Com_DPrintf("CL_GameResultsCmd - num %i\n", numberofsoldiers); /* DEBUG */
 
-	baseCurrent->deathMask = 0; /* Just in case. This isn't needed later on anyway. */
 	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n", i);
 
 	/* onwin and onlose triggers */

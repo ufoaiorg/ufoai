@@ -210,6 +210,11 @@ void CL_GenerateCharacter(employee_t *employee, char *team, int type, employeeTy
 		Sys_Error("CL_GenerateCharacter: Unknown character type (%i)\n", type);
 	}
 
+	chr->HP = GET_HP(chr->skills[ABILITY_POWER]);
+	chr->morale = GET_MORALE(chr->skills[ABILITY_MIND]);
+	if (chr->morale >= MAX_SKILL)
+		chr->morale = MAX_SKILL;
+
 	/* Generate character stats, moels & names. */
 	switch (employeeType) {
 	case EMPL_SOLDIER:
@@ -270,8 +275,10 @@ void CL_ResetCharacters(base_t* const base)
 	for (i = 0; i < MAX_EMPL; i++)
 		E_UnhireAllEmployees(base, i);
 
-	for (i = 0; i < base->numAircraftInBase; i++)
-		base->teamMask[i] = base->teamNum[i] = 0;
+	for (i = 0; i < base->numAircraftInBase; i++) { 
+		base->teamNum[i] = 0;
+		CL_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base,i));
+	}
 }
 
 
@@ -556,12 +563,11 @@ static void CL_GenerateEquipmentCmd(void)
 		}
 
 	if ( p != baseCurrent->teamNum[baseCurrent->aircraftCurrent])
-		Sys_Error("CL_GenerateEquipmentCmd: numEmployees: %i, teamNum[%i]: %i, p: %i, mask %i\n",
+		Sys_Error("CL_GenerateEquipmentCmd: numEmployees: %i, teamNum[%i]: %i, p: %i\n",
 			gd.numEmployees[EMPL_SOLDIER],
 			baseCurrent->aircraftCurrent,
 			baseCurrent->teamNum[baseCurrent->aircraftCurrent],
-			p,
-			baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
+			p);
 
 	for (; p < MAX_ACTIVETEAM; p++) {
 		Cvar_ForceSet(va("mn_name%i", p), "");
@@ -647,8 +653,8 @@ static void CL_SelectCmd(void)
 	*strchr(arg, '_') = 0;
 	Q_strncpyz(command, arg, MAX_VAR);
 
- 	if (!Q_strncmp(command, "soldier", 7)) {
- 		/* check whether we are connected (tactical mission) */
+	if (!Q_strncmp(command, "soldier", 7)) {
+		/* check whether we are connected (tactical mission) */
 		if (CL_OnBattlescape()) {
 			CL_ActorSelectList(num);
 			return;
@@ -717,20 +723,18 @@ void CL_UpdateHireVar(void)
 	Cvar_Set("mn_hired", va(_("%i of %i"), baseCurrent->teamNum[baseCurrent->aircraftCurrent], aircraft->size));
 
 	/* update curTeam list */
-	for (i = 0, p = 0; i < (int)cl_numnames->value; i++)
+	for (i = 0, p = 0; i < (int)cl_numnames->value; i++) {	
 		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
 		}
-
+	}
 	if ( p != baseCurrent->teamNum[baseCurrent->aircraftCurrent])
-		Sys_Error("CL_UpdateHireVar: SoldiersInBase: %i, teamNum[%i]: %i, p: %i, mask %i\n",
-			E_CountHired(baseCurrent, EMPL_SOLDIER),
-			baseCurrent->aircraftCurrent,
-			baseCurrent->teamNum[baseCurrent->aircraftCurrent],
-			p,
-			baseCurrent->teamMask[baseCurrent->aircraftCurrent]
-		);
+		Sys_Error("CL_UpdateHireVar: SoldiersInBase: %i, teamNum[%i]: %i, p: %i\n",
+				  E_CountHired(baseCurrent, EMPL_SOLDIER),
+				  baseCurrent->aircraftCurrent,
+				  baseCurrent->teamNum[baseCurrent->aircraftCurrent],
+				  p);
 
 	for (; p<MAX_ACTIVETEAM; p++)
 		baseCurrent->curTeam[p] = NULL;
@@ -758,7 +762,10 @@ void CL_ResetTeamInBase(void)
 	}
 
 	CL_CleanTempInventory();
-	baseCurrent->teamMask[0] = baseCurrent->teamNum[0] = 0;
+	
+	baseCurrent->teamNum[0] = 0;
+	CL_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(baseCurrent,0));
+
 	E_ResetEmployees();
 	while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->value) {
 		employee = E_CreateEmployee(EMPL_SOLDIER);
@@ -875,7 +882,7 @@ qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
 	if ( aircraft_idx < 0 )
 		return qfalse;
 
-	return baseCurrent->teamMask[aircraft_idx] & (1 << employee_idx);
+	return CL_IsInAircraftTeam(CL_AircraftGetFromIdx(aircraft_idx),employee_idx);
 }
 
 /**
@@ -905,9 +912,7 @@ void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
 		return;
 
 	Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][employee_idx].inv);
-
-	/* Switch the bit for the employee in the mask to 0.*/
-	baseCurrent->teamMask[aircraft_idx] &= ~(1 << employee_idx);
+	CL_RemoveFromAircraftTeam(CL_AircraftGetFromIdx(aircraft_idx), employee_idx);
 	baseCurrent->teamNum[aircraft_idx]--;
 }
 
@@ -949,14 +954,19 @@ static qboolean CL_AssignSoldierToAircraft(int employee_idx, int aircraft_idx)
 	if (baseCurrent->teamNum[aircraft_idx] < MAX_ACTIVETEAM) {
 		aircraft = &baseCurrent->aircraft[aircraft_idx];
 		/* Check whether the soldier is already on another aircraft */
+		Com_DPrintf("CL_AssignSoldierToAircraft: attempting to find idx '%d'\n", employee_idx);
+
 		if ( CL_SoldierInAircraft(employee_idx, -1) )
+		{
+			Com_DPrintf("CL_AssignSoldierToAircraft: found idx '%d' \n",employee_idx);
 			return qfalse;
+		}
 
 		/* Assign the soldier to the aircraft. */
 		if (aircraft->size > baseCurrent->teamNum[aircraft_idx]) {
 
-			/* Switch the bit for the employee in the mask to 1.*/
-			baseCurrent->teamMask[aircraft_idx] |= (1 << employee_idx);
+			Com_DPrintf("CL_AssignSoldierToAircraft: attemting to add idx '%d' \n",employee_idx);
+			CL_AddToAircraftTeam(aircraft,employee_idx);
 			baseCurrent->teamNum[aircraft_idx]++;
 			return qtrue;
 		}
@@ -1079,7 +1089,7 @@ void CL_SaveTeam(char *filename)
 	CL_SendTeamInfo(&sb, baseCurrent->idx, E_CountHired(baseCurrent, EMPL_SOLDIER));
 
 	/* store assignement */
-	MSG_WriteFormat(&sb, "bl", baseCurrent->teamNum[0], baseCurrent->teamMask[0]);
+	MSG_WriteByte(&sb, baseCurrent->teamNum[0]);
 
 	/* write data */
 	res = FS_WriteFile(buf, sb.cursize, filename);
@@ -1122,6 +1132,9 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 	Q_strncpyz(chr->body, MSG_ReadString(sb), MAX_VAR);
 	Q_strncpyz(chr->head, MSG_ReadString(sb), MAX_VAR);
 	chr->skin = MSG_ReadByte(sb);
+
+	chr->HP = MSG_ReadShort(sb);
+	chr->morale = MSG_ReadByte(sb);
 
 	/* new attributes */
 	for (i = 0; i < SKILL_NUM_TYPES; i++)
@@ -1185,7 +1198,7 @@ void CL_LoadTeamMultiplayer(char *filename)
 	}
 
 	/* get assignement */
-	MSG_ReadFormat(&sb, "bl", &gd.bases[0].teamNum[0], &gd.bases[0].teamMask[0]);
+	gd.bases[0].teamNum[0] = MSG_ReadByte(&sb);
 
 	for (i = 0, p = 0; i < num; i++)
 		if ( CL_SoldierInAircraft(i, gd.bases[0].aircraftCurrent) )
@@ -1279,6 +1292,9 @@ void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 		MSG_WriteString(buf, chr->head);
 		MSG_WriteByte(buf, chr->skin);
 
+		MSG_WriteShort(buf, chr->HP);
+		MSG_WriteByte(buf, chr->morale);
+
 		/* even new attributes */
 		for (j = 0; j < SKILL_NUM_TYPES; j++)
 			MSG_WriteByte(buf, chr->skills[j]);
@@ -1328,6 +1344,9 @@ void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
 		MSG_WriteString(buf, chr->head);
 		MSG_WriteByte(buf, chr->skin);
 
+		MSG_WriteShort(buf, chr->HP);
+		MSG_WriteByte(buf, chr->morale);
+
 		/* even new attributes */
 		for (j = 0; j < SKILL_NUM_TYPES; j++)
 			MSG_WriteByte(buf, chr->skills[j]);
@@ -1347,6 +1366,8 @@ void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
 typedef struct updateCharacter_s {
 	int ucn;
 	int kills[KILLED_NUM_TYPES];
+	int HP;
+	int morale;
 } updateCharacter_t;
 
 /**
@@ -1374,18 +1395,28 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 				Com_Printf("Warning: Could not get character with ucn: %i.\n", updateCharacterArray[i].ucn);
 				continue;
 			}
+			chr->HP = updateCharacterArray[i].HP;
+			chr->morale = updateCharacterArray[i].morale;
+
 			for (j=0; j<KILLED_NUM_TYPES; j++)
 				chr->kills[j] = updateCharacterArray[i].kills[j];
 		}
 		num = 0;
 	} else {
-		num = MSG_ReadShort(buf) / (2 * (KILLED_NUM_TYPES + 1));
+		/* invalidate ucn in the array first */
+		for (i=0; i<MAX_WHOLETEAM; i++) {
+			updateCharacterArray[i].ucn = -1;
+		}
+		num = MSG_ReadShort(buf) / ((KILLED_NUM_TYPES + 2) * 2 + 1);
 		if (num > MAX_EMPLOYEES)
 			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
 		else if (num < 0)
 			Sys_Error("CL_ParseCharacterData: MSG_ReadShort error (%i)\n", num);
 		for (i=0; i<num; i++) {
 			updateCharacterArray[i].ucn = MSG_ReadShort(buf);
+			updateCharacterArray[i].HP = MSG_ReadShort(buf);
+			updateCharacterArray[i].morale = MSG_ReadByte(buf);
+
 			for (j=0; j<KILLED_NUM_TYPES; j++)
 				updateCharacterArray[i].kills[j] = MSG_ReadShort(buf);
 		}
@@ -1542,7 +1573,7 @@ void CL_ParseResults(sizebuf_t * buf)
 	/* TODO: I don't understand how this works 
 	   and why, when I move this to CL_GameResultsCmd, 
 	   the "won" menu get's garbled at "killteam 7" */
- 	Cbuf_AddText("disconnect\n");
+	Cbuf_AddText("disconnect\n");
 	Cbuf_Execute();
 }
 

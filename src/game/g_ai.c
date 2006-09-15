@@ -606,12 +606,14 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 			if (ent->chr.skills[ABILITY_MIND] >= MAX_SKILL)
 				ent->chr.skills[ABILITY_MIND] = MAX_SKILL;
 
-			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
+			ent->chr.HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
+			ent->HP = ent->chr.HP;
+			ent->chr.morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
+			if (ent->chr.morale >= MAX_SKILL)
+				ent->chr.morale = MAX_SKILL;
+			ent->morale = ent->chr.morale;
 			ent->AP = 100;
 			ent->STUN = 0;
-			ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
-			if (ent->morale >= MAX_SKILL)
-				ent->morale = MAX_SKILL;
 
 			/* pack equipment */
 			Com_EquipActor(&ent->i, ed->num, name);
@@ -623,10 +625,12 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 			ent->skin = ent->chr.skin;
 		} else {
 			Com_CharGenAbilitySkills(&ent->chr, 0, 20, 0, 20);
-			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]) / 2;
+			ent->chr.HP = GET_HP(ent->chr.skills[ABILITY_POWER]) / 2;
+			ent->HP = ent->chr.HP;
+			ent->chr.morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
+			ent->morale = ent->chr.morale;
 			ent->AP = 100;
 			ent->STUN = 0;
-			ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 
 			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_civilian"), &ent->chr);
 			ent->chr.inv = &ent->i;

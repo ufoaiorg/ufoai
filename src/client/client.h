@@ -492,6 +492,7 @@ typedef struct le_s {
 	int AP;
 	int state;
 	int reaction_minhit;
+	int chr_ucn;
 
 	float angles[3];
 	float sunfrac;

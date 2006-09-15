@@ -168,17 +168,7 @@ typedef struct base_s {
 
 	baseStatus_t baseStatus;
 
-	/* these are 31bit masks FIXME: still? */
-	/* NOTE: we only use the first 19 (because we can only select from 19 soldiers) */
-	/* see cl_numnames cvars */
-	int teamMask[MAX_AIRCRAFT];	/* Soldiers assigned to a specific aircraft. */
-	int teamNum[MAX_AIRCRAFT];		/* Number if soldiers assigned to a specific aircraft. */
-	int deathMask;				/* Mask of soldiers (relative to gd.employees) that have died in the current mission. Needed so soldiers are resurrected on mission-retry. */
-
-	/* these should not be bigger than MAX_ACTIVETEAM */
-	/*int numHired;
-	int numOnTeam[MAX_AIRCRAFT];
-	*/
+	int teamNum[MAX_AIRCRAFT];		/* Number of soldiers assigned to a specific aircraft. */
 
 	/* the onconstruct value of the buliding */
 	/* building_radar increases the sensor width */
@@ -239,4 +229,6 @@ void B_BuildingStatus(void);
 building_t *B_GetFreeBuildingType(buildingType_t type);
 int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx);
 
+aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index);
+void B_ReviveSoldiersInBase(base_t* base); /* TODO */
 #endif /* CLIENT_CL_BASEMANGEMENT_H */
