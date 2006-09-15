@@ -2052,7 +2052,7 @@ qboolean G_GetShotFromType(edict_t *ent, int type, item_t **weapon, int *contain
 		*weapon = NULL;
 		return qfalse;
 	}
-	
+
 	*fd = &gi.csi->ods[(*weapon)->m].fd[SHOT_FD_PRIO(type)];
 
 	return qtrue;
@@ -2508,11 +2508,22 @@ void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, in
 	}
 }
 
+/**
+ * @brief
+ * @param[in] player
+ * @param[in] num
+ * @param[in] at
+ * @param[in] type
+ * @sa G_ReactionFire
+ * @sa G_ClientShoot
+ * @sa G_ShotTargetAtPos
+ * @sa G_ShotProbability
+ */
 qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type)
 {
 	edict_t *shooter, *target;
 	int ff, hit, maxff, minhit, self;
-	
+
 	/* use a read-only copy of the shooter so we can change its facing for probability tracing */
 	shooter = malloc(sizeof(*g_edicts));
 	memcpy(shooter, &(g_edicts[num]), sizeof(*g_edicts));
@@ -2536,7 +2547,6 @@ qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type
 
 	G_ShotProbability(shooter, target, type, &hit, &ff, &self);
 	free(shooter);
-
 
 	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF: %d/%d Self: %d.\n", hit, minhit, ff, maxff, self);
 	if (ff <= maxff && hit >= minhit)
