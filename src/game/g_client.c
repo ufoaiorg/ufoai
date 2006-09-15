@@ -33,6 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TU_CROUCH		1
 #define TU_TURN		1
 
+static qboolean sentAppearPerishEvent;
+
 /*
  * 0: Stores the used TUs for Reaction fire for each edict.
  * 1: Stores if the edict has fired in rection.
@@ -237,6 +239,8 @@ void G_SendInventory(int player_mask, edict_t * ent)
  */
 void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 {
+	sentAppearPerishEvent = qtrue;
+
 	if (appear) {
 		/* appear */
 		switch (check->type) {
@@ -1059,8 +1063,15 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 			/* everything ok, found valid route */
 			/* create movement related events */
 			steps = 0;
+			sentAppearPerishEvent = qfalse;
+
 			FLOOR(ent) = NULL;
 
+			/* BEWARE: do not print anything (even with DPrintf)
+			   in functions called in this loop
+			   without setting 'steps = 0' afterwards;
+			   also do not send events except G_AppearPerishEvent
+			   without manually setting 'steps = 0' */
 			while (numdv > 0) {
 				/* get next dv */
 				numdv--;
@@ -1075,8 +1086,10 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 				}
 				if (stop && (status & VIS_STOP))
 					break;
-				if (status)
+				if (status || sentAppearPerishEvent) {
 					steps = 0;
+					sentAppearPerishEvent = qfalse;
+				}
 
 				/* check for "blockers" */
 				if (G_CheckMoveBlock(ent->pos, dvtab[numdv]))
@@ -1101,7 +1114,7 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 				if (!steps) {
 					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
 					gi.WriteShort(num);
-					gi.WriteNewSave(1);
+					gi.WriteNewSave(0);
 				}
 
 				/* write step */
@@ -1109,21 +1122,18 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 				gi.WriteByte(dvtab[numdv]);
 				gi.WriteToSave(steps);
 
-				/*gi.dprintf( "move: (pm: %i)\n", ent->visflags>>1 ); */
-
-				/* check if the player appears/perishes, seen from other teams */
-				status = G_CheckVis(ent, qtrue);
-				if (status)
-					steps = 0;
+				/* check if player appears/perishes, seen from other teams */
+				G_CheckVis(ent, qtrue);
 
 				/* check for anything appearing, seen by "the moving one" */
-				status = G_CheckVisTeam(ent->team, NULL, qfalse);
-				if (status)
-					steps = 0;
+				G_CheckVisTeam(ent->team, NULL, qfalse);
 
 				/* check for reaction fire */
-				if (G_ReactionFire(ent))
+				if ( G_ReactionFire(ent, qfalse) ) {
+					G_ReactionFire(ent, qtrue);
 					steps = 0;
+					sentAppearPerishEvent = qfalse;
+				}
 
 				/* check for death */
 				if (ent->state & STATE_DEAD)
@@ -1131,6 +1141,11 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 
 				if (stop && (status & VIS_STOP))
 					break;
+
+				if (sentAppearPerishEvent) {
+					steps = 0;
+					sentAppearPerishEvent = qfalse;
+				}
 			}
 
 			/* submit the TUs / round down */
@@ -1834,12 +1849,12 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
  * @brief Fires straight shots.
  * @param[in] ent The attacker.
  * @param[in] fd ?? TODO
- * @param[in] type ?? TODO
+ * @param[in] wi ?? TODO
  * @param[in] from Location of the gun muzzle.
  * @param[in] at Grid coordinate of the target.
  * @param[in] mask ?? TODO Visibility bit-mask of the others?
  */
-void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at, int mask, item_t * weapon)
+void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at, int mask, item_t * weapon)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
@@ -1859,7 +1874,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
 	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
-	VectorMA(cur_loc, 8, dir, cur_loc);	/* ?? TODO: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid. Might need some change to reflect 2x2 units. Also might need a check if the distace is bigger than the one to the impact location.*/
+	VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);	/* ?? TODO: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid. Might need some change to reflect 2x2 units. Also might need a check if the distace is bigger than the one to the impact location.*/
 	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
 	/* Get accuracy value for this attacker. */
@@ -1919,7 +1934,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		/* send shot */
 		gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
 		gi.WriteShort(ent->number);
-		gi.WriteByte(type);
+		gi.WriteByte(wi);
 		gi.WriteByte(flags);
 		gi.WritePos(cur_loc);
 		gi.WritePos(impact);
@@ -1928,11 +1943,11 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		/* send shot sound to the others */
 		gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 		gi.WriteByte(qfalse);
-		gi.WriteByte(type);
+		gi.WriteByte(wi);
 
 		/* do splash damage */
 		if (tr.fraction < 1.0 && fd->splrad && !fd-> bounce) {
-			VectorMA(impact, 8, tr.plane.normal, impact);
+			VectorMA(impact, sv_shot_origin->value, tr.plane.normal, impact);
 			G_SplashDamage(ent, fd, impact);
 		}
 
@@ -1943,7 +1958,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 			break;
 		}
 
-		/* bounce is checked here to see if the rubber rocket hit walls enought times to wear out*/
+		/* bounce is checked here to see if the rubber rocket hit walls enough times to wear out*/
 		bounce++;
 		if (bounce > fd->bounce || tr.fraction >= 1.0)
 			break;
@@ -2166,7 +2181,7 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 	gi.EndEvents();
 
 	/* check for Reaction fire against the shooter */
-	G_ReactionFire(ent);
+	G_ReactionFire(ent, qtrue);
 
 	return qtrue;
 }
@@ -2401,7 +2416,7 @@ edict_t *G_ShotTargetAtPos(edict_t *shooter, pos3_t at)
 }
 
 /* TODO: factor out key functions and share with G_ShootSingle */
-trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int mask, item_t *weapon)
+trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int mask, item_t *weapon, int debug_type)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
@@ -2415,7 +2430,7 @@ trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
 	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
-	VectorMA(cur_loc, 8, dir, cur_loc);	/* ?? TODO: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid. Might need some change to reflect 2x2 units. Also might need a check if the distace is bigger than the one to the impact location.*/
+	VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);	/* ?? TODO: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid. Might need some change to reflect 2x2 units. Also might need a check if the distace is bigger than the one to the impact location.*/
 	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
 	/* Get accuracy value for this attacker. */
@@ -2440,6 +2455,7 @@ trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int
 	/* Do the trace from current position of the projectile
 	   to the end_of_range location.*/
 	tr = gi.trace(cur_loc, NULL, NULL, impact, shooter, MASK_SHOT);
+
 	return tr;
 }
 
@@ -2447,7 +2463,7 @@ trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int
 /**
  * @brief Calculate probability of a hit
  */
-void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, int *ff)
+void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, int *ff, int *self)
 {
 	item_t *weapon;
 	trace_t tr;
@@ -2478,11 +2494,14 @@ void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, in
 
 	*hit = 0;
 	*ff = 0;
+	*self = 0;
 	for (i = 0; i < 100; i++) {
-		tr = G_TraceShot(shooter, fd, shotOrigin, target->pos, mask, weapon);
+		tr = G_TraceShot(shooter, fd, shotOrigin, target->pos, mask, weapon, type);
 		if (!tr.ent || !tr.ent->inuse || tr.ent->state & STATE_DEAD)
 			continue;
-		if (tr.ent->team == shooter->team || tr.ent->team == TEAM_CIVILIAN)
+		if (tr.ent->number == shooter->number)
+			*self += 1;
+		else if (tr.ent->team == shooter->team || tr.ent->team == TEAM_CIVILIAN)
 			*ff += 1;
 		else if ((tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV) && tr.ent == target)
 			*hit += 1;
@@ -2492,7 +2511,7 @@ void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, in
 qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type)
 {
 	edict_t *shooter, *target;
-	int ff, hit, maxff, minhit;
+	int ff, hit, maxff, minhit, self;
 	
 	/* use a read-only copy of the shooter so we can change its facing for probability tracing */
 	shooter = malloc(sizeof(*g_edicts));
@@ -2515,14 +2534,11 @@ qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type
 	else
 		maxff = 5;
 
-	G_ShotProbability(shooter, target, type, &hit, &ff);
+	G_ShotProbability(shooter, target, type, &hit, &ff, &self);
 	free(shooter);
 
 
-#if 0
-	/* Causes race condition that produce: ERROR: CL_ParseServerMessage: Illegible server message 0 */
-	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF: %d/%d.\n", hit, minhit, ff, maxff);
-#endif
+	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF: %d/%d Self: %d.\n", hit, minhit, ff, maxff, self);
 	if (ff <= maxff && hit >= minhit)
 		return G_ClientShoot(player, num, at, type);
 	else
@@ -2533,7 +2549,7 @@ qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type
  * @brief	Checks if an edict has reaction fire enabled and sees the target. Then fire at him.
  * @param[in,out] target The edict that will be fired on.
  */
-qboolean G_ReactionFire(edict_t * target)
+qboolean G_ReactionFire(edict_t * target, qboolean doShoot)
 {
 	qboolean fired, frustom;
 	player_t *player;
@@ -2549,7 +2565,7 @@ qboolean G_ReactionFire(edict_t * target)
 				continue;
 			actorVis = G_ActorVis(ent->origin, target, qtrue);
 			frustom = G_FrustomVis(ent, target->origin);
-			if (actorVis > 0.6 && frustom) {
+			if (actorVis > 0.2 && frustom) {
 				if (target->team == TEAM_CIVILIAN || target->team == ent->team)
 					if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand())
 						continue;
@@ -2573,22 +2589,24 @@ qboolean G_ReactionFire(edict_t * target)
 					 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
 						 || RIGHT(ent)->item.a > 0)
 					 && gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
-					fired = G_FireWithJudgementCall(player, ent->number, target->pos, ST_RIGHT_PRIMARY_REACTION);
-				} else if ( LEFT(ent)
-							&& (LEFT(ent)->item.m != NONE)
-							&& gi.csi->ods[LEFT(ent)->item.t].weapon
-							&& (!gi.csi->ods[LEFT(ent)->item.t].reload
-								|| LEFT(ent)->item.a > 0)
-							&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_SECONDARY].range > VectorDist(ent->origin, target->origin) ) {
-					fired = G_FireWithJudgementCall(player, ent->number, target->pos, ST_LEFT_PRIMARY_REACTION);
+					fired = !doShoot ? qtrue : G_FireWithJudgementCall(player, ent->number, target->pos, ST_RIGHT_PRIMARY_REACTION);
+				}
+				if (!fired
+					&& LEFT(ent)
+					&& (LEFT(ent)->item.m != NONE)
+					&& gi.csi->ods[LEFT(ent)->item.t].weapon
+					&& (!gi.csi->ods[LEFT(ent)->item.t].reload
+						|| LEFT(ent)->item.a > 0)
+					&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_SECONDARY].range > VectorDist(ent->origin, target->origin) ) {
+					fired = !doShoot ? qtrue : G_FireWithJudgementCall(player, ent->number, target->pos, ST_LEFT_PRIMARY_REACTION);
 				}
 
 				/* Revert active team. */
 				level.activeTeam = team;
 
-				if ( fired ) {
+				if (fired && doShoot) {
 					ent->state &= ~STATE_SHAKEN;
-					TU_REACTIONS[ent->number][1]  += 1;	/* Save the fact that the ent has fired. */
+					TU_REACTIONS[ent->number][1] += 1; /* Save the fact that the ent has fired. */
 				}
 
 				/* Check for death of the target. */

@@ -66,6 +66,7 @@ cvar_t *sv_ai;
 cvar_t *sv_teamplay;
 cvar_t *sv_maxclients;
 cvar_t *sv_reaction_leftover;
+cvar_t *sv_shot_origin;
 
 cvar_t *ai_alien;
 cvar_t *ai_civilian;
@@ -160,6 +161,7 @@ void InitGame(void)
 	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	/* reaction leftover is 0 for acceptance testing; should default to 13 */
 	sv_reaction_leftover = gi.cvar("sv_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
+	sv_shot_origin = gi.cvar("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
 
 	ai_alien = gi.cvar("ai_alien", "alien", 0, NULL);
 	ai_civilian = gi.cvar("ai_civilian", "civilian", 0, NULL);

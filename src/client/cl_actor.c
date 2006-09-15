@@ -1008,8 +1008,13 @@ void CL_ActorDoMove(sizebuf_t * sb)
 
 	/* get le */
 	le = LE_Get(MSG_ReadShort(sb));
-	if (!le) {
-		Com_Printf("Can't move, LE doesn't exist\n");
+	if ( !le || (le->type != ET_ACTOR && le->type != ET_UGV) ) {
+		Com_Printf("Can't move, LE doesn't exist or is not an actor\n");
+		return;
+	}
+
+	if (le->state & STATE_DEAD) {
+		Com_Printf( "Can't move, actor dead\n" );
 		return;
 	}
 
@@ -1067,8 +1072,13 @@ void CL_ActorDoTurn(sizebuf_t *sb)
 
 	/* get le */
 	le = LE_Get(entnum);
-	if (!le) {
-		Com_Printf("Can't turn, LE doesn't exist\n");
+	if ( !le || (le->type != ET_ACTOR && le->type != ET_UGV) ) {
+		Com_Printf("Can't turn, LE doesn't exist or is not an actor\n");
+		return;
+	}
+
+	if (le->state & STATE_DEAD) {
+		Com_Printf( "Can't turn, actor dead\n" );
 		return;
 	}
 
@@ -1170,8 +1180,20 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 	firstShot = qfalse;
 
 	/* do actor related stuff */
-	if (!le)
+	if ( !le ) {
+		/* it's OK, the actor not visible */
 		return;
+	}
+
+	if ( le->type != ET_ACTOR && le->type != ET_UGV ) {
+		Com_Printf("Can't shoot, LE is not an actor\n");
+		return;
+	}
+
+	if (le->state & STATE_DEAD) {
+		Com_Printf( "Can't shoot, actor dead\n" );
+		return;
+	}
 
 	/* animate */
 	re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
@@ -1258,8 +1280,19 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 	firstShot = qtrue;
 
 	/* actor dependant stuff following */
-	if (!le)
+	if ( !le )
+		/* it's OK, the actor not visible */
 		return;
+
+	if ( le->type != ET_ACTOR && le->type != ET_UGV ) {
+		Com_Printf("Can't start shoot, LE not an actor\n");
+		return;
+	}
+
+	if (le->state & STATE_DEAD) {
+		Com_Printf( "Can't start shoot, actor dead\n" );
+		return;
+	}
 
 	/* erase one-time weapons from storage --- which ones?
 	if (curCampaign && le->team == cls.team && !csi.ods[type].ammo) {
@@ -1285,8 +1318,15 @@ void CL_ActorDie(sizebuf_t * sb)
 
 	/* get le */
 	le = LE_Get(number);
-	if (!le)
+	if ( !le || (le->type != ET_ACTOR && le->type != ET_UGV) ) {
+		Com_Printf("Can't kill, LE doesn't exist or is not an actor\n");
 		return;
+	}
+
+	if (le->state & STATE_DEAD) {
+		Com_Printf( "Can't kill, actor already dead\n" );
+		return;
+	}
 
 	/* count spotted aliens */
 	if (le->team != cls.team && le->team != TEAM_CIVILIAN)
