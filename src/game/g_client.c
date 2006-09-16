@@ -2884,6 +2884,8 @@ void G_ClientTeamInfo(player_t * player)
 			for (k = 0; k < 4; k++)
 				gi.ReadString(); /* name, path, body, head */
 			gi.ReadByte(); /* skin */
+			gi.ReadShort(); /* HP */
+			gi.ReadByte(); /* morale */
 			for (k = 0; k < SKILL_NUM_TYPES; k++)
 				gi.ReadByte(); /* skills */
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
