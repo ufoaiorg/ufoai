@@ -559,12 +559,12 @@ void CL_EntPerish( sizebuf_t *sb )
 	if ( le->type == ET_ITEM ) {
 		le_t *actor;
 		int i;
-		
+
 		Com_EmptyContainer(&le->i, csi.idFloor);
 
 		/* search owners (there can be many, some of them dead) */
 		for (i = 0, actor = LEs; i < numLEs; i++, actor++)
-			if ( actor->inuse 
+			if ( actor->inuse
 				 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
 				 && VectorCompare(actor->pos, le->pos) ) {
 				FLOOR(actor) = NULL;
@@ -629,9 +629,9 @@ void CL_ActorAppear( sizebuf_t *sb )
 
 	/* get the info */
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_APPEAR],
-				   &le->team, &le->pnum, &le->pos, 
+				   &le->team, &le->pnum, &le->pos,
 				   &le->dir, &le->right, &le->left,
-				   &modelnum1, &modelnum2, &le->skinnum, 
+				   &modelnum1, &modelnum2, &le->skinnum,
 				   &le->state, &le->fieldSize,
 				   &le->maxTU, &le->maxMorale, &le->maxHP);
 
@@ -784,7 +784,7 @@ void CL_PlaceItem( le_t *le )
 
 	/* search owners (there can be many, some of them dead) */
 	for (i = 0, actor = LEs; i < numLEs; i++, actor++)
-		if ( actor->inuse 
+		if ( actor->inuse
 			 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
 			 && VectorCompare(actor->pos, le->pos) ) {
 #if PARANOID
@@ -792,7 +792,7 @@ void CL_PlaceItem( le_t *le )
 #endif
 		FLOOR(actor) = FLOOR(le);
 		}
-	
+
 	if (FLOOR(le)) {
 		biggest = CL_BiggestItem(FLOOR(le));
 		le->model1 = cl.model_weapons[biggest];
@@ -836,6 +836,8 @@ void CL_InvAdd( sizebuf_t *sb )
 				le->right = item.t;
 			else if ( container == csi.idLeft )
 				le->left = item.t;
+			else if ( container == csi.idExtension )
+				le->extension = item.t;
 		}
 	}
 
@@ -876,6 +878,8 @@ void CL_InvDel( sizebuf_t *sb )
 		le->right = NONE;
 	else if ( container == csi.idLeft )
 		le->left = NONE;
+	else if ( container == csi.idExtension )
+		le->extension = NONE;
 
 	switch ( le->type ) {
 	case ET_ACTOR:
@@ -1073,7 +1077,7 @@ void CL_ParseEvent( void )
 					if (first) {
 						nextTime += 500;
 						impactTime = shootTime = nextTime;
-					} else { 
+					} else {
 						fd = GET_FIREDEF(type);
 /* TODO: not needed? and SF_BOUNCED?
 						if ( fd->speed )

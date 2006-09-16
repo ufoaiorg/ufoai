@@ -62,6 +62,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* Macros for faster access to the inventory-container. */
 #define RIGHT(e) e->i.c[gi.csi->idRight]
 #define LEFT(e)  e->i.c[gi.csi->idLeft]
+#define EXTENSION(e)  e->i.c[gi.csi->idExtension]
 #define FLOOR(e) e->i.c[gi.csi->idFloor]
 
 /* this structure is left intact through an entire game */

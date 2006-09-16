@@ -60,6 +60,8 @@ static value_t od_vals[] = {
 	{"center", V_VECTOR, offsetof(objDef_t, center)},
 	{"weapon", V_BOOL, offsetof(objDef_t, weapon)},
 	{"twohanded", V_BOOL, offsetof(objDef_t, twohanded)},
+	{"extends_item", V_STRING, offsetof(objDef_t, extends_item)},
+	{"extension", V_BOOL, offsetof(objDef_t, extension)},
 	{"thrown", V_BOOL, offsetof(objDef_t, thrown)},
 	{"ammo", V_INT, offsetof(objDef_t, ammo)},
 	{"reload", V_INT, offsetof(objDef_t, reload)},
@@ -276,7 +278,6 @@ static void Com_ParseItem(char *name, char **text)
 				}
 				break;
 			}
-
 		if (!val->string)
 			Com_Printf("Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 
@@ -306,6 +307,9 @@ static value_t idps[] = {
 	,
 	/* only a single item */
 	{"single", V_BOOL, offsetof(invDef_t, single)}
+	,
+	/* only a single item as weapon extension - single should be set, too */
+	{"extension", V_BOOL, offsetof(invDef_t, extension)}
 	,
 	/* this is the armor container */
 	{"armor", V_BOOL, offsetof(invDef_t, armor)}
@@ -371,6 +375,8 @@ static void Com_ParseInventory(char *name, char **text)
 		csi.idRight = id - csi.ids;
 	else if (!Q_strncmp(name, "left", 4))
 		csi.idLeft = id - csi.ids;
+	else if (!Q_strncmp(name, "extension", 4))
+		csi.idExtension = id - csi.ids;
 	else if (!Q_strncmp(name, "belt", 4))
 		csi.idBelt = id - csi.ids;
 	else if (!Q_strncmp(name, "holster", 7))
@@ -1112,7 +1118,7 @@ void Com_ParseScripts(void)
 
 	/* reset csi basic info */
 	Com_InitCSI(&csi);
-	csi.idRight = csi.idLeft = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmor = csi.idFloor = csi.idEquip = NONE;
+	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmor = csi.idFloor = csi.idEquip = NONE;
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damTachyon = csi.damStun = NONE;
 
 	/* I guess this is needed, too, if not please remove */

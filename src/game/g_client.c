@@ -2276,8 +2276,7 @@ qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st)
 		/* Check for two-handed weapon */
 		hand = gi.csi->idRight;
 		weapon = ent->i.c[hand]->item.t;
-	}
-	else
+	} else
 		return qfalse;
 
 	for (container = 0; container < gi.csi->numIDs; container++)

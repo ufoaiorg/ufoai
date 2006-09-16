@@ -525,7 +525,7 @@ typedef struct le_s {
 	ptl_t *ptl;
 	char *ref1, *ref2;
 	inventory_t i;
-	int left, right;
+	int left, right, extension;
 	int fieldSize;				/* ACTOR_SIZE_* */
 
 	/* is called before adding a le to scene */

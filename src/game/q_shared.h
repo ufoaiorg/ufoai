@@ -875,6 +875,7 @@ typedef struct objDef_s {
 	char model[MAX_VAR];
 	char image[MAX_VAR];
 	char type[MAX_VAR];
+	char extends_item[MAX_VAR];
 	int shape;
 	/* size in x and y direction */
 	byte sx, sy;
@@ -883,6 +884,7 @@ typedef struct objDef_s {
 	char category;
 	byte weapon;
 	byte twohanded;
+	byte extension;
 	byte thrown;
 	int price;
 	int buytype;
@@ -895,6 +897,9 @@ typedef struct objDef_s {
 
 	/* technology link */
 	void *tech;
+	/* technology link to item to use this extension for (if this is an extension) */
+	/* TODO: Can be used for menu highlightning and in ufopedia */
+	void *extension_tech;
 
 	/* armor specific */
 	short protection[MAX_DAMAGETYPES];
@@ -905,7 +910,7 @@ typedef struct objDef_s {
 
 typedef struct invDef_s {
 	char name[MAX_VAR];
-	byte single, armor, all, temp;
+	byte single, armor, all, temp, extension;
 	int shape[16];
 	int in, out;
 } invDef_t;
@@ -947,7 +952,7 @@ typedef struct csi_s {
 	/* inventory definitions */
 	invDef_t ids[MAX_INVDEFS];
 	int numIDs;
-	int idRight, idLeft, idBackpack, idBelt, idHolster;
+	int idRight, idLeft, idExtension, idBackpack, idBelt, idHolster;
 	int idArmor, idFloor, idEquip;
 
 	/* damage type ids */
