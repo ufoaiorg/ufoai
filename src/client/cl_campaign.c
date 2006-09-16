@@ -2382,12 +2382,9 @@ void CL_UpdateCharacterStats(int won)
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-
 		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
 			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
-
 			assert(chr);
-
 			chr->assigned_missions++;
 
 			/* FIXME: */

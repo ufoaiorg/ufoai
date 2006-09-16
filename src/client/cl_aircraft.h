@@ -66,7 +66,7 @@ typedef struct aircraft_s {
 	int idxBase;				/* id of base */
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	int *teamSize;				/* how many soldiers on board */
-    int teamIdxs[MAX_ACTIVETEAM];              /* array of team members on board employee idx*/ 
+	int teamIdxs[MAX_ACTIVETEAM];              /* array of team members on board employee idx*/
 
 	char model[MAX_QPATH];
 	char weapon_string[MAX_VAR];

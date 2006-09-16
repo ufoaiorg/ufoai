@@ -2010,6 +2010,11 @@ int B_GetNumOnTeam(void)
 	return baseCurrent->teamNum[baseCurrent->aircraftCurrent];
 }
 
+/**
+ * @brief
+ * @param[in] base
+ * @param[in] index
+ */
 aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index)
 {
 	if (index<base->numAircraftInBase) {

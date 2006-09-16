@@ -932,6 +932,10 @@ extern void CL_SendAircraftPurchasingUfo(aircraft_t* aircraft,aircraft_t* ufo)
 	aircraft->ufo = num;
 }
 
+/**
+ * @brief
+ * @param[in] aircraft
+ */
 void CL_ResetAircraftTeam(aircraft_t *aircraft)
 {
 	int i;
@@ -940,9 +944,14 @@ void CL_ResetAircraftTeam(aircraft_t *aircraft)
 		aircraft->teamIdxs[i]=-1;
 }
 
+/**
+ * @brief
+ * @param[in] aircraft
+ * @param[in] idx
+ */
 void CL_AddToAircraftTeam(aircraft_t *aircraft,int idx)
 {
-	if	(aircraft==NULL) {
+	if (aircraft==NULL) {
 		Com_DPrintf("CL_AddToAircraftTeam: null aircraft \n");
 		return ;
 	}
@@ -961,6 +970,11 @@ void CL_AddToAircraftTeam(aircraft_t *aircraft,int idx)
 	}
 }
 
+/**
+ * @brief
+ * @param[in] aircraft
+ * @param[in] idx
+ */
 void CL_RemoveFromAircraftTeam(aircraft_t *aircraft,int idx)
 {
 	int i;
@@ -978,6 +992,11 @@ void CL_RemoveFromAircraftTeam(aircraft_t *aircraft,int idx)
 	Com_DPrintf("CL_RemoveFromAircraftTeam: error: idx '%d' not on aircraft\n",idx);
 }
 
+/**
+ * @brief
+ * @param[in] aircraft
+ * @param[in] idx
+ */
 void CL_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft,int idx)
 {
 	int i;
@@ -993,7 +1012,11 @@ void CL_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft,int idx)
 		}
 }
 
-
+/**
+ * @brief
+ * @param[in] aircraft
+ * @param[in] idx
+ */
 qboolean CL_IsInAircraftTeam(aircraft_t *aircraft,int idx)
 {
 	int i;
