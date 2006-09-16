@@ -148,7 +148,6 @@ item laserrifle_ammo
 item heavylaser
 {
 	name		"_Heavy Laser"
-//	model		weapons/laserrifle/laserrifle
 	model		weapons/laserheavy/laserheavy
 	weapon		true
 	type		biggun
