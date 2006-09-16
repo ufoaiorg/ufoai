@@ -7440,3 +7440,25 @@
 "origin" "336 -336 48"
 "angle" "180"
 }
+// entity 142
+{
+"classname" "info_human_start"
+"origin" "880 -432 48"
+}
+// entity 143
+{
+"classname" "info_human_start"
+"origin" "208 -464 48"
+"angle" "180"
+}
+// entity 144
+{
+"classname" "info_human_start"
+"origin" "176 -528 48"
+"angle" "180"
+}
+// entity 145
+{
+"classname" "info_human_start"
+"origin" "816 -368 56"
+}
