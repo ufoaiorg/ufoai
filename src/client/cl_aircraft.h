@@ -66,6 +66,8 @@ typedef struct aircraft_s {
 	int idxBase;				/* id of base */
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	int *teamSize;				/* how many soldiers on board */
+    int teamIdxs[MAX_ACTIVETEAM];              /* array of team members on board employee idx*/ 
+
 	char model[MAX_QPATH];
 	char weapon_string[MAX_VAR];
 	/* NOTE: these pointers needs reinit after loading a saved game */
@@ -104,6 +106,12 @@ void CL_AircraftInit(void);
 void CL_AircraftSelect(void);
 void CL_NewAircraft_f(void);
 void CL_DeleteAircraft(aircraft_t *aircraft);
+
+void CL_ResetAircraftTeam(aircraft_t *aircraft);
+void CL_AddToAircraftTeam(aircraft_t *aircraft,int idx);
+void CL_RemoveFromAircraftTeam(aircraft_t *aircraft,int idx);
+void CL_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft,int idx);
+qboolean CL_IsInAircraftTeam(aircraft_t *aircraft,int idx);
 
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *CL_GetAircraft(char *name);

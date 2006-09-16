@@ -629,7 +629,7 @@ void CL_AddActorToTeamList(le_t * le)
  */
 void CL_RemoveActorFromTeamList(le_t * le)
 {
-	int i, j;
+	int i;
 
 	if (!le)
 		return;
@@ -655,22 +655,6 @@ void CL_RemoveActorFromTeamList(le_t * le)
 
 			/* remove from list */
 			cl.teamList[i] = NULL;
-
-			/* campaign death */
-			if (!curCampaign)
-				return;
-
-			for (j = 0; j < gd.numEmployees[EMPL_SOLDIER]; j++) {
-				if (baseCurrent->curTeam[i]->ucn == gd.employees[EMPL_SOLDIER][j].chr.ucn) {
-					/* Mark the soldier as dead, but do not delete him ... just in case there is a mission-retry. See CL_GameResultsCmd for more.*/
-					baseCurrent->deathMask |= 1 << j;
-					break;
-				}
-			}
-#ifdef DEBUG
-			if ( j == gd.numEmployees[EMPL_SOLDIER] )
-				Com_Printf("CL_RemoveActorFromTeamList: could not mask as dead - ucn: %i; team:%i.\n", baseCurrent->curTeam[i]->ucn, i);
-#endif
 			return;
 		}
 	}
@@ -1334,7 +1318,6 @@ void CL_ActorDie(sizebuf_t * sb)
 
 	/* set relevant vars */
 	FLOOR(le) = NULL;
-	le->HP = 0;
 	le->STUN = 0;
 	le->state = state;
 

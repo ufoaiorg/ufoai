@@ -169,7 +169,7 @@ extern void B_BuildingStatus(void)
 
 /**
  * @brief  Hires some employees of appropriate type for a building
- * @param building  in which building
+ * @param building	in which building
  * @param num  how many employees, if -1, hire building->maxEmployees
  *
  * @sa B_SetUpBase
@@ -1512,7 +1512,7 @@ static void B_PackInitialEquipment_f(void)
 }
 
 /* FIXME: This value is in menu_geoscape, too */
-/*       make this variable?? */
+/*		 make this variable?? */
 #define BASE_COSTS 100000
 
 /**
@@ -2009,3 +2009,14 @@ int B_GetNumOnTeam(void)
 		return 0;
 	return baseCurrent->teamNum[baseCurrent->aircraftCurrent];
 }
+
+aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index)
+{
+	if (index<base->numAircraftInBase) {
+		return &base->aircraft[index];
+	} else {
+		Com_DPrintf("B_GetAircraftFromBaseByIndex: error: index bigger then number of aircrafts\n");
+		return NULL;
+	}
+}
+

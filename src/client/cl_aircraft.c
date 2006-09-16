@@ -362,6 +362,8 @@ void CL_NewAircraft(base_t *base, char *name)
 		aircraft->idxInBase = base->numAircraftInBase;
 		/* link the teamSize pointer in */
 		aircraft->teamSize = &base->teamNum[base->numAircraftInBase];
+		CL_ResetAircraftTeam(aircraft);
+
 		Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf("Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
@@ -904,7 +906,7 @@ extern void CL_AircraftsUfoDisappear(const aircraft_t *const ufo)
 	base_t*		base;
 	aircraft_t*	aircraft;
 
-	/* Aircrafts currently purchasing the specified ufo will be redirect to base */
+	/* Aircrafts currently pursuing the specified ufo will be redirect to base */
 	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ;
 		aircraft >= base->aircraft ; aircraft--)
@@ -928,4 +930,83 @@ extern void CL_SendAircraftPurchasingUfo(aircraft_t* aircraft,aircraft_t* ufo)
 	aircraft->time = 0;
 	aircraft->point = 0;
 	aircraft->ufo = num;
+}
+
+void CL_ResetAircraftTeam(aircraft_t *aircraft)
+{
+	int i;
+
+	for (i=0; i<aircraft->size; i++)
+		aircraft->teamIdxs[i]=-1;
+}
+
+void CL_AddToAircraftTeam(aircraft_t *aircraft,int idx)
+{
+	if	(aircraft==NULL) {
+		Com_DPrintf("CL_AddToAircraftTeam: null aircraft \n");
+		return ;
+	}
+	if (*(aircraft->teamSize)<aircraft->size) {
+		int i;
+		for (i=0; i<aircraft->size; i++)
+			if (aircraft->teamIdxs[i]==-1) {
+				aircraft->teamIdxs[i]=idx;
+				Com_DPrintf("CL_AddToAircraftTeam: added idx '%d' \n",idx);
+				break;
+			}
+		if (i >= aircraft->size)
+			Com_DPrintf("CL_AddToAircraftTeam: couldnt find space \n",idx);
+	} else {
+		Com_DPrintf("CL_AddToAircraftTeam: error: no space in aircraft\n");
+	}
+}
+
+void CL_RemoveFromAircraftTeam(aircraft_t *aircraft,int idx)
+{
+	int i;
+
+	if  (aircraft==NULL) {
+		Com_DPrintf("CL_RemoveFromAircraftTeam: null aircraft \n");
+		return ;
+	}
+	for (i=0; i<aircraft->size; i++)
+		if (aircraft->teamIdxs[i]==idx)	{
+			aircraft->teamIdxs[i]=-1;
+			Com_DPrintf("CL_RemoveFromAircraftTeam: removed idx '%d' \n",idx);
+			return;
+		}
+	Com_DPrintf("CL_RemoveFromAircraftTeam: error: idx '%d' not on aircraft\n",idx);
+}
+
+void CL_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft,int idx)
+{
+	int i;
+
+	if  (aircraft==NULL) {
+		Com_DPrintf("CL_DecreaseAircraftTeamIdxGreaterThan: null aircraft \n");
+		return ;
+	}
+	for (i=0; i<aircraft->size; i++)
+		if (aircraft->teamIdxs[i]>idx) {
+			aircraft->teamIdxs[i]--;
+			Com_DPrintf("CL_DecreaseAircraftTeamIdxGreaterThan: decreased idx '%d' \n",aircraft->teamIdxs[i]+1);
+		}
+}
+
+
+qboolean CL_IsInAircraftTeam(aircraft_t *aircraft,int idx)
+{
+	int i;
+
+	if  (aircraft==NULL) {
+		Com_DPrintf("CL_IsInAircraftTeam: null aircraft \n");
+		return qfalse;
+	}
+	for (i=0; i<aircraft->size; i++)
+		if (aircraft->teamIdxs[i]==idx) {
+			Com_DPrintf("CL_IsInAircraftTeam: found idx '%d' \n",idx);
+			return qtrue;
+		}
+	Com_DPrintf("CL_IsInAircraftTeam:not found idx '%d' \n",idx);
+	return qfalse;
 }

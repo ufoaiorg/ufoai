@@ -369,6 +369,10 @@ static void G_SendCharacterData( edict_t* ent )
 
 	/* write character number */
 	gi.WriteShort(ent->chr.ucn);
+
+	gi.WriteShort(ent->HP);
+	gi.WriteByte(ent->morale);
+
 	/* scores */
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		gi.WriteShort(ent->chr.kills[k]);
@@ -425,20 +429,19 @@ void G_EndGame(int team)
 			gi.WriteByte(level.num_kills[i][j]);
 		}
 
-	/* how many alive actors */
+	/* how many actors */
 	for (j = 0, i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
-			&& !(ent->state & STATE_DEAD)
-			&& ent->team == TEAM_PHALANX)
+		if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+			 && ent->team == TEAM_PHALANX )
 			j++;
 
-	Com_DPrintf("Sending results with %i alive actors.\n", j);
-	gi.WriteShort((KILLED_NUM_TYPES + 1) * j * 2);
+	Com_DPrintf("Sending results with %i actors.\n", j);
+	/* this is (size of updateCharacter_t) * number of phalanx actors */
+	gi.WriteShort(((KILLED_NUM_TYPES + 2) * 2 + 1) * j );
 
 	if (j) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
-				 && !(ent->state & STATE_DEAD)
 				 && ent->team == TEAM_PHALANX ) {
 				Com_DPrintf("Sending results for actor %i.\n", i);
 				G_SendCharacterData(ent);

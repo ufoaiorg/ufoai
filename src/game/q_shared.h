@@ -413,11 +413,11 @@ void Hunk_Free(void *buf);
 int Hunk_End(void);
 
 /* directory searching */
-#define SFF_ARCH    0x01
-#define SFF_HIDDEN  0x02
-#define SFF_RDONLY  0x04
-#define SFF_SUBDIR  0x08
-#define SFF_SYSTEM  0x10
+#define SFF_ARCH	0x01
+#define SFF_HIDDEN	0x02
+#define SFF_RDONLY	0x04
+#define SFF_SUBDIR	0x08
+#define SFF_SYSTEM	0x10
 
 /* pass in an attribute mask of things you wish to REJECT */
 char *Sys_FindFirst(char *path, unsigned musthave, unsigned canthave);
@@ -616,10 +616,10 @@ typedef struct {
 
 
 /* sound attenuation values */
-#define	ATTN_NONE               0	/* full volume the entire level */
-#define	ATTN_NORM               1
-#define	ATTN_IDLE               2
-#define	ATTN_STATIC             3	/* diminish very rapidly with distance */
+#define	ATTN_NONE				0	/* full volume the entire level */
+#define	ATTN_NORM				1
+#define	ATTN_IDLE				2
+#define	ATTN_STATIC				3	/* diminish very rapidly with distance */
 
 
 /*
@@ -1023,7 +1023,7 @@ typedef struct medals_s {
 	int band;
 	abilityskills_t affectedSkill;
 	int skillIncrease;
-	/*date  date; */
+	/*date	date; */
 	char text[MAX_MEDALTEXT];
 	struct medals_s *next_medal;
 } medals_t;
@@ -1052,16 +1052,18 @@ typedef struct character_s {
 	/* new abilities and skills: */
 	int skills[SKILL_NUM_TYPES];
 
+	int HP, morale;
+
 	/* score */
 	killtypes_t kills[KILLED_NUM_TYPES];
-/* 	int		destroyed_objects; */
-/* 	int		hit_ratio; */
-/* 	int		inflicted_damage; */
-/* 	int		damage_taken; */
+/*	int		destroyed_objects; */
+/*	int		hit_ratio; */
+/*	int		inflicted_damage; */
+/*	int		damage_taken; */
 	int assigned_missions;
-/* 	int		crossed_distance; */
-	/* date     joined_edc; */
-	/* date     died; */
+/*	int		crossed_distance; */
+	/* date		joined_edc; */
+	/* date		died; */
 	int	rank; /* index in gd.ranks */
 	medals_t *medals;
 	/* TODO: */
