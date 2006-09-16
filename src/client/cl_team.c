@@ -202,11 +202,6 @@ void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t emplo
 	chr->empl_type = employeeType;
 	chr->empl_idx = employee->idx;
 
-	chr->HP = GET_HP(chr->skills[ABILITY_POWER]);
-	chr->morale = GET_MORALE(chr->skills[ABILITY_MIND]);
-	if (chr->morale >= MAX_SKILL)
-		chr->morale = MAX_SKILL;
-
 	/* Generate character stats, moels & names. */
 	switch (employeeType) {
 	case EMPL_SOLDIER:
@@ -257,6 +252,11 @@ void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t emplo
 		Sys_Error("Unknown employee type\n");
 		break;
 	}
+
+	chr->HP = GET_HP(chr->skills[ABILITY_POWER]);
+	chr->morale = GET_MORALE(chr->skills[ABILITY_MIND]);
+	if (chr->morale >= MAX_SKILL)
+		chr->morale = MAX_SKILL;
 }
 
 

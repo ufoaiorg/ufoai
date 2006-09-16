@@ -7,21 +7,21 @@
 equipment campaign_player
 {
 	assault			1
-	assault_ammo	1
+	assault_ammo	12
 	sniper			1
-	sniper_ammo		1
+	sniper_ammo		10
 	pistol			1
-	pistol_ammo		1
+	pistol_ammo		10
 	smg				1
-	smg_ammo		1
+	smg_ammo		10
 	shotgun			1
-	shotgun_ammo	1
+	shotgun_ammo	12
 	flamer			1
-	flamer_ammo		1
+	flamer_ammo		6
 	rpg				1
-	rpg_ammo		4
-	fraggrenade		3
-	knife			1
+	rpg_ammo		12
+	fraggrenade		12
+	knife			2
 	light			0
 	smokegrenade	2
 }
