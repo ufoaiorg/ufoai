@@ -284,9 +284,9 @@ equipment stage4_soldiers
 equipment human_phalanx_initial
 {
 	assault				14
-	assault_ammo		17
+	assault_ammo		24
 	sniper				19
-	sniper_ammo			21
+	sniper_ammo			28
 	pistol				25
 	pistol_ammo			61
 	smg 				21
@@ -294,9 +294,9 @@ equipment human_phalanx_initial
 	shotgun				27
 	shotgun_ammo		55
 	flamer				10
-	flamer_ammo			17
+	flamer_ammo			23
 	rpg				    8
-	rpg_ammo			24
+	rpg_ammo			30
 	fraggrenade			70
 	knife				23
 	light	    		17
