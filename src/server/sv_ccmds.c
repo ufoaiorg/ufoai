@@ -427,17 +427,17 @@ void SV_ServerCommand_f(void)
 
 /**
  * @brief List all valid maps
+ * @sa FS_GetMaps
  */
 void SV_ListMaps_f(void)
 {
 	int i;
 
-	if (!mapsInstalledInit)
-		FS_GetMaps();
+	FS_GetMaps(qtrue);
 
-	for (i = 0; i < anzInstalledMaps - 1; i++) {
+	for (i=0; i<=anzInstalledMaps; i++)
 		Com_Printf("%s\n", maps[i]);
-	}
+	Com_Printf("-----\n %i installed maps\n", anzInstalledMaps+1);
 }
 
 /**
