@@ -965,6 +965,15 @@ menu equipment
 		size "160 25"
 	}
 
+	string s_extension
+	{
+		pos "610 76"
+		align uc
+		string	"_Extension"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
 	string s_holster
 	{
 		pos "932 245"
@@ -1465,7 +1474,7 @@ menu equipment
 	string changeskin
 	{
 		string	"*cvar mn_skinname"
-		pos		"560 85"
+		pos		"660 300"
 		size	"100 16"
 		in		{ *changeskin color "0.7 0.7 0.7 1" }
 		out		{ *changeskin color "1 1 1 1" }
@@ -1476,8 +1485,9 @@ menu equipment
 	// containers
 	// ==================
 
+	container extension	{ pos "548 104" }
 	container right		{ pos "548 178" }
-	container left		{ pos "874 178" }
+	container left		{ pos "872 178" }
 	container armor		{ pos "700 100" invis true }
 	container backpack	{ pos "872 54" }
 	container belt		{ pos "569 273" }

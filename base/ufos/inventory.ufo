@@ -1,3 +1,12 @@
+inventory extension
+{
+	shape	"0 0 5 1"
+	extension	true
+	single	true
+	in		1
+	out		0
+}
+
 inventory right
 {
 	shape	"0 0 5 2"
