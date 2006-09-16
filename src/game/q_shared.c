@@ -2552,7 +2552,7 @@ CHARACTER GENERATION AND HANDLING
   * @param[in] equip The equipment that shows how many clips to pack
   * @param[in] name The name of the equipment for debug messages
   */
-int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], char *name)
+int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int no_primary, char *name)
 {
 	int ammo = -1; /* this variable is never used before being set */
 	item_t item = {0,NONE,NONE};
@@ -2592,7 +2592,8 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 				num =
 					equip[ammo] / equip[weapon]
 					+ (equip[ammo] % equip[weapon] > rand() % equip[weapon])
-					+ (PROB_COMPENSATION > 40 * frand());
+					+ (PROB_COMPENSATION > 40 * frand())
+					+ (no_primary ? 1 + frand() * PROB_COMPENSATION : 0);
 
 				/* load ammo, but avoid reloading with cheaper ammo */
 				if (item.m == NONE) {
@@ -2669,7 +2670,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			if ( equip[weapon] >= (40 - PROB_COMPENSATION) * frand() ) {
 				/* not decrementing equip[weapon]
 				 * so that we get more possible squads */
-				has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, name);
+				has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 				if (has_weapon) {
 					int ammo;
 
@@ -2718,13 +2719,13 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			}
 			if ( !(max_price == (primary ? 0 : INT_MAX)) ) {
 				if ( equip[weapon] >= 40 * frand() ) {
-					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, name);
+					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, (primary == 2), name);
 					if (has_weapon) {
 						/* try to get the second akimbo pistol */
 						if ( primary == 2
 							 && !CSI->ods[weapon].twohanded
 							 && frand() < AKIMBO_CHANCE ) {
-							Com_PackAmmoAndWeapon(inv, weapon, equip, name);
+							Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 						}
 						/* enough sidearms */
 						max_price = primary ? 0 : INT_MAX;
@@ -2762,7 +2763,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 					equip[weapon] / 40
 					+ (equip[weapon] % 40 >= 40 * frand());
 				while (num--)
-					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, name);
+					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 			}
 		} while (max_price);
 	} while (repeat--); /* gives more if no serious weapons */
@@ -2782,7 +2783,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			}
 		}
 		if (max_price)
-			has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, name);
+			has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 	}
 	/* if still no weapon, something is broken, or no blades in equip */
 	if (!has_weapon)
