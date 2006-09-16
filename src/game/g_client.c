@@ -2490,9 +2490,11 @@ static trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t 
  * @param[in] type
  * @param[in] hit
  * @param[in] ff
+ * @param[in] civ
  * @param[in] self
+ * @param[in] self_fraction
  */
-static void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, int *ff, int *self)
+static void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, int *ff, int *civ, int *self, float *self_fraction)
 {
 	item_t *weapon;
 	trace_t tr;
@@ -2522,19 +2524,26 @@ static void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *
 	G_GetShotOrigin(shooter, fd, dir, shotOrigin);
 
 	*hit = 0;
+	*civ = 0;
 	*ff = 0;
 	*self = 0;
+	*self_fraction = 0.0;
 	for (i = 0; i < 100; i++) {
 		tr = G_TraceShot(shooter, fd, shotOrigin, target->pos, mask, weapon, type);
 		if (!tr.ent || !tr.ent->inuse || tr.ent->state & STATE_DEAD)
 			continue;
-		if (tr.ent->number == shooter->number)
-			*self += 1;
-		else if (tr.ent->team == shooter->team || tr.ent->team == TEAM_CIVILIAN)
+		else if (tr.ent->number == shooter->number)
+			*self += 1; /* FIXME: incorrect actor facing or shotOrg, or bug in trace code? */
+		else if (tr.ent->team == TEAM_CIVILIAN)
+			*civ += 1;
+		else if (tr.ent->team == shooter->team)
 			*ff += 1;
 		else if ((tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV) && tr.ent == target)
 			*hit += 1;
 	}
+
+	if (*self)
+		*self_fraction = *self_fraction / *self;
 }
 
 /**
@@ -2551,7 +2560,8 @@ static void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *
 static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type)
 {
 	edict_t *shooter, *target;
-	int ff, hit, maxff, minhit, self;
+	int civ, ff, hit, maxff, minhit, self;
+	float self_fraction;
 
 	/* use a read-only copy of the shooter so we can change its facing for probability tracing */
 	shooter = malloc(sizeof(*g_edicts));
@@ -2574,11 +2584,11 @@ static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, i
 	else
 		maxff = 5;
 
-	G_ShotProbability(shooter, target, type, &hit, &ff, &self);
+	G_ShotProbability(shooter, target, type, &hit, &ff, &civ, &self, &self_fraction);
 	free(shooter);
 
-	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF: %d/%d Self: %d.\n", hit, minhit, ff, maxff, self);
-	if (ff <= maxff && hit >= minhit)
+	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF+Civ: %d+%d=%d/%d Self: %d (Avg fraction: %06.4f).\n", hit, minhit, ff, civ, ff + civ, maxff, self, self_fraction);
+	if (ff + civ <= maxff && hit >= minhit)
 		return G_ClientShoot(player, num, at, type);
 	else
 		return qfalse;
