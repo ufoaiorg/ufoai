@@ -983,7 +983,6 @@ void CL_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft,int idx)
 	int i;
 
 	if  (aircraft==NULL) {
-		Com_DPrintf("CL_DecreaseAircraftTeamIdxGreaterThan: null aircraft \n");
 		return ;
 	}
 	for (i=0; i<aircraft->size; i++)
@@ -999,7 +998,6 @@ qboolean CL_IsInAircraftTeam(aircraft_t *aircraft,int idx)
 	int i;
 
 	if  (aircraft==NULL) {
-		Com_DPrintf("CL_IsInAircraftTeam: null aircraft \n");
 		return qfalse;
 	}
 	for (i=0; i<aircraft->size; i++)
