@@ -259,6 +259,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		/* is a hiding spot */
 		guete += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 	} else if (aia->target && tu >= 2) {
+			byte minX, maxX, minY, maxY;
 		/* reward short walking to shooting spot, when seen by enemies;
 		   TODO: do this decently, only penalizing the visible part of walk
 		   and penalizing much more for reaction shooters around;
@@ -269,8 +270,6 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		guete += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
 
 		/* search hiding spot */
-		byte minX, maxX, minY, maxY;
-
 		G_MoveCalc(0, to, HIDE_DIST);
 		ent->pos[2] = to[2];
 		minX = to[0] - HIDE_DIST > 0 ? to[0] - HIDE_DIST : 0;
