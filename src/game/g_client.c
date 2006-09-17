@@ -1131,10 +1131,10 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 				gi.WriteToSave(steps);
 
 				/* check if player appears/perishes, seen from other teams */
-				G_CheckVis(ent, qtrue);
+				status = G_CheckVis(ent, qtrue);
 
 				/* check for anything appearing, seen by "the moving one" */
-				G_CheckVisTeam(ent->team, NULL, qfalse);
+				status = G_CheckVisTeam(ent->team, NULL, qfalse);
 
 				/* check for reaction fire */
 				if ( G_ReactionFire(ent, qfalse) ) {
