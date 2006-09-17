@@ -199,7 +199,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 					vis = G_ActorVis(ent->origin, check, qtrue);
 					if (vis == 0.0)
 						continue;
-					dmg = vis * fd->damage[0] * fd->shots * shots;
+					dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
 					if (nspread && dist > nspread)
 						dmg *= nspread / dist;
 
