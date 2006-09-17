@@ -461,35 +461,33 @@ void CL_Reset( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_StartGame
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_StartGame( sizebuf_t *sb )
 {
 	/* init camera position and angles */
-	memset( &cl.cam, 0, sizeof( camera_t ) );
-	VectorSet( cl.cam.angles, 60.0, 60.0, 0.0 );
-	VectorSet( cl.cam.omega, 0.0, 0.0, 0.0 );
+	memset(&cl.cam, 0, sizeof(camera_t));
+	VectorSet(cl.cam.angles, 60.0, 60.0, 0.0);
+	VectorSet(cl.cam.omega, 0.0, 0.0, 0.0);
 	cl.cam.zoom = 1.0;
 	camera_mode = CAMERA_MODE_REMOTE;
 
 	/* center on first actor */
 	cl_worldlevel->modified = qtrue;
-	if ( cl.numTeamList ) {
-		le_t	*le;
+	if (cl.numTeamList) {
+		le_t *le;
 		le = cl.teamList[0];
-		VectorCopy( le->origin, cl.cam.reforg );
-		Cvar_SetValue( "cl_worldlevel", le->pos[2] );
+		VectorCopy(le->origin, cl.cam.reforg);
+		Cvar_SetValue("cl_worldlevel", le->pos[2]);
 	}
 
 	/* activate the renderer */
 	cls.state = ca_active;
 
 	/* activate hud */
-	MN_PushMenu( mn_hud->string );
-	Cvar_Set( "mn_active", mn_hud->string );
+	MN_PushMenu(mn_hud->string);
+	Cvar_Set("mn_active", mn_hud->string);
 }
 
 
