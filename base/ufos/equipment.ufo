@@ -29,19 +29,19 @@ equipment campaign_player
 equipment campaign_market
 {
 	assault					4
-	assault_ammo			40
+	assault_ammo			45
 	sniper					3
-	sniper_ammo				40
+	sniper_ammo				45
 	pistol					4
 	pistol_ammo				40
 	smg						3
 	smg_ammo				40
 	shotgun					3
-	shotgun_ammo			30
+	shotgun_ammo			40
 	flamer					3
-	flamer_ammo				30
+	flamer_ammo				40
 	rpg						3
-	rpg_ammo				40
+	rpg_ammo				50
 	rpg_incendiary_ammo		20
 	rpg_tachyon_ammo		10
 	grenl					2
