@@ -1517,10 +1517,32 @@ static void G_MoraleBehaviour(int team)
 }
 
 
+static void G_UpdateShotMock(shot_mock_t *mock, edict_t *shooter, edict_t *struck, int damage)
+{
+	if (damage > 0) {
+		if (!struck || !struck->inuse || struck->state & STATE_DEAD)
+			return;
+		else if (struck->number == shooter->number)
+			/* FIXME: incorrect actor facing or shotOrg, or bug in trace code? */
+			/* FIXME: when self means hits on self (e.g. stepped on grenade), incr team instead */
+			mock->self += 1;
+		else if (struck->team == TEAM_CIVILIAN)
+			mock->civilian += 1; /* FIXME: should alien shooters consider civilians enemy? */
+		else if (struck->team == shooter->team)
+			mock->friend += 1;
+		else if (struck->type == ET_ACTOR || struck->type == ET_UGV)
+			mock->enemy += 1;
+		else
+			return;
+
+		mock->damage += damage;
+	}
+}
+
 /**
  * @brief
  */
-static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
+static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker, shot_mock_t *mock)
 {
 	int stun = dmgtype == gi.csi->damStun;
 
@@ -1535,23 +1557,25 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 
 	/* breakables */
 	if (ent->type == ET_BREAKABLE) {
-		if (damage >= ent->HP) {
-			gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
-			gi.WriteShort(ent->mapNum);
-			if (ent->particle && Q_strcmp(ent->particle, "null")) {
-				/* TODO: Spawn the breaking particle here */
-				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-				gi.WriteShort(ent->spawnflags);
-				gi.WriteGPos(ent->pos);
-				gi.WriteShort((int)strlen(ent->particle));
-				gi.WriteString(ent->particle);
-			}
-			gi.unlinkentity(ent);
-			ent->inuse = qfalse;
-			G_RecalcRouting(ent);
-			G_FreeEdict(ent);
-		} else
-			ent->HP -= damage;
+		if (!mock) {
+			if (damage >= ent->HP) {
+				gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
+				gi.WriteShort(ent->mapNum);
+				if (ent->particle && Q_strcmp(ent->particle, "null")) {
+					/* TODO: Spawn the breaking particle here */
+					gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
+					gi.WriteShort(ent->spawnflags);
+					gi.WriteGPos(ent->pos);
+					gi.WriteShort((int)strlen(ent->particle));
+					gi.WriteString(ent->particle);
+				}
+				gi.unlinkentity(ent);
+				ent->inuse = qfalse;
+				G_RecalcRouting(ent);
+				G_FreeEdict(ent);
+			} else
+				ent->HP -= damage;
+		}
 		return;
 	}
 
@@ -1581,11 +1605,13 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		else
 			damage *= 1.0 - ad->protection[dmgtype] * 0.01;
 
-		if (ad->hardness[dmgtype]) {
-			int armorDamage;
+		if (!mock) {
+			if (ad->hardness[dmgtype]) {
+				int armorDamage;
 
-			armorDamage = (totalDamage - damage) / ad->hardness[dmgtype];
-			ent->AP = armorDamage < ent->AP ? ent->AP - armorDamage : 0;
+				armorDamage = (totalDamage - damage) / ad->hardness[dmgtype];
+				ent->AP = armorDamage < ent->AP ? ent->AP - armorDamage : 0;
+			}
 		}
 	}
 
@@ -1601,11 +1627,16 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 	if (g_nodamage != NULL && !g_nodamage->value)
 	{
 		/* hit */
-		if (stun)
+		if (mock)
+			G_UpdateShotMock(mock, attacker, ent, damage);
+		else if (stun)
 			ent->STUN += damage;
 		else
 			ent->HP -= damage;
 	}
+
+	if (mock)
+		return;
 
 	/* check death/knockouth */
 	if (ent->HP <= 0 || ent->HP <= ent->STUN) {
@@ -1645,7 +1676,7 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 /**
  * @brief
  */
-void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
+void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *mock)
 {
 	edict_t *check;
 	vec3_t center;
@@ -1677,8 +1708,10 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 		/* FIXME: don't make aliens in back visible */
 		if (fd->irgoggles && (check->type == ET_ACTOR || check->type == ET_UGV)) {
 			if (G_FrustomVis(ent, check->origin)) {
-				G_AppearPerishEvent(~G_VisToPM(check->visflags), 1, check);
-				check->visflags |= ~check->visflags;
+				if (!mock) {
+					G_AppearPerishEvent(~G_VisToPM(check->visflags), 1, check);
+					check->visflags |= ~check->visflags;
+				}
 				continue;
 			}
 		}
@@ -1689,7 +1722,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 
 		/* do damage */
 		damage = (fd->spldmg[0] + fd->spldmg[1] * crand()) * (1.0 - dist / fd->splrad);
-		G_Damage(check, fd->dmgtype, damage, ent);
+		G_Damage(check, fd->dmgtype, damage, ent, mock);
 	}
 }
 
@@ -1698,7 +1731,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 /**
  * @brief
  */
-void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at, int mask, item_t * weapon)
+void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
@@ -1774,23 +1807,25 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 				 /* or we have sensors that tell us enemy is near */
 				 || (!fd->delay && tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))) {
 
-				/* explode */
-				gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
-				gi.WriteShort(dt * 1000);
-				gi.WriteByte(type);
-				if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))
-					gi.WriteByte(flags | SF_BODY);
-				else
-					gi.WriteByte(flags | SF_IMPACT);
-				gi.WritePos(last);
-				gi.WritePos(startV);
+				if (!mock) {
+					/* explode */
+					gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
+					gi.WriteShort(dt * 1000);
+					gi.WriteByte(type);
+					if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))
+						gi.WriteByte(flags | SF_BODY);
+					else
+						gi.WriteByte(flags | SF_IMPACT);
+					gi.WritePos(last);
+					gi.WritePos(startV);
+				}
 
 				tr.endpos[2] += 10;
 
 				/* check if this is a stone, ammor clip or grenade */
 				if (fd->splrad) {
-					G_SplashDamage(ent, fd, tr.endpos);
-				} else {
+					G_SplashDamage(ent, fd, tr.endpos, mock);
+				} else if (!mock) {
 					/* spawn the stone on the floor */
 					if (fd->ammo && !fd->splrad && gi.csi->ods[weapon->t].thrown) {
 						pos3_t drop;
@@ -1826,13 +1861,16 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 				}
 				return;
 			}
-			/* send */
-			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
-			gi.WriteShort(dt * 1000);
-			gi.WriteByte(type);
-			gi.WriteByte(flags);
-			gi.WritePos(last);
-			gi.WritePos(startV);
+
+			if (!mock) {
+				/* send */
+				gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
+				gi.WriteShort(dt * 1000);
+				gi.WriteByte(type);
+				gi.WriteByte(flags);
+				gi.WritePos(last);
+				gi.WritePos(startV);
+			}
 			flags |= SF_BOUNCED;
 
 			/* bounce */
@@ -1863,7 +1901,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
  * @param[in] at Grid coordinate of the target.
  * @param[in] mask ?? TODO Visibility bit-mask of the others?
  */
-void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at, int mask, item_t * weapon)
+void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
@@ -1940,30 +1978,32 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 			mask |= 1 << tr.ent->team;
 #endif
 
-		/* send shot */
-		gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
-		gi.WriteShort(ent->number);
-		gi.WriteByte(wi);
-		gi.WriteByte(flags);
-		gi.WritePos(cur_loc);
-		gi.WritePos(impact);
-		gi.WriteDir(tr.plane.normal);
+		if (!mock) {
+			/* send shot */
+			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
+			gi.WriteShort(ent->number);
+			gi.WriteByte(wi);
+			gi.WriteByte(flags);
+			gi.WritePos(cur_loc);
+			gi.WritePos(impact);
+			gi.WriteDir(tr.plane.normal);
 
-		/* send shot sound to the others */
-		gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
-		gi.WriteByte(qfalse);
-		gi.WriteByte(wi);
+			/* send shot sound to the others */
+			gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
+			gi.WriteByte(qfalse);
+			gi.WriteByte(wi);
+		}
 
 		/* do splash damage */
 		if (tr.fraction < 1.0 && fd->splrad && !fd-> bounce) {
 			VectorMA(impact, sv_shot_origin->value, tr.plane.normal, impact);
-			G_SplashDamage(ent, fd, impact);
+			G_SplashDamage(ent, fd, impact, mock);
 		}
 
 		/* do damage */
 		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV || tr.ent->type == ET_BREAKABLE)) {
 			damage = fd->damage[0] + fd->damage[1] * crand();
-			G_Damage(tr.ent, fd->dmgtype, damage, ent);
+			G_Damage(tr.ent, fd->dmgtype, damage, ent, mock);
 			break;
 		}
 
@@ -1981,42 +2021,44 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 	}
 	while (1);
 
-	/* spawn the knife on the floor */
-	if (fd->ammo && !fd->splrad && gi.csi->ods[weapon->t].thrown) {
-		pos3_t drop;
-		edict_t *floor, *actor;
+	if (!mock) {
+		/* spawn the knife on the floor */
+		if (fd->ammo && !fd->splrad && gi.csi->ods[weapon->t].thrown) {
+			pos3_t drop;
+			edict_t *floor, *actor;
 
-		if (VectorCompare(ent->pos, at)) { /* throw under his own feet */
-			VectorCopy(at, drop);
-		} else {
-			impact[2] -= 20; /* a hack: no-gravity items are flying high */
-			VecToPos(impact, drop);
+			if (VectorCompare(ent->pos, at)) { /* throw under his own feet */
+				VectorCopy(at, drop);
+			} else {
+				impact[2] -= 20; /* a hack: no-gravity items are flying high */
+				VecToPos(impact, drop);
+			}
+
+			for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
+				if (floor->inuse
+					&& floor->type == ET_ITEM
+					&& VectorCompare(drop, floor->pos))
+					break;
+			}
+
+			if (floor == &g_edicts[globals.num_edicts]) {
+				floor = G_SpawnFloor(drop);
+
+				for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
+					if ( actor->inuse
+						 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
+						 && VectorCompare(drop, actor->pos) )
+						FLOOR(actor) = FLOOR(floor);
+			} else {
+				gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
+				gi.WriteShort(floor->number);
+				floor->visflags = 0;
+			}
+			Com_TryAddToInventory(&floor->i, *weapon, gi.csi->idFloor);
+
+			/* send item info to the clients */
+			G_CheckVis(floor, qtrue);
 		}
-
-		for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
-			if (floor->inuse
-				&& floor->type == ET_ITEM
-				&& VectorCompare(drop, floor->pos))
-				break;
-		}
-
-		if (floor == &g_edicts[globals.num_edicts]) {
-			floor = G_SpawnFloor(drop);
-
-			for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
-				if ( actor->inuse
-					 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
-					 && VectorCompare(drop, actor->pos) )
-					FLOOR(actor) = FLOOR(floor);
-		} else {
-			gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
-			gi.WriteShort(floor->number);
-			floor->visflags = 0;
-		}
-		Com_TryAddToInventory(&floor->i, *weapon, gi.csi->idFloor);
-
-		/* send item info to the clients */
-		G_CheckVis(floor, qtrue);
 	}
 }
 
@@ -2070,13 +2112,13 @@ qboolean G_GetShotFromType(edict_t *ent, int type, item_t **weapon, int *contain
 /**
  * @brief
  */
-qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
+qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_mock_t *mock)
 {
 	fireDef_t *fd;
 	edict_t *ent;
 	item_t *weapon;
 	vec3_t dir, center, target, shotOrigin;
-	int i, ammo, wi, reaction_leftover, shots;
+	int i, ammo, wi, prev_dir, reaction_leftover, shots;
 	int container, mask;
 
 	ent = g_edicts + num;
@@ -2116,14 +2158,18 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 	}
 
 	/* rotate the player */
+	if (mock)
+		prev_dir = ent->dir;
 	VectorSubtract(at, ent->pos, dir);
 	ent->dir = AngleToDV((int) (atan2(dir[1], dir[0]) * 180 / M_PI));
 
-	G_CheckVisTeam(ent->team, NULL, qfalse);
+	if (!mock) {
+		G_CheckVisTeam(ent->team, NULL, qfalse);
 
-	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
-	gi.WriteShort(num);
-	gi.WriteByte(ent->dir);
+		gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
+		gi.WriteShort(num);
+		gi.WriteByte(ent->dir);
+	}
 
 	/* calculate visibility */
 	gi.GridPosToVec(gi.map, at, target);
@@ -2134,41 +2180,43 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 		if (ent->visflags & (1 << i) || G_TeamPointVis(i, target) || G_TeamPointVis(i, center))
 			mask |= 1 << i;
 
-	/* start shoot */
-	gi.AddEvent(G_VisToPM(mask), EV_ACTOR_START_SHOOT);
-	gi.WriteShort(ent->number);
-	gi.WriteByte(wi);
-	gi.WriteGPos(ent->pos);
-	gi.WriteGPos(at);
+	if (!mock) {
+		/* start shoot */
+		gi.AddEvent(G_VisToPM(mask), EV_ACTOR_START_SHOOT);
+		gi.WriteShort(ent->number);
+		gi.WriteByte(wi);
+		gi.WriteGPos(ent->pos);
+		gi.WriteGPos(at);
 
-	/* send shot sound to the others */
-	gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
-	gi.WriteByte(qtrue);
-	gi.WriteByte(wi);
+		/* send shot sound to the others */
+		gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
+		gi.WriteByte(qtrue);
+		gi.WriteByte(wi);
 
-	/* ammo... */
-	if (fd->ammo) {
-		if ( ammo > 0
-			 || !gi.csi->ods[weapon->t].thrown ) {
-			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_AMMO);
-			gi.WriteShort(num);
-			gi.WriteByte(ammo);
-			gi.WriteByte(weapon->m);
-			weapon->a = ammo;
-			if (IS_SHOT_RIGHT(type))
-				gi.WriteByte(gi.csi->idRight);
-			else
-				gi.WriteByte(gi.csi->idLeft);
-		} else { /* delete the knife or the rifle without ammo */
-			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
-			gi.WriteShort(num);
-			gi.WriteByte(container);
-			assert (gi.csi->ids[container].single);
-			Com_EmptyContainer(&ent->i, container);
+		/* ammo... */
+		if (fd->ammo) {
+			if ( ammo > 0
+				 || !gi.csi->ods[weapon->t].thrown ) {
+				gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_AMMO);
+				gi.WriteShort(num);
+				gi.WriteByte(ammo);
+				gi.WriteByte(weapon->m);
+				weapon->a = ammo;
+				if (IS_SHOT_RIGHT(type))
+					gi.WriteByte(gi.csi->idRight);
+				else
+					gi.WriteByte(gi.csi->idLeft);
+			} else { /* delete the knife or the rifle without ammo */
+				gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
+				gi.WriteShort(num);
+				gi.WriteByte(container);
+				assert (gi.csi->ids[container].single);
+				Com_EmptyContainer(&ent->i, container);
+			}
+			/* x and y value */
+			gi.WriteByte(0);
+			gi.WriteByte(0);
 		}
-		/* x and y value */
-		gi.WriteByte(0);
-		gi.WriteByte(0);
 	}
 
 	G_GetShotOrigin(ent, fd, dir, shotOrigin);
@@ -2176,21 +2224,26 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 	/* fire all shots */
 	for (i = 0; i < shots; i++)
 		if (fd->gravity)
-			G_ShootGrenade(player, ent, fd, wi, shotOrigin, at, mask, weapon);
+			G_ShootGrenade(player, ent, fd, wi, shotOrigin, at, mask, weapon, mock);
 		else
-			G_ShootSingle(ent, fd, wi, shotOrigin, at, mask, weapon);
+			G_ShootSingle(ent, fd, wi, shotOrigin, at, mask, weapon, mock);
 
-	/* send TUs */
-	if (ent->inuse) {
-		ent->TU -= fd->time;
-		G_SendStats(ent);
+	if (!mock) {
+		/* send TUs */
+		if (ent->inuse) {
+			ent->TU -= fd->time;
+			G_SendStats(ent);
+		}
+
+		/* end events */
+		gi.EndEvents();
+
+		/* check for Reaction fire against the shooter */
+		G_ReactionFire(ent, mock ? qfalse : qtrue);
+	} else {
+		ent->dir = prev_dir;
 	}
 
-	/* end events */
-	gi.EndEvents();
-
-	/* check for Reaction fire against the shooter */
-	G_ReactionFire(ent, qtrue);
 
 	return qtrue;
 }
@@ -2403,175 +2456,21 @@ void G_KillTeam(void)
 
 /**
  * @brief
- * @param[in] shooter
- * @param[in] at
- * @sa G_FireWithJudgementCall
- */
-static edict_t *G_ShotTargetAtPos(edict_t *shooter, pos3_t at)
-{
-	edict_t *target;
-	int i;
-
-	target = NULL;
-	for (i = 0; i < globals.num_edicts; i++) {
-		if (g_edicts[i].inuse
-			&& (g_edicts[i].type == ET_ACTOR || g_edicts[i].type == ET_UGV)
-			&& !(g_edicts[i].state & STATE_DEAD)
-			&& g_edicts[i].team != TEAM_CIVILIAN
-			&& g_edicts[i].team != shooter->team
-			&& VectorCompare(at, g_edicts[i].pos)) {
-			target = &g_edicts[i];
-			break;
-		}
-	}
-
-	return target;
-}
-
-/**
- * @brief
- * @TODO: factor out key functions and share with G_ShootSingle
- * @param[in] shooter
- * @param[in] fd
- * @param[in] from
- * @param[in] at
- * @param[in] mask
- * @param[in] weapon
- * @param[in] debug_type
- */
-static trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int mask, item_t *weapon, int debug_type)
-{
-	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
-	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
-	vec3_t cur_loc;	/* The current location of the projectile. */
-	vec3_t impact;	/* The location of the target (-center?) */
-	trace_t tr;	/* ?? TODO */
-	float acc;	/* Accuracy modifier for the angle of the shot. */
-
-	/* Calc direction of the shot. */
-	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
-	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
-	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
-	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
-	VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);	/* ?? TODO: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid. Might need some change to reflect 2x2 units. Also might need a check if the distace is bigger than the one to the impact location.*/
-	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
-
-	/* Get accuracy value for this attacker. */
-	acc = GET_ACC(shooter->chr.skills[ABILITY_ACCURACY], fd->weaponSkill ? shooter->chr.skills[fd->weaponSkill] : 0);
-
-	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
-	if ((shooter->state & STATE_CROUCHED) && fd->crouch) {
-		angles[PITCH] += crand() * fd->spread[0] * fd->crouch * acc;
-		angles[YAW] += crand() * fd->spread[1] * fd->crouch * acc;
-	} else {
-		angles[PITCH] += crand() * fd->spread[0] * acc;
-		angles[YAW] += crand() * fd->spread[1] * acc;
-	}
-	/* Convert changed angles into new direction. */
-	AngleVectors(angles, dir, NULL, NULL);
-
-	/* Calc 'impact' vector that is located at the end of the range
-	   defined by the fireDef_t. This is not really the impact location,
-	   but rather the 'endofrange' location, see below for another use.*/
-	VectorMA(cur_loc, fd->range, dir, impact);
-
-	/* Do the trace from current position of the projectile
-	   to the end_of_range location.*/
-	tr = gi.trace(cur_loc, NULL, NULL, impact, shooter, MASK_SHOT);
-
-	return tr;
-}
-
-
-/**
- * @brief Calculate probability of a hit
- * @param[in] shooter
- * @param[in] target
- * @param[in] type
- * @param[in] hit
- * @param[in] ff
- * @param[in] civ
- * @param[in] self
- * @param[in] self_fraction
- */
-static void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *hit, int *ff, int *civ, int *self, float *self_fraction)
-{
-	item_t *weapon;
-	trace_t tr;
-	fireDef_t *fd;
-	vec3_t dir, center, target_vec, shotOrigin;
-	int container, i, mask;
-
-	if (!G_GetShotFromType(shooter, type, &weapon, &container, &fd)) {
-		*hit = -1000;
-		*ff = 1000;
-		return;
-	}
-
-	/* rotate the player - this is why we need a readonly copy of the shooter */
-	VectorSubtract(target->pos, shooter->pos, dir);
-	shooter->dir = AngleToDV((int) (atan2(dir[1], dir[0]) * 180 / M_PI));
-
-	/* calculate visibility */
-	gi.GridPosToVec(gi.map, target->pos, target_vec);
-	VectorSubtract(target_vec, shooter->origin, dir);
-	VectorMA(shooter->origin, 0.5, dir, center);
-	mask = 0;
-	for (i = 0; i < MAX_TEAMS; i++)
-		if (shooter->visflags & (1 << i) || G_TeamPointVis(i, target_vec) || G_TeamPointVis(i, center))
-			mask |= 1 << i;
-
-	G_GetShotOrigin(shooter, fd, dir, shotOrigin);
-
-	*hit = 0;
-	*civ = 0;
-	*ff = 0;
-	*self = 0;
-	*self_fraction = 0.0;
-	for (i = 0; i < 100; i++) {
-		tr = G_TraceShot(shooter, fd, shotOrigin, target->pos, mask, weapon, type);
-		if (!tr.ent || !tr.ent->inuse || tr.ent->state & STATE_DEAD)
-			continue;
-		else if (tr.ent->number == shooter->number)
-			*self += 1; /* FIXME: incorrect actor facing or shotOrg, or bug in trace code? */
-		else if (tr.ent->team == TEAM_CIVILIAN)
-			*civ += 1;
-		else if (tr.ent->team == shooter->team)
-			*ff += 1;
-		else if ((tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV) && tr.ent == target)
-			*hit += 1;
-	}
-
-	if (*self)
-		*self_fraction = *self_fraction / *self;
-}
-
-/**
- * @brief
  * @param[in] player
  * @param[in] num
  * @param[in] at
  * @param[in] type
  * @sa G_ReactionFire
  * @sa G_ClientShoot
- * @sa G_ShotTargetAtPos
- * @sa G_ShotProbability
  */
 static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type)
 {
-	edict_t *shooter, *target;
-	int civ = 0, ff, hit, maxff, minhit, self = 0;
-	float self_fraction = 0.0f;
+	shot_mock_t mock;
+	edict_t *shooter;
+	int i, maxff, minhit;
 
-	/* use a read-only copy of the shooter so we can change its facing for probability tracing */
-	shooter = malloc(sizeof(*g_edicts));
-	memcpy(shooter, &(g_edicts[num]), sizeof(*g_edicts));
-	target = G_ShotTargetAtPos(shooter, at);
-	if (!target) {
-		free(shooter);
-		return qfalse;
-	}
-
+	shooter = g_edicts + num;
+	
 	minhit = shooter->reaction_minhit;
 	if (shooter->state & STATE_INSANE)
 		maxff = 100;
@@ -2584,12 +2483,14 @@ static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, i
 	else
 		maxff = 5;
 
-	G_ShotProbability(shooter, target, type, &hit, &ff, &civ, &self, &self_fraction);
-	free(shooter);
+	memset(&mock, 0, sizeof(mock));
+	for (i = 0; i < 100; i++)
+		G_ClientShoot(player, num, at, type, &mock);
 
-	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF+Civ: %d+%d=%d/%d Self: %d (Avg fraction: %06.4f).\n", hit, minhit, ff, civ, ff + civ, maxff, self, self_fraction);
-	if (ff + civ <= maxff && hit >= minhit)
-		return G_ClientShoot(player, num, at, type);
+	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF+Civ: %d+%d=%d/%d Self: %d.\n",
+		mock.enemy, minhit, mock.friend, mock.civilian, mock.friend + mock.civilian, maxff, mock.self);
+	if (mock.friend + mock.civilian <= maxff && mock.enemy >= minhit)
+		return G_ClientShoot(player, num, at, type, NULL);
 	else
 		return qfalse;
 }
@@ -2704,7 +2605,7 @@ void G_ClientAction(player_t * player)
 
 	case PA_SHOOT:
 		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i);
-		(void)G_ClientShoot(player, num, pos, i);
+		(void)G_ClientShoot(player, num, pos, i, NULL);
 		break;
 
 	case PA_INVMOVE:

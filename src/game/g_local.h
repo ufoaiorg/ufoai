@@ -139,6 +139,15 @@ typedef struct {
 	float maxpitch;
 } spawn_temp_t;
 
+/* used in shot probability calculations */
+typedef struct {
+	int enemy;
+	int friend;
+	int civilian;
+	int self; /* FIXME: incorrect actor facing or shotOrg, or bug in trace code? */
+	int damage;
+} shot_mock_t;
+
 extern game_locals_t game;
 extern level_locals_t level;
 extern game_import_t gi;
@@ -286,7 +295,7 @@ qboolean G_ClientConnect(player_t * player, char *userinfo);
 void G_ClientDisconnect(player_t * player);
 
 int G_TestVis(int team, edict_t * check, int flags);
-qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type);
+qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_mock_t *mock);
 void G_ClientReload(player_t *player, int entnum, shoot_types_t st);
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum);
