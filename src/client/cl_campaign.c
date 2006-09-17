@@ -588,9 +588,6 @@ static void CL_CampaignAddMission(setState_t * set)
 {
 	actMis_t *mis;
 
-	static mission_t *oldMis1 = NULL;
-	static mission_t *oldMis2 = NULL;
-
 	mission_t *misTemp;
 	int i;
 	float f;
@@ -603,8 +600,13 @@ static void CL_CampaignAddMission(setState_t * set)
 
 	while (1) {
 		misTemp = &missions[set->def->missions[rand() % set->def->numMissions]];
-		if ((misTemp != oldMis1 && misTemp != oldMis2)
-			|| set->def->numMissions < 3)
+
+		if ((set->def->numMissions < 2 
+			 || Q_strncmp(misTemp->name, gd.oldMis1, MAX_VAR))
+			&& (set->def->numMissions < 3 
+				|| Q_strncmp(misTemp->name, gd.oldMis2, MAX_VAR))
+			&& (set->def->numMissions < 4 
+				|| Q_strncmp(misTemp->name, gd.oldMis3, MAX_VAR)))
 			break;
 	}
 
@@ -621,8 +623,9 @@ static void CL_CampaignAddMission(setState_t * set)
 	/* set relevant info */
 	mis->def = misTemp;
 	mis->cause = set;
-	oldMis2 = oldMis1;
-	oldMis1 = misTemp;
+	Q_strncpyz(gd.oldMis3, gd.oldMis2, MAX_VAR);
+	Q_strncpyz(gd.oldMis2, gd.oldMis1, MAX_VAR);
+	Q_strncpyz(gd.oldMis1, misTemp->name, MAX_VAR);
 
 	/* execute mission commands */
 	if (*mis->def->cmds)

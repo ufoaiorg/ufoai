@@ -1,3 +1,9 @@
+// code ensures there are at least 3 missions between repetitions 
+// of any mission in a given stage set, or at least 2 mission
+// if the total number of missions is 3, etc.
+// so 'number n', where n <= 4 ensures not repetitions
+// and 'quota n', where n <= 4, ensures no repetitions if all missions are won
+
 stage intro
 {
 	set first
@@ -24,7 +30,7 @@ stage intro
 		missions	"africa_excavation transport mine mart italy"
 // TODO: mine does not really fit there, because civilians are safe
 // please add some spawn points down there or move this to another stage
-// the same for city
+// the same for city; also make some alien spawns on the top level
 		number		11 // don't torment the player with the same missions
 		quota		4
 	}

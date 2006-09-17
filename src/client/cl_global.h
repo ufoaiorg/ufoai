@@ -89,6 +89,10 @@ typedef struct globalData_s
 	int interceptAircraft;
 	/* already paid in this month? */
 	qboolean fund;
+	/* missions last seen on geoscape */
+	char oldMis1[MAX_VAR];
+	char oldMis2[MAX_VAR];
+	char oldMis3[MAX_VAR];
 
 	/* == production == */
 	/* we will allow only one active production at the same time for each base */
