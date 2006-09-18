@@ -1437,7 +1437,8 @@ void CL_ParseResults(sizebuf_t * buf)
 	byte num_alive[MAX_TEAMS];
 	byte num_kills[MAX_TEAMS][MAX_TEAMS];
 	byte winner, we;
-	int i, j, num, res, kills;
+
+	int i, j, num, res, kills, number_items, credits_gained;
 
 	/* get number of teams */
 	num = MSG_ReadByte(buf);
@@ -1521,7 +1522,7 @@ void CL_ParseResults(sizebuf_t * buf)
 		/* the mission was in singleplayer */
 
 		/* loot the battlefield */
-		CL_CollectItems(winner == we);
+		CL_CollectItems(winner == we, &number_items, &credits_gained);
 	
 		/* check for stunned aliens; 
 		   TODO: make this reversible, like CL_CollectItems above */
@@ -1554,9 +1555,12 @@ void CL_ParseResults(sizebuf_t * buf)
 
 		Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), num_kills[TEAM_ALIEN][TEAM_CIVILIAN]), sizeof(resultText));
 		Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), num_kills[we][TEAM_CIVILIAN] + num_kills[TEAM_CIVILIAN][TEAM_CIVILIAN]), sizeof(resultText));
-		Q_strcat(resultText, va(_("Civilians saved\t%i\n\n\n"), num_alive[TEAM_CIVILIAN]), sizeof(resultText));
+		Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), num_alive[TEAM_CIVILIAN]), sizeof(resultText));
 
 		ccs.civiliansKilled += num_kills[TEAM_ALIEN][TEAM_CIVILIAN] + num_kills[we][TEAM_CIVILIAN] + num_kills[TEAM_CIVILIAN][TEAM_CIVILIAN];
+
+		Q_strcat(resultText, va(_("Items looted and sold\t%i\n"), number_items),sizeof(resultText));
+		Q_strcat(resultText, va(_("Total item sale value\t%i\n\n"), credits_gained),sizeof(resultText));
 
 		MN_PopMenu(qtrue);
 		Cvar_Set("mn_main", "singleplayer");

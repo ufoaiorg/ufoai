@@ -2295,12 +2295,14 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
  * @brief Collect items from battlefield
  *
  * @param[in] won Determines whether we have won the match or not
+ * @param[out] item_counter Returns count of items collected from battlefield
+ * @param[out] credits_gained Return total credits gained from sale of items
  *
  * collects all items from battlefield (if we've won the match)
  * and put them back to inventory. Calls CL_CollectItemAmmo which
  * does the real collecting
  */
-void CL_CollectItems(int won)
+void CL_CollectItems(int won, int *item_counter, int *credits_gained)
 {
 	int i;
 	le_t *le;
@@ -2310,7 +2312,10 @@ void CL_CollectItems(int won)
 	eTempMarket = ccs.eMarket;
 	eTempCredits = ccs.credits;
 
+	*item_counter = 0;
+
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+
 		/* Winner collects everything on the floor, and everything carried */
 		/* by surviving actors.  Loser only gets what their living team */
 		/* members carry. */
@@ -2319,8 +2324,10 @@ void CL_CollectItems(int won)
 		switch (le->type) {
 		case ET_ITEM:
 			if (won)
-				for (item = FLOOR(le); item; item = item->next)
+				for (item = FLOOR(le); item; item = item->next) {
+					*item_counter += 1;
 					CL_CollectItemAmmo(item, 0, qtrue);
+		}
 			break;
 		case ET_ACTOR:
 		case ET_UGV:
@@ -2341,6 +2348,9 @@ void CL_CollectItems(int won)
 			break;
 		}
 	}
+	/* work out the difference in credits before and after the sales */
+	*credits_gained = eTempCredits - ccs.credits;
+
 /*	RS_MarkCollected(&ccs.eMission); not needed due to statusCollected above */
 	/* TODO: make this reversible, like eTempMarket */
 	RS_MarkResearchable();
