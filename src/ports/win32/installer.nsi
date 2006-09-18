@@ -787,6 +787,12 @@ Section "SourceCode" SEC03
   SetOutPath "$INSTDIR\src\ports\win32"
   File "..\..\ports\win32\*.h"
   File "..\..\ports\win32\*.c"
+  File "..\..\ports\win32\*.c"
+  File "..\..\ports\win32\*.h"
+  File "..\..\ports\win32\installer.nsi"
+  File "..\..\ports\win32\*.lib"
+  File "..\..\ports\win32\*.ico"
+  File "..\..\ports\win32\*.rc"
   SetOutPath "$INSTDIR\src\ports\macosx"
 ;  File "..\..\ports\macosx\*.h"
   File "..\..\ports\macosx\*.m"
@@ -875,12 +881,6 @@ Section "SourceCode" SEC03
   File "..\..\*.vcproj"
   File "..\..\*.workspace"
   SetOutPath "$INSTDIR"
-  File "*.c"
-  File "*.h"
-  File "installer.nsi"
-  File "*.lib"
-  File "*.ico"
-  File "*.rc"
 SectionEnd
 
 Section -AdditionalIcons
