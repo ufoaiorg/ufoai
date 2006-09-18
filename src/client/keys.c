@@ -511,18 +511,18 @@ static void Key_SetBinding(int keynum, char *binding, keyBindSpace_t space)
 	if (keynum == -1)
 		return;
 
-	Com_Printf("Binding for '%s' for space ", binding);
+	Com_DPrintf("Binding for '%s' for space ", binding);
 	switch (space) {
 	case KEYSPACE_MENU:
 		keySpace = &menukeybindings[keynum];
-		Com_Printf("menu\n");
+		Com_DPrintf("menu\n");
 		break;
 	case KEYSPACE_GAME:
 		keySpace = &keybindings[keynum];
-		Com_Printf("game\n");
+		Com_DPrintf("game\n");
 		break;
 	default:
-		Com_Printf("failure\n");
+		Com_DPrintf("failure\n");
 		return;
 	}
 
