@@ -1,4 +1,4 @@
-all: packdata update_installer_data makeself
+all: update_installer_data makeself
 
 ROOTDIR=../../../../
 
@@ -17,8 +17,21 @@ BINARIES = \
 	$(ROOTDIR)snd_sdl.so \
 	$(ROOTDIR)base/game.so
 
+# FIXME
+BINARIES_64 = \
+	$(ROOTDIR)x86_64/ufo \
+	$(ROOTDIR)x86_64/ufoded \
+	$(ROOTDIR)x86_64/ufo2map \
+	$(ROOTDIR)x86_64/ref_glx.so \
+	$(ROOTDIR)x86_64/ref_sdl.so \
+	$(ROOTDIR)x86_64/snd_alsa.so \
+	$(ROOTDIR)x86_64/snd_oss.so \
+	$(ROOTDIR)x86_64/snd_sdl.so \
+	$(ROOTDIR)x86_64/base/game.so
+
 packdata:
-	tar -cvjp -f data/binaries.tar.bz2 $(BINARIES)
+	tar -cvjp -f data/ufo-x86.tar.bz2 $(BINARIES)
+	tar -cvjp -f data/ufo-x86_64.tar.bz2 $(BINARIES)
 	tar -cvjp --exclude-from=../tar.ex -f data/data.tar.bz2 ../../../../base
 
 update_installer_data:
