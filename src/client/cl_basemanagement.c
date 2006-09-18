@@ -43,7 +43,6 @@ static int numBuildingConstructionList;
  */
 void B_ResetBuildingCurrent(void)
 {
-
 	if (Cmd_Argc() > 2) {
 		Com_Printf("Usage: reset_building_current [arg]\n");
 		return;
@@ -386,7 +385,7 @@ static qboolean B_ConstructBuilding(void)
 		return qfalse;
 
 	/*enough credits to build this? */
-	if ( !B_CheckCredits(baseCurrent->buildingCurrent->fixCosts) ) {
+	if (!B_CheckCredits(baseCurrent->buildingCurrent->fixCosts)) {
 		Com_DPrintf("B_ConstructBuilding: Not enough credits to build: '%s'\n", baseCurrent->buildingCurrent->id);
 		B_ResetBuildingCurrent();
 		return qfalse;
@@ -421,7 +420,8 @@ void B_NewBuilding(void)
 		return;
 
 	if (baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
-		if ( B_ConstructBuilding() ) {
+		/* credits are updated in the construct function */
+		if (B_ConstructBuilding()) {
 			B_BuildingStatus();
 			Com_DPrintf("B_NewBuilding: buildingCurrent->buildingStatus = %i\n", baseCurrent->buildingCurrent->buildingStatus);
 		}
@@ -487,6 +487,7 @@ void B_SetBuildingByClick(int row, int col)
 			} else {
 				baseCurrent->buildingToBuild = -1;
 			}
+			/* credits are updated here, too */
 			B_NewBuilding();
 
 			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->idx;
