@@ -1744,8 +1744,8 @@ float CL_TargetingToHit(pos3_t toPos)
 		if (le->inuse && VectorCompare(le->pos, toPos))
 			break;
 
-	if (i >= numLEs)
-		/* no target there */
+	if (i >= numLEs || le == selActor )
+		/* no target there or suicide attempted */
 		return 0.0;
 
 	VectorCopy(selActor->origin, shooter);
@@ -1777,11 +1777,12 @@ float CL_TargetingToHit(pos3_t toPos)
 	if (height / (2 * distance * tan(acc * selFD->spread[1])) < 1)
 		hitchance *= height / (2 * distance * tan(acc * selFD->spread[1]));
 
-	/*Calculate cover: */
+	/* Calculate cover: */
 	n = 0;
 	height = height / 18;
 	width = width / 18;
-	target[2] = height * 9;
+	target[2] -= UNIT_HEIGHT/2;
+	target[2] += height * 9;
 	perpX = disty / distance * width;
 	perpY = 0 - distx / distance * width;
 
@@ -1790,41 +1791,47 @@ float CL_TargetingToHit(pos3_t toPos)
 	target[1] += perpY;
 	perpY *= 2;
 	target[2] += 6 * height;
+/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!CM_TestLine(shooter, target))
 		n++;
 	target[0] += perpX;
 	target[1] += perpY;
 	target[2] -= 6 * height;
+/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!CM_TestLine(shooter, target))
 		n++;
 	target[0] += perpX;
 	target[1] += perpY;
 	target[2] += 4 * height;
+/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!CM_TestLine(shooter, target))
 		n++;
-	target[0] += perpX;
-	target[1] += perpY;
-	target[2] -= 10 * height;
+	target[2] += 4 * height;
+/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!CM_TestLine(shooter, target))
 		n++;
-	target[0] -= perpX * 4;
-	target[1] -= perpY * 4;
-	target[2] += height + height;
+	target[0] -= perpX * 3;
+	target[1] -= perpY * 3;
+	target[2] -= 12 * height;
+/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!CM_TestLine(shooter, target))
 		n++;
 	target[0] -= perpX;
 	target[1] -= perpY;
 	target[2] += 6 * height;
+/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!CM_TestLine(shooter, target))
 		n++;
 	target[0] -= perpX;
 	target[1] -= perpY;
 	target[2] -= 4 * height;
+/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!CM_TestLine(shooter, target))
 		n++;
 	target[0] -= perpX;
 	target[1] -= perpY;
 	target[2] += 10 * height;
+/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!CM_TestLine(shooter, target))
 		n++;
 
