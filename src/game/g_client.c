@@ -2607,8 +2607,8 @@ static void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *
 qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type)
 {
 	edict_t *shooter, *target;
-	int civ, ff, hit, maxff, minhit, self;
-	float self_fraction;
+	int civ = 0, ff, hit, maxff, minhit, self = 0;
+	float self_fraction = 0.0f;
 	
 	/* use a read-only copy of the shooter so we can change its facing for probability tracing */
 	shooter = malloc(sizeof(*g_edicts));
