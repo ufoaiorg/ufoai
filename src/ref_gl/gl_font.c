@@ -499,7 +499,6 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	int line = 0;
 	float texh0, fh, fy; /* rounding errors break mouse-text corelation */
 	qboolean skipline = qfalse;
-	int secondTime = 0; /* allow a Could not generate font surface once */
 
 	/* transform from 1024x768 coordinates for drawing */
 	absX = (float) absX *vid.rx;
@@ -613,12 +612,11 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 
 			if (!cache) {
 				/* maybe we are running out of mem */
-				if (!secondTime) {
-					Font_CleanCache();
-					secondTime = 1;
-				} else
-					ri.Sys_Error(ERR_FATAL, "...could not generate font surface '%s'\n", buffer);
+				Font_CleanCache();
+				cache = Font_GenerateCache(buffer, searchString, f);
 			}
+			if (!cache)
+				ri.Sys_Error(ERR_FATAL, "...could not generate font surface '%s'\n", buffer);
 
 			Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
 			fy += fh;
