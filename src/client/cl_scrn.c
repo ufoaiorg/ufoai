@@ -361,18 +361,28 @@ void SCR_DrawPause(void)
 }
 
 /**
- * @brief
+ * @brief Draws the current loading pic of the map from base/pics/maps/loading
  */
 void SCR_DrawLoading(void)
 {
-	int w = 0, h = 0;
+	char loadingPic[MAX_QPATH];
+	const vec4_t color = {0.0, 1.0, 0.0, 1.0};
 
 	if (!scr_draw_loading)
 		return;
 
 	scr_draw_loading = qfalse;
-	re.DrawGetPicSize(&w, &h, "loading");
-	re.DrawPic((viddef.width - w) / 2, (viddef.height - h) / 2, "loading");
+	if (!ccs.singleplayer || !selMis) {
+		Com_sprintf(loadingPic, MAX_QPATH, "maps/loading/default.jpg");
+	} else {
+		if (FS_CheckFile(va("maps/loading/%s.jpg", selMis->def->map)))
+			Com_sprintf(loadingPic, MAX_QPATH, "maps/loading/%s.jpg", selMis->def->map);
+		else
+			Com_sprintf(loadingPic, MAX_QPATH, "maps/loading/default.jpg");
+	}
+	re.DrawStretchPic(0, 0, viddef.width, viddef.height, loadingPic);
+	re.DrawColor(color);
+	re.FontDrawString("f_menubig", ALIGN_CC, viddef.width / 2, viddef.height - 30, 0, 1, viddef.width, viddef.height, 50, _("Loading..."), 0, 0, NULL, qfalse);
 }
 
 /**
@@ -505,8 +515,6 @@ void SCR_BeginLoadingPlaque(void)
 	cl.sound_prepped = qfalse;	/* don't play ambients */
 	CDAudio_Stop();
 	if (developer->value)
-		return;
-	if (cls.state == ca_disconnected)
 		return;
 	/* if at console, don't bring up the plaque */
 	if (cls.key_dest == key_console)
