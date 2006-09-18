@@ -2593,7 +2593,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 					equip[ammo] / equip[weapon]
 					+ (equip[ammo] % equip[weapon] > rand() % equip[weapon])
 					+ (PROB_COMPENSATION > 40 * frand())
-					+ (no_primary ? 1 + frand() * PROB_COMPENSATION : 0);
+					+ (no_primary ? (float) no_primary * frand() * 5.0 / 40.0 : 0);
 
 				/* load ammo, but avoid reloading with cheaper ammo */
 				if (item.m == NONE) {
@@ -2645,7 +2645,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
-	int has_weapon = 0, has_armor = 0, repeat = 0;
+	int has_weapon = 0, has_armor = 0, repeat = 0, primary_count = 0;
 	int primary = 2; /* 0 tachyon or normal, 1 other, 2 no primary weapon */
 	objDef_t obj;
 
@@ -2666,6 +2666,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 		}
 		/* see if there is any */
 		if (max_price) {
+			primary_count += equip[weapon];
 			/* see if the actor picks it */
 			if ( equip[weapon] >= (40 - PROB_COMPENSATION) * frand() ) {
 				/* not decrementing equip[weapon]
@@ -2719,7 +2720,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			}
 			if ( !(max_price == (primary ? 0 : INT_MAX)) ) {
 				if ( equip[weapon] >= 40 * frand() ) {
-					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, (primary == 2), name);
+					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, (primary == 2 ? primary_count : 0), name);
 					if (has_weapon) {
 						/* try to get the second akimbo pistol */
 						if ( primary == 2
