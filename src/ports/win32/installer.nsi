@@ -128,9 +128,9 @@ Section "Game" SEC01
 ; FIXME: Activate md2 and other
 ;======================================================================
   SetOutPath "$INSTDIR\base\models\aliens"
-  SetOutPath "$INSTDIR\base\models\aliens\bloodspider"
-  File "..\..\..\base\models\aliens\bloodspider\*.md2"
-  File "..\..\..\base\models\aliens\bloodspider\*.jpg"
+;  SetOutPath "$INSTDIR\base\models\aliens\bloodspider"
+;  File "..\..\..\base\models\aliens\bloodspider\*.md2"
+;  File "..\..\..\base\models\aliens\bloodspider\*.jpg"
 ;  File "..\..\..\base\models\aliens\bloodspider\*.tag"
 ;  File "..\..\..\base\models\aliens\bloodspider\*.anm"
   SetOutPath "$INSTDIR\base\models\aliens\blue"
@@ -235,9 +235,9 @@ Section "Game" SEC01
 ;======================================================================
 ; models/objects/aircraft/heli
 ;======================================================================
-  SetOutPath "$INSTDIR\base\models\objects\aircraft\heli"
-  File "..\..\..\base\models\objects\aircraft\heli\*.jpg"
-  File "..\..\..\base\models\objects\aircraft\heli\*.md2"
+;  SetOutPath "$INSTDIR\base\models\objects\aircraft\heli"
+;  File "..\..\..\base\models\objects\aircraft\heli\*.jpg"
+;  File "..\..\..\base\models\objects\aircraft\heli\*.md2"
 ;======================================================================
 ; models/objects/aircraft/heli2
 ;======================================================================
@@ -277,9 +277,9 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\models\objects\cars\van"
   File "..\..\..\base\models\objects\cars\van\*.jpg"
   File "..\..\..\base\models\objects\cars\van\*.md2"
-  SetOutPath "$INSTDIR\base\models\objects\cars\van2"
-  File "..\..\..\base\models\objects\cars\van2\*.jpg"
-  File "..\..\..\base\models\objects\cars\van2\*.md2"
+;  SetOutPath "$INSTDIR\base\models\objects\cars\van2"
+;  File "..\..\..\base\models\objects\cars\van2\*.jpg"
+;  File "..\..\..\base\models\objects\cars\van2\*.md2"
 
 ;======================================================================
 ; models/objects/city
@@ -310,9 +310,9 @@ Section "Game" SEC01
 ;======================================================================
 ; models/objects/geoscape
 ;======================================================================
-  SetOutPath "$INSTDIR\base\models\objects\geoscape"
+;  SetOutPath "$INSTDIR\base\models\objects\geoscape"
 ;  File "..\..\..\base\models\objects\geoscape\*.jpg"
-  File "..\..\..\base\models\objects\geoscape\*.md2"
+;  File "..\..\..\base\models\objects\geoscape\*.md2"
 
 ;======================================================================
 ; models/objects/tank
@@ -349,12 +349,12 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\models\objects\furniture\metalshelf"
   File "..\..\..\base\models\objects\furniture\metalshelf\*.jpg"
   File "..\..\..\base\models\objects\furniture\metalshelf\*.md2"
-  SetOutPath "$INSTDIR\base\models\objects\furniture\microwave"
-  File "..\..\..\base\models\objects\furniture\microwave\*.jpg"
-  File "..\..\..\base\models\objects\furniture\microwave\*.md2"
-  SetOutPath "$INSTDIR\base\models\objects\furniture\oven"
-  File "..\..\..\base\models\objects\furniture\oven\*.jpg"
-  File "..\..\..\base\models\objects\furniture\oven\*.md2"
+;  SetOutPath "$INSTDIR\base\models\objects\furniture\microwave"
+;  File "..\..\..\base\models\objects\furniture\microwave\*.jpg"
+;  File "..\..\..\base\models\objects\furniture\microwave\*.md2"
+;  SetOutPath "$INSTDIR\base\models\objects\furniture\oven"
+;  File "..\..\..\base\models\objects\furniture\oven\*.jpg"
+;  File "..\..\..\base\models\objects\furniture\oven\*.md2"
   SetOutPath "$INSTDIR\base\models\objects\furniture\speaker"
   File "..\..\..\base\models\objects\furniture\speaker\*.jpg"
   File "..\..\..\base\models\objects\furniture\speaker\*.md2"
@@ -380,7 +380,7 @@ Section "Game" SEC01
   File "..\..\..\base\models\objects\vegi\chestnut\*.md2"
   File "..\..\..\base\models\objects\vegi\chestnut\*.tga"
   SetOutPath "$INSTDIR\base\models\objects\vegi\corn"
-  File "..\..\..\base\models\objects\vegi\corn\*.tga"
+  File "..\..\..\base\models\objects\vegi\corn\*.jpg"
   File "..\..\..\base\models\objects\vegi\corn\*.md2"
   SetOutPath "$INSTDIR\base\models\objects\vegi\palm1"
   File "..\..\..\base\models\objects\vegi\palm1\*.jpg"
@@ -788,7 +788,7 @@ Section "SourceCode" SEC03
   File "..\..\ports\win32\*.h"
   File "..\..\ports\win32\*.c"
   SetOutPath "$INSTDIR\src\ports\macosx"
-  File "..\..\ports\macosx\*.h"
+;  File "..\..\ports\macosx\*.h"
   File "..\..\ports\macosx\*.m"
   File "..\..\ports\macosx\*.c"
   SetOutPath "$INSTDIR\src\ports\linux"
