@@ -1527,7 +1527,7 @@ static void G_UpdateShotMock(shot_mock_t *mock, edict_t *shooter, edict_t *struc
 			/* FIXME: when self means hits on self (e.g. stepped on grenade), incr team instead */
 			mock->self += 1;
 		else if (struck->team == TEAM_CIVILIAN)
-			mock->civilian += 1; /* FIXME: should alien shooters consider civilians enemy? */
+			mock->civilian += 1;
 		else if (struck->team == shooter->team)
 			mock->friend += 1;
 		else if (struck->type == ET_ACTOR || struck->type == ET_UGV)
@@ -2467,7 +2467,7 @@ static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, i
 {
 	shot_mock_t mock;
 	edict_t *shooter;
-	int i, maxff, minhit;
+	int ff, i, maxff, minhit;
 
 	shooter = g_edicts + num;
 	
@@ -2489,7 +2489,9 @@ static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, i
 
 	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF+Civ: %d+%d=%d/%d Self: %d.\n",
 		mock.enemy, minhit, mock.friend, mock.civilian, mock.friend + mock.civilian, maxff, mock.self);
-	if (mock.friend + mock.civilian <= maxff && mock.enemy >= minhit)
+
+	ff = mock.friend + (shooter->team == TEAM_ALIEN ? 0 : mock.civilian);
+	if (ff <= maxff && mock.enemy >= minhit)
 		return G_ClientShoot(player, num, at, type, NULL);
 	else
 		return qfalse;
