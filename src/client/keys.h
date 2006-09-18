@@ -157,14 +157,20 @@ typedef enum {
 
 #define		MAXCMDLINE	256
 
+typedef enum {
+	KEYSPACE_MENU,
+	KEYSPACE_GAME,
+
+	KEYSPACE_MAX
+} keyBindSpace_t;
+
 extern int msg_mode;
 extern char msg_buffer[MAXCMDLINE];
 extern int msg_bufferlen;
 
 void Key_Event(int key, qboolean down, unsigned time);
 void Key_Init(void);
-void Key_WriteBindings(FILE * f);
-void Key_SetBinding(int keynum, char *binding);
+void Key_WriteBindings(char* path);
 void Key_ClearStates(void);
 int Key_GetKey(void);
 

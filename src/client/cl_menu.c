@@ -1067,7 +1067,7 @@ static void MN_TextScrollKeyBinding_f(void)
 	}
 	if (!MN_GetNodeFromCurrentMenu(Cvar_VariableString("mn_scrollnode")))
 		return;
-	Cbuf_AddText(va("mn_textscroll %s %s", Cvar_VariableString("mn_scrollnode"), Cmd_Argv(1)));
+	Cbuf_AddText(va("mn_textscroll %s %s1;", Cvar_VariableString("mn_scrollnode"), Cmd_Argv(1)));
 }
 
 /**
