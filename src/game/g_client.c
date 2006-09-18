@@ -2525,6 +2525,10 @@ qboolean G_ReactionFire(edict_t * target, qboolean doShoot)
 				   and the shooter is still sane, don't shoot;
 				   well, if the shooter isn't sane anymore... */
 
+				/* Don't react in your own turn, trust your commander. */
+				if (ent->team == level.activeTeam)
+					continue;
+
 				/* Get player. */
 				player = game.players + ent->pnum;
 				if (!player)
