@@ -287,7 +287,6 @@ void GetEvent(SDL_Event *event)
 {
 	int key;
 	int p = 0;
-	static unsigned char KeyStates[K_LAST_KEY];
 
 	switch(event->type) {
 	case SDL_MOUSEBUTTONDOWN:
@@ -330,7 +329,7 @@ void GetEvent(SDL_Event *event)
 		break;
 	case SDL_KEYDOWN:
 		printkey(event);
-		if (KeyStates[K_ALT] && (event->key.keysym.sym == SDLK_RETURN)) {
+		if (event->key.keysym.mod & KMOD_ALT && event->key.keysym.sym == SDLK_RETURN) {
 			SDL_WM_ToggleFullScreen(surface);
 
 			if (surface->flags & SDL_FULLSCREEN) {
@@ -342,7 +341,7 @@ void GetEvent(SDL_Event *event)
 			break; /* ignore this key */
 		}
 
-		if (KeyStates[K_CTRL] && (event->key.keysym.sym == SDLK_g)) {
+		if (event->key.keysym.mod & KMOD_CTRL && event->key.keysym.sym == SDLK_g) {
 			SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
 			ri.Cvar_SetValue( "vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1 );
 			break; /* ignore this key */
@@ -350,7 +349,6 @@ void GetEvent(SDL_Event *event)
 
 		p = SDLateKey(&event->key.keysym, &key);
 		if (key) {
-			KeyStates[key] = 1;
 			keyq[keyq_head].key = key;
 			keyq[keyq_head].down = qtrue;
 			keyq_head = (keyq_head + 1) & 63;
@@ -366,7 +364,6 @@ void GetEvent(SDL_Event *event)
 	case SDL_KEYUP:
 		p = SDLateKey(&event->key.keysym, &key);
 		if (key) {
-			KeyStates[key] = 0;
 			keyq[keyq_head].key = key;
 			keyq[keyq_head].down = qfalse;
 			keyq_head = (keyq_head + 1) & 63;
