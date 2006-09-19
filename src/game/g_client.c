@@ -2125,7 +2125,7 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 	edict_t *ent;
 	item_t *weapon;
 	vec3_t dir, center, target, shotOrigin;
-	int i, ammo, wi, prev_dir, reaction_leftover, shots;
+	int i, ammo, wi, prev_dir = 0, reaction_leftover, shots;
 	int container, mask;
 
 	ent = g_edicts + num;
