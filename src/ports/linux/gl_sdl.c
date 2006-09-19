@@ -257,6 +257,8 @@ static int SDLateKey(SDL_keysym *keysym, int *key)
 		if (buf == '~')
 			*key = '~'; /* console HACK */
 	}
+	if (sdl_debug->value)
+		printf("unicode: %hx\n", keysym->unicode);
 
 	return buf;
 }
@@ -715,8 +717,10 @@ void RW_IN_Init(in_state_t *in_state_p)
 	/* mouse variables */
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0, NULL);
 	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE, NULL);
-	sdl_debug = ri.Cvar_Get ("sdl_debug", "0", 0, NULL);
 	sensitivity = ri.Cvar_Get ("sensitivity", "2", CVAR_ARCHIVE, NULL);
+
+	/* other cvars */
+	sdl_debug = ri.Cvar_Get ("sdl_debug", "0", 0, NULL);
 
 	mx = my = 0.0;
 	mouse_avail = qtrue;
