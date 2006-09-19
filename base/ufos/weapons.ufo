@@ -119,8 +119,8 @@ item fraggrenade
 		projtl	fraggren
 		impact	frag_explosion
 		hitbody frag_explosion
-		impsnd	misc/metalbreak.wav
-		bodysnd	misc/metalbreak.wav
+		impsnd	weapons/frag_grenade.wav
+		bodysnd	weapons/frag_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -143,8 +143,8 @@ item fraggrenade
 		projtl	fraggren
 		impact	frag_explosion
 		hitbody frag_explosion
-		impsnd	misc/metalbreak.wav
-		bodysnd	misc/metalbreak.wav
+		impsnd	weapons/frag_grenade.wav
+		bodysnd	weapons/frag_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
