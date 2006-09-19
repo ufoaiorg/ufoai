@@ -1526,6 +1526,8 @@ static void G_UpdateShotMock(shot_mock_t *mock, edict_t *shooter, edict_t *struc
 			/* FIXME: incorrect actor facing or shotOrg, or bug in trace code? */
 			/* FIXME: when self means hits on self (e.g. stepped on grenade), incr team instead */
 			mock->self += 1;
+		else if (!(struck->visflags & (1 << shooter->team)))
+			return;
 		else if (struck->team == TEAM_CIVILIAN)
 			mock->civilian += 1;
 		else if (struck->team == shooter->team)
