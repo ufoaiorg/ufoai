@@ -723,7 +723,7 @@ char **FS_ListFiles(char *findname, int *numfiles, unsigned musthave, unsigned c
 	char **list = NULL;
 	char tempList[MAX_FILES][MAX_OSPATH];
 
-	numfiles = 0;
+	*numfiles = 0;
 
 	s = Sys_FindFirst(findname, musthave, canthave);
 	while (s) {
