@@ -345,25 +345,27 @@ void GetEvent(SDL_Event *event)
 			keyq[keyq_head].down = qtrue;
 			keyq_head = (keyq_head + 1) & 63;
 		}
+#ifdef PARANOID
+		if (!key && !p)
+			Com_Printf("...strange\n");
+#endif
 
 		break;
 	case SDL_VIDEOEXPOSE:
 		break;
 	case SDL_KEYUP:
-		if (KeyStates[event->key.keysym.sym]) {
-			KeyStates[event->key.keysym.sym] = 0;
+		KeyStates[event->key.keysym.sym] = 0;
 
-			p = SDLateKey(&event->key.keysym, &key);
-			if (key) {
-				keyq[keyq_head].key = key;
-				keyq[keyq_head].down = qfalse;
-				keyq_head = (keyq_head + 1) & 63;
-			}
-			if (p) {
-				keyq[keyq_head].key = p;
-				keyq[keyq_head].down = qfalse;
-				keyq_head = (keyq_head + 1) & 63;
-			}
+		p = SDLateKey(&event->key.keysym, &key);
+		if (key) {
+			keyq[keyq_head].key = key;
+			keyq[keyq_head].down = qfalse;
+			keyq_head = (keyq_head + 1) & 63;
+		}
+		if (p) {
+			keyq[keyq_head].key = p;
+			keyq[keyq_head].down = qfalse;
+			keyq_head = (keyq_head + 1) & 63;
 		}
 		break;
 	case SDL_QUIT:
