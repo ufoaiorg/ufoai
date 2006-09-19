@@ -253,14 +253,13 @@ static int SDLateKey(SDL_keysym *keysym, int *key)
 			*key = (int) keysym->sym;
 		break;
 	}
-
-	if (keysym->unicode <= 127) {  /* maps to ASCII? */
-		buf = (int) keysym->unicode;
+	if ((keysym->unicode & 0xFF80) == 0) {  /* maps to ASCII? */
+		buf = (int) keysym->unicode & 0x7F;
 		if (buf == '~')
 			*key = '~'; /* console HACK */
 	}
 	if (sdl_debug->value)
-		printf("unicode: %hx\n", keysym->unicode);
+		printf("unicode: %hx keycode: %i key: %c\n", keysym->unicode, *key, *key);
 
 	return buf;
 }
@@ -357,7 +356,6 @@ void GetEvent(SDL_Event *event)
 			keyq_head = (keyq_head + 1) & 63;
 		}
 		if (p) {
-			KeyStates[p] = 1;
 			keyq[keyq_head].key = p;
 			keyq[keyq_head].down = qtrue;
 			keyq_head = (keyq_head + 1) & 63;
@@ -374,7 +372,6 @@ void GetEvent(SDL_Event *event)
 			keyq_head = (keyq_head + 1) & 63;
 		}
 		if (p) {
-			KeyStates[p] = 0;
 			keyq[keyq_head].key = p;
 			keyq[keyq_head].down = qfalse;
 			keyq_head = (keyq_head + 1) & 63;
