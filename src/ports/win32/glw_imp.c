@@ -231,7 +231,6 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		memset( &dm, 0, sizeof( dm ) );
 
 		dm.dmSize = sizeof( dm );
-
 		dm.dmPelsWidth  = width;
 		dm.dmPelsHeight = height;
 		dm.dmFields     = DM_PELSWIDTH | DM_PELSHEIGHT;
@@ -244,7 +243,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		} else {
 			HDC hdc = GetDC (NULL);
 			int displayref = GetDeviceCaps (hdc, VREFRESH);
-	                dm.dmDisplayFrequency	= displayref;
+			dm.dmDisplayFrequency	= displayref;
 			dm.dmFields				|= DM_DISPLAYFREQUENCY;
 			ri.Con_Printf(PRINT_ALL, "...using desktop frequency: %d hz\n", displayref);
 		}
@@ -279,7 +278,6 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 			*pheight = height;
 
 			ri.Con_Printf( PRINT_ALL, "failed\n" );
-
 			ri.Con_Printf( PRINT_ALL, "...calling CDS assuming dual monitors:" );
 
 			dm.dmPelsWidth = width * 2;
@@ -297,7 +295,6 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 			*/
 			if ( ChangeDisplaySettings( &dm, CDS_FULLSCREEN ) != DISP_CHANGE_SUCCESSFUL ) {
 				ri.Con_Printf( PRINT_ALL, " failed\n" );
-
 				ri.Con_Printf( PRINT_ALL, "...setting windowed mode\n" );
 
 				ChangeDisplaySettings( 0, 0 );
@@ -621,7 +618,6 @@ void GLimp_SetGamma(void)
 
 				if (v < 0.0f)
 					v = 0.0f;
-
 				else if (v > 1.0f)
 					v = 1.0f;
 

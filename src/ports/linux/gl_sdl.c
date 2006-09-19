@@ -44,6 +44,7 @@ qboolean have_stencil = qfalse;
 
 static cvar_t	*m_filter;
 static cvar_t	*in_mouse;
+static cvar_t	*sdl_debug;
 
 /* state struct passed in Init */
 static in_state_t *in_state;
@@ -252,14 +253,28 @@ static int SDLateKey(SDL_keysym *keysym, int *key)
 	}
 
 	if (keysym->unicode <= 127) {  /* maps to ASCII? */
-		int ch = (int) keysym->unicode;
-		if (ch == '~')
+		buf = (int) keysym->unicode;
+		if (buf == '~')
 			*key = '~'; /* console HACK */
-
-		buf = ch;
 	}
 
 	return buf;
+}
+
+/**
+ * @brief Debug function to print sdl key events
+ */
+static void printkey(const SDL_Event* event)
+{
+	if (sdl_debug->value) {
+		printf("key name: %s", SDL_GetKeyName(event->key.keysym.sym));
+		if(event->key.keysym.unicode) {
+			printf(" unicode: %hx", event->key.keysym.unicode);
+			if (event->key.keysym.unicode >= '0' && event->key.keysym.unicode <= '~')  /* printable? */
+				printf(" (%c)", (unsigned char)(event->key.keysym.unicode));
+		}
+		puts("");
+	}
 }
 
 /**
@@ -275,27 +290,27 @@ void GetEvent(SDL_Event *event)
 	case SDL_MOUSEBUTTONDOWN:
 	case SDL_MOUSEBUTTONUP:
 		switch (event->button.button) {
-			case  1:
+			case 1:
 				mouse_buttonstate = K_MOUSE1;
 				break;
-			case  2:
+			case 2:
 				mouse_buttonstate = K_MOUSE3;
 				break;
-			case  3:
+			case 3:
 				mouse_buttonstate = K_MOUSE2;
 				break;
-			case  4:
+			case 4:
 				mouse_buttonstate = K_MWHEELUP;
 				break;
-			case  5:
+			case 5:
 				mouse_buttonstate = K_MWHEELDOWN;
 				break;
-#if 0
-			case  6:
-				mouse_buttonstate = K_MOUSE4; break;
-			case  7:
-				mouse_buttonstate = K_MOUSE5; break;
-#endif
+			case 6:
+				mouse_buttonstate = K_MOUSE4;
+				break;
+			case 7:
+				mouse_buttonstate = K_MOUSE5;
+				break;
 			default:
 				mouse_buttonstate = K_AUX1 + (event->button.button - 8) % 16;
 				break;
@@ -311,6 +326,7 @@ void GetEvent(SDL_Event *event)
 		}
 		break;
 	case SDL_KEYDOWN:
+		printkey(event);
 		if ( (KeyStates[SDLK_LALT] || KeyStates[SDLK_RALT]) &&
 			(event->key.keysym.sym == SDLK_RETURN) ) {
 
@@ -345,11 +361,6 @@ void GetEvent(SDL_Event *event)
 			keyq[keyq_head].down = qtrue;
 			keyq_head = (keyq_head + 1) & 63;
 		}
-#ifdef PARANOID
-		if (!key && !p)
-			Com_Printf("...strange\n");
-#endif
-
 		break;
 	case SDL_VIDEOEXPOSE:
 		break;
@@ -704,7 +715,7 @@ void RW_IN_Init(in_state_t *in_state_p)
 	/* mouse variables */
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0, NULL);
 	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE, NULL);
-
+	sdl_debug = ri.Cvar_Get ("sdl_debug", "0", 0, NULL);
 	sensitivity = ri.Cvar_Get ("sensitivity", "2", CVAR_ARCHIVE, NULL);
 
 	mx = my = 0.0;
