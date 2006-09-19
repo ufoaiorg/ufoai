@@ -94,189 +94,172 @@ void RW_IN_Activate(qboolean active)
 /**
   * @brief Translate the keys to ufo keys
   */
-int SDLateKey(SDL_KeyboardEvent sdlke)
+static int SDLateKey(SDL_keysym *keysym, int *key)
 {
-	int keysym = sdlke.keysym.sym;
-	int key = 0;
+	int buf = 0;
+	*key = 0;
 
-	/* these happen to match the ASCII chars. */
-	if ((keysym >= ' ') && (keysym <= '~')) {
-		key = keysym;
-	} else
-		switch (keysym) {
-		case SDLK_KP9:
-			key = K_KP_PGUP;
-			break;
-		case SDLK_PAGEUP:
-			key = K_PGUP;
-			break;
-		case SDLK_KP3:
-			key = K_KP_PGDN;
-			break;
-		case SDLK_PAGEDOWN:
-			key = K_PGDN;
-			break;
-		case SDLK_KP7:
-			key = K_KP_HOME;
-			break;
-		case SDLK_HOME:
-			key = K_HOME;
-			break;
-		case SDLK_KP1:
-			key = K_KP_END;
-			break;
-		case SDLK_END:
-			key = K_END;
-			break;
-		case SDLK_KP4:
-			key = K_KP_LEFTARROW;
-			break;
-		case SDLK_LEFT:
-			key = K_LEFTARROW;
-			break;
-		case SDLK_KP6:
-			key = K_KP_RIGHTARROW;
-			break;
-		case SDLK_RIGHT:
-			key = K_RIGHTARROW;
-			break;
-		case SDLK_KP2:
-			key = K_KP_DOWNARROW;
-			break;
-		case SDLK_DOWN:
-			key = K_DOWNARROW;
-			break;
-		case SDLK_KP8:
-			key = K_KP_UPARROW;
-			break;
-		case SDLK_UP:
-			key = K_UPARROW;
-			break;
-		case SDLK_ESCAPE:
-			key = K_ESCAPE;
-			break;
-		case SDLK_KP_ENTER:
-			key = K_KP_ENTER;
-			break;
-		case SDLK_RETURN:
-			key = K_ENTER;
-			break;
-		case SDLK_TAB:
-			key = K_TAB;
-			break;
-		case SDLK_F1:
-			key = K_F1;
-			break;
-		case SDLK_F2:
-			key = K_F2;
-			break;
-		case SDLK_F3:
-			key = K_F3;
-			break;
-		case SDLK_F4:
-			key = K_F4;
-			break;
-		case SDLK_F5:
-			key = K_F5;
-			break;
-		case SDLK_F6:
-			key = K_F6;
-			break;
-		case SDLK_F7:
-			key = K_F7;
-			break;
-		case SDLK_F8:
-			key = K_F8;
-			break;
-		case SDLK_F9:
-			key = K_F9;
-			break;
-		case SDLK_F10:
-			key = K_F10;
-			break;
-		case SDLK_F11:
-			key = K_F11;
-			break;
-		case SDLK_F12:
-			key = K_F12;
-			break;
-		case SDLK_BACKSPACE:
-			key = K_BACKSPACE;
-			break;
-		case SDLK_KP_PERIOD:
-			key = K_KP_DEL;
-			break;
-		case SDLK_DELETE:
-			key = K_DEL;
-			break;
-		case SDLK_PAUSE:
-			key = K_PAUSE;
-			break;
-		case SDLK_LSHIFT:
-		case SDLK_RSHIFT:
-			key = K_SHIFT;
-			break;
-		case SDLK_LCTRL:
-		case SDLK_RCTRL:
-			key = K_CTRL;
-			break;
-		case SDLK_LMETA:
-		case SDLK_RMETA:
-		case SDLK_LALT:
-		case SDLK_RALT:
-			key = K_ALT;
-			break;
-		case SDLK_KP5:
-			key = K_KP_5;
-			break;
-		case SDLK_INSERT:
-			key = K_INS;
-			break;
-		case SDLK_KP0:
-			key = K_KP_INS;
-			break;
-		case SDLK_KP_MULTIPLY:
-			key = '*';
-			break;
-		case SDLK_KP_PLUS:
-			key = K_KP_PLUS;
-			break;
-		case SDLK_KP_MINUS:
-			key = K_KP_MINUS;
-			break;
-		case SDLK_KP_DIVIDE:
-			key = K_KP_SLASH;
-			break;
-		/* suggestions on how to handle this better would be appreciated */
-		case SDLK_WORLD_7:
-			key = '`';
-			break;
-		/* French keyboard */
-		case 178:
-			key = '~';
-			break;
+	switch (keysym->sym) {
+	case SDLK_KP9:
+		*key = K_KP_PGUP;
+		break;
+	case SDLK_PAGEUP:
+		*key = K_PGUP;
+		break;
+	case SDLK_KP3:
+		*key = K_KP_PGDN;
+		break;
+	case SDLK_PAGEDOWN:
+		*key = K_PGDN;
+		break;
+	case SDLK_KP7:
+		*key = K_KP_HOME;
+		break;
+	case SDLK_HOME:
+		*key = K_HOME;
+		break;
+	case SDLK_KP1:
+		*key = K_KP_END;
+		break;
+	case SDLK_END:
+		*key = K_END;
+		break;
+	case SDLK_KP4:
+		*key = K_KP_LEFTARROW;
+		break;
+	case SDLK_LEFT:
+		*key = K_LEFTARROW;
+		break;
+	case SDLK_KP6:
+		*key = K_KP_RIGHTARROW;
+		break;
+	case SDLK_RIGHT:
+		*key = K_RIGHTARROW;
+		break;
+	case SDLK_KP2:
+		*key = K_KP_DOWNARROW;
+		break;
+	case SDLK_DOWN:
+		*key = K_DOWNARROW;
+		break;
+	case SDLK_KP8:
+		*key = K_KP_UPARROW;
+		break;
+	case SDLK_UP:
+		*key = K_UPARROW;
+		break;
+	case SDLK_ESCAPE:
+		*key = K_ESCAPE;
+		break;
+	case SDLK_KP_ENTER:
+		*key = K_KP_ENTER;
+		break;
+	case SDLK_RETURN:
+		*key = K_ENTER;
+		break;
+	case SDLK_TAB:
+		*key = K_TAB;
+		break;
+	case SDLK_F1:
+		*key = K_F1;
+		break;
+	case SDLK_F2:
+		*key = K_F2;
+		break;
+	case SDLK_F3:
+		*key = K_F3;
+		break;
+	case SDLK_F4:
+		*key = K_F4;
+		break;
+	case SDLK_F5:
+		*key = K_F5;
+		break;
+	case SDLK_F6:
+		*key = K_F6;
+		break;
+	case SDLK_F7:
+		*key = K_F7;
+		break;
+	case SDLK_F8:
+		*key = K_F8;
+		break;
+	case SDLK_F9:
+		*key = K_F9;
+		break;
+	case SDLK_F10:
+		*key = K_F10;
+		break;
+	case SDLK_F11:
+		*key = K_F11;
+		break;
+	case SDLK_F12:
+		*key = K_F12;
+		break;
+	case SDLK_BACKSPACE:
+		*key = K_BACKSPACE;
+		break;
+	case SDLK_KP_PERIOD:
+		*key = K_KP_DEL;
+		break;
+	case SDLK_DELETE:
+		*key = K_DEL;
+		break;
+	case SDLK_PAUSE:
+		*key = K_PAUSE;
+		break;
+	case SDLK_LSHIFT:
+	case SDLK_RSHIFT:
+		*key = K_SHIFT;
+		break;
+	case SDLK_LCTRL:
+	case SDLK_RCTRL:
+		*key = K_CTRL;
+		break;
+	case SDLK_LMETA:
+	case SDLK_RMETA:
+	case SDLK_LALT:
+	case SDLK_RALT:
+		*key = K_ALT;
+		break;
+	case SDLK_KP5:
+		*key = K_KP_5;
+		break;
+	case SDLK_INSERT:
+		*key = K_INS;
+		break;
+	case SDLK_KP0:
+		*key = K_KP_INS;
+		break;
+	case SDLK_KP_MULTIPLY:
+		*key = '*';
+		break;
+	case SDLK_KP_PLUS:
+		*key = K_KP_PLUS;
+		break;
+	case SDLK_KP_MINUS:
+		*key = K_KP_MINUS;
+		break;
+	case SDLK_KP_DIVIDE:
+		*key = K_KP_SLASH;
+		break;
+	/* suggestions on how to handle this better would be appreciated */
+	case SDLK_WORLD_7:
+		*key = '`';
+		break;
+	default:
+		break;
+	}
 
-		default:
-#if 0
-			if( keysym >= 128 )
-				key = sdlke.keysym.unicode;
-			else
-				key = keysym;
-#endif
-#if 0
-			if (sdlke.keysym.unicode < 256) {
-				/* If the translated key is between 0 and 256, it's ok */
-				key = sdlke.keysym.unicode;
-				if (key <= 0)
-					key = keysym;
-			} else
-				/* The key don't fit in the Quake3 keyboard array */
-				key = 0;
-#endif
-			break;
-		}
+	if (keysym->unicode <= 127) {  /* maps to ASCII? */
+		int ch = (int) keysym->unicode;
+		if (ch == '~')
+			*key = '~'; /* console HACK */
 
-	return key;
+		buf = ch;
+	}
+
+	return buf;
 }
 
 /**
@@ -284,7 +267,8 @@ int SDLateKey(SDL_KeyboardEvent sdlke)
  */
 void GetEvent(SDL_Event *event)
 {
-	unsigned int key;
+	int key;
+	int p = 0;
 	static unsigned char KeyStates[SDLK_LAST];
 
 	switch(event->type) {
@@ -350,12 +334,18 @@ void GetEvent(SDL_Event *event)
 
 		KeyStates[event->key.keysym.sym] = 1;
 
-		key = SDLateKey(event->key);
+		p = SDLateKey(&event->key.keysym, &key);
 		if (key) {
 			keyq[keyq_head].key = key;
 			keyq[keyq_head].down = qtrue;
 			keyq_head = (keyq_head + 1) & 63;
 		}
+		if (p) {
+			keyq[keyq_head].key = p;
+			keyq[keyq_head].down = qtrue;
+			keyq_head = (keyq_head + 1) & 63;
+		}
+
 		break;
 	case SDL_VIDEOEXPOSE:
 		break;
@@ -363,9 +353,14 @@ void GetEvent(SDL_Event *event)
 		if (KeyStates[event->key.keysym.sym]) {
 			KeyStates[event->key.keysym.sym] = 0;
 
-			key = SDLateKey(event->key);
+			p = SDLateKey(&event->key.keysym, &key);
 			if (key) {
 				keyq[keyq_head].key = key;
+				keyq[keyq_head].down = qfalse;
+				keyq_head = (keyq_head + 1) & 63;
+			}
+			if (p) {
+				keyq[keyq_head].key = p;
 				keyq[keyq_head].down = qfalse;
 				keyq_head = (keyq_head + 1) & 63;
 			}
