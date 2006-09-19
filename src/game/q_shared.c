@@ -1199,6 +1199,25 @@ float crand(void)
 }
 
 /**
+ * @brief generate two gaussian distributed random numbers with median at 0 and stdev of 1
+ * @param pointers to two floats that need to be set. both have to be provided.
+ */
+void gaussrand(float *gauss1, float *gauss2)
+{
+	float x1,x2,w;
+
+	do {
+		x1 = crand();
+		x2 = crand();
+		w = x1 * x1 + x2 * x2;
+	} while ( w >= 1.0 );
+
+	w = sqrt( (-2.0 * logf (w) ) / w );
+	*gauss1 = x1 * w;
+	*gauss2 = x2 * w;
+}
+
+/**
  * @brief
  * @param
  * @sa Com_SkipTokens

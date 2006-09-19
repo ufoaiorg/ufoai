@@ -1913,6 +1913,8 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 	trace_t tr;	/* ?? TODO */
 	float acc;	/* Accuracy modifier for the angle of the shot. */
 	float range;	/* ?? TODO */
+	float gauss1;
+	float gauss2;   /* For storing 2 gaussian distributed random values. */
 	int bounce;	/* ?? TODO */
 	int damage;	/* The damage to be dealt to the target. */
 	byte flags;	/* ?? TODO */
@@ -1929,13 +1931,16 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 	/* Get accuracy value for this attacker. */
 	acc = GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.skills[fd->weaponSkill] : 0);
 
+	/* Get 2 gaussian distributed random values */
+	gaussrand(&gauss1, &gauss2);
+
 	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
 	if ((ent->state & STATE_CROUCHED) && fd->crouch) {
-		angles[PITCH] += crand() * fd->spread[0] * fd->crouch * acc;
-		angles[YAW] += crand() * fd->spread[1] * fd->crouch * acc;
+		angles[PITCH] += gauss1 * fd->spread[0] * fd->crouch * acc;
+		angles[YAW] += gauss2 * fd->spread[1] * fd->crouch * acc;
 	} else {
-		angles[PITCH] += crand() * fd->spread[0] * acc;
-		angles[YAW] += crand() * fd->spread[1] * acc;
+		angles[PITCH] += gauss1 * fd->spread[0] * acc;
+		angles[YAW] += gauss2 * fd->spread[1] * acc;
 	}
 	/* Convert changed angles into new direction. */
 	AngleVectors(angles, dir, NULL, NULL);
@@ -2472,7 +2477,7 @@ static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, i
 	int ff, i, maxff, minhit;
 
 	shooter = g_edicts + num;
-	
+
 	minhit = shooter->reaction_minhit;
 	if (shooter->state & STATE_INSANE)
 		maxff = 100;
