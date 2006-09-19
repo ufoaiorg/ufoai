@@ -1559,7 +1559,7 @@ void CL_ParseResults(sizebuf_t * buf)
 
 		ccs.civiliansKilled += num_kills[TEAM_ALIEN][TEAM_CIVILIAN] + num_kills[we][TEAM_CIVILIAN] + num_kills[TEAM_CIVILIAN][TEAM_CIVILIAN];
 
-		Q_strcat(resultText, va(_("Items looted and sold\t%i\n"), number_items),sizeof(resultText));
+		Q_strcat(resultText, va(_("Items salvaged and sold\t%i\n"), number_items),sizeof(resultText));
 		Q_strcat(resultText, va(_("Total item sale value\t%i\n\n"), credits_gained),sizeof(resultText));
 
 		MN_PopMenu(qtrue);
