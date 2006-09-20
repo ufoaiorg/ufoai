@@ -3,7 +3,6 @@
 
 #include <sys/stat.h>
 
-#include "../ufo2map/common/cmdlib.h"
 #include "../ufo2map/common/scriplib.h"
 #include "../ufo2map/common/mathlib.h"
 #include "../ufo2map/common/lbmlib.h"
