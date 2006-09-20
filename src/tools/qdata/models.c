@@ -459,7 +459,7 @@ void BuildGlCmds (void)
 	int		i, j, k;
 	int		startv;
 	float	s, t;
-	int		len, bestlen, besttype;
+	int		len, bestlen, besttype = 0;
 	int		best_xyz[1024];
 	int		best_st[1024];
 	int		best_tris[1024];
