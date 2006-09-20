@@ -2684,6 +2684,7 @@ qboolean G_ReactionFire(edict_t * target, qboolean doShoot)
 					 && gi.csi->ods[RIGHT(ent)->item.t].weapon
 					 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
 						 || RIGHT(ent)->item.a > 0)
+					 && gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->value <= ent->TU
 					 && gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
 					fired = !doShoot ? qtrue : G_FireWithJudgementCall(player, ent->number, target->pos, ST_RIGHT_PRIMARY_REACTION);
 				}
@@ -2693,7 +2694,8 @@ qboolean G_ReactionFire(edict_t * target, qboolean doShoot)
 					&& gi.csi->ods[LEFT(ent)->item.t].weapon
 					&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 						|| LEFT(ent)->item.a > 0)
-					&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_SECONDARY].range > VectorDist(ent->origin, target->origin) ) {
+					&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->value <= ent->TU
+					&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
 					fired = !doShoot ? qtrue : G_FireWithJudgementCall(player, ent->number, target->pos, ST_LEFT_PRIMARY_REACTION);
 				}
 
