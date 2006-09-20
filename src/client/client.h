@@ -692,6 +692,7 @@ typedef struct radar_s {
 	int numUfos;					/* Num ufos sensored by radar */
 } radar_t;
 
+extern void RADAR_DrawCoverage(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
 extern void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, int x, int y, vec2_t pos);
 extern void RADAR_RemoveUfo(radar_t* radar, const struct aircraft_s* ufo);
 extern void Radar_NotifyUfoRemoved(radar_t* radar, const struct aircraft_s* ufo);

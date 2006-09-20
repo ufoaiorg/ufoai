@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec2_t pos);
 extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos);
 static qboolean RADAR_AddUfo(radar_t* radar, int numUfo);
 static int RADAR_IsUfoSensored(const radar_t* radar, int numUfo);
@@ -36,30 +37,27 @@ extern void Radar_Initialise(radar_t* radar, int range);
 extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 	const aircraft_t* ufo, qboolean wasUfoSensored);
 
-/**
- * @brief Display radar in geoscape
- */
 #define RADAR_DRAW_POINTS	60
-extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos)
+/** 
+ * @brief Show Radar coverage
+ */
+extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec2_t pos) 
 {
+	int i, xCircle, yCircle;
 	int pts[RADAR_DRAW_POINTS * 2 + 2];
 	int pts2[RADAR_DRAW_POINTS * 2 + 2];
-	int i, xCircle, yCircle;
-	vec4_t color = {0, 1, 0, 1};
-	vec2_t posCircle;
-	float cosinus, sinus, rangeTracking;
 
-	if (radar->numUfos <= 0)
-		return;
-	
+	vec4_t color = {0, 1, 0, 1};
 	/* Set color */
 	re.DrawColor(color);
 
-	/* Show radar range zones */
+	vec2_t posCircle;
+	float cosinus, sinus, rangeTracking;
+
 	rangeTracking = radar->range + radar->range / 10.0f;
 	for ( i = 0 ; i <= RADAR_DRAW_POINTS ; i++ ) {
-    	cosinus = cos(i * 6.283185306 / RADAR_DRAW_POINTS);
-    	sinus = sin(i * 6.283185306 / RADAR_DRAW_POINTS);
+		cosinus = cos(i * 6.283185306 / RADAR_DRAW_POINTS);
+		sinus = sin(i * 6.283185306 / RADAR_DRAW_POINTS);
 		posCircle[0] = pos[0] + cosinus * radar->range;
 		posCircle[1] = pos[1] + sinus * radar->range;
 		MAP_MapToScreen(node, posCircle, &xCircle, &yCircle);
@@ -73,7 +71,26 @@ extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x,
 	}
 	re.DrawLineStrip(RADAR_DRAW_POINTS + 1, pts);
 	re.DrawLineStrip(RADAR_DRAW_POINTS + 1, pts2);
-	/*re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor");*/
+	re.DrawColor(NULL);
+}
+
+/**
+ * @brief Display radar in geoscape
+ */
+extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos)
+{
+	int i;
+	vec4_t color = {0, 1, 0, 1};
+	int pts[4];
+
+	if (radar->numUfos==0) 
+		return;
+
+	/* Show radar range zones */
+	RADAR_DrawCoverage(node,radar,pos);
+
+	/* Set color */
+	re.DrawColor(color);
 
 	/* Draw lines from radar to ufos sensored */
 	Vector2Set(pts, x, y);
@@ -93,7 +110,7 @@ static qboolean RADAR_AddUfo(radar_t* radar, int numUfo)
 {
 	if (radar->numUfos >= MAX_UFOONGEOSCAPE)
 		return qfalse;
-	
+
 	radar->ufos[radar->numUfos] = numUfo;
 	radar->numUfos++;
 	return qtrue;
@@ -105,7 +122,7 @@ static qboolean RADAR_AddUfo(radar_t* radar, int numUfo)
 static int RADAR_IsUfoSensored(const radar_t* radar, int numUfo)
 {
 	int i;
-	
+
 	for (i = 0 ; i < radar->numUfos ; i++)
 		if (radar->ufos[i] == numUfo)
 			return i;
@@ -134,7 +151,7 @@ extern void RADAR_RemoveUfo(radar_t* radar, const aircraft_t* ufo)
 extern void Radar_NotifyUfoRemoved(radar_t* radar, const aircraft_t* ufo)
 {
 	int i, numUfo = ufo - gd.ufos;
-	
+
 	for (i = 0 ; i < radar->numUfos ; i++)
 		if (radar->ufos[i] == numUfo) {
 			radar->numUfos--;

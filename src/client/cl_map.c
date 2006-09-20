@@ -725,7 +725,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 {
 	float q;
-
+	base_t* base;
 	/* Draw the map and markers */
 	if (map3D) {
 		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
@@ -745,6 +745,10 @@ extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 	menuText[TEXT_STANDARD] = NULL;
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
+		for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--)
+			/* Draw base radar info */
+			RADAR_DrawCoverage(node, &(base->radar),base->pos);
+
 		menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
 		return;
 	case MA_BASEATTACK:
