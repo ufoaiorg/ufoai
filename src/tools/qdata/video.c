@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qdata.h"
 
+/* #define DUMPCHUNKS */
+
 byte	*soundtrack;
 char	base[32];
 
@@ -106,7 +108,7 @@ static void FindNextChunk(char *name)
 /*			Sys_Error ("FindNextChunk: %i length is past the 1 meg sanity limit", iff_chunk_len); */
 		data_p -= 8;
 		last_chunk = data_p + 8 + ( (iff_chunk_len + 1) & ~1 );
-		if (!strncmp(data_p, name, 4))
+		if (!strncmp((char*)data_p, name, 4))
 			return;
 	}
 }
@@ -120,7 +122,7 @@ static void FindChunk(char *name)
 	FindNextChunk (name);
 }
 
-
+#ifdef DUMPCHUNKS
 /**
  * @brief
  */
@@ -138,6 +140,7 @@ static void DumpChunks(void)
 		data_p += (iff_chunk_len + 1) & ~1;
 	} while (data_p < iff_end);
 }
+#endif
 
 /**
  * @brief
@@ -159,13 +162,16 @@ static wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 
 	/* find "RIFF" chunk */
 	FindChunk("RIFF");
-	if (!(data_p && !strncmp(data_p+8, "WAVE", 4))) {
+	if (!(data_p && !strncmp((char*)data_p+8, "WAVE", 4))) {
 		printf("Missing RIFF/WAVE chunks\n");
 		return info;
 	}
 
 	/* get "fmt " chunk */
 	iff_data = data_p + 12;
+#ifdef DUMPCHUNKS
+	DumpChunks();
+#endif
 
 	FindChunk("fmt ");
 	if (!data_p) {
@@ -194,7 +200,7 @@ static wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 		/* if the next chunk is a LIST chunk, look for a cue length marker */
 		FindNextChunk ("LIST");
 		if (data_p) {
-			if (!strncmp (data_p + 28, "mark", 4)) {
+			if (!strncmp ((char*)data_p + 28, "mark", 4)) {
 				/* this is not a proper parse, but it works with cooledit... */
 				data_p += 24;
 				i = GetLittleLong ();	/* samples in loop */
@@ -1102,7 +1108,7 @@ void Cmd_Video (void)
 
 	/* build the dictionary */
 	for ( frame=startframe ;  ; frame++) {
-		printf ("counting ", frame);
+		printf ("counting %i ", frame);
 		in = LoadFrame (base, frame, digits, &palette);
 		if (!in.data)
 			break;
@@ -1118,7 +1124,7 @@ void Cmd_Video (void)
 
 	/* compress it with the dictionary */
 	for (frame=startframe ;  ; frame++) {
-		printf ("packing ", frame);
+		printf ("packing %i ", frame);
 		in = LoadFrame (base, frame, digits, &palette);
 		if (!in.data)
 			break;
@@ -1160,7 +1166,7 @@ void Cmd_Video (void)
 	command = 2;
 	fwrite (&command, 1, 4, output);
 
-	printf ("Total size: %i\n", ftell (output));
+	printf ("Total size: %li\n", ftell (output));
 
 	fclose (output);
 

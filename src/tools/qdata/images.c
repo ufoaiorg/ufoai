@@ -618,7 +618,7 @@ void Cmd_Mipdir (void)
 	GetToken (qfalse);
 	strcpy (mip_prefix, token);
 	/* create the directory if needed */
-	sprintf (filename, "%stextures", gamedir, mip_prefix);
+	sprintf (filename, "%stextures", gamedir);
 	Q_mkdir (filename);
 	sprintf (filename, "%stextures/%s", gamedir, mip_prefix);
 	Q_mkdir (filename);

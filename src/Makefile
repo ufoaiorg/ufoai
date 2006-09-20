@@ -1368,6 +1368,7 @@ cleanrenderer2:
 	$(BUILDDIR)/ref_sdl.$(SHLIBEXT) \
 	$(BUILDDIR)/ref_glx.$(SHLIBEXT) \
 	$(BUILDDIR)/snd_sdl.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_arts.$(SHLIBEXT) \
 	$(BUILDDIR)/snd_oss.$(SHLIBEXT) \
 	$(BUILDDIR)/snd_alsa.$(SHLIBEXT)
 
@@ -1379,6 +1380,7 @@ clean-release:
 
 clean2:
 	rm -f \
+	$(QDATA_OBJS) \
 	$(TOOLS_OBJS) \
 	$(QUAKE2_OBJS) \
 	$(QUAKE2_AS_OBJS) \
@@ -1397,6 +1399,7 @@ clean2:
 	$(BUILDDIR)/ref_glx.$(SHLIBEXT) \
 	$(BUILDDIR)/snd_sdl.$(SHLIBEXT) \
 	$(BUILDDIR)/snd_oss.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_arts.$(SHLIBEXT) \
 	$(BUILDDIR)/snd_alsa.$(SHLIBEXT) \
 	$(BUILDDIR)/ufoded
 
