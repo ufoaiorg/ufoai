@@ -49,10 +49,70 @@ menu althud
 		rclick	{ cmd "mn_push physdata;" }
 	}
 
+
+	// ==================
+	// CHAT BUTTONS
+	// ==================
+	pic bar_chat
+	{
+		if	"maxclients >= 2"
+		image	hud/bar_chat
+		pos		"1024 580"
+		align	"ur"
+		out	{
+				*bar_chat image hud/bar_chat
+				*bar_chat size "64 64"
+				cmd "mn_showchatbuttons 0"
+			}
+		in	{
+				*bar_chat image hud/bar_chat_choice
+				*bar_chat size "128 64"
+				cmd "mn_showchatbuttons 1"
+			}
+	}
+	pic bar_chat_all
+	{
+		if	"mn_showchatbuttons == 1"
+		tooltip	"_Chat"
+		image	hud/button_chat
+		pos		"976 592"
+		align	"ur"
+		texl	"0 0"
+		texh	"32 32"
+		click {
+				cmd	"messagesay"
+			}
+	}
+	pic bar_chat_team
+	{
+		if	"mn_showchatbuttons == 1"
+		tooltip	"_Teamchat"
+		image	hud/button_chat
+		pos		"938 592"
+		align	"ur"
+		texl	"32 0"
+		texh	"64 32"
+		click {
+				cmd	"messagesayteam"
+			}
+	}
+
+	pic button_chat
+	{
+		if	"maxclients >= 2"
+		tooltip	"_Chat messages"
+		image	menu/event_log
+		texl	"0 0"
+		texh	"32 36"
+		pos	"985 590"
+		mousefx false
+		in
+	}
+
 	pic bar_floor
 	{
 		image	althud/bar_floor
-		pos		"960 600"
+		pos		"960 630"
 		click { }
 	}
 
@@ -496,16 +556,26 @@ menu althud
 		click	{ cmd togglereaction; }
 	}
 
-	// FIXME: No reload left
-	pic reload
+	pic bt_reloadright
 	{
-		tooltip	"_Reload weapon"
+		tooltip	"_Reload right hand weapon"
 		image	althud/buttons_althud1
 		pos		"991 497"
 		texl	"0 37"
 		texh	"25 70"
 		mousefx	true
 		click	{ cmd reloadright; }
+	}
+
+	pic bt_reloadleft
+	{
+		tooltip	"_Reload left hand weapon"
+		image	althud/buttons_althud1
+		pos		"991 497"
+		texl	"0 37"
+		texh	"25 70"
+		mousefx	true
+		click	{ cmd reloadleft; }
 	}
 
 	confunc tostanda  { *bt_duck texl "27 37" *bt_duck texh "52 70" }
@@ -527,7 +597,7 @@ menu althud
 		tooltip	"_Level up"
 		image	althud/buttons_althud1
 		mousefx true
-		pos		"991 618"
+		pos		"991 648"
 		texl	"54 74"
 		texh	"79 107"
 		click	{ cmd "mn_modify cl_worldlevel +1 0 7;" }
@@ -537,7 +607,7 @@ menu althud
 		tooltip	"_Level down"
 		image	althud/buttons_althud1
 		mousefx true
-		pos		"991 693"
+		pos		"991 723"
 		texl	"81 74"
 		texh	"106 107"
 		click	{ cmd "mn_modify cl_worldlevel -1 0 7;" }
@@ -568,6 +638,8 @@ menu althud
 		*left  invis true  *ammoleft  invis true
 		*bt_primaryright invis false *bt_secondaryright invis false
 		*bt_primaryleft  invis true  *bt_secondaryleft  invis true
+		*bt_reloadright invis false
+		*bt_reloadleft  invis true
 	}
 	func show_leftweapon
 	{
@@ -575,6 +647,8 @@ menu althud
 		*left  invis false *ammoleft  invis false
 		*bt_primaryright invis true  *bt_secondaryright invis true
 		*bt_primaryleft  invis false *bt_secondaryleft  invis false
+		*bt_reloadright invis true
+		*bt_reloadleft  invis false
 	}
 
 	pic teamnum_dec
@@ -634,8 +708,8 @@ menu althud
 	string str_floor
 	{
 		string	"*cvar cl_worldlevel"
-		pos		"1005 664"
-		align	uc
+		pos		"1005 700"
+		align	cc
 	}
 
 	// ==================
@@ -915,5 +989,6 @@ menu althud
 		cmd "set hud_refresh 1;"
 		cmd "ov_start;"
 		show_rightweapon
+		cmd "set mn_showchatbuttons 0;"
 	}
 }
