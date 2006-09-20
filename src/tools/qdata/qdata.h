@@ -1,10 +1,6 @@
 /* qdata.h */
 
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
 #include <sys/stat.h>
 
 #include "../ufo2map/common/cmdlib.h"
