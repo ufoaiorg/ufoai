@@ -127,7 +127,7 @@ menu options
 
 	func init
 	{
-		cmd "mn_escpop 2;"
+		cmd "mn_escpop 3;"
 		cmd "mn_push options_video;"
 	}
 }
@@ -175,6 +175,19 @@ menu options_video
 		texh	"32 16"
 		mousefx	true
 		click	{ cmd "mn_resolution_change +;" }
+	}
+
+	pic res_test_pic
+	{
+		image	menu/buttons_small
+		pos	"750 140"
+		texl	"32 0"
+		texh	"47 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_push popup_maintain_resolution;"
+		}
 	}
 
 	string full_str
@@ -469,8 +482,91 @@ menu options_video
 	}
 	func close
 	{
-		cmd "copy gl_mode mn_glmode;"
+		//cmd "copy gl_mode mn_glmode;"
 	}
+}
+
+// ==================
+// POPUP MAINTAIN RESOLUTION
+// ==================
+
+menu popup_maintain_resolution
+{
+	zone popup
+	{
+		invis false
+		timeout 4000
+	}
+	pic back
+	{
+		image	menu/popup
+		pos		"0 0"
+	}
+
+	string title
+	{
+		string	"_Maintain resolution"
+		pos	"34 20"
+		font	f_big
+	}
+
+	string name_label
+	{
+		string	"_Want To Maintain resolution"
+		pos	"34 64"
+	}
+
+	pic bt_cancel
+	{
+		tooltip	"_Close this dialog"
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 33"
+		pos	"34 194"
+		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		click	{ cmd "mn_pop; copy new_glmode old_glmode;" }
+	}
+	pic bt_change
+	{
+		tooltip	"_Change the resolution"
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 33"
+		pos	"304 194"
+		out	{ *string_accept color "0 0.5 0 1" *bt_change image menu/multi_buttons3 }
+		in	{ *string_accept color "1 1 1 1" *bt_change image menu/multi_buttons3a }
+		click	{ cmd "mn_pop; copy new_glmode mn_glmode;" }
+	}
+	string string_cancel
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Cancel"
+		pos	"124 192"
+		align	uc
+	}
+	string string_accept
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Accept"
+		pos	"394 192"
+		align	uc
+	}
+
+	func init
+	{
+		cmd "copy old_glmode gl_mode;"
+		cmd "copy gl_mode mn_glmode;"
+		cmd "copy new_glmode old_glmode;"
+	}
+
+	func close
+	{
+		cmd "copy gl_mode new_glmode;"
+	}
+
 }
 
 
