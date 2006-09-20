@@ -4,8 +4,8 @@
  */
 
 #include <stdio.h>
-#include "cmdlib.h"
-#include "mathlib.h"
+#include "../../ufo2map/common/cmdlib.h"
+#include "../../ufo2map/common/mathlib.h"
 #include "trilib.h"
 
 /* on disk representation of a face */

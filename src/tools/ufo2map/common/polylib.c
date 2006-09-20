@@ -39,23 +39,14 @@ int	c_winding_points;
 
 #define	BOGUS_RANGE	8192
 
-void pw(winding_t *w)
-{
-	int		i;
-	for (i=0 ; i<w->numpoints ; i++)
-		printf ("(%5.1f, %5.1f, %5.1f)\n",w->p[i][0], w->p[i][1],w->p[i][2]);
-}
-
-
-/*
-=============
-AllocWinding
-=============
-*/
+/**
+ * @brief
+ * @sa FreeWinding
+ */
 winding_t *AllocWinding (int points)
 {
-	winding_t	*w;
-	int			s;
+	winding_t *w;
+	int s;
 
 	if (numthreads == 1) {
 		c_winding_allocs++;
@@ -70,6 +61,10 @@ winding_t *AllocWinding (int points)
 	return w;
 }
 
+/**
+ * @brief
+ * @sa AllocWinding
+ */
 void FreeWinding (winding_t *w)
 {
 	if (*(unsigned *)w == 0xdeaddead)
@@ -81,13 +76,11 @@ void FreeWinding (winding_t *w)
 	free (w);
 }
 
-/*
-============
-RemoveColinearPoints
-============
-*/
-int	c_removed;
+static int c_removed;
 
+/**
+ * @brief
+ */
 void RemoveColinearPoints (winding_t *w)
 {
 	int		i, j, k;
@@ -118,11 +111,9 @@ void RemoveColinearPoints (winding_t *w)
 	memcpy (w->p, p, nump*sizeof(p[0]));
 }
 
-/*
-============
-WindingPlane
-============
-*/
+/**
+ * @brief
+ */
 void WindingPlane (winding_t *w, vec3_t normal, vec_t *dist)
 {
 	vec3_t	v1, v2;
@@ -134,11 +125,9 @@ void WindingPlane (winding_t *w, vec3_t normal, vec_t *dist)
 	*dist = DotProduct (w->p[0], normal);
 }
 
-/*
-=============
-WindingArea
-=============
-*/
+/**
+ * @brief
+ */
 vec_t WindingArea (winding_t *w)
 {
 	int		i;
@@ -155,6 +144,9 @@ vec_t WindingArea (winding_t *w)
 	return total;
 }
 
+/**
+ * @brief
+ */
 void WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs)
 {
 	vec_t	v;
@@ -174,11 +166,9 @@ void WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs)
 	}
 }
 
-/*
-=============
-WindingCenter
-=============
-*/
+/**
+ * @brief
+ */
 void WindingCenter (winding_t *w, vec3_t center)
 {
 	int		i;
@@ -192,11 +182,9 @@ void WindingCenter (winding_t *w, vec3_t center)
 	VectorScale (center, scale, center);
 }
 
-/*
-=================
-BaseWindingForPlane
-=================
-*/
+/**
+ * @brief
+ */
 winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
 {
 	int		i, x;
@@ -259,12 +247,10 @@ winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
 	return w;
 }
 
-/*
-==================
-CopyWinding
-==================
-*/
-winding_t	*CopyWinding (winding_t *w)
+/**
+ * @brief
+ */
+winding_t *CopyWinding (winding_t *w)
 {
 	ptrdiff_t	size;
 	winding_t	*c;
@@ -275,12 +261,10 @@ winding_t	*CopyWinding (winding_t *w)
 	return c;
 }
 
-/*
-==================
-ReverseWinding
-==================
-*/
-winding_t	*ReverseWinding (winding_t *w)
+/**
+ * @brief
+ */
+winding_t *ReverseWinding (winding_t *w)
 {
 	int			i;
 	winding_t	*c;
@@ -293,24 +277,21 @@ winding_t	*ReverseWinding (winding_t *w)
 	return c;
 }
 
-
-/*
-=============
-ClipWindingEpsilon
-=============
-*/
+/**
+ * @brief
+ */
 void ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
-				vec_t epsilon, winding_t **front, winding_t **back)
+		vec_t epsilon, winding_t **front, winding_t **back)
 {
-	vec_t	dists[MAX_POINTS_ON_WINDING+4];
-	int		sides[MAX_POINTS_ON_WINDING+4];
-	int		counts[3];
-	static	vec_t	dot;		/* VC 4.2 optimizer bug if not static */
-	int		i, j;
-	vec_t	*p1, *p2;
-	vec3_t	mid;
-	winding_t	*f, *b;
-	int		maxpts;
+	vec_t dists[MAX_POINTS_ON_WINDING+4];
+	int sides[MAX_POINTS_ON_WINDING+4];
+	int counts[3];
+	static vec_t dot;		/* VC 4.2 optimizer bug if not static */
+	int i, j;
+	vec_t *p1, *p2;
+	vec3_t mid;
+	winding_t *f, *b;
+	int maxpts;
 
 	counts[0] = counts[1] = counts[2] = 0;
 
@@ -371,7 +352,7 @@ void ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
 		if (sides[i+1] == SIDE_ON || sides[i+1] == sides[i])
 			continue;
 
-	/* generate a split point */
+		/* generate a split point */
 		p2 = in->p[(i+1)%in->numpoints];
 
 		dot = dists[i] / (dists[i]-dists[i+1]);
@@ -397,23 +378,21 @@ void ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
 }
 
 
-/*
-=============
-ChopWindingInPlace
-=============
-*/
+/**
+ * @brief
+ */
 void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t epsilon)
 {
-	winding_t	*in;
-	vec_t	dists[MAX_POINTS_ON_WINDING+4];
-	int		sides[MAX_POINTS_ON_WINDING+4];
-	int		counts[3];
-	static	vec_t	dot;		/* VC 4.2 optimizer bug if not static */
-	int		i, j;
-	vec_t	*p1, *p2;
-	vec3_t	mid;
-	winding_t	*f;
-	int		maxpts;
+	winding_t *in;
+	vec_t dists[MAX_POINTS_ON_WINDING+4];
+	int sides[MAX_POINTS_ON_WINDING+4];
+	int counts[3];
+	static vec_t dot;		/* VC 4.2 optimizer bug if not static */
+	int i, j;
+	vec_t *p1, *p2;
+	vec3_t mid;
+	winding_t *f;
+	int maxpts;
 
 	in = *inout;
 	counts[0] = counts[1] = counts[2] = 0;
@@ -511,11 +490,9 @@ winding_t *ChopWinding (winding_t *in, vec3_t normal, vec_t dist)
 }
 
 
-/*
-=================
-CheckWinding
-=================
-*/
+/**
+ * @brief
+ */
 void CheckWinding (winding_t *w)
 {
 	int		i, j;
@@ -572,16 +549,14 @@ void CheckWinding (winding_t *w)
 }
 
 
-/*
-============
-WindingOnPlaneSide
-============
-*/
+/**
+ * @brief
+ */
 int WindingOnPlaneSide (winding_t *w, vec3_t normal, vec_t dist)
 {
-	qboolean	front, back;
-	int			i;
-	vec_t		d;
+	qboolean front, back;
+	int i;
+	vec_t d;
 
 	front = qfalse;
 	back = qfalse;

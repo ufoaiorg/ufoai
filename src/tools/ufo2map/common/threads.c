@@ -29,18 +29,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	MAX_THREADS	64
 
-int		dispatch;
-int		workcount;
-int		oldf;
-qboolean		pacifier;
+int dispatch;
+int workcount;
+int oldf;
+qboolean pacifier;
+qboolean threaded;
 
-qboolean	threaded;
-
-/*
-=============
-GetThreadWork
-=============
-*/
+/**
+ * @brief
+ */
 int	GetThreadWork (void)
 {
 	int	r;
@@ -72,6 +69,9 @@ int	GetThreadWork (void)
 
 void (*workfunction) (int);
 
+/**
+ * @brief
+ */
 void ThreadWorkerFunction (int threadnum)
 {
 	int		work;
@@ -85,6 +85,9 @@ void ThreadWorkerFunction (int threadnum)
 	}
 }
 
+/**
+ * @brief
+ */
 void RunThreadsOnIndividual (int workcnt, qboolean showpacifier, void(*func)(int))
 {
 	if (numthreads == -1)
@@ -105,10 +108,13 @@ WIN32
 
 #include <windows.h>
 
-int		numthreads = -1;
-CRITICAL_SECTION		crit;
+int numthreads = -1;
+CRITICAL_SECTION crit;
 static int enter;
 
+/**
+ * @brief
+ */
 void ThreadSetDefault (void)
 {
 	SYSTEM_INFO info;
@@ -124,6 +130,9 @@ void ThreadSetDefault (void)
 }
 
 
+/**
+ * @brief
+ */
 void ThreadLock (void)
 {
 	if (!threaded)
@@ -134,6 +143,9 @@ void ThreadLock (void)
 	enter = 1;
 }
 
+/**
+ * @brief
+ */
 void ThreadUnlock (void)
 {
 	if (!threaded)
@@ -144,11 +156,9 @@ void ThreadUnlock (void)
 	LeaveCriticalSection (&crit);
 }
 
-/*
-=============
-RunThreadsOn
-=============
-*/
+/**
+ * @brief
+ */
 void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 {
 	int		threadid[MAX_THREADS];
@@ -195,9 +205,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 
 /*
 ===================================================================
-
 OSF1
-
 ===================================================================
 */
 
@@ -206,6 +214,9 @@ OSF1
 
 int numthreads = 4;
 
+/**
+ * @brief
+ */
 void ThreadSetDefault (void)
 {
 	if (numthreads == -1) {	/* not set manually */
@@ -218,24 +229,27 @@ void ThreadSetDefault (void)
 
 pthread_mutex_t	*my_mutex;
 
+/**
+ * @brief
+ */
 void ThreadLock (void)
 {
 	if (my_mutex)
 		pthread_mutex_lock (my_mutex);
 }
 
+/**
+ * @brief
+ */
 void ThreadUnlock (void)
 {
 	if (my_mutex)
 		pthread_mutex_unlock (my_mutex);
 }
 
-
-/*
-=============
-RunThreadsOn
-=============
-*/
+/**
+ * @brief
+ */
 void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 {
 	int		i;
@@ -293,9 +307,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 
 /*
 ===================================================================
-
 IRIX
-
 ===================================================================
 */
 
@@ -311,6 +323,9 @@ IRIX
 int numthreads = -1;
 abilock_t lck;
 
+/**
+ * @brief
+ */
 void ThreadSetDefault (void)
 {
 	if (numthreads == -1)
@@ -320,22 +335,25 @@ void ThreadSetDefault (void)
 }
 
 
+/**
+ * @brief
+ */
 void ThreadLock (void)
 {
 	spin_lock (&lck);
 }
 
+/**
+ * @brief
+ */
 void ThreadUnlock (void)
 {
 	release_lock (&lck);
 }
 
-
-/*
-=============
-RunThreadsOn
-=============
-*/
+/**
+ * @brief
+ */
 void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 {
 	int		i;
@@ -382,37 +400,42 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 
 /*
 =======================================================================
-
-  SINGLE THREAD
-
+SINGLE THREAD
 =======================================================================
 */
 
 #ifndef USED
 
-int		numthreads = 1;
+int numthreads = 1;
 
+/**
+ * @brief
+ */
 void ThreadSetDefault (void)
 {
 	numthreads = 1;
 }
 
+/**
+ * @brief
+ */
 void ThreadLock (void)
 {
 }
 
+/**
+ * @brief
+ */
 void ThreadUnlock (void)
 {
 }
 
-/*
-=============
-RunThreadsOn
-=============
-*/
+/**
+ * @brief
+ */
 void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 {
-	int		start, end;
+	int start, end;
 
 	dispatch = 0;
 	workcount = workcnt;

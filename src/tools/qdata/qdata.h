@@ -10,11 +10,11 @@
 #include "../ufo2map/common/cmdlib.h"
 #include "../ufo2map/common/scriplib.h"
 #include "../ufo2map/common/mathlib.h"
-#include "../ufo2map/common/trilib.h"
 #include "../ufo2map/common/lbmlib.h"
 #include "../ufo2map/common/threads.h"
-#include "../ufo2map/common/l3dslib.h"
 #include "../ufo2map/common/bspfile.h"
+#include "common/trilib.h"
+#include "common/l3dslib.h"
 
 void Cmd_Modelname (void);
 void Cmd_Base (void);

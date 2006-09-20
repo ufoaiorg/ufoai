@@ -403,6 +403,7 @@ copy_debug:
 	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
 	@if test -f $(BUILD_DEBUG_DIR)/ufoded; then cp $(BUILD_DEBUG_DIR)/ufoded ../ufoded; fi
 	@if test -f $(BUILD_DEBUG_DIR)/ufo; then cp $(BUILD_DEBUG_DIR)/ufo ../ufo; fi
+	@if test -f $(BUILD_DEBUG_DIR)/qdata; then cp $(BUILD_DEBUG_DIR)/qdata ../qdata; fi
 	@if test -f $(BUILD_DEBUG_DIR)/ufo2map; then cp $(BUILD_DEBUG_DIR)/ufo2map ../ufo2map; fi
 	@if test -f $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT); fi
 	@if test -f $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT) ../ref_glx.$(SHLIBEXT); fi
@@ -544,14 +545,12 @@ TOOLS_OBJS = \
 	$(BUILDDIR)/tools/ufo2map/writebsp.o \
 	$(BUILDDIR)/tools/ufo2map/common/bspfile.o \
 	$(BUILDDIR)/tools/ufo2map/common/cmdlib.o \
-	$(BUILDDIR)/tools/ufo2map/common/l3dslib.o \
-	$(BUILDDIR)/tools/ufo2map/common/lbmlib.o \
 	$(BUILDDIR)/tools/ufo2map/common/mathlib.o \
 	$(BUILDDIR)/tools/ufo2map/common/polylib.o \
 	$(BUILDDIR)/tools/ufo2map/common/scriplib.o \
-	$(BUILDDIR)/tools/ufo2map/common/threads.o \
 	$(BUILDDIR)/tools/ufo2map/common/trace.o \
-	$(BUILDDIR)/tools/ufo2map/common/trilib.o
+	$(BUILDDIR)/tools/ufo2map/common/lbmlib.o \
+	$(BUILDDIR)/tools/ufo2map/common/threads.o
 
 $(BUILDDIR)/ufo2map : $(TOOLS_OBJS)
 	@echo " * [MAP] ...linking";
@@ -668,7 +667,6 @@ QDATA_OBJS = \
 	$(BUILDDIR)/tools/qdata/md4.o \
 	$(BUILDDIR)/tools/qdata/video.o
 
-
 $(BUILDDIR)/qdata: $(QDATA_OBJS)
 	@echo " * [QDA] ...linking";
 	$(CC) $(CFLAGS) $(QDATACFLAGS) -o $@ $(QDATA_OBJS) $(QDATALDFLAGS)
@@ -682,7 +680,7 @@ $(BUILDDIR)/tools/qdata/bspfile.o :    $(TOOLS_DIR)/ufo2map/common/bspfile.c
 $(BUILDDIR)/tools/qdata/cmdlib.o :    $(TOOLS_DIR)/ufo2map/common/cmdlib.c
 	$(DO_QDATA_CC)
 
-$(BUILDDIR)/tools/qdata/l3dslib.o :    $(TOOLS_DIR)/ufo2map/common/l3dslib.c
+$(BUILDDIR)/tools/qdata/l3dslib.o :    $(TOOLS_DIR)/qdata/common/l3dslib.c
 	$(DO_QDATA_CC)
 
 $(BUILDDIR)/tools/qdata/lbmlib.o :    $(TOOLS_DIR)/ufo2map/common/lbmlib.c
@@ -703,7 +701,7 @@ $(BUILDDIR)/tools/qdata/images.o :    $(TOOLS_DIR)/qdata/images.c
 $(BUILDDIR)/tools/qdata/scriplib.o :    $(TOOLS_DIR)/ufo2map/common/scriplib.c
 	$(DO_QDATA_CC)
 
-$(BUILDDIR)/tools/qdata/trilib.o :    $(TOOLS_DIR)/ufo2map/common/trilib.c
+$(BUILDDIR)/tools/qdata/trilib.o :    $(TOOLS_DIR)/qdata/common/trilib.c
 	$(DO_QDATA_CC)
 
 $(BUILDDIR)/tools/qdata/threads.o :    $(TOOLS_DIR)/ufo2map/common/threads.c

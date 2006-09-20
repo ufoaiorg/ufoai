@@ -28,7 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 vec3_t vec3_origin = {0,0,0};
 
-
+/**
+ * @brief
+ */
 double VectorLength(vec3_t v)
 {
 	int		i;
@@ -42,6 +44,9 @@ double VectorLength(vec3_t v)
 	return length;
 }
 
+/**
+ * @brief
+ */
 qboolean VectorCompare (vec3_t v1, vec3_t v2)
 {
 	int		i;
@@ -53,6 +58,9 @@ qboolean VectorCompare (vec3_t v1, vec3_t v2)
 	return qtrue;
 }
 
+/**
+ * @brief
+ */
 qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp)
 {
 	int		i;
@@ -64,11 +72,17 @@ qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp)
 	return qfalse;
 }
 
+/**
+ * @brief
+ */
 vec_t Q_rint (vec_t in)
 {
 	return floor (in + 0.5);
 }
 
+/**
+ * @brief
+ */
 void VectorMA (vec3_t va, double scale, vec3_t vb, vec3_t vc)
 {
 	vc[0] = va[0] + scale*vb[0];
@@ -76,6 +90,9 @@ void VectorMA (vec3_t va, double scale, vec3_t vb, vec3_t vc)
 	vc[2] = va[2] + scale*vb[2];
 }
 
+/**
+ * @brief
+ */
 void CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross)
 {
 	cross[0] = v1[1]*v2[2] - v1[2]*v2[1];
@@ -83,11 +100,17 @@ void CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross)
 	cross[2] = v1[0]*v2[1] - v1[1]*v2[0];
 }
 
+/**
+ * @brief
+ */
 vec_t _DotProduct (vec3_t v1, vec3_t v2)
 {
 	return v1[0]*v2[0] + v1[1]*v2[1] + v1[2]*v2[2];
 }
 
+/**
+ * @brief
+ */
 void _VectorSubtract (vec3_t va, vec3_t vb, vec3_t out)
 {
 	out[0] = va[0]-vb[0];
@@ -95,6 +118,9 @@ void _VectorSubtract (vec3_t va, vec3_t vb, vec3_t out)
 	out[2] = va[2]-vb[2];
 }
 
+/**
+ * @brief
+ */
 void _VectorAdd (vec3_t va, vec3_t vb, vec3_t out)
 {
 	out[0] = va[0]+vb[0];
@@ -102,6 +128,9 @@ void _VectorAdd (vec3_t va, vec3_t vb, vec3_t out)
 	out[2] = va[2]+vb[2];
 }
 
+/**
+ * @brief
+ */
 void _VectorCopy (vec3_t in, vec3_t out)
 {
 	out[0] = in[0];
@@ -109,6 +138,9 @@ void _VectorCopy (vec3_t in, vec3_t out)
 	out[2] = in[2];
 }
 
+/**
+ * @brief
+ */
 void _VectorScale (vec3_t v, vec_t scale, vec3_t out)
 {
 	out[0] = v[0] * scale;
@@ -116,6 +148,9 @@ void _VectorScale (vec3_t v, vec_t scale, vec3_t out)
 	out[2] = v[2] * scale;
 }
 
+/**
+ * @brief
+ */
 vec_t VectorNormalize (vec3_t in, vec3_t out)
 {
 	vec_t	length, ilength;
@@ -134,6 +169,9 @@ vec_t VectorNormalize (vec3_t in, vec3_t out)
 	return length;
 }
 
+/**
+ * @brief
+ */
 vec_t ColorNormalize (vec3_t in, vec3_t out)
 {
 	float	max, scale;
@@ -154,8 +192,9 @@ vec_t ColorNormalize (vec3_t in, vec3_t out)
 	return max;
 }
 
-
-
+/**
+ * @brief
+ */
 void VectorInverse (vec3_t v)
 {
 	v[0] = -v[0];
@@ -163,12 +202,18 @@ void VectorInverse (vec3_t v)
 	v[2] = -v[2];
 }
 
+/**
+ * @brief
+ */
 void ClearBounds (vec3_t mins, vec3_t maxs)
 {
 	mins[0] = mins[1] = mins[2] = 99999;
 	maxs[0] = maxs[1] = maxs[2] = -99999;
 }
 
+/**
+ * @brief
+ */
 void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs)
 {
 	int		i;

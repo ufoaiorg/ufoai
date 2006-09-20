@@ -342,9 +342,9 @@ int		bwt_size;
 byte	*bwt_data;
 
 /**
- * @brief
+ * @brief qsort function
  */
-int bwtCompare (const void *elem1, const void *elem2)
+static int bwtCompare (const void *elem1, const void *elem2)
 {
 	int		i;
 	int		i1, i2;
@@ -422,18 +422,17 @@ typedef struct hnode_s
 	int			children[2];
 } hnode_t;
 
-int			numhnodes;
-hnode_t		hnodes[512];
-unsigned	charbits[256];
-int			charbitscount[256];
+static int numhnodes;
+static hnode_t hnodes[512];
+static unsigned charbits[256];
+static int charbitscount[256];
 
 /**
  * @brief
  */
-int	SmallestNode (void)
+static int	SmallestNode (void)
 {
-	int		i;
-	int		best, bestnode;
+	int i, best, bestnode;
 
 	best = 99999999;
 	bestnode = -1;
@@ -458,7 +457,7 @@ int	SmallestNode (void)
 /**
  * @brief
  */
-void BuildChars (int nodenum, unsigned bits, int bitcount)
+static void BuildChars (int nodenum, unsigned bits, int bitcount)
 {
 	hnode_t	*node;
 
@@ -568,16 +567,17 @@ cblock_t Huffman (cblock_t in)
 	return out;
 }
 
+#if 0
 #define	RLE_CODE	0xe8
 #define	RLE_TRIPPLE	0xe9
 
-int	rle_counts[256];
-int	rle_bytes[256];
+static int rle_counts[256];
+static int rle_bytes[256];
 
 /**
  * @brief
  */
-cblock_t RLE (cblock_t in)
+static cblock_t RLE (cblock_t in)
 {
 	int		i;
 	byte	*out_p;
@@ -617,140 +617,24 @@ cblock_t RLE (cblock_t in)
 	out.count = out_p - out.data;
 	return out;
 }
-
-unsigned	lzss_head[256];
-unsigned	lzss_next[0x20000];
-
-#define	BACK_WINDOW		0x10000
-#define	BACK_BITS		16
-#define	FRONT_WINDOW	16
-#define	FRONT_BITS		4
-/**
- * @brief
- */
-cblock_t LZSS (cblock_t in)
-{
-	int		i;
-	byte	*out_p;
-	cblock_t	out;
-	int		val;
-	int		j, start, max;
-	int		bestlength, beststart;
-	int		outbits;
-
-	if (in.count >= sizeof(lzss_next)/4)
-		Error ("LZSS: too big");
-
-	memset (lzss_head, -1, sizeof(lzss_head));
-
-	out_p = out.data = malloc (in.count*2);
-	memset (out.data, 0, in.count*2);
-
-	/* write count */
-	*out_p++ = in.count&255;
-	*out_p++ = (in.count>>8)&255;
-	*out_p++ = (in.count>>16)&255;
-	*out_p++ = (in.count>>24)&255;
-
-	outbits = 0;
-	for (i=0 ; i<in.count ; ) {
-		val = in.data[i];
-#if 1
-		/* chained search */
-		bestlength = 0;
-		beststart = 0;
-
-		max = FRONT_WINDOW;
-		if (i + max > in.count)
-			max = in.count - i;
-
-		start = lzss_head[val];
-		while (start != -1 && start >= i-BACK_WINDOW) {
-			/* count match length */
-			for (j=0 ; j<max ; j++)
-				if (in.data[start+j] != in.data[i+j])
-					break;
-			if (j > bestlength) {
-				bestlength = j;
-				beststart = start;
-			}
-			start = lzss_next[start];
-		}
-
-#else
-		/* slow simple search */
-		/* search for a match */
-		max = FRONT_WINDOW;
-		if (i + max > in.count)
-			max = in.count - i;
-
-		start = i - BACK_WINDOW;
-		if (start < 0)
-			start = 0;
-		bestlength = 0;
-		beststart = 0;
-		for ( ; start < i ; start++) {
-			if (in.data[start] != val)
-				continue;
-			/* count match length */
-			for (j=0 ; j<max ; j++)
-				if (in.data[start+j] != in.data[i+j])
-					break;
-			if (j > bestlength) {
-				bestlength = j;
-				beststart = start;
-			}
-		}
 #endif
-		beststart = BACK_WINDOW - (i-beststart);
-
-		if (bestlength < 3) {	/* output a single char */
-			bestlength = 1;
-
-			out_p[outbits>>3] |= 1<<(outbits&7);	/* set bit to mark char */
-			outbits++;
-			for (j=0 ; j<8 ; j++, outbits++)
-				if (val & (1<<j) )
-					out_p[outbits>>3] |= 1<<(outbits&7);
-		} else {	/* output a phrase */
-			outbits++;	/* leave a 0 bit to mark phrase */
-			for (j=0 ; j<BACK_BITS ; j++, outbits++)
-				if (beststart & (1<<j) )
-					out_p[outbits>>3] |= 1<<(outbits&7);
-			for (j=0 ; j<FRONT_BITS ; j++, outbits++)
-				if (bestlength & (1<<j) )
-					out_p[outbits>>3] |= 1<<(outbits&7);
-		}
-
-		while (bestlength--) {
-			val = in.data[i];
-			lzss_next[i] = lzss_head[val];
-			lzss_head[val] = i;
-			i++;
-		}
-	}
-
-	out_p += (outbits+7)>>3;
-	out.count = out_p - out.data;
-	return out;
-}
 
 #define	MIN_REPT	15
 #define	MAX_REPT	0
 #define	HUF_TOKENS	(256+MAX_REPT)
 
-unsigned	charbits1[256][HUF_TOKENS];
-int			charbitscount1[256][HUF_TOKENS];
+static unsigned charbits1[256][HUF_TOKENS];
+static int charbitscount1[256][HUF_TOKENS];
 
-hnode_t		hnodes1[256][HUF_TOKENS*2];
-int			numhnodes1[256];
+static hnode_t hnodes1[256][HUF_TOKENS*2];
+static int numhnodes1[256];
 
-int			order0counts[256];
+static int order0counts[256];
 
 /**
  * @brief
  */
-int	SmallestNode1 (hnode_t *hnodes, int numhnodes)
+static int SmallestNode1 (hnode_t *hnodes, int numhnodes)
 {
 	int		i;
 	int		best, bestnode;
@@ -779,7 +663,7 @@ int	SmallestNode1 (hnode_t *hnodes, int numhnodes)
 /**
  * @brief
  */
-void BuildChars1 (int prev, int nodenum, unsigned bits, int bitcount)
+static void BuildChars1 (int prev, int nodenum, unsigned bits, int bitcount)
 {
 	hnode_t	*node;
 
@@ -802,7 +686,7 @@ void BuildChars1 (int prev, int nodenum, unsigned bits, int bitcount)
 /**
  * @brief
  */
-void BuildTree1 (int prev)
+static void BuildTree1 (int prev)
 {
 	hnode_t		*node, *nodebase;
 	int			numhnodes;
@@ -834,7 +718,7 @@ void BuildTree1 (int prev)
 /**
  * @brief
  */
-void Huffman1_Count (cblock_t in)
+static void Huffman1_Count (cblock_t in)
 {
 	int		i;
 	int		prev;
@@ -860,11 +744,11 @@ void Huffman1_Count (cblock_t in)
 }
 
 
-byte	scaled[256][HUF_TOKENS];
+static byte scaled[256][HUF_TOKENS];
 /**
  * @brief
  */
-void Huffman1_Build (FILE *f)
+static void Huffman1_Build (FILE *f)
 {
 	int		i, j, v;
 	int		max;
@@ -918,7 +802,7 @@ void Huffman1_Build (FILE *f)
 /**
  * @brief Order 1 compression with pre-built table
  */
-cblock_t Huffman1 (cblock_t in)
+static cblock_t Huffman1 (cblock_t in)
 {
 	int			i;
 	int			outbits, c;
@@ -987,7 +871,7 @@ cblock_t Huffman1 (cblock_t in)
 /**
  * @brief
  */
-cblock_t LoadFrame (char *base, int frame, int digits, byte **palette)
+static cblock_t LoadFrame (char *base, int frame, int digits, byte **palette)
 {
 	int			ten3, ten2, ten1, ten0;
 	cblock_t	in;
@@ -1019,7 +903,6 @@ cblock_t LoadFrame (char *base, int frame, int digits, byte **palette)
 	Load256Image (name, &in.data, palette, &width, &height);
 	in.count = width*height;
 	/* FIXME: map 0 and 255! */
-
 #if 0
 	/* rle compress */
 	rle = RLE(in);
@@ -1034,7 +917,7 @@ cblock_t LoadFrame (char *base, int frame, int digits, byte **palette)
 /**
  * @brief video <directory> <framedigits>
  */
-void Cmd_Video (void)
+extern void Cmd_Video (void)
 {
 	char	savename[1024];
 	char	name[1024];

@@ -29,9 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 =============================================================================
-
-						PARSING STUFF
-
+PARSING STUFF
 =============================================================================
 */
 
@@ -43,27 +41,26 @@ typedef struct
 } script_t;
 
 #define	MAX_INCLUDES	8
-script_t	scriptstack[MAX_INCLUDES];
-script_t	*script;
+static script_t	scriptstack[MAX_INCLUDES];
+static script_t	*script;
 int			scriptline;
 
 char    token[MAXTOKEN];
 qboolean endofscript;
-qboolean tokenready;                     /* only true if UnGetToken was just called */
+static qboolean tokenready;                     /* only true if UnGetToken was just called */
 
-/*
-==============
-AddScriptToStack
-==============
-*/
-void AddScriptToStack (char *filename)
+/**
+ * @brief
+ * @sa LoadScriptFile
+ */
+static void AddScriptToStack (char *filename)
 {
-	int            size;
+	int size;
 
 	script++;
 	if (script == &scriptstack[MAX_INCLUDES])
 		Error ("script file exceeded MAX_INCLUDES");
-	strcpy (script->filename, ExpandPath (filename) );
+	strncpy (script->filename, ExpandPath (filename), sizeof(script->filename));
 
 	size = LoadFile (script->filename, (void **)&script->buffer);
 
@@ -76,11 +73,9 @@ void AddScriptToStack (char *filename)
 }
 
 
-/*
-==============
-LoadScriptFile
-==============
-*/
+/**
+ * @brief
+ */
 void LoadScriptFile (char *filename)
 {
 	script = scriptstack;
@@ -91,18 +86,16 @@ void LoadScriptFile (char *filename)
 }
 
 
-/*
-==============
-ParseFromMemory
-==============
-*/
+/**
+ * @brief
+ */
 void ParseFromMemory (char *buffer, int size)
 {
 	script = scriptstack;
 	script++;
 	if (script == &scriptstack[MAX_INCLUDES])
 		Error ("script file exceeded MAX_INCLUDES");
-	strcpy (script->filename, "memory buffer" );
+	strncpy (script->filename, "memory buffer", sizeof(script->filename));
 
 	script->buffer = buffer;
 	script->line = 1;
@@ -128,6 +121,9 @@ void UnGetToken (void)
 }
 
 
+/**
+ * @brief
+ */
 qboolean EndOfScript (qboolean crossline)
 {
 	if (!crossline)
@@ -149,14 +145,12 @@ qboolean EndOfScript (qboolean crossline)
 	return GetToken (crossline);
 }
 
-/*
-==============
-GetToken
-==============
-*/
+/**
+ * @brief
+ */
 qboolean GetToken (qboolean crossline)
 {
-	char    *token_p;
+	char *token_p;
 	/* is a token allready waiting? */
 	if (tokenready) {
 		tokenready = qfalse;
@@ -246,7 +240,7 @@ skipspace:
  */
 qboolean TokenAvailable (void)
 {
-	char    *search_p;
+	char *search_p;
 
 	search_p = script->script_p;
 
@@ -266,5 +260,3 @@ qboolean TokenAvailable (void)
 
 	return qtrue;
 }
-
-
