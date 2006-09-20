@@ -1,3 +1,28 @@
+/**
+ * @file models.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 
 #include "qdata.h"
 
@@ -66,11 +91,9 @@ FILE	*headerouthandle = NULL;
 
 /*============================================================== */
 
-/*
-===============
-ClearModel
-===============
-*/
+/**
+ * @brief
+ */
 void ClearModel (void)
 {
 	memset (&model, 0, sizeof(model));
@@ -83,13 +106,15 @@ void ClearModel (void)
 }
 
 
+/**
+ * @brief
+ */
 void H_printf(char *fmt, ...)
 {
 	va_list argptr;
 	char	name[1024];
 
-	if (!headerouthandle)
-	{
+	if (!headerouthandle) {
 		sprintf (name, "%s/tris.h", cddir);
 		headerouthandle = SafeOpenWrite (name);
 		fprintf(headerouthandle, "/* %s\n\n", cddir); */
@@ -102,11 +127,9 @@ void H_printf(char *fmt, ...)
 }
 
 
-/*
-============
-WriteModelFile
-============
-*/
+/**
+ * @brief
+ */
 void WriteModelFile (FILE *modelouthandle)
 {
 	int				i;
@@ -201,11 +224,9 @@ void WriteModelFile (FILE *modelouthandle)
 }
 
 
-/*
-===============
-FinishModel
-===============
-*/
+/**
+ * @brief
+ */
 void FinishModel (void)
 {
 	FILE		*modelouthandle;
@@ -266,9 +287,7 @@ void FinishModel (void)
 
 /*
 =================================================================
-
 ALIAS MODEL DISPLAY LIST GENERATION
-
 =================================================================
 */
 
@@ -277,11 +296,9 @@ int		strip_st[128];
 int		strip_tris[128];
 int		stripcount;
 
-/*
-================
-StripLength
-================
-*/
+/**
+ * @brief
+ */
 int	StripLength (int starttri, int startv)
 {
 	int			m1, m2;
@@ -358,11 +375,9 @@ done:
 }
 
 
-/*
-===========
-FanLength
-===========
-*/
+/**
+ * @brief
+ */
 int	FanLength (int starttri, int startv)
 {
 	int		m1, m2;
@@ -513,9 +528,7 @@ void BuildGlCmds (void)
 
 /*
 ===============================================================
-
 BASE FRAME SETUP
-
 ===============================================================
 */
 
@@ -600,11 +613,9 @@ void BuildST (triangle_t *ptri, int numtri)
 }
 
 
-/*
-=================
-Cmd_Base
-=================
-*/
+/**
+ * @brief
+ */
 void Cmd_Base (void)
 {
 	triangle_t	*ptri;
@@ -675,9 +686,10 @@ void Cmd_Base (void)
 	BuildGlCmds ();
 }
 
-/*=============================================================== */
-
-char	*FindFrameFile (char *frame)
+/**
+ * @brief
+ */
+char *FindFrameFile (char *frame)
 {
 	int			time1;
 	char	file1[1024];
@@ -719,11 +731,9 @@ char	*FindFrameFile (char *frame)
 	return NULL;
 }
 
-/*
-===============
-GrabFrame
-===============
-*/
+/**
+ * @brief
+ */
 void GrabFrame (char *frame)
 {
 	triangle_t	*ptri;
@@ -791,8 +801,7 @@ void GrabFrame (char *frame)
 		normal[0] = -normal[1];
 		normal[1] = ftemp;
 
-		for (j=0 ; j<3 ; j++)
-		{
+		for (j=0 ; j<3 ; j++) {
 			index_xyz = triangles[i].index_xyz[j];
 
 			/* rotate the vertices so the model faces down the positive x axis */
@@ -847,11 +856,9 @@ void GrabFrame (char *frame)
 	free (ptri);
 }
 
-/*
-===============
-Cmd_Frame
-===============
-*/
+/**
+ * @brief
+ */
 void Cmd_Frame (void)
 {
 	while (TokenAvailable()) {
@@ -932,11 +939,9 @@ void Cmd_Skin (void)
 }
 
 
-/*
-=================
-Cmd_Origin
-=================
-*/
+/**
+ * @brief
+ */
 void Cmd_Origin (void)
 {
 	/* rotate points into frame of reference so model points down the */
@@ -952,11 +957,9 @@ void Cmd_Origin (void)
 }
 
 
-/*
-=================
-Cmd_ScaleUp
-=================
-*/
+/**
+ * @brief
+ */
 void Cmd_ScaleUp (void)
 {
 	GetToken (qfalse);
@@ -988,11 +991,9 @@ void Cmd_Modelname (void)
 	strcpy (modelname, token);
 }
 
-/*
-===============
-Cmd_Cd
-===============
-*/
+/**
+ * @brief
+ */
 void Cmd_Cd (void)
 {
 	FinishModel ();

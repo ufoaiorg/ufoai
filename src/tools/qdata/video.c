@@ -1,3 +1,28 @@
+/**
+ * @file video.c
+ * @brief Cin file creator
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 #include "qdata.h"
 
 byte	*soundtrack;
@@ -5,9 +30,7 @@ char	base[32];
 
 /*
 ===============================================================================
-
 WAV loading
-
 ===============================================================================
 */
 
@@ -31,9 +54,12 @@ int 	iff_chunk_len;
 
 int		samplecounts[0x10000];
 
-wavinfo_t	wavinfo;
+static wavinfo_t wavinfo;
 
-short GetLittleShort(void)
+/**
+ * @brief
+ */
+static short GetLittleShort(void)
 {
 	short val = 0;
 	val = *data_p;
@@ -42,7 +68,10 @@ short GetLittleShort(void)
 	return val;
 }
 
-int GetLittleLong(void)
+/**
+ * @brief
+ */
+static int GetLittleLong(void)
 {
 	int val = 0;
 	val = *data_p;
@@ -53,22 +82,23 @@ int GetLittleLong(void)
 	return val;
 }
 
-void FindNextChunk(char *name)
+/**
+ * @brief
+ */
+static void FindNextChunk(char *name)
 {
-	while (1)
-	{
+	while (1) {
 		data_p=last_chunk;
 
-		if (data_p >= iff_end)
-		{	/* didn't find the chunk */
+		if (data_p >= iff_end) {
+			/* didn't find the chunk */
 			data_p = NULL;
 			return;
 		}
-		
+
 		data_p += 4;
 		iff_chunk_len = GetLittleLong();
-		if (iff_chunk_len < 0)
-		{
+		if (iff_chunk_len < 0) {
 			data_p = NULL;
 			return;
 		}
@@ -81,21 +111,26 @@ void FindNextChunk(char *name)
 	}
 }
 
-void FindChunk(char *name)
+/**
+ * @brief
+ */
+static void FindChunk(char *name)
 {
 	last_chunk = iff_data;
 	FindNextChunk (name);
 }
 
 
-void DumpChunks(void)
+/**
+ * @brief
+ */
+static void DumpChunks(void)
 {
 	char	str[5];
-	
+
 	str[4] = 0;
 	data_p=iff_data;
-	do
-	{
+	do {
 		memcpy (str, data_p, 4);
 		data_p += 4;
 		iff_chunk_len = GetLittleLong();
@@ -104,12 +139,10 @@ void DumpChunks(void)
 	} while (data_p < iff_end);
 }
 
-/*
-============
-GetWavinfo
-============
-*/
-wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
+/**
+ * @brief
+ */
+static wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 {
 	wavinfo_t	info;
 	int     i;
@@ -120,32 +153,28 @@ wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 
 	if (!wav)
 		return info;
-		
+
 	iff_data = wav;
 	iff_end = wav + wavlength;
 
-/* find "RIFF" chunk */
+	/* find "RIFF" chunk */
 	FindChunk("RIFF");
-	if (!(data_p && !strncmp(data_p+8, "WAVE", 4)))
-	{
+	if (!(data_p && !strncmp(data_p+8, "WAVE", 4))) {
 		printf("Missing RIFF/WAVE chunks\n");
 		return info;
 	}
 
-/* get "fmt " chunk */
+	/* get "fmt " chunk */
 	iff_data = data_p + 12;
-/* DumpChunks (); */
 
 	FindChunk("fmt ");
-	if (!data_p)
-	{
+	if (!data_p) {
 		printf("Missing fmt chunk\n");
 		return info;
 	}
 	data_p += 8;
 	format = GetLittleShort();
-	if (format != 1)
-	{
+	if (format != 1) {
 		printf("Microsoft PCM format only\n");
 		return info;
 	}
@@ -155,33 +184,29 @@ wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 	data_p += 4+2;
 	info.width = GetLittleShort() / 8;
 
-/* get cue chunk */
+	/* get cue chunk */
 	FindChunk("cue ");
-	if (data_p)
-	{
+	if (data_p) {
 		data_p += 32;
 		info.loopstart = GetLittleLong();
 /*		Com_Printf("loopstart=%d\n", sfx->loopstart); */
 
-	/* if the next chunk is a LIST chunk, look for a cue length marker */
+		/* if the next chunk is a LIST chunk, look for a cue length marker */
 		FindNextChunk ("LIST");
-		if (data_p)
-		{
-			if (!strncmp (data_p + 28, "mark", 4))
-			{	/* this is not a proper parse, but it works with cooledit... */
+		if (data_p) {
+			if (!strncmp (data_p + 28, "mark", 4)) {
+				/* this is not a proper parse, but it works with cooledit... */
 				data_p += 24;
 				i = GetLittleLong ();	/* samples in loop */
 				info.samples = info.loopstart + i;
 			}
 		}
-	}
-	else
+	} else
 		info.loopstart = -1;
 
-/* find data chunk */
+	/* find data chunk */
 	FindChunk("data");
-	if (!data_p)
-	{
+	if (!data_p) {
 		printf("Missing data chunk\n");
 		return info;
 	}
@@ -189,12 +214,10 @@ wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 	data_p += 4;
 	samples = GetLittleLong ();
 
-	if (info.samples)
-	{
+	if (info.samples) {
 		if (samples < info.samples)
 			Error ("Sound %s has a bad loop length", name);
-	}
-	else
+	} else
 		info.samples = samples;
 
 	info.dataofs = data_p - wav;
@@ -202,13 +225,9 @@ wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 	return info;
 }
 
-/*===================================================================== */
-
-/*
-==============
-LoadSoundtrack
-==============
-*/
+/**
+ * @brief
+ */
 void LoadSoundtrack (void)
 {
 	char	name[1024];
@@ -220,8 +239,7 @@ void LoadSoundtrack (void)
 	sprintf (name, "%svideo/%s/%s.wav", gamedir, base, base);
 	printf ("%s\n", name);
 	f = fopen (name, "rb");
-	if (!f)
-	{
+	if (!f) {
 		printf ("no soundtrack for %s\n", base);
 		return;
 	}
@@ -236,8 +254,7 @@ void LoadSoundtrack (void)
 	memset (samplecounts, 0, sizeof(samplecounts));
 
 	j = wavinfo.samples/2;
-	for (i=0 ; i<j ; i++)
-	{
+	for (i=0 ; i<j ; i++) {
 		val = ((unsigned short *)( soundtrack + wavinfo.dataofs))[i];
 		samplecounts[val]++;
 	}
@@ -249,11 +266,9 @@ void LoadSoundtrack (void)
 	printf ("%i unique sample values\n", val);
 }
 
-/*
-==================
-WriteSound
-==================
-*/
+/**
+ * @brief
+ */
 void WriteSound (FILE *output, int frame)
 {
 	int		start, end;
@@ -269,8 +284,7 @@ void WriteSound (FILE *output, int frame)
 	end = (frame+1)*wavinfo.rate/14;
 	count = end - start;
 
-	for (i=0 ; i<count ; i++)
-	{
+	for (i=0 ; i<count ; i++) {
 		sample = start+i;
 		if (sample > wavinfo.samples || !soundtrack)
 			fwrite (&empty, 1, width, output);
@@ -279,13 +293,9 @@ void WriteSound (FILE *output, int frame)
 	}
 }
 
-/*========================================================================== */
-
-/*
-==================
-MTF
-==================
-*/
+/**
+ * @brief
+ */
 cblock_t MTF (cblock_t in)
 {
 	int			i, j, b, code;
@@ -304,12 +314,11 @@ cblock_t MTF (cblock_t in)
 	for (i=0 ; i<256 ; i++)
 		index[i] = i;
 
-	for (i=0 ; i<in.count ; i++)
-	{
+	for (i=0 ; i<in.count ; i++) {
 		b = in.data[i];
 		code = index[b];
 		*out_p++ = code;
-		
+
 		/* shuffle b indexes to 0 */
 		for (j=0 ; j<256 ; j++)
 			if (index[j] < code)
@@ -323,11 +332,12 @@ cblock_t MTF (cblock_t in)
 }
 
 
-/*========================================================================== */
-
 int		bwt_size;
 byte	*bwt_data;
 
+/**
+ * @brief
+ */
 int bwtCompare (const void *elem1, const void *elem2)
 {
 	int		i;
@@ -337,8 +347,7 @@ int bwtCompare (const void *elem1, const void *elem2)
 	i1 = *(int *)elem1;
 	i2 = *(int *)elem2;
 
-	for (i=0 ; i<bwt_size ; i++)
-	{
+	for (i=0 ; i<bwt_size ; i++) {
 		b1 = bwt_data[i1];
 		b2 = bwt_data[i2];
 		if (b1 < b2)
@@ -354,11 +363,9 @@ int bwtCompare (const void *elem1, const void *elem2)
 	return 0;
 }
 
-/*
-==================
-BWT
-==================
-*/
+/**
+ * @brief
+ */
 cblock_t BWT (cblock_t in)
 {
 	int		*sorted;
@@ -402,8 +409,6 @@ cblock_t BWT (cblock_t in)
 	return out;
 }
 
-/*========================================================================== */
-
 typedef struct hnode_s
 {
 	int			count;
@@ -416,6 +421,9 @@ hnode_t		hnodes[512];
 unsigned	charbits[256];
 int			charbitscount[256];
 
+/**
+ * @brief
+ */
 int	SmallestNode (void)
 {
 	int		i;
@@ -423,14 +431,12 @@ int	SmallestNode (void)
 
 	best = 99999999;
 	bestnode = -1;
-	for (i=0 ; i<numhnodes ; i++)
-	{
+	for (i=0 ; i<numhnodes ; i++) {
 		if (hnodes[i].used)
 			continue;
 		if (!hnodes[i].count)
 			continue;
-		if (hnodes[i].count < best)
-		{
+		if (hnodes[i].count < best) {
 			best = hnodes[i].count;
 			bestnode = i;
 		}
@@ -443,12 +449,14 @@ int	SmallestNode (void)
 	return bestnode;
 }
 
+/**
+ * @brief
+ */
 void BuildChars (int nodenum, unsigned bits, int bitcount)
 {
 	hnode_t	*node;
 
-	if (nodenum < 256)
-	{
+	if (nodenum < 256) {
 		if (bitcount > 32)
 			Error ("bitcount > 32");
 		charbits[nodenum] = bits;
@@ -464,11 +472,9 @@ void BuildChars (int nodenum, unsigned bits, int bitcount)
 }
 
 
-/*
-==================
-Huffman
-==================
-*/
+/**
+ * @brief
+ */
 cblock_t Huffman (cblock_t in)
 {
 	int			i;
@@ -487,10 +493,8 @@ cblock_t Huffman (cblock_t in)
 	/* normalize counts */
 	max = 0;
 	maxchar = 0;
-	for (i=0 ; i<256 ; i++)
-	{
-		if (hnodes[i].count > max)
-		{
+	for (i=0 ; i<256 ; i++) {
+		if (hnodes[i].count > max) {
 			max = hnodes[i].count;
 			maxchar = i;
 		}
@@ -498,15 +502,13 @@ cblock_t Huffman (cblock_t in)
 	if (max == 0)
 		Error ("Huffman: max == 0");
 
-	for (i=0 ; i<256 ; i++)
-	{
+	for (i=0 ; i<256 ; i++) {
 		hnodes[i].count = (hnodes[i].count*255+max-1) / max;
 	}
 
 	/* build the nodes */
 	numhnodes = 256;
-	while (numhnodes != 511)
-	{
+	while (numhnodes != 511) {
 		node = &hnodes[numhnodes];
 
 		/* pick two lowest counts */
@@ -515,13 +517,12 @@ cblock_t Huffman (cblock_t in)
 			break;	/* no more */
 
 		node->children[1] = SmallestNode ();
-		if (node->children[1] == -1)
-		{
+		if (node->children[1] == -1) {
 			if (node->children[0] != numhnodes-1)
 				Error ("Bad smallestnode");
 			break;
 		}
-		node->count = hnodes[node->children[0]].count + 
+		node->count = hnodes[node->children[0]].count +
 			hnodes[node->children[1]].count;
 		numhnodes++;
 	}
@@ -543,12 +544,10 @@ cblock_t Huffman (cblock_t in)
 
 	/* write bits */
 	outbits = 0;
-	for (i=0 ; i<in.count ; i++)
-	{
+	for (i=0 ; i<in.count ; i++) {
 		c = charbitscount[in.data[i]];
 		bits = charbits[in.data[i]];
-		while (c)
-		{
+		while (c) {
 			c--;
 			if (bits & (1<<c))
 				out_p[outbits>>3] |= 1<<(outbits&7);
@@ -563,19 +562,15 @@ cblock_t Huffman (cblock_t in)
 	return out;
 }
 
-/*========================================================================== */
-
-/*
-==================
-RLE
-==================
-*/
 #define	RLE_CODE	0xe8
 #define	RLE_TRIPPLE	0xe9
 
 int	rle_counts[256];
 int	rle_bytes[256];
 
+/**
+ * @brief
+ */
 cblock_t RLE (cblock_t in)
 {
 	int		i;
@@ -592,27 +587,22 @@ cblock_t RLE (cblock_t in)
 	*out_p++ = (in.count>>16)&255;
 	*out_p++ = (in.count>>24)&255;
 
-	for (i=0 ; i<in.count ; )
-	{
+	for (i=0 ; i<in.count ; ) {
 		val = in.data[i];
 		rle_bytes[val]++;
 		repeat = 1;
 		i++;
-		while (i<in.count && repeat < 255 && in.data[i] == val)
-		{
+		while (i<in.count && repeat < 255 && in.data[i] == val) {
 			repeat++;
 			i++;
 		}
-if (repeat < 256)
-rle_counts[repeat]++;
-		if (repeat > 3 || val == RLE_CODE)
-		{
+		if (repeat < 256)
+			rle_counts[repeat]+;
+		if (repeat > 3 || val == RLE_CODE) {
 			*out_p++ = RLE_CODE;
 			*out_p++ = val;
 			*out_p++ = repeat;
-		}
-		else
-		{
+		} else {
 			while (repeat--)
 				*out_p++ = val;
 		}
@@ -622,20 +612,16 @@ rle_counts[repeat]++;
 	return out;
 }
 
-/*========================================================================== */
-
 unsigned	lzss_head[256];
 unsigned	lzss_next[0x20000];
 
-/*
-==================
-LZSS
-==================
-*/
 #define	BACK_WINDOW		0x10000
 #define	BACK_BITS		16
 #define	FRONT_WINDOW	16
 #define	FRONT_BITS		4
+/**
+ * @brief
+ */
 cblock_t LZSS (cblock_t in)
 {
 	int		i;
@@ -646,8 +632,8 @@ cblock_t LZSS (cblock_t in)
 	int		bestlength, beststart;
 	int		outbits;
 
-if (in.count >= sizeof(lzss_next)/4)
-Error ("LZSS: too big");
+	if (in.count >= sizeof(lzss_next)/4)
+		Error ("LZSS: too big");
 
 	memset (lzss_head, -1, sizeof(lzss_head));
 
@@ -661,11 +647,10 @@ Error ("LZSS: too big");
 	*out_p++ = (in.count>>24)&255;
 
 	outbits = 0;
-	for (i=0 ; i<in.count ; )
-	{
+	for (i=0 ; i<in.count ; ) {
 		val = in.data[i];
 #if 1
-/* chained search */
+		/* chained search */
 		bestlength = 0;
 		beststart = 0;
 
@@ -674,14 +659,12 @@ Error ("LZSS: too big");
 			max = in.count - i;
 
 		start = lzss_head[val];
-		while (start != -1 && start >= i-BACK_WINDOW)
-		{			
+		while (start != -1 && start >= i-BACK_WINDOW) {
 			/* count match length */
 			for (j=0 ; j<max ; j++)
 				if (in.data[start+j] != in.data[i+j])
 					break;
-			if (j > bestlength)
-			{
+			if (j > bestlength) {
 				bestlength = j;
 				beststart = start;
 			}
@@ -689,7 +672,7 @@ Error ("LZSS: too big");
 		}
 
 #else
-/* slow simple search */
+		/* slow simple search */
 		/* search for a match */
 		max = FRONT_WINDOW;
 		if (i + max > in.count)
@@ -700,16 +683,14 @@ Error ("LZSS: too big");
 			start = 0;
 		bestlength = 0;
 		beststart = 0;
-		for ( ; start < i ; start++)
-		{
+		for ( ; start < i ; start++) {
 			if (in.data[start] != val)
 				continue;
 			/* count match length */
 			for (j=0 ; j<max ; j++)
 				if (in.data[start+j] != in.data[i+j])
 					break;
-			if (j > bestlength)
-			{
+			if (j > bestlength) {
 				bestlength = j;
 				beststart = start;
 			}
@@ -717,8 +698,7 @@ Error ("LZSS: too big");
 #endif
 		beststart = BACK_WINDOW - (i-beststart);
 
-		if (bestlength < 3)
-		{	/* output a single char */
+		if (bestlength < 3) {	/* output a single char */
 			bestlength = 1;
 
 			out_p[outbits>>3] |= 1<<(outbits&7);	/* set bit to mark char */
@@ -726,9 +706,7 @@ Error ("LZSS: too big");
 			for (j=0 ; j<8 ; j++, outbits++)
 				if (val & (1<<j) )
 					out_p[outbits>>3] |= 1<<(outbits&7);
-		}
-		else
-		{	/* output a phrase */
+		} else {	/* output a phrase */
 			outbits++;	/* leave a 0 bit to mark phrase */
 			for (j=0 ; j<BACK_BITS ; j++, outbits++)
 				if (beststart & (1<<j) )
@@ -738,8 +716,7 @@ Error ("LZSS: too big");
 					out_p[outbits>>3] |= 1<<(outbits&7);
 		}
 
-		while (bestlength--)
-		{
+		while (bestlength--) {
 			val = in.data[i];
 			lzss_next[i] = lzss_head[val];
 			lzss_head[val] = i;
@@ -751,8 +728,6 @@ Error ("LZSS: too big");
 	out.count = out_p - out.data;
 	return out;
 }
-
-/*========================================================================== */
 
 #define	MIN_REPT	15
 #define	MAX_REPT	0
@@ -766,11 +741,9 @@ int			numhnodes1[256];
 
 int			order0counts[256];
 
-/*
-==================
-SmallestNode1
-==================
-*/
+/**
+ * @brief
+ */
 int	SmallestNode1 (hnode_t *hnodes, int numhnodes)
 {
 	int		i;
@@ -778,14 +751,12 @@ int	SmallestNode1 (hnode_t *hnodes, int numhnodes)
 
 	best = 99999999;
 	bestnode = -1;
-	for (i=0 ; i<numhnodes ; i++)
-	{
+	for (i=0 ; i<numhnodes ; i++) {
 		if (hnodes[i].used)
 			continue;
 		if (!hnodes[i].count)
 			continue;
-		if (hnodes[i].count < best)
-		{
+		if (hnodes[i].count < best) {
 			best = hnodes[i].count;
 			bestnode = i;
 		}
@@ -799,17 +770,14 @@ int	SmallestNode1 (hnode_t *hnodes, int numhnodes)
 }
 
 
-/*
-==================
-BuildChars1
-==================
-*/
+/**
+ * @brief
+ */
 void BuildChars1 (int prev, int nodenum, unsigned bits, int bitcount)
 {
 	hnode_t	*node;
 
-	if (nodenum < HUF_TOKENS)
-	{
+	if (nodenum < HUF_TOKENS) {
 		if (bitcount > 32)
 			Error ("bitcount > 32");
 		charbits1[prev][nodenum] = bits;
@@ -825,11 +793,9 @@ void BuildChars1 (int prev, int nodenum, unsigned bits, int bitcount)
 }
 
 
-/*
-==================
-BuildTree1
-==================
-*/
+/**
+ * @brief
+ */
 void BuildTree1 (int prev)
 {
 	hnode_t		*node, *nodebase;
@@ -838,8 +804,7 @@ void BuildTree1 (int prev)
 	/* build the nodes */
 	numhnodes = HUF_TOKENS;
 	nodebase = hnodes1[prev];
-	while (1)
-	{
+	while (1) {
 		node = &nodebase[numhnodes];
 
 		/* pick two lowest counts */
@@ -851,7 +816,7 @@ void BuildTree1 (int prev)
 		if (node->children[1] == -1)
 			break;
 
-		node->count = nodebase[node->children[0]].count + 
+		node->count = nodebase[node->children[0]].count +
 			nodebase[node->children[1]].count;
 		numhnodes++;
 	}
@@ -860,11 +825,9 @@ void BuildTree1 (int prev)
 }
 
 
-/*
-==================
-Huffman1_Count
-==================
-*/
+/**
+ * @brief
+ */
 void Huffman1_Count (cblock_t in)
 {
 	int		i;
@@ -873,8 +836,7 @@ void Huffman1_Count (cblock_t in)
 	int		rept;
 
 	prev = 0;
-	for (i=0 ; i<in.count ; i++)
-	{
+	for (i=0 ; i<in.count ; i++) {
 		v = in.data[i];
 		order0counts[v]++;
 		hnodes1[prev][v].count++;
@@ -883,8 +845,7 @@ void Huffman1_Count (cblock_t in)
 		for (rept=1 ; i+rept < in.count && rept < MAX_REPT ; rept++)
 			if (in.data[i+rept] != v)
 				break;
-		if (rept > MIN_REPT)
-		{
+		if (rept > MIN_REPT) {
 			hnodes1[prev][255+rept].count++;
 			i += rept-1;
 		}
@@ -893,20 +854,17 @@ void Huffman1_Count (cblock_t in)
 }
 
 
-/*
-==================
-Huffman1_Build
-==================
-*/
 byte	scaled[256][HUF_TOKENS];
+/**
+ * @brief
+ */
 void Huffman1_Build (FILE *f)
 {
 	int		i, j, v;
 	int		max;
 	int		total;
 
-	for (i=0 ; i<256 ; i++)
-	{
+	for (i=0 ; i<256 ; i++) {
 		/* normalize and save the counts */
 		max = 0;
 		for (j=0 ; j<HUF_TOKENS ; j++)
@@ -917,8 +875,8 @@ void Huffman1_Build (FILE *f)
 		if (max == 0)
 			max = 1;
 		total = 0;
-		for (j=0 ; j<HUF_TOKENS ; j++)
-		{	/* easy to overflow 32 bits here! */
+		for (j=0 ; j<HUF_TOKENS ; j++) {
+			/* easy to overflow 32 bits here! */
 			v = (hnodes1[i][j].count*(double)255+max-1)/max;
 			if (v > 255)
 				Error ("v > 255");
@@ -926,8 +884,8 @@ void Huffman1_Build (FILE *f)
 			if (v)
 				total++;
 		}
-		if (total == 1)
-		{	/* must have two tokens */
+		if (total == 1) {
+			/* must have two tokens */
 			if (!scaled[i][0])
 				scaled[i][0] = hnodes1[i][0].count = 1;
 			else
@@ -951,13 +909,9 @@ void Huffman1_Build (FILE *f)
 	fwrite (scaled, 1, sizeof(scaled), f);
 }
 
-/*
-==================
-Huffman1
-
-Order 1 compression with pre-built table
-==================
-*/
+/**
+ * @brief Order 1 compression with pre-built table
+ */
 cblock_t Huffman1 (cblock_t in)
 {
 	int			i;
@@ -981,16 +935,14 @@ cblock_t Huffman1 (cblock_t in)
 	/* write bits */
 	outbits = 0;
 	prev = 0;
-	for (i=0 ; i<in.count ; i++)
-	{
+	for (i=0 ; i<in.count ; i++) {
 		v = in.data[i];
 
 		c = charbitscount1[prev][v];
 		bits = charbits1[prev][v];
 		if (!c)
 			Error ("!bits");
-		while (c)
-		{
+		while (c) {
 			c--;
 			if (bits & (1<<c))
 				out_p[outbits>>3] |= 1<<(outbits&7);
@@ -1003,14 +955,12 @@ cblock_t Huffman1 (cblock_t in)
 		for (rept=1 ; i+rept < in.count && rept < MAX_REPT ; rept++)
 			if (in.data[i+rept] != v)
 				break;
-		if (rept > MIN_REPT)
-		{
+		if (rept > MIN_REPT) {
 			c = charbitscount1[prev][255+rept];
 			bits = charbits1[prev][255+rept];
 			if (!c)
 				Error ("!bits");
-			while (c)
-			{
+			while (c) {
 				c--;
 				if (bits & (1<<c))
 					out_p[outbits>>3] |= 1<<(outbits&7);
@@ -1028,14 +978,9 @@ cblock_t Huffman1 (cblock_t in)
 	return out;
 }
 
-/*========================================================================== */
-
-
-/*
-===================
-LoadFrame
-===================
-*/
+/**
+ * @brief
+ */
 cblock_t LoadFrame (char *base, int frame, int digits, byte **palette)
 {
 	int			ten3, ten2, ten1, ten0;
@@ -1058,8 +1003,7 @@ cblock_t LoadFrame (char *base, int frame, int digits, byte **palette)
 		sprintf (name, "%svideo/%s/%s%i%i%i.pcx", gamedir, base, base, ten2, ten1, ten0);
 
 	f = fopen(name, "rb");
-	if (!f)
-	{
+	if (!f) {
 		in.data = NULL;
 		return in;
 	}
@@ -1068,7 +1012,7 @@ cblock_t LoadFrame (char *base, int frame, int digits, byte **palette)
 	printf ("%s\n", name);
 	Load256Image (name, &in.data, palette, &width, &height);
 	in.count = width*height;
-/* FIXME: map 0 and 255! */
+	/* FIXME: map 0 and 255! */
 
 #if 0
 	/* rle compress */
@@ -1081,13 +1025,9 @@ cblock_t LoadFrame (char *base, int frame, int digits, byte **palette)
 	return in;
 }
 
-/*
-===============
-Cmd_Video
-
-video <directory> <framedigits>
-===============
-*/
+/**
+ * @brief video <directory> <framedigits>
+ */
 void Cmd_Video (void)
 {
 	char	savename[1024];
@@ -1106,8 +1046,7 @@ void Cmd_Video (void)
 
 	GetToken (qfalse);
 	strcpy (base, token);
-	if (g_release)
-	{
+	if (g_release) {
 /*		sprintf (savename, "video/%s.cin", token); */
 /*		ReleaseFile (savename); */
 		return;
@@ -1117,12 +1056,10 @@ void Cmd_Video (void)
 	digits = atoi(token);
 
 	/* optionally skip frames */
-	if (TokenAvailable ())
-	{
+	if (TokenAvailable ()) {
 		GetToken (qfalse);
 		startframe = atoi(token);
-	}
-	else
+	} else
 		startframe=0;
 
 	sprintf (savename, "%svideo/%s.cin", gamedir, base);
@@ -1164,8 +1101,7 @@ void Cmd_Video (void)
 	fwrite (&i, 4, 1, output);
 
 	/* build the dictionary */
-	for ( frame=startframe ;  ; frame++)
-	{
+	for ( frame=startframe ;  ; frame++) {
 		printf ("counting ", frame);
 		in = LoadFrame (base, frame, digits, &palette);
 		if (!in.data)
@@ -1178,12 +1114,10 @@ void Cmd_Video (void)
 	/* build nodes and write counts */
 	Huffman1_Build (output);
 
-
 	memset (current_palette, 0, sizeof(current_palette));
 
 	/* compress it with the dictionary */
-	for (frame=startframe ;  ; frame++)
-	{
+	for (frame=startframe ;  ; frame++) {
 		printf ("packing ", frame);
 		in = LoadFrame (base, frame, digits, &palette);
 		if (!in.data)
@@ -1191,8 +1125,7 @@ void Cmd_Video (void)
 
 		/* see if the palette has changed */
 		for (i=0 ; i<768 ; i++)
-			if (palette[i] != current_palette[i])
-			{
+			if (palette[i] != current_palette[i]) {
 				/* write a palette change */
 				memcpy (current_palette, palette, sizeof(current_palette));
 				command = LittleLong(1);
@@ -1200,8 +1133,7 @@ void Cmd_Video (void)
 				fwrite (current_palette, 1, sizeof(current_palette), output);
 				break;
 			}
-		if (i == 768)
-		{
+		if (i == 768) {
 			command = 0;	/* no palette change */
 			fwrite (&command, 1, 4, output);
 		}

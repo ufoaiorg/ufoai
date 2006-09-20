@@ -1,3 +1,9 @@
+/**
+ * @file qdata.c
+ * @brief
+ */
+
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -35,9 +41,7 @@ char		*trifileext;
 
 /*
 =======================================================
-
-  PAK FILES
-
+PAK FILES
 =======================================================
 */
 
@@ -63,11 +67,9 @@ packheader_t	pakheader;
 
 
 
-/*
-==============
-BeginPak
-==============
-*/
+/**
+ * @brief
+ */
 void BeginPak (char *outname)
 {
 	if (!g_pak)
@@ -82,15 +84,10 @@ void BeginPak (char *outname)
 }
 
 
-/*
-==============
-ReleaseFile
-
-Filename should be gamedir reletive.
-Either copies the file to the release dir, or adds it to
-the pak file.
-==============
-*/
+/**
+ * @brief Filename should be gamedir relative.
+ * Either copies the file to the release dir, or adds it to the pak file.
+ */
 void ReleaseFile (char *filename)
 {
 	int		len;
@@ -103,8 +100,7 @@ void ReleaseFile (char *filename)
 
 	sprintf (source, "%s%s", gamedir, filename);
 
-	if (!g_pak)
-	{	/* copy it */
+	if (!g_pak) {	/* copy it */
 		sprintf (dest, "%s/%s", g_releasedir, filename);
 		printf ("copying to %s\n", dest);
 		QCopyFile (source, dest);
@@ -118,8 +114,7 @@ void ReleaseFile (char *filename)
 
 	len = LoadFile (source, (void **)&buf);
 
-	if (g_compress_pak && len < 4096*1024 )
-	{
+	if (g_compress_pak && len < 4096*1024 ) {
 		cblock_t	in, out;
 		cblock_t Huffman (cblock_t in);
 
@@ -128,14 +123,12 @@ void ReleaseFile (char *filename)
 
 		out = Huffman (in);
 
-		if (out.count < in.count)
-		{
+		if (out.count < in.count) {
 			printf ("   compressed from %i to %i\n", in.count, out.count);
 			free (in.data);
 			buf = out.data;
 			len = out.count;
-		}
-		else
+		} else
 			free (out.data);
 	}
 
@@ -149,12 +142,9 @@ void ReleaseFile (char *filename)
 	free (buf);
 }
 
-
-/*
-==============
-FinishPak
-==============
-*/
+/**
+ * @brief
+ */
 void FinishPak (void)
 {
 	int		dirlen;
@@ -189,28 +179,20 @@ void FinishPak (void)
 }
 
 
-/*
-===============
-Cmd_File
-
-This is only used to cause a file to be copied during a release
-build (default.cfg, maps, etc)
-===============
-*/
+/**
+ * @brief This is only used to cause a file to be copied during a release build (default.cfg, maps, etc)
+ */
 void Cmd_File (void)
 {
 	GetToken (qfalse);
 	ReleaseFile (token);
 }
 
-/*
-===============
-PackDirectory_r
-
-===============
-*/
 #ifdef _WIN32
 #include "io.h"
+/**
+ * @brief
+ */
 void PackDirectory_r (char *dir)
 {
 	struct _finddata_t fileinfo;
@@ -248,6 +230,9 @@ void PackDirectory_r (char *dir)
 #include <sys/dirent.h>
 #endif
 
+/**
+ * @brief
+ */
 void PackDirectory_r (char *dir)
 {
 #ifdef NeXT
@@ -266,8 +251,7 @@ void PackDirectory_r (char *dir)
 	sprintf (dirstring, "%s%s", gamedir, dir);
 	count = scandir(dirstring, &namelist, NULL, NULL);
 
-	for (i=0 ; i<count ; i++)
-	{
+	for (i=0 ; i<count ; i++) {
 		ent = namelist[i];
 		name = ent->d_name;
 
@@ -279,8 +263,7 @@ void PackDirectory_r (char *dir)
 
 		if (stat (dirstring, &st) == -1)
 			Error ("fstating %s", pf->name);
-		if (st.st_mode & S_IFDIR)
-		{	/* directory */
+		if (st.st_mode & S_IFDIR) {	/* directory */
 			PackDirectory_r (fullname);
 			continue;
 		}
@@ -292,26 +275,22 @@ void PackDirectory_r (char *dir)
 #endif
 
 
-/*
-===============
-Cmd_Dir
-
-This is only used to cause a directory to be copied during a
-release build (sounds, etc)
-===============
-*/
+/**
+ * @brief This is only used to cause a directory to be copied during a release build (sounds, etc)
+ */
 void Cmd_Dir (void)
 {
 	GetToken (qfalse);
 	PackDirectory_r (token);
 }
 
-/*======================================================================== */
-
 #define	MAX_RTEX	16384
 int		numrtex;
 char	rtex[MAX_RTEX][64];
 
+/**
+ * @brief
+ */
 void ReleaseTexture (char *name)
 {
 	int		i;
@@ -331,22 +310,17 @@ void ReleaseTexture (char *name)
 	ReleaseFile (path);
 }
 
-/*
-===============
-Cmd_Maps
-
-Only relevent for release and pak files.
-Releases the .bsp files for the maps, and scans all of the files to
-build a list of all textures used, which are then released.
-===============
-*/
+/**
+ * @brief Only relevent for release and pak files.
+ * Releases the .bsp files for the maps, and scans all of the files to
+ * build a list of all textures used, which are then released.
+ */
 void Cmd_Maps (void)
 {
 	char	map[1024];
 	int		i;
 
-	while (TokenAvailable ())
-	{
+	while (TokenAvailable ()) {
 		GetToken (qfalse);
 		sprintf (map, "maps/%s.bsp", token);
 		ReleaseFile (map);
@@ -363,19 +337,14 @@ void Cmd_Maps (void)
 }
 
 
-/*============================================================== */
 
-/*
-===============
-ParseScript
-===============
-*/
+/**
+ * @brief
+ */
 void ParseScript (void)
 {
-	while (1)
-	{
-		do
-		{	/* look for a line starting with a $ command */
+	while (1) {
+		do {	/* look for a line starting with a $ command */
 			GetToken (qtrue);
 			if (endofscript)
 				return;
@@ -443,13 +412,9 @@ void ParseScript (void)
 	}
 }
 
-/*======================================================= */
-
-/*
-==============
-main
-==============
-*/
+/**
+ * @brief
+ */
 int main (int argc, char **argv)
 {
 	static	int		i;		/* VC4.2 compiler bug if auto... */

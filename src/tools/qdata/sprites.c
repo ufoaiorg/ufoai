@@ -1,3 +1,27 @@
+/**
+ * @file sprites.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
 
 #include "qdata.h"
 
@@ -17,11 +41,9 @@ void Cmd_Spritename (void);
 
 
 
-/*
-==============
-FinishSprite
-==============
-*/
+/**
+ * @brief
+ */
 void FinishSprite (void)
 {
 	FILE	*spriteouthandle;
@@ -37,8 +59,7 @@ void FinishSprite (void)
 
 	sprintf (savename, "%s%s.sp2", gamedir, spritename);
 
-	if (g_release)
-	{
+	if (g_release) {
 		char	name[1024];
 
 		sprintf (name, "%s.sp2", spritename);
@@ -78,11 +99,9 @@ void FinishSprite (void)
 }
 
 
-/*
-===============
-Cmd_Load
-===============
-*/
+/**
+ * @brief
+ */
 void Cmd_Load (void)
 {
 	char	*name;
@@ -103,11 +122,9 @@ void Cmd_Load (void)
 }
 
 
-/*
-===============
-Cmd_SpriteFrame
-===============
-*/
+/**
+ * @brief
+ */
 void Cmd_SpriteFrame (void)
 {
 	int             y,xl,yl,xh,yh,w,h;
@@ -176,13 +193,9 @@ void Cmd_SpriteFrame (void)
 	free (cropped);
 }
 
-
-
-/*
-==============
-Cmd_SpriteName
-==============
-*/
+/**
+ * @brief
+ */
 void Cmd_SpriteName (void)
 {
 	if (sprite.numframes)
