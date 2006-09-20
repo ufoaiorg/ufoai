@@ -597,7 +597,7 @@ cblock_t RLE (cblock_t in)
 			i++;
 		}
 		if (repeat < 256)
-			rle_counts[repeat]+;
+			rle_counts[repeat]++;
 		if (repeat > 3 || val == RLE_CODE) {
 			*out_p++ = RLE_CODE;
 			*out_p++ = val;

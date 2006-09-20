@@ -27,6 +27,7 @@ BUILD_WITH_MMX=NO	# MMX support
 BUILD_PARANOID=YES	# paranoid mode for debug
 BUILD_FOR_PROFILING=NO  # build with -pg option for profiling via gprof
 BUILD_COMPILETOOLS=YES	# build ufo2map bsp compile tool
+BUILD_QDATA=YES		# build qdata tools
 
 # (hopefully) end of configurable options
 
@@ -105,6 +106,8 @@ endif
 # -ansi -pedantic
 TOOLSCFLAGS=
 TOOLSLDFLAGS=-lm
+QDATACFLAGS=
+QDATALDFLAGS=-lm
 PROFILER_CFLAGS=
 
 MAKE_FLAGS=--stop --silent
@@ -138,6 +141,7 @@ ifeq ($(OSTYPE),Darwin)
 	BUILD_WITH_MMX=NO	# MMX support
 	BUILD_FOR_PROFILING=NO # build with -pg option for profiling via gprof
 	BUILD_COMPILETOOLS=YES	# build ufo2map bsp compile tool
+	BUILD_QDATA=YES		# build qdata tools
 
 	LDFLAGS=-L/sw/lib -ldl -lm -lvorbisfile -lvorbis -lintl -framework IOKit -framework AppKit -framework QuickTime -framework CoreAudio
 	BASE_CFLAGS+=-I/sw/include
@@ -273,6 +277,7 @@ endif
 DO_CC=echo " * [UFO] $@"; $(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c $<
 DO_DED_CC=echo " * [DED] $@"; $(CC) $(CFLAGS) -DDEDICATED_ONLY -o $@ -c $<
 DO_TOOLS_CC=echo " * [MAP] $@"; $(CC) $(CFLAGS) -o $@ -c $<
+DO_QDATA_CC=echo " * [QDA] $@"; $(CC) $(CFLAGS) -o $@ -c $<
 DO_JPEG_CC=echo " * [JPG] $@"; $(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c $<
 DO_O_CC=echo " * [OPT] $@"; $(CC) $(CFLAGS) -O -o $@ -c $<
 DO_SHLIB_CC=echo " * [LIB] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
@@ -365,6 +370,10 @@ ifeq ($(strip $(BUILD_COMPILETOOLS)),YES)
 	TARGETS += $(BUILDDIR)/ufo2map
 endif
 
+ifeq ($(strip $(BUILD_QDATA)),YES)
+	TARGETS += $(BUILDDIR)/qdata
+endif
+
 debug: build_debug copy_debug echo_info
 all: build_debug build_release lang
 lazy: lang build_debug copy_debug maps
@@ -412,6 +421,7 @@ build_debug:
 		$(BUILD_DEBUG_DIR)/ref_gl \
 		$(BUILD_DEBUG_DIR)/game \
 		$(BUILD_DEBUG_DIR)/tools \
+		$(BUILD_DEBUG_DIR)/tools/qdata \
 		$(BUILD_DEBUG_DIR)/tools/ufo2map \
 		$(BUILD_DEBUG_DIR)/tools/ufo2map/common
 	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS) -DSVN='\"$(SVN_REV)\"'"
@@ -440,6 +450,7 @@ echo_info:
 	@echo "BUILD_WITH_MMX = $(BUILD_WITH_MMX)"
 	@echo "BUILD_FOR_PROFILING = $(BUILD_FOR_PROFILING)"
 	@echo "BUILD_COMPILETOOLS = $(BUILD_COMPILETOOLS)"
+	@echo "BUILD_QDATA = $(BUILD_QDATA)"
 	@echo "BUILD_PARANOID = $(BUILD_PARANOID)"
 	@echo
 	@echo "Note"
@@ -468,6 +479,7 @@ build_release:
 		$(BUILD_RELEASE_DIR)/ref_gl \
 		$(BUILD_RELEASE_DIR)/game \
 		$(BUILD_RELEASE_DIR)/tools \
+		$(BUILD_RELEASE_DIR)/tools/qdata \
 		$(BUILD_RELEASE_DIR)/tools/ufo2map \
 		$(BUILD_RELEASE_DIR)/tools/ufo2map/common
 	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_RELEASE_DIR) CFLAGS="$(RELEASE_CFLAGS) -DSVN='\"$(SVN_REV)\"'"
@@ -494,6 +506,7 @@ build_release:
 	@echo "BUILD_WITH_MMX = $(BUILD_WITH_MMX)"
 	@echo "BUILD_FOR_PROFILING = $(BUILD_FOR_PROFILING)"
 	@echo "BUILD_COMPILETOOLS = $(BUILD_COMPILETOOLS)"
+	@echo "BUILD_QDATA = $(BUILD_QDATA)"
 	@echo "BUILD_PARANOID = $(BUILD_PARANOID) (only in debug mode)"
 	@echo
 	@echo "Gettext"
@@ -634,6 +647,72 @@ $(BUILDDIR)/tools/ufo2map/common/trace.o :    $(TOOLS_DIR)/ufo2map/common/trace.
 $(BUILDDIR)/tools/ufo2map/common/trilib.o :    $(TOOLS_DIR)/ufo2map/common/trilib.c
 	$(DO_TOOLS_CC)
 
+#############################################################################
+# QDATA
+#############################################################################
+
+QDATA_OBJS = \
+	$(BUILDDIR)/tools/qdata/qdata.o \
+	$(BUILDDIR)/tools/qdata/bspfile.o \
+	$(BUILDDIR)/tools/qdata/cmdlib.o \
+	$(BUILDDIR)/tools/qdata/l3dslib.o \
+	$(BUILDDIR)/tools/qdata/lbmlib.o \
+	$(BUILDDIR)/tools/qdata/mathlib.o \
+	$(BUILDDIR)/tools/qdata/models.o \
+	$(BUILDDIR)/tools/qdata/sprites.o \
+	$(BUILDDIR)/tools/qdata/images.o \
+	$(BUILDDIR)/tools/qdata/scriplib.o \
+	$(BUILDDIR)/tools/qdata/trilib.o \
+	$(BUILDDIR)/tools/qdata/threads.o \
+	$(BUILDDIR)/tools/qdata/tables.o \
+	$(BUILDDIR)/tools/qdata/video.o
+
+
+$(BUILDDIR)/qdata: $(QDATA_OBJS)
+	@echo " * [QDA] ...linking";
+	$(CC) $(CFLAGS) $(QDATACFLAGS) -o $@ $(QDATA_OBJS) $(QDATALDFLAGS)
+
+$(BUILDDIR)/tools/qdata/qdata.o :    $(TOOLS_DIR)/qdata/qdata.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/bspfile.o :    $(TOOLS_DIR)/ufo2map/common/bspfile.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/cmdlib.o :    $(TOOLS_DIR)/ufo2map/common/cmdlib.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/l3dslib.o :    $(TOOLS_DIR)/ufo2map/common/l3dslib.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/lbmlib.o :    $(TOOLS_DIR)/ufo2map/common/lbmlib.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/mathlib.o :    $(TOOLS_DIR)/ufo2map/common/mathlib.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/models.o :    $(TOOLS_DIR)/qdata/models.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/sprites.o :    $(TOOLS_DIR)/qdata/sprites.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/images.o :    $(TOOLS_DIR)/qdata/images.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/scriplib.o :    $(TOOLS_DIR)/ufo2map/common/scriplib.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/trilib.o :    $(TOOLS_DIR)/ufo2map/common/trilib.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/threads.o :    $(TOOLS_DIR)/ufo2map/common/threads.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/tables.o :    $(TOOLS_DIR)/qdata/tables.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/video.o :    $(TOOLS_DIR)/qdata/video.c
+	$(DO_QDATA_CC)
 
 #############################################################################
 # CLIENT/SERVER

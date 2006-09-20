@@ -150,7 +150,7 @@ void FinishPak (void)
 	int		dirlen;
 	int		d;
 	int		i;
-	unsigned	checksum;
+	unsigned	checksum = 0;
 
 	if (!g_pak)
 		return;
@@ -163,7 +163,7 @@ void FinishPak (void)
 	pakheader.dirofs = LittleLong(ftell(pakfile));
 	pakheader.dirlen = LittleLong(dirlen);
 
-	checksum = Com_BlockChecksum ( (void *)pfiles, dirlen );
+/*	checksum = Com_BlockChecksum ( (void *)pfiles, dirlen );*/
 
 	SafeWrite (pakfile, pfiles, dirlen);
 
@@ -227,7 +227,7 @@ void PackDirectory_r (char *dir)
 #ifdef NeXT
 #include <sys/dir.h>
 #else
-#include <sys/dirent.h>
+#include <dirent.h>
 #endif
 
 /**
@@ -243,7 +243,6 @@ void PackDirectory_r (char *dir)
 	int		count;
 	struct stat st;
 	int			i;
-	int			len;
 	char		fullname[1024];
 	char		dirstring[1024];
 	char		*name;

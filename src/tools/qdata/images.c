@@ -426,7 +426,7 @@ static mipparm_t mipparms[] =
 	{"mist",	CONTENTS_MIST, pt_contents},	/* non-solid window */
 	{"origin",	CONTENTS_ORIGIN, pt_contents},	/* center of rotating brushes */
 	{"playerclip",	CONTENTS_PLAYERCLIP, pt_contents},
-	{"monsterclip",	CONTENTS_MONSTERCLIP, pt_contents},
+/*	{"monsterclip",	CONTENTS_MONSTERCLIP, pt_contents},*/
 
 	/* utility surface attributes */
 	{"hint",	SURF_HINT, pt_flags},
