@@ -163,7 +163,7 @@ void FinishPak (void)
 	pakheader.dirofs = LittleLong(ftell(pakfile));
 	pakheader.dirlen = LittleLong(dirlen);
 
-/*	checksum = Com_BlockChecksum ( (void *)pfiles, dirlen );*/
+	checksum = Com_BlockChecksum ( (void *)pfiles, dirlen );
 
 	SafeWrite (pakfile, pfiles, dirlen);
 

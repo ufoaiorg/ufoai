@@ -665,6 +665,7 @@ QDATA_OBJS = \
 	$(BUILDDIR)/tools/qdata/trilib.o \
 	$(BUILDDIR)/tools/qdata/threads.o \
 	$(BUILDDIR)/tools/qdata/tables.o \
+	$(BUILDDIR)/tools/qdata/md4.o \
 	$(BUILDDIR)/tools/qdata/video.o
 
 
@@ -709,6 +710,9 @@ $(BUILDDIR)/tools/qdata/threads.o :    $(TOOLS_DIR)/ufo2map/common/threads.c
 	$(DO_QDATA_CC)
 
 $(BUILDDIR)/tools/qdata/tables.o :    $(TOOLS_DIR)/qdata/tables.c
+	$(DO_QDATA_CC)
+
+$(BUILDDIR)/tools/qdata/md4.o :    $(COMMON_DIR)/md4.c
 	$(DO_QDATA_CC)
 
 $(BUILDDIR)/tools/qdata/video.o :    $(TOOLS_DIR)/qdata/video.c
