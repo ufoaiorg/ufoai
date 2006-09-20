@@ -6,7 +6,7 @@ CC = i586-mingw32msvc-gcc
 
 JPEGLIB = -DDONT_TYPEDEF_INT32
 VORBISLIB = -lvorbisfile -lvorbis -logg
-CFLAGS = -g -Iclient -Imingw32 -DSHADERS $(shell sdl-config --cflags)
+CFLAGS = -g -Iclient -Imingw32 -DC_ONLY -DSHADERS $(shell sdl-config --cflags) -fexceptions
 LDFLAGSINTL = -L/usr/local/lib -lintl -DHAVE_GETTEXT
 LDFLAGS = -L/usr/lib -L/usr/local/lib -lgdi32 -lwinmm -lwsock32 $(LDFLAGSINTL)
 LDFLAGS_DLL = -L/usr/lib -L/usr/local/lib -lkernel32 -luser32 -lgdi32 -lwinmm -Imingw32

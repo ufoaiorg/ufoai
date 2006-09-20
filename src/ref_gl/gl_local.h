@@ -33,21 +33,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #endif
 
-#ifndef _WIN32
-#include <jpeglib.h>
-#else
-#ifdef DEVCPP
+#ifndef _MSC_VER
 #include <jpeglib.h>
 #else
 #include "../ports/win32/jpeglib.h"
 #endif
-#endif
+
 /* this was taken from jmorecfg.h */
 #define RGB_PIXELSIZE 3
 
 #include "gl_arb_shader.h"
 
-#if defined (__FreeBSD__)
+#ifndef _WIN32
 #include <SDL.h>
 #include <SDL_ttf.h>
 #else
