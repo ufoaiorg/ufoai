@@ -23,9 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "common/cmdlib.h"
-#include "common/mathlib.h"
 #include "common/scriplib.h"
+#include "common/mathlib.h"
 #include "common/polylib.h"
 #include "common/threads.h"
 #include "common/bspfile.h"

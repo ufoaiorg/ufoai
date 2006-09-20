@@ -3,7 +3,6 @@
  * @brief library for loading triangles from an Alias triangle file
  */
 
-#include <stdio.h>
 #include "../../ufo2map/common/cmdlib.h"
 #include "../../ufo2map/common/mathlib.h"
 #include "trilib.h"
