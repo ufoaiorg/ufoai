@@ -1726,9 +1726,11 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 
 		/* do damage */
 		damage = (fd->spldmg[0] + fd->spldmg[1] * crand()) * (1.0 - dist / fd->splrad);
-		mock->allow_self = qtrue;
+		if (mock)
+			mock->allow_self = qtrue;
 		G_Damage(check, fd->dmgtype, damage, ent, mock);
-		mock->allow_self = qfalse;
+		if (mock)
+			mock->allow_self = qfalse;
 	}
 }
 
