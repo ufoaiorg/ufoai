@@ -146,6 +146,7 @@ typedef struct {
 	int civilian;
 	int self; /* FIXME: incorrect actor facing or shotOrg, or bug in trace code? */
 	int damage;
+	qboolean allow_self;
 } shot_mock_t;
 
 extern game_locals_t game;

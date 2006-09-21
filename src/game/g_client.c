@@ -41,6 +41,9 @@ static qboolean sentAppearPerishEvent;
 */
 static int TU_REACTIONS[MAX_EDICTS][2];
 
+/* Stores level.activeTeam while G_ReactionFire() is abusing it. */
+static int turnTeam;
+
 /**
  * @brief Generates the player mask
  */
@@ -1137,8 +1140,9 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 				status = G_CheckVisTeam(ent->team, NULL, qfalse);
 
 				/* check for reaction fire */
-				if ( G_ReactionFire(ent, qfalse) ) {
-					G_ReactionFire(ent, qtrue);
+				if (G_ReactionFire(ent, qfalse)) {
+					if (G_ReactionFire(ent, qtrue))
+						status |= VIS_STOP;
 					steps = 0;
 					sentAppearPerishEvent = qfalse;
 				}
@@ -1519,13 +1523,11 @@ static void G_MoraleBehaviour(int team)
 
 static void G_UpdateShotMock(shot_mock_t *mock, edict_t *shooter, edict_t *struck, int damage)
 {
+	assert(struck->number != shooter->number || mock->allow_self);
+
 	if (damage > 0) {
 		if (!struck || !struck->inuse || struck->state & STATE_DEAD)
 			return;
-		else if (struck->number == shooter->number)
-			/* FIXME: incorrect actor facing or shotOrg, or bug in trace code? */
-			/* FIXME: when self means hits on self (e.g. stepped on grenade), incr team instead */
-			mock->self += 1;
 		else if (!(struck->visflags & (1 << shooter->team)))
 			return;
 		else if (struck->team == TEAM_CIVILIAN)
@@ -1724,7 +1726,9 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 
 		/* do damage */
 		damage = (fd->spldmg[0] + fd->spldmg[1] * crand()) * (1.0 - dist / fd->splrad);
+		mock->allow_self = qtrue;
 		G_Damage(check, fd->dmgtype, damage, ent, mock);
+		mock->allow_self = qfalse;
 	}
 }
 
@@ -2525,15 +2529,16 @@ qboolean G_ReactionFire(edict_t * target, qboolean doShoot)
 			actorVis = G_ActorVis(ent->origin, target, qtrue);
 			frustom = G_FrustomVis(ent, target->origin);
 			if (actorVis > 0.2 && frustom) {
-				if (target->team == TEAM_CIVILIAN || target->team == ent->team)
-					if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand())
-						continue;
 				/* If reaction fire is triggered by a friendly unit
 				   and the shooter is still sane, don't shoot;
 				   well, if the shooter isn't sane anymore... */
+				if (target->team == TEAM_CIVILIAN || target->team == ent->team)
+					if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand())
+						continue;
 
-				/* Don't react in your own turn, trust your commander. */
-				if (ent->team == level.activeTeam)
+				/* Don't react in your own turn, trust your commander. Can't use
+				   level.activeTeam, because this function touches it recursively. */
+				if (ent->team == turnTeam)
 					continue;
 
 				/* Get player. */
@@ -2900,6 +2905,7 @@ void G_ClientEndRound(player_t * player)
 
 		lastTeam = nextTeam;
 	}
+	turnTeam = level.activeTeam;
 
 	/* communicate next player in row to clients */
 	gi.AddEvent(PM_ALL, EV_ENDROUND);
@@ -2938,8 +2944,10 @@ void G_ClientBegin(player_t * player)
 	G_GetTeam(player);
 
 	/* activate his round if he's first to join */
-	if (level.activeTeam == -1)
+	if (level.activeTeam == -1) {
 		level.activeTeam = player->pers.team;
+		turnTeam = level.activeTeam;
+	}
 
 	level.numplayers++;
 
