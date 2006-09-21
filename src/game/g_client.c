@@ -635,46 +635,50 @@ int G_DoTurn(edict_t * ent, byte toDV)
  * @brief
  * @todo: Integrate into hud - don´t use cprintf
  */
-qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU)
+qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU, qboolean quiet)
 {
+	int msglevel;
+
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player->pers.team) {
 		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - this isn't your round!\n"));
 		return qfalse;
 	}
 
+	msglevel = quiet ? PRINT_NONE : PRINT_HIGH;
+
 	if (!ent || !ent->inuse) {
-		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - object not present!\n"));
+		gi.cprintf(player, msglevel, _("Can't perform action - object not present!\n"));
 		return qfalse;
 	}
 
 	if (ent->type != ET_ACTOR && ent->type != ET_UGV) {
-		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not an actor!\n"));
+		gi.cprintf(player, msglevel, _("Can't perform action - not an actor!\n"));
 		return qfalse;
 	}
 
 	if (ent->state & STATE_STUN) {
-		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - actor is stunned!\n"));
+		gi.cprintf(player, msglevel, _("Can't perform action - actor is stunned!\n"));
 		return qfalse;
 	}
 
 	if (ent->state & STATE_DEAD) {
-		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - actor is dead!\n"));
+		gi.cprintf(player, msglevel, _("Can't perform action - actor is dead!\n"));
 		return qfalse;
 	}
 
 	if (ent->team != player->pers.team) {
-		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not on same team!\n"));
+		gi.cprintf(player, msglevel, _("Can't perform action - not on same team!\n"));
 		return qfalse;
 	}
 
 	if (ent->pnum != player->num) {
-		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - no control over allied actors!\n"));
+		gi.cprintf(player, msglevel, _("Can't perform action - no control over allied actors!\n"));
 		return qfalse;
 	}
 
 	if (TU > ent->TU) {
-		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not enough TUs!\n"));
+		gi.cprintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
 		return qfalse;
 	}
 
@@ -729,7 +733,7 @@ edict_t *G_GetFloorItems(edict_t * ent)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction)
+void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction, qboolean quiet)
 {
 	edict_t *ent, *floor;
 	invList_t *ic;
@@ -737,11 +741,13 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 	item_t item;
 	int mask;
 	int ia;
+	int msglevel;
 
 	ent = g_edicts + num;
+	msglevel = quiet ? PRINT_NONE : PRINT_HIGH;
 
 	/* check if action is possible */
-	if (checkaction && !G_ActionCheck(player, ent, 1))
+	if (checkaction && !G_ActionCheck(player, ent, 1, quiet))
 		return;
 
 	/* "get floor ready" */
@@ -773,10 +779,10 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 	if ( ( ia = Com_MoveInInventory(&ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic) ) != 0 ) {
 		switch (ia) {
 		case IA_NOTIME:
-			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not enough TUs!\n"));
+			gi.cprintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
 			return;
 		case IA_NORELOAD:
-			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - weapon already fully loaded with the same ammunition!\n")); /* TODO: "or not researched" */
+			gi.cprintf(player, msglevel, _("Can't perform action - weapon already fully loaded with the same ammunition!\n")); /* TODO: "or not researched" */
 			return;
 		}
 
@@ -1034,7 +1040,7 @@ static qboolean G_CheckMoveBlock(pos3_t from, int dv)
  * @brief
  * @sa CL_ActorStartMove
  */
-void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean stop)
+void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean stop, qboolean quiet)
 {
 	edict_t *ent;
 	int length, status;
@@ -1046,7 +1052,7 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 	ent = g_edicts + num;
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, 2))
+	if (!G_ActionCheck(player, ent, 2, quiet))
 		return;
 
 	/* calculate move table */
@@ -1182,7 +1188,7 @@ static void G_ClientTurn(player_t * player, int num, int dv)
 	ent = g_edicts + num;
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, TU_TURN))
+	if (!G_ActionCheck(player, ent, TU_TURN, NOISY))
 		return;
 
 	/* check if we're already facing that direction */
@@ -1224,7 +1230,7 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 	ent = g_edicts + num;
 
 	/* Check if any action is possible. */
-	if (!G_ActionCheck(player, ent, 0))
+	if (!G_ActionCheck(player, ent, 0, NOISY))
 		return;
 
 	changeState = ent->state ^ newState;
@@ -1233,7 +1239,7 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 
 	if (changeState & STATE_CROUCHED)
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
-		if (G_ActionCheck(player, ent, TU_CROUCH)) {
+		if (G_ActionCheck(player, ent, TU_CROUCH, NOISY)) {
 			ent->state ^= STATE_CROUCHED;
 			ent->TU -= TU_CROUCH;
 			/* Link it. */
@@ -1267,7 +1273,7 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 		} else if (ent->state & STATE_REACTION_ONCE) {
 			ent->state &= ~STATE_REACTION;
 			ent->state |= STATE_REACTION_MANY;
-		} else if (G_ActionCheck(player, ent, TU_REACTION)) {
+		} else if (G_ActionCheck(player, ent, TU_REACTION, NOISY)) {
 			/* Turn on reaction fire and save the used TUs to the list. */
 			ent->state |= STATE_REACTION_ONCE;
 
@@ -1383,16 +1389,16 @@ static void G_Morale(int type, edict_t * victim, edict_t * attacker, int param)
 /**
  * @brief
  */
-static void G_MoralePanic(edict_t * ent, qboolean sanity)
+static void G_MoralePanic(edict_t * ent, qboolean sanity, qboolean quiet)
 {
 	gi.cprintf(game.players + ent->pnum, PRINT_HIGH, _("%s panics!\n"), ent->chr.name);
 
 	/* drop items in hands */
 	if (!sanity) {
 		if (RIGHT(ent))
-			G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
+			G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, quiet);
 		if (LEFT(ent))
-			G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
+			G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, quiet);
 	}
 
 	/* get up */
@@ -1418,12 +1424,12 @@ static void G_MoralePanic(edict_t * ent, qboolean sanity)
  * @brief Stops the panic state of an actor
  * @note This is only called when cvar mor_panic is not zero
  */
-static void G_MoraleStopPanic(edict_t * ent)
+static void G_MoraleStopPanic(edict_t * ent, qboolean quiet)
 {
 	if (((ent->morale) / mor_panic->value) > (m_panic_stop->value * frand()))
 		ent->state &= ~STATE_PANIC;
 	else
-		G_MoralePanic(ent, qtrue);
+		G_MoralePanic(ent, qtrue, quiet);
 }
 
 /**
@@ -1448,20 +1454,20 @@ static void G_MoraleRage(edict_t * ent, qboolean sanity)
  * @brief Stops the rage state of an actor
  * @note This is only called when cvar mor_panic is not zero
  */
-static void G_MoraleStopRage(edict_t * ent)
+static void G_MoraleStopRage(edict_t * ent, qboolean quiet)
 {
 	if (((ent->morale) / mor_panic->value) > (m_rage_stop->value * frand())) {
 		ent->state &= ~STATE_INSANE;
 		G_SendState(G_VisToPM(ent->visflags), ent);
 	} else
-		G_MoralePanic(ent, qtrue);	/*regains sanity */
+		G_MoralePanic(ent, qtrue, quiet);	/*regains sanity */
 }
 
 /**
  * @brief Applies morale behaviour on actors
  * @note only called when mor_panic is not zero
  */
-static void G_MoraleBehaviour(int team)
+static void G_MoraleBehaviour(int team, qboolean quiet)
 {
 	edict_t *ent;
 	int i, newMorale;
@@ -1472,7 +1478,7 @@ static void G_MoraleBehaviour(int team)
 		if (ent->inuse && ent->type == ET_ACTOR && ent->team == team && !(ent->state & STATE_DEAD)) {
 			/* civilians have a 1:1 chance to randomly run away, will be changed: */
 			if (level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
-				G_MoralePanic(ent, qfalse);
+				G_MoralePanic(ent, qfalse, quiet);
 			/* multiplayer needs enabled sv_enablemorale */
 			/* singleplayer has this in every case */
 			if (((int) sv_maxclients->value >= 2 && (int) sv_enablemorale->value == 1)
@@ -1484,7 +1490,7 @@ static void G_MoraleBehaviour(int team)
 					else
 						sanity = qfalse;
 					if ((float) ent->morale / mor_panic->value > (m_rage->value * frand()))
-						G_MoralePanic(ent, sanity);
+						G_MoralePanic(ent, sanity, quiet);
 					else
 						G_MoraleRage(ent, sanity);
 					/* if shaken, well .. be shaken; */
@@ -1496,9 +1502,9 @@ static void G_MoraleBehaviour(int team)
 					gi.cprintf(game.players + ent->pnum, PRINT_HIGH, _("%s is currently shaken.\n"), ent->chr.name);
 				} else {
 					if (ent->state & STATE_PANIC)
-						G_MoraleStopPanic(ent);
+						G_MoraleStopPanic(ent, quiet);
 					else if (ent->state & STATE_RAGE)
-						G_MoraleStopRage(ent);
+						G_MoraleStopRage(ent, quiet);
 				}
 			}
 			/* set correct bounding box */
@@ -1759,7 +1765,8 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 	/* calculate parabola */
 	dt = gi.GrenadeTarget(last, target, startV);
 	if (!dt) {
-		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - impossible throw!\n"));
+		if (!mock)
+			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - impossible throw!\n"));
 		return;
 	}
 
@@ -2133,11 +2140,13 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 	vec3_t dir, center, target, shotOrigin;
 	int i, ammo, wi, prev_dir = 0, reaction_leftover, shots;
 	int container, mask;
+	qboolean quiet;
 
 	ent = g_edicts + num;
+	quiet = mock != NULL;
 
 	if (!G_GetShotFromType(ent, type, &weapon, &container, &fd)) {
-		if (!weapon)
+		if (!weapon && !quiet)
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - object not activable!\n"));
 		return qfalse;
 	}
@@ -2147,11 +2156,12 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 	reaction_leftover = IS_SHOT_REACTION(type) ? sv_reaction_leftover->value : 0;
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, fd->time + reaction_leftover))
+	if (!G_ActionCheck(player, ent, fd->time + reaction_leftover, quiet))
 		return qfalse;
 
 	if (!ammo && fd->ammo && !gi.csi->ods[weapon->t].thrown) {
-		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - no ammo!\n"));
+		if (!quiet)
+			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - no ammo!\n"));
 		return qfalse;
 	}
 
@@ -2165,7 +2175,8 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 			ammo -= fd->ammo;
 		}
 		if (shots < 1) {
-			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not enough ammo!\n"));
+			if (!quiet)
+				gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not enough ammo!\n"));
 			return qfalse;
 		}
 	}
@@ -2266,7 +2277,7 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
  * @param[in] hand
  * @sa AI_ActorThink
  */
-void G_ClientReload(player_t *player, int entnum, shoot_types_t st)
+void G_ClientReload(player_t *player, int entnum, shoot_types_t st, qboolean quiet)
 {
 	edict_t *ent;
 	invList_t *ic;
@@ -2315,7 +2326,7 @@ void G_ClientReload(player_t *player, int entnum, shoot_types_t st)
 
 	/* send request */
 	if (bestContainer != NONE)
-		G_ClientInvMove(player, entnum, bestContainer, x, y, hand, 0, 0, qtrue);
+		G_ClientInvMove(player, entnum, bestContainer, x, y, hand, 0, 0, qtrue, quiet);
 }
 
 /**
@@ -2356,7 +2367,7 @@ qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st)
  * @brief Retrieve weapon from backpack for actor
  * @sa AI_ActorThink
  */
-void G_ClientGetWeaponFromInventory(player_t *player, int entnum)
+void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet)
 {
 	edict_t *ent;
 	invList_t *ic;
@@ -2392,7 +2403,7 @@ void G_ClientGetWeaponFromInventory(player_t *player, int entnum)
 
 	/* send request */
 	if (bestContainer != NONE)
-		G_ClientInvMove(player, entnum, bestContainer, x, y, hand, 0, 0, qtrue);
+		G_ClientInvMove(player, entnum, bestContainer, x, y, hand, 0, 0, qtrue, quiet);
 }
 
 /**
@@ -2615,7 +2626,7 @@ void G_ClientAction(player_t * player)
 
 	case PA_MOVE:
 		gi.ReadFormat(pa_format[PA_MOVE], &pos);
-		G_ClientMove(player, player->pers.team, num, pos, qtrue);
+		G_ClientMove(player, player->pers.team, num, pos, qtrue, NOISY);
 		break;
 
 	case PA_STATE:
@@ -2630,7 +2641,7 @@ void G_ClientAction(player_t * player)
 
 	case PA_INVMOVE:
 		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
-		G_ClientInvMove(player, num, from, fx, fy, to, tx, ty, qtrue);
+		G_ClientInvMove(player, num, from, fx, fy, to, tx, ty, qtrue, NOISY);
 		break;
 
 	default:
@@ -2841,7 +2852,7 @@ void G_ClientTeamInfo(player_t * player)
  * @brief
  * @TODO: Check if we are in multiplayer and there are other teams
  */
-void G_ClientEndRound(player_t * player)
+void G_ClientEndRound(player_t * player, qboolean quiet)
 {
 	player_t *p;
 	int i, lastTeam, nextTeam;
@@ -2916,7 +2927,7 @@ void G_ClientEndRound(player_t * player)
 	/* apply morale behaviour, reset reaction fire */
 	G_ResetReactionFire(level.activeTeam);
 	if (mor_panic->value)
-		G_MoraleBehaviour(level.activeTeam);
+		G_MoraleBehaviour(level.activeTeam, quiet);
 
 	/* start ai */
 	p->pers.last = NULL;
@@ -3039,7 +3050,7 @@ void G_ClientDisconnect(player_t * player)
 	level.numplayers--;
 
 	if (level.activeTeam == player->pers.team)
-		G_ClientEndRound(player);
+		G_ClientEndRound(player, NOISY);
 
 	gi.bprintf(PRINT_HIGH, "%s disconnected.\n", player->pers.netname);
 }

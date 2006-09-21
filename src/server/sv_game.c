@@ -85,6 +85,9 @@ static void PF_cprintf(player_t * player, int level, char *fmt, ...)
 	va_list argptr;
 	int n;
 
+	if (level == PRINT_NONE)
+		return;
+
 	n = 0;
 	if (player) {
 		n = player->num;
