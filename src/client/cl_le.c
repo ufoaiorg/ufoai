@@ -123,8 +123,8 @@ static void LM_Delete(lm_t * lm)
 
 	LM_GenerateList();
 	Grid_RecalcRouting(&clMap, backup.name, lmList);
-	if (selActor)
-		Grid_MoveCalc(&clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length);
+	/* TODO: before CL_ConditionalMoveCalc() was implemented, forbidden list wasn't recalculated here */
+	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
 }
 
 
@@ -388,12 +388,8 @@ static void LET_PathMove(le_t * le)
 
 			Grid_PosToVec(&clMap, le->pos, le->origin);
 
-			/* calculate next possible moves */
-			CL_BuildForbiddenList();
-			if (selActor) {
-				Grid_MoveCalc(&clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length);
-				CL_ResetActorMoveLength();
-			}
+			CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
+			CL_ResetActorMoveLength();
 
 			floor = LE_Find(ET_ITEM, le->pos);
 			if (floor)
