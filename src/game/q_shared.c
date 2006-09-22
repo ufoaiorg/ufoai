@@ -2552,7 +2552,7 @@ CHARACTER GENERATION AND HANDLING
   * @param[in] equip The equipment that shows how many clips to pack
   * @param[in] name The name of the equipment for debug messages
   */
-int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int no_primary, char *name)
+int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, char *name)
 {
 	int ammo = -1; /* this variable is never used before being set */
 	item_t item = {0,NONE,NONE};
@@ -2593,7 +2593,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 					equip[ammo] / equip[weapon]
 					+ (equip[ammo] % equip[weapon] > rand() % equip[weapon])
 					+ (PROB_COMPENSATION > 40 * frand())
-					+ (no_primary ? (float) no_primary * frand() * 5.0 / 40.0 : 0);
+					+ (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0;
 
 				/* load ammo, but avoid reloading with cheaper ammo */
 				if (item.m == NONE) {
@@ -2645,7 +2645,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
-	int has_weapon = 0, has_armor = 0, repeat = 0, primary_count = 0;
+	int has_weapon = 0, has_armor = 0, repeat = 0, missed_primary = 0;
 	int primary = 2; /* 0 tachyon or normal, 1 other, 2 no primary weapon */
 	objDef_t obj;
 
@@ -2666,7 +2666,6 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 		}
 		/* see if there is any */
 		if (max_price) {
-			primary_count += equip[weapon];
 			/* see if the actor picks it */
 			if ( equip[weapon] >= (40 - PROB_COMPENSATION) * frand() ) {
 				/* not decrementing equip[weapon]
@@ -2689,7 +2688,10 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 								 == CSI->damNormal);
 					}
 					max_price = 0; /* one primary weapon is enough */
+					missed_primary = 0;
 				}
+			} else {
+				missed_primary += equip[weapon];
 			}
 		}
 	} while (max_price);
@@ -2720,7 +2722,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			}
 			if ( !(max_price == (primary ? 0 : INT_MAX)) ) {
 				if ( equip[weapon] >= 40 * frand() ) {
-					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, (primary == 2 ? primary_count : 0), name);
+					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, missed_primary, name);
 					if (has_weapon) {
 						/* try to get the second akimbo pistol */
 						if ( primary == 2
@@ -2790,11 +2792,8 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 	if (!has_weapon)
 		Com_DPrintf("Com_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", name);
 
-	/* armor */
-	if (!has_weapon)
-		repeat = WEAPONLESS_BONUS > frand ();
-	else 
-		repeat = 0;
+	/* armor; especially for those without primary weapons */
+	repeat = (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0;
 	do {
 		max_price = INT_MAX;
 		do {
