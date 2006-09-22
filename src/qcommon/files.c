@@ -354,8 +354,16 @@ void FS_Read(void *buffer, int len, FILE * f)
 			if (!tries) {
 				tries = 1;
 				CDAudio_Stop();
-			} else
+			} else {
+#if 0 /* Pk3 file support is not working atm */
+				read = unzReadCurrentFile(f, buffer, len);
+				if (read == 0)
+					Com_Error(ERR_FATAL, "FS_Read: 0 bytes read");
+				else
+					break;
+#endif
 				Com_Error(ERR_FATAL, "FS_Read: 0 bytes read");
+			}
 		}
 
 		if (read == -1)
@@ -473,7 +481,7 @@ pack_t *FS_LoadPackFile(char *packfile)
 		}
 		pack->files = newfiles;
 
-		Com_Printf("Added packfile %s (%i files)\n", packfile, gi.number_entry);
+		Com_Printf("Added packfile %s (%i files) (NOTE: support for pk3 is not fully implemented)\n", packfile, gi.number_entry);
 		return pack;
 	} else {
 		/* Unrecognized file type! */
@@ -510,8 +518,6 @@ void FS_AddGameDirectory(char *dir)
 				pak = FS_LoadPackFile(dirnames[i]);
 				if (!pak)
 					continue;
-				else
-					Com_Printf("...loaded archive file\n");
 				search = Z_Malloc(sizeof(searchpath_t));
 				search->pack = pak;
 				search->next = fs_searchpaths;
