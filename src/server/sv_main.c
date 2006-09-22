@@ -49,7 +49,7 @@ cvar_t *rcon_password;			/* password for remote server commands */
 
 cvar_t *sv_noreload;			/* don't reload level state when reentering */
 
-cvar_t *sv_maxclients;
+cvar_t *sv_maxclients = NULL;
 cvar_t *sv_showclamp;
 cvar_t *sv_enablemorale;
 cvar_t *maxsoldiers;
@@ -889,5 +889,7 @@ void SV_Shutdown(char *finalmsg, qboolean reconnect)
 		fclose(svs.demofile);
 	memset(&svs, 0, sizeof(svs));
 
-	sv_maxclients->flags &= ~CVAR_LATCH;
+	/* maybe we shut down before we init - e.g. in case of an error */
+	if (sv_maxclients)
+		sv_maxclients->flags &= ~CVAR_LATCH;
 }
