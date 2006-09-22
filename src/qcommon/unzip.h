@@ -20,6 +20,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
 
+#ifndef UNZIP_DEFINED
+#define UNZIP_DEFINED
+
 #if defined(STRICTUNZIP) || defined(STRICTZIPUNZIP)
 /* like the STRICT of WIN32, we define a pointer that cannot be converted
     from (void*) without cast */
@@ -334,3 +337,5 @@ extern int unzGetLocalExtrafield (unzFile file, void* buf, unsigned len);
   the return value is the number of unsigned chars copied in buf, or (if <0)
 	the error code
 */
+
+#endif	/* UNZIP_DEFINED */

@@ -23,57 +23,54 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * This file must be identical in the quake and utils directories
  */
 
+#include "unzip.h"
+
 /*
 ========================================================================
 The .pak files are just a linear collapse of a directory tree
 ========================================================================
 */
 
-#define IDPAKHEADER		(('K'<<24)+('C'<<16)+('A'<<8)+'P')
+#ifdef _WIN32
+typedef long fs_offset_t; /* 32bit */
+/*typedef _int64 fs_offset_t;  *//* 64bit (lots of warnings, and lseek/read/write still don't take 64bit on win64) */
+#else
+typedef long long fs_offset_t;
+#endif
 
-typedef struct {
-	char name[MAX_QPATH];
-	int filepos, filelen;
-} dpackfile_t;
+#define FILE_BUFF_SIZE 2048
+typedef struct
+{
+	z_stream	zstream;
+	size_t		comp_length;			/* length of the compressed file */
+	size_t		in_ind, in_len;			/* input buffer current index and length */
+	size_t		in_position;			/* position in the compressed file */
+	unsigned char		input [FILE_BUFF_SIZE];
+} ztoolkit_t;
 
-typedef struct {
-	int ident;					/* == IDPAKHEADER */
-	int dirofs;
-	int dirlen;
-} dpackheader_t;
+typedef struct qfile_s
+{
+	int				flags;
+	int				handle;					/* file descriptor */
+	fs_offset_t		real_length;			/* uncompressed file size (for files opened in "read" mode) */
+	fs_offset_t		position;				/* current position in the file */
+	fs_offset_t		offset;					/* offset into the package (0 if external file) */
+	int				ungetc;					/* single stored character from ungetc, cleared to EOF when read */
 
-#define	MAX_FILES_IN_PACK	4096
+	/* Contents buffer */
+	fs_offset_t		buff_ind, buff_len;		/* buffer current index and length */
+	unsigned char			buff [FILE_BUFF_SIZE];
+
+	/* For zipped files */
+	ztoolkit_t*		ztk;
+} qfile_t;
 
 /*
 ==============================================================
 Pak3 support
-The .pk3 files are just uncompressed zip files
+The .pk3 files are just zip files
 ==============================================================
 */
-
-#define PAK3HEADER (0x504B0304)
-#define PAK3DIRHEADER (0x504B0102)
-
-#ifdef _MSC_VER
-#pragma pack(push, 2)
-#endif
-typedef struct dpak3header_s {
-	unsigned long ident;
-	unsigned short version;
-	unsigned short flags;
-	unsigned short compression;
-	unsigned short modtime;
-	unsigned short moddate;
-	unsigned long crc32;
-	unsigned long compressedSize;
-	unsigned long uncompressedSize;
-	unsigned short filenameLength;
-	unsigned short extraFieldLength;
-} dpak3header_t;
-
-#ifdef _MSC_VER
-#pragma pack(pop)
-#endif
 
 /* Make sure we have this available */
 char **FS_ListFiles(char *findname, int *numfiles, unsigned musthave, unsigned canthave);
@@ -249,11 +246,11 @@ typedef struct
 
 typedef struct
 {
-    vec3_t			mins;
+	vec3_t			mins;
 	vec3_t			maxs;
-    vec3_t			translate;
-    float			radius;
-    char			creator[16];
+	vec3_t			translate;
+	float			radius;
+	char			creator[16];
 } dmd3frame_t;
 
 typedef struct
@@ -276,43 +273,43 @@ typedef struct
 
 typedef struct
 {
-    char			id[4];
+	char			id[4];
 
-    char			name[MD3_MAX_PATH];
+	char			name[MD3_MAX_PATH];
 
 	int				flags;
 
-    int				num_frames;
-    int				num_skins;
-    int				num_verts;
-    int				num_tris;
+	int				num_frames;
+	int				num_skins;
+	int				num_verts;
+	int				num_tris;
 
-    int				ofs_tris;
-    int				ofs_skins;
-    int				ofs_tcs;
-    int				ofs_verts;
+	int				ofs_tris;
+	int				ofs_skins;
+	int				ofs_tcs;
+	int				ofs_verts;
 
-    int				meshsize;
+	int				meshsize;
 } dmd3mesh_t;
 
 typedef struct
 {
-    int				id;
-    int				version;
+	int				id;
+	int				version;
 
-    char			filename[MD3_MAX_PATH];
+	char			filename[MD3_MAX_PATH];
 
 	int				flags;
 
-    int				num_frames;
-    int				num_tags;
-    int				num_meshes;
-    int				num_skins;
+	int				num_frames;
+	int				num_tags;
+	int				num_meshes;
+	int				num_skins;
 
-    int				ofs_frames;
-    int				ofs_tags;
-    int				ofs_meshes;
-    int				ofs_end;
+	int				ofs_frames;
+	int				ofs_tags;
+	int				ofs_meshes;
+	int				ofs_end;
 } dmd3_t;
 
 /*
@@ -365,7 +362,7 @@ typedef struct miptex_s {
 */
 
 #define IDBSPHEADER	(('P'<<24)+('S'<<16)+('B'<<8)+'I')
-		/* little-endian "IBSP" */
+/* little-endian "IBSP" */
 
 #define BSPVERSION	71
 
@@ -510,19 +507,13 @@ typedef struct {
 #define	CONTENTS_TRANSLUCENT	0x10000000	/* auto set if any surface has trans */
 #define	CONTENTS_LADDER			0x20000000
 
-
-
 #define	SURF_LIGHT		0x1		/* value will hold the light strength */
-
 #define	SURF_SLICK		0x2		/* effects game physics */
-
 #define	SURF_WARP		0x8		/* turbulent water warp */
 #define	SURF_TRANS33	0x10
 #define	SURF_TRANS66	0x20
 #define	SURF_FLOWING	0x40	/* scroll towards angle */
 #define	SURF_NODRAW		0x80	/* don't bother referencing the texture */
-
-
 
 
 typedef struct {
@@ -559,7 +550,7 @@ typedef struct {
 	short numedges;
 	short texinfo;
 
-/* lighting info */
+	/* lighting info */
 	byte styles[MAXLIGHTMAPS];
 	int lightofs;				/* start of [numstyles*surfsize] samples */
 } dface_t;

@@ -32,31 +32,12 @@ The .pak files are just a linear collapse of a directory tree
 ========================================================================
 */
 
-#define IDPAKHEADER		(('K'<<24)+('C'<<16)+('A'<<8)+'P')
-
 #define MAX_QPATH 64
-
-typedef struct
-{
-	char	name[MAX_QPATH];
-	int		filepos, filelen;
-} dpackfile_t;
-
-typedef struct
-{
-	int		ident;		/* == IDPAKHEADER */
-	int		dirofs;
-	int		dirlen;
-} dpackheader_t;
-
-#define	MAX_FILES_IN_PACK	4096
 
 
 /*
 ========================================================================
-
 PCX files are used for as many images as possible
-
 ========================================================================
 */
 
@@ -80,9 +61,7 @@ typedef struct
 
 /*
 ========================================================================
-
 .MD2 triangle model file format
-
 ========================================================================
 */
 
@@ -164,9 +143,7 @@ typedef struct
 
 /*
 ========================================================================
-
 .SP2 sprite file format
-
 ========================================================================
 */
 
@@ -190,9 +167,7 @@ typedef struct {
 
 /*
 ==============================================================================
-
-  .WAL texture file format
-
+.WAL texture file format
 ==============================================================================
 */
 
@@ -213,14 +188,12 @@ typedef struct miptex_s
 
 /*
 ==============================================================================
-
-  .BSP file format
-
+.BSP file format
 ==============================================================================
 */
 
 #define IDBSPHEADER	(('P'<<24)+('S'<<16)+('B'<<8)+'I')
-		/* little-endian "IBSP" */
+/* little-endian "IBSP" */
 
 #define BSPVERSION	71
 
@@ -251,7 +224,6 @@ typedef struct miptex_s
 #define	MAX_MAP_ROUTING		0x40000
 
 /* key / value pair sizes */
-
 #define	MAX_KEY		32
 #define	MAX_VALUE	1024
 
@@ -371,19 +343,13 @@ typedef struct
 #define MASK_CLIP		( CONTENTS_PLAYERCLIP | CONTENTS_WEAPONCLIP | CONTENTS_STEPON )
 
 
-
 #define	SURF_LIGHT		0x1		/* value will hold the light strength */
-
 #define	SURF_SLICK		0x2		/* effects game physics */
-
-/* sky */
-/*#define	SURF_SKY		0x4*/
 #define	SURF_WARP		0x8		/* turbulent water warp */
 #define	SURF_TRANS33	0x10
 #define	SURF_TRANS66	0x20
 #define	SURF_FLOWING	0x40	/* scroll towards angle */
 #define	SURF_NODRAW		0x80	/* don't bother referencing the texture */
-
 #define	SURF_HINT		0x100	/* make a primary bsp splitter */
 #define	SURF_SKIP		0x200	/* completely ignore, allowing non-closed brushes */
 
@@ -465,19 +431,6 @@ typedef struct
 #define	ANGLE_UP	-1
 #define	ANGLE_DOWN	-2
 
-
-/* the visibility lump consists of a header with a count, then */
-/* byte offsets for the PVS and PHS of each cluster, then the raw */
-/* compressed bit vectors */
-#if 0
-#define	DVIS_PVS	0
-#define	DVIS_PHS	1
-typedef struct
-{
-	int			numclusters;
-	int			bitofs[8][2];	/* bitofs[numclusters][2] */
-} dvis_t;
-#endif
 
 /* each area has a list of portals that lead into other areas */
 /* when portals are closed, other areas may not be visible or */
