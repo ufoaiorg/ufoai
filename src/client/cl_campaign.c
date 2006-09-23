@@ -1680,6 +1680,18 @@ int CL_GameLoad(char *filename)
 	memcpy(&gd, sb.data + sb.readcount, sizeof(globalData_t));
 	sb.readcount += sizeof(globalData_t);
 
+	/* Patch up corrupt ranks (wrong type) saved before r3797. */
+	/* TODO: Don't merge this hack to branch. */
+	/* TODO: Get rid of this once trunk users have had time to catch up. */
+	gd.numRanks = 0;
+	char *fixup_type, *fixup_name, *fixup_text;
+	FS_BuildFileList( "ufos/*.ufo" );
+	FS_NextScriptHeader( NULL, NULL, NULL );
+	fixup_text = NULL;
+	while ( (fixup_type = FS_NextScriptHeader( "ufos/*.ufo", &fixup_name, &fixup_text)) != 0)
+		if ( !Q_strncmp(fixup_type, "rank", 4) )
+			CL_ParseScriptFirst( fixup_type, fixup_name, &fixup_text );
+
 	CL_UpdatePointersInGlobalData();
 	/* lots of inventory pointers if gd, so we have to do the hack below;
 	   some serialization library would be much better for gd, though */
