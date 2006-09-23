@@ -1063,7 +1063,7 @@ typedef struct character_s {
 	int HP, morale;
 
 	/* score */
-	killtypes_t kills[KILLED_NUM_TYPES];
+	int kills[KILLED_NUM_TYPES];
 /*	int		destroyed_objects; */
 /*	int		hit_ratio; */
 /*	int		inflicted_damage; */
