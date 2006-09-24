@@ -24,6 +24,11 @@ shader textures/exterior/ext_conc03
 	emboss true
 }
 
+shader textures/tex_buildings/roof007
+{
+	emboss true
+}
+
 shader textures/tex_buildings/step
 {
 	emboss true
@@ -32,4 +37,9 @@ shader textures/tex_buildings/step
 shader textures/tex_material/c_blue
 {
 	emboss_low true
+}
+
+shader textures/tex_material/metal002
+{
+	emboss true
 }
