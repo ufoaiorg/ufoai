@@ -304,7 +304,7 @@ item shotgun
 	ammo		8
 	reload		10
 	price		880
-	buytype		1
+	buytype		0
 }
 
 item shotgun_ammo
@@ -317,7 +317,7 @@ item shotgun_ammo
 	center		"0 0 0"
 	scale		1.5
 	price		35
-	buytype		1
+	buytype		0
 
 	primary
 	{
@@ -455,7 +455,7 @@ item rpg
 	ammo		1
 	reload		12
 	price		2800
-	buytype		0
+	buytype		2
 }
 
 item rpg_ammo
@@ -468,7 +468,7 @@ item rpg_ammo
 	center		"0 0 0"
 	scale		1.1
 	price		190
-	buytype		0
+	buytype		2
 
 	primary
 	{
@@ -526,7 +526,7 @@ item rpg_incendiary_ammo
 	center		"0 0 0"
 	scale		1.1
 	price		210
-	buytype		0
+	buytype		2
 
 	primary
 	{
@@ -584,7 +584,7 @@ item rpg_tachyon_ammo
 	center	"0 0 0"
 	scale	1.1
 	price	1400
-	buytype	0
+	buytype	2
 
 	primary
 	{
@@ -650,7 +650,7 @@ item grenl
 	ammo		6
 	reload		14
 	price		2450
-	buytype		0
+	buytype		2
 }
 
 item grenl_ammo
@@ -663,7 +663,7 @@ item grenl_ammo
 	center		"0 0 0"
 	scale		0.7
 	price		65
-	buytype		0
+	buytype		2
 
 	primary
 	{
@@ -730,7 +730,7 @@ item grenl_plasma_ammo
 	center		"0 0 0"
 	scale		0.7
 	price		140
-	buytype		0
+	buytype		2
 
 	primary
 	{

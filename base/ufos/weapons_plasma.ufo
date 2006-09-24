@@ -163,7 +163,7 @@ item plasblaster
 	ammo		12
 	reload		10
 	price		5800
-	buytype		0
+	buytype		2
 }
 
 item plasblaster_ammo
@@ -176,7 +176,7 @@ item plasblaster_ammo
 	center		"0 0 0"
 	scale		1.4
 	price		400
-	buytype		0
+	buytype		2
 
 	primary
 	{
