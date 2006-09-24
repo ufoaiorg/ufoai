@@ -298,9 +298,9 @@ item shotgun
 	type		biggun
 	category	1
 	twohanded	true
-	shape		"0 0 3 2"
+	shape		"0 0 4 2"
 	center		"10.4 0 1"
-	scale		0.81
+	scale		1
 	ammo		8
 	reload		10
 	price		880
