@@ -27,24 +27,20 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 class UfoAIFilterWrapper : public Filter
 {
-  bool m_active;
-  UfoAIFilter& m_filter;
-public:
-  UfoAIFilterWrapper(UfoAIFilter& filter) : m_filter(filter)
-  {
-  }
-  void setActive(bool active)
-  {
-    m_active = active;
-  }
-  bool active()
-  {
-    return m_active;
-  }
-  bool filter(const UfoAI& ufoai)
-  {
-    return m_filter.filter(ufoai);
-  }
+	bool m_active;
+	UfoAIFilter& m_filter;
+	public:
+	UfoAIFilterWrapper(UfoAIFilter& filter) : m_filter(filter) {
+	}
+	void setActive(bool active) {
+		m_active = active;
+	}
+	bool active() {
+		return m_active;
+	}
+	bool filter(const UfoAI& ufoai) {
+		return m_filter.filter(ufoai);
+	}
 };
 
 
@@ -53,19 +49,17 @@ UfoAIFilters g_UfoAIFilters;
 
 void add_ufoai_filter(UfoAIFilter& filter, int mask)
 {
-  g_UfoAIFilters.push_back(UfoAIFilterWrapper(filter));
-  GlobalFilterSystem().addFilter(g_UfoAIFilters.back(), mask);
+	g_UfoAIFilters.push_back(UfoAIFilterWrapper(filter));
+	GlobalFilterSystem().addFilter(g_UfoAIFilters.back(), mask);
 }
 
 bool ufoai_filtered(UfoAI& ufoai)
 {
-  for(UfoAIFilters::iterator i = g_UfoAIFilters.begin(); i != g_UfoAIFilters.end(); ++i)
-  {
-    if((*i).active() && (*i).filter(ufoai))
-    {
-      return true;
-    }
-  }
-  return false;
+	for(UfoAIFilters::iterator i = g_UfoAIFilters.begin(); i != g_UfoAIFilters.end(); ++i) {
+		if((*i).active() && (*i).filter(ufoai)) {
+			return true;
+		}
+	}
+	return false;
 }
 

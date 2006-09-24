@@ -31,8 +31,8 @@ class UfoAI;
 
 class UfoAIFilter
 {
-public:
-  virtual bool filter(const UfoAI& ufoai) const = 0;
+	public:
+	virtual bool filter(const UfoAI& ufoai) const = 0;
 };
 
 bool ufoai_filtered(UfoAI& ufoai);
@@ -40,43 +40,34 @@ void add_ufoai_filter(UfoAIFilter& filter, int mask);
 
 class ClassnameFilter : public Filterable
 {
-  scene::Node& m_node;
-public:
-  UfoAI& m_ufoai;
+	scene::Node& m_node;
+	public:
+	UfoAI& m_ufoai;
 
-  ClassnameFilter(UfoAI& ufoai, scene::Node& node) : m_node(node), m_ufoai(ufoai)
-  {
-  }
-  ~ClassnameFilter()
-  {
-  }
+	ClassnameFilter(UfoAI& ufoai, scene::Node& node) : m_node(node), m_ufoai(ufoai) {
+	}
+	~ClassnameFilter() {
+	}
 
-  void instanceAttach()
-  {
-    GlobalFilterSystem().registerFilterable(*this);
-  }
-  void instanceDetach()
-  {
-    GlobalFilterSystem().unregisterFilterable(*this);
-  }
+	void instanceAttach() {
+		GlobalFilterSystem().registerFilterable(*this);
+	}
+	void instanceDetach() {
+		GlobalFilterSystem().unregisterFilterable(*this);
+	}
 
-  void updateFiltered()
-  {
-    if(entity_filtered(m_ufoai))
-    {
-      m_node.enable(scene::Node::eFiltered);
-    }
-    else
-    {
-      m_node.disable(scene::Node::eFiltered);
-    }
-  }
+	void updateFiltered() {
+/*		if(entity_filtered(m_ufoai)) {
+			m_node.enable(scene::Node::eFiltered);
+		} else {
+			m_node.disable(scene::Node::eFiltered);
+		}*/
+	}
 
-  void classnameChanged(const char* value)
-  {
-    updateFiltered();
-  }
-  typedef MemberCaller1<ClassnameFilter, const char*, &ClassnameFilter::classnameChanged> ClassnameChangedCaller;
+	void classnameChanged(const char* value) {
+		updateFiltered();
+	}
+	typedef MemberCaller1<ClassnameFilter, const char*, &ClassnameFilter::classnameChanged> ClassnameChangedCaller;
 };
 
 #endif
