@@ -69,7 +69,7 @@ $(UFOINSTALLED)ufo.exe: $(UFO_EXE_SRC:.c=.o) win32/resources.coff
 	$(CC) -o $@ $(LDFLAGSINTL) $(LDFLAGS) $(VORBISLIB) $+
 
 $(UFOINSTALLED)ufo_ded.exe: $(UFODED_EXE_SRC:.c=.o) win32/resources.coff
-	$(CC) -o $@ $(LDFLAGS) -DDEDICATED_ONLY$+
+	$(CC) -o $@ $(LDFLAGS) -DDEDICATED_ONLY $+
 
 %.shob: %.c
 	$(CC) -o $@ -c $< -shared $(CFLAGS)
