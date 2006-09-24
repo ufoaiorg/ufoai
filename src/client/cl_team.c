@@ -1442,9 +1442,13 @@ void CL_ParseResults(sizebuf_t * buf)
 	byte num_spawned[MAX_TEAMS];
 	byte num_alive[MAX_TEAMS];
 	byte num_kills[MAX_TEAMS][MAX_TEAMS];
+	byte num_stuns[MAX_TEAMS][MAX_TEAMS];
 	byte winner, we;
 
-	int i, j, num, res, kills, number_items, credits_gained;
+	int i, j, num, number_items, credits_gained;;
+	int our_surviviurs,our_killed,our_stunned;
+	int thier_surviviurs,thier_killed,thier_stunned;
+	int civilian_surviviurs,civilian_killed,civilian_stunned;
 
 	/* get number of teams */
 	num = MSG_ReadByte(buf);
@@ -1470,55 +1474,93 @@ void CL_ParseResults(sizebuf_t * buf)
 		for (j = 0; j < num; j++)
 			num_kills[i][j] = MSG_ReadByte(buf);
 
+	MSG_ReadShort(buf); /* size */
+	/* get stuns */
+	for (i = 0; i < num; i++)
+		for (j = 0; j < num; j++)
+			num_stuns[i][j] = MSG_ReadByte(buf);
+
 	CL_ParseCharacterData(buf, qfalse);
 
 	/* init result text */
 	menuText[TEXT_STANDARD] = resultText;
 
+	our_surviviurs = 0;
+	our_killed = 0;
+	our_stunned = 0;
+	thier_surviviurs = 0;
+	thier_killed = 0;
+	thier_stunned = 0;
+	civilian_surviviurs = 0;
+	civilian_killed = 0;
+	civilian_stunned = 0;
+
+	for (i = 0; i < num; i++) {
+		if (i == we)
+			our_surviviurs = num_alive[i];
+		else if (i == TEAM_CIVILIAN)
+			civilian_surviviurs = num_alive[i];
+		else
+			thier_surviviurs += num_alive[i];
+		for (j = 0; j < num; j++)
+			if (j == we) {
+				our_killed += num_kills[i][j];
+				our_stunned += num_stuns[i][j]++;
+			} else if (j == TEAM_CIVILIAN) {
+				civilian_killed += num_kills[i][j];
+				civilian_stunned += num_stuns[i][j]++;
+			} else {
+				thier_killed += num_kills[i][j];
+				thier_stunned += num_stuns[i][j]++;
+			}
+	}
+	/* if we won, our stunned are alive*/
+	if (winner==we) {
+		our_surviviurs += our_stunned;
+		our_stunned = 0;
+	} else
+		/* if we lost, they revive stunned */
+		thier_stunned = 0;
+
+	/* we won,and we'r not the dirty aliens*/
+	if ((winner==we)&&(curCampaign))
+		civilian_surviviurs+=civilian_stunned;
+	else
+		civilian_killed+=civilian_stunned;
+
 	if (!curCampaign || !selMis) {
 		/* the mission was started via console (TODO: or is multiplayer) */
-
-		/* alien stats */
-		for (i = 1, kills = 0; i < num; i++)
-			kills += (i == we) ? 0 : num_kills[we][i];
-
 		/* needs to be cleared and then append to it */
-		if (curCampaign)
-			Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Aliens killed\t%i\n"), kills);
-		else
-			Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Enemies killed\t%i\n"), kills);
-		ccs.aliensKilled += kills;
-
-		for (i = 1, res = 0; i < num; i++)
-			res += (i == we) ? 0 : num_alive[i];
-
-		if (curCampaign)
-			Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), res), sizeof(resultText));
-		else
-			Q_strcat(resultText, va(_("Enemy survivors\t%i\n\n"), res), sizeof(resultText));
-
-		/* team stats */
-		Q_strcat(resultText, va(_("Team losses\t%i\n"), num_spawned[we] - num_alive[we]), sizeof(resultText));
-		Q_strcat(resultText, va(_("Friendly fire losses\t%i\n"), num_kills[we][we]), sizeof(resultText));
-		Q_strcat(resultText, va(_("Team survivors\t%i\n\n"), num_alive[we]), sizeof(resultText));
-
-		/* kill civilians on campaign, if not won */
-		if (curCampaign && num_alive[TEAM_CIVILIAN] && winner != we) {
-			num_kills[TEAM_ALIEN][TEAM_CIVILIAN] += num_alive[TEAM_CIVILIAN];
-			num_alive[TEAM_CIVILIAN] = 0;
+		if (curCampaign) {
+			Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Aliens killed\t%i\n"), thier_killed);
+			ccs.aliensKilled += thier_killed;
+		} else {
+			Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Enemies killed\t%i\n"), thier_killed + civilian_killed);
+			ccs.aliensKilled += thier_killed + civilian_killed;
 		}
 
-		/* civilian stats */
-		for (i = 1, res = 0; i < num; i++)
-			res += (i == we) ? 0 : num_kills[i][TEAM_CIVILIAN];
+		if (curCampaign) {
+			Q_strcat(resultText, va(_("Aliens captured\t%i\n\n"), thier_stunned), sizeof(resultText));
+			Q_strcat(resultText, va(_("Alien surviviurs\t%i\n\n"), thier_surviviurs), sizeof(resultText));
+		} else {
+			Q_strcat(resultText, va(_("Enemies captured\t%i\n\n"), thier_stunned), sizeof(resultText));
+			Q_strcat(resultText, va(_("Enemy surviviurs\t%i\n\n"), thier_surviviurs), sizeof(resultText));
+		}
+
+		/* team stats */
+		Q_strcat(resultText, va(_("Team losses\t%i\n"), our_killed), sizeof(resultText));
+		Q_strcat(resultText, va(_("Team missing in action\t%i\n"), our_stunned), sizeof(resultText));
+		Q_strcat(resultText, va(_("Friendly fire losses\t%i\n"), num_kills[we][we]), sizeof(resultText));
+		Q_strcat(resultText, va(_("Team survivors\t%i\n\n"), our_surviviurs), sizeof(resultText));
 
 		if (curCampaign)
-			Q_strcat(resultText, va(_("Civilians killed by the Aliens\t%i\n"), res), sizeof(resultText));
+			Q_strcat(resultText, va(_("Civilians killed by the Aliens\t%i\n"), civilian_killed - num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
 		else
-			Q_strcat(resultText, va(_("Civilians killed by the Enemies\t%i\n"), res), sizeof(resultText));
+			Q_strcat(resultText, va(_("Civilians killed by the Enemies\t%i\n"), civilian_killed - civilian_stunned - num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
+
 		Q_strcat(resultText, va(_("Civilians killed by your Team\t%i\n"), num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
-		Q_strcat(resultText, va(_("Civilians saved\t%i\n\n\n"), num_alive[TEAM_CIVILIAN]), sizeof(resultText));
-		ccs.civiliansKilled += res + num_kills[we][TEAM_CIVILIAN];
+		Q_strcat(resultText, va(_("Civilians saved\t%i\n\n\n"), civilian_surviviurs), sizeof(resultText));
+		ccs.civiliansKilled += civilian_killed;
 
 		MN_PopMenu(qtrue);
 		Cvar_Set("mn_main", "main");
@@ -1526,44 +1568,35 @@ void CL_ParseResults(sizebuf_t * buf)
 		MN_PushMenu("main");
 	} else {
 		/* the mission was in singleplayer */
-
 		/* loot the battlefield */
 		CL_CollectItems(winner == we, &number_items, &credits_gained);
 
 		/* check for stunned aliens;
-		   TODO: make this reversible, like CL_CollectItems above */
+		 TODO: make this reversible, like CL_CollectItems above */
 		if (winner == we)
 			CL_CollectAliens();
 
 		/* clear unused LE inventories */
 		LE_Cleanup();
 
-		/* alien deaths */
-		for (i = 0, kills = 0; i < num; i++)
-			kills += num_kills[i][TEAM_ALIEN];
-
 		/* needs to be cleared and then append to it */
-		Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Aliens killed\t%i\n"), kills);
-		ccs.aliensKilled += kills;
+		Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Aliens killed\t%i\n"), thier_killed);
+		ccs.aliensKilled += thier_killed;
 
-		Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), num_alive[TEAM_ALIEN]), sizeof(resultText));
+		Q_strcat(resultText, va(_("Aliens captured\t%i\n"), thier_stunned), sizeof(resultText));
+		Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), thier_surviviurs), sizeof(resultText));
 
 		/* team stats */
-		Q_strcat(resultText, va(_("Phalanx soldiers killed by Aliens\t%i\n"), num_spawned[we] - num_alive[we] - num_kills[we][we] - num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
+		Q_strcat(resultText, va(_("Phalanx soldiers killed by Aliens\t%i\n"), our_killed - num_kills[we][we] - num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
+		Q_strcat(resultText, va(_("Phalanx soldiers missing in action\t%i\n"), our_stunned), sizeof(resultText));
 		Q_strcat(resultText, va(_("Phalanx friendly fire losses\t%i\n"), num_kills[we][we] + num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
-		Q_strcat(resultText, va(_("Phalanx survivors\t%i\n\n"), num_alive[we]), sizeof(resultText));
+		Q_strcat(resultText, va(_("Phalanx survivors\t%i\n\n"), our_surviviurs), sizeof(resultText));
 
-		/* kill civilians on campaign, if not won */
-		if (num_alive[TEAM_CIVILIAN] && winner != we) {
-			num_kills[TEAM_ALIEN][TEAM_CIVILIAN] += num_alive[TEAM_CIVILIAN];
-			num_alive[TEAM_CIVILIAN] = 0;
-		}
-
-		Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), num_kills[TEAM_ALIEN][TEAM_CIVILIAN]), sizeof(resultText));
+		Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), civilian_killed), sizeof(resultText));
 		Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), num_kills[we][TEAM_CIVILIAN] + num_kills[TEAM_CIVILIAN][TEAM_CIVILIAN]), sizeof(resultText));
-		Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), num_alive[TEAM_CIVILIAN]), sizeof(resultText));
+		Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), civilian_surviviurs), sizeof(resultText));
 
-		ccs.civiliansKilled += num_kills[TEAM_ALIEN][TEAM_CIVILIAN] + num_kills[we][TEAM_CIVILIAN] + num_kills[TEAM_CIVILIAN][TEAM_CIVILIAN];
+		ccs.civiliansKilled += civilian_killed;
 
 		Q_strcat(resultText, va(_("Items salvaged and sold\t%i\n"), number_items),sizeof(resultText));
 		Q_strcat(resultText, va(_("Total item sale value\t%i\n\n"), credits_gained),sizeof(resultText));

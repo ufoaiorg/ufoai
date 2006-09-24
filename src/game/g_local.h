@@ -115,6 +115,7 @@ typedef struct {
 	byte num_spawnpoints[MAX_TEAMS];
 	byte num_ugvspawnpoints[MAX_TEAMS];
 	byte num_kills[MAX_TEAMS][MAX_TEAMS];
+	byte num_stuns[MAX_TEAMS][MAX_TEAMS];
 } level_locals_t;
 
 

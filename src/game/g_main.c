@@ -396,6 +396,7 @@ void G_EndGame(int team)
 			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
 				 && !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX ) {
 				ent->state = STATE_DEAD;
+				ent->HP=0;
 				gi.AddEvent(PM_ALL, EV_ACTOR_STATECHANGE);
 				gi.WriteShort(ent->number);
 				gi.WriteShort(STATE_DEAD);
@@ -427,6 +428,12 @@ void G_EndGame(int team)
 	for (i = 0; i < number_of_teams; i++)
 		for (j = 0; j < number_of_teams; j++) {
 			gi.WriteByte(level.num_kills[i][j]);
+		}
+
+	gi.WriteShort(number_of_teams * number_of_teams);
+	for (i = 0; i < number_of_teams; i++)
+		for (j = 0; j < number_of_teams; j++) {
+			gi.WriteByte(level.num_stuns[i][j]);
 		}
 
 	/* how many actors */
