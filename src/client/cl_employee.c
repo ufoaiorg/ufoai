@@ -75,6 +75,14 @@ static void E_EmployeeList (void)
 		if (employeesInCurrentList>=(int)cl_numnames->value)
 			break;
 	}
+	
+	/* if the list is empty don't show the model*/
+	if (employeesInCurrentList == 0) {
+		Cvar_Set("mn_show_employee", "0");
+	} else {
+		Cvar_Set("mn_show_employee", "1");
+	}
+
 	i = employeesInCurrentList;
 	for (;i<(int)cl_numnames->value;i++) {
 		Cvar_ForceSet(va("mn_name%i", i), "");
