@@ -9915,7 +9915,7 @@
 // entity 110
 {
 "classname" "misc_model"
-"origin" "768 1280 24"
+"origin" "768 1280 36"
 "spawnflags" "254"
 "model" "models/aircraft/dropship/dropship_top.md2"
 "angles" "0 180 0"
@@ -9924,9 +9924,9 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "768 1280 24"
-"angles" "0 180 0"
+"origin" "768 1280 36"
 "model" "models/aircraft/dropship/dropship_glass.md2"
+"angles" "0 180 0"
 }
 // entity 112
 {
@@ -10348,4 +10348,12 @@
 "origin" "502 288 36"
 "model" "models/animals/cow/cow.md2"
 "spawnflags" "1"
+}
+// entity 173
+{
+"classname" "misc_model"
+"origin" "156 1284 40"
+"model" "models/objects/furniture/pitchfork/pitchfork.md2"
+"angles" "190 90 0"
+"spawnflags" "255"
 }
