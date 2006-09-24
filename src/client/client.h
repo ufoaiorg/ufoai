@@ -411,6 +411,7 @@ void CL_Video_f(void);
 extern refexport_t re;
 
 void CL_Init(void);
+void CL_ParseScriptFirst(char *type, char *name, char **text);
 void CL_ReadSinglePlayerData( void );
 
 void CL_FixUpGender(void);
