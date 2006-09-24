@@ -1970,7 +1970,6 @@ void B_UpdateBaseData(void)
 			}
 		}
 	}
-	CL_CheckResearchStatus();
 }
 
 /**
