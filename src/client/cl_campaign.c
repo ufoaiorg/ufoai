@@ -57,6 +57,30 @@ extern qboolean CL_SendAircraftToMission(aircraft_t * aircraft, actMis_t * missi
 extern void CL_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 static void CL_GameExit(void);
 
+/* 20060921 LordHavoc: moved salary parameters out of the code */
+static int SALARY_SOLDIER_BASE = 300;
+static int SALARY_SOLDIER_RANKBONUS = 50;
+static int SALARY_WORKER_BASE = 300;
+static int SALARY_WORKER_RANKBONUS = 50;
+static int SALARY_SCIENTIST_BASE = 300;
+static int SALARY_SCIENTIST_RANKBONUS = 50;
+static int SALARY_MEDIC_BASE = 300;
+static int SALARY_MEDIC_RANKBONUS = 50;
+static int SALARY_ROBOT_BASE = 750;
+static int SALARY_ROBOT_RANKBONUS = 150;
+static int SALARY_AIRCRAFT_FACTOR = 1;
+static int SALARY_AIRCRAFT_DIVISOR = 100;
+static int SALARY_BASE_UPKEEP = 2000;
+static int SALARY_ADMIN_INITIAL = 550;
+static int SALARY_ADMIN_SOLDIER = 35;
+static int SALARY_ADMIN_WORKER = 35;
+static int SALARY_ADMIN_SCIENTIST = 35;
+static int SALARY_ADMIN_MEDIC = 35;
+static int SALARY_ADMIN_ROBOT = 70;
+static float SALARY_DEBT_INTEREST = 0.005;
+/* 20060923 LordHavoc: made autosell an option here */
+static qboolean MARKET_AUTOSELL = qtrue;
+
 /*
 ============================================================================
 
@@ -583,11 +607,11 @@ static void CL_CampaignAddMission(setState_t * set)
 	while (1) {
 		misTemp = &missions[set->def->missions[rand() % set->def->numMissions]];
 
-		if ((set->def->numMissions < 2 
+		if ((set->def->numMissions < 2
 			 || Q_strncmp(misTemp->name, gd.oldMis1, MAX_VAR))
-			&& (set->def->numMissions < 3 
+			&& (set->def->numMissions < 3
 				|| Q_strncmp(misTemp->name, gd.oldMis2, MAX_VAR))
-			&& (set->def->numMissions < 4 
+			&& (set->def->numMissions < 4
 				|| Q_strncmp(misTemp->name, gd.oldMis3, MAX_VAR)))
 			break;
 	}
@@ -801,16 +825,16 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
 
 /**
  * @brief Deletes employees from a base along with all base equipment.
- * Called when invading forces overrun a base after a base-attack mission 
+ * Called when invading forces overrun a base after a base-attack mission
  * @param[in] *base base_t base to be ransacked
  */
-void CL_BaseRansacked(base_t *base) 
+void CL_BaseRansacked(base_t *base)
 {
 	int item, ac;
 
 	if (!base)
 		return;
-    
+
 	/* Delete all employees from the base & the global list. */
 	E_DeleteAllEmployees(base);
 
@@ -822,9 +846,9 @@ void CL_BaseRansacked(base_t *base)
 	for ( ac = base->numAircraftInBase-1; ac >= 0; ac-- )
 		CL_DeleteAircraft(&base->aircraft[ac]);
 
-	/* TODO: Maybe reset research in progress. ... needs playbalance 
-	 *       need another value in technology_t to remember researched 
-	 *       time from other bases? 
+	/* TODO: Maybe reset research in progress. ... needs playbalance
+	 *       need another value in technology_t to remember researched
+	 *       time from other bases?
 	 * TODO: Destroy (or better: just damage) some random buildings. */
 
 	Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base: %s has been ransacked! All employees killed and all equipment destroyed."), base->name);
@@ -997,7 +1021,7 @@ static void CL_HandleBudget(void)
 	int cost;
 	nation_t *nation;
 	int initial_credits = ccs.credits;
-	int new_scientists, new_medics, new_soldiers, new_workers; 
+	int new_scientists, new_medics, new_soldiers, new_workers;
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
@@ -1036,7 +1060,7 @@ static void CL_HandleBudget(void)
 
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-		cost += 300 + gd.employees[EMPL_SOLDIER][i].chr.rank * 50;
+		cost += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.rank * SALARY_SOLDIER_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to soldiers"), cost);
@@ -1045,7 +1069,7 @@ static void CL_HandleBudget(void)
 
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
-		cost += 300 + gd.employees[EMPL_WORKER][i].chr.rank * 50;
+		cost += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.rank * SALARY_WORKER_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to workers"), cost);
@@ -1054,7 +1078,7 @@ static void CL_HandleBudget(void)
 
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
-		cost += 300 + gd.employees[EMPL_SCIENTIST][i].chr.rank * 50;
+		cost += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.rank * SALARY_SCIENTIST_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to scientists"), cost);
@@ -1063,7 +1087,7 @@ static void CL_HandleBudget(void)
 
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_MEDIC]; i++) {
-		cost += 300 + gd.employees[EMPL_MEDIC][i].chr.rank * 50;
+		cost += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.rank * SALARY_MEDIC_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to medics"), cost);
@@ -1072,7 +1096,7 @@ static void CL_HandleBudget(void)
 
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
-		cost += 750 + gd.employees[EMPL_ROBOT][i].chr.rank * 150;
+		cost += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.rank * SALARY_ROBOT_RANKBONUS;
 	}
 
 	if (cost != 0) {
@@ -1084,7 +1108,7 @@ static void CL_HandleBudget(void)
 	cost = 0;
 	for (i = 0; i < gd.numBases; i++) {
 		for (j = 0; j < gd.bases[i].numAircraftInBase; j++) {
-			cost += gd.bases[i].aircraft[j].price / 100;
+			cost += gd.bases[i].aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
 		}
 	}
 
@@ -1095,7 +1119,7 @@ static void CL_HandleBudget(void)
 	}
 
 	for (i = 0; i < gd.numBases; i++) {
-		cost = 2000;	/* base cost */
+		cost = SALARY_BASE_UPKEEP;	/* base cost */
 		for (j = 0; j < gd.numBuildings[i]; j++) {
 			cost += gd.buildings[i][j].varCosts;
 		}
@@ -1104,14 +1128,14 @@ static void CL_HandleBudget(void)
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 		CL_UpdateCredits(ccs.credits - cost);
 	}
-	
-	cost = ((gd.numEmployees[EMPL_SOLDIER] + gd.numEmployees[EMPL_MEDIC] + gd.numEmployees[EMPL_WORKER] + gd.numEmployees[EMPL_SCIENTIST] + 2 * gd.numEmployees[EMPL_ROBOT] + 24) / 25) * 150 + 550;
+
+	cost = SALARY_ADMIN_INITIAL + gd.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + gd.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + gd.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + gd.numEmployees[EMPL_MEDIC] * SALARY_ADMIN_MEDIC + gd.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
 	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
 	CL_UpdateCredits(ccs.credits - cost);
 	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 
 	if (initial_credits < 0) {
-		float interest = initial_credits * 0.005;
+		float interest = initial_credits * SALARY_DEBT_INTEREST;
 
 		cost = (int)ceil(interest);
 		Com_sprintf(message, sizeof(message), _("Paid %i credits in interest on your debt."), cost);
@@ -1138,27 +1162,25 @@ void CL_CampaignRun(void)
 	ccs.timer += cls.frametime * gd.gameTimeScale;
 	if (ccs.timer >= 1.0) {
 		/* calculate new date */
-		int dt, day, month;
+		int dt, day, month, currenthour;
 
 		dt = (int)floor(ccs.timer);
+		currenthour = (int)floor(ccs.date.sec / 3600);
 		ccs.date.sec += dt;
 		ccs.timer -= dt;
-		
-#if 0
-/* Prepared code so we can check research status more often. Requires a change to CL_CheckResearchStatus so it checks for the elapsed time. */
-		every4hours += dt;
-		if (dt > 3600 * 4) {
-			/* check for research status every 4 hours */
-			CL_CheckResearchStatus();
-			every4hours = 0;
+
+		/* compute hourly events  */
+		/* (this may run multiple times if the time stepping is > 1 hour at a time) */
+		while (currenthour < (int)floor(ccs.date.sec / 3600)) {
+			currenthour++;
 		}
-#endif
-		
+
 		while (ccs.date.sec > 3600 * 24) {
 			ccs.date.sec -= 3600 * 24;
 			ccs.date.day++;
 			/* every day */
 			B_UpdateBaseData();
+			CL_CheckResearchStatus();
 			PR_ProductionRun();
 		}
 
@@ -2326,7 +2348,7 @@ void CL_CollectItems(int won, int *item_counter, int *credits_gained)
 			if (won)
 				for (item = FLOOR(le); item; item = item->next) {
 					*item_counter += 1;
-					CL_CollectItemAmmo(item, 0, qtrue);
+					CL_CollectItemAmmo(item, 0, MARKET_AUTOSELL);
 		}
 			break;
 		case ET_ACTOR:

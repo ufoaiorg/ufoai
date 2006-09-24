@@ -32,6 +32,12 @@ static byte buyList[MAX_BUYLIST];
 static int buyListLength;
 static int buyCategory;
 
+/* 20060921 LordHavoc: added market buy/sell factors */
+static int MARKET_BUY_FACTOR = 1;
+static int MARKET_BUY_DIVISOR = 1;
+static int MARKET_SELL_FACTOR = 1;
+static int MARKET_SELL_DIVISOR = 1;
+
 
 /**
  * @brief Prints general information about aircraft for buy/sell menu
@@ -237,10 +243,10 @@ static void CL_BuyItem(void)
 	} else {
 		CL_ItemDescription(item);
 		Com_DPrintf("CL_BuyItem: item %i\n", item);
-		if (ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item]) {
+		if (ccs.credits >= csi.ods[item].price * MARKET_BUY_FACTOR / MARKET_BUY_DIVISOR && ccs.eMarket.num[item]) {
 			Cvar_SetValue(va("mn_storage%i", num), ++baseCurrent->storage.num[item]);
 			Cvar_SetValue(va("mn_supply%i", num), --ccs.eMarket.num[item]);
-			CL_UpdateCredits(ccs.credits - csi.ods[item].price);
+			CL_UpdateCredits(ccs.credits - csi.ods[item].price * MARKET_BUY_FACTOR / MARKET_BUY_DIVISOR);
 		}
 	}
 
@@ -278,7 +284,7 @@ static void CL_SellItem(void)
 		if (baseCurrent->storage.num[item]) {
 			Cvar_SetValue(va("mn_storage%i", num), --baseCurrent->storage.num[item]);
 			Cvar_SetValue(va("mn_supply%i", num), ++ccs.eMarket.num[item]);
-			CL_UpdateCredits(ccs.credits + csi.ods[item].price);
+			CL_UpdateCredits(ccs.credits + csi.ods[item].price * MARKET_SELL_FACTOR / MARKET_SELL_DIVISOR);
 		}
 	}
 }
