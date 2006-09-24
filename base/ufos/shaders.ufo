@@ -24,6 +24,11 @@ shader textures/exterior/ext_conc03
 	emboss true
 }
 
+shader textures/tex_buildings/step
+{
+	emboss true
+}
+
 shader textures/tex_material/c_blue
 {
 	emboss_low true
