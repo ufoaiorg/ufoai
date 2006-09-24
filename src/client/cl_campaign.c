@@ -1529,7 +1529,7 @@ void CL_UpdatePointersInGlobalData(void)
 	base_t *base;
 	aircraft_t *aircraft;
 
-	for (type = 0, i = 0; i < MAX_EMPL; type++)
+	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++)
 			gd.employees[type][i].chr.inv = &gd.employees[type][i].inv;
 
