@@ -17,6 +17,10 @@ researched rslist_human
 	rs_weapon_rpg_ammo
 	rs_weapon_fraggren
 	rs_weapon_combatknife
+	rs_weapon_grenl
+	rs_weapon_grenl_ammo
+	rs_medikit
+	rs_irgoggles
 	rs_kevlar_armor
 	rs_damage_normal
 	rs_damage_blast

@@ -61,7 +61,7 @@ item irgoggles
 	shape		"0 0 2 2"
 	center		"-1.5 -4 -4.5"
 	scale		0.85
-	price		18700
+	price		1870
 	buytype		2
 	thrown		true
 

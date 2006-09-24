@@ -374,7 +374,8 @@ tech rs_medikit
 
 	requires	rs_skill_mind
 	provides	medikit
-	time	35
+//	time	35
+	time	0
 }
 
 tech rs_irgoggles
@@ -385,7 +386,8 @@ tech rs_irgoggles
 
 	requires	rs_skill_mind
 	provides	irgoggles
-	time	35
+//	time	35
+	time	0
 }
 
 tech rs_weapon_stungren
@@ -429,7 +431,8 @@ tech rs_weapon_grenl
 
 	requires	rs_skill_explosive
 	provides	grenl
-	time	30
+//	time	30
+	time	0
 }
 
 tech rs_weapon_grenl_ammo

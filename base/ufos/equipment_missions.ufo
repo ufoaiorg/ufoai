@@ -297,9 +297,13 @@ equipment human_phalanx_initial
 	flamer_ammo			35
 	rpg				    8
 	rpg_ammo			32
+	grenl				8
+	grenl_ammo			32
 	fraggrenade			70
 	knife				23
 	light	    		17
+	medikit				20
+	irgoggles			5
 }
 
 equipment human_farmers // some will be weaponless
