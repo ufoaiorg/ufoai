@@ -849,7 +849,6 @@ static void MYgluPerspective(GLdouble zNear, GLdouble zFar)
  */
 static void R_SetupGL(void)
 {
-	float screenaspect;
 	int x, x2, y2, y, w, h;
 
 	/* set up viewport */
@@ -864,7 +863,6 @@ static void R_SetupGL(void)
 	qglViewport(x, y2, w, h);
 
 	/* set up projection matrix */
-	screenaspect = (float) r_newrefdef.width / r_newrefdef.height;
 	qglMatrixMode(GL_PROJECTION);
 	qglLoadIdentity();
 	MYgluPerspective(4, 2048);
