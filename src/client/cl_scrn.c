@@ -366,7 +366,7 @@ void SCR_DrawPause(void)
 void SCR_DrawLoading(void)
 {
 	char loadingPic[MAX_QPATH];
-	const vec4_t color = {0.0, 1.0, 0.0, 1.0};
+	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
 
 	if (!scr_draw_loading)
 		return;
@@ -508,6 +508,7 @@ void SCR_DrawConsole(void)
  * @brief
  * @sa SCR_UpdateScreen
  * @sa SCR_EndLoadingPlaque
+ * @sa SCR_DrawLoading
  */
 void SCR_BeginLoadingPlaque(void)
 {
