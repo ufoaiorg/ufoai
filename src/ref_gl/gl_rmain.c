@@ -765,9 +765,13 @@ static void R_SetFrustum(void)
 
 		for (i = 0; i < 4; i++) {
 			frustum[i].type = PLANE_ANYZ;
-			frustum[i].dist = -10 * r_newrefdef.fov_x;
+			frustum[i].dist = DotProduct(r_origin, frustum[i].normal);
 			frustum[i].signbits = SignbitsForPlane(&frustum[i]);
 		}
+		frustum[0].dist -= 10 * r_newrefdef.fov_x;
+		frustum[1].dist -= 10 * r_newrefdef.fov_x;
+		frustum[2].dist -= 10 * r_newrefdef.fov_x * ((float) r_newrefdef.height / r_newrefdef.width);
+		frustum[3].dist -= 10 * r_newrefdef.fov_x * ((float) r_newrefdef.height / r_newrefdef.width);
 	} else {
 		/* rotate VPN right by FOV_X/2 degrees */
 		RotatePointAroundVector(frustum[0].normal, vup, vpn, -(90 - r_newrefdef.fov_x / 2));
@@ -818,23 +822,25 @@ static void R_SetupFrame(void)
 /**
  * @brief
  */
-static void MYgluPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)
+static void MYgluPerspective(GLdouble zNear, GLdouble zFar)
 {
-	GLdouble xmin, xmax, ymin, ymax;
+	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) r_newrefdef.height / r_newrefdef.width;
 
-	ymax = zNear * tan(fovy * M_PI / 360.0);
-	ymin = -ymax;
+	if (r_isometric->value) {
+		/* TODO: someone with stereo glasses should try to figure out what the correct stereo separation multiplier is for ortho mode */
+		qglOrtho((-10 - 2 * gl_state.camera_separation) * r_newrefdef.fov_x, (10 - 2 * gl_state.camera_separation) * r_newrefdef.fov_x, -10 * r_newrefdef.fov_x * yaspect, 10 * r_newrefdef.fov_x * yaspect, -zFar, zFar);
+	} else {
+		xmax = zNear * tan(r_newrefdef.fov_x * M_PI / 360.0);
+		xmin = -xmax;
 
-	xmin = ymin * aspect;
-	xmax = ymax * aspect;
+		ymin = xmin * yaspect;
+		ymax = xmax * yaspect;
 
-	xmin += -(2 * gl_state.camera_separation) / zNear;
-	xmax += -(2 * gl_state.camera_separation) / zNear;
+		xmin += -(2 * gl_state.camera_separation) / zNear;
+		xmax += -(2 * gl_state.camera_separation) / zNear;
 
-	if (!r_isometric->value)
 		qglFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
-	else
-		qglOrtho(-10 * fovy * aspect, 10 * fovy * aspect, -10 * fovy, 10 * fovy, -zFar, zFar);
+	}
 }
 
 
@@ -861,7 +867,7 @@ static void R_SetupGL(void)
 	screenaspect = (float) r_newrefdef.width / r_newrefdef.height;
 	qglMatrixMode(GL_PROJECTION);
 	qglLoadIdentity();
-	MYgluPerspective(r_newrefdef.fov_y, screenaspect, 4, 2048);
+	MYgluPerspective(4, 2048);
 
 	qglCullFace(GL_FRONT);
 

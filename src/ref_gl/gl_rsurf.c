@@ -621,7 +621,10 @@ static void R_DrawInlineBModel(void)
 		/* find which side of the node we are on */
 		pplane = psurf->plane;
 
-		dot = DotProduct(modelorg, pplane->normal) - pplane->dist;
+		if (r_isometric->value)
+			dot = -DotProduct(vpn, pplane->normal);
+		else
+			dot = DotProduct(modelorg, pplane->normal) - pplane->dist;
 
 		/* draw the polygon */
 		if (((psurf->flags & SURF_PLANEBACK) && (dot < -BACKFACE_EPSILON)) || (!(psurf->flags & SURF_PLANEBACK) && (dot > BACKFACE_EPSILON))) {
