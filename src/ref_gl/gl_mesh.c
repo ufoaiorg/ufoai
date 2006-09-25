@@ -172,9 +172,6 @@ static qboolean R_CullAliasModel(entity_t * e)
 	daliasframe_t *pframe, *poldframe;
 	vec4_t bbox[8];
 
-	if (r_isometric->value)
-		return qfalse;
-
 	assert (currentmodel->type == mod_alias);
 	paliashdr = (dmdl_t *) currentmodel->extradata;
 

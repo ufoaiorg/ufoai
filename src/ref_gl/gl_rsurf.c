@@ -751,19 +751,12 @@ static void R_RecursiveWorldNode(mnode_t * node)
 	/* find which side of the node we are on */
 	plane = node->plane;
 
-	switch (plane->type) {
-	case PLANE_X:
-		dot = modelorg[0] - plane->dist;
-		break;
-	case PLANE_Y:
-		dot = modelorg[1] - plane->dist;
-		break;
-	case PLANE_Z:
-		dot = modelorg[2] - plane->dist;
-		break;
-	default:
+	if (r_isometric->value) {
+		dot = -DotProduct(vpn, plane->normal);
+	} else if (plane->type >= 3) {
 		dot = DotProduct(modelorg, plane->normal) - plane->dist;
-		break;
+	} else {
+		dot = modelorg[plane->type] - plane->dist;
 	}
 
 	if (dot >= 0) {

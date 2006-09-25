@@ -197,7 +197,7 @@ qboolean R_CullBox(vec3_t mins, vec3_t maxs)
 {
 	int i;
 
-	if (r_nocull->value || r_isometric->value)
+	if (r_nocull->value)
 		return qfalse;
 
 	for (i = 0; i < 4; i++)
@@ -834,7 +834,7 @@ static void MYgluPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLd
 	if (!r_isometric->value)
 		qglFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
 	else
-		qglOrtho(-10 * fovy * aspect, 10 * fovy * aspect, -10 * fovy, 10 * fovy, zNear, zFar);
+		qglOrtho(-10 * fovy * aspect, 10 * fovy * aspect, -10 * fovy, 10 * fovy, -zFar, zFar);
 }
 
 
