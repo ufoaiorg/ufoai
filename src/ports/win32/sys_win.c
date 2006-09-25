@@ -626,3 +626,13 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	/* never gets here */
 	return TRUE;
 }
+
+/**
+ * @brief Calls the win32 sleep function
+ */
+void Sys_Sleep(int milliseconds)
+{
+	if (milliseconds < 1)
+		milliseconds = 1;
+	Sleep(milliseconds);
+}

@@ -779,6 +779,7 @@ ifeq ($(OSTYPE),Linux)
 	$(BUILDDIR)/client/q_shlinux.o \
 	$(BUILDDIR)/client/vid_so.o \
 	$(BUILDDIR)/client/sys_linux.o \
+	$(BUILDDIR)/client/sys_unix.o \
 	$(BUILDDIR)/client/glob.o \
 	$(BUILDDIR)/client/$(NET_UDP).o
 endif
@@ -788,6 +789,7 @@ ifeq ($(OSTYPE),FreeBSD)
 	$(BUILDDIR)/client/q_shlinux.o \
 	$(BUILDDIR)/client/vid_so.o \
 	$(BUILDDIR)/client/sys_linux.o \
+	$(BUILDDIR)/client/sys_unix.o \
 	$(BUILDDIR)/client/glob.o \
 	$(BUILDDIR)/client/$(NET_UDP).o
 endif
@@ -799,6 +801,7 @@ ifeq ($(OSTYPE),Darwin)
 	$(BUILDDIR)/client/in_osx.o \
 	$(BUILDDIR)/client/snddma_osx.o \
 	$(BUILDDIR)/client/glob.o \
+	$(BUILDDIR)/client/sys_unix.o \
 	$(BUILDDIR)/client/$(NET_UDP).o \
 	$(BUILDDIR)/client/q_shosx.o
 	# FIXME Add more objects
@@ -981,6 +984,9 @@ $(BUILDDIR)/client/sys_linux.o :   $(LINUX_DIR)/sys_linux.c
 $(BUILDDIR)/client/glob.o :        $(UNIX_DIR)/glob.c
 	$(DO_CC)
 
+$(BUILDDIR)/client/sys_unix.o :        $(UNIX_DIR)/sys_unix.c
+	$(DO_CC)
+
 $(BUILDDIR)/client/q_shared.o :    $(GAME_DIR)/q_shared.c
 	$(DO_CC)
 
@@ -1045,6 +1051,7 @@ ifeq ($(OSTYPE),Linux)
 	Q2DED_OBJS += \
 	$(BUILDDIR)/ded/q_shlinux.o \
 	$(BUILDDIR)/ded/sys_linux.o \
+	$(BUILDDIR)/ded/sys_unix.o \
 	$(BUILDDIR)/ded/glob.o \
 	$(BUILDDIR)/ded/$(NET_UDP).o
 endif
@@ -1053,6 +1060,7 @@ ifeq ($(OSTYPE),FreeBSD)
 	Q2DED_OBJS += \
 	$(BUILDDIR)/ded/q_shlinux.o \
 	$(BUILDDIR)/ded/sys_linux.o \
+	$(BUILDDIR)/ded/sys_unix.o \
 	$(BUILDDIR)/ded/glob.o \
 	$(BUILDDIR)/ded/$(NET_UDP).o
 endif
@@ -1061,6 +1069,7 @@ ifeq ($(OSTYPE),Darwin)
 	Q2DED_OBJS += \
 	$(BUILDDIR)/ded/sys_osx.o \
 	$(BUILDDIR)/ded/q_shosx.o \
+	$(BUILDDIR)/ded/sys_unix.o \
 	$(BUILDDIR)/ded/glob.o \
 	$(BUILDDIR)/ded/$(NET_UDP).o
 endif
@@ -1136,6 +1145,9 @@ $(BUILDDIR)/ded/sys_linux.o :  $(LINUX_DIR)/sys_linux.c
 	$(DO_DED_CC)
 
 $(BUILDDIR)/ded/glob.o :	$(UNIX_DIR)/glob.c
+	$(DO_DED_CC)
+
+$(BUILDDIR)/ded/sys_unix.o :	$(UNIX_DIR)/sys_unix.c
 	$(DO_DED_CC)
 
 $(BUILDDIR)/ded/net_udp.o :    $(UNIX_DIR)/net_udp.c
