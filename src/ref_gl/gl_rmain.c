@@ -982,6 +982,7 @@ static void R_RenderView(refdef_t * fd)
 	if (gl_wire->value)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	/* draw brushes on current worldlevel */
 	R_DrawLevelBrushes();
 	R_DrawTriangleOutlines();
 

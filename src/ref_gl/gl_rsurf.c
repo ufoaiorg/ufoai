@@ -869,7 +869,8 @@ static void R_FindModelNodes_r(mnode_t * node)
 
 
 /**
- * @brief
+ * @brief Draws the brushes for the current worldlevel
+ * @sa cvar cl_worldlevel
  */
 void R_DrawLevelBrushes(void)
 {
