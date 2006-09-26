@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=24
+UnitCount=26
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -130,14 +130,14 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c cd_null.c -o cd_null.o $(CFLAGS)
 
 [Unit26]
-FileName=ports\win32\in_win.c
+FileName=qcommon\unzip.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c unzip.c -o unzip.o $(CFLAGS)
 
 [Unit27]
 FileName=client\keys.c
@@ -770,6 +770,16 @@ BuildCmd=$(CC) -c net_wins.c -o net_wins.o $(CFLAGS)
 FileName=qcommon\crc.c
 CompileCpp=0
 Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit25]
+FileName=qcommon\unzip.h
+CompileCpp=1
+Folder=Header Files
 Compile=1
 Link=1
 Priority=1000
