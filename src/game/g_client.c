@@ -1550,22 +1550,23 @@ static void G_UpdateShotMock(shot_mock_t *mock, edict_t *shooter, edict_t *struc
 }
 
 /**
- * @brief
+ * @brief Deals damage of a give type and amount to a target.
  */
 static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker, shot_mock_t *mock)
 {
-	int stun = dmgtype == gi.csi->damStun;
+	qboolean stun = (dmgtype == gi.csi->damStun);
+	qboolean shock = (dmgtype == gi.csi->damShock);
 
 	assert (ent);
 	assert (ent->type == ET_ACTOR
 			|| ent->type == ET_UGV
 			|| ent->type == ET_BREAKABLE);
 
-	/* breakables are immune to stun damage */
-	if (stun && ent->type == ET_BREAKABLE)
+	/* Breakables are immune to stun & shock damage. */
+	if ((stun || shock) && (ent->type == ET_BREAKABLE))
 		return;
 
-	/* breakables */
+	/* Breakables */
 	if (ent->type == ET_BREAKABLE) {
 		if (!mock) {
 			if (damage >= ent->HP) {
@@ -1589,11 +1590,11 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 		return;
 	}
 
-	/* actors don't die again */
+	/* Actors don't die again. */
 	if (ent->state & STATE_DEAD)
 		return;
 
-	/* apply difficulty settings */
+	/* Apply difficulty settings. */
 	if (sv_maxclients->value == 1) {
 		if (attacker->team == TEAM_ALIEN && ent->team < TEAM_ALIEN)
 			damage *= pow(1.3, difficulty->value);
@@ -1601,7 +1602,8 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 			damage *= pow(1.3, -difficulty->value);
 	}
 
-	/* apply armor effects */
+	
+	/* Apply armor effects. */
 	if (damage > 0 && ent->i.c[gi.csi->idArmor]) {
 		objDef_t *ad;
 		int totalDamage;
@@ -1641,6 +1643,10 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 			G_UpdateShotMock(mock, attacker, ent, damage);
 		else if (stun)
 			ent->STUN += damage;
+		else if (shock)
+			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
+			if (ent->team != attacker->team)
+				ent->AP = 0;
 		else
 			ent->HP -= damage;
 	}
@@ -1730,6 +1736,8 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 	int damage;
 	int i;
 
+	qboolean shock = (fd->dmgtype==gi.csi->damShock);
+	
 	assert (fd->splrad);
 
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
@@ -1737,6 +1745,10 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 		if (!check->inuse)
 			continue;
 
+		/* If we use a blinding weapon we skip the target if it's looking away from the impact location. */
+		if (shock && if G_FrustomVis(ent, impact)) {
+			continue;
+		
 		if (check->type == ET_ACTOR || check->type == ET_UGV)
 			VectorCopy(check->origin, center);
 		else if (check->type == ET_BREAKABLE) {
@@ -1767,7 +1779,11 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 			continue;
 
 		/* do damage */
-		damage = (fd->spldmg[0] + fd->spldmg[1] * crand()) * (1.0 - dist / fd->splrad);
+		if (shock)
+			damage = 0;
+		else
+			damage = (fd->spldmg[0] + fd->spldmg[1] * crand()) * (1.0 - dist / fd->splrad);
+
 		if (mock)
 			mock->allow_self = qtrue;
 		G_Damage(check, fd->dmgtype, damage, ent, mock);
@@ -2605,6 +2621,7 @@ qboolean G_ReactionFire(edict_t * target, qboolean doShoot)
 					 && gi.csi->ods[RIGHT(ent)->item.t].weapon
 					 && (!gi.csi->ods[RIGHT(ent)->item.t].reload
 						 || RIGHT(ent)->item.a > 0)
+					 && gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->value <= ent->TU
 					 && gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
 					fired = !doShoot ? qtrue : G_FireWithJudgementCall(player, ent->number, target->pos, ST_RIGHT_PRIMARY_REACTION);
 				}
@@ -2614,7 +2631,8 @@ qboolean G_ReactionFire(edict_t * target, qboolean doShoot)
 					&& gi.csi->ods[LEFT(ent)->item.t].weapon
 					&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 						|| LEFT(ent)->item.a > 0)
-					&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_SECONDARY].range > VectorDist(ent->origin, target->origin) ) {
+					&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->value <= ent->TU
+					&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
 					fired = !doShoot ? qtrue : G_FireWithJudgementCall(player, ent->number, target->pos, ST_LEFT_PRIMARY_REACTION);
 				}
 
