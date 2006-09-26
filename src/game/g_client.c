@@ -1644,8 +1644,10 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 			ent->STUN += damage;
 		} else if (shock) {
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
-			if (ent->team != attacker->team)
+			if (ent->team != attacker->team) {
 				ent->AP = 0;
+				return;
+			}
 		} else {
 			ent->HP -= damage;
 		}
@@ -1746,7 +1748,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 			continue;
 		
 		/* If we use a blinding weapon we skip the target if it's looking away from the impact location. */
-		if (shock && if G_FrustomVis(ent, impact)) {
+		if (shock && !G_FrustomVis(ent, impact))
 			continue;
 
 		if (check->type == ET_ACTOR || check->type == ET_UGV)
