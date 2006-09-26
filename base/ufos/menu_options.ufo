@@ -448,6 +448,44 @@ menu options_video
 		}
 	}
 
+	string isomode_str
+	{
+		string	"_Isometric Mode:"
+		pos		"500 380"
+	}
+	string isomode_value
+	{
+		string	"*cvar mn_isomode"
+		pos		"840 380"
+		align	ur
+	}
+	pic isomode_dec
+	{
+		image	menu/buttons_small
+		pos		"868 384"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modify r_isometric -1 0 1;"
+			cmd "mn_translate r_isometric mn_isomode 0:No,1:Yes;"
+		}
+	}
+	pic isomode_inc
+	{
+		image	menu/buttons_small
+		pos		"884 384"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modify r_isometric +1 0 1;"
+			cmd "mn_translate r_isometric mn_isomode 0:No,1:Yes;"
+		}
+	}
+
 	string gamma_str
 	{
 		string	"_Gamma:"
@@ -477,6 +515,7 @@ menu options_video
 		cmd "mn_translate cl_fps mn_fps 0:No,1:Yes;"
 		cmd "mn_translate gl_imagefilter mn_imagefilter 0:No,1:Yes;"
 		cmd "mn_translate r_texture_lod mn_lod 0:No,1:Yes;"
+		cmd "mn_translate r_isometric mn_isomode 0:No,1:Yes;"
 		cmd "mn_translate gl_ext_texture_compression mn_compression 0:No,1:Yes;"
 		cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:High,2048:Excellent;"
 	}
