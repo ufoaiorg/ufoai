@@ -56,6 +56,8 @@ typedef enum {
 typedef struct {
 	server_state_t state;		/* precache commands are only valid during load */
 
+	qboolean active;			/* false if only a net client */
+
 	qboolean attractloop;		/* running cinematics and demos for the local system only */
 	qboolean loadgame;			/* client begins should reuse existing entity */
 

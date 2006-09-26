@@ -795,6 +795,8 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 	sv.state = serverstate;
 	Com_SetServerState(sv.state);
 
+	sv.active = qtrue;
+
 	/* set serverinfo variable */
 	Cvar_FullSet("mapname", sv.name, CVAR_SERVERINFO | CVAR_NOSET);
 
