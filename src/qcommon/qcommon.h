@@ -266,6 +266,7 @@ void Qcommon_LocaleInit(void);
 void Qcommon_Init(int argc, char **argv);
 float Qcommon_Frame(int msec);
 void Qcommon_Shutdown(void);
+qboolean Qcommon_ServerActive(void);
 
 #define NUMVERTEXNORMALS	162
 extern vec3_t bytedirs[NUMVERTEXNORMALS];

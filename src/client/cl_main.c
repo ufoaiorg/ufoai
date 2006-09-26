@@ -205,6 +205,25 @@ void CL_Quit_f(void)
 }
 
 /**
+ * @brief Disconnects a multiplayer game if singleplayer is true and set css.singleplayer to true
+ */
+void CL_StartSingleplayer(qboolean singleplayer)
+{
+	if (singleplayer) {
+		ccs.singleplayer = qtrue;
+		if (Qcommon_ServerActive()) {
+			/* shutdown server */
+			SV_Shutdown("Server was killed.\n", qfalse);
+		}
+		if (cls.state >= ca_connecting) {
+			Com_Printf("Disconnect from current server\n");
+			CL_Disconnect();
+		}
+	} else
+		ccs.singleplayer = qfalse;
+}
+
+/**
  * @brief
  * @note Called after an ERR_DROP was thrown
  */
@@ -1493,7 +1512,7 @@ void CL_Frame(int msec)
 
 	if (sv_maxclients->modified) {
 		if ((int) sv_maxclients->value > 1) {
-			ccs.singleplayer = qfalse;
+			CL_StartSingleplayer(qfalse);
 			curCampaign = NULL;
 			selMis = NULL;
 			baseCurrent = &gd.bases[0];
@@ -1508,7 +1527,7 @@ void CL_Frame(int msec)
 			Cvar_Set("map_dropship", "craft_dropship");
 			CL_Disconnect();
 		} else {
-			ccs.singleplayer = qtrue;
+			CL_StartSingleplayer(qtrue);
 			Com_Printf("Changing to Singleplayer\n");
 		}
 		sv_maxclients->modified = qfalse;

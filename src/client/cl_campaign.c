@@ -1651,6 +1651,8 @@ int CL_GameLoad(char *filename)
 	if (curCampaign)
 		CL_GameExit();
 
+	CL_StartSingleplayer(qtrue);
+
 	memset(&gd, 0, sizeof(gd));
 	CL_ReadSinglePlayerData();
 
@@ -1688,7 +1690,7 @@ int CL_GameLoad(char *filename)
 	memset(&ccs, 0, sizeof(ccs_t));
 
 	/* set ccs.singleplayer to true (gameloading is singleplayer only) */
-	ccs.singleplayer = qtrue;
+	CL_StartSingleplayer(qtrue);
 
 	/* read date */
 	ccs.date.day = MSG_ReadLong(&sb);
@@ -3477,9 +3479,9 @@ static void CL_GameNew(void)
 	Cvar_SetValue("maxclients", 1.0f);
 
 	/* exit running game */
+	CL_StartSingleplayer(qtrue);
 	if (curCampaign)
 		CL_GameExit();
-	ccs.singleplayer = qtrue;
 
 	memset(&gd, 0, sizeof(gd));
 	CL_ReadSinglePlayerData();
