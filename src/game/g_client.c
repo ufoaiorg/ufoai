@@ -1527,6 +1527,14 @@ static void G_MoraleBehaviour(int team, qboolean quiet)
 }
 
 
+/**
+ * @brief
+ * @param[in] mock
+ * @param[in] shooter
+ * @param[in] struck
+ * @param[in] damage
+ * @sa G_Damage
+ */
 static void G_UpdateShotMock(shot_mock_t *mock, edict_t *shooter, edict_t *struck, int damage)
 {
 	assert(struck->number != shooter->number || mock->allow_self);
@@ -1666,11 +1674,11 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 			G_Morale(ML_DEATH, ent, attacker, damage);
 
 		/* count kills */
-		if (ent->HP<=0) 		
+		if (ent->HP<=0)
 			level.num_kills[attacker->team][ent->team]++;
 		/*count stuns*/
 		else
-			level.num_stuns[attacker->team][ent->team]++;  
+			level.num_stuns[attacker->team][ent->team]++;
 
 		/* count score */
 		if (ent->team == TEAM_CIVILIAN)
@@ -1737,7 +1745,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 	float dist;
 	int damage;
 	int i;
-	
+
 	qboolean shock = (fd->dmgtype==gi.csi->damShock);
 
 	assert (fd->splrad);
@@ -1746,7 +1754,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 		/* check basic info */
 		if (!check->inuse)
 			continue;
-		
+
 		/* If we use a blinding weapon we skip the target if it's looking away from the impact location. */
 		if (shock && !G_FrustomVis(ent, impact))
 			continue;
