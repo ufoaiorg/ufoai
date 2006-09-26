@@ -52,7 +52,6 @@ cvar_t *rcon_address;
 
 cvar_t *cl_timeout;
 
-cvar_t *cl_maxfps;
 cvar_t *cl_markactors;
 
 cvar_t *cl_fps;
@@ -1157,7 +1156,6 @@ void CL_InitLocal(void)
 	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE, NULL);
 	cl_stereo = Cvar_Get("cl_stereo", "0", 0, NULL);
 
-	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
 	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE, NULL);
 	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, NULL);
 

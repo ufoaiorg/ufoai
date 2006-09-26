@@ -1,7 +1,7 @@
 /**
  * @file sv_null.c
  * @brief Stub out the entire server system for pure net-only clients.
- * 
+ *
  * NOTE: This code is currently not in use and is not compiled.
  */
 
@@ -23,7 +23,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -43,6 +43,6 @@ void SV_Shutdown(char *finalmsg, qboolean reconnect)
 {
 }
 
-void SV_Frame(float time)
+void SV_Frame(int time)
 {
 }

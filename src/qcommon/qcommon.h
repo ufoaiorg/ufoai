@@ -245,6 +245,7 @@ extern cvar_t *log_stats;
 extern cvar_t *sv_maxclients;
 extern cvar_t *sv_reaction_leftover;
 extern cvar_t *sv_shot_origin;
+extern cvar_t *cl_maxfps;
 
 extern FILE *log_stats_file;
 

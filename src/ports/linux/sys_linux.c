@@ -401,7 +401,8 @@ char *Sys_GetClipboardData(void)
  */
 int main (int argc, char **argv)
 {
-	int 	time, oldtime, newtime;
+	int time, oldtime, newtime;
+	float timescale = 1.0;
 
 	/* go back to real user for config loads */
 	saved_euid = geteuid();
@@ -416,17 +417,14 @@ int main (int argc, char **argv)
 		fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 	}
 
-	oldtime = Sys_Milliseconds ();
-	while (1) {
-		if (dedicated && dedicated->value)
-			usleep(1);
+	newtime = Sys_Milliseconds();
+	for (;;) {
 		/* find time spent rendering last frame */
-		do {
-			newtime = Sys_Milliseconds ();
-			time = newtime - oldtime;
-		} while (time < 1);
-		Qcommon_Frame (time);
 		oldtime = newtime;
+		newtime = Sys_Milliseconds();
+		time = timescale * (newtime - oldtime);
+		timescale = Qcommon_Frame(time);
 	}
+	return 0;
 }
 

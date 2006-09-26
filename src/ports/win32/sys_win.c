@@ -602,15 +602,15 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	/* main window message loop */
 	while (1) {
 		/* if at a full screen console, don't update unless needed */
-		if (Minimized || (dedicated && dedicated->value) )
-			Sleep (1);
+		if (Minimized)
+			Sys_Sleep(1);
 
 		while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE)) {
 			if (!GetMessage (&msg, NULL, 0, 0))
 				Com_Quit ();
 			sys_msg_time = msg.time;
 			TranslateMessage (&msg);
-   			DispatchMessage (&msg);
+			DispatchMessage (&msg);
 		}
 
 		do {
@@ -619,6 +619,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		} while (time < 1);
 
 		_controlfp( _PC_24, _MCW_PC );
+		time = timescale * (newtime - oldtime);
 		timescale = Qcommon_Frame (time);
 		oldtime = newtime;
 	}

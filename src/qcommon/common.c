@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "qcommon.h"
+#include "../server/server.h"
 #include <setjmp.h>
 
 #if defined DEBUG && defined _MSC_VER
@@ -52,6 +53,7 @@ cvar_t *fixedtime;
 cvar_t *logfile_active;			/* 1 = buffer log, 2 = flush after each print */
 cvar_t *showtrace;
 cvar_t *dedicated;
+cvar_t *cl_maxfps;
 
 static FILE *logfile;
 
@@ -1405,6 +1407,7 @@ void Qcommon_Init(int argc, char **argv)
 #else
 	dedicated = Cvar_Get("dedicated", "0", CVAR_NOSET, NULL);
 #endif
+	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 	Cvar_Get("version", s, CVAR_NOSET, NULL);
@@ -1472,27 +1475,54 @@ void Qcommon_Init(int argc, char **argv)
  * @sa Qcommon_Shutdown
  * @sa SV_Frame
  * @sa CL_Frame
+ * @param[in] msec Passed miliseconds since last frame
  */
 float Qcommon_Frame(int msec)
 {
 	char *s;
 	int time_before = 0, time_between = 0, time_after = 0;
+	static int sv_timer = 0, cl_timer = 0;
 
 	/* an ERR_DROP was thrown */
 	if (setjmp(abortframe))
 		return 1.0;
+
+	/* if there is some time remaining from last frame, reset the timers */
+	if (cl_timer > 0)
+		cl_timer = 0;
+	if (sv_timer > 0)
+		sv_timer = 0;
+
+	/* accumulate the new frametime into the timers */
+	cl_timer += msec;
+	sv_timer += msec;
 
 	if (timescale->value > 5.0)
 		Cvar_SetValue("timescale", 5.0);
 	else if (timescale->value < 0.2)
 		Cvar_SetValue("timescale", 0.2);
 
+	if (cl_timer <= 0 && sv_timer <= 0) {
+		int wait;
+		if (dedicated->value)
+			wait = abs(sv_timer);
+		else if (!sv.active)
+			wait = abs(cl_timer);
+		else
+			wait = max(cl_timer, sv_timer);
+		if (wait >= 1) {
+			Sys_Sleep(wait);
+		}
+		cl_timer = sv_timer = 0;
+		return timescale->value;
+	}
+
 	if (log_stats->modified) {
 		log_stats->modified = qfalse;
 		if (log_stats->value) {
 			if (log_stats_file) {
 				fclose(log_stats_file);
-				log_stats_file = 0;
+				log_stats_file = NULL;
 			}
 			log_stats_file = fopen("stats.log", "w");
 			if (log_stats_file)
@@ -1500,13 +1530,10 @@ float Qcommon_Frame(int msec)
 		} else {
 			if (log_stats_file) {
 				fclose(log_stats_file);
-				log_stats_file = 0;
+				log_stats_file = NULL;
 			}
 		}
 	}
-
-/*	if (fixedtime->value) */
-/*		msec = fixedtime->value; */
 
 	if (showtrace->value) {
 		extern int c_traces, c_brush_traces;
@@ -1518,22 +1545,41 @@ float Qcommon_Frame(int msec)
 		c_pointcontents = 0;
 	}
 
+	Cbuf_Execute();
+
 	do {
 		s = Sys_ConsoleInput();
 		if (s)
 			Cbuf_AddText(va("%s\n", s));
 	} while (s);
-	Cbuf_Execute();
 
 	if (host_speeds->value)
 		time_before = Sys_Milliseconds();
 
-	SV_Frame(msec);
+	if (sv_timer > 0) {
+		if (!sv.active) {
+			/* if there is no server, run server timing at 10fps */
+			sv_timer -= 100;
+		} else {
+			SV_Frame(msec);
+		}
+	}
 
 	if (host_speeds->value)
 		time_between = Sys_Milliseconds();
 
-	CL_Frame(msec);
+	if (cl_timer > 0) {
+		if (dedicated->value) {
+			/* if there is no client, run client timing at 10fps */
+			cl_timer -= 100;
+		} else {
+			double frametime;
+			frametime = (cl_timer < 1000 ? cl_timer : 1000);
+			frametime = max(frametime, 1000/(int)cl_maxfps->value);
+			cl_timer -= frametime;
+			CL_Frame(msec);
+		}
+	}
 
 	if (host_speeds->value)
 		time_after = Sys_Milliseconds();

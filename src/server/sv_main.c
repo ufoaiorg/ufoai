@@ -686,7 +686,6 @@ void SV_Frame(int msec)
 
 	/* clear teleport flags, etc for next frame */
 	/*SV_PrepWorldFrame (); */
-
 }
 
 /*============================================================================ */

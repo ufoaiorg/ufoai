@@ -1,7 +1,7 @@
 /**
  * @file cl_null.c
  * @brief This file can stub out the entire client system for pure dedicated servers
- * 
+ *
  * FIXME: Calls to functions not required by the dedicated server should be surrounded by the DEDICATED_ONLY macro.
  */
 
