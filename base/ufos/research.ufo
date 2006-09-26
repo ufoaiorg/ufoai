@@ -333,6 +333,18 @@ tech rs_weapon_fraggren
 	time	0
 }
 
+ 
+tech rs_weapon_flashbang
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_flashbang_txt"
+
+	requires	"rs_skill_explosive rs_damage_shock"
+	provides	flashbang
+	time	0
+}
+
 tech rs_weapon_smokegren
 {
 	type	weapon

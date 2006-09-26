@@ -24,6 +24,7 @@ equipment campaign_player
 	knife			2
 	light			0
 	smokegrenade	2
+	flashbang	5
 }
 
 equipment campaign_market
@@ -62,6 +63,7 @@ equipment campaign_market
 	medikit					2
 	stunrod					2
 	stungrenade				10
+	flashbang			10
 	light					20
 	medium					5
 //	heavy					1

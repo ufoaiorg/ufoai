@@ -162,6 +162,73 @@ item fraggrenade
 	}
 }
 
+// =======================
+// FLASHBANG GRENADE
+// TODO: fix spldmg value
+// =======================
+item flashbang
+{
+	name		"_Flashbang"
+	model		weapons/flashbang/flashbang
+	weapon		true
+	type		grenade
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.3
+	price		170
+	buytype		2
+	thrown		true
+
+	primary
+	{
+		name	"_Throw"
+		skill	explosive
+		projtl	fraggren
+		impact	frag_explosion
+		hitbody frag_explosion
+		impsnd	weapons/frag_grenade.wav
+		bodysnd	weapons/frag_grenade.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	12
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"999 999"	// TODO: needed at all?
+		splrad	5
+		dmgtype shock
+	}
+	secondary
+	{
+		name	"_Throw"
+		skill	explosive
+		projtl	fraggren
+		impact	frag_explosion
+		hitbody frag_explosion
+		impsnd	weapons/frag_grenade.wav
+		bodysnd	weapons/frag_grenade.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	12
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"999 999"	// TODO: needed at all?
+		splrad	5
+		dmgtype shock
+	}
+}
 
 // =======================
 // SMOKE GRENADE

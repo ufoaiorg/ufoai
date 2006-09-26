@@ -1564,7 +1564,7 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 
 	/* Breakables are immune to stun & shock damage. */
 	if ((stun || shock) && (ent->type == ET_BREAKABLE))
-		return;
+ 		return;
 
 	/* Breakables */
 	if (ent->type == ET_BREAKABLE) {
@@ -1602,7 +1602,6 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 			damage *= pow(1.3, -difficulty->value);
 	}
 
-	
 	/* Apply armor effects. */
 	if (damage > 0 && ent->i.c[gi.csi->idArmor]) {
 		objDef_t *ad;
@@ -1639,16 +1638,17 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 	if (g_nodamage != NULL && !g_nodamage->value)
 	{
 		/* hit */
-		if (mock)
+		if (mock) {
 			G_UpdateShotMock(mock, attacker, ent, damage);
-		else if (stun)
+		} else if (stun) {
 			ent->STUN += damage;
-		else if (shock)
+		} else if (shock) {
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
 			if (ent->team != attacker->team)
 				ent->AP = 0;
-		else
+		} else {
 			ent->HP -= damage;
+		}
 	}
 
 	if (mock)
@@ -1735,20 +1735,20 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 	float dist;
 	int damage;
 	int i;
-
-	qboolean shock = (fd->dmgtype==gi.csi->damShock);
 	
+	qboolean shock = (fd->dmgtype==gi.csi->damShock);
+
 	assert (fd->splrad);
 
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
 		/* check basic info */
 		if (!check->inuse)
 			continue;
-
+		
 		/* If we use a blinding weapon we skip the target if it's looking away from the impact location. */
 		if (shock && if G_FrustomVis(ent, impact)) {
 			continue;
-		
+
 		if (check->type == ET_ACTOR || check->type == ET_UGV)
 			VectorCopy(check->origin, center);
 		else if (check->type == ET_BREAKABLE) {
