@@ -46,13 +46,12 @@ extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec
 	int i, xCircle, yCircle;
 	int pts[RADAR_DRAW_POINTS * 2 + 2];
 	int pts2[RADAR_DRAW_POINTS * 2 + 2];
-
-	vec4_t color = {0, 1, 0, 1};
-	/* Set color */
-	re.DrawColor(color);
-
 	vec2_t posCircle;
 	float cosinus, sinus, rangeTracking;
+
+	const vec4_t color = {0, 1, 0, 1};
+	/* Set color */
+	re.DrawColor(color);
 
 	rangeTracking = radar->range + radar->range / 10.0f;
 	for ( i = 0 ; i <= RADAR_DRAW_POINTS ; i++ ) {
@@ -80,7 +79,7 @@ extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec
 extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos)
 {
 	int i;
-	vec4_t color = {0, 1, 0, 1};
+	const vec4_t color = {0, 1, 0, 1};
 	int pts[4];
 
 	if (radar->numUfos==0) 
