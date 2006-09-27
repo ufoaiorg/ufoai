@@ -13,8 +13,8 @@ item plaspistol
 	center		"1 0 0.3"
 	scale		1.5
 	ammo		6
-	reload		6
-	price		3400
+	reload		12
+	price		34000
 	buytype		1
 }
 
@@ -27,43 +27,43 @@ item plaspistol_ammo
 	shape		"0 0 1 1"
 	center		"0 0 -0.2"
 	scale		1.1
-	price		170
+	price		1700
 	buytype		1
 
 	primary
 	{
 		name	"_Charged Pulse"
-		skill 	assault
+		skill 	close
 		projtl	plasmaMiniBall
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
 		firesnd	weapons/plasma_s.wav
 		speed	800
-		spread	"4 4"
+		spread	"0 3"
 		crouch	0.8
 		range	15
 		shots	5
 		ammo	1
 		rof		6
-		time	10
+		time	7
 		damage	"11 5"
 		dmgtype plasma
 	}
 	secondary
 	{
 		name	"_Continuous Stream"
-		skill 	heavy
+		skill 	assault
 		projtl	plasmaContinuous
 		impact	plasmaImpact
 		hitbody	plasmaImpact
 		firesnd	weapons/plasma_c.wav
 		sndonce true
 		speed	0
-		spread	"13 5"
+		spread	"1 5"
 		crouch	1.0
 		range	10
-		shots	46
-		ammo	2
+		shots	30
+		ammo	3
 		rof		32
 		time	15
 		damage	"6 2"
@@ -86,9 +86,9 @@ item plasrifle
 	shape		"0 0 5 2"
 	center		"9.3 0 1.5"
 	scale		1.25
-	ammo		8
-	reload		8
-	price		4000
+	ammo		9
+	reload		14
+	price		40000
 	buytype		0
 }
 
@@ -101,7 +101,7 @@ item plasrifle_ammo
 	shape		"0 0 2 1"
 	center		"0 0 -0.1"
 	scale		1.25
-	price		200
+	price		2000
 	buytype		0
 
 	primary
@@ -113,13 +113,13 @@ item plasrifle_ammo
 		hitbody	plasmaImpactCharged
 		firesnd	weapons/plasma_s.wav
 		speed	700
-		spread	"3 3"
+		spread	"0 2"
 		crouch	0.7
 		range	22
 		shots	5
 		ammo	1
 		rof		5
-		time	13
+		time	9
 		damage	"14 5"
 		dmgtype plasma
 	}
@@ -133,13 +133,13 @@ item plasrifle_ammo
 		firesnd	weapons/plasma_big.wav
 		sndonce true
 		speed	0
-		spread	"8 4"
+		spread	"1 4"
 		crouch	1.0
 		range	18
 		shots	30
 		ammo	3
 		rof		21
-		time	22
+		time	14
 		damage	"12 2"
 		dmgtype plasma
 	}
@@ -160,9 +160,9 @@ item plasblaster
 	shape		"0 0 5 2"
 	center		"7 0 1.4"
 	scale		1.06
-	ammo		12
-	reload		10
-	price		5800
+	ammo		4
+	reload		18
+	price		58000
 	buytype		2
 }
 
@@ -175,7 +175,7 @@ item plasblaster_ammo
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		1.4
-	price		400
+	price		4000
 	buytype		2
 
 	primary
@@ -189,12 +189,12 @@ item plasblaster_ammo
 		impsnd	weapons/plasma_grenade.wav
 		bodysnd	weapons/plasma_grenade.wav
 		gravity	true
-		spread	"4 4"
+		spread	"0 1"
 		range	17
 		shots	1
-		ammo	4
+		ammo	1
 		rof		1
-		time	16
+		time	10
 		damage	"60 10"
 		spldmg	"120 20"
 		splrad	5
@@ -210,13 +210,13 @@ item plasblaster_ammo
 		firesnd	weapons/plasma_big.wav
 		sndonce true
 		speed	0
-		spread	"11 4"
+		spread	"1 5"
 		crouch	1.0
 		range	15
-		shots	22
-		ammo	3
+		shots	15
+		ammo	1
 		rof		15
-		time	26
+		time	12
 		damage	"21 6"
 		dmgtype plasma
 	}

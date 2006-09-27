@@ -304,6 +304,7 @@ equipment human_phalanx_initial
 	light	    		17
 	medikit				20
 	irgoggles			5
+	smokegrenade		20
 }
 
 equipment human_farmers // some will be weaponless
@@ -313,6 +314,7 @@ equipment human_farmers // some will be weaponless
 	shotgun				5
 	shotgun_ammo		6
 	fraggrenade			1
+	knife				2
 }
 
 equipment human_gang
@@ -328,6 +330,8 @@ equipment human_gang
 	rpg					1
 	rpg_ammo			1
 	fraggrenade			1
+	smokegrenade		1
+	stungrenade			1
 	knife				20
 }
 
@@ -340,6 +344,8 @@ equipment human_police // some may be weaponless
 	sniper				1
 	sniper_ammo			1
 	fraggrenade			2
+	smokegrenade		2
+	stungrenade			2
 	light			    7
 }
 
@@ -358,6 +364,7 @@ equipment human_antiterrorist
 	shotgun				5
 	shotgun_ammo		12
 	fraggrenade			25
+	smokegrenade		20
 	knife				40
 	light			    35
 }
@@ -375,6 +382,7 @@ equipment human_army
 	rpg  				3
 	rpg_ammo			7
 	fraggrenade			55
+	smokegrenade		20
 	knife				40
 	light			    15
 }
@@ -431,4 +439,5 @@ equipment multiplayer_initial
 	light				10
 	medium				10
 //	heavy				5
+	smokegrenade		20
 }

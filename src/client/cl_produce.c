@@ -36,8 +36,13 @@ static int produceCategory = 0;
  */
 
 /* 20060921 LordHavoc: added PRODUCE_DIVISOR to allow reducing prices below 1x */
+#ifdef LORDHAVOC_ECONOMY
+static int PRODUCE_FACTOR = 1;
+static int PRODUCE_DIVISOR = 2;
+#else
 static int PRODUCE_FACTOR = 10;
 static int PRODUCE_DIVISOR = 1;
+#endif
 
 /**
  * @brief Checks whether an item is finished

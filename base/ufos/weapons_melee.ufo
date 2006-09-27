@@ -27,7 +27,7 @@ item knife
 		range	1.5
 		shots	1
 		time	4
-		damage	"50 5"
+		damage	"40 20"
 		dmgtype normal
 	}
 	secondary
@@ -41,11 +41,11 @@ item knife
 		bodysnd misc/klonk01.wav
 		speed	320
 		range	7
-		spread	"7 7"
+		spread	"1 4"
 		shots	1
 		ammo	1
 		time	8
-		damage	"30 10"
+		damage	"35 30"
 		dmgtype normal
 	}
 }
@@ -79,14 +79,14 @@ item stunrod
 		speed	0
 		range	1.5
 		shots	1
-		time	8
+		time	7
 		damage	"60 20"
 		dmgtype stun
 	}
 
 	secondary
 	{
-		name	"_Stun"
+		name	"_Stun Twice"
 		skill	close
 		projtl	null
 		impact	null
@@ -94,9 +94,10 @@ item stunrod
 		firesnd	weapons/stun.wav
 		speed	0
 		range	1.5
-		shots	1
-		time	8
-		damage	"60 20"
+		shots	2
+		rof		5
+		time	10
+		damage	"50 20"
 		dmgtype stun
 	}
 }
@@ -115,7 +116,7 @@ item kerrblade
 	shape		"0 0 5 2"
 	center		"6.3 0 3"
 	scale		1.0
-	price		3210 // really expensive production process
+	price		840
 	buytype		1
 	thrown		true
 
@@ -130,8 +131,8 @@ item kerrblade
 		speed	0
 		range	1.5
 		shots	1
-		time	5
-		damage	"110 10"
+		time	8
+		damage	"70 20"
 		dmgtype normal
 	}
 	secondary
@@ -146,11 +147,11 @@ item kerrblade
 		bodysnd weapons/kerrblade.wav
 		speed	320
 		range	5
-		spread	"10 10"
+		spread	"4 9"
 		shots	1
 		ammo	1
 		time	12
-		damage	"80 20"
+		damage	"50 25"
 		dmgtype normal
 	}
 }
@@ -169,7 +170,7 @@ item plasblade
 	shape		"0 0 1 2"
 	center		"-6 -13 0.5"
 	scale  		0.77
-	price		710
+	price		3710
 	buytype		1
 	thrown		true
 
@@ -184,8 +185,8 @@ item plasblade
 		speed	0
 		range	1.5
 		shots	1
-		time	10
-		damage	"150 20"
+		time	7
+		damage	"90 5"
 		dmgtype plasma
 	}
 	secondary
@@ -199,11 +200,11 @@ item plasblade
 		bodysnd weapons/plasma_blade.wav
 		speed	320
 		range	7
-		spread	"7 7"
+		spread	"2 5"
 		shots	1
 		ammo	1
 		time	10
-		damage	"130 40"
+		damage	"80 30"
 		dmgtype plasma
 	}
 }

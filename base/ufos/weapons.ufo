@@ -11,7 +11,7 @@ item medikit
 	shape		"0 0 2 2"
 	center		"1 0 2"
 	scale		1.1
-	price		1700
+	price		170
 	buytype		2
 	thrown		true
 
@@ -26,7 +26,7 @@ item medikit
 		range	1.5
 		shots	1
 		time	20
-		damage	"-40 10"
+		damage	"-40 20"
 	}
 	secondary
 	{
@@ -38,10 +38,10 @@ item medikit
 		gravity	true
 		speed	220
 		range	8
-		spread	"7 7"
+		spread	"4 7"
 		shots	1
 		ammo	1
-		time	15
+		time	10
 		damage	"1 1"
 		dmgtype normal
 	}
@@ -49,7 +49,7 @@ item medikit
 
 
 // =======================
-// IR-GOOGLES
+// IR-GOGGLES
 // =======================
 item irgoggles
 {
@@ -61,7 +61,7 @@ item irgoggles
 	shape		"0 0 2 2"
 	center		"-1.5 -4 -4.5"
 	scale		0.85
-	price		1870
+	price		200
 	buytype		2
 	thrown		true
 
@@ -71,7 +71,7 @@ item irgoggles
 		firesnd	misc/plopp03.wav
 		splrad	10
 		range	1.5
-		time	25
+		time	12
 		shots	1
 		irgoggles	true
 	}
@@ -85,10 +85,10 @@ item irgoggles
 		gravity	true
 		speed	220
 		range	10
-		spread	"7 7"
+		spread	"4 7"
 		shots	1
 		ammo	1
-		time	12
+		time	10
 		damage	"1 2"
 		dmgtype normal
 	}
@@ -108,7 +108,7 @@ item fraggrenade
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		1.3
-	price		170
+	price		70
 	buytype		2
 	thrown		true
 
@@ -126,14 +126,14 @@ item fraggrenade
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"7 7"
+		spread	"2 6"
 		range	12
 		shots	1
 		ammo	1
 		rof		1
-		time	12
-		spldmg	"100 30"
-		splrad	4
+		time	8
+		spldmg	"300 90"
+		splrad	6
 		dmgtype blast
 	}
 	secondary
@@ -150,14 +150,14 @@ item fraggrenade
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"7 7"
+		spread	"2 6"
 		range	12
 		shots	1
 		ammo	1
 		rof		1
-		time	12
-		spldmg	"100 30"
-		splrad	4
+		time	8
+		spldmg	"300 90"
+		splrad	6
 		dmgtype blast
 	}
 }
@@ -243,7 +243,7 @@ item smokegrenade
 	shape		"0 0 1 1"
 	center		"0 0 -0.25"
 	scale		1.5
-	price		150
+	price		50
 	buytype		2
 	thrown		true
 
@@ -261,14 +261,14 @@ item smokegrenade
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"7 7"
+		spread	"2 6"
 		range	12
 		shots	1
 		ammo	1
 		rof		1
-		time	12
+		time	8
 		spldmg	"5 5"
-		splrad	4
+		splrad	6
 		dmgtype normal
 	}
 	secondary
@@ -285,14 +285,14 @@ item smokegrenade
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"7 7"
+		spread	"2 6"
 		range	12
 		shots	1
 		ammo	1
 		rof		1
-		time	12
+		time	8
 		spldmg	"5 5"
-		splrad	4
+		splrad	6
 		dmgtype normal
 	}
 }
@@ -310,7 +310,7 @@ item stungrenade
 	shape		"0 0 1 1"
 	center		"-0.7 0 0"
 	scale		2.2
-	price		170
+	price		90
 	buytype		2
 	thrown		true
 
@@ -328,14 +328,14 @@ item stungrenade
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"7 7"
+		spread	"2 6"
 		range	12
 		shots	1
 		ammo	1
 		rof		1
-		time	12
-		spldmg	"50 20"
-		splrad	4
+		time	8
+		spldmg	"150 60"
+		splrad	6
 		dmgtype stun
 	}
 	secondary
@@ -352,14 +352,14 @@ item stungrenade
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"7 7"
+		spread	"2 6"
 		range	12
 		shots	1
 		ammo	1
 		rof		1
-		time	12
-		spldmg	"50 20"
-		splrad	4
+		time	8
+		spldmg	"150 60"
+		splrad	6
 		dmgtype stun
 	}
 }
@@ -378,7 +378,7 @@ item alienincgrenade
 	shape		"0 0 1 1"
 	center		"0 0 -0.3"
 	scale		1.4
-	price		390
+	price		350
 	buytype		2
 	thrown		true
 
@@ -396,14 +396,14 @@ item alienincgrenade
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"7 7"
+		spread	"2 6"
 		range	12
 		shots	1
 		ammo	1
 		rof		1
-		time	12
-		spldmg	"70 20"
-		splrad	2
+		time	8
+		spldmg	"210 60"
+		splrad	3
 		dmgtype "fire"
 	}
 	secondary
@@ -420,14 +420,14 @@ item alienincgrenade
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"7 7"
+		spread	"2 6"
 		range	12
 		shots	1
 		ammo	1
 		rof		1
-		time	12
-		spldmg	"70 20"
-		splrad	2
+		time	8
+		spldmg	"210 60"
+		splrad	3
 		dmgtype "fire"
 	}
 }
@@ -445,7 +445,7 @@ item plasmagrenade
 	shape		"0 0 1 1"
 	center		"0 0 -0.25"
 	scale		1.5
-	price		650
+	price		550
 	buytype		2
 	thrown		true
 
@@ -463,14 +463,14 @@ item plasmagrenade
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"7 7"
+		spread	"2 6"
 		range	12
 		shots	1
 		ammo	1
 		rof		1
-		time	12
-		spldmg	"140 20"
-		splrad	5
+		time	8
+		spldmg	"420 60"
+		splrad	7
 		dmgtype "plasma"
 	}
 	secondary
@@ -487,14 +487,14 @@ item plasmagrenade
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"7 7"
+		spread	"2 6"
 		range	12
 		shots	1
 		ammo	1
 		rof		1
-		time	12
-		spldmg	"140 20"
-		splrad	5
+		time	8
+		spldmg	"420 60"
+		splrad	7
 		dmgtype "plasma"
 	}
 }

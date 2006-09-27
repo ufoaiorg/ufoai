@@ -1213,4 +1213,7 @@ typedef enum {
 	ACTOR_SIZE_UGV
 } actorSizeEnum_t;
 
+/* defines to enable experimental game balance patches by LordHavoc go here */
+#define LORDHAVOC_ECONOMY
+
 #endif /* GAME_Q_SHARED_H */

@@ -2009,6 +2009,10 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 	/* Get 2 gaussian distributed random values */
 	gaussrand(&gauss1, &gauss2);
 
+	/* Make most of the shots be within the spread cone */
+	gauss1 *= 0.5;
+	gauss2 *= 0.5;
+
 	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
 	if ((ent->state & STATE_CROUCHED) && fd->crouch) {
 		angles[PITCH] += gauss1 * fd->spread[0] * fd->crouch * acc;

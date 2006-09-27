@@ -20,10 +20,14 @@ equipment campaign_player
 	flamer_ammo		6
 	rpg				1
 	rpg_ammo		12
+	grenl			1
+	grenl_ammo		10
 	fraggrenade		12
+	smokegrenade	2
 	knife			2
 	light			0
-	smokegrenade	2
+	medikit			2
+	irgoggles		1
 	flashbang	5
 }
 
@@ -60,7 +64,7 @@ equipment campaign_market
 	smokegrenade			10
 	knife					20
 	irgoggles				2
-	medikit					2
+	medikit					4
 	stunrod					2
 	stungrenade				10
 	flashbang			10

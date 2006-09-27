@@ -12,9 +12,9 @@ item tachyonpistol
 	shape		"0 0 2 2"
 	center		"1.2 0 1.5"
 	scale		1.18
-	ammo		24
-	reload		4
-	price		3800
+	ammo		16
+	reload		14
+	price		38000
 	buytype		1
 }
 
@@ -27,7 +27,7 @@ item tachyonpistol_ammo
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		0.97
-	price		250
+	price		2500
 	buytype		1
 
 	primary
@@ -39,12 +39,12 @@ item tachyonpistol_ammo
 		hitbody	tachyonImpact
 		firesnd	weapons/tachyonpistol.wav
 		speed	0
-		spread	"4 4"
+		spread	"0 1"
 		crouch	0.9
-		range	15
+		range	30
 		shots	1
 		ammo	1
-		time	8
+		time	4
 		damage	"45 5"
 		dmgtype tachyon
 	}
@@ -57,13 +57,13 @@ item tachyonpistol_ammo
 		hitbody	tachyonImpact
 		firesnd	weapons/tachyonpistol.wav
 		speed	0
-		spread	"4 4"
+		spread	"1 2"
 		crouch	0.9
-		range	15
+		range	30
 		shots	4
 		ammo	4
 		rof		5
-		time	15
+		time	7
 		damage	"28 3"
 		dmgtype tachyon
 	}
@@ -84,9 +84,9 @@ item tachyonrifle
 	shape		"0 0 5 2"
 	center		"11 0 0.3"
 	scale		1.07
-	ammo		34
-	reload		8
-	price		4400
+	ammo		8
+	reload		16
+	price		44000
 	buytype		2
 }
 
@@ -99,7 +99,7 @@ item tachyonrifle_ammo
 	shape		"0 0 2 1"
 	center		"0 0 -0.2"
 	scale		1.0
-	price		300
+	price		3000
 	buytype		2
 
 	primary
@@ -111,12 +111,12 @@ item tachyonrifle_ammo
 		hitbody tachyonBigImpact
 		firesnd	weapons/tachyon_rifle_explosive.wav
 		speed	0
-		spread	"4 4"
+		spread	"0 1"
 		crouch	0.8
-		range	23
+		range	100
 		shots	1
-		ammo	10
-		time	20
+		ammo	4
+		time	12
 		damage	"100 20"
 		spldmg	"100 20"
 		splrad	3
@@ -125,19 +125,19 @@ item tachyonrifle_ammo
 	secondary
 	{
 		name	"_Rapid Shots"
-		skill	assault
+		skill	heavy
 		projtl	tachyonMiniBeam
 		impact	tachyonImpact
 		hitbody tachyonImpact
 		firesnd	weapons/tachyonbig.wav
 		speed	0
-		spread	"3 3"
+		spread	"1 2"
 		crouch	0.6
-		range	27
-		shots	4
-		ammo	4
+		range	50
+		shots	5
+		ammo	1
 		rof		5
-		time	17
+		time	9
 		damage	"38 5"
 		dmgtype tachyon
 	}
@@ -159,8 +159,8 @@ item tachyonsniper
 	center		"9 0 1.8"
 	scale		1.1
 	ammo		12
-	reload		8
-	price		5900
+	reload		14
+	price		59000
 	buytype		0
 }
 
@@ -173,7 +173,7 @@ item tachyonsniper_ammo
 	shape		"0 0 1 1"
 	center		"0 0 -0.3"
 	scale		1.1
-	price		350
+	price		3500
 	buytype		0
 
 	primary
@@ -185,12 +185,12 @@ item tachyonsniper_ammo
 		hitbody tachyonImpact
 		firesnd	weapons/tachyonsniper.wav
 		speed	0
-		spread	"2.5 2.5"
+		spread	"0 0.2"
 		crouch	0.6
-		range	35
+		range	150
 		shots	1
-		ammo	1
-		time	14
+		ammo	2
+		time	12
 		damage	"95 10"
 		dmgtype tachyon
 	}
@@ -203,13 +203,13 @@ item tachyonsniper_ammo
 		hitbody tachyonImpact
 		firesnd	weapons/tachyonsniper.wav
 		speed	0
-		spread	"1.5 1.5"
+		spread	"1 2"
 		crouch	0.8
-		range	35
+		range	90
 		shots	4
 		ammo	4
 		rof		5
-		time	25
+		time	12
 		damage	"40 4"
 		dmgtype tachyon
 	}

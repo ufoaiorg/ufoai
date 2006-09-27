@@ -13,8 +13,8 @@ item laserpistol
 	center		"2.5 0 1.2"
 	scale		1.7
 	ammo		12
-	reload		6
-	price		2200
+	reload		12
+	price		5400
 	buytype		1
 }
 
@@ -27,7 +27,7 @@ item laserpistol_ammo
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.6
-	price		100
+	price		130
 	buytype		1
 
 	primary
@@ -39,12 +39,12 @@ item laserpistol_ammo
 		hitbody	laserImpact
 		firesnd	weapons/laser.wav
 		speed	0
-		spread	"2.5 2.5"
+		spread	"0 1"
 		crouch	0.8
-		range	20
+		range	64
 		shots	1
 		ammo	1
-		time	9
+		time	5
 		damage	"32 6"
 		dmgtype laser
 	}
@@ -57,14 +57,14 @@ item laserpistol_ammo
 		hitbody	laserImpact
 		firesnd	weapons/laser.wav
 		speed	0
-		spread	"3.5 5.5"
+		spread	"0 2"
 		crouch	1.0
-		range	18
+		range	56
 		shots	4
 		ammo	4
 		rof		6
-		time	17
-		damage	"24 4"
+		time	8
+		damage	"28 5"
 		dmgtype laser
 	}
 }
@@ -85,8 +85,8 @@ item laserrifle
 	center		"4.5 0 1.5"
 	scale		1.26
 	ammo		16
-	reload		8
-	price		3200
+	reload		12
+	price		9570
 	buytype		0
 }
 
@@ -99,7 +99,7 @@ item laserrifle_ammo
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.8
-	price		130
+	price		210
 	buytype		0
 
 	primary
@@ -111,12 +111,12 @@ item laserrifle_ammo
 		hitbody	laserImpact
 		firesnd	weapons/laser.wav
 		speed	0
-		spread	"1.5 1.5"
+		spread	"0 0.2"
 		crouch	0.7
-		range	35
+		range	84
 		shots	1
 		ammo	1
-		time	11
+		time	10
 		damage	"42 6"
 		dmgtype laser
 	}
@@ -129,13 +129,13 @@ item laserrifle_ammo
 		hitbody	laserImpact
 		firesnd	weapons/laser.wav
 		speed	0
-		spread	"2.5 3.5"
+		spread	"0 2"
 		crouch	1.0
-		range	30
+		range	68
 		shots	4
 		ammo	4
 		rof		6
-		time	22
+		time	14
 		damage	"34 6"
 		dmgtype laser
 	}
@@ -157,8 +157,8 @@ item heavylaser
 	center		"8.5 0 1.5"
 	scale		1.15
 	ammo		6
-	reload		12
-	price		4400
+	reload		16
+	price		22540
 	buytype		0
 }
 
@@ -172,24 +172,25 @@ item heavylaser_ammo
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.8
-	price		170
+	price		700
 	buytype		0
 
 	primary
 	{
-		name	"_Single Pulse"
+		name	"_Rapid Pulses"
 		skill	heavy
 		projtl	laserPulse
 		impact	laserImpact
 		hitbody	laserImpact
 		firesnd	weapons/laser.wav
 		speed	0
-		spread	"2 2"
+		spread	"0 2"
 		crouch	0.7
-		range	35
-		shots	1
+		range	90
+		shots	5
 		ammo	1
-		time	13
+		rof		10
+		time	10
 		damage	"72 6"
 		dmgtype laser
 	}
@@ -202,13 +203,13 @@ item heavylaser_ammo
 		hitbody	laserImpact
 		firesnd	weapons/heavy_laser.wav
 		speed	0
-		spread	"3.5 3.5"
+		spread	"0 0.2"
 		crouch	0.7
-		range	45
+		range	250
 		shots	1
-		ammo	5
-		time	31
-		damage	"196 6"
+		ammo	1
+		time	14
+		damage	"245 70"
 		dmgtype laser
 	}
 }

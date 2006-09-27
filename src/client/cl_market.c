@@ -33,10 +33,17 @@ static int buyListLength;
 static int buyCategory;
 
 /* 20060921 LordHavoc: added market buy/sell factors */
+#ifdef LORDHAVOC_ECONOMY
 static int MARKET_BUY_FACTOR = 1;
 static int MARKET_BUY_DIVISOR = 1;
 static int MARKET_SELL_FACTOR = 1;
 static int MARKET_SELL_DIVISOR = 1;
+#else
+static int MARKET_BUY_FACTOR = 1;
+static int MARKET_BUY_DIVISOR = 1;
+static int MARKET_SELL_FACTOR = 1;
+static int MARKET_SELL_DIVISOR = 1;
+#endif
 
 
 /**
