@@ -2688,36 +2688,159 @@ TARGETING FUNCTIONS
 ==============================================================================
 */
 
+
+/**
+ * Grenade Aiming Maths
+ * --------------------------------------------------------------
+ *
+ * There are two possibilities when aiming: either we can reach the target at
+ * maximum speed or we can't. If we can reach it would would like to reach it with
+ * as flat a trajectory as possible. To do this we calculate the angle to hit the
+ * target with the projectile traveling at the maximum allowed velocity.
+ *
+ * However, if we can't reach it then we'd like the aiming curve to use the smallest
+ * possible velocity that would have reached the target.
+ *
+ * let d  = horizontal distance to target
+ *     h  = vertical distance to target
+ *     g  = gravity
+ *     v  = launch velocity
+ *     vx = horizontal component of launch velocity
+ *     vy = vertical component of launch velocity
+ *     alpha = launch angle
+ *     t  = time
+ *
+ * Then using the laws of linear motion and some trig
+ *
+ * d = vx * t
+ * h = vy * t - 1/2 * g * t^2
+ * vx = v * cos(alpha)
+ * vy = v * sin(alpha)
+ *
+ * and some trig identities
+ *
+ * 2*cos^2(x) = 1 + cos(2*x)
+ * 2*sin(x)*cos(x) = sin(2*x)
+ * a*cos(x) + b*sin(x) = sqrt(a^2 + b^2) * cos(x - atan2(b,a))
+ *
+ * it is possible to show that:
+ *
+ * alpha = 0.5 * (atan2(d, -h) - theta)
+ *
+ * where
+ *               /    2       2  \
+ *              |    v h + g d    |
+ *              |  -------------- |
+ * theta = acos |        ________ |
+ *              |   2   / 2    2  |
+ *               \ v  \/ h  + d  /
+ *
+ *
+ * Thus we can calculate the desired aiming angle for any given velocity.
+ *
+ * With some more rearrangement we can show:
+ *
+ *               ________________________
+ *              /           2
+ *             /         g d
+ *  v =       / ------------------------
+ *           /   ________
+ *          /   / 2    2
+ *        \/  \/ h  + d   cos(theta) - h
+ *
+ * Which we can also write as:
+ *                _________________
+ *               /        a
+ * f(theta) =   / ----------------
+ *            \/  b cos(theta) - c
+ *
+ * where
+ *  a = g*d^2
+ *  b = sqrt(h*h+d*d)
+ *  c = h
+ *
+ * We can imagine a graph of launch velocity versus launch angle. When the angle is near 0 degrees (i.e. totally flat)
+ * more and more velocity is needed. Similarly as the angle gets closer and closer to 90 degrees.
+ *
+ * Somewhere in the middle is the minimum velocity that we could possibly hit the target with and the 'optimum' angle
+ * to fire at. Note that when h = 0 the optimum angle is 45 degrees. We want to find the minimum velocity so we need
+ * to take the derivative of f (which I suggest doing an algebra system!).
+ *
+ * f'(theta) =  a * b * sin(theta) / junk
+ *
+ * the `junk` is unimportant because we're just going to set f'(theta) = 0 and multiply it out anyway.
+ *
+ * 0 = a * b * sin(theta)
+ *
+ * Neither a nor b can be 0 as long as d does not equal 0 (which is a degenerate case). Thus if we solve for theta
+ * we get 'sin(theta) = 0', thus 'theta = 0'. If we recall that:
+ *
+ *  alpha = 0.5 * (atan2(d, -h) - theta)
+ *
+ * then we get our 'optimum' firing angle alpha as
+ *
+ * alpha = 1/2 * atan2(d, -h)
+ *
+ * and if we subsitute back into our equation for v and we get
+ *
+ *               _______________
+ *              /        2
+ *             /      g d
+ *  vmin =    / ---------------
+ *           /   ________
+ *          /   / 2    2
+ *        \/  \/ h  + d   - h
+ *
+ * as the minimum launch velocity for that angle.
+ */
+
 /**
  * @brief
  */
-float Com_GrenadeTarget(vec3_t from, vec3_t at, vec3_t v0)
+float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, vec3_t v0)
 {
 	vec3_t delta;
-	float h, d, vx, alpha;
+	float d, h, g, v, alpha, vx, vy;
+	float k, gd2, len;
 
-	/* get useful data */
+	/* calculate target distance and height */
 	h = at[2] - from[2];
 	VectorSubtract(at, from, delta);
 	delta[2] = 0;
 	d = VectorLength(delta);
 
-	/* get angle */
-	alpha = GRENADE_MINALPHA + GRENADE_ALPHAFAC * sqrt((abs(h) + 20.) / d);
-	if (alpha < GRENADE_MINALPHA || h < -20.1)
-		alpha = GRENADE_MINALPHA;
-	if (alpha > GRENADE_MAXALPHA)
-		alpha = GRENADE_MAXALPHA;
+	/* check that it's not degenerate */
+	if (d == 0){
+		return 0;
+	}
 
-	/* calc starting speed */
-	if (d * tan(alpha) * 0.8 < h)
-		return 0.0;
-	vx = d * sqrt(GRAVITY / (2 * (d * tan(alpha) - h)));
+	/* firstly try to get as flat a trajectory as possible (fire at max velocity) */
+	g = GRAVITY; v = speed;
+	gd2 = g*d*d;
+	len = sqrt(h*h + d*d);
+	k = (v*v*h + gd2) / (v*v*len);
 
+	/* check whether the shot's possible */
+	if (k >= -1 && k <= 1){
+		/* it is possible, so calculate the angle */
+		alpha = 0.5 * (atan2(d, -h) - acos(k));
+	}else{
+		/* it's not possible, so calculate the minimum possible velocity that would make it possible */
+		alpha = 0.5 * atan2(d, -h);
+		v = sqrt(gd2 / (len - h));
+	}
+
+	/* calculate velocities */
+	vx = v * cos(alpha);
+	vy = v * sin(alpha);
 	VectorNormalize(delta);
 	VectorScale(delta, vx, v0);
-	v0[2] = vx * tan(alpha);
+	v0[2] = vy;
 
-	/* return time needed */
+	/* prevent any rounding errors */
+	VectorNormalize(v0);
+	VectorScale(v0, v - DIST_EPSILON, v0);
+
+	/* return time */
 	return d / vx;
 }

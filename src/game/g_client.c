@@ -1825,7 +1825,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 	target[2] -= 9;
 
 	/* calculate parabola */
-	dt = gi.GrenadeTarget(last, target, startV);
+	dt = gi.GrenadeTarget(last, target, fd->range, startV);
 	if (!dt) {
 		if (!mock)
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - impossible throw!\n"));

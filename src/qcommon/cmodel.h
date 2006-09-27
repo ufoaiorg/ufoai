@@ -77,6 +77,6 @@ void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec);
 ==========================================================
 */
 
-float Com_GrenadeTarget(vec3_t from, vec3_t at, vec3_t v0);
+float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, vec3_t v0);
 
 
