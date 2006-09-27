@@ -1108,7 +1108,7 @@ void CL_ParseInput(void)
 		if (!scr_vrect.width || !scr_vrect.height)
 			return;
 
-		if (cl.cmode < M_PEND_MOVE)
+		if (cl.cmode <= M_PEND_MOVE)
 			CL_ActorMouseTrace();
 		else
 			mouseSpace = MS_WORLD;

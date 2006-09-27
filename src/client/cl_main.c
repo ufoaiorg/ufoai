@@ -88,6 +88,7 @@ cvar_t *cl_initial_equipment;
 cvar_t *cl_start_buildings;
 
 cvar_t *confirm_actions;
+cvar_t *confirm_movement;
 
 cvar_t *cl_precachemenus;
 
@@ -1222,6 +1223,7 @@ void CL_InitLocal(void)
 	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, NULL);
 
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, NULL);
+	confirm_movement = Cvar_Get("confirm_movement", "0", CVAR_ARCHIVE, NULL);
 
 	Cvar_Set("music", "");
 
