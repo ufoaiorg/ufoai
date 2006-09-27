@@ -1247,5 +1247,6 @@ menu options_game
 		cmd "mn_translate cl_show_tooltips mn_show_tooltips 0:No,1:Yes;"
 		cmd "mn_translate cl_show_cursor_tooltips mn_show_cursor_tooltips 0:No,1:Yes;"
 		cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes;"
+		cmd "mn_translate confirm_movement mn_confirm_movement 0:No,1:Yes;"
 	}
 }
