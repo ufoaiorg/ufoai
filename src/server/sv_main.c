@@ -634,6 +634,7 @@ void SV_RunGameFrame(void)
 
 /**
  * @brief
+ * @sa Qcommon_Frame
  */
 void SV_Frame(int msec)
 {
