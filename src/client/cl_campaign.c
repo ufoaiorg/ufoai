@@ -3508,6 +3508,7 @@ static void CL_GameNew(void)
 
 	/* base setup */
 	gd.numBases = 0;
+	gd.numAircraft = 0;
 	B_NewBases();
 	PR_ProductionInit();
 

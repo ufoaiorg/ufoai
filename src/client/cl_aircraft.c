@@ -352,8 +352,8 @@ void CL_NewAircraft(base_t *base, char *name)
 		/* we do this because every aircraft can have its own parameters */
 		memcpy(&base->aircraft[base->numAircraftInBase], aircraft, sizeof(aircraft_t));
 		/* now lets use the aircraft array for the base to set some parameters */
-		aircraft->idx = gd.numAircraft++;
 		aircraft = &base->aircraft[base->numAircraftInBase];
+		aircraft->idx = gd.numAircraft++;
 		aircraft->homebase = base;
 		/* for saving and loading a base */
 		aircraft->idxBase = base->idx;
