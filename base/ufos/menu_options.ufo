@@ -962,7 +962,7 @@ menu options_game
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		tooltip	"_No confirmation before walking and shooting"
+		tooltip	"_No confirmation before walking"
 		click
 		{
 			cmd "mn_modify confirm_movement -1 0 1;"
@@ -976,7 +976,7 @@ menu options_game
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		tooltip	"_Confirmation needed before walking and shooting"
+		tooltip	"_Confirmation needed before walking"
 		click
 		{
 			cmd "mn_modify confirm_movement +1 0 1;"
