@@ -57,7 +57,7 @@ sequence credits
 	}
 	2dobj mattn_name
 	{
-		text	"Martin Gerhardy (Mattn)"
+		text	"Martin Gerhardy (Mattn/tlh2000)"
 		pos		"974 75"		align	ur
 		color	"1 1 1 0"		fade	"0 0 0 1"
 	}
@@ -119,6 +119,23 @@ sequence credits
 
 	model hoehrer_body { anim stand0 speed "0 0 0" }
 	wait 1.8
+
+	model winter_body
+	{
+		model	models/soldiers/male/body.md2
+		anim	walk0
+		origin	"0 -270 0"
+		speed	"0 60 0"
+		angles	"0 90 0"
+	}
+	model winter_head
+	{
+		model	models/soldiers/male/head03a.md2
+		parent	winter_body
+		tag		tag_head
+	}
+	wait 2.0
+
 	2dobj hoehrer_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj hoehrer_name { fade "0 0 0 -1" speed "0 100" }
 
@@ -126,6 +143,7 @@ sequence credits
 	model hoehrer_head { omega "20 30 0" }
 	wait 1.5
 
+	model winter_head { omega "-20 -30 0" }
 	model hoehrer_head { omega "0 0 0" }
 	wait 1.0
 
@@ -134,6 +152,326 @@ sequence credits
 	rem hoehrer_text
 	rem hoehrer_name
 
+	2dobj winter_text
+	{
+		text	"_Storywriter"
+		pos		"50 50"		align	ul
+		color	"0 1 0 0"	fade	"0 0 0 1"
+	}
+	2dobj winter_name
+	{
+		text	"_Ryan A. Span. (Winter)"
+		pos		"50 75"		align	ul
+		color	"1 1 1 0"	fade	"0 0 0 1"
+
+	}
+	model winter_body { anim stand_still speed "0 0 0" }
+	model winter_head { omega "0 0 0" }
+	wait 0.2
+
+	model winter_body { anim stand0 speed "0 0 0" }
+	wait 1.8
+
+	model btaxis_body
+	{
+		model	models/soldiers/male/body.md2
+		anim	walk0
+		origin	"0 -270 0"
+		speed	"0 60 0"
+		angles	"0 90 0"
+	}
+	model btaxis_head
+	{
+		model	models/soldiers/male/head03a.md2
+		parent	btaxis_body
+		tag		tag_head
+	}
+	wait 2.0
+
+	2dobj winter_text { fade "0 0 0 -1" speed "0 60" }
+	2dobj winter_name { fade "0 0 0 -1" speed "0 100" }
+
+	model winter_body { anim walk2 speed "0 50 0" }
+	model winter_head { omega "20 30 0" }
+	wait 1.5
+
+	model btaxis_head { omega "-20 -30 0" }
+	model winter_head { omega "0 0 0" }
+	wait 1.0
+
+	rem winter_body
+	rem winter_head
+	rem winter_text
+	rem winter_name
+
+	2dobj btaxis_text
+	{
+		text	"_Co-Storywriter"
+		pos		"50 50"		align	ul
+		color	"0 1 0 0"	fade	"0 0 0 1"
+	}
+	2dobj btaxis_name
+	{
+		text	"_Bas Fournier (BTAxis)"
+		pos		"50 75"		align	ul
+		color	"1 1 1 0"	fade	"0 0 0 1"
+
+	}
+	model btaxis_body { anim stand_still speed "0 0 0" }
+	model btaxis_head { omega "0 0 0" }
+	wait 0.2
+
+	model btaxis_body { anim stand0 speed "0 0 0" }
+	wait 1.8
+
+	model lordhavoc_body
+	{
+		model	models/soldiers/male/body.md2
+		anim	walk0
+		origin	"0 -270 0"
+		speed	"0 60 0"
+		angles	"0 90 0"
+	}
+	model lordhavoc_head
+	{
+		model	models/soldiers/male/head03a.md2
+		parent	lordhavoc_body
+		tag		tag_head
+	}
+	wait 2.0
+
+	2dobj btaxis_text { fade "0 0 0 -1" speed "0 60" }
+	2dobj btaxis_name { fade "0 0 0 -1" speed "0 100" }
+
+	model btaxis_body { anim walk2 speed "0 50 0" }
+	model btaxis_head { omega "20 30 0" }
+	wait 1.5
+
+	model lordhavoc_head { omega "-20 -30 0" }
+	model btaxis_head { omega "0 0 0" }
+	wait 1.0
+
+	rem btaxis_body
+	rem btaxis_head
+	rem btaxis_text
+	rem btaxis_name
+
+	2dobj lordhavoc_text
+	{
+		text	"_Technology Consultant"
+		pos		"50 50"		align	ul
+		color	"0 1 0 0"	fade	"0 0 0 1"
+	}
+	2dobj lordhavoc_name
+	{
+		text	"_Forest Hale (LordHavoc)"
+		pos		"50 75"		align	ul
+		color	"1 1 1 0"	fade	"0 0 0 1"
+
+	}
+	model lordhavoc_body { anim stand_still speed "0 0 0" }
+	model lordhavoc_head { omega "0 0 0" }
+	wait 0.2
+
+	model lordhavoc_body { anim stand0 speed "0 0 0" }
+	wait 1.8
+
+	model sheldonh_body
+	{
+		model	models/soldiers/male/body.md2
+		anim	walk0
+		origin	"0 -270 0"
+		speed	"0 60 0"
+		angles	"0 90 0"
+	}
+	model sheldonh_head
+	{
+		model	models/soldiers/male/head03a.md2
+		parent	sheldonh_body
+		tag		tag_head
+	}
+	wait 2.0
+
+	2dobj lordhavoc_text { fade "0 0 0 -1" speed "0 60" }
+	2dobj lordhavoc_name { fade "0 0 0 -1" speed "0 100" }
+
+	model lordhavoc_body { anim walk2 speed "0 50 0" }
+	model lordhavoc_head { omega "20 30 0" }
+	wait 1.5
+
+	model sheldonh_head { omega "-20 -30 0" }
+	model lordhavoc_head { omega "0 0 0" }
+	wait 1.0
+
+	rem lordhavoc_body
+	rem lordhavoc_head
+	rem lordhavoc_text
+	rem lordhavoc_name
+
+	2dobj sheldonh_text
+	{
+		text	"_Contributing Programmer"
+		pos		"50 50"		align	ul
+		color	"0 1 0 0"	fade	"0 0 0 1"
+	}
+	2dobj sheldonh_name
+	{
+		text	"_Sheldon Hearn (sheldonh)"
+		pos		"50 75"		align	ul
+		color	"1 1 1 0"	fade	"0 0 0 1"
+
+	}
+	model sheldonh_body { anim stand_still speed "0 0 0" }
+	model sheldonh_head { omega "0 0 0" }
+	wait 0.2
+
+	model sheldonh_body { anim stand0 speed "0 0 0" }
+	wait 1.8
+
+	model ubequitz_body
+	{
+		model	models/soldiers/male/body.md2
+		anim	walk0
+		origin	"0 -270 0"
+		speed	"0 60 0"
+		angles	"0 90 0"
+	}
+	model ubequitz_head
+	{
+		model	models/soldiers/male/head03a.md2
+		parent	ubequitz_body
+		tag		tag_head
+	}
+	wait 2.0
+
+	2dobj sheldonh_text { fade "0 0 0 -1" speed "0 60" }
+	2dobj sheldonh_name { fade "0 0 0 -1" speed "0 100" }
+
+	model sheldonh_body { anim walk2 speed "0 50 0" }
+	model sheldonh_head { omega "20 30 0" }
+	wait 1.5
+
+	model ubequitz_head { omega "-20 -30 0" }
+	model sheldonh_head { omega "0 0 0" }
+	wait 1.0
+
+	rem sheldonh_body
+	rem sheldonh_head
+	rem sheldonh_text
+	rem sheldonh_name
+
+	2dobj ubequitz_text
+	{
+		text	"_Contributing Programmer"
+		pos		"50 50"		align	ul
+		color	"0 1 0 0"	fade	"0 0 0 1"
+	}
+	2dobj ubequitz_name
+	{
+		text	"_Ivor Blockley (ubequitz/cassiterite)"
+		pos		"50 75"		align	ul
+		color	"1 1 1 0"	fade	"0 0 0 1"
+
+	}
+	model ubequitz_body { anim stand_still speed "0 0 0" }
+	model ubequitz_head { omega "0 0 0" }
+	wait 0.2
+
+	model ubequitz_body { anim stand0 speed "0 0 0" }
+	wait 1.8
+
+	model tomshackell_body
+	{
+		model	models/soldiers/male/body.md2
+		anim	walk0
+		origin	"0 -270 0"
+		speed	"0 60 0"
+		angles	"0 90 0"
+	}
+	model tomshackell_head
+	{
+		model	models/soldiers/male/head03a.md2
+		parent	tomshackell_body
+		tag		tag_head
+	}
+	wait 2.0
+
+	2dobj ubequitz_text { fade "0 0 0 -1" speed "0 60" }
+	2dobj ubequitz_name { fade "0 0 0 -1" speed "0 100" }
+
+	model ubequitz_body { anim walk2 speed "0 50 0" }
+	model ubequitz_head { omega "20 30 0" }
+	wait 1.5
+
+	model tomshackell_head { omega "-20 -30 0" }
+	model ubequitz_head { omega "0 0 0" }
+	wait 1.0
+
+	rem ubequitz_body
+	rem ubequitz_head
+	rem ubequitz_text
+	rem ubequitz_name
+
+	// to add additional credits, duplicate this section (including the 4 rems
+	// at the end) and place it above this comment, then search/replace the
+	// relevant names and uncomment the new person's name ("nicknamegoeshere")
+	// in that copy.
+	2dobj tomshackell_text
+	{
+		text	"_Contributing Programmer"
+		pos		"50 50"		align	ul
+		color	"0 1 0 0"	fade	"0 0 0 1"
+	}
+	2dobj tomshackell_name
+	{
+		text	"_Tom Shackell (archmoo/tomshackell)"
+		pos		"50 75"		align	ul
+		color	"1 1 1 0"	fade	"0 0 0 1"
+
+	}
+	model tomshackell_body { anim stand_still speed "0 0 0" }
+	model tomshackell_head { omega "0 0 0" }
+	wait 0.2
+
+	model tomshackell_body { anim stand0 speed "0 0 0" }
+	wait 1.8
+
+	//model nicknamegoeshere_body
+	//{
+	//	model	models/soldiers/male/body.md2
+	//	anim	walk0
+	//	origin	"0 -270 0"
+	//	speed	"0 60 0"
+	//	angles	"0 90 0"
+	//}
+	//model nicknamegoeshere_head
+	//{
+	//	model	models/soldiers/male/head03a.md2
+	//	parent	nicknamegoeshere_body
+	//	tag		tag_head
+	//}
+	//wait 2.0
+
+
+	2dobj tomshackell_text { fade "0 0 0 -1" speed "0 60" }
+	2dobj tomshackell_name { fade "0 0 0 -1" speed "0 100" }
+
+	model tomshackell_body { anim walk2 speed "0 50 0" }
+	model tomshackell_head { omega "20 30 0" }
+	wait 1.5
+
+	//model nicknamegoeshere_head { omega "-20 -30 0" }
+	model tomshackell_head { omega "0 0 0" }
+	wait 1.0
+
+	rem tomshackell_body
+	rem tomshackell_head
+	rem tomshackell_text
+	rem tomshackell_name
+
+
+
+	// now begin the original dev team credits
 	2dobj community_driven
 	{
 		text	"_This game is now community driven"
