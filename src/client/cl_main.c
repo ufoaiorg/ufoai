@@ -1498,17 +1498,15 @@ void CL_CvarCheck(void)
 }
 
 
+#define NUM_DELTA_FRAMES	20
 /**
  * @brief
+ * @sa Qcommon_Frame
  */
-#define NUM_DELTA_FRAMES	20
 void CL_Frame(int msec)
 {
-	static int extratime;
-	static int lasttimecalled;
-
-	if (dedicated->value)
-		return;
+	static int extratime = 0;
+	static int lasttimecalled = 0;
 
 	if (sv_maxclients->modified) {
 		if ((int) sv_maxclients->value > 1) {
