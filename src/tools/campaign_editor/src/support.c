@@ -37,6 +37,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "support.h"
 
+/**
+ * @brief
+ * @param[in] widget
+ * @param[in] widget_name
+ */
 GtkWidget* lookup_widget (GtkWidget *widget, const gchar *widget_name)
 {
 	GtkWidget *parent, *found_widget;
@@ -61,13 +66,21 @@ GtkWidget* lookup_widget (GtkWidget *widget, const gchar *widget_name)
 
 static GList *pixmaps_directories = NULL;
 
-/* Use this function to set the directory containing installed pixmaps. */
+/**
+ * @brief
+ * @param[in] directory
+ * @note Use this function to set the directory containing installed pixmaps.
+ */
 void add_pixmap_directory (const gchar *directory)
 {
 	pixmaps_directories = g_list_prepend (pixmaps_directories, g_strdup (directory));
 }
 
-/* This is an internally used function to find pixmap files. */
+/**
+ * @brief
+ * @param[in] filename
+ * @note This is an internally used function to find pixmap files.
+ */
 static gchar* find_pixmap_file (const gchar *filename)
 {
 	GList *elem;
@@ -85,7 +98,12 @@ static gchar* find_pixmap_file (const gchar *filename)
 	return NULL;
 }
 
-/* This is an internally used function to create pixmaps. */
+/**
+ * @brief
+ * @param[in] widget
+ * @param[in] filename
+ * @note This is an internally used function to create pixmaps.
+ */
 GtkWidget* create_pixmap (GtkWidget *widget, const gchar *filename)
 {
 	gchar *pathname = NULL;
@@ -106,7 +124,11 @@ GtkWidget* create_pixmap (GtkWidget *widget, const gchar *filename)
 	return pixmap;
 }
 
-/* This is an internally used function to create pixmaps. */
+/**
+ * @brief
+ * @param[in] filename
+ * @note This is an internally used function to create pixmaps.
+ */
 GdkPixbuf* create_pixbuf (const gchar *filename)
 {
 	gchar *pathname = NULL;
@@ -133,7 +155,13 @@ GdkPixbuf* create_pixbuf (const gchar *filename)
 	return pixbuf;
 }
 
-/* This is used to set ATK action descriptions. */
+/**
+ * @brief
+ * @param[in] action
+ * @param[in] action_name
+ * @param[in] description
+ * @note This is used to set ATK action descriptions.
+ */
 void glade_set_atk_action_description (AtkAction *action, const gchar *action_name, const gchar *description)
 {
 	gint n_actions, i;
@@ -145,6 +173,10 @@ void glade_set_atk_action_description (AtkAction *action, const gchar *action_na
 	}
 }
 
+/**
+ * @brief
+ * @param[in] filename
+ */
 int file_exists (char *filename)
 {
 #ifdef _WIN32
@@ -154,6 +186,11 @@ int file_exists (char *filename)
 #endif
 }
 
+/**
+ * @brief
+ * @param[in] filename
+ * @param[in] fileext
+ */
 int file_ext (char *filename, char *fileext)
 {
 	if ( strstr(filename, fileext))
@@ -162,6 +199,11 @@ int file_ext (char *filename, char *fileext)
 	return 0;
 }
 
+/**
+ * @brief
+ * @param[in] in
+ * @param[in] out
+ */
 void file_strip_ext (char *in, char *out)
 {
 	while (*in && *in != '.')
@@ -169,6 +211,10 @@ void file_strip_ext (char *in, char *out)
 	*out = 0;
 }
 
+/**
+ * @brief
+ * @param[in] format
+ */
 char *va(char *format, ...)
 {
 	va_list argptr;
@@ -179,6 +225,10 @@ char *va(char *format, ...)
 	return string;
 }
 
+/**
+ * @brief
+ * @param[in] value
+ */
 char *bool_translate( int value )
 {
 	if ( value )

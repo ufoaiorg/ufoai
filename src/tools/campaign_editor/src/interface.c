@@ -49,6 +49,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GLADE_HOOKUP_OBJECT_NO_REF(component,widget,name) \
   g_object_set_data (G_OBJECT (component), name, widget)
 
+/**
+ * @brief
+ */
 GtkWidget* create_campaign_editor (void)
 {
 	GtkWidget *editor_vbox;
@@ -185,6 +188,9 @@ GtkWidget* create_campaign_editor (void)
 	return campaign_editor;
 }
 
+/**
+ * @brief
+ */
 GtkWidget* create_mission_dialog (void)
 {
 	GtkWidget *mission_vbox;
@@ -223,6 +229,8 @@ GtkWidget* create_mission_dialog (void)
 	GtkWidget *commands_entry;
 	GtkWidget *alienteam_entry;
 	GtkWidget *civ_team_entry;
+	GtkWidget *nation_label;
+	GtkWidget *nation_entry;
 	GtkWidget *onwin_entry;
 	GtkWidget *onlose_entry;
 	GtkWidget *alien_equip_entry;
@@ -530,7 +538,7 @@ GtkWidget* create_mission_dialog (void)
 	gtk_widget_show (other_frame);
 	gtk_box_pack_start (GTK_BOX (mission_variables_vbox), other_frame, TRUE, TRUE, 0);
 
-	other_table = gtk_table_new (6, 2, FALSE);
+	other_table = gtk_table_new (7, 2, FALSE);
 	gtk_widget_show (other_table);
 	gtk_container_add (GTK_CONTAINER (other_frame), other_table);
 
@@ -555,23 +563,30 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (alienequip_label), 0, 0.5);
 
+	nation_label = gtk_label_new (Q_("Nation"));
+	gtk_widget_show (nation_label);
+	gtk_table_attach (GTK_TABLE (other_table), nation_label, 0, 1, 3, 4,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	gtk_misc_set_alignment (GTK_MISC (nation_label), 0, 0.5);
+
 	win_label = gtk_label_new (Q_("Credits on win"));
 	gtk_widget_show (win_label);
-	gtk_table_attach (GTK_TABLE (other_table), win_label, 0, 1, 3, 4,
+	gtk_table_attach (GTK_TABLE (other_table), win_label, 0, 1, 4, 5,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (win_label), 0, 0.5);
 
 	credits_civ_label = gtk_label_new (Q_("Credits for rescued civilians"));
 	gtk_widget_show (credits_civ_label);
-	gtk_table_attach (GTK_TABLE (other_table), credits_civ_label, 0, 1, 4, 5,
+	gtk_table_attach (GTK_TABLE (other_table), credits_civ_label, 0, 1, 5, 6,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (credits_civ_label), 0, 0.5);
 
 	credits_aliens_label = gtk_label_new (Q_("Credits for killed aliens"));
 	gtk_widget_show (credits_aliens_label);
-	gtk_table_attach (GTK_TABLE (other_table), credits_aliens_label, 0, 1, 5, 6,
+	gtk_table_attach (GTK_TABLE (other_table), credits_aliens_label, 0, 1, 6, 7,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (credits_aliens_label), 0, 0.5);
@@ -600,9 +615,17 @@ GtkWidget* create_mission_dialog (void)
 	gtk_entry_set_invisible_char (GTK_ENTRY (alien_equip_entry), 9679);
 	gtk_entry_set_text(GTK_ENTRY(alien_equip_entry), "campaign_alien");
 
+	nation_entry = gtk_entry_new_with_max_length (MAX_VAR);
+	gtk_widget_show (nation_entry);
+	gtk_table_attach (GTK_TABLE (other_table), nation_entry, 1, 2, 3, 4,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	gtk_entry_set_invisible_char (GTK_ENTRY (nation_entry), 9679);
+	gtk_entry_set_text(GTK_ENTRY(nation_entry), "europa");
+
 	credits_win_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (credits_win_entry);
-	gtk_table_attach (GTK_TABLE (other_table), credits_win_entry, 1, 2, 3, 4,
+	gtk_table_attach (GTK_TABLE (other_table), credits_win_entry, 1, 2, 4, 5,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_entry_set_invisible_char (GTK_ENTRY (credits_win_entry), 9679);
@@ -610,7 +633,7 @@ GtkWidget* create_mission_dialog (void)
 
 	credits_civ_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (credits_civ_entry);
-	gtk_table_attach (GTK_TABLE (other_table), credits_civ_entry, 1, 2, 4, 5,
+	gtk_table_attach (GTK_TABLE (other_table), credits_civ_entry, 1, 2, 5, 6,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_entry_set_invisible_char (GTK_ENTRY (credits_civ_entry), 9679);
@@ -618,7 +641,7 @@ GtkWidget* create_mission_dialog (void)
 
 	credits_alien_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (credits_alien_entry);
-	gtk_table_attach (GTK_TABLE (other_table), credits_alien_entry, 1, 2, 5, 6,
+	gtk_table_attach (GTK_TABLE (other_table), credits_alien_entry, 1, 2, 6, 7,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_entry_set_invisible_char (GTK_ENTRY (credits_alien_entry), 9679);
@@ -669,6 +692,7 @@ GtkWidget* create_mission_dialog (void)
 	GLADE_HOOKUP_OBJECT (mission_dialog, credits_civ_entry, "credits_civ_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, credits_alien_entry, "credits_alien_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, storyrelated_checkbutton, "storyrelated_checkbutton");
+	GLADE_HOOKUP_OBJECT (mission_dialog, nation_entry, "nation_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, onwin_entry, "onwin_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, onlose_entry, "onlose_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, type_mission, "type_mission");
@@ -680,6 +704,9 @@ GtkWidget* create_mission_dialog (void)
 	return mission_dialog;
 }
 
+/**
+ * @brief
+ */
 GtkWidget* create_mis_txt (void)
 {
 	GtkWidget *mis_txt_vbox;
@@ -722,6 +749,9 @@ GtkWidget* create_mis_txt (void)
 	return mis_txt;
 }
 
+/**
+ * @brief
+ */
 void create_about_box (void)
 {
 	const gchar *authors[] = {

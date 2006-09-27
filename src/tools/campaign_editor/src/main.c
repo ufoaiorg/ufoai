@@ -32,6 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "interface.h"
 #include "support.h"
 
+/**
+ * @brief Main function for campaign editor
+ */
 int main (int argc, char *argv[])
 {
 #ifdef ENABLE_NLS
