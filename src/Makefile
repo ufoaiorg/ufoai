@@ -147,23 +147,14 @@ ifeq ($(OSTYPE),Darwin)
 	BASE_CFLAGS+=-I/sw/include
 endif
 
-ifeq ($(OSTYPE),FreeBSD)
-	ifeq ($(strip $(BUILD_SDLUFO)),YES)
-		LDFLAGS+=$(shell sdl11-config --libs)
-		BASE_CFLAGS+=$(shell sdl11-config --cflags)
-	endif
-	SDLLDFLAGS=$(shell sdl11-config --libs) -lSDL_ttf
-	GLXCFLAGS=-I/usr/X11R6/include $(shell sdl11-config --cflags)
-	GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext $(shell sdl11-config --libs) -lSDL_ttf
-else
-	ifeq ($(strip $(BUILD_SDLUFO)),YES)
-		LDFLAGS+=$(shell sdl-config --libs)
-		BASE_CFLAGS+=$(shell sdl-config --cflags)
-	endif
-	SDLLDFLAGS=$(shell sdl-config --libs) -lSDL_ttf
-	GLXCFLAGS=-I/usr/X11R6/include $(shell sdl-config --cflags)
-	GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext $(shell sdl-config --libs) -lSDL_ttf
+ifeq ($(strip $(BUILD_SDLUFO)),YES)
+	LDFLAGS+=$(shell sdl-config --libs)
+	BASE_CFLAGS+=$(shell sdl-config --cflags)
 endif
+
+SDLLDFLAGS=$(shell sdl-config --libs) -lSDL_ttf
+GLXCFLAGS=-I/usr/X11R6/include $(shell sdl-config --cflags)
+GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext $(shell sdl-config --libs) -lSDL_ttf
 
 ifeq ($(strip $(BUILD_ALSA)),YES)
 	BASE_CFLAGS+=-DUSE_ALSA
