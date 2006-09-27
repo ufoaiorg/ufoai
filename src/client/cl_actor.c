@@ -1362,20 +1362,22 @@ MOUSE INPUT
 void CL_ActorMoveMouse(void)
 {
 	if (cl.cmode == M_PEND_MOVE) {
-		if (VectorCompare(mousePos, mousePendPos))
+		if (VectorCompare(mousePos, mousePendPos)) {
 			/* pend move and clicked the same spot */
 			CL_ActorStartMove(selActor, mousePos);
-		else
+		} else {
 			/* clicked different spot */
 			VectorCopy(mousePos, mousePendPos);
+		}
 	} else {
 		if (confirm_movement->value || confirm_actions->value) {
 			/* set our mode to pending move */
 			VectorCopy(mousePos, mousePendPos);
 			cl.cmode = M_PEND_MOVE;
-		} else
+		} else {
 			/* just move there */
 			CL_ActorStartMove(selActor, mousePos);
+		}
 	}
 }
 
@@ -1392,8 +1394,9 @@ void CL_ActorSelectMouse(void)
 		if (CL_ActorSelect(mouseActor)) {
 			/* succeeded so go back into move mode */
 			cl.cmode = M_MOVE;
-		} else
+		} else {
 			CL_ActorMoveMouse();
+		}
 	} else if (cl.cmode > M_PEND_MOVE) {
 		cl.cmode -= M_PEND_FIRE_PR - M_FIRE_PR;
 	} else if (confirm_actions->value) {
@@ -1414,10 +1417,11 @@ void CL_ActorActionMouse(void)
 	if (!selActor || mouseSpace != MS_WORLD)
 		return;
 
-	if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE)
+	if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
 		CL_ActorMoveMouse();
-	else
+	} else {
 		cl.cmode = M_MOVE;
+	}
 }
 
 
