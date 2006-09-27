@@ -1,4 +1,4 @@
-all: packdata update_installer_data makeself
+all: update_installer_data makeself
 
 ROOTDIR=../../../../
 
