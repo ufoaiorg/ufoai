@@ -440,6 +440,7 @@ void UP_Content_f( void )
 	upCurrent = NULL;
 	menuText[TEXT_STANDARD] = NULL;
 	menuText[TEXT_UFOPEDIA] = upText;
+	menuText[TEXT_LIST] = NULL;
 	Cvar_Set("mn_upmodel_top", "");
 	Cvar_Set("mn_upmodel_bottom", "");
 	Cvar_Set("mn_upmodel_big", "");
