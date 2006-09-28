@@ -49,8 +49,11 @@ int main (int argc, char *argv[])
 	/* add ufo base dir to pixmaps searchpath */
 	add_pixmap_directory ("base/pics/menu");
 	/* system pixmaps dir */
-	add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
-
+#ifndef _WIN32
+	add_pixmap_directory(PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
+#else
+	add_pixmap_directory("/pixmaps");
+#endif
 	/* first visible window */
 	campaign_editor = create_campaign_editor ();
 	gtk_widget_show (campaign_editor);
