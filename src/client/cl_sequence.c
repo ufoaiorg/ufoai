@@ -383,8 +383,8 @@ void CL_SequenceStart_f(void)
 
 	/* init sun */
 	VectorSet(map_sun.dir, 2, 2, 3);
-	VectorSet(map_sun.ambient, 0.2, 0.2, 0.2);
-	map_sun.ambient[3] = 1.0;
+	VectorSet(map_sun.ambient, 1.6, 1.6, 1.6);
+	map_sun.ambient[3] = 5.4;
 	VectorSet(map_sun.color, 1.2, 1.2, 1.2);
 	map_sun.color[3] = 1.0;
 }

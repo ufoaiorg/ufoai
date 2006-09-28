@@ -3516,6 +3516,9 @@ static void CL_GameNew(void)
 	if (curCampaign)
 		CL_GameExit();
 
+	/* clear any old pending messages */
+	CL_InitMessageSystem();
+
 	memset(&gd, 0, sizeof(gd));
 	CL_ReadSinglePlayerData();
 
