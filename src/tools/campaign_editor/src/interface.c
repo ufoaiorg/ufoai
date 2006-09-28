@@ -467,7 +467,7 @@ GtkWidget* create_mission_dialog (void)
 	create_entry("map_assembly_param_entry", NULL, table, 1, 2, 1, 2);
 	create_music_widget("combo_music", table, 1, 2, 2, 3);
 	create_entry("text_mission", "Protect inhabitants", table, 1, 2, 3, 4);
-	create_entry("map_assembly_param_entry", "TYPE_LOCATION", table, 1, 2, 4, 5);
+	create_entry("location_mission", "TYPE_LOCATION", table, 1, 2, 4, 5);
 	create_entry("type_mission", "Terror Attack", table, 1, 2, 5, 6);
 
 	checkbox = gtk_check_button_new();
