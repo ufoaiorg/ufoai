@@ -261,7 +261,7 @@ void fatal_error (char* errormessage)
 	gtk_exit(0);
 }
 
-static byte* globalFileBuffer = NULL;
+void* globalFileBuffer;
 
 /**
  * @brief
@@ -269,7 +269,7 @@ static byte* globalFileBuffer = NULL;
  */
 void file_close(void)
 {
-	free(globalFileBuffer);
+	g_free(globalFileBuffer);
 	globalFileBuffer = NULL;
 }
 
@@ -278,7 +278,7 @@ void file_close(void)
  * @brief
  * @sa file_close
  */
-int file_load(char* filename, void** buffer)
+int file_load(char* filename)
 {
 	FILE *f;
 	byte *buf = NULL;
@@ -289,32 +289,22 @@ int file_load(char* filename, void** buffer)
 
 	f = fopen(filename, "rb");
 	if (!f) {
-		if (buffer)
-			*buffer = NULL;
 		fprintf(stderr, "could not load %s\n", filename);
-		return -1;
-	}
-
-	if (!buffer) {
-		fprintf(stderr, "no buffer for %s\n", filename);
-		fclose(f);
 		return -1;
 	}
 
 	len = file_length(f);
 	if (!len) {
 		fclose(f);
-		if (buffer)
-			*buffer = NULL;
 		fprintf(stderr, "file %s is empty\n", filename);
 		return -1;
 	}
 
-	buf = (byte*)malloc(sizeof(byte)*(len + 1));
+	buf = (byte*)g_malloc(len + 1);
 	if (!buf)
 		fatal_error("could not allocate memory\n");
+	memset(buf, 0, len + 1);
 	globalFileBuffer = buf;
-	*buffer = buf;
 
 	/* read in chunks for progress bar */
 	remaining = len;
@@ -338,9 +328,12 @@ int file_load(char* filename, void** buffer)
 
 		remaining -= read;
 		buf += read;
+		if (buf > &buf[len])
+			fatal_error("overrun\n");
 	}
 
-	buf[len] = 0;
+	if (remaining != 0)
+		fatal_error(va("read error: remaining: %i\n", remaining));
 	fclose(f);
 
 	return len;

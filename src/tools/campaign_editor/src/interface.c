@@ -310,7 +310,8 @@ void create_select_box_from_script_data(char* string, char* script_type, char* a
 	DIR *dir;
 	char filename[128];
 	char *token;
-	void *buffer = NULL, *name = NULL;
+	char *buffer = NULL;
+	char *name = NULL;
 	int i = 0, len = 0;
 	int active = -1;
 	GtkWidget* w;
@@ -329,30 +330,31 @@ void create_select_box_from_script_data(char* string, char* script_type, char* a
 			if ( !file_ext(dir_info->d_name, ".ufo") )
 				continue;
 			snprintf(filename, sizeof(filename), "base/ufos/%s", dir_info->d_name);
-			len = file_load(filename, (void**)&buffer);
-			if (!buffer) {
+			len = file_load(filename);
+			buffer = (char*)globalFileBuffer;
+			if (!globalFileBuffer) {
 				printf("failed to load %s\n", dir_info->d_name);
 				continue;
-#if DEBUG
+#if 0
 			} else {
 				printf("loaded %s with size %i\n", dir_info->d_name, len);
 #endif
 			}
-			token = loadscript((char**)&name, (char**)&buffer);
+			token = loadscript(&name, &buffer);
 			while (token && buffer) {
 				if (!strcmp(token, script_type)) {
 					printf("(%s-)name: %s\n", script_type, name);
 					if (!strcmp(name, active_string)) {
 						if (active > -1)
-							fatal_error(va("found too %s with same name (%s)\n", script_type, name));
+							fatal_error(va("found two %s with same name (%s)\n", script_type, name));
 						active = i;
 					}
 					i++;
-					// FIXME: This crashed the program - don't know why
+					// FIXME: This crashes the program - don't know why
 					gtk_combo_box_append_text (GTK_COMBO_BOX (w), name);
 				}
 				if (buffer)
-					token = loadscript((char**)&name, (char**)&buffer);
+					token = loadscript(&name, &buffer);
 			}
 			file_close();
 		}
@@ -374,6 +376,9 @@ GtkWidget* create_mission_dialog (void)
 	GtkWidget *mission_action_area;
 	GtkWidget *cancel_button, *ok_button;
 	int i;
+
+	/* just init this extern var */
+	globalFileBuffer = NULL;
 
 	mission_dialog = gtk_dialog_new ();
 	gtk_window_set_title (GTK_WINDOW (mission_dialog), Q_("Mission"));
