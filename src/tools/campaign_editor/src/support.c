@@ -218,7 +218,7 @@ void file_strip_ext (char *in, char *out)
 char *va(char *format, ...)
 {
 	va_list argptr;
-	static char string[2048];
+	static char string[256];
 	va_start(argptr, format);
 	vsprintf(string, format, argptr);
 	va_end(argptr);

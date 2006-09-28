@@ -456,12 +456,8 @@ GtkWidget* create_mission_dialog (void)
 	create_label("OnLoose Trigger", table, 0, 1, 9, 10);
 
 	create_map_widget("combo_map", table, 1, 2, 0, 1, 0);
-
 	create_entry("map_assembly_param_entry", NULL, table, 1, 2, 1, 2);
-
 	create_music_widget("combo_music", table, 1, 2, 2, 3);
-
-	/* text_mission */
 	create_entry("text_mission", "Protect inhabitants", table, 1, 2, 3, 4);
 	create_entry("map_assembly_param_entry", "TYPE_LOCATION", table, 1, 2, 4, 5);
 	create_entry("type_mission", "Terror Attack", table, 1, 2, 5, 6);
