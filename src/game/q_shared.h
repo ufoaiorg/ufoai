@@ -1099,7 +1099,7 @@ invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int 
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, int container, int x, int y);
 qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y);
 int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp);
-void Com_EmptyContainer(inventory_t* const i, int container);
+void Com_EmptyContainer(inventory_t* const i, const int container);
 void Com_DestroyInventory(inventory_t* const i);
 void Com_FindSpace(const inventory_t* const inv, const int item, const int container, int * const px, int * const py);
 int Com_TryAddToInventory(inventory_t* const inv, item_t item, int container);

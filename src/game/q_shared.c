@@ -1204,7 +1204,7 @@ float crand(void)
  */
 void gaussrand(float *gauss1, float *gauss2)
 {
-	float x1,x2,w;
+	float x1,x2,w,tmp;
 
 	do {
 		x1 = crand();
@@ -1212,7 +1212,8 @@ void gaussrand(float *gauss1, float *gauss2)
 		w = x1 * x1 + x2 * x2;
 	} while ( w >= 1.0 );
 
-	w = sqrt( (-2.0 * logf (w) ) / w );
+	tmp = -2 * logf(w) ;
+	w = sqrt( tmp / w );
 	*gauss1 = x1 * w;
 	*gauss2 = x2 * w;
 }
@@ -2120,7 +2121,7 @@ static int cache_Com_CheckToInventory = 0;
  * @param
  * @sa
  */
-qboolean Com_CheckToInventory(const inventory_t * i, const int item, const int container, int x, int y)
+qboolean Com_CheckToInventory(const inventory_t * const i, const int item, const int container, int x, int y)
 {
 	invList_t *ic;
 	static int mask[16];
@@ -2221,7 +2222,7 @@ invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int 
 /**
   * @brief Add an item to a specified container in a given inventory
   */
-invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x, int y)
+invList_t *Com_AddToInventory(inventory_t * const i, item_t item, int container, int x, int y)
 {
 	invList_t *ic;
 
@@ -2954,7 +2955,7 @@ static char returnModel[MAX_VAR];
  * @param chr Pointer to character struct
  * @sa Com_CharGetBody
  */
-char *Com_CharGetBody(character_t * chr)
+char *Com_CharGetBody(character_t * const chr)
 {
 	char kurz[MAX_VAR];
 	char *underline;
@@ -2993,7 +2994,7 @@ char *Com_CharGetBody(character_t * chr)
  * @param chr Pointer to character struct
  * @sa Com_CharGetBody
  */
-char *Com_CharGetHead(character_t * chr)
+char *Com_CharGetHead(character_t * const chr)
 {
 	char kurz[MAX_VAR];
 	char *underline;

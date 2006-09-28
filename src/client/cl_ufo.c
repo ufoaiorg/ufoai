@@ -134,8 +134,10 @@ extern void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo) {
 
 	/* Remove ufo from ufos list */
 	num = ufo - gd.ufos;
-	if (num < 0 || num >= gd.numUfos)
-		return Com_DPrintf("Cannot remove ufo: '%s'\n", ufo->name);
+	if (num < 0 || num >= gd.numUfos) {
+		Com_DPrintf("Cannot remove ufo: '%s'\n", ufo->name);
+		return;
+	}
 	Com_DPrintf("Remove ufo from geoscape: '%s'\n", ufo->name);
 	memcpy(gd.ufos + num, gd.ufos + num + 1, (gd.numUfos - num - 1) * sizeof(aircraft_t));
 	gd.numUfos--;
