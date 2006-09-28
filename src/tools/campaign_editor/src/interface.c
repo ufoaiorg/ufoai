@@ -418,6 +418,7 @@ GtkWidget* create_mission_dialog (void)
 	for (i=1; i<=8; i++)
 		gtk_combo_box_append_text (GTK_COMBO_BOX (select), va("%i", i));
 	gtk_combo_box_set_active( GTK_COMBO_BOX (select), 5 );
+	GLADE_HOOKUP_OBJECT (mission_dialog, select, "combo_recruits");
 
 	select = gtk_combo_box_new_text ();
 	gtk_widget_show (select);
@@ -427,6 +428,7 @@ GtkWidget* create_mission_dialog (void)
 	for (i=1; i<=8; i++)
 		gtk_combo_box_append_text (GTK_COMBO_BOX (select), va("%i", i));
 	gtk_combo_box_set_active( GTK_COMBO_BOX (select), 2 );
+	GLADE_HOOKUP_OBJECT (mission_dialog, select, "combo_civilians");
 
 	select = gtk_combo_box_new_text ();
 	gtk_widget_show (select);
@@ -436,6 +438,7 @@ GtkWidget* create_mission_dialog (void)
 	for (i=1; i<=8; i++)
 		gtk_combo_box_append_text (GTK_COMBO_BOX (select), va("%i", i));
 	gtk_combo_box_set_active( GTK_COMBO_BOX (select), 5 );
+	GLADE_HOOKUP_OBJECT (mission_dialog, select, "combo_aliens");
 
 	label = gtk_label_new (_("Actors"));
 	gtk_widget_show (label);
@@ -458,7 +461,7 @@ GtkWidget* create_mission_dialog (void)
 	create_label("Story related mission", table, 0, 1, 6, 7);
 	create_label("Activate Trigger", table, 0, 1, 7, 8);
 	create_label("OnWin Trigger", table, 0, 1, 8, 9);
-	create_label("OnLoose Trigger", table, 0, 1, 9, 10);
+	create_label("OnLose Trigger", table, 0, 1, 9, 10);
 
 	create_map_widget("combo_map", table, 1, 2, 0, 1, 0);
 	create_entry("map_assembly_param_entry", NULL, table, 1, 2, 1, 2);
@@ -476,7 +479,7 @@ GtkWidget* create_mission_dialog (void)
 
 	create_entry("commands_entry", NULL, table, 1, 2, 7, 8);
 	create_entry("onwin_entry", NULL, table, 1, 2, 8, 9);
-	create_entry("onclose_entry", NULL, table, 1, 2, 9, 10);
+	create_entry("onlose_entry", NULL, table, 1, 2, 9, 10);
 
 	label = gtk_label_new (_("Mission"));
 	gtk_widget_show (label);
@@ -503,7 +506,7 @@ GtkWidget* create_mission_dialog (void)
 	create_select_box_from_script_data("alienteam_entry", "team", "ortnok", table, 1, 2, 0, 1);
 	create_select_box_from_script_data("civteam_entry", "team", "european", table, 1, 2, 1, 2);
 	create_select_box_from_script_data("alien_equip_entry", "equipment", "campaign_alien", table, 1, 2, 2, 3);
-	create_select_box_from_script_data("nations_entry", "nation", "europa", table, 1, 2, 3, 4);
+	create_select_box_from_script_data("nation_entry", "nation", "europa", table, 1, 2, 3, 4);
 	create_entry("credits_win_entry", "1000", table, 1, 2, 4, 5);
 	create_entry("credits_civ_entry", "500", table, 1, 2, 5, 6);
 	create_entry("credits_alien_entry", "100", table, 1, 2, 6, 7);
