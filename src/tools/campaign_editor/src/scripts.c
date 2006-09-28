@@ -1,6 +1,6 @@
 /**
- * @file interface.h
- * @brief
+ * @file scripts.c
+ * @brief Parses the ufo scripts as needed for campaign editor
  */
 
 /*
@@ -23,17 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#define VERSION "0.1"
-#define WEBSITE "http://www.ufoai.net"
-#define NAME "Campaign editor for UFO:AI"
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
 
-GtkWidget* create_campaign_editor (void);
-GtkWidget* create_mission_dialog (void);
-GtkWidget* create_mis_txt (void);
-void create_about_box (void);
-
-GtkWidget *mis_txt;
-GtkWidget *campaign_editor;
-extern GtkWidget *mission_dialog;
-
-GtkWidget *mission_txt;
