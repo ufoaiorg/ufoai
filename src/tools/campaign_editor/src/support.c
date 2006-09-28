@@ -301,11 +301,11 @@ int file_load(char* filename, void** buffer)
 		return -1;
 	}
 
-	buf = (byte *) buffer;
-
 	len = file_length(f);
 	if (!len) {
 		fclose(f);
+		if (buffer)
+			*buffer = NULL;
 		fprintf(stderr, "file %s is empty\n", filename);
 		return -1;
 	}
@@ -340,11 +340,7 @@ int file_load(char* filename, void** buffer)
 		buf += read;
 	}
 
-	if ((int)buf > (int)&buf[len])
-		fatal_error("overflow\n");
-
 	buf[len] = 0;
-
 	fclose(f);
 
 	return len;

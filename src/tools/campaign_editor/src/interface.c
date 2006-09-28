@@ -308,7 +308,7 @@ void create_select_box_from_script_data(char* string, char* script_type, char* a
 {
 	struct dirent *dir_info;
 	DIR *dir;
-	char dirname[128];
+	char filename[128];
 	char *token;
 	void *buffer = NULL, *name = NULL;
 	int i = 0, len = 0;
@@ -328,7 +328,8 @@ void create_select_box_from_script_data(char* string, char* script_type, char* a
 			/* only the *.ufo files */
 			if ( !file_ext(dir_info->d_name, ".ufo") )
 				continue;
-			len = file_load(va("base/ufos/%s", dir_info->d_name), (void**)&buffer);
+			snprintf(filename, sizeof(filename), "base/ufos/%s", dir_info->d_name);
+			len = file_load(filename, (void**)&buffer);
 			if (!buffer) {
 				printf("failed to load %s\n", dir_info->d_name);
 				continue;
@@ -500,7 +501,7 @@ GtkWidget* create_mission_dialog (void)
 
 	create_select_box_from_script_data("alienteam_entry", "team", "ortnok", table, 1, 2, 0, 1);
 	create_select_box_from_script_data("civteam_entry", "team", "european", table, 1, 2, 1, 2);
-	create_select_box_from_script_data("alien_equip_entry", "equip", "campaign_alien", table, 1, 2, 2, 3);
+	create_select_box_from_script_data("alien_equip_entry", "equipment", "campaign_alien", table, 1, 2, 2, 3);
 	create_select_box_from_script_data("nations_entry", "nation", "europa", table, 1, 2, 3, 4);
 	create_entry("credits_win_entry", "1000", table, 1, 2, 4, 5);
 	create_entry("credits_civ_entry", "500", table, 1, 2, 5, 6);
