@@ -427,6 +427,7 @@ void UP_Content_f( void )
 
 	upCurrent = NULL;
 	menuText[TEXT_STANDARD] = NULL;
+	menuText[TEXT_LIST] = NULL;
 	menuText[TEXT_UFOPEDIA] = upText;
 	Cvar_Set("mn_upmodel_top", "");
 	Cvar_Set("mn_upmodel_bottom", "");
