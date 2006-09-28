@@ -235,3 +235,117 @@ char *bool_translate( int value )
 		return "true";
 	return "false";
 }
+
+/**
+ * @brief
+ */
+int file_length(FILE * f)
+{
+	int pos;
+	int end;
+
+	pos = ftell(f);
+	fseek(f, 0, SEEK_END);
+	end = ftell(f);
+	fseek(f, pos, SEEK_SET);
+
+	return end;
+}
+
+/**
+ * @brief
+ */
+void fatal_error (char* errormessage)
+{
+	fprintf(stderr, "%s\n", errormessage);
+	gtk_exit(0);
+}
+
+static byte* globalFileBuffer = NULL;
+
+/**
+ * @brief
+ * @sa file_load
+ */
+void file_close(void)
+{
+	free(globalFileBuffer);
+	globalFileBuffer = NULL;
+}
+
+#define	MAX_READ	0x10000		/* read in blocks of 64k */
+/**
+ * @brief
+ * @sa file_close
+ */
+int file_load(char* filename, void** buffer)
+{
+	FILE *f;
+	byte *buf = NULL;
+	int len, block, remaining, read, tries;
+
+	if (globalFileBuffer)
+		fatal_error("still another buffer active\n");
+
+	f = fopen(filename, "rb");
+	if (!f) {
+		if (buffer)
+			*buffer = NULL;
+		fprintf(stderr, "could not load %s\n", filename);
+		return -1;
+	}
+
+	if (!buffer) {
+		fprintf(stderr, "no buffer for %s\n", filename);
+		fclose(f);
+		return -1;
+	}
+
+	buf = (byte *) buffer;
+
+	len = file_length(f);
+	if (!len) {
+		fclose(f);
+		fprintf(stderr, "file %s is empty\n", filename);
+		return -1;
+	}
+
+	buf = (byte*)malloc(sizeof(byte)*(len + 1));
+	if (!buf)
+		fatal_error("could not allocate memory\n");
+	globalFileBuffer = buf;
+	*buffer = buf;
+
+	/* read in chunks for progress bar */
+	remaining = len;
+	tries = 0;
+	while (remaining) {
+		block = remaining;
+		if (block > MAX_READ)
+			block = MAX_READ;
+		read = fread(buf, 1, block, f);
+		if (read == 0) {
+			/* we might have been trying to read from a CD */
+			if (!tries) {
+				tries = 1;
+			} else {
+				fatal_error("file_load: 0 bytes read");
+			}
+		}
+
+		if (read == -1)
+			fatal_error("file_load: -1 bytes read");
+
+		remaining -= read;
+		buf += read;
+	}
+
+	if ((int)buf > (int)&buf[len])
+		fatal_error("overflow\n");
+
+	buf[len] = 0;
+
+	fclose(f);
+
+	return len;
+}

@@ -41,7 +41,7 @@ static int x, y;
  */
 void on_quit_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
-	exit(0);
+	gtk_exit(0);
 }
 
 /**

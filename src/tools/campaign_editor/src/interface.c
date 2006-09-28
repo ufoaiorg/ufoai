@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "callbacks.h"
 #include "interface.h"
 #include "support.h"
+#include "scripts.h"
 
 #define GLADE_HOOKUP_OBJECT(component,widget,name) \
   g_object_set_data_full (G_OBJECT (component), name, \
@@ -214,6 +215,8 @@ void create_music_widget(char* string, GtkWidget* table, int col1, int col2, int
 		file_strip_ext(dir_info->d_name, buffer);
 		gtk_combo_box_append_text (GTK_COMBO_BOX (w), buffer);
 	}
+	if (dir)
+		closedir(dir);
 	gtk_combo_box_set_active( GTK_COMBO_BOX (w), 0 );
 	GLADE_HOOKUP_OBJECT (mission_dialog, w, string);
 }
@@ -259,6 +262,7 @@ void create_map_widget(char* string, GtkWidget* table, int col1, int col2, int r
 				continue;
 			gtk_combo_box_append_text (GTK_COMBO_BOX (w), va("+%s", buffer) );
 		}
+		closedir(dir);
 	}
 
 	gtk_combo_box_set_active( GTK_COMBO_BOX (w), active );
@@ -296,6 +300,70 @@ void create_label(char* string, GtkWidget* table, int col1, int col2, int row1, 
 	gtk_label_set_use_markup(GTK_LABEL (w), TRUE);
 	gtk_misc_set_alignment(GTK_MISC (w), 0, 0.5);
 }
+
+/**
+ * @brief
+ */
+void create_select_box_from_script_data(char* string, char* script_type, char* active_string, GtkWidget* table, int col1, int col2, int row1, int row2)
+{
+	struct dirent *dir_info;
+	DIR *dir;
+	char dirname[128];
+	char *token;
+	void *buffer = NULL, *name = NULL;
+	int i = 0, len = 0;
+	int active = -1;
+	GtkWidget* w;
+
+	w = gtk_combo_box_new_text();
+	gtk_widget_show (w);
+	gtk_table_attach (GTK_TABLE (table), w, col1, col2, row1, row2,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+
+	if ( (dir = opendir("base/ufos")) == NULL )
+		fprintf(stderr, "Could not read base/ufos\n");
+	if (dir) {
+		while ( (dir_info = readdir(dir)) != NULL ) {
+			/* only the *.ufo files */
+			if ( !file_ext(dir_info->d_name, ".ufo") )
+				continue;
+			len = file_load(va("base/ufos/%s", dir_info->d_name), (void**)&buffer);
+			if (!buffer) {
+				printf("failed to load %s\n", dir_info->d_name);
+				continue;
+#if DEBUG
+			} else {
+				printf("loaded %s with size %i\n", dir_info->d_name, len);
+#endif
+			}
+			token = loadscript((char**)&name, (char**)&buffer);
+			while (token && buffer) {
+				if (!strcmp(token, script_type)) {
+					printf("(%s-)name: %s\n", script_type, name);
+					if (!strcmp(name, active_string)) {
+						if (active > -1)
+							fatal_error(va("found too %s with same name (%s)\n", script_type, name));
+						active = i;
+					}
+					i++;
+					// FIXME: This crashed the program - don't know why
+					gtk_combo_box_append_text (GTK_COMBO_BOX (w), name);
+				}
+				if (buffer)
+					token = loadscript((char**)&name, (char**)&buffer);
+			}
+			file_close();
+		}
+		closedir(dir);
+	}
+	printf("found: %i\n", i);
+	if (active < 0)
+		active = 0;
+	gtk_combo_box_set_active( GTK_COMBO_BOX (w), active);
+	GLADE_HOOKUP_OBJECT (mission_dialog, w, string);
+}
+
 /**
  * @brief
  */
@@ -430,10 +498,10 @@ GtkWidget* create_mission_dialog (void)
 	create_label("Credits for rescued civilians", table, 0, 1, 5, 6);
 	create_label("Credits for killed aliens", table, 0, 1, 6, 7);
 
-	create_entry("alienteam_entry", "ortnok", table, 1, 2, 0, 1);
-	create_entry("civ_team_entry", "european", table, 1, 2, 1, 2);
-	create_entry("alien_equip_entry", "campaign_alien", table, 1, 2, 2, 3);
-	create_entry("nation_entry", "europa", table, 1, 2, 3, 4);
+	create_select_box_from_script_data("alienteam_entry", "team", "ortnok", table, 1, 2, 0, 1);
+	create_select_box_from_script_data("civteam_entry", "team", "european", table, 1, 2, 1, 2);
+	create_select_box_from_script_data("alien_equip_entry", "equip", "campaign_alien", table, 1, 2, 2, 3);
+	create_select_box_from_script_data("nations_entry", "nation", "europa", table, 1, 2, 3, 4);
 	create_entry("credits_win_entry", "1000", table, 1, 2, 4, 5);
 	create_entry("credits_civ_entry", "500", table, 1, 2, 5, 6);
 	create_entry("credits_alien_entry", "100", table, 1, 2, 6, 7);
