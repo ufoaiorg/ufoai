@@ -103,7 +103,7 @@ void mission_save (GtkButton *button, gpointer user_data)
 		get_selectbox_txt("combo_civilians"),
 		get_selectbox_txt("combo_recruits"),
 		get_entry_txt("alienteam_entry"),
-		get_entry_txt("civ_team_entry"),
+		get_entry_txt("civteam_entry"),
 		get_entry_txt("alien_equip_entry"),
 		get_entry_txt("credits_win_entry"),
 		get_entry_txt("credits_alien_entry"),
