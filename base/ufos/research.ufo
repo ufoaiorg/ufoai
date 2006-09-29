@@ -150,19 +150,6 @@ tech rs_craft_ufo_tech
 // weapons and items
 //=================================
 
-tech rs_weapon_alienincgrenade
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_alienincgrenade_txt"
-
-	requires	"rs_skill_explosive rs_damage_fire"
-	provides	incgrenade
-	time	500
-	needscollected	true
-	producetime	2
-}
-
 tech rs_weapon_assault
 {
 	type	weapon
@@ -277,9 +264,9 @@ tech rs_weapon_incgren
 	description	"_incgren_txt"
 
 	requires	"rs_skill_explosive rs_damage_fire"
-	provides	incendiarygrenade
+	provides	incgrenade
 	time	0
-	producetime	1
+	producetime	2
 }
 
 tech rs_weapon_grenl
@@ -324,7 +311,7 @@ tech rs_weapon_grenl_incendiary_ammo
 	up_chapter	weapons
 	description	"_grenl_incendiary_ammo_txt"
 
-	requires	"rs_damage_fire rs_weapon_alienincgrenade rs_weapon_grenl"
+	requires	"rs_damage_fire rs_weapon_grenl"
 	provides	grenl_incendiary_ammo
 	time	1000
 	producetime	1
@@ -606,7 +593,7 @@ tech rs_weapon_rpg_incendiary_ammo
 	up_chapter	weapons
 	description	"_rpg_incendiary_ammo_txt"
 
-	requires	"rs_damage_fire rs_weapon_rpg rs_weapon_alienincgrenade"
+	requires	"rs_damage_fire rs_weapon_rpg"
 	provides	rpg_incendiary_ammo
 	time	1000
 	producetime	1
