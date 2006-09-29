@@ -57,6 +57,20 @@
 // Buildings
 // ====================
 
+building building_aliencontainment
+{
+	name		"_Alien containment"
+	image		base/aliencont
+	fixcosts	500000
+	build_time	10
+	varcosts	1000
+	map_name	"aliencont"
+	pedia		rs_building_aliencontainment
+	firstbase	false
+	pos		    "2 4"
+	more_than_one	true
+}
+
 building building_entrance
 {
 	name		"_Entrance"

@@ -1084,6 +1084,17 @@ tech rs_skill_speed
 // Buildings
 //========================
 
+tech rs_building_aliencontainment
+{
+	type	building
+	description	"_b_aliencontainment_txt"
+	up_chapter	buildings
+
+	requires	rs_alien
+	provides	building_aliencontainment
+	time	0
+}
+
 tech rs_building_command
 {
 	type	building
