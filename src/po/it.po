@@ -1,4 +1,5 @@
-# translation of it.po to ITALIAN
+﻿# translation of it.po to ITALIAN
+# Daniele C. <legolas558@email.it>, September 2006
 # Matteo Azzali <kaioth@tiscalinet.it>, 2006.
 msgid ""
 msgstr ""
@@ -60,11 +61,11 @@ msgstr "Nano Armatura"
 
 #: ../base/ufos/armor.ufo:129
 msgid "Light armor"
-msgstr ""
+msgstr "Armatura Leggera"
 
 #: ../base/ufos/armor.ufo:167
 msgid "Medium armor"
-msgstr ""
+msgstr "Armatura Media"
 
 #: ../base/ufos/basemanagement.ufo:62
 msgid "Entrance"
@@ -92,7 +93,7 @@ msgstr "Hangar Nave da Trasporto"
 
 #: ../base/ufos/basemanagement.ufo:166
 msgid "Interceptor Hangar"
-msgstr "Hangar intercettatori"
+msgstr "Hangar Intercettatore"
 
 #: ../base/ufos/basemanagement.ufo:184
 msgid "UFO Hangar"
@@ -172,7 +173,7 @@ msgstr "Campagna Incubo"
 
 #: ../base/ufos/campaign.ufo:145
 msgid "txt_veryhard_campaign"
-msgstr ""
+msgstr "Serio rischio di minaccia alla sopravvivenza"
 
 #: ../base/ufos/campaign.ufo:165
 msgid "Hard Campaign"
@@ -180,7 +181,7 @@ msgstr "Campagna Difficile"
 
 #: ../base/ufos/campaign.ufo:166
 msgid "txt_hard_campaign"
-msgstr ""
+msgstr "Come la campagna standard ma con meno reclute e meno crediti"
 
 #: ../base/ufos/campaign.ufo:186
 msgid "Standard Campaign"
@@ -188,7 +189,7 @@ msgstr "Campagna Normale"
 
 #: ../base/ufos/campaign.ufo:187 ../base/ufos/campaign.ufo:272
 msgid "txt_standard_campaign"
-msgstr ""
+msgstr "Il pianeta natale degli alieni è un piccolo pianeta orbitante attorno la stella Antares. Essi si sono evoluti similmente agli esseri umani, sviluppando organismi dapprima unicellulari, poi organizzati in forme più complesse, poi anfibi, mammiferi e alla fine il pollice opponibile. Oggi, la loro tecnologia è entrata nell'era ella fusione, dove la potenza delle stelle è sfruttata attraverso dispositivi abbastanza piccoli da essere facilmente spostati. Gli Antariani hanno anche scoperto una forma di viaggio più veloce della luce (ultra-luce), anche se un viaggio interstellare impiega ancora anni, e l'equipaggio deve essere messo in stasi per la durata. In termini di avanzamenti tecnologi quindi, gli Antariani sono qualche centinaio di anni avanti; in termini di società, invece, sono molte centinaia di anni indietro. La loro società ricorda il sistema feudale durante il medioevo terrestre. Il Re Antariano è la più alta autorità, e tutti obbediscono alla sua volontà. Le specie Antariani sono inoltre specie guerresche; hanno già conquistato molti altri mondi, schiavizzando la popolazione indigena e, nel caso degli Ortnoks, costringendoli a combattere per la loro causa. Adesso i signori della guerra Antariani hanno preso di mira la Terra. Ma differentemente dagli abitanti dei loro precedenti obiettivi, gli umani sono diventati una sfida intellettiva per gli Antariani. La Terra potrebbe dimostrarsi una noce più dura di quello che i signori della guerra Antariani avevano originariamente pensato..."
 
 #: ../base/ufos/campaign.ufo:208
 msgid "Easy Campaign"
@@ -213,7 +214,7 @@ msgstr ""
 #: ../base/ufos/campaign.ufo:251
 #, fuzzy
 msgid "txt_alien_campaign"
-msgstr "Inizia campagna"
+msgstr "Gioca con gli alieni contro gli umani"
 
 #: ../base/ufos/campaign.ufo:271
 msgid "Testing and Tweaking Campaign --- Please Ignore"
@@ -225,7 +226,7 @@ msgstr "Devastante ttacco di panico da alieni a Mumbai"
 
 #: ../base/ufos/events.ufo:29
 msgid "Alien stealth aircraft sighted"
-msgstr "Avvistato velivolo alieno furtivo"
+msgstr "Avvistato velivolo alieno stealth"
 
 #: ../base/ufos/fonts.ufo:15 ../base/ufos/fonts.ufo:21
 #: ../base/ufos/fonts.ufo:27
@@ -404,12 +405,12 @@ msgstr "Cambia fuoco di reazione"
 #: ../base/ufos/menu_althud.ufo:561
 #, fuzzy
 msgid "Reload right hand weapon"
-msgstr "Passa all'arma nella destra"
+msgstr "Ricarica arma mano destra"
 
 #: ../base/ufos/menu_althud.ufo:572
 #, fuzzy
 msgid "Reload left hand weapon"
-msgstr "Passa all'arma nella sinistra"
+msgstr "Ricarica arma mano sinistra"
 
 #: ../base/ufos/menu_althud.ufo:586 ../base/ufos/menu_hud.ufo:504
 msgid "Crouch/Stand up"
@@ -457,7 +458,7 @@ msgstr "Compra aereo"
 #: ../base/ufos/menu_bases.ufo:141 ../base/ufos/menu_geoscape.ufo:719
 #: ../base/ufos/research.ufo:60 client/cl_map.c:327
 msgid "Aircraft"
-msgstr "Aereo"
+msgstr "Velivoli"
 
 #: ../base/ufos/menu_bases.ufo:152
 msgid "Buy/Sell equipment"
@@ -581,7 +582,7 @@ msgstr "Mostra il resto"
 #: ../base/ufos/menu_buy.ufo:795 ../base/ufos/menu_production.ufo:225
 #: ../base/ufos/menu_team.ufo:1261
 msgid "Misc"
-msgstr ""
+msgstr "Altro"
 
 #: ../base/ufos/menu_buy.ufo:800 ../base/ufos/menu_production.ufo:230
 msgid "Show only armor"
@@ -665,7 +666,7 @@ msgstr "Pronto"
 
 #: ../base/ufos/menu_geoscape.ufo:314
 msgid "Aircraft reached desired location - what to do?"
-msgstr "L'aereo e' arrivato - cosa faccio?"
+msgstr "L'aereo e' arrivato - in attesa di ordini"
 
 #: ../base/ufos/menu_geoscape.ufo:320 ../base/ufos/menu_geoscape.ufo:436
 #: ../base/ufos/menu_geoscape.ufo:533 ../base/ufos/menu_geoscape.ufo:588
@@ -736,7 +737,7 @@ msgstr "Attacco alla Base"
 
 #: ../base/ufos/menu_geoscape.ufo:582
 msgid "What to do?"
-msgstr "Cosa faccio?"
+msgstr "In attesa di ordini."
 
 #: ../base/ufos/menu_geoscape.ufo:651
 msgid "Select item"
@@ -959,11 +960,11 @@ msgstr "Piano"
 
 #: ../base/ufos/menu_main.ufo:70
 msgid "Singleplayer"
-msgstr "Gioco singolo"
+msgstr "Singolo giocatore"
 
 #: ../base/ufos/menu_main.ufo:90
 msgid "Multiplayer"
-msgstr ""
+msgstr "Multigiocatore"
 
 #: ../base/ufos/menu_main.ufo:130 ../base/ufos/menu_tutorials.ufo:46
 msgid "Tutorials"
@@ -991,11 +992,11 @@ msgstr "Crea"
 
 #: ../base/ufos/menu_multiplayer.ufo:103
 msgid "Team"
-msgstr ""
+msgstr "Squadra"
 
 #: ../base/ufos/menu_multiplayer.ufo:236
 msgid "Load team from current selected slot"
-msgstr "Carica team dallo slot selezionato"
+msgstr "Carica squadra dallo slot selezionato"
 
 #: ../base/ufos/menu_multiplayer.ufo:247 ../base/ufos/menu_singleplayer.ufo:89
 #: ../base/ufos/menu_singleplayer.ufo:363
@@ -1004,7 +1005,7 @@ msgstr "Carica"
 
 #: ../base/ufos/menu_multiplayer.ufo:256
 msgid "Save team to current selected slot"
-msgstr "Salva team nello slot selezionato"
+msgstr "Salva squadra nello slot selezionato"
 
 #: ../base/ufos/menu_multiplayer.ufo:267
 #: ../base/ufos/menu_singleplayer.ufo:109
@@ -1015,19 +1016,19 @@ msgstr "Salva"
 # # in game
 #: ../base/ufos/menu_multiplayer.ufo:279
 msgid "Current Team"
-msgstr "Team attuale"
+msgstr "Squadra corrente"
 
 #: ../base/ufos/menu_multiplayer.ufo:288
 msgid "Edit your team after loading"
-msgstr "Edita il team dopo il caricamento"
+msgstr "Modifica la squadra dopo il caricamento"
 
 #: ../base/ufos/menu_multiplayer.ufo:302 ../base/ufos/menu_team.ufo:764
 msgid "Edit"
-msgstr "Edita"
+msgstr "Modifica"
 
 #: ../base/ufos/menu_multiplayer.ufo:311
 msgid "Generate a new team"
-msgstr "Genera un nuovo team"
+msgstr "Genera una nuova squadra"
 
 #: ../base/ufos/menu_multiplayer.ufo:325
 msgid "New"
@@ -1035,7 +1036,7 @@ msgstr "Nuovo"
 
 #: ../base/ufos/menu_multiplayer.ufo:334
 msgid "Generate a team automatically"
-msgstr "Genera un team automaticamente"
+msgstr "Genera una squadra automaticamente"
 
 #: ../base/ufos/menu_multiplayer.ufo:349 ../base/ufos/weapons_human.ufo:54
 msgid "Auto"
@@ -1068,7 +1069,7 @@ msgstr ""
 #: ../base/ufos/menu_multiplayer.ufo:610 ../base/ufos/menu_multiplayer.ufo:772
 #: ../base/ufos/menu_multiplayer.ufo:1043
 msgid "Team preference:"
-msgstr "Preferenze team:"
+msgstr "Preferenze squadra:"
 
 #: ../base/ufos/menu_multiplayer.ufo:652
 msgid "Refresh"
@@ -1092,11 +1093,11 @@ msgstr "Server dedicato:"
 
 #: ../base/ufos/menu_multiplayer.ufo:900
 msgid "Teamplay:"
-msgstr ""
+msgstr "Gioco di squadra:"
 
 #: ../base/ufos/menu_multiplayer.ufo:941
 msgid "Max. clients:"
-msgstr "Max.giocatori:"
+msgstr "Max. giocatori:"
 
 #: ../base/ufos/menu_multiplayer.ufo:943
 msgid "Sets the max allowed clients to connect"
@@ -1104,27 +1105,27 @@ msgstr "Scegli il numero massimo di giocatori"
 
 #: ../base/ufos/menu_multiplayer.ufo:975
 msgid "Max. soldiers per team:"
-msgstr "Max.soldati per team:"
+msgstr "Max. soldati per squadra:"
 
 #: ../base/ufos/menu_multiplayer.ufo:977
 msgid "Sets the max allowed soldiers per team"
-msgstr "Scegli il massimo di soldati per team"
+msgstr "Scegli il massimo di soldati per squadra"
 
 #: ../base/ufos/menu_multiplayer.ufo:1009
 msgid "Max. soldiers per player:"
-msgstr "Max.soldati per giocatore:"
+msgstr "Max. soldati per giocatore:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1011
 msgid "Sets the max allowed soldiers per player when in teamplay"
-msgstr "Scegli il max soldati per giocatore quando gioca in team"
+msgstr "Scegli il max soldati per giocatore quando si gioca in squadra"
 
 #: ../base/ufos/menu_multiplayer.ufo:1045
 msgid "Sets the preferred team"
-msgstr "Scegli il team preferito"
+msgstr "Scegli la squadra preferito"
 
 #: ../base/ufos/menu_multiplayer.ufo:1078
 msgid "Max. players per team:"
-msgstr "Max.giocatori per team:"
+msgstr "Max. giocatori per squadra:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1111
 msgid "Max. AI actors:"
@@ -1132,7 +1133,7 @@ msgstr "Max. attori AI:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1113
 msgid "Max AI actors for teamplay mode"
-msgstr "Max. attori AI nel gioco in team"
+msgstr "Numero massimo degli attori gestiti dal computer (AI) nel gioco di squadra"
 
 #: ../base/ufos/menu_multiplayer.ufo:1145
 msgid "Server-Password:"
@@ -1144,7 +1145,7 @@ msgstr "Password-RCON:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1191
 msgid "Hostname:"
-msgstr "None host:"
+msgstr "Nome host:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1214
 msgid "Map"
@@ -1168,7 +1169,7 @@ msgstr "Gioco"
 
 #: ../base/ufos/menu_options.ufo:144
 msgid "Video settings"
-msgstr ""
+msgstr "Impostazioni video"
 
 #: ../base/ufos/menu_options.ufo:152
 msgid "Resolution:"
@@ -1176,7 +1177,7 @@ msgstr "Risoluzione:"
 
 #: ../base/ufos/menu_options.ufo:195
 msgid "Fullscreen:"
-msgstr "SchermoIntero:"
+msgstr "Schermo intero:"
 
 #: ../base/ufos/menu_options.ufo:233
 msgid "Texture compression:"
@@ -1184,7 +1185,7 @@ msgstr "Compressione exture:"
 
 #: ../base/ufos/menu_options.ufo:271
 msgid "Texture resolution cap:"
-msgstr "Max.risoluzione texture:"
+msgstr "Max. risoluzione texture:"
 
 #: ../base/ufos/menu_options.ufo:309
 msgid "Show FPS:"
@@ -1204,7 +1205,7 @@ msgstr "Filtro immagini:"
 
 #: ../base/ufos/menu_options.ufo:453
 msgid "Isometric Mode:"
-msgstr ""
+msgstr "Isometria:"
 
 #: ../base/ufos/menu_options.ufo:491
 msgid "Gamma:"
@@ -1213,24 +1214,24 @@ msgstr ""
 #: ../base/ufos/menu_options.ufo:547
 #, fuzzy
 msgid "Maintain resolution"
-msgstr "Risoluzione:"
+msgstr "Mantieni risoluzione"
 
 #: ../base/ufos/menu_options.ufo:554
 msgid "Want To Maintain resolution"
-msgstr ""
+msgstr "Voglio mantenere la risoluzione"
 
 #: ../base/ufos/menu_options.ufo:571
 #, fuzzy
 msgid "Change the resolution"
-msgstr "Max.risoluzione texture:"
+msgstr "Cambia risoluzione"
 
 #: ../base/ufos/menu_options.ufo:592
 msgid "Accept"
-msgstr ""
+msgstr "Accetta"
 
 #: ../base/ufos/menu_options.ufo:620
 msgid "Sound settings"
-msgstr ""
+msgstr "Impostazioni audio"
 
 #: ../base/ufos/menu_options.ufo:628
 msgid "Volume Control"
@@ -1251,16 +1252,16 @@ msgstr ""
 #: ../base/ufos/menu_options.ufo:712
 #, fuzzy
 msgid "Sound renderer:"
-msgstr "Granata tramortente"
+msgstr "Renderer audio:"
 
 #: ../base/ufos/menu_options.ufo:753
 #, fuzzy
 msgid "Show key bindings"
-msgstr "Spari rimasti"
+msgstr "Controlli"
 
 #: ../base/ufos/menu_options.ufo:809
 msgid "Game settings"
-msgstr ""
+msgstr "Impostazioni di gioco"
 
 #: ../base/ufos/menu_options.ufo:820
 msgid "Start with employees:"
@@ -1268,7 +1269,7 @@ msgstr "Inizia con impiegati:"
 
 #: ../base/ufos/menu_options.ufo:836
 msgid "No employees hired at campaign start"
-msgstr "Nessun Impiegato a inizio campagna"
+msgstr "Nessun impiegato a inizio campagna"
 
 #: ../base/ufos/menu_options.ufo:850
 msgid "Employees already hired at campaign start"
@@ -1292,7 +1293,7 @@ msgstr "Conferma Azioni:"
 
 #: ../base/ufos/menu_options.ufo:922
 msgid "No confirmation before walking and shooting"
-msgstr "No conferma prima di camminare e sparare"
+msgstr "Non confermare prima di camminare e sparare"
 
 #: ../base/ufos/menu_options.ufo:936
 msgid "Confirmation needed before walking and shooting"
@@ -1315,7 +1316,7 @@ msgstr "Conferma necessaria prima di camminare e sparare"
 
 #: ../base/ufos/menu_options.ufo:992
 msgid "HUD Design:"
-msgstr "Disegno HUD:"
+msgstr "Modello HUD:"
 
 #: ../base/ufos/menu_options.ufo:1008 ../base/ufos/menu_options.ufo:1018
 msgid "Choose another hud"
@@ -1335,15 +1336,15 @@ msgstr "Attiva spiegazioni"
 
 #: ../base/ufos/menu_options.ufo:1070
 msgid "Center view:"
-msgstr "Centra vista"
+msgstr "Centra visuale"
 
 #: ../base/ufos/menu_options.ufo:1086
 msgid "No centering at soldier selecting, shooting and appearing"
-msgstr "Non centrare ai soldati nella selezione, sparo o apparizione"
+msgstr "Non centrare visuale sui soldati in caso di selezione, fuoco o apparizione"
 
 #: ../base/ufos/menu_options.ufo:1100
 msgid "Centering at soldier selecting, shooting and appearing"
-msgstr "Centra ai soldati nella selezione, sparo o apparizione"
+msgstr "Centra visuale sui soldati in caso di selezione, fuoco o apparizione"
 
 #: ../base/ufos/menu_options.ufo:1113
 msgid "Cursor tooltips:"
@@ -1363,11 +1364,11 @@ msgstr ""
 
 #: ../base/ufos/menu_options.ufo:1178
 msgid "Camera Rotation:"
-msgstr ""
+msgstr "Rotazione camera:"
 
 #: ../base/ufos/menu_options.ufo:1237
 msgid "Keys"
-msgstr ""
+msgstr "Pulsanti"
 
 #: ../base/ufos/menu_production.ufo:93
 msgid "Increase production by 1"
@@ -1438,7 +1439,7 @@ msgstr "Inizia ricerca"
 #: ../base/ufos/menu_singleplayer.ufo:69
 #: ../base/ufos/menu_singleplayer.ufo:225
 msgid "Continue"
-msgstr "ContinuaRaggio continuo di energia"
+msgstr "Continua"
 
 #: ../base/ufos/menu_singleplayer.ufo:129
 msgid "New game"
@@ -1572,7 +1573,7 @@ msgid ""
 "Damn it, you've let some of them get\\away again! Reequip your squad and"
 "\\get after them!"
 msgstr ""
-"Dannazione,ne hai lasciati scappare alcuni! Riequipaggia la squadra e "
+"Dannazione, ne hai lasciati scappare alcuni! Riequipaggia la squadra e "
 "\\inseguili!"
 
 #: ../base/ufos/missions.ufo:25
@@ -1750,7 +1751,7 @@ msgstr "Gen"
 
 #: ../base/ufos/missions.ufo:584
 msgid "Secure Dam"
-msgstr ""
+msgstr "Rendi sicura la diga"
 
 #: ../base/ufos/missions.ufo:601
 msgid "Asyut"
@@ -1810,7 +1811,7 @@ msgstr "Gli alieni hanno attaccato una nosta base"
 
 #: ../base/ufos/nations.ufo:31
 msgid "The Revolutionary Countries"
-msgstr ""
+msgstr "Paesi Rivoluzionari"
 
 #: ../base/ufos/nations.ufo:44
 #, fuzzy
@@ -1825,15 +1826,15 @@ msgstr "Grande Unione Europea"
 #: ../base/ufos/nations.ufo:70
 #, fuzzy
 msgid "The Asian Republic"
-msgstr "Repubblica Araba UnitaRepubblica Araba Unita"
+msgstr "Repubblica Asiatica"
 
 #: ../base/ufos/nations.ufo:82
 msgid "The Middle-Eastern Alliance"
-msgstr ""
+msgstr "Alleanza del Medio Oriente"
 
 #: ../base/ufos/nations.ufo:94
 msgid "New Africa"
-msgstr ""
+msgstr "Nuova Africa"
 
 #: ../base/ufos/nations.ufo:106
 msgid "Russia"
@@ -1841,7 +1842,7 @@ msgstr ""
 
 #: ../base/ufos/nations.ufo:118
 msgid "The Commonwealth of Oceania"
-msgstr ""
+msgstr "Commonwealth dell'Oceania"
 
 #: ../base/ufos/research.ufo:61
 msgid "Technologies & Discoveries"
@@ -1877,19 +1878,19 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:79
 msgid "Advanced Laser Technology"
-msgstr ""
+msgstr "Tecnologia Laser Avanzata"
 
 #: ../base/ufos/research.ufo:81
 msgid "laser_txt"
-msgstr ""
+msgstr "La tecnologia Laser è da tempo conosciuta al genere umano, ma i cosidetti Laser Tattici ad alta energia o  THEL sono stati scoperti da un periodo relativamente breve. Anche se una variante mobile chiamata MTHEL esiste già, questi sistemi sono troppo grandi e inefficienti per avere vantaggi reali sulle armi convenzionali. Il design base di queste armi include un laser chimico (in questo caso, fluorido di deuterio), che i nostri scienziati hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad armi MTHEL più leggere nel futuro prossimo."
 
 #: ../base/ufos/research.ufo:90
 msgid "Advanced Plasma Control"
-msgstr ""
+msgstr "Controllo Avanzato del Plasma"
 
 #: ../base/ufos/research.ufo:92
 msgid "plasma_txt"
-msgstr ""
+msgstr "Gli Antariani hanno raffinato la tecnologia per usare il concetto base del plasma (gas ionizzato) e perfezionato il suo uso per scopi militari. Non solo lo usano per le armi, ma sono anche riusciti a creare ionizzatori più potenti di quanto l'umanità abbia mai immaginato. I tuoi scienziati potrebbero carpire i concetti base dietro queste migliorie e potremmo anche essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
 #: ../base/ufos/research.ufo:101
 msgid "Tachyon Control"
