@@ -224,7 +224,20 @@ ADD_DEFINITIONS("-DSVN='\"${SVN_OUTPUT}\"'")
 
 
 IF (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
-	LIST(APPEND EXTERNAL_LIBS m vorbisfile vorbis asound)
+        LIST(APPEND UFOSOURCEFILES
+                ports/linux/q_shlinux.c
+                ports/linux/vid_so.c
+                ports/linux/sys_linux.c
+                ports/unix/glob.c
+                "ports/unix/${NET_UDP}.c"
+        )  
+        LIST(APPEND UFODED_SOURCEFILES
+                ports/linux/q_shlinux.c
+                ports/linux/sys_linux.c
+                ports/unix/glob.c
+                "ports/unix/${NET_UDP}.c"
+        )
+	LIST(APPEND EXTERNAL_LIBS m vorbisfile vorbis intl)
 ENDIF (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
 
 IF (${CMAKE_SYSTEM_NAME} STREQUAL Linux)
@@ -275,6 +288,10 @@ ELSE(BUILD_SDLUFO)
    IF (${CMAKE_SYSTEM_NAME} STREQUAL Linux)
 		LIST(APPEND UFOSOURCEFILES client/cd_linux.c)
    ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
+
+   IF (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
+                LIST(APPEND UFOSOURCEFILES client/cd_linux.c)
+   ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
 #TODO: MacOs/Darwin/OSX
 # 	ifeq ($(OSTYPE),Darwin)
 # 		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_osx.o
