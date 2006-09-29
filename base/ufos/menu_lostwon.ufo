@@ -58,32 +58,62 @@ menu won
 
 	pic bt_tryagain
 	{
-		image	menu/button_aftermission
+		tooltip	"_Retry this mission"
+		image	"menu/button_blue"
 		pos		"480 700"
 		texl	"0 0"
-		texh	"128 55"
-		mousefx true
+		texh	"128 53"
+		mousefx	true
 		click	{ cmd "set game_tryagain 1;mn_pop;" }
+	}
+
+	string s_tryagain
+	{
+		pos	"544 710"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Try again"
 	}
 
 //	pic bt_replay
 //	{
-//		image	menu/button_aftermission
-//		pos		"626 700"
-//		texl	"0 60"
-//		texh	"128 115"
-//		mousefx true
-//		click
+//		tooltip	"_Replay your tactical mission as demo"
+//		image	"menu/button_blue"
+//		pos		"480 700"
+//		texl	"0 0"
+//		texh	"128 57"
+//		mousefx	true
+//		click	{ }
+//	}
+
+//	string s_replay
+//	{
+//		pos	"690 710"
+//		align	uc
+//		color "1 1 1 0.6"
+//		font	"f_big"
+//		string	"_Replay"
 //	}
 
 	pic bt_continue
 	{
-		image	menu/button_aftermission
+		tooltip	"_Continue"
+		image	"menu/button_blue"
 		pos		"865 700"
-		texl	"0 120"
-		texh	"128 175"
-		mousefx true
+		texl	"0 0"
+		texh	"128 53"
+		mousefx	true
 		click	{ cmd "set game_tryagain 0;mn_pop;" }
+	}
+
+	string s_continue
+	{
+		pos	"929 710"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Continue"
 	}
 
 	func init
@@ -157,32 +187,62 @@ menu lost
 
 	pic bt_tryagain
 	{
-		image	menu/button_aftermission
+		tooltip	"_Retry this mission"
+		image	"menu/button_blue"
 		pos		"480 700"
 		texl	"0 0"
-		texh	"128 55"
-		mousefx true
+		texh	"128 53"
+		mousefx	true
 		click	{ cmd "set game_tryagain 1;mn_pop;" }
+	}
+
+	string s_tryagain
+	{
+		pos	"544 710"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Try again"
 	}
 
 //	pic bt_replay
 //	{
-//		image	menu/button_aftermission
-//		pos		"626 700"
-//		texl	"0 60"
-//		texh	"128 115"
-//		mousefx true
-//		click
+//		tooltip	"_Replay your tactical mission as demo"
+//		image	"menu/button_blue"
+//		pos		"480 700"
+//		texl	"0 0"
+//		texh	"128 57"
+//		mousefx	true
+//		click	{ }
+//	}
+
+//	string s_replay
+//	{
+//		pos	"690 710"
+//		align	uc
+//		color "1 1 1 0.6"
+//		font	"f_big"
+//		string	"_Replay"
 //	}
 
 	pic bt_continue
 	{
-		image	menu/button_aftermission
+		tooltip	"_Continue"
+		image	"menu/button_blue"
 		pos		"865 700"
-		texl	"0 120"
-		texh	"128 175"
-		mousefx true
+		texl	"0 0"
+		texh	"128 53"
+		mousefx	true
 		click	{ cmd "set game_tryagain 0;mn_pop;" }
+	}
+
+	string s_continue
+	{
+		pos	"929 710"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Continue"
 	}
 
 	func init
