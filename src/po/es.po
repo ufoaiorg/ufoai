@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-09-29 07:07+0200\n"
+"POT-Creation-Date: 2006-09-29 11:46+0200\n"
 "PO-Revision-Date: 2006-08-08 22:16-0300\n"
 "Last-Translator: Alejandro Marzuca <serpentus@gmail.com>\n"
 "Language-Team: \n"
@@ -1979,15 +1979,27 @@ msgstr ""
 "not passing through. Not only that, but the nano-fabric is promising to also "
 "be lighter than similar conventional materials."
 
-#: ../base/ufos/research.ufo:136
+#: ../base/ufos/research.ufo:137
 msgid "General UFO technology"
 msgstr "Tecnología General de los OVNIs"
 
-#: ../base/ufos/research.ufo:137
-msgid "ufo_txt"
+#: ../base/ufos/research.ufo:138
+#, fuzzy
+msgid "ufo_tech_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:156 ../base/ufos/research.ufo:168
+#: ../base/ufos/research.ufo:157
+#, fuzzy
+msgid "alienincgrenade_txt"
+msgstr ""
+"While the usual incendiary grenade has been used for quite a while, this new "
+"one, which is also efficient against the aliens, uses a super-hot and long "
+"burning gel.\n"
+"Battle Implications: This grenade will set alight a small area on the "
+"battlefield, and all units caught in its blast radius. It can be timed in "
+"the same way as the Frag Grenade. "
+
+#: ../base/ufos/research.ufo:170
 #, fuzzy
 msgid "assault_txt"
 msgstr ""
@@ -2002,57 +2014,47 @@ msgstr ""
 "Battle Implications: A rifle with medium accuracy that can fire with optimum "
 "accuracy over medium range. "
 
-#: ../base/ufos/research.ufo:180 ../base/ufos/research.ufo:192
+#: ../base/ufos/research.ufo:182
 #, fuzzy
-msgid "sniper_txt"
+msgid "assault_mag_txt"
 msgstr ""
-"Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the "
-"most deadly weapons employed by Phalanx forces. Powered by a advanced "
-"version of the 0.5 cartridge, it is capable to easily penetrate the engine "
-"block of a vehicle at 150 meters. However, the weapon is very bulky and "
-"requires many precious seconds to aim, therefore the WE-78 is definitely not "
-"suitable for close combat.\n"
-"Battle Implications: A gun that has great accuracy at long range. It takes "
-"very long to fire, and a soldier cannot typically move and fire the Sniper "
-"Rifle in one turn. "
+"The AR-80 is the standard weapon of the Phalanx forces. Using improved ammo "
+"and a revolutionary design, this rifle can do more damage than any "
+"comparable assault rifle. The AR-80s rear loaded clip allows the weapon to "
+"fire with greater accuracy as the bullet has to move down an extended muzzle "
+"before exiting the weapon. The Assault Rifle can also be repaired with "
+"greater ease due to its modular design. For example, the firing mechanism "
+"can be field repaired simply by removing the out of commission back end and "
+"inserting a new one. The entire process takes only minutes.\n"
+"Battle Implications: A rifle with medium accuracy that can fire with optimum "
+"accuracy over medium range. "
 
-#: ../base/ufos/research.ufo:204 ../base/ufos/research.ufo:216
+#: ../base/ufos/research.ufo:194
 #, fuzzy
-msgid "smg_txt"
+msgid "bolterrifle_txt"
 msgstr ""
-"Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at "
-"the cost of less accuracy and penetrating power. These characteristics make "
-"the SMG-68 an ideal choice for close combat. Therefore Phalanx soldiers use "
-"the SMG-68 mainly in urban areas. To optimize the rate of fire, this weapon "
-"has two barrels through which the bullets are fired off alternating. To damp "
-"the considerable recoil, an advanced counter-balance system is used, powered "
-"by the explosion gases originating from the cartridges. The SMG-68 is rather "
-"inaccurate at medium range, but performs well at short range.\n"
-"Battle Implications: Rather inaccurate at medium range, but performs well at "
-"short range. Does more damage than the 9mm Pistol at short range "
-"(approximately the same as the pistol used akimbo, but with better "
-"accuracy). A good weapon to take to close-quarter combat situations. One of "
-"only three two-handed secondary weapons. Just as each of the three weapons, "
-"SMG-68 is not affected by the close combat skill (or lack thereof). Fits in "
-"the holster (barely). "
+"Good for stealth situations that require a long range weapon. Can maintain "
+"near perfect silence, but has a low fire rate. Has a potential for one shot "
+"kills."
 
-#: ../base/ufos/research.ufo:228 ../base/ufos/research.ufo:240
+#: ../base/ufos/research.ufo:206
 #, fuzzy
-msgid "shotgun_txt"
+msgid "bolterrifle_mag_txt"
 msgstr ""
-"The Phalanx forces have been using the SG-260 with great success for quite "
-"some time now. Compared with the shotguns traditionally used by many SWAT "
-"teams, the SG-260 is capable of concentrating the pellets it fires into a "
-"smaller area. Therefore, the effective range of this weapon is increased so "
-"that it can be used not only at close but also at medium range. The SG-260 "
-"is a good choice for urban combat, especially for clearing buildings.\n"
-"Battle Implications: The SG-260 shotgun has tremendous stopping power at "
-"close range and, accordingly, considerable recoil. Its main bulk hardly fits "
-"in the holster and the double barrel protrudes along the soldier leg. To "
-"master this secondary weapon, the soldier needs both hands and considerable "
-"skill with heavy weapons. "
+"Good for stealth situations that require a long range weapon. Can maintain "
+"near perfect silence, but has a low fire rate. Has a potential for one shot "
+"kills."
 
-#: ../base/ufos/research.ufo:252 ../base/ufos/research.ufo:264
+#: ../base/ufos/research.ufo:218
+msgid "combatknife_txt"
+msgstr ""
+"El cuchillo básico de combate. Puede ser usado a una distancia corta o ser "
+"lanzado.\n"
+"Consecuencias en la Batalla: El daño relativamente alto de una estocada se "
+"debe a la habilidad de apuntar a los puntos débiles del cuerpo del oponente, "
+"en las aberturas o junturas de las armaduras."
+
+#: ../base/ufos/research.ufo:230
 #, fuzzy
 msgid "flamer_txt"
 msgstr ""
@@ -2067,97 +2069,34 @@ msgstr ""
 "has decent accuracy, but very limited range. Useful also for setting on fire "
 "minimal, precisely chosen locations, one at a time. "
 
-#: ../base/ufos/research.ufo:276 ../base/ufos/research.ufo:288
+#: ../base/ufos/research.ufo:242
 #, fuzzy
-msgid "pistol_txt"
+msgid "flamer_mag_txt"
 msgstr ""
-"The P-95 is the standard Phalanx sidearm. The simple design of this handgun "
-"makes it a very reliable addition to every soldier's equipment. Because of "
-"the weapon's low weight a experienced gunner can also use two pistols at the "
-"same time with the considerable drawback of a massively reduced accuracy. "
-"The P-95 is especially appreciated by snipers for having a valuable sidearm "
-"when it comes to close combat.\n"
-"Battle Implications: A one-handed firearm that is very accurate at medium "
-"range, and can be fired at short notice, but lacks the stopping power of the "
-"Assault Rifle. Useful for self-defense, and covering fire. A soldier may use "
-"two pistols at the same time, gaining twice the firepower at a small "
-"accuracy cost, but using the same amount of TUs as when firing a single gun. "
+"The FT-207 is one of the most recent additions to tactical combat. Prior "
+"versions of this weapon were not employed due to the risk of accidentally "
+"igniting surrounding objects. This version, however, greatly reduces this "
+"risk by employing FHAS, or, Focused Heat Attack System, which restricts the "
+"'hot zone' created by the flamethrower to a very defined region. The area "
+"centimeters outside the 'hot zone' show no noticeable temperature increase. "
+"However, the enemy or object at which you aim will surely catch fire.\n"
+"Battle Implications: A weapon that shoots burning napalm from its muzzle. It "
+"has decent accuracy, but very limited range. Useful also for setting on fire "
+"minimal, precisely chosen locations, one at a time. "
 
-#: ../base/ufos/research.ufo:300
+#: ../base/ufos/research.ufo:254
 #, fuzzy
-msgid "rpg_txt"
+msgid "flashbang_txt"
 msgstr ""
-"Rocket Launcher fires rocket-propelled grenades. It is an unguided area of "
-"affect weapon. Suitable for killing small, tightly-packed groups of enemies, "
-"demolition of weak obstacles and barriers, and destroying lightly armored "
-"vehicles or aircraft. Operator must load a new charge into the weapon after "
-"each shot and that takes considerable time. Potentially, rockets of other "
-"kinds than high-explosive could also be used.\n"
-"Battle Implications: The capability to launch anti-armor explosive rounds "
-"designed for disabling vehicles and demolition and, in the future, to "
-"accommodate other specialized rockets, makes the RPG-37 a very versatile "
-"weapon. The modern liquid fuel engines enable rockets to operate on "
-"formidable distances. The only serious drawback of the weapon is the high "
-"reload time. "
+"Los Antareanos han refinado la tecnología para usar el concepto básico "
+"detrás del plasma (gas ionizado) y perfeccionado su uso para fines "
+"militares. No solamente lo usan como armas, pero también han logrado "
+"producir un propulsor iónico más poderoso de lo que jamas se ha imaginado la "
+"humanidad. Sus científicos pudieron reproducir el concepto básico detrás de "
+"estas mejoras y nosotros incluso podríamos producir algún equipamiento "
+"similar en cualquier momento."
 
-#: ../base/ufos/research.ufo:312
-#, fuzzy
-msgid "rpg_ammo_txt"
-msgstr ""
-"Rocket Launcher fires rocket-propelled grenades. It is an unguided area of "
-"affect weapon. Suitable for killing small, tightly-packed groups of enemies, "
-"demolition of weak obstacles and barriers, and destroying lightly armored "
-"vehicles or aircraft. Operator must load a new charge into the weapon after "
-"each shot and that takes considerable time. Potentially, rockets of other "
-"kinds than high-explosive could also be used.\n"
-"Battle Implications: The capability to launch anti-armor explosive rounds "
-"designed for disabling vehicles and demolition and, in the future, to "
-"accommodate other specialized rockets, makes the RPG-37 a very versatile "
-"weapon. The modern liquid fuel engines enable rockets to operate on "
-"formidable distances. The only serious drawback of the weapon is the high "
-"reload time. The High-Explosive rocket damages the unit it hits and all "
-"units in its blast radius. "
-
-#: ../base/ufos/research.ufo:324
-#, fuzzy
-msgid "rpg_incendiary_ammo_txt"
-msgstr ""
-"Rocket Launcher fires rocket-propelled grenades. It is an unguided area of "
-"affect weapon. Suitable for killing small, tightly-packed groups of enemies, "
-"demolition of weak obstacles and barriers, and destroying lightly armored "
-"vehicles or aircraft. Operator must load a new charge into the weapon after "
-"each shot and that takes considerable time. Potentially, rockets of other "
-"kinds than high-explosive could also be used.\n"
-"Battle Implications: The capability to launch anti-armor explosive rounds "
-"designed for disabling vehicles and demolition and, in the future, to "
-"accommodate other specialized rockets, makes the RPG-37 a very versatile "
-"weapon. The modern liquid fuel engines enable rockets to operate on "
-"formidable distances. The only serious drawback of the weapon is the high "
-"reload time. The Incendiary Rocket, which has to researched separately, has "
-"a smaller damage radius than the High-Explosive rocket, but sets terrain and "
-"all units caught in its blast radius on fire. "
-
-#: ../base/ufos/research.ufo:336
-#, fuzzy
-msgid "rpg_tachyon_ammo_txt"
-msgstr ""
-"Rocket Launcher fires rocket-propelled grenades. It is an unguided area of "
-"affect weapon. Suitable for killing small, tightly-packed groups of enemies, "
-"demolition of weak obstacles and barriers, and destroying lightly armored "
-"vehicles or aircraft. Operator must load a new charge into the weapon after "
-"each shot and that takes considerable time. Potentially, rockets of other "
-"kinds than high-explosive could also be used.\n"
-"Battle Implications: The capability to launch anti-armor explosive rounds "
-"designed for disabling vehicles and demolition and, in the future, to "
-"accommodate other specialized rockets, makes the RPG-37 a very versatile "
-"weapon. The modern liquid fuel engines enable rockets to operate on "
-"formidable distances. The only serious drawback of the weapon is the high "
-"reload time. The most advanced of all rockets, the Tachyon-Beam Rocket has a "
-"somewhat smaller splash damage radius than High-Explosive Rocket. After "
-"reaching its target, the warhead beams tachyon particles in all directions "
-"and is disintegrated by the radiation. "
-
-#: ../base/ufos/research.ufo:348
+#: ../base/ufos/research.ufo:265
 #, fuzzy
 msgid "fraggren_txt"
 msgstr ""
@@ -2172,93 +2111,7 @@ msgstr ""
 "being thrown, 1 means it explodes on the start of the player's next turn, "
 "etc. Timed grenades may be picked up and thrown back. "
 
-#: ../base/ufos/research.ufo:361
-#, fuzzy
-msgid "flashbang_txt"
-msgstr ""
-"Los Antareanos han refinado la tecnología para usar el concepto básico "
-"detrás del plasma (gas ionizado) y perfeccionado su uso para fines "
-"militares. No solamente lo usan como armas, pero también han logrado "
-"producir un propulsor iónico más poderoso de lo que jamas se ha imaginado la "
-"humanidad. Sus científicos pudieron reproducir el concepto básico detrás de "
-"estas mejoras y nosotros incluso podríamos producir algún equipamiento "
-"similar en cualquier momento."
-
-#: ../base/ufos/research.ufo:372
-#, fuzzy
-msgid "smokegren_txt"
-msgstr ""
-"Once our scientists understood the basics of plasma control they were able "
-"to reconstruct alien plasma grenade without even taking the risk of reverse "
-"engineering any original sample.\n"
-"Battle Implications: This device acts just like a Frag Grenade, but instead "
-"of an explosive blast it creates a ball of hot plasma in its effective "
-"radius. This radius is slightly larger than that of a Frag Grenade. "
-
-#: ../base/ufos/research.ufo:384
-msgid "combatknife_txt"
-msgstr ""
-"El cuchillo básico de combate. Puede ser usado a una distancia corta o ser "
-"lanzado.\n"
-"Consecuencias en la Batalla: El daño relativamente alto de una estocada se "
-"debe a la habilidad de apuntar a los puntos débiles del cuerpo del oponente, "
-"en las aberturas o junturas de las armaduras."
-
-#: ../base/ufos/research.ufo:396
-#, fuzzy
-msgid "stunrod_txt"
-msgstr ""
-"Easy to handle device for stunning and capturing your enemy. The only "
-"downside is that you need to stand next to him to do so, but then it's a few "
-"times more effective then stun grenades. The stun rod used by Phalanx "
-"soldiers is one of the most effective devices to capture your enemies alive. "
-"It not only deploys a huge electrical discharge onto the target, but also "
-"injects very powerful narcotics and drugs. The combination of the discharge "
-"and these chemicals can knock out even the biggest life-form known to "
-"mankind and will most likely also work on most of the aliens we have "
-"encountered yet. The rod is equipped with two roto-hammer like spikes that "
-"will be driven into the target and then deploy the before mentioned "
-"discharge and chemicals.\n"
-"Battle Implications: Does not fit into the holster, but one-handed. "
-
-#: ../base/ufos/research.ufo:408
-msgid "medikit_txt"
-msgstr ""
-"Un set de suministros médicos de campo. Capaz de restaurar la saludo de los "
-"soldados heridos."
-
-#: ../base/ufos/research.ufo:420
-msgid "irgoggles_txt"
-msgstr ""
-"Este artefacto permite a cualquier soldado que lo utilice detectar cualquier "
-"fuente de calor, por ejemplo extraterrestres. Es útil para ubicar "
-"extraterrestres detrás de las paredes."
-
-#: ../base/ufos/research.ufo:432
-#, fuzzy
-msgid "stungren_txt"
-msgstr ""
-"When this grenade goes off, it emits ultra-high frequency sound waves that "
-"temporarily paralyze the nervous system of all units caught in its effective "
-"blast radius. The closer a victim is to the center of the blast, the "
-"stronger the effect, and the longer the victim will stay unconscious. "
-"Because the sound waves are so high-pitched, they weaken very quickly with "
-"distance, so the grenade needs to go off fairly close to the target to have "
-"the desired effect. Beyond a certain radius, the grenade will only cause "
-"headaches.\n"
-"Battle Implications: The Stun Grenade is only effective against biologic "
-"organisms that have auditory senses. Fortunately, this includes all known "
-"biological aliens."
-
-#: ../base/ufos/research.ufo:444 ../base/ufos/research.ufo:456
-#, fuzzy
-msgid "bolterrifle_txt"
-msgstr ""
-"Good for stealth situations that require a long range weapon. Can maintain "
-"near perfect silence, but has a low fire rate. Has a potential for one shot "
-"kills."
-
-#: ../base/ufos/research.ufo:468
+#: ../base/ufos/research.ufo:277
 #, fuzzy
 msgid "grenl_txt"
 msgstr ""
@@ -2267,7 +2120,7 @@ msgstr ""
 "just as well and at greater distances to boot. The secondary attack is a "
 "timed grenade mode, just as for frag grenades."
 
-#: ../base/ufos/research.ufo:480
+#: ../base/ufos/research.ufo:289
 #, fuzzy
 msgid "grenl_ammo_txt"
 msgstr ""
@@ -2277,7 +2130,17 @@ msgstr ""
 "Grenade shell is comparable to the Frag Grenade, but with somewhat smaller "
 "damage."
 
-#: ../base/ufos/research.ufo:492
+#: ../base/ufos/research.ufo:301 ../base/ufos/research.ufo:313
+#, fuzzy
+msgid "grenl_fle_ammo_txt"
+msgstr ""
+"Grenade Launcher allows the soldier to fire grenades one after another. The "
+"grenades are less damaging than hand grenades, but can travel over obstacles "
+"just as well and at greater distances to boot. The standard High-Explosive "
+"Grenade shell is comparable to the Frag Grenade, but with somewhat smaller "
+"damage."
+
+#: ../base/ufos/research.ufo:325
 #, fuzzy
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
@@ -2287,35 +2150,7 @@ msgstr ""
 "higher damage than the Frag Grenade Shell and has higher splash damage "
 "radius."
 
-#: ../base/ufos/research.ufo:504 ../base/ufos/research.ufo:516
-#, fuzzy
-msgid "laserpistol_txt"
-msgstr ""
-"Using a smaller and less powerful version of the 'YAG laser reactor', the "
-"LAS-10 is like its big brother, the LAS-24 Laser Rifle, a offspring of the "
-"recent advances made in the field of laser technology. Due to the smaller "
-"'YAG reactor', the photons have a lower kinetic energy and therefore a "
-"lessened penetrating power.\n"
-"Battle Implications: A one-handed firearm that is very accurate at medium "
-"range, and can be fired at short notice. It deals limited damage, but is "
-"more accurate then the 9mm Pistol due to the lack of recoil. Like 9mm "
-"Pistols, Laser Pistols may be used ambidextrously. "
-
-#: ../base/ufos/research.ufo:528 ../base/ufos/research.ufo:540
-#, fuzzy
-msgid "laserrifle_txt"
-msgstr ""
-"The XLR-24 (Experimental Laser Rifle) is a revolution in modern day warfare. "
-"Using a highly complex system of light refraction, crystals, and high power-"
-"density batteries, the laser rifle is a deadly weapon. The lack of a "
-"detonation and recoil from a discharged bullet make the XLR-24 far more "
-"accurate than the standard assault rifle while still retaining medium-range "
-"capability and lethal firepower.\n"
-"Battle Implications: Like the Assault Rifle, the Laser Rifle is effective at "
-"medium range. It deals fair damage and is more accurate than the Assault "
-"Rifle due to the lack of recoil. "
-
-#: ../base/ufos/research.ufo:552 ../base/ufos/research.ufo:564
+#: ../base/ufos/research.ufo:337 ../base/ufos/research.ufo:349
 #, fuzzy
 msgid "heavylaser_txt"
 msgstr ""
@@ -2332,29 +2167,14 @@ msgstr ""
 "overload, the heavy Laser is less accurate than a Laser Rifle, but it has a "
 "longer effective range. It also does a lot more damage. "
 
-#: ../base/ufos/research.ufo:580
-#, fuzzy
-msgid "alienincgrenade_txt"
+#: ../base/ufos/research.ufo:361
+msgid "irgoggles_txt"
 msgstr ""
-"While the usual incendiary grenade has been used for quite a while, this new "
-"one, which is also efficient against the aliens, uses a super-hot and long "
-"burning gel.\n"
-"Battle Implications: This grenade will set alight a small area on the "
-"battlefield, and all units caught in its blast radius. It can be timed in "
-"the same way as the Frag Grenade. "
+"Este artefacto permite a cualquier soldado que lo utilice detectar cualquier "
+"fuente de calor, por ejemplo extraterrestres. Es útil para ubicar "
+"extraterrestres detrás de las paredes."
 
-#: ../base/ufos/research.ufo:593
-#, fuzzy
-msgid "plasmagren_txt"
-msgstr ""
-"Once our scientists understood the basics of plasma control they were able "
-"to reconstruct alien plasma grenade without even taking the risk of reverse "
-"engineering any original sample.\n"
-"Battle Implications: This device acts just like a Frag Grenade, but instead "
-"of an explosive blast it creates a ball of hot plasma in its effective "
-"radius. This radius is slightly larger than that of a Frag Grenade. "
-
-#: ../base/ufos/research.ufo:606
+#: ../base/ufos/research.ufo:373
 #, fuzzy
 msgid "kerrblade_txt"
 msgstr ""
@@ -2377,18 +2197,103 @@ msgstr ""
 "blade. It does not fit into the holster, so it's not quite a sidearm. It is "
 "one-handed and close range, so it's definitely not a primary weapon. "
 
-#: ../base/ufos/research.ufo:619
+#: ../base/ufos/research.ufo:386
 #, fuzzy
-msgid "plasblade_txt"
+msgid "laserpistol_txt"
 msgstr ""
-"This melee weapon has proved to be of great value in hand to hand combat "
-"because of the devastating burns it can inflict when someone touches its "
-"blade. Generally the enemy is unable to fight onward just after one strike. "
-"On the downside the range of this weapon is utterly limited."
+"Using a smaller and less powerful version of the 'YAG laser reactor', the "
+"LAS-10 is like its big brother, the LAS-24 Laser Rifle, a offspring of the "
+"recent advances made in the field of laser technology. Due to the smaller "
+"'YAG reactor', the photons have a lower kinetic energy and therefore a "
+"lessened penetrating power.\n"
+"Battle Implications: A one-handed firearm that is very accurate at medium "
+"range, and can be fired at short notice. It deals limited damage, but is "
+"more accurate then the 9mm Pistol due to the lack of recoil. Like 9mm "
+"Pistols, Laser Pistols may be used ambidextrously. "
+
+#: ../base/ufos/research.ufo:398
+#, fuzzy
+msgid "laserpistol_mag_txt"
+msgstr ""
+"Using a smaller and less powerful version of the 'YAG laser reactor', the "
+"LAS-10 is like its big brother, the LAS-24 Laser Rifle, a offspring of the "
+"recent advances made in the field of laser technology. Due to the smaller "
+"'YAG reactor', the photons have a lower kinetic energy and therefore a "
+"lessened penetrating power.\n"
+"Battle Implications: A one-handed firearm that is very accurate at medium "
+"range, and can be fired at short notice. It deals limited damage, but is "
+"more accurate then the 9mm Pistol due to the lack of recoil. Like 9mm "
+"Pistols, Laser Pistols may be used ambidextrously. "
+
+#: ../base/ufos/research.ufo:410
+#, fuzzy
+msgid "laserrifle_txt"
+msgstr ""
+"The XLR-24 (Experimental Laser Rifle) is a revolution in modern day warfare. "
+"Using a highly complex system of light refraction, crystals, and high power-"
+"density batteries, the laser rifle is a deadly weapon. The lack of a "
+"detonation and recoil from a discharged bullet make the XLR-24 far more "
+"accurate than the standard assault rifle while still retaining medium-range "
+"capability and lethal firepower.\n"
+"Battle Implications: Like the Assault Rifle, the Laser Rifle is effective at "
+"medium range. It deals fair damage and is more accurate than the Assault "
+"Rifle due to the lack of recoil. "
+
+#: ../base/ufos/research.ufo:422
+#, fuzzy
+msgid "laserrifle_mag_txt"
+msgstr ""
+"The XLR-24 (Experimental Laser Rifle) is a revolution in modern day warfare. "
+"Using a highly complex system of light refraction, crystals, and high power-"
+"density batteries, the laser rifle is a deadly weapon. The lack of a "
+"detonation and recoil from a discharged bullet make the XLR-24 far more "
+"accurate than the standard assault rifle while still retaining medium-range "
+"capability and lethal firepower.\n"
+"Battle Implications: Like the Assault Rifle, the Laser Rifle is effective at "
+"medium range. It deals fair damage and is more accurate than the Assault "
+"Rifle due to the lack of recoil. "
+
+#: ../base/ufos/research.ufo:434
+msgid "medikit_txt"
+msgstr ""
+"Un set de suministros médicos de campo. Capaz de restaurar la saludo de los "
+"soldados heridos."
+
+#: ../base/ufos/research.ufo:446
+#, fuzzy
+msgid "pistol_txt"
+msgstr ""
+"The P-95 is the standard Phalanx sidearm. The simple design of this handgun "
+"makes it a very reliable addition to every soldier's equipment. Because of "
+"the weapon's low weight a experienced gunner can also use two pistols at the "
+"same time with the considerable drawback of a massively reduced accuracy. "
+"The P-95 is especially appreciated by snipers for having a valuable sidearm "
+"when it comes to close combat.\n"
+"Battle Implications: A one-handed firearm that is very accurate at medium "
+"range, and can be fired at short notice, but lacks the stopping power of the "
+"Assault Rifle. Useful for self-defense, and covering fire. A soldier may use "
+"two pistols at the same time, gaining twice the firepower at a small "
+"accuracy cost, but using the same amount of TUs as when firing a single gun. "
+
+#: ../base/ufos/research.ufo:458
+#, fuzzy
+msgid "pistol_mag_txt"
+msgstr ""
+"The P-95 is the standard Phalanx sidearm. The simple design of this handgun "
+"makes it a very reliable addition to every soldier's equipment. Because of "
+"the weapon's low weight a experienced gunner can also use two pistols at the "
+"same time with the considerable drawback of a massively reduced accuracy. "
+"The P-95 is especially appreciated by snipers for having a valuable sidearm "
+"when it comes to close combat.\n"
+"Battle Implications: A one-handed firearm that is very accurate at medium "
+"range, and can be fired at short notice, but lacks the stopping power of the "
+"Assault Rifle. Useful for self-defense, and covering fire. A soldier may use "
+"two pistols at the same time, gaining twice the firepower at a small "
+"accuracy cost, but using the same amount of TUs as when firing a single gun. "
 
 # los ***** son poque no supe como traducir:
 # longer bursts recoil
-#: ../base/ufos/research.ufo:632 ../base/ufos/research.ufo:645
+#: ../base/ufos/research.ufo:470
 #, fuzzy
 msgid "plasatomizer_txt"
 msgstr ""
@@ -2407,7 +2312,63 @@ msgstr ""
 "manos para ser operados, caben en un pistolero y no dependen de habilidades "
 "par el combate cuerpo a cuerpo."
 
-#: ../base/ufos/research.ufo:657 ../base/ufos/research.ufo:670
+# los ***** son poque no supe como traducir:
+# longer bursts recoil
+#: ../base/ufos/research.ufo:483
+#, fuzzy
+msgid "plasatomizer_mag_txt"
+msgstr ""
+"Usan la misma tecnología que el rifle plasmático, pero en una escala mucho "
+"menor, el atomizador plasmático también puede causar un daño considerable a "
+"su objetivo. El plasma de xenón súper-calentado es contenido dentro de un "
+"campo magnético fuerte implementado en el cartucho del arma, y es disparado "
+"continuamente en porciones mínimas. Debido al tamaño pequeño de esta arma, "
+"el generador del campo magnético no tiene la misma capacidad como la usada "
+"en el rifle de plasma. En consecuencia la energía cinética dada al rayo de "
+"plasma es disminuida, pero gracias al ***** no lo es.\n"
+"Implicaciones en la Batalla: Es lo más básico en armamento extraterrestre "
+"facilitado a los trabajadores. Por lo general hace un poco más de daño a un "
+"objetivo sin protección que un subfusil, también están precisa como uno. Al "
+"igual que los subfusiles, los atomizadores plasmáticos necesitan de ambas "
+"manos para ser operados, caben en un pistolero y no dependen de habilidades "
+"par el combate cuerpo a cuerpo."
+
+#: ../base/ufos/research.ufo:495
+msgid "plasblaster_txt"
+msgstr ""
+"Un arma normalmente utilizada para destruir objetivos armados. Es pesada y "
+"lenta para dispara, sin embargo esta arma es mas poderosa que cualquier cosa "
+"hecha en la Tierra."
+
+#: ../base/ufos/research.ufo:508
+#, fuzzy
+msgid "plasblaster_mag_txt"
+msgstr ""
+"Un arma normalmente utilizada para destruir objetivos armados. Es pesada y "
+"lenta para dispara, sin embargo esta arma es mas poderosa que cualquier cosa "
+"hecha en la Tierra."
+
+#: ../base/ufos/research.ufo:520
+#, fuzzy
+msgid "plasblade_txt"
+msgstr ""
+"This melee weapon has proved to be of great value in hand to hand combat "
+"because of the devastating burns it can inflict when someone touches its "
+"blade. Generally the enemy is unable to fight onward just after one strike. "
+"On the downside the range of this weapon is utterly limited."
+
+#: ../base/ufos/research.ufo:533
+#, fuzzy
+msgid "plasmagren_txt"
+msgstr ""
+"Once our scientists understood the basics of plasma control they were able "
+"to reconstruct alien plasma grenade without even taking the risk of reverse "
+"engineering any original sample.\n"
+"Battle Implications: This device acts just like a Frag Grenade, but instead "
+"of an explosive blast it creates a ball of hot plasma in its effective "
+"radius. This radius is slightly larger than that of a Frag Grenade. "
+
+#: ../base/ufos/research.ufo:546
 #, fuzzy
 msgid "plasrifle_txt"
 msgstr ""
@@ -2424,14 +2385,258 @@ msgstr ""
 "does more damage to an unprotected target than an Assault Rifle, and is "
 "about as accurate as one."
 
-#: ../base/ufos/research.ufo:682 ../base/ufos/research.ufo:695
-msgid "plasblaster_txt"
+#: ../base/ufos/research.ufo:559
+#, fuzzy
+msgid "plasrifle_mag_txt"
 msgstr ""
-"Un arma normalmente utilizada para destruir objetivos armados. Es pesada y "
-"lenta para dispara, sin embargo esta arma es mas poderosa que cualquier cosa "
-"hecha en la Tierra."
+"The Plasma Rifle is the weapon most often used by alien soldiers. The plasma "
+"fired by this weapon easily cuts through almost every known material. "
+"Therefore the standard Phalanx Kevlar Vest only provides minor protection. "
+"Soldiers wounded by a Plasma Rifle's beam suffer of extensive burns which "
+"are in many cases instantly lethal. The overheated highly energetic xenon "
+"gas plasma is stored inside a intense magnetic field integrated in the "
+"weapon's clip. If the trigger is used, the magnetic field is reconfigured so "
+"that a continuous plasma beam is formed. This beam is focused by a second "
+"magnetic field and finally propelled to the front end of the Plasma Rifle.\n"
+"Battle Implications: Standard issue weapons for Soldier-class Antareans. It "
+"does more damage to an unprotected target than an Assault Rifle, and is "
+"about as accurate as one."
 
-#: ../base/ufos/research.ufo:707 ../base/ufos/research.ufo:720
+#: ../base/ufos/research.ufo:571
+#, fuzzy
+msgid "rpg_txt"
+msgstr ""
+"Rocket Launcher fires rocket-propelled grenades. It is an unguided area of "
+"affect weapon. Suitable for killing small, tightly-packed groups of enemies, "
+"demolition of weak obstacles and barriers, and destroying lightly armored "
+"vehicles or aircraft. Operator must load a new charge into the weapon after "
+"each shot and that takes considerable time. Potentially, rockets of other "
+"kinds than high-explosive could also be used.\n"
+"Battle Implications: The capability to launch anti-armor explosive rounds "
+"designed for disabling vehicles and demolition and, in the future, to "
+"accommodate other specialized rockets, makes the RPG-37 a very versatile "
+"weapon. The modern liquid fuel engines enable rockets to operate on "
+"formidable distances. The only serious drawback of the weapon is the high "
+"reload time. "
+
+#: ../base/ufos/research.ufo:583
+#, fuzzy
+msgid "rpg_ammo_txt"
+msgstr ""
+"Rocket Launcher fires rocket-propelled grenades. It is an unguided area of "
+"affect weapon. Suitable for killing small, tightly-packed groups of enemies, "
+"demolition of weak obstacles and barriers, and destroying lightly armored "
+"vehicles or aircraft. Operator must load a new charge into the weapon after "
+"each shot and that takes considerable time. Potentially, rockets of other "
+"kinds than high-explosive could also be used.\n"
+"Battle Implications: The capability to launch anti-armor explosive rounds "
+"designed for disabling vehicles and demolition and, in the future, to "
+"accommodate other specialized rockets, makes the RPG-37 a very versatile "
+"weapon. The modern liquid fuel engines enable rockets to operate on "
+"formidable distances. The only serious drawback of the weapon is the high "
+"reload time. The High-Explosive rocket damages the unit it hits and all "
+"units in its blast radius. "
+
+#: ../base/ufos/research.ufo:595
+#, fuzzy
+msgid "rpg_incendiary_ammo_txt"
+msgstr ""
+"Rocket Launcher fires rocket-propelled grenades. It is an unguided area of "
+"affect weapon. Suitable for killing small, tightly-packed groups of enemies, "
+"demolition of weak obstacles and barriers, and destroying lightly armored "
+"vehicles or aircraft. Operator must load a new charge into the weapon after "
+"each shot and that takes considerable time. Potentially, rockets of other "
+"kinds than high-explosive could also be used.\n"
+"Battle Implications: The capability to launch anti-armor explosive rounds "
+"designed for disabling vehicles and demolition and, in the future, to "
+"accommodate other specialized rockets, makes the RPG-37 a very versatile "
+"weapon. The modern liquid fuel engines enable rockets to operate on "
+"formidable distances. The only serious drawback of the weapon is the high "
+"reload time. The Incendiary Rocket, which has to researched separately, has "
+"a smaller damage radius than the High-Explosive rocket, but sets terrain and "
+"all units caught in its blast radius on fire. "
+
+#: ../base/ufos/research.ufo:607
+#, fuzzy
+msgid "rpg_tachyon_ammo_txt"
+msgstr ""
+"Rocket Launcher fires rocket-propelled grenades. It is an unguided area of "
+"affect weapon. Suitable for killing small, tightly-packed groups of enemies, "
+"demolition of weak obstacles and barriers, and destroying lightly armored "
+"vehicles or aircraft. Operator must load a new charge into the weapon after "
+"each shot and that takes considerable time. Potentially, rockets of other "
+"kinds than high-explosive could also be used.\n"
+"Battle Implications: The capability to launch anti-armor explosive rounds "
+"designed for disabling vehicles and demolition and, in the future, to "
+"accommodate other specialized rockets, makes the RPG-37 a very versatile "
+"weapon. The modern liquid fuel engines enable rockets to operate on "
+"formidable distances. The only serious drawback of the weapon is the high "
+"reload time. The most advanced of all rockets, the Tachyon-Beam Rocket has a "
+"somewhat smaller splash damage radius than High-Explosive Rocket. After "
+"reaching its target, the warhead beams tachyon particles in all directions "
+"and is disintegrated by the radiation. "
+
+#: ../base/ufos/research.ufo:619
+#, fuzzy
+msgid "shotgun_txt"
+msgstr ""
+"The Phalanx forces have been using the SG-260 with great success for quite "
+"some time now. Compared with the shotguns traditionally used by many SWAT "
+"teams, the SG-260 is capable of concentrating the pellets it fires into a "
+"smaller area. Therefore, the effective range of this weapon is increased so "
+"that it can be used not only at close but also at medium range. The SG-260 "
+"is a good choice for urban combat, especially for clearing buildings.\n"
+"Battle Implications: The SG-260 shotgun has tremendous stopping power at "
+"close range and, accordingly, considerable recoil. Its main bulk hardly fits "
+"in the holster and the double barrel protrudes along the soldier leg. To "
+"master this secondary weapon, the soldier needs both hands and considerable "
+"skill with heavy weapons. "
+
+#: ../base/ufos/research.ufo:631
+#, fuzzy
+msgid "shotgun_ammo_txt"
+msgstr ""
+"The Phalanx forces have been using the SG-260 with great success for quite "
+"some time now. Compared with the shotguns traditionally used by many SWAT "
+"teams, the SG-260 is capable of concentrating the pellets it fires into a "
+"smaller area. Therefore, the effective range of this weapon is increased so "
+"that it can be used not only at close but also at medium range. The SG-260 "
+"is a good choice for urban combat, especially for clearing buildings.\n"
+"Battle Implications: The SG-260 shotgun has tremendous stopping power at "
+"close range and, accordingly, considerable recoil. Its main bulk hardly fits "
+"in the holster and the double barrel protrudes along the soldier leg. To "
+"master this secondary weapon, the soldier needs both hands and considerable "
+"skill with heavy weapons. "
+
+#: ../base/ufos/research.ufo:643
+#, fuzzy
+msgid "shotgun_slug_ammo_txt"
+msgstr ""
+"The Phalanx forces have been using the SG-260 with great success for quite "
+"some time now. Compared with the shotguns traditionally used by many SWAT "
+"teams, the SG-260 is capable of concentrating the pellets it fires into a "
+"smaller area. Therefore, the effective range of this weapon is increased so "
+"that it can be used not only at close but also at medium range. The SG-260 "
+"is a good choice for urban combat, especially for clearing buildings.\n"
+"Battle Implications: The SG-260 shotgun has tremendous stopping power at "
+"close range and, accordingly, considerable recoil. Its main bulk hardly fits "
+"in the holster and the double barrel protrudes along the soldier leg. To "
+"master this secondary weapon, the soldier needs both hands and considerable "
+"skill with heavy weapons. "
+
+#: ../base/ufos/research.ufo:655
+#, fuzzy
+msgid "smg_txt"
+msgstr ""
+"Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at "
+"the cost of less accuracy and penetrating power. These characteristics make "
+"the SMG-68 an ideal choice for close combat. Therefore Phalanx soldiers use "
+"the SMG-68 mainly in urban areas. To optimize the rate of fire, this weapon "
+"has two barrels through which the bullets are fired off alternating. To damp "
+"the considerable recoil, an advanced counter-balance system is used, powered "
+"by the explosion gases originating from the cartridges. The SMG-68 is rather "
+"inaccurate at medium range, but performs well at short range.\n"
+"Battle Implications: Rather inaccurate at medium range, but performs well at "
+"short range. Does more damage than the 9mm Pistol at short range "
+"(approximately the same as the pistol used akimbo, but with better "
+"accuracy). A good weapon to take to close-quarter combat situations. One of "
+"only three two-handed secondary weapons. Just as each of the three weapons, "
+"SMG-68 is not affected by the close combat skill (or lack thereof). Fits in "
+"the holster (barely). "
+
+#: ../base/ufos/research.ufo:667
+#, fuzzy
+msgid "smg_mag_txt"
+msgstr ""
+"Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at "
+"the cost of less accuracy and penetrating power. These characteristics make "
+"the SMG-68 an ideal choice for close combat. Therefore Phalanx soldiers use "
+"the SMG-68 mainly in urban areas. To optimize the rate of fire, this weapon "
+"has two barrels through which the bullets are fired off alternating. To damp "
+"the considerable recoil, an advanced counter-balance system is used, powered "
+"by the explosion gases originating from the cartridges. The SMG-68 is rather "
+"inaccurate at medium range, but performs well at short range.\n"
+"Battle Implications: Rather inaccurate at medium range, but performs well at "
+"short range. Does more damage than the 9mm Pistol at short range "
+"(approximately the same as the pistol used akimbo, but with better "
+"accuracy). A good weapon to take to close-quarter combat situations. One of "
+"only three two-handed secondary weapons. Just as each of the three weapons, "
+"SMG-68 is not affected by the close combat skill (or lack thereof). Fits in "
+"the holster (barely). "
+
+#: ../base/ufos/research.ufo:679
+#, fuzzy
+msgid "smokegren_txt"
+msgstr ""
+"Once our scientists understood the basics of plasma control they were able "
+"to reconstruct alien plasma grenade without even taking the risk of reverse "
+"engineering any original sample.\n"
+"Battle Implications: This device acts just like a Frag Grenade, but instead "
+"of an explosive blast it creates a ball of hot plasma in its effective "
+"radius. This radius is slightly larger than that of a Frag Grenade. "
+
+#: ../base/ufos/research.ufo:691
+#, fuzzy
+msgid "sniper_txt"
+msgstr ""
+"Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the "
+"most deadly weapons employed by Phalanx forces. Powered by a advanced "
+"version of the 0.5 cartridge, it is capable to easily penetrate the engine "
+"block of a vehicle at 150 meters. However, the weapon is very bulky and "
+"requires many precious seconds to aim, therefore the WE-78 is definitely not "
+"suitable for close combat.\n"
+"Battle Implications: A gun that has great accuracy at long range. It takes "
+"very long to fire, and a soldier cannot typically move and fire the Sniper "
+"Rifle in one turn. "
+
+#: ../base/ufos/research.ufo:703
+#, fuzzy
+msgid "sniper_mag_txt"
+msgstr ""
+"Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the "
+"most deadly weapons employed by Phalanx forces. Powered by a advanced "
+"version of the 0.5 cartridge, it is capable to easily penetrate the engine "
+"block of a vehicle at 150 meters. However, the weapon is very bulky and "
+"requires many precious seconds to aim, therefore the WE-78 is definitely not "
+"suitable for close combat.\n"
+"Battle Implications: A gun that has great accuracy at long range. It takes "
+"very long to fire, and a soldier cannot typically move and fire the Sniper "
+"Rifle in one turn. "
+
+#: ../base/ufos/research.ufo:715
+#, fuzzy
+msgid "stungren_txt"
+msgstr ""
+"When this grenade goes off, it emits ultra-high frequency sound waves that "
+"temporarily paralyze the nervous system of all units caught in its effective "
+"blast radius. The closer a victim is to the center of the blast, the "
+"stronger the effect, and the longer the victim will stay unconscious. "
+"Because the sound waves are so high-pitched, they weaken very quickly with "
+"distance, so the grenade needs to go off fairly close to the target to have "
+"the desired effect. Beyond a certain radius, the grenade will only cause "
+"headaches.\n"
+"Battle Implications: The Stun Grenade is only effective against biologic "
+"organisms that have auditory senses. Fortunately, this includes all known "
+"biological aliens."
+
+#: ../base/ufos/research.ufo:727
+#, fuzzy
+msgid "stunrod_txt"
+msgstr ""
+"Easy to handle device for stunning and capturing your enemy. The only "
+"downside is that you need to stand next to him to do so, but then it's a few "
+"times more effective then stun grenades. The stun rod used by Phalanx "
+"soldiers is one of the most effective devices to capture your enemies alive. "
+"It not only deploys a huge electrical discharge onto the target, but also "
+"injects very powerful narcotics and drugs. The combination of the discharge "
+"and these chemicals can knock out even the biggest life-form known to "
+"mankind and will most likely also work on most of the aliens we have "
+"encountered yet. The rod is equipped with two roto-hammer like spikes that "
+"will be driven into the target and then deploy the before mentioned "
+"discharge and chemicals.\n"
+"Battle Implications: Does not fit into the holster, but one-handed. "
+
+#: ../base/ufos/research.ufo:739
 #, fuzzy
 msgid "tachyonpistol_txt"
 msgstr ""
@@ -2443,14 +2648,33 @@ msgstr ""
 "Battle Implications: Good for close combat with well-armored enemies, "
 "especially when used ambidextrously. "
 
-#: ../base/ufos/research.ufo:732 ../base/ufos/research.ufo:745
+#: ../base/ufos/research.ufo:752
+#, fuzzy
+msgid "tachyonpistol_mag_txt"
+msgstr ""
+"This weapon is powered by a miniaturized version of the tachyon accelerator. "
+"Therefore the Tachyon Pistol has a lower rate of fire as well as a "
+"diminished accuracy compared to the other two tachyon weapons. The major "
+"advantage of the Tachyon Pistol is its low weight and its small dimensions "
+"which makes it a valuable sidearm.\n"
+"Battle Implications: Good for close combat with well-armored enemies, "
+"especially when used ambidextrously. "
+
+#: ../base/ufos/research.ufo:764
 #, fuzzy
 msgid "tachyonrifle_txt"
 msgstr ""
 "These rifles fire tachyon beams at medium range. They are not exceptionally "
 "accurate, but they are very powerful, especially against armored targets."
 
-#: ../base/ufos/research.ufo:757 ../base/ufos/research.ufo:770
+#: ../base/ufos/research.ufo:777
+#, fuzzy
+msgid "tachyonrifle_mag_txt"
+msgstr ""
+"These rifles fire tachyon beams at medium range. They are not exceptionally "
+"accurate, but they are very powerful, especially against armored targets."
+
+#: ../base/ufos/research.ufo:789
 #, fuzzy
 msgid "tachyonsniper_txt"
 msgstr ""
@@ -2461,7 +2685,18 @@ msgstr ""
 "the Tachyon Sniper Rifle are more focused and hence have a greater accuracy "
 "as well as a bigger penetrating power."
 
-#: ../base/ufos/research.ufo:786
+#: ../base/ufos/research.ufo:802
+#, fuzzy
+msgid "tachyonsniper_mag_txt"
+msgstr ""
+"The Tachyon Sniper Rifle uses the newly discovered alien tachyon accelerator "
+"technology, first found in an Ortnok scout spaceship. Unlike the Tachyon "
+"Rifle, this weapon has a low rate of fire because the tachyon particles are "
+"intensely charged before they are fired. This means that the shots fired by "
+"the Tachyon Sniper Rifle are more focused and hence have a greater accuracy "
+"as well as a bigger penetrating power."
+
+#: ../base/ufos/research.ufo:818
 #, fuzzy
 msgid "kevlar_armor_txt"
 msgstr ""
@@ -2474,7 +2709,7 @@ msgstr ""
 "While Kevlar is not flammable, the other parts of the armor: stripes, "
 "pockets, etc. are easily damaged by fire or any other harsh conditions. "
 
-#: ../base/ufos/research.ufo:796
+#: ../base/ufos/research.ufo:828
 #, fuzzy
 msgid "nano_armor_txt"
 msgstr ""
@@ -2494,11 +2729,53 @@ msgstr ""
 "the soldier's body and so weights a little more. Still, even weak soldiers "
 "should be able to wear it without problems. "
 
-#: ../base/ufos/research.ufo:849
+#: ../base/ufos/research.ufo:881
+msgid "Blast Damage Type"
+msgstr "Tipo de Daño del Estallido"
+
+#: ../base/ufos/research.ufo:883
+#, fuzzy
+msgid "blast_damage_txt"
+msgstr ""
+"High-explosive charges, or shrapnel shells or shotgun buckshots. Very easy "
+"to shield against with armor. The weapons with blast damage are usually long "
+"range or thrown (grenades) and almost always cause splash damage. As a rule, "
+"the splash damage is twice as big as point damage for such weapons."
+
+#: ../base/ufos/research.ufo:892
+msgid "Fire Damage Type"
+msgstr "Tipo de Daño del Fuego"
+
+#: ../base/ufos/research.ufo:894
+#, fuzzy
+msgid "fire_damage_txt"
+msgstr ""
+"Burns actors, spreads over terrain, lights surroundings (the last two not "
+"yet implemented). Not very dangerous to mechanical actors and to those in "
+"life-support armor. Modern armor fabrics are usually nonflammable, but only "
+"life-support armor protects from the heat, toxic combustion gases and lack "
+"of oxygen."
+
+#: ../base/ufos/research.ufo:903
+msgid "Laser Damage Type"
+msgstr "Tipo de Daño de Láser"
+
+#: ../base/ufos/research.ufo:905
+#, fuzzy
+msgid "laser_damage_txt"
+msgstr ""
+"Beam of focused light that pierces armor and burns flesh inside. So "
+"concentrated are the beams that it's hard to block them with any armor, "
+"especially with armor made by the aliens (it appears they didn't use laser "
+"in their own wars). However the punctures are so minute that armor is "
+"considered almost intact even after lethal shots. Laser weapons tend to have "
+"low damage, long range and high accuracy. "
+
+#: ../base/ufos/research.ufo:915
 msgid "Normal Damage Type"
 msgstr "Tipo de Daño Normal"
 
-#: ../base/ufos/research.ufo:851
+#: ../base/ufos/research.ufo:917
 #, fuzzy
 msgid "normal_damage_txt"
 msgstr ""
@@ -2511,38 +2788,11 @@ msgstr ""
 "damage can be defended against by distributing the force of the impact "
 "across a large area. A supple yet firm harness suffices for this task. "
 
-#: ../base/ufos/research.ufo:860
-msgid "Blast Damage Type"
-msgstr "Tipo de Daño del Estallido"
-
-#: ../base/ufos/research.ufo:862
-#, fuzzy
-msgid "blast_damage_txt"
-msgstr ""
-"High-explosive charges, or shrapnel shells or shotgun buckshots. Very easy "
-"to shield against with armor. The weapons with blast damage are usually long "
-"range or thrown (grenades) and almost always cause splash damage. As a rule, "
-"the splash damage is twice as big as point damage for such weapons."
-
-#: ../base/ufos/research.ufo:871
-msgid "Fire Damage Type"
-msgstr "Tipo de Daño del Fuego"
-
-#: ../base/ufos/research.ufo:873
-#, fuzzy
-msgid "fire_damage_txt"
-msgstr ""
-"Burns actors, spreads over terrain, lights surroundings (the last two not "
-"yet implemented). Not very dangerous to mechanical actors and to those in "
-"life-support armor. Modern armor fabrics are usually nonflammable, but only "
-"life-support armor protects from the heat, toxic combustion gases and lack "
-"of oxygen."
-
-#: ../base/ufos/research.ufo:882
+#: ../base/ufos/research.ufo:926 ../base/ufos/research.ufo:949
 msgid "Shock Damage Type"
 msgstr "Tipo de Daño del Shock"
 
-#: ../base/ufos/research.ufo:884
+#: ../base/ufos/research.ufo:928 ../base/ufos/research.ufo:951
 #, fuzzy
 msgid "shock_damage_txt"
 msgstr ""
@@ -2550,26 +2800,11 @@ msgstr ""
 "passes even through the most robust armor, leaving only slight burn marks in "
 "the process."
 
-#: ../base/ufos/research.ufo:893
-msgid "Laser Damage Type"
-msgstr "Tipo de Daño de Láser"
-
-#: ../base/ufos/research.ufo:895
-#, fuzzy
-msgid "laser_damage_txt"
-msgstr ""
-"Beam of focused light that pierces armor and burns flesh inside. So "
-"concentrated are the beams that it's hard to block them with any armor, "
-"especially with armor made by the aliens (it appears they didn't use laser "
-"in their own wars). However the punctures are so minute that armor is "
-"considered almost intact even after lethal shots. Laser weapons tend to have "
-"low damage, long range and high accuracy. "
-
-#: ../base/ufos/research.ufo:905
+#: ../base/ufos/research.ufo:937
 msgid "Plasma Damage Type"
 msgstr "Tipo de Daño de Plasma"
 
-#: ../base/ufos/research.ufo:907
+#: ../base/ufos/research.ufo:939
 #, fuzzy
 msgid "plasma_damage_txt"
 msgstr ""
@@ -2579,11 +2814,27 @@ msgstr ""
 "but burns them quickly, nevertheless. Plasma weapons usually have high "
 "damage, short to middle range and mediocre accuracy."
 
-#: ../base/ufos/research.ufo:917
+#: ../base/ufos/research.ufo:960
+msgid "Stun Damage Type"
+msgstr "Tipo de Daño del Aturdimiento"
+
+#: ../base/ufos/research.ufo:962
+#, fuzzy
+msgid "stun_damage_txt"
+msgstr ""
+"Stuns biological actors, no effect on mechanical actors and those in life-"
+"support armor. Various methods of stunning are used, for instance, ultra-"
+"high frequency sound waves that temporarily paralyze the nervous system, "
+"injections of very powerful narcotics and drugs, toxic gases of various "
+"kinds. A stunned biological actor is out for several rounds, but if left "
+"alone for too long, will regain consciousness. This should never take less "
+"than three or four turns. "
+
+#: ../base/ufos/research.ufo:971
 msgid "Tachyon Damage Type"
 msgstr "Tipo de Daño de Taquión"
 
-#: ../base/ufos/research.ufo:919
+#: ../base/ufos/research.ufo:973
 #, fuzzy
 msgid "tachyon_damage_txt"
 msgstr ""
@@ -2597,27 +2848,98 @@ msgstr ""
 "difficult to produce even for aliens, and they do medium damage, have medium "
 "to long range and decent accuracy."
 
-#: ../base/ufos/research.ufo:929
-msgid "Stun Damage Type"
-msgstr "Tipo de Daño del Aturdimiento"
+#: ../base/ufos/research.ufo:987
+msgid "Accuracy Attribute"
+msgstr "Atributos de Precisión"
 
-#: ../base/ufos/research.ufo:931
+#: ../base/ufos/research.ufo:989
 #, fuzzy
-msgid "stun_damage_txt"
+msgid "accuracy_skill_txt"
 msgstr ""
-"Stuns biological actors, no effect on mechanical actors and those in life-"
-"support armor. Various methods of stunning are used, for instance, ultra-"
-"high frequency sound waves that temporarily paralyze the nervous system, "
-"injections of very powerful narcotics and drugs, toxic gases of various "
-"kinds. A stunned biological actor is out for several rounds, but if left "
-"alone for too long, will regain consciousness. This should never take less "
-"than three or four turns. "
+"Accuracy represents how good a soldier is at hitting a target. Accuracy is "
+"important for all soldiers who use ranged weapons, but especially so for "
+"snipers, assault weapon specialists and explosive weapon users."
 
-#: ../base/ufos/research.ufo:944
+#: ../base/ufos/research.ufo:998
+msgid "Assault Guns Proficiency"
+msgstr "Habilidad para Pistolas de Asalto"
+
+#: ../base/ufos/research.ufo:1000
+#, fuzzy
+msgid "assault_skill_txt"
+msgstr ""
+"The Assault Guns skill reflects a soldier's proficiency with assault "
+"weapons. The assault skill is a combination of the ability to quickly "
+"identify friend from foe in tight combat situations, and to fire a rifle at "
+"the latter, not the former. Weapons that use the Assault Guns skill tend to "
+"be good all-round weapons, with decent damage, accuracy and rate of fire."
+
+#: ../base/ufos/research.ufo:1009
+msgid "Close Combat Proficiency"
+msgstr "Habilidad del Combate Cuerpo a Cuerpo"
+
+#: ../base/ufos/research.ufo:1011
+#, fuzzy
+msgid "close_skill_txt"
+msgstr ""
+"The Close Combat skill represents a soldier's proficiency with close-range "
+"weapons. A soldier with a high Close Combat skill is better at aiming a "
+"pistol at a fast moving enemy, and can also wield a blade better in combat, "
+"increasing damage. Fire modes affected by the Close Combat skill are always "
+"short range and with relatively low TU costs."
+
+#: ../base/ufos/research.ufo:1020
+msgid "High-Explosives Proficiency"
+msgstr "Habilidad para usar Explosivos"
+
+#: ../base/ufos/research.ufo:1022
+#, fuzzy
+msgid "explosive_skill_txt"
+msgstr ""
+"The High-Explosives skill represents a soldier's ability to use grenades, "
+"and weapons with a splash damage effect (whether caused by a high-explosive "
+"ammunition or any other ammunition, even alien). A soldier with a big High-"
+"Explosives skill is better at landing the charge at the spot where he wants "
+"it: at the feet of the enemy or, if the spot is unreachable, still close "
+"enough to harm him. A soldier trained in this skill will also be more "
+"attuned to a launcher's recoil and more accustomed to its fire trajectory, "
+"increasing accuracy."
+
+#: ../base/ufos/research.ufo:1031
+msgid "Heavy Weapons Proficiency"
+msgstr "Habilidad para Armamento Pesado"
+
+#: ../base/ufos/research.ufo:1033
+#, fuzzy
+msgid "heavy_skill_txt"
+msgstr ""
+"The Heavy Weapons skill affects how well a soldier is able to handle weapons "
+"that weigh a lot or weapons that produce much recoil. Recoil decreases "
+"accuracy tremendously, unless the soldiers is trained to counteract with the "
+"muscles of his arms. Heavy weapons include high stopping power firearms such "
+"as flame throwers and shotguns, as well as many medium and long range heavy "
+"support fire weapons. Fire modes governed by the Heavy Weapons skill always "
+"trade accuracy for damage, but differ in every other characteristics."
+
+#: ../base/ufos/research.ufo:1042
+msgid "Mind Attribute"
+msgstr "Atributos de la Mentalidad"
+
+#: ../base/ufos/research.ufo:1044
+#, fuzzy
+msgid "mind_skill_txt"
+msgstr ""
+"Mind is a representation of the mental training of a soldier. The better "
+"this attribute, the less likely a soldier is to panic, and the better the "
+"soldier is at psionic warfare. Moreover, the use of utility miscellaneous "
+"equipment, as well as mines, depends on this skill. Soldiers with weak minds "
+"should not count on fast promotions."
+
+#: ../base/ufos/research.ufo:1053
 msgid "Power Attribute"
 msgstr "Atributos de Poder"
 
-#: ../base/ufos/research.ufo:946
+#: ../base/ufos/research.ufo:1055
 #, fuzzy
 msgid "power_skill_txt"
 msgstr ""
@@ -2632,94 +2954,11 @@ msgstr ""
 "a soldier can carry before he becomes encumbered. An encumbered soldier "
 "suffers a time units (TU) penalty, as well as an accuracy penalty. "
 
-#: ../base/ufos/research.ufo:955
-msgid "Speed Attribute"
-msgstr "Atributos de Velocidad"
-
-#: ../base/ufos/research.ufo:957
-msgid "speed_skill_txt"
-msgstr ""
-"La velocidad representa que tan rápido se puede mover un soldado. Los "
-"atributos solamente afectan cuantas UT (unidades de tiempo) tiene un "
-"soldado. Sin embargo, se podría decir que las unidades de tiempo es la "
-"característica más importante para la sobrevivencia de un soldado, así que "
-"el atributo de velocidad no debería ser subestimado."
-
-#: ../base/ufos/research.ufo:966
-msgid "Accuracy Attribute"
-msgstr "Atributos de Precisión"
-
-#: ../base/ufos/research.ufo:968
-#, fuzzy
-msgid "accuracy_skill_txt"
-msgstr ""
-"Accuracy represents how good a soldier is at hitting a target. Accuracy is "
-"important for all soldiers who use ranged weapons, but especially so for "
-"snipers, assault weapon specialists and explosive weapon users."
-
-#: ../base/ufos/research.ufo:977
-msgid "Mind Attribute"
-msgstr "Atributos de la Mentalidad"
-
-#: ../base/ufos/research.ufo:979
-#, fuzzy
-msgid "mind_skill_txt"
-msgstr ""
-"Mind is a representation of the mental training of a soldier. The better "
-"this attribute, the less likely a soldier is to panic, and the better the "
-"soldier is at psionic warfare. Moreover, the use of utility miscellaneous "
-"equipment, as well as mines, depends on this skill. Soldiers with weak minds "
-"should not count on fast promotions."
-
-#: ../base/ufos/research.ufo:988
-msgid "Close Combat Proficiency"
-msgstr "Habilidad del Combate Cuerpo a Cuerpo"
-
-#: ../base/ufos/research.ufo:990
-#, fuzzy
-msgid "close_skill_txt"
-msgstr ""
-"The Close Combat skill represents a soldier's proficiency with close-range "
-"weapons. A soldier with a high Close Combat skill is better at aiming a "
-"pistol at a fast moving enemy, and can also wield a blade better in combat, "
-"increasing damage. Fire modes affected by the Close Combat skill are always "
-"short range and with relatively low TU costs."
-
-#: ../base/ufos/research.ufo:999
-msgid "Heavy Weapons Proficiency"
-msgstr "Habilidad para Armamento Pesado"
-
-#: ../base/ufos/research.ufo:1001
-#, fuzzy
-msgid "heavy_skill_txt"
-msgstr ""
-"The Heavy Weapons skill affects how well a soldier is able to handle weapons "
-"that weigh a lot or weapons that produce much recoil. Recoil decreases "
-"accuracy tremendously, unless the soldiers is trained to counteract with the "
-"muscles of his arms. Heavy weapons include high stopping power firearms such "
-"as flame throwers and shotguns, as well as many medium and long range heavy "
-"support fire weapons. Fire modes governed by the Heavy Weapons skill always "
-"trade accuracy for damage, but differ in every other characteristics."
-
-#: ../base/ufos/research.ufo:1010
-msgid "Assault Guns Proficiency"
-msgstr "Habilidad para Pistolas de Asalto"
-
-#: ../base/ufos/research.ufo:1012
-#, fuzzy
-msgid "assault_skill_txt"
-msgstr ""
-"The Assault Guns skill reflects a soldier's proficiency with assault "
-"weapons. The assault skill is a combination of the ability to quickly "
-"identify friend from foe in tight combat situations, and to fire a rifle at "
-"the latter, not the former. Weapons that use the Assault Guns skill tend to "
-"be good all-round weapons, with decent damage, accuracy and rate of fire."
-
-#: ../base/ufos/research.ufo:1021
+#: ../base/ufos/research.ufo:1064
 msgid "Sniper Rifles Proficiency"
 msgstr "Habilidad para Francotirador"
 
-#: ../base/ufos/research.ufo:1023
+#: ../base/ufos/research.ufo:1066
 #, fuzzy
 msgid "sniper_skill_txt"
 msgstr ""
@@ -2729,24 +2968,30 @@ msgstr ""
 "range, high accuracy fire mode of any weapon is bound to require Sniper "
 "Rifles skill."
 
-#: ../base/ufos/research.ufo:1032
-msgid "High-Explosives Proficiency"
-msgstr "Habilidad para usar Explosivos"
+#: ../base/ufos/research.ufo:1075
+msgid "Speed Attribute"
+msgstr "Atributos de Velocidad"
 
-#: ../base/ufos/research.ufo:1034
-#, fuzzy
-msgid "explosive_skill_txt"
+#: ../base/ufos/research.ufo:1077
+msgid "speed_skill_txt"
 msgstr ""
-"The High-Explosives skill represents a soldier's ability to use grenades, "
-"and weapons with a splash damage effect (whether caused by a high-explosive "
-"ammunition or any other ammunition, even alien). A soldier with a big High-"
-"Explosives skill is better at landing the charge at the spot where he wants "
-"it: at the feet of the enemy or, if the spot is unreachable, still close "
-"enough to harm him. A soldier trained in this skill will also be more "
-"attuned to a launcher's recoil and more accustomed to its fire trajectory, "
-"increasing accuracy."
+"La velocidad representa que tan rápido se puede mover un soldado. Los "
+"atributos solamente afectan cuantas UT (unidades de tiempo) tiene un "
+"soldado. Sin embargo, se podría decir que las unidades de tiempo es la "
+"característica más importante para la sobrevivencia de un soldado, así que "
+"el atributo de velocidad no debería ser subestimado."
 
-#: ../base/ufos/research.ufo:1046
+# Traduci "field operatives" como "agentes de campos" Si esta mal, por favor corregir
+#: ../base/ufos/research.ufo:1090
+msgid "b_command_txt"
+msgstr ""
+"El Centro de Comando es el corazón de cualquier base Phalanx. Todas las "
+"misiones son planeadas aquí, al igual que toda la información recogida por "
+"los sensores de la base y los agentes de campo convergen aquí. Ninguna base "
+"puede operar sin un Centro de Comando, en consecuencia cada base debe tener "
+"uno para poder entrar en operación."
+
+#: ../base/ufos/research.ufo:1101
 #, fuzzy
 msgid "b_entrance_txt"
 msgstr ""
@@ -2760,48 +3005,6 @@ msgstr ""
 "links the base with the surface, the Entrance remains a weak spot in the "
 "base's defenses. In the event of an alien attack, the aliens will likely "
 "enter from here."
-
-#: ../base/ufos/research.ufo:1056
-msgid "b_storage_txt"
-msgstr ""
-"Este edificio es usado para almacenar el equipamiento y partes sobrantes. "
-"Cada bodega provee espacio para 50 unidades de equipamiento."
-
-#: ../base/ufos/research.ufo:1067
-msgid "b_powerplant_txt"
-msgstr ""
-"La planta de poder provee a la base de energía. Sin energía la mayoría de "
-"las instalaciones no podrán operar. Por esta razón la planta de poder es "
-"vital, y es probable que sea un objetivo en caso de una invasión enemiga."
-
-#: ../base/ufos/research.ufo:1078
-#, fuzzy
-msgid "b_quarters_txt"
-msgstr ""
-"The Quarters facility provides space for all Phalanx personnel living in the "
-"base. Soldiers and scientists, as well as the command staff, call this place "
-"home. Each employee has his or her own cubicle, which is equipped with a "
-"bunk, a small desk and basic sanitary facilities. In addition, the Quarters "
-"has a common living space where employees go to relax and socialize. Each "
-"Quarters facility provides living space for twenty people."
-
-#: ../base/ufos/research.ufo:1089
-msgid "b_teamroom_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:1100
-#, fuzzy
-msgid "b_workshop_txt"
-msgstr ""
-"The H-92 dropship is the main troop transport for the Phalanx rapid "
-"intervention forces. Powered by four General Electrics HM-5600 turbo jet "
-"engines, this dropship achieves a top speed of mach 1.0. The four engine "
-"exhausts can be pivoted so the H-92 has the ability to take off and land "
-"vertically. This technical feature is essential for rapidly deploying troops "
-"to any location worldwide. On the downside the H-92 has hardly no combat "
-"value because of only minor armament. Therefore Phalanx commanders always "
-"have some interceptors stading by for air cover if a H-92 encounters a enemy "
-"UFO."
 
 #: ../base/ufos/research.ufo:1111
 #, fuzzy
@@ -2819,24 +3022,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1122
 #, fuzzy
-msgid "b_radar_txt"
+msgid "b_hospital_txt"
 msgstr ""
-"The Radar facility is the control center for a radar array set up outside "
-"the base. Using the radar array, UFOs can be detected from a long distance "
-"away, allowing intercept missions to be launched and giving advance warning "
-"to the Command Center should the UFO intend to attack the base."
+"Este edificio es usado para almacenar el equipamiento y partes sobrantes. "
+"Cada bodega provee espacio para 50 unidades de equipamiento."
 
-# Traduci "field operatives" como "agentes de campos" Si esta mal, por favor corregir
 #: ../base/ufos/research.ufo:1133
-msgid "b_command_txt"
-msgstr ""
-"El Centro de Comando es el corazón de cualquier base Phalanx. Todas las "
-"misiones son planeadas aquí, al igual que toda la información recogida por "
-"los sensores de la base y los agentes de campo convergen aquí. Ninguna base "
-"puede operar sin un Centro de Comando, en consecuencia cada base debe tener "
-"uno para poder entrar en operación."
-
-#: ../base/ufos/research.ufo:1144
 #, fuzzy
 msgid "b_intercept_txt"
 msgstr ""
@@ -2845,18 +3036,48 @@ msgstr ""
 "down. Though Interceptor missiles are an adequate defense against light "
 "raids, they cannot hope to stop larger UFOs."
 
-#: ../base/ufos/research.ufo:1155
+#: ../base/ufos/research.ufo:1144
 msgid "b_lab_txt"
 msgstr "Contrate a científicos para investigar tecnología extraterrestre."
 
+#: ../base/ufos/research.ufo:1155
+msgid "b_powerplant_txt"
+msgstr ""
+"La planta de poder provee a la base de energía. Sin energía la mayoría de "
+"las instalaciones no podrán operar. Por esta razón la planta de poder es "
+"vital, y es probable que sea un objetivo en caso de una invasión enemiga."
+
 #: ../base/ufos/research.ufo:1166
 #, fuzzy
-msgid "b_hospital_txt"
+msgid "b_quarters_txt"
+msgstr ""
+"The Quarters facility provides space for all Phalanx personnel living in the "
+"base. Soldiers and scientists, as well as the command staff, call this place "
+"home. Each employee has his or her own cubicle, which is equipped with a "
+"bunk, a small desk and basic sanitary facilities. In addition, the Quarters "
+"has a common living space where employees go to relax and socialize. Each "
+"Quarters facility provides living space for twenty people."
+
+#: ../base/ufos/research.ufo:1177
+#, fuzzy
+msgid "b_radar_txt"
+msgstr ""
+"The Radar facility is the control center for a radar array set up outside "
+"the base. Using the radar array, UFOs can be detected from a long distance "
+"away, allowing intercept missions to be launched and giving advance warning "
+"to the Command Center should the UFO intend to attack the base."
+
+#: ../base/ufos/research.ufo:1188
+msgid "b_storage_txt"
 msgstr ""
 "Este edificio es usado para almacenar el equipamiento y partes sobrantes. "
 "Cada bodega provee espacio para 50 unidades de equipamiento."
 
-#: ../base/ufos/research.ufo:1177
+#: ../base/ufos/research.ufo:1199
+msgid "b_teamroom_txt"
+msgstr "<TODO>"
+
+#: ../base/ufos/research.ufo:1210
 #, fuzzy
 msgid "b_ufo_hangar_txt"
 msgstr ""
@@ -2868,7 +3089,21 @@ msgstr ""
 "concern to the Phalanx Commander. A UFO Hangar can house any UFO up to "
 "Transport class."
 
-#: ../base/ufos/research.ufo:1191
+#: ../base/ufos/research.ufo:1221
+#, fuzzy
+msgid "b_workshop_txt"
+msgstr ""
+"The H-92 dropship is the main troop transport for the Phalanx rapid "
+"intervention forces. Powered by four General Electrics HM-5600 turbo jet "
+"engines, this dropship achieves a top speed of mach 1.0. The four engine "
+"exhausts can be pivoted so the H-92 has the ability to take off and land "
+"vertically. This technical feature is essential for rapidly deploying troops "
+"to any location worldwide. On the downside the H-92 has hardly no combat "
+"value because of only minor armament. Therefore Phalanx commanders always "
+"have some interceptors stading by for air cover if a H-92 encounters a enemy "
+"UFO."
+
+#: ../base/ufos/research.ufo:1235
 #, fuzzy
 msgid "dropship_txt"
 msgstr ""
@@ -2882,7 +3117,7 @@ msgstr ""
 "have some interceptors stading by for air cover if a H-92 encounters a enemy "
 "UFO."
 
-#: ../base/ufos/research.ufo:1204
+#: ../base/ufos/research.ufo:1248
 #, fuzzy
 msgid "interceptor_txt"
 msgstr ""
@@ -2895,21 +3130,21 @@ msgstr ""
 "leading form the surface to the subterranean flight hangars. This has been "
 "proven to be safest way to make a airfield almost completely undetectable."
 
-#: ../base/ufos/research.ufo:1232
+#: ../base/ufos/research.ufo:1276
 msgid "Small alien craft"
 msgstr "Nave Extraterrestre Pequeña"
 
-#: ../base/ufos/research.ufo:1233
+#: ../base/ufos/research.ufo:1277
 msgid "ufo_small_txt"
 msgstr ""
 "Una nave pequeña enviada por lo Antareanos para topografíar el terreno e "
 "identificar posibles objetivos militares y científicos."
 
-#: ../base/ufos/research.ufo:1248
+#: ../base/ufos/research.ufo:1292
 msgid "Big alien craft"
 msgstr "Nave Extraterrestre Grande"
 
-#: ../base/ufos/research.ufo:1249
+#: ../base/ufos/research.ufo:1293
 #, fuzzy
 msgid "ufo_big_txt"
 msgstr ""
@@ -2917,11 +3152,11 @@ msgstr ""
 "carry about as many soldiers as Transports. These craft are a dangerous "
 "force even on their own and should be engaged with caution."
 
-#: ../base/ufos/research.ufo:1270
+#: ../base/ufos/research.ufo:1314
 msgid "Ortnok - Combat notes"
 msgstr "Ortnok - Notas de Combates"
 
-#: ../base/ufos/research.ufo:1271
+#: ../base/ufos/research.ufo:1315
 #, fuzzy
 msgid "ortnok_notes_txt"
 msgstr ""
@@ -2939,11 +3174,11 @@ msgstr ""
 "this is only a assumption because there is no evidence proving the existence "
 "of such a master-species."
 
-#: ../base/ufos/research.ufo:1286
+#: ../base/ufos/research.ufo:1330
 msgid "Ortnok - Autopsy"
 msgstr "Ortnok - Autopsia"
 
-#: ../base/ufos/research.ufo:1287
+#: ../base/ufos/research.ufo:1331
 #, fuzzy
 msgid "ortnok_autopsy_txt"
 msgstr ""
@@ -2957,35 +3192,35 @@ msgstr ""
 "them as a limitless supply of cannon fodder in every terrain they choose to "
 "conquer."
 
-#: ../base/ufos/research.ufo:1304
+#: ../base/ufos/research.ufo:1348
 msgid "Ortnok - Xenobiology"
 msgstr "Ortnok - Astrobiología"
 
-#: ../base/ufos/research.ufo:1305
+#: ../base/ufos/research.ufo:1349
 msgid "ortnok_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1320
+#: ../base/ufos/research.ufo:1364
 msgid "Ortnok - Interrogation"
 msgstr "Ortnok - Interrogación"
 
-#: ../base/ufos/research.ufo:1321
+#: ../base/ufos/research.ufo:1365
 msgid "ortnok_interrogation_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1338
+#: ../base/ufos/research.ufo:1382
 msgid "Ortnok Worker"
 msgstr "Trabajador Ortnok"
 
-#: ../base/ufos/research.ufo:1339
+#: ../base/ufos/research.ufo:1383
 msgid "ortnok_light_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1356
+#: ../base/ufos/research.ufo:1400
 msgid "Ortnok Warrior"
 msgstr "Guerrero Ortnok"
 
-#: ../base/ufos/research.ufo:1357
+#: ../base/ufos/research.ufo:1401
 #, fuzzy
 msgid "ortnok_medium_txt"
 msgstr ""
@@ -3002,19 +3237,19 @@ msgstr ""
 "cyberneticaugmentation is the increased vulnerability to electromagnetic "
 "pulses (EMP)."
 
-#: ../base/ufos/research.ufo:1374
+#: ../base/ufos/research.ufo:1418
 msgid "Antarean - Combat notes"
 msgstr "Antarean - Notas de Combates"
 
-#: ../base/ufos/research.ufo:1375
+#: ../base/ufos/research.ufo:1419
 msgid "antarean_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1390
+#: ../base/ufos/research.ufo:1434
 msgid "Antarean - Autopsy"
 msgstr "Antarean - Autopsia"
 
-#: ../base/ufos/research.ufo:1391
+#: ../base/ufos/research.ufo:1435
 #, fuzzy
 msgid "antarean_autopsy_txt"
 msgstr ""
@@ -3034,43 +3269,43 @@ msgstr ""
 "destined to lead before they are even born. Advanced psionic attacks may "
 "provide access to this information."
 
-#: ../base/ufos/research.ufo:1406
+#: ../base/ufos/research.ufo:1450
 msgid "Antarean - Xenobiology"
 msgstr "Antarean - Astrobiología"
 
-#: ../base/ufos/research.ufo:1407
+#: ../base/ufos/research.ufo:1451
 msgid "antarean_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1422
+#: ../base/ufos/research.ufo:1466
 msgid "Antarean - Interrogation"
 msgstr "Antarean - Interrogación"
 
-#: ../base/ufos/research.ufo:1423
+#: ../base/ufos/research.ufo:1467
 msgid "antarean_interrogation_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1438
+#: ../base/ufos/research.ufo:1482
 msgid "Antarean - Commander interrogation"
 msgstr "Antarean - Interrogación al Comandante"
 
-#: ../base/ufos/research.ufo:1439
+#: ../base/ufos/research.ufo:1483
 msgid "antarean_interrogation_commander_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1456
+#: ../base/ufos/research.ufo:1500
 msgid "Shevaar - Combat notes"
 msgstr "Shevaar - Notas de Combate"
 
-#: ../base/ufos/research.ufo:1457
+#: ../base/ufos/research.ufo:1501
 msgid "shevaar_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1472
+#: ../base/ufos/research.ufo:1516
 msgid "Shevaar - Autopsy"
 msgstr "Shevaar - Autopsia"
 
-#: ../base/ufos/research.ufo:1473
+#: ../base/ufos/research.ufo:1517
 #, fuzzy
 msgid "shevaar_autopsy_txt"
 msgstr ""
@@ -3084,27 +3319,27 @@ msgstr ""
 "prominent placement and lack of protective bone renders it susceptible to "
 "psionic attack, as well as providing an obvious weak point in melee combat."
 
-#: ../base/ufos/research.ufo:1488
+#: ../base/ufos/research.ufo:1532
 msgid "Shevaar - Xenobiology"
 msgstr "Shevaar - Astrobilogía"
 
-#: ../base/ufos/research.ufo:1489
+#: ../base/ufos/research.ufo:1533
 msgid "shevaar_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1506
+#: ../base/ufos/research.ufo:1550
 msgid "Hovernet - Combat notes"
 msgstr "Hovernet - Notas de Combates"
 
-#: ../base/ufos/research.ufo:1507
+#: ../base/ufos/research.ufo:1551
 msgid "hovernet_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1522
+#: ../base/ufos/research.ufo:1566
 msgid "Hovernet - wreck research"
 msgstr "Hoernet - Investigación de los Restos"
 
-#: ../base/ufos/research.ufo:1523
+#: ../base/ufos/research.ufo:1567
 #, fuzzy
 msgid "hovernet_autopsy_txt"
 msgstr ""
@@ -3120,27 +3355,27 @@ msgstr ""
 "successful hit with a projectile or directed energy weapon is unlikely, and "
 "blast or incendiary weapons would have greater effect."
 
-#: ../base/ufos/research.ufo:1538
+#: ../base/ufos/research.ufo:1582
 msgid "Hovernet - design"
 msgstr "Hovernet - Diseño"
 
-#: ../base/ufos/research.ufo:1539
+#: ../base/ufos/research.ufo:1583
 msgid "hovernet_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1556
+#: ../base/ufos/research.ufo:1600
 msgid "Cyborg Ortnok - Combat notes"
 msgstr "Cyborg Ortnok - Notas de Combate"
 
-#: ../base/ufos/research.ufo:1557
+#: ../base/ufos/research.ufo:1601
 msgid "cyborg_ortnok_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1572
+#: ../base/ufos/research.ufo:1616
 msgid "Cyborg Ortnok - Autopsy"
 msgstr "Cyborg Ortnok - Autopsia"
 
-#: ../base/ufos/research.ufo:1573
+#: ../base/ufos/research.ufo:1617
 #, fuzzy
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
@@ -3156,63 +3391,63 @@ msgstr ""
 "weapons platform that demands much greater energy output and suppression of "
 "the reproductive instinct."
 
-#: ../base/ufos/research.ufo:1588
+#: ../base/ufos/research.ufo:1632
 msgid "Cyborg Ortnok - Xenobiology"
 msgstr "Cyborg Ortnok - Astrobilogía"
 
-#: ../base/ufos/research.ufo:1589
+#: ../base/ufos/research.ufo:1633
 msgid "cyborg_ortnok_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1607
+#: ../base/ufos/research.ufo:1651
 msgid "UGV Phoenix"
 msgstr "Phoenix VTNT"
 
-#: ../base/ufos/research.ufo:1608
+#: ../base/ufos/research.ufo:1652
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1622
+#: ../base/ufos/research.ufo:1666
 msgid "UGV Triax"
 msgstr "Triax VTNT"
 
-#: ../base/ufos/research.ufo:1623
+#: ../base/ufos/research.ufo:1667
 msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1639
+#: ../base/ufos/research.ufo:1683
 msgid "Light Shield"
 msgstr "Escudo Ligero"
 
-#: ../base/ufos/research.ufo:1640
+#: ../base/ufos/research.ufo:1684
 msgid "craft_shield_light_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1654
+#: ../base/ufos/research.ufo:1698
 #, fuzzy
 msgid "Medium Shield"
 msgstr "Escudo Ligero"
 
-#: ../base/ufos/research.ufo:1655
+#: ../base/ufos/research.ufo:1699
 #, fuzzy
 msgid "craft_shield_medium_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1670
+#: ../base/ufos/research.ufo:1714
 #, fuzzy
 msgid "Hard Shield"
 msgstr "Escudo"
 
-#: ../base/ufos/research.ufo:1671
+#: ../base/ufos/research.ufo:1715
 #, fuzzy
 msgid "craft_shield_hard_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1686
+#: ../base/ufos/research.ufo:1730
 msgid "Flac Cannon"
 msgstr "Cañón Flac"
 
-#: ../base/ufos/research.ufo:1687
+#: ../base/ufos/research.ufo:1731
 msgid "craft_weapon_flac_txt"
 msgstr "<TODO>"
 
@@ -5345,6 +5580,14 @@ msgstr "No se puede efectuar la acción - ¡No hay municiones!\n"
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "No se puede efectuar la acción - ¡No hay municiones suficientes!\n"
 
+#: po/OTHER_STRINGS:2
+msgid "Yes"
+msgstr "Sí"
+
+#: po/OTHER_STRINGS:3
+msgid "No"
+msgstr "No"
+
 #~ msgid "TODO"
 #~ msgstr "Por Hacer"
 
@@ -5399,12 +5642,6 @@ msgstr "No se puede efectuar la acción - ¡No hay municiones suficientes!\n"
 #, fuzzy
 #~ msgid "Gained %i credits from nation %s (%s)"
 #~ msgstr "Ganó %i créditos de la nación %s"
-
-#~ msgid "No"
-#~ msgstr "No"
-
-#~ msgid "Yes"
-#~ msgstr "Sí"
 
 #~ msgid ""
 #~ "Some aliens have escaped from the\\mine, and their tracks lead south,"
