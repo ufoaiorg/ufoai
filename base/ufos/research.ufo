@@ -123,6 +123,7 @@ tech rs_nano
 // 	name	"_Advanced Armor Fabrics"
 // 	up_chapter	tech
 // 	description	"_armor_fabrics_txt"
+//	provides	"armor_fabrics"
 //
 // 	requires	"rs_nano rs_tachyon"
 // 	time	10000
@@ -134,7 +135,7 @@ tech rs_craft_ufo_tech
 {
 	type	tech
 	name	"_General UFO technology"
-	description	"_ufo_txt"
+	description	"_ufo_tech_txt"
 	up_chapter	tech
 
 	// FIXME
@@ -146,8 +147,21 @@ tech rs_craft_ufo_tech
 }
 
 //=================================
-// Human Weapons & Misc Equipment
+// weapons and items
 //=================================
+
+tech rs_weapon_alienincgrenade
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_alienincgrenade_txt"
+
+	requires	"rs_skill_explosive rs_damage_fire"
+	provides	alienincgrenade
+	time	500
+	needscollected	true
+	producetime	2
+}
 
 tech rs_weapon_assault
 {
@@ -165,7 +179,7 @@ tech rs_weapon_assault_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_assault_txt"
+	description	"_assault_mag_txt"
 
 	requires	"rs_damage_normal rs_weapon_assault"
 	provides	assault_ammo
@@ -173,76 +187,40 @@ tech rs_weapon_assault_ammo
 	producetime	4
 }
 
-tech rs_weapon_sniper
+tech rs_weapon_bolterrifle
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_sniper_txt"
-
-	requires	rs_skill_sniper
-	provides	sniper
-	time	0
-	producetime	60
-}
-
-tech rs_weapon_sniper_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_sniper_txt"
-
-	requires	"rs_damage_normal rs_weapon_sniper"
-	provides	sniper_ammo
-	time	0
-	producetime	1
-}
-
-tech rs_weapon_smg
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_smg_txt"
-
-	requires	rs_skill_assault
-	provides	smg
-	time	0
-	producetime	45
-}
-
-tech rs_weapon_smg_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_smg_txt"
-
-	requires	"rs_damage_normal rs_weapon_smg"
-	provides	smg_ammo
-	time	0
-	producetime	1
-}
-
-tech rs_weapon_shotgun
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_shotgun_txt"
+	description	"_bolterrifle_txt"
 
 	requires	rs_skill_heavy
-	provides	shotgun
-	time	0
-	producetime	40
+	provides	bolterrifle
+	time	500
+	producetime	70
 }
 
-tech rs_weapon_shotgun_ammo
+tech rs_weapon_bolterrifle_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_shotgun_txt"
+	description	"_bolterrifle_mag_txt"
 
-	requires	"rs_damage_blast rs_weapon_shotgun"
-	provides	shotgun_ammo
+	requires	"rs_damage_normal rs_weapon_bolterrifle"
+	provides	bolterrifle_ammo
 	time	0
 	producetime	1
+}
+
+tech rs_weapon_combatknife
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_combatknife_txt"
+
+	requires	"rs_skill_close rs_damage_normal"
+	provides	knife
+	time	0
+	producetime	3
 }
 
 tech rs_weapon_flamer
@@ -261,12 +239,204 @@ tech rs_weapon_flamer_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_flamer_txt"
+	description	"_flamer_mag_txt"
 
 	requires	"rs_damage_fire rs_weapon_flamer"
 	provides	flamer_ammo
 	time	0
 	producetime	1
+}
+
+tech rs_weapon_flashbang
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_flashbang_txt"
+
+	requires	"rs_skill_explosive rs_damage_shock"
+	provides	flashbang
+	time	0
+}
+
+tech rs_weapon_fraggren
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_fraggren_txt"
+
+	requires	"rs_skill_explosive rs_damage_blast"
+	provides	fraggrenade
+	time	0
+	producetime	1
+}
+
+tech rs_weapon_grenl
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_grenl_txt"
+
+	requires	rs_skill_explosive
+	provides	grenl
+	time	0
+	producetime	40
+}
+
+tech rs_weapon_grenl_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_grenl_ammo_txt"
+
+	requires	"rs_damage_blast rs_weapon_grenl"
+	provides	grenl_ammo
+	time	0
+	producetime	1
+}
+
+tech rs_weapon_grenl_fle_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_grenl_fle_ammo_txt"
+
+	requires	"rs_damage_normal rs_weapon_grenl"
+	provides	grenl_fle_ammo
+	time	1000
+	producetime	1
+}
+
+tech rs_weapon_grenl_incendiary_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_grenl_fle_ammo_txt"
+
+	requires	"rs_damage_fire rs_weapon_alienincgrenade rs_weapon_grenl"
+	provides	grenl_fle_ammo
+	time	1000
+	producetime	1
+}
+
+tech rs_weapon_grenl_plasma_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_grenl_plasma_ammo_txt"
+
+	requires	"rs_damage_plasma rs_weapon_grenl"
+	provides	grenl_plasma_ammo
+	time	1250
+	producetime	1
+}
+
+tech rs_weapon_heavylaser
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_heavylaser_txt"
+
+	requires	"rs_skill_sniper rs_skill_heavy rs_weapon_laserrifle"
+	provides	heavylaser
+	time	1500
+	producetime	80
+}
+
+tech rs_weapon_heavylaser_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_heavylaser_txt"
+
+	requires	"rs_damage_laser rs_weapon_heavylaser"
+	provides	heavylaser_ammo
+	time	0
+	producetime	1
+}
+
+tech rs_irgoggles
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_irgoggles_txt"
+
+	requires	rs_skill_mind
+	provides	irgoggles
+	time	0
+	producetime	15
+}
+
+tech rs_weapon_kerrblade
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_kerrblade_txt"
+
+	requires	"rs_skill_close rs_damage_normal"
+	provides	kerrblade
+	time	200
+	producetime	10
+	needscollected	true
+}
+
+tech rs_weapon_laserpistol
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_laserpistol_txt"
+
+	requires	"rs_skill_close rs_laser"
+	provides	laserpistol
+	time	1000
+	producetime	50
+}
+
+tech rs_weapon_laserpistol_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_laserpistol_mag_txt"
+
+	requires	"rs_damage_laser rs_weapon_laserpistol"
+	provides	laserpistol_ammo
+	time	0
+	producetime	1
+}
+
+tech rs_weapon_laserrifle
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_laserrifle_txt"
+
+	requires	"rs_skill_sniper rs_skill_assault rs_weapon_laserpistol"
+	provides	laserrifle
+	time	1750
+	producetime	70
+}
+
+tech rs_weapon_laserrifle_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_laserrifle_mag_txt"
+
+	requires	"rs_damage_laser rs_weapon_laserrifle"
+	provides	laserrifle_ammo
+	time	0
+	producetime	1
+}
+
+tech rs_medikit
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_medikit_txt"
+
+	requires	rs_skill_mind
+	provides	medikit
+	time	0
+	producetime	10
 }
 
 tech rs_weapon_pistol
@@ -285,12 +455,113 @@ tech rs_weapon_pistol_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_pistol_txt"
+	description	"_pistol_mag_txt"
 
 	requires	"rs_damage_normal rs_weapon_pistol"
 	provides	pistol_ammo
 	time	0
 	producetime	1
+}
+
+tech rs_weapon_plasatomizer
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasatomizer_txt"
+
+	requires	"rs_skill_assault rs_skill_heavy rs_plasma"
+	provides	plaspistol
+	time	2000
+	producetime	60
+	needscollected	true
+}
+
+tech rs_weapon_plasatomizer_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasatomizer_mag_txt"
+
+	requires	"rs_damage_plasma rs_weapon_plasatomizer"
+	provides	plaspistol_ammo
+	time	0
+	producetime	2
+}
+
+tech rs_weapon_plasblaster
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasblaster_txt"
+
+	requires	"rs_skill_explosive rs_skill_heavy rs_plasma"
+	provides	plasblaster
+	time	5500
+	producetime	90
+	needscollected	true
+}
+
+tech rs_weapon_plasblaster_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasblaster_mag_txt"
+
+	requires	"rs_damage_plasma rs_weapon_plasblaster"
+	provides	plasblaster_ammo
+	time	0
+	producetime	3
+}
+
+tech rs_weapon_plasblade
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasblade_txt"
+
+	requires	"rs_skill_close rs_damage_plasma"
+	provides	plasblade
+	time	1000
+	producetime	15
+	needscollected	true
+}
+
+tech rs_weapon_plasmagren
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasmagren_txt"
+
+	requires	"rs_skill_explosive rs_damage_plasma"
+	provides	plasmagrenade
+	time	1500
+	needscollected	false
+	producetime	2
+}
+
+tech rs_weapon_plasrifle
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasrifle_txt"
+
+	requires	"rs_skill_assault rs_skill_heavy rs_plasma"
+	provides	plasrifle
+	time	3250
+	producetime	90
+	needscollected	true
+}
+
+tech rs_weapon_plasrifle_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasrifle_mag_txt"
+
+	requires	"rs_damage_plasma rs_weapon_plasrifle"
+	provides	plasrifle_ammo
+	time	0
+	producetime	2
 }
 
 tech rs_weapon_rpg
@@ -341,28 +612,64 @@ tech rs_weapon_rpg_tachyon_ammo
 	producetime	1
 }
 
-tech rs_weapon_fraggren
+tech rs_weapon_shotgun
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_fraggren_txt"
+	description	"_shotgun_txt"
 
-	requires	"rs_skill_explosive rs_damage_blast"
-	provides	fraggrenade
+	requires	rs_skill_heavy
+	provides	shotgun
+	time	0
+	producetime	40
+}
+
+tech rs_weapon_shotgun_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_shotgun_ammo_txt"
+
+	requires	"rs_damage_blast rs_weapon_shotgun"
+	provides	shotgun_ammo
 	time	0
 	producetime	1
 }
 
- 
-tech rs_weapon_flashbang
+tech rs_weapon_shotgun_slug_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_flashbang_txt"
+	description	"_shotgun_slug_ammo_txt"
 
-	requires	"rs_skill_explosive rs_damage_shock"
-	provides	flashbang
+	requires	"rs_damage_blast rs_weapon_shotgun"
+	provides	shotgun_slug_ammo
 	time	0
+	producetime	1
+}
+
+tech rs_weapon_smg
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_smg_txt"
+
+	requires	rs_skill_assault
+	provides	smg
+	time	0
+	producetime	45
+}
+
+tech rs_weapon_smg_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_smg_mag_txt"
+
+	requires	"rs_damage_normal rs_weapon_smg"
+	provides	smg_ammo
+	time	0
+	producetime	1
 }
 
 tech rs_weapon_smokegren
@@ -377,52 +684,28 @@ tech rs_weapon_smokegren
 	producetime	1
 }
 
-tech rs_weapon_combatknife
+tech rs_weapon_sniper
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_combatknife_txt"
+	description	"_sniper_txt"
 
-	requires	"rs_skill_close rs_damage_normal"
-	provides	knife
+	requires	rs_skill_sniper
+	provides	sniper
 	time	0
-	producetime	3
+	producetime	60
 }
 
-tech rs_weapon_stunrod
+tech rs_weapon_sniper_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_stunrod_txt"
+	description	"_sniper_mag_txt"
 
-	requires	"rs_skill_close rs_damage_stun"
-	provides	stunrod
-	time	500
-	producetime	10
-}
-
-tech rs_medikit
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_medikit_txt"
-
-	requires	rs_skill_mind
-	provides	medikit
+	requires	"rs_damage_normal rs_weapon_sniper"
+	provides	sniper_ammo
 	time	0
-	producetime	10
-}
-
-tech rs_irgoggles
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_irgoggles_txt"
-
-	requires	rs_skill_mind
-	provides	irgoggles
-	time	0
-	producetime	15
+	producetime	1
 }
 
 tech rs_weapon_stungren
@@ -437,267 +720,16 @@ tech rs_weapon_stungren
 	producetime	1
 }
 
-tech rs_weapon_bolterrifle
+tech rs_weapon_stunrod
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_bolterrifle_txt"
+	description	"_stunrod_txt"
 
-	requires	rs_skill_heavy
-	provides	bolterrifle
+	requires	"rs_skill_close rs_damage_stun"
+	provides	stunrod
 	time	500
-	producetime	70
-}
-
-tech rs_weapon_bolterrifle_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_bolterrifle_txt"
-
-	requires	"rs_damage_normal rs_weapon_bolterrifle"
-	provides	bolterrifle_ammo
-	time	0
-	producetime	1
-}
-
-tech rs_weapon_grenl
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_grenl_txt"
-
-	requires	rs_skill_explosive
-	provides	grenl
-	time	0
-	producetime	40
-}
-
-tech rs_weapon_grenl_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_grenl_ammo_txt"
-
-	requires	"rs_damage_blast rs_weapon_grenl"
-	provides	grenl_ammo
-	time	0
-	producetime	1
-}
-
-tech rs_weapon_grenl_plasma_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_grenl_plasma_ammo_txt"
-
-	requires	"rs_damage_plasma rs_weapon_grenl"
-	provides	grenl_plasma_ammo
-	time	1250
-	producetime	1
-}
-
-tech rs_weapon_laserpistol
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_laserpistol_txt"
-
-	requires	"rs_skill_close rs_laser"
-	provides	laserpistol
-	time	1000
-	producetime	50
-}
-
-tech rs_weapon_laserpistol_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_laserpistol_txt"
-
-	requires	"rs_damage_laser rs_weapon_laserpistol"
-	provides	laserpistol_ammo
-	time	0
-	producetime	1
-}
-
-tech rs_weapon_laserrifle
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_laserrifle_txt"
-
-	requires	"rs_skill_sniper rs_skill_assault rs_weapon_laserpistol"
-	provides	laserrifle
-	time	1750
-	producetime	70
-}
-
-tech rs_weapon_laserrifle_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_laserrifle_txt"
-
-	requires	"rs_damage_laser rs_weapon_laserrifle"
-	provides	laserrifle_ammo
-	time	0
-	producetime	1
-}
-
-tech rs_weapon_heavylaser
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_heavylaser_txt"
-
-	requires	"rs_skill_sniper rs_skill_heavy rs_weapon_laserrifle"
-	provides	heavylaser
-	time	1500
-	producetime	80
-}
-
-tech rs_weapon_heavylaser_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_heavylaser_txt"
-
-	requires	"rs_damage_laser rs_weapon_heavylaser"
-	provides	heavylaser_ammo
-	time	0
-	producetime	1
-}
-
-//=================================
-// Alien Weapons & Misc Equipment
-//=================================
-
-tech rs_weapon_alienincgrenade
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_alienincgrenade_txt"
-
-	requires	"rs_skill_explosive rs_damage_fire"
-	provides	alienincgrenade
-	time	500
-	needscollected	true
-	producetime	2
-}
-
-tech rs_weapon_plasmagren
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_plasmagren_txt"
-
-	requires	"rs_skill_explosive rs_damage_plasma"
-	provides	plasmagrenade
-	time	1500
-	needscollected	false
-	producetime	2
-}
-
-tech rs_weapon_kerrblade
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_kerrblade_txt"
-
-	requires	"rs_skill_close rs_damage_normal"
-	provides	kerrblade
-	time	200
 	producetime	10
-	needscollected	true
-}
-
-tech rs_weapon_plasblade
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_plasblade_txt"
-
-	requires	"rs_skill_close rs_damage_plasma"
-	provides	plasblade
-	time	1000
-	producetime	15
-	needscollected	true
-}
-
-tech rs_weapon_plasatomizer
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_plasatomizer_txt"
-
-	requires	"rs_skill_assault rs_skill_heavy rs_plasma"
-	provides	plaspistol
-	time	2000
-	producetime	60
-	needscollected	true
-}
-
-tech rs_weapon_plasatomizer_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_plasatomizer_txt"
-
-	requires	"rs_damage_plasma rs_weapon_plasatomizer"
-	provides	plaspistol_ammo
-	time	0
-	producetime	2
-}
-
-tech rs_weapon_plasrifle
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_plasrifle_txt"
-
-	requires	"rs_skill_assault rs_skill_heavy rs_plasma"
-	provides	plasrifle
-	time	3250
-	producetime	90
-	needscollected	true
-}
-
-tech rs_weapon_plasrifle_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_plasrifle_txt"
-
-	requires	"rs_damage_plasma rs_weapon_plasrifle"
-	provides	plasrifle_ammo
-	time	0
-	producetime	2
-}
-
-tech rs_weapon_plasblaster
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_plasblaster_txt"
-
-	requires	"rs_skill_explosive rs_skill_heavy rs_plasma"
-	provides	plasblaster
-	time	5500
-	producetime	90
-	needscollected	true
-}
-
-tech rs_weapon_plasblaster_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_plasblaster_txt"
-
-	requires	"rs_damage_plasma rs_weapon_plasblaster"
-	provides	plasblaster_ammo
-	time	0
-	producetime	3
 }
 
 tech rs_weapon_tachyonpistol
@@ -717,7 +749,7 @@ tech rs_weapon_tachyonpistol_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_tachyonpistol_txt"
+	description	"_tachyonpistol_mag_txt"
 
 	requires	"rs_damage_tachyon rs_weapon_tachyonpistol"
 	provides	tachyonpistol_ammo
@@ -742,7 +774,7 @@ tech rs_weapon_tachyonrifle_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_tachyonrifle_txt"
+	description	"_tachyonrifle_mag_txt"
 
 	requires	"rs_damage_tachyon rs_weapon_tachyonrifle"
 	provides	tachyonrifle_ammo
@@ -767,7 +799,7 @@ tech rs_weapon_tachyonsniper_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_tachyonsniper_txt"
+	description	"_tachyonsniper_mag_txt"
 
 	requires	"rs_damage_tachyon rs_weapon_tachyonsniper"
 	provides	tachyonsniper_ammo
@@ -843,17 +875,6 @@ tech rs_medium_alien
 // Damage Types
 //========================
 
-tech rs_damage_normal
-{
-	type	tech
-	name "_Normal Damage Type"
-	up_chapter	damage
-	description	"_normal_damage_txt"
-
-	time	0
-//	image_top	techs/normal_damage
-}
-
 tech rs_damage_blast
 {
 	type	tech
@@ -876,17 +897,6 @@ tech rs_damage_fire
 //	image_top	techs/fire_damage
 }
 
-tech rs_damage_shock
-{
-	type	tech
-	name "_Shock Damage Type"
-	up_chapter	damage
-	description	"_shock_damage_txt"
-
-	time	0
-//	image_top	techs/shock_damage
-}
-
 tech rs_damage_laser
 {
 	type	tech
@@ -897,6 +907,28 @@ tech rs_damage_laser
 	requires	rs_laser
 	time	0
 //	image_top	techs/laser_damage
+}
+
+tech rs_damage_normal
+{
+	type	tech
+	name "_Normal Damage Type"
+	up_chapter	damage
+	description	"_normal_damage_txt"
+
+	time	0
+//	image_top	techs/normal_damage
+}
+
+tech rs_damage_shock
+{
+	type	tech
+	name "_Shock Damage Type"
+	up_chapter	damage
+	description	"_shock_damage_txt"
+
+	time	0
+//	image_top	techs/shock_damage
 }
 
 tech rs_damage_plasma
@@ -911,16 +943,15 @@ tech rs_damage_plasma
 //	image_top	techs/plasma_damage
 }
 
-tech rs_damage_tachyon
+tech rs_damage_shock
 {
 	type	tech
-	name "_Tachyon Damage Type"
+	name "_Shock Damage Type"
 	up_chapter	damage
-	description	"_tachyon_damage_txt"
+	description	"_shock_damage_txt"
 
-	requires	rs_tachyon
 	time	0
-//	image_top	techs/tachyon_damage
+//	image_top	techs/shock_damage
 }
 
 tech rs_damage_stun
@@ -934,31 +965,21 @@ tech rs_damage_stun
 //	image_top	techs/stun_damage
 }
 
+tech rs_damage_tachyon
+{
+	type	tech
+	name "_Tachyon Damage Type"
+	up_chapter	damage
+	description	"_tachyon_damage_txt"
+
+	requires	rs_tachyon
+	time	0
+//	image_top	techs/tachyon_damage
+}
+
 //========================
 // Soldier Skills
 //========================
-
-tech rs_skill_power
-{
-	type	tech
-	name "_Power Attribute"
-	up_chapter	skill
-	description	"_power_skill_txt"
-
-	time	0
-//	image_top	techs/power_skill
-}
-
-tech rs_skill_speed
-{
-	type	tech
-	name "_Speed Attribute"
-	up_chapter	skill
-	description	"_speed_skill_txt"
-
-	time	0
-//	image_top	techs/speed_skill
-}
 
 tech rs_skill_accuracy
 {
@@ -969,39 +990,6 @@ tech rs_skill_accuracy
 
 	time	0
 //	image_top	techs/accuracy_skill
-}
-
-tech rs_skill_mind
-{
-	type	tech
-	name "_Mind Attribute"
-	up_chapter	skill
-	description	"_mind_skill_txt"
-
-	time	0
-//	image_top	techs/mind_skill
-}
-
-tech rs_skill_close
-{
-	type	tech
-	name "_Close Combat Proficiency"
-	up_chapter	skill
-	description	"_close_skill_txt"
-
-	time	0
-//	image_top	techs/close_skill
-}
-
-tech rs_skill_heavy
-{
-	type	tech
-	name "_Heavy Weapons Proficiency"
-	up_chapter	skill
-	description	"_heavy_skill_txt"
-
-	time	0
-//	image_top	techs/heavy_skill
 }
 
 tech rs_skill_assault
@@ -1015,15 +1003,15 @@ tech rs_skill_assault
 //	image_top	techs/assault_skill
 }
 
-tech rs_skill_sniper
+tech rs_skill_close
 {
 	type	tech
-	name "_Sniper Rifles Proficiency"
+	name "_Close Combat Proficiency"
 	up_chapter	skill
-	description	"_sniper_skill_txt"
+	description	"_close_skill_txt"
 
 	time	0
-//	image_top	techs/sniper_skill
+//	image_top	techs/close_skill
 }
 
 tech rs_skill_explosive
@@ -1037,9 +1025,76 @@ tech rs_skill_explosive
 //	image_top	techs/explosive_skill
 }
 
+tech rs_skill_heavy
+{
+	type	tech
+	name "_Heavy Weapons Proficiency"
+	up_chapter	skill
+	description	"_heavy_skill_txt"
+
+	time	0
+//	image_top	techs/heavy_skill
+}
+
+tech rs_skill_mind
+{
+	type	tech
+	name "_Mind Attribute"
+	up_chapter	skill
+	description	"_mind_skill_txt"
+
+	time	0
+//	image_top	techs/mind_skill
+}
+
+tech rs_skill_power
+{
+	type	tech
+	name "_Power Attribute"
+	up_chapter	skill
+	description	"_power_skill_txt"
+
+	time	0
+//	image_top	techs/power_skill
+}
+
+tech rs_skill_sniper
+{
+	type	tech
+	name "_Sniper Rifles Proficiency"
+	up_chapter	skill
+	description	"_sniper_skill_txt"
+
+	time	0
+//	image_top	techs/sniper_skill
+}
+
+tech rs_skill_speed
+{
+	type	tech
+	name "_Speed Attribute"
+	up_chapter	skill
+	description	"_speed_skill_txt"
+
+	time	0
+//	image_top	techs/speed_skill
+}
+
 //========================
 // Buildings
 //========================
+
+tech rs_building_command
+{
+	type	building
+	description	"_b_command_txt"
+	up_chapter	buildings
+
+	requires	rs_building_powerplant
+	provides	building_command
+	time	0
+}
+
 tech rs_building_entrance
 {
 	type	building
@@ -1047,61 +1102,6 @@ tech rs_building_entrance
 	up_chapter	buildings
 
 	provides	building_entrance
-	time	0
-}
-
-tech rs_building_storage
-{
-	type	building
-	description	"_b_storage_txt"
-	up_chapter	buildings
-
-	requires	rs_building_entrance
-	provides	building_storage
-	time	0
-}
-
-tech rs_building_powerplant
-{
-	type	building
-	description	"_b_powerplant_txt"
-	up_chapter	buildings
-
-	requires	rs_building_entrance
-	provides	building_powerplant
-	time	0
-}
-
-tech rs_building_quarters
-{
-	type	building
-	description	"_b_quarters_txt"
-	up_chapter	buildings
-
-	requires	rs_building_powerplant
-	provides	building_quarters
-	time	0
-}
-
-tech rs_building_teamroom
-{
-	type	building
-	description	"_b_teamroom_txt"
-	up_chapter	buildings
-
-	requires	rs_building_powerplant
-	provides	building_teamroom
-	time	0
-}
-
-tech rs_building_workshop
-{
-	type	    building
-	description	"_b_workshop_txt"
-	up_chapter	buildings
-
-	requires	rs_building_powerplant
-	provides	building_workshop
 	time	0
 }
 
@@ -1116,25 +1116,14 @@ tech rs_building_hangar
 	time	0
 }
 
-tech rs_building_radar
+tech rs_building_hospital
 {
-	type	building
-	description	"_b_radar_txt"
+	type	    building
+	description	"_b_hospital_txt"
 	up_chapter	buildings
 
-	requires	rs_building_powerplant
-	provides	building_radar
-	time	0
-}
-
-tech rs_building_command
-{
-	type	building
-	description	"_b_command_txt"
-	up_chapter	buildings
-
-	requires	rs_building_powerplant
-	provides	building_command
+	requires	rs_building_lab
+	provides	building_hospital
 	time	0
 }
 
@@ -1160,14 +1149,58 @@ tech rs_building_lab
 	time	0
 }
 
-tech rs_building_hospital
+tech rs_building_powerplant
 {
-	type	    building
-	description	"_b_hospital_txt"
+	type	building
+	description	"_b_powerplant_txt"
 	up_chapter	buildings
 
-	requires	rs_building_lab
-	provides	building_hospital
+	requires	rs_building_entrance
+	provides	building_powerplant
+	time	0
+}
+
+tech rs_building_quarters
+{
+	type	building
+	description	"_b_quarters_txt"
+	up_chapter	buildings
+
+	requires	rs_building_powerplant
+	provides	building_quarters
+	time	0
+}
+
+tech rs_building_radar
+{
+	type	building
+	description	"_b_radar_txt"
+	up_chapter	buildings
+
+	requires	rs_building_powerplant
+	provides	building_radar
+	time	0
+}
+
+tech rs_building_storage
+{
+	type	building
+	description	"_b_storage_txt"
+	up_chapter	buildings
+
+	requires	rs_building_entrance
+	provides	building_storage
+	time	0
+}
+
+tech rs_building_teamroom
+{
+	type	building
+	description	"_b_teamroom_txt"
+	up_chapter	buildings
+
+	requires	rs_building_powerplant
+	provides	building_teamroom
 	time	0
 }
 
@@ -1179,6 +1212,17 @@ tech rs_building_ufo_hangar
 
 	requires	"rs_building_lab rs_craft_ufo_tech"
 	provides	building_ufo_hangar
+	time	0
+}
+
+tech rs_building_workshop
+{
+	type	    building
+	description	"_b_workshop_txt"
+	up_chapter	buildings
+
+	requires	rs_building_powerplant
+	provides	building_workshop
 	time	0
 }
 
