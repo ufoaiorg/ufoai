@@ -43,3 +43,18 @@ shader textures/tex_material/metal002
 {
 	emboss true
 }
+
+shader textures/exterior/ext_brik03g
+{
+	emboss true
+}
+
+shader textures/interior/int_met01
+{
+	emboss true
+}
+
+shader textures/tex_buildings/wall002
+{
+	emboss true
+}
