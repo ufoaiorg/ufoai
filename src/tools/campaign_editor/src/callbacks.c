@@ -65,27 +65,27 @@ void mission_save (GtkButton *button, gpointer user_data)
 	snprintf(buffer, sizeof(buffer),
 		"mission GIVE_ME_A_NAME\n"
 		"{\n"
-		"\tlocation\t\"_%s\"\n"
-		"\ttype\t\"_%s\"\n"
-		"\ttext\t\"_%s\"\n"
-		"\tmap\t%s\n"
-		"\tparam\t\"%s\"\n"
-		"\tnation\t\"%s\"\n"
+		"\tlocation\t\t\"_%s\"\n"
+		"\ttype\t\t\t\"_%s\"\n"
+		"\ttext\t\t\t\"_%s\"\n"
+		"\tmap\t\t%s\n"
+		"\tparam\t\t\"%s\"\n"
+		"\tnation\t\t\"%s\"\n"
 		"\tstoryrelated\t%s\n"
-		"\tonwin\t\"%s\"\n"
-		"\tonlose\t\"%s\"\n"
+		"\tonwin\t\t\"%s\"\n"
+		"\tonlose\t\t\"%s\"\n"
 		"\tcommands\t\"%s\"\n"
-		"\tmusic\t%s\n"
-		"\tpos\t\"%i %i\"\n"
-		"\taliens\t%s\n"
-		"\tcivilians\t%s\n"
-		"\trecruits\t%s\n"
+		"\tmusic\t\t%s\n"
+		"\tpos\t\t\t\"%i %i\"\n"
+		"\taliens\t\t%s\n"
+		"\tcivilians\t\t%s\n"
+		"\trecruits\t\t%s\n"
 		"\talienteam\t%s\n"
-		"\tcivteam\t%s\n"
+		"\tcivteam\t\t%s\n"
 		"\talienequip\t%s\n"
-		"\t$win\t%s\n"
-		"\t$alien\t%s\n"
-		"\t$civilian\t%s\n"
+		"\t$win\t\t\t%s\n"
+		"\t$alien\t\t%s\n"
+		"\t$civilian\t\t%s\n"
 		"}\n",
 		get_entry_txt("location_mission"),
 		get_entry_txt("type_mission"),
@@ -113,7 +113,7 @@ void mission_save (GtkButton *button, gpointer user_data)
 	gtk_widget_show( mis_txt );
 	txtbuf = gtk_text_buffer_new(NULL);
 	gtk_text_buffer_insert_at_cursor(txtbuf, buffer, -1);
-	gtk_text_view_set_buffer(mission_txt, txtbuf);
+	gtk_text_view_set_buffer(GTK_TEXT_VIEW(mission_txt), txtbuf);
 }
 
 /**

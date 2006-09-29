@@ -55,12 +55,12 @@ int main (int argc, char *argv[])
 	add_pixmap_directory("/pixmaps");
 #endif
 	/* first visible window */
-	campaign_editor = create_campaign_editor ();
-	gtk_widget_show (campaign_editor);
+	ufoai_editor = create_ufoai_editor();
+	gtk_widget_show(ufoai_editor);
 
 	/* create two more dialogs, but don't show them */
 	mis_txt = create_mis_txt();
-	mission_dialog = create_mission_dialog ();
+	mission_dialog = create_mission_dialog();
 
 	/* enter main loop */
 	gtk_main ();

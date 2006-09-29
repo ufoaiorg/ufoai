@@ -55,40 +55,152 @@ GtkWidget *mission_dialog;
 /**
  * @brief
  */
-GtkWidget* create_campaign_editor (void)
+void tab_geoscape(GtkWidget *notebook, char* campaign_map)
 {
-	GtkWidget *editor_vbox;
+	GtkWidget *label, *scrolledwindow, *viewport, *image;
+
+	scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
+	gtk_widget_show (scrolledwindow);
+	gtk_container_add (GTK_CONTAINER (notebook), scrolledwindow);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+
+	viewport = gtk_viewport_new (NULL, NULL);
+	gtk_widget_show (viewport);
+	gtk_container_add (GTK_CONTAINER (scrolledwindow), viewport);
+
+	/* FIXME: First show a campaign selection dialog */
+	/* then load the given campaign map */
+	image = create_pixmap (ufoai_editor, va("map_%s_day.jpg", campaign_map));
+	gtk_widget_show (image);
+	gtk_container_add (GTK_CONTAINER (viewport), image);
+
+	gtk_signal_connect (GTK_OBJECT (viewport), "motion_notify_event",
+						(GtkSignalFunc) motion_notify_event, NULL);
+	gtk_signal_connect (GTK_OBJECT (viewport), "button_press_event",
+						(GtkSignalFunc) button_press_event, NULL);
+
+	gtk_widget_set_events (viewport, GDK_EXPOSURE_MASK
+						| GDK_LEAVE_NOTIFY_MASK
+						| GDK_BUTTON_PRESS_MASK
+						| GDK_POINTER_MOTION_MASK
+						| GDK_POINTER_MOTION_HINT_MASK);
+
+	label = gtk_label_new (_("Campaigns"));
+	gtk_widget_show (label);
+	gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 0), label);
+	GLADE_HOOKUP_OBJECT (ufoai_editor, label, "campaigns_tab");
+}
+
+/**
+ * @brief
+ */
+void tab_particle(GtkWidget *notebook)
+{
+	GtkWidget *vbox, *label;
+
+	vbox = gtk_vbox_new(FALSE, 2);
+	gtk_widget_show(vbox);
+	label = gtk_label_new (_("Particles"));
+	gtk_widget_show (label);
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, label);
+	GLADE_HOOKUP_OBJECT (ufoai_editor, label, "particle_tab");
+}
+
+/**
+ * @brief
+ */
+void tab_equipment(GtkWidget *notebook)
+{
+	GtkWidget *vbox, *label;
+
+	vbox = gtk_vbox_new(FALSE, 2);
+	gtk_widget_show(vbox);
+	label = gtk_label_new (_("Equipment"));
+	gtk_widget_show (label);
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, label);
+	GLADE_HOOKUP_OBJECT (ufoai_editor, label, "equipment_tab");
+}
+
+/**
+ * @brief
+ */
+void tab_weapons(GtkWidget *notebook)
+{
+	GtkWidget *vbox, *label;
+
+	vbox = gtk_vbox_new(FALSE, 2);
+	gtk_widget_show(vbox);
+	label = gtk_label_new (_("Weapons/Items"));
+	gtk_widget_show (label);
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, label);
+	GLADE_HOOKUP_OBJECT (ufoai_editor, label, "weapons_items_tab");
+}
+
+/**
+ * @brief
+ */
+void tab_teams(GtkWidget *notebook)
+{
+	GtkWidget *vbox, *label;
+
+	vbox = gtk_vbox_new(FALSE, 2);
+	gtk_widget_show(vbox);
+	label = gtk_label_new (_("Teams"));
+	gtk_widget_show (label);
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, label);
+	GLADE_HOOKUP_OBJECT (ufoai_editor, label, "teams_tab");
+}
+
+/**
+ * @brief
+ */
+void tab_research(GtkWidget *notebook)
+{
+	GtkWidget *vbox, *label;
+
+	vbox = gtk_vbox_new(FALSE, 2);
+	gtk_widget_show(vbox);
+	label = gtk_label_new (_("Research"));
+	gtk_widget_show (label);
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, label);
+	GLADE_HOOKUP_OBJECT (ufoai_editor, label, "research_tab");
+}
+
+/**
+ * @brief
+ */
+GtkWidget* create_ufoai_editor (void)
+{
 	GtkWidget *menubar;
-	AtkObject *atko;
+	AtkObject *widget;
 	GtkWidget *file;
 	GtkWidget *file_menu;
 	GtkWidget *menu_item_quit;
 	GtkWidget *help;
 	GtkWidget *help_menu;
 	GtkWidget *menu_item_info;
-	GtkWidget *notebook;
 	GtkWidget *geoscape_scrolledwindow;
 	GtkWidget *geoscape_viewport;
 	GtkWidget *geoscape_image;
-	GtkWidget *geoscape_notebook_label;
-	GtkWidget *campaign_notebook_label;
+	GtkWidget *notebook, *notebook_label;
+	GtkWidget *vbox;
 	GtkAccelGroup *accel_group;
 
 	accel_group = gtk_accel_group_new ();
 
-	campaign_editor = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title (GTK_WINDOW (campaign_editor), Q_("Campaign editor"));
-	gtk_window_set_default_size (GTK_WINDOW (campaign_editor), 800, 600);
+	ufoai_editor = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_title (GTK_WINDOW (ufoai_editor), Q_("Campaign editor"));
+	gtk_window_set_default_size (GTK_WINDOW (ufoai_editor), 800, 600);
 
-	gtk_signal_connect (GTK_OBJECT (campaign_editor), "destroy", GTK_SIGNAL_FUNC (gtk_exit), NULL);
+	gtk_signal_connect (GTK_OBJECT (ufoai_editor), "destroy", GTK_SIGNAL_FUNC (gtk_exit), NULL);
 
-	editor_vbox = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (editor_vbox);
-	gtk_container_add (GTK_CONTAINER (campaign_editor), editor_vbox);
+	vbox = gtk_vbox_new (FALSE, 2);
+	gtk_widget_show (vbox);
+	gtk_container_add (GTK_CONTAINER (ufoai_editor), vbox);
 
 	menubar = gtk_menu_bar_new ();
 	gtk_widget_show (menubar);
-	gtk_box_pack_start (GTK_BOX (editor_vbox), menubar, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), menubar, FALSE, FALSE, 0);
 
 	file = gtk_menu_item_new_with_mnemonic (_("_File"));
 	gtk_widget_show (file);
@@ -112,55 +224,40 @@ GtkWidget* create_campaign_editor (void)
 	gtk_widget_show (menu_item_info);
 	gtk_container_add (GTK_CONTAINER (help_menu), menu_item_info);
 
-	atko = gtk_widget_get_accessible (menubar);
-	atk_object_set_name (atko, _("About"));
+	widget = gtk_widget_get_accessible (menubar);
+	atk_object_set_name (widget, _("About"));
 
-	atko = gtk_widget_get_accessible (file);
-	atk_object_set_name (atko, _("File"));
+	widget = gtk_widget_get_accessible (file);
+	atk_object_set_name (widget, _("File"));
 
-	atko = gtk_widget_get_accessible (menu_item_quit);
-	atk_object_set_name (atko, _("Quit"));
+	widget = gtk_widget_get_accessible (menu_item_quit);
+	atk_object_set_name (widget, _("Quit"));
 
-	atko = gtk_widget_get_accessible (menu_item_info);
-	atk_object_set_name (atko, _("About"));
+	widget = gtk_widget_get_accessible (menu_item_info);
+	atk_object_set_name (widget, _("About"));
 
 	notebook = gtk_notebook_new ();
 	gtk_widget_show (notebook);
-	gtk_box_pack_start (GTK_BOX (editor_vbox), notebook, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
 
-	geoscape_scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
-	gtk_widget_show (geoscape_scrolledwindow);
-	gtk_container_add (GTK_CONTAINER (notebook), geoscape_scrolledwindow);
-	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (geoscape_scrolledwindow), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	tab_geoscape(notebook, "earth"); // FIXME
+	tab_particle(notebook);
+	tab_equipment(notebook);
+	tab_weapons(notebook);
+	tab_research(notebook);
+	tab_teams(notebook);
 
-	geoscape_viewport = gtk_viewport_new (NULL, NULL);
-	gtk_widget_show (geoscape_viewport);
-	gtk_container_add (GTK_CONTAINER (geoscape_scrolledwindow), geoscape_viewport);
+/*
+	notebook_label = gtk_label_new (_("New mission"));
+	gtk_widget_show (notebook_label);
+	gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 0), notebook_label);
+	GLADE_HOOKUP_OBJECT (ufoai_editor, notebook_label, "new_mission_tab");
 
-	/* FIXME: First show a campaign selection dialog */
-	/* then load the given campaign map */
-	geoscape_image = create_pixmap (campaign_editor, "map_earth_day.jpg");
-	gtk_widget_show (geoscape_image);
-	gtk_container_add (GTK_CONTAINER (geoscape_viewport), geoscape_image);
-
-	gtk_signal_connect (GTK_OBJECT (geoscape_viewport), "motion_notify_event",
-						(GtkSignalFunc) motion_notify_event, NULL);
-	gtk_signal_connect (GTK_OBJECT (geoscape_viewport), "button_press_event",
-						(GtkSignalFunc) button_press_event, NULL);
-
-	gtk_widget_set_events (geoscape_viewport, GDK_EXPOSURE_MASK
-						| GDK_LEAVE_NOTIFY_MASK
-						| GDK_BUTTON_PRESS_MASK
-						| GDK_POINTER_MOTION_MASK
-						| GDK_POINTER_MOTION_HINT_MASK);
-
-	geoscape_notebook_label = gtk_label_new (_("Geoscape"));
-	gtk_widget_show (geoscape_notebook_label);
-	gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 0), geoscape_notebook_label);
-
-/*	campaign_notebook_label = gtk_label_new (_("Campaign"));
-	gtk_widget_show (campaign_notebook_label);
-	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 0), campaign_notebook_label);*/
+	notebook_label = gtk_label_new (_("Edit missions"));
+	gtk_widget_show (notebook_label);
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 0), notebook_label);
+	GLADE_HOOKUP_OBJECT (ufoai_editor, notebook_label, "edit_mission_tab");
+*/
 
 	g_signal_connect ((gpointer) menu_item_quit, "activate",
 						G_CALLBACK (on_quit_activate),
@@ -170,25 +267,22 @@ GtkWidget* create_campaign_editor (void)
 						NULL);
 
 	/* Store pointers to all widgets, for use by lookup_widget(). */
-	GLADE_HOOKUP_OBJECT_NO_REF (campaign_editor, campaign_editor, "campaign_editor");
-	GLADE_HOOKUP_OBJECT (campaign_editor, editor_vbox, "editor_vbox");
-	GLADE_HOOKUP_OBJECT (campaign_editor, menubar, "menubar");
-	GLADE_HOOKUP_OBJECT (campaign_editor, file, "file");
-	GLADE_HOOKUP_OBJECT (campaign_editor, file_menu, "file_menu");
-	GLADE_HOOKUP_OBJECT (campaign_editor, menu_item_quit, "menu_item_quit");
-	GLADE_HOOKUP_OBJECT (campaign_editor, help, "help");
-	GLADE_HOOKUP_OBJECT (campaign_editor, help_menu, "help_menu");
-	GLADE_HOOKUP_OBJECT (campaign_editor, menu_item_info, "menu_item_info");
-	GLADE_HOOKUP_OBJECT (campaign_editor, notebook, "notebook");
-	GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_scrolledwindow, "geoscape_scrolledwindow");
-	GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_viewport, "geoscape_viewport");
-	GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_image, "geoscape_image");
-	GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_notebook_label, "geoscape_notebook_label");
-	GLADE_HOOKUP_OBJECT (campaign_editor, campaign_notebook_label, "geoscape_campaign_label");
+	GLADE_HOOKUP_OBJECT_NO_REF (ufoai_editor, ufoai_editor, "ufoai_editor");
+	GLADE_HOOKUP_OBJECT (ufoai_editor, menubar, "menubar");
+	GLADE_HOOKUP_OBJECT (ufoai_editor, file, "file");
+	GLADE_HOOKUP_OBJECT (ufoai_editor, file_menu, "file_menu");
+	GLADE_HOOKUP_OBJECT (ufoai_editor, menu_item_quit, "menu_item_quit");
+	GLADE_HOOKUP_OBJECT (ufoai_editor, help, "help");
+	GLADE_HOOKUP_OBJECT (ufoai_editor, help_menu, "help_menu");
+	GLADE_HOOKUP_OBJECT (ufoai_editor, menu_item_info, "menu_item_info");
+	GLADE_HOOKUP_OBJECT (ufoai_editor, notebook, "notebook");
+	GLADE_HOOKUP_OBJECT (ufoai_editor, geoscape_scrolledwindow, "geoscape_scrolledwindow");
+	GLADE_HOOKUP_OBJECT (ufoai_editor, geoscape_viewport, "geoscape_viewport");
+	GLADE_HOOKUP_OBJECT (ufoai_editor, geoscape_image, "geoscape_image");
 
-	gtk_window_add_accel_group (GTK_WINDOW (campaign_editor), accel_group);
+	gtk_window_add_accel_group (GTK_WINDOW (ufoai_editor), accel_group);
 
-	return campaign_editor;
+	return ufoai_editor;
 }
 
 /**
@@ -564,6 +658,7 @@ GtkWidget* create_mis_txt (void)
 
 	mission_txt = gtk_text_view_new ();
 	gtk_widget_show (mission_txt);
+	gtk_text_view_set_accepts_tab (GTK_TEXT_VIEW(mission_txt), TRUE);
 	gtk_box_pack_start (GTK_BOX (mis_txt_vbox), mission_txt, TRUE, TRUE, 0);
 
 	mis_txt_action_area = GTK_DIALOG (mis_txt)->action_area;

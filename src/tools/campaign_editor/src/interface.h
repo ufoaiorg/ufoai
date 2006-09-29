@@ -33,7 +33,7 @@ GtkWidget* create_mis_txt (void);
 void create_about_box (void);
 
 GtkWidget *mis_txt;
-GtkWidget *campaign_editor;
+GtkWidget *ufoai_editor;
 extern GtkWidget *mission_dialog;
 
 GtkWidget *mission_txt;

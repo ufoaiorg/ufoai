@@ -36,5 +36,5 @@ void button_mission_dialog_cancel (GtkWidget *widget, GdkEventButton *event);
 #define get_entry_txt(x) (char*)gtk_entry_get_text( GTK_ENTRY(lookup_widget(GTK_WIDGET (button), (const gchar*)x)) )
 #define get_textfield_txt(x) (char*)gtk_editable_get_chars( GTK_EDITABLE (lookup_widget(GTK_WIDGET (button), (const gchar*)x)), 0, -1 )
 #define get_selectbox_txt(x) (char*)gtk_combo_box_get_active_text( GTK_COMBO_BOX (lookup_widget(GTK_WIDGET (button), (const gchar*)x)) )
-#define get_checkbutton_txt(x) (int)gtk_toggle_button_get_active(GTK_CHECK_BUTTON(lookup_widget(GTK_WIDGET (button), (const gchar*)x)) )
+#define get_checkbutton_txt(x) (int)gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(lookup_widget(GTK_WIDGET (button), (const gchar*)x)) )
 
