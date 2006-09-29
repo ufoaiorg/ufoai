@@ -365,13 +365,13 @@ item stungrenade
 }
 
 // ====================
-// HELLFIRE CANISTER
+// INCENDIARY GRENADE
+// TODO fix the various values
 // ====================
-item alienincgrenade
+item incgrenade
 {
-	name		"_Hellfire Canister"
+	name		"_Incendiary grenade"
 	model		weapons/incgren/incgren
-//	model		weapons/alienincgren/alienincgren
 	weapon		true
 	type		grenade
 	category	0

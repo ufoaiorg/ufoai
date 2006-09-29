@@ -270,6 +270,18 @@ tech rs_weapon_fraggren
 	producetime	1
 }
 
+tech rs_weapon_incgren
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_incgren_txt"
+
+	requires	"rs_skill_explosive rs_damage_fire"
+	provides	incendiarygrenade
+	time	0
+	producetime	1
+}
+
 tech rs_weapon_grenl
 {
 	type	weapon

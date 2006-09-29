@@ -61,6 +61,7 @@ equipment campaign_market
 	heavylaser				1
 	heavylaser_ammo			5
 	fraggrenade				40
+	incgrenade				10
 	smokegrenade			10
 	knife					20
 	irgoggles				2
@@ -190,7 +191,7 @@ equipment multiplayer
 	knife				1
 	irgoggles			1
 	medikit				2
-//	alienincgrenade		6
+	incgrenade		6
 	plasmagrenade		6
 	kerrblade			5
 	plasblade			2
@@ -250,7 +251,7 @@ equipment testing_and_tweaking
 	medikit				6
 	stunrod				6
 	stungrenade			6
-	alienincgrenade		6
+	incgrenade		6
 	plasmagrenade		6
 	kerrblade			6
 	plasblade			6

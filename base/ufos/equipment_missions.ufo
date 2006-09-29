@@ -13,7 +13,6 @@
 //	tachyonsniper_ammo
 //	kerrblade
 //	plasblade
-//	alienincgrenade
 //	plasmagrenade
 //
 // The equipment approximately represent what an 40-alien team
@@ -49,7 +48,7 @@
 //    where #ammo and #weapon are the numbers of that particular
 //    ammo and weapon in the equipment definition;
 //    #ammo/#weapon should be greater than 1
-// 4. for each misc item (alienincgrenade or plasmagrenade)
+// 4. for each misc item (plasmagrenade)
 //    and secondary weapon without reload (kerrblade or plasblade) get
 //      (#item/40) slightly randomly increased
 //    with probability depending on the fractional part
@@ -81,7 +80,6 @@ equipment stage1_workers
 	plasrifle			1
 	plasrifle_ammo		1
 	kerrblade			50
-	alienincgrenade		1
 	light_alien         1
 }
 
@@ -92,7 +90,6 @@ equipment stage1_workers_explosive
 	plasblaster			2
 	plasblaster_ammo	3
 	kerrblade			10
-	alienincgrenade		125
 	plasmagrenade		20
 	light_alien         3
 	medium_alien        1
@@ -108,7 +105,6 @@ equipment stage1_soldiers
 	plasblaster_ammo	7
 	kerrblade			35
 	plasblade			1
-	alienincgrenade		1
 	light_alien         13
 }
 
@@ -120,7 +116,6 @@ equipment stage2_workers
 	plasrifle_ammo		3
 	kerrblade			30
 	plasblade			1
-	alienincgrenade		20
 	light_alien         1
 	medium_alien        7
 }
@@ -137,7 +132,6 @@ equipment stage2_soldiers_melee
 	tachyonsniper_ammo	1
 	kerrblade			15
 	plasblade			150
-	alienincgrenade		35
 	plasmagrenade		1
 	light_alien         7
 	medium_alien        10
@@ -156,7 +150,6 @@ equipment stage2_soldiers
 	tachyonpistol_ammo	1
 	kerrblade			35
 	plasblade			10
-	alienincgrenade		60
 	plasmagrenade		1
 	light_alien         25
 	medium_alien        3
@@ -172,7 +165,6 @@ equipment stage3_workers
 	tachyonpistol_ammo	25
 	kerrblade			3
 	plasblade			20
-	alienincgrenade		20
 	plasmagrenade		20
 	light_alien         1
 	medium_alien        15
@@ -191,7 +183,6 @@ equipment stage3_workers_explosive
 	tachyonrifle_ammo	4
 	kerrblade			10
 	plasblade			1
-	alienincgrenade		100
 	plasmagrenade		150
 	medium_alien        20
 //  heavy_alien         1
@@ -211,7 +202,6 @@ equipment stage3_soldiers
 	tachyonsniper_ammo	3
 	kerrblade			10
 	plasblade			50
-	alienincgrenade		35
 	plasmagrenade		35
 	light_alien         15
 	medium_alien        20
@@ -232,7 +222,6 @@ equipment stage4_workers
 	tachyonrifle_ammo	15
 	kerrblade			2
 	plasblade			25
-	alienincgrenade		35
 	plasmagrenade		35
 	light_alien         1
 	medium_alien        25 // 10
@@ -249,7 +238,6 @@ equipment stage4_soldiers_plasma
 	plasblaster_ammo	85
 	kerrblade			3
 	plasblade			100
-	alienincgrenade		50
 	plasmagrenade		100
 	light_alien         1
 	medium_alien        38 // 5
@@ -272,7 +260,6 @@ equipment stage4_soldiers
 	tachyonsniper_ammo	40
 	kerrblade			10 // bulky, will rarely get into the backpack
 	plasblade			70
-	alienincgrenade		70
 	plasmagrenade		70
 	light_alien         1
 	medium_alien        38 // 10
@@ -432,7 +419,6 @@ equipment multiplayer_initial
 	knife				5
 	irgoggles			5
 	medikit				5
-//	alienincgrenade		30
 	plasmagrenade		50
 	kerrblade           25 // bulky, will rarely get into the backpack
 	plasblade			20
