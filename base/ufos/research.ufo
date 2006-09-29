@@ -157,7 +157,7 @@ tech rs_weapon_alienincgrenade
 	description	"_alienincgrenade_txt"
 
 	requires	"rs_skill_explosive rs_damage_fire"
-	provides	alienincgrenade
+	provides	incgrenade
 	time	500
 	needscollected	true
 	producetime	2
