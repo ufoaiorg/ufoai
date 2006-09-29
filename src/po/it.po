@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-09-29 11:46+0200\n"
-"PO-Revision-Date: 2006-09-29 12:50+0100\n"
+"PO-Revision-Date: 2006-09-29 19:43+0100\n"
 "Last-Translator: DAniele C <sdads@sds.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2129,7 +2129,7 @@ msgstr "Nanotecnologia"
 
 #: ../base/ufos/research.ufo:114
 msgid "nano_txt"
-msgstr "La nanotecnologia apre un vasto campo di nuovi metodi di produzione particolarmente nel design di armature e vestiario. Linee di produzione basate sulla tecnologia laser avanzata rendono possibile la creazione di materiali quasi del tutto composti da fullereni e il loro utilizzo per la creazione di armature che sono più robuste e hanno una maggiore resistenza al calore di qualsiasi altra protezione controllata finora. In particolare, i raggi di plasma carichi recentemente analizzati sono stati osservati dissiparsi sulla superficie del nano-materiale, consumando parte del tessuto fullerenico, ma senza attraversarlo. E non solo, il nano-tessuto promette anche di essere più leggero di simili materiali convenzionali."
+msgstr "La nanotecnologia apre un vasto campo di nuovi metodi di produzione particolarmente nel design di armature e vestiario. Prototipi basati sulla tecnologia laser avanzata rendono possibile la creazione di materiali quasi del tutto composti da fullereni e il loro utilizzo per la creazione di armature che sono più robuste e hanno una maggiore resistenza al calore di qualsiasi altra protezione testata finora. In particolare, i raggi di plasma carichi recentemente analizzati sono stati osservati dissiparsi sulla superficie del nano-materiale, consumando parte del tessuto fullerenico, ma senza attraversarlo. E non solo, il nano-tessuto promette anche di essere più leggero di simili materiali convenzionali."
 
 #: ../base/ufos/research.ufo:137
 msgid "General UFO technology"
@@ -2765,7 +2765,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1683
 msgid "Light Shield"
-msgstr ""
+msgstr "Scudo Leggero"
 
 #: ../base/ufos/research.ufo:1684
 msgid "craft_shield_light_txt"
@@ -2773,7 +2773,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1698
 msgid "Medium Shield"
-msgstr ""
+msgstr "Scudo Medio"
 
 #: ../base/ufos/research.ufo:1699
 msgid "craft_shield_medium_txt"
@@ -2781,7 +2781,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1714
 msgid "Hard Shield"
-msgstr ""
+msgstr "Scudo Pesante"
 
 #: ../base/ufos/research.ufo:1715
 msgid "craft_shield_hard_txt"
@@ -2848,19 +2848,19 @@ msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:477
 msgid "This game is now community driven"
-msgstr ""
+msgstr "Questo gioco adesso è gestito dalla comunità"
 
 #: ../base/ufos/seq_credits.ufo:484
 msgid "To honor the original development team:"
-msgstr ""
+msgstr "In onore del team di sviluppo originale:"
 
 #: ../base/ufos/seq_credits.ufo:517
 msgid "Code, Visual Effects"
-msgstr ""
+msgstr "Codice, Effetti Visivi"
 
 #: ../base/ufos/seq_credits.ufo:568
 msgid "Maps, Textures, Art"
-msgstr ""
+msgstr "Mappe, Texture, Grafica"
 
 #: ../base/ufos/seq_credits.ufo:574
 msgid "SparX"
@@ -2892,7 +2892,7 @@ msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:761
 msgid "Special Thanks To"
-msgstr ""
+msgstr "Ringraziamenti particolari per"
 
 #: ../base/ufos/seq_credits.ufo:768
 msgid "id Software"
@@ -2912,7 +2912,7 @@ msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:797
 msgid "Additional Thanks To"
-msgstr ""
+msgstr "Ringraziamenti addizionali per"
 
 #: ../base/ufos/seq_credits.ufo:804
 msgid "Sacrusha"
@@ -2924,7 +2924,7 @@ msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:818
 msgid "The Community"
-msgstr ""
+msgstr "La Community"
 
 #: ../base/ufos/seq_credits.ufo:825
 msgid "Everyone who supported us"
