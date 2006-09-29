@@ -272,7 +272,7 @@ void RS_InitTree(void)
 			/*no id found in csi.ods */
 			if (!found) {
 				Com_sprintf(tech->name, MAX_VAR, tech->id);
-				Com_DPrintf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
+				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
 			}
 			break;
 		case RS_BUILDING:
@@ -1451,7 +1451,8 @@ static void RS_GetFirstRequired2(int tech_idx, int first_tech_idx, stringlist_t 
 	}
 	for (i = 0; i < required_temp->numEntries; i++) {
 		tech = RS_GetTechByID(required_temp->string[i]);
-		assert(tech); /* here we are in singleplayer and no hacks, please */
+		if (!tech)
+			Sys_Error("...could not find tech with id: %s\n", required_temp->string[i]);
 		if (RS_IsResearched_ptr(tech)) {
 			if (required->numEntries < MAX_TECHLINKS) {
 				required->idx[required->numEntries] = tech->idx;
