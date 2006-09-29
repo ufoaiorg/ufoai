@@ -1,5 +1,5 @@
-﻿# translation of it.po to ITALIAN
-# Daniele C. <legolas558@email.it>, September 2006
+# translation of it.po to ITALIAN
+# Daniele C. <legolas558@users.sourceforge.net>, September 2006
 # Matteo Azzali <kaioth@tiscalinet.it>, 2006.
 msgid ""
 msgstr ""
