@@ -732,7 +732,7 @@ void CL_UpdateHireVar(void)
 
 	/* update curTeam list */
 	for (i = 0, p = 0; i < (int)cl_numnames->value; i++) {
-		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
+		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
 		}
