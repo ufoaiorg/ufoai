@@ -53,7 +53,7 @@ ENDIF(HAVE_IPV6)
 # Sourcefiles for client
 #
 
-SET(UFOSOURCEFILES 
+SET(UFOSOURCEFILES
 	client/cl_actor.c
 	client/cl_aircraft.c
 	client/cl_basemanagement.c
@@ -86,7 +86,7 @@ SET(UFOSOURCEFILES
 	client/snd_mix.c
 	client/snd_ref.c
 	client/x86.c
-	
+
 #	qcommon/cbuf.c
 	qcommon/cmd.c
 	qcommon/cmodel.c
@@ -97,7 +97,7 @@ SET(UFOSOURCEFILES
 	qcommon/md4.c
 	qcommon/net_chan.c
 	qcommon/scripts.c
-	
+
 	server/sv_ccmds.c
 	server/sv_game.c
 	server/sv_init.c
@@ -138,11 +138,11 @@ SET(REF_GL_SOURCEFULES
 	ref_gl/gl_arb_shader.c
 	ref_gl/gl_shadows.c
 	ref_gl/qgl.c
-	
+
 	ports/linux/qgl_linux.c
 	game/q_shared.c
 	ports/linux/q_shlinux.c
-	ports/unix/glob.c # TODO: Different for macos. 
+	ports/unix/glob.c # TODO: Different for macos.
 )
 
 SET(REF_GLX_SOURCEFILES
@@ -230,7 +230,7 @@ IF (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
                 ports/linux/sys_linux.c
                 ports/unix/glob.c
                 "ports/unix/${NET_UDP}.c"
-        )  
+        )
         LIST(APPEND UFODED_SOURCEFILES
                 ports/linux/q_shlinux.c
                 ports/linux/sys_linux.c
@@ -241,13 +241,13 @@ IF (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
 ENDIF (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
 
 IF (${CMAKE_SYSTEM_NAME} STREQUAL Linux)
-	LIST(APPEND UFOSOURCEFILES 
+	LIST(APPEND UFOSOURCEFILES
 		ports/linux/q_shlinux.c
 		ports/linux/vid_so.c
 		ports/linux/sys_linux.c
 		ports/unix/glob.c
 		"ports/unix/${NET_UDP}.c"
-	)  
+	)
 	LIST(APPEND UFODED_SOURCEFILES
 		ports/linux/q_shlinux.c
 		ports/linux/sys_linux.c
@@ -335,7 +335,6 @@ IF (BUILD_SDLUFO)
 ENDIF (BUILD_SDLUFO)
 
 IF (BUILD_ALSA)
-	ADD_DEFINITIONS(-DUSE_ALSA)
 	LIST(APPEND EXTERNAL_LIBS asound)
 	ADD_LIBRARY(snd_alsa SHARED ports/linux/snd_alsa.c)
 	SET_TARGET_PROPERTIES(snd_alsa PROPERTIES PREFIX "" )
@@ -345,13 +344,14 @@ ENDIF (BUILD_ALSA)
 IF (BUILD_OSS)
 	ADD_LIBRARY(snd_oss SHARED ports/linux/snd_oss.c)
 	SET_TARGET_PROPERTIES(snd_oss PROPERTIES PREFIX "" )
-	INSTALL(TARGETS snd_oss DESTINATION ".")	
+	INSTALL(TARGETS snd_oss DESTINATION ".")
 ENDIF (BUILD_OSS)
 
 IF (BUILD_ARTS)
+	LIST(APPEND EXTERNAL_LIBS artsc)
 	ADD_LIBRARY(snd_arts SHARED ports/linux/snd_arts.c)
 	SET_TARGET_PROPERTIES(snd_arts PROPERTIES PREFIX "" )
-	INSTALL(TARGETS snd_arts DESTINATION ".")	
+	INSTALL(TARGETS snd_arts DESTINATION ".")
 ENDIF (BUILD_ARTS)
 
 IF (BUILD_WITH_VIDMODE)
@@ -390,7 +390,7 @@ IF (BUILD_DEDICATED)
    INSTALL(TARGETS ufoded DESTINATION ".")
    TARGET_LINK_LIBRARIES(ufoded ${EXTERNAL_LIBS_FOUND})
    SET_TARGET_PROPERTIES(ufoded PROPERTIES  COMPILE_FLAGS -DDEDICATED_ONLY)
-   
+
 ENDIF (BUILD_DEDICATED)
 
 IF (BUILD_COMPILETOOLS)
