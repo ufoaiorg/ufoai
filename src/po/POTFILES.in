@@ -27,3 +27,4 @@
 ./client/cl_basemanagement.c
 ./client/cl_particle.c
 ./client/cl_campaign.c
+./po/OTHER_STRINGS

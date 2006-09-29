@@ -1,0 +1,3 @@
+/* we can use this file to put in string here that are not found in the source via direct translations */
+_("Yes")
+_("No")
