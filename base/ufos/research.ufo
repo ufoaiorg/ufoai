@@ -310,10 +310,10 @@ tech rs_weapon_grenl_incendiary_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_grenl_fle_ammo_txt"
+	description	"_grenl_incendiary_ammo_txt"
 
 	requires	"rs_damage_fire rs_weapon_alienincgrenade rs_weapon_grenl"
-	provides	grenl_fle_ammo
+	provides	grenl_incendiary_ammo
 	time	1000
 	producetime	1
 }
@@ -1318,6 +1318,22 @@ tech rs_craft_ufo_big
 //========================
 
 // ORTNOK
+
+tech rs_alien
+{
+	type	tech
+	name	"_Ortnok - Combat notes"
+	description	"_ortnok_notes_txt"
+	up_chapter	tech
+
+	requires	rs_alien_ortnok_notes
+	provides	""
+	time	0
+	needscollected	true
+
+	// menuModel - see models.ufo
+	mdl_top	alien_ortnok
+}
 
 tech rs_alien_ortnok_notes
 {
