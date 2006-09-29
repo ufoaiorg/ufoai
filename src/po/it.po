@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-09-28 07:27+0200\n"
+"POT-Creation-Date: 2006-09-29 07:07+0200\n"
 "PO-Revision-Date: 2006-09-28 01:45+0200\n"
 "Last-Translator: Matteo Azzali <kaioth@nospam.tiscalinet.it>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
@@ -4423,7 +4423,7 @@ msgid "No pre-research description available."
 msgstr "Nessuna descrizione"
 
 # #ufopedia
-#: client/cl_ufopedia.c:448
+#: client/cl_ufopedia.c:449
 msgid "Ufopedia Content"
 msgstr "Contenuto dell'Ufopedia"
 
