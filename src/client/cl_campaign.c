@@ -1627,8 +1627,10 @@ void CL_UpdatePointersInGlobalData(void)
 
 		/* now fix the curTeam pointers */
 		/* FIXME: EMPL_ROBOTS => ugvs */
+		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+
 		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-			if ( CL_SoldierInAircraft(i, base->aircraftCurrent) ) {
+			if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
 				/* maybe we already have soldiers in this base */
 				base->curTeam[p] = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
 				assert(base->curTeam[p]);
@@ -2157,7 +2159,7 @@ static void CL_GameGo(void)
 
 	/* retrieve the correct team */
 	for (i = 0, p = 0; i < (int)cl_numnames->value; i++)
-		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
+		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
 			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
 		}
@@ -2481,12 +2483,15 @@ void CL_UpdateCharacterStats(int won)
 {
 	character_t *chr = NULL;
 	rank_t *rank = NULL;
+	aircraft_t *aircraft;
 	int i, j;
 
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
+		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
 			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			assert(chr);
 			chr->assigned_missions++;
@@ -2602,7 +2607,7 @@ static void CL_GameResultsCmd(void)
 	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
 	for (i = gd.numEmployees[EMPL_SOLDIER]-1; i >= 0 ; i-- ) {
 		/* if employee is marked as dead */
-		if (CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) )	/* DEBUG */
+		if (CL_SoldierInAircraft(i, gd.interceptAircraft) )	/* DEBUG? */
 			numberofsoldiers++;
 
 		Com_DPrintf("CL_GameResultsCmd - try to get player %i \n", i);
