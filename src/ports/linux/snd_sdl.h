@@ -1,6 +1,6 @@
 #if defined (__FreeBSD__)
-#include <SDL11/SDL.h>
-#include <SDL11/SDL_version.h>
+#include <SDL.h>
+#include <SDL_version.h>
 #else
 #include <SDL/SDL.h>
 #include <SDL/SDL_version.h>
