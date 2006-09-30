@@ -234,37 +234,55 @@ void S_Init(void)
 		ov_loop = Cvar_Get("ov_loop", "1", 0, NULL);
 
 		{
-			char fn[MAX_QPATH];
+			char libPath[MAX_OSPATH];
+#ifndef _WIN32
+			char libName[MAX_QPATH];
+#endif
 			snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, NULL);
 			/* don't restart right again */
 			snd_ref->modified = qfalse;
 
 			Com_Printf("Loading snd_%s sound driver\n", snd_ref->string);
 #ifdef _WIN32
-			Com_sprintf(fn, sizeof(fn), "snd_%s.dll", snd_ref->string);
-			if ((snd_ref_lib = LoadLibrary(fn)) == 0) {
+			Com_sprintf(libPath, sizeof(libPath), "snd_%s.dll", snd_ref->string);
+			if ((snd_ref_lib = LoadLibrary(libPath)) == 0) {
 #if defined _M_IX86
 #ifdef DEBUG
-				Com_sprintf(fn, sizeof(fn), "snd_%s32d.dll", snd_ref->string);
+				Com_sprintf(libPath, sizeof(libPath), "snd_%s32d.dll", snd_ref->string);
 #else
-				Com_sprintf(fn, sizeof(fn), "snd_%s32.dll", snd_ref->string);
+				Com_sprintf(libPath, sizeof(libPath), "snd_%s32.dll", snd_ref->string);
 #endif
 #elif defined _M_X64
 #ifdef DEBUG
-				Com_sprintf(fn, sizeof(fn), "snd_%s64d.dll", snd_ref->string);
+				Com_sprintf(libPath, sizeof(libPath), "snd_%s64d.dll", snd_ref->string);
 #else
-				Com_sprintf(fn, sizeof(fn), "snd_%s64.dll", snd_ref->string);
+				Com_sprintf(libPath, sizeof(libPath), "snd_%s64.dll", snd_ref->string);
 #endif
 #endif
-				if ((snd_ref_lib = LoadLibrary(fn)) == 0) {
+				if ((snd_ref_lib = LoadLibrary(libPath)) == 0) {
 					Com_Printf("Load library failed - no sound available\n");
 					return;
 				}
 #else
-			Com_sprintf(fn, sizeof(fn), "./snd_%s.so", snd_ref->string);
-			if ((snd_ref_lib = dlopen(fn, RTLD_LAZY)) == 0) {
-				Com_Printf("Load library failed: %s\n", dlerror());
-				return;
+			cvar_t* s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
+
+			/* try path given via cvar */
+			if (strlen(s_libdir->string))
+				Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
+			else
+				strcpy(libPath, ".");
+
+			Com_Printf("...library search path: '%s'\n", libPath);
+
+			/* first try system wide */
+			Com_sprintf(libName, sizeof(libName), "snd_%s.so", snd_ref->string);
+			if ((snd_ref_lib = dlopen(libName, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
+				/* then use s_libdir cvar */
+				Com_sprintf(libPath, sizeof(libPath), "%s/%s", libPath, libName);
+				if ((snd_ref_lib = dlopen(libPath, RTLD_LAZY)) == 0) {
+					Com_Printf("Load library failed: %s\n", dlerror());
+					return;
+				}
 #endif
 			}
 

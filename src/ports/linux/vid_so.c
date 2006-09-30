@@ -243,7 +243,6 @@ qboolean VID_LoadRefresh( char *name )
 		Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
 	else
 		strcpy(libPath, ".");
-	Com_Printf("...library search path: '%s'\n", libPath);
 
 	Q_strcat(libPath, "/", sizeof(libPath));
 	Q_strcat(libPath, name, sizeof(libPath));

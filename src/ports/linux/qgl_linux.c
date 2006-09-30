@@ -82,7 +82,7 @@ void *qwglGetProcAddress(char *symbol)
  */
 qboolean QGL_Init( const char *dllname )
 {
-	if ((glw_state.OpenGLLib = dlopen(dllname, RTLD_LAZY | RTLD_GLOBAL)) == 0) {
+	if ((glw_state.OpenGLLib = dlopen(dllname, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
 		char libPath[MAX_OSPATH];
 		cvar_t* s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
 
@@ -91,7 +91,6 @@ qboolean QGL_Init( const char *dllname )
 			Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
 		else
 			strcpy(libPath, ".");
-		Com_Printf("...library search path: '%s'\n", libPath);
 
 		Q_strcat(libPath, "/", sizeof(libPath));
 		Q_strcat(libPath, dllname, sizeof(libPath));
