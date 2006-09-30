@@ -200,6 +200,22 @@ then
 fi
 
 #---------------------------------------------------------------------------------------------
+# Check JPEG
+#---------------------------------------------------------------------------------------------
+
+AC_CHECK_HEADERS([jpeglib.h])
+if test "$ac_cv_header_jpeglib_h" == "no"
+then
+	AC_MSG_ERROR([You must have the JPEG development headers])
+fi
+
+AC_SEARCH_LIBS([jpeg_CreateDecompress],[jpeg])
+if test "$ac_cv_search_jpeg_create_decompress" == "no"
+then
+	AC_MSG_ERROR([You must have the JPEG development libraries])
+fi
+
+#---------------------------------------------------------------------------------------------
 # Check GLX
 #---------------------------------------------------------------------------------------------
 
