@@ -1617,6 +1617,14 @@ void CL_UpdatePointersInGlobalData(void)
 			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
 		}
 
+		/* initalize team to null */
+		for (p = 0; p < MAX_ACTIVETEAM; p++)
+			base->curTeam[p] = NULL;
+
+		/* if there are no aircraft in base, a team can't be assigned */
+		if (baseCurrent->numAircraftInBase <= 0)
+			continue;
+
 		/* now fix the curTeam pointers */
 		/* FIXME: EMPL_ROBOTS => ugvs */
 		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
@@ -1626,9 +1634,6 @@ void CL_UpdatePointersInGlobalData(void)
 				assert(base->curTeam[p]);
 				p++;
 			}
-		/* rest will be null */
-		for (; p < MAX_ACTIVETEAM; p++)
-			base->curTeam[p] = NULL;
 	}
 }
 

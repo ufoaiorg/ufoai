@@ -1547,6 +1547,7 @@ void B_BuildBase(void)
 			Com_DPrintf("B_BuildBase: numBases: %i\n", gd.numBases);
 			baseCurrent->idx = gd.numBases - 1;
 			baseCurrent->founded = qtrue;
+			baseCurrent->numAircraftInBase = 0;
 			stats.basesBuild++;
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - BASE_COSTS);
