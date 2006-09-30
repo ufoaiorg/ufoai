@@ -528,13 +528,13 @@ static void Key_SetBinding(int keynum, char *binding, keyBindSpace_t space)
 
 	/* free old bindings */
 	if (keySpace) {
-		Z_Free(*keySpace);
+		Mem_Free(*keySpace);
 		*keySpace = NULL;
 	}
 
 	/* allocate memory for new binding */
 	l = strlen(binding);
-	new = Z_Malloc(l + 1);
+	new = Mem_Alloc(l + 1);
 	Q_strncpyz(new, binding, l + 1);
 	*keySpace = new;
 }

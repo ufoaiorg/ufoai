@@ -1109,8 +1109,8 @@ qboolean CL_OpenAVIForWriting(char *fileName)
 		afd.motionJpeg = qfalse;
 	}
 
-	afd.cBuffer = Z_Malloc(afd.width * afd.height * 4);
-	afd.eBuffer = Z_Malloc(afd.width * afd.height * 4);
+	afd.cBuffer = Mem_Alloc(afd.width * afd.height * 4);
+	afd.eBuffer = Mem_Alloc(afd.width * afd.height * 4);
 
 	afd.a.rate = dma.speed;
 	afd.a.format = 1;
@@ -1355,8 +1355,8 @@ qboolean CL_CloseAVI(void)
 
 	SafeFS_Write(buffer, bufIndex, afd.f);
 
-	Z_Free(afd.cBuffer);
-	Z_Free(afd.eBuffer);
+	Mem_Free(afd.cBuffer);
+	Mem_Free(afd.eBuffer);
 	FS_FCloseFile(afd.f);
 
 	Com_Printf("Wrote %d:%d frames to %s\n", afd.numVideoFrames, afd.numAudioFrames, afd.fileName);

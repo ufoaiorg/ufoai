@@ -570,9 +570,9 @@ void SV_InitGameProgs(void)
 
 	import.GetModelAndName = Com_GetModelAndName;
 
-	import.TagMalloc = Z_TagMalloc;
-	import.TagFree = Z_Free;
-	import.FreeTags = Z_FreeTags;
+	import.TagMalloc = Mem_TagMalloc;
+	import.TagFree = Mem_Free;
+	import.FreeTags = Mem_FreeTags;
 
 	import.cvar = Cvar_Get;
 	import.cvar_set = Cvar_Set;

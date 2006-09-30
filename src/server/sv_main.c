@@ -884,7 +884,7 @@ void SV_Shutdown(char *finalmsg, qboolean reconnect)
 
 	/* free server static data */
 	if (svs.clients)
-		Z_Free(svs.clients);
+		Mem_Free(svs.clients);
 	if (svs.demofile)
 		fclose(svs.demofile);
 	memset(&svs, 0, sizeof(svs));
