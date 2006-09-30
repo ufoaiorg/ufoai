@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-09-29 11:46+0200\n"
-"PO-Revision-Date: 2006-09-29 19:43+0100\n"
+"PO-Revision-Date: 2006-09-30 13:01+0100\n"
 "Last-Translator: DAniele C <sdads@sds.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -383,7 +383,7 @@ msgstr ""
 #: ../base/ufos/menu_althud.ufo:89
 #: ../base/ufos/menu_hud.ufo:590
 msgid "Teamchat"
-msgstr ""
+msgstr "Chat di squadra"
 
 #: ../base/ufos/menu_althud.ufo:103
 #: ../base/ufos/menu_hud.ufo:604
@@ -438,7 +438,7 @@ msgstr "Ricarica arma mano sinistra"
 #: ../base/ufos/menu_althud.ufo:586
 #: ../base/ufos/menu_hud.ufo:504
 msgid "Crouch/Stand up"
-msgstr "Accucciato/In piedi"
+msgstr "Abbassato/In piedi"
 
 #: ../base/ufos/menu_althud.ufo:597
 msgid "Level up"
@@ -2093,11 +2093,11 @@ msgstr "Specie aliene"
 
 #: ../base/ufos/research.ufo:68
 msgid "UFOs"
-msgstr ""
+msgstr "UFO"
 
 #: ../base/ufos/research.ufo:69
 msgid "UGVs"
-msgstr ""
+msgstr "UGV"
 
 #: ../base/ufos/research.ufo:79
 msgid "Advanced Laser Technology"
@@ -2133,7 +2133,7 @@ msgstr "La nanotecnologia apre un vasto campo di nuovi metodi di produzione part
 
 #: ../base/ufos/research.ufo:137
 msgid "General UFO technology"
-msgstr ""
+msgstr "Tecnologia UFO generica"
 
 #: ../base/ufos/research.ufo:138
 msgid "ufo_tech_txt"
@@ -2383,7 +2383,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:892
 msgid "Fire Damage Type"
-msgstr ""
+msgstr "Danno da bruciatura"
 
 #: ../base/ufos/research.ufo:894
 msgid "fire_damage_txt"
@@ -2391,7 +2391,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:903
 msgid "Laser Damage Type"
-msgstr ""
+msgstr "Danno laser"
 
 #: ../base/ufos/research.ufo:905
 msgid "laser_damage_txt"
@@ -2399,7 +2399,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:915
 msgid "Normal Damage Type"
-msgstr ""
+msgstr "Danno normale"
 
 #: ../base/ufos/research.ufo:917
 msgid "normal_damage_txt"
@@ -2408,7 +2408,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:926
 #: ../base/ufos/research.ufo:949
 msgid "Shock Damage Type"
-msgstr ""
+msgstr "Danno da urto"
 
 #: ../base/ufos/research.ufo:928
 #: ../base/ufos/research.ufo:951
@@ -2417,11 +2417,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:937
 msgid "Plasma Damage Type"
-msgstr ""
+msgstr "Danno da plasma"
 
 #: ../base/ufos/research.ufo:939
 msgid "plasma_damage_txt"
-msgstr ""
+msgstr "Il danno da plasma è inferto con proiettili polimerici riempiti di plasma o raffiche a corto raggio di flussi plasmatici. Il plasma alle sue alte temperature e con la sua notevole carica brucia tutto; anche le armature più avanzate. Molto efficace contro umani con tute di Kevlar e alieni con debole armatura. Viene diffuso molto bene da qualsiasi armatura medio-avanzata, ma tuttavia brucia esse stesse velocemente. Le armi al plasma generano di solito un grande danno, hanno un raggio d'azione da corto a medio e una precisione mediocre."
 
 #: ../base/ufos/research.ufo:960
 msgid "Stun Damage Type"
@@ -2433,11 +2433,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:971
 msgid "Tachyon Damage Type"
-msgstr ""
+msgstr "Danno di tipo tachionico"
 
 #: ../base/ufos/research.ufo:973
 msgid "tachyon_damage_txt"
-msgstr ""
+msgstr "Un tipo di danno davvero non convenzionale: raggi di particelle più veloci della luce, incontrollabili ma violentemente reagenti con della materia (solitamente corpi umani) e che possono oltrepassare armature (specialmente quelle umane). Le armi tachioniche sono conosciute da tempo agli alieni, anche la più basilare armatura aliena protegge da almeno un terzo del danno tachionico. D'altro canto le particelle sono così particolari che anche la più potente difesa aliena non può offrire più di questa protezione basilare e solo i più avanzati design umani si avvicinano a tale protezione. Le armi tachioniche sono difficili da produrre anche per gli alieni, provocano un danno medio, hanno un raggio d'azione da medio a lungo e una decente precisione."
 
 #: ../base/ufos/research.ufo:987
 msgid "Accuracy Attribute"
@@ -2481,7 +2481,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1042
 msgid "Mind Attribute"
-msgstr ""
+msgstr "Qualità mentali"
 
 #: ../base/ufos/research.ufo:1044
 msgid "mind_skill_txt"
@@ -2489,7 +2489,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1053
 msgid "Power Attribute"
-msgstr ""
+msgstr "Potenza"
 
 #: ../base/ufos/research.ufo:1055
 msgid "power_skill_txt"
@@ -2497,7 +2497,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1064
 msgid "Sniper Rifles Proficiency"
-msgstr ""
+msgstr "Predisposizione per fucili di precisione"
 
 #: ../base/ufos/research.ufo:1066
 msgid "sniper_skill_txt"
@@ -2505,7 +2505,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1075
 msgid "Speed Attribute"
-msgstr ""
+msgstr "Velocità"
 
 #: ../base/ufos/research.ufo:1077
 msgid "speed_skill_txt"
@@ -2589,7 +2589,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1314
 msgid "Ortnok - Combat notes"
-msgstr ""
+msgstr "Ortnok - Note di combattimento"
 
 #: ../base/ufos/research.ufo:1315
 msgid "ortnok_notes_txt"
@@ -2597,7 +2597,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1330
 msgid "Ortnok - Autopsy"
-msgstr ""
+msgstr "Ortnok - Autopsia"
 
 #: ../base/ufos/research.ufo:1331
 msgid "ortnok_autopsy_txt"
@@ -2605,7 +2605,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1348
 msgid "Ortnok - Xenobiology"
-msgstr ""
+msgstr "Ortnok - Xenobiologia"
 
 #: ../base/ufos/research.ufo:1349
 msgid "ortnok_xenobiology_txt"
@@ -2613,7 +2613,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1364
 msgid "Ortnok - Interrogation"
-msgstr ""
+msgstr "Ortnok - Interrogatorio"
 
 #: ../base/ufos/research.ufo:1365
 msgid "ortnok_interrogation_txt"
@@ -2621,7 +2621,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1382
 msgid "Ortnok Worker"
-msgstr ""
+msgstr "Lavoratore Ortnok"
 
 #: ../base/ufos/research.ufo:1383
 msgid "ortnok_light_txt"
@@ -2629,7 +2629,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1400
 msgid "Ortnok Warrior"
-msgstr ""
+msgstr "Guerriero Ortnok"
 
 #: ../base/ufos/research.ufo:1401
 msgid "ortnok_medium_txt"
@@ -2637,7 +2637,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1418
 msgid "Antarean - Combat notes"
-msgstr ""
+msgstr "Antariano - Note di combattimento"
 
 #: ../base/ufos/research.ufo:1419
 msgid "antarean_notes_txt"
@@ -2645,7 +2645,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1434
 msgid "Antarean - Autopsy"
-msgstr ""
+msgstr "Antariano - Autopsia"
 
 #: ../base/ufos/research.ufo:1435
 msgid "antarean_autopsy_txt"
@@ -2653,7 +2653,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1450
 msgid "Antarean - Xenobiology"
-msgstr ""
+msgstr "Antariano - Xenobiologia"
 
 #: ../base/ufos/research.ufo:1451
 msgid "antarean_xenobiology_txt"
@@ -2661,7 +2661,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1466
 msgid "Antarean - Interrogation"
-msgstr ""
+msgstr "Antariano - Interrogatorio"
 
 #: ../base/ufos/research.ufo:1467
 msgid "antarean_interrogation_txt"
@@ -2669,7 +2669,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1482
 msgid "Antarean - Commander interrogation"
-msgstr ""
+msgstr "Antariano - Interrogatorio al Comandante"
 
 #: ../base/ufos/research.ufo:1483
 msgid "antarean_interrogation_commander_txt"
@@ -2677,7 +2677,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1500
 msgid "Shevaar - Combat notes"
-msgstr ""
+msgstr "Shevaar - Note di combattimento"
 
 #: ../base/ufos/research.ufo:1501
 msgid "shevaar_notes_txt"
@@ -2685,7 +2685,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1516
 msgid "Shevaar - Autopsy"
-msgstr ""
+msgstr "Shevaar - Autopsia"
 
 #: ../base/ufos/research.ufo:1517
 msgid "shevaar_autopsy_txt"
@@ -2693,7 +2693,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1532
 msgid "Shevaar - Xenobiology"
-msgstr ""
+msgstr "Shevaar - Xenobiologia"
 
 #: ../base/ufos/research.ufo:1533
 msgid "shevaar_xenobiology_txt"
@@ -2701,7 +2701,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1550
 msgid "Hovernet - Combat notes"
-msgstr ""
+msgstr "Hovernet - Note di combattimento"
 
 #: ../base/ufos/research.ufo:1551
 msgid "hovernet_notes_txt"
@@ -2709,7 +2709,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1566
 msgid "Hovernet - wreck research"
-msgstr ""
+msgstr "Hovernet - studio del relitto"
 
 #: ../base/ufos/research.ufo:1567
 msgid "hovernet_autopsy_txt"
@@ -2717,7 +2717,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1582
 msgid "Hovernet - design"
-msgstr ""
+msgstr "Hovernet - design"
 
 #: ../base/ufos/research.ufo:1583
 msgid "hovernet_xenobiology_txt"
@@ -2725,7 +2725,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1600
 msgid "Cyborg Ortnok - Combat notes"
-msgstr ""
+msgstr "Cyborg Ortnok - Note di combattimento"
 
 #: ../base/ufos/research.ufo:1601
 msgid "cyborg_ortnok_notes_txt"
@@ -2733,7 +2733,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1616
 msgid "Cyborg Ortnok - Autopsy"
-msgstr ""
+msgstr "Cyborg Ortnok - Autopsia"
 
 #: ../base/ufos/research.ufo:1617
 msgid "cyborg_ortnok_autopsy_txt"
@@ -2741,7 +2741,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1632
 msgid "Cyborg Ortnok - Xenobiology"
-msgstr ""
+msgstr "Cyborg Ortnok - Xenobiologia"
 
 #: ../base/ufos/research.ufo:1633
 msgid "cyborg_ortnok_xenobiology_txt"
@@ -2822,7 +2822,7 @@ msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:261
 msgid "Technology Consultant"
-msgstr ""
+msgstr "Consulente tecnologico"
 
 #: ../base/ufos/seq_credits.ufo:267
 msgid "Forest Hale (LordHavoc)"
@@ -2832,7 +2832,7 @@ msgstr ""
 #: ../base/ufos/seq_credits.ufo:365
 #: ../base/ufos/seq_credits.ufo:421
 msgid "Contributing Programmer"
-msgstr ""
+msgstr "Programmatore associato"
 
 #: ../base/ufos/seq_credits.ufo:319
 msgid "Sheldon Hearn (sheldonh)"
@@ -2876,7 +2876,7 @@ msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:673
 msgid "Music"
-msgstr ""
+msgstr "Musica"
 
 #: ../base/ufos/seq_credits.ufo:679
 msgid "Vanethian"
@@ -2928,7 +2928,7 @@ msgstr "La Community"
 
 #: ../base/ufos/seq_credits.ufo:825
 msgid "Everyone who supported us"
-msgstr ""
+msgstr "Tutti quelli che ci hanno aiutato"
 
 #: ../base/ufos/seq_credits.ufo:857
 msgid "http://www.ufoai.net"
@@ -2948,7 +2948,7 @@ msgstr "Gli UFO appaiono nei cieli della terra ..."
 
 #: ../base/ufos/seq_ingame.ufo:42
 msgid "(Catch them with your Interceptor to shoot them down.)"
-msgstr ""
+msgstr "(Raggiungili con il tuo Intercettatore per abbaterli.)"
 
 #: ../base/ufos/seq_ingame.ufo:62
 msgid "Finally: The attack on the alien base ..."
@@ -3126,7 +3126,7 @@ msgstr "Metti/togli fuoco di reazione"
 
 #: ../base/ufos/seq_tutorials.ufo:705
 msgid "Crouch (kneel down) or stand up"
-msgstr "Accucciati o alzati"
+msgstr "Abbassati (ginocchioni) o alzati"
 
 #: ../base/ufos/seq_tutorials.ufo:727
 msgid "Cycle through visible enemies"
@@ -3142,7 +3142,7 @@ msgstr ""
 
 #: ../base/ufos/team_aliens.ufo:223
 msgid "Antarean"
-msgstr ""
+msgstr "Antariano"
 
 #: ../base/ufos/team_aliens.ufo:233
 msgid "Shevaar"
@@ -3882,7 +3882,7 @@ msgstr "Attivita aliena"
 #: client/cl_campaign.c:897
 #, c-format
 msgid "Your base: %s has been ransacked! All employees killed and all equipment destroyed."
-msgstr ""
+msgstr "La tua base %s è stata saccheggiata! Tutti gli impiegati sono stati uccisi e l'equipaggiamento distrutto."
 
 #: client/cl_campaign.c:948
 #, c-format
@@ -3988,7 +3988,7 @@ msgstr "Esuberante"
 #: client/cl_campaign.c:1100
 #, c-format
 msgid "Gained %i credits, %i scientists, %i medics, %i soldiers and %i workers from nation %s (%s)"
-msgstr ""
+msgstr "Hai ottenuto %i crediti, %i scienziati, %i medici, %i soldati e %i lavoratori dalla nazione %s (%s)"
 
 #: client/cl_campaign.c:1109
 #, c-format
@@ -4077,7 +4077,7 @@ msgstr "Sodlato promosso"
 #: client/cl_campaign.c:2641
 #, c-format
 msgid "Defense of base: %s successful!"
-msgstr ""
+msgstr "Difesa della base %s: operazione riuscita!"
 
 #: client/cl_campaign.c:3633
 #, c-format
@@ -4096,7 +4096,7 @@ msgstr ""
 
 #: client/cl_input.c:738
 msgid "Toggle stand/crounch"
-msgstr ""
+msgstr "In piedi/abbassato"
 
 #: client/cl_input.c:739
 #, fuzzy
@@ -4105,7 +4105,7 @@ msgstr "Cambia fuoco di reazione"
 
 #: client/cl_input.c:740
 msgid "Toogle to next alien"
-msgstr ""
+msgstr "Vai al prossimo alieno"
 
 #: client/cl_input.c:747
 #, fuzzy
@@ -4276,7 +4276,7 @@ msgstr "Stato:\t%s\n"
 
 #: client/cl_menu.c:409
 msgid "Set playersoldiers lower than teamsoldiers"
-msgstr ""
+msgstr "Soldati del giocatore minori dei soldati della squadra"
 
 #: client/cl_menu.c:409
 msgid "Settings doesn't make sense"
@@ -4431,7 +4431,7 @@ msgstr "Nessuna descrizione"
 
 #: client/cl_scrn.c:385
 msgid "Loading..."
-msgstr ""
+msgstr "Caricamento..."
 
 #: client/cl_team.c:38
 msgid "Urban"
@@ -4514,7 +4514,7 @@ msgstr "Perdite Team\t%i\n"
 #: client/cl_team.c:1552
 #, c-format
 msgid "Team missing in action\t%i\n"
-msgstr ""
+msgstr "Squadra perduta in azione\t%i\n"
 
 #: client/cl_team.c:1553
 #, c-format
@@ -4667,7 +4667,7 @@ msgstr ""
 #: client/cl_ufopedia.c:142
 #: client/cl_ufopedia.c:147
 msgid "One-handed"
-msgstr ""
+msgstr "Singola mano"
 
 #: client/cl_ufopedia.c:139
 #: client/cl_ufopedia.c:142
@@ -4684,12 +4684,12 @@ msgstr "Munizioni:\t%i\n"
 #: client/cl_ufopedia.c:142
 #, c-format
 msgid "%s ammo-less weapon with\n"
-msgstr ""
+msgstr "%s arma senza munizioni con\n"
 
 #: client/cl_ufopedia.c:147
 #, c-format
 msgid "%s auxiliary equipment with\n"
-msgstr ""
+msgstr "%s equipaggiamento ausiliario con\n"
 
 #: client/cl_ufopedia.c:148
 #, c-format
