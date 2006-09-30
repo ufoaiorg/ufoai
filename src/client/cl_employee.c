@@ -522,7 +522,7 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 		gd.numEmployees[type]--;
 
 		if (type == EMPL_SOLDIER) {
-			for ( i = 0; i < MAX_AIRCRAFT; i++ ) 
+			for ( i = 0; i < gd.numAircraft; i++ ) 
 				CL_DecreaseAircraftTeamIdxGreaterThan(CL_AircraftGetFromIdx(i),idx);
 		}
 	} else {
