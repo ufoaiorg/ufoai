@@ -33,6 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "callbacks.h"
 #include "interface.h"
 #include "support.h"
+#include "scripts.h"
+#include "campaign.h"
 
 static int x, y;
 

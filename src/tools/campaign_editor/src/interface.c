@@ -42,69 +42,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "interface.h"
 #include "support.h"
 #include "scripts.h"
-
-#define GLADE_HOOKUP_OBJECT(component,widget,name) \
-  g_object_set_data_full (G_OBJECT (component), name, \
-    gtk_widget_ref (widget), (GDestroyNotify) gtk_widget_unref)
-
-#define GLADE_HOOKUP_OBJECT_NO_REF(component,widget,name) \
-  g_object_set_data (G_OBJECT (component), name, widget)
+#include "campaign.h"
 
 GtkWidget *mission_dialog;
-
-/**
- * @brief
- */
-void tab_geoscape(GtkWidget *notebook, char* campaign_map)
-{
-	GtkWidget *label, *scrolledwindow, *viewport, *image;
-
-	scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
-	gtk_widget_show (scrolledwindow);
-	gtk_container_add (GTK_CONTAINER (notebook), scrolledwindow);
-	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-
-	viewport = gtk_viewport_new (NULL, NULL);
-	gtk_widget_show (viewport);
-	gtk_container_add (GTK_CONTAINER (scrolledwindow), viewport);
-
-	/* FIXME: First show a campaign selection dialog */
-	/* then load the given campaign map */
-	image = create_pixmap (ufoai_editor, va("map_%s_day.jpg", campaign_map));
-	gtk_widget_show (image);
-	gtk_container_add (GTK_CONTAINER (viewport), image);
-
-	gtk_signal_connect (GTK_OBJECT (viewport), "motion_notify_event",
-						(GtkSignalFunc) motion_notify_event, NULL);
-	gtk_signal_connect (GTK_OBJECT (viewport), "button_press_event",
-						(GtkSignalFunc) button_press_event, NULL);
-
-	gtk_widget_set_events (viewport, GDK_EXPOSURE_MASK
-						| GDK_LEAVE_NOTIFY_MASK
-						| GDK_BUTTON_PRESS_MASK
-						| GDK_POINTER_MOTION_MASK
-						| GDK_POINTER_MOTION_HINT_MASK);
-
-	label = gtk_label_new (_("Campaigns"));
-	gtk_widget_show (label);
-	gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 0), label);
-	GLADE_HOOKUP_OBJECT (ufoai_editor, label, "campaigns_tab");
-}
-
-/**
- * @brief
- */
-void tab_particle(GtkWidget *notebook)
-{
-	GtkWidget *vbox, *label;
-
-	vbox = gtk_vbox_new(FALSE, 2);
-	gtk_widget_show(vbox);
-	label = gtk_label_new (_("Particles"));
-	gtk_widget_show (label);
-	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, label);
-	GLADE_HOOKUP_OBJECT (ufoai_editor, label, "particle_tab");
-}
 
 /**
  * @brief
@@ -119,21 +59,6 @@ void tab_equipment(GtkWidget *notebook)
 	gtk_widget_show (label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, label);
 	GLADE_HOOKUP_OBJECT (ufoai_editor, label, "equipment_tab");
-}
-
-/**
- * @brief
- */
-void tab_weapons(GtkWidget *notebook)
-{
-	GtkWidget *vbox, *label;
-
-	vbox = gtk_vbox_new(FALSE, 2);
-	gtk_widget_show(vbox);
-	label = gtk_label_new (_("Weapons/Items"));
-	gtk_widget_show (label);
-	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, label);
-	GLADE_HOOKUP_OBJECT (ufoai_editor, label, "weapons_items_tab");
 }
 
 /**
@@ -240,8 +165,8 @@ GtkWidget* create_ufoai_editor (void)
 	gtk_widget_show (notebook);
 	gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
 
-	tab_geoscape(notebook, "earth"); // FIXME
-	tab_particle(notebook);
+	tab_campaigns(notebook); // FIXME
+	tab_particles(notebook);
 	tab_equipment(notebook);
 	tab_weapons(notebook);
 	tab_research(notebook);
@@ -398,7 +323,7 @@ void create_label(char* string, GtkWidget* table, int col1, int col2, int row1, 
 /**
  * @brief
  */
-void create_select_box_from_script_data(char* string, char* script_type, char* active_string, GtkWidget* table, int col1, int col2, int row1, int row2)
+GtkWidget* create_select_box_from_script_data(char* string, char* script_type, char* active_string, GtkWidget* table, int col1, int col2, int row1, int row2)
 {
 	struct dirent *dir_info;
 	DIR *dir;
@@ -459,6 +384,7 @@ void create_select_box_from_script_data(char* string, char* script_type, char* a
 		active = 0;
 	gtk_combo_box_set_active( GTK_COMBO_BOX (w), active);
 	GLADE_HOOKUP_OBJECT (mission_dialog, w, string);
+	return w;
 }
 
 /**

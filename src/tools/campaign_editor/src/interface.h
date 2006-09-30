@@ -27,10 +27,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define WEBSITE "http://www.ufoai.net"
 #define NAME "Campaign editor for UFO:AI"
 
+#define GLADE_HOOKUP_OBJECT(component,widget,name) \
+  g_object_set_data_full (G_OBJECT (component), name, \
+    gtk_widget_ref (widget), (GDestroyNotify) gtk_widget_unref)
+
+#define GLADE_HOOKUP_OBJECT_NO_REF(component,widget,name) \
+  g_object_set_data (G_OBJECT (component), name, widget)
+
 GtkWidget* create_campaign_editor (void);
 GtkWidget* create_mission_dialog (void);
 GtkWidget* create_mis_txt (void);
 void create_about_box (void);
+GtkWidget* create_select_box_from_script_data(char* string, char* script_type, char* active_string, GtkWidget* table, int col1, int col2, int row1, int row2);
 
 GtkWidget *mis_txt;
 GtkWidget *ufoai_editor;
