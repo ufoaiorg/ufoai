@@ -23,7 +23,7 @@ REF_GL_SRCS = \
 	ports/unix/glob.c
 
 REF_GLX_SRCS = \
-	ref_gl/gl_glx.c
+	ports/linux/gl_glx.c
 
 REF_SDL_SRCS = \
 	ports/linux/gl_sdl.c
@@ -31,14 +31,14 @@ REF_SDL_SRCS = \
 REF_GL_OBJS=$(REF_GL_SRCS:%.c=$(BUILDDIR)/ref_gl/%.o)
 REF_GL_DEPS=$(REF_GL_OBJS:%.o=%.d)
 
-REF_GLX_OBJS=$(REF_GLX_SRCS:%.c=$(BUILDDIR)/reg_gl/%.o)
+REF_GLX_OBJS=$(REF_GLX_SRCS:%.c=$(BUILDDIR)/ref_gl/%.o)
 REF_GLX_DEPS=$(REF_GLX_OBJS:%.o=%.d)
 REF_GLX_TARGET=ref_glx.$(SHARED_EXT)
 
 ifeq ($(HAVE_VID_GLX), 1)
 	TARGETS += $(REF_GLX_TARGET)
 	ALL_OBJS += $(REF_GL_OBJS) $(REF_GLX_OBJS)
-	ALL_DEPS += $(REF_GL_DEPS) $(REG_GLX_DEPS)
+	ALL_DEPS += $(REF_GL_DEPS) $(REF_GLX_DEPS)
 endif
 
 REF_SDL_OBJS=$(REF_SDL_SRCS:%.c=$(BUILDDIR)/ref_gl/%.o)
@@ -52,7 +52,7 @@ ifeq ($(HAVE_SDL), 1)
 endif
 
 # Say about to build the target
-$(REG_GLX_TARGET) : $(REF_GLX_OBJS) $(REF_GL_OBJS) $(BUILDDIR)/.dirs
+$(REF_GLX_TARGET) : $(REF_GLX_OBJS) $(REF_GL_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [GLX] ... linking"; \
 		$(LIBTOOL_LD) -o $(BUILDDIR)/libref_glx.la $(REF_GLX_OBJS:%.o=%.lo) $(REF_GL_OBJS:%.o=%.lo)
 	@cp $(BUILDDIR)/.libs/libref_glx.$(SHARED_EXT) $@
