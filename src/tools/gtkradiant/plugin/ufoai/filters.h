@@ -27,24 +27,24 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "generic/callback.h"
 #include "scenelib.h"
 
-class UfoAI;
+class UfoAIF;
 
 class UfoAIFilter
 {
 	public:
-	virtual bool filter(const UfoAI &ufoai) const = 0;
+	virtual bool filter(const UfoAIF &ufoai) const = 0;
 };
 
-bool ufoai_filtered(UfoAI& ufoai);
+bool ufoai_filtered(UfoAIF& ufoai);
 void add_ufoai_filter(UfoAIFilter& filter, int mask);
 
 class ClassnameFilter : public Filterable
 {
 	scene::Node &m_node;
 	public:
-	UfoAI &m_ufoai;
+	UfoAIF &m_ufoai;
 
-	ClassnameFilter(UfoAI& ufoai, scene::Node& node) : m_node(node), m_ufoai(ufoai) {
+	ClassnameFilter(UfoAIF& ufoai, scene::Node& node) : m_node(node), m_ufoai(ufoai) {
 	}
 	~ClassnameFilter() {
 	}

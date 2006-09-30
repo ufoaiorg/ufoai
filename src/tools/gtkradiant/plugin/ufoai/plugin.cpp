@@ -356,7 +356,6 @@ class filter_ufoai : public UfoAIFilter
 
 filter_ufoai g_filter_level1("level1");
 
-
 void initFilters()
 {
 	add_ufoai_filter(g_filter_level1, CONTENTS_LEVEL8);

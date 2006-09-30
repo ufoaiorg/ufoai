@@ -38,7 +38,7 @@ class UfoAIFilterWrapper : public Filter
 	bool active() {
 		return m_active;
 	}
-	bool filter(const UfoAI& ufoai) {
+	bool filter(const UfoAIF& ufoai) {
 		return m_filter.filter(ufoai);
 	}
 };
@@ -53,7 +53,7 @@ void add_ufoai_filter(UfoAIFilter& filter, int mask)
 	GlobalFilterSystem().addFilter(g_UfoAIFilters.back(), mask);
 }
 
-bool ufoai_filtered(UfoAI& ufoai)
+bool ufoai_filtered(UfoAIF& ufoai)
 {
 	for(UfoAIFilters::iterator i = g_UfoAIFilters.begin(); i != g_UfoAIFilters.end(); ++i) {
 		if((*i).active() && (*i).filter(ufoai)) {
