@@ -52,8 +52,6 @@ viddef_t	viddef;				/* global video state; used by other modules */
 void		*reflib_library;		/* Handle to refresh DLL */
 qboolean	reflib_active = qfalse;
 
-const char so_file[] = "/etc/ufo.conf";
-
 /** KEYBOARD **************************************************************/
 
 void Do_Key_Event(int key, qboolean down);
@@ -215,13 +213,13 @@ void VID_FreeReflib (void)
  */
 qboolean VID_LoadRefresh( char *name )
 {
-	refimport_t	ri;
-	GetRefAPI_t	GetRefAPI;
-	qboolean	restart = qfalse;
-	char	fn[MAX_OSPATH];
+	refimport_t ri;
+	GetRefAPI_t GetRefAPI;
+	qboolean restart = qfalse;
 	struct stat st;
 	extern uid_t saved_euid;
-	FILE *fp;
+	char libPath[MAX_OSPATH];
+	cvar_t* s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
 
 	if (reflib_active) {
 		if (KBD_Close_fp)
@@ -240,30 +238,27 @@ qboolean VID_LoadRefresh( char *name )
 	/*regain root */
 	seteuid(saved_euid);
 
-	if ((fp = fopen(so_file, "r")) == NULL) {
-		Com_Printf( "LoadLibrary(\"%s\"): can't open %s - setting search path to .\n", name, so_file);
-		strcpy(fn, ".");
-	} else {
-		fgets(fn, sizeof(fn), fp);
-		fclose(fp);
-		while (*fn && isspace(fn[strlen(fn) - 1]))
-			fn[strlen(fn) - 1] = 0;
-	}
+	/* try path given via cvar */
+	if (strlen(s_libdir->string))
+		Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
+	else
+		strcpy(libPath, ".");
+	Com_Printf("...library search path: '%s'\n", libPath);
 
-	Q_strcat(fn, "/", sizeof(fn));
-	Q_strcat(fn, name, sizeof(fn));
+	Q_strcat(libPath, "/", sizeof(libPath));
+	Q_strcat(libPath, name, sizeof(libPath));
 
-	if (stat(fn, &st) == -1) {
+	if (stat(libPath, &st) == -1) {
 		Com_Printf( "LoadLibrary(\"%s\") failed: %s\n", name, strerror(errno));
 		return qfalse;
 	}
 
-	if ( ( reflib_library = dlopen( fn, RTLD_LAZY | RTLD_GLOBAL ) ) == 0 ) {
-		Com_Printf( "LoadLibrary(\"%s\") failed: %s\n", name , dlerror());
+	if ((reflib_library = dlopen(libPath, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
+		Com_Printf("LoadLibrary(\"%s\") failed: %s\n", name , dlerror());
 		return qfalse;
 	}
 
-	Com_Printf( "LoadLibrary(\"%s\")\n", fn );
+	Com_Printf("LoadLibrary(\"%s\")\n", libPath);
 
 	ri.Cmd_AddCommand = Cmd_AddCommand;
 	ri.Cmd_RemoveCommand = Cmd_RemoveCommand;

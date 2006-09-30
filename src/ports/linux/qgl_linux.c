@@ -31,20 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "glw_linux.h"
 
 #include <GL/glx.h>
-
 #include <dlfcn.h>
-
-const char so_file[] = "/etc/ufo.conf";
-
-#if 0
-/*FX Mesa Functions */
-fxMesaContext (*qfxMesaCreateContext)(GLuint win, GrScreenResolution_t, GrScreenRefresh_t, const GLint attribList[]);
-fxMesaContext (*qfxMesaCreateBestContext)(GLuint win, GLint width, GLint height, const GLint attribList[]);
-void (*qfxMesaDestroyContext)(fxMesaContext ctx);
-void (*qfxMesaMakeCurrent)(fxMesaContext ctx);
-fxMesaContext (*qfxMesaGetCurrentContext)(void);
-void (*qfxMesaSwapBuffers)(void);
-#endif
 
 /*GLX Functions */
 XVisualInfo * (*qglXChooseVisual)( Display *dpy, int screen, int *attribList );
@@ -95,25 +82,22 @@ void *qwglGetProcAddress(char *symbol)
  */
 qboolean QGL_Init( const char *dllname )
 {
-	if ( ( glw_state.OpenGLLib = dlopen( dllname, RTLD_LAZY | RTLD_GLOBAL ) ) == 0 ) {
-		char	fn[MAX_OSPATH];
-		FILE *fp;
+	if ((glw_state.OpenGLLib = dlopen(dllname, RTLD_LAZY | RTLD_GLOBAL)) == 0) {
+		char libPath[MAX_OSPATH];
+		cvar_t* s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
 
-		/* try path in /etc/ufo.conf */
-		if ((fp = fopen(so_file, "r")) == NULL) {
-			strcpy(fn, "." );
-		} else {
-			fgets(fn, sizeof(fn), fp);
-			fclose(fp);
-			while (*fn && isspace(fn[strlen(fn) - 1]))
-			fn[strlen(fn) - 1] = 0;
-		}
+		/* try path given via cvar */
+		if (strlen(s_libdir->string))
+			Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
+		else
+			strcpy(libPath, ".");
+		Com_Printf("...library search path: '%s'\n", libPath);
 
-		Q_strcat(fn, "/", sizeof(fn));
-		Q_strcat(fn, dllname, sizeof(fn));
+		Q_strcat(libPath, "/", sizeof(libPath));
+		Q_strcat(libPath, dllname, sizeof(libPath));
 
-		if ( ( glw_state.OpenGLLib = dlopen( fn, RTLD_LAZY ) ) == 0 ) {
-			ri.Con_Printf( PRINT_ALL, "%s\n", dlerror() );
+		if ((glw_state.OpenGLLib = dlopen(libPath, RTLD_LAZY)) == 0) {
+			ri.Con_Printf(PRINT_ALL, "%s\n", dlerror());
 			return qfalse;
 		}
 	}
@@ -121,13 +105,13 @@ qboolean QGL_Init( const char *dllname )
 	/* general qgl bindings */
 	QGL_Link();
 	/* linux specific ones */
-	qglXChooseVisual             = GPA("glXChooseVisual");
-	qglXCreateContext            = GPA("glXCreateContext");
-	qglXDestroyContext           = GPA("glXDestroyContext");
-	qglXMakeCurrent              = GPA("glXMakeCurrent");
-	qglXCopyContext              = GPA("glXCopyContext");
-	qglXSwapBuffers              = GPA("glXSwapBuffers");
-	qglXGetConfig                = GPA("glXGetConfig");
+	qglXChooseVisual   = GPA("glXChooseVisual");
+	qglXCreateContext  = GPA("glXCreateContext");
+	qglXDestroyContext = GPA("glXDestroyContext");
+	qglXMakeCurrent    = GPA("glXMakeCurrent");
+	qglXCopyContext    = GPA("glXCopyContext");
+	qglXSwapBuffers    = GPA("glXSwapBuffers");
+	qglXGetConfig      = GPA("glXGetConfig");
 	return qtrue;
 }
 
