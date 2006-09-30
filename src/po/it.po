@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-09-29 11:46+0200\n"
-"PO-Revision-Date: 2006-09-30 13:01+0100\n"
+"PO-Revision-Date: 2006-09-30 17:21+0100\n"
 "Last-Translator: DAniele C <sdads@sds.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -122,7 +122,7 @@ msgstr "Ospedale"
 
 #: ../base/ufos/basemanagement.ufo:286
 msgid "Home"
-msgstr "Base Madre"
+msgstr "Quartier Generale"
 
 #: ../base/ufos/basemanagement.ufo:287
 msgid "Base #2"
@@ -200,7 +200,7 @@ msgstr "Campagna Facile"
 
 #: ../base/ufos/campaign.ufo:209
 msgid "txt_easy_campaign"
-msgstr ""
+msgstr "Come la campagna standard ma con più reclute e con più crediti"
 
 #: ../base/ufos/campaign.ufo:229
 msgid "Very Easy Campaign"
@@ -208,11 +208,11 @@ msgstr "Campagna Molto Facile"
 
 #: ../base/ufos/campaign.ufo:230
 msgid "txt_veryeasy_campaign"
-msgstr ""
+msgstr "Come la campagna facile ma con più reclute e con più crediti"
 
 #: ../base/ufos/campaign.ufo:250
 msgid "Play the aliens"
-msgstr ""
+msgstr "Gioca nel ruolo degli alieni"
 
 #: ../base/ufos/campaign.ufo:251
 #, fuzzy
@@ -252,14 +252,12 @@ msgid "Coin"
 msgstr "Testa"
 
 #: ../base/ufos/medals.ufo:30
-#, fuzzy
 msgid "Scientist"
-msgstr "Scienziati"
+msgstr "Scienziato"
 
 #: ../base/ufos/medals.ufo:37
-#, fuzzy
 msgid "Medic"
-msgstr "Medici"
+msgstr "Medico"
 
 #: ../base/ufos/medals.ufo:44
 #: ../base/ufos/team_humans.ufo:1553
@@ -268,9 +266,8 @@ msgid "UGV"
 msgstr ""
 
 #: ../base/ufos/medals.ufo:51
-#, fuzzy
 msgid "Worker"
-msgstr "Operai"
+msgstr "Operaio"
 
 #: ../base/ufos/medals.ufo:58
 msgid "Rookie"
@@ -2497,7 +2494,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1064
 msgid "Sniper Rifles Proficiency"
-msgstr "Predisposizione per fucili di precisione"
+msgstr "Predisposizione per fucili di Precisione"
 
 #: ../base/ufos/research.ufo:1066
 msgid "sniper_skill_txt"
@@ -2621,7 +2618,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1382
 msgid "Ortnok Worker"
-msgstr "Lavoratore Ortnok"
+msgstr "Operaio Ortnok"
 
 #: ../base/ufos/research.ufo:1383
 msgid "ortnok_light_txt"
@@ -2798,7 +2795,7 @@ msgstr ""
 #: ../base/ufos/seq_credits.ufo:54
 #: ../base/ufos/seq_credits.ufo:105
 msgid "Project leader"
-msgstr ""
+msgstr "Capo Progetto"
 
 #: ../base/ufos/seq_credits.ufo:111
 msgid "Werner Hoehrer (hoehrer)"
@@ -2956,35 +2953,35 @@ msgstr "Finalmente: Attacco alla base aliena..."
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr ""
+msgstr "È l'anno 2084. La Terra, un posto raramente pacifico, gode un periodo di relativa calma. I violenti inizi del 21esimo secolo sono molto lontani adesso; ricordi lontani, ma non così lontani da essere dimenticati. Per la maggior parte degli abitanti della Terra, la Seconda Guerra Fredda è un'ombra oscura del passato, come le Guerre Mondiali lo furono per i bambini del tardo 20esimo."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr ""
+msgstr "I conflitti sono diventati sempre più rari verso la fine del secolo man mano che le nuove tecnologie e la cure mediche diventarono disponibili al terzo mondo. Anche i focolai del terrorismo si erano raffreddati al sorgere della Seconda Guerra Fredda, con i suoi orrori e le sue atrocità ancora fresche nelle menti della gente, dai vecchi Stati Uniti al devastato subcontinente Indiano. Lotte di classe stanno entrando nel campo di battaglia politico adesso che ogni nazione ha un'equa rappresentanza nelle UN, e lo standard di vita globale è in lenta crescita anche nei più impoveriti angoli del pianeta. Le nazioni si sono solidificate, stabilizzandosi attorno alle ristrutturate Nazioni Unite che garantisce con successo per i governi planetari. Grupppi frammentari di nazioni più piccole, spaventate all'inizio dai vasti blocchi di potere che si accumulavano attorno alla Cina e all'Unione Europea, si sono uniti indipendentemente in potenti leghe politiche -- e poi fuse insieme per tenere lontano vicini che non potrebbero combattere. Per la prima volta nella storai del genere umano, c'è legge e ordine in più di tre quarti del mondo."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr ""
+msgstr "A molta gente sulla Terra, sembrava che le cose stessero andando molto bene."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr ""
+msgstr "Il primo attacco colpisce la città di Mumbai il 3 Maggio 2084. Sei piccoli UFO spuntano fuori dal nulla e scendono giù dall'orbita, silenziosamente, invisibili alle vaste installazioni radar che coprono i cieli di Mumbai, e appostati sulla singola città più densamente popolata della Terra. Non danno avvisi o spiegazioni. Ventimila civili innocenti e tre battaglioni di truppe d'elite sono massacrati in dodici brutali ore prima che le truppe ammassate del Commonwealth riescano a portare l'avanzata aliena ad uno stallo. Allora, improvvisamente per come erano apparsi, gli alieni si ritirarono nel loro velivolo e svanirono di nuovo in orbita, lasciando solo le devastate vie di Mumbai come prova del misfatto."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr ""
+msgstr "Una riunione di emergenza delle Nazioni Unite non è arrivata a nessuna direzione conclusiva. Le incursioni continuano più veloci, grandi e selvagge che prima, questa volta a Bonn, Johannesburg e Bangkok. Alcune nazioni hanno provato un contatto diplomatico, inviando messaggi in un migliaio di linguaggi diversi agli alieni mentre devastavano il territorio nazionale. Le loro parole sono ignorate. Nel giro di poche ore, tutte e tre le città sono svuotate da segni di vita umana. L'attacco è finito prima che i militari possano unire abbastanza forze per contrattaccare. Gli alieni non lasciano niente dietro di sè oltre al sangue e al cemento. Tutti gli UFO scompaiono senza lasciare tracce -- ma nessuno dubita che torneranno."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr ""
+msgstr "Ottantasette ore dopo l'attacco iniziale su Mumbai, la Terra dichiara guerra. Per due settimane, ogni esercito dell'umanità prova a difendersi dai misteriosi nemici alieni al meglio delle proprie capacità. Ottengono pochi ma preziosi successi."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr ""
+msgstr "Lasciate con una sola alternativa, le Nazioni unite intervengono. L'antico equipaggiamento è impolverato, una parte di esso vecchio più di un secolo, e la vecchia agenzia anti-estraterrestri dei primi Stati Uniti -- PHALANX -- viene fatta risorgere sotto il nuovo vessillo delle Nazioni Unite. È un dovere innegabile combattere la minaccia aliena, e assicurare la sopravvivenza della razza umana a tutti i costi."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr ""
+msgstr "Fondata da tutti e sette i poteri politici, e richiamando i suoi soldati dalle elite degli eserciti nazionali, PHALANX è il meglio del meglio. È la prima e ultima linea di difesa della Terra. Non può permettersi di fallire; perchè se fallisce, l'umanità non ha speranze."
 
 #: ../base/ufos/seq_intro.ufo:73
 #: ../base/ufos/seq_intro.ufo:165
@@ -2994,31 +2991,31 @@ msgstr "Torna ai contenuti"
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr ""
+msgstr "Prologo"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr ""
+msgstr "Benvenuto, Comandante. Le è stato affidato il comando dell'unità PHALANX. La sua missione: proteggere i cittadini della Terra, ed evitare la minaccia aliena. In qualunque modo intenda svolgerla, sappia che il fallimento non è una possibilità."
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr ""
+msgstr "Il suo primo ordine di servizio è di installare il Quartier Generale. Scelga la posizione saggiamente, perchè avrà grande influenza sul successo del progetto PHALANX."
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr ""
+msgstr "Una recente analisi dell'attacco su Mumbai ha rivelato che in quei momenti gli avvistamenti alieni erano aumentati nelle regioni più popolate della Terra, includendo le parti centrali dell'America, dell'Europa, dell'Asia, dell'Africa e dell'Australia. Le consigliamo di aumentare il suo campo d'azione includendo questi territori."
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr ""
+msgstr "Una volta stabilita la prima base, è necessario preparare i soldati. Le reclute  transferite al PHALANX devono essere riassegnate al suo velivolo, e poi equipaggiate per la battaglia."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr ""
+msgstr "E non dimentichi di proteggerli accuratamente. Un soldato vivo uccide più alieni di uno morto."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr ""
+msgstr "Questo è tutto, Comandante. Buona fortuna."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -3569,7 +3566,7 @@ msgstr "Divinità"
 #: client/cl_actor.c:127
 #, c-format
 msgid "Rank: %s"
-msgstr ""
+msgstr "Posizione: %s"
 
 # # in game
 #: client/cl_actor.c:411
@@ -3988,7 +3985,7 @@ msgstr "Esuberante"
 #: client/cl_campaign.c:1100
 #, c-format
 msgid "Gained %i credits, %i scientists, %i medics, %i soldiers and %i workers from nation %s (%s)"
-msgstr "Hai ottenuto %i crediti, %i scienziati, %i medici, %i soldati e %i lavoratori dalla nazione %s (%s)"
+msgstr "Hai ottenuto %i crediti, %i scienziati, %i medici, %i soldati e %i operai dalla nazione %s (%s)"
 
 #: client/cl_campaign.c:1109
 #, c-format
@@ -4617,7 +4614,7 @@ msgstr ""
 #: client/cl_team.c:1601
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
-msgstr ""
+msgstr "Oggetti recuperati e venduti\t%i\n"
 
 #: client/cl_team.c:1602
 #, c-format
@@ -4625,6 +4622,8 @@ msgid ""
 "Total item sale value\t%i\n"
 "\n"
 msgstr ""
+"Valore totale oggetti venduti\t%i\n"
+"\n"
 
 #: client/cl_ufopedia.c:50
 msgid "Close"
