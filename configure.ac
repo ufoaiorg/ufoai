@@ -216,7 +216,7 @@ then
 	fi
 	if test "$ac_cv_header_GL_glx_h" == "yes"
 	then
-		AC_SEARCH_LIBS([glXCreateContext],[X11 Xext])
+		AC_SEARCH_LIBS([glXCreateContext],[GL MesaGL])
 		if test "$ac_cv_search_glXCreateContext" == "no"
 		then
 		   AC_MSG_WARN([found GLX headers but couldn't find GLX libraries, GLX will be disabled!])
