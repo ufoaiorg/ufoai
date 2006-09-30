@@ -22,10 +22,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "filters.h"
 
 #include "ifilter.h"
+#include "ientity.h"
 
 #include <list>
 
-class UfoAIFilterWrapper : public Filter
+class UfoAIFilterWrapper : public FaceFilter
 {
 	bool m_active;
 	UfoAIFilter& m_filter;
@@ -38,8 +39,8 @@ class UfoAIFilterWrapper : public Filter
 	bool active() {
 		return m_active;
 	}
-	bool filter(const UfoAIF& ufoai) {
-		return m_filter.filter(ufoai);
+	bool filter(const Entity& entity) {
+		return m_filter.filter(entity);
 	}
 };
 
@@ -51,9 +52,10 @@ void add_ufoai_filter(UfoAIFilter& filter, int mask)
 {
 	g_UfoAIFilters.push_back(UfoAIFilterWrapper(filter));
 	GlobalFilterSystem().addFilter(g_UfoAIFilters.back(), mask);
+	globalOutputStream() << "...add new filter for mask " << mask << "\n";
 }
 
-bool ufoai_filtered(UfoAIF& ufoai)
+bool ufoai_filtered(Entity& ufoai)
 {
 	for(UfoAIFilters::iterator i = g_UfoAIFilters.begin(); i != g_UfoAIFilters.end(); ++i) {
 		if((*i).active() && (*i).filter(ufoai)) {

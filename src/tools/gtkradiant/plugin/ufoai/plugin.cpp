@@ -21,11 +21,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "plugin.h"
 
-#if 0
-#include "ifilter.h"
-#include "filters.h"
-#endif
-
 #include "debugging/debugging.h"
 #include "iplugin.h"
 #include "string/string.h"
@@ -40,11 +35,47 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "ientity.h"     // declaration of entity system
 #include "string/string.h"
 
+#include "filters.h"
+
+class filter_ufoai : public UfoAIFilter
+{
+	const char* m_classname;
+	public:
+	filter_ufoai(const char* classname) : m_classname(classname)
+	{
+	}
+	bool filter(const Entity& entity) const
+	{
+		return string_equal(entity.getKeyValue("classname"), m_classname);
+	}
+};
+
+filter_ufoai g_filter_level1("level1");
+filter_ufoai g_filter_level2("level2");
+filter_ufoai g_filter_level3("level3");
+filter_ufoai g_filter_level4("level4");
+filter_ufoai g_filter_level5("level5");
+filter_ufoai g_filter_level6("level6");
+filter_ufoai g_filter_level7("level7");
+filter_ufoai g_filter_level8("level8");
+
+void initFilters()
+{
+	add_ufoai_filter(g_filter_level1, CONTENTS_LEVEL1);
+	add_ufoai_filter(g_filter_level2, CONTENTS_LEVEL2);
+	add_ufoai_filter(g_filter_level3, CONTENTS_LEVEL3);
+	add_ufoai_filter(g_filter_level4, CONTENTS_LEVEL4);
+	add_ufoai_filter(g_filter_level5, CONTENTS_LEVEL5);
+	add_ufoai_filter(g_filter_level6, CONTENTS_LEVEL6);
+	add_ufoai_filter(g_filter_level7, CONTENTS_LEVEL7);
+	add_ufoai_filter(g_filter_level8, CONTENTS_LEVEL8);
+	globalOutputStream() << "UfoAI: added new filters\n";
+}
+
 #define VERSION "0.1"
 
 void about_plugin_window(void);
 void WorldSpawnSettings(void);
-void initFilters();
 
 #ifdef __linux__
 // linux itoa implementation
@@ -128,7 +159,6 @@ namespace UfoAI
 	const char* init(void* hApp, void* pMainWidget) {
 		main_window = (GtkWindow*)pMainWidget;
 		ASSERT_NOTNULL(main_window);
-		initFilters();
 		return "UFO:AI Filters";
 	}
 	const char* getName() {
@@ -144,11 +174,12 @@ namespace UfoAI
 		GlobalFilterSystem().addFilter(g_entityFilters.back(), mask);
 	}*/
 	void dispatch(const char* command, float* vMin, float* vMax, bool bSingleBrush) {
-		globalOutputStream() << "UFO:Alien Invasion Plugin\n";
 		if(string_equal(command, "Map properties")) {
 			globalOutputStream() << "Worldspawn properties\n";
 			WorldSpawnSettings();
 		} else if(string_equal(command, "Level1")) {
+			globalOutputStream() << "Filter level 1\n";
+			initFilters();
 			globalOutputStream() << "Show only level 1\n";
 		} else if(string_equal(command, "Level2")) {
 			globalOutputStream() << "Show only level 2\n";
@@ -190,6 +221,7 @@ class UfoAIPluginModule
 		m_plugin.m_pfnQERPlug_GetCommandList = &UfoAI::getCommandList;
 		m_plugin.m_pfnQERPlug_GetCommandTitleList = &UfoAI::getCommandTitleList;
 		m_plugin.m_pfnQERPlug_Dispatch = &UfoAI::dispatch;
+		initFilters();
 	}
 	_QERPluginTable* getTable() {
 		return &m_plugin;
@@ -338,26 +370,3 @@ void WorldSpawnSettings(void)
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER); // center the window
 	gtk_widget_show_all(window); // show the window and all subelements
 }
-
-#include "filters.h"
-
-class filter_ufoai : public UfoAIFilter
-{
-	const char* m_classname;
-	public:
-	filter_ufoai(const char* classname) : m_classname(classname)
-	{
-	}
-	bool filter(const Entity& entity) const
-	{
-		return string_equal(entity.getKeyValue("classname"), m_classname);
-	}
-};
-
-filter_ufoai g_filter_level1("level1");
-
-void initFilters()
-{
-	add_ufoai_filter(g_filter_level1, CONTENTS_LEVEL8);
-}
-

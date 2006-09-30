@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define INCLUDED_UFOAIFILTERS_H
 
 #include "ifilter.h"
+#include "ientity.h"
 
 #include "generic/callback.h"
 #include "scenelib.h"
@@ -32,7 +33,7 @@ class UfoAIF;
 class UfoAIFilter
 {
 	public:
-	virtual bool filter(const UfoAIF &ufoai) const = 0;
+	virtual bool filter(const Entity &ufoai) const = 0;
 };
 
 bool ufoai_filtered(UfoAIF& ufoai);
@@ -57,11 +58,11 @@ class ClassnameFilter : public Filterable
 	}
 
 	void updateFiltered() {
-/*		if(entity_filtered(m_ufoai)) {
+		if(ufoai_filtered(m_ufoai)) {
 			m_node.enable(scene::Node::eFiltered);
 		} else {
 			m_node.disable(scene::Node::eFiltered);
-		}*/
+		}
 	}
 
 	void classnameChanged(const char* value) {
