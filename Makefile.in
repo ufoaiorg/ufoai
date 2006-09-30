@@ -1,0 +1,117 @@
+
+
+#######################################################################################################
+# Configure guessed variables ...
+#######################################################################################################
+
+CC=@CC@
+CFLAGS=@CFLAGS@
+# MKDIR_P=@MKDIR_P@
+LIBS=@LIBS@
+LDFLAGS=@LDFLAGS@
+
+TARGET_OS=@target_os@
+EXE_EXT=@EXE_EXT@
+
+HAVE_SDL=@HAVE_SDL@
+SDL_CFLAGS=@SDL_CFLAGS@
+SDL_LIBS=@SDL_LIBS@
+
+HAVE_VID_GLX=@HAVE_VID_GLX@
+
+HAVE_SND_ARTS=@HAVE_SND_ARTS@
+ARTS_CFLAGS=@ARTS_CFLAGS@
+ARTS_LIBS=@ARTS_LIBS@
+
+HAVE_SND_ALSA=@HAVE_SND_ALSA@
+
+HAVE_SND_SDL=@HAVE_SND_SDL@
+
+HAVE_SND_OSS=@HAVE_SND_OSS@
+
+PROFILING=@PROFILING@
+BUILD_DEDICATED=@BUILD_DEDICATED@
+BUILD_UFO2MAP=@BUILD_UFO2MAP@
+BUILD_QDATA=@BUILD_QDATA@
+BUILD_DEBUG=@BUILD_DEBUG@
+
+HAVE_IPV6=0
+
+#######################################################################################################
+
+
+.PHONY: all all2 clean
+
+# some variables needed by the modules
+LIBTOOL=libtool
+SHARED_EXT=so
+SRCDIR=src
+LDFLAGS+=$(LIBS)
+
+ifeq ($(BUILD_DEBUG),1)
+	BUILDDIR=debug-$(TARGET_OS)
+else
+	BUILDDIR=release-$(TARGET_OS)
+endif
+
+# define all the modules that need to be compiled
+MODULES = game client server sound ref_gl tools
+
+all: all2
+
+# include the make files for each module
+include build/defs.mk
+-include $(patsubst %, build/%.mk, $(MODULES))
+
+all2: Makefile $(TARGETS) echo_info
+
+# check that the makefile is up to date
+Makefile: Makefile.in
+	@echo "ERROR: You need to re-run configure"
+	@exit 1
+
+
+# Say how to build the build directories
+$(BUILDDIR)/.dirs:
+	@mkdir -p $(foreach i, $(ALL_OBJS), $(dir $i))
+	@touch $@
+
+-include $(ALL_DEPS)
+
+clean:
+	@echo "Making clean"
+	@rm -f $(ALL_OBJS) $(ALL_DEPS) $(BUILDDIR)/.dirs $(TARGETS)
+
+echo_info:
+	@echo "Gettext"
+	@echo "-----------------------"
+	@echo "Type 'make lang' to compile the gettext translation files. Type 'make update-po' in src/po to update with newest strings"
+	@echo
+	@echo "Maps"
+	@echo "-----------------------"
+	@echo "Type 'make' in base/maps to compile the maps"
+	@echo
+	@echo "Build for $(TARGET_OS)"
+	@echo
+
+HAVE_SDL=@HAVE_SDL@
+
+HAVE_VID_GLX=@HAVE_VID_GLX@
+
+HAVE_SND_ARTS=@HAVE_SND_ARTS@
+ARTS_CFLAGS=@ARTS_CFLAGS@
+ARTS_LIBS=@ARTS_LIBS@
+
+HAVE_SND_ALSA=@HAVE_SND_ALSA@
+
+HAVE_SND_SDL=@HAVE_SND_SDL@
+
+HAVE_SND_OSS=@HAVE_SND_OSS@
+
+PROFILING=@PROFILING@
+BUILD_DEDICATED=@BUILD_DEDICATED@
+BUILD_UFO2MAP=@BUILD_UFO2MAP@
+BUILD_QDATA=@BUILD_QDATA@
+BUILD_DEBUG=@BUILD_DEBUG@
+
+HAVE_IPV6=0
