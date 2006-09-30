@@ -32,7 +32,7 @@ Boston, MA  02111-1307, USA
 
 #include <stdio.h>
 #if defined (__FreeBSD__)
-#include <SDL11/SDL.h>
+#include <SDL.h>
 #else
 #include <SDL/SDL.h>
 #endif
