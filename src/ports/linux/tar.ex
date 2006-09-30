@@ -1,7 +1,7 @@
 .svn
-ufoai-*
 *.map
 src
+tarsrc
 *.blend
 *.obj
 *.mtl
