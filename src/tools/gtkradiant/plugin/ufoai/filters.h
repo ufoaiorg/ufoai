@@ -32,7 +32,7 @@ class UfoAI;
 class UfoAIFilter
 {
 	public:
-	virtual bool filter(const UfoAI& ufoai) const = 0;
+	virtual bool filter(const UfoAI &ufoai) const = 0;
 };
 
 bool ufoai_filtered(UfoAI& ufoai);
@@ -40,9 +40,9 @@ void add_ufoai_filter(UfoAIFilter& filter, int mask);
 
 class ClassnameFilter : public Filterable
 {
-	scene::Node& m_node;
+	scene::Node &m_node;
 	public:
-	UfoAI& m_ufoai;
+	UfoAI &m_ufoai;
 
 	ClassnameFilter(UfoAI& ufoai, scene::Node& node) : m_node(node), m_ufoai(ufoai) {
 	}
