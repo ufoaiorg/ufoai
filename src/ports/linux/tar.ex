@@ -1,7 +1,7 @@
 .svn
-ufoai-*
 *.map
 src
+tarsrc
 *.blend
 *.obj
 *.mtl
@@ -24,11 +24,12 @@ src
 *.rej
 *.bz2
 *.gz
+*.run
 debug*
 release*
 build*
 debian
-Makefile*
+Makefile.new
 *UVW*
 *misc_source_files*
 *.run
