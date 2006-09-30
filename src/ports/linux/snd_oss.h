@@ -7,12 +7,9 @@
 #include <sys/shm.h>
 #include <sys/wait.h>
 #include <stdio.h>
-#if defined(__FreeBSD__)
-#include <sys/soundcard.h>
-#endif
-#if defined(__linux__)
-#include <linux/soundcard.h>
-#endif
+
+#include "../../../config.h"
+#include OSS_HEADER
 
 #include "../../client/client.h"
 #include "../../client/snd_loc.h"
