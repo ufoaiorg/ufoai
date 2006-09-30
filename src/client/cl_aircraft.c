@@ -391,7 +391,7 @@ void CL_DeleteAircraft(aircraft_t *aircraft)
 	if (aircraft) {
 		base = &gd.bases[aircraft->idxBase];
 		/* Remove all soldiers from the aircraft (the employees are still hired after this) */
-		CL_RemoveSoldiersFromAircraft(aircraft->idx, aircraft->idxInBase );
+		CL_RemoveSoldiersFromAircraft(aircraft->idxInBase, aircraft->idxBase );
 
 		/* Remove aircraft and rearrange the aircraft-list (in base), */
 		base->numAircraftInBase--;
