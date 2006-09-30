@@ -68,7 +68,7 @@ endif
 CC?=gcc
 
 #VERSION=$(shell grep UFO_VERSION $(MOUNT_DIR)/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s\s\(.*\)/\1/')
-VERSION=$(shell grep UFO_VERSION ./qcommon/qcommon.h | sed -e 's/.*define UFO_VERSION //')
+VERSION=$(shell grep UFO_VERSION ./qcommon/qcommon.h | sed -e 's/.*define UFO_VERSION \"\(.*\)\"/\1/')
 
 SVN_REV=
 ifeq ($(wildcard .svn),.svn)
