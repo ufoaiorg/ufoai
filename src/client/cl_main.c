@@ -220,6 +220,7 @@ void CL_StartSingleplayer(qboolean singleplayer)
 			Com_Printf("Disconnect from current server\n");
 			CL_Disconnect();
 		}
+		Cvar_ForceSet("maxclients", "1");
 	} else
 		ccs.singleplayer = qfalse;
 }

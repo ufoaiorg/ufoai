@@ -1855,6 +1855,9 @@ int CL_GameLoad(char *filename)
 		name = MSG_ReadString(&sb);
 	}
 
+	/* reset team */
+	Cvar_Set("team", curCampaign->team);
+
 	/* store active missions */
 	ccs.numMissions = MSG_ReadByte(&sb);
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++) {
