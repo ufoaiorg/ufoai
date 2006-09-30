@@ -399,18 +399,18 @@ debdata:
 deb: debbinary debdata
 
 copy_debug:
-	@rm -f ufo ufo2map ref_glx.$(SHLIBEXT) ref_sdl.$(SHLIBEXT) base/game.$(SHLIBEXT) ufoded snd_sdl.$(SHLIBEXT) snd_alsa.$(SHLIBEXT) snd_oss.$(SHLIBEXT) snd_arts.$(SHLIBEXT)
-	@if test -f $(BUILD_DEBUG_DIR)/ufoded; then cp $(BUILD_DEBUG_DIR)/ufoded ufoded; fi
-	@if test -f $(BUILD_DEBUG_DIR)/ufo; then cp $(BUILD_DEBUG_DIR)/ufo ufo; fi
-	@if test -f $(BUILD_DEBUG_DIR)/qdata; then cp $(BUILD_DEBUG_DIR)/qdata qdata; fi
-	@if test -f $(BUILD_DEBUG_DIR)/ufo2map; then cp $(BUILD_DEBUG_DIR)/ufo2map ufo2map; fi
-	@if test -f $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT) ref_sdl.$(SHLIBEXT); fi
-	@if test -f $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT) ref_glx.$(SHLIBEXT); fi
-	@if test -f $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT) snd_alsa.$(SHLIBEXT); fi
-	@if test -f $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT) snd_sdl.$(SHLIBEXT); fi
-	@if test -f $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT) snd_oss.$(SHLIBEXT); fi
-	@if test -f $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT) snd_arts.$(SHLIBEXT); fi
-	@if test -f $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT) game.$(SHLIBEXT); fi
+	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
+	@if test -f $(BUILD_DEBUG_DIR)/ufoded; then cp $(BUILD_DEBUG_DIR)/ufoded ../ufoded; fi
+	@if test -f $(BUILD_DEBUG_DIR)/ufo; then cp $(BUILD_DEBUG_DIR)/ufo ../ufo; fi
+	@if test -f $(BUILD_DEBUG_DIR)/qdata; then cp $(BUILD_DEBUG_DIR)/qdata ../qdata; fi
+	@if test -f $(BUILD_DEBUG_DIR)/ufo2map; then cp $(BUILD_DEBUG_DIR)/ufo2map ../ufo2map; fi
+	@if test -f $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT) ../ref_glx.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT) ../snd_sdl.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT) ../base/game.$(SHLIBEXT); fi
 
 release: build_release
 
