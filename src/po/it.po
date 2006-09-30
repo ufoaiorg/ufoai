@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-09-29 11:46+0200\n"
-"PO-Revision-Date: 2006-09-30 17:21+0100\n"
+"PO-Revision-Date: 2006-09-30 18:00+0100\n"
 "Last-Translator: DAniele C <sdads@sds.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -89,7 +89,7 @@ msgstr "Dormitori"
 #: ../base/ufos/basemanagement.ufo:139
 #: ../base/ufos/basemanagement.ufo:158
 msgid "Dropship Hangar"
-msgstr "Hangar Nave da Trasporto"
+msgstr "Hangar Nave da Sbarco"
 
 #: ../base/ufos/basemanagement.ufo:166
 msgid "Interceptor Hangar"
@@ -122,7 +122,7 @@ msgstr "Ospedale"
 
 #: ../base/ufos/basemanagement.ufo:286
 msgid "Home"
-msgstr "Quartier Generale"
+msgstr "QG PHALANX"
 
 #: ../base/ufos/basemanagement.ufo:287
 msgid "Base #2"
@@ -154,7 +154,7 @@ msgstr ""
 
 #: ../base/ufos/basemanagement.ufo:299
 msgid "Dropship"
-msgstr "Nave da Trasporto"
+msgstr "Nave da Sbarco"
 
 #: ../base/ufos/basemanagement.ufo:313
 msgid "Interceptor"
@@ -292,7 +292,7 @@ msgstr "Assegna la squadra"
 
 #: ../base/ufos/menu_aircraft.ufo:65
 msgid "Hire your team first"
-msgstr "Assolda un team prima"
+msgstr "Assolda una squadra prima"
 
 #: ../base/ufos/menu_aircraft.ufo:75
 msgid "Equip Aircraft"
@@ -493,7 +493,7 @@ msgstr "Compra/Vendi equipaggiamento"
 
 #: ../base/ufos/menu_bases.ufo:177
 msgid "Buy/Sell Equipment"
-msgstr "Compra/Vendi Equipaggiamento"
+msgstr "Compra/Vendi Equip."
 
 #: ../base/ufos/menu_bases.ufo:212
 msgid "Research new technology"
@@ -514,7 +514,7 @@ msgstr "Produzione"
 #: ../base/ufos/menu_bases.ufo:284
 #: ../base/ufos/menu_bases.ufo:309
 msgid "Hire employees"
-msgstr "Assolda impiegati"
+msgstr "Assumi impiegati"
 
 #: ../base/ufos/menu_bases.ufo:322
 #: ../base/ufos/menu_buildings.ufo:76
@@ -749,7 +749,9 @@ msgstr "Pronto"
 
 #: ../base/ufos/menu_geoscape.ufo:314
 msgid "Aircraft reached desired location - what to do?"
-msgstr "L'aereo e' arrivato - in attesa di ordini"
+msgstr ""
+"Il velivolo ha raggiunto la destinazione desiderata\n"
+"In attesa di ordini"
 
 #: ../base/ufos/menu_geoscape.ufo:320
 #: ../base/ufos/menu_geoscape.ufo:436
@@ -769,7 +771,7 @@ msgstr "Chiudi questo dialogo"
 #: ../base/ufos/menu_geoscape.ufo:761
 #: ../base/ufos/menu_options.ufo:584
 msgid "Cancel"
-msgstr "Cancella"
+msgstr "Annulla"
 
 #: ../base/ufos/menu_geoscape.ufo:340
 #: ../base/ufos/menu_geoscape.ufo:608
@@ -3747,7 +3749,7 @@ msgstr "Hai un nuovo aereo (a %s) nella base %s"
 
 #: client/cl_aircraft.c:520
 msgid "Your dropship has low fuel and returns to base"
-msgstr "La nave da trasporto ha poco carburante e torna alla base"
+msgstr "La nave da sbarco ha carburante insufficiente, rientro immediato alla base"
 
 #: client/cl_aircraft.c:559
 #: client/cl_aircraft.c:566
@@ -3819,7 +3821,7 @@ msgstr "%i Giorni di costruzione\n"
 #: client/cl_basemanagement.c:570
 #, c-format
 msgid "Running Costs:\t%1.0f c\n"
-msgstr "Costo di Mantenimento:\t%1.0f c\n"
+msgstr "Mantenimento:\t%1.0f c\n"
 
 #: client/cl_basemanagement.c:1187
 #, c-format
@@ -4846,7 +4848,7 @@ msgstr "Impossibile eseguire - arma già caricata!\n"
 
 #: game/g_client.c:1256
 msgid "Currently shaken, won't let it's guard down.\n"
-msgstr "Scosso, non abbassera'la guardia.\n"
+msgstr "Sotto shock, non abbasserà la guardia.\n"
 
 #: game/g_client.c:1394
 #, c-format
@@ -4866,7 +4868,7 @@ msgstr "%s è infuriato!\n"
 #: game/g_client.c:1502
 #, c-format
 msgid "%s is currently shaken.\n"
-msgstr "%s è attualmente scioccato\n"
+msgstr "%s è sotto shock\n"
 
 #: game/g_client.c:1831
 msgid "Can't perform action - impossible throw!\n"
@@ -4887,7 +4889,7 @@ msgstr "Impossibile eseguire - munizioni insufficienti\n"
 
 #: po/OTHER_STRINGS:2
 msgid "Yes"
-msgstr "Si"
+msgstr "Sì"
 
 #: po/OTHER_STRINGS:3
 msgid "No"

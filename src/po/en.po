@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-09-29 11:46+0200\n"
-"PO-Revision-Date: 2006-09-30 13:05+0100\n"
+"PO-Revision-Date: 2006-09-30 18:01+0100\n"
 "Last-Translator: DAniele C <sdads@sds.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -115,7 +115,7 @@ msgstr "Hospital"
 
 #: ../base/ufos/basemanagement.ufo:286
 msgid "Home"
-msgstr "Home"
+msgstr "PHALANX HQ"
 
 #: ../base/ufos/basemanagement.ufo:287
 msgid "Base #2"
@@ -4856,7 +4856,7 @@ msgstr "Can't perform action - weapon already fully loaded with the same ammunit
 
 #: game/g_client.c:1256
 msgid "Currently shaken, won't let it's guard down.\n"
-msgstr "Currently shaken, won't let it's guard down.\n"
+msgstr "Currently shaken, won't let its guard down.\n"
 
 #: game/g_client.c:1394
 #, c-format
