@@ -67,7 +67,8 @@ endif
 
 CC?=gcc
 
-VERSION=$(shell grep UFO_VERSION $(MOUNT_DIR)/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/')
+#VERSION=$(shell grep UFO_VERSION $(MOUNT_DIR)/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s\s\(.*\)/\1/')
+VERSION=$(shell grep UFO_VERSION ./qcommon/qcommon.h | sed -e 's/.*define UFO_VERSION //')
 
 SVN_REV=
 ifeq ($(wildcard .svn),.svn)
@@ -76,8 +77,8 @@ endif
 
 MOUNT_DIR=.
 
-BUILD_DEBUG_DIR=../debug$(ARCH)
-BUILD_RELEASE_DIR=../release$(ARCH)
+BUILD_DEBUG_DIR=debug$(ARCH)
+BUILD_RELEASE_DIR=release$(ARCH)
 TOOLS_DIR=$(MOUNT_DIR)/tools
 CLIENT_DIR=$(MOUNT_DIR)/client
 SERVER_DIR=$(MOUNT_DIR)/server
@@ -137,16 +138,6 @@ ifeq ($(OSTYPE),Darwin)
 	LDFLAGS=-L/sw/lib -ldl -lm -lvorbisfile -lvorbis -lintl -framework IOKit -framework AppKit -framework QuickTime -framework CoreAudio -lGL
 	BASE_CFLAGS+=-I/sw/include
 endif
-
-ifeq ($(OSTYPE),FreeBSD)
-	ifeq ($(strip $(BUILD_SDLUFO)),YES)
-		LDFLAGS+=$(shell sdl11-config --libs)
-		BASE_CFLAGS+=$(shell sdl11-config --cflags)
-	endif
-	SDLLDFLAGS=$(shell sdl11-config --libs) -lSDL_ttf
-	GLXCFLAGS=-I/usr/X11R6/include $(shell sdl11-config --cflags)
-	GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext $(shell sdl11-config --libs) -lSDL_ttf
-else
 	ifeq ($(strip $(BUILD_SDLUFO)),YES)
 		LDFLAGS+=$(shell sdl-config --libs)
 		BASE_CFLAGS+=$(shell sdl-config --cflags)
@@ -154,7 +145,6 @@ else
 	SDLLDFLAGS=$(shell sdl-config --libs) -lSDL_ttf
 	GLXCFLAGS=-I/usr/X11R6/include $(shell sdl-config --cflags)
 	GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext $(shell sdl-config --libs) -lSDL_ttf
-endif
 
 ifeq ($(strip $(BUILD_ALSA)),YES)
 	BASE_CFLAGS+=-DUSE_ALSA
@@ -374,7 +364,15 @@ linuxinstaller:
 	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-linux.tar.bz2 ../
 
 sourcearchive:
-	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-source.tar.bz2 ./
+	mkdir -p ../ufoai-$(VERSION)-source
+	mkdir -p tarsrc
+	cp -rf * ../ufoai-$(VERSION)-source
+	mv ../ufoai-$(VERSION)-source  ./tarsrc
+	tar -cj \
+		-X $(LINUX_DIR)/tar.ex \
+		-f ufoai-$(VERSION)-source.tar.bz2 \
+		-C tarsrc ufoai-$(VERSION)-source
+	rm -rf ./tarsrc
 
 # build this first - install ufoai-tools and then build debdata
 debbinary:
@@ -386,17 +384,17 @@ debdata:
 deb: debbinary debdata
 
 copy_debug:
-	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
-	@if test -f $(BUILD_DEBUG_DIR)/ufoded; then cp $(BUILD_DEBUG_DIR)/ufoded ../ufoded; fi
-	@if test -f $(BUILD_DEBUG_DIR)/ufo; then cp $(BUILD_DEBUG_DIR)/ufo ../ufo; fi
-	@if test -f $(BUILD_DEBUG_DIR)/ufo2map; then cp $(BUILD_DEBUG_DIR)/ufo2map ../ufo2map; fi
-	@if test -f $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT); fi
-	@if test -f $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT) ../ref_glx.$(SHLIBEXT); fi
-	@if test -f $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT); fi
-	@if test -f $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT) ../snd_sdl.$(SHLIBEXT); fi
-	@if test -f $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT); fi
-	@if test -f $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT); fi
-	@if test -f $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT) ../base/game.$(SHLIBEXT); fi
+	@rm -f ufo ufo2map ref_glx.$(SHLIBEXT) ref_sdl.$(SHLIBEXT) base/game.$(SHLIBEXT) ufoded snd_sdl.$(SHLIBEXT) snd_alsa.$(SHLIBEXT) snd_oss.$(SHLIBEXT) snd_arts.$(SHLIBEXT)
+	@if test -f $(BUILD_DEBUG_DIR)/ufoded; then cp $(BUILD_DEBUG_DIR)/ufoded ufoded; fi
+	@if test -f $(BUILD_DEBUG_DIR)/ufo; then cp $(BUILD_DEBUG_DIR)/ufo ufo; fi
+	@if test -f $(BUILD_DEBUG_DIR)/ufo2map; then cp $(BUILD_DEBUG_DIR)/ufo2map ufo2map; fi
+	@if test -f $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT) ref_sdl.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT) ref_glx.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT) snd_alsa.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT) snd_sdl.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT) snd_oss.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT) snd_arts.$(SHLIBEXT); fi
+	@if test -f $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT) game.$(SHLIBEXT); fi
 
 release: build_release
 
@@ -1306,7 +1304,17 @@ clean2:
 	$(BUILDDIR)/snd_sdl.$(SHLIBEXT) \
 	$(BUILDDIR)/snd_oss.$(SHLIBEXT) \
 	$(BUILDDIR)/snd_alsa.$(SHLIBEXT) \
-	$(BUILDDIR)/ufoded
+	$(BUILDDIR)/ufoded \
+        ufo \
+        ufo2map \
+        game.$(SHLIBEXT) \
+        ref_sdl.$(SHLIBEXT) \
+        ref_glx.$(SHLIBEXT) \
+        snd_sdl.$(SHLIBEXT) \
+        snd_oss.$(SHLIBEXT) \
+        snd_alsa.$(SHLIBEXT) \
+        snd_arts.$(SHLIBEXT) \
+        ufoded
 
 distclean:
 	@-rm -rf $(BUILD_DEBUG_DIR) $(BUILD_RELEASE_DIR)
