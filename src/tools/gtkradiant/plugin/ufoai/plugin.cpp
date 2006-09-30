@@ -44,6 +44,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 void about_plugin_window(void);
 void WorldSpawnSettings(void);
+void initFilters();
 
 #ifdef __linux__
 // linux itoa implementation
@@ -127,6 +128,7 @@ namespace UfoAI
 	const char* init(void* hApp, void* pMainWidget) {
 		main_window = (GtkWindow*)pMainWidget;
 		ASSERT_NOTNULL(main_window);
+		initFilters();
 		return "UFO:AI Filters";
 	}
 	const char* getName() {
@@ -169,8 +171,12 @@ namespace UfoAI
 		}
     }
 } // namespace
-
-
+/*
+class UfoAIDependencies :
+  public GlobalFilterModuleRef
+{
+};
+*/
 class UfoAIPluginModule
 {
 	_QERPluginTable m_plugin;
@@ -332,3 +338,27 @@ void WorldSpawnSettings(void)
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER); // center the window
 	gtk_widget_show_all(window); // show the window and all subelements
 }
+
+#include "filters.h"
+
+class filter_ufoai : public UfoAIFilter
+{
+	const char* m_classname;
+	public:
+	filter_ufoai(const char* classname) : m_classname(classname)
+	{
+	}
+	bool filter(const Entity& entity) const
+	{
+		return string_equal(entity.getKeyValue("classname"), m_classname);
+	}
+};
+
+filter_ufoai g_filter_level1("level1");
+
+
+void initFilters()
+{
+	add_ufoai_filter(g_filter_level1, CONTENTS_LEVEL8);
+}
+
