@@ -948,8 +948,8 @@ void CL_RemoveSoldiersFromAircraft(int aircraft_idx, int base_idx)
 	base = &gd.bases[base_idx];
 
 	/* Counting backwards because teamNum[aircraft->idx] is changed in CL_RemoveSoldierFromAircraft */
-	for ( i = base->teamNum[aircraft->idx]-1; i >= 0; i-- ) {
-		CL_RemoveSoldierFromAircraft(i, aircraft->idx);
+	for ( i = base->teamNum[aircraft_idx]-1; i >= 0; i-- ) {
+		CL_RemoveSoldierFromAircraft(i, aircraft_idx);
 	}
 }
 
