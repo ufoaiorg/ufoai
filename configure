@@ -5596,8 +5596,8 @@ done
 
    if test "$ac_cv_header_linux_soundcard_h" == "yes"
    then
-	 cat >>confdefs.h <<\_ACEOF
-#define OSS_HEADER linux/soundcard.h
+		cat >>confdefs.h <<\_ACEOF
+#define OSS_HEADER linux
 _ACEOF
 
    else
@@ -5753,7 +5753,7 @@ done
      if test "$ac_cv_header_sys_soundcard_h" == "yes"
 	 then
 	 	cat >>confdefs.h <<\_ACEOF
-#define OSS_HEADER sys/soundcard.h
+#define OSS_HEADER sys
 _ACEOF
 
 	 fi
@@ -7222,6 +7222,28 @@ echo "$as_me: error: cannot create directory \"$ac_dir\"" >&2;}
     cat $tmp/config.h
     rm -f $tmp/config.h
   fi
+# Compute $ac_file's index in $config_headers.
+_am_stamp_count=1
+for _am_header in $config_headers :; do
+  case $_am_header in
+    $ac_file | $ac_file:* )
+      break ;;
+    * )
+      _am_stamp_count=`expr $_am_stamp_count + 1` ;;
+  esac
+done
+echo "timestamp for $ac_file" >`(dirname $ac_file) 2>/dev/null ||
+$as_expr X$ac_file : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
+	 X$ac_file : 'X\(//\)[^/]' \| \
+	 X$ac_file : 'X\(//\)$' \| \
+	 X$ac_file : 'X\(/\)' \| \
+	 .     : '\(.\)' 2>/dev/null ||
+echo X$ac_file |
+    sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{ s//\1/; q; }
+  	  /^X\(\/\/\)[^/].*/{ s//\1/; q; }
+  	  /^X\(\/\/\)$/{ s//\1/; q; }
+  	  /^X\(\/\).*/{ s//\1/; q; }
+  	  s/.*/./; q'`/stamp-h$_am_stamp_count
 done
 _ACEOF
 

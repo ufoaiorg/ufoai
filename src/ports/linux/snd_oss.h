@@ -9,7 +9,12 @@
 #include <stdio.h>
 
 #include "../../../config.h"
-#include OSS_HEADER
+
+#if OSS_HEADER == "sys"
+#include <sys/soundcard.h>
+#else
+#include <linux/soundcard.h>
+#endif
 
 #include "../../client/client.h"
 #include "../../client/snd_loc.h"

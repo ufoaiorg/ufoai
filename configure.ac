@@ -85,7 +85,7 @@ then
 elif test "$target_cpu" == "i386" ||
 	 test "$target_cpu" == "i486" ||
 	 test "$target_cpu" == "i586" ||
-	 test "$target_cpu" == "i686" 
+	 test "$target_cpu" == "i686"
 then
 	AC_SUBST([TARGET_CPU],[i386])
 else
@@ -360,12 +360,12 @@ then
    AC_CHECK_HEADERS([linux/soundcard.h])
    if test "$ac_cv_header_linux_soundcard_h" == "yes"
    then
-	 AC_DEFINE([OSS_HEADER],[linux/soundcard.h])
+		AC_DEFINE([OSS_HEADER],[linux])
    else
      AC_CHECK_HEADERS([sys/soundcard.h])
      if test "$ac_cv_header_sys_soundcard_h" == "yes"
 	 then
-	 	AC_DEFINE([OSS_HEADER],[sys/soundcard.h])
+	 	AC_DEFINE([OSS_HEADER],[sys])
 	 fi
    fi
    if test "$ac_cv_header_linux_soundcard_h" == "yes" || \

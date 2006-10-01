@@ -32,7 +32,7 @@ $(BUILDDIR)/snd-sdl/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 # ALSA
 ###################################################################################################
 
-SND_ALSA_SRCSS=ports/linux/snd_alsa.c
+SND_ALSA_SRCS=ports/linux/snd_alsa.c
 SND_ALSA_OBJS=$(SND_ALSA_SRCS:%.c=$(BUILDDIR)/snd-alsa/%.o)
 SND_ALSA_DEPS=$(SND_ALSA_OBJS:%.o=%.d)
 SND_ALSA_TARGET=snd_alsa.$(SHARED_EXT)
@@ -63,7 +63,7 @@ $(BUILDDIR)/snd-alsa/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 ###################################################################################################
 
 SND_OSS_SRCS=ports/linux/snd_oss.c
-SND_OSS_SRCS=$(SND_OSS_SRCS:%.c=$(BUILDDIR)/snd-oss/%.o)
+SND_OSS_OBJS=$(SND_OSS_SRCS:%.c=$(BUILDDIR)/snd-oss/%.o)
 SND_OSS_DEPS=$(SND_OSS_OBJS:%.o=%.d)
 SND_OSS_TARGET=snd_oss.$(SHARED_EXT)
 
