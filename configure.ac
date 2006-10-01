@@ -52,9 +52,9 @@ AC_ARG_ENABLE(gettext,
 	[AS_HELP_STRING([--disable-gettext], [build with multilanguage support @<:@default=enabled@:>@])],
 	[], [enable_gettext=yes])
 
-AC_ARG_ENABLE(debug,
-	[AS_HELP_STRING([--enable-debug], [enable debug build, if disabled then build release @<:@default=disabled@:>@])],
-	[], [enable_debug=no])
+AC_ARG_ENABLE(release,
+	[AS_HELP_STRING([--enable-release], [build release, if disabled then build debug @<:@default=disabled@:>@])],
+	[], [enable_release=no])
 
 AC_ARG_ENABLE(paranoid,
 	[AS_HELP_STRING([--enable-paranoid], [enable PARANOID checks @<:@default=disabled@:>@])],
@@ -64,6 +64,32 @@ AC_ARG_ENABLE(profiling,
 	[AS_HELP_STRING([--enable-profiling], [build with profiling for gprof @<:@default=disabled@:>@])],
 	[], [enable_profiling=no])
 
+#---------------------------------------------------------------------------------------------
+# CHECK TARGET_OS
+#---------------------------------------------------------------------------------------------
+
+if test "$target_os" == "linux-gnu"
+then
+	AC_SUBST([TARGET_OS],[linux-gnu])
+else
+	AC_MSG_ERROR([The target operating system '$target_os' is unknown, please contact the developers])
+fi
+
+#---------------------------------------------------------------------------------------------
+# CHECK TARGET_CPU
+#---------------------------------------------------------------------------------------------
+
+if test "$target_cpu" == "x86_64"
+then
+	AC_SUBST([TARGET_CPU],[x86_64])
+elif test "$target_cpu" == "i386"
+then
+	AC_SUBST([TARGET_CPU],[i386])
+else
+	AC_MSG_WARN([The target CPU '$target_cpu' is unknown, default options will be applied])
+	AC_MSG_WARN([Please contact the developers for assistance])
+	AC_SUBST([TARGET_CPU],[unknown])
+fi
 
 #---------------------------------------------------------------------------------------------
 # CHECK CC
@@ -455,20 +481,17 @@ then
 	AC_DEFINE([HAVE_GETTEXT],1)
 fi
 
-
 #---------------------------------------------------------------------------------------------
 # Check for debug
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_debug" == "yes"
+if test "$enable_release" == "no"
 then
 	AC_MSG_NOTICE([Enabling debug build])
 	AC_SUBST([BUILD_DEBUG],1)
-	AC_DEFINE([DEBUG],1)
 else
 	AC_MSG_NOTICE([Enabling release build])
 	AC_SUBST([BUILD_DEBUG],0)
-	AC_DEFINE([NDEBUG],1)
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -477,7 +500,7 @@ fi
 
 if test "$enable_paranoid" == "yes"
 then
-	AC_DEFINE([PARANOID],1)
+	AC_SUBST([PARANOID],1)
 	AC_MSG_NOTICE([Enabling PARANOID])
 fi
 

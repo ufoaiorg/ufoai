@@ -309,7 +309,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT HAVE_RM HAVE_MKDIR HAVE_LIBTOOL CPP EGREP HAVE_SDL_CONFIG SDL_CFLAGS SDL_LIBS HAVE_SDL HAVE_SND_SDL HAVE_VID_GLX HAVE_SHADERS HAVE_SND_ALSA HAVE_SND_OSS HAVE_ARTSC_CONFIG HAVE_SND_ARTS ARTS_CFLAGS ARTS_LIBS HAVE_VID_DGA HAVE_VID_VIDMODE BUILD_DEDICATED BUILD_UFO2MAP BUILD_QDATA BUILD_DEBUG PROFILING EXE_EXT LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os TARGET_OS TARGET_CPU CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT HAVE_RM HAVE_MKDIR HAVE_LIBTOOL CPP EGREP HAVE_SDL_CONFIG SDL_CFLAGS SDL_LIBS HAVE_SDL HAVE_SND_SDL HAVE_VID_GLX HAVE_SHADERS HAVE_SND_ALSA HAVE_SND_OSS HAVE_ARTSC_CONFIG HAVE_SND_ARTS ARTS_CFLAGS ARTS_LIBS HAVE_VID_DGA HAVE_VID_VIDMODE BUILD_DEDICATED BUILD_UFO2MAP BUILD_QDATA BUILD_DEBUG PROFILING EXE_EXT LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -850,7 +850,7 @@ Optional Features:
   --disable-qdata         build qdata [default=enabled]
   --disable-gettext       build with multilanguage support
                           [default=enabled]
-  --enable-debug          enable debug build, if disabled then build release
+  --enable-release        build release, if disabled then build debug
                           [default=disabled]
   --enable-paranoid       enable PARANOID checks [default=disabled]
   --enable-profiling      build with profiling for gprof
@@ -1536,12 +1536,12 @@ else
   enable_gettext=yes
 fi;
 
-# Check whether --enable-debug or --disable-debug was given.
-if test "${enable_debug+set}" = set; then
-  enableval="$enable_debug"
+# Check whether --enable-release or --disable-release was given.
+if test "${enable_release+set}" = set; then
+  enableval="$enable_release"
 
 else
-  enable_debug=no
+  enable_release=no
 fi;
 
 # Check whether --enable-paranoid or --disable-paranoid was given.
@@ -1560,6 +1560,40 @@ else
   enable_profiling=no
 fi;
 
+#---------------------------------------------------------------------------------------------
+# CHECK TARGET_OS
+#---------------------------------------------------------------------------------------------
+
+if test "$target_os" == "linux-gnu"
+then
+	TARGET_OS=linux-gnu
+
+else
+	{ { echo "$as_me:$LINENO: error: The target operating system '$target_os' is unknown, please contact the developers" >&5
+echo "$as_me: error: The target operating system '$target_os' is unknown, please contact the developers" >&2;}
+   { (exit 1); exit 1; }; }
+fi
+
+#---------------------------------------------------------------------------------------------
+# CHECK TARGET_CPU
+#---------------------------------------------------------------------------------------------
+
+if test "$target_cpu" == "x86_64"
+then
+	TARGET_CPU=x86_64
+
+elif test "$target_cpu" == "i386"
+then
+	TARGET_CPU=i386
+
+else
+	{ echo "$as_me:$LINENO: WARNING: The target CPU '$target_cpu' is unknown, default options will be applied" >&5
+echo "$as_me: WARNING: The target CPU '$target_cpu' is unknown, default options will be applied" >&2;}
+	{ echo "$as_me:$LINENO: WARNING: Please contact the developers for assistance" >&5
+echo "$as_me: WARNING: Please contact the developers for assistance" >&2;}
+	TARGET_CPU=unknown
+
+fi
 
 #---------------------------------------------------------------------------------------------
 # CHECK CC
@@ -6023,7 +6057,7 @@ fi
 # Check for debug
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_debug" == "yes"
+if test "$enable_release" == "no"
 then
 	{ echo "$as_me:$LINENO: Enabling debug build" >&5
 echo "$as_me: Enabling debug build" >&6;}
@@ -6703,6 +6737,8 @@ s,@target@,$target,;t t
 s,@target_cpu@,$target_cpu,;t t
 s,@target_vendor@,$target_vendor,;t t
 s,@target_os@,$target_os,;t t
+s,@TARGET_OS@,$TARGET_OS,;t t
+s,@TARGET_CPU@,$TARGET_CPU,;t t
 s,@CC@,$CC,;t t
 s,@CFLAGS@,$CFLAGS,;t t
 s,@LDFLAGS@,$LDFLAGS,;t t
