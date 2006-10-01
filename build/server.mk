@@ -33,7 +33,7 @@ ifeq ($(TARGET_OS),linux-gnu)
 endif
 
 ifeq ($(TARGET_OS),freebsd)
-	SERVER_SRCS +=
+	SERVER_SRCS += \
 		ports/linux/q_shlinux.c \
 		ports/linux/sys_linux.c \
 		ports/unix/sys_unix.c \
