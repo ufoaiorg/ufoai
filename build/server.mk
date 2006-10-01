@@ -30,8 +30,6 @@ ifeq ($(TARGET_OS),linux-gnu)
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
-else
-	error "don't know about platform $(TARGET_OS)"
 endif
 
 ifeq ($(TARGET_OS),freebsd)
