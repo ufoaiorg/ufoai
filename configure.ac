@@ -88,13 +88,13 @@ fi
 # CHECK TARGET_OS
 #---------------------------------------------------------------------------------------------
 
-if test "$target_os" == "linux-gnu"
+if test `echo $target_os | sed "s/\(linux\).*/\1/"` == "linux"
 then
 	AC_SUBST([TARGET_OS],[linux-gnu])
-elif test `echo $target_os | sed s/\(freebsd\).*/\1/` == "freebsd"
+elif test `echo $target_os | sed "s/\(freebsd\).*/\1/"` == "freebsd"
 then
 	AC_SUBST([TARGET_OS],[freebsd])
-elif test `echo $target_os | sed s/\(mingw32\).*/\1/` == "mingw32"
+elif test `echo $target_os | sed "s/\(mingw32\).*/\1/"` == "mingw32"
 then
 	AC_SUBST([TARGET_OS],[mingw32])
 else
