@@ -10,7 +10,7 @@
 
 #include "../../../config.h"
 
-#if OSS_HEADER == "sys"
+#if OSS_HEADER_SYS
 #include <sys/soundcard.h>
 #else
 #include <linux/soundcard.h>

@@ -360,12 +360,12 @@ then
    AC_CHECK_HEADERS([linux/soundcard.h])
    if test "$ac_cv_header_linux_soundcard_h" == "yes"
    then
-		AC_DEFINE([OSS_HEADER],[linux])
+		# AC_DEFINE([OSS_HEADER],[linux])
    else
      AC_CHECK_HEADERS([sys/soundcard.h])
      if test "$ac_cv_header_sys_soundcard_h" == "yes"
 	 then
-	 	AC_DEFINE([OSS_HEADER],[sys])
+	 	AC_DEFINE([OSS_HEADER_SYS],[1])
 	 fi
    fi
    if test "$ac_cv_header_linux_soundcard_h" == "yes" || \
