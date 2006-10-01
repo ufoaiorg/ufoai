@@ -51,14 +51,16 @@ endif
 # this nice line comes from the linux kernel makefile
 ARCH := $(shell uname -m | sed -e s/i.86/i386/ -e s/sun4u/sparc/ -e s/sparc64/sparc/ -e s/arm.*/arm/ -e s/sa110/arm/ -e s/alpha/axp/ -e 's/Power Macintosh/ppc/' )
 
-ifneq ($(ARCH),amd64)
-	ifneq ($(ARCH),x86_64)
-		ifneq ($(ARCH),i386)
-			ifneq ($(ARCH),axp)
-				ifneq ($(ARCH),ppc)
-					ifneq ($(OSTYPE),Darwin)
-						ifneq ($(ARCH),sparc)
-							$(error arch $(ARCH) is currently not supported)
+ifneq ($(ARCH),ia64)
+	ifneq ($(ARCH),amd64)
+		ifneq ($(ARCH),x86_64)
+			ifneq ($(ARCH),i386)
+				ifneq ($(ARCH),axp)
+					ifneq ($(ARCH),ppc)
+						ifneq ($(OSTYPE),Darwin)
+							ifneq ($(ARCH),sparc)
+								$(error arch $(ARCH) is currently not supported)
+							endif
 						endif
 					endif
 				endif
@@ -227,6 +229,10 @@ ifeq ($(ARCH),amd64)
 	RELEASE_CFLAGS=$(BASE_CFLAGS) -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing -DNDEBUG
 endif
 
+ifeq ($(ARCH),ia64)
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing -DNDEBUG
+endif
+
 #ifeq ($(ARCH),mipsEE)
 #	GLCFLAGS=-I$(MESA_DIR)/include -I/usr/X11R6/include
 #	GLLDFLAGS=-L$(MESA_DIR)/lib -L/usr/X11R6/lib -L/usr/local/lib -lm -lGL -lGLU -lps2dev
@@ -356,6 +362,24 @@ ifeq ($(ARCH),i386)
 		TARGETS += $(BUILDDIR)/ref_sdl.$(SHLIBEXT)
 	endif
 endif # ARCH i386
+
+ifeq ($(ARCH),amd64)
+	ifeq ($(strip $(BUILD_GLX)),YES)
+		TARGETS += $(BUILDDIR)/ref_glx.$(SHLIBEXT)
+	endif
+	ifeq ($(strip $(BUILD_SDLUFO)),YES)
+		TARGETS += $(BUILDDIR)/ref_sdl.$(SHLIBEXT)
+	endif   
+endif # ARCH amd64
+
+ifeq ($(ARCH),ia64)
+	ifeq ($(strip $(BUILD_GLX)),YES)
+		TARGETS += $(BUILDDIR)/ref_glx.$(SHLIBEXT)
+	endif
+	ifeq ($(strip $(BUILD_SDLUFO)),YES)
+		TARGETS += $(BUILDDIR)/ref_sdl.$(SHLIBEXT)
+	endif
+endif # ARCH ia64
 
 ifeq ($(strip $(BUILD_COMPILETOOLS)),YES)
 	TARGETS += $(BUILDDIR)/ufo2map
