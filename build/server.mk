@@ -34,7 +34,7 @@ else
 	error "don't know about platform $(TARGET_OS)"
 endif
 
-ifeq ($(TARGET_OS),FreeBSD)
+ifeq ($(TARGET_OS),freebsd)
 	SERVER_SRCS +=
 		ports/linux/q_shlinux.c \
 		ports/linux/sys_linux.c \

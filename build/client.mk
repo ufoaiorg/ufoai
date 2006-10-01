@@ -69,15 +69,15 @@ ifeq ($(TARGET_OS),linux-gnu)
 		ports/unix/$(NET_UDP).c
 endif
 
-#ifeq ($(TARGET_OS),FreeBSD)
-#	CLIENT_SRCS+= \
-#		ports/linux/q_shlinux.c \
-#		ports/linux/vid_so.c \
-#		ports/linux/sys_linux.c \
-#		ports/unix/sys_unix.c \
-#		ports/unix/glob.c \
-#		ports/unix/$(NET_UDP).c
-#endif
+ifeq ($(TARGET_OS),freebsd)
+	CLIENT_SRCS+= \
+		ports/linux/q_shlinux.c \
+		ports/linux/vid_so.c \
+		ports/linux/sys_linux.c \
+		ports/unix/sys_unix.c \
+		ports/unix/glob.c \
+		ports/unix/$(NET_UDP).c
+endif
 
 #ifeq ($(TARGET_OS),Darwin)
 #	CLIENT_SRCS+= \

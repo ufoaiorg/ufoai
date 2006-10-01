@@ -18,18 +18,18 @@ RELEASE_CFLAGS=-ffast-math -funroll-loops
 #endif
 
 ifeq ($(TARGET_CPU),i386)
-#	ifeq ($(TARGET_OS),bsd)
-#		RELEASE_CFLAGS+=-falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing
-#	else
+	ifeq ($(TARGET_OS),freebsd)
+		RELEASE_CFLAGS+=-falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing
+	else
 		RELEASE_CFLAGS+=-O2 -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing
-#	endif
+	endif
 endif
 
 ifeq ($(TARGET_CPU),x86_64)
-	RELEASE_CFLAGS+=-O2 -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing
+	ifeq ($(TARGET_OS),freebsd)
+		RELEASE_CFLAGS+=-fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing
+	else
+		RELEASE_CFLAGS+=-O2 -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing
+	endif
 endif
 
-# FreeBSD only
-#ifeq ($(TARGET_CPU),amd64)
-#	RELEASE_CFLAGS+=-fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing
-#endif

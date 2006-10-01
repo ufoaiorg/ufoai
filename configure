@@ -309,7 +309,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os TARGET_OS TARGET_CPU CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT HAVE_RM HAVE_MKDIR HAVE_LIBTOOL CPP EGREP HAVE_SDL_CONFIG SDL_CFLAGS SDL_LIBS HAVE_SDL HAVE_SND_SDL HAVE_VID_GLX HAVE_SHADERS HAVE_SND_ALSA HAVE_SND_OSS HAVE_ARTSC_CONFIG HAVE_SND_ARTS ARTS_CFLAGS ARTS_LIBS HAVE_VID_DGA HAVE_VID_VIDMODE BUILD_DEDICATED BUILD_UFO2MAP BUILD_QDATA BUILD_DEBUG PARANOID PROFILING EXE_EXT LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os HAVE_SED HAVE_ECHO TARGET_OS TARGET_CPU CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT HAVE_RM HAVE_MKDIR HAVE_LIBTOOL CPP EGREP HAVE_SDL_CONFIG SDL_CFLAGS SDL_LIBS HAVE_SDL HAVE_SND_SDL HAVE_VID_GLX HAVE_SHADERS HAVE_SND_ALSA HAVE_SND_OSS HAVE_ARTSC_CONFIG HAVE_SND_ARTS ARTS_CFLAGS ARTS_LIBS HAVE_VID_DGA HAVE_VID_VIDMODE BUILD_DEDICATED BUILD_UFO2MAP BUILD_QDATA BUILD_DEBUG PARANOID PROFILING EXE_EXT LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -1561,12 +1561,112 @@ else
 fi;
 
 #---------------------------------------------------------------------------------------------
+# CHECK SED
+#---------------------------------------------------------------------------------------------
+
+# Extract the first word of "sed", so it can be a program name with args.
+set dummy sed; ac_word=$2
+echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
+if test "${ac_cv_prog_HAVE_SED+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test -n "$HAVE_SED"; then
+  ac_cv_prog_HAVE_SED="$HAVE_SED" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_HAVE_SED="yes"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+
+fi
+fi
+HAVE_SED=$ac_cv_prog_HAVE_SED
+if test -n "$HAVE_SED"; then
+  echo "$as_me:$LINENO: result: $HAVE_SED" >&5
+echo "${ECHO_T}$HAVE_SED" >&6
+else
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
+if test $HAVE_SED != "yes"
+then
+	{ { echo "$as_me:$LINENO: error: You must have sed installed" >&5
+echo "$as_me: error: You must have sed installed" >&2;}
+   { (exit 1); exit 1; }; }
+fi
+
+#---------------------------------------------------------------------------------------------
+# CHECK ECHO
+#---------------------------------------------------------------------------------------------
+
+# Extract the first word of "echo", so it can be a program name with args.
+set dummy echo; ac_word=$2
+echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
+if test "${ac_cv_prog_HAVE_ECHO+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test -n "$HAVE_ECHO"; then
+  ac_cv_prog_HAVE_ECHO="$HAVE_ECHO" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_HAVE_ECHO="yes"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+
+fi
+fi
+HAVE_ECHO=$ac_cv_prog_HAVE_ECHO
+if test -n "$HAVE_ECHO"; then
+  echo "$as_me:$LINENO: result: $HAVE_ECHO" >&5
+echo "${ECHO_T}$HAVE_ECHO" >&6
+else
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
+if test $HAVE_ECHO != "yes"
+then
+	{ { echo "$as_me:$LINENO: error: You must have a functioning echo installed" >&5
+echo "$as_me: error: You must have a functioning echo installed" >&2;}
+   { (exit 1); exit 1; }; }
+fi
+
+#---------------------------------------------------------------------------------------------
 # CHECK TARGET_OS
 #---------------------------------------------------------------------------------------------
 
 if test "$target_os" == "linux-gnu"
 then
 	TARGET_OS=linux-gnu
+
+elif test `echo $target_os | sed s/\(freebsd\).*/\1/` == "freebsd"
+then
+	TARGET_OS=freebsd
+
+elif test `echo $target_os | sed s/\(mingw32\).*/\1/` == "mingw32"
+then
+	TARGET_OS=mingw32
 
 else
 	{ { echo "$as_me:$LINENO: error: The target operating system '$target_os' is unknown, please contact the developers" >&5
@@ -4111,6 +4211,141 @@ echo "$as_me: error: couldn't find libvorbisfile!" >&2;}
 fi
 
 #---------------------------------------------------------------------------------------------
+# Check for gettext
+#---------------------------------------------------------------------------------------------
+
+echo "$as_me:$LINENO: checking for library containing gettext" >&5
+echo $ECHO_N "checking for library containing gettext... $ECHO_C" >&6
+if test "${ac_cv_search_gettext+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  ac_func_search_save_LIBS=$LIBS
+ac_cv_search_gettext=no
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+   builtin and then its argument prototype would still apply.  */
+char gettext ();
+int
+main ()
+{
+gettext ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_search_gettext="none required"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+if test "$ac_cv_search_gettext" = no; then
+  for ac_lib in intl; do
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+    cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+   builtin and then its argument prototype would still apply.  */
+char gettext ();
+int
+main ()
+{
+gettext ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_search_gettext="-l$ac_lib"
+break
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+  done
+fi
+LIBS=$ac_func_search_save_LIBS
+fi
+echo "$as_me:$LINENO: result: $ac_cv_search_gettext" >&5
+echo "${ECHO_T}$ac_cv_search_gettext" >&6
+if test "$ac_cv_search_gettext" != no; then
+  test "$ac_cv_search_gettext" = "none required" || LIBS="$ac_cv_search_gettext $LIBS"
+
+fi
+
+if test "$ac_cv_search_gettext" == "no"
+then
+	{ { echo "$as_me:$LINENO: error: couldn't find internationalization library with gettext in it" >&5
+echo "$as_me: error: couldn't find internationalization library with gettext in it" >&2;}
+   { (exit 1); exit 1; }; }
+fi
+
+#---------------------------------------------------------------------------------------------
 # Check SDL
 #---------------------------------------------------------------------------------------------
 
@@ -5594,13 +5829,8 @@ fi
 
 done
 
-   if test "$ac_cv_header_linux_soundcard_h" == "yes"
+   if test "$ac_cv_header_linux_soundcard_h" != "yes"
    then
-		cat >>confdefs.h <<\_ACEOF
-#define OSS_HEADER linux
-_ACEOF
-
-   else
 
 for ac_header in sys/soundcard.h
 do
@@ -5753,7 +5983,7 @@ done
      if test "$ac_cv_header_sys_soundcard_h" == "yes"
 	 then
 	 	cat >>confdefs.h <<\_ACEOF
-#define OSS_HEADER sys
+#define OSS_HEADER_SYS 1
 _ACEOF
 
 	 fi
@@ -6729,6 +6959,8 @@ s,@target@,$target,;t t
 s,@target_cpu@,$target_cpu,;t t
 s,@target_vendor@,$target_vendor,;t t
 s,@target_os@,$target_os,;t t
+s,@HAVE_SED@,$HAVE_SED,;t t
+s,@HAVE_ECHO@,$HAVE_ECHO,;t t
 s,@TARGET_OS@,$TARGET_OS,;t t
 s,@TARGET_CPU@,$TARGET_CPU,;t t
 s,@CC@,$CC,;t t

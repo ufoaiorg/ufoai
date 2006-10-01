@@ -65,12 +65,38 @@ AC_ARG_ENABLE(profiling,
 	[], [enable_profiling=no])
 
 #---------------------------------------------------------------------------------------------
+# CHECK SED
+#---------------------------------------------------------------------------------------------
+
+AC_CHECK_PROG(HAVE_SED,sed,yes)
+if test $HAVE_SED != "yes"
+then
+	AC_MSG_ERROR([You must have sed installed])
+fi
+
+#---------------------------------------------------------------------------------------------
+# CHECK ECHO
+#---------------------------------------------------------------------------------------------
+
+AC_CHECK_PROG(HAVE_ECHO,echo,yes)
+if test $HAVE_ECHO != "yes"
+then
+	AC_MSG_ERROR([You must have a functioning echo installed])
+fi
+
+#---------------------------------------------------------------------------------------------
 # CHECK TARGET_OS
 #---------------------------------------------------------------------------------------------
 
 if test "$target_os" == "linux-gnu"
 then
 	AC_SUBST([TARGET_OS],[linux-gnu])
+elif test `echo $target_os | sed s/\(freebsd\).*/\1/` == "freebsd"
+then
+	AC_SUBST([TARGET_OS],[freebsd])
+elif test `echo $target_os | sed s/\(mingw32\).*/\1/` == "mingw32"
+then
+	AC_SUBST([TARGET_OS],[mingw32])
 else
 	AC_MSG_ERROR([The target operating system '$target_os' is unknown, please contact the developers])
 fi
@@ -188,6 +214,16 @@ AC_SEARCH_LIBS([ov_open],[vorbisfile])
 if test "$ac_cv_search_ov_open" == "no"
 then
 	AC_MSG_ERROR([couldn't find libvorbisfile!])
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for gettext
+#---------------------------------------------------------------------------------------------
+
+AC_SEARCH_LIBS([gettext],[intl])
+if test "$ac_cv_search_gettext" == "no"
+then
+	AC_MSG_ERROR([couldn't find internationalization library with gettext in it])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -358,11 +394,9 @@ fi
 if test "$with_snd_alsa" == "check" || test "$with_snd_alsa" == "yes"
 then
    AC_CHECK_HEADERS([linux/soundcard.h])
-   if test "$ac_cv_header_linux_soundcard_h" == "yes"
+   if test "$ac_cv_header_linux_soundcard_h" != "yes"
    then
-		# AC_DEFINE([OSS_HEADER],[linux])
-   else
-     AC_CHECK_HEADERS([sys/soundcard.h])
+	 AC_CHECK_HEADERS([sys/soundcard.h])
      if test "$ac_cv_header_sys_soundcard_h" == "yes"
 	 then
 	 	AC_DEFINE([OSS_HEADER_SYS],[1])
