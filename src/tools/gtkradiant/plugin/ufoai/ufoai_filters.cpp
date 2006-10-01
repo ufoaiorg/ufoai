@@ -1,7 +1,4 @@
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
-
 This file is part of GtkRadiant.
 
 GtkRadiant is free software; you can redistribute it and/or modify
@@ -19,46 +16,60 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "filters.h"
+#include "ufoai_filters.h"
 
 #include "ifilter.h"
-#include "ientity.h"
 
 #include <list>
 
-class UfoAIFilterWrapper : public FaceFilter
+/**
+ * @brief
+ */
+class LevelFilterWrapper : public Filter
 {
 	bool m_active;
-	UfoAIFilter& m_filter;
-	public:
-	UfoAIFilterWrapper(UfoAIFilter& filter) : m_filter(filter) {
+	bool m_invert;
+	LevelFilter& m_filter;
+public:
+	LevelFilterWrapper(LevelFilter& filter, bool invert) : m_invert(invert), m_filter(filter)
+	{
 	}
-	void setActive(bool active) {
+	void setActive(bool active)
+	{
 		m_active = active;
 	}
-	bool active() {
+	bool active()
+	{
 		return m_active;
 	}
-	bool filter(const Entity& entity) {
-		return m_filter.filter(entity);
+	bool filter(const Level& level)
+	{
+		return m_invert ^ m_filter.filter(level);
 	}
 };
 
 
-typedef std::list<UfoAIFilterWrapper> UfoAIFilters;
-UfoAIFilters g_UfoAIFilters;
+typedef std::list<LevelFilterWrapper> LevelFilters;
+LevelFilters g_levelFilters;
 
-void add_ufoai_filter(UfoAIFilter& filter, int mask)
+/**
+ * @brief
+ */
+void add_level_filter(LevelFilter& filter, int mask, bool invert)
 {
-	g_UfoAIFilters.push_back(UfoAIFilterWrapper(filter));
-	GlobalFilterSystem().addFilter(g_UfoAIFilters.back(), mask);
-	globalOutputStream() << "...add new filter for mask " << mask << "\n";
+	g_levelFilters.push_back(LevelFilterWrapper(filter, invert));
+	GlobalFilterSystem().addFilter(g_levelFilters.back(), mask);
 }
 
-bool ufoai_filtered(Entity& ufoai)
+/**
+ * @brief
+ */
+bool level_filtered(Level& level)
 {
-	for(UfoAIFilters::iterator i = g_UfoAIFilters.begin(); i != g_UfoAIFilters.end(); ++i) {
-		if((*i).active() && (*i).filter(ufoai)) {
+	for(LevelFilters::iterator i = g_levelFilters.begin(); i != g_levelFilters.end(); ++i)
+	{
+		if((*i).active() && (*i).filter(level))
+		{
 			return true;
 		}
 	}

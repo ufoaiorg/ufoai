@@ -1,7 +1,4 @@
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
-
 This file is part of GtkRadiant.
 
 GtkRadiant is free software; you can redistribute it and/or modify
@@ -19,53 +16,61 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#if !defined(INCLUDED_UFOAIFILTERS_H)
-#define INCLUDED_UFOAIFILTERS_H
+#if !defined(INCLUDED_FILTERS_H)
+#define INCLUDED_FILTERS_H
 
 #include "ifilter.h"
-#include "ientity.h"
 
 #include "generic/callback.h"
 #include "scenelib.h"
 
-class UfoAIF;
+class Level;
 
-class UfoAIFilter
+class LevelFilter
 {
-	public:
-	virtual bool filter(const Entity &ufoai) const = 0;
+public:
+	virtual bool filter(const Level& level) const = 0;
 };
 
-bool ufoai_filtered(UfoAIF& ufoai);
-void add_ufoai_filter(UfoAIFilter& filter, int mask);
+bool level_filtered(Level& level);
+void add_level_filter(LevelFilter& filter, int mask, bool invert = false);
 
 class ClassnameFilter : public Filterable
 {
-	scene::Node &m_node;
-	public:
-	UfoAIF &m_ufoai;
+	scene::Node& m_node;
+public:
+	Level& m_level;
 
-	ClassnameFilter(UfoAIF& ufoai, scene::Node& node) : m_node(node), m_ufoai(ufoai) {
+	ClassnameFilter(Level& level, scene::Node& node) : m_node(node), m_level(level)
+	{
 	}
-	~ClassnameFilter() {
+	~ClassnameFilter()
+	{
 	}
 
-	void instanceAttach() {
+	void instanceAttach()
+	{
 		GlobalFilterSystem().registerFilterable(*this);
 	}
-	void instanceDetach() {
+	void instanceDetach()
+	{
 		GlobalFilterSystem().unregisterFilterable(*this);
 	}
 
-	void updateFiltered() {
-		if(ufoai_filtered(m_ufoai)) {
+	void updateFiltered()
+	{
+		if(level_filtered(m_level))
+		{
 			m_node.enable(scene::Node::eFiltered);
-		} else {
+		}
+		else
+		{
 			m_node.disable(scene::Node::eFiltered);
 		}
 	}
 
-	void classnameChanged(const char* value) {
+	void classnameChanged(const char* value)
+	{
 		updateFiltered();
 	}
 	typedef MemberCaller1<ClassnameFilter, const char*, &ClassnameFilter::classnameChanged> ClassnameChangedCaller;

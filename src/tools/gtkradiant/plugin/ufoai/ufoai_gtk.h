@@ -1,7 +1,4 @@
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
-
 This file is part of GtkRadiant.
 
 GtkRadiant is free software; you can redistribute it and/or modify
@@ -19,17 +16,7 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#if !defined(INCLUDED_PLUGIN_H)
-#define INCLUDED_PLUGIN_H
-
-#define CONTENTS_LEVEL8 0x8000
-#define CONTENTS_LEVEL7 0x4000
-#define CONTENTS_LEVEL6 0x2000
-#define CONTENTS_LEVEL5 0x1000
-#define CONTENTS_LEVEL4 0x0800
-#define CONTENTS_LEVEL3 0x0400
-#define CONTENTS_LEVEL2 0x0200
-#define CONTENTS_LEVEL1 0x0100
-#define CONTENTS_STEPON 0x40000000
+#if !defined(INCLUDED_UFOAI_GTK_H)
+#define INCLUDED_UFOAI_GTK_H
 
 #endif
