@@ -1656,15 +1656,15 @@ fi
 # CHECK TARGET_OS
 #---------------------------------------------------------------------------------------------
 
-if test `echo $target_os | sed "s/\(linux\).*/\1/"` == "lonux"
+if test `echo $target_os | sed "s/\(linux\).*/\1/"` = "linux"
 then
 	TARGET_OS=linux-gnu
 
-elif test `echo freebsd6.2 | sed "s/\(freebsd\).*/\1/"` == "freebsd"
+elif test `echo $target_os | sed "s/\(freebsd\).*/\1/"` = "freebsd"
 then
 	TARGET_OS=freebsd
 
-elif test `echo $target_os | sed "s/\(mingw32\).*/\1/"` == "mingw32"
+elif test `echo $target_os | sed "s/\(mingw32\).*/\1/"` = "mingw32"
 then
 	TARGET_OS=mingw32
 
@@ -1678,14 +1678,14 @@ fi
 # CHECK TARGET_CPU
 #---------------------------------------------------------------------------------------------
 
-if test "$target_cpu" == "x86_64"
+if test "$target_cpu" = "x86_64"
 then
 	TARGET_CPU=x86_64
 
-elif test "$target_cpu" == "i386" ||
-	 test "$target_cpu" == "i486" ||
-	 test "$target_cpu" == "i586" ||
-	 test "$target_cpu" == "i686"
+elif test "$target_cpu" = "i386" ||
+	 test "$target_cpu" = "i486" ||
+	 test "$target_cpu" = "i586" ||
+	 test "$target_cpu" = "i686"
 then
 	TARGET_CPU=i386
 
@@ -3405,7 +3405,7 @@ fi
 
 done
 
-if test "$ac_cv_header_X11_Xlib_h" == "yes"
+if test "$ac_cv_header_X11_Xlib_h" = "yes"
 then
 	echo "$as_me:$LINENO: checking for library containing XCreateWindow" >&5
 echo $ECHO_N "checking for library containing XCreateWindow... $ECHO_C" >&6
@@ -3531,7 +3531,7 @@ if test "$ac_cv_search_XCreateWindow" != no; then
 
 fi
 
-	if test "$ac_cv_search_XCreateWindow" == "no"
+	if test "$ac_cv_search_XCreateWindow" = "no"
 	then
 		{ echo "$as_me:$LINENO: WARNING: found X11 header but couldn't find library!" >&5
 echo "$as_me: WARNING: found X11 header but couldn't find library!" >&2;}
@@ -3666,7 +3666,7 @@ if test "$ac_cv_search_dlopen" != no; then
 
 fi
 
-if test "$ac_cv_search_dlopen" == "no"
+if test "$ac_cv_search_dlopen" = "no"
 then
 	{ { echo "$as_me:$LINENO: error: could not decide how to open a dynamic link library!" >&5
 echo "$as_me: error: could not decide how to open a dynamic link library!" >&2;}
@@ -3801,7 +3801,7 @@ if test "$ac_cv_search_cos" != no; then
 
 fi
 
-if test "$ac_cv_search_cos" == "no"
+if test "$ac_cv_search_cos" = "no"
 then
 	{ { echo "$as_me:$LINENO: error: could not determine how to link to maths library" >&5
 echo "$as_me: error: could not determine how to link to maths library" >&2;}
@@ -3936,7 +3936,7 @@ if test "$ac_cv_search_stricmp" != no; then
 
 fi
 
-if test "$ac_cv_search_stricmp" == "no"
+if test "$ac_cv_search_stricmp" = "no"
 then
 	echo "$as_me:$LINENO: checking for library containing strcasecmp" >&5
 echo $ECHO_N "checking for library containing strcasecmp... $ECHO_C" >&6
@@ -4062,7 +4062,7 @@ if test "$ac_cv_search_strcasecmp" != no; then
 
 fi
 
-	if test "$ac_cv_search_strcasecmp" == "no"
+	if test "$ac_cv_search_strcasecmp" = "no"
 	then
 	   { { echo "$as_me:$LINENO: error: could find neither stricmp nor strcasecmp!" >&5
 echo "$as_me: error: could find neither stricmp nor strcasecmp!" >&2;}
@@ -4203,7 +4203,7 @@ if test "$ac_cv_search_ov_open" != no; then
 
 fi
 
-if test "$ac_cv_search_ov_open" == "no"
+if test "$ac_cv_search_ov_open" = "no"
 then
 	{ { echo "$as_me:$LINENO: error: couldn't find libvorbisfile!" >&5
 echo "$as_me: error: couldn't find libvorbisfile!" >&2;}
@@ -4338,7 +4338,7 @@ if test "$ac_cv_search_gettext" != no; then
 
 fi
 
-if test "$ac_cv_search_gettext" == "no"
+if test "$ac_cv_search_gettext" = "no"
 then
 	{ { echo "$as_me:$LINENO: error: couldn't find internationalization library with gettext in it" >&5
 echo "$as_me: error: couldn't find internationalization library with gettext in it" >&2;}
@@ -4384,7 +4384,7 @@ else
 echo "${ECHO_T}no" >&6
 fi
 
-if test "$ac_cv_prog_HAVE_SDL_CONFIG" == "yes"
+if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
 then
 	SDL_CFLAGS=`sdl-config --cflags`
 
@@ -4396,8 +4396,8 @@ echo "$as_me: error: cannot find sdl-config, make sure the SDL development libra
    { (exit 1); exit 1; }; }
 fi
 
-if test "$with_sdl" == "check" || test "$with_sdl" == "yes" || \
-   test "$with_snd_sdl" == "check" || test "$with_snd_sdl" == "yes"
+if test "$with_sdl" = "check" || test "$with_sdl" = "yes" || \
+   test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
 then
 	HAVE_SDL=1
 
@@ -4406,7 +4406,7 @@ else
 
 fi
 
-if test "$with_snd_sdl" == "check" || test "$with_snd_sdl" == "yes"
+if test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
 then
 	HAVE_SND_SDL=1
 
@@ -4543,7 +4543,7 @@ if test "$ac_cv_search_TTF_Init" != no; then
 
 fi
 
-if test "$ac_cv_search_TTF_Init" == "no"
+if test "$ac_cv_search_TTF_Init" = "no"
 then
 	{ { echo "$as_me:$LINENO: error: You must have the SDL_ttf development libraries" >&5
 echo "$as_me: error: You must have the SDL_ttf development libraries" >&2;}
@@ -4703,7 +4703,7 @@ fi
 
 done
 
-if test "$ac_cv_header_jpeglib_h" == "no"
+if test "$ac_cv_header_jpeglib_h" = "no"
 then
 	{ { echo "$as_me:$LINENO: error: You must have the JPEG development headers" >&5
 echo "$as_me: error: You must have the JPEG development headers" >&2;}
@@ -4834,7 +4834,7 @@ if test "$ac_cv_search_jpeg_CreateDecompress" != no; then
 
 fi
 
-if test "$ac_cv_search_jpeg_create_decompress" == "no"
+if test "$ac_cv_search_jpeg_create_decompress" = "no"
 then
 	{ { echo "$as_me:$LINENO: error: You must have the JPEG development libraries" >&5
 echo "$as_me: error: You must have the JPEG development libraries" >&2;}
@@ -4847,7 +4847,7 @@ fi
 
 HAVE_VID_GLX=0
 
-if test "$with_vid_glx" == "check" || test "$with_vid_glx" == "yes"
+if test "$with_vid_glx" = "check" || test "$with_vid_glx" = "yes"
 then
 	if test "$ac_cv_header_X11_Xlib_h" != "no"
 	then
@@ -4916,7 +4916,7 @@ fi
 done
 
 	fi
-	if test "$ac_cv_header_GL_glx_h" == "yes"
+	if test "$ac_cv_header_GL_glx_h" = "yes"
 	then
 		echo "$as_me:$LINENO: checking for library containing glXCreateContext" >&5
 echo $ECHO_N "checking for library containing glXCreateContext... $ECHO_C" >&6
@@ -5042,7 +5042,7 @@ if test "$ac_cv_search_glXCreateContext" != no; then
 
 fi
 
-		if test "$ac_cv_search_glXCreateContext" == "no"
+		if test "$ac_cv_search_glXCreateContext" = "no"
 		then
 		   { echo "$as_me:$LINENO: WARNING: found GLX headers but couldn't find GLX libraries, GLX will be disabled!" >&5
 echo "$as_me: WARNING: found GLX headers but couldn't find GLX libraries, GLX will be disabled!" >&2;}
@@ -5050,7 +5050,7 @@ echo "$as_me: WARNING: found GLX headers but couldn't find GLX libraries, GLX wi
 		   HAVE_VID_GLX=1
 
 		fi
-	elif test "$with_vid_glx" == "yes"
+	elif test "$with_vid_glx" = "yes"
 	then
 		{ { echo "$as_me:$LINENO: error: --with-glx specified but failed find GLX header" >&5
 echo "$as_me: error: --with-glx specified but failed find GLX header" >&2;}
@@ -5225,7 +5225,7 @@ fi
 # Check for shaders
 #---------------------------------------------------------------------------------------------
 
-if test "$with_shaders" == "check" || test "$with_shaders" == "yes"
+if test "$with_shaders" = "check" || test "$with_shaders" = "yes"
 then
 	shaders_enabled=no
 
@@ -5292,7 +5292,7 @@ fi
 done
 
 
-	if test "$ac_cv_header_GL_glext_h" == "yes"
+	if test "$ac_cv_header_GL_glext_h" = "yes"
 	then
 		echo "$as_me:$LINENO: checking OpenGL shader support" >&5
 echo $ECHO_N "checking OpenGL shader support... $ECHO_C" >&6
@@ -5348,7 +5348,7 @@ ac_cv_shaders=
 
 fi
 rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
-		if test "$ac_cv_shaders" == "yes"
+		if test "$ac_cv_shaders" = "yes"
 		then
 			echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6
@@ -5364,7 +5364,7 @@ _ACEOF
 echo "${ECHO_T}no" >&6
 		fi
 	fi
-	if test "$with_shaders" == "yes" && test "shaders_enabled" != "yes"
+	if test "$with_shaders" = "yes" && test "shaders_enabled" != "yes"
 	then
 		{ { echo "$as_me:$LINENO: error: --with-shaders specified but couldn't use OpenGL shaders!" >&5
 echo "$as_me: error: --with-shaders specified but couldn't use OpenGL shaders!" >&2;}
@@ -5376,7 +5376,7 @@ fi
 # Check ALSA
 #---------------------------------------------------------------------------------------------
 
-if test "$with_snd_alsa" == "check" || test "$with_snd_alsa" == "yes"
+if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
 then
 
 for ac_header in alsa/asoundlib.h
@@ -5527,7 +5527,7 @@ fi
 
 done
 
-	if test "$ac_cv_header_alsa_asoundlib_h" == "yes"
+	if test "$ac_cv_header_alsa_asoundlib_h" = "yes"
 	then
 		echo "$as_me:$LINENO: checking for library containing snd_pcm_open" >&5
 echo $ECHO_N "checking for library containing snd_pcm_open... $ECHO_C" >&6
@@ -5666,7 +5666,7 @@ _ACEOF
 echo "$as_me: error: found alsa header but couldn't locate alsa library!" >&2;}
    { (exit 1); exit 1; }; }
 		fi
-	elif test "$with_snd_alsa" == "yes"
+	elif test "$with_snd_alsa" = "yes"
 	then
 		{ { echo "$as_me:$LINENO: error: specified --with-snd-alsa specified but cannot find alsa/asoundlib.h!" >&5
 echo "$as_me: error: specified --with-snd-alsa specified but cannot find alsa/asoundlib.h!" >&2;}
@@ -5678,7 +5678,7 @@ fi
 # Check OSS
 #---------------------------------------------------------------------------------------------
 
-if test "$with_snd_alsa" == "check" || test "$with_snd_alsa" == "yes"
+if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
 then
 
 for ac_header in linux/soundcard.h
@@ -5980,7 +5980,7 @@ fi
 
 done
 
-     if test "$ac_cv_header_sys_soundcard_h" == "yes"
+     if test "$ac_cv_header_sys_soundcard_h" = "yes"
 	 then
 	 	cat >>confdefs.h <<\_ACEOF
 #define OSS_HEADER_SYS 1
@@ -5988,8 +5988,8 @@ _ACEOF
 
 	 fi
    fi
-   if test "$ac_cv_header_linux_soundcard_h" == "yes" || \
-	  test "$ac_cv_header_sys_soundcard_h" == "yes"
+   if test "$ac_cv_header_linux_soundcard_h" = "yes" || \
+	  test "$ac_cv_header_sys_soundcard_h" = "yes"
    then
      HAVE_SND_OSS=1
 
@@ -6000,7 +6000,7 @@ fi
 # Check ARTS
 #---------------------------------------------------------------------------------------------
 
-if test "$with_snd_arts" == check || test "$with_snd_arts" == yes
+if test "$with_snd_arts" = check || test "$with_snd_arts" = yes
 then
 	# Extract the first word of "artsc-config", so it can be a program name with args.
 set dummy artsc-config; ac_word=$2
@@ -6037,7 +6037,7 @@ else
 echo "${ECHO_T}no" >&6
 fi
 
-	if test "$ac_cv_prog_HAVE_ARTSC_CONFIG" == "yes"
+	if test "$ac_cv_prog_HAVE_ARTSC_CONFIG" = "yes"
 	then
 		HAVE_SND_ARTS=1
 
@@ -6052,9 +6052,9 @@ fi
 # Check for DGA
 #---------------------------------------------------------------------------------------------
 
-if test "$with_vid_dga" == "check" || test "$with_vid_dga" == "yes"
+if test "$with_vid_dga" = "check" || test "$with_vid_dga" = "yes"
 then
-	if test "$ac_cv_header_X11_Xlib_h" == "yes"
+	if test "$ac_cv_header_X11_Xlib_h" = "yes"
 	then
 
 for ac_header in X11/extensions/xf86dga.h
@@ -6122,7 +6122,7 @@ done
 
 	fi
 
-	if test "$ac_cv_header_X11_extensions_xf86dga_h" == "yes"
+	if test "$ac_cv_header_X11_extensions_xf86dga_h" = "yes"
 	then
 		HAVE_VID_DGA=1
 
@@ -6130,7 +6130,7 @@ done
 #define HAVE_DGA 1
 _ACEOF
 
-	elif test "$with_vid_dga" == "yes"
+	elif test "$with_vid_dga" = "yes"
 	then
 		{ { echo "$as_me:$LINENO: error: --with-dga specified but couldn't find X11/extensions/xf86dga.h" >&5
 echo "$as_me: error: --with-dga specified but couldn't find X11/extensions/xf86dga.h" >&2;}
@@ -6142,9 +6142,9 @@ fi
 # Check for vidmode
 #---------------------------------------------------------------------------------------------
 
-if test "$with_vid_vidmode" == "check" || test "$with_vid_vidmode" == "yes"
+if test "$with_vid_vidmode" = "check" || test "$with_vid_vidmode" = "yes"
 then
-	if test "$ac_cv_header_X11_Xlib_h" == "yes"
+	if test "$ac_cv_header_X11_Xlib_h" = "yes"
 	then
 
 for ac_header in X11/extensions/xf86vmode.h
@@ -6212,7 +6212,7 @@ done
 
 	fi
 
-	if test "$ac_cv_header_X11_extensions_xf86vmode_h" == "yes"
+	if test "$ac_cv_header_X11_extensions_xf86vmode_h" = "yes"
 	then
 		HAVE_VID_VIDMODE=1
 
@@ -6220,7 +6220,7 @@ done
 #define HAVE_VIDMODE 1
 _ACEOF
 
-	elif test "$with_vid_vidmode" == "yes"
+	elif test "$with_vid_vidmode" = "yes"
 	then
 		{ { echo "$as_me:$LINENO: error: --with-vidmode specified but couldn't find X11/extensions/xf86vmode.h" >&5
 echo "$as_me: error: --with-vidmode specified but couldn't find X11/extensions/xf86vmode.h" >&2;}
@@ -6235,7 +6235,7 @@ fi
 
 BUILD_DEDICATED=0
 
-if test "$enable_dedicated" == "yes"
+if test "$enable_dedicated" = "yes"
 then
 	{ echo "$as_me:$LINENO: Enabling dedicated server" >&5
 echo "$as_me: Enabling dedicated server" >&6;}
@@ -6249,7 +6249,7 @@ fi
 
 BUILD_UFO2MAP=0
 
-if test "$enable_ufo2map" == "yes"
+if test "$enable_ufo2map" = "yes"
 then
 	{ echo "$as_me:$LINENO: Enabling ufo2map" >&5
 echo "$as_me: Enabling ufo2map" >&6;}
@@ -6263,7 +6263,7 @@ fi
 
 BUILD_QDATA=0
 
-if test "$enable_qdata" == "yes"
+if test "$enable_qdata" = "yes"
 then
 	{ echo "$as_me:$LINENO: Enabling qdata" >&5
 echo "$as_me: Enabling qdata" >&6;}
@@ -6275,7 +6275,7 @@ fi
 # Check for gettext
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_gettext" == "yes"
+if test "$enable_gettext" = "yes"
 then
 	{ echo "$as_me:$LINENO: Enabling multilanguage support" >&5
 echo "$as_me: Enabling multilanguage support" >&6;}
@@ -6289,7 +6289,7 @@ fi
 # Check for debug
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_release" == "no"
+if test "$enable_release" = "no"
 then
 	{ echo "$as_me:$LINENO: Enabling debug build" >&5
 echo "$as_me: Enabling debug build" >&6;}
@@ -6306,7 +6306,7 @@ fi
 # Check for PARANOID
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_paranoid" == "yes"
+if test "$enable_paranoid" = "yes"
 then
 	PARANOID=1
 
@@ -6318,7 +6318,7 @@ fi
 # Check for PROFILING
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_profiling" == "yes"
+if test "$enable_profiling" = "yes"
 then
 	PROFILING=1
 
