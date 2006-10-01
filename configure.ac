@@ -88,13 +88,13 @@ fi
 # CHECK TARGET_OS
 #---------------------------------------------------------------------------------------------
 
-if test `echo $target_os | sed "s/\(linux\).*/\1/"` == "linux"
+if test `echo $target_os | sed "s/\(linux\).*/\1/"` = "linux"
 then
 	AC_SUBST([TARGET_OS],[linux-gnu])
-elif test `echo $target_os | sed "s/\(freebsd\).*/\1/"` == "freebsd"
+elif test `echo $target_os | sed "s/\(freebsd\).*/\1/"` = "freebsd"
 then
 	AC_SUBST([TARGET_OS],[freebsd])
-elif test `echo $target_os | sed "s/\(mingw32\).*/\1/"` == "mingw32"
+elif test `echo $target_os | sed "s/\(mingw32\).*/\1/"` = "mingw32"
 then
 	AC_SUBST([TARGET_OS],[mingw32])
 else
@@ -105,13 +105,13 @@ fi
 # CHECK TARGET_CPU
 #---------------------------------------------------------------------------------------------
 
-if test "$target_cpu" == "x86_64"
+if test "$target_cpu" = "x86_64"
 then
 	AC_SUBST([TARGET_CPU],[x86_64])
-elif test "$target_cpu" == "i386" ||
-	 test "$target_cpu" == "i486" ||
-	 test "$target_cpu" == "i586" ||
-	 test "$target_cpu" == "i686"
+elif test "$target_cpu" = "i386" ||
+	 test "$target_cpu" = "i486" ||
+	 test "$target_cpu" = "i586" ||
+	 test "$target_cpu" = "i686"
 then
 	AC_SUBST([TARGET_CPU],[i386])
 else
@@ -161,10 +161,10 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_CHECK_HEADERS([X11/Xlib.h])
-if test "$ac_cv_header_X11_Xlib_h" == "yes"
+if test "$ac_cv_header_X11_Xlib_h" = "yes"
 then
 	AC_SEARCH_LIBS([XCreateWindow],[X11])
-	if test "$ac_cv_search_XCreateWindow" == "no"
+	if test "$ac_cv_search_XCreateWindow" = "no"
 	then
 		AC_MSG_WARN([found X11 header but couldn't find library!])
 	fi
@@ -175,7 +175,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_SEARCH_LIBS([dlopen],[dl])
-if test "$ac_cv_search_dlopen" == "no"
+if test "$ac_cv_search_dlopen" = "no"
 then
 	AC_MSG_ERROR([could not decide how to open a dynamic link library!])
 fi
@@ -185,7 +185,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_SEARCH_LIBS([cos],[m])
-if test "$ac_cv_search_cos" == "no"
+if test "$ac_cv_search_cos" = "no"
 then
 	AC_MSG_ERROR([could not determine how to link to maths library])
 fi
@@ -195,10 +195,10 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_SEARCH_LIBS([stricmp],[])
-if test "$ac_cv_search_stricmp" == "no"
+if test "$ac_cv_search_stricmp" = "no"
 then
 	AC_SEARCH_LIBS([strcasecmp], [])
-	if test "$ac_cv_search_strcasecmp" == "no"
+	if test "$ac_cv_search_strcasecmp" = "no"
 	then
 	   AC_MSG_ERROR([could find neither stricmp nor strcasecmp!])
 	else
@@ -211,7 +211,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_SEARCH_LIBS([ov_open],[vorbisfile])
-if test "$ac_cv_search_ov_open" == "no"
+if test "$ac_cv_search_ov_open" = "no"
 then
 	AC_MSG_ERROR([couldn't find libvorbisfile!])
 fi
@@ -221,7 +221,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_SEARCH_LIBS([gettext],[intl])
-if test "$ac_cv_search_gettext" == "no"
+if test "$ac_cv_search_gettext" = "no"
 then
 	AC_MSG_ERROR([couldn't find internationalization library with gettext in it])
 fi
@@ -231,7 +231,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_CHECK_PROG(HAVE_SDL_CONFIG,sdl-config,yes)
-if test "$ac_cv_prog_HAVE_SDL_CONFIG" == "yes"
+if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
 then
 	AC_SUBST([SDL_CFLAGS],`sdl-config --cflags`)
 	AC_SUBST([SDL_LIBS],`sdl-config --libs`)
@@ -239,15 +239,15 @@ else
 	AC_MSG_ERROR([cannot find sdl-config, make sure the SDL development libraries are installed!])
 fi
 
-if test "$with_sdl" == "check" || test "$with_sdl" == "yes" || \
-   test "$with_snd_sdl" == "check" || test "$with_snd_sdl" == "yes"
+if test "$with_sdl" = "check" || test "$with_sdl" = "yes" || \
+   test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
 then
 	AC_SUBST([HAVE_SDL],1)
 else
 	AC_SUBST([HAVE_SDL],0)
 fi
 
-if test "$with_snd_sdl" == "check" || test "$with_snd_sdl" == "yes"
+if test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
 then
 	AC_SUBST([HAVE_SND_SDL],1)
 else
@@ -259,7 +259,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_SEARCH_LIBS([TTF_Init],[SDL_ttf])
-if test "$ac_cv_search_TTF_Init" == "no"
+if test "$ac_cv_search_TTF_Init" = "no"
 then
 	AC_MSG_ERROR([You must have the SDL_ttf development libraries])
 fi
@@ -269,13 +269,13 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_CHECK_HEADERS([jpeglib.h])
-if test "$ac_cv_header_jpeglib_h" == "no"
+if test "$ac_cv_header_jpeglib_h" = "no"
 then
 	AC_MSG_ERROR([You must have the JPEG development headers])
 fi
 
 AC_SEARCH_LIBS([jpeg_CreateDecompress],[jpeg])
-if test "$ac_cv_search_jpeg_create_decompress" == "no"
+if test "$ac_cv_search_jpeg_create_decompress" = "no"
 then
 	AC_MSG_ERROR([You must have the JPEG development libraries])
 fi
@@ -285,7 +285,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_SUBST([HAVE_VID_GLX],0)
-if test "$with_vid_glx" == "check" || test "$with_vid_glx" == "yes"
+if test "$with_vid_glx" = "check" || test "$with_vid_glx" = "yes"
 then
 	if test "$ac_cv_header_X11_Xlib_h" != "no"
 	then
@@ -295,16 +295,16 @@ then
 				#endif
 			])
 	fi
-	if test "$ac_cv_header_GL_glx_h" == "yes"
+	if test "$ac_cv_header_GL_glx_h" = "yes"
 	then
 		AC_SEARCH_LIBS([glXCreateContext],[GL MesaGL])
-		if test "$ac_cv_search_glXCreateContext" == "no"
+		if test "$ac_cv_search_glXCreateContext" = "no"
 		then
 		   AC_MSG_WARN([found GLX headers but couldn't find GLX libraries, GLX will be disabled!])
 		else
 		   AC_SUBST([HAVE_VID_GLX],1)
 		fi
-	elif test "$with_vid_glx" == "yes"
+	elif test "$with_vid_glx" = "yes"
 	then
 		AC_MSG_ERROR([--with-glx specified but failed find GLX header])
 	fi
@@ -326,7 +326,7 @@ fi
 # Check for shaders
 #---------------------------------------------------------------------------------------------
 
-if test "$with_shaders" == "check" || test "$with_shaders" == "yes"
+if test "$with_shaders" = "check" || test "$with_shaders" = "yes"
 then
 	shaders_enabled=no
 	AC_CHECK_HEADERS([GL/glext.h],[],[],[
@@ -334,7 +334,7 @@ then
 		#include <GL/glu.h>
 	])
 
-	if test "$ac_cv_header_GL_glext_h" == "yes"
+	if test "$ac_cv_header_GL_glext_h" = "yes"
 	then
 		AC_MSG_CHECKING([OpenGL shader support])
 		AC_COMPILE_IFELSE([
@@ -348,7 +348,7 @@ then
 				[ac_cv_shaders=yes],
 				[ac_cv_shaders=]
 			)
-		if test "$ac_cv_shaders" == "yes"
+		if test "$ac_cv_shaders" = "yes"
 		then
 			AC_MSG_RESULT([yes])
 			AC_SUBST([HAVE_SHADERS],1)
@@ -358,7 +358,7 @@ then
 			AC_MSG_RESULT([no])
 		fi
 	fi
-	if test "$with_shaders" == "yes" && test "shaders_enabled" != "yes"
+	if test "$with_shaders" = "yes" && test "shaders_enabled" != "yes"
 	then
 		AC_MSG_ERROR([--with-shaders specified but couldn't use OpenGL shaders!])
 	fi
@@ -368,10 +368,10 @@ fi
 # Check ALSA
 #---------------------------------------------------------------------------------------------
 
-if test "$with_snd_alsa" == "check" || test "$with_snd_alsa" == "yes"
+if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
 then
 	AC_CHECK_HEADERS([alsa/asoundlib.h])
-	if test "$ac_cv_header_alsa_asoundlib_h" == "yes"
+	if test "$ac_cv_header_alsa_asoundlib_h" = "yes"
 	then
 		AC_SEARCH_LIBS([snd_pcm_open], [asound])
 		if test "$ac_cv_search_snd_pcm_open" != "no"
@@ -381,7 +381,7 @@ then
 		else
 			AC_MSG_ERROR([found alsa header but couldn't locate alsa library!])
 		fi
-	elif test "$with_snd_alsa" == "yes"
+	elif test "$with_snd_alsa" = "yes"
 	then
 		AC_MSG_ERROR([specified --with-snd-alsa specified but cannot find alsa/asoundlib.h!])
 	fi
@@ -391,19 +391,19 @@ fi
 # Check OSS
 #---------------------------------------------------------------------------------------------
 
-if test "$with_snd_alsa" == "check" || test "$with_snd_alsa" == "yes"
+if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
 then
    AC_CHECK_HEADERS([linux/soundcard.h])
    if test "$ac_cv_header_linux_soundcard_h" != "yes"
    then
 	 AC_CHECK_HEADERS([sys/soundcard.h])
-     if test "$ac_cv_header_sys_soundcard_h" == "yes"
+     if test "$ac_cv_header_sys_soundcard_h" = "yes"
 	 then
 	 	AC_DEFINE([OSS_HEADER_SYS],[1])
 	 fi
    fi
-   if test "$ac_cv_header_linux_soundcard_h" == "yes" || \
-	  test "$ac_cv_header_sys_soundcard_h" == "yes"
+   if test "$ac_cv_header_linux_soundcard_h" = "yes" || \
+	  test "$ac_cv_header_sys_soundcard_h" = "yes"
    then
      AC_SUBST([HAVE_SND_OSS],1)
    fi
@@ -413,10 +413,10 @@ fi
 # Check ARTS
 #---------------------------------------------------------------------------------------------
 
-if test "$with_snd_arts" == check || test "$with_snd_arts" == yes
+if test "$with_snd_arts" = check || test "$with_snd_arts" = yes
 then
 	AC_CHECK_PROG(HAVE_ARTSC_CONFIG,artsc-config,yes)
-	if test "$ac_cv_prog_HAVE_ARTSC_CONFIG" == "yes"
+	if test "$ac_cv_prog_HAVE_ARTSC_CONFIG" = "yes"
 	then
 		AC_SUBST([HAVE_SND_ARTS],1)
 		AC_SUBST([ARTS_CFLAGS], `artsc-config --cflags`)
@@ -428,9 +428,9 @@ fi
 # Check for DGA
 #---------------------------------------------------------------------------------------------
 
-if test "$with_vid_dga" == "check" || test "$with_vid_dga" == "yes"
+if test "$with_vid_dga" = "check" || test "$with_vid_dga" = "yes"
 then
-	if test "$ac_cv_header_X11_Xlib_h" == "yes"
+	if test "$ac_cv_header_X11_Xlib_h" = "yes"
 	then
 		AC_CHECK_HEADERS([X11/extensions/xf86dga.h], [], [], [
 			#if HAVE_X11_XLIB_H
@@ -439,11 +439,11 @@ then
 			])
 	fi
 
-	if test "$ac_cv_header_X11_extensions_xf86dga_h" == "yes"
+	if test "$ac_cv_header_X11_extensions_xf86dga_h" = "yes"
 	then
 		AC_SUBST([HAVE_VID_DGA], 1)
 		AC_DEFINE([HAVE_DGA],1)
-	elif test "$with_vid_dga" == "yes"
+	elif test "$with_vid_dga" = "yes"
 	then
 		AC_MSG_ERROR([--with-dga specified but couldn't find X11/extensions/xf86dga.h])
 	fi
@@ -453,9 +453,9 @@ fi
 # Check for vidmode
 #---------------------------------------------------------------------------------------------
 
-if test "$with_vid_vidmode" == "check" || test "$with_vid_vidmode" == "yes"
+if test "$with_vid_vidmode" = "check" || test "$with_vid_vidmode" = "yes"
 then
-	if test "$ac_cv_header_X11_Xlib_h" == "yes"
+	if test "$ac_cv_header_X11_Xlib_h" = "yes"
 	then
 		AC_CHECK_HEADERS([X11/extensions/xf86vmode.h],[],[],[
 			#if HAVE_X11_XLIB_H
@@ -464,11 +464,11 @@ then
 			])
 	fi
 
-	if test "$ac_cv_header_X11_extensions_xf86vmode_h" == "yes"
+	if test "$ac_cv_header_X11_extensions_xf86vmode_h" = "yes"
 	then
 		AC_SUBST([HAVE_VID_VIDMODE], 1)
 		AC_DEFINE([HAVE_VIDMODE],1)
-	elif test "$with_vid_vidmode" == "yes"
+	elif test "$with_vid_vidmode" = "yes"
 	then
 		AC_MSG_ERROR([--with-vidmode specified but couldn't find X11/extensions/xf86vmode.h])
 	fi
@@ -480,7 +480,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_SUBST([BUILD_DEDICATED],0)
-if test "$enable_dedicated" == "yes"
+if test "$enable_dedicated" = "yes"
 then
 	AC_MSG_NOTICE([Enabling dedicated server])
 	AC_SUBST([BUILD_DEDICATED],1)
@@ -491,7 +491,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_SUBST([BUILD_UFO2MAP],0)
-if test "$enable_ufo2map" == "yes"
+if test "$enable_ufo2map" = "yes"
 then
 	AC_MSG_NOTICE([Enabling ufo2map])
 	AC_SUBST([BUILD_UFO2MAP],1)
@@ -502,7 +502,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_SUBST([BUILD_QDATA],0)
-if test "$enable_qdata" == "yes"
+if test "$enable_qdata" = "yes"
 then
 	AC_MSG_NOTICE([Enabling qdata])
 	AC_SUBST([BUILD_QDATA],1)
@@ -512,7 +512,7 @@ fi
 # Check for gettext
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_gettext" == "yes"
+if test "$enable_gettext" = "yes"
 then
 	AC_MSG_NOTICE([Enabling multilanguage support])
 	AC_DEFINE([HAVE_GETTEXT],1)
@@ -522,7 +522,7 @@ fi
 # Check for debug
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_release" == "no"
+if test "$enable_release" = "no"
 then
 	AC_MSG_NOTICE([Enabling debug build])
 	AC_SUBST([BUILD_DEBUG],1)
@@ -535,7 +535,7 @@ fi
 # Check for PARANOID
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_paranoid" == "yes"
+if test "$enable_paranoid" = "yes"
 then
 	AC_SUBST([PARANOID],1)
 	AC_MSG_NOTICE([Enabling PARANOID])
@@ -545,7 +545,7 @@ fi
 # Check for PROFILING
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_profiling" == "yes"
+if test "$enable_profiling" = "yes"
 then
 	AC_SUBST([PROFILING],1)
 	AC_MSG_NOTICE([Enabling profiling])
