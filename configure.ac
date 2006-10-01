@@ -82,7 +82,10 @@ fi
 if test "$target_cpu" == "x86_64"
 then
 	AC_SUBST([TARGET_CPU],[x86_64])
-elif test "$target_cpu" == "i386"
+elif test "$target_cpu" == "i386" ||
+	 test "$target_cpu" == "i486" ||
+	 test "$target_cpu" == "i586" ||
+	 test "$target_cpu" == "i686" 
 then
 	AC_SUBST([TARGET_CPU],[i386])
 else
