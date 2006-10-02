@@ -44,16 +44,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_arb_shader.h"
 
-#ifndef _WIN32
-#include <SDL.h>
-#include <SDL_ttf.h>
-#elif defined(__MINGW32__)
+#if !defined _WIN32 || ( defined(__MINGW32__) && !defined(DEVCPP ) )
 #include <SDL.h>
 #include <SDL_ttf.h>
 #else
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #endif
+
 void GL_ShutdownSDLFonts(void);	/* gl_draw.c */
 
 #include "qgl.h"
