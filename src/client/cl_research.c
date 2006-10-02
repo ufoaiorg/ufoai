@@ -1084,7 +1084,7 @@ static value_t valid_tech_vars[] = {
 	{"needscollected", V_BOOL, offsetof(technology_t, needsCollected)},
 #else
 	/* ("require")	Handled in parser below. */
-	("delay", V_INT, offsetof(technology_t, require->delay)},
+	/* ("delay", V_INT, offsetof(technology_t, require->delay)}, can this work? */
 #endif
 	/*how long will this research last */
 	{"producetime", V_INT, offsetof(technology_t, produceTime)},
@@ -1214,6 +1214,8 @@ void RS_ParseTechnologies(char *id, char **text)
 					token = COM_EParse(text, errhead, id);
 					if (!*text)
 						return;
+					if (*token == '}')
+						break;
 
 					if (!Q_strcmp(token, "tech")) {
 						if (required->numLinks < MAX_TECHLINKS) {
@@ -1247,11 +1249,13 @@ void RS_ParseTechnologies(char *id, char **text)
 						token = COM_Parse(text);
 						Com_DPrintf("RS_ParseTechnologies: event - %s\n", token);
 						/* Get name/id & amount of required item. */
+						/* TODO: Implement final event esystem, so this can work 100% */
 					} else {
 						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", id, token);
 					}
 				} while (*text);
 			} else if (!Q_strncmp(token, "delay", MAX_VAR)) {
+				/* TODO: mode this to the default parser? See valid_tech_vars */
 				token = COM_Parse(text);
 				Com_DPrintf("RS_ParseTechnologies: delay - %s\n", token);
 			}
