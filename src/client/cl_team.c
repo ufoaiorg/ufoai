@@ -1083,9 +1083,11 @@ qboolean CL_SaveTeam(char *filename)
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
 	char *name;
-	int res;
+	aircraft_t *aircraft;
+	int i, res;
 
 	assert(baseCurrent);
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 
 	/* create the save dir - if needed */
 	FS_CreatePath(filename);
@@ -1102,8 +1104,19 @@ qboolean CL_SaveTeam(char *filename)
 	/* store team */
 	CL_SendTeamInfo(&sb, baseCurrent->idx, E_CountHired(baseCurrent, EMPL_SOLDIER));
 
-	/* store assignement */
+	/* store assignment */
 	MSG_WriteByte(&sb, baseCurrent->teamNum[0]);
+
+	/* store aircraft soldier content for multi-player */
+	MSG_WriteByte(&sb, aircraft->size);
+	for (i = 0; i < aircraft->size; i++) 
+		MSG_WriteByte(&sb, aircraft->teamIdxs[i]);
+
+	/* store equipment in baseCurrent so soldiers can be properly equipped */
+	for (i = 0; i < MAX_OBJDEFS; i++) {
+		MSG_WriteLong(&sb, baseCurrent->storage.num[i]);
+		MSG_WriteByte(&sb, baseCurrent->storage.num_loose[i]);
+	}
 
 	/* write data */
 	res = FS_WriteFile(buf, sb.cursize, filename);
@@ -1180,6 +1193,7 @@ void CL_LoadTeamMultiplayer(char *filename)
 	FILE *f;
 	character_t *chr;
 	employee_t *employee;
+	aircraft_t *aircraft;
 	int i, p, num;
 
 	/* open file */
@@ -1215,8 +1229,21 @@ void CL_LoadTeamMultiplayer(char *filename)
 		CL_LoadTeamMember(&sb, chr);
 	}
 
-	/* get assignement */
+	/* get assignment */
 	gd.bases[0].teamNum[0] = MSG_ReadByte(&sb);
+
+	/* get aircraft soldier content for multi-player */
+	aircraft = &gd.bases[0].aircraft[0];
+	Com_Printf("Multiplayer aircraft IDX = %i\n", aircraft->idx);
+	aircraft->size = MSG_ReadByte(&sb);
+	for (i = 0; i < aircraft->size; i++) 
+		aircraft->teamIdxs[i] = MSG_ReadByte(&sb);
+
+	/* read equipment */
+	for (i = 0; i < MAX_OBJDEFS; i++) {
+		gd.bases[0].storage.num[i] = MSG_ReadLong(&sb);
+		gd.bases[0].storage.num_loose[i] = MSG_ReadByte(&sb);
+	}
 
 	for (i = 0, p = 0; i < num; i++)
 		if ( CL_SoldierInAircraft(i, 0) )

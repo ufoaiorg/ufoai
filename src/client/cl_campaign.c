@@ -882,8 +882,10 @@ void CL_BaseRansacked(base_t *base)
 	E_DeleteAllEmployees(base);
 
 	/* Destroy all items in storage */
-	for ( item = 0; item < csi.numODs; item++ )
+	for ( item = 0; item < csi.numODs; item++ ) {
 		base->storage.num[item] = 0;
+		base->storage.num_loose[item] = 0;
+	}
 
 	/* Remove all aircrafts from the base. */
 	for ( ac = base->numAircraftInBase-1; ac >= 0; ac-- )
