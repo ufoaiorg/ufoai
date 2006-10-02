@@ -1773,18 +1773,18 @@ tech rs_craft_weapon_flac
 //{
 //	name "Testing dependency-overhaul"
 //
-//	// needscollected	true		// DEPRECATED - replaced by "depends"
-//	// requires	nothing			// DEPRECATED - replaced by "depends"
+//	// needscollected	true		// DEPRECATED - replaced by "require"
+//	// requires	nothing			// DEPRECATED - replaced by "require"
 //
-//	provides	assault			// CHANGES: all functions that check for this info will need to be modified so they get either this or the correct 'depends' value(s)
+//	provides	assault			// CHANGES: all functions that check for this info will need to be modified so they get either this or the correct 'require' value(s)
 //
-//	depends
+//	require					// List of all dependencies (except the 'delay' one.
 //	{
-//		// tech	rs_needed_for_rs_tech
-//		item	alien_dead	10
-//		// item leet_alien_weapon 5
-//		event	text_event		
+//		// tech	rs_needed_for_rs_tech	// This tech need to be researched.
+//		item	alien_dead	10	// 10 dead aliens needed in store/quarantine for research
+//		// item leet_alien_weapon 5	// 5 pieces of this weapon need to be in storage for research (future: remove them from the store?)
+//		event	test_event		// See events.ufo .... unimplemented right now .. but for future use.
 //	}
 //	
-//	delay	0	// Number in days the system should wait until the tech is available (starting from the time all other dependencies have been fulfilled)
+//	delay	0				// Number in days the system should wait until the tech is available (starting from the time all other dependencies have been fulfilled)
 //}

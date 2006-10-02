@@ -60,18 +60,38 @@ typedef struct stringlist_s {
 	int idx[MAX_TECHLINKS];		/* holds the indices of the tech for faster operation after finding it once */
 } stringlist_t;
 
+#if 0
+/* TODO: dependencies overhaul */
+typedef struct requirement_s {
+	int numLinks;			/* The number of requirements for this tech. */
+	int type;			/* What type the requ. is: item (in store/quarantine), event, etc... */
+	char id[MAX_TECHLINKS][MAX_VAR];	/* dependency id (text-id) */
+	int idx[MAX_TECHLINKS];		/* Dependency index (index in relation to array depends on the type) */
+	int amount[MAX_TECHLINKS];	/* How many items are needed for research ... if any. */
+	int delay;			/* Number in days the system should wait until the tech is available. */
+					/* Starting from the time all other dependencies have been fulfilled. */
+} requirement_t;
+#endif
+	
 typedef struct technology_s {
 	char id[MAX_VAR];			/* Short (unique) id/name. */
-	int idx;					/* Self-link in the global list */
+	int idx;				/* Self-link in the global list */
 	char name[MAX_VAR];			/* Full name of this technology. */
 	char description[MAX_VAR];	/* Description of researched item. Short text-id to get the full text via gettext. */
-	char description_pre[MAX_VAR];	/* Dewscription of item before it's researched. Short text-id to get the full text via gettext. */
+	char description_pre[MAX_VAR];	/* Description of item before it's researched. Short text-id to get the full text via gettext. */
 	researchType_t type;
 
 	stringlist_t requires;
+#if 0
+	/* TODO: dependencies overhaul */
+	requirement_t require;	/* See struct above. */
+#endif
 	char provides[MAX_VAR];		/* The item that this technology enables. */
-	float overalltime, time;	/* The time that is needed to research this tech. (in days) */
-	researchStatus_t statusResearch;
+	float overalltime, time;	/* The time that is needed to research this tech. (in days). */
+					/* "overalltime" stays always the same, */
+					/* "time" will be modified when it is under research.*/
+
+	researchStatus_t statusResearch;	/* Current status of the research. */
 
 	int base_idx;				/* The base this tech is researched in. */
 	int scientists;					/* How many scientists are researching this tech. */
