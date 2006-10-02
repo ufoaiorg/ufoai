@@ -1435,7 +1435,7 @@ qboolean CL_GameSave(char *filename, char *comment)
 
 	if (!curCampaign) {
 		Com_Printf("No campaign active.\n");
-		return;
+		return qfalse;
 	}
 
 	Com_sprintf(savegame, MAX_OSPATH, "%s/save/%s.sav", FS_Gamedir(), filename);
