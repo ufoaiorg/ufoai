@@ -1110,8 +1110,9 @@ void RS_ParseTechnologies(char *id, char **text)
 	char *token = NULL;
 	char *misp = NULL;
 	char temp_text[MAX_VAR];
+#if 1
 	stringlist_t *required = NULL;
-#if 0
+#else
 	requirements_t *required = NULL;
 #endif
 	int i;
@@ -1130,9 +1131,9 @@ void RS_ParseTechnologies(char *id, char **text)
 	/* New technology (next free entry in global tech-list) */
 	tech = &gd.technologies[gd.numTechnologies];
 	gd.numTechnologies++;
-
+#if 1
 	required = &tech->requires;
-#if 0
+#else
 	required = &tech->require;
 #endif
 	memset(tech, 0, sizeof(technology_t));
@@ -1221,22 +1222,54 @@ void RS_ParseTechnologies(char *id, char **text)
 /* TODO: parse 'require' list */
 				/* Initialize requirement list. */
 				required->numLinks = 0;
-				/* TODO: loop through 'require' entries.*/
+
+				token = COM_EParse(text, errhead, id);
+				if (!*text)
+					break;
+				if (*token != '{')
+					break;
+
+				do {	/* Loop through all 'require' entries.*/
+					token = COM_EParse(text, errhead, id);
+					if (!*text)
+						return;
+					Q_strncpyz(temp_text, token, MAX_VAR);
+					misp = temp_text;
+
 					if (!Q_strcmp(token, "tech")) {
-						/* Get name/id of required technology. */
-					} else
-					if (!Q_strcmp(token, "item")) {
-						/* Get name/id & amount of required item. */
+						if (required->numLinks < MAX_TECHLINKS) {
+							/* Set requirement-type. */
+							required->type[required->numLinks] = RS_LINK_TECH;
+							/* Set requirement-name (id). */
+							token = COM_Parse(&misp);
+							Q_strncpyz(required->id[required->numLinks], token, MAX_VAR);
+							required->numLinks += 1;
+						} else {
+							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
+						}
+					} else if (!Q_strcmp(token, "item")) {
+						if (required->numLinks < MAX_TECHLINKS) {
+							/* Set requirement-type. */
+							required->type[required->numLinks] = RS_LINK_ITEM;
+							/* Set requirement-name (id). */
+							token = COM_Parse(&misp);
+							Q_strncpyz(required->id[required->numLinks], token, MAX_VAR);
+							/* Set requirement-amount of item. */
+							token = COM_Parse(&misp);
+							required->amount[required->numLinks] = atoi(token);
+							required->numLinks += 1;
+						} else {
+							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
+						}
 #if 0
 /*TODO: activate when event system is implemented. */
-					} else
-					if (!Q_strcmp(token, "event")) {
+					} else if (!Q_strcmp(token, "event")) {
 						/* Get name/id & amount of required item. */
 #endif					
 					} else {
 						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", id, token);
 					}
-				/* TODO: end loop */
+				} while (*text);
 #endif
 			} else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
 				/* ufopedia chapter */

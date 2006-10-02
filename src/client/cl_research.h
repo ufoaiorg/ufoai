@@ -60,11 +60,19 @@ typedef struct stringlist_s {
 	int idx[MAX_TECHLINKS];		/* holds the indices of the tech for faster operation after finding it once */
 } stringlist_t;
 
-#if 0
+#if 1
 /* TODO: dependencies overhaul */
+
+typedef enum requirementType_s {
+	RS_LINK_TECH,
+	RS_LINK_ITEM,
+	RS_LINK_EVENT,
+	MAX_RS_LINKTYPES
+} requirementType_t;
+
 typedef struct requirements_s {
 	int numLinks;			/* The number of requirements for this tech. */
-	int type;			/* What type the requ. is: item (in store/quarantine), event, etc... */
+	requirementType_t type[MAX_TECHLINKS];	/* What type the requ. is: item (in store/quarantine), event, etc... */
 	char id[MAX_TECHLINKS][MAX_VAR];	/* dependency id (text-id) */
 	int idx[MAX_TECHLINKS];		/* Dependency index (index in relation to array depends on the type) */
 	int amount[MAX_TECHLINKS];	/* How many items are needed for research ... if any. */
@@ -82,7 +90,7 @@ typedef struct technology_s {
 	researchType_t type;
 
 	stringlist_t requires;
-#if 0
+#if 1
 	/* TODO: dependencies overhaul */
 	requirements_t require;	/* See struct above. */
 #endif
