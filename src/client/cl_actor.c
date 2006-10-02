@@ -1932,6 +1932,10 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 	vec3_t from, at;
 	float vz, dt;
 	vec3_t v0, ds, next;
+	vec3_t mins, maxs;
+	trace_t tr;
+	int oldLevel;
+	qboolean obstructed = qfalse;
 	int i;
 
 	if (!selActor || (fromPos[0] == toPos[0] && fromPos[1] == toPos[1]))
@@ -1959,6 +1963,10 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 	VectorScale(ds, 1.0 / GRENADE_PARTITIONS, ds);
 	ds[2] = 0;
 
+	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
+	oldLevel = cl_worldlevel->value;
+	Cvar_SetValue("cl_worldlevel", map_maxlevel-1);
+
 	/* paint */
 	vz = v0[2];
 	for (i = 0; i < GRENADE_PARTITIONS; i++) {
@@ -1966,14 +1974,27 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 		next[2] += dt * (vz - 0.5 * GRAVITY * dt);
 		vz -= GRAVITY * dt;
 		VectorScale(v0, (i + 1.0) / GRENADE_PARTITIONS, at);
-		if (VectorLength(at) > selFD->range)
-			/* TODO: also check for obstacles in this condition */
+
+		/* trace for obstacles */
+		VectorSet(mins, 0, 0, 0);
+		VectorSet(maxs, 0, 0, 0);
+		tr = CL_Trace(from, next, mins, maxs, selActor, MASK_SHOT);
+
+		if (tr.fraction < 1.0) {
+			obstructed = qtrue;
+		}
+
+		/* draw particles */
+		if (obstructed || VectorLength(at) > selFD->range)
 			CL_ParticleSpawn("longRangeTracer", 0, from, next, NULL);
 		else
 			CL_ParticleSpawn("inRangeTracer", 0, from, next, NULL);
 		VectorCopy(next, from);
 	}
 	selToHit = 100 * CL_TargetingToHit(toPos);
+
+	/* switch level back to where it was again */
+	Cvar_SetValue("cl_worldlevel", oldLevel);
 }
 
 
