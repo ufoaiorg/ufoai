@@ -1196,9 +1196,10 @@ void RS_ParseTechnologies(char *id, char **text)
 			else
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
 		} else {
-			if (!Q_strncmp(token, "requires", MAX_VAR)) {
+			
 #if DEPENDENCIES_OVERHAUL
 /* TODO: parse 'require' list */
+			if (!Q_strncmp(token, "require", MAX_VAR)) {
 				/* Initialize requirement list. */
 				required->numLinks = 0;
 
@@ -1221,6 +1222,7 @@ void RS_ParseTechnologies(char *id, char **text)
 							required->type[required->numLinks] = RS_LINK_TECH;
 							/* Set requirement-name (id). */
 							token = COM_Parse(&misp);
+							/* TODO: Fix the broken 'token'. currently it's always "tech" isntead of the 'id' */
 							Q_strncpyz(required->id[required->numLinks], token, MAX_VAR);
 							Com_DPrintf("RS_ParseTechnologies: tech - %s\n", required->id[required->numLinks]);
 							required->numLinks += 1;
@@ -1251,8 +1253,10 @@ void RS_ParseTechnologies(char *id, char **text)
 						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", id, token);
 					}
 				} while (*text);
+			}
 #else
-/* TODO: replace with 'require' paser below */
+			if (!Q_strncmp(token, "requires", MAX_VAR)) {
+/* TODO: replace with 'require' parser below */
 				/* what other techs this one requires */
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
@@ -1272,8 +1276,9 @@ void RS_ParseTechnologies(char *id, char **text)
 
 				}
 				while (misp && required->numEntries < MAX_TECHLINKS);
+			}
 #endif
-			} else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
+			else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
 				/* ufopedia chapter */
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
