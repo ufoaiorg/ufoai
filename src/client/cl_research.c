@@ -1138,7 +1138,6 @@ void RS_ParseTechnologies(char *id, char **text)
 #endif
 	memset(tech, 0, sizeof(technology_t));
 
-
 	/*set standard values */
 	tech->idx = gd.numTechnologies - 1;
 	Com_sprintf(tech->id, MAX_VAR, id);
@@ -1208,20 +1207,20 @@ void RS_ParseTechnologies(char *id, char **text)
 					break;
 				if (*token != '{')
 					break;
+				if (*token == '}')
+					break;
 
 				do {	/* Loop through all 'require' entries.*/
 					token = COM_EParse(text, errhead, id);
 					if (!*text)
 						return;
-					Q_strncpyz(temp_text, token, MAX_VAR);
-					misp = temp_text;
 
 					if (!Q_strcmp(token, "tech")) {
 						if (required->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
 							required->type[required->numLinks] = RS_LINK_TECH;
 							/* Set requirement-name (id). */
-							token = COM_Parse(&misp);
+							token = COM_Parse(text);
 							/* TODO: Fix the broken 'token'. currently it's always "tech" isntead of the 'id' */
 							Q_strncpyz(required->id[required->numLinks], token, MAX_VAR);
 							Com_DPrintf("RS_ParseTechnologies: tech - %s\n", required->id[required->numLinks]);
@@ -1234,25 +1233,27 @@ void RS_ParseTechnologies(char *id, char **text)
 							/* Set requirement-type. */
 							required->type[required->numLinks] = RS_LINK_ITEM;
 							/* Set requirement-name (id). */
-							token = COM_Parse(&misp);
+							token = COM_Parse(text);
 							Q_strncpyz(required->id[required->numLinks], token, MAX_VAR);
 							/* Set requirement-amount of item. */
-							token = COM_Parse(&misp);
+							token = COM_Parse(text);
 							required->amount[required->numLinks] = atoi(token);
 							Com_DPrintf("RS_ParseTechnologies: item - %s - %i\n", required->id[required->numLinks], required->amount[required->numLinks]);
 							required->numLinks += 1;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
 						}
-#if 0
-/*TODO: activate when event system is implemented. */
 					} else if (!Q_strcmp(token, "event")) {
+						token = COM_Parse(text);
+						Com_DPrintf("RS_ParseTechnologies: event - %s\n", token);
 						/* Get name/id & amount of required item. */
-#endif					
 					} else {
 						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", id, token);
 					}
 				} while (*text);
+			} else if (!Q_strncmp(token, "delay", MAX_VAR)) {
+				token = COM_Parse(text);
+				Com_DPrintf("RS_ParseTechnologies: delay - %s\n", token);
 			}
 #else
 			if (!Q_strncmp(token, "requires", MAX_VAR)) {
