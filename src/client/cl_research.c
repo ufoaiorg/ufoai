@@ -1242,7 +1242,6 @@ void RS_ParseTechnologies(char *id, char **text)
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
 						}
-					fdsjiufsdhzfuisd
 #if 0
 /*TODO: activate when event system is implemented. */
 					} else if (!Q_strcmp(token, "event")) {
