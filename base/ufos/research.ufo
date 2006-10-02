@@ -1780,6 +1780,7 @@ tech rs_craft_weapon_flac
 //
 //	require					// List of all dependencies (except the 'delay' one.
 //	{
+//		//[type] [name] [amount]
 //		// tech	rs_needed_for_rs_tech	// This tech need to be researched.
 //		item	alien_dead	10	// 10 dead aliens needed in store/quarantine for research
 //		// item leet_alien_weapon 5	// 5 pieces of this weapon need to be in storage for research (future: remove them from the store?)

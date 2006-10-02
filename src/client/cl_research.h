@@ -62,7 +62,7 @@ typedef struct stringlist_s {
 
 #if 0
 /* TODO: dependencies overhaul */
-typedef struct requirement_s {
+typedef struct requirements_s {
 	int numLinks;			/* The number of requirements for this tech. */
 	int type;			/* What type the requ. is: item (in store/quarantine), event, etc... */
 	char id[MAX_TECHLINKS][MAX_VAR];	/* dependency id (text-id) */
@@ -70,7 +70,7 @@ typedef struct requirement_s {
 	int amount[MAX_TECHLINKS];	/* How many items are needed for research ... if any. */
 	int delay;			/* Number in days the system should wait until the tech is available. */
 					/* Starting from the time all other dependencies have been fulfilled. */
-} requirement_t;
+} requirements_t;
 #endif
 	
 typedef struct technology_s {
@@ -84,7 +84,7 @@ typedef struct technology_s {
 	stringlist_t requires;
 #if 0
 	/* TODO: dependencies overhaul */
-	requirement_t require;	/* See struct above. */
+	requirements_t require;	/* See struct above. */
 #endif
 	char provides[MAX_VAR];		/* The item that this technology enables. */
 	float overalltime, time;	/* The time that is needed to research this tech. (in days). */
@@ -102,7 +102,10 @@ typedef struct technology_s {
 	char mdl_bottom[MAX_QPATH];
 
 	int statusCollected;		/* Did we loot this item (and how mach of it -> aliens/corpses) ? */
+#if 1
+/* TODO: replace with 'require' entries. */
 	byte needsCollected;		/* Is a collected item neccessary to research this item? */
+#endif
 	byte statusResearchable;	/* Is this item researchable? */
 
 	int produceTime;			/* how many days for self production */

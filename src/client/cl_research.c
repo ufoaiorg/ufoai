@@ -1079,7 +1079,13 @@ static value_t valid_tech_vars[] = {
 	/*what does this research provide */
 	{"provides", V_STRING, offsetof(technology_t, provides)},
 	/* to be able to research this tech zou need all "required" and at least one collected "provides" item. */
+#if 1
+	/* TODO: replace with 'require' entries as defined in cl_research.h */
 	{"needscollected", V_BOOL, offsetof(technology_t, needsCollected)},
+#else
+	/* ("require")	Handled in parser below. */
+	("delay", V_INT, offsetof(technology_t, require->delay)},
+#endif
 	/*how long will this research last */
 	{"producetime", V_INT, offsetof(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time)},
@@ -1105,6 +1111,9 @@ void RS_ParseTechnologies(char *id, char **text)
 	char *misp = NULL;
 	char temp_text[MAX_VAR];
 	stringlist_t *required = NULL;
+#if 0
+	requirements_t *required = NULL;
+#endif
 	int i;
 
 	/* get body */
@@ -1123,7 +1132,11 @@ void RS_ParseTechnologies(char *id, char **text)
 	gd.numTechnologies++;
 
 	required = &tech->requires;
+#if 0
+	required = &tech->require;
+#endif
 	memset(tech, 0, sizeof(technology_t));
+
 
 	/*set standard values */
 	tech->idx = gd.numTechnologies - 1;
@@ -1183,6 +1196,8 @@ void RS_ParseTechnologies(char *id, char **text)
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
 		} else {
 			if (!Q_strncmp(token, "requires", MAX_VAR)) {
+#if 1
+/* TODO: replace with 'require' paser below */
 				/* what other techs this one requires */
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
@@ -1202,12 +1217,8 @@ void RS_ParseTechnologies(char *id, char **text)
 
 				}
 				while (misp && required->numEntries < MAX_TECHLINKS);
-#if 0
-			} else if (!Q_strncmp(token, "researched", MAX_VAR)) {
-				/* tech alreadyy researched? */
-				token = COM_EParse(text, errhead, id);
-				if (!Q_strncmp(token, "true", MAX_VAR) || *token == '1')
-					tech->statusResearch = RS_FINISH;
+#else
+/* TODO: parse 'require' list */
 #endif
 			} else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
 				/* ufopedia chapter */
