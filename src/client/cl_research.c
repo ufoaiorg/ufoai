@@ -1110,10 +1110,10 @@ void RS_ParseTechnologies(char *id, char **text)
 	char *token = NULL;
 	char *misp = NULL;
 	char temp_text[MAX_VAR];
-#if 1
-	stringlist_t *required = NULL;
-#else
+#if DEPENDENCIES_OVERHAUL
 	requirements_t *required = NULL;
+#else
+	stringlist_t *required = NULL;
 #endif
 	int i;
 
@@ -1131,10 +1131,10 @@ void RS_ParseTechnologies(char *id, char **text)
 	/* New technology (next free entry in global tech-list) */
 	tech = &gd.technologies[gd.numTechnologies];
 	gd.numTechnologies++;
-#if 1
-	required = &tech->requires;
-#else
+#if DEPENDENCIES_OVERHAUL
 	required = &tech->require;
+#else
+	required = &tech->requires;
 #endif
 	memset(tech, 0, sizeof(technology_t));
 
@@ -1197,28 +1197,7 @@ void RS_ParseTechnologies(char *id, char **text)
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
 		} else {
 			if (!Q_strncmp(token, "requires", MAX_VAR)) {
-#if 1
-/* TODO: replace with 'require' paser below */
-				/* what other techs this one requires */
-				token = COM_EParse(text, errhead, id);
-				if (!*text)
-					return;
-				Q_strncpyz(temp_text, token, MAX_VAR);
-				misp = temp_text;
-
-				required->numEntries = 0;
-				do {
-					token = COM_Parse(&misp);
-					if (!misp)
-						break;
-					if (required->numEntries < MAX_TECHLINKS)
-						Q_strncpyz(required->string[required->numEntries++], token, MAX_VAR);
-					else
-						Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
-
-				}
-				while (misp && required->numEntries < MAX_TECHLINKS);
-#else
+#if DEPENDENCIES_OVERHAUL
 /* TODO: parse 'require' list */
 				/* Initialize requirement list. */
 				required->numLinks = 0;
@@ -1243,6 +1222,7 @@ void RS_ParseTechnologies(char *id, char **text)
 							/* Set requirement-name (id). */
 							token = COM_Parse(&misp);
 							Q_strncpyz(required->id[required->numLinks], token, MAX_VAR);
+							Com_DPrintf("RS_ParseTechnologies: tech - %s\n", required->id[required->numLinks]);
 							required->numLinks += 1;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
@@ -1257,10 +1237,12 @@ void RS_ParseTechnologies(char *id, char **text)
 							/* Set requirement-amount of item. */
 							token = COM_Parse(&misp);
 							required->amount[required->numLinks] = atoi(token);
+							Com_DPrintf("RS_ParseTechnologies: item - %s - %i\n", required->id[required->numLinks], required->amount[required->numLinks]);
 							required->numLinks += 1;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
 						}
+					fdsjiufsdhzfuisd
 #if 0
 /*TODO: activate when event system is implemented. */
 					} else if (!Q_strcmp(token, "event")) {
@@ -1270,6 +1252,27 @@ void RS_ParseTechnologies(char *id, char **text)
 						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", id, token);
 					}
 				} while (*text);
+#else
+/* TODO: replace with 'require' paser below */
+				/* what other techs this one requires */
+				token = COM_EParse(text, errhead, id);
+				if (!*text)
+					return;
+				Q_strncpyz(temp_text, token, MAX_VAR);
+				misp = temp_text;
+
+				required->numEntries = 0;
+				do {
+					token = COM_Parse(&misp);
+					if (!misp)
+						break;
+					if (required->numEntries < MAX_TECHLINKS)
+						Q_strncpyz(required->string[required->numEntries++], token, MAX_VAR);
+					else
+						Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
+
+				}
+				while (misp && required->numEntries < MAX_TECHLINKS);
 #endif
 			} else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
 				/* ufopedia chapter */

@@ -54,15 +54,11 @@ typedef enum researchType_s {
 	RS_UGV
 } researchType_t;
 
-typedef struct stringlist_s {
-	int numEntries;				/* The number of used strings/techs. */
-	char string[MAX_TECHLINKS][MAX_VAR];	/* A list of strings. */
-	int idx[MAX_TECHLINKS];		/* holds the indices of the tech for faster operation after finding it once */
-} stringlist_t;
+#define DEPENDENCIES_OVERHAUL 0
+/* TODO: dependencies overhaul. Set to 1 to change to new dependency-calculation. */
 
-#if 1
-/* TODO: dependencies overhaul */
 
+#if DEPENDENCIES_OVERHAUL
 typedef enum requirementType_s {
 	RS_LINK_TECH,
 	RS_LINK_ITEM,
@@ -80,7 +76,13 @@ typedef struct requirements_s {
 					/* Starting from the time all other dependencies have been fulfilled. */
 } requirements_t;
 #endif
-	
+
+typedef struct stringlist_s {
+	int numEntries;				/* The number of used strings/techs. */
+	char string[MAX_TECHLINKS][MAX_VAR];	/* A list of strings. */
+	int idx[MAX_TECHLINKS];		/* holds the indices of the tech for faster operation after finding it once */
+} stringlist_t;
+
 typedef struct technology_s {
 	char id[MAX_VAR];			/* Short (unique) id/name. */
 	int idx;				/* Self-link in the global list */
@@ -90,9 +92,16 @@ typedef struct technology_s {
 	researchType_t type;
 
 	stringlist_t requires;
-#if 1
+#if DEPENDENCIES_OVERHAUL
 	/* TODO: dependencies overhaul */
 	requirements_t require;	/* See struct above. */
+#else
+#endif
+
+#if 1
+/* TODO: replace with 'require' entries. */
+	byte needsCollected;		/* Is a collected item neccessary to research this item? */
+	int statusCollected;		/* Did we loot this item (and how mach of it -> aliens/corpses) ? */
 #endif
 	char provides[MAX_VAR];		/* The item that this technology enables. */
 	float overalltime, time;	/* The time that is needed to research this tech. (in days). */
@@ -109,11 +118,6 @@ typedef struct technology_s {
 	char mdl_top[MAX_QPATH];
 	char mdl_bottom[MAX_QPATH];
 
-	int statusCollected;		/* Did we loot this item (and how mach of it -> aliens/corpses) ? */
-#if 1
-/* TODO: replace with 'require' entries. */
-	byte needsCollected;		/* Is a collected item neccessary to research this item? */
-#endif
 	byte statusResearchable;	/* Is this item researchable? */
 
 	int produceTime;			/* how many days for self production */
