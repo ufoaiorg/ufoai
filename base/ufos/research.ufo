@@ -73,6 +73,24 @@ up_chapters main
 // Basic Technologies
 //========================
 
+// =====================
+// DEBUG TECH - uncomment to test dependency-overhaul code
+// =====================
+//tech rs_nano
+//{
+//	type	tech
+//	name	"_Nano Technology"
+//	up_chapter	tech
+//	description	"_nano_txt"
+//	// requires	"rs_laser rs_plasma"
+//	require
+//	{
+//		tech rs_laser
+//		tech rs_plasma
+//	}
+//	time	2500
+//}
+
 tech rs_laser
 {
 	type	tech
