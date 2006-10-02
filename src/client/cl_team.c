@@ -1078,7 +1078,7 @@ static void CL_MessageMenuCmd(void)
 /**
  * @brief Saves a team
  */
-void CL_SaveTeam(char *filename)
+qboolean CL_SaveTeam(char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
@@ -1108,10 +1108,13 @@ void CL_SaveTeam(char *filename)
 	/* write data */
 	res = FS_WriteFile(buf, sb.cursize, filename);
 
-	if (res == sb.cursize)
-		Com_Printf("Team '%s' saved.\n", filename);
-	else if (!res)
+	if (res == sb.cursize && res > 0) {
+		Com_Printf("Team '%s' saved. Size written: %i\n", filename, res);
+		return qtrue;
+	} else {
 		Com_Printf("Team '%s' not saved.\n", filename);
+		return qfalse;
+	}
 }
 
 /**
@@ -1123,7 +1126,8 @@ static void CL_SaveTeamSlotCmd(void)
 
 	/* save */
 	Com_sprintf(filename, MAX_QPATH, "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
-	CL_SaveTeam(filename);
+	if (!CL_SaveTeam(filename))
+		MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 }
 
 /**

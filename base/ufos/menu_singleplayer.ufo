@@ -611,14 +611,14 @@ menu save
 	string txt_slot6 { string "*cvar mn_slot6" pos "650 415" color "0 .78 0 1" }
 	string txt_slot7 { string "*cvar mn_slot7" pos "650 450" color "0 .78 0 1" }
 
-	confunc mn_slot0_changed { *txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false cmd "game_save slot0 *mn_slot0" cmd ";mn_pop;" }
-	confunc mn_slot1_changed { *txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false cmd "game_save slot1 *mn_slot1" cmd ";mn_pop;" }
-	confunc mn_slot2_changed { *txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false cmd "game_save slot2 *mn_slot2" cmd ";mn_pop;" }
-	confunc mn_slot3_changed { *txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false cmd "game_save slot3 *mn_slot3" cmd ";mn_pop;" }
-	confunc mn_slot4_changed { *txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false cmd "game_save slot4 *mn_slot4" cmd ";mn_pop;" }
-	confunc mn_slot5_changed { *txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false cmd "game_save slot5 *mn_slot5" cmd ";mn_pop;" }
-	confunc mn_slot6_changed { *txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false cmd "game_save slot6 *mn_slot6" cmd ";mn_pop;" }
-	confunc mn_slot7_changed { *txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false cmd "game_save slot7 *mn_slot7" cmd ";mn_pop;" }
+	confunc mn_slot0_changed { *txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false cmd "game_save slot0 *mn_slot0" }
+	confunc mn_slot1_changed { *txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false cmd "game_save slot1 *mn_slot1" }
+	confunc mn_slot2_changed { *txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false cmd "game_save slot2 *mn_slot2" }
+	confunc mn_slot3_changed { *txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false cmd "game_save slot3 *mn_slot3" }
+	confunc mn_slot4_changed { *txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false cmd "game_save slot4 *mn_slot4" }
+	confunc mn_slot5_changed { *txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false cmd "game_save slot5 *mn_slot5" }
+	confunc mn_slot6_changed { *txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false cmd "game_save slot6 *mn_slot6" }
+	confunc mn_slot7_changed { *txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false cmd "game_save slot7 *mn_slot7" }
 
 	// ==================
 	// buttons
