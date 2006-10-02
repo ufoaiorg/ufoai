@@ -1219,6 +1219,24 @@ void RS_ParseTechnologies(char *id, char **text)
 				while (misp && required->numEntries < MAX_TECHLINKS);
 #else
 /* TODO: parse 'require' list */
+				/* Initialize requirement list. */
+				required->numLinks = 0;
+				/* TODO: loop through 'require' entries.*/
+					if (!Q_strcmp(token, "tech")) {
+						/* Get name/id of required technology. */
+					} else
+					if (!Q_strcmp(token, "item")) {
+						/* Get name/id & amount of required item. */
+#if 0
+/*TODO: activate when event system is implemented. */
+					} else
+					if (!Q_strcmp(token, "event")) {
+						/* Get name/id & amount of required item. */
+#endif					
+					} else {
+						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", id, token);
+					}
+				/* TODO: end loop */
 #endif
 			} else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
 				/* ufopedia chapter */
