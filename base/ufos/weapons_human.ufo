@@ -733,6 +733,7 @@ item grenl_incendiary_ammo
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		launched true
 		spread	"0 3"
 		range	15
 		shots	1
@@ -758,6 +759,7 @@ item grenl_incendiary_ammo
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		launched true
 		delay	1
 		bounce	10
 		bncfac	0.5
@@ -798,6 +800,7 @@ item grenl_fle_ammo
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		launched true		
 		spread	"0 3"
 		range	15
 		shots	1
@@ -823,6 +826,7 @@ item grenl_fle_ammo
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		launched true		
 		delay	1
 		bounce	10
 		bncfac	0.5
@@ -863,6 +867,7 @@ item grenl_ammo
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		launched true		
 		spread	"0 3"
 		range	15
 		shots	1
@@ -888,6 +893,7 @@ item grenl_ammo
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		launched true		
 		delay	1
 		bounce	10
 		bncfac	0.5
@@ -928,6 +934,7 @@ item grenl_plasma_ammo
 		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		launched true		
 		spread	"0 3"
 		range	15
 		shots	1
@@ -953,6 +960,7 @@ item grenl_plasma_ammo
 		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		launched true		
 		delay	1
 		bounce	10
 		bncfac	0.5
