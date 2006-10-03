@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void RS_GetFirstRequired(int tech_idx, stringlist_t * required);
 #endif /* overhaul */
 
-qboolean RS_TechIsResearchable(technology_t * t);
+qboolean RS_TechIsResearchable(technology_t *t);
 
 /* A (local) list of displayed technology-entries (the research list in the base) */
 static technology_t *researchList[MAX_RESEARCHLIST];
@@ -99,6 +99,39 @@ void RS_MarkOneResearchable(int tech_idx)
 
 #if DEPENDENCIES_OVERHAUL
 /**
+ * @brief Checks if all requirements of a tech have been met.
+ * @param[in] require pointer to a list of requirements.
+ * @return qtrue if all requirements are satisfied otherwise qfalse.
+ */
+qboolean RS_RequirementsMet(requirements_t *required)
+{
+	int i;
+	for (i = 0; i < required->numLinks; i++) {
+		switch (required->type[i]) {
+		case RS_LINK_TECH:
+			Com_DPrintf("RS_RequirementsMet: tech: %s / %i\n", required->id[i], required->idx[i]);
+			if ((!RS_TechIsResearched(required->idx[i]))
+				|| (!Q_strncmp(required->id[i], "nothing", MAX_VAR))) {
+				return qfalse;
+			}
+			break;
+		case RS_LINK_ITEM:
+			Com_DPrintf("RS_RequirementsMet: item: %s / %i\n", required->id[i], required->idx[i]);
+			if (required->collected[i] < required->collected[i]) {
+				return qfalse;
+			}
+			break;
+		case RS_LINK_EVENT:
+			break;
+		default:
+			break;
+		}
+	}
+
+	return qtrue;
+}
+
+/**
  * @brief Marks all the techs that can be researched.
  * Automatically researches 'free' techs such as ammo for a weapon.
  * Should be called when a new item is researched (RS_MarkResearched) and after
@@ -106,12 +139,10 @@ void RS_MarkOneResearchable(int tech_idx)
  */
 void RS_MarkResearchable(void)
 {
-	int i, j;
+	int i;
 	technology_t *tech = NULL;
-	requirements_t *required = NULL;
-	byte required_are_researched;
 
-	/* set all entries to initial value */
+	/* Set all entries to initial value. */
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 		tech->statusResearchable = qfalse;
@@ -122,7 +153,7 @@ void RS_MarkResearchable(void)
 		if (!tech->statusResearchable) {	/* Redundant, since we set them all to false, but you never know. */
 			if (tech->statusResearch != RS_FINISH) {
 				Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", tech->id);
-				/* TODO doesn't work yet? */
+				/* TODO: doesn't work yet? Needed?*/
 				/* If the tech has an collected item, mark the first-required techs as researchable */
 				/*
 				firstrequired.numLinks = 0;
@@ -136,36 +167,9 @@ void RS_MarkResearchable(void)
 				*/
 
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
-				required = &tech->require;
-				required_are_researched = qtrue;
-				Com_DPrintf("RS_MarkResearchable: %i required entries\n", required->numLinks);
-				for (j = 0; j < required->numLinks; j++) {	/* j = link-index */
-					switch (required->type[j]) {
-					case RS_LINK_TECH:
-						Com_DPrintf("RS_MarkResearchable: req-tech: %s / %i\n", required->id[j], required->idx[j]);
-						if ((!RS_TechIsResearched(required->idx[j]))
-							|| (!Q_strncmp(required->id[j], "nothing", MAX_VAR))) {
-							required_are_researched = qfalse;
-						}
-						break;
-					case RS_LINK_ITEM:
-						Com_DPrintf("RS_MarkResearchable: req-item: %s / %i\n", required->id[j], required->idx[j]);
-						if (required->collected[j] < required->collected[j]) {
-							required_are_researched = qfalse;
-						}
-						break;
-					case RS_LINK_EVENT:
-						break;
-					default:
-						break;
-					}
-
-					if (!required_are_researched)
-						break;
-				}
-
+				
 				/* All requirements are met. */
-				if (required_are_researched) {
+				if (RS_RequirementsMet(&tech->require)) {
 					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
 					tech->statusResearchable = qtrue;
 				}
@@ -1169,6 +1173,87 @@ void CL_CheckResearchStatus(void)
 }
 
 #ifdef DEBUG
+#if DEPENDENCIES_OVERHAUL
+/**
+ * @brief List all parsed technologies and their attributes in commandline/console.
+ * Command to call this: techlist
+ */
+static void RS_TechnologyList_f(void)
+{
+	int i, j;
+	technology_t *tech = NULL;
+	requirements_t *req = NULL;
+
+	for (i = 0; i < gd.numTechnologies; i++) {
+		tech = &gd.technologies[i];
+		req = &tech->require;
+		Com_Printf("Tech: %s\n", tech->id);
+		Com_Printf("... time      -> %.2f\n", tech->time);
+		Com_Printf("... name      -> %s\n", tech->name);
+		Com_Printf("... requires  ->");
+		for (j = 0; j < req->numLinks; j++)
+			Com_Printf(" %i %s %i", req->type[j], req->id[j], req->idx[j]);
+		Com_Printf("\n");
+		Com_Printf("... provides  -> %s", tech->provides);
+		Com_Printf("\n");
+
+		Com_Printf("... type      -> ");
+		switch (tech->type) {
+		case RS_TECH:
+			Com_Printf("tech");
+			break;
+		case RS_WEAPON:
+			Com_Printf("weapon");
+			break;
+		case RS_CRAFT:
+			Com_Printf("craft");
+			break;
+		case RS_CRAFTWEAPON:
+			Com_Printf("craftweapon");
+			break;
+		case RS_CRAFTSHIELD:
+			Com_Printf("craftshield");
+			break;
+		case RS_ARMOR:
+			Com_Printf("armor");
+			break;
+		case RS_BUILDING:
+			Com_Printf("building");
+			break;
+		case RS_UGV:
+			Com_Printf("ugv");
+			break;
+		default:
+			break;
+		}
+		Com_Printf("\n");
+
+		Com_Printf("... research  -> ");
+		switch (tech->type) {
+		case RS_NONE:
+			Com_Printf("unknown tech");
+			break;
+		case RS_RUNNING:
+			Com_Printf("running");
+			break;
+		case RS_PAUSED:
+			Com_Printf("paused");
+			break;
+		case RS_FINISH:
+			Com_Printf("done");
+			break;
+		default:
+			break;
+		}
+		Com_Printf("\n");
+
+		Com_Printf("... Res.able  -> %i\n", tech->statusResearchable);
+		Com_Printf("... Collected -> %i\n", tech->statusCollected);
+
+		Com_Printf("\n");
+	}
+}
+#else /* overhaul */
 /**
  * @brief List all parsed technologies and their attributes in commandline/console.
  * Command to call this: techlist
@@ -1249,16 +1334,16 @@ static void RS_TechnologyList_f(void)
 
 		Com_Printf("... req_first ->");
 		req_temp.numEntries = 0;
-#if DEPENDENCIES_OVERHAUL
-#else /* overhaul */
+
 		RS_GetFirstRequired(tech->idx, &req_temp);
 		for (j = 0; j < req_temp.numEntries; j++)
 			Com_Printf(" %s", req_temp.string[j]);
-#endif /* overhaul */
+
 		Com_Printf("\n");
 	}
 }
-#endif
+#endif /* overhaul */
+#endif /* DEBUG */
 
 /**
  * @brief
@@ -1285,7 +1370,7 @@ static void RS_DebugResearchAll(void)
 		Com_Printf("...mark %s as researched\n", gd.technologies[i].id);
 		gd.technologies[i].statusResearchable = qtrue;
 		gd.technologies[i].statusResearch = RS_FINISH;
-		gd.technologies[i].needsCollected = qfalse;
+		/* TODO: Set all "collected" entries in the requirements to the "amount" value. */
 	}
 }
 #endif
@@ -1742,6 +1827,24 @@ void RS_ParseTechnologies(char *id, char **text)
 }
 #endif /* overhaul */
 
+#if DEPENDENCIES_OVERHAUL
+/**
+ * @brief Returns the list of required (by id) items.
+ * @param[in] id Unique id of a technology_t.
+ * @param[out] required A list of requirements with the unique ids of techs/items/buildings/etc..
+ */
+void RS_GetRequired(char *id, requirements_t *required)
+{
+	technology_t *tech = NULL;
+
+	tech = RS_GetTechByID(id);
+	if (!tech)
+		return;
+
+	/* research item found */
+	required = &tech->require;	/* Is linking a good idea? */
+}
+#else /* overhaul */
 /**
  * @brief Returns the list of required (by id) items.
  * @param[in] id Unique id of a technology_t.
@@ -1759,7 +1862,7 @@ void RS_GetRequired(char *id, stringlist_t * required)
 	/* research item found */
 	required = &tech->requires;	/* is linking a good idea? */
 }
-
+#endif /* overhaul */
 
 /**
  * @brief Checks whether an item is already researched
@@ -1866,6 +1969,29 @@ qboolean RS_TechIsResearched(int tech_idx)
 	return qfalse;
 }
 
+#if DEPENDENCIES_OVERHAUL
+/**
+ * @brief Checks if the technology (tech-id) is researchable.
+ * @param[in] tech pointer to technology_t.
+ * @return qboolean
+ * @sa RS_TechIsResearched
+ */
+qboolean RS_TechIsResearchable(technology_t * tech)
+{
+	if (!tech)
+		return qfalse;
+
+	/* Research item found */
+	if (tech->statusResearch == RS_FINISH)
+		return qfalse;
+
+	if (tech->statusResearchable)
+		return qtrue;
+	
+	return RS_RequirementsMet(&tech->require);
+}
+
+#else /* overhaul */
 /**
  * @brief Checks if the technology (tech-id) is researchable.
  * @param[in] tech pointer to technology_t.
@@ -1897,6 +2023,7 @@ qboolean RS_TechIsResearchable(technology_t * tech)
 	return qtrue;
 
 }
+#endif /* overhaul */
 
 #if DEPENDENCIES_OVERHAUL
 #else /* overhaul */

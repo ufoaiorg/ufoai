@@ -54,7 +54,7 @@ typedef enum researchType_s {
 	RS_UGV
 } researchType_t;
 
-#define DEPENDENCIES_OVERHAUL 0
+#define DEPENDENCIES_OVERHAUL 1
 /* TODO: dependencies overhaul. Set to 1 to change to new dependency-calculation. */
 
 
