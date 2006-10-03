@@ -32,7 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+#if DEPENDENCIES_OVERHAUL
+#else /* overhaul */
 void RS_GetFirstRequired(int tech_idx, stringlist_t * required);
+#endif /* overhaul */
+
 qboolean RS_TechIsResearchable(technology_t * t);
 
 /* A (local) list of displayed technology-entries (the research list in the base) */
@@ -93,6 +97,94 @@ void RS_MarkOneResearchable(int tech_idx)
 	gd.technologies[tech_idx].statusResearchable = qtrue;
 }
 
+#if DEPENDENCIES_OVERHAUL
+/**
+ * @brief Marks all the techs that can be researched.
+ * Automatically researches 'free' techs such as ammo for a weapon.
+ * Should be called when a new item is researched (RS_MarkResearched) and after
+ * the tree-initialisation (RS_InitTree)
+ */
+void RS_MarkResearchable(void)
+{
+	int i, j;
+	technology_t *tech = NULL;
+	requirements_t *required = NULL;
+	byte required_are_researched;
+
+	/* set all entries to initial value */
+	for (i = 0; i < gd.numTechnologies; i++) {
+		tech = &gd.technologies[i];
+		tech->statusResearchable = qfalse;
+	}
+
+	for (i = 0; i < gd.numTechnologies; i++) {	/* i = tech-index */
+		tech = &gd.technologies[i];
+		if (!tech->statusResearchable) {	/* Redundant, since we set them all to false, but you never know. */
+			if (tech->statusResearch != RS_FINISH) {
+				Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", tech->id);
+				/* TODO doesn't work yet? */
+				/* If the tech has an collected item, mark the first-required techs as researchable */
+				/*
+				firstrequired.numLinks = 0;
+				RS_GetFirstRequired(tech->idx, &firstrequired);
+				if (tech->statusCollected) {
+					for (j = 0; j < firstrequired.numLinks; j++) {
+						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:firstrequired of collected.\n", firstrequired.string[j]);
+						RS_MarkOneResearchable(firstrequired.idx[j]);
+					}
+				}
+				*/
+
+				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
+				required = &tech->require;
+				required_are_researched = qtrue;
+				Com_DPrintf("RS_MarkResearchable: %i required entries\n", required->numLinks);
+				for (j = 0; j < required->numLinks; j++) {	/* j = link-index */
+					switch (required->type[j]) {
+					case RS_LINK_TECH:
+						Com_DPrintf("RS_MarkResearchable: req-tech: %s / %i\n", required->id[j], required->idx[j]);
+						if ((!RS_TechIsResearched(required->idx[j]))
+							|| (!Q_strncmp(required->id[j], "nothing", MAX_VAR))) {
+							required_are_researched = qfalse;
+						}
+						break;
+					case RS_LINK_ITEM:
+						Com_DPrintf("RS_MarkResearchable: req-item: %s / %i\n", required->id[j], required->idx[j]);
+						if (required->collected[j] < required->collected[j]) {
+							required_are_researched = qfalse;
+						}
+						break;
+					case RS_LINK_EVENT:
+						break;
+					default:
+						break;
+					}
+
+					if (!required_are_researched)
+						break;
+				}
+
+				/* All requirements are met. */
+				if (required_are_researched) {
+					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
+					tech->statusResearchable = qtrue;
+				}
+
+				/* If the tech is a 'free' one (such as ammo for a weapon),
+				   mark it as researched and loop back to see if it unlocks
+				   any other techs */
+				if (tech->statusResearchable && tech->time <= 0) {
+					tech->statusResearch = RS_FINISH;
+					Com_DPrintf("RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
+					/* restart the loop as this may have unlocked new possibilities */
+					i = 0;
+				}
+			}
+		}
+	}
+	Com_DPrintf("RS_MarkResearchable: Done.\n");
+}
+#else /* overhaul */
 /**
  * @brief Marks all the techs that can be researched.
  * Automatically researches 'free' techs such as ammo for a weapon.
@@ -177,6 +269,7 @@ void RS_MarkResearchable(void)
 	}
 	Com_DPrintf("RS_MarkResearchable: Done.\n");
 }
+#endif /* overhaul */
 
 /**
  * @brief Link the tech pointers to object definitions
@@ -195,6 +288,168 @@ void RS_AddObjectTechs(void)
 	}
 }
 
+#if DEPENDENCIES_OVERHAUL
+/**
+ * @brief Gets all needed names/file-paths/etc... for each technology entry.
+ * Should be executed after the parsing of _all_ the ufo files and e.g. the
+ * research tree/inventory/etc... are initialised.
+ * TODO: add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
+ */
+void RS_InitTree(void)
+{
+	int i, j, k;
+	technology_t *tech = NULL;
+	technology_t *tech_required = NULL;
+	requirements_t *required = NULL;
+	objDef_t *item = NULL;
+	objDef_t *item_ammo = NULL;
+	building_t *building = NULL;
+	aircraft_t *air_samp = NULL;
+	byte found;
+
+	for (i = 0; i < gd.numTechnologies; i++) {
+		tech = &gd.technologies[i];
+
+		/* Save the idx to the id-names of the different requirement-types for quicker access. The id-strings themself are not really needed afterwards :-/ */
+		required = &tech->require;
+		for (j = 0; j < required->numLinks; j++) {	/* j = link index */
+			switch (required->type[j]) {
+			case RS_LINK_TECH:
+				/* Get index of technology by its id-name. */
+				tech_required = RS_GetTechByID(required->id[j]);
+				required->idx[j] = -1;
+				if (tech_required) {
+					required->idx[j] = tech_required->idx;
+				}
+				break;
+			case RS_LINK_ITEM:
+				/* Get index of item by its id-name. */
+				required->idx[j] = -1;
+				for (k = 0; k < csi.numODs; k++) {	/* k = item index */
+					item = &csi.ods[k];
+					if (!Q_strncmp(required->id[j], item->kurz, MAX_VAR)) {
+						required->idx[j] = k;
+						break;
+					}
+				}
+				break;
+			case RS_LINK_EVENT:
+				/* TODO: get index of event */
+				break;
+			default:
+				break;
+			}
+			
+		}
+
+		/* Search in correct data/.ufo */
+		switch (tech->type) {
+		case RS_CRAFTWEAPON:
+		case RS_CRAFTSHIELD:
+			if (!*tech->name)
+				Com_DPrintf("RS_InitTree: \"%s\" A type craftshield or craftweapon item needs to have a 'name\txxx' defined.", tech->id);
+			break;
+		case RS_TECH:
+			if (!*tech->name)
+				Com_DPrintf("RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", tech->id);
+			break;
+		case RS_WEAPON:
+		case RS_ARMOR:
+			found = qfalse;
+			for (j = 0; j < csi.numODs; j++) {	/* j = item index */
+				item = &csi.ods[j];
+
+				/* This item has been 'provided' -> get the correct data. */
+				if (!Q_strncmp(tech->provides, item->kurz, MAX_VAR)) {
+					found = qtrue;
+					if (!*tech->name)
+						Com_sprintf(tech->name, MAX_VAR, item->name);
+					if (!*tech->mdl_top)
+						Com_sprintf(tech->mdl_top, MAX_VAR, item->model);
+					if (!*tech->image_top)
+						Com_sprintf(tech->image_top, MAX_VAR, item->image);
+					if (!*tech->mdl_bottom) {
+						if (tech->type == RS_WEAPON) {
+							/* Find ammo for weapon. */
+							for (k = 0; k < csi.numODs; k++) {
+								item_ammo = &csi.ods[k];
+								if (j == item_ammo->link) {
+									Com_sprintf(tech->mdl_bottom, MAX_VAR, item_ammo->model);
+									break;
+								}
+							}
+						}
+					}
+					/* Should return to CASE RS_xxx. */
+					break;
+				}
+			}
+			/*no id found in csi.ods */
+			if (!found) {
+				Com_sprintf(tech->name, MAX_VAR, tech->id);
+				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
+			}
+			break;
+		case RS_BUILDING:
+			found = qfalse;
+			for (j = 0; j < gd.numBuildingTypes; j++) {
+				building = &gd.buildingTypes[j];
+				/* This building has been 'provided'  -> get the correct data. */
+				if (!Q_strncmp(tech->provides, building->id, MAX_VAR)) {
+					found = qtrue;
+					if (!*tech->name)
+						Com_sprintf(tech->name, MAX_VAR, building->name);
+					if (!*tech->image_top)
+						Com_sprintf(tech->image_top, MAX_VAR, building->image);
+
+					/* Should return to CASE RS_xxx. */
+					break;
+				}
+			}
+			if (!found) {
+				Com_sprintf(tech->name, MAX_VAR, tech->id);
+				Com_DPrintf("RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
+			}
+			break;
+		case RS_CRAFT:
+			found = qfalse;
+			for (j = 0; j < numAircraft_samples; j++) {
+				air_samp = &aircraft_samples[j];
+				/* This aircraft has been 'provided'  -> get the correct data. */
+				if (!Q_strncmp(tech->provides, air_samp->id, MAX_VAR)) {
+					found = qtrue;
+					if (!*tech->name)
+						Com_sprintf(tech->name, MAX_VAR, air_samp->name);
+					if (!*tech->mdl_top) {	/* DEBUG testing */
+						Com_sprintf(tech->mdl_top, MAX_VAR, air_samp->model);
+						Com_DPrintf("RS_InitTree: aircraft model \"%s\" \n", air_samp->model);
+					}
+					/* Should return to CASE RS_xxx. */
+					break;
+				}
+			}
+			if (!found)
+				Com_DPrintf("RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n", tech->id, tech->provides);
+			break;
+		case RS_ALIEN:
+			/* does nothing right now */
+			break;
+		case RS_UGV:
+			/* TODO: Implement me */
+			break;
+		} /* switch */
+	}
+	for (i = 0; i < gd.numBases; i++)
+		if (gd.bases[i].founded)
+			RS_MarkCollected(&gd.bases[i].storage);
+
+	RS_MarkResearchable();
+
+	memset(&curRequiredList, 0, sizeof(stringlist_t));
+
+	Com_DPrintf("RS_InitTree: Technology tree initialised. %i entries found.\n", i);
+}
+#else /*overhaul */
 /**
  * @brief Gets all needed names/file-paths/etc... for each technology entry.
  * Should be executed after the parsing of _all_ the ufo files and e.g. the
@@ -334,6 +589,7 @@ void RS_InitTree(void)
 
 	Com_DPrintf("RS_InitTree: Technology tree initialised. %i entries found.\n", i);
 }
+#endif /* overhaul */
 
 /**
  * @brief Return "name" if present, otherwise enter the correct .ufo file and get it from the definition there.
@@ -369,11 +625,14 @@ void RS_GetName(char *id, char *name)
  */
 static void RS_ResearchDisplayInfo(void)
 {
+#if DEPENDENCIES_OVERHAUL
+#else /* overhaul */
 	int i;
-	technology_t *tech = NULL;
-	base_t *base = NULL;
 	static char dependencies[256];
 	char tempstring[MAX_VAR];
+#endif /* overhaul */
+	technology_t *tech = NULL;
+	base_t *base = NULL;
 
 	/* we are not in base view */
 	if (!baseCurrent)
@@ -426,6 +685,8 @@ static void RS_ResearchDisplayInfo(void)
 		break;
 	}
 
+#if DEPENDENCIES_OVERHAUL
+#else /* overhaul */
 	memset(&curRequiredList, 0, sizeof(stringlist_t));
 	RS_GetFirstRequired(tech->idx, &curRequiredList);
 
@@ -441,6 +702,7 @@ static void RS_ResearchDisplayInfo(void)
 
 	menuText[TEXT_RESEARCH_INFO] = dependencies;
 	Cvar_Set("mn_research_seldep", _("Dependencies"));
+#endif /* overhaul */
 }
 
 /**
@@ -806,6 +1068,7 @@ void CL_ResearchType(void)
 		MN_Popup(_("Notice"), _("Build a laboratory first"));
 }
 
+#if 0
 /**
  * @brief Checks if the research item id1 depends on (requires) id2
  * @param[in] id1 Unique id of a technology_t that may or may not depend on id2.
@@ -831,6 +1094,7 @@ static qboolean RS_DependsOn(char *id1, char *id2)
 	}
 	return qfalse;
 }
+#endif
 
 /**
  * @brief Mark technologies as researched. This includes techs that depends in "id" and have time=0
@@ -985,10 +1249,12 @@ static void RS_TechnologyList_f(void)
 
 		Com_Printf("... req_first ->");
 		req_temp.numEntries = 0;
+#if DEPENDENCIES_OVERHAUL
+#else /* overhaul */
 		RS_GetFirstRequired(tech->idx, &req_temp);
 		for (j = 0; j < req_temp.numEntries; j++)
 			Com_Printf(" %s", req_temp.string[j]);
-
+#endif /* overhaul */
 		Com_Printf("\n");
 	}
 }
@@ -1096,6 +1362,7 @@ static value_t valid_tech_vars[] = {
 	{NULL, 0, 0}
 };
 
+#if DEPENDENCIES_OVERHAUL
 /**
  * @brief Parses one "tech" entry in the research.ufo file and writes it into the next free entry in technologies (technology_t).
  * @param[in] id Unique id of a technology_t. This is parsed from "tech xxx" -> id=xxx
@@ -1108,13 +1375,8 @@ void RS_ParseTechnologies(char *id, char **text)
 	int tech_old;
 	char *errhead = "RS_ParseTechnologies: unexptected end of file.";
 	char *token = NULL;
-	char *misp = NULL;
-	char temp_text[MAX_VAR];
-#if DEPENDENCIES_OVERHAUL
 	requirements_t *required = NULL;
-#else
-	stringlist_t *required = NULL;
-#endif
+
 	int i;
 
 	/* get body */
@@ -1131,11 +1393,8 @@ void RS_ParseTechnologies(char *id, char **text)
 	/* New technology (next free entry in global tech-list) */
 	tech = &gd.technologies[gd.numTechnologies];
 	gd.numTechnologies++;
-#if DEPENDENCIES_OVERHAUL
+
 	required = &tech->require;
-#else
-	required = &tech->requires;
-#endif
 	memset(tech, 0, sizeof(technology_t));
 
 	/*set standard values */
@@ -1195,9 +1454,6 @@ void RS_ParseTechnologies(char *id, char **text)
 			else
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
 		} else {
-			
-#if DEPENDENCIES_OVERHAUL
-/* TODO: parse 'require' list */
 			if (!Q_strncmp(token, "require", MAX_VAR)) {
 				/* Initialize requirement list. */
 				required->numLinks = 0;
@@ -1255,35 +1511,10 @@ void RS_ParseTechnologies(char *id, char **text)
 					}
 				} while (*text);
 			} else if (!Q_strncmp(token, "delay", MAX_VAR)) {
-				/* TODO: mode this to the default parser? See valid_tech_vars */
+				/* TODO: Move this to the default parser? See valid_tech_vars. */
 				token = COM_Parse(text);
 				Com_DPrintf("RS_ParseTechnologies: delay - %s\n", token);
-			}
-#else
-			if (!Q_strncmp(token, "requires", MAX_VAR)) {
-/* TODO: replace with 'require' parser below */
-				/* what other techs this one requires */
-				token = COM_EParse(text, errhead, id);
-				if (!*text)
-					return;
-				Q_strncpyz(temp_text, token, MAX_VAR);
-				misp = temp_text;
-
-				required->numEntries = 0;
-				do {
-					token = COM_Parse(&misp);
-					if (!misp)
-						break;
-					if (required->numEntries < MAX_TECHLINKS)
-						Q_strncpyz(required->string[required->numEntries++], token, MAX_VAR);
-					else
-						Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
-
-				}
-				while (misp && required->numEntries < MAX_TECHLINKS);
-			}
-#endif
-			else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
+			} else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
 				/* ufopedia chapter */
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
@@ -1339,6 +1570,177 @@ void RS_ParseTechnologies(char *id, char **text)
 	/* set the overall reseach time to the one given in the ufo-file. */
 	tech->overalltime = tech->time;
 }
+
+#else /* overhaul */
+/**
+ * @brief Parses one "tech" entry in the research.ufo file and writes it into the next free entry in technologies (technology_t).
+ * @param[in] id Unique id of a technology_t. This is parsed from "tech xxx" -> id=xxx
+ * @param[in] text the whole following text that is part of the "tech" item definition in research.ufo.
+ */
+void RS_ParseTechnologies(char *id, char **text)
+{
+	value_t *var = NULL;
+	technology_t *tech = NULL;
+	int tech_old;
+	char *errhead = "RS_ParseTechnologies: unexptected end of file.";
+	char *token = NULL;
+	char *misp = NULL;
+	char temp_text[MAX_VAR];
+	stringlist_t *required = NULL;
+
+	int i;
+
+	/* get body */
+	token = COM_Parse(text);
+	if (!*text || *token != '{') {
+		Com_Printf("RS_ParseTechnologies: \"%s\" technology def without body ignored.\n", id);
+		return;
+	}
+	if (gd.numTechnologies >= MAX_TECHNOLOGIES) {
+		Com_Printf("RS_ParseTechnologies: too many technology entries. limit is %i.\n", MAX_TECHNOLOGIES);
+		return;
+	}
+
+	/* New technology (next free entry in global tech-list) */
+	tech = &gd.technologies[gd.numTechnologies];
+	gd.numTechnologies++;
+	required = &tech->requires;
+	memset(tech, 0, sizeof(technology_t));
+
+	/*set standard values */
+	tech->idx = gd.numTechnologies - 1;
+	Com_sprintf(tech->id, MAX_VAR, id);
+	Com_sprintf(tech->description, MAX_VAR, _("No description available."));
+	/* tech->description_pre should be NULL in the beginning so we can check on that. TODO: this may change int he future.*/
+	*tech->provides = '\0';
+	*tech->image_top = '\0';
+	*tech->image_bottom = '\0';
+	*tech->mdl_top = '\0';
+	*tech->mdl_bottom = '\0';
+	tech->type = RS_TECH;
+	tech->statusResearch = RS_NONE;
+	tech->statusResearchable = qfalse;
+	tech->statusCollected = 0;
+	tech->time = 0;
+	tech->overalltime = 0;
+	tech->scientists = 0;
+	tech->prev = -1;
+	tech->next = -1;
+	tech->base_idx = -1;
+
+
+	do {
+		/* get the name type */
+		token = COM_EParse(text, errhead, id);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+		/* get values */
+		if (!Q_strncmp(token, "type", MAX_VAR)) {
+			/* what type of tech this is */
+			token = COM_EParse(text, errhead, id);
+			if (!*text)
+				return;
+			/* redundant, but oh well. */
+			if (!Q_strncmp(token, "tech", MAX_VAR))
+				tech->type = RS_TECH;
+			else if (!Q_strncmp(token, "weapon", MAX_VAR))
+				tech->type = RS_WEAPON;
+			else if (!Q_strncmp(token, "armor", MAX_VAR))
+				tech->type = RS_ARMOR;
+			else if (!Q_strncmp(token, "craft", MAX_VAR))
+				tech->type = RS_CRAFT;
+			else if (!Q_strncmp(token, "craftweapon", MAX_VAR))
+				tech->type = RS_CRAFTWEAPON;
+			else if (!Q_strncmp(token, "craftshield", MAX_VAR))
+				tech->type = RS_CRAFTSHIELD;
+			else if (!Q_strncmp(token, "building", MAX_VAR))
+				tech->type = RS_BUILDING;
+			else if (!Q_strncmp(token, "alien", MAX_VAR))
+				tech->type = RS_ALIEN;
+			else if (!Q_strncmp(token, "ugv", MAX_VAR))
+				tech->type = RS_UGV;
+			else
+				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
+		} else {
+			if (!Q_strncmp(token, "requires", MAX_VAR)) {
+				/* what other techs this one requires */
+				token = COM_EParse(text, errhead, id);
+				if (!*text)
+					return;
+				Q_strncpyz(temp_text, token, MAX_VAR);
+				misp = temp_text;
+
+				required->numEntries = 0;
+				do {
+					token = COM_Parse(&misp);
+					if (!misp)
+						break;
+					if (required->numEntries < MAX_TECHLINKS)
+						Q_strncpyz(required->string[required->numEntries++], token, MAX_VAR);
+					else
+						Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
+
+				}
+				while (misp && required->numEntries < MAX_TECHLINKS);
+			} else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
+				/* ufopedia chapter */
+				token = COM_EParse(text, errhead, id);
+				if (!*text)
+					return;
+
+				if (*token) {
+					/* find chapter */
+					for (i = 0; i < gd.numChapters; i++) {
+						if (!Q_strncmp(token, gd.upChapters[i].id, MAX_VAR)) {
+							/* add entry to chapter */
+							tech->up_chapter = i;
+							if (!gd.upChapters[i].first) {
+								gd.upChapters[i].first = tech->idx;
+								gd.upChapters[i].last = tech->idx;
+								tech->prev = -1;
+								tech->next = -1;
+							} else {
+								/* get "last entry" in chapter */
+								tech_old = gd.upChapters[i].last;
+								gd.upChapters[i].last = tech->idx;
+								gd.technologies[tech_old].next = tech->idx;
+								gd.technologies[gd.upChapters[i].last].prev = tech_old;
+								gd.technologies[gd.upChapters[i].last].next = -1;
+							}
+							break;
+						}
+						if (i == gd.numChapters)
+							Com_Printf("RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n", id, token);
+					}
+				}
+			} else {
+				for (var = valid_tech_vars; var->string; var++)
+					if (!Q_strncmp(token, var->string, sizeof(var->string))) {
+						/* found a definition */
+						token = COM_EParse(text, errhead, id);
+						if (!*text)
+							return;
+
+						if (var->ofs && var->type != V_NULL)
+							Com_ParseValue(tech, token, var->type, var->ofs);
+						else
+							/* NOTE: do we need a buffer here? for saving or something like that? */
+							Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed\n");
+						break;
+					}
+				/*TODO: escape "type weapon/tech/etc.." here */
+				if (!var->string)
+					Com_Printf("RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n", token, id);
+			}
+		}
+	} while (*text);
+
+	/* set the overall reseach time to the one given in the ufo-file. */
+	tech->overalltime = tech->time;
+}
+#endif /* overhaul */
 
 /**
  * @brief Returns the list of required (by id) items.
@@ -1496,6 +1898,8 @@ qboolean RS_TechIsResearchable(technology_t * tech)
 
 }
 
+#if DEPENDENCIES_OVERHAUL
+#else /* overhaul */
 /**
  * @brief Returns the first required (yet unresearched) technologies that are needed by "tech_idx".
  * That means you need to research the result to be able to research (and maybe use) "id".
@@ -1550,6 +1954,8 @@ void RS_GetFirstRequired(int tech_idx, stringlist_t * required)
 {
 	RS_GetFirstRequired2(tech_idx, tech_idx, required);
 }
+#endif /* overhaul */
+
 
 /**
  * @brief Returns a list of .ufo items that are produceable when this item has been researched (=provided)

@@ -71,7 +71,8 @@ typedef struct requirements_s {
 	requirementType_t type[MAX_TECHLINKS];	/* What type the requ. is: item (in store/quarantine), event, etc... */
 	char id[MAX_TECHLINKS][MAX_VAR];	/* dependency id (text-id) */
 	int idx[MAX_TECHLINKS];		/* Dependency index (index in relation to array depends on the type) */
-	int amount[MAX_TECHLINKS];	/* How many items are needed for research ... if any. */
+	int amount[MAX_TECHLINKS];	/* How many items are needed for research ... if any. (fix) */
+	int collected[MAX_TECHLINKS];	/* How many items have been collected. (varies) */
 	int delay;			/* Number in days the system should wait until the tech is available. */
 					/* Starting from the time all other dependencies have been fulfilled. */
 } requirements_t;
