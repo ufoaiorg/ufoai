@@ -257,8 +257,9 @@ static void CL_BuyItem(void)
 			CL_UpdateCredits(ccs.credits - csi.ods[item].price * MARKET_BUY_FACTOR / MARKET_BUY_DIVISOR);
 		}
 	}
-
+	/*
 	RS_MarkCollected(&baseCurrent->storage);
+	*/
 	RS_MarkResearchable();
 }
 

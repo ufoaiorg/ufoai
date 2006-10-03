@@ -51,6 +51,8 @@ static int researchListPos;
 static stringlist_t curRequiredList;
 
 
+#if DEPENDENCIES_OVERHAUL
+#else /* overhaul */
 /**
  * @brief Marks one tech as 'collected'  if an item it 'provides' (= id) has been collected.
  * @param id unique id of a provided item (can be item/building/craft/etc..)
@@ -86,6 +88,7 @@ void RS_MarkCollected(equipDef_t *ed)
 		}
 	}
 }
+#endif /* overhaul */
 
 /**
  * @brief Marks one tech as researchable.
@@ -174,6 +177,28 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 }
 
 /**
+ * @brief Checks if any items have been collected and correct the value for each requirement.
+ */
+void RS_CheckCollected(requirements_t *required)
+{
+	int i;
+	
+	if (!required)
+		return;
+	
+	if (!baseCurrent)
+		return;
+	
+	for (i = 0; i < required->numLinks; i++) {
+		if (required->type[i] == RS_LINK_ITEM) {
+			/* TODO: Search for item in base-storage and quarantine. */
+			/* TODO: Set 'collected' value to the found number */
+			/* baseCurrent */
+		}
+	}
+}
+
+/**
  * @brief Marks all the techs that can be researched.
  * Automatically researches 'free' techs such as ammo for a weapon.
  * Should be called when a new item is researched (RS_MarkResearched) and after
@@ -193,6 +218,8 @@ void RS_MarkResearchable(void)
 	for (i = 0; i < gd.numTechnologies; i++) {	/* i = tech-index */
 		tech = &gd.technologies[i];
 		if (!tech->statusResearchable) {	/* Redundant, since we set them all to false, but you never know. */
+			/* Check for collected items/aliens/etc... */
+			
 			if (tech->statusResearch != RS_FINISH) {
 				Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", tech->id);
 				/* TODO: doesn't work yet? Needed?*/
@@ -494,10 +521,11 @@ void RS_InitTree(void)
 			break;
 		} /* switch */
 	}
+	/*
 	for (i = 0; i < gd.numBases; i++)
 		if (gd.bases[i].founded)
 			RS_MarkCollected(&gd.bases[i].storage);
-
+	*/
 	RS_MarkResearchable();
 
 	memset(&curRequiredList, 0, sizeof(stringlist_t));
@@ -933,11 +961,17 @@ static void RS_ResearchStart(void)
 	/* get the currently selected research-item */
 	tech = researchList[researchListPos];
 
-	/* TODO:
+	/************
+		TODO:
 		Check for collected items that are needed by the tech to be researchable.
 		If there are enough items add them to the tech, otherwise pop an errormessage telling the palyer what is missing.
 	*/
-	
+	if (!tech->statusResearchable) {
+		RS_CheckCollected(&tech->require_AND);
+		RS_CheckCollected(&tech->require_OR);
+		RS_MarkResearchable();
+	}
+	/************/
 	
 	if (tech->statusResearchable) {
 		switch (tech->statusResearch) {
