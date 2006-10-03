@@ -138,6 +138,9 @@ $(BUILDDIR)/client/%.m: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 ifdef BUILDDIR
 $(BUILDDIR)/client/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [DEP] $<"; $(DEP)
+
+$(BUILDDIR)/client/%.d: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
+	@echo " * [DEP] $<"; $(DEP)
 endif
 
 

@@ -93,6 +93,10 @@ ifdef BUILDDIR
 $(BUILDDIR)/server/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [DEP] $<"; \
 		$(DEP) $(DEDICATED_CFLAGS)
+
+$(BUILDDIR)/server/%.d: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
+	@echo " * [DEP] $<"; \
+		$(DEP) $(DEDICATED_CFLAGS)
 endif
 
 
