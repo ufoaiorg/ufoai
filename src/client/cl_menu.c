@@ -205,7 +205,7 @@ static byte *adata, *curadata;
 static int adataize = 0;
 
 static menu_t *menuStack[MAX_MENUSTACK];
-static int menuStackPos;
+static int menuStackPos = -1;
 
 inventory_t *menuInventory = NULL;
 char *menuText[MAX_MENUTEXTS];
