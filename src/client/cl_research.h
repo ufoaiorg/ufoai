@@ -92,12 +92,13 @@ typedef struct technology_s {
 	char description_pre[MAX_VAR];	/* Description of item before it's researched. Short text-id to get the full text via gettext. */
 	researchType_t type;
 
-	stringlist_t requires;
+
 #if DEPENDENCIES_OVERHAUL
-	/* TODO: dependencies overhaul */
-	requirements_t require;	/* See struct above. */
-#else
-#endif
+	requirements_t require_AND;	/* A list of requirements that ALL need to be met (= AND-related) See struct above. */
+	requirements_t require_OR;	/* A list of requirements where ANY need to be met (= OR-related) See struct above. */
+#else /* overhaul */
+	stringlist_t requires;
+#endif /* overhaul */
 
 #if 1
 /* TODO: replace with 'require' entries. */

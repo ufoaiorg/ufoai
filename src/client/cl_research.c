@@ -100,35 +100,77 @@ void RS_MarkOneResearchable(int tech_idx)
 #if DEPENDENCIES_OVERHAUL
 /**
  * @brief Checks if all requirements of a tech have been met.
- * @param[in] require pointer to a list of requirements.
+ * @param[in] require_AND pointer to a list of AND-related requirements.
+ * @param[in] require_OR pointer to a list of OR-related requirements.
  * @return qtrue if all requirements are satisfied otherwise qfalse.
  */
-qboolean RS_RequirementsMet(requirements_t *required)
+static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t *required_OR)
 {
 	int i;
-	for (i = 0; i < required->numLinks; i++) {
-		switch (required->type[i]) {
-		case RS_LINK_TECH:
-			Com_DPrintf("RS_RequirementsMet: tech: %s / %i\n", required->id[i], required->idx[i]);
-			if ((!RS_TechIsResearched(required->idx[i]))
-				|| (!Q_strncmp(required->id[i], "nothing", MAX_VAR))) {
-				return qfalse;
-			}
-			break;
-		case RS_LINK_ITEM:
-			Com_DPrintf("RS_RequirementsMet: item: %s / %i\n", required->id[i], required->idx[i]);
-			if (required->collected[i] < required->collected[i]) {
-				return qfalse;
-			}
-			break;
-		case RS_LINK_EVENT:
-			break;
-		default:
-			break;
-		}
-	}
+	qboolean met_AND = qtrue;
+	qboolean met_OR = qfalse;
 
-	return qtrue;
+	if (!required_AND && !required_AND) {
+		Com_Printf("RS_RequirementsMet: No requirement list(s) given as parameter.\n");
+		return qfalse;
+	}
+	
+	if (required_AND)
+		for (i = 0; i < required_AND->numLinks; i++) {
+			switch (required_AND->type[i]) {
+			case RS_LINK_TECH:
+				Com_DPrintf("RS_RequirementsMet: ANDtech: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
+				if ((!RS_TechIsResearched(required_AND->idx[i]))
+					|| (!Q_strncmp(required_AND->id[i], "nothing", MAX_VAR))) {
+					met_AND = qfalse;
+				}
+				break;
+			case RS_LINK_ITEM:
+				Com_DPrintf("RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
+				if (required_AND->collected[i] < required_AND->collected[i]) {
+					met_AND = qfalse;
+				}
+				break;
+			case RS_LINK_EVENT:
+				break;
+			default:
+				break;
+			}
+
+			if (!met_AND)
+				break;
+		}
+	else
+		met_AND = qfalse;
+		
+
+	if (required_OR)
+		for (i = 0; i < required_OR->numLinks; i++) {
+			switch (required_OR->type[i]) {
+			case RS_LINK_TECH:
+				Com_DPrintf("RS_RequirementsMet: ORtech: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
+				if ((!RS_TechIsResearched(required_OR->idx[i]))
+					|| (!Q_strncmp(required_OR->id[i], "nothing", MAX_VAR))) {
+					met_OR = qtrue;
+				}
+				break;
+			case RS_LINK_ITEM:
+				Com_DPrintf("RS_RequirementsMet: ORitem: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
+				if (required_OR->collected[i] < required_OR->collected[i]) {
+					met_OR = qtrue;
+				}
+				break;
+			case RS_LINK_EVENT:
+				break;
+			default:
+				break;
+			}
+
+			if (met_OR)
+				break;
+		}
+
+	return (met_AND || met_OR);
 }
 
 /**
@@ -169,7 +211,7 @@ void RS_MarkResearchable(void)
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 				
 				/* All requirements are met. */
-				if (RS_RequirementsMet(&tech->require)) {
+				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR)) {
 					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
 					tech->statusResearchable = qtrue;
 				}
@@ -293,6 +335,45 @@ void RS_AddObjectTechs(void)
 }
 
 #if DEPENDENCIES_OVERHAUL
+static void RS_InitRequirementList(requirements_t *required)
+{
+	int i, k;
+	technology_t *tech_required = NULL;
+	objDef_t *item = NULL;
+
+	for (i = 0; i < required->numLinks; i++) {	/* i = link index */
+		switch (required->type[i]) {
+		case RS_LINK_TECH:
+			/* Get index of technology by its id-name. */
+			tech_required = RS_GetTechByID(required->id[i]);
+			required->idx[i] = -1;
+			if (tech_required) {
+				required->idx[i] = tech_required->idx;
+			}
+			break;
+		case RS_LINK_ITEM:
+			/* Get index of item by its id-name. */
+			required->idx[i] = -1;
+			for (k = 0; k < csi.numODs; k++) {	/* k = item index */
+				item = &csi.ods[k];
+				if (!Q_strncmp(required->id[i], item->kurz, MAX_VAR)) {
+					required->idx[i] = k;
+					break;
+				}
+			}
+			break;
+		case RS_LINK_EVENT:
+			/* TODO: get index of event */
+			break;
+		default:
+			break;
+		}
+		
+	}
+
+}
+
+
 /**
  * @brief Gets all needed names/file-paths/etc... for each technology entry.
  * Should be executed after the parsing of _all_ the ufo files and e.g. the
@@ -303,8 +384,6 @@ void RS_InitTree(void)
 {
 	int i, j, k;
 	technology_t *tech = NULL;
-	technology_t *tech_required = NULL;
-	requirements_t *required = NULL;
 	objDef_t *item = NULL;
 	objDef_t *item_ammo = NULL;
 	building_t *building = NULL;
@@ -315,36 +394,8 @@ void RS_InitTree(void)
 		tech = &gd.technologies[i];
 
 		/* Save the idx to the id-names of the different requirement-types for quicker access. The id-strings themself are not really needed afterwards :-/ */
-		required = &tech->require;
-		for (j = 0; j < required->numLinks; j++) {	/* j = link index */
-			switch (required->type[j]) {
-			case RS_LINK_TECH:
-				/* Get index of technology by its id-name. */
-				tech_required = RS_GetTechByID(required->id[j]);
-				required->idx[j] = -1;
-				if (tech_required) {
-					required->idx[j] = tech_required->idx;
-				}
-				break;
-			case RS_LINK_ITEM:
-				/* Get index of item by its id-name. */
-				required->idx[j] = -1;
-				for (k = 0; k < csi.numODs; k++) {	/* k = item index */
-					item = &csi.ods[k];
-					if (!Q_strncmp(required->id[j], item->kurz, MAX_VAR)) {
-						required->idx[j] = k;
-						break;
-					}
-				}
-				break;
-			case RS_LINK_EVENT:
-				/* TODO: get index of event */
-				break;
-			default:
-				break;
-			}
-			
-		}
+		RS_InitRequirementList(&tech->require_AND);
+		RS_InitRequirementList(&tech->require_OR);
 
 		/* Search in correct data/.ufo */
 		switch (tech->type) {
@@ -1186,11 +1237,15 @@ static void RS_TechnologyList_f(void)
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
-		req = &tech->require;
 		Com_Printf("Tech: %s\n", tech->id);
 		Com_Printf("... time      -> %.2f\n", tech->time);
 		Com_Printf("... name      -> %s\n", tech->name);
-		Com_Printf("... requires  ->");
+		req = &tech->require_AND;
+		Com_Printf("... requires ALL  ->");
+		for (j = 0; j < req->numLinks; j++)
+			Com_Printf(" %i %s %i", req->type[j], req->id[j], req->idx[j]);
+		req = &tech->require_OR;
+		Com_Printf("... requires ANY  ->");
 		for (j = 0; j < req->numLinks; j++)
 			Com_Printf(" %i %s %i", req->type[j], req->id[j], req->idx[j]);
 		Com_Printf("\n");
@@ -1460,7 +1515,7 @@ void RS_ParseTechnologies(char *id, char **text)
 	int tech_old;
 	char *errhead = "RS_ParseTechnologies: unexptected end of file.";
 	char *token = NULL;
-	requirements_t *required = NULL;
+	requirements_t *required_temp = NULL;
 
 	int i;
 
@@ -1479,7 +1534,6 @@ void RS_ParseTechnologies(char *id, char **text)
 	tech = &gd.technologies[gd.numTechnologies];
 	gd.numTechnologies++;
 
-	required = &tech->require;
 	memset(tech, 0, sizeof(technology_t));
 
 	/*set standard values */
@@ -1539,9 +1593,16 @@ void RS_ParseTechnologies(char *id, char **text)
 			else
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
 		} else {
-			if (!Q_strncmp(token, "require", MAX_VAR)) {
+			
+			if ((!Q_strncmp(token, "require_AND", MAX_VAR)) || (!Q_strncmp(token, "require_OR", MAX_VAR))) {
+				if (!Q_strncmp(token, "require_AND", MAX_VAR)) {
+					required_temp = &tech->require_AND;
+				} else {
+					required_temp = &tech->require_OR;
+				}
+				
 				/* Initialize requirement list. */
-				required->numLinks = 0;
+				required_temp->numLinks = 0;
 
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
@@ -1559,30 +1620,30 @@ void RS_ParseTechnologies(char *id, char **text)
 						break;
 
 					if (!Q_strcmp(token, "tech")) {
-						if (required->numLinks < MAX_TECHLINKS) {
+						if (required_temp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
-							required->type[required->numLinks] = RS_LINK_TECH;
+							required_temp->type[required_temp->numLinks] = RS_LINK_TECH;
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
 							/* TODO: Fix the broken 'token'. currently it's always "tech" isntead of the 'id' */
-							Q_strncpyz(required->id[required->numLinks], token, MAX_VAR);
-							Com_DPrintf("RS_ParseTechnologies: tech - %s\n", required->id[required->numLinks]);
-							required->numLinks += 1;
+							Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
+							Com_DPrintf("RS_ParseTechnologies: tech - %s\n", required_temp->id[required_temp->numLinks]);
+							required_temp->numLinks += 1;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
 						}
 					} else if (!Q_strcmp(token, "item")) {
-						if (required->numLinks < MAX_TECHLINKS) {
+						if (required_temp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
-							required->type[required->numLinks] = RS_LINK_ITEM;
+							required_temp->type[required_temp->numLinks] = RS_LINK_ITEM;
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
-							Q_strncpyz(required->id[required->numLinks], token, MAX_VAR);
+							Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
 							/* Set requirement-amount of item. */
 							token = COM_Parse(text);
-							required->amount[required->numLinks] = atoi(token);
-							Com_DPrintf("RS_ParseTechnologies: item - %s - %i\n", required->id[required->numLinks], required->amount[required->numLinks]);
-							required->numLinks += 1;
+							required_temp->amount[required_temp->numLinks] = atoi(token);
+							Com_DPrintf("RS_ParseTechnologies: item - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
+							required_temp->numLinks += 1;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
 						}
@@ -1828,12 +1889,13 @@ void RS_ParseTechnologies(char *id, char **text)
 #endif /* overhaul */
 
 #if DEPENDENCIES_OVERHAUL
+#if 0
 /**
  * @brief Returns the list of required (by id) items.
  * @param[in] id Unique id of a technology_t.
  * @param[out] required A list of requirements with the unique ids of techs/items/buildings/etc..
  */
-void RS_GetRequired(char *id, requirements_t *required)
+void RS_GetRequired(char *id, requirements_t *required_AND)
 {
 	technology_t *tech = NULL;
 
@@ -1842,8 +1904,10 @@ void RS_GetRequired(char *id, requirements_t *required)
 		return;
 
 	/* research item found */
-	required = &tech->require;	/* Is linking a good idea? */
+	required = &tech->require_AND;	/* Is linking a good idea? */
+	/* TODO: require_OR??? */
 }
+#endif /* 0 */
 #else /* overhaul */
 /**
  * @brief Returns the list of required (by id) items.
@@ -1988,7 +2052,7 @@ qboolean RS_TechIsResearchable(technology_t * tech)
 	if (tech->statusResearchable)
 		return qtrue;
 	
-	return RS_RequirementsMet(&tech->require);
+	return RS_RequirementsMet(&tech->require_AND, &tech->require_OR);
 }
 
 #else /* overhaul */

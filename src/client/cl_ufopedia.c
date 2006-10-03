@@ -67,6 +67,38 @@ char* CL_WeaponSkillToName(int weaponSkill)
 	}
 }
 
+#if DEPENDENCIES_OVERHAUL
+/**
+ * @brief Diplays the tech tree dependencies in the ufopedia
+ * @sa UP_DrawEntry
+ */
+void UP_DisplayTechTree (technology_t* t)
+{
+	int i = 0;
+	static char up_techtree[1024];
+	requirements_t *required = NULL;
+	technology_t *techRequired = NULL;
+	required = &t->require_AND;
+	up_techtree[0] = '\0';
+	for (; i<required->numLinks; i++) {
+		if (required->type[i] == RS_LINK_TECH) {
+			if (!Q_strncmp(required->id[i], "nothing", MAX_VAR)
+			|| !Q_strncmp(required->id[i], "initial", MAX_VAR)) {
+				Q_strcat(up_techtree, _("No requirements"), sizeof(up_techtree));
+				continue;
+			} else {
+				techRequired = RS_GetTechByIDX(required->idx[i]);
+				if (!techRequired)
+					Sys_Error("Could not find the tech for '%s'\n", required->id[i]);
+				Q_strcat(up_techtree, techRequired->name, sizeof(up_techtree));
+			}
+			Q_strcat(up_techtree, "\n", sizeof(up_techtree));
+		}
+	}
+	/* and now set the buffer to the right menuText */
+	menuText[TEXT_LIST] = up_techtree;
+}
+#else /* overhaul */
 /**
  * @brief Diplays the tech tree dependencies in the ufopedia
  * @sa UP_DrawEntry
@@ -95,6 +127,7 @@ void UP_DisplayTechTree (technology_t* t)
 	/* and now set the buffer to the right menuText */
 	menuText[TEXT_LIST] = up_techtree;
 }
+#endif /* overhaul */
 
 /**
  * @brief Prints the (ufopedia and other) description for items (weapons, armor, ...)
@@ -568,7 +601,42 @@ void UP_Click_f( void )
 		} while ( upCurrent );
 	}
 }
+#if DEPENDENCIES_OVERHAUL
+/**
+ * @brief
+ * @param
+ * @sa
+ * @todo The "num" value and the link-index will most probably not match.
+ */
+void UP_TechTreeClick_f( void )
+{
+	int num;
+	requirements_t *required_AND = NULL;
+	technology_t *techRequired = NULL;
 
+	if ( Cmd_Argc() < 2 )
+		return;
+	num = atoi( Cmd_Argv( 1 ) );
+
+	if (!upCurrent)
+		return;
+
+	required_AND = &upCurrent->require_AND;
+
+	if (!Q_strncmp(required_AND->id[num], "nothing", MAX_VAR)
+		|| !Q_strncmp(required_AND->id[num], "initial", MAX_VAR))
+		return;
+
+	if (num >= required_AND->numLinks)
+		return;
+
+	techRequired = RS_GetTechByIDX(required_AND->idx[num]);
+	if (!techRequired)
+		Sys_Error("Could not find the tech for '%s'\n", required_AND->id[num]);
+
+	UP_OpenCopyWith(techRequired->id);
+}
+#else /* overhaul */
 /**
  * @brief
  * @param
@@ -602,7 +670,7 @@ void UP_TechTreeClick_f( void )
 
 	UP_OpenCopyWith(techRequired->id);
 }
-
+#endif /* overhaul */
 
 /**
  * @brief Shows available ufopedia entries

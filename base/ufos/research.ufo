@@ -22,12 +22,14 @@
 //		This needs to be a unique string in all descriptions. See the po files in the source directory (src/po/*.po)
 //	description_pre
 //		The description to be displayed when an item has been collected, but it's not yet researched. Usage is the same as 'description'
-//	require { type id [amount] }
-//		A list of requirements that needs to be met in order to be able to research it.
+//	require_AND { type id [amount] }
+//		A list of requirements that ALL need to be met in order to be able to research it.
 //		"tech" type	-	e.g "tech rs_xxx"
 //			Another technology that has to be researched.
 //		"item" type	-	e.g "item coolweapon 10"
 //			You need to collect at least 10 items of this thing so it can be researched.
+//	require_OR { type id [amount] }
+//		Works the same as require_AND with the difference that ANY of the entries will enable the tech to bew researchable.
 //	delay
 //		The number of days until a 'successor' technology-item will be available for research.
 //		i.e. Every requirement from above is met, but this nubmer of days hasn't passed yet => tech not yet available for research.
@@ -37,7 +39,7 @@
 //		This items can be produced once the "tech" item has been finished.
 //	time
 //		Time the research needs to be finished. Consider that this value doesn't reflect _real_ time, but it will depend on the number of scientists working on the item.
-//		If time is 0 the item can be produced at the same time all the "required" items are finished.
+//		If time is 0 the item can be produced at the same time all the "require_X" items are finished.
 //		[Default] 0
 //	produceTime
 //		Time the production of one item takes. This value is similar to time.
@@ -90,7 +92,7 @@ tech rs_plasma
 	up_chapter	tech
 	description	"_plasma_txt"
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	time	2250
 }
 
@@ -101,7 +103,7 @@ tech rs_tachyon
 	up_chapter	tech
 	description	"_tachyon_txt"
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	time	3000
 }
 
@@ -112,7 +114,7 @@ tech rs_nano
 	up_chapter	tech
 	description	"_nano_txt"
 
-	require
+	require_AND
 	{
 		tech rs_laser
 		tech rs_plasma
@@ -128,7 +130,7 @@ tech rs_nano
 // 	description	"_armor_fabrics_txt"
 //	provides	"armor_fabrics"
 //
-// 	require
+// 	require_AND
 //	{
 //		tech rs_nano
 //		tech rs_tachyon
@@ -146,7 +148,7 @@ tech rs_craft_ufo_tech
 	up_chapter	tech
 
 	// FIXME
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	found_ufo
 	time	2500
 
@@ -163,7 +165,7 @@ tech rs_weapon_assault
 	up_chapter	weapons
 	description	"_assault_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_assault
 	}
@@ -178,7 +180,7 @@ tech rs_weapon_assault_ammo
 	up_chapter	weapons
 	description	"_assault_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_normal
 		tech rs_weapon_assault
@@ -194,7 +196,7 @@ tech rs_weapon_bolterrifle
 	up_chapter	weapons
 	description	"_bolterrifle_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_heavy
 	}
@@ -209,7 +211,7 @@ tech rs_weapon_bolterrifle_ammo
 	up_chapter	weapons
 	description	"_bolterrifle_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_normal
 		tech rs_weapon_bolterrifle
@@ -225,7 +227,7 @@ tech rs_weapon_combatknife
 	up_chapter	weapons
 	description	"_combatknife_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_close
 		tech rs_damage_normal
@@ -241,7 +243,7 @@ tech rs_weapon_flamer
 	up_chapter	weapons
 	description	"_flamer_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_heavy
 	}
@@ -256,7 +258,7 @@ tech rs_weapon_flamer_ammo
 	up_chapter	weapons
 	description	"_flamer_mag_txt"
 
-	require
+	require_AND
 	{ 
 		tech rs_damage_fire
 		tech rs_weapon_flamer
@@ -272,7 +274,7 @@ tech rs_weapon_flashbang
 	up_chapter	weapons
 	description	"_flashbang_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_explosive
 		tech rs_damage_shock
@@ -287,7 +289,7 @@ tech rs_weapon_fraggren
 	up_chapter	weapons
 	description	"_fraggren_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_explosive
 		tech rs_damage_blast
@@ -303,7 +305,7 @@ tech rs_weapon_incgren
 	up_chapter	weapons
 	description	"_incgren_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_explosive
 		tech rs_damage_fire
@@ -319,7 +321,7 @@ tech rs_weapon_grenl
 	up_chapter	weapons
 	description	"_grenl_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_explosive
 	}
@@ -334,7 +336,7 @@ tech rs_weapon_grenl_ammo
 	up_chapter	weapons
 	description	"_grenl_ammo_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_blast
 		tech rs_weapon_grenl
@@ -350,7 +352,7 @@ tech rs_weapon_grenl_fle_ammo
 	up_chapter	weapons
 	description	"_grenl_fle_ammo_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_normal
 		tech rs_weapon_grenl
@@ -366,7 +368,7 @@ tech rs_weapon_grenl_incendiary_ammo
 	up_chapter	weapons
 	description	"_grenl_incendiary_ammo_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_fire 
 		tech rs_weapon_grenl
@@ -382,7 +384,7 @@ tech rs_weapon_grenl_plasma_ammo
 	up_chapter	weapons
 	description	"_grenl_plasma_ammo_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_plasma
 		tech rs_weapon_grenl
@@ -398,7 +400,7 @@ tech rs_weapon_heavylaser
 	up_chapter	weapons
 	description	"_heavylaser_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_sniper
 		tech rs_skill_heavy
@@ -415,7 +417,7 @@ tech rs_weapon_heavylaser_ammo
 	up_chapter	weapons
 	description	"_heavylaser_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_laser
 		tech rs_weapon_heavylaser
@@ -431,7 +433,7 @@ tech rs_irgoggles
 	up_chapter	weapons
 	description	"_irgoggles_txt"
 
-	require
+	require_AND
 	{
 			tech rs_skill_mind
 	}
@@ -446,7 +448,7 @@ tech rs_weapon_kerrblade
 	up_chapter	weapons
 	description	"_kerrblade_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_close
 		tech rs_damage_normal
@@ -463,7 +465,7 @@ tech rs_weapon_laserpistol
 	up_chapter	weapons
 	description	"_laserpistol_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_close
 		tech rs_laser
@@ -479,7 +481,7 @@ tech rs_weapon_laserpistol_ammo
 	up_chapter	weapons
 	description	"_laserpistol_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_laser
 		tech rs_weapon_laserpistol
@@ -495,7 +497,7 @@ tech rs_weapon_laserrifle
 	up_chapter	weapons
 	description	"_laserrifle_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_sniper
 		tech rs_skill_assault
@@ -512,7 +514,7 @@ tech rs_weapon_laserrifle_ammo
 	up_chapter	weapons
 	description	"_laserrifle_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_laser
 		tech rs_weapon_laserrifle
@@ -528,7 +530,7 @@ tech rs_medikit
 	up_chapter	weapons
 	description	"_medikit_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_mind
 	}
@@ -543,7 +545,7 @@ tech rs_weapon_pistol
 	up_chapter	weapons
 	description	"_pistol_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_close
 	}
@@ -559,7 +561,7 @@ tech rs_weapon_pistol_ammo
 	up_chapter	weapons
 	description	"_pistol_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_normal
 		tech rs_weapon_pistol
@@ -576,7 +578,7 @@ tech rs_weapon_plasatomizer
 	up_chapter	weapons
 	description	"_plasatomizer_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_assault
 		tech rs_skill_heavy
@@ -595,7 +597,7 @@ tech rs_weapon_plasatomizer_ammo
 	up_chapter	weapons
 	description	"_plasatomizer_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_plasma
 		tech rs_weapon_plasatomizer
@@ -611,7 +613,7 @@ tech rs_weapon_plasblaster
 	up_chapter	weapons
 	description	"_plasblaster_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_explosive
 		tech rs_skill_heavy
@@ -629,7 +631,7 @@ tech rs_weapon_plasblaster_ammo
 	up_chapter	weapons
 	description	"_plasblaster_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_plasma
 		tech rs_weapon_plasblaster
@@ -645,7 +647,7 @@ tech rs_weapon_plasblade
 	up_chapter	weapons
 	description	"_plasblade_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_close
 		tech rs_damage_plasma
@@ -662,7 +664,7 @@ tech rs_weapon_plasmagren
 	up_chapter	weapons
 	description	"_plasmagren_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_explosive
 		tech rs_damage_plasma
@@ -680,7 +682,7 @@ tech rs_weapon_plasrifle
 	up_chapter	weapons
 	description	"_plasrifle_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_assault
 		tech rs_skill_heavy
@@ -699,7 +701,7 @@ tech rs_weapon_plasrifle_ammo
 	up_chapter	weapons
 	description	"_plasrifle_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_plasma
 		tech rs_weapon_plasrifle
@@ -715,7 +717,7 @@ tech rs_weapon_rpg
 	up_chapter	weapons
 	description	"_rpg_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_explosive
 	}
@@ -731,7 +733,7 @@ tech rs_weapon_rpg_ammo
 	up_chapter	weapons
 	description	"_rpg_ammo_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_blast
 		tech rs_weapon_rpg
@@ -748,7 +750,7 @@ tech rs_weapon_rpg_incendiary_ammo
 	up_chapter	weapons
 	description	"_rpg_incendiary_ammo_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_fire
 		tech rs_weapon_rpg
@@ -765,7 +767,7 @@ tech rs_weapon_rpg_tachyon_ammo
 	up_chapter	weapons
 	description	"_rpg_tachyon_ammo_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_tachyon
 		tech rs_weapon_rpg
@@ -782,7 +784,7 @@ tech rs_weapon_shotgun
 	up_chapter	weapons
 	description	"_shotgun_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_heavy
 	}
@@ -798,7 +800,7 @@ tech rs_weapon_shotgun_ammo
 	up_chapter	weapons
 	description	"_shotgun_ammo_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_blast
 		tech rs_weapon_shotgun
@@ -815,7 +817,7 @@ tech rs_weapon_shotgun_slug_ammo
 	up_chapter	weapons
 	description	"_shotgun_slug_ammo_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_blast
 		tech rs_weapon_shotgun
@@ -832,7 +834,7 @@ tech rs_weapon_smg
 	up_chapter	weapons
 	description	"_smg_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_assault
 	}
@@ -848,7 +850,7 @@ tech rs_weapon_smg_ammo
 	up_chapter	weapons
 	description	"_smg_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_normal
 		tech rs_weapon_smg
@@ -865,7 +867,7 @@ tech rs_weapon_smokegren
 	up_chapter	weapons
 	description	"_smokegren_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_explosive
 	}
@@ -881,7 +883,7 @@ tech rs_weapon_sniper
 	up_chapter	weapons
 	description	"_sniper_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_sniper
 	}
@@ -897,7 +899,7 @@ tech rs_weapon_sniper_ammo
 	up_chapter	weapons
 	description	"_sniper_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_normal
 		tech rs_weapon_sniper
@@ -914,7 +916,7 @@ tech rs_weapon_stungren
 	up_chapter	weapons
 	description	"_stungren_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_explosive
 		tech rs_damage_stun
@@ -932,7 +934,7 @@ tech rs_weapon_stunrod
 	up_chapter	weapons
 	description	"_stunrod_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_close
 		tech rs_damage_stun
@@ -949,7 +951,7 @@ tech rs_weapon_tachyonpistol
 	up_chapter	weapons
 	description	"_tachyonpistol_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_close
 		tech rs_tachyon
@@ -967,7 +969,7 @@ tech rs_weapon_tachyonpistol_ammo
 	up_chapter	weapons
 	description	"_tachyonpistol_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_tachyon
 		tech rs_weapon_tachyonpistol
@@ -984,7 +986,7 @@ tech rs_weapon_tachyonrifle
 	up_chapter	weapons
 	description	"_tachyonrifle_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_explosive
 		tech rs_skill_assault
@@ -1003,7 +1005,7 @@ tech rs_weapon_tachyonrifle_ammo
 	up_chapter	weapons
 	description	"_tachyonrifle_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_tachyon
 		tech rs_weapon_tachyonrifle
@@ -1020,7 +1022,7 @@ tech rs_weapon_tachyonsniper
 	up_chapter	weapons
 	description	"_tachyonsniper_txt"
 
-	require
+	require_AND
 	{
 		tech rs_skill_sniper
 		tech rs_tachyon
@@ -1038,7 +1040,7 @@ tech rs_weapon_tachyonsniper_ammo
 	up_chapter	weapons
 	description	"_tachyonsniper_mag_txt"
 
-	require
+	require_AND
 	{
 		tech rs_damage_tachyon
 		tech rs_weapon_tachyonsniper
@@ -1070,7 +1072,7 @@ tech rs_nano_armor
 	description	"_nano_armor_txt"
 	up_chapter	armors
 
-	require
+	require_AND
 	{
 		tech rs_nano
 	}
@@ -1086,7 +1088,7 @@ tech rs_nano_armor
 // 	description	"_nano_heavy_armor_txt"
 // 	up_chapter	armors
 //
-// 	require { tech rs_advanced_armor }
+// 	require_AND { tech rs_advanced_armor }
 // 	provides	heavy
 // 	time	5000
 //	producetime	120
@@ -1099,7 +1101,7 @@ tech rs_light_alien
 	up_chapter	armors
 	description	"SHOULD NEVER BE SEEN: Alien light armor"
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	light_alien
 	time	    25000
 	needscollected	true
@@ -1111,7 +1113,7 @@ tech rs_medium_alien
 	description	"SHOULD NEVER BE SEEN: Alien medium armor"
 	up_chapter	armors
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	medium_alien
 	time	    25000
 	needscollected	true
@@ -1150,7 +1152,7 @@ tech rs_damage_laser
 	up_chapter	damage
 	description	"_laser_damage_txt"
 
-	require
+	require_AND
 	{
 		tech rs_laser
 	}
@@ -1188,7 +1190,7 @@ tech rs_damage_plasma
 	up_chapter	damage
 	description	"_plasma_damage_txt"
 
-	require
+	require_AND
 	{
 		tech rs_plasma
 	}
@@ -1226,7 +1228,7 @@ tech rs_damage_tachyon
 	up_chapter	damage
 	description	"_tachyon_damage_txt"
 
-	require
+	require_AND
 	{
 		tech rs_tachyon
 	}
@@ -1348,7 +1350,7 @@ tech rs_building_aliencontainment
 	description	"_b_aliencontainment_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_alien
 	}
@@ -1363,7 +1365,7 @@ tech rs_building_command
 	description	"_b_command_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_building_powerplant
 	}
@@ -1388,7 +1390,7 @@ tech rs_building_hangar
 	description	"_b_hangar_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_building_powerplant
 	}
@@ -1403,7 +1405,7 @@ tech rs_building_hospital
 	description	"_b_hospital_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_building_lab
 	}
@@ -1418,7 +1420,7 @@ tech rs_building_intercept
 	description	"_b_intercept_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_building_command
 	}
@@ -1433,7 +1435,7 @@ tech rs_building_lab
 	description	"_b_lab_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_building_command
 	}
@@ -1448,7 +1450,7 @@ tech rs_building_powerplant
 	description	"_b_powerplant_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_building_entrance
 	}
@@ -1463,7 +1465,7 @@ tech rs_building_quarters
 	description	"_b_quarters_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_building_powerplant
 	}
@@ -1478,7 +1480,7 @@ tech rs_building_radar
 	description	"_b_radar_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_building_powerplant
 	}
@@ -1493,7 +1495,7 @@ tech rs_building_storage
 	description	"_b_storage_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_building_entrance
 	}
@@ -1508,7 +1510,7 @@ tech rs_building_teamroom
 	description	"_b_teamroom_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_building_powerplant
 	}
@@ -1523,7 +1525,7 @@ tech rs_building_ufo_hangar
 	description	"_b_ufo_hangar_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_building_lab
 		tech rs_craft_ufo_tech
@@ -1539,7 +1541,7 @@ tech rs_building_workshop
 	description	"_b_workshop_txt"
 	up_chapter	buildings
 
-	require
+	require_AND
 	{
 		tech rs_building_powerplant
 	}
@@ -1583,8 +1585,8 @@ tech rs_craft_interceptor
 //	name	"_Plasmadrive for H-92 Transport"
 //	description	"_dropship_upgrade_txt"
 //	up_chapter	crafts
-
-//	require 
+//
+//	require_AND 
 //	{
 //		tech rs_craft_dropship
 //		tech rs_plasma
@@ -1604,7 +1606,7 @@ tech rs_craft_ufo_small
 	up_chapter	ufos
 
 	// FIXME
-	require
+	require_AND
 	{
 		tech rs_craft_ufo_tech
 	}
@@ -1624,7 +1626,7 @@ tech rs_craft_ufo_big
 	up_chapter	ufos
 
 	// FIXME
-	require
+	require_AND
 	{
 		tech rs_craft_ufo_tech
 	}
@@ -1649,7 +1651,7 @@ tech rs_alien_ortnok
 	description	"_ortnok_notes_txt"
 	up_chapter	tech
 
-	require
+	require_AND
 	{
 		tech rs_alien_ortnok_notes
 	}
@@ -1669,7 +1671,7 @@ tech rs_alien_ortnok_notes
 	description	"_ortnok_notes_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	0
 	needscollected	true
@@ -1685,7 +1687,7 @@ tech rs_alien_ortnok_autopsy
 	description	"_ortnok_autopsy_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	1500
 	needscollected	true
@@ -1703,7 +1705,7 @@ tech rs_alien_ortnok_xenobiology
 	description	"_ortnok_xenobiology_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	2250
 	needscollected	true
@@ -1719,7 +1721,7 @@ tech rs_alien_ortnok_interrogation
 	description	"_ortnok_interrogation_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	1500
 	needscollected	true
@@ -1737,7 +1739,7 @@ tech rs_alien_ortnok_light
 	description	"_ortnok_light_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	0
 	needscollected	true
@@ -1755,7 +1757,7 @@ tech rs_alien_ortnok_medium
 	description	"_ortnok_medium_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	0
 	needscollected	true
@@ -1773,7 +1775,7 @@ tech rs_alien_antarean_notes
 	description	"_antarean_notes_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	0
 	needscollected	true
@@ -1789,7 +1791,7 @@ tech rs_alien_antarean_autopsy
 	description	"_antarean_autopsy_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	1500
 	needscollected	true
@@ -1805,7 +1807,7 @@ tech rs_alien_antarean_xenobiology
 	description	"_antarean_xenobiology_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	2250
 	needscollected	true
@@ -1821,7 +1823,7 @@ tech rs_alien_antarean_interrogation
 	description	"_antarean_interrogation_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	1500
 	needscollected	true
@@ -1837,7 +1839,7 @@ tech rs_alien_antarean_interrogation_commander
 	description	"_antarean_interrogation_commander_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	6000
 	needscollected	true
@@ -1855,7 +1857,7 @@ tech rs_alien_shevaar_notes
 	description	"_shevaar_notes_txt"
 	up_chapter	aliens
 
-		require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	0
 	needscollected	true
@@ -1871,7 +1873,7 @@ tech rs_alien_shevaar_autopsy
 	description	"_shevaar_autopsy_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	1500
 	needscollected	true
@@ -1887,7 +1889,7 @@ tech rs_alien_shevaar_xenobiology
 	description	"_shevaar_xenobiology_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	2250
 	needscollected	true
@@ -1905,7 +1907,7 @@ tech rs_alien_hovernet_notes
 	description	"_hovernet_notes_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	0
 	needscollected	true
@@ -1921,7 +1923,7 @@ tech rs_alien_hovernet_autopsy
 	description	"_hovernet_autopsy_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	1500
 	needscollected	true
@@ -1937,7 +1939,7 @@ tech rs_alien_hovernet_xenobiology
 	description	"_hovernet_xenobiology_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	2250
 	needscollected	true
@@ -1955,7 +1957,7 @@ tech rs_alien_cyborg_ortnok_notes
 	description	"_cyborg_ortnok_notes_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	0
 	needscollected	true
@@ -1971,7 +1973,7 @@ tech rs_alien_cyborg_ortnok_autopsy
 	description	"_cyborg_ortnok_autopsy_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	1500
 	needscollected	true
@@ -1987,7 +1989,7 @@ tech rs_alien_cyborg_ortnok_xenobiology
 	description	"_cyborg_ortnok_xenobiology_txt"
 	up_chapter	aliens
 
-	require { tech nothing }
+	require_AND { tech nothing }
 	provides	""
 	time	2250
 	needscollected	true
@@ -2052,7 +2054,7 @@ tech rs_craft_shield_medium
 	name	"_Medium Shield"
 	description	"_craft_shield_medium_txt"
 
-	require
+	require_AND
 	{
 		tech rs_craft_shield_light
 	}
@@ -2072,7 +2074,7 @@ tech rs_craft_shield_hard
 	name	"_Hard Shield"
 	description	"_craft_shield_hard_txt"
 
-	require
+	require_AND
 	{
 		tech rs_craft_shield_medium
 	}
