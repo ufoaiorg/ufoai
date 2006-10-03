@@ -914,7 +914,7 @@ static void RS_RemoveScientist_f(void)
 
 /**
  * @brief Starts the research of the selected research-list entry.
- * TODO: Check if laboratory is available
+ * TODO: Check if laboratory is available.
  */
 static void RS_ResearchStart(void)
 {
@@ -933,6 +933,12 @@ static void RS_ResearchStart(void)
 	/* get the currently selected research-item */
 	tech = researchList[researchListPos];
 
+	/* TODO:
+		Check for collected items that are needed by the tech to be researchable.
+		If there are enough items add them to the tech, otherwise pop an errormessage telling the palyer what is missing.
+	*/
+	
+	
 	if (tech->statusResearchable) {
 		switch (tech->statusResearch) {
 		case RS_RUNNING:
@@ -1889,25 +1895,6 @@ void RS_ParseTechnologies(char *id, char **text)
 #endif /* overhaul */
 
 #if DEPENDENCIES_OVERHAUL
-#if 0
-/**
- * @brief Returns the list of required (by id) items.
- * @param[in] id Unique id of a technology_t.
- * @param[out] required A list of requirements with the unique ids of techs/items/buildings/etc..
- */
-void RS_GetRequired(char *id, requirements_t *required_AND)
-{
-	technology_t *tech = NULL;
-
-	tech = RS_GetTechByID(id);
-	if (!tech)
-		return;
-
-	/* research item found */
-	required = &tech->require_AND;	/* Is linking a good idea? */
-	/* TODO: require_OR??? */
-}
-#endif /* 0 */
 #else /* overhaul */
 /**
  * @brief Returns the list of required (by id) items.
