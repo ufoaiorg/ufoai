@@ -85,7 +85,7 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 				break;
 			case RS_LINK_ITEM:
 				/* Com_DPrintf("RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]); */
-				if (required_AND->collected[i] < required_AND->collected[i]) {
+				if (required_AND->collected[i] < required_AND->amount[i]) {
 					met_AND = qfalse;
 				}
 				break;
@@ -114,7 +114,7 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 				break;
 			case RS_LINK_ITEM:
 				Com_DPrintf("RS_RequirementsMet: ORitem: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
-				if (required_OR->collected[i] < required_OR->collected[i]) {
+				if (required_OR->collected[i] < required_OR->amount[i]) {
 					met_OR = qtrue;
 				}
 				break;
@@ -150,6 +150,8 @@ int RS_ItemInBase(int item_idx, base_t *base)
 	if (!ed)
 		return -1;
 	
+	Com_DPrintf("RS_ItemInBase: DEBUG idx %s\n",  csi.ods[item_idx].kurz);
+	
 	return ed->num[item_idx];
 }
 
@@ -171,7 +173,7 @@ qboolean RS_CheckCollected(requirements_t *required)
 	for (i = 0; i < required->numLinks; i++) {
 		if (required->type[i] == RS_LINK_ITEM) {
 			item_amount = RS_ItemInBase(required->idx[i], baseCurrent);
-			if (RS_ItemInBase > 0) {
+			if (item_amount > 0) {
 				required->collected[i] = item_amount;
 			} else {
 				required->collected[i] = 0;
@@ -222,7 +224,8 @@ void RS_MarkResearchable(void)
 		tech = &gd.technologies[i];
 		tech->statusResearchable = qfalse;
 	}
-
+	RS_CheckAllCollected();
+	
 	for (i = 0; i < gd.numTechnologies; i++) {	/* i = tech-index */
 		tech = &gd.technologies[i];
 		if (!tech->statusResearchable) {	/* Redundant, since we set them all to false, but you never know. */
@@ -823,8 +826,8 @@ static void RS_ResearchStart(void)
 		If there are enough items add them to the tech, otherwise pop an errormessage telling the palyer what is missing.
 	*/
 	if (!tech->statusResearchable) {
-		RS_CheckCollected(&tech->require_AND);
-		RS_CheckCollected(&tech->require_OR);
+		if (RS_CheckCollected(&tech->require_AND) && RS_CheckCollected(&tech->require_OR))
+			tech->statusCollected = qtrue;
 		RS_MarkResearchable();
 	}
 	/************/
