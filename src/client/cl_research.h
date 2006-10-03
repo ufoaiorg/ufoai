@@ -28,11 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cl_ufopedia.h"
 
-#define MAX_RESEARCHDISPLAY 28	/* number of the available string (in the list) in the research menu */
+#define MAX_RESEARCHDISPLAY 28	/* Number of the available string (in the list) in the research menu */
 #define MAX_RESEARCHLIST 32
-#define MAX_TECHNOLOGIES 256
-#define MAX_TECHLINKS 32
-
+#define MAX_TECHNOLOGIES 256	/* Maximum number of technologies overall. */
+#define MAX_TECHLINKS 16		/* Maximum number of requirements in a technology (i.e in require_AND and require_OR). */
 
 
 typedef enum researchStatus_s {
@@ -56,7 +55,6 @@ typedef enum researchType_s {
 
 #define DEPENDENCIES_OVERHAUL 1
 /* TODO: dependencies overhaul. Set to 1 to change to new dependency-calculation. */
-
 
 #if DEPENDENCIES_OVERHAUL
 typedef enum requirementType_s {
