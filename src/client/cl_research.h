@@ -94,15 +94,14 @@ typedef struct technology_s {
 #if DEPENDENCIES_OVERHAUL
 	requirements_t require_AND;	/* A list of requirements that ALL need to be met (= AND-related) See struct above. */
 	requirements_t require_OR;	/* A list of requirements where ANY need to be met (= OR-related) See struct above. */
+	qboolean statusCollected;	/* Did we loot all required items? This is (or _should be_) updated from the info stored in the require_X lists. */
 #else /* overhaul */
 	stringlist_t requires;
-#endif /* overhaul */
-
-#if 1
-/* TODO: replace with 'require' entries. */
+	/* TODO: replace with 'require' entries. */
 	byte needsCollected;		/* Is a collected item neccessary to research this item? */
 	int statusCollected;		/* Did we loot this item (and how mach of it -> aliens/corpses) ? */
-#endif
+#endif /* overhaul */
+
 	char provides[MAX_VAR];		/* The item that this technology enables. */
 	float overalltime, time;	/* The time that is needed to research this tech. (in days). */
 					/* "overalltime" stays always the same, */
@@ -141,8 +140,11 @@ qboolean RS_TechIsResearched(int tech_idx);
 qboolean RS_TechIsResearchable(technology_t * tech);
 qboolean RS_IsResearched_idx(int idx);
 qboolean RS_IsResearched_ptr(technology_t * tech);
+#if DEPENDENCIES_OVERHAUL
 int RS_Collected_(technology_t * tech);
+#else /* overhaul */
 qboolean RS_ItemCollected(char *id_provided);
+#endif /* overhaul */
 
 void RS_AddObjectTechs(void);
 void RS_InitTree(void);

@@ -452,6 +452,7 @@ tech rs_weapon_kerrblade
 	{
 		tech rs_skill_close
 		tech rs_damage_normal
+		item kerrblade 1
 	}
 	provides	kerrblade
 	time	200
@@ -583,6 +584,7 @@ tech rs_weapon_plasatomizer
 		tech rs_skill_assault
 		tech rs_skill_heavy
 		tech rs_plasma
+		item plaspistol 3
 	}
 
 	provides	plaspistol
@@ -618,6 +620,7 @@ tech rs_weapon_plasblaster
 		tech rs_skill_explosive
 		tech rs_skill_heavy
 		tech rs_plasma
+		item plasblaster 5
 	}
 	provides	plasblaster
 	time	5500
@@ -651,6 +654,7 @@ tech rs_weapon_plasblade
 	{
 		tech rs_skill_close
 		tech rs_damage_plasma
+		item plasblade 5
 	}
 	provides	plasblade
 	time	1000
@@ -668,6 +672,7 @@ tech rs_weapon_plasmagren
 	{
 		tech rs_skill_explosive
 		tech rs_damage_plasma
+		item plasmagrenade 2
 	}
 
 	provides	plasmagrenade
@@ -687,6 +692,7 @@ tech rs_weapon_plasrifle
 		tech rs_skill_assault
 		tech rs_skill_heavy
 		tech rs_plasma
+		item plasrifle 4
 	}
 
 	provides	plasrifle
@@ -955,6 +961,7 @@ tech rs_weapon_tachyonpistol
 	{
 		tech rs_skill_close
 		tech rs_tachyon
+		item tachyonpistol 4
 	}
 
 	provides	tachyonpistol
@@ -991,6 +998,7 @@ tech rs_weapon_tachyonrifle
 		tech rs_skill_explosive
 		tech rs_skill_assault
 		tech rs_tachyon
+		item tachyonrifle 7
 	}
 
 	provides	tachyonrifle
@@ -1026,6 +1034,7 @@ tech rs_weapon_tachyonsniper
 	{
 		tech rs_skill_sniper
 		tech rs_tachyon
+		item tachyonrifle 7
 	}
 
 	provides	tachyonsniper
@@ -1609,6 +1618,7 @@ tech rs_craft_ufo_small
 	require_AND
 	{
 		tech rs_craft_ufo_tech
+		// item craft_ufo_small 1
 	}
 
 	provides	craft_ufo_small
@@ -1629,6 +1639,7 @@ tech rs_craft_ufo_big
 	require_AND
 	{
 		tech rs_craft_ufo_tech
+		// item craft_ufo_big 1
 	}
 
 	provides	craft_ufo_big
