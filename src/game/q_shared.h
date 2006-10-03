@@ -56,7 +56,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #endif
 
-#include "../../config.h"
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
 #include <assert.h>
 #include <math.h>
