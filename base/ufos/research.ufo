@@ -457,7 +457,6 @@ tech rs_weapon_kerrblade
 	provides	kerrblade
 	time	200
 	producetime	10
-	needscollected	true
 }
 
 tech rs_weapon_laserpistol
@@ -590,7 +589,6 @@ tech rs_weapon_plasatomizer
 	provides	plaspistol
 	time	2000
 	producetime	60
-	needscollected	true
 }
 
 tech rs_weapon_plasatomizer_ammo
@@ -625,7 +623,6 @@ tech rs_weapon_plasblaster
 	provides	plasblaster
 	time	5500
 	producetime	90
-	needscollected	true
 }
 
 tech rs_weapon_plasblaster_ammo
@@ -659,7 +656,6 @@ tech rs_weapon_plasblade
 	provides	plasblade
 	time	1000
 	producetime	15
-	needscollected	true
 }
 
 tech rs_weapon_plasmagren
@@ -677,7 +673,6 @@ tech rs_weapon_plasmagren
 
 	provides	plasmagrenade
 	time	1500
-	needscollected	false
 	producetime	2
 }
 
@@ -698,7 +693,6 @@ tech rs_weapon_plasrifle
 	provides	plasrifle
 	time	3250
 	producetime	90
-	needscollected	true
 }
 
 tech rs_weapon_plasrifle_ammo
@@ -967,7 +961,6 @@ tech rs_weapon_tachyonpistol
 	provides	tachyonpistol
 	time	3750
 	producetime	60
-	needscollected	true
 }
 
 tech rs_weapon_tachyonpistol_ammo
@@ -1004,7 +997,6 @@ tech rs_weapon_tachyonrifle
 	provides	tachyonrifle
 	time	6000
 	producetime	80
-	needscollected	true
 }
 
 tech rs_weapon_tachyonrifle_ammo
@@ -1040,7 +1032,6 @@ tech rs_weapon_tachyonsniper
 	provides	tachyonsniper
 	time	7750
 	producetime	90
-	needscollected	true
 }
 
 tech rs_weapon_tachyonsniper_ammo
@@ -1113,7 +1104,7 @@ tech rs_light_alien
 	require_AND { tech nothing }
 	provides	light_alien
 	time	    25000
-	needscollected	true
+	//needscollected	true
 }
 
 tech rs_medium_alien
@@ -1125,7 +1116,7 @@ tech rs_medium_alien
 	require_AND { tech nothing }
 	provides	medium_alien
 	time	    25000
-	needscollected	true
+	//needscollected	true
 }
 
 //========================
@@ -1669,7 +1660,7 @@ tech rs_alien_ortnok
 
 	provides	""
 	time	0
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_ortnok
@@ -1685,7 +1676,7 @@ tech rs_alien_ortnok_notes
 	require_AND { tech nothing }
 	provides	""
 	time	0
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_ortnok
@@ -1701,7 +1692,7 @@ tech rs_alien_ortnok_autopsy
 	require_AND { tech nothing }
 	provides	""
 	time	1500
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_ortnok
@@ -1719,7 +1710,7 @@ tech rs_alien_ortnok_xenobiology
 	require_AND { tech nothing }
 	provides	""
 	time	2250
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_ortnok
@@ -1735,7 +1726,7 @@ tech rs_alien_ortnok_interrogation
 	require_AND { tech nothing }
 	provides	""
 	time	1500
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_ortnok
@@ -1753,7 +1744,7 @@ tech rs_alien_ortnok_light
 	require_AND { tech nothing }
 	provides	""
 	time	0
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_ortnok_light
@@ -1771,7 +1762,7 @@ tech rs_alien_ortnok_medium
 	require_AND { tech nothing }
 	provides	""
 	time	0
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_ortnok_medium
@@ -1789,7 +1780,7 @@ tech rs_alien_antarean_notes
 	require_AND { tech nothing }
 	provides	""
 	time	0
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_antarean
@@ -1805,7 +1796,7 @@ tech rs_alien_antarean_autopsy
 	require_AND { tech nothing }
 	provides	""
 	time	1500
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_antarean
@@ -1821,7 +1812,7 @@ tech rs_alien_antarean_xenobiology
 	require_AND { tech nothing }
 	provides	""
 	time	2250
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_antarean
@@ -1837,7 +1828,7 @@ tech rs_alien_antarean_interrogation
 	require_AND { tech nothing }
 	provides	""
 	time	1500
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_antarean
@@ -1853,7 +1844,7 @@ tech rs_alien_antarean_interrogation_commander
 	require_AND { tech nothing }
 	provides	""
 	time	6000
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_antarean
@@ -1871,7 +1862,7 @@ tech rs_alien_shevaar_notes
 	require_AND { tech nothing }
 	provides	""
 	time	0
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_shevaar
@@ -1887,7 +1878,7 @@ tech rs_alien_shevaar_autopsy
 	require_AND { tech nothing }
 	provides	""
 	time	1500
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_shevaar
@@ -1903,7 +1894,7 @@ tech rs_alien_shevaar_xenobiology
 	require_AND { tech nothing }
 	provides	""
 	time	2250
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_shevaar
@@ -1921,7 +1912,7 @@ tech rs_alien_hovernet_notes
 	require_AND { tech nothing }
 	provides	""
 	time	0
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_hovernet
@@ -1937,7 +1928,7 @@ tech rs_alien_hovernet_autopsy
 	require_AND { tech nothing }
 	provides	""
 	time	1500
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_hovernet
@@ -1953,7 +1944,7 @@ tech rs_alien_hovernet_xenobiology
 	require_AND { tech nothing }
 	provides	""
 	time	2250
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_hovernet
@@ -1971,7 +1962,7 @@ tech rs_alien_cyborg_ortnok_notes
 	require_AND { tech nothing }
 	provides	""
 	time	0
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_cyborg_ortnok
@@ -1987,7 +1978,7 @@ tech rs_alien_cyborg_ortnok_autopsy
 	require_AND { tech nothing }
 	provides	""
 	time	1500
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_cyborg_ortnok
@@ -2003,7 +1994,7 @@ tech rs_alien_cyborg_ortnok_xenobiology
 	require_AND { tech nothing }
 	provides	""
 	time	2250
-	needscollected	true
+	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_cyborg_ortnok
@@ -2021,7 +2012,6 @@ tech rs_ugv_phoenix
 	provides	ugv_phoenix
 	time	0
 	producetime	800
-	needscollected	false
 
 	mdl_top	"soldiers/ugv_phoenix/phoenix"
 }
@@ -2036,7 +2026,6 @@ tech rs_ugv_triax
 	provides	ugv_triax
 	time	0
 	producetime	800
-	needscollected	false
 
 	mdl_top	"soldiers/ugv_triax/triax"
 }
@@ -2053,7 +2042,6 @@ tech rs_craft_shield_light
 	// FIXME
 	provides	light
 	time	0
-	needscollected	false
 
 	image_top	"techs/craftshield_light"
 }
@@ -2073,7 +2061,6 @@ tech rs_craft_shield_medium
 	// FIXME
 	provides	medium
 	time	1000
-	needscollected	false
 
 	image_top	"techs/craftshield_medium"
 }
@@ -2093,7 +2080,6 @@ tech rs_craft_shield_hard
 	// FIXME
 	provides	light
 	time	2500
-	needscollected	true
 
 	image_top	"techs/craftshield_hard"
 }
@@ -2108,7 +2094,6 @@ tech rs_craft_weapon_flac
 	// FIXME
 	provides	assault
 	time	0
-	needscollected	false
 
 	image_top	"techs/craftweapon_flac"
 }

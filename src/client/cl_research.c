@@ -77,14 +77,14 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 		for (i = 0; i < required_AND->numLinks; i++) {
 			switch (required_AND->type[i]) {
 			case RS_LINK_TECH:
-				Com_DPrintf("RS_RequirementsMet: ANDtech: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
+				/* Com_DPrintf("RS_RequirementsMet: ANDtech: %s / %i\n", required_AND->id[i], required_AND->idx[i]); */
 				if ((!RS_TechIsResearched(required_AND->idx[i]))
 					|| (!Q_strncmp(required_AND->id[i], "nothing", MAX_VAR))) {
 					met_AND = qfalse;
 				}
 				break;
 			case RS_LINK_ITEM:
-				Com_DPrintf("RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
+				/* Com_DPrintf("RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]); */
 				if (required_AND->collected[i] < required_AND->collected[i]) {
 					met_AND = qfalse;
 				}
@@ -229,7 +229,7 @@ void RS_MarkResearchable(void)
 			/* Check for collected items/aliens/etc... */
 			
 			if (tech->statusResearch != RS_FINISH) {
-				Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", tech->id);
+				/* Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", tech->id); */
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 				
 				/* All requirements are met. */
@@ -1502,15 +1502,13 @@ void RS_ParseTechnologies(char *id, char **text)
 		} else {
 			
 			if ((!Q_strncmp(token, "require_AND", MAX_VAR)) || (!Q_strncmp(token, "require_OR", MAX_VAR))) {
+				/* Link to correct list. */
 				if (!Q_strncmp(token, "require_AND", MAX_VAR)) {
 					required_temp = &tech->require_AND;
 				} else {
 					required_temp = &tech->require_OR;
 				}
 				
-				/* Initialize requirement list. */
-				required_temp->numLinks = 0;
-
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					break;
@@ -1532,7 +1530,6 @@ void RS_ParseTechnologies(char *id, char **text)
 							required_temp->type[required_temp->numLinks] = RS_LINK_TECH;
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
-							/* TODO: Fix the broken 'token'. currently it's always "tech" isntead of the 'id' */
 							Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
 							Com_DPrintf("RS_ParseTechnologies: tech - %s\n", required_temp->id[required_temp->numLinks]);
 							required_temp->numLinks++;

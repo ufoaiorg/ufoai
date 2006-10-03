@@ -135,6 +135,8 @@ static void CL_BuyType(void)
 	if (!baseCurrent)
 		return;
 
+	/* RS_CheckAllCollected(); TODO: needed? */
+
 	CL_UpdateCredits(ccs.credits);
 
 	/* 'normal' items */

@@ -142,6 +142,7 @@ qboolean RS_IsResearched_idx(int idx);
 qboolean RS_IsResearched_ptr(technology_t * tech);
 #if DEPENDENCIES_OVERHAUL
 int RS_Collected_(technology_t * tech);
+/* void RS_CheckAllCollected(void); */
 #else /* overhaul */
 qboolean RS_ItemCollected(char *id_provided);
 #endif /* overhaul */
