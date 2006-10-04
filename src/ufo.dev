@@ -753,18 +753,18 @@ BuildCmd=$(CC) -c cl_aircraft.c -o cl_aircraft.o $(CFLAGS)
 Major=2
 Minor=1
 Release=0
-Build=0
+Build=2
 LanguageID=1033
 CharsetID=1252
 CompanyName=http://www.ufoai.net
-FileVersion=2.1-dev
+FileVersion=2.1-dev2
 FileDescription=UFO:Alien Invasion
 InternalName=
 LegalCopyright=
 LegalTrademarks=
 OriginalFilename=ufo.exe
 ProductName=ufo
-ProductVersion=2.1-dev
+ProductVersion=2.1-dev2
 AutoIncBuildNr=0
 
 [Unit78]
