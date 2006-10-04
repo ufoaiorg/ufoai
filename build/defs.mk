@@ -2,7 +2,9 @@
 LIBTOOL=libtool
 SHARED_EXT=so
 SRCDIR=src
+
 LDFLAGS+=$(LIBS)
+CFLAGS+=-DHAVE_CONFIG_H
 
 # Common things
 _BUILDDIR=$(strip $(BUILDDIR))
@@ -17,17 +19,17 @@ LIBTOOL_CC=$(LIBTOOL) --silent --mode=compile $(CC) -prefer-pic $(CFLAGS)
 # Target options
 
 ifeq ($(BUILD_DEBUG),1)
-	BUILDDIR=debug-$(TARGET_OS)-$(TARGET_CPU)
-	CFLAGS+=-ggdb -O0 -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS) -fno-inline
+    BUILDDIR=debug-$(TARGET_OS)-$(TARGET_CPU)
+    CFLAGS+=-ggdb -O0 -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS) -fno-inline
 else
-	BUILDDIR=release-$(TARGET_OS)-$(TARGET_CPU)
-	CFLAGS+=-DNDEBUG $(RELEASE_CFLAGS)
+    BUILDDIR=release-$(TARGET_OS)-$(TARGET_CPU)
+    CFLAGS+=-DNDEBUG $(RELEASE_CFLAGS)
 endif
 
 ifeq ($(PROFILING),1)
-	CFLAGS+=-pg -DPROFILING -fprofile-arcs -ftest-coverage
+    CFLAGS+=-pg -DPROFILING -fprofile-arcs -ftest-coverage
 endif
 
 ifeq ($(PARANOID),1)
-	CFLAGS+=-DPARANOID
+    CFLAGS+=-DPARANOID
 endif
