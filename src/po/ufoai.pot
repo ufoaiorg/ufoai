@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-01 08:45+0200\n"
+"POT-Creation-Date: 2006-10-04 19:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.ufo.po (UFO Alien Invasion)  #-#-#-#-#\n"
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: http://www.sourceforge.net/projects/ufoai/\n"
-"POT-Creation-Date: 2006-10-01 08:45+0200\n"
+"POT-Creation-Date: 2006-10-04 19:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -448,7 +448,7 @@ msgstr ""
 msgid "Build base-facilities"
 msgstr ""
 
-#: ../base/ufos/menu_bases.ufo:98 ../base/ufos/research.ufo:66
+#: ../base/ufos/menu_bases.ufo:98 ../base/ufos/research.ufo:67
 msgid "Buildings"
 msgstr ""
 
@@ -461,7 +461,7 @@ msgid "Buy a new aircraft"
 msgstr ""
 
 #: ../base/ufos/menu_bases.ufo:141 ../base/ufos/menu_geoscape.ufo:719
-#: ../base/ufos/research.ufo:60 client/cl_map.c:327
+#: ../base/ufos/research.ufo:61 client/cl_map.c:327
 msgid "Aircraft"
 msgstr ""
 
@@ -1839,719 +1839,719 @@ msgstr ""
 msgid "The Commonwealth of Oceania"
 msgstr ""
 
-#: ../base/ufos/research.ufo:61
+#: ../base/ufos/research.ufo:62
 msgid "Technologies & Discoveries"
 msgstr ""
 
-#: ../base/ufos/research.ufo:62
+#: ../base/ufos/research.ufo:63
 msgid "Weapons"
 msgstr ""
 
-#: ../base/ufos/research.ufo:63
+#: ../base/ufos/research.ufo:64
 msgid "Armors"
 msgstr ""
 
-#: ../base/ufos/research.ufo:64
+#: ../base/ufos/research.ufo:65
 msgid "Damage Types"
 msgstr ""
 
-#: ../base/ufos/research.ufo:65
+#: ../base/ufos/research.ufo:66
 msgid "Soldier Skills"
 msgstr ""
 
-#: ../base/ufos/research.ufo:67
+#: ../base/ufos/research.ufo:68
 msgid "Alien Species"
 msgstr ""
 
-#: ../base/ufos/research.ufo:68
+#: ../base/ufos/research.ufo:69
 msgid "UFOs"
 msgstr ""
 
-#: ../base/ufos/research.ufo:69
+#: ../base/ufos/research.ufo:70
 msgid "UGVs"
 msgstr ""
 
-#: ../base/ufos/research.ufo:79
+#: ../base/ufos/research.ufo:80
 msgid "Advanced Laser Technology"
 msgstr ""
 
-#: ../base/ufos/research.ufo:81
+#: ../base/ufos/research.ufo:82
 msgid "laser_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:90
+#: ../base/ufos/research.ufo:91
 msgid "Advanced Plasma Control"
 msgstr ""
 
-#: ../base/ufos/research.ufo:92
+#: ../base/ufos/research.ufo:93
 msgid "plasma_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:101
+#: ../base/ufos/research.ufo:102
 msgid "Tachyon Control"
 msgstr ""
 
-#: ../base/ufos/research.ufo:103
+#: ../base/ufos/research.ufo:104
 msgid "tachyon_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:112
+#: ../base/ufos/research.ufo:113
 msgid "Nano Technology"
 msgstr ""
 
-#: ../base/ufos/research.ufo:114
+#: ../base/ufos/research.ufo:115
 msgid "nano_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:137
+#: ../base/ufos/research.ufo:146
 msgid "General UFO technology"
 msgstr ""
 
-#: ../base/ufos/research.ufo:138
+#: ../base/ufos/research.ufo:147
 msgid "ufo_tech_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:157
+#: ../base/ufos/research.ufo:166
 msgid "assault_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:169
+#: ../base/ufos/research.ufo:181
 msgid "assault_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:181
+#: ../base/ufos/research.ufo:197
 msgid "bolterrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:193
+#: ../base/ufos/research.ufo:212
 msgid "bolterrifle_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:205
+#: ../base/ufos/research.ufo:228
 msgid "combatknife_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:217
+#: ../base/ufos/research.ufo:244
 msgid "flamer_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:229
+#: ../base/ufos/research.ufo:259
 msgid "flamer_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:241
+#: ../base/ufos/research.ufo:275
 msgid "flashbang_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:252
+#: ../base/ufos/research.ufo:290
 msgid "fraggren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:264
+#: ../base/ufos/research.ufo:306
 msgid "incgren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:276
+#: ../base/ufos/research.ufo:322
 msgid "grenl_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:288
+#: ../base/ufos/research.ufo:337
 msgid "grenl_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:300
+#: ../base/ufos/research.ufo:353
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:312
+#: ../base/ufos/research.ufo:369
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:324
+#: ../base/ufos/research.ufo:385
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:336 ../base/ufos/research.ufo:348
+#: ../base/ufos/research.ufo:401 ../base/ufos/research.ufo:418
 msgid "heavylaser_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:360
+#: ../base/ufos/research.ufo:434
 msgid "irgoggles_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:372
+#: ../base/ufos/research.ufo:449
 msgid "kerrblade_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:385
+#: ../base/ufos/research.ufo:466
 msgid "laserpistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:397
+#: ../base/ufos/research.ufo:482
 msgid "laserpistol_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:409
+#: ../base/ufos/research.ufo:498
 msgid "laserrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:421
+#: ../base/ufos/research.ufo:515
 msgid "laserrifle_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:433
+#: ../base/ufos/research.ufo:531
 msgid "medikit_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:445
+#: ../base/ufos/research.ufo:546
 msgid "pistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:457
+#: ../base/ufos/research.ufo:562
 msgid "pistol_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:469
+#: ../base/ufos/research.ufo:579
 msgid "plasatomizer_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:482
+#: ../base/ufos/research.ufo:598
 msgid "plasatomizer_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:494
+#: ../base/ufos/research.ufo:614
 msgid "plasblaster_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:507
+#: ../base/ufos/research.ufo:632
 msgid "plasblaster_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:519
+#: ../base/ufos/research.ufo:648
 msgid "plasblade_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:532
+#: ../base/ufos/research.ufo:665
 msgid "plasmagren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:545
+#: ../base/ufos/research.ufo:683
 msgid "plasrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:558
+#: ../base/ufos/research.ufo:702
 msgid "plasrifle_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:570
+#: ../base/ufos/research.ufo:718
 msgid "rpg_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:582
+#: ../base/ufos/research.ufo:734
 msgid "rpg_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:594
+#: ../base/ufos/research.ufo:751
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:606
+#: ../base/ufos/research.ufo:768
 msgid "rpg_tachyon_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:618
+#: ../base/ufos/research.ufo:785
 msgid "shotgun_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:630
+#: ../base/ufos/research.ufo:801
 msgid "shotgun_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:642
+#: ../base/ufos/research.ufo:818
 msgid "shotgun_slug_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:654
+#: ../base/ufos/research.ufo:835
 msgid "smg_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:666
+#: ../base/ufos/research.ufo:851
 msgid "smg_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:678
+#: ../base/ufos/research.ufo:868
 msgid "smokegren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:690
+#: ../base/ufos/research.ufo:884
 msgid "sniper_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:702
+#: ../base/ufos/research.ufo:900
 msgid "sniper_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:714
+#: ../base/ufos/research.ufo:917
 msgid "stungren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:726
+#: ../base/ufos/research.ufo:935
 msgid "stunrod_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:738
+#: ../base/ufos/research.ufo:952
 msgid "tachyonpistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:751
+#: ../base/ufos/research.ufo:970
 msgid "tachyonpistol_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:763
+#: ../base/ufos/research.ufo:987
 msgid "tachyonrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:776
+#: ../base/ufos/research.ufo:1006
 msgid "tachyonrifle_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:788
+#: ../base/ufos/research.ufo:1023
 msgid "tachyonsniper_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:801
+#: ../base/ufos/research.ufo:1041
 msgid "tachyonsniper_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:817
+#: ../base/ufos/research.ufo:1062
 msgid "kevlar_armor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:827
+#: ../base/ufos/research.ufo:1072
 msgid "nano_armor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:880
+#: ../base/ufos/research.ufo:1129
 msgid "Blast Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:882
+#: ../base/ufos/research.ufo:1131
 msgid "blast_damage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:891
+#: ../base/ufos/research.ufo:1140
 msgid "Fire Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:893
+#: ../base/ufos/research.ufo:1142
 msgid "fire_damage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:902
+#: ../base/ufos/research.ufo:1151
 msgid "Laser Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:904
+#: ../base/ufos/research.ufo:1153
 msgid "laser_damage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:914
+#: ../base/ufos/research.ufo:1167
 msgid "Normal Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:916
+#: ../base/ufos/research.ufo:1169
 msgid "normal_damage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:925 ../base/ufos/research.ufo:948
+#: ../base/ufos/research.ufo:1178 ../base/ufos/research.ufo:1205
 msgid "Shock Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:927 ../base/ufos/research.ufo:950
+#: ../base/ufos/research.ufo:1180 ../base/ufos/research.ufo:1207
 msgid "shock_damage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:936
+#: ../base/ufos/research.ufo:1189
 msgid "Plasma Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:938
+#: ../base/ufos/research.ufo:1191
 msgid "plasma_damage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:959
+#: ../base/ufos/research.ufo:1216
 msgid "Stun Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:961
+#: ../base/ufos/research.ufo:1218
 msgid "stun_damage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:970
+#: ../base/ufos/research.ufo:1227
 msgid "Tachyon Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:972
+#: ../base/ufos/research.ufo:1229
 msgid "tachyon_damage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:986
+#: ../base/ufos/research.ufo:1247
 msgid "Accuracy Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:988
+#: ../base/ufos/research.ufo:1249
 msgid "accuracy_skill_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:997
+#: ../base/ufos/research.ufo:1258
 msgid "Assault Guns Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:999
+#: ../base/ufos/research.ufo:1260
 msgid "assault_skill_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1008
+#: ../base/ufos/research.ufo:1269
 msgid "Close Combat Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1010
+#: ../base/ufos/research.ufo:1271
 msgid "close_skill_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1019
+#: ../base/ufos/research.ufo:1280
 msgid "High-Explosives Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1021
+#: ../base/ufos/research.ufo:1282
 msgid "explosive_skill_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1030
+#: ../base/ufos/research.ufo:1291
 msgid "Heavy Weapons Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1032
+#: ../base/ufos/research.ufo:1293
 msgid "heavy_skill_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1041
+#: ../base/ufos/research.ufo:1302
 msgid "Mind Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1043
+#: ../base/ufos/research.ufo:1304
 msgid "mind_skill_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1052
+#: ../base/ufos/research.ufo:1313
 msgid "Power Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1054
+#: ../base/ufos/research.ufo:1315
 msgid "power_skill_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1063
+#: ../base/ufos/research.ufo:1324
 msgid "Sniper Rifles Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1065
+#: ../base/ufos/research.ufo:1326
 msgid "sniper_skill_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1074
+#: ../base/ufos/research.ufo:1335
 msgid "Speed Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1076
+#: ../base/ufos/research.ufo:1337
 msgid "speed_skill_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1089
+#: ../base/ufos/research.ufo:1350
 msgid "b_aliencontainment_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1100
+#: ../base/ufos/research.ufo:1365
 msgid "b_command_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1111
+#: ../base/ufos/research.ufo:1380
 msgid "b_entrance_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1121
+#: ../base/ufos/research.ufo:1390
 msgid "b_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1132
+#: ../base/ufos/research.ufo:1405
 msgid "b_hospital_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1143
+#: ../base/ufos/research.ufo:1420
 msgid "b_intercept_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1154
+#: ../base/ufos/research.ufo:1435
 msgid "b_lab_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1165
+#: ../base/ufos/research.ufo:1450
 msgid "b_powerplant_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1176
+#: ../base/ufos/research.ufo:1465
 msgid "b_quarters_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1187
+#: ../base/ufos/research.ufo:1480
 msgid "b_radar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1198
+#: ../base/ufos/research.ufo:1495
 msgid "b_storage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1209
+#: ../base/ufos/research.ufo:1510
 msgid "b_teamroom_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1220
+#: ../base/ufos/research.ufo:1525
 msgid "b_ufo_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1231
+#: ../base/ufos/research.ufo:1541
 msgid "b_workshop_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1245
+#: ../base/ufos/research.ufo:1559
 msgid "dropship_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1258
+#: ../base/ufos/research.ufo:1572
 msgid "interceptor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1286
+#: ../base/ufos/research.ufo:1604
 msgid "Small alien craft"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1287
+#: ../base/ufos/research.ufo:1605
 msgid "ufo_small_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1302
+#: ../base/ufos/research.ufo:1625
 msgid "Big alien craft"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1303
+#: ../base/ufos/research.ufo:1626
 msgid "ufo_big_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1324 ../base/ufos/research.ufo:1340
+#: ../base/ufos/research.ufo:1652 ../base/ufos/research.ufo:1672
 msgid "Ortnok - Combat notes"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1325 ../base/ufos/research.ufo:1341
+#: ../base/ufos/research.ufo:1653 ../base/ufos/research.ufo:1673
 msgid "ortnok_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1356
+#: ../base/ufos/research.ufo:1688
 msgid "Ortnok - Autopsy"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1357
+#: ../base/ufos/research.ufo:1689
 msgid "ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1374
+#: ../base/ufos/research.ufo:1706
 msgid "Ortnok - Xenobiology"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1375
+#: ../base/ufos/research.ufo:1707
 msgid "ortnok_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1390
+#: ../base/ufos/research.ufo:1722
 msgid "Ortnok - Interrogation"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1391
+#: ../base/ufos/research.ufo:1723
 msgid "ortnok_interrogation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1408
+#: ../base/ufos/research.ufo:1740
 msgid "Ortnok Worker"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1409
+#: ../base/ufos/research.ufo:1741
 msgid "ortnok_light_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1426
+#: ../base/ufos/research.ufo:1758
 msgid "Ortnok Warrior"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1427
+#: ../base/ufos/research.ufo:1759
 msgid "ortnok_medium_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1444
+#: ../base/ufos/research.ufo:1776
 msgid "Antarean - Combat notes"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1445
+#: ../base/ufos/research.ufo:1777
 msgid "antarean_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1460
+#: ../base/ufos/research.ufo:1792
 msgid "Antarean - Autopsy"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1461
+#: ../base/ufos/research.ufo:1793
 msgid "antarean_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1476
+#: ../base/ufos/research.ufo:1808
 msgid "Antarean - Xenobiology"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1477
+#: ../base/ufos/research.ufo:1809
 msgid "antarean_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1492
+#: ../base/ufos/research.ufo:1824
 msgid "Antarean - Interrogation"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1493
+#: ../base/ufos/research.ufo:1825
 msgid "antarean_interrogation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1508
+#: ../base/ufos/research.ufo:1840
 msgid "Antarean - Commander interrogation"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1509
+#: ../base/ufos/research.ufo:1841
 msgid "antarean_interrogation_commander_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1526
+#: ../base/ufos/research.ufo:1858
 msgid "Shevaar - Combat notes"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1527
+#: ../base/ufos/research.ufo:1859
 msgid "shevaar_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1542
+#: ../base/ufos/research.ufo:1874
 msgid "Shevaar - Autopsy"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1543
+#: ../base/ufos/research.ufo:1875
 msgid "shevaar_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1558
+#: ../base/ufos/research.ufo:1890
 msgid "Shevaar - Xenobiology"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1559
+#: ../base/ufos/research.ufo:1891
 msgid "shevaar_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1576
+#: ../base/ufos/research.ufo:1908
 msgid "Hovernet - Combat notes"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1577
+#: ../base/ufos/research.ufo:1909
 msgid "hovernet_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1592
+#: ../base/ufos/research.ufo:1924
 msgid "Hovernet - wreck research"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1593
+#: ../base/ufos/research.ufo:1925
 msgid "hovernet_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1608
+#: ../base/ufos/research.ufo:1940
 msgid "Hovernet - design"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1609
+#: ../base/ufos/research.ufo:1941
 msgid "hovernet_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1626
+#: ../base/ufos/research.ufo:1958
 msgid "Cyborg Ortnok - Combat notes"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1627
+#: ../base/ufos/research.ufo:1959
 msgid "cyborg_ortnok_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1642
+#: ../base/ufos/research.ufo:1974
 msgid "Cyborg Ortnok - Autopsy"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1643
+#: ../base/ufos/research.ufo:1975
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1658
+#: ../base/ufos/research.ufo:1990
 msgid "Cyborg Ortnok - Xenobiology"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1659
+#: ../base/ufos/research.ufo:1991
 msgid "cyborg_ortnok_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1677
+#: ../base/ufos/research.ufo:2009
 msgid "UGV Phoenix"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1678
+#: ../base/ufos/research.ufo:2010
 msgid "ugv_phoenix_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1692
+#: ../base/ufos/research.ufo:2023
 msgid "UGV Triax"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1693
+#: ../base/ufos/research.ufo:2024
 msgid "ugv_triax_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1709
+#: ../base/ufos/research.ufo:2039
 msgid "Light Shield"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1710
+#: ../base/ufos/research.ufo:2040
 msgid "craft_shield_light_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1724
+#: ../base/ufos/research.ufo:2053
 msgid "Medium Shield"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1725
+#: ../base/ufos/research.ufo:2054
 msgid "craft_shield_medium_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1740
+#: ../base/ufos/research.ufo:2072
 msgid "Hard Shield"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1741
+#: ../base/ufos/research.ufo:2073
 msgid "craft_shield_hard_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1756
+#: ../base/ufos/research.ufo:2091
 msgid "Flac Cannon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1757
+#: ../base/ufos/research.ufo:2092
 msgid "craft_weapon_flac_txt"
 msgstr ""
 
@@ -3008,7 +3008,7 @@ msgid "Pistol Clip"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:179 ../base/ufos/weapons_human.ufo:324
-#: ../base/ufos/weapons_human.ufo:379 ../base/ufos/weapons_human.ufo:1006
+#: ../base/ufos/weapons_human.ufo:379 ../base/ufos/weapons_human.ufo:1014
 msgid "Single Shot"
 msgstr ""
 
@@ -3084,37 +3084,37 @@ msgstr ""
 msgid "25mm Flechette Grenade Shells"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:725 ../base/ufos/weapons_human.ufo:790
-#: ../base/ufos/weapons_human.ufo:855 ../base/ufos/weapons_human.ufo:920
+#: ../base/ufos/weapons_human.ufo:725 ../base/ufos/weapons_human.ufo:792
+#: ../base/ufos/weapons_human.ufo:859 ../base/ufos/weapons_human.ufo:926
 msgid "Airburst Grenade"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:750 ../base/ufos/weapons_human.ufo:815
-#: ../base/ufos/weapons_human.ufo:880 ../base/ufos/weapons_human.ufo:945
+#: ../base/ufos/weapons_human.ufo:751 ../base/ufos/weapons_human.ufo:818
+#: ../base/ufos/weapons_human.ufo:885 ../base/ufos/weapons_human.ufo:952
 msgid "Timed Grenade"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:778
+#: ../base/ufos/weapons_human.ufo:780
 msgid "25mm IC Grenade Shells"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:843
+#: ../base/ufos/weapons_human.ufo:847
 msgid "Frag Grenade Shells"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:908
+#: ../base/ufos/weapons_human.ufo:914
 msgid "Plasma Grenade Shells"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:977
+#: ../base/ufos/weapons_human.ufo:985
 msgid "Bolter Rifle"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:994
+#: ../base/ufos/weapons_human.ufo:1002
 msgid "Bolter Rifle Clip"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1025
+#: ../base/ufos/weapons_human.ufo:1033
 msgid "Cannonade"
 msgstr ""
 
@@ -3223,7 +3223,7 @@ msgstr ""
 msgid "Charged Ball"
 msgstr ""
 
-#: ../base/ufos/weapons_plasma.ufo:205
+#: ../base/ufos/weapons_plasma.ufo:206
 msgid "Continuous Beam"
 msgstr ""
 
@@ -3363,16 +3363,16 @@ msgstr ""
 #: client/cl_aircraft.c:103 client/cl_aircraft.c:368 client/cl_aircraft.c:520
 #: client/cl_aircraft.c:738 client/cl_basemanagement.c:448
 #: client/cl_basemanagement.c:1870 client/cl_campaign.c:473
-#: client/cl_campaign.c:898 client/cl_campaign.c:949 client/cl_campaign.c:1101
-#: client/cl_campaign.c:1111 client/cl_campaign.c:1120
-#: client/cl_campaign.c:1129 client/cl_campaign.c:1138
-#: client/cl_campaign.c:1148 client/cl_campaign.c:1161
-#: client/cl_campaign.c:1171 client/cl_campaign.c:1178
-#: client/cl_campaign.c:1186 client/cl_campaign.c:2249
-#: client/cl_campaign.c:2286 client/cl_campaign.c:2288
-#: client/cl_campaign.c:2655 client/cl_map.c:301 client/cl_research.c:512
-#: client/cl_research.c:622 client/cl_research.c:625 client/cl_research.c:629
-#: client/cl_research.c:642 client/cl_research.c:671 client/cl_research.c:806
+#: client/cl_campaign.c:900 client/cl_campaign.c:951 client/cl_campaign.c:1103
+#: client/cl_campaign.c:1113 client/cl_campaign.c:1122
+#: client/cl_campaign.c:1131 client/cl_campaign.c:1140
+#: client/cl_campaign.c:1150 client/cl_campaign.c:1163
+#: client/cl_campaign.c:1173 client/cl_campaign.c:1180
+#: client/cl_campaign.c:1188 client/cl_campaign.c:2264
+#: client/cl_campaign.c:2301 client/cl_campaign.c:2303
+#: client/cl_campaign.c:2670 client/cl_map.c:301 client/cl_research.c:716
+#: client/cl_research.c:838 client/cl_research.c:841 client/cl_research.c:845
+#: client/cl_research.c:858 client/cl_research.c:887 client/cl_research.c:1137
 msgid "Notice"
 msgstr ""
 
@@ -3420,7 +3420,7 @@ msgstr ""
 msgid "Back to base"
 msgstr ""
 
-#: client/cl_aircraft.c:310 client/cl_map.c:780 client/cl_ufopedia.c:249
+#: client/cl_aircraft.c:310 client/cl_map.c:780 client/cl_ufopedia.c:282
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr ""
@@ -3430,12 +3430,12 @@ msgstr ""
 msgid "Fuel:\t%i/%i\n"
 msgstr ""
 
-#: client/cl_aircraft.c:312 client/cl_aircraft.c:313 client/cl_ufopedia.c:230
-#: client/cl_ufopedia.c:251 client/cl_ufopedia.c:252
+#: client/cl_aircraft.c:312 client/cl_aircraft.c:313 client/cl_ufopedia.c:263
+#: client/cl_ufopedia.c:284 client/cl_ufopedia.c:285
 msgid "None"
 msgstr ""
 
-#: client/cl_aircraft.c:312 client/cl_ufopedia.c:251
+#: client/cl_aircraft.c:312 client/cl_ufopedia.c:284
 #, c-format
 msgid "Weapon:\t%s\n"
 msgstr ""
@@ -3458,11 +3458,11 @@ msgstr ""
 msgid "Interception"
 msgstr ""
 
-#: client/cl_aircraft.c:559 client/cl_campaign.c:2286
+#: client/cl_aircraft.c:559 client/cl_campaign.c:2301
 msgid "You've won the battle"
 msgstr ""
 
-#: client/cl_aircraft.c:566 client/cl_campaign.c:2288
+#: client/cl_aircraft.c:566 client/cl_campaign.c:2303
 msgid "You've lost the battle"
 msgstr ""
 
@@ -3575,168 +3575,168 @@ msgstr ""
 msgid "Alien activity"
 msgstr ""
 
-#: client/cl_campaign.c:897
+#: client/cl_campaign.c:899
 #, c-format
 msgid ""
 "Your base: %s has been ransacked! All employees killed and all equipment "
 "destroyed."
 msgstr ""
 
-#: client/cl_campaign.c:948
+#: client/cl_campaign.c:950
 #, c-format
 msgid "The mission expired and %i civilians died."
 msgstr ""
 
-#: client/cl_campaign.c:990
+#: client/cl_campaign.c:992
 msgid "Jan"
 msgstr ""
 
-#: client/cl_campaign.c:992
+#: client/cl_campaign.c:994
 msgid "Feb"
 msgstr ""
 
-#: client/cl_campaign.c:994
+#: client/cl_campaign.c:996
 msgid "Mar"
 msgstr ""
 
-#: client/cl_campaign.c:996
+#: client/cl_campaign.c:998
 msgid "Apr"
 msgstr ""
 
-#: client/cl_campaign.c:998
+#: client/cl_campaign.c:1000
 msgid "May"
 msgstr ""
 
-#: client/cl_campaign.c:1000
+#: client/cl_campaign.c:1002
 msgid "Jun"
 msgstr ""
 
-#: client/cl_campaign.c:1002
+#: client/cl_campaign.c:1004
 msgid "Jul"
 msgstr ""
 
-#: client/cl_campaign.c:1004
+#: client/cl_campaign.c:1006
 msgid "Aug"
 msgstr ""
 
-#: client/cl_campaign.c:1006
+#: client/cl_campaign.c:1008
 msgid "Sep"
 msgstr ""
 
-#: client/cl_campaign.c:1008
+#: client/cl_campaign.c:1010
 msgid "Oct"
 msgstr ""
 
-#: client/cl_campaign.c:1010
+#: client/cl_campaign.c:1012
 msgid "Nov"
 msgstr ""
 
-#: client/cl_campaign.c:1012
+#: client/cl_campaign.c:1014
 msgid "Dec"
 msgstr ""
 
-#: client/cl_campaign.c:1026
+#: client/cl_campaign.c:1028
 msgid "Giving up"
 msgstr ""
 
-#: client/cl_campaign.c:1028
+#: client/cl_campaign.c:1030
 msgid "Furious"
 msgstr ""
 
-#: client/cl_campaign.c:1030
+#: client/cl_campaign.c:1032
 msgid "Angry"
 msgstr ""
 
-#: client/cl_campaign.c:1032
+#: client/cl_campaign.c:1034
 msgid "Mad"
 msgstr ""
 
-#: client/cl_campaign.c:1034
+#: client/cl_campaign.c:1036
 msgid "Upset"
 msgstr ""
 
-#: client/cl_campaign.c:1036
+#: client/cl_campaign.c:1038
 msgid "Tolerant"
 msgstr ""
 
-#: client/cl_campaign.c:1038
+#: client/cl_campaign.c:1040
 msgid "Neutral"
 msgstr ""
 
-#: client/cl_campaign.c:1040
+#: client/cl_campaign.c:1042
 msgid "Content"
 msgstr ""
 
-#: client/cl_campaign.c:1042
+#: client/cl_campaign.c:1044
 msgid "Pleased"
 msgstr ""
 
-#: client/cl_campaign.c:1044
+#: client/cl_campaign.c:1046
 msgid "Happy"
 msgstr ""
 
-#: client/cl_campaign.c:1046
+#: client/cl_campaign.c:1048
 msgid "Exuberant"
 msgstr ""
 
-#: client/cl_campaign.c:1100
+#: client/cl_campaign.c:1102
 #, c-format
 msgid ""
 "Gained %i credits, %i scientists, %i medics, %i soldiers and %i workers from "
 "nation %s (%s)"
 msgstr ""
 
-#: client/cl_campaign.c:1109
+#: client/cl_campaign.c:1111
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr ""
 
-#: client/cl_campaign.c:1118
+#: client/cl_campaign.c:1120
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr ""
 
-#: client/cl_campaign.c:1127
+#: client/cl_campaign.c:1129
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr ""
 
-#: client/cl_campaign.c:1136
+#: client/cl_campaign.c:1138
 #, c-format
 msgid "Paid %i credits to medics"
 msgstr ""
 
-#: client/cl_campaign.c:1146
+#: client/cl_campaign.c:1148
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr ""
 
-#: client/cl_campaign.c:1159
+#: client/cl_campaign.c:1161
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr ""
 
-#: client/cl_campaign.c:1170
+#: client/cl_campaign.c:1172
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr ""
 
-#: client/cl_campaign.c:1176
+#: client/cl_campaign.c:1178
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr ""
 
-#: client/cl_campaign.c:1184
+#: client/cl_campaign.c:1186
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr ""
 
-#: client/cl_campaign.c:1266
+#: client/cl_campaign.c:1268
 #, c-format
 msgid "%02i:%i%i"
 msgstr ""
 
-#: client/cl_campaign.c:1378
+#: client/cl_campaign.c:1380
 #, c-format
 msgid ""
 "Missions:\n"
@@ -3745,33 +3745,37 @@ msgid ""
 "build:\t%i\tattacked:\t%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:2146
-msgid "Assemble or load a team"
+#: client/cl_campaign.c:1599
+msgid "Error saving game. Check free disk space!"
 msgstr ""
 
-#: client/cl_campaign.c:2146
+#: client/cl_campaign.c:1599 client/cl_campaign.c:2161 client/cl_team.c:1143
 msgid "Note"
 msgstr ""
 
-#: client/cl_campaign.c:2249
+#: client/cl_campaign.c:2161
+msgid "Assemble or load a team"
+msgstr ""
+
+#: client/cl_campaign.c:2264
 msgid "Your dropship is not near the landing zone"
 msgstr ""
 
-#: client/cl_campaign.c:2514
+#: client/cl_campaign.c:2529
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2515
+#: client/cl_campaign.c:2530
 msgid "Soldier promoted"
 msgstr ""
 
-#: client/cl_campaign.c:2654
+#: client/cl_campaign.c:2669
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr ""
 
-#: client/cl_campaign.c:3646
+#: client/cl_campaign.c:3661
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -4003,96 +4007,96 @@ msgstr ""
 msgid "Production started"
 msgstr ""
 
-#: client/cl_research.c:388
+#: client/cl_research.c:589
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr ""
 
-#: client/cl_research.c:389
+#: client/cl_research.c:590
 msgid "Not researched in any base."
 msgstr ""
 
-#: client/cl_research.c:395
+#: client/cl_research.c:596
 #, c-format
 msgid "Researched in %s"
 msgstr ""
 
-#: client/cl_research.c:397
+#: client/cl_research.c:598
 msgid "Researched in this base."
 msgstr ""
 
-#: client/cl_research.c:408
+#: client/cl_research.c:609
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr ""
 
-#: client/cl_research.c:410
+#: client/cl_research.c:611
 msgid "Progress: Not available."
 msgstr ""
 
-#: client/cl_research.c:414
+#: client/cl_research.c:615
 msgid "Status: Under research"
 msgstr ""
 
-#: client/cl_research.c:417
+#: client/cl_research.c:618
 msgid "Status: Research paused"
 msgstr ""
 
-#: client/cl_research.c:420
+#: client/cl_research.c:621
 msgid "Status: Research finished"
 msgstr ""
 
-#: client/cl_research.c:423
+#: client/cl_research.c:624
 msgid "Status: Unknown technology"
 msgstr ""
 
-#: client/cl_research.c:443
+#: client/cl_research.c:646
 msgid "Dependencies"
 msgstr ""
 
-#: client/cl_research.c:513
+#: client/cl_research.c:717
 msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
 "in order to assign scientists to research this technology.\n"
 msgstr ""
 
-#: client/cl_research.c:622
+#: client/cl_research.c:838
 msgid "This item is already under research by your scientists."
 msgstr ""
 
-#: client/cl_research.c:625
+#: client/cl_research.c:841
 msgid "The research on this item continues."
 msgstr ""
 
-#: client/cl_research.c:629 client/cl_research.c:671
+#: client/cl_research.c:845 client/cl_research.c:887
 msgid "The research on this item is complete."
 msgstr ""
 
-#: client/cl_research.c:642
+#: client/cl_research.c:858
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 msgstr ""
 
-#: client/cl_research.c:707
+#: client/cl_research.c:926 client/cl_research.c:1037
 msgid " [not yet researchable]"
 msgstr ""
 
-#: client/cl_research.c:806
+#: client/cl_research.c:1137
 msgid "Build a laboratory first"
 msgstr ""
 
-#: client/cl_research.c:884
+#: client/cl_research.c:1217
 #, c-format
 msgid "Research of %s finished\n"
 msgstr ""
 
-#: client/cl_research.c:885
+#: client/cl_research.c:1218
 msgid "Research finished"
 msgstr ""
 
-#: client/cl_research.c:1131
+#: client/cl_research.c:1454
 msgid "No description available."
 msgstr ""
 
@@ -4121,90 +4125,94 @@ msgstr ""
 msgid "%i of %i"
 msgstr ""
 
-#: client/cl_team.c:1098
+#: client/cl_team.c:1100
 msgid "NewTeam"
 msgstr ""
 
-#: client/cl_team.c:1265
+#: client/cl_team.c:1143
+msgid "Error saving team. Check free disk space!"
+msgstr ""
+
+#: client/cl_team.c:1296
 msgid "Select a soldier from list"
 msgstr ""
 
-#: client/cl_team.c:1543 client/cl_team.c:1591
+#: client/cl_team.c:1574 client/cl_team.c:1622
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1546
+#: client/cl_team.c:1577
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1551
+#: client/cl_team.c:1582
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1552
+#: client/cl_team.c:1583
 #, c-format
 msgid ""
 "Alien surviviurs\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1554
+#: client/cl_team.c:1585
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1555
+#: client/cl_team.c:1586
 #, c-format
 msgid ""
 "Enemy surviviurs\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1559
+#: client/cl_team.c:1590
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1560
+#: client/cl_team.c:1591
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1561
+#: client/cl_team.c:1592
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1562
+#: client/cl_team.c:1593
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1565
+#: client/cl_team.c:1596
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1567
+#: client/cl_team.c:1598
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1569
+#: client/cl_team.c:1600
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1570
+#: client/cl_team.c:1601
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -4212,63 +4220,63 @@ msgid ""
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1594
+#: client/cl_team.c:1625
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1595
+#: client/cl_team.c:1626
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1598
+#: client/cl_team.c:1629
 #, c-format
 msgid "Phalanx soldiers killed by Aliens\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1599
+#: client/cl_team.c:1630
 #, c-format
 msgid "Phalanx soldiers missing in action\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1600
+#: client/cl_team.c:1631
 #, c-format
 msgid "Phalanx friendly fire losses\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1601
+#: client/cl_team.c:1632
 #, c-format
 msgid ""
 "Phalanx survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1603
+#: client/cl_team.c:1634
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1604
+#: client/cl_team.c:1635
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1605
+#: client/cl_team.c:1636
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1609
+#: client/cl_team.c:1640
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1610
+#: client/cl_team.c:1641
 #, c-format
 msgid ""
 "Total item sale value\t%i\n"
@@ -4299,148 +4307,148 @@ msgstr ""
 msgid "Unknown weapon skill"
 msgstr ""
 
-#: client/cl_ufopedia.c:85
+#: client/cl_ufopedia.c:87 client/cl_ufopedia.c:117
 msgid "No requirements"
 msgstr ""
 
-#: client/cl_ufopedia.c:134
+#: client/cl_ufopedia.c:167
 msgid "Armor\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:139
+#: client/cl_ufopedia.c:172
 #, c-format
 msgid "%s weapon with\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:139 client/cl_ufopedia.c:142 client/cl_ufopedia.c:147
+#: client/cl_ufopedia.c:172 client/cl_ufopedia.c:175 client/cl_ufopedia.c:180
 msgid "One-handed"
 msgstr ""
 
-#: client/cl_ufopedia.c:139 client/cl_ufopedia.c:142 client/cl_ufopedia.c:147
+#: client/cl_ufopedia.c:172 client/cl_ufopedia.c:175 client/cl_ufopedia.c:180
 msgid "Two-handed"
 msgstr ""
 
-#: client/cl_ufopedia.c:140
+#: client/cl_ufopedia.c:173
 #, c-format
 msgid "Max ammo:\t%i\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:142
+#: client/cl_ufopedia.c:175
 #, c-format
 msgid "%s ammo-less weapon with\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:147
+#: client/cl_ufopedia.c:180
 #, c-format
 msgid "%s auxiliary equipment with\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:148
+#: client/cl_ufopedia.c:181
 #, c-format
 msgid "Action:\t%s\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:149
+#: client/cl_ufopedia.c:182
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:150
+#: client/cl_ufopedia.c:183
 #, c-format
 msgid "Range:\t%g\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:155
+#: client/cl_ufopedia.c:188
 #, c-format
 msgid "Primary:\t%s\t(%s)\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:156
+#: client/cl_ufopedia.c:189
 #, c-format
 msgid "Secondary:\t%s\t(%s)\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:158
+#: client/cl_ufopedia.c:191
 #, c-format
 msgid "Damage:\t%i / %i\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:160
+#: client/cl_ufopedia.c:193
 #, c-format
 msgid "Time units:\t%i / %i\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:161
+#: client/cl_ufopedia.c:194
 #, c-format
 msgid "Range:\t%g / %g\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:163
+#: client/cl_ufopedia.c:196
 #, c-format
 msgid "Spreads:\t%g / %g\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:168
+#: client/cl_ufopedia.c:201
 msgid "Unknown - need to research this"
 msgstr ""
 
-#: client/cl_ufopedia.c:192
+#: client/cl_ufopedia.c:225
 msgid "Could not find armor definition"
 msgstr ""
 
-#: client/cl_ufopedia.c:194
+#: client/cl_ufopedia.c:227
 #, c-format
 msgid "Item %s is no armor but %s"
 msgstr ""
 
-#: client/cl_ufopedia.c:204
+#: client/cl_ufopedia.c:237
 #, c-format
 msgid "%s:\tProtection: %i\tHardness: %i\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:228
+#: client/cl_ufopedia.c:261
 msgid "Error - could not find building"
 msgstr ""
 
-#: client/cl_ufopedia.c:230
+#: client/cl_ufopedia.c:263
 #, c-format
 msgid "Depends:\t%s\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:231
+#: client/cl_ufopedia.c:264
 #, c-format
 msgid "Buildtime:\t%i day(s)\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:232
+#: client/cl_ufopedia.c:265
 #, c-format
 msgid "Fixcosts:\t%i c\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:233
+#: client/cl_ufopedia.c:266
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:247
+#: client/cl_ufopedia.c:280
 msgid "Error - could not find aircraft"
 msgstr ""
 
-#: client/cl_ufopedia.c:250
+#: client/cl_ufopedia.c:283
 #, c-format
 msgid "Fuel:\t%i\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:252
+#: client/cl_ufopedia.c:285
 #, c-format
 msgid "Shield:\t%s\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:333
+#: client/cl_ufopedia.c:366
 msgid "No pre-research description available."
 msgstr ""
 
-#: client/cl_ufopedia.c:449
+#: client/cl_ufopedia.c:482
 msgid "Ufopedia Content"
 msgstr ""
 
