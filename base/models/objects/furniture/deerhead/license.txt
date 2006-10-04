@@ -1,0 +1,27 @@
+Texture
+=======
+
+http://species.wikimedia.org/wiki/Image:Rothirsch.jpg
+
+photo by Heinz Seehagel (22.9.2004)
+
+HaSee grants anyone the right to use this work for any purpose, without any conditions, unless such conditions are required by law.
+
+Maybe using the original texture would've beena  better idea:
+http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=f9d3596d131c71a05556958d6dbcd34e
+
+
+Model
+=====
+
+Head from http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62
+
+License: see GNU FDL + GNU GPL dual licensing
+
+This file comes from the Worldforge Media Repository, for details check out:
+
+http://www.worldforge.org/media/
+
+https://svn.worldforge.org:886/
+
+
