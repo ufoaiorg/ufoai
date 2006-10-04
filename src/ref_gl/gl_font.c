@@ -659,8 +659,17 @@ void Font_Init(void)
 	lastTextureCache = 0;
 	memset(textureCache, 0, sizeof(textureCache));
 
+	/* try and init SDL VIDEO if not previously initialized */
+	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
+		if (SDL_Init(SDL_INIT_VIDEO) < 0)
+			ri.Con_Printf(PRINT_ALL,"video SDL_Init failed: %s\n", SDL_GetError());
+	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
+		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
+			ri.Con_Printf(PRINT_ALL,"video SDL_InitSubsystem failed: %s\n", SDL_GetError());
+	}
+
 	/* init the truetype font engine */
-	if (TTF_Init())
+	if (TTF_Init() == -1)
 		ri.Sys_Error(ERR_FATAL, "...SDL_ttf error: %s\n", TTF_GetError());
 
 	ri.Con_Printf(PRINT_ALL, "...SDL_ttf inited\n");

@@ -424,12 +424,12 @@ qboolean GLimp_Init( void *hInstance, void *wndProc )
 {
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_CDROM|SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-			Sys_Error("SDL Init failed: %s\n", SDL_GetError());
+			Sys_Error("Video SDL_Init failed: %s\n", SDL_GetError());
 			return qfalse;
 		}
 	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
 		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
-			Sys_Error("SDL Init failed: %s\n", SDL_GetError());
+			Sys_Error("Video SDL_InitSubsystem failed: %s\n", SDL_GetError());
 			return qfalse;
 		}
 	}
