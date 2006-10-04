@@ -1352,7 +1352,7 @@ tech rs_building_aliencontainment
 
 	require_AND
 	{
-		tech rs_alien
+		tech nothing
 	}
 
 	provides	building_aliencontainment
