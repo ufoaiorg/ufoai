@@ -596,6 +596,26 @@ mission dam
 	storyrelated	true
 }
 
+// FIXME
+mission estate
+{
+	location	"_TODO"
+	type		"_Terror Attack"
+	text		"_TODO"
+	map			estate01
+	music		mission3
+	pos			"-62 25" // TODO
+	aliens		7
+	alienteam	alien
+	alienequip	stage1_soldiers
+	civilians	3
+	civteam		european
+	nation		"middle" // TODO
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
 mission or_asyut
 {
 	location	"_Asyut"
