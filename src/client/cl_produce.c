@@ -60,6 +60,9 @@ static production_t *PR_QueueNew(production_queue_t *queue, signed int objID, si
 	objDef_t *od;
 	production_t *prod;
 
+	if (queue->numItems >= MAX_PRODUCTIONS)
+		return NULL;
+
 	/* initialize */
 	prod = &queue->items[queue->numItems];
 	od = &csi.ods[objID];
@@ -452,12 +455,18 @@ void PR_ProductionIncrease(void)
 		if (selectedIndex < 0)
 			return;
 		prod = PR_QueueNew(queue, selectedIndex, amount);
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), "Production of %s started", csi.ods[selectedIndex].name);
-		MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
+		if (prod) {
+			Com_sprintf(messageBuffer, sizeof(messageBuffer), "Production of %s started", csi.ods[selectedIndex].name);
+			MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
 
-		/* now we select the item we just created */
-		selectedQueueItem = qtrue;
-		selectedIndex = queue->numItems-1;
+			/* now we select the item we just created */
+			selectedQueueItem = qtrue;
+			selectedIndex = queue->numItems-1;
+		} else {
+			/* oops! too many items! */
+			Com_sprintf(messageBuffer, sizeof(messageBuffer), "You cannot queue any more items!");
+			MN_AddNewMessage(_("Queue full!"), messageBuffer, qfalse, MSG_PRODUCTION, NULL);
+		}
 	}
 
 	PR_ProductionInfo();
