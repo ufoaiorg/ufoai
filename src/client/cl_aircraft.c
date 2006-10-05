@@ -147,6 +147,12 @@ void CL_AircraftInit(void)
 char *CL_AircraftStatusToName(aircraft_t * aircraft)
 {
 	assert(aircraft);
+
+	/* display special status if base-attack affects aircraft */
+	if ( gd.bases[aircraft->idxBase].baseStatus == BASE_UNDER_ATTACK &&
+		(aircraft->status == AIR_HOME || aircraft->status == AIR_REFUEL) )
+		return _("ON RED ALERT");
+
 	switch (aircraft->status) {
 	case AIR_NONE:
 		return _("Nothing - should not be displayed");
@@ -739,7 +745,20 @@ extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission
 		return qfalse;
 	}
 
-	MAP_MapCalcLine(aircraft->pos, mission->def->pos, &(aircraft->route));
+	/* ensure interceptAircraft IDX is set correctly */
+	gd.interceptAircraft = aircraft->idx;
+
+	/* if mission is a base-attack and aircraft already in base, launch
+	 * mission immediately */
+	if ( gd.bases[aircraft->idxBase].baseStatus == BASE_UNDER_ATTACK &&
+		(aircraft->status == AIR_HOME || aircraft->status == AIR_REFUEL) ) {
+		aircraft->mission = mission;
+		mission->def->active = qtrue;
+		MN_PushMenu("popup_baseattack");
+		return qtrue;
+	}
+
+	MAP_MapCalcLine(aircraft->pos, mission->realPos, &(aircraft->route));
 	aircraft->status = AIR_MISSION;
 	aircraft->time = 0;
 	aircraft->point = 0;

@@ -355,6 +355,11 @@ extern void CL_DisplayPopupIntercept(actMis_t* mission, aircraft_t* ufo)
 
 		for (i = 0; i < gd.bases[j].numAircraftInBase; i++) {
 			air = &gd.bases[j].aircraft[i];
+
+			/* if aircraft is empty we can't send it on a ground mission */
+			if (mission && *air->teamSize <= 0)
+				continue;
+
 			s = va("%s (%i/%i)\t%s\t%s\n", air->name, *air->teamSize, air->size, CL_AircraftStatusToName(air), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 			popupIntercept.idBaseAircraft[popupIntercept.numAircraft] = j;

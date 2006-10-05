@@ -169,11 +169,8 @@ static void MAP_MultiSelectExecuteAction_f(void)
 			selMis->def->active = qtrue;
 			gd.mapAction = MA_BASEATTACK;
 			Com_DPrintf("Base attack: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
-			/* Maybe another ship is flying to this base to fight there? */
-			if (gd.interceptAircraft == -1)
-				/* FIXME: Check whether aircraft 0 has recruits */
-				gd.interceptAircraft = 0;
-			MN_PushMenu("popup_baseattack");
+			CL_DisplayPopupIntercept(selMis, NULL);
+			return;
 		} else {
 			Com_DPrintf("Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
 			gd.mapAction = MA_INTERCEPT;

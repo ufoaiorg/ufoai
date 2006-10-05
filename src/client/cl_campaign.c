@@ -2080,6 +2080,7 @@ void CL_StartMissionMap(mission_t* mission)
 {
 	char expanded[MAX_QPATH];
 	char timeChar;
+	base_t *bAttack;
 
 	/* prepare */
 	MN_PopMenu(qtrue);
@@ -2097,17 +2098,18 @@ void CL_StartMissionMap(mission_t* mission)
 		break;
 	/* base attack maps starts with a dot */
 	case '.':
-		if (!baseCurrent) {
+		bAttack = (base_t*)mission->data;
+		if (!bAttack) {
 			/* assemble a random base and set the base status to BASE_UNDER_ATTACK */
 			Cbuf_AddText("base_assemble_rand 1;");
 			return;
-		} else if (baseCurrent->baseStatus != BASE_UNDER_ATTACK) {
+		} else if (bAttack->baseStatus != BASE_UNDER_ATTACK) {
 			Com_Printf("Base is not under attack\n");
 			return;
 		}
 		/* check whether are there founded bases */
 		if (B_GetCount() > 0)
-			Cbuf_AddText(va("base_assemble %i 1;", baseCurrent->idx));
+			Cbuf_AddText(va("base_assemble %i 1;", bAttack->idx));
 		return;
 	default:
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.bsp", mission->map, timeChar);
@@ -2155,6 +2157,9 @@ static void CL_GameGo(void)
 	map_maxlevel_base = 0;
 	baseCurrent = aircraft->homebase;
 	assert(baseCurrent && mis && aircraft);
+
+	/* set current aircraft of current base */
+	baseCurrent->aircraftCurrent = aircraft->idxInBase;
 
 	if (!ccs.singleplayer && B_GetNumOnTeam() == 0) {
 		/* multiplayer; but we never reach this far! */

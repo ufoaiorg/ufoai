@@ -1698,8 +1698,8 @@ void B_AssembleMap(void)
 	/* reset the used flag */
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++) {
-			if (baseCurrent->map[row][col] != -1) {
-				entry = B_GetBuildingByIdx(baseCurrent->map[row][col]);
+			if (base->map[row][col] != -1) {
+				entry = B_GetBuildingByIdx(base->map[row][col]);
 				entry->used = 0;
 			}
 		}
@@ -1710,8 +1710,8 @@ void B_AssembleMap(void)
 		for (col = 0; col < BASE_SIZE; col++) {
 			baseMapPart[0] = '\0';
 
-			if (baseCurrent->map[row][col] != -1) {
-				entry = B_GetBuildingByIdx(baseCurrent->map[row][col]);
+			if (base->map[row][col] != -1) {
+				entry = B_GetBuildingByIdx(base->map[row][col]);
 
 				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one */
 				/* this is why we check the used flag and continue if it was set already */
@@ -1724,11 +1724,11 @@ void B_AssembleMap(void)
 				}
 
 				if (*entry->mapPart)
-					Q_strncpyz(baseMapPart, va("b/%c/%s", baseCurrent->mapChar, entry->mapPart), sizeof(baseMapPart));
+					Q_strncpyz(baseMapPart, va("b/%c/%s", base->mapChar, entry->mapPart), sizeof(baseMapPart));
 				else
 					Com_Printf("B_AssembleMap: Error - map has no mapPart set. Building '%s'\n'", entry->id);
 			} else
-				Q_strncpyz(baseMapPart, va("b/%c/empty", baseCurrent->mapChar), sizeof(baseMapPart));
+				Q_strncpyz(baseMapPart, va("b/%c/empty", base->mapChar), sizeof(baseMapPart));
 
 			if (*baseMapPart) {
 				Q_strcat(maps, baseMapPart, sizeof(maps));

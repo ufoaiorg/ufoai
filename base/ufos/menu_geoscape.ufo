@@ -548,10 +548,6 @@ menu popup_intercept
 		align	uc
 	}
 
-	func init
-	{
-		cmd "aircraft_list"
-	}
 }
 
 // ==================
