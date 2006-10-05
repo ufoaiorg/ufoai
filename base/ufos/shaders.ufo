@@ -58,3 +58,8 @@ shader textures/tex_buildings/wall002
 {
 	emboss true
 }
+
+shader textures/tex_buildings/wall021
+{
+	embosslow true
+}
