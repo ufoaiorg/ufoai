@@ -1030,7 +1030,8 @@ static unsigned CM_AddMapTile(char *name, int sX, int sY, int sZ)
 	char filename[MAX_QPATH];
 	unsigned checksum;
 	unsigned *buf;
-	int i, length;
+	unsigned int i;
+	int length;
 	dheader_t header;
 
 	/* load the file */
@@ -2815,7 +2816,7 @@ float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, qboolean launched, 
 	}
 
 	/* firstly try to get as flat a trajectory as possible (fire at max velocity) */
-	g = GRAVITY; 
+	g = GRAVITY;
 	v = speed;
 	gd2 = g*d*d;
 	len = sqrt(h*h + d*d);

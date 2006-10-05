@@ -1320,15 +1320,15 @@ typedef struct {
 } cheatvar_t;
 
 static cheatvar_t cheatvars[] = {
-	{"timedemo", "0"},
-	{"r_drawworld", "1"},
-	{"r_fullbright", "0"},
-	{"paused", "0"},
-	{"fixedtime", "0"},
-	{"gl_lightmap", "0"},
-	{"gl_wire", "0"},
-	{"gl_saturatelighting", "0"},
-	{NULL, NULL}
+	{"timedemo", "0", NULL},
+	{"r_drawworld", "1", NULL},
+	{"r_fullbright", "0", NULL},
+	{"paused", "0", NULL},
+	{"fixedtime", "0", NULL},
+	{"gl_lightmap", "0", NULL},
+	{"gl_wire", "0", NULL},
+	{"gl_saturatelighting", "0", NULL},
+	{NULL, NULL, NULL}
 };
 
 static int numcheatvars = 0;

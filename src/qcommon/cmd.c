@@ -217,7 +217,7 @@ void Cbuf_ExecuteText(int exec_when, char *text)
  */
 void Cbuf_Execute(void)
 {
-	int i;
+	unsigned int i;
 	char *text;
 	char line[1024];
 	int quotes;
@@ -498,7 +498,7 @@ int Cmd_Argc(void)
  */
 char *Cmd_Argv(int arg)
 {
-	if ((unsigned) arg >= cmd_argc)
+	if (arg >= cmd_argc)
 		return cmd_null_string;
 	return cmd_argv[arg];
 }
