@@ -251,19 +251,11 @@ void Cmd_Score_f(edict_t * ent);
 
 
 /* g_utils.c */
-qboolean KillBox(edict_t * ent);
-void G_ProjectSource(vec3_t point, vec3_t distance, vec3_t forward, vec3_t right, vec3_t result);
 edict_t *G_Find(edict_t * from, int fieldofs, char *match);
 edict_t *findradius(edict_t * from, vec3_t org, float rad);
-edict_t *G_PickTarget(char *targetname);
-void G_UseTargets(edict_t * ent, edict_t * activator);
-void G_SetMovedir(vec3_t angles, vec3_t movedir);
 
 edict_t *G_Spawn(void);
 void G_FreeEdict(edict_t * e);
-
-void G_TouchTriggers(edict_t * ent);
-void G_TouchSolids(edict_t * ent);
 
 char *G_CopyString(char *in);
 
