@@ -59,7 +59,6 @@ static production_t *PR_QueueNew(production_queue_t *queue, signed int objID, si
 	technology_t *t;
 	objDef_t *od;
 	production_t *prod;
-	int i;
 
 	/* initialize */
 	prod = &queue->items[queue->numItems];
@@ -122,7 +121,6 @@ static void PR_QueueMove(production_queue_t *queue, int index, int dir)
  */
 static void PR_QueueNext(int base)
 {
-	int i;
 	char messageBuffer[256];
 	production_queue_t *queue = &gd.productions[base];
 
@@ -142,7 +140,7 @@ static void PR_QueueNext(int base)
  */
 void PR_ProductionRun(void)
 {
-	int b, i;
+	int i;
 	objDef_t *od;
 	technology_t *t;
 	production_t *prod;

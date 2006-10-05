@@ -4,7 +4,7 @@ SHARED_EXT=so
 SRCDIR=src
 
 LDFLAGS+=$(LIBS)
-CFLAGS+=-DHAVE_CONFIG_H
+CFLAGS+=-DHAVE_CONFIG_H -Wall
 
 # Common things
 _BUILDDIR=$(strip $(BUILDDIR))
