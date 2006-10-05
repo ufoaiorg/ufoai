@@ -26,18 +26,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_PROOUCE
 #define CLIENT_CL_PROOUCE
 
+/** @brief maximum number of productions queued in any one base */
+#define MAX_PRODUCTIONS		256
+
 /** @note:
  * We can get the tech pointer from csi.ods
  * the tech struct holds the time that is needed to produce
  * the selected equipment
  */
-
 typedef struct production_s
 {
 	signed int objID; /* object id from global csi.ods struct */
 	signed int amount; /* how much are we producing */
 	int timeLeft; /* get this from tech */
 } production_t;
+
+/** @brief
+ * a production queue
+ */
+typedef struct production_queue_s
+{
+	int 			numItems;					/* the number of items in the queue */
+	production_t	items[MAX_PRODUCTIONS];		/* actual production items (in order) */
+} production_queue_t;
 
 void PR_ResetProduction(void);
 void PR_ProductionRun(void);

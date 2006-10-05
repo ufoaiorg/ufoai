@@ -32,8 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define UPGRADECOSTS 100
 #define UPGRADETIME  2
 
-#define MAX_PRODUCTIONS		256
-
 #define MAX_LIST_CHAR		1024
 #define MAX_BUILDINGS		256
 #define MAX_BASES		8

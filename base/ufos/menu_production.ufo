@@ -64,9 +64,23 @@ menu production
 	// list
 	// ==================
 
+	string txt_queued
+	{
+		string 	"_Q"
+		pos 	"465 30"
+		align	ul
+	}
+
+	string txt_amount
+	{
+		string 	"_Num"
+		pos		"505 30"
+		align	ul
+	}
+
 	text prodlist
 	{
-		pos		"40 30"
+		pos		"40 70"
 		size	"402 710"
 //		bgcolor "1 1 1 0.5"
 		format	"22 0"
@@ -78,12 +92,21 @@ menu production
 
 	text prodlist_amount
 	{
-		pos		"465 30"
-		size	"80 710"
+		pos		"505 70"
+		size	"60 710"
 //		bgcolor "1 1 1 0.5"
 		format	"22 0"
 		num	16
 		mousefx	true
+	}
+
+	text prodlist_queued
+	{
+		pos		"465 70"
+		size	"60 710"
+		format	"22 0"
+		num 23
+		mousefx true
 	}
 
 	pic prod_inc
@@ -136,6 +159,26 @@ menu production
 		click	{ cmd "prod_dec 10" }
 	}
 
+	pic prod_up
+	{
+		image	menu/button_produce
+		pos		"615 300"
+		tooltip "_Increase priority"
+		texl	"0 0"
+		texh	"16 16"
+		click { cmd "prod_up" }
+	}
+
+	pic prod_down
+	{
+		image	menu/button_produce
+		pos		"615 320"
+		tooltip "_Decrease priority"
+		texl	"0 16"
+		texh	"16 32"
+		click { cmd "prod_down" }
+	}
+
 	// ==================
 	// item description
 	// ==================
@@ -160,10 +203,10 @@ menu production
 		*s_misc			color "1 1 1 0.6"
 		*s_armor		color "1 1 1 0.6"
 	}
-	confunc prod_primary	{ cmd "prod_init 0;" prod_reset *s_primary	color "1 1 1 1" }
-	confunc prod_secondary	{ cmd "prod_init 1;" prod_reset *s_secondary	color "1 1 1 1" }
-	confunc prod_misc		{ cmd "prod_init 2;" prod_reset *s_misc	color "1 1 1 1" }
-	confunc prod_armor		{ cmd "prod_init 3;" prod_reset *s_armor	color "1 1 1 1" }
+	confunc prod_primary	{ cmd "prod_select 0;" prod_reset *s_primary	color "1 1 1 1" }
+	confunc prod_secondary	{ cmd "prod_select 1;" prod_reset *s_secondary	color "1 1 1 1" }
+	confunc prod_misc		{ cmd "prod_select 2;" prod_reset *s_misc	color "1 1 1 1" }
+	confunc prod_armor		{ cmd "prod_select 3;" prod_reset *s_armor	color "1 1 1 1" }
 
 	pic bt_primary
 	{
@@ -270,6 +313,6 @@ menu production
 
 	func init
 	{
-		cmd "prod_primary"
+		cmd "prod_init 0;"
 	}
 }

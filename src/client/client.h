@@ -897,6 +897,7 @@ typedef enum {
 	TEXT_STATS_1 = 20,
 	TEXT_STATS_2,
 	TEXT_STATS_3,
+	TEXT_PRODUCTION_QUEUED,
 
 	MAX_MENUTEXTS
 } texts_t;
