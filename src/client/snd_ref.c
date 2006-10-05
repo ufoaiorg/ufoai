@@ -216,7 +216,9 @@ void S_ModifyKhz_f(void)
 void S_Init(void)
 {
 	cvar_t *cv;
+#ifndef _WIN32
 	cvar_t *s_libdir;
+#endif
 
 	Com_Printf("\n------- sound initialization -------\n");
 
