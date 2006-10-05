@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="5" />
+	<Project>
+		<Option title="ref_gl" />
+		<Option pch_mode="2" />
+		<Option default_target="" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="" />
+		<Build>
+			<Target title="default">
+				<Option output="..\..\ref_gl.dll" prefix_auto="1" extension_auto="1" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-D__GNUWIN32__" />
+			<Add option="-D_M_IX86=500" />
+			<Add option="-Wall" />
+			<Add option="-DDEVCPP" />
+			<Add option="-DC_ONLY" />
+			<Add option="-DSHADERS" />
+			<Add option="-DHAVE_GETTEXT" />
+		</Compiler>
+		<Linker>
+			<Add option="../ports/win32/intl.lib" />
+			<Add option="-def ref_gl.def" />
+			<Add library="kernel32" />
+			<Add library="user32" />
+			<Add library="gdi32" />
+			<Add library="winmm" />
+			<Add library="libjpeg" />
+			<Add library="SDL_ttf" />
+			<Add library="SDL" />
+		</Linker>
+		<Unit filename="..\client\ref.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\game\q_shared.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\game\q_shared.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ports\win32\glw_imp.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ports\win32\glw_win.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ports\win32\q_shwin.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ports\win32\qgl_win.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ports\win32\winquake.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\qcommon\qcommon.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\qcommon\qfiles.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="anorms.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="anormtab.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_anim.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_arb_shader.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_draw.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_drawmd3.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_font.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_font.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_image.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_light.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_local.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_md3.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_mesh.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_model.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_model.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_particle.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_rmain.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_rmisc.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_rsurf.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_shadows.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="gl_warp.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qgl.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qgl.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="ref_gl.def">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="warpsin.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

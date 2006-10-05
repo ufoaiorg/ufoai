@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="5" />
+	<Project>
+		<Option title="ufo2map" />
+		<Option pch_mode="2" />
+		<Option default_target="" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="" />
+		<Build>
+			<Target title="default">
+				<Option output="ufo2map.exe" prefix_auto="1" extension_auto="1" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-D__GNUWIN32__" />
+			<Add option="-D_M_IX86=500" />
+			<Add option="-Wall" />
+			<Add option="-DWIN_ERROR" />
+			<Add option="-DDEBUG" />
+			<Add option="-DDEVCPP" />
+			<Add option="-DC_ONLY" />
+			<Add directory="D:\Programme\Dev-Cpp\include" />
+		</Compiler>
+		<Linker>
+			<Add directory="C:\Dev-Cpp\lib" />
+		</Linker>
+		<Unit filename="brushbsp.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="common\bspfile.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="common\cmdlib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="common\lbmlib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="common\mathlib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="common\polylib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="common\scriplib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="common\threads.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="common\trace.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="csg.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="faces.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="glfile.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="levels.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="lightmap.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="map.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="nodraw.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="patches.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="portals.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qbsp.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qbsp3.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qrad.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qrad3.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="routing.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="textures.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="tree.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="ufo2map.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="writebsp.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

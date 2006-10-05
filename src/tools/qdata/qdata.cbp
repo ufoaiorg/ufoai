@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="5" />
+	<Project>
+		<Option title="qdata" />
+		<Option makefile="makefile" />
+		<Option pch_mode="2" />
+		<Option default_target="" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="" />
+		<Build>
+			<Target title="default">
+				<Option output="qdata.exe" prefix_auto="1" extension_auto="1" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-D__GNUWIN32__" />
+			<Add option="-D_M_IX86=500" />
+			<Add option="-Wall" />
+			<Add option="-DWIN_ERROR" />
+			<Add option="-DDEBUG" />
+			<Add option="-DDEVCPP" />
+			<Add option="-DC_ONLY" />
+			<Add directory="D:\Programme\Dev-Cpp\include" />
+		</Compiler>
+		<Linker>
+			<Add directory="C:\Dev-Cpp\lib" />
+		</Linker>
+		<Unit filename="..\..\qcommon\md4.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\qcommon\md4.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="anorms.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="common\l3dslib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="common\l3dslib.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="common\trilib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="common\trilib.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="images.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="models.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qdata.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qdata.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="sprites.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="tables.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="video.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ufo2map\common\bspfile.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ufo2map\common\bspfile.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ufo2map\common\cmdlib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ufo2map\common\cmdlib.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ufo2map\common\lbmlib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ufo2map\common\lbmlib.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ufo2map\common\mathlib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ufo2map\common\mathlib.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ufo2map\common\scriplib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ufo2map\common\scriplib.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ufo2map\common\threads.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\ufo2map\common\threads.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

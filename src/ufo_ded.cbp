@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="5" />
+	<Project>
+		<Option title="ufo_ded" />
+		<Option pch_mode="2" />
+		<Option default_target="" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="" />
+		<Build>
+			<Target title="default">
+				<Option output="..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-D__GNUWIN32__" />
+			<Add option="-D_M_IX86=500" />
+			<Add option="-Wall" />
+			<Add option="-DDEBUG" />
+			<Add option="-DDEVCPP" />
+			<Add option="-DC_ONLY" />
+			<Add option="-DDEDICATED_ONLY" />
+		</Compiler>
+		<Linker>
+			<Add library="winmm" />
+			<Add library="wsock32" />
+			<Add library="kernel32" />
+			<Add library="user32" />
+			<Add library="gdi32" />
+			<Add library="gmon" />
+			<Add directory="C:\Dev-Cpp\lib" />
+		</Linker>
+		<Unit filename="game\q_shared.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="ports\null\cd_null.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="ports\null\cl_null.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="ports\win32\conproc.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="ports\win32\net_wins.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="ports\win32\q_shwin.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="ports\win32\sys_win.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="ports\win32\ufo.ico">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qcommon\cmd.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qcommon\cmodel.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qcommon\common.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qcommon\crc.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qcommon\cvar.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qcommon\files.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qcommon\md4.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qcommon\net_chan.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qcommon\scripts.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qcommon\unzip.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="qcommon\unzip.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="server\sv_ccmds.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="server\sv_game.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="server\sv_init.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="server\sv_main.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="server\sv_send.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="server\sv_user.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="server\sv_world.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="5" />
+	<Project>
+		<Option title="Campaigneditor" />
+		<Option pch_mode="2" />
+		<Option default_target="" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="" />
+		<Build>
+			<Target title="default">
+				<Option output="Campaigneditor.exe" prefix_auto="1" extension_auto="1" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option='-DPACKAGE_DATA_DIR=&quot;.&quot;' />
+			<Add option='-DPACKAGE=&quot;campaign_editor&quot;' />
+			<Add directory="C:\Dev-Cpp\include\gtk-2.0" />
+			<Add directory="C:\Dev-Cpp\include\glib-2.0" />
+			<Add directory="C:\Dev-Cpp\lib\glib-2.0\include" />
+			<Add directory="C:\Dev-Cpp\lib\gtk-2.0\include" />
+			<Add directory="C:\Dev-Cpp\include\pango-1.0" />
+			<Add directory="C:\Dev-Cpp\include\atk-1.0" />
+		</Compiler>
+		<Linker>
+			<Add library="atk-1.0" />
+			<Add library="gdk_pixbuf-2.0" />
+			<Add library="m" />
+			<Add library="pango-1.0" />
+			<Add library="gobject-2.0" />
+			<Add library="gmodule-2.0" />
+			<Add library="glib-2.0" />
+			<Add library="gdk-win32-2.0" />
+			<Add library="gtk-win32-2.0" />
+			<Add directory="C:\Dev-Cpp\lib\glib-2.0" />
+			<Add directory="C:\Dev-Cpp\lib\gtk-2.0" />
+		</Linker>
+		<Unit filename="src\callbacks.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="src\callbacks.h">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="src\interface.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="src\interface.h">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="src\main.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="src\scripts.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="src\scripts.h">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="src\support.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="src\support.h">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
