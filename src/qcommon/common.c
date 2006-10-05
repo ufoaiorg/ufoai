@@ -1008,17 +1008,20 @@ void SZ_Print(sizebuf_t * buf, char *data)
 
 
 /**
- * @brief
- *
- * Returns the position (1 to argc-1) in the program's argument list
+ * @brief Checks whether a given commandline paramter was set
+ * @param[in] parm Check for this commandline parameter
+ * @return the position (1 to argc-1) in the program's argument list
  * where the given parameter apears, or 0 if not present
+ * @sa COM_InitArgv
  */
 int COM_CheckParm(char *parm)
 {
 	int i;
 
 	for (i = 1; i < com_argc; i++) {
-		if (!strcmp(parm, com_argv[i]))
+		if (!com_argv[i])
+			continue;               /* NEXTSTEP sometimes clears appkit vars. */
+		if (!Q_strcmp (parm, com_argv[i]))
 			return i;
 	}
 
@@ -1044,7 +1047,11 @@ char *COM_Argv(int arg)
 }
 
 /**
- * @brief
+ * @brief Reset com_argv entry to empty string
+ * @param[in] arg Which argument in com_argv
+ * @sa COM_InitArgv
+ * @sa COM_CheckParm
+ * @sa COM_AddParm
  */
 void COM_ClearArgv(int arg)
 {
@@ -1056,6 +1063,7 @@ void COM_ClearArgv(int arg)
 
 /**
  * @brief
+ * @sa COM_CheckParm
  */
 void COM_InitArgv(int argc, char **argv)
 {
@@ -1074,6 +1082,7 @@ void COM_InitArgv(int argc, char **argv)
 
 /**
  * @brief Adds the given string at the end of the current argument list
+ * @sa COM_InitArgv
  */
 void COM_AddParm(char *parm)
 {
