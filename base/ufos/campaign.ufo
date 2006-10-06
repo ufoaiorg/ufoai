@@ -197,6 +197,9 @@ campaign main
 		TEAM_ALIEN EMPL_SOLDIER skill 90 100
 		TEAM_ALIEN EMPL_SOLDIER ability 90 100
 	}
+	salary {
+		soldier_base 3200
+	}
 	researched rslist_human
 //	ugvs	2
 	equipment	campaign_player
