@@ -76,3 +76,62 @@ bool level_filtered(Level& level)
 	return false;
 }
 
+static int activeLevelFilter = 0;
+static int activeSteponFilter = 0;
+
+/**
+ * @brief Deactivates the level filter for the given level
+ */
+void deactive_filter_level(int level)
+{
+	globalOutputStream() << "deactive_filter_level: " << level << "\n";
+	activeLevelFilter = 0;
+	globalOutputStream() << "TODO: Implement me\n";
+}
+
+/**
+ * @brief Activates the level filter for the given level
+ * @param[in] level Which level to show?
+ */
+void filter_level(int level)
+{
+	if (activeLevelFilter > 0)
+		deactive_filter_level(activeLevelFilter);
+	if (activeLevelFilter != level)
+	{
+		activeLevelFilter = level;
+		globalOutputStream() << "filter_level: " << activeLevelFilter << "\n";
+		globalOutputStream() << "TODO: Implement me\n";
+	}
+	else
+	{
+		globalOutputStream() << "Level filters deactivated\n";
+	}
+}
+
+/**
+ * @brief Deactivates the stepon filter
+ */
+void deactive_filter_stepon(void)
+{
+	globalOutputStream() << "deactive_filter_stepon\n";
+	activeSteponFilter = 0;
+	globalOutputStream() << "TODO: Implement me\n";
+}
+
+/**
+ * @brief Activates the level filter for the given level
+ * @param[in] level Which level to show?
+ */
+void filter_stepon(void)
+{
+	if (activeSteponFilter == 1)
+		deactive_filter_stepon();
+	else
+	{
+		activeSteponFilter = 1;
+		globalOutputStream() << "filter_stepon\n";
+		globalOutputStream() << "TODO: Implement me\n";
+	}
+}
+

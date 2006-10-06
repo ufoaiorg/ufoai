@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "iplugin.h"
 #include "ifilter.h"
+#include "ibrush.h"
 #include "iundo.h"       // declaration of undo system
 #include "ientity.h"     // declaration of entity system
 #include "iscenegraph.h" // declaration of datastructure of the map
@@ -34,11 +35,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "string/string.h"
 #include "modulesystem/singletonmodule.h"
 
-#include <gtk/gtk.h>
-
 class UFOAIPluginDependencies :
   public GlobalRadiantModuleRef,    // basic class for all other module refs
   public GlobalUndoModuleRef,       // used to say radiant that something has changed and to undo that
+  public GlobalBrushModuleRef,
   public GlobalSceneGraphModuleRef, // necessary to handle data in the mapfile (change, retrieve data)
   public GlobalEntityModuleRef      // to access and modify the entities
 {
@@ -64,10 +64,8 @@ namespace UFOAI
 	}
 	const char* getCommandList()
 	{
-		if (strncmp(GlobalRadiant().getGameName(), "ufoai", 6) == 0)
-			strncat(UFOMenuList, ";Level 1,Level 2,Level 3,Level 4,Level 5,Level 6,Level 7,Level 8,StepOn", sizeof(UFOMenuList));
-		else
-			strncat(UFOMenuList, GlobalRadiant().getGameName(), sizeof(UFOMenuList));
+		strncat(UFOMenuList, ";Level 1,Level 2,Level 3,Level 4,Level 5,Level 6,Level 7,Level 8,StepOn", sizeof(UFOMenuList));
+		/*GlobalRadiant().getGameName()*/
 		return (const char*)UFOMenuList;
 	}
 	const char* getCommandTitleList()
@@ -76,7 +74,7 @@ namespace UFOAI
 	}
 	void dispatch(const char* command, float* vMin, float* vMax, bool bSingleBrush)
 	{
-		if(string_equal(command, "About"))
+		if(string_equal(command, "About..."))
 		{
 			GlobalRadiant().m_pfnMessageBox(GTK_WIDGET(g_mainwnd),
 				"UFO:AI Plugin (http://www.ufoai.net)\n", "About",
@@ -84,7 +82,39 @@ namespace UFOAI
 		}
 		else if(string_equal(command, "Level 1"))
 		{
-			globalOutputStream() << "Level 1\n";
+			filter_level(1);
+		}
+		else if(string_equal(command, "Level 2"))
+		{
+			filter_level(2);
+		}
+		else if(string_equal(command, "Level 3"))
+		{
+			filter_level(3);
+		}
+		else if(string_equal(command, "Level 4"))
+		{
+			filter_level(4);
+		}
+		else if(string_equal(command, "Level 5"))
+		{
+			filter_level(5);
+		}
+		else if(string_equal(command, "Level 6"))
+		{
+			filter_level(6);
+		}
+		else if(string_equal(command, "Level 7"))
+		{
+			filter_level(7);
+		}
+		else if(string_equal(command, "Level 8"))
+		{
+			filter_level(8);
+		}
+		else if(string_equal(command, "StepOn"))
+		{
+			globalOutputStream() << "StepOn\n";
 		}
 	}
 } // namespace
@@ -115,9 +145,41 @@ typedef SingletonModule<UFOAIPluginModule> SingletonUFOAIPluginModule;
 SingletonUFOAIPluginModule g_UFOAIPluginModule;
 
 
+class UFOAIToolbarDependencies : public ModuleRef<_QERPluginTable>
+{
+public:
+	UFOAIToolbarDependencies() : ModuleRef<_QERPluginTable>("ufoai")
+	{
+	}
+};
+
+class UFOAIToolbarModule : public TypeSystemRef
+{
+	_QERPlugToolbarTable m_table;
+public:
+	typedef _QERPlugToolbarTable Type;
+	STRING_CONSTANT(Name, "ufoai");
+
+	UFOAIToolbarModule()
+	{
+		m_table.m_pfnToolbarButtonCount = ToolbarButtonCount;
+		m_table.m_pfnGetToolbarButton = GetToolbarButton;
+	}
+	_QERPlugToolbarTable* getTable()
+	{
+		return &m_table;
+	}
+};
+
+typedef SingletonModule<UFOAIToolbarModule, UFOAIToolbarDependencies> SingletonUFOAIToolbarModule;
+
+SingletonUFOAIToolbarModule g_UFOAIToolbarModule;
+
+
 extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules(ModuleServer& server)
 {
 	initialiseModule(server);
 
 	g_UFOAIPluginModule.selfRegister();
+	g_UFOAIToolbarModule.selfRegister();
 }

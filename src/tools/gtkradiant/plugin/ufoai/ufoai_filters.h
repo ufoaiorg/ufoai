@@ -34,6 +34,8 @@ public:
 
 bool level_filtered(Level& level);
 void add_level_filter(LevelFilter& filter, int mask, bool invert = false);
+void filter_level(int level);
+void filter_stepon(void);
 
 class ClassnameFilter : public Filterable
 {
@@ -75,5 +77,17 @@ public:
 	}
 	typedef MemberCaller1<ClassnameFilter, const char*, &ClassnameFilter::classnameChanged> ClassnameChangedCaller;
 };
+
+
+#define CONTENTS_LEVEL8 0x8000
+#define CONTENTS_LEVEL7 0x4000
+#define CONTENTS_LEVEL6 0x2000
+#define CONTENTS_LEVEL5 0x1000
+#define CONTENTS_LEVEL4 0x0800
+#define CONTENTS_LEVEL3 0x0400
+#define CONTENTS_LEVEL2 0x0200
+#define CONTENTS_LEVEL1 0x0100
+
+#define CONTENTS_STEPON 0x40000000
 
 #endif
