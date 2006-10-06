@@ -61,5 +61,5 @@ shader textures/tex_buildings/wall002
 
 shader textures/tex_buildings/wall021
 {
-	embosslow true
+	emboss_low true
 }

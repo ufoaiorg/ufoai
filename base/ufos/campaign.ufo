@@ -1,4 +1,4 @@
-// code ensures there are at least 3 missions between repetitions 
+// code ensures there are at least 3 missions between repetitions
 // of any mission in a given stage set, or at least 2 mission
 // if the total number of missions is 3, etc.
 // so 'number n', where n <= 4 ensures not repetitions
@@ -44,7 +44,7 @@ stage intro
 		number		3 // no mission will get repeated
 		quota		3
 	}
-// from this place on, due to not enough missions in RC5, 
+// from this place on, due to not enough missions in RC5,
 // and only 19 scientists total, I increase all "frame" settings
 	set ultimate_terror // stage2 equipment start here
 	{
@@ -191,6 +191,12 @@ campaign main
 	workers		4
 	medics		2
 	difficulty	0
+	character_data {
+		TEAM_PHALANX EMPL_SOLDIER skill 75 100
+		TEAM_PHALANX EMPL_SOLDIER ability 15 80
+		TEAM_ALIEN EMPL_SOLDIER skill 90 100
+		TEAM_ALIEN EMPL_SOLDIER ability 90 100
+	}
 	researched rslist_human
 //	ugvs	2
 	equipment	campaign_player
