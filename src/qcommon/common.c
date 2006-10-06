@@ -1522,7 +1522,8 @@ float Qcommon_Frame(int msec)
 		else
 			wait = max(cl_timer, sv_timer);
 		if (wait >= 1) {
-			Com_DPrintf("Sys_Sleep for %i ms\n", wait);
+			if (COM_CheckParm("-paranoid"))
+				Com_DPrintf("Sys_Sleep for %i ms\n", wait);
 			Sys_Sleep(wait);
 		}
 		cl_timer = sv_timer = 0;

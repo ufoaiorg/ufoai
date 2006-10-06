@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_REQMISSIONS	4
 #define MAX_ACTMISSIONS	16
 #define MAX_SETMISSIONS	16
-#define MAX_CAMPAIGNS	16
 
 #define MAX_STAGESETS	256
 #define MAX_STAGES		64
@@ -136,6 +135,7 @@ typedef struct actMis_s {
 } actMis_t;
 
 typedef struct campaign_s {
+	int idx;					/* own index in global campaign array */
 	char id[MAX_VAR];
 	char name[MAX_VAR];
 	char team[MAX_VAR];

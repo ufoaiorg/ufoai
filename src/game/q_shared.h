@@ -1091,7 +1091,27 @@ typedef struct character_s {
     int empl_type;
 } character_t;
 
-void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility, int minSkill, int maxSkill);
+/* The types of employees */
+typedef enum {
+	EMPL_SOLDIER,
+	EMPL_SCIENTIST,
+	EMPL_WORKER,				/* unused right now */
+	EMPL_MEDIC,					/* unused right now */
+	EMPL_ROBOT,					/* unused right now */
+	MAX_EMPL					/* for counting over all available enums */
+} employeeType_t;
+
+#define MAX_CAMPAIGNS	16
+
+/* min and max values for all teams can be defined via campaign script */
+extern int skillValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
+extern int abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
+
+/* cl_main.c */
+int CL_GetCampaignID (void);
+
+int Com_StringToTeamNum(char* teamString);
+void Com_CharGenAbilitySkills(character_t * chr, int team);
 char *Com_CharGetBody(character_t* const chr);
 char *Com_CharGetHead(character_t* const chr);
 

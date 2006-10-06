@@ -1432,6 +1432,17 @@ void CL_AddMapParticle(char *ptl, vec3_t origin, vec2_t wait, char *info, int le
 }
 
 /**
+ * @brief Returns the current campaign index in global campaign array
+ * @sa Com_CharGenAbilitySkills
+ */
+int CL_GetCampaignID (void)
+{
+	if (curCampaign)
+		return curCampaign->idx;
+	return -1;
+}
+
+/**
  * @brief Translate the difficulty int to a translated string
  * @param difficulty the difficulty integer value
  */

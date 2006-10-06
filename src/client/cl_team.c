@@ -182,6 +182,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t emplo
 {
 	character_t *chr = NULL;
 	char teamDefName[MAX_VAR];
+	int teamValue = TEAM_CIVILIAN;
 
 	if (!employee)
 		return;
@@ -202,12 +203,18 @@ void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t emplo
 	chr->empl_type = employeeType;
 	chr->empl_idx = employee->idx;
 
+	/* if not human - then we TEAM_ALIEN */
+	if (strstr(team, "human"))
+		teamValue = TEAM_PHALANX;
+	else if (strstr(team, "alien"))
+		teamValue = TEAM_ALIEN;
+
 	/* Generate character stats, moels & names. */
 	switch (employeeType) {
 	case EMPL_SOLDIER:
 		chr->rank = CL_GetRank("rookie");
 		/* Create attributes. */
-		Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
+		Com_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
 		chr->skin = Com_GetModelAndName(team, chr);
@@ -215,7 +222,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t emplo
 	case EMPL_SCIENTIST:
 		chr->rank = CL_GetRank("scientist");
 		/* Create attributes. */
-		Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
+		Com_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		Com_sprintf(teamDefName, MAX_VAR, "%s_scientist", team);
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
@@ -224,7 +231,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t emplo
 	case EMPL_MEDIC:
 		chr->rank = CL_GetRank("medic");
 		/* Create attributes. */
-		Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
+		Com_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		Com_sprintf(teamDefName, MAX_VAR, "%s_medic", team);
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
@@ -233,7 +240,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t emplo
 	case EMPL_WORKER:
 		chr->rank = CL_GetRank("worker");
 		/* Create attributes. */
-		Com_CharGenAbilitySkills(chr, 15, 50, 15, 50);
+		Com_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		Com_sprintf(teamDefName, MAX_VAR, "%s_worker", team);
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
@@ -242,7 +249,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t emplo
 	case EMPL_ROBOT:
 		chr->rank = CL_GetRank("ugv");
 		/* Create attributes. */
-		Com_CharGenAbilitySkills(chr, 80, 80, 80, 80);
+		Com_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		chr->fieldSize = ACTOR_SIZE_UGV;
 		Com_sprintf(teamDefName, MAX_VAR, "%s_ugv", team);
@@ -1109,7 +1116,7 @@ qboolean CL_SaveTeam(char *filename)
 
 	/* store aircraft soldier content for multi-player */
 	MSG_WriteByte(&sb, aircraft->size);
-	for (i = 0; i < aircraft->size; i++) 
+	for (i = 0; i < aircraft->size; i++)
 		MSG_WriteByte(&sb, aircraft->teamIdxs[i]);
 
 	/* store equipment in baseCurrent so soldiers can be properly equipped */
@@ -1236,7 +1243,7 @@ void CL_LoadTeamMultiplayer(char *filename)
 	aircraft = &gd.bases[0].aircraft[0];
 	Com_Printf("Multiplayer aircraft IDX = %i\n", aircraft->idx);
 	aircraft->size = MSG_ReadByte(&sb);
-	for (i = 0; i < aircraft->size; i++) 
+	for (i = 0; i < aircraft->size; i++)
 		aircraft->teamIdxs[i] = MSG_ReadByte(&sb);
 
 	/* read equipment */

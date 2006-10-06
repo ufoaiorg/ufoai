@@ -3127,6 +3127,69 @@ void CL_ParseStage(char *name, char **text)
 	sp->num = numStageSets - sp->first;
 }
 
+/* =========================================================== */
+
+/**
+ * @brief Parse the character ability and skill values from script
+ * @param[in] name Name or ID of the found character skill and ability definition
+ * @param[in] text The text of the nation node
+ * @sa nation_vals
+ * @note Example:
+ * <code>character_data {
+ *  TEAM_ALIEN skill 15 75
+ *  TEAM_ALIEN ability 15 95
+ * }</code>
+ */
+void CL_ParseCharacterValues(char *name, char **text, int campaignID)
+{
+	char *errhead = "CL_ParseCharacterValues: unexptected end of file (aircraft ";
+	char *token;
+	int team = 0, i, empl_type = 0;
+
+	Com_DPrintf("...found character value %s\n", name);
+
+	/* get it's body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("CL_ParseCharacterValues: character_data def \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	do {
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		team = Com_StringToTeamNum(token);
+		/* >= MAX_TEAMS is impossible atm - but who knows */
+		if (team < 0 || team >= MAX_TEAMS)
+			Sys_Error("CL_ParseCharacterValues: Unknown teamString\n");
+		/* now let's check whether we want parse skill or abilitie values */
+		token = COM_EParse(text, errhead, name);
+		empl_type = E_GetEmployeeType(token);
+		token = COM_EParse(text, errhead, name);
+
+		/* found a definition */
+		if (!Q_strcmp(token, "skill")) {
+			for (i=0; i<2; i++) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					Sys_Error("CL_ParseCharacterValues: invalid skill entry for team %i\n", team);
+				skillValues[campaignID][team][empl_type][i] = atoi(token);
+			}
+		} else if (!Q_strcmp(token, "ability")) {
+			for (i=0; i<2; i++) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					Sys_Error("CL_ParseCharacterValues: invalid ability entry for team %i\n", team);
+				abilityValues[campaignID][team][empl_type][i] = atoi(token);
+			}
+		}
+	} while (*text);
+}
 
 /* =========================================================== */
 
@@ -3199,7 +3262,11 @@ void CL_ParseCampaign(char *id, char **text)
 	cp = &campaigns[numCampaigns++];
 	memset(cp, 0, sizeof(campaign_t));
 
+	cp->idx = numCampaigns-1;
 	Q_strncpyz(cp->id, id, MAX_VAR);
+
+	memset(skillValues[cp->idx], -1, sizeof(skillValues[cp->idx]));
+	memset(abilityValues[cp->idx], -1, sizeof(abilityValues[cp->idx]));
 
 	/* some default values */
 	Q_strncpyz(cp->team, "human", MAX_VAR);
@@ -3232,8 +3299,9 @@ void CL_ParseCampaign(char *id, char **text)
 				Com_ParseValue(cp, token, vp->type, vp->ofs);
 				break;
 			}
-
-		if (!vp->string) {
+		if (!Q_strncmp(token, "character_data", MAX_VAR)) {
+			CL_ParseCharacterValues(token, text, numCampaigns-1);
+		} else if (!vp->string) {
 			Com_Printf("CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, id);
 			COM_EParse(text, errhead, id);
 		}
@@ -3263,7 +3331,6 @@ static value_t nation_vals[] = {
 	,
 
 	{NULL, 0, 0}
-	,
 };
 
 /**
@@ -3325,7 +3392,6 @@ void CL_ParseNations(char *name, char **text)
 		}
 	} while (*text);
 }
-
 
 /**
  * @brief Check whether we are in a tactical mission as server or as client

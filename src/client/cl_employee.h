@@ -39,16 +39,6 @@ void E_Reset(void);
 /* if ( !maxEmployeesWorkersInLab ) maxEmployeesWorkersInLab = MAX_EMPLOYEES_IN_BUILDING; */
 /* if ( !maxEmployeesInWorkshop ) maxEmployeesInWorkshop = MAX_EMPLOYEES_IN_BUILDING; */
 
-/* The types of employees */
-typedef enum {
-	EMPL_SOLDIER,
-	EMPL_SCIENTIST,
-	EMPL_WORKER,				/* unused right now */
-	EMPL_MEDIC,					/* unused right now */
-	EMPL_ROBOT,					/* unused right now */
-	MAX_EMPL					/* for counting over all available enums */
-} employeeType_t;
-
 /* The definition of an employee */
 typedef struct employee_s {
 	int idx;					/* self link in global employee-list. */

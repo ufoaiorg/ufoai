@@ -263,9 +263,9 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		/* reward short walking to shooting spot, when seen by enemies;
 		   TODO: do this decently, only penalizing the visible part of walk
 		   and penalizing much more for reaction shooters around;
-		   now it may remove some tactical options from aliens, 
+		   now it may remove some tactical options from aliens,
 		   e.g. they may now choose only the closer doors;
-		   however it's still better than going three times around soldier 
+		   however it's still better than going three times around soldier
 		   and only then firing at him */
 		guete += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
 
@@ -600,7 +600,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 			gi.linkentity(ent);
 
 			/* skills; TODO: more power to Ortnoks, more mind to Antareans */
-			Com_CharGenAbilitySkills(&ent->chr, 0, 100, 0, 100);
+			Com_CharGenAbilitySkills(&ent->chr, team);
 			ent->chr.skills[ABILITY_MIND] += 100;
 			if (ent->chr.skills[ABILITY_MIND] >= MAX_SKILL)
 				ent->chr.skills[ABILITY_MIND] = MAX_SKILL;
@@ -623,7 +623,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 			ent->head = gi.modelindex(Com_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
 		} else {
-			Com_CharGenAbilitySkills(&ent->chr, 0, 20, 0, 20);
+			Com_CharGenAbilitySkills(&ent->chr, team);
 			ent->chr.HP = GET_HP(ent->chr.skills[ABILITY_POWER]) / 2;
 			ent->HP = ent->chr.HP;
 			ent->chr.morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);

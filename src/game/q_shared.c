@@ -2868,6 +2868,129 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 	} while (!has_armor && repeat--);
 }
 
+/**
+ * @brief Translate the team string to the team int value
+ * @sa TEAM_ALIEN, TEAM_CIVILIAN, TEAM_PHALANX
+ * @param[in] teamString
+ */
+int Com_StringToTeamNum(char* teamString)
+{
+	if (!Q_strncmp(teamString, "TEAM_PHALANX", MAX_VAR))
+		return TEAM_PHALANX;
+	if (!Q_strncmp(teamString, "TEAM_CIVILIAN", MAX_VAR))
+		return TEAM_CIVILIAN;
+	if (!Q_strncmp(teamString, "TEAM_ALIEN", MAX_VAR))
+		return TEAM_ALIEN;
+	/* there may be other ortnok teams - only check first 6 characters */
+	Com_Printf("Com_StringToTeamNum: Unknown teamString: '%s'\n", teamString);
+	return -1;
+}
+
+/* min and max values for all teams can be defined via campaign script */
+int skillValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
+int abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
+
+/**
+ * @brief Fills the min and max values for abilities for the given character
+ * @param[in] chr For which character - needed to check empl_type
+ * @param[in] team TEAM_ALIEN, TEAM_CIVILIAN, ...
+ * @param[in] minAbility Pointer to minAbility int value to use for this character
+ * @param[in] maxAbility Pointer to maxAbility int value to use for this character
+ * @sa Com_CharGenAbilitySkills
+ */
+void Com_GetAbility (character_t *chr, int team, int *minAbility, int *maxAbility, int campaignID)
+{
+	*minAbility = *maxAbility = 0;
+	/* some default values */
+	switch (chr->empl_type) {
+	case EMPL_SOLDIER:
+		*minAbility = 15;
+		*maxAbility = 75;
+		break;
+	case EMPL_MEDIC:
+		*minAbility = 15;
+		*maxAbility = 75;
+		break;
+	case EMPL_SCIENTIST:
+		*minAbility = 15;
+		*maxAbility = 75;
+		break;
+	case EMPL_WORKER:
+		*minAbility = 15;
+		*maxAbility = 50;
+		break;
+	case EMPL_ROBOT:
+		*minAbility = 80;
+		*maxAbility = 80;
+		break;
+	default:
+		Sys_Error("Com_GetAbility: Unknown employee type: %i\n", chr->empl_type);
+	}
+	if (team == TEAM_ALIEN) {
+		*minAbility = 0;
+		*maxAbility = 100;
+	} else if (team == TEAM_CIVILIAN) {
+		*minAbility = 0;
+		*maxAbility = 20;
+	}
+	/* we always need both values - min and max - otherwise it was already a Sys_Error at parsing time */
+	if (campaignID >= 0 && abilityValues[campaignID][team][chr->empl_type][0] >= 0) {
+		*minAbility = abilityValues[campaignID][team][chr->empl_type][0];
+		*maxAbility = abilityValues[campaignID][team][chr->empl_type][1];
+	}
+	Com_Printf("Com_GetAbility: use minAbility %i and maxAbility %i for team %i and empl_type %i\n", *minAbility, *maxAbility, team, chr->empl_type);
+}
+
+/**
+ * @brief Fills the min and max values for skill for the given character
+ * @param[in] chr For which character - needed to check empl_type
+ * @param[in] team TEAM_ALIEN, TEAM_CIVILIAN, ...
+ * @param[in] minSkill Pointer to minSkill int value to use for this character
+ * @param[in] maxSkill Pointer to maxSkill int value to use for this character
+ * @sa Com_CharGenAbilitySkills
+ */
+void Com_GetSkill (character_t *chr, int team, int *minSkill, int *maxSkill, int campaignID)
+{
+	*minSkill = *maxSkill = 0;
+	/* some default values */
+	switch (chr->empl_type) {
+	case EMPL_SOLDIER:
+		*minSkill = 15;
+		*maxSkill = 75;
+		break;
+	case EMPL_MEDIC:
+		*minSkill = 15;
+		*maxSkill = 75;
+		break;
+	case EMPL_SCIENTIST:
+		*minSkill = 15;
+		*maxSkill = 75;
+		break;
+	case EMPL_WORKER:
+		*minSkill = 15;
+		*maxSkill = 50;
+		break;
+	case EMPL_ROBOT:
+		*minSkill = 80;
+		*maxSkill = 80;
+		break;
+	default:
+		Sys_Error("Com_GetSkill: Unknown employee type: %i\n", chr->empl_type);
+	}
+	if (team == TEAM_ALIEN) {
+		*minSkill = 0;
+		*maxSkill = 100;
+	} else if (team == TEAM_CIVILIAN) {
+		*minSkill = 0;
+		*maxSkill = 20;
+	}
+	/* we always need both values - min and max - otherwise it was already a Sys_Error at parsing time */
+	if (campaignID >= 0 && skillValues[campaignID][team][chr->empl_type][0] >= 0) {
+		*minSkill = skillValues[campaignID][team][chr->empl_type][0];
+		*maxSkill = skillValues[campaignID][team][chr->empl_type][1];
+	}
+	Com_Printf("Com_GetSkill: use minSkill %i and maxSkill %i for team %i and empl_type %i\n", *minSkill, *maxSkill, team, chr->empl_type);
+}
 
 /**
  * @brief
@@ -2876,13 +2999,17 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
  * @param[in] maxAbility
  * @param[in] minSkill
  * @param[in] maxSkill
+ * @sa Com_GetAbility
+ * @sa Com_GetSkill
  */
 #define MAX_GENCHARRETRIES	20
-void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility, int minSkill, int maxSkill)
+void Com_CharGenAbilitySkills(character_t * chr, int team)
 {
 	float randomArray[SKILL_NUM_TYPES];
 	int i, retry;
 	float max, min, rand_avg;
+	int minAbility = 0, maxAbility = 0, minSkill = 0, maxSkill = 0;
+	int campaignID = -1;
 
 	assert(chr);
 #ifdef DEBUG
@@ -2890,6 +3017,13 @@ void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility,
 		return;	/* never reached. need for code analyst. */
 #endif
 
+#ifndef DEDICATED_ONLY
+	campaignID = CL_GetCampaignID();
+#endif /* DEDICATED_ONLY */
+
+	Com_GetAbility(chr, team, &minAbility, &maxAbility, campaignID);
+	Com_GetSkill(chr, team, &minSkill, &maxSkill, campaignID);
+	Com_Printf("\n");
 	retry = MAX_GENCHARRETRIES;
 	do {
 		/* Abilities */
