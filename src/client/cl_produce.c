@@ -40,13 +40,8 @@ static int selectedIndex 			= -1;
  */
 
 /* 20060921 LordHavoc: added PRODUCE_DIVISOR to allow reducing prices below 1x */
-#ifdef LORDHAVOC_ECONOMY
-static int PRODUCE_FACTOR = 1;
-static int PRODUCE_DIVISOR = 2;
-#else
-static int PRODUCE_FACTOR = 10;
-static int PRODUCE_DIVISOR = 1;
-#endif
+static const int PRODUCE_FACTOR = 1;
+static const int PRODUCE_DIVISOR = 2;
 
 /** @brief number of blank lines between queued items and tech list */
 #define QUEUE_SPACERS 2
