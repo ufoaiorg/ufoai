@@ -2938,7 +2938,8 @@ void Com_GetAbility (character_t *chr, int team, int *minAbility, int *maxAbilit
 		*minAbility = abilityValues[campaignID][team][chr->empl_type][0];
 		*maxAbility = abilityValues[campaignID][team][chr->empl_type][1];
 	}
-	Com_Printf("Com_GetAbility: use minAbility %i and maxAbility %i for team %i and empl_type %i\n", *minAbility, *maxAbility, team, chr->empl_type);
+	if (COM_CheckParm("-paranoid"))
+		Com_DPrintf("Com_GetAbility: use minAbility %i and maxAbility %i for team %i and empl_type %i\n", *minAbility, *maxAbility, team, chr->empl_type);
 }
 
 /**
@@ -2989,7 +2990,8 @@ void Com_GetSkill (character_t *chr, int team, int *minSkill, int *maxSkill, int
 		*minSkill = skillValues[campaignID][team][chr->empl_type][0];
 		*maxSkill = skillValues[campaignID][team][chr->empl_type][1];
 	}
-	Com_Printf("Com_GetSkill: use minSkill %i and maxSkill %i for team %i and empl_type %i\n", *minSkill, *maxSkill, team, chr->empl_type);
+	if (COM_CheckParm("-paranoid"))
+		Com_DPrintf("Com_GetSkill: use minSkill %i and maxSkill %i for team %i and empl_type %i\n", *minSkill, *maxSkill, team, chr->empl_type);
 }
 
 /**
@@ -3023,7 +3025,6 @@ void Com_CharGenAbilitySkills(character_t * chr, int team)
 
 	Com_GetAbility(chr, team, &minAbility, &maxAbility, campaignID);
 	Com_GetSkill(chr, team, &minSkill, &maxSkill, campaignID);
-	Com_Printf("\n");
 	retry = MAX_GENCHARRETRIES;
 	do {
 		/* Abilities */

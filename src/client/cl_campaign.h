@@ -158,6 +158,52 @@ typedef struct campaign_s {
 	qboolean finished;
 } campaign_t;
 
+typedef struct salary_s {
+	int soldier_base;
+	int soldier_rankbonus;
+	int worker_base;
+	int worker_rankbonus;
+	int scientist_base;
+	int scientist_rankbonus;
+	int medic_base;
+	int medic_rankbonus;
+	int robot_base;
+	int robot_rankbonus;
+	int aircraft_factor;
+	int aircraft_divisor;
+	int base_upkeep;
+	int admin_initial;
+	int admin_soldier;
+	int admin_worker;
+	int admin_scientist;
+	int admin_medic;
+	int admin_robot;
+	float debt_interest;
+} salary_t;
+
+#define SALARY_SOLDIER_BASE salaries[curCampaign->idx].soldier_base
+#define SALARY_SOLDIER_RANKBONUS salaries[curCampaign->idx].soldier_rankbonus
+#define SALARY_WORKER_BASE salaries[curCampaign->idx].worker_base
+#define SALARY_WORKER_RANKBONUS salaries[curCampaign->idx].worker_rankbonus
+#define SALARY_SCIENTIST_BASE salaries[curCampaign->idx].scientist_base
+#define SALARY_SCIENTIST_RANKBONUS salaries[curCampaign->idx].scientist_rankbonus
+#define SALARY_MEDIC_BASE salaries[curCampaign->idx].medic_base
+#define SALARY_MEDIC_RANKBONUS salaries[curCampaign->idx].medic_rankbonus
+#define SALARY_ROBOT_BASE salaries[curCampaign->idx].robot_base
+#define SALARY_ROBOT_RANKBONUS salaries[curCampaign->idx].robot_rankbonus
+#define SALARY_AIRCRAFT_FACTOR salaries[curCampaign->idx].aircraft_factor
+#define SALARY_AIRCRAFT_DIVISOR salaries[curCampaign->idx].aircraft_divisor
+#define SALARY_BASE_UPKEEP salaries[curCampaign->idx].base_upkeep
+#define SALARY_ADMIN_INITIAL salaries[curCampaign->idx].admin_initial
+#define SALARY_ADMIN_SOLDIER salaries[curCampaign->idx].admin_soldier
+#define SALARY_ADMIN_WORKER salaries[curCampaign->idx].admin_worker
+#define SALARY_ADMIN_SCIENTIST salaries[curCampaign->idx].admin_scientist
+#define SALARY_ADMIN_MEDIC salaries[curCampaign->idx].admin_medic
+#define SALARY_ADMIN_ROBOT salaries[curCampaign->idx].admin_robot
+#define SALARY_DEBT_INTEREST salaries[curCampaign->idx].debt_interest
+
+extern salary_t salaries[MAX_CAMPAIGNS];
+
 typedef struct nation_s {
 	char id[MAX_VAR];
 	char name[MAX_VAR];

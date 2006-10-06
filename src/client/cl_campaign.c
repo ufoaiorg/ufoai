@@ -60,54 +60,8 @@ extern qboolean CL_SendAircraftToMission(aircraft_t * aircraft, actMis_t * missi
 extern void CL_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 static void CL_GameExit(void);
 
-/* 20060921 LordHavoc: moved salary parameters out of the code */
-#ifdef LORDHAVOC_ECONOMY
-static int SALARY_SOLDIER_BASE = 3000;
-static int SALARY_SOLDIER_RANKBONUS = 500;
-static int SALARY_WORKER_BASE = 3000;
-static int SALARY_WORKER_RANKBONUS = 500;
-static int SALARY_SCIENTIST_BASE = 3000;
-static int SALARY_SCIENTIST_RANKBONUS = 500;
-static int SALARY_MEDIC_BASE = 3000;
-static int SALARY_MEDIC_RANKBONUS = 500;
-static int SALARY_ROBOT_BASE = 7500;
-static int SALARY_ROBOT_RANKBONUS = 1500;
-static int SALARY_AIRCRAFT_FACTOR = 1;
-static int SALARY_AIRCRAFT_DIVISOR = 25;
-static int SALARY_BASE_UPKEEP = 20000;
-static int SALARY_ADMIN_INITIAL = 1000;
-static int SALARY_ADMIN_SOLDIER = 75;
-static int SALARY_ADMIN_WORKER = 75;
-static int SALARY_ADMIN_SCIENTIST = 75;
-static int SALARY_ADMIN_MEDIC = 75;
-static int SALARY_ADMIN_ROBOT = 150;
-static float SALARY_DEBT_INTEREST = 0.005;
 /* 20060923 LordHavoc: made autosell an option here */
 static qboolean MARKET_AUTOSELL = qtrue;
-#else
-static int SALARY_SOLDIER_BASE = 300;
-static int SALARY_SOLDIER_RANKBONUS = 50;
-static int SALARY_WORKER_BASE = 300;
-static int SALARY_WORKER_RANKBONUS = 50;
-static int SALARY_SCIENTIST_BASE = 300;
-static int SALARY_SCIENTIST_RANKBONUS = 50;
-static int SALARY_MEDIC_BASE = 300;
-static int SALARY_MEDIC_RANKBONUS = 50;
-static int SALARY_ROBOT_BASE = 750;
-static int SALARY_ROBOT_RANKBONUS = 150;
-static int SALARY_AIRCRAFT_FACTOR = 1;
-static int SALARY_AIRCRAFT_DIVISOR = 100;
-static int SALARY_BASE_UPKEEP = 2000;
-static int SALARY_ADMIN_INITIAL = 550;
-static int SALARY_ADMIN_SOLDIER = 35;
-static int SALARY_ADMIN_WORKER = 35;
-static int SALARY_ADMIN_SCIENTIST = 35;
-static int SALARY_ADMIN_MEDIC = 35;
-static int SALARY_ADMIN_ROBOT = 70;
-static float SALARY_DEBT_INTEREST = 0.005;
-/* 20060923 LordHavoc: made autosell an option here */
-static qboolean MARKET_AUTOSELL = qtrue;
-#endif
 
 /*
 ============================================================================
@@ -3129,11 +3083,112 @@ void CL_ParseStage(char *name, char **text)
 
 /* =========================================================== */
 
+salary_t salaries[MAX_CAMPAIGNS];
+
+static value_t salary_vals[] = {
+	{"soldier_base", V_INT, offsetof(salary_t, soldier_base)}
+	,
+	{"soldier_rankbonus", V_INT, offsetof(salary_t, soldier_rankbonus)}
+	,
+	{"worker_base", V_INT, offsetof(salary_t, worker_base)}
+	,
+	{"worker_rankbonus", V_INT, offsetof(salary_t, worker_rankbonus)}
+	,
+	{"scientist_base", V_INT, offsetof(salary_t, scientist_base)}
+	,
+	{"scientist_rankbonus", V_INT, offsetof(salary_t, scientist_rankbonus)}
+	,
+	{"medic_base", V_INT, offsetof(salary_t, medic_base)}
+	,
+	{"medic_rankbonus", V_INT, offsetof(salary_t, medic_rankbonus)}
+	,
+	{"robot_base", V_INT, offsetof(salary_t, robot_base)}
+	,
+	{"robot_rankbonus", V_INT, offsetof(salary_t, robot_rankbonus)}
+	,
+	{"aircraft_factor", V_INT, offsetof(salary_t, aircraft_factor)}
+	,
+	{"aircraft_divisor", V_INT, offsetof(salary_t, aircraft_divisor)}
+	,
+	{"base_upkeep", V_INT, offsetof(salary_t, base_upkeep)}
+	,
+	{"admin_initial", V_INT, offsetof(salary_t, admin_initial)}
+	,
+	{"admin_soldier", V_INT, offsetof(salary_t, admin_soldier)}
+	,
+	{"admin_worker", V_INT, offsetof(salary_t, admin_worker)}
+	,
+	{"admin_scientist", V_INT, offsetof(salary_t, admin_scientist)}
+	,
+	{"admin_medic", V_INT, offsetof(salary_t, admin_medic)}
+	,
+	{"admin_robot", V_INT, offsetof(salary_t, admin_robot)}
+	,
+	{"debt_interest", V_FLOAT, offsetof(salary_t, debt_interest)}
+	,
+	{NULL, 0, 0}
+};
+
+/**
+ * @brief Parse the salaries from campaign definition
+ * @param[in] name Name or ID of the found character skill and ability definition
+ * @param[in] text The text of the nation node
+ * @param[in] campaignID Current campaign id (idx)
+ * @note Example:
+ * <code>salary {
+ *  soldier_base 3000
+ * }</code>
+ */
+void CL_ParseSalary(char *name, char **text, int campaignID)
+{
+	char *errhead = "CL_ParseSalary: unexptected end of file ";
+	salary_t *s;
+	value_t *vp;
+	char *token;
+
+	/* initialize the campaign */
+	s = &salaries[campaignID];
+
+	/* get it's body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("CL_ParseSalary: salary def without body ignored\n");
+		return;
+	}
+
+	do {
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		/* check for some standard values */
+		for (vp = salary_vals; vp->string; vp++)
+			if (!Q_strcmp(token, vp->string)) {
+				/* found a definition */
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				Com_ParseValue(s, token, vp->type, vp->ofs);
+				break;
+			}
+		if (!vp->string) {
+			Com_Printf("CL_ParseSalary: unknown token \"%s\" ignored (campaignID %i)\n", token, campaignID);
+			COM_EParse(text, errhead, name);
+		}
+	} while (*text);
+}
+
+/* =========================================================== */
+
 /**
  * @brief Parse the character ability and skill values from script
  * @param[in] name Name or ID of the found character skill and ability definition
  * @param[in] text The text of the nation node
- * @sa nation_vals
+ * @param[in] campaignID Current campaign id (idx)
  * @note Example:
  * <code>character_data {
  *  TEAM_ALIEN skill 15 75
@@ -3242,6 +3297,7 @@ void CL_ParseCampaign(char *id, char **text)
 	value_t *vp;
 	char *token;
 	int i;
+	salary_t *s;
 
 	/* search for campaigns with same name */
 	for (i = 0; i < numCampaigns; i++)
@@ -3281,6 +3337,30 @@ void CL_ParseCampaign(char *id, char **text)
 		return;
 	}
 
+	/* some default values */
+	s = &salaries[numCampaigns-1];
+	memset(s, 0, sizeof(salary_t));
+	s->soldier_base = 3000;
+	s->soldier_rankbonus = 500;
+	s->worker_base = 3000;
+	s->worker_rankbonus = 500;
+	s->scientist_base = 3000;
+	s->scientist_rankbonus = 500;
+	s->medic_base = 3000;
+	s->medic_rankbonus = 500;
+	s->robot_base = 7500;
+	s->robot_rankbonus = 1500;
+	s->aircraft_factor = 1;
+	s->aircraft_divisor = 25;
+	s->base_upkeep = 20000;
+	s->admin_initial = 1000;
+	s->admin_soldier = 75;
+	s->admin_worker = 75;
+	s->admin_scientist = 75;
+	s->admin_medic = 75;
+	s->admin_robot = 150;
+	s->debt_interest = 0.005;
+
 	do {
 		token = COM_EParse(text, errhead, id);
 		if (!*text)
@@ -3301,6 +3381,8 @@ void CL_ParseCampaign(char *id, char **text)
 			}
 		if (!Q_strncmp(token, "character_data", MAX_VAR)) {
 			CL_ParseCharacterValues(token, text, numCampaigns-1);
+		} else if (!Q_strncmp(token, "salary", MAX_VAR)) {
+			CL_ParseSalary(token, text, numCampaigns-1);
 		} else if (!vp->string) {
 			Com_Printf("CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, id);
 			COM_EParse(text, errhead, id);
@@ -3776,6 +3858,27 @@ static void CP_CampaignStats(void)
 		Com_Printf("......number: %i\n", set->def->number);
 		Com_Printf("......done: %i\n", set->done);
 	}
+	Com_Printf("..salaries:\n");
+	Com_Printf("...soldier_base: %i\n", SALARY_SOLDIER_BASE);
+	Com_Printf("...soldier_rankbonus: %i\n", SALARY_SOLDIER_RANKBONUS);
+	Com_Printf("...worker_base: %i\n", SALARY_WORKER_BASE);
+	Com_Printf("...worker_rankbonus: %i\n", SALARY_WORKER_RANKBONUS);
+	Com_Printf("...scientist_base: %i\n", SALARY_SCIENTIST_BASE);
+	Com_Printf("...scientist_rankbonus: %i\n", SALARY_SCIENTIST_RANKBONUS);
+	Com_Printf("...medic_base: %i\n", SALARY_MEDIC_BASE);
+	Com_Printf("...medic_rankbonus: %i\n", SALARY_MEDIC_RANKBONUS);
+	Com_Printf("...robot_base: %i\n", SALARY_ROBOT_BASE);
+	Com_Printf("...robot_rankbonus: %i\n", SALARY_ROBOT_RANKBONUS);
+	Com_Printf("...aircraft_factor: %i\n", SALARY_AIRCRAFT_FACTOR);
+	Com_Printf("...aircraft_divisor: %i\n", SALARY_AIRCRAFT_DIVISOR);
+	Com_Printf("...base_upkeep: %i\n", SALARY_BASE_UPKEEP);
+	Com_Printf("...admin_initial: %i\n", SALARY_ADMIN_INITIAL);
+	Com_Printf("...admin_soldier: %i\n", SALARY_ADMIN_SOLDIER);
+	Com_Printf("...admin_worker: %i\n", SALARY_ADMIN_WORKER);
+	Com_Printf("...admin_scientist: %i\n", SALARY_ADMIN_SCIENTIST);
+	Com_Printf("...admin_medic: %i\n", SALARY_ADMIN_MEDIC);
+	Com_Printf("...admin_robot: %i\n", SALARY_ADMIN_ROBOT);
+	Com_Printf("...debt_interest: %.5f\n", SALARY_DEBT_INTEREST);
 }
 
 /**
