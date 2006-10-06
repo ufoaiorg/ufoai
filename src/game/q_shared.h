@@ -1238,7 +1238,4 @@ typedef enum {
     ACTOR_SIZE_UGV
 } actorSizeEnum_t;
 
-/* FIXME: this does not belong here */
-int COM_CheckParm(char *parm);
-
 #endif /* GAME_Q_SHARED_H */
