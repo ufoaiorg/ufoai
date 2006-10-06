@@ -49,7 +49,7 @@ static int PRODUCE_DIVISOR = 1;
 #endif
 
 /** @brief number of blank lines between queued items and tech list */
-#define QUEUE_SPACERS 2;
+#define QUEUE_SPACERS 2
 
 /**
  * @brief add a new item to the bottom of the production queue
