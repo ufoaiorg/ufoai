@@ -976,7 +976,7 @@ char *CL_DateGetMonthName(int month)
  * @param[in] nation
  * @return Translated happiness string
  */
-char* CL_GetNationHapinessString(nation_t* nation)
+char* CL_GetNationHappinessString(nation_t* nation)
 {
 	if (nation->happiness < 0.015)
 		return _("Giving up");
@@ -1053,7 +1053,7 @@ static void CL_HandleBudget(void)
 			new_workers++;
 		}
 
-		Com_sprintf(message, sizeof(message), _("Gained %i credits, %i scientists, %i medics, %i soldiers and %i workers from nation %s (%s)"), funding, new_scientists, new_medics, new_soldiers, new_workers, _(nation->name), CL_GetNationHapinessString(nation));
+		Com_sprintf(message, sizeof(message), _("Gained %i credits, %i scientists, %i medics, %i soldiers and %i workers from nation %s (%s)"), funding, new_scientists, new_medics, new_soldiers, new_workers, _(nation->name), CL_GetNationHappinessString(nation));
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 	}
 
@@ -1339,7 +1339,7 @@ void CL_Stats_Update(void)
 	length = strlen(statsBuffer) + 1;
 	menuText[TEXT_STATS_2] = statsBuffer + length;
 	for (i=0; i<gd.numNations;i++) {
-		Q_strcat(menuText[TEXT_STATS_2], va("%s\t%s\n", gd.nations[i].name, CL_GetNationHapinessString(&gd.nations[i])), sizeof(statsBuffer) - length);
+		Q_strcat(menuText[TEXT_STATS_2], va("%s\t%s\n", gd.nations[i].name, CL_GetNationHappinessString(&gd.nations[i])), sizeof(statsBuffer) - length);
 	}
 }
 
