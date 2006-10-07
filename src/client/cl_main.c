@@ -1279,6 +1279,7 @@ void CL_InitLocal(void)
 
 	Cmd_AddCommand("precache", CL_Precache_f, NULL);
 
+	Cmd_AddCommand("seq_click", CL_SequenceClick_f, NULL);
 	Cmd_AddCommand("seq_start", CL_SequenceStart_f, NULL);
 	Cmd_AddCommand("seq_end", CL_SequenceEnd_f, NULL);
 

@@ -999,6 +999,7 @@ void V_CenterView(pos3_t pos);
 /* cl_sequence.c */
 void CL_SequenceRender(void);
 void CL_Sequence2D(void);
+void CL_SequenceClick_f(void);
 void CL_SequenceStart_f(void);
 void CL_SequenceEnd_f(void);
 void CL_ResetSequences(void);
