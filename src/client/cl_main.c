@@ -206,7 +206,7 @@ void CL_Quit_f(void)
 }
 
 /**
- * @brief Disconnects a multiplayer game if singleplayer is true and set css.singleplayer to true
+ * @brief Disconnects a multiplayer game if singleplayer is true and set ccs.singleplayer to true
  */
 void CL_StartSingleplayer(qboolean singleplayer)
 {

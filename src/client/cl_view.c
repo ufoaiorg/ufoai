@@ -421,6 +421,7 @@ void CL_PrepRefresh(void)
 			if (num_cl_weaponmodels < MAX_CLIENTWEAPONMODELS) {
 				Q_strncpyz(cl_weaponmodels[num_cl_weaponmodels], cl.configstrings[CS_MODELS + i] + 1, sizeof(cl_weaponmodels[num_cl_weaponmodels]));
 				num_cl_weaponmodels++;
+				Com_Printf("num_cl_weaponmodels\n");
 			}
 		} else {
 			cl.model_draw[i] = re.RegisterModel(cl.configstrings[CS_MODELS + i]);

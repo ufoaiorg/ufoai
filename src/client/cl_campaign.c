@@ -1615,6 +1615,7 @@ void CL_UpdatePointersInGlobalData(void)
  *
  * @sa CL_GameLoad_f
  * @sa CL_GameSave
+ * @sa CL_GameInit
  * @sa CL_MessageSave
  * @sa CL_ReadSinglePlayerData
  * @sa CL_UpdatePointersInGlobalData
@@ -3632,10 +3633,14 @@ static void CL_GameExit(void)
 
 /**
  * @brief Called at new game and load game
+ * @sa CL_GameLoad
+ * @sa CL_GameNew
  */
 void CL_GameInit(void)
 {
 	cmdList_t *commands;
+
+	assert(curCampaign);
 
 	for (commands = game_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
@@ -3654,6 +3659,7 @@ void CL_GameInit(void)
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 	MAP_GameInit();
+	Com_SetGlobalCampaignID(curCampaign->idx);
 }
 
 /**
@@ -3682,6 +3688,7 @@ static void CL_CampaignRunMarket(void);
 
 /**
  * @brief Starts a new single-player game
+ * @sa CL_GameInit
  */
 static void CL_GameNew(void)
 {

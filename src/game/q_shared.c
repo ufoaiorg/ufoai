@@ -43,6 +43,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 vec3_t vec3_origin = { 0, 0, 0 };
 vec4_t vec4_origin = { 0, 0, 0, 0 };
 
+/* this is used to access the skill and ability arrays for the current campaign */
+static int globalCampaignID = -1;
+
 #define RT2	0.707107
 
 const int dvecs[8][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1} };
@@ -2997,6 +3000,16 @@ void Com_GetSkill (character_t *chr, int team, int *minSkill, int *maxSkill, int
 }
 
 /**
+ * @brief Sets the current active campaign id (see curCampaign pointer)
+ * @note used to access the right values from skillValues and abilityValues
+ * @sa CL_GameInit
+ */
+void Com_SetGlobalCampaignID (int campaignID)
+{
+	globalCampaignID = campaignID;
+}
+
+/**
  * @brief
  * @param[in] chr
  * @param[in] minAbility
@@ -3013,7 +3026,6 @@ void Com_CharGenAbilitySkills(character_t * chr, int team)
 	int i, retry;
 	float max, min, rand_avg;
 	int minAbility = 0, maxAbility = 0, minSkill = 0, maxSkill = 0;
-	int campaignID = -1;
 
 	assert(chr);
 #ifdef DEBUG
@@ -3021,12 +3033,8 @@ void Com_CharGenAbilitySkills(character_t * chr, int team)
 		return;	/* never reached. need for code analyst. */
 #endif
 
-#ifndef DEDICATED_ONLY
-	campaignID = CL_GetCampaignID();
-#endif /* DEDICATED_ONLY */
-
-	Com_GetAbility(chr, team, &minAbility, &maxAbility, campaignID);
-	Com_GetSkill(chr, team, &minSkill, &maxSkill, campaignID);
+	Com_GetAbility(chr, team, &minAbility, &maxAbility, globalCampaignID);
+	Com_GetSkill(chr, team, &minSkill, &maxSkill, globalCampaignID);
 	retry = MAX_GENCHARRETRIES;
 	do {
 		/* Abilities */

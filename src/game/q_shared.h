@@ -1107,9 +1107,7 @@ typedef enum {
 extern int skillValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
 extern int abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
 
-/* cl_main.c */
-int CL_GetCampaignID (void);
-
+void Com_SetGlobalCampaignID (int campaignID);
 int Com_StringToTeamNum(char* teamString);
 void Com_CharGenAbilitySkills(character_t * chr, int team);
 char *Com_CharGetBody(character_t* const chr);
