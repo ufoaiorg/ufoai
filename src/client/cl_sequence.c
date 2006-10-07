@@ -471,8 +471,14 @@ static value_t seq2D_vals[] = {
  */
 int SEQ_Click(char *name, char *data)
 {
-	if (seqEndClickLoop)
+	if (seqEndClickLoop) {
+		seqEndClickLoop = qfalse;
+		seqLocked = qfalse;
+		Com_Printf("SEQ_CLICK end\n");
 		return 1;
+	}
+	Com_Printf("SEQ_CLICK cycle\n");
+	seqTime += 1000;
 	seqLocked = qtrue;
 	return 0;
 }
