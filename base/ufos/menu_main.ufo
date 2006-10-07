@@ -197,7 +197,7 @@ menu sequence
 	zone click
 	{
 		size	"1024 768"
-		click	{ cmd mn_pop; }
+		click	{ cmd seq_click; }
 	}
 
 	func close
