@@ -315,7 +315,7 @@ menu mp_team
 		in	{ *string_new color "1 1 1 1" *button_new texl "0 64" *button_new texh "128 128" }
 		click
 		{
-			cmd "team_reset; set mn_teamname NewTeam;gennames;mn_push team;"
+			cmd "new_team;"
 		}
 	}
 	string string_new
@@ -338,7 +338,7 @@ menu mp_team
 		in	{ *string_auto color "1 1 1 1" *button_auto texl "0 64" *button_auto texh "128 128" }
 		click
 		{
-			cmd "team_reset; assign_initial; set mn_teamname NewTeam;gennames;mn_push team;"
+			cmd "assign_initial;"
 		}
 	}
 
