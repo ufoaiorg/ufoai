@@ -1284,10 +1284,22 @@ static void CL_LoadTeamSlotCmd(void)
 }
 
 /**
+ * @brief Call all the needed functions to generate a new initial team (e.g. for multiplayer)
+ */
+void CL_GenerateNewTeam (void)
+{
+	CL_ResetTeamInBase();
+	Cvar_Set("mn_teamname", _("NewTeam"));
+	CL_GenerateNamesCmd();
+	MN_PushMenu("team");
+}
+
+/**
  * @brief
  */
 void CL_ResetTeams(void)
 {
+	Cmd_AddCommand("new_team", CL_GenerateNewTeam, NULL);
 	Cmd_AddCommand("givename", CL_GiveNameCmd, NULL);
 	Cmd_AddCommand("gennames", CL_GenerateNamesCmd, NULL);
 	Cmd_AddCommand("team_reset", CL_ResetTeamInBase, NULL);

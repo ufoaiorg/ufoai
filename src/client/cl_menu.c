@@ -392,14 +392,13 @@ static void MN_StartServer(void)
 	if (Cmd_Argc() <= 1) {
 		Com_Printf("Usage: mn_startserver <name>\n");
 		return;
-	} else
-		Com_Printf("MN_StartServer\n");
+	}
 
 	if (Cvar_VariableValue("dedicated") > 0)
 		Com_DPrintf("Dedicated server needs no team\n");
 	/* FIXME: Spectator */
 	else if (!B_GetNumOnTeam()) {
-		MN_Popup(_("Error"), _("Assemble a team first"));
+		Cbuf_ExecuteText(EXEC_NOW, "assign_initial\n");
 		return;
 	} else
 		Com_DPrintf("There are %i members on team\n", B_GetNumOnTeam());

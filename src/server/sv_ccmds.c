@@ -145,6 +145,10 @@ void SV_DemoMap_f(void)
  */
 void SV_Map_f(void)
 {
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: map <mapname>\n");
+		return;
+	}
 	/* change */
 	sv.state = ss_dead;
 	sv.loadgame = qfalse;
