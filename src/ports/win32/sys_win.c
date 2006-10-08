@@ -618,7 +618,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			time = timescale * (newtime - oldtime);
 		} while (time < 1);
 
-#if 0
+#ifndef __MINGW32__
 		_controlfp( _PC_24, _MCW_PC );
 #endif
 		time = timescale * (newtime - oldtime);
