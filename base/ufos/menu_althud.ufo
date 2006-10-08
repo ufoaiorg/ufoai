@@ -125,6 +125,7 @@ menu althud
 
 	pic bar_teambox0
 	{
+		key "*binding soldier_select 0"
 		image	althud/bar_teambox
 		pos		"856 640"
 		click	{ cmd "soldier_select 0;" }
@@ -138,6 +139,7 @@ menu althud
 	}
 	pic bar_teambox1
 	{
+		key "*binding soldier_select 1"
 		image	althud/bar_teambox
 		pos		"776 640"
 		click	{ cmd "soldier_select 1;" }
@@ -151,6 +153,7 @@ menu althud
 	}
 	pic bar_teambox2
 	{
+		key "*binding soldier_select 2"
 		image	althud/bar_teambox
 		pos		"696 640"
 		click	{ cmd "soldier_select 2;" }
@@ -164,6 +167,7 @@ menu althud
 	}
 	pic bar_teambox3
 	{
+		key "*binding soldier_select 3"
 		image	althud/bar_teambox
 		pos		"616 640"
 		click	{ cmd "soldier_select 3;" }
@@ -177,6 +181,7 @@ menu althud
 	}
 	pic bar_teambox4
 	{
+		key "*binding soldier_select 4"
 		image	althud/bar_teambox
 		pos		"536 640"
 		click	{ cmd "soldier_select 4;" }
@@ -190,6 +195,7 @@ menu althud
 	}
 	pic bar_teambox5
 	{
+		key "*binding soldier_select 5"
 		image	althud/bar_teambox
 		pos		"456 640"
 		click	{ cmd "soldier_select 5;" }
@@ -203,6 +209,7 @@ menu althud
 	}
 	pic bar_teambox6
 	{
+		key "*binding soldier_select 6"
 		image	althud/bar_teambox
 		pos		"376 640"
 		click	{ cmd "soldier_select 6;" }
@@ -216,6 +223,7 @@ menu althud
 	}
 	pic bar_teambox7
 	{
+		key "*binding soldier_select 7"
 		image	althud/bar_teambox
 		pos		"296 640"
 		click	{ cmd "soldier_select 7;" }
@@ -373,7 +381,6 @@ menu althud
 		scale	"1.0 1.0 1.0"
 	}
 
-
 	model head0
 	{
 		md2		"*cvar mn_head0"
@@ -445,6 +452,7 @@ menu althud
 
 	zone spotted
 	{
+		key "*binding nextalien"
 		tooltip	"_Enemy spotted"
 		pos		"841 12"
 		size	"48 34"
@@ -596,6 +604,7 @@ menu althud
 
 	pic bt_floorup
 	{
+		key "*binding levelup"
 		tooltip	"_Level up"
 		image	althud/buttons_althud1
 		mousefx true
@@ -606,6 +615,7 @@ menu althud
 	}
 	pic bt_floordown
 	{
+		key "*binding leveldown"
 		tooltip	"_Level down"
 		image	althud/buttons_althud1
 		mousefx true
