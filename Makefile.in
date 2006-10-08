@@ -98,7 +98,7 @@ include build/lang.mk
 include build/install.mk
 include build/various.mk
 
-maps:
+maps: $(UFO2MAP_TARGET)
 	@$(MAKE) -C base/maps all
 
 #######################################################################################################
