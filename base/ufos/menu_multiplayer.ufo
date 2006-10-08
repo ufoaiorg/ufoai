@@ -338,7 +338,7 @@ menu mp_team
 		in	{ *string_auto color "1 1 1 1" *button_auto texl "0 64" *button_auto texh "128 128" }
 		click
 		{
-			cmd "assign_initial;"
+			cmd "assign_initial 1;"
 		}
 	}
 

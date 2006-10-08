@@ -1472,23 +1472,27 @@ static void B_AssignInitial_f(void)
 	int i;
 
 	/* check syntax */
-	if (Cmd_Argc() > 1) {
-		Com_Printf("Usage: assign_initial\n");
+	if (Cmd_Argc() > 2) {
+		Com_Printf("Usage: assign_initial [<multiplayer>]\n");
 		return;
 	}
 
 	if (!baseCurrent)
 		return;
 
-	CL_ResetTeamInBase();
-	Cvar_Set("mn_teamname", _("NewTeam"));
-	Cbuf_AddText("gennames;");
+	if (Cmd_Argc() == 2) {
+		CL_ResetTeamInBase();
+		Cvar_Set("mn_teamname", _("NewTeam"));
+		Cbuf_AddText("gennames;");
+	}
 
 	for (i = MAX_TEAMLIST; --i >= 0;)
 		Cbuf_AddText(va("team_hire %i;", i));
 
 	Cbuf_AddText("pack_initial;");
-	MN_PushMenu("team");
+	if (Cmd_Argc() == 2) {
+		MN_PushMenu("team");
+	}
 }
 
 /**

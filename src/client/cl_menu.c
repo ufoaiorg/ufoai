@@ -1344,8 +1344,7 @@ static int MN_DrawTooltip(char *font, char *string, int x, int y, int maxWidth)
  */
 static void MN_Tooltip(menuNode_t * node, int x, int y)
 {
-	char *tooltip, *key;
-	char *keyBinding = _("Key: ");
+	char *tooltip;
 	int width = 0;
 
 	/* tooltips
@@ -1361,8 +1360,9 @@ static void MN_Tooltip(menuNode_t * node, int x, int y)
 		y += 20;
 	}
 	if (node->key[0]) {
-		key = MN_GetReferenceString(menuStack[menuStackPos-1], node->key);
-		MN_DrawTooltip("f_verysmall", va("%s %s", keyBinding, key), x, y, width);
+		if (node->key[0] == '*')
+			Com_sprintf(node->key, sizeof(node->key), _("Key: %s"), MN_GetReferenceString(menuStack[menuStackPos-1], node->key));
+		MN_DrawTooltip("f_verysmall", node->key, x, y, width);
 	}
 }
 
