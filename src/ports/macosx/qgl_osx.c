@@ -103,11 +103,16 @@ void QGL_Shutdown (void)
 }
 
 /**
- * @brief
+ * @brief This is responsible for binding our qgl function pointers to the appropriate GL stuff
+ * @sa QGL_Init
  */
 qboolean QGL_Init (const char *dllname)
 {
+	/* general qgl bindings */
 	QGL_Link();
+	/* mac specific ones */
+	qglPNTrianglesiATIX          = NULL;
+	qglPNTrianglesfATIX          = NULL;
 	return (qtrue);
 }
 

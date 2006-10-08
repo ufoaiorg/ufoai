@@ -643,8 +643,10 @@ void UP_ParseUpChapters( char *id, char **text )
 	do {
 		/* get the id */
 		token = COM_EParse( text, errhead, id );
-		if ( !*text ) break;
-		if ( *token == '}' ) break;
+		if ( !*text )
+			break;
+		if ( *token == '}' )
+			break;
 
 		/* add chapter */
 		if ( gd.numChapters >= MAX_PEDIACHAPTERS ) {

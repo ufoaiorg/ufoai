@@ -98,7 +98,28 @@ qboolean QGL_Init( const char *dllname )
 		return qfalse;
 	}
 
+	/* general qgl bindings */
 	QGL_Link();
+	/* windows specific ones */
+	qwglCopyContext              = GPA("wglCopyContext");
+	qwglCreateContext            = GPA("wglCreateContext");
+	qwglCreateLayerContext       = GPA("wglCreateLayerContext");
+	qwglDeleteContext            = GPA("wglDeleteContext");
+	qwglGetCurrentContext        = GPA("wglGetCurrentContext");
+	qwglGetCurrentDC             = GPA("wglGetCurrentDC");
+	qwglGetLayerPaletteEntries   = GPA("wglGetLayerPaletteEntries");
+	qwglGetProcAddress           = GPA("wglGetProcAddress");
+	qwglMakeCurrent              = GPA("wglMakeCurrent");
+	qwglRealizeLayerPalette      = GPA("wglRealizeLayerPalette");
+	qwglSetLayerPaletteEntries   = GPA("wglSetLayerPaletteEntries");
+	qwglShareLists               = GPA("wglShareLists");
+	qwglChoosePixelFormat        = GPA("wglChoosePixelFormat");
+	qwglDescribePixelFormat      = GPA("wglDescribePixelFormat");
+	qwglGetPixelFormat           = GPA("wglGetPixelFormat");
+	qwglSetPixelFormat           = GPA("wglSetPixelFormat");
+	qwglSwapBuffers              = GPA("wglSwapBuffers");
+	qwglSwapIntervalEXT          = NULL;
+
 	return qtrue;
 }
 

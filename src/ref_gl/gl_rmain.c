@@ -1114,7 +1114,7 @@ static void R_Register(void)
 	gl_monolightmap = ri.Cvar_Get("gl_monolightmap", "0", 0);
 #if defined(_WIN32)
 	gl_driver = ri.Cvar_Get("gl_driver", "opengl32", CVAR_ARCHIVE);
-#elif defined(MACOS_X)
+#elif defined (__APPLE__) || defined (MACOSX)
 	gl_driver = ri.Cvar_Get("gl_driver", "/System/Library/Frameworks/OpenGL.framework/Libraries/libGL.dylib", CVAR_ARCHIVE);
 #else
 	gl_driver = ri.Cvar_Get("gl_driver", "libGL.so.1", CVAR_ARCHIVE);
@@ -1146,7 +1146,7 @@ static void R_Register(void)
 	vid_gamma = ri.Cvar_Get("vid_gamma", "1.0", CVAR_ARCHIVE);
 #if defined(_WIN32)
 	vid_ref = ri.Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE);
-#elif defined(MACOS_X)
+#elif defined (__APPLE__) || defined (MACOSX)
 	/* FIXME: Don't know the macosx driver, yet */
 	vid_ref = ri.Cvar_Get( "vid_ref", "glx", CVAR_ARCHIVE );
 #else

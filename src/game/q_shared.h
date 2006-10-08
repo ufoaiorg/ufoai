@@ -78,7 +78,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* i18n support via gettext */
 /* needs to be activated via -DHAVE_GETTEXT */
 #ifdef HAVE_GETTEXT
-#ifdef MACOS_X
+#if defined (__APPLE__) || defined (MACOSX)
 #include <intl/libintl.h>
 #elif defined(_WIN32)
 #define snprintf _snprintf

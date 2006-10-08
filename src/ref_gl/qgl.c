@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #if defined (__linux__) || defined (__FreeBSD__)
 #include "../ports/linux/glw_linux.h"
-#include <GL/glx.h>
-#include <dlfcn.h>
 #elif defined _WIN32
 #include "../ports/win32/glw_win.h"
 #elif defined __MACOSX__
@@ -5237,38 +5235,6 @@ void QGL_Link(void)
 	qglVertex4sv                 = dllVertex4sv                 = GPA("glVertex4sv");
 	qglVertexPointer             = dllVertexPointer             = GPA("glVertexPointer");
 	qglViewport                  = dllViewport                  = GPA("glViewport");
-
-#if defined (__linux__) || defined (__FreeBSD__)
-	qglXChooseVisual             = GPA("glXChooseVisual");
-	qglXCreateContext            = GPA("glXCreateContext");
-	qglXDestroyContext           = GPA("glXDestroyContext");
-	qglXMakeCurrent              = GPA("glXMakeCurrent");
-	qglXCopyContext              = GPA("glXCopyContext");
-	qglXSwapBuffers              = GPA("glXSwapBuffers");
-	qglXGetConfig                = GPA("glXGetConfig");
-#elif defined __WIN32
-	qwglCopyContext              = GPA("wglCopyContext");
-	qwglCreateContext            = GPA("wglCreateContext");
-	qwglCreateLayerContext       = GPA("wglCreateLayerContext");
-	qwglDeleteContext            = GPA("wglDeleteContext");
-	qwglGetCurrentContext        = GPA("wglGetCurrentContext");
-	qwglGetCurrentDC             = GPA("wglGetCurrentDC");
-	qwglGetLayerPaletteEntries   = GPA("wglGetLayerPaletteEntries");
-	qwglGetProcAddress           = GPA("wglGetProcAddress");
-	qwglMakeCurrent              = GPA("wglMakeCurrent");
-	qwglRealizeLayerPalette      = GPA("wglRealizeLayerPalette");
-	qwglSetLayerPaletteEntries   = GPA("wglSetLayerPaletteEntries");
-	qwglShareLists               = GPA("wglShareLists");
-	qwglChoosePixelFormat        = GPA("wglChoosePixelFormat");
-	qwglDescribePixelFormat      = GPA("wglDescribePixelFormat");
-	qwglGetPixelFormat           = GPA("wglGetPixelFormat");
-	qwglSetPixelFormat           = GPA("wglSetPixelFormat");
-	qwglSwapBuffers              = GPA("wglSwapBuffers");
-	qwglSwapIntervalEXT          = NULL;
-#elif defined (__APPLE__) || defined (MACOSX)
-	qglPNTrianglesiATIX          = NULL;
-	qglPNTrianglesfATIX          = NULL;
-#endif
 	qglLockArraysEXT             = NULL;
 	qglUnlockArraysEXT           = NULL;
 	qglPointParameterfEXT        = NULL;
@@ -5280,6 +5246,7 @@ void QGL_Link(void)
 	qglActiveStencilFaceEXT      = NULL;
 	qglStencilOpSeparateATI      = NULL;
 	qglStencilFuncSeparateATI    = NULL;
+#ifdef SHADERS
 	qglProgramStringARB          = NULL;
 	qglBindProgramARB            = NULL;
 	qglDeleteProgramsARB         = NULL;
@@ -5303,4 +5270,5 @@ void QGL_Link(void)
 	qglGetVertexAttribPointervARB    = NULL;
 	qglGetProgramLocalParameterdvARB = NULL;
 	qglGetProgramLocalParameterfvARB = NULL;
+#endif
 }

@@ -118,7 +118,16 @@ qboolean QGL_Init( const char *dllname )
 		}
 	}
 
+	/* general qgl bindings */
 	QGL_Link();
+	/* linux specific ones */
+	qglXChooseVisual             = GPA("glXChooseVisual");
+	qglXCreateContext            = GPA("glXCreateContext");
+	qglXDestroyContext           = GPA("glXDestroyContext");
+	qglXMakeCurrent              = GPA("glXMakeCurrent");
+	qglXCopyContext              = GPA("glXCopyContext");
+	qglXSwapBuffers              = GPA("glXSwapBuffers");
+	qglXGetConfig                = GPA("glXGetConfig");
 	return qtrue;
 }
 
