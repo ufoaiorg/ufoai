@@ -37,4 +37,7 @@ extern glwstate_t glw_state;
 
 void InitSig(void);
 
+#define GPA( a ) dlsym( glw_state.OpenGLLib, a )
+#define SIG( x ) fprintf( glw_state.log_fp, x "\n" )
+
 #endif

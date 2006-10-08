@@ -94,7 +94,11 @@ WIN32_DIR=$(MOUNT_DIR)/ports/win32
 SOLARIS_DIR=$(MOUNT_DIR)/ports/solaris
 IRIX_DIR=$(MOUNT_DIR)/ports/irix
 
-BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
+ifeq ($(OSTYPE),Darwin)
+	BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE
+else
+	BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
+endif
 # this may fix prediction errors
 # -ffloat-store -mfpmath=sse
 # Put this in when it is fixed
@@ -123,8 +127,8 @@ ifeq ($(OSTYPE),Darwin)
 	BUILD_SDLUFO=NO	# use SDL for cdrom, sound and maybe renderer (selectable)
 	BUILD_GLX=NO		# X11 GLX driver
 	BUILD_DEDICATED=YES	# build a dedicated ufo server
-	BUILD_ALSA=YES		# build alsa sound driver
-	BUILD_OSS=YES		# build oss sound driver
+	BUILD_ALSA=NO		# build alsa sound driver
+	BUILD_OSS=NO		# build oss sound driver
 	BUILD_ARTS=NO		# build arts sound driver
 	BUILD_WITH_SHADER=NO	# build with shader support
 	HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
@@ -133,9 +137,9 @@ ifeq ($(OSTYPE),Darwin)
 	BUILD_WITH_VIDMODE=NO	# vidmode support
 	BUILD_WITH_MMX=NO	# MMX support
 	BUILD_FOR_PROFILING=NO # build with -pg option for profiling via gprof
-	BUILD_COMPILETOOLS=NO	# build ufo2map bsp compile tool
+	BUILD_COMPILETOOLS=YES	# build ufo2map bsp compile tool
 
-	LDFLAGS=-L/sw/lib -ldl -lm -lvorbisfile -lvorbis -lintl -framework IOKit -framework AppKit -framework QuickTime -framework CoreAudio -lGL
+	LDFLAGS=-L/sw/lib -ldl -lm -lvorbisfile -lvorbis -lintl -framework IOKit -framework AppKit -framework QuickTime -framework CoreAudio
 	BASE_CFLAGS+=-I/sw/include
 endif
 	ifeq ($(strip $(BUILD_SDLUFO)),YES)
@@ -1122,6 +1126,7 @@ REF_GL_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_arb_shader.o \
 	$(BUILDDIR)/ref_gl/gl_shadows.o \
 	\
+	$(BUILDDIR)/ref_gl/qgl.o \
 	$(BUILDDIR)/ref_gl/qgl_linux.o \
 	$(BUILDDIR)/ref_gl/q_shared.o \
 	$(BUILDDIR)/ref_gl/q_shlinux.o \
@@ -1193,6 +1198,9 @@ $(BUILDDIR)/ref_gl/gl_warp.o :        $(REF_GL_DIR)/gl_warp.c
 	$(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_gl/qgl_linux.o :      $(LINUX_DIR)/qgl_linux.c
+	$(DO_GL_SHLIB_CC)
+
+$(BUILDDIR)/ref_gl/qgl.o :      $(REF_GL_DIR)/qgl.c
 	$(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_gl/q_shared.o :       $(GAME_DIR)/q_shared.c

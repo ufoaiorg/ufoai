@@ -213,9 +213,9 @@ extern void (APIENTRY * qglLogicOp) (GLenum opcode);
 extern void (APIENTRY * qglMap1d) (GLenum target, GLdouble u1, GLdouble u2, GLint stride, GLint order, const GLdouble * points);
 extern void (APIENTRY * qglMap1f) (GLenum target, GLfloat u1, GLfloat u2, GLint stride, GLint order, const GLfloat * points);
 extern void (APIENTRY * qglMap2d) (GLenum target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder,
-								   const GLdouble * points);
+								const GLdouble * points);
 extern void (APIENTRY * qglMap2f) (GLenum target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder,
-								   const GLfloat * points);
+								const GLfloat * points);
 extern void (APIENTRY * qglMapGrid1d) (GLint un, GLdouble u1, GLdouble u2);
 extern void (APIENTRY * qglMapGrid1f) (GLint un, GLfloat u1, GLfloat u2);
 extern void (APIENTRY * qglMapGrid2d) (GLint un, GLdouble u1, GLdouble u2, GLint vn, GLdouble v1, GLdouble v2);
@@ -350,9 +350,9 @@ extern void (APIENTRY * qglTexGenf) (GLenum coord, GLenum pname, GLfloat param);
 extern void (APIENTRY * qglTexGenfv) (GLenum coord, GLenum pname, const GLfloat * params);
 extern void (APIENTRY * qglTexGeni) (GLenum coord, GLenum pname, GLint param);
 extern void (APIENTRY * qglTexGeniv) (GLenum coord, GLenum pname, const GLint * params);
-extern void (APIENTRY * qglTexImage1D) (GLenum target, GLint level, GLint internalformat, GLsizei width, GLint border, GLenum format, GLenum type,
+extern void (APIENTRY * qglTexImage1D) (GLenum target, GLint level, GLenum internalformat, GLsizei width, GLint border, GLenum format, GLenum type,
 										const GLvoid * pixels);
-extern void (APIENTRY * qglTexImage2D) (GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format,
+extern void (APIENTRY * qglTexImage2D) (GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLenum format,
 										GLenum type, const GLvoid * pixels);
 extern void (APIENTRY * qglTexParameterf) (GLenum target, GLenum pname, GLfloat param);
 extern void (APIENTRY * qglTexParameterfv) (GLenum target, GLenum pname, const GLfloat * params);
@@ -360,7 +360,7 @@ extern void (APIENTRY * qglTexParameteri) (GLenum target, GLenum pname, GLint pa
 extern void (APIENTRY * qglTexParameteriv) (GLenum target, GLenum pname, const GLint * params);
 extern void (APIENTRY * qglTexSubImage1D) (GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const GLvoid * pixels);
 extern void (APIENTRY * qglTexSubImage2D) (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type,
-										   const GLvoid * pixels);
+										const GLvoid * pixels);
 extern void (APIENTRY * qglTranslated) (GLdouble x, GLdouble y, GLdouble z);
 extern void (APIENTRY * qglTranslatef) (GLfloat x, GLfloat y, GLfloat z);
 extern void (APIENTRY * qglVertex2d) (GLdouble x, GLdouble y);
@@ -435,13 +435,11 @@ extern void (APIENTRY * qglStencilFuncSeparateATI) (GLenum frontfunc, GLenum bac
 
 
 #ifdef _WIN32
-
 extern int (WINAPI * qwglChoosePixelFormat) (HDC, CONST PIXELFORMATDESCRIPTOR *);
 extern int (WINAPI * qwglDescribePixelFormat) (HDC, int, UINT, LPPIXELFORMATDESCRIPTOR);
 extern int (WINAPI * qwglGetPixelFormat) (HDC);
 extern BOOL(WINAPI * qwglSetPixelFormat) (HDC, int, CONST PIXELFORMATDESCRIPTOR *);
 extern BOOL(WINAPI * qwglSwapBuffers) (HDC);
-
 extern BOOL(WINAPI * qwglCopyContext) (HGLRC, HGLRC, UINT);
 extern HGLRC(WINAPI * qwglCreateContext) (HDC);
 extern HGLRC(WINAPI * qwglCreateLayerContext) (HDC, int);
@@ -451,28 +449,17 @@ extern HDC(WINAPI * qwglGetCurrentDC) (VOID);
 extern PROC(WINAPI * qwglGetProcAddress) (LPCSTR);
 extern BOOL(WINAPI * qwglMakeCurrent) (HDC, HGLRC);
 extern BOOL(WINAPI * qwglShareLists) (HGLRC, HGLRC);
-extern BOOL(WINAPI * qwglUseFontBitmaps) (HDC, DWORD, DWORD, DWORD);
-
-extern BOOL(WINAPI * qwglUseFontOutlines) (HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
-
-extern BOOL(WINAPI * qwglDescribeLayerPlane) (HDC, int, int, UINT, LPLAYERPLANEDESCRIPTOR);
 extern int (WINAPI * qwglSetLayerPaletteEntries) (HDC, int, int, int, CONST COLORREF *);
 extern int (WINAPI * qwglGetLayerPaletteEntries) (HDC, int, int, int, COLORREF *);
 extern BOOL(WINAPI * qwglRealizeLayerPalette) (HDC, int, BOOL);
-extern BOOL(WINAPI * qwglSwapLayerBuffers) (HDC, UINT);
-
 extern BOOL(WINAPI * qwglSwapIntervalEXT) (int interval);
-
 extern BOOL(WINAPI * qwglGetDeviceGammaRampEXT) (unsigned char *pRed, unsigned char *pGreen, unsigned char *pBlue);
 extern BOOL(WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, const unsigned char *pGreen, const unsigned char *pBlue);
-
 #endif
 
 #if defined __linux__ || defined __FreeBSD__
-
 /* local function in dll */
 extern void *qwglGetProcAddress(char *symbol);
-
 /*GLX Functions */
 extern XVisualInfo *(*qglXChooseVisual) (Display * dpy, int screen, int *attribList);
 extern GLXContext(*qglXCreateContext) (Display * dpy, XVisualInfo * vis, GLXContext shareList, Bool direct);
@@ -481,17 +468,18 @@ extern Bool(*qglXMakeCurrent) (Display * dpy, GLXDrawable drawable, GLXContext c
 extern void (*qglXCopyContext) (Display * dpy, GLXContext src, GLXContext dst, GLuint mask);
 extern void (*qglXSwapBuffers) (Display * dpy, GLXDrawable drawable);
 extern int (*qglXGetConfig) (Display * dpy, XVisualInfo * vis, int attrib, int *value);
-
 /* 3dfxSetPaletteEXT shunt */
 /*void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
                              GLsizei width, GLenum format, GLenum type,
                              const GLvoid *table );*/
-
 #endif							/* linux */
 
-/*
-** extension constants
-*/
+#if defined (__APPLE__) || defined (MACOSX)
+extern void ( APIENTRY * qglPNTrianglesiATIX) (GLenum pname, GLint param);
+extern void ( APIENTRY * qglPNTrianglesfATIX) (GLenum pname, GLfloat param);
+#endif
+
+/* extension constants */
 
 extern GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
 extern GLenum gl_combine;

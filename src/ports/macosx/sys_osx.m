@@ -46,7 +46,7 @@
 
 #import <IOKit/hidsystem/event_status_driver.h>
 
-#include "../client/client.h"
+#include "../../client/client.h"
 
 #pragma mark -
 
@@ -424,6 +424,8 @@ game_export_t *Sys_GetGameAPI (game_import_t *theParameters)
         if (myPath == NULL)
             return (NULL);
 
+        if (Sys_OpenGameAPI ("../debugppc/game.dylib", "", myCurPath) == YES)
+            break;
         // we try both extensions since we need to be compatible with the pre v1.0.6 ".bundle" extension:
         if (Sys_OpenGameAPI ("GamePPC.q2plug/Contents/MacOS/GamePPC", myPath, myCurPath) == YES)
             break;
@@ -1970,6 +1972,26 @@ int	main (int theArgCount, const char **theArgValues)
     return (NSApplicationMain (theArgCount, theArgValues));
 
 #endif /* DEDICATED ONLY */
+}
+
+/*                                                  
+=================                                   
+Sys_GetHomeDirectory                                
+=================                                   
+*/                                              
+char *Sys_GetHomeDirectory (void)
+{
+  return getenv ( "HOME" );                         
+}                                                        
+
+/*                                                  
+=================                                   
+Sys_NormPath
+=================                                   
+*/
+                                                        
+void Sys_NormPath(char* path)                            
+{                                                       
 }
 
 //______________________________________________________________________________________________________________eOF

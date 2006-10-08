@@ -1667,7 +1667,16 @@ char *Q_strlwr(char *str)
 #ifdef _MSC_VER
 	return _strlwr(str);
 #else
-	return strlwr(str);
+	#if !defined (__APPLE__) && !defined (MACOSX)
+		return strlwr(str);
+	#else
+		char* origs = str;
+		while (*str) {
+			*str = tolower(*str);
+			str++;
+		}
+		return origs;
+	#endif
 #endif
 }
 
