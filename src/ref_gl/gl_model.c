@@ -670,7 +670,7 @@ static void Mod_ShiftTile(void)
 /**
  * @brief
  */
-static void R_AddMapTile(char *name, int sX, int sY, int sZ)
+static void R_AddMapTile(const char *name, int sX, int sY, int sZ)
 {
 	int i;
 	unsigned *buffer;
@@ -1018,7 +1018,7 @@ MD3 ALIAS MODELS
 /**
  * @brief
  */
-static int R_FindTriangleWithEdge ( index_t *indexes, int numtris, index_t start, index_t end, int ignore)
+static int R_FindTriangleWithEdge (index_t *indexes, int numtris, index_t start, index_t end, int ignore)
 {
 	int i;
 	int match, count;
@@ -1051,7 +1051,7 @@ static int R_FindTriangleWithEdge ( index_t *indexes, int numtris, index_t start
 /**
  * @brief
  */
-static void R_BuildTriangleNeighbors ( int *neighbors, index_t *indexes, int numtris )
+static void R_BuildTriangleNeighbors (int *neighbors, index_t *indexes, int numtris)
 {
 	int i, *n;
 	index_t *index;
@@ -1068,7 +1068,7 @@ static void R_BuildTriangleNeighbors ( int *neighbors, index_t *indexes, int num
  * @brief Load MD3 models from file.
  * @note Some Vic code here not fully used
  */
-static void Mod_LoadAliasMD3Model ( model_t *mod, void *buffer )
+static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 {
 	int					version, i, j, l;
 	dmd3_t				*pinmodel;

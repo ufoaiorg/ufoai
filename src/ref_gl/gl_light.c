@@ -39,7 +39,7 @@ DYNAMIC LIGHTS BLEND RENDERING
  * @brief
  * @sa R_RenderDlights
  */
-void R_RenderDlight(dlight_t * light)
+void R_RenderDlight(const dlight_t const* light)
 {
 	int i, j;
 	float a;

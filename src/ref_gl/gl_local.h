@@ -81,16 +81,14 @@ extern viddef_t vid;
 
 
 /*
+skins will be outline flood filled and mip mapped
+pics and sprites with alpha will be outline flood filled
+pic won't be mip mapped
 
-  skins will be outline flood filled and mip mapped
-  pics and sprites with alpha will be outline flood filled
-  pic won't be mip mapped
-
-  model skin
-  sprite frame
-  wall texture
-  pic
-
+model skin
+sprite frame
+wall texture
+pic
 */
 
 typedef enum {
@@ -383,7 +381,7 @@ void WriteTGA(const char *filename, byte * data, int width, int height);
 image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
 image_t *GL_FindImage(const char *pname, imagetype_t type);
 image_t *GL_FindImageForShader(const char *name);
-void GL_TextureMode(char *string);
+void GL_TextureMode(const char *string);
 void GL_ImageList_f(void);
 
 void GL_InitImages(void);
@@ -391,8 +389,8 @@ void GL_ShutdownImages(void);
 
 void GL_FreeUnusedImages(void);
 
-void GL_TextureAlphaMode(char *string);
-void GL_TextureSolidMode(char *string);
+void GL_TextureAlphaMode(const char *string);
+void GL_TextureSolidMode(const char *string);
 
 void R_DrawPtls(void);
 

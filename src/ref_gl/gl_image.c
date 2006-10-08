@@ -192,7 +192,7 @@ static gltmode_t gl_solid_modes[] = {
 /**
  * @brief
  */
-void GL_TextureMode(char *string)
+void GL_TextureMode(const char *string)
 {
 	int i;
 	image_t *glt;
@@ -223,7 +223,7 @@ void GL_TextureMode(char *string)
 /**
  * @brief
  */
-void GL_TextureAlphaMode(char *string)
+void GL_TextureAlphaMode(const char *string)
 {
 	int i;
 
@@ -243,7 +243,7 @@ void GL_TextureAlphaMode(char *string)
 /**
  * @brief
  */
-void GL_TextureSolidMode(char *string)
+void GL_TextureSolidMode(const char *string)
 {
 	int i;
 
