@@ -24,8 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "gl_local.h"
-#include <ctype.h>
-
 #if defined DEBUG && defined _MSC_VER
 #include <intrin.h>
 #endif

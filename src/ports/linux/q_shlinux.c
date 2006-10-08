@@ -1,3 +1,9 @@
+/**
+ * @file q_shlinux.c
+ * @brief Shared linux functions
+ * @note Hunk system and some file system functions
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,15 +23,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+
 #include <sys/types.h>
 #include <errno.h>
-#include <stdio.h>
-#include <dirent.h>
 #include <sys/stat.h>
-#include <unistd.h>
 #include <sys/mman.h>
 #include <sys/time.h>
-#include <ctype.h>
 
 #include "../unix/glob.h"
 
@@ -40,6 +43,9 @@ byte *membase;
 int maxhunksize;
 int curhunksize;
 
+/**
+ * @brief
+ */
 void *Hunk_Begin (int maxsize)
 {
 	/* reserve a huge chunk of memory, but don't commit any yet */
@@ -60,6 +66,9 @@ void *Hunk_Begin (int maxsize)
 	return membase + sizeof(int);
 }
 
+/**
+ * @brief
+ */
 void *Hunk_Alloc (int size)
 {
 	byte *buf;
@@ -73,6 +82,9 @@ void *Hunk_Alloc (int size)
 	return buf;
 }
 
+/**
+ * @brief
+ */
 int Hunk_End (void)
 {
 #if defined(__FreeBSD__)
@@ -92,7 +104,7 @@ int Hunk_End (void)
 
 		if (munmap(membase + newsz, maxhunksize - newsz) == -1)
 			Sys_Error("Hunk_End: munmap() failed: %s", strerror(errno));
-        }
+	}
 #endif
 #if defined(__linux__)
 	byte *n = NULL;
@@ -108,6 +120,9 @@ int Hunk_End (void)
 	return curhunksize;
 }
 
+/**
+ * @brief
+ */
 void Hunk_Free (void *base)
 {
 	byte *m;
@@ -122,12 +137,11 @@ void Hunk_Free (void *base)
 /*=============================================================================== */
 
 
-/*
-================
-Sys_Milliseconds
-================
-*/
 int curtime;
+
+/**
+ * @brief
+ */
 int Sys_Milliseconds (void)
 {
 	struct timeval tp;
@@ -146,11 +160,17 @@ int Sys_Milliseconds (void)
 	return curtime;
 }
 
+/**
+ * @brief Creates a directory with all right (rwx) for user, group and world
+ */
 void Sys_Mkdir (char *path)
 {
 	mkdir (path, 0777);
 }
 
+/**
+ * @brief Lowers a given string
+ */
 char *strlwr (char *s)
 {
 	char* origs = s;
@@ -168,6 +188,9 @@ static	char	findpath[MAX_OSPATH];
 static	char	findpattern[MAX_OSPATH];
 static	DIR		*fdir;
 
+/**
+ * @brief
+ */
 static qboolean CompareAttributes(char *path, char *name,
 	unsigned musthave, unsigned canthave )
 {
@@ -192,6 +215,11 @@ static qboolean CompareAttributes(char *path, char *name,
 	return qtrue;
 }
 
+/**
+ * @brief Opens the directory and returns the first file that matches our searchrules
+ * @sa Sys_FindNext
+ * @sa Sys_FindClose
+ */
 char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
 {
 	struct dirent *d;
@@ -228,6 +256,12 @@ char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
 	return NULL;
 }
 
+/**
+ * @brief Returns the next file of the already opened directory (Sys_FindFirst) that matches our search mask
+ * @sa Sys_FindClose
+ * @sa Sys_FindFirst
+ * @sa static var findpattern
+ */
 char *Sys_FindNext (unsigned musthave, unsigned canhave)
 {
 	struct dirent *d;
@@ -247,6 +281,11 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 	return NULL;
 }
 
+/**
+ * @brief Close of dir handle
+ * @sa Sys_FindNext
+ * @sa Sys_FindFirst
+ */
 void Sys_FindClose (void)
 {
 	if (fdir != NULL)
