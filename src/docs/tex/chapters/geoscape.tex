@@ -8,6 +8,9 @@
 %
 %  date		/		changes																	/		comment						/ author
 %	06.10.06	/	rev. 0.0.5 (alpha) released											/	complete aspell-check		/	Elbenfreund
+%	07.10.06	/	added the overdue geoscape screenshot					/											/	Elbenfreund
+%	08.10.06	/	added promotion and badges										/											/	Elbenfreund
+%					/	+ size-optimized geoscape sceenshots added			/											/
 %
 %---------------------------------------------------------------------------
 
@@ -17,10 +20,14 @@
 \section{Worldmap - an overview} 
 Welcome to Geoscape! As said before UFO:AI distincts between two major aspects of the game - macromanagement and tactical combat. To put it simple one could say: Combat is where you earn the bucks (besides honor of cause ... ), Geoscape is where you spend em.
 
-Geoscape itself basically consist of two screens. The first one is the world map. This is where you get in right after starting a new campain and it is used to get the bigger picture as well as coordinating combat missions and intercepting enemy UFOs. Second is the base overview, where you improve infrastructures and order important decisions about equipment, research and production. In the following we will take a closer look at both of them.
+Geoscape itself basically consist of two screens. The first one is the world map. This is where you get in right after starting a new campaign and it is used to get the bigger picture as well as coordinating combat missions and intercepting enemy UFOs. Second is the base overview, where you improve infrastructures and order important decisions about equipment, research and production. In the following we will take a closer look at both of them.
 
 Taking the following screenshot we will have a look at what we might want to use the world map for.
-Please take notice of the fact that it is divided into day and night zones which actually influence any combat mission you get into (the day/night boarderline changes its shape according to the seasons as the relation earth\leftrightharpoons sun changes).
+Please take notice of the fact that it is divided into day and night zones which actually influence any combat mission you get into (the day/night boarderline changes its shape according to the seasons as the relation earth \leftrightharpoons sun changes).\\
+
+\includegraphics[width=\textwidth]{images/geoscape_final.jpg}
+
+\newpage
 
 \subsection{Status screen}
 Here some general information(e.g. stats, descriptions) show up depending on the context. What is shown in detail will be explaint in the following.
@@ -44,7 +51,7 @@ So whenever you notice news, make sure to check the button as well so you don't 
 Those yellow houses represent your bases. Circles around them (popping up later in the game) represent their radars range.  If you want to "enter" a base just click on its symbol.
 \subsection{Your dropship}
 This is the one that gets you squad to action. Clicking on it once brings up some general data about it (like fuel, speed, status and amount assigned soldiers) to the status screen. A second click while it's selected opens a submenu where you may give/change orders,e.g. sending it back home.
-\subsection{Your intercepors}
+\subsection{Your interceptors}
 Those fast ships job is to take enemy UFOs down. If it catches up with one the dogfight is going to be calculated based on both ships equipment and the result shown on screen. Just like one paragraph before a single click selects the interceptor (a further click to a certain spot on the map will order it to move it there) printing some general information in the status window. A second click while it is selected brings up a window where you might give more advanced orders to your ship.
 \subsection{Upcomig missions}
 This is where the action waits. Selecting a mission will give you a short description on the status screen while a second one makes you select a ship to bring in the troops you want.
@@ -94,5 +101,9 @@ Using this screen you can add further personal to your organisation. While espec
 \subsection{Research}
 is going to be re-done in 2.1 anyway
 \subsection{Promotions}
-nothing realy implemented yet
-%badges ?
+While the actual implementation is still under heavy discussion a few comments might help to understand how it works now. Different you ones first thought the main criteria for promotions is not the missions / kills ratio but the mind skill. You simply don't want an psychopathic, thrill seeking terminator like guy as squadleader but someone who is mentally stable ;) Also, up to now, there is only one member of you squad that is going to be promoted while the rest is left with nothing.
+Here a list of the different badges and their corresponding ranks.
+\begin{tabular}{cccc}
+\item \includegraphics[scale=1]{images/badges_rekrut_final.jpg} & & \item \includegraphics[scale=1]{images/badges_sergeant_final.jpg} & \item \includegraphics[scale=1]{images/badges_hauptmann_final.jpg}\\ 
+Private & & Sergeant & Hauptmann\\  
+\end{tabular} 
