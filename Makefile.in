@@ -96,6 +96,7 @@ echo_info:
 
 include build/lang.mk
 include build/install.mk
+include build/various.mk
 
 maps:
 	@$(MAKE) -C base/maps all
