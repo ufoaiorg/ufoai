@@ -1,175 +1,22 @@
+// base/maps/frozend.ump - 2006-09-05
+
 // *********************************
 // SNOW TERRAIN MAPS
 // *********************************
 
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: any
+
+
 base frozend/st_
 
-// ---------------------------------
-tile +n01
-{
-4 3
 
-0      a      a      0
-a      +a     +a     a
-0      a      a      0
-}
+// ########################################
+// ############### Vehicles ###############
 
-tile +n02
-{
-4 4
-
-0      a      a      0
-a      +a     a      a
-a      +a     +a     a
-0      a      a      0
-}
-
-
-tile +n03
-{
-3 4
-
-0      a      0
-a      +a     a
-a      +a     a
-0      a      0
-}
-
-
-tile +n04
-{
-3 3
-
-0      a         0
-a      +a        a
-0      a         0
-}
-
-
-tile +n05
-{
-3 3
-
-0      a         0
-a      +a        a
-0      a         0
-}
-
-tile +h01
-{
-4 4
-
-0      a      a      0
-a      +a     +a     a
-a      +a     +a     a
-0      a      a      0
-}
-
-tile +h02
-{
-5 4
-
-0      a      a      a     0
-a      +a     +a     +a	   a
-a      +a     +a     +a    a
-0      a      a      a	   0
-}
-
-
-tile +h03
-{
-4 3
-
-0      a      a      0
-a      +a     +a     a
-0      a      a      0
-}
-
-tile +h04
-{
-3 4
-
-0      a      0
-a      +a     a
-a      +a     a
-0      a      0
-}
-
-tile +h05
-{
-3 4
-
-0      a      0
-a      +a     a
-a      +a     a
-0      a      0
-}
-
-tile +i01
-{
-6 4
-
-0      a      a      a 	  a     0
-a      +a     +a     +a	  +a	a
-a      +a     +a     +a	  +a 	a
-0      a      a      a	  0    	0
-}
-
-tile +i02
-{
-3 4
-
-0      a      0
-a      +a     a
-a      +a     a
-0      a      0
-}
-
-tile +i03
-{
-4 4
-
-0      a      a      0
-a      a      +a     a
-a      +a     +a     a
-0      a      a      0
-}
-
-
-tile +i04
-{
-4 4
-
-0      a      a      0
-a      +a     +a     a
-a      +a     +a     a
-0      a      a      0
-}
-
-
-tile +i05
-{
-3 3
-
-0      a      0
-a      +a     a
-a      a      0
-
-}
-
-
-tile +i06
-{
-4 3
-
-0      a      a      0
-a      +a     +a     a
-0      a      a      0
-}
-
-
-
-
+// Dropship
 tile +drop
 {
 5 4
@@ -180,6 +27,7 @@ a      +a     +a     +a	  a
 0      a      a      a	  0
 }
 
+// Small alien ship
 tile +aliensmall
 {
 4 4
@@ -191,7 +39,191 @@ a      +a     +a     a
 }
 
 
-// *********************************
+// ########################################
+// ############# Nature Tiles #############
+
+// ---------------------------------
+// Plain, 2 trees
+tile +n01
+{
+4 3
+
+0      a      a      0
+a      +a     +a     a
+0      a      a      0
+}
+
+// Plain, 6 trees
+tile +n02
+{
+4 4
+
+0      a      a      0
+a      +a     a      a
+a      +a     +a     a
+0      a      a      0
+}
+
+// Plain, 4 trees
+tile +n03
+{
+3 4
+
+0      a      0
+a      +a     a
+a      +a     a
+0      a      0
+}
+
+// Plain, 1 tree
+tile +n04
+{
+3 3
+
+0      a         0
+a      +a        a
+0      a         0
+}
+
+// Plain
+tile +n05
+{
+3 3
+
+0      a         0
+a      +a        a
+0      a         0
+}
+
+// ########################################
+// ############# House Tiles #############
+
+// Small house, 3 rooms and fireplace
+tile +h01
+{
+4 4
+
+0      a      a      0
+a      +a     +a     a
+a      +a     +a     a
+0      a      a      0
+}
+
+// 2 storage buildings, 4 trees
+tile +h02
+{
+5 4
+
+0      a      a      a     0
+a      +a     +a     +a	   a
+a      +a     +a     +a    a
+0      a      a      a	   0
+}
+
+// 3 trees, pile of wood
+tile +h03
+{
+4 3
+
+0      a      a      0
+a      +a     +a     a
+0      a      a      0
+}
+
+// Small abandoned house, 2 trees
+tile +h04
+{
+3 4
+
+0      a      0
+a      +a     a
+a      +a     a
+0      a      0
+}
+
+// Small damaged house, 2 trees
+tile +h05
+{
+3 4
+
+0      a      0
+a      +a     a
+a      +a     a
+0      a      0
+}
+
+
+// ########################################
+// ########### Industrial Tiles ###########
+
+// Steelworks
+tile +i01
+{
+6 4
+
+0      a      a      a 	  a     0
+a      +a     +a     +a	  +a	a
+a      +a     +a     +a	  +a 	a
+0      a      a      a	  0    	0
+}
+
+// Refinery + pipeline
+tile +i02
+{
+3 4
+
+0      a      0
+a      +a     a
+a      +a     a
+0      a      0
+}
+
+// 3 halls: storage, gastank, 2 ovens
+tile +i03
+{
+4 4
+
+0      a      a      0
+a      a      +a     a
+a      +a     +a     a
+0      a      a      0
+}
+
+// Storage building, 3 containers
+tile +i04
+{
+4 4
+
+0      a      a      0
+a      +a     +a     a
+a      +a     +a     a
+0      a      a      0
+}
+
+// Pipeline with valve
+tile +i05
+{
+3 3
+
+0      a      0
+a      +a     a
+a      a      0
+
+}
+
+// 2 Containers, 7 barrels
+tile +i06
+{
+4 3
+
+0      a      a      0
+a      +a     +a     a
+0      a      a      0
+}
+
+
+// ########################################
+// ########### Maps for the game ###########
 
 assembly small
 {
@@ -238,7 +270,6 @@ size "6 6"
 +i04 "1 3"
 +i05 "1 2"
 +i06 "0 3"
-
 +drop "1 1"
 }
 
@@ -260,3 +291,141 @@ size "8 8"
 +aliensmall "1 1"
 +drop "1 1"
 }
+
+// ########################################
+// ######### Maps for screenshots #########
+
+// // Dropship
+// assembly drop
+// {
+// size "3 2"
+// +drop "1 1"
+// }
+// 
+// // small alien ship
+// assembly alien
+// {
+// size "2 2"
+// +aliensmall "1 1"
+// }
+// 
+// // --------------------
+// 
+// // Small house with 3 rooms and fireplace
+// assembly h1
+// {
+// size "2 2"
+// +h01 "1 1"
+// }
+// 
+// // 2 storage buildings
+// assembly h2
+// {
+// size "3 2"
+// +h02 "1 1"
+// }
+// 
+// // 3 trees, pile of wood
+// assembly h3
+// {
+// size "2 1"
+// +h03 "1 1"
+// }
+// 
+// // Small house, 2 trees
+// assembly h4
+// {
+// size "1 2"
+// +h04 "1 1"
+// }
+// 
+// // Small damaged house, 2 trees
+// assembly h5
+// {
+// size "1 2"
+// +h05 "1 1"
+// }
+// 
+// // --------------------
+// 
+// // Steelworks
+// assembly i1
+// {
+// size "4 2"
+// +i01 "1 1"
+// }
+// 
+// // Refinery + pipeline
+// assembly i2
+// {
+// size "1 2"
+// +i02 "1 1"
+// }
+// 
+// // 2 Ovens
+// assembly i3
+// {
+// size "2 2"
+// +i03 "1 1"
+// +n05 "0 1"
+// }
+// 
+// // Container storage
+// assembly i4
+// {
+// size "2 2"
+// +i04 "1 1"
+// }
+// 
+// // Pipeline
+// assembly i5
+// {
+// size "1 1"
+// +i05 "1 1"
+// }
+// 
+// // 2 Containers, barrels
+// assembly i6
+// {
+// size "2 1"
+// +i06 "1 1"
+// }
+// 
+// // --------------------
+// 
+// // Plain, 2 trees
+// assembly n1
+// {
+// size "2 1"
+// +n01 "1 1"
+// }
+// 
+// // Plain, 6 trees
+// assembly n2
+// {
+// size "2 2"
+// +n02 "1 1"
+// +n05 "0 1"
+// }
+// 
+// // Plain, 4 trees
+// assembly n3
+// {
+// size "1 2"
+// +n03 "1 1"
+// }
+// 
+// // Plain, 1 tree
+// assembly n4
+// {
+// size "1 1"
+// +n04 "1 1"
+// }
+// 
+// // Plain
+// assembly n5
+// {
+// size "1 1"
+// +n05 "1 1"
+// }
+
