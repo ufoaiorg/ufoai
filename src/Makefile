@@ -369,7 +369,7 @@ ifeq ($(ARCH),amd64)
 	endif
 	ifeq ($(strip $(BUILD_SDLUFO)),YES)
 		TARGETS += $(BUILDDIR)/ref_sdl.$(SHLIBEXT)
-	endif   
+	endif
 endif # ARCH amd64
 
 ifeq ($(ARCH),ia64)
@@ -392,7 +392,8 @@ endif
 debug: build_debug copy_debug echo_info
 all: build_debug build_release lang
 lazy: lang build_debug copy_debug maps
-installer: win32installer linuxinstaller sourcearchive
+installer:
+ linuxinstaller sourcearchive
 mappack:
 	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ../base/maps
 
