@@ -143,7 +143,7 @@ void WriteModelFile (FILE *modelouthandle)
 
 	model.ident = IDALIASHEADER;
 	model.version = ALIAS_VERSION;
-	model.framesize = (int)&((daliasframe_t *)0)->verts[model.num_xyz];
+	model.framesize = (intptr_t)&((daliasframe_t *)0)->verts[model.num_xyz];
 	model.num_glcmds = numcommands;
 	model.ofs_skins = sizeof(dmdl_t);
 	model.ofs_st = model.ofs_skins + model.num_skins * MAX_SKINNAME;

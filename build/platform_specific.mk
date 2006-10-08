@@ -2,17 +2,38 @@
 # Special libs
 #########################################################################################################################
 
+# Defaults
+SHARED_EXT=so
+SHARED_LDFLAGS=-shared
+SHARED_CFLAGS=-fPIC
+JPEG_CFLAGS=
+
+# MinGW32
 ifeq ($(TARGET_OS),mingw32)
 	LIBS+=-lwsock32 -lwinmm -lkernel32 -luser32 -lgdi32
 	SHARED_EXT=dll
 	SHARED_LDFLAGS=-shared
 	SHARED_CFLAGS=-shared
 	JPEG_CFLAGS=-DDONT_TYPEDEF_INT32
-else
-	SHARED_EXT=so
-	SHARED_LDFLAGS=-shared
-	SHARED_CFLAGS=-fPIC
-	JPEG_CFLAGS=
+	CFLAGS += -std=c89
+endif
+
+# Linux like
+ifeq ($(TARGET_OS),linux-gnu)
+	CFLAGS +=-D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
+endif
+
+# FreeBSD like
+ifeq ($(TARGET_OS),freebsd)
+	CFLAGS +=-D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
+endif
+
+# Darwin
+ifeq ($(TARGET_OS),darwin)
+	SHARED_EXT=dylib
+	SHARED_CFLAGS=-fPIC -fno-common
+	SHARED_LDFLAGS=-dynamiclib
+	CFLAGS += -D_BSD_SOURCE -D_XOPEN_SOURCE
 endif
 
 #########################################################################################################################
@@ -25,13 +46,13 @@ RELEASE_CFLAGS=-ffast-math -funroll-loops
 #	RELEASE_CFLAGS+=-fomit-frame-pointer -fexpensive-optimizations
 #endif
 
-#ifeq ($(TARGET_CPU),ppc)
-#	RELEASE_CFLAGS+=-O2 -fomit-frame-pointer -fexpensive-optimizations
-#endif
-
 #ifeq ($(TARGET_CPU),sparc)
 #	RELEASE_CFLAGS+=-fomit-frame-pointer -fexpensive-optimizations
 #endif
+
+ifeq ($(TARGET_CPU),ppc)
+	RELEASE_CFLAGS+=-O2 -fomit-frame-pointer -fexpensive-optimizations
+endif
 
 ifeq ($(TARGET_CPU),i386)
 	ifeq ($(TARGET_OS),freebsd)

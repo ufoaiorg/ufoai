@@ -2,6 +2,7 @@
 
 
 #include <sys/stat.h>
+#include <stdint.h>
 
 #include "../ufo2map/common/scriplib.h"
 #include "../ufo2map/common/mathlib.h"

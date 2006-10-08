@@ -52,14 +52,14 @@ ifeq ($(TARGET_OS),mingw32)
 	SERVER_OKAY=1
 endif
 
-#ifeq ($(OSTYPE),Darwin)
-#	SERVER_SRCS+=\
-#		ports/macosx/sys_osx.m \
-#		ports/unix/glob.c \
-#		ports/unix/sys_unix.c \
-#		ports/unix/$(NET_UDP).c \
-#		ports/macosx/q_shosx.c
-#endif
+ifeq ($(TARGET_OS),darwin)
+	SERVER_SRCS+=\
+		ports/macosx/sys_osx.m \
+		ports/unix/glob.c \
+		ports/unix/sys_unix.c \
+		ports/unix/$(NET_UDP).c \
+		ports/macosx/q_shosx.c
+endif
 
 ifndef SERVER_OKAY
 	error "server.mk: couldn't find option for platform $(TARGET_OS)"

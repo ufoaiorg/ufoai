@@ -110,6 +110,9 @@ then
 elif test `echo $target_os | sed "s/\(mingw32\).*/\1/"` = "mingw32"
 then
 	AC_SUBST([TARGET_OS],[mingw32])
+elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
+then
+	AC_SUBST([TARGET_OS],[darwin])
 else
 	AC_MSG_ERROR([The target operating system '$target_os' is unknown, please contact the developers])
 fi
@@ -129,6 +132,9 @@ elif test "$target_cpu" = "i386" ||
 	 test "$target_cpu" = "i686"
 then
 	AC_SUBST([TARGET_CPU],[i386])
+elif test "$target_cpu" = "ppc"
+then
+	AC_SUBST([TARGET_CPU],[ppc])
 else
 	AC_MSG_WARN([The target CPU '$target_cpu' is unknown, default options will be applied])
 	AC_MSG_WARN([Please contact the developers for assistance])
@@ -171,6 +177,39 @@ fi
 #then
 #	AC_MSG_ERROR([You must have libtool installed])
 #fi
+
+#---------------------------------------------------------------------------------------------
+# Check for stdint.h
+#---------------------------------------------------------------------------------------------
+
+AC_CHECK_HEADERS([stdint.h])
+if test "$ac_cv_header_stdint_h" != "yes"
+then
+	AC_MSG_ERROR([Couldn't find stdint.h!])
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for int_ptr_t
+#---------------------------------------------------------------------------------------------
+
+AC_MSG_CHECKING([stdint.h has intptr_t])
+AC_COMPILE_IFELSE([
+		AC_LANG_PROGRAM([[
+			#include <stdint.h>
+			]]
+			,[[intptr_t p = 0;]]
+		)],
+		[ac_cv_intptr_t=yes],
+		[ac_cv_intptr_t=no]
+	)
+if test "$ac_cv_intptr_t" = "yes"
+then
+	AC_MSG_RESULT([yes])
+else
+	AC_MSG_RESULT([no])
+	AC_MSG_WARN([stdint.h does not define intptr_tm so will not build qdata!])
+	enable_qdata = "no"
+fi
 
 #---------------------------------------------------------------------------------------------
 # Check for X11/Xlib.h

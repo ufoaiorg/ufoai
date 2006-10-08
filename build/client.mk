@@ -92,25 +92,19 @@ ifeq ($(TARGET_OS),mingw32)
 	CLIENT_CD=ports/win32/cd_win.c
 endif
 
-# ports/win32/cd_win.c
-# ports/win32/qgl_win.c ports/win32/glw_imp.c
-# ports/win32/snd_wapi.c
-# ports/linux/snd_sdl.c
-# ports/linux/snd_dx.c
-
-#ifeq ($(TARGET_OS),Darwin)
-#	CLIENT_SRCS+= \
-#		ports/macosx/sys_osx.m \
-#		ports/macosx/vid_osx.m \
-#		ports/macosx/in_osx.m \
-#		ports/macosx/snddma_osx.m \
-#		ports/unix/glob.c \
-#		ports/unix/sys_unix.c \
-#		ports/unix/$(NET_UDP).c \
-#		ports/macosx/q_shosx.c
-#		# FIXME Add more objects
-#   CLIENT_CD+=ports/macosx/cd_osx.m
-#endif
+ifeq ($(TARGET_OS),darwin)
+	CLIENT_SRCS+= \
+		ports/macosx/sys_osx.m \
+		ports/macosx/vid_osx.m \
+		ports/macosx/in_osx.m \
+		ports/macosx/snddma_osx.m \
+		ports/unix/glob.c \
+		ports/unix/sys_unix.c \
+		ports/unix/$(NET_UDP).c \
+		ports/macosx/q_shosx.c
+		# FIXME Add more objects
+   CLIENT_CD+=ports/macosx/cd_osx.m
+endif
 
 ifeq ($(TARGET_OS),mingw32)
 	CLIENT_SRCS+=$(CLIENT_CD)
