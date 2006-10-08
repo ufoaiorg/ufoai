@@ -340,9 +340,9 @@ void gaussrand(float *gauss1, float *gauss2);   /* -inf to +inf, median 0, stdev
 void stradd(char **str, const char *addStr);
 
 char *COM_SkipPath(char *pathname);
-void COM_StripExtension(char *in, char *out);
-void COM_FileBase(char *in, char *out);
-void COM_FilePath(char *in, char *out);
+void COM_StripExtension(const char *in, char *out);
+void COM_FileBase(const char *in, char *out);
+void COM_FilePath(const char *in, char *out);
 void COM_DefaultExtension(char *path, char *extension);
 
 char *COM_Parse(char **data_p);

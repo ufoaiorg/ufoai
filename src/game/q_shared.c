@@ -1305,7 +1305,7 @@ char *COM_SkipPath(char *pathname)
  * @param
  * @sa COM_SkipPath
  */
-void COM_StripExtension(char *in, char *out)
+void COM_StripExtension(const char *in, char *out)
 {
 	while (*in && *in != '.')
 		*out++ = *in++;
@@ -1317,7 +1317,7 @@ void COM_StripExtension(char *in, char *out)
  * @param
  * @sa
  */
-char *COM_FileExtension(char *in)
+char *COM_FileExtension(const char *in)
 {
 	static char exten[8];
 	int i;
@@ -1338,9 +1338,9 @@ char *COM_FileExtension(char *in)
  * @param
  * @sa
  */
-void COM_FileBase(char *in, char *out)
+void COM_FileBase(const char *in, char *out)
 {
-	char *s, *s2;
+	const char *s, *s2;
 
 	s = in + strlen(in) - 1;
 
@@ -1361,9 +1361,9 @@ void COM_FileBase(char *in, char *out)
 /**
   * @brief Returns the path up to, but not including the last /
   */
-void COM_FilePath(char *in, char *out)
+void COM_FilePath(const char *in, char *out)
 {
-	char *s;
+	const char *s;
 
 	s = in + strlen(in) - 1;
 

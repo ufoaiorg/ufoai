@@ -350,8 +350,6 @@ void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lig
 
 #include "gl_font.h"
 
-void COM_StripExtension(char *in, char *out);
-
 void Draw_GetPicSize(int *w, int *h, char *name);
 void Draw_Pic(int x, int y, char *name);
 void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
