@@ -282,7 +282,7 @@ typedef struct {
 	int api_version;
 
 	/* called when the library is loaded */
-	 qboolean(*Init) (HINSTANCE hinstance, WNDPROC wndproc);
+	qboolean(*Init) (HINSTANCE hinstance, WNDPROC wndproc);
 
 	/* called before the library is unloaded */
 	void (*Shutdown) (void);
@@ -301,10 +301,10 @@ typedef struct {
 	/* an implicit "pics/" prepended to the name. (a pic name that starts with a */
 	/* slash will not use the "pics/" prefix or the ".pcx" postfix) */
 	void (*BeginRegistration) (char *tiles, char *pos);
-	struct model_s *(*RegisterModel) (char *name);
-	struct image_s *(*RegisterSkin) (char *name);
+	struct model_s *(*RegisterModel) (const char *name);
+	struct image_s *(*RegisterSkin) (const char *name);
 
-	struct image_s *(*RegisterPic) (char *name);
+	struct image_s *(*RegisterPic) (const char *name);
 	void (*EndRegistration) (void);
 
 	void (*RenderFrame) (refdef_t * fd);
@@ -316,9 +316,9 @@ typedef struct {
 	void (*DrawNormPic) (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
 	void (*DrawStretchPic) (int x, int y, int w, int h, char *name);
 	void (*DrawChar) (int x, int y, int c);
-	void (*FontRegister) (char *name, int size, char *path, char *style);
-	void (*FontLength) (char *font, char *c, int *width, int *height);
-	int (*FontDrawString) (char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
+	void (*FontRegister) (const char *name, int size, char *path, char *style);
+	void (*FontLength) (const char *font, char *c, int *width, int *height);
+	int (*FontDrawString) (const char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
 	void (*DrawTileClear) (int x, int y, int w, int h, char *name);
 	void (*DrawFill) (int x, int y, int w, int h, int style, const vec4_t color);
 	void (*DrawColor) (const float *rgba);
@@ -334,7 +334,7 @@ typedef struct {
 	void (*AnimRun) (animState_t * as, struct model_s * mod, int msec);
 	char *(*AnimGetName) (animState_t * as, struct model_s * mod);
 
-	void (*LoadTGA) (char *name, byte ** pic, int *width, int *height);
+	void (*LoadTGA) (const char *name, byte ** pic, int *width, int *height);
 
 	/* video mode and refresh state management entry points */
 	void (*BeginFrame) (float camera_separation);
@@ -348,7 +348,7 @@ typedef struct {
 	void (*Sys_Error) (int err_level, char *str, ...);
 
 	void (*Cmd_AddCommand) (char *name, void (*cmd) (void), char *desc);
-	void (*Cmd_RemoveCommand) (char *name);
+	void (*Cmd_RemoveCommand) (const char *name);
 	int (*Cmd_Argc) (void);
 	char *(*Cmd_Argv) (int i);
 	void (*Cmd_ExecuteText) (int exec_when, char *text);
@@ -361,24 +361,24 @@ typedef struct {
 	/* a -1 return means the file does not exist */
 	/* NULL can be passed for buf to just determine existance */
 	int (*FS_WriteFile) (const void *buffer, int len, const char *filename);
-	int (*FS_LoadFile) (char *name, void **buf);
+	int (*FS_LoadFile) (const char *name, void **buf);
 	void (*FS_FreeFile) (void *buf);
 	int (*FS_CheckFile) (const char *name);
-	char **(*FS_ListFiles) (char *findname, int *numfiles, unsigned musthave, unsigned canthave);
+	char **(*FS_ListFiles) (const char *findname, int *numfiles, unsigned musthave, unsigned canthave);
 
 	/* will return the size and the path for each font */
-	void (*CL_GetFontData) (char *name, int *size, char *path);
+	void (*CL_GetFontData) (const char *name, int *size, char *path);
 
 	/* gamedir will be the current directory that generated */
 	/* files should be stored to, ie: "f:\quake\id1" */
 	char *(*FS_Gamedir) (void);
-	char *(*FS_NextPath) (char *prevpath);
+	char *(*FS_NextPath) (const char *prevpath);
 
-	cvar_t *(*Cvar_Get) (char *name, char *value, int flags, char* desc);
-	cvar_t *(*Cvar_Set) (char *name, char *value);
-	void (*Cvar_SetValue) (char *name, float value);
+	cvar_t *(*Cvar_Get) (const char *name, const char *value, int flags, char* desc);
+	cvar_t *(*Cvar_Set) (const char *name, const char *value);
+	void (*Cvar_SetValue) (const char *name, float value);
 
-	 qboolean(*Vid_GetModeInfo) (int *width, int *height, int mode);
+	qboolean(*Vid_GetModeInfo) (int *width, int *height, int mode);
 	void (*Vid_NewWindow) (int width, int height);
 	void (*CL_WriteAVIVideoFrame) (const byte * buffer, int size);
 } refimport_t;

@@ -73,7 +73,7 @@ The .pk3 files are just zip files
 */
 
 /* Make sure we have this available */
-char **FS_ListFiles(char *findname, int *numfiles, unsigned musthave, unsigned canthave);
+char **FS_ListFiles(const char *findname, int *numfiles, unsigned musthave, unsigned canthave);
 
 /* cleanup function */
 void FS_Shutdown(void);

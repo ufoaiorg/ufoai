@@ -25,12 +25,12 @@ void Cbuf_Init(void);
 
 /* allocates an initial text buffer that will grow as needed */
 
-void Cbuf_AddText(char *text);
+void Cbuf_AddText(const char *text);
 
 /* as new commands are generated from the console or keybindings, */
 /* the text is added to the end of the command buffer. */
 
-void Cbuf_InsertText(char *text);
+void Cbuf_InsertText(const char *text);
 
 /* when a command wants to issue other commands immediately, the text is */
 /* inserted at the beginning of the buffer, before any remaining unexecuted */
@@ -89,13 +89,13 @@ void Cmd_AddCommand(char *cmd_name, xcommand_t function, char* desc);
 /* The cmd_name is referenced later, so it should not be in temp memory */
 /* if function is NULL, the command will be forwarded to the server */
 /* as a clc_stringcmd instead of executed locally */
-void Cmd_RemoveCommand(char *cmd_name);
+void Cmd_RemoveCommand(const char *cmd_name);
 
-qboolean Cmd_Exists(char *cmd_name);
+qboolean Cmd_Exists(const char *cmd_name);
 
 /* used by the cvar code to check for cvar / command name overlap */
 
-int Cmd_CompleteCommand(char *partial, char **match);
+int Cmd_CompleteCommand(const char *partial, char **match);
 
 /* attempts to match a partial command for automatic command line completion */
 /* returns NULL if nothing fits */
@@ -125,4 +125,4 @@ void Cmd_ForwardToServer(void);
 /* so when they are typed in at the console, they will need to be forwarded. */
 
 
-char* Cmd_GetCommandDesc(char* command);
+char* Cmd_GetCommandDesc(const char* command);

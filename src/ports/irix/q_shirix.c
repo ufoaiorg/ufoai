@@ -36,6 +36,9 @@ byte *membase;
 int maxhunksize;
 int curhunksize;
 
+/**
+ * @brief
+ */
 void *Hunk_Begin (int maxsize)
 {
 	maxhunksize = maxsize + sizeof(int);
@@ -52,6 +55,9 @@ void *Hunk_Begin (int maxsize)
 	return membase + sizeof(int);
 }
 
+/**
+ * @brief
+ */
 void *Hunk_Alloc (int size)
 {
 	byte *buf;
@@ -65,11 +71,17 @@ void *Hunk_Alloc (int size)
 	return buf;
 }
 
+/**
+ * @brief
+ */
 int Hunk_End (void)
 {
 	return curhunksize;
 }
 
+/**
+ * @brief
+ */
 void Hunk_Free (void *base)
 {
 	byte *m;
@@ -83,11 +95,9 @@ void Hunk_Free (void *base)
 /*=============================================================================== */
 
 
-/*
-================
-Sys_Milliseconds
-================
-*/
+/**
+ * @brief
+ */
 int curtime;
 int Sys_Milliseconds (void)
 {
@@ -107,14 +117,14 @@ int Sys_Milliseconds (void)
 	return curtime;
 }
 
-void Sys_Mkdir (char *path)
+void Sys_Mkdir (const char *path)
 {
-    mkdir (path, 0777);
+	mkdir (path, 0777);
 }
 
 char *strlwr (char *s)
 {
-        char *origs = s;
+	char *origs = s;
 	while (*s) {
 		*s = tolower(*s);
 		s++;
@@ -129,7 +139,7 @@ static	char	findpath[MAX_OSPATH];
 static	char	findpattern[MAX_OSPATH];
 static	DIR		*fdir;
 
-static qboolean CompareAttributes(char *path, char *name,
+static qboolean CompareAttributes(const char *path, char *name,
 	unsigned musthave, unsigned canthave )
 {
 	struct stat st;
@@ -152,7 +162,7 @@ static qboolean CompareAttributes(char *path, char *name,
 	return qtrue;
 }
 
-char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
+char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 {
 	struct dirent *d;
 	char *p;

@@ -488,7 +488,7 @@ typedef struct _TargaHeader {
 /**
  * @brief
  */
-void LoadTGA(char *name, byte ** pic, int *width, int *height)
+void LoadTGA(const char *name, byte ** pic, int *width, int *height)
 {
 	int columns, rows, numPixels;
 	byte *pixbuf;
@@ -732,7 +732,7 @@ void jpeg_mem_src(j_decompress_ptr cinfo, byte * mem, int len)
  * @sa LoadPCX
  * @sa LoadTGA
  */
-void LoadJPG(char *filename, byte ** pic, int *width, int *height)
+void LoadJPG(const char *filename, byte ** pic, int *width, int *height)
 {
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;
@@ -1735,7 +1735,7 @@ void GL_CalcDayAndNight(float q)
 /**
  * @brief This is also used as an entry point for the generated r_notexture
  */
-image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t type, int bits)
+image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits)
 {
 	image_t *image;
 	int len, i;
@@ -1824,7 +1824,7 @@ image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t t
 /**
  * @brief
  */
-image_t *GL_LoadWal(char *name)
+image_t *GL_LoadWal(const char *name)
 {
 	miptex_t *mt;
 	int width, height, ofs;
@@ -1851,7 +1851,7 @@ image_t *GL_LoadWal(char *name)
 /**
  * @brief Finds an image for a shader
  */
-image_t *GL_FindImageForShader(char *name)
+image_t *GL_FindImageForShader(const char *name)
 {
 	int i;
 	image_t *image;
@@ -1869,7 +1869,7 @@ image_t *GL_FindImageForShader(char *name)
  * @param pname Image name
  * @note the image name has to be at least 5 chars long
  */
-image_t *GL_FindImage(char *pname, imagetype_t type)
+image_t *GL_FindImage(const char *pname, imagetype_t type)
 {
 	char lname[MAX_QPATH];
 	char *ename;
@@ -1975,7 +1975,7 @@ image_t *GL_FindImage(char *pname, imagetype_t type)
 /**
  * @brief
  */
-struct image_s *R_RegisterSkin(char *name)
+struct image_s *R_RegisterSkin(const char *name)
 {
 	return GL_FindImage(name, it_skin);
 }

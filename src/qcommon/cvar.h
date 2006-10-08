@@ -17,35 +17,35 @@ Cvars are restricted from having the same names as commands to keep this
 interface from being ambiguous.
 */
 
-cvar_t *Cvar_Get(char *var_name, char *value, int flags, char* desc);
+cvar_t *Cvar_Get(const char *var_name, const char *value, int flags, char* desc);
 
 /* creates the variable if it doesn't exist, or returns the existing one */
 /* if it exists, the value will not be changed, but flags will be ORed in */
 /* that allows variables to be unarchived without needing bitflags */
 
-cvar_t *Cvar_Set(char *var_name, char *value);
+cvar_t *Cvar_Set(const char *var_name, const char *value);
 
 /* will create the variable if it doesn't exist */
 
-cvar_t *Cvar_ForceSet(char *var_name, char *value);
+cvar_t *Cvar_ForceSet(const char *var_name, const char *value);
 
 /* will set the variable even if NOSET or LATCH */
 
-cvar_t *Cvar_FullSet(char *var_name, char *value, int flags);
+cvar_t *Cvar_FullSet(const char *var_name, const char *value, int flags);
 
-void Cvar_SetValue(char *var_name, float value);
+void Cvar_SetValue(const char *var_name, float value);
 
 /* expands value to a string and calls Cvar_Set */
 
-float Cvar_VariableValue(char *var_name);
+float Cvar_VariableValue(const char *var_name);
 
 /* returns 0 if not defined or non numeric */
 
-char *Cvar_VariableString(char *var_name);
+char *Cvar_VariableString(const char *var_name);
 
 /* returns an empty string if not defined */
 
-int Cvar_CompleteVariable(char *partial, char **match);
+int Cvar_CompleteVariable(const char *partial, char **match);
 
 /* attempts to match a partial variable name for command line completion */
 /* returns NULL if nothing fits */
@@ -60,7 +60,7 @@ qboolean Cvar_Command(void);
 /* command.  Returns true if the command was a variable reference that */
 /* was handled. (print or change) */
 
-void Cvar_WriteVariables(char *path);
+void Cvar_WriteVariables(const char *path);
 
 /* appends lines containing "set variable value" for all variables */
 /* with the archive flag set to true. */

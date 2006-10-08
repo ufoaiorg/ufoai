@@ -108,7 +108,7 @@ void Cbuf_Init(void)
  * @brief Adds command text at the end of the buffer
  * @note Normally when a command is generate from the console or keybinings, it will be added to the end of the command buffer.
  */
-void Cbuf_AddText(char *text)
+void Cbuf_AddText(const char *text)
 {
 	int l;
 	char *cmdopen;
@@ -135,7 +135,7 @@ void Cbuf_AddText(char *text)
  * @note Adds a \n to the text
  * FIXME: actually change the command buffer to do less copying
  */
-void Cbuf_InsertText(char *text)
+void Cbuf_InsertText(const char *text)
 {
 	char *temp;
 	int templen;
@@ -654,16 +654,17 @@ void Cmd_TokenizeString(char *text, qboolean macroExpand)
  * @note never returns a NULL pointer
  * @todo - search alias, too
  */
-char* Cmd_GetCommandDesc(char* cmd_name)
+char* Cmd_GetCommandDesc(const char* cmd_name)
 {
 	cmd_function_t *cmd;
+	char *sep = NULL;
 	char searchName[MAX_VAR];
 
 	/* remove paramters */
 	Q_strncpyz(searchName, cmd_name, sizeof(searchName));
-	cmd_name = strstr(searchName, " ");
-	if (cmd_name)
-		*cmd_name = '\0';
+	sep = strstr(searchName, " ");
+	if (sep)
+		*sep = '\0';
 
 	/* fail if the command already exists */
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
@@ -715,7 +716,7 @@ void Cmd_AddCommand(char *cmd_name, xcommand_t function, char *desc)
  * @param[in] cmd_name The script interface function name to remove
  * @sa Cmd_AddCommand
  */
-void Cmd_RemoveCommand(char *cmd_name)
+void Cmd_RemoveCommand(const char *cmd_name)
 {
 	cmd_function_t *cmd, **back;
 
@@ -739,7 +740,7 @@ void Cmd_RemoveCommand(char *cmd_name)
  * @brief Checks whether a function exists already
  * @param[in] cmd_name The script interface function name to search for
  */
-qboolean Cmd_Exists(char *cmd_name)
+qboolean Cmd_Exists(const char *cmd_name)
 {
 	cmd_function_t *cmd;
 
@@ -757,7 +758,7 @@ qboolean Cmd_Exists(char *cmd_name)
   * @sa Cvar_CompleteVariable
   * @sa Key_CompleteCommand
   */
-int Cmd_CompleteCommand(char *partial, char **match)
+int Cmd_CompleteCommand(const char *partial, char **match)
 {
 	cmd_function_t *cmd;
 	cmdalias_t *a;

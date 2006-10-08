@@ -323,7 +323,7 @@ extern int registration_sequence;
 
 void V_AddBlend(float r, float g, float b, float a, float *v_blend);
 
-struct model_s *R_RegisterModelShort(char *name);
+struct model_s *R_RegisterModelShort(const char *name);
 
 void GL_ScreenShot_f(void);
 void R_InterpolateTransform(animState_t * as, int numframes, float *tag, float *interpolated);
@@ -370,21 +370,21 @@ int Draw_GetPalette(void);
 
 void R_BeginRegistration(char *tiles, char *pos);
 void R_EndRegistration(void);
-struct image_s *Draw_FindPic(char *name);
-void LoadTGA(char *name, byte ** pic, int *width, int *height);
+struct image_s *Draw_FindPic(const char *name);
+void LoadTGA(const char *name, byte ** pic, int *width, int *height);
 
 void Anim_Append(animState_t * as, model_t * mod, char *name);
 void Anim_Change(animState_t * as, model_t * mod, char *name);
 void Anim_Run(animState_t * as, model_t * mod, int msec);
 char *Anim_GetName(animState_t * as, model_t * mod);
 
-struct image_s *R_RegisterSkin(char *name);
+struct image_s *R_RegisterSkin(const char *name);
 
-void WriteTGA(char *filename, byte * data, int width, int height);
+void WriteTGA(const char *filename, byte * data, int width, int height);
 
-image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t type, int bits);
-image_t *GL_FindImage(char *pname, imagetype_t type);
-image_t *GL_FindImageForShader(char *name);
+image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
+image_t *GL_FindImage(const char *pname, imagetype_t type);
+image_t *GL_FindImageForShader(const char *name);
 void GL_TextureMode(char *string);
 void GL_ImageList_f(void);
 
