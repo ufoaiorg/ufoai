@@ -133,9 +133,9 @@ qboolean SV_SetPlayer(void)
 /**
  * @brief Puts the server in demo mode on a specific map/cinematic
  */
-void SV_DemoMap_f(void)
+void SV_Demo_f(void)
 {
-	SV_Map(qtrue, Cmd_Argv(1), qfalse);
+	SV_Map(qtrue, va("%s.dm2", Cmd_Argv(1)), qfalse);
 }
 
 /**
@@ -456,7 +456,7 @@ void SV_InitOperatorCommands(void)
 	Cmd_AddCommand("dumpuser", SV_DumpUser_f, NULL);
 
 	Cmd_AddCommand("map", SV_Map_f, NULL);
-	Cmd_AddCommand ("demomap", SV_DemoMap_f, NULL);
+	Cmd_AddCommand ("demo", SV_Demo_f, NULL);
 	Cmd_AddCommand("maplist", SV_ListMaps_f, NULL);
 
 	Cmd_AddCommand("setmaster", SV_SetMaster_f, NULL);

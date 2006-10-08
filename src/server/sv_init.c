@@ -714,6 +714,7 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 {
 	int i;
 	unsigned checksum = 0;
+	char *map, *pos;
 
 	if (attractloop)
 		Cvar_Set("paused", "0");
@@ -752,9 +753,8 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 
 	sv.time = 1000;
 
-	if (serverstate == ss_game) {
-		char *map, *pos;
-
+	switch (serverstate) {
+	case ss_game:
 		/* assemble and load the map */
 		if (server[0] == '+')
 			SV_AssembleMap(server + 1, param, &map, &pos);
@@ -770,8 +770,13 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 			sv.configstrings[CS_POSITIONS][0] = 0;
 
 		CM_LoadMap(map, pos);
-	} else {
-		/* fix this! what here? */
+		break;
+	case ss_demo:
+		Com_Printf("Play demo\n");
+		CM_LoadMap(server, NULL);
+		break;
+	default:
+		break;
 	}
 
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
@@ -857,6 +862,8 @@ void SV_InitGame(void)
  * another level:
  * map tram.cin+jail_e3
  * @sa SV_SpawnServer
+ * @sa SV_Map_f
+ * @sa SV_Demo_f
  */
 void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame)
 {
