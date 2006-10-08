@@ -459,6 +459,7 @@ menu althud
 	}
 	pic nextround
 	{
+		key "*binding nextround"
 		tooltip	"_Finish round"
 		image	althud/buttons_althud1
 		pos		"888 11"
@@ -583,6 +584,7 @@ menu althud
 
 	pic bt_duck
 	{
+		key "*binding standcrouch"
 		tooltip	"_Crouch/Stand up"
 		image	althud/buttons_althud1
 		mousefx true
