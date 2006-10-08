@@ -2042,6 +2042,7 @@ static void CL_GameGo(void)
 	}
 
 	mis = selMis->def;
+	map_maxlevel_base = 0;
 	baseCurrent = aircraft->homebase;
 	assert(baseCurrent && mis && aircraft);
 

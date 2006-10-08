@@ -595,9 +595,10 @@ menu mp_join_lan
 		pos	"500 200"
 		size	"420 550"
 		format	"20 200"
-		mousefx	truepingservers;
+		mousefx	true
 		num	1
 		click	{ }
+		rclick	{ cmd "pingservers;" }
 	}
 
 	// ==================
@@ -713,8 +714,8 @@ menu mp_join_internet
 
 	text bookmarks
 	{
-		pos	"500 200"
-		size	"420 550"
+		pos	"500 230"
+		size	"420 520"
 		format	"20 200"
 		mousefx	true
 		num	1
@@ -727,7 +728,7 @@ menu mp_join_internet
 	pic button_inet_connect_to_ip
 	{
 		image	menu/multi_buttons3
-		click	{ cmd "connect *mn_server_ip" }
+		click	{ cmd "server_info *mn_server_ip;" }
 		texh	"256 32"
 		texl	"0 0"
 		pos	"500 615"
