@@ -1466,6 +1466,8 @@ static void CL_SwapSkills(character_t *team[], int num)
 
 /**
  * @brief Assigns initial team of soldiers with equipment to aircraft
+ * @note If assign_initial is called with one parameter (e.g. a 1), this is for
+ * multiplayer - assign_initial with no parameters is for singleplayer
  */
 static void B_AssignInitial_f(void)
 {

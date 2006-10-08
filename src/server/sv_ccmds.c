@@ -456,7 +456,7 @@ void SV_InitOperatorCommands(void)
 	Cmd_AddCommand("dumpuser", SV_DumpUser_f, NULL);
 
 	Cmd_AddCommand("map", SV_Map_f, NULL);
-/*	Cmd_AddCommand ("demomap", SV_DemoMap_f, NULL);*/
+	Cmd_AddCommand ("demomap", SV_DemoMap_f, NULL);
 	Cmd_AddCommand("maplist", SV_ListMaps_f, NULL);
 
 	Cmd_AddCommand("setmaster", SV_SetMaster_f, NULL);
