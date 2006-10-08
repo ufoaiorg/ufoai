@@ -26,8 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-static vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
-static vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
+static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
+static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 
 /* =========================================================== */
 
@@ -42,6 +42,7 @@ typedef enum ea_s {
 	EA_NUM_EVENTACTION
 } ea_t;
 
+/** @brief valid node event actions */
 static char *ea_strings[EA_NUM_EVENTACTION] = {
 	"",
 	"cmd",
@@ -73,6 +74,7 @@ typedef enum ne_s {
 	NE_NUM_NODEEVENT
 } ne_t;
 
+/** @brief valid node event ids */
 static char *ne_strings[NE_NUM_NODEEVENT] = {
 	"",
 	"click",
@@ -93,6 +95,7 @@ size_t ne_values[NE_NUM_NODEEVENT] = {
 
 /* =========================================================== */
 
+/** @brief valid properties for a menu node */
 static value_t nps[] = {
 	{"invis", V_BOOL, offsetof(menuNode_t, invis)},
 	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx)},
@@ -111,6 +114,7 @@ static value_t nps[] = {
 	{"text_scroll", V_INT, offsetof(menuNode_t, textScroll)},
 	{"timeout", V_INT, offsetof(menuNode_t, timeOut)},
 	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor)},
+	{"key", V_STRING, offsetof(menuNode_t, key)},
 	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
 	{"tooltip", V_STRING, -5},	/* translated in MN_Tooltip */
 	{"image", V_STRING, 0},
@@ -132,6 +136,7 @@ static value_t nps[] = {
 	{NULL, V_NULL, 0},
 };
 
+/** @brief valid properties for a menu model definition */
 static value_t menuModelValues[] = {
 	{"model", V_STRING, offsetof(menuModel_t, model)},
 	{"need", V_NULL, 0},
@@ -168,6 +173,7 @@ typedef enum mn_s {
 	MN_NUM_NODETYPE
 } mn_t;
 
+/** @brief node type strings */
 static char *nt_strings[MN_NUM_NODETYPE] = {
 	"",
 	"confunc",
@@ -294,6 +300,12 @@ static char *MN_GetReferenceString(const menu_t* const menu, char *ref)
 		if (!Q_strncmp(ident, "cvar", 4)) {
 			/* get the cvar value */
 			return Cvar_VariableString(token);
+		} else if (!Q_strncmp(ident, "binding", 7)) {
+			/* get the cvar value */
+			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
+		} else if (!Q_strncmp(ident, "cmd", 3)) {
+			/* TODO: get the command output */
+			return "TOOD";
 		} else {
 			menuNode_t *refNode;
 			value_t *val;
@@ -1304,22 +1316,27 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 /**
  * @brief Generic tooltip function
  */
-static void MN_DrawTooltip(char *font, char *string, int x, int y)
+static int MN_DrawTooltip(char *font, char *string, int x, int y, int maxWidth)
 {
-	int width = 0, height = 0;
+	int height = 0, width = 0;
 
 	re.FontLength(font, string, &width, &height);
 	if (!width)
-		return;
+		return 0;
+
+	/* maybe there is no maxWidth given */
+	if (maxWidth < width)
+		maxWidth = width;
 
 	x += 5;
 	y += 5;
-	if (x + width > VID_NORM_WIDTH)
-		x -= (width + 10);
-	re.DrawFill(x - 1, y - 1, width, height, 0, tooltipBG);
+	if (x + maxWidth > VID_NORM_WIDTH)
+		x -= (maxWidth + 10);
+	re.DrawFill(x - 1, y - 1, maxWidth, height, 0, tooltipBG);
 	re.DrawColor(tooltipColor);
-	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, width, 0, height, string, 0, 0, NULL, qfalse);
+	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, 0, height, string, 0, 0, NULL, qfalse);
 	re.DrawColor(NULL);
+	return width;
 }
 
 /**
@@ -1327,16 +1344,25 @@ static void MN_DrawTooltip(char *font, char *string, int x, int y)
  */
 static void MN_Tooltip(menuNode_t * node, int x, int y)
 {
-	char *tooltip;
+	char *tooltip, *key;
+	char *keyBinding = _("Key: ");
+	int width = 0;
 
 	/* tooltips
 	   data[5] is a char pointer to the tooltip text
 	   see value_t nps for more info */
+
+	/* maybe not tooltip but a key entity? */
 	if (node->data[5]) {
 		tooltip = (char *) node->data[5];
 		if (*tooltip == '_')
 			tooltip++;
-		MN_DrawTooltip("f_small", _(tooltip), x, y);
+		width = MN_DrawTooltip("f_small", _(tooltip), x, y, width);
+		y += 20;
+	}
+	if (node->key[0]) {
+		key = MN_GetReferenceString(menuStack[menuStackPos-1], node->key);
+		MN_DrawTooltip("f_verysmall", va("%s %s", keyBinding, key), x, y, width);
 	}
 }
 
@@ -1896,13 +1922,13 @@ void MN_DrawMenus(void)
 				case MN_BASEMAP:
 					B_DrawBase(node);
 					break;
-				}				/* switch */
+				}	/* switch */
 
 				/* mouseover? */
 				if (node->state == qtrue)
 					menu->hoverNode = node;
-			}					/* if */
-		}						/* for */
+			}	/* if */
+		}	/* for */
 		if (sp == menuStackPos && menu->hoverNode && cl_show_tooltips->value) {
 			MN_Tooltip(menu->hoverNode, mx, my);
 			menu->hoverNode = NULL;

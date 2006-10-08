@@ -356,7 +356,7 @@ void Draw_TileClear(int x, int y, int w, int h, char *name)
 /**
  * @brief Fills a box of pixels with a single color
  */
-void Draw_Fill(int x, int y, int w, int h, int style, vec4_t color)
+void Draw_Fill(int x, int y, int w, int h, int style, const vec4_t color)
 {
 	float nx, ny, nw, nh;
 

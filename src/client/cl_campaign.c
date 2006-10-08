@@ -3551,7 +3551,7 @@ void CL_NationList (void)
 /* ===================================================================== */
 
 /* these commands are only available in singleplayer */
-static cmdList_t game_commands[] = {
+static const cmdList_t game_commands[] = {
 	{"aircraft_start", CL_AircraftStart_f, NULL}
 	,
 	{"aircraftlist", CL_ListAircraft_f, NULL}
@@ -3616,7 +3616,7 @@ static cmdList_t game_commands[] = {
  */
 static void CL_GameExit(void)
 {
-	cmdList_t *commands;
+	const cmdList_t *commands;
 
 	Cbuf_AddText("disconnect\n");
 	Cvar_Set("mn_main", "main");
@@ -3625,9 +3625,13 @@ static void CL_GameExit(void)
 	MN_ShutdownMessageSystem();
 	CL_InitMessageSystem();
 	/* singleplayer commands are no longer available */
-	if (curCampaign)
-		for (commands = game_commands; commands->name; commands++)
+	if (curCampaign) {
+		Com_DPrintf("Remove game commands\n");
+		for (commands = game_commands; commands->name; commands++) {
+			Com_DPrintf("...%s\n", commands->name);
 			Cmd_RemoveCommand(commands->name);
+		}
+	}
 	curCampaign = NULL;
 }
 
@@ -3638,12 +3642,15 @@ static void CL_GameExit(void)
  */
 void CL_GameInit(void)
 {
-	cmdList_t *commands;
+	const cmdList_t *commands;
 
 	assert(curCampaign);
 
-	for (commands = game_commands; commands->name; commands++)
+	Com_DPrintf("Init game commands\n");
+	for (commands = game_commands; commands->name; commands++) {
+		Com_DPrintf("...%s\n", commands->name);
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
+	}
 
 	CL_GameTimeStop();
 

@@ -849,6 +849,7 @@ typedef struct menuAction_s {
 typedef struct menuNode_s {
 	void *data[6];				/* needs to be first */
 	char name[MAX_VAR];
+	char key[MAX_VAR];
 	int type;
 	vec3_t origin, scale, angles, center;
 	vec2_t pos, size, texh, texl;

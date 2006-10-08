@@ -494,6 +494,36 @@ char *Key_KeynumToString(int keynum)
 	return "<UNKNOWN KEYNUM>";
 }
 
+/**
+ * @brief Return the key binding for a given script command
+ * @param[in] binding The script command to bind keynum to
+ * @sa Key_SetBinding
+ * @return the binded key or empty string if not found
+ */
+char* Key_GetBinding(char *binding, keyBindSpace_t space)
+{
+	int i;
+	char **keySpace = NULL;
+
+	switch (space) {
+	case KEYSPACE_MENU:
+		keySpace = menukeybindings;
+		break;
+	case KEYSPACE_GAME:
+		keySpace = keybindings;
+		break;
+	default:
+		return "";
+	}
+
+	for (i = 0; i < 256; i++)
+		if (keySpace[i] && *keySpace[i] && !Q_strncmp(keySpace[i], binding, strlen(binding))) {
+			return Key_KeynumToString(i);
+		}
+
+	/* not found */
+	return "";
+}
 
 /**
  * @brief Bind a keynum to script command
