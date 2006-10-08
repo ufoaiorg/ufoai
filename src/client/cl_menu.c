@@ -410,7 +410,7 @@ static void MN_StartServer(void)
 		Com_DPrintf("Dedicated server needs no team\n");
 	/* FIXME: Spectator */
 	else if (!B_GetNumOnTeam()) {
-		Cbuf_ExecuteText(EXEC_NOW, "assign_initial\n");
+		Cbuf_ExecuteText(EXEC_NOW, "assign_initial 1\n");
 		return;
 	} else
 		Com_DPrintf("There are %i members on team\n", B_GetNumOnTeam());
