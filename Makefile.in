@@ -10,7 +10,7 @@ LDFLAGS=@LDFLAGS@
 
 TARGET_OS=@TARGET_OS@
 TARGET_CPU=@TARGET_CPU@
-EXE_EXT=@EXE_EXT@
+EXE_EXT=@EXEEXT@
 
 HAVE_SDL=@HAVE_SDL@
 SDL_CFLAGS=@SDL_CFLAGS@
@@ -27,6 +27,9 @@ HAVE_SND_ALSA=@HAVE_SND_ALSA@
 HAVE_SND_SDL=@HAVE_SND_SDL@
 
 HAVE_SND_OSS=@HAVE_SND_OSS@
+
+HAVE_SND_WAPI=@HAVE_SND_WAPI@
+HAVE_SND_DX=@HAVE_SND_DX@
 
 PROFILING=@PROFILING@
 PARANOID=@PARANOID@
@@ -47,7 +50,7 @@ include build/defs.mk
 #######################################################################################################
 
 # define all the modules that need to be compiled
-MODULES = game client server sound ref_gl tools
+MODULES = client server tools game sound ref_gl
 
 all: all2
 

@@ -20,13 +20,12 @@ TARGETS +=$(GAME_TARGET)
 # Say how about to build the target
 $(GAME_TARGET) : $(GAME_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [GAM] ... linking"; \
-		$(LIBTOOL_LD) -o $(BUILDDIR)/libgame.la $(GAME_OBJS:%.o=%.lo)
-	@cp $(BUILDDIR)/.libs/libgame.$(SHARED_EXT) $@
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(GAME_OBJS) $(LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/game/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [GAM] $<"; \
-		$(LIBTOOL_CC) -o $@ -c $<
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
 
 # Say how to build the dependencies
 ifdef BUILDDIR

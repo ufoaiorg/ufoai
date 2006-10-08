@@ -16,17 +16,37 @@ REF_GL_SRCS = \
 	ref_gl/gl_shadows.c \
 	ref_gl/qgl.c \
 	\
-	game/q_shared.c \
-	\
-	ports/linux/qgl_linux.c \
-	ports/linux/q_shlinux.c \
-	ports/unix/glob.c
+	game/q_shared.c
 
-REF_GLX_SRCS = \
-	ports/linux/gl_glx.c
+ifeq ($(TARGET_OS),linux-gnu)
+	REF_GL_SRCS += \
+		ports/linux/qgl_linux.c \
+		ports/linux/q_shlinux.c \
+		ports/unix/glob.c
 
-REF_SDL_SRCS = \
-	ports/linux/gl_sdl.c
+	REF_SDL_SRCS = ports/linux/gl_sdl.c
+	REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
+endif
+ifeq ($(TARGET_OS),freebsd)
+	REF_GL_SRCS += \
+		ports/linux/qgl_linux.c \
+		ports/linux/q_shlinux.c \
+		ports/unix/glob.c
+	REF_SDL_SRCS = 	ports/linux/gl_sdl.c
+	REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
+endif
+ifeq ($(TARGET_OS),mingw32)
+	REF_GL_SRCS += \
+		ports/win32/qgl_win.c \
+		ports/win32/glw_imp.c \
+		ports/win32/q_shwin.c
+	REF_SDL_SRCS =
+	REF_SDL_TARGET=ref_gl.$(SHARED_EXT)
+endif
+
+REF_GLX_SRCS = 	ports/linux/gl_glx.c
+
+#---------------------------------------------------------------------------------------------------------------------
 
 REF_GL_OBJS=$(REF_GL_SRCS:%.c=$(BUILDDIR)/ref_gl/%.o)
 REF_GL_DEPS=$(REF_GL_OBJS:%.o=%.d)
@@ -41,9 +61,15 @@ ifeq ($(HAVE_VID_GLX), 1)
 	ALL_DEPS += $(REF_GL_DEPS) $(REF_GLX_DEPS)
 endif
 
+# Say about to build the target
+$(REF_GLX_TARGET) : $(REF_GLX_OBJS) $(REF_GL_OBJS) $(BUILDDIR)/.dirs
+	@echo " * [GLX] ... linking"; \
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(REF_GLX_OBJS) $(REF_GL_OBJS) $(LIBS) $(SDL_LIBS)
+
+#---------------------------------------------------------------------------------------------------------------------
+
 REF_SDL_OBJS=$(REF_SDL_SRCS:%.c=$(BUILDDIR)/ref_gl/%.o)
 REF_SDL_DEPS=$(REF_SDL_OBJS:%.o=%.d)
-REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
 
 ifeq ($(HAVE_SDL), 1)
 	TARGETS += $(REF_SDL_TARGET)
@@ -52,22 +78,17 @@ ifeq ($(HAVE_SDL), 1)
 endif
 
 # Say about to build the target
-$(REF_GLX_TARGET) : $(REF_GLX_OBJS) $(REF_GL_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [GLX] ... linking"; \
-		$(LIBTOOL_LD) -o $(BUILDDIR)/libref_glx.la $(REF_GLX_OBJS:%.o=%.lo) $(REF_GL_OBJS:%.o=%.lo)
-	@cp $(BUILDDIR)/.libs/libref_glx.$(SHARED_EXT) $@
-
-# Say about to build the target
 $(REF_SDL_TARGET) : $(REF_SDL_OBJS) $(REF_GL_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [SDL] ... linking"; \
-		$(LIBTOOL_LD) -o $(BUILDDIR)/libref_sdl.la $(REF_SDL_OBJS:%.o=%.lo) $(REF_GL_OBJS:%.o=%.lo)
-	@cp $(BUILDDIR)/.libs/libref_sdl.$(SHARED_EXT) $@
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(REF_SDL_OBJS) $(REF_GL_OBJS) $(LIBS) $(SDL_LIBS)
+
+#---------------------------------------------------------------------------------------------------------------------
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/ref_gl/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [RGL] $<"; \
-		$(LIBTOOL_CC) $(SDL_CFLAGS) -o $@ -c $<
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(SDL_CFLAGS) $(JPEG_CFLAGS) -o $@ -c $<
 
 # Say how to build the dependencies
 $(BUILDDIR)/ref_gl/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP)
+	@echo " * [DEP] $<"; $(DEP) $(SDL_CFLAGS)

@@ -67,6 +67,7 @@ ifeq ($(TARGET_OS),linux-gnu)
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
+	CLIENT_CD=ports/linux/cd_linux.c
 endif
 
 ifeq ($(TARGET_OS),freebsd)
@@ -77,7 +78,25 @@ ifeq ($(TARGET_OS),freebsd)
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
+	CLIENT_CD=ports/linux/cd_linux.c
 endif
+
+ifeq ($(TARGET_OS),mingw32)
+	CLIENT_SRCS+=\
+		ports/win32/q_shwin.c \
+		ports/win32/vid_dll.c \
+		ports/win32/in_win.c \
+		ports/win32/conproc.c  \
+		ports/win32/sys_win.c \
+		ports/win32/net_wins.c
+	CLIENT_CD=ports/win32/cd_win.c
+endif
+
+# ports/win32/cd_win.c
+# ports/win32/qgl_win.c ports/win32/glw_imp.c
+# ports/win32/snd_wapi.c
+# ports/linux/snd_sdl.c
+# ports/linux/snd_dx.c
 
 #ifeq ($(TARGET_OS),Darwin)
 #	CLIENT_SRCS+= \
@@ -90,23 +109,19 @@ endif
 #		ports/unix/$(NET_UDP).c \
 #		ports/macosx/q_shosx.c
 #		# FIXME Add more objects
+#   CLIENT_CD+=ports/macosx/cd_osx.m
 #endif
 
-ifeq ($(HAVE_SDL),1)
-	CLIENT_SRCS+=ports/unix/cd_sdl.c
-	CLIENT_LIBS+=$(SDL_LIBS)
+ifeq ($(TARGET_OS),mingw32)
+	CLIENT_SRCS+=$(CLIENT_CD)
 else
-	ifeq ($(TARGET_OS),linux-gnu)
-		CLIENT_SRCS+=ports/linux/cd_linux.c
+	ifeq ($(HAVE_SDL),1)
+		CLIENT_SRCS+=ports/unix/cd_sdl.c
+		CLIENT_LIBS+=$(SDL_LIBS)
+	else
+		CLIENT_SRCS+=$(CLIENT_CD)
 	endif
-#	ifeq ($(TARGET_OS),FreeBSD)
-#		CLIENT_SRCS+=ports/linux/cd_linux.c
-#	endif
-#	ifeq ($(TARGET_OS),Darwin)
-#		CLIENT_SRCS+=ports/macosx/cd_osx.m
-#	endif
 endif
-
 
 CLIENT_OBJS= \
 	$(patsubst %.c, $(BUILDDIR)/client/%.o, $(filter %.c, $(CLIENT_SRCS))) \
@@ -122,7 +137,7 @@ TARGETS+=$(CLIENT_TARGET)
 # Say how to like the exe
 $(CLIENT_TARGET): $(CLIENT_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [UFO] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(CLIENT_LIBS)
+		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LIBS) $(CLIENT_LIBS) $(LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs

@@ -1,9 +1,6 @@
 # Some variables needed by the modules
-LIBTOOL=libtool
-SHARED_EXT=so
 SRCDIR=src
 
-LDFLAGS+=$(LIBS)
 CFLAGS+=-DHAVE_CONFIG_H -Wall
 
 # Common things
@@ -13,7 +10,7 @@ _SRCDIR=$(strip $(SRCDIR))
 
 DEP=$(CC) $(CFLAGS) -c $< -MM -MT "$(@:%.d=%.o) $@" -MF $@
 
-LIBTOOL_LD=$(LIBTOOL) --silent --mode=link $(CC) -module -rpath / $(LDFLAGS)
+LIBTOOL_LD=$(LIBTOOL) --silent --mode=link $(CC) -module -rpath / $(LDFLAGS) $(KIBS)
 LIBTOOL_CC=$(LIBTOOL) --silent --mode=compile $(CC) -prefer-pic $(CFLAGS)
 
 # Target options

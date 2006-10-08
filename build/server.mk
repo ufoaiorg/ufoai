@@ -30,6 +30,7 @@ ifeq ($(TARGET_OS),linux-gnu)
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
+	SERVER_OKAY=1
 endif
 
 ifeq ($(TARGET_OS),freebsd)
@@ -39,15 +40,29 @@ ifeq ($(TARGET_OS),freebsd)
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
+	SERVER_OKAY=1
 endif
 
-ifeq ($(OSTYPE),Darwin)
+ifeq ($(TARGET_OS),mingw32)
 	SERVER_SRCS+=\
-		ports/macosx/sys_osx.m \
-		ports/unix/glob.c \
-		ports/unix/sys_unix.c \
-		ports/unix/$(NET_UDP).c \
-		ports/macosx/q_shosx.c
+		ports/win32/q_shwin.c \
+		ports/win32/sys_win.c \
+		ports/win32/conproc.c  \
+		ports/win32/net_wins.c
+	SERVER_OKAY=1
+endif
+
+#ifeq ($(OSTYPE),Darwin)
+#	SERVER_SRCS+=\
+#		ports/macosx/sys_osx.m \
+#		ports/unix/glob.c \
+#		ports/unix/sys_unix.c \
+#		ports/unix/$(NET_UDP).c \
+#		ports/macosx/q_shosx.c
+#endif
+
+ifndef SERVER_OKAY
+	error "server.mk: couldn't find option for platform $(TARGET_OS)"
 endif
 
 ifeq ($(HAVE_IPV6),1)
@@ -76,7 +91,7 @@ DEDICATED_CFLAGS=-DDEDICATED_ONLY
 # Say how to like the exe
 $(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [DED] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) $(SDL_LIBS)
+		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) $(SDL_LIBS) $(LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/server/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs

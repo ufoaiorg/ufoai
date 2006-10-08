@@ -4,6 +4,10 @@ AC_ARG_WITH(sdl,
 	[AS_HELP_STRING([--with-sdl], [with SDL support @<:@default=yes@:>@])],
 	[], [with_sdl=yes])
 
+AC_ARG_WITH(sdl_config,
+	[AC_HELP_STRING([--with-sdl-config=FILE], [using the given sdl-config @<:@default=sdl-config@:>@])],
+	[], [with_sdl_config=sdl-config])
+
 AC_ARG_WITH(vid_glx,
 	[AS_HELP_STRING([--with-glx], [with GLX support @<:@default=check@:>@])],
 	[], [with_vid_glx=check])
@@ -27,6 +31,14 @@ AC_ARG_WITH(snd_oss,
 AC_ARG_WITH(snd_arts,
     [AS_HELP_STRING([--with-snd-arts], [with arts sound support @<:@default=check@:>@])],
 	[], [with_snd_arts=check])
+
+AC_ARG_WITH(snd_wapi,
+    [AS_HELP_STRING([--with-snd-wapi], [with wapi sound support @<:@default=check@:>@])],
+	[], [with_snd_wapi=check])
+
+AC_ARG_WITH(snd_dx,
+    [AS_HELP_STRING([--with-snd-dx], [with directX sound support @<:@default=check@:>@])],
+	[], [with_snd_dx=check])
 
 AC_ARG_WITH(vid_dga,
 	[AS_HELP_STRING([--with-dga], [compile with DGA support  @<:@default=check@:>@])],
@@ -88,6 +100,7 @@ fi
 # CHECK TARGET_OS
 #---------------------------------------------------------------------------------------------
 
+AC_MSG_CHECKING([target OS])
 if test `echo $target_os | sed "s/\(linux\).*/\1/"` = "linux"
 then
 	AC_SUBST([TARGET_OS],[linux-gnu])
@@ -100,11 +113,13 @@ then
 else
 	AC_MSG_ERROR([The target operating system '$target_os' is unknown, please contact the developers])
 fi
+AC_MSG_RESULT($TARGET_OS)
 
 #---------------------------------------------------------------------------------------------
 # CHECK TARGET_CPU
 #---------------------------------------------------------------------------------------------
 
+AC_MSG_CHECKING([target CPU])
 if test "$target_cpu" = "x86_64"
 then
 	AC_SUBST([TARGET_CPU],[x86_64])
@@ -119,6 +134,7 @@ else
 	AC_MSG_WARN([Please contact the developers for assistance])
 	AC_SUBST([TARGET_CPU],[unknown])
 fi
+AC_MSG_RESULT($TARGET_CPU)
 
 #---------------------------------------------------------------------------------------------
 # CHECK CC
@@ -150,11 +166,11 @@ fi
 # CHECK LIBTOOL
 #---------------------------------------------------------------------------------------------
 
-AC_CHECK_PROG(HAVE_LIBTOOL,libtool,yes)
-if test "$HAVE_LIBTOOL" != "yes"
-then
-	AC_MSG_ERROR([You must have libtool installed])
-fi
+#AC_CHECK_PROG(HAVE_LIBTOOL,libtool,yes)
+#if test "$HAVE_LIBTOOL" != "yes"
+#then
+#	AC_MSG_ERROR([You must have libtool installed])
+#fi
 
 #---------------------------------------------------------------------------------------------
 # Check for X11/Xlib.h
@@ -174,10 +190,13 @@ fi
 # Check how to open a dynamic library ...
 #---------------------------------------------------------------------------------------------
 
-AC_SEARCH_LIBS([dlopen],[dl])
-if test "$ac_cv_search_dlopen" = "no"
+if test "$TARGET_OS" != "mingw32"
 then
-	AC_MSG_ERROR([could not decide how to open a dynamic link library!])
+	AC_SEARCH_LIBS([dlopen],[dl])
+	if test "$ac_cv_search_dlopen" = "no"
+	then
+		AC_MSG_ERROR([could not decide how to open a dynamic link library!])
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -207,6 +226,26 @@ then
 fi
 
 #---------------------------------------------------------------------------------------------
+# Check for libogg
+#---------------------------------------------------------------------------------------------
+
+AC_SEARCH_LIBS([ogg_stream_init],[ogg])
+if test "$ac_cv_search_ogg_stream_init" = "no"
+then
+	AC_MSG_ERROR([couldn't find libogg!])
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for libvorbis
+#---------------------------------------------------------------------------------------------
+
+AC_SEARCH_LIBS([vorbis_info_init],[vorbis])
+if test "$ac_cv_search_ogg_stream_init" = "no"
+then
+	AC_MSG_ERROR([couldn't find libvorbis!])
+fi
+
+#---------------------------------------------------------------------------------------------
 # Check for libvorbis file
 #---------------------------------------------------------------------------------------------
 
@@ -230,13 +269,15 @@ fi
 # Check SDL
 #---------------------------------------------------------------------------------------------
 
-AC_CHECK_PROG(HAVE_SDL_CONFIG,sdl-config,yes)
+sdl_config=$with_sdl_config
+
+AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
 if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
 then
-	AC_SUBST([SDL_CFLAGS],`sdl-config --cflags`)
-	AC_SUBST([SDL_LIBS],`sdl-config --libs`)
+	AC_SUBST([SDL_CFLAGS],`$sdl_config --cflags`)
+	AC_SUBST([SDL_LIBS],`$sdl_config --libs`)
 else
-	AC_MSG_ERROR([cannot find sdl-config, make sure the SDL development libraries are installed!])
+	AC_MSG_ERROR([cannot find $sdl_config, make sure the SDL development libraries are installed!])
 fi
 
 if test "$with_sdl" = "check" || test "$with_sdl" = "yes" || \
@@ -413,7 +454,7 @@ fi
 # Check ARTS
 #---------------------------------------------------------------------------------------------
 
-if test "$with_snd_arts" = check || test "$with_snd_arts" = yes
+if (test "$with_snd_arts" = check || test "$with_snd_arts" = yes) && test "$TARGET_OS" != "mingw32"
 then
 	AC_CHECK_PROG(HAVE_ARTSC_CONFIG,artsc-config,yes)
 	if test "$ac_cv_prog_HAVE_ARTSC_CONFIG" = "yes"
@@ -422,6 +463,38 @@ then
 		AC_SUBST([ARTS_CFLAGS], `artsc-config --cflags`)
 		AC_SUBST([ARTS_LIBS], `artsc-config --libs`)
 	fi
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check WAPI
+#---------------------------------------------------------------------------------------------
+
+if test "$with_snd_wapi" = "check" || test "$with_snd_wapi" = "yes"
+then
+   AC_CHECK_HEADERS([windows.h])
+   if test "$ac_cv_header_windows_h" == "yes"
+   then
+     AC_SUBST([HAVE_SND_WAPI],1)
+   elif test "$with_snd_wapi" = "yes"
+   then
+		AC_MSG_ERROR([specified --with-snd-wapi specified but cannot find windows.h!])
+   fi
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check DX
+#---------------------------------------------------------------------------------------------
+
+if test "$with_snd_dx" = "check" || test "$with_snd_dx" = "yes"
+then
+   AC_CHECK_HEADERS([dsound.h])
+   if test "$ac_cv_header_dsound_h" == "yes"
+   then
+     AC_SUBST([HAVE_SND_DX],1)
+   elif test "$with_snd_dx" = "yes"
+   then
+		AC_MSG_ERROR([specified --with-snd-dx specified but cannot find dsound.h!])
+   fi
 fi
 
 #---------------------------------------------------------------------------------------------
