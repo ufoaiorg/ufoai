@@ -66,7 +66,7 @@ sequence view
 		omega "0 -30 0"
 	}
 
-	wait 10.0
+	click 1
 	rem bloodspider
 
 //	model cow
@@ -116,9 +116,6 @@ sequence view
  		parent	model2_body
  		tag		tag_head
  	}
-
-
-
 
 	wait 20.0
 
