@@ -102,6 +102,7 @@ void CL_AircraftEquipmenuMenuInit_f(void);
 void CL_AircraftEquipmenuMenuWeaponsClick_f(void);
 void CL_AircraftEquipmenuMenuShieldsClick_f(void);
 char *CL_AircraftStatusToName(aircraft_t * aircraft);
+qboolean CL_IsAircraftInBase(aircraft_t * aircraft);
 void CL_AircraftInit(void);
 void CL_AircraftSelect(void);
 void CL_NewAircraft_f(void);

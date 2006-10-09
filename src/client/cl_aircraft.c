@@ -183,6 +183,16 @@ char *CL_AircraftStatusToName(aircraft_t * aircraft)
 }
 
 /**
+ * @brief Returns true if aircraft is parked in its base
+ */
+qboolean CL_IsAircraftInBase(aircraft_t * aircraft) 
+{
+	if (aircraft->status == AIR_HOME || aircraft->status == AIR_REFUEL)
+		return qtrue;
+	return qfalse;
+}
+
+/**
   * @brief Calls CL_NewAircraft for given base with given aircraft type
   * @sa CL_NewAircraft
   */
@@ -305,6 +315,7 @@ void CL_AircraftSelect(void)
 	Cvar_SetValue("mn_soldiers_in_base", E_CountHired(baseCurrent, EMPL_SOLDIER));
 	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
 	Cvar_Set("mn_aircraftstatus", CL_AircraftStatusToName(aircraft));
+	Cvar_Set("mn_aircraftinbase", CL_IsAircraftInBase(aircraft) ? "1" : "0");
 	Cvar_Set("mn_aircraftname", aircraft->name);
 	Cvar_Set("mn_aircraft_model", aircraft->model);
 	Cvar_Set("mn_aircraft_weapon", aircraft->weapon ? aircraft->weapon->name : "");
