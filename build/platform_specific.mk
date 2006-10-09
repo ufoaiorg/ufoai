@@ -49,7 +49,7 @@ RELEASE_CFLAGS=-ffast-math -funroll-loops
 #	RELEASE_CFLAGS+=-fomit-frame-pointer -fexpensive-optimizations
 #endif
 
-ifeq ($(TARGET_CPU),ppc)
+ifeq ($(TARGET_CPU),powerpc)
 	RELEASE_CFLAGS+=-O2 -fomit-frame-pointer -fexpensive-optimizations
 endif
 

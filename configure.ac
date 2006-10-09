@@ -132,9 +132,9 @@ elif test "$target_cpu" = "i386" ||
 	 test "$target_cpu" = "i686"
 then
 	AC_SUBST([TARGET_CPU],[i386])
-elif test "$target_cpu" = "ppc"
+elif test "$target_cpu" = "powerpc"
 then
-	AC_SUBST([TARGET_CPU],[ppc])
+	AC_SUBST([TARGET_CPU],[powerpc])
 else
 	AC_MSG_WARN([The target CPU '$target_cpu' is unknown, default options will be applied])
 	AC_MSG_WARN([Please contact the developers for assistance])
