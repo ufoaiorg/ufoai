@@ -59,6 +59,7 @@ ifeq ($(TARGET_OS),darwin)
 		ports/unix/sys_unix.c \
 		ports/unix/$(NET_UDP).c \
 		ports/macosx/q_shosx.c
+	SERVER_OKAY=1
 endif
 
 ifndef SERVER_OKAY
