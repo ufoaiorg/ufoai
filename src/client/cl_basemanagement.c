@@ -1465,9 +1465,9 @@ static void B_AssignInitialCmd(void)
 		return;
 
 	for (i = MAX_TEAMLIST; --i >= 0;)
-		Cbuf_AddText(va("team_hire %i\n", i));
+		Cbuf_AddText(va("team_hire %i;", i));
 
-	Cbuf_AddText(va("pack_initial\n"));
+	Cbuf_AddText("pack_initial;");
 }
 
 /**

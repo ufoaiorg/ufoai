@@ -2555,12 +2555,12 @@ CHARACTER GENERATION AND HANDLING
 #define PROB_COMPENSATION   3.0
 
 /**
-  * @brief Pack a weapon, possibly with some ammo
-  * @param[in] inv The inventory that will get the weapon
-  * @param[in] weapon The weapon type index in gi.csi->ods
-  * @param[in] equip The equipment that shows how many clips to pack
-  * @param[in] name The name of the equipment for debug messages
-  */
+ * @brief Pack a weapon, possibly with some ammo
+ * @param[in] inv The inventory that will get the weapon
+ * @param[in] weapon The weapon type index in gi.csi->ods
+ * @param[in] equip The equipment that shows how many clips to pack
+ * @param[in] name The name of the equipment for debug messages
+ */
 int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, char *name)
 {
 	int ammo = -1; /* this variable is never used before being set */
@@ -2638,18 +2638,18 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 
 
 /**
-  * @brief Fully equip one actor
-  * @param[in] inv The inventory that will get the weapon
-  * @param[in] equip The equipment that shows what is available
-  * @param[in] name The name of the equipment for debug messages
-  * @note The code below is a complete implementation
-  * of the scheme sketched at the beginning of equipment_missions.ufo.
-  * However, aliens cannot yet swap weapons,
-  * so in their case only the weapon in the right hand will be used.
-  * The rest will be just player's loot.
-  * Beware: if two weapons in the same category have the same price,
-  * only one will be considered for inventory.
-  */
+ * @brief Fully equip one actor
+ * @param[in] inv The inventory that will get the weapon
+ * @param[in] equip The equipment that shows what is available
+ * @param[in] name The name of the equipment for debug messages
+ * @note The code below is a complete implementation
+ * of the scheme sketched at the beginning of equipment_missions.ufo.
+ * However, aliens cannot yet swap weapons,
+ * so in their case only the weapon in the right hand will be used.
+ * The rest will be just player's loot.
+ * Beware: if two weapons in the same category have the same price,
+ * only one will be considered for inventory.
+ */
 void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *name)
 {
 	int weapon = -1; /* this variable is never used before being set */
@@ -2945,7 +2945,7 @@ char *Com_CharGetBody(character_t * chr)
 		Q_strncpyz(kurz, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, MAX_VAR);
 		underline = strchr(kurz, '_');
 		if (underline)
-			*underline = 0;
+			*underline = '\0';
 
 		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, kurz, chr->body);
 	} else
@@ -2984,7 +2984,7 @@ char *Com_CharGetHead(character_t * chr)
 		Q_strncpyz(kurz, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, MAX_VAR);
 		underline = strchr(kurz, '_');
 		if (underline)
-			*underline = 0;
+			*underline = '\0';
 
 		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, kurz, chr->head);
 	} else
