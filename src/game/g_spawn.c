@@ -415,7 +415,7 @@ static void SP_player_start(edict_t * ent)
 	/* maybe there are already the max soldiers allowed per team connected */
 	if ((int) (maxsoldiers->value) > level.num_spawnpoints[ent->team]) {
 		ent->STUN = 0;
-		ent->HP = 100;
+		ent->HP = MAX_HP;
 		ent->AP = 100;
 		G_ActorSpawn(ent);
 		soldierCount++;
@@ -438,7 +438,7 @@ static void SP_human_start(edict_t * ent)
 	}
 	ent->team = TEAM_PHALANX;
 	ent->STUN = 0;
-	ent->HP = 100;
+	ent->HP = MAX_HP;
 	ent->AP = 100;
 	G_ActorSpawn(ent);
 }
@@ -456,7 +456,7 @@ static void SP_ugv_start(edict_t * ent)
 	}
 	/* set stats */
 	ent->STUN = 0;
-	ent->HP = 100;
+	ent->HP = MAX_HP;
 	ent->AP = 100;
 
 	/* these units are bigger */
@@ -480,7 +480,7 @@ static void SP_alien_start(edict_t * ent)
 	ent->team = TEAM_ALIEN;
 	/* set stats */
 	ent->STUN = 0;
-	ent->HP = 100;
+	ent->HP = MAX_HP;
 	ent->AP = 100;
 
 	G_ActorSpawn(ent);
@@ -495,7 +495,7 @@ static void SP_civilian_start(edict_t * ent)
 	ent->team = TEAM_CIVILIAN;
 	/* set stats */
 	ent->STUN = 99;
-	ent->HP = 100;
+	ent->HP = MAX_HP;
 	ent->AP = 100;
 	G_ActorSpawn(ent);
 }

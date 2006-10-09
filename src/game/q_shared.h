@@ -171,6 +171,8 @@ typedef uint8_t byte;
 
 #define MAX_FB_LIST         1024
 
+#define MAX_HP 100
+
 /* game print flags */
 #define PRINT_NONE          -1  /* suppress printing */
 #define PRINT_LOW           0   /* pickup messages */
@@ -456,14 +458,14 @@ CVARS (console variables)
 
 /* nothing outside the Cvar_*() functions should modify these fields! */
 typedef struct cvar_s {
-    char *name;
-    char *string;
-    char *latched_string;       /* for CVAR_LATCH vars */
-    char *description;
-    int flags;
-    qboolean modified;          /* set each time the cvar is changed */
-    float value;
-    struct cvar_s *next;
+	char *name;
+	char *string;
+	char *latched_string;       /* for CVAR_LATCH vars */
+	char *description;
+	int flags;
+	qboolean modified;          /* set each time the cvar is changed */
+	float value;
+	struct cvar_s *next;
 } cvar_t;
 
 cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, char* desc);
@@ -539,11 +541,11 @@ COLLISION DETECTION
 /* plane_t structure */
 /* !!! if this is changed, it must be changed in asm code too !!! */
 typedef struct cplane_s {
-    vec3_t normal;
-    float dist;
-    byte type;                  /* for fast side tests */
-    byte signbits;              /* signx + (signy<<1) + (signz<<1) */
-    byte pad[2];
+	vec3_t normal;
+	float dist;
+	byte type;                  /* for fast side tests */
+	byte signbits;              /* signx + (signy<<1) + (signz<<1) */
+	byte pad[2];
 } cplane_t;
 
 /* structure offset for asm code */
@@ -557,34 +559,34 @@ typedef struct cplane_s {
 #define CPLANE_PAD1             19
 
 typedef struct cmodel_s {
-    vec3_t mins, maxs;
-    vec3_t origin;              /* for sounds or lights */
-    int tile;
-    int headnode;
+	vec3_t mins, maxs;
+	vec3_t origin;              /* for sounds or lights */
+	int tile;
+	int headnode;
 } cmodel_t;
 
 typedef struct csurface_s {
-    char name[16];
-    int flags;
-    int value;
+	char name[16];
+	int flags;
+	int value;
 } csurface_t;
 
 typedef struct mapsurface_s {   /* used internally due to name len probs //ZOID */
-    csurface_t c;
-    char rname[32];
+	csurface_t c;
+	char rname[32];
 } mapsurface_t;
 
 /* a trace is returned when a box is swept through the world */
 typedef struct {
-    qboolean allsolid;          /* if true, plane is not valid */
-    qboolean startsolid;        /* if true, the initial point was in a solid area */
-    float fraction;             /* time completed, 1.0 = didn't hit anything */
-    vec3_t endpos;              /* final position */
-    cplane_t plane;             /* surface normal at impact */
-    csurface_t *surface;        /* surface hit */
-    int contents;               /* contents on other side of surface hit */
-    struct le_s *le;            /* not set by CM_*() functions */
-    struct edict_s *ent;        /* not set by CM_*() functions */
+	qboolean allsolid;          /* if true, plane is not valid */
+	qboolean startsolid;        /* if true, the initial point was in a solid area */
+	float fraction;             /* time completed, 1.0 = didn't hit anything */
+	vec3_t endpos;              /* final position */
+	cplane_t plane;             /* surface normal at impact */
+	csurface_t *surface;        /* surface hit */
+	int contents;               /* contents on other side of surface hit */
+	struct le_s *le;            /* not set by CM_*() functions */
+	struct edict_s *ent;        /* not set by CM_*() functions */
 } trace_t;
 
 
@@ -641,50 +643,50 @@ SCRIPT VALUE PARSING
 
 /* conditions for V_IF */
 typedef enum menuIfCondition_s {
-    IF_EQ, /* == */
-    IF_LE, /* <= */
-    IF_GE, /* >= */
-    IF_GT, /* > */
-    IF_LT, /* < */
-    IF_NE, /* != */
+	IF_EQ, /* == */
+	IF_LE, /* <= */
+	IF_GE, /* >= */
+	IF_GT, /* > */
+	IF_LT, /* < */
+	IF_NE, /* != */
 
-    IF_SIZE
+	IF_SIZE
 } menuIfCondition_t;
 
 typedef struct menuDepends_s {
-    char var[MAX_VAR];
-    char value[MAX_VAR];
-    int cond;
+	char var[MAX_VAR];
+	char value[MAX_VAR];
+	int cond;
 } menuDepends_t;
 
 /* end of V_IF */
 
 typedef enum {
-    V_NULL,
-    V_BOOL,
-    V_CHAR,
-    V_INT,
-    V_FLOAT,
-    V_POS,
-    V_VECTOR,
-    V_COLOR,
-    V_RGBA,
-    V_STRING,
-    V_TRANSLATION_STRING,       /* translate via gettext */
-    V_TRANSLATION2_STRING,      /* remove _ but don't translate */
-    V_LONGSTRING,
-    V_POINTER,
-    V_ALIGN,
-    V_BLEND,
-    V_STYLE,
-    V_FADE,
-    V_SHAPE_SMALL,
-    V_SHAPE_BIG,
-    V_DMGTYPE,
-    V_DATE,
-    V_IF,
+	V_NULL,
+	V_BOOL,
+	V_CHAR,
+	V_INT,
+	V_FLOAT,
+	V_POS,
+	V_VECTOR,
+	V_COLOR,
+	V_RGBA,
+	V_STRING,
+	V_TRANSLATION_STRING,       /* translate via gettext */
+	V_TRANSLATION2_STRING,      /* remove _ but don't translate */
+	V_LONGSTRING,
+	V_POINTER,
+	V_ALIGN,
+	V_BLEND,
+	V_STYLE,
+	V_FADE,
+	V_SHAPE_SMALL,
+	V_SHAPE_BIG,
+	V_DMGTYPE,
+	V_DATE,
+	V_IF,
 
-    V_NUM_TYPES
+	V_NUM_TYPES
 } value_types;
 
 #define V_UNTYPED   0x7FFF
@@ -692,51 +694,51 @@ typedef enum {
 extern char *vt_names[V_NUM_TYPES];
 
 typedef enum {
-    ALIGN_UL,
-    ALIGN_UC,
-    ALIGN_UR,
-    ALIGN_CL,
-    ALIGN_CC,
-    ALIGN_CR,
-    ALIGN_LL,
-    ALIGN_LC,
-    ALIGN_LR,
+	ALIGN_UL,
+	ALIGN_UC,
+	ALIGN_UR,
+	ALIGN_CL,
+	ALIGN_CC,
+	ALIGN_CR,
+	ALIGN_LL,
+	ALIGN_LC,
+	ALIGN_LR,
 
-    ALIGN_LAST
+	ALIGN_LAST
 } align_t;
 
 typedef enum {
-    BLEND_REPLACE,
-    BLEND_BLEND,
-    BLEND_ADD,
-    BLEND_FILTER,
-    BLEND_INVFILTER,
+	BLEND_REPLACE,
+	BLEND_BLEND,
+	BLEND_ADD,
+	BLEND_FILTER,
+	BLEND_INVFILTER,
 
-    BLEND_LAST
+	BLEND_LAST
 } blend_t;
 
 typedef enum {
-    STYLE_FACING,
-    STYLE_ROTATED,
-    STYLE_BEAM,
-    STYLE_LINE,
+	STYLE_FACING,
+	STYLE_ROTATED,
+	STYLE_BEAM,
+	STYLE_LINE,
 
-    STYLE_LAST
+	STYLE_LAST
 } style_t;
 
 typedef enum {
-    FADE_NONE,
-    FADE_IN,
-    FADE_OUT,
-    FADE_SIN,
-    FADE_SAW,
-    FADE_BLEND,
+	FADE_NONE,
+	FADE_IN,
+	FADE_OUT,
+	FADE_SIN,
+	FADE_SAW,
+	FADE_BLEND,
 
-    FADE_LAST
+	FADE_LAST
 } fade_t;
 
 typedef struct date_s {
-    int day, sec;
+	int day, sec;
 } date_t;
 
 extern char *align_names[ALIGN_LAST];
@@ -745,9 +747,9 @@ extern char *style_names[STYLE_LAST];
 extern char *fade_names[FADE_LAST];
 
 typedef struct value_s {
-    char *string;
-    int type;
-    size_t ofs;
+	char *string;
+	int type;
+	size_t ofs;
 } value_t;
 
 int Com_ParseValue(void *base, char *token, int type, int ofs);
@@ -768,71 +770,71 @@ ELEMENTS COMMUNICATED ACROSS THE NET
 #define INSTANTLY   0x80
 
 typedef enum {
-    EV_NULL,
-    EV_RESET,
-    EV_START,
-    EV_ENDROUND,
-    EV_RESULTS,
-    EV_CENTERVIEW,
+	EV_NULL,
+	EV_RESET,
+	EV_START,
+	EV_ENDROUND,
+	EV_RESULTS,
+	EV_CENTERVIEW,
 
-    EV_ENT_APPEAR,
-    EV_ENT_PERISH,
+	EV_ENT_APPEAR,
+	EV_ENT_PERISH,
 
-    EV_ACTOR_APPEAR,
-    EV_ACTOR_START_MOVE,
-    EV_ACTOR_TURN,
-    EV_ACTOR_MOVE,
-    EV_ACTOR_START_SHOOT,
-    EV_ACTOR_SHOOT,
-    EV_ACTOR_SHOOT_HIDDEN,
-    EV_ACTOR_THROW,
-    EV_ACTOR_DIE,
-    EV_ACTOR_STATS,
-    EV_ACTOR_STATECHANGE,
+	EV_ACTOR_APPEAR,
+	EV_ACTOR_START_MOVE,
+	EV_ACTOR_TURN,
+	EV_ACTOR_MOVE,
+	EV_ACTOR_START_SHOOT,
+	EV_ACTOR_SHOOT,
+	EV_ACTOR_SHOOT_HIDDEN,
+	EV_ACTOR_THROW,
+	EV_ACTOR_DIE,
+	EV_ACTOR_STATS,
+	EV_ACTOR_STATECHANGE,
 
-    EV_INV_ADD,
-    EV_INV_DEL,
-    EV_INV_AMMO,
-    EV_INV_RELOAD,
+	EV_INV_ADD,
+	EV_INV_DEL,
+	EV_INV_AMMO,
+	EV_INV_RELOAD,
 
-    EV_MODEL_PERISH,
-    EV_MODEL_EXPLODE,
+	EV_MODEL_PERISH,
+	EV_MODEL_EXPLODE,
 
-    EV_SPAWN_PARTICLE,
+	EV_SPAWN_PARTICLE,
 
-    EV_NUM_EVENTS
+	EV_NUM_EVENTS
 } event_t;
 
 
 typedef enum {
-    ET_NULL,
-    ET_ACTORSPAWN,
-    ET_ACTOR,
-    ET_ITEM,
-    ET_BREAKABLE,
-    ET_UGVSPAWN,
-    ET_UGV
+	ET_NULL,
+	ET_ACTORSPAWN,
+	ET_ACTOR,
+	ET_ITEM,
+	ET_BREAKABLE,
+	ET_UGVSPAWN,
+	ET_UGV
 } entity_type_t;
 
 
 typedef enum {
-    PA_NULL,
-    PA_TURN,
-    PA_MOVE,
-    PA_STATE,
-    PA_SHOOT,
-    PA_INVMOVE
+	PA_NULL,
+	PA_TURN,
+	PA_MOVE,
+	PA_STATE,
+	PA_SHOOT,
+	PA_INVMOVE
 } player_action_t;
 
 
 typedef enum {
-    IA_NONE,
-    IA_MOVE,
-    IA_RELOAD,
-    IA_RELOAD_SWAP,
-    IA_NOTIME,
-    IA_NORELOAD,
-    IA_ARMOR
+	IA_NONE,
+	IA_MOVE,
+	IA_RELOAD,
+	IA_RELOAD_SWAP,
+	IA_NOTIME,
+	IA_NORELOAD,
+	IA_ARMOR
 } inventory_action_t;
 
 
@@ -846,135 +848,135 @@ extern char *pa_format[128];
 #define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[!!(type & 0x80)])
 
 typedef struct fireDef_s {
-    char name[MAX_VAR];
-    char projectile[MAX_VAR];
-    char impact[MAX_VAR];
-    char hitBody[MAX_VAR];
-    char fireSound[MAX_VAR];
-    char impactSound[MAX_VAR];
-    char hitBodySound[MAX_VAR];
-    char bounceSound[MAX_VAR];
-    byte soundOnce;
-    byte gravity;
-    byte launched;
+	char name[MAX_VAR];
+	char projectile[MAX_VAR];
+	char impact[MAX_VAR];
+	char hitBody[MAX_VAR];
+	char fireSound[MAX_VAR];
+	char impactSound[MAX_VAR];
+	char hitBodySound[MAX_VAR];
+	char bounceSound[MAX_VAR];
+	byte soundOnce;
+	byte gravity;
+	byte launched;
 	byte rolled;
-    byte dmgtype;
-    float speed;
-    vec2_t shotOrg;
-    vec2_t spread;
-    int delay;
-    int bounce;
-    float bounceFac;
-    float crouch;
-    float range;
-    int shots;
-    int ammo;
-    float rof;
-    int time;
-    vec2_t damage, spldmg;
-    float splrad;
-    int weaponSkill;
-    int irgoggles;
+	byte dmgtype;
+	float speed;
+	vec2_t shotOrg;
+	vec2_t spread;
+	int delay;
+	int bounce;
+	float bounceFac;
+	float crouch;
+	float range;
+	int shots;
+	int ammo;
+	float rof;
+	int time;
+	vec2_t damage, spldmg;
+	float splrad;
+	int weaponSkill;
+	int irgoggles;
 } fireDef_t;
 
 typedef struct objDef_s {
-    /* common */
-    char name[MAX_VAR];
-    char kurz[MAX_VAR];
-    char model[MAX_VAR];
-    char image[MAX_VAR];
-    char type[MAX_VAR];
-    char extends_item[MAX_VAR];
-    int shape;
-    /* size in x and y direction */
-    byte sx, sy;
-    float scale;
-    vec3_t center;
-    char category;
-    byte weapon;
-    byte twohanded;
-    byte extension;
-    byte thrown;
-    int price;
-    int buytype;
-    int link;
+	/* common */
+	char name[MAX_VAR];
+	char kurz[MAX_VAR];
+	char model[MAX_VAR];
+	char image[MAX_VAR];
+	char type[MAX_VAR];
+	char extends_item[MAX_VAR];
+	int shape;
+	/* size in x and y direction */
+	byte sx, sy;
+	float scale;
+	vec3_t center;
+	char category;
+	byte weapon;
+	byte twohanded;
+	byte extension;
+	byte thrown;
+	int price;
+	int buytype;
+	int link;
 
-    /* weapon specific */
-    int ammo;
-    int reload;
-    fireDef_t fd[2];
+	/* weapon specific */
+	int ammo;
+	int reload;
+	fireDef_t fd[2];
 
-    /* technology link */
-    void *tech;
-    /* technology link to item to use this extension for (if this is an extension) */
-    /* TODO: Can be used for menu highlightning and in ufopedia */
-    void *extension_tech;
+	/* technology link */
+	void *tech;
+	/* technology link to item to use this extension for (if this is an extension) */
+	/* TODO: Can be used for menu highlightning and in ufopedia */
+	void *extension_tech;
 
-    /* armor specific */
-    short protection[MAX_DAMAGETYPES];
-    short hardness[MAX_DAMAGETYPES];
+	/* armor specific */
+	short protection[MAX_DAMAGETYPES];
+	short hardness[MAX_DAMAGETYPES];
 } objDef_t;
 
 #define MAX_INVDEFS     16
 
 typedef struct invDef_s {
-    char name[MAX_VAR];
-    byte single, armor, all, temp, extension;
-    int shape[16];
-    int in, out;
+	char name[MAX_VAR];
+	byte single, armor, all, temp, extension;
+	int shape[16];
+	int in, out;
 } invDef_t;
 
 #define MAX_CONTAINERS  MAX_INVDEFS
 #define MAX_INVLIST     1024
 
 typedef struct item_s {
-    int a;              /* number of ammo rounds left */
-    int m;              /* index of ammo type on csi->ods  */
-    int t;              /* index of weapon == csi->ods[m].link */
+	int a;              /* number of ammo rounds left */
+	int m;              /* index of ammo type on csi->ods  */
+	int t;              /* index of weapon == csi->ods[m].link */
 } item_t;
 
 typedef struct invList_s {
-    item_t item;
-    int x, y;
-    struct invList_s *next;
+	item_t item;
+	int x, y;
+	struct invList_s *next;
 } invList_t;
 
 typedef struct inventory_s {
-    invList_t *c[MAX_CONTAINERS];
+	invList_t *c[MAX_CONTAINERS];
 } inventory_t;
 
 #define MAX_EQUIPDEFS   64
 
 typedef struct equipDef_s {
-    char name[MAX_VAR];
-    int num[MAX_OBJDEFS];
-    byte num_loose[MAX_OBJDEFS];
+	char name[MAX_VAR];
+	int num[MAX_OBJDEFS];
+	byte num_loose[MAX_OBJDEFS];
 } equipDef_t;
 
 /* the csi structure is the client-server-information structure */
 /* which contains all the UFO info needed by the server and the client */
 typedef struct csi_s {
-    /* object definitions */
-    objDef_t ods[MAX_OBJDEFS];
-    int numODs;
+	/* object definitions */
+	objDef_t ods[MAX_OBJDEFS];
+	int numODs;
 
-    /* inventory definitions */
-    invDef_t ids[MAX_INVDEFS];
-    int numIDs;
-    int idRight, idLeft, idExtension, idBackpack, idBelt, idHolster;
-    int idArmor, idFloor, idEquip;
+	/* inventory definitions */
+	invDef_t ids[MAX_INVDEFS];
+	int numIDs;
+	int idRight, idLeft, idExtension, idBackpack, idBelt, idHolster;
+	int idArmor, idFloor, idEquip;
 
-    /* damage type ids */
-    int damNormal, damBlast, damFire, damShock;
-    int damLaser, damPlasma, damTachyon, damStun;
+	/* damage type ids */
+	int damNormal, damBlast, damFire, damShock;
+	int damLaser, damPlasma, damTachyon, damStun;
 
-    /* equipment definitions */
-    equipDef_t eds[MAX_EQUIPDEFS];
-    int numEDs;
+	/* equipment definitions */
+	equipDef_t eds[MAX_EQUIPDEFS];
+	int numEDs;
 
-    /* damage types */
-    char dts[MAX_DAMAGETYPES][MAX_VAR];
-    int numDTs;
+	/* damage types */
+	char dts[MAX_DAMAGETYPES][MAX_VAR];
+	int numDTs;
 } csi_t;
 
 
@@ -988,25 +990,25 @@ typedef struct csi_s {
 #define GET_MORALE( ab )        (100 + (ab) * 150/MAX_SKILL)
 
 typedef enum {
-    KILLED_ALIENS,
-    KILLED_CIVILIANS,
-    KILLED_TEAM,
+	KILLED_ALIENS,
+	KILLED_CIVILIANS,
+	KILLED_TEAM,
 
-    KILLED_NUM_TYPES
+	KILLED_NUM_TYPES
 } killtypes_t;
 
 typedef enum {
-    ABILITY_POWER,
-    ABILITY_SPEED,
-    ABILITY_ACCURACY,
-    ABILITY_MIND,
+	ABILITY_POWER,
+	ABILITY_SPEED,
+	ABILITY_ACCURACY,
+	ABILITY_MIND,
 
-    SKILL_CLOSE,
-    SKILL_HEAVY,
-    SKILL_ASSAULT,
-    SKILL_SNIPER,
-    SKILL_EXPLOSIVE,
-    SKILL_NUM_TYPES
+	SKILL_CLOSE,
+	SKILL_HEAVY,
+	SKILL_ASSAULT,
+	SKILL_SNIPER,
+	SKILL_EXPLOSIVE,
+	SKILL_NUM_TYPES
 } abilityskills_t;
 
 #define ABILITY_NUM_TYPES SKILL_CLOSE
@@ -1014,82 +1016,82 @@ typedef enum {
 
 #define MAX_UGV         8
 typedef struct ugv_s {
-    char id[MAX_VAR];
-    char weapon[MAX_VAR];
-    char armor[MAX_VAR];
-    int size;
-    int tu;
+	char id[MAX_VAR];
+	char weapon[MAX_VAR];
+	char armor[MAX_VAR];
+	int size;
+	int tu;
 } ugv_t;
 
 
 typedef enum {
-    MEDAL_CROSS,
-    MEDAL_COIN
+	MEDAL_CROSS,
+	MEDAL_COIN
 } medalType_t;
 
 #define MAX_MEDALTEXT       256
 #define MAX_MEDALTITLE      32
 #define MAX_RANKS           8
 typedef struct medals_s {
-    char id[MAX_MEDALTITLE];
-    char name[MAX_MEDALTITLE];
-    medalType_t type;
-    int band;
-    abilityskills_t affectedSkill;
-    int skillIncrease;
-    /*date  date; */
-    char text[MAX_MEDALTEXT];
-    struct medals_s *next_medal;
+	char id[MAX_MEDALTITLE];
+	char name[MAX_MEDALTITLE];
+	medalType_t type;
+	int band;
+	abilityskills_t affectedSkill;
+	int skillIncrease;
+	/*date  date; */
+	char text[MAX_MEDALTEXT];
+	struct medals_s *next_medal;
 } medals_t;
 
 typedef struct rank_s {
-    char id[MAX_VAR];
-    char name[MAX_MEDALTITLE];
-    char image[MAX_VAR];
-    int type; /* employeeType_t */
-    int mind;
-    int killed_enemies;
-    int killed_others;
+	char id[MAX_VAR];
+	char name[MAX_MEDALTITLE];
+	char image[MAX_VAR];
+	int type; /* employeeType_t */
+	int mind;
+	int killed_enemies;
+	int killed_others;
 } rank_t;
 
 extern rank_t ranks[MAX_RANKS]; /* Global list of all ranks defined in medals.ufo. */
 extern int numRanks;            /* The number of entries in the list above. */
 
 typedef struct character_s {
-    int ucn;
-    char name[MAX_VAR];
-    char path[MAX_VAR];
-    char body[MAX_VAR];
-    char head[MAX_VAR];
-    int skin;
+	int ucn;
+	char name[MAX_VAR];
+	char path[MAX_VAR];
+	char body[MAX_VAR];
+	char head[MAX_VAR];
+	int skin;
 
-    /* new abilities and skills: */
-    int skills[SKILL_NUM_TYPES];
+	/* new abilities and skills: */
+	int skills[SKILL_NUM_TYPES];
 
-    int HP, morale;
+	int HP, morale;
 
-    /* score */
-    int kills[KILLED_NUM_TYPES];
+	/* score */
+	int kills[KILLED_NUM_TYPES];
 /*  int     destroyed_objects; */
 /*  int     hit_ratio; */
 /*  int     inflicted_damage; */
 /*  int     damage_taken; */
-    int assigned_missions;
+	int assigned_missions;
 /*  int     crossed_distance; */
-    /* date     joined_edc; */
-    /* date     died; */
-    int rank; /* index in gd.ranks */
-    medals_t *medals;
-    /* TODO: */
-    /* *------------------** */
-    /* *------------------** */
+	/* date     joined_edc; */
+	/* date     died; */
+	int rank; /* index in gd.ranks */
+	medals_t *medals;
+	/* TODO: */
+	/* *------------------** */
+	/* *------------------** */
 
-    int fieldSize;              /* ACTOR_SIZE_* */
-    inventory_t *inv;
+	int fieldSize;              /* ACTOR_SIZE_* */
+	inventory_t *inv;
 
-    /* Backlink to employee-struct. */
-    int empl_idx;
-    int empl_type;
+	/* Backlink to employee-struct. */
+	int empl_idx;
+	int empl_type;
 } character_t;
 
 /* The types of employees */
@@ -1136,20 +1138,20 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS],  char 
 #define FD_SECONDARY        1
 
 typedef enum {
-    ST_RIGHT_PRIMARY,
-    ST_RIGHT_PRIMARY_REACTION,
-    ST_RIGHT_SECONDARY,
-    ST_RIGHT_SECONDARY_REACTION,    /* unused */
-    ST_LEFT_PRIMARY,
-    ST_LEFT_PRIMARY_REACTION,
-    ST_LEFT_SECONDARY,
-    ST_LEFT_SECONDARY_REACTION, /* unused */
+	ST_RIGHT_PRIMARY,
+	ST_RIGHT_PRIMARY_REACTION,
+	ST_RIGHT_SECONDARY,
+	ST_RIGHT_SECONDARY_REACTION,    /* unused */
+	ST_LEFT_PRIMARY,
+	ST_LEFT_PRIMARY_REACTION,
+	ST_LEFT_SECONDARY,
+	ST_LEFT_SECONDARY_REACTION, /* unused */
 
-    ST_NUM_SHOOT_TYPES,
+	ST_NUM_SHOOT_TYPES,
 
-    /* 20060905 LordHavoc: added reload types */
-    ST_RIGHT_RELOAD,
-    ST_LEFT_RELOAD
+	/* 20060905 LordHavoc: added reload types */
+	ST_RIGHT_RELOAD,
+	ST_LEFT_RELOAD
 } shoot_types_t;
 
 #define IS_SHOT_REACTION(x) ((x) == ST_RIGHT_PRIMARY_REACTION || (x) == ST_RIGHT_SECONDARY_REACTION \
@@ -1233,8 +1235,8 @@ void Com_InventoryList_f(void);
 
 /* NOTE: this only allows quadratic units */
 typedef enum {
-    ACTOR_SIZE_NORMAL = 1,
-    ACTOR_SIZE_UGV
+	ACTOR_SIZE_NORMAL = 1,
+	ACTOR_SIZE_UGV
 } actorSizeEnum_t;
 
 #endif /* GAME_Q_SHARED_H */
