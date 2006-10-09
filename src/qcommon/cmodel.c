@@ -2799,7 +2799,7 @@ TARGETING FUNCTIONS
  */
 float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)
 {
-	const float rollAngle = 0.0; /* angle to throw at for rolling, in radians. */
+	const float rollAngle = 3.0; /* angle to throw at for rolling, in degrees. */
 	vec3_t delta;
 	float d, h, g, v, alpha, theta, vx, vy;
 	float k, gd2, len;
@@ -2822,10 +2822,10 @@ float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, qboolean launched, 
 
 	/* are we rolling? */
 	if (rolled) {
-		alpha = rollAngle;
+		alpha = rollAngle * M_PI / 180;
 		theta = atan2(d, -h) - 2 * alpha;
 		k = gd2 / (len * cos(theta) - h);
-		if (k < 0)	/* impossible shot at any velocity */
+		if (k <= 0)	/* impossible shot at any velocity */
 			return 0;
 		v = sqrt(k);
 	} else {
