@@ -32,6 +32,7 @@ ifeq ($(TARGET_OS),darwin)
 	SHARED_EXT=dylib
 	SHARED_CFLAGS=-fPIC -fno-common
 	SHARED_LDFLAGS=-dynamiclib
+	LDFLAGS += -framework SDL -framework SDL_ttf -framework OpenGL
 	CFLAGS += -D_BSD_SOURCE -D_XOPEN_SOURCE
 endif
 
