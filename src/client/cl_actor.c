@@ -756,6 +756,39 @@ qboolean CL_ActorSelectList(int num)
 	return qtrue;
 }
 
+/**
+ * @brief selects the next actor
+ */
+qboolean CL_ActorSelectNext()
+{
+	le_t* le;
+	int selIndex = -1;
+	int num = cl.numTeamList;
+	int i;
+
+	/* find index of currently selected actor */
+	for (i = 0; i < num; i++) {
+		le = cl.teamList[i];
+		if (le->selected) {
+			selIndex = i;
+			break;
+		}
+	}
+	if (selIndex < 0)
+		return qfalse;			/* no one selected? */
+
+	/* cycle round */
+	i = selIndex;
+	while (qtrue) {
+		i = (i + 1) % num;
+		if (i == selIndex)
+			break;
+		if (CL_ActorSelectList(i))
+			return qtrue;
+	}
+	return qtrue;
+}
+
 
 /*
 ==============================================================

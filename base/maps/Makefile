@@ -5,11 +5,15 @@ UFO2MAP = ../../ufo2map
 MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' -not -name 'tutorial*' -not -name '*autosave*' -not -name 'prefab*')
 BSPS = $(MAPSRCS:.map=.bsp)
 
-QRAD3FLAGS = -bounce 0 -chop 32 -extra
+QRAD3FLAGS = -extra -bounce 0 -chop 32
+
+ifdef FAST
+ QRAD3FLAGS+=-noradiosity
+endif
 
 all: $(BSPS)
 
-clean: 
+clean:
 	find $(MAPSDIR) -name '*.bsp' | xargs --no-run-if-empty rm
 
 $(BSPS): %.bsp: %.map

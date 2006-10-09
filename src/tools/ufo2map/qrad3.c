@@ -63,6 +63,7 @@ int		lightquant = 3;
 qboolean	glview;
 
 qboolean	nopvs;
+qboolean	noradiosity = qfalse;
 
 char		source[1024];
 
