@@ -769,7 +769,7 @@ qboolean CL_ActorSelectNext()
 	/* find index of currently selected actor */
 	for (i = 0; i < num; i++) {
 		le = cl.teamList[i];
-		if (le->selected) {
+		if (le && le->selected && le->inuse && !(le->state & STATE_DEAD)) {
 			selIndex = i;
 			break;
 		}
