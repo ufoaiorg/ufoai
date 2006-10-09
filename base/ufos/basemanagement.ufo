@@ -146,6 +146,7 @@ building building_quarters
 	more_than_one	true
 	type     	quarters
 	max_employees	20
+	onclick		"building_open"
 }
 
 building building_hangar
@@ -165,6 +166,7 @@ building building_hangar
 	needs		building_hangar2
 	onconstruct "aircraft_new craft_dropship"
 	max_employees	8
+	onclick		"building_open"
 }
 
 building building_hangar2
@@ -173,6 +175,7 @@ building building_hangar2
 	image		base/drop1
 	pedia		rs_building_hangar
 	visible		false // no 'needs' field here!
+	onclick		"building_open"
 }
 
 building building_intercept
@@ -191,6 +194,7 @@ building building_intercept
 	onconstruct	"aircraft_new craft_interceptor"
 //	ondestroy	???
 	type        hangar
+	onclick		"building_open"
 }
 
 building building_ufo_hangar
@@ -205,6 +209,7 @@ building building_ufo_hangar
 	pedia		rs_building_ufo_hangar
 	more_than_one	true
     type    	hangar
+	onclick		"building_open"
 }
 
 building building_teamroom
@@ -235,6 +240,7 @@ building building_workshop
 	type	    workshop
 	max_employees	10
 	needs		building_workshop2
+	onclick		"building_open"
 }
 
 building building_workshop2
@@ -243,6 +249,7 @@ building building_workshop2
 	image		base/workshop1
 	pedia		rs_building_workshop
 	visible		false // no 'needs' field here!
+	onclick		"building_open"
 }
 
 building building_radar
@@ -277,6 +284,7 @@ building building_lab
 	more_than_one	true
 	type    	lab
 	max_employees	10
+	onclick		"building_open"
 }
 
 building building_hospital
@@ -293,6 +301,7 @@ building building_hospital
 	more_than_one	true
 	type	    hospital
 	max_employees	10
+	onclick		"building_open"
 }
 
 base main
