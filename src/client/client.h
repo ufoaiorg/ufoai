@@ -727,6 +727,9 @@ const struct aircraft_s* ufo, qboolean wasUfoSensored);
 /* cl_employee.c */
 #include "cl_employee.h"
 
+/* cl_hospital.c */
+#include "cl_hospital.h"
+
 /* MISC */
 /* TODO: needs to be sorted (e.g what file is it defined?) */
 #define MAX_TEAMDATASIZE	32768
@@ -900,6 +903,7 @@ typedef enum {
 	TEXT_STATS_2,
 	TEXT_STATS_3,
 	TEXT_PRODUCTION_QUEUED,
+	TEXT_HOSPITAL = 25,
 
 	MAX_MENUTEXTS
 } texts_t;

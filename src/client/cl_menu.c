@@ -908,8 +908,11 @@ static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 				if (!entry)
 					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
 
-				if (*entry->onClick)
+				if (*entry->onClick) {
+					baseCurrent->buildingCurrent = entry;
 					Cbuf_ExecuteText(EXEC_NOW, entry->onClick);
+					baseCurrent->buildingCurrent = NULL;
+				}
 #if 0
 				else {
 					/* Click on building : display its properties in the building menu */
@@ -2412,6 +2415,7 @@ void MN_ResetMenus(void)
 	RS_ResetResearch();
 	PR_ResetProduction();
 	E_Reset();
+	HOS_Reset();
 	MAP_ResetAction();
 	UFO_Reset();
 }

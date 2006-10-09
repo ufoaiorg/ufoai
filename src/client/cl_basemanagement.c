@@ -1208,6 +1208,7 @@ void B_BaseInit(void)
 
 	baseCurrent = &gd.bases[baseID];
 
+	Cvar_SetValue("mn_medics_in_base", E_CountHired(baseCurrent, EMPL_MEDIC));
 	Cvar_SetValue("mn_soldiers_in_base", E_CountHired(baseCurrent, EMPL_SOLDIER));
 	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
 
@@ -1897,6 +1898,43 @@ static void B_ChangeBaseName_f(void)
 	Q_strncpyz(baseCurrent->name, Cvar_VariableString("mn_base_title"), MAX_VAR);
 }
 
+/**
+ * @brief Checks whether the building menu or the pedia entry should be called when baseCurrent->buildingCurrent is set
+ */
+void B_BuildingOpen_f (void)
+{
+	if (baseCurrent && baseCurrent->buildingCurrent) {
+		if (baseCurrent->buildingCurrent->buildingStatus != B_STATUS_WORKING) {
+			UP_OpenWith(baseCurrent->buildingCurrent->pedia);
+		} else
+			switch (baseCurrent->buildingCurrent->buildingType) {
+			case B_LAB:
+				MN_PushMenu("research");
+				break;
+			case B_HOSPITAL:
+				MN_PushMenu("hospital");
+				break;
+			case B_QUARTERS:
+				MN_PushMenu("employees");
+				break;
+			case B_WORKSHOP:
+				MN_PushMenu("production");
+				break;
+			case B_HANGAR:
+				MN_PushMenu("aircraft");
+				break;
+			default:
+				UP_OpenWith(baseCurrent->buildingCurrent->pedia);
+				break;
+			}
+	} else {
+		Com_Printf("Usage: Only call me from baseview\n");
+	}
+}
+
+/**
+ * @brief
+ */
 void B_CheckMaxBases_f(void)
 {
 	if (gd.numBases >= MAX_BASES) {
@@ -1927,6 +1965,7 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("base_init", B_BaseInit, NULL);
 	Cmd_AddCommand("base_assemble", B_AssembleMap, NULL);
 	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase, NULL);
+	Cmd_AddCommand("building_open", B_BuildingOpen_f, NULL);
 	Cmd_AddCommand("building_init", B_BuildingInit, NULL);
 	Cmd_AddCommand("building_status", B_BuildingStatus, NULL);
 	Cmd_AddCommand("buildinginfo_click", B_BuildingInfoClick_f, NULL);
