@@ -114,7 +114,7 @@ item fraggrenade
 
 	primary
 	{
-		name	"_Throw"
+		name	"_Overarm Throw"
 		skill	explosive
 		projtl	fraggren
 		impact	frag_explosion
@@ -122,6 +122,7 @@ item fraggrenade
 		impsnd	weapons/frag_grenade.wav
 		bodysnd	weapons/frag_grenade.wav
 		bncsnd	misc/klonk03.wav
+		overarm true
 		gravity	true
 		delay	1
 		bounce	10
@@ -138,7 +139,7 @@ item fraggrenade
 	}
 	secondary
 	{
-		name	"_Throw"
+		name	"_Underarm Throw"
 		skill	explosive
 		projtl	fraggren
 		impact	frag_explosion
@@ -182,7 +183,7 @@ item flashbang
 
 	primary
 	{
-		name	"_Throw"
+		name	"_Overarm Throw"
 		skill	explosive
 		projtl	fraggren
 		impact	frag_explosion
@@ -190,6 +191,7 @@ item flashbang
 		impsnd	weapons/frag_grenade.wav
 		bodysnd	weapons/frag_grenade.wav
 		bncsnd	misc/klonk03.wav
+		overarm true
 		gravity	true
 		delay	1
 		bounce	10
@@ -206,7 +208,7 @@ item flashbang
 	}
 	secondary
 	{
-		name	"_Throw"
+		name	"_Underarm Throw"
 		skill	explosive
 		projtl	fraggren
 		impact	frag_explosion
@@ -249,7 +251,7 @@ item smokegrenade
 
 	primary
 	{
-		name	"_Throw"
+		name	"_Overarm Throw"
 		skill	explosive
 		projtl	smokegren
 		impact	smoke_explosion
@@ -257,6 +259,7 @@ item smokegrenade
 		impsnd	weapons/smoke_grenade.wav
 		bodysnd	weapons/smoke_grenade.wav
 		bncsnd	misc/klonk03.wav
+		overarm true
 		gravity	true
 		delay	1
 		bounce	10
@@ -273,7 +276,7 @@ item smokegrenade
 	}
 	secondary
 	{
-		name	"_Throw"
+		name	"_Underarm Throw"
 		skill	explosive
 		projtl	smokegren
 		impact	smoke_explosion
@@ -316,7 +319,7 @@ item stungrenade
 
 	primary
 	{
-		name	"_Throw"
+		name	"_Overarm Throw"
 		skill	explosive
 		projtl	stungren
 		impact	coronaImpact
@@ -324,6 +327,7 @@ item stungrenade
 		impsnd	weapons/stun_grenade.wav
 		bodysnd	weapons/stun_grenade.wav
 		bncsnd	misc/klonk03.wav
+		overarm true
 		gravity	true
 		delay	1
 		bounce	10
@@ -340,7 +344,7 @@ item stungrenade
 	}
 	secondary
 	{
-		name	"_Throw"
+		name	"_Underarm Throw"
 		skill	explosive
 		projtl	stungren
 		impact	coronaImpact
@@ -384,7 +388,7 @@ item incgrenade
 
 	primary
 	{
-		name	"_Throw"
+		name	"_Overarm Throw"
 		skill	explosive
 		projtl	incgren
 		impact	fire_explosion
@@ -392,6 +396,7 @@ item incgrenade
 		impsnd	weapons/incendiary_grenade.wav
 		bodysnd	weapons/incendiary_grenade.wav
 		bncsnd	misc/klonk03.wav
+		overarm true
 		gravity	true
 		delay	1
 		bounce	10
@@ -408,7 +413,7 @@ item incgrenade
 	}
 	secondary
 	{
-		name	"_Throw"
+		name	"_Underarm Throw"
 		skill	explosive
 		projtl	incgren
 		impact	fire_explosion
@@ -451,7 +456,7 @@ item plasmagrenade
 
 	primary
 	{
-		name	"_Throw"
+		name	"_Overarm Throw"
 		skill	explosive
 		projtl	plasmagren
 		impact	plasmaBigExplosion
@@ -459,6 +464,7 @@ item plasmagrenade
 		impsnd	weapons/plasma_grenade.wav
 		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
+		overarm true
 		gravity	true
 		delay	1
 		bounce	10
@@ -475,7 +481,7 @@ item plasmagrenade
 	}
 	secondary
 	{
-		name	"_Throw"
+		name	"_Underarm Throw"
 		skill	explosive
 		projtl	plasmagren
 		impact	plasmaBigExplosion

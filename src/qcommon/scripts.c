@@ -85,6 +85,7 @@ static value_t fdps[] = {
 	{"sndonce", V_BOOL, offsetof(fireDef_t, soundOnce)},
 	{"gravity", V_BOOL, offsetof(fireDef_t, gravity)},
 	{"launched", V_BOOL, offsetof(fireDef_t, launched)},
+	{"overarm", V_BOOL, offsetof(fireDef_t, overarm)},
 	{"delay", V_INT, offsetof(fireDef_t, delay)},
 	{"bounce", V_INT, offsetof(fireDef_t, bounce)},
 	{"bncfac", V_FLOAT, offsetof(fireDef_t, bounceFac)},

@@ -1812,6 +1812,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
 	vec3_t angles;
+	qboolean underarm;
 	float dt, time, speed;
 	float acc;
 	trace_t tr;
@@ -1824,8 +1825,11 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 	gi.GridPosToVec(gi.map, at, target);
 	target[2] -= 9;
 
+	/* lower for underarm throws */
+	underarm = !fd->overarm && !fd->launched;
+
 	/* calculate parabola */
-	dt = gi.GrenadeTarget(last, target, fd->range, fd->launched, startV);
+	dt = gi.GrenadeTarget(last, target, fd->range, !underarm, startV);
 	if (!dt) {
 		if (!mock)
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - impossible throw!\n"));

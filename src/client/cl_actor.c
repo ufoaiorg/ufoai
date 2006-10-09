@@ -1935,6 +1935,7 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 	vec3_t mins, maxs;
 	trace_t tr;
 	int oldLevel;
+	qboolean underarm;
 	qboolean obstructed = qfalse;
 	int i;
 
@@ -1945,10 +1946,12 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 	Grid_PosToVec(&clMap, fromPos, from);
 	Grid_PosToVec(&clMap, toPos, at);
 
+	/* lower for underarm throws */
+	underarm = !selFD->overarm && !selFD->launched;
 	at[2] -= 9;
 
 	/* calculate parabola */
-	dt = Com_GrenadeTarget(from, at, selFD->range, selFD->launched, v0);
+	dt = Com_GrenadeTarget(from, at, selFD->range, !underarm, v0);
 	if (!dt) {
 		CL_ParticleSpawn("cross_no", 0, at, NULL, NULL);
 		return;
