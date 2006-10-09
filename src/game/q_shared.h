@@ -857,7 +857,7 @@ typedef struct fireDef_s {
     byte soundOnce;
     byte gravity;
     byte launched;
-	byte overarm;
+	byte rolled;
     byte dmgtype;
     float speed;
     vec2_t shotOrg;

@@ -114,7 +114,7 @@ item fraggrenade
 
 	primary
 	{
-		name	"_Overarm Throw"
+		name	"_Lob"
 		skill	explosive
 		projtl	fraggren
 		impact	frag_explosion
@@ -122,7 +122,6 @@ item fraggrenade
 		impsnd	weapons/frag_grenade.wav
 		bodysnd	weapons/frag_grenade.wav
 		bncsnd	misc/klonk03.wav
-		overarm true
 		gravity	true
 		delay	1
 		bounce	10
@@ -139,7 +138,7 @@ item fraggrenade
 	}
 	secondary
 	{
-		name	"_Underarm Throw"
+		name	"_Roll"
 		skill	explosive
 		projtl	fraggren
 		impact	frag_explosion
@@ -148,6 +147,7 @@ item fraggrenade
 		bodysnd	weapons/frag_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		rolled true
 		delay	1
 		bounce	10
 		bncfac	0.5
@@ -183,7 +183,7 @@ item flashbang
 
 	primary
 	{
-		name	"_Overarm Throw"
+		name	"_Lob"
 		skill	explosive
 		projtl	fraggren
 		impact	frag_explosion
@@ -191,7 +191,6 @@ item flashbang
 		impsnd	weapons/frag_grenade.wav
 		bodysnd	weapons/frag_grenade.wav
 		bncsnd	misc/klonk03.wav
-		overarm true
 		gravity	true
 		delay	1
 		bounce	10
@@ -208,7 +207,7 @@ item flashbang
 	}
 	secondary
 	{
-		name	"_Underarm Throw"
+		name	"_Roll"
 		skill	explosive
 		projtl	fraggren
 		impact	frag_explosion
@@ -217,6 +216,7 @@ item flashbang
 		bodysnd	weapons/frag_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		rolled true
 		delay	1
 		bounce	10
 		bncfac	0.5
@@ -251,7 +251,7 @@ item smokegrenade
 
 	primary
 	{
-		name	"_Overarm Throw"
+		name	"_Lob"
 		skill	explosive
 		projtl	smokegren
 		impact	smoke_explosion
@@ -259,7 +259,6 @@ item smokegrenade
 		impsnd	weapons/smoke_grenade.wav
 		bodysnd	weapons/smoke_grenade.wav
 		bncsnd	misc/klonk03.wav
-		overarm true
 		gravity	true
 		delay	1
 		bounce	10
@@ -276,7 +275,7 @@ item smokegrenade
 	}
 	secondary
 	{
-		name	"_Underarm Throw"
+		name	"_Roll"
 		skill	explosive
 		projtl	smokegren
 		impact	smoke_explosion
@@ -285,6 +284,7 @@ item smokegrenade
 		bodysnd	weapons/smoke_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		rolled true
 		delay	1
 		bounce	10
 		bncfac	0.5
@@ -319,7 +319,7 @@ item stungrenade
 
 	primary
 	{
-		name	"_Overarm Throw"
+		name	"_Lob"
 		skill	explosive
 		projtl	stungren
 		impact	coronaImpact
@@ -327,7 +327,6 @@ item stungrenade
 		impsnd	weapons/stun_grenade.wav
 		bodysnd	weapons/stun_grenade.wav
 		bncsnd	misc/klonk03.wav
-		overarm true
 		gravity	true
 		delay	1
 		bounce	10
@@ -344,7 +343,7 @@ item stungrenade
 	}
 	secondary
 	{
-		name	"_Underarm Throw"
+		name	"_Roll"
 		skill	explosive
 		projtl	stungren
 		impact	coronaImpact
@@ -353,6 +352,7 @@ item stungrenade
 		bodysnd	weapons/stun_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		rolled true
 		delay	1
 		bounce	10
 		bncfac	0.5
@@ -388,7 +388,7 @@ item incgrenade
 
 	primary
 	{
-		name	"_Overarm Throw"
+		name	"_Lob"
 		skill	explosive
 		projtl	incgren
 		impact	fire_explosion
@@ -396,7 +396,6 @@ item incgrenade
 		impsnd	weapons/incendiary_grenade.wav
 		bodysnd	weapons/incendiary_grenade.wav
 		bncsnd	misc/klonk03.wav
-		overarm true
 		gravity	true
 		delay	1
 		bounce	10
@@ -413,7 +412,7 @@ item incgrenade
 	}
 	secondary
 	{
-		name	"_Underarm Throw"
+		name	"_Roll"
 		skill	explosive
 		projtl	incgren
 		impact	fire_explosion
@@ -422,6 +421,7 @@ item incgrenade
 		bodysnd	weapons/incendiary_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		rolled true
 		delay	1
 		bounce	10
 		bncfac	0.5
@@ -456,7 +456,7 @@ item plasmagrenade
 
 	primary
 	{
-		name	"_Overarm Throw"
+		name	"_Lob"
 		skill	explosive
 		projtl	plasmagren
 		impact	plasmaBigExplosion
@@ -464,7 +464,6 @@ item plasmagrenade
 		impsnd	weapons/plasma_grenade.wav
 		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
-		overarm true
 		gravity	true
 		delay	1
 		bounce	10
@@ -481,7 +480,7 @@ item plasmagrenade
 	}
 	secondary
 	{
-		name	"_Underarm Throw"
+		name	"_Roll"
 		skill	explosive
 		projtl	plasmagren
 		impact	plasmaBigExplosion
@@ -490,6 +489,7 @@ item plasmagrenade
 		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
+		rolled true
 		delay	1
 		bounce	10
 		bncfac	0.5

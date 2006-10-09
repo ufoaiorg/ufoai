@@ -2689,7 +2689,6 @@ TARGETING FUNCTIONS
 ==============================================================================
 */
 
-
 /**
  * Grenade Aiming Maths
  * --------------------------------------------------------------
@@ -2765,7 +2764,7 @@ TARGETING FUNCTIONS
  *
  * Somewhere in the middle is the minimum velocity that we could possibly hit the target with and the 'optimum' angle
  * to fire at. Note that when h = 0 the optimum angle is 45 degrees. We want to find the minimum velocity so we need
- * to take the derivative of f (which I suggest doing an algebra system!).
+ * to take the derivative of f (which I suggest doing with an algebra system!).
  *
  * f'(theta) =  a * b * sin(theta) / junk
  *
@@ -2798,10 +2797,11 @@ TARGETING FUNCTIONS
 /**
  * @brief
  */
-float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, qboolean launched, vec3_t v0)
+float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)
 {
+	const float rollAngle = 0.0; /* angle to throw at for rolling, in radians. */
 	vec3_t delta;
-	float d, h, g, v, alpha, vx, vy;
+	float d, h, g, v, alpha, theta, vx, vy;
 	float k, gd2, len;
 
 	/* calculate target distance and height */
@@ -2815,21 +2815,33 @@ float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, qboolean launched, 
 		return 0;
 	}
 
-	/* firstly try to get as flat a trajectory as possible (fire at max velocity) */
+	/* precalculate some useful values */
 	g = GRAVITY;
-	v = speed;
 	gd2 = g*d*d;
 	len = sqrt(h*h + d*d);
-	k = (v*v*h + gd2) / (v*v*len);
 
-	/* check whether the shot's possible */
-	if (launched && k >= -1 && k <= 1) {
-		/* it is possible, so calculate the angle */
-		alpha = 0.5 * (atan2(d, -h) - acos(k));
-	}else{
-		/* calculate the minimum possible velocity that would make it possible */
-		alpha = 0.5 * atan2(d, -h);
-		v = sqrt(gd2 / (len - h));
+	/* are we rolling? */
+	if (rolled) {
+		alpha = rollAngle;
+		theta = atan2(d, -h) - 2 * alpha;
+		k = gd2 / (len * cos(theta) - h);
+		if (k < 0)	/* impossible shot at any velocity */
+			return 0;
+		v = sqrt(k);
+	} else {
+		/* firstly try with the maximum speed possible */
+		v = speed;
+		k = (v*v*h + gd2) / (v*v*len);
+
+		/* check whether the shot's possible */
+		if (launched && k >= -1 && k <= 1) {
+			/* it is possible, so calculate the angle */
+			alpha = 0.5 * (atan2(d, -h) - acos(k));
+		} else {
+			/* calculate the minimum possible velocity that would make it possible */
+			alpha = 0.5 * atan2(d, -h);
+			v = sqrt(gd2 / (len - h));
+		}
 	}
 
 	/* calculate velocities */
