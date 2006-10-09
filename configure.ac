@@ -399,7 +399,12 @@ AC_CHECK_HEADERS([GL/gl.h GL/glu.h])
 if test "$ac_cv_header_GL_gl_h" != "yes" || \
    test "$ac_cv_header_GL_glu_h" != "yes"
 then
-	AC_MSG_ERROR([Couldn't find OpenGL development headers!])
+	AC_CHECK_HEADERS([gl.h glu.h])
+	if test "$ac_cv_header_gl_h" != "yes" || \
+   	   test "$ac_cv_header_glu_h" != "yes"
+	then
+		AC_MSG_ERROR([Couldn't find OpenGL development headers!])
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
