@@ -101,9 +101,6 @@ include build/various.mk
 maps: $(UFO2MAP_TARGET)
 	@$(MAKE) -C base/maps all
 
-fastmaps: $(UFO2MAP_TARGET)
-	@$(MAKE) -C base/maps all FAST=1
-
 #######################################################################################################
 
 -include $(ALL_DEPS)

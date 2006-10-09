@@ -7,10 +7,6 @@ BSPS = $(MAPSRCS:.map=.bsp)
 
 QRAD3FLAGS = -extra -bounce 0 -chop 32
 
-ifdef FAST
- QRAD3FLAGS+=-noradiosity
-endif
-
 all: $(BSPS)
 
 clean:
