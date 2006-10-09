@@ -26,12 +26,20 @@ ifeq ($(TARGET_OS),mingw32)
 	REF_SDL_SRCS =
 	REF_SDL_TARGET=ref_gl.$(SHARED_EXT)
 else
-	REF_GL_SRCS += \
-			ports/linux/qgl_linux.c \
-			ports/linux/q_shlinux.c \
-			ports/unix/glob.c
-	REF_SDL_SRCS = ports/linux/gl_sdl.c
-	REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
+	ifeq ($(TARGET_OS),darwin)
+		REF_GL_SRCS += \
+				ports/macosx/qgl_osx.c \
+				ports/macosx/q_shosx.c
+		REF_SDL_SRCS = ports/macosx/glimp_osx.m
+		REF_SDL_TARGET=ref_gl.$(SHARED_EXT)
+	else
+		REF_GL_SRCS += \
+				ports/linux/qgl_linux.c \
+				ports/linux/q_shlinux.c \
+				ports/unix/glob.c
+		REF_SDL_SRCS = ports/linux/gl_sdl.c
+		REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
+	endif
 endif
 
 REF_GLX_SRCS = 	ports/linux/gl_glx.c

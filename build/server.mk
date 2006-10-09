@@ -30,7 +30,6 @@ ifeq ($(TARGET_OS),linux-gnu)
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
-	SERVER_OKAY=1
 endif
 
 ifeq ($(TARGET_OS),freebsd)
@@ -40,7 +39,6 @@ ifeq ($(TARGET_OS),freebsd)
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
-	SERVER_OKAY=1
 endif
 
 ifeq ($(TARGET_OS),mingw32)
@@ -49,7 +47,6 @@ ifeq ($(TARGET_OS),mingw32)
 		ports/win32/sys_win.c \
 		ports/win32/conproc.c  \
 		ports/win32/net_wins.c
-	SERVER_OKAY=1
 endif
 
 ifeq ($(TARGET_OS),darwin)
@@ -59,11 +56,6 @@ ifeq ($(TARGET_OS),darwin)
 		ports/unix/sys_unix.c \
 		ports/unix/$(NET_UDP).c \
 		ports/macosx/q_shosx.c
-	SERVER_OKAY=1
-endif
-
-ifndef SERVER_OKAY
-	error "server.mk: couldn't find option for platform $(TARGET_OS)"
 endif
 
 ifeq ($(HAVE_IPV6),1)
