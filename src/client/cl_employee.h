@@ -63,6 +63,7 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int num
 qboolean E_RemoveEmployeeFromBuilding(employee_t *employee);
 
 employeeType_t E_GetEmployeeType(char* type);
+extern char* E_GetEmployeeString(employeeType_t type);
 int E_EmployeesInBase(const base_t* const base, employeeType_t type, qboolean free_only);
 
 employee_t * E_GetEmployee(const base_t* const base, employeeType_t type, int num);
@@ -74,9 +75,10 @@ employee_t * E_GetAssignedEmployee(const base_t* const base, employeeType_t type
 employee_t * E_GetHiredEmployeeByUcn(const base_t* const base, employeeType_t type, int ucn);
 
 int E_CountHired(const base_t* const base, employeeType_t type);
-int E_CountUnhired(const base_t* const base, employeeType_t type);
+int E_CountUnhired(employeeType_t type);
 int E_CountUnassigned(const base_t* const base, employeeType_t type);
 void E_UnhireAllEmployees(const base_t* const base, employeeType_t type);
 void E_DeleteAllEmployees(const base_t* const base);
+extern qboolean E_IsInBase(employee_t* empl, const base_t const * base);
 
 #endif /* CLIENT_CL_EMPLOYEE */

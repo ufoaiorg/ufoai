@@ -75,7 +75,7 @@ static void E_EmployeeList (void)
 		if (employeesInCurrentList>=(int)cl_numnames->value)
 			break;
 	}
-	
+
 	/* if the list is empty don't show the model*/
 	if (employeesInCurrentList == 0) {
 		Cvar_Set("mn_show_employee", "0");
@@ -95,6 +95,40 @@ static void E_EmployeeList (void)
 /*****************************************************
  * EMPLOYEE BACKEND STUFF
  *****************************************************/
+
+/**
+ * @brief Checks whether the given employee is in the given base
+ */
+extern qboolean E_IsInBase(employee_t* empl, const base_t const * base)
+{
+	if (empl->baseIDHired == base->idx)
+		return qtrue;
+	return qfalse;
+}
+
+/**
+ * @brief Convert employeeType_t to translated string
+ * @param type employeeType_t value
+ * @return translated employee string
+ */
+extern char* E_GetEmployeeString(employeeType_t type)
+{
+	switch (type) {
+	case EMPL_SOLDIER:
+		return _("Soldier");
+	case EMPL_SCIENTIST:
+		return _("Scientist");
+	case EMPL_WORKER:
+		return _("Worker");
+	case EMPL_MEDIC:
+		return _("Medic");
+	case EMPL_ROBOT:
+		return _("UGV");
+	default:
+		Sys_Error("Unknown employee type '%s'\n", type);
+		return "";
+	}
+}
 
 /**
  * @brief Convert string to employeeType_t
@@ -162,7 +196,7 @@ employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int idx
 {
 	int i;
 
-	if ( !base || type >= MAX_EMPL || idx < 0 )
+	if (!base || type >= MAX_EMPL || idx < 0)
 		return NULL;
 
 	for (i=0; i<gd.numEmployees[type]; i++) {
@@ -183,7 +217,7 @@ void E_UnhireAllEmployees(const base_t* const base, employeeType_t type)
 	int i;
 	employee_t *employee = NULL;
 
-	if ( !base || type > MAX_EMPL )
+	if (!base || type > MAX_EMPL)
 		return;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
@@ -224,7 +258,7 @@ employee_t* E_GetUnhiredEmployee(employeeType_t type, int idx)
 	int j = -1;	/* The number of found unhired employees. Ignore the minus. */
 	employee_t *employee = NULL;
 
-	if ( type >= MAX_EMPL ) {
+	if (type >= MAX_EMPL) {
 		Com_Printf("E_GetUnhiredEmployee: Unknown EmployeeType: %i\n", type );
 		return NULL;
 	}
@@ -264,10 +298,10 @@ employee_t* E_GetHiredEmployee(const base_t* const base, employeeType_t type, in
 	int j = -1;	/* The number of found hired employees. Ignore the minus. */
 	employee_t *employee = NULL;
 
-	if ( !base)
+	if (!base)
 		return NULL;
 
-	if ( type >= MAX_EMPL ) {
+	if (type >= MAX_EMPL) {
 		Com_Printf("E_GetHiredEmployee: Unknown EmployeeType: %i\n", type );
 		return NULL;
 	}
@@ -437,7 +471,7 @@ employee_t* E_CreateEmployee(employeeType_t type)
 {
 	employee_t* employee = NULL;
 
-	if ( type >= MAX_EMPL )
+	if (type >= MAX_EMPL)
 		return NULL;
 
 	if (gd.numEmployees[type] >= MAX_EMPLOYEES) {
@@ -522,7 +556,7 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 		gd.numEmployees[type]--;
 
 		if (type == EMPL_SOLDIER) {
-			for ( i = 0; i < gd.numAircraft; i++ ) 
+			for ( i = 0; i < gd.numAircraft; i++ )
 				CL_DecreaseAircraftTeamIdxGreaterThan(CL_AircraftGetFromIdx(i),idx);
 		}
 	} else {
@@ -671,7 +705,7 @@ int E_CountHired(const base_t* const base, employeeType_t type)
  * @param[in] base The base where we count
  * @return count of hired employees of a given type in a given base
  */
-int E_CountUnhired(const base_t* const base, employeeType_t type)
+int E_CountUnhired(employeeType_t type)
 {
 	int count = 0, i;
 	employee_t *employee = NULL;
