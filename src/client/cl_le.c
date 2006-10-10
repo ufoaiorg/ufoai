@@ -437,7 +437,7 @@ void LET_StartPathMove(le_t * le)
 static void LET_Projectile(le_t * le)
 {
 	if (cl.time >= le->endTime) {
-		le->ptl->inuse = qfalse;
+		CL_ParticleFree(le->ptl);
 		le->inuse = qfalse;
 		if (le->ref1 && le->ref1[0]) {
 			vec3_t impact;

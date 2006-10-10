@@ -611,6 +611,7 @@ lm_t *CL_AddLocalModel(char *model, char *particle, vec3_t origin, vec3_t angles
 void CL_AddMapParticle(char *particle, vec3_t origin, vec2_t wait, char *info, int levelflags);
 void CL_ParticleCheckRounds(void);
 void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb);
+void CL_ParticleFree(ptl_t *p);
 
 /* cl_actor.c */
 extern le_t *selActor;

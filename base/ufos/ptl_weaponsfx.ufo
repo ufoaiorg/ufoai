@@ -335,14 +335,16 @@ particle laserSpark
 // PLASMA EFFECTS
 // ==================
 
-particle plasmaMiniBall
+particle plasmaMiniFlash
 {
 	init
 	{
 		image  sfx/plasmaflash
 		blend  add
 		style  axis
-		color  "1 1 1 .5"
+		child  plasmaMiniFlashBall
+		push pos "0 -16"
+		pop  *offset
 	}
 	run
 	{
@@ -351,7 +353,97 @@ particle plasmaMiniBall
 		mul  float 16.0
 		sin  #
 		mul  #
-		add  pos "64 8"
+		add  pos "32 12"
+		pop  *size
+	}
+}
+
+particle plasmaFlash
+{
+	init
+	{
+		image  sfx/plasmaflash
+		blend  add
+		style  axis
+		child  plasmaFlashBall
+		push pos "0 -26"
+		pop  *offset
+	}
+	run
+	{
+		push pos "1 1"
+		push *t
+		mul  float 16.0
+		sin  #
+		mul  #
+		add  pos "64 16"
+		pop  *size
+	}
+}
+
+
+particle plasmaMiniFlashBall
+{
+	init
+	{
+		image  sfx/plasmaball
+		blend  add
+		style  facing
+		push   pos "0 9"
+		pop    *offset
+	}
+	run
+	{
+		push pos "1 1"
+		push *t
+		mul  float 16.0
+		sin  #
+		mul  #
+		add  pos "6 6"
+		pop  *size
+	}
+}
+
+particle plasmaFlashBall
+{
+	init
+	{
+		image  sfx/plasmaball
+		blend  add
+		style  facing
+		push   pos "0 20"
+		pop    *offset
+	}
+	run
+	{
+		push pos "1.2 1.2"
+		push *t
+		mul  float 12.0
+		sin  #
+		mul  #
+		add  pos "8 8"
+		pop  *size
+	}
+}
+
+//---------------
+
+particle plasmaMiniBall
+{
+	init
+	{
+		image  sfx/plasmaball
+		blend  add
+		style  facing
+	}
+	run
+	{
+		push pos "1 1"
+		push *t
+		mul  float 16.0
+		sin  #
+		mul  #
+		add  pos "4 4"
 		pop  *size
 	}
 }

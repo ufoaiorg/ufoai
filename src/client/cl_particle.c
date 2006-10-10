@@ -80,7 +80,7 @@ typedef enum pc_s {
 	PC_V2, PC_V3, PC_V4,
 
 	PC_KILL,
-	PC_SPAWN, PC_NSPAWN,
+	PC_SPAWN, PC_NSPAWN, PC_CHILD,
 
 	PC_NUM_PTLCMDS
 } pc_t;
@@ -96,7 +96,7 @@ static char *pc_strings[PC_NUM_PTLCMDS] = {
 	"v2", "v3", "v4",
 
 	"kill",
-	"spawn", "nspawn"
+	"spawn", "nspawn", "child"
 };
 
 #define F(x)		(1<<x)
@@ -114,7 +114,7 @@ static int pc_types[PC_NUM_PTLCMDS] = {
 	0, 0, 0,
 
 	0,
-	ONLY | V_STRING, ONLY | V_STRING
+	ONLY | V_STRING, ONLY | V_STRING, ONLY | V_STRING
 };
 
 static value_t pps[] = {
@@ -130,6 +130,7 @@ static value_t pps[] = {
 	{"a", V_VECTOR, offsetof(ptl_t, a)},
 	{"v", V_VECTOR, offsetof(ptl_t, v)},
 	{"s", V_VECTOR, offsetof(ptl_t, s)},
+	{"offset", V_VECTOR, offsetof(ptl_t, offset)},
 
 	/* t and dt are not specified in particle definitions */
 	/* but they can be used as references */
@@ -290,6 +291,7 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 	int i, j, n;
 	void *radr;
 	float arg;
+	ptl_t *pnew;
 
 	/* test for null cmd */
 	if (!cmd)
@@ -496,7 +498,7 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 			break;
 
 		case PC_KILL:
-			p->inuse = qfalse;
+			CL_ParticleFree(p);
 			return;
 
 		case PC_SPAWN:
@@ -517,6 +519,15 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 
 			for (i = 0; i < n; i++)
 				CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
+			break;
+
+		case PC_CHILD:
+			pnew = CL_ParticleSpawn((char *)radr, p->levelFlags, p->s, p->v, p->a);
+			if (pnew) {
+				pnew->next = p->children;
+				pnew->parent = p;
+				p->children = pnew;
+			}
 			break;
 
 		default:
@@ -589,6 +600,20 @@ ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a
 	CL_ParticleFunction(p, pd->init);
 
 	return p;
+}
+
+/**
+ * @brief Free a particle and all it's children
+ * @param[in] p the particle to free
+ */
+void CL_ParticleFree(ptl_t *p)
+{
+	ptl_t *c;
+
+	p->inuse = qfalse;
+	for (c = p->children; c; c = c->next) {
+		CL_ParticleFree(c);
+	}
 }
 
 /**
@@ -667,7 +692,7 @@ void CL_ParticleCheckRounds(void)
 			if (p->rounds) {
 				p->roundsCnt--;
 				if (p->roundsCnt <= 0)
-					p->inuse = qfalse;
+					CL_ParticleFree(p);
 			}
 		}
 }
@@ -679,7 +704,7 @@ void CL_ParticleCheckRounds(void)
 void CL_ParticleRun(void)
 {
 	qboolean onlyAlpha;
-	ptl_t *p;
+	ptl_t *p, *c;
 	int i;
 
 	for (i = 0, p = ptl; i < numPtls; i++, p++)
@@ -694,8 +719,8 @@ void CL_ParticleRun(void)
 				p->roundsCnt = p->rounds;
 
 			/* test for end of life */
-			if (p->life && p->t >= p->life) {
-				p->inuse = qfalse;
+			if (p->life && p->t >= p->life && !p->parent) {
+				CL_ParticleFree(p);
 				continue;
 			}
 

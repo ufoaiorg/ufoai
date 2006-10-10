@@ -34,7 +34,7 @@ item plaspistol_ammo
 	{
 		name	"_Charged Pulse"
 		skill 	close
-		projtl	plasmaMiniBall
+		projtl	plasmaMiniFlash
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
 		firesnd	weapons/plasma_s.wav
@@ -108,11 +108,11 @@ item plasrifle_ammo
 	{
 		name	"_Charged Pulse"
 		skill 	assault
-		projtl	plasmaBall
+		projtl	plasmaFlash
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
 		firesnd	weapons/plasma_s.wav
-		speed	350
+		speed	1700
 		spread	"0 2"
 		crouch	0.7
 		range	22
