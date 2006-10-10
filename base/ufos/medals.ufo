@@ -28,7 +28,7 @@ medal coin
 rank scientist
 {
 	name "_Scientist"
-	image "hud/scientist_01"
+	image "hud/rank_scientist"
 	type EMPL_SCIENTIST
 }
 
