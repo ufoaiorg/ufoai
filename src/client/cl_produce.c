@@ -44,6 +44,7 @@ static const int PRODUCE_FACTOR = 1;
 static const int PRODUCE_DIVISOR = 2;
 
 static cvar_t* mn_production_limit;
+static cvar_t* mn_production_workers;
 
 /** @brief number of blank lines between queued items and tech list */
 #define QUEUE_SPACERS 2
@@ -425,6 +426,9 @@ static void PR_ProductionList (void)
 	PR_ProductionSelect();
 	PR_ProductionInfo();
 	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP));
+#if 0
+	Cvar_SetValue("mn_production_workers", /* TODO */);
+#endif
 }
 
 
@@ -436,6 +440,7 @@ void PR_ProductionInit(void)
 	Com_DPrintf("Reset all productions\n");
 	memset(gd.productions, 0, sizeof(production_queue_t)*MAX_BASES);
 	mn_production_limit = Cvar_Get("mn_production_limit", "0", 0, NULL);
+	mn_production_workers = Cvar_Get("mn_production_workers", "0", 0, NULL);
 }
 
 /**
