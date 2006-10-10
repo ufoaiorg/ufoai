@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+static employee_t* currentEmployeeInHospital = NULL;
+
 /**
  * @brief
  * @param[in] chr Character data of an employee
@@ -66,8 +68,8 @@ extern void HOS_HealAll(const base_t const* base)
 
 	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
-			/* TODO: Check whether the employee is in the given base */
-			HOS_HealEmployee(&gd.employees[type][i]);
+			if (E_IsInBase(&gd.employees[type][i], base))
+				HOS_HealEmployee(&gd.employees[type][i]);
 		}
 }
 
@@ -83,13 +85,109 @@ static void HOS_Init (void)
 
 	if (!baseCurrent)
 		return;
-	menuText[TEXT_HOSPITAL] = NULL;
-	/* TODO: Print all hurted employees in the current base */
+
+	*hospitalText = '\0';
+	menuText[TEXT_HOSPITAL] = hospitalText;
+
 	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
 			employee = &gd.employees[type][i];
-			/* TODO: Check whether the employee is in the given base */
+			if (!E_IsInBase(employee, baseCurrent))
+				continue;
+			if (employee->chr.HP < MAX_HP)
+				Q_strcat(hospitalText, va(_("%s\t%s\t(%i/%i)\n"), employee->chr.name, E_GetEmployeeString(type), employee->chr.HP, MAX_HP), sizeof(hospitalText));
 		}
+}
+
+#ifdef DEBUG
+/**
+ * @brief Set the character HP field to MAX_HP
+ */
+static void HOS_HealAll_f (void)
+{
+	int i, type;
+	employee_t* employee = NULL;
+
+	if (!baseCurrent)
+		return;
+
+	for (type = 0; type < MAX_EMPL; type++)
+		for (i = 0; i < gd.numEmployees[type]; i++) {
+			employee = &gd.employees[type][i];
+			if (!E_IsInBase(employee, baseCurrent))
+				continue;
+			employee->chr.HP = MAX_HP;
+		}
+}
+
+/**
+ * @brief Decrement the character HP field by one
+ */
+static void HOS_HurtAll_f (void)
+{
+	int i, type;
+	employee_t* employee = NULL;
+
+	if (!baseCurrent)
+		return;
+
+	for (type = 0; type < MAX_EMPL; type++)
+		for (i = 0; i < gd.numEmployees[type]; i++) {
+			employee = &gd.employees[type][i];
+			if (!E_IsInBase(employee, baseCurrent))
+				continue;
+			employee->chr.HP--;
+		}
+}
+#endif
+
+/**
+ * @brief Click function for hospital menu employee list
+ */
+void HOS_ListClick_f (void)
+{
+	int num, type, i;
+	employee_t* employee;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (!baseCurrent)
+		return;
+
+	/* which employee? */
+	num = atoi(Cmd_Argv(1));
+
+	for (type = 0; type < MAX_EMPL; type++)
+		for (i = 0; i < gd.numEmployees[type]; i++) {
+			employee = &gd.employees[type][i];
+			if (!E_IsInBase(employee, baseCurrent))
+				continue;
+			num--;
+			if (!num) {
+				currentEmployeeInHospital = employee;
+				/* end outer loop, too */
+				type = MAX_EMPL;
+				/* end inner loop */
+				break;
+			}
+		}
+
+	/* open the hospital menu for this employee */
+	MN_PushMenu("hospital_employee");
+}
+
+/**
+ * @brief This is the init function for the hospital_employee menu
+ */
+void HOS_EmployeeInit (void)
+{
+	if (!currentEmployeeInHospital) {
+		Com_Printf("No employee selected\n");
+		return;
+	}
 }
 
 /**
@@ -100,7 +198,12 @@ static void HOS_Init (void)
 extern void HOS_Reset(void)
 {
 	/* add commands */
-	Cmd_AddCommand("hosp_init", HOS_Init, NULL);
-
+	Cmd_AddCommand("hosp_empl_init", HOS_EmployeeInit, "Init function for hospital employee menu");
+	Cmd_AddCommand("hosp_init", HOS_Init, "Init function for hospital menu");
+	Cmd_AddCommand("hosp_list_click", HOS_ListClick_f, "Click function for hospital employee list");
+#ifdef DEBUG
+	Cmd_AddCommand("hosp_hurt_all", HOS_HurtAll_f, "Debug function to hurt all employees in the current base by one");
+	Cmd_AddCommand("hosp_heal_all", HOS_HealAll_f, "Debug function to heal all employees in the current base completly");
+#endif
 	memset(hospitalText, 0, sizeof(hospitalText));
 }
