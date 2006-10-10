@@ -225,7 +225,8 @@ void B_NewBases(void);
 void B_BuildingStatus(void);
 
 building_t *B_GetFreeBuildingType(buildingType_t type);
-int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx);
+int B_GetNumberOfBuildingsInBaseByTypeIDX(int base_idx, int type_idx);
+int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type);
 
 aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index);
 void B_ReviveSoldiersInBase(base_t* base); /* TODO */

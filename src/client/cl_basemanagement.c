@@ -145,7 +145,7 @@ extern void B_BuildingStatus(void)
 
 	switch (baseCurrent->buildingCurrent->buildingStatus) {
 	case B_STATUS_NOT_SET:
-		NumberOfBuildings = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, baseCurrent->buildingCurrent->type_idx);
+		NumberOfBuildings = B_GetNumberOfBuildingsInBaseByTypeIDX(baseCurrent->idx, baseCurrent->buildingCurrent->type_idx);
 		if (NumberOfBuildings)
 			Cvar_Set("mn_building_status", va(_("Already %i in base"), NumberOfBuildings));
 		break;
@@ -603,23 +603,47 @@ void B_BuildingAddToList(building_t * building)
  *
  * @param[in] base_idx Which base
  * @param[in] type_idx Which buildingtype
+ * @sa B_GetNumberOfBuildingsInBaseByType
  */
-int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx)
+int B_GetNumberOfBuildingsInBaseByTypeIDX(int base_idx, int type_idx)
 {
 	int i;
-	int NumberOfBuildings;
+	int NumberOfBuildings = 0;
 
 	if (base_idx < 0 || base_idx >= gd.numBases) {
 		Com_Printf("Bad base-index given: %i\n", base_idx);
 		return -1;
 	}
 
-	NumberOfBuildings = 0;
 	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
 		if (gd.buildings[base_idx][i].type_idx == type_idx)
 			NumberOfBuildings++;
 	}
 	Com_DPrintf("B_GetNumOfBuildType: base: '%s' - num_b: %i - type_idx: %s\n", gd.bases[base_idx].name, NumberOfBuildings, gd.buildingTypes[type_idx].id);
+	return NumberOfBuildings;
+}
+
+/**
+ * @brief Counts the number of buildings of a particular type in a base.
+ *
+ * @param[in] base_idx Which base
+ * @param[in] type Building type value
+ * @sa B_GetNumberOfBuildingsInBaseByTypeIDX
+ */
+int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type)
+{
+	int i;
+	int NumberOfBuildings = 0;
+
+	if (base_idx < 0 || base_idx >= gd.numBases) {
+		Com_Printf("Bad base-index given: %i\n", base_idx);
+		return -1;
+	}
+
+	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
+		if (gd.buildings[base_idx][i].buildingType == type)
+			NumberOfBuildings++;
+	}
 	return NumberOfBuildings;
 }
 
@@ -678,7 +702,7 @@ void B_BuildingInit(void)
 		/*make an entry in list for this building */
 
 		if (buildingType->visible) {
-			numSameBuildings = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType->type_idx);
+			numSameBuildings = B_GetNumberOfBuildingsInBaseByTypeIDX(baseCurrent->idx, buildingType->type_idx);
 
 			if (buildingType->moreThanOne) {
 				/* skip if limit of BASE_SIZE*BASE_SIZE exceeded */
@@ -1030,7 +1054,7 @@ void B_ClearBase(base_t *const base)
 		return;
 
 	/* setup team */
-	if (!E_CountUnhired(base, EMPL_SOLDIER)) {
+	if (!E_CountUnhired(EMPL_SOLDIER)) {
 		/* should be multiplayer (campaignmode TODO) or singleplayer */
 		Com_DPrintf("B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
 		for (i = 0; i < curCampaign->soldiers; i++)
@@ -1819,7 +1843,7 @@ static void B_BuildingList_f(void)
 		Com_Printf("\nBase id %i: %s\n", i, base->name);
 		for (j = 0; j < gd.numBuildings[base->idx]; j++) {
 
-			Com_Printf("...Building: %s #%i - id: %i\n", building->id, B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, building->buildingType),
+			Com_Printf("...Building: %s #%i - id: %i\n", building->id, B_GetNumberOfBuildingsInBaseByTypeIDX(baseCurrent->idx, building->buildingType),
 					   building->idx);
 			Com_Printf("...image: %s\n", building->image);
 			Com_Printf(".....Status:\n");
