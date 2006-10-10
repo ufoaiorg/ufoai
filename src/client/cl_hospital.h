@@ -27,3 +27,4 @@ extern void HOS_Reset(void);
 extern qboolean HOS_HealCharacter(character_t* chr);
 extern qboolean HOS_HealEmployee(employee_t* employee);
 extern void HOS_HealAll(const base_t const* base);
+extern void HOS_HospitalRun(void);

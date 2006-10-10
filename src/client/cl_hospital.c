@@ -26,7 +26,71 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+#define MAX_EMPLOYEES_IN_HOSPITAL 64
+
+/** @brief This is the current selected employee for the hospital_employee menu */
 static employee_t* currentEmployeeInHospital = NULL;
+
+/** @brief This is a list of all employees that are in active healing - null terminated! */
+static employee_t* employeesInHospitalList[MAX_EMPLOYEES_IN_HOSPITAL];
+
+/**
+ * @brief Checks whether an employee should or can (in case of full healing) be removed
+ * from the employeesInHospitalList array
+ */
+void HOS_CheckRemovalFromEmployeeList(employee_t* employee)
+{
+	int i = 0;
+	/* set to first pos in our array */
+	employee_t* listEmployee = employeesInHospitalList;
+
+	if (employee->chr.HP >= MAX_HP) {
+		while (listEmployee) {
+			if (listEmployee == employee)
+				break;
+			listEmployee++;
+			i++;
+		}
+		while (listEmployee) {
+			employeesInHospitalList[i] = employeesInHospitalList[i+1];
+			i++;
+			listEmployee++;
+		}
+	}
+}
+
+/**
+ * @brief Adds an employee to the employeesInHospitalList array
+ */
+void HOS_AddToEmployeeList(employee_t* employee)
+{
+	employee_t* listEmployee = employeesInHospitalList;
+
+	while (listEmployee) {
+		listEmployee++;
+	}
+	/* TODO: Add */
+}
+
+
+/**
+ * @brief Checks what the status of a soldier is
+ * @sa CL_CampaignRun
+ */
+extern void HOS_HospitalRun(void)
+{
+	int i;
+	employee_t* employee;
+
+	employee = *employeesInHospitalList;
+	/* loop until null is reached (end of list) */
+	while (employee){
+		if (employee->chr.HP < MAX_HP)
+			employee->chr.HP++;
+		HOS_CheckRemovalFromEmployeeList(employee);
+		employee++;
+	}
+}
 
 /**
  * @brief
@@ -77,6 +141,7 @@ static char hospitalText[1024];
 
 /**
  * @brief Script command to init the hospital menu
+ * @sa HOS_EmployeeInit
  */
 static void HOS_Init (void)
 {
@@ -154,8 +219,10 @@ void HOS_ListClick_f (void)
 		return;
 	}
 
-	if (!baseCurrent)
+	if (!baseCurrent) {
+		currentEmployeeInHospital = NULL;
 		return;
+	}
 
 	/* which employee? */
 	num = atoi(Cmd_Argv(1));
@@ -163,31 +230,47 @@ void HOS_ListClick_f (void)
 	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
 			employee = &gd.employees[type][i];
-			if (!E_IsInBase(employee, baseCurrent))
+			if (!E_IsInBase(employee, baseCurrent) || employee->chr.HP >= MAX_HP)
 				continue;
-			num--;
 			if (!num) {
 				currentEmployeeInHospital = employee;
 				/* end outer loop, too */
-				type = MAX_EMPL;
+				type = MAX_EMPL + 1;
 				/* end inner loop */
 				break;
 			}
+			num--;
 		}
 
 	/* open the hospital menu for this employee */
-	MN_PushMenu("hospital_employee");
+	if (type != MAX_EMPL)
+		MN_PushMenu("hospital_employee");
 }
+
+static char employeeDesc[512];
 
 /**
  * @brief This is the init function for the hospital_employee menu
  */
 void HOS_EmployeeInit (void)
 {
+	character_t* c;
+
 	if (!currentEmployeeInHospital) {
 		Com_Printf("No employee selected\n");
 		return;
 	}
+
+	/* TODO */
+	menuText[TEXT_STANDARD] = employeeDesc;
+	*employeeDesc = '\0';
+
+	c = &currentEmployeeInHospital->chr;
+
+	CL_CharacterCvars(c);
+
+	Cvar_SetValue("mn_hp", c->HP);
+	Cvar_SetValue("mn_hpmax", MAX_HP);
 }
 
 /**
@@ -206,4 +289,5 @@ extern void HOS_Reset(void)
 	Cmd_AddCommand("hosp_heal_all", HOS_HealAll_f, "Debug function to heal all employees in the current base completly");
 #endif
 	memset(hospitalText, 0, sizeof(hospitalText));
+	memset(employeesInHospitalList, 0, sizeof(employeesInHospitalList));
 }
