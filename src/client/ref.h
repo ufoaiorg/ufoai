@@ -10,7 +10,7 @@ All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
 15/06/06, Eddy Cullen (ScreamingWithNoSound):
 	Reformatted to agreed style.
-	Added doxygen file comment.
+ 	Added doxygen file comment.
 	Updated copyright notice.
 	Modified inclusion guard.
 

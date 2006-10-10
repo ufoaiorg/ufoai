@@ -339,9 +339,10 @@ particle plasmaMiniBall
 {
 	init
 	{
-		image  sfx/plasmaball
+		image  sfx/plasmaflash
 		blend  add
-		style  facing
+		style  axis
+		color  "1 1 1 .5"
 	}
 	run
 	{
@@ -350,7 +351,7 @@ particle plasmaMiniBall
 		mul  float 16.0
 		sin  #
 		mul  #
-		add  pos "4 4"
+		add  pos "64 8"
 		pop  *size
 	}
 }

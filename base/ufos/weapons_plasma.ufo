@@ -38,7 +38,7 @@ item plaspistol_ammo
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
 		firesnd	weapons/plasma_s.wav
-		speed	800
+		speed	1800
 		spread	"0 3"
 		crouch	0.8
 		range	15
@@ -112,7 +112,7 @@ item plasrifle_ammo
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
 		firesnd	weapons/plasma_s.wav
-		speed	700
+		speed	350
 		spread	"0 2"
 		crouch	0.7
 		range	22
@@ -189,7 +189,7 @@ item plasblaster_ammo
 		impsnd	weapons/plasma_grenade.wav
 		bodysnd	weapons/plasma_grenade.wav
 		gravity	true
-		launched true		
+		launched true
 		spread	"0 1"
 		range	17
 		shots	1

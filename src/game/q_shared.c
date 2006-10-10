@@ -3212,7 +3212,7 @@ char *blend_names[BLEND_LAST] = {
 };
 
 char *style_names[STYLE_LAST] = {
-	"facing", "rotated", "beam", "line"
+	"facing", "rotated", "beam", "line", "axis"
 };
 
 char *fade_names[FADE_LAST] = {

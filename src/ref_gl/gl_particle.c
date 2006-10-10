@@ -53,6 +53,7 @@ void R_DrawSprite(ptl_t * p)
 		break;
 
 	case STYLE_BEAM:
+	case STYLE_AXIS:
 		AngleVectors(p->angles, right, NULL, NULL);
 		CrossProduct(right, vpn, up);
 		VectorNormalize(up);

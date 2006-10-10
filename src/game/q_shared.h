@@ -722,6 +722,7 @@ typedef enum {
 	STYLE_ROTATED,
 	STYLE_BEAM,
 	STYLE_LINE,
+	STYLE_AXIS,
 
 	STYLE_LAST
 } style_t;
