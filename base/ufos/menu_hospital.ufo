@@ -41,10 +41,80 @@ menu hospital
 	}
 
 	// ==================
+	// employee list
+	// ==================
+
+	text hosp_list
+	{
+		pos		"40 60"
+		size	"402 690"
+		bgcolor "1 1 1 0.5"
+		format	"22 0"
+		click
+		rclick
+		num		25
+		mousefx true
+	}
+
+	// ==================
 	// init function
 	// ==================
 
 	func init
 	{
+		cmd hosp_init
 	}
 }
+
+// ======================
+// HOSPITAL EMPLOYEE MENU
+// ======================
+menu hospital_employee
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/hosp_empl_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/hosp_empl_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/hosp_empl_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/hosp_empl_lr
+		pos		"512 512"
+	}
+
+	// ==================
+	// init function
+	// ==================
+
+	func init
+	{
+		cmd hope_empl_init
+	}
+}
+

@@ -47,7 +47,7 @@ menu production
 	string txt_credits_caption
 	{
 		string	"_CREDIT"
-		pos	"650 70"
+		pos	"610 30"
 		font	f_big
 		align	ul
 	}
@@ -56,7 +56,47 @@ menu production
 	{
 		font	"f_big"
 		string	"*cvar mn_credits"
-		pos		"944 70"
+		pos		"975 30"
+		align	ur
+	}
+
+	// ==================
+	// prod limit
+	// ==================
+
+	string txt_prod_limit_caption
+	{
+		string	"_Productionlimit"
+		pos	"610 60"
+		font	f_small
+		align	ul
+	}
+
+	string txt_prod_limit
+	{
+		font	"f_small"
+		string	"*cvar mn_production_limit"
+		pos		"975 60"
+		align	ur
+	}
+
+	// ==================
+	// workers
+	// ==================
+
+	string txt_prod_workers_caption
+	{
+		string	"_Workers"
+		pos	"610 80"
+		font	f_small
+		align	ul
+	}
+
+	string txt_prod_workers
+	{
+		font	"f_small"
+		string	"*cvar mn_production_workers"
+		pos		"975 80"
 		align	ur
 	}
 
