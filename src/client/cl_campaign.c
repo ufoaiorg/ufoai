@@ -1203,6 +1203,7 @@ void CL_CampaignRun(void)
 			/* every day */
 			B_UpdateBaseData();
 			CL_CampaignRunMarket();
+			HOS_HospitalRun();
 		}
 
 		/* check for campaign events */
