@@ -569,22 +569,30 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 			}
 		}
 
-		/* This will cut down the string to 160 chars */
-		/* NOTE: There can be a non critical overflow in Com_sprintf */
-		Com_sprintf(searchString, MAX_FONTNAME + MAX_HASH_STRING, "%s%s", fontID, buffer);
-		cache = Font_GetFromCache(searchString);
-		if (!cache)
-			cache = Font_GenerateCache(buffer, searchString, f);
+		if (strlen(buffer)) {
+			/* This will cut down the string to 160 chars */
+			/* NOTE: There can be a non critical overflow in Com_sprintf */
+			Com_sprintf(searchString, MAX_FONTNAME + MAX_HASH_STRING, "%s%s", fontID, buffer);
 
-		if (!cache)
-			ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n");
+			cache = Font_GetFromCache(searchString);
+			if (!cache)
+				cache = Font_GenerateCache(buffer, searchString, f);
 
-		Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
+			if (!cache) {
+				/* maybe we are running out of mem */
+				Font_CleanCache();
+				cache = Font_GenerateCache(buffer, searchString, f);
+			}
+			if (!cache)
+				ri.Sys_Error(ERR_FATAL, "...could not generate font surface '%s'\n", buffer);
+
+			Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
+			fy += fh;
+			returnHeight += (texh0 > 0) ? texh0 : h;
+		}
 
 		/* skip for next line */
-		fy += fh;
 		buffer = pos;
-		returnHeight += (texh0 > 0) ? texh0 : h;
 		x = locX;
 	} while (buffer);
 

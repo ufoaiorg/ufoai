@@ -2475,29 +2475,45 @@ void G_KillTeam(void)
 	G_CheckEndGame();
 }
 
-edict_t *G_ShotTargetAtPos(edict_t *shooter, pos3_t at)
+/**
+ * @brief
+ * @param[in] shooter
+ * @param[in] at
+ * @sa G_FireWithJudgementCall
+ */
+static edict_t *G_ShotTargetAtPos(edict_t *shooter, pos3_t at)
 {
 	edict_t *target;
 	int i;
 
 	target = NULL;
 	for (i = 0; i < globals.num_edicts; i++) {
-	       if (g_edicts[i].inuse
-		       && (g_edicts[i].type == ET_ACTOR || g_edicts[i].type == ET_UGV)
-		       && !(g_edicts[i].state & STATE_DEAD)
-			   && g_edicts[i].team != TEAM_CIVILIAN
-			   && g_edicts[i].team != shooter->team
-		       && VectorCompare(at, g_edicts[i].pos)) {
-		       target = &g_edicts[i];
-		       break;
-	       }
+		if (g_edicts[i].inuse
+			&& (g_edicts[i].type == ET_ACTOR || g_edicts[i].type == ET_UGV)
+			&& !(g_edicts[i].state & STATE_DEAD)
+			&& g_edicts[i].team != TEAM_CIVILIAN
+			&& g_edicts[i].team != shooter->team
+			&& VectorCompare(at, g_edicts[i].pos)) {
+			target = &g_edicts[i];
+			break;
+		}
 	}
 
 	return target;
 }
 
-/* TODO: factor out key functions and share with G_ShootSingle */
-trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int mask, item_t *weapon, int debug_type)
+/**
+ * @brief
+ * @TODO: factor out key functions and share with G_ShootSingle
+ * @param[in] shooter
+ * @param[in] fd
+ * @param[in] from
+ * @param[in] at
+ * @param[in] mask
+ * @param[in] weapon
+ * @param[in] debug_type
+ */
+static trace_t G_TraceShot(edict_t *shooter, fireDef_t *fd, vec3_t from, pos3_t at, int mask, item_t *weapon, int debug_type)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
@@ -2604,7 +2620,7 @@ static void G_ShotProbability(edict_t *shooter, edict_t *target, int type, int *
 		*self_fraction = *self_fraction / *self;
 }
 
-qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type)
+static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type)
 {
 	edict_t *shooter, *target;
 	int civ = 0, ff, hit, maxff, minhit, self = 0;

@@ -275,7 +275,7 @@ void CL_ResetCharacters(base_t* const base)
 	for (i = 0; i < MAX_EMPL; i++)
 		E_UnhireAllEmployees(base, i);
 
-	for (i = 0; i < base->numAircraftInBase; i++) { 
+	for (i = 0; i < base->numAircraftInBase; i++) {
 		base->teamNum[i] = 0;
 		CL_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base,i));
 	}
@@ -723,7 +723,7 @@ void CL_UpdateHireVar(void)
 	Cvar_Set("mn_hired", va(_("%i of %i"), baseCurrent->teamNum[baseCurrent->aircraftCurrent], aircraft->size));
 
 	/* update curTeam list */
-	for (i = 0, p = 0; i < (int)cl_numnames->value; i++) {	
+	for (i = 0, p = 0; i < (int)cl_numnames->value; i++) {
 		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
@@ -762,7 +762,7 @@ void CL_ResetTeamInBase(void)
 	}
 
 	CL_CleanTempInventory();
-	
+
 	baseCurrent->teamNum[0] = 0;
 	CL_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(baseCurrent,0));
 
@@ -956,15 +956,13 @@ static qboolean CL_AssignSoldierToAircraft(int employee_idx, int aircraft_idx)
 		/* Check whether the soldier is already on another aircraft */
 		Com_DPrintf("CL_AssignSoldierToAircraft: attempting to find idx '%d'\n", employee_idx);
 
-		if ( CL_SoldierInAircraft(employee_idx, -1) )
-		{
+		if (CL_SoldierInAircraft(employee_idx, -1)) {
 			Com_DPrintf("CL_AssignSoldierToAircraft: found idx '%d' \n",employee_idx);
 			return qfalse;
 		}
 
 		/* Assign the soldier to the aircraft. */
 		if (aircraft->size > baseCurrent->teamNum[aircraft_idx]) {
-
 			Com_DPrintf("CL_AssignSoldierToAircraft: attemting to add idx '%d' \n",employee_idx);
 			CL_AddToAircraftTeam(aircraft,employee_idx);
 			baseCurrent->teamNum[aircraft_idx]++;
