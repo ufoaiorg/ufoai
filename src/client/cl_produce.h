@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief maximum number of productions queued in any one base */
 #define MAX_PRODUCTIONS		256
+#define MAX_PRODUCTIONS_PER_WORKSHOP 5
 
 /** @note:
  * We can get the tech pointer from csi.ods

@@ -43,6 +43,8 @@ static int selectedIndex 			= -1;
 static const int PRODUCE_FACTOR = 1;
 static const int PRODUCE_DIVISOR = 2;
 
+static cvar_t* mn_production_limit;
+
 /** @brief number of blank lines between queued items and tech list */
 #define QUEUE_SPACERS 2
 
@@ -53,10 +55,17 @@ static production_t *PR_QueueNew(production_queue_t *queue, signed int objID, si
 {
 	technology_t *t;
 	objDef_t *od;
+	int numWorkshops = 0;
 	production_t *prod;
 
-	if (queue->numItems >= MAX_PRODUCTIONS)
+	assert(baseCurrent);
+
+	numWorkshops = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP);
+
+	if (queue->numItems >= numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP) {
+		Com_Printf("PR_QueueNew: Max number of productions reached in %i workshops - build more workshops\n", numWorkshops);
 		return NULL;
+	}
 
 	/* initialize */
 	prod = &queue->items[queue->numItems];
@@ -185,7 +194,7 @@ void PR_ProductionRun(void)
  * @brief Prints information about the selected item in production
  * @note -1 for objID means that there ic no production in this base
  */
-static void PR_ProductionInfo ()
+static void PR_ProductionInfo (void)
 {
 	static char productionInfo[512];
 	technology_t *t;
@@ -205,7 +214,9 @@ static void PR_ProductionInfo ()
 		t = (technology_t*)(od->tech);
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
 		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR)),
-				 sizeof(productionInfo) );
+				sizeof(productionInfo) );
+		Q_strcat(productionInfo, va(_("Productiontime\t%ih\n"), (t->produceTime)),
+				sizeof(productionInfo) );
 		CL_ItemDescription(objID);
 	} else {
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
@@ -333,7 +344,7 @@ static void PR_ProductionListClick_f (void)
 }
 
 /** @brief update the list of queued and available items */
-static void PR_UpdateProductionList()
+static void PR_UpdateProductionList(void)
 {
 	int i;
 	static char productionList[1024];
@@ -388,7 +399,7 @@ static void PR_UpdateProductionList()
 /**
  * @brief will select a new tab on the produciton list
  */
-static void PR_ProductionSelect()
+static void PR_ProductionSelect(void)
 {
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
@@ -413,6 +424,7 @@ static void PR_ProductionList (void)
 
 	PR_ProductionSelect();
 	PR_ProductionInfo();
+	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP));
 }
 
 
@@ -423,6 +435,7 @@ void PR_ProductionInit(void)
 {
 	Com_DPrintf("Reset all productions\n");
 	memset(gd.productions, 0, sizeof(production_queue_t)*MAX_BASES);
+	mn_production_limit = Cvar_Get("mn_production_limit", "0", 0, NULL);
 }
 
 /**
@@ -523,7 +536,7 @@ void PR_ProductionDecrease(void)
 /**
  * @brief shift the current production up the list
  */
-static void PR_ProductionUp()
+static void PR_ProductionUp(void)
 {
 	production_queue_t *queue;
 
@@ -543,7 +556,7 @@ static void PR_ProductionUp()
 /**
  * @brief shift the current production down the list
  */
-static void PR_ProductionDown()
+static void PR_ProductionDown(void)
 {
 	production_queue_t *queue;
 
