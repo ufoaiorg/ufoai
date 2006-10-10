@@ -713,6 +713,7 @@ static void CL_SelectCmd(void)
 		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -num);
 		if (!chr)
 			Sys_Error("CL_SelectCmd: No hired character at pos %i (base: %i)\n", num, baseCurrent->idx);
+		/* FIXME: This isn't true ACTOR_SIZE_NORMAL has nothing to do with ugvs anymore - old code */
 		if ( chr->fieldSize == ACTOR_SIZE_NORMAL )
 			CL_CharacterCvars(chr);
 		else
