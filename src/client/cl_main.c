@@ -1671,4 +1671,5 @@ void CL_Shutdown(void)
 	IN_Shutdown();
 	VID_Shutdown();
 	MN_Shutdown();
+	FS_Shutdown();
 }

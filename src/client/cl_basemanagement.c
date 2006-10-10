@@ -43,7 +43,6 @@ static int numBuildingConstructionList;
  */
 void B_ResetBuildingCurrent(void)
 {
-
 	if (Cmd_Argc() > 2) {
 		Com_Printf("Usage: reset_building_current [arg]\n");
 		return;
@@ -217,6 +216,34 @@ void B_HireForBuilding (building_t * building, int num)
 }
 
 /**
+ * @brief Checks whether a building as status B_STATUS_WORKING and sets hasLab, hasHospital and so on
+ */
+void B_UpdateBaseBuildingStatus(building_t* building, base_t* base, buildingStatus_t status)
+{
+	assert(base);
+	assert(building);
+
+	building->buildingStatus = status;
+
+	switch (building->buildingType) {
+	case B_LAB:
+		if (building->buildingStatus == B_STATUS_WORKING)
+			base->hasLab = qtrue;
+		break;
+	case B_HOSPITAL:
+		if (building->buildingStatus == B_STATUS_WORKING)
+			base->hasHospital = qtrue;
+		break;
+	case B_HANGAR:
+		if (building->buildingStatus == B_STATUS_WORKING)
+			base->hasHangar = qtrue;
+		break;
+	default:
+		break;
+	}
+}
+
+/**
  * @brief Setup new base?
  */
 void B_SetUpBase(void)
@@ -249,7 +276,7 @@ void B_SetUpBase(void)
 			baseCurrent->buildingCurrent = building;
 			/* fake a click to basemap */
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
-			building->buildingStatus = B_STATUS_WORKING;
+			B_UpdateBaseBuildingStatus(building, baseCurrent, B_STATUS_WORKING);
 
 			/* now call the onconstruct trigger */
 			if (*building->onConstruct) {
@@ -358,7 +385,7 @@ static qboolean B_ConstructBuilding(void)
 		return qfalse;
 
 	/*enough credits to build this? */
-	if ( !B_CheckCredits(baseCurrent->buildingCurrent->fixCosts) ) {
+	if (!B_CheckCredits(baseCurrent->buildingCurrent->fixCosts)) {
 		Com_DPrintf("B_ConstructBuilding: Not enough credits to build: '%s'\n", baseCurrent->buildingCurrent->id);
 		B_ResetBuildingCurrent();
 		return qfalse;
@@ -376,7 +403,7 @@ static qboolean B_ConstructBuilding(void)
 		baseCurrent->buildingCurrent->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
 		baseCurrent->buildingCurrent->timeStart = ccs.date.day;
 	} else {
-		baseCurrent->buildingCurrent->buildingStatus = B_STATUS_WORKING;
+		B_UpdateBaseBuildingStatus(baseCurrent->buildingCurrent, baseCurrent, B_STATUS_WORKING);
 	}
 
 	CL_UpdateCredits(ccs.credits - baseCurrent->buildingCurrent->fixCosts);
@@ -393,7 +420,8 @@ void B_NewBuilding(void)
 		return;
 
 	if (baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
-		if ( B_ConstructBuilding() ) {
+		/* credits are updated in the construct function */
+		if (B_ConstructBuilding()) {
 			B_BuildingStatus();
 			Com_DPrintf("B_NewBuilding: buildingCurrent->buildingStatus = %i\n", baseCurrent->buildingCurrent->buildingStatus);
 		}
@@ -459,23 +487,11 @@ void B_SetBuildingByClick(int row, int col)
 			} else {
 				baseCurrent->buildingToBuild = -1;
 			}
+			/* credits are updated here, too */
 			B_NewBuilding();
 
 			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->idx;
 
-			switch (baseCurrent->buildingCurrent->buildingType) {
-			case B_LAB:
-				baseCurrent->hasLab = 1;
-				break;
-			case B_HOSPITAL:
-				baseCurrent->hasHospital = 1;
-				break;
-			case B_HANGAR:
-				baseCurrent->hasHangar = 1;
-				break;
-			default:
-				break;
-			}
 			B_ResetBuildingCurrent();
 			B_BuildingInit();	/* update the building-list */
 		} else {
@@ -1967,7 +1983,7 @@ int B_CheckBuildingConstruction(building_t * building, int base_idx)
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 		if (building->timeStart && (building->timeStart + building->buildTime) <= ccs.date.day) {
-			building->buildingStatus = B_STATUS_WORKING;
+			B_UpdateBaseBuildingStatus(building, &gd.bases[base_idx], B_STATUS_WORKING);
 
 			if (*building->onConstruct) {
 				gd.bases[base_idx].buildingCurrent = building;

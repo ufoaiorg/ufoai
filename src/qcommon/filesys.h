@@ -8,7 +8,6 @@ FILESYSTEM
 #define MAX_MAPS 400
 extern char *maps[MAX_MAPS];
 extern int anzInstalledMaps;
-extern qboolean mapsInstalledInit;
 extern int mapInstalledIndex;
 
 typedef enum {
@@ -28,7 +27,6 @@ int FS_FOpenFileWrite(const char *filename, FILE ** f);
 int FS_Seek(FILE * f, long offset, int origin);
 int FS_WriteFile(const void *buffer, int len, const char *filename);
 int FS_Write(const void *buffer, int len, FILE * f);
-void FS_GetMaps(void);
 void FS_InitFilesystem(void);
 void FS_SetGamedir(char *dir);
 char *FS_Gamedir(void);
@@ -38,7 +36,7 @@ char *FS_GetCwd(void);
 void FS_NormPath(char *path);
 qboolean FS_FileExists(char *filename);
 
-void FS_GetMaps(void);
+void FS_GetMaps(qboolean reset);
 
 int FS_FOpenFile(const char *filename, FILE ** file);
 void FS_FCloseFile(FILE * f);

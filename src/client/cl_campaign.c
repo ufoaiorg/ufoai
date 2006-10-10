@@ -2622,6 +2622,8 @@ static value_t mission_vals[] = {
 	,
 	{"storyrelated", V_BOOL, offsetof(mission_t, storyRelated)}
 	,
+	{"loadingscreen", V_STRING, offsetof(mission_t, loadingscreen)}
+	,
 	{NULL, 0, 0}
 	,
 };
@@ -2743,6 +2745,8 @@ void CL_ParseMission(char *name, char **text)
 	if (abs(ms->pos[1]) > 90.0f)
 		Com_Printf("Latitude for mission '%s' is bigger than 90 NS (%.0f)\n", ms->name, ms->pos[1]);
 #endif
+	if (!*ms->loadingscreen)
+		Q_strncpyz(ms->loadingscreen, "default.jpg", MAX_VAR);
 }
 
 

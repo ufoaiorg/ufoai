@@ -60,6 +60,7 @@ typedef struct mission_s {
 	char *text;
 	char name[MAX_VAR];
 	char map[MAX_VAR];
+	char loadingscreen[MAX_VAR];
 	char param[MAX_VAR];
 	char location[MAX_VAR];
 	char nation[MAX_VAR];

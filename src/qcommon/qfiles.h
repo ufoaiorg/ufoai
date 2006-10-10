@@ -25,9 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 ========================================================================
-
 The .pak files are just a linear collapse of a directory tree
-
 ========================================================================
 */
 
@@ -80,13 +78,14 @@ typedef struct dpak3header_s {
 /* Make sure we have this available */
 char **FS_ListFiles(char *findname, int *numfiles, unsigned musthave, unsigned canthave);
 
+/* cleanup function */
+void FS_Shutdown(void);
+
 /* End .pk3 support */
 
 /*
 ========================================================================
-
 PCX files are used for as many images as possible
-
 ========================================================================
 */
 

@@ -1050,7 +1050,7 @@ char *FS_NextScriptHeader(char *files, char **name, char **text)
 		Q_strncpyz(lastList, files, MAX_QPATH);
 
 		for (block = fs_blocklist; block; block = block->next)
-			if (!strcmp(files, block->path))
+			if (!Q_strncmp(files, block->path, MAX_QPATH))
 				break;
 
 		if (!block)
@@ -1122,48 +1122,58 @@ char *FS_NextScriptHeader(char *files, char **name, char **text)
 
 /* global vars for maplisting */
 char *maps[MAX_MAPS];
-int anzInstalledMaps = 0;
-qboolean mapsInstalledInit = qfalse;
+int anzInstalledMaps = -1;
+static qboolean mapsInstalledInit = qfalse;
 int mapInstalledIndex = 0;
 
-#define MAX_MAPNAME_LENGTH 256
 /**
  * @brief
+ * @param[in] reset If true the directory is scanned everytime for new maps (useful for dedicated servers).
+ * If false we only use the maps array (for clients e.g.)
  */
-void FS_GetMaps(void)
+void FS_GetMaps(qboolean reset)
 {
-	char name[MAX_OSPATH];
-	int len, status;
-	char *found;
-	char *path = NULL;
+	char findname[MAX_OSPATH];
+	char filename[MAX_QPATH];
+	int status, i;
 	char *baseMapName = NULL;
+	char **dirnames;
+	char *path = NULL;
+	int ndirs;
 
-	if (mapsInstalledInit)
+	/* force a reread */
+	if (!reset && mapsInstalledInit)
 		return;
 
-	Com_sprintf(name, sizeof(name), "maps/*.bsp");
-	len = strlen(name);
 	mapInstalledIndex = 0;
-	while ((path = FS_NextPath(path)) != 0) {
-		found = Sys_FindFirst(va("%s/%s", path, name), 0, 0);
-		while (found && anzInstalledMaps < MAX_MAPS) {
-			baseMapName = COM_SkipPath(found);
-			COM_StripExtension(baseMapName, found);
-			status = CheckBSPFile(found);
-			if (!status) {
-				/*searched a specific map? */
-				maps[anzInstalledMaps] = (char *) malloc(MAX_MAPNAME_LENGTH * sizeof(char));
-				if (maps[anzInstalledMaps] == NULL) {
-					Com_Printf("Could not allocate memory in MN_GetMaps\n");
-					return;
-				}
-				Q_strncpyz(maps[anzInstalledMaps], found, MAX_MAPNAME_LENGTH);
+	anzInstalledMaps = -1;
+
+	while ((path = FS_NextPath(path)) != NULL) {
+		Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", path);
+		FS_NormPath(findname);
+
+		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, 0)) != 0) {
+			for (i = 0; i < ndirs - 1; i++) {
 				anzInstalledMaps++;
-			} else
-				Com_Printf("invalid mapstatus: %i (%s)\n", status, found);
-			found = Sys_FindNext(0, 0);
+				Com_DPrintf("...found '%s'\n", i, ndirs, dirnames[i]);
+				baseMapName = COM_SkipPath(dirnames[i]);
+				COM_StripExtension(baseMapName, filename);
+				status = CheckBSPFile(filename);
+				if (!status) {
+					/*searched a specific map? */
+					maps[anzInstalledMaps] = (char *) malloc(MAX_QPATH * sizeof(char));
+					if (maps[anzInstalledMaps] == NULL) {
+						Com_Printf("Could not allocate memory in MN_GetMaps\n");
+						free(dirnames[i]);
+						continue;
+					}
+					Q_strncpyz(maps[anzInstalledMaps], filename, MAX_QPATH);
+				} else
+					Com_Printf("invalid mapstatus: %i (%s)\n", status, dirnames[i]);
+				free(dirnames[i]);
+			}
+			free(dirnames);
 		}
-		Sys_FindClose();
 	}
 
 	mapsInstalledInit = qtrue;
@@ -1256,4 +1266,39 @@ qboolean FS_FileExists(char *filename)
 #else
 	return (access(filename, R_OK) == 0);
 #endif
+}
+
+/**
+ * @brief Extract the path from a given filename
+ * @param[in] filename The complete filename
+ * @return pointer to start location of the base path
+ */
+char* FS_GetBasePath(char* filename)
+{
+	char* pathSep = filename;
+	char* endPos;
+
+	FS_NormPath(filename);
+	while ((pathSep = strstr(pathSep, "/")) != NULL) {
+		/* set to next / */
+		endPos = pathSep;
+	}
+	if (endPos)
+		endPos = '\0';
+
+	return filename;
+}
+
+/**
+ * @brief Cleanup function
+ */
+void FS_Shutdown(void)
+{
+	int i;
+
+	/* free malloc'ed space for maplist */
+	if (mapsInstalledInit) {
+		for (i=0; i<=anzInstalledMaps;i++)
+			free(maps[i]);
+	}
 }

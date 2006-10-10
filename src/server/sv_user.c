@@ -273,7 +273,7 @@ static void SV_ExecuteUserCommand(char *s)
 /*	SV_BeginRedirect (RD_CLIENT); */
 
 	for (u = ucmds; u->name; u++)
-		if (!strcmp(Cmd_Argv(0), u->name)) {
+		if (!Q_strncmp(Cmd_Argv(0), u->name, MAX_VAR)) {
 			u->func();
 			break;
 		}

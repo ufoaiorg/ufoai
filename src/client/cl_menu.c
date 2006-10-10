@@ -1464,7 +1464,7 @@ void MN_DrawMenus(void)
 						node->texl[0] = -(int) (0.01 * (node->name[4] - 'a') * cl.time) % 64;
 						node->texh[0] = node->texl[0] + node->size[0];
 					}
-					if (ref)
+					if (ref && *ref)
 						re.DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
 								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
 					break;
@@ -2867,11 +2867,11 @@ void CL_ListMaps_f(void)
 {
 	int i;
 
-	if (!mapsInstalledInit)
-		FS_GetMaps();
+	FS_GetMaps(qtrue);
 
-	for (i = 0; i < anzInstalledMaps - 1; i++)
+	for (i=0; i<=anzInstalledMaps; i++)
 		Com_Printf("%s\n", maps[i]);
+	Com_Printf("-----\n %i installed maps\n", anzInstalledMaps+1);
 }
 
 /**
@@ -2884,8 +2884,7 @@ void MN_MapInfo(void)
 	qboolean normalized = qfalse, found = qfalse;
 
 	/* maybe mn_next/prev_map are called before getmaps??? */
-	if (!mapsInstalledInit)
-		FS_GetMaps();
+	FS_GetMaps(qfalse);
 
 	Cvar_Set("mn_mappic", "maps/shots/na.jpg");
 	Cvar_Set("mn_mappic2", "maps/shots/na.jpg");
@@ -2939,8 +2938,7 @@ void MN_MapInfo(void)
  */
 void MN_GetMaps_f(void)
 {
-	if (!mapsInstalledInit)
-		FS_GetMaps();
+	FS_GetMaps(qfalse);
 
 	MN_MapInfo();
 }
@@ -2950,7 +2948,7 @@ void MN_GetMaps_f(void)
  */
 void MN_NextMap(void)
 {
-	if (mapInstalledIndex < anzInstalledMaps - 1)
+	if (mapInstalledIndex < anzInstalledMaps)
 		mapInstalledIndex++;
 	else
 		mapInstalledIndex = 0;
@@ -2965,7 +2963,7 @@ void MN_PrevMap(void)
 	if (mapInstalledIndex > 0)
 		mapInstalledIndex--;
 	else
-		mapInstalledIndex = anzInstalledMaps - 1;
+		mapInstalledIndex = anzInstalledMaps;
 	MN_MapInfo();
 }
 

@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -220,11 +220,9 @@ qboolean SV_RateDrop(client_t * c)
 	return qfalse;
 }
 
-/*
-=======================
-SV_SendClientMessages
-=======================
-*/
+/**
+ * @brief
+ */
 void SV_SendClientMessages(void)
 {
 	int i;
