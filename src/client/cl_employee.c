@@ -162,7 +162,7 @@ employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int idx
 {
 	int i;
 
-	if ( !base || type >= MAX_EMPL || type < 0 || idx < 0 )
+	if ( !base || type >= MAX_EMPL || idx < 0 )
 		return NULL;
 
 	for (i=0; i<gd.numEmployees[type]; i++) {
@@ -183,7 +183,7 @@ void E_UnhireAllEmployees(const base_t* const base, employeeType_t type)
 	int i;
 	employee_t *employee = NULL;
 
-	if ( !base || type > MAX_EMPL || type < 0 )
+	if ( !base || type > MAX_EMPL )
 		return;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
@@ -224,7 +224,7 @@ employee_t* E_GetUnhiredEmployee(employeeType_t type, int idx)
 	int j = -1;	/* The number of found unhired employees. Ignore the minus. */
 	employee_t *employee = NULL;
 
-	if ( type >= MAX_EMPL || type < 0 ) {
+	if ( type >= MAX_EMPL ) {
 		Com_Printf("E_GetUnhiredEmployee: Unknown EmployeeType: %i\n", type );
 		return NULL;
 	}
@@ -267,7 +267,7 @@ employee_t* E_GetHiredEmployee(const base_t* const base, employeeType_t type, in
 	if ( !base)
 		return NULL;
 
-	if ( type >= MAX_EMPL || type < 0 ) {
+	if ( type >= MAX_EMPL ) {
 		Com_Printf("E_GetHiredEmployee: Unknown EmployeeType: %i\n", type );
 		return NULL;
 	}
@@ -437,7 +437,7 @@ employee_t* E_CreateEmployee(employeeType_t type)
 {
 	employee_t* employee = NULL;
 
-	if ( type >= MAX_EMPL || type < 0 )
+	if ( type >= MAX_EMPL )
 		return NULL;
 
 	if (gd.numEmployees[type] >= MAX_EMPLOYEES) {

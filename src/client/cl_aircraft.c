@@ -150,7 +150,7 @@ char *CL_AircraftStatusToName(aircraft_t * aircraft)
 
 	/* display special status if base-attack affects aircraft */
 	if ( gd.bases[aircraft->idxBase].baseStatus == BASE_UNDER_ATTACK &&
-		(aircraft->status == AIR_HOME || aircraft->status == AIR_REFUEL) )
+		CL_IsAircraftInBase(aircraft) )
 		return _("ON RED ALERT");
 
 	switch (aircraft->status) {
@@ -762,7 +762,7 @@ extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission
 	/* if mission is a base-attack and aircraft already in base, launch
 	 * mission immediately */
 	if ( gd.bases[aircraft->idxBase].baseStatus == BASE_UNDER_ATTACK &&
-		(aircraft->status == AIR_HOME || aircraft->status == AIR_REFUEL) ) {
+		CL_IsAircraftInBase(aircraft) ) {
 		aircraft->mission = mission;
 		mission->def->active = qtrue;
 		MN_PushMenu("popup_baseattack");
