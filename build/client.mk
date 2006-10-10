@@ -4,6 +4,7 @@ CLIENT_SRCS = \
 	client/cl_research.c \
 	client/cl_market.c \
 	client/cl_campaign.c \
+	client/cl_hospital.c \
 	client/cl_ufo.c \
 	client/cl_radar.c \
 	client/cl_popup.c \
