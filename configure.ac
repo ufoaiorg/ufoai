@@ -126,6 +126,7 @@ elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	AC_SUBST([TARGET_OS],[darwin])
 	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_sdl_framework -F$with_sdl_ttf_framework"
+	LDFLAGS="$LDFLAGS -framework SDL -framework SDL_ttf -framework OpenGL"
 else
 	AC_MSG_ERROR([The target operating system '$target_os' is unknown, please contact the developers])
 fi
