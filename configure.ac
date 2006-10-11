@@ -304,6 +304,12 @@ then
 	AC_MSG_ERROR([couldn't find internationalization library with gettext in it])
 fi
 
+AC_CHECK_HEADERS([libintl.h])
+if test "$ac_cv_header_libintl_h" != "yes"
+then
+	AC_MSG_ERROR([Couldn't find libintl.h!])
+fi
+
 #---------------------------------------------------------------------------------------------
 # Check SDL
 #---------------------------------------------------------------------------------------------
