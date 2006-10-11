@@ -57,6 +57,66 @@ menu hospital
 	}
 
 	// ==================
+	// healing limit
+	// ==================
+
+	string txt_hosp_heal_caption
+	{
+		string	"_Capacity"
+		pos	"510 80"
+		font	f_normal
+		align	ul
+	}
+
+	string txt_hosp_heal_limit
+	{
+		font	f_normal
+		string	"*cvar mn_hosp_heal_limit"
+		pos		"975 80"
+		align	ur
+	}
+
+	// ==================
+	// healing limit
+	// ==================
+
+	string txt_hosp_healing_caption
+	{
+		string	"_Currently healing"
+		pos	"510 110"
+		font	f_normal
+		align	ul
+	}
+
+	string txt_hosp_healing_value
+	{
+		font	f_normal
+		string	"*cvar mn_hosp_healing"
+		pos		"975 110"
+		align	ur
+	}
+
+	// ==================
+	// medics
+	// ==================
+
+	string txt_hosp_medics_caption
+	{
+		string	"_Medics"
+		pos	"510 140"
+		font	f_normal
+		align	ul
+	}
+
+	string txt_hosp_medics
+	{
+		font	f_normal
+		string	"*cvar mn_hosp_medics"
+		pos		"975 140"
+		align	ur
+	}
+
+	// ==================
 	// additional stuff
 	// ==================
 
@@ -201,10 +261,65 @@ menu hospital_employee
 	pic exp_rahmen { pos "707 348" image menu/bar_rahmen }
 	bar exp_bar    { pos "716 353" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string health { pos "600 360" string "_Health:" }
-	string health_val { pos "875 360" string "*cvar mn_hp" align ur }
-	pic health_rahmen { pos "607 378" image menu/bar_rahmen }
-	bar health_bar    { pos "616 383" current "*cvar mn_hp" size "245 6" color "0 .8 0 1" max "*cvar mn_hpmax" align uc }
+	string health { pos "700 374" string "_Health:" font f_normal }
+	string health_val { pos "975 374" string "*cvar mn_hp" align ur font f_normal }
+	pic health_rahmen { pos "707 398" image menu/bar_rahmen }
+	bar health_bar    { pos "716 403" current "*cvar mn_hp" size "245 6" color "0 .8 0 1" max "*cvar mn_hpmax" align uc }
+
+
+	// ==================
+	// action buttons
+	// ==================
+
+	pic button_hosp_heal_start
+	{
+		tooltip	"_Heal this soldier"
+		image   menu/button
+		pos	"45 100"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "hosp_start_healing; hosp_init;mn_pop;"
+		}
+		out		{ *txt_hosp_heal_start color "0 0.8 0 1" *button_hosp_heal_start texl "0 0" *button_hosp_heal_start texh "230 64" }
+		in		{ *txt_hosp_heal_start color "1 1 1 1" *button_hosp_heal_start texl "230 0" *button_hosp_heal_start texh "460 64" }
+	}
+
+	string txt_hosp_heal_start
+	{
+		string	"_Heal"
+		color	"0 0.8 0 1"
+		pos	"160 116"
+		font	f_menu
+		align	uc
+	}
+
+	pic button_hosp_bionic_start
+	{
+		tooltip	"_Implants"
+		image   menu/button
+		pos	"45 170"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd ""
+		}
+		out		{ *txt_hosp_heal_start color "0 0.8 0 1" *button_hosp_heal_start texl "0 0" *button_hosp_heal_start texh "230 64" }
+		in		{ *txt_hosp_heal_start color "1 1 1 1" *button_hosp_heal_start texl "230 0" *button_hosp_heal_start texh "460 64" }
+	}
+
+	string txt_hosp_bionic_start
+	{
+		string	"_Implants"
+		color	"0 0.8 0 1"
+		pos	"160 186"
+		font	f_menu
+		align	uc
+	}
 
 	// ==================
 	// additional stuff

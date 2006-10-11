@@ -67,16 +67,16 @@ menu production
 	string txt_prod_limit_caption
 	{
 		string	"_Productionlimit"
-		pos	"610 60"
-		font	f_small
+		pos	"610 80"
+		font	f_normal
 		align	ul
 	}
 
 	string txt_prod_limit
 	{
-		font	"f_small"
+		font	"f_normal"
 		string	"*cvar mn_production_limit"
-		pos		"975 60"
+		pos		"975 80"
 		align	ur
 	}
 
@@ -87,16 +87,16 @@ menu production
 	string txt_prod_workers_caption
 	{
 		string	"_Workers"
-		pos	"610 80"
-		font	f_small
+		pos	"610 110"
+		font	f_normal
 		align	ul
 	}
 
 	string txt_prod_workers
 	{
-		font	"f_small"
+		font	f_normal
 		string	"*cvar mn_production_workers"
-		pos		"975 80"
+		pos		"975 110"
 		align	ur
 	}
 
