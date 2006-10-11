@@ -28,17 +28,32 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  include <windows.h>
 #endif
 
-#include <GL/gl.h>
-#include <GL/glu.h>
+#ifdef USE_OPENGL_FRAMEWORK
+#	include <OpenGL/gl.h>
+#   include <OpenGL/glu.h>
+#else
+#	include <GL/gl.h>
+#	include <GL/glu.h>
+#endif
+
+
 
 #ifdef _WIN32
 #include "glext.h"
 #else							/* use standard glext */
-#include <GL/glext.h>
+#ifdef USE_OPENGL_FRAMEWORK
+#	include <OpenGL/glext.h>
+#else
+#	include <GL/glext.h>
+#endif
 #endif
 
 #if defined __linux__ || defined __FreeBSD__
-#include <GL/glx.h>
+#ifdef USE_OPENGL_FRAMEWORK
+#	include <OpenGL/glx.h>
+#else
+#	include <GL/glx.h>
+#endif
 #endif
 
 qboolean QGL_Init(const char *dllname);

@@ -35,7 +35,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/keysym.h>
-#include <GL/glx.h>
+
+#ifdef USE_OPENGL_FRAMEWORK
+#	include <OpenGL/glx.h>
+#else
+#	include <GL/glx.h>
+#endif
 
 #ifdef HAVE_DGA /* makefile */
 #ifdef __x86_64__

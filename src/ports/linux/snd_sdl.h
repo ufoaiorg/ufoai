@@ -1,9 +1,9 @@
 #if defined (__FreeBSD__)
-#include <SDL.h>
-#include <SDL_version.h>
+#	include <SDL.h>
+#	include <SDL_version.h>
 #else
-#include <SDL/SDL.h>
-#include <SDL/SDL_version.h>
+#	include <SDL/SDL.h>
+#	include <SDL/SDL_version.h>
 #endif
 
 #include "../../client/client.h"

@@ -30,7 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../ref_gl/gl_local.h"
 #include "glw_linux.h"
 
-#include <GL/glx.h>
+#ifdef USE_OPENGL_FRAMEWORK
+#	include <OpenGL/glx.h>
+#else
+#	include <GL/glx.h>
+#endif
+
 #include <dlfcn.h>
 
 /*GLX Functions */

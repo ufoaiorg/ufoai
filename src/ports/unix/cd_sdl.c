@@ -31,9 +31,9 @@ Boston, MA  02111-1307, USA
 */
 
 #if defined (__FreeBSD__)
-#include <SDL.h>
+#	include <SDL.h>
 #else
-#include <SDL/SDL.h>
+#	include <SDL/SDL.h>
 #endif
 #include "../../client/client.h"
 

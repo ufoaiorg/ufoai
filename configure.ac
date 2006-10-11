@@ -48,6 +48,18 @@ AC_ARG_WITH(vid_vidmode,
 	[AS_HELP_STRING([--with-vidmode], [compile with vidmode support @<:@default=check@:>@])],
 	[], [with_vid_vidmode=check])
 
+AC_ARG_WITH(opengl_framework,
+	[AS_HELP_STRING([--with-opengl-framework], [compile with given opengl framework @<:@default=/System/Library/Frameworks/OpenGL.framework@:>@])],
+	[], [with_opengl_framework=/System/Library/Frameworks/OpenGL.framework])
+
+AC_ARG_WITH(sdl_framework,
+	[AS_HELP_STRING([--with-sdl-framework], [compile with given sdl framework @<:@default=/System/Library/Frameworks/SDL.framework@:>@])],
+	[], [with_sdl_framework=/System/Library/Frameworks/SDL.framework])
+
+AC_ARG_WITH(sdl_ttf_framework,
+	[AS_HELP_STRING([--with-sdl-ttf-framework], [compile with given sdl-ttf framework @<:@default=/System/Library/Frameworks/SDL_ttf.framework@:>@])],
+	[], [with_sdl_ttf_framework=/System/Library/Frameworks/SDL_ttf.framework])
+
 AC_ARG_ENABLE(dedicated,
 	[AS_HELP_STRING([--disable-dedicated], [build dedicated server @<:@default=enabled@:>@])],
 	[], [enable_dedicated=yes])
@@ -113,6 +125,7 @@ then
 elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	AC_SUBST([TARGET_OS],[darwin])
+	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_sdl_framework -F$with_sdl_ttf_framework"
 else
 	AC_MSG_ERROR([The target operating system '$target_os' is unknown, please contact the developers])
 fi
@@ -298,16 +311,16 @@ fi
 # Check for gettext
 #---------------------------------------------------------------------------------------------
 
-AC_SEARCH_LIBS([gettext],[intl])
-if test "$ac_cv_search_gettext" = "no"
-then
-	AC_MSG_ERROR([couldn't find internationalization library with gettext in it])
-fi
-
 AC_CHECK_HEADERS([libintl.h])
 if test "$ac_cv_header_libintl_h" != "yes"
 then
 	AC_MSG_ERROR([Couldn't find libintl.h!])
+fi
+
+AC_SEARCH_LIBS([gettext],[intl])
+if test "$ac_cv_search_gettext" = "no"
+then
+	AC_MSG_ERROR([couldn't find internationalization library with gettext in it])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -341,8 +354,60 @@ else
 fi
 
 #---------------------------------------------------------------------------------------------
+# Check for SDL headers and libraries
+#---------------------------------------------------------------------------------------------
+
+OLD_CFLAGS=$CFLAGS
+CFLAGS="$CFLAGS $SDL_CFLAGS"
+CPPFLAGS=$CFLAGS
+
+AC_CHECK_HEADERS([SDL.h])
+if test "$ac_cv_header_SDL_h" != "yes"
+then
+	AC_CHECK_HEADERS([SDL/SDL.h])
+	if test "$ac_cv_header_SDL_SDL_h" != "yes"
+	then
+		AC_MSG_ERROR([You must have the SDL development headers])
+	else
+		AC_DEFINE([USE_SDL_FRAMEWORK])
+	fi
+fi
+
+CFLAGS=$OLD_CFLAGS
+CPPFLAGS=
+
+OLD_LDFLAGS=$LDFLAGS
+LDFLAGS="$LDFLAGS $SDL_LDFLAGS"
+AC_SEARCH_LIBS([SDL_Init],[SDL])
+if test "$ac_cv_search_SDL_Init" = "no"
+then
+	AC_MSG_ERROR([You must have the SDL development libraries])
+fi
+LDFLAGS=$OLD_LDFLAGS
+
+#---------------------------------------------------------------------------------------------
 # Check for SDL_ttf
 #---------------------------------------------------------------------------------------------
+
+OLD_CFLAGS=$CFLAGS
+CFLAGS="$CFLAGS $SDL_CFLAGS"
+
+AC_CHECK_HEADERS([SDL_ttf.h],[],[],[
+		#include "SDL.h"
+	])
+if test "$ac_cv_header_SDL_ttf_h" != "yes"
+then
+	AC_CHECK_HEADERS([SDL_ttf/SDL_ttf.h],[],[],[
+			#include "SDL.h"
+		])
+	if test "$ac_cv_header_SDL_ttf_SDL_ttf_h" != "yes"
+	then
+		AC_MSG_ERROR([You must have the SDL_ttf development headers])
+	else
+		AC_DEFINE([USE_SDL_TTF_FRAMEWORK])
+	fi
+fi
+CFLAGS=$OLD_CFLAGS
 
 AC_SEARCH_LIBS([TTF_Init],[SDL_ttf])
 if test "$ac_cv_search_TTF_Init" = "no"
@@ -375,7 +440,7 @@ if test "$with_vid_glx" = "check" || test "$with_vid_glx" = "yes"
 then
 	if test "$ac_cv_header_X11_Xlib_h" != "no"
 	then
-		AC_CHECK_HEADERS([GL/glx.h], [], [], [
+		AC_CHECK_HEADERS([GL/glx.h glx.h], [], [], [
 				#if HAVE_X11_XLIB_H
 				#include <X11/Xlib.h>
 				#endif
@@ -410,6 +475,8 @@ then
    	   test "$ac_cv_header_glu_h" != "yes"
 	then
 		AC_MSG_ERROR([Couldn't find OpenGL development headers!])
+	else
+		AC_DEFINE([GL_H_WITHOUT_GL_DIR],1)
 	fi
 fi
 
@@ -522,7 +589,7 @@ fi
 if test "$with_snd_wapi" = "check" || test "$with_snd_wapi" = "yes"
 then
    AC_CHECK_HEADERS([windows.h])
-   if test "$ac_cv_header_windows_h" == "yes"
+   if test "$ac_cv_header_windows_h" = "yes"
    then
      AC_SUBST([HAVE_SND_WAPI],1)
    elif test "$with_snd_wapi" = "yes"
@@ -538,7 +605,7 @@ fi
 if test "$with_snd_dx" = "check" || test "$with_snd_dx" = "yes"
 then
    AC_CHECK_HEADERS([dsound.h])
-   if test "$ac_cv_header_dsound_h" == "yes"
+   if test "$ac_cv_header_dsound_h" = "yes"
    then
      AC_SUBST([HAVE_SND_DX],1)
    elif test "$with_snd_dx" = "yes"
