@@ -27,12 +27,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 #define MAX_EMPLOYEES_IN_HOSPITAL 64
+#define MAX_EMPLOYEES_PER_HOSPITAL 5
 
 /** @brief This is the current selected employee for the hospital_employee menu */
 static employee_t* currentEmployeeInHospital = NULL;
 
 /** @brief This is a list of all employees that are in active healing - null terminated! */
 static employee_t* employeesInHospitalList[MAX_EMPLOYEES_IN_HOSPITAL];
+static int employeesInHospitalListCount = 0;
+
+static cvar_t* mn_hosp_heal_limit = NULL;
 
 /**
  * @brief Checks whether an employee should or can (in case of full healing) be removed
@@ -40,23 +44,26 @@ static employee_t* employeesInHospitalList[MAX_EMPLOYEES_IN_HOSPITAL];
  */
 void HOS_CheckRemovalFromEmployeeList(employee_t* employee)
 {
-	int i = 0;
-	/* set to first pos in our array */
-	employee_t* listEmployee = employeesInHospitalList;
+	int i = 0, j = 0;
+	char messageBuffer[256];
+
+	if (!employeesInHospitalListCount)
+		return;
 
 	if (employee->chr.HP >= MAX_HP) {
-		while (listEmployee) {
-			if (listEmployee == employee)
-				break;
-			listEmployee++;
-			i++;
+		for (; i<employeesInHospitalListCount; i++, j++) {
+			if (employeesInHospitalList[i] == employee) {
+				j++;
+				Com_sprintf(messageBuffer, sizeof(messageBuffer), "Healing of %s completed - %i active healings left\n", employee->chr.name, employeesInHospitalListCount-1);
+				employeesInHospitalListCount--;
+				MN_AddNewMessage(_("Healing complete"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+			}
+			employeesInHospitalList[i] = employeesInHospitalList[j];
 		}
-		while (listEmployee) {
-			employeesInHospitalList[i] = employeesInHospitalList[i+1];
-			i++;
-			listEmployee++;
-		}
-	}
+		for (; j<MAX_EMPLOYEES_IN_HOSPITAL; j++)
+			employeesInHospitalList[j] = NULL;
+	} else
+		Com_Printf("character with %i hp\n", employee->chr.HP);
 }
 
 /**
@@ -64,32 +71,15 @@ void HOS_CheckRemovalFromEmployeeList(employee_t* employee)
  */
 void HOS_AddToEmployeeList(employee_t* employee)
 {
-	employee_t* listEmployee = employeesInHospitalList;
-
-	while (listEmployee) {
-		listEmployee++;
-	}
-	/* TODO: Add */
-}
-
-
-/**
- * @brief Checks what the status of a soldier is
- * @sa CL_CampaignRun
- */
-extern void HOS_HospitalRun(void)
-{
 	int i;
-	employee_t* employee;
-
-	employee = *employeesInHospitalList;
-	/* loop until null is reached (end of list) */
-	while (employee){
-		if (employee->chr.HP < MAX_HP)
-			employee->chr.HP++;
-		HOS_CheckRemovalFromEmployeeList(employee);
-		employee++;
+	/* alrady in our list? */
+	for (i = 0; i < employeesInHospitalListCount; i++) {
+		if (employeesInHospitalList[i] == employee)
+			return;
 	}
+	/* overflow saftly */
+	if (employeesInHospitalListCount<MAX_EMPLOYEES_IN_HOSPITAL-1)
+		employeesInHospitalList[employeesInHospitalListCount++] = employee;
 }
 
 /**
@@ -102,9 +92,27 @@ extern qboolean HOS_HealCharacter(character_t* chr)
 {
 	assert(chr);
 	if (chr->HP < MAX_HP) {
-		Com_Printf("TODO: heal him\n");
+		chr->HP++;
+		return qtrue;
+	} else
+		return qfalse;
+}
+
+/**
+ * @brief Checks what the status of a soldier is
+ * @sa CL_CampaignRun
+ */
+extern void HOS_HospitalRun(void)
+{
+	employee_t** employee;
+
+	employee = employeesInHospitalList;
+	/* loop until null is reached (end of list) */
+	while (*employee){
+		if (!HOS_HealCharacter(&(*employee)->chr))
+			HOS_CheckRemovalFromEmployeeList(*employee);
+		employee++;
 	}
-	return qtrue;
 }
 
 /**
@@ -162,6 +170,10 @@ static void HOS_Init (void)
 			if (employee->chr.HP < MAX_HP)
 				Q_strcat(hospitalText, va(_("%s\t%s\t(%i/%i)\n"), employee->chr.name, E_GetEmployeeString(type), employee->chr.HP, MAX_HP), sizeof(hospitalText));
 		}
+
+	Cvar_SetValue("mn_hosp_medics", E_CountHired(baseCurrent, EMPL_MEDIC));
+	Cvar_SetValue("mn_hosp_heal_limit", MAX_EMPLOYEES_PER_HOSPITAL * B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_HOSPITAL));
+	Cvar_SetValue("mn_hosp_healing", employeesInHospitalListCount);
 }
 
 #ifdef DEBUG
@@ -274,6 +286,17 @@ void HOS_EmployeeInit (void)
 }
 
 /**
+ * @brief Starts the healing process via hospital menu button
+ */
+void HGS_StartHealing_f (void)
+{
+	if (!baseCurrent || !currentEmployeeInHospital)
+		return;
+	if ((int)mn_hosp_heal_limit->value > employeesInHospitalListCount)
+		HOS_AddToEmployeeList(currentEmployeeInHospital);
+}
+
+/**
  * @brief Initial stuff for hospitals
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal
@@ -283,6 +306,7 @@ extern void HOS_Reset(void)
 	/* add commands */
 	Cmd_AddCommand("hosp_empl_init", HOS_EmployeeInit, "Init function for hospital employee menu");
 	Cmd_AddCommand("hosp_init", HOS_Init, "Init function for hospital menu");
+	Cmd_AddCommand("hosp_start_healing", HGS_StartHealing_f, "Start the healing process for the current selected soldier");
 	Cmd_AddCommand("hosp_list_click", HOS_ListClick_f, "Click function for hospital employee list");
 #ifdef DEBUG
 	Cmd_AddCommand("hosp_hurt_all", HOS_HurtAll_f, "Debug function to hurt all employees in the current base by one");
@@ -290,4 +314,6 @@ extern void HOS_Reset(void)
 #endif
 	memset(hospitalText, 0, sizeof(hospitalText));
 	memset(employeesInHospitalList, 0, sizeof(employeesInHospitalList));
+	mn_hosp_heal_limit = Cvar_Get("mn_hosp_heal_limit", "0", 0, "Current hospital capacity (for current base)");
+	Com_Printf("%i\n", (int)mn_hosp_heal_limit->value);
 }
