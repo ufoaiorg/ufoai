@@ -138,6 +138,16 @@ typedef struct {
 	float maxpitch;
 } spawn_temp_t;
 
+/* used in shot probability calculations */
+typedef struct {
+	int enemy;
+	int friend;
+	int civilian;
+	int self; /* FIXME: incorrect actor facing or shotOrg, or bug in trace code? */
+	int damage;
+	qboolean allow_self;
+} shot_mock_t;
+
 extern game_locals_t game;
 extern level_locals_t level;
 extern game_import_t gi;
@@ -275,7 +285,7 @@ void G_RecalcRouting(edict_t * ent);
 
 void G_ActorDie(edict_t * ent, int state);
 void G_ClientAction(player_t * player);
-void G_ClientEndRound(player_t * player);
+void G_ClientEndRound(player_t * player, qboolean quiet);
 void G_ClientTeamInfo(player_t * player);
 
 void G_ClientCommand(player_t * player);
@@ -285,14 +295,14 @@ qboolean G_ClientConnect(player_t * player, char *userinfo);
 void G_ClientDisconnect(player_t * player);
 
 int G_TestVis(int team, edict_t * check, int flags);
-qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type);
-void G_ClientReload(player_t *player, int entnum, shoot_types_t st);
+qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_mock_t *mock);
+void G_ClientReload(player_t *player, int entnum, shoot_types_t st, qboolean quiet);
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
-void G_ClientGetWeaponFromInventory(player_t *player, int entnum);
-void G_ClientMove(player_t * player, int team, int num, pos3_t to, qboolean stop);
+void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet);
+void G_ClientMove(player_t * player, int team, int num, pos3_t to, qboolean stop, qboolean quiet);
 void G_MoveCalc(int team, pos3_t from, int distance);
 qboolean G_ReactionFire(edict_t * target, qboolean testRun);
-void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction);
+void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction, qboolean quiet);
 
 qboolean G_FrustomVis(edict_t * from, vec3_t point);
 float G_ActorVis(vec3_t from, edict_t * check, qboolean full);

@@ -620,6 +620,7 @@ void CL_ActorUpdateCVars(void);
 
 void CL_DisplayHudMessage(char *text, int time);
 
+void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance, byte ** fb_list, int fb_length);
 qboolean CL_ActorSelect(le_t * le);
 qboolean CL_ActorSelectList(int num);
 void CL_AddActorToTeamList(le_t * le);

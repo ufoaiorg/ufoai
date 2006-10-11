@@ -168,12 +168,14 @@ typedef uint8_t byte;
 #define MAX_FB_LIST			1024
 
 /* game print flags */
+#define	PRINT_NONE			-1	/* suppress printing */
 #define	PRINT_LOW			0	/* pickup messages */
 #define	PRINT_MEDIUM		1	/* death messages */
 #define	PRINT_HIGH			2	/* critical messages */
 #define	PRINT_CHAT			3	/* chat messages */
 
-
+#define	QUIET	(qtrue)
+#define	NOISY	(qfalse)
 
 #define	ERR_FATAL			0	/* exit the entire game with a popup window */
 #define	ERR_DROP			1	/* print to console and disconnect from game */
@@ -327,6 +329,7 @@ void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, f
 
 float frand(void);				/* 0 to 1 */
 float crand(void);				/* -1 to 1 */
+void gaussrand(float *gauss1, float *gauss2);	/* -inf to +inf, median 0, stdev 1 */
 
 /*============================================= */
 

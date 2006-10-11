@@ -660,6 +660,17 @@ void CL_RemoveActorFromTeamList(le_t * le)
 	}
 }
 
+/**
+ * @brief Recalculate forbidden list and available moves, if the passed le is the selected actor.
+ */
+void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance, byte ** fb_list, int fb_length)
+{
+
+	if (selActor && le->entnum == selActor->entnum) {
+		CL_BuildForbiddenList();
+		Grid_MoveCalc(map, le->pos, distance, fb_list, fb_length);
+	}
+}
 
 /**
  * @brief Selects an actor.
@@ -696,9 +707,7 @@ qboolean CL_ActorSelect(le_t * le)
 				CL_UGVCvars(selChr);
 			}
 
-			/* calculate possible moves */
-			CL_BuildForbiddenList();
-			Grid_MoveCalc(&clMap, le->pos, MAX_ROUTE, fb_list, fb_length);
+			CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE, fb_list, fb_length);
 
 			/* move first person camera to new actor */
 			if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -1069,9 +1078,8 @@ void CL_ActorDoTurn(sizebuf_t *sb)
 	le->dir = dir;
 	le->angles[YAW] = dangle[le->dir];
 
-	/* calculate possible moves */
-	CL_BuildForbiddenList();
-	Grid_MoveCalc(&clMap, le->pos, MAX_ROUTE, fb_list, fb_length);
+	/* TODO: before CL_ConditionalMoveCalc() was implemented, forbidden list wasn't recalculated here */
+	CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE, fb_list, fb_length);
 }
 
 
@@ -1182,7 +1190,8 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 	/* animate */
 	re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 	re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
-	Grid_MoveCalc(&clMap, le->pos, MAX_ROUTE, fb_list, fb_length);
+	/* TODO: before CL_ConditionalMoveCalc() was implemented, forbidden list wasn't recalculated here */
+	CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE, fb_list, fb_length);
 }
 
 
@@ -1328,12 +1337,9 @@ void CL_ActorDie(sizebuf_t * sb)
 
 	CL_RemoveActorFromTeamList(le);
 
-	/* calculate possible moves */
-	CL_BuildForbiddenList();
-	if (selActor) {
-		Grid_MoveCalc(&clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length);
+	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
+	if (selActor)
 		CL_ResetActorMoveLength();
-	}
 }
 
 
@@ -1458,10 +1464,7 @@ void CL_DoEndRound(sizebuf_t * sb)
 		Cbuf_AddText("startround\n");
 		CL_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart.wav");
-		if (selActor) {
-			CL_BuildForbiddenList();
-			Grid_MoveCalc(&clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length);
-		}
+		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
 	}
 }
 

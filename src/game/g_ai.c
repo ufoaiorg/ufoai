@@ -407,12 +407,12 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 #ifdef PARANOID
 				Com_DPrintf("AI_ActorThink: Reloading right hand weapon\n");
 #endif
-				G_ClientReload(player, ent->number, ST_RIGHT_RELOAD);
+				G_ClientReload(player, ent->number, ST_RIGHT_RELOAD, QUIET);
 			} else {
 #ifdef PARANOID
 				Com_DPrintf("AI_ActorThink: Dropping right hand weapon\n");
 #endif
-				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
+				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, QUIET);
 			}
 		}
 		if ( LEFT(ent) && gi.csi->ods[LEFT(ent)->item.t].reload && LEFT(ent)->item.a == 0 ) {
@@ -420,19 +420,19 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 #ifdef PARANOID
 				Com_DPrintf("AI_ActorThink: Reloading left hand weapon\n");
 #endif
-				G_ClientReload(player, ent->number, ST_LEFT_RELOAD);
+				G_ClientReload(player, ent->number, ST_LEFT_RELOAD, QUIET);
 			} else {
 #ifdef PARANOID
 				Com_DPrintf("AI_ActorThink: Dropping left hand weapon\n");
 #endif
-				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
+				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, QUIET);
 			}
 		}
 	}
 
 	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
 	if (!LEFT(ent) && !RIGHT(ent)) {
-		G_ClientGetWeaponFromInventory(player, ent->number);
+		G_ClientGetWeaponFromInventory(player, ent->number, QUIET);
 		if (LEFT(ent) || RIGHT(ent))
 			Com_DPrintf("AI_ActorThink: Got weapon from inventory\n");
 	}
@@ -485,7 +485,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 		return;
 
 	/* do the first move */
-	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse);
+	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
 /*	Com_DPrintf( "(%i %i %i) (%i %i %i)\n", */
 /*		(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2], */
@@ -496,8 +496,8 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 		/* TODO: check whether shoot is needed or enemy died already;
 		   use the remaining TUs for reaction fire */
 		for (i = 0; i < bestAia.shots; i++)
-			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode);
-		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse);
+			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, NULL);
+		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse, QUIET);
 	}
 }
 
@@ -532,7 +532,7 @@ void AI_Run(void)
 
 			/* nothing left to do, request endround */
 			if (j >= globals.num_edicts) {
-				G_ClientEndRound(player);
+				G_ClientEndRound(player, QUIET);
 				player->pers.last = g_edicts + globals.num_edicts;
 			}
 			return;

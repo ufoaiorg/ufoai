@@ -160,7 +160,7 @@ void InitGame(void)
 	/* how many connected clients */
 	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH);
 	/* reaction leftover is 0 for acceptance testing; should default to 13 */
-	sv_reaction_leftover = gi.cvar("sv_reaction_leftover", "10", CVAR_LATCH);
+	sv_reaction_leftover = gi.cvar("sv_reaction_leftover", "0", CVAR_LATCH);
 	sv_shot_origin = gi.cvar("sv_shot_origin", "16", 0);
 
 	ai_alien = gi.cvar("ai_alien", "alien", 0);

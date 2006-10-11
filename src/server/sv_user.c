@@ -346,7 +346,7 @@ void SV_ExecuteClientMessage(client_t * cl)
 
 		case clc_endround:
 			/* player wants to end round */
-			ge->ClientEndRound(sv_player);
+			ge->ClientEndRound(sv_player, NOISY);
 			break;
 
 		case clc_teaminfo:
