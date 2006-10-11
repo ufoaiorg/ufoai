@@ -53,12 +53,12 @@ AC_ARG_WITH(opengl_framework,
 	[], [with_opengl_framework=/System/Library/Frameworks/OpenGL.framework])
 
 AC_ARG_WITH(sdl_framework,
-	[AS_HELP_STRING([--with-sdl-framework], [compile with given sdl framework @<:@default=/System/Library/Frameworks/SDL.framework@:>@])],
-	[], [with_sdl_framework=/System/Library/Frameworks/SDL.framework])
+	[AS_HELP_STRING([--with-sdl-framework], [compile with given sdl framework @<:@default=/Library/Frameworks/SDL.framework@:>@])],
+	[], [with_sdl_framework=/Library/Frameworks/SDL.framework])
 
 AC_ARG_WITH(sdl_ttf_framework,
-	[AS_HELP_STRING([--with-sdl-ttf-framework], [compile with given sdl-ttf framework @<:@default=/System/Library/Frameworks/SDL_ttf.framework@:>@])],
-	[], [with_sdl_ttf_framework=/System/Library/Frameworks/SDL_ttf.framework])
+	[AS_HELP_STRING([--with-sdl-ttf-framework], [compile with given sdl-ttf framework @<:@default=/Library/Frameworks/SDL_ttf.framework@:>@])],
+	[], [with_sdl_ttf_framework=/Library/Frameworks/SDL_ttf.framework])
 
 AC_ARG_ENABLE(dedicated,
 	[AS_HELP_STRING([--disable-dedicated], [build dedicated server @<:@default=enabled@:>@])],
