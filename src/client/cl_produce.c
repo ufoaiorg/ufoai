@@ -427,7 +427,7 @@ static void PR_ProductionList (void)
 	PR_ProductionInfo();
 	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP));
 #if 0
-	Cvar_SetValue("mn_production_workers", /* TODO */);
+	Cvar_SetValue("mn_production_workers", E_CountHired(baseCurrent, EMPL_WORKER));
 #endif
 }
 
