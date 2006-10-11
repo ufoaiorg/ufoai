@@ -22,6 +22,12 @@ font f_small
 	size	14
 }
 
+font f_normal
+{
+	font	"_media/DejaVuSans.ttf"
+	size	18
+}
+
 font f_big
 {
 	font	"_media/DejaVuSans.ttf"
