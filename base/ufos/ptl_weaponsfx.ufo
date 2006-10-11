@@ -376,7 +376,7 @@ particle plasmaFlash
 		mul  float 16.0
 		sin  #
 		mul  #
-		add  pos "64 16"
+		add  pos "64 12"
 		pop  *size
 	}
 }
@@ -391,15 +391,16 @@ particle plasmaMiniFlashBall
 		style  facing
 		push   pos "0 9"
 		pop    *offset
+		color  "1 1 1 0.5"
 	}
 	run
 	{
-		push pos "1 1"
-		push *t
-		mul  float 16.0
-		sin  #
-		mul  #
-		add  pos "6 6"
+		// push pos "1 1"
+		// push *t
+		// mul  float 16.0
+		// sin  #
+		// mul  #
+		push  pos "6 6"
 		pop  *size
 	}
 }
@@ -411,17 +412,18 @@ particle plasmaFlashBall
 		image  sfx/plasmaball
 		blend  add
 		style  facing
-		push   pos "0 20"
+		push   pos "0 23"
 		pop    *offset
+		color  "1 1 1 0.5"
 	}
 	run
 	{
-		push pos "1.2 1.2"
-		push *t
-		mul  float 12.0
-		sin  #
-		mul  #
-		add  pos "8 8"
+		// push pos "1.2 1.2"
+		// push *t
+		// mul  float 12.0
+		// sin  #
+		// mul  #
+		push  pos "12 12"
 		pop  *size
 	}
 }
