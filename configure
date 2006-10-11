@@ -875,10 +875,10 @@ Optional Packages:
   --with-opengl-framework compile with given opengl framework
                           [default=/System/Library/Frameworks/OpenGL.framework]
   --with-sdl-framework    compile with given sdl framework
-                          [default=/System/Library/Frameworks/SDL.framework]
+                          [default=/Library/Frameworks/SDL.framework]
   --with-sdl-ttf-framework
                           compile with given sdl-ttf framework
-                          [default=/System/Library/Frameworks/SDL_ttf.framework]
+                          [default=/Library/Frameworks/SDL_ttf.framework]
 
 Some influential environment variables:
   CC          C compiler command
@@ -1557,7 +1557,7 @@ if test "${with_sdl_framework+set}" = set; then
   withval="$with_sdl_framework"
 
 else
-  with_sdl_framework=/System/Library/Frameworks/SDL.framework
+  with_sdl_framework=/Library/Frameworks/SDL.framework
 fi;
 
 
@@ -1566,7 +1566,7 @@ if test "${with_sdl_ttf_framework+set}" = set; then
   withval="$with_sdl_ttf_framework"
 
 else
-  with_sdl_ttf_framework=/System/Library/Frameworks/SDL_ttf.framework
+  with_sdl_ttf_framework=/Library/Frameworks/SDL_ttf.framework
 fi;
 
 # Check whether --enable-dedicated or --disable-dedicated was given.
