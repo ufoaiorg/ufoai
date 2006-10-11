@@ -5434,11 +5434,14 @@ done
 echo "$as_me: error: You must have the SDL development headers" >&2;}
    { (exit 1); exit 1; }; }
 	else
+		SDL_HEADER="SDL/SDL.h"
 		cat >>confdefs.h <<\_ACEOF
 #define USE_SDL_FRAMEWORK 1
 _ACEOF
 
 	fi
+else
+	SDL_HEADER="SDL.h"
 fi
 
 CFLAGS=$OLD_CFLAGS
@@ -5601,7 +5604,7 @@ cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
-		#include "SDL.h"
+		#include <$SDL_HEADER>
 
 
 #include <$ac_header>
@@ -5665,7 +5668,7 @@ cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
-			#include "SDL.h"
+			#include <$SDL_HEADER>
 
 
 #include <$ac_header>

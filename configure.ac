@@ -370,8 +370,11 @@ then
 	then
 		AC_MSG_ERROR([You must have the SDL development headers])
 	else
+		SDL_HEADER="SDL/SDL.h"
 		AC_DEFINE([USE_SDL_FRAMEWORK])
 	fi
+else
+	SDL_HEADER="SDL.h"
 fi
 
 CFLAGS=$OLD_CFLAGS
@@ -394,12 +397,12 @@ OLD_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $SDL_CFLAGS"
 
 AC_CHECK_HEADERS([SDL_ttf.h],[],[],[
-		#include "SDL.h"
+		#include <$SDL_HEADER>
 	])
 if test "$ac_cv_header_SDL_ttf_h" != "yes"
 then
 	AC_CHECK_HEADERS([SDL_ttf/SDL_ttf.h],[],[],[
-			#include "SDL.h"
+			#include <$SDL_HEADER>
 		])
 	if test "$ac_cv_header_SDL_ttf_SDL_ttf_h" != "yes"
 	then
