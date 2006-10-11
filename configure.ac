@@ -336,7 +336,7 @@ then
 	AC_SUBST([SDL_CFLAGS],`$sdl_config --cflags`)
 	AC_SUBST([SDL_LIBS],`$sdl_config --libs`)
 else
-	AC_MSG_ERROR([cannot find $sdl_config, make sure the SDL development libraries are installed!])
+	AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
 fi
 
 if test "$with_sdl" = "check" || test "$with_sdl" = "yes" || \
