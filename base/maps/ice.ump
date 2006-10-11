@@ -1,66 +1,75 @@
+// base/maps/ice.ump - 2006-09-05
+
 // *********************************
 // ICE THEME
 // *********************************
 
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: any
+
+
 base ice/ice_
 
 // ---------------------------------
-tile +r01
-{
-4 4
-
-0      abc     abc	0
-abc     +a     +a	abc
-abc     +a     +a	abc
-0      abc     abc	0
-}
-
-// ---------------------------------
-tile +r02
-{
-4 4
-
-0      abc     abc	0
-abc     +a     +a	abc
-abc     +a     +a	abc
-0      abc     abc	0
-}
-
-// ---------------------------------
-tile +r03
-{
-4 4
-
-0      abc     abc	0
-abc     +a     +a	abc
-abc     +a     +a	abc
-0      abc     abc	0
-}
-
-// ---------------------------------
-tile +r04
-{
-4 4
-
-0      abc     abc	0
-abc     +a     +a	abc
-abc     +a     +a	abc
-0      abc     abc	0
-}
-
-
-// ---------------------------------
+// Dropship on ice map
 tile +drop
 {
 4 4
-
 0      abc     abc     0
 abc     +a     +a      abc
 abc     +a     +a      abc
 0      abc     abc     0
 }
 
+// ---------------------------------
+// Big rocks of ice - horizontal
+tile +r01
+{
+4 4
+0      abc     abc	0
+abc     +a     +a	abc
+abc     +a     +a	abc
+0      abc     abc	0
+}
+
+// ---------------------------------
+// Big rocks of ice - vertical
+tile +r02
+{
+4 4
+0      abc     abc	0
+abc     +a     +a	abc
+abc     +a     +a	abc
+0      abc     abc	0
+}
+
+// ---------------------------------
+// Iceblock with niche
+tile +r03
+{
+4 4
+0      abc     abc	0
+abc     +a     +a	abc
+abc     +a     +a	abc
+0      abc     abc	0
+}
+
+// ---------------------------------
+// Plain snow terrain
+tile +r04
+{
+4 4
+0      abc     abc	0
+abc     +a     +a	abc
+abc     +a     +a	abc
+0      abc     abc	0
+}
+
+
 // *********************************
+
 assembly test
 {
 size "6 6"
@@ -70,3 +79,38 @@ size "6 6"
 +r04 "1 6"
 +drop "1 1"
 }
+
+// *********************************
+// ***** Maps for screenshots *****
+
+// assembly drop
+// {
+// size "2 2"
+// +drop "1 1"
+// }
+// 
+// assembly r1
+// {
+// size "2 2"
+// +r01 "1 1"
+// }
+// 
+// assembly r2
+// {
+// size "2 2"
+// +r02 "1 1"
+// }
+// 
+// assembly r3
+// {
+// size "2 2"
+// +r03 "1 1"
+// }
+// 
+// assembly r4
+// {
+// size "2 2"
+// +r04 "1 1"
+// }
+
+
