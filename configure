@@ -1740,6 +1740,7 @@ then
 	TARGET_OS=darwin
 
 	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_sdl_framework -F$with_sdl_ttf_framework"
+	LDFLAGS="$LDFLAGS -framework SDL -framework SDL_ttf -framework OpenGL"
 else
 	{ { echo "$as_me:$LINENO: error: The target operating system '$target_os' is unknown, please contact the developers" >&5
 echo "$as_me: error: The target operating system '$target_os' is unknown, please contact the developers" >&2;}
@@ -5096,9 +5097,8 @@ then
 	SDL_LIBS=`$sdl_config --libs`
 
 else
-	{ { echo "$as_me:$LINENO: error: cannot find $sdl_config, make sure the SDL development libraries are installed!" >&5
-echo "$as_me: error: cannot find $sdl_config, make sure the SDL development libraries are installed!" >&2;}
-   { (exit 1); exit 1; }; }
+	{ echo "$as_me:$LINENO: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
+echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
 fi
 
 if test "$with_sdl" = "check" || test "$with_sdl" = "yes" || \
@@ -6525,7 +6525,7 @@ if test "$ac_cv_header_GL_gl_h" != "yes" || \
 then
 
 
-for ac_header in gl.h glu.h
+for ac_header in OpenGL/gl.h OpenGL/glu.h
 do
 as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
 if eval "test \"\${$as_ac_Header+set}\" = set"; then
@@ -6673,8 +6673,8 @@ fi
 
 done
 
-	if test "$ac_cv_header_gl_h" != "yes" || \
-   	   test "$ac_cv_header_glu_h" != "yes"
+	if test "$ac_cv_header_OpenGL_gl_h" != "yes" || \
+   	   test "$ac_cv_header_OpenGL_glu_h" != "yes"
 	then
 		{ { echo "$as_me:$LINENO: error: Couldn't find OpenGL development headers!" >&5
 echo "$as_me: error: Couldn't find OpenGL development headers!" >&2;}
