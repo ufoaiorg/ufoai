@@ -44,6 +44,7 @@ qboolean have_stencil = qfalse;
 
 static cvar_t	*m_filter;
 static cvar_t	*in_mouse;
+static cvar_t	*sdl_debug;
 
 /* state struct passed in Init */
 static in_state_t *in_state;
@@ -94,189 +95,189 @@ void RW_IN_Activate(qboolean active)
 /**
   * @brief Translate the keys to ufo keys
   */
-int SDLateKey(SDL_KeyboardEvent sdlke)
+static int SDLateKey(SDL_keysym *keysym, int *key)
 {
-	int keysym = sdlke.keysym.sym;
-	int key = 0;
+	int buf = 0;
+	*key = 0;
 
-	/* these happen to match the ASCII chars. */
-	if ((keysym >= ' ') && (keysym <= '~')) {
-		key = keysym;
-	} else
-		switch (keysym) {
-		case SDLK_KP9:
-			key = K_KP_PGUP;
-			break;
-		case SDLK_PAGEUP:
-			key = K_PGUP;
-			break;
-		case SDLK_KP3:
-			key = K_KP_PGDN;
-			break;
-		case SDLK_PAGEDOWN:
-			key = K_PGDN;
-			break;
-		case SDLK_KP7:
-			key = K_KP_HOME;
-			break;
-		case SDLK_HOME:
-			key = K_HOME;
-			break;
-		case SDLK_KP1:
-			key = K_KP_END;
-			break;
-		case SDLK_END:
-			key = K_END;
-			break;
-		case SDLK_KP4:
-			key = K_KP_LEFTARROW;
-			break;
-		case SDLK_LEFT:
-			key = K_LEFTARROW;
-			break;
-		case SDLK_KP6:
-			key = K_KP_RIGHTARROW;
-			break;
-		case SDLK_RIGHT:
-			key = K_RIGHTARROW;
-			break;
-		case SDLK_KP2:
-			key = K_KP_DOWNARROW;
-			break;
-		case SDLK_DOWN:
-			key = K_DOWNARROW;
-			break;
-		case SDLK_KP8:
-			key = K_KP_UPARROW;
-			break;
-		case SDLK_UP:
-			key = K_UPARROW;
-			break;
-		case SDLK_ESCAPE:
-			key = K_ESCAPE;
-			break;
-		case SDLK_KP_ENTER:
-			key = K_KP_ENTER;
-			break;
-		case SDLK_RETURN:
-			key = K_ENTER;
-			break;
-		case SDLK_TAB:
-			key = K_TAB;
-			break;
-		case SDLK_F1:
-			key = K_F1;
-			break;
-		case SDLK_F2:
-			key = K_F2;
-			break;
-		case SDLK_F3:
-			key = K_F3;
-			break;
-		case SDLK_F4:
-			key = K_F4;
-			break;
-		case SDLK_F5:
-			key = K_F5;
-			break;
-		case SDLK_F6:
-			key = K_F6;
-			break;
-		case SDLK_F7:
-			key = K_F7;
-			break;
-		case SDLK_F8:
-			key = K_F8;
-			break;
-		case SDLK_F9:
-			key = K_F9;
-			break;
-		case SDLK_F10:
-			key = K_F10;
-			break;
-		case SDLK_F11:
-			key = K_F11;
-			break;
-		case SDLK_F12:
-			key = K_F12;
-			break;
-		case SDLK_BACKSPACE:
-			key = K_BACKSPACE;
-			break;
-		case SDLK_KP_PERIOD:
-			key = K_KP_DEL;
-			break;
-		case SDLK_DELETE:
-			key = K_DEL;
-			break;
-		case SDLK_PAUSE:
-			key = K_PAUSE;
-			break;
-		case SDLK_LSHIFT:
-		case SDLK_RSHIFT:
-			key = K_SHIFT;
-			break;
-		case SDLK_LCTRL:
-		case SDLK_RCTRL:
-			key = K_CTRL;
-			break;
-		case SDLK_LMETA:
-		case SDLK_RMETA:
-		case SDLK_LALT:
-		case SDLK_RALT:
-			key = K_ALT;
-			break;
-		case SDLK_KP5:
-			key = K_KP_5;
-			break;
-		case SDLK_INSERT:
-			key = K_INS;
-			break;
-		case SDLK_KP0:
-			key = K_KP_INS;
-			break;
-		case SDLK_KP_MULTIPLY:
-			key = '*';
-			break;
-		case SDLK_KP_PLUS:
-			key = K_KP_PLUS;
-			break;
-		case SDLK_KP_MINUS:
-			key = K_KP_MINUS;
-			break;
-		case SDLK_KP_DIVIDE:
-			key = K_KP_SLASH;
-			break;
-		/* suggestions on how to handle this better would be appreciated */
-		case SDLK_WORLD_7:
-			key = '`';
-			break;
-		/* French keyboard */
-		case 178:
-			key = '~';
-			break;
+	switch (keysym->sym) {
+	case SDLK_KP9:
+		*key = K_KP_PGUP;
+		break;
+	case SDLK_PAGEUP:
+		*key = K_PGUP;
+		break;
+	case SDLK_KP3:
+		*key = K_KP_PGDN;
+		break;
+	case SDLK_PAGEDOWN:
+		*key = K_PGDN;
+		break;
+	case SDLK_KP7:
+		*key = K_KP_HOME;
+		break;
+	case SDLK_HOME:
+		*key = K_HOME;
+		break;
+	case SDLK_KP1:
+		*key = K_KP_END;
+		break;
+	case SDLK_END:
+		*key = K_END;
+		break;
+	case SDLK_KP4:
+		*key = K_KP_LEFTARROW;
+		break;
+	case SDLK_LEFT:
+		*key = K_LEFTARROW;
+		break;
+	case SDLK_KP6:
+		*key = K_KP_RIGHTARROW;
+		break;
+	case SDLK_RIGHT:
+		*key = K_RIGHTARROW;
+		break;
+	case SDLK_KP2:
+		*key = K_KP_DOWNARROW;
+		break;
+	case SDLK_DOWN:
+		*key = K_DOWNARROW;
+		break;
+	case SDLK_KP8:
+		*key = K_KP_UPARROW;
+		break;
+	case SDLK_UP:
+		*key = K_UPARROW;
+		break;
+	case SDLK_ESCAPE:
+		*key = K_ESCAPE;
+		break;
+	case SDLK_KP_ENTER:
+		*key = K_KP_ENTER;
+		break;
+	case SDLK_RETURN:
+		*key = K_ENTER;
+		break;
+	case SDLK_TAB:
+		*key = K_TAB;
+		break;
+	case SDLK_F1:
+		*key = K_F1;
+		break;
+	case SDLK_F2:
+		*key = K_F2;
+		break;
+	case SDLK_F3:
+		*key = K_F3;
+		break;
+	case SDLK_F4:
+		*key = K_F4;
+		break;
+	case SDLK_F5:
+		*key = K_F5;
+		break;
+	case SDLK_F6:
+		*key = K_F6;
+		break;
+	case SDLK_F7:
+		*key = K_F7;
+		break;
+	case SDLK_F8:
+		*key = K_F8;
+		break;
+	case SDLK_F9:
+		*key = K_F9;
+		break;
+	case SDLK_F10:
+		*key = K_F10;
+		break;
+	case SDLK_F11:
+		*key = K_F11;
+		break;
+	case SDLK_F12:
+		*key = K_F12;
+		break;
+	case SDLK_BACKSPACE:
+		*key = K_BACKSPACE;
+		break;
+	case SDLK_KP_PERIOD:
+		*key = K_KP_DEL;
+		break;
+	case SDLK_DELETE:
+		*key = K_DEL;
+		break;
+	case SDLK_PAUSE:
+		*key = K_PAUSE;
+		break;
+	case SDLK_LSHIFT:
+	case SDLK_RSHIFT:
+		*key = K_SHIFT;
+		break;
+	case SDLK_LCTRL:
+	case SDLK_RCTRL:
+		*key = K_CTRL;
+		break;
+	case SDLK_LMETA:
+	case SDLK_RMETA:
+	case SDLK_LALT:
+	case SDLK_RALT:
+		*key = K_ALT;
+		break;
+	case SDLK_KP5:
+		*key = K_KP_5;
+		break;
+	case SDLK_INSERT:
+		*key = K_INS;
+		break;
+	case SDLK_KP0:
+		*key = K_KP_INS;
+		break;
+	case SDLK_KP_MULTIPLY:
+		*key = '*';
+		break;
+	case SDLK_KP_PLUS:
+		*key = K_KP_PLUS;
+		break;
+	case SDLK_KP_MINUS:
+		*key = K_KP_MINUS;
+		break;
+	case SDLK_KP_DIVIDE:
+		*key = K_KP_SLASH;
+		break;
+	/* suggestions on how to handle this better would be appreciated */
+	case SDLK_WORLD_7:
+		*key = '`';
+		break;
+	default:
+		if (!keysym->unicode && (keysym->sym >= ' ') && (keysym->sym <= '~'))
+			*key = (int) keysym->sym;
+		break;
+	}
+	if ((keysym->unicode & 0xFF80) == 0) {  /* maps to ASCII? */
+		buf = (int) keysym->unicode & 0x7F;
+		if (buf == '~')
+			*key = '~'; /* console HACK */
+	}
+	if (sdl_debug->value)
+		printf("unicode: %hx keycode: %i key: %c\n", keysym->unicode, *key, *key);
 
-		default:
-#if 0
-			if( keysym >= 128 )
-				key = sdlke.keysym.unicode;
-			else
-				key = keysym;
-#endif
-#if 0
-			if (sdlke.keysym.unicode < 256) {
-				/* If the translated key is between 0 and 256, it's ok */
-				key = sdlke.keysym.unicode;
-				if (key <= 0)
-					key = keysym;
-			} else
-				/* The key don't fit in the Quake3 keyboard array */
-				key = 0;
-#endif
-			break;
+	return buf;
+}
+
+/**
+ * @brief Debug function to print sdl key events
+ */
+static void printkey(const SDL_Event* event)
+{
+	if (sdl_debug->value) {
+		printf("key name: %s", SDL_GetKeyName(event->key.keysym.sym));
+		if(event->key.keysym.unicode) {
+			printf(" unicode: %hx", event->key.keysym.unicode);
+			if (event->key.keysym.unicode >= '0' && event->key.keysym.unicode <= '~')  /* printable? */
+				printf(" (%c)", (unsigned char)(event->key.keysym.unicode));
 		}
-
-	return key;
+		puts("");
+	}
 }
 
 /**
@@ -284,34 +285,34 @@ int SDLateKey(SDL_KeyboardEvent sdlke)
  */
 void GetEvent(SDL_Event *event)
 {
-	unsigned int key;
-	static unsigned char KeyStates[SDLK_LAST];
+	int key;
+	int p = 0;
 
 	switch(event->type) {
 	case SDL_MOUSEBUTTONDOWN:
 	case SDL_MOUSEBUTTONUP:
 		switch (event->button.button) {
-			case  1:
+			case 1:
 				mouse_buttonstate = K_MOUSE1;
 				break;
-			case  2:
+			case 2:
 				mouse_buttonstate = K_MOUSE3;
 				break;
-			case  3:
+			case 3:
 				mouse_buttonstate = K_MOUSE2;
 				break;
-			case  4:
+			case 4:
 				mouse_buttonstate = K_MWHEELUP;
 				break;
-			case  5:
+			case 5:
 				mouse_buttonstate = K_MWHEELDOWN;
 				break;
-#if 0
-			case  6:
-				mouse_buttonstate = K_MOUSE4; break;
-			case  7:
-				mouse_buttonstate = K_MOUSE5; break;
-#endif
+			case 6:
+				mouse_buttonstate = K_MOUSE4;
+				break;
+			case 7:
+				mouse_buttonstate = K_MOUSE5;
+				break;
 			default:
 				mouse_buttonstate = K_AUX1 + (event->button.button - 8) % 16;
 				break;
@@ -327,9 +328,8 @@ void GetEvent(SDL_Event *event)
 		}
 		break;
 	case SDL_KEYDOWN:
-		if ( (KeyStates[SDLK_LALT] || KeyStates[SDLK_RALT]) &&
-			(event->key.keysym.sym == SDLK_RETURN) ) {
-
+		printkey(event);
+		if (event->key.keysym.mod & KMOD_ALT && event->key.keysym.sym == SDLK_RETURN) {
 			SDL_WM_ToggleFullScreen(surface);
 
 			if (surface->flags & SDL_FULLSCREEN) {
@@ -341,18 +341,20 @@ void GetEvent(SDL_Event *event)
 			break; /* ignore this key */
 		}
 
-		if ( (KeyStates[SDLK_LCTRL] || KeyStates[SDLK_RCTRL]) &&
-			(event->key.keysym.sym == SDLK_g) ) {
+		if (event->key.keysym.mod & KMOD_CTRL && event->key.keysym.sym == SDLK_g) {
 			SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
 			ri.Cvar_SetValue( "vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1 );
 			break; /* ignore this key */
 		}
 
-		KeyStates[event->key.keysym.sym] = 1;
-
-		key = SDLateKey(event->key);
+		p = SDLateKey(&event->key.keysym, &key);
 		if (key) {
 			keyq[keyq_head].key = key;
+			keyq[keyq_head].down = qtrue;
+			keyq_head = (keyq_head + 1) & 63;
+		}
+		if (p) {
+			keyq[keyq_head].key = p;
 			keyq[keyq_head].down = qtrue;
 			keyq_head = (keyq_head + 1) & 63;
 		}
@@ -360,15 +362,16 @@ void GetEvent(SDL_Event *event)
 	case SDL_VIDEOEXPOSE:
 		break;
 	case SDL_KEYUP:
-		if (KeyStates[event->key.keysym.sym]) {
-			KeyStates[event->key.keysym.sym] = 0;
-
-			key = SDLateKey(event->key);
-			if (key) {
-				keyq[keyq_head].key = key;
-				keyq[keyq_head].down = qfalse;
-				keyq_head = (keyq_head + 1) & 63;
-			}
+		p = SDLateKey(&event->key.keysym, &key);
+		if (key) {
+			keyq[keyq_head].key = key;
+			keyq[keyq_head].down = qfalse;
+			keyq_head = (keyq_head + 1) & 63;
+		}
+		if (p) {
+			keyq[keyq_head].key = p;
+			keyq[keyq_head].down = qfalse;
+			keyq_head = (keyq_head + 1) & 63;
 		}
 		break;
 	case SDL_QUIT:
@@ -707,8 +710,10 @@ void RW_IN_Init(in_state_t *in_state_p)
 	/* mouse variables */
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
 	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
-
 	sensitivity = ri.Cvar_Get ("sensitivity", "2", CVAR_ARCHIVE);
+
+	/* other cvars */
+	sdl_debug = ri.Cvar_Get ("sdl_debug", "0", 0);
 
 	mx = my = 0.0;
 	mouse_avail = qtrue;

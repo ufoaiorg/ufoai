@@ -1,20 +1,36 @@
-#include "qdata.h"
+/**
+ * @file tables.c
+ * @brief ALPHALIGHT GENERATION
+ * Find alphamap values that best match modulated lightmap values
+ * This isn't used anymore, but I'm keeping it around...
+ */
 
 /*
-=============================================================================
+Copyright (C) 1997-2001 Id Software, Inc.
 
-ALPHALIGHT GENERATION
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
 
-Find alphamap values that best match modulated lightmap values
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-This isn't used anymore, but I'm keeping it around...
-=============================================================================
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
 */
+
+#include "qdata.h"
 
 unsigned short	alphamap[32*32*32];
 unsigned char	inverse16to8table[65536];
 
-/*
+#if 0
 static int FindNearestColor( unsigned int color )
 {
 	int i;
@@ -47,7 +63,7 @@ static int FindNearestColor( unsigned int color )
 
 	return closest_so_far;
 }
-*/
+#endif
 
 extern byte BestColor( int, int, int, int, int );
 
@@ -55,11 +71,8 @@ void Inverse16_BuildTable( void )
 {
 	int i;
 
-	/*
-	** create the 16-to-8 table
-	*/
-	for ( i = 0; i < 65536; i++ )
-	{
+	/* create the 16-to-8 table */
+	for ( i = 0; i < 65536; i++ ) {
 		int r = i & 31;
 		int g = ( i >> 5 ) & 63;
 		int b = ( i >> 11 ) & 31;
@@ -85,8 +98,7 @@ void Alphalight_Thread (int i)
 	b = (i&31) * (1.0/16);
 
 	bestdistortion = 999999;
-	for (j=0 ; j<16*16*16*16 ; j++)
-	{
+	for (j=0 ; j<16*16*16*16 ; j++) {
 		mr = (j>>12) * (1.0/16);
 		mg = ((j>>8)&15) * (1.0/16);
 		mb = ((j>>4)&15) * (1.0/16);
@@ -101,8 +113,7 @@ void Alphalight_Thread (int i)
 
 		distortion *= 1.0 + ma*4;
 
-		if (distortion < bestdistortion)
-		{
+		if (distortion < bestdistortion) {
 			bestdistortion = distortion;
 			alphamap[i] = j;
 		}
@@ -115,8 +126,7 @@ void Cmd_Alphalight (void)
 
 	GetToken (qfalse);
 
-	if (g_release)
-	{
+	if (g_release) {
 		ReleaseFile (token);
 		return;
 	}
@@ -134,8 +144,7 @@ void Cmd_Inverse16Table( void )
 {
 	char savename[1024];
 
-	if ( g_release )
-	{
+	if ( g_release ) {
 		sprintf (savename, "pics/16to8.dat");
 		ReleaseFile( savename );
 		return;

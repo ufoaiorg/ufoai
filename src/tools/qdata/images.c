@@ -1,3 +1,28 @@
+/**
+ * @file images.c
+ * @brief
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 #include "qdata.h"
 
 char		mip_prefix[1024];		/* directory to dump the textures in */
@@ -5,15 +30,11 @@ char		mip_prefix[1024];		/* directory to dump the textures in */
 qboolean	colormap_issued;
 byte		colormap_palette[768];
 
-/*
-==============
-RemapZero
-
-Replaces all 0 bytes in an image with the closest palette entry.
-This is because NT won't let us change index 0, so any palette
-animation leaves those pixels untouched.
-==============
-*/
+/**
+ * @brief Replaces all 0 bytes in an image with the closest palette entry.
+ * This is because NT won't let us change index 0, so any palette
+ * animation leaves those pixels untouched.
+ */
 void RemapZero (byte *pixels, byte *palette, int width, int height)
 {
 	int		i, c;
@@ -22,11 +43,9 @@ void RemapZero (byte *pixels, byte *palette, int width, int height)
 
 	alt_zero = 0;
 	best = 9999999;
-	for (i=1 ; i<255 ; i++)
-	{
+	for (i=1 ; i<255 ; i++) {
 		value = palette[i*3+0]+palette[i*3+1]+palette[i*3+2];
-		if (value < best)
-		{
+		if (value < best) {
 			best = value;
 			alt_zero = i;
 		}
@@ -38,13 +57,9 @@ void RemapZero (byte *pixels, byte *palette, int width, int height)
 			pixels[i] = alt_zero;
 }
 
-/*
-==============
-Cmd_Grab
-
-$grab filename x y width height
-==============
-*/
+/**
+ * @brief $grab filename x y width height
+ */
 void Cmd_Grab (void)
 {
 	int             xl,yl,w,h,y;
@@ -59,8 +74,7 @@ void Cmd_Grab (void)
 	else
 		sprintf (savename, "%spics/%s.pcx", gamedir, token);
 
-	if (g_release)
-	{
+	if (g_release) {
 		if (token[0] == '/' || token[0] == '\\')
 			sprintf (dest, "%s.pcx", token+1);
 		else
@@ -84,8 +98,7 @@ void Cmd_Grab (void)
 
 	/* crop it to the proper size */
 	cropped = malloc (w*h);
-	for (y=0 ; y<h ; y++)
-	{
+	for (y=0 ; y<h ; y++) {
 		memcpy (cropped+y*w, byteimage+(y+yl)*byteimagewidth+xl, w);
 	}
 
@@ -97,13 +110,9 @@ void Cmd_Grab (void)
 	free (cropped);
 }
 
-/*
-==============
-Cmd_Raw
-
-$grab filename x y width height
-==============
-*/
+/**
+ * @brief $grab filename x y width height
+ */
 void Cmd_Raw (void)
 {
 	int             xl,yl,w,h,y;
@@ -115,8 +124,7 @@ void Cmd_Raw (void)
 
 	sprintf (savename, "%s%s.lmp", gamedir, token);
 
-	if (g_release)
-	{
+	if (g_release) {
 		sprintf (dest, "%s.lmp", token);
 		ReleaseFile (dest);
 		return;
@@ -136,8 +144,7 @@ void Cmd_Raw (void)
 
 	/* crop it to the proper size */
 	cropped = malloc (w*h);
-	for (y=0 ; y<h ; y++)
-	{
+	for (y=0 ; y<h ; y++) {
 		memcpy (cropped+y*w, byteimage+(y+yl)*byteimagewidth+xl, w);
 	}
 
@@ -152,17 +159,13 @@ void Cmd_Raw (void)
 
 /*
 =============================================================================
-
 COLORMAP GRABBING
-
 =============================================================================
 */
 
-/*
-===============
-BestColor
-===============
-*/
+/**
+ * @brief
+ */
 byte BestColor (int r, int g, int b, int start, int stop)
 {
 	int	i;
@@ -196,6 +199,7 @@ byte BestColor (int r, int g, int b, int start, int stop)
 
 
 /**
+ * @brief
  * @note $colormap filename
  * the brightes colormap is first in the table (FIXME: reverse this now?)
  * 64 rows of 256 : lightmaps
@@ -282,9 +286,7 @@ void Cmd_Colormap (void)
 
 /*
 =============================================================================
-
 MIPTEX GRABBING
-
 =============================================================================
 */
 
@@ -295,11 +297,9 @@ int		d_red, d_green, d_blue;
 byte	palmap[32][32][32];
 qboolean	palmap_built;
 
-/*
-=============
-FindColor
-=============
-*/
+/**
+ * @brief
+ */
 int FindColor (int r, int g, int b)
 {
 	int		bestcolor;
@@ -326,6 +326,9 @@ int FindColor (int r, int g, int b)
 }
 
 
+/**
+ * @brief
+ */
 void BuildPalmap (void)
 {
 #ifdef TABLECOLORS
@@ -351,11 +354,9 @@ void BuildPalmap (void)
 
 }
 
-/*
-=============
-AveragePixels
-=============
-*/
+/**
+ * @brief
+ */
 byte AveragePixels (int count)
 {
 	int		r,g,b;
@@ -415,7 +416,7 @@ typedef struct
 	parmtype_t	type;
 } mipparm_t;
 
-mipparm_t	mipparms[] =
+static mipparm_t mipparms[] =
 {
 	/* utility content attributes */
 	{"water",	CONTENTS_WATER, pt_contents},
@@ -451,6 +452,7 @@ mipparm_t	mipparms[] =
 
 
 /**
+ * @brief
  * @note $mip filename x y width height <OPTIONS>
  * must be multiples of sixteen
  * SURF_WINDOW
@@ -591,11 +593,9 @@ void Cmd_Mip (void)
 	free (qtex);
 }
 
-/*
-===============
-Cmd_Mippal
-===============
-*/
+/**
+ * @brief
+ */
 void Cmd_Mippal (void)
 {
 	colormap_issued = qtrue;
@@ -608,11 +608,9 @@ void Cmd_Mippal (void)
 }
 
 
-/*
-===============
-Cmd_Mipdir
-===============
-*/
+/**
+ * @brief
+ */
 void Cmd_Mipdir (void)
 {
 	char	filename[1024];
@@ -629,7 +627,6 @@ void Cmd_Mipdir (void)
 
 /*
 =============================================================================
-
 ENVIRONMENT MAP GRABBING
 
 Creates six pcx files from tga files without any palette edge seams
@@ -638,14 +635,12 @@ also copies the tga files for GL rendering.
 */
 
 /* 3dstudio environment map suffixes */
-char	*suf[6] = {"rt", "ft", "lf", "bk", "up", "dn"};
+char *suf[6] = {"rt", "ft", "lf", "bk", "up", "dn"};
 
-/*
-=================
-Cmd_Environment
-FIXME: UFO does not use this
-=================
-*/
+/**
+ * @brief
+ * NOTE: UFO does not use this
+ */
 void Cmd_Environment (void)
 {
 	char	name[1024];
