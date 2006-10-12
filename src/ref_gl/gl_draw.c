@@ -460,11 +460,15 @@ void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, fl
 	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
 		return;
 
+	gl = GL_FindImage(va("pics/menu/%s_night", map), it_wrappic);
+	/* maybe the campaign map doesn't have a night image */
+	if (!gl)
+		return;
+
 	/* init combiner */
 	qglEnable(GL_BLEND);
 
 	GL_SelectTexture(gl_texture0);
-	gl = GL_FindImage(va("pics/menu/%s_night", map), it_wrappic);
 	GL_Bind(gl->texnum);
 
 	GL_SelectTexture(gl_texture1);
@@ -515,16 +519,17 @@ void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float c
 	image_t *gl;
 	float nx, ny, nw, nh;
 
+	/* load clouds image */
+	gl = GL_FindImage(va("pics/menu/%s_clouds", map), it_wrappic);
+	/* maybe the campaign map doesn't have a clouds image */
+	if (!gl)
+		return;
+
 	/* normalize */
 	nx = x * vid.rx;
 	ny = y * vid.ry;
 	nw = w * vid.rx;
 	nh = h * vid.ry;
-
-	/* load day image */
-	gl = GL_FindImage(va("pics/menu/%s_clouds", map), it_wrappic);
-	if (!gl)
-		return;
 
 	/* init combiner */
 	qglEnable(GL_BLEND);
