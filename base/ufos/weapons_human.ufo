@@ -8,7 +8,8 @@ item assault
 	weapon		true
 	type		rifle
 	category	1
-	twohanded	true
+	holdtwohanded	false
+	firetwohanded	true
 	shape		"0 0 5 2"
 	center		"3 0 2"
 	scale		1.25
@@ -81,7 +82,8 @@ item sniper
 	weapon		true
 	type		rifle
 	category	1
-	twohanded	true
+	holdtwohanded	false
+	firetwohanded 	true
 	shape		"0 0 5 2"
 	center		"9 0 3"
 	scale		1.05
@@ -152,7 +154,8 @@ item pistol
 	weapon		true
 	type		pistol
 	category	2
-	twohanded	false
+	holdtwohanded	false
+	firetwohanded 	false
 	shape		"0 0 2 2"
 	center		"2 0 1"
 	scale		1.35
@@ -224,7 +227,8 @@ item smg
 	weapon		true
 	type		pistol
 	category	2
-	twohanded	true
+	holdtwohanded	false
+	firetwohanded 	true
 	shape		"0 0 3 2"
 	center		"6.4 0 1"
 	scale		1.15
@@ -297,7 +301,8 @@ item shotgun
 	weapon		true
 	type		biggun
 	category	1
-	twohanded	true
+	holdtwohanded	false
+	firetwohanded	true
 	shape		"0 0 4 2"
 	center		"10.4 0 1"
 	scale		1
@@ -428,7 +433,8 @@ item flamer
 	weapon		true
 	type		biggun
 	category	1
-	twohanded	true
+	holdtwohanded	false
+	firetwohanded	true
 	shape		"0 0 5 2"
 	center		"9 0 2"
 	scale		1.2
@@ -503,7 +509,8 @@ item rpg
 	weapon		true
 	type		rpg
 	category	3
-	twohanded	true
+	holdtwohanded	true
+	firetwohanded	true
 	shape		"0 0 5 2"
 	center		"-5.7 0 2"
 	scale		0.87
@@ -698,7 +705,8 @@ item grenl
 	weapon		true
 	type		biggun
 	category	1
-	twohanded	true
+	holdtwohanded	false
+	firetwohanded	true
 	shape		"0 0 5 2"
 	center		"7 0 2"
 	scale		1.1
@@ -800,7 +808,7 @@ item grenl_fle_ammo
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
-		launched true		
+		launched true
 		spread	"0 3"
 		range	15
 		shots	1
@@ -826,7 +834,7 @@ item grenl_fle_ammo
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
-		launched true		
+		launched true
 		delay	1
 		bounce	10
 		bncfac	0.5
@@ -867,7 +875,7 @@ item grenl_ammo
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
-		launched true		
+		launched true
 		spread	"0 3"
 		range	15
 		shots	1
@@ -893,7 +901,7 @@ item grenl_ammo
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
-		launched true		
+		launched true
 		delay	1
 		bounce	10
 		bncfac	0.5
@@ -934,7 +942,7 @@ item grenl_plasma_ammo
 		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
-		launched true		
+		launched true
 		spread	"0 3"
 		range	15
 		shots	1
@@ -960,7 +968,7 @@ item grenl_plasma_ammo
 		bodysnd	weapons/plasma_grenade.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
-		launched true		
+		launched true
 		delay	1
 		bounce	10
 		bncfac	0.5
@@ -987,7 +995,8 @@ item bolterrifle
 	weapon          true
 	type            biggun
 	category        3
-	twohanded       true
+	holdtwohanded   false
+	firetwohanded	true
 	shape           "0 0 5 2"
 	center          "4 0 1.1"
 	scale           1.2

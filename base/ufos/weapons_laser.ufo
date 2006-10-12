@@ -8,7 +8,8 @@ item laserpistol
 	weapon		true
 	type		pistol
 	category	2
-	twohanded	false
+	holdtwohanded	false
+	firetwohanded	false
 	shape		"0 0 3 2"
 	center		"2.5 0 1.2"
 	scale		1.7
@@ -80,7 +81,8 @@ item laserrifle
 	weapon		true
 	type		rifle
 	category	1
-	twohanded	true
+	holdtwohanded	false
+	firetwohanded	true
 	shape		"0 0 5 2"
 	center		"4.5 0 1.5"
 	scale		1.26
@@ -152,7 +154,8 @@ item heavylaser
 	weapon		true
 	type		biggun
 	category	3
-	twohanded	true
+	holdtwohanded	false
+	firetwohanded	true
 	shape		"0 0 5 2"
 	center		"8.5 0 1.5"
 	scale		1.15

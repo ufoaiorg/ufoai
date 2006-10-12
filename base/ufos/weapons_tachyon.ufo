@@ -8,7 +8,8 @@ item tachyonpistol
 	weapon		true
 	type		pistol
 	category	2
-	twohanded	false
+	holdtwohanded	false
+	firetwohanded	false
 	shape		"0 0 2 2"
 	center		"1.2 0 1.5"
 	scale		1.18
@@ -80,7 +81,8 @@ item tachyonrifle
 	weapon		true
 	type		rifle
 	category	1
-	twohanded	true
+	holdtwohanded	false
+	firetwohanded	true
 	shape		"0 0 5 2"
 	center		"11 0 0.3"
 	scale		1.07
@@ -154,7 +156,8 @@ item tachyonsniper
 	weapon		true
 	type		rifle
 	category	1
-	twohanded	true
+	holdtwohanded	false
+	firetwohanded	true
 	shape		"0 0 5 2"
 	center		"9 0 1.8"
 	scale		1.1

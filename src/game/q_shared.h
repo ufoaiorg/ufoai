@@ -893,7 +893,8 @@ typedef struct objDef_s {
 	vec3_t center;
 	char category;
 	byte weapon;
-	byte twohanded;
+	byte holdtwohanded;
+	byte firetwohanded;
 	byte extension;
 	byte thrown;
 	int price;

@@ -1732,12 +1732,18 @@ void MN_DrawMenus(void)
 							/* single item container (special case for left hand) */
 							if (node->mousefx == csi.idLeft && !menuInventory->c[csi.idLeft]) {
 								color[3] = 0.5;
-								if (menuInventory->c[csi.idRight] && csi.ods[menuInventory->c[csi.idRight]->item.t].twohanded)
-									MN_DrawItem(node->pos, menuInventory->c[csi.idRight]->item, node->size[0] / C_UNIT, node->size[1] / C_UNIT, 0, 0, scale,
-												color);
-							} else if (menuInventory->c[node->mousefx])
-								MN_DrawItem(node->pos, menuInventory->c[node->mousefx]->item, node->size[0] / C_UNIT, node->size[1] / C_UNIT, 0, 0, scale,
-											color);
+								if (menuInventory->c[csi.idRight] && csi.ods[menuInventory->c[csi.idRight]->item.t].holdtwohanded)
+									MN_DrawItem(node->pos, menuInventory->c[csi.idRight]->item, node->size[0] / C_UNIT,
+												node->size[1] / C_UNIT, 0, 0, scale, color);
+							} else if (menuInventory->c[node->mousefx]) {
+								if (node->mousefx == csi.idRight &&
+										csi.ods[menuInventory->c[csi.idRight]->item.t].firetwohanded &&
+										menuInventory->c[csi.idLeft]) {
+									color[0] = color[1] = color[2] = color[3] = 0.3;
+								}
+								MN_DrawItem(node->pos, menuInventory->c[node->mousefx]->item, node->size[0] / C_UNIT,
+											node->size[1] / C_UNIT, 0, 0, scale, color);
+							}
 						} else {
 							/* standard container */
 							for (ic = menuInventory->c[node->mousefx]; ic; ic = ic->next) {
