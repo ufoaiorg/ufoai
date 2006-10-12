@@ -60,7 +60,7 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c bspfile.c -o bspfile.o $(CFLAGS)
 
 [Unit16]
-FileName=..\..\src\tools\common\cmdlib.c
+FileName=..\..\src\tools\ufo2map\common\cmdlib.c
 Folder=src
 Compile=1
 CompileCpp=0
@@ -308,7 +308,7 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c video.c -o video.o $(CFLAGS)
 
 [Unit12]
-FileName=common\trilib.c
+FileName=..\..\src\tools\qdata\common\trilib.c
 CompileCpp=0
 Folder=src
 Compile=1
