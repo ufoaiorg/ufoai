@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define min(a,b) ((a)<(b) ? (a):(b))
 #endif
 
+extern cvar_t *gl_drawclouds;
 extern qboolean scrap_dirty;
 void Scrap_Upload(void);
 image_t *shadow;
@@ -425,7 +426,8 @@ void Draw_FadeScreen(void)
 
 static float lastQ;
 /**
- * @brief
+ * @brief Draw the day and night images of a flat geoscape - multitexture feature is used to blend the images
+ * @note If no multitexture is available only the day map is drawn
  */
 void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
 {
@@ -499,6 +501,53 @@ void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, fl
 	/* reset mode */
 	qglDisable(GL_TEXTURE_2D);
 	GL_SelectTexture(gl_texture0);
+
+	qglDisable(GL_BLEND);
+	if (gl_drawclouds->value)
+		Draw_Clouds(x, y, w, h, p, q, cx, cy, iz, map);
+}
+
+/**
+ * @brief Draw the clouds for flat geoscape
+ * @note If no multitexture is available only the day map is drawn
+ */
+void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
+{
+	image_t *gl;
+	float nx, ny, nw, nh;
+
+	/* normalize */
+	nx = x * vid.rx;
+	ny = y * vid.ry;
+	nw = w * vid.rx;
+	nh = h * vid.ry;
+
+	/* load day image */
+	gl = GL_FindImage(va("pics/menu/%s_clouds", map), it_wrappic);
+	if (!gl)
+		return;
+
+	/* init combiner */
+	qglEnable(GL_BLEND);
+	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	qglEnable(GL_TEXTURE_2D);
+
+	/* draw day image */
+	GL_Bind(gl->texnum);
+	qglBegin(GL_QUADS);
+	qglTexCoord2f(cx - iz, cy - iz);
+	qglVertex2f(nx, ny);
+	qglTexCoord2f(cx + iz, cy - iz);
+	qglVertex2f(nx + nw, ny);
+	qglTexCoord2f(cx + iz, cy + iz);
+	qglVertex2f(nx + nw, ny + nh);
+	qglTexCoord2f(cx - iz, cy + iz);
+	qglVertex2f(nx, ny + nh);
+	qglEnd();
+
+	/* reset mode */
+	qglDisable(GL_TEXTURE_2D);
 
 	qglDisable(GL_BLEND);
 }

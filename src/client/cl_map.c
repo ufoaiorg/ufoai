@@ -734,7 +734,6 @@ extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
 		re.DrawDayAndNight(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / (3600 * 24), q,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
-
 		MAP_DrawMapMarkers(node);
 	}
 

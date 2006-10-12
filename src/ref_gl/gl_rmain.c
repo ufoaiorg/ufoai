@@ -118,6 +118,7 @@ cvar_t *gl_shadow_debug_shade;
 cvar_t *r_ati_separate_stencil;
 cvar_t *r_stencil_two_side;
 
+cvar_t *gl_drawclouds;
 cvar_t *gl_imagefilter;
 cvar_t *gl_mode;
 cvar_t *gl_dynamic;
@@ -1113,6 +1114,7 @@ static void R_Register(void)
 	gl_shadow_debug_shade = ri.Cvar_Get("r_shadow_debug_shade", "0", CVAR_ARCHIVE, NULL);
 	r_ati_separate_stencil = ri.Cvar_Get("r_ati_separate_stencil", "1", CVAR_ARCHIVE, NULL);
 	r_stencil_two_side = ri.Cvar_Get("r_stencil_two_side", "1", CVAR_ARCHIVE, NULL);
+	gl_drawclouds = ri.Cvar_Get("gl_drawclouds", "0", CVAR_ARCHIVE, NULL);
 	gl_imagefilter = ri.Cvar_Get("gl_imagefilter", "1", CVAR_ARCHIVE, NULL);
 	gl_dynamic = ri.Cvar_Get("gl_dynamic", "1", 0, NULL);
 	gl_nobind = ri.Cvar_Get("gl_nobind", "0", 0, NULL);
