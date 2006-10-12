@@ -536,13 +536,13 @@ void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float c
 	/* draw day image */
 	GL_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
-	qglTexCoord2f(cx - iz, cy - iz);
+	qglTexCoord2f(q-p + cx - iz, cy - iz);
 	qglVertex2f(nx, ny);
-	qglTexCoord2f(cx + iz, cy - iz);
+	qglTexCoord2f(q-p + cx + iz, cy - iz);
 	qglVertex2f(nx + nw, ny);
-	qglTexCoord2f(cx + iz, cy + iz);
+	qglTexCoord2f(q-p + cx + iz, cy + iz);
 	qglVertex2f(nx + nw, ny + nh);
-	qglTexCoord2f(cx - iz, cy + iz);
+	qglTexCoord2f(q-p + cx - iz, cy + iz);
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
 
