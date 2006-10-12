@@ -27,13 +27,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "qcommon.h"
-
+#include "unzip.h"
 
 /* in memory */
 
 typedef struct {
 	char name[MAX_QPATH];
-	int filepos, filelen;
+	unsigned long filepos;
+	unsigned long filelen;
 } packfile_t;
 
 typedef struct pack_s {
@@ -353,8 +354,16 @@ void FS_Read(void *buffer, int len, FILE * f)
 			if (!tries) {
 				tries = 1;
 				CDAudio_Stop();
-			} else
+			} else {
+#if 0 /* Pk3 file support is not working atm */
+				read = unzReadCurrentFile(f, buffer, len);
+				if (read == 0)
+					Com_Error(ERR_FATAL, "FS_Read: 0 bytes read");
+				else
+					break;
+#endif
 				Com_Error(ERR_FATAL, "FS_Read: 0 bytes read");
+			}
 		}
 
 		if (read == -1)
@@ -414,18 +423,18 @@ void FS_FreeFile(void *buffer)
 
 /**
  * @brief Takes an explicit (not game tree related) path to a pak file.
- *
- * Loads the header and directory, adding the files at the beginning
- * of the list so they override previous pack files.
+ * Adding the files at the beginning of the list so they override previous pack files.
  */
 pack_t *FS_LoadPackFile(char *packfile)
 {
-	dpak3header_t temp;
-	int i, numpackfiles, len;
+	int i, len, err;
 	packfile_t *newfiles;
 	pack_t *pack;
 	FILE *packhandle;
-	dpackfile_t info[MAX_FILES_IN_PACK];
+	unz_file_info file_info;
+	unzFile uf;
+	unz_global_info gi;
+	char filename_inzip[MAX_QPATH];
 
 	packhandle = fopen(packfile, "rb");
 	if (!packhandle)
@@ -433,59 +442,52 @@ pack_t *FS_LoadPackFile(char *packfile)
 	len = strlen(packfile);
 
 	if (!Q_strncmp(packfile + len - 4, ".pk3", 4) || !Q_strncmp(packfile + len - 4, ".zip", 4)) {
-		for (i = 0; i < MAX_FILES_IN_PACK; ++i) {
-			/*-- Get the local header of the file. */
-			fread(&temp, sizeof(dpak3header_t), 1, packhandle);
+		uf = unzOpen(packfile);
+		err = unzGetGlobalInfo (uf,&gi);
 
-			/*-- Check if finished with pak file item collection. */
-			if (BigLong(temp.ident) == PAK3DIRHEADER)
+		if (err != UNZ_OK)
+			return NULL;
+
+		len = 0;
+		unzGoToFirstFile(uf);
+		for (i = 0; i < gi.number_entry; i++) {
+			err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
+			if (err != UNZ_OK) {
 				break;
-
-			/*-- Check if header signature is correct for the first item. */
-			if ((BigLong(temp.ident) != PAK3HEADER) && (i == 0))
-				Com_Error(ERR_FATAL, "%s is not a packfile", packfile);
-
-			/*-- Check if compression is used or any flags are set. */
-			if ((temp.compression != 0) || (temp.flags != 0))
-				Com_Error(ERR_FATAL, "%s contains errors or is compressed", packfile);
-
-			/*-- Get length of data area */
-			info[i].filelen = temp.uncompressedSize;
-
-			/*-- Get the data areas filename and add \0 to the end */
-			fread(&info[i].name, temp.filenameLength, 1, packhandle);
-			info[i].name[temp.filenameLength] = '\0';
-
-			/*-- Get the offset of the data area */
-			info[i].filepos = (ftell(packhandle) + temp.extraFieldLength);
-
-			/*-- Goto the next header */
-			fseek(packhandle, (info[i].filelen + info[i].filepos), SEEK_SET);
+			}
+			len += strlen(filename_inzip) + 1;
+			unzGoToNextFile(uf);
 		}
-		/*-- Allocate space for array of packfile structures (filename, offset, length) */
+
+		pack = Z_Malloc(sizeof(pack_t));
+		Q_strncpyz(pack->filename, packfile, MAX_QPATH);
+		pack->handle = uf;
+		pack->numfiles = gi.number_entry;
+		unzGoToFirstFile(uf);
+
+		/* Allocate space for array of packfile structures (filename, offset, length) */
 		newfiles = Z_Malloc(i * sizeof(packfile_t));
 
-		/*-- The save the number of items collected from the zip file. */
-		numpackfiles = i;
+		for (i = 0; i < gi.number_entry; i++) {
+			err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
+			if (err != UNZ_OK)
+				break;
+			Q_strlwr(filename_inzip);
 
-		for (i = 0; i < numpackfiles; i++) {
-			Q_strncpyz(newfiles[i].name, info[i].name, MAX_QPATH);
-			newfiles[i].filepos = info[i].filepos;
-			newfiles[i].filelen = info[i].filelen;
+			unzGetCurrentFileInfoPosition(uf, &newfiles[i].filepos);
+			Q_strncpyz(newfiles[i].name, filename_inzip, MAX_QPATH);
+			newfiles[i].filelen = file_info.compressed_size;
+			unzGoToNextFile(uf);
 		}
+		pack->files = newfiles;
+
+		Com_Printf("Added packfile %s (%i files) (NOTE: support for pk3 is not fully implemented)\n", packfile, gi.number_entry);
+		return pack;
 	} else {
 		/* Unrecognized file type! */
 		Com_Printf("Pack file type %s unrecognized\n", packfile + len - 4);
 		return NULL;
 	}
-	pack = Z_Malloc(sizeof(pack_t));
-	Q_strncpyz(pack->filename, packfile, MAX_QPATH);
-	pack->handle = packhandle;
-	pack->numfiles = numpackfiles;
-	pack->files = newfiles;
-
-	Com_Printf("Added packfile %s (%i files)\n", packfile, numpackfiles);
-	return pack;
 }
 
 
@@ -494,13 +496,10 @@ pack_t *FS_LoadPackFile(char *packfile)
   */
 void FS_AddGameDirectory(char *dir)
 {
-	int i;
 	searchpath_t *search;
 	pack_t *pak;
-	char pakfile[MAX_OSPATH];
-	char findname[1024];
-	char **dirnames;
-	int ndirs;
+	char **dirnames = NULL;
+	int ndirs = 0, i;
 
 	Q_strncpyz(fs_gamedir, dir, MAX_QPATH);
 
@@ -513,68 +512,20 @@ void FS_AddGameDirectory(char *dir)
 	search->next = fs_searchpaths;
 	fs_searchpaths = search;
 
-	/* add any pk3 files in the format pak0.pk3 pak1.pk3, ... */
-	for (i = 0; i < 100; i++) {
-		Com_sprintf(pakfile, sizeof(pakfile), "%s/pak%i.pk3", dir, i);
-		pak = FS_LoadPackFile(pakfile);
-		if (!pak)
-			continue;
-		search = Z_Malloc(sizeof(searchpath_t));
-		search->pack = pak;
-		search->next = fs_searchpaths;
-		fs_searchpaths = search;
-	}
-	/* add any pk3 files in the format pak0.pk3 pak1.pk3, ... */
-	for (i = 0; i < 100; i++) {
-		Com_sprintf(pakfile, sizeof(pakfile), "%s/pak%i.zip", dir, i);
-		pak = FS_LoadPackFile(pakfile);
-		if (!pak)
-			continue;
-		search = Z_Malloc(sizeof(searchpath_t));
-		search->pack = pak;
-		search->next = fs_searchpaths;
-		fs_searchpaths = search;
-	}
-	for (i = 0; i < 3; i++) {
-		switch (i) {
-		case 0:
-			/* Standard Quake II pack file '.pak' */
-			Com_sprintf(findname, sizeof(findname), "%s/%s", dir, ".pak");
-			break;
-		case 1:
-			/* Quake III pack file '.pk3' */
-			Com_sprintf(findname, sizeof(findname), "%s/%s", dir, ".pk3");
-			break;
-		case 2:
-			/* Uncompressed zip file '.zip' */
-			Com_sprintf(findname, sizeof(findname), "%s/%s", dir, ".zip");
-			break;
-		default:
-			/* Standard Quake II pack file '.pak' */
-			Com_sprintf(findname, sizeof(findname), "%s/%s", dir, ".pak");
-			break;
-		}
-
-		FS_NormPath(findname);
-
-		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, 0)) != 0) {
-			int i;
-
-			for (i = 0; i < ndirs - 1; i++) {
-				if (strrchr(dirnames[i], '/')) {
-					pak = FS_LoadPackFile(dirnames[i]);
-					if (!pak)
-						continue;
-					search = Z_Malloc(sizeof(searchpath_t));
-					search->pack = pak;
-					search->next = fs_searchpaths;
-					fs_searchpaths = search;
-				}
-				free(dirnames[i]);
+	if ((dirnames = FS_ListFiles(va("%s/*.pk3", dir), &ndirs, 0, 0)) != 0) {
+		for (i = 0; i < ndirs - 1; i++) {
+			if (strrchr(dirnames[i], '/')) {
+				pak = FS_LoadPackFile(dirnames[i]);
+				if (!pak)
+					continue;
+				search = Z_Malloc(sizeof(searchpath_t));
+				search->pack = pak;
+				search->next = fs_searchpaths;
+				fs_searchpaths = search;
 			}
-			free(dirnames);
+			free(dirnames[i]);
 		}
-		/*VoiD -E- *.pack support */
+		free(dirnames);
 	}
 }
 

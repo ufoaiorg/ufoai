@@ -670,6 +670,7 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/snd_mix.o \
 	\
 	$(BUILDDIR)/client/cmd.o \
+	$(BUILDDIR)/client/unzip.o \
 	$(BUILDDIR)/client/cmodel.o \
 	$(BUILDDIR)/client/common.o \
 	$(BUILDDIR)/client/crc.o \
@@ -833,6 +834,9 @@ $(BUILDDIR)/client/snd_mix.o :     $(CLIENT_DIR)/snd_mix.c
 $(BUILDDIR)/client/cmd.o :         $(COMMON_DIR)/cmd.c
 	$(DO_CC)
 
+$(BUILDDIR)/client/unzip.o :         $(COMMON_DIR)/unzip.c
+	$(DO_CC)
+
 $(BUILDDIR)/client/cmodel.o :      $(COMMON_DIR)/cmodel.c
 	$(DO_CC)
 
@@ -930,6 +934,7 @@ $(BUILDDIR)/client/q_shosx.o :    $(MACOSX_DIR)/q_shosx.c
 Q2DED_OBJS = \
 	\
 	$(BUILDDIR)/ded/cmd.o \
+	$(BUILDDIR)/ded/unzip.o \
 	$(BUILDDIR)/ded/cmodel.o \
 	$(BUILDDIR)/ded/common.o \
 	$(BUILDDIR)/ded/crc.o \
@@ -981,6 +986,9 @@ $(BUILDDIR)/ufoded : $(Q2DED_OBJS)
 	$(CC) $(CFLAGS) -o $@ $(Q2DED_OBJS) $(LDFLAGS)
 
 $(BUILDDIR)/ded/cmd.o :        $(COMMON_DIR)/cmd.c
+	$(DO_DED_CC)
+
+$(BUILDDIR)/ded/unzip.o :        $(COMMON_DIR)/unzip.c
 	$(DO_DED_CC)
 
 $(BUILDDIR)/ded/cmodel.o :     $(COMMON_DIR)/cmodel.c
