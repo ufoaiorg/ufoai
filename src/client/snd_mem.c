@@ -34,14 +34,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "snd_loc.h"
 
-byte *S_Alloc(int size);
+/* #define DUMPCHUNKS */
 
-/*
-================
-ResampleSfx
-================
-*/
-void ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data)
+byte *S_Alloc(int size);
+static wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength);
+
+/**
+ * @brief
+ */
+static void ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data)
 {
 	int outcount;
 	int srcsample;
@@ -69,7 +70,6 @@ void ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data)
 	sc->stereo = 0;
 
 	/* resample / decimate to the current source rate */
-
 	if (stepscale == 1 && inwidth == 1 && sc->width == 1) {
 		/* fast special case */
 		for (i = 0; i < outcount; i++)
@@ -94,14 +94,10 @@ void ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data)
 	}
 }
 
-/*============================================================================= */
-
-/*
-==============
-S_LoadSound
-==============
-*/
-sfxcache_t *S_LoadSound(sfx_t * s)
+/**
+ * @brief
+ */
+extern sfxcache_t *S_LoadSound(sfx_t * s)
 {
 	char namebuffer[MAX_QPATH];
 	byte *data;
@@ -175,9 +171,7 @@ sfxcache_t *S_LoadSound(sfx_t * s)
 
 /*
 ===============================================================================
-
 WAV loading
-
 ===============================================================================
 */
 
@@ -188,7 +182,10 @@ static byte *last_chunk;
 static byte *iff_data;
 static int iff_chunk_len;
 
-short GetLittleShort(void)
+/**
+ * @brief
+ */
+static short GetLittleShort(void)
 {
 	short val = 0;
 
@@ -198,7 +195,10 @@ short GetLittleShort(void)
 	return val;
 }
 
-int GetLittleLong(void)
+/**
+ * @brief
+ */
+static int GetLittleLong(void)
 {
 	int val = 0;
 
@@ -210,7 +210,11 @@ int GetLittleLong(void)
 	return val;
 }
 
-void FindNextChunk(char *name)
+/**
+ * @brief
+ * @sa FindChunk
+ */
+static void FindNextChunk(char *name)
 {
 	while (1) {
 		data_p = last_chunk;
@@ -230,19 +234,26 @@ void FindNextChunk(char *name)
 /*			Sys_Error ("FindNextChunk: %i length is past the 1 meg sanity limit", iff_chunk_len); */
 		data_p -= 8;
 		last_chunk = data_p + 8 + ((iff_chunk_len + 1) & ~1);
-		if (!strncmp((char *) data_p, name, 4))
+		if (!Q_strncmp((char *) data_p, name, 4))
 			return;
 	}
 }
 
-void FindChunk(char *name)
+/**
+ * @brief
+ * @sa FindNextChunk
+ */
+static void FindChunk(char *name)
 {
 	last_chunk = iff_data;
 	FindNextChunk(name);
 }
 
-
-void DumpChunks(void)
+#ifdef DUMPCHUNKS
+/**
+ * @brief
+ */
+static void DumpChunks(void)
 {
 	char str[5];
 
@@ -256,13 +267,12 @@ void DumpChunks(void)
 		data_p += (iff_chunk_len + 1) & ~1;
 	} while (data_p < iff_end);
 }
+#endif
 
-/*
-============
-GetWavinfo
-============
-*/
-wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength)
+/**
+ * @brief
+ */
+static wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength)
 {
 	wavinfo_t info;
 	int i;
@@ -286,7 +296,9 @@ wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength)
 
 	/* get "fmt " chunk */
 	iff_data = data_p + 12;
-/* 	DumpChunks (); */
+#ifdef DUMPCHUNKS
+	DumpChunks();
+#endif
 
 	FindChunk("fmt ");
 	if (!data_p) {

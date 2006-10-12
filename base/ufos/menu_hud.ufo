@@ -739,7 +739,7 @@ menu hud
 	{
 		cmd "set hud_refresh 1;"
 		cmd "ov_start;"
-		cmd "set mn_showchatbuttons 0"
+		cmd "set mn_showchatbuttons 0;"
 	}
 }
 

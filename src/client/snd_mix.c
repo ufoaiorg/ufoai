@@ -169,9 +169,7 @@ void S_TransferPaintBuffer(int endtime)
 
 /*
 ===============================================================================
-
 CHANNEL MIXING
-
 ===============================================================================
 */
 
@@ -340,7 +338,6 @@ void S_PaintChannels(int endtime)
 					}
 				}
 			}
-
 		}
 
 		/* transfer out according to DMA format */

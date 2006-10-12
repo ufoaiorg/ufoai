@@ -174,8 +174,6 @@ extern cvar_t *snd_testsound;
 extern cvar_t *ov_volume;
 extern cvar_t *ov_loop;
 
-wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength);
-
 void S_InitScaletable(void);
 
 sfxcache_t *S_LoadSound(sfx_t * s);

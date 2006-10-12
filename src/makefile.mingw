@@ -6,27 +6,37 @@ CC = i586-mingw32msvc-gcc
 
 JPEGLIB = -DDONT_TYPEDEF_INT32
 VORBISLIB = -lvorbisfile -lvorbis -logg
-CFLAGS = -g -I/usr/include -I/usr/local/include -Iclient -Imingw32  -DSHADERS
+CFLAGS = -g -Iclient -Imingw32 -DC_ONLY -DSHADERS $(shell sdl-config --cflags) -fexceptions
 LDFLAGSINTL = -L/usr/local/lib -lintl -DHAVE_GETTEXT
 LDFLAGS = -L/usr/lib -L/usr/local/lib -lgdi32 -lwinmm -lwsock32 $(LDFLAGSINTL)
+LDFLAGS_DLL = -L/usr/lib -L/usr/local/lib -lkernel32 -luser32 -lgdi32 -lwinmm -Imingw32
+LDFLAGS_SDL_TTF = -lSDL_ttf
 
 GAME_SRC = game/g_ai.c game/g_client.c game/g_cmds.c game/g_main.c game/g_spawn.c game/g_svcmds.c game/g_utils.c
 
-REF_GL_SRC = ref_gl/gl_anim.c ref_gl/arb_shader.c ref_gl/gl_draw.c ref_gl/gl_font.c ref_gl/gl_image.c ref_gl/gl_light.c ref_gl/gl_mesh.c ref_gl/gl_model.c ref_gl/gl_particle.c ref_gl/gl_rmain.c ref_gl/gl_rmisc.c ref_gl/gl_rsurf.c ref_gl/gl_shadows.c ref_gl/gl_warp.c
+REF_GL_SRC = ref_gl/gl_anim.c ref_gl/arb_shader.c ref_gl/gl_draw.c ref_gl/gl_font.c ref_gl/gl_image.c ref_gl/gl_light.c ref_gl/gl_mesh.c ref_gl/gl_model.c ref_gl/gl_particle.c ref_gl/gl_rmain.c ref_gl/gl_rmisc.c ref_gl/gl_rsurf.c ref_gl/gl_shadows.c ref_gl/gl_warp.c ref_gl/qgl.c
 
-REF_GL_WIN32_SRC = win32/qgl_win.c win32/glw_imp.c
+REF_GL_WIN32_SRC = ports/win32/qgl_win.c ports/win32/glw_imp.c
+
+SND_WAPI_WIN32_SRC = ports/win32/snd_wapi.c
+
+SND_SDL_WIN32_SRC = ports/linux/snd_sdl.c
+
+SND_DX_WIN32_SRC = ports/linux/snd_dx.c
 
 SHARED_SRC1 = game/q_shared.c
 
-SHARED_SRC2 = win32/q_shwin.c
+SHARED_SRC2 = ports/win32/q_shwin.c
 
-CLIENT_SRC = client/cl_actor.c client/cl_basemanagement.c client/cl_campaign.c client/cl_cin.c client/cl_fx.c client/cl_input.c client/cl_le.c client/cl_main.c client/cl_market.c client/cl_menu.c client/cl_parse.c client/cl_particle.c client/cl_research.c client/cl_scrn.c client/cl_sequence.c client/cl_shader.c client/cl_team.c client/cl_ufopedia.c client/cl_view.c client/console.c client/keys.c client/snd_ref.c client/snd_mem.c client/snd_mix.c client/x86.c
+NULL_SRC = ports/null/cl_null.c ports/null/cd_null.c
+
+CLIENT_SRC = client/cl_actor.c client/cl_aircraft.c client/cl_basemanagement.c client/cl_campaign.c client/cl_fx.c client/cl_input.c client/cl_inventory.c client/cl_le.c client/cl_map.c client/cl_main.c client/cl_market.c client/cl_menu.c client/cl_parse.c client/cl_particle.c client/cl_popup.c client/cl_produce.c client/cl_radar.c client/cl_research.c client/cl_scrn.c client/cl_sequence.c client/cl_shader.c client/cl_team.c client/cl_ufo.c client/cl_ufopedia.c client/cl_view.c client/console.c client/keys.c client/snd_ref.c client/snd_mem.c client/snd_mix.c client/snd_ref.c client/x86.c
 
 QCOMMON_SRC = qcommon/cmd.c qcommon/cmodel.c qcommon/common.c qcommon/crc.c qcommon/cvar.c qcommon/files.c qcommon/md4.c qcommon/net_chan.c qcommon/scripts.c
 
 SERVER_SRC = server/sv_ccmds.c server/sv_game.c server/sv_init.c server/sv_main.c server/sv_send.c server/sv_user.c server/sv_world.c
 
-WIN32_SRC = win32/cd_win.c win32/conproc.c win32/in_win.c win32/net_wins.c win32/snd_win.c win32/sys_win.c win32/vid_dll.c
+WIN32_SRC = ports/win32/cd_win.c ports/win32/conproc.c ports/win32/in_win.c ports/win32/net_wins.c ports/win32/sys_win.c ports/win32/vid_dll.c
 
 SRC = $(GAME_SRC) $(REF_GL_SRC) $(REF_GL_WIN32_SRC) $(SHARED_SRC1) $(SHARED_SRC2) $(CLIENT_SRC) $(QCOMMON_SRC) $(SERVER_SRC) $(WIN32_SRC)
 
@@ -36,16 +46,30 @@ REF_GL_DLL_SRC = $(REF_GL_SRC) $(REF_GL_WIN32_SRC) $(SHARED_SRC1) $(SHARED_SRC2)
 
 UFO_EXE_SRC = $(SHARED_SRC1) $(SHARED_SRC2) $(CLIENT_SRC) $(QCOMMON_SRC) $(SERVER_SRC) $(WIN32_SRC)
 
-all: $(UFOINSTALLED)base/gamex86.dll $(UFOINSTALLED)ref_gl.dll $(UFOINSTALLED)ufo.exe
+UFODED_EXE_SRC = $(SHARED_SRC1) $(SHARED_SRC2) $(QCOMMON_SRC) $(SERVER_SRC) $(WIN32_SRC) $(NULL_SRC)
 
-$(UFOINSTALLED)base/gamex86.dll: $(GAMEX86_DLL_SRC:.c=.shob)
-	$(CC) -o $@ -shared $(LDFLAGSINTL) $+
+all: $(UFOINSTALLED)base/game.dll $(UFOINSTALLED)ref_gl.dll $(UFOINSTALLED)snd_sdl.dll $(UFOINSTALLED)snd_wapi.dll $(UFOINSTALLED)snd_dx.dll $(UFOINSTALLED)ufo.exe
+
+$(UFOINSTALLED)base/game.dll: $(GAMEX86_DLL_SRC:.c=.shob)
+	$(CC) -o $@ -shared $(LDFLAGSINTL) $(LDFLAGS_DLL) $+
+
+$(UFOINSTALLED)snd_sdl.dll: $(SND_SDL_WIN32_SRC:.c=.shob)
+	$(CC) -o $@ -shared $(LDFLAGS_DLL) $+
+
+$(UFOINSTALLED)snd_wapi.dll: $(SND_WAPI_WIN32_SRC:.c=.shob)
+	$(CC) -o $@ -shared $(LDFLAGS_DLL) $+
+
+$(UFOINSTALLED)snd_dx.dll: $(SND_DX_WIN32_SRC:.c=.shob)
+	$(CC) -o $@ -shared $(LDFLAGS_DLL) $+
 
 $(UFOINSTALLED)ref_gl.dll: $(REF_GL_DLL_SRC:.c=.shob)
-	$(CC) -o $@ -shared $(JPEGLIB) $(LDFLAGS) $+
+	$(CC) -o $@ -shared $(JPEGLIB) $(LDFLAGS) $(LDFLAGS_SDL_TTF) $+
 
 $(UFOINSTALLED)ufo.exe: $(UFO_EXE_SRC:.c=.o) win32/resources.coff
-	$(CC) -o $@ $(LDFLAGS) $(VORBISLIB) $+
+	$(CC) -o $@ $(LDFLAGSINTL) $(LDFLAGS) $(VORBISLIB) $+
+
+$(UFOINSTALLED)ufo_ded.exe: $(UFODED_EXE_SRC:.c=.o) win32/resources.coff
+	$(CC) -o $@ $(LDFLAGS) -DDEDICATED_ONLY$+
 
 %.shob: %.c
 	$(CC) -o $@ -c $< -shared $(CFLAGS)
