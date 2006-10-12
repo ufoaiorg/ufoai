@@ -7,12 +7,102 @@
 %---------------------------------------------------------------------------
 %							Version history
 %
-%  date		/		changes																	/		comment						/ author
+%  date		/		changes																	/		comment						/ 		author
 %	06.10.06	/	rev. 0.0.5 (alpha) released											/	complete aspell-check		/	Elbenfreund
+% 08.10.06	/	added chapters: "first steps"	and "options"				/											/	Elbenfreund
+%	11.10.06	/	added "troubleshooting" und "to come"						/											/	Elbenfreund
 %
 %---------------------------------------------------------------------------
 
+\section{First steps}
+This chapter is obviouly dedicated to players that are new to the UFO-series or maybe even round based tactical combat games in general. Experienced players may skip this one, but of cause won't be harmed by reading it as well.
 
-\chapter{Final comments}
-\section{Course of the game}
-\section{To come}
+The usual process after starting a new campaign is quite unified and all the same for all kind of players. First you may choose a proper place for your first homebase. Even if there are strategical differences between certain location there is hardly any No-no spot, so feel free to make your selection as you like.
+
+After you have set up your base you may want to prepare your squad so everything is ready in case aliens show up. In the following we will assume that you start you game with default settings (starting with buildings in base and employees hired). So the next thing you may do is open up your base-screen (as discused in the previous chapters) $\hookrightarrow$ Aircraft $\hookrightarrow$ Equip aircraft. This might be a strange way to group the squad menu, but turns out to offer certain advantages later on. If you followed those instructions you will now see a list off all soldiers aviable. By turning the "X" buttons to the right of their names into a \surd you now assign all 8 soldiers aviable to your dropship. Clicking on their names brings up their detailed statistics but instead of doing so we will click the arrow symbol in the very bottom left.
+
+Now we have entered the "equip sqad" screen. While its particular elements have been discussed in the regarding chapter (geoscape - your base) we will limit ourselfs to the most urent actions. First you need to get an overview about your soldiers weapon skills using the "actors abilities" screen. Once you have done so you should know how many weapons of each kind (assault, heavy etc.) you want to use for your squad. After that you need to find out how much of each weapon class you actualy own. If you lack a certain item you can try to buy the missing ones using the "Buy / Sell Equipment" menue (reached through the base screen). After you did your best to equipt every soldier with the best you can get, make sure you do not forget to hand them all the armor you have. Also some extra ammunition (just in case) might be helpfull. Now, the most important part is done and your squad eagerly waits for its first mission.
+
+In the meanwhile your job as the commander of PHALANX isn't halfway done. In order to fight the alien invaders your task force relies on the best technology available. And your research departments job is to offer the best human mind can invent. Using the research menu you can can make your selection on what your scientists should focus on next. It may also be a good idea to keep your production facilities busy, for example producing more armor (in case you could not get enough to equip every soldier with this very basic kind of protection.
+
+Now you should be done with the very basics. Of cause there is a whole lot features out there waiting to be explored by you, but this is not the place to spoil all your fun in finding out on your own. Instead you may turn up game speed in geoscape until the first alien attack offers you the chance to prrof you are worth leading PHALANX. Until then, you are dismissed - soldier.
+
+\section{Options}
+The options menu can allways be accessed by pressing "ESC" till you reach the main screen $\hookrightarrow$ options.
+
+\subsection{Video}
+This section offers you various ways to make UFO:AI look the best way possible to the engine and your system. Please be aware that while most options here can cause improved graphics they can also cause remarkable slow downs your computer.
+\subsubsection*{Resolution}
+You may choose resolutions betweem 320x240 and 2048x1536. It might be worth the note that "after" some rather rare resolutions like 1280x854 and the like follow which might be interesting for laptop users.
+\subsubsection*{Fullscreen}
+Well, here you either turn fullscreen mode on or off.
+\subsubsection*{Texture compression}
+\subsubsection*{Texture resolution cap}
+\subsubsection*{Show FPS}
+If you choose to turn on this option UFO:AI will display current frames per second in the very upper right corner.
+\subsubsection*{Texture anisotropy level}
+\subsubsection*{Lexture Lod}
+\subsubsection*{Image filter}
+\subsubsection*{Gamma}
+Here you may adjust UFO:AIs Gamma factor to your grafic card or monitor settings.
+
+\subsection{Sound}
+\subsubsection*{Effects}
+Use this fader to adjust effects volume to your neighbours ears.
+\subsubsection*{Music}
+Use this fader to adjust music volume once you got bored of your private music collection.
+\subsubsection*{Mixing rate}
+I am not realy familiar with sound engeniering, so i guess it is "the more the merrier"...
+\subsubsection*{Sound renderer}
+Here you may selsect the sound renderer UFO:AI uses. Options are SDL, wapi and DirectX[tm] (win32 only). Unless you know what you are doing or sound is not working properly you may be ok with the presets.
+
+\subsection{Game}
+Besides having the chance to change your "playername" the game options also offer more practical opportunities.
+\subsubsection*{Start with employees}
+Choosing this option will make you start with a set of employees as well as some basic equipment for your soldiers. If you prefer to do realy everything on your own, switch to "no" here.
+\subsubsection*{Start with buildings}
+If you say "yes" here UFO:AI will equip your first base with standart set of facilities that will do the trick quite well. Perfectionists may choose "no" here.
+\subsubsection*{Confirm actions}
+In order to prevent to fast clicking mistakes or making it easier to play UFO:AI while being drunk you may turn on this option. Doing so will make battlescape showing you the path your soldiers will choose once ordered to move to a certain spot. In order to finally make the soldier in question move there you need to press <Enter>.
+\subsubsection*{HUD design}
+As said at the introduction of battlescape there are two user interfaces available for tactical combats. here you can switch between HUD and altHUD. Please be aware that it is not possible to change the HUD while being in combat (you may change the option, but it won't take affect within the running mission).
+\subsubsection*{Center view}
+Depending on your setting here the HUD will focus on the selected soldier if you use the team-overview or buttons 1 to 8 to switch between different soldiers or stay focused on your point of view while switching.
+\subsubsection*{Cursor tooltips}
+Turn on/off cursor tooltips, indicating the function of various UI elements.
+\subsubsection*{Camera scroll}
+Adjust camera scroll  speed.
+\subsubsection*{Camera rotation}
+Adjust camera rotation speed.
+
+\section{Troubleshooting}
+This section tries to address some known problems and possible workaround. Nevertheless your first and most up-to-date reference should be the projects homepage.
+
+\subsection{Usefull commands}
+There are some quite helpful commands to be entered on UFO:AI console that may help you to work around problems or help getting debugging information for better diagnostics.
+\subsubsection{Changing drivers used}
+maybe not all of the following option may be valid for you, depending on your systems config.
+
+\paragraph*{Linux}
++ref_gl [glx|sdl] $\Longrightarrow$ for grafic drivers with valid driver options given in brackets.
++ref_snd [sdl|oss|arts|alsa] $\Longrightarrow$ for sound drivers with valid driver options given in brackets 																						again.
+\paragraph*{Windows}
++ref_gl [gl] $\Longrightarrow$ for grafic drivers with valid driver options given in brackets.
++ref_snd [sdl|wapi|dx] $\Longrightarrow$ for sound drivers with valid driver options given in brackets 																						again.
+
+\subsection{Turning off sound completly}
+Even if this is not an elegant way to solve problems, it at least helps to norrow things sometimes to switch off any sound. While just turning the volmue to zero still loads the drivers +set snd_init 0 (needs to be entered within the shell / command line on windows) disables them completly. If this solves your problem, please send us an bugreport to help improving the game.
+
+
+\section{Things to come}
+Because UFO:AI is allways work in progress we will include a small list of features we all would love to have but cant tell you when, if ever, they are to come. So we are glad for any suggestions and feedback but please check if someone had the same idea before you.
+\\
+\begin{tabular}{lll}
+more ships  & more maps & more models ...   \\ 
+random maps & interceptor battles & voice support \\ 
+reaction fire for aliens  & destructable terrain & alien autopsy \\ 
+interrogation of aliens  & more subtle influence of all primary stats & armor effects TUs \\ 
+improved inventory system & did i mention more of everything ? &  \\ 
+\end{tabular} 
+\\
+As you can see we are far away from thinking we got it perfect, but in order to improve things we allways need individuals with passion, skill and attitude to support this project of which we think its worth our time and maybe yours as well...

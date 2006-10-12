@@ -6,10 +6,14 @@
 %---------------------------------------------------------------------------
 %							Version history
 %
-%  date		/		changes																	/		comment						/ author
+%  date		/		changes																	/		comment						/ 		author
 %	06.10.06	/	rev. 0.0.5 (alpha) released											/	complete aspell-check		/	Elbenfreund
 % 08.10.06	/	added altHUD screenshots  										/	text is yet to come			/	Elbenfreund
 %					/	+ size-optimized HUD-screenshot added					/											/
+%	08.10.06	/	added altHUD descriptions											/											/	Elbenfreund
+%					/	+minor fixes and added moral section text				/											/
+%					/	+"commented" stun section as implementation is		/											/
+%					/		unclear right now														/											/			
 %
 %---------------------------------------------------------------------------
 
@@ -21,10 +25,9 @@
 \section{Battlescape - an overview}
 So this is where all the fun happens ;) It is here that your former choices have to proof their worth as well as you will have to prove your commanding skills.
 The goal of every tactical combat is quite simple: kill all those evil aliens with as few civilian (and of cause squad) looses as possible. In order to achieve this you will have to find a good balance between caution and fast proceedings. You don't want to watch all innocents die like flies just because your soldiers are afraid of the enemy.
-In the course of the game you will see a wide range of settings and environments, but no matter how bad things may look like, there a some quite powerfull tools at you hand to get rid of them. The main task of the following section is to get familiar with most of them. If you have some experience with (turn-based) tactical combat games you should find some redundant elements - and of cause you will if you ever played any other UFO before. Nevertheless you should take a short overview over the interface so you make sure you don't miss any important feature. To change the view within battlescape you may use either cursor buttons or "WASD". Please be aware that its also possible to change the pitch of the camera. ("R" and "F" by default)
-There are two alternative interfaces available right now, offering identical functions of cause. In the following we will discuss bot of them. You may switch between them whenever and as often as you want until you feel familiar with one of them (options \hookrightarrow game).
+In the course of the game you will see a wide range of settings and environments, but no matter how bad things may look like, there a some quite powerfull tools at you hand to get rid of them. If you have some experience with (turn-based) tactical combat games you should find some redundant elements - and of cause you will if you ever played any other UFO before. Nevertheless you should take a short overview over the interface so you make sure you don't miss any important feature. To change the view within battlescape you may use either cursor buttons or "WASD". Please be aware that its also possible to change the pitch of the camera. ("R" and "F" by default)
+There are two alternative interfaces available right now, offering identical functions of cause. In the following we will discuss bot of them. You may switch between them as often as you want until you feel familiar with one of them (options $\hookrightarrow$ game).
 While the first one is heavily inspired by the classic HUD the second one (althud) tries to utilise modern technics to achive cleaner optics.
-
 \subsection{Buttons - HUD}
 \includegraphics[width=\textwidth]{images/HUD_final.jpg}
 \subsubsection{Floors}
@@ -35,9 +38,7 @@ This is more for aesthetic reasons, so no big actions are bound to this. (But of
 There is where you can switch between you soldiers (alternatively use keybindings: 1 to 8 or just left-click on their model). In case one (or more *G*) of your devoted fighters lost their live fighting the evil his button will become grey.
 \subsubsection{Known aliens}
 This states the number of aliens all your squad member have discovered this round. By clicking on it you may switch through all of them.
-\subsubsection{???}
-This field is without any use yet...
-\subsubsection{next round}
+\subsubsection{Next round}
 Hmm... so what do you suspect this one does ? Exactly !
 \subsubsection{Options}
 Opens the "Options"-menu where you may vary several video/sound-settings as well as aboard or retry current missions. Be aware that it's not possible nor intended to save a ongoing mission.
@@ -52,17 +53,17 @@ This button enables "reaction fire", a central concept of every tactical combat.
 \subsubsection{Crouch}
 As one might guess, this button will make your soldier kneel down (and by doing so reducing the danger of being hit by enemy fire) or if he already does make him stand up. Please notice that a soldier that kneels down can still move forward as if he would stand upright, but it takes him 1 additional time unit per square to do so.
 \subsubsection{Right/left-hand}
-Those two fields are completely identical besides the fact the left hand one is active only if you actually wear two one-handed items/weapons. If you have a two-handed item/weapon equiped the left-hand field will be inactive. Because each of the two fields consist of several important buttons itself we will discuss them a bit more detailed. Please take a look at the following image.
+Those two fields are completely identical besides the fact the left hand one is active only if you actually wear two one-handed items/weapons. If you have a two-handed item/weapon equiped the left-hand field will be inactive. Because each of the two fields consist of several important buttons itself we will discuss them a bit more detailed. Please take a look at the following image.\\
 \includegraphics[width=6cm]{images/HUD_detail_final.jpg}
 %as float ?!
 %transparent background ?! ->going to be re-worked soon
-\subsubsubsection{Item/weapon}
+\subsubsection{Item/weapon}
 Gives a picture of the currently equiped item/weapon. This turnes red in case you can't use the weapon, for example because you don't know the tech or don't have any ammunition left.
-\subsubsubsection{Primary-mode}
+\subsubsection{Primary-mode}
 Activates primary-mode for this item. In case of weapons this is usually (but not always!) a fast but less accurate / powerfull shoot. For Details see weapon description.
 \subparagraph{Secondary-mode}
 Activates secondary-mode for this item. In case of weapons this is usually (but again, not always!) a more TU-consuming but also more accurate / powerfull shoot. Please notice that in case the item supports only one mode (like stun rod) both modes are identical.
-\subsubsubsection{Reload}
+\subsubsection{Reload}
 Reloads currently equiped weapon, if ammunition is left in the inventory.
 \subparagraph{Amunition left}
 Shows the ammunition left in your weapon. Please notice that some shooting-modes (also some of the one-shoot ones) require more than one "bullet" here.
@@ -70,11 +71,43 @@ Shows the ammunition left in your weapon. Please notice that some shooting-modes
 \subsection{Buttons - altHUD}
 
 \includegraphics[width=\textwidth]{images/altHUD_final.jpg}\\
+
+\subsubsection{Discovered aliens}
+This states the number of aliens all your squad member have discovered this round. By clicking on it you may switch through all of them.
+\subsubsection{Next round}
+Hmm... so what do you suspect this one does ? Exactly !
+\subsubsection{Options}
+Opens the "Options"-menu where you may vary several video/sound-settings as well as aboard or retry current missions. Be aware that it's not possible nor intended to save a ongoing mission.
+\subsubsection{Character portrait}
+Besides giving you the chance to admire your well dressed and equiped soldiers clicking on a soldiers portrait opens up his/hers inventory.
+\subsubsection{Vital stats}
+This is where you find more detailed information about (from left to right) health, remaining TUs, moral and armor of your soldier.
+\subsubsection{Action details}
+Here some more details on your current action are displayed. If you are abou to move your soldier this means you will be shown the required TU costs as well as how many will be left (if any) at the end of this action. In case you have selected one of the two firemodes you will be informed about the TU costs and the aproximate propability to hit the target. Hint: Even with an 100\% chance it is still possible (but very unlikely) that your soldier failt to hit the target for unforseen reasons.
+\subsubsection{Crouch}
+As one might guess, this button will make your soldier kneel down (and by doing so reducing the danger of being hit by enemy fire) or if he already does make him stand up. Please notice that a soldier that kneels down can still move forward as if he would stand upright, but it takes him 1 additional time unit per square to do so.
+\subsubsection{Floor switch}
+Here you can change the "ground-level" or floor shown in the tactical view. Besides its obvious use in order to move you soldiers between different floor-levels it's also helpful to get an general overview. So it's always a smart move to switch between all levels at the beginning of each mission so you won't miss the "hidden" cellar or rooftop.
+\subsubsection{Status overview}
+There is where you can switch between you soldiers (alternatively use keybindings: 1 to 8 or just left-click on their model). In case one (or more *G*) of your devoted fighters lost their live fighting the evil his button disapear. Three different ??? give you an fast overview over your teams vital statistics. Red representing health points, yellow moral and blue the amount of remaining time units.
+\subsubsection{Weapon hand}
 \includegraphics[width=6cm]{images/altHUD_detail_final.jpg}
 
+\subsubsection{Weapon in use}
+Gives a picture of the currently equiped item/weapon. This turnes red in case you can't use the weapon, for example because you don't know the tech or don't have any ammunition left.
+\subsubsection{Ammo left}
+Shows the ammunition left in your weapon. Please notice that some shooting-modes (also some of the one-shoot ones) require more than one "bullet" here.
+\subsubsection{Primary firemode}
+Activates primary-mode for this item. In case of weapons this is usually (but not always!) a fast but less accurate / powerfull shoot. For Details see weapon description.
+\subsubsection{Secondary firemode}
+Activates secondary-mode for this item. In case of weapons this is usually (but again, not always!) a more TU-consuming but also more accurate / powerfull shoot. Please notice that in case the item supports only one mode (like stun rod) both modes are identical.
+\subsubsection{Reaction fire}
+This button enables "reaction fire", a central concept of every tactical combat. We will deal with it in the following chapter. For now you should just remember that it is here where you turn it on and off.
+\subsubsection{Reload}
+Reloads currently equiped weapon, if ammunition is left in the inventory (consumes TUs).
+\subsubsection{Right/left hand}
+Switches between the left and right hands item (in case the soldier carries two one handed items).
 
-\subsection{What to do now ... ?}
-%needed ?!
 
 \section{Game-mechanics (Battlescape)}
 
@@ -96,17 +129,24 @@ As we have said before most items, weapons in particular, do have two different 
 An alien is popping up just around the corner and not enough TUs left to fire this Plasma-Blaster in secondary mode while primary-mode offers only indirect fire? Your soldiers being keen on some extra thrill ? You want to capture an living alien for "interrogation"   but all your research department has to offer is a stun rod of which they say it might work - somehow... ? No matter what the reasons may be, there will be a time you will get into close-combat, or it will get to you. While the reason to be that close to an hostile alien might be quite scary, lucky enough the way to use the interface in such a situation is not at all. Overall it works exactly like caring a gun besides the fact that your power skill is taken into consideration when calculating the combat results. Also most close combat weapons (that includes pistols as well) do have a far more devastating impact on their target compared for their needed TUs making them a reasonable choice in small and narrow environments like buildings and the likes. Hint: Most pistols also fall under the close combat category which makes them a usefull alternative.
 
 \subsection{Friendly fire}
-
+This is subject to heavy discussion right now. Yet you better make sure there is noone of your soldiers in any possible line of fire when using RF or normal firemodes - friendly fire is rather strict right now.
 
 \subsection{Reaction fire}
-One of the main aspects every experienced commander needs to be able to use for his advantage is what is called "reaction-fire"(RF). When discussing the basics of battlescape we already mentioned its button but spared to explain the corresponding concept. When enabled (costing a certain amount of TUs) your soldier will be able to react on new situations and sightings after you already ended your turn. For doing so he has all the TUs left from your current turn plus half of the upcoming turns TUs at his disposal. So whenever an enemy gets into (or already is) the line of sight of our brave hero he will use those TUs at his disposal to fire his weapon in order to deal with this more or less suprising situation. So in order to get the most of it and make your soldier really kill an alien it might be a smart move not to leave him with RF activated but no further TUs at his hand - which would leave him with only 50\% of the upcoming turns TUs for his answer to an enemy poping up. Somtimes, especially after having suffered heavy penetration by enemy fire with reaction-fire activated, your soldiers will refuse your order to "turn it off" as they are too scared to let their guard down. For details about this and other effects of a bad moral please refer to the according section of the manual.
+One of the main aspects every experienced commander needs to be able to use for his advantage is what is called "reaction-fire"(RF). When discussing the basics of battlescape we already mentioned its button but spared to explain the corresponding concept. To make things even more complicated there are two kinds of reaction fire (refered to RF-1 or RF-2 in the following). The RF-mode that is activated is indicated by one or two \surd s (HUD) or an "i" or "*"(altHUD). When enabled (costing a certain amount of TUs) your soldier will be able to react on new situations and sightings after you already ended your turn. For doing so in case of RF-1 he has one shot on any enemy that he has at least a 30\% chance to hit with no more than 5\% risk of friendly fire. Those conditions also hold for RF-2 but with this option the soldier in question firest as often as possible while he has all the TUs of the upcoming round (without costs for RF) at his disposal to fire his weapon in order to deal with this more or less suprising situation.Especially after having suffered heavy penetration by enemy fire with reaction-fire activated, your soldiers will refuse your order to "turn it off" as they are too scared to let their guard down or will take greater risks (lesser chance to hit or bigger tollerance to friendly fire) in their aproach to kill the enemy. For details about this and other effects of a bad moral please refer to the according section of the manual.
 
 \subsection{Damagetypes}
+Obviously different weapons cause different kinds of damage. To reflect this fact each weapon is assigned a certain damage-class. This gets important when it comes to armor types as different armor types suit different damage types. Details can be found in the according armor and ammunition Ufopedia entries. This way it might be possible that some armor that is almost unpenetrateable for plasma damage fails to offer any protection against weapons that inflict fire damage.
 
 \subsection{Stun}
-In order to find out more about your alien enemy and his goal, motivation and structures you might find it usefull to catch one or more them for direct interrogation. Once your research lab developed the tools needed to do so you might use them as any other weapon of this kind (e.g. grenades, close-combat, etc.). After successfully finishing a mission those stuned alien will be brought to your base. Please be aware that you will need special structures to make sure your "guest" will stay long enough to give you any answer at all. If you lack those facilities your stuned aliens will die instantly once you reach your inproper base.\textbf{at least that's the plan ?!} In case everything is prepared to make your stuned aliens feel home they will open up new options in the research department.
+nothing implemented so far... :(
+%In order to find out more about your alien enemy and his goal, motivation and structures you might find it %usefull to catch one or more them for direct interrogation. Once your research lab developed the tools needed
+%to do so you might use them as any other weapon of this kind (e.g. grenades, close-combat, etc.). After %successfully finishing a mission those stuned alien will be brought to your base. Please be aware that you will %need special structures to make sure your "guest" will stay long enough to give you any answer at all. If you %lack those facilities your stuned aliens will die instantly once you reach your inproper base. In case everything %is prepared to make your stuned aliens feel home they will open up new options in the research department.
 
 \subsection{Moral}
+Your squads, but also your enemies, moral plays an important role in tactical combats. Especialy in critical situations that tend to bring the decision on win or loose. As the moral system is not fully implemented we will limit ourself to talk about what can be said about the thinks that are already in. 
+
+There are a couple of influences to any characters moral and once one reaches a critical point the reslt can be anything from throwing away your weapon and running away to panic attacks including shooting at allied forces.
+A characters moral is going to drop slightly when is witnesses a civilian being killed. If the same happens to a squadmember his moral drop far more remarkable and if an alien dies nearby on the other hand moral is going to increase. All that relative to the soldiers moral values.
 
 \section{Tips and Hints}
 %suggestions welcome !?
