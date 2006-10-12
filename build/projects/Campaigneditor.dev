@@ -30,7 +30,7 @@ CompilerSet=0
 CompilerSettings=0000001000000001000000
 
 [Unit1]
-FileName=src\callbacks.c
+FileName=..\..\src\tools\campaign_editor\src\callbacks.c
 CompileCpp=0
 Folder=Source
 Compile=1
@@ -40,7 +40,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit2]
-FileName=src\callbacks.h
+FileName=..\..\src\tools\campaign_editor\src\callbacks.h
 CompileCpp=0
 Folder=Header
 Compile=1
@@ -50,7 +50,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=src\interface.c
+FileName=..\..\src\tools\campaign_editor\src\interface.c
 CompileCpp=0
 Folder=Source
 Compile=1
@@ -60,7 +60,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit4]
-FileName=src\interface.h
+FileName=..\..\src\tools\campaign_editor\src\interface.h
 CompileCpp=0
 Folder=Header
 Compile=1
@@ -70,7 +70,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit5]
-FileName=src\main.c
+FileName=..\..\src\tools\campaign_editor\src\main.c
 CompileCpp=0
 Folder=Source
 Compile=1
@@ -80,7 +80,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=src\scripts.c
+FileName=..\..\src\tools\campaign_editor\src\scripts.c
 CompileCpp=0
 Folder=Source
 Compile=1
@@ -90,7 +90,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit7]
-FileName=src\scripts.h
+FileName=..\..\src\tools\campaign_editor\src\scripts.h
 CompileCpp=0
 Folder=Header
 Compile=1
@@ -100,7 +100,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit8]
-FileName=src\support.c
+FileName=..\..\src\tools\campaign_editor\src\support.c
 CompileCpp=0
 Folder=Source
 Compile=1
@@ -110,7 +110,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit9]
-FileName=src\support.h
+FileName=..\..\src\tools\campaign_editor\src\support.h
 CompileCpp=0
 Folder=Header
 Compile=1
