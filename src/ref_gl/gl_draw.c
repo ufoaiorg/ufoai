@@ -509,7 +509,6 @@ void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, fl
 
 /**
  * @brief Draw the clouds for flat geoscape
- * @note If no multitexture is available only the day map is drawn
  */
 void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
 {
