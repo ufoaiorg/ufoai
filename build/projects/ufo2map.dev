@@ -9,7 +9,7 @@ CppCompiler=
 Includes=D:\Programme\Dev-Cpp\include
 Linker=_@@__@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=24
+UnitCount=29
 Folders=
 ObjFiles=
 PrivateResource=
@@ -110,14 +110,14 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c polylib.c -o polylib.o $(CFLAGS)
 
 [Unit25]
-FileName=..\..\src\tools\ufo2map\common\trace.c
+FileName=..\..\src\tools\ufo2map\common\scriplib.h
 Folder=ufo2map
 Compile=1
-CompileCpp=0
+CompileCpp=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c trace.c -o trace.o $(CFLAGS)
+BuildCmd=
 
 [Unit26]
 FileName=..\..\src\tools\ufo2map\common\scriplib.c
@@ -130,17 +130,17 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c scriplib.c -o scriplib.o $(CFLAGS)
 
 [Unit27]
-FileName=..\..\src\tools\ufo2map\common\lbmlib.c
+FileName=..\..\src\tools\ufo2map\common\trace.c
 Folder=ufo2map
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c lbmlib.c -o lbmlib.o $(CFLAGS)
+BuildCmd=$(CC) -c trace.c -o trace.o $(CFLAGS)
 
 [Unit28]
-FileName=..\..\src\tools\ufo2map\common\cmdlib.h
+FileName=..\..\src\tools\ufo2map\common\lbmlib.h
 Folder=ufo2map
 Compile=1
 CompileCpp=1
@@ -150,14 +150,14 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit29]
-FileName=..\..\src\tools\ufo2map\common\l3dslib.c
+FileName=..\..\src\tools\ufo2map\common\lbmlib.c
 Folder=ufo2map
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c lbmlib.c -o lbmlib.o $(CFLAGS)
 
 [Unit30]
 FileName=..\..\src\tools\ufo2map\common\l3dslib.h
