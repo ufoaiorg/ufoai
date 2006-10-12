@@ -529,7 +529,7 @@ void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float c
 
 	/* init combiner */
 	qglEnable(GL_BLEND);
-	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	qglBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR);
 
 	qglEnable(GL_TEXTURE_2D);
 
@@ -550,6 +550,7 @@ void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float c
 	qglDisable(GL_TEXTURE_2D);
 
 	qglDisable(GL_BLEND);
+	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 #define MAX_LINEVERTS 256
