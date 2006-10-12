@@ -75,6 +75,14 @@ static void E_EmployeeList (void)
 		if (employeesInCurrentList>=(int)cl_numnames->value)
 			break;
 	}
+	
+	/* if the list is empty don't show the model*/
+	if (employeesInCurrentList == 0) {
+		Cvar_Set("mn_show_employee", "0");
+	} else {
+		Cvar_Set("mn_show_employee", "1");
+	}
+
 	i = employeesInCurrentList;
 	for (;i<(int)cl_numnames->value;i++) {
 		Cvar_ForceSet(va("mn_name%i", i), "");
@@ -96,15 +104,15 @@ static void E_EmployeeList (void)
 employeeType_t E_GetEmployeeType(char* type)
 {
 	assert(type);
-	if ( Q_strncmp(type, "EMPL_SCIENTIST", 14 ) )
+	if ( !Q_strncmp(type, "EMPL_SCIENTIST", 14 ) )
 		return EMPL_SCIENTIST;
-	else if ( Q_strncmp(type, "EMPL_SOLDIER", 12 ) )
+	else if ( !Q_strncmp(type, "EMPL_SOLDIER", 12 ) )
 		return EMPL_SOLDIER;
-	else if ( Q_strncmp(type, "EMPL_WORKER", 11 ) )
+	else if ( !Q_strncmp(type, "EMPL_WORKER", 11 ) )
 		return EMPL_WORKER;
-	else if ( Q_strncmp(type, "EMPL_MEDIC", 10 ) )
+	else if ( !Q_strncmp(type, "EMPL_MEDIC", 10 ) )
 		return EMPL_MEDIC;
-	else if ( Q_strncmp(type, "EMPL_ROBOT", 10 ) )
+	else if ( !Q_strncmp(type, "EMPL_ROBOT", 10 ) )
 		return EMPL_ROBOT;
 	else {
 		Sys_Error("Unknown employee type '%s'\n", type);

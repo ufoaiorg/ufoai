@@ -76,7 +76,7 @@ char *ev_format[] =
 	"",					/* EV_START */
 	"b",				/* EV_ENDROUND */
 
-	"bb***",			/* EV_RESULTS */
+	"bb****",			/* EV_RESULTS */
 	"g",				/* EV_CENTERVIEW */
 
 	"sbg",				/* EV_ENT_APPEAR */

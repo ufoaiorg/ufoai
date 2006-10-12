@@ -144,6 +144,7 @@ static void Cmd_PlayerList_f(player_t * player)
 
 #ifdef DEBUG
 void G_KillTeam(void);
+void G_StunTeam(void);
 #endif
 
 /**
@@ -169,6 +170,8 @@ void G_ClientCommand(player_t * player)
 #ifdef DEBUG
 	else if (Q_stricmp(cmd, "killteam") == 0)
 		G_KillTeam();
+	else if (Q_stricmp(cmd, "stunteam") == 0)
+		G_StunTeam();
 #endif
 	else
 		/* anything that doesn't match a command will be a chat */
