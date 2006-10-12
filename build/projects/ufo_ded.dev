@@ -1,21 +1,21 @@
 [Project]
-FileName=ufo.dev
-Name=ufo
+FileName=ufo_ded.dev
+Name=ufo_ded
 Ver=1
 IsCpp=1
 Type=0
-Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DDEBUG _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DUSE_SDL_@@_-DSHADERS_@@_-DHAVE_GETTEXT_@@_
+Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DDEBUG _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DDEDICATED_ONLY_@@_
 CppCompiler=
 Includes=
-Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_ports/win32/libjpeg.lib_@@_
+Linker=-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=95
+UnitCount=26
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
 ResourceIncludes=ports\win32
 MakeIncludes=
-Icon=ufo.ico
+Icon=ufo_ded.ico
 ExeOutput=..
 ObjectOutput=
 OverrideOutput=0
@@ -29,28 +29,8 @@ SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000001000000001000000
 
-[Unit1]
-FileName=ports\win32\cd_win.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit2]
-FileName=client\cl_actor.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit3]
-FileName=client\cl_basemanagement.c
+FileName=..\..\src\qcommon\common.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -60,17 +40,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit4]
-FileName=client\cl_campaign.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit5]
-FileName=client\cl_fx.c
+FileName=..\..\src\ports\win32\conproc.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -80,17 +50,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=client\cl_input.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit7]
-FileName=client\cl_le.c
+FileName=..\..\src\qcommon\cvar.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -100,17 +60,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit8]
-FileName=client\cl_main.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit9]
-FileName=client\cl_menu.c
+FileName=..\..\src\qcommon\net_chan.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -120,7 +70,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit10]
-FileName=client\cl_parse.c
+FileName=..\..\src\qcommon\scripts.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -130,27 +80,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit11]
-FileName=client\cl_particle.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit12]
-FileName=client\cl_research.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit13]
-FileName=client\cl_scrn.c
+FileName=..\..\src\server\sv_ccmds.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -160,17 +90,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit14]
-FileName=client\cl_sequence.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit15]
-FileName=client\cl_team.c
+FileName=..\..\src\server\sv_main.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -180,67 +100,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit16]
-FileName=client\cl_ufopedia.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit17]
-FileName=client\cl_view.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit18]
-FileName=qcommon\cmd.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit19]
-FileName=qcommon\cmodel.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit20]
-FileName=qcommon\common.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit21]
-FileName=ports\win32\conproc.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit22]
-FileName=client\console.c
+FileName=..\..\src\server\sv_world.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -250,57 +110,37 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit23]
-FileName=qcommon\crc.c
+FileName=..\..\src\qcommon\md4.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c md4.c -o md4.o $(CFLAGS)
 
 [Unit24]
-FileName=qcommon\cvar.c
+FileName=..\..\src\ports\null\cd_null.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
-
-[Unit25]
-FileName=qcommon\files.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c cd_null.c -o cd_null.o $(CFLAGS)
 
 [Unit26]
-FileName=ports\win32\in_win.c
+FileName=..\..\src\qcommon\unzip.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c unzip.c -o unzip.o $(CFLAGS)
 
 [Unit27]
-FileName=client\keys.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit28]
-FileName=qcommon\md4.c
+FileName=..\..\src\client\keys.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -310,7 +150,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit29]
-FileName=qcommon\net_chan.c
+FileName=..\..\src\qcommon\net_chan.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -320,17 +160,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit30]
-FileName=ports\win32\net_wins.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit31]
-FileName=game\q_shared.c
+FileName=..\..\src\ports\win32\net_wins.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -340,17 +170,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit32]
-FileName=ports\win32\q_shwin.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit33]
-FileName=qcommon\scripts.c
+FileName=..\..\src\ports\win32\q_shwin.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -360,27 +180,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit34]
-FileName=client\snd_ref.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit35]
-FileName=client\snd_mem.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit36]
-FileName=client\snd_mix.c
+FileName=..\..\src\client\snd_ref.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -390,7 +190,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit37]
-FileName=server\sv_ccmds.c
+FileName=..\..\src\server\sv_ccmds.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -400,17 +200,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit38]
-FileName=server\sv_game.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit39]
-FileName=server\sv_init.c
+FileName=..\..\src\server\sv_game.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -420,17 +210,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit40]
-FileName=server\sv_main.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit41]
-FileName=server\sv_send.c
+FileName=..\..\src\server\sv_main.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -440,27 +220,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit42]
-FileName=server\sv_user.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit43]
-FileName=server\sv_world.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit44]
-FileName=ports\win32\sys_win.c
+FileName=..\..\src\server\sv_user.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -470,7 +230,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit45]
-FileName=ports\win32\vid_dll.c
+FileName=..\..\src\ports\win32\vid_dll.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -480,7 +240,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit46]
-FileName=client\x86.c
+FileName=..\..\src\client\x86.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -490,7 +250,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit47]
-FileName=client\anorms.h
+FileName=..\..\src\client\anorms.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -500,17 +260,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit48]
-FileName=client\cdaudio.h
-Folder=Header Files
-Compile=1
-CompileCpp=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit49]
-FileName=client\cl_basemanagement.h
+FileName=..\..\src\client\cdaudio.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -520,17 +270,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit50]
-FileName=client\cl_research.h
-Folder=Header Files
-Compile=1
-CompileCpp=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit51]
-FileName=client\client.h
+FileName=..\..\src\client\cl_research.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -540,7 +280,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit52]
-FileName=ports\win32\conproc.h
+FileName=..\..\src\ports\win32\conproc.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -550,7 +290,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit53]
-FileName=client\console.h
+FileName=..\..\src\client\console.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -560,7 +300,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit54]
-FileName=game\game.h
+FileName=..\..\src\game\game.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -570,7 +310,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit55]
-FileName=client\input.h
+FileName=..\..\src\client\input.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -580,7 +320,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit56]
-FileName=client\keys.h
+FileName=..\..\src\client\keys.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -590,7 +330,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit57]
-FileName=ports\win32\libintl.h
+FileName=..\..\src\ports\win32\libintl.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -600,7 +340,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit58]
-FileName=client\os_types.h
+FileName=..\..\src\client\os_types.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -610,7 +350,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit59]
-FileName=game\q_shared.h
+FileName=..\..\src\game\q_shared.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -620,17 +360,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit60]
-FileName=qcommon\qcommon.h
-Folder=Header Files
-Compile=1
-CompileCpp=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit61]
-FileName=qcommon\qfiles.h
+FileName=..\..\src\qcommon\qcommon.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -640,7 +370,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit62]
-FileName=client\ref.h
+FileName=..\..\src\client\ref.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -650,17 +380,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit63]
-FileName=client\screen.h
-Folder=Header Files
-Compile=1
-CompileCpp=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit64]
-FileName=server\server.h
+FileName=..\..\src\client\screen.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -670,27 +390,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit65]
-FileName=client\snd_loc.h
-Folder=Header Files
-Compile=1
-CompileCpp=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit66]
-FileName=client\sound.h
-Folder=Header Files
-Compile=1
-CompileCpp=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit67]
-FileName=client\vid.h
+FileName=..\..\src\client\snd_loc.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -700,7 +400,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit68]
-FileName=ports\win32\vorbisfile.h
+FileName=..\..\src\ports\win32\vorbisfile.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -710,7 +410,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit69]
-FileName=ports\win32\winquake.h
+FileName=..\..\src\ports\win32\winquake.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -719,18 +419,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit72]
-FileName=client\cl_market.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_market.c -o cl_market.o $(CFLAGS)
-
 [Unit73]
-FileName=client\cl_market.h
+FileName=..\..\src\client\cl_market.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -740,7 +430,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit74]
-FileName=client\cl_aircraft.c
+FileName=..\..\src\client\cl_aircraft.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -751,31 +441,21 @@ BuildCmd=$(CC) -c cl_aircraft.c -o cl_aircraft.o $(CFLAGS)
 
 [VersionInfo]
 Major=2
-Minor=1
-Release=0
-Build=2
+Minor=0
+Release=4
+Build=4
 LanguageID=1033
 CharsetID=1252
 CompanyName=http://www.ufoai.net
-FileVersion=2.1-dev2
+FileVersion=2.0-RC4
 FileDescription=UFO:Alien Invasion
 InternalName=
 LegalCopyright=
 LegalTrademarks=
 OriginalFilename=ufo.exe
 ProductName=ufo
-ProductVersion=2.1-dev2
+ProductVersion=2.0-RC4
 AutoIncBuildNr=0
-
-[Unit78]
-FileName=qcommon\mem.h
-Folder=Header Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-CompileCpp=1
 
 [Unit75]
 FileName=client\cl_aircraft.h
@@ -787,7 +467,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit76]
+[Unit77]
 FileName=qcommon\filesys.h
 CompileCpp=1
 Folder=Header Files
@@ -797,18 +477,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit77]
-FileName=qcommon\md4.h
-CompileCpp=1
-Folder=Header Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit79]
-FileName=qcommon\scripts.h
+FileName=qcommon\mem.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
@@ -818,7 +488,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit80]
-FileName=qcommon\ufotypes.h
+FileName=qcommon\scripts.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
@@ -828,7 +498,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit81]
-FileName=qcommon\cmd.h
+FileName=qcommon\ufotypes.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
@@ -838,7 +508,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit82]
-FileName=qcommon\cmodel.h
+FileName=qcommon\cbuf.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
@@ -848,7 +518,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit83]
-FileName=qcommon\doxygen.h
+FileName=qcommon\cmd.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
@@ -858,7 +528,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit84]
-FileName=qcommon\cvar.h
+FileName=qcommon\cmodel.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
@@ -868,6 +538,26 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit85]
+FileName=qcommon\doxygen.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit86]
+FileName=qcommon\cvar.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit87]
 FileName=client\cl_map.c
 CompileCpp=0
 Folder=Source Files
@@ -877,27 +567,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_map.c -o cl_map.o $(CFLAGS)
 
-[Unit86]
-FileName=client\cl_produce.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_produce.c -o cl_produce.o $(CFLAGS)
-
-[Unit87]
-FileName=client\cl_popup.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_popup.c -o cl_popup.o $(CFLAGS)
-
-[Unit88]
+[Unit90]
 FileName=client\cl_ufo.c
 CompileCpp=0
 Folder=Source Files
@@ -907,7 +577,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_ufo.c -o cl_ufo.o $(CFLAGS)
 
-[Unit90]
+[Unit91]
+FileName=client\cl_radar.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_radar.c -o cl_radar.o $(CFLAGS)
+
+[Unit92]
 FileName=client\cl_employee.h
 CompileCpp=1
 Folder=Header Files
@@ -917,7 +597,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit91]
+[Unit93]
 FileName=client\cl_employee.c
 CompileCpp=0
 Folder=Source Files
@@ -926,16 +606,6 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_employee.c -o cl_employee.o $(CFLAGS)
-
-[Unit92]
-FileName=qcommon\unzip.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c unzip.c -o unzip.o $(CFLAGS)
 
 [Unit70]
 FileName=ports\win32\ufo.ico
@@ -957,37 +627,157 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_shader.c -o cl_shader.o $(CFLAGS)
 
 [Unit89]
-FileName=client\cl_radar.c
+FileName=client\cl_popup.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_radar.c -o cl_radar.o $(CFLAGS)
+BuildCmd=$(CC) -c cl_popup.c -o cl_popup.o $(CFLAGS)
 
-[Unit93]
-FileName=qcommon\unzip.h
-CompileCpp=1
-Folder=Header Files
+[Unit1]
+FileName=qcommon\cmd.c
+CompileCpp=0
+Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit94]
-FileName=client\cl_hospital.c
+[Unit2]
+FileName=qcommon\cmodel.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_hospital.c -o cl_hospital.o $(CFLAGS)
+BuildCmd=
 
-[Unit95]
-FileName=client\cl_hospital.h
+[Unit7]
+FileName=qcommon\files.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit9]
+FileName=game\q_shared.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit12]
+FileName=server\sv_game.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit13]
+FileName=server\sv_init.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit15]
+FileName=server\sv_send.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit17]
+FileName=ports\win32\ufo.ico
+CompileCpp=0
+Folder=Resource Files
+Compile=0
+Link=0
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit18]
+FileName=server\sv_user.c
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c sv_user.c -o sv_user.o $(CFLAGS)
+CompileCpp=0
+
+[Unit19]
+FileName=ports\win32\sys_win.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c sys_win.c -o sys_win.o $(CFLAGS)
+
+[Unit20]
+FileName=ports\win32\q_shwin.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c q_shwin.c -o q_shwin.o $(CFLAGS)
+
+[Unit21]
+FileName=ports\null\cl_null.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_null.c -o cl_null.o $(CFLAGS)
+
+[Unit22]
+FileName=ports\win32\net_wins.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c net_wins.c -o net_wins.o $(CFLAGS)
+
+[Unit5]
+FileName=qcommon\crc.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit25]
+FileName=qcommon\unzip.h
 CompileCpp=1
 Folder=Header Files
 Compile=1

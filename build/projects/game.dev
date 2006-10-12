@@ -30,7 +30,7 @@ CompilerSet=0
 CompilerSettings=0000000000000000000000
 
 [Unit1]
-FileName=g_ai.c
+FileName=..\..\src\game\g_ai.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -40,7 +40,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit2]
-FileName=g_client.c
+FileName=..\..\src\game\g_client.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -50,7 +50,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=g_cmds.c
+FileName=..\..\src\game\g_cmds.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -60,7 +60,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit4]
-FileName=g_main.c
+FileName=..\..\src\game\g_main.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -70,7 +70,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit5]
-FileName=g_spawn.c
+FileName=..\..\src\game\g_spawn.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -80,7 +80,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=g_svcmds.c
+FileName=..\..\src\game\g_svcmds.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -90,7 +90,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit7]
-FileName=g_utils.c
+FileName=..\..\src\game\g_utils.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -100,7 +100,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit8]
-FileName=q_shared.c
+FileName=..\..\src\game\q_shared.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -110,7 +110,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit9]
-FileName=g_local.h
+FileName=..\..\src\game\g_local.h
 Folder="Header Files"
 Compile=1
 CompileCpp=1
@@ -120,7 +120,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit10]
-FileName=game.h
+FileName=..\..\src\game\game.h
 Folder="Header Files"
 Compile=1
 CompileCpp=1
@@ -130,7 +130,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit11]
-FileName=q_shared.h
+FileName=..\..\src\game\q_shared.h
 Folder="Header Files"
 Compile=1
 CompileCpp=1
@@ -140,17 +140,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit12]
-FileName=game.def
-Folder="Resource Files"
-Compile=0
-CompileCpp=0
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit13]
-FileName=..\win32\libintl.lib
+FileName=..\..\src\game\game.def
 Folder="Resource Files"
 Compile=0
 CompileCpp=0
