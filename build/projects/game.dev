@@ -7,7 +7,7 @@ Type=3
 Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DWIN32 _@@_-DDEBUG _@@_-D_WINDOWS _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DHAVE_GETTEXT_@@_
 CppCompiler=_@@_
 Includes=
-Linker=-lkernel32 -luser32 -lwinmm_@@_../ports/win32/intl.lib _@@_--export-all-symbols_@@__@@_
+Linker=-lkernel32 -luser32 -lwinmm_@@_../../src/ports/win32/intl.lib _@@_--export-all-symbols_@@__@@_
 Libs=
 UnitCount=12
 Folders="Header Files","Resource Files","Source Files"
