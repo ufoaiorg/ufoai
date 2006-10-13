@@ -1558,14 +1558,15 @@ void CL_ResetActorMoveLength(void) {
  */
 void CL_ActorMouseTrace(void)
 {
-	int isometric;
+	int i, isometric, restingLevel;
 	float /*d, */cur[2], fov_x, frustumslope[2], projectiondistance = 2048;
+	float nDotP2minusP1, u;
 	/* vec3_t angles; */
 	vec3_t forward, right, up, stop;
-	vec3_t end, dir;
+	vec3_t from, end, dir;
+	vec3_t mapNormal, P3, P2minusP1, P3minusP1;
+	pos3_t testPos;
 	le_t *le;
-	int i;
-	vec3_t from;
 
 	/* FIXME: r_isometric is not known here, so it is being looked up each time... */
 	isometric = Cvar_VariableValue("r_isometric") != 0;
@@ -1599,7 +1600,7 @@ void CL_ActorMouseTrace(void)
 
 	fov_x = (FOV / cl.cam.zoom);
 	if (isometric)
-		frustumslope[0] = 10 * fov_x;
+		frustumslope[0] = 36. * fov_x;
 	else
 		frustumslope[0] = tan(fov_x * M_PI / 360) * projectiondistance;
 	frustumslope[1] = frustumslope[0] * ((float)scr_vrect.height / scr_vrect.width);
@@ -1613,27 +1614,48 @@ void CL_ActorMouseTrace(void)
 	if (isometric)
 		VectorMA(stop, -projectiondistance*2, forward, from);
 
-	/* do the trace */
-	CM_EntTestLineDM(cl.cam.camorg, stop, end);
+	/* set stop point to the intersection of the trace line with the current world-level plane */
+	/* description of maths used:
+	 *   The equation for the plane can be written:
+	 *     mapNormal dot (end - P3) = 0
+	 *     where mapNormal is the vector normal to the plane,
+	 *         P3 is any point on the plane and
+	 *         end is the point where the line interesects the plane
+	 *   All points on the line can be calculated using:
+	 *     P1 + u*(P2 - P1)
+	 *     where P1 and P2 are points that define the line and
+	 *           u is some scalar
+	 *   The intersection of the line and plane occurs when:
+	 *     mapNormal dot (P1 + u*(P2 - P1)) == mapNormal dot P3
+	 *   The intersection therefore occurs when:
+	 *     u = (mapNormal dot (P3 - P1))/(mapNormal dot (P2 - P1))
+	 * Note: in the code below cl.cam.camorg & stop represent P1 and P2 respectively
+	 */  
+	VectorSet(P3, 0., 0., cl_worldlevel->value * UNIT_HEIGHT + UNIT_HEIGHT * 0.4);
+	VectorSet(mapNormal, 0., 0., 1.);
+	VectorSubtract(stop, cl.cam.camorg, P2minusP1);
+	nDotP2minusP1 = DotProduct(mapNormal, P2minusP1);
 
-	/* the mouse is out of the world */
-	if (end[2] < 0.0)
+	/* calculate intersection directly if angle is not parallel to the map plane */
+	if (nDotP2minusP1 > 0.01 || nDotP2minusP1 < -0.01) {
+		VectorSubtract(P3, cl.cam.camorg,  P3minusP1);
+		u = DotProduct(mapNormal, P3minusP1)/nDotP2minusP1;
+		VectorScale(P2minusP1, (vec_t)u, dir);
+		VectorAdd(cl.cam.camorg, dir, end);
+	} else { /* otherwise do a full trace */
+		CM_EntTestLineDM(cl.cam.camorg, stop, end);
+		end[2] += UNIT_HEIGHT * 0.4;
+	}
+
+	VecToPos(end, testPos);
+	restingLevel = Grid_Fall(&clMap, testPos);
+
+	/* test if the mouse is out of the world */
+	if (restingLevel < 0)
 		return;
-
-	/* get position */
-	mousePos[2] = end[2] / UNIT_HEIGHT;
-	if (mousePos[2] > cl_worldlevel->value)
-		mousePos[2] = cl_worldlevel->value;
-
-	/* FIXME: wrong values if cursor is not centered or outside the map */
-	VectorSubtract(stop, from, dir);
-	VectorNormalize(dir);
-	stop[2] = (mousePos[2] + 0.5) * UNIT_HEIGHT;
-	stop[0] = end[0] + dir[0] * (end[2] - stop[2]);
-	stop[1] = end[1] + dir[1] * (end[2] - stop[2]);
-
-	VecToPos(stop, mousePos);
-	mousePos[2] = Grid_Fall(&clMap, mousePos);
+   
+	Vector2Copy(testPos, mousePos);
+	mousePos[2] = restingLevel;
 
 	/* search for an actor on this field */
 	mouseActor = NULL;
