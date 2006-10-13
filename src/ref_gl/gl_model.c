@@ -718,7 +718,7 @@ static void R_AddMapTile(const char *name, int sX, int sY, int sZ)
 	/* swap all the lumps */
 	mod_base = (byte *) header;
 
-	for (i = 0; i < sizeof(dheader_t) / 4; i++)
+	for (i = 0; i < (int)sizeof(dheader_t) / 4; i++)
 		((int *) header)[i] = LittleLong(((int *) header)[i]);
 
 	/* load into heap */
@@ -795,7 +795,7 @@ static void Mod_LoadTags(model_t * mod, void *buffer)
 	pheader = mod->tagdata;
 
 	/* byte swap the header fields and sanity check */
-	for (i = 0; i < sizeof(dtag_t) / 4; i++)
+	for (i = 0; i < (int)sizeof(dtag_t) / 4; i++)
 		((int *) pheader)[i] = LittleLong(((int *) buffer)[i]);
 
 	if (pheader->num_tags <= 0)
@@ -909,7 +909,7 @@ static void Mod_LoadAliasModel(model_t * mod, void *buffer)
 	pheader = Hunk_Alloc(LittleLong(pinmodel->ofs_end));
 
 	/* byte swap the header fields and sanity check */
-	for (i = 0; i < sizeof(dmdl_t) / 4; i++)
+	for (i = 0; i < (int)sizeof(dmdl_t) / 4; i++)
 		((int *) pheader)[i] = LittleLong(((int *) buffer)[i]);
 
 	if (pheader->skinheight > MAX_LBM_HEIGHT)

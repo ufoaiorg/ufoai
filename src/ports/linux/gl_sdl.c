@@ -457,7 +457,7 @@ static void SetSDLIcon( void )
 	SDL_Surface *icon;
 	SDL_Color color;
 	Uint8 *ptr;
-	int i, mask;
+	unsigned int i, mask;
 
 	icon = SDL_CreateRGBSurface(SDL_SWSURFACE, ufoicon_width, ufoicon_height, 8, 0, 0, 0, 0);
 	if (icon == NULL)
@@ -510,11 +510,11 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	/* Just toggle fullscreen if that's all that has been changed */
 	if (surface && (surface->w == vid.width) && (surface->h == vid.height)) {
-		int isfullscreen = (surface->flags & SDL_FULLSCREEN) ? 1 : 0;
+		qboolean isfullscreen = (surface->flags & SDL_FULLSCREEN) ? qtrue : qfalse;
 		if (fullscreen != isfullscreen)
 			SDL_WM_ToggleFullScreen(surface);
 
-		isfullscreen = (surface->flags & SDL_FULLSCREEN) ? 1 : 0;
+		isfullscreen = (surface->flags & SDL_FULLSCREEN) ? qtrue : qfalse;
 		if (fullscreen == isfullscreen)
 			return qtrue;
 	}
