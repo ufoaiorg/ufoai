@@ -419,7 +419,7 @@ void FS_FreeFile(void *buffer)
  */
 pack_t *FS_LoadPackFile(const char *packfile)
 {
-	int i, len, err;
+	unsigned int i, len, err;
 	packfile_t *newfiles;
 	pack_t *pack;
 	FILE *packhandle;
