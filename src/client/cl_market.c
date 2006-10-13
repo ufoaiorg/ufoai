@@ -44,7 +44,27 @@ static const int MARKET_SELL_DIVISOR = 1;
  */
 static void CL_MarketAircraftDescription (int aircraftID)
 {
-	menuText[TEXT_STANDARD] = "NULL";
+	static char itemText[MAX_MENUTEXTLEN];
+	technology_t *tech;
+	aircraft_t *aircraft;
+
+	if (aircraftID >= numAircraft_samples)
+		return;
+
+	*itemText = '\0';
+	aircraft = &aircraft_samples[aircraftID];
+	tech = RS_GetTechByProvided(aircraft->id);
+	assert(tech);
+	if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
+		Cvar_Set("mn_name", aircraft->name);
+
+		/* set description text */
+		Com_sprintf(itemText, MAX_MENUTEXTLEN, _("TODO\n"));
+		Q_strcat(itemText, _("TODO\n"), sizeof(itemText));
+	} else {
+		Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Unknown - need to research this"));
+	}
+	menuText[TEXT_STANDARD] = itemText;
 }
 
 /**
