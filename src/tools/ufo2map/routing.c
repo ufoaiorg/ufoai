@@ -55,7 +55,7 @@ static ipos3_t wpMins, wpMaxs;
  * @brief
  * @sa DoRouting
  */
-static void CheckUnit_Thread (int unitnum)
+static void CheckUnit_Thread (unsigned int unitnum)
 {
 	int		x, y, z;
 	int		i;
@@ -169,7 +169,7 @@ static void CheckUnit_Thread (int unitnum)
  * @brief
  * @sa DoRouting
  */
-static void CheckConnections_Thread (int unitnum)
+static void CheckConnections_Thread (unsigned int unitnum)
 {
 	int		x, y, z, sz;
 	int		i, h, sh;

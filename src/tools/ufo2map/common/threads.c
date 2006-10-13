@@ -88,7 +88,7 @@ void ThreadWorkerFunction (int threadnum)
 /**
  * @brief
  */
-void RunThreadsOnIndividual (int workcnt, qboolean showpacifier, void(*func)(int))
+void RunThreadsOnIndividual (int workcnt, qboolean showpacifier, void(*func)(unsigned int))
 {
 	if (numthreads == -1)
 		ThreadSetDefault ();
@@ -159,7 +159,7 @@ void ThreadUnlock (void)
 /**
  * @brief
  */
-void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
+void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int))
 {
 	DWORD	threadid[MAX_THREADS];
 	HANDLE	threadhandle[MAX_THREADS];
@@ -250,7 +250,7 @@ void ThreadUnlock (void)
 /**
  * @brief
  */
-void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
+void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int))
 {
 	int		i;
 	pthread_t	work_threads[MAX_THREADS];
@@ -354,7 +354,7 @@ void ThreadUnlock (void)
 /**
  * @brief
  */
-void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
+void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int))
 {
 	int		i;
 	int		pid[MAX_THREADS];
@@ -433,7 +433,7 @@ void ThreadUnlock (void)
 /**
  * @brief
  */
-void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
+void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int))
 {
 	int start, end;
 

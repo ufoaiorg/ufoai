@@ -85,7 +85,7 @@ void Inverse16_BuildTable( void )
 	}
 }
 
-void Alphalight_Thread (int i)
+void Alphalight_Thread (unsigned int i)
 {
 	int		j;
 	float	r, g, b;

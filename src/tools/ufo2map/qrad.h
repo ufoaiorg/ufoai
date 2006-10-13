@@ -126,7 +126,7 @@ extern	float ambient_red, ambient_green, ambient_blue, maxlight;
 void LinkPlaneFaces (void);
 
 extern	qboolean	extrasamples;
-extern int numbounce;
+extern unsigned int numbounce;
 extern qboolean	dumppatches;
 extern qboolean	nopvs;
 extern qboolean noradiosity;
@@ -136,9 +136,9 @@ extern	byte	nodehit[MAX_MAP_NODES];
 
 void BuildLightmaps (void);
 
-void BuildFacelights (int facenum);
+void BuildFacelights (unsigned int facenum);
 
-void FinalLightFace (int facenum);
+void FinalLightFace (unsigned int facenum);
 
 qboolean PvsForOrigin (vec3_t org, byte *pvs);
 

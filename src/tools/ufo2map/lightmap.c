@@ -991,7 +991,7 @@ static float sampleofs[5][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4}, {0.4, 0.4}, {
 /**
  * @brief
  */
-void BuildFacelights (int facenum)
+void BuildFacelights (unsigned int facenum)
 {
 	dface_t	*f;
 	lightinfo_t	*l;
@@ -1086,7 +1086,7 @@ void BuildFacelights (int facenum)
  * @brief Add the indirect lighting on top of the direct
  * lighting and save into final map format
  */
-void FinalLightFace (int facenum)
+void FinalLightFace (unsigned int facenum)
 {
 	dface_t		*f;
 	int			i, j, k, st;

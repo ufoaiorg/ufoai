@@ -41,7 +41,7 @@ char		inbase[32], outbase[32];
 
 int			fakeplanes;					/* created planes for origin offset */
 
-int		numbounce = 0;
+unsigned int	numbounce = 0;
 qboolean	extrasamples;
 
 float	subdiv = 64;
@@ -72,9 +72,7 @@ float	entity_scale =	1.0;
 
 /*
 ===================================================================
-
 MISC
-
 ===================================================================
 */
 
@@ -115,11 +113,11 @@ void MakeParents (int nodenum, int parent)
 	}
 }
 
-
+#if 0
 /**
  * @brief
  */
-void CalcVertexNormals ( int vnum )
+void CalcVertexNormals ( unsigned int vnum )
 {
 	qboolean	found;
 	int		i, k;
@@ -163,13 +161,12 @@ void CalcVertexNormals ( int vnum )
 
 /*	printf( "(%1.4f %1.4f %1.4f)\n", (vnormals[vnum])[0], (vnormals[vnum])[1], (vnormals[vnum])[2] ); */
 }
+#endif
 
 
 /*
 ===================================================================
-
 TRANSFER SCALES
-
 ===================================================================
 */
 
@@ -214,9 +211,9 @@ static int total_transfer;
 /**
  * @brief
  */
-void MakeTransfers (int i)
+void MakeTransfers (unsigned int i)
 {
-	int			j;
+	unsigned int			j;
 	vec3_t		delta;
 	vec_t		dist, scale;
 	float		trans;
@@ -317,7 +314,7 @@ void MakeTransfers (int i)
  */
 void FreeTransfers (void)
 {
-	int		i;
+	unsigned int		i;
 
 	for (i=0 ; i<num_patches ; i++) {
 		free (patches[i].transfers);
@@ -333,10 +330,11 @@ void FreeTransfers (void)
  */
 void WriteWorld (char *name)
 {
-	int		i, j;
-	FILE		*out;
-	patch_t		*patch;
-	winding_t	*w;
+	unsigned int j;
+	int i;
+	FILE *out;
+	patch_t *patch;
+	winding_t *w;
 
 	out = fopen (name, "w");
 	if (!out)
@@ -365,11 +363,12 @@ void WriteWorld (char *name)
  */
 void WriteGlView (void)
 {
-	char	name[1024];
-	FILE	*f;
-	int		i, j;
-	patch_t	*p;
-	winding_t	*w;
+	char name[1024];
+	FILE *f;
+	unsigned int j;
+	int i;
+	patch_t *p;
+	winding_t *w;
 
 	strcpy (name, source);
 	StripExtension (name);
@@ -406,7 +405,7 @@ void WriteGlView (void)
  */
 float CollectLight (void)
 {
-	int		i, j;
+	unsigned int i, j;
 	patch_t	*patch;
 	vec_t	total;
 
@@ -430,7 +429,7 @@ float CollectLight (void)
  * @brief Send light out to other patches
  * @note Run multi-threaded
  */
-void ShootLight (int patchnum)
+void ShootLight (unsigned int patchnum)
 {
 	int			k, l;
 	transfer_t	*trans;
@@ -459,7 +458,7 @@ void ShootLight (int patchnum)
  */
 void BounceLight (void)
 {
-	int		i, j;
+	unsigned int i, j;
 	float	added;
 	char	name[64];
 	patch_t	*p;
@@ -493,8 +492,8 @@ void BounceLight (void)
  */
 void CheckPatches (void)
 {
-	int		i;
-	patch_t	*patch;
+	unsigned int i;
+	patch_t *patch;
 
 	for (i=0 ; i<num_patches ; i++) {
 		patch = &patches[i];
