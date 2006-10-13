@@ -1600,7 +1600,7 @@ void CL_ActorMouseTrace(void)
 
 	fov_x = (FOV / cl.cam.zoom);
 	if (isometric)
-		frustumslope[0] = 36. * fov_x;
+		frustumslope[0] = 10. * fov_x;
 	else
 		frustumslope[0] = tan(fov_x * M_PI / 360) * projectiondistance;
 	frustumslope[1] = frustumslope[0] * ((float)scr_vrect.height / scr_vrect.width);
@@ -1629,21 +1629,21 @@ void CL_ActorMouseTrace(void)
 	 *     mapNormal dot (P1 + u*(P2 - P1)) == mapNormal dot P3
 	 *   The intersection therefore occurs when:
 	 *     u = (mapNormal dot (P3 - P1))/(mapNormal dot (P2 - P1))
-	 * Note: in the code below cl.cam.camorg & stop represent P1 and P2 respectively
+	 * Note: in the code below from & stop represent P1 and P2 respectively
 	 */  
 	VectorSet(P3, 0., 0., cl_worldlevel->value * UNIT_HEIGHT + UNIT_HEIGHT * 0.4);
 	VectorSet(mapNormal, 0., 0., 1.);
-	VectorSubtract(stop, cl.cam.camorg, P2minusP1);
+	VectorSubtract(stop, from, P2minusP1);
 	nDotP2minusP1 = DotProduct(mapNormal, P2minusP1);
 
 	/* calculate intersection directly if angle is not parallel to the map plane */
 	if (nDotP2minusP1 > 0.01 || nDotP2minusP1 < -0.01) {
-		VectorSubtract(P3, cl.cam.camorg,  P3minusP1);
+		VectorSubtract(P3, from,  P3minusP1);
 		u = DotProduct(mapNormal, P3minusP1)/nDotP2minusP1;
 		VectorScale(P2minusP1, (vec_t)u, dir);
-		VectorAdd(cl.cam.camorg, dir, end);
+		VectorAdd(from, dir, end);
 	} else { /* otherwise do a full trace */
-		CM_EntTestLineDM(cl.cam.camorg, stop, end);
+		CM_EntTestLineDM(from, stop, end);
 		end[2] += UNIT_HEIGHT * 0.4;
 	}
 
