@@ -2345,7 +2345,7 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 
 	/* if weapon is twohanded and is moved from hand to hand do nothing. */
 	/* twohanded weapon are only in CSI->idRight */
-	if (CSI->ods[cacheItem.t].holdtwohanded && to == CSI->idLeft && from == CSI->idRight)
+	if (CSI->ods[cacheItem.t].firetwohanded && to == CSI->idLeft && from == CSI->idRight)
 		return IA_NONE;
 
 	/* break if source item is not removeable */
@@ -2609,6 +2609,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 	item_t item = {0,NONE,NONE};
 	int i, max_price, prev_price;
 	objDef_t obj;
+	qboolean allowLeft;
 
 #ifdef PARANOID
 	if (weapon < 0) {
@@ -2669,11 +2670,14 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 		if (item.m == NONE)
 			Com_Printf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].kurz, name);
 	}
+	/* are we going to allow trying the left hand */
+	allowLeft = !(inv->c[CSI->idRight] && CSI->ods[inv->c[CSI->idRight]->item.t].firetwohanded);
+
 	/* now try to pack the weapon */
 	return
 		Com_TryAddToInventory(inv, item, CSI->idRight)
-		|| Com_TryAddToInventory(inv, item, CSI->idLeft)
-		|| Com_TryAddToInventory(inv, item, CSI->idBelt)
+		|| allowLeft ? Com_TryAddToInventory(inv, item, CSI->idLeft) : qfalse
+		|| Com_TryAddToInventory(inv, item, CSI->idBelt )
 		|| Com_TryAddToInventory(inv, item, CSI->idHolster)
 		|| Com_TryAddToInventory(inv, item, CSI->idBackpack);
 }
