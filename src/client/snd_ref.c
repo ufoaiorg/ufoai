@@ -263,8 +263,11 @@ void S_Init(void)
 #else
 			Com_sprintf(fn, sizeof(fn), "./snd_%s.so", snd_ref->string);
 			if ((snd_ref_lib = dlopen(fn, RTLD_LAZY)) == 0) {
-				Com_Printf("Load library failed: %s\n", dlerror());
-				return;
+				Com_sprintf(fn, sizeof(fn), "snd_%s.so", snd_ref->string);
+				if ((snd_ref_lib = dlopen(fn, RTLD_LAZY)) == 0) {
+					Com_Printf("Load library failed: %s\n", dlerror());
+					return;
+				}
 #endif
 			}
 

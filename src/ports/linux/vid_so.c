@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <assert.h>
 #include <dlfcn.h> /* ELF dl loader */
-#include <sys/stat.h>
 #include <unistd.h>
 #include <errno.h>
 #include <string.h>
@@ -219,7 +218,6 @@ qboolean VID_LoadRefresh( char *name )
 	GetRefAPI_t	GetRefAPI;
 	qboolean	restart = qfalse;
 	char	fn[MAX_OSPATH];
-	struct stat st;
 	extern uid_t saved_euid;
 	FILE *fp;
 
@@ -242,25 +240,22 @@ qboolean VID_LoadRefresh( char *name )
 
 	if ((fp = fopen(so_file, "r")) == NULL) {
 		Com_Printf( "LoadLibrary(\"%s\"): can't open %s - setting search path to .\n", name, so_file);
-		strcpy(fn, ".");
 	} else {
 		fgets(fn, sizeof(fn), fp);
 		fclose(fp);
 		while (*fn && isspace(fn[strlen(fn) - 1]))
 			fn[strlen(fn) - 1] = 0;
+		Q_strcat(fn, "/", sizeof(fn));
 	}
 
-	Q_strcat(fn, "/", sizeof(fn));
 	Q_strcat(fn, name, sizeof(fn));
 
-	if (stat(fn, &st) == -1) {
-		Com_Printf( "LoadLibrary(\"%s\") failed: %s\n", name, strerror(errno));
-		return qfalse;
-	}
-
 	if ( ( reflib_library = dlopen( fn, RTLD_LAZY | RTLD_GLOBAL ) ) == 0 ) {
-		Com_Printf( "LoadLibrary(\"%s\") failed: %s\n", name , dlerror());
-		return qfalse;
+		Com_sprintf(fn, sizeof(fn), "./%s", name);
+		if ( ( reflib_library = dlopen(fn, RTLD_LAZY | RTLD_GLOBAL ) ) == 0 ) {
+			Com_Printf( "LoadLibrary(\"%s\") failed: %s\n", name , dlerror());
+			return qfalse;
+		}
 	}
 
 	Com_Printf( "LoadLibrary(\"%s\")\n", fn );
