@@ -460,6 +460,16 @@ static qboolean Com_CheckShape(int shape[16], int x, int y)
 /**
  * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
  */
+static void MN_DrawDisabled(menuNode_t* node)
+{
+	static vec4_t color = { 0.3f, 0.3f, 0.3f, 0.7f };
+	re.DrawFill(node->pos[0], node->pos[1], node->size[0], node->size[1], ALIGN_UL, color);
+	re.DrawColor(NULL);
+}
+
+/**
+ * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
+ */
 static void MN_DrawFree(int posx, int posy, int sizex, int sizey)
 {
 	static vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
@@ -1739,7 +1749,8 @@ void MN_DrawMenus(void)
 								if (node->mousefx == csi.idRight &&
 										csi.ods[menuInventory->c[csi.idRight]->item.t].firetwohanded &&
 										menuInventory->c[csi.idLeft]) {
-									color[0] = color[1] = color[2] = color[3] = 0.3;
+									color[0] = color[1] = color[2] = color[3] = 0.5;
+									MN_DrawDisabled(node);
 								}
 								MN_DrawItem(node->pos, menuInventory->c[node->mousefx]->item, node->size[0] / C_UNIT,
 											node->size[1] / C_UNIT, 0, 0, scale, color);
