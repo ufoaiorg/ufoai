@@ -1177,8 +1177,7 @@ void GetSoundtime(void)
  */
 void S_Update_(void)
 {
-	unsigned endtime;
-	int samps;
+	unsigned int samps, endtime;
 
 	if (!sound_started)
 		return;

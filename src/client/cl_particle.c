@@ -704,7 +704,7 @@ void CL_ParticleCheckRounds(void)
 void CL_ParticleRun(void)
 {
 	qboolean onlyAlpha;
-	ptl_t *p, *c;
+	ptl_t *p;
 	int i;
 
 	for (i = 0, p = ptl; i < numPtls; i++, p++)
