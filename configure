@@ -2806,6 +2806,7 @@ fi
 # CHECK windres
 #---------------------------------------------------------------------------------------------
 
+WINDRES=""
 if test $TARGET_OS = "mingw32"
 then
 	WINDRES=windres
@@ -2890,9 +2891,9 @@ echo "$as_me: error: You must have the mkdir program installed" >&2;}
    { (exit 1); exit 1; }; }
 		fi
 	fi
-	WINDRES=$WINDRES
-
 fi
+WINDRES=$WINDRES
+
 
 #---------------------------------------------------------------------------------------------
 # CHECK LIBTOOL

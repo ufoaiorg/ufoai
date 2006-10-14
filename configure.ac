@@ -186,6 +186,7 @@ fi
 # CHECK windres
 #---------------------------------------------------------------------------------------------
 
+WINDRES=""
 if test $TARGET_OS = "mingw32"
 then
 	WINDRES=windres
@@ -200,8 +201,8 @@ then
 			AC_MSG_ERROR([You must have the mkdir program installed])	
 		fi	
 	fi
-	AC_SUBST([WINDRES],$WINDRES)
 fi
+AC_SUBST([WINDRES],$WINDRES)
 
 #---------------------------------------------------------------------------------------------
 # CHECK LIBTOOL
