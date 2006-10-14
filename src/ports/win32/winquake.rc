@@ -7,7 +7,11 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "afxres.h"
+#ifndef __MINGW32__
+#include "winres.h"
+#else
+#include <winresrc.h>
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -54,7 +58,11 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON    DISCARDABLE     "q2.ico"
+#ifndef __MINGW32__
+IDI_ICON1               ICON    DISCARDABLE     "ufo.ico"
+#else
+IDI_ICON1               ICON    DISCARDABLE     "src/ports/win32/ufo.ico"
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -67,7 +75,7 @@ STYLE DS_MODALFRAME | DS_SETFOREGROUND | DS_3DLOOK | DS_CENTER | WS_POPUP |
 EXSTYLE WS_EX_TOOLWINDOW | WS_EX_CLIENTEDGE
 FONT 16, "Times New Roman", 0, 0, 0x1
 BEGIN
-    CTEXT           "Starting QW...",IDC_STATIC,4,6,54,8
+    CTEXT           "Starting UFO...",IDC_STATIC,4,6,54,8
 END
 
 
@@ -78,7 +86,7 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_STRING1             "WinQuake"
+    IDS_STRING1             "UFO:Alien Invasion"
 END
 
 #endif    // English (U.S.) resources
