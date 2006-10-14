@@ -44,6 +44,7 @@ jmp_buf abortframe;				/* an ERR_DROP occured, exit the entire frame */
 
 FILE *log_stats_file;
 
+cvar_t *s_sleep;
 cvar_t *s_language;
 cvar_t *host_speeds;
 cvar_t *log_stats;
@@ -1406,6 +1407,7 @@ void Qcommon_Init(int argc, char **argv)
 	Cmd_AddCommand("mem_stats", Mem_Stats_f, NULL);
 	Cmd_AddCommand("error", Com_Error_f, NULL);
 
+	s_sleep = Cvar_Get("s_sleep", "1", CVAR_ARCHIVE, "Use the sleep function to redruce cpu usage");
 	host_speeds = Cvar_Get("host_speeds", "0", 0, NULL);
 	log_stats = Cvar_Get("log_stats", "0", 0, NULL);
 	developer = Cvar_Get("developer", "0", 0, NULL);
@@ -1486,7 +1488,7 @@ void Qcommon_Init(int argc, char **argv)
  * @sa Qcommon_Shutdown
  * @sa SV_Frame
  * @sa CL_Frame
- * @param[in] msec Passed miliseconds since last frame
+ * @param[in] msec Passed milliseconds since last frame
  */
 float Qcommon_Frame(int msec)
 {
@@ -1514,7 +1516,7 @@ float Qcommon_Frame(int msec)
 	else if (timescale->value < 0.2)
 		Cvar_SetValue("timescale", 0.2);
 
-	if (cl_timer <= 0 && sv_timer <= 0) {
+	if (s_sleep->value && cl_timer <= 0 && sv_timer <= 0) {
 		int wait;
 		if (dedicated->value)
 			wait = abs(sv_timer);
@@ -1606,7 +1608,7 @@ float Qcommon_Frame(int msec)
 		rf = time_after_ref - time_before_ref;
 		sv -= gm;
 		cl -= rf;
-		Com_Printf("all:%3i sv:%3i gm:%3i cl:%3i rf:%3i\n", all, sv, gm, cl, rf);
+		Com_Printf("all:%3i sv:%3i game:%3i cl:%3i ref:%3i cltimer:%3i svtimer:%3i \n", all, sv, gm, cl, rf, cl_timer, sv_timer);
 	}
 
 	return timescale->value;
