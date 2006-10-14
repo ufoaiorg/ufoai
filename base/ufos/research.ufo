@@ -1121,11 +1121,11 @@ tech rs_weapon_tachyonsniper_ammo
 // Armor
 //========================
 
-tech rs_kevlar_armor
+tech rs_combat_armor
 {
 	type	armor
 	up_chapter	armors
-	description	"_kevlar_armor_txt"
+	description	"_combat_armor_txt"
 
 	provides	light
 	time	0
