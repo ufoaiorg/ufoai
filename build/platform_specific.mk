@@ -15,7 +15,6 @@ ifeq ($(TARGET_OS),mingw32)
 	SHARED_LDFLAGS=-shared
 	SHARED_CFLAGS=-shared
 	JPEG_CFLAGS=-DDONT_TYPEDEF_INT32
-	WINDRES=windres
 endif
 
 # Linux like

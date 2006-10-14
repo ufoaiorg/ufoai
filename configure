@@ -309,7 +309,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os HAVE_SED HAVE_ECHO TARGET_OS TARGET_CPU CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT HAVE_RM HAVE_MKDIR CPP EGREP HAVE_SDL_CONFIG SDL_CFLAGS SDL_LIBS HAVE_SDL HAVE_SND_SDL HAVE_VID_GLX HAVE_SHADERS HAVE_SND_ALSA HAVE_SND_OSS HAVE_ARTSC_CONFIG HAVE_SND_ARTS ARTS_CFLAGS ARTS_LIBS HAVE_SND_WAPI HAVE_SND_DX HAVE_VID_DGA HAVE_VID_VIDMODE BUILD_DEDICATED BUILD_UFO2MAP BUILD_QDATA BUILD_DEBUG PARANOID PROFILING EXE_EXT LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os HAVE_SED HAVE_ECHO TARGET_OS TARGET_CPU CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT HAVE_RM HAVE_MKDIR HAVE_WINDRES WINDRES CPP EGREP HAVE_SDL_CONFIG SDL_CFLAGS SDL_LIBS HAVE_SDL HAVE_SND_SDL HAVE_VID_GLX HAVE_SHADERS HAVE_SND_ALSA HAVE_SND_OSS HAVE_ARTSC_CONFIG HAVE_SND_ARTS ARTS_CFLAGS ARTS_LIBS HAVE_SND_WAPI HAVE_SND_DX HAVE_VID_DGA HAVE_VID_VIDMODE BUILD_DEDICATED BUILD_UFO2MAP BUILD_QDATA BUILD_DEBUG PARANOID PROFILING EXE_EXT LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -2800,6 +2800,98 @@ then
 	{ { echo "$as_me:$LINENO: error: You must have the mkdir program installed" >&5
 echo "$as_me: error: You must have the mkdir program installed" >&2;}
    { (exit 1); exit 1; }; }
+fi
+
+#---------------------------------------------------------------------------------------------
+# CHECK windres
+#---------------------------------------------------------------------------------------------
+
+if test $TARGET_OS = "mingw32"
+then
+	WINDRES=windres
+	# Extract the first word of "$WINDRES", so it can be a program name with args.
+set dummy $WINDRES; ac_word=$2
+echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
+if test "${ac_cv_prog_HAVE_WINDRES+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test -n "$HAVE_WINDRES"; then
+  ac_cv_prog_HAVE_WINDRES="$HAVE_WINDRES" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_HAVE_WINDRES="yes"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+
+fi
+fi
+HAVE_WINDRES=$ac_cv_prog_HAVE_WINDRES
+if test -n "$HAVE_WINDRES"; then
+  echo "$as_me:$LINENO: result: $HAVE_WINDRES" >&5
+echo "${ECHO_T}$HAVE_WINDRES" >&6
+else
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
+	if test "$HAVE_WINDRES" != "yes"
+	then
+		WINDRES="$target_cpu-$target_os-windres"
+		# Extract the first word of "$WINDRES", so it can be a program name with args.
+set dummy $WINDRES; ac_word=$2
+echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
+if test "${ac_cv_prog_HAVE_WINDRES+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test -n "$HAVE_WINDRES"; then
+  ac_cv_prog_HAVE_WINDRES="$HAVE_WINDRES" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_HAVE_WINDRES="yes"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+
+fi
+fi
+HAVE_WINDRES=$ac_cv_prog_HAVE_WINDRES
+if test -n "$HAVE_WINDRES"; then
+  echo "$as_me:$LINENO: result: $HAVE_WINDRES" >&5
+echo "${ECHO_T}$HAVE_WINDRES" >&6
+else
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
+		if test "$HAVE_WINDRES" != "yes"
+		then
+			WINDRES=""
+			{ { echo "$as_me:$LINENO: error: You must have the mkdir program installed" >&5
+echo "$as_me: error: You must have the mkdir program installed" >&2;}
+   { (exit 1); exit 1; }; }
+		fi
+	fi
+	WINDRES=$WINDRES
+
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -8775,6 +8867,8 @@ s,@EXEEXT@,$EXEEXT,;t t
 s,@OBJEXT@,$OBJEXT,;t t
 s,@HAVE_RM@,$HAVE_RM,;t t
 s,@HAVE_MKDIR@,$HAVE_MKDIR,;t t
+s,@HAVE_WINDRES@,$HAVE_WINDRES,;t t
+s,@WINDRES@,$WINDRES,;t t
 s,@CPP@,$CPP,;t t
 s,@EGREP@,$EGREP,;t t
 s,@HAVE_SDL_CONFIG@,$HAVE_SDL_CONFIG,;t t
