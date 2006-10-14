@@ -22,7 +22,7 @@ researched rslist_human
 	rs_weapon_grenl_ammo
 	rs_medikit
 	rs_irgoggles
-	rs_kevlar_armor
+	rs_combat_armor
 	rs_damage_normal
 	rs_damage_blast
 	rs_damage_fire
@@ -62,7 +62,7 @@ researched rslist_human
 researchable rslist_human
 {
 	rs_laser
-	rs_kevlar_armor
+	rs_combat_armor
 	rs_damage_normal
 	rs_damage_blast
 	rs_damage_fire
