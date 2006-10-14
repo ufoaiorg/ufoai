@@ -621,7 +621,6 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 #ifndef __MINGW32__
 		_controlfp( _PC_24, _MCW_PC );
 #endif
-		time = timescale * (newtime - oldtime);
 		timescale = Qcommon_Frame (time);
 		oldtime = newtime;
 	}
