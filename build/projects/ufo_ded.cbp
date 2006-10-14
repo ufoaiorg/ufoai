@@ -36,15 +36,7 @@
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="ports\null\cd_null.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
 		<Unit filename="ports\null\cl_null.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="ports\win32\conproc.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
@@ -74,35 +66,11 @@
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="qcommon\common.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
 		<Unit filename="qcommon\crc.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="qcommon\cvar.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
 		<Unit filename="qcommon\files.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="qcommon\md4.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="qcommon\net_chan.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="qcommon\scripts.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="qcommon\unzip.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
@@ -112,19 +80,11 @@
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="server\sv_ccmds.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
 		<Unit filename="server\sv_game.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
 		<Unit filename="server\sv_init.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="server\sv_main.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
@@ -136,7 +96,47 @@
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="server\sv_world.c">
+		<Unit filename="..\..\src\ports\null\cd_null.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\ports\win32\conproc.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\common.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\cvar.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\md4.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\net_chan.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\scripts.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\unzip.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_ccmds.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_main.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_world.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>

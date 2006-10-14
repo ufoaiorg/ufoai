@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="Default workspace">
-		<Project filename="ufo.cbp" active="1" />
-		<Project filename="tools\qdata\qdata.cbp" />
-		<Project filename="tools\ufo2map\ufo2map.cbp" />
-		<Project filename="tools\campaign_editor\Campaigneditor.cbp" />
-		<Project filename="ufo_ded.cbp" />
-		<Project filename="snd_wapi.cbp" />
+		<Project filename="ufo.cbp" />
+		<Project filename="game.cbp" />
+		<Project filename="ufo_ded.cbp" active="1" />
+		<Project filename="ufo2map.cbp" />
 		<Project filename="snd_sdl.cbp" />
+		<Project filename="snd_wapi.cbp" />
 		<Project filename="snd_dx.cbp" />
-		<Project filename="game\game.cbp" />
-		<Project filename="ref_gl\ref_gl.cbp" />
+		<Project filename="ref_gl.cbp" />
+		<Project filename="Campaigneditor.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

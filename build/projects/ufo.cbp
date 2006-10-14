@@ -3,814 +3,499 @@
 	<FileVersion major="1" minor="5" />
 	<Project>
 		<Option title="ufo" />
-		<Option pch_mode="0" />
+		<Option pch_mode="2" />
 		<Option default_target="" />
 		<Option compiler="gcc" />
 		<Option virtualFolders="" />
 		<Build>
-			<Target title="Win32 Release">
-				<Option output="C:\ufoai\ufo.exe" prefix_auto="0" extension_auto="0" />
-				<Option object_output=".\release" />
-				<Option external_deps="C:\ufoai\src\game\release\libgame.a;C:\ufoai\libref_gl.a;" />
+			<Target title="default">
+				<Option output="..\..\ufo.exe" prefix_auto="1" extension_auto="1" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option projectResourceIncludeDirsRelation="0" />
-				<Compiler>
-					<Add option="-O2" />
-					<Add option="-W" />
-					<Add option="-Wall" />
-					<Add option="-fexceptions" />
-					<Add option="-DNDEBUG" />
-					<Add option="-DC_ONLY" />
-				</Compiler>
-				<Linker>
-					<Add library="vorbisfile" />
-					<Add library="vorbis" />
-					<Add library="ogg" />
-					<Add library="jpeg" />
-					<Add library="winmm" />
-					<Add library="wsock32" />
-					<Add library="kernel32" />
-					<Add library="user32" />
-					<Add library="gdi32" />
-					<Add library="mingw32" />
-				</Linker>
-			</Target>
-			<Target title="Win32 Debug">
-				<Option output="C:\ufoai\src\debug\ufo.exe" prefix_auto="0" extension_auto="0" />
-				<Option object_output=".\debug" />
-				<Option external_deps="C:\ufoai\src\debug\libgame.a;C:\ufoai\src\debug\libref_gl.a;" />
-				<Option type="0" />
-				<Option compiler="gcc" />
-				<Option projectResourceIncludeDirsRelation="0" />
-				<Compiler>
-					<Add option="-W" />
-					<Add option="-Wall" />
-					<Add option="-g" />
-					<Add option="-fexceptions" />
-					<Add option="-mcpu=pentium -D_M_IX86=500" />
-					<Add option="-DDEBUG" />
-					<Add option="-DC_ONLY" />
-					<Add option="-DSHADERS" />
-					<Add option="-DHAVE_GETTEXT" />
-				</Compiler>
-				<Linker>
-					<Add library="vorbisfile" />
-					<Add library="vorbis" />
-					<Add library="ogg" />
-					<Add library="jpeg" />
-					<Add library="winmm" />
-					<Add library="wsock32" />
-					<Add library="kernel32" />
-					<Add library="user32" />
-					<Add library="gdi32" />
-					<Add library="mingw32" />
-				</Linker>
-			</Target>
-			<Target title="Win32 Debug Alpha">
-				<Option external_deps=";;" />
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<Option projectResourceIncludeDirsRelation="4" />
-				<Compiler>
-					<Add option="-W" />
-					<Add option="-fexceptions" />
-					<Add option="-g" />
-					<Add option="-DWIN32" />
-					<Add option="-D_DEBUG" />
-					<Add option="-D_WINDOWS" />
-					<Add option="-DC_ONLY" />
-				</Compiler>
-			</Target>
-			<Target title="Win32 Release Alpha">
-				<Option external_deps=";;" />
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<Option projectResourceIncludeDirsRelation="4" />
-				<Compiler>
-					<Add option="-W" />
-					<Add option="-fexceptions" />
-					<Add option="-O2" />
-					<Add option="-DWIN32" />
-					<Add option="-DNDEBUG" />
-					<Add option="-D_WINDOWS" />
-					<Add option="-DC_ONLY" />
-				</Compiler>
 			</Target>
 		</Build>
-		<VirtualTargets>
-			<Add alias="All" targets="Win32 Release;Win32 Debug;Win32 Debug Alpha;Win32 Release Alpha;" />
-		</VirtualTargets>
-		<Unit filename="client\anorms.h">
-			<Option compilerVar="" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cdaudio.h">
-			<Option compilerVar="" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_actor.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_aircraft.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_aircraft.h">
+		<Compiler>
+			<Add option="-D__GNUWIN32__" />
+			<Add option="-D_M_IX86=500" />
+			<Add option="-Wall" />
+			<Add option="-DDEBUG" />
+			<Add option="-DDEVCPP" />
+			<Add option="-DC_ONLY" />
+			<Add option="-DUSE_SDL" />
+			<Add option="-DSHADERS" />
+			<Add option="-DHAVE_GETTEXT" />
+		</Compiler>
+		<Linker>
+			<Add option="../../src/ports/win32/intl.lib" />
+			<Add option="../../src/ports/win32/libjpeg.lib" />
+			<Add library="vorbisfile" />
+			<Add library="vorbis" />
+			<Add library="ogg" />
+			<Add library="winmm" />
+			<Add library="wsock32" />
+			<Add library="kernel32" />
+			<Add library="user32" />
+			<Add library="gdi32" />
+			<Add library="gmon" />
+			<Add library="SDL" />
+			<Add library="SDL_ttf" />
+			<Add directory="C:\Dev-Cpp\lib" />
+		</Linker>
+		<Unit filename="..\..\src\client\anorms.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_basemanagement.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_basemanagement.h">
-			<Option compilerVar="" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_campaign.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_cin.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_employee.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_employee.h">
+		<Unit filename="..\..\src\client\cdaudio.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_fx.c">
+		<Unit filename="..\..\src\client\cl_actor.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_global.h">
+		<Unit filename="..\..\src\client\cl_aircraft.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_aircraft.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_input.c">
+		<Unit filename="..\..\src\client\cl_basemanagement.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_inventory.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_le.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_main.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_map.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_market.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_market.h">
+		<Unit filename="..\..\src\client\cl_basemanagement.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_menu.c">
+		<Unit filename="..\..\src\client\cl_campaign.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_parse.c">
+		<Unit filename="..\..\src\client\cl_employee.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_particle.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_popup.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_produce.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_produce.h">
+		<Unit filename="..\..\src\client\cl_employee.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_radar.c">
+		<Unit filename="..\..\src\client\cl_fx.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_research.c">
+		<Unit filename="..\..\src\client\cl_hospital.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_research.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\cl_hospital.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_scrn.c">
+		<Unit filename="..\..\src\client\cl_input.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_sequence.c">
+		<Unit filename="..\..\src\client\cl_le.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_shader.c">
+		<Unit filename="..\..\src\client\cl_main.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_team.c">
+		<Unit filename="..\..\src\client\cl_map.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_ufo.c">
+		<Unit filename="..\..\src\client\cl_market.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\cl_ufopedia.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\cl_view.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\client.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\cl_market.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\console.c">
+		<Unit filename="..\..\src\client\cl_menu.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\console.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\cl_parse.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_particle.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_popup.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_produce.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_radar.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_research.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_research.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\input.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\cl_scrn.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_sequence.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_shader.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_team.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_ufo.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_ufopedia.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_view.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\client.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\keys.c">
+		<Unit filename="..\..\src\client\console.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\keys.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\console.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\ref.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\input.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\screen.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\keys.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\keys.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\snd_loc.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\os_types.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\snd_mem.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\snd_mix.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\snd_ref.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="client\sound.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\ref.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\vid.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\screen.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="client\x86.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="game\game.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\snd_loc.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="game\q_shared.c">
+		<Unit filename="..\..\src\client\snd_mem.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="game\q_shared.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\snd_mix.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\snd_ref.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\sound.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="qcommon\bspfile.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\client\vid.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="qcommon\cmd.c">
+		<Unit filename="..\..\src\client\x86.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="qcommon\cmodel.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="qcommon\common.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="qcommon\crc.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="qcommon\cvar.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="qcommon\files.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="qcommon\md4.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="qcommon\net_chan.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="qcommon\qcommon.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\game\game.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="qcommon\qfiles.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\game\q_shared.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\game\q_shared.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="qcommon\scripts.c">
+		<Unit filename="..\..\src\ports\win32\cd_win.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="qcommon\unzip.c">
+		<Unit filename="..\..\src\ports\win32\conproc.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="server\server.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\ports\win32\conproc.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="server\sv_ccmds.c">
+		<Unit filename="..\..\src\ports\win32\in_win.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="server\sv_game.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="server\sv_init.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="server\sv_main.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="server\sv_send.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="server\sv_user.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="server\sv_world.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="win32\cd_win.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="win32\conproc.c">
-			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="win32\conproc.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\ports\win32\libintl.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="win32\in_win.c">
+		<Unit filename="..\..\src\ports\win32\net_wins.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="win32\intl.lib">
-			<Option compilerVar="" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="win32\libintl.h">
-			<Option compilerVar="" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="win32\net_wins.c">
+		<Unit filename="..\..\src\ports\win32\q_shwin.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="win32\ogg.lib">
-			<Option compilerVar="" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="win32\q2.ico">
-			<Option compilerVar="" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="win32\q2.rc">
-			<Option compilerVar="WINDRES" />
-			<Option objectName="win32\q2.res" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
-		</Unit>
-		<Unit filename="win32\q_shwin.c">
+		<Unit filename="..\..\src\ports\win32\sys_win.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="win32\sys_win.c">
+		<Unit filename="..\..\src\ports\win32\ufo.ico">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\ports\win32\vid_dll.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="win32\ufo.ico">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\ports\win32\vorbisfile.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="win32\vid_dll.c">
+		<Unit filename="..\..\src\ports\win32\winquake.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\cmd.c">
 			<Option compilerVar="CC" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="win32\vorbisfile.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\qcommon\cmd.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="win32\vorbisfile.lib">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\qcommon\cmodel.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\cmodel.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
 		</Unit>
-		<Unit filename="win32\winquake.h">
-			<Option compilerVar="" />
+		<Unit filename="..\..\src\qcommon\common.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\crc.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\cvar.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\cvar.h">
+			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Win32 Release" />
-			<Option target="Win32 Debug" />
-			<Option target="Win32 Debug Alpha" />
-			<Option target="Win32 Release Alpha" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\doxygen.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\files.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\filesys.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\md4.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\md4.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\mem.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\net_chan.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\qcommon.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\qfiles.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\scripts.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\scripts.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\ufotypes.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\unzip.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\unzip.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\server\server.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_ccmds.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_game.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_init.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_main.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_send.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_user.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_world.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
 		</Unit>
 		<Extensions />
 	</Project>

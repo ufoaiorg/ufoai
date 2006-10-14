@@ -37,45 +37,45 @@
 			<Add directory="C:\Dev-Cpp\lib\glib-2.0" />
 			<Add directory="C:\Dev-Cpp\lib\gtk-2.0" />
 		</Linker>
-		<Unit filename="src\callbacks.c">
+		<Unit filename="..\..\src\tools\campaign_editor\src\callbacks.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="src\callbacks.h">
-			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="src\interface.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="src\interface.h">
+		<Unit filename="..\..\src\tools\campaign_editor\src\callbacks.h">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="src\main.c">
+		<Unit filename="..\..\src\tools\campaign_editor\src\interface.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="src\scripts.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="src\scripts.h">
+		<Unit filename="..\..\src\tools\campaign_editor\src\interface.h">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="src\support.c">
+		<Unit filename="..\..\src\tools\campaign_editor\src\main.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="src\support.h">
+		<Unit filename="..\..\src\tools\campaign_editor\src\scripts.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\campaign_editor\src\scripts.h">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\campaign_editor\src\support.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\campaign_editor\src\support.h">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />

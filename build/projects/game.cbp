@@ -17,63 +17,63 @@
 			</Target>
 		</Build>
 		<Linker>
-			<Add option="../ports/win32/intl.lib" />
+			<Add option="../../src/ports/win32/intl.lib" />
 			<Add option="--export-all-symbols" />
 			<Add library="kernel32" />
 			<Add library="user32" />
 			<Add library="winmm" />
 		</Linker>
-		<Unit filename="g_ai.c">
+		<Unit filename="..\..\src\game\g_ai.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="g_client.c">
+		<Unit filename="..\..\src\game\g_client.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="g_cmds.c">
+		<Unit filename="..\..\src\game\g_cmds.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="g_local.h">
+		<Unit filename="..\..\src\game\g_local.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="g_main.c">
+		<Unit filename="..\..\src\game\g_main.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="g_spawn.c">
+		<Unit filename="..\..\src\game\g_spawn.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="g_svcmds.c">
+		<Unit filename="..\..\src\game\g_svcmds.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="g_utils.c">
+		<Unit filename="..\..\src\game\g_utils.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="game.def">
+		<Unit filename="..\..\src\game\game.def">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="game.h">
+		<Unit filename="..\..\src\game\game.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="q_shared.c">
+		<Unit filename="..\..\src\game\q_shared.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="q_shared.h">
+		<Unit filename="..\..\src\game\q_shared.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />

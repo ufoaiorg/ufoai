@@ -27,115 +27,127 @@
 		<Linker>
 			<Add directory="C:\Dev-Cpp\lib" />
 		</Linker>
-		<Unit filename="brushbsp.c">
+		<Unit filename="..\..\src\tools\ufo2map\brushbsp.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="common\bspfile.c">
+		<Unit filename="..\..\src\tools\ufo2map\common\bspfile.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="common\cmdlib.c">
+		<Unit filename="..\..\src\tools\ufo2map\common\cmdlib.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="common\lbmlib.c">
+		<Unit filename="..\..\src\tools\ufo2map\common\lbmlib.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="common\mathlib.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="common\polylib.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="common\scriplib.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="common\threads.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="common\trace.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="csg.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="faces.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="glfile.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="levels.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="lightmap.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="map.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="nodraw.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="patches.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="portals.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="qbsp.h">
+		<Unit filename="..\..\src\tools\ufo2map\common\lbmlib.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="qbsp3.c">
+		<Unit filename="..\..\src\tools\ufo2map\common\mathlib.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="qrad.h">
+		<Unit filename="..\..\src\tools\ufo2map\common\polylib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\common\scriplib.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\common\scriplib.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="qrad3.c">
+		<Unit filename="..\..\src\tools\ufo2map\common\threads.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="routing.c">
+		<Unit filename="..\..\src\tools\ufo2map\common\trace.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="textures.c">
+		<Unit filename="..\..\src\tools\ufo2map\csg.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="tree.c">
+		<Unit filename="..\..\src\tools\ufo2map\faces.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="ufo2map.c">
+		<Unit filename="..\..\src\tools\ufo2map\glfile.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="writebsp.c">
+		<Unit filename="..\..\src\tools\ufo2map\levels.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\lightmap.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\map.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\nodraw.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\patches.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\portals.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\qbsp.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\qbsp3.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\qrad.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\qrad3.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\routing.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\textures.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\tree.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\ufo2map.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\writebsp.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
