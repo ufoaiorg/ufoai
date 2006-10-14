@@ -47,7 +47,8 @@ ifeq ($(TARGET_OS),mingw32)
 		ports/win32/q_shwin.c \
 		ports/win32/sys_win.c \
 		ports/win32/conproc.c  \
-		ports/win32/net_wins.c
+		ports/win32/net_wins.c \
+		ports/win32/ufo.rc
 endif
 
 ifeq ($(TARGET_OS),darwin)
@@ -69,7 +70,8 @@ endif
 
 SERVER_OBJS= \
 	$(patsubst %.c, $(BUILDDIR)/server/%.o, $(filter %.c, $(SERVER_SRCS))) \
-	$(patsubst %.m, $(BUILDDIR)/server/%.o, $(filter %.m, $(SERVER_SRCS)))
+	$(patsubst %.m, $(BUILDDIR)/server/%.o, $(filter %.m, $(SERVER_SRCS))) \
+	$(patsubst %.rc, $(BUILDDIR)/server/%.o, $(filter %.rc, $(SERVER_SRCS)))
 
 SERVER_DEPS=$(SERVER_OBJS:%.o=%.d)
 SERVER_TARGET=ufo2ded$(EXE_EXT)
@@ -112,8 +114,7 @@ $(BUILDDIR)/server/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 
 ifeq ($(TARGET_OS),mingw32)
 $(BUILDDIR)/server/%.d: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; \
-		$(DEP) $(DEDICATED_CFLAGS)
+	@echo " * [DEP] $<"; touch $@
 endif
 
 $(BUILDDIR)/server/%.d: $(SRCDIR)/%.m $(BUILDDIR)/.dirs

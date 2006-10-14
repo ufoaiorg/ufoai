@@ -90,7 +90,8 @@ ifeq ($(TARGET_OS),mingw32)
 		ports/win32/in_win.c \
 		ports/win32/conproc.c  \
 		ports/win32/sys_win.c \
-		ports/win32/net_wins.c
+		ports/win32/net_wins.c \
+		ports/win32/ufo.rc
 	CLIENT_CD=ports/win32/cd_win.c
 endif
 
@@ -121,7 +122,8 @@ endif
 
 CLIENT_OBJS= \
 	$(patsubst %.c, $(BUILDDIR)/client/%.o, $(filter %.c, $(CLIENT_SRCS))) \
-	$(patsubst %.m, $(BUILDDIR)/client/%.o, $(filter %.m, $(CLIENT_SRCS)))
+	$(patsubst %.m, $(BUILDDIR)/client/%.o, $(filter %.m, $(CLIENT_SRCS))) \
+	$(patsubst %.rc, $(BUILDDIR)/client/%.o, $(filter %.rc, $(CLIENT_SRCS)))
 
 CLIENT_DEPS=$(CLIENT_OBJS:%.o=%.d)
 CLIENT_TARGET=ufo$(EXE_EXT)
@@ -159,7 +161,7 @@ $(BUILDDIR)/client/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 
 ifeq ($(TARGET_OS),mingw32)
 $(BUILDDIR)/client/%.d: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP)
+	@echo " * [DEP] $<"; touch $@
 endif
 
 $(BUILDDIR)/client/%.d: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
