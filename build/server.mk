@@ -74,7 +74,7 @@ SERVER_OBJS= \
 	$(patsubst %.rc, $(BUILDDIR)/server/%.o, $(filter %.rc, $(SERVER_SRCS)))
 
 SERVER_DEPS=$(SERVER_OBJS:%.o=%.d)
-SERVER_TARGET=ufo2ded$(EXE_EXT)
+SERVER_TARGET=ufoded$(EXE_EXT)
 
 ifeq ($(BUILD_DEDICATED),1)
 	ALL_OBJS+=$(SERVER_OBJS)
