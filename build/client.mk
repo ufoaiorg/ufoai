@@ -84,6 +84,7 @@ endif
 
 ifeq ($(TARGET_OS),mingw32)
 	CLIENT_SRCS+=\
+		ports/win32/ufo.rc \
 		ports/win32/q_shwin.c \
 		ports/win32/vid_dll.c \
 		ports/win32/in_win.c \
@@ -139,6 +140,13 @@ $(BUILDDIR)/client/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
 		$(CC) $(CFLAGS) -o $@ -c $<
 
+ifeq ($(TARGET_OS),mingw32)
+# Say how to build .o files from .rc files for this module
+$(BUILDDIR)/client/%.o: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
+	@echo " * [RC ] $<"; \
+		$(WINDRES) -i $< -o $@
+endif
+
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/client/%.m: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
@@ -148,6 +156,11 @@ $(BUILDDIR)/client/%.m: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 ifdef BUILDDIR
 $(BUILDDIR)/client/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [DEP] $<"; $(DEP)
+
+ifeq ($(TARGET_OS),mingw32)
+$(BUILDDIR)/client/%.d: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
+	@echo " * [DEP] $<"; $(DEP)
+endif
 
 $(BUILDDIR)/client/%.d: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
 	@echo " * [DEP] $<"; $(DEP)

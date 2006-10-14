@@ -43,9 +43,11 @@ endif
 
 ifeq ($(TARGET_OS),mingw32)
 	SERVER_SRCS+=\
+		ports/win32/ufo.rc \
 		ports/win32/q_shwin.c \
 		ports/win32/sys_win.c \
 		ports/win32/conproc.c  \
+		ports/win32/ufo.rc  \
 		ports/win32/net_wins.c
 endif
 
@@ -91,6 +93,13 @@ $(BUILDDIR)/server/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [DED] $<"; \
 		$(CC) $(CFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $<
 
+ifeq ($(TARGET_OS),mingw32)
+# Say how to build .o files from .rc files for this module
+$(BUILDDIR)/server/%.o: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
+	@echo " * [RC ] $<"; \
+		$(WINDRES) -i $< -o $@
+endif
+
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/server/%.m: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [DED] $<"; \
@@ -101,6 +110,12 @@ ifdef BUILDDIR
 $(BUILDDIR)/server/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [DEP] $<"; \
 		$(DEP) $(DEDICATED_CFLAGS)
+
+ifeq ($(TARGET_OS),mingw32)
+$(BUILDDIR)/server/%.d: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
+	@echo " * [DEP] $<"; \
+		$(DEP) $(DEDICATED_CFLAGS)
+endif
 
 $(BUILDDIR)/server/%.d: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
 	@echo " * [DEP] $<"; \
