@@ -67,12 +67,12 @@ int	GetThreadWork (void)
 }
 
 
-void (*workfunction) (int);
+void (*workfunction) (unsigned int);
 
 /**
  * @brief
  */
-void ThreadWorkerFunction (int threadnum)
+void ThreadWorkerFunction (unsigned int threadnum)
 {
 	int		work;
 
