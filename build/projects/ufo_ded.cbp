@@ -9,7 +9,7 @@
 		<Option virtualFolders="" />
 		<Build>
 			<Target title="default">
-				<Option output="..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 			</Target>
@@ -93,50 +93,6 @@
 			<Option target="default" />
 		</Unit>
 		<Unit filename="server\sv_user.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\ports\null\cd_null.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\ports\win32\conproc.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\qcommon\common.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\qcommon\cvar.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\qcommon\md4.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\qcommon\net_chan.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\qcommon\scripts.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\qcommon\unzip.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_ccmds.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_main.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_world.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
