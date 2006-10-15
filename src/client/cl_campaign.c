@@ -3716,6 +3716,7 @@ static void CL_GameNew(void)
 	CL_InitMessageSystem();
 
 	memset(&gd, 0, sizeof(gd));
+	memset(&stats, 0, sizeof(stats));
 	CL_ReadSinglePlayerData();
 
 	/* get campaign */
