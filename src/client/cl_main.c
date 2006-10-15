@@ -221,6 +221,7 @@ void CL_StartSingleplayer(qboolean singleplayer)
 			CL_Disconnect();
 		}
 		Cvar_ForceSet("maxclients", "1");
+		sv_maxclients->modified = qtrue;
 	} else
 		ccs.singleplayer = qfalse;
 }
