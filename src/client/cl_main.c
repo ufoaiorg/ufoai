@@ -221,6 +221,8 @@ void CL_StartSingleplayer(qboolean singleplayer)
 			CL_Disconnect();
 		}
 		Cvar_ForceSet("maxclients", "1");
+		/* this is needed to let 'soldier_select 0' do
+		   the right thing while we are on geoscape */
 		sv_maxclients->modified = qtrue;
 	} else
 		ccs.singleplayer = qfalse;
