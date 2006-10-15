@@ -35,7 +35,7 @@ item plaspistol_ammo
 	{
 		name	"_Charged Pulse"
 		skill 	close
-		projtl	plasmaMiniFlash
+		projtl	plasmaMiniPulse
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
 		firesnd	weapons/plasma_s.wav
@@ -110,7 +110,7 @@ item plasrifle_ammo
 	{
 		name	"_Charged Pulse"
 		skill 	assault
-		projtl	plasmaFlash
+		projtl	plasmaPulse
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
 		firesnd	weapons/plasma_s.wav
