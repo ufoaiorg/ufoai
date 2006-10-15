@@ -1,12 +1,7 @@
 # Some variables needed by the modules
 SRCDIR=src
 
-CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe 
-
-# Check svnversion
-ifdef HAVE_SVNVERSION
-	CFLAGS+=-DSVN=\"`svnversion`\"
-endif
+CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe -DHAVE_SVNVERSION_H
 
 # Common things
 _BUILDDIR=$(strip $(BUILDDIR))
@@ -35,3 +30,4 @@ endif
 ifeq ($(PARANOID),1)
     CFLAGS+=-DPARANOID
 endif
+
