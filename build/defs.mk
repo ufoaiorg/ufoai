@@ -1,7 +1,7 @@
 # Some variables needed by the modules
 SRCDIR=src
 
-CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe
+CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe -DSVN=\"$(REVISION)\"
 
 # Common things
 _BUILDDIR=$(strip $(BUILDDIR))
