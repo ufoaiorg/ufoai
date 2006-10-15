@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-14 17:36+0200\n"
+"POT-Creation-Date: 2006-10-15 19:36+0200\n"
 "PO-Revision-Date: 2006-09-30 14:44-0500\n"
 "Last-Translator: Charles Bedón <snookiex@gmail.com>\n"
 "Language-Team: \n"
@@ -4182,7 +4182,7 @@ msgstr "Cartucho de Subfusil"
 msgid "Full Auto"
 msgstr "Full Automático"
 
-#: ../base/ufos/weapons_human.ufo:370 ../base/ufos/weapons_human.ufo:446
+#: ../base/ufos/weapons_human.ufo:370
 #, fuzzy
 msgid "Riot Shotgun"
 msgstr "Escopeta"
@@ -4195,6 +4195,11 @@ msgstr "Munición de Escopeta"
 #: ../base/ufos/weapons_human.ufo:552
 msgid "Double Shot"
 msgstr "Doble Disparo"
+
+#: ../base/ufos/weapons_human.ufo:446
+#, fuzzy
+msgid "Shotgun"
+msgstr "Escopeta"
 
 #: ../base/ufos/weapons_human.ufo:519
 msgid "Saboted Slugs"
@@ -4979,7 +4984,7 @@ msgstr "Soldado Ascendido"
 msgid "Defense of base: %s successful!"
 msgstr "Defensa  de la base: %s exitosa!"
 
-#: client/cl_campaign.c:3829
+#: client/cl_campaign.c:3830
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -4999,38 +5004,38 @@ msgstr ""
 msgid "Soldier"
 msgstr "Soldados"
 
-#: client/cl_input.c:738
+#: client/cl_input.c:750
 msgid "Toggle stand/crounch"
 msgstr ""
 
-#: client/cl_input.c:739
+#: client/cl_input.c:751
 #, fuzzy
 msgid "Toggle reaction fire"
 msgstr "Cambia Reacción de Disparo"
 
-#: client/cl_input.c:740
+#: client/cl_input.c:752
 msgid "Toogle to next alien"
 msgstr "Cambiar al siguiente extraterrestre"
 
-#: client/cl_input.c:747
+#: client/cl_input.c:759
 #, fuzzy
 msgid "Ends current round"
 msgstr "Terminar Turno"
 
-#: client/cl_input.c:752
+#: client/cl_input.c:764
 #, fuzzy
 msgid "Confirm the current action"
 msgstr "Confirmar Acciones:"
 
-#: client/cl_main.c:324 client/cl_main.c:669
+#: client/cl_main.c:327 client/cl_main.c:672
 msgid "Assemble a team first"
 msgstr "Primero Construya un Equipo"
 
-#: client/cl_main.c:324 client/cl_main.c:669
+#: client/cl_main.c:327 client/cl_main.c:672
 msgid "Error"
 msgstr "Error"
 
-#: client/cl_main.c:609
+#: client/cl_main.c:612
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -5039,80 +5044,80 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:631
+#: client/cl_main.c:634
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Mapa:\t%s\n"
 
-#: client/cl_main.c:633
+#: client/cl_main.c:636
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Versión:\t%s\n"
 
-#: client/cl_main.c:635
+#: client/cl_main.c:638
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Nombre de Servidor:\t%s\n"
 
-#: client/cl_main.c:637
+#: client/cl_main.c:640
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Estados Morales:\t%s\n"
 
-#: client/cl_main.c:639
+#: client/cl_main.c:642
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Juego en Equipo:\t%s\n"
 
-#: client/cl_main.c:641
+#: client/cl_main.c:644
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Máximo de Jugadores por Equipo:\t%s\n"
 
-#: client/cl_main.c:643
+#: client/cl_main.c:646
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Máximo de Clientes:\t%s\n"
 
-#: client/cl_main.c:645
+#: client/cl_main.c:648
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Máximo de Soldados por Jugador:\t%s\n"
 
-#: client/cl_main.c:647
+#: client/cl_main.c:650
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Máximo de Soldados por Equipo:\t%s\n"
 
-#: client/cl_main.c:1240
+#: client/cl_main.c:1245
 msgid "Unnamed"
 msgstr "No Nombrado"
 
-#: client/cl_main.c:1454
+#: client/cl_main.c:1459
 msgid "Chicken-hearted"
 msgstr "Cobarde"
 
-#: client/cl_main.c:1456
+#: client/cl_main.c:1461
 msgid "Very Easy"
 msgstr "Muy Fácil"
 
-#: client/cl_main.c:1459
+#: client/cl_main.c:1464
 msgid "Easy"
 msgstr "Fácil"
 
-#: client/cl_main.c:1461
+#: client/cl_main.c:1466
 msgid "Normal"
 msgstr "Normal"
 
-#: client/cl_main.c:1464
+#: client/cl_main.c:1469
 msgid "Hard"
 msgstr "Difícil"
 
-#: client/cl_main.c:1466
+#: client/cl_main.c:1471
 msgid "Very Hard"
 msgstr "Muy Difícil"
 
-#: client/cl_main.c:1468
+#: client/cl_main.c:1473
 msgid "Insane"
 msgstr "Loco de Remate"
 

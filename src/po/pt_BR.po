@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO-AI\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-14 17:36+0200\n"
+"POT-Creation-Date: 2006-10-15 19:36+0200\n"
 "PO-Revision-Date: 2006-07-12 22:50-0300\n"
 "Last-Translator: Arthur Nascimento <tureba@gmail.com>\n"
 "Language-Team: \n"
@@ -3253,7 +3253,7 @@ msgstr "Pente de Metralhadora"
 msgid "Full Auto"
 msgstr "Automático Completo"
 
-#: ../base/ufos/weapons_human.ufo:370 ../base/ufos/weapons_human.ufo:446
+#: ../base/ufos/weapons_human.ufo:370
 #, fuzzy
 msgid "Riot Shotgun"
 msgstr "Espingarda"
@@ -3266,6 +3266,11 @@ msgstr "Cartuchos"
 #: ../base/ufos/weapons_human.ufo:552
 msgid "Double Shot"
 msgstr "Tiro Duplo"
+
+#: ../base/ufos/weapons_human.ufo:446
+#, fuzzy
+msgid "Shotgun"
+msgstr "Espingarda"
 
 #: ../base/ufos/weapons_human.ufo:519
 msgid "Saboted Slugs"
@@ -4053,7 +4058,7 @@ msgstr "Soldado promovido"
 msgid "Defense of base: %s successful!"
 msgstr ""
 
-#: client/cl_campaign.c:3829
+#: client/cl_campaign.c:3830
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -4072,38 +4077,38 @@ msgstr ""
 msgid "Soldier"
 msgstr "Soldado 8"
 
-#: client/cl_input.c:738
+#: client/cl_input.c:750
 msgid "Toggle stand/crounch"
 msgstr ""
 
-#: client/cl_input.c:739
+#: client/cl_input.c:751
 #, fuzzy
 msgid "Toggle reaction fire"
 msgstr "Alternar reação ao fogo"
 
-#: client/cl_input.c:740
+#: client/cl_input.c:752
 msgid "Toogle to next alien"
 msgstr ""
 
-#: client/cl_input.c:747
+#: client/cl_input.c:759
 #, fuzzy
 msgid "Ends current round"
 msgstr "Terminar o turno"
 
-#: client/cl_input.c:752
+#: client/cl_input.c:764
 #, fuzzy
 msgid "Confirm the current action"
 msgstr "Confirmar Ações:"
 
-#: client/cl_main.c:324 client/cl_main.c:669
+#: client/cl_main.c:327 client/cl_main.c:672
 msgid "Assemble a team first"
 msgstr "Monte uma equipe primeiro"
 
-#: client/cl_main.c:324 client/cl_main.c:669
+#: client/cl_main.c:327 client/cl_main.c:672
 msgid "Error"
 msgstr "Erro"
 
-#: client/cl_main.c:609
+#: client/cl_main.c:612
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -4112,83 +4117,83 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:631
+#: client/cl_main.c:634
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Mapa:\t%s\n"
 
-#: client/cl_main.c:633
+#: client/cl_main.c:636
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Versão:\t%s\n"
 
-#: client/cl_main.c:635
+#: client/cl_main.c:638
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Nome do servidor:\t%s\n"
 
-#: client/cl_main.c:637
+#: client/cl_main.c:640
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Estados de moral:\t%s\n"
 
-#: client/cl_main.c:639
+#: client/cl_main.c:642
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Jogo de Equipes:\t%s\n"
 
-#: client/cl_main.c:641
+#: client/cl_main.c:644
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Máx. de jogadores por time:\t%s\n"
 
-#: client/cl_main.c:643
+#: client/cl_main.c:646
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Máx. de jogadores:\t%s\n"
 
-#: client/cl_main.c:645
+#: client/cl_main.c:648
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Máx. de soldados por jogador:\t%s\n"
 
-#: client/cl_main.c:647
+#: client/cl_main.c:650
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Máx de soldados por time:\t%s\n"
 
-#: client/cl_main.c:1240
+#: client/cl_main.c:1245
 #, fuzzy
 msgid "Unnamed"
 msgstr "sem nome"
 
-#: client/cl_main.c:1454
+#: client/cl_main.c:1459
 msgid "Chicken-hearted"
 msgstr ""
 
-#: client/cl_main.c:1456
+#: client/cl_main.c:1461
 msgid "Very Easy"
 msgstr ""
 
-#: client/cl_main.c:1459
+#: client/cl_main.c:1464
 msgid "Easy"
 msgstr ""
 
-#: client/cl_main.c:1461
+#: client/cl_main.c:1466
 #, fuzzy
 msgid "Normal"
 msgstr "normal"
 
-#: client/cl_main.c:1464
+#: client/cl_main.c:1469
 #, fuzzy
 msgid "Hard"
 msgstr "Hangar"
 
-#: client/cl_main.c:1466
+#: client/cl_main.c:1471
 msgid "Very Hard"
 msgstr ""
 
-#: client/cl_main.c:1468
+#: client/cl_main.c:1473
 #, fuzzy
 msgid "Insane"
 msgstr "sem nome"

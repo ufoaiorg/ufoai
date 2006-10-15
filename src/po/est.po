@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-14 17:36+0200\n"
+"POT-Creation-Date: 2006-10-15 19:36+0200\n"
 "PO-Revision-Date: 2006-08-06 17:20+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -3839,7 +3839,7 @@ msgstr "SMG-68 salv"
 msgid "Full Auto"
 msgstr "Täis Valang"
 
-#: ../base/ufos/weapons_human.ufo:370 ../base/ufos/weapons_human.ufo:446
+#: ../base/ufos/weapons_human.ufo:370
 #, fuzzy
 msgid "Riot Shotgun"
 msgstr "Pumppüss SG-260"
@@ -3852,6 +3852,11 @@ msgstr "Haavlid"
 #: ../base/ufos/weapons_human.ufo:552
 msgid "Double Shot"
 msgstr "Kahekordne lask"
+
+#: ../base/ufos/weapons_human.ufo:446
+#, fuzzy
+msgid "Shotgun"
+msgstr "Pumppüss SG-260"
 
 #: ../base/ufos/weapons_human.ufo:519
 msgid "Saboted Slugs"
@@ -4640,7 +4645,7 @@ msgstr "Sõdur sai ametikõrgendust"
 msgid "Defense of base: %s successful!"
 msgstr ""
 
-#: client/cl_campaign.c:3829
+#: client/cl_campaign.c:3830
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -4660,38 +4665,38 @@ msgstr ""
 msgid "Soldier"
 msgstr "Sõdur 8"
 
-#: client/cl_input.c:738
+#: client/cl_input.c:750
 msgid "Toggle stand/crounch"
 msgstr ""
 
-#: client/cl_input.c:739
+#: client/cl_input.c:751
 #, fuzzy
 msgid "Toggle reaction fire"
 msgstr "Käivita reaktsioon tulistamine"
 
-#: client/cl_input.c:740
+#: client/cl_input.c:752
 msgid "Toogle to next alien"
 msgstr ""
 
-#: client/cl_input.c:747
+#: client/cl_input.c:759
 #, fuzzy
 msgid "Ends current round"
 msgstr "Lõpeta round"
 
-#: client/cl_input.c:752
+#: client/cl_input.c:764
 #, fuzzy
 msgid "Confirm the current action"
 msgstr "Kinnita tegevust:"
 
-#: client/cl_main.c:324 client/cl_main.c:669
+#: client/cl_main.c:327 client/cl_main.c:672
 msgid "Assemble a team first"
 msgstr "Kogu tiim enne"
 
-#: client/cl_main.c:324 client/cl_main.c:669
+#: client/cl_main.c:327 client/cl_main.c:672
 msgid "Error"
 msgstr "VIGA"
 
-#: client/cl_main.c:609
+#: client/cl_main.c:612
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -4700,81 +4705,81 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:631
+#: client/cl_main.c:634
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Kaart:\t%s\n"
 
-#: client/cl_main.c:633
+#: client/cl_main.c:636
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Versioon:\t%s\n"
 
-#: client/cl_main.c:635
+#: client/cl_main.c:638
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Serverinimi:\t%s\n"
 
-#: client/cl_main.c:637
+#: client/cl_main.c:640
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Meeleseisundid:\t%s\n"
 
-#: client/cl_main.c:639
+#: client/cl_main.c:642
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Tiimimäng:\t%s\n"
 
-#: client/cl_main.c:641
+#: client/cl_main.c:644
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Maksimum mängijaid ühe tiimi kohta: \t%s\n"
 
-#: client/cl_main.c:643
+#: client/cl_main.c:646
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Maksimum kliente:\t%s\n"
 
-#: client/cl_main.c:645
+#: client/cl_main.c:648
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Maksimum sõdureid mängija kohta:\t%s\n"
 
-#: client/cl_main.c:647
+#: client/cl_main.c:650
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maks. Sõdureid ühe tiimi kohta:\t%s\n"
 
-#: client/cl_main.c:1240
+#: client/cl_main.c:1245
 #, fuzzy
 msgid "Unnamed"
 msgstr "Nimetu"
 
-#: client/cl_main.c:1454
+#: client/cl_main.c:1459
 msgid "Chicken-hearted"
 msgstr "Kartlik"
 
-#: client/cl_main.c:1456
+#: client/cl_main.c:1461
 msgid "Very Easy"
 msgstr "Väga kerge"
 
-#: client/cl_main.c:1459
+#: client/cl_main.c:1464
 msgid "Easy"
 msgstr "Kerge"
 
-#: client/cl_main.c:1461
+#: client/cl_main.c:1466
 msgid "Normal"
 msgstr "Tavaline"
 
-#: client/cl_main.c:1464
+#: client/cl_main.c:1469
 msgid "Hard"
 msgstr "Raske"
 
-#: client/cl_main.c:1466
+#: client/cl_main.c:1471
 msgid "Very Hard"
 msgstr "Väga Raske"
 
-#: client/cl_main.c:1468
+#: client/cl_main.c:1473
 msgid "Insane"
 msgstr "Hullumeelne"
 
