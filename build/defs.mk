@@ -1,7 +1,12 @@
 # Some variables needed by the modules
 SRCDIR=src
 
-CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe -DSVN=\"$(REVISION)\"
+CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe 
+
+# Check svnversion
+ifdef HAVE_SVNVERSION
+	CFLAGS+=-DSVN=\"`svnversion`\"
+endif
 
 # Common things
 _BUILDDIR=$(strip $(BUILDDIR))

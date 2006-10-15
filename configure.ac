@@ -160,16 +160,7 @@ AC_MSG_RESULT($TARGET_CPU)
 # CHECK SVN version
 #---------------------------------------------------------------------------------------------
 
-AC_CHECK_PROG(HAVE_SVN,svnversion,yes)
-if test $HAVE_SVN = "yes"
-then
-	AC_MSG_CHECKING([revision])
-	REV=`svnversion`
-	AC_MSG_RESULT([$REV])
-	AC_SUBST([REVISION],[$REV])
-else
-	AC_SUBST([REVISION],[unknown])
-fi
+AC_CHECK_PROG(HAVE_SVNVERSION,svnversion,yes)
 
 #---------------------------------------------------------------------------------------------
 # CHECK CC

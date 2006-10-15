@@ -309,7 +309,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os HAVE_SED HAVE_ECHO TARGET_OS TARGET_CPU HAVE_SVN REVISION CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT HAVE_RM HAVE_MKDIR HAVE_WINDRES WINDRES CPP EGREP HAVE_SDL_CONFIG SDL_CFLAGS SDL_LIBS HAVE_SDL HAVE_SND_SDL HAVE_VID_GLX HAVE_SHADERS HAVE_SND_ALSA HAVE_SND_OSS HAVE_ARTSC_CONFIG HAVE_SND_ARTS ARTS_CFLAGS ARTS_LIBS HAVE_SND_WAPI HAVE_SND_DX HAVE_VID_DGA HAVE_VID_VIDMODE BUILD_DEDICATED BUILD_UFO2MAP BUILD_QDATA BUILD_DEBUG PARANOID PROFILING EXE_EXT LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os HAVE_SED HAVE_ECHO TARGET_OS TARGET_CPU HAVE_SVNVERSION CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT HAVE_RM HAVE_MKDIR HAVE_WINDRES WINDRES CPP EGREP HAVE_SDL_CONFIG SDL_CFLAGS SDL_LIBS HAVE_SDL HAVE_SND_SDL HAVE_VID_GLX HAVE_SHADERS HAVE_SND_ALSA HAVE_SND_OSS HAVE_ARTSC_CONFIG HAVE_SND_ARTS ARTS_CFLAGS ARTS_LIBS HAVE_SND_WAPI HAVE_SND_DX HAVE_VID_DGA HAVE_VID_VIDMODE BUILD_DEDICATED BUILD_UFO2MAP BUILD_QDATA BUILD_DEBUG PARANOID PROFILING EXE_EXT LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -1789,11 +1789,11 @@ echo "${ECHO_T}$TARGET_CPU" >&6
 set dummy svnversion; ac_word=$2
 echo "$as_me:$LINENO: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
-if test "${ac_cv_prog_HAVE_SVN+set}" = set; then
+if test "${ac_cv_prog_HAVE_SVNVERSION+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  if test -n "$HAVE_SVN"; then
-  ac_cv_prog_HAVE_SVN="$HAVE_SVN" # Let the user override the test.
+  if test -n "$HAVE_SVNVERSION"; then
+  ac_cv_prog_HAVE_SVNVERSION="$HAVE_SVNVERSION" # Let the user override the test.
 else
 as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
 for as_dir in $PATH
@@ -1802,7 +1802,7 @@ do
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
   if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_prog_HAVE_SVN="yes"
+    ac_cv_prog_HAVE_SVNVERSION="yes"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
   fi
@@ -1811,28 +1811,15 @@ done
 
 fi
 fi
-HAVE_SVN=$ac_cv_prog_HAVE_SVN
-if test -n "$HAVE_SVN"; then
-  echo "$as_me:$LINENO: result: $HAVE_SVN" >&5
-echo "${ECHO_T}$HAVE_SVN" >&6
+HAVE_SVNVERSION=$ac_cv_prog_HAVE_SVNVERSION
+if test -n "$HAVE_SVNVERSION"; then
+  echo "$as_me:$LINENO: result: $HAVE_SVNVERSION" >&5
+echo "${ECHO_T}$HAVE_SVNVERSION" >&6
 else
   echo "$as_me:$LINENO: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
-if test $HAVE_SVN = "yes"
-then
-	echo "$as_me:$LINENO: checking revision" >&5
-echo $ECHO_N "checking revision... $ECHO_C" >&6
-	REV=`svnversion`
-	echo "$as_me:$LINENO: result: $REV" >&5
-echo "${ECHO_T}$REV" >&6
-	REVISION=$REV
-
-else
-	REVISION=unknown
-
-fi
 
 #---------------------------------------------------------------------------------------------
 # CHECK CC
@@ -8912,8 +8899,7 @@ s,@HAVE_SED@,$HAVE_SED,;t t
 s,@HAVE_ECHO@,$HAVE_ECHO,;t t
 s,@TARGET_OS@,$TARGET_OS,;t t
 s,@TARGET_CPU@,$TARGET_CPU,;t t
-s,@HAVE_SVN@,$HAVE_SVN,;t t
-s,@REVISION@,$REVISION,;t t
+s,@HAVE_SVNVERSION@,$HAVE_SVNVERSION,;t t
 s,@CC@,$CC,;t t
 s,@CFLAGS@,$CFLAGS,;t t
 s,@LDFLAGS@,$LDFLAGS,;t t
