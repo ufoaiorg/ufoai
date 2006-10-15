@@ -1580,7 +1580,7 @@ float Qcommon_Frame(int msec)
 			/* if there is no server, run server timing at 10fps */
 			sv_timer -= 100;
 		} else {
-			SV_Frame(msec);
+			SV_Frame(sv_timer);
 		}
 	}
 
@@ -1595,8 +1595,8 @@ float Qcommon_Frame(int msec)
 			double frametime;
 			frametime = (cl_timer < 1000 ? cl_timer : 1000);
 			frametime = max(frametime, 1000/(int)cl_maxfps->value);
+			CL_Frame(cl_timer);
 			cl_timer -= frametime;
-			CL_Frame(msec);
 		}
 	}
 
