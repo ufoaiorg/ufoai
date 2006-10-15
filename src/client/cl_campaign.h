@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_CAMPAIGN_H
 
 #define MAX_MISSIONS	255
-#define MAX_MISFIELDS	8
 #define MAX_REQMISSIONS	4
 #define MAX_ACTMISSIONS	16
 #define MAX_SETMISSIONS	16
