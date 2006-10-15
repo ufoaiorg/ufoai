@@ -95,7 +95,7 @@ item chaingun
 item chaingun_ammo
 {
 	name		"_Chaingun Clip"
-	model		weapons/chaingun/chaingun_clip
+	model		weapons/chaingun/chaingun_ammo
 	type		ammo
 	category	0
 	shape		"0 0 1 2"
@@ -375,7 +375,7 @@ item shotgun2
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 4 2"
-	center		"10.4 0 1"
+	center		"0 0 1"
 	scale		1
 	ammo		8
 	reload		20
@@ -443,7 +443,7 @@ item shotgun2_ammo
 // =======================
 item shotgun
 {
-	name		"_Riot Shotgun"
+	name		"_Shotgun"
 	model		weapons/shotgun/shotgun
 	weapon		true
 	type		biggun
