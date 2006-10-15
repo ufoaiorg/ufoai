@@ -1558,10 +1558,9 @@ void CL_ResetActorMoveLength(void) {
  */
 void CL_ActorMouseTrace(void)
 {
-	int i, isometric, restingLevel;
-	float /*d, */cur[2], fov_x, frustumslope[2], projectiondistance = 2048;
+	int i, isometric, restingLevel, intersectionLevel;
+	float cur[2], fov_x, frustumslope[2], projectiondistance = 2048;
 	float nDotP2minusP1, u;
-	/* vec3_t angles; */
 	vec3_t forward, right, up, stop;
 	vec3_t from, end, dir;
 	vec3_t mapNormal, P3, P2minusP1, P3minusP1;
@@ -1571,13 +1570,9 @@ void CL_ActorMouseTrace(void)
 	/* FIXME: r_isometric is not known here, so it is being looked up each time... */
 	isometric = Cvar_VariableValue("r_isometric") != 0;
 
-	/* get camera parameters */
-	/*
-	d = (scr_vrect.width / 2) / tan((FOV / cl.cam.zoom) * M_PI / 360);
-	angles[YAW] = atan((mx * viddef.rx - scr_vrect.width / 2 - scr_vrect.x) / d) * 180 / M_PI;
-	angles[PITCH] = atan((my * viddef.ry - scr_vrect.height / 2 - scr_vrect.y) / d) * 180 / M_PI;
-	angles[ROLL] = 0;
-	*/
+	/* get cursor position as a -1 to +1 range for projection */
+	cur[0] = (mx * viddef.rx - scr_vrect.width * 0.5 - scr_vrect.x) / (scr_vrect.width * 0.5);
+	cur[1] = (my * viddef.ry - scr_vrect.height * 0.5 - scr_vrect.y) / (scr_vrect.height * 0.5);
 
 	/* get trace vectors */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON) {
@@ -1585,18 +1580,19 @@ void CL_ActorMouseTrace(void)
 		if (!(selActor->state & STATE_CROUCHED))
 			from[2] += 10;		/* raise from waist to head */
 		AngleVectors(cl.cam.angles, forward, right, up);
+		/* set the intersection level to that of the selected actor */
+		VecToPos(from, testPos);
+		intersectionLevel = Grid_Fall(&clMap, testPos);
+ 		/* if looking up, raise the intersection level */
+		if (cur[1] < 0.)
+			intersectionLevel++;
 	} else {
 		VectorCopy(cl.cam.camorg, from);
 		VectorCopy(cl.cam.axis[0], forward);
 		VectorCopy(cl.cam.axis[1], right);
 		VectorCopy(cl.cam.axis[2], up);
+		intersectionLevel = cl_worldlevel->value;
 	}
-
-	/* get cursor position as a -1 to +1 range for projection */
-	cur[0] = (mx * viddef.rx - scr_vrect.width * 0.5 - scr_vrect.x) / (scr_vrect.width * 0.5);
-	cur[1] = (my * viddef.ry - scr_vrect.height * 0.5 - scr_vrect.y) / (scr_vrect.height * 0.5);
-
-	/* FIXME: fix isometric scaling so it reacts properly to zoom */
 
 	fov_x = (FOV / cl.cam.zoom);
 	if (isometric)
@@ -1614,7 +1610,7 @@ void CL_ActorMouseTrace(void)
 	if (isometric)
 		VectorMA(stop, -projectiondistance*2, forward, from);
 
-	/* set stop point to the intersection of the trace line with the current world-level plane */
+	/* set stop point to the intersection of the trace line with the desired plane */
 	/* description of maths used:
 	 *   The equation for the plane can be written:
 	 *     mapNormal dot (end - P3) = 0
@@ -1630,8 +1626,8 @@ void CL_ActorMouseTrace(void)
 	 *   The intersection therefore occurs when:
 	 *     u = (mapNormal dot (P3 - P1))/(mapNormal dot (P2 - P1))
 	 * Note: in the code below from & stop represent P1 and P2 respectively
-	 */  
-	VectorSet(P3, 0., 0., cl_worldlevel->value * UNIT_HEIGHT + UNIT_HEIGHT * 0.4);
+	 */
+	VectorSet(P3, 0., 0., intersectionLevel * UNIT_HEIGHT + CURSOR_OFFSET);
 	VectorSet(mapNormal, 0., 0., 1.);
 	VectorSubtract(stop, from, P2minusP1);
 	nDotP2minusP1 = DotProduct(mapNormal, P2minusP1);
@@ -1644,16 +1640,24 @@ void CL_ActorMouseTrace(void)
 		VectorAdd(from, dir, end);
 	} else { /* otherwise do a full trace */
 		CM_EntTestLineDM(from, stop, end);
-		end[2] += UNIT_HEIGHT * 0.4;
 	}
 
 	VecToPos(end, testPos);
 	restingLevel = Grid_Fall(&clMap, testPos);
 
-	/* test if the mouse is out of the world */
+	/* test if the selected grid is out of the world */
 	if (restingLevel < 0)
 		return;
-   
+
+	/* if grid below intersection level, start a trace from the intersection */
+	if (restingLevel < intersectionLevel) {
+		VectorCopy(end, from);
+		from[2] -= CURSOR_OFFSET;
+		CM_EntTestLineDM(from, stop, end);
+		VecToPos(end, testPos);
+		restingLevel = Grid_Fall(&clMap, testPos);
+	}
+
 	Vector2Copy(testPos, mousePos);
 	mousePos[2] = restingLevel;
 
