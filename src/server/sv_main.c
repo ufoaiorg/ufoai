@@ -679,14 +679,8 @@ void SV_Frame(int msec)
 	/* send messages back to the clients that had packets read this frame */
 	SV_SendClientMessages();
 
-	/* save the entire world state if recording a serverdemo */
-	/* SV_RecordDemoMessage (); */
-
 	/* TODO: send a heartbeat to the master if needed */
 	Master_Heartbeat();
-
-	/* clear teleport flags, etc for next frame */
-	/*SV_PrepWorldFrame (); */
 }
 
 /*============================================================================ */

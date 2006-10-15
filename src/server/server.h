@@ -225,10 +225,6 @@ void Master_Packet(void);
 void SV_InitGame(void);
 void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame);
 
-
-/* sv_phys.c */
-void SV_PrepWorldFrame(void);
-
 /* sv_send.c */
 typedef enum { RD_NONE, RD_CLIENT, RD_PACKET } redirect_t;
 
@@ -256,7 +252,6 @@ void SV_Status_f(void);
 
 /* sv_ents.c */
 void SV_WriteFrameToClient(client_t * client, sizebuf_t * msg);
-void SV_RecordDemoMessage(void);
 void SV_BuildClientFrame(client_t * client);
 
 
