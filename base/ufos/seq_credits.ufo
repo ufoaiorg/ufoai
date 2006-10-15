@@ -25,8 +25,8 @@ sequence credits
 	}
 	camera cam1
 	{
-		zoom	1.0
-		angles	"30 225 0"
+		zoom	6.0
+		angles	"30 215 0"
 		dist	100
 	}
 
@@ -95,11 +95,6 @@ sequence credits
 	model mattn_head { omega "0 0 0" }
 	wait 1.0
 
-	rem mattn_body
-	rem mattn_head
-	rem mattn_text
-	rem mattn_name
-
 	2dobj hoehrer_text
 	{
 		text	"_Project leader"
@@ -119,6 +114,11 @@ sequence credits
 
 	model hoehrer_body { anim stand0 speed "0 0 0" }
 	wait 1.8
+
+	rem mattn_body
+	rem mattn_head
+	rem mattn_text
+	rem mattn_name
 
 	model winter_body
 	{
@@ -371,7 +371,6 @@ sequence credits
 		text	"_Ivor Blockley (ubequitz/cassiterite)"
 		pos		"50 75"		align	ul
 		color	"1 1 1 0"	fade	"0 0 0 1"
-
 	}
 	model ubequitz_body { anim stand_still speed "0 0 0" }
 	model ubequitz_head { omega "0 0 0" }
@@ -412,10 +411,6 @@ sequence credits
 	rem ubequitz_text
 	rem ubequitz_name
 
-	// to add additional credits, duplicate this section (including the 4 rems
-	// at the end) and place it above this comment, then search/replace the
-	// relevant names and uncomment the new person's name ("nicknamegoeshere")
-	// in that copy.
 	2dobj tomshackell_text
 	{
 		text	"_Contributing Programmer"
@@ -436,6 +431,61 @@ sequence credits
 	model tomshackell_body { anim stand0 speed "0 0 0" }
 	wait 1.8
 
+	model kaeau_body
+	{
+		model	models/soldiers/male/body.md2
+		anim	walk0
+		origin	"0 -270 0"
+		speed	"0 60 0"
+		angles	"0 90 0"
+	}
+	model kaeau_head
+	{
+		model	models/soldiers/male/head03a.md2
+		parent	kaeau_body
+		tag		tag_head
+	}
+	wait 2.0
+
+	2dobj tomshackell_text { fade "0 0 0 -1" speed "0 60" }
+	2dobj tomshackell_name { fade "0 0 0 -1" speed "0 100" }
+
+	model tomshackell_body { anim walk2 speed "0 50 0" }
+	model tomshackell_head { omega "20 30 0" }
+	wait 1.5
+
+	model kaeau_head { omega "-20 -30 0" }
+	model tomshackell_head { omega "0 0 0" }
+	wait 1.0
+
+	rem tomshackell_body
+	rem tomshackell_head
+	rem tomshackell_text
+	rem tomshackell_name
+
+	// to add additional credits, duplicate this section (including the 4 rems
+	// at the end) and place it above this comment, then search/replace the
+	// relevant names and uncomment the new person's name ("nicknamegoeshere")
+	// in that copy.
+	2dobj kaeau_text
+	{
+		text	"_Contributing Artist and Modeller"
+		pos		"50 50"		align	ul
+		color	"0 1 0 0"	fade	"0 0 0 1"
+	}
+	2dobj kaeau_name
+	{
+		text	"_Philipp Hummer (kaeau) - Nathan : INC :: www.ninc.at"
+		pos		"50 75"		align	ul
+		color	"1 1 1 0"	fade	"0 0 0 1"
+	}
+	model kaeau_body { anim stand_still speed "0 0 0" }
+	model kaeau_head { omega "0 0 0" }
+	wait 0.2
+
+	model kaeau_body { anim stand0 speed "0 0 0" }
+	wait 1.8
+
 	//model nicknamegoeshere_body
 	//{
 	//	model	models/soldiers/male/body.md2
@@ -453,23 +503,21 @@ sequence credits
 	//wait 2.0
 
 
-	2dobj tomshackell_text { fade "0 0 0 -1" speed "0 60" }
-	2dobj tomshackell_name { fade "0 0 0 -1" speed "0 100" }
+	2dobj kaeau_text { fade "0 0 0 -1" speed "0 60" }
+	2dobj kaeau_name { fade "0 0 0 -1" speed "0 100" }
 
-	model tomshackell_body { anim walk2 speed "0 50 0" }
-	model tomshackell_head { omega "20 30 0" }
+	model kaeau_body { anim walk2 speed "0 50 0" }
+	model kaeau_head { omega "20 30 0" }
 	wait 1.5
 
 	//model nicknamegoeshere_head { omega "-20 -30 0" }
-	model tomshackell_head { omega "0 0 0" }
+	model kaeau_head { omega "0 0 0" }
 	wait 1.0
 
-	rem tomshackell_body
-	rem tomshackell_head
-	rem tomshackell_text
-	rem tomshackell_name
-
-
+	rem kaeau_body
+	rem kaeau_head
+	rem kaeau_text
+	rem kaeau_name
 
 	// now begin the original dev team credits
 	2dobj community_driven

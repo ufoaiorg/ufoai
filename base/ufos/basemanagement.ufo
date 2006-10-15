@@ -291,13 +291,14 @@ building building_hospital
 {
 	name		"_Hospital"
 	image		base/hospital
-	fixcosts	750000
+	fixcosts	750
 	depends		building_command // medics need supervision, or...
 	build_time	9
 	varcosts	10000
 	map_name	"hospital"
 	pedia		rs_building_hospital
-	firstbase	false //the luxury of your veterans back in combat costs extra
+	firstbase	true //the luxury of your veterans back in combat costs extra
+	pos			"3 3"
 	more_than_one	true
 	type	    hospital
 	max_employees	10
