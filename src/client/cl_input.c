@@ -358,7 +358,7 @@ float CL_KeyState(kbutton_t * key)
 /*========================================================================== */
 
 const float MIN_ZOOM = 0.5;
-const float MAX_ZOOM = 3.0;
+const float MAX_ZOOM = 20.0;
 
 cvar_t *cl_camrotspeed;
 cvar_t *cl_camrotaccel;
@@ -369,6 +369,8 @@ cvar_t *cl_campitchmax;
 cvar_t *cl_campitchmin;
 cvar_t *cl_campitchspeed;
 cvar_t *cl_camzoomquant;
+cvar_t *cl_camzoommax;
+cvar_t *cl_camzoommin;
 
 cvar_t *cl_anglespeedkey;
 
@@ -421,7 +423,7 @@ void CL_LevelDown(void)
  */
 void CL_ZoomInQuant(void)
 {
-	float quant;
+	float quant, zoom;
 
 	/* no zooming in first person mode */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -438,9 +440,14 @@ void CL_ZoomInQuant(void)
 	/* change zoom */
 	cl.cam.zoom *= quant;
 
+	if (cl_camzoommax->value > MAX_ZOOM)
+		zoom = MAX_ZOOM;
+	else
+		zoom = cl_camzoommax->value;
+
 	/* test boundaris */
-	if (cl.cam.zoom > MAX_ZOOM)
-		cl.cam.zoom = MAX_ZOOM;
+	if (cl.cam.zoom > zoom)
+		cl.cam.zoom = zoom;
 }
 
 /**
@@ -448,7 +455,7 @@ void CL_ZoomInQuant(void)
  */
 void CL_ZoomOutQuant(void)
 {
-	float quant;
+	float quant, zoom;
 
 	/* no zooming in first person mode */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -465,9 +472,14 @@ void CL_ZoomOutQuant(void)
 	/* change zoom */
 	cl.cam.zoom /= quant;
 
+	if (cl_camzoommin->value > MIN_ZOOM)
+		zoom = MIN_ZOOM;
+	else
+		zoom = cl_camzoommin->value;
+
 	/* test boundaries */
-	if (cl.cam.zoom < MIN_ZOOM)
-		cl.cam.zoom = MIN_ZOOM;
+	if (cl.cam.zoom < zoom)
+		cl.cam.zoom = zoom;
 }
 
 /**

@@ -1189,6 +1189,8 @@ void CL_InitLocal(void)
 	cl_campitchmin = Cvar_Get("cl_campitchmin", "35", 0, "Min camera pitch - under 35 presents difficulty positioning cursor");
 	cl_campitchspeed = Cvar_Get("cl_campitchspeed", "0.5", 0, NULL);
 	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.25", 0, NULL);
+	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.5", 0, NULL);
+	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.0", 0, NULL);
 	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, NULL);
 
 	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE, NULL);

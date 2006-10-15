@@ -282,6 +282,8 @@ extern cvar_t *cl_campitchmax;
 extern cvar_t *cl_campitchmin;
 extern cvar_t *cl_campitchspeed;
 extern cvar_t *cl_camzoomquant;
+extern cvar_t *cl_camzoommax;
+extern cvar_t *cl_camzoommin;
 
 extern cvar_t *cl_anglespeedkey;
 
