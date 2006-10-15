@@ -3479,7 +3479,7 @@ void CL_ParseNations(char *name, char **text)
 
 /**
  * @brief Check whether we are in a tactical mission as server or as client
- * @note handles mutliplayer and singleplayer
+ * @note handles multiplayer and singleplayer
  *
  * @return true when we are not in battlefield
  * TODO: Check cvar mn_main for value
