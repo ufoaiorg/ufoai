@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 19:07+0200\n"
+"POT-Creation-Date: 2006-10-16 20:27+0200\n"
 "PO-Revision-Date: 2006-09-23 11:20+0100\n"
 "Last-Translator: Kracken <alloschery@irsamc.ups-tlse.fr>\n"
 "Language-Team: \n"
@@ -2831,7 +2831,8 @@ msgstr ""
 "alienne, les ennemis passeront probablement par là."
 
 #: ../base/ufos/research.ufo:1456
-msgid "b_hangar_txt"
+#, fuzzy
+msgid "b_large_hangar_txt"
 msgstr ""
 "Le Hangar est la zone de stockage et de maintenance des avions de combat "
 "Phalanx. Le Hangar contient tous les outils nécessaires aux ingénieurs pour "
@@ -2850,13 +2851,20 @@ msgid "b_hospital_txt"
 msgstr "b_hospital_txt"
 
 #: ../base/ufos/research.ufo:1486
-msgid "b_intercept_txt"
+#, fuzzy
+msgid "b_small_hangar_txt"
 msgstr ""
-"Les missiles Interceptor sont une défense anti aérienne basique qui protège "
-"la base d'attaque d'OVNI. Les OVNIs essayant d'atterir près de la base "
-"seront pris pour cible et abattus. Bien que les missiles soient une défense "
-"adquate contre les raids légers, ils ne peuvent espérer arrêter les plus "
-"gros OVNIs."
+"Le Hangar est la zone de stockage et de maintenance des avions de combat "
+"Phalanx. Le Hangar contient tous les outils nécessaires aux ingénieurs pour "
+"maintenir les avions dans de parfaites conditions de fonctionnement. La "
+"majeure partie du sol d'un Hangar est occupée par un ascenseur. Quand un "
+"avion doit être lancé, l'ascenseur le remonte jusqu'à la surface avant qu'il "
+"ne décolle. Les portes extérieures du Hangar sont camouflées pour empêcher "
+"sa détection depuis l'espace aérien, réduisant ainsi le risque de découverte "
+"de la base par les Aliens. Cependant, et parce qu'il s'agit d'une des seules "
+"structures qui relie la base avec la surface, le Hangar reste un point "
+"faible dans les défenses de la base. En cas d'attaque, les Aliens entreront "
+"probablement par là. "
 
 #: ../base/ufos/research.ufo:1501
 msgid "b_lab_txt"
@@ -2903,7 +2911,8 @@ msgid "b_teamroom_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1591
-msgid "b_ufo_hangar_txt"
+#, fuzzy
+msgid "b_small_ufo_hangar_txt"
 msgstr ""
 "Le Hangar à OVNI sert à stocker les OVNI. Évidemment il n'est pas bien "
 "pratique de démonter un OVNI sur le champs de bataille où il a été capturé "
@@ -4838,7 +4847,7 @@ msgstr "Fixer soldats par jouer inéfrieur aux soldat par équipe"
 msgid "Settings doesn't make sense"
 msgstr "Les réglages ne sont pas cohérents"
 
-#: client/cl_menu.c:1377
+#: client/cl_menu.c:1382
 #, fuzzy, c-format
 msgid "Key: %s"
 msgstr "Touches clavier"
@@ -5465,6 +5474,14 @@ msgstr "Oui"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "Non"
+
+#~ msgid "b_intercept_txt"
+#~ msgstr ""
+#~ "Les missiles Interceptor sont une défense anti aérienne basique qui "
+#~ "protège la base d'attaque d'OVNI. Les OVNIs essayant d'atterir près de la "
+#~ "base seront pris pour cible et abattus. Bien que les missiles soient une "
+#~ "défense adquate contre les raids légers, ils ne peuvent espérer arrêter "
+#~ "les plus gros OVNIs."
 
 #~ msgid "Damage Types"
 #~ msgstr "Types de Dommages"

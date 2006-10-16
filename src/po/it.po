@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 19:07+0200\n"
+"POT-Creation-Date: 2006-10-16 20:27+0200\n"
 "PO-Revision-Date: 2006-09-30 18:00+0100\n"
 "Last-Translator: DAniele C <sdads@sds.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
@@ -2517,16 +2517,30 @@ msgid "b_entrance_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1456
-msgid "b_hangar_txt"
+#, fuzzy
+msgid "b_large_hangar_txt"
 msgstr ""
+"Gli Antariani hanno raffinato la tecnologia per usare il concetto base del "
+"plasma (gas ionizzato) e perfezionato il suo uso per scopi militari. Non "
+"solo lo usano per le armi, ma sono anche riusciti a creare ionizzatori più "
+"potenti di quanto l'umanità abbia mai immaginato. I tuoi scienziati "
+"potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
+"essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
 #: ../base/ufos/research.ufo:1471
 msgid "b_hospital_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1486
-msgid "b_intercept_txt"
+#, fuzzy
+msgid "b_small_hangar_txt"
 msgstr ""
+"Gli Antariani hanno raffinato la tecnologia per usare il concetto base del "
+"plasma (gas ionizzato) e perfezionato il suo uso per scopi militari. Non "
+"solo lo usano per le armi, ma sono anche riusciti a creare ionizzatori più "
+"potenti di quanto l'umanità abbia mai immaginato. I tuoi scienziati "
+"potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
+"essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
 #: ../base/ufos/research.ufo:1501
 msgid "b_lab_txt"
@@ -2553,7 +2567,7 @@ msgid "b_teamroom_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1591
-msgid "b_ufo_hangar_txt"
+msgid "b_small_ufo_hangar_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1607
@@ -4377,7 +4391,7 @@ msgstr "Soldati del giocatore minori dei soldati della squadra"
 msgid "Settings doesn't make sense"
 msgstr "Le impostazioni non hanno senso"
 
-#: client/cl_menu.c:1377
+#: client/cl_menu.c:1382
 #, fuzzy, c-format
 msgid "Key: %s"
 msgstr "Pulsanti"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 19:07+0200\n"
+"POT-Creation-Date: 2006-10-16 20:27+0200\n"
 "PO-Revision-Date: 2006-09-30 14:44-0500\n"
 "Last-Translator: Charles Bedón <snookiex@gmail.com>\n"
 "Language-Team: \n"
@@ -2987,7 +2987,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1456
 #, fuzzy
-msgid "b_hangar_txt"
+msgid "b_large_hangar_txt"
 msgstr ""
 "The Hangar is where Phalanx combat craft are stored and maintained. The "
 "Hangar is stocked with all the tools the engineers need to keep the craft in "
@@ -3008,12 +3008,17 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1486
 #, fuzzy
-msgid "b_intercept_txt"
+msgid "b_small_hangar_txt"
 msgstr ""
-"Interceptor missiles are a basic anti-air defense that protect the base from "
-"UFO invasions. UFOs trying to land near the base will be targeted and shot "
-"down. Though Interceptor missiles are an adequate defense against light "
-"raids, they cannot hope to stop larger UFOs."
+"The Hangar is where Phalanx combat craft are stored and maintained. The "
+"Hangar is stocked with all the tools the engineers need to keep the craft in "
+"top condition. Most of the Hangar floor is a massive elevator. When a craft "
+"is to be launched, the elevator transports the craft to the surface before "
+"it takes off. The Hangar bay doors are camouflaged, so they can't be spotted "
+"easily from the air, reducing the chance of the base being discovered by the "
+"aliens. However, because it is one of the few structures that links the base "
+"with the surface, the Hangar remains a weak spot in the base's defenses. In "
+"the event of an alien attack, the aliens will likely enter from here."
 
 #: ../base/ufos/research.ufo:1501
 msgid "b_lab_txt"
@@ -3058,7 +3063,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1591
 #, fuzzy
-msgid "b_ufo_hangar_txt"
+msgid "b_small_ufo_hangar_txt"
 msgstr ""
 "The UFO Hangar is where captured UFOs are stored. Obviously, it is not "
 "practical to disassemble a captured UFO on the spot, as it would invite "
@@ -5027,7 +5032,7 @@ msgstr ""
 msgid "Settings doesn't make sense"
 msgstr "La configuración no tiene sentido"
 
-#: client/cl_menu.c:1377
+#: client/cl_menu.c:1382
 #, fuzzy, c-format
 msgid "Key: %s"
 msgstr "Teclas"
@@ -5658,6 +5663,14 @@ msgstr "Sí"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "No"
+
+#, fuzzy
+#~ msgid "b_intercept_txt"
+#~ msgstr ""
+#~ "Interceptor missiles are a basic anti-air defense that protect the base "
+#~ "from UFO invasions. UFOs trying to land near the base will be targeted "
+#~ "and shot down. Though Interceptor missiles are an adequate defense "
+#~ "against light raids, they cannot hope to stop larger UFOs."
 
 #~ msgid "Damage Types"
 #~ msgstr "Tipos de Daños"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 19:07+0200\n"
+"POT-Creation-Date: 2006-10-16 20:27+0200\n"
 "PO-Revision-Date: 2006-08-06 17:20+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -2692,7 +2692,8 @@ msgstr ""
 "sisenevad nad kindlasti siit."
 
 #: ../base/ufos/research.ufo:1456
-msgid "b_hangar_txt"
+#, fuzzy
+msgid "b_large_hangar_txt"
 msgstr ""
 "Hangaaris hoitakse Phalanxi lennumasinaid ja nende jaoks vajalike tööriistu, "
 "et hoida masinad korras. Enamus hangaarist on tohutu lift. Kui Lennumasin "
@@ -2709,12 +2710,15 @@ msgstr ""
 "objekti. "
 
 #: ../base/ufos/research.ufo:1486
-msgid "b_intercept_txt"
+#, fuzzy
+msgid "b_small_hangar_txt"
 msgstr ""
-"Iterceptor raketid on baasi kaitse mis kaitseb baasi UFOde maandumiste eets. "
-"Iga UFO mis üritab maanduda baasi lähedal tulistatakse all. Kuigi "
-"iterceptorid suudavad hakkama saad nõrgemate kallaletungidega, ei saa nad "
-"suurtemate UFOde vastu."
+"Hangaaris hoitakse Phalanxi lennumasinaid ja nende jaoks vajalike tööriistu, "
+"et hoida masinad korras. Enamus hangaarist on tohutu lift. Kui Lennumasin "
+"peab väljuma baasist, viib lift ta maapinnale. Hangaari ukseava on peidetud "
+"ja raskesti märgatav õhust/maapinnalt. Kuigi see on üks väheseid ehitisi mis "
+"ühedavad baasi maapinnaga., seega on see nõrk koht baasi kaitses ja kõige "
+"tõenäolisemalt rünnatakse just sealt baasi baasi rünnaku ajal.  "
 
 #: ../base/ufos/research.ufo:1501
 msgid "b_lab_txt"
@@ -2760,7 +2764,8 @@ msgid "b_teamroom_txt"
 msgstr "<unknow> scrapped or renamed"
 
 #: ../base/ufos/research.ufo:1591
-msgid "b_ufo_hangar_txt"
+#, fuzzy
+msgid "b_small_ufo_hangar_txt"
 msgstr ""
 "Ufo hangaaris hoitakse vallutatud UFOsid. Kuna on ohtlik uurida vallutatud "
 "ufot kohapeal kuna see kutsuks tulnukaid seda tagasi vallutama. Seega pärast "
@@ -4720,7 +4725,7 @@ msgstr "Pane mängitavadid sõdureid vähemaks kui tiimi sõdureid"
 msgid "Settings doesn't make sense"
 msgstr "Seadistused ei ole õiged"
 
-#: client/cl_menu.c:1377
+#: client/cl_menu.c:1382
 #, c-format
 msgid "Key: %s"
 msgstr ""
@@ -5350,6 +5355,13 @@ msgstr "Jah"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "Ei"
+
+#~ msgid "b_intercept_txt"
+#~ msgstr ""
+#~ "Iterceptor raketid on baasi kaitse mis kaitseb baasi UFOde maandumiste "
+#~ "eets. Iga UFO mis üritab maanduda baasi lähedal tulistatakse all. Kuigi "
+#~ "iterceptorid suudavad hakkama saad nõrgemate kallaletungidega, ei saa nad "
+#~ "suurtemate UFOde vastu."
 
 #~ msgid "Damage Types"
 #~ msgstr "Kahju tüübid"

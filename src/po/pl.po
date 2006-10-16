@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 19:07+0200\n"
+"POT-Creation-Date: 2006-10-16 20:27+0200\n"
 "PO-Revision-Date: 2006-06-20 20:48+0100\n"
 "Last-Translator: Piotr Borowiec <ursus250@o2.pl>\n"
 "Language-Team: \n"
@@ -2274,7 +2274,7 @@ msgid "b_entrance_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1456
-msgid "b_hangar_txt"
+msgid "b_large_hangar_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1471
@@ -2282,7 +2282,7 @@ msgid "b_hospital_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1486
-msgid "b_intercept_txt"
+msgid "b_small_hangar_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1501
@@ -2310,7 +2310,7 @@ msgid "b_teamroom_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1591
-msgid "b_ufo_hangar_txt"
+msgid "b_small_ufo_hangar_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1607
@@ -4004,7 +4004,7 @@ msgstr ""
 msgid "Settings doesn't make sense"
 msgstr ""
 
-#: client/cl_menu.c:1377
+#: client/cl_menu.c:1382
 #, c-format
 msgid "Key: %s"
 msgstr ""

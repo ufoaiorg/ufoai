@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 19:07+0200\n"
+"POT-Creation-Date: 2006-10-16 20:27+0200\n"
 "PO-Revision-Date: 2006-10-16 17:57+0100\n"
 "Last-Translator: moe <maui_key@yahoo.de>\n"
 "Language-Team: \n"
@@ -3019,7 +3019,7 @@ msgstr "Hierbei handelt es sich um den Haupteingang zur Basis."
 
 #: ../base/ufos/research.ufo:1456
 #, fuzzy
-msgid "b_hangar_txt"
+msgid "b_large_hangar_txt"
 msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:1471
@@ -3034,8 +3034,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1486
 #, fuzzy
-msgid "b_intercept_txt"
-msgstr "Hangar für Abfangjäger"
+msgid "b_small_hangar_txt"
+msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:1501
 #, fuzzy
@@ -3078,7 +3078,7 @@ msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:1591
 #, fuzzy
-msgid "b_ufo_hangar_txt"
+msgid "b_small_ufo_hangar_txt"
 msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:1607
@@ -5165,7 +5165,7 @@ msgstr "Setze Soldaten pro Spieler niedriger als Soldaten pro Team"
 msgid "Settings doesn't make sense"
 msgstr "Einstellungen ergeben keinen Sinn"
 
-#: client/cl_menu.c:1377
+#: client/cl_menu.c:1382
 #, c-format
 msgid "Key: %s"
 msgstr "Taste: %s"
@@ -5786,6 +5786,10 @@ msgstr "Ja"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "Nein"
+
+#, fuzzy
+#~ msgid "b_intercept_txt"
+#~ msgstr "Hangar für Abfangjäger"
 
 #~ msgid "Damage Types"
 #~ msgstr "Schadensarten"
