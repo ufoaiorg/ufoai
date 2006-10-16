@@ -1453,7 +1453,7 @@ tech rs_building_entrance
 tech rs_building_hangar
 {
 	type	building
-	description	"_b_hangar_txt"
+	description	"_b_large_hangar_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -1483,7 +1483,7 @@ tech rs_building_hospital
 tech rs_building_intercept
 {
 	type	building
-	description	"_b_intercept_txt"
+	description	"_b_small_hangar_txt"
 	up_chapter	buildings
 
 	require_AND
