@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 17:57+0200\n"
+"POT-Creation-Date: 2006-10-16 19:07+0200\n"
 "PO-Revision-Date: 2006-09-30 14:44-0500\n"
 "Last-Translator: Charles Bedón <snookiex@gmail.com>\n"
 "Language-Team: \n"
@@ -1953,14 +1953,6 @@ msgstr "Armas"
 msgid "Armors"
 msgstr "Armadura"
 
-#: ../base/ufos/research.ufo:65
-msgid "Damage Types"
-msgstr "Tipos de Daños"
-
-#: ../base/ufos/research.ufo:66
-msgid "Soldier Skills"
-msgstr "Habilidades del Soldado"
-
 #: ../base/ufos/research.ufo:68
 msgid "Alien Species"
 msgstr "Razas de Extraterrestres"
@@ -2888,253 +2880,70 @@ msgstr ""
 msgid "Blast Damage Type"
 msgstr "Tipo de Daño del Estallido"
 
-#: ../base/ufos/research.ufo:1197
-#, fuzzy
-msgid "blast_damage_txt"
-msgstr ""
-"High-explosive charges, or shrapnel shells or shotgun buckshots. Very easy "
-"to shield against with armor. The weapons with blast damage are usually long "
-"range or thrown (grenades) and almost always cause splash damage. As a rule, "
-"the splash damage is twice as big as point damage for such weapons."
-
 #: ../base/ufos/research.ufo:1206
 msgid "Fire Damage Type"
 msgstr "Tipo de Daño del Fuego"
-
-#: ../base/ufos/research.ufo:1208
-#, fuzzy
-msgid "fire_damage_txt"
-msgstr ""
-"Burns actors, spreads over terrain, lights surroundings (the last two not "
-"yet implemented). Not very dangerous to mechanical actors and to those in "
-"life-support armor. Modern armor fabrics are usually nonflammable, but only "
-"life-support armor protects from the heat, toxic combustion gases and lack "
-"of oxygen."
 
 #: ../base/ufos/research.ufo:1217
 msgid "Laser Damage Type"
 msgstr "Tipo de Daño de Láser"
 
-#: ../base/ufos/research.ufo:1219
-#, fuzzy
-msgid "laser_damage_txt"
-msgstr ""
-"Beam of focused light that pierces armor and burns flesh inside. So "
-"concentrated are the beams that it's hard to block them with any armor, "
-"especially with armor made by the aliens (it appears they didn't use laser "
-"in their own wars). However the punctures are so minute that armor is "
-"considered almost intact even after lethal shots. Laser weapons tend to have "
-"low damage, long range and high accuracy. "
-
 #: ../base/ufos/research.ufo:1233
-msgid "Normal Damage Type"
-msgstr "Tipo de Daño Normal"
-
-#: ../base/ufos/research.ufo:1235
 #, fuzzy
-msgid "normal_damage_txt"
-msgstr ""
-"Normal damage is damage inflicted through impact, solid projectiles or metal "
-"blades. Normal damage usually focuses on applying as large a Newtonian force "
-"on as small an area of the target as possible, causing the target to rupture "
-"at that point. Bullets use this principle, as do knives. Normal damage also "
-"includes a sudden impact, straining the body and causing it to take damage. "
-"In other words, falling from a great height causes Normal damage.Normal "
-"damage can be defended against by distributing the force of the impact "
-"across a large area. A supple yet firm harness suffices for this task. "
+msgid "Impact Damage Type"
+msgstr "Tipo de Daño del Estallido"
 
 #: ../base/ufos/research.ufo:1244 ../base/ufos/research.ufo:1271
 msgid "Shock Damage Type"
 msgstr "Tipo de Daño del Shock"
 
-#: ../base/ufos/research.ufo:1246 ../base/ufos/research.ufo:1273
-#, fuzzy
-msgid "shock_damage_txt"
-msgstr ""
-"High voltage electric shock, harms actors. Electric shock with high voltage "
-"passes even through the most robust armor, leaving only slight burn marks in "
-"the process."
-
 #: ../base/ufos/research.ufo:1255
 msgid "Plasma Damage Type"
 msgstr "Tipo de Daño de Plasma"
-
-#: ../base/ufos/research.ufo:1257
-#, fuzzy
-msgid "plasma_damage_txt"
-msgstr ""
-"Balls and even streams of high-temperature, high-charge plasma that burns "
-"all; even advanced armor. Quite effective against humans in Kevlar Vests and "
-"aliens in weak armor. Diffused very well by any medium and advanced armor, "
-"but burns them quickly, nevertheless. Plasma weapons usually have high "
-"damage, short to middle range and mediocre accuracy."
 
 #: ../base/ufos/research.ufo:1282
 msgid "Stun Damage Type"
 msgstr "Tipo de Daño del Aturdimiento"
 
-#: ../base/ufos/research.ufo:1284
-#, fuzzy
-msgid "stun_damage_txt"
-msgstr ""
-"Stuns biological actors, no effect on mechanical actors and those in life-"
-"support armor. Various methods of stunning are used, for instance, ultra-"
-"high frequency sound waves that temporarily paralyze the nervous system, "
-"injections of very powerful narcotics and drugs, toxic gases of various "
-"kinds. A stunned biological actor is out for several rounds, but if left "
-"alone for too long, will regain consciousness. This should never take less "
-"than three or four turns. "
-
 #: ../base/ufos/research.ufo:1293
 msgid "Tachyon Damage Type"
 msgstr "Tipo de Daño de Taquión"
-
-#: ../base/ufos/research.ufo:1295
-#, fuzzy
-msgid "tachyon_damage_txt"
-msgstr ""
-"A very exotic damage type: beams of faster than light particles, unreliably "
-"but violently reacting with some matter (notably human bodies), bypassing "
-"armor (especially human armor). Tachyon weapons are known for a long time to "
-"aliens, so even the most basic alien armor protects from around one third of "
-"tachyon damage. On the other hand the particles are so exotic that even the "
-"most powerful alien armor cannot offer more this basic protection and only "
-"the most advanced human designs approach that figure. Tachyon weapons are "
-"difficult to produce even for aliens, and they do medium damage, have medium "
-"to long range and decent accuracy."
 
 #: ../base/ufos/research.ufo:1313
 msgid "Accuracy Attribute"
 msgstr "Atributos de Precisión"
 
-#: ../base/ufos/research.ufo:1315
-#, fuzzy
-msgid "accuracy_skill_txt"
-msgstr ""
-"Accuracy represents how good a soldier is at hitting a target. Accuracy is "
-"important for all soldiers who use ranged weapons, but especially so for "
-"snipers, assault weapon specialists and explosive weapon users."
-
 #: ../base/ufos/research.ufo:1324
 msgid "Assault Guns Proficiency"
 msgstr "Habilidad para Pistolas de Asalto"
-
-#: ../base/ufos/research.ufo:1326
-#, fuzzy
-msgid "assault_skill_txt"
-msgstr ""
-"The Assault Guns skill reflects a soldier's proficiency with assault "
-"weapons. The assault skill is a combination of the ability to quickly "
-"identify friend from foe in tight combat situations, and to fire a rifle at "
-"the latter, not the former. Weapons that use the Assault Guns skill tend to "
-"be good all-round weapons, with decent damage, accuracy and rate of fire."
 
 #: ../base/ufos/research.ufo:1335
 msgid "Close Combat Proficiency"
 msgstr "Habilidad del Combate Cuerpo a Cuerpo"
 
-#: ../base/ufos/research.ufo:1337
-#, fuzzy
-msgid "close_skill_txt"
-msgstr ""
-"The Close Combat skill represents a soldier's proficiency with close-range "
-"weapons. A soldier with a high Close Combat skill is better at aiming a "
-"pistol at a fast moving enemy, and can also wield a blade better in combat, "
-"increasing damage. Fire modes affected by the Close Combat skill are always "
-"short range and with relatively low TU costs."
-
 #: ../base/ufos/research.ufo:1346
 msgid "High-Explosives Proficiency"
 msgstr "Habilidad para usar Explosivos"
-
-#: ../base/ufos/research.ufo:1348
-#, fuzzy
-msgid "explosive_skill_txt"
-msgstr ""
-"The High-Explosives skill represents a soldier's ability to use grenades, "
-"and weapons with a splash damage effect (whether caused by a high-explosive "
-"ammunition or any other ammunition, even alien). A soldier with a big High-"
-"Explosives skill is better at landing the charge at the spot where he wants "
-"it: at the feet of the enemy or, if the spot is unreachable, still close "
-"enough to harm him. A soldier trained in this skill will also be more "
-"attuned to a launcher's recoil and more accustomed to its fire trajectory, "
-"increasing accuracy."
 
 #: ../base/ufos/research.ufo:1357
 msgid "Heavy Weapons Proficiency"
 msgstr "Habilidad para Armamento Pesado"
 
-#: ../base/ufos/research.ufo:1359
-#, fuzzy
-msgid "heavy_skill_txt"
-msgstr ""
-"The Heavy Weapons skill affects how well a soldier is able to handle weapons "
-"that weigh a lot or weapons that produce much recoil. Recoil decreases "
-"accuracy tremendously, unless the soldiers is trained to counteract with the "
-"muscles of his arms. Heavy weapons include high stopping power firearms such "
-"as flame throwers and shotguns, as well as many medium and long range heavy "
-"support fire weapons. Fire modes governed by the Heavy Weapons skill always "
-"trade accuracy for damage, but differ in every other characteristics."
-
 #: ../base/ufos/research.ufo:1368
 msgid "Mind Attribute"
 msgstr "Atributos de la Mentalidad"
-
-#: ../base/ufos/research.ufo:1370
-#, fuzzy
-msgid "mind_skill_txt"
-msgstr ""
-"Mind is a representation of the mental training of a soldier. The better "
-"this attribute, the less likely a soldier is to panic, and the better the "
-"soldier is at psionic warfare. Moreover, the use of utility miscellaneous "
-"equipment, as well as mines, depends on this skill. Soldiers with weak minds "
-"should not count on fast promotions."
 
 #: ../base/ufos/research.ufo:1379
 msgid "Power Attribute"
 msgstr "Atributos de Poder"
 
-#: ../base/ufos/research.ufo:1381
-#, fuzzy
-msgid "power_skill_txt"
-msgstr ""
-"Power reflects a soldier's physical strength. A high physical strength is "
-"especially important for soldiers who handle heavy weapons and armor, as "
-"well as soldiers who fight in close quarters. Power directly influences the "
-"damage a soldier can do in melee combat, and how well a soldier is able to "
-"handle a weapon's recoil. Recoil decreases accuracy, so a soldier using a "
-"weapon with a lot of recoil needs strength to keep it pointing in the right "
-"direction when firing.\n"
-"Power also affects soldier's health points (HP) and the amount of equipment "
-"a soldier can carry before he becomes encumbered. An encumbered soldier "
-"suffers a time units (TU) penalty, as well as an accuracy penalty. "
-
 #: ../base/ufos/research.ufo:1390
 msgid "Sniper Rifles Proficiency"
 msgstr "Habilidad para Francotirador"
 
-#: ../base/ufos/research.ufo:1392
-#, fuzzy
-msgid "sniper_skill_txt"
-msgstr ""
-"The Sniper Rifles skill represents a soldier's skill to aim a weapon very "
-"accurately, provided the weapon is designed for that. Most weapons used with "
-"that skill are indeed sniper rifles, but there are exceptions --- long "
-"range, high accuracy fire mode of any weapon is bound to require Sniper "
-"Rifles skill."
-
 #: ../base/ufos/research.ufo:1401
 msgid "Speed Attribute"
 msgstr "Atributos de Velocidad"
-
-#: ../base/ufos/research.ufo:1403
-msgid "speed_skill_txt"
-msgstr ""
-"La velocidad representa que tan rápido se puede mover un soldado. Los "
-"atributos solamente afectan cuantas UT (unidades de tiempo) tiene un "
-"soldado. Sin embargo, se podría decir que las unidades de tiempo es la "
-"característica más importante para la sobrevivencia de un soldado, así que "
-"el atributo de velocidad no debería ser subestimado."
 
 #: ../base/ufos/research.ufo:1416
 #, fuzzy
@@ -5849,6 +5658,188 @@ msgstr "Sí"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "No"
+
+#~ msgid "Damage Types"
+#~ msgstr "Tipos de Daños"
+
+#~ msgid "Soldier Skills"
+#~ msgstr "Habilidades del Soldado"
+
+#, fuzzy
+#~ msgid "blast_damage_txt"
+#~ msgstr ""
+#~ "High-explosive charges, or shrapnel shells or shotgun buckshots. Very "
+#~ "easy to shield against with armor. The weapons with blast damage are "
+#~ "usually long range or thrown (grenades) and almost always cause splash "
+#~ "damage. As a rule, the splash damage is twice as big as point damage for "
+#~ "such weapons."
+
+#, fuzzy
+#~ msgid "fire_damage_txt"
+#~ msgstr ""
+#~ "Burns actors, spreads over terrain, lights surroundings (the last two not "
+#~ "yet implemented). Not very dangerous to mechanical actors and to those in "
+#~ "life-support armor. Modern armor fabrics are usually nonflammable, but "
+#~ "only life-support armor protects from the heat, toxic combustion gases "
+#~ "and lack of oxygen."
+
+#, fuzzy
+#~ msgid "laser_damage_txt"
+#~ msgstr ""
+#~ "Beam of focused light that pierces armor and burns flesh inside. So "
+#~ "concentrated are the beams that it's hard to block them with any armor, "
+#~ "especially with armor made by the aliens (it appears they didn't use "
+#~ "laser in their own wars). However the punctures are so minute that armor "
+#~ "is considered almost intact even after lethal shots. Laser weapons tend "
+#~ "to have low damage, long range and high accuracy. "
+
+#~ msgid "Normal Damage Type"
+#~ msgstr "Tipo de Daño Normal"
+
+#, fuzzy
+#~ msgid "normal_damage_txt"
+#~ msgstr ""
+#~ "Normal damage is damage inflicted through impact, solid projectiles or "
+#~ "metal blades. Normal damage usually focuses on applying as large a "
+#~ "Newtonian force on as small an area of the target as possible, causing "
+#~ "the target to rupture at that point. Bullets use this principle, as do "
+#~ "knives. Normal damage also includes a sudden impact, straining the body "
+#~ "and causing it to take damage. In other words, falling from a great "
+#~ "height causes Normal damage.Normal damage can be defended against by "
+#~ "distributing the force of the impact across a large area. A supple yet "
+#~ "firm harness suffices for this task. "
+
+#, fuzzy
+#~ msgid "shock_damage_txt"
+#~ msgstr ""
+#~ "High voltage electric shock, harms actors. Electric shock with high "
+#~ "voltage passes even through the most robust armor, leaving only slight "
+#~ "burn marks in the process."
+
+#, fuzzy
+#~ msgid "plasma_damage_txt"
+#~ msgstr ""
+#~ "Balls and even streams of high-temperature, high-charge plasma that burns "
+#~ "all; even advanced armor. Quite effective against humans in Kevlar Vests "
+#~ "and aliens in weak armor. Diffused very well by any medium and advanced "
+#~ "armor, but burns them quickly, nevertheless. Plasma weapons usually have "
+#~ "high damage, short to middle range and mediocre accuracy."
+
+#, fuzzy
+#~ msgid "stun_damage_txt"
+#~ msgstr ""
+#~ "Stuns biological actors, no effect on mechanical actors and those in life-"
+#~ "support armor. Various methods of stunning are used, for instance, ultra-"
+#~ "high frequency sound waves that temporarily paralyze the nervous system, "
+#~ "injections of very powerful narcotics and drugs, toxic gases of various "
+#~ "kinds. A stunned biological actor is out for several rounds, but if left "
+#~ "alone for too long, will regain consciousness. This should never take "
+#~ "less than three or four turns. "
+
+#, fuzzy
+#~ msgid "tachyon_damage_txt"
+#~ msgstr ""
+#~ "A very exotic damage type: beams of faster than light particles, "
+#~ "unreliably but violently reacting with some matter (notably human "
+#~ "bodies), bypassing armor (especially human armor). Tachyon weapons are "
+#~ "known for a long time to aliens, so even the most basic alien armor "
+#~ "protects from around one third of tachyon damage. On the other hand the "
+#~ "particles are so exotic that even the most powerful alien armor cannot "
+#~ "offer more this basic protection and only the most advanced human designs "
+#~ "approach that figure. Tachyon weapons are difficult to produce even for "
+#~ "aliens, and they do medium damage, have medium to long range and decent "
+#~ "accuracy."
+
+#, fuzzy
+#~ msgid "accuracy_skill_txt"
+#~ msgstr ""
+#~ "Accuracy represents how good a soldier is at hitting a target. Accuracy "
+#~ "is important for all soldiers who use ranged weapons, but especially so "
+#~ "for snipers, assault weapon specialists and explosive weapon users."
+
+#, fuzzy
+#~ msgid "assault_skill_txt"
+#~ msgstr ""
+#~ "The Assault Guns skill reflects a soldier's proficiency with assault "
+#~ "weapons. The assault skill is a combination of the ability to quickly "
+#~ "identify friend from foe in tight combat situations, and to fire a rifle "
+#~ "at the latter, not the former. Weapons that use the Assault Guns skill "
+#~ "tend to be good all-round weapons, with decent damage, accuracy and rate "
+#~ "of fire."
+
+#, fuzzy
+#~ msgid "close_skill_txt"
+#~ msgstr ""
+#~ "The Close Combat skill represents a soldier's proficiency with close-"
+#~ "range weapons. A soldier with a high Close Combat skill is better at "
+#~ "aiming a pistol at a fast moving enemy, and can also wield a blade better "
+#~ "in combat, increasing damage. Fire modes affected by the Close Combat "
+#~ "skill are always short range and with relatively low TU costs."
+
+#, fuzzy
+#~ msgid "explosive_skill_txt"
+#~ msgstr ""
+#~ "The High-Explosives skill represents a soldier's ability to use grenades, "
+#~ "and weapons with a splash damage effect (whether caused by a high-"
+#~ "explosive ammunition or any other ammunition, even alien). A soldier with "
+#~ "a big High-Explosives skill is better at landing the charge at the spot "
+#~ "where he wants it: at the feet of the enemy or, if the spot is "
+#~ "unreachable, still close enough to harm him. A soldier trained in this "
+#~ "skill will also be more attuned to a launcher's recoil and more "
+#~ "accustomed to its fire trajectory, increasing accuracy."
+
+#, fuzzy
+#~ msgid "heavy_skill_txt"
+#~ msgstr ""
+#~ "The Heavy Weapons skill affects how well a soldier is able to handle "
+#~ "weapons that weigh a lot or weapons that produce much recoil. Recoil "
+#~ "decreases accuracy tremendously, unless the soldiers is trained to "
+#~ "counteract with the muscles of his arms. Heavy weapons include high "
+#~ "stopping power firearms such as flame throwers and shotguns, as well as "
+#~ "many medium and long range heavy support fire weapons. Fire modes "
+#~ "governed by the Heavy Weapons skill always trade accuracy for damage, but "
+#~ "differ in every other characteristics."
+
+#, fuzzy
+#~ msgid "mind_skill_txt"
+#~ msgstr ""
+#~ "Mind is a representation of the mental training of a soldier. The better "
+#~ "this attribute, the less likely a soldier is to panic, and the better the "
+#~ "soldier is at psionic warfare. Moreover, the use of utility miscellaneous "
+#~ "equipment, as well as mines, depends on this skill. Soldiers with weak "
+#~ "minds should not count on fast promotions."
+
+#, fuzzy
+#~ msgid "power_skill_txt"
+#~ msgstr ""
+#~ "Power reflects a soldier's physical strength. A high physical strength is "
+#~ "especially important for soldiers who handle heavy weapons and armor, as "
+#~ "well as soldiers who fight in close quarters. Power directly influences "
+#~ "the damage a soldier can do in melee combat, and how well a soldier is "
+#~ "able to handle a weapon's recoil. Recoil decreases accuracy, so a soldier "
+#~ "using a weapon with a lot of recoil needs strength to keep it pointing in "
+#~ "the right direction when firing.\n"
+#~ "Power also affects soldier's health points (HP) and the amount of "
+#~ "equipment a soldier can carry before he becomes encumbered. An encumbered "
+#~ "soldier suffers a time units (TU) penalty, as well as an accuracy "
+#~ "penalty. "
+
+#, fuzzy
+#~ msgid "sniper_skill_txt"
+#~ msgstr ""
+#~ "The Sniper Rifles skill represents a soldier's skill to aim a weapon very "
+#~ "accurately, provided the weapon is designed for that. Most weapons used "
+#~ "with that skill are indeed sniper rifles, but there are exceptions --- "
+#~ "long range, high accuracy fire mode of any weapon is bound to require "
+#~ "Sniper Rifles skill."
+
+#~ msgid "speed_skill_txt"
+#~ msgstr ""
+#~ "La velocidad representa que tan rápido se puede mover un soldado. Los "
+#~ "atributos solamente afectan cuantas UT (unidades de tiempo) tiene un "
+#~ "soldado. Sin embargo, se podría decir que las unidades de tiempo es la "
+#~ "característica más importante para la sobrevivencia de un soldado, así "
+#~ "que el atributo de velocidad no debería ser subestimado."
 
 #, fuzzy
 #~ msgid "Dropship Hangar"

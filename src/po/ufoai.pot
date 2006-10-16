@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 17:57+0200\n"
+"POT-Creation-Date: 2006-10-16 19:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.ufo.po (UFO Alien Invasion)  #-#-#-#-#\n"
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: http://www.sourceforge.net/projects/ufoai/\n"
-"POT-Creation-Date: 2006-10-16 17:57+0200\n"
+"POT-Creation-Date: 2006-10-16 19:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1922,14 +1922,6 @@ msgstr ""
 msgid "Armors"
 msgstr ""
 
-#: ../base/ufos/research.ufo:65
-msgid "Damage Types"
-msgstr ""
-
-#: ../base/ufos/research.ufo:66
-msgid "Soldier Skills"
-msgstr ""
-
 #: ../base/ufos/research.ufo:68
 msgid "Alien Species"
 msgstr ""
@@ -2222,136 +2214,68 @@ msgstr ""
 msgid "Blast Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1197
-msgid "blast_damage_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1206
 msgid "Fire Damage Type"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1208
-msgid "fire_damage_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1217
 msgid "Laser Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1219
-msgid "laser_damage_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1233
-msgid "Normal Damage Type"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1235
-msgid "normal_damage_txt"
+msgid "Impact Damage Type"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1244 ../base/ufos/research.ufo:1271
 msgid "Shock Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1246 ../base/ufos/research.ufo:1273
-msgid "shock_damage_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1255
 msgid "Plasma Damage Type"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1257
-msgid "plasma_damage_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1282
 msgid "Stun Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1284
-msgid "stun_damage_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1293
 msgid "Tachyon Damage Type"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1295
-msgid "tachyon_damage_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1313
 msgid "Accuracy Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1315
-msgid "accuracy_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1324
 msgid "Assault Guns Proficiency"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1326
-msgid "assault_skill_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1335
 msgid "Close Combat Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1337
-msgid "close_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1346
 msgid "High-Explosives Proficiency"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1348
-msgid "explosive_skill_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1357
 msgid "Heavy Weapons Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1359
-msgid "heavy_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1368
 msgid "Mind Attribute"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1370
-msgid "mind_skill_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1379
 msgid "Power Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1381
-msgid "power_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1390
 msgid "Sniper Rifles Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1392
-msgid "sniper_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1401
 msgid "Speed Attribute"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1403
-msgid "speed_skill_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1416

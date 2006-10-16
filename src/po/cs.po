@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 17:57+0200\n"
+"POT-Creation-Date: 2006-10-16 19:07+0200\n"
 "PO-Revision-Date: 2006-05-25 22:19+0200\n"
 "Last-Translator: Karel Volný <kavol@seznam.cz>\n"
 "Language-Team:  <cs@li.org>\n"
@@ -2025,15 +2025,6 @@ msgstr "Zbraně"
 msgid "Armors"
 msgstr "Zbroje"
 
-#: ../base/ufos/research.ufo:65
-msgid "Damage Types"
-msgstr ""
-
-#: ../base/ufos/research.ufo:66
-#, fuzzy
-msgid "Soldier Skills"
-msgstr "Voják 8"
-
 #: ../base/ufos/research.ufo:68
 msgid "Alien Species"
 msgstr "Cizácké druhy"
@@ -2353,80 +2344,38 @@ msgstr ""
 msgid "Blast Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1197
-#, fuzzy
-msgid "blast_damage_txt"
-msgstr "plasma"
-
 #: ../base/ufos/research.ufo:1206
 msgid "Fire Damage Type"
 msgstr ""
-
-#: ../base/ufos/research.ufo:1208
-#, fuzzy
-msgid "fire_damage_txt"
-msgstr "plasma"
 
 #: ../base/ufos/research.ufo:1217
 msgid "Laser Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1219
-#, fuzzy
-msgid "laser_damage_txt"
-msgstr "plasma"
-
 #: ../base/ufos/research.ufo:1233
-msgid "Normal Damage Type"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1235
 #, fuzzy
-msgid "normal_damage_txt"
-msgstr "plasma"
+msgid "Impact Damage Type"
+msgstr "Plasmové ostří"
 
 #: ../base/ufos/research.ufo:1244 ../base/ufos/research.ufo:1271
 msgid "Shock Damage Type"
 msgstr ""
-
-#: ../base/ufos/research.ufo:1246 ../base/ufos/research.ufo:1273
-#, fuzzy
-msgid "shock_damage_txt"
-msgstr "plasma"
 
 #: ../base/ufos/research.ufo:1255
 #, fuzzy
 msgid "Plasma Damage Type"
 msgstr "Plasmové ostří"
 
-#: ../base/ufos/research.ufo:1257
-#, fuzzy
-msgid "plasma_damage_txt"
-msgstr "plasma"
-
 #: ../base/ufos/research.ufo:1282
 msgid "Stun Damage Type"
 msgstr ""
-
-#: ../base/ufos/research.ufo:1284
-#, fuzzy
-msgid "stun_damage_txt"
-msgstr "plasma"
 
 #: ../base/ufos/research.ufo:1293
 msgid "Tachyon Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1295
-msgid "tachyon_damage_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1313
 msgid "Accuracy Attribute"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1315
-msgid "accuracy_skill_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1324
@@ -2434,51 +2383,27 @@ msgstr ""
 msgid "Assault Guns Proficiency"
 msgstr "Útočné pušky:"
 
-#: ../base/ufos/research.ufo:1326
-msgid "assault_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1335
 #, fuzzy
 msgid "Close Combat Proficiency"
 msgstr "Boj zblízka:"
-
-#: ../base/ufos/research.ufo:1337
-msgid "close_skill_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1346
 #, fuzzy
 msgid "High-Explosives Proficiency"
 msgstr "Vysocevýbušná raketa"
 
-#: ../base/ufos/research.ufo:1348
-msgid "explosive_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1357
 #, fuzzy
 msgid "Heavy Weapons Proficiency"
 msgstr "Těžké zbraně:"
 
-#: ../base/ufos/research.ufo:1359
-msgid "heavy_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1368
 msgid "Mind Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1370
-msgid "mind_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1379
 msgid "Power Attribute"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1381
-msgid "power_skill_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1390
@@ -2486,18 +2411,10 @@ msgstr ""
 msgid "Sniper Rifles Proficiency"
 msgstr "Zásobník ostřelovačské pušky"
 
-#: ../base/ufos/research.ufo:1392
-msgid "sniper_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1401
 #, fuzzy
 msgid "Speed Attribute"
 msgstr "Zrychlit čas"
-
-#: ../base/ufos/research.ufo:1403
-msgid "speed_skill_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1416
 msgid "b_aliencontainment_txt"
@@ -4969,6 +4886,38 @@ msgstr "Ano"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "Ne"
+
+#, fuzzy
+#~ msgid "Soldier Skills"
+#~ msgstr "Voják 8"
+
+#, fuzzy
+#~ msgid "blast_damage_txt"
+#~ msgstr "plasma"
+
+#, fuzzy
+#~ msgid "fire_damage_txt"
+#~ msgstr "plasma"
+
+#, fuzzy
+#~ msgid "laser_damage_txt"
+#~ msgstr "plasma"
+
+#, fuzzy
+#~ msgid "normal_damage_txt"
+#~ msgstr "plasma"
+
+#, fuzzy
+#~ msgid "shock_damage_txt"
+#~ msgstr "plasma"
+
+#, fuzzy
+#~ msgid "plasma_damage_txt"
+#~ msgstr "plasma"
+
+#, fuzzy
+#~ msgid "stun_damage_txt"
+#~ msgstr "plasma"
 
 #, fuzzy
 #~ msgid "Dropship Hangar"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 17:57+0200\n"
+"POT-Creation-Date: 2006-10-16 19:07+0200\n"
 "PO-Revision-Date: 2006-09-23 11:20+0100\n"
 "Last-Translator: Kracken <alloschery@irsamc.ups-tlse.fr>\n"
 "Language-Team: \n"
@@ -1960,14 +1960,6 @@ msgstr "Armes"
 msgid "Armors"
 msgstr "Protections"
 
-#: ../base/ufos/research.ufo:65
-msgid "Damage Types"
-msgstr "Types de Dommages"
-
-#: ../base/ufos/research.ufo:66
-msgid "Soldier Skills"
-msgstr "Compétences des soldats"
-
 #: ../base/ufos/research.ufo:68
 msgid "Alien Species"
 msgstr "Espèces Aliennes"
@@ -2737,265 +2729,70 @@ msgstr ""
 msgid "Blast Damage Type"
 msgstr "Dommage par Explosion"
 
-#: ../base/ufos/research.ufo:1197
-msgid "blast_damage_txt"
-msgstr ""
-"Charges hautement explosive, balles de \"shrapnel\", ou cartouches de fusil "
-"à pompe. Très facile à contrer avec une armure. Un arme à dommages explosifs "
-"est habituellement de longue portée ou de jet (grenades) et crée dans la "
-"plupart des cas des dégâts dans une zone d'effet. En règle générale, la zone "
-"d'effet est deux fois plus grande que les points de dommages pour de telles "
-"armes."
-
 #: ../base/ufos/research.ufo:1206
 msgid "Fire Damage Type"
 msgstr "Dommage par le Feu"
-
-#: ../base/ufos/research.ufo:1208
-msgid "fire_damage_txt"
-msgstr ""
-"Brûle les acteurs, évolue et gagne du terrain, éclaire l'environnement (les "
-"deux derniers points n'ont pas encore été implémentés). Pas très dangereux "
-"pour les acteurs mécaniques et ceux qui portent une armure de survie. Les "
-"armures modernes sont habituellement ininflammables, mais seules les "
-"combinaisons de survie protègent de la chaleur, des gaz toxiques et du "
-"manque d'oxygène."
 
 #: ../base/ufos/research.ufo:1217
 msgid "Laser Damage Type"
 msgstr "Dommage Laser"
 
-#: ../base/ufos/research.ufo:1219
-msgid "laser_damage_txt"
-msgstr ""
-"Faisceau de lumière focalisée qui perce les armures et brûle la chair à "
-"l'intérieur. Les faisceaux sont concentrés à un tel point qu'il est "
-"difficile de les stopper avec une armure, et ceci est particulièrement vrai "
-"avec les protections réalisées par les aliens (il semble qu'ils n'utilisent "
-"pas de laser dans leurs propres guerres). Cependant les zones d'impact sont "
-"si fines qu'une armure est considérée quasiment intacte même après un tir "
-"mortel. Les armes laser tendent à provoquer de faibles dommages, mais avec "
-"une longue portée et une grande précision."
-
 #: ../base/ufos/research.ufo:1233
-msgid "Normal Damage Type"
-msgstr "Dommage Normal"
-
-#: ../base/ufos/research.ufo:1235
-msgid "normal_damage_txt"
-msgstr ""
-"Les dommages normaux sont infligés par impact, les projectiles solides ou "
-"les lames en métal. Un dommage normal concerne habituellement l'application "
-"d'une importante force de Newton sur la plus petite surface possible, "
-"causant une rupture de la cible en ce point. Les balles utilisent ce "
-"principe, de même que les poignards. Les dommages normaux incluent également "
-"un impact soudain, contraignant le corps en lui causant des dommages. En "
-"d'autres termes, la chute d'une grande hauteur inflige des dommages normaux. "
-"Il est possible de se protéger des dommages normaux en répartissant la force "
-"d'impact sur une grande surface. Un harnais souple mais ferme suffit à "
-"remplir cette tâche."
+#, fuzzy
+msgid "Impact Damage Type"
+msgstr "Dommage par Explosion"
 
 #: ../base/ufos/research.ufo:1244 ../base/ufos/research.ufo:1271
 msgid "Shock Damage Type"
 msgstr "Dommage Electrique"
 
-#: ../base/ufos/research.ufo:1246 ../base/ufos/research.ufo:1273
-msgid "shock_damage_txt"
-msgstr ""
-"Décharge électrique à haute tension qui blesse les acteurs. Une décharge "
-"électrique à haute tension passe même au travers de la plus robuste armure, "
-"laissant seulement de petites traces de brûlure."
-
 #: ../base/ufos/research.ufo:1255
 msgid "Plasma Damage Type"
 msgstr "Dommage Plasma"
-
-#: ../base/ufos/research.ufo:1257
-msgid "plasma_damage_txt"
-msgstr ""
-"Rayonnement chargé d'ions, tel que des boules explosant d'un plasma à très "
-"haute température et qui brûle tout, même les armures évoluées. Tout à fait "
-"efficace contre les humains équipés de Gilet Kevlar et les aliens dotés "
-"d'armures légères. Très bien repoussé par n'importe quelle  amure moyenne ou "
-"lourde, mais qui sont néanmoins rapidement brûlées. Les armes à plasma "
-"causent habituellement des dommages élevés, et sont d'une courte à moyenne "
-"portée avec une précision médiocre."
 
 #: ../base/ufos/research.ufo:1282
 msgid "Stun Damage Type"
 msgstr "Dommage Assomant "
 
-#: ../base/ufos/research.ufo:1284
-msgid "stun_damage_txt"
-msgstr ""
-"Assomme les acteurs biologiques, aucun effet sur les acteurs mécaniques et "
-"ceux protégés dans une armure de survie. Diverses méthodes sont utilisées "
-"avec, par exemple, des vagues de sons à ultra-haute fréquences qui "
-"paralysent temporairement le système nerveux, des injections de drogues et "
-"de narcotiques très puissants, des gaz toxiques de toutes sortes. Un acteur "
-"biologique assommé le reste pendant plusieurs tours mais, s'il reste seul "
-"trop longtemps, il reprendra conscience. Cela ne doit généralement jamais "
-"prendre plus de trois ou quatre tours."
-
 #: ../base/ufos/research.ufo:1293
 msgid "Tachyon Damage Type"
 msgstr "Dommage Tachyon"
-
-#: ../base/ufos/research.ufo:1295
-msgid "tachyon_damage_txt"
-msgstr ""
-"Un type très exotique de dommages : un rayonnement plus rapide que les "
-"particules de lumière, incertain mais qui réagit violemment avec certaines "
-"matières (notamment les corps humains), et qui passe au travers des armures "
-"(particulièrement les armures humaines). Les armes à Tachyon sont connues "
-"depuis très longtemps par les aliens, de sorte que même la plus basique des "
-"armures alien protège d'environ un tiers des dommages tachyons. D'un autre "
-"côté ces particules sont tellement exotiques que même la plus puissante "
-"armure alien ne peut pas offrir plus que cette protection de base, et seules "
-"les conceptions humaines les plus avancées approchent ce cas de figure. Les "
-"armes à tachyons sont très difficiles à produire, même pour les aliens. "
-"Elles causent des dommages moyens, sont d'une grande portée et d'une "
-"précision correcte."
 
 #: ../base/ufos/research.ufo:1313
 msgid "Accuracy Attribute"
 msgstr "Attribut de précision"
 
-#: ../base/ufos/research.ufo:1315
-msgid "accuracy_skill_txt"
-msgstr ""
-"La compétence de Précision représente la capacité d'un soldat à toucher une "
-"cible. La Précision est importante pour tous les soldats qui utilisent des "
-"armes de tir à distance, donc spécialement pour les snipers, les "
-"spécialistes des armes d'assaut et l'emploi d'armes explosives."
-
 #: ../base/ufos/research.ufo:1324
 msgid "Assault Guns Proficiency"
 msgstr "Compétence en Armes d'Assaut"
-
-#: ../base/ufos/research.ufo:1326
-msgid "assault_skill_txt"
-msgstr ""
-"La Compétence en Armes d'Assaut reflète l'habileté d'un soldat au maniement "
-"de ces armes. La Compétence en Armes d'Assaut est une combinaison entre la "
-"capacité de rapidement différencier ses équipiers des ennemis dans les "
-"situations combat rapprochés, et de tirer au dernier moment, mais pas trop "
-"tard. Les armes qui utilisent la Compétence d'Armes d'Assaut tendent à être "
-"des armes complètes, avec des dommages, une précision et un taux de tir "
-"décents."
 
 #: ../base/ufos/research.ufo:1335
 msgid "Close Combat Proficiency"
 msgstr "Compétence au corps à corps"
 
-#: ../base/ufos/research.ufo:1337
-msgid "close_skill_txt"
-msgstr ""
-"Le Combat au Corps à Corps représente la compétence d'un soldat à se battre "
-"avec des armes de portée très réduite. Une compétence de Combat au Corps à "
-"Corps élevée rend un soldat plus efficace pour viser une cible mouvante "
-"rapide, et elle rend aussi l'utilisation d'épées plus efficace, en "
-"augmentant les dommages occasionnés. Les modes de tirs affectés par la "
-"compétence du Combat au Corps à Corps sont toujours de portée réduite et "
-"coûtent relativement peu de TU (unités de temps)."
-
 #: ../base/ufos/research.ufo:1346
 msgid "High-Explosives Proficiency"
 msgstr "Compétences en Explosifs"
-
-#: ../base/ufos/research.ufo:1348
-msgid "explosive_skill_txt"
-msgstr ""
-"La Compétence en Explosifs représente la capacité d'un soldat à utiliser des "
-"grenades et des armes à aire d'effet (aussi bien une munition explosive que "
-"tout autre munition, même alien). Un soldat doté d'une forte Compétence en "
-"Explosifs sera meilleur pour lancer précisément des charges: aux pieds de "
-"l'ennemi ou, si la zone n'est pas accessible directement, suffisamment "
-"proche pour le blesser. Un soldat entraîné dans cet compétence sera moins "
-"gêné par le recul d'un lanceur et plus habitué à la trajectoire du tir, "
-"augmentant sa précision."
 
 #: ../base/ufos/research.ufo:1357
 msgid "Heavy Weapons Proficiency"
 msgstr "Compétence en Armes Lourdes"
 
-#: ../base/ufos/research.ufo:1359
-msgid "heavy_skill_txt"
-msgstr ""
-"La Compétence en Armes Lourdes affecte la capacité d'un soldat à porter les "
-"armes qui pèsent beaucoup, ou qui produisent un recul important. Le recul "
-"diminue énormément la précision, à moins que le soldat ne soit entraîné pour "
-"le contrecarrer grâce aux muscles de ses bras. Les armes lourdes incluent "
-"les armes à feu de barrage, tel que les lances flamme ou les fusils à pompe, "
-"mais aussi beaucoup d'autres armes à feu de soutient de portée moyenne ou "
-"longue. Les modes de tir concernés par la Compétence en Armes Lourdes "
-"balancent toujours la précision contre les dommages, mais ils varient aussi "
-"selon toutes les autres caractéristiques."
-
 #: ../base/ufos/research.ufo:1368
 msgid "Mind Attribute"
 msgstr "Attribut d'Esprit"
-
-#: ../base/ufos/research.ufo:1370
-msgid "mind_skill_txt"
-msgstr ""
-"L'esprit est une représentation de l'entraînement mental d'un soldat. Plus "
-"cet attribut est élevé, moins le soldat risque de paniquer, et meilleur il "
-"sera dans la guerre psionique, D'ailleurs l'utilisation de l'équipement "
-"supplémentaire, aussi bien que celui des mines, dépend de cette compétence. "
-"Les soldats dotés d'un esprit faible ne devraient pas compter sur des "
-"promotions bien rapides."
 
 #: ../base/ufos/research.ufo:1379
 msgid "Power Attribute"
 msgstr "Attribut de puissance"
 
-#: ../base/ufos/research.ufo:1381
-msgid "power_skill_txt"
-msgstr ""
-"La puissance reflète la force physique d'un soldat. Une grande résistance "
-"physique est particulièrement importante pour les soldats qui portent des "
-"armes et des armures lourdes, ainsi que lors de combats rapprochés. La "
-"puissance influence directement les dommages qu'un soldat peut causer dans "
-"un combat en mêlée, et la capacité d'un soldat à maîtriser le recul d'une "
-"arme. Le recul diminue la précision, ainsi un soldat qui utilise une arme "
-"avec beaucoup de recul a besoin de force pour la maintenir dans la bonne "
-"direction au moment où il tire. La puissance affecte également les points de "
-"vie du soldat (HP) et la quantité d'équipement qu'il peut porter avant qu'il "
-"ne soit surchargé. Un soldat surchargé subit des pénalités sur ses unités de "
-"temps (TU) et sa précision."
-
 #: ../base/ufos/research.ufo:1390
 msgid "Sniper Rifles Proficiency"
 msgstr "Compétence en Fusils de Sniper"
 
-#: ../base/ufos/research.ufo:1392
-msgid "sniper_skill_txt"
-msgstr ""
-"La puissance reflète la force physique d'un soldat. Une grande résistance "
-"physique est particulièrement importante pour les soldats qui portent des "
-"armes et des armures lourdes, ainsi que lors de combats rapprochés. La "
-"puissance influence directement les dommages qu'un soldat peut causer dans "
-"un combat en mêlée, et la capacité d'un soldat à maîtriser le recul d'une "
-"arme. Le recul diminue la précision, ainsi un soldat qui utilise une arme "
-"avec beaucoup de recul a besoin de force pour la maintenir dans la bonne "
-"direction au moment où il tire. La puissance affecte également les points de "
-"vie du soldat (HP) et la quantité d'équipement qu'il peut porter avant qu'il "
-"ne soit surchargé. Un soldat surchargé subit des pénalités sur ses unités de "
-"temps (TU) et sa précision."
-
 #: ../base/ufos/research.ufo:1401
 msgid "Speed Attribute"
 msgstr "Attribut de Vitesse"
-
-#: ../base/ufos/research.ufo:1403
-msgid "speed_skill_txt"
-msgstr ""
-"La vitesse représente la rapidité de déplacement d'un soldat. Cet attribut "
-"affecte seulement les TUs (unités de temps) du soldat. Cependant, les unités "
-"de temps sont, mais ceci est discutable, la plus importante caractéristique "
-"de survie d'un soldat. La compétence de vitesse ne devrait donc pas être "
-"sous-estimé. "
 
 #: ../base/ufos/research.ufo:1416
 #, fuzzy
@@ -5668,6 +5465,195 @@ msgstr "Oui"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "Non"
+
+#~ msgid "Damage Types"
+#~ msgstr "Types de Dommages"
+
+#~ msgid "Soldier Skills"
+#~ msgstr "Compétences des soldats"
+
+#~ msgid "blast_damage_txt"
+#~ msgstr ""
+#~ "Charges hautement explosive, balles de \"shrapnel\", ou cartouches de "
+#~ "fusil à pompe. Très facile à contrer avec une armure. Un arme à dommages "
+#~ "explosifs est habituellement de longue portée ou de jet (grenades) et "
+#~ "crée dans la plupart des cas des dégâts dans une zone d'effet. En règle "
+#~ "générale, la zone d'effet est deux fois plus grande que les points de "
+#~ "dommages pour de telles armes."
+
+#~ msgid "fire_damage_txt"
+#~ msgstr ""
+#~ "Brûle les acteurs, évolue et gagne du terrain, éclaire l'environnement "
+#~ "(les deux derniers points n'ont pas encore été implémentés). Pas très "
+#~ "dangereux pour les acteurs mécaniques et ceux qui portent une armure de "
+#~ "survie. Les armures modernes sont habituellement ininflammables, mais "
+#~ "seules les combinaisons de survie protègent de la chaleur, des gaz "
+#~ "toxiques et du manque d'oxygène."
+
+#~ msgid "laser_damage_txt"
+#~ msgstr ""
+#~ "Faisceau de lumière focalisée qui perce les armures et brûle la chair à "
+#~ "l'intérieur. Les faisceaux sont concentrés à un tel point qu'il est "
+#~ "difficile de les stopper avec une armure, et ceci est particulièrement "
+#~ "vrai avec les protections réalisées par les aliens (il semble qu'ils "
+#~ "n'utilisent pas de laser dans leurs propres guerres). Cependant les zones "
+#~ "d'impact sont si fines qu'une armure est considérée quasiment intacte "
+#~ "même après un tir mortel. Les armes laser tendent à provoquer de faibles "
+#~ "dommages, mais avec une longue portée et une grande précision."
+
+#~ msgid "Normal Damage Type"
+#~ msgstr "Dommage Normal"
+
+#~ msgid "normal_damage_txt"
+#~ msgstr ""
+#~ "Les dommages normaux sont infligés par impact, les projectiles solides ou "
+#~ "les lames en métal. Un dommage normal concerne habituellement "
+#~ "l'application d'une importante force de Newton sur la plus petite surface "
+#~ "possible, causant une rupture de la cible en ce point. Les balles "
+#~ "utilisent ce principe, de même que les poignards. Les dommages normaux "
+#~ "incluent également un impact soudain, contraignant le corps en lui "
+#~ "causant des dommages. En d'autres termes, la chute d'une grande hauteur "
+#~ "inflige des dommages normaux. Il est possible de se protéger des dommages "
+#~ "normaux en répartissant la force d'impact sur une grande surface. Un "
+#~ "harnais souple mais ferme suffit à remplir cette tâche."
+
+#~ msgid "shock_damage_txt"
+#~ msgstr ""
+#~ "Décharge électrique à haute tension qui blesse les acteurs. Une décharge "
+#~ "électrique à haute tension passe même au travers de la plus robuste "
+#~ "armure, laissant seulement de petites traces de brûlure."
+
+#~ msgid "plasma_damage_txt"
+#~ msgstr ""
+#~ "Rayonnement chargé d'ions, tel que des boules explosant d'un plasma à "
+#~ "très haute température et qui brûle tout, même les armures évoluées. Tout "
+#~ "à fait efficace contre les humains équipés de Gilet Kevlar et les aliens "
+#~ "dotés d'armures légères. Très bien repoussé par n'importe quelle  amure "
+#~ "moyenne ou lourde, mais qui sont néanmoins rapidement brûlées. Les armes "
+#~ "à plasma causent habituellement des dommages élevés, et sont d'une courte "
+#~ "à moyenne portée avec une précision médiocre."
+
+#~ msgid "stun_damage_txt"
+#~ msgstr ""
+#~ "Assomme les acteurs biologiques, aucun effet sur les acteurs mécaniques "
+#~ "et ceux protégés dans une armure de survie. Diverses méthodes sont "
+#~ "utilisées avec, par exemple, des vagues de sons à ultra-haute fréquences "
+#~ "qui paralysent temporairement le système nerveux, des injections de "
+#~ "drogues et de narcotiques très puissants, des gaz toxiques de toutes "
+#~ "sortes. Un acteur biologique assommé le reste pendant plusieurs tours "
+#~ "mais, s'il reste seul trop longtemps, il reprendra conscience. Cela ne "
+#~ "doit généralement jamais prendre plus de trois ou quatre tours."
+
+#~ msgid "tachyon_damage_txt"
+#~ msgstr ""
+#~ "Un type très exotique de dommages : un rayonnement plus rapide que les "
+#~ "particules de lumière, incertain mais qui réagit violemment avec "
+#~ "certaines matières (notamment les corps humains), et qui passe au travers "
+#~ "des armures (particulièrement les armures humaines). Les armes à Tachyon "
+#~ "sont connues depuis très longtemps par les aliens, de sorte que même la "
+#~ "plus basique des armures alien protège d'environ un tiers des dommages "
+#~ "tachyons. D'un autre côté ces particules sont tellement exotiques que "
+#~ "même la plus puissante armure alien ne peut pas offrir plus que cette "
+#~ "protection de base, et seules les conceptions humaines les plus avancées "
+#~ "approchent ce cas de figure. Les armes à tachyons sont très difficiles à "
+#~ "produire, même pour les aliens. Elles causent des dommages moyens, sont "
+#~ "d'une grande portée et d'une précision correcte."
+
+#~ msgid "accuracy_skill_txt"
+#~ msgstr ""
+#~ "La compétence de Précision représente la capacité d'un soldat à toucher "
+#~ "une cible. La Précision est importante pour tous les soldats qui "
+#~ "utilisent des armes de tir à distance, donc spécialement pour les "
+#~ "snipers, les spécialistes des armes d'assaut et l'emploi d'armes "
+#~ "explosives."
+
+#~ msgid "assault_skill_txt"
+#~ msgstr ""
+#~ "La Compétence en Armes d'Assaut reflète l'habileté d'un soldat au "
+#~ "maniement de ces armes. La Compétence en Armes d'Assaut est une "
+#~ "combinaison entre la capacité de rapidement différencier ses équipiers "
+#~ "des ennemis dans les situations combat rapprochés, et de tirer au dernier "
+#~ "moment, mais pas trop tard. Les armes qui utilisent la Compétence d'Armes "
+#~ "d'Assaut tendent à être des armes complètes, avec des dommages, une "
+#~ "précision et un taux de tir décents."
+
+#~ msgid "close_skill_txt"
+#~ msgstr ""
+#~ "Le Combat au Corps à Corps représente la compétence d'un soldat à se "
+#~ "battre avec des armes de portée très réduite. Une compétence de Combat au "
+#~ "Corps à Corps élevée rend un soldat plus efficace pour viser une cible "
+#~ "mouvante rapide, et elle rend aussi l'utilisation d'épées plus efficace, "
+#~ "en augmentant les dommages occasionnés. Les modes de tirs affectés par la "
+#~ "compétence du Combat au Corps à Corps sont toujours de portée réduite et "
+#~ "coûtent relativement peu de TU (unités de temps)."
+
+#~ msgid "explosive_skill_txt"
+#~ msgstr ""
+#~ "La Compétence en Explosifs représente la capacité d'un soldat à utiliser "
+#~ "des grenades et des armes à aire d'effet (aussi bien une munition "
+#~ "explosive que tout autre munition, même alien). Un soldat doté d'une "
+#~ "forte Compétence en Explosifs sera meilleur pour lancer précisément des "
+#~ "charges: aux pieds de l'ennemi ou, si la zone n'est pas accessible "
+#~ "directement, suffisamment proche pour le blesser. Un soldat entraîné dans "
+#~ "cet compétence sera moins gêné par le recul d'un lanceur et plus habitué "
+#~ "à la trajectoire du tir, augmentant sa précision."
+
+#~ msgid "heavy_skill_txt"
+#~ msgstr ""
+#~ "La Compétence en Armes Lourdes affecte la capacité d'un soldat à porter "
+#~ "les armes qui pèsent beaucoup, ou qui produisent un recul important. Le "
+#~ "recul diminue énormément la précision, à moins que le soldat ne soit "
+#~ "entraîné pour le contrecarrer grâce aux muscles de ses bras. Les armes "
+#~ "lourdes incluent les armes à feu de barrage, tel que les lances flamme ou "
+#~ "les fusils à pompe, mais aussi beaucoup d'autres armes à feu de soutient "
+#~ "de portée moyenne ou longue. Les modes de tir concernés par la Compétence "
+#~ "en Armes Lourdes balancent toujours la précision contre les dommages, "
+#~ "mais ils varient aussi selon toutes les autres caractéristiques."
+
+#~ msgid "mind_skill_txt"
+#~ msgstr ""
+#~ "L'esprit est une représentation de l'entraînement mental d'un soldat. "
+#~ "Plus cet attribut est élevé, moins le soldat risque de paniquer, et "
+#~ "meilleur il sera dans la guerre psionique, D'ailleurs l'utilisation de "
+#~ "l'équipement supplémentaire, aussi bien que celui des mines, dépend de "
+#~ "cette compétence. Les soldats dotés d'un esprit faible ne devraient pas "
+#~ "compter sur des promotions bien rapides."
+
+#~ msgid "power_skill_txt"
+#~ msgstr ""
+#~ "La puissance reflète la force physique d'un soldat. Une grande résistance "
+#~ "physique est particulièrement importante pour les soldats qui portent des "
+#~ "armes et des armures lourdes, ainsi que lors de combats rapprochés. La "
+#~ "puissance influence directement les dommages qu'un soldat peut causer "
+#~ "dans un combat en mêlée, et la capacité d'un soldat à maîtriser le recul "
+#~ "d'une arme. Le recul diminue la précision, ainsi un soldat qui utilise "
+#~ "une arme avec beaucoup de recul a besoin de force pour la maintenir dans "
+#~ "la bonne direction au moment où il tire. La puissance affecte également "
+#~ "les points de vie du soldat (HP) et la quantité d'équipement qu'il peut "
+#~ "porter avant qu'il ne soit surchargé. Un soldat surchargé subit des "
+#~ "pénalités sur ses unités de temps (TU) et sa précision."
+
+#~ msgid "sniper_skill_txt"
+#~ msgstr ""
+#~ "La puissance reflète la force physique d'un soldat. Une grande résistance "
+#~ "physique est particulièrement importante pour les soldats qui portent des "
+#~ "armes et des armures lourdes, ainsi que lors de combats rapprochés. La "
+#~ "puissance influence directement les dommages qu'un soldat peut causer "
+#~ "dans un combat en mêlée, et la capacité d'un soldat à maîtriser le recul "
+#~ "d'une arme. Le recul diminue la précision, ainsi un soldat qui utilise "
+#~ "une arme avec beaucoup de recul a besoin de force pour la maintenir dans "
+#~ "la bonne direction au moment où il tire. La puissance affecte également "
+#~ "les points de vie du soldat (HP) et la quantité d'équipement qu'il peut "
+#~ "porter avant qu'il ne soit surchargé. Un soldat surchargé subit des "
+#~ "pénalités sur ses unités de temps (TU) et sa précision."
+
+#~ msgid "speed_skill_txt"
+#~ msgstr ""
+#~ "La vitesse représente la rapidité de déplacement d'un soldat. Cet "
+#~ "attribut affecte seulement les TUs (unités de temps) du soldat. "
+#~ "Cependant, les unités de temps sont, mais ceci est discutable, la plus "
+#~ "importante caractéristique de survie d'un soldat. La compétence de "
+#~ "vitesse ne devrait donc pas être sous-estimé. "
 
 #~ msgid "Dropship Hangar"
 #~ msgstr "Hangar pour le transport"

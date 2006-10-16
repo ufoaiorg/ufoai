@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 17:57+0200\n"
+"POT-Creation-Date: 2006-10-16 19:07+0200\n"
 "PO-Revision-Date: 2006-07-24 09:50+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: inzenir <simon.cedula@guest.arnes.si>\n"
@@ -1984,14 +1984,6 @@ msgstr "Orožja"
 msgid "Armors"
 msgstr "Oklepi "
 
-#: ../base/ufos/research.ufo:65
-msgid "Damage Types"
-msgstr "Tipi poškodb"
-
-#: ../base/ufos/research.ufo:66
-msgid "Soldier Skills"
-msgstr "Vojakove sposobnosti"
-
 #: ../base/ufos/research.ufo:68
 msgid "Alien Species"
 msgstr "Nezemeljske vrste"
@@ -2295,137 +2287,70 @@ msgstr ""
 msgid "Blast Damage Type"
 msgstr "Tip poškodb pri udarcu"
 
-#: ../base/ufos/research.ufo:1197
-msgid "blast_damage_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1206
 msgid "Fire Damage Type"
 msgstr "Tip ognjenih poškodb"
-
-#: ../base/ufos/research.ufo:1208
-msgid "fire_damage_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1217
 msgid "Laser Damage Type"
 msgstr "Tip laserskih poškodb"
 
-#: ../base/ufos/research.ufo:1219
-msgid "laser_damage_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1233
-msgid "Normal Damage Type"
-msgstr "Običajen tip poškodb"
-
-#: ../base/ufos/research.ufo:1235
-msgid "normal_damage_txt"
-msgstr ""
+#, fuzzy
+msgid "Impact Damage Type"
+msgstr "Tip poškodb pri udarcu"
 
 #: ../base/ufos/research.ufo:1244 ../base/ufos/research.ufo:1271
 msgid "Shock Damage Type"
 msgstr "Tip električnih poškodb"
 
-#: ../base/ufos/research.ufo:1246 ../base/ufos/research.ufo:1273
-msgid "shock_damage_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1255
 msgid "Plasma Damage Type"
 msgstr "Tip plazemskih poškodb"
-
-#: ../base/ufos/research.ufo:1257
-msgid "plasma_damage_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1282
 msgid "Stun Damage Type"
 msgstr "Tip poškodb ob omotici"
 
-#: ../base/ufos/research.ufo:1284
-msgid "stun_damage_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1293
 msgid "Tachyon Damage Type"
 msgstr "Tip tahionskih poškodb"
-
-#: ../base/ufos/research.ufo:1295
-msgid "tachyon_damage_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1313
 msgid "Accuracy Attribute"
 msgstr "Pripisana natančnost"
 
-#: ../base/ufos/research.ufo:1315
-msgid "accuracy_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1324
 msgid "Assault Guns Proficiency"
 msgstr "Usposobljenost za jurišna orožja"
-
-#: ../base/ufos/research.ufo:1326
-msgid "assault_skill_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1335
 msgid "Close Combat Proficiency"
 msgstr "Usposobljenost za boj od blizu"
 
-#: ../base/ufos/research.ufo:1337
-msgid "close_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1346
 msgid "High-Explosives Proficiency"
 msgstr "Usposobljenost za eksplozive"
-
-#: ../base/ufos/research.ufo:1348
-msgid "explosive_skill_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1357
 msgid "Heavy Weapons Proficiency"
 msgstr "Usposobljenost za težka orožja"
 
-#: ../base/ufos/research.ufo:1359
-msgid "heavy_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1368
 msgid "Mind Attribute"
 msgstr "Pripisani um"
-
-#: ../base/ufos/research.ufo:1370
-msgid "mind_skill_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1379
 msgid "Power Attribute"
 msgstr "Pripisana energija"
 
-#: ../base/ufos/research.ufo:1381
-msgid "power_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1390
 msgid "Sniper Rifles Proficiency"
 msgstr "Usposobljenost za ostrostrelska orožja"
 
-#: ../base/ufos/research.ufo:1392
-msgid "sniper_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1401
 msgid "Speed Attribute"
 msgstr "Pripisana hitrost"
-
-#: ../base/ufos/research.ufo:1403
-msgid "speed_skill_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1416
 msgid "b_aliencontainment_txt"
@@ -4925,6 +4850,15 @@ msgstr "Da"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "Ne"
+
+#~ msgid "Damage Types"
+#~ msgstr "Tipi poškodb"
+
+#~ msgid "Soldier Skills"
+#~ msgstr "Vojakove sposobnosti"
+
+#~ msgid "Normal Damage Type"
+#~ msgstr "Običajen tip poškodb"
 
 #, fuzzy
 #~ msgid "Dropship Hangar"

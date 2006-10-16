@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 17:57+0200\n"
+"POT-Creation-Date: 2006-10-16 19:07+0200\n"
 "PO-Revision-Date: 2006-08-06 17:20+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -1967,14 +1967,6 @@ msgstr "Relvad"
 msgid "Armors"
 msgstr "Kehakaitsed"
 
-#: ../base/ufos/research.ufo:65
-msgid "Damage Types"
-msgstr "Kahju tüübid"
-
-#: ../base/ufos/research.ufo:66
-msgid "Soldier Skills"
-msgstr "Sõduri oskused"
-
 #: ../base/ufos/research.ufo:68
 msgid "Alien Species"
 msgstr "Tulnukate liigid"
@@ -2599,214 +2591,71 @@ msgstr ""
 msgid "Blast Damage Type"
 msgstr "Blast Damage Type"
 
-#: ../base/ufos/research.ufo:1197
-#, fuzzy
-msgid "blast_damage_txt"
-msgstr ""
-"Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat "
-"sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei ole "
-"tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid plasma "
-"relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased suudavad "
-"mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
-"uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
-
 #: ../base/ufos/research.ufo:1206
 msgid "Fire Damage Type"
 msgstr "Tule tüüpi kahju"
-
-#: ../base/ufos/research.ufo:1208
-#, fuzzy
-msgid "fire_damage_txt"
-msgstr ""
-"Kild granaate saab visata sõduri poolt. Selle plahvatuse kahju kandub "
-"üksustele selle plahvatuse raadiuses. Aega saab määrata 0-9. 0 tähendab, et "
-"granaat plahvatab maandudes. 1 tähendab, et plahvatab vastase käigu alguses, "
-"2 et sinu järgmise käigu alguses jne. Ajastatud granaate võib ülesse korjata "
-"ja edasi visata."
 
 #: ../base/ufos/research.ufo:1217
 msgid "Laser Damage Type"
 msgstr "Laser tüüpi kahju"
 
-#: ../base/ufos/research.ufo:1219
-#, fuzzy
-msgid "laser_damage_txt"
-msgstr "laser.txt"
-
 #: ../base/ufos/research.ufo:1233
-msgid "Normal Damage Type"
-msgstr "Tavaline tüüpi kahju"
-
-#: ../base/ufos/research.ufo:1235
-msgid "normal_damage_txt"
-msgstr "<TODO>"
+#, fuzzy
+msgid "Impact Damage Type"
+msgstr "Blast Damage Type"
 
 #: ../base/ufos/research.ufo:1244 ../base/ufos/research.ufo:1271
 msgid "Shock Damage Type"
 msgstr "Shock Damage Type"
 
-#: ../base/ufos/research.ufo:1246 ../base/ufos/research.ufo:1273
-#, fuzzy
-msgid "shock_damage_txt"
-msgstr ""
-"Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste "
-"pumppüssidega SWAT tiimides suudab SG-260 paremini juhtida haavleid torus, "
-"millest tuleneb palju suurem laskeulatus,. See omakorda tähendab, et pumpüss "
-"on kasulik ka keskmiste vahemaade tagant. SG-260 eelis SMG-68 ees on see, et "
-"see teeb rohkem kahju ühe lasuga, tehes selle paremaks relvaks "
-"kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikeses ruumis ja "
-"lähivõitluses näiteks: majas, metsas."
-
 #: ../base/ufos/research.ufo:1255
 msgid "Plasma Damage Type"
 msgstr "Plasma kahju"
-
-#: ../base/ufos/research.ufo:1257
-#, fuzzy
-msgid "plasma_damage_txt"
-msgstr ""
-"Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat "
-"sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei ole "
-"tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid plasma "
-"relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased suudavad "
-"mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
-"uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
 
 #: ../base/ufos/research.ufo:1282
 msgid "Stun Damage Type"
 msgstr "Paralüseerimis tüüpi kahju"
 
-#: ../base/ufos/research.ufo:1284
-#, fuzzy
-msgid "stun_damage_txt"
-msgstr ""
-"Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste "
-"pumppüssidega SWAT tiimides suudab SG-260 paremini juhtida haavleid torus, "
-"millest tuleneb palju suurem laskeulatus,. See omakorda tähendab, et pumpüss "
-"on kasulik ka keskmiste vahemaade tagant. SG-260 eelis SMG-68 ees on see, et "
-"see teeb rohkem kahju ühe lasuga, tehes selle paremaks relvaks "
-"kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikeses ruumis ja "
-"lähivõitluses näiteks: majas, metsas."
-
 #: ../base/ufos/research.ufo:1293
 msgid "Tachyon Damage Type"
 msgstr "Tachyon tüüpi kahju"
-
-#: ../base/ufos/research.ufo:1295
-#, fuzzy
-msgid "tachyon_damage_txt"
-msgstr ""
-"Tachyon - tähendades liikumist kiiremini kui valgus kiirus, on olnud alati "
-"saladuseks inimeste ees. Antareanid suutsid selle mõistatuse siiski "
-"lahendada ja mitte ainult lahendad nad on õppinud kuidas, neid nn\"ussiauke"
-"\" luua, hävitada või nendega manipuleerida.  Kuna nemad seda suutsid teha, "
-"suudame seda ka meie. Antareanid kasutavad seda tehnoloogjat hävitavate "
-"relvade tegemiseks. Meie teadlased usuvad, et nad suudavad järeletoota "
-"Tachyoni relv, kohe kui nad saavad endale mõn näidise."
 
 #: ../base/ufos/research.ufo:1313
 msgid "Accuracy Attribute"
 msgstr "Täpsus"
 
-#: ../base/ufos/research.ufo:1315
-msgid "accuracy_skill_txt"
-msgstr "accuracy_skill_txt"
-
 #: ../base/ufos/research.ufo:1324
 msgid "Assault Guns Proficiency"
 msgstr "Ründe relvade oskus"
-
-#: ../base/ufos/research.ufo:1326
-#, fuzzy
-msgid "assault_skill_txt"
-msgstr ""
-"AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja "
-"revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline "
-"automaat. AR-80 salve kuju ja salve positsioon, lubavad tal isegi täpsemini "
-"tulistada. Automaati on ka lihtne parandada, kuna see on erinevatest osadest "
-"kokku pandud. Tulistamise mehanismi saab parandad lahingus olles, lihtsalt "
-"tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult "
-"natuke üle minuti."
 
 #: ../base/ufos/research.ufo:1335
 msgid "Close Combat Proficiency"
 msgstr "Lähivõitlususe oskus"
 
-#: ../base/ufos/research.ufo:1337
-#, fuzzy
-msgid "close_skill_txt"
-msgstr "<TODO>"
-
 #: ../base/ufos/research.ufo:1346
 msgid "High-Explosives Proficiency"
 msgstr "Raske lõhkeaine oskus"
-
-#: ../base/ufos/research.ufo:1348
-#, fuzzy
-msgid "explosive_skill_txt"
-msgstr ""
-"Kasutades sama tehnoloogiat mida plasmapüssgi, suudab plasma püstol teha "
-"märgatavat kahju sihtmärgile. Kuna plasma püstol on väike ei suuda ta väga "
-"tugevat kahju teha, kuna plasma hulk on piiratud, sellegi poolest suudab "
-"plasma püstol tulistada läbi 5cm paksuse teras plaadi."
 
 #: ../base/ufos/research.ufo:1357
 msgid "Heavy Weapons Proficiency"
 msgstr "Raske relvade oskus"
 
-#: ../base/ufos/research.ufo:1359
-msgid "heavy_skill_txt"
-msgstr "heavy_skill_txt"
-
 #: ../base/ufos/research.ufo:1368
 msgid "Mind Attribute"
 msgstr "Mõttejõud"
-
-#: ../base/ufos/research.ufo:1370
-#, fuzzy
-msgid "mind_skill_txt"
-msgstr ""
-"Pakk erinevaid arstivahendeid alustades skapellidest lõpedades "
-"valuvaigistitega. Arstipakk suudab parandada haavad või väheamalt peatada "
-"sõdurite haavade laienemise ja sõdurite suremise."
 
 #: ../base/ufos/research.ufo:1379
 msgid "Power Attribute"
 msgstr "Jõud"
 
-#: ../base/ufos/research.ufo:1381
-#, fuzzy
-msgid "power_skill_txt"
-msgstr ""
-"Jõujaam varustab baasi energiaga. Ilma energiata enamus baasi ehitisi ei "
-"suuda töötada. Selle pärast on jõujaam eluliselt vajalik ja seda üritatakse "
-"kindlasti hävitada kui vastased peaksid baasi ründama"
-
 #: ../base/ufos/research.ufo:1390
 msgid "Sniper Rifles Proficiency"
 msgstr "Snaiper püsside oskus"
-
-#: ../base/ufos/research.ufo:1392
-#, fuzzy
-msgid "sniper_skill_txt"
-msgstr ""
-"Kasutades tugevat ja mehaanilist sihikut on uus snaiper püss kõige surmavam "
-"relv Phalanxsi vägedes. Kuulid on 0,5 mm mis suudavad läbida 10 cm läbi "
-"petoon seina 200 m kauguselt lastuna. Aga kuna relv on väga kohmakas, võtab "
-"sellega sihtimine kaua aega. Seega ei sobi WE-78 kindlasti lähivõitlusesse."
 
 #: ../base/ufos/research.ufo:1401
 #, fuzzy
 msgid "Speed Attribute"
 msgstr "Kiirenda aega"
-
-#: ../base/ufos/research.ufo:1403
-#, fuzzy
-msgid "speed_skill_txt"
-msgstr ""
-"Pakk erinevaid arstivahendeid alustades skapellidest lõpedades "
-"valuvaigistitega. Arstipakk suudab parandada haavad või väheamalt peatada "
-"sõdurite haavade laienemise ja sõdurite suremise."
 
 #: ../base/ufos/research.ufo:1416
 #, fuzzy
@@ -5501,6 +5350,146 @@ msgstr "Jah"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "Ei"
+
+#~ msgid "Damage Types"
+#~ msgstr "Kahju tüübid"
+
+#~ msgid "Soldier Skills"
+#~ msgstr "Sõduri oskused"
+
+#, fuzzy
+#~ msgid "blast_damage_txt"
+#~ msgstr ""
+#~ "Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat "
+#~ "sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei "
+#~ "ole tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid "
+#~ "plasma relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased "
+#~ "suudavad mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me "
+#~ "saaksime uurida nende relvade tehnoloogiat, saame me varsti sarnast "
+#~ "varustust toota."
+
+#, fuzzy
+#~ msgid "fire_damage_txt"
+#~ msgstr ""
+#~ "Kild granaate saab visata sõduri poolt. Selle plahvatuse kahju kandub "
+#~ "üksustele selle plahvatuse raadiuses. Aega saab määrata 0-9. 0 tähendab, "
+#~ "et granaat plahvatab maandudes. 1 tähendab, et plahvatab vastase käigu "
+#~ "alguses, 2 et sinu järgmise käigu alguses jne. Ajastatud granaate võib "
+#~ "ülesse korjata ja edasi visata."
+
+#, fuzzy
+#~ msgid "laser_damage_txt"
+#~ msgstr "laser.txt"
+
+#~ msgid "Normal Damage Type"
+#~ msgstr "Tavaline tüüpi kahju"
+
+#~ msgid "normal_damage_txt"
+#~ msgstr "<TODO>"
+
+#, fuzzy
+#~ msgid "shock_damage_txt"
+#~ msgstr ""
+#~ "Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste "
+#~ "pumppüssidega SWAT tiimides suudab SG-260 paremini juhtida haavleid "
+#~ "torus, millest tuleneb palju suurem laskeulatus,. See omakorda tähendab, "
+#~ "et pumpüss on kasulik ka keskmiste vahemaade tagant. SG-260 eelis SMG-68 "
+#~ "ees on see, et see teeb rohkem kahju ühe lasuga, tehes selle paremaks "
+#~ "relvaks kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikeses "
+#~ "ruumis ja lähivõitluses näiteks: majas, metsas."
+
+#, fuzzy
+#~ msgid "plasma_damage_txt"
+#~ msgstr ""
+#~ "Antareanid on arendanud plasma(iooniseeritud gaas) tehnoloogjat "
+#~ "sõjaväeliseks otstarbeks. Mitte, et neil õnnestus teha plasma relvi ei "
+#~ "ole tähtis vaid see, et neil õnnestud toota mitmeid korda tugevamaid "
+#~ "plasma relvi, kui teadlased arvasid võimalik teha olema... Meie teadlased "
+#~ "suudavad mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me "
+#~ "saaksime uurida nende relvade tehnoloogiat, saame me varsti sarnast "
+#~ "varustust toota."
+
+#, fuzzy
+#~ msgid "stun_damage_txt"
+#~ msgstr ""
+#~ "Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste "
+#~ "pumppüssidega SWAT tiimides suudab SG-260 paremini juhtida haavleid "
+#~ "torus, millest tuleneb palju suurem laskeulatus,. See omakorda tähendab, "
+#~ "et pumpüss on kasulik ka keskmiste vahemaade tagant. SG-260 eelis SMG-68 "
+#~ "ees on see, et see teeb rohkem kahju ühe lasuga, tehes selle paremaks "
+#~ "relvaks kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikeses "
+#~ "ruumis ja lähivõitluses näiteks: majas, metsas."
+
+#, fuzzy
+#~ msgid "tachyon_damage_txt"
+#~ msgstr ""
+#~ "Tachyon - tähendades liikumist kiiremini kui valgus kiirus, on olnud "
+#~ "alati saladuseks inimeste ees. Antareanid suutsid selle mõistatuse siiski "
+#~ "lahendada ja mitte ainult lahendad nad on õppinud kuidas, neid nn"
+#~ "\"ussiauke\" luua, hävitada või nendega manipuleerida.  Kuna nemad seda "
+#~ "suutsid teha, suudame seda ka meie. Antareanid kasutavad seda "
+#~ "tehnoloogjat hävitavate relvade tegemiseks. Meie teadlased usuvad, et nad "
+#~ "suudavad järeletoota Tachyoni relv, kohe kui nad saavad endale mõn "
+#~ "näidise."
+
+#~ msgid "accuracy_skill_txt"
+#~ msgstr "accuracy_skill_txt"
+
+#, fuzzy
+#~ msgid "assault_skill_txt"
+#~ msgstr ""
+#~ "AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja "
+#~ "revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline "
+#~ "automaat. AR-80 salve kuju ja salve positsioon, lubavad tal isegi "
+#~ "täpsemini tulistada. Automaati on ka lihtne parandada, kuna see on "
+#~ "erinevatest osadest kokku pandud. Tulistamise mehanismi saab parandad "
+#~ "lahingus olles, lihtsalt tõmmates vana välja ja pannes uue asemele. Kogu "
+#~ "protsess võta aega ainult natuke üle minuti."
+
+#, fuzzy
+#~ msgid "close_skill_txt"
+#~ msgstr "<TODO>"
+
+#, fuzzy
+#~ msgid "explosive_skill_txt"
+#~ msgstr ""
+#~ "Kasutades sama tehnoloogiat mida plasmapüssgi, suudab plasma püstol teha "
+#~ "märgatavat kahju sihtmärgile. Kuna plasma püstol on väike ei suuda ta "
+#~ "väga tugevat kahju teha, kuna plasma hulk on piiratud, sellegi poolest "
+#~ "suudab plasma püstol tulistada läbi 5cm paksuse teras plaadi."
+
+#~ msgid "heavy_skill_txt"
+#~ msgstr "heavy_skill_txt"
+
+#, fuzzy
+#~ msgid "mind_skill_txt"
+#~ msgstr ""
+#~ "Pakk erinevaid arstivahendeid alustades skapellidest lõpedades "
+#~ "valuvaigistitega. Arstipakk suudab parandada haavad või väheamalt peatada "
+#~ "sõdurite haavade laienemise ja sõdurite suremise."
+
+#, fuzzy
+#~ msgid "power_skill_txt"
+#~ msgstr ""
+#~ "Jõujaam varustab baasi energiaga. Ilma energiata enamus baasi ehitisi ei "
+#~ "suuda töötada. Selle pärast on jõujaam eluliselt vajalik ja seda "
+#~ "üritatakse kindlasti hävitada kui vastased peaksid baasi ründama"
+
+#, fuzzy
+#~ msgid "sniper_skill_txt"
+#~ msgstr ""
+#~ "Kasutades tugevat ja mehaanilist sihikut on uus snaiper püss kõige "
+#~ "surmavam relv Phalanxsi vägedes. Kuulid on 0,5 mm mis suudavad läbida 10 "
+#~ "cm läbi petoon seina 200 m kauguselt lastuna. Aga kuna relv on väga "
+#~ "kohmakas, võtab sellega sihtimine kaua aega. Seega ei sobi WE-78 "
+#~ "kindlasti lähivõitlusesse."
+
+#, fuzzy
+#~ msgid "speed_skill_txt"
+#~ msgstr ""
+#~ "Pakk erinevaid arstivahendeid alustades skapellidest lõpedades "
+#~ "valuvaigistitega. Arstipakk suudab parandada haavad või väheamalt peatada "
+#~ "sõdurite haavade laienemise ja sõdurite suremise."
 
 #, fuzzy
 #~ msgid "Dropship Hangar"

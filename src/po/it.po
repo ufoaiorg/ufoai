@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-16 17:57+0200\n"
+"POT-Creation-Date: 2006-10-16 19:07+0200\n"
 "PO-Revision-Date: 2006-09-30 18:00+0100\n"
 "Last-Translator: DAniele C <sdads@sds.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
@@ -1977,14 +1977,6 @@ msgstr "Armi"
 msgid "Armors"
 msgstr "Armature"
 
-#: ../base/ufos/research.ufo:65
-msgid "Damage Types"
-msgstr "Tipi di danno"
-
-#: ../base/ufos/research.ufo:66
-msgid "Soldier Skills"
-msgstr "Abilità soldato"
-
 #: ../base/ufos/research.ufo:68
 msgid "Alien Species"
 msgstr "Specie aliene"
@@ -2435,156 +2427,70 @@ msgstr ""
 msgid "Blast Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1197
-msgid "blast_damage_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1206
 msgid "Fire Damage Type"
 msgstr "Danno da bruciatura"
-
-#: ../base/ufos/research.ufo:1208
-msgid "fire_damage_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1217
 msgid "Laser Damage Type"
 msgstr "Danno laser"
 
-#: ../base/ufos/research.ufo:1219
-msgid "laser_damage_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1233
-msgid "Normal Damage Type"
+#, fuzzy
+msgid "Impact Damage Type"
 msgstr "Danno normale"
-
-#: ../base/ufos/research.ufo:1235
-msgid "normal_damage_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1244 ../base/ufos/research.ufo:1271
 msgid "Shock Damage Type"
 msgstr "Danno da urto"
 
-#: ../base/ufos/research.ufo:1246 ../base/ufos/research.ufo:1273
-msgid "shock_damage_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1255
 msgid "Plasma Damage Type"
 msgstr "Danno da plasma"
 
-#: ../base/ufos/research.ufo:1257
-msgid "plasma_damage_txt"
-msgstr ""
-"Il danno da plasma è inferto con proiettili polimerici riempiti di plasma o "
-"raffiche a corto raggio di flussi plasmatici. Il plasma alle sue alte "
-"temperature e con la sua notevole carica brucia tutto; anche le armature più "
-"avanzate. Molto efficace contro umani con tute di Kevlar e alieni con debole "
-"armatura. Viene diffuso molto bene da qualsiasi armatura medio-avanzata, ma "
-"tuttavia brucia esse stesse velocemente. Le armi al plasma generano di "
-"solito un grande danno, hanno un raggio d'azione da corto a medio e una "
-"precisione mediocre."
-
 #: ../base/ufos/research.ufo:1282
 msgid "Stun Damage Type"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1284
-msgid "stun_damage_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1293
 msgid "Tachyon Damage Type"
 msgstr "Danno di tipo tachionico"
 
-#: ../base/ufos/research.ufo:1295
-msgid "tachyon_damage_txt"
-msgstr ""
-"Un tipo di danno davvero non convenzionale: raggi di particelle più veloci "
-"della luce, incontrollabili ma violentemente reagenti con della materia "
-"(solitamente corpi umani) e che possono oltrepassare armature (specialmente "
-"quelle umane). Le armi tachioniche sono conosciute da tempo agli alieni, "
-"anche la più basilare armatura aliena protegge da almeno un terzo del danno "
-"tachionico. D'altro canto le particelle sono così particolari che anche la "
-"più potente difesa aliena non può offrire più di questa protezione basilare "
-"e solo i più avanzati design umani si avvicinano a tale protezione. Le armi "
-"tachioniche sono difficili da produrre anche per gli alieni, provocano un "
-"danno medio, hanno un raggio d'azione da medio a lungo e una decente "
-"precisione."
-
 #: ../base/ufos/research.ufo:1313
 msgid "Accuracy Attribute"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1315
-msgid "accuracy_skill_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1324
 msgid "Assault Guns Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1326
-msgid "assault_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1335
 msgid "Close Combat Proficiency"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1337
-msgid "close_skill_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1346
 msgid "High-Explosives Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1348
-msgid "explosive_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1357
 msgid "Heavy Weapons Proficiency"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1359
-msgid "heavy_skill_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1368
 msgid "Mind Attribute"
 msgstr "Qualità mentali"
 
-#: ../base/ufos/research.ufo:1370
-msgid "mind_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1379
 msgid "Power Attribute"
 msgstr "Potenza"
-
-#: ../base/ufos/research.ufo:1381
-msgid "power_skill_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1390
 msgid "Sniper Rifles Proficiency"
 msgstr "Predisposizione per fucili di Precisione"
 
-#: ../base/ufos/research.ufo:1392
-msgid "sniper_skill_txt"
-msgstr ""
-
 #: ../base/ufos/research.ufo:1401
 msgid "Speed Attribute"
 msgstr "Velocità"
-
-#: ../base/ufos/research.ufo:1403
-msgid "speed_skill_txt"
-msgstr ""
 
 #: ../base/ufos/research.ufo:1416
 #, fuzzy
@@ -5100,6 +5006,37 @@ msgstr "Sì"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "No"
+
+#~ msgid "Damage Types"
+#~ msgstr "Tipi di danno"
+
+#~ msgid "Soldier Skills"
+#~ msgstr "Abilità soldato"
+
+#~ msgid "plasma_damage_txt"
+#~ msgstr ""
+#~ "Il danno da plasma è inferto con proiettili polimerici riempiti di plasma "
+#~ "o raffiche a corto raggio di flussi plasmatici. Il plasma alle sue alte "
+#~ "temperature e con la sua notevole carica brucia tutto; anche le armature "
+#~ "più avanzate. Molto efficace contro umani con tute di Kevlar e alieni con "
+#~ "debole armatura. Viene diffuso molto bene da qualsiasi armatura medio-"
+#~ "avanzata, ma tuttavia brucia esse stesse velocemente. Le armi al plasma "
+#~ "generano di solito un grande danno, hanno un raggio d'azione da corto a "
+#~ "medio e una precisione mediocre."
+
+#~ msgid "tachyon_damage_txt"
+#~ msgstr ""
+#~ "Un tipo di danno davvero non convenzionale: raggi di particelle più "
+#~ "veloci della luce, incontrollabili ma violentemente reagenti con della "
+#~ "materia (solitamente corpi umani) e che possono oltrepassare armature "
+#~ "(specialmente quelle umane). Le armi tachioniche sono conosciute da tempo "
+#~ "agli alieni, anche la più basilare armatura aliena protegge da almeno un "
+#~ "terzo del danno tachionico. D'altro canto le particelle sono così "
+#~ "particolari che anche la più potente difesa aliena non può offrire più di "
+#~ "questa protezione basilare e solo i più avanzati design umani si "
+#~ "avvicinano a tale protezione. Le armi tachioniche sono difficili da "
+#~ "produrre anche per gli alieni, provocano un danno medio, hanno un raggio "
+#~ "d'azione da medio a lungo e una decente precisione."
 
 #~ msgid "Dropship Hangar"
 #~ msgstr "Hangar Nave da Sbarco"
