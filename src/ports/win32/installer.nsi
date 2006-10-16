@@ -534,7 +534,7 @@ Section "Game" SEC01
   File "..\..\..\base\models\weapons\flare\*.jpg"
   File "..\..\..\base\models\weapons\flare\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\flashbang"
-  File "..\..\..\base\models\weapons\flashbang\*.jpg"
+  File "..\..\..\base\models\weapons\flashbang\*.tga"
   File "..\..\..\base\models\weapons\flashbang\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\fraggren"
   File "..\..\..\base\models\weapons\fraggren\*.jpg"
