@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-10-15 19:36+0200\n"
-"PO-Revision-Date: 2006-10-15 19:42+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2006-10-16 17:57+0100\n"
+"Last-Translator: moe <maui_key@yahoo.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -62,9 +62,8 @@ msgid "Medium armor"
 msgstr "Mittlere Rüstung"
 
 #: ../base/ufos/basemanagement.ufo:62
-#, fuzzy
 msgid "Alien containment"
-msgstr "Alien Aktivitäten"
+msgstr "Sicherheitsbereich für Aliengegenstände"
 
 #: ../base/ufos/basemanagement.ufo:76
 msgid "Entrance"
@@ -307,9 +306,8 @@ msgid "Equip Aircraft"
 msgstr "Besatzung"
 
 #: ../base/ufos/menu_aircraft.ufo:105
-#, fuzzy
 msgid "Aircraft away"
-msgstr "Flugzeuge"
+msgstr "Flugzeuge im Moment nicht verfügbar."
 
 #: ../base/ufos/menu_aircraft.ufo:117
 msgid "Buy/Sell aircraft"
@@ -328,9 +326,8 @@ msgid "Start Aircraft"
 msgstr "Flugzeug starten"
 
 #: ../base/ufos/menu_aircraft.ufo:170
-#, fuzzy
 msgid "Call back aircraft"
-msgstr "Verkaufe Flugzeug"
+msgstr "Flugzeug zurückrufen"
 
 #: ../base/ufos/menu_aircraft.ufo:186
 #: ../base/ufos/menu_aircraft.ufo:315
@@ -1005,19 +1002,16 @@ msgid "Capacity"
 msgstr "Kapazität"
 
 #: ../base/ufos/menu_hospital.ufo:85
-#, fuzzy
 msgid "Currently healing"
-msgstr "Aktuelles Team"
+msgstr "Aktuelle heilung"
 
 #: ../base/ufos/menu_hospital.ufo:264
-#, fuzzy
 msgid "Health:"
-msgstr "Heilen"
+msgstr "Lebensenergie:"
 
 #: ../base/ufos/menu_hospital.ufo:276
-#, fuzzy
 msgid "Heal this soldier"
-msgstr "Rüste diesen Soldaten aus"
+msgstr "Diesen Soldaten behandeln"
 
 #: ../base/ufos/menu_hospital.ufo:292
 #: ../base/ufos/weapons.ufo:20
@@ -1027,7 +1021,7 @@ msgstr "Heilen"
 #: ../base/ufos/menu_hospital.ufo:301
 #: ../base/ufos/menu_hospital.ufo:317
 msgid "Implants"
-msgstr ""
+msgstr "Implantat"
 
 #: ../base/ufos/menu_hud.ufo:62
 msgid "Level 1"
@@ -1546,14 +1540,12 @@ msgid "Center view:"
 msgstr "Zentriere Sicht:"
 
 #: ../base/ufos/menu_options.ufo:1086
-#, fuzzy
 msgid "No centering at soldier selecting, shooting and appearing"
-msgstr "No centering at soldier selecting, shooting and appearing"
+msgstr "Über angewählten soldaten kein zentrieren  beim laufen und schiessen"
 
 #: ../base/ufos/menu_options.ufo:1100
-#, fuzzy
 msgid "Centering at soldier selecting, shooting and appearing"
-msgstr "Centering at soldier selecting, shooting and appearing"
+msgstr "Über angewählten soldaten zentrieren  beim laufen und schiessen"
 
 #: ../base/ufos/menu_options.ufo:1113
 msgid "Cursor tooltips:"
@@ -1580,17 +1572,16 @@ msgid "Keys"
 msgstr "Tasten"
 
 #: ../base/ufos/menu_production.ufo:69
-#, fuzzy
 msgid "Productionlimit"
-msgstr "Produktion"
+msgstr "Produktionlimit"
 
 #: ../base/ufos/menu_production.ufo:109
 msgid "Q"
-msgstr ""
+msgstr "Q"
 
 #: ../base/ufos/menu_production.ufo:116
 msgid "Num"
-msgstr ""
+msgstr "Num"
 
 #: ../base/ufos/menu_production.ufo:156
 msgid "Increase production by 1"
@@ -1613,14 +1604,12 @@ msgid "Decrease production by 10"
 msgstr "Verringere Produktion um 10"
 
 #: ../base/ufos/menu_production.ufo:206
-#, fuzzy
 msgid "Increase priority"
-msgstr "Erhöhe Produktion um 1"
+msgstr "Priorität erhöhen"
 
 #: ../base/ufos/menu_production.ufo:216
-#, fuzzy
 msgid "Decrease priority"
-msgstr "Verringere Produktion um 1"
+msgstr "Priorität verringern"
 
 #: ../base/ufos/menu_research.ufo:373
 #: ../base/ufos/menu_research.ufo:389
@@ -2064,7 +2053,7 @@ msgstr "Damm sichern"
 #: ../base/ufos/missions.ufo:602
 #: ../base/ufos/missions.ufo:604
 msgid "TODO"
-msgstr ""
+msgstr "TODO"
 
 #: ../base/ufos/missions.ufo:621
 msgid "Asyut"
@@ -3528,7 +3517,6 @@ msgid "Tom Shackell (archmoo/tomshackell)"
 msgstr "Tom Shackell (archmoo/tomshackell)"
 
 #: ../base/ufos/seq_credits.ufo:477
-#, fuzzy
 msgid "This game is now community driven"
 msgstr "Dieses Spiel ist nun Community gesteuert"
 
@@ -3881,7 +3869,7 @@ msgstr "Splittergranate"
 #: ../base/ufos/weapons.ufo:391
 #: ../base/ufos/weapons.ufo:459
 msgid "Lob"
-msgstr ""
+msgstr "fallen lassen"
 
 #: ../base/ufos/weapons.ufo:141
 #: ../base/ufos/weapons.ufo:210
@@ -3890,7 +3878,7 @@ msgstr ""
 #: ../base/ufos/weapons.ufo:415
 #: ../base/ufos/weapons.ufo:483
 msgid "Roll"
-msgstr ""
+msgstr "rollen"
 
 #: ../base/ufos/weapons.ufo:172
 msgid "Flashbang"
@@ -3928,11 +3916,11 @@ msgstr "Feuerstoß"
 
 #: ../base/ufos/weapons_human.ufo:79
 msgid "Chaingun"
-msgstr ""
+msgstr "Maschienengewehr"
 
 #: ../base/ufos/weapons_human.ufo:97
 msgid "Chaingun Clip"
-msgstr ""
+msgstr "Maschienengewehr Munition"
 
 #: ../base/ufos/weapons_human.ufo:152
 msgid "Sniper Rifle"
@@ -4063,9 +4051,8 @@ msgstr "Splittergranate"
 #: ../base/ufos/weapons_human.ufo:973
 #: ../base/ufos/weapons_human.ufo:1040
 #: ../base/ufos/weapons_human.ufo:1107
-#, fuzzy
 msgid "Timed Grenade"
-msgstr "Rauchgranate"
+msgstr "Zeitgesteuerte Granate"
 
 #: ../base/ufos/weapons_human.ufo:935
 #, fuzzy
@@ -4388,7 +4375,7 @@ msgstr "Hinweis"
 
 #: client/cl_aircraft.c:154
 msgid "ON RED ALERT"
-msgstr ""
+msgstr "Auf ROTEN ALARM SCHALTEN"
 
 #: client/cl_aircraft.c:158
 msgid "Nothing - should not be displayed"
@@ -4411,9 +4398,8 @@ msgid "On transit"
 msgstr "Unterwegs"
 
 #: client/cl_aircraft.c:168
-#, fuzzy
 msgid "Moving to mission"
-msgstr "Automatisch"
+msgstr "Mission starten"
 
 #: client/cl_aircraft.c:170
 msgid "Pursuing a UFO"
@@ -5049,14 +5035,13 @@ msgid "Mission\t%s (%s)\n"
 msgstr "Mission\t%s (%s)\n"
 
 #: client/cl_produce.c:137
-#, fuzzy, c-format
+#, c-format
 msgid "Production queue for base %s is empty"
-msgstr "Produktion von %s abgeschlossen"
+msgstr "Produktionswareteschalnge von Basis %s leer"
 
 #: client/cl_produce.c:138
-#, fuzzy
 msgid "Production queue empty"
-msgstr "Produktion"
+msgstr "Produktionswarteschlange is leer"
 
 #: client/cl_produce.c:217
 #, c-format
@@ -5078,7 +5063,7 @@ msgstr "Produktion gestartet"
 
 #: client/cl_produce.c:481
 msgid "Queue full!"
-msgstr ""
+msgstr "Warteschlange voll!"
 
 #: client/cl_research.c:589
 #, c-format
@@ -5624,9 +5609,8 @@ msgid "Can't perform action - object not activable!\n"
 msgstr "Objekt nicht vorhanden!\n"
 
 #: game/g_client.c:2233
-#, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
-msgstr "Spieler ist tod\n"
+msgstr "Kann Aktion nicht ausführen, da diese Waffe nicht einhändig benutzt werden kann\n"
 
 #: game/g_client.c:2240
 msgid "Can't perform action - no ammo!\n"
