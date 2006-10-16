@@ -159,6 +159,24 @@ sequence prolog
 		speed	"0 -30"
 		relative	true
 	}
+	2dobj p_sentence8
+	{
+		text	"_prolog_sentence8"
+		pos	"512 635"
+		align	uc
+		color	"0 0.8  0 1"
+		speed	"0 -30"
+		relative	true
+	}
+	2dobj p_sentence9
+	{
+		text	"_prolog_sentence9"
+		pos	"512 660"
+		align	uc
+		color	"0 0.8  0 1"
+		speed	"0 -30"
+		relative	true
+	}
 
 	2dobj p_continue_txt
 	{
@@ -178,5 +196,7 @@ sequence prolog
 	rem p_sentence5
 	rem p_sentence6
 	rem p_sentence7
+	rem p_sentence8
+	rem p_sentence9
 	rem p_continue_txt
 }
