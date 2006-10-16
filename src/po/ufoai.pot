@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-15 19:36+0200\n"
+"POT-Creation-Date: 2006-10-16 17:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.ufo.po (UFO Alien Invasion)  #-#-#-#-#\n"
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: http://www.sourceforge.net/projects/ufoai/\n"
-"POT-Creation-Date: 2006-10-15 19:36+0200\n"
+"POT-Creation-Date: 2006-10-16 17:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2642,11 +2642,11 @@ msgstr ""
 msgid "craft_weapon_flac_txt"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:54 ../base/ufos/seq_credits.ufo:105
+#: ../base/ufos/seq_credits.ufo:54 ../base/ufos/seq_credits.ufo:100
 msgid "Project leader"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:111
+#: ../base/ufos/seq_credits.ufo:106
 msgid "Werner Hoehrer (hoehrer)"
 msgstr ""
 
@@ -2675,7 +2675,7 @@ msgid "Forest Hale (LordHavoc)"
 msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:313 ../base/ufos/seq_credits.ufo:365
-#: ../base/ufos/seq_credits.ufo:421
+#: ../base/ufos/seq_credits.ufo:416
 msgid "Contributing Programmer"
 msgstr ""
 
@@ -2687,99 +2687,107 @@ msgstr ""
 msgid "Ivor Blockley (ubequitz/cassiterite)"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:427
+#: ../base/ufos/seq_credits.ufo:422
 msgid "Tom Shackell (archmoo/tomshackell)"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:477
+#: ../base/ufos/seq_credits.ufo:472
+msgid "Contributing Artist and Modeller"
+msgstr ""
+
+#: ../base/ufos/seq_credits.ufo:478
+msgid "Philipp Hummer (kaeau) - Nathan : INC :: www.ninc.at"
+msgstr ""
+
+#: ../base/ufos/seq_credits.ufo:525
 msgid "This game is now community driven"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:484
+#: ../base/ufos/seq_credits.ufo:532
 msgid "To honor the original development team:"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:517
+#: ../base/ufos/seq_credits.ufo:565
 msgid "Code, Visual Effects"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:568
+#: ../base/ufos/seq_credits.ufo:616
 msgid "Maps, Textures, Art"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:574
+#: ../base/ufos/seq_credits.ufo:622
 msgid "SparX"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:621
+#: ../base/ufos/seq_credits.ufo:669
 msgid "Models, Animations"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:627
+#: ../base/ufos/seq_credits.ufo:675
 msgid "Rastaman"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:673
+#: ../base/ufos/seq_credits.ufo:721
 msgid "Music"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:679
+#: ../base/ufos/seq_credits.ufo:727
 msgid "Vanethian"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:723
+#: ../base/ufos/seq_credits.ufo:771
 msgid "Webdesign"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:729
+#: ../base/ufos/seq_credits.ufo:777
 msgid "Ww 3"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:761
+#: ../base/ufos/seq_credits.ufo:809
 msgid "Special Thanks To"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:768
+#: ../base/ufos/seq_credits.ufo:816
 msgid "id Software"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:775
+#: ../base/ufos/seq_credits.ufo:823
 msgid "Quake 2 Engine"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:782
+#: ../base/ufos/seq_credits.ufo:830
 msgid "Extreme Players"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:789
+#: ../base/ufos/seq_credits.ufo:837
 msgid "Our Host"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:797
+#: ../base/ufos/seq_credits.ufo:845
 msgid "Additional Thanks To"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:804
+#: ../base/ufos/seq_credits.ufo:852
 msgid "Sacrusha"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:811
+#: ../base/ufos/seq_credits.ufo:859
 msgid "Mattn"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:818
+#: ../base/ufos/seq_credits.ufo:866
 msgid "The Community"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:825
+#: ../base/ufos/seq_credits.ufo:873
 msgid "Everyone who supported us"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:857
+#: ../base/ufos/seq_credits.ufo:905
 msgid "http://www.ufoai.net"
 msgstr ""
 
-#: ../base/ufos/seq_credits.ufo:863
+#: ../base/ufos/seq_credits.ufo:911
 msgid "Copyright 2004-2006 by UFO: AI Team"
 msgstr ""
 
@@ -2831,7 +2839,7 @@ msgstr ""
 msgid "intro_sentence8"
 msgstr ""
 
-#: ../base/ufos/seq_intro.ufo:73 ../base/ufos/seq_intro.ufo:165
+#: ../base/ufos/seq_intro.ufo:73 ../base/ufos/seq_intro.ufo:192
 msgid "Click to continue"
 msgstr ""
 
@@ -2861,6 +2869,18 @@ msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:164
+msgid "prolog_sentence8"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:173
+msgid "prolog_sentence9"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:182
+msgid "prolog_sentence10"
 msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:3

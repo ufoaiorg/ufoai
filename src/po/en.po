@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-15 19:36+0200\n"
-"PO-Revision-Date: 2006-10-15 19:39+0100\n"
+"POT-Creation-Date: 2006-10-16 17:57+0200\n"
+"PO-Revision-Date: 2006-10-16 17:58+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2944,11 +2944,11 @@ msgid "craft_weapon_flac_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/seq_credits.ufo:54
-#: ../base/ufos/seq_credits.ufo:105
+#: ../base/ufos/seq_credits.ufo:100
 msgid "Project leader"
 msgstr "Project leader"
 
-#: ../base/ufos/seq_credits.ufo:111
+#: ../base/ufos/seq_credits.ufo:106
 msgid "Werner Hoehrer (hoehrer)"
 msgstr "Werner Hoehrer (hoehrer)"
 
@@ -2978,7 +2978,7 @@ msgstr "Forest Hale (LordHavoc)"
 
 #: ../base/ufos/seq_credits.ufo:313
 #: ../base/ufos/seq_credits.ufo:365
-#: ../base/ufos/seq_credits.ufo:421
+#: ../base/ufos/seq_credits.ufo:416
 msgid "Contributing Programmer"
 msgstr "Contributing Programmer"
 
@@ -2990,99 +2990,107 @@ msgstr "Sheldon Hearn (sheldonh)"
 msgid "Ivor Blockley (ubequitz/cassiterite)"
 msgstr "Ivor Blockley (ubequitz/cassiterite)"
 
-#: ../base/ufos/seq_credits.ufo:427
+#: ../base/ufos/seq_credits.ufo:422
 msgid "Tom Shackell (archmoo/tomshackell)"
 msgstr "Tom Shackell (archmoo/tomshackell)"
 
-#: ../base/ufos/seq_credits.ufo:477
+#: ../base/ufos/seq_credits.ufo:472
+msgid "Contributing Artist and Modeller"
+msgstr "Contributing Artist and Modeller"
+
+#: ../base/ufos/seq_credits.ufo:478
+msgid "Philipp Hummer (kaeau) - Nathan : INC :: www.ninc.at"
+msgstr "Philipp Hummer (kaeau) - Nathan : INC :: www.ninc.at"
+
+#: ../base/ufos/seq_credits.ufo:525
 msgid "This game is now community driven"
 msgstr "This game is now community driven"
 
-#: ../base/ufos/seq_credits.ufo:484
+#: ../base/ufos/seq_credits.ufo:532
 msgid "To honor the original development team:"
 msgstr "To honor the original development team:"
 
-#: ../base/ufos/seq_credits.ufo:517
+#: ../base/ufos/seq_credits.ufo:565
 msgid "Code, Visual Effects"
 msgstr "Code, Visual Effects"
 
-#: ../base/ufos/seq_credits.ufo:568
+#: ../base/ufos/seq_credits.ufo:616
 msgid "Maps, Textures, Art"
 msgstr "Maps, Textures, Art"
 
-#: ../base/ufos/seq_credits.ufo:574
+#: ../base/ufos/seq_credits.ufo:622
 msgid "SparX"
 msgstr "SparX"
 
-#: ../base/ufos/seq_credits.ufo:621
+#: ../base/ufos/seq_credits.ufo:669
 msgid "Models, Animations"
 msgstr "Models, Animations"
 
-#: ../base/ufos/seq_credits.ufo:627
+#: ../base/ufos/seq_credits.ufo:675
 msgid "Rastaman"
 msgstr "Rastaman"
 
-#: ../base/ufos/seq_credits.ufo:673
+#: ../base/ufos/seq_credits.ufo:721
 msgid "Music"
 msgstr "Music"
 
-#: ../base/ufos/seq_credits.ufo:679
+#: ../base/ufos/seq_credits.ufo:727
 msgid "Vanethian"
 msgstr "Vanethian"
 
-#: ../base/ufos/seq_credits.ufo:723
+#: ../base/ufos/seq_credits.ufo:771
 msgid "Webdesign"
 msgstr "Webdesign"
 
-#: ../base/ufos/seq_credits.ufo:729
+#: ../base/ufos/seq_credits.ufo:777
 msgid "Ww 3"
 msgstr "Ww 3"
 
-#: ../base/ufos/seq_credits.ufo:761
+#: ../base/ufos/seq_credits.ufo:809
 msgid "Special Thanks To"
 msgstr "Special Thanks To"
 
-#: ../base/ufos/seq_credits.ufo:768
+#: ../base/ufos/seq_credits.ufo:816
 msgid "id Software"
 msgstr "id Software"
 
-#: ../base/ufos/seq_credits.ufo:775
+#: ../base/ufos/seq_credits.ufo:823
 msgid "Quake 2 Engine"
 msgstr "Quake 2 Engine"
 
-#: ../base/ufos/seq_credits.ufo:782
+#: ../base/ufos/seq_credits.ufo:830
 msgid "Extreme Players"
 msgstr "Extreme Players"
 
-#: ../base/ufos/seq_credits.ufo:789
+#: ../base/ufos/seq_credits.ufo:837
 msgid "Our Host"
 msgstr "Our Host"
 
-#: ../base/ufos/seq_credits.ufo:797
+#: ../base/ufos/seq_credits.ufo:845
 msgid "Additional Thanks To"
 msgstr "Additional Thanks To"
 
-#: ../base/ufos/seq_credits.ufo:804
+#: ../base/ufos/seq_credits.ufo:852
 msgid "Sacrusha"
 msgstr "Sacrusha"
 
-#: ../base/ufos/seq_credits.ufo:811
+#: ../base/ufos/seq_credits.ufo:859
 msgid "Mattn"
 msgstr "Mattn"
 
-#: ../base/ufos/seq_credits.ufo:818
+#: ../base/ufos/seq_credits.ufo:866
 msgid "The Community"
 msgstr "The Community"
 
-#: ../base/ufos/seq_credits.ufo:825
+#: ../base/ufos/seq_credits.ufo:873
 msgid "Everyone who supported us"
 msgstr "Everyone who supported us"
 
-#: ../base/ufos/seq_credits.ufo:857
+#: ../base/ufos/seq_credits.ufo:905
 msgid "http://www.ufoai.net"
 msgstr "http://www.ufoai.net"
 
-#: ../base/ufos/seq_credits.ufo:863
+#: ../base/ufos/seq_credits.ufo:911
 msgid "Copyright 2004-2006 by UFO: AI Team"
 msgstr "Copyright 2004-2006 by UFO: AI Team"
 
@@ -3135,7 +3143,7 @@ msgid "intro_sentence8"
 msgstr "Funded by all seven of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
 
 #: ../base/ufos/seq_intro.ufo:73
-#: ../base/ufos/seq_intro.ufo:165
+#: ../base/ufos/seq_intro.ufo:192
 msgid "Click to continue"
 msgstr "Click to continue"
 
@@ -3166,6 +3174,18 @@ msgstr "And don't forget to protect them as well. A living soldier kills more al
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
 msgstr "That is all, Commander. Good luck."
+
+#: ../base/ufos/seq_intro.ufo:164
+msgid "prolog_sentence8"
+msgstr "Once you've established your first base, you must prepare your soldiers. The recruits we have assigned to PHALANX must be stationed on your dropship, then equipped for battle."
+
+#: ../base/ufos/seq_intro.ufo:173
+msgid "prolog_sentence9"
+msgstr "Take care of them, Commander. The rest of us are all counting on you, and praying for you."
+
+#: ../base/ufos/seq_intro.ufo:182
+msgid "prolog_sentence10"
+msgstr "That is all. Good luck and good hunting."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
