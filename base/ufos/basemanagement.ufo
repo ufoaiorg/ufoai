@@ -197,7 +197,7 @@ building building_intercept
 	onclick		"building_open"
 }
 
-building building_ufo_hangar
+building building_small_ufo_hangar
 {
 	name		"_UFO Hangar"
 	image		base/adrop
@@ -206,7 +206,7 @@ building building_ufo_hangar
 	build_time	12
 	varcosts	5600
 	map_name	"ufohangar"
-	pedia		rs_building_ufo_hangar
+	pedia		rs_building_small_ufo_hangar
 	more_than_one	true
     type    	hangar
 	onclick		"building_open"
@@ -355,7 +355,7 @@ aircraft craft_ufo_small
 	type	ufo
 	model	"ufo1"
 	size	4
-	building	building_ufo_hangar
+	building	building_small_ufo_hangar
 	price	3000000
 	fuel	100000
 	fuelsize	100000
@@ -369,7 +369,8 @@ aircraft craft_ufo_big
 	type	ufo
 	model	"ufobig"
 	size	8
-	building	building_ufo_hangar
+	// FIXME: should be big hangar
+	building	building_small_ufo_hangar
 	fuel	1000000
 	fuelsize	1000000
 	price	4000000
