@@ -1230,7 +1230,7 @@ tech rs_damage_laser
 tech rs_damage_normal
 {
 	type	tech
-	name "_Normal Damage Type"
+	name "_Impact Damage Type"
 	up_chapter	damage
 	description	"none"
 
