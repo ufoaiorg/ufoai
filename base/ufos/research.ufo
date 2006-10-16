@@ -62,7 +62,7 @@ up_chapters main
 	tech		"_Technologies & Discoveries"
 	weapons	"_Weapons"
 	armors	"_Armors"
-	damage	"_Damage Types"
+//	damage	"_Damage Types"
 	skill	"_Soldier Skills"
 	buildings	"_Buildings"
 	aliens	"_Alien Species"
@@ -1193,8 +1193,8 @@ tech rs_damage_blast
 {
 	type	tech
 	name "_Blast Damage Type"
-	up_chapter	damage
-	description	"_blast_damage_txt"
+	up_chapter damage
+	description	"none"
 
 	time	0
 //	image_top	techs/blast_damage
@@ -1205,7 +1205,7 @@ tech rs_damage_fire
 	type	tech
 	name "_Fire Damage Type"
 	up_chapter	damage
-	description	"_fire_damage_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/fire_damage
@@ -1216,7 +1216,7 @@ tech rs_damage_laser
 	type	tech
 	name "_Laser Damage Type"
 	up_chapter	damage
-	description	"_laser_damage_txt"
+	description	"none"
 
 	require_AND
 	{
@@ -1232,7 +1232,7 @@ tech rs_damage_normal
 	type	tech
 	name "_Normal Damage Type"
 	up_chapter	damage
-	description	"_normal_damage_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/normal_damage
@@ -1243,7 +1243,7 @@ tech rs_damage_shock
 	type	tech
 	name "_Shock Damage Type"
 	up_chapter	damage
-	description	"_shock_damage_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/shock_damage
@@ -1254,7 +1254,7 @@ tech rs_damage_plasma
 	type	tech
 	name "_Plasma Damage Type"
 	up_chapter	damage
-	description	"_plasma_damage_txt"
+	description	"none"
 
 	require_AND
 	{
@@ -1270,7 +1270,7 @@ tech rs_damage_shock
 	type	tech
 	name "_Shock Damage Type"
 	up_chapter	damage
-	description	"_shock_damage_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/shock_damage
@@ -1281,7 +1281,7 @@ tech rs_damage_stun
 	type	tech
 	name "_Stun Damage Type"
 	up_chapter	damage
-	description	"_stun_damage_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/stun_damage
@@ -1292,7 +1292,7 @@ tech rs_damage_tachyon
 	type	tech
 	name "_Tachyon Damage Type"
 	up_chapter	damage
-	description	"_tachyon_damage_txt"
+	description	"none"
 
 	require_AND
 	{
