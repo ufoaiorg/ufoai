@@ -177,6 +177,15 @@ sequence prolog
 		speed	"0 -30"
 		relative	true
 	}
+	2dobj p_sentence10
+	{
+		text	"_prolog_sentence10"
+		pos	"512 685"
+		align	uc
+		color	"0 0.8  0 1"
+		speed	"0 -30"
+		relative	true
+	}
 
 	2dobj p_continue_txt
 	{
@@ -198,5 +207,6 @@ sequence prolog
 	rem p_sentence7
 	rem p_sentence8
 	rem p_sentence9
+	rem p_sentence10
 	rem p_continue_txt
 }
