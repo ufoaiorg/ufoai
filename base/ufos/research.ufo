@@ -63,7 +63,7 @@ up_chapters main
 	weapons	"_Weapons"
 	armors	"_Armors"
 //	damage	"_Damage Types"
-	skill	"_Soldier Skills"
+//	skill	"_Soldier Skills"
 	buildings	"_Buildings"
 	aliens	"_Alien Species"
 	ufos		"_UFOs"
@@ -1312,7 +1312,7 @@ tech rs_skill_accuracy
 	type	tech
 	name "_Accuracy Attribute"
 	up_chapter	skill
-	description	"_accuracy_skill_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/accuracy_skill
@@ -1323,7 +1323,7 @@ tech rs_skill_assault
 	type	tech
 	name "_Assault Guns Proficiency"
 	up_chapter	skill
-	description	"_assault_skill_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/assault_skill
@@ -1334,7 +1334,7 @@ tech rs_skill_close
 	type	tech
 	name "_Close Combat Proficiency"
 	up_chapter	skill
-	description	"_close_skill_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/close_skill
@@ -1345,7 +1345,7 @@ tech rs_skill_explosive
 	type	tech
 	name "_High-Explosives Proficiency"
 	up_chapter	skill
-	description	"_explosive_skill_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/explosive_skill
@@ -1356,7 +1356,7 @@ tech rs_skill_heavy
 	type	tech
 	name "_Heavy Weapons Proficiency"
 	up_chapter	skill
-	description	"_heavy_skill_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/heavy_skill
@@ -1367,7 +1367,7 @@ tech rs_skill_mind
 	type	tech
 	name "_Mind Attribute"
 	up_chapter	skill
-	description	"_mind_skill_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/mind_skill
@@ -1378,7 +1378,7 @@ tech rs_skill_power
 	type	tech
 	name "_Power Attribute"
 	up_chapter	skill
-	description	"_power_skill_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/power_skill
@@ -1389,7 +1389,7 @@ tech rs_skill_sniper
 	type	tech
 	name "_Sniper Rifles Proficiency"
 	up_chapter	skill
-	description	"_sniper_skill_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/sniper_skill
@@ -1400,7 +1400,7 @@ tech rs_skill_speed
 	type	tech
 	name "_Speed Attribute"
 	up_chapter	skill
-	description	"_speed_skill_txt"
+	description	"none"
 
 	time	0
 //	image_top	techs/speed_skill
