@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_../../src/ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_../../src/ports/win32/libjpeg.lib_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=95
+UnitCount=94
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -720,16 +720,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit72]
-FileName=..\..\src\client\cl_market.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_market.c -o cl_market.o $(CFLAGS)
-
-[Unit73]
 FileName=..\..\src\client\cl_market.h
 Folder=Header Files
 Compile=1
@@ -739,7 +729,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit74]
+[Unit73]
 FileName=..\..\src\client\cl_aircraft.c
 Folder=Source Files
 Compile=1
@@ -748,6 +738,16 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_aircraft.c -o cl_aircraft.o $(CFLAGS)
+
+[Unit74]
+FileName=..\..\src\client\cl_aircraft.h
+Folder=Header Files
+Compile=1
+CompileCpp=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
 
 [VersionInfo]
 Major=2
@@ -768,7 +768,7 @@ ProductVersion=2.1-dev2
 AutoIncBuildNr=0
 
 [Unit78]
-FileName=..\..\src\qcommon\mem.h
+FileName=..\..\src\qcommon\scripts.h
 Folder=Header Files
 Compile=1
 Link=1
@@ -778,16 +778,6 @@ BuildCmd=
 CompileCpp=1
 
 [Unit75]
-FileName=..\..\src\client\cl_aircraft.h
-CompileCpp=1
-Folder=Header Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit76]
 FileName=..\..\src\qcommon\filesys.h
 CompileCpp=1
 Folder=Header Files
@@ -797,7 +787,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit77]
+[Unit76]
 FileName=..\..\src\qcommon\md4.h
 CompileCpp=1
 Folder=Header Files
@@ -807,8 +797,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit79]
-FileName=..\..\src\qcommon\scripts.h
+[Unit77]
+FileName=..\..\src\qcommon\mem.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
@@ -817,7 +807,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit80]
+[Unit79]
 FileName=..\..\src\qcommon\ufotypes.h
 CompileCpp=1
 Folder=Header Files
@@ -827,7 +817,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit81]
+[Unit80]
 FileName=..\..\src\qcommon\cmd.h
 CompileCpp=1
 Folder=Header Files
@@ -837,7 +827,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit82]
+[Unit81]
 FileName=..\..\src\qcommon\cmodel.h
 CompileCpp=1
 Folder=Header Files
@@ -847,7 +837,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit83]
+[Unit82]
 FileName=..\..\src\qcommon\doxygen.h
 CompileCpp=1
 Folder=Header Files
@@ -857,7 +847,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit84]
+[Unit83]
 FileName=..\..\src\qcommon\cvar.h
 CompileCpp=1
 Folder=Header Files
@@ -867,7 +857,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit85]
+[Unit84]
 FileName=..\..\src\client\cl_map.c
 CompileCpp=0
 Folder=Source Files
@@ -877,7 +867,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_map.c -o cl_map.o $(CFLAGS)
 
-[Unit86]
+[Unit85]
 FileName=..\..\src\client\cl_produce.c
 CompileCpp=0
 Folder=Source Files
@@ -887,7 +877,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_produce.c -o cl_produce.o $(CFLAGS)
 
-[Unit87]
+[Unit86]
 FileName=..\..\src\client\cl_popup.c
 CompileCpp=0
 Folder=Source Files
@@ -897,7 +887,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_popup.c -o cl_popup.o $(CFLAGS)
 
-[Unit88]
+[Unit87]
 FileName=..\..\src\client\cl_ufo.c
 CompileCpp=0
 Folder=Source Files
@@ -907,56 +897,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_ufo.c -o cl_ufo.o $(CFLAGS)
 
-[Unit90]
-FileName=..\..\src\client\cl_employee.h
-CompileCpp=1
-Folder=Header Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit91]
-FileName=..\..\src\client\cl_employee.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_employee.c -o cl_employee.o $(CFLAGS)
-
-[Unit92]
-FileName=..\..\src\qcommon\unzip.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c unzip.c -o unzip.o $(CFLAGS)
-
-[Unit70]
-FileName=..\..\src\ports\win32\ufo.ico
-Folder=Resource Files
-Compile=0
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit71]
-FileName=..\..\src\client\cl_shader.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_shader.c -o cl_shader.o $(CFLAGS)
-
-[Unit89]
+[Unit88]
 FileName=..\..\src\client\cl_radar.c
 CompileCpp=0
 Folder=Source Files
@@ -966,7 +907,27 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_radar.c -o cl_radar.o $(CFLAGS)
 
-[Unit93]
+[Unit90]
+FileName=..\..\src\client\cl_employee.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_employee.c -o cl_employee.o $(CFLAGS)
+
+[Unit91]
+FileName=..\..\src\qcommon\unzip.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c unzip.c -o unzip.o $(CFLAGS)
+
+[Unit92]
 FileName=..\..\src\qcommon\unzip.h
 CompileCpp=1
 Folder=Header Files
@@ -976,7 +937,27 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit94]
+[Unit71]
+FileName=..\..\src\client\cl_market.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_market.c -o cl_market.o $(CFLAGS)
+
+[Unit89]
+FileName=..\..\src\client\cl_employee.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit93]
 FileName=..\..\src\client\cl_hospital.h
 CompileCpp=1
 Folder=Header Files
@@ -985,6 +966,16 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+
+[Unit94]
+FileName=..\..\src\client\cl_hospital.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_hospital.c -o cl_hospital.o $(CFLAGS)
 
 [Unit95]
 FileName=..\..\src\client\cl_hospital.c
@@ -995,4 +986,14 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_hospital.c -o cl_hospital.o $(CFLAGS)
+
+[Unit70]
+FileName=..\..\src\client\cl_shader.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_shader.c -o cl_shader.o $(CFLAGS)
 
