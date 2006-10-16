@@ -48,17 +48,7 @@ ProductVersion=0.1
 AutoIncBuildNr=0
 
 [Unit1]
-FileName=ports\linux\snd_sdl.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c snd_sdl.c -o snd_sdl.o $(CFLAGS)
-
-[Unit2]
-FileName=client\snd_loc.h
+FileName=..\..\src\client\snd_loc.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
@@ -67,8 +57,18 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+[Unit2]
+FileName=..\..\src\ports\linux\snd_sdl.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c snd_sdl.c -o snd_sdl.o $(CFLAGS)
+
 [Unit3]
-FileName=ports\linux\snd_sdl.h
+FileName=..\..\src\ports\linux\snd_sdl.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
