@@ -62,6 +62,6 @@ END
 #ifndef __MINGW32__
 IDI_ICON1               ICON    DISCARDABLE     "ufo.ico"
 #else
-IDI_ICON1               ICON    DISCARDABLE     "src/ports/win32/ufo.ico"
+IDI_ICON1               ICON    DISCARDABLE     "build/projects/ufo.ico"
 #endif    // __MINGW32__
 

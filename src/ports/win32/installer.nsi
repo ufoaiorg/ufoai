@@ -21,8 +21,8 @@ ShowUninstDetails "nevershow"
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "..\..\ports\win32\ufo.ico"
-!define MUI_UNICON "..\..\ports\win32\ufo.ico"
+!define MUI_ICON "..\..\..\build\projects\ufo.ico"
+!define MUI_UNICON "..\..\..\build\projects\ufo.ico"
 
 ; Language Selection Dialog Settings
 !define MUI_LANGDLL_REGISTRY_ROOT "${PRODUCT_UNINST_ROOT_KEY}"
