@@ -141,6 +141,7 @@ menu ufopedia
 		*ufopedia format  "18 0"
 		*ufopedia font    f_small
 		*ufopedia mousefx false
+		cmd "mn_textscroll ufopedia reset;"
 	}
 
 	text description
