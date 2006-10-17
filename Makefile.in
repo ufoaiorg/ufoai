@@ -107,7 +107,7 @@ maps: $(UFO2MAP_TARGET)
 #-----------------------------------------
 
 ifeq ($(HAVE_SVNVERSION),yes)
-VER=`svnversion`
+VER=`svnversion .`
 else
 VER="Unknown"
 endif
