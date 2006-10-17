@@ -1,4 +1,4 @@
-#if defined __linux__ || defined __FreeBSD__
+#ifndef min
 #define min(a,b) ((a)<(b) ? (a):(b))
 #endif
 
