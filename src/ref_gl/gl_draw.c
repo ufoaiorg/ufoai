@@ -25,10 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-#if defined __linux__ || defined __FreeBSD__
-#define min(a,b) ((a)<(b) ? (a):(b))
-#endif
-
 extern cvar_t *gl_drawclouds;
 extern qboolean scrap_dirty;
 void Scrap_Upload(void);

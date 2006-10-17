@@ -1,3 +1,7 @@
+#if defined __linux__ || defined __FreeBSD__
+#define min(a,b) ((a)<(b) ? (a):(b))
+#endif
+
 /*============================================================================ */
 
 typedef struct sizebuf_s {
