@@ -1,5 +1,6 @@
 SERVER_SRCS += \
 	qcommon/cmd.c \
+	qcommon/ioapi.c \
 	qcommon/unzip.c \
 	qcommon/cmodel.c \
 	qcommon/common.c \

@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct {
 	char name[MAX_QPATH];
-	unsigned long filepos;
+	unz_file_pos* filepos;
 	unsigned long filelen;
 } packfile_t;
 
@@ -204,7 +204,7 @@ int FS_FOpenFileSingle(const char *filename, FILE ** file)
 					*file = fopen(pak->filename, "rb");
 					if (!*file)
 						Com_Error(ERR_FATAL, "Couldn't reopen %s", pak->filename);
-					fseek(*file, pak->files[i].filepos, SEEK_SET);
+					fseek(*file, pak->files[i].filepos->pos_in_zip_directory, SEEK_SET);
 					return pak->files[i].filelen;
 				}
 		} else {
@@ -466,7 +466,7 @@ pack_t *FS_LoadPackFile(const char *packfile)
 				break;
 			Q_strlwr(filename_inzip);
 
-			unzGetCurrentFileInfoPosition(uf, &newfiles[i].filepos);
+			unzGetFilePos(uf, newfiles[i].filepos);
 			Q_strncpyz(newfiles[i].name, filename_inzip, MAX_QPATH);
 			newfiles[i].filelen = file_info.compressed_size;
 			unzGoToNextFile(uf);
