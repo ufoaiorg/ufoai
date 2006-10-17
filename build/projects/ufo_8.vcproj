@@ -622,7 +622,7 @@
 				>
 			</File>
 			<File
-				RelativePath="qcommon\crc.c"
+				RelativePath="qcommon\ioapi.c"
 				>
 			</File>
 			<File

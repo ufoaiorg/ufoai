@@ -375,7 +375,7 @@
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\crc.c">
+		<Unit filename="..\..\src\qcommon\ioapi.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>

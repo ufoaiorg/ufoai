@@ -250,7 +250,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit23]
-FileName=..\..\src\qcommon\crc.c
+FileName=..\..\src\qcommon\ioapi.c
 Folder=Source Files
 Compile=1
 CompileCpp=0

@@ -830,7 +830,7 @@ DEP_CPP_CONSO=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\qcommon\crc.c
+SOURCE=.\qcommon\ioapi.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
