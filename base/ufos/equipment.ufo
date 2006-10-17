@@ -45,6 +45,8 @@ equipment campaign_market
 	shotgun_ammo			40
 	shotgun2				1
 	shotgun2_ammo			20
+	shotgun_micro			4
+	shotgun_micro_ammo		20
 //	chaingun				1
 //	chaingun_ammo			5
 	flamer					3
@@ -161,6 +163,12 @@ equipment multiplayer
 	smg_ammo			5
 	shotgun				2
 	shotgun_ammo		5
+	shotgun2			1
+	shotgun2_ammo		20
+	shotgun_micro		4
+	shotgun_micro_ammo	20
+	chaingun			1
+	chaingun_ammo		5
 	flamer				1
 	flamer_ammo			3
 	rpg					1
@@ -220,6 +228,12 @@ equipment testing_and_tweaking
 	smg_ammo			4
 	shotgun				2
 	shotgun_ammo		4
+	shotgun2			1
+	shotgun2_ammo		20
+	shotgun_micro		4
+	shotgun_micro_ammo	20
+	chaingun			1
+	chaingun_ammo		5
 	flamer				2
 	flamer_ammo			4
 	rpg					2

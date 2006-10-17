@@ -569,6 +569,81 @@ item shotgun_slug_ammo
 	}
 }
 
+// =======================
+// SHOTGUN MICRO
+// =======================
+item shotgun_micro
+{
+	name		"_Riot Shotgun"
+	model		weapons/shotgunmicro/shotgunmicro
+	weapon		true
+	type		biggun
+	category	1
+	holdtwohanded	false
+	firetwohanded	true
+	shape		"0 0 4 2"
+	center		"0 0 1"
+	scale		1
+	ammo		8
+	reload		20
+	price		3500
+	buytype		0
+}
+
+item shotgun_micro_ammo
+{
+	name		"_Buckshots"
+	model		weapons/shotgunmicro/shotgunmicro_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.5
+	price		35
+	buytype		0
+
+	primary
+	{
+		name	"_Single Shot"
+		skill	heavy
+		projtl	null
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/shotgunmicro.wav
+		sndonce true
+		speed	0
+		spread	"4 0"
+		crouch	1.0
+		range	60
+		shots	6
+		ammo	1
+		rof		0
+		time	4
+		damage	"6 2"
+		dmgtype blast
+	}
+
+	secondary
+	{
+		name	"_Double Shot"
+		skill	heavy
+		projtl	null
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/shotgunmicro.wav
+		sndonce true
+		speed	0
+		spread	"5 0"
+		crouch	1.0
+		range	40
+		shots	12
+		ammo	2
+		rof		0
+		time	7
+		damage	"6 2"
+		dmgtype blast
+	}
+}
 
 // =======================
 // FLAMETHROWER

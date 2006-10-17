@@ -894,6 +894,39 @@ tech rs_weapon_shotgun2_ammo
 	producetime	1
 }
 
+tech rs_weapon_shotgun_micro
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_shotgun_micro_txt"
+
+	require_AND
+	{
+		tech rs_skill_heavy
+	}
+
+	provides	shotgun_micro
+	time	0
+	producetime	40
+}
+
+tech rs_weapon_shotgun_micro_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_shotgun_micro_ammo_txt"
+
+	require_AND
+	{
+		tech rs_damage_blast
+		tech rs_weapon_shotgun_micro
+	}
+
+	provides	shotgun_micro_ammo
+	time	0
+	producetime	1
+}
+
 tech rs_weapon_smg
 {
 	type	weapon

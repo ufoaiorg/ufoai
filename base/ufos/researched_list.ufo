@@ -9,6 +9,10 @@ researched rslist_human
 	rs_weapon_smg_ammo
 	rs_weapon_shotgun
 	rs_weapon_shotgun_ammo
+	rs_weapon_shotgun2
+	rs_weapon_shotgun2_ammo
+//	rs_weapon_shotgun_micro
+//	rs_weapon_shotgun_micro_ammo
 	rs_weapon_flamer
 	rs_weapon_flamer_ammo
 	rs_weapon_pistol

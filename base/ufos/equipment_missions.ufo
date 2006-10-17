@@ -280,6 +280,10 @@ equipment human_phalanx_initial
 	smg_ammo			75
 	shotgun				27
 	shotgun_ammo		90
+	shotgun2			10
+	shotgun2_ammo		40
+//	shotgun_mirco		27
+//	shotgun_micro_ammo	90
 	flamer				10
 	flamer_ammo			35
 	rpg				    8
