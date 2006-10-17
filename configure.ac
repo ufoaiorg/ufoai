@@ -204,8 +204,8 @@ then
 		if test "$HAVE_WINDRES" != "yes"
 		then
 			WINDRES=""
-			AC_MSG_ERROR([You must have the mkdir program installed])	
-		fi	
+			AC_MSG_ERROR([You must have the mkdir program installed])
+		fi
 	fi
 fi
 AC_SUBST([WINDRES],$WINDRES)
@@ -304,6 +304,21 @@ then
 	else
 	   AC_DEFINE([stricmp],[strcasecmp])
 	fi
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for zlib
+#---------------------------------------------------------------------------------------------
+
+AC_CHECK_HEADERS([zlib.h])
+if test "$ac_cv_header_zlib_h" != "yes"
+then
+	AC_MSG_ERROR([Couldn't find zlib.h!])
+fi
+AC_SEARCH_LIBS([compress],[z])
+if test "$ac_cv_search_compress" = "no"
+then
+	AC_MSG_ERROR([couldn't find zlib!])
 fi
 
 #---------------------------------------------------------------------------------------------
