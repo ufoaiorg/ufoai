@@ -3,7 +3,6 @@ SERVER_SRCS += \
 	qcommon/unzip.c \
 	qcommon/cmodel.c \
 	qcommon/common.c \
-	qcommon/crc.c \
 	qcommon/cvar.c \
 	qcommon/files.c \
 	qcommon/md4.c \
