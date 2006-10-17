@@ -1496,6 +1496,7 @@ void Qcommon_Init(int argc, char **argv)
 float Qcommon_Frame(int msec)
 {
 	char *s;
+	int wait;
 	/* static to fix some warnings in relation to setjmp */
 	static int time_before = 0, time_between = 0, time_after = 0;
 	static int sv_timer = 0, cl_timer = 0;
@@ -1519,20 +1520,20 @@ float Qcommon_Frame(int msec)
 	else if (timescale->value < 0.2)
 		Cvar_SetValue("timescale", 0.2);
 
-	if (s_sleep->value && cl_timer <= 0 && sv_timer <= 0) {
-		int wait;
-		if (dedicated->value)
-			wait = abs(sv_timer);
-		else if (!sv.active)
-			wait = abs(cl_timer);
-		else
-			wait = max(cl_timer, sv_timer);
-		if (wait >= 1) {
-			if (COM_CheckParm("-paranoid"))
-				Com_DPrintf("Sys_Sleep for %i ms\n", wait);
-			Sys_Sleep(wait);
-		}
-		cl_timer = sv_timer = 0;
+	if (dedicated->value) {
+		cl_timer = 0;
+		wait = -sv_timer;
+	} else if (!sv.active) {
+		sv_timer = 0;
+		wait = -cl_timer;
+	} else
+		wait = -max(cl_timer, sv_timer);
+	wait = min(wait, 100);
+
+	if (wait >= 1 && s_sleep->value) {
+		if (COM_CheckParm("-paranoid"))
+			Com_DPrintf("Sys_Sleep for %i ms\n", wait);
+		Sys_Sleep(wait);
 		return timescale->value;
 	}
 
@@ -1575,29 +1576,22 @@ float Qcommon_Frame(int msec)
 	if (host_speeds->value)
 		time_before = Sys_Milliseconds();
 
+	/* run a server frame every 100ms (10fps) */
 	if (sv_timer > 0) {
-		if (!sv.active) {
-			/* if there is no server, run server timing at 10fps */
-			sv_timer -= 100;
-		} else {
-			SV_Frame(sv_timer);
-		}
+		int frametime = 100;
+		SV_Frame(frametime);
+		sv_timer -= frametime;
 	}
 
 	if (host_speeds->value)
 		time_between = Sys_Milliseconds();
 
+	/* run client frames according to cl_maxfps */
 	if (cl_timer > 0) {
-		if (dedicated->value) {
-			/* if there is no client, run client timing at 10fps */
-			cl_timer -= 100;
-		} else {
-			double frametime;
-			frametime = (cl_timer < 1000 ? cl_timer : 1000);
-			frametime = max(frametime, 1000/(int)cl_maxfps->value);
-			CL_Frame(cl_timer);
-			cl_timer -= frametime;
-		}
+		int frametime = max(cl_timer, 1000/(int)cl_maxfps->value);
+		frametime = min(frametime, 1000);
+		cl_timer -= frametime;
+		CL_Frame(frametime);
 	}
 
 	if (host_speeds->value) {
