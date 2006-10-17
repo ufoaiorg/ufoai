@@ -45,8 +45,8 @@ equipment campaign_market
 	shotgun_ammo			40
 	shotgun2				1
 	shotgun2_ammo			20
-	chaingun				1
-	chaingun_ammo			5
+//	chaingun				1
+//	chaingun_ammo			5
 	flamer					3
 	flamer_ammo				40
 	rpg						3
