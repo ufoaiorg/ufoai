@@ -221,7 +221,7 @@ item sniper_ammo
 // =======================
 item pistol
 {
-	name		"_9mm Pistol"
+	name		"_7.62mm Pistol"
 	model		weapons/pistol/pistol
 	weapon		true
 	type		pistol
@@ -239,7 +239,7 @@ item pistol
 
 item pistol_ammo
 {
-	name		"_Pistol Clip"
+	name		"_Pistol Clip 7.62mm"
 	model		weapons/pistol/pistol_clip
 	type		ammo
 	category	0
@@ -311,7 +311,7 @@ item pistol2
 
 item pistol2_ammo
 {
-	name		"_Pistol Clip"
+	name		"_Pistol Clip 9mm"
 	model		weapons/pistol2/pistol2_clip
 	type		ammo
 	category	0
