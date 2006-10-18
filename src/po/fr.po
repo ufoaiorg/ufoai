@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 09:01+0200\n"
+"POT-Creation-Date: 2006-10-18 09:31+0200\n"
 "PO-Revision-Date: 2006-09-23 11:20+0100\n"
 "Last-Translator: Kracken <alloschery@irsamc.ups-tlse.fr>\n"
 "Language-Team: \n"
@@ -3048,11 +3048,61 @@ msgstr ""
 "Tranports. Ces vaisseaux sont un danger même isolés et doivent être engagés "
 "avec prudence."
 
-#: ../base/ufos/research.ufo:1800 ../base/ufos/research.ufo:1820
+#: ../base/ufos/research.ufo:1800 ../base/ufos/research.ufo:1819
+#, fuzzy
+msgid "Bloodspider - Combat notes"
+msgstr "Hovernet - Note de Combat"
+
+#: ../base/ufos/research.ufo:1801 ../base/ufos/research.ufo:1820
+#, fuzzy
+msgid "bloodspider_notes_txt"
+msgstr "<TODO>"
+
+#: ../base/ufos/research.ufo:1834
+#, fuzzy
+msgid "Bloodspider - Autopsy"
+msgstr "Shevaar - Autopsie"
+
+#: ../base/ufos/research.ufo:1835
+#, fuzzy
+msgid "bloodspider_autopsy_txt"
+msgstr ""
+"L'impressionnante masse musculaire d'un Shevaar est soutenue par un "
+"squelette trappu, donnant à l'espèce sa force terrifiante. Les deux "
+"machoires sont fixées sur les énormes clavicules de la créature, les rendant "
+"presques aussi large que la créature en elle même et leur donnant une force "
+"de broyage phénoménale. Le large museau humide de la bête est en fait son "
+"cerveau, couvert par un ensemble dense de senseurs variés. Bien que "
+"l'abilité du Shevaar à pourchasser sa proie soit augmentée par cet organe "
+"sensitif et cognitif combiné, sont emplacement proéminent et le manque d'os "
+"protecteur le rend sensible aux attaques psioniques ainsi qu'offrant un "
+"point faible évident en combat rapproché."
+
+#: ../base/ufos/research.ufo:1851
+#, fuzzy
+msgid "Bloodspider - Xenobiology"
+msgstr "Shevaar - Xenobiologie"
+
+#: ../base/ufos/research.ufo:1852
+#, fuzzy
+msgid "bloodspider_xenobiology_txt"
+msgstr "<TODO>"
+
+#: ../base/ufos/research.ufo:1866
+#, fuzzy
+msgid "Bloodspider - Interrogation"
+msgstr "Ortnok - Interrogatoire"
+
+#: ../base/ufos/research.ufo:1867
+#, fuzzy
+msgid "bloodspider_interrogation_txt"
+msgstr "<TODO>"
+
+#: ../base/ufos/research.ufo:1883 ../base/ufos/research.ufo:1903
 msgid "Ortnok - Combat notes"
 msgstr "Ortnok - Notes de Combat"
 
-#: ../base/ufos/research.ufo:1801 ../base/ufos/research.ufo:1821
+#: ../base/ufos/research.ufo:1884 ../base/ufos/research.ufo:1904
 msgid "ortnok_notes_txt"
 msgstr ""
 "L'Ortnok, qui a la peau verte, est génétiquement très proche à la race "
@@ -3070,11 +3120,11 @@ msgstr ""
 "actuellement qu'une hypothèse car aucune preuve ne démontre l'existence de "
 "maître d'espèce."
 
-#: ../base/ufos/research.ufo:1836
+#: ../base/ufos/research.ufo:1919
 msgid "Ortnok - Autopsy"
 msgstr "Ortnok - Autopsie"
 
-#: ../base/ufos/research.ufo:1837
+#: ../base/ufos/research.ufo:1920
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "Leur peau verte est dure et composée d'écailles. L'analyse cellulaire "
@@ -3087,27 +3137,27 @@ msgstr ""
 "heures après la mort. Les Antareans les utilisent sans limite comme chair à "
 "canon dans tous les terrains qu'ils ont décidé de conquérir."
 
-#: ../base/ufos/research.ufo:1854
+#: ../base/ufos/research.ufo:1937
 msgid "Ortnok - Xenobiology"
 msgstr "Ortnok - Xenobiologie"
 
-#: ../base/ufos/research.ufo:1855
+#: ../base/ufos/research.ufo:1938
 msgid "ortnok_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1870
+#: ../base/ufos/research.ufo:1953
 msgid "Ortnok - Interrogation"
 msgstr "Ortnok - Interrogatoire"
 
-#: ../base/ufos/research.ufo:1871
+#: ../base/ufos/research.ufo:1954
 msgid "ortnok_interrogation_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1888
+#: ../base/ufos/research.ufo:1971
 msgid "Ortnok Worker"
 msgstr "Technicien Ortnok"
 
-#: ../base/ufos/research.ufo:1889
+#: ../base/ufos/research.ufo:1972
 msgid "ortnok_light_txt"
 msgstr ""
 "Ayant les mêmes attributs génétiques que les autres Ortnoks, les Guerriers "
@@ -3124,11 +3174,11 @@ msgstr ""
 "désavantage de cette massive augmentation d'implants est la vulnérabilité "
 "accrue aux impulsions électro-magnétiques (EMP)."
 
-#: ../base/ufos/research.ufo:1906
+#: ../base/ufos/research.ufo:1989
 msgid "Ortnok Warrior"
 msgstr "Guerrier Ortnok"
 
-#: ../base/ufos/research.ufo:1907
+#: ../base/ufos/research.ufo:1990
 msgid "ortnok_medium_txt"
 msgstr ""
 "Ayant les mêmes attributs génétiques que les autres Ortnoks, les Guerriers "
@@ -3145,19 +3195,19 @@ msgstr ""
 "poumons. Le désavantage de cette massive augmentation d'implants est la "
 "vulnérabilité accrue aux impulsions électro-magnétiques (EMP)."
 
-#: ../base/ufos/research.ufo:1924
+#: ../base/ufos/research.ufo:2007
 msgid "Antarean - Combat notes"
 msgstr "Antarean - Notes de Combat"
 
-#: ../base/ufos/research.ufo:1925
+#: ../base/ufos/research.ufo:2008
 msgid "antarean_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1940
+#: ../base/ufos/research.ufo:2023
 msgid "Antarean - Autopsy"
 msgstr "Antarean - Autopsie"
 
-#: ../base/ufos/research.ufo:1941
+#: ../base/ufos/research.ufo:2024
 msgid "antarean_autopsy_txt"
 msgstr ""
 "L'antarean possède un ensemble d'organes internes superficiellement "
@@ -3177,43 +3227,43 @@ msgstr ""
 "ceux qui sont destinés à reigner avant même qu'ils naissent. Des attaques "
 "psioniques poussées pourraient donner accès à une telle information."
 
-#: ../base/ufos/research.ufo:1956
+#: ../base/ufos/research.ufo:2039
 msgid "Antarean - Xenobiology"
 msgstr "Antarean - Xenobiologie"
 
-#: ../base/ufos/research.ufo:1957
+#: ../base/ufos/research.ufo:2040
 msgid "antarean_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1972
+#: ../base/ufos/research.ufo:2055
 msgid "Antarean - Interrogation"
 msgstr "Antarean - Interrogatoire"
 
-#: ../base/ufos/research.ufo:1973
+#: ../base/ufos/research.ufo:2056
 msgid "antarean_interrogation_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1988
+#: ../base/ufos/research.ufo:2071
 msgid "Antarean - Commander interrogation"
 msgstr "Antarean - Interrogatoire d'un Commandant"
 
-#: ../base/ufos/research.ufo:1989
+#: ../base/ufos/research.ufo:2072
 msgid "antarean_interrogation_commander_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2006
+#: ../base/ufos/research.ufo:2089
 msgid "Shevaar - Combat notes"
 msgstr "Shevaar - Notes de Combat"
 
-#: ../base/ufos/research.ufo:2007
+#: ../base/ufos/research.ufo:2090
 msgid "shevaar_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2022
+#: ../base/ufos/research.ufo:2105
 msgid "Shevaar - Autopsy"
 msgstr "Shevaar - Autopsie"
 
-#: ../base/ufos/research.ufo:2023
+#: ../base/ufos/research.ufo:2106
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "L'impressionnante masse musculaire d'un Shevaar est soutenue par un "
@@ -3227,27 +3277,27 @@ msgstr ""
 "protecteur le rend sensible aux attaques psioniques ainsi qu'offrant un "
 "point faible évident en combat rapproché."
 
-#: ../base/ufos/research.ufo:2038
+#: ../base/ufos/research.ufo:2121
 msgid "Shevaar - Xenobiology"
 msgstr "Shevaar - Xenobiologie"
 
-#: ../base/ufos/research.ufo:2039
+#: ../base/ufos/research.ufo:2122
 msgid "shevaar_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2056
+#: ../base/ufos/research.ufo:2139
 msgid "Hovernet - Combat notes"
 msgstr "Hovernet - Note de Combat"
 
-#: ../base/ufos/research.ufo:2057
+#: ../base/ufos/research.ufo:2140
 msgid "hovernet_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2072
+#: ../base/ufos/research.ufo:2155
 msgid "Hovernet - wreck research"
 msgstr "Hovernet - Recherche sur l'épave"
 
-#: ../base/ufos/research.ufo:2073
+#: ../base/ufos/research.ufo:2156
 msgid "hovernet_autopsy_txt"
 msgstr ""
 "Le démêlement du réseau de fibres molles, qui forme au moins 90% du "
@@ -3263,27 +3313,27 @@ msgstr ""
 "ou une arme à énergie dirigée est peu efficace, et les armes explosives ou "
 "incendiaires doivent causer plus de dégâts."
 
-#: ../base/ufos/research.ufo:2088
+#: ../base/ufos/research.ufo:2171
 msgid "Hovernet - design"
 msgstr "Hovernet - design"
 
-#: ../base/ufos/research.ufo:2089
+#: ../base/ufos/research.ufo:2172
 msgid "hovernet_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2106
+#: ../base/ufos/research.ufo:2189
 msgid "Cyborg Ortnok - Combat notes"
 msgstr "Cyborg Ortnok - Notes de Combat"
 
-#: ../base/ufos/research.ufo:2107
+#: ../base/ufos/research.ufo:2190
 msgid "cyborg_ortnok_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2122
+#: ../base/ufos/research.ufo:2205
 msgid "Cyborg Ortnok - Autopsy"
 msgstr "Cyborg Ortnok - Autopsie"
 
-#: ../base/ufos/research.ufo:2123
+#: ../base/ufos/research.ufo:2206
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
 "La séparation de l'endo-squelette du cyborg de la chair du spécimen produit "
@@ -3299,59 +3349,59 @@ msgstr ""
 "biomécanique qui exige une production d'énergie beaucoup plus importante et "
 "la suppression de l'instinct reproducteur."
 
-#: ../base/ufos/research.ufo:2138
+#: ../base/ufos/research.ufo:2221
 msgid "Cyborg Ortnok - Xenobiology"
 msgstr "Cyborg Ortnok - Xenobiologie"
 
-#: ../base/ufos/research.ufo:2139
+#: ../base/ufos/research.ufo:2222
 msgid "cyborg_ortnok_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2157
+#: ../base/ufos/research.ufo:2240
 msgid "UGV Phoenix"
 msgstr "UGV Phoenix"
 
-#: ../base/ufos/research.ufo:2158
+#: ../base/ufos/research.ufo:2241
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2171
+#: ../base/ufos/research.ufo:2254
 msgid "UGV Triax"
 msgstr "UGV Triax"
 
-#: ../base/ufos/research.ufo:2172
+#: ../base/ufos/research.ufo:2255
 msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2187
+#: ../base/ufos/research.ufo:2270
 msgid "Light Shield"
 msgstr "Armure légère"
 
-#: ../base/ufos/research.ufo:2188
+#: ../base/ufos/research.ufo:2271
 msgid "craft_shield_light_txt"
 msgstr "craft_shield_light_txt"
 
-#: ../base/ufos/research.ufo:2201
+#: ../base/ufos/research.ufo:2284
 msgid "Medium Shield"
 msgstr "Armure moyenne"
 
-#: ../base/ufos/research.ufo:2202
+#: ../base/ufos/research.ufo:2285
 msgid "craft_shield_medium_txt"
 msgstr "craft_shield_medium_txt"
 
-#: ../base/ufos/research.ufo:2220
+#: ../base/ufos/research.ufo:2303
 msgid "Hard Shield"
 msgstr "Armure lourde"
 
-#: ../base/ufos/research.ufo:2221
+#: ../base/ufos/research.ufo:2304
 msgid "craft_shield_hard_txt"
 msgstr "craft_shield_hard_txt"
 
-#: ../base/ufos/research.ufo:2239
+#: ../base/ufos/research.ufo:2322
 msgid "Flac Cannon"
 msgstr "Canon Flac"
 
-#: ../base/ufos/research.ufo:2240
+#: ../base/ufos/research.ufo:2323
 msgid "craft_weapon_flac_txt"
 msgstr "craft_weapon_flac_txt"
 

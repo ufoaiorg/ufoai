@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 09:01+0200\n"
-"PO-Revision-Date: 2006-10-18 09:23+0100\n"
+"POT-Creation-Date: 2006-10-18 09:31+0200\n"
+"PO-Revision-Date: 2006-10-18 09:34+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -4178,212 +4178,292 @@ msgid "ufo_big_txt"
 msgstr "Warships are larger vessels that boast more firepower than Cruisers, and carry about as many soldiers as Transports. These craft are a dangerous force even on their own and should be engaged with caution."
 
 #: ../base/ufos/research.ufo:1800
+#: ../base/ufos/research.ufo:1819
+msgid "Bloodspider - Combat notes"
+msgstr "Bloodspider - Combat notes"
+
+#: ../base/ufos/research.ufo:1801
 #: ../base/ufos/research.ufo:1820
+msgid "bloodspider_notes_txt"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: 01 June 2084\n"
+"\n"
+"SUB: Proposal: Alien Autopsy -- Bloodspider\n"
+"\n"
+"\n"
+"Commander,\n"
+"\n"
+"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+
+#: ../base/ufos/research.ufo:1834
+msgid "Bloodspider - Autopsy"
+msgstr "Bloodspider - Autopsy"
+
+#: ../base/ufos/research.ufo:1835
+msgid "bloodspider_autopsy_txt"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: 06 June 2084\n"
+"\n"
+"SUB: Re: Alien Autopsy -- Bloodspider\n"
+"\n"
+"\n"
+"Commander,\n"
+"\n"
+"My team has analysed the remains of the arachnid machine our operatives brought back, and we have prepared a summary for your review.\n"
+"\n"
+"Autopsy reveals that the creature is a complex robot without any organic components. Its body is reminiscent of the terrestrial spider; a central body housing the artificial brain and power cells, and eight legs driven by powerful servomotors that allow it to move across the battlefield at frightening speeds. It is equipped with razor-sharp mandibles which can dissect human victims on the spot and store tissue or whole organs in a large cavity located in front of the power cells. These machines have been recorded cutting apart live humans during a terror mission and storing their biomass for retrieval. The process is gruesome and very, very short.\n"
+"\n"
+"Our soldiers have dubbed the creature 'Bloodspider', and the name has stuck.\n"
+"\n"
+"Ballistics testing on samples of the Bloodspider's armour plating reveal that it is very tough and has excellent insulating properties, making it effective against a wide variety of weapons.\n"
+"\n"
+"-- The armour is highly resistant to lasers, electricity and incendiary ammunition, but it can be penetrated by high-velocity armour-piercing rounds and plasma weapons.\n"
+"\n"
+"-- High explosives also achieve good results, as they tend to damage the vulnerable leg joints. This may be the most effective way to take these creatures out.\n"
+"\n"
+"-- Due to its robotic nature, the Bloodspider is immune to tachyon weaponry and psionics.\n"
+"\n"
+"The existence of this creature raises some frightening questions. It suggests that the aliens are taking a very personal interest in us, and they're not asking questions. Commander, these machines pose a dire threat to any human that comes close. If encountered, they should be destroyed immediately and at all costs.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+
+#: ../base/ufos/research.ufo:1851
+msgid "Bloodspider - Xenobiology"
+msgstr "Bloodspider - Xenobiology"
+
+#: ../base/ufos/research.ufo:1852
+msgid "bloodspider_xenobiology_txt"
+msgstr "<TODO>"
+
+#: ../base/ufos/research.ufo:1866
+msgid "Bloodspider - Interrogation"
+msgstr "Bloodspider - Interrogation"
+
+#: ../base/ufos/research.ufo:1867
+msgid "bloodspider_interrogation_txt"
+msgstr "<TODO>"
+
+#: ../base/ufos/research.ufo:1883
+#: ../base/ufos/research.ufo:1903
 msgid "Ortnok - Combat notes"
 msgstr "Ortnok - Combat notes"
 
-#: ../base/ufos/research.ufo:1801
-#: ../base/ufos/research.ufo:1821
+#: ../base/ufos/research.ufo:1884
+#: ../base/ufos/research.ufo:1904
 msgid "ortnok_notes_txt"
 msgstr "Genetically the green skinned Ortnoks seem to be related very closely to the human race. About 80% of their DNA is identical compared to the human's. The parts that are different are most likely genetically engineered because they do not show any individual variability. The fact that they are genetically altered and that they do not seem to have any functional reproduction organs suggests that they are clones made by some as yet unknown alien species. Additionally the Ortnoks have several cybernetic implants which involve mainly the cardiovascular system, the muscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the senses to a level superior to any human. The purpose of the brain implants is mostly unclear but it is believed that they serve as receivers for commands. But currently this is only a assumption because there is no evidence proving the existence of such a master-species."
 
-#: ../base/ufos/research.ufo:1836
+#: ../base/ufos/research.ufo:1919
 msgid "Ortnok - Autopsy"
 msgstr "Ortnok - Autopsy"
 
-#: ../base/ufos/research.ufo:1837
+#: ../base/ufos/research.ufo:1920
 msgid "ortnok_autopsy_txt"
 msgstr "The green skin is scaly and tough, and cellular analysis reveals an abundance of chlorophyll, the molecule that makes plant leaves green. The digestive system does not appear to be undersized so we can only surmise that the Ortnok must have evolved in an environment where food could be scarce and falling back on solar energy was the only option in such situations.The reproductive organs of this species are very active, only ceasing to function 14 hours after death. Small wonder the Antareans use them as a limitless supply of cannon fodder in every terrain they choose to conquer."
 
-#: ../base/ufos/research.ufo:1854
+#: ../base/ufos/research.ufo:1937
 msgid "Ortnok - Xenobiology"
 msgstr "Ortnok - Xenobiology"
 
-#: ../base/ufos/research.ufo:1855
+#: ../base/ufos/research.ufo:1938
 msgid "ortnok_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1870
+#: ../base/ufos/research.ufo:1953
 msgid "Ortnok - Interrogation"
 msgstr "Ortnok - Interrogation"
 
-#: ../base/ufos/research.ufo:1871
+#: ../base/ufos/research.ufo:1954
 msgid "ortnok_interrogation_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1888
+#: ../base/ufos/research.ufo:1971
 msgid "Ortnok Worker"
 msgstr "Ortnok Worker"
 
-#: ../base/ufos/research.ufo:1889
+#: ../base/ufos/research.ufo:1972
 msgid "ortnok_light_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1906
+#: ../base/ufos/research.ufo:1989
 msgid "Ortnok Warrior"
 msgstr "Ortnok Warrior"
 
-#: ../base/ufos/research.ufo:1907
+#: ../base/ufos/research.ufo:1990
 msgid "ortnok_medium_txt"
 msgstr "Having the same genetic features as the regular Ortnoks, the Ortnok Warriors have beenextensively modified with cybernetic implants. All these additional implants obviously aim toachieve a better performance in combat. Therefore the legs and arms have been almost completelyreplaced by cybernetic prostheses which allow a physical strength far beyond the potential of ahuman being. The claw shaped hands are designed to handle extreme weights. The chest area iscovered with a thick steel plating which is almost impenetrable for regular rifle ammunition.The face mask serves as a protection against hazardous gases as well as a augmentation of theupper airways to allow a better lung function. The disadvantage of this massive cyberneticaugmentation is the increased vulnerability to electromagnetic pulses (EMP)."
 
-#: ../base/ufos/research.ufo:1924
+#: ../base/ufos/research.ufo:2007
 msgid "Antarean - Combat notes"
 msgstr "Antarean - Combat notes"
 
-#: ../base/ufos/research.ufo:1925
+#: ../base/ufos/research.ufo:2008
 msgid "antarean_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1940
+#: ../base/ufos/research.ufo:2023
 msgid "Antarean - Autopsy"
 msgstr "Antarean - Autopsy"
 
-#: ../base/ufos/research.ufo:1941
+#: ../base/ufos/research.ufo:2024
 msgid "antarean_autopsy_txt"
 msgstr "Possesses a superficially similar complement of internal organs to humans. On closer inspection the heart is found to have a more complicated structure, tighter integration with the lungs and a connection to a small, liver-like organ. Electrically stimulating the Antarean heart produces a smooth, four stroke heart beat that takes in blood, aerates the blood within the lungs, filters the aerated blood of pollutants and toxins through the additional organ, before pumping the blood around the body. This circulatory system must contribute greatly to the stamina of the species.DNA analysis of specimens of different rank reveals differences in the amount of junk DNA carried by each specimen. Specimens of a higher rank have noticeably less junk DNA, and it appears to have been replaced by DNA containing patterns that yield easily to mathematical modelling. It is possible that this species uses genetic manipulation to confer knowledge upon those who are destined to lead before they are even born. Advanced psionic attacks may provide access to this information."
 
-#: ../base/ufos/research.ufo:1956
+#: ../base/ufos/research.ufo:2039
 msgid "Antarean - Xenobiology"
 msgstr "Antarean - Xenobiology"
 
-#: ../base/ufos/research.ufo:1957
+#: ../base/ufos/research.ufo:2040
 msgid "antarean_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1972
+#: ../base/ufos/research.ufo:2055
 msgid "Antarean - Interrogation"
 msgstr "Antarean - Interrogation"
 
-#: ../base/ufos/research.ufo:1973
+#: ../base/ufos/research.ufo:2056
 msgid "antarean_interrogation_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1988
+#: ../base/ufos/research.ufo:2071
 msgid "Antarean - Commander interrogation"
 msgstr "Antarean - Commander interrogation"
 
-#: ../base/ufos/research.ufo:1989
+#: ../base/ufos/research.ufo:2072
 msgid "antarean_interrogation_commander_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2006
+#: ../base/ufos/research.ufo:2089
 msgid "Shevaar - Combat notes"
 msgstr "Shevaar - Combat notes"
 
-#: ../base/ufos/research.ufo:2007
+#: ../base/ufos/research.ufo:2090
 msgid "shevaar_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2022
+#: ../base/ufos/research.ufo:2105
 msgid "Shevaar - Autopsy"
 msgstr "Shevaar - Autopsy"
 
-#: ../base/ufos/research.ufo:2023
+#: ../base/ufos/research.ufo:2106
 msgid "shevaar_autopsy_txt"
 msgstr "The sheer muscular bulk of the Shevaar is supported by a stout, rugged skeleton, giving the species its fearsome strength. The two sets of jaws are anchored on the creature's enormous shoulder blades, making them as wide as the creature itself, and provide phenomenal crushing force.The huge wet nose of the beast is in fact its brain, covered with a dense array of sensory cells of varying types. While the ability of the Shevaar to hunt down its prey is heightened by this combined sensory and cognitive organ, its prominent placement and lack of protective bone renders it susceptible to psionic attack, as well as providing an obvious weak point in melee combat."
 
-#: ../base/ufos/research.ufo:2038
+#: ../base/ufos/research.ufo:2121
 msgid "Shevaar - Xenobiology"
 msgstr "Shevaar - Xenobiology"
 
-#: ../base/ufos/research.ufo:2039
+#: ../base/ufos/research.ufo:2122
 msgid "shevaar_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2056
+#: ../base/ufos/research.ufo:2139
 msgid "Hovernet - Combat notes"
 msgstr "Hovernet - Combat notes"
 
-#: ../base/ufos/research.ufo:2057
+#: ../base/ufos/research.ufo:2140
 msgid "hovernet_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2072
+#: ../base/ufos/research.ufo:2155
 msgid "Hovernet - wreck research"
 msgstr "Hovernet - wreck research"
 
-#: ../base/ufos/research.ufo:2073
+#: ../base/ufos/research.ufo:2156
 msgid "hovernet_autopsy_txt"
 msgstr "Untangling the network of loose, fibrous material that forms at least 90% of the hovernet reveals a solid disc of unknown construction. Mounting points for weaponry are clearly visible, though the markings alongside them have yet to be deciphered and would be our first breakthrough in understanding the alien language.No joints can be seen between the disc and the dozens of fibres that protrude from it, even under an electron microscope. It is possible that the fibres are extruded from the disc itself, which must provide the most efficient distribution of the hovernet's energy and propulsive force.The loose arrangement of the fibres suggests that a successful hit with a projectile or directed energy weapon is unlikely, and blast or incendiary weapons would have greater effect."
 
-#: ../base/ufos/research.ufo:2088
+#: ../base/ufos/research.ufo:2171
 msgid "Hovernet - design"
 msgstr "Hovernet - design"
 
-#: ../base/ufos/research.ufo:2089
+#: ../base/ufos/research.ufo:2172
 msgid "hovernet_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2106
+#: ../base/ufos/research.ufo:2189
 msgid "Cyborg Ortnok - Combat notes"
 msgstr "Cyborg Ortnok - Combat notes"
 
-#: ../base/ufos/research.ufo:2107
+#: ../base/ufos/research.ufo:2190
 msgid "cyborg_ortnok_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2122
+#: ../base/ufos/research.ufo:2205
 msgid "Cyborg Ortnok - Autopsy"
 msgstr "Cyborg Ortnok - Autopsy"
 
-#: ../base/ufos/research.ufo:2123
+#: ../base/ufos/research.ufo:2206
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr "Separating the cyborg endoskeleton from the specimen's flesh generates sparks and releases choking, acidic vapours. The internals of the endoskeleton slide out of access holes in the artificial bone structure, attached to surgically implanted tendrils that appear to be bio-mechanical. It seems that digestive systems and reproductive organs have been removed and replaced by numerous small engines encased within the endoskeleton. Energy created by the chlorophyll in the Ortnok's skin appears to kick-start the reactions in these micro-engines.The purpose of the Antarean cyborg programme is clearly the conversion of the Ortnok into a bio-mechanical weapons platform that demands much greater energy output and suppression of the reproductive instinct."
 
-#: ../base/ufos/research.ufo:2138
+#: ../base/ufos/research.ufo:2221
 msgid "Cyborg Ortnok - Xenobiology"
 msgstr "Cyborg Ortnok - Xenobiology"
 
-#: ../base/ufos/research.ufo:2139
+#: ../base/ufos/research.ufo:2222
 msgid "cyborg_ortnok_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2157
+#: ../base/ufos/research.ufo:2240
 msgid "UGV Phoenix"
 msgstr "UGV Phoenix"
 
-#: ../base/ufos/research.ufo:2158
+#: ../base/ufos/research.ufo:2241
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2171
+#: ../base/ufos/research.ufo:2254
 msgid "UGV Triax"
 msgstr "UGV Triax"
 
-#: ../base/ufos/research.ufo:2172
+#: ../base/ufos/research.ufo:2255
 msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2187
+#: ../base/ufos/research.ufo:2270
 msgid "Light Shield"
 msgstr "Light Shield"
 
-#: ../base/ufos/research.ufo:2188
+#: ../base/ufos/research.ufo:2271
 msgid "craft_shield_light_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2201
+#: ../base/ufos/research.ufo:2284
 msgid "Medium Shield"
 msgstr "Medium Shield"
 
-#: ../base/ufos/research.ufo:2202
+#: ../base/ufos/research.ufo:2285
 msgid "craft_shield_medium_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2220
+#: ../base/ufos/research.ufo:2303
 msgid "Hard Shield"
 msgstr "Hard Shield"
 
-#: ../base/ufos/research.ufo:2221
+#: ../base/ufos/research.ufo:2304
 msgid "craft_shield_hard_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2239
+#: ../base/ufos/research.ufo:2322
 msgid "Flac Cannon"
 msgstr "Flac Cannon"
 
-#: ../base/ufos/research.ufo:2240
+#: ../base/ufos/research.ufo:2323
 msgid "craft_weapon_flac_txt"
 msgstr "<TODO>"
 

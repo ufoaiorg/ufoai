@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 09:01+0200\n"
+"POT-Creation-Date: 2006-10-18 09:31+0200\n"
 "PO-Revision-Date: 2006-02-15 23:32+0100\n"
 "Last-Translator: Anders K. Madsen <madsen@lillesvin.net>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -2410,211 +2410,243 @@ msgstr ""
 msgid "ufo_big_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1800 ../base/ufos/research.ufo:1820
+#: ../base/ufos/research.ufo:1800 ../base/ufos/research.ufo:1819
+msgid "Bloodspider - Combat notes"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1801 ../base/ufos/research.ufo:1820
+msgid "bloodspider_notes_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1834
+msgid "Bloodspider - Autopsy"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1835
+msgid "bloodspider_autopsy_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1851
+msgid "Bloodspider - Xenobiology"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1852
+msgid "bloodspider_xenobiology_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1866
+msgid "Bloodspider - Interrogation"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1867
+msgid "bloodspider_interrogation_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1883 ../base/ufos/research.ufo:1903
 msgid "Ortnok - Combat notes"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1801 ../base/ufos/research.ufo:1821
+#: ../base/ufos/research.ufo:1884 ../base/ufos/research.ufo:1904
 msgid "ortnok_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1836
+#: ../base/ufos/research.ufo:1919
 msgid "Ortnok - Autopsy"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1837
+#: ../base/ufos/research.ufo:1920
 msgid "ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1854
+#: ../base/ufos/research.ufo:1937
 msgid "Ortnok - Xenobiology"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1855
+#: ../base/ufos/research.ufo:1938
 msgid "ortnok_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1870
+#: ../base/ufos/research.ufo:1953
 msgid "Ortnok - Interrogation"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1871
+#: ../base/ufos/research.ufo:1954
 msgid "ortnok_interrogation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1888
+#: ../base/ufos/research.ufo:1971
 msgid "Ortnok Worker"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1889
+#: ../base/ufos/research.ufo:1972
 msgid "ortnok_light_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1906
+#: ../base/ufos/research.ufo:1989
 msgid "Ortnok Warrior"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1907
+#: ../base/ufos/research.ufo:1990
 msgid "ortnok_medium_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1924
+#: ../base/ufos/research.ufo:2007
 msgid "Antarean - Combat notes"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1925
+#: ../base/ufos/research.ufo:2008
 msgid "antarean_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1940
+#: ../base/ufos/research.ufo:2023
 msgid "Antarean - Autopsy"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1941
+#: ../base/ufos/research.ufo:2024
 msgid "antarean_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1956
+#: ../base/ufos/research.ufo:2039
 msgid "Antarean - Xenobiology"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1957
+#: ../base/ufos/research.ufo:2040
 msgid "antarean_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1972
+#: ../base/ufos/research.ufo:2055
 msgid "Antarean - Interrogation"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1973
+#: ../base/ufos/research.ufo:2056
 msgid "antarean_interrogation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1988
+#: ../base/ufos/research.ufo:2071
 msgid "Antarean - Commander interrogation"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1989
+#: ../base/ufos/research.ufo:2072
 msgid "antarean_interrogation_commander_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2006
+#: ../base/ufos/research.ufo:2089
 msgid "Shevaar - Combat notes"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2007
+#: ../base/ufos/research.ufo:2090
 msgid "shevaar_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2022
+#: ../base/ufos/research.ufo:2105
 msgid "Shevaar - Autopsy"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2023
+#: ../base/ufos/research.ufo:2106
 msgid "shevaar_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2038
+#: ../base/ufos/research.ufo:2121
 msgid "Shevaar - Xenobiology"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2039
+#: ../base/ufos/research.ufo:2122
 msgid "shevaar_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2056
+#: ../base/ufos/research.ufo:2139
 msgid "Hovernet - Combat notes"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2057
+#: ../base/ufos/research.ufo:2140
 msgid "hovernet_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2072
+#: ../base/ufos/research.ufo:2155
 msgid "Hovernet - wreck research"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2073
+#: ../base/ufos/research.ufo:2156
 msgid "hovernet_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2088
+#: ../base/ufos/research.ufo:2171
 msgid "Hovernet - design"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2089
+#: ../base/ufos/research.ufo:2172
 msgid "hovernet_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2106
+#: ../base/ufos/research.ufo:2189
 msgid "Cyborg Ortnok - Combat notes"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2107
+#: ../base/ufos/research.ufo:2190
 msgid "cyborg_ortnok_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2122
+#: ../base/ufos/research.ufo:2205
 msgid "Cyborg Ortnok - Autopsy"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2123
+#: ../base/ufos/research.ufo:2206
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2138
+#: ../base/ufos/research.ufo:2221
 msgid "Cyborg Ortnok - Xenobiology"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2139
+#: ../base/ufos/research.ufo:2222
 msgid "cyborg_ortnok_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2157
+#: ../base/ufos/research.ufo:2240
 msgid "UGV Phoenix"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2158
+#: ../base/ufos/research.ufo:2241
 msgid "ugv_phoenix_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2171
+#: ../base/ufos/research.ufo:2254
 msgid "UGV Triax"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2172
+#: ../base/ufos/research.ufo:2255
 msgid "ugv_triax_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2187
+#: ../base/ufos/research.ufo:2270
 msgid "Light Shield"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2188
+#: ../base/ufos/research.ufo:2271
 msgid "craft_shield_light_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2201
+#: ../base/ufos/research.ufo:2284
 msgid "Medium Shield"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2202
+#: ../base/ufos/research.ufo:2285
 msgid "craft_shield_medium_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2220
+#: ../base/ufos/research.ufo:2303
 msgid "Hard Shield"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2221
+#: ../base/ufos/research.ufo:2304
 msgid "craft_shield_hard_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2239
+#: ../base/ufos/research.ufo:2322
 msgid "Flac Cannon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2240
+#: ../base/ufos/research.ufo:2323
 msgid "craft_weapon_flac_txt"
 msgstr ""
 

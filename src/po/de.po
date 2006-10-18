@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 09:01+0200\n"
+"POT-Creation-Date: 2006-10-18 09:31+0200\n"
 "PO-Revision-Date: 2006-10-16 17:57+0100\n"
 "Last-Translator: moe <maui_key@yahoo.de>\n"
 "Language-Team: \n"
@@ -3216,11 +3216,68 @@ msgstr ""
 "weapon is utterly\n"
 "limited."
 
-#: ../base/ufos/research.ufo:1800 ../base/ufos/research.ufo:1820
+#: ../base/ufos/research.ufo:1800 ../base/ufos/research.ufo:1819
+#, fuzzy
+msgid "Bloodspider - Combat notes"
+msgstr "Hovernet - Kampfverhalten"
+
+#: ../base/ufos/research.ufo:1801 ../base/ufos/research.ufo:1820
+#, fuzzy
+msgid "bloodspider_notes_txt"
+msgstr "TEXT"
+
+#: ../base/ufos/research.ufo:1834
+#, fuzzy
+msgid "Bloodspider - Autopsy"
+msgstr "Shevaar - Autopsie"
+
+#: ../base/ufos/research.ufo:1835
+#, fuzzy
+msgid "bloodspider_autopsy_txt"
+msgstr "TEXT"
+
+#: ../base/ufos/research.ufo:1851
+#, fuzzy
+msgid "Bloodspider - Xenobiology"
+msgstr "Shevaar - Xenobiologie"
+
+#: ../base/ufos/research.ufo:1852
+#, fuzzy
+msgid "bloodspider_xenobiology_txt"
+msgstr "TEXT"
+
+#: ../base/ufos/research.ufo:1866
+#, fuzzy
+msgid "Bloodspider - Interrogation"
+msgstr "Ortnok - Verhör"
+
+#: ../base/ufos/research.ufo:1867
+#, fuzzy
+msgid "bloodspider_interrogation_txt"
+msgstr ""
+"Having the same genetical features as the regular Ortnoks, the Ortnok "
+"Warriors have been\n"
+"extensively modified with cybernetic implants. All these additional implants "
+"obviously aim to\n"
+"achieve a better performance in combat. Therefore the legs and arms have "
+"been almost completely\n"
+"replaced by cybernetic prostheses which allow a physical strength far beyond "
+"the potential of a\n"
+"human beeing. The claw shaped hands are designed to handle extreme weights. "
+"The chest area is\n"
+"covered with a thick steel plating which is almost impenetrable for regular "
+"rifle ammunition.\n"
+"The face mask serves as a protection against hazardous gases as well as a "
+"augmentation of the\n"
+"upper airways to allow a better lung function. The disadvantage of this "
+"massive cybernetic\n"
+"augmentation is the increased vulnerability to electromagnetic pulses (EMP)."
+
+#: ../base/ufos/research.ufo:1883 ../base/ufos/research.ufo:1903
 msgid "Ortnok - Combat notes"
 msgstr "Ortnok - Kampfverhalten"
 
-#: ../base/ufos/research.ufo:1801 ../base/ufos/research.ufo:1821
+#: ../base/ufos/research.ufo:1884 ../base/ufos/research.ufo:1904
 #, fuzzy
 msgid "ortnok_notes_txt"
 msgstr ""
@@ -3245,11 +3302,11 @@ msgstr ""
 "assumption because there is no evidence proving the existence of such a "
 "master-species."
 
-#: ../base/ufos/research.ufo:1836
+#: ../base/ufos/research.ufo:1919
 msgid "Ortnok - Autopsy"
 msgstr "Ortnok - Autopsie"
 
-#: ../base/ufos/research.ufo:1837
+#: ../base/ufos/research.ufo:1920
 #, fuzzy
 msgid "ortnok_autopsy_txt"
 msgstr ""
@@ -3274,11 +3331,11 @@ msgstr ""
 "assumption because there is no evidence proving the existence of such a "
 "master-species."
 
-#: ../base/ufos/research.ufo:1854
+#: ../base/ufos/research.ufo:1937
 msgid "Ortnok - Xenobiology"
 msgstr "Ortnok - Xenobiologie"
 
-#: ../base/ufos/research.ufo:1855
+#: ../base/ufos/research.ufo:1938
 #, fuzzy
 msgid "ortnok_xenobiology_txt"
 msgstr ""
@@ -3300,11 +3357,11 @@ msgstr ""
 "massive cybernetic\n"
 "augmentation is the increased vulnerability to electromagnetic pulses (EMP)."
 
-#: ../base/ufos/research.ufo:1870
+#: ../base/ufos/research.ufo:1953
 msgid "Ortnok - Interrogation"
 msgstr "Ortnok - Verhör"
 
-#: ../base/ufos/research.ufo:1871
+#: ../base/ufos/research.ufo:1954
 #, fuzzy
 msgid "ortnok_interrogation_txt"
 msgstr ""
@@ -3326,11 +3383,11 @@ msgstr ""
 "massive cybernetic\n"
 "augmentation is the increased vulnerability to electromagnetic pulses (EMP)."
 
-#: ../base/ufos/research.ufo:1888
+#: ../base/ufos/research.ufo:1971
 msgid "Ortnok Worker"
 msgstr "Ortnok Arbeiter"
 
-#: ../base/ufos/research.ufo:1889
+#: ../base/ufos/research.ufo:1972
 #, fuzzy
 msgid "ortnok_light_txt"
 msgstr ""
@@ -3355,120 +3412,120 @@ msgstr ""
 "assumption because there is no evidence proving the existence of such a "
 "master-species."
 
-#: ../base/ufos/research.ufo:1906
+#: ../base/ufos/research.ufo:1989
 msgid "Ortnok Warrior"
 msgstr "Ortnok Krieger"
 
-#: ../base/ufos/research.ufo:1907
+#: ../base/ufos/research.ufo:1990
 #, fuzzy
 msgid "ortnok_medium_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:1924
+#: ../base/ufos/research.ufo:2007
 msgid "Antarean - Combat notes"
 msgstr "Antarean - Kampfverhalten"
 
-#: ../base/ufos/research.ufo:1925
+#: ../base/ufos/research.ufo:2008
 #, fuzzy
 msgid "antarean_notes_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:1940
+#: ../base/ufos/research.ufo:2023
 msgid "Antarean - Autopsy"
 msgstr "Antarean - Autopsie"
 
-#: ../base/ufos/research.ufo:1941
+#: ../base/ufos/research.ufo:2024
 #, fuzzy
 msgid "antarean_autopsy_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:1956
+#: ../base/ufos/research.ufo:2039
 msgid "Antarean - Xenobiology"
 msgstr "Antarean - Xenobiologie"
 
-#: ../base/ufos/research.ufo:1957
+#: ../base/ufos/research.ufo:2040
 #, fuzzy
 msgid "antarean_xenobiology_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:1972
+#: ../base/ufos/research.ufo:2055
 msgid "Antarean - Interrogation"
 msgstr "Antarean - Verhör"
 
-#: ../base/ufos/research.ufo:1973
+#: ../base/ufos/research.ufo:2056
 #, fuzzy
 msgid "antarean_interrogation_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:1988
+#: ../base/ufos/research.ufo:2071
 msgid "Antarean - Commander interrogation"
 msgstr "Antarean - Kommander Verhör"
 
-#: ../base/ufos/research.ufo:1989
+#: ../base/ufos/research.ufo:2072
 #, fuzzy
 msgid "antarean_interrogation_commander_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:2006
+#: ../base/ufos/research.ufo:2089
 msgid "Shevaar - Combat notes"
 msgstr "Shevaar - Kampfverhalten"
 
-#: ../base/ufos/research.ufo:2007
+#: ../base/ufos/research.ufo:2090
 #, fuzzy
 msgid "shevaar_notes_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:2022
+#: ../base/ufos/research.ufo:2105
 msgid "Shevaar - Autopsy"
 msgstr "Shevaar - Autopsie"
 
-#: ../base/ufos/research.ufo:2023
+#: ../base/ufos/research.ufo:2106
 #, fuzzy
 msgid "shevaar_autopsy_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:2038
+#: ../base/ufos/research.ufo:2121
 msgid "Shevaar - Xenobiology"
 msgstr "Shevaar - Xenobiologie"
 
-#: ../base/ufos/research.ufo:2039
+#: ../base/ufos/research.ufo:2122
 #, fuzzy
 msgid "shevaar_xenobiology_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:2056
+#: ../base/ufos/research.ufo:2139
 msgid "Hovernet - Combat notes"
 msgstr "Hovernet - Kampfverhalten"
 
-#: ../base/ufos/research.ufo:2057
+#: ../base/ufos/research.ufo:2140
 #, fuzzy
 msgid "hovernet_notes_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:2072
+#: ../base/ufos/research.ufo:2155
 #, fuzzy
 msgid "Hovernet - wreck research"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:2073
+#: ../base/ufos/research.ufo:2156
 #, fuzzy
 msgid "hovernet_autopsy_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:2088
+#: ../base/ufos/research.ufo:2171
 msgid "Hovernet - design"
 msgstr "Hovernet - Design/Aufbau"
 
-#: ../base/ufos/research.ufo:2089
+#: ../base/ufos/research.ufo:2172
 #, fuzzy
 msgid "hovernet_xenobiology_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:2106
+#: ../base/ufos/research.ufo:2189
 msgid "Cyborg Ortnok - Combat notes"
 msgstr "Cyborg Ortnok - Kampfverhalten"
 
-#: ../base/ufos/research.ufo:2107
+#: ../base/ufos/research.ufo:2190
 #, fuzzy
 msgid "cyborg_ortnok_notes_txt"
 msgstr ""
@@ -3493,11 +3550,11 @@ msgstr ""
 "assumption because there is no evidence proving the existence of such a "
 "master-species."
 
-#: ../base/ufos/research.ufo:2122
+#: ../base/ufos/research.ufo:2205
 msgid "Cyborg Ortnok - Autopsy"
 msgstr "Cyborg Ortnok - Autopsie"
 
-#: ../base/ufos/research.ufo:2123
+#: ../base/ufos/research.ufo:2206
 #, fuzzy
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
@@ -3522,11 +3579,11 @@ msgstr ""
 "assumption because there is no evidence proving the existence of such a "
 "master-species."
 
-#: ../base/ufos/research.ufo:2138
+#: ../base/ufos/research.ufo:2221
 msgid "Cyborg Ortnok - Xenobiology"
 msgstr "Cyborg Ortnok - Xenobiologie"
 
-#: ../base/ufos/research.ufo:2139
+#: ../base/ufos/research.ufo:2222
 #, fuzzy
 msgid "cyborg_ortnok_xenobiology_txt"
 msgstr ""
@@ -3551,20 +3608,20 @@ msgstr ""
 "assumption because there is no evidence proving the existence of such a "
 "master-species."
 
-#: ../base/ufos/research.ufo:2157
+#: ../base/ufos/research.ufo:2240
 msgid "UGV Phoenix"
 msgstr "UGV Phoenix"
 
-#: ../base/ufos/research.ufo:2158
+#: ../base/ufos/research.ufo:2241
 #, fuzzy
 msgid "ugv_phoenix_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:2171
+#: ../base/ufos/research.ufo:2254
 msgid "UGV Triax"
 msgstr "UGV Triax"
 
-#: ../base/ufos/research.ufo:2172
+#: ../base/ufos/research.ufo:2255
 #, fuzzy
 msgid "ugv_triax_txt"
 msgstr ""
@@ -3574,11 +3631,11 @@ msgstr ""
 "fragments which fly from\n"
 "the weapon at great speeds. The detonation is controlled by a built in timer."
 
-#: ../base/ufos/research.ufo:2187
+#: ../base/ufos/research.ufo:2270
 msgid "Light Shield"
 msgstr "Leichtes Schild"
 
-#: ../base/ufos/research.ufo:2188
+#: ../base/ufos/research.ufo:2271
 #, fuzzy
 msgid "craft_shield_light_txt"
 msgstr ""
@@ -3603,11 +3660,11 @@ msgstr ""
 "assumption because there is no evidence proving the existence of such a "
 "master-species."
 
-#: ../base/ufos/research.ufo:2201
+#: ../base/ufos/research.ufo:2284
 msgid "Medium Shield"
 msgstr "Mittleres Schild"
 
-#: ../base/ufos/research.ufo:2202
+#: ../base/ufos/research.ufo:2285
 #, fuzzy
 msgid "craft_shield_medium_txt"
 msgstr ""
@@ -3632,11 +3689,11 @@ msgstr ""
 "assumption because there is no evidence proving the existence of such a "
 "master-species."
 
-#: ../base/ufos/research.ufo:2220
+#: ../base/ufos/research.ufo:2303
 msgid "Hard Shield"
 msgstr "Schweres Schild"
 
-#: ../base/ufos/research.ufo:2221
+#: ../base/ufos/research.ufo:2304
 #, fuzzy
 msgid "craft_shield_hard_txt"
 msgstr ""
@@ -3661,12 +3718,12 @@ msgstr ""
 "assumption because there is no evidence proving the existence of such a "
 "master-species."
 
-#: ../base/ufos/research.ufo:2239
+#: ../base/ufos/research.ufo:2322
 #, fuzzy
 msgid "Flac Cannon"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:2240
+#: ../base/ufos/research.ufo:2323
 #, fuzzy
 msgid "craft_weapon_flac_txt"
 msgstr "TEXT"
