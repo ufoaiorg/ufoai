@@ -21,7 +21,7 @@ item assault
 
 item assault_ammo
 {
-	name		"_Assault Rifle Clip"
+	name		"_Assault Rifle Magazine"
 	model		weapons/assault/assault_clip
 	type		ammo
 	category	0
@@ -94,7 +94,7 @@ item chaingun
 
 item chaingun_ammo
 {
-	name		"_Chaingun Clip"
+	name		"_Chaingun Magazine"
 	model		weapons/chaingun/chaingun_ammo
 	type		ammo
 	category	0
@@ -167,7 +167,7 @@ item sniper
 
 item sniper_ammo
 {
-	name		"_Sniper Rifle Clip"
+	name		"_Sniper Rifle Magazine"
 	model		weapons/sniper/sniper_clip
 	type		ammo
 	category	0
@@ -384,7 +384,7 @@ item smg
 
 item smg_ammo
 {
-	name		"_SMG Clip"
+	name		"_SMG Magazine"
 	model		weapons/smg/smg_clip
 	type		ammo
 	category	0
@@ -515,7 +515,7 @@ item shotgun2_ammo
 // =======================
 item shotgun
 {
-	name		"_Shotgun"
+	name		"_Riot Shotgun"
 	model		weapons/shotgun/shotgun
 	weapon		true
 	type		biggun
@@ -533,7 +533,7 @@ item shotgun
 
 item shotgun_ammo
 {
-	name		"_Buckshots"
+	name		"_Flechette Shells"
 	model		weapons/shotgun/shotgun_clip
 	type		ammo
 	category	0
@@ -646,7 +646,7 @@ item shotgun_slug_ammo
 // =======================
 item shotgun_micro
 {
-	name		"_Riot Shotgun"
+	name		"_Shotgun"
 	model		weapons/shotgunmicro/shotgunmicro
 	weapon		true
 	type		biggun
@@ -740,7 +740,7 @@ item flamer
 
 item flamer_ammo
 {
-	name		"_Napalm Tank"
+	name		"_C90 Canister"
 	model		weapons/flamer/flamer_ammo
 	type		ammo
 	category	0
@@ -1012,7 +1012,7 @@ item grenl
 
 item grenl_incendiary_ammo
 {
-	name		"_25mm Flechette Grenade Shells"
+	name		"_25mm IC Grenades"
 	model		weapons/grenl/grenl_clip
 	type		ammo
 	category	0
@@ -1079,7 +1079,7 @@ item grenl_incendiary_ammo
 
 item grenl_fle_ammo
 {
-	name		"_25mm IC Grenade Shells"
+	name		"_25mm Flechette Grenades"
 	model		weapons/grenl/grenl_clip
 	type		ammo
 	category	0
@@ -1146,7 +1146,7 @@ item grenl_fle_ammo
 
 item grenl_ammo
 {
-	name		"_Frag Grenade Shells"
+	name		"_25mm HIT Grenades"
 	model		weapons/grenl/grenl_clip
 	type		ammo
 	category	0
