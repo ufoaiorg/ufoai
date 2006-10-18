@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 08:49+0200\n"
+"POT-Creation-Date: 2006-10-18 08:53+0200\n"
 "PO-Revision-Date: 2006-07-24 09:50+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: inzenir <simon.cedula@guest.arnes.si>\n"
@@ -3213,12 +3213,14 @@ msgstr "Nabojnik ostrostrelske puške"
 msgid "Aimed Shot"
 msgstr "Naciljan strel"
 
-#: ../base/ufos/weapons_human.ufo:224 ../base/ufos/weapons_human.ufo:296
-msgid "9mm Pistol"
+#: ../base/ufos/weapons_human.ufo:224
+#, fuzzy
+msgid "7.62mm Pistol"
 msgstr "9milimetrska pištola"
 
-#: ../base/ufos/weapons_human.ufo:242 ../base/ufos/weapons_human.ufo:314
-msgid "Pistol Clip"
+#: ../base/ufos/weapons_human.ufo:242
+#, fuzzy
+msgid "Pistol Clip 7.62mm"
 msgstr "Pištolin nabojnik"
 
 #: ../base/ufos/weapons_human.ufo:254 ../base/ufos/weapons_human.ufo:326
@@ -3231,6 +3233,15 @@ msgstr "En strel"
 #: ../base/ufos/weapons_human.ufo:272 ../base/ufos/weapons_human.ufo:344
 msgid "Rapid Fire"
 msgstr "Rafalno streljanje"
+
+#: ../base/ufos/weapons_human.ufo:296
+msgid "9mm Pistol"
+msgstr "9milimetrska pištola"
+
+#: ../base/ufos/weapons_human.ufo:314
+#, fuzzy
+msgid "Pistol Clip 9mm"
+msgstr "Pištolin nabojnik"
 
 #: ../base/ufos/weapons_human.ufo:369
 msgid "Submachine Gun"

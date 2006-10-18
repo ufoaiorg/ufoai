@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 08:49+0200\n"
+"POT-Creation-Date: 2006-10-18 08:53+0200\n"
 "PO-Revision-Date: 2006-05-25 22:19+0200\n"
 "Last-Translator: Karel Volný <kavol@seznam.cz>\n"
 "Language-Team:  <cs@li.org>\n"
@@ -3235,12 +3235,14 @@ msgstr "Zásobník ostřelovačské pušky"
 msgid "Aimed Shot"
 msgstr "Cílený výstřel"
 
-#: ../base/ufos/weapons_human.ufo:224 ../base/ufos/weapons_human.ufo:296
-msgid "9mm Pistol"
+#: ../base/ufos/weapons_human.ufo:224
+#, fuzzy
+msgid "7.62mm Pistol"
 msgstr "Pistole ráže 9 mm"
 
-#: ../base/ufos/weapons_human.ufo:242 ../base/ufos/weapons_human.ufo:314
-msgid "Pistol Clip"
+#: ../base/ufos/weapons_human.ufo:242
+#, fuzzy
+msgid "Pistol Clip 7.62mm"
 msgstr "Zásobník pistole"
 
 #: ../base/ufos/weapons_human.ufo:254 ../base/ufos/weapons_human.ufo:326
@@ -3253,6 +3255,15 @@ msgstr "Jeden výstřel"
 #: ../base/ufos/weapons_human.ufo:272 ../base/ufos/weapons_human.ufo:344
 msgid "Rapid Fire"
 msgstr "Rychlá střelba"
+
+#: ../base/ufos/weapons_human.ufo:296
+msgid "9mm Pistol"
+msgstr "Pistole ráže 9 mm"
+
+#: ../base/ufos/weapons_human.ufo:314
+#, fuzzy
+msgid "Pistol Clip 9mm"
+msgstr "Zásobník pistole"
 
 #: ../base/ufos/weapons_human.ufo:369
 msgid "Submachine Gun"

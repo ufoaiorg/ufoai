@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 08:49+0200\n"
+"POT-Creation-Date: 2006-10-18 08:53+0200\n"
 "PO-Revision-Date: 2006-10-16 17:57+0100\n"
 "Last-Translator: moe <maui_key@yahoo.de>\n"
 "Language-Team: \n"
@@ -4212,12 +4212,14 @@ msgstr "Scharfschützengewehr Munition"
 msgid "Aimed Shot"
 msgstr "Gezielter Schuss"
 
-#: ../base/ufos/weapons_human.ufo:224 ../base/ufos/weapons_human.ufo:296
-msgid "9mm Pistol"
+#: ../base/ufos/weapons_human.ufo:224
+#, fuzzy
+msgid "7.62mm Pistol"
 msgstr "9mm Pistole"
 
-#: ../base/ufos/weapons_human.ufo:242 ../base/ufos/weapons_human.ufo:314
-msgid "Pistol Clip"
+#: ../base/ufos/weapons_human.ufo:242
+#, fuzzy
+msgid "Pistol Clip 7.62mm"
 msgstr "9mm Munition"
 
 #: ../base/ufos/weapons_human.ufo:254 ../base/ufos/weapons_human.ufo:326
@@ -4230,6 +4232,15 @@ msgstr "Einzelschuss"
 #: ../base/ufos/weapons_human.ufo:272 ../base/ufos/weapons_human.ufo:344
 msgid "Rapid Fire"
 msgstr "Schnellfeuer"
+
+#: ../base/ufos/weapons_human.ufo:296
+msgid "9mm Pistol"
+msgstr "9mm Pistole"
+
+#: ../base/ufos/weapons_human.ufo:314
+#, fuzzy
+msgid "Pistol Clip 9mm"
+msgstr "9mm Munition"
 
 #: ../base/ufos/weapons_human.ufo:369
 msgid "Submachine Gun"

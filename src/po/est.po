@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 08:49+0200\n"
+"POT-Creation-Date: 2006-10-18 08:53+0200\n"
 "PO-Revision-Date: 2006-08-06 17:20+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -3751,12 +3751,14 @@ msgstr "WE-78 salv"
 msgid "Aimed Shot"
 msgstr "Sihitud lask"
 
-#: ../base/ufos/weapons_human.ufo:224 ../base/ufos/weapons_human.ufo:296
-msgid "9mm Pistol"
+#: ../base/ufos/weapons_human.ufo:224
+#, fuzzy
+msgid "7.62mm Pistol"
 msgstr "9mm Püstol"
 
-#: ../base/ufos/weapons_human.ufo:242 ../base/ufos/weapons_human.ufo:314
-msgid "Pistol Clip"
+#: ../base/ufos/weapons_human.ufo:242
+#, fuzzy
+msgid "Pistol Clip 7.62mm"
 msgstr "9mm salv"
 
 #: ../base/ufos/weapons_human.ufo:254 ../base/ufos/weapons_human.ufo:326
@@ -3769,6 +3771,15 @@ msgstr "Üks lask"
 #: ../base/ufos/weapons_human.ufo:272 ../base/ufos/weapons_human.ufo:344
 msgid "Rapid Fire"
 msgstr "Tihe tulistamine"
+
+#: ../base/ufos/weapons_human.ufo:296
+msgid "9mm Pistol"
+msgstr "9mm Püstol"
+
+#: ../base/ufos/weapons_human.ufo:314
+#, fuzzy
+msgid "Pistol Clip 9mm"
+msgstr "9mm salv"
 
 #: ../base/ufos/weapons_human.ufo:369
 msgid "Submachine Gun"
