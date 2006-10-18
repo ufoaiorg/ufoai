@@ -1631,7 +1631,23 @@ tech rs_building_small_ufo_hangar
 	}
 
 	provides	building_small_ufo_hangar
-	time	0
+	time	4000
+}
+
+tech rs_building_large_ufo_hangar
+{
+	type	building
+	description	"_b_large_ufo_hangar_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_lab
+		tech rs_craft_ufo_tech
+	}
+
+	provides	building_large_ufo_hangar
+	time	6000
 }
 
 tech rs_building_workshop

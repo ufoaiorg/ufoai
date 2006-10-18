@@ -199,7 +199,7 @@ building building_intercept
 
 building building_small_ufo_hangar
 {
-	name		"_UFO Hangar"
+	name		"_Small UFO Hangar"
 	image		base/adrop
 	fixcosts	940000
 	depends		building_powerplant
@@ -207,6 +207,21 @@ building building_small_ufo_hangar
 	varcosts	5600
 	map_name	"ufohangar"
 	pedia		rs_building_small_ufo_hangar
+	more_than_one	true
+    type    	hangar
+	onclick		"building_open"
+}
+
+building building_large_ufo_hangar
+{
+	name		"_Large UFO Hangar"
+	image		base/adropl
+	fixcosts	1000000
+	depends		building_powerplant
+	build_time	18
+	varcosts	5600
+	map_name	"ufohangar_l"
+	pedia		rs_building_large_ufo_hangar
 	more_than_one	true
     type    	hangar
 	onclick		"building_open"

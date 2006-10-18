@@ -28,7 +28,7 @@ equipment campaign_player
 	light			0
 	medikit			2
 	irgoggles		1
-	flashbang	5
+	flashbang		5
 }
 
 equipment campaign_market
@@ -74,7 +74,7 @@ equipment campaign_market
 	medikit					4
 	stunrod					2
 	stungrenade				10
-	flashbang			10
+	flashbang				10
 	light					20
 	medium					5
 //	heavy					1
@@ -269,7 +269,7 @@ equipment testing_and_tweaking
 	medikit				6
 	stunrod				6
 	stungrenade			6
-	incgrenade		6
+	incgrenade			6
 	plasmagrenade		6
 	kerrblade			6
 	plasblade			6
