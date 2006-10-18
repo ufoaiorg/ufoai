@@ -79,12 +79,12 @@ item chaingun
 	name		"_Chaingun"
 	model		weapons/chaingun/chaingun
 	weapon		true
-	type		rifle
+	type		biggun
 	category	1
-	holdtwohanded	false
+	holdtwohanded	true
 	firetwohanded	true
 	shape		"0 0 5 2"
-	center		"3 0 2"
+	center		"5 0 2"
 	scale		1.25
 	ammo		30
 	reload		12
@@ -98,16 +98,16 @@ item chaingun_ammo
 	model		weapons/chaingun/chaingun_ammo
 	type		ammo
 	category	0
-	shape		"0 0 1 2"
-	center		"0 0 0"
-	scale		1.25
-	price		130
+	shape		"0 0 4 2"
+	center		"-3 -6 0"
+	scale		1.6
+	price		300
 	buytype		0
 
 	primary
 	{
 		name	"_Burst"
-		skill	assault
+		skill	heavy
 		projtl	bullet
 		impact	bulletImpact
 		hitbody blood
@@ -126,7 +126,7 @@ item chaingun_ammo
 	secondary
 	{
 		name	"_Auto"
-		skill	assault
+		skill	heavy
 		projtl	bullet
 		impact	bulletImpact
 		hitbody blood
@@ -581,9 +581,9 @@ item shotgun_micro
 	category	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"0 0 4 2"
-	center		"0 0 1"
-	scale		1
+	shape		"0 0 3 2"
+	center		"2 0 1"
+	scale		1.1
 	ammo		8
 	reload		20
 	price		3500
@@ -596,9 +596,9 @@ item shotgun_micro_ammo
 	model		weapons/shotgunmicro/shotgunmicro_clip
 	type		ammo
 	category	0
-	shape		"0 0 1 1"
+	shape		"0 0 1 2"
 	center		"0 0 0"
-	scale		1.5
+	scale		1.4
 	price		35
 	buytype		0
 
