@@ -126,7 +126,7 @@ menu ufopedia
 		num		2
 		format	"24 0"
 		click { cmd "mn_textscroll ufopedia 1;" }
-		height	"24"
+		height	"21"
 	}
 
 	confunc mn_upfbig
