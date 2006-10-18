@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-10-18 09:31+0200\n"
-"PO-Revision-Date: 2006-10-18 17:05+0100\n"
+"PO-Revision-Date: 2006-10-18 17:28+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -193,7 +193,10 @@ msgstr "Standard Campaign"
 #: ../base/ufos/campaign.ufo:187
 #: ../base/ufos/campaign.ufo:281
 msgid "txt_standard_campaign"
-msgstr "<TODO>"
+msgstr ""
+"This is a single-player, military-themed invasion scenario. The player assumes command of Project PHALANX, Earth's response to the alien threat, and can play through a dynamic game with both significant random elements and a strong overarching storyline.\n"
+"\n"
+"This campaign is available at several difficulty levels. This option represents the Standard difficulty level, and is recommended for first-time players who like a challenge."
 
 #: ../base/ufos/campaign.ufo:217
 msgid "Easy Campaign"
