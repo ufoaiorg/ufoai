@@ -659,7 +659,7 @@ item shotgun_micro
 	ammo		8
 	reload		20
 	price		3500
-	buytype		0
+	buytype		1
 }
 
 item shotgun_micro_ammo
@@ -672,7 +672,7 @@ item shotgun_micro_ammo
 	center		"0 0 0"
 	scale		1.4
 	price		35
-	buytype		0
+	buytype		1
 
 	primary
 	{
