@@ -39,6 +39,8 @@ equipment campaign_market
 	sniper_ammo				45
 	pistol					4
 	pistol_ammo				40
+//	pistol2					4
+//	pistol2_ammo			40
 	smg						3
 	smg_ammo				40
 	shotgun					3

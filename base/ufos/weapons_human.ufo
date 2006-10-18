@@ -288,6 +288,78 @@ item pistol_ammo
 	}
 }
 
+// =======================
+// PISTOL2
+// =======================
+item pistol2
+{
+	name		"_9mm Pistol"
+	model		weapons/pistol2/pistol2
+	weapon		true
+	type		pistol2
+	category	2
+	holdtwohanded	false
+	firetwohanded 	false
+	shape		"0 0 2 2"
+	center		"2 0 1"
+	scale		1.35
+	ammo		12
+	reload		12
+	price		900
+	buytype		1
+}
+
+item pistol2_ammo
+{
+	name		"_Pistol Clip"
+	model		weapons/pistol2/pistol2_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 -0.21"
+	scale		1.57
+	price		20
+	buytype		1
+
+	primary
+	{
+		name	"_Single Shot"
+		skill	close
+		projtl	bullet
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/pistol.wav
+		speed	0
+		spread	"0 1"
+		crouch	0.9
+		range	40
+		shots	1
+		ammo	1
+		time	5
+		damage	"20 5"
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"_Rapid Fire"
+		skill	close
+		projtl	bullet
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/pistol.wav
+		speed	0
+		spread	"1 2"
+		crouch	0.9
+		range	40
+		shots	3
+		ammo	3
+		rof		10
+		time	7
+		damage	"20 5"
+		dmgtype normal
+	}
+}
+
 
 // =======================
 // SMG

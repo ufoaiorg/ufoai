@@ -605,6 +605,39 @@ tech rs_weapon_pistol_ammo
 	producetime	1
 }
 
+tech rs_weapon_pistol2
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_pistol2_txt"
+
+	require_AND
+	{
+		tech rs_skill_close
+	}
+
+	provides	pistol2
+	time	0
+	producetime	20
+}
+
+tech rs_weapon_pistol2_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_pistol2_mag_txt"
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_pistol2
+	}
+
+	provides	pistol2_ammo
+	time	0
+	producetime	1
+}
+
 tech rs_weapon_plasatomizer
 {
 	type	weapon
