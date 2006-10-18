@@ -83,8 +83,7 @@ menu aircraft
 	string txt_squad
 	{
 		if "mn_soldiers_in_base > 0"
-		if "mn_aircraftinbase > 0"
-		string	"_Equip Aircraft"
+		string	"_Assign Soldiers"
 		color	"0 0.8 0 1"
 		pos	"160 116"
 		font	f_menu
@@ -93,7 +92,7 @@ menu aircraft
 	string txt_no_squad
 	{
 		if "mn_soldiers_in_base <= 0"
-		string	"_Assign your squad"
+		string	"_NA"
 		color	"0.5 0.5 0.5 1"
 		pos	"160 116"
 		font	f_menu
