@@ -768,7 +768,7 @@ void S_StartSound(vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float 
 {
 	sfxcache_t *sc;
 	int vol;
-	playsound_t *ps, *sort;
+	playsound_t *ps;
 	int start;
 
 	if (!sound_started)
@@ -818,11 +818,8 @@ void S_StartSound(vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float 
 	else
 		ps->begin = start + timeofs * dma.speed;
 
-	/* sort into the pending sound list */
-	for (sort = s_pendingplays.next; sort != &s_pendingplays && sort->begin < ps->begin; sort = sort->next);
-
-	ps->next = sort;
-	ps->prev = sort->prev;
+	ps->next = &s_pendingplays;
+	ps->prev = &s_pendingplays;
 
 	ps->next->prev = ps;
 	ps->prev->next = ps;
