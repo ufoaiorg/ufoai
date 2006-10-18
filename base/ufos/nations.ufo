@@ -29,98 +29,103 @@
 nation latin
 {
 	name "_The Revolutionary Countries"
-	color "0 255 128 1"
+	color "255 255 255 1"
 	names "english_american spanish_italian german"
 	funding	500000
 	happiness 0.44
 	alien_friendly	15
 	soldiers 4
 	scientists 1
-	pos "100 100"
+	pos "0 0"
 }
 
 nation states
 {
 	name "_United America"
-	color "0 128 0 1"
+	color "255 255 255 1"
 	names "english_american spanish_italian french german scandinavian"
 	funding	900000
 	happiness 0.44
 	alien_friendly	40
 	soldiers 4
 	scientists 2
-	pos "100 100"
+	pos "90 20"
 }
 
 nation europa
 {
 	name "_The Greater European Union"
-	color "0 128 255 1"
+	color "255 255 255 1"
 	names "german spanish_italian french english_american scandinavian"
 	funding	750000
 	happiness 0.44
 	alien_friendly	45
 	soldiers 3
 	scientists 3
-	pos "10 10"
+	pos "-10 50"
 }
 
 nation asia
 {
 	name "_The Asian Republic"
-	color "128 128 0 1"
+	color "255 255 255 1"
 	names "chinese japanese"
 	funding	1200000
 	happiness 0.44
 	alien_friendly	30
 	soldiers 5
 	scientists 1
+	pos "-100 55"
 }
 
 nation middle
 {
 	name "_The Middle-Eastern Alliance"
-	color "255 255 0 1"
+	color "255 255 255 1"
 	names "arabic"
 	funding	450000
 	happiness 0.44
 	alien_friendly	25
 	soldiers 1
 	scientists 3
+	pos "-55 20"
 }
 
 nation africa
 {
 	name "_New Africa"
-	color "255 128 64 1"
+	color "255 255 255 1"
 	names "african"
 	funding	600000
 	happiness 0.44
 	alien_friendly	25
 	soldiers 5
 	scientists 1
+	pos "-20 0"
 }
 
 nation russia
 {
 	name "_Russia"
-	color "128 0 0 1"
+	color "255 255 255 1"
 	names "russian"
 	funding	500000
 	happiness 0.44
 	alien_friendly	70
 	soldiers 5
 	scientists 5
+	pos "-60 55"
 }
 
 nation oceania
 {
 	name "_The Commonwealth of Oceania"
-	color "128 0 128 1"
+	color "255 255 255 1"
 	names "english_american"
 	funding	900000
 	happiness 0.44
 	alien_friendly	85
 	soldiers 4
 	scientists 2
+	pos "-130 -25"
 }
