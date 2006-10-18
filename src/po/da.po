@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 08:53+0200\n"
+"POT-Creation-Date: 2006-10-18 09:01+0200\n"
 "PO-Revision-Date: 2006-02-15 23:32+0100\n"
 "Last-Translator: Anders K. Madsen <madsen@lillesvin.net>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -3067,7 +3067,7 @@ msgid "Assault Rifle"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:24
-msgid "Assault Rifle Clip"
+msgid "Assault Rifle Magazine"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:109
@@ -3080,7 +3080,7 @@ msgid "Chaingun"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:97
-msgid "Chaingun Clip"
+msgid "Chaingun Magazine"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:152
@@ -3088,7 +3088,7 @@ msgid "Sniper Rifle"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:170
-msgid "Sniper Rifle Clip"
+msgid "Sniper Rifle Magazine"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:182 ../base/ufos/weapons_human.ufo:200
@@ -3130,20 +3130,19 @@ msgid "Submachine Gun"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:387
-msgid "SMG Clip"
+msgid "SMG Magazine"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:418
 msgid "Full Auto"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:649
+#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:518
 #, fuzzy
 msgid "Riot Shotgun"
 msgstr "Skyd"
 
-#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:536
-#: ../base/ufos/weapons_human.ufo:667
+#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:667
 msgid "Buckshots"
 msgstr ""
 
@@ -3152,21 +3151,26 @@ msgstr ""
 msgid "Double Shot"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:518
+#: ../base/ufos/weapons_human.ufo:536
 #, fuzzy
-msgid "Shotgun"
-msgstr "Skyd"
+msgid "Flechette Shells"
+msgstr "Spreder"
 
 #: ../base/ufos/weapons_human.ufo:591
 msgid "Saboted Slugs"
 msgstr ""
+
+#: ../base/ufos/weapons_human.ufo:649
+#, fuzzy
+msgid "Shotgun"
+msgstr "Skyd"
 
 #: ../base/ufos/weapons_human.ufo:725
 msgid "Flamethrower"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:743
-msgid "Napalm Tank"
+msgid "C90 Canister"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:755
@@ -3199,7 +3203,7 @@ msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1015
 #, fuzzy
-msgid "25mm Flechette Grenade Shells"
+msgid "25mm IC Grenades"
 msgstr "Spreder"
 
 #: ../base/ufos/weapons_human.ufo:1027 ../base/ufos/weapons_human.ufo:1094
@@ -3216,12 +3220,12 @@ msgstr "Spreder"
 
 #: ../base/ufos/weapons_human.ufo:1082
 #, fuzzy
-msgid "25mm IC Grenade Shells"
+msgid "25mm Flechette Grenades"
 msgstr "Spreder"
 
 #: ../base/ufos/weapons_human.ufo:1149
 #, fuzzy
-msgid "Frag Grenade Shells"
+msgid "25mm HIT Grenades"
 msgstr "Spreder"
 
 #: ../base/ufos/weapons_human.ufo:1216
@@ -4721,6 +4725,10 @@ msgstr ""
 #, fuzzy
 msgid "No"
 msgstr "Nov"
+
+#, fuzzy
+#~ msgid "Frag Grenade Shells"
+#~ msgstr "Spreder"
 
 #~ msgid ""
 #~ "Health\t%i\n"

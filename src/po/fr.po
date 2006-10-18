@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 08:53+0200\n"
+"POT-Creation-Date: 2006-10-18 09:01+0200\n"
 "PO-Revision-Date: 2006-09-23 11:20+0100\n"
 "Last-Translator: Kracken <alloschery@irsamc.ups-tlse.fr>\n"
 "Language-Team: \n"
@@ -3874,7 +3874,8 @@ msgid "Assault Rifle"
 msgstr "Fusil d'Assaut"
 
 #: ../base/ufos/weapons_human.ufo:24
-msgid "Assault Rifle Clip"
+#, fuzzy
+msgid "Assault Rifle Magazine"
 msgstr "Chargeur de Fusil d'Assaut"
 
 #: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:109
@@ -3887,7 +3888,7 @@ msgid "Chaingun"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:97
-msgid "Chaingun Clip"
+msgid "Chaingun Magazine"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:152
@@ -3895,7 +3896,8 @@ msgid "Sniper Rifle"
 msgstr "Fusil de Sniper"
 
 #: ../base/ufos/weapons_human.ufo:170
-msgid "Sniper Rifle Clip"
+#, fuzzy
+msgid "Sniper Rifle Magazine"
 msgstr "Chargeur de Fusil de Sniper"
 
 #: ../base/ufos/weapons_human.ufo:182 ../base/ufos/weapons_human.ufo:200
@@ -3940,19 +3942,18 @@ msgid "Submachine Gun"
 msgstr "Mitrailleuse"
 
 #: ../base/ufos/weapons_human.ufo:387
-msgid "SMG Clip"
-msgstr "Chargeur de Mitrailleuse"
+msgid "SMG Magazine"
+msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:418
 msgid "Full Auto"
 msgstr "Tir Auto"
 
-#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:649
+#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:518
 msgid "Riot Shotgun"
 msgstr "Fusil à Pompe"
 
-#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:536
-#: ../base/ufos/weapons_human.ufo:667
+#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:667
 msgid "Buckshots"
 msgstr "Cartouche"
 
@@ -3961,22 +3962,28 @@ msgstr "Cartouche"
 msgid "Double Shot"
 msgstr "Tir Double"
 
-#: ../base/ufos/weapons_human.ufo:518
+#: ../base/ufos/weapons_human.ufo:536
 #, fuzzy
-msgid "Shotgun"
-msgstr "Fusil à Pompe"
+msgid "Flechette Shells"
+msgstr "Grenade à Fragmentation"
 
 #: ../base/ufos/weapons_human.ufo:591
 msgid "Saboted Slugs"
 msgstr ""
+
+#: ../base/ufos/weapons_human.ufo:649
+#, fuzzy
+msgid "Shotgun"
+msgstr "Fusil à Pompe"
 
 #: ../base/ufos/weapons_human.ufo:725
 msgid "Flamethrower"
 msgstr "Lance Flammes"
 
 #: ../base/ufos/weapons_human.ufo:743
-msgid "Napalm Tank"
-msgstr "Réservoir de  Napalm"
+#, fuzzy
+msgid "C90 Canister"
+msgstr "Hellfire Canister"
 
 #: ../base/ufos/weapons_human.ufo:755
 msgid "Candlelight"
@@ -4008,8 +4015,8 @@ msgstr "Lance Grenade"
 
 #: ../base/ufos/weapons_human.ufo:1015
 #, fuzzy
-msgid "25mm Flechette Grenade Shells"
-msgstr "Grenade à Fragmentation"
+msgid "25mm IC Grenades"
+msgstr "Grenade à Plasma"
 
 #: ../base/ufos/weapons_human.ufo:1027 ../base/ufos/weapons_human.ufo:1094
 #: ../base/ufos/weapons_human.ufo:1161 ../base/ufos/weapons_human.ufo:1228
@@ -4025,12 +4032,13 @@ msgstr "Grenade Fumigène"
 
 #: ../base/ufos/weapons_human.ufo:1082
 #, fuzzy
-msgid "25mm IC Grenade Shells"
-msgstr "Grenade à Plasma"
+msgid "25mm Flechette Grenades"
+msgstr "Grenade à Fragmentation"
 
 #: ../base/ufos/weapons_human.ufo:1149
-msgid "Frag Grenade Shells"
-msgstr "Grenade à Fragmentation"
+#, fuzzy
+msgid "25mm HIT Grenades"
+msgstr "Grenade à Plasma"
 
 #: ../base/ufos/weapons_human.ufo:1216
 msgid "Plasma Grenade Shells"
@@ -5564,6 +5572,15 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
+#~ msgid "SMG Clip"
+#~ msgstr "Chargeur de Mitrailleuse"
+
+#~ msgid "Napalm Tank"
+#~ msgstr "Réservoir de  Napalm"
+
+#~ msgid "Frag Grenade Shells"
+#~ msgstr "Grenade à Fragmentation"
+
 #~ msgid "UFO Hangar"
 #~ msgstr "Hangar  OVNI"
 
@@ -5789,9 +5806,6 @@ msgstr "Non"
 #~ "Cette grenade éclaire une petite zone sur le champs de bataille, ainsi "
 #~ "que toutes les unités dans son rayon d'action. Elle peut être retardée de "
 #~ "la même façon que les grenades à fragmentation."
-
-#~ msgid "Hellfire Canister"
-#~ msgstr "Hellfire Canister"
 
 #~ msgid "Twohanded:\t%s"
 #~ msgstr "Deux mains:\t%s"

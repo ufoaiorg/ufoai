@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 08:53+0200\n"
+"POT-Creation-Date: 2006-10-18 09:01+0200\n"
 "PO-Revision-Date: 2006-09-30 14:44-0500\n"
 "Last-Translator: Charles Bedón <snookiex@gmail.com>\n"
 "Language-Team: \n"
@@ -4043,7 +4043,8 @@ msgid "Assault Rifle"
 msgstr "Rifle de Asalto"
 
 #: ../base/ufos/weapons_human.ufo:24
-msgid "Assault Rifle Clip"
+#, fuzzy
+msgid "Assault Rifle Magazine"
 msgstr "Cartucho de Rifle de Asalto"
 
 #: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:109
@@ -4056,7 +4057,7 @@ msgid "Chaingun"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:97
-msgid "Chaingun Clip"
+msgid "Chaingun Magazine"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:152
@@ -4064,7 +4065,8 @@ msgid "Sniper Rifle"
 msgstr "Rifle Francotirador"
 
 #: ../base/ufos/weapons_human.ufo:170
-msgid "Sniper Rifle Clip"
+#, fuzzy
+msgid "Sniper Rifle Magazine"
 msgstr "Cartucho de Rifle Francotirador"
 
 #: ../base/ufos/weapons_human.ufo:182 ../base/ufos/weapons_human.ufo:200
@@ -4109,20 +4111,19 @@ msgid "Submachine Gun"
 msgstr "Subfusil"
 
 #: ../base/ufos/weapons_human.ufo:387
-msgid "SMG Clip"
-msgstr "Cartucho de Subfusil"
+msgid "SMG Magazine"
+msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:418
 msgid "Full Auto"
 msgstr "Full Automático"
 
-#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:649
+#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:518
 #, fuzzy
 msgid "Riot Shotgun"
 msgstr "Escopeta"
 
-#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:536
-#: ../base/ufos/weapons_human.ufo:667
+#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:667
 msgid "Buckshots"
 msgstr "Munición de Escopeta"
 
@@ -4131,22 +4132,28 @@ msgstr "Munición de Escopeta"
 msgid "Double Shot"
 msgstr "Doble Disparo"
 
-#: ../base/ufos/weapons_human.ufo:518
+#: ../base/ufos/weapons_human.ufo:536
 #, fuzzy
-msgid "Shotgun"
-msgstr "Escopeta"
+msgid "Flechette Shells"
+msgstr "Casquillo de Granada de Fragmentación"
 
 #: ../base/ufos/weapons_human.ufo:591
 msgid "Saboted Slugs"
 msgstr ""
+
+#: ../base/ufos/weapons_human.ufo:649
+#, fuzzy
+msgid "Shotgun"
+msgstr "Escopeta"
 
 #: ../base/ufos/weapons_human.ufo:725
 msgid "Flamethrower"
 msgstr "Lanza Llamas"
 
 #: ../base/ufos/weapons_human.ufo:743
-msgid "Napalm Tank"
-msgstr "Tanque de Napalm"
+#, fuzzy
+msgid "C90 Canister"
+msgstr "Cañón de Fuego Infernal"
 
 #: ../base/ufos/weapons_human.ufo:755
 msgid "Candlelight"
@@ -4177,8 +4184,9 @@ msgid "Grenade Launcher"
 msgstr "Lanza Granadas"
 
 #: ../base/ufos/weapons_human.ufo:1015
-msgid "25mm Flechette Grenade Shells"
-msgstr "Casquillo de Granada de Fragmentación"
+#, fuzzy
+msgid "25mm IC Grenades"
+msgstr "Casquillo de la Granada IC de 25mm"
 
 #: ../base/ufos/weapons_human.ufo:1027 ../base/ufos/weapons_human.ufo:1094
 #: ../base/ufos/weapons_human.ufo:1161 ../base/ufos/weapons_human.ufo:1228
@@ -4192,12 +4200,14 @@ msgid "Timed Grenade"
 msgstr "Granada Temporizada"
 
 #: ../base/ufos/weapons_human.ufo:1082
-msgid "25mm IC Grenade Shells"
-msgstr "Casquillo de la Granada IC de 25mm"
+#, fuzzy
+msgid "25mm Flechette Grenades"
+msgstr "Casquillo de Granada de Fragmentación"
 
 #: ../base/ufos/weapons_human.ufo:1149
-msgid "Frag Grenade Shells"
-msgstr "Cascara de la Granada de Fragmentación"
+#, fuzzy
+msgid "25mm HIT Grenades"
+msgstr "Casquillo de la Granada IC de 25mm"
 
 #: ../base/ufos/weapons_human.ufo:1216
 #, fuzzy
@@ -5761,6 +5771,15 @@ msgstr "Sí"
 msgid "No"
 msgstr "No"
 
+#~ msgid "SMG Clip"
+#~ msgstr "Cartucho de Subfusil"
+
+#~ msgid "Napalm Tank"
+#~ msgstr "Tanque de Napalm"
+
+#~ msgid "Frag Grenade Shells"
+#~ msgstr "Cascara de la Granada de Fragmentación"
+
 #~ msgid "UFO Hangar"
 #~ msgstr "Hangar de OVNIs"
 
@@ -6038,10 +6057,6 @@ msgstr "No"
 #~ "fire and medium intensity plasma beams. The price of this robustness is "
 #~ "that the suit is very heavy, so that only very powerful soldiers will be "
 #~ "able to wear it comfortably. "
-
-#, fuzzy
-#~ msgid "Hellfire Canister"
-#~ msgstr "Cañón de Fuego Infernal"
 
 #~ msgid ""
 #~ "The aliens killed all employees and destroyed all equipment in your base "

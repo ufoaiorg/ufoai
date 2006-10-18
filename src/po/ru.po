@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 08:53+0200\n"
+"POT-Creation-Date: 2006-10-18 09:01+0200\n"
 "PO-Revision-Date: 2006-06-11 22:44+0300\n"
 "Last-Translator: Virtul <virtul@gmail.com>\n"
 "Language-Team: \n"
@@ -3640,7 +3640,8 @@ msgid "Assault Rifle"
 msgstr "Штурмовая Винтовка"
 
 #: ../base/ufos/weapons_human.ufo:24
-msgid "Assault Rifle Clip"
+#, fuzzy
+msgid "Assault Rifle Magazine"
 msgstr "Обойма Штурмовой Винтовки"
 
 #: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:109
@@ -3653,7 +3654,7 @@ msgid "Chaingun"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:97
-msgid "Chaingun Clip"
+msgid "Chaingun Magazine"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:152
@@ -3661,7 +3662,8 @@ msgid "Sniper Rifle"
 msgstr "Снайперская Винтовка"
 
 #: ../base/ufos/weapons_human.ufo:170
-msgid "Sniper Rifle Clip"
+#, fuzzy
+msgid "Sniper Rifle Magazine"
 msgstr "Обойма Снайперской Винтовки"
 
 #: ../base/ufos/weapons_human.ufo:182 ../base/ufos/weapons_human.ufo:200
@@ -3706,20 +3708,19 @@ msgid "Submachine Gun"
 msgstr "Пистолет-Пулемет"
 
 #: ../base/ufos/weapons_human.ufo:387
-msgid "SMG Clip"
-msgstr "Обойма Пистолет-Пулемета"
+msgid "SMG Magazine"
+msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:418
 msgid "Full Auto"
 msgstr "Очередь"
 
-#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:649
+#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:518
 #, fuzzy
 msgid "Riot Shotgun"
 msgstr "Дробовик"
 
-#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:536
-#: ../base/ufos/weapons_human.ufo:667
+#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:667
 msgid "Buckshots"
 msgstr "Дробь"
 
@@ -3728,22 +3729,27 @@ msgstr "Дробь"
 msgid "Double Shot"
 msgstr "Двойной Выстрел"
 
-#: ../base/ufos/weapons_human.ufo:518
+#: ../base/ufos/weapons_human.ufo:536
 #, fuzzy
-msgid "Shotgun"
-msgstr "Дробовик"
+msgid "Flechette Shells"
+msgstr "Осколочная Граната"
 
 #: ../base/ufos/weapons_human.ufo:591
 msgid "Saboted Slugs"
 msgstr ""
+
+#: ../base/ufos/weapons_human.ufo:649
+#, fuzzy
+msgid "Shotgun"
+msgstr "Дробовик"
 
 #: ../base/ufos/weapons_human.ufo:725
 msgid "Flamethrower"
 msgstr "Огнемёт"
 
 #: ../base/ufos/weapons_human.ufo:743
-msgid "Napalm Tank"
-msgstr "Бак Напалма"
+msgid "C90 Canister"
+msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:755
 msgid "Candlelight"
@@ -3777,8 +3783,8 @@ msgstr "Гранатомёт"
 
 #: ../base/ufos/weapons_human.ufo:1015
 #, fuzzy
-msgid "25mm Flechette Grenade Shells"
-msgstr "Осколочная Граната"
+msgid "25mm IC Grenades"
+msgstr "Плазмолезвие"
 
 #: ../base/ufos/weapons_human.ufo:1027 ../base/ufos/weapons_human.ufo:1094
 #: ../base/ufos/weapons_human.ufo:1161 ../base/ufos/weapons_human.ufo:1228
@@ -3794,13 +3800,13 @@ msgstr "Дымовая Граната"
 
 #: ../base/ufos/weapons_human.ufo:1082
 #, fuzzy
-msgid "25mm IC Grenade Shells"
-msgstr "Плазмолезвие"
+msgid "25mm Flechette Grenades"
+msgstr "Осколочная Граната"
 
 #: ../base/ufos/weapons_human.ufo:1149
 #, fuzzy
-msgid "Frag Grenade Shells"
-msgstr "Осколочная Граната"
+msgid "25mm HIT Grenades"
+msgstr "Плазмолезвие"
 
 #: ../base/ufos/weapons_human.ufo:1216
 #, fuzzy
@@ -5367,6 +5373,16 @@ msgstr "Да"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "Нет"
+
+#~ msgid "SMG Clip"
+#~ msgstr "Обойма Пистолет-Пулемета"
+
+#~ msgid "Napalm Tank"
+#~ msgstr "Бак Напалма"
+
+#, fuzzy
+#~ msgid "Frag Grenade Shells"
+#~ msgstr "Осколочная Граната"
 
 #~ msgid "UFO Hangar"
 #~ msgstr "Ангар НЛО"

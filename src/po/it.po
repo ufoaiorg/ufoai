@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 08:53+0200\n"
+"POT-Creation-Date: 2006-10-18 09:01+0200\n"
 "PO-Revision-Date: 2006-09-30 18:00+0100\n"
 "Last-Translator: DAniele C <sdads@sds.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
@@ -3409,7 +3409,8 @@ msgid "Assault Rifle"
 msgstr "Fucile d'assalto"
 
 #: ../base/ufos/weapons_human.ufo:24
-msgid "Assault Rifle Clip"
+#, fuzzy
+msgid "Assault Rifle Magazine"
 msgstr "Caricatore per fucile d'assalto"
 
 #: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:109
@@ -3422,7 +3423,7 @@ msgid "Chaingun"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:97
-msgid "Chaingun Clip"
+msgid "Chaingun Magazine"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:152
@@ -3430,7 +3431,8 @@ msgid "Sniper Rifle"
 msgstr "Fucile da cecchino"
 
 #: ../base/ufos/weapons_human.ufo:170
-msgid "Sniper Rifle Clip"
+#, fuzzy
+msgid "Sniper Rifle Magazine"
 msgstr "Caricatore per fucile da cecchino"
 
 #: ../base/ufos/weapons_human.ufo:182 ../base/ufos/weapons_human.ufo:200
@@ -3475,19 +3477,18 @@ msgid "Submachine Gun"
 msgstr "Mitra"
 
 #: ../base/ufos/weapons_human.ufo:387
-msgid "SMG Clip"
-msgstr "Caricatore per mitra"
+msgid "SMG Magazine"
+msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:418
 msgid "Full Auto"
 msgstr "Automatico"
 
-#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:649
+#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:518
 msgid "Riot Shotgun"
 msgstr "Fucile da rivolta"
 
-#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:536
-#: ../base/ufos/weapons_human.ufo:667
+#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:667
 msgid "Buckshots"
 msgstr "Pallettoni"
 
@@ -3496,22 +3497,28 @@ msgstr "Pallettoni"
 msgid "Double Shot"
 msgstr "Colpo doppio"
 
-#: ../base/ufos/weapons_human.ufo:518
+#: ../base/ufos/weapons_human.ufo:536
 #, fuzzy
-msgid "Shotgun"
-msgstr "Fucile da rivolta"
+msgid "Flechette Shells"
+msgstr "Munizioni granate a frammentazione"
 
 #: ../base/ufos/weapons_human.ufo:591
 msgid "Saboted Slugs"
 msgstr ""
+
+#: ../base/ufos/weapons_human.ufo:649
+#, fuzzy
+msgid "Shotgun"
+msgstr "Fucile da rivolta"
 
 #: ../base/ufos/weapons_human.ufo:725
 msgid "Flamethrower"
 msgstr "Lanciafiamme"
 
 #: ../base/ufos/weapons_human.ufo:743
-msgid "Napalm Tank"
-msgstr "Ricarica di Napalm"
+#, fuzzy
+msgid "C90 Canister"
+msgstr "Granata Inferno"
 
 #: ../base/ufos/weapons_human.ufo:755
 msgid "Candlelight"
@@ -3543,8 +3550,8 @@ msgstr "Lanciagranate"
 
 #: ../base/ufos/weapons_human.ufo:1015
 #, fuzzy
-msgid "25mm Flechette Grenade Shells"
-msgstr "Munizioni granate a frammentazione"
+msgid "25mm IC Grenades"
+msgstr "Munizioni granate al plasma"
 
 #: ../base/ufos/weapons_human.ufo:1027 ../base/ufos/weapons_human.ufo:1094
 #: ../base/ufos/weapons_human.ufo:1161 ../base/ufos/weapons_human.ufo:1228
@@ -3560,12 +3567,13 @@ msgstr "Granata al plasma"
 
 #: ../base/ufos/weapons_human.ufo:1082
 #, fuzzy
-msgid "25mm IC Grenade Shells"
-msgstr "Munizioni granate al plasma"
+msgid "25mm Flechette Grenades"
+msgstr "Munizioni granate a frammentazione"
 
 #: ../base/ufos/weapons_human.ufo:1149
-msgid "Frag Grenade Shells"
-msgstr "Munizioni granate a frammentazione"
+#, fuzzy
+msgid "25mm HIT Grenades"
+msgstr "Munizioni granate al plasma"
 
 #: ../base/ufos/weapons_human.ufo:1216
 msgid "Plasma Grenade Shells"
@@ -5111,6 +5119,15 @@ msgstr "Sì"
 msgid "No"
 msgstr "No"
 
+#~ msgid "SMG Clip"
+#~ msgstr "Caricatore per mitra"
+
+#~ msgid "Napalm Tank"
+#~ msgstr "Ricarica di Napalm"
+
+#~ msgid "Frag Grenade Shells"
+#~ msgstr "Munizioni granate a frammentazione"
+
 #~ msgid "UFO Hangar"
 #~ msgstr "Hangar UFO"
 
@@ -5156,9 +5173,6 @@ msgstr "No"
 
 #~ msgid "No running productions"
 #~ msgstr "Nessuna produzione attuale"
-
-#~ msgid "Hellfire Canister"
-#~ msgstr "Granata Inferno"
 
 #~ msgid "Asian Commonwealth"
 #~ msgstr "Commonwealth Asiatico"

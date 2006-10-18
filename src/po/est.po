@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 08:53+0200\n"
+"POT-Creation-Date: 2006-10-18 09:01+0200\n"
 "PO-Revision-Date: 2006-08-06 17:20+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -3713,7 +3713,8 @@ msgstr ""
 "natuke üle minuti."
 
 #: ../base/ufos/weapons_human.ufo:24
-msgid "Assault Rifle Clip"
+#, fuzzy
+msgid "Assault Rifle Magazine"
 msgstr ""
 "AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja "
 "revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline "
@@ -3733,7 +3734,7 @@ msgid "Chaingun"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:97
-msgid "Chaingun Clip"
+msgid "Chaingun Magazine"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:152
@@ -3741,7 +3742,8 @@ msgid "Sniper Rifle"
 msgstr "WE-78 Snaiper"
 
 #: ../base/ufos/weapons_human.ufo:170
-msgid "Sniper Rifle Clip"
+#, fuzzy
+msgid "Sniper Rifle Magazine"
 msgstr "WE-78 salv"
 
 #: ../base/ufos/weapons_human.ufo:182 ../base/ufos/weapons_human.ufo:200
@@ -3786,20 +3788,19 @@ msgid "Submachine Gun"
 msgstr "SMG-68"
 
 #: ../base/ufos/weapons_human.ufo:387
-msgid "SMG Clip"
-msgstr "SMG-68 salv"
+msgid "SMG Magazine"
+msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:418
 msgid "Full Auto"
 msgstr "Täis Valang"
 
-#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:649
+#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:518
 #, fuzzy
 msgid "Riot Shotgun"
 msgstr "Pumppüss SG-260"
 
-#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:536
-#: ../base/ufos/weapons_human.ufo:667
+#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:667
 msgid "Buckshots"
 msgstr "Haavlid"
 
@@ -3808,22 +3809,28 @@ msgstr "Haavlid"
 msgid "Double Shot"
 msgstr "Kahekordne lask"
 
-#: ../base/ufos/weapons_human.ufo:518
+#: ../base/ufos/weapons_human.ufo:536
 #, fuzzy
-msgid "Shotgun"
-msgstr "Pumppüss SG-260"
+msgid "Flechette Shells"
+msgstr "Kildkranaat"
 
 #: ../base/ufos/weapons_human.ufo:591
 msgid "Saboted Slugs"
 msgstr ""
+
+#: ../base/ufos/weapons_human.ufo:649
+#, fuzzy
+msgid "Shotgun"
+msgstr "Pumppüss SG-260"
 
 #: ../base/ufos/weapons_human.ufo:725
 msgid "Flamethrower"
 msgstr "Leegiheitja"
 
 #: ../base/ufos/weapons_human.ufo:743
-msgid "Napalm Tank"
-msgstr "Napalm tank"
+#, fuzzy
+msgid "C90 Canister"
+msgstr "Põrgutule granaat"
 
 #: ../base/ufos/weapons_human.ufo:755
 msgid "Candlelight"
@@ -3855,8 +3862,8 @@ msgstr "Bazooka"
 
 #: ../base/ufos/weapons_human.ufo:1015
 #, fuzzy
-msgid "25mm Flechette Grenade Shells"
-msgstr "Kildkranaat"
+msgid "25mm IC Grenades"
+msgstr "Plasma granaadi kestad"
 
 #: ../base/ufos/weapons_human.ufo:1027 ../base/ufos/weapons_human.ufo:1094
 #: ../base/ufos/weapons_human.ufo:1161 ../base/ufos/weapons_human.ufo:1228
@@ -3872,13 +3879,13 @@ msgstr "Suitsu granaat"
 
 #: ../base/ufos/weapons_human.ufo:1082
 #, fuzzy
-msgid "25mm IC Grenade Shells"
-msgstr "Plasma granaadi kestad"
+msgid "25mm Flechette Grenades"
+msgstr "Kildkranaat"
 
 #: ../base/ufos/weapons_human.ufo:1149
 #, fuzzy
-msgid "Frag Grenade Shells"
-msgstr "Kildkranaat"
+msgid "25mm HIT Grenades"
+msgstr "Plasma granaadi kestad"
 
 #: ../base/ufos/weapons_human.ufo:1216
 msgid "Plasma Grenade Shells"
@@ -5434,6 +5441,16 @@ msgstr "Jah"
 msgid "No"
 msgstr "Ei"
 
+#~ msgid "SMG Clip"
+#~ msgstr "SMG-68 salv"
+
+#~ msgid "Napalm Tank"
+#~ msgstr "Napalm tank"
+
+#, fuzzy
+#~ msgid "Frag Grenade Shells"
+#~ msgstr "Kildkranaat"
+
 #~ msgid "UFO Hangar"
 #~ msgstr "Ufode hangaar"
 
@@ -5605,9 +5622,6 @@ msgstr "Ei"
 
 #~ msgid "alienincgrenade_txt"
 #~ msgstr "<TODO>"
-
-#~ msgid "Hellfire Canister"
-#~ msgstr "Põrgutule granaat"
 
 #~ msgid "Asian Commonwealth"
 #~ msgstr "Aasia ühendus"

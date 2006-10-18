@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 08:53+0200\n"
+"POT-Creation-Date: 2006-10-18 09:01+0200\n"
 "PO-Revision-Date: 2006-07-24 09:50+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: inzenir <simon.cedula@guest.arnes.si>\n"
@@ -3182,7 +3182,8 @@ msgid "Assault Rifle"
 msgstr "Jurišna puška"
 
 #: ../base/ufos/weapons_human.ufo:24
-msgid "Assault Rifle Clip"
+#, fuzzy
+msgid "Assault Rifle Magazine"
 msgstr "Nabojnik jurišne puške"
 
 #: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:109
@@ -3195,7 +3196,7 @@ msgid "Chaingun"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:97
-msgid "Chaingun Clip"
+msgid "Chaingun Magazine"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:152
@@ -3203,7 +3204,8 @@ msgid "Sniper Rifle"
 msgstr "Ostrostrelska puška"
 
 #: ../base/ufos/weapons_human.ufo:170
-msgid "Sniper Rifle Clip"
+#, fuzzy
+msgid "Sniper Rifle Magazine"
 msgstr "Nabojnik ostrostrelske puške"
 
 #: ../base/ufos/weapons_human.ufo:182 ../base/ufos/weapons_human.ufo:200
@@ -3248,20 +3250,19 @@ msgid "Submachine Gun"
 msgstr "Polavtomatska puška"
 
 #: ../base/ufos/weapons_human.ufo:387
-msgid "SMG Clip"
-msgstr "Nabojnik polavtomatske"
+msgid "SMG Magazine"
+msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:418
 msgid "Full Auto"
 msgstr "Avtomatsko"
 
-#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:649
+#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:518
 #, fuzzy
 msgid "Riot Shotgun"
 msgstr "Šibrovka "
 
-#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:536
-#: ../base/ufos/weapons_human.ufo:667
+#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:667
 msgid "Buckshots"
 msgstr "Šibre "
 
@@ -3270,22 +3271,27 @@ msgstr "Šibre "
 msgid "Double Shot"
 msgstr "Dvojni strel"
 
-#: ../base/ufos/weapons_human.ufo:518
+#: ../base/ufos/weapons_human.ufo:536
 #, fuzzy
-msgid "Shotgun"
-msgstr "Šibrovka "
+msgid "Flechette Shells"
+msgstr "Drobci eksplozivne granate"
 
 #: ../base/ufos/weapons_human.ufo:591
 msgid "Saboted Slugs"
 msgstr ""
+
+#: ../base/ufos/weapons_human.ufo:649
+#, fuzzy
+msgid "Shotgun"
+msgstr "Šibrovka "
 
 #: ../base/ufos/weapons_human.ufo:725
 msgid "Flamethrower"
 msgstr "Metalec ognja"
 
 #: ../base/ufos/weapons_human.ufo:743
-msgid "Napalm Tank"
-msgstr "Posoda z napalmom"
+msgid "C90 Canister"
+msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:755
 msgid "Candlelight"
@@ -3317,8 +3323,8 @@ msgstr "Metalec granat"
 
 #: ../base/ufos/weapons_human.ufo:1015
 #, fuzzy
-msgid "25mm Flechette Grenade Shells"
-msgstr "Drobci eksplozivne granate"
+msgid "25mm IC Grenades"
+msgstr "Drobci plazemske granate"
 
 #: ../base/ufos/weapons_human.ufo:1027 ../base/ufos/weapons_human.ufo:1094
 #: ../base/ufos/weapons_human.ufo:1161 ../base/ufos/weapons_human.ufo:1228
@@ -3334,12 +3340,13 @@ msgstr "Omamna granata"
 
 #: ../base/ufos/weapons_human.ufo:1082
 #, fuzzy
-msgid "25mm IC Grenade Shells"
-msgstr "Drobci plazemske granate"
+msgid "25mm Flechette Grenades"
+msgstr "Drobci eksplozivne granate"
 
 #: ../base/ufos/weapons_human.ufo:1149
-msgid "Frag Grenade Shells"
-msgstr "Drobci eksplozivne granate"
+#, fuzzy
+msgid "25mm HIT Grenades"
+msgstr "Drobci plazemske granate"
 
 #: ../base/ufos/weapons_human.ufo:1216
 msgid "Plasma Grenade Shells"
@@ -4894,6 +4901,15 @@ msgstr "Da"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "Ne"
+
+#~ msgid "SMG Clip"
+#~ msgstr "Nabojnik polavtomatske"
+
+#~ msgid "Napalm Tank"
+#~ msgstr "Posoda z napalmom"
+
+#~ msgid "Frag Grenade Shells"
+#~ msgstr "Drobci eksplozivne granate"
 
 #~ msgid "UFO Hangar"
 #~ msgstr "Hangar NLPjev"
