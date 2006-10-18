@@ -1792,6 +1792,89 @@ tech rs_craft_ufo_big
 // Aliens
 //========================
 
+// BLOODSPIDER
+
+tech rs_alien_bloodspider
+{
+	type	tech
+	name	"_Bloodspider - Combat notes"
+	description	"_bloodspider_notes_txt"
+	up_chapter	tech
+
+	require_AND
+	{
+		tech rs_alien_bloodspider_notes
+	}
+
+	provides	""
+	time	0
+	//needscollected	true
+
+	mdl_top	"aliens/bloodspider/bloodspider"
+}
+
+tech rs_alien_bloodspider_notes
+{
+	type	alien
+	name	"_Bloodspider - Combat notes"
+	description	"_bloodspider_notes_txt"
+	up_chapter	aliens
+
+	require_AND { tech nothing }
+	provides	""
+	time	0
+	//needscollected	true
+
+	mdl_top	"aliens/bloodspider/bloodspider"
+}
+
+tech rs_alien_bloodspider_autopsy
+{
+	type	alien
+	name	"_Bloodspider - Autopsy"
+	description	"_bloodspider_autopsy_txt"
+	up_chapter	aliens
+
+	require_AND { tech nothing }
+	provides	""
+	time	1500
+	//needscollected	true
+
+	mdl_top	"aliens/bloodspider/bloodspider"
+
+	//TODO: autopsy image
+}
+
+tech rs_alien_bloodspider_xenobiology
+{
+	type	alien
+	name	"_Bloodspider - Xenobiology"
+	description	"_bloodspider_xenobiology_txt"
+	up_chapter	aliens
+
+	require_AND { tech nothing }
+	provides	""
+	time	2250
+	//needscollected	true
+
+	mdl_top	"aliens/bloodspider/bloodspider"
+}
+
+tech rs_alien_bloodspider_interrogation
+{
+	type	alien
+	name	"_Bloodspider - Interrogation"
+	description	"_bloodspider_interrogation_txt"
+	up_chapter	aliens
+
+	require_AND { tech nothing }
+	provides	""
+	time	1500
+	//needscollected	true
+
+	mdl_top	"aliens/bloodspider/bloodspider"
+}
+
 // ORTNOK
 
 tech rs_alien_ortnok

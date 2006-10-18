@@ -313,6 +313,14 @@ names ortnok
 	}
 }
 
+actors bloodspider
+{
+	neutral
+	{
+		aliens/bloodspider bloodspider head 0
+	}
+}
+
 actors ortnok
 {
 	neutral
@@ -372,4 +380,9 @@ team ortnok_all
 // {
 // 	hovernet
 // }
+
+team bloodspider
+{
+	bloodspider
+}
 
