@@ -11,10 +11,11 @@ researched rslist_human
 	rs_weapon_shotgun_ammo
 	rs_weapon_shotgun2
 	rs_weapon_shotgun2_ammo
-//	rs_weapon_shotgun_micro
-//	rs_weapon_shotgun_micro_ammo
+	rs_weapon_shotgun_micro
+	rs_weapon_shotgun_micro_ammo
 	rs_weapon_flamer
 	rs_weapon_flamer_ammo
+	rs_weapon_incgren
 	rs_weapon_pistol
 	rs_weapon_pistol_ammo
 	rs_weapon_rpg
@@ -24,6 +25,8 @@ researched rslist_human
 	rs_weapon_combatknife
 	rs_weapon_grenl
 	rs_weapon_grenl_ammo
+	rs_weapon_grenl_fle_ammo
+	rs_weapon_grenl_incendiary_ammo
 	rs_medikit
 	rs_irgoggles
 	rs_combat_armor
