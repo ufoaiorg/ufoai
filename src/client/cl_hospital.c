@@ -315,5 +315,4 @@ extern void HOS_Reset(void)
 	memset(hospitalText, 0, sizeof(hospitalText));
 	memset(employeesInHospitalList, 0, sizeof(employeesInHospitalList));
 	mn_hosp_heal_limit = Cvar_Get("mn_hosp_heal_limit", "0", 0, "Current hospital capacity (for current base)");
-	Com_Printf("%i\n", (int)mn_hosp_heal_limit->value);
 }
