@@ -193,6 +193,23 @@ qboolean CL_IsAircraftInBase(aircraft_t * aircraft)
 }
 
 /**
+ * @brief Determines the state of the equip soldier menu button:
+ * returns 1 if no aircraft in base else 2 if no soldiers
+ * available otherwise 3
+ */
+int CL_EquipSoldierState(aircraft_t * aircraft) 
+{
+	if (!CL_IsAircraftInBase(aircraft)) {
+		return 1;
+	} else {
+		if (E_CountHired(baseCurrent, EMPL_SOLDIER) <= 0)
+			return 2;
+		else
+			return 3;
+	}
+}
+
+/**
   * @brief Calls CL_NewAircraft for given base with given aircraft type
   * @sa CL_NewAircraft
   */
@@ -312,7 +329,7 @@ void CL_AircraftSelect(void)
 
 	CL_UpdateHireVar();
 
-	Cvar_SetValue("mn_soldiers_in_base", E_CountHired(baseCurrent, EMPL_SOLDIER));
+	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
 	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
 	Cvar_Set("mn_aircraftstatus", CL_AircraftStatusToName(aircraft));
 	Cvar_Set("mn_aircraftinbase", CL_IsAircraftInBase(aircraft) ? "1" : "0");
