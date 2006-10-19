@@ -34,6 +34,9 @@ woven in by Terry Thorsen 1/2003.
   version without encryption capabilities).
  */
 
+#ifdef _WIN32
+#define ZLIB_WINAPI
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
