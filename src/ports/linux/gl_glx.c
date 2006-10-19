@@ -865,10 +865,11 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		XMoveWindow(dpy, win, 0, 0);
 		XRaiseWindow(dpy, win);
 		XWarpPointer(dpy, None, win, 0, 0, 0, 0, 0, 0);
+		XFlush(dpy);
+		/* paranoia to ensure viewport is actually moved to the top-left */
+		XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
 	}
 #endif /* HAVE_XF86_VIDMODE */
-
-	XFlush(dpy);
 
 	ctx = qglXCreateContext(dpy, visinfo, NULL, True);
 
@@ -880,7 +881,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	/* let the sound and input subsystems know about the new window */
 	ri.Vid_NewWindow (width, height);
 
-	qglXMakeCurrent(dpy, win, ctx);
+	XSync(dpy, False);
 
 	return rserr_ok;
 }
@@ -951,6 +952,7 @@ static void signal_handler(int sig)
 void InitSig(void)
 {
 	signal(SIGHUP, signal_handler);
+	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	signal(SIGILL, signal_handler);
 	signal(SIGTRAP, signal_handler);
