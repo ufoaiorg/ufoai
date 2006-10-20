@@ -413,6 +413,7 @@ static void signal_handler(int sig)
 void InitSig(void)
 {
 	signal(SIGHUP, signal_handler);
+	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	signal(SIGILL, signal_handler);
 	signal(SIGTRAP, signal_handler);
@@ -440,7 +441,7 @@ qboolean GLimp_Init( void *hInstance, void *wndProc )
 		}
 	}
 
-	SDL_EnableUNICODE(1);
+	SDL_EnableUNICODE(SDL_ENABLE);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 
 	InitSig();
@@ -496,6 +497,9 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 	SDL_SysWMinfo info;
 	SDL_VERSION(&info.version);
 	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
+
+	/* turn off DGA mouse support: leaving it makes cursor _slow_ in fullscreen under X11 at least */
+	setenv("SDL_VIDEO_X11_DGAMOUSE", "0", 1);
 
 	have_stencil = qfalse;
 	if (SDL_GetWMInfo(&info) > 0 ) {
