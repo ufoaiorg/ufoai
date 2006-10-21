@@ -60,7 +60,7 @@ all: all2
 # include the make files for each module
 -include $(patsubst %, build/%.mk, $(MODULES))
 
-all2: Makefile mksvnversion $(TARGETS) echo_info
+all2: Makefile $(TARGETS) echo_info
 
 # check that the makefile is up to date
 Makefile: Makefile.in
@@ -103,21 +103,6 @@ include build/various.mk
 
 maps: $(UFO2MAP_TARGET)
 	@$(MAKE) -C base/maps all
-
-#-----------------------------------------
-
-ifeq ($(HAVE_SVNVERSION),yes)
-VER=`svnversion .`
-else
-VER="Unknown"
-endif
-
-mksvnversion:
-	@echo -n "Getting current svn version ... "
-	@echo "#define SVN \"$(VER)\"" > svnversion.tmp.h
-	@diff -N svnversion.tmp.h svnversion.h >/dev/null 2>&1 && echo "no change" || \
-		echo "$(VER)" ; \
-		mv -f svnversion.tmp.h svnversion.h 
 
 #######################################################################
 
