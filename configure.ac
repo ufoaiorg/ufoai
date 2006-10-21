@@ -703,12 +703,22 @@ then
 
 	if test "$ac_cv_header_X11_extensions_xf86vmode_h" = "yes"
 	then
-		AC_SUBST([HAVE_VID_VIDMODE], 1)
-		AC_DEFINE([HAVE_VIDMODE],1)
+		AC_SEARCH_LIBS([XF86VidModeQueryVersion], [Xxf86vm])
+		if test "$ac_cv_search_XF86VidModeQueryVersion" != "no"
+		then
+			AC_SUBST([HAVE_VID_VIDMODE], 1)
+			AC_DEFINE([HAVE_VIDMODE],1)
+		elif test "$with_vid_vidmode" = "yes"
+		then
+			AC_MSG_ERROR([--with-vidmode specified but couldn't find XF86VidModeQueryVersion])
+		fi
 	elif test "$with_vid_vidmode" = "yes"
 	then
 		AC_MSG_ERROR([--with-vidmode specified but couldn't find X11/extensions/xf86vmode.h])
 	fi
+
+
+
 fi
 
 
