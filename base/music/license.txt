@@ -11,3 +11,8 @@ The tracks can be grabbed from: http://sourceforge.net/projects/ufoai
 Tracks under Creative Commons
 =============================
 * dawn.ogg (author: Draikon)
+
+Tracks that are public domain
+=============================
+* greecei.ogg (talken from worldforge/golgotha)
+
