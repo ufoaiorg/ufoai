@@ -87,3 +87,28 @@ Only used for the world.
 Used as a positional target for spotlights, etc.
 "targetname"	target name
 */
+
+/*QUAKED info_civilian_target (0.5 0.8 0.1) (-16 -16 -24) (16 16 32)
+Used as a target where civilians try to get in a mission (TODO: Implement me)
+*/
+
+/*QUAKED misc_sound (0.5 1 0.5) (-4 -4 -4) (4 4 4)
+Used to play ambient sounds (TODO: Implement me)
+"radius"	the radius a player has to be within to play that sound
+*/
+
+/*QUAKED misc_mission (0.1 0.6 0.3) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
+Defines a mission target (TODO: Implement me)
+"model"	display a model
+"particle"	display a particle
+"time"	if set the entity has to be occupied x rounds to win the mission
+"health"	if set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)
+*/
+
+/*QUAKED misc_rope (0.2 0.6 0.9) (-4 -4 -4) (4 4 4)
+Creates ropes - you always have to define a target (start- and endpoint) (TODO: Implement me)
+"name"	name of this rope (see targetname)
+"targetname"	info_null or another misc_rope
+"slack"	slack paramter for this rope
+*/
+
