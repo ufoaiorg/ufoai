@@ -16,3 +16,7 @@ Tracks that are public domain
 =============================
 * greecei.ogg (taken from worldforge/golgotha)
 
+Tracks contributed under GPL
+=============================
+* ufo1.ogg (author: Paul B, http://www.myspace.com/s2zpaulb)
+* ufo2.ogg (author: Paul B, http://www.myspace.com/s2zpaulb)
