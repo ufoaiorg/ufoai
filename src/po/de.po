@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-10-18 09:31+0200\n"
-"PO-Revision-Date: 2006-10-19 22:57+0100\n"
+"PO-Revision-Date: 2006-10-22 20:04+0100\n"
 "Last-Translator: moe <maui_key@yahoo.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2597,9 +2597,14 @@ msgstr ""
 "focused by a second magnetic field and finally propelled to the front end of the Plasma Rifle."
 
 #: ../base/ufos/research.ufo:784
-#, fuzzy
 msgid "rpg_txt"
-msgstr "TEXT"
+msgstr ""
+"Rocketlauncher:RpgTechnical Specifications: HMPL RacketenwerferCLASSIFIED LEVEL YELLOWPHALANX Extraterrestrial Response UnitTechnisches Dokument, Delta ClearanceFiled: 20 March 2084By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations CommandÜberblick:\n"
+"\n"
+"Der Angriff der Aliens auf Mumbai stellte unsere Situation schmerzlich klar.Ihre Technologie ist weit fortgeschrittener als unsere. Die komplette Unfähigkeit der Commonwealth Truppen, eine Bresche in der Mumbai Offensive zu schlagen, deckte kritische Schwäche im der gegenwärtigen militärischen Ausbildung und der Ausrüstung auf. Die drei verlorenen Bataillone brachten die Aliens zwar zum Stillstand, aber konnten ihnen keine bedeutenden Verluste zuzufügen.\n"
+"Die PHALANX-Einheit muss diese Ungleichheiten überwinden und um das zu erreichen brauchen wir das beste,was die menschliche Technologie hergibt.\n"
+"Das Excalibur Projekt wurde erschaffen, um die effektivste Waffe auf der Erde unter Bewertung von Herstellungsstandards, Beständigkeit und Kampfleistung für den Kampf gegen die die Aliens entwickeln.\n"
+"Die Südafrikanische MPMDS hat einen klassischen aber einwandfreien Namen der seinen Zweck bestätigt. Es ist der schwerste Infanterie Raketenwerfer,der auf dem Markt verfügbar ist und Panzergeschosse sowie hoch explosivgeschosse abfeuern und eine Fußeinheit in Nullzeit in einen Hamburger verwandeln kann.Ursprünglicher weise als leichte Feldatillerie gedacht ist diese Waffe mit der man nur unter den Commonwealth Truppen in Mumbai Erfahrung gesammelt hat realtiv neu.Es war eine von ein paar Waffen die letztendlich  noch den Kampf zum guten drehen kann, und das ist ein guter Grund.Alien Ufo's die auf der Erde stehen geben sie eine enorme Störungs- und EW-Strahlung aus die Geräte um großem Radius stört.Vielmehr strahlen sie so viel ab das eine ordinäre 'intelligente' Rakete total unbrauchbar wird.Wenn ein Typ von Alien EW die Elektronik von einen relativ dummen Raketensystem nicht stört tut es ein anderes.Keinen Erfolg hatten der Ingenieure des Militärs der Erde diesen Nachteil auszubessern. Die MPMDS hingegen ist relativ unbeeinflusst von den Alien Eindringlingen das das Raketensystem keine Zielelektronik benutztDie Raketen sind 120mm Monster mir der Größe von Artillergeschossen. Sie werden aus einem glatten Lauf geschossen und sind im Flug durch Flossen stabilisiert.Sie haben eine maximale Reichweite von 70m.Überraschenderweise bestehen sie nur aus drei Teilen: Raketenantrieb, Gefechtskopf mit Aufschlagsauslöser.Diese Einfachheit erlaubt es ihnen Effektiv und zuverlässig in den meist gefährlichen Situationen zu bleiben.Dennoch sind Raketen nicht besonders Zielgenau und trotzdem vernichten sie alles in ihrem Weg, sogar Aliens.Es genügt nur ein guter Treffen einer MPMDS Rakete um den Gegner in die Luft zu befördern.Standard Munition für diese Waffe ist:HE(Hoch-Explosiv) Raketen, AA (Anti-Panzer) Raketen und IC (Brand) RaketenNeue Typen für MPMDS Munition wurde von den Commonwealthhearstellern vor dem Kriegsanfang erforscht.Wie haben alle die Pläne als Dateien, damit wir aus diesen weitere revolutionäre Raketen Typen erschaffen können.Zusammen mit dem HPGL Granatwerfer , ist diese Waffe ein Artillerieunterstützung der Truppen die sie zu Sieg führen wird.Für unsere PHALANX Mitglieder haben wir dem Raketenwerfer die Klassifikation HPML gegeben.Recommended Doctrine:Als bestes ist der HMPL als Unterstützung gedacht um Truppen deckung zu geben oder Sturmtruppen mit Hochexplosiv- und/oder mit Brandraketen zu unterstützen.Außerdem sollten sie sich darum kümmern, das eigene Soldaten sich nicht gegeneinander abschießen. Es könnte zu einem Disaster führen.Eigene Truppen sollten niemals hinter einem Soldaten stehen der einen Rakenwerfer betätigt. Die heißen austretenden Gase sind extrem gefährlich für ihre Soldaten.Der HPML sollte niemals auf Ziele geschossen werden, die näher als 8 Meter entfernt sind. Verstöße gegen diese Sicherheitsmaßnahmen kann lebensgefährlicheVerletzungen oder den Tod des Schützen und von Mitgliedern verursachen. Sollte das Ziel näher als 8 Meter stehen, sollte man sofort seine Zweitwaffe oder ein Messer benutzen. Alles andere wäre wohl Selbstmord.AddendaZusammen mit Scharfschützengewehren und Granaten sind das ein paar Standardwaffen der Menschen die vollen Effekt gegen Robotbionische Aliens hat."
 
 #: ../base/ufos/research.ufo:800
 #, fuzzy
@@ -4097,9 +4102,8 @@ msgid "Heavy Laser Charge"
 msgstr "Munition für Schweren Laser"
 
 #: ../base/ufos/weapons_laser.ufo:183
-#, fuzzy
 msgid "Rapid Pulses"
-msgstr "Geladener Impuls"
+msgstr "Schnellfeuermodus für Plasmawaffen"
 
 #: ../base/ufos/weapons_laser.ufo:202
 msgid "Overload"
