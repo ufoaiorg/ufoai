@@ -105,7 +105,7 @@ struct edict_s {
 };
 
 
-#endif							/* GAME_INCLUDE */
+#endif	/* GAME_INCLUDE */
 
 /*=============================================================== */
 
@@ -121,6 +121,7 @@ typedef struct {
 	void (*dprintf) (char *fmt, ...);
 	void (*cprintf) (player_t * player, int printlevel, char *fmt, ...);
 	void (*centerprintf) (player_t * player, char *fmt, ...);
+	void (*positioned_sound)(vec3_t origin, edict_t *ent, int channel, int soundinedex, float volume, float attenuation, float timeofs);
 
 	/* config strings hold all the index strings, the lightstyles, */
 	/* and misc data like the cdtrack. */
@@ -128,7 +129,7 @@ typedef struct {
 	/* they connect, and changes are sent to all connected clients. */
 	void (*configstring) (int num, char *string);
 
-	void (*error) (char *fmt, ...);
+	void (*error) (char *fmt, ...) __attribute__((noreturn));
 
 	/* the *index functions create configstrings and some internal server state */
 	int (*modelindex) (char *name);

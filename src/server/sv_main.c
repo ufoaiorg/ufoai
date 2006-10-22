@@ -165,7 +165,7 @@ void SVC_Info(void)
 	version = atoi(Cmd_Argv(1));
 
 	if (version != PROTOCOL_VERSION)
-		Com_sprintf(string, sizeof(string), "%s: wrong version\n", hostname->string, sizeof(string));
+		Com_sprintf(string, sizeof(string), "%s: wrong version\n", hostname->string);
 	else {
 		count = 0;
 		for (i = 0; i < sv_maxclients->value; i++)
@@ -247,7 +247,7 @@ void SVC_DirectConnect(void)
 
 	version = atoi(Cmd_Argv(1));
 	if (version != PROTOCOL_VERSION) {
-		Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nServer is version %4.2f.\n", UFO_VERSION);
+		Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nServer is version %s.\n", UFO_VERSION);
 		Com_DPrintf("    rejected connect from version %i\n", version);
 		return;
 	}

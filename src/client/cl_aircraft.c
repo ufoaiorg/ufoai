@@ -185,7 +185,7 @@ char *CL_AircraftStatusToName(aircraft_t * aircraft)
 /**
  * @brief Returns true if aircraft is parked in its base
  */
-qboolean CL_IsAircraftInBase(aircraft_t * aircraft) 
+qboolean CL_IsAircraftInBase(aircraft_t * aircraft)
 {
 	if (aircraft->status == AIR_HOME || aircraft->status == AIR_REFUEL)
 		return qtrue;
@@ -197,7 +197,7 @@ qboolean CL_IsAircraftInBase(aircraft_t * aircraft)
  * returns 1 if no aircraft in base else 2 if no soldiers
  * available otherwise 3
  */
-int CL_EquipSoldierState(aircraft_t * aircraft) 
+int CL_EquipSoldierState(aircraft_t * aircraft)
 {
 	if (!CL_IsAircraftInBase(aircraft)) {
 		return 1;
@@ -1007,11 +1007,11 @@ void CL_AddToAircraftTeam(aircraft_t *aircraft,int idx)
 		for (i=0; i<aircraft->size; i++)
 			if (aircraft->teamIdxs[i]==-1) {
 				aircraft->teamIdxs[i]=idx;
-				Com_DPrintf("CL_AddToAircraftTeam: added idx '%d' \n",idx);
+				Com_DPrintf("CL_AddToAircraftTeam: added idx '%d'\n", idx);
 				break;
 			}
 		if (i >= aircraft->size)
-			Com_DPrintf("CL_AddToAircraftTeam: couldnt find space \n",idx);
+			Com_DPrintf("CL_AddToAircraftTeam: couldnt find space\n");
 	} else {
 		Com_DPrintf("CL_AddToAircraftTeam: error: no space in aircraft\n");
 	}

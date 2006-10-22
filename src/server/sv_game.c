@@ -135,7 +135,7 @@ static void PF_centerprintf(player_t * player, char *fmt, ...)
 /**
  * @brief Abort the server with a game error
  */
-static void PF_error(char *fmt, ...)
+static void __attribute__((noreturn)) PF_error(char *fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;
@@ -536,6 +536,7 @@ void SV_InitGameProgs(void)
 	import.setmodel = PF_SetModel;
 
 	import.configstring = PF_Configstring;
+	import.positioned_sound = SV_StartSound;
 
 	import.WriteChar = PF_WriteChar;
 	import.WriteByte = PF_WriteByte;

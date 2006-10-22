@@ -214,11 +214,9 @@ int impactTime;
 
 /*============================================================================= */
 
-/*
-======================
-CL_RegisterSounds
-======================
-*/
+/**
+ * @brief
+ */
 void CL_RegisterSounds (void)
 {
 	int		i, j;
@@ -249,9 +247,7 @@ void CL_RegisterSounds (void)
 
 /*
 =====================================================================
-
-  SERVER CONNECTING MESSAGES
-
+SERVER CONNECTING MESSAGES
 =====================================================================
 */
 
@@ -361,11 +357,11 @@ ACTION MESSAGES
 =====================================================================
 */
 
-/*
-==================
-CL_ParseStartSoundPacket
-==================
-*/
+/**
+ * @brief Parsed a server send sound package
+ * @sa svc_sound
+ * @sa SV_StartSound
+ */
 void CL_ParseStartSoundPacket(void)
 {
 	vec3_t  pos_v;
@@ -423,11 +419,9 @@ void CL_ParseStartSoundPacket(void)
 }
 
 
-/*
-=====================
-CL_Reset
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_Reset( sizebuf_t *sb )
 {
 	evTimes_t	*last, *et;
@@ -489,11 +483,9 @@ void CL_StartGame( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_CenterView
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_CenterView( sizebuf_t *sb )
 {
 	pos3_t pos;
@@ -503,11 +495,9 @@ void CL_CenterView( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_EntAppear
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_EntAppear( sizebuf_t *sb )
 {
 	le_t	*le;
@@ -583,13 +573,10 @@ void CL_EntPerish( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_ActorDoStartMove
-=====================
-*/
 le_t	*lastMoving;
-
+/**
+ * @brief
+ */
 void CL_ActorDoStartMove( sizebuf_t *sb )
 {
 	int	entnum;
@@ -600,11 +587,9 @@ void CL_ActorDoStartMove( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_ActorAppear
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_ActorAppear( sizebuf_t *sb )
 {
 	qboolean newActor;
@@ -690,11 +675,9 @@ void CL_ActorAppear( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_ActorStats
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_ActorStats( sizebuf_t *sb )
 {
 	le_t	*le;
@@ -719,11 +702,9 @@ void CL_ActorStats( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_ActorStateChange
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_ActorStateChange( sizebuf_t *sb )
 {
 	le_t	*le;
@@ -746,11 +727,9 @@ void CL_ActorStateChange( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_BiggestItem
-=====================
-*/
+/**
+ * @brief
+ */
 int CL_BiggestItem( invList_t *ic )
 {
 	int shape, size, max, maxSize;
@@ -849,11 +828,9 @@ void CL_InvAdd( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_InvDel
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_InvDel( sizebuf_t *sb )
 {
 	le_t	*le;
@@ -889,11 +866,9 @@ void CL_InvDel( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_InvAmmo
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_InvAmmo( sizebuf_t *sb )
 {
 	invList_t	*ic;
@@ -923,11 +898,9 @@ void CL_InvAmmo( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_InvReload
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_InvReload( sizebuf_t *sb )
 {
 	invList_t	*ic;
@@ -973,11 +946,9 @@ void CL_InvReload( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_LogEvent
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_LogEvent( int num )
 {
 	FILE *logfile;
@@ -991,11 +962,9 @@ void CL_LogEvent( int num )
 }
 
 
-/*
-=====================
-CL_ParseEvent
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_ParseEvent( void )
 {
 	evTimes_t *et, *last, *cur;
@@ -1075,7 +1044,8 @@ void CL_ParseEvent( void )
 						impactTime = shootTime = nextTime;
 					} else {
 						fd = GET_FIREDEF(type);
-/* TODO: not needed? and SF_BOUNCED?
+/*
+						TODO: not needed? and SF_BOUNCED?
 						if ( fd->speed )
 							impactTime = shootTime + 1000 * VectorDist( muzzle, impact ) / fd->speed;
 						else
@@ -1179,11 +1149,9 @@ void CL_ParseEvent( void )
 }
 
 
-/*
-=====================
-CL_Events
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_Events( void )
 {
 	evTimes_t	*last;
@@ -1217,11 +1185,9 @@ void CL_Events( void )
 }
 
 
-/*
-=====================
-CL_InitEvents
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_InitEvents( void )
 {
 	SZ_Init( &evStorage, evBuf, EV_STORAGE_SIZE );
@@ -1230,17 +1196,18 @@ void CL_InitEvents( void )
 }
 
 
+/**
+ * @brief
+ */
 void SHOWNET(char *s)
 {
 	if (cl_shownet->value>=2)
 		Com_Printf ("%3i:%s\n", net_message.readcount-1, s);
 }
 
-/*
-=====================
-CL_ParseServerMessage
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_ParseServerMessage (void)
 {
 	int			cmd;

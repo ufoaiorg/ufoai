@@ -125,7 +125,7 @@ extern char* E_GetEmployeeString(employeeType_t type)
 	case EMPL_ROBOT:
 		return _("UGV");
 	default:
-		Sys_Error("Unknown employee type '%s'\n", type);
+		Sys_Error("Unknown employee type '%i'\n", type);
 		return "";
 	}
 }

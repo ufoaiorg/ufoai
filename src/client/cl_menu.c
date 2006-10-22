@@ -553,7 +553,7 @@ static void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const firs
 		case EA_CMD:
 			/* execute a command */
 			if (action->data)
-				Cbuf_AddText(va("%s\n", action->data));
+				Cbuf_AddText(va("%s\n", (char*)action->data));
 			break;
 		case EA_CALL:
 			/* call another function */
@@ -1405,7 +1405,7 @@ void MN_PrecacheMenus(void)
 				if (!ref) {
 					/* bad reference */
 					node->invis = qtrue;
-					Com_Printf("MN_PrecacheMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data);
+					Com_Printf("MN_PrecacheMenus: node \"%s\" bad reference \"%s\"\n", node->name, (char*)node->data);
 					continue;
 				}
 				Q_strncpyz(source, ref, MAX_VAR);
@@ -1569,7 +1569,7 @@ void MN_DrawMenus(void)
 					if (!ref) {
 						/* bad reference */
 						node->invis = qtrue;
-						Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data);
+						Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, (char*)node->data);
 						continue;
 					}
 					Q_strncpyz(source, ref, MAX_VAR);
@@ -2917,7 +2917,7 @@ void MN_ParseMenuModel(char *name, char **text)
 		}
 
 	if (numMenuModels >= MAX_MENUMODELS) {
-		Com_Printf("MN_ParseMenuModel: Max menu models reached\n", name);
+		Com_Printf("MN_ParseMenuModel: Max menu models reached\n");
 		return;
 	}
 
@@ -3317,7 +3317,7 @@ void CL_ParseFont(char *name, char **text)
 		}
 
 	if (numFonts >= MAX_FONTS) {
-		Com_Printf("CL_ParseFont: Max fonts reached\n", name);
+		Com_Printf("CL_ParseFont: Max fonts reached\n");
 		return;
 	}
 

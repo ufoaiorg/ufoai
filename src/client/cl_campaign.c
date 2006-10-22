@@ -1674,7 +1674,7 @@ int CL_GameLoad(char *filename)
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
 	res = uncompress(buf, (uLongf *)&len, cbuf + MAX_VAR, clen - MAX_VAR);
 	free(cbuf);
-	
+
 	if (res != Z_OK) {
 		Com_Printf("Error decompressing data in '%s'.\n", filename);
 		return 1;
@@ -2621,7 +2621,7 @@ static void CL_GameResultsCmd(void)
 	} /* for */
 	Com_DPrintf("CL_GameResultsCmd - num %i\n", numberofsoldiers); /* DEBUG */
 
-	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n", i);
+	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n");
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won);
@@ -3560,8 +3560,8 @@ void CL_NationList (void)
 		Com_Printf("...happiness %0.2f\n", gd.nations[i].happiness);
 		Com_Printf("...soldiers %i\n", gd.nations[i].soldiers);
 		Com_Printf("...scientists %i\n", gd.nations[i].scientists);
-		Com_Printf("...color r:%i g:%i b:%i a:%i\n", gd.nations[i].color[0], gd.nations[i].color[1], gd.nations[i].color[2], gd.nations[i].color[3]);
-		Com_Printf("...pos x:%i y:%i\n", gd.nations[i].pos[0], gd.nations[i].pos[1]);
+		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", gd.nations[i].color[0], gd.nations[i].color[1], gd.nations[i].color[2], gd.nations[i].color[3]);
+		Com_Printf("...pos x:%.0f y:%.0f\n", gd.nations[i].pos[0], gd.nations[i].pos[1]);
 	}
 }
 

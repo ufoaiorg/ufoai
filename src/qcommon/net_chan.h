@@ -96,5 +96,5 @@ void Netchan_Init(void);
 void Netchan_Setup(netsrc_t sock, netchan_t * chan, netadr_t adr, int qport);
 
 void Netchan_Transmit(netchan_t * chan, int length, byte * data);
-void Netchan_OutOfBandPrint(int net_socket, netadr_t adr, char *format, ...);
+void Netchan_OutOfBandPrint(int net_socket, netadr_t adr, char *format, ...) __attribute__((format(printf, 3, 4)));
 qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg);

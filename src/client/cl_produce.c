@@ -364,15 +364,15 @@ static void PR_UpdateProductionList(void)
 		od = &csi.ods[prod->objID];
 
 		Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
-		Q_strcat(productionAmount, va("\n", baseCurrent->storage.num[prod->objID]), sizeof(productionAmount));
+		Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[prod->objID]), sizeof(productionAmount));
 		Q_strcat(productionQueued, va("%i\n", prod->amount), sizeof(productionQueued));
 	}
 
 	/* then spacers */
 	for (i = 0; i < QUEUE_SPACERS; i++) {
-		Q_strcat(productionList, va("\n"), sizeof(productionList));
-		Q_strcat(productionAmount, va("\n"), sizeof(productionAmount));
-		Q_strcat(productionQueued, va("\n"), sizeof(productionQueued));
+		Q_strcat(productionList, "\n", sizeof(productionList));
+		Q_strcat(productionAmount, "\n", sizeof(productionAmount));
+		Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 	}
 
 	/* then go through all object definitions */
@@ -381,7 +381,7 @@ static void PR_UpdateProductionList(void)
 		if (od->buytype == produceCategory && RS_IsResearched_ptr(od->tech)) {
 			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
 			Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[i]), sizeof(productionAmount));
-			Q_strcat(productionQueued, va("\n"), sizeof(productionQueued));
+			Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 		}
 	}
 	/* bind the menu text to our static char array */

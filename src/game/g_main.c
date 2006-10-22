@@ -208,9 +208,7 @@ void InitGame(void)
 
 	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET, NULL);
 
-	Com_sprintf(game.helpmessage1, sizeof(game.helpmessage1), "");
-
-	Com_sprintf(game.helpmessage2, sizeof(game.helpmessage2), "");
+	*game.helpmessage1 = *game.helpmessage2 = '\0';
 
 	game.maxentities = maxentities->value;
 	game.maxplayers = maxplayers->value;

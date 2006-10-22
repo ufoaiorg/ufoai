@@ -350,7 +350,7 @@ typedef struct {
 
 /* these are the functions imported by the refresh module */
 typedef struct {
-	void (*Sys_Error) (int err_level, char *str, ...);
+	void (*Sys_Error) (int err_level, char *str, ...) __attribute__((noreturn));
 
 	void (*Cmd_AddCommand) (char *name, void (*cmd) (void), char *desc);
 	void (*Cmd_RemoveCommand) (const char *name);

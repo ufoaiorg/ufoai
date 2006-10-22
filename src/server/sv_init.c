@@ -215,7 +215,7 @@ static void SV_ParseMapTile(char *filename, char **text)
 	if (!*text)
 		return;
 	if (*token != '{') {
-		Com_Printf("SV_ParseMapTile: Expected '{' for tile '%s' (%s)\n", filename);
+		Com_Printf("SV_ParseMapTile: Expected '{' for tile '%s' (%s)\n", t->name, filename);
 		return;
 	}
 
