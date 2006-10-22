@@ -14,5 +14,5 @@ Tracks under Creative Commons
 
 Tracks that are public domain
 =============================
-* greecei.ogg (talken from worldforge/golgotha)
+* greecei.ogg (taken from worldforge/golgotha)
 
