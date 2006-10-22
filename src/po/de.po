@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-10-18 09:31+0200\n"
-"PO-Revision-Date: 2006-10-18 18:30+0100\n"
+"PO-Revision-Date: 2006-10-19 22:57+0100\n"
 "Last-Translator: moe <maui_key@yahoo.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -195,7 +195,7 @@ msgstr "Standardkampagne"
 #: ../base/ufos/campaign.ufo:187
 #: ../base/ufos/campaign.ufo:281
 msgid "txt_standard_campaign"
-msgstr "Standard Kampagne. Es sind beim Bau der Basis schon Gebäude vorhanden und auch schon ein paar Arbeiter, Ärzte sowie Soldaten"
+msgstr "This is a single-player, military-themed invasion scenario. The player assumes command of Project PHALANX, Earth's response to the alien threat, and can play through a dynamic game with both significant random elements and a strong overarching storyline.Dieses is das Einzelspieler szenario/nDiese Kampagne ist in mehereren Schwierigkeitsstufen verfügbar.Diese Option stellt die Standartschwierigkeir dar und ist für Erst-Spieler empfelenswert welche Herrausvorderungen mögen."
 
 #: ../base/ufos/campaign.ufo:217
 msgid "Easy Campaign"
@@ -1007,7 +1007,7 @@ msgstr "Kapazität"
 
 #: ../base/ufos/menu_hospital.ufo:85
 msgid "Currently healing"
-msgstr "Aktuelle heilung"
+msgstr "Gerade in Behandlung"
 
 #: ../base/ufos/menu_hospital.ufo:264
 msgid "Health:"
@@ -1905,7 +1905,7 @@ msgstr "Wellington"
 msgid "There are rumors of a mine being\\overrun by aliens. Although this\\source of information is doubtful,\\you'll need to investigate."
 msgstr ""
 "Es gibt ein gerücht das eine Mine von Aliens überrant wurde.Naja die Quelle des Informanten ist\n"
-" nicht sehr verlässlich, also müssen Sie wohl hin um dem Hinweis nachzugehen"
+" nicht sehr verlässlich, also sollten Sie der Sache nachgehen."
 
 #: ../base/ufos/missions.ufo:145
 msgid "Mackay"
@@ -2827,9 +2827,8 @@ msgid "Laser Damage Type"
 msgstr "Laser"
 
 #: ../base/ufos/research.ufo:1299
-#, fuzzy
 msgid "Impact Damage Type"
-msgstr "Explosion"
+msgstr "Einschlag"
 
 #: ../base/ufos/research.ufo:1310
 #: ../base/ufos/research.ufo:1337
@@ -2837,9 +2836,8 @@ msgid "Shock Damage Type"
 msgstr "Schock"
 
 #: ../base/ufos/research.ufo:1321
-#, fuzzy
 msgid "Plasma Damage Type"
-msgstr "Plasmaklinge"
+msgstr "Plasma"
 
 #: ../base/ufos/research.ufo:1348
 msgid "Stun Damage Type"
@@ -3466,9 +3464,8 @@ msgid "Tom Shackell (archmoo/tomshackell)"
 msgstr "Tom Shackell (archmoo/tomshackell)"
 
 #: ../base/ufos/seq_credits.ufo:472
-#, fuzzy
 msgid "Contributing Artist and Modeller"
-msgstr "Contributing Programmer"
+msgstr "Contributing Artist and Modeller"
 
 #: ../base/ufos/seq_credits.ufo:478
 msgid "Philipp Hummer (kaeau) - Nathan : INC :: www.ninc.at"
@@ -3572,7 +3569,7 @@ msgstr "Die Aliens haben ihre Invasion gestartet"
 
 #: ../base/ufos/seq_ingame.ufo:33
 msgid "UFOs appear in the sky around the world ..."
-msgstr "Ufo ferscheinen am himmel überall auf der Welt"
+msgstr "UFOs erscheinen am himmel überall auf der Welt"
 
 #: ../base/ufos/seq_ingame.ufo:42
 msgid "(Catch them with your Interceptor to shoot them down.)"
@@ -3584,7 +3581,7 @@ msgstr "Endlich: Die attacke auf die Alien Basis"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "2084 - Es herscht weltweiter Frieden, alte Kriege wurden beendet, sämtliche Regierungen kooperieren, alte Grenzen wurden aufgehoben und neue gezogen. Die großen Nationen haben sich zu einer Supermacht zusammengeschlossen - die verbleibenden kleineren Nationen arbeiten eng zusammen. Reichtum ist kein Fremdwort mehr für viele der Erdbewohner - sie vertrauen auf die Führer der Nationen, die die Balance aufrecht erhalten und sie in das 22ste. Jahrhundert leiten sollen."
+msgstr "2084 - Es herscht weltweiter Frieden, die Erde ist friedlich wie sie es noch nie erlebt hat. DieDie großen Nationen haben sich zu einer Supermacht zusammengeschlossen - die verbleibenden kleineren Nationen arbeiten eng zusammen. Reichtum ist kein Fremdwort mehr für viele der Erdbewohner - sie vertrauen auf die Führer der Nationen, die die Balance aufrecht erhalten und sie in das 22ste. Jahrhundert leiten sollen."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
@@ -3612,7 +3609,7 @@ msgstr "2084 - Es herscht weltweiter Frieden, alte Kriege wurden beendet, sämtl
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "2084 - Es herscht weltweiter Frieden, alte Kriege wurden beendet, sämtliche Regierungen kooperieren, alte Grenzen wurden aufgehoben und neue gezogen. Die großen Nationen haben sich zu einer Supermacht zusammengeschlossen - die verbleibenden kleineren Nationen arbeiten eng zusammen. Reichtum ist kein Fremdwort mehr für viele der Erdbewohner - sie vertrauen auf die Führer der Nationen, die die Balance aufrecht erhalten und sie in das 22ste. Jahrhundert leiten sollen."
+msgstr "Mit dem Hintergrund der Alienattacke entgegen zu wirken, wird die Eingreiftruppe von alles Staaten unterstützt. Sie erhält große Mengen Geld und bezieht ihre Soldaten aus den Elitetruppen der jeweiligen Armeen. Sie sind die letzte Abwehrreihe der Erde gegen die Aliens. Wir können es uns nicht erlauben zu verlieren , andernfalls sind wir für immer verloren."
 
 #: ../base/ufos/seq_intro.ufo:73
 #: ../base/ufos/seq_intro.ufo:192
@@ -3621,7 +3618,7 @@ msgstr "Mauklick um fortzufahren"
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr "AN: Base Commander, PHALANX, Atlantic Operations Command"
+msgstr "An: Base Commander, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
@@ -3633,7 +3630,7 @@ msgstr "Datum: 01 Januar 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr "SUB: Viel Glück!"
+msgstr "Betreff: Viel Glück!"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
@@ -3953,9 +3950,8 @@ msgstr "Vollautomatisch"
 
 #: ../base/ufos/weapons_human.ufo:442
 #: ../base/ufos/weapons_human.ufo:518
-#, fuzzy
 msgid "Riot Shotgun"
-msgstr "Schrotflinte"
+msgstr "Schiesgewehr"
 
 #: ../base/ufos/weapons_human.ufo:460
 #: ../base/ufos/weapons_human.ufo:667
@@ -3988,9 +3984,8 @@ msgid "Flamethrower"
 msgstr "Flammenwerfer"
 
 #: ../base/ufos/weapons_human.ufo:743
-#, fuzzy
 msgid "C90 Canister"
-msgstr "Hellire Canister"
+msgstr "C90 Kanister"
 
 #: ../base/ufos/weapons_human.ufo:755
 msgid "Candlelight"
