@@ -4,3 +4,4 @@ Author: Ingo Ruhnke <grumbel@gmx.de>
 
 Any modifications made so far are under the same licenses.
 
+Author of first texture & poly-reduction: Olivier Alloschery.
