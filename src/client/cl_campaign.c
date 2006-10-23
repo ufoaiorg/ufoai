@@ -1592,6 +1592,7 @@ int CL_GameLoad(char *filename)
 	message_t *mess;
 	base_t *base;
 	int selectedMission;
+	char *fixup_type, *fixup_name, *fixup_text;
 
 	/* open file */
 	f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
@@ -1684,7 +1685,6 @@ int CL_GameLoad(char *filename)
 	/* TODO: Don't merge this hack to branch. */
 	/* TODO: Get rid of this once trunk users have had time to catch up. */
 	gd.numRanks = 0;
-	char *fixup_type, *fixup_name, *fixup_text;
 	FS_BuildFileList( "ufos/*.ufo" );
 	FS_NextScriptHeader( NULL, NULL, NULL );
 	fixup_text = NULL;
@@ -3358,6 +3358,7 @@ static void CL_GameNew(void)
 
 	/* base setup */
 	gd.numBases = 0;
+	gd.numAircraft = 0;
 	B_NewBases();
 	PR_ProductionInit();
 

@@ -54,7 +54,7 @@ void PR_ProductionRun(void)
 		if (!gd.bases[i].founded)
 			continue;
 		/* no active production */
-		if (gd.productions[i].objID < 0)
+		if (gd.productions[i].objID < 0 || gd.productions[i].amount <= 0)
 			continue;
 
 		od = &csi.ods[gd.productions[i].objID];
@@ -72,6 +72,10 @@ void PR_ProductionRun(void)
 		if (gd.productions[i].timeLeft <= 0) {
 			CL_UpdateCredits(ccs.credits - (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR));
 			gd.productions[i].timeLeft = t->produceTime;
+			gd.productions[i].amount--;
+			/* now add it to equipment */
+			/* FIXME: overflow possible */
+			gd.bases[i].storage.num[gd.productions[i].objID]++;
 			/* switch to no running production */
 			if (gd.productions[i].amount<=0) {
 				gd.productions[i].objID = -1;
@@ -79,10 +83,6 @@ void PR_ProductionRun(void)
 				MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, t);
 				CL_GameTimeStop();
 			}
-			/* now add it to equipment */
-			/* FIXME: overflow possible */
-			gd.bases[i].storage.num[gd.productions[i].objID]++;
-			gd.productions[i].amount--;
 		}
 	}
 }
