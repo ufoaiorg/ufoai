@@ -37,7 +37,7 @@ invList_t invList[MAX_INVLIST];
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
-
+static pos3_t mousePendPos; /* for double-click movement ... */
 
 /**
  * @brief Writes player action with its data
@@ -896,6 +896,9 @@ void CL_ActorStartMove(le_t * le, pos3_t to)
 		return;
 	}
 
+	/* change mode to move now */
+	cl.cmode = M_MOVE;
+
 	/* move seems to be possible; send request to server */
 	MSG_Write_PA(PA_MOVE, le->entnum, to);
 }
@@ -1352,6 +1355,33 @@ MOUSE INPUT
 */
 
 /**
+ * @brief handle select or action clicking in either move mode
+ * @sa CL_ActorSelectMouse
+ * @sa CL_ActorActionMouse
+ */
+void CL_ActorMoveMouse(void)
+{
+	if (cl.cmode == M_PEND_MOVE) {
+		if (VectorCompare(mousePos, mousePendPos)) {
+			/* pend move and clicked the same spot */
+			CL_ActorStartMove(selActor, mousePos);
+		} else {
+			/* clicked different spot */
+			VectorCopy(mousePos, mousePendPos);
+		}
+	} else {
+		if (confirm_movement->value || confirm_actions->value) {
+			/* set our mode to pending move */
+			VectorCopy(mousePos, mousePendPos);
+			cl.cmode = M_PEND_MOVE;
+		} else {
+			/* just move there */
+			CL_ActorStartMove(selActor, mousePos);
+		}
+	}
+}
+
+/**
  * @brief Selects an actor using the mouse.
  */
 void CL_ActorSelectMouse(void)
@@ -1360,17 +1390,12 @@ void CL_ActorSelectMouse(void)
 		return;
 
 	if (M_MOVE == cl.cmode || M_PEND_MOVE == cl.cmode) {
-		cl.cmode = M_MOVE;
-
 		/* Try and select another team member */
-		if (!CL_ActorSelect(mouseActor)) {
-			/* If another team member wasn't selected, move the currently */
-			/* selected team member to wherever the mouse was clicked */
-			if (confirm_actions->value) {
-				cl.cmode = M_PEND_MOVE;
-			} else {
-				CL_ActorStartMove(selActor, mousePos);
-			}
+		if (CL_ActorSelect(mouseActor)) {
+			/* succeeded so go back into move mode */
+			cl.cmode = M_MOVE;
+		} else {
+			CL_ActorMoveMouse();
 		}
 	} else if (cl.cmode > M_PEND_MOVE) {
 		cl.cmode -= M_PEND_FIRE_PR - M_FIRE_PR;
@@ -1392,13 +1417,11 @@ void CL_ActorActionMouse(void)
 	if (!selActor || mouseSpace != MS_WORLD)
 		return;
 
-	if (cl.cmode == M_MOVE) {
-		if (confirm_actions->value)
-			cl.cmode = M_PEND_MOVE;
-		else
-			CL_ActorStartMove(selActor, mousePos);
-	} else
+	if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
+		CL_ActorMoveMouse();
+	} else {
 		cl.cmode = M_MOVE;
+	}
 }
 
 
@@ -1937,6 +1960,69 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
  */
 const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT };
 #define BoxSize(i,source,target) (target[0]=i*source[0],target[1]=i*source[1],target[2]=source[2])
+
+/**
+  * @brief create a targeting box at the given position
+  */
+void CL_AddTargetingBox(pos3_t pos, qboolean pendBox)
+{
+	entity_t ent;
+	vec3_t realBoxSize;
+
+	memset(&ent, 0, sizeof(entity_t));
+	ent.flags = RF_BOX;
+
+	Grid_PosToVec(&clMap, pos, ent.origin);
+
+	/* ok, paint the green box if move is possible */
+	if (selActor && actorMoveLength < 0xFF && actorMoveLength <= selActor->TU)
+		VectorSet(ent.angles, 0, 1, 0);
+	/* and paint the blue one if move is impossible or the soldier */
+	/* does not have enough TimeUnits left */
+	else
+		VectorSet(ent.angles, 0, 0, 1);
+
+	VectorAdd(ent.origin, boxSize, ent.oldorigin);
+	/* color */
+	if (mouseActor) {
+		ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
+		/* paint the box red if the soldiers under the cursor is */
+		/* not in our team and no civilian, too */
+		if (mouseActor->team != cls.team)
+			switch (mouseActor->team) {
+			case TEAM_CIVILIAN:
+				/* civilians are yellow */
+				VectorSet(ent.angles, 1, 1, 0);
+				break;
+			default:
+				/* aliens (and players not in our team [multiplayer]) are red */
+				VectorSet(ent.angles, 1, 0, 0);
+				break;
+			}
+		BoxSize(mouseActor->fieldSize, boxSize, realBoxSize);
+		VectorSubtract(ent.origin, realBoxSize, ent.origin);
+	} else {
+		if (selActor) {
+			BoxSize(selActor->fieldSize, boxSize, realBoxSize);
+			VectorSubtract(ent.origin, realBoxSize, ent.origin);
+		} else {
+			VectorSubtract(ent.origin, boxSize, ent.origin);
+		}
+		ent.alpha = 0.3;
+	}
+/* 	V_AddLight( ent.origin, 256, 1.0, 0, 0 ); */
+	/* if pendBox is true then ignore all the previous color considerations and use cyan */
+	if (pendBox) {
+		VectorSet(ent.angles, 0, 1, 1);
+		ent.alpha = 0.15;
+	}
+
+	/* add it */
+	V_AddEntity(&ent);
+}
+
+
+
 /**
   * @brief Adds a target.
   *
@@ -1944,62 +2030,17 @@ const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT };
   */
 void CL_AddTargeting(void)
 {
-	vec3_t realBoxSize;
-
 	if (mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE)
 		return;
 
 	if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
-		entity_t ent;
-
-		memset(&ent, 0, sizeof(entity_t));
-		ent.flags = RF_BOX;
-
-		Grid_PosToVec(&clMap, mousePos, ent.origin);
-
-		/* ok, paint the green box if move is possible */
-		if (selActor && actorMoveLength < 0xFF && actorMoveLength <= selActor->TU)
-			VectorSet(ent.angles, 0, 1, 0);
-		/* and paint the blue one if move is impossible or the soldier */
-		/* does not have enough TimeUnits left */
-		else
-			VectorSet(ent.angles, 0, 0, 1);
-
-		VectorAdd(ent.origin, boxSize, ent.oldorigin);
-		/* color */
-		if (mouseActor) {
-			ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
-			/* paint the box red if the soldiers under the cursor is */
-			/* not in our team and no civilian, too */
-			if (mouseActor->team != cls.team)
-				switch (mouseActor->team) {
-				case TEAM_CIVILIAN:
-					/* civilians are yellow */
-					VectorSet(ent.angles, 1, 1, 0);
-					break;
-				default:
-					/* aliens (and players not in our team [multiplayer]) are red */
-					VectorSet(ent.angles, 1, 0, 0);
-					break;
-				}
-			BoxSize(mouseActor->fieldSize, boxSize, realBoxSize);
-			VectorSubtract(ent.origin, realBoxSize, ent.origin);
-		} else {
-			if (selActor) {
-				BoxSize(selActor->fieldSize, boxSize, realBoxSize);
-				VectorSubtract(ent.origin, realBoxSize, ent.origin);
-			} else {
-				VectorSubtract(ent.origin, boxSize, ent.origin);
-			}
-			ent.alpha = 0.3;
-		}
-/* 		V_AddLight( ent.origin, 256, 1.0, 0, 0 ); */
-
-		/* add it */
-		V_AddEntity(&ent);
-		if (cl.cmode == M_PEND_MOVE)
-			if (!CL_TraceMove(mousePos))
+		CL_AddTargetingBox(mousePos, qfalse);
+		if (cl.cmode == M_PEND_MOVE){
+			/* also display a box for the pending move if we have one */
+			CL_AddTargetingBox(mousePendPos, qtrue);
+			if (!CL_TraceMove(mousePendPos))
 				cl.cmode = M_MOVE;
+		}
 	} else {
 		if (!selActor || !selFD)
 			return;

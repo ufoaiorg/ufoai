@@ -1437,7 +1437,7 @@ void CL_ParseResults(sizebuf_t * buf)
 	byte num_stuns[MAX_TEAMS][MAX_TEAMS];
 	byte winner, we;
 
-	int i, j, num, number_items, credits_gained;;
+	int i, j, num, number_items, credits_gained;
 	int our_surviviurs,our_killed,our_stunned;
 	int thier_surviviurs,thier_killed,thier_stunned;
 	int civilian_surviviurs,civilian_killed,civilian_stunned;

@@ -89,6 +89,7 @@ cvar_t *cl_initial_equipment;
 cvar_t *cl_start_buildings;
 
 cvar_t *confirm_actions;
+cvar_t *confirm_movement;
 
 cvar_t *cl_precachemenus;
 
@@ -1205,6 +1206,7 @@ void CL_InitLocal(void)
 	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE);
 
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE);
+	confirm_movement = Cvar_Get("confirm_movement", "0", CVAR_ARCHIVE);
 
 	Cvar_Set("music", "");
 
@@ -1482,17 +1484,15 @@ void CL_CvarCheck(void)
 }
 
 
+#define NUM_DELTA_FRAMES	20
 /**
  * @brief
+ * @sa Qcommon_Frame
  */
-#define NUM_DELTA_FRAMES	20
 void CL_Frame(int msec)
 {
-	static int extratime;
-	static int lasttimecalled;
-
-	if (dedicated->value)
-		return;
+	static int extratime = 0;
+	static int lasttimecalled = 0;
 
 	if (sv_maxclients->modified) {
 		if ((int) sv_maxclients->value > 1) {

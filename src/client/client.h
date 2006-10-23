@@ -316,6 +316,7 @@ extern cvar_t *mn_lastsave;
 extern cvar_t *snd_ref;
 
 extern cvar_t *confirm_actions;
+extern cvar_t *confirm_movement;
 
 extern cvar_t *cl_precachemenus;
 

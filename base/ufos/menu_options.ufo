@@ -863,23 +863,66 @@ menu options_game
 	}
 
 	// ===================
+	// CONFIRM MOVEMEMENT
+	// ===================
+	string confirm_move_str
+	{
+		string	"_Confirm Movement:"
+		pos		"500 180"
+	}
+	string confirm_move_value
+	{
+		string	"*cvar mn_confirm_movement"
+		pos		"840 180"
+		align	ur
+	}
+	pic confirm_move_dec
+	{
+		image	menu/buttons_small
+		pos		"868 184"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		tooltip	"_No confirmation before walking"
+		click
+		{
+			cmd "mn_modify confirm_movement -1 0 1;"
+			cmd "mn_translate confirm_movement mn_confirm_movement 0:No,1:Yes;"
+		}
+	}
+	pic confirm_move_inc
+	{
+		image	menu/buttons_small
+		pos		"884 184"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		tooltip	"_Confirmation needed before walking"
+		click
+		{
+			cmd "mn_modify confirm_movement +1 0 1;"
+			cmd "mn_translate confirm_movement mn_confirm_movement 0:No,1:Yes;"
+		}
+	}
+
+	// ===================
 	// HUD
 	// ===================
 	string hud_str
 	{
 		string	"_HUD Design:"
-		pos		"500 180"
+		pos		"500 205"
 	}
 	string hud_value
 	{
 		string	"*cvar mn_hud"
-		pos		"840 180"
+		pos		"840 205"
 		align	ur
 	}
 	pic hud_dec
 	{
 		image	menu/buttons_small
-		pos		"868 184"
+		pos		"868 209"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -889,7 +932,7 @@ menu options_game
 	pic hud_inc
 	{
 		image	menu/buttons_small
-		pos		"884 184"
+		pos		"884 209"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -903,18 +946,18 @@ menu options_game
 	string tooltip_str
 	{
 		string	"_Tooltips:"
-		pos		"500 205"
+		pos		"500 230"
 	}
 	string tooltip_value
 	{
 		string	"*cvar mn_show_tooltips"
-		pos		"840 205"
+		pos		"840 230"
 		align	ur
 	}
 	pic tooltip_dec
 	{
 		image	menu/buttons_small
-		pos		"868 209"
+		pos		"868 234"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -928,7 +971,7 @@ menu options_game
 	pic tooltip_inc
 	{
 		image	menu/buttons_small
-		pos		"884 209"
+		pos		"884 234"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -946,18 +989,18 @@ menu options_game
 	string centerview_str
 	{
 		string	"_Center view:"
-		pos		"500 230"
+		pos		"500 255"
 	}
 	string centerview_value
 	{
 		string	"*cvar mn_centerview"
-		pos		"840 230"
+		pos		"840 255"
 		align	ur
 	}
 	pic centerview_dec
 	{
 		image	menu/buttons_small
-		pos		"868 234"
+		pos		"868 259"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -971,7 +1014,7 @@ menu options_game
 	pic centerview_inc
 	{
 		image	menu/buttons_small
-		pos		"884 234"
+		pos		"884 259"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -989,18 +1032,18 @@ menu options_game
 	string c_tooltip_str
 	{
 		string	"_Cursor tooltips:"
-		pos		"500 255"
+		pos		"500 280"
 	}
 	string c_tooltip_value
 	{
 		string	"*cvar mn_show_cursor_tooltips"
-		pos		"840 255"
+		pos		"840 280"
 		align	ur
 	}
 	pic c_tooltip_dec
 	{
 		image	menu/buttons_small
-		pos		"868 259"
+		pos		"868 284"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1014,7 +1057,7 @@ menu options_game
 	pic c_tooltip_inc
 	{
 		image	menu/buttons_small
-		pos		"884 259"
+		pos		"884 284"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1032,16 +1075,16 @@ menu options_game
 	string camspeed_str
 	{
 		string	"_Camera Scroll:"
-		pos		"500 310"
+		pos		"500 330"
 	}
 	pic camspeed_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 315"
+		pos		"659 335"
 	}
 	bar camspeed_bar
 	{
-		pos		"668 320"
+		pos		"668 340"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_cammovespeed"
@@ -1054,16 +1097,16 @@ menu options_game
 	string camrot_str
 	{
 		string	"_Camera Rotation:"
-		pos		"500 330"
+		pos		"500 350"
 	}
 	pic camrot_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 335"
+		pos		"659 355"
 	}
 	bar camrot_bar
 	{
-		pos		"668 340"
+		pos		"668 360"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_camrotspeed"
@@ -1079,21 +1122,21 @@ menu options_game
 	// ===================
 	string current_name
 	{
-			string  "_Name:"
-			pos     "500 420"
+		string  "_Name:"
+		pos     "500 520"
 	}
 	pic slot_hostname
 	{
-			image   menu/save_slot
-			pos     "500 440"
-			mousefx true
-			click   { cmd "msgmenu ?name" *txt_name color "1 1 1 1" *txt_name mousefx true }
+		image   menu/save_slot
+		pos     "500 540"
+		mousefx true
+		click   { cmd "msgmenu ?name" *txt_name color "1 1 1 1" *txt_name mousefx true }
 	}
 	string txt_name
 	{
-			string "*cvar name"
-			pos "510 445"
-			color "0 .78 0 1"
+		string "*cvar name"
+		pos "510 545"
+		color "0 .78 0 1"
 	}
 	confunc name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
 
@@ -1105,5 +1148,6 @@ menu options_game
 		cmd "mn_translate cl_show_tooltips mn_show_tooltips 0:No,1:Yes;"
 		cmd "mn_translate cl_show_cursor_tooltips mn_show_cursor_tooltips 0:No,1:Yes;"
 		cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes;"
+		cmd "mn_translate confirm_movement mn_confirm_movement 0:No,1:Yes;"
 	}
 }
