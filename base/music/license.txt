@@ -15,6 +15,8 @@ Tracks under Creative Commons
 Tracks that are public domain
 =============================
 * greecei.ogg (taken from worldforge/golgotha)
+* alBasrahM.ogg (from Golgotha, modified)
+* turinItalyM.ogg (from Golgotha, modified)
 
 Tracks contributed under GPL
 =============================
