@@ -131,22 +131,22 @@ void InitGame(void)
 	gi.dprintf("==== InitGame ====\n");
 
 	/* noset vars */
-	dedicated = gi.cvar("dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, NULL);
+	dedicated = gi.cvar("dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server");
 
 	/* latched vars */
-	sv_cheats = gi.cvar("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	sv_cheats = gi.cvar("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, "Activate cheats (see cheatcvars)");
 	gi.cvar("gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	gi.cvar("gamedate", __DATE__, CVAR_SERVERINFO | CVAR_LATCH, NULL);
-	developer = gi.cvar("developer", "0", 0, NULL);
+	developer = gi.cvar("developer", "0", 0, "Print out a lot of developer debug messages - useful to track down bugs");
 
 	/* max. players per team (original quake) */
-	maxplayers = gi.cvar("maxplayers", "8", CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	maxplayers = gi.cvar("maxplayers", "8", CVAR_SERVERINFO | CVAR_LATCH, "How many players (humans) may a team have");
 	/* max. soldiers per team */
-	maxsoldiers = gi.cvar("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	maxsoldiers = gi.cvar("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers may one team have");
 	/* max soldiers per player */
-	maxsoldiersperplayer = gi.cvar("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	maxsoldiersperplayer = gi.cvar("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers one player is able to control in a given team");
 	/* enable moralestates in multiplayer */
-	sv_enablemorale = gi.cvar("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	sv_enablemorale = gi.cvar("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
 	maxspectators = gi.cvar("maxspectators", "8", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	maxentities = gi.cvar("maxentities", "1024", CVAR_LATCH, NULL);
 
@@ -156,22 +156,22 @@ void InitGame(void)
 	needpass = gi.cvar("needpass", "0", CVAR_SERVERINFO, NULL);
 	filterban = gi.cvar("filterban", "1", 0, NULL);
 	sv_ai = gi.cvar("sv_ai", "1", 0, NULL);
-	sv_teamplay = gi.cvar("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
+	sv_teamplay = gi.cvar("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, "Is teamplay activated? see maxclients, maxplayers, maxsoldiers and maxsoldiersperplayer");
 	/* how many connected clients */
-	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH, "If maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 	/* reaction leftover is 0 for acceptance testing; should default to 13 */
 	sv_reaction_leftover = gi.cvar("sv_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
 	sv_shot_origin = gi.cvar("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
 
-	ai_alien = gi.cvar("ai_alien", "alien", 0, NULL);
-	ai_civilian = gi.cvar("ai_civilian", "civilian", 0, NULL);
-	ai_equipment = gi.cvar("ai_equipment", "human_phalanx_initial", 0, NULL);
+	ai_alien = gi.cvar("ai_alien", "alien", 0, "Alien team");
+	ai_civilian = gi.cvar("ai_civilian", "civilian", 0, "Civilian team");
+	ai_equipment = gi.cvar("ai_equipment", "human_phalanx_initial", 0, "Initial equipment definition");
 	/* aliens in singleplayer (can differ each mission) */
-	ai_numaliens = gi.cvar("ai_numaliens", "8", 0, NULL);
+	ai_numaliens = gi.cvar("ai_numaliens", "8", 0, "How many aliens in this battle");
 	/* civilians for singleplayer */
-	ai_numcivilians = gi.cvar("ai_numcivilians", "8", 0, NULL);
+	ai_numcivilians = gi.cvar("ai_numcivilians", "8", 0, "How many civilians in this battle");
 	/* aliens in multiplayer */
-	ai_numactors = gi.cvar("ai_numactors", "8", CVAR_ARCHIVE, NULL);
+	ai_numactors = gi.cvar("ai_numactors", "8", CVAR_ARCHIVE, "How many (human controlled) actors in this battle");
 	/* autojoin aliens */
 	ai_autojoin = gi.cvar("ai_autojoin", "0", 0, NULL);
 
@@ -184,15 +184,15 @@ void InitGame(void)
 	mof_enemy = gi.cvar("mof_ememy", "0.5", CVAR_LATCH, NULL);
 	mor_pain = gi.cvar("mof_pain", "3.6", CVAR_LATCH, NULL);
 	/*everyone gets this times morale damage */
-	mor_default = gi.cvar("mor_default", "0.3", CVAR_LATCH, NULL);
+	mor_default = gi.cvar("mor_default", "0.3", CVAR_LATCH, "Everyone gets this times morale damage");
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_distance = gi.cvar("mor_distance", "120", CVAR_LATCH, NULL);
+	mor_distance = gi.cvar("mor_distance", "120", CVAR_LATCH, "At this distance the following two get halfed (exponential scale)");
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_victim = gi.cvar("mor_victim", "0.7", CVAR_LATCH, NULL);
+	mor_victim = gi.cvar("mor_victim", "0.7", CVAR_LATCH, "At this distance the following two get halfed (exponential scale)");
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_attacker = gi.cvar("mor_attacker", "0.3", CVAR_LATCH, NULL);
+	mor_attacker = gi.cvar("mor_attacker", "0.3", CVAR_LATCH, "At this distance the following two get halfed (exponential scale)");
 	/* how much the morale depends on the size of the damaged team */
-	mon_teamfactor = gi.cvar("mon_teamfactor", "0.6", CVAR_LATCH, NULL);
+	mon_teamfactor = gi.cvar("mon_teamfactor", "0.6", CVAR_LATCH, "How much the morale depends on the size of the damaged team");
 
 	mor_regeneration = gi.cvar("mor_regeneration", "15", CVAR_LATCH, NULL);
 	mor_shaken = gi.cvar("mor_shaken", "50", CVAR_LATCH, NULL);
@@ -204,9 +204,9 @@ void InitGame(void)
 	m_panic_stop = gi.cvar("m_panic_stop", "1.0", CVAR_LATCH, NULL);
 
 	/* TODO: add CVAR_DEVELOPER flag which if !COM_CheckParm("-developer") acts like CVAR_NOSET and hides the cvar from the console */
-	g_nodamage = gi.cvar("g_nodamage", "0", 0, NULL);
+	g_nodamage = gi.cvar("g_nodamage", "0", 0, "No damage in developer mode");
 
-	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET, NULL);
+	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET, "Difficulty level");
 
 	*game.helpmessage1 = *game.helpmessage2 = '\0';
 
@@ -293,7 +293,7 @@ void Sys_Error(char *error, ...)
 	vsprintf(text, error, argptr);
 	va_end(argptr);
 
-	gi.error(ERR_FATAL, "%s", text);
+	gi.error("%s", text);
 }
 
 void Com_Printf(char *msg, ...)

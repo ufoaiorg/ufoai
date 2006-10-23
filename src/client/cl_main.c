@@ -829,14 +829,14 @@ void CL_PingServers_f(void)
 	serverText[0] = 0;
 	serverListLength = 0;
 
-	noudp = Cvar_Get("noudp", "0", CVAR_NOSET, NULL);
+	noudp = Cvar_Get("noudp", "0", CVAR_NOSET, "Don't use UDP as network protocol'");
 	if (!noudp->value) {
 		adr.type = NA_BROADCAST;
 		adr.port = BigShort(PORT_SERVER);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
 	}
 
-	noipx = Cvar_Get("noipx", "0", CVAR_NOSET, NULL);
+	noipx = Cvar_Get("noipx", "0", CVAR_NOSET, "Don't use IPX as network protocol");
 	if (!noipx->value) {
 		adr.type = NA_BROADCAST_IPX;
 		adr.port = BigShort(PORT_SERVER);
@@ -1165,23 +1165,23 @@ void CL_InitLocal(void)
 	CL_ResetSequences();
 	CL_ResetTeams();
 
-	adr0 = Cvar_Get("adr0", "", CVAR_ARCHIVE, NULL);
-	adr1 = Cvar_Get("adr1", "", CVAR_ARCHIVE, NULL);
-	adr2 = Cvar_Get("adr2", "", CVAR_ARCHIVE, NULL);
-	adr3 = Cvar_Get("adr3", "", CVAR_ARCHIVE, NULL);
-	adr4 = Cvar_Get("adr4", "", CVAR_ARCHIVE, NULL);
-	adr5 = Cvar_Get("adr5", "", CVAR_ARCHIVE, NULL);
-	adr6 = Cvar_Get("adr6", "", CVAR_ARCHIVE, NULL);
-	adr7 = Cvar_Get("adr7", "", CVAR_ARCHIVE, NULL);
-	adr8 = Cvar_Get("adr8", "", CVAR_ARCHIVE, NULL);
-	map_dropship = Cvar_Get("map_dropship", "craft_dropship", 0, NULL);
+	adr0 = Cvar_Get("adr0", "", CVAR_ARCHIVE, "Bookmark for network ip");
+	adr1 = Cvar_Get("adr1", "", CVAR_ARCHIVE, "Bookmark for network ip");
+	adr2 = Cvar_Get("adr2", "", CVAR_ARCHIVE, "Bookmark for network ip");
+	adr3 = Cvar_Get("adr3", "", CVAR_ARCHIVE, "Bookmark for network ip");
+	adr4 = Cvar_Get("adr4", "", CVAR_ARCHIVE, "Bookmark for network ip");
+	adr5 = Cvar_Get("adr5", "", CVAR_ARCHIVE, "Bookmark for network ip");
+	adr6 = Cvar_Get("adr6", "", CVAR_ARCHIVE, "Bookmark for network ip");
+	adr7 = Cvar_Get("adr7", "", CVAR_ARCHIVE, "Bookmark for network ip");
+	adr8 = Cvar_Get("adr8", "", CVAR_ARCHIVE, "Bookmark for network ip");
+	map_dropship = Cvar_Get("map_dropship", "craft_dropship", 0, "The dropship that is to be used in the map");
 
 	/* register our variables */
 	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE, NULL);
 	cl_stereo = Cvar_Get("cl_stereo", "0", 0, NULL);
 
-	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE, NULL);
-	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, NULL);
+	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
+	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
 
 	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", 0, NULL);
 	cl_camrotaccel = Cvar_Get("cl_camrotaccel", "400", 0, NULL);
@@ -1210,33 +1210,32 @@ void CL_InitLocal(void)
 	cl_paused = Cvar_Get("paused", "0", 0, NULL);
 	cl_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
 
-	rcon_client_password = Cvar_Get("rcon_password", "", 0, NULL);
-	rcon_address = Cvar_Get("rcon_address", "", 0, NULL);
+	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
+	rcon_address = Cvar_Get("rcon_address", "", 0, "Remote console adress");
 
-	cl_logevents = Cvar_Get("cl_logevents", "0", 0, NULL);
+	cl_logevents = Cvar_Get("cl_logevents", "0", 0, "Log all events to events.log");
 
-	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, NULL);
+	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode");
 	cl_worldlevel->modified = qfalse;
-	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, NULL);
+	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
 
 	/* only 19 soldiers in soldier selection list */
 	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET, NULL);
 
-	difficulty = Cvar_Get("difficulty", "0", CVAR_NOSET, NULL);
-	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, NULL);
-	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "human_phalanx_initial", CVAR_ARCHIVE, NULL);
+	difficulty = Cvar_Get("difficulty", "0", CVAR_NOSET, "Difficulty level");
+	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
+	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "human_phalanx_initial", CVAR_ARCHIVE, "Start with assigned equipment - see cl_start_employees");
+	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
 
-	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, NULL);
-
-	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, NULL);
-	confirm_movement = Cvar_Get("confirm_movement", "0", CVAR_ARCHIVE, NULL);
+	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
+	confirm_movement = Cvar_Get("confirm_movement", "0", CVAR_ARCHIVE, "Confirm all movements in tactical mode");
 
 	Cvar_Set("music", "");
 
-	mn_main = Cvar_Get("mn_main", "main", 0, NULL);
-	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, NULL);
+	mn_main = Cvar_Get("mn_main", "main", 0, "Which is the main menu id to return to");
+	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "Which is the sequence menu node to render the sequence in");
 	mn_active = Cvar_Get("mn_active", "", 0, NULL);
-	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, NULL);
+	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "Which is the current selected hud");
 	mn_lastsave = Cvar_Get("mn_lastsave", "", CVAR_ARCHIVE, NULL);
 
 	/* userinfo */
@@ -1246,16 +1245,16 @@ void CL_InitLocal(void)
 	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer");
 	team = Cvar_Get("team", "human", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 	equip = Cvar_Get("equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
-	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
-	campaign = Cvar_Get("campaign", "main", 0, NULL);
+	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Teamnum for multiplayer teamplay games");
+	campaign = Cvar_Get("campaign", "main", 0, "Which is the current selected campaign id");
 	rate = Cvar_Get("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE, NULL);	/* FIXME */
 	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
-	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, NULL);
+	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, "If maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 
 	/* register our commands */
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
-	Cmd_AddCommand("pause", CL_Pause_f, NULL);
-	Cmd_AddCommand("pingservers", CL_PingServers_f, NULL);
+	Cmd_AddCommand("pause", CL_Pause_f, "Pause the current server (singleplayer and multiplayer when you are server)");
+	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
 
 	/* text id is servers in menu_multiplayer.ufo */
 	Cmd_AddCommand("server_info", CL_ServerInfo_f, NULL);
@@ -1263,7 +1262,7 @@ void CL_InitLocal(void)
 	Cmd_AddCommand("server_connect", CL_ServerConnect_f, NULL);
 	Cmd_AddCommand("bookmarks_click", CL_BookmarkListClick_f, NULL);
 	Cmd_AddCommand("bookmarks_print", CL_BookmarkPrint_f, NULL);
-	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, NULL);
+	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
 
 	Cmd_AddCommand("userinfo", CL_Userinfo_f, NULL);
 	Cmd_AddCommand("snd_restart", CL_Snd_Restart_f, "Restart the sound renderer");
@@ -1276,13 +1275,13 @@ void CL_InitLocal(void)
 	Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
 	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
 
-	Cmd_AddCommand("rcon", CL_Rcon_f, NULL);
+	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
 
 /* 	Cmd_AddCommand ("packet", CL_Packet_f); // this is dangerous to leave in */
 
 	Cmd_AddCommand("setenv", CL_Setenv_f, NULL);
 
-	Cmd_AddCommand("precache", CL_Precache_f, NULL);
+	Cmd_AddCommand("precache", CL_Precache_f, "Function that is called at mapload to precache map data");
 
 	Cmd_AddCommand("seq_click", CL_SequenceClick_f, NULL);
 	Cmd_AddCommand("seq_start", CL_SequenceStart_f, NULL);

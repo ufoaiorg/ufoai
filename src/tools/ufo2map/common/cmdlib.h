@@ -3,6 +3,11 @@
 #ifndef __CMDLIB__
 #define __CMDLIB__
 
+/* to support the gnuc __attribute__ command */
+#ifndef __GNUC__
+#  define  __attribute__(x)  /*NOTHING*/
+#endif
+
 #ifdef _MSC_VER
 #pragma warning(disable : 4244)     /* MIPS */
 #pragma warning(disable : 4136)     /* X86 */
@@ -56,7 +61,7 @@ char *ExpandPathAndArchive (char *path);
 
 double I_FloatTime (void);
 
-void	Error (char *error, ...);
+void	Error (char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 int		CheckParm (char *check);
 
 FILE	*SafeOpenWrite (char *filename);
@@ -100,7 +105,7 @@ extern	char			archivedir[1024];
 
 
 extern	qboolean verbose;
-void qprintf (char *format, ...);
+void qprintf (char *format, ...) __attribute__((format(printf, 1, 2)));
 
 void ExpandWildcards (int *argc, char ***argv);
 

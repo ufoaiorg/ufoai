@@ -59,7 +59,6 @@ static void PF_Unicast(player_t * player)
 	SZ_Clear(&sv.multicast);
 }
 
-
 /**
  * @brief Debug print to server console
  */

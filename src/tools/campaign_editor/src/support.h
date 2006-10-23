@@ -27,6 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  include <config.h>
 #endif
 
+/* to support the gnuc __attribute__ command */
+#ifndef __GNUC__
+#  define  __attribute__(x)  /*NOTHING*/
+#endif
+
 #include <gtk/gtk.h>
 
 /* is 64 in ufo but \0 */
@@ -91,7 +96,7 @@ extern void* globalFileBuffer;
 int file_exists (char *filename);
 int file_ext (char *filename, char *fileext);
 void file_strip_ext (char *in, char *out);
-char *va(char *format, ...);
+char *va(char *format, ...) __attribute__(format(printf, 1, 2));
 char *bool_translate( int value );
 typedef unsigned char byte;
 void fatal_error (char* errormessage);

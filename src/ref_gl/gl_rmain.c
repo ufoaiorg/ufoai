@@ -1614,7 +1614,7 @@ static void R_BeginFrame(float camera_separation)
 
 	if (r_anisotropic->modified) {
 		if (r_anisotropic->value > r_ext_max_anisotropy->value) {
-			ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %i\n", r_ext_max_anisotropy->value);
+			ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %.0f\n", r_ext_max_anisotropy->value);
 			ri.Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->value);
 		}
 		r_anisotropic->modified = qfalse;
