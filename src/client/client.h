@@ -91,6 +91,7 @@ extern int num_cl_weaponmodels;
 #define	CMD_BACKUP		64		/* allow a lot of command backups for very fast systems */
 
 #define FOV				60.0
+#define FOV_FPS			90.0
 
 typedef struct {
 	vec3_t reforg;

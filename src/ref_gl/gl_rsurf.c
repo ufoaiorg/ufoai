@@ -621,7 +621,10 @@ static void R_DrawInlineBModel(void)
 		/* find which side of the node we are on */
 		pplane = psurf->plane;
 
-		dot = DotProduct(modelorg, pplane->normal) - pplane->dist;
+		if (r_isometric->value)
+			dot = -DotProduct(vpn, pplane->normal);
+		else
+			dot = DotProduct(modelorg, pplane->normal) - pplane->dist;
 
 		/* draw the polygon */
 		if (((psurf->flags & SURF_PLANEBACK) && (dot < -BACKFACE_EPSILON)) || (!(psurf->flags & SURF_PLANEBACK) && (dot > BACKFACE_EPSILON))) {
@@ -751,19 +754,12 @@ static void R_RecursiveWorldNode(mnode_t * node)
 	/* find which side of the node we are on */
 	plane = node->plane;
 
-	switch (plane->type) {
-	case PLANE_X:
-		dot = modelorg[0] - plane->dist;
-		break;
-	case PLANE_Y:
-		dot = modelorg[1] - plane->dist;
-		break;
-	case PLANE_Z:
-		dot = modelorg[2] - plane->dist;
-		break;
-	default:
+	if (r_isometric->value) {
+		dot = -DotProduct(vpn, plane->normal);
+	} else if (plane->type >= 3) {
 		dot = DotProduct(modelorg, plane->normal) - plane->dist;
-		break;
+	} else {
+		dot = modelorg[plane->type] - plane->dist;
 	}
 
 	if (dot >= 0) {
@@ -869,7 +865,8 @@ static void R_FindModelNodes_r(mnode_t * node)
 
 
 /**
- * @brief
+ * @brief Draws the brushes for the current worldlevel
+ * @sa cvar cl_worldlevel
  */
 void R_DrawLevelBrushes(void)
 {

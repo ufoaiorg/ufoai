@@ -539,6 +539,7 @@ void SCR_DrawConsole(void)
  * @brief
  * @sa SCR_UpdateScreen
  * @sa SCR_EndLoadingPlaque
+ * @sa SCR_DrawLoading
  */
 void SCR_BeginLoadingPlaque(void)
 {
