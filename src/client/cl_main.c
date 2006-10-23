@@ -52,7 +52,6 @@ cvar_t *rcon_address;
 
 cvar_t *cl_timeout;
 
-/*cvar_t	*cl_minfps; */
 cvar_t *cl_maxfps;
 cvar_t *cl_markactors;
 
@@ -204,6 +203,25 @@ void CL_Quit_f(void)
 {
 	CL_Disconnect();
 	Com_Quit();
+}
+
+/**
+ * @brief Disconnects a multiplayer game if singleplayer is true and set css.singleplayer to true
+ */
+void CL_StartSingleplayer(qboolean singleplayer)
+{
+	if (singleplayer) {
+		ccs.singleplayer = qtrue;
+		if (Qcommon_ServerActive()) {
+			/* shutdown server */
+			SV_Shutdown("Server was killed.\n", qfalse);
+		}
+		if (cls.state >= ca_connecting) {
+			Com_Printf("Disconnect from current server\n");
+			CL_Disconnect();
+		}
+	} else
+		ccs.singleplayer = qfalse;
 }
 
 /**
@@ -1141,7 +1159,6 @@ void CL_InitLocal(void)
 	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE);
 	cl_stereo = Cvar_Get("cl_stereo", "0", 0);
 
-/*	cl_minfps = Cvar_Get ("cl_minfps", "5", 0); */
 	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0);
 	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE);
 	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE);
@@ -1286,7 +1303,6 @@ typedef struct {
 static cheatvar_t cheatvars[] = {
 	{"timedemo", "0"},
 	{"r_drawworld", "1"},
-	{"cl_testlights", "0"},
 	{"r_fullbright", "0"},
 	{"paused", "0"},
 	{"fixedtime", "0"},
@@ -1320,8 +1336,10 @@ void CL_FixCvarCheats(void)
 
 	/* make sure they are all set to the proper values */
 	for (i = 0, var = cheatvars; i < numcheatvars; i++, var++) {
-		if (Q_strcmp(var->var->string, var->value))
+		if (Q_strcmp(var->var->string, var->value)) {
+			Com_DPrintf("...cheatcvar '%s': value from '%s' to '%s'\n", var->name, var->var->string, var->value);
 			Cvar_Set(var->name, var->value);
+		}
 	}
 }
 
@@ -1478,7 +1496,7 @@ void CL_Frame(int msec)
 
 	if (sv_maxclients->modified) {
 		if ((int) sv_maxclients->value > 1) {
-			ccs.singleplayer = qfalse;
+			CL_StartSingleplayer(qfalse);
 			curCampaign = NULL;
 			selMis = NULL;
 			baseCurrent = &gd.bases[0];
@@ -1493,7 +1511,7 @@ void CL_Frame(int msec)
 			Cvar_Set("map_dropship", "craft_dropship");
 			CL_Disconnect();
 		} else {
-			ccs.singleplayer = qtrue;
+			CL_StartSingleplayer(qtrue);
 			Com_Printf("Changing to Singleplayer\n");
 		}
 		sv_maxclients->modified = qfalse;

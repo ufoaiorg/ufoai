@@ -1899,7 +1899,7 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 	at[2] -= 9;
 
 	/* calculate parabola */
-	dt = Com_GrenadeTarget(from, at, v0);
+	dt = Com_GrenadeTarget(from, at, selFD->range, v0);
 	if (!dt) {
 		CL_ParticleSpawn("cross_no", 0, at, NULL, NULL);
 		return;

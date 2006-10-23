@@ -2,9 +2,11 @@
 
 UFOINSTALLED = ../
 
+MAKE_FLAGS = --stop --silent
+
 CC = i586-mingw32msvc-gcc
 
-JPEGLIB = -DDONT_TYPEDEF_INT32
+JPEGLIB = -DDONT_TYPEDEF_INT32 -llibjpeg
 VORBISLIB = -lvorbisfile -lvorbis -logg
 CFLAGS = -g -Iclient -Imingw32 -DC_ONLY -DSHADERS $(shell sdl-config --cflags) -fexceptions
 LDFLAGSINTL = -L/usr/local/lib -lintl -DHAVE_GETTEXT
@@ -14,7 +16,7 @@ LDFLAGS_SDL_TTF = -lSDL_ttf
 
 GAME_SRC = game/g_ai.c game/g_client.c game/g_cmds.c game/g_main.c game/g_spawn.c game/g_svcmds.c game/g_utils.c
 
-REF_GL_SRC = ref_gl/gl_anim.c ref_gl/arb_shader.c ref_gl/gl_draw.c ref_gl/gl_font.c ref_gl/gl_image.c ref_gl/gl_light.c ref_gl/gl_mesh.c ref_gl/gl_model.c ref_gl/gl_particle.c ref_gl/gl_rmain.c ref_gl/gl_rmisc.c ref_gl/gl_rsurf.c ref_gl/gl_shadows.c ref_gl/gl_warp.c ref_gl/qgl.c
+REF_GL_SRC = ref_gl/gl_anim.c ref_gl/gl_arb_shader.c ref_gl/gl_draw.c ref_gl/gl_font.c ref_gl/gl_image.c ref_gl/gl_light.c ref_gl/gl_mesh.c ref_gl/gl_model.c ref_gl/gl_particle.c ref_gl/gl_rmain.c ref_gl/gl_rmisc.c ref_gl/gl_rsurf.c ref_gl/gl_shadows.c ref_gl/gl_warp.c ref_gl/qgl.c
 
 REF_GL_WIN32_SRC = ports/win32/qgl_win.c ports/win32/glw_imp.c
 
@@ -46,6 +48,8 @@ REF_GL_DLL_SRC = $(REF_GL_SRC) $(REF_GL_WIN32_SRC) $(SHARED_SRC1) $(SHARED_SRC2)
 
 UFO_EXE_SRC = $(SHARED_SRC1) $(SHARED_SRC2) $(CLIENT_SRC) $(QCOMMON_SRC) $(SERVER_SRC) $(WIN32_SRC)
 
+UFO2MAP_EXE_SRC = $(SHARED_SRC1) $(SHARED_SRC2) $(QCOMMON_SRC) $(SERVER_SRC) $(WIN32_SRC) $(NULL_SRC)
+
 UFODED_EXE_SRC = $(SHARED_SRC1) $(SHARED_SRC2) $(QCOMMON_SRC) $(SERVER_SRC) $(WIN32_SRC) $(NULL_SRC)
 
 all: $(UFOINSTALLED)base/game.dll $(UFOINSTALLED)ref_gl.dll $(UFOINSTALLED)snd_sdl.dll $(UFOINSTALLED)snd_wapi.dll $(UFOINSTALLED)snd_dx.dll $(UFOINSTALLED)ufo.exe
@@ -54,7 +58,7 @@ $(UFOINSTALLED)base/game.dll: $(GAMEX86_DLL_SRC:.c=.shob)
 	$(CC) -o $@ -shared $(LDFLAGSINTL) $(LDFLAGS_DLL) $+
 
 $(UFOINSTALLED)snd_sdl.dll: $(SND_SDL_WIN32_SRC:.c=.shob)
-	$(CC) -o $@ -shared $(LDFLAGS_DLL) $+
+	$(CC) -o $@ -shared $(LDFLAGS_DLL) $(shell sdl-config --libs) $+
 
 $(UFOINSTALLED)snd_wapi.dll: $(SND_WAPI_WIN32_SRC:.c=.shob)
 	$(CC) -o $@ -shared $(LDFLAGS_DLL) $+
@@ -63,13 +67,16 @@ $(UFOINSTALLED)snd_dx.dll: $(SND_DX_WIN32_SRC:.c=.shob)
 	$(CC) -o $@ -shared $(LDFLAGS_DLL) $+
 
 $(UFOINSTALLED)ref_gl.dll: $(REF_GL_DLL_SRC:.c=.shob)
-	$(CC) -o $@ -shared $(JPEGLIB) $(LDFLAGS) $(LDFLAGS_SDL_TTF) $+
+	$(CC) -o $@ -shared $(JPEGLIB) $(LDFLAGS_DLL) $(shell sdl-config --libs) $(LDFLAGS_SDL_TTF) $+
 
 $(UFOINSTALLED)ufo.exe: $(UFO_EXE_SRC:.c=.o) win32/resources.coff
 	$(CC) -o $@ $(LDFLAGSINTL) $(LDFLAGS) $(VORBISLIB) $+
 
 $(UFOINSTALLED)ufo_ded.exe: $(UFODED_EXE_SRC:.c=.o) win32/resources.coff
 	$(CC) -o $@ $(LDFLAGS) -DDEDICATED_ONLY $+
+
+$(UFOINSTALLED)ufo2map.exe: $(UFO2MAP_EXE_SRC:.c=.o)
+	$(CC) -o $@ $(LDFLAGS) $+
 
 %.shob: %.c
 	$(CC) -o $@ -c $< -shared $(CFLAGS)

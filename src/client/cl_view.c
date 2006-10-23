@@ -46,9 +46,6 @@ char cl_weaponmodels[MAX_CLIENTWEAPONMODELS][MAX_QPATH];
 int num_cl_weaponmodels;
 
 /* static vars */
-static cvar_t *cl_testparticles;
-static cvar_t *cl_testentities;
-static cvar_t *cl_testlights;
 static cvar_t *cl_drawgrid;
 static cvar_t *cl_stats;
 
@@ -144,83 +141,6 @@ void V_AddLightStyle(int style, float r, float g, float b)
 	ls->rgb[0] = r;
 	ls->rgb[1] = g;
 	ls->rgb[2] = b;
-}
-
-/**
- * @brief If cl_testparticles is set, create 4096 particles in the view
- */
-void V_TestParticles(void)
-{
-	particle_t *p;
-	int i, j;
-	float d, r, u;
-
-	r_numparticles = MAX_PARTICLES;
-	for (i = 0; i < r_numparticles; i++) {
-		d = i * 0.25;
-		r = 4 * ((i & 7) - 3.5);
-		u = 4 * (((i >> 3) & 7) - 3.5);
-		p = &r_particles[i];
-
-		for (j = 0; j < 3; j++)
-			p->origin[j] = cl.refdef.vieworg[j] + cl.cam.axis[j][0] * d + cl.cam.axis[j][1] * r + cl.cam.axis[j][2] * u;
-
-		p->color = 8;
-		p->alpha = cl_testparticles->value;
-	}
-}
-
-/**
- * @brief If cl_testentities is set, create 32 player models
- */
-void V_TestEntities(void)
-{
-	int i, j;
-	float f, r;
-	entity_t *ent;
-
-	r_numentities = 32;
-	memset(r_entities, 0, sizeof(r_entities));
-
-	for (i = 0; i < r_numentities; i++) {
-		ent = &r_entities[i];
-
-		r = 64 * ((i % 4) - 1.5);
-		f = 64 * (i / 4) + 128;
-
-		for (j = 0; j < 3; j++)
-			ent->origin[j] = cl.refdef.vieworg[j] + cl.cam.axis[j][0] * f + cl.cam.axis[j][1] * r;
-
-		ent->model = cl.baseclientinfo.model;
-		ent->skin = cl.baseclientinfo.skin;
-	}
-}
-
-/**
- * @brief If cl_testlights is set, create 32 lights models
- */
-void V_TestLights(void)
-{
-	int i, j;
-	float f, r;
-	dlight_t *dl;
-
-	r_numdlights = 32;
-	memset(r_dlights, 0, sizeof(r_dlights));
-
-	for (i = 0; i < r_numdlights; i++) {
-		dl = &r_dlights[i];
-
-		r = 64 * ((i % 4) - 1.5);
-		f = 64 * (i / 4) + 128;
-
-		for (j = 0; j < 3; j++)
-			dl->origin[j] = cl.refdef.vieworg[j] + cl.cam.axis[j][0] * f + cl.cam.axis[j][1] * r;
-		dl->color[0] = ((i % 6) + 1) & 1;
-		dl->color[1] = (((i % 6) + 1) & 2) >> 1;
-		dl->color[2] = (((i % 6) + 1) & 4) >> 2;
-		dl->intensity = 200;
-	}
 }
 
 /**
@@ -752,10 +672,6 @@ void V_Init(void)
 	Cmd_AddCommand("shaderlist", CL_ShaderList_f);
 
 	cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE);
-
-	cl_testparticles = Cvar_Get("cl_testparticles", "0", 0);
-	cl_testentities = Cvar_Get("cl_testentities", "0", 0);
-	cl_testlights = Cvar_Get("cl_testlights", "0", 0);
 
 	cl_drawgrid = Cvar_Get("drawgrid", "0", 0);
 

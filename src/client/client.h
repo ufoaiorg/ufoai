@@ -413,6 +413,7 @@ void CL_Init(void);
 void CL_ParseScriptFirst(char *type, char *name, char **text);
 void CL_ReadSinglePlayerData( void );
 
+void CL_StartSingleplayer(qboolean singleplayer);
 void CL_FixUpGender(void);
 void CL_Disconnect(void);
 void CL_Disconnect_f(void);
