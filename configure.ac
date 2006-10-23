@@ -716,9 +716,6 @@ then
 	then
 		AC_MSG_ERROR([--with-vidmode specified but couldn't find X11/extensions/xf86vmode.h])
 	fi
-
-
-
 fi
 
 

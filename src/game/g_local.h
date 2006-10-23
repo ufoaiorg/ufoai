@@ -277,6 +277,19 @@ void G_RecalcRouting(edict_t * ent);
 #define VT_NOFRUSTOM	2
 #define VT_FULL			4
 
+/* Timeunits for the various actions. */
+#define TU_CROUCH		1
+#define TU_TURN		1
+#define TU_REACTION		7
+
+#define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
+
+qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU, qboolean quiet);
+void G_SendStats(edict_t * ent);
+edict_t *G_SpawnFloor(pos3_t pos);
+int G_CheckVisTeam(int team, edict_t * check, qboolean perish);
+
+
 void G_ActorDie(edict_t * ent, int state);
 void G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player, qboolean quiet);
@@ -308,6 +321,13 @@ void G_AppearPerishEvent(int player_mask, int appear, edict_t * check);
 int G_VisToPM(int vis_mask);
 void G_SendInventory(int player_mask, edict_t * ent);
 int G_TeamToPM(int team);
+
+extern int TU_REACTIONS[MAX_EDICTS][2];
+extern int turnTeam;
+
+/* g_combat.c */
+
+void G_ResetReactionFire(int team);
 
 /* g_ai.c */
 void AI_Run(void);
@@ -422,6 +442,10 @@ struct edict_s {
 	int body;
 	int head;
 	int skin;
+
+	/* delayed reaction fire */
+	edict_t *reactionTarget;
+	float	reactionTUs;
 
 	/* here are the character values */
 	character_t chr;

@@ -2,6 +2,7 @@ GAME_SRCS=\
 	game/q_shared.c \
 	game/g_ai.c \
 	game/g_client.c \
+	game/g_combat.c \
 	game/g_cmds.c \
 	game/g_main.c \
 	game/g_spawn.c \
