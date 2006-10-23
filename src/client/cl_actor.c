@@ -1526,35 +1526,60 @@ void CL_ResetActorMoveLength(void) {
  */
 void CL_ActorMouseTrace(void)
 {
-	float d;
-	vec3_t angles;
-	vec3_t fw, forward, stop;
-	vec3_t end;
+	int isometric;
+	float /*d, */cur[2], fov_x, frustumslope[2], projectiondistance = 2048;
+	/* vec3_t angles; */
+	vec3_t forward, right, up, stop;
+	vec3_t end, dir;
 	le_t *le;
 	int i;
 	vec3_t from;
 
+	/* FIXME: r_isometric is not known here, so it is being looked up each time... */
+	isometric = Cvar_VariableValue("r_isometric") != 0;
+
 	/* get camera parameters */
+	/*
 	d = (scr_vrect.width / 2) / tan((FOV / cl.cam.zoom) * M_PI / 360);
 	angles[YAW] = atan((mx * viddef.rx - scr_vrect.width / 2 - scr_vrect.x) / d) * 180 / M_PI;
 	angles[PITCH] = atan((my * viddef.ry - scr_vrect.height / 2 - scr_vrect.y) / d) * 180 / M_PI;
 	angles[ROLL] = 0;
+	*/
 
 	/* get trace vectors */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON) {
 		VectorCopy(selActor->origin, from);
 		if (!(selActor->state & STATE_CROUCHED))
 			from[2] += 10;		/* raise from waist to head */
-		angles[PITCH] += cl.cam.angles[PITCH];
-		angles[YAW] = cl.cam.angles[YAW] - angles[YAW];
-		angles[ROLL] += cl.cam.angles[ROLL];
-		AngleVectors(angles, forward, NULL, NULL);
+		AngleVectors(cl.cam.angles, forward, right, up);
 	} else {
 		VectorCopy(cl.cam.camorg, from);
-		AngleVectors(angles, fw, NULL, NULL);
-		VectorRotate(cl.cam.axis, fw, forward);
+		VectorCopy(cl.cam.axis[0], forward);
+		VectorCopy(cl.cam.axis[1], right);
+		VectorCopy(cl.cam.axis[2], up);
 	}
-	VectorMA(from, 2048, forward, stop);
+
+	/* get cursor position as a -1 to +1 range for projection */
+	cur[0] = (mx * viddef.rx - scr_vrect.width * 0.5 - scr_vrect.x) / (scr_vrect.width * 0.5);
+	cur[1] = (my * viddef.ry - scr_vrect.height * 0.5 - scr_vrect.y) / (scr_vrect.height * 0.5);
+
+	/* FIXME: fix isometric scaling so it reacts properly to zoom */
+
+	fov_x = (FOV / cl.cam.zoom);
+	if (isometric)
+		frustumslope[0] = 10 * fov_x;
+	else
+		frustumslope[0] = tan(fov_x * M_PI / 360) * projectiondistance;
+	frustumslope[1] = frustumslope[0] * ((float)scr_vrect.height / scr_vrect.width);
+
+	/* transform cursor position into perspective space */
+	VectorMA(from, projectiondistance, forward, stop);
+	VectorMA(stop, cur[0] * frustumslope[0], right, stop);
+	VectorMA(stop, cur[1] * -frustumslope[1], up, stop);
+
+	/* in isometric mode the camera position has to be calculated from the cursor position so that the trace goes in the right direction */
+	if (isometric)
+		VectorMA(stop, -projectiondistance*2, forward, from);
 
 	/* do the trace */
 	CM_EntTestLineDM(cl.cam.camorg, stop, end);
@@ -1569,9 +1594,11 @@ void CL_ActorMouseTrace(void)
 		mousePos[2] = cl_worldlevel->value;
 
 	/* FIXME: wrong values if cursor is not centered or outside the map */
+	VectorSubtract(stop, from, dir);
+	VectorNormalize(dir);
 	stop[2] = (mousePos[2] + 0.5) * UNIT_HEIGHT;
-	stop[0] = end[0] + forward[0] * (end[2] - stop[2]);
-	stop[1] = end[1] + forward[1] * (end[2] - stop[2]);
+	stop[0] = end[0] + dir[0] * (end[2] - stop[2]);
+	stop[1] = end[1] + dir[1] * (end[2] - stop[2]);
 
 	VecToPos(stop, mousePos);
 	mousePos[2] = Grid_Fall(&clMap, mousePos);

@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual C++ Express 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ufo", "ufo_8.vcproj", "{81666F07-269F-43B1-BE2E-2762520E562E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug Alpha|Win32 = Debug Alpha|Win32
+		Debug|Win32 = Debug|Win32
+		Release Alpha|Win32 = Release Alpha|Win32
+		Release|Win32 = Release|Win32
+		Release-SDLTTF|Win32 = Release-SDLTTF|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Debug Alpha|Win32.ActiveCfg = Debug Alpha|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Debug Alpha|Win32.Build.0 = Debug Alpha|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Debug|Win32.Build.0 = Debug|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Release Alpha|Win32.ActiveCfg = Release Alpha|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Release Alpha|Win32.Build.0 = Release Alpha|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Release|Win32.ActiveCfg = Release|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Release|Win32.Build.0 = Release|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Release-SDLTTF|Win32.ActiveCfg = Release-SDLTTF|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Release-SDLTTF|Win32.Build.0 = Release-SDLTTF|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

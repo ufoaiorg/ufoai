@@ -1552,16 +1552,23 @@ void CL_UpdatePointersInGlobalData(void)
 			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
 		}
 
+		/* initalize team to null */
+		for (p = 0; p < MAX_ACTIVETEAM; p++)
+			base->curTeam[p] = NULL;
+
+		/* if there are no aircraft in base, a team can't be assigned */
+		if (baseCurrent->numAircraftInBase <= 0)
+			continue;
+
 		/* now fix the curTeam pointers */
+		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+
 		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-			if ( CL_SoldierInAircraft(i, base->aircraftCurrent) ) {
+			if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
 				/* maybe we already have soldiers in this base */
 				base->curTeam[p] = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
 				p++;
 			}
-		/* rest will be null */
-		for (; p < MAX_ACTIVETEAM; p++)
-			base->curTeam[p] = NULL;
 	}
 }
 
@@ -1778,6 +1785,9 @@ int CL_GameLoad(char *filename)
 		/* read next stage name */
 		name = MSG_ReadString(&sb);
 	}
+
+	/* reset team */
+	Cvar_Set("team", curCampaign->team);
 
 	/* store active missions */
 	ccs.numMissions = MSG_ReadByte(&sb);
@@ -2078,7 +2088,7 @@ static void CL_GameGo(void)
 
 	/* retrieve the correct team */
 	for (i = 0, p = 0; i < (int)cl_numnames->value; i++)
-		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
+		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
 			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
 		}
@@ -2402,12 +2412,15 @@ void CL_UpdateCharacterStats(int won)
 {
 	character_t *chr = NULL;
 	rank_t *rank = NULL;
+	aircraft_t *aircraft;
 	int i, j;
 
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
+		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
 			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			assert(chr);
 			chr->assigned_missions++;
@@ -2540,7 +2553,7 @@ static void CL_GameResultsCmd(void)
 	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
 	for (i = gd.numEmployees[EMPL_SOLDIER]-1; i >= 0 ; i-- ) {
 		/* if employee is marked as dead */
-		if (CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) )	/* DEBUG */
+		if (CL_SoldierInAircraft(i, gd.interceptAircraft) )	/* DEBUG? */
 			numberofsoldiers++;
 
 		Com_DPrintf("CL_GameResultsCmd - try to get player %i \n", i);
@@ -3326,6 +3339,9 @@ static void CL_GameNew(void)
 	CL_StartSingleplayer(qtrue);
 	if (curCampaign)
 		CL_GameExit();
+
+	/* clear any old pending messages */
+	CL_InitMessageSystem();
 
 	memset(&gd, 0, sizeof(gd));
 	CL_ReadSinglePlayerData();

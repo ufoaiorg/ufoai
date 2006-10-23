@@ -371,7 +371,7 @@ void CL_NewAircraft(base_t *base, char *name)
 		Radar_Initialise(&(aircraft->radar), AIRCRAFT_RADAR_RANGE);
 
 		base->numAircraftInBase++;
-		Com_DPrintf("Aircraft for base %s: %s\n", base->name, aircraft->name);
+		Com_DPrintf("Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
 		/* now update the aircraft list - maybe there is a popup active */
 		Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
 	}
@@ -391,7 +391,7 @@ void CL_DeleteAircraft(aircraft_t *aircraft)
 	if (aircraft) {
 		base = &gd.bases[aircraft->idxBase];
 		/* Remove all soldiers from the aircraft (the employees are still hired after this) */
-		CL_RemoveSoldiersFromAircraft(aircraft->idx, aircraft->idxInBase );
+		CL_RemoveSoldiersFromAircraft(aircraft->idxInBase, aircraft->idxBase );
 
 		/* Remove aircraft and rearrange the aircraft-list (in base), */
 		base->numAircraftInBase--;

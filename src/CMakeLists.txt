@@ -39,13 +39,13 @@ SUBDIRS(po)
 SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 
 IF(HAVE_IPV6)
-   ADD_DEFINITIONS(-DHAVE_IPV6)
-   IF(${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
-      ADD_DEFINITIONS(-DHAVE_SIN6_LEN)
-   ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
-   SET(NET_UDP "net_udp6")
+	ADD_DEFINITIONS(-DHAVE_IPV6)
+	IF(${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
+		ADD_DEFINITIONS(-DHAVE_SIN6_LEN)
+	ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
+	SET(NET_UDP "net_udp6")
 ELSE(HAVE_IPV6)
-   SET(NET_UDP "net_udp")
+	SET(NET_UDP "net_udp")
 ENDIF(HAVE_IPV6)
 
 
@@ -53,7 +53,7 @@ ENDIF(HAVE_IPV6)
 # Sourcefiles for client
 #
 
-SET(UFOSOURCEFILES 
+SET(UFOSOURCEFILES
 	client/cl_actor.c
 	client/cl_aircraft.c
 	client/cl_basemanagement.c
@@ -86,7 +86,7 @@ SET(UFOSOURCEFILES
 	client/snd_mix.c
 	client/snd_ref.c
 	client/x86.c
-	
+
 #	qcommon/cbuf.c
 	qcommon/cmd.c
 	qcommon/cmodel.c
@@ -97,7 +97,7 @@ SET(UFOSOURCEFILES
 	qcommon/md4.c
 	qcommon/net_chan.c
 	qcommon/scripts.c
-	
+
 	server/sv_ccmds.c
 	server/sv_game.c
 	server/sv_init.c
@@ -138,15 +138,15 @@ SET(REF_GL_SOURCEFULES
 	ref_gl/gl_arb_shader.c
 	ref_gl/gl_shadows.c
 	ref_gl/qgl.c
-	
+
 	ports/linux/qgl_linux.c
 	game/q_shared.c
 	ports/linux/q_shlinux.c
-	ports/unix/glob.c # TODO: Different for macos. 
+	ports/unix/glob.c # TODO: Different for macos.
 )
 
 SET(REF_GLX_SOURCEFILES
-    ports/linux/gl_glx.c
+	ports/linux/gl_glx.c
 )
 
 SET(REF_SDL_SOURCEFILES
@@ -224,30 +224,30 @@ ADD_DEFINITIONS("-DSVN='\"${SVN_OUTPUT}\"'")
 
 
 IF (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
-        LIST(APPEND UFOSOURCEFILES
-                ports/linux/q_shlinux.c
-                ports/linux/vid_so.c
-                ports/linux/sys_linux.c
-                ports/unix/glob.c
-                "ports/unix/${NET_UDP}.c"
-        )  
-        LIST(APPEND UFODED_SOURCEFILES
-                ports/linux/q_shlinux.c
-                ports/linux/sys_linux.c
-                ports/unix/glob.c
-                "ports/unix/${NET_UDP}.c"
-        )
+	LIST(APPEND UFOSOURCEFILES
+			ports/linux/q_shlinux.c
+			ports/linux/vid_so.c
+			ports/linux/sys_linux.c
+			ports/unix/glob.c
+			"ports/unix/${NET_UDP}.c"
+	)
+	LIST(APPEND UFODED_SOURCEFILES
+			ports/linux/q_shlinux.c
+			ports/linux/sys_linux.c
+			ports/unix/glob.c
+			"ports/unix/${NET_UDP}.c"
+	)
 	LIST(APPEND EXTERNAL_LIBS m vorbisfile vorbis intl)
 ENDIF (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
 
 IF (${CMAKE_SYSTEM_NAME} STREQUAL Linux)
-	LIST(APPEND UFOSOURCEFILES 
+	LIST(APPEND UFOSOURCEFILES
 		ports/linux/q_shlinux.c
 		ports/linux/vid_so.c
 		ports/linux/sys_linux.c
 		ports/unix/glob.c
 		"ports/unix/${NET_UDP}.c"
-	)  
+	)
 	LIST(APPEND UFODED_SOURCEFILES
 		ports/linux/q_shlinux.c
 		ports/linux/sys_linux.c
@@ -270,14 +270,14 @@ IF (${CMAKE_SYSTEM_NAME} STREQUAL Linux)
 			SET(BUILD_SDLUFO, OFF)
 		ENDIF (X11_FOUND)
 		IF (BUILD_WITH_DGA)
-		    FIND_LIBRARY(LIB_Xxf86dga Xxf86dga)
+			FIND_LIBRARY(LIB_Xxf86dga Xxf86dga)
 			TARGET_LINK_LIBRARIES(ref_glx ${LIB_Xxf86dga})
 		ENDIF (BUILD_WITH_DGA)
 		IF (BUILD_WITH_VIDMODE)
-		    FIND_LIBRARY(LIB_Xxf86vm Xxf86vm)
+			FIND_LIBRARY(LIB_Xxf86vm Xxf86vm)
 			TARGET_LINK_LIBRARIES(ref_glx ${LIB_Xxf86vm})
 		ENDIF (BUILD_WITH_VIDMODE)
-       INSTALL(TARGETS ref_glx DESTINATION ".")
+		INSTALL(TARGETS ref_glx DESTINATION ".")
 	ENDIF(BUILD_GLX)
 ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
 
@@ -285,13 +285,13 @@ ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
 IF (BUILD_SDLUFO)
    LIST(APPEND UFOSOURCEFILES ports/unix/cd_sdl.c)
 ELSE(BUILD_SDLUFO)
-   IF (${CMAKE_SYSTEM_NAME} STREQUAL Linux)
+	IF (${CMAKE_SYSTEM_NAME} STREQUAL Linux)
 		LIST(APPEND UFOSOURCEFILES client/cd_linux.c)
-   ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
+	ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
 
-   IF (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
-                LIST(APPEND UFOSOURCEFILES client/cd_linux.c)
-   ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
+	IF (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
+		LIST(APPEND UFOSOURCEFILES client/cd_linux.c)
+	ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
 #TODO: MacOs/Darwin/OSX
 # 	ifeq ($(OSTYPE),Darwin)
 # 		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_osx.o
@@ -299,15 +299,15 @@ ELSE(BUILD_SDLUFO)
 ENDIF(BUILD_SDLUFO)
 
 IF (BUILD_WITH_SHADER)
-   ADD_DEFINITIONS(-DSHADERS)
+	ADD_DEFINITIONS(-DSHADERS)
 ENDIF (BUILD_WITH_SHADER)
 
 IF (HAVE_GETTEXT)
-   ADD_DEFINITIONS(-DHAVE_GETTEXT)
+	ADD_DEFINITIONS(-DHAVE_GETTEXT)
 ENDIF (HAVE_GETTEXT)
 
 IF (BUILD_WITH_DGA)
-   ADD_DEFINITIONS(-DHAVE_DGA)
+	ADD_DEFINITIONS(-DHAVE_DGA)
 ENDIF (BUILD_WITH_DGA)
 
 IF (BUILD_WITH_MMX)
@@ -315,27 +315,26 @@ IF (BUILD_WITH_MMX)
 ENDIF(BUILD_WITH_MMX)
 
 IF (${ARCH} STREQUAL "i386")
-   ADD_DEFINITIONS(-DC_ONLY)
+	ADD_DEFINITIONS(-DC_ONLY)
 ENDIF (${ARCH} STREQUAL "i386")
 
 IF (BUILD_SDLUFO)
-   INCLUDE(FindSDL)
-   IF (SDL_FOUND)
-     	ADD_LIBRARY(snd_sdl SHARED ports/linux/snd_sdl.c)
-    	ADD_LIBRARY(ref_sdl SHARED ${REF_GL_SOURCEFULES} ${REF_SDL_SOURCEFILES})
+	INCLUDE(FindSDL)
+	IF (SDL_FOUND)
+		ADD_LIBRARY(snd_sdl SHARED ports/linux/snd_sdl.c)
+		ADD_LIBRARY(ref_sdl SHARED ${REF_GL_SOURCEFULES} ${REF_SDL_SOURCEFILES})
 		LIST(APPEND EXTERNAL_LIBS ${SDL_LIBRARY} jpeg	)
 		ADD_DEFINITIONS(-DUSE_SDL)
-        INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIR})
-        SET_TARGET_PROPERTIES(ref_sdl snd_sdl PROPERTIES PREFIX "" )
-        INSTALL(TARGETS snd_sdl ref_sdl DESTINATION ".")
-   ELSE(SDL_FOUND)
+		INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIR})
+		SET_TARGET_PROPERTIES(ref_sdl snd_sdl PROPERTIES PREFIX "" )
+		INSTALL(TARGETS snd_sdl ref_sdl DESTINATION ".")
+	ELSE(SDL_FOUND)
 		MESSAGE("SDL could not be found, but BUILD_SDLUFO was specified. Turning off BUILD_SDLUFO")
 		SET(BUILD_SDLUFO, OFF)
-   ENDIF (SDL_FOUND)
+	ENDIF (SDL_FOUND)
 ENDIF (BUILD_SDLUFO)
 
 IF (BUILD_ALSA)
-	ADD_DEFINITIONS(-DUSE_ALSA)
 	LIST(APPEND EXTERNAL_LIBS asound)
 	ADD_LIBRARY(snd_alsa SHARED ports/linux/snd_alsa.c)
 	SET_TARGET_PROPERTIES(snd_alsa PROPERTIES PREFIX "" )
@@ -345,13 +344,14 @@ ENDIF (BUILD_ALSA)
 IF (BUILD_OSS)
 	ADD_LIBRARY(snd_oss SHARED ports/linux/snd_oss.c)
 	SET_TARGET_PROPERTIES(snd_oss PROPERTIES PREFIX "" )
-	INSTALL(TARGETS snd_oss DESTINATION ".")	
+	INSTALL(TARGETS snd_oss DESTINATION ".")
 ENDIF (BUILD_OSS)
 
 IF (BUILD_ARTS)
+	LIST(APPEND EXTERNAL_LIBS artsc)
 	ADD_LIBRARY(snd_arts SHARED ports/linux/snd_arts.c)
 	SET_TARGET_PROPERTIES(snd_arts PROPERTIES PREFIX "" )
-	INSTALL(TARGETS snd_arts DESTINATION ".")	
+	INSTALL(TARGETS snd_arts DESTINATION ".")
 ENDIF (BUILD_ARTS)
 
 IF (BUILD_WITH_VIDMODE)
@@ -368,8 +368,8 @@ ENDIF(BUILD_FOR_PROFILING)
 
 SET(EXTERNAL_LIBS_FOUND "")
 FOREACH(LIB ${EXTERNAL_LIBS})
-   FIND_LIBRARY(LIB_${LIB} ${LIB})
-   LIST(APPEND EXTERNAL_LIBS_FOUND ${LIB})
+	FIND_LIBRARY(LIB_${LIB} ${LIB})
+	LIST(APPEND EXTERNAL_LIBS_FOUND ${LIB})
 ENDFOREACH(LIB)
 
 INCLUDE_DIRECTORIES(${SOURCEDIRS})
@@ -386,16 +386,15 @@ TARGET_LINK_LIBRARIES(game ${EXTERNAL_LIBS})
 INSTALL(TARGETS game DESTINATION base/)
 
 IF (BUILD_DEDICATED)
-   ADD_EXECUTABLE(ufoded  ${UFODED_SOURCEFILES})
-   INSTALL(TARGETS ufoded DESTINATION ".")
-   TARGET_LINK_LIBRARIES(ufoded ${EXTERNAL_LIBS_FOUND})
-   SET_TARGET_PROPERTIES(ufoded PROPERTIES  COMPILE_FLAGS -DDEDICATED_ONLY)
-   
+	ADD_EXECUTABLE(ufoded  ${UFODED_SOURCEFILES})
+	INSTALL(TARGETS ufoded DESTINATION ".")
+	TARGET_LINK_LIBRARIES(ufoded ${EXTERNAL_LIBS_FOUND})
+	SET_TARGET_PROPERTIES(ufoded PROPERTIES  COMPILE_FLAGS -DDEDICATED_ONLY)
 ENDIF (BUILD_DEDICATED)
 
 IF (BUILD_COMPILETOOLS)
-  ADD_EXECUTABLE(ufo2map ${TOOLS_SOURCEFILES})
-  TARGET_LINK_LIBRARIES(ufo2map m)
-  INSTALL(TARGETS ufo2map DESTINATION ".")
+	ADD_EXECUTABLE(ufo2map ${TOOLS_SOURCEFILES})
+	TARGET_LINK_LIBRARIES(ufo2map m)
+	INSTALL(TARGETS ufo2map DESTINATION ".")
 ENDIF(BUILD_COMPILETOOLS)
 

@@ -537,6 +537,7 @@ static void CL_GenerateEquipmentCmd(void)
 {
 	equipDef_t unused;
 	int i, p;
+	aircraft_t *aircraft;
 	/* t value will be set below - a and m are not changed here */
 	item_t item = {0,NONE,NONE};
 
@@ -549,10 +550,12 @@ static void CL_GenerateEquipmentCmd(void)
 		return;
 	}
 
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+
 	/* Store hired names. */
 	Cvar_ForceSet("cl_selected", "0");
 	for (i = 0, p = 0; i < (int)cl_numnames->value; i++)
-		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
+		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
 			/* maybe we already have soldiers in this aircraft */
 			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
 			if (!baseCurrent->curTeam[p])
@@ -724,7 +727,7 @@ void CL_UpdateHireVar(void)
 
 	/* update curTeam list */
 	for (i = 0, p = 0; i < (int)cl_numnames->value; i++) {
-		if ( CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent) ) {
+		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
 		}
@@ -803,6 +806,7 @@ static void CL_MarkTeamCmd(void)
 {
 	int i, j, k = 0;
 	qboolean alreadyInOtherShip = qfalse;
+	aircraft_t *aircraft;
 
 	/* check if we are allowed to be here? */
 	/* we are only allowed to be here if we already set up a base */
@@ -813,14 +817,15 @@ static void CL_MarkTeamCmd(void)
 	}
 
 	CL_UpdateHireVar();
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 
 	for (i = 0; i < (int)cl_numnames->value; i++) {
 		alreadyInOtherShip = qfalse;
 		/* don't show other base's recruits */
 		if (!gd.employees[EMPL_SOLDIER][i].hired || gd.employees[EMPL_SOLDIER][i].baseIDHired != baseCurrent->idx)
 			continue;
-		for (j = 0; j < MAX_AIRCRAFT; j++) {
-			if (j==baseCurrent->aircraftCurrent)
+		for (j = 0; j < gd.numAircraft; j++) {
+			if (j==aircraft->idx)
 				continue;
 			/* already on another aircraft */
 			if (CL_SoldierInAircraft(i, j) )
@@ -828,7 +833,7 @@ static void CL_MarkTeamCmd(void)
 		}
 		Cvar_ForceSet(va("mn_name%i", k), gd.employees[EMPL_SOLDIER][i].chr.name);
 		/* change the buttons */
-		if (!alreadyInOtherShip && CL_SoldierInAircraft(i, baseCurrent->aircraftCurrent))
+		if (!alreadyInOtherShip && CL_SoldierInAircraft(i, aircraft->idx))
 			Cbuf_AddText(va("listadd%i\n", k));
 		/* disable the button - the soldier is already on another aircraft */
 		else if (alreadyInOtherShip)
@@ -873,7 +878,7 @@ qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
 
 	if ( aircraft_idx < 0) {
 		/* Search if he is in _any_ aircraft and return true if it's the case. */
-		for ( i = 0; i < baseCurrent->numAircraftInBase; i++ ) {
+		for ( i = 0; i < gd.numAircraft; i++ ) {
 			if ( CL_SoldierInAircraft(employee_idx, i) )
 				return qtrue;
 		}
@@ -893,6 +898,7 @@ qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
  */
 void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
 {
+	aircraft_t *aircraft;
 	int i;
 
 	if ( employee_idx < 0 )
@@ -900,7 +906,7 @@ void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
 
 	if ( aircraft_idx < 0 ) {
 		/* Search if he is in _any_ aircraft and set the aircraft_idx if found.. */
-		for ( i = 0; i < MAX_AIRCRAFT; i++ ) {
+		for ( i = 0; i < gd.numAircraft; i++ ) {
 			if ( CL_SoldierInAircraft(employee_idx, i) ) {
 				aircraft_idx = i;
 				break;
@@ -911,8 +917,10 @@ void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
 	if ( aircraft_idx < 0 )
 		return;
 
+	aircraft = &baseCurrent->aircraft[aircraft_idx];
+
 	Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][employee_idx].inv);
-	CL_RemoveFromAircraftTeam(CL_AircraftGetFromIdx(aircraft_idx), employee_idx);
+	CL_RemoveFromAircraftTeam(aircraft, employee_idx);
 	baseCurrent->teamNum[aircraft_idx]--;
 }
 
@@ -925,17 +933,15 @@ void CL_RemoveSoldiersFromAircraft(int aircraft_idx, int base_idx)
 {
 	int i = 0;
 	base_t *base = NULL;
-	aircraft_t *aircraft = NULL;
 
 	if ( aircraft_idx < 0 || base_idx < 0)
 		return;
 
 	base = &gd.bases[base_idx];
-	aircraft = &base->aircraft[aircraft_idx];
 
 	/* Counting backwards because teamNum[aircraft->idx] is changed in CL_RemoveSoldierFromAircraft */
-	for ( i = base->teamNum[aircraft->idx]-1; i >= 0; i-- ) {
-		CL_RemoveSoldierFromAircraft(i, aircraft->idx);
+	for ( i = base->teamNum[aircraft_idx]-1; i >= 0; i-- ) {
+		CL_RemoveSoldierFromAircraft(i, aircraft_idx);
 	}
 }
 
@@ -979,6 +985,7 @@ static void CL_AssignSoldierCmd(void)
 {
 	int num = -1;
 	employee_t *employee = NULL;
+	aircraft_t *aircraft;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -995,7 +1002,9 @@ static void CL_AssignSoldierCmd(void)
 		Sys_Error("CL_AssignSoldierCmd: Could not get employee %i\n", num);
 
 	Com_DPrintf("CL_AssignSoldierCmd: employee with idx %i selected\n", employee->idx);
-	if ( CL_SoldierInAircraft(employee->idx, baseCurrent->aircraftCurrent) ) {
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+
+	if ( CL_SoldierInAircraft(employee->idx, aircraft->idx) ) {
 		Com_DPrintf("CL_AssignSoldierCmd: removing\n");
 		/* Remove soldier from aircraft/team. */
 		Cbuf_AddText(va("listdel%i\n", num));
@@ -1004,9 +1013,8 @@ static void CL_AssignSoldierCmd(void)
 	} else {
 		Com_DPrintf("CL_AssignSoldierCmd: assigning\n");
 		/* Assign soldier to aircraft/team. */
-		if (CL_AssignSoldierToAircraft(employee->idx ,baseCurrent->aircraftCurrent)) {
+		if (CL_AssignSoldierToAircraft(employee->idx, baseCurrent->aircraftCurrent))
 			Cbuf_AddText(va("listadd%i\n", num));
-		}
 	}
 	/* Select the desired one anyways. */
 	CL_UpdateHireVar();
@@ -1199,7 +1207,7 @@ void CL_LoadTeamMultiplayer(char *filename)
 	gd.bases[0].teamNum[0] = MSG_ReadByte(&sb);
 
 	for (i = 0, p = 0; i < num; i++)
-		if ( CL_SoldierInAircraft(i, gd.bases[0].aircraftCurrent) )
+		if ( CL_SoldierInAircraft(i, 0) )
 			gd.bases[0].curTeam[p++] = E_GetHiredCharacter(&gd.bases[0], EMPL_SOLDIER, i);
 
 	/* gd.bases[0].numHired = p; */
