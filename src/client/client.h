@@ -725,7 +725,8 @@ const struct aircraft_s* ufo, qboolean wasUfoSensored);
 /* MISC */
 /* TODO: needs to be sorted (e.g what file is it defined?) */
 #define MAX_TEAMDATASIZE	32768
-#define MAX_GAMESAVESIZE	MAX_TEAMDATASIZE + 16384 + sizeof(globalData_t)
+/* MAX_GAMESAVESIZE has room for 3MB for dynamic data, eg geoscape messages */
+#define MAX_GAMESAVESIZE	MAX_TEAMDATASIZE + sizeof(globalData_t) + 3145728
 #define MAX_COMMENTLENGTH	32
 
 void CL_LoadTeam(sizebuf_t *sb, base_t *base, int version);

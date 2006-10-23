@@ -237,7 +237,7 @@ void InitGame(void)
 
 /**
  * @brief Free the tags TAG_LEVEL and TAG_GAME
- * @sa Z_FreeTags
+ * @sa Mem_FreeTags
  */
 void ShutdownGame(void)
 {

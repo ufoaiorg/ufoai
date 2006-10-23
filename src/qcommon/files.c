@@ -402,7 +402,7 @@ int FS_LoadFile(char *path, void **buffer)
 		return len;
 	}
 
-	buf = Z_Malloc(len + 1);
+	buf = Mem_Alloc(len + 1);
 	*buffer = buf;
 
 	FS_Read(buf, len, h);
@@ -418,7 +418,7 @@ int FS_LoadFile(char *path, void **buffer)
  */
 void FS_FreeFile(void *buffer)
 {
-	Z_Free(buffer);
+	Mem_Free(buffer);
 }
 
 /**
@@ -459,14 +459,14 @@ pack_t *FS_LoadPackFile(char *packfile)
 			unzGoToNextFile(uf);
 		}
 
-		pack = Z_Malloc(sizeof(pack_t));
+		pack = Mem_Alloc(sizeof(pack_t));
 		Q_strncpyz(pack->filename, packfile, MAX_QPATH);
 		pack->handle = uf;
 		pack->numfiles = gi.number_entry;
 		unzGoToFirstFile(uf);
 
 		/* Allocate space for array of packfile structures (filename, offset, length) */
-		newfiles = Z_Malloc(i * sizeof(packfile_t));
+		newfiles = Mem_Alloc(i * sizeof(packfile_t));
 
 		for (i = 0; i < gi.number_entry; i++) {
 			err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
@@ -506,7 +506,7 @@ void FS_AddGameDirectory(char *dir)
 	Com_Printf("Adding game dir: %s\n", fs_gamedir);
 
 	/* add the directory to the search path */
-	search = Z_Malloc(sizeof(searchpath_t));
+	search = Mem_Alloc(sizeof(searchpath_t));
 	Q_strncpyz(search->filename, dir, sizeof(search->filename) - 1);
 	search->filename[sizeof(search->filename) - 1] = 0;
 	search->next = fs_searchpaths;
@@ -518,7 +518,7 @@ void FS_AddGameDirectory(char *dir)
 				pak = FS_LoadPackFile(dirnames[i]);
 				if (!pak)
 					continue;
-				search = Z_Malloc(sizeof(searchpath_t));
+				search = Mem_Alloc(sizeof(searchpath_t));
 				search->pack = pak;
 				search->next = fs_searchpaths;
 				fs_searchpaths = search;
@@ -597,11 +597,11 @@ void FS_SetGamedir(char *dir)
 	while (fs_searchpaths != fs_base_searchpaths) {
 		if (fs_searchpaths->pack) {
 			fclose(fs_searchpaths->pack->handle);
-			Z_Free(fs_searchpaths->pack->files);
-			Z_Free(fs_searchpaths->pack);
+			Mem_Free(fs_searchpaths->pack->files);
+			Mem_Free(fs_searchpaths->pack);
 		}
 		next = fs_searchpaths->next;
-		Z_Free(fs_searchpaths);
+		Mem_Free(fs_searchpaths);
 		fs_searchpaths = next;
 	}
 
@@ -638,11 +638,11 @@ void FS_Link_f(void)
 	prev = &fs_links;
 	for (l = fs_links; l; l = l->next) {
 		if (!Q_strcmp(l->from, Cmd_Argv(1))) {
-			Z_Free(l->to);
+			Mem_Free(l->to);
 			if (!strlen(Cmd_Argv(2))) {	/* delete it */
 				*prev = l->next;
-				Z_Free(l->from);
-				Z_Free(l);
+				Mem_Free(l->from);
+				Mem_Free(l);
 				return;
 			}
 			l->to = CopyString(Cmd_Argv(2));
@@ -652,7 +652,7 @@ void FS_Link_f(void)
 	}
 
 	/* create a new link */
-	l = Z_Malloc(sizeof(*l));
+	l = Mem_Alloc(sizeof(*l));
 	l->next = fs_links;
 	fs_links = l;
 	l->from = CopyString(Cmd_Argv(1));
@@ -868,7 +868,7 @@ void FS_BuildFileList(char *fileList)
 			else
 				fs_blocklist = block->next;
 
-			Z_Free(block);
+			Mem_Free(block);
 
 			if (tblock)
 				block = tblock->next;
@@ -882,7 +882,7 @@ void FS_BuildFileList(char *fileList)
 	}
 
 	/* allocate a new block and link it into the list */
-	block = Z_Malloc(sizeof(listBlock_t));
+	block = Mem_Alloc(sizeof(listBlock_t));
 	block->next = fs_blocklist;
 	fs_blocklist = block;
 
@@ -930,7 +930,7 @@ void FS_BuildFileList(char *fileList)
 						*fl = 0;
 
 						/* allocate a new block */
-						tblock = Z_Malloc(sizeof(listBlock_t));
+						tblock = Mem_Alloc(sizeof(listBlock_t));
 						tblock->next = block->next;
 						block->next = tblock;
 

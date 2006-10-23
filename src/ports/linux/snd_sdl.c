@@ -68,11 +68,17 @@ qboolean SND_Init (struct sndinfo *s)
 	SDL_VERSION(&version);
 	si->Com_Printf("SDL version: %i.%i.%i\n", version.major, version.minor, version.patch);
 
-	if (!SDL_WasInit(SDL_INIT_AUDIO))
+	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
 		if (SDL_Init(SDL_INIT_AUDIO) == -1) {
 			si->Com_Printf("Couldn't init SDL audio: %s\n", SDL_GetError () );
 			return qfalse;
 		}
+	} else if (SDL_WasInit(SDL_INIT_AUDIO) == 0) {
+		if (SDL_InitSubSystem(SDL_INIT_AUDIO) == -1) {
+			si->Com_Printf("Couldn't init SDL audio subsystem: %s\n", SDL_GetError () );
+			return qfalse;
+		}
+	}
 
 	if (SDL_AudioDriverName(drivername, sizeof (drivername)) == NULL)
 		strncpy(drivername, "(UNKNOWN)", sizeof(drivername));

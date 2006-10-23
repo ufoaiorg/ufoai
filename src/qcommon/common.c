@@ -1007,17 +1007,20 @@ void SZ_Print(sizebuf_t * buf, char *data)
 
 
 /**
- * @brief
- *
- * Returns the position (1 to argc-1) in the program's argument list
+ * @brief Checks whether a given commandline paramter was set
+ * @param[in] parm Check for this commandline parameter
+ * @return the position (1 to argc-1) in the program's argument list
  * where the given parameter apears, or 0 if not present
+ * @sa COM_InitArgv
  */
 int COM_CheckParm(char *parm)
 {
 	int i;
 
 	for (i = 1; i < com_argc; i++) {
-		if (!strcmp(parm, com_argv[i]))
+		if (!com_argv[i])
+			continue;               /* NEXTSTEP sometimes clears appkit vars. */
+		if (!Q_strcmp (parm, com_argv[i]))
 			return i;
 	}
 
@@ -1043,7 +1046,11 @@ char *COM_Argv(int arg)
 }
 
 /**
- * @brief
+ * @brief Reset com_argv entry to empty string
+ * @param[in] arg Which argument in com_argv
+ * @sa COM_InitArgv
+ * @sa COM_CheckParm
+ * @sa COM_AddParm
  */
 void COM_ClearArgv(int arg)
 {
@@ -1055,6 +1062,7 @@ void COM_ClearArgv(int arg)
 
 /**
  * @brief
+ * @sa COM_CheckParm
  */
 void COM_InitArgv(int argc, char **argv)
 {
@@ -1073,6 +1081,7 @@ void COM_InitArgv(int argc, char **argv)
 
 /**
  * @brief Adds the given string at the end of the current argument list
+ * @sa COM_InitArgv
  */
 void COM_AddParm(char *parm)
 {
@@ -1105,7 +1114,7 @@ char *CopyString(char *in)
 	char *out;
 	int l = strlen(in);
 
-	out = Z_Malloc(l + 1);
+	out = Mem_Alloc(l + 1);
 	Q_strncpyz(out, in, l + 1);
 	return out;
 }
@@ -1177,9 +1186,9 @@ zhead_t z_chain;
 int z_count, z_bytes;
 
 /**
- * @brief Frees a Z_Malloc'ed pointer
+ * @brief Frees a Mem_Alloc'ed pointer
  */
-void Z_Free(void *ptr)
+void Mem_Free(void *ptr)
 {
 	zhead_t *z;
 
@@ -1189,7 +1198,7 @@ void Z_Free(void *ptr)
 	z = ((zhead_t *) ptr) - 1;
 
 	if (z->magic != Z_MAGIC)
-		Com_Error(ERR_FATAL, "Z_Free: bad magic (%i)", z->magic);
+		Com_Error(ERR_FATAL, "Mem_Free: bad magic (%i)", z->magic);
 
 	z->prev->next = z->next;
 	z->next->prev = z->prev;
@@ -1201,9 +1210,9 @@ void Z_Free(void *ptr)
 
 
 /**
- * @brief Stats about the allocated bytes via Z_Malloc
+ * @brief Stats about the allocated bytes via Mem_Alloc
  */
-void Z_Stats_f(void)
+void Mem_Stats_f(void)
 {
 	Com_Printf("%i bytes in %i blocks\n", z_bytes, z_count);
 }
@@ -1211,14 +1220,14 @@ void Z_Stats_f(void)
 /**
  * @brief Frees a memory block with a given tag
  */
-void Z_FreeTags(int tag)
+void Mem_FreeTags(int tag)
 {
 	zhead_t *z, *next;
 
 	for (z = z_chain.next; z != &z_chain; z = next) {
 		next = z->next;
 		if (z->tag == tag)
-			Z_Free((void *) (z + 1));
+			Mem_Free((void *) (z + 1));
 	}
 }
 
@@ -1227,14 +1236,14 @@ void Z_FreeTags(int tag)
  *
  * and fills with 0
  */
-void *Z_TagMalloc(size_t size, int tag)
+void *Mem_TagMalloc(size_t size, int tag)
 {
 	zhead_t *z;
 
 	size = size + sizeof(zhead_t);
 	z = malloc(size);
 	if (!z)
-		Com_Error(ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", size);
+		Com_Error(ERR_FATAL, "Mem_TagMalloc: failed on allocation of %i bytes", size);
 	memset(z, 0, size);
 	z_count++;
 	z_bytes += size;
@@ -1255,9 +1264,9 @@ void *Z_TagMalloc(size_t size, int tag)
  *
  * and fills with 0
  */
-void *Z_Malloc(size_t size)
+void *Mem_Alloc(size_t size)
 {
-	return Z_TagMalloc(size, 0);
+	return Mem_TagMalloc(size, 0);
 }
 
 /*======================================================== */
@@ -1391,7 +1400,7 @@ void Qcommon_Init(int argc, char **argv)
 	Cbuf_Execute();
 
 	/* init commands and vars */
-	Cmd_AddCommand("z_stats", Z_Stats_f);
+	Cmd_AddCommand("mem_stats", Mem_Stats_f);
 	Cmd_AddCommand("error", Com_Error_f);
 
 	host_speeds = Cvar_Get("host_speeds", "0", 0);

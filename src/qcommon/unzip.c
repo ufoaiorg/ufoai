@@ -583,10 +583,10 @@ static void   zcfree  OF((voidp opaque, voidp ptr));
 #endif
 
 #ifndef ALLOC
-# define ALLOC(size) (Z_Malloc(size))
+# define ALLOC(size) (Mem_Alloc(size))
 #endif
 #ifndef TRYFREE
-# define TRYFREE(p) {if (p) Z_Free(p);}
+# define TRYFREE(p) {if (p) Mem_Free(p);}
 #endif
 
 #define SIZECENTRALDIRITEM (0x2e)
@@ -3558,12 +3558,12 @@ int inflate(z_streamp z, int f)
 voidp zcalloc (voidp opaque, unsigned items, unsigned size)
 {
     if (opaque) items += size - size; /* make compiler happy */
-    return (voidp)Z_Malloc(items*size);
+    return (voidp)Mem_Alloc(items*size);
 }
 
 void  zcfree (voidp opaque, voidp ptr)
 {
-    Z_Free(ptr);
+    Mem_Free(ptr);
     if (opaque) return; /* make compiler happy */
 }
 

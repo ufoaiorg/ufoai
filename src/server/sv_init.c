@@ -831,7 +831,7 @@ void SV_InitGame(void)
 /*	Cvar_FullSet ("maxclients", "8", CVAR_SERVERINFO | CVAR_LATCH); */
 
 	svs.spawncount = rand();
-	svs.clients = Z_Malloc(sizeof(client_t) * sv_maxclients->value);
+	svs.clients = Mem_Alloc(sizeof(client_t) * sv_maxclients->value);
 	svs.num_client_entities = sv_maxclients->value * UPDATE_BACKUP * 64;
 
 	/* init network stuff */

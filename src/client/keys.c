@@ -510,13 +510,13 @@ void Key_SetBinding(int keynum, char *binding)
 
 	/* free old bindings */
 	if (keybindings[keynum]) {
-		Z_Free(keybindings[keynum]);
+		Mem_Free(keybindings[keynum]);
 		keybindings[keynum] = NULL;
 	}
 
 	/* allocate memory for new binding */
 	l = strlen(binding);
-	new = Z_Malloc(l + 1);
+	new = Mem_Alloc(l + 1);
 	Q_strncpyz(new, binding, l + 1);
 	keybindings[keynum] = new;
 }

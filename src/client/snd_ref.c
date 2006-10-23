@@ -375,7 +375,7 @@ void S_Shutdown(void)
 		if (!sfx->name[0])
 			continue;
 		if (sfx->cache)
-			Z_Free(sfx->cache);
+			Mem_Free(sfx->cache);
 		memset(sfx, 0, sizeof(*sfx));
 	}
 
@@ -463,7 +463,7 @@ sfx_t *S_AliasName(char *aliasname, char *truename)
 
 	int i;
 
-	s = Z_Malloc(MAX_QPATH);
+	s = Mem_Alloc(MAX_QPATH);
 	Q_strncpyz(s, truename, MAX_QPATH);
 
 	/* find a free sfx */
@@ -531,7 +531,7 @@ void S_EndRegistration(void)
 			continue;
 		if (sfx->registration_sequence != s_registration_sequence) {	/* don't need this sound */
 			if (sfx->cache)		/* it is possible to have a leftover */
-				Z_Free(sfx->cache);	/* from a server that didn't finish loading */
+				Mem_Free(sfx->cache);	/* from a server that didn't finish loading */
 			memset(sfx, 0, sizeof(*sfx));
 		} else {				/* make sure it is paged in */
 			if (sfx->cache) {
