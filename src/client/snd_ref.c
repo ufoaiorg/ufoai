@@ -181,24 +181,24 @@ void S_ModifyKhz_f(void)
 		return;
 
 	if (*Cmd_Argv(1) == '+') {
-		if (snd_khz->value == 11)
+		if ((int)snd_khz->value == 11)
 			Cvar_SetValue("snd_khz", 22);
-		else if (snd_khz->value == 22)
+		else if ((int)snd_khz->value == 22)
 			Cvar_SetValue("snd_khz", 44);
-		else if (snd_khz->value == 44)
+		else if ((int)snd_khz->value == 44)
 			Cvar_SetValue("snd_khz", 48);
-		else if (snd_khz->value == 48)
+		else if ((int)snd_khz->value == 48)
 			Cvar_SetValue("snd_khz", 11);
 		else
 			Cvar_SetValue("snd_khz", 48);
 	} else if (*Cmd_Argv(1) == '-') {
-		if (snd_khz->value == 48)
+		if ((int)snd_khz->value == 48)
 			Cvar_SetValue("snd_khz", 44);
-		else if (snd_khz->value == 44)
+		else if ((int)snd_khz->value == 44)
 			Cvar_SetValue("snd_khz", 22);
-		else if (snd_khz->value == 22)
+		else if ((int)snd_khz->value == 22)
 			Cvar_SetValue("snd_khz", 11);
-		else if (snd_khz->value == 11)
+		else if ((int)snd_khz->value == 11)
 			Cvar_SetValue("snd_khz", 48);
 		else
 			Cvar_SetValue("snd_khz", 48);
@@ -615,8 +615,8 @@ void S_SpatializeOrigin(vec3_t origin, float master_vol, float dist_mult, int *l
 
 	dist = VectorNormalize(source_vec);
 	dist -= SOUND_FULLVOLUME;
-	if (dist < 0)
-		dist = 0;				/* close enough to be at full volume */
+	if (dist < 0.)
+		dist = 0.;				/* close enough to be at full volume */
 	dist *= dist_mult;			/* different attenuation levels */
 
 	dot = DotProduct(listener_right, source_vec);

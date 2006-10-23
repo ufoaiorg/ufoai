@@ -839,8 +839,10 @@ void CL_BaseRansacked(base_t *base)
 	E_DeleteAllEmployees(base);
 
 	/* Destroy all items in storage */
-	for ( item = 0; item < csi.numODs; item++ )
+	for ( item = 0; item < csi.numODs; item++ ) {
 		base->storage.num[item] = 0;
+		base->storage.num_loose[item] = 0;
+	}
 
 	/* Remove all aircrafts from the base. */
 	for ( ac = base->numAircraftInBase-1; ac >= 0; ac-- )
@@ -1356,7 +1358,7 @@ void CL_MessageSave(sizebuf_t * sb, message_t * message)
  * @brief
  * @sa CL_GameLoad
  */
-void CL_GameSave(char *filename, char *comment)
+qboolean CL_GameSave(char *filename, char *comment)
 {
 	stageState_t *state;
 	actMis_t *mis;
@@ -1370,7 +1372,7 @@ void CL_GameSave(char *filename, char *comment)
 
 	if (!curCampaign) {
 		Com_Printf("No campaign active.\n");
-		return;
+		return qfalse;
 	}
 
 	Com_sprintf(savegame, MAX_OSPATH, "%s/save/%s.sav", FS_Gamedir(), filename);
@@ -1482,7 +1484,11 @@ void CL_GameSave(char *filename, char *comment)
 
 	if (res == sb.cursize) {
 		Cvar_Set("mn_lastsave", filename);
-		Com_Printf("Campaign '%s' saved.\n", filename);
+		Com_Printf("Campaign '%s' saved.\n", comment);
+		return qtrue;
+	} else {
+		Com_Printf("Failed to save campaign '%s' !!!\n", comment);
+		return qfalse;
 	}
 }
 
@@ -1494,6 +1500,7 @@ static void CL_GameSaveCmd(void)
 {
 	char comment[MAX_COMMENTLENGTH];
 	char *arg;
+	qboolean result;
 
 	/* get argument */
 	if (Cmd_Argc() < 2) {
@@ -1517,7 +1524,15 @@ static void CL_GameSaveCmd(void)
 		comment[0] = 0;
 
 	/* save the game */
-	CL_GameSave(Cmd_Argv(1), comment);
+	result = CL_GameSave(Cmd_Argv(1), comment);
+
+	Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
+
+	/* if save failed refresh the SaveGame menu and popup error message */
+	if (!result) {
+		MN_PushMenu("save");
+		MN_Popup(_("Note"), _("Error saving game. Check free disk space!"));
+	}
 }
 
 /**

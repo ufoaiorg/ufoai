@@ -1108,7 +1108,7 @@ void FS_GetMaps(qboolean reset)
 		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, 0)) != 0) {
 			for (i = 0; i < ndirs - 1; i++) {
 				anzInstalledMaps++;
-				Com_DPrintf("...found '%s'\n", i, ndirs, dirnames[i]);
+				Com_DPrintf("... found map: '%s' (pos %i out of %i)\n", dirnames[i], i+1, ndirs);
 				baseMapName = COM_SkipPath(dirnames[i]);
 				COM_StripExtension(baseMapName, filename);
 				status = CheckBSPFile(filename);
@@ -1180,17 +1180,30 @@ int FS_Write(const void *buffer, int len, FILE * f)
 int FS_WriteFile(const void *buffer, int len, const char *filename)
 {
 	FILE *f;
-	int c;
+	int c, lencheck;
 
 	FS_CreatePath((char *) filename);
 
 	f = fopen(filename, "wb");
-	if (f) {
+
+	if (f)
 		c = fwrite(buffer, 1, len, f);
-		fclose(f);
-		return c;
+	else
+		return 0;
+
+	lencheck = FS_filelength(f);
+	fclose(f);
+
+	/* if file write failed (file is incomplete) then delete it */
+	if (c != len || lencheck != len) {
+		Com_Printf("FS_WriteFile: failed to finish writing '%s'\n", filename);
+		Com_Printf("FS_WriteFile: deleting this incomplete file\n");
+		if (remove(filename))
+			Com_Printf("FS_WriteFile: could not remove file: %s\n", filename);
+		return 0;
 	}
-	return 0;
+
+	return c;
 }
 
 /**

@@ -827,6 +827,8 @@ void SV_Init(void)
 	if (dedicated->value)
 		Cvar_Set("maxclients", "8");
 
+	sv_maxclients->modified = qfalse;
+
 	SZ_Init(&net_message, net_message_buffer, sizeof(net_message_buffer));
 }
 

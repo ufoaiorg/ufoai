@@ -190,6 +190,7 @@ item plasblaster_ammo
 		bodysnd	weapons/plasma_grenade.wav
 		gravity	true
 		spread	"4 4"
+		launched true		
 		range	17
 		shots	1
 		ammo	4

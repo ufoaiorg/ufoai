@@ -143,7 +143,7 @@ typedef struct {
 	void (*unlinkentity) (edict_t * ent);	/* call before removing an interactive edict */
 
 	int (*TestLine) (vec3_t start, vec3_t stop);
-	float (*GrenadeTarget) (vec3_t from, vec3_t at, float speed, vec3_t v0);
+	float (*GrenadeTarget) (vec3_t from, vec3_t at, float speed, qboolean launched, vec3_t v0);
 
 	void (*MoveCalc) (struct routing_s * map, pos3_t from, int distance, byte ** fb_list, int fb_length);
 	void (*MoveStore) (struct routing_s * map);

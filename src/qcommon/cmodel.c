@@ -2797,7 +2797,7 @@ TARGETING FUNCTIONS
 /**
  * @brief
  */
-float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, vec3_t v0)
+float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, qboolean launched, vec3_t v0)
 {
 	vec3_t delta;
 	float d, h, g, v, alpha, vx, vy;
@@ -2810,22 +2810,23 @@ float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, vec3_t v0)
 	d = VectorLength(delta);
 
 	/* check that it's not degenerate */
-	if (d == 0){
+	if (d == 0) {
 		return 0;
 	}
 
 	/* firstly try to get as flat a trajectory as possible (fire at max velocity) */
-	g = GRAVITY; v = speed;
+	g = GRAVITY; 
+	v = speed;
 	gd2 = g*d*d;
 	len = sqrt(h*h + d*d);
 	k = (v*v*h + gd2) / (v*v*len);
 
 	/* check whether the shot's possible */
-	if (k >= -1 && k <= 1){
+	if (launched && k >= -1 && k <= 1) {
 		/* it is possible, so calculate the angle */
 		alpha = 0.5 * (atan2(d, -h) - acos(k));
 	}else{
-		/* it's not possible, so calculate the minimum possible velocity that would make it possible */
+		/* calculate the minimum possible velocity that would make it possible */
 		alpha = 0.5 * atan2(d, -h);
 		v = sqrt(gd2 / (len - h));
 	}
