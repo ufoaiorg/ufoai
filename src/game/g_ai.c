@@ -496,7 +496,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 		/* TODO: check whether shoot is needed or enemy died already;
 		   use the remaining TUs for reaction fire */
 		for (i = 0; i < bestAia.shots; i++)
-			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, NULL);
+			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, NULL, qtrue);
 		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse, QUIET);
 	}
 }

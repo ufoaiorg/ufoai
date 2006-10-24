@@ -964,7 +964,7 @@ static qboolean G_CheckMoveBlock(pos3_t from, int dv)
 void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean stop, qboolean quiet)
 {
 	edict_t *ent;
-	int length, status;
+	int length, status, initTU;
 	byte dvtab[32];
 	byte dv, numdv, steps;
 	pos3_t pos;
@@ -989,6 +989,7 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 		VectorCopy(to, pos);
 		numdv = 0;
 		tu = 0;
+		initTU = ent->TU;
 
 		while ((dv = gi.MoveNext(gi.map, pos)) < 0xFF) {
 			/* store the inverted dv */
@@ -1066,13 +1067,21 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 				/* check for anything appearing, seen by "the moving one" */
 				status = G_CheckVisTeam(ent->team, NULL, qfalse);
 
+				/* set ent->TU because the reaction code relies on ent->TU being accurate */
+				ent->TU = initTU - (int) tu;
+
 				/* check for reaction fire */
-				if (G_ReactionFire(ent, qfalse)) {
-					if (G_ReactionFire(ent, qtrue))
+				if (G_ReactToMove(ent, qtrue)){
+					if (G_ReactToMove(ent, qfalse))
 						status |= VIS_STOP;
+					else
+						Com_Printf("mock and non-mock don't agree!?\n");
 					steps = 0;
 					sentAppearPerishEvent = qfalse;
 				}
+
+				/* restore ent->TU because the movement code relies on it not being modified! */
+				ent->TU = initTU;
 
 				/* check for death */
 				if (ent->state & STATE_DEAD)
@@ -1088,7 +1097,7 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 			}
 
 			/* submit the TUs / round down */
-			ent->TU -= (int) tu;
+			ent->TU = initTU - (int) tu;
 			G_SendStats(ent);
 
 			/* end the move */
@@ -1615,7 +1624,7 @@ void G_ClientAction(player_t * player)
 
 	case PA_SHOOT:
 		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i);
-		(void)G_ClientShoot(player, num, pos, i, NULL);
+		(void)G_ClientShoot(player, num, pos, i, NULL, qtrue);
 		break;
 
 	case PA_INVMOVE:
@@ -1850,6 +1859,9 @@ void G_ClientEndRound(player_t * player, qboolean quiet)
 	for (i = 0, p = game.players; i < game.maxplayers * 2; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam && !p->ready)
 			return;
+
+	/* clear any remaining reaction fire */
+	G_ReactToEndTurn();
 
 	/* give his actors their TUs */
 	G_GiveTimeUnits(level.activeTeam);

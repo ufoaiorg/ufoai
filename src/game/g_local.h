@@ -302,13 +302,11 @@ qboolean G_ClientConnect(player_t * player, char *userinfo);
 void G_ClientDisconnect(player_t * player);
 
 int G_TestVis(int team, edict_t * check, int flags);
-qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_mock_t *mock);
 void G_ClientReload(player_t *player, int entnum, shoot_types_t st, qboolean quiet);
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet);
 void G_ClientMove(player_t * player, int team, int num, pos3_t to, qboolean stop, qboolean quiet);
 void G_MoveCalc(int team, pos3_t from, int distance);
-qboolean G_ReactionFire(edict_t * target, qboolean testRun);
 void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction, qboolean quiet);
 
 qboolean G_FrustomVis(edict_t * from, vec3_t point);
@@ -327,7 +325,12 @@ extern int turnTeam;
 
 /* g_combat.c */
 
+qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_mock_t *mock, qboolean allowReaction);
 void G_ResetReactionFire(int team);
+qboolean G_ReactToMove(edict_t *target, qboolean mock);
+void G_ReactToPreFire(edict_t *target);
+void G_ReactToPostFire(edict_t *target);
+void G_ReactToEndTurn();
 
 /* g_ai.c */
 void AI_Run(void);
@@ -446,6 +449,7 @@ struct edict_s {
 	/* delayed reaction fire */
 	edict_t *reactionTarget;
 	float	reactionTUs;
+	qboolean reactionNoDraw;
 
 	/* here are the character values */
 	character_t chr;
