@@ -9,7 +9,7 @@ CppCompiler=_@@_
 Includes=
 Linker=-lkernel32 -luser32 -lwinmm_@@_../../src/ports/win32/intl.lib _@@_--export-all-symbols_@@__@@_
 Libs=
-UnitCount=12
+UnitCount=13
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=
@@ -31,7 +31,7 @@ CompilerSettings=0000000000000000000000
 
 [Unit1]
 FileName=..\..\src\game\g_ai.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -41,7 +41,7 @@ BuildCmd=
 
 [Unit2]
 FileName=..\..\src\game\g_client.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -51,7 +51,7 @@ BuildCmd=
 
 [Unit3]
 FileName=..\..\src\game\g_cmds.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -61,7 +61,7 @@ BuildCmd=
 
 [Unit4]
 FileName=..\..\src\game\g_main.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -71,7 +71,7 @@ BuildCmd=
 
 [Unit5]
 FileName=..\..\src\game\g_spawn.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -81,7 +81,7 @@ BuildCmd=
 
 [Unit6]
 FileName=..\..\src\game\g_svcmds.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -91,7 +91,7 @@ BuildCmd=
 
 [Unit7]
 FileName=..\..\src\game\g_utils.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -101,7 +101,7 @@ BuildCmd=
 
 [Unit8]
 FileName=..\..\src\game\q_shared.c
-Folder="Source Files"
+Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
@@ -111,7 +111,7 @@ BuildCmd=
 
 [Unit9]
 FileName=..\..\src\game\g_local.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -121,7 +121,7 @@ BuildCmd=
 
 [Unit10]
 FileName=..\..\src\game\game.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -131,7 +131,7 @@ BuildCmd=
 
 [Unit11]
 FileName=..\..\src\game\q_shared.h
-Folder="Header Files"
+Folder=Header Files
 Compile=1
 CompileCpp=1
 Link=1
@@ -141,7 +141,7 @@ BuildCmd=
 
 [Unit12]
 FileName=..\..\src\game\game.def
-Folder="Resource Files"
+Folder=Resource Files
 Compile=0
 CompileCpp=0
 Link=0
@@ -166,4 +166,14 @@ OriginalFilename=game.exe
 ProductName=game
 ProductVersion=0.1
 AutoIncBuildNr=0
+
+[Unit13]
+FileName=..\..\src\game\g_combat.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c g_combat.c -o g_combat.o $(CFLAGS)
 
