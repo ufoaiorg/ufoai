@@ -1074,8 +1074,6 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 				if (G_ReactToMove(ent, qtrue)){
 					if (G_ReactToMove(ent, qfalse))
 						status |= VIS_STOP;
-					else
-						Com_Printf("mock and non-mock don't agree!?\n");
 					steps = 0;
 					sentAppearPerishEvent = qfalse;
 				}
