@@ -672,7 +672,8 @@ float MSG_ReadFloat(sizebuf_t * msg_read)
 char *MSG_ReadString(sizebuf_t * msg_read)
 {
 	static char string[2048];
-	int l, c;
+	unsigned int l;
+	int c;
 
 	l = 0;
 	do {
@@ -1486,7 +1487,8 @@ void Qcommon_Init(int argc, char **argv)
 float Qcommon_Frame(int msec)
 {
 	char *s;
-	int time_before = 0, time_between = 0, time_after = 0;
+	/* static to fix some warnings in relation to setjmp */
+	static int time_before = 0, time_between = 0, time_after = 0;
 
 	/* an ERR_DROP was thrown */
 	if (setjmp(abortframe))

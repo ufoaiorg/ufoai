@@ -106,8 +106,8 @@ char *SV_StatusString(void)
 	static char status[MAX_MSGLEN - 16];
 	int i;
 	client_t *cl;
-	int statusLength;
-	int playerLength;
+	unsigned int statusLength;
+	unsigned int playerLength;
 
 	Q_strncpyz(status, Cvar_Serverinfo(), MAX_MSGLEN - 16);
 	Q_strcat(status, "\n", sizeof(status));
@@ -763,7 +763,7 @@ void Master_Shutdown(void)
 void SV_UserinfoChanged(client_t * cl)
 {
 	char *val;
-	int i;
+	unsigned int i;
 
 	/* call prog code to allow overrides */
 	ge->ClientUserinfoChanged(cl->player, cl->userinfo);

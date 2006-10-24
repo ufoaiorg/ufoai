@@ -162,14 +162,6 @@ void FS_FCloseFile(FILE * f)
 }
 
 /**
- * @brief
- */
-int Developer_searchpath(int who)
-{
-	return (0);
-}
-
-/**
  * @brief Finds the file in the search path.
  * @return filesize and an open FILE *
  * @note Used for streaming data out of either a pak file or a seperate file.

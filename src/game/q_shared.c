@@ -1225,7 +1225,7 @@ void gaussrand(float *gauss1, float *gauss2)
  */
 static qboolean Com_CharIsOneOfCharset(char c, char *set)
 {
-	int i;
+	unsigned int i;
 
 	for (i = 0; i < strlen(set); i++) {
 		if (set[i] == c)

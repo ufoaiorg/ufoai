@@ -33,8 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+#if 0
 /**
  * @brief
+ * @note unused
  */
 void G_ProjectSource(vec3_t point, vec3_t distance, vec3_t forward, vec3_t right, vec3_t result)
 {
@@ -42,6 +44,7 @@ void G_ProjectSource(vec3_t point, vec3_t distance, vec3_t forward, vec3_t right
 	result[1] = point[1] + forward[1] * distance[0] + right[1] * distance[1];
 	result[2] = point[2] + forward[2] * distance[0] + right[2] * distance[1] + distance[2];
 }
+#endif
 
 /**
  * @brief Marks the edict as free
@@ -118,13 +121,14 @@ edict_t *findradius(edict_t * from, vec3_t org, float rad)
 	return NULL;
 }
 
-
+#if 0
 /**
  * @brief Searches all active entities for the next one that holds
  * the matching string at fieldofs (use the offsetof() macro) in the structure.
  *
  * @note Searches beginning at the edict after from, or the beginning if NULL
  * @return NULL will be returned if the end of the list is reached.
+ * @note unused
  */
 #define MAXCHOICES	8
 
@@ -155,14 +159,13 @@ edict_t *G_PickTarget(char *targetname)
 
 	return choice[rand() % num_choices];
 }
+#endif
 
 /**
  * @brief
  */
 void Think_Delay(edict_t * ent)
 {
-/*	G_UseTargets (ent, ent->activator); */
-/*	G_FreeEdict (ent); */
 }
 
 /**
@@ -211,8 +214,10 @@ static const vec3_t MOVEDIR_UP = { 0, 0, 1 };
 static const vec3_t VEC_DOWN = { 0, -2, 0 };
 static const vec3_t MOVEDIR_DOWN = { 0, 0, -1 };
 
+#if 0
 /**
  * @brief
+ * @note unused
  */
 void G_SetMovedir(vec3_t angles, vec3_t movedir)
 {
@@ -225,7 +230,7 @@ void G_SetMovedir(vec3_t angles, vec3_t movedir)
 
 	VectorClear(angles);
 }
-
+#endif
 
 float vectoyaw(vec3_t vec)
 {
