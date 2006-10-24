@@ -1199,7 +1199,7 @@ qboolean G_CheckRFTrigger(edict_t *target)
 
 		/* queue a reaction fire to take place */
 		ent->reactionTarget = target;
-		ent->reactionTUs = MAX(0,target->TU - (tus / 4.0));
+		ent->reactionTUs = MAX(0,target->TU - (tus / 2.0));
 		ent->reactionNoDraw = qfalse;
 		queued = qtrue;
 
