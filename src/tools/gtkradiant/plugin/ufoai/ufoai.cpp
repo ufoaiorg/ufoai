@@ -24,6 +24,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "debugging/debugging.h"
 
 #include "iplugin.h"
+
+#include "string/string.h"
+#include "modulesystem/singletonmodule.h"
+
+#include <gtk/gtk.h>
+
 #include "ifilter.h"
 #include "ibrush.h"
 #include "iundo.h"       // declaration of undo system
@@ -32,18 +38,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "scenelib.h"    // declaration of datastructure of the map
 #include "qerplugin.h"   // declaration to use other interfaces as a plugin
 
-#include "string/string.h"
-#include "modulesystem/singletonmodule.h"
-
 class UFOAIPluginDependencies :
   public GlobalRadiantModuleRef,    // basic class for all other module refs
   public GlobalUndoModuleRef,       // used to say radiant that something has changed and to undo that
-  public GlobalBrushModuleRef,
+//  public GlobalBrushModuleRef,
   public GlobalSceneGraphModuleRef, // necessary to handle data in the mapfile (change, retrieve data)
   public GlobalEntityModuleRef      // to access and modify the entities
 {
 public:
-	UFOAIPluginDependencies() :
+	UFOAIPluginDependencies(void) :
 		GlobalEntityModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("entities"))
 	{
 	}
@@ -52,11 +55,11 @@ public:
 namespace UFOAI
 {
 	GtkWindow* g_mainwnd;
-	char UFOMenuList[100] = "About...";
 
 	const char* init(void* hApp, void* pMainWidget)
 	{
-		return "";
+		g_mainwnd = GTK_WINDOW(pMainWidget);
+		return "Initializing GTKRadiant UFOAI plugin";
 	}
 	const char* getName()
 	{
@@ -64,9 +67,8 @@ namespace UFOAI
 	}
 	const char* getCommandList()
 	{
-		strncat(UFOMenuList, ";Level 1,Level 2,Level 3,Level 4,Level 5,Level 6,Level 7,Level 8,StepOn", sizeof(UFOMenuList));
 		/*GlobalRadiant().getGameName()*/
-		return (const char*)UFOMenuList;
+		return "About;-;Level 1;Level 2;Level 3;Level 4;Level 5;Level 6;Level 7;Level 8;-;StepOn";
 	}
 	const char* getCommandTitleList()
 	{
@@ -74,7 +76,7 @@ namespace UFOAI
 	}
 	void dispatch(const char* command, float* vMin, float* vMax, bool bSingleBrush)
 	{
-		if(string_equal(command, "About..."))
+		if(string_equal(command, "About"))
 		{
 			GlobalRadiant().m_pfnMessageBox(GTK_WIDGET(g_mainwnd),
 				"UFO:AI Plugin (http://www.ufoai.net)\n", "About",
@@ -119,14 +121,14 @@ namespace UFOAI
 	}
 } // namespace
 
-class UFOAIPluginModule
+class UFOAIModule : public TypeSystemRef
 {
 	_QERPluginTable m_plugin;
 public:
 	typedef _QERPluginTable Type;
-	STRING_CONSTANT(Name, "ufoai");
+	STRING_CONSTANT(Name, "ufo:ai");
 
-	UFOAIPluginModule()
+	UFOAIModule()
 	{
 		m_plugin.m_pfnQERPlug_Init = &UFOAI::init;
 		m_plugin.m_pfnQERPlug_GetName = &UFOAI::getName;
@@ -140,15 +142,15 @@ public:
 	}
 };
 
-typedef SingletonModule<UFOAIPluginModule> SingletonUFOAIPluginModule;
+typedef SingletonModule<UFOAIModule, UFOAIPluginDependencies> SingletonUFOAIModule;
 
-SingletonUFOAIPluginModule g_UFOAIPluginModule;
+SingletonUFOAIModule g_UFOAIModule;
 
 
 class UFOAIToolbarDependencies : public ModuleRef<_QERPluginTable>
 {
 public:
-	UFOAIToolbarDependencies() : ModuleRef<_QERPluginTable>("ufoai")
+	UFOAIToolbarDependencies() : ModuleRef<_QERPluginTable>("ufo:ai")
 	{
 	}
 };
@@ -158,7 +160,7 @@ class UFOAIToolbarModule : public TypeSystemRef
 	_QERPlugToolbarTable m_table;
 public:
 	typedef _QERPlugToolbarTable Type;
-	STRING_CONSTANT(Name, "ufoai");
+	STRING_CONSTANT(Name, "ufo:ai");
 
 	UFOAIToolbarModule()
 	{
@@ -180,6 +182,6 @@ extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules(ModuleServer& server)
 {
 	initialiseModule(server);
 
-	g_UFOAIPluginModule.selfRegister();
+	g_UFOAIModule.selfRegister();
 	g_UFOAIToolbarModule.selfRegister();
 }
