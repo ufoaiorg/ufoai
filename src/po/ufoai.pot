@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-18 09:31+0200\n"
+"POT-Creation-Date: 2006-10-24 13:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.ufo.po (UFO Alien Invasion)  #-#-#-#-#\n"
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: http://www.sourceforge.net/projects/ufoai/\n"
-"POT-Creation-Date: 2006-10-18 09:32+0200\n"
+"POT-Creation-Date: 2006-10-24 13:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,51 +136,51 @@ msgstr ""
 msgid "Hospital"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:325
+#: ../base/ufos/basemanagement.ufo:326
 msgid "Home"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:326
+#: ../base/ufos/basemanagement.ufo:327
 msgid "Base #2"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:327
+#: ../base/ufos/basemanagement.ufo:328
 msgid "Base #3"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:328
+#: ../base/ufos/basemanagement.ufo:329
 msgid "Base #4"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:329
+#: ../base/ufos/basemanagement.ufo:330
 msgid "Base #5"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:330
+#: ../base/ufos/basemanagement.ufo:331
 msgid "Base #6"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:331
+#: ../base/ufos/basemanagement.ufo:332
 msgid "Base #7"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:332
+#: ../base/ufos/basemanagement.ufo:333
 msgid "Base #8"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:338
+#: ../base/ufos/basemanagement.ufo:339
 msgid "Dropship"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:352
+#: ../base/ufos/basemanagement.ufo:353
 msgid "Interceptor"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:369 client/cl_map.c:335
+#: ../base/ufos/basemanagement.ufo:370 client/cl_map.c:335
 msgid "UFO"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:383
+#: ../base/ufos/basemanagement.ufo:384
 msgid "UFO - Destroyer class"
 msgstr ""
 
@@ -295,93 +295,97 @@ msgstr ""
 msgid "Captain"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:50 ../base/ufos/menu_aircraft.ufo:96
+#: ../base/ufos/menu_aircraft.ufo:49
 msgid "Assign your squad"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:66
+#: ../base/ufos/menu_aircraft.ufo:65
 msgid "Hire your team first"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:76
+#: ../base/ufos/menu_aircraft.ufo:75
 msgid "Aircraft absent from base"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:87
-msgid "Equip Aircraft"
+#: ../base/ufos/menu_aircraft.ufo:85
+msgid "Assign Soldiers"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:105
+#: ../base/ufos/menu_aircraft.ufo:94
+msgid "NA"
+msgstr ""
+
+#: ../base/ufos/menu_aircraft.ufo:103
 msgid "Aircraft away"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:117
+#: ../base/ufos/menu_aircraft.ufo:115
 msgid "Buy/Sell aircraft"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:132
+#: ../base/ufos/menu_aircraft.ufo:130
 msgid "Buy/Sell Aircraft"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:145
+#: ../base/ufos/menu_aircraft.ufo:143
 msgid "Start your aircraft"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:161
+#: ../base/ufos/menu_aircraft.ufo:159
 msgid "Start Aircraft"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:170
+#: ../base/ufos/menu_aircraft.ufo:168
 msgid "Call back aircraft"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:186 ../base/ufos/menu_aircraft.ufo:315
+#: ../base/ufos/menu_aircraft.ufo:184 ../base/ufos/menu_aircraft.ufo:313
 msgid "Call back"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:198 ../base/ufos/menu_bases.ufo:186
+#: ../base/ufos/menu_aircraft.ufo:196 ../base/ufos/menu_bases.ufo:186
 msgid "Transfer equipment or personnel"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:213 ../base/ufos/menu_bases.ufo:201
+#: ../base/ufos/menu_aircraft.ufo:211 ../base/ufos/menu_bases.ufo:201
 msgid "Transfer"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:226
+#: ../base/ufos/menu_aircraft.ufo:224
 msgid "Equip weapons and shields"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:242
+#: ../base/ufos/menu_aircraft.ufo:240
 msgid "Equip"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:282 ../base/ufos/menu_aircraft.ufo:461
+#: ../base/ufos/menu_aircraft.ufo:280 ../base/ufos/menu_aircraft.ufo:459
 #: ../base/ufos/menu_hospital.ufo:125 ../base/ufos/menu_hospital.ufo:330
 #: ../base/ufos/menu_team.ufo:894 ../base/ufos/menu_team.ufo:1503
 msgid "Done"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:293
+#: ../base/ufos/menu_aircraft.ufo:291
 msgid "Switch to the previous aircraft"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:304
+#: ../base/ufos/menu_aircraft.ufo:302
 msgid "Switch to the next aircraft"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:328 ../base/ufos/menu_team.ufo:878
+#: ../base/ufos/menu_aircraft.ufo:326 ../base/ufos/menu_team.ufo:878
 msgid "Team Members:"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:411
+#: ../base/ufos/menu_aircraft.ufo:409
 msgid "Shield"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:419
+#: ../base/ufos/menu_aircraft.ufo:417
 msgid "Weapon"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:427
+#: ../base/ufos/menu_aircraft.ufo:425
 msgid "Available equipment:"
 msgstr ""
 
@@ -3477,8 +3481,8 @@ msgstr ""
 msgid "Aircraft started"
 msgstr ""
 
-#: client/cl_aircraft.c:103 client/cl_aircraft.c:385 client/cl_aircraft.c:537
-#: client/cl_aircraft.c:755 client/cl_basemanagement.c:448
+#: client/cl_aircraft.c:103 client/cl_aircraft.c:402 client/cl_aircraft.c:554
+#: client/cl_aircraft.c:772 client/cl_basemanagement.c:448
 #: client/cl_basemanagement.c:1906 client/cl_campaign.c:428
 #: client/cl_campaign.c:855 client/cl_campaign.c:906 client/cl_campaign.c:1058
 #: client/cl_campaign.c:1068 client/cl_campaign.c:1077
@@ -3541,65 +3545,65 @@ msgstr ""
 msgid "Back to base"
 msgstr ""
 
-#: client/cl_aircraft.c:327 client/cl_map.c:776 client/cl_ufopedia.c:282
+#: client/cl_aircraft.c:344 client/cl_map.c:776 client/cl_ufopedia.c:282
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr ""
 
-#: client/cl_aircraft.c:328 client/cl_map.c:777
+#: client/cl_aircraft.c:345 client/cl_map.c:777
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr ""
 
-#: client/cl_aircraft.c:329 client/cl_aircraft.c:330 client/cl_ufopedia.c:263
+#: client/cl_aircraft.c:346 client/cl_aircraft.c:347 client/cl_ufopedia.c:263
 #: client/cl_ufopedia.c:284 client/cl_ufopedia.c:285
 msgid "None"
 msgstr ""
 
-#: client/cl_aircraft.c:329 client/cl_ufopedia.c:284
+#: client/cl_aircraft.c:346 client/cl_ufopedia.c:284
 #, c-format
 msgid "Weapon:\t%s\n"
 msgstr ""
 
-#: client/cl_aircraft.c:330
+#: client/cl_aircraft.c:347
 #, c-format
 msgid "Shield:\t%s"
 msgstr ""
 
-#: client/cl_aircraft.c:384
+#: client/cl_aircraft.c:401
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr ""
 
-#: client/cl_aircraft.c:537
+#: client/cl_aircraft.c:554
 msgid "Your dropship has low fuel and returns to base"
 msgstr ""
 
-#: client/cl_aircraft.c:576 client/cl_aircraft.c:583
+#: client/cl_aircraft.c:593 client/cl_aircraft.c:600
 msgid "Interception"
 msgstr ""
 
-#: client/cl_aircraft.c:576 client/cl_campaign.c:2278
+#: client/cl_aircraft.c:593 client/cl_campaign.c:2278
 msgid "You've won the battle"
 msgstr ""
 
-#: client/cl_aircraft.c:583 client/cl_campaign.c:2280
+#: client/cl_aircraft.c:600 client/cl_campaign.c:2280
 msgid "You've lost the battle"
 msgstr ""
 
-#: client/cl_aircraft.c:606 client/cl_aircraft.c:617
+#: client/cl_aircraft.c:623 client/cl_aircraft.c:634
 msgid "None\n"
 msgstr ""
 
-#: client/cl_aircraft.c:657
+#: client/cl_aircraft.c:674
 msgid "No weapon assigned"
 msgstr ""
 
-#: client/cl_aircraft.c:707
+#: client/cl_aircraft.c:724
 msgid "No shield assigned"
 msgstr ""
 
-#: client/cl_aircraft.c:755
+#: client/cl_aircraft.c:772
 msgid "Assign a team to aircraft"
 msgstr ""
 
@@ -3994,35 +3998,35 @@ msgstr ""
 msgid "Max. soldiers per team:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:1245
+#: client/cl_main.c:1244
 msgid "Unnamed"
 msgstr ""
 
-#: client/cl_main.c:1459
+#: client/cl_main.c:1458
 msgid "Chicken-hearted"
 msgstr ""
 
-#: client/cl_main.c:1461
+#: client/cl_main.c:1460
 msgid "Very Easy"
 msgstr ""
 
-#: client/cl_main.c:1464
+#: client/cl_main.c:1463
 msgid "Easy"
 msgstr ""
 
-#: client/cl_main.c:1466
+#: client/cl_main.c:1465
 msgid "Normal"
 msgstr ""
 
-#: client/cl_main.c:1469
+#: client/cl_main.c:1468
 msgid "Hard"
 msgstr ""
 
-#: client/cl_main.c:1471
+#: client/cl_main.c:1470
 msgid "Very Hard"
 msgstr ""
 
-#: client/cl_main.c:1473
+#: client/cl_main.c:1472
 msgid "Insane"
 msgstr ""
 
@@ -4093,15 +4097,15 @@ msgstr ""
 msgid "Key: %s"
 msgstr ""
 
-#: client/cl_parse.c:679
+#: client/cl_parse.c:662
 msgid "Alien spotted!\n"
 msgstr ""
 
-#: client/cl_parse.c:681
+#: client/cl_parse.c:664
 msgid "Enemy spotted!\n"
 msgstr ""
 
-#: client/cl_parse.c:683
+#: client/cl_parse.c:666
 msgid "Civilian spotted!\n"
 msgstr ""
 
@@ -4595,86 +4599,66 @@ msgstr ""
 msgid "Alien"
 msgstr ""
 
-#: game/g_client.c:644
+#: game/g_client.c:565
 msgid "Can't perform action - this isn't your round!\n"
 msgstr ""
 
-#: game/g_client.c:651
+#: game/g_client.c:572
 msgid "Can't perform action - object not present!\n"
 msgstr ""
 
-#: game/g_client.c:656
+#: game/g_client.c:577
 msgid "Can't perform action - not an actor!\n"
 msgstr ""
 
-#: game/g_client.c:661
+#: game/g_client.c:582
 msgid "Can't perform action - actor is stunned!\n"
 msgstr ""
 
-#: game/g_client.c:666
+#: game/g_client.c:587
 msgid "Can't perform action - actor is dead!\n"
 msgstr ""
 
-#: game/g_client.c:671
+#: game/g_client.c:592
 msgid "Can't perform action - not on same team!\n"
 msgstr ""
 
-#: game/g_client.c:676
+#: game/g_client.c:597
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr ""
 
-#: game/g_client.c:681 game/g_client.c:782
+#: game/g_client.c:602 game/g_client.c:703
 msgid "Can't perform action - not enough TUs!\n"
 msgstr ""
 
-#: game/g_client.c:785
+#: game/g_client.c:706
 msgid ""
 "Can't perform action - weapon already fully loaded with the same "
 "ammunition!\n"
 msgstr ""
 
-#: game/g_client.c:1256
+#: game/g_client.c:1177
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr ""
 
-#: game/g_client.c:1394
+#: game/g_client.c:1238
 #, c-format
 msgid "%s panics!\n"
 msgstr ""
 
-#: game/g_client.c:1447
+#: game/g_client.c:1291
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr ""
 
-#: game/g_client.c:1449
+#: game/g_client.c:1293
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr ""
 
-#: game/g_client.c:1502
+#: game/g_client.c:1346
 #, c-format
 msgid "%s is currently shaken.\n"
-msgstr ""
-
-#: game/g_client.c:1833
-msgid "Can't perform action - impossible throw!\n"
-msgstr ""
-
-#: game/g_client.c:2218
-msgid "Can't perform action - object not activable!\n"
-msgstr ""
-
-#: game/g_client.c:2233
-msgid "Can't perform action - weapon cannot be fired one handed!\n"
-msgstr ""
-
-#: game/g_client.c:2240
-msgid "Can't perform action - no ammo!\n"
-msgstr ""
-
-#: game/g_client.c:2255
-msgid "Can't perform action - not enough ammo!\n"
 msgstr ""
 
 #: po/OTHER_STRINGS:2
