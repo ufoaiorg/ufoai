@@ -145,7 +145,7 @@ int Cvar_CompleteVariable(char *partial, char **match)
  * If the variable already exists, the value will not be set
  * The flags will be or'ed in if the variable exists.
  */
-cvar_t *Cvar_Get(char *var_name, char *var_value, int flags)
+cvar_t *Cvar_Get(char *var_name, char *var_value, int flags, char* desc)
 {
 	cvar_t *var;
 
@@ -158,6 +158,8 @@ cvar_t *Cvar_Get(char *var_name, char *var_value, int flags)
 	var = Cvar_FindVar(var_name);
 	if (var) {
 		var->flags |= flags;
+		if (desc)
+			var->description = desc;
 		return var;
 	}
 
@@ -175,6 +177,7 @@ cvar_t *Cvar_Get(char *var_name, char *var_value, int flags)
 	var->string = CopyString(var_value);
 	var->modified = qtrue;
 	var->value = atof(var->string);
+	var->description = desc;
 
 	/* link the variable in */
 	var->next = cvar_vars;
@@ -199,7 +202,7 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 	var = Cvar_FindVar(var_name);
 	/* create it */
 	if (!var)
-		return Cvar_Get(var_name, value, 0);
+		return Cvar_Get(var_name, value, 0, NULL);
 
 	if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO))
 		if (!Cvar_InfoValidate(value)) {
@@ -299,7 +302,7 @@ cvar_t *Cvar_FullSet(char *var_name, char *value, int flags)
 	var = Cvar_FindVar(var_name);
 	/* create it */
 	if (!var)
-		return Cvar_Get(var_name, value, flags);
+		return Cvar_Get(var_name, value, flags, NULL);
 
 	var->modified = qtrue;
 
@@ -504,6 +507,8 @@ void Cvar_List_f(void)
 		else
 			Com_Printf(" ");
 		Com_Printf(" %s \"%s\"\n", var->name, var->string);
+		if (var->description)
+			Com_Printf("%c - %s\n", 2, var->description);
 	}
 	Com_Printf("%i cvars\n", i);
 }
@@ -546,7 +551,7 @@ char *Cvar_Serverinfo(void)
  */
 void Cvar_Init(void)
 {
-	Cmd_AddCommand("set", Cvar_Set_f);
-	Cmd_AddCommand("copy", Cvar_Copy_f);
-	Cmd_AddCommand("cvarlist", Cvar_List_f);
+	Cmd_AddCommand("set", Cvar_Set_f, NULL);
+	Cmd_AddCommand("copy", Cvar_Copy_f, NULL);
+	Cmd_AddCommand("cvarlist", Cvar_List_f, NULL);
 }

@@ -455,13 +455,14 @@ typedef struct cvar_s {
 	char *name;
 	char *string;
 	char *latched_string;		/* for CVAR_LATCH vars */
+	char *description;
 	int flags;
 	qboolean modified;			/* set each time the cvar is changed */
 	float value;
 	struct cvar_s *next;
 } cvar_t;
 
-cvar_t *Cvar_Get(char *var_name, char *value, int flags);
+cvar_t *Cvar_Get(char *var_name, char *var_value, int flags, char* desc);
 
 #endif							/* CVAR */
 

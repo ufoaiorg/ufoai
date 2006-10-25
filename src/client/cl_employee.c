@@ -781,7 +781,7 @@ static void E_EmployeeSelect_f(void)
 void E_Reset(void)
 {
 	/* add commands */
-	Cmd_AddCommand("employee_init", E_EmployeeList);
-	Cmd_AddCommand("employee_hire", E_EmployeeHire_f);
-	Cmd_AddCommand("employee_select", E_EmployeeSelect_f);
+	Cmd_AddCommand("employee_init", E_EmployeeList, NULL);
+	Cmd_AddCommand("employee_hire", E_EmployeeHire_f, NULL);
+	Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
 }

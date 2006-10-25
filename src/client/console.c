@@ -268,15 +268,15 @@ void Con_Init(void)
 	Com_Printf("Console initialized.\n");
 
 	/* register our commands */
-	con_notifytime = Cvar_Get("con_notifytime", "3", 0);
+	con_notifytime = Cvar_Get("con_notifytime", "3", 0, NULL);
 
-	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f);
-	Cmd_AddCommand("togglechat", Con_ToggleChat_f);
-	Cmd_AddCommand("messagesay", Con_MessageModeSay_f);
-	Cmd_AddCommand("messagesayteam", Con_MessageModeSayTeam_f);
-	Cmd_AddCommand("messagemenu", Con_MessageModeMenu_f);
-	Cmd_AddCommand("clear", Con_Clear_f);
-	Cmd_AddCommand("condump", Con_Dump_f);
+	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, NULL);
+	Cmd_AddCommand("togglechat", Con_ToggleChat_f, NULL);
+	Cmd_AddCommand("messagesay", Con_MessageModeSay_f, NULL);
+	Cmd_AddCommand("messagesayteam", Con_MessageModeSayTeam_f, NULL);
+	Cmd_AddCommand("messagemenu", Con_MessageModeMenu_f, NULL);
+	Cmd_AddCommand("clear", Con_Clear_f, NULL);
+	Cmd_AddCommand("condump", Con_Dump_f, NULL);
 	con.initialized = qtrue;
 }
 

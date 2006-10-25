@@ -1,10 +1,7 @@
 /*
 ==============================================================
-
 CMD
-
 Command text buffering and command execution
-
 ==============================================================
 */
 
@@ -80,11 +77,12 @@ typedef void (*xcommand_t) (void);
 typedef struct cmdList_s {
 	char *name;
 	xcommand_t function;
+	char *description;
 } cmdList_t;
 
 void Cmd_Init(void);
 
-void Cmd_AddCommand(char *cmd_name, xcommand_t function);
+void Cmd_AddCommand(char *cmd_name, xcommand_t function, char* desc);
 
 /* called by the init functions of other parts of the program to */
 /* register commands and functions to call for them. */
@@ -127,3 +125,4 @@ void Cmd_ForwardToServer(void);
 /* so when they are typed in at the console, they will need to be forwarded. */
 
 
+char* Cmd_GetCommandDesc(char* command);

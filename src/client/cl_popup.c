@@ -62,16 +62,16 @@ static void CL_PopupInterceptNotifyUfoDisappeared(const aircraft_t* ufo);
 extern void CL_PopupInit(void)
 {
 	/* popup_aircraft commands */
-	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
+	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f, NULL);
 
 	/* popup_intercept commands */
-	Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f);
-	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f);
+	Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f, NULL);
+	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f, NULL);
 
 	/* popup_interception_ready commands */
-	/*Cmd_AddCommand("popup_interception_ready_enter", CL_PopupInterceptionReadyEnter_f);
-	Cmd_AddCommand("popup_interception_ready_auto", CL_PopupInterceptionReadyAuto_f);
-	Cmd_AddCommand("popup_interception_ready_cancel", CL_PopupInterceptionReadyCancel_f);
+	/*Cmd_AddCommand("popup_interception_ready_enter", CL_PopupInterceptionReadyEnter_f, NULL);
+	Cmd_AddCommand("popup_interception_ready_auto", CL_PopupInterceptionReadyAuto_f, NULL);
+	Cmd_AddCommand("popup_interception_ready_cancel", CL_PopupInterceptionReadyCancel_f, NULL);
 	*/
 }
 

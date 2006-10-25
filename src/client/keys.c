@@ -49,9 +49,9 @@ char msg_buffer[MAXCMDLINE];
 int msg_bufferlen = 0;
 
 static int key_waiting;
-static char *keybindings[256];
+char *keybindings[256];
+static char *menukeybindings[256];
 static qboolean consolekeys[256];		/* if true, can't be rebound while in console */
-static qboolean menubound[256];		/* if true, can't be rebound while in menu */
 static int keyshift[256];				/* key to map to if shift held down in console */
 static int key_repeats[256];			/* if > 1, it is autorepeating */
 qboolean keydown[256];
@@ -61,7 +61,7 @@ typedef struct {
 	int keynum;
 } keyname_t;
 
-static keyname_t keynames[] = {
+static const keyname_t keynames[] = {
 	{"TAB", K_TAB},
 	{"ENTER", K_ENTER},
 	{"ESCAPE", K_ESCAPE},
@@ -99,6 +99,8 @@ static keyname_t keynames[] = {
 	{"MOUSE1", K_MOUSE1},
 	{"MOUSE2", K_MOUSE2},
 	{"MOUSE3", K_MOUSE3},
+	{"MOUSE4", K_MOUSE4},
+	{"MOUSE5", K_MOUSE5},
 
 	{"AUX1", K_AUX1},
 	{"AUX2", K_AUX2},
@@ -377,7 +379,7 @@ static void Key_Console(int key)
  * @note Used for chatting and cvar editing via menu
  * @sa Key_Event
  */
-void Key_Message(int key)
+static void Key_Message(int key)
 {
 	if (key == K_ENTER || key == K_KP_ENTER) {
 		qboolean send = qtrue;
@@ -450,9 +452,9 @@ void Key_Message(int key)
  * the given string.  Single ascii characters return themselves, while
  * the K_* names are matched up.
  */
-int Key_StringToKeynum(char *str)
+static int Key_StringToKeynum(char *str)
 {
-	keyname_t *kn;
+	const keyname_t *kn;
 
 	if (!str || !str[0])
 		return -1;
@@ -474,7 +476,7 @@ int Key_StringToKeynum(char *str)
  */
 char *Key_KeynumToString(int keynum)
 {
-	keyname_t *kn;
+	const keyname_t *kn;
 	static char tinystr[2];
 
 	if (keynum == -1)
@@ -492,6 +494,36 @@ char *Key_KeynumToString(int keynum)
 	return "<UNKNOWN KEYNUM>";
 }
 
+/**
+ * @brief Return the key binding for a given script command
+ * @param[in] binding The script command to bind keynum to
+ * @sa Key_SetBinding
+ * @return the binded key or empty string if not found
+ */
+char* Key_GetBinding(char *binding, keyBindSpace_t space)
+{
+	int i;
+	char **keySpace = NULL;
+
+	switch (space) {
+	case KEYSPACE_MENU:
+		keySpace = menukeybindings;
+		break;
+	case KEYSPACE_GAME:
+		keySpace = keybindings;
+		break;
+	default:
+		return "";
+	}
+
+	for (i = 0; i < 256; i++)
+		if (keySpace[i] && *keySpace[i] && !Q_strncmp(keySpace[i], binding, strlen(binding))) {
+			return Key_KeynumToString(i);
+		}
+
+	/* not found */
+	return "";
+}
 
 /**
  * @brief Bind a keynum to script command
@@ -500,32 +532,48 @@ char *Key_KeynumToString(int keynum)
  * @sa Key_Bind_f
  * @sa Key_StringToKeynum
  */
-void Key_SetBinding(int keynum, char *binding)
+static void Key_SetBinding(int keynum, char *binding, keyBindSpace_t space)
 {
 	char *new;
+	char **keySpace = NULL;
 	int l;
 
 	if (keynum == -1)
 		return;
 
+	Com_DPrintf("Binding for '%s' for space ", binding);
+	switch (space) {
+	case KEYSPACE_MENU:
+		keySpace = &menukeybindings[keynum];
+		Com_DPrintf("menu\n");
+		break;
+	case KEYSPACE_GAME:
+		keySpace = &keybindings[keynum];
+		Com_DPrintf("game\n");
+		break;
+	default:
+		Com_DPrintf("failure\n");
+		return;
+	}
+
 	/* free old bindings */
-	if (keybindings[keynum]) {
-		Mem_Free(keybindings[keynum]);
-		keybindings[keynum] = NULL;
+	if (keySpace) {
+		Mem_Free(*keySpace);
+		*keySpace = NULL;
 	}
 
 	/* allocate memory for new binding */
 	l = strlen(binding);
 	new = Mem_Alloc(l + 1);
 	Q_strncpyz(new, binding, l + 1);
-	keybindings[keynum] = new;
+	*keySpace = new;
 }
 
 /**
  * @brief Unbind a given key binding
  * @sa Key_SetBinding
  */
-void Key_Unbind_f(void)
+static void Key_Unbind_f(void)
 {
 	int b;
 
@@ -540,20 +588,42 @@ void Key_Unbind_f(void)
 		return;
 	}
 
-	Key_SetBinding(b, "");
+	if (!Q_strncmp(Cmd_Argv(0), "unbindmenu", MAX_VAR))
+		Key_SetBinding(b, "", KEYSPACE_MENU);
+	else
+		Key_SetBinding(b, "", KEYSPACE_GAME);
 }
+
+#if 0
+/**
+ * @brief Translate the key space string to enum value of keyBindSpace_t
+ */
+static int Key_SpaceStringToEnumValue(char* keySpace)
+{
+	if (Q_strncmp(keySpace, "KEYSPACE_MENU", MAX_VAR))
+		return KEYSPACE_MENU;
+	else if (Q_strncmp(keySpace, "KEYSPACE_GAME", MAX_VAR))
+		return KEYSPACE_MENU;
+	else
+		return -1;
+}
+#endif
 
 /**
  * @brief Unbind all key bindings
  * @sa Key_SetBinding
  */
-void Key_Unbindall_f(void)
+static void Key_Unbindall_f(void)
 {
 	int i;
 
 	for (i = 0; i < 256; i++)
-		if (keybindings[i])
-			Key_SetBinding(i, "");
+		if (keybindings[i]) {
+			if (!Q_strncmp(Cmd_Argv(0), "unbindallmenu", MAX_VAR))
+				Key_SetBinding(i, "", KEYSPACE_MENU);
+			else
+				Key_SetBinding(i, "", KEYSPACE_GAME);
+		}
 }
 
 
@@ -561,7 +631,7 @@ void Key_Unbindall_f(void)
  * @brief Binds a key to a given script command
  * @sa Key_SetBinding
  */
-void Key_Bind_f(void)
+static void Key_Bind_f(void)
 {
 	int i, c, b;
 	char cmd[1024];
@@ -587,24 +657,38 @@ void Key_Bind_f(void)
 	}
 
 	/* copy the rest of the command line */
-	cmd[0] = 0;					/* start out with a null string */
+	cmd[0] = '\0';					/* start out with a null string */
 	for (i = 2; i < c; i++) {
-		strcat(cmd, Cmd_Argv(i));
+		Q_strcat(cmd, Cmd_Argv(i), sizeof(cmd));
 		if (i != (c - 1))
-			strcat(cmd, " ");
+			Q_strcat(cmd, " ", sizeof(cmd));
 	}
 
-	Key_SetBinding(b, cmd);
+	if (!Q_strncmp(Cmd_Argv(0), "bindmenu", MAX_VAR))
+		Key_SetBinding(b, cmd, KEYSPACE_MENU);
+	else
+		Key_SetBinding(b, cmd, KEYSPACE_GAME);
 }
 
 /**
  * @brief Writes lines containing "bind key value"
  * @param[in] f Filehandle to print the keybinding too
  */
-void Key_WriteBindings(FILE * f)
+void Key_WriteBindings(char* path)
 {
 	int i;
+	FILE *f;
 
+	f = fopen(path, "w");
+	if (!f)
+		return;
+
+	fprintf(f, "// generated by ufo, do not modify\n");
+	fprintf(f, "unbindallmenu\n");
+	fprintf(f, "unbindall\n");
+	for (i = 0; i < 256; i++)
+		if (menukeybindings[i] && menukeybindings[i][0])
+			fprintf(f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
 	for (i = 0; i < 256; i++)
 		if (keybindings[i] && keybindings[i][0])
 			fprintf(f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
@@ -614,13 +698,18 @@ void Key_WriteBindings(FILE * f)
 /**
  * @brief List all binded keys with its function
  */
-void Key_Bindlist_f(void)
+static void Key_Bindlist_f(void)
 {
 	int i;
 
+	Com_Printf("key space: game\n");
 	for (i = 0; i < 256; i++)
 		if (keybindings[i] && keybindings[i][0])
-			Com_Printf("%s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
+			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
+	Com_Printf("key space: menu\n");
+	for (i = 0; i < 256; i++)
+		if (menukeybindings[i] && menukeybindings[i][0])
+			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]);
 }
 
 
@@ -704,15 +793,14 @@ void Key_Init(void)
 	keyshift['\\'] = '|';
 #endif
 
-	menubound[K_ESCAPE] = qtrue;
-	for (i = 0; i < 12; i++)
-		menubound[K_F1 + i] = qtrue;
-
 	/* register our functions */
-	Cmd_AddCommand("bind", Key_Bind_f);
-	Cmd_AddCommand("unbind", Key_Unbind_f);
-	Cmd_AddCommand("unbindall", Key_Unbindall_f);
-	Cmd_AddCommand("bindlist", Key_Bindlist_f);
+	Cmd_AddCommand("bindmenu", Key_Bind_f, NULL);
+	Cmd_AddCommand("bind", Key_Bind_f, NULL);
+	Cmd_AddCommand("unbindmenu", Key_Unbind_f, NULL);
+	Cmd_AddCommand("unbind", Key_Unbind_f, NULL);
+	Cmd_AddCommand("unbindallmenu", Key_Unbindall_f, NULL);
+	Cmd_AddCommand("unbindall", Key_Unbindall_f, NULL);
+	Cmd_AddCommand("bindlist", Key_Bindlist_f, NULL);
 }
 
 /**
@@ -722,7 +810,7 @@ void Key_Init(void)
  */
 void Key_Event(int key, qboolean down, unsigned time)
 {
-	char *kb;
+	char *kb = NULL;
 	char cmd[1024];
 
 	/* hack for modal presses */
@@ -814,7 +902,10 @@ void Key_Event(int key, qboolean down, unsigned time)
 
 	/* if not a consolekey, send to the interpreter no matter what mode is */
 	if (cls.key_dest == key_game) {	/*&& !consolekeys[key] ) */
-		kb = keybindings[key];
+		if (mouseSpace == MS_MENU)
+			kb = menukeybindings[key];
+		if (!kb)
+			kb = keybindings[key];
 		if (kb) {
 			if (kb[0] == '+') {	/* button commands add keynum and time as a parm */
 				Com_sprintf(cmd, sizeof(cmd), "%s %i %i\n", kb, key, time);

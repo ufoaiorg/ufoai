@@ -209,6 +209,7 @@ menu hud
 
 	pic bt_nextround
 	{
+		key "*binding nextround"
 		tooltip	"_Finish round"
 		image	hud/buttons2
 		mousefx true
@@ -220,6 +221,7 @@ menu hud
 
 	zone spotted
 	{
+		key "*binding nextalien"
 		tooltip	"_Enemy spotted"
 		pos		"816 12"
 		size	"48 34"
@@ -262,6 +264,7 @@ menu hud
 
 	pic bt_actor0
 	{
+		key "*binding soldier_select 0"
 		tooltip	"_Soldier 1"
 		pos		"426 10"
 		texl	"0 0"
@@ -271,6 +274,7 @@ menu hud
 	}
 	pic bt_actor1
 	{
+		key "*binding soldier_select 1"
 		tooltip	"_Soldier 2"
 		pos		"457 10"
 		texl	"32 0"
@@ -280,6 +284,7 @@ menu hud
 	}
 	pic bt_actor2
 	{
+		key "*binding soldier_select 2"
 		tooltip	"_Soldier 3"
 		pos		"488 10"
 		texl	"64 0"
@@ -289,6 +294,7 @@ menu hud
 	}
 	pic bt_actor3
 	{
+		key "*binding soldier_select 3"
 		tooltip	"_Soldier 4"
 		pos		"519 10"
 		texl	"96 0"
@@ -298,6 +304,7 @@ menu hud
 	}
 	pic bt_actor4
 	{
+		key "*binding soldier_select 4"
 		tooltip	"_Soldier 5"
 		pos		"550 10"
 		texl	"0 38"
@@ -307,6 +314,7 @@ menu hud
 	}
 	pic bt_actor5
 	{
+		key "*binding soldier_select 5"
 		tooltip	"_Soldier 6"
 		pos		"581 10"
 		texl	"32 38"
@@ -316,6 +324,7 @@ menu hud
 	}
 	pic bt_actor6
 	{
+		key "*binding soldier_select 6"
 		tooltip	"_Soldier 7"
 		pos		"612 10"
 		texl	"64 38"
@@ -325,6 +334,7 @@ menu hud
 	}
 	pic bt_actor7
 	{
+		key "*binding soldier_select 7"
 		tooltip	"_Soldier 8"
 		pos		"643 10"
 		texl	"96 38"
@@ -501,6 +511,7 @@ menu hud
 
 	pic bt_duck
 	{
+		key "*binding standcrouch"
 		tooltip	"_Crouch/Stand up"
 		mousefx true
 		pos		"303 723"
@@ -515,6 +526,7 @@ menu hud
 
 	pic bt_reaction
 	{
+		key "*binding togglereaction"
 		tooltip	"_Toggle reaction-fire"
 		mousefx true
 		pos		"303 686"

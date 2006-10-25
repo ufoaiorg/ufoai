@@ -54,7 +54,7 @@ qboolean SND_Init(struct sndinfo *s)
 
 	si = s;
 
-	snd_loadas8bit = Cvar_Get("snd_loadas8bit", "16", CVAR_ARCHIVE);
+	snd_loadas8bit = Cvar_Get("snd_loadas8bit", "16", CVAR_ARCHIVE, NULL);
 	if ((int)s_loadas8bit->value)
 		si->dma->samplebits = 8;
     else
@@ -64,10 +64,10 @@ qboolean SND_Init(struct sndinfo *s)
 		Com_Printf("Don't currently support %i-bit data.  Forcing 16-bit.\n",
 			si->dma->samplebits);
 		si->dma->samplebits = 16;
-		Cvar_SetValue( "snd_loadas8bit", qfalse );
+		Cvar_SetValue("snd_loadas8bit", 0);
 	}
 
-	snd_khz = Cvar_Get("snd_khz", "0", CVAR_ARCHIVE);
+	snd_khz = Cvar_Get("snd_khz", "0", CVAR_ARCHIVE, NULL);
 	switch ((int)snd_khz->value) {
 	case 48:
 		si->dma->speed = AL_RATE_48000;
@@ -96,21 +96,21 @@ qboolean SND_Init(struct sndinfo *s)
 			(int)snd_khz->value, (int)(si->dma->speed/1000));
     }
 
-	snd_channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE);
+	snd_channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, NULL);
 	si->dma->channels = (int)sndchannels->value;
 	if (si->dma->channels != 2)
 		Com_Printf("Don't currently support %.0f sound channels.  Try 2.\n", snd_channels->value);
 
 	ac = alNewConfig();
-	alSetChannels( ac, AL_STEREO );
-	alSetSampFmt( ac, AL_SAMPFMT_TWOSCOMP );
-	alSetQueueSize( ac, QSND_BUFFER_FRAMES );
+	alSetChannels(ac, AL_STEREO);
+	alSetSampFmt(ac, AL_SAMPFMT_TWOSCOMP);
+	alSetQueueSize(ac, QSND_BUFFER_FRAMES);
 	if (si->dma->samplebits == 8)
 		alSetWidth( ac, AL_SAMPLE_8 );
 	else
 		alSetWidth( ac, AL_SAMPLE_16 );
 
-	sgisnd_aport = alOpenPort( "UFO", "w", ac );
+	sgisnd_aport = alOpenPort("UFO", "w", ac);
 	if (!sgisnd_aport)
 		printf( "failed to open audio port!\n" );
 
@@ -121,7 +121,7 @@ qboolean SND_Init(struct sndinfo *s)
 	pvbuf[1].value.ll = alIntToFixed( si->dma->speed );
 	alSetParams( alGetResource( sgisnd_aport ), pvbuf, 2 );
 	if (pvbuf[1].sizeOut < 0)
-		printf( "illegal sample rate %d\n", si->dma->speed );
+		printf("illegal sample rate %d\n", si->dma->speed);
 
 	sgisnd_frames_per_ns = si->dma->speed * 1.0e-9;
 

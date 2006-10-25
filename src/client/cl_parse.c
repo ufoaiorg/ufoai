@@ -67,7 +67,7 @@ char *svc_strings[256] =
 /* d	| dir		| 1 */
 /* a	| angle		| 1 */
 /* !	| do not read	| 1 */
-/* *	| pascal string type - SIZE+DATA, SIZE can be read from va_arg 
+/* *	| pascal string type - SIZE+DATA, SIZE can be read from va_arg
                         | 2 + sizeof(DATA) */
 char *ev_format[] =
 {
@@ -297,7 +297,6 @@ void CL_ParseServerData (void)
 
 	if (cl.pnum >= 0) {
 		/* seperate the printfs so the server message can have a color */
-		Com_Printf("\n\n\35\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\37\n\n");
 		Com_Printf ("%c%s\n", 2, str);
 		/* need to prep refresh at next oportunity */
 		cl.refresh_prepped = qfalse;
@@ -1157,7 +1156,7 @@ void CL_ParseEvent( void )
 
 			if (now) {
 				correct = 0;
-			} else { 
+			} else {
 				switch ( eType ) {
 				case EV_ACTOR_SHOOT_HIDDEN:
 				case EV_ACTOR_SHOOT:

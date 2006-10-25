@@ -845,6 +845,7 @@ typedef struct menuAction_s {
 typedef struct menuNode_s {
 	void *data[6];				/* needs to be first */
 	char name[MAX_VAR];
+	char key[MAX_VAR];
 	int type;
 	vec3_t origin, scale, angles, center;
 	vec2_t pos, size, texh, texl;
@@ -993,6 +994,7 @@ void V_CenterView(pos3_t pos);
 /* cl_sequence.c */
 void CL_SequenceRender(void);
 void CL_Sequence2D(void);
+void CL_SequenceClick_f(void);
 void CL_SequenceStart_f(void);
 void CL_SequenceEnd_f(void);
 void CL_ResetSequences(void);
@@ -1037,5 +1039,8 @@ extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
 extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
 extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
 extern void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
+
+/* keys.c */
+extern char *keybindings[256];
 
 #endif /* CLIENT_CLIENT_H */

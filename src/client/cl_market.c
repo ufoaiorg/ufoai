@@ -388,11 +388,11 @@ static void CL_SellAircraft(void)
  */
 void CL_ResetMarket(void)
 {
-	Cmd_AddCommand("buy_type", CL_BuyType);
-	Cmd_AddCommand("buy_select", CL_BuySelectCmd);
-	Cmd_AddCommand("mn_buy", CL_BuyItem);
-	Cmd_AddCommand("mn_sell", CL_SellItem);
-	Cmd_AddCommand("mn_buy_aircraft", CL_BuyAircraft);
-	Cmd_AddCommand("mn_sell_aircraft", CL_SellAircraft);
+	Cmd_AddCommand("buy_type", CL_BuyType, NULL);
+	Cmd_AddCommand("buy_select", CL_BuySelectCmd, NULL);
+	Cmd_AddCommand("mn_buy", CL_BuyItem, NULL);
+	Cmd_AddCommand("mn_sell", CL_SellItem, NULL);
+	Cmd_AddCommand("mn_buy_aircraft", CL_BuyAircraft, NULL);
+	Cmd_AddCommand("mn_sell_aircraft", CL_SellAircraft, NULL);
 	buyListLength = -1;
 }

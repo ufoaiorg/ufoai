@@ -1707,6 +1707,8 @@ char *Q_strlwr(char *str)
  */
 char *Q_strdup(const char *str)
 {
+	if (!str)
+		return NULL;
 #ifdef _MSC_VER
 	return _strdup(str);
 #else

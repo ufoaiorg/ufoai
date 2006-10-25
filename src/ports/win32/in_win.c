@@ -141,7 +141,7 @@ void IN_StartupMouse (void)
 {
 	cvar_t		*cv;
 
-	cv = Cvar_Get ("in_initmouse", "1", CVAR_NOSET);
+	cv = Cvar_Get ("in_initmouse", "1", CVAR_NOSET, NULL);
 	if ( !cv->value )
 		return;
 
@@ -203,12 +203,12 @@ cvar_t	*v_centerspeed;
 void IN_Init (void)
 {
 	/* mouse variables */
-	m_filter = Cvar_Get ("m_filter", "0", 0);
-	in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
+	m_filter = Cvar_Get ("m_filter", "0", 0, NULL);
+	in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE, NULL);
 
 	/* centering */
-	v_centermove = Cvar_Get ("v_centermove", "0.15", 0);
-	v_centerspeed = Cvar_Get ("v_centerspeed", "500", 0);
+	v_centermove = Cvar_Get ("v_centermove", "0.15", 0, NULL);
+	v_centerspeed = Cvar_Get ("v_centerspeed", "500", 0, NULL);
 
 	IN_StartupMouse ();
 }

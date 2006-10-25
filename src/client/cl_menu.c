@@ -26,8 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-static vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
-static vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
+static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
+static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 
 /* =========================================================== */
 
@@ -42,6 +42,7 @@ typedef enum ea_s {
 	EA_NUM_EVENTACTION
 } ea_t;
 
+/** @brief valid node event actions */
 static char *ea_strings[EA_NUM_EVENTACTION] = {
 	"",
 	"cmd",
@@ -73,6 +74,7 @@ typedef enum ne_s {
 	NE_NUM_NODEEVENT
 } ne_t;
 
+/** @brief valid node event ids */
 static char *ne_strings[NE_NUM_NODEEVENT] = {
 	"",
 	"click",
@@ -93,6 +95,7 @@ size_t ne_values[NE_NUM_NODEEVENT] = {
 
 /* =========================================================== */
 
+/** @brief valid properties for a menu node */
 static value_t nps[] = {
 	{"invis", V_BOOL, offsetof(menuNode_t, invis)},
 	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx)},
@@ -111,6 +114,7 @@ static value_t nps[] = {
 	{"text_scroll", V_INT, offsetof(menuNode_t, textScroll)},
 	{"timeout", V_INT, offsetof(menuNode_t, timeOut)},
 	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor)},
+	{"key", V_STRING, offsetof(menuNode_t, key)},
 	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
 	{"tooltip", V_STRING, -5},	/* translated in MN_Tooltip */
 	{"image", V_STRING, 0},
@@ -132,6 +136,7 @@ static value_t nps[] = {
 	{NULL, V_NULL, 0},
 };
 
+/** @brief valid properties for a menu model definition */
 static value_t menuModelValues[] = {
 	{"model", V_STRING, offsetof(menuModel_t, model)},
 	{"need", V_NULL, 0},
@@ -168,6 +173,7 @@ typedef enum mn_s {
 	MN_NUM_NODETYPE
 } mn_t;
 
+/** @brief node type strings */
 static char *nt_strings[MN_NUM_NODETYPE] = {
 	"",
 	"confunc",
@@ -294,6 +300,12 @@ static char *MN_GetReferenceString(const menu_t* const menu, char *ref)
 		if (!Q_strncmp(ident, "cvar", 4)) {
 			/* get the cvar value */
 			return Cvar_VariableString(token);
+		} else if (!Q_strncmp(ident, "binding", 7)) {
+			/* get the cvar value */
+			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
+		} else if (!Q_strncmp(ident, "cmd", 3)) {
+			/* TODO: get the command output */
+			return "TOOD";
 		} else {
 			menuNode_t *refNode;
 			value_t *val;
@@ -392,14 +404,13 @@ static void MN_StartServer(void)
 	if (Cmd_Argc() <= 1) {
 		Com_Printf("Usage: mn_startserver <name>\n");
 		return;
-	} else
-		Com_Printf("MN_StartServer\n");
+	}
 
 	if (Cvar_VariableValue("dedicated") > 0)
 		Com_DPrintf("Dedicated server needs no team\n");
 	/* FIXME: Spectator */
 	else if (!B_GetNumOnTeam()) {
-		MN_Popup(_("Error"), _("Assemble a team first"));
+		Cbuf_ExecuteText(EXEC_NOW, "assign_initial 1\n");
 		return;
 	} else
 		Com_DPrintf("There are %i members on team\n", B_GetNumOnTeam());
@@ -644,27 +655,27 @@ static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
 		/* menuIfCondition_t */
 		switch (node->depends.cond) {
 		case IF_EQ:
-			if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0)->value)
+			if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value)
 				return qfalse;
 			break;
 		case IF_LE:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value > atof(node->depends.value))
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value > atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_GE:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value < atof(node->depends.value))
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value < atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_GT:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value <= atof(node->depends.value))
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value <= atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_LT:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value >= atof(node->depends.value))
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value >= atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_NE:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0)->value == atof(node->depends.value))
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value == atof(node->depends.value))
 				return qfalse;
 			break;
 		default:
@@ -1013,7 +1024,6 @@ void MN_Click(int x, int y)
 	}
 }
 
-
 /**
  * @brief
  * @sa MAP_ResetAction
@@ -1221,22 +1231,27 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 /**
  * @brief Generic tooltip function
  */
-static void MN_DrawTooltip(char *font, char *string, int x, int y)
+static int MN_DrawTooltip(char *font, char *string, int x, int y, int maxWidth)
 {
-	int width = 0, height = 0;
+	int height = 0, width = 0;
 
 	re.FontLength(font, string, &width, &height);
 	if (!width)
-		return;
+		return 0;
+
+	/* maybe there is no maxWidth given */
+	if (maxWidth < width)
+		maxWidth = width;
 
 	x += 5;
 	y += 5;
-	if (x + width > VID_NORM_WIDTH)
-		x -= (width + 10);
-	re.DrawFill(x - 1, y - 1, width, height, 0, tooltipBG);
+	if (x + maxWidth > VID_NORM_WIDTH)
+		x -= (maxWidth + 10);
+	re.DrawFill(x - 1, y - 1, maxWidth, height, 0, tooltipBG);
 	re.DrawColor(tooltipColor);
-	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, width, 0, height, string);
+	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, 0, height, string);
 	re.DrawColor(NULL);
+	return width;
 }
 
 /**
@@ -1245,15 +1260,24 @@ static void MN_DrawTooltip(char *font, char *string, int x, int y)
 static void MN_Tooltip(menuNode_t * node, int x, int y)
 {
 	char *tooltip;
+	int width = 0;
 
 	/* tooltips
 	   data[5] is a char pointer to the tooltip text
 	   see value_t nps for more info */
+
+	/* maybe not tooltip but a key entity? */
 	if (node->data[5]) {
 		tooltip = (char *) node->data[5];
 		if (*tooltip == '_')
 			tooltip++;
-		MN_DrawTooltip("f_small", _(tooltip), x, y);
+		width = MN_DrawTooltip("f_small", _(tooltip), x, y, width);
+		y += 20;
+	}
+	if (node->key[0]) {
+		if (node->key[0] == '*')
+			Com_sprintf(node->key, sizeof(node->key), _("Key: %s"), MN_GetReferenceString(menuStack[menuStackPos-1], node->key));
+		MN_DrawTooltip("f_verysmall", node->key, x, y, width);
 	}
 }
 
@@ -1379,27 +1403,27 @@ void MN_DrawMenus(void)
 					/* menuIfCondition_t */
 					switch (node->depends.cond) {
 					case IF_EQ:
-						if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0)->value)
+						if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value)
 							continue;
 						break;
 					case IF_LE:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value > atof(node->depends.value))
+						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value > atof(node->depends.value))
 							continue;
 						break;
 					case IF_GE:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value < atof(node->depends.value))
+						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value < atof(node->depends.value))
 							continue;
 						break;
 					case IF_GT:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value <= atof(node->depends.value))
+						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value <= atof(node->depends.value))
 							continue;
 						break;
 					case IF_LT:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value >= atof(node->depends.value))
+						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value >= atof(node->depends.value))
 							continue;
 						break;
 					case IF_NE:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value == atof(node->depends.value))
+						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value == atof(node->depends.value))
 							continue;
 						break;
 					default:
@@ -1809,13 +1833,13 @@ void MN_DrawMenus(void)
 				case MN_BASEMAP:
 					B_DrawBase(node);
 					break;
-				}				/* switch */
+				}	/* switch */
 
 				/* mouseover? */
 				if (node->state == qtrue)
 					menu->hoverNode = node;
-			}					/* if */
-		}						/* for */
+			}	/* if */
+		}	/* for */
 		if (sp == menuStackPos && menu->hoverNode && cl_show_tooltips->value) {
 			MN_Tooltip(menu->hoverNode, mx, my);
 			menu->hoverNode = NULL;
@@ -1827,9 +1851,7 @@ void MN_DrawMenus(void)
 
 /*
 ==============================================================
-
 GENERIC MENU FUNCTIONS
-
 ==============================================================
 */
 
@@ -2219,6 +2241,25 @@ void MN_ResolutionChange_f (void)
 /**
  * @brief Prints a list of tab and newline seperated string to keylist char array that hold the key and the command desc
  */
+void MN_InitKeyList_f (void)
+{
+	static char keylist[2048];
+	int i;
+
+	*keylist = '\0';
+
+	for (i = 0; i < 256; i++)
+		if (keybindings[i] && keybindings[i][0]) {
+			Com_Printf("%s - %s\n", Key_KeynumToString(i), keybindings[i]);
+			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(keybindings[i])), sizeof(keylist));
+		}
+
+	menuText[TEXT_STANDARD] = keylist;
+}
+
+/**
+ * @brief
+ */
 void MN_ResetMenus(void)
 {
 	int i;
@@ -2232,29 +2273,32 @@ void MN_ResetMenus(void)
 	numTutorials = 0;
 
 	/* add commands */
-	mn_escpop = Cvar_Get("mn_escpop", "1", 0);
+	mn_escpop = Cvar_Get("mn_escpop", "1", 0, NULL);
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_sequence", "sequence");
 
-	Cmd_AddCommand("mn_resolution_change", MN_ResolutionChange_f);
+	/* print the keybindings to menuText */
+	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);
+
+	Cmd_AddCommand("mn_resolution_change", MN_ResolutionChange_f, NULL);
 
 	/* tutorial stuff */
-	Cmd_AddCommand("listtutorials", MN_ListTutorials_f);
-	Cmd_AddCommand("gettutorials", MN_GetTutorials_f);
-	Cmd_AddCommand("tutoriallist_click", MN_TutorialListClick_f);
+	Cmd_AddCommand("listtutorials", MN_ListTutorials_f, NULL);
+	Cmd_AddCommand("gettutorials", MN_GetTutorials_f, NULL);
+	Cmd_AddCommand("tutoriallist_click", MN_TutorialListClick_f, NULL);
 
-	Cmd_AddCommand("getmaps", MN_GetMaps_f);
-	Cmd_AddCommand("mn_startserver", MN_StartServer);
-	Cmd_AddCommand("mn_nextmap", MN_NextMap);
-	Cmd_AddCommand("mn_prevmap", MN_PrevMap);
-	Cmd_AddCommand("mn_push", MN_PushMenu_f);
-	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f);
-	Cmd_AddCommand("mn_pop", MN_PopMenu_f);
-	Cmd_AddCommand("mn_modify", MN_Modify_f);
-	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f);
-	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f);
-	Cmd_AddCommand("mn_translate", MN_Translate_f);
-	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f);
+	Cmd_AddCommand("getmaps", MN_GetMaps_f, NULL);
+	Cmd_AddCommand("mn_startserver", MN_StartServer, NULL);
+	Cmd_AddCommand("mn_nextmap", MN_NextMap, NULL);
+	Cmd_AddCommand("mn_prevmap", MN_PrevMap, NULL);
+	Cmd_AddCommand("mn_push", MN_PushMenu_f, NULL);
+	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
+	Cmd_AddCommand("mn_pop", MN_PopMenu_f, NULL);
+	Cmd_AddCommand("mn_modify", MN_Modify_f, NULL);
+	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f, NULL);
+	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f, NULL);
+	Cmd_AddCommand("mn_translate", MN_Translate_f, NULL);
+	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 	/* get action data memory */
 	if (adataize)
 		memset(adata, 0, adataize);
@@ -2480,7 +2524,7 @@ qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 		memset(*action, 0, sizeof(menuAction_t));
 
 		if (node->type == MN_CONFUNC)
-			Cmd_AddCommand(node->name, MN_Command);
+			Cmd_AddCommand(node->name, MN_Command, NULL);
 
 		return MN_ParseAction(node, *action, text, token);
 	}

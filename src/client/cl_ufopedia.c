@@ -612,13 +612,13 @@ void UP_ResetUfopedia( void )
 	/*numEntries = 0; */
 
 	/* add commands and cvars */
-	Cmd_AddCommand("ufopedialist", UP_List_f);
-	Cmd_AddCommand("mn_upcontent", UP_Content_f);
-	Cmd_AddCommand("mn_upprev", UP_Prev_f);
-	Cmd_AddCommand("mn_upnext", UP_Next_f);
-	Cmd_AddCommand("ufopedia", UP_FindEntry_f);
-	Cmd_AddCommand("ufopedia_click", UP_Click_f);
-	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f);
+	Cmd_AddCommand("ufopedialist", UP_List_f, NULL);
+	Cmd_AddCommand("mn_upcontent", UP_Content_f, NULL);
+	Cmd_AddCommand("mn_upprev", UP_Prev_f, NULL);
+	Cmd_AddCommand("mn_upnext", UP_Next_f, NULL);
+	Cmd_AddCommand("ufopedia", UP_FindEntry_f, NULL);
+	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
+	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
 }
 
 /**

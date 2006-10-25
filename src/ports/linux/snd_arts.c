@@ -52,11 +52,11 @@ qboolean SND_Init(struct sndinfo *s)
 	if (errorcode)
 		Com_Printf ("aRts: %s\n", arts_error_text(errorcode));
 
-	si->dma->samplebits=(si->Cvar_Get("snd_bits", "16", CVAR_ARCHIVE))->value;
+	si->dma->samplebits=(si->Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, NULL))->value;
 
 	si->Com_Printf("Initializing aRts\n");
 
-	si->dma->speed=(si->Cvar_Get("snd_khz", "44", CVAR_ARCHIVE))->value;
+	si->dma->speed=(si->Cvar_Get("snd_khz", "44", CVAR_ARCHIVE, NULL))->value;
 
 	if (si->dma->speed >= 48)
 		si->dma->speed = 48000;

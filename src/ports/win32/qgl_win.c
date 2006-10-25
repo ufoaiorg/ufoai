@@ -50,8 +50,7 @@ BOOL(WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, const unsig
  */
 void QGL_Shutdown( void )
 {
-	if ( glw_state.hinstOpenGL )
-	{
+	if ( glw_state.hinstOpenGL ) {
 		FreeLibrary( glw_state.hinstOpenGL );
 		glw_state.hinstOpenGL = NULL;
 	}

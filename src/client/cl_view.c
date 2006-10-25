@@ -668,12 +668,12 @@ void V_Viewpos_f(void)
  */
 void V_Init(void)
 {
-	Cmd_AddCommand("viewpos", V_Viewpos_f);
-	Cmd_AddCommand("shaderlist", CL_ShaderList_f);
+	Cmd_AddCommand("viewpos", V_Viewpos_f, NULL);
+	Cmd_AddCommand("shaderlist", CL_ShaderList_f, NULL);
 
-	cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE);
+	cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE, NULL);
 
-	cl_drawgrid = Cvar_Get("drawgrid", "0", 0);
+	cl_drawgrid = Cvar_Get("drawgrid", "0", 0, NULL);
 
-	cl_stats = Cvar_Get("cl_stats", "0", 0);
+	cl_stats = Cvar_Get("cl_stats", "0", 0, NULL);
 }

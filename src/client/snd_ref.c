@@ -219,23 +219,23 @@ void S_Init(void)
 
 	Com_Printf("\n------- sound initialization -------\n");
 
-	cv = Cvar_Get("snd_init", "1", 0);
+	cv = Cvar_Get("snd_init", "1", 0, NULL);
 
 	if (!cv->value) {
 		Com_Printf("not initializing.\n");
 	} else {
-		snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE);
-		snd_khz = Cvar_Get("snd_khz", "48", CVAR_ARCHIVE);
-		snd_loadas8bit = Cvar_Get("snd_loadas8bit", "0", CVAR_ARCHIVE);
-		snd_mixahead = Cvar_Get("snd_mixahead", "0.2", CVAR_ARCHIVE);
-		snd_show = Cvar_Get("snd_show", "0", 0);
-		snd_testsound = Cvar_Get("snd_testsound", "0", 0);
-		ov_volume = Cvar_Get("ov_volume", "0.5", CVAR_ARCHIVE);
-		ov_loop = Cvar_Get("ov_loop", "1", 0);
+		snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, NULL);
+		snd_khz = Cvar_Get("snd_khz", "48", CVAR_ARCHIVE, NULL);
+		snd_loadas8bit = Cvar_Get("snd_loadas8bit", "0", CVAR_ARCHIVE, NULL);
+		snd_mixahead = Cvar_Get("snd_mixahead", "0.2", CVAR_ARCHIVE, NULL);
+		snd_show = Cvar_Get("snd_show", "0", 0, NULL);
+		snd_testsound = Cvar_Get("snd_testsound", "0", 0, NULL);
+		ov_volume = Cvar_Get("ov_volume", "0.5", CVAR_ARCHIVE, NULL);
+		ov_loop = Cvar_Get("ov_loop", "1", 0, NULL);
 
 		{
 			char fn[MAX_QPATH];
-			snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE);
+			snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, NULL);
 			/* don't restart right again */
 			snd_ref->modified = qfalse;
 
@@ -288,9 +288,9 @@ void S_Init(void)
 		}
 
 		si.dma = &dma;
-		si.bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE);
-		si.channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE);
-		si.device = Cvar_Get("snd_device", "default", CVAR_ARCHIVE);
+		si.bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, NULL);
+		si.channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, NULL);
+		si.device = Cvar_Get("snd_device", "default", CVAR_ARCHIVE, NULL);
 		si.khz = snd_khz;
 		si.Cvar_Get = Cvar_Get;
 		si.Com_Printf = Com_Printf;
@@ -305,17 +305,17 @@ void S_Init(void)
 			return;
 		}
 
-		Cmd_AddCommand("play", S_Play);
-		Cmd_AddCommand("stopsound", S_StopAllSounds);
-		Cmd_AddCommand("soundlist", S_SoundList_f);
-		Cmd_AddCommand("soundinfo", S_SoundInfo_f);
+		Cmd_AddCommand("play", S_Play, NULL);
+		Cmd_AddCommand("stopsound", S_StopAllSounds, NULL);
+		Cmd_AddCommand("soundlist", S_SoundList_f, NULL);
+		Cmd_AddCommand("soundinfo", S_SoundInfo_f, NULL);
 
-		Cmd_AddCommand("ov_play", S_PlayOGG);
-		Cmd_AddCommand("ov_start", S_StartOGG);
-		Cmd_AddCommand("ov_stop", OGG_Stop);
+		Cmd_AddCommand("ov_play", S_PlayOGG, NULL);
+		Cmd_AddCommand("ov_start", S_StartOGG, NULL);
+		Cmd_AddCommand("ov_stop", OGG_Stop, NULL);
 
-		Cmd_AddCommand("modifysnd_ref", S_ModifySndRef_f);
-		Cmd_AddCommand("modifykhz", S_ModifyKhz_f);
+		Cmd_AddCommand("modifysnd_ref", S_ModifySndRef_f, NULL);
+		Cmd_AddCommand("modifykhz", S_ModifyKhz_f, NULL);
 
 		S_InitScaletable();
 

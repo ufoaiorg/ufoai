@@ -1,6 +1,8 @@
 /**
  * @file cl_sequence.c
  * @brief Non-interactive sequence rendering and AVI recording.
+ * @note Sequences are rendered on top of a menu node - the default menu
+ * is stored in mn_sequence cvar
  */
 
 /*
@@ -28,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_DATA_LENGTH 2048
 
 typedef struct seqCmd_s {
-	void (*handler) (char *name, char *data);
+	int (*handler) (char *name, char *data);
 	char name[MAX_VAR];
 	char data[MAX_DATA_LENGTH];
 } seqCmd_t;
@@ -42,6 +44,7 @@ typedef struct sequence_s {
 typedef enum {
 	SEQ_END,
 	SEQ_WAIT,
+	SEQ_CLICK,
 	SEQ_PRECACHE,
 	SEQ_CAMERA,
 	SEQ_MODEL,
@@ -55,6 +58,7 @@ typedef enum {
 char *seqCmdName[SEQ_NUMCMDS] = {
 	"end",
 	"wait",
+	"click",
 	"precache",
 	"camera",
 	"model",
@@ -97,18 +101,19 @@ typedef struct seq2D_s {
 	qboolean relativePos;		/* useful for translations when sentence length may differ */
 } seq2D_t;
 
-void SEQ_Wait(char *name, char *data);
-void SEQ_Precache(char *name, char *data);
-void SEQ_Set(char *name, char *data);
-void SEQ_Camera(char *name, char *data);
-void SEQ_Model(char *name, char *data);
-void SEQ_2Dobj(char *name, char *data);
-void SEQ_Remove(char *name, char *data);
-void SEQ_Command(char *name, char *data);
+int SEQ_Click(char *name, char *data);
+int SEQ_Wait(char *name, char *data);
+int SEQ_Precache(char *name, char *data);
+int SEQ_Camera(char *name, char *data);
+int SEQ_Model(char *name, char *data);
+int SEQ_2Dobj(char *name, char *data);
+int SEQ_Remove(char *name, char *data);
+int SEQ_Command(char *name, char *data);
 
-void (*seqCmdFunc[SEQ_NUMCMDS]) (char *name, char *data) = {
+int (*seqCmdFunc[SEQ_NUMCMDS]) (char *name, char *data) = {
 	NULL,
 	SEQ_Wait,
+	SEQ_Click,
 	SEQ_Precache,
 	SEQ_Camera,
 	SEQ_Model,
@@ -129,6 +134,8 @@ static sequence_t sequences[MAX_SEQUENCES];
 static int numSequences;
 
 static int seqTime;
+static qboolean seqLocked = qfalse; /* if a click event is triggered this is true */
+static qboolean seqEndClickLoop = qfalse; /* if the menu node the sequence is rendered in fetches a click this is true */
 static int seqCmd, seqEndCmd;
 
 static seqCamera_t seqCamera;
@@ -143,7 +150,8 @@ static cvar_t *seq_animspeed;
 
 
 /**
- * @brief
+ * @brief Sets the client state to ca_disconnected
+ * @sa CL_SequenceStart_f
  */
 void CL_SequenceEnd_f(void)
 {
@@ -152,7 +160,8 @@ void CL_SequenceEnd_f(void)
 
 
 /**
- * @brief
+ * @brief Set the camera values for a sequence
+ * @sa CL_SequenceRender
  */
 void CL_SequenceCamera(void)
 {
@@ -176,7 +185,8 @@ void CL_SequenceCamera(void)
 
 
 /**
- * @brief
+ * @brief Finds a given entity in all sequence entities
+ * @sa CL_SequenceFind2D
  */
 seqEnt_t *CL_SequenceFindEnt(char *name)
 {
@@ -194,7 +204,8 @@ seqEnt_t *CL_SequenceFindEnt(char *name)
 
 
 /**
- * @brief
+ * @brief Finds a given 2d object in the current sequence data
+ * @sa CL_SequenceFindEnt
  */
 seq2D_t *CL_SequenceFind2D(char *name)
 {
@@ -213,6 +224,11 @@ seq2D_t *CL_SequenceFind2D(char *name)
 
 /**
  * @brief
+ * @sa CL_Sequence2D
+ * @sa V_RenderView
+ * @sa CL_SequenceEnd_f
+ * @sa MN_PopMenu
+ * @sa CL_SequenceFindEnt
  */
 void CL_SequenceRender(void)
 {
@@ -233,9 +249,7 @@ void CL_SequenceRender(void)
 
 		/* call handler */
 		sc = &seqCmds[seqCmd];
-		sc->handler(sc->name, sc->data);
-
-		seqCmd++;
+		seqCmd += sc->handler(sc->name, sc->data);
 	}
 
 	/* set camera */
@@ -276,12 +290,12 @@ void CL_SequenceRender(void)
 			se->ep = V_GetEntity();
 			V_AddEntity(&ent);
 		}
-
 }
 
 
 /**
- * @brief
+ * @brief Renders text and images
+ * @sa CL_ResetSequences
  */
 void CL_Sequence2D(void)
 {
@@ -336,7 +350,22 @@ void CL_Sequence2D(void)
 }
 
 /**
- * @brief
+ * @brief Unlock a click event for the current sequence or ends the current sequence if not locked
+ * @note Script binding for seq_click
+ * @sa menu sequence in menu_main.ufo
+ */
+void CL_SequenceClick_f(void)
+{
+	if (seqLocked) {
+		seqEndClickLoop = qtrue;
+		seqLocked = qfalse;
+	} else
+		MN_PopMenu(qfalse);
+}
+
+/**
+ * @brief Start a sequence
+ * @sa CL_SequenceEnd_f
  */
 void CL_SequenceStart_f(void)
 {
@@ -346,7 +375,7 @@ void CL_SequenceStart_f(void)
 	menu_t* menu;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: seq_start <name>\n");
+		Com_Printf("Usage: seq_start <name> [<menu>]\n");
 		return;
 	}
 	name = Cmd_Argv(1);
@@ -360,7 +389,8 @@ void CL_SequenceStart_f(void)
 		return;
 	}
 
-	/* display the menu */
+	/* display the sequence menu */
+	/* the default is in menu_main.ufo - menu sequence */
 	menuName = Cmd_Argc() < 3 ? mn_sequence->string : Cmd_Argv(2);
 	menu = MN_PushMenu(menuName);
 	if (! menu) {
@@ -396,16 +426,18 @@ void CL_SequenceStart_f(void)
 void CL_ResetSequences(void)
 {
 	/* reset counters */
-	seq_animspeed = Cvar_Get("seq_animspeed", "1000", 0);
+	seq_animspeed = Cvar_Get("seq_animspeed", "1000", 0, NULL);
 	numSequences = 0;
 	numSeqCmds = 0;
 	numSeqEnts = 0;
 	numSeq2Ds = 0;
+	seqLocked = qfalse;
 }
 
 
 /* =========================================================== */
 
+/** @brief valid id names for camera */
 static value_t seqCamera_vals[] = {
 	{"origin", V_VECTOR, offsetof(seqCamera_t, origin)},
 	{"speed", V_VECTOR, offsetof(seqCamera_t, speed)},
@@ -418,6 +450,7 @@ static value_t seqCamera_vals[] = {
 	{NULL, 0, 0},
 };
 
+/** @brief valid entity names for a sequence */
 static value_t seqEnt_vals[] = {
 	{"name", V_STRING, offsetof(seqEnt_t, name)},
 	{"skin", V_INT, offsetof(seqEnt_t, skin)},
@@ -431,6 +464,7 @@ static value_t seqEnt_vals[] = {
 	{NULL, 0, 0},
 };
 
+/** @brief valid id names for 2d entity */
 static value_t seq2D_vals[] = {
 	{"name", V_STRING, offsetof(seq2D_t, name)},
 	{"text", V_TRANSLATION2_STRING, offsetof(seq2D_t, text)},
@@ -449,19 +483,42 @@ static value_t seq2D_vals[] = {
 };
 
 /**
- * @brief
+ * @brief Wait until someone clicks with the mouse
+ * @return 0 if you wait for the click
+ * @return 1 if the click occured
  */
-void SEQ_Wait(char *name, char *data)
+int SEQ_Click(char *name, char *data)
+{
+	/* if a CL_SequenceClick_f event was called */
+	if (seqEndClickLoop) {
+		seqEndClickLoop = qfalse;
+		seqLocked = qfalse;
+		/* increase the command counter by 1 */
+		return 1;
+	}
+	seqTime += 1000;
+	seqLocked = qtrue;
+	/* don't increase the command counter - stay at click command */
+	return 0;
+}
+
+/**
+ * @brief Increase the sequence time
+ * @return 1 - increase the command position of the sequence by one
+ */
+int SEQ_Wait(char *name, char *data)
 {
 	seqTime += 1000 * atof(name);
+	return 1;
 }
 
 /**
  * @brief Precaches the models and images for a sequence
+ * @return 1 - increase the command position of the sequence by one
  * @sa R_RegisterModel
  * @sa Draw_FindPic
  */
-void SEQ_Precache(char *name, char *data)
+int SEQ_Precache(char *name, char *data)
 {
 	if (!Q_strncmp(name, "models", 6)) {
 		while (*data) {
@@ -477,12 +534,13 @@ void SEQ_Precache(char *name, char *data)
 		}
 	} else
 		Com_Printf("SEQ_Precache: unknown format '%s'\n", name);
+	return 1;
 }
 
 /**
- * @brief
+ * @brief Parse the values for the camera like given in seqCamera
  */
-void SEQ_Camera(char *name, char *data)
+int SEQ_Camera(char *name, char *data)
 {
 	value_t *vp;
 
@@ -499,12 +557,16 @@ void SEQ_Camera(char *name, char *data)
 
 		data += strlen(data) + 1;
 	}
+	return 1;
 }
 
 /**
- * @brief
+ * @brief Parse values for a sequence model
+ * @return 1 - increase the command position of the sequence by one
+ * @sa seqEnt_vals
+ * @sa CL_SequenceFindEnt
  */
-void SEQ_Model(char *name, char *data)
+int SEQ_Model(char *name, char *data)
 {
 	seqEnt_t *se;
 	value_t *vp;
@@ -551,12 +613,16 @@ void SEQ_Model(char *name, char *data)
 
 		data += strlen(data) + 1;
 	}
+	return 1;
 }
 
 /**
- * @brief
+ * @brief Parse 2D objects like text and images
+ * @return 1 - increase the command position of the sequence by one
+ * @sa seq2D_vals
+ * @sa CL_SequenceFind2D
  */
-void SEQ_2Dobj(char *name, char *data)
+int SEQ_2Dobj(char *name, char *data)
 {
 	seq2D_t *s2d;
 	value_t *vp;
@@ -596,12 +662,16 @@ void SEQ_2Dobj(char *name, char *data)
 
 		data += strlen(data) + 1;
 	}
+	return 1;
 }
 
 /**
- * @brief
+ * @brief Removed a sequence entity from the current sequence
+ * @return 1 - increase the command position of the sequence by one
+ * @sa CL_SequenceFind2D
+ * @sa CL_SequenceFindEnt
  */
-void SEQ_Remove(char *name, char *data)
+int SEQ_Remove(char *name, char *data)
 {
 	seqEnt_t *se;
 	seq2D_t *s2d;
@@ -616,19 +686,23 @@ void SEQ_Remove(char *name, char *data)
 
 	if (!se && !s2d)
 		Com_Printf("SEQ_Remove: couldn't find '%s'\n", name);
+	return 1;
 }
 
 /**
- * @brief
+ * @brief Executes a sequence command
+ * @return 1 - increase the command position of the sequence by one
+ * @sa Cbuf_AddText
  */
-void SEQ_Command(char *name, char *data)
+int SEQ_Command(char *name, char *data)
 {
 	/* add the command */
 	Cbuf_AddText(name);
+	return 1;
 }
 
 /**
- * @brief
+ * @brief Reads the sequence values from given text-pointer
  */
 void CL_ParseSequence(char *name, char **text)
 {

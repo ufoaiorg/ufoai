@@ -462,15 +462,14 @@ void Cmd_Alias_f(void)
 
 /*
 =============================================================================
-
-					COMMAND EXECUTION
-
+COMMAND EXECUTION
 =============================================================================
 */
 
 typedef struct cmd_function_s {
 	struct cmd_function_s *next;
 	char *name;
+	char *description;
 	xcommand_t function;
 } cmd_function_t;
 
@@ -649,6 +648,35 @@ void Cmd_TokenizeString(char *text, qboolean macroExpand)
 
 }
 
+/**
+ * @brief Returns the command description for a given command
+ * @param[in] cmd_name Command id in global command array
+ * @note never returns a NULL pointer
+ * @todo - search alias, too
+ */
+char* Cmd_GetCommandDesc(char* cmd_name)
+{
+	cmd_function_t *cmd;
+	char searchName[MAX_VAR];
+
+	/* remove paramters */
+	Q_strncpyz(searchName, cmd_name, sizeof(searchName));
+	cmd_name = strstr(searchName, " ");
+	if (cmd_name)
+		*cmd_name = '\0';
+
+	/* fail if the command already exists */
+	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
+		if (!Q_strcmp(searchName, cmd->name)) {
+			if (cmd->description)
+				return cmd->description;
+			else
+				return "";
+		}
+	}
+	return "";
+}
+
 
 /**
  * @brief Add a new command to the script interface
@@ -656,7 +684,7 @@ void Cmd_TokenizeString(char *text, qboolean macroExpand)
  * @param[in] function The function pointer
  * @sa Cmd_RemoveCommand
  */
-void Cmd_AddCommand(char *cmd_name, xcommand_t function)
+void Cmd_AddCommand(char *cmd_name, xcommand_t function, char *desc)
 {
 	cmd_function_t *cmd;
 
@@ -676,6 +704,7 @@ void Cmd_AddCommand(char *cmd_name, xcommand_t function)
 
 	cmd = Mem_Alloc(sizeof(cmd_function_t));
 	cmd->name = cmd_name;
+	cmd->description = desc;
 	cmd->function = function;
 	cmd->next = cmd_functions;
 	cmd_functions = cmd;
@@ -838,6 +867,8 @@ void Cmd_List_f(void)
 			continue;
 		}
 		Com_Printf("C %s\n", cmd->name);
+		if (cmd->description)
+			Com_Printf("%c - %s\n", 2, cmd->description);
 	}
 	/* check alias */
 	for (alias = cmd_alias; alias; alias = alias->next, j++) {
@@ -857,11 +888,11 @@ void Cmd_List_f(void)
 void Cmd_Init(void)
 {
 	/* register our commands */
-	Cmd_AddCommand("cmdlist", Cmd_List_f);
-	Cmd_AddCommand("exec", Cmd_Exec_f);
-	Cmd_AddCommand("echo", Cmd_Echo_f);
-	Cmd_AddCommand("alias", Cmd_Alias_f);
-	Cmd_AddCommand("wait", Cmd_Wait_f);
-	Cmd_AddCommand("cmdclose", Cmd_Close_f);
-	Cmd_AddCommand("cmdopen", Cmd_Open_f);
+	Cmd_AddCommand("cmdlist", Cmd_List_f, NULL);
+	Cmd_AddCommand("exec", Cmd_Exec_f, NULL);
+	Cmd_AddCommand("echo", Cmd_Echo_f, NULL);
+	Cmd_AddCommand("alias", Cmd_Alias_f, NULL);
+	Cmd_AddCommand("wait", Cmd_Wait_f, NULL);
+	Cmd_AddCommand("cmdclose", Cmd_Close_f, NULL);
+	Cmd_AddCommand("cmdopen", Cmd_Open_f, NULL);
 }
