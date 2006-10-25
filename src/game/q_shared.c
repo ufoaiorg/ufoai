@@ -1302,7 +1302,7 @@ char *COM_SkipPath(char *pathname)
  * @param
  * @sa COM_SkipPath
  */
-void COM_StripExtension(char *in, char *out)
+void COM_StripExtension(const char *in, char *out)
 {
 	while (*in && *in != '.')
 		*out++ = *in++;
@@ -1314,7 +1314,7 @@ void COM_StripExtension(char *in, char *out)
  * @param
  * @sa
  */
-char *COM_FileExtension(char *in)
+char *COM_FileExtension(const char *in)
 {
 	static char exten[8];
 	int i;
@@ -1335,9 +1335,9 @@ char *COM_FileExtension(char *in)
  * @param
  * @sa
  */
-void COM_FileBase(char *in, char *out)
+void COM_FileBase(const char *in, char *out)
 {
-	char *s, *s2;
+	const char *s, *s2;
 
 	s = in + strlen(in) - 1;
 
@@ -1358,9 +1358,9 @@ void COM_FileBase(char *in, char *out)
 /**
   * @brief Returns the path up to, but not including the last /
   */
-void COM_FilePath(char *in, char *out)
+void COM_FilePath(const char *in, char *out)
 {
-	char *s;
+	const char *s;
 
 	s = in + strlen(in) - 1;
 
@@ -1749,7 +1749,7 @@ char *Q_getcwd(char *dest, size_t size)
  * @param
  * @sa
  */
-int Q_strcmp(char *s1, char *s2)
+int Q_strcmp(const char *s1, const char *s2)
 {
 	return strncmp(s1, s2, 99999);
 }
@@ -1759,7 +1759,7 @@ int Q_strcmp(char *s1, char *s2)
  * @param
  * @sa
  */
-int Q_strncmp(char *s1, char *s2, size_t n)
+int Q_strncmp(const char *s1, const char *s2, size_t n)
 {
 	return strncmp(s1, s2, n);
 }
@@ -1775,14 +1775,14 @@ int Q_strncmp(char *s1, char *s2, size_t n)
  * @param
  * @sa
  */
-int Q_stricmp(char *s1, char *s2)
+int Q_stricmp(const char *s1, const char *s2)
 {
 	return strcasecmp(s1, s2);
 }
 
 #else							/* sun */
 /* FIXME: replace all Q_stricmp with Q_strcasecmp */
-int Q_stricmp(char *s1, char *s2)
+int Q_stricmp(const char *s1, const char *s2)
 {
 #ifdef _WIN32
 	return _stricmp(s1, s2);
@@ -1796,7 +1796,7 @@ int Q_stricmp(char *s1, char *s2)
  * @param
  * @sa
  */
-int Q_strncasecmp(char *s1, char *s2, size_t n)
+int Q_strncasecmp(const char *s1, const char *s2, size_t n)
 {
 	int c1, c2;
 
@@ -1883,7 +1883,7 @@ void Q_strcat(char *dest, const char *src, size_t destsize)
  * @param
  * @sa
  */
-int Q_strcasecmp(char *s1, char *s2)
+int Q_strcasecmp(const char *s1, const char *s2)
 {
 	return Q_strncasecmp(s1, s2, 99999);
 }

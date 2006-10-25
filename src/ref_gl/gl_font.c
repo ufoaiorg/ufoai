@@ -111,7 +111,7 @@ void Font_Shutdown(void)
  * @brief
  * @TODO: Check whether font is already loaded
  */
-font_t *Font_Analyze(char *name, char *path, int renderStyle, int size)
+font_t *Font_Analyze(const char *name, const char *path, int renderStyle, int size)
 {
 	font_t *f = NULL;
 	SDL_RWops *rw = NULL;
@@ -159,7 +159,7 @@ font_t *Font_Analyze(char *name, char *path, int renderStyle, int size)
 /**
  * @brief
  */
-static font_t *Font_GetFont(char *name)
+static font_t *Font_GetFont(const char *name)
 {
 	int i;
 
@@ -173,7 +173,7 @@ static font_t *Font_GetFont(char *name)
 /**
  * @brief
  */
-void Font_Length(char *font, char *c, int *width, int *height)
+void Font_Length(const char *font, char *c, int *width, int *height)
 {
 	font_t *f = NULL;
 
@@ -486,7 +486,7 @@ static void Font_ConvertChars(char *buffer)
 /**
  * @brief
  */
-int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
+int Font_DrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
 {
 	int w = 0, h = 0, locX;
 	float returnHeight = 0; /* rounding errors break mouse-text corelation */
@@ -679,7 +679,7 @@ void Font_Init(void)
 /**
  * @brief
  */
-void Font_Register(char *name, int size, char *path, char *style)
+void Font_Register(const char *name, int size, char *path, char *style)
 {
 	int renderstyle = 0;		/* NORMAL is standard */
 	int i;

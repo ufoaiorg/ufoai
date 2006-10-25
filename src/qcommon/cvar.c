@@ -44,7 +44,7 @@ static cvar_t *cvar_vars;
 /**
  * @brief
  */
-static qboolean Cvar_InfoValidate(char *s)
+static qboolean Cvar_InfoValidate(const char *s)
 {
 	if (strstr(s, "\\"))
 		return qfalse;
@@ -62,7 +62,7 @@ static qboolean Cvar_InfoValidate(char *s)
  * @sa Cvar_VariableString
  * @sa Cvar_SetValue
  */
-static cvar_t *Cvar_FindVar(char *var_name)
+static cvar_t *Cvar_FindVar(const char *var_name)
 {
 	cvar_t *var;
 
@@ -79,7 +79,7 @@ static cvar_t *Cvar_FindVar(char *var_name)
  * @sa Cvar_FindVar
  * @return 0 if not defined
  */
-float Cvar_VariableValue(char *var_name)
+float Cvar_VariableValue(const char *var_name)
 {
 	cvar_t *var;
 
@@ -98,7 +98,7 @@ float Cvar_VariableValue(char *var_name)
  * Even if the cvar does not exist this function will not return a null pointer
  * but an empty string
  */
-char *Cvar_VariableString(char *var_name)
+char *Cvar_VariableString(const char *var_name)
 {
 	cvar_t *var;
 
@@ -115,7 +115,7 @@ char *Cvar_VariableString(char *var_name)
  * @sa Cmd_CompleteCommand
  * @sa Key_CompleteCommand
  */
-int Cvar_CompleteVariable(char *partial, char **match)
+int Cvar_CompleteVariable(const char *partial, char **match)
 {
 	cvar_t *cvar;
 	char *localMatch = NULL;
@@ -145,7 +145,7 @@ int Cvar_CompleteVariable(char *partial, char **match)
  * If the variable already exists, the value will not be set
  * The flags will be or'ed in if the variable exists.
  */
-cvar_t *Cvar_Get(char *var_name, char *var_value, int flags, char* desc)
+cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, char* desc)
 {
 	cvar_t *var;
 
@@ -195,7 +195,7 @@ cvar_t *Cvar_Get(char *var_name, char *var_value, int flags, char* desc)
  * @param value Set the cvar to the value specified by 'value'
  * @param force Force the update of the cvar
  */
-cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
+cvar_t *Cvar_Set2(const char *var_name, const char *value, qboolean force)
 {
 	cvar_t *var;
 
@@ -265,7 +265,7 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 /**
  * @brief Will set the variable even if NOSET or LATCH
  */
-cvar_t *Cvar_ForceSet(char *var_name, char *value)
+cvar_t *Cvar_ForceSet(const char *var_name, const char *value)
 {
 	return Cvar_Set2(var_name, value, qtrue);
 }
@@ -276,7 +276,7 @@ cvar_t *Cvar_ForceSet(char *var_name, char *value)
  * @param value Which value should the cvar get
  * @note Look after the CVAR_LATCH stuff and check for write protected cvars
  */
-cvar_t *Cvar_Set(char *var_name, char *value)
+cvar_t *Cvar_Set(const char *var_name, const char *value)
 {
 	return Cvar_Set2(var_name, value, qfalse);
 }
@@ -295,7 +295,7 @@ cvar_t *Cvar_Set(char *var_name, char *value)
  * @param flags which flags
  * @sa Cvar_Set_f
  */
-cvar_t *Cvar_FullSet(char *var_name, char *value, int flags)
+cvar_t *Cvar_FullSet(const char *var_name, const char *value, int flags)
 {
 	cvar_t *var;
 
@@ -323,7 +323,7 @@ cvar_t *Cvar_FullSet(char *var_name, char *value, int flags)
 /**
  * @brief Expands value to a string and calls Cvar_Set
  */
-void Cvar_SetValue(char *var_name, float value)
+void Cvar_SetValue(const char *var_name, float value)
 {
 	char val[32];
 
@@ -440,7 +440,7 @@ void Cvar_Copy_f(void)
  * @brief Stores the archive cvars
  * @param path Config file where we will save all cvars with the archive flag set
  */
-void Cvar_WriteVariables(char *path)
+void Cvar_WriteVariables(const char *path)
 {
 	cvar_t *var;
 	char buffer[1024];

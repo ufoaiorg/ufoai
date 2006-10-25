@@ -118,7 +118,7 @@ void Draw_Color(const float *rgba)
  * @return NULL on error or image_t pointer on success
  * @sa GL_FindImage
  */
-image_t *Draw_FindPic(char *name)
+image_t *Draw_FindPic(const char *name)
 {
 	image_t *gl;
 	char fullname[MAX_QPATH];

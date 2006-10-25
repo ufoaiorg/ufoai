@@ -373,7 +373,7 @@ void FS_Read(void *buffer, int len, FILE * f)
  * a null buffer will just return the file length without loading
  * a -1 length means that the file is not present
  */
-int FS_LoadFile(char *path, void **buffer)
+int FS_LoadFile(const char *path, void **buffer)
 {
 	FILE *h;
 	byte *buf;
@@ -417,7 +417,7 @@ void FS_FreeFile(void *buffer)
  * @brief Takes an explicit (not game tree related) path to a pak file.
  * Adding the files at the beginning of the list so they override previous pack files.
  */
-pack_t *FS_LoadPackFile(char *packfile)
+pack_t *FS_LoadPackFile(const char *packfile)
 {
 	int i, len, err;
 	packfile_t *newfiles;
@@ -486,7 +486,7 @@ pack_t *FS_LoadPackFile(char *packfile)
 /**
   * @brief Sets fs_gamedir, adds the directory to the head of the path
   */
-void FS_AddGameDirectory(char *dir)
+void FS_AddGameDirectory(const char *dir)
 {
 	searchpath_t *search;
 	pack_t *pak;
@@ -537,7 +537,7 @@ char *FS_Gamedir(void)
  * @note e.g. *nix: Use ~/.ufoai/dir as fs_gamedir
  * @sa Sys_GetHomeDirectory
  */
-void FS_AddHomeAsGameDirectory(char *dir)
+void FS_AddHomeAsGameDirectory(const char *dir)
 {
 	char gdir[MAX_OSPATH];
 	char *homedir = Sys_GetHomeDirectory();
@@ -575,7 +575,7 @@ void FS_ExecAutoexec(void)
 /**
  * @brief Sets the gamedir and path to a different directory.
  */
-void FS_SetGamedir(char *dir)
+void FS_SetGamedir(const char *dir)
 {
 	searchpath_t *next;
 
@@ -659,7 +659,7 @@ void FS_Link_f(void)
  * @sa Sys_FindNext
  * @sa Sys_FindClose
  */
-char **FS_ListFiles(char *findname, int *numfiles, unsigned musthave, unsigned canthave)
+char **FS_ListFiles(const char *findname, int *numfiles, unsigned musthave, unsigned canthave)
 {
 	char *s;
 	int nfiles = 0, i;
@@ -772,7 +772,7 @@ void FS_Path_f(void)
 /**
  * @brief Allows enumerating all of the directories in the search path
  */
-char *FS_NextPath(char *prevpath)
+char *FS_NextPath(const char *prevpath)
 {
 	searchpath_t *s;
 	char *prev;
@@ -980,7 +980,7 @@ static char headerName[32];
 /**
  * @brief
  */
-char *FS_NextScriptHeader(char *files, char **name, char **text)
+char *FS_NextScriptHeader(const char *files, char **name, char **text)
 {
 	listBlock_t *block;
 	char *token;
@@ -1217,7 +1217,7 @@ char *FS_GetCwd(void)
 /**
  * @brief
  */
-qboolean FS_FileExists(char *filename)
+qboolean FS_FileExists(const char *filename)
 {
 #ifdef _WIN32
 	return (_access(filename, 00) == 0);

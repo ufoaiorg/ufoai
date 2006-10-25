@@ -28,13 +28,13 @@ int FS_Seek(FILE * f, long offset, int origin);
 int FS_WriteFile(const void *buffer, int len, const char *filename);
 int FS_Write(const void *buffer, int len, FILE * f);
 void FS_InitFilesystem(void);
-void FS_SetGamedir(char *dir);
+void FS_SetGamedir(const char *dir);
 char *FS_Gamedir(void);
-char *FS_NextPath(char *prevpath);
+char *FS_NextPath(const char *prevpath);
 void FS_ExecAutoexec(void);
 char *FS_GetCwd(void);
 void FS_NormPath(char *path);
-qboolean FS_FileExists(char *filename);
+qboolean FS_FileExists(const char *filename);
 
 void FS_GetMaps(qboolean reset);
 
@@ -43,7 +43,7 @@ void FS_FCloseFile(FILE * f);
 
 /* note: this can't be called from another DLL, due to MS libc issues */
 
-int FS_LoadFile(char *path, void **buffer);
+int FS_LoadFile(const char *path, void **buffer);
 
 /* a null buffer will just return the file length without loading */
 /* a -1 length is not present */
@@ -57,7 +57,7 @@ void FS_FreeFile(void *buffer);
 int FS_CheckFile(const char *path);
 
 void FS_BuildFileList(char *files);
-char *FS_NextScriptHeader(char *files, char **name, char **text);
+char *FS_NextScriptHeader(const char *files, char **name, char **text);
 void FS_CreatePath(char *path);
 
 

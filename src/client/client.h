@@ -947,7 +947,7 @@ extern font_t *fontSmall;
 extern font_t *fontBig;
 
 /* will return the size and the path for each font */
-void CL_GetFontData(char *name, int *size, char *path);
+void CL_GetFontData(const char *name, int *size, char *path);
 
 /* cl_particle.c */
 void CL_ParticleRegisterArt(void);

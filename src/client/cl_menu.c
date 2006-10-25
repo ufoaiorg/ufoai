@@ -3250,7 +3250,7 @@ static value_t fontValues[] = {
 /**
  * @brief
  */
-void CL_GetFontData(char *name, int *size, char *path)
+void CL_GetFontData(const char *name, int *size, char *path)
 {
 	int i;
 

@@ -336,9 +336,9 @@ void gaussrand(float *gauss1, float *gauss2);	/* -inf to +inf, median 0, stdev 1
 void stradd(char **str, const char *addStr);
 
 char *COM_SkipPath(char *pathname);
-void COM_StripExtension(char *in, char *out);
-void COM_FileBase(char *in, char *out);
-void COM_FilePath(char *in, char *out);
+void COM_StripExtension(const char *in, char *out);
+void COM_FileBase(const char *in, char *out);
+void COM_FilePath(const char *in, char *out);
 void COM_DefaultExtension(char *path, char *extension);
 
 char *COM_Parse(char **data_p);
@@ -353,11 +353,11 @@ void Com_PageInMemory(byte * buffer, int size);
 /*============================================= */
 
 /* portable case insensitive compare */
-int Q_strncmp(char *s1, char *s2, size_t n);
-int Q_strcmp(char *s1, char *s2);
-int Q_stricmp(char *s1, char *s2);
-int Q_strcasecmp(char *s1, char *s2);
-int Q_strncasecmp(char *s1, char *s2, size_t n);
+int Q_strncmp(const char *s1, const char *s2, size_t n);
+int Q_strcmp(const char *s1, const char *s2);
+int Q_stricmp(const char *s1, const char *s2);
+int Q_strcasecmp(const char *s1, const char *s2);
+int Q_strncasecmp(const char *s1, const char *s2, size_t n);
 
 int Q_StringSort(const void *string1, const void *string2);
 
@@ -423,7 +423,7 @@ int Hunk_End(void);
 #define SFF_SYSTEM	0x10
 
 /* pass in an attribute mask of things you wish to REJECT */
-char *Sys_FindFirst(char *path, unsigned musthave, unsigned canthave);
+char *Sys_FindFirst(const char *path, unsigned musthave, unsigned canthave);
 char *Sys_FindNext(unsigned musthave, unsigned canthave);
 void Sys_FindClose(void);
 
@@ -462,7 +462,7 @@ typedef struct cvar_s {
 	struct cvar_s *next;
 } cvar_t;
 
-cvar_t *Cvar_Get(char *var_name, char *var_value, int flags, char* desc);
+cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, char* desc);
 
 #endif							/* CVAR */
 

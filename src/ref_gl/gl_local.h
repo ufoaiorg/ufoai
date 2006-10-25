@@ -83,16 +83,14 @@ extern viddef_t vid;
 
 
 /*
+skins will be outline flood filled and mip mapped
+pics and sprites with alpha will be outline flood filled
+pic won't be mip mapped
 
-  skins will be outline flood filled and mip mapped
-  pics and sprites with alpha will be outline flood filled
-  pic won't be mip mapped
-
-  model skin
-  sprite frame
-  wall texture
-  pic
-
+model skin
+sprite frame
+wall texture
+pic
 */
 
 typedef enum {
@@ -191,12 +189,6 @@ extern transform_t trafo[MAX_ENTITIES];
 /*==================================================== */
 
 extern image_t *shadow;
-
-extern char glerrortex[MAX_GLERRORTEX];
-extern char *glerrortexend;
-extern image_t gltextures[MAX_GLTEXTURES];
-extern int numgltextures;
-
 
 extern image_t *r_notexture;
 extern image_t *r_particletexture;
@@ -313,6 +305,7 @@ void GL_MBind(GLenum target, int texnum);
 void GL_TexEnv(GLenum value);
 void GL_EnableMultitexture(qboolean enable);
 void GL_SelectTexture(GLenum);
+void GL_CalcDayAndNight(float q);
 
 void R_LightPoint(vec3_t p, vec3_t color);
 
@@ -332,7 +325,7 @@ extern int registration_sequence;
 
 void V_AddBlend(float r, float g, float b, float a, float *v_blend);
 
-struct model_s *R_RegisterModelShort(char *name);
+struct model_s *R_RegisterModelShort(const char *name);
 
 void GL_ScreenShot_f(void);
 void R_InterpolateTransform(animState_t * as, int numframes, float *tag, float *interpolated);
@@ -358,8 +351,6 @@ void R_MarkLights(dlight_t * light, int bit, mnode_t * node);
 
 #include "gl_font.h"
 
-void COM_StripExtension(char *in, char *out);
-
 void Draw_GetPicSize(int *w, int *h, char *name);
 void Draw_Pic(int x, int y, char *name);
 void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
@@ -378,35 +369,31 @@ int Draw_GetPalette(void);
 
 void R_BeginRegistration(char *tiles, char *pos);
 void R_EndRegistration(void);
-struct image_s *Draw_FindPic(char *name);
-void LoadTGA(char *name, byte ** pic, int *width, int *height);
+struct image_s *Draw_FindPic(const char *name);
+void LoadTGA(const char *name, byte ** pic, int *width, int *height);
 
 void Anim_Append(animState_t * as, model_t * mod, char *name);
 void Anim_Change(animState_t * as, model_t * mod, char *name);
 void Anim_Run(animState_t * as, model_t * mod, int msec);
 char *Anim_GetName(animState_t * as, model_t * mod);
 
-void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight);
+struct image_s *R_RegisterSkin(const char *name);
 
-struct image_s *R_RegisterSkin(char *name);
+void WriteTGA(const char *filename, byte * data, int width, int height);
 
-void WriteTGA(char *filename, byte * data, int width, int height);
-
-void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, int *height);
-image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t type, int bits);
-image_t *GL_FindImage(char *pname, imagetype_t type);
-image_t *GL_FindImageForShader(char *name);
-void GL_TextureMode(char *string);
+image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
+image_t *GL_FindImage(const char *pname, imagetype_t type);
+image_t *GL_FindImageForShader(const char *name);
+void GL_TextureMode(const char *string);
 void GL_ImageList_f(void);
-void GL_CalcDayAndNight(float q);
 
 void GL_InitImages(void);
 void GL_ShutdownImages(void);
 
 void GL_FreeUnusedImages(void);
 
-void GL_TextureAlphaMode(char *string);
-void GL_TextureSolidMode(char *string);
+void GL_TextureAlphaMode(const char *string);
+void GL_TextureSolidMode(const char *string);
 
 void R_DrawPtls(void);
 

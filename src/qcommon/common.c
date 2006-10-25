@@ -980,7 +980,7 @@ void *SZ_GetSpace(sizebuf_t * buf, int length)
 /**
  * @brief
  */
-void SZ_Write(sizebuf_t * buf, void *data, int length)
+void SZ_Write(sizebuf_t * buf, const void *data, int length)
 {
 	memcpy(SZ_GetSpace(buf, length), data, length);
 }
@@ -988,7 +988,7 @@ void SZ_Write(sizebuf_t * buf, void *data, int length)
 /**
  * @brief
  */
-void SZ_Print(sizebuf_t * buf, char *data)
+void SZ_Print(sizebuf_t * buf, const char *data)
 {
 	int len;
 
@@ -1110,7 +1110,7 @@ int memsearch(byte * start, int count, int search)
 /**
  * @brief
  */
-char *CopyString(char *in)
+char *CopyString(const char *in)
 {
 	char *out;
 	int l = strlen(in);

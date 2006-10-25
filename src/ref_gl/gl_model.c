@@ -67,7 +67,7 @@ void Mod_Modellist_f(void)
 /**
  * @brief Loads in a model for the given name
  */
-static model_t *Mod_ForName(char *name, qboolean crash)
+static model_t *Mod_ForName(const char *name, qboolean crash)
 {
 	model_t *mod;
 	unsigned *buf;
@@ -650,7 +650,7 @@ static void Mod_ShiftTile(void)
 /**
  * @brief
  */
-static void R_AddMapTile(char *name, int sX, int sY, int sZ)
+static void R_AddMapTile(const char *name, int sX, int sY, int sZ)
 {
 	int i;
 	unsigned *buffer;
@@ -1151,7 +1151,7 @@ static void Mod_FindSharedEdges(model_t * mod)
 /**
  * @brief
  */
-struct model_s *R_RegisterModel(char *name)
+struct model_s *R_RegisterModel(const char *name)
 {
 	model_t *mod;
 	int i;
@@ -1197,7 +1197,7 @@ struct model_s *R_RegisterModel(char *name)
 /**
  * @brief
  */
-struct model_s *R_RegisterModelShort(char *name)
+struct model_s *R_RegisterModelShort(const char *name)
 {
 	if (!name || !name[0])
 		return NULL;

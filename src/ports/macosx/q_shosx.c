@@ -176,7 +176,7 @@ static qboolean Sys_CompareAttributes (char *thePath, char *theName, unsigned th
 /**
  * @brief
  */
-char* Sys_FindFirst (char *thePath, unsigned theMustHave, unsigned theCantHave)
+char* Sys_FindFirst (const char *thePath, unsigned theMustHave, unsigned theCantHave)
 {
 	struct dirent	*myDirEnt;
 	char		*myPointer;
