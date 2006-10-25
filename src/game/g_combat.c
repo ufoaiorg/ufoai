@@ -1065,7 +1065,7 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
 	if (ent == target) {
 #ifdef DEBUG_REACTION
 		if (reason)
-			sprintf(reason, "Cannot fire on self");
+			Com_sprintf(reason, sizeof(reason), "Cannot fire on self");
 		return qfalse;
 #endif
 	}
@@ -1074,7 +1074,7 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
 	if (!ent->inuse || (ent->type != ET_ACTOR && ent->type != ET_UGV) || (ent->state & STATE_DEAD)) {
 #ifdef DEBUG_REACTION
 		if (reason)
-			sprintf(reason, "Shooter is not ent, is non-actor or is dead");
+			Com_sprintf(reason, sizeof(reason), "Shooter is not ent, is non-actor or is dead");
 #endif
 		return qfalse;
 	}
@@ -1084,7 +1084,7 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
 			(!(ent->state & STATE_REACTION_ONCE) || TU_REACTIONS[ent->number][1])) {
 #ifdef DEBUG_REACTION
 		if (reason)
-			sprintf(reason, "Shooter does not have reaction fire enabled, or has already fired too often");
+			Com_sprintf(reason, sizeof(reason), "Shooter does not have reaction fire enabled, or has already fired too often");
 #endif
 		return qfalse;
 	}
@@ -1093,7 +1093,7 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
 	if (VectorDistSqr(ent->origin, target->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST) {
 #ifdef DEBUG_REACTION
 		if (reason)
-			sprintf(reason, "Target is out of range");
+			Com_sprintf(reason, sizeof(reason), "Target is out of range");
 #endif
 		return qfalse;
 	}
@@ -1103,7 +1103,7 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
 	if (actorVis <= 0.2 || !frustom) {
 #ifdef DEBUG_REACTION
 		if (reason)
-			sprintf(reason, "Target is not visible");
+			Com_sprintf(reason, sizeof(reason), "Target is not visible");
 #endif
 		return qfalse;
 	}
@@ -1115,7 +1115,7 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
 		if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand()) {
 #ifdef DEBUG_REACTION
 			if (reason)
-				sprintf(reason, "Shooter will not fire on friendly");
+				Com_sprintf(reason, sizeof(reason), "Shooter will not fire on friendly");
 #endif
 			return qfalse;
 		}
@@ -1125,7 +1125,7 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
 	if (ent->team == turnTeam) {
 #ifdef DEBUG_REACTION
 		if (reason)
-			sprintf(reason, "It's the shooter's turn");
+			Com_sprintf(reason, sizeof(reason), "It's the shooter's turn");
 #endif
 		return qfalse;
 	}
