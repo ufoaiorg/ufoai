@@ -1025,6 +1025,91 @@ void MN_Click(int x, int y)
 }
 
 /**
+ * @brief Scrolls the text in a textbox up/down.
+ * @param[in] node The node of the text to be scrolled.
+ * @param[in] offset Number of lines to scroll. Positive values scroll down, negative up.
+ * @return Returns qtrue if scrolling was possible otherwise qfalse.
+ */
+static qboolean MN_TextScroll(menuNode_t *node, int offset)
+{
+	int textScroll_new;
+
+	if (!node)
+		return qfalse;
+
+	if (abs(offset) >= node->height) {
+		/* Offset value is bigger than textbox height. */
+		node->textScroll = 0;
+		return qfalse;
+	}
+	
+	if (node->textLines <= node->height ) {
+		/* Number of lines are less tehan the height of the textbox. */
+		node->textScroll = 0;
+		return qfalse;
+	}
+
+	textScroll_new = node->textScroll + offset;
+
+	if (textScroll_new <= 0) {
+		/* Goto top line, no matter how big the offset was. */
+		node->textScroll = 0;
+		return qtrue;
+
+	} else if (textScroll_new >= (node->textLines + 1 - node->height)) {
+		/* Goto last possible line line, no matter how big the offset was. */
+		node->textScroll = node->textLines + 1 - node->height;
+		return qtrue;
+
+	} else {
+		node->textScroll = textScroll_new;
+		return qtrue;
+	}
+}
+
+/**
+ * @brief Bind this function to a key to scroll the node given via cvar mn_scrollnode
+ */
+static void MN_TextScrollKeyBinding_f(void)
+{
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <+/-offset>\n", Cmd_Argv(0));
+		return;
+	}
+	if (!MN_GetNodeFromCurrentMenu(Cvar_VariableString("mn_scrollnode")))
+		return;
+	Cbuf_AddText(va("mn_textscroll %s %s", Cvar_VariableString("mn_scrollnode"), Cmd_Argv(1)));
+}
+
+/**
+ * @brief Scriptfunction that gets the wanted text node and scrolls the text.
+ */
+static void MN_TextScroll_f(void)
+{
+	int offset = 0;
+	menuNode_t *node = NULL;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <nodename> <+/-offset>\n", Cmd_Argv(0));
+		return;
+	}
+
+	node = MN_GetNodeFromCurrentMenu(Cmd_Argv(1));
+
+	if ( !node ) {
+		Com_DPrintf("MN_TextScroll_f: Node '%s' not found.\n", Cmd_Argv(1));
+		return;
+	}
+
+	offset = atoi(Cmd_Argv(2));
+
+	if ( offset == 0 )
+		return;
+
+	MN_TextScroll(node, offset);
+}
+
+/**
  * @brief
  * @sa MAP_ResetAction
  * @sa MN_TextRightClick
@@ -1249,7 +1334,7 @@ static int MN_DrawTooltip(char *font, char *string, int x, int y, int maxWidth)
 		x -= (maxWidth + 10);
 	re.DrawFill(x - 1, y - 1, maxWidth, height, 0, tooltipBG);
 	re.DrawColor(tooltipColor);
-	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, 0, height, string);
+	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, 0, height, string, 0, 0, NULL, qfalse);
 	re.DrawColor(NULL);
 	return width;
 }
@@ -1375,7 +1460,7 @@ void MN_DrawMenus(void)
 	vec4_t color;
 	int mouseOver = 0;
 	char *cur, *tab, *end;
-	int y, line, x;
+	int y, x;
 	message_t *message;
 	menuModel_t *menuModel = NULL;
 	int width, height;
@@ -1496,39 +1581,29 @@ void MN_DrawMenus(void)
 				case MN_STRING:
 					font = MN_GetFont(menu, node);
 					if (!node->mousefx || cl.time % 1000 < 500)
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], ref);
+						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse);
 					else
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref));
+						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse);
 					break;
 
 				case MN_TEXT:
 					if (menuText[node->num]) {
 						char textCopy[MAX_MENUTEXTLEN];
+						int lineHeight = 0;
 
 						Q_strncpyz(textCopy, menuText[node->num], MAX_MENUTEXTLEN);
 						font = MN_GetFont(menu, node);
 
 						cur = textCopy;
 						y = node->pos[1];
-						line = 0; /* these are lines only in one-line texts! */
+						/*Com_Printf("\n\n\nnode->textLines: %i \n", node->textLines);*/
+						node->textLines = 0; /* these are lines only in one-line texts! */
 						/* but it's easy to fix, just change FontDrawString
 							so that it returns a pair, #lines and height
 							and add that to variable line; the only other file
 							using FontDrawString result is client/cl_sequence.c
 							and there just ignore #lines */
 						do {
-							line++;
-							/* have a look that the maxline value defined in menu via */
-							/* the height parameter is not exceeded here */
-							/* TODO: Draw the scrollbars */
-							/* this is currently broken: */
-#if 0
-							if (node->height > 0 && line >= node->height)
-								break;
-							/* maybe due to scrolling this line is not visible */
-							if (line < node->textScroll)
-								break;
-#endif
 							/* new line starts from node x position */
 							x = node->pos[0];
 
@@ -1536,8 +1611,9 @@ void MN_DrawMenus(void)
 							if (end)
 								*end++ = '\0';
 
-							/* only works with one-line texts right now: */
-							if (node->mousefx && line == mouseOver)
+							/* hightlight if mousefx is true */
+							/* FIXME: what about multiline text that should be highlighted completly? */
+							if (node->mousefx && node->textLines + 1 == mouseOver)
 								re.DrawColor(color);
 
 							/* we assume all the tabs fit on a single line */
@@ -1547,7 +1623,9 @@ void MN_DrawMenus(void)
 									break;
 
 								*tab++ = '\0';
-								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur);
+								/* now check whether we should draw this string */
+								/*Com_Printf("tab - first part - node->textLines: %i \n", node->textLines);*/
+								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse);
 								if (!node->texh[1])
 									x += (node->size[0] / 3);
 								else
@@ -1555,10 +1633,13 @@ void MN_DrawMenus(void)
 								cur = tab;
 							} while (1);
 
+							/*Com_Printf("until newline - node->textLines: %i\n", node->textLines);*/
 							/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
-							y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], (*cur ? cur : " "));
+							lineHeight = re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue);
+							if (lineHeight > 0)
+								y += lineHeight;
 
-							if (node->mousefx && line == mouseOver)
+							if (node->mousefx)
 								 re.DrawColor(node->color); /* why is this repeated? */
 
 							cur = end;
@@ -1571,17 +1652,17 @@ void MN_DrawMenus(void)
 							font = "f_small";
 
 						y = node->pos[1];
-						line = 0;
+						node->textLines = 0;
 						message = messageStack;
 						while (message) {
-							if (line >= node->height) {
+							if (node->textLines >= node->height) {
 								/* TODO: Draw the scrollbars */
 								break;
 							}
-							line++;
+							node->textLines++;
 
 							/* maybe due to scrolling this line is not visible */
-							if (line > node->textScroll) {
+							if (node->textLines > node->textScroll) {
 								char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
 								MN_TimestampedText(text, sizeof(text), message);
 								re.FontLength(font, text, &width, &height);
@@ -1593,10 +1674,10 @@ void MN_DrawMenus(void)
 									tab = text;
 									while ((end = strstr(tab, "\\")) != NULL) {
 										*end++ = '\0';
-										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab);
+										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab, 0, 0, NULL, qfalse);
 										tab = end;
-										line++;
-										if (line >= node->height)
+										node->textLines++;
+										if (node->textLines >= node->height)
 											break;
 									}
 								} else {
@@ -1604,7 +1685,7 @@ void MN_DrawMenus(void)
 									while ((end = strstr(text, "\\")) != NULL)
 										*end = ' ';
 
-									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], text);
+									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], text, 0, 0, NULL, qfalse);
 								}
 							}
 
@@ -2276,6 +2357,10 @@ void MN_ResetMenus(void)
 	mn_escpop = Cvar_Get("mn_escpop", "1", 0, NULL);
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_sequence", "sequence");
+
+	/* textbox */
+	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
+	Cmd_AddCommand("mn_textscroll_key", MN_TextScrollKeyBinding_f, NULL);
 
 	/* print the keybindings to menuText */
 	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);

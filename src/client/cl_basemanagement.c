@@ -1184,7 +1184,7 @@ void B_DrawBase(menuNode_t * node)
 					break;
 				case B_STATUS_UNDER_CONSTRUCTION:
 					time = building->buildTime - (ccs.date.day - building->timeStart);
-					re.FontDrawString("f_small", 0, x + 10, y + 10, x + 10, y + 10, node->size[0], 0, node->texh[0], va(_("%i days left"), time));
+					re.FontDrawString("f_small", 0, x + 10, y + 10, x + 10, y + 10, node->size[0], 0, node->texh[0], va(_("%i days left"), time), 0, 0, NULL, qfalse);
 					break;
 				default:
 					break;
@@ -1194,7 +1194,7 @@ void B_DrawBase(menuNode_t * node)
 	}
 	if (hoverBuilding) {
 		re.DrawColor(color);
-		re.FontDrawString("f_small", 0, mx + 3, my, mx + 3, my, node->size[0], 0, node->texh[0], hoverBuilding->name);
+		re.FontDrawString("f_small", 0, mx + 3, my, mx + 3, my, node->size[0], 0, node->texh[0], hoverBuilding->name, 0, 0, NULL, qfalse);
 		re.DrawColor(NULL);
 	}
 }

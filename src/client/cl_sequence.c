@@ -344,7 +344,7 @@ void CL_Sequence2D(void)
 
 			/* gettext placeholder */
 			if (*s2d->text)
-				height += re.FontDrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], (int) s2d->size[0], (int) s2d->size[1], -1 /* TODO: use this for some nice line spacing */, _(s2d->text));
+				height += re.FontDrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], (int) s2d->size[0], (int) s2d->size[1], -1 /* TODO: use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse);
 		}
 	re.DrawColor(NULL);
 }

@@ -139,6 +139,14 @@ menu options
 
 menu options_video
 {
+	string showkeys
+	{
+		string	"_Video settings"
+		pos		"840 60"
+		align	ur
+		font	"f_menubig"
+	}
+
 	string res_str
 	{
 		string	"_Resolution:"
@@ -607,6 +615,14 @@ menu popup_maintain_resolution
 
 menu options_sound
 {
+	string soundsettings
+	{
+		string	"_Sound settings"
+		pos		"840 60"
+		align	ur
+		font	"f_menubig"
+	}
+
 	string volume_str
 	{
 		string	"_Volume Control"
@@ -726,6 +742,61 @@ menu options_sound
 	}
 }
 
+// ==================
+// KEY OPTIONS MENU
+// ==================
+
+menu options_keys
+{
+	string showkeys
+	{
+		string	"_Show key bindings"
+		pos		"840 60"
+		align	ur
+		font	"f_menubig"
+	}
+
+	// only show the current binding - no support for changing them atm
+	// FIXME: Scrollable
+	text keylist
+	{
+		size	"460 580"
+		pos	"480 110"
+		height	30
+//		bgcolor	"1 1 1 0.4"
+	}
+
+	pic scrollup
+	{
+		image menu/buttons_small
+		pos		"930 339"
+		texl	"32 32"
+		texh	"48 48"
+		mousefx	true
+		click	{ cmd "mn_textscroll keylist -1;" }
+		out	{ *scrollup texl "32 32" *scrollup texh "48 48" }
+		in	{ *scrollup texl "48 32" *scrollup texh "64 48" }
+	}
+
+	pic scrolldown
+	{
+		image menu/buttons_small
+		pos		"930 355"
+		texl	"32 48"
+		texh	"48 64"
+		mousefx	true
+		click	{ cmd "mn_textscroll keylist 1;" }
+		out	{ *scrolldown texl "32 48" *scrolldown texh "48 64" }
+		in	{ *scrolldown texl "48 48" *scrolldown texh "64 64" }
+	}
+
+	func init
+	{
+		cmd "mn_init_keylist; set mn_scrollnode keylist;"
+	}
+}
+
+
 
 // ==================
 // GAME OPTIONS MENU
@@ -733,6 +804,14 @@ menu options_sound
 
 menu options_game
 {
+	string gamesettings
+	{
+		string	"_Game settings"
+		pos		"840 60"
+		align	ur
+		font	"f_menubig"
+	}
+
 	// =====================
 	// START WITH EMPLOYEES
 	// =====================
@@ -1139,6 +1218,26 @@ menu options_game
 		color "0 .78 0 1"
 	}
 	confunc name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
+
+	pic button_keys
+	{
+		pos	"580 620"
+		click	{ cmd "mn_pop;mn_push options_keys;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_keys color "0 0.5 0 1" *button_keys texl "0 0"  *button_keys texh "256 64" }
+		in	{ *string_keys color "1 1 1 1" *button_keys texl "0 64" *button_keys texh "256 128" }
+	}
+	string string_keys
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Keys"
+		pos	"708 630"
+		align	uc
+	}
 
 	func init
 	{

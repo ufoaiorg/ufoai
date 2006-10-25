@@ -89,17 +89,45 @@ menu ufopedia
 		click	{ cmd mn_pop; }
 	}
 
+	pic button_scrollup
+	{
+		tooltip "_Scroll up"
+		image	menu/buttons_small
+		mousefx true
+		pos		"25 85"
+		texl	"32 32"
+		texh	"48 48"
+		texl	"32 32"
+		click	{ cmd "mn_textscroll ufopedia -1;" }
+		out	{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
+		in	{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
+	}
+
+	pic button_scrolldown
+	{
+		tooltip "_Scroll down"
+		image	menu/buttons_small
+		mousefx true
+		pos		"25 117"
+		texl	"32 48"
+		texh	"48 64"
+		click	{ cmd "mn_textscroll ufopedia 1;" }
+		out	{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
+		in	{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
+	}
+
 	// ==================
 	// text and info
 	// ==================
 
 	text ufopedia
 	{
-		pos		"35 85"
+		pos		"50 85"
 		size	"700 390"
 		num		2
 		format	"24 0"
-		click
+		click { cmd "mn_textscroll ufopedia 1;" }
+		height	"24"
 	}
 
 	confunc mn_upfbig
@@ -118,7 +146,7 @@ menu ufopedia
 
 	text description
 	{
-		pos		"35 495"
+		pos		"45 495"
 		size	"380 200"
 		format	"20 0"
 	}
@@ -181,6 +209,6 @@ menu ufopedia
 
 	func init
 	{
-		cmd mn_upcontent;
+		cmd "mn_upcontent; set mn_scrollnode ufopedia;"
 	}
 }

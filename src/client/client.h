@@ -442,6 +442,7 @@ typedef enum {
 	MS_ZOOMMAP,
 	MS_SHIFT3DMAP,
 	MS_ZOOM3DMAP,
+	MS_SCROLLTEXTNODE,
 	MS_WORLD
 } mouseSpace_t;
 
@@ -855,6 +856,7 @@ typedef struct menuNode_s {
 	byte invis, blend;
 	int mousefx;
 	int textScroll;				/* textfields - current scroll position */
+	int textLines;				/* How many lines there are (set by MN_DrawMenus)*/
 	int timeOut;				/* ms value until invis is set (see cl.time) */
 	int num, height;			/* textfields - num: menutexts-id; height: max. rows to show */
 	vec4_t color;				/* rgba */

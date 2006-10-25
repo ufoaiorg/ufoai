@@ -1521,8 +1521,8 @@ void CL_ResetActorMoveLength(void) {
 
 /**
  * @brief Selects the actor on the battlescape.
- *
- * Sets global var mouseActor to current selected le
+ * @note Sets global var mouseActor to current selected le
+ * @sa CL_ParseInput
  */
 void CL_ActorMouseTrace(void)
 {
@@ -1624,9 +1624,7 @@ void CL_ActorMouseTrace(void)
 
 /*
 ==============================================================
-
 ACTOR GRAPHICS
-
 ==============================================================
 */
 
@@ -1773,9 +1771,7 @@ qboolean CL_AddUGV(le_t * le, entity_t * ent)
 
 /*
 ==============================================================
-
 TARGETING GRAPHICS
-
 ==============================================================
 */
 

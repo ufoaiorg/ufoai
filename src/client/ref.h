@@ -309,7 +309,7 @@ typedef struct {
 	void (*DrawChar) (int x, int y, int c);
 	void (*FontRegister) (char *name, int size, char *path, char *style);
 	void (*FontLength) (char *font, char *c, int *width, int *height);
-	int (*FontDrawString) (char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c);
+	int (*FontDrawString) (char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
 	void (*DrawTileClear) (int x, int y, int w, int h, char *name);
 	void (*DrawFill) (int x, int y, int w, int h, int style, const vec4_t color);
 	void (*DrawColor) (const float *rgba);

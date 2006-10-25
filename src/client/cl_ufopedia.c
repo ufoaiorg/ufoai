@@ -182,8 +182,7 @@ void UP_ArmorDescription ( technology_t* t )
 
 	/* select item */
 	for ( i = 0; i < csi.numODs; i++ )
-		if ( !Q_strncmp( t->provides, csi.ods[i].kurz, MAX_VAR ) )
-		{
+		if ( !Q_strncmp( t->provides, csi.ods[i].kurz, MAX_VAR ) ) {
 			od = &csi.ods[i];
 			break;
 		}
@@ -453,34 +452,33 @@ void UP_Prev_f( void )
 	if ( upCurrent->prev >= 0 ) {
 		/* Check if the previous entry is researched already otherwise go to the next entry. */
 		do {
-			 upCurrent = &gd.technologies[upCurrent->prev];
-			 assert (upCurrent);
-			 if (upCurrent->idx == upCurrent->prev)
-				  Sys_Error("UP_Prev_f: The 'prev':%d entry equals to 'idx' entry for '%s'.\n", upCurrent->prev, upCurrent->id);
+			upCurrent = &gd.technologies[upCurrent->prev];
+			assert (upCurrent);
+			if (upCurrent->idx == upCurrent->prev)
+				Sys_Error("UP_Prev_f: The 'prev':%d entry equals to 'idx' entry for '%s'.\n", upCurrent->prev, upCurrent->id);
 		} while ( upCurrent->prev >= 0 && !RS_IsResearched_ptr(upCurrent) );
 
 		if ( RS_IsResearched_ptr(upCurrent) ) {
-			 UP_DrawEntry( upCurrent );
-			 return;
+			UP_DrawEntry( upCurrent );
+			return;
 		}
-
 	}
 
 	/* change chapter */
 	{
-		 int upc = upCurrent->up_chapter;
+		int upc = upCurrent->up_chapter;
 
-		 /* get previous chapter */
-		 while (upc-- > 0) {
-			  if ( gd.upChapters[upc].last >= 0 ) {
-				   upCurrent = &gd.technologies[gd.upChapters[upc].last];
-				   if ( RS_IsResearched_ptr(upCurrent) )
-						UP_DrawEntry( upCurrent );
-				   else
-						UP_Prev_f();
-				   return;
-			  }
-		 }
+		/* get previous chapter */
+		while (upc-- > 0) {
+			if ( gd.upChapters[upc].last >= 0 ) {
+				upCurrent = &gd.technologies[gd.upChapters[upc].last];
+				if ( RS_IsResearched_ptr(upCurrent) )
+					UP_DrawEntry( upCurrent );
+				else
+					UP_Prev_f();
+				return;
+			}
+		}
 	}
 
 	/* Go to pedia-index if no more previous entries available. */
@@ -500,33 +498,33 @@ void UP_Next_f( void )
 	if ( upCurrent && ( upCurrent->next >= 0) ) {
 		/* Check if the next entry is researched already otherwise go to the next entry. */
 		do {
-			 upCurrent = &gd.technologies[upCurrent->next];
-			 assert (upCurrent);
-			 if (upCurrent->idx == upCurrent->next)
-				  Sys_Error("UP_Next_f: The 'next':%d entry equals to 'idx' entry for '%s'.\n", upCurrent->next, upCurrent->id);
+			upCurrent = &gd.technologies[upCurrent->next];
+			assert (upCurrent);
+			if (upCurrent->idx == upCurrent->next)
+				Sys_Error("UP_Next_f: The 'next':%d entry equals to 'idx' entry for '%s'.\n", upCurrent->next, upCurrent->id);
 		} while ( upCurrent->next >= 0 && !RS_IsResearched_ptr(upCurrent) );
 
 		if ( RS_IsResearched_ptr(upCurrent) ) {
-			 UP_DrawEntry( upCurrent );
-			 return;
+			UP_DrawEntry( upCurrent );
+			return;
 		}
 	}
 
 	/* change chapter */
 	{
-		 int upc = upCurrent->up_chapter;
+		int upc = upCurrent->up_chapter;
 
-		 /* get next chapter */
-		 while (++upc < gd.numChapters) {
-			  if ( gd.upChapters[upc].first >= 0 ) {
-				   upCurrent = &gd.technologies[gd.upChapters[upc].first];
-				   if ( RS_IsResearched_ptr(upCurrent) )
-						UP_DrawEntry( upCurrent );
-				   else
-						UP_Next_f();
-				   return;
-			  }
-		 }
+		/* get next chapter */
+		while (++upc < gd.numChapters) {
+			if ( gd.upChapters[upc].first >= 0 ) {
+				upCurrent = &gd.technologies[gd.upChapters[upc].first];
+				if ( RS_IsResearched_ptr(upCurrent) )
+					UP_DrawEntry( upCurrent );
+				else
+					UP_Next_f();
+				return;
+			}
+		}
 	}
 
 	/* do nothing at the end */
@@ -542,7 +540,7 @@ void UP_Click_f( void )
 {
 	int num;
 
-	if ( Cmd_Argc() < 2 )
+	if ( Cmd_Argc() < 2 || upCurrent )
 		return;
 	num = atoi( Cmd_Argv( 1 ) );
 
