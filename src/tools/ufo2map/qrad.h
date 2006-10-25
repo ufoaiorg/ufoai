@@ -129,6 +129,7 @@ extern	qboolean	extrasamples;
 extern int numbounce;
 extern qboolean	dumppatches;
 extern qboolean	nopvs;
+extern qboolean noradiosity;
 extern char		inbase[32], outbase[32];
 
 extern	directlight_t	*directlights;

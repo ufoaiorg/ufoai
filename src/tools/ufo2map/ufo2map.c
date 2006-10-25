@@ -139,6 +139,9 @@ void Check_RAD_Parameter( int argc, char** argv )
 		} else if (!strcmp(argv[i],"-maxlight")) {
 			maxlight = atof (argv[i+1]) * 128;
 			i++;
+		} else if (!strcmp(argv[i], "-noradiosity")) {
+			printf ("noradiosity = true\n");
+			noradiosity = qtrue;
 		} else
 			break;
 	}
@@ -159,7 +162,7 @@ int main (int argc, char **argv)
 	Check_RAD_Parameter( argc, argv );
 
 	if (argc < 2)
-		Error ("usage: ufo2map [-threads num] [-glview] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] mapfile");
+		Error ("usage: ufo2map [-threads num] [-glview] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] [-noradiosity] mapfile");
 
 	start = I_FloatTime ();
 
@@ -205,7 +208,7 @@ int main (int argc, char **argv)
 	end = I_FloatTime ();
 	printf ("%5.0f seconds elapsed\n", end-start);
 
-	if (!onlyents) {
+	if (!onlyents && !noradiosity) {
 		printf ("----- Radiosity ----\n");
 
 		begin = start;

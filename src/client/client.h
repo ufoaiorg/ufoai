@@ -628,6 +628,7 @@ void CL_DisplayHudMessage(char *text, int time);
 void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance, byte ** fb_list, int fb_length);
 qboolean CL_ActorSelect(le_t * le);
 qboolean CL_ActorSelectList(int num);
+qboolean CL_ActorSelectNext();
 void CL_AddActorToTeamList(le_t * le);
 void CL_RemoveActorFromTeamList(le_t * le);
 void CL_ActorSelectMouse(void);

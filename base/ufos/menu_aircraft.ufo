@@ -46,6 +46,7 @@ menu aircraft
 	pic button_squad
 	{
 		if "mn_soldiers_in_base > 0"
+		if "mn_aircraftinbase > 0"
 		tooltip	"_Assign your squad"
 		image   menu/button
 		pos	"45 100"
@@ -69,9 +70,20 @@ menu aircraft
 		texh	"230 128"
 		mousefx true
 	}
+	pic button_aircraft_away
+	{
+		if "mn_aircraftinbase <= 0"
+		tooltip	"_Aircraft absent from base"
+		image   menu/button
+		pos	"45 100"
+		texl	"0 64"
+		texh	"230 128"
+		mousefx false
+	}
 	string txt_squad
 	{
 		if "mn_soldiers_in_base > 0"
+		if "mn_aircraftinbase > 0"
 		string	"_Equip Aircraft"
 		color	"0 0.8 0 1"
 		pos	"160 116"
@@ -82,6 +94,15 @@ menu aircraft
 	{
 		if "mn_soldiers_in_base <= 0"
 		string	"_Assign your squad"
+		color	"0.5 0.5 0.5 1"
+		pos	"160 116"
+		font	f_menu
+		align	uc
+	}
+	string txt_aircraft_away
+	{
+		if "mn_aircraftinbase <= 0"
+		string	"_Aircraft away"
 		color	"0.5 0.5 0.5 1"
 		pos	"160 116"
 		font	f_menu
@@ -116,10 +137,11 @@ menu aircraft
 	}
 
 	// ===============
-	// transfer
+	// start/recall
 	// ===============
 	pic button_start
 	{
+		if "mn_aircraftinbase > 0"
 		tooltip	"_Start your aircraft"
 		image	menu/button
 		pos	"45 240"
@@ -135,7 +157,33 @@ menu aircraft
 	}
 	string txt_start
 	{
+		if "mn_aircraftinbase > 0"
 		string	"_Start Aircraft"
+		color	"0 0.8 0 1"
+		pos	"160 256"
+		font	f_menu
+		align	uc
+	}
+	pic button_recall
+	{
+		if "mn_aircraftinbase <= 0"
+		tooltip	"_Call back aircraft"
+		image	menu/button
+		pos	"45 240"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "aircraft_return;"
+		}
+		out		{ *txt_recall color "0 0.8 0 1" *button_recall texl "0 0" *button_recall texh "230 64" }
+		in		{ *txt_recall color "1 1 1 1" *button_recall texl "230 0" *button_recall texh "460 64" }
+	}
+	string txt_recall
+	{
+		if "mn_aircraftinbase <= 0"
+		string	"_Call back"
 		color	"0 0.8 0 1"
 		pos	"160 256"
 		font	f_menu
@@ -174,6 +222,7 @@ menu aircraft
 	// ===============
 	pic button_equip
 	{
+		if "mn_aircraftinbase > 0"
 		tooltip	"_Equip weapons and shields"
 		image	menu/button
 		pos	"45 380"
@@ -189,6 +238,7 @@ menu aircraft
 	}
 	string txt_equip
 	{
+		if "mn_aircraftinbase > 0"
 		string	"_Equip"
 		color	"0 0.8 0 1"
 		pos	"160 396"

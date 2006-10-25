@@ -8,7 +8,11 @@
 /* #define const */
 #undef CHAR_IS_UNSIGNED
 #define HAVE_STDDEF_H
+
+#ifndef __MINGW32__
 #define HAVE_STDLIB_H
+#endif
+
 #undef NEED_BSD_STRINGS
 #undef NEED_SYS_TYPES_H
 #undef NEED_FAR_POINTERS	/* we presume a 32-bit flat memory model */
@@ -16,7 +20,7 @@
 #undef INCOMPLETE_TYPES_BROKEN
 
 /* Define "boolean" as unsigned char, not int, per Windows custom */
-#ifndef __RPCNDR_H__		/* don't conflict if rpcndr.h already read */
+#if !defined __RPCNDR_H__ || defined __MINGW32__		/* don't conflict if rpcndr.h already read */
 typedef unsigned char boolean;
 #endif
 #define HAVE_BOOLEAN		/* prevent jmorecfg.h from redefining it */

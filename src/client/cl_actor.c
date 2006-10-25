@@ -756,6 +756,39 @@ qboolean CL_ActorSelectList(int num)
 	return qtrue;
 }
 
+/**
+ * @brief selects the next actor
+ */
+qboolean CL_ActorSelectNext()
+{
+	le_t* le;
+	int selIndex = -1;
+	int num = cl.numTeamList;
+	int i;
+
+	/* find index of currently selected actor */
+	for (i = 0; i < num; i++) {
+		le = cl.teamList[i];
+		if (le && le->selected && le->inuse && !(le->state & STATE_DEAD)) {
+			selIndex = i;
+			break;
+		}
+	}
+	if (selIndex < 0)
+		return qfalse;			/* no one selected? */
+
+	/* cycle round */
+	i = selIndex;
+	while (qtrue) {
+		i = (i + 1) % num;
+		if (i == selIndex)
+			break;
+		if (CL_ActorSelectList(i))
+			return qtrue;
+	}
+	return qtrue;
+}
+
 
 /*
 ==============================================================
@@ -1930,7 +1963,7 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
  */
 void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 {
-	vec3_t from, at;
+	vec3_t from, at, cross;
 	float vz, dt;
 	vec3_t v0, ds, next;
 	vec3_t mins, maxs;
@@ -1945,19 +1978,23 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 	/* get vectors, paint cross */
 	Grid_PosToVec(&clMap, fromPos, from);
 	Grid_PosToVec(&clMap, toPos, at);
+	from[2] += selFD->shotOrg[1];
 
-	at[2] -= 9;
+	/* prefer to aim grenades at the ground */
+	VectorCopy(at,cross);
+	cross[2] -= 9;
+	at[2] -= 28;
 
 	/* calculate parabola */
-	dt = Com_GrenadeTarget(from, at, selFD->range, selFD->launched, v0);
+	dt = Com_GrenadeTarget(from, at, selFD->range, selFD->launched, selFD->rolled, v0);
 	if (!dt) {
-		CL_ParticleSpawn("cross_no", 0, at, NULL, NULL);
+		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
 		return;
 	}
 	if (VectorLength(v0) > selFD->range)
-		CL_ParticleSpawn("cross_no", 0, at, NULL, NULL);
+		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
 	else
-		CL_ParticleSpawn("cross", 0, at, NULL, NULL);
+		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
 
 	dt /= GRENADE_PARTITIONS;
 	VectorSubtract(at, from, ds);

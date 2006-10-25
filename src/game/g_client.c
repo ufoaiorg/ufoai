@@ -1797,10 +1797,12 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 	/* get positional data */
 	VectorCopy(from, last);
 	gi.GridPosToVec(gi.map, at, target);
-	target[2] -= 9;
+
+	/* prefer to aim grenades at the ground */
+	target[2] -= 28;
 
 	/* calculate parabola */
-	dt = gi.GrenadeTarget(last, target, fd->range, fd->launched, startV);
+	dt = gi.GrenadeTarget(last, target, fd->range, fd->launched, fd->rolled, startV);
 	if (!dt) {
 		if (!mock)
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - impossible throw!\n"));

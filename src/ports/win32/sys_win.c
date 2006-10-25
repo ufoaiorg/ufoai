@@ -602,7 +602,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	/* main window message loop */
 	while (1) {
 		/* if at a full screen console, don't update unless needed */
-		if (Minimized || (dedicated && dedicated->value) )
+		if (Minimized)
 			Sleep (1);
 
 		while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE)) {
@@ -618,7 +618,10 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			time = timescale * (newtime - oldtime);
 		} while (time < 1);
 
+#ifndef __MINGW32__
 		_controlfp( _PC_24, _MCW_PC );
+#endif
+		time = timescale * (newtime - oldtime);
 		timescale = Qcommon_Frame (time);
 		oldtime = newtime;
 	}
