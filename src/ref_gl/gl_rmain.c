@@ -1309,20 +1309,13 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 			ri.Cvar_Set( "gl_monolightmap", "0" );
 	}
 
-	/* power vr can't have anything stay in the framebuffer, so */
-	/* the screen needs to redraw the tiled background every frame */
-	if (gl_config.renderer & GL_RENDERER_POWERVR)
-		ri.Cvar_Set("scr_drawall", "1");
-	else
-		ri.Cvar_Set("scr_drawall", "0");
-
 #if defined __linux__ || defined __FreeBSD__
 	ri.Cvar_SetValue("gl_finish", 1);
-#endif
-
+#else
 	/* MCD has buffering issues */
 	if (gl_config.renderer == GL_RENDERER_MCD)
 		ri.Cvar_SetValue("gl_finish", 1);
+#endif
 
 	/* grab extensions */
 	if (strstr(gl_config.extensions_string, "GL_EXT_compiled_vertex_array") || strstr(gl_config.extensions_string, "GL_SGI_compiled_vertex_array")) {

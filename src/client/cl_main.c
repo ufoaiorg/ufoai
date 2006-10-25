@@ -234,16 +234,26 @@ void CL_StartSingleplayer(qboolean singleplayer)
  */
 void CL_Drop(void)
 {
+	/* TODO: I hope this will work for all CL_Drop calls.
+	   at least it is working when a map isn't found */
+#if 1
+	/* drop loading plaque unless this is the initial game start */
+	if (cls.disable_servercount != -1)
+		SCR_EndLoadingPlaque();	/* get rid of loading plaque */
+	MN_PopMenu(qfalse);
+#endif
+
 	if (cls.state == ca_uninitialized)
 		return;
 	if (cls.state == ca_disconnected)
 		return;
 
-	CL_Disconnect();
-
+#if 0
 	/* drop loading plaque unless this is the initial game start */
 	if (cls.disable_servercount != -1)
 		SCR_EndLoadingPlaque();	/* get rid of loading plaque */
+#endif
+	CL_Disconnect();
 }
 
 

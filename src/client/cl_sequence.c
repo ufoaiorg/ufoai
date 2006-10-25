@@ -407,7 +407,7 @@ void CL_SequenceStart_f(void)
 	seqEndCmd = sp->start + sp->length;
 
 	/* init sequence state */
-	Cbuf_AddText("stopsound\n");
+	Cbuf_AddText("snd_stop\n");
 	cls.state = ca_sequence;
 	cl.refresh_prepped = qtrue;
 

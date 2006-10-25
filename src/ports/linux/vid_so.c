@@ -281,14 +281,14 @@ qboolean VID_LoadRefresh( char *name )
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;
 
-	if ( ( GetRefAPI = (void *) dlsym( reflib_library, "GetRefAPI" ) ) == 0 )
-		Com_Error( ERR_FATAL, "dlsym failed on %s", name );
+	if ((GetRefAPI = (void *) dlsym(reflib_library, "GetRefAPI")) == 0)
+		Com_Error(ERR_FATAL, "dlsym failed on %s", name);
 
 	re = GetRefAPI( ri );
 
 	if (re.api_version != API_VERSION) {
 		VID_FreeReflib ();
-		Com_Error (ERR_FATAL, "%s has incompatible api_version", name);
+		Com_Error(ERR_FATAL, "%s has incompatible api_version", name);
 	}
 
 	/* Init IN (Mouse) */
