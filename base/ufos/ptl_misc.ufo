@@ -162,6 +162,21 @@ particle explosion_2
 	think { kill }
 }
 
+particle flash
+{
+	init
+	{
+		image sfx/flashbang
+		blend add
+		style facing
+		ffade out
+		size  "250 250"
+		tps   18
+		v     "0 0 0"
+	}
+	think { kill }
+}
+
 particle smoketrail
 {
 	init
@@ -235,6 +250,28 @@ particle smoke
 		push pos "16 16"
 		mul  *t
 		add  pos "8 8"
+		pop  *size
+	}
+	think { kill }
+}
+
+particle flashsmoke
+{
+	init
+	{
+		image  sfx/smoke
+		blend  invfilter
+		style  facing
+		tfade  out
+		tps    0.5
+		v      "0 0 0"
+		a      "0 0 0"
+	}
+	run
+	{
+		push pos "32 32"
+		mul  *t
+		add  pos "16 16"
 		pop  *size
 	}
 	think { kill }
@@ -329,7 +366,7 @@ particle smokebig
 		rand		float 0.2
 		add			float 0.4
 		pop			*tps
-		crand		vector "20 20 20"
+		crand		vector "60 60 60"
 		add			*s
 		pop			*s
 		crand		vector "150 150 1000"
@@ -337,9 +374,9 @@ particle smokebig
 	}
 	run
 	{
-		push		pos "20 20"
+		push		pos "60 60"
 		mul			*t
-		add			pos "10 10"
+		add			pos "30 30"
 		pop			*size
 	}
 	think { kill }

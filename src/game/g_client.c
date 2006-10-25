@@ -135,6 +135,7 @@ void G_GiveTimeUnits(int team)
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == team) {
+			ent->state &= ~STATE_DAZED;
 			ent->TU = GET_TU(ent->chr.skills[ABILITY_SPEED]);
 			G_SendStats(ent);
 		}

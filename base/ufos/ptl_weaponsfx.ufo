@@ -979,6 +979,15 @@ particle frag_explosion
 	}
 }
 
+particle flash_explosion
+{
+	init
+	{
+		spawn 	flash
+		kill
+	}
+}
+
 particle grenadeFragment
 {
 	init

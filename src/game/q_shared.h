@@ -1187,6 +1187,8 @@ typedef enum {
 #define STATE_RAGE          0x0010  /* pretty self-explaining */
 #define STATE_INSANE        0x0030
 #define STATE_STUN      0x0043  /* stunned - includes death */
+#define STATE_DAZED			0x0080  /* dazed and unable to move */
+
 /* private */
 #define STATE_REACTION_ONCE 0x0100
 #define STATE_REACTION_MANY 0x0200

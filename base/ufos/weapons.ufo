@@ -127,7 +127,7 @@ item fraggrenade
 		bounce	10
 		bncfac	0.5
 		spread	"2 6"
-		range	12
+		range	14
 		shots	1
 		ammo	1
 		rof		1
@@ -152,7 +152,7 @@ item fraggrenade
 		bounce	10
 		bncfac	0.5
 		spread	"2 6"
-		range	12
+		range	14
 		shots	1
 		ammo	1
 		rof		1
@@ -175,8 +175,8 @@ item flashbang
 	type		grenade
 	category	0
 	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		1.3
+	center		"0 1.5 0"
+	scale		2.4
 	price		170
 	buytype		2
 	thrown		true
@@ -185,11 +185,11 @@ item flashbang
 	{
 		name	"_Lob"
 		skill	explosive
-		projtl	fraggren
-		impact	frag_explosion
-		hitbody frag_explosion
-		impsnd	weapons/frag_grenade.wav
-		bodysnd	weapons/frag_grenade.wav
+		projtl	smokegren
+		impact	flash_explosion
+		hitbody flash_explosion
+		impsnd	weapons/flashbang.wav
+		bodysnd	weapons/flashbang.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -201,7 +201,7 @@ item flashbang
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"999 999"	// TODO: needed at all?
+		spldmg	"999 0"	// TODO: needed at all?
 		splrad	5
 		dmgtype shock
 	}
@@ -209,11 +209,11 @@ item flashbang
 	{
 		name	"_Roll"
 		skill	explosive
-		projtl	fraggren
-		impact	frag_explosion
-		hitbody frag_explosion
-		impsnd	weapons/frag_grenade.wav
-		bodysnd	weapons/frag_grenade.wav
+		projtl	smokegren
+		impact	flash_explosion
+		hitbody flash_explosion
+		impsnd	weapons/flashbang.wav
+		bodysnd	weapons/flashbang.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		rolled true
@@ -226,7 +226,7 @@ item flashbang
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"999 999"	// TODO: needed at all?
+		spldmg	"999 0"	// TODO: needed at all?
 		splrad	5
 		dmgtype shock
 	}

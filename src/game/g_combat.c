@@ -304,7 +304,8 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 		} else if (shock) {
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
 			if (ent->team != attacker->team) {
-				ent->AP = 0;
+				ent->TU = 0; /* flashbangs kill TUs */
+				ent->state |= STATE_DAZED; /* entity is dazed */
 				return;
 			}
 		} else {
