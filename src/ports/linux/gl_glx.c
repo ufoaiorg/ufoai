@@ -930,9 +930,9 @@ int qXErrorHandler(Display *dpy, XErrorEvent *ev)
 	static char buf[1024];
 	XGetErrorText(dpy, ev->error_code, buf, 1024);
 	ri.Con_Printf( PRINT_ALL, "X Error of failed request: %s\n", buf);
-	ri.Con_Printf( PRINT_ALL, "  Major opcode of failed request: %d\n", ev->request_code, buf);
+	ri.Con_Printf( PRINT_ALL, "  Major opcode of failed request: %uli\n", ev->request_code);
 	ri.Con_Printf( PRINT_ALL, "  Minor opcode of failed request: %d\n", ev->minor_code);
-	ri.Con_Printf( PRINT_ALL, "  Serial number of failed request: %d\n", ev->serial);
+	ri.Con_Printf( PRINT_ALL, "  Serial number of failed request: %lui\n", ev->serial);
 	return 0;
 }
 
