@@ -1,0 +1,181 @@
+// ==================
+// PHYSDATA BASE MENU
+// ==================
+
+menu physdata
+{
+	// ==================
+	// background
+	// ==================
+
+	pic bar_physdata
+	{
+		image	hud/bar_phys
+		pos		"256 96"
+		click
+	}
+
+	string actorname
+	{
+		string	"*cvar mn_name"
+		pos		"290 120"
+	}
+
+	// ==================
+	// model
+	// ==================
+
+	model actor
+	{
+		md2		"*cvar mn_body"
+		skin	"*cvar mn_skin"
+		anim	"stand2"
+		origin	"370 270 0"
+		angles	"0 70 90"
+		scale	"5 5 5"
+		color	"0.5 0.5 0.5 1"
+	}
+
+	model head
+	{
+		md2		"*cvar mn_head"
+		skin	"*cvar mn_skin"
+		tag		"actor tag_head"
+		color	"0.5 0.5 0.5 1"
+		scale	"1.0 1.0 1.0"
+	}
+
+	// ==================
+	// abilities
+	// ==================
+
+	string pwr_lbl { pos "480 135"  string "_Power:" }
+	string pwr_val { pos "745 135"  string "*cvar mn_tpwr" align ur }
+	pic pwr_rahmen { pos "477 148"  image menu/bar_rahmen }
+	bar pwr_bar    { pos "486 153" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 256 align uc }
+
+	string spd_lbl { pos "480 165" string "_Speed:" }
+	string spd_val { pos "745 165" string "*cvar mn_tspd" align ur }
+	pic spd_rahmen { pos "477 178" image menu/bar_rahmen }
+	bar spd_bar    { pos "486 183" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 256 align uc }
+
+	string acc_lbl { pos "480 195" string "_Accuracy:" }
+	string acc_val { pos "745 195" string "*cvar mn_tacc" align ur }
+	pic acc_rahmen { pos "477 208" image menu/bar_rahmen }
+	bar acc_bar    { pos "486 213" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 256 align uc }
+
+	string mnd_lbl { pos "480 225" string "_Mind:" }
+	string mnd_val { pos "745 225" string "*cvar mn_tmnd" align ur }
+	pic mnd_rahmen { pos "477 238" image menu/bar_rahmen }
+	bar mnd_bar    { pos "486 243" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 256 align uc }
+
+	string cls_lbl { pos "480 270" string "_Close Combat:" }
+	string cls_val { pos "745 270" string "*cvar mn_tcls" align ur }
+	pic cls_rahmen { pos "477 283" image menu/bar_rahmen }
+	bar cls_bar    { pos "486 288" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 256 align uc }
+
+	string hvy_lbl { pos "480 300" string "_Heavy Weapons:" }
+	string hvy_val { pos "745 300" string "*cvar mn_thvy" align ur }
+	pic hvy_rahmen { pos "477 313" image menu/bar_rahmen }
+	bar hvy_bar    { pos "486 318" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 256 align uc }
+
+	string ass_lbl { pos "480 330" string "_Assault Guns:" }
+	string ass_val { pos "745 330" string "*cvar mn_tass" align ur }
+	pic ass_rahmen { pos "477 343" image menu/bar_rahmen }
+	bar ass_bar    { pos "486 348" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
+
+	string snp_lbl { pos "480 360" string "_Sniper Rifles:" }
+	string snp_val { pos "745 360" string "*cvar mn_tsnp" align ur }
+	pic snp_rahmen { pos "477 373" image menu/bar_rahmen }
+	bar snp_bar    { pos "486 378" current "*cvar mn_vsnp" size "245 6" color "0 .8 0 1" max 256 align uc }
+
+	string exp_lbl { pos "480 390" string "_High-Explosives:" }
+	string exp_val { pos "745 390" string "*cvar mn_texp" align ur }
+	pic exp_rahmen { pos "477 403" image menu/bar_rahmen }
+	bar exp_bar    { pos "486 408" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
+
+	// ==================
+	// health and morale
+	// ==================
+
+	string hp_val
+	{
+		string	"*cvar mn_hp"
+		pos		"696 472"
+		align	uc
+	}
+	pic ekg_hp
+	{
+		image	hud/phys_ekg_noclamp
+		pos		"334 465"
+		size	"324 32"
+	}
+
+	string morale_val
+	{
+		string	"*cvar mn_morale"
+		pos		"696 512"
+		align	uc
+	}
+	pic ekg_morale
+	{
+		image	hud/phys_mor_noclamp
+		pos		"334 504"
+		size	"324 32"
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	pic button_exit
+	{
+		image	hud/buttons2
+		mousefx true
+		pos		"684 554"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop }
+	}
+}
+
+// ==================
+// HUD PHYSDATA
+// ==================
+
+menu hudphysdat extends physdata
+{
+	zone bt_physdata
+	{
+		image	hud/buttons1
+		mousefx true
+		pos		"983 266"
+		size	"36 75"
+		click	{ cmd mn_pop }
+	}
+
+	zone bt_inventory
+	{
+		image	hud/buttons1
+		mousefx true
+		pos		"983 376"
+		size	"36 75"
+		click	{ cmd mn_pop }
+	}
+}
+
+// ==================
+// ALT HUD PHYSDATA
+// ==================
+
+menu ahudphysdat extends physdata
+{
+	zone zone_clickright
+	{
+		tooltip "_Inventory and physical stats"
+		pos     "878 84"
+		size    "130 265"
+		click   { cmd "mn_pop" }
+		rclick  { cmd "mn_pop" }
+	}
+}

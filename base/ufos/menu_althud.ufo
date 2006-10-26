@@ -45,8 +45,8 @@ menu althud
 		tooltip	"_Inventory and physical stats"
 		pos		"878 84"
 		size	"130 265"
-		click	{ cmd "mn_push inventory;" }
-		rclick	{ cmd "mn_push physdata;" }
+		click	{ cmd "mn_push ahudinv" }
+		rclick	{ cmd "mn_push ahudphysdat" }
 	}
 
 

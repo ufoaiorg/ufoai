@@ -171,7 +171,7 @@ particle flash
 		style facing
 		ffade out
 		size  "250 250"
-		tps   18
+		tps   10
 		v     "0 0 0"
 	}
 	think { kill }
