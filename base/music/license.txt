@@ -15,10 +15,9 @@ Tracks under Creative Commons
 Tracks that are public domain
 =============================
 * greecei.ogg (taken from worldforge/golgotha)
-* alBasrahM.ogg (from Golgotha, modified)
-* turinItalyM.ogg (from Golgotha, modified)
+* alBasrahM.ogg, turinItalyM.ogg (from Golgotha, modified)
 
 Tracks contributed under GPL
 =============================
-* ufo1.ogg (author: Paul B, http://www.myspace.com/s2zpaulb)
-* ufo2.ogg (author: Paul B, http://www.myspace.com/s2zpaulb)
+* ufo1.ogg, ufo2.ogg (author: Paul B, http://www.myspace.com/s2zpaulb)
+* The Psymong series: Psymong*.ogg (Simon Green, http://www.8hz.co.uk/)
