@@ -835,6 +835,8 @@ void CL_InitMessageSystem(void);
 
 #define MAX_MENUTEXTLEN		4096
 
+#define LOOKFWD		 		qtrue
+#define LOOKBCK 			qfalse
 
 typedef struct menuModel_s {
 	char id[MAX_VAR];
@@ -880,6 +882,7 @@ typedef struct menuNode_s {
 typedef struct menu_s {
 	char name[MAX_VAR];
 	menuNode_t *firstNode, *initNode, *closeNode, *renderNode, *popupNode, *hoverNode;
+	void *supermenu;
 } menu_t;
 
 typedef enum {
