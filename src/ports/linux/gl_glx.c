@@ -858,25 +858,21 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	}
 	wmhints = XAllocWMHints();
 	if (wmhints) {
-		#include "icon.xbm"
+		#include "ufoicon.xbm"
 
 		Pixmap icon_pixmap, icon_mask;
 		unsigned long fg, bg;
-		int i;
 
 		fg = BlackPixel(dpy, visinfo->screen);
 		bg = WhitePixel(dpy, visinfo->screen);
 
 		icon_pixmap = XCreatePixmapFromBitmapData(
-				dpy, win, (char *)icon_bits, icon_width, icon_height,
+				dpy, win, (char *)ufoicon_bits, ufoicon_width, ufoicon_height,
 				fg, bg, visinfo->depth
 		);
 
-		for (i = 0; i < sizeof(icon_bits); i++)
-			icon_bits[i] = ~icon_bits[i];
-
 		icon_mask = XCreatePixmapFromBitmapData(
-				dpy, win, (char *)icon_bits, icon_width, icon_height,
+				dpy, win, (char *)ufoicon_bits, ufoicon_width, ufoicon_height,
 				bg, fg, visinfo->depth
 		);
 
