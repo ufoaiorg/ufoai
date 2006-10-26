@@ -1096,7 +1096,7 @@ static qboolean MN_TextScroll(menuNode_t *node, int offset)
 {
 	int textScroll_new;
 
-	if (!node)
+	if (!node || !node->height)
 		return qfalse;
 
 	if (abs(offset) >= node->height) {
@@ -3076,7 +3076,7 @@ void MN_ParseMenu(char *name, char **text)
 	/* does this menu inherit data from another menu? */
 	if (!Q_strncmp(token, "extends", 7)) {
 		token = COM_Parse(text);
-		Com_Printf("MN_ParseMenus: menu \"%s\" inheriting menu \"%s\"\n", menu->name, token);
+		Com_DPrintf("MN_ParseMenus: menu \"%s\" inheriting menu \"%s\"\n", menu->name, token);
 		menu->supermenu = MN_GetMenu(token);
 		token = COM_Parse(text);
 	}
