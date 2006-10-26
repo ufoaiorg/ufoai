@@ -389,7 +389,40 @@ void Sys_SendKeyEvents (void)
  */
 char *Sys_GetClipboardData(void)
 {
+#if 0 /* this should be in the renderer lib */
+	Window sowner;
+	Atom type, property;
+	unsigned long len, bytes_left, tmp;
+	unsigned char *data;
+	int format, result;
+	char *ret = NULL;
+
+	sowner = XGetSelectionOwner(dpy, XA_PRIMARY);
+
+	if (sowner != None) {
+		property = XInternAtom(dpy, "GETCLIPBOARDDATA_PROP", False);
+
+		XConvertSelection(dpy, XA_PRIMARY, XA_STRING, property, win, myxtime);
+		/* myxtime is time of last X event */
+
+		XFlush(dpy);
+
+		XGetWindowProperty(dpy, win, property, 0, 0, False, AnyPropertyType,
+							&type, &format, &len, &bytes_left, &data);
+
+		if (bytes_left > 0) {
+			result = XGetWindowProperty(dpy, win, property, 0, bytes_left, True, AnyPropertyType,
+							&type, &format, &len, &tmp, &data);
+
+			if (result == Success)
+				ret = strdup((char*)data);
+			XFree(data);
+		}
+	}
+	return ret;
+#else
 	return NULL;
+#endif
 }
 
 /**
