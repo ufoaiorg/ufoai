@@ -41,6 +41,8 @@ int key_linepos;
 static qboolean shift_down = qfalse;
 static int anykeydown;
 
+static int key_insert = 1;
+
 int edit_line = 0;
 static int history_line = 0;
 
@@ -49,12 +51,12 @@ char msg_buffer[MAXCMDLINE];
 size_t msg_bufferlen = 0;
 
 static int key_waiting;
-char *keybindings[256];
-static char *menukeybindings[256];
-static qboolean consolekeys[256];		/* if true, can't be rebound while in console */
-static int keyshift[256];				/* key to map to if shift held down in console */
-static int key_repeats[256];			/* if > 1, it is autorepeating */
-qboolean keydown[256];
+char *keybindings[K_LAST_KEY];
+static char *menukeybindings[K_LAST_KEY];
+static qboolean consolekeys[K_LAST_KEY];		/* if true, can't be rebound while in console */
+static int keyshift[K_LAST_KEY];				/* key to map to if shift held down in console */
+static int key_repeats[K_LAST_KEY];			/* if > 1, it is autorepeating */
+qboolean keydown[K_LAST_KEY];
 
 typedef struct {
 	char *name;
@@ -181,6 +183,8 @@ static void Key_CompleteCommand(void)
 	s = key_lines[edit_line] + 1;
 	if (*s == '\\' || *s == '/')
 		s++;
+	if (!*s)
+		return;
 
 	cntCmd = Cmd_CompleteCommand(s, &cmd);
 	cntCvar = Cvar_CompleteVariable(s, &cvar);
@@ -209,6 +213,8 @@ static void Key_CompleteCommand(void)
  */
 static void Key_Console(int key)
 {
+	int i;
+
 	switch (key) {
 	case K_KP_SLASH:
 		key = '/';
@@ -252,6 +258,8 @@ static void Key_Console(int key)
 	case K_KP_DEL:
 		key = '.';
 		break;
+	default:
+		break;
 	}
 
 	/* ctrl-V gets clipboard data */
@@ -278,10 +286,21 @@ static void Key_Console(int key)
 		return;
 	}
 
-	/* ctrl-L clears screen */
-	if (key == 'l' && keydown[K_CTRL]) {
-		Cbuf_AddText("clear\n");
-		return;
+	if (keydown[K_CTRL]) {
+		switch (toupper(key)) {
+		/* ctrl-L clears screen */
+		case 'L':
+			Cbuf_AddText("clear\n");
+			return;
+		/* jump to beginning of line */
+		case 'A':
+			key_linepos = 1;
+			return;
+		case 'E':
+			/* end of line */
+			key_linepos = strlen(key_lines[edit_line]);
+			return;
+		}
 	}
 
 	if (key == K_ENTER || key == K_KP_ENTER) {	/* backslash text are commands, else chat */
@@ -308,9 +327,17 @@ static void Key_Console(int key)
 		return;
 	}
 
-	if (key == K_BACKSPACE || key == K_LEFTARROW || key == K_KP_LEFTARROW || ((key == 'h') && (keydown[K_CTRL]))) {
-		if (key_linepos > 1)
+	if (key == K_BACKSPACE || ((key == 'h') && (keydown[K_CTRL]))) {
+		if (key_linepos > 1) {
+			strcpy(key_lines[edit_line] + key_linepos - 1, key_lines[edit_line] + key_linepos);
 			key_linepos--;
+		}
+		return;
+	}
+	/* delete char on cursor */
+	if (key == K_DEL) {
+		if (key_linepos < strlen(key_lines[edit_line]))
+			strcpy(key_lines[edit_line] + key_linepos, key_lines[edit_line] + key_linepos + 1);
 		return;
 	}
 
@@ -323,9 +350,7 @@ static void Key_Console(int key)
 		Q_strncpyz(key_lines[edit_line], key_lines[history_line], MAXCMDLINE);
 		key_linepos = strlen(key_lines[edit_line]);
 		return;
-	}
-
-	if (key == K_DOWNARROW || key == K_KP_DOWNARROW || ((tolower(key) == 'n') && keydown[K_CTRL])) {
+	} else if (key == K_DOWNARROW || key == K_KP_DOWNARROW || ((tolower(key) == 'n') && keydown[K_CTRL])) {
 		if (history_line == edit_line)
 			return;
 		do {
@@ -342,6 +367,40 @@ static void Key_Console(int key)
 		return;
 	}
 
+	if (key == K_LEFTARROW){  /* move cursor left */
+		if (keydown[K_CTRL]) { /* by a whole word */
+			while (key_linepos > 1 && key_lines[edit_line][key_linepos - 1] == ' ')
+				key_linepos--;  /* get off current word */
+			while (key_linepos > 1 && key_lines[edit_line][key_linepos - 1] != ' ')
+				key_linepos--;  /* and behind previous word */
+			return;
+		}
+
+		if(key_linepos > 1)  /* or just a char */
+			key_linepos--;
+		return;
+	} else if (key == K_RIGHTARROW) {  /* move cursor right */
+		if ((i = strlen(key_lines[edit_line])) == key_linepos)
+			return; /* no character to get */
+		if (keydown[K_CTRL]){  /* by a whole word */
+			while (key_linepos < i && key_lines[edit_line][key_linepos + 1] == ' ')
+				key_linepos++;  /* get off current word */
+			while (key_linepos < i && key_lines[edit_line][key_linepos + 1] != ' ')
+				key_linepos++;  /* and in front of next word */
+			if (key_linepos < i)  /* all the way in front */
+				key_linepos++;
+			return;
+		}
+		key_linepos++;  /* or just a char */
+		return;
+	}
+
+	/* toggle insert mode */
+	if (key == K_INS) {
+		key_insert ^= 1;
+		return;
+	}
+
 	if (key == K_PGUP || key == K_KP_PGUP || key == K_MWHEELUP) {
 		con.display -= 2;
 		return;
@@ -355,12 +414,12 @@ static void Key_Console(int key)
 	}
 
 	if (key == K_HOME || key == K_KP_HOME) {
-		con.display = con.current - con.totallines + 10;
+		key_linepos = 1;
 		return;
 	}
 
 	if (key == K_END || key == K_KP_END) {
-		con.display = con.current;
+		key_linepos = strlen(key_lines[edit_line]);
 		return;
 	}
 
@@ -368,9 +427,21 @@ static void Key_Console(int key)
 		return;					/* non printable */
 
 	if (key_linepos < MAXCMDLINE - 1) {
+		int i;
+
+		if (key_insert) {  /* can't do strcpy to move string to right */
+			i = strlen(key_lines[edit_line]) - 1;
+
+			if (i == 254)
+				i--;
+			for (; i >= key_linepos; i--)
+				key_lines[edit_line][i + 1] = key_lines[edit_line][i];
+		}
+		i = key_lines[edit_line][key_linepos];
 		key_lines[edit_line][key_linepos] = key;
 		key_linepos++;
-		key_lines[edit_line][key_linepos] = 0;
+		if (!i)  /* only null terminate if at the end */
+			key_lines[edit_line][key_linepos] = 0;
 	}
 }
 
@@ -516,7 +587,7 @@ char* Key_GetBinding(char *binding, keyBindSpace_t space)
 		return "";
 	}
 
-	for (i = 0; i < 256; i++)
+	for (i = 0; i < K_LAST_KEY; i++)
 		if (keySpace[i] && *keySpace[i] && !Q_strncmp(keySpace[i], binding, strlen(binding))) {
 			return Key_KeynumToString(i);
 		}
@@ -617,7 +688,7 @@ static void Key_Unbindall_f(void)
 {
 	int i;
 
-	for (i = 0; i < 256; i++)
+	for (i = 0; i < K_LAST_KEY; i++)
 		if (keybindings[i]) {
 			if (!Q_strncmp(Cmd_Argv(0), "unbindallmenu", MAX_VAR))
 				Key_SetBinding(i, "", KEYSPACE_MENU);
@@ -686,10 +757,10 @@ void Key_WriteBindings(char* path)
 	fprintf(f, "// generated by ufo, do not modify\n");
 	fprintf(f, "unbindallmenu\n");
 	fprintf(f, "unbindall\n");
-	for (i = 0; i < 256; i++)
+	for (i = 0; i < K_LAST_KEY; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
 			fprintf(f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
-	for (i = 0; i < 256; i++)
+	for (i = 0; i < K_LAST_KEY; i++)
 		if (keybindings[i] && keybindings[i][0])
 			fprintf(f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
 }
@@ -703,11 +774,11 @@ static void Key_Bindlist_f(void)
 	int i;
 
 	Com_Printf("key space: game\n");
-	for (i = 0; i < 256; i++)
+	for (i = 0; i < K_LAST_KEY; i++)
 		if (keybindings[i] && keybindings[i][0])
 			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
 	Com_Printf("key space: menu\n");
-	for (i = 0; i < 256; i++)
+	for (i = 0; i < K_LAST_KEY; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
 			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]);
 }
@@ -764,7 +835,7 @@ void Key_Init(void)
 	consolekeys['`'] = qfalse;
 	consolekeys['~'] = qfalse;
 
-	for (i = 0; i < 256; i++)
+	for (i = 0; i < K_LAST_KEY; i++)
 		keyshift[i] = i;
 	for (i = 'a'; i <= 'z'; i++)
 		keyshift[i] = i - 'a' + 'A';
@@ -811,7 +882,7 @@ void Key_Init(void)
 void Key_Event(int key, qboolean down, unsigned time)
 {
 	char *kb = NULL;
-	char cmd[1024];
+	char cmd[MAX_STRING_CHARS];
 
 	/* hack for modal presses */
 	if (key_waiting == -1) {
@@ -825,9 +896,10 @@ void Key_Event(int key, qboolean down, unsigned time)
 		key_repeats[key]++;
 		if (key != K_BACKSPACE && key != K_PAUSE && key != K_PGUP && key != K_KP_PGUP && key != K_PGDN && key != K_KP_PGDN && key_repeats[key] > 1)
 			return;				/* ignore most autorepeats */
-
-		if (key > 255 && !keybindings[key])
+#if 0
+		if (key >= K_LAST_KEY && !keybindings[key])
 			Com_Printf("%s is unbound, hit F4 to set.\n", Key_KeynumToString(key));
+#endif
 	} else {
 		key_repeats[key] = 0;
 	}
@@ -946,7 +1018,7 @@ void Key_ClearStates(void)
 
 	anykeydown = qfalse;
 
-	for (i = 0; i < 256; i++) {
+	for (i = 0; i < K_LAST_KEY; i++) {
 		if (keydown[i] || key_repeats[i])
 			Key_Event(i, qfalse, 0);
 		keydown[i] = 0;
