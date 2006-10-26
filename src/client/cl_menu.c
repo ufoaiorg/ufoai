@@ -247,7 +247,7 @@ menu_t *MN_GetMenu(char *name)
  * Useful when recursing through entries in the stack
  * if forward is true, menuStack is recursed in a forward direction
  */
-menu_t *MN_GetMenuFromStack(int *pos, menu_t *menu, qboolean forward) 
+menu_t *MN_GetMenuFromStack(int *pos, menu_t *menu, qboolean forward)
 {
 	menu_t *newmenu;
 	newmenu = (menu_t *)menu->supermenu;
@@ -3099,7 +3099,7 @@ void MN_ParseMenu(char *name, char **text)
 			if (node->num >= MAX_MENUTEXTS)
 				Sys_Error("Error in menu %s - max menu num exeeded (%i)", menus[i].name, MAX_MENUTEXTS);
 
-	Com_DPrintf("Nodes: %4i Menu data: %li\n", numNodes, curadata - adata);
+	Com_DPrintf("Nodes: %4i Menu data: %li\n", numNodes, (long)(curadata - adata));
 }
 
 /**
