@@ -363,10 +363,10 @@ aircraft craft_interceptor
 	shield	rs_craft_shield_light
 }
 
-aircraft craft_ufo_small
+aircraft craft_ufo_scout
 {
 	speed	25.0
-	name	"_UFO"
+	name	"_UFO - Scout"
 	type	ufo
 	model	"ufo1"
 	size	4
@@ -377,10 +377,10 @@ aircraft craft_ufo_small
 	image	air_ufo
 }
 
-aircraft craft_ufo_big
+aircraft craft_ufo_fighter
 {
 	speed	18.0
-	name	"_UFO - Destroyer class"
+	name	"_UFO - Fighter"
 	type	ufo
 	model	"ufobig"
 	size	8
