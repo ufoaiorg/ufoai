@@ -1,6 +1,6 @@
 /**
- * @file g_client.c
- * @brief Main part of the game logic.
+ * @file g_combat.c
+ * @brief All parts of the main game logic that are combat related
  */
 
 /*
@@ -443,8 +443,10 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 		/* do damage */
 		if (shock)
 			damage = 0;
-		else
-			damage = (fd->spldmg[0] + fd->spldmg[1] * crand()) * (1.0 - dist / fd->splrad);
+		else {
+			/* REMOVED random component - it's quite random enough already */
+			damage = (fd->spldmg[0] /* + fd->spldmg[1] * crand() */) * (1.0 - dist / fd->splrad);
+		}
 
 		if (mock)
 			mock->allow_self = qtrue;
@@ -495,8 +497,8 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 	acc = GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.skills[fd->weaponSkill] : 0);
 
 	VecToAngles(startV, angles);
-	angles[PITCH] += crand() * fd->spread[0] * acc;
-	angles[YAW] += crand() * fd->spread[1] * acc;
+	angles[PITCH] += crand() * (fd->spread[0] + acc*(1+fd->modif));
+	angles[YAW] += crand() * (fd->spread[1] + acc*(1+fd->modif));
 	AngleVectors(angles, startV, NULL, NULL);
 	VectorScale(startV, speed, startV);
 
@@ -663,17 +665,13 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 	/* Get 2 gaussian distributed random values */
 	gaussrand(&gauss1, &gauss2);
 
-	/* Make most of the shots be within the spread cone */
-	gauss1 *= 0.5;
-	gauss2 *= 0.5;
-
 	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
 	if ((ent->state & STATE_CROUCHED) && fd->crouch) {
-		angles[PITCH] += gauss1 * fd->spread[0] * fd->crouch * acc;
-		angles[YAW] += gauss2 * fd->spread[1] * fd->crouch * acc;
+		angles[PITCH] += gauss1 * 0.5 * (fd->spread[0] + acc * (1+fd->modif)) * fd->crouch;
+		angles[YAW] += gauss2 * 0.5 * (fd->spread[1] + acc * (1+fd->modif)) * fd->crouch;
 	} else {
-		angles[PITCH] += gauss1 * fd->spread[0] * acc;
-		angles[YAW] += gauss2 * fd->spread[1] * acc;
+		angles[PITCH] += gauss1 * 0.5 * (fd->spread[0] + acc * (1+fd->modif));
+		angles[YAW] += gauss2 * 0.5 * (fd->spread[1] + acc * (1+fd->modif));
 	}
 	/* Convert changed angles into new direction. */
 	AngleVectors(angles, dir, NULL, NULL);
@@ -742,7 +740,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 
 		/* do damage */
 		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV || tr.ent->type == ET_BREAKABLE)) {
-			damage = fd->damage[0] + fd->damage[1] * crand();
+			damage = fd->damage[0]; /* + fd->damage[1] * crand(); //  REMOVED random component - it's quite random enough already */
 			G_Damage(tr.ent, fd->dmgtype, damage, ent, mock);
 			break;
 		}
@@ -1200,7 +1198,7 @@ qboolean G_CheckRFTrigger(edict_t *target)
 
 		/* queue a reaction fire to take place */
 		ent->reactionTarget = target;
-		ent->reactionTUs = MAX(0,target->TU - (tus / 2.0));
+		ent->reactionTUs = MAX(0,target->TU - (tus / 4.0));
 		ent->reactionNoDraw = qfalse;
 		queued = qtrue;
 

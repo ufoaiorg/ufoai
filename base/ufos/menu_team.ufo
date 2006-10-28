@@ -791,47 +791,47 @@ menu team
 	string pwr_lbl { pos "700 80"  string "_Power:" }
 	string pwr_val { pos "975 80"  string "*cvar mn_tpwr" align ur }
 	pic pwr_rahmen { pos "707 98"  image menu/bar_rahmen }
-	bar pwr_bar    { pos "716 103" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar pwr_bar    { pos "716 103" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string spd_lbl { pos "700 110" string "_Speed:" }
 	string spd_val { pos "975 110" string "*cvar mn_tspd" align ur }
 	pic spd_rahmen { pos "707 128" image menu/bar_rahmen }
-	bar spd_bar    { pos "716 133" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar spd_bar    { pos "716 133" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string acc_lbl { pos "700 140" string "_Accuracy:" }
 	string acc_val { pos "975 140" string "*cvar mn_tacc" align ur }
 	pic acc_rahmen { pos "707 158" image menu/bar_rahmen }
-	bar acc_bar    { pos "716 163" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar acc_bar    { pos "716 163" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string mnd_lbl { pos "700 170" string "_Mind:" }
 	string mnd_val { pos "975 170" string "*cvar mn_tmnd" align ur }
 	pic mnd_rahmen { pos "707 188" image menu/bar_rahmen }
-	bar mnd_bar    { pos "716 193" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar mnd_bar    { pos "716 193" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string cls_lbl { pos "700 210" string "_Close Combat:" }
 	string cls_val { pos "975 210" string "*cvar mn_tcls" align ur }
 	pic cls_rahmen { pos "707 228" image menu/bar_rahmen }
-	bar cls_bar    { pos "716 233" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar cls_bar    { pos "716 233" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string hvy_lbl { pos "700 240" string "_Heavy Weapons:" }
 	string hvy_val { pos "975 240" string "*cvar mn_thvy" align ur }
 	pic hvy_rahmen { pos "707 258" image menu/bar_rahmen }
-	bar hvy_bar    { pos "716 263" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar hvy_bar    { pos "716 263" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string ass_lbl { pos "700 270" string "_Assault Guns:" }
 	string ass_val { pos "975 270" string "*cvar mn_tass" align ur }
 	pic ass_rahmen { pos "707 288" image menu/bar_rahmen }
-	bar ass_bar    { pos "716 293" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar ass_bar    { pos "716 293" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string snp_lbl { pos "700 300" string "_Sniper Rifles:" }
 	string snp_val { pos "975 300" string "*cvar mn_tsnp" align ur }
 	pic snp_rahmen { pos "707 318" image menu/bar_rahmen }
-	bar snp_bar    { pos "716 323" current "*cvar mn_vsnp" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar snp_bar    { pos "716 323" current "*cvar mn_vsnp" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string exp_lbl { pos "700 330" string "_High-Explosives:" }
 	string exp_val { pos "975 330" string "*cvar mn_texp" align ur }
 	pic exp_rahmen { pos "707 348" image menu/bar_rahmen }
-	bar exp_bar    { pos "716 353" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar exp_bar    { pos "716 353" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string	missions_lbl { pos "700 380" string "_Survived Missions:" }
 	string	missions_val { pos "975 380" string "*cvar mn_chrmis" align ur }
@@ -1327,47 +1327,47 @@ menu equipment
 	string pwr_lbl { pos "60 375"  string "_Power:" }
 	string pwr_val { pos "335 375"  string "*cvar mn_tpwr" align ur }
 	pic pwr_rahmen { pos "67 395"  image menu/bar_rahmen }
-	bar pwr_bar    { pos "76 400" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar pwr_bar    { pos "76 400" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string spd_lbl { pos "60 410" string "_Speed:" }
 	string spd_val { pos "335 410" string "*cvar mn_tspd" align ur }
 	pic spd_rahmen { pos "67 430" image menu/bar_rahmen }
-	bar spd_bar    { pos "76 435" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar spd_bar    { pos "76 435" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string acc_lbl { pos "60 445" string "_Accuracy:" }
 	string acc_val { pos "335 445" string "*cvar mn_tacc" align ur }
 	pic acc_rahmen { pos "67 465" image menu/bar_rahmen }
-	bar acc_bar    { pos "76 470" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar acc_bar    { pos "76 470" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string mnd_lbl { pos "60 480" string "_Mind:" }
 	string mnd_val { pos "335 480" string "*cvar mn_tmnd" align ur }
 	pic mnd_rahmen { pos "67 500" image menu/bar_rahmen }
-	bar mnd_bar    { pos "76 505" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar mnd_bar    { pos "76 505" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string cls_lbl { pos "60 530" string "_Close Combat:" }
 	string cls_val { pos "335 530" string "*cvar mn_tcls" align ur }
 	pic cls_rahmen { pos "67 550" image menu/bar_rahmen }
-	bar cls_bar    { pos "76 555" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar cls_bar    { pos "76 555" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string hvy_lbl { pos "60 565" string "_Heavy Weapons:" }
 	string hvy_val { pos "335 565" string "*cvar mn_thvy" align ur }
 	pic hvy_rahmen { pos "67 585" image menu/bar_rahmen }
-	bar hvy_bar    { pos "76 590" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar hvy_bar    { pos "76 590" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string ass_lbl { pos "60 600" string "_Assault Guns:" }
 	string ass_val { pos "335 600" string "*cvar mn_tass" align ur }
 	pic ass_rahmen { pos "67 620" image menu/bar_rahmen }
-	bar ass_bar    { pos "76 625" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar ass_bar    { pos "76 625" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string snp_lbl { pos "60 635" string "_Sniper Rifles:" }
 	string snp_val { pos "335 635" string "*cvar mn_tsnp" align ur }
 	pic snp_rahmen { pos "67 655" image menu/bar_rahmen }
-	bar snp_bar    { pos "76 660" current "*cvar mn_vsnp" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar snp_bar    { pos "76 660" current "*cvar mn_vsnp" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	string exp_lbl { pos "60 670" string "_High-Explosives:" }
 	string exp_val { pos "335 670" string "*cvar mn_texp" align ur }
 	pic exp_rahmen { pos "67 690" image menu/bar_rahmen }
-	bar exp_bar    { pos "76 695" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
+	bar exp_bar    { pos "76 695" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 100 align uc }
 
 	// ==================
 	// switch

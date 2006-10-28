@@ -1878,11 +1878,11 @@ float CL_TargetingToHit(pos3_t toPos)
 	if ((selActor->state & STATE_CROUCHED) && selFD->crouch)
 		acc *= selFD->crouch;
 
-	hitchance = width / (2 * distance * tan(acc * selFD->spread[0]));
+	hitchance = width / (2 * distance * tan(acc * (1+selFD->modif) + selFD->spread[0]));
 	if (hitchance > 1)
 		hitchance = 1;
 	if (height / (2 * distance * tan(acc * selFD->spread[1])) < 1)
-		hitchance *= height / (2 * distance * tan(acc * selFD->spread[1]));
+		hitchance *= height / (2 * distance * tan(acc * (1+selFD->modif) + selFD->spread[1]));
 
 	/* Calculate cover: */
 	n = 0;

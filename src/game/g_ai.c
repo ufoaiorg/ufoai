@@ -168,7 +168,8 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 
 		fd = &od->fd[SHOT_FD_PRIO(fm)];
 
-		nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill) / 2);
+		nspread = SPREAD_NORM((fd->spread[0]+fd->spread[1])*0.5 + GET_ACC(ent->chr.skills[ABILITY_ACCURACY]*(1+fd->modif),
+								 fd->weaponSkill));
 		shots = tu / fd->time;
 		if (shots) {
 			/* search best target */

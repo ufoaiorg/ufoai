@@ -531,7 +531,7 @@ menu employees
 		if "mn_show_employee == 1"
 		pos "475 370" image "*cvar mn_chrrank_img"
 	}
-	
+
 	string	rank_lbl
 	{
 		if "mn_show_employee == 1"
@@ -545,10 +545,10 @@ menu employees
 		pos "975 80"  string "*cvar mn_tpwr" align ur
 	}
 	pic pwr_rahmen { pos "707 98"  image menu/bar_rahmen }
-	bar pwr_bar    
+	bar pwr_bar
 	{
 		if "mn_show_employee == 1"
-		pos "716 103" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 256 align uc
+		pos "716 103" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 100 align uc
 	}
 
 	string spd_lbl { pos "700 110" string "_Speed:" }
@@ -557,12 +557,12 @@ menu employees
 		if "mn_show_employee == 1"
 		pos "975 110" string "*cvar mn_tspd" align ur
 	}
-	
+
 	pic spd_rahmen { pos "707 128" image menu/bar_rahmen }
 	bar spd_bar
 	{
 		if "mn_show_employee == 1"
-		pos "716 133" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 256 align uc
+		pos "716 133" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 100 align uc
 	}
 
 	string acc_lbl { pos "700 140" string "_Accuracy:" }
@@ -571,12 +571,12 @@ menu employees
 		if "mn_show_employee == 1"
 		pos "975 140" string "*cvar mn_tacc" align ur
 	}
-	
+
 	pic acc_rahmen { pos "707 158" image menu/bar_rahmen }
 	bar acc_bar
 	{
 		if "mn_show_employee == 1"
-		pos "716 163" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 256 align uc
+		pos "716 163" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 100 align uc
 	}
 
 	string mnd_lbl { pos "700 170" string "_Mind:" }
@@ -589,7 +589,7 @@ menu employees
 	bar mnd_bar
 	{
 		if "mn_show_employee == 1"
-		pos "716 193" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 256 align uc
+		pos "716 193" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 100 align uc
 	}
 
 	string cls_lbl { pos "700 210" string "_Close Combat:" }
@@ -602,7 +602,7 @@ menu employees
 	bar cls_bar
 	{
 		if "mn_show_employee == 1"
-		pos "716 233" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 256 align uc
+		pos "716 233" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 100 align uc
 	}
 
 	string hvy_lbl { pos "700 240" string "_Heavy Weapons:" }
@@ -615,7 +615,7 @@ menu employees
 	bar hvy_bar
 	{
 		if "mn_show_employee == 1"
-		pos "716 263" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 256 align uc
+		pos "716 263" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 100 align uc
 	}
 
 	string ass_lbl { pos "700 270" string "_Assault Guns:" }
@@ -628,7 +628,7 @@ menu employees
 	bar ass_bar
 	{
 		if "mn_show_employee == 1"
-		pos "716 293" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc
+		pos "716 293" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 100 align uc
 	}
 
 	string snp_lbl { pos "700 300" string "_Sniper Rifles:" }
@@ -641,7 +641,7 @@ menu employees
 	bar snp_bar
 	{
 		if "mn_show_employee == 1"
-		pos "716 323" current "*cvar mn_vsnp" size "245 6" color "0 .8 0 1" max 256 align uc
+		pos "716 323" current "*cvar mn_vsnp" size "245 6" color "0 .8 0 1" max 100 align uc
 	}
 
 	string exp_lbl { pos "700 330" string "_High-Explosives:" }
@@ -650,12 +650,12 @@ menu employees
 		if "mn_show_employee == 1"
 		pos "975 330" string "*cvar mn_texp" align ur
 	}
-	
+
 	pic exp_rahmen { pos "707 348" image menu/bar_rahmen }
 	bar exp_bar
 	{
 		if "mn_show_employee == 1"
-		pos "716 353" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc
+		pos "716 353" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 100 align uc
 	}
 
 	string	missions_lbl { pos "700 380" string "_Survived Missions:" }
@@ -664,7 +664,7 @@ menu employees
 		if "mn_show_employee == 1"
 		pos "975 380" string "*cvar mn_chrmis" align ur
 	}
-	
+
 	string	kills_lbl { pos "700 400" string "_Killed Enemies:" }
 	string	kills_val
 	{

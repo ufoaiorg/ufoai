@@ -281,6 +281,23 @@ qboolean G_FrustomVis(edict_t * from, vec3_t point)
 
 
 /**
+ * @brief tests the visibility between two points
+ * @param[in] from  The point to check visibility from
+ * @param[to] to    The point to check visibility to
+ * @return true if the points are visible from each other, false otherwise.
+ */
+qboolean G_LineVis(vec3_t from, vec3_t to)
+{
+#if 0 /* this version is more accurate the other version is much faster */
+	trace_t tr;
+	tr = gi.trace(from, NULL, NULL, to, NULL, MASK_SOLID);
+	return (tr.fraction >= 1.0);
+#else
+	return gi.TestLine(from, to);
+#endif
+}
+
+/**
  * @brief calculate how much check is "visible" from from
  */
 float G_ActorVis(vec3_t from, edict_t * check, qboolean full)
@@ -312,7 +329,7 @@ float G_ActorVis(vec3_t from, edict_t * check, qboolean full)
 	/* do 3 tests */
 	n = 0;
 	for (i = 0; i < 3; i++) {
-		if (!gi.TestLine(from, test)) {
+		if (G_LineVis(from, test)) {
 			if (full)
 				n++;
 			else
@@ -397,7 +414,7 @@ float G_Vis(int team, edict_t * from, edict_t * check, int flags)
 	case ET_UGV:
 		return G_ActorVis(eye, check, qfalse);
 	case ET_ITEM:
-		return !gi.TestLine(eye, check->origin);
+		return G_LineVis(eye, check->origin);
 	default:
 		return 0.0;
 	}

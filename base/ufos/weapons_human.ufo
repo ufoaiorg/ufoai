@@ -33,40 +33,42 @@ item assault_ammo
 
 	primary
 	{
-		name	"_Burst"
+		name	"_Snap Burst"
 		skill	assault
 		projtl	bullet
 		impact	bulletImpact
 		hitbody blood
 		firesnd	weapons/assault.wav
 		speed	0
-		spread	"0 2"
+		spread	"1.4 1.4"
+		modif	0.7
 		crouch	0.7
 		range	60
 		shots	3
 		ammo	3
 		rof		5
-		time	7
-		damage	"20 5"
+		time	15
+		damage	"37 0"
 		dmgtype normal
 	}
 	secondary
 	{
-		name	"_Auto"
+		name	"_Aimed Burst"
 		skill	assault
 		projtl	bullet
 		impact	bulletImpact
 		hitbody blood
 		firesnd	weapons/assault.wav
 		speed	0
-		spread	"1 2"
+		spread	"0.8 0.8"
+		modif	0.7
 		crouch	0.6
 		range	60
-		shots	9
-		ammo	9
+		shots	3
+		ammo	3
 		rof		10
-		time	9
-		damage	"20 5"
+		time	18
+		damage	"37 0"
 		dmgtype normal
 	}
 }
@@ -186,13 +188,14 @@ item sniper_ammo
 		hitbody blood
 		firesnd	weapons/sniper.wav
 		speed	0
-		spread	"0 0.2"
+		spread	"0.1 0.1"
+		modif	1.7
 		crouch	0.7
 		range	250
 		shots	1
 		ammo	1
-		time	12
-		damage	"80 40"
+		time	18
+		damage	"105 0"
 		dmgtype normal
 	}
 	secondary
@@ -204,13 +207,14 @@ item sniper_ammo
 		hitbody blood
 		firesnd	weapons/sniper.wav
 		speed	0
-		spread	"0 0.2"
+		spread	"0.1 0.1"
+		modif	1.7
 		crouch	0.7
 		range	250
 		shots	1
 		ammo	1
-		time	12
-		damage	"80 40"
+		time	18
+		damage	"105 0"
 		dmgtype normal
 	}
 }
@@ -251,39 +255,40 @@ item pistol_ammo
 
 	primary
 	{
-		name	"_Single Shot"
+		name	"_Snap Shot"
 		skill	close
 		projtl	bullet
 		impact	bulletImpact
 		hitbody blood
 		firesnd	weapons/pistol.wav
 		speed	0
-		spread	"0 1"
+		spread	"2.2 2.2"
 		crouch	0.9
 		range	40
 		shots	1
 		ammo	1
-		time	5
-		damage	"20 5"
+		time	6
+		damage	"37 0"
 		dmgtype normal
 	}
 	secondary
 	{
-		name	"_Rapid Fire"
+		name	"_Aimed Shot"
 		skill	close
 		projtl	bullet
 		impact	bulletImpact
 		hitbody blood
 		firesnd	weapons/pistol.wav
 		speed	0
-		spread	"1 2"
+		spread	"1.2 1.2"
+		modif	0.7
 		crouch	0.9
 		range	40
-		shots	3
-		ammo	3
+		shots	1
+		ammo	1
 		rof		10
-		time	7
-		damage	"20 5"
+		time	8
+		damage	"37 0"
 		dmgtype normal
 	}
 }
@@ -396,40 +401,41 @@ item smg_ammo
 
 	primary
 	{
-		name	"_Burst"
+		name	"_Snap Burst"
 		skill	assault
 		projtl	bullet
 		impact	bulletImpact
 		hitbody blood
 		firesnd	weapons/smg.wav
 		speed	0
-		spread	"1 2"
+		spread	"2.7 2.7"
 		crouch	0.7
 		range	60
-		shots	6
-		ammo	6
+		shots	3
+		ammo	3
 		rof		10
-		time	8
-		damage	"9 2"
+		time	9
+		damage	"25 0"
 		dmgtype normal
 	}
 	secondary
 	{
-		name	"_Full Auto"
+		name	"_Aimed Burst"
 		skill	assault
 		projtl	bullet
 		impact	bulletImpact
 		hitbody blood
 		firesnd	weapons/smg.wav
 		speed	0
-		spread	"1 3"
+		spread	"1.6 1.6"
+		modif	0.1
 		crouch	0.7
 		range	60
-		shots	18
-		ammo	18
-		rof		15
+		shots	3
+		ammo	3
+		rof		10
 		time	12
-		damage	"9 2"
+		damage	"25 0"
 		dmgtype normal
 	}
 }
@@ -477,14 +483,14 @@ item shotgun2_ammo
 		firesnd	weapons/shotgun.wav
 		sndonce true
 		speed	0
-		spread	"4 0"
+		spread	"3.6 3.6"
 		crouch	1.0
 		range	60
-		shots	8
+		shots	10
 		ammo	1
 		rof		0
-		time	7
-		damage	"6 2"
+		time	12
+		damage	"11 0"
 		dmgtype blast
 	}
 
@@ -498,14 +504,14 @@ item shotgun2_ammo
 		firesnd	weapons/shotgun.wav
 		sndonce true
 		speed	0
-		spread	"5 0"
+		spread	"5.5 5.5"
 		crouch	1.0
 		range	60
 		shots	16
 		ammo	2
 		rof		0
-		time	9
-		damage	"6 2"
+		time	17
+		damage	"11 0"
 		dmgtype blast
 	}
 }
@@ -553,14 +559,14 @@ item shotgun_ammo
 		firesnd	weapons/shotgun.wav
 		sndonce true
 		speed	0
-		spread	"4 0"
+		spread	"3.6 3.6"
 		crouch	1.0
 		range	60
-		shots	8
+		shots	10
 		ammo	1
 		rof		0
-		time	7
-		damage	"6 2"
+		time	12
+		damage	"11 0"
 		dmgtype blast
 	}
 
@@ -574,14 +580,14 @@ item shotgun_ammo
 		firesnd	weapons/shotgun.wav
 		sndonce true
 		speed	0
-		spread	"5 0"
+		spread	"5.5 5.5"
 		crouch	1.0
 		range	60
 		shots	16
 		ammo	2
 		rof		0
-		time	9
-		damage	"6 2"
+		time	17
+		damage	"11 0"
 		dmgtype blast
 	}
 }
@@ -608,14 +614,14 @@ item shotgun_slug_ammo
 		firesnd	weapons/shotgun.wav
 		sndonce true
 		speed	0
-		spread	"4 0"
+		spread	"3.6 3.6"
 		crouch	1.0
 		range	60
-		shots	8
+		shots	10
 		ammo	1
 		rof		0
-		time	7
-		damage	"6 2"
+		time	12
+		damage	"11 0"
 		dmgtype blast
 	}
 
@@ -629,14 +635,14 @@ item shotgun_slug_ammo
 		firesnd	weapons/shotgun.wav
 		sndonce true
 		speed	0
-		spread	"5 0"
+		spread	"5.5 5.5"
 		crouch	1.0
 		range	60
 		shots	16
 		ammo	2
 		rof		0
-		time	9
-		damage	"6 2"
+		time	17
+		damage	"11 0"
 		dmgtype blast
 	}
 }

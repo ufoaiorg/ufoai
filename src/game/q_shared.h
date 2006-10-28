@@ -868,6 +868,7 @@ typedef struct fireDef_s {
 	float speed;
 	vec2_t shotOrg;
 	vec2_t spread;
+	float modif;
 	int delay;
 	int bounce;
 	float bounceFac;
@@ -987,10 +988,10 @@ typedef struct csi_s {
 
 /* TODO: Medals. Still subject to (major) changes. */
 
-#define MAX_SKILL           256
+#define MAX_SKILL           100
 
 #define GET_HP( ab )        (80 + (ab) * 90/MAX_SKILL)
-#define GET_ACC( ab, sk )   ((1.5 - (float)(ab)/MAX_SKILL) * pow(0.8, (sk)/50) )
+#define GET_ACC( ab, sk )   ((1 - (float)(ab)/MAX_SKILL))
 #define GET_TU( ab )        (27 + (ab) * 20/MAX_SKILL)
 #define GET_MORALE( ab )        (100 + (ab) * 150/MAX_SKILL)
 
