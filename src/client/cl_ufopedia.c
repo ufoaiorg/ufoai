@@ -208,7 +208,7 @@ void CL_ItemDescription(int item)
  * @brief Prints the ufopedia description for armors
  * @sa UP_DrawEntry
  */
-void UP_ArmorDescription ( technology_t* t )
+void UP_ArmorDescription (technology_t* t)
 {
 	objDef_t	*od = NULL;
 	int	i;
@@ -244,7 +244,7 @@ void UP_ArmorDescription ( technology_t* t )
  * @brief Prints the ufopedia description for technologies
  * @sa UP_DrawEntry
  */
-void UP_TechDescription ( technology_t* t )
+void UP_TechDescription (technology_t* t)
 {
 	UP_DisplayTechTree(t);
 }
@@ -253,7 +253,7 @@ void UP_TechDescription ( technology_t* t )
  * @brief Prints the ufopedia description for buildings
  * @sa UP_DrawEntry
  */
-void UP_BuildingDescription ( technology_t* t )
+void UP_BuildingDescription (technology_t* t)
 {
 	building_t* b = B_GetBuildingType ( t->provides );
 
@@ -273,7 +273,7 @@ void UP_BuildingDescription ( technology_t* t )
  * @brief Prints the ufopedia description for aircraft
  * @sa UP_DrawEntry
  */
-void UP_AircraftDescription ( technology_t* t )
+void UP_AircraftDescription (technology_t* t)
 {
 	aircraft_t* aircraft = CL_GetAircraft ( t->provides );
 	if ( !aircraft ) {
@@ -297,14 +297,13 @@ void UP_AircraftDescription ( technology_t* t )
  * @sa UP_ArmorDescription
  * @sa CL_ItemDescription
  */
-void UP_DrawEntry( technology_t* tech )
+void UP_DrawEntry (technology_t* tech)
 {
 	int i;
 	if (!tech)
 		return;
 
-	menuText[TEXT_LIST] = NULL;
-	Cvar_Set("mn_uptitle", _(tech->name));
+	menuText[TEXT_LIST] = menuText[TEXT_STANDARD] = menuText[TEXT_UFOPEDIA] = NULL;
 
 	Cvar_Set("mn_upmodel_top", "");
 	Cvar_Set("mn_upmodel_bottom", "");
@@ -321,50 +320,60 @@ void UP_DrawEntry( technology_t* tech )
 	/* confunc */
 	Cbuf_AddText("mn_upfsmall\n");
 
-	if ( RS_IsResearched_ptr(tech) ) {
-		/* Is research -> display research text */
-
+	if (RS_IsResearched_ptr(tech)) {
+		Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
+		/* If researched -> display research text */
 		menuText[TEXT_UFOPEDIA] = _(tech->description);
+		if (*tech->pre_description) {
+			if (!Q_strncmp(Cvar_VariableString("mn_up_desc"), "pre", 3)) {
+				Com_Printf("research: use pre text\n");
+				menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
+			}
+			Cbuf_AddText("mn_upenable_button_switchtext\n");
+			Com_Printf("enable\n");
+		} else {
+			Com_Printf("disable\n");
+			Cbuf_AddText("mn_updisable_button_switchtext\n");
+		}
 
 		if (upCurrent) {
-			menuText[TEXT_STANDARD] = NULL;
-			switch ( tech->type ) {
+			switch (tech->type) {
 			case RS_ARMOR:
-				UP_ArmorDescription( tech );
+				UP_ArmorDescription(tech);
 				break;
 			case RS_WEAPON:
 				for (i = 0; i < csi.numODs; i++) {
-					if ( !Q_strncmp( tech->provides, csi.ods[i].kurz, MAX_VAR ) ) {
-						CL_ItemDescription( i );
+					if (!Q_strncmp(tech->provides, csi.ods[i].kurz, MAX_VAR)) {
+						CL_ItemDescription(i);
 						UP_DisplayTechTree(tech);
 						break;
 					}
 				}
 				break;
 			case RS_TECH:
-				UP_TechDescription( tech );
+				UP_TechDescription(tech);
 				break;
 			case RS_CRAFT:
-				UP_AircraftDescription( tech );
+				UP_AircraftDescription(tech);
 				break;
 			case RS_BUILDING:
-				UP_BuildingDescription( tech );
+				UP_BuildingDescription(tech);
 				break;
 			default:
 				break;
 			}
 		}
-		else {
-			menuText[TEXT_STANDARD] = NULL;
-		}
-	} else if ( RS_Collected_(tech) ) {
+	} else if (RS_Collected_(tech)) {
+		Cvar_Set("mn_uptitle", _(tech->name));
 		/* Not researched but some items collected -> display pre-research text if available. */
-
-		if ( tech->description_pre )
-			menuText[TEXT_UFOPEDIA] = _(tech->description_pre);
-		else
+		if (*tech->pre_description) {
+			Com_Printf("use pre text\n");
+			menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
+		} else
 			menuText[TEXT_UFOPEDIA] = _("No pre-research description available.");
-	}
+		Cbuf_AddText("mn_updisable_button_switchtext\n");
+	} else
+		Cvar_Set("mn_uptitle", _(tech->name));
 }
 
 /**
@@ -372,7 +381,7 @@ void UP_DrawEntry( technology_t* tech )
  * @param name Ufopedia entry id
  * @sa UP_FindEntry_f
  */
-void UP_OpenWith ( char *name )
+void UP_OpenWith (char *name)
 {
 	Cbuf_AddText("mn_push ufopedia\n");
 	Cbuf_Execute();
@@ -384,7 +393,7 @@ void UP_OpenWith ( char *name )
  * @param name Ufopedia entry id
  * @sa UP_FindEntry_f
  */
-void UP_OpenCopyWith ( char *name )
+void UP_OpenCopyWith (char *name)
 {
 	Cbuf_AddText("mn_push_copy ufopedia\n");
 	Cbuf_Execute();
@@ -398,32 +407,32 @@ void UP_OpenCopyWith ( char *name )
  * Usage: ufopedia <id>
  * opens the ufopedia with entry id
  */
-void UP_FindEntry_f ( void )
+void UP_FindEntry_f (void)
 {
 	char *id = NULL;
 	technology_t *tech = NULL;
 
-	if ( Cmd_Argc() < 2 ) {
+	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: ufopedia <id>\n");
 		return;
 	}
 
 	/*what are we searching for? */
-	id = Cmd_Argv( 1 );
+	id = Cmd_Argv(1);
 
 	/* maybe we get a call like ufopedia "" */
-	if ( !*id ) {
+	if (!*id) {
 		Com_Printf("UP_FindEntry_f: No PediaEntry given as parameter\n");
 		return;
 	}
 
 	Com_DPrintf("UP_FindEntry_f: id=\"%s\"\n", id); /*DEBUG */
 
-	tech = RS_GetTechByID( id );
+	tech = RS_GetTechByID(id);
 
 	if (tech) {
 		upCurrent = tech;
-		UP_DrawEntry( upCurrent );
+		UP_DrawEntry(upCurrent);
 		return;
 	}
 
@@ -446,7 +455,7 @@ void UP_Content_f( void )
 	cp = upText;
 	*cp = '\0';
 
-	for ( i = 0; i < gd.numChapters; i++ ) {
+	for (i = 0; i < gd.numChapters; i++) {
 		/* Check if there are any researched items in this chapter ... */
 		researched_entries = qfalse;
 		upCurrent = &gd.technologies[gd.upChapters[i].first];
@@ -460,10 +469,10 @@ void UP_Content_f( void )
 			else {
 				upCurrent = NULL;
 			}
-		} while ( upCurrent );
+		} while (upCurrent);
 
 		/* .. and if so add them to the displaylist of chapters. */
-		if ( researched_entries ) {
+		if (researched_entries) {
 			upChapters_displaylist[numChapters_displaylist++] = &gd.upChapters[i];
 			Q_strcat( cp, gd.upChapters[i].name, MAX_UPTEXT);
 			Q_strcat( cp, "\n", MAX_UPTEXT);
@@ -481,7 +490,7 @@ void UP_Content_f( void )
 	Cvar_Set("mn_upimage_bottom", "base/empty");
 	Cvar_Set("mn_uptitle", _("Ufopedia Content"));
 	/* confunc */
-	Cbuf_AddText("mn_upfbig\n");
+	Cbuf_AddText("mn_upfbig;mn_updisable_button_switchtext\n");
 }
 
 
@@ -491,20 +500,20 @@ void UP_Content_f( void )
  */
 void UP_Prev_f( void )
 {
-	if ( !upCurrent ) /* if called from console */
+	if (!upCurrent) /* if called from console */
 		return;
 
 	/* get previous entry */
-	if ( upCurrent->prev >= 0 ) {
+	if (upCurrent->prev >= 0) {
 		/* Check if the previous entry is researched already otherwise go to the next entry. */
 		do {
 			upCurrent = &gd.technologies[upCurrent->prev];
 			assert (upCurrent);
 			if (upCurrent->idx == upCurrent->prev)
 				Sys_Error("UP_Prev_f: The 'prev':%d entry equals to 'idx' entry for '%s'.\n", upCurrent->prev, upCurrent->id);
-		} while ( upCurrent->prev >= 0 && !RS_IsResearched_ptr(upCurrent) );
+		} while (upCurrent->prev >= 0 && !RS_IsResearched_ptr(upCurrent));
 
-		if ( RS_IsResearched_ptr(upCurrent) ) {
+		if (RS_IsResearched_ptr(upCurrent)) {
 			UP_DrawEntry( upCurrent );
 			return;
 		}
@@ -516,10 +525,10 @@ void UP_Prev_f( void )
 
 		/* get previous chapter */
 		while (upc-- > 0) {
-			if ( gd.upChapters[upc].last >= 0 ) {
+			if (gd.upChapters[upc].last >= 0) {
 				upCurrent = &gd.technologies[gd.upChapters[upc].last];
-				if ( RS_IsResearched_ptr(upCurrent) )
-					UP_DrawEntry( upCurrent );
+				if (RS_IsResearched_ptr(upCurrent))
+					UP_DrawEntry(upCurrent);
 				else
 					UP_Prev_f();
 				return;
@@ -537,21 +546,21 @@ void UP_Prev_f( void )
  */
 void UP_Next_f( void )
 {
-	if ( !upCurrent ) /* if called from console */
+	if (!upCurrent) /* if called from console */
 		return;
 
 	/* get next entry */
-	if ( upCurrent && ( upCurrent->next >= 0) ) {
+	if (upCurrent && (upCurrent->next >= 0)) {
 		/* Check if the next entry is researched already otherwise go to the next entry. */
 		do {
 			upCurrent = &gd.technologies[upCurrent->next];
 			assert (upCurrent);
 			if (upCurrent->idx == upCurrent->next)
 				Sys_Error("UP_Next_f: The 'next':%d entry equals to 'idx' entry for '%s'.\n", upCurrent->next, upCurrent->id);
-		} while ( upCurrent->next >= 0 && !RS_IsResearched_ptr(upCurrent) );
+		} while (upCurrent->next >= 0 && !RS_IsResearched_ptr(upCurrent));
 
-		if ( RS_IsResearched_ptr(upCurrent) ) {
-			UP_DrawEntry( upCurrent );
+		if (RS_IsResearched_ptr(upCurrent)) {
+			UP_DrawEntry(upCurrent);
 			return;
 		}
 	}
@@ -562,10 +571,10 @@ void UP_Next_f( void )
 
 		/* get next chapter */
 		while (++upc < gd.numChapters) {
-			if ( gd.upChapters[upc].first >= 0 ) {
+			if (gd.upChapters[upc].first >= 0) {
 				upCurrent = &gd.technologies[gd.upChapters[upc].first];
-				if ( RS_IsResearched_ptr(upCurrent) )
-					UP_DrawEntry( upCurrent );
+				if (RS_IsResearched_ptr(upCurrent))
+					UP_DrawEntry(upCurrent);
 				else
 					UP_Next_f();
 				return;
@@ -582,23 +591,23 @@ void UP_Next_f( void )
  * @param
  * @sa
  */
-void UP_Click_f( void )
+void UP_Click_f (void)
 {
 	int num;
 
-	if ( Cmd_Argc() < 2 || upCurrent )
+	if (Cmd_Argc() < 2 || upCurrent)
 		return;
-	num = atoi( Cmd_Argv( 1 ) );
+	num = atoi(Cmd_Argv(1));
 
 	if ( num < numChapters_displaylist && upChapters_displaylist[num]->first ) {
 		upCurrent = &gd.technologies[upChapters_displaylist[num]->first];
 		do {
-			if ( RS_IsResearched_ptr(upCurrent) ) {
+			if (RS_IsResearched_ptr(upCurrent)) {
 				UP_DrawEntry( upCurrent );
 				return;
 			}
 			upCurrent = &gd.technologies[upCurrent->next];
-		} while ( upCurrent );
+		} while (upCurrent);
 	}
 }
 #if DEPENDENCIES_OVERHAUL
@@ -614,9 +623,9 @@ void UP_TechTreeClick_f( void )
 	requirements_t *required_AND = NULL;
 	technology_t *techRequired = NULL;
 
-	if ( Cmd_Argc() < 2 )
+	if (Cmd_Argc() < 2)
 		return;
-	num = atoi( Cmd_Argv( 1 ) );
+	num = atoi(Cmd_Argv(1));
 
 	if (!upCurrent)
 		return;
@@ -648,9 +657,9 @@ void UP_TechTreeClick_f( void )
 	stringlist_t *required = NULL;
 	technology_t *techRequired = NULL;
 
-	if ( Cmd_Argc() < 2 )
+	if (Cmd_Argc() < 2)
 		return;
-	num = atoi( Cmd_Argv( 1 ) );
+	num = atoi(Cmd_Argv(1));
 
 	if (!upCurrent)
 		return;
@@ -673,6 +682,26 @@ void UP_TechTreeClick_f( void )
 #endif /* overhaul */
 
 /**
+ * @brief
+ */
+void UP_SwitchDescriptions_f (void)
+{
+	if (!Q_strncmp(Cvar_VariableString("mn_up_desc"), "pre", 3))
+		Cvar_Set("mn_up_desc", "normal");
+	else
+		Cvar_Set("mn_up_desc", "pre");
+}
+
+/**
+ * @brief Redraw the ufopedia article
+ */
+void UP_Update_f (void)
+{
+	if (upCurrent)
+		UP_DrawEntry(upCurrent);
+}
+
+/**
  * @brief Shows available ufopedia entries
  * TODO: Implement me
  */
@@ -688,13 +717,14 @@ void UP_ResetUfopedia( void )
 {
 	/* reset menu structures */
 	gd.numChapters = 0;
-	/*numEntries = 0; */
 
 	/* add commands and cvars */
+	Cmd_AddCommand("mn_upswitch", UP_SwitchDescriptions_f, "Cycles through the ufopedia emails that are available for the current tech");
 	Cmd_AddCommand("ufopedialist", UP_List_f, NULL);
 	Cmd_AddCommand("mn_upcontent", UP_Content_f, NULL);
 	Cmd_AddCommand("mn_upprev", UP_Prev_f, NULL);
 	Cmd_AddCommand("mn_upnext", UP_Next_f, NULL);
+	Cmd_AddCommand("mn_upupdate", UP_Update_f, NULL);
 	Cmd_AddCommand("ufopedia", UP_FindEntry_f, NULL);
 	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
 	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
@@ -712,42 +742,42 @@ void UP_ParseUpChapters( char *id, char **text )
 	char	*token;
 
 	/* get name list body body */
-	token = COM_Parse( text );
+	token = COM_Parse(text);
 
-	if ( !*text || *token !='{' ) {
-		Com_Printf( "UP_ParseUpChapters: chapter def \"%s\" without body ignored\n", id );
+	if (!*text || *token !='{') {
+		Com_Printf("UP_ParseUpChapters: chapter def \"%s\" without body ignored\n", id);
 		return;
 	}
 
 	do {
 		/* get the id */
-		token = COM_EParse( text, errhead, id );
-		if ( !*text )
+		token = COM_EParse(text, errhead, id);
+		if (!*text)
 			break;
-		if ( *token == '}' )
+		if (*token == '}')
 			break;
 
 		/* add chapter */
-		if ( gd.numChapters >= MAX_PEDIACHAPTERS ) {
+		if (gd.numChapters >= MAX_PEDIACHAPTERS) {
 			Com_Printf("UP_ParseUpChapters: too many chapter defs\n");
 			return;
 		}
-		memset( &gd.upChapters[gd.numChapters], 0, sizeof( pediaChapter_t ) );
-		Q_strncpyz( gd.upChapters[gd.numChapters].id, token, MAX_VAR );
+		memset(&gd.upChapters[gd.numChapters], 0, sizeof(pediaChapter_t));
+		Q_strncpyz(gd.upChapters[gd.numChapters].id, token, MAX_VAR);
 		gd.upChapters[gd.numChapters].idx = gd.numChapters;	/* set self-link */
 
 		/* get the name */
-		token = COM_EParse( text, errhead, id );
-		if ( !*text )
+		token = COM_EParse(text, errhead, id);
+		if (!*text)
 			break;
-		if ( *token == '}' )
+		if (*token == '}')
 			break;
 		if ( *token == '_' )
 			token++;
 		if ( !*token )
 			continue;
-		Q_strncpyz( gd.upChapters[gd.numChapters].name, _(token), MAX_VAR );
+		Q_strncpyz(gd.upChapters[gd.numChapters].name, _(token), MAX_VAR);
 
 		gd.numChapters++;
-	} while ( *text );
+	} while (*text);
 }
