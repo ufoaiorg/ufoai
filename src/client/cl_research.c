@@ -72,7 +72,7 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 		Com_Printf("RS_RequirementsMet: No requirement list(s) given as parameter.\n");
 		return qfalse;
 	}
-	
+
 	if (required_AND) {
 		for (i = 0; i < required_AND->numLinks; i++) {
 			switch (required_AND->type[i]) {
@@ -141,17 +141,17 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 int RS_ItemInBase(int item_idx, base_t *base)
 {
 	equipDef_t *ed = NULL;
-	
+
 	if (!base)
 		return -1;
-	
+
 	ed = &base->storage;
-	
+
 	if (!ed)
 		return -1;
-	
+
 	Com_DPrintf("RS_ItemInBase: DEBUG idx %s\n",  csi.ods[item_idx].kurz);
-	
+
 	return ed->num[item_idx];
 }
 
@@ -163,13 +163,13 @@ qboolean RS_CheckCollected(requirements_t *required)
 	int i;
 	int item_amount;
 	qboolean all_collected = qtrue;
-	
+
 	if (!required)
 		return qfalse;
-	
+
 	if (!baseCurrent)
 		return qfalse;
-	
+
 	for (i = 0; i < required->numLinks; i++) {
 		if (required->type[i] == RS_LINK_ITEM) {
 			item_amount = RS_ItemInBase(required->idx[i], baseCurrent);
@@ -195,16 +195,16 @@ void RS_CheckAllCollected(void)
 
 	if (!required)
 		return;
-	
+
 	if (!baseCurrent)
 		return;
-	
+
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 		if (RS_CheckCollected(&tech->require_AND)) {
 			tech->statusCollected = qtrue;
 		}
-		
+
 	}
 }
 
@@ -225,16 +225,16 @@ void RS_MarkResearchable(void)
 		tech->statusResearchable = qfalse;
 	}
 	RS_CheckAllCollected();
-	
+
 	for (i = 0; i < gd.numTechnologies; i++) {	/* i = tech-index */
 		tech = &gd.technologies[i];
 		if (!tech->statusResearchable) {	/* Redundant, since we set them all to false, but you never know. */
 			/* Check for collected items/aliens/etc... */
-			
+
 			if (tech->statusResearch != RS_FINISH) {
 				/* Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", tech->id); */
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
-				
+
 				/* All requirements are met. */
 				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR)) {
 					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
@@ -393,7 +393,7 @@ static void RS_InitRequirementList(requirements_t *required)
 		default:
 			break;
 		}
-		
+
 	}
 
 }
@@ -831,7 +831,7 @@ static void RS_ResearchStart(void)
 		RS_MarkResearchable();
 	}
 	/************/
-	
+
 	if (tech->statusResearchable) {
 		switch (tech->statusResearch) {
 		case RS_RUNNING:
@@ -920,7 +920,7 @@ void RS_UpdateData(void)
 		Com_sprintf(name, MAX_VAR, tech->name);
 
 		/* TODO: add check for collected items */
-		
+
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
 			/* An unresearched collected item that cannot yet be researched. */
 			Q_strcat(name, _(" [not yet researchable]"), MAX_VAR);
@@ -1402,7 +1402,7 @@ static value_t valid_tech_vars[] = {
 	/*name of technology */
 	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name)},
 	{"description", V_TRANSLATION2_STRING, offsetof(technology_t, description)},
-	{"description_pre", V_TRANSLATION2_STRING, offsetof(technology_t, description_pre)},
+	{"pre_description", V_TRANSLATION2_STRING, offsetof(technology_t, pre_description)},
 	/*what does this research provide */
 	{"provides", V_STRING, offsetof(technology_t, provides)},
 	/* ("require")	Handled in parser below. */
@@ -1454,12 +1454,6 @@ void RS_ParseTechnologies(char *id, char **text)
 	tech->idx = gd.numTechnologies - 1;
 	Com_sprintf(tech->id, MAX_VAR, id);
 	Com_sprintf(tech->description, MAX_VAR, _("No description available."));
-	/* tech->description_pre should be NULL in the beginning so we can check on that. TODO: this may change int he future.*/
-	*tech->provides = '\0';
-	*tech->image_top = '\0';
-	*tech->image_bottom = '\0';
-	*tech->mdl_top = '\0';
-	*tech->mdl_bottom = '\0';
 	tech->type = RS_TECH;
 	tech->statusResearch = RS_NONE;
 	tech->statusResearchable = qfalse;
@@ -1505,7 +1499,7 @@ void RS_ParseTechnologies(char *id, char **text)
 			else
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
 		} else {
-			
+
 			if ((!Q_strncmp(token, "require_AND", MAX_VAR)) || (!Q_strncmp(token, "require_OR", MAX_VAR))) {
 				/* Link to correct list. */
 				if (!Q_strncmp(token, "require_AND", MAX_VAR)) {
@@ -1513,7 +1507,7 @@ void RS_ParseTechnologies(char *id, char **text)
 				} else {
 					required_temp = &tech->require_OR;
 				}
-				
+
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					break;
@@ -1773,7 +1767,7 @@ qboolean RS_TechIsResearchable(technology_t * tech)
 
 	if (tech->statusResearchable)
 		return qtrue;
-	
+
 	return RS_RequirementsMet(&tech->require_AND, &tech->require_OR);
 }
 

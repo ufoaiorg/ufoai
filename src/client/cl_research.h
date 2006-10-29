@@ -87,7 +87,7 @@ typedef struct technology_s {
 	int idx;				/* Self-link in the global list */
 	char name[MAX_VAR];			/* Full name of this technology. */
 	char description[MAX_VAR];	/* Description of researched item. Short text-id to get the full text via gettext. */
-	char description_pre[MAX_VAR];	/* Description of item before it's researched. Short text-id to get the full text via gettext. */
+	char pre_description[MAX_VAR];	/* Description of item before it's researched. Short text-id to get the full text via gettext. */
 	researchType_t type;
 
 
