@@ -72,7 +72,7 @@ CLIENT / SERVER interactions
 
 static int rd_target;
 static char *rd_buffer;
-static int rd_buffersize;
+static unsigned int rd_buffersize;
 static void (*rd_flush) (int target, char *buffer);
 
 /**
@@ -329,7 +329,7 @@ void MSG_WriteByte(sizebuf_t * sb, int c)
 	byte *buf;
 
 	/* PARANOID is only possible in debug mode (when DEBUG was set, too) */
-#ifdef PARANOID
+#ifdef DEBUG
 	if (c < 0 || c > UCHAR_MAX)
 		Com_Printf("MSG_WriteByte: range error %i ('%s', line %i)\n", c, file, line);
 #endif
@@ -349,7 +349,7 @@ void MSG_WriteShort(sizebuf_t * sb, int c)
 {
 	byte *buf;
 
-#ifdef PARANOID
+#ifdef DEBUG
 	if (c < SHRT_MIN || c > USHRT_MAX)
 		Com_Printf("MSG_WriteShort: range error %i ('%s', line %i)\n", c, file, line);
 #endif
@@ -695,7 +695,8 @@ char *MSG_ReadString(sizebuf_t * msg_read)
 char *MSG_ReadStringLine(sizebuf_t * msg_read)
 {
 	static char string[2048];
-	int l, c;
+	unsigned int l;
+	int c;
 
 	l = 0;
 	do {

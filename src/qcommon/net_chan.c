@@ -73,9 +73,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qcommon.h"
 
-cvar_t *showpackets;
-cvar_t *showdrop;
-cvar_t *qport;
+static cvar_t *showpackets;
+static cvar_t *showdrop;
+static cvar_t *qport;
 
 netadr_t net_from;
 sizebuf_t net_message;
@@ -249,10 +249,10 @@ void Netchan_Transmit(netchan_t * chan, int length, byte * data)
 	if (showpackets->value) {
 		if (send_reliable)
 			Com_Printf("send %4i : s=%i reliable=%i ack=%i rack=%i\n", send.cursize, chan->outgoing_sequence - 1, chan->reliable_sequence,
-					   chan->incoming_sequence, chan->incoming_reliable_sequence);
+					chan->incoming_sequence, chan->incoming_reliable_sequence);
 		else
 			Com_Printf("send %4i : s=%i ack=%i rack=%i\n", send.cursize, chan->outgoing_sequence - 1, chan->incoming_sequence,
-					   chan->incoming_reliable_sequence);
+					chan->incoming_reliable_sequence);
 	}
 }
 
@@ -284,7 +284,7 @@ qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 	if (showpackets->value) {
 		if (reliable_message)
 			Com_Printf("recv %4i : s=%i reliable=%i ack=%i rack=%i\n", msg->cursize, sequence, chan->incoming_reliable_sequence ^ 1, sequence_ack,
-					   reliable_ack);
+					reliable_ack);
 		else
 			Com_Printf("recv %4i : s=%i ack=%i rack=%i\n", msg->cursize, sequence, sequence_ack, reliable_ack);
 	}
@@ -292,8 +292,8 @@ qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 	/* discard stale or duplicated packets */
 	if (sequence <= chan->incoming_sequence) {
 		if (showdrop->value)
-			Com_Printf("%s:Out of order packet %i at %i\n", NET_AdrToString(chan->remote_address)
-					   , sequence, chan->incoming_sequence);
+			Com_Printf("%s:Out of order packet %i at %i\n", NET_AdrToString(chan->remote_address),
+					sequence, chan->incoming_sequence);
 		return qfalse;
 	}
 
@@ -301,8 +301,8 @@ qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 	chan->dropped = sequence - (chan->incoming_sequence + 1);
 	if (chan->dropped > 0) {
 		if (showdrop->value)
-			Com_Printf("%s:Dropped %i packets at %i\n", NET_AdrToString(chan->remote_address)
-					   , chan->dropped, sequence);
+			Com_Printf("%s:Dropped %i packets at %i\n", NET_AdrToString(chan->remote_address),
+					chan->dropped, sequence);
 	}
 
 	/* if the current outgoing reliable message has been acknowledged */

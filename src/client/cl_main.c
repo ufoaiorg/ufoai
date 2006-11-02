@@ -1528,7 +1528,7 @@ void CL_Frame(int msec)
 		if (cls.state == ca_connected && extratime < 100)
 			return;
 		/* framerate is too high */
-		if (extratime < 1000 / cl_maxfps->value)
+		if (extratime < ceil(1000.0 / cl_maxfps->value))
 			return;
 	}
 
@@ -1633,6 +1633,7 @@ void CL_Frame(int msec)
 
 /**
  * @brief
+ * @sa CL_Shutdown
  */
 void CL_Init(void)
 {
@@ -1661,7 +1662,6 @@ void CL_Init(void)
 	CL_InitLocal();
 	IN_Init();
 
-/*	Cbuf_AddText("exec autoexec.cfg\n"); --- already called in FS_ExecAutoexec */
 	/* FIXME: Maybe we should activate this again when all savegames issues are solved */
 /*	Cbuf_AddText( "loadteam current\n" ); */
 	FS_ExecAutoexec();
@@ -1670,10 +1670,11 @@ void CL_Init(void)
 
 
 /**
- * @brief
- *
+ * @brief Saves configuration file and shuts the client systems down
  * FIXME: this is a callback from Sys_Quit and Com_Error.  It would be better
  * to run quit through here before the final handoff to the sys code.
+ * @sa Sys_Quit
+ * @sa CL_Init
  */
 void CL_Shutdown(void)
 {

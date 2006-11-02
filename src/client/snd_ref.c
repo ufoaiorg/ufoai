@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void S_Play(void);
 void S_SoundList_f(void);
-void S_Update_();
+void S_Update_(void);
 void S_StopAllSounds(void);
 
 void S_PlayOGG(void);

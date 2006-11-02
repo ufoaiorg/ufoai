@@ -254,9 +254,9 @@ void R_SetCacheState(msurface_t * surf)
  */
 void R_BuildLightMap(msurface_t * surf, byte * dest, int stride)
 {
-	int smax, tmax;
+	unsigned int smax, tmax;
 	int r, g, b, a, max;
-	int i, j, size;
+	unsigned int i, j, size;
 	byte *lightmap;
 	float scale[4];
 	int nummaps;

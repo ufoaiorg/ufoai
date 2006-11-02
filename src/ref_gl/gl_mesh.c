@@ -51,7 +51,7 @@ float r_avertexnormal_dots[SHADEDOT_QUANT][256] =
 /**
  * @brief
  */
-void GL_LerpVerts(int nverts, dtrivertx_t * v, dtrivertx_t * ov, dtrivertx_t * verts, float *lerp, float move[3], float frontv[3], float backv[3])
+void GL_LerpVerts(int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, float move[3], float frontv[3], float backv[3])
 {
 	int i;
 
@@ -100,7 +100,7 @@ static void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp, int framen
 
 	lerp = s_lerped[0];
 
-	GL_LerpVerts(paliashdr->num_xyz, v, ov, verts, lerp, move, frontv, backv);
+	GL_LerpVerts(paliashdr->num_xyz, v, ov, lerp, move, frontv, backv);
 
 	/* setup vertex array */
 	qglEnableClientState(GL_VERTEX_ARRAY);

@@ -2614,7 +2614,7 @@ int Grid_Fall(struct routing_s *map, pos3_t pos)
 {
 	int z = pos[2];
 
-	while (z > 0 && map->fall[pos[1]][pos[0]] & (1 << z))
+	while (z >= 0 && map->fall[pos[1]][pos[0]] & (1 << z))
 		z--;
 	return z;
 }

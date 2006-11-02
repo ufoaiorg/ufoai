@@ -611,6 +611,7 @@ void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb);
 void CL_ParticleFree(ptl_t *p);
 
 /* cl_actor.c */
+#define CURSOR_OFFSET UNIT_HEIGHT * 0.4 /* vertical cursor offset */
 extern le_t *selActor;
 extern int actorMoveLength;
 extern invList_t invList[MAX_INVLIST];
