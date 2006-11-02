@@ -1111,6 +1111,11 @@ static void MN_TextScroll_f(void)
 		return;
 	}
 
+	if (!Q_strncmp(Cmd_Argv(2), "reset", 5)) {
+		node->textScroll = 0;
+		return;
+	}
+
 	offset = atoi(Cmd_Argv(2));
 
 	if ( offset == 0 )

@@ -673,7 +673,6 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/unzip.o \
 	$(BUILDDIR)/client/cmodel.o \
 	$(BUILDDIR)/client/common.o \
-	$(BUILDDIR)/client/crc.o \
 	$(BUILDDIR)/client/cvar.o \
 	$(BUILDDIR)/client/files.o \
 	$(BUILDDIR)/client/md4.o \
@@ -846,9 +845,6 @@ $(BUILDDIR)/client/cmodel.o :      $(COMMON_DIR)/cmodel.c
 $(BUILDDIR)/client/common.o :      $(COMMON_DIR)/common.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/crc.o :         $(COMMON_DIR)/crc.c
-	$(DO_CC)
-
 $(BUILDDIR)/client/cvar.o :        $(COMMON_DIR)/cvar.c
 	$(DO_CC)
 
@@ -943,7 +939,6 @@ Q2DED_OBJS = \
 	$(BUILDDIR)/ded/unzip.o \
 	$(BUILDDIR)/ded/cmodel.o \
 	$(BUILDDIR)/ded/common.o \
-	$(BUILDDIR)/ded/crc.o \
 	$(BUILDDIR)/ded/cvar.o \
 	$(BUILDDIR)/ded/files.o \
 	$(BUILDDIR)/ded/md4.o \
@@ -1004,9 +999,6 @@ $(BUILDDIR)/ded/cmodel.o :     $(COMMON_DIR)/cmodel.c
 	$(DO_DED_CC)
 
 $(BUILDDIR)/ded/common.o :     $(COMMON_DIR)/common.c
-	$(DO_DED_CC)
-
-$(BUILDDIR)/ded/crc.o :	 $(COMMON_DIR)/crc.c
 	$(DO_DED_CC)
 
 $(BUILDDIR)/ded/cvar.o :	$(COMMON_DIR)/cvar.c

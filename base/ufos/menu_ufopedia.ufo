@@ -135,6 +135,7 @@ menu ufopedia
 		*ufopedia format  "24 0"
 		*ufopedia font    f_big
 		*ufopedia mousefx true
+		cmd "mn_textscroll ufopedia reset;"
 	}
 
 	confunc mn_upfsmall
@@ -142,6 +143,7 @@ menu ufopedia
 		*ufopedia format  "18 0"
 		*ufopedia font    f_small
 		*ufopedia mousefx false
+		cmd "mn_textscroll ufopedia reset;"
 	}
 
 	text description
