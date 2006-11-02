@@ -114,12 +114,12 @@ ifneq ($(ARCH),i386)
 endif
 
 ifeq ($(OSTYPE),FreeBSD)
-	LDFLAGS=-lm -lvorbisfile -lvorbis -lintl
+	LDFLAGS=-lm -lvorbisfile -lvorbis -lintl -lz
 	BUILD_ALSA=NO
 endif
 
 ifeq ($(OSTYPE),Linux)
-	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis
+	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis -lz
 endif
 
 ifeq ($(OSTYPE),Darwin)
@@ -139,7 +139,7 @@ ifeq ($(OSTYPE),Darwin)
 	BUILD_FOR_PROFILING=NO # build with -pg option for profiling via gprof
 	BUILD_COMPILETOOLS=YES	# build ufo2map bsp compile tool
 
-	LDFLAGS=-L/sw/lib -ldl -lm -lvorbisfile -lvorbis -lintl -framework IOKit -framework AppKit -framework QuickTime -framework CoreAudio
+	LDFLAGS=-L/sw/lib -ldl -lm -lvorbisfile -lvorbis -lz -lintl -framework IOKit -framework AppKit -framework QuickTime -framework CoreAudio
 	BASE_CFLAGS+=-I/sw/include
 endif
 	ifeq ($(strip $(BUILD_SDLUFO)),YES)
@@ -670,6 +670,7 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/snd_mix.o \
 	\
 	$(BUILDDIR)/client/cmd.o \
+	$(BUILDDIR)/client/ioapi.o \
 	$(BUILDDIR)/client/unzip.o \
 	$(BUILDDIR)/client/cmodel.o \
 	$(BUILDDIR)/client/common.o \
@@ -836,6 +837,9 @@ $(BUILDDIR)/client/snd_mix.o :     $(CLIENT_DIR)/snd_mix.c
 $(BUILDDIR)/client/cmd.o :         $(COMMON_DIR)/cmd.c
 	$(DO_CC)
 
+$(BUILDDIR)/client/ioapi.o :       $(COMMON_DIR)/ioapi.c
+	$(DO_CC)
+
 $(BUILDDIR)/client/unzip.o :         $(COMMON_DIR)/unzip.c
 	$(DO_CC)
 
@@ -936,6 +940,7 @@ $(BUILDDIR)/client/q_shosx.o :    $(MACOSX_DIR)/q_shosx.c
 Q2DED_OBJS = \
 	\
 	$(BUILDDIR)/ded/cmd.o \
+	$(BUILDDIR)/ded/ioapi.o \
 	$(BUILDDIR)/ded/unzip.o \
 	$(BUILDDIR)/ded/cmodel.o \
 	$(BUILDDIR)/ded/common.o \
@@ -990,6 +995,9 @@ $(BUILDDIR)/ufoded : $(Q2DED_OBJS)
 	$(CC) $(CFLAGS) -o $@ $(Q2DED_OBJS) $(LDFLAGS)
 
 $(BUILDDIR)/ded/cmd.o :        $(COMMON_DIR)/cmd.c
+	$(DO_DED_CC)
+
+$(BUILDDIR)/ded/ioapi.o :      $(COMMON_DIR)/ioapi.c
 	$(DO_DED_CC)
 
 $(BUILDDIR)/ded/unzip.o :        $(COMMON_DIR)/unzip.c

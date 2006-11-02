@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include <zlib.h>
 #include "client.h"
 #include "cl_global.h"
 
@@ -1365,7 +1366,8 @@ qboolean CL_GameSave(char *filename, char *comment)
 	sizebuf_t sb;
 	char savegame[MAX_OSPATH];
 	message_t *message;
-	byte *buf;
+	byte *buf, *fbuf;
+	uLongf bufLen;
 	int res;
 	int i, j, type;
 	base_t *base;
@@ -1378,6 +1380,7 @@ qboolean CL_GameSave(char *filename, char *comment)
 	Com_sprintf(savegame, MAX_OSPATH, "%s/save/%s.sav", FS_Gamedir(), filename);
 
 	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
+
 	/* create data */
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
 
@@ -1385,9 +1388,6 @@ qboolean CL_GameSave(char *filename, char *comment)
 	MSG_WriteLong(&sb, SAVE_FILE_VERSION);
 
 	MSG_WriteLong(&sb, MAX_GAMESAVESIZE);
-
-	/* store comment */
-	MSG_WriteString(&sb, comment);
 
 	/* store campaign name */
 	MSG_WriteString(&sb, curCampaign->id);
@@ -1478,11 +1478,28 @@ qboolean CL_GameSave(char *filename, char *comment)
 	/* save all the stats */
 	SZ_Write(&sb, &stats, sizeof(stats_t));
 
-	/* write data */
-	res = FS_WriteFile(buf, sb.cursize, savegame);
+	/* compress data using zlib before writing */
+	bufLen = (uLongf) (24 + 1.02*sb.cursize);
+	fbuf = (byte *) malloc(sizeof(byte) * (bufLen + MAX_VAR));
+
+	/* write an uncompressed header containing the comment */
+	memset(fbuf, 0, sizeof(byte) * MAX_VAR);
+	memcpy(fbuf, comment, strlen(comment));
+
+	res = compress(fbuf + MAX_VAR, &bufLen, buf, sb.cursize);
 	free(buf);
 
-	if (res == sb.cursize) {
+	if (res != Z_OK) {
+		free(fbuf);
+		Com_Printf("Memory error compressing save-game data (%s)!", comment);
+		return qfalse;
+	}
+
+	/* write data */
+	res = FS_WriteFile(fbuf, bufLen + MAX_VAR, savegame);
+	free(fbuf);
+
+	if (res == bufLen + MAX_VAR) {
 		Cvar_Set("mn_lastsave", filename);
 		Com_Printf("Campaign '%s' saved.\n", comment);
 		return qtrue;
@@ -1605,16 +1622,16 @@ int CL_GameLoad(char *filename)
 	setState_t *set;
 	setState_t dummy;
 	sizebuf_t sb;
-	byte *buf;
-	char *name, *title, *text;
+	byte *buf, *cbuf;
 	FILE *f;
+	char *name, *title, *text;
+	int res, clen, len = MAX_GAMESAVESIZE;
 	int version, dataSize, mtype, idx;
 	int i, j, num, type;
 	char val[32];
 	message_t *mess;
 	base_t *base;
 	int selectedMission;
-	char *fixup_type, *fixup_name, *fixup_text;
 
 	/* open file */
 	f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
@@ -1623,13 +1640,26 @@ int CL_GameLoad(char *filename)
 		return 1;
 	}
 
-	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
-
-	/* read data */
-	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
-	sb.cursize = fread(buf, 1, MAX_GAMESAVESIZE, f);
+	/* read compressed data into cbuf buffer */
+	clen = FS_filelength(f);
+	cbuf = (byte *) malloc(sizeof(byte) * clen);
+	fread(cbuf, 1, clen, f);
 	fclose(f);
 
+	/* uncompress data, skipping comment header */
+	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
+	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
+	res = uncompress(buf, (uLongf *)&len, cbuf + MAX_VAR, clen - MAX_VAR);
+	free(cbuf);
+	
+	if (res != Z_OK) {
+		Com_Printf("Error decompressing data in '%s'.\n", filename);
+		return 1;
+	}
+
+	sb.cursize = len;
+
+	/* read data */
 	version = MSG_ReadLong(&sb);
 	Com_Printf("Savefile version %d detected\n", version);
 	dataSize = MSG_ReadLong(&sb);
@@ -1657,9 +1687,6 @@ int CL_GameLoad(char *filename)
 
 	memset(&gd, 0, sizeof(gd));
 	CL_ReadSinglePlayerData();
-
-	/* read comment */
-	MSG_ReadString(&sb);
 
 	/* read campaign name */
 	name = MSG_ReadString(&sb);
@@ -1702,17 +1729,6 @@ int CL_GameLoad(char *filename)
 	/* Recently it was loaded from disk. Attention, bad pointers!!! */
 	memcpy(&gd, sb.data + sb.readcount, sizeof(globalData_t));
 	sb.readcount += sizeof(globalData_t);
-
-	/* Patch up corrupt ranks (wrong type) saved before r3797. */
-	/* TODO: Don't merge this hack to branch. */
-	/* TODO: Get rid of this once trunk users have had time to catch up. */
-	gd.numRanks = 0;
-	FS_BuildFileList( "ufos/*.ufo" );
-	FS_NextScriptHeader( NULL, NULL, NULL );
-	fixup_text = NULL;
-	while ( (fixup_type = FS_NextScriptHeader( "ufos/*.ufo", &fixup_name, &fixup_text)) != 0)
-		if ( !Q_strncmp(fixup_type, "rank", 4) )
-			CL_ParseScriptFirst( fixup_type, fixup_name, &fixup_text );
 
 	CL_UpdatePointersInGlobalData();
 	/* lots of inventory pointers if gd, so we have to do the hack below;
@@ -1939,9 +1955,9 @@ static void CL_GameComments_f(void)
 		}
 
 		/* skip the version number */
-		fread(comment, sizeof(int), 1, f);
+		/*fread(comment, sizeof(int), 1, f);*/
 		/* skip the globalData_t size */
-		fread(comment, sizeof(int), 1, f);
+		/*fread(comment, sizeof(int), 1, f);*/
 		/* read the comment */
 		fread(comment, 1, MAX_VAR, f);
 		Cvar_Set(va("mn_slot%i", i), comment);
