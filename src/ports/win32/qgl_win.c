@@ -23,26 +23,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../ref_gl/gl_local.h"
 #include "glw_win.h"
 
-int   ( WINAPI * qwglChoosePixelFormat )(HDC, CONST PIXELFORMATDESCRIPTOR *);
-int   ( WINAPI * qwglDescribePixelFormat) (HDC, int, UINT, LPPIXELFORMATDESCRIPTOR);
-int   ( WINAPI * qwglGetPixelFormat)(HDC);
-BOOL  ( WINAPI * qwglSetPixelFormat)(HDC, int, CONST PIXELFORMATDESCRIPTOR *);
-BOOL  ( WINAPI * qwglSwapBuffers)(HDC);
-BOOL  ( WINAPI * qwglCopyContext)(HGLRC, HGLRC, UINT);
-HGLRC ( WINAPI * qwglCreateContext)(HDC);
-HGLRC ( WINAPI * qwglCreateLayerContext)(HDC, int);
-BOOL  ( WINAPI * qwglDeleteContext)(HGLRC);
-HGLRC ( WINAPI * qwglGetCurrentContext)(VOID);
-HDC   ( WINAPI * qwglGetCurrentDC)(VOID);
-PROC  ( WINAPI * qwglGetProcAddress)(LPCSTR);
-BOOL  ( WINAPI * qwglMakeCurrent)(HDC, HGLRC);
-BOOL  ( WINAPI * qwglShareLists)(HGLRC, HGLRC);
-int  ( WINAPI * qwglSetLayerPaletteEntries)(HDC, int, int, int, CONST COLORREF *);
-int  ( WINAPI * qwglGetLayerPaletteEntries)(HDC, int, int, int, COLORREF *);
-BOOL ( WINAPI * qwglRealizeLayerPalette)(HDC, int, BOOL);
-BOOL(WINAPI * qwglSwapIntervalEXT) (int interval);
-BOOL(WINAPI * qwglGetDeviceGammaRampEXT) (unsigned char *pRed, unsigned char *pGreen, unsigned char *pBlue);
-BOOL(WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, const unsigned char *pGreen, const unsigned char *pBlue);
+static int ( WINAPI * qwglChoosePixelFormat )(HDC, CONST PIXELFORMATDESCRIPTOR *);
+static int ( WINAPI * qwglDescribePixelFormat) (HDC, int, UINT, LPPIXELFORMATDESCRIPTOR);
+static BOOL ( WINAPI * qwglSetPixelFormat)(HDC, int, CONST PIXELFORMATDESCRIPTOR *);
+static BOOL ( WINAPI * qwglSwapBuffers)(HDC);
+static HGLRC ( WINAPI * qwglCreateContext)(HDC);
+static BOOL ( WINAPI * qwglDeleteContext)(HGLRC);
+static PROC ( WINAPI * qwglGetProcAddress)(LPCSTR);
+static BOOL ( WINAPI * qwglMakeCurrent)(HDC, HGLRC);
+static BOOL (WINAPI * qwglSwapIntervalEXT) (int interval);
+
+/* not used */
+static int ( WINAPI * qwglGetPixelFormat)(HDC);
+static BOOL ( WINAPI * qwglCopyContext)(HGLRC, HGLRC, UINT);
+static HGLRC ( WINAPI * qwglCreateLayerContext)(HDC, int);
+static HGLRC ( WINAPI * qwglGetCurrentContext)(VOID);
+static HDC ( WINAPI * qwglGetCurrentDC)(VOID);
+static BOOL ( WINAPI * qwglShareLists)(HGLRC, HGLRC);
+static int ( WINAPI * qwglSetLayerPaletteEntries)(HDC, int, int, int, CONST COLORREF *);
+static int ( WINAPI * qwglGetLayerPaletteEntries)(HDC, int, int, int, COLORREF *);
+static BOOL ( WINAPI * qwglRealizeLayerPalette)(HDC, int, BOOL);
+static BOOL (WINAPI * qwglGetDeviceGammaRampEXT) (unsigned char *pRed, unsigned char *pGreen, unsigned char *pBlue);
+static BOOL (WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, const unsigned char *pGreen, const unsigned char *pBlue);
 
 /**
  * @brief Unloads the specified DLL then nulls out all the proc pointers.
