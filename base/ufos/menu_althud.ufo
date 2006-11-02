@@ -45,8 +45,8 @@ menu althud
 		tooltip	"_Inventory and physical stats"
 		pos		"878 84"
 		size	"130 265"
-		click	{ cmd "mn_push inventory;" }
-		rclick	{ cmd "mn_push physdata;" }
+		click	{ cmd "mn_push ahudinv" }
+		rclick	{ cmd "mn_push ahudphysdat" }
 	}
 
 
@@ -999,7 +999,7 @@ menu althud
 	func init
 	{
 		cmd "set hud_refresh 1;"
-		cmd "ov_start;"
+		cmd "music_start;"
 		show_rightweapon
 		cmd "set mn_showchatbuttons 0;"
 	}

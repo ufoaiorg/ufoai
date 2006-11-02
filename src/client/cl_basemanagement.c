@@ -199,10 +199,10 @@ void B_HireForBuilding (building_t * building, int num)
 		case B_QUARTERS:
 			return;
 		case B_MISC:
-			Com_DPrintf("B_HireForBuilding: Misc bulding type: %s with employees: %i.\n", building->buildingType, num);
+			Com_DPrintf("B_HireForBuilding: Misc bulding type: %i with employees: %i.\n", building->buildingType, num);
 			return;
 		default:
-			Com_DPrintf("B_HireForBuilding: Unknown bulding type: %s.\n", building->buildingType);
+			Com_DPrintf("B_HireForBuilding: Unknown bulding type: %i.\n", building->buildingType);
 			return;
 		}
 		if (num > gd.numEmployees[employeeType])

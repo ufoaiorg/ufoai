@@ -473,7 +473,7 @@ pack_t *FS_LoadPackFile(const char *packfile)
 		}
 		pack->files = newfiles;
 
-		Com_Printf("Added packfile %s (%i files) (NOTE: support for pk3 is not fully implemented)\n", packfile, gi.number_entry);
+		Com_Printf("Added packfile %s (%li files) (NOTE: support for pk3 is not fully implemented)\n", packfile, gi.number_entry);
 		return pack;
 	} else {
 		/* Unrecognized file type! */

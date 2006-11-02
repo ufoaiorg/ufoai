@@ -695,7 +695,7 @@ menu options_sound
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		click	{ cmd "modifykhz -;" }
+		click	{ cmd "snd_modifykhz -;" }
 	}
 	pic mix_inc
 	{
@@ -704,7 +704,7 @@ menu options_sound
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		click	{ cmd "modifykhz +;" }
+		click	{ cmd "snd_modifykhz +;" }
 	}
 
 	string snd_ref_str
@@ -725,7 +725,7 @@ menu options_sound
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		click	{ cmd "modifysnd_ref;" }
+		click	{ cmd "snd_modifyref;" }
 	}
 	pic snd_ref_inc
 	{
@@ -734,7 +734,7 @@ menu options_sound
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		click	{ cmd "modifysnd_ref;" }
+		click	{ cmd "snd_modifyref;" }
 	}
 
 	func init

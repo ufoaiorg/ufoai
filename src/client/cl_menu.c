@@ -242,16 +242,45 @@ menu_t *MN_GetMenu(char *name)
 	return NULL;
 }
 
+/*
+ * @brief Gets the next menu at pos from the menuStack
+ * Useful when recursing through entries in the stack
+ * if forward is true, menuStack is recursed in a forward direction
+ */
+menu_t *MN_GetMenuFromStack(int *pos, menu_t *menu, qboolean forward)
+{
+	menu_t *newmenu;
+	newmenu = (menu_t *)menu->supermenu;
+	if (!newmenu) {
+		if (*pos < 0 || *pos >= menuStackPos) {
+			return NULL;
+		} else {
+			newmenu = menuStack[*pos];
+			if (forward)
+				*pos = *pos + 1;
+			else
+				*pos = *pos - 1;
+		}
+	}
+	return newmenu;
+}
+
+
 /**
  * @brief Searches all nodes in the given menu for a given nodename
  */
 menuNode_t *MN_GetNode(const menu_t* const menu, char *name)
 {
+	const menu_t *tmenu;
 	menuNode_t *node;
 
-	for (node = menu->firstNode; node; node = node->next)
-		if (!Q_strncmp(name, node->name, sizeof(node->name)))
-			break;
+	tmenu = menu;
+	while (tmenu) {
+		for (node = tmenu->firstNode; node; node = node->next)
+			if (!Q_strncmp(name, node->name, sizeof(node->name)))
+				break;
+		tmenu = (menu_t *)tmenu->supermenu;
+	}
 
 	return node;
 }
@@ -553,7 +582,7 @@ static void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const firs
 		case EA_CMD:
 			/* execute a command */
 			if (action->data)
-				Cbuf_AddText(va("%s\n", action->data));
+				Cbuf_AddText(va("%s\n", (char*)action->data));
 			break;
 		case EA_CALL:
 			/* call another function */
@@ -576,7 +605,7 @@ static void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const firs
 				if (!node) {
 					/* didn't find node -> "kill" action and print error */
 					action->type = EA_NULL;
-					Com_Printf("MN_ExecuteActions: node \"%s\" doesn't exist\n", (char *) action->data);
+					Com_Printf("MN_ExecuteAction: node \"%s\" doesn't exist\n", (char *) action->data);
 					break;
 				}
 
@@ -593,24 +622,35 @@ static void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const firs
 		}
 }
 
-
 /**
  * @brief
  */
 static void MN_Command(void)
 {
 	menuNode_t *node;
+	menu_t *menu;
 	char *name;
-	int i;
+	int i = 0;
 
 	name = Cmd_Argv(0);
-	for (i = 0; i < numMenus; i++)
-		for (node = menus[i].firstNode; node; node = node->next)
+
+	if (numMenus <= 0)
+		return;
+
+	menu = &menus[i++];
+	while (menu) {
+		for (node = menu->firstNode; node; node = node->next)
 			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
-				MN_ExecuteActions(&menus[i], node->click);
+				MN_ExecuteActions(menu, node->click);
 				return;
 			}
+		menu = (menu_t *)menu->supermenu;
+		if (!menu) {
+			if (++i < numMenus)
+				menu = &menus[i];
+		}
+	}
 }
 
 
@@ -759,10 +799,13 @@ qboolean MN_CursorOnMenu(int x, int y)
 	menu_t *menu;
 	int sp;
 
-	sp = menuStackPos;
+	if (menuStackPos < 1)
+		return qfalse;
 
-	while (sp > 0) {
-		menu = menuStack[--sp];
+	sp = menuStackPos - 1;
+	menu = menuStack[sp--];
+
+	while (menu) {
 		for (node = menu->firstNode; node; node = node->next)
 			if (MN_CheckNodeZone(node, x, y)) {
 				/* found an element */
@@ -776,6 +819,7 @@ qboolean MN_CursorOnMenu(int x, int y)
 			else
 				return qfalse;
 		}
+		menu = MN_GetMenuFromStack(&sp, menu, LOOKBCK);
 	}
 
 	return qfalse;
@@ -985,10 +1029,13 @@ void MN_Click(int x, int y)
 	menu_t *menu;
 	int sp, mouseOver;
 
-	sp = menuStackPos;
+	if (menuStackPos < 1)
+		return;
 
-	while (sp > 0) {
-		menu = menuStack[--sp];
+	sp = menuStackPos - 1;
+	menu = menuStack[sp--];
+
+	while (menu) {
 		for (node = menu->firstNode; node; node = node->next) {
 			if (node->type != MN_CONTAINER && !node->click)
 				continue;
@@ -1031,6 +1078,8 @@ void MN_Click(int x, int y)
 		/* don't care about non-rendered windows */
 		if (menu->renderNode || menu->popupNode)
 			return;
+
+		menu = MN_GetMenuFromStack(&sp, menu, LOOKBCK);
 	}
 }
 
@@ -1044,7 +1093,7 @@ static qboolean MN_TextScroll(menuNode_t *node, int offset)
 {
 	int textScroll_new;
 
-	if (!node)
+	if (!node || !node->height)
 		return qfalse;
 
 	if (abs(offset) >= node->height) {
@@ -1137,10 +1186,13 @@ void MN_RightClick(int x, int y)
 	menu_t *menu;
 	int sp, mouseOver;
 
-	sp = menuStackPos;
+	if (menuStackPos < 1)
+		return;
 
-	while (sp > 0) {
-		menu = menuStack[--sp];
+	sp = menuStackPos - 1;
+	menu = menuStack[sp--];
+
+	while (menu) {
 		for (node = menu->firstNode; node; node = node->next) {
 			/* no right click for this node defined */
 			if (!node->rclick)
@@ -1173,6 +1225,8 @@ void MN_RightClick(int x, int y)
 		if (menu->renderNode || menu->popupNode)
 			/* don't care about non-rendered windows */
 			return;
+
+		menu = MN_GetMenuFromStack(&sp, menu, LOOKBCK);
 	}
 }
 
@@ -1186,10 +1240,13 @@ void MN_MiddleClick(int x, int y)
 	menu_t *menu;
 	int sp, mouseOver;
 
-	sp = menuStackPos;
+	if (menuStackPos < 1)
+		return;
 
-	while (sp > 0) {
-		menu = menuStack[--sp];
+	sp = menuStackPos - 1;
+	menu = menuStack[sp--];
+
+	while (menu) {
 		for (node = menu->firstNode; node; node = node->next) {
 			/* no middle click for this node defined */
 			if (!node->mclick)
@@ -1217,6 +1274,8 @@ void MN_MiddleClick(int x, int y)
 		if (menu->renderNode || menu->popupNode)
 			/* don't care about non-rendered windows */
 			return;
+
+		menu = MN_GetMenuFromStack(&sp, menu, LOOKBCK);
 	}
 }
 
@@ -1227,7 +1286,14 @@ void MN_MiddleClick(int x, int y)
  */
 void MN_SetViewRect(const menu_t* menu)
 {
-	menuNode_t* menuNode = menu ? (menu->renderNode ? menu->renderNode : (menu->popupNode ? menu->popupNode : NULL)): NULL;
+	const menu_t* tmenu;
+	menuNode_t* menuNode = NULL;
+
+	tmenu = menu;
+	while (!menuNode && tmenu) {
+		menuNode = tmenu->renderNode ? tmenu->renderNode : (tmenu->popupNode ? tmenu->popupNode : NULL);
+		tmenu = (menu_t*)tmenu->supermenu;
+	}
 
 	if (!menuNode) {
 		/* render the full screen */
@@ -1402,7 +1468,7 @@ void MN_PrecacheMenus(void)
 				if (!ref) {
 					/* bad reference */
 					node->invis = qtrue;
-					Com_Printf("MN_PrecacheMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data);
+					Com_Printf("MN_PrecacheMenus: node \"%s\" bad reference \"%s\"\n", node->name, (char*)node->data);
 					continue;
 				}
 				Q_strncpyz(source, ref, MAX_VAR);
@@ -1492,8 +1558,12 @@ void MN_DrawMenus(void)
 	if (pp < sp)
 		pp = sp;
 
-	while (sp < menuStackPos) {
-		menu = menuStack[sp++];
+	if (sp >= menuStackPos)
+		return;
+
+	menu = menuStack[sp++];
+
+	while (menu) {
 		for (node = menu->firstNode; node; node = node->next) {
 			if (!node->invis && (node->data[0] /* 0 are images, models and strings e.g. */
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP
@@ -1566,7 +1636,7 @@ void MN_DrawMenus(void)
 					if (!ref) {
 						/* bad reference */
 						node->invis = qtrue;
-						Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data);
+						Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, (char*)node->data);
 						continue;
 					}
 					Q_strncpyz(source, ref, MAX_VAR);
@@ -1947,10 +2017,11 @@ void MN_DrawMenus(void)
 			MN_Tooltip(menu->hoverNode, mx, my);
 			menu->hoverNode = NULL;
 		}
+
+		menu = MN_GetMenuFromStack(&sp, menu, LOOKFWD);
 	}
 	re.DrawColor(NULL);
 }
-
 
 /*
 ==============================================================
@@ -2075,7 +2146,7 @@ void MN_PopMenu(qboolean all)
 	}
 
 	if (!all && menuStackPos == 0) {
-		if (!Q_strncmp(menuStack[0]->name, mn_main->string, MAX_VAR)) {
+		if (menuStack[0] && !Q_strncmp(menuStack[0]->name, mn_main->string, MAX_VAR)) {
 			if (*mn_active->string)
 				MN_PushMenu(mn_active->string);
 			if (!menuStackPos)
@@ -2905,7 +2976,7 @@ void MN_ParseMenuModel(char *name, char **text)
 		}
 
 	if (numMenuModels >= MAX_MENUMODELS) {
-		Com_Printf("MN_ParseMenuModel: Max menu models reached\n", name);
+		Com_Printf("MN_ParseMenuModel: Max menu models reached\n");
 		return;
 	}
 
@@ -2990,6 +3061,14 @@ void MN_ParseMenu(char *name, char **text)
 	/* get it's body */
 	token = COM_Parse(text);
 
+	/* does this menu inherit data from another menu? */
+	if (!Q_strncmp(token, "extends", 7)) {
+		token = COM_Parse(text);
+		Com_DPrintf("MN_ParseMenus: menu \"%s\" inheriting menu \"%s\"\n", menu->name, token);
+		menu->supermenu = MN_GetMenu(token);
+		token = COM_Parse(text);
+	}
+
 	if (!*text || *token != '{') {
 		Com_Printf("MN_ParseMenus: menu \"%s\" without body ignored\n", menu->name);
 		numMenus--;
@@ -3008,7 +3087,7 @@ void MN_ParseMenu(char *name, char **text)
 			if (node->num >= MAX_MENUTEXTS)
 				Sys_Error("Error in menu %s - max menu num exeeded (%i)", menus[i].name, MAX_MENUTEXTS);
 
-	Com_DPrintf("Nodes: %4i Menu data: %i\n", numNodes, curadata - adata);
+	Com_DPrintf("Nodes: %4i Menu data: %li\n", numNodes, (long)(curadata - adata));
 }
 
 /**
@@ -3305,7 +3384,7 @@ void CL_ParseFont(char *name, char **text)
 		}
 
 	if (numFonts >= MAX_FONTS) {
-		Com_Printf("CL_ParseFont: Max fonts reached\n", name);
+		Com_Printf("CL_ParseFont: Max fonts reached\n");
 		return;
 	}
 

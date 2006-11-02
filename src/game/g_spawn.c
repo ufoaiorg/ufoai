@@ -45,6 +45,8 @@ static void SP_civilian_start(edict_t * ent);
 static void SP_func_breakable(edict_t * ent);
 static void SP_worldspawn(edict_t * ent);
 static void SP_ugv_start(edict_t * ent);
+static void SP_civilian_target(edict_t * ent);
+static void SP_misc_mission(edict_t * ent);
 
 typedef struct {
 	char *name;
@@ -62,6 +64,8 @@ static spawn_t spawns[] = {
 	{"info_civilian_start", SP_civilian_start},
 	{"info_ugv_start", SP_ugv_start},
 	{"func_breakable", SP_func_breakable},
+	{"misc_mission", SP_misc_mission},
+	{"info_civilian_target", SP_civilian_target},
 
 	{NULL, NULL}
 };
@@ -500,6 +504,22 @@ static void SP_civilian_start(edict_t * ent)
 	G_ActorSpawn(ent);
 }
 
+/**
+ * @brief
+ */
+static void SP_civilian_target(edict_t * ent)
+{
+	/* target point for which team */
+	ent->team = TEAM_CIVILIAN;
+}
+
+/**
+ * @brief
+ */
+static void SP_misc_mission(edict_t * ent)
+{
+	/* should already be parsed */
+}
 
 /*
 a dummy to get rid of local entities

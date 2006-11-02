@@ -31,15 +31,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-/* sv_main.c -- server main program */
-
 #include "server.h"
 
 /*
 =============================================================================
-
 Com_Printf redirection
-
 =============================================================================
 */
 
@@ -59,9 +55,7 @@ void SV_FlushRedirect(int sv_redirected, char *outputbuf)
 
 /*
 =============================================================================
-
 EVENT MESSAGES
-
 =============================================================================
 */
 
@@ -185,17 +179,14 @@ void SV_Multicast(int mask)
 
 /*
 ===============================================================================
-
 FRAME UPDATES
-
 ===============================================================================
 */
 
 
 /**
  * @brief Returns true if the client is over its current bandwidth estimation and should not be sent another packet
-=======================
-*/
+ */
 qboolean SV_RateDrop(client_t * c)
 {
 	int total;
@@ -253,4 +244,98 @@ void SV_SendClientMessages(void)
 			Netchan_Transmit(&c->netchan, 0, NULL);
 		}
 	}
+}
+
+/**
+ * Each entity can have eight independant sound sources, like voice, weapon, feet, etc.
+ * If cahnnel & 8, the sound will be sent to everyone, not just things in the PHS.
+ * FIXME: if entity isn't in PHS, they must be forced to be sent or have the origin explicitly sent.
+ *
+ * Channel 0 is an auto-allocate channel, the others override anything already running on that entity/channel pair.
+ *
+ * An attenuation of 0 will play full volume everywhere in the level. Larger attenuations will drop off. (max 4 attenuation)
+ *
+ * Timeofs can range from 0.0 to 0.1 to cause sounds to be started later in the frame than they normally would.
+ *
+ * If origin is NULL, the origin is determined from the entity origin or the midpoint of the entity box for bmodels.
+ */
+void SV_StartSound(vec3_t origin, edict_t *entity, int channel,
+	int soundindex, float volume, float attenuation, float timeofs)
+{
+	#if 0
+	int sendchan;
+	int flags;
+	int i;
+	int ent;
+	vec3_t origin_v;
+
+	if (volume < 0 || volume > 1.0)
+		Com_Error(ERR_FATAL, "SV_StartSound: volume = %f", volume);
+
+	if (attenuation < 0 || attenuation > 4)
+		Com_Error(ERR_FATAL, "SV_StartSound: attenuation = %f", attenuation);
+
+	if (timeofs < 0 || timeofs > 0.255)
+		Com_Error(ERR_FATAL, "SV_StartSound: timeofs = %f", timeofs);
+
+	ent = NUM_FOR_EDICT(entity);
+
+	if (channel & 8) { /* no PHS flag */
+		channel &= 7;
+
+	sendchan =(ent << 3) |(channel & 7);
+
+	flags = 0;
+	if (volume != DEFAULT_SOUND_PACKET_VOLUME)
+		flags |= SND_VOLUME;
+	if (attenuation != DEFAULT_SOUND_PACKET_ATTENUATION)
+		flags |= SND_ATTENUATION;
+
+	/**
+	 * the client doesn't know that bmodels have weird origins
+	 * the origin can also be explicitly set
+	 */
+	if ((entity->svflags & SVF_NOCLIENT) || (entity->solid == SOLID_BSP) || origin)
+		flags |= SND_POS;
+
+	/* always send the entity number for channel overrides */
+	flags |= SND_ENT;
+
+	if (timeofs)
+		flags |= SND_OFFSET;
+
+	/* use the entity origin unless it is a bmodel or explicitly specified */
+	if (!origin){
+		origin = origin_v;
+		if (entity->solid == SOLID_BSP){
+			for (i = 0; i < 3; i++)
+				origin_v[i] = entity->s.origin[i] + 0.5 *(entity->mins[i] + entity->maxs[i]);
+		} else {
+			VectorCopy(entity->s.origin, origin_v);
+		}
+	}
+
+	MSG_WriteByte(&sv.multicast, svc_sound);
+	MSG_WriteByte(&sv.multicast, flags);
+	MSG_WriteByte(&sv.multicast, soundindex);
+
+	if (flags & SND_VOLUME)
+		MSG_WriteByte(&sv.multicast, volume*255);
+	if (flags & SND_ATTENUATION)
+		MSG_WriteByte(&sv.multicast, attenuation*64);
+	if (flags & SND_OFFSET)
+		MSG_WriteByte(&sv.multicast, timeofs*1000);
+
+	if (flags & SND_ENT)
+		MSG_WriteShort(&sv.multicast, sendchan);
+
+	if (flags & SND_POS)
+		MSG_WritePos(&sv.multicast, origin);
+
+	if (channel & CHAN_RELIABLE){
+		SV_Multicast(origin, MULTICAST_ALL_R);
+	} else {
+		SV_Multicast(origin, MULTICAST_ALL);
+	}
+	#endif
 }

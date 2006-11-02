@@ -67,20 +67,25 @@ static void Key_ClearTyping(void)
  */
 void Con_ToggleConsole_f(void)
 {
+	int maxclients;
+
 	if (cl.attractloop) {
 		Cbuf_AddText("killserver\n");
 		return;
 	}
+	maxclients = (int)Cvar_VariableValue("maxclients");
+
 	Key_ClearTyping();
 	Con_ClearNotify();
 
 	if (cls.key_dest == key_console) {
 		cls.key_dest = key_game;
-		Cvar_Set("paused", "0");
+		if (maxclients == 1 && Com_ServerState())  /* unpause */
+			Cvar_Set("paused", "0");
 	} else {
 		cls.key_dest = key_console;
 
-		if (Cvar_VariableValue("maxclients") == 1 && Com_ServerState())
+		if (maxclients == 1 && Com_ServerState())
 			Cvar_Set("paused", "1");
 	}
 }
@@ -316,7 +321,7 @@ void Con_Print(char *txt)
 		mask = 0;
 
 
-	while ( ( c = *txt ) != 0 ) {
+	while ((c = *txt) != 0) {
 		/* count word length */
 		for (l = 0; l < con.linewidth; l++)
 			if (txt[l] <= ' ')
@@ -388,9 +393,7 @@ void Con_CenteredPrint(char *text)
 
 /*
 ==============================================================================
-
 DRAWING
-
 ==============================================================================
 */
 
@@ -402,18 +405,24 @@ static void Con_DrawInput(void)
 {
 	int y;
 	int i;
-	char *text;
+	char editlinecopy[MAXCMDLINE], *text;
 
 	if (cls.key_dest != key_console && cls.state == ca_active)
 		return;					/* don't draw anything (always draw if not active) */
 
-	text = key_lines[edit_line];
+	Q_strncpyz(editlinecopy, key_lines[edit_line], sizeof(editlinecopy));
+	text = editlinecopy;
+	y = strlen(text);
 
 	/* add the cursor frame */
-	text[key_linepos] = 10 + ((int) (cls.realtime >> 8) & 1);
+	if ((int)(cls.realtime >> 8) & 1) {
+		text[key_linepos] = 11;
+		if (key_linepos == y)
+			y++;
+	}
 
 	/* fill out remainder with spaces */
-	for (i = key_linepos + 1; i < con.linewidth; i++)
+	for (i = y; i < con.linewidth; i++)
 		text[i] = ' ';
 
 	/* prestep if horizontally scrolling */
@@ -425,9 +434,6 @@ static void Con_DrawInput(void)
 
 	for (i = 0; i < con.linewidth; i++)
 		re.DrawChar((i + 1) << 3, con.vislines - 22, text[i]);
-
-	/* remove cursor */
-	key_lines[edit_line][key_linepos] = 0;
 }
 
 
@@ -438,11 +444,8 @@ static void Con_DrawInput(void)
 void Con_DrawNotify(void)
 {
 	int x, l, v;
-	char *text;
-	int i;
-	int time;
-	char *s;
-	int skip;
+	char *text, *s;
+	int i, time, skip;
 
 	v = 60 * viddef.rx;
 	l = 120 * viddef.ry;
@@ -497,10 +500,8 @@ void Con_DrawNotify(void)
 void Con_DrawConsole(float frac)
 {
 	int i, x, y;
-	int rows;
+	int rows, row, lines;
 	char *text;
-	int row;
-	int lines;
 	char version[MAX_VAR];
 
 	lines = viddef.height * frac;

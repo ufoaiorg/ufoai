@@ -308,9 +308,7 @@ void CL_ParseEntitystring(char *es)
 			/* maximum level */
 			map_maxlevel = maxlevel;
 			VectorCopy(map_dropship_coord, dropship_coord);
-		}
-
-		if (!Q_strcmp(classname, "light") && light) {
+		} else if (!Q_strcmp(classname, "light") && light) {
 			dlight_t *newlight;
 
 			/* add light to list */
@@ -321,9 +319,7 @@ void CL_ParseEntitystring(char *es)
 			VectorCopy(origin, newlight->origin);
 			VectorNormalize2(color, newlight->color);
 			newlight->intensity = light;
-		}
-
-		if (!Q_strcmp(classname, "misc_model")) {
+		} else if (!Q_strcmp(classname, "misc_model")) {
 			lm_t *lm;
 
 			if (!model[0]) {
@@ -354,13 +350,15 @@ void CL_ParseEntitystring(char *es)
 					lm->flags |= LMF_NOSMOOTH;
 				lm->skin = skin;
 			}
-		}
-
-		if (!Q_strcmp(classname, "misc_particle")) {
+		} else if (!Q_strcmp(classname, "misc_particle")) {
 			CL_AddMapParticle(particle, origin, wait, strstart, (spawnflags & 0xFF));
-		}
-
-		if (!Q_strcmp(classname, "func_breakable")) {
+		} else if (!Q_strcmp(classname, "misc_sound")) {
+			Com_Printf("implement misc_sound\n");
+		} else if (!Q_strcmp(classname, "misc_rope")) {
+			Com_Printf("implement misc_rope\n");
+		} else if (!Q_strcmp(classname, "misc_decal")) {
+			Com_Printf("implement misc_decal\n");
+		} else if (!Q_strcmp(classname, "func_breakable")) {
 			angles[0] = angles[1] = angles[2] = 0.0;
 			CL_AddLocalModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF));
 		}
@@ -441,7 +439,7 @@ void CL_PrepRefresh(void)
 		cl.model_weapons[i] = re.RegisterModel(csi.ods[i].model);
 
 	/* images */
-	Com_Printf("images\n", i);
+	Com_Printf("images\n");
 	SCR_UpdateScreen();
 	for (i = 1; i < MAX_IMAGES && cl.configstrings[CS_IMAGES + i][0]; i++) {
 		cl.image_precache[i] = re.RegisterPic(cl.configstrings[CS_IMAGES + i]);

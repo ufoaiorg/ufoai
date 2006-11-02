@@ -142,7 +142,7 @@ void Com_Printf(char *fmt, ...)
 
 	/* logfile */
 	if (logfile_active && logfile_active->value) {
-		char name[MAX_QPATH];
+		char name[MAX_OSPATH];
 
 		if (!logfile) {
 			Com_sprintf(name, sizeof(name), "%s/ufoconsole.log", FS_Gamedir());

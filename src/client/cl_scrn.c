@@ -40,40 +40,38 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-float scr_con_current;			/* aproaches scr_conlines at scr_conspeed */
-float scr_conlines;				/* 0.0 to 1.0 lines of console to display */
+static float scr_con_current;			/* aproaches scr_conlines at scr_conspeed */
+static float scr_conlines;				/* 0.0 to 1.0 lines of console to display */
 
-static qboolean scr_initialized;/* ready to draw */
+static qboolean scr_initialized = qfalse;/* ready to draw */
 
-static int scr_draw_loading;
+static int scr_draw_loading = 0;
 
 vrect_t scr_vrect;				/* position of render window on screen */
 
-cvar_t *scr_viewsize;
-cvar_t *scr_conspeed;
-cvar_t *scr_consize;
-cvar_t *scr_centertime;
-cvar_t *scr_showpause;
+static cvar_t *scr_conspeed;
+static cvar_t *scr_consize;
+static cvar_t *scr_centertime;
+static cvar_t *scr_showpause;
 
-cvar_t *scr_netgraph;
-cvar_t *scr_timegraph;
-cvar_t *scr_debuggraph;
-cvar_t *scr_graphheight;
-cvar_t *scr_graphscale;
-cvar_t *scr_graphshift;
-cvar_t *scr_drawall;
+static cvar_t *scr_netgraph;
+static cvar_t *scr_timegraph;
+static cvar_t *scr_debuggraph;
+static cvar_t *scr_graphheight;
+static cvar_t *scr_graphscale;
+static cvar_t *scr_graphshift;
 
 typedef struct {
 	int x1, y1, x2, y2;
 } dirty_t;
 
-dirty_t scr_dirty, scr_old_dirty[2];
+static dirty_t scr_dirty;
 
-char cursor_pic[MAX_QPATH];
+static char cursor_pic[MAX_QPATH];
 
-void SCR_TimeRefresh_f(void);
-void SCR_Loading_f(void);
-void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont);
+static void SCR_TimeRefresh_f(void);
+static void SCR_Loading_f(void);
+static void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont);
 
 
 /*
@@ -118,7 +116,7 @@ typedef struct {
 	int color;
 } graphsamp_t;
 
-static int current;
+static int current = 0;
 static graphsamp_t values[1024];
 
 /**
@@ -134,7 +132,7 @@ void SCR_DebugGraph(float value, int color)
 /**
  * @brief
  */
-void SCR_DrawDebugGraph(void)
+static void SCR_DrawDebugGraph(void)
 {
 	int a, x, y, w, i, h;
 	float v;
@@ -225,7 +223,7 @@ void SCR_CenterPrint(char *str)
 /**
  * @brief
  */
-void SCR_DrawCenterString(void)
+static void SCR_DrawCenterString(void)
 {
 	char *start;
 	int l;
@@ -272,7 +270,7 @@ void SCR_DrawCenterString(void)
 /**
  * @brief
  */
-void SCR_CheckDrawCenterString(void)
+static void SCR_CheckDrawCenterString(void)
 {
 	scr_centertime_off -= cls.frametime;
 
@@ -284,46 +282,23 @@ void SCR_CheckDrawCenterString(void)
 
 /**
  * @brief
- * @note Keybinding command
- */
-void SCR_SizeUp_f(void)
-{
-	Cvar_SetValue("viewsize", scr_viewsize->value + 10);
-}
-
-
-/**
- * @brief
- * @note Keybinding command
- */
-void SCR_SizeDown_f(void)
-{
-	Cvar_SetValue("viewsize", scr_viewsize->value - 10);
-}
-
-/**
- * @brief
  */
 void SCR_Init(void)
 {
-	scr_viewsize = Cvar_Get("viewsize", "100", CVAR_ARCHIVE, NULL);
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, NULL);
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, NULL);
 	scr_showpause = Cvar_Get("scr_showpause", "1", 0, NULL);
 	scr_centertime = Cvar_Get("scr_centertime", "2.5", 0, NULL);
-	scr_netgraph = Cvar_Get("netgraph", "0", 0, NULL);
+	scr_netgraph = Cvar_Get("netgraph", "0", 0, "Draw the netgraph");
 	scr_timegraph = Cvar_Get("timegraph", "0", 0, NULL);
 	scr_debuggraph = Cvar_Get("debuggraph", "0", 0, NULL);
 	scr_graphheight = Cvar_Get("graphheight", "32", 0, NULL);
 	scr_graphscale = Cvar_Get("graphscale", "1", 0, NULL);
 	scr_graphshift = Cvar_Get("graphshift", "0", 0, NULL);
-	scr_drawall = Cvar_Get("scr_drawall", "0", 0, NULL);
 
 	/* register our commands */
 	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f, NULL);
 	Cmd_AddCommand("loading", SCR_Loading_f, NULL);
-	Cmd_AddCommand("sizeup", SCR_SizeUp_f, NULL);
-	Cmd_AddCommand("sizedown", SCR_SizeDown_f, NULL);
 
 	SCR_TouchPics();
 
@@ -334,7 +309,7 @@ void SCR_Init(void)
 /**
  * @brief
  */
-void SCR_DrawNet(void)
+static void SCR_DrawNet(void)
 {
 	if (cls.netchan.outgoing_sequence - cls.netchan.incoming_acknowledged < CMD_BACKUP - 1)
 		return;
@@ -345,7 +320,7 @@ void SCR_DrawNet(void)
 /**
  * @brief
  */
-void SCR_DrawPause(void)
+static void SCR_DrawPause(void)
 {
 	int w = 0, h = 0;
 
@@ -363,14 +338,14 @@ void SCR_DrawPause(void)
 /**
  * @brief
  */
-void SCR_DrawLoading(void)
+static void SCR_DrawLoading(void)
 {
 	int w = 0, h = 0;
 
 	if (!scr_draw_loading)
 		return;
 
-	scr_draw_loading = qfalse;
+	scr_draw_loading = 0;
 	re.DrawGetPicSize(&w, &h, "loading");
 	re.DrawPic((viddef.width - w) / 2, (viddef.height - h) / 2, "loading");
 }
@@ -378,7 +353,7 @@ void SCR_DrawLoading(void)
 /**
  * @brief Draws the 3D-cursor in battlemode and the icons/info next to it.
  */
-void SCR_DrawCursor(void)
+static void SCR_DrawCursor(void)
 {
 	int icon_offset_x = 16;	/* Offset of the first icon on the x-axis. */
 	int icon_offset_y = 16;	/* Offset of the first icon on the y-axis. */
@@ -469,7 +444,7 @@ void SCR_RunConsole(void)
  * @sa Con_DrawConsole
  * @sa Con_DrawNotify
  */
-void SCR_DrawConsole(void)
+static void SCR_DrawConsole(void)
 {
 	Con_CheckResize();
 
@@ -513,7 +488,7 @@ void SCR_BeginLoadingPlaque(void)
 	if (cls.key_dest == key_console)
 		return;
 
-	scr_draw_loading = 2;		/* clear to black first */
+	scr_draw_loading = 1;		/* clear to black first */
 
 	SCR_UpdateScreen();
 	cls.disable_screen = Sys_Milliseconds();
@@ -535,7 +510,7 @@ void SCR_EndLoadingPlaque(void)
  * @sa SCR_BeginLoadingPlaque
  * @sa SCR_EndLoadingPlaque
  */
-void SCR_Loading_f(void)
+static void SCR_Loading_f(void)
 {
 	SCR_BeginLoadingPlaque();
 }
@@ -543,7 +518,7 @@ void SCR_Loading_f(void)
 /**
  * @brief
  */
-void SCR_TimeRefresh_f(void)
+static void SCR_TimeRefresh_f(void)
 {
 	int i;
 	int start, stop;
@@ -623,7 +598,7 @@ void SCR_TouchPics(void)
  * @brief
  * @sa Font_DrawString
  */
-void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont)
+static void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont)
 {
 	if (bitmapFont) {
 		while (*string) {

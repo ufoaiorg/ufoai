@@ -827,6 +827,8 @@ void CL_InitMessageSystem(void);
 
 #define MAX_MENUTEXTLEN		4096
 
+#define LOOKFWD		 		qtrue
+#define LOOKBCK 			qfalse
 
 typedef struct menuModel_s {
 	char id[MAX_VAR];
@@ -872,6 +874,7 @@ typedef struct menuNode_s {
 typedef struct menu_s {
 	char name[MAX_VAR];
 	menuNode_t *firstNode, *initNode, *closeNode, *renderNode, *popupNode, *hoverNode;
+	void *supermenu;
 } menu_t;
 
 typedef enum {
@@ -1046,6 +1049,6 @@ extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
 extern void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
 
 /* keys.c */
-extern char *keybindings[256];
+extern char *keybindings[K_LAST_KEY];
 
 #endif /* CLIENT_CLIENT_H */

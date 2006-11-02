@@ -45,6 +45,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../qcommon/ufotypes.h"
 
+/* to support the gnuc __attribute__ command */
+#ifndef __linux__
+#  define  __attribute__(x)  /*NOTHING*/
+#endif
+
 #ifdef _MSC_VER
 /* unknown pragmas are SUPPOSED to be ignored, but.... */
 #pragma warning(disable : 4244)	/* MIPS */
@@ -346,7 +351,7 @@ char *COM_Parse(char **data_p);
 /* data is an in/out parm, returns a parsed out token */
 char *COM_EParse(char **text, char *errhead, char *errinfo);
 
-void Com_sprintf(char *dest, size_t size, char *fmt, ...);
+qboolean Com_sprintf(char *dest, size_t size, char *fmt, ...) __attribute__((format(printf, 3, 4)));
 
 void Com_PageInMemory(byte * buffer, int size);
 
@@ -382,7 +387,7 @@ float BigFloat(float l);
 float LittleFloat(float l);
 
 void Swap_Init(void);
-char *va(char *format, ...);
+char *va(char *format, ...) __attribute__((format(printf, 1, 2)));
 
 /*============================================= */
 
@@ -429,9 +434,9 @@ void Sys_FindClose(void);
 
 
 /* this is only here so the functions in q_shared.c and q_shwin.c can link */
-void Sys_Error(char *error, ...);
-void Com_Printf(char *msg, ...);
-void Com_DPrintf(char *msg, ...);
+void Sys_Error(char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
+void Com_Printf(char *msg, ...) __attribute__((format(printf, 1, 2)));
+void Com_DPrintf(char *msg, ...) __attribute__((format(printf, 1, 2)));
 
 
 /*

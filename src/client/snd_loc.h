@@ -152,10 +152,6 @@ extern channel_t channels[MAX_CHANNELS];
 
 extern int paintedtime;
 extern int s_rawend;
-extern vec3_t listener_origin;
-extern vec3_t listener_forward;
-extern vec3_t listener_right;
-extern vec3_t listener_up;
 extern dma_t dma;
 extern playsound_t s_pendingplays;
 
@@ -169,8 +165,8 @@ extern cvar_t *snd_khz;
 extern cvar_t *snd_show;
 extern cvar_t *snd_mixahead;
 extern cvar_t *snd_testsound;
-extern cvar_t *ov_volume;
-extern cvar_t *ov_loop;
+extern cvar_t *snd_music_volume;
+extern cvar_t *snd_music_loop;
 
 void S_InitScaletable(void);
 

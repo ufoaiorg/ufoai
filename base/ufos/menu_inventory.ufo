@@ -1,0 +1,176 @@
+// ==================
+// INVENTORY BASE MENU
+// ==================
+
+menu inventory
+{
+	// ==================
+	// background
+	// ==================
+
+	pic bar_inventory
+	{
+		image	hud/bar_inventory
+		pos		"256 96"
+		click
+	}
+	string s_backpack
+	{
+		pos "676 121"
+		align uc
+		string	"_Backpack"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_left
+	{
+		pos "676 246"
+		align uc
+		string	"_Left Hand"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_right
+	{
+		pos "354 246"
+		align uc
+		string	"_Right Hand"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_extension
+	{
+		pos "354 172"
+		align uc
+		string	"_Extension"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_holster
+	{
+		pos "676 341"
+		align uc
+		string	"_Holster"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_belt
+	{
+		pos "354 341"
+		align uc
+		string	"_Belt"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_floor
+	{
+		pos "318 456"
+		align uc
+		string	"_Floor"
+		color "0 0.6 0 1"
+		size "76 25"
+	}
+
+	string actorname
+	{
+		string	"*cvar mn_name"
+		pos		"290 120"
+	}
+
+	// ==================
+	// containers
+	// ==================
+
+	container right		{ pos "289 277" }
+	container left		{ pos "613 277" }
+	container floor		{ pos "284 458" }
+	container backpack	{ pos "613 155" }
+	container belt		{ pos "310 372" }
+	container holster	{ pos "639 369" }
+
+	// ==================
+	// model
+	// ==================
+
+	model actor
+	{
+		md2		"*cvar mn_body"
+		skin	"*cvar mn_skin"
+		anim	"stand_menu"
+		origin	"512 270 0"
+		angles	"0 70 90"
+		scale	"5 5 5"
+		color	"0.5 0.5 0.5 1"
+	}
+
+	model head
+	{
+		md2		"*cvar mn_head"
+		skin	"*cvar mn_skin"
+		tag		"actor tag_head"
+		color	"0.5 0.5 0.5 1"
+		scale	"1.0 1.0 1.0"
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	pic button_exit
+	{
+		image	hud/buttons2
+		mousefx true
+		pos		"684 554"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop }
+	}
+}
+
+// ==================
+// HUD INVENTORY
+// ==================
+
+menu hudinv extends inventory
+{
+	zone bt_physdata
+	{
+		image	hud/buttons1
+		mousefx true
+		pos		"983 266"
+		size	"36 75"
+		click	{ cmd mn_pop }
+	}
+
+	zone bt_inventory
+	{
+		image	hud/buttons1
+		mousefx true
+		pos		"983 376"
+		size	"36 75"
+		click	{ cmd mn_pop }
+	}
+}
+
+// ==================
+// ALT HUD INVENTORY
+// ==================
+
+menu ahudinv extends inventory
+{
+	zone zone_clickright
+	{
+		tooltip "_Inventory and physical stats"
+		pos     "878 84"
+		size    "130 265"
+		click   { cmd mn_pop }
+		rclick  { cmd mn_pop }
+	}
+}
+

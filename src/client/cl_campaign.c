@@ -1651,7 +1651,7 @@ int CL_GameLoad(char *filename)
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
 	res = uncompress(buf, (uLongf *)&len, cbuf + MAX_VAR, clen - MAX_VAR);
 	free(cbuf);
-	
+
 	if (res != Z_OK) {
 		Com_Printf("Error decompressing data in '%s'.\n", filename);
 		return 1;
@@ -2611,7 +2611,7 @@ static void CL_GameResultsCmd(void)
 	} /* for */
 	Com_DPrintf("CL_GameResultsCmd - num %i\n", numberofsoldiers); /* DEBUG */
 
-	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n", i);
+	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n");
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won);

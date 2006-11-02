@@ -1,6 +1,6 @@
 sequence intro
 {
-	cmd "ov_stop;music mission;ov_start;"
+	cmd "music_stop;music mission;music_start;"
 	cmd "seq_animspeed 100;"
 
 	2dobj i_sentence1
@@ -92,7 +92,7 @@ sequence intro
 
 sequence prolog
 {
-	cmd "ov_stop;music mission;ov_start;"
+	cmd "music_stop;music mission;music_start;"
 	cmd "seq_animspeed 100;"
 
 	2dobj p_sentence1

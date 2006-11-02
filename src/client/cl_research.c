@@ -787,10 +787,12 @@ void CL_ResearchType(void)
 	RS_UpdateData();
 
 	/* Nothing to research here. */
-	if (!researchListLength || !gd.numBases)
+	if (!researchListLength || !gd.numBases) {
 		Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
-	else if (baseCurrent && !baseCurrent->hasLab)
+	} else if (baseCurrent && !baseCurrent->hasLab) {
+		Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
 		MN_Popup(_("Notice"), _("Build a laboratory first"));
+	}
 }
 
 /**
@@ -885,7 +887,7 @@ void CL_CheckResearchStatus(void)
 
 	if (newResearch) {
 		CL_GameTimeStop();
-		CL_ResearchType();
+		RS_UpdateData();
 	}
 }
 

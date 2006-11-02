@@ -80,7 +80,7 @@ static void UFO_ListUfosOnGeoscape(void)
 
 	Com_Printf("There are %i ufos on geoscape\n", gd.numUfos);
 	for (ufo = gd.ufos + gd.numUfos - 1 ; ufo >= gd.ufos; ufo--)
-		Com_Printf("ufo: %s - status: %i - pos: %.0f:%0.f\n", ufo - gd.ufos + 1, ufo->status, ufo->pos[0], ufo->pos[1]);
+		Com_Printf("ufo: %s - status: %i - pos: %.0f:%0.f\n", gd.ufos[ufo - gd.ufos + 1].name, ufo->status, ufo->pos[0], ufo->pos[1]);
 }
 #endif
 

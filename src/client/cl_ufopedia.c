@@ -133,7 +133,7 @@ void CL_ItemDescription(int item)
 			/* TODO: Print protection */
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Armor\n") );
 		} else if (!Q_strncmp(od->type, "ammo", 4)) {
-			Com_sprintf(itemText, MAX_MENUTEXTLEN, "");
+			*itemText = '\0';
 			/* more will be written below */
 		} else if (od->weapon && (od->reload || od->thrown)) {
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("%s weapon with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
@@ -648,7 +648,7 @@ void UP_ParseUpChapters( char *id, char **text )
 
 		/* add chapter */
 		if ( gd.numChapters >= MAX_PEDIACHAPTERS ) {
-			Com_Printf( "UP_ParseUpChapters: too many chapter defs\n", id );
+			Com_Printf("UP_ParseUpChapters: too many chapter defs\n");
 			return;
 		}
 		memset( &gd.upChapters[gd.numChapters], 0, sizeof( pediaChapter_t ) );

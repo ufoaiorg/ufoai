@@ -224,9 +224,9 @@ MISC
 
 void Com_BeginRedirect(int target, char *buffer, int buffersize, void (*flush) (int, char *));
 void Com_EndRedirect(void);
-void Com_Printf(char *fmt, ...);
-void Com_DPrintf(char *fmt, ...);
-void Com_Error(int code, char *fmt, ...);
+void Com_Printf(char *msg, ...) __attribute__((format(printf, 1, 2)));
+void Com_DPrintf(char *msg, ...) __attribute__((format(printf, 1, 2)));
+void Com_Error(int code, char *fmt, ...) __attribute__((noreturn, format(printf, 2, 3)));
 void Com_Drop(void);
 void Com_Quit(void);
 
@@ -290,7 +290,7 @@ game_export_t *Sys_GetGameAPI(game_import_t * parms);
 char *Sys_ConsoleInput(void);
 void Sys_ConsoleOutput(char *string);
 void Sys_SendKeyEvents(void);
-void Sys_Error(char *error, ...);
+void Sys_Error(char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 void Sys_Quit(void);
 char *Sys_GetClipboardData(void);
 char *Sys_GetHomeDirectory(void);

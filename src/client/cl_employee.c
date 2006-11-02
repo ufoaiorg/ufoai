@@ -406,7 +406,10 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
 			E_AssignEmployee(employee, building_rom_unhired_employee);
 			*/
 		}
-		/* why not merge it with E_RemoveEmployeeFromBuilding, where the building is Dropship Hangar (unless handgar can hold more than one aircraft... */
+		/**
+		 * TODO: why not merge it with E_RemoveEmployeeFromBuilding, where the building is Dropship Hangar
+		 * (unless hangar can hold more than one aircraft...)?
+		 */
 		if (type == EMPL_SOLDIER ) {
 			/* Remove soldier from aircraft/team if he was assigned to one. */
 			if ( CL_SoldierInAircraft(employee->idx, -1) ){

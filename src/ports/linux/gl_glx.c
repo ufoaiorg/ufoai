@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <X11/keysym.h>
 #include <GL/glx.h>
 
-#ifdef HAVE_DGA /* makefile */
+#ifdef HAVE_DGA
 #ifdef __x86_64__
 #ifndef XMD_H
 #define XMD_H
@@ -49,7 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #endif /* HAVE_DGA */
 
-#ifdef HAVE_VIDMODE /* makefile */
+#ifdef HAVE_VIDMODE
 #include <X11/extensions/xf86vmode.h>
 #ifdef _XF86VIDMODE_H_
 #define HAVE_XF86_VIDMODE
@@ -90,8 +90,6 @@ static int	win_x, win_y;
 static cvar_t	*m_filter;
 static cvar_t	*in_mouse;
 static cvar_t	*in_dgamouse;
-
-static cvar_t	*r_fakeFullscreen;
 
 #ifdef HAVE_XF86_VIDMODE
 static XF86VidModeModeInfo **vidmodes;
@@ -523,8 +521,7 @@ static void HandleEvents(void)
 				if (dgamouse) {
 					mx += (event.xmotion.x + win_x) * sensitivity->value;
 					my += (event.xmotion.y + win_y) * sensitivity->value;
-				}
-				else
+				} else
 #endif /* HAVE_XF86_DGA */
 				{
 					int xoffset = event.xmotion.x - middlex;
@@ -591,15 +588,15 @@ static void HandleEvents(void)
 			break;
 
 		case MapNotify:
-			if( vid_grabmouse->value ){
-				XGrabPointer( dpy, win, True, 0, GrabModeAsync,
+			if (vid_grabmouse->value) {
+				XGrabPointer(dpy, win, True, 0, GrabModeAsync,
 					GrabModeAsync, win, None, CurrentTime);
 			}
 			break;
 
 		case UnmapNotify:
-			if( vid_grabmouse->value )
-				XUngrabPointer( dpy, CurrentTime);
+			if (vid_grabmouse->value)
+				XUngrabPointer(dpy, CurrentTime);
 			break;
 
 		case VisibilityNotify:
@@ -610,7 +607,7 @@ static void HandleEvents(void)
 
 	if (vid_grabmouse->modified) {
 		vid_grabmouse->modified = qfalse;
-		if ( ! vid_grabmouse->value ) {
+		if (!vid_grabmouse->value) {
 			XUngrabPointer(dpy, CurrentTime);
 			ri.Con_Printf( PRINT_ALL, "Ungrab mouse\n" );
 		} else {
@@ -681,6 +678,8 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	Window root;
 	XVisualInfo *visinfo;
 	XSetWindowAttributes attr;
+	XSizeHints *sizehints;
+	XWMHints *wmhints;
 	unsigned long mask;
 
 #ifdef HAVE_XF86_VIDMODE
@@ -690,8 +689,6 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 
 	srandom(getpid());
 
-	r_fakeFullscreen = ri.Cvar_Get( "r_fakeFullscreen", "0", CVAR_ARCHIVE, NULL);
-
 	ri.Con_Printf( PRINT_ALL, "Initializing OpenGL display\n");
 
 	if (fullscreen)
@@ -699,7 +696,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	else
 		ri.Con_Printf (PRINT_ALL, "...setting mode %d:", mode );
 
-	if ( !ri.Vid_GetModeInfo( &width, &height, mode ) ) {
+	if (!ri.Vid_GetModeInfo(&width, &height, mode)) {
 		ri.Con_Printf( PRINT_ALL, " invalid mode\n" );
 		return rserr_invalid_mode;
 	}
@@ -751,32 +748,26 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	/* do some pantsness */
 	if (qglXGetConfig) {
 		int red_bits, blue_bits, green_bits, depth_bits, alpha_bits;
+		int stencil_bits;
 
 		qglXGetConfig(dpy, visinfo, GLX_RED_SIZE, &red_bits);
 		qglXGetConfig(dpy, visinfo, GLX_BLUE_SIZE, &blue_bits);
 		qglXGetConfig(dpy, visinfo, GLX_GREEN_SIZE, &green_bits);
 		qglXGetConfig(dpy, visinfo, GLX_DEPTH_SIZE, &depth_bits);
 		qglXGetConfig(dpy, visinfo, GLX_ALPHA_SIZE, &alpha_bits);
+		qglXGetConfig(dpy, visinfo, GLX_STENCIL_SIZE, &stencil_bits);
 
+		ri.Con_Printf(PRINT_ALL, "I: got %d bits of stencil\n", stencil_bits);
 		ri.Con_Printf(PRINT_ALL, "I: got %d bits of red\n", red_bits);
 		ri.Con_Printf(PRINT_ALL, "I: got %d bits of blue\n", blue_bits);
 		ri.Con_Printf(PRINT_ALL, "I: got %d bits of green\n", green_bits);
 		ri.Con_Printf(PRINT_ALL, "I: got %d bits of depth\n", depth_bits);
 		ri.Con_Printf(PRINT_ALL, "I: got %d bits of alpha\n", alpha_bits);
-	}
-
-	/* stencilbuffer shadows */
-	if (qglXGetConfig) {
-		int stencil_bits;
-
-		if (!qglXGetConfig(dpy, visinfo, GLX_STENCIL_SIZE, &stencil_bits)) {
-			ri.Con_Printf(PRINT_ALL, "I: got %d bits of stencil\n", stencil_bits);
-			if (stencil_bits >= 1) {
-				have_stencil = qtrue;
-			}
-		}
-	} else {
-		have_stencil = qtrue;
+		/* stencilbuffer shadows */
+		if (stencil_bits >= 1)
+			have_stencil = qtrue;
+		else
+			have_stencil = qfalse;
 	}
 
 #ifdef HAVE_XF86_VIDMODE
@@ -786,7 +777,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		XF86VidModeGetAllModeLines(dpy, scrnum, &num_vidmodes, &vidmodes);
 
 		/* Are we going fullscreen?  If so, let's change video mode */
-		if (fullscreen && !r_fakeFullscreen->value) {
+		if (fullscreen) {
 			best_dist = 9999999;
 			best_fit = -1;
 
@@ -848,6 +839,49 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	win = XCreateWindow(dpy, root, 0, 0, width, height,
 						0, visinfo->depth, InputOutput,
 						visinfo->visual, mask, &attr);
+
+	sizehints = XAllocSizeHints();
+	if (sizehints) {
+		sizehints->min_width = width;
+		sizehints->min_height = height;
+		sizehints->max_width = width;
+		sizehints->max_height = height;
+		sizehints->base_width = width;
+		sizehints->base_height = height;
+		sizehints->flags = PMinSize | PMaxSize | PBaseSize;
+	}
+	wmhints = XAllocWMHints();
+	if (wmhints) {
+		#include "ufoicon.xbm"
+
+		Pixmap icon_pixmap, icon_mask;
+		unsigned long fg, bg;
+
+		fg = BlackPixel(dpy, visinfo->screen);
+		bg = WhitePixel(dpy, visinfo->screen);
+
+		icon_pixmap = XCreatePixmapFromBitmapData(
+				dpy, win, (char *)ufoicon_bits, ufoicon_width, ufoicon_height,
+				fg, bg, visinfo->depth
+		);
+
+		icon_mask = XCreatePixmapFromBitmapData(
+				dpy, win, (char *)ufoicon_bits, ufoicon_width, ufoicon_height,
+				bg, fg, visinfo->depth
+		);
+
+		wmhints->flags = IconPixmapHint | IconMaskHint;
+		wmhints->icon_pixmap = icon_pixmap;
+		wmhints->icon_mask = icon_mask;
+	}
+
+	XSetWMProperties(dpy, win, NULL, NULL, NULL, 0, sizehints, wmhints, None);
+
+	if (sizehints)
+		XFree(sizehints);
+	if (wmhints)
+		XFree(wmhints);
+
 	XStoreName(dpy, win, GAME_TITLE);
 
 	wmDeleteWindow = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
@@ -894,13 +928,15 @@ void GLimp_Shutdown( void )
 	dgamouse = qfalse;
 
 	if (dpy) {
+		uninstall_grabs();
+
 		if (ctx)
 			qglXDestroyContext(dpy, ctx);
 		if (win)
 			XDestroyWindow(dpy, win);
 #ifdef HAVE_XF86_VIDMODE
 		/*revert to original gamma-settings */
-		if ( gl_state.hwgamma )
+		if (gl_state.hwgamma)
 			XF86VidModeSetGamma(dpy, scrnum, &oldgamma);
 		if (vidmode_active)
 			XF86VidModeSwitchToMode(dpy, scrnum, vidmodes[0]);
@@ -924,9 +960,9 @@ int qXErrorHandler(Display *dpy, XErrorEvent *ev)
 	static char buf[1024];
 	XGetErrorText(dpy, ev->error_code, buf, 1024);
 	ri.Con_Printf( PRINT_ALL, "X Error of failed request: %s\n", buf);
-	ri.Con_Printf( PRINT_ALL, "  Major opcode of failed request: %d\n", ev->request_code, buf);
+	ri.Con_Printf( PRINT_ALL, "  Major opcode of failed request: %uli\n", ev->request_code);
 	ri.Con_Printf( PRINT_ALL, "  Minor opcode of failed request: %d\n", ev->minor_code);
-	ri.Con_Printf( PRINT_ALL, "  Serial number of failed request: %d\n", ev->serial);
+	ri.Con_Printf( PRINT_ALL, "  Serial number of failed request: %lui\n", ev->serial);
 	return 0;
 }
 

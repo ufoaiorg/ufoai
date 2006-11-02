@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <dlfcn.h>
 #endif
 
-void S_Play(void);
+void S_Play_f(void);
 void S_SoundList_f(void);
 void S_Update_(void);
 void S_StopAllSounds(void);
@@ -70,10 +70,10 @@ static int sound_started = 0;
 
 dma_t dma;
 
-vec3_t listener_origin;
-vec3_t listener_forward;
-vec3_t listener_right;
-vec3_t listener_up;
+static vec3_t listener_origin;
+static vec3_t listener_forward;
+static vec3_t listener_right;
+static vec3_t listener_up;
 
 static qboolean s_registering;
 
@@ -102,8 +102,8 @@ cvar_t *snd_khz;
 cvar_t *snd_show;
 cvar_t *snd_mixahead;
 
-cvar_t *ov_volume;
-cvar_t *ov_loop;
+cvar_t *snd_music_volume;
+cvar_t *snd_music_loop;
 
 cvar_t *snd_ref;
 static qboolean snd_ref_active;
@@ -144,11 +144,11 @@ void S_SoundInfo_f(void)
 	Com_Printf("%5d samplebits\n", dma.samplebits);
 	Com_Printf("%5d submission_chunk\n", dma.submission_chunk);
 	Com_Printf("%5d speed\n", dma.speed);
-	Com_Printf("0x%x dma buffer\n", dma.buffer);
+	Com_Printf("0x%p dma buffer\n", dma.buffer);
 }
 
 /**
- * @brief Lists all sound renderers for options menu
+ * @brief Lists all sound renderers for options menu - and cycles between them
  * @note Sound renderer differers from os to os
  */
 void S_ModifySndRef_f (void)
@@ -172,7 +172,8 @@ void S_ModifySndRef_f (void)
 }
 
 /**
- * @brief
+ * @brief Cycles between khz values for sound renderer
+ * @note initiate a sound renderer restart at change
  * @sa CL_Snd_Restart_f
  */
 void S_ModifyKhz_f(void)
@@ -219,23 +220,23 @@ void S_Init(void)
 
 	Com_Printf("\n------- sound initialization -------\n");
 
-	cv = Cvar_Get("snd_init", "1", 0, NULL);
+	cv = Cvar_Get("snd_init", "1", 0, "Should the sound renderer get initialized");
 
 	if (!cv->value) {
 		Com_Printf("not initializing.\n");
 	} else {
-		snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, NULL);
-		snd_khz = Cvar_Get("snd_khz", "48", CVAR_ARCHIVE, NULL);
+		snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
+		snd_khz = Cvar_Get("snd_khz", "48", CVAR_ARCHIVE, "Khz value for sound renderer - default is 48");
 		snd_loadas8bit = Cvar_Get("snd_loadas8bit", "0", CVAR_ARCHIVE, NULL);
 		snd_mixahead = Cvar_Get("snd_mixahead", "0.2", CVAR_ARCHIVE, NULL);
 		snd_show = Cvar_Get("snd_show", "0", 0, NULL);
 		snd_testsound = Cvar_Get("snd_testsound", "0", 0, NULL);
-		ov_volume = Cvar_Get("ov_volume", "0.5", CVAR_ARCHIVE, NULL);
-		ov_loop = Cvar_Get("ov_loop", "1", 0, NULL);
+		snd_music_volume = Cvar_Get("snd_music_volume", "0.5", CVAR_ARCHIVE, "Music volume");
+		snd_music_loop = Cvar_Get("snd_music_loop", "1", 0, "Music loop");
 
 		{
 			char fn[MAX_QPATH];
-			snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, NULL);
+			snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
 			/* don't restart right again */
 			snd_ref->modified = qfalse;
 
@@ -288,9 +289,9 @@ void S_Init(void)
 		}
 
 		si.dma = &dma;
-		si.bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, NULL);
-		si.channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, NULL);
-		si.device = Cvar_Get("snd_device", "default", CVAR_ARCHIVE, NULL);
+		si.bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, "Sound bits");
+		si.channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, "Sound channels");
+		si.device = Cvar_Get("snd_device", "default", CVAR_ARCHIVE, "Default sound device");
 		si.khz = snd_khz;
 		si.Cvar_Get = Cvar_Get;
 		si.Com_Printf = Com_Printf;
@@ -305,17 +306,17 @@ void S_Init(void)
 			return;
 		}
 
-		Cmd_AddCommand("play", S_Play, NULL);
-		Cmd_AddCommand("stopsound", S_StopAllSounds, NULL);
-		Cmd_AddCommand("soundlist", S_SoundList_f, NULL);
-		Cmd_AddCommand("soundinfo", S_SoundInfo_f, NULL);
+		Cmd_AddCommand("snd_play", S_Play_f, NULL);
+		Cmd_AddCommand("snd_stop", S_StopAllSounds, NULL);
+		Cmd_AddCommand("snd_list", S_SoundList_f, NULL);
+		Cmd_AddCommand("snd_info", S_SoundInfo_f, NULL);
 
-		Cmd_AddCommand("ov_play", S_PlayOGG, NULL);
-		Cmd_AddCommand("ov_start", S_StartOGG, NULL);
-		Cmd_AddCommand("ov_stop", OGG_Stop, NULL);
+		Cmd_AddCommand("music_play", S_PlayOGG, "Plays an ogg sound track");
+		Cmd_AddCommand("music_start", S_StartOGG, NULL);
+		Cmd_AddCommand("music_stop", OGG_Stop, "Stop currently playing music tracks");
 
-		Cmd_AddCommand("modifysnd_ref", S_ModifySndRef_f, NULL);
-		Cmd_AddCommand("modifykhz", S_ModifyKhz_f, NULL);
+		Cmd_AddCommand("snd_modifyref", S_ModifySndRef_f, "Modify sound renderer");
+		Cmd_AddCommand("snd_modifykhz", S_ModifyKhz_f, "Modify khz for sound renderer - use + or - as paramaters");
 
 		S_InitScaletable();
 
@@ -361,14 +362,15 @@ void S_Shutdown(void)
 
 	sound_started = 0;
 
-	Cmd_RemoveCommand("play");
-	Cmd_RemoveCommand("stopsound");
-	Cmd_RemoveCommand("soundlist");
-	Cmd_RemoveCommand("soundinfo");
-	Cmd_RemoveCommand("ov_play");
-	Cmd_RemoveCommand("ov_start");
-	Cmd_RemoveCommand("ov_stop");
-	Cmd_RemoveCommand("modifykhz");
+	Cmd_RemoveCommand("snd_play");
+	Cmd_RemoveCommand("snd_stop");
+	Cmd_RemoveCommand("snd_list");
+	Cmd_RemoveCommand("snd_info");
+	Cmd_RemoveCommand("music_play");
+	Cmd_RemoveCommand("music_start");
+	Cmd_RemoveCommand("music_stop");
+	Cmd_RemoveCommand("snd_modifykhz");
+	Cmd_RemoveCommand("snd_modifyref");
 
 	/* free all sounds */
 	for (i = 0, sfx = known_sfx; i < num_sfx; i++, sfx++) {
@@ -1211,7 +1213,7 @@ qboolean OGG_Open(char *filename)
 	int res, length;
 	vorbis_info *vi;
 
-	if (ov_volume->value <= 0)
+	if (snd_music_volume->value <= 0)
 		return qfalse;
 
 	/* check running music */
@@ -1266,18 +1268,18 @@ int OGG_Read(void)
 {
 	int res;
 
-	if (ov_volume->value <= 0) {
+	if (snd_music_volume->value <= 0) {
 		OGG_Stop();
 		return 0;
 	}
 
 	/* read and resample */
 	res = ov_read(&ovFile, ovBuf, sizeof(ovBuf), 0, 2, 1, &ovSection);
-	S_RawSamples(res >> 2, 44100, 2, 2, (byte *) ovBuf, ov_volume->value);
+	S_RawSamples(res >> 2, 44100, 2, 2, (byte *) ovBuf, snd_music_volume->value);
 
 	/* end of file? */
 	if (!res) {
-		if ((int) ov_loop->value)
+		if ((int) snd_music_loop->value)
 			ov_raw_seek(&ovFile, 0);
 		else
 			OGG_Stop();
@@ -1291,7 +1293,7 @@ int OGG_Read(void)
 void S_PlayOGG(void)
 {
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: ov_play <filename>\n");
+		Com_Printf("Usage: music_play <filename>\n");
 		return;
 	}
 	OGG_Open(Cmd_Argv(1));
@@ -1318,7 +1320,7 @@ console functions
 /**
  * @brief
  */
-void S_Play(void)
+void S_Play_f(void)
 {
 	int i;
 	char name[256];

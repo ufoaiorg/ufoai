@@ -1295,20 +1295,13 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 			ri.Cvar_Set( "gl_monolightmap", "0" );
 	}
 
-	/* power vr can't have anything stay in the framebuffer, so */
-	/* the screen needs to redraw the tiled background every frame */
-	if (gl_config.renderer & GL_RENDERER_POWERVR)
-		ri.Cvar_Set("scr_drawall", "1");
-	else
-		ri.Cvar_Set("scr_drawall", "0");
-
 #if defined __linux__ || defined __FreeBSD__
 	ri.Cvar_SetValue("gl_finish", 1);
-#endif
-
+#else
 	/* MCD has buffering issues */
 	if (gl_config.renderer == GL_RENDERER_MCD)
 		ri.Cvar_SetValue("gl_finish", 1);
+#endif
 
 	/* grab extensions */
 	if (strstr(gl_config.extensions_string, "GL_EXT_compiled_vertex_array") || strstr(gl_config.extensions_string, "GL_SGI_compiled_vertex_array")) {
@@ -1600,7 +1593,7 @@ static void R_BeginFrame(float camera_separation)
 
 	if (r_anisotropic->modified) {
 		if (r_anisotropic->value > r_ext_max_anisotropy->value) {
-			ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %i\n", r_ext_max_anisotropy->value);
+			ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %.0f\n", r_ext_max_anisotropy->value);
 			ri.Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->value);
 		}
 		r_anisotropic->modified = qfalse;

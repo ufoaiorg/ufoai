@@ -268,8 +268,6 @@ typedef struct {
 	float *fogColor;
 } refdef_t;
 
-
-
 #define	API_VERSION		4
 
 /* these are the functions exported by the refresh module */
@@ -341,7 +339,7 @@ typedef struct {
 
 /* these are the functions imported by the refresh module */
 typedef struct {
-	void (*Sys_Error) (int err_level, char *str, ...);
+	void (*Sys_Error) (int err_level, char *str, ...) __attribute__((noreturn, format(printf, 2, 3)));
 
 	void (*Cmd_AddCommand) (char *name, void (*cmd) (void), char *desc);
 	void (*Cmd_RemoveCommand) (const char *name);
@@ -349,7 +347,7 @@ typedef struct {
 	char *(*Cmd_Argv) (int i);
 	void (*Cmd_ExecuteText) (int exec_when, char *text);
 
-	void (*Con_Printf) (int print_level, char *str, ...);
+	void (*Con_Printf) (int print_level, char *str, ...) __attribute__((format(printf, 2, 3)));
 
 	/* files will be memory mapped read only */
 	/* the returned buffer may be part of a larger pak file, */
