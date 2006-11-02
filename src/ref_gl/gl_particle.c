@@ -32,13 +32,13 @@ PARTICLE DRAWING
 */
 
 /**
- * @brief
+ * @brief Get Sprite Vectors
+ * @param[in] p the particle to give the dimensions for
+ * @param[out] right the output right vector for the particle
+ * @param[out] up the output up vector for the particle
  */
-void R_DrawSprite(ptl_t * p)
+static void R_GetSpriteVectors(ptl_t *p, vec3_t right, vec3_t up)
 {
-	vec3_t up, right;
-	vec3_t pos;
-
 	/* get transformation */
 	switch (p->style) {
 	case STYLE_FACING:
@@ -53,6 +53,7 @@ void R_DrawSprite(ptl_t * p)
 		break;
 
 	case STYLE_BEAM:
+	case STYLE_AXIS:
 		AngleVectors(p->angles, right, NULL, NULL);
 		CrossProduct(right, vpn, up);
 		VectorNormalize(up);
@@ -62,13 +63,50 @@ void R_DrawSprite(ptl_t * p)
 
 	default:
 		/* shouldn't happen */
+		abort();
 		return;
 	}
+}
+
+/**
+ * @brief
+ */
+void R_DrawSprite(ptl_t * p)
+{
+	ptl_t *q;
+	vec3_t up, right;
+	vec3_t nup, nright;
+	vec3_t pos;
 
 	/* load texture set up coordinates */
 	GL_Bind(((image_t *) r_newrefdef.ptl_art[p->pic].art)->texnum);
 
-	VectorMA(p->s, -0.5, up, pos);
+	/* calculate main position and normalised up and right vectors */
+	q = p->parent ? p->parent : p;
+	R_GetSpriteVectors(q, right, up);
+
+	/* Calculate normalised */
+	VectorCopy(up, nup);
+	VectorCopy(right, nright);
+	VectorNormalize(nup);
+	VectorNormalize(nright);
+
+	/* offset */
+	VectorCopy(q->s, pos);
+	VectorMA(pos, q->offset[0], nup, pos);
+	VectorMA(pos, q->offset[1], nright, pos);
+
+	if (p->parent){
+		/* if this is a child then calculate our own up and right vectors and offsets */
+		R_GetSpriteVectors(p, right, up);
+
+		/* but offset by our parent's nup and nright */
+		VectorMA(pos, p->offset[0], nup, pos);
+		VectorMA(pos, p->offset[1], nright, pos);
+	}
+
+	/* center image */
+	VectorMA(pos, -0.5, up, pos);
 	VectorMA(pos, -0.5, right, pos);
 
 	/* draw it */

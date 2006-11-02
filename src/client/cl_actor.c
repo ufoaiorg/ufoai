@@ -1512,11 +1512,10 @@ void CL_DoEndRound(sizebuf_t * sb)
 	cl.actTeam = MSG_ReadByte(sb);
 	Com_Printf(", team %i's round started!\n", cl.actTeam);
 
-	/* check whether a particle has to go */
-	CL_ParticleCheckRounds();
-
 	/* hud changes */
 	if (cls.team == cl.actTeam) {
+		/* check whether a particle has to go */
+		CL_ParticleCheckRounds();
 		Cbuf_AddText("startround\n");
 		CL_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart.wav");
@@ -1929,6 +1928,11 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 {
 	vec3_t start, end;
 	vec3_t dir, mid;
+	vec3_t mins, maxs;
+	trace_t tr;
+	int oldLevel;
+	float d;
+	qboolean crossNo;
 
 	if (!selActor || !selFD)
 		return;
@@ -1936,17 +1940,42 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 	Grid_PosToVec(&clMap, fromPos, start);
 	Grid_PosToVec(&clMap, toPos, end);
 
-	/* show cross and trace */
+	/* calculate direction */
+	VectorSubtract(end, start, dir);
+	VectorNormalize(dir);
+
+	/* calculate 'out of range point' if there is one */
 	if (VectorDistSqr(start, end) > selFD->range * selFD->range) {
-		VectorSubtract(end, start, dir);
-		VectorNormalize(dir);
 		VectorMA(start, selFD->range, dir, mid);
-		/* TODO: set mid to the first obstacle if there is one */
-		CL_ParticleSpawn("inRangeTracer", 0, start, mid, NULL);
+		crossNo = qtrue;
+	}else{
+		VectorCopy(end, mid);
+		crossNo = qfalse;
+	}
+
+	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
+	oldLevel = cl_worldlevel->value;
+	Cvar_SetValue("cl_worldlevel", map_maxlevel-1);
+
+	/* check for obstacles */
+	VectorSet(mins, 0, 0, 0);
+	VectorSet(maxs, 0, 0, 0);
+	tr = CL_Trace(start, mid, mins, maxs, selActor, MASK_SHOT);
+	if (tr.fraction < 1.0) {
+		d = VectorDist(start, mid);
+		VectorMA(start, tr.fraction * d, dir, mid);
+		crossNo = qtrue;
+	}
+
+	/* switch level back to where it was again */
+	Cvar_SetValue("cl_worldlevel", oldLevel);
+
+	/* spawn particles */
+	CL_ParticleSpawn("inRangeTracer", 0, start, mid, NULL);
+	if (crossNo) {
 		CL_ParticleSpawn("longRangeTracer", 0, mid, end, NULL);
 		CL_ParticleSpawn("cross_no", 0, end, NULL, NULL);
-	} else {
-		CL_ParticleSpawn("inRangeTracer", 0, start, end, NULL);
+	}else{
 		CL_ParticleSpawn("cross", 0, end, NULL, NULL);
 	}
 

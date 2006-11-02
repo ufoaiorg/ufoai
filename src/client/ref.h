@@ -10,7 +10,7 @@ All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
 15/06/06, Eddy Cullen (ScreamingWithNoSound):
 	Reformatted to agreed style.
-	Added doxygen file comment.
+ 	Added doxygen file comment.
 	Updated copyright notice.
 	Modified inclusion guard.
 
@@ -202,8 +202,13 @@ typedef struct ptl_s {
 	vec3_t scale;
 	vec4_t color;
 	vec3_t s;
+	vec3_t offset;
 	vec3_t angles;
 	int levelFlags;
+
+	struct ptl_s* children;	/* list of children */
+	struct ptl_s* next;		/* next peer in list */
+	struct ptl_s* parent;   /* pointer to parent */
 
 	/* private */
 	struct ptlDef_s *ctrl;

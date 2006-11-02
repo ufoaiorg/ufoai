@@ -1446,7 +1446,7 @@ char *MN_GetFont(const menu_t *m, const menuNode_t *const n)
  */
 void MN_DrawMenus(void)
 {
-	modelInfo_t mi = {0, };
+	modelInfo_t mi;
 	modelInfo_t pmi;
 	menuNode_t *node;
 	menu_t *menu;

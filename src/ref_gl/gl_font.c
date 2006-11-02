@@ -242,7 +242,7 @@ void Font_ListCache_f(void)
  */
 static int Font_Hash(const char *string, int maxlen)
 {
-	int register hashValue, i;
+	register int hashValue, i;
 
 	hashValue = 0;
 	for (i = 0; i < maxlen && string[i] != '\0'; i++)

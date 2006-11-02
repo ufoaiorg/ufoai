@@ -39,7 +39,7 @@ typedef struct ptlCmd_s {
 
 typedef struct ptlDef_s {
 	char name[MAX_VAR];
-	ptlCmd_t *init, *run, *think;
+	ptlCmd_t *init, *run, *think, *round;
 } ptlDef_t;
 
 
@@ -49,6 +49,7 @@ typedef enum pf_s {
 	PF_INIT,
 	PF_RUN,
 	PF_THINK,
+	PF_ROUND,
 
 	PF_NUM_PTLFUNCS
 } pf_t;
@@ -56,13 +57,15 @@ typedef enum pf_s {
 static char *pf_strings[PF_NUM_PTLFUNCS] = {
 	"init",
 	"run",
-	"think"
+	"think",
+	"round"
 };
 
 static size_t pf_values[PF_NUM_PTLFUNCS] = {
 	offsetof(ptlDef_t, init),
 	offsetof(ptlDef_t, run),
-	offsetof(ptlDef_t, think)
+	offsetof(ptlDef_t, think),
+	offsetof(ptlDef_t, round)
 };
 
 
@@ -77,7 +80,7 @@ typedef enum pc_s {
 	PC_V2, PC_V3, PC_V4,
 
 	PC_KILL,
-	PC_SPAWN, PC_NSPAWN,
+	PC_SPAWN, PC_NSPAWN, PC_CHILD,
 
 	PC_NUM_PTLCMDS
 } pc_t;
@@ -93,7 +96,7 @@ static char *pc_strings[PC_NUM_PTLCMDS] = {
 	"v2", "v3", "v4",
 
 	"kill",
-	"spawn", "nspawn"
+	"spawn", "nspawn", "child"
 };
 
 #define F(x)		(1<<x)
@@ -111,7 +114,7 @@ static int pc_types[PC_NUM_PTLCMDS] = {
 	0, 0, 0,
 
 	0,
-	ONLY | V_STRING, ONLY | V_STRING
+	ONLY | V_STRING, ONLY | V_STRING, ONLY | V_STRING
 };
 
 static value_t pps[] = {
@@ -127,6 +130,7 @@ static value_t pps[] = {
 	{"a", V_VECTOR, offsetof(ptl_t, a)},
 	{"v", V_VECTOR, offsetof(ptl_t, v)},
 	{"s", V_VECTOR, offsetof(ptl_t, s)},
+	{"offset", V_VECTOR, offsetof(ptl_t, offset)},
 
 	/* t and dt are not specified in particle definitions */
 	/* but they can be used as references */
@@ -187,11 +191,9 @@ int numPtls;
 /* =========================================================== */
 
 
-/*
-======================
-CL_ParticleRegisterArt
-======================
-*/
+/**
+ * @brief
+ */
 void CL_ParticleRegisterArt(void)
 {
 	ptlArt_t *a;
@@ -216,11 +218,11 @@ void CL_ParticleRegisterArt(void)
 }
 
 
-/*
-======================
-CL_ParticleGetArt
-======================
-*/
+/**
+ * @brief Register art (pics, models) for each particle
+ * @note searches the global particle art list and checks whether the pic or model was already loaded
+ * @return index of global art array
+ */
 static int CL_ParticleGetArt(char *name, int frame, char type)
 {
 	ptlArt_t *a;
@@ -233,6 +235,9 @@ static int CL_ParticleGetArt(char *name, int frame, char type)
 
 	if (i < numPtlArt)
 		return i;
+
+	if (i >= MAX_PTL_ART)
+		Sys_Error("CL_ParticleGetArt: MAX_PTL_ART overflow\n");
 
 	/* register new art */
 	switch (type) {
@@ -262,11 +267,9 @@ static int CL_ParticleGetArt(char *name, int frame, char type)
 }
 
 
-/*
-======================
-CL_ResetParticles
-======================
-*/
+/**
+ * @brief
+ */
 void CL_ResetParticles(void)
 {
 	numPtls = 0;
@@ -278,11 +281,9 @@ void CL_ResetParticles(void)
 }
 
 
-/*
-======================
-CL_ParticleFunction
-======================
-*/
+/**
+ * @brief
+ */
 void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 {
 	int s, e;
@@ -290,6 +291,7 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 	int i, j, n;
 	void *radr;
 	float arg;
+	ptl_t *pnew;
 
 	/* test for null cmd */
 	if (!cmd)
@@ -496,7 +498,7 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 			break;
 
 		case PC_KILL:
-			p->inuse = qfalse;
+			CL_ParticleFree(p);
 			return;
 
 		case PC_SPAWN:
@@ -519,6 +521,15 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 				CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
 			break;
 
+		case PC_CHILD:
+			pnew = CL_ParticleSpawn((char *)radr, p->levelFlags, p->s, p->v, p->a);
+			if (pnew) {
+				pnew->next = p->children;
+				pnew->parent = p;
+				p->children = pnew;
+			}
+			break;
+
 		default:
 			Sys_Error("CL_ParticleFunction: unknown cmd type %i\n", cmd->type);
 			break;
@@ -527,11 +538,9 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 }
 
 
-/*
-======================
-CL_ParticleSpawn
-======================
-*/
+/**
+ * @brief
+ */
 ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a)
 {
 	ptlDef_t *pd;
@@ -594,6 +603,20 @@ ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a
 }
 
 /**
+ * @brief Free a particle and all it's children
+ * @param[in] p the particle to free
+ */
+void CL_ParticleFree(ptl_t *p)
+{
+	ptl_t *c;
+
+	p->inuse = qfalse;
+	for (c = p->children; c; c = c->next) {
+		CL_ParticleFree(c);
+	}
+}
+
+/**
  * @brief Spawn a particle given by EV_SPAWN_PARTICLE event
  * @param[in] sb sizebuf that holds the network transfer
  */
@@ -617,11 +640,9 @@ void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb)
 	}
 }
 
-/*
-======================
-CL_Fading
-======================
-*/
+/**
+ * @brief
+ */
 void CL_Fading(vec4_t color, byte fade, float frac, qboolean onlyAlpha)
 {
 	int i;
@@ -653,37 +674,37 @@ void CL_Fading(vec4_t color, byte fade, float frac, qboolean onlyAlpha)
 	}
 }
 
-/*
-======================
-CL_ParticleCheckRounds
-
-checks whether a particle is still active in the current round
-======================
-*/
+/**
+ * @brief checks whether a particle is still active in the current round
+ * @note also calls the round function of each particle (if defined)
+ * @sa CL_ParticleFunction
+ */
 void CL_ParticleCheckRounds(void)
 {
 	ptl_t *p;
 	int i;
 
 	for (i = 0, p = ptl; i < numPtls; i++, p++)
-		if (p->inuse && p->rounds) {
-			p->roundsCnt--;
-			if (p->roundsCnt <= 0) {
-				p->inuse = qfalse;
+		if (p->inuse) {
+			/* run round function */
+			CL_ParticleFunction(p, p->ctrl->round);
+
+			if (p->rounds) {
+				p->roundsCnt--;
+				if (p->roundsCnt <= 0)
+					CL_ParticleFree(p);
 			}
 		}
 }
 
 
-/*
-======================
-CL_ParticleRun
-======================
-*/
+/**
+ * @brief
+ */
 void CL_ParticleRun(void)
 {
 	qboolean onlyAlpha;
-	ptl_t *p;
+	ptl_t *p, *c;
 	int i;
 
 	for (i = 0, p = ptl; i < numPtls; i++, p++)
@@ -698,8 +719,8 @@ void CL_ParticleRun(void)
 				p->roundsCnt = p->rounds;
 
 			/* test for end of life */
-			if (p->life && p->t >= p->life) {
-				p->inuse = qfalse;
+			if (p->life && p->t >= p->life && !p->parent) {
+				CL_ParticleFree(p);
 				continue;
 			}
 
@@ -752,11 +773,9 @@ void CL_ParticleRun(void)
 
 /* =========================================================== */
 
-/*
-==============
-CL_ParseMapParticle
-==============
-*/
+/**
+ * @brief
+ */
 void CL_ParseMapParticle(ptl_t * ptl, char *es, qboolean afterwards)
 {
 	char keyname[MAX_QPATH];
@@ -807,11 +826,9 @@ void CL_ParseMapParticle(ptl_t * ptl, char *es, qboolean afterwards)
 }
 
 
-/*
-==============
-CL_RunMapParticles
-==============
-*/
+/**
+ * @brief
+ */
 void CL_RunMapParticles(void)
 {
 	mp_t *mp;
@@ -844,11 +861,9 @@ void CL_RunMapParticles(void)
 /* =========================================================== */
 
 
-/*
-======================
-CL_ParsePtlCmds
-======================
-*/
+/**
+ * @brief
+ */
 void CL_ParsePtlCmds(char *name, char **text)
 {
 	ptlCmd_t *pc;
@@ -1028,11 +1043,9 @@ int CL_GetParticleIndex(char *name)
 	return i;
 }
 
-/*
-======================
-CL_ParseParticle
-======================
-*/
+/**
+ * @brief
+ */
 void CL_ParseParticle(char *name, char **text)
 {
 	char *errhead = "CL_ParseParticle: unexptected end of file (particle ";
