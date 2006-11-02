@@ -166,7 +166,7 @@ typedef enum {
 
 extern int msg_mode;
 extern char msg_buffer[MAXCMDLINE];
-extern int msg_bufferlen;
+extern size_t msg_bufferlen;
 
 void Key_Event(int key, qboolean down, unsigned time);
 void Key_Init(void);

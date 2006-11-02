@@ -298,7 +298,7 @@ static void CL_RefreshWeaponButtons(int time)
 	}
 
 	/* check for two-handed weapon - if not, switch to left hand */
-	if (!weapon || !csi.ods[weapon->item.t].twohanded)
+	if (!weapon || !csi.ods[weapon->item.t].holdtwohanded)
 		weapon = LEFT(selActor);
 
 	if ( !weapon || weapon->item.m == NONE
@@ -388,7 +388,7 @@ void CL_ActorUpdateCVars(void)
 		/* get weapon */
 		selWeapon = IS_MODE_FIRE_LEFT(cl.cmode) ? LEFT(selActor) : RIGHT(selActor);
 
-		if (!selWeapon && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].twohanded)
+		if (!selWeapon && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].holdtwohanded)
 			selWeapon = RIGHT(selActor);
 
 		if (selWeapon) {
@@ -475,7 +475,7 @@ void CL_ActorUpdateCVars(void)
 		}
 
 		if (!LEFT(selActor) && RIGHT(selActor)
-			&& csi.ods[RIGHT(selActor)->item.t].twohanded)
+			&& csi.ods[RIGHT(selActor)->item.t].holdtwohanded)
 			Cvar_Set("mn_ammoleft", Cvar_VariableString("mn_ammoright"));
 
 		/* change stand-crouch */
@@ -988,7 +988,7 @@ void CL_ActorReload(int hand)
 	if (inv->c[hand]) {
 		weapon = inv->c[hand]->item.t;
 	} else if (hand == csi.idLeft
-			   && csi.ods[inv->c[csi.idRight]->item.t].twohanded) {
+			   && csi.ods[inv->c[csi.idRight]->item.t].holdtwohanded) {
 		/* Check for two-handed weapon */
 		hand = csi.idRight;
 		weapon = inv->c[hand]->item.t;

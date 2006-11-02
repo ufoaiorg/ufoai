@@ -2323,7 +2323,7 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 	/* fake item */
 	assert (weapon->item.t != NONE);
 	/* twohanded weapons and container is left hand container */
-	assert (!(left_hand && csi.ods[weapon->item.t].twohanded));
+	assert (!(left_hand && csi.ods[weapon->item.t].holdtwohanded));
 
 	if (market) {
 		eTempMarket.num[weapon->item.t]++;

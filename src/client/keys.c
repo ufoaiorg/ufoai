@@ -46,7 +46,7 @@ static int history_line = 0;
 
 int msg_mode;
 char msg_buffer[MAXCMDLINE];
-int msg_bufferlen = 0;
+size_t msg_bufferlen = 0;
 
 static int key_waiting;
 char *keybindings[256];
