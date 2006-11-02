@@ -329,7 +329,7 @@ float G_ActorVis(vec3_t from, edict_t * check, qboolean full)
 	/* do 3 tests */
 	n = 0;
 	for (i = 0; i < 3; i++) {
-		if (G_LineVis(from, test)) {
+		if (!G_LineVis(from, test)) {
 			if (full)
 				n++;
 			else
@@ -414,7 +414,7 @@ float G_Vis(int team, edict_t * from, edict_t * check, int flags)
 	case ET_UGV:
 		return G_ActorVis(eye, check, qfalse);
 	case ET_ITEM:
-		return G_LineVis(eye, check->origin);
+		return !G_LineVis(eye, check->origin);
 	default:
 		return 0.0;
 	}
