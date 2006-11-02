@@ -828,6 +828,13 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		ri.Con_Printf( PRINT_ALL, "...using no hardware gamma - only available in fullscreen mode\n");
 #endif /* HAVE_XF86_VIDMODE */
 
+	if (width > DisplayWidth(dpy, scrnum)
+		|| height > DisplayHeight(dpy, scrnum)) {
+		width = DisplayWidth(dpy, scrnum);
+		height = DisplayHeight(dpy, scrnum);
+		ri.Con_Printf( PRINT_ALL, "...downscaling resolution to %d %d\n", width, height);
+	}
+
 	/* window attributes */
 	attr.background_pixel = 0;
 	attr.border_pixel = 0;
@@ -900,12 +907,12 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		XMoveWindow(dpy, win, 0, 0);
 		XRaiseWindow(dpy, win);
 		XWarpPointer(dpy, None, win, 0, 0, 0, 0, 0, 0);
-		XFlush(dpy);
 		/* paranoia to ensure viewport is actually moved to the top-left */
 		XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
 	}
 #endif /* HAVE_XF86_VIDMODE */
 
+	XFlush(dpy);
 	ctx = qglXCreateContext(dpy, visinfo, NULL, True);
 
 	qglXMakeCurrent(dpy, win, ctx);
