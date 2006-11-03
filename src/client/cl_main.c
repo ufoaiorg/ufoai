@@ -421,6 +421,7 @@ void CL_ClearState(void)
 	/* wipe the entire cl structure */
 	memset(&cl, 0, sizeof(cl));
 	memset(&cl_entities, 0, sizeof(cl_entities));
+	cl.cam.zoom = 1.0;
 
 	numLEs = 0;
 	numLMs = 0;

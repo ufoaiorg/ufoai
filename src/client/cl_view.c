@@ -502,20 +502,13 @@ static float CalcFov(float fov_x, float width, float height)
  */
 void CL_CalcRefdef(void)
 {
-	float zoom;
+	float zoom = cl.cam.zoom;
 
 	VectorCopy(cl.cam.camorg, cl.refdef.vieworg);
 	VectorCopy(cl.cam.angles, cl.refdef.viewangles);
 
 	VectorSet(cl.refdef.blend, 0.0, 0.0, 0.0);
 
-	/* set field of view */
-	if (cl.cam.zoom < MIN_ZOOM)
-		zoom = MIN_ZOOM;
-	else if (cl.cam.zoom > MAX_ZOOM)
-		zoom = MAX_ZOOM;
-	else
-		zoom = cl.cam.zoom;
 	cl.refdef.fov_x = FOV / zoom;
 
 	/* set dependant variables */

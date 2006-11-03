@@ -424,7 +424,7 @@ void CL_LevelDown(void)
  */
 void CL_ZoomInQuant(void)
 {
-	float quant, zoom;
+	float quant;
 
 	/* no zooming in first person mode */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -441,14 +441,8 @@ void CL_ZoomInQuant(void)
 	/* change zoom */
 	cl.cam.zoom *= quant;
 
-	if (cl_camzoommax->value > MAX_ZOOM)
-		zoom = MAX_ZOOM;
-	else
-		zoom = cl_camzoommax->value;
-
-	/* test boundaris */
-	if (cl.cam.zoom > zoom)
-		cl.cam.zoom = zoom;
+	/* ensure zoom doesnt exceed either MAX_ZOOM or cl_camzoommax */
+	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
 }
 
 /**
@@ -456,7 +450,7 @@ void CL_ZoomInQuant(void)
  */
 void CL_ZoomOutQuant(void)
 {
-	float quant, zoom;
+	float quant;
 
 	/* no zooming in first person mode */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -473,14 +467,8 @@ void CL_ZoomOutQuant(void)
 	/* change zoom */
 	cl.cam.zoom /= quant;
 
-	if (cl_camzoommin->value > MIN_ZOOM)
-		zoom = MIN_ZOOM;
-	else
-		zoom = cl_camzoommin->value;
-
-	/* test boundaries */
-	if (cl.cam.zoom < zoom)
-		cl.cam.zoom = zoom;
+	/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
+	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 }
 
 /**
@@ -1009,14 +997,15 @@ void CL_CameraMoveRemote(void)
 
 	/* zoom change */
 	frac = CL_GetKeyMouseState(STATE_ZOOM);
-	if (frac > 0.1)
+	if (frac > 0.1) {
 		cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
-	else if (frac < -0.1)
+		/* ensure zoom not greater than either MAX_ZOOM or cl_camzoommax */
+		cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
+	} else if (frac < -0.1) {
 		cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
-	if (cl.cam.zoom < MIN_ZOOM)
-		cl.cam.zoom = MIN_ZOOM;
-	else if (cl.cam.zoom > MAX_ZOOM)
-		cl.cam.zoom = MAX_ZOOM;
+		/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
+		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
+	}
 }
 
 /**
