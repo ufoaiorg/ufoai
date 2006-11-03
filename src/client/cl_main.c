@@ -240,7 +240,6 @@ void CL_Drop(void)
 	/* drop loading plaque unless this is the initial game start */
 	if (cls.disable_servercount != -1)
 		SCR_EndLoadingPlaque();	/* get rid of loading plaque */
-	MN_PopMenu(qfalse);
 #endif
 
 	if (cls.state == ca_uninitialized)
