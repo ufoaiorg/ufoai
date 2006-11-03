@@ -40,6 +40,7 @@ int mx, my;
 int dragFrom, dragFromX, dragFromY;
 item_t dragItem = {NONE,NONE,NONE}; /* to crash as soon as possible */
 float *rotateAngles;
+qboolean wasCrouched = qfalse, doCrouch = qfalse;
 
 static qboolean cameraRoute = qfalse;
 static vec3_t routeFrom, routeDelta;
@@ -306,10 +307,10 @@ void CL_CameraModeChange(camera_mode_t new_camera_mode)
 		VectorCopy(selActor->origin, cl.cam.camorg);
 		Cvar_SetValue("cl_worldlevel", selActor->pos[2]);
 		if (!(selActor->state & STATE_CROUCHED))
-			/* raise from waist to head */
-			cl.cam.camorg[2] += 10;
+			cl.cam.camorg[2] += EYE_HT_OFFSET; /* raise from waist to head */
 		VectorCopy(selActor->angles, cl.cam.angles);
 		cl.cam.zoom = FOV/FOV_FPS;
+		wasCrouched = selActor->state & STATE_CROUCHED;
 	}
 }
 
@@ -819,7 +820,6 @@ float CL_GetKeyMouseState(int dir)
  */
 void CL_CameraMoveFirstPerson(void)
 {
-	float frac;
 	float rotation_speed;
 
 	rotation_speed =
@@ -840,17 +840,36 @@ void CL_CameraMoveFirstPerson(void)
 	if ((in_turnup.state & 1) && (cl.cam.angles[PITCH] > -45))
 		cl.cam.angles[PITCH] -= cls.frametime * rotation_speed;
 
-	/* zoom */
-	frac = CL_GetKeyMouseState(STATE_ZOOM);
-	if (frac > 0.1)
-		cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
-	if (frac < -0.1)
-		cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
+	/* ensure camera's horizontal position is over actor */
+	Vector2Copy(selActor->origin, cl.cam.camorg);
 
-	if (cl.cam.zoom > MAX_ZOOM)
-		cl.cam.zoom = MAX_ZOOM;
-	if (cl.cam.zoom < MIN_ZOOM)
-		cl.cam.zoom = MIN_ZOOM;
+	/* check if actor is starting a crouch/stand action */
+	if (wasCrouched != (selActor->state & STATE_CROUCHED)) {
+		doCrouch = qtrue;
+		wasCrouched = selActor->state & STATE_CROUCHED;
+	}
+
+	/* if in process of crouching or standing, move camera vertically */
+	if (doCrouch) {
+		if (selActor->state & STATE_CROUCHED) {
+			cl.cam.camorg[2] -= 11.*cls.frametime;
+			if (cl.cam.camorg[2] < selActor->origin[2]) {
+				cl.cam.camorg[2] = selActor->origin[2];
+				doCrouch = qfalse;
+			}
+		} else {
+			cl.cam.camorg[2] += 16.*cls.frametime;
+			if (cl.cam.camorg[2] > selActor->origin[2] + EYE_HT_OFFSET) {
+				cl.cam.camorg[2] = selActor->origin[2] + EYE_HT_OFFSET;
+				doCrouch = qfalse;
+			}
+		}
+	}
+
+	/* move camera forward horizontally to where soldier eyes are */
+	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
+	cl.cam.axis[0][2] = 0.;
+	VectorMA(cl.cam.camorg, 4., cl.cam.axis[0], cl.cam.camorg);
 }
 
 

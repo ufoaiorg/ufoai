@@ -714,6 +714,7 @@ qboolean CL_ActorSelect(le_t * le)
 				CL_CameraModeChange(CAMERA_MODE_FIRSTPERSON);
 
 			cl.cmode = M_MOVE;
+			wasCrouched = le->state & STATE_CROUCHED;
 
 			return qtrue;
 		}
@@ -1578,7 +1579,7 @@ void CL_ActorMouseTrace(void)
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON) {
 		VectorCopy(selActor->origin, from);
 		if (!(selActor->state & STATE_CROUCHED))
-			from[2] += 10;		/* raise from waist to head */
+			from[2] += EYE_HT_OFFSET;	/* raise from waist to head */
 		AngleVectors(cl.cam.angles, forward, right, up);
 		/* set the intersection level to that of the selected actor */
 		VecToPos(from, testPos);

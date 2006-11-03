@@ -451,6 +451,7 @@ typedef enum {
 	MS_WORLD
 } mouseSpace_t;
 
+extern qboolean wasCrouched;
 extern int mouseSpace;
 extern int mx, my;
 extern int dragFrom, dragFromX, dragFromY;
@@ -617,6 +618,7 @@ void CL_ParticleFree(ptl_t *p);
 
 /* cl_actor.c */
 #define CURSOR_OFFSET UNIT_HEIGHT * 0.4 /* vertical cursor offset */
+#define EYE_HT_OFFSET UNIT_HEIGHT * 0.25 /* vertical distance from waist to head */
 extern le_t *selActor;
 extern int actorMoveLength;
 extern invList_t invList[MAX_INVLIST];

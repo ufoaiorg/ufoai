@@ -378,9 +378,12 @@ static void LET_PathMove(le_t * le)
 			le->startTime = le->endTime;
 			le->endTime += ((dv & 7) > 3 ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
 			if (le->team == cls.team && le == selActor && (int) cl_worldlevel->value == le->oldPos[2] && le->pos[2] != le->oldPos[2]) {
-				/*PosToVec( le->pos, dest ); */
-				/*VectorCopy( dest, cl.cam.reforg ); */
 				Cvar_SetValue("cl_worldlevel", le->pos[2]);
+			}
+			if (camera_mode == CAMERA_MODE_FIRSTPERSON && le == selActor) {
+				cl.cam.camorg[2] = selActor->origin[2];
+				if (!(le->state & STATE_CROUCHED))
+					cl.cam.camorg[2] += EYE_HT_OFFSET;
 			}
 		} else {
 			/* end of move */
@@ -398,11 +401,6 @@ static void LET_PathMove(le_t * le)
 			blockEvents = qfalse;
 			le->think = LET_StartIdle;
 			le->think(le);
-			if (camera_mode == CAMERA_MODE_FIRSTPERSON) {
-				PosToVec(le->pos, dest);
-				VectorCopy(dest, cl.cam.camorg);
-				VectorCopy(selActor->angles, cl.cam.angles);
-			}
 			return;
 		}
 	}
