@@ -265,6 +265,7 @@ extern client_static_t cls;
 #ifdef HAVE_GETTEXT
 extern cvar_t *s_language;
 #endif
+extern cvar_t *cl_isometric;
 extern cvar_t *cl_stereo_separation;
 extern cvar_t *cl_stereo;
 
