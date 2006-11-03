@@ -44,6 +44,7 @@ cvar_t *adr6;
 cvar_t *adr7;
 cvar_t *adr8;
 
+cvar_t *cl_isometric;
 cvar_t *cl_stereo_separation;
 cvar_t *cl_stereo;
 
@@ -421,6 +422,7 @@ void CL_ClearState(void)
 	/* wipe the entire cl structure */
 	memset(&cl, 0, sizeof(cl));
 	memset(&cl_entities, 0, sizeof(cl_entities));
+	cl.cam.zoom = 1.0;
 
 	numLEs = 0;
 	numLMs = 0;
@@ -1171,6 +1173,7 @@ void CL_InitLocal(void)
 	/* register our variables */
 	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE, NULL);
 	cl_stereo = Cvar_Get("cl_stereo", "0", 0, NULL);
+	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
 
 	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
 	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
@@ -1182,6 +1185,8 @@ void CL_InitLocal(void)
 	cl_camyawspeed = Cvar_Get("cl_camyawspeed", "160", 0, NULL);
 	cl_campitchspeed = Cvar_Get("cl_campitchspeed", "0.5", 0, NULL);
 	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.25", 0, NULL);
+	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.5", 0, NULL);
+	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.0", 0, NULL);
 	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, NULL);
 
 	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE, NULL);

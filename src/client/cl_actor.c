@@ -714,6 +714,7 @@ qboolean CL_ActorSelect(le_t * le)
 				CL_CameraModeChange(CAMERA_MODE_FIRSTPERSON);
 
 			cl.cmode = M_MOVE;
+			wasCrouched = le->state & STATE_CROUCHED;
 
 			return qtrue;
 		}
@@ -1558,7 +1559,7 @@ void CL_ResetActorMoveLength(void) {
  */
 void CL_ActorMouseTrace(void)
 {
-	int i, isometric, restingLevel, intersectionLevel;
+	int i, restingLevel, intersectionLevel;
 	float cur[2], fov_x, frustumslope[2], projectiondistance = 2048;
 	float nDotP2minusP1, u;
 	vec3_t forward, right, up, stop;
@@ -1566,9 +1567,6 @@ void CL_ActorMouseTrace(void)
 	vec3_t mapNormal, P3, P2minusP1, P3minusP1;
 	pos3_t testPos;
 	le_t *le;
-
-	/* FIXME: r_isometric is not known here, so it is being looked up each time... */
-	isometric = Cvar_VariableValue("r_isometric") != 0;
 
 	/* get cursor position as a -1 to +1 range for projection */
 	cur[0] = (mx * viddef.rx - scr_vrect.width * 0.5 - scr_vrect.x) / (scr_vrect.width * 0.5);
@@ -1578,7 +1576,7 @@ void CL_ActorMouseTrace(void)
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON) {
 		VectorCopy(selActor->origin, from);
 		if (!(selActor->state & STATE_CROUCHED))
-			from[2] += 10;		/* raise from waist to head */
+			from[2] += EYE_HT_OFFSET;	/* raise from waist to head */
 		AngleVectors(cl.cam.angles, forward, right, up);
 		/* set the intersection level to that of the selected actor */
 		VecToPos(from, testPos);
@@ -1595,7 +1593,7 @@ void CL_ActorMouseTrace(void)
 	}
 
 	fov_x = (FOV / cl.cam.zoom);
-	if (isometric)
+	if (cl_isometric->value)
 		frustumslope[0] = 10. * fov_x;
 	else
 		frustumslope[0] = tan(fov_x * M_PI / 360) * projectiondistance;
@@ -1607,7 +1605,7 @@ void CL_ActorMouseTrace(void)
 	VectorMA(stop, cur[1] * -frustumslope[1], up, stop);
 
 	/* in isometric mode the camera position has to be calculated from the cursor position so that the trace goes in the right direction */
-	if (isometric)
+	if (cl_isometric->value)
 		VectorMA(stop, -projectiondistance*2, forward, from);
 
 	/* set stop point to the intersection of the trace line with the desired plane */

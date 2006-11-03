@@ -40,6 +40,7 @@ int mx, my;
 int dragFrom, dragFromX, dragFromY;
 item_t dragItem = {NONE,NONE,NONE}; /* to crash as soon as possible */
 float *rotateAngles;
+qboolean wasCrouched = qfalse, doCrouch = qfalse;
 
 static qboolean cameraRoute = qfalse;
 static vec3_t routeFrom, routeDelta;
@@ -306,10 +307,10 @@ void CL_CameraModeChange(camera_mode_t new_camera_mode)
 		VectorCopy(selActor->origin, cl.cam.camorg);
 		Cvar_SetValue("cl_worldlevel", selActor->pos[2]);
 		if (!(selActor->state & STATE_CROUCHED))
-			/* raise from waist to head */
-			cl.cam.camorg[2] += 10;
+			cl.cam.camorg[2] += EYE_HT_OFFSET; /* raise from waist to head */
 		VectorCopy(selActor->angles, cl.cam.angles);
 		cl.cam.zoom = FOV/FOV_FPS;
+		wasCrouched = selActor->state & STATE_CROUCHED;
 	}
 }
 
@@ -358,7 +359,7 @@ float CL_KeyState(kbutton_t * key)
 /*========================================================================== */
 
 const float MIN_ZOOM = 0.5;
-const float MAX_ZOOM = 3.0;
+const float MAX_ZOOM = 20.0;
 
 cvar_t *cl_camrotspeed;
 cvar_t *cl_camrotaccel;
@@ -367,6 +368,8 @@ cvar_t *cl_cammoveaccel;
 cvar_t *cl_camyawspeed;
 cvar_t *cl_campitchspeed;
 cvar_t *cl_camzoomquant;
+cvar_t *cl_camzoommax;
+cvar_t *cl_camzoommin;
 
 cvar_t *cl_anglespeedkey;
 
@@ -436,9 +439,8 @@ void CL_ZoomInQuant(void)
 	/* change zoom */
 	cl.cam.zoom *= quant;
 
-	/* test boundaris */
-	if (cl.cam.zoom > MAX_ZOOM)
-		cl.cam.zoom = MAX_ZOOM;
+	/* ensure zoom doesnt exceed either MAX_ZOOM or cl_camzoommax */
+	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
 }
 
 /**
@@ -463,9 +465,8 @@ void CL_ZoomOutQuant(void)
 	/* change zoom */
 	cl.cam.zoom /= quant;
 
-	/* test boundaries */
-	if (cl.cam.zoom < MIN_ZOOM)
-		cl.cam.zoom = MIN_ZOOM;
+	/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
+	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 }
 
 /**
@@ -805,7 +806,6 @@ float CL_GetKeyMouseState(int dir)
  */
 void CL_CameraMoveFirstPerson(void)
 {
-	float frac;
 	float rotation_speed;
 
 	rotation_speed =
@@ -826,17 +826,36 @@ void CL_CameraMoveFirstPerson(void)
 	if ((in_turnup.state & 1) && (cl.cam.angles[PITCH] > -45))
 		cl.cam.angles[PITCH] -= cls.frametime * rotation_speed;
 
-	/* zoom */
-	frac = CL_GetKeyMouseState(STATE_ZOOM);
-	if (frac > 0.1)
-		cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
-	if (frac < -0.1)
-		cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
+	/* ensure camera's horizontal position is over actor */
+	Vector2Copy(selActor->origin, cl.cam.camorg);
 
-	if (cl.cam.zoom > MAX_ZOOM)
-		cl.cam.zoom = MAX_ZOOM;
-	if (cl.cam.zoom < MIN_ZOOM)
-		cl.cam.zoom = MIN_ZOOM;
+	/* check if actor is starting a crouch/stand action */
+	if (wasCrouched != (selActor->state & STATE_CROUCHED)) {
+		doCrouch = qtrue;
+		wasCrouched = selActor->state & STATE_CROUCHED;
+	}
+
+	/* if in process of crouching or standing, move camera vertically */
+	if (doCrouch) {
+		if (selActor->state & STATE_CROUCHED) {
+			cl.cam.camorg[2] -= 11.*cls.frametime;
+			if (cl.cam.camorg[2] < selActor->origin[2]) {
+				cl.cam.camorg[2] = selActor->origin[2];
+				doCrouch = qfalse;
+			}
+		} else {
+			cl.cam.camorg[2] += 16.*cls.frametime;
+			if (cl.cam.camorg[2] > selActor->origin[2] + EYE_HT_OFFSET) {
+				cl.cam.camorg[2] = selActor->origin[2] + EYE_HT_OFFSET;
+				doCrouch = qfalse;
+			}
+		}
+	}
+
+	/* move camera forward horizontally to where soldier eyes are */
+	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
+	cl.cam.axis[0][2] = 0.;
+	VectorMA(cl.cam.camorg, 4., cl.cam.axis[0], cl.cam.camorg);
 }
 
 
@@ -978,14 +997,15 @@ void CL_CameraMoveRemote(void)
 
 	/* zoom change */
 	frac = CL_GetKeyMouseState(STATE_ZOOM);
-	if (frac > 0.1)
+	if (frac > 0.1) {
 		cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
-	else if (frac < -0.1)
+		/* ensure zoom not greater than either MAX_ZOOM or cl_camzoommax */
+		cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
+	} else if (frac < -0.1) {
 		cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
-	if (cl.cam.zoom < MIN_ZOOM)
-		cl.cam.zoom = MIN_ZOOM;
-	else if (cl.cam.zoom > MAX_ZOOM)
-		cl.cam.zoom = MAX_ZOOM;
+		/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
+		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
+	}
 }
 
 /**
