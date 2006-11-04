@@ -1347,6 +1347,7 @@ int OGG_Read(void)
 	if (music.fading <= 0.0) {
 		OGG_Stop();
 		OGG_Open(music.newFilename);
+		music.newFilename[0] = '\0';
 		return 0;
 	}
 
