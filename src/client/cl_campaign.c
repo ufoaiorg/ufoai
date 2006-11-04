@@ -1320,31 +1320,47 @@ void CL_UpdateCredits(int credits)
 }
 
 
-#define MAX_STATS_BUFFER 512
+#define MAX_STATS_BUFFER 2048
 /**
  * @brief Shows the current stats from stats_t stats
  */
 void CL_Stats_Update(void)
 {
+	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
-	int i = 0, length = 0;
+	int i = 0;
 
 	/* delete buffer */
-	*statsBuffer = '\0';
+	memset(statsBuffer, 0, sizeof(statsBuffer));
 
-	/* TODO: implement me */
-	Com_sprintf(statsBuffer, MAX_STATS_BUFFER, _("Missions:\nWon: %i\nLost: %i\n\n"),
-		stats.missionsWon, stats.missionsLost);
-	Q_strcat(statsBuffer, va(_("Bases:\nBuild: %i\nActive: %i\nAttacked: %i\n"),
-		stats.basesBuild, stats.basesAttacked, gd.numBases), MAX_STATS_BUFFER),
-	menuText[TEXT_STATS_1] = statsBuffer;
+	pos = statsBuffer;
 
-	/* now do the nations stuff */
-	length = strlen(statsBuffer) + 1;
-	menuText[TEXT_STATS_2] = statsBuffer + length;
-	for (i=0; i<gd.numNations;i++) {
-		Q_strcat(menuText[TEXT_STATS_2], va("%s\t%s\n", gd.nations[i].name, CL_GetNationHappinessString(&gd.nations[i])), sizeof(statsBuffer) - length);
+	/* missions */
+	menuText[TEXT_STATS_1] = pos;
+	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), stats.missionsWon, stats.missionsLost);
+
+	/* bases */
+	pos += (strlen(pos) + 1);
+	menuText[TEXT_STATS_2] = pos;
+	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Build:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
+		stats.basesBuild, stats.basesAttacked, gd.numBases),
+
+	/* nations */
+	pos += (strlen(pos) + 1);
+	menuText[TEXT_STATS_3] = pos;
+	for (i = 0; i < gd.numNations; i++) {
+		Q_strcat(pos, va(_("%s\t%s\n"), gd.nations[i].name, CL_GetNationHappinessString(&gd.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
+
+	/* employees */
+	pos += (strlen(pos) + 1);
+	menuText[TEXT_STATS_4] = pos;
+	for (i = 0; i < MAX_EMPL; i++) {
+		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), gd.numEmployees[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+	}
+
+	pos += (strlen(pos) + 1);
+	menuText[TEXT_STATS_5] = pos;
 }
 
 /**
