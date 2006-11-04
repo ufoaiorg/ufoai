@@ -1252,7 +1252,8 @@ OGG Vorbis decoding
 */
 
 /**
- * @brief
+ * @brief Opens the given ogg file
+ * @sa OGG_Stop
  */
 qboolean OGG_Open(char *filename)
 {
