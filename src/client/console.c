@@ -307,7 +307,7 @@ void Con_LoadConsoleHistory(char* path)
 			Com_DPrintf("....command: %s\n", cmdStart);
 			cmdStart = cmdEnd;
 			i++;
-		} while (strstr(cmdEnd, "\n"));
+		} while (cmdEnd && strstr(cmdEnd, "\n"));
 	}
 	/* only the do not modify comment */
 	Mem_Free(f2);
