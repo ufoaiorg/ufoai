@@ -49,6 +49,8 @@
 //	mdl_top / mdl_bottom
 //		Same as the image but for 3d-models.
 //		It overrides the image-definitions if it is provided.
+// NB: Every tech entry must have a require_AND or require_OR section if
+// it is to be researable (even if it is just a null requirement like "require_AND { tech nothing }")
 //==========================================
 
 
@@ -82,6 +84,8 @@ tech rs_laser
 	description	"_laser_txt"
 	pre_description	"_laser_pre_txt"
 
+	require_AND { tech nothing }
+
 	time	1500
 	image_top	techs/laser
 }
@@ -94,7 +98,14 @@ tech rs_plasma
 	description	"_plasma_txt"
 	pre_description	"_plasma_pre_txt"
 
-	require_AND { tech nothing }
+	require_OR 
+	{
+		item plaspistol 1
+		item plasrifle 1
+		item plasmagrenade 1
+		item plasblade 1
+		item plasblaster 1
+	}
 	time	2250
 }
 
@@ -106,7 +117,12 @@ tech rs_tachyon
 	description	"_tachyon_txt"
 	pre_description	"_tachyon_pre_txt"
 
-	require_AND { tech nothing }
+	require_OR 
+	{
+		item tachyonpistol 1
+		item tachyonrifle 1
+		item tachyonsniper 1
+	}
 	time	3000
 }
 
@@ -154,7 +170,7 @@ tech rs_craft_ufo_tech
 	up_chapter	tech
 
 	// FIXME
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	found_ufo
 	time	2500
 
@@ -1262,6 +1278,8 @@ tech rs_combat_armor
 	description	"_combat_armor_txt"
 	pre_description	"_combat_armor_pre_txt"
 
+	require_AND { tech nothing }
+
 	provides	light
 	time	0
 	producetime	10
@@ -1305,7 +1323,6 @@ tech rs_light_alien
 	description	"_light_alien_armor"
 	pre_description	"_light_alien_pre_armor"
 
-	require_AND { tech nothing }
 	provides	light_alien
 	time	    25000
 	//needscollected	true
@@ -1318,7 +1335,6 @@ tech rs_medium_alien
 	pre_description	"_medium_alien_pre_armor"
 	up_chapter	armors
 
-	require_AND { tech nothing }
 	provides	medium_alien
 	time	    25000
 	//needscollected	true
@@ -1334,6 +1350,7 @@ tech rs_damage_blast
 	name "_Blast Damage Type"
 	up_chapter damage
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/blast_damage
@@ -1345,6 +1362,7 @@ tech rs_damage_fire
 	name "_Fire Damage Type"
 	up_chapter	damage
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/fire_damage
@@ -1372,6 +1390,7 @@ tech rs_damage_normal
 	name "_Impact Damage Type"
 	up_chapter	damage
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/normal_damage
@@ -1383,6 +1402,7 @@ tech rs_damage_shock
 	name "_Shock Damage Type"
 	up_chapter	damage
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/shock_damage
@@ -1410,6 +1430,7 @@ tech rs_damage_shock
 	name "_Shock Damage Type"
 	up_chapter	damage
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/shock_damage
@@ -1421,6 +1442,7 @@ tech rs_damage_stun
 	name "_Stun Damage Type"
 	up_chapter	damage
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/stun_damage
@@ -1452,6 +1474,7 @@ tech rs_skill_accuracy
 	name "_Accuracy Attribute"
 	up_chapter	skill
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/accuracy_skill
@@ -1463,6 +1486,7 @@ tech rs_skill_assault
 	name "_Assault Guns Proficiency"
 	up_chapter	skill
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/assault_skill
@@ -1474,6 +1498,7 @@ tech rs_skill_close
 	name "_Close Combat Proficiency"
 	up_chapter	skill
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/close_skill
@@ -1485,6 +1510,7 @@ tech rs_skill_explosive
 	name "_High-Explosives Proficiency"
 	up_chapter	skill
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/explosive_skill
@@ -1496,6 +1522,7 @@ tech rs_skill_heavy
 	name "_Heavy Weapons Proficiency"
 	up_chapter	skill
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/heavy_skill
@@ -1507,6 +1534,7 @@ tech rs_skill_mind
 	name "_Mind Attribute"
 	up_chapter	skill
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/mind_skill
@@ -1518,6 +1546,7 @@ tech rs_skill_power
 	name "_Power Attribute"
 	up_chapter	skill
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/power_skill
@@ -1529,6 +1558,7 @@ tech rs_skill_sniper
 	name "_Sniper Rifles Proficiency"
 	up_chapter	skill
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/sniper_skill
@@ -1540,6 +1570,7 @@ tech rs_skill_speed
 	name "_Speed Attribute"
 	up_chapter	skill
 	description	"none"
+	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/speed_skill
@@ -1587,6 +1618,7 @@ tech rs_building_entrance
 	description	"_b_entrance_txt"
 	pre_description	"_b_entrance_pre_txt"
 	up_chapter	buildings
+	require_AND { tech nothing }
 
 	provides	building_entrance
 	time	0
@@ -1797,6 +1829,7 @@ tech rs_craft_dropship
 	up_chapter	crafts
 
 	provides	craft_dropship
+	require_AND { tech nothing }
 	time	0
 
 	// TODO should come from craft-definition:
@@ -1811,6 +1844,7 @@ tech rs_craft_interceptor
 	up_chapter	crafts
 
 	provides	craft_interceptor
+	require_AND { tech nothing }
 	time	0
 
 	// TODO should come from craft-definition:
@@ -1931,7 +1965,7 @@ tech rs_alien_bloodspider_autopsy
 	pre_description	"_bloodspider_autopsy_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	1500
 	//needscollected	true
@@ -1949,7 +1983,7 @@ tech rs_alien_bloodspider_xenobiology
 	pre_description	"_bloodspider_xenobiology_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	2250
 	//needscollected	true
@@ -1965,7 +1999,7 @@ tech rs_alien_bloodspider_interrogation
 	pre_description	"_bloodspider_interrogation_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	1500
 	//needscollected	true
@@ -2004,7 +2038,7 @@ tech rs_alien_ortnok_notes
 	pre_description	"_ortnok_notes_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	0
 	//needscollected	true
@@ -2021,7 +2055,7 @@ tech rs_alien_ortnok_autopsy
 	pre_description	"_ortnok_autopsy_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	1500
 	//needscollected	true
@@ -2040,7 +2074,7 @@ tech rs_alien_ortnok_xenobiology
 	pre_description	"_ortnok_xenobiology_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	2250
 	//needscollected	true
@@ -2057,7 +2091,7 @@ tech rs_alien_ortnok_interrogation
 	pre_description	"_ortnok_interrogation_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	1500
 	//needscollected	true
@@ -2076,7 +2110,7 @@ tech rs_alien_ortnok_light
 	pre_description	"_ortnok_light_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	0
 	//needscollected	true
@@ -2095,7 +2129,7 @@ tech rs_alien_ortnok_medium
 	pre_description	"_ortnok_medium_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	0
 	//needscollected	true
@@ -2114,7 +2148,7 @@ tech rs_alien_antarean_notes
 	pre_description	"_antarean_notes_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	0
 	//needscollected	true
@@ -2131,7 +2165,7 @@ tech rs_alien_antarean_autopsy
 	pre_description	"_antarean_autopsy_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	1500
 	//needscollected	true
@@ -2148,7 +2182,7 @@ tech rs_alien_antarean_xenobiology
 	pre_description	"_antarean_xenobiology_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	2250
 	//needscollected	true
@@ -2165,7 +2199,7 @@ tech rs_alien_antarean_interrogation
 	pre_description	"_antarean_interrogation_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	1500
 	//needscollected	true
@@ -2182,7 +2216,7 @@ tech rs_alien_antarean_interrogation_commander
 	pre_description	"_antarean_interrogation_commander_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	6000
 	//needscollected	true
@@ -2201,7 +2235,7 @@ tech rs_alien_shevaar_notes
 	pre_description	"_shevaar_notes_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	0
 	//needscollected	true
@@ -2218,7 +2252,7 @@ tech rs_alien_shevaar_autopsy
 	pre_description	"_shevaar_autopsy_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	1500
 	//needscollected	true
@@ -2235,7 +2269,7 @@ tech rs_alien_shevaar_xenobiology
 	pre_description	"_shevaar_xenobiology_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	2250
 	//needscollected	true
@@ -2254,7 +2288,7 @@ tech rs_alien_hovernet_notes
 	pre_description	"_hovernet_notes_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	0
 	//needscollected	true
@@ -2271,7 +2305,7 @@ tech rs_alien_hovernet_autopsy
 	pre_description	"_hovernet_autopsy_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	1500
 	//needscollected	true
@@ -2288,7 +2322,7 @@ tech rs_alien_hovernet_xenobiology
 	pre_description	"_hovernet_xenobiology_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	2250
 	//needscollected	true
@@ -2307,7 +2341,7 @@ tech rs_alien_cyborg_ortnok_notes
 	pre_description	"_cyborg_ortnok_notes_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	0
 	//needscollected	true
@@ -2324,7 +2358,7 @@ tech rs_alien_cyborg_ortnok_autopsy
 	pre_description	"_cyborg_ortnok_autopsy_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	1500
 	//needscollected	true
@@ -2341,7 +2375,7 @@ tech rs_alien_cyborg_ortnok_xenobiology
 	pre_description	"_cyborg_ortnok_xenobiology_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech nothing }
+	require_AND { tech TODO }
 	provides	""
 	time	2250
 	//needscollected	true
@@ -2361,6 +2395,7 @@ tech rs_ugv_phoenix
 	pre_description	"_ugv_phoenix_pre_txt"
 
 	provides	ugv_phoenix
+	require_AND { tech nothing }
 	time	0
 	producetime	800
 
@@ -2376,6 +2411,7 @@ tech rs_ugv_triax
 	pre_description	"_ugv_triax_pre_txt"
 
 	provides	ugv_triax
+	require_AND { tech nothing }
 	time	0
 	producetime	800
 
@@ -2394,6 +2430,7 @@ tech rs_craft_shield_light
 
 	// FIXME
 	provides	light
+	require_AND { tech nothing }
 	time	0
 
 	image_top	"techs/craftshield_light"
@@ -2433,7 +2470,7 @@ tech rs_craft_shield_hard
 	}
 
 	// FIXME
-	provides	light
+	provides	heavy
 	time	2500
 
 	image_top	"techs/craftshield_hard"
@@ -2449,6 +2486,7 @@ tech rs_craft_weapon_flac
 
 	// FIXME
 	provides	assault
+	require_AND { tech nothing }
 	time	0
 
 	image_top	"techs/craftweapon_flac"

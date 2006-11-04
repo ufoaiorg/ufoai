@@ -69,7 +69,6 @@ researched rslist_human
 researchable rslist_human
 {
 	rs_laser
-	rs_combat_armor
 	rs_damage_normal
 	rs_damage_blast
 	rs_damage_fire

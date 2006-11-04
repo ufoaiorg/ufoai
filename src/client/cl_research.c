@@ -96,7 +96,7 @@ int RS_ItemInBase(int item_idx, base_t *base)
 static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t *required_OR)
 {
 	int i;
-	qboolean met_AND = qtrue;
+	qboolean met_AND = qfalse;
 	qboolean met_OR = qfalse;
 
 	if (!required_AND && !required_AND) {
@@ -104,13 +104,14 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 		return qfalse;
 	}
 
-	if (required_AND) {
+	if (required_AND->numLinks) {
+		met_AND = qtrue;
 		for (i = 0; i < required_AND->numLinks; i++) {
 			switch (required_AND->type[i]) {
 			case RS_LINK_TECH:
 				Com_DPrintf("RS_RequirementsMet: ANDtech: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
-				if ((!RS_TechIsResearched(required_AND->idx[i]))
-					|| (!Q_strncmp(required_AND->id[i], "nothing", MAX_VAR))) {
+				if (!RS_TechIsResearched(required_AND->idx[i])
+					&& Q_strncmp(required_AND->id[i], "nothing", MAX_VAR)) {
 					Com_DPrintf("RS_RequirementsMet: this tech not researched ----> %s \n", required_AND->id[i]);
 					met_AND = qfalse;
 				}
@@ -133,25 +134,21 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 			if (!met_AND)
 				break;
 		}
-	} else {
-		met_AND = qfalse;
 	}
 
-	if (required_OR)
+	if (required_OR->numLinks)
 		for (i = 0; i < required_OR->numLinks; i++) {
 			switch (required_OR->type[i]) {
 			case RS_LINK_TECH:
 				Com_DPrintf("RS_RequirementsMet: ORtech: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
-				if ((!RS_TechIsResearched(required_OR->idx[i]))
-					|| (!Q_strncmp(required_OR->id[i], "nothing", MAX_VAR))) {
+				if (RS_TechIsResearched(required_OR->idx[i]))
 					met_OR = qtrue;
-				}
 				break;
 			case RS_LINK_ITEM:
 				Com_DPrintf("RS_RequirementsMet: ORitem: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
-				if (required_OR->collected[i] < required_OR->amount[i]) {
+				/* TODO: required_OR->collected[i] should be used instead of RS_ItemInBase, see equivalent TODO above */
+				if (RS_ItemInBase(required_OR->idx[i], baseCurrent) >= required_OR->amount[i])
 					met_OR = qtrue;
-				}
 				break;
 			case RS_LINK_EVENT:
 				break;
@@ -162,6 +159,7 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 			if (met_OR)
 				break;
 		}
+	Com_Printf("met_AND is %i, met_OR is %i\n", met_AND, met_OR);
 
 	return (met_AND || met_OR);
 }
@@ -409,26 +407,29 @@ static void RS_InitRequirementList(requirements_t *required)
 
 }
 
-/* assign IDXs to all required techs */
+/* @brief assign required tech IDXs for a single requirements list */
+void RS_AssignTechIdxs(requirements_t *req)
+{
+	int i;
+
+	for (i = 0; i < req->numLinks; i++) {
+	 	if (req->type[i] == RS_LINK_TECH)
+			req->idx[i] = RS_GetTechIdxByName(req->id[i]);
+	}
+}
+
+/* @brief assign IDXs to all required techs */
 void RS_RequiredIdxAssign(void)
 {
-	int i, j;
+	int i;
 	technology_t *tech = NULL;
-	requirements_t *required_temp = NULL;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
-		if (&tech->require_AND) {
-			required_temp = &tech->require_AND;
-			for (j = 0; j < required_temp->numLinks; j++) {
-				required_temp->idx[j] = RS_GetTechIdxByName(required_temp->id[j]);
-			}
-		}
-		if (&tech->require_OR) {
-			required_temp = &tech->require_OR;
-			for (j = 0; j < required_temp->numLinks; j++)
-				required_temp->idx[j] = RS_GetTechIdxByName(required_temp->id[j]);
-		}
+		if (&tech->require_AND.numLinks)
+			RS_AssignTechIdxs(&tech->require_AND);
+		if (&tech->require_OR.numLinks)
+			RS_AssignTechIdxs(&tech->require_OR);
 	}
 }
 
