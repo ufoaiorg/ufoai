@@ -1060,7 +1060,8 @@ static void CL_HandleBudget(void)
 
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-		cost += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.rank * SALARY_SOLDIER_RANKBONUS;
+		if (gd.employees[EMPL_SOLDIER][i].hired)
+			cost += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.rank * SALARY_SOLDIER_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to soldiers"), cost);
@@ -1069,7 +1070,8 @@ static void CL_HandleBudget(void)
 
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
-		cost += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.rank * SALARY_WORKER_RANKBONUS;
+		if (gd.employees[EMPL_WORKER][i].hired)
+			cost += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.rank * SALARY_WORKER_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to workers"), cost);
@@ -1078,7 +1080,8 @@ static void CL_HandleBudget(void)
 
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
-		cost += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.rank * SALARY_SCIENTIST_RANKBONUS;
+		if (gd.employees[EMPL_SCIENTIST][i].hired)
+			cost += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.rank * SALARY_SCIENTIST_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to scientists"), cost);
@@ -1087,7 +1090,8 @@ static void CL_HandleBudget(void)
 
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_MEDIC]; i++) {
-		cost += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.rank * SALARY_MEDIC_RANKBONUS;
+		if (gd.employees[EMPL_MEDIC][i].hired)
+			cost += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.rank * SALARY_MEDIC_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to medics"), cost);
@@ -1096,7 +1100,8 @@ static void CL_HandleBudget(void)
 
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
-		cost += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.rank * SALARY_ROBOT_RANKBONUS;
+		if (gd.employees[EMPL_ROBOT][i].hired)
+			cost += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.rank * SALARY_ROBOT_RANKBONUS;
 	}
 
 	if (cost != 0) {
@@ -1328,7 +1333,7 @@ void CL_Stats_Update(void)
 {
 	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
-	int i = 0;
+	int i = 0, j, costs = 0, sum = 0;
 
 	/* delete buffer */
 	memset(statsBuffer, 0, sizeof(statsBuffer));
@@ -1359,8 +1364,62 @@ void CL_Stats_Update(void)
 		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), gd.numEmployees[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
+	/* costs */
 	pos += (strlen(pos) + 1);
 	menuText[TEXT_STATS_5] = pos;
+	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
+		if (gd.employees[EMPL_SCIENTIST][i].hired)
+			costs += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.rank * SALARY_SCIENTIST_RANKBONUS;
+	}
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+		if (gd.employees[EMPL_SOLDIER][i].hired)
+			costs += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.rank * SALARY_SOLDIER_RANKBONUS;
+	}
+	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
+		if (gd.employees[EMPL_WORKER][i].hired)
+			costs += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.rank * SALARY_WORKER_RANKBONUS;
+	}
+	for (i = 0; i < gd.numEmployees[EMPL_MEDIC]; i++) {
+		if (gd.employees[EMPL_MEDIC][i].hired)
+			costs += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.rank * SALARY_MEDIC_RANKBONUS;
+	}
+	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
+		if (gd.employees[EMPL_ROBOT][i].hired)
+			costs += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.rank * SALARY_ROBOT_RANKBONUS;
+	}
+	Q_strcat(pos, va(_("Employees:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+	sum += costs;
+
+	costs = 0;
+	for (i = 0; i < gd.numBases; i++) {
+		for (j = 0; j < gd.bases[i].numAircraftInBase; j++) {
+			costs += gd.bases[i].aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
+		}
+	}
+	Q_strcat(pos, va(_("Aircrafts:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+	sum += costs;
+
+	for (i = 0; i < gd.numBases; i++) {
+		costs = SALARY_BASE_UPKEEP;	/* base cost */
+		for (j = 0; j < gd.numBuildings[i]; j++) {
+			costs += gd.buildings[i][j].varCosts;
+		}
+		Q_strcat(pos, va(_("Base (%s):\t%i c\n"), gd.bases[i].name, costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+		sum += costs;
+	}
+
+	costs = SALARY_ADMIN_INITIAL + gd.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + gd.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + gd.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + gd.numEmployees[EMPL_MEDIC] * SALARY_ADMIN_MEDIC + gd.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
+	Q_strcat(pos, va(_("Administrative costs:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+	sum += costs;
+
+	if (ccs.credits < 0) {
+		float interest = ccs.credits * SALARY_DEBT_INTEREST;
+
+		costs = (int)ceil(interest);
+		Q_strcat(pos, va(_("Debt:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+		sum += costs;
+	}
+	Q_strcat(pos, va(_("\n\t-------\nSum:\t%i c\n"), sum), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 }
 
 /**
