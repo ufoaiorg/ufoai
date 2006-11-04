@@ -477,57 +477,22 @@ void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
 
 #define GL_TEXTURE0_SGIS					0x835E
 #define GL_TEXTURE1_SGIS					0x835F
-#define GL_TEXTURE2_SGIS					0x8360
-#define GL_TEXTURE3_SGIS					0x8361
 #define GL_TEXTURE0_ARB						0x84C0
 #define GL_TEXTURE1_ARB						0x84C1
-#define GL_TEXTURE2_ARB						0x84C2
-#define GL_TEXTURE3_ARB						0x84C3
 
-extern int gl_texture0, gl_texture1, gl_texture2, gl_texture3;
+extern int gl_texture0, gl_texture1;
 
 
-#define GL_COMBINE_EXT						0x8570
-#define GL_COMBINE_RGB_EXT					0x8571
-#define GL_COMBINE_ALPHA_EXT				0x8572
-#define GL_RGB_SCALE_EXT					0x8573
-#define GL_ADD_SIGNED_EXT					0x8574
-#define GL_INTERPOLATE_EXT					0x8575
-#define GL_CONSTANT_EXT						0x8576
-#define GL_PRIMARY_COLOR_EXT				0x8577
-#define GL_PREVIOUS_EXT						0x8578
-
-#define GL_SOURCE0_RGB_EXT					0x8580
-#define GL_SOURCE1_RGB_EXT					0x8581
-#define GL_SOURCE2_RGB_EXT					0x8582
-#define GL_SOURCE0_ALPHA_EXT				0x8588
-#define GL_SOURCE1_ALPHA_EXT				0x8589
-#define GL_SOURCE2_ALPHA_EXT				0x858A
-#define GL_OPERAND0_RGB_EXT					0x8590
-#define GL_OPERAND1_RGB_EXT					0x8591
-#define GL_OPERAND2_RGB_EXT					0x8592
-#define GL_OPERAND0_ALPHA_EXT				0x8598
-#define GL_OPERAND1_ALPHA_EXT				0x8599
-#define GL_OPERAND2_ALPHA_EXT				0x859A
+#define GL_COMBINE_EXT                    0x8570
+#define GL_COMBINE_RGB_EXT                0x8571
+#define GL_COMBINE_ALPHA_EXT              0x8572
+#define GL_RGB_SCALE_EXT                  0x8573
+#define GL_ADD_SIGNED_EXT                 0x8574
+#define GL_INTERPOLATE_EXT                0x8575
+#define GL_CONSTANT_EXT                   0x8576
+#define GL_PRIMARY_COLOR_EXT              0x8577
+#define GL_PREVIOUS_EXT                   0x8578
 
 extern int gl_combine;
-
-#define GL_COMPRESSED_ALPHA_ARB					0x84E9
-#define GL_COMPRESSED_LUMINANCE_ARB				0x84EA
-#define GL_COMPRESSED_LUMINANCE_ALPHA_ARB		0x84EB
-#define GL_COMPRESSED_INTENSITY_ARB				0x84EC
-#define GL_COMPRESSED_RGB_ARB					0x84ED
-#define GL_COMPRESSED_RGBA_ARB					0x84EE
-
-#define GL_TEXTURE_COMPRESSION_HINT_ARB			0x84EF
-#define GL_TEXTURE_COMPRESSED_IMAGE_SIZE_ARB	0x86A0
-#define GL_TEXTURE_COMPRESSED_ARB				0x86A1
-#define GL_NUM_COMPRESSED_TEXTURE_FORMATS_ARB	0x86A2
-#define GL_COMPRESSED_TEXTURE_FORMATS_ARB		0x86A3
-
-#define GL_COMPRESSED_RGB_S3TC_DXT1_EXT			0x83F0
-#define GL_COMPRESSED_RGBA_S3TC_DXT1_EXT		0x83F1
-#define GL_COMPRESSED_RGBA_S3TC_DXT3_EXT		0x83F2
-#define GL_COMPRESSED_RGBA_S3TC_DXT5_EXT		0x83F3
 
 #endif

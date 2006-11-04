@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qgl.h"
 
-#define	REF_VERSION	"GL 0.11"
+#define	REF_VERSION	"GL 0.10"
 
 // up / down
 #define	PITCH	0
@@ -88,7 +88,6 @@ typedef enum
 	it_sprite,
 	it_wall,
 	it_pic,
-	it_wrappic,
 	it_font,
 	it_sky
 } imagetype_t;
@@ -110,8 +109,8 @@ typedef struct image_s
 } image_t;
 
 #define	TEXNUM_LIGHTMAPS	1024
-#define	TEXNUM_SCRAPS		1280
-#define	TEXNUM_IMAGES		1281
+#define	TEXNUM_SCRAPS		1152
+#define	TEXNUM_IMAGES		1153
 
 #define		MAX_GLERRORTEX	4096
 #define		MAX_GLTEXTURES	1024
@@ -154,7 +153,7 @@ typedef struct
 
 #define	MAX_MOD_KNOWN	512
 extern model_t	mod_inline[MAX_MOD_KNOWN];
-extern int		numInline;
+
 
 // entity transform
 typedef struct
@@ -175,9 +174,9 @@ typedef struct font_s
 {
 	image_t	*image;
 	char	name[MAX_FONTNAME];
-	byte	wc[128];
+	byte	wc[64];
 	byte	w, h;
-	float	rw, rh, rhl;
+	float	hr;
 } font_t;
 
 //====================================================
@@ -198,9 +197,8 @@ extern	int			r_framecount;
 extern	cplane_t	frustum[4];
 extern	int			c_brush_polys, c_alias_polys;
 
-extern	int			gl_filter_min, gl_filter_max;
 
-extern	image_t		*DaN;
+extern	int			gl_filter_min, gl_filter_max;
 
 //
 // view origin
@@ -223,7 +221,6 @@ extern	cvar_t	*r_speeds;
 extern	cvar_t	*r_fullbright;
 extern	cvar_t	*r_novis;
 extern	cvar_t	*r_nocull;
-extern	cvar_t	*r_isometric;
 extern	cvar_t	*r_lerpmodels;
 
 extern	cvar_t	*r_lightlevel;	// FIXME: This is a HACK to get the client's light level
@@ -235,8 +232,6 @@ extern cvar_t	*gl_ext_multitexture;
 extern cvar_t	*gl_ext_combine;
 extern cvar_t	*gl_ext_pointparameters;
 extern cvar_t	*gl_ext_compiled_vertex_array;
-extern cvar_t	*gl_ext_texture_compression;
-extern cvar_t	*gl_ext_s3tc_compression;
 
 extern cvar_t	*gl_particle_min_size;
 extern cvar_t	*gl_particle_max_size;
@@ -257,7 +252,6 @@ extern  cvar_t  *gl_monolightmap;
 extern	cvar_t	*gl_nobind;
 extern	cvar_t	*gl_round_down;
 extern	cvar_t	*gl_picmip;
-extern	cvar_t	*gl_maxtexres;
 extern	cvar_t	*gl_skymip;
 extern	cvar_t	*gl_showtris;
 extern	cvar_t	*gl_finish;
@@ -281,7 +275,6 @@ extern	cvar_t	*gl_texturesolidmode;
 extern  cvar_t  *gl_saturatelighting;
 extern  cvar_t  *gl_lockpvs;
 extern	cvar_t  *gl_wire;
-extern	cvar_t	*gl_fog;
 
 extern	cvar_t	*vid_fullscreen;
 extern	cvar_t	*vid_gamma;
@@ -291,8 +284,8 @@ extern	cvar_t		*intensity;
 extern	int		gl_lightmap_format;
 extern	int		gl_solid_format;
 extern	int		gl_alpha_format;
-extern	int		gl_compressed_solid_format;
-extern	int		gl_compressed_alpha_format;
+extern	int		gl_tex_solid_format;
+extern	int		gl_tex_alpha_format;
 
 extern	int		c_visible_lightmaps;
 extern	int		c_visible_textures;
@@ -311,8 +304,7 @@ void R_PushDlights (mnode_t *node);
 
 //====================================================================
 
-extern	model_t	*rTiles[MAX_MAPTILES];
-extern	int		rNumTiles;
+extern	model_t	*r_worldmodel;
 
 extern	unsigned	d_8to24table[256];
 
@@ -354,7 +346,6 @@ void R_ClearSkyBox (void);
 void R_DrawSkyBox (void);
 void R_MarkLights (dlight_t *light, int bit, mnode_t *node);
 
-void R_AddMapTile( char *name, int sX, int sY, int sZ );
 
 #if 0
 short LittleShort (short l);
@@ -381,7 +372,6 @@ void	Draw_TileClear (int x, int y, int w, int h, char *name);
 void	Draw_Fill (int x, int y, int w, int h, int style, vec4_t color);
 void	Draw_Color (float *rgba);
 void	Draw_FadeScreen (void);
-void	Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz );
 
 void	Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data);
 //void	Draw_Model (int x, int y, );
@@ -395,7 +385,6 @@ int		Draw_GetPalette (void);
 void	Anim_Append( animState_t *as, model_t *mod, char *name );
 void	Anim_Change( animState_t *as, model_t *mod, char *name );
 void	Anim_Run( animState_t *as, model_t *mod, int msec );
-char	*Anim_GetName( animState_t *as, model_t *mod );
 
 
 void GL_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out,  int outwidth, int outheight);
@@ -407,7 +396,6 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 image_t	*GL_FindImage (char *pname, imagetype_t type);
 void	GL_TextureMode( char *string );
 void	GL_ImageList_f (void);
-void	GL_CalcDayAndNight ( float q );
 
 void	GL_SetTexturePalette( unsigned palette[256] );
 

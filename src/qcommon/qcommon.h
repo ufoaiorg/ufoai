@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/q_shared.h"
 
 
-#define	VERSION		0.11
+#define	VERSION		0.10
 
 #define	BASEDIRNAME	"base"
 
@@ -69,8 +69,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	CPUSTRING	"NON-WIN32"
 
 #endif
-
-int dstrcmp( char *source, char *s1, char *s2 );
 
 //============================================================================
 
@@ -181,7 +179,7 @@ PROTOCOL
 
 // protocol.h -- communications protocols
 
-#define	PROTOCOL_VERSION	3
+#define	PROTOCOL_VERSION	34
 
 //=========================================
 
@@ -525,7 +523,7 @@ NET
 
 #define	PORT_ANY	-1
 
-#define	MAX_MSGLEN		1400		// max length of a message
+#define	MAX_MSGLEN		3000		// max length of a message
 #define	PACKET_HEADER	10			// two ints and a short
 
 typedef enum {NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX} netadrtype_t;
@@ -621,56 +619,61 @@ CMODEL
 
 ==============================================================
 */
+
+
 #include "../qcommon/qfiles.h"
 
-#define MAX_MAPTILES	256
+typedef struct
+{
+	vec3_t		dir;
+	vec4_t		color;
+	vec4_t		ambient;
+} sun_t;
 
+extern int		map_maxlevel;
+extern sun_t	map_sun;
 extern vec3_t	map_min, map_max;
 
-void CM_LoadMap (char *tiles, char *pos);
-cmodel_t *CM_InlineModel (char *name);	// *0, *1, *2, etc
+typedef struct
+{
+	vec3_t	origin;
+	vec3_t	color;
+	float	intensity;
+} dlight_t;
+
+cmodel_t	*CM_LoadMap (char *name, qboolean clientload, unsigned *checksum);
+cmodel_t	*CM_InlineModel (char *name);	// *1, *2, etc
+
+int			CM_GetLightList( dlight_t **list );
 
 int			CM_NumClusters (void);
 int			CM_NumInlineModels (void);
 char		*CM_EntityString (void);
 
-/*
-==============================================================
-
-CMODEL BOX TRACING
-
-==============================================================
-*/
-
-// WARNING: The functions, that are commented out,
-// possibly don't give the expected results, because of
-// the new map tiles, all the others should work
-
 // creates a clipping hull for an arbitrary box
-int			CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs);
+int			CM_HeadnodeForBox (vec3_t mins, vec3_t maxs);
 
 
 // returns an ORed contents mask
-//int			CM_PointContents (vec3_t p, int headnode);
-//int			CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t angles);
+int			CM_PointContents (vec3_t p, int headnode);
+int			CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t angles);
 
 trace_t		CM_BoxTrace (vec3_t start, vec3_t end,
 						  vec3_t mins, vec3_t maxs,
-						  int tile, int headnode, int brushmask);
+						  int headnode, int brushmask);
 trace_t		CM_TransformedBoxTrace (vec3_t start, vec3_t end,
 						  vec3_t mins, vec3_t maxs,
-						  int tile, int headnode, int brushmask,
+						  int headnode, int brushmask,
 						  vec3_t origin, vec3_t angles);
 trace_t		CM_CompleteBoxTrace (vec3_t start, vec3_t end,
 						  vec3_t mins, vec3_t maxs,
 						  int levelmask, int brushmask);
 
-int CM_EntTestLine (vec3_t start, vec3_t stop);
-int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end);
+void CM_MakeTnodes ( void );
 int CM_TestLine (vec3_t start, vec3_t stop);
 int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end);
 
-/*byte		*CM_ClusterPVS (int cluster);
+byte		*CM_ClusterPVS (int cluster);
 byte		*CM_ClusterPHS (int cluster);
 
 int			CM_PointLeafnum (vec3_t p);
@@ -691,7 +694,7 @@ int			CM_WriteAreaBits (byte *buffer, int area);
 qboolean	CM_HeadnodeVisible (int headnode, byte *visbits);
 
 void		CM_WritePortalState (FILE *f);
-void		CM_ReadPortalState (FILE *f);*/
+void		CM_ReadPortalState (FILE *f);
 
 
 /*
@@ -702,27 +705,13 @@ void		CM_ReadPortalState (FILE *f);*/
 ==========================================================
 */
 
-extern struct routing_s svMap, clMap;
+void	Grid_MoveCalc( pos3_t from, int distance, byte **fb_list, int fb_length );
+void	Grid_MoveStore( void );
+int		Grid_MoveLength( pos3_t to, qboolean stored );
+int		Grid_MoveNext( pos3_t from );
+int		Grid_Height( pos3_t pos );
+void	Grid_PosToVec( pos3_t pos, vec3_t vec );
 
-void	Grid_RecalcRouting( struct routing_s *map, char *name, char **list );
-void	Grid_MoveCalc( struct routing_s *map, pos3_t from, int distance, byte **fb_list, int fb_length );
-void	Grid_MoveStore( struct routing_s *map );
-int		Grid_MoveLength( struct routing_s *map, pos3_t to, qboolean stored );
-int		Grid_MoveNext( struct routing_s *map, pos3_t from );
-int		Grid_Height( struct routing_s *map, pos3_t pos );
-int		Grid_Fall( struct routing_s *map, pos3_t pos );
-void	Grid_PosToVec( struct routing_s *map, pos3_t pos, vec3_t vec );
-
-
-/*
-==========================================================
-
-  MISC WORLD RELATED
-  
-==========================================================
-*/
-
-float	Com_GrenadeTarget( vec3_t from, vec3_t at, vec3_t v0 );
 
 /*
 ==============================================================
@@ -757,36 +746,6 @@ void	FS_BuildFileList (char *files);
 char	*FS_NextScriptHeader( char *files, char **name, char **text );
 void	FS_CreatePath (char *path);
 
-
-/*
-==============================================================
-
-SCRIPT PARSING
-
-==============================================================
-*/
-
-
-#define LASTNAME	3
-typedef enum 
-{
-	NAME_NEUTRAL,
-	NAME_FEMALE,
-	NAME_MALE,
-
-	NAME_LAST,
-	NAME_FEMALE_LAST,
-	NAME_MALE_LAST,
-
-	NAME_NUM_TYPES
-} nametypes_t;
-extern	char *name_strings[NAME_NUM_TYPES];
-
-char *Com_GiveName( int gender, char *category );
-char *Com_GiveModel( int type, int gender, char *category );
-int Com_GetModelAndName( char *team, char *body, char *head, char *name );
-
-void Com_ParseScripts( void );
 
 /*
 ==============================================================
@@ -839,7 +798,8 @@ extern	int		time_after_ref;
 // weapon definitions
 extern csi_t	csi;
 
-extern char map_entitystring[MAX_MAP_ENTSTRING];
+extern int		numLMs;
+extern int		numMPs;
 
 
 void Z_Free (void *ptr);
@@ -895,6 +855,8 @@ void CL_Shutdown (void);
 void CL_Frame (int msec);
 void CL_ParseScriptFirst (char *type, char *name, char **text);
 void CL_ParseScriptSecond (char *type, char *name, char **text);
+void CL_AddLocalModel (char *model, vec3_t origin, vec3_t angles, int levelflags);
+void CL_AddMapParticle (char *particle, vec3_t origin, vec2_t wait, char *info);
 int  CL_GetModelInTeam ( char *team, char *body, char *head );
 void Con_Print (char *text);
 void SCR_BeginLoadingPlaque (void);

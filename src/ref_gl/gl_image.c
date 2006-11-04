@@ -34,14 +34,14 @@ cvar_t		*intensity;
 unsigned	d_8to24table[256];
 
 qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboolean is_sky );
-qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap, qboolean clamp );
+qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap);
 
 
-int		gl_solid_format = GL_RGB;
-int		gl_alpha_format = GL_RGBA;
+int		gl_solid_format = 3;
+int		gl_alpha_format = 4;
 
-int		gl_compressed_solid_format = 0;
-int		gl_compressed_alpha_format = 0;
+int		gl_tex_solid_format = 3;
+int		gl_tex_alpha_format = 4;
 
 int		gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
 int		gl_filter_max = GL_LINEAR;
@@ -246,7 +246,7 @@ void GL_TextureAlphaMode( char *string )
 		return;
 	}
 
-	gl_alpha_format = gl_alpha_modes[i].mode;
+	gl_tex_alpha_format = gl_alpha_modes[i].mode;
 }
 
 /*
@@ -270,7 +270,7 @@ void GL_TextureSolidMode( char *string )
 		return;
 	}
 
-	gl_solid_format = gl_solid_modes[i].mode;
+	gl_tex_solid_format = gl_solid_modes[i].mode;
 }
 
 /*
@@ -1070,17 +1070,41 @@ GL_Upload32
 Returns has_alpha
 ===============
 */
-int		upload_width, upload_height;
-unsigned scaled_buffer[1024*1024];
-
-qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qboolean clamp)
+void GL_BuildPalettedTexture( unsigned char *paletted_texture, unsigned char *scaled, int scaled_width, int scaled_height )
 {
-	unsigned	*scaled;
+	int i;
+
+	for ( i = 0; i < scaled_width * scaled_height; i++ )
+	{
+		unsigned int r, g, b, c;
+
+		r = ( scaled[0] >> 3 ) & 31;
+		g = ( scaled[1] >> 2 ) & 63;
+		b = ( scaled[2] >> 3 ) & 31;
+
+		c = r | ( g << 5 ) | ( b << 11 );
+
+		paletted_texture[i] = gl_state.d_16to8table[c];
+
+		scaled += 4;
+	}
+}
+
+int		upload_width, upload_height;
+qboolean uploaded_paletted;
+
+unsigned	scaled[512*512*4];
+unsigned char paletted_texture[512*512*4];
+
+qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
+{
 	int			samples;
 	int			scaled_width, scaled_height;
 	int			i, c;
-	int			size;
 	byte		*scan;
+	int comp;
+
+	uploaded_paletted = false;
 
 	for (scaled_width = 1 ; scaled_width < width ; scaled_width<<=1)
 		;
@@ -1098,15 +1122,11 @@ qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qb
 		scaled_height >>= (int)gl_picmip->value;
 	}
 
-	// don't ever bother with > 2048*2048 textures
-	if ( scaled_width > 2048 ) scaled_width = 2048;
-	if ( scaled_height > 2048 ) scaled_height = 2048;
-
-	while ( scaled_width > gl_maxtexres->value || scaled_height > gl_maxtexres->value ) 
-	{
-		scaled_width >>= 1;
-		scaled_height >>= 1;
-	}
+	// don't ever bother with >512 textures
+	if (scaled_width > 512)
+		scaled_width = 512;
+	if (scaled_height > 512)
+		scaled_height = 512;
 
 	if (scaled_width < 1)
 		scaled_width = 1;
@@ -1116,43 +1136,61 @@ qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qb
 	upload_width = scaled_width;
 	upload_height = scaled_height;
 
+	if (scaled_width * scaled_height > sizeof(scaled)/4)
+		ri.Sys_Error (ERR_DROP, "GL_Upload32: too big");
+
 	// scan the texture for any non-255 alpha
 	c = width*height;
 	scan = ((byte *)data) + 3;
-	samples = gl_compressed_solid_format ? gl_compressed_solid_format : gl_solid_format;
+	samples = gl_solid_format;
 	for (i=0 ; i<c ; i++, scan += 4)
 	{
 		if ( *scan != 255 )
 		{
-			samples = gl_compressed_alpha_format ? gl_compressed_alpha_format : gl_alpha_format;
+			samples = gl_alpha_format;
 			break;
 		}
 	}
+
+	if (samples == gl_solid_format)
+	    comp = gl_tex_solid_format;
+	else if (samples == gl_alpha_format)
+	    comp = gl_tex_alpha_format;
+	else {
+	    ri.Con_Printf (PRINT_ALL,
+			   "Unknown number of texture components %i\n",
+			   samples);
+	    comp = samples;
+	}
+
+#if 0
+	if (mipmap)
+		gluBuild2DMipmaps (GL_TEXTURE_2D, samples, width, height, GL_RGBA, GL_UNSIGNED_BYTE, trans);
+	else if (scaled_width == width && scaled_height == height)
+		qglTexImage2D (GL_TEXTURE_2D, 0, comp, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, trans);
+	else
+	{
+		gluScaleImage (GL_RGBA, width, height, GL_UNSIGNED_BYTE, trans,
+			scaled_width, scaled_height, GL_UNSIGNED_BYTE, scaled);
+		qglTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+	}
+#else
 
 	if (scaled_width == width && scaled_height == height)
 	{
 		if (!mipmap)
 		{
-			qglTexImage2D (GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			qglTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 			goto done;
 		}
-		// directly use the incoming data
-		scaled = data;
-		size = 0;
+		memcpy (scaled, data, width*height*4);
 	}
 	else
-	{
-		// allocate memory for scaled texture
-		scaled = scaled_buffer;
-		while ( scaled_width > 1024 ) scaled_width >>= 1;
-		while ( scaled_height > 1024 ) scaled_height >>= 1;
-
 		GL_ResampleTexture (data, width, height, scaled, scaled_width, scaled_height);
-	}
 
 	GL_LightScaleTexture (scaled, scaled_width, scaled_height, !mipmap );
 
-	qglTexImage2D( GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled );
+	qglTexImage2D( GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled );
 
 	if (mipmap)
 	{
@@ -1169,10 +1207,12 @@ qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qb
 			if (scaled_height < 1)
 				scaled_height = 1;
 			miplevel++;
-			qglTexImage2D (GL_TEXTURE_2D, miplevel, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+			qglTexImage2D (GL_TEXTURE_2D, miplevel, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 		}
 	}
 done: ;
+#endif
+
 
 	if (mipmap)
 	{
@@ -1185,13 +1225,7 @@ done: ;
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 	}
 
-	if (clamp)
-	{
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	}
-
-	return (samples == gl_alpha_format || samples == gl_compressed_alpha_format);
+	return (samples == gl_alpha_format);
 }
 
 /*
@@ -1255,81 +1289,7 @@ qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboole
 		}
 	}
 
-	return GL_Upload32 (trans, width, height, mipmap, true);
-}
-
-
-/*
-================
-GL_CalcDayAndNight
-================
-*/
-#define DAN_WIDTH	512
-#define DAN_HEIGHT	256
-
-#define DAEMMERUNG	0.03
-
-byte	DaNalpha[DAN_WIDTH*DAN_HEIGHT];
-image_t	*DaN;
-
-void GL_CalcDayAndNight ( float q )
-{
-	int start;
-	int x, y;
-	float phi, dphi, a, da;
-	float sin_q, cos_q, root;
-	float pos;
-	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
-	byte *px;
-
-	// get image
-	if ( !DaN )
-	{
-		if (numgltextures >= MAX_GLTEXTURES)
-			ri.Sys_Error (ERR_DROP, "MAX_GLTEXTURES");
-		DaN = &gltextures[numgltextures++];
-		DaN->width = DAN_WIDTH;
-		DaN->height = DAN_HEIGHT;
-		DaN->type = it_pic;
-		DaN->texnum = TEXNUM_IMAGES + (DaN - gltextures);
-	}
-	GL_Bind(DaN->texnum);
-
-	// init geometric data
-	dphi = (float)2*M_PI/DAN_WIDTH;
-	da = M_PI/2*(HIGH_LAT-LOW_LAT)/DAN_HEIGHT;
-
-	// precalculate trigonometric functions
-	sin_q = sin(q);
-	cos_q = cos(q);
-	for ( x = 0; x < DAN_WIDTH; x++ )
-	{
-		phi = x*dphi - q;
-		sin_phi[x] = sin(phi);
-		cos_phi[x] = cos(phi);
-	}
-
-	// calculate 
-	px = DaNalpha;
-	for ( y = 0; y < DAN_HEIGHT; y++ )
-	{
-		a = sin(M_PI/2*HIGH_LAT - y*da);
-		root = sqrt(1-a*a);
-		for ( x = 0; x < DAN_WIDTH; x++ )
-		{
-			pos = sin_phi[x]*root*sin_q - (a*SIN_ALPHA + cos_phi[x]*root*COS_ALPHA)*cos_q;
-
-			if ( pos >= DAEMMERUNG ) *px++ = 255;
-			else if ( pos <= -DAEMMERUNG ) *px++ = 0;
-			else *px++ = (byte)(128.0 * (pos/DAEMMERUNG + 1));
-		}
-	}
-
-	// upload alpha map
-	qglTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, DaNalpha );
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	return GL_Upload32 (trans, width, height, mipmap);
 }
 
 
@@ -1370,8 +1330,6 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 	image->width = width;
 	image->height = height;
 	image->type = type;
-	if ( image->type == it_pic && strstr( image->name, "_noclamp" ) ) 
-		image->type = it_wrappic;
 
 	if (type == it_skin && bits == 8)
 		R_FloodFillSkin(pic, width, height);
@@ -1411,11 +1369,10 @@ nonscrap:
 		if (bits == 8)
 			image->has_alpha = GL_Upload8 (pic, width, height, (image->type != it_pic && image->type != it_sky), image->type == it_sky );
 		else
-			image->has_alpha = GL_Upload32 ((unsigned *)pic, width, height, 
-				(image->type != it_pic &&& image->type != it_wrappic && image->type != it_sky), image->type == it_pic );
+			image->has_alpha = GL_Upload32 ((unsigned *)pic, width, height, (image->type != it_pic && image->type != it_sky) );
 		image->upload_width = upload_width;		// after power of 2 and scales
 		image->upload_height = upload_height;
-		image->paletted = false;
+		image->paletted = uploaded_paletted;
 		image->sl = 0;
 		image->sh = 1;
 		image->tl = 0;
@@ -1481,7 +1438,7 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 
 	// drop extension
 	strcpy( lname, pname );
-	if ( lname[len-4] == '.' ) len -= 4;
+	if ( lname[len-4] == '.' )  len -= 4;
 	ename = &(lname[len]);
 	*ename = 0;
 
@@ -1626,8 +1583,8 @@ void GL_FreeUnusedImages (void)
 			continue;		// used this sequence
 		if (!image->registration_sequence)
 			continue;		// free image_t slot
-		if (image->type == it_pic || image->type == it_wrappic)
-			continue;		// fix this! don't free pics
+		if (image->type == it_pic)
+			continue;		// don't free pics
 		// free it
 		qglDeleteTextures (1, &image->texnum);
 		memset (image, 0, sizeof(*image));
@@ -1687,7 +1644,6 @@ void	GL_InitImages (void)
 	numgltextures = 0;
 	glerrortex[0] = 0;
 	glerrortexend = glerrortex;
-	DaN = NULL;
 
 	// init intensity conversions
 	intensity = ri.Cvar_Get( "intensity", "2", CVAR_ARCHIVE );

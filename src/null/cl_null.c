@@ -43,15 +43,7 @@ void CL_Frame (int msec)
 {
 }
 
-void CL_ParseScriptFirst (char *type, char *name, char **text)
-{
-}
-
-void CL_ParseScriptSecond (char *type, char *name, char **text)
-{
-}
-
-int  CL_GetModelInTeam ( char *team, char *body, char *head )
+void CL_AddModel (char *name, vec3_t angles)
 {
 }
 

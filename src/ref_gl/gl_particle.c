@@ -179,7 +179,6 @@ void R_DrawPtls( void )
 	ptl_t	*p;
 	int		i;
 
-	if ( gl_fog->value && r_newrefdef.fog ) qglDisable( GL_FOG );
 	qglDepthMask( GL_FALSE );		// no z buffering
 	qglDisable( GL_CULL_FACE );
 	qglEnable( GL_BLEND );
@@ -188,11 +187,6 @@ void R_DrawPtls( void )
 	for ( i = 0, p = r_newrefdef.ptls; i < r_newrefdef.num_ptls; i++, p++ )
 		if ( p->inuse )
 		{
-			// test for visibility
-			if ( p->levelFlags && !((1<<r_newrefdef.worldlevel) & p->levelFlags) )
-				continue;
-
-			// set blend mode and draw gfx
 			GL_SetBlendMode( p->blend );
 			if ( p->style == STYLE_LINE ) R_DrawPtlLine( p );
 			if ( p->pic != -1 ) R_DrawSprite( p );
@@ -209,7 +203,6 @@ void R_DrawPtls( void )
 	qglBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	qglEnable( GL_CULL_FACE );
 	qglDepthMask( GL_TRUE );
-	if ( gl_fog->value && r_newrefdef.fog ) qglEnable( GL_FOG );
 }
 
 

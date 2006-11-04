@@ -3,14 +3,1033 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
+--------------------Configuration: game - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSPE0E2.TMP" with contents
+[
+/nologo /G5 /MT /W4 /GX /Zd /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /Fp".\release/game.pch" /YX /Fo".\release/" /Fd".\release/" /FD /c 
+"D:\ufo\source\game\g_ai.c"
+"D:\ufo\source\game\g_client.c"
+"D:\ufo\source\game\g_cmds.c"
+"D:\ufo\source\game\g_main.c"
+"D:\ufo\source\game\g_spawn.c"
+"D:\ufo\source\game\g_svcmds.c"
+"D:\ufo\source\game\g_utils.c"
+"D:\ufo\source\game\q_shared.c"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSPE0E2.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSPE0E3.TMP" with contents
+[
+kernel32.lib user32.lib winmm.lib /nologo /base:"0x20000000" /subsystem:windows /dll /incremental:no /pdb:".\release/gamex86.pdb" /machine:I386 /def:".\game.def" /out:"..\..\base\gamex86.dll" /implib:".\release/gamex86.lib" 
+.\release\g_ai.obj
+.\release\g_client.obj
+.\release\g_cmds.obj
+.\release\g_main.obj
+.\release\g_spawn.obj
+.\release\g_svcmds.obj
+.\release\g_utils.obj
+.\release\q_shared.obj
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSPE0E3.TMP"
+<h3>Output Window</h3>
+Compiling...
+g_ai.c
+g_client.c
+g_cmds.c
+D:\ufo\source\game\g_client.c(658) : warning C4706: assignment within conditional expression
+g_main.c
+g_spawn.c
+D:\ufo\source\game\g_spawn.c(231) : warning C4127: conditional expression is constant
+D:\ufo\source\game\g_spawn.c(429) : warning C4127: conditional expression is constant
+g_svcmds.c
+g_utils.c
+D:\ufo\source\game\g_utils.c(147) : warning C4127: conditional expression is constant
+D:\ufo\source\game\g_utils.c(168) : warning C4100: 'ent' : unreferenced formal parameter
+q_shared.c
+D:\ufo\source\game\q_shared.c(339) : warning C4100: 'f' : unreferenced formal parameter
+D:\ufo\source\game\q_shared.c(491) : warning C4100: 'p' : unreferenced formal parameter
+D:\ufo\source\game\q_shared.c(491) : warning C4100: 'emaxs' : unreferenced formal parameter
+D:\ufo\source\game\q_shared.c(491) : warning C4100: 'emins' : unreferenced formal parameter
+D:\ufo\source\game\q_shared.c(1254) : warning C4127: conditional expression is constant
+D:\ufo\source\game\q_shared.c(1430) : warning C4127: conditional expression is constant
+D:\ufo\source\game\q_shared.c(1474) : warning C4127: conditional expression is constant
+D:\ufo\source\game\q_shared.c(1447) : warning C4702: unreachable code
+Linking...
+   Creating library .\release/gamex86.lib and object .\release/gamex86.exp
+<h3>
+--------------------Configuration: ref_gl - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSPE111.TMP" with contents
+[
+/nologo /G5 /MT /W4 /GX /O2 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /Fp".\release/ref_gl.pch" /YX /Fo".\release/" /Fd".\release/" /FD /c 
+"D:\ufo\source\ref_gl\gl_anim.c"
+"D:\ufo\source\ref_gl\gl_draw.c"
+"D:\ufo\source\ref_gl\gl_image.c"
+"D:\ufo\source\ref_gl\gl_light.c"
+"D:\ufo\source\ref_gl\gl_mesh.c"
+"D:\ufo\source\ref_gl\gl_model.c"
+"D:\ufo\source\ref_gl\gl_particle.c"
+"D:\ufo\source\ref_gl\gl_rmain.c"
+"D:\ufo\source\ref_gl\gl_rmisc.c"
+"D:\ufo\source\ref_gl\gl_rsurf.c"
+"D:\ufo\source\ref_gl\gl_warp.c"
+"D:\ufo\source\win32\glw_imp.c"
+"D:\ufo\source\game\q_shared.c"
+"D:\ufo\source\win32\q_shwin.c"
+"D:\ufo\source\win32\qgl_win.c"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSPE111.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSPE112.TMP" with contents
+[
+kernel32.lib user32.lib gdi32.lib winmm.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\..\ref_gl.pdb" /machine:I386 /def:".\ref_gl.def" /out:"..\..\ref_gl.dll" /implib:"..\..\ref_gl.lib" 
+.\release\gl_anim.obj
+.\release\gl_draw.obj
+.\release\gl_image.obj
+.\release\gl_light.obj
+.\release\gl_mesh.obj
+.\release\gl_model.obj
+.\release\gl_particle.obj
+.\release\gl_rmain.obj
+.\release\gl_rmisc.obj
+.\release\gl_rsurf.obj
+.\release\gl_warp.obj
+.\release\glw_imp.obj
+.\release\q_shared.obj
+.\release\q_shwin.obj
+.\release\qgl_win.obj
+..\win32\libjpeg.lib
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSPE112.TMP"
+<h3>Output Window</h3>
+Compiling...
+gl_anim.c
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+D:\ufo\source\ref_gl\../win32/jmorecfg.h(161) : warning C4142: benign redefinition of type
+D:\ufo\source\ref_gl\../win32/jmorecfg.h(215) : warning C4005: 'FAR' : macro redefinition
+        C:\Programme\MSVC\VC98\INCLUDE\windef.h(135) : see previous definition of 'FAR'
+gl_draw.c
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+D:\ufo\source\ref_gl\../win32/jmorecfg.h(161) : warning C4142: benign redefinition of type
+D:\ufo\source\ref_gl\../win32/jmorecfg.h(215) : warning C4005: 'FAR' : macro redefinition
+        C:\Programme\MSVC\VC98\INCLUDE\windef.h(135) : see previous definition of 'FAR'
+D:\ufo\source\ref_gl\gl_draw.c(670) : warning C4101: 'image8' : unreferenced local variable
+gl_image.c
+D:\ufo\source\ref_gl\gl_draw.c(501) : warning C4701: local variable 'nw' may be used without having been initialized
+D:\ufo\source\ref_gl\gl_draw.c(503) : warning C4701: local variable 'nh' may be used without having been initialized
+D:\ufo\source\ref_gl\gl_image.c(724) : warning C4100: 'cinfo' : unreferenced formal parameter
+D:\ufo\source\ref_gl\gl_image.c(728) : warning C4100: 'cinfo' : unreferenced formal parameter
+D:\ufo\source\ref_gl\gl_image.c(1255) : warning C4100: 'is_sky' : unreferenced formal parameter
+D:\ufo\source\ref_gl\gl_image.c(1589) : warning C4057: 'function' : 'const unsigned int *' differs in indirection to slightly different base types from 'int *'
+D:\ufo\source\ref_gl\gl_image.c(1708) : warning C4057: 'function' : 'const unsigned int *' differs in indirection to slightly different base types from 'int *'
+gl_light.c
+D:\ufo\source\ref_gl\gl_image.c(658) : warning C4701: local variable 'blue' may be used without having been initialized
+D:\ufo\source\ref_gl\gl_image.c(657) : warning C4701: local variable 'green' may be used without having been initialized
+D:\ufo\source\ref_gl\gl_image.c(656) : warning C4701: local variable 'red' may be used without having been initialized
+D:\ufo\source\ref_gl\gl_image.c(659) : warning C4701: local variable 'alphabyte' may be used without having been initialized
+D:\ufo\source\ref_gl\gl_image.c(1328) : warning C4706: assignment within conditional expression
+D:\ufo\source\ref_gl\gl_image.c(1457) : warning C4706: assignment within conditional expression
+gl_mesh.c
+D:\ufo\source\ref_gl\gl_mesh.c(53) : warning C4100: 'verts' : unreferenced formal parameter
+D:\ufo\source\ref_gl\gl_mesh.c(163) : warning C4127: conditional expression is constant
+D:\ufo\source\ref_gl\gl_mesh.c(81) : warning C4101: 'delta' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_mesh.c(86) : warning C4101: 'matrix' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_mesh.c(75) : warning C4101: 'l' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_mesh.c(225) : warning C4127: conditional expression is constant
+D:\ufo\source\ref_gl\gl_mesh.c(204) : warning C4100: 'posenum' : unreferenced formal parameter
+D:\ufo\source\ref_gl\gl_mesh.c(278) : warning C4101: 'angles' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_mesh.c(401) : warning C4101: 'color' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_mesh.c(477) : warning C4101: 'an' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_mesh.c(475) : warning C4101: 'i' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_mesh.c(693) : warning C4013: 'R_RegisterModelShort' undefined; assuming extern returning int
+D:\ufo\source\ref_gl\gl_mesh.c(693) : warning C4047: '=' : 'struct model_s *' differs in levels of indirection from 'int '
+D:\ufo\source\ref_gl\gl_mesh.c(760) : warning C4047: '=' : 'struct model_s *' differs in levels of indirection from 'int '
+D:\ufo\source\ref_gl\gl_mesh.c(690) : warning C4101: 'color' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_mesh.c(688) : warning C4101: 'an' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_mesh.c(690) : warning C4101: 'pos' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_mesh.c(863) : warning C4101: 'an' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_mesh.c(861) : warning C4101: 'i' : unreferenced local variable
+gl_model.c
+D:\ufo\source\ref_gl\gl_model.c(58) : warning C4127: conditional expression is constant
+gl_particle.c
+D:\ufo\source\ref_gl\gl_model.c(70) : warning C4702: unreachable code
+gl_rmain.c
+D:\ufo\source\ref_gl\gl_rmain.c(1267) : warning C4057: 'function' : 'int *' differs in indirection to slightly different base types from 'unsigned int *'
+D:\ufo\source\ref_gl\gl_rmain.c(1267) : warning C4057: 'function' : 'int *' differs in indirection to slightly different base types from 'unsigned int *'
+D:\ufo\source\ref_gl\gl_rmain.c(1278) : warning C4057: 'function' : 'int *' differs in indirection to slightly different base types from 'unsigned int *'
+D:\ufo\source\ref_gl\gl_rmain.c(1278) : warning C4057: 'function' : 'int *' differs in indirection to slightly different base types from 'unsigned int *'
+D:\ufo\source\ref_gl\gl_rmain.c(1289) : warning C4057: 'function' : 'int *' differs in indirection to slightly different base types from 'unsigned int *'
+D:\ufo\source\ref_gl\gl_rmain.c(1289) : warning C4057: 'function' : 'int *' differs in indirection to slightly different base types from 'unsigned int *'
+D:\ufo\source\ref_gl\gl_rmain.c(1353) : warning C4057: '=' : 'const char *' differs in indirection to slightly different base types from 'const unsigned char *'
+D:\ufo\source\ref_gl\gl_rmain.c(1355) : warning C4057: '=' : 'const char *' differs in indirection to slightly different base types from 'const unsigned char *'
+D:\ufo\source\ref_gl\gl_rmain.c(1357) : warning C4057: '=' : 'const char *' differs in indirection to slightly different base types from 'const unsigned char *'
+D:\ufo\source\ref_gl\gl_rmain.c(1359) : warning C4057: '=' : 'const char *' differs in indirection to slightly different base types from 'const unsigned char *'
+D:\ufo\source\ref_gl\gl_rmain.c(1454) : warning C4054: 'type cast' : from function pointer 'int (__stdcall *)()' to data pointer 'void *'
+D:\ufo\source\ref_gl\gl_rmain.c(1454) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+D:\ufo\source\ref_gl\gl_rmain.c(1455) : warning C4054: 'type cast' : from function pointer 'int (__stdcall *)()' to data pointer 'void *'
+D:\ufo\source\ref_gl\gl_rmain.c(1455) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+D:\ufo\source\ref_gl\gl_rmain.c(1497) : warning C4054: 'type cast' : from function pointer 'int (__stdcall *)()' to data pointer 'void *'
+D:\ufo\source\ref_gl\gl_rmain.c(1497) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+D:\ufo\source\ref_gl\gl_rmain.c(1498) : warning C4054: 'type cast' : from function pointer 'int (__stdcall *)()' to data pointer 'void *'
+D:\ufo\source\ref_gl\gl_rmain.c(1498) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+D:\ufo\source\ref_gl\gl_rmain.c(1499) : warning C4054: 'type cast' : from function pointer 'int (__stdcall *)()' to data pointer 'void *'
+D:\ufo\source\ref_gl\gl_rmain.c(1499) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+D:\ufo\source\ref_gl\gl_rmain.c(1542) : warning C4054: 'type cast' : from function pointer 'int (__stdcall *)()' to data pointer 'void *'
+D:\ufo\source\ref_gl\gl_rmain.c(1542) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+D:\ufo\source\ref_gl\gl_rmain.c(1543) : warning C4054: 'type cast' : from function pointer 'int (__stdcall *)()' to data pointer 'void *'
+D:\ufo\source\ref_gl\gl_rmain.c(1543) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+D:\ufo\source\ref_gl\gl_rmain.c(1859) : warning C4505: 'GL_DrawStereoPattern' : unreferenced local function has been removed
+        D:\ufo\source\ref_gl\gl_rmain.c(1087) : see declaration of 'GL_DrawStereoPattern'
+gl_rmisc.c
+D:\ufo\source\ref_gl\gl_rmain.c(1138) : warning C4700: local variable 'shadelight' used without having been initialized
+D:\ufo\source\ref_gl\gl_rmain.c(1574) : warning C4715: 'R_Init' : not all control paths return a value
+gl_rsurf.c
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+D:\ufo\source\ref_gl\../win32/jmorecfg.h(161) : warning C4142: benign redefinition of type
+D:\ufo\source\ref_gl\../win32/jmorecfg.h(215) : warning C4005: 'FAR' : macro redefinition
+        C:\Programme\MSVC\VC98\INCLUDE\windef.h(135) : see previous definition of 'FAR'
+D:\ufo\source\ref_gl\gl_rsurf.c(1041) : warning C4101: 'pleaf' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_rsurf.c(1040) : warning C4101: 'mark' : unreferenced local variable
+D:\ufo\source\ref_gl\gl_rsurf.c(1535) : warning C4100: 'm' : unreferenced formal parameter
+gl_warp.c
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+D:\ufo\source\ref_gl\../win32/jmorecfg.h(161) : warning C4142: benign redefinition of type
+D:\ufo\source\ref_gl\../win32/jmorecfg.h(215) : warning C4005: 'FAR' : macro redefinition
+        C:\Programme\MSVC\VC98\INCLUDE\windef.h(135) : see previous definition of 'FAR'
+glw_imp.c
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+D:\ufo\source\win32\../ref_gl/../win32/jmorecfg.h(161) : warning C4142: benign redefinition of type
+D:\ufo\source\win32\../ref_gl/../win32/jmorecfg.h(215) : warning C4005: 'FAR' : macro redefinition
+        C:\Programme\MSVC\VC98\INCLUDE\windef.h(135) : see previous definition of 'FAR'
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(201) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(207) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(216) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(222) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(229) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(398) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(403) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(408) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(413) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(420) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(439) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(445) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1188) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1195) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(113) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(117) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(121) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(125) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(132) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(136) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(140) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(144) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(151) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(155) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(159) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(261) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(265) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(269) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(279) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(283) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(287) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(291) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(295) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(299) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(303) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(307) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(327) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(331) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(335) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(340) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(344) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(348) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(352) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(373) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(377) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(381) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(385) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(389) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(393) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(397) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(401) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(594) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(598) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(602) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(606) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(610) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(991) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(995) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1076) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1080) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1084) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1096) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1100) : warning C4201: nonstandard extension used : nameless struct/union
+D:\ufo\source\win32\glw_imp.c(51) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'const unsigned char *'
+D:\ufo\source\win32\glw_imp.c(75) : warning C4055: 'type cast' : from data pointer 'void *' to function pointer 'long (__stdcall *)(struct HWND__ *,unsigned int ,unsigned int ,long )'
+q_shared.c
+D:\ufo\source\game\q_shared.c(339) : warning C4100: 'f' : unreferenced formal parameter
+D:\ufo\source\game\q_shared.c(491) : warning C4100: 'p' : unreferenced formal parameter
+D:\ufo\source\game\q_shared.c(491) : warning C4100: 'emaxs' : unreferenced formal parameter
+D:\ufo\source\game\q_shared.c(491) : warning C4100: 'emins' : unreferenced formal parameter
+D:\ufo\source\game\q_shared.c(1254) : warning C4127: conditional expression is constant
+D:\ufo\source\game\q_shared.c(1430) : warning C4127: conditional expression is constant
+D:\ufo\source\game\q_shared.c(1474) : warning C4127: conditional expression is constant
+q_shwin.c
+D:\ufo\source\game\q_shared.c(1447) : warning C4702: unreachable code
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(201) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(207) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(216) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(222) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(229) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(398) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(403) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(408) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(413) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(420) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(439) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(445) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1188) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1195) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(113) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(117) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(121) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(125) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(132) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(136) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(140) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(144) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(151) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(155) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(159) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(261) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(265) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(269) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(279) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(283) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(287) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(291) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(295) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(299) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(303) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(307) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(327) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(331) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(335) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(340) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(344) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(348) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(352) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(373) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(377) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(381) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(385) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(389) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(393) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(397) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(401) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(594) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(598) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(602) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(606) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(610) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(991) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(995) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1076) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1080) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1084) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1096) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1100) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(70) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(71) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(72) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(76) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(77) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(77) : warning C4032: formal parameter 2 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(78) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(93) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(94) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(100) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(101) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(101) : warning C4032: formal parameter 2 has different type when promoted
+qgl_win.c
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+D:\ufo\source\win32\../ref_gl/../win32/jmorecfg.h(161) : warning C4142: benign redefinition of type
+D:\ufo\source\win32\../ref_gl/../win32/jmorecfg.h(215) : warning C4005: 'FAR' : macro redefinition
+        C:\Programme\MSVC\VC98\INCLUDE\windef.h(135) : see previous definition of 'FAR'
+D:\ufo\source\win32\qgl_win.c(213) : warning C4030: first formal parameter list longer than the second list
+D:\ufo\source\win32\qgl_win.c(3153) : warning C4057: '=' : 'unsigned int (__stdcall *)(int )' differs in indirection to slightly different base types from 'int (__stdcall *)()'
+D:\ufo\source\win32\qgl_win.c(3158) : warning C4057: '=' : 'unsigned int (__stdcall *)(void )' differs in indirection to slightly different base types from 'int (__stdcall *)()'
+Linking...
+   Creating library ..\..\ref_gl.lib and object ..\..\ref_gl.exp
+LINK : warning LNK4089: all references to "WINMM.dll" discarded by /OPT:REF
+<h3>
 --------------------Configuration: ufo - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /fo".\release/q2.res" /i "win32" /d "NDEBUG" "D:\ufo\source\win32\q2.rc"" 
+Creating temporary file "C:\WINDOWS\TEMP\RSPE192.TMP" with contents
+[
+/nologo /G5 /MT /W4 /GX /Zd /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /Fp".\release/ufo.pch" /YX /Fo".\release/" /Fd".\release/" /FD /c 
+"D:\ufo\source\win32\cd_win.c"
+"D:\ufo\source\client\cl_actor.c"
+"D:\ufo\source\client\cl_campaign.c"
+"D:\ufo\source\client\cl_cin.c"
+"D:\ufo\source\client\cl_fx.c"
+"D:\ufo\source\client\cl_input.c"
+"D:\ufo\source\client\cl_le.c"
+"D:\ufo\source\client\cl_main.c"
+"D:\ufo\source\client\cl_menu.c"
+"D:\ufo\source\client\cl_parse.c"
+"D:\ufo\source\client\cl_particle.c"
+"D:\ufo\source\client\cl_scrn.c"
+"D:\ufo\source\client\cl_sequence.c"
+"D:\ufo\source\client\cl_team.c"
+"D:\ufo\source\client\cl_view.c"
+"D:\ufo\source\qcommon\cmd.c"
+"D:\ufo\source\qcommon\cmodel.c"
+"D:\ufo\source\qcommon\common.c"
+"D:\ufo\source\win32\conproc.c"
+"D:\ufo\source\client\console.c"
+"D:\ufo\source\qcommon\crc.c"
+"D:\ufo\source\qcommon\cvar.c"
+"D:\ufo\source\qcommon\files.c"
+"D:\ufo\source\win32\in_win.c"
+"D:\ufo\source\client\keys.c"
+"D:\ufo\source\qcommon\md4.c"
+"D:\ufo\source\qcommon\net_chan.c"
+"D:\ufo\source\win32\net_wins.c"
+"D:\ufo\source\game\q_shared.c"
+"D:\ufo\source\win32\q_shwin.c"
+"D:\ufo\source\client\snd_dma.c"
+"D:\ufo\source\client\snd_mem.c"
+"D:\ufo\source\client\snd_mix.c"
+"D:\ufo\source\win32\snd_win.c"
+"D:\ufo\source\server\sv_ccmds.c"
+"D:\ufo\source\server\sv_game.c"
+"D:\ufo\source\server\sv_init.c"
+"D:\ufo\source\server\sv_main.c"
+"D:\ufo\source\server\sv_send.c"
+"D:\ufo\source\server\sv_user.c"
+"D:\ufo\source\server\sv_world.c"
+"D:\ufo\source\win32\sys_win.c"
+"D:\ufo\source\win32\vid_dll.c"
+"D:\ufo\source\client\x86.c"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSPE192.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSPE193.TMP" with contents
+[
+winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib /nologo /subsystem:windows /incremental:no /pdb:"..\ufo.pdb" /machine:I386 /out:"..\ufo.exe" 
+.\release\cd_win.obj
+.\release\cl_actor.obj
+.\release\cl_campaign.obj
+.\release\cl_cin.obj
+.\release\cl_fx.obj
+.\release\cl_input.obj
+.\release\cl_le.obj
+.\release\cl_main.obj
+.\release\cl_menu.obj
+.\release\cl_parse.obj
+.\release\cl_particle.obj
+.\release\cl_scrn.obj
+.\release\cl_sequence.obj
+.\release\cl_team.obj
+.\release\cl_view.obj
+.\release\cmd.obj
+.\release\cmodel.obj
+.\release\common.obj
+.\release\conproc.obj
+.\release\console.obj
+.\release\crc.obj
+.\release\cvar.obj
+.\release\files.obj
+.\release\in_win.obj
+.\release\keys.obj
+.\release\md4.obj
+.\release\net_chan.obj
+.\release\net_wins.obj
+.\release\q_shared.obj
+.\release\q_shwin.obj
+.\release\snd_dma.obj
+.\release\snd_mem.obj
+.\release\snd_mix.obj
+.\release\snd_win.obj
+.\release\sv_ccmds.obj
+.\release\sv_game.obj
+.\release\sv_init.obj
+.\release\sv_main.obj
+.\release\sv_send.obj
+.\release\sv_user.obj
+.\release\sv_world.obj
+.\release\sys_win.obj
+.\release\vid_dll.obj
+.\release\x86.obj
+.\release\q2.res
+.\win32\ogg.lib
+.\win32\vorbisfile.lib
+.\game\release\gamex86.lib
+\ufo\ref_gl.lib
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSPE193.TMP"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+cd_win.c
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+D:\ufo\source\win32\cd_win.c(375) : warning C4100: 'uMsg' : unreferenced formal parameter
+D:\ufo\source\win32\cd_win.c(375) : warning C4100: 'hWnd' : unreferenced formal parameter
+cl_actor.c
+D:\ufo\source\win32\cd_win.c(202) : warning C4706: assignment within conditional expression
+D:\ufo\source\win32\cd_win.c(222) : warning C4706: assignment within conditional expression
+D:\ufo\source\win32\cd_win.c(449) : warning C4706: assignment within conditional expression
+D:\ufo\source\win32\cd_win.c(458) : warning C4706: assignment within conditional expression
+D:\ufo\source\win32\cd_win.c(53) : warning C4706: assignment within conditional expression
+D:\ufo\source\win32\cd_win.c(62) : warning C4706: assignment within conditional expression
+cl_campaign.c
+D:\ufo\source\client\cl_actor.c(635) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\ufo\source\client\cl_actor.c(635) : warning C4761: integral size mismatch in argument; conversion supplied
+cl_cin.c
+D:\ufo\source\client\cl_cin.c(557) : warning C4057: 'function' : 'const unsigned char *' differs in indirection to slightly different base types from 'char [768]'
+cl_fx.c
+D:\ufo\source\client\cl_fx.c(461) : warning C4100: 'type' : unreferenced formal parameter
+D:\ufo\source\client\cl_fx.c(822) : warning C4100: 'flags' : unreferenced formal parameter
+cl_input.c
+D:\ufo\source\client\cl_fx.c(1587) : warning C4701: local variable 'time' may be used without having been initialized
+cl_le.c
+cl_main.c
+D:\ufo\source\client\cl_main.c(391) : warning C4310: cast truncates constant value
+D:\ufo\source\client\cl_main.c(392) : warning C4310: cast truncates constant value
+D:\ufo\source\client\cl_main.c(393) : warning C4310: cast truncates constant value
+D:\ufo\source\client\cl_main.c(394) : warning C4310: cast truncates constant value
+D:\ufo\source\client\cl_main.c(490) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'unsigned char [32]'
+D:\ufo\source\client\cl_main.c(491) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'unsigned char [32]'
+D:\ufo\source\client\cl_main.c(492) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'unsigned char [32]'
+D:\ufo\source\client\cl_main.c(546) : warning C4310: cast truncates constant value
+D:\ufo\source\client\cl_main.c(1409) : warning C4101: 'f' : unreferenced local variable
+cl_menu.c
+cl_parse.c
+D:\ufo\source\client\cl_parse.c(163) : warning C4101: 'name' : unreferenced local variable
+D:\ufo\source\client\cl_parse.c(162) : warning C4101: 'fp' : unreferenced local variable
+D:\ufo\source\client\cl_parse.c(629) : warning C4100: 'sb' : unreferenced formal parameter
+D:\ufo\source\client\cl_parse.c(1059) : warning C4133: '=' : incompatible types - from 'int *' to 'unsigned char *'
+D:\ufo\source\client\cl_parse.c(1060) : warning C4133: '=' : incompatible types - from 'int *' to 'unsigned char *'
+D:\ufo\source\client\cl_parse.c(1061) : warning C4133: '=' : incompatible types - from 'int *' to 'unsigned char *'
+D:\ufo\source\client\cl_parse.c(1294) : warning C4127: conditional expression is constant
+cl_particle.c
+D:\ufo\source\client\cl_parse.c(1092) : warning C4706: assignment within conditional expression
+cl_scrn.c
+D:\ufo\source\client\cl_scrn.c(245) : warning C4127: conditional expression is constant
+D:\ufo\source\client\cl_scrn.c(294) : warning C4127: conditional expression is constant
+cl_sequence.c
+D:\ufo\source\client\cl_sequence.c(443) : warning C4100: 'data' : unreferenced formal parameter
+D:\ufo\source\client\cl_sequence.c(479) : warning C4100: 'name' : unreferenced formal parameter
+D:\ufo\source\client\cl_sequence.c(613) : warning C4100: 'data' : unreferenced formal parameter
+D:\ufo\source\client\cl_sequence.c(633) : warning C4100: 'data' : unreferenced formal parameter
+cl_team.c
+cl_view.c
+D:\ufo\source\client\cl_view.c(442) : warning C4210: nonstandard extension used : function given file scope
+cmd.c
+D:\ufo\source\qcommon\cmd.c(161) : warning C4057: 'function' : 'char *' differs in indirection to slightly different base types from 'unsigned char [8192]'
+D:\ufo\source\qcommon\cmd.c(638) : warning C4127: conditional expression is constant
+D:\ufo\source\qcommon\cmd.c(729) : warning C4127: conditional expression is constant
+cmodel.c
+D:\ufo\source\qcommon\cmodel.c(697) : warning C4127: conditional expression is constant
+D:\ufo\source\qcommon\cmodel.c(721) : warning C4127: conditional expression is constant
+D:\ufo\source\qcommon\cmodel.c(1161) : warning C4127: conditional expression is constant
+common.c
+D:\ufo\source\qcommon\common.c(80) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+D:\ufo\source\qcommon\common.c(1508) : warning C4100: 'challenge' : unreferenced formal parameter
+D:\ufo\source\qcommon\common.c(1508) : warning C4100: 'sequence' : unreferenced formal parameter
+D:\ufo\source\qcommon\common.c(1508) : warning C4100: 'length' : unreferenced formal parameter
+D:\ufo\source\qcommon\common.c(1508) : warning C4100: 'base' : unreferenced formal parameter
+conproc.c
+D:\ufo\source\qcommon\common.c(1730) : warning C4706: assignment within conditional expression
+D:\ufo\source\qcommon\common.c(1745) : warning C4706: assignment within conditional expression
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+D:\ufo\source\win32\conproc.c(170) : warning C4127: conditional expression is constant
+D:\ufo\source\win32\conproc.c(160) : warning C4100: 'arg' : unreferenced formal parameter
+D:\ufo\source\win32\conproc.c(268) : warning C4244: '=' : conversion from 'int ' to 'short ', possible loss of data
+D:\ufo\source\win32\conproc.c(299) : warning C4244: '=' : conversion from 'int ' to 'char ', possible loss of data
+D:\ufo\source\win32\conproc.c(305) : warning C4244: '=' : conversion from 'int ' to 'unsigned short ', possible loss of data
+D:\ufo\source\win32\conproc.c(335) : warning C4244: '=' : conversion from 'int ' to 'char ', possible loss of data
+D:\ufo\source\win32\conproc.c(374) : warning C4244: '=' : conversion from 'int ' to 'short ', possible loss of data
+D:\ufo\source\win32\conproc.c(376) : warning C4244: '=' : conversion from 'int ' to 'short ', possible loss of data
+D:\ufo\source\win32\conproc.c(383) : warning C4244: '=' : conversion from 'int ' to 'short ', possible loss of data
+D:\ufo\source\win32\conproc.c(390) : warning C4244: '=' : conversion from 'int ' to 'short ', possible loss of data
+D:\ufo\source\win32\conproc.c(404) : warning C4244: '=' : conversion from 'int ' to 'short ', possible loss of data
+D:\ufo\source\win32\conproc.c(406) : warning C4244: '=' : conversion from 'int ' to 'short ', possible loss of data
+D:\ufo\source\win32\conproc.c(413) : warning C4244: '=' : conversion from 'int ' to 'short ', possible loss of data
+D:\ufo\source\win32\conproc.c(420) : warning C4244: '=' : conversion from 'int ' to 'short ', possible loss of data
+console.c
+D:\ufo\source\win32\conproc.c(116) : warning C4701: local variable 'hFile' may be used without having been initialized
+D:\ufo\source\win32\conproc.c(116) : warning C4701: local variable 'heventParent' may be used without having been initialized
+D:\ufo\source\win32\conproc.c(116) : warning C4701: local variable 'heventChild' may be used without having been initialized
+D:\ufo\source\client\console.c(599) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+crc.c
+D:\ufo\source\client\console.c(381) : warning C4706: assignment within conditional expression
+cvar.c
+D:\ufo\source\qcommon\cvar.c(431) : warning C4101: 'flags' : unreferenced local variable
+files.c
+D:\ufo\source\qcommon\files.c(109) : warning C4127: conditional expression is constant
+in_win.c
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(201) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(207) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(216) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(222) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(229) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(398) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(403) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(408) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(413) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(420) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(439) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(445) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1188) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1195) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(113) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(117) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(121) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(125) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(132) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(136) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(140) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(144) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(151) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(155) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(159) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(261) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(265) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(269) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(279) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(283) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(287) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(291) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(295) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(299) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(303) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(307) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(327) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(331) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(335) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(340) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(344) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(348) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(352) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(373) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(377) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(381) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(385) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(389) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(393) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(397) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(401) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(594) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(598) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(602) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(606) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(610) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(991) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(995) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1076) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1080) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1084) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1096) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1100) : warning C4201: nonstandard extension used : nameless struct/union
+keys.c
+D:\ufo\source\win32\in_win.c(450) : warning C4701: local variable 'mmr' may be used without having been initialized
+D:\ufo\source\win32\in_win.c(504) : warning C4715: 'RawValuePointer' : not all control paths return a value
+md4.c
+net_chan.c
+net_wins.c
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+D:\ufo\source\win32\net_wins.c(315) : warning C4100: 'to' : unreferenced formal parameter
+D:\ufo\source\win32\net_wins.c(354) : warning C4057: 'function' : 'char *' differs in indirection to slightly different base types from 'unsigned char *'
+D:\ufo\source\win32\net_wins.c(496) : warning C4057: 'function' : 'unsigned long *' differs in indirection to slightly different base types from 'int *'
+D:\ufo\source\win32\net_wins.c(605) : warning C4057: 'function' : 'unsigned long *' differs in indirection to slightly different base types from 'int *'
+D:\ufo\source\win32\net_wins.c(739) : warning C4127: conditional expression is constant
+D:\ufo\source\win32\net_wins.c(743) : warning C4127: conditional expression is constant
+q_shared.c
+D:\ufo\source\win32\net_wins.c(124) : warning C4715: 'NET_CompareAdr' : not all control paths return a value
+D:\ufo\source\win32\net_wins.c(154) : warning C4715: 'NET_CompareBaseAdr' : not all control paths return a value
+D:\ufo\source\win32\net_wins.c(235) : warning C4706: assignment within conditional expression
+D:\ufo\source\win32\net_wins.c(436) : warning C4701: local variable 'net_socket' may be used without having been initialized
+D:\ufo\source\game\q_shared.c(339) : warning C4100: 'f' : unreferenced formal parameter
+D:\ufo\source\game\q_shared.c(491) : warning C4100: 'p' : unreferenced formal parameter
+D:\ufo\source\game\q_shared.c(491) : warning C4100: 'emaxs' : unreferenced formal parameter
+D:\ufo\source\game\q_shared.c(491) : warning C4100: 'emins' : unreferenced formal parameter
+D:\ufo\source\game\q_shared.c(1254) : warning C4127: conditional expression is constant
+D:\ufo\source\game\q_shared.c(1430) : warning C4127: conditional expression is constant
+D:\ufo\source\game\q_shared.c(1474) : warning C4127: conditional expression is constant
+q_shwin.c
+D:\ufo\source\game\q_shared.c(1447) : warning C4702: unreachable code
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(201) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(207) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(216) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(222) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(229) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(398) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(403) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(408) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(413) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(420) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(439) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(445) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1188) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1195) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(113) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(117) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(121) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(125) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(132) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(136) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(140) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(144) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(151) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(155) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(159) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(261) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(265) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(269) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(279) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(283) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(287) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(291) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(295) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(299) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(303) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(307) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(327) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(331) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(335) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(340) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(344) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(348) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(352) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(373) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(377) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(381) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(385) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(389) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(393) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(397) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(401) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(594) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(598) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(602) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(606) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(610) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(991) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(995) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1076) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1080) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1084) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1096) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1100) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(70) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(71) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(72) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(76) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(77) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(77) : warning C4032: formal parameter 2 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(78) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(93) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(94) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(100) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(101) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(101) : warning C4032: formal parameter 2 has different type when promoted
+snd_dma.c
+snd_mem.c
+D:\ufo\source\client\snd_dma.c(1198) : warning C4702: unreachable code
+D:\ufo\source\client\snd_mem.c(212) : warning C4127: conditional expression is constant
+D:\ufo\source\client\snd_mem.c(233) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'unsigned char *'
+D:\ufo\source\client\snd_mem.c(283) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'unsigned char *'
+D:\ufo\source\client\snd_mem.c(324) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'unsigned char *'
+snd_mix.c
+D:\ufo\source\client\snd_mix.c(188) : warning C4310: cast truncates constant value
+D:\ufo\source\client\snd_mix.c(189) : warning C4310: cast truncates constant value
+D:\ufo\source\client\snd_mix.c(203) : warning C4310: cast truncates constant value
+D:\ufo\source\client\snd_mix.c(204) : warning C4310: cast truncates constant value
+D:\ufo\source\client\snd_mix.c(244) : warning C4127: conditional expression is constant
+D:\ufo\source\client\snd_mix.c(400) : warning C4100: 'offset' : unreferenced formal parameter
+D:\ufo\source\client\snd_mix.c(400) : warning C4100: 'count' : unreferenced formal parameter
+D:\ufo\source\client\snd_mix.c(400) : warning C4100: 'sc' : unreferenced formal parameter
+D:\ufo\source\client\snd_mix.c(400) : warning C4100: 'ch' : unreferenced formal parameter
+snd_win.c
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(201) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(207) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(216) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(222) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(229) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(398) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(403) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(408) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(413) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(420) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(439) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(445) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1188) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1195) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(113) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(117) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(121) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(125) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(132) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(136) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(140) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(144) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(151) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(155) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(159) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(261) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(265) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(269) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(279) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(283) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(287) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(291) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(295) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(299) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(303) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(307) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(327) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(331) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(335) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(340) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(344) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(348) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(352) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(373) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(377) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(381) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(385) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(389) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(393) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(397) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(401) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(594) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(598) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(602) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(606) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(610) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(991) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(995) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1076) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1080) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1084) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1096) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1100) : warning C4201: nonstandard extension used : nameless struct/union
+D:\ufo\source\win32\snd_win.c(382) : warning C4054: 'type cast' : from function pointer 'int (__stdcall *)()' to data pointer 'void *'
+D:\ufo\source\win32\snd_win.c(382) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+D:\ufo\source\win32\snd_win.c(779) : warning C4127: conditional expression is constant
+sv_ccmds.c
+D:\ufo\source\win32\snd_win.c(692) : warning C4701: local variable 's' may be used without having been initialized
+D:\ufo\source\server\sv_ccmds.c(210) : warning C4127: conditional expression is constant
+D:\ufo\source\server\sv_ccmds.c(228) : warning C4100: 'dst' : unreferenced formal parameter
+D:\ufo\source\server\sv_ccmds.c(228) : warning C4100: 'src' : unreferenced formal parameter
+D:\ufo\source\server\sv_ccmds.c(334) : warning C4100: 'autosave' : unreferenced formal parameter
+D:\ufo\source\server\sv_ccmds.c(431) : warning C4127: conditional expression is constant
+D:\ufo\source\server\sv_ccmds.c(493) : warning C4101: 'savedInuse' : unreferenced local variable
+D:\ufo\source\server\sv_ccmds.c(491) : warning C4101: 'i' : unreferenced local variable
+D:\ufo\source\server\sv_ccmds.c(492) : warning C4101: 'cl' : unreferenced local variable
+D:\ufo\source\server\sv_ccmds.c(922) : warning C4057: 'function' : 'unsigned char *' differs in indirection to slightly different base types from 'char [32768]'
+sv_game.c
+sv_init.c
+D:\ufo\source\server\sv_init.c(192) : warning C4101: 'ent' : unreferenced local variable
+D:\ufo\source\server\sv_init.c(191) : warning C4101: 'i' : unreferenced local variable
+sv_main.c
+D:\ufo\source\server\sv_main.c(117) : warning C4101: 'playerLength' : unreferenced local variable
+D:\ufo\source\server\sv_main.c(112) : warning C4101: 'player' : unreferenced local variable
+D:\ufo\source\server\sv_main.c(114) : warning C4101: 'i' : unreferenced local variable
+D:\ufo\source\server\sv_main.c(115) : warning C4101: 'cl' : unreferenced local variable
+D:\ufo\source\server\sv_main.c(448) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+sv_send.c
+sv_user.c
+D:\ufo\source\server\sv_user.c(62) : warning C4101: 'ent' : unreferenced local variable
+D:\ufo\source\server\sv_user.c(461) : warning C4127: conditional expression is constant
+D:\ufo\source\server\sv_user.c(452) : warning C4101: 'checksumIndex' : unreferenced local variable
+D:\ufo\source\server\sv_user.c(451) : warning C4101: 'calculatedChecksum' : unreferenced local variable
+D:\ufo\source\server\sv_user.c(451) : warning C4101: 'checksum' : unreferenced local variable
+D:\ufo\source\server\sv_user.c(449) : warning C4101: 'net_drop' : unreferenced local variable
+D:\ufo\source\server\sv_user.c(453) : warning C4101: 'lastframe' : unreferenced local variable
+sv_world.c
+D:\ufo\source\server\sv_world.c(201) : warning C4127: conditional expression is constant
+D:\ufo\source\server\sv_world.c(171) : warning C4101: 'topnode' : unreferenced local variable
+D:\ufo\source\server\sv_world.c(170) : warning C4101: 'area' : unreferenced local variable
+D:\ufo\source\server\sv_world.c(169) : warning C4101: 'num_leafs' : unreferenced local variable
+D:\ufo\source\server\sv_world.c(168) : warning C4101: 'leafs' : unreferenced local variable
+sys_win.c
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(201) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(207) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(216) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(222) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(229) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(398) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(403) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(408) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(413) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(420) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(439) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(445) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1188) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1195) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(113) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(117) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(121) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(125) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(132) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(136) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(140) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(144) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(151) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(155) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(159) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(261) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(265) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(269) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(279) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(283) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(287) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(291) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(295) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(299) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(303) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(307) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(327) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(331) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(335) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(340) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(344) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(348) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(352) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(373) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(377) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(381) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(385) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(389) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(393) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(397) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(401) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(594) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(598) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(602) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(606) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(610) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(991) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(995) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1076) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1080) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1084) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1096) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1100) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(70) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(71) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(72) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(76) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(77) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(77) : warning C4032: formal parameter 2 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(78) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(93) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(94) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(100) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(101) : warning C4032: formal parameter 1 has different type when promoted
+C:\Programme\MSVC\VC98\INCLUDE\conio.h(101) : warning C4032: formal parameter 2 has different type when promoted
+D:\ufo\source\win32\sys_win.c(277) : warning C4057: 'function' : 'unsigned long *' differs in indirection to slightly different base types from 'int *'
+D:\ufo\source\win32\sys_win.c(283) : warning C4057: 'function' : 'unsigned long *' differs in indirection to slightly different base types from 'int *'
+D:\ufo\source\win32\sys_win.c(298) : warning C4057: 'function' : 'unsigned long *' differs in indirection to slightly different base types from 'int *'
+D:\ufo\source\win32\sys_win.c(312) : warning C4057: 'function' : 'unsigned long *' differs in indirection to slightly different base types from 'int *'
+D:\ufo\source\win32\sys_win.c(321) : warning C4057: 'function' : 'unsigned long *' differs in indirection to slightly different base types from 'int *'
+D:\ufo\source\win32\sys_win.c(359) : warning C4057: 'function' : 'unsigned long *' differs in indirection to slightly different base types from 'int *'
+D:\ufo\source\win32\sys_win.c(362) : warning C4057: 'function' : 'unsigned long *' differs in indirection to slightly different base types from 'int *'
+D:\ufo\source\win32\sys_win.c(365) : warning C4057: 'function' : 'unsigned long *' differs in indirection to slightly different base types from 'int *'
+D:\ufo\source\win32\sys_win.c(524) : warning C4127: conditional expression is constant
+D:\ufo\source\win32\sys_win.c(540) : warning C4054: 'type cast' : from function pointer 'int (__stdcall *)()' to data pointer 'void *'
+D:\ufo\source\win32\sys_win.c(540) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+D:\ufo\source\win32\sys_win.c(637) : warning C4127: conditional expression is constant
+D:\ufo\source\win32\sys_win.c(596) : warning C4100: 'nCmdShow' : unreferenced formal parameter
+vid_dll.c
+D:\ufo\source\win32\sys_win.c(669) : warning C4702: unreachable code
+C:\Programme\MSVC\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(201) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(207) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(216) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(222) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(229) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(398) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(403) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(408) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(413) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(420) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(439) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(445) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1188) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\ddraw.h(1195) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(113) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(117) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(121) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(125) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(132) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(136) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(140) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(144) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(151) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(155) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(159) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(261) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(265) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(269) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(279) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(283) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(287) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(291) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(295) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(299) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(303) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(307) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(327) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(331) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(335) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(340) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(344) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(348) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(352) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(373) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(377) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(381) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(385) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(389) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(393) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(397) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(401) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(594) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(598) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(602) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(606) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(610) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(991) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(995) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1076) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1080) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1084) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1096) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Programme\MSVC\VC98\INCLUDE\d3dtypes.h(1100) : warning C4201: nonstandard extension used : nameless struct/union
+D:\ufo\source\win32\vid_dll.c(441) : warning C4210: nonstandard extension used : function given file scope
+D:\ufo\source\win32\vid_dll.c(506) : warning C4100: 'y' : unreferenced formal parameter
+D:\ufo\source\win32\vid_dll.c(506) : warning C4100: 'x' : unreferenced formal parameter
+D:\ufo\source\win32\vid_dll.c(591) : warning C4054: 'type cast' : from function pointer 'int (__stdcall *)()' to data pointer 'void *'
+D:\ufo\source\win32\vid_dll.c(591) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+D:\ufo\source\win32\vid_dll.c(602) : warning C4152: nonstandard extension, function/data pointer conversion in expression
+x86.c
+Linking...
 
 
 
 <h3>Results</h3>
-ufo.exe - 0 error(s), 0 warning(s)
+ufo.exe - 0 error(s), 754 warning(s)
 </pre>
 </body>
 </html>

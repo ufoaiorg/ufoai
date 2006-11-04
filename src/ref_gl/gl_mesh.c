@@ -278,9 +278,6 @@ static qboolean R_CullAliasModel( entity_t *e )
 	vec3_t		angles;
 	vec4_t		bbox[8];
 
-	if ( r_isometric->value )
-		return false;
-
 	paliashdr = (dmdl_t *)currentmodel->extradata;
 
 	pframe = ( daliasframe_t * ) ( ( byte * ) paliashdr + 
@@ -597,6 +594,7 @@ void R_DrawAliasModel (entity_t *e)
 	if ( gl_shadows->value && (e->flags & RF_SHADOW) )
 	{
 		if ( !(e->flags & RF_TRANSLUCENT) ) qglDepthMask (0);
+		qglBlendFunc (GL_ZERO, GL_SRC_COLOR);
 		qglEnable (GL_BLEND);
 
 		qglColor4f( 1, 1, 1, 1 );
@@ -611,10 +609,9 @@ void R_DrawAliasModel (entity_t *e)
 		qglEnd();
 
 		qglDisable (GL_BLEND);
+		qglBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		if ( !(e->flags & RF_TRANSLUCENT) ) qglDepthMask (1);
 	}
-
-	if ( gl_fog->value && r_newrefdef.fog ) qglDisable( GL_FOG );
 
 	if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER))
 	{
@@ -675,58 +672,8 @@ void R_DrawAliasModel (entity_t *e)
 		qglPopMatrix ();
 	}*/
 
-	if ( gl_fog->value && r_newrefdef.fog ) qglEnable( GL_FOG );
-
 	qglColor4f (1,1,1,1);
-}
 
-/*
-=================
-R_TransformModelDirect
-=================
-*/
-void R_TransformModelDirect( modelInfo_t *mi )
-{
-	// translate and rotate
-	qglTranslatef( mi->origin[0], mi->origin[1], mi->origin[2] );
-
-	qglRotatef (mi->angles[0], 0, 0, 1);
-	qglRotatef (mi->angles[1], 0, 1, 0);
-	qglRotatef (mi->angles[2], 1, 0, 0);
-
-	if ( mi->scale ) 
-	{
-		// scale by parameters
-		qglScalef (mi->scale[0], mi->scale[1], mi->scale[2] );
-		if ( mi->center ) qglTranslatef( -mi->center[0], -mi->center[1], -mi->center[2] );
-	} 
-	else if ( mi->center ) 
-	{
-		// autoscale
-		dmdl_t		*paliashdr;
-		daliasframe_t *pframe;
-
-		float	max, size;
-		vec3_t	mins, maxs, center;
-		int		i;
-
-		// get model data
-		paliashdr = (dmdl_t *)mi->model->extradata;
-		pframe = (daliasframe_t *) ( (byte *)paliashdr + paliashdr->ofs_frames);
-
-		// get center and scale
-		for ( max = 1.0, i = 0; i < 3; i++ )
-		{
-			mins[i] = pframe->translate[i];
-			maxs[i] = mins[i] + pframe->scale[i]*255;
-			center[i] = -(mins[i] + maxs[i]) / 2;
-			size = maxs[i] - mins[i];
-			if ( size > max ) max = size;
-		}
-		size = (mi->center[0] < mi->center[1] ? mi->center[0] : mi->center[1]) / max;
-		qglScalef (size, size, size );
-		qglTranslatef( center[0], center[1], center[2] );
-	}
 }
 
 /*
@@ -802,7 +749,6 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 	//
     qglPushMatrix ();
 //	qglLoadIdentity ();
-	qglScalef( vid.rx, vid.ry, (vid.rx + vid.ry)/2 );
 
 	if ( mi->color[3] ) qglColor4fv( mi->color );
 	else qglColor4f( 1,1,1,1 );
@@ -813,11 +759,17 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 		// register the parent model
 		pmi->model = R_RegisterModelShort( pmi->name );
 
-		// transform
-		R_TransformModelDirect( pmi );
+		qglTranslatef( pmi->origin[0]*vid.rx, pmi->origin[1]*vid.ry, pmi->origin[2]*(vid.rx+vid.ry)/2 );
+
+		qglRotatef (pmi->angles[0], 0, 0, 1);
+		qglRotatef (pmi->angles[1], 0, 1, 0);
+		qglRotatef (pmi->angles[2], 1, 0, 0);
+
+		if ( pmi->scale[0] ) qglScalef (pmi->scale[0]*vid.rx, pmi->scale[1]*vid.ry, pmi->scale[2]*(vid.rx+vid.ry)/2 );
+		if ( pmi->center ) qglTranslatef( -pmi->center[0], -pmi->center[1], -pmi->center[2] );
 
 		// tag trafo
-		if ( tagname && pmi->model && pmi->model->tagdata )
+		if ( tagname && pmi->model && pmi->model->tagdatasize )
 		{
 			animState_t as;
 			dtag_t	*taghdr;
@@ -849,8 +801,14 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 		}	
 	}
 
-	// transform
-	R_TransformModelDirect( mi );
+	qglTranslatef( mi->origin[0]*vid.rx, mi->origin[1]*vid.ry, mi->origin[2]*(vid.rx+vid.ry)/2 );
+
+    qglRotatef (mi->angles[0], 0, 0, 1);
+    qglRotatef (mi->angles[1], 0, 1, 0);
+    qglRotatef (mi->angles[2], 1, 0, 0);
+
+	if ( mi->scale[0] ) qglScalef (mi->scale[0]*vid.rx, mi->scale[1]*vid.ry, mi->scale[2]*(vid.rx+vid.ry)/2 );
+	if ( mi->center ) qglTranslatef( -mi->center[0], -mi->center[1], -mi->center[2] );
 
 	// draw it
 	GL_Bind(skin->texnum);

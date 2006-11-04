@@ -26,8 +26,10 @@ viddef_t	vid;
 
 refimport_t	ri;
 
-int gl_texture0, gl_texture1, gl_texture2, gl_texture3;
+int gl_texture0, gl_texture1;
 int gl_combine;
+
+model_t		*r_worldmodel;
 
 float		gldepthmin, gldepthmax;
 
@@ -78,7 +80,6 @@ cvar_t	*r_speeds;
 cvar_t	*r_fullbright;
 cvar_t	*r_novis;
 cvar_t	*r_nocull;
-cvar_t	*r_isometric;
 cvar_t	*r_lerpmodels;
 cvar_t	*r_lefthand;
 
@@ -102,8 +103,6 @@ cvar_t	*gl_ext_multitexture;
 cvar_t	*gl_ext_combine;
 cvar_t	*gl_ext_pointparameters;
 cvar_t	*gl_ext_compiled_vertex_array;
-cvar_t	*gl_ext_texture_compression;
-cvar_t	*gl_ext_s3tc_compression;
 
 cvar_t	*gl_log;
 cvar_t	*gl_bitdepth;
@@ -118,7 +117,6 @@ cvar_t	*gl_modulate;
 cvar_t	*gl_nobind;
 cvar_t	*gl_round_down;
 cvar_t	*gl_picmip;
-cvar_t	*gl_maxtexres;
 cvar_t	*gl_skymip;
 cvar_t	*gl_showtris;
 cvar_t	*gl_ztrick;
@@ -135,7 +133,6 @@ cvar_t	*gl_texturealphamode;
 cvar_t	*gl_texturesolidmode;
 cvar_t	*gl_lockpvs;
 cvar_t  *gl_wire;
-cvar_t	*gl_fog;
 
 cvar_t	*gl_3dlabs_broken;
 
@@ -154,7 +151,7 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 {
 	int		i;
 
-	if (r_nocull->value || r_isometric->value)
+	if (r_nocull->value)
 		return false;
 
 	for (i=0 ; i<4 ; i++)
@@ -403,7 +400,7 @@ float *R_CalcTransform( entity_t *e )
 		mp = R_CalcTransform( e->tagent );
 		
 		// tag trafo
-		if ( e->tagent->model && e->tagent->model->tagdata )
+		if ( e->tagent->model && e->tagent->model->tagdatasize )
 		{
 			dtag_t	*taghdr;
 			char	*name;
@@ -752,38 +749,39 @@ void R_SetFrustum (void)
 {
 	int		i;
 
-	if ( r_isometric->value )
-	{
-		// 4 planes of a cube
-		VectorScale( vright, +1, frustum[0].normal );
-		VectorScale( vright, -1, frustum[1].normal );
-		VectorScale( vup, +1, frustum[2].normal );
-		VectorScale( vup, -1, frustum[3].normal );
+#if 0
+	/*
+	** this code is wrong, since it presume a 90 degree FOV both in the
+	** horizontal and vertical plane
+	*/
+	// front side is visible
+	VectorAdd (vpn, vright, frustum[0].normal);
+	VectorSubtract (vpn, vright, frustum[1].normal);
+	VectorAdd (vpn, vup, frustum[2].normal);
+	VectorSubtract (vpn, vup, frustum[3].normal);
 
-		for (i=0 ; i<4 ; i++)
-		{
-			frustum[i].type = PLANE_ANYZ;
-			frustum[i].dist = -10 * r_newrefdef.fov_x;
-			frustum[i].signbits = SignbitsForPlane (&frustum[i]);
-		}
-	}
-	else
-	{
-		// rotate VPN right by FOV_X/2 degrees
-		RotatePointAroundVector( frustum[0].normal, vup, vpn, -(90-r_newrefdef.fov_x / 2 ) );
-		// rotate VPN left by FOV_X/2 degrees
-		RotatePointAroundVector( frustum[1].normal, vup, vpn, 90-r_newrefdef.fov_x / 2 );
-		// rotate VPN up by FOV_X/2 degrees
-		RotatePointAroundVector( frustum[2].normal, vright, vpn, 90-r_newrefdef.fov_y / 2 );
-		// rotate VPN down by FOV_X/2 degrees
-		RotatePointAroundVector( frustum[3].normal, vright, vpn, -( 90 - r_newrefdef.fov_y / 2 ) );
+	// we theoretically don't need to normalize these vectors, but I do it
+	// anyway so that debugging is a little easier
+	VectorNormalize( frustum[0].normal );
+	VectorNormalize( frustum[1].normal );
+	VectorNormalize( frustum[2].normal );
+	VectorNormalize( frustum[3].normal );
+#else
+	// rotate VPN right by FOV_X/2 degrees
+	RotatePointAroundVector( frustum[0].normal, vup, vpn, -(90-r_newrefdef.fov_x / 2 ) );
+	// rotate VPN left by FOV_X/2 degrees
+	RotatePointAroundVector( frustum[1].normal, vup, vpn, 90-r_newrefdef.fov_x / 2 );
+	// rotate VPN up by FOV_X/2 degrees
+	RotatePointAroundVector( frustum[2].normal, vright, vpn, 90-r_newrefdef.fov_y / 2 );
+	// rotate VPN down by FOV_X/2 degrees
+	RotatePointAroundVector( frustum[3].normal, vright, vpn, -( 90 - r_newrefdef.fov_y / 2 ) );
+#endif
 
-		for (i=0 ; i<4 ; i++)
-		{
-			frustum[i].type = PLANE_ANYZ;
-			frustum[i].dist = DotProduct (r_origin, frustum[i].normal);
-			frustum[i].signbits = SignbitsForPlane (&frustum[i]);
-		}
+	for (i=0 ; i<4 ; i++)
+	{
+		frustum[i].type = PLANE_ANYZ;
+		frustum[i].dist = DotProduct (r_origin, frustum[i].normal);
+		frustum[i].signbits = SignbitsForPlane (&frustum[i]);
 	}
 }
 
@@ -807,7 +805,7 @@ void R_SetupFrame (void)
 	AngleVectors (r_newrefdef.viewangles, vpn, vright, vup);
 
 // current viewcluster
-/*	if ( !( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) )
+	if ( !( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) )
 	{
 		r_oldviewcluster = r_viewcluster;
 		r_oldviewcluster2 = r_viewcluster2;
@@ -837,7 +835,7 @@ void R_SetupFrame (void)
 				(leaf->cluster != r_viewcluster2) )
 				r_viewcluster2 = leaf->cluster;
 		}
-	}*/
+	}
 
 	for (i=0 ; i<4 ; i++)
 		v_blend[i] = r_newrefdef.blend[i];
@@ -870,8 +868,7 @@ void MYgluPerspective( GLdouble fovy, GLdouble aspect,
    xmin += -( 2 * gl_state.camera_separation ) / zNear;
    xmax += -( 2 * gl_state.camera_separation ) / zNear;
 
-   if ( !r_isometric->value ) qglFrustum( xmin, xmax, ymin, ymax, zNear, zFar );
-   else qglOrtho( -10*fovy*aspect, 10*fovy*aspect, -10*fovy, 10*fovy, zNear, zFar );
+   qglFrustum( xmin, xmax, ymin, ymax, zNear, zFar );
 }
 
 
@@ -937,16 +934,8 @@ void R_SetupGL (void)
 
 	qglDisable(GL_BLEND);
 	qglDisable(GL_ALPHA_TEST);
-	qglEnable(GL_DEPTH_TEST);
 
-	if ( gl_fog->value && r_newrefdef.fog ) 
-	{
-		qglEnable( GL_FOG );
-		qglFogi( GL_FOG_MODE, GL_LINEAR );
-		qglFogf( GL_FOG_START, 0.1 * r_newrefdef.fog );
-		qglFogf( GL_FOG_END, r_newrefdef.fog );
-		qglFogfv( GL_FOG_COLOR, r_newrefdef.fogColor );
-	}
+	qglEnable(GL_DEPTH_TEST);
 }
 
 /*
@@ -1012,8 +1001,8 @@ void R_RenderView (refdef_t *fd)
 
 	r_newrefdef = *fd;
 
-//	if (!r_worldmodel && !( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) )
-//		ri.Sys_Error (ERR_DROP, "R_RenderView: NULL worldmodel");
+	if (!r_worldmodel && !( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) )
+		ri.Sys_Error (ERR_DROP, "R_RenderView: NULL worldmodel");
 
 	if (r_speeds->value)
 	{
@@ -1080,7 +1069,6 @@ void	R_SetGL2D (void)
 	qglDisable (GL_DEPTH_TEST);
 	qglDisable (GL_CULL_FACE);
 	qglDisable (GL_BLEND);
-	qglDisable (GL_FOG);
 	qglEnable (GL_ALPHA_TEST);
 	GL_TexEnv( GL_MODULATE );
 	qglColor4f (1,1,1,1);
@@ -1187,7 +1175,6 @@ void R_Register( void )
 	r_drawworld = ri.Cvar_Get ("r_drawworld", "1", 0);
 	r_novis = ri.Cvar_Get ("r_novis", "0", 0);
 	r_nocull = ri.Cvar_Get ("r_nocull", "0", 0);
-	r_isometric = ri.Cvar_Get ("r_isometric", "0", 0);
 	r_lerpmodels = ri.Cvar_Get ("r_lerpmodels", "1", 0);
 	r_speeds = ri.Cvar_Get ("r_speeds", "0", 0);
 
@@ -1213,7 +1200,6 @@ void R_Register( void )
 	gl_nobind = ri.Cvar_Get ("gl_nobind", "0", 0);
 	gl_round_down = ri.Cvar_Get ("gl_round_down", "1", 0);
 	gl_picmip = ri.Cvar_Get ("gl_picmip", "0", 0);
-	gl_maxtexres = ri.Cvar_Get ("gl_maxtexres", "1024", CVAR_ARCHIVE);
 	gl_skymip = ri.Cvar_Get ("gl_skymip", "0", 0);
 	gl_showtris = ri.Cvar_Get ("gl_showtris", "0", 0);
 	gl_ztrick = ri.Cvar_Get ("gl_ztrick", "0", 0);
@@ -1230,7 +1216,6 @@ void R_Register( void )
 	gl_texturesolidmode = ri.Cvar_Get( "gl_texturesolidmode", "default", CVAR_ARCHIVE );
 	gl_lockpvs = ri.Cvar_Get( "gl_lockpvs", "0", 0 );
 	gl_wire = ri.Cvar_Get ("gl_wire", "0", 0);
-	gl_fog = ri.Cvar_Get ("gl_fog", "1", CVAR_ARCHIVE );
 	gl_vertex_arrays = ri.Cvar_Get( "gl_vertex_arrays", "0", CVAR_ARCHIVE );
 
 	gl_ext_swapinterval = ri.Cvar_Get( "gl_ext_swapinterval", "1", CVAR_ARCHIVE );
@@ -1239,8 +1224,6 @@ void R_Register( void )
 	gl_ext_combine = ri.Cvar_Get( "gl_ext_combine", "1", CVAR_ARCHIVE );
 	gl_ext_pointparameters = ri.Cvar_Get( "gl_ext_pointparameters", "1", CVAR_ARCHIVE );
 	gl_ext_compiled_vertex_array = ri.Cvar_Get( "gl_ext_compiled_vertex_array", "1", CVAR_ARCHIVE );
-	gl_ext_texture_compression = ri.Cvar_Get( "gl_ext_texture_compression", "0", CVAR_ARCHIVE );
-	gl_ext_s3tc_compression = ri.Cvar_Get( "gl_ext_s3tc_compression", "1", CVAR_ARCHIVE );
 
 	gl_drawbuffer = ri.Cvar_Get( "gl_drawbuffer", "GL_BACK", 0 );
 	gl_swapinterval = ri.Cvar_Get( "gl_swapinterval", "1", CVAR_ARCHIVE );
@@ -1280,7 +1263,6 @@ qboolean R_SetMode (void)
 
 	vid_fullscreen->modified = false;
 	gl_mode->modified = false;
-	gl_ext_texture_compression->modified = false;
 
 	if ( ( err = GLimp_SetMode( &vid.width, &vid.height, gl_mode->value, fullscreen ) ) == rserr_ok )
 	{
@@ -1517,8 +1499,6 @@ int R_Init( void *hinstance, void *hWnd )
 			qglClientActiveTextureARB = ( void * ) qwglGetProcAddress( "glClientActiveTextureARB" );
 			gl_texture0 = GL_TEXTURE0_ARB;
 			gl_texture1 = GL_TEXTURE1_ARB;
-			gl_texture2 = GL_TEXTURE2_ARB;
-			gl_texture3 = GL_TEXTURE3_ARB;
 		}
 		else
 		{
@@ -1563,8 +1543,6 @@ int R_Init( void *hinstance, void *hWnd )
 			qglSelectTextureSGIS = ( void * ) qwglGetProcAddress( "glSelectTextureSGIS" );
 			gl_texture0 = GL_TEXTURE0_SGIS;
 			gl_texture1 = GL_TEXTURE1_SGIS;
-			gl_texture2 = GL_TEXTURE2_SGIS;
-			gl_texture3 = GL_TEXTURE3_SGIS;
 		}
 		else
 		{
@@ -1574,38 +1552,6 @@ int R_Init( void *hinstance, void *hWnd )
 	else
 	{
 		ri.Con_Printf( PRINT_ALL, "...GL_SGIS_multitexture not found\n" );
-	}
-
-	if ( strstr( gl_config.extensions_string, "GL_ARB_texture_compression" ) )
-	{
-		if ( gl_ext_texture_compression->value )
-		{
-			ri.Con_Printf( PRINT_ALL, "...using GL_ARB_texture_compression\n" );
-			if ( gl_ext_s3tc_compression->value && strstr( gl_config.extensions_string, "GL_EXT_texture_compression_s3tc" ) )
-			{
-//				ri.Con_Printf( PRINT_ALL, "   with s3tc compression\n" );
-				gl_compressed_solid_format = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
-				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
-			}
-			else
-			{
-//				ri.Con_Printf( PRINT_ALL, "   without s3tc compression\n" );
-				gl_compressed_solid_format = GL_COMPRESSED_RGB_ARB;
-				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_ARB;
-			}
-		}
-		else
-		{
-			ri.Con_Printf( PRINT_ALL, "...ignoring GL_ARB_texture_compression\n" );
-			gl_compressed_solid_format = 0;
-			gl_compressed_alpha_format = 0;
-		}
-	}
-	else
-	{
-		ri.Con_Printf( PRINT_ALL, "...GL_ARB_texture_compression not found\n" );
-		gl_compressed_solid_format = 0;
-		gl_compressed_alpha_format = 0;
 	}
 
 	GL_SetDefaultState();
@@ -1625,8 +1571,6 @@ int R_Init( void *hinstance, void *hWnd )
 	err = qglGetError();
 	if ( err != GL_NO_ERROR )
 		ri.Con_Printf (PRINT_ALL, "glGetError() = 0x%x\n", err);
-		
-	return 0;
 }
 
 /*
@@ -1671,7 +1615,7 @@ void R_BeginFrame( float camera_separation )
 	/*
 	** change modes if necessary
 	*/
-	if ( gl_mode->modified || vid_fullscreen->modified || gl_ext_texture_compression->modified )
+	if ( gl_mode->modified || vid_fullscreen->modified )
 	{	// FIXME: only restart if CDS is required
 		cvar_t	*ref;
 
@@ -1811,7 +1755,7 @@ void R_SetPalette ( const unsigned char *palette)
 //===================================================================
 
 
-void	R_BeginRegistration (char *tiles, char *pos);
+void	R_BeginRegistration (char *map);
 struct model_s	*R_RegisterModelShort (char *name);
 struct image_s	*R_RegisterSkin (char *name);
 struct image_s	*R_RegisterFont (char *name);
@@ -1863,12 +1807,10 @@ refexport_t GetRefAPI (refimport_t rimp )
 	re.DrawFill = Draw_Fill;
 	re.DrawColor = Draw_Color;
 	re.DrawFadeScreen = Draw_FadeScreen;
-	re.DrawDayAndNight = Draw_DayAndNight;
 
 	re.AnimAppend = Anim_Append;
 	re.AnimChange = Anim_Change;
 	re.AnimRun = Anim_Run;
-	re.AnimGetName = Anim_GetName;
 
 	re.DrawStretchRaw = Draw_StretchRaw;
 
