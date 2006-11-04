@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-28 13:46+0200\n"
+"POT-Creation-Date: 2006-11-04 15:20+0100\n"
 "PO-Revision-Date: 2006-10-24 13:29+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -1134,8 +1134,7 @@ msgstr "Uus"
 msgid "Generate a team automatically"
 msgstr "Loo uus tiim"
 
-#: ../base/ufos/menu_multiplayer.ufo:349 ../base/ufos/weapons_human.ufo:55
-#: ../base/ufos/weapons_human.ufo:128
+#: ../base/ufos/menu_multiplayer.ufo:349 ../base/ufos/weapons_human.ufo:130
 msgid "Auto"
 msgstr "Sihtimata Valang"
 
@@ -1657,11 +1656,6 @@ msgstr ""
 #: ../base/ufos/menu_ufopedia.ufo:107
 msgid "Scroll down"
 msgstr ""
-
-#: ../base/ufos/menu_ufopedia.ufo:223
-#, fuzzy
-msgid "Cycle through available emails"
-msgstr "Vaatle erinevaid nähtavaid vastaseid"
 
 #: ../base/ufos/missions.ufo:5 ../base/ufos/missions.ufo:285
 msgid "New York"
@@ -4862,182 +4856,192 @@ msgstr ""
 "tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult "
 "natuke üle minuti."
 
-#: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:109
-#: ../base/ufos/weapons_human.ufo:399
-msgid "Burst"
+#: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:404
+#, fuzzy
+msgid "Snap Burst"
 msgstr "Poolik Valang"
 
-#: ../base/ufos/weapons_human.ufo:79
+#: ../base/ufos/weapons_human.ufo:56 ../base/ufos/weapons_human.ufo:423
+#, fuzzy
+msgid "Aimed Burst"
+msgstr "Sihitud lask"
+
+#: ../base/ufos/weapons_human.ufo:81
 msgid "Chaingun"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:97
+#: ../base/ufos/weapons_human.ufo:99
 msgid "Chaingun Magazine"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:152
+#: ../base/ufos/weapons_human.ufo:111
+msgid "Burst"
+msgstr "Poolik Valang"
+
+#: ../base/ufos/weapons_human.ufo:154
 msgid "Sniper Rifle"
 msgstr "WE-78 Snaiper"
 
-#: ../base/ufos/weapons_human.ufo:170
+#: ../base/ufos/weapons_human.ufo:172
 #, fuzzy
 msgid "Sniper Rifle Magazine"
 msgstr "WE-78 salv"
 
-#: ../base/ufos/weapons_human.ufo:182 ../base/ufos/weapons_human.ufo:200
-#: ../base/ufos/weapons_human.ufo:831 ../base/ufos/weapons_human.ufo:853
-#: ../base/ufos/weapons_human.ufo:889 ../base/ufos/weapons_human.ufo:911
-#: ../base/ufos/weapons_human.ufo:947 ../base/ufos/weapons_human.ufo:969
+#: ../base/ufos/weapons_human.ufo:184 ../base/ufos/weapons_human.ufo:203
+#: ../base/ufos/weapons_human.ufo:276 ../base/ufos/weapons_human.ufo:837
+#: ../base/ufos/weapons_human.ufo:859 ../base/ufos/weapons_human.ufo:895
+#: ../base/ufos/weapons_human.ufo:917 ../base/ufos/weapons_human.ufo:953
+#: ../base/ufos/weapons_human.ufo:975
 msgid "Aimed Shot"
 msgstr "Sihitud lask"
 
-#: ../base/ufos/weapons_human.ufo:224
+#: ../base/ufos/weapons_human.ufo:228
 #, fuzzy
 msgid "7.62mm Pistol"
 msgstr "9mm Püstol"
 
-#: ../base/ufos/weapons_human.ufo:242
+#: ../base/ufos/weapons_human.ufo:246
 #, fuzzy
 msgid "Pistol Clip 7.62mm"
 msgstr "9mm salv"
 
-#: ../base/ufos/weapons_human.ufo:254 ../base/ufos/weapons_human.ufo:326
-#: ../base/ufos/weapons_human.ufo:472 ../base/ufos/weapons_human.ufo:548
-#: ../base/ufos/weapons_human.ufo:603 ../base/ufos/weapons_human.ufo:679
-#: ../base/ufos/weapons_human.ufo:1317
-msgid "Single Shot"
-msgstr "Üks lask"
+#: ../base/ufos/weapons_human.ufo:258 ../base/ufos/weapons_tachyon.ufo:36
+#: ../base/ufos/weapons_tachyon.ufo:184
+msgid "Snap Shot"
+msgstr "Sihtimata lask"
 
-#: ../base/ufos/weapons_human.ufo:272 ../base/ufos/weapons_human.ufo:344
-msgid "Rapid Fire"
-msgstr "Tihe tulistamine"
-
-#: ../base/ufos/weapons_human.ufo:296
+#: ../base/ufos/weapons_human.ufo:301
 msgid "9mm Pistol"
 msgstr "9mm Püstol"
 
-#: ../base/ufos/weapons_human.ufo:314
+#: ../base/ufos/weapons_human.ufo:319
 #, fuzzy
 msgid "Pistol Clip 9mm"
 msgstr "9mm salv"
 
-#: ../base/ufos/weapons_human.ufo:369
+#: ../base/ufos/weapons_human.ufo:331 ../base/ufos/weapons_human.ufo:478
+#: ../base/ufos/weapons_human.ufo:554 ../base/ufos/weapons_human.ufo:609
+#: ../base/ufos/weapons_human.ufo:685 ../base/ufos/weapons_human.ufo:1323
+msgid "Single Shot"
+msgstr "Üks lask"
+
+#: ../base/ufos/weapons_human.ufo:349
+msgid "Rapid Fire"
+msgstr "Tihe tulistamine"
+
+#: ../base/ufos/weapons_human.ufo:374
 msgid "Submachine Gun"
 msgstr "SMG-68"
 
-#: ../base/ufos/weapons_human.ufo:387
+#: ../base/ufos/weapons_human.ufo:392
 msgid "SMG Magazine"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:418
-msgid "Full Auto"
-msgstr "Täis Valang"
-
-#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:518
+#: ../base/ufos/weapons_human.ufo:448 ../base/ufos/weapons_human.ufo:524
 #, fuzzy
 msgid "Riot Shotgun"
 msgstr "Pumppüss SG-260"
 
-#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:667
+#: ../base/ufos/weapons_human.ufo:466 ../base/ufos/weapons_human.ufo:673
 msgid "Buckshots"
 msgstr "Haavlid"
 
-#: ../base/ufos/weapons_human.ufo:493 ../base/ufos/weapons_human.ufo:569
-#: ../base/ufos/weapons_human.ufo:624 ../base/ufos/weapons_human.ufo:700
+#: ../base/ufos/weapons_human.ufo:499 ../base/ufos/weapons_human.ufo:575
+#: ../base/ufos/weapons_human.ufo:630 ../base/ufos/weapons_human.ufo:706
 msgid "Double Shot"
 msgstr "Kahekordne lask"
 
-#: ../base/ufos/weapons_human.ufo:536
+#: ../base/ufos/weapons_human.ufo:542
 #, fuzzy
 msgid "Flechette Shells"
 msgstr "Kildkranaat"
 
-#: ../base/ufos/weapons_human.ufo:591
+#: ../base/ufos/weapons_human.ufo:597
 msgid "Saboted Slugs"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:649
+#: ../base/ufos/weapons_human.ufo:655
 #, fuzzy
 msgid "Shotgun"
 msgstr "Pumppüss SG-260"
 
-#: ../base/ufos/weapons_human.ufo:725
+#: ../base/ufos/weapons_human.ufo:731
 msgid "Flamethrower"
 msgstr "Leegiheitja"
 
-#: ../base/ufos/weapons_human.ufo:743
+#: ../base/ufos/weapons_human.ufo:749
 #, fuzzy
 msgid "C90 Canister"
 msgstr "Põrgutule granaat"
 
-#: ../base/ufos/weapons_human.ufo:755
+#: ../base/ufos/weapons_human.ufo:761
 msgid "Candlelight"
 msgstr "Kõrvetamine"
 
-#: ../base/ufos/weapons_human.ufo:775
+#: ../base/ufos/weapons_human.ufo:781
 msgid "Inferno"
 msgstr "Põletamine"
 
-#: ../base/ufos/weapons_human.ufo:801
+#: ../base/ufos/weapons_human.ufo:807
 msgid "Rocket Launcher"
 msgstr "Raketi heitja"
 
-#: ../base/ufos/weapons_human.ufo:819
+#: ../base/ufos/weapons_human.ufo:825
 msgid "High-Explosive Rocket"
 msgstr "Suurejõulise lõhkeainega raketid"
 
-#: ../base/ufos/weapons_human.ufo:877
+#: ../base/ufos/weapons_human.ufo:883
 msgid "Incendiary Rocket"
 msgstr "Süüte rakett"
 
-#: ../base/ufos/weapons_human.ufo:935
+#: ../base/ufos/weapons_human.ufo:941
 msgid "Tachyon-Beam Rocket"
 msgstr "Tachyoni-kiire rakett"
 
-#: ../base/ufos/weapons_human.ufo:997
+#: ../base/ufos/weapons_human.ufo:1003
 msgid "Grenade Launcher"
 msgstr "Bazooka"
 
-#: ../base/ufos/weapons_human.ufo:1015
+#: ../base/ufos/weapons_human.ufo:1021
 #, fuzzy
 msgid "25mm IC Grenades"
 msgstr "Plasma granaadi kestad"
 
-#: ../base/ufos/weapons_human.ufo:1027 ../base/ufos/weapons_human.ufo:1094
-#: ../base/ufos/weapons_human.ufo:1161 ../base/ufos/weapons_human.ufo:1228
+#: ../base/ufos/weapons_human.ufo:1033 ../base/ufos/weapons_human.ufo:1100
+#: ../base/ufos/weapons_human.ufo:1167 ../base/ufos/weapons_human.ufo:1234
 #, fuzzy
 msgid "Airburst Grenade"
 msgstr "Kildkranaat"
 
-#: ../base/ufos/weapons_human.ufo:1053 ../base/ufos/weapons_human.ufo:1120
-#: ../base/ufos/weapons_human.ufo:1187 ../base/ufos/weapons_human.ufo:1254
+#: ../base/ufos/weapons_human.ufo:1059 ../base/ufos/weapons_human.ufo:1126
+#: ../base/ufos/weapons_human.ufo:1193 ../base/ufos/weapons_human.ufo:1260
 #, fuzzy
 msgid "Timed Grenade"
 msgstr "Suitsu granaat"
 
-#: ../base/ufos/weapons_human.ufo:1082
+#: ../base/ufos/weapons_human.ufo:1088
 #, fuzzy
 msgid "25mm Flechette Grenades"
 msgstr "Kildkranaat"
 
-#: ../base/ufos/weapons_human.ufo:1149
+#: ../base/ufos/weapons_human.ufo:1155
 #, fuzzy
 msgid "25mm HIT Grenades"
 msgstr "Plasma granaadi kestad"
 
-#: ../base/ufos/weapons_human.ufo:1216
+#: ../base/ufos/weapons_human.ufo:1222
 msgid "Plasma Grenade Shells"
 msgstr "Plasma granaadi kestad"
 
-#: ../base/ufos/weapons_human.ufo:1287
+#: ../base/ufos/weapons_human.ufo:1293
 msgid "Bolter Rifle"
 msgstr "MkII - EM"
 
-#: ../base/ufos/weapons_human.ufo:1305
+#: ../base/ufos/weapons_human.ufo:1311
 msgid "Bolter Rifle Clip"
 msgstr "MkII - EM laeng"
 
-#: ../base/ufos/weapons_human.ufo:1336
+#: ../base/ufos/weapons_human.ufo:1342
 msgid "Cannonade"
 msgstr "Cannonade"
 
@@ -5163,10 +5167,6 @@ msgstr "Tachyoni Püstol"
 msgid "Tachyon Pistol Clip"
 msgstr "Tachyoni Püstoli salv"
 
-#: ../base/ufos/weapons_tachyon.ufo:36 ../base/ufos/weapons_tachyon.ufo:184
-msgid "Snap Shot"
-msgstr "Sihtimata lask"
-
 #: ../base/ufos/weapons_tachyon.ufo:54 ../base/ufos/weapons_tachyon.ufo:129
 #: ../base/ufos/weapons_tachyon.ufo:202
 msgid "Rapid Shots"
@@ -5271,15 +5271,15 @@ msgstr ""
 msgid "Armor  %i\tMorale  %i\n"
 msgstr ""
 
-#: client/cl_actor.c:859
+#: client/cl_actor.c:860
 msgid "Nobody selected\n"
 msgstr "Kedagi pole valitud\n"
 
-#: client/cl_actor.c:870
+#: client/cl_actor.c:871
 msgid "This isn't your round\n"
 msgstr "See ei ole sinu käik\n"
 
-#: client/cl_actor.c:1000
+#: client/cl_actor.c:1001
 #, fuzzy
 msgid ""
 "You cannot reload this unknown item.\n"
@@ -5288,7 +5288,7 @@ msgstr ""
 "Sa ei saa seda tundmatut eset kasutatda.\n"
 "Sa pead selle enne uurima.\n"
 
-#: client/cl_actor.c:1520
+#: client/cl_actor.c:1521
 msgid "Your round started!\n"
 msgstr "Sinu käik algas!\n"
 
@@ -5765,38 +5765,38 @@ msgstr ""
 msgid "Soldier"
 msgstr "Sõdur 8"
 
-#: client/cl_input.c:750
+#: client/cl_input.c:738
 msgid "Toggle stand/crounch"
 msgstr ""
 
-#: client/cl_input.c:751
+#: client/cl_input.c:739
 #, fuzzy
 msgid "Toggle reaction fire"
 msgstr "Käivita reaktsioon tulistamine"
 
-#: client/cl_input.c:752
+#: client/cl_input.c:740
 msgid "Toogle to next alien"
 msgstr ""
 
-#: client/cl_input.c:759
+#: client/cl_input.c:747
 #, fuzzy
 msgid "Ends current round"
 msgstr "Lõpeta round"
 
-#: client/cl_input.c:764
+#: client/cl_input.c:752
 #, fuzzy
 msgid "Confirm the current action"
 msgstr "Kinnita tegevust:"
 
-#: client/cl_main.c:337 client/cl_main.c:682
+#: client/cl_main.c:337 client/cl_main.c:684
 msgid "Assemble a team first"
 msgstr "Kogu tiim enne"
 
-#: client/cl_main.c:337 client/cl_main.c:682
+#: client/cl_main.c:337 client/cl_main.c:684
 msgid "Error"
 msgstr "VIGA"
 
-#: client/cl_main.c:622
+#: client/cl_main.c:624
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -5805,81 +5805,81 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:644
+#: client/cl_main.c:646
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Kaart:\t%s\n"
 
-#: client/cl_main.c:646
+#: client/cl_main.c:648
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Versioon:\t%s\n"
 
-#: client/cl_main.c:648
+#: client/cl_main.c:650
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Serverinimi:\t%s\n"
 
-#: client/cl_main.c:650
+#: client/cl_main.c:652
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Meeleseisundid:\t%s\n"
 
-#: client/cl_main.c:652
+#: client/cl_main.c:654
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Tiimimäng:\t%s\n"
 
-#: client/cl_main.c:654
+#: client/cl_main.c:656
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Maksimum mängijaid ühe tiimi kohta: \t%s\n"
 
-#: client/cl_main.c:656
+#: client/cl_main.c:658
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Maksimum kliente:\t%s\n"
 
-#: client/cl_main.c:658
+#: client/cl_main.c:660
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Maksimum sõdureid mängija kohta:\t%s\n"
 
-#: client/cl_main.c:660
+#: client/cl_main.c:662
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maks. Sõdureid ühe tiimi kohta:\t%s\n"
 
-#: client/cl_main.c:1254
+#: client/cl_main.c:1257
 #, fuzzy
 msgid "Unnamed"
 msgstr "Nimetu"
 
-#: client/cl_main.c:1468
+#: client/cl_main.c:1471
 msgid "Chicken-hearted"
 msgstr "Kartlik"
 
-#: client/cl_main.c:1470
+#: client/cl_main.c:1473
 msgid "Very Easy"
 msgstr "Väga kerge"
 
-#: client/cl_main.c:1473
+#: client/cl_main.c:1476
 msgid "Easy"
 msgstr "Kerge"
 
-#: client/cl_main.c:1475
+#: client/cl_main.c:1478
 msgid "Normal"
 msgstr "Tavaline"
 
-#: client/cl_main.c:1478
+#: client/cl_main.c:1481
 msgid "Hard"
 msgstr "Raske"
 
-#: client/cl_main.c:1480
+#: client/cl_main.c:1483
 msgid "Very Hard"
 msgstr "Väga Raske"
 
-#: client/cl_main.c:1482
+#: client/cl_main.c:1485
 msgid "Insane"
 msgstr "Hullumeelne"
 
@@ -5957,15 +5957,15 @@ msgstr "Seadistused ei ole õiged"
 msgid "Key: %s"
 msgstr ""
 
-#: client/cl_parse.c:662
+#: client/cl_parse.c:663
 msgid "Alien spotted!\n"
 msgstr "Tulnukat on märgatud\n"
 
-#: client/cl_parse.c:664
+#: client/cl_parse.c:665
 msgid "Enemy spotted!\n"
 msgstr "Vastast on märgatudl\n"
 
-#: client/cl_parse.c:666
+#: client/cl_parse.c:667
 msgid "Civilian spotted!\n"
 msgstr "Inimest on märgatud!\n"
 
@@ -6477,78 +6477,78 @@ msgstr "Kütus:\t%i\n"
 msgid "Shield:\t%s\n"
 msgstr "Kilp:\t%s\n"
 
-#: client/cl_ufopedia.c:369
+#: client/cl_ufopedia.c:373
 #, fuzzy
 msgid "No pre-research description available."
 msgstr "Ei ole infot selle asja kohta"
 
-#: client/cl_ufopedia.c:486
+#: client/cl_ufopedia.c:491
 msgid "Ufopedia Content"
 msgstr "Ufopedia sisu"
 
-#: game/g_ai.c:597
+#: game/g_ai.c:598
 msgid "Alien"
 msgstr "Tulnukas"
 
-#: game/g_client.c:566
+#: game/g_client.c:583
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Sa ei saa seda teha - see ei ole sinu käik\n"
 
-#: game/g_client.c:573
+#: game/g_client.c:590
 msgid "Can't perform action - object not present!\n"
 msgstr "Sa ei saa seda teha - objekt ei ole omal kohal\n"
 
-#: game/g_client.c:578
+#: game/g_client.c:595
 msgid "Can't perform action - not an actor!\n"
 msgstr "Sa ei saa seda teha - object ei ole tegelane\n"
 
-#: game/g_client.c:583
+#: game/g_client.c:600
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Saa ei saa seda teha - tegelane on meelemärkuseta\n"
 
-#: game/g_client.c:588
+#: game/g_client.c:605
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Sa ei saa seda teha - tegelane on surnud\n"
 
-#: game/g_client.c:593
+#: game/g_client.c:610
 msgid "Can't perform action - not on same team!\n"
 msgstr "Sa ei saa seda teha - te pole samas tiimis\n"
 
-#: game/g_client.c:598
+#: game/g_client.c:615
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Sa ei saa seda teha - Sul ei ole kontrolli liitlase üle\n"
 
-#: game/g_client.c:603 game/g_client.c:704
+#: game/g_client.c:620 game/g_client.c:721
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Sa ei saa seda teha - pole piisavalt TUse\n"
 
-#: game/g_client.c:707
+#: game/g_client.c:724
 #, fuzzy
 msgid ""
 "Can't perform action - weapon already fully loaded with the same "
 "ammunition!\n"
 msgstr "Sa ei saa relva uuesti laadida - Relv on juba laetud\n"
 
-#: game/g_client.c:1185
+#: game/g_client.c:1202
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "On halvas vaimses seisundis aga saab hakkama\n"
 
-#: game/g_client.c:1246
+#: game/g_client.c:1263
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s on paanikas\n"
 
-#: game/g_client.c:1299
+#: game/g_client.c:1316
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s Keeb vihast\n"
 
-#: game/g_client.c:1301
+#: game/g_client.c:1318
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s on hullumeelsuse piiri ületanud!\n"
 
-#: game/g_client.c:1354
+#: game/g_client.c:1371
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s on vaimselt raputatud.\n"
@@ -6560,6 +6560,13 @@ msgstr "Jah"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "Ei"
+
+#, fuzzy
+#~ msgid "Cycle through available emails"
+#~ msgstr "Vaatle erinevaid nähtavaid vastaseid"
+
+#~ msgid "Full Auto"
+#~ msgstr "Täis Valang"
 
 #~ msgid "UFO - Destroyer class"
 #~ msgstr "Ufo - Hävitaja klass"

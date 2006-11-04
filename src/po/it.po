@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-28 13:46+0200\n"
+"POT-Creation-Date: 2006-11-04 15:20+0100\n"
 "PO-Revision-Date: 2006-10-24 13:28+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
@@ -1146,8 +1146,7 @@ msgstr "Nuovo"
 msgid "Generate a team automatically"
 msgstr "Genera una squadra automaticamente"
 
-#: ../base/ufos/menu_multiplayer.ufo:349 ../base/ufos/weapons_human.ufo:55
-#: ../base/ufos/weapons_human.ufo:128
+#: ../base/ufos/menu_multiplayer.ufo:349 ../base/ufos/weapons_human.ufo:130
 msgid "Auto"
 msgstr "Automatico"
 
@@ -1670,11 +1669,6 @@ msgstr ""
 #: ../base/ufos/menu_ufopedia.ufo:107
 msgid "Scroll down"
 msgstr ""
-
-#: ../base/ufos/menu_ufopedia.ufo:223
-#, fuzzy
-msgid "Cycle through available emails"
-msgstr "Prossimo nemico visibile"
 
 #: ../base/ufos/missions.ufo:5 ../base/ufos/missions.ufo:285
 msgid "New York"
@@ -4562,181 +4556,191 @@ msgstr "Fucile d'assalto"
 msgid "Assault Rifle Magazine"
 msgstr "Caricatore per fucile d'assalto"
 
-#: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:109
-#: ../base/ufos/weapons_human.ufo:399
-msgid "Burst"
+#: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:404
+#, fuzzy
+msgid "Snap Burst"
 msgstr "Raffica"
 
-#: ../base/ufos/weapons_human.ufo:79
+#: ../base/ufos/weapons_human.ufo:56 ../base/ufos/weapons_human.ufo:423
+#, fuzzy
+msgid "Aimed Burst"
+msgstr "Colpo mirato"
+
+#: ../base/ufos/weapons_human.ufo:81
 msgid "Chaingun"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:97
+#: ../base/ufos/weapons_human.ufo:99
 msgid "Chaingun Magazine"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:152
+#: ../base/ufos/weapons_human.ufo:111
+msgid "Burst"
+msgstr "Raffica"
+
+#: ../base/ufos/weapons_human.ufo:154
 msgid "Sniper Rifle"
 msgstr "Fucile da cecchino"
 
-#: ../base/ufos/weapons_human.ufo:170
+#: ../base/ufos/weapons_human.ufo:172
 #, fuzzy
 msgid "Sniper Rifle Magazine"
 msgstr "Caricatore per fucile da cecchino"
 
-#: ../base/ufos/weapons_human.ufo:182 ../base/ufos/weapons_human.ufo:200
-#: ../base/ufos/weapons_human.ufo:831 ../base/ufos/weapons_human.ufo:853
-#: ../base/ufos/weapons_human.ufo:889 ../base/ufos/weapons_human.ufo:911
-#: ../base/ufos/weapons_human.ufo:947 ../base/ufos/weapons_human.ufo:969
+#: ../base/ufos/weapons_human.ufo:184 ../base/ufos/weapons_human.ufo:203
+#: ../base/ufos/weapons_human.ufo:276 ../base/ufos/weapons_human.ufo:837
+#: ../base/ufos/weapons_human.ufo:859 ../base/ufos/weapons_human.ufo:895
+#: ../base/ufos/weapons_human.ufo:917 ../base/ufos/weapons_human.ufo:953
+#: ../base/ufos/weapons_human.ufo:975
 msgid "Aimed Shot"
 msgstr "Colpo mirato"
 
-#: ../base/ufos/weapons_human.ufo:224
+#: ../base/ufos/weapons_human.ufo:228
 #, fuzzy
 msgid "7.62mm Pistol"
 msgstr "Pistola da 9mm"
 
-#: ../base/ufos/weapons_human.ufo:242
+#: ../base/ufos/weapons_human.ufo:246
 #, fuzzy
 msgid "Pistol Clip 7.62mm"
 msgstr "Caricatore per pistola da 9mm"
 
-#: ../base/ufos/weapons_human.ufo:254 ../base/ufos/weapons_human.ufo:326
-#: ../base/ufos/weapons_human.ufo:472 ../base/ufos/weapons_human.ufo:548
-#: ../base/ufos/weapons_human.ufo:603 ../base/ufos/weapons_human.ufo:679
-#: ../base/ufos/weapons_human.ufo:1317
-msgid "Single Shot"
-msgstr "Colpo singolo"
+#: ../base/ufos/weapons_human.ufo:258 ../base/ufos/weapons_tachyon.ufo:36
+#: ../base/ufos/weapons_tachyon.ufo:184
+msgid "Snap Shot"
+msgstr "Colpo improvviso"
 
-#: ../base/ufos/weapons_human.ufo:272 ../base/ufos/weapons_human.ufo:344
-msgid "Rapid Fire"
-msgstr "Fuoco rapido"
-
-#: ../base/ufos/weapons_human.ufo:296
+#: ../base/ufos/weapons_human.ufo:301
 msgid "9mm Pistol"
 msgstr "Pistola da 9mm"
 
-#: ../base/ufos/weapons_human.ufo:314
+#: ../base/ufos/weapons_human.ufo:319
 #, fuzzy
 msgid "Pistol Clip 9mm"
 msgstr "Caricatore per pistola da 9mm"
 
-#: ../base/ufos/weapons_human.ufo:369
+#: ../base/ufos/weapons_human.ufo:331 ../base/ufos/weapons_human.ufo:478
+#: ../base/ufos/weapons_human.ufo:554 ../base/ufos/weapons_human.ufo:609
+#: ../base/ufos/weapons_human.ufo:685 ../base/ufos/weapons_human.ufo:1323
+msgid "Single Shot"
+msgstr "Colpo singolo"
+
+#: ../base/ufos/weapons_human.ufo:349
+msgid "Rapid Fire"
+msgstr "Fuoco rapido"
+
+#: ../base/ufos/weapons_human.ufo:374
 msgid "Submachine Gun"
 msgstr "Mitra"
 
-#: ../base/ufos/weapons_human.ufo:387
+#: ../base/ufos/weapons_human.ufo:392
 msgid "SMG Magazine"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:418
-msgid "Full Auto"
-msgstr "Automatico"
-
-#: ../base/ufos/weapons_human.ufo:442 ../base/ufos/weapons_human.ufo:518
+#: ../base/ufos/weapons_human.ufo:448 ../base/ufos/weapons_human.ufo:524
 msgid "Riot Shotgun"
 msgstr "Fucile da rivolta"
 
-#: ../base/ufos/weapons_human.ufo:460 ../base/ufos/weapons_human.ufo:667
+#: ../base/ufos/weapons_human.ufo:466 ../base/ufos/weapons_human.ufo:673
 msgid "Buckshots"
 msgstr "Pallettoni"
 
-#: ../base/ufos/weapons_human.ufo:493 ../base/ufos/weapons_human.ufo:569
-#: ../base/ufos/weapons_human.ufo:624 ../base/ufos/weapons_human.ufo:700
+#: ../base/ufos/weapons_human.ufo:499 ../base/ufos/weapons_human.ufo:575
+#: ../base/ufos/weapons_human.ufo:630 ../base/ufos/weapons_human.ufo:706
 msgid "Double Shot"
 msgstr "Colpo doppio"
 
-#: ../base/ufos/weapons_human.ufo:536
+#: ../base/ufos/weapons_human.ufo:542
 #, fuzzy
 msgid "Flechette Shells"
 msgstr "Munizioni granate a frammentazione"
 
-#: ../base/ufos/weapons_human.ufo:591
+#: ../base/ufos/weapons_human.ufo:597
 msgid "Saboted Slugs"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:649
+#: ../base/ufos/weapons_human.ufo:655
 #, fuzzy
 msgid "Shotgun"
 msgstr "Fucile da rivolta"
 
-#: ../base/ufos/weapons_human.ufo:725
+#: ../base/ufos/weapons_human.ufo:731
 msgid "Flamethrower"
 msgstr "Lanciafiamme"
 
-#: ../base/ufos/weapons_human.ufo:743
+#: ../base/ufos/weapons_human.ufo:749
 #, fuzzy
 msgid "C90 Canister"
 msgstr "Granata Inferno"
 
-#: ../base/ufos/weapons_human.ufo:755
+#: ../base/ufos/weapons_human.ufo:761
 msgid "Candlelight"
 msgstr "Fuoco di candela"
 
-#: ../base/ufos/weapons_human.ufo:775
+#: ../base/ufos/weapons_human.ufo:781
 msgid "Inferno"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:801
+#: ../base/ufos/weapons_human.ufo:807
 msgid "Rocket Launcher"
 msgstr "Lanciamissili"
 
-#: ../base/ufos/weapons_human.ufo:819
+#: ../base/ufos/weapons_human.ufo:825
 msgid "High-Explosive Rocket"
 msgstr "Missile ad alto potenziale"
 
-#: ../base/ufos/weapons_human.ufo:877
+#: ../base/ufos/weapons_human.ufo:883
 msgid "Incendiary Rocket"
 msgstr "Razzo incendiario"
 
-#: ../base/ufos/weapons_human.ufo:935
+#: ../base/ufos/weapons_human.ufo:941
 msgid "Tachyon-Beam Rocket"
 msgstr "Razzo a tachioni"
 
-#: ../base/ufos/weapons_human.ufo:997
+#: ../base/ufos/weapons_human.ufo:1003
 msgid "Grenade Launcher"
 msgstr "Lanciagranate"
 
-#: ../base/ufos/weapons_human.ufo:1015
+#: ../base/ufos/weapons_human.ufo:1021
 #, fuzzy
 msgid "25mm IC Grenades"
 msgstr "Munizioni granate al plasma"
 
-#: ../base/ufos/weapons_human.ufo:1027 ../base/ufos/weapons_human.ufo:1094
-#: ../base/ufos/weapons_human.ufo:1161 ../base/ufos/weapons_human.ufo:1228
+#: ../base/ufos/weapons_human.ufo:1033 ../base/ufos/weapons_human.ufo:1100
+#: ../base/ufos/weapons_human.ufo:1167 ../base/ufos/weapons_human.ufo:1234
 #, fuzzy
 msgid "Airburst Grenade"
 msgstr "Granata a frammentazione"
 
-#: ../base/ufos/weapons_human.ufo:1053 ../base/ufos/weapons_human.ufo:1120
-#: ../base/ufos/weapons_human.ufo:1187 ../base/ufos/weapons_human.ufo:1254
+#: ../base/ufos/weapons_human.ufo:1059 ../base/ufos/weapons_human.ufo:1126
+#: ../base/ufos/weapons_human.ufo:1193 ../base/ufos/weapons_human.ufo:1260
 #, fuzzy
 msgid "Timed Grenade"
 msgstr "Granata al plasma"
 
-#: ../base/ufos/weapons_human.ufo:1082
+#: ../base/ufos/weapons_human.ufo:1088
 #, fuzzy
 msgid "25mm Flechette Grenades"
 msgstr "Munizioni granate a frammentazione"
 
-#: ../base/ufos/weapons_human.ufo:1149
+#: ../base/ufos/weapons_human.ufo:1155
 #, fuzzy
 msgid "25mm HIT Grenades"
 msgstr "Munizioni granate al plasma"
 
-#: ../base/ufos/weapons_human.ufo:1216
+#: ../base/ufos/weapons_human.ufo:1222
 msgid "Plasma Grenade Shells"
 msgstr "Munizioni granate al plasma"
 
-#: ../base/ufos/weapons_human.ufo:1287
+#: ../base/ufos/weapons_human.ufo:1293
 msgid "Bolter Rifle"
 msgstr "Fucile bolter"
 
-#: ../base/ufos/weapons_human.ufo:1305
+#: ../base/ufos/weapons_human.ufo:1311
 msgid "Bolter Rifle Clip"
 msgstr "Caricatore per fucile bolter"
 
-#: ../base/ufos/weapons_human.ufo:1336
+#: ../base/ufos/weapons_human.ufo:1342
 msgid "Cannonade"
 msgstr "Cannone"
 
@@ -4862,10 +4866,6 @@ msgstr "Pistola a Tachioni"
 msgid "Tachyon Pistol Clip"
 msgstr "Caricatore per pistola a Tachioni"
 
-#: ../base/ufos/weapons_tachyon.ufo:36 ../base/ufos/weapons_tachyon.ufo:184
-msgid "Snap Shot"
-msgstr "Colpo improvviso"
-
 #: ../base/ufos/weapons_tachyon.ufo:54 ../base/ufos/weapons_tachyon.ufo:129
 #: ../base/ufos/weapons_tachyon.ufo:202
 msgid "Rapid Shots"
@@ -4972,15 +4972,15 @@ msgstr ""
 msgid "Armor  %i\tMorale  %i\n"
 msgstr "Armatura  %i\tMorale  %i\n"
 
-#: client/cl_actor.c:859
+#: client/cl_actor.c:860
 msgid "Nobody selected\n"
 msgstr "Non hai selezionato nessuno!\n"
 
-#: client/cl_actor.c:870
+#: client/cl_actor.c:871
 msgid "This isn't your round\n"
 msgstr "Questo non è il tuo turno!\n"
 
-#: client/cl_actor.c:1000
+#: client/cl_actor.c:1001
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -4989,7 +4989,7 @@ msgstr ""
 "Devi studiare l'oggetto e le sue munizioni prima.\n"
 
 # # in-game (hud)
-#: client/cl_actor.c:1520
+#: client/cl_actor.c:1521
 msgid "Your round started!\n"
 msgstr "Il tuo turno è iniziato!\n"
 
@@ -5454,118 +5454,118 @@ msgstr ""
 msgid "Soldier"
 msgstr "Soldati"
 
-#: client/cl_input.c:750
+#: client/cl_input.c:738
 msgid "Toggle stand/crounch"
 msgstr "In piedi/abbassato"
 
-#: client/cl_input.c:751
+#: client/cl_input.c:739
 #, fuzzy
 msgid "Toggle reaction fire"
 msgstr "Cambia fuoco di reazione"
 
-#: client/cl_input.c:752
+#: client/cl_input.c:740
 msgid "Toogle to next alien"
 msgstr "Vai al prossimo alieno"
 
-#: client/cl_input.c:759
+#: client/cl_input.c:747
 #, fuzzy
 msgid "Ends current round"
 msgstr "Fine turno"
 
-#: client/cl_input.c:764
+#: client/cl_input.c:752
 #, fuzzy
 msgid "Confirm the current action"
 msgstr "Conferma Azioni:"
 
-#: client/cl_main.c:337 client/cl_main.c:682
+#: client/cl_main.c:337 client/cl_main.c:684
 msgid "Assemble a team first"
 msgstr "Crea un team prima"
 
-#: client/cl_main.c:337 client/cl_main.c:682
+#: client/cl_main.c:337 client/cl_main.c:684
 msgid "Error"
 msgstr "Errore"
 
-#: client/cl_main.c:622
+#: client/cl_main.c:624
 #, c-format
 msgid ""
 "IP\t%s\n"
 "\n"
 msgstr ""
 
-#: client/cl_main.c:644
+#: client/cl_main.c:646
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Mappa:\t%s\n"
 
-#: client/cl_main.c:646
+#: client/cl_main.c:648
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Versione:\t%s\n"
 
-#: client/cl_main.c:648
+#: client/cl_main.c:650
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Nome Server:\t%s\n"
 
-#: client/cl_main.c:650
+#: client/cl_main.c:652
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Stato morale:\t%s\n"
 
-#: client/cl_main.c:652
+#: client/cl_main.c:654
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Gioco a squadre:\t%s\n"
 
-#: client/cl_main.c:654
+#: client/cl_main.c:656
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Max.giocatori per team:\t%s\n"
 
-#: client/cl_main.c:656
+#: client/cl_main.c:658
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Max.giocatori:\t%s\n"
 
-#: client/cl_main.c:658
+#: client/cl_main.c:660
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max soldati per giocatore:\t%s\n"
 
-#: client/cl_main.c:660
+#: client/cl_main.c:662
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldati per team:\t%s\n"
 
-#: client/cl_main.c:1254
+#: client/cl_main.c:1257
 msgid "Unnamed"
 msgstr "Sena Nome"
 
-#: client/cl_main.c:1468
+#: client/cl_main.c:1471
 msgid "Chicken-hearted"
 msgstr "Pollo"
 
-#: client/cl_main.c:1470
+#: client/cl_main.c:1473
 msgid "Very Easy"
 msgstr "Facilissimo"
 
-#: client/cl_main.c:1473
+#: client/cl_main.c:1476
 msgid "Easy"
 msgstr "Facile"
 
-#: client/cl_main.c:1475
+#: client/cl_main.c:1478
 msgid "Normal"
 msgstr "Normale"
 
-#: client/cl_main.c:1478
+#: client/cl_main.c:1481
 msgid "Hard"
 msgstr "Difficile"
 
-#: client/cl_main.c:1480
+#: client/cl_main.c:1483
 msgid "Very Hard"
 msgstr "Molto duro"
 
-#: client/cl_main.c:1482
+#: client/cl_main.c:1485
 msgid "Insane"
 msgstr "Insano"
 
@@ -5647,15 +5647,15 @@ msgstr "Le impostazioni non hanno senso"
 msgid "Key: %s"
 msgstr "Pulsanti"
 
-#: client/cl_parse.c:662
+#: client/cl_parse.c:663
 msgid "Alien spotted!\n"
 msgstr "Alieno individuato!\n"
 
-#: client/cl_parse.c:664
+#: client/cl_parse.c:665
 msgid "Enemy spotted!\n"
 msgstr "Nemico individuato!\n"
 
-#: client/cl_parse.c:666
+#: client/cl_parse.c:667
 msgid "Civilian spotted!\n"
 msgstr "Civile individuato!\n"
 
@@ -6164,80 +6164,80 @@ msgstr "Salute\t%i\n"
 msgid "Shield:\t%s\n"
 msgstr "Scudo:\t%s\n"
 
-#: client/cl_ufopedia.c:369
+#: client/cl_ufopedia.c:373
 #, fuzzy
 msgid "No pre-research description available."
 msgstr "Nessuna descrizione"
 
 # #ufopedia
-#: client/cl_ufopedia.c:486
+#: client/cl_ufopedia.c:491
 msgid "Ufopedia Content"
 msgstr "Contenuto dell'Ufopedia"
 
-#: game/g_ai.c:597
+#: game/g_ai.c:598
 msgid "Alien"
 msgstr "Alieno"
 
-#: game/g_client.c:566
+#: game/g_client.c:583
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Impossibile eseguire - questo non è il tuo turno!\n"
 
-#: game/g_client.c:573
+#: game/g_client.c:590
 msgid "Can't perform action - object not present!\n"
 msgstr "Impossibile eseguire - oggetto non presente!\n"
 
-#: game/g_client.c:578
+#: game/g_client.c:595
 msgid "Can't perform action - not an actor!\n"
 msgstr "Impossibile eseguire - non è un unità!\n"
 
-#: game/g_client.c:583
+#: game/g_client.c:600
 #, fuzzy
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Impossibile eseguire - l'unità è morta!\n"
 
-#: game/g_client.c:588
+#: game/g_client.c:605
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Impossibile eseguire - l'unità è morta!\n"
 
-#: game/g_client.c:593
+#: game/g_client.c:610
 msgid "Can't perform action - not on same team!\n"
 msgstr "Impossibile eseguire - non nella stessa squadra!\n"
 
-#: game/g_client.c:598
+#: game/g_client.c:615
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Impossibile eseguire - non si ha il controllo delle unità alleate!\n"
 
-#: game/g_client.c:603 game/g_client.c:704
+#: game/g_client.c:620 game/g_client.c:721
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Impossibile eseguire - non ci sono abbastanza unità di tempo!\n"
 
-#: game/g_client.c:707
+#: game/g_client.c:724
 #, fuzzy
 msgid ""
 "Can't perform action - weapon already fully loaded with the same "
 "ammunition!\n"
 msgstr "Impossibile eseguire - arma già caricata!\n"
 
-#: game/g_client.c:1185
+#: game/g_client.c:1202
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "Sotto shock, non abbasserà la guardia.\n"
 
-#: game/g_client.c:1246
+#: game/g_client.c:1263
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s è in preda al panico!\n"
 
-#: game/g_client.c:1299
+#: game/g_client.c:1316
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s è scatenato!\n"
 
-#: game/g_client.c:1301
+#: game/g_client.c:1318
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s è infuriato!\n"
 
-#: game/g_client.c:1354
+#: game/g_client.c:1371
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s è sotto shock\n"
@@ -6249,6 +6249,13 @@ msgstr "Sì"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "No"
+
+#, fuzzy
+#~ msgid "Cycle through available emails"
+#~ msgstr "Prossimo nemico visibile"
+
+#~ msgid "Full Auto"
+#~ msgstr "Automatico"
 
 #~ msgid "UFO - Destroyer class"
 #~ msgstr "UFO - classe Destroyer"
