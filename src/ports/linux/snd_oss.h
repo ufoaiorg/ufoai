@@ -7,6 +7,7 @@
 #include <sys/shm.h>
 #include <sys/wait.h>
 #include <stdio.h>
+#include <errno.h>
 
 #include "../../../config.h"
 
