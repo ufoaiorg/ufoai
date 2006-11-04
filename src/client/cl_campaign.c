@@ -1333,8 +1333,10 @@ void CL_Stats_Update(void)
 	*statsBuffer = '\0';
 
 	/* TODO: implement me */
-	Com_sprintf(statsBuffer, MAX_STATS_BUFFER, _("Missions:\nwon:\t%i\tlost:\t%i\nBases:\nbuild:\t%i\tattacked:\t%i\n"),
-				stats.missionsWon, stats.missionsLost, stats.basesBuild, stats.basesAttacked);
+	Com_sprintf(statsBuffer, MAX_STATS_BUFFER, _("Missions:\nWon: %i\nLost: %i\n\n"),
+		stats.missionsWon, stats.missionsLost);
+	Q_strcat(statsBuffer, va(_("Bases:\nBuild: %i\nActive: %i\nAttacked: %i\n"),
+		stats.basesBuild, stats.basesAttacked, gd.numBases), MAX_STATS_BUFFER),
 	menuText[TEXT_STATS_1] = statsBuffer;
 
 	/* now do the nations stuff */
