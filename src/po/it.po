@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-11-04 15:20+0100\n"
+"POT-Creation-Date: 2006-11-04 17:37+0100\n"
 "PO-Revision-Date: 2006-10-24 13:28+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
@@ -1584,6 +1584,31 @@ msgstr "Riprova"
 #: ../base/ufos/menu_stats.ufo:55
 msgid "Statistics"
 msgstr "Statistiche"
+
+#: ../base/ufos/menu_stats.ufo:63
+#, fuzzy
+msgid "Missions"
+msgstr "Missione\t%s (%s)\n"
+
+#: ../base/ufos/menu_stats.ufo:79
+#, fuzzy
+msgid "Bases"
+msgstr "Base"
+
+#: ../base/ufos/menu_stats.ufo:95
+#, fuzzy
+msgid "Employees"
+msgstr "Assumi impiegati"
+
+#: ../base/ufos/menu_stats.ufo:111
+#, fuzzy
+msgid "Costs"
+msgstr "Croce"
+
+#: ../base/ufos/menu_stats.ufo:127
+#, fuzzy
+msgid "Nations"
+msgstr "Opzioni"
 
 #: ../base/ufos/menu_team.ufo:234 ../base/ufos/menu_team.ufo:244
 #: ../base/ufos/menu_team.ufo:254 ../base/ufos/menu_team.ufo:264
@@ -5001,13 +5026,13 @@ msgstr "Aereo decollato"
 #: client/cl_aircraft.c:772 client/cl_basemanagement.c:448
 #: client/cl_basemanagement.c:1906 client/cl_campaign.c:428
 #: client/cl_campaign.c:855 client/cl_campaign.c:906 client/cl_campaign.c:1058
-#: client/cl_campaign.c:1068 client/cl_campaign.c:1077
-#: client/cl_campaign.c:1086 client/cl_campaign.c:1095
-#: client/cl_campaign.c:1105 client/cl_campaign.c:1118
-#: client/cl_campaign.c:1128 client/cl_campaign.c:1135
-#: client/cl_campaign.c:1143 client/cl_campaign.c:2241
-#: client/cl_campaign.c:2278 client/cl_campaign.c:2280
-#: client/cl_campaign.c:2647 client/cl_map.c:298 client/cl_research.c:716
+#: client/cl_campaign.c:1069 client/cl_campaign.c:1079
+#: client/cl_campaign.c:1089 client/cl_campaign.c:1099
+#: client/cl_campaign.c:1110 client/cl_campaign.c:1123
+#: client/cl_campaign.c:1133 client/cl_campaign.c:1140
+#: client/cl_campaign.c:1148 client/cl_campaign.c:2318
+#: client/cl_campaign.c:2355 client/cl_campaign.c:2357
+#: client/cl_campaign.c:2724 client/cl_map.c:298 client/cl_research.c:716
 #: client/cl_research.c:838 client/cl_research.c:841 client/cl_research.c:845
 #: client/cl_research.c:858 client/cl_research.c:887 client/cl_research.c:1138
 msgid "Notice"
@@ -5101,11 +5126,11 @@ msgstr ""
 msgid "Interception"
 msgstr "Intercettazione"
 
-#: client/cl_aircraft.c:593 client/cl_campaign.c:2278
+#: client/cl_aircraft.c:593 client/cl_campaign.c:2355
 msgid "You've won the battle"
 msgstr "Hai vinto'la battaglia"
 
-#: client/cl_aircraft.c:600 client/cl_campaign.c:2280
+#: client/cl_aircraft.c:600 client/cl_campaign.c:2357
 msgid "You've lost the battle"
 msgstr "Hai perso la battaglia"
 
@@ -5341,100 +5366,146 @@ msgstr ""
 "Hai ottenuto %i crediti, %i scienziati, %i medici, %i soldati e %i operai "
 "dalla nazione %s (%s)"
 
-#: client/cl_campaign.c:1066
+#: client/cl_campaign.c:1067
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Paghi %i crediti per i soldati"
 
-#: client/cl_campaign.c:1075
+#: client/cl_campaign.c:1077
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr "Paghi %i crediti per gli operai"
 
-#: client/cl_campaign.c:1084
+#: client/cl_campaign.c:1087
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Paghi %i crediti per gli scienziati"
 
-#: client/cl_campaign.c:1093
+#: client/cl_campaign.c:1097
 #, c-format
 msgid "Paid %i credits to medics"
 msgstr "Paghi %i crediti per i medici"
 
-#: client/cl_campaign.c:1103
+#: client/cl_campaign.c:1108
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr "Paghi %i crediti per i robots"
 
-#: client/cl_campaign.c:1116
+#: client/cl_campaign.c:1121
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Paghi %i crediti per l'aereo"
 
-#: client/cl_campaign.c:1127
+#: client/cl_campaign.c:1132
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "Paghi %i crediti di mantenimento base %s"
 
-#: client/cl_campaign.c:1133
+#: client/cl_campaign.c:1138
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Paghi %i crediti per amministrazione."
 
-#: client/cl_campaign.c:1141
+#: client/cl_campaign.c:1146
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Paghi %i interessi sui tuoi debiti."
 
-#: client/cl_campaign.c:1224
+#: client/cl_campaign.c:1229
 #, c-format
 msgid "%02i:%i%i"
 msgstr ""
 
-#: client/cl_campaign.c:1336
+#: client/cl_campaign.c:1345
 #, c-format
 msgid ""
-"Missions:\n"
-"won:\t%i\tlost:\t%i\n"
-"Bases:\n"
-"build:\t%i\tattacked:\t%i\n"
+"Won:\t%i\n"
+"Lost:\t%i\n"
+"\n"
 msgstr ""
-"Missioni:\n"
-"vinte:\t%i\tperse:\t%i\n"
-"Basi:\n"
-"costruite:\t%i\tattaccate:\t%i\n"
 
-#: client/cl_campaign.c:1571
+#: client/cl_campaign.c:1350
+#, c-format
+msgid ""
+"Build:\t%i\n"
+"Active:\t%i\n"
+"Attacked:\t%i\n"
+msgstr ""
+
+#: client/cl_campaign.c:1357
+#, c-format
+msgid "%s\t%s\n"
+msgstr ""
+
+#: client/cl_campaign.c:1364
+#, c-format
+msgid "%s\t%i\n"
+msgstr ""
+
+#: client/cl_campaign.c:1390
+#, c-format
+msgid "Employees:\t%i c\n"
+msgstr ""
+
+#: client/cl_campaign.c:1399
+#, fuzzy, c-format
+msgid "Aircrafts:\t%i c\n"
+msgstr "Costo fisso:\t%i c\n"
+
+#: client/cl_campaign.c:1407
+#, c-format
+msgid "Base (%s):\t%i c\n"
+msgstr ""
+
+#: client/cl_campaign.c:1412
+#, fuzzy, c-format
+msgid "Administrative costs:\t%i c\n"
+msgstr "Costo mantenimento:\t%i c\n"
+
+#: client/cl_campaign.c:1419
+#, fuzzy, c-format
+msgid "Debt:\t%i c\n"
+msgstr "Costo fisso:\t%i c\n"
+
+#: client/cl_campaign.c:1422
+#, c-format
+msgid ""
+"\n"
+"\t-------\n"
+"Sum:\t%i c\n"
+msgstr ""
+
+#: client/cl_campaign.c:1648
 msgid "Error saving game. Check free disk space!"
 msgstr ""
 
-#: client/cl_campaign.c:1571 client/cl_campaign.c:2138 client/cl_team.c:1162
+#: client/cl_campaign.c:1648 client/cl_campaign.c:2215 client/cl_team.c:1162
 msgid "Note"
 msgstr "Nota"
 
-#: client/cl_campaign.c:2138
+#: client/cl_campaign.c:2215
 msgid "Assemble or load a team"
 msgstr "Crea o carica un team"
 
-#: client/cl_campaign.c:2241
+#: client/cl_campaign.c:2318
 msgid "Your dropship is not near the landing zone"
 msgstr "Le nave trasporto e'lontana dalla zona atterraggio"
 
-#: client/cl_campaign.c:2506
+#: client/cl_campaign.c:2583
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s e'stato promosso a %s.\n"
 
-#: client/cl_campaign.c:2507
+#: client/cl_campaign.c:2584
 msgid "Soldier promoted"
 msgstr "Sodlato promosso"
 
-#: client/cl_campaign.c:2646
+#: client/cl_campaign.c:2723
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Difesa della base %s: operazione riuscita!"
 
-#: client/cl_campaign.c:3846
+#: client/cl_campaign.c:3923
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -6249,6 +6320,17 @@ msgstr "Sì"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "No"
+
+#~ msgid ""
+#~ "Missions:\n"
+#~ "won:\t%i\tlost:\t%i\n"
+#~ "Bases:\n"
+#~ "build:\t%i\tattacked:\t%i\n"
+#~ msgstr ""
+#~ "Missioni:\n"
+#~ "vinte:\t%i\tperse:\t%i\n"
+#~ "Basi:\n"
+#~ "costruite:\t%i\tattaccate:\t%i\n"
 
 #, fuzzy
 #~ msgid "Cycle through available emails"
