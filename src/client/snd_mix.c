@@ -358,6 +358,16 @@ void S_InitScaletable(void)
 	for (i = 0; i < 32; i++) {
 		scale = i * 8 * 256 * snd_volume->value;
 		for (j = 0; j < 256; j++)
+			/**
+			 * When compiling with gcc-4.1.0 at optimisations O1 and
+			 * higher, the tricky signed char type conversion is not
+			 * guaranteed. Therefore we explicity calculate the signed
+			 * value from the index as required. From Kevin Shanahan.
+			 * Also see: http://gcc.gnu.org/bugzilla/show_bug.cgi?id=26719
+			 * Note: should already be fixed in gcc
+			 */
 			snd_scaletable[i][j] = ((signed char) j) * scale;
+			/* snd_scaletable[i][j] = ((j < 128) ? j : j - 0xff) * i * 8; */
+
 	}
 }
