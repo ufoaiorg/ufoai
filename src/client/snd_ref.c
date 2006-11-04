@@ -106,6 +106,13 @@ cvar_t *snd_music_volume;
 cvar_t *snd_music_loop;
 
 cvar_t *snd_ref;
+
+/**< fading speed for music - see OGG_Read */
+static cvar_t* snd_fadingspeed;
+
+/**< should music fading be activated */
+static cvar_t* snd_fadingenable;
+
 static qboolean snd_ref_active;
 
 int s_rawend;
@@ -120,10 +127,16 @@ OGG Vorbis stuff
 ==========================================================
 */
 
-static char ovPlaying[MAX_QPATH] = ""; /**< currently playing ogg tracks basename */
-static OggVorbis_File ovFile; /**< currently playing ogg vorbis file */
-static char ovBuf[16384]; /**< ogg vorbis buffer */
-static int ovSection; /**< number of the current logical bitstream */
+typedef struct music_s {
+	OggVorbis_File ovFile; /**< currently playing ogg vorbis file */
+	char newFilename[MAX_QPATH]; /**< after fading out ovFile play newFilename */
+	char ovBuf[4096]; /**< ogg vorbis buffer */
+	int ovSection; /**< number of the current logical bitstream */
+	float fading; /**< current volumn - if le zero play newFilename */
+	char ovPlaying[MAX_QPATH]; /**< currently playing ogg tracks basename */
+} music_t;
+
+static music_t music;
 
 /*
 ==========================================================
@@ -165,17 +178,17 @@ void S_SoundInfo_f(void)
 	Com_Printf("%5d submission_chunk\n", dma.submission_chunk);
 	Com_Printf("%5d speed\n", dma.speed);
 	Com_Printf("0x%p dma buffer\n", dma.buffer);
-	if (ovPlaying[0]) {
+	if (music.ovPlaying[0]) {
 		Com_Printf("\nogg infos:\n");
-		Com_Printf("...currently playing: %s\n", ovPlaying);
-		for (i = 0; i < ov_streams(&ovFile); i++) {
-			vi = ov_info(&ovFile,i);
+		Com_Printf("...currently playing: %s\n", music.ovPlaying);
+		for (i = 0; i < ov_streams(&music.ovFile); i++) {
+			vi = ov_info(&music.ovFile,i);
 			Com_Printf("...logical bitstream section %d information:\n", i + 1);
 			Com_Printf("......%ldHz %d channels bitrate %ldkbps serial number=%ld\n",
-				vi->rate, vi->channels, ov_bitrate(&ovFile,i)/1000, ov_serialnumber(&ovFile, i));
-			Com_Printf("......compressed length: %ld bytes\n", (long)(ov_raw_total(&ovFile, i)));
-			Com_Printf("...play time: %ld s\n", (long)ov_time_total(&ovFile, i));
-			Com_Printf("...compressed length: %ld bytes\n", (long)(ov_raw_total(&ovFile, i)));
+				vi->rate, vi->channels, ov_bitrate(&music.ovFile,i)/1000, ov_serialnumber(&music.ovFile, i));
+			Com_Printf("......compressed length: %ld bytes\n", (long)(ov_raw_total(&music.ovFile, i)));
+			Com_Printf("...play time: %ld s\n", (long)ov_time_total(&music.ovFile, i));
+			Com_Printf("...compressed length: %ld bytes\n", (long)(ov_raw_total(&music.ovFile, i)));
 		}
 	}
 }
@@ -269,6 +282,8 @@ void S_Init(void)
 		snd_testsound = Cvar_Get("snd_testsound", "0", 0, NULL);
 		snd_music_volume = Cvar_Get("snd_music_volume", "0.5", CVAR_ARCHIVE, "Music volume");
 		snd_music_loop = Cvar_Get("snd_music_loop", "1", 0, "Music loop");
+		snd_fadingspeed = Cvar_Get("snd_fadingspeed", "0.01", 0, "Music fading speed");
+		snd_fadingenable = Cvar_Get("snd_fadingenable", "1", 0, "Music fading enabled");
 
 		{
 			char libPath[MAX_OSPATH];
@@ -375,7 +390,7 @@ void S_Init(void)
 		sound_started = 1;
 		num_sfx = 0;
 
-		ovPlaying[0] = 0;
+		music.ovPlaying[0] = 0;
 		soundtime = 0;
 		paintedtime = 0;
 
@@ -928,7 +943,7 @@ void S_StopAllSounds(void)
 
 	/* clear all the channels */
 	memset(channels, 0, sizeof(channels));
-	ovPlaying[0] = 0;
+	music.ovPlaying[0] = 0;
 
 	S_ClearBuffer();
 
@@ -1170,7 +1185,7 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	S_Update_();
 
 	/* stream music */
-	while (ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
+	while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
 		OGG_Read();
 }
 
@@ -1265,13 +1280,19 @@ qboolean OGG_Open(char *filename)
 		return qfalse;
 
 	/* check running music */
-	if (ovPlaying[0]) {
-		if (!Q_strcmp(ovPlaying, filename)) {
+	if (music.ovPlaying[0]) {
+		if (!Q_strcmp(music.ovPlaying, filename)) {
 			Com_DPrintf("OGG_Open: Already playing %s\n", filename);
 			return qtrue;
-		} else
-			OGG_Stop();
+		} else {
+			if (snd_fadingenable->value) {
+				Q_strncpyz(music.newFilename, filename, sizeof(music.newFilename));
+				return qtrue;
+			} else
+				OGG_Stop();
+		}
 	}
+	music.fading = snd_music_volume->value;
 
 	/* find file */
 	length = FS_FOpenFile(va("music/%s.ogg", filename), &f);
@@ -1281,14 +1302,14 @@ qboolean OGG_Open(char *filename)
 	}
 
 	/* open ogg vorbis file */
-	res = ov_open(f, &ovFile, NULL, 0);
+	res = ov_open(f, &music.ovFile, NULL, 0);
 	if (res < 0) {
 		Com_Printf("'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n", filename, res);
 		fclose(f);
 		return qfalse;
 	}
 
-	vi = ov_info(&ovFile, -1);
+	vi = ov_info(&music.ovFile, -1);
 	if ((vi->channels != 1) && (vi->channels != 2)) {
 		Com_Printf("%s has an unsupported number of channels: %i\n", filename, vi->channels);
 		fclose(f);
@@ -1296,21 +1317,22 @@ qboolean OGG_Open(char *filename)
 	}
 
 /*	Com_Printf( "Playing '%s'\n", filename ); */
-	Q_strncpyz(ovPlaying, filename, MAX_QPATH);
-	ovSection = 0;
+	Q_strncpyz(music.ovPlaying, filename, MAX_QPATH);
+	music.ovSection = 0;
 	return qtrue;
 }
 
 /**
- * @brief Clears the ovPlaying string and stop the currently playing ogg file (ovFile)
+ * @brief Clears the music.ovPlaying string and stop the currently playing ogg file (music.ovFile)
  * @sa OGG_Open
  * @sa S_StartOGG
  * @sa S_PlayOGG
  */
 void OGG_Stop(void)
 {
-	ovPlaying[0] = 0;
-	ov_clear(&ovFile);
+	music.ovPlaying[0] = 0;
+	music.fading = snd_music_volume->value;
+	ov_clear(&music.ovFile);
 }
 
 /**
@@ -1322,19 +1344,24 @@ int OGG_Read(void)
 {
 	int res;
 
-	if (snd_music_volume->value <= 0) {
+	if (music.fading <= 0.0) {
 		OGG_Stop();
+		OGG_Open(music.newFilename);
 		return 0;
 	}
 
 	/* read and resample */
-	res = ov_read(&ovFile, ovBuf, sizeof(ovBuf), 0, 2, 1, &ovSection);
-	S_RawSamples(res >> 2, 44100, 2, 2, (byte *) ovBuf, snd_music_volume->value);
+	res = ov_read(&music.ovFile, music.ovBuf, sizeof(music.ovBuf), 0, 2, 1, &music.ovSection);
+	S_RawSamples(res >> 2, 44100, 2, 2, (byte *) music.ovBuf, music.fading);
+	if (*music.newFilename) {
+		Com_DPrintf("fading ogg track: %.10f\n", music.fading);
+		music.fading -= snd_fadingspeed->value;
+	}
 
 	/* end of file? */
 	if (!res) {
 		if ((int) snd_music_loop->value)
-			ov_raw_seek(&ovFile, 0);
+			ov_raw_seek(&music.ovFile, 0);
 		else
 			OGG_Stop();
 	}
