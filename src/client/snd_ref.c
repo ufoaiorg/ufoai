@@ -256,6 +256,32 @@ void S_ModifyKhz_f(void)
 }
 
 /**
+ * @brief List all available music tracks
+ */
+void S_MusicList (void)
+{
+	char findname[MAX_OSPATH];
+	int i, ndirs;
+	char **dirnames;
+	char *path = NULL;
+
+	Com_Printf("music tracks\n");
+	while ((path = FS_NextPath(path)) != NULL) {
+		Com_Printf("..searchpath: %s\n", path);
+		Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", path);
+		FS_NormPath(findname);
+
+		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, 0)) != 0) {
+			for (i = 0; i < ndirs - 1; i++) {
+				Com_Printf("...%s\n", dirnames[i]);
+				free(dirnames[i]);
+			}
+			free(dirnames);
+		}
+	}
+}
+
+/**
  * @brief
  * @sa S_Shutdown
  * @sa CL_Snd_Restart_f
@@ -373,6 +399,7 @@ void S_Init(void)
 			return;
 		}
 
+		Cmd_AddCommand("musiclist", S_MusicList, NULL);
 		Cmd_AddCommand("snd_play", S_Play_f, NULL);
 		Cmd_AddCommand("snd_stop", S_StopAllSounds, NULL);
 		Cmd_AddCommand("snd_list", S_SoundList_f, NULL);
