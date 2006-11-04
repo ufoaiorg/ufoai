@@ -52,7 +52,7 @@ menu hospital
 		format	"22 170"
 		click
 		rclick
-		num		25
+		num		21
 		mousefx true
 	}
 

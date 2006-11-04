@@ -145,7 +145,7 @@ menu production
 		pos		"465 70"
 		size	"60 710"
 		format	"22 0"
-		num 23
+		num 20
 		mousefx true
 	}
 
