@@ -146,8 +146,6 @@ int OGG_Read(void);
 
 /*==================================================================== */
 
-extern char ovPlaying[MAX_QPATH];
-
 #define	MAX_CHANNELS			32
 extern channel_t channels[MAX_CHANNELS];
 

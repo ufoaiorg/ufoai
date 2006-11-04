@@ -114,6 +114,23 @@ portable_samplepair_t s_rawsamples[MAX_RAW_SAMPLES];
 struct sndinfo si;
 static void* snd_ref_lib = NULL;
 
+/*
+==========================================================
+OGG Vorbis stuff
+==========================================================
+*/
+
+static char ovPlaying[MAX_QPATH] = ""; /**< currently playing ogg tracks basename */
+static OggVorbis_File ovFile; /**< currently playing ogg vorbis file */
+static char ovBuf[16384]; /**< ogg vorbis buffer */
+static int ovSection; /**< number of the current logical bitstream */
+
+/*
+==========================================================
+Sound renderer function pointers
+==========================================================
+*/
+
 typedef qboolean (*SND_Init_t)(struct sndinfo* si);
 typedef int (*SND_GetDMAPos_t)(void);
 typedef void (*SND_Shutdown_t)(void);
@@ -133,6 +150,9 @@ SND_Activate_t SND_Activate;
  */
 void S_SoundInfo_f(void)
 {
+	vorbis_info *vi;
+	int i;
+
 	if (!sound_started) {
 		Com_Printf("sound system not started\n");
 		return;
@@ -145,6 +165,19 @@ void S_SoundInfo_f(void)
 	Com_Printf("%5d submission_chunk\n", dma.submission_chunk);
 	Com_Printf("%5d speed\n", dma.speed);
 	Com_Printf("0x%p dma buffer\n", dma.buffer);
+	if (ovPlaying[0]) {
+		Com_Printf("\nogg infos:\n");
+		Com_Printf("...currently playing: %s\n", ovPlaying);
+		for (i = 0; i < ov_streams(&ovFile); i++) {
+			vi = ov_info(&ovFile,i);
+			Com_Printf("...logical bitstream section %d information:\n", i + 1);
+			Com_Printf("......%ldHz %d channels bitrate %ldkbps serial number=%ld\n",
+				vi->rate, vi->channels, ov_bitrate(&ovFile,i)/1000, ov_serialnumber(&ovFile, i));
+			Com_Printf("......compressed length: %ld bytes\n", (long)(ov_raw_total(&ovFile, i)));
+			Com_Printf("...play time: %ld s\n", (long)ov_time_total(&ovFile, i));
+			Com_Printf("...compressed length: %ld bytes\n", (long)(ov_raw_total(&ovFile, i)));
+		}
+	}
 }
 
 /**
@@ -331,7 +364,7 @@ void S_Init(void)
 		Cmd_AddCommand("snd_info", S_SoundInfo_f, NULL);
 
 		Cmd_AddCommand("music_play", S_PlayOGG, "Plays an ogg sound track");
-		Cmd_AddCommand("music_start", S_StartOGG, NULL);
+		Cmd_AddCommand("music_start", S_StartOGG, "Start the ogg music track from cvar music");
 		Cmd_AddCommand("music_stop", OGG_Stop, "Stop currently playing music tracks");
 
 		Cmd_AddCommand("snd_modifyref", S_ModifySndRef_f, "Modify sound renderer");
@@ -1218,11 +1251,6 @@ OGG Vorbis decoding
 ==========================================================
 */
 
-char ovPlaying[MAX_QPATH];
-static OggVorbis_File ovFile;
-static char ovBuf[4096];
-static int ovSection;
-
 /**
  * @brief
  */
@@ -1237,9 +1265,10 @@ qboolean OGG_Open(char *filename)
 
 	/* check running music */
 	if (ovPlaying[0]) {
-		if (!strcmp(ovPlaying, filename))
+		if (!Q_strcmp(ovPlaying, filename)) {
+			Com_DPrintf("OGG_Open: Already playing %s\n", filename);
 			return qtrue;
-		else
+		} else
 			OGG_Stop();
 	}
 
@@ -1272,7 +1301,10 @@ qboolean OGG_Open(char *filename)
 }
 
 /**
- * @brief
+ * @brief Clears the ovPlaying string and stop the currently playing ogg file (ovFile)
+ * @sa OGG_Open
+ * @sa S_StartOGG
+ * @sa S_PlayOGG
  */
 void OGG_Stop(void)
 {
@@ -1282,6 +1314,8 @@ void OGG_Stop(void)
 
 /**
  * @brief
+ * @sa OGG_Stop
+ * @sa S_RawSamples
  */
 int OGG_Read(void)
 {
@@ -1307,7 +1341,10 @@ int OGG_Read(void)
 }
 
 /**
- * @brief
+ * @brief Script command that plays the music track given via parameter
+ * @sa OGG_Open
+ * @sa S_StartOGG
+ * @sa OGG_Stop
  */
 void S_PlayOGG(void)
 {
@@ -1319,7 +1356,10 @@ void S_PlayOGG(void)
 }
 
 /**
- * @brief
+ * @brief Script command that plays the music track stored in cvar music
+ * @sa OGG_Open
+ * @sa S_PlayOGG
+ * @sa OGG_Stop
  */
 void S_StartOGG(void)
 {
