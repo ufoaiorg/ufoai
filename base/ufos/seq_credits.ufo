@@ -925,7 +925,7 @@ sequence credits
 
 	camera cam1
 	{
-		zoom	1.0
+		zoom	2.0
 		angles	"20 240 0"
 		dist	500
 	}

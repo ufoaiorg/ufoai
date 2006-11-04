@@ -90,8 +90,11 @@ extern int num_cl_weaponmodels;
 
 #define	CMD_BACKUP		64		/* allow a lot of command backups for very fast systems */
 
-#define FOV				60.0
+#define FOV				75.0
 #define FOV_FPS			90.0
+#define CAMERA_START_DIST   600
+#define CAMERA_START_HEIGHT UNIT_HEIGHT*1.5
+#define CAMERA_LEVEL_HEIGHT 64
 
 typedef struct {
 	vec3_t reforg;
@@ -1011,6 +1014,7 @@ void V_AddLight(vec3_t org, float intensity, float r, float g, float b);
 void V_AddLightStyle(int style, float r, float g, float b);
 entity_t *V_GetEntity(void);
 void V_CenterView(pos3_t pos);
+void CalcFovX(void);
 
 /* cl_sequence.c */
 void CL_SequenceRender(void);

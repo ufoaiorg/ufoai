@@ -300,6 +300,7 @@ void CL_CameraModeChange(camera_mode_t new_camera_mode)
 		VectorCopy(save_camorg, cl.cam.camorg);
 		VectorCopy(save_camangles, cl.cam.angles);
 		cl.cam.zoom = save_camzoom;
+		CalcFovX();
 		Cvar_SetValue("cl_worldlevel", save_level);
 	} else {
 		Com_Printf("Changed camera mode to first-person.\n");
@@ -309,7 +310,8 @@ void CL_CameraModeChange(camera_mode_t new_camera_mode)
 		if (!(selActor->state & STATE_CROUCHED))
 			cl.cam.camorg[2] += EYE_HT_OFFSET; /* raise from waist to head */
 		VectorCopy(selActor->angles, cl.cam.angles);
-		cl.cam.zoom = FOV/FOV_FPS;
+		cl.refdef.fov_x = FOV_FPS;
+		cl.cam.zoom = 1.0;
 		wasCrouched = selActor->state & STATE_CROUCHED;
 	}
 }
@@ -359,7 +361,7 @@ float CL_KeyState(kbutton_t * key)
 /*========================================================================== */
 
 const float MIN_ZOOM = 0.5;
-const float MAX_ZOOM = 20.0;
+const float MAX_ZOOM = 32.0;
 
 cvar_t *cl_camrotspeed;
 cvar_t *cl_camrotaccel;
@@ -384,15 +386,10 @@ cvar_t *cl_anglespeedkey;
 #define MAX_CAMMOVE_SPEED	3000
 #define MAX_CAMMOVE_ACCEL	3000
 #define ZOOM_SPEED			1.4
-#define MIN_CAMZOOM_QUANT	0.2
+#define MIN_CAMZOOM_QUANT	0.05
 #define MAX_CAMZOOM_QUANT	1.0
 #define LEVEL_SPEED			3.0
 #define LEVEL_MIN			0.05
-
-#define CAMERA_START_DIST	600
-#define CAMERA_LEVEL_DIST	0
-#define CAMERA_START_HEIGHT	0
-#define CAMERA_LEVEL_HEIGHT	64
 
 /*========================================================================== */
 
@@ -443,6 +440,7 @@ void CL_ZoomInQuant(void)
 
 	/* ensure zoom doesnt exceed either MAX_ZOOM or cl_camzoommax */
 	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
+	CalcFovX();
 }
 
 /**
@@ -469,6 +467,7 @@ void CL_ZoomOutQuant(void)
 
 	/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
 	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
+	CalcFovX();
 }
 
 /**
@@ -860,6 +859,23 @@ void CL_CameraMoveFirstPerson(void)
 	VectorMA(cl.cam.camorg, 4., cl.cam.axis[0], cl.cam.camorg);
 }
 
+/**
+ * @brief forces the camera to stay within the horizontal bounds of the
+ * map plus some border 
+ */
+void CL_ClampCamToMap(float border)
+{
+	if (cl.cam.reforg[0] < map_min[0] - border)
+		cl.cam.reforg[0] = map_min[0] - border;
+	else if (cl.cam.reforg[0] > map_max[0] + border)
+		cl.cam.reforg[0] = map_max[0] + border;
+
+	if (cl.cam.reforg[1] < map_min[1] - border)
+		cl.cam.reforg[1] = map_min[1] - border;
+	else if (cl.cam.reforg[1] > map_max[1] + border)
+		cl.cam.reforg[1] = map_max[1] + border;
+}
+
 
 /**
  * @brief
@@ -979,22 +995,6 @@ void CL_CameraMoveRemote(void)
 	if (frac > 1.0)
 		VectorScale(cl.cam.speed, 1.0 / frac, cl.cam.speed);
 
-	/* calc new camera reference origin */
-	VectorMA(cl.cam.reforg, cls.frametime, cl.cam.speed, cl.cam.reforg);
-	if (cl.cam.reforg[0] < map_min[0])
-		cl.cam.reforg[0] = map_min[0];
-	if (cl.cam.reforg[1] < map_min[1])
-		cl.cam.reforg[1] = map_min[1];
-	if (cl.cam.reforg[0] > map_max[0])
-		cl.cam.reforg[0] = map_max[0];
-	if (cl.cam.reforg[1] > map_max[1])
-		cl.cam.reforg[1] = map_max[1];
-	cl.cam.reforg[2] = 0;
-
-	/* calc real camera origin */
-	VectorMA(cl.cam.reforg, -CAMERA_START_DIST + cl.cam.lerplevel * CAMERA_LEVEL_DIST, cl.cam.axis[0], cl.cam.camorg);
-	cl.cam.camorg[2] += CAMERA_START_HEIGHT + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
-
 	/* zoom change */
 	frac = CL_GetKeyMouseState(STATE_ZOOM);
 	if (frac > 0.1) {
@@ -1006,6 +1006,21 @@ void CL_CameraMoveRemote(void)
 		/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
 		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 	}
+	CalcFovX();
+
+	/* calc new camera reference and new camera real origin */
+	VectorMA(cl.cam.reforg, cls.frametime, cl.cam.speed, cl.cam.reforg);
+	cl.cam.reforg[2] = 0.;
+	if (cl_isometric->value) {
+		CL_ClampCamToMap(72.);
+		VectorMA(cl.cam.reforg, -CAMERA_START_DIST + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT, cl.cam.axis[0], cl.cam.camorg);
+		cl.cam.camorg[2] += CAMERA_START_HEIGHT + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
+	} else {
+		CL_ClampCamToMap(min(144.*(cl.cam.zoom - cl_camzoommin->value - 0.4)/cl_camzoommax->value, 86));
+		VectorMA(cl.cam.reforg, -CAMERA_START_DIST/cl.cam.zoom , cl.cam.axis[0], cl.cam.camorg);
+		cl.cam.camorg[2] += CAMERA_START_HEIGHT/cl.cam.zoom + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
+	}
+
 }
 
 /**

@@ -181,6 +181,10 @@ void CL_SequenceCamera(void)
 	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
 	VectorMA(cl.cam.reforg, -seqCamera.dist, cl.cam.axis[0], cl.cam.camorg);
 	cl.cam.zoom = max(seqCamera.zoom, MIN_ZOOM);
+	/* fudge to get isometric and perspective modes looking similar */
+	if (cl_isometric->value)
+		cl.cam.zoom /= 1.35;
+	CalcFovX();
 }
 
 

@@ -50,7 +50,7 @@ sequence view
 
 	camera cam1
 	{
-		zoom	1.0
+		zoom	6.0
 		angles	"20 0 0"
 		omega   "0 0 0"
 		dist	100
