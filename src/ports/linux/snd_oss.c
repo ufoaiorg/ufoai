@@ -30,12 +30,15 @@ int snd_inited;
 static struct sndinfo *si;
 
 static int tryrates[] = { 11025, 22051, 44100, 48000, 8000 };
+static unsigned long mmaplen;
 
 qboolean SND_Init(struct sndinfo *s)
 {
 	int rc, fmt, tmp, i, caps;
 	struct audio_buf_info info;
+	unsigned long sz;
 	uid_t saved_euid = getuid();
+
 
 	if (snd_inited)
 		return qtrue;
@@ -47,21 +50,30 @@ qboolean SND_Init(struct sndinfo *s)
 	si->Com_Printf("Soundsystem: OSS.\n");
 
 	/*alsa => oss */
-	if ( ! strcmp (si->device->string, "default") )
-		si->device->string = "/dev/dsp";
+	if ( !strcmp (si->device->string, "default") )
+		si->Cvar_Set("snd_device", "/dev/dsp");
 
 	/* open /dev/dsp, confirm capability to mmap, and get size of dma buffer */
 	if (audio_fd == -1) {
-		seteuid ( saved_euid );
+		seteuid (saved_euid);
 
 		/* see https://www.redhat.com/archives/sound-list/1999-September/msg00012.html for reason */
-		audio_fd = open( si->device->string, O_WRONLY );
+		audio_fd = open(si->device->string, O_WRONLY|O_NONBLOCK);
 
 		if (audio_fd == -1) {
-			perror( si->device->string );
-			seteuid( getuid() );
-			si->Com_Printf("SND_Init: Could not open %s.\n", si->device->string);
-			return qfalse;
+			tmp = 3;
+			while ( (audio_fd < 0) && tmp-- &&
+				((errno == EAGAIN) || (errno == EBUSY)) ) {
+				sleep(1);
+				/* maybe O_WRONLY failed - try the original way */
+				audio_fd = open(si->device->string, O_RDWR|O_NONBLOCK);
+			}
+			if (audio_fd < 0) {
+				perror(si->device->string);
+				seteuid(getuid());
+				si->Com_Printf("SND_Init: Could not open %s. %s\n", si->device->string, strerror(errno));
+				return qfalse;
+			}
 		}
 		seteuid( getuid() );
 	}
@@ -69,7 +81,7 @@ qboolean SND_Init(struct sndinfo *s)
 	rc = ioctl( audio_fd, SNDCTL_DSP_RESET, 0 );
 	if ( rc == -1 ) {
 		perror(si->device->string);
-		si->Com_Printf("SND_Init: Could not reset %s.\n", si->device->string);
+		si->Com_Printf("SND_Init: Could not reset %s. %s\n", si->device->string, strerror(errno));
 		close(audio_fd);
 		audio_fd = -1;
 		return qfalse;
@@ -77,14 +89,14 @@ qboolean SND_Init(struct sndinfo *s)
 
 	if ( ioctl ( audio_fd, SNDCTL_DSP_GETCAPS, &caps ) == -1 ) {
 		perror(si->device->string);
-		si->Com_Printf("SND_Init: Sound driver too old.\n");
+		si->Com_Printf("SND_Init: Sound driver too old. %s\n", strerror(errno));
 		close(audio_fd);
 		audio_fd = -1;
 		return qfalse;
 	}
 
 	if ( ! ( caps & DSP_CAP_TRIGGER ) || ! ( caps & DSP_CAP_MMAP ) ) {
-		si->Com_Printf("SND_Init: Sorry, but your soundcard doesn't support trigger or mmap. (%08x)\n", caps);
+		si->Com_Printf("SND_Init: Sorry, but your soundcard doesn't support trigger or mmap. (%08x). %s\n", caps, strerror(errno));
 		close(audio_fd);
 		audio_fd = -1;
 		return qfalse;
@@ -92,7 +104,7 @@ qboolean SND_Init(struct sndinfo *s)
 
 	if ( ioctl(audio_fd, SNDCTL_DSP_GETOSPACE, &info) == -1 ) {
 		perror("GETOSPACE");
-		si->Com_Printf("SND_Init: GETOSPACE ioctl failed.\n");
+		si->Com_Printf("SND_Init: GETOSPACE ioctl failed. %s\n", strerror(errno));
 		close(audio_fd);
 		audio_fd = -1;
 		return qfalse;
@@ -113,7 +125,7 @@ qboolean SND_Init(struct sndinfo *s)
 		rc = ioctl(audio_fd, SNDCTL_DSP_SETFMT, &rc);
 		if (rc < 0) {
 			perror(si->device->string);
-			si->Com_Printf("SND_Init: Could not support 16-bit data.  Try 8-bit.\n");
+			si->Com_Printf("SND_Init: Could not support 16-bit data.  Try 8-bit. %s\n", strerror(errno));
 			close(audio_fd);
 			audio_fd = -1;
 			return qfalse;
@@ -162,7 +174,7 @@ qboolean SND_Init(struct sndinfo *s)
 	rc = ioctl(audio_fd, SNDCTL_DSP_STEREO, &tmp); /*FP: bugs here. */
 	if (rc < 0) {
 		perror(si->device->string);
-		si->Com_Printf("SND_Init: Could not set %s to stereo=%d.", si->device->string, si->dma->channels);
+		si->Com_Printf("SND_Init: Could not set %s to stereo=%d. %s", si->device->string, si->dma->channels, strerror(errno));
 		close(audio_fd);
 		audio_fd = -1;
 		return qfalse;
@@ -177,7 +189,7 @@ qboolean SND_Init(struct sndinfo *s)
 	rc = ioctl(audio_fd, SNDCTL_DSP_SPEED, &si->dma->speed);
 	if (rc < 0) {
 		perror(si->device->string);
-		si->Com_Printf("SND_Init: Could not set %s speed to %d.", si->device->string, si->dma->speed);
+		si->Com_Printf("SND_Init: Could not set %s speed to %d. %s", si->device->string, si->dma->speed, strerror(errno));
 		close(audio_fd);
 		audio_fd = -1;
 		return qfalse;
@@ -187,16 +199,19 @@ qboolean SND_Init(struct sndinfo *s)
 	si->dma->submission_chunk = 1;
 
 	/* memory map the dma buffer */
+	sz = sysconf (_SC_PAGESIZE);
+	mmaplen = info.fragstotal * info.fragsize;
+	mmaplen = (mmaplen + sz - 1) & ~(sz - 1);
 	if (!si->dma->buffer)
-		si->dma->buffer = (unsigned char *) mmap(NULL, info.fragstotal
-			* info.fragsize, PROT_WRITE|PROT_READ, MAP_FILE|MAP_SHARED, audio_fd, 0);
+		si->dma->buffer = (unsigned char *) mmap(NULL, mmaplen, PROT_READ|PROT_WRITE,
+					     MAP_FILE|MAP_SHARED, audio_fd, 0);
 	if (!si->dma->buffer || si->dma->buffer == MAP_FAILED) {
-		perror(si->device->string);
-		si->Com_Printf("SND_Init: Could not mmap %s.\n", si->device->string);
+		si->Com_Printf("SND_Init: Could not mmap %s. %s\n", si->device->string, strerror(errno));
 		close(audio_fd);
 		audio_fd = -1;
-		return qfalse;
+		return qfalse;;
 	}
+	si->Com_Printf ("...mmaped %u bytes buffer\n", mmaplen);
 
 	/* toggle the trigger & start her up */
 	tmp = 0;
@@ -206,6 +221,7 @@ qboolean SND_Init(struct sndinfo *s)
 		si->Com_Printf("SND_Init: Could not toggle. (1)\n");
 		close(audio_fd);
 		audio_fd = -1;
+		munmap (si->dma->buffer, mmaplen);
 		return qfalse;
 	}
 	tmp = PCM_ENABLE_OUTPUT;
@@ -215,6 +231,7 @@ qboolean SND_Init(struct sndinfo *s)
 		si->Com_Printf("SND_Init: Could not toggle. (2)\n");
 		close(audio_fd);
 		audio_fd = -1;
+		munmap (si->dma->buffer, mmaplen);
 		return qfalse;
 	}
 
