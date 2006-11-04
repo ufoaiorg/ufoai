@@ -58,22 +58,84 @@ menu stats
 		font	f_big
 	}
 
-	text description
+	string mission_string
 	{
-		pos		"40 86"
-		size	"940 200"
-//		bgcolor	"0.5 0.5 0.5 0.5"
-		format  "22 100"
-		num		"20"
+		string	"_Missions"
+		pos		"140 86"
+		align	uc
+		font	f_small
+	}
+	text mission_stats
+	{
+		pos		"40 110"
+		size	"200 140"
+		bgcolor	"0.5 0.5 0.5 0.2"
+		format  "22 170"
+		num		"22"
 	}
 
+	string base_string
+	{
+		string	"_Bases"
+		pos		"350 86"
+		align	uc
+		font	f_small
+	}
+	text base_stats
+	{
+		pos		"250 110"
+		size	"200 140"
+		bgcolor	"0.5 0.5 0.5 0.2"
+		format  "22 170"
+		num		"23"
+	}
+
+	string empl_string
+	{
+		string	"_Employees"
+		pos		"560 86"
+		align	uc
+		font	f_small
+	}
+	text empl_stats
+	{
+		pos		"460 110"
+		size	"200 140"
+		bgcolor	"0.5 0.5 0.5 0.2"
+		format  "22 170"
+		num		"25"
+	}
+
+	string costs_string
+	{
+		string	"_Costs"
+		pos		"236 260"
+		align	uc
+		font	f_small
+	}
+	text costs_stats
+	{
+		pos		"40 284"
+		size	"470 240"
+		bgcolor	"0.5 0.5 0.5 0.2"
+		format  "22 100"
+		num		"26"
+	}
+
+	string nations_string
+	{
+		string	"_Nations"
+		pos		"754 260"
+		align	uc
+		font	f_small
+	}
 	text nation_stats
 	{
-		pos		"40 300"
-//		bgcolor	"0.5 0.5 0.5 0.5"
-		size	"940 400"
-		format  "22 250"
-		num		"21"
+		pos		"518 284"
+		bgcolor	"0.5 0.5 0.5 0.2"
+		size	"470 240"
+		format  "22 360"
+		num		"24"
 	}
 
 	func init
