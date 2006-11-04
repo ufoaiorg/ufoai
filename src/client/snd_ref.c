@@ -1302,9 +1302,17 @@ qboolean OGG_Open(char *filename)
 	FILE *f;
 	int res, length;
 	vorbis_info *vi;
+	char *checkFilename = NULL;
+
+	assert(filename);
 
 	if (snd_music_volume->value <= 0)
 		return qfalse;
+
+	/* strip extension */
+	checkFilename = strstr(filename, ".ogg");
+	if (checkFilename)
+		*checkFilename = '\0';
 
 	/* check running music */
 	if (music.ovPlaying[0]) {
