@@ -1146,6 +1146,9 @@ void CL_ReadSinglePlayerData( void )
 	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 )
 		CL_ParseScriptFirst( type, name, &text );
 
+	/* fill in IDXs for required research techs */
+	RS_RequiredIdxAssign();
+
 	/* stage two parsing */
 	FS_NextScriptHeader( NULL, NULL, NULL );
 	text = NULL;

@@ -274,7 +274,7 @@ static void CL_BuyItem(void)
 	/*
 	RS_MarkCollected(&baseCurrent->storage);
 	*/
-	RS_MarkResearchable();
+	/*RS_MarkResearchable();*/
 }
 
 /**

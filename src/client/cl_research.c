@@ -55,6 +55,37 @@ void RS_MarkOneResearchable(int tech_idx)
 	gd.technologies[tech_idx].statusResearchable = qtrue;
 }
 
+/**
+ * @brief Check if the item has been collected (in storage or quarantine) in the giveb base.
+ * @param[in] item_idx The index of the item in the inv.
+ * @param[in] base The base to searrch in.
+ * @return qboolean
+ * @todo quarantine
+ */
+int RS_ItemInBase(int item_idx, base_t *base)
+{
+	equipDef_t *ed = NULL;
+
+	if (!base)
+		return -1;
+
+	ed = &base->storage;
+
+	if (!ed)
+		return -1;
+
+	/* Com_DPrintf("RS_ItemInBase: DEBUG idx %s\n",  csi.ods[item_idx].kurz); */
+
+	/* FIXME/TODO: currently since all alien artifacts are added to the
+	 * market, this check ensures market items are researchable too...
+	 * otherwise the user must buy each item before researching it.
+	 * Suggestion: if an unknown alien tech is found, sell all but the
+	 * required number of items to perform research on that tech. Then
+	 * the eMarket addition below would not be required */
+	return ed->num[item_idx] + ccs.eMarket.num[item_idx];
+}
+
+
 #if DEPENDENCIES_OVERHAUL
 /**
  * @brief Checks if all requirements of a tech have been met.
@@ -77,15 +108,19 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 		for (i = 0; i < required_AND->numLinks; i++) {
 			switch (required_AND->type[i]) {
 			case RS_LINK_TECH:
-				/* Com_DPrintf("RS_RequirementsMet: ANDtech: %s / %i\n", required_AND->id[i], required_AND->idx[i]); */
+				Com_DPrintf("RS_RequirementsMet: ANDtech: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
 				if ((!RS_TechIsResearched(required_AND->idx[i]))
 					|| (!Q_strncmp(required_AND->id[i], "nothing", MAX_VAR))) {
+					Com_DPrintf("RS_RequirementsMet: this tech not researched ----> %s \n", required_AND->id[i]);
 					met_AND = qfalse;
 				}
 				break;
 			case RS_LINK_ITEM:
-				/* Com_DPrintf("RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]); */
-				if (required_AND->collected[i] < required_AND->amount[i]) {
+				Com_DPrintf("RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]); 
+				/* TODO: required_AND->collected[i] was being used instead of RS_ItemInBase below,
+				 * but the collected count never seemed to be incremented... 
+				 * so either remove this and the RS_CheckCollected method or fix them */
+				if (RS_ItemInBase(required_AND->idx[i], baseCurrent) < required_AND->amount[i]) {
 					met_AND = qfalse;
 				}
 				break;
@@ -129,30 +164,6 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 		}
 
 	return (met_AND || met_OR);
-}
-
-/**
- * @brief Check if the item has been collected (in storage or quarantine) in the giveb base.
- * @param[in] item_idx The index of the item in the inv.
- * @param[in] base The base to searrch in.
- * @return qboolean
- * @todo quarantine
- */
-int RS_ItemInBase(int item_idx, base_t *base)
-{
-	equipDef_t *ed = NULL;
-
-	if (!base)
-		return -1;
-
-	ed = &base->storage;
-
-	if (!ed)
-		return -1;
-
-	Com_DPrintf("RS_ItemInBase: DEBUG idx %s\n",  csi.ods[item_idx].kurz);
-
-	return ed->num[item_idx];
 }
 
 /**
@@ -232,7 +243,7 @@ void RS_MarkResearchable(void)
 			/* Check for collected items/aliens/etc... */
 
 			if (tech->statusResearch != RS_FINISH) {
-				/* Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", tech->id); */
+				Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", tech->id);
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 
 				/* All requirements are met. */
@@ -396,6 +407,29 @@ static void RS_InitRequirementList(requirements_t *required)
 
 	}
 
+}
+
+/* assign IDXs to all required techs */
+void RS_RequiredIdxAssign(void)
+{
+	int i, j;
+	technology_t *tech = NULL;
+	requirements_t *required_temp = NULL;
+
+	for (i = 0; i < gd.numTechnologies; i++) {
+		tech = &gd.technologies[i];
+		if (&tech->require_AND) {
+			required_temp = &tech->require_AND;
+			for (j = 0; j < required_temp->numLinks; j++) {
+				required_temp->idx[j] = RS_GetTechIdxByName(required_temp->id[j]);
+			}
+		}
+		if (&tech->require_OR) {
+			required_temp = &tech->require_OR;
+			for (j = 0; j < required_temp->numLinks; j++)
+				required_temp->idx[j] = RS_GetTechIdxByName(required_temp->id[j]);
+		}
+	}
 }
 
 
@@ -915,6 +949,7 @@ void RS_UpdateData(void)
 		available[i] = E_CountUnassigned(&gd.bases[i], EMPL_SCIENTIST);
 	}
 	RS_CheckAllCollected();
+	RS_MarkResearchable();
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 		Com_sprintf(name, MAX_VAR, tech->name);
@@ -1932,4 +1967,29 @@ technology_t *RS_GetTechWithMostScientists( int base_idx )
 	}
 
 	return tech;
+}
+
+/** 
+ * @brief Returns the index (idx) of a "tech" entry given it's name.
+ * @param[in] name the name of the tech
+ * TODO: this method is extremely inefficient... it could be dramatically improved
+ */
+int RS_GetTechIdxByName(char *name)
+{
+	int i;
+	technology_t *tech;
+
+	/* return -1 if tech matches "nothing" */
+	if (!Q_strncmp(name, "nothing", MAX_VAR))
+		return -1;
+
+	/* search through all techs for a match */
+	for (i = 0; i < gd.numTechnologies; i++) {
+		tech = &gd.technologies[i];
+		if (!Q_strncmp(name, tech->id, MAX_VAR))
+			return i;
+	}
+
+	/* return -1 if not found */
+	return -1;
 }

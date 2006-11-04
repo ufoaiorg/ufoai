@@ -148,6 +148,7 @@ qboolean RS_ItemCollected(char *id_provided);
 #endif /* overhaul */
 
 void RS_AddObjectTechs(void);
+void RS_RequiredIdxAssign(void);
 void RS_InitTree(void);
 void RS_MarkCollected(equipDef_t *ed);
 void RS_MarkResearchable(void);
@@ -159,6 +160,7 @@ technology_t *RS_GetTechByProvided(const char *id_provided);
 technology_t **RS_GetTechsByType(researchType_t type);
 technology_t* RS_GetTechByIDX(int tech_idx);
 technology_t *RS_GetTechWithMostScientists( int base_idx );
+int RS_GetTechIdxByName(char *name);
 
 
 /* ufopedia function - but needs technology_t */
