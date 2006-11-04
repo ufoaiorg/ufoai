@@ -263,7 +263,7 @@ menu map
 
 	func init
 	{
-		cmd "music geoscape;music_start;"
+		cmd "music PsymongN3;music_start;"
 	}
 }
 

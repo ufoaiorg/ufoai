@@ -174,7 +174,7 @@ menu main
 
 	func init
 	{
-		cmd "music theme;music_start;"
+		cmd "music PsymongN3;music_start;"
 	}
 }
 
