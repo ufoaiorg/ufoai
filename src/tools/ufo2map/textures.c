@@ -26,12 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qbsp.h"
 
-int		nummiptex;
-textureref_t	textureref[MAX_MAP_TEXTURES];
-
-/*========================================================================== */
+static int nummiptex = 0;
+textureref_t textureref[MAX_MAP_TEXTURES];
 
 
+/**
+ * @brief
+ */
 int	FindMiptex (char *name)
 {
 	int		i;
@@ -64,12 +65,10 @@ int	FindMiptex (char *name)
 }
 
 
-/*
-==================
-textureAxisFromPlane
-==================
-*/
-vec3_t	baseaxis[18] =
+/**
+ * @brief
+ */
+static const vec3_t baseaxis[18] =
 {
 {0,0,1}, {1,0,0}, {0,-1,0},			/* floor */
 {0,0,-1}, {1,0,0}, {0,-1,0},		/* ceiling */
@@ -79,7 +78,10 @@ vec3_t	baseaxis[18] =
 {0,-1,0}, {1,0,0}, {0,0,-1}			/* north wall */
 };
 
-void TextureAxisFromPlane(plane_t *pln, vec3_t xv, vec3_t yv)
+/**
+ * @brief
+ */
+static void TextureAxisFromPlane(plane_t *pln, vec3_t xv, vec3_t yv)
 {
 	int		bestaxis;
 	vec_t	dot,best;
@@ -101,8 +103,9 @@ void TextureAxisFromPlane(plane_t *pln, vec3_t xv, vec3_t yv)
 }
 
 
-
-
+/**
+ * @brief
+ */
 int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin)
 {
 	vec3_t	vecs[2];

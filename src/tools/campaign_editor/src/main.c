@@ -32,6 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "interface.h"
 #include "support.h"
 
+/**
+ * @brief Main function for campaign editor
+ */
 int main (int argc, char *argv[])
 {
 #ifdef ENABLE_NLS
@@ -46,15 +49,18 @@ int main (int argc, char *argv[])
 	/* add ufo base dir to pixmaps searchpath */
 	add_pixmap_directory ("base/pics/menu");
 	/* system pixmaps dir */
-	add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
-
+#ifndef _WIN32
+	add_pixmap_directory(PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
+#else
+	add_pixmap_directory("/pixmaps");
+#endif
 	/* first visible window */
-	campaign_editor = create_campaign_editor ();
-	gtk_widget_show (campaign_editor);
+	ufoai_editor = create_ufoai_editor();
+	gtk_widget_show(ufoai_editor);
 
 	/* create two more dialogs, but don't show them */
 	mis_txt = create_mis_txt();
-	mission_dialog = create_mission_dialog ();
+	mission_dialog = create_mission_dialog();
 
 	/* enter main loop */
 	gtk_main ();

@@ -23,9 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include <stdio.h>
-#include "cmdlib.h"
-#include "mathlib.h"
+#include "../../ufo2map/common/cmdlib.h"
+#include "../../ufo2map/common/mathlib.h"
 #include "trilib.h"
 #include "l3dslib.h"
 
@@ -42,21 +41,23 @@ typedef struct {
 	int	v[4];
 } tri;
 
-float	fverts[MAXVERTS][3];
-tri		tris[MAXTRIANGLES];
+static float fverts[MAXVERTS][3];
+static tri tris[MAXTRIANGLES];
 
-int	bytesread, level, numtris, totaltris;
-int	vertsfound, trisfound;
+static int bytesread, level, numtris, totaltris;
+static int vertsfound, trisfound;
 
-triangle_t	*ptri;
+static triangle_t *ptri;
 
 
-/* Alias stores triangles as 3 explicit vertices in .tri files, so even though we */
-/* start out with a vertex pool and vertex indices for triangles, we have to convert */
-/* to raw, explicit triangles */
-void StoreAliasTriangles (void)
+/**
+ * @brief Alias stores triangles as 3 explicit vertices in .tri files, so even though we
+ * start out with a vertex pool and vertex indices for triangles, we have to convert
+ * to raw, explicit triangles
+ */
+static void StoreAliasTriangles (void)
 {
-	int		i, j, k;
+	int i, j, k;
 
 	if ((totaltris + numtris) > MAXTRIANGLES)
 		Error ("Error: Too many triangles");
@@ -76,10 +77,13 @@ void StoreAliasTriangles (void)
 }
 
 
-int ParseVertexL (FILE *input)
+/**
+ * @brief
+ */
+static int ParseVertexL (FILE *input)
 {
-	int				i, j, startbytesread, numverts;
-	unsigned short	tshort;
+	int i, j, startbytesread, numverts;
+	unsigned short tshort;
 
 	if (vertsfound)
 		Error ("Error: Multiple vertex chunks");
@@ -114,10 +118,13 @@ int ParseVertexL (FILE *input)
 }
 
 
-int ParseFaceL1 (FILE *input)
+/**
+ * @brief
+ */
+static int ParseFaceL1 (FILE *input)
 {
 
-	int				i, j, startbytesread;
+	int i, j, startbytesread;
 	unsigned short	tshort;
 
 	if (trisfound)
@@ -154,12 +161,15 @@ int ParseFaceL1 (FILE *input)
 }
 
 
-int ParseChunk (FILE *input)
-{
 #define BLOCK_SIZE	4096
-	char			temp[BLOCK_SIZE];
-	unsigned short	type;
-	int				i, length, w, t, retval;
+/**
+ * @brief
+ */
+static int ParseChunk (FILE *input)
+{
+	char temp[BLOCK_SIZE];
+	unsigned short type;
+	int i, length, w, t, retval;
 
 	level++;
 	retval = 0;
@@ -228,7 +238,6 @@ ParseSubchunk:
 
 			fread (&temp, t, 1, input);
 			bytesread += t;
-
 			w -= t;
 		}
 
@@ -241,11 +250,13 @@ Done:
 	return retval;
 }
 
-
-void Load3DSTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
+/**
+ * @brief
+ */
+extern void Load3DSTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 {
-	FILE        *input;
-	short int	tshort;
+	FILE *input;
+	short int tshort;
 
 	bytesread = 0;
 	level = 0;
@@ -272,7 +283,6 @@ void Load3DSTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 	fseek(input, 0, SEEK_SET);
 
 	ptri = malloc (MAXTRIANGLES * sizeof(triangle_t));
-
 	*pptri = ptri;
 
 	/* parse through looking for the relevant chunk tree (MAIN3DS | EDIT3DS | EDIT_OBJECT | */

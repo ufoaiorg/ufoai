@@ -376,7 +376,7 @@ void WriteGlView (void)
 
 	f = fopen (name, "w");
 	if (!f)
-		Error ("Couldn't open %s", f);
+		Error ("Couldn't open %s", name);
 
 	for (j=0 ; j<num_patches ; j++) {
 		p = &patches[j];
@@ -512,7 +512,6 @@ void RadWorld (void)
 	MakeBackplanes ();
 	MakeParents (0, -1);
 
-	forbiddenContents = CONTENTS_TRANSLUCENT;
 	MakeTnodes ( 256 );
 
 	/* turn each face into a single patch */

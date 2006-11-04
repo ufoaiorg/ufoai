@@ -48,7 +48,7 @@ byte	step[WIDTH][WIDTH];
 byte	filled[WIDTH][WIDTH];
 
 
-ipos3_t	wpMins, wpMaxs;
+static ipos3_t wpMins, wpMaxs;
 
 
 /**
@@ -205,33 +205,38 @@ static void CheckConnections_Thread (unsigned int unitnum)
 	/* test connections */
 	for ( i = 0; i < 4; i++ ) {
 		/* range check and test height */
-		if ( i == 0 && (x >= 255 || (filled[y][x+1] & (1<<sz)) || (area[sz][y][x+1]&0x0F) > h) ) continue;
-		if ( i == 1 && (x <=   0 || (filled[y][x-1] & (1<<sz)) || (area[sz][y][x-1]&0x0F) > h) ) continue;
-		if ( i == 2 && (y >= 255 || (filled[y+1][x] & (1<<sz)) || (area[sz][y+1][x]&0x0F) > h) ) continue;
-		if ( i == 3 && (y <=   0 || (filled[y-1][x] & (1<<sz)) || (area[sz][y-1][x]&0x0F) > h) ) continue;
+		if ( i == 0 && (x >= 255 || (filled[y][x+1] & (1<<sz)) || (area[sz][y][x+1]&0x0F) > h) )
+			continue;
+		if ( i == 1 && (x <=   0 || (filled[y][x-1] & (1<<sz)) || (area[sz][y][x-1]&0x0F) > h) )
+			continue;
+		if ( i == 2 && (y >= 255 || (filled[y+1][x] & (1<<sz)) || (area[sz][y+1][x]&0x0F) > h) )
+			continue;
+		if ( i == 3 && (y <=   0 || (filled[y-1][x] & (1<<sz)) || (area[sz][y-1][x]&0x0F) > h) )
+			continue;
 
 		/* test for walls */
 		VectorAdd( start, move_vec[i], te );
 
 		/* center check */
-		if ( TestLineMask( start, te, 2 ) ) continue;
+		if ( TestLineMask( start, te, 2 ) )
+			continue;
 
 		/* lower check */
 		ts[2] = te[2] -= UH/2 - sh*QUANT - 2;
-		if ( TestLineMask( ts, te, 2 ) ) continue;
+		if ( TestLineMask( ts, te, 2 ) )
+			continue;
 
 		area[z][y][x] |= 1 << (i+4);
 	}
 }
 
 
-/*
-============
-DoRouting
-
-============
-*/
-void DoRouting(void)
+/**
+ * @brief Calculates the routing of a map
+ * @sa CheckUnit_Thread
+ * @sa CheckConnections_Thread
+ */
+extern void DoRouting(void)
 {
 	int		x, y, i;
 	byte	*data;
@@ -267,8 +272,10 @@ void DoRouting(void)
 	VectorAdd( wpMaxs, v_epsilon, wpMaxs );
 
 	for ( i = 0; i < 3; i++ ) {
-		if ( wpMins[i] <   0 ) wpMins[i] = 0;
-		if ( wpMaxs[i] > 255 ) wpMaxs[i] = 255;
+		if ( wpMins[i] <   0 )
+			wpMins[i] = 0;
+		if ( wpMaxs[i] > 255 )
+			wpMaxs[i] = 255;
 	}
 
 /*	printf( "(%i %i %i) (%i %i %i)\n", wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2] ); */

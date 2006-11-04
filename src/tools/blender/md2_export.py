@@ -120,7 +120,7 @@ def draw_gui():
 
 	########## Scale slider-default is 1/8 which is a good scale for md2->blender
 	g_scale= Slider("Scale Factor: ", EVENT_NOEVENT, 10, 95, 210, 18,
-                    1.0, 0.001, 10.0, 1, "Scale factor for obj Model");
+                    g_scale.val, 0.001, 100.0, 0, "Scale factor for obj Model");
 
 	######### Draw and Exit Buttons
 	Button("Export",EVENT_SAVE_MD2 , 10, 10, 80, 18)

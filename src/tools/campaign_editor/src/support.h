@@ -61,7 +61,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  define N_(String) (String)
 #endif
 
-
 /*
  * Public Functions.
  */
@@ -92,8 +91,14 @@ GdkPixbuf* create_pixbuf (const gchar *filename);
 /* This is used to set ATK action descriptions. */
 void glade_set_atk_action_description (AtkAction *action, const gchar *action_name, const gchar *description);
 
+extern void* globalFileBuffer;
+
 int file_exists (char *filename);
 int file_ext (char *filename, char *fileext);
 void file_strip_ext (char *in, char *out);
 char *va(char *format, ...) __attribute__(format(printf, 1, 2));
 char *bool_translate( int value );
+typedef unsigned char byte;
+void fatal_error (char* errormessage);
+int file_load(char* filename);
+void file_close(void);

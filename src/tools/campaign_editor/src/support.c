@@ -35,8 +35,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <gtk/gtk.h>
 
+#include "callbacks.h"
+#include "interface.h"
 #include "support.h"
+#include "scripts.h"
+#include "campaign.h"
 
+/**
+ * @brief
+ * @param[in] widget
+ * @param[in] widget_name
+ */
 GtkWidget* lookup_widget (GtkWidget *widget, const gchar *widget_name)
 {
 	GtkWidget *parent, *found_widget;
@@ -61,13 +70,21 @@ GtkWidget* lookup_widget (GtkWidget *widget, const gchar *widget_name)
 
 static GList *pixmaps_directories = NULL;
 
-/* Use this function to set the directory containing installed pixmaps. */
+/**
+ * @brief
+ * @param[in] directory
+ * @note Use this function to set the directory containing installed pixmaps.
+ */
 void add_pixmap_directory (const gchar *directory)
 {
 	pixmaps_directories = g_list_prepend (pixmaps_directories, g_strdup (directory));
 }
 
-/* This is an internally used function to find pixmap files. */
+/**
+ * @brief
+ * @param[in] filename
+ * @note This is an internally used function to find pixmap files.
+ */
 static gchar* find_pixmap_file (const gchar *filename)
 {
 	GList *elem;
@@ -85,7 +102,12 @@ static gchar* find_pixmap_file (const gchar *filename)
 	return NULL;
 }
 
-/* This is an internally used function to create pixmaps. */
+/**
+ * @brief
+ * @param[in] widget
+ * @param[in] filename
+ * @note This is an internally used function to create pixmaps.
+ */
 GtkWidget* create_pixmap (GtkWidget *widget, const gchar *filename)
 {
 	gchar *pathname = NULL;
@@ -106,7 +128,11 @@ GtkWidget* create_pixmap (GtkWidget *widget, const gchar *filename)
 	return pixmap;
 }
 
-/* This is an internally used function to create pixmaps. */
+/**
+ * @brief
+ * @param[in] filename
+ * @note This is an internally used function to create pixmaps.
+ */
 GdkPixbuf* create_pixbuf (const gchar *filename)
 {
 	gchar *pathname = NULL;
@@ -133,7 +159,13 @@ GdkPixbuf* create_pixbuf (const gchar *filename)
 	return pixbuf;
 }
 
-/* This is used to set ATK action descriptions. */
+/**
+ * @brief
+ * @param[in] action
+ * @param[in] action_name
+ * @param[in] description
+ * @note This is used to set ATK action descriptions.
+ */
 void glade_set_atk_action_description (AtkAction *action, const gchar *action_name, const gchar *description)
 {
 	gint n_actions, i;
@@ -145,6 +177,10 @@ void glade_set_atk_action_description (AtkAction *action, const gchar *action_na
 	}
 }
 
+/**
+ * @brief
+ * @param[in] filename
+ */
 int file_exists (char *filename)
 {
 #ifdef _WIN32
@@ -154,6 +190,11 @@ int file_exists (char *filename)
 #endif
 }
 
+/**
+ * @brief
+ * @param[in] filename
+ * @param[in] fileext
+ */
 int file_ext (char *filename, char *fileext)
 {
 	if ( strstr(filename, fileext))
@@ -162,6 +203,11 @@ int file_ext (char *filename, char *fileext)
 	return 0;
 }
 
+/**
+ * @brief
+ * @param[in] in
+ * @param[in] out
+ */
 void file_strip_ext (char *in, char *out)
 {
 	while (*in && *in != '.')
@@ -169,19 +215,130 @@ void file_strip_ext (char *in, char *out)
 	*out = 0;
 }
 
+/**
+ * @brief
+ * @param[in] format
+ */
 char *va(char *format, ...)
 {
 	va_list argptr;
-	static char string[2048];
+	static char string[256];
 	va_start(argptr, format);
 	vsprintf(string, format, argptr);
 	va_end(argptr);
 	return string;
 }
 
+/**
+ * @brief
+ * @param[in] value
+ */
 char *bool_translate( int value )
 {
 	if ( value )
 		return "true";
 	return "false";
+}
+
+/**
+ * @brief
+ */
+int file_length(FILE * f)
+{
+	int pos;
+	int end;
+
+	pos = ftell(f);
+	fseek(f, 0, SEEK_END);
+	end = ftell(f);
+	fseek(f, pos, SEEK_SET);
+
+	return end;
+}
+
+/**
+ * @brief
+ */
+void fatal_error (char* errormessage)
+{
+	fprintf(stderr, "%s\n", errormessage);
+	gtk_exit(0);
+}
+
+void* globalFileBuffer;
+
+/**
+ * @brief
+ * @sa file_load
+ */
+void file_close(void)
+{
+	g_free(globalFileBuffer);
+	globalFileBuffer = NULL;
+}
+
+#define	MAX_READ	0x10000		/* read in blocks of 64k */
+/**
+ * @brief
+ * @sa file_close
+ */
+int file_load(char* filename)
+{
+	FILE *f;
+	byte *buf = NULL;
+	int len, block, remaining, read, tries;
+
+	if (globalFileBuffer)
+		fatal_error("still another buffer active\n");
+
+	f = fopen(filename, "rb");
+	if (!f) {
+		fprintf(stderr, "could not load %s\n", filename);
+		return -1;
+	}
+
+	len = file_length(f);
+	if (!len) {
+		fclose(f);
+		fprintf(stderr, "file %s is empty\n", filename);
+		return -1;
+	}
+
+	buf = (byte*)g_malloc(len + 1);
+	if (!buf)
+		fatal_error("could not allocate memory\n");
+	memset(buf, 0, len + 1);
+	globalFileBuffer = buf;
+
+	/* read in chunks for progress bar */
+	remaining = len;
+	tries = 0;
+	while (remaining) {
+		block = remaining;
+		if (block > MAX_READ)
+			block = MAX_READ;
+		read = fread(buf, 1, block, f);
+		if (read == 0) {
+			/* we might have been trying to read from a CD */
+			if (!tries) {
+				tries = 1;
+			} else {
+				fatal_error("file_load: 0 bytes read");
+			}
+		}
+
+		if (read == -1)
+			fatal_error("file_load: -1 bytes read");
+
+		remaining -= read;
+		buf += read;
+		if (buf > &buf[len])
+			fatal_error("overrun\n");
+	}
+
+	if (remaining != 0)
+		fatal_error(va("read error: remaining: %i\n", remaining));
+	fclose(f);
+
+	return len;
 }

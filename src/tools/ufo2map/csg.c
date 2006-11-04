@@ -25,37 +25,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qbsp.h"
 
-/*
+/**
+ * tag all brushes with original contents
+ * brushes may contain multiple contents
+ * there will be no brush overlap after csg phase
+ *
+ * each side has a count of the other sides it splits
+ *
+ * the best split will be the one that minimizes the total split counts
+ * of all remaining sides
+ *
+ * precalc side on plane table
+ *
+ * evaluate split side
+ * {
+ * cost = 0
+ * for all sides
+ *   for all sides
+ *     get
+ *       if side splits side and splitside is on same child
+ *         cost++;
+ * }
+ */
 
-tag all brushes with original contents
-brushes may contain multiple contents
-there will be no brush overlap after csg phase
-
-
-
-
-each side has a count of the other sides it splits
-
-the best split will be the one that minimizes the total split counts
-of all remaining sides
-
-precalc side on plane table
-
-evaluate split side
-{
-cost = 0
-for all sides
-	for all sides
-		get
-		if side splits side and splitside is on same child
-			cost++;
-}
-
-
-  */
-
-void SplitBrush2 (bspbrush_t *brush, int planenum,
-	bspbrush_t **front, bspbrush_t **back)
+/**
+ * @brief
+ */
+static void SplitBrush2 (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back)
 {
 	SplitBrush (brush, planenum, front, back);
 }
@@ -66,7 +62,7 @@ void SplitBrush2 (bspbrush_t *brush, int planenum,
  * @note Return may by empty if A is contained inside B.
  * @note The originals are undisturbed.
  */
-bspbrush_t *SubtractBrush (bspbrush_t *a, bspbrush_t *b)
+static bspbrush_t *SubtractBrush (bspbrush_t *a, bspbrush_t *b)
 {	/* a - b = out (list) */
 	int		i;
 	bspbrush_t	*front, *back;
@@ -95,39 +91,10 @@ bspbrush_t *SubtractBrush (bspbrush_t *a, bspbrush_t *b)
 
 /**
  * @brief
- * @return a single brush made up by the intersection of the two provided brushes, or NULL if they are disjoint.
- * @note The originals are undisturbed.
- */
-bspbrush_t *IntersectBrush (bspbrush_t *a, bspbrush_t *b)
-{
-	int		i;
-	bspbrush_t	*front, *back;
-	bspbrush_t	*in;
-
-	in = a;
-	for (i=0 ; i<b->numsides && in ; i++) {
-		SplitBrush2 (in, b->sides[i].planenum, &front, &back);
-		if (in != a)
-			FreeBrush (in);
-		if (front)
-			FreeBrush (front);
-		in = back;
-	}
-
-	if (in == a)
-		return NULL;
-
-	in->next = NULL;
-	return in;
-}
-
-
-/**
- * @brief
  * @return true if the two brushes definately do not intersect.
  * @note There will be false negatives for some non-axial combinations.
  */
-qboolean BrushesDisjoint (bspbrush_t *a, bspbrush_t *b)
+static qboolean BrushesDisjoint (bspbrush_t *a, bspbrush_t *b)
 {
 	int		i, j;
 
@@ -149,32 +116,13 @@ qboolean BrushesDisjoint (bspbrush_t *a, bspbrush_t *b)
 	return qfalse;	/* might intersect */
 }
 
-/**
- * @brief
- * @return a content word for the intersection of two brushes.
- * Some combinations will generate a combination (water + clip),
- * but most will be the stronger of the two contents.
- */
-int	IntersectionContents (int c1, int c2)
-{
-	int		out;
-
-	out = c1 | c2;
-
-	if (out & CONTENTS_SOLID)
-		out = CONTENTS_SOLID;
-
-	return out;
-}
-
-
-int		minplanenums[3];
-int		maxplanenums[3];
+int minplanenums[3];
+int maxplanenums[3];
 
 /**
  * @brief Any planes shared with the box edge will be set to no texinfo
  */
-bspbrush_t	*ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t clipmaxs)
+static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t clipmaxs)
 {
 	int		i, j;
 	bspbrush_t	*front,	*back;
@@ -212,12 +160,10 @@ bspbrush_t	*ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t clipmaxs)
 }
 
 
-/*
-===============
-IsInLevel
-===============
-*/
-qboolean IsInLevel( int contents, int level )
+/**
+ * @brief
+ */
+static qboolean IsInLevel( int contents, int level )
 {
 	/* special levels */
 	if ( level == 256 ) {
@@ -261,13 +207,10 @@ qboolean IsInLevel( int contents, int level )
 }
 
 
-/*
-============
-MapBrushesBounds
-============
-*/
-int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs,
-					  vec3_t mins, vec3_t maxs )
+/**
+ * @brief
+ */
+extern int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs )
 {
 	mapbrush_t	*b;
 	int		i, j, num;
@@ -302,13 +245,10 @@ int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, 
 }
 
 
-/*
-===============
-MakeBspBrushList
-===============
-*/
-bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level,
-		vec3_t clipmins, vec3_t clipmaxs)
+/**
+ * @brief
+ */
+extern bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs)
 {
 	mapbrush_t	*mb;
 	bspbrush_t	*brushlist, *newbrush;
@@ -389,12 +329,10 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level,
 	return brushlist;
 }
 
-/*
-===============
-AddBspBrushListToTail
-===============
-*/
-bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
+/**
+ * @brief
+ */
+static bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
 {
 	bspbrush_t	*walk, *next;
 
@@ -411,7 +349,7 @@ bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
 /**
  * @brief Builds a new list that doesn't hold the given brush
  */
-bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip1)
+static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip1)
 {
 	bspbrush_t	*newlist;
 	bspbrush_t	*next;
@@ -430,49 +368,10 @@ bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip1)
 	return newlist;
 }
 
-
-/*
-==================
-WriteBrushMap
-==================
-*/
-void WriteBrushMap (char *name, bspbrush_t *list)
-{
-	FILE	*f;
-	side_t	*s;
-	int		i;
-	winding_t	*w;
-
-	printf ("writing %s\n", name);
-	f = fopen (name, "wb");
-	if (!f)
-		Error ("Can't write %s\b", name);
-
-	fprintf (f, "{\n\"classname\" \"worldspawn\"\n");
-
-	for ( ; list ; list=list->next ) {
-		fprintf (f, "{\n");
-		for (i=0,s=list->sides ; i<list->numsides ; i++,s++) {
-			w = BaseWindingForPlane (mapplanes[s->planenum].normal, mapplanes[s->planenum].dist);
-
-			fprintf (f,"( %i %i %i ) ", (int)w->p[0][0], (int)w->p[0][1], (int)w->p[0][2]);
-			fprintf (f,"( %i %i %i ) ", (int)w->p[1][0], (int)w->p[1][1], (int)w->p[1][2]);
-			fprintf (f,"( %i %i %i ) ", (int)w->p[2][0], (int)w->p[2][1], (int)w->p[2][2]);
-
-			fprintf (f, "%s 0 0 0 1 1\n", texinfo[s->texinfo].texture);
-			FreeWinding (w);
-		}
-		fprintf (f, "}\n");
-	}
-	fprintf (f, "}\n");
-
-	fclose (f);
-}
-
 /**
  * @brief Returns true if b1 is allowed to bite b2
  */
-qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
+static qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
 {
 	/* detail brushes never bite structural brushes */
 	if ( (b1->original->contents & CONTENTS_DETAIL)
@@ -486,7 +385,7 @@ qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
 /**
  * @brief Carves any intersecting solid brushes into the minimum number of non-intersecting brushes.
  */
-bspbrush_t *ChopBrushes (bspbrush_t *head)
+extern bspbrush_t *ChopBrushes (bspbrush_t *head)
 {
 	bspbrush_t	*b1, *b2, *next;
 	bspbrush_t	*tail;
@@ -579,58 +478,3 @@ newlist:
 }
 
 
-/*
-=================
-InitialBrushList
-=================
-*/
-bspbrush_t *InitialBrushList (bspbrush_t *list)
-{
-	bspbrush_t *b;
-	bspbrush_t	*out, *newb;
-	int			i;
-
-	/* only return brushes that have visible faces */
-	out = NULL;
-	for (b=list ; b ; b=b->next) {
-		newb = CopyBrush (b);
-		newb->next = out;
-		out = newb;
-
-		/* clear visible, so it must be set by MarkVisibleFaces_r */
-		/* to be used in the optimized list */
-		for (i=0 ; i<b->numsides ; i++) {
-			newb->sides[i].original = &b->sides[i];
-			b->sides[i].visible = qfalse;
-		}
-	}
-
-	return out;
-}
-
-/*
-=================
-OptimizedBrushList
-=================
-*/
-bspbrush_t *OptimizedBrushList (bspbrush_t *list)
-{
-	bspbrush_t *b;
-	bspbrush_t	*out, *newb;
-	int			i;
-
-	/* only return brushes that have visible faces */
-	out = NULL;
-	for (b=list ; b ; b=b->next) {
-		for (i=0 ; i<b->numsides ; i++)
-			if (b->sides[i].visible)
-				break;
-		if (i == b->numsides)
-			continue;
-		newb = CopyBrush (b);
-		newb->next = out;
-		out = newb;
-	}
-
-	return out;
-}

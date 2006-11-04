@@ -25,35 +25,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qbsp.h"
 
-extern	int	c_nodes;
+extern int c_nodes;
 
 void RemovePortalFromNode (portal_t *portal, node_t *l);
 
-node_t *NodeForPoint (node_t *node, vec3_t origin)
-{
-	plane_t	*plane;
-	vec_t	d;
-
-	while (node->planenum != PLANENUM_LEAF) {
-		plane = &mapplanes[node->planenum];
-		d = DotProduct (origin, plane->normal) - plane->dist;
-		if (d >= 0)
-			node = node->children[0];
-		else
-			node = node->children[1];
-	}
-
-	return node;
-}
-
-
-
-/*
-=============
-FreeTreePortals_r
-=============
-*/
-void FreeTreePortals_r (node_t *node)
+/**
+ * @brief
+ */
+static void FreeTreePortals_r (node_t *node)
 {
 	portal_t	*p, *nextp;
 	int			s;
@@ -75,12 +54,10 @@ void FreeTreePortals_r (node_t *node)
 	node->portals = NULL;
 }
 
-/*
-=============
-FreeTree_r
-=============
-*/
-void FreeTree_r (node_t *node)
+/**
+ * @brief
+ */
+static void FreeTree_r (node_t *node)
 {
 	face_t		*f, *nextf;
 
@@ -109,21 +86,20 @@ void FreeTree_r (node_t *node)
 }
 
 
-/*
-=============
-FreeTree
-=============
-*/
-void FreeTree (tree_t *tree)
+/**
+ * @brief
+ */
+extern void FreeTree (tree_t *tree)
 {
 	FreeTreePortals_r (tree->headnode);
 	FreeTree_r (tree->headnode);
 	free (tree);
 }
 
-/*=============================================================== */
-
-void PrintTree_r (node_t *node, int depth)
+/**
+ * @brief
+ */
+static void PrintTree_r (node_t *node, int depth)
 {
 	int		i;
 	plane_t	*plane;
@@ -148,65 +124,4 @@ void PrintTree_r (node_t *node, int depth)
 		plane->dist);
 	PrintTree_r (node->children[0], depth+1);
 	PrintTree_r (node->children[1], depth+1);
-}
-
-/*
-=========================================================
-
-NODES THAT DON'T SEPERATE DIFFERENT CONTENTS CAN BE PRUNED
-
-=========================================================
-*/
-
-int	c_pruned;
-
-/*
-============
-PruneNodes_r
-============
-*/
-void PruneNodes_r (node_t *node)
-{
-	bspbrush_t		*b, *next;
-
-	if (node->planenum == PLANENUM_LEAF)
-		return;
-	PruneNodes_r (node->children[0]);
-	PruneNodes_r (node->children[1]);
-
-	if ( (node->children[0]->contents & CONTENTS_SOLID)
-	&& (node->children[1]->contents & CONTENTS_SOLID) ) {
-		if (node->faces)
-			Error ("node->faces seperating CONTENTS_SOLID");
-		if (node->children[0]->faces || node->children[1]->faces)
-			Error ("!node->faces with children");
-
-		/* FIXME: free stuff */
-		node->planenum = PLANENUM_LEAF;
-		node->contents = CONTENTS_SOLID;
-		node->detail_seperator = qfalse;
-
-		if (node->brushlist)
-			Error ("PruneNodes: node->brushlist");
-
-		/* combine brush lists */
-		node->brushlist = node->children[1]->brushlist;
-
-		for (b=node->children[0]->brushlist ; b ; b=next) {
-			next = b->next;
-			b->next = node->brushlist;
-			node->brushlist = b;
-		}
-
-		c_pruned++;
-	}
-}
-
-
-void PruneNodes (node_t *node)
-{
-	qprintf ("--- PruneNodes ---\n");
-	c_pruned = 0;
-	PruneNodes_r (node);
-	qprintf ("%5i pruned nodes\n", c_pruned);
 }

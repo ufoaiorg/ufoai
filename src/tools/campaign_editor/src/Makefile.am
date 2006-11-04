@@ -11,6 +11,10 @@ campaign_editor_SOURCES = \
 	main.c \
 	support.c support.h \
 	interface.c interface.h \
+	scripts.c scripts.h \
+	campaign.c campaign.h \
+	weapon.c weapon.h \
+	particle.c particle.h \
 	callbacks.c callbacks.h
 
 campaign_editor_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)

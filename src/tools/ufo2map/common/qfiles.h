@@ -310,7 +310,7 @@ typedef struct
 #define	CONTENTS_SOLID			1		/* an eye is never valid in a solid */
 #define	CONTENTS_WINDOW			2		/* translucent, but not watery */
 #define	CONTENTS_AUX			4
-#define	CONTENTS_LAVA			8
+#define	CONTENTS_SMOKE			8
 #define	CONTENTS_SLIME			16
 #define	CONTENTS_WATER			32
 #define	CONTENTS_MIST			64

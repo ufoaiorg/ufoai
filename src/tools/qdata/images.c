@@ -421,12 +421,12 @@ static mipparm_t mipparms[] =
 	/* utility content attributes */
 	{"water",	CONTENTS_WATER, pt_contents},
 	{"slime",	CONTENTS_SLIME, pt_contents},		/* mildly damaging */
-	{"lava",	CONTENTS_LAVA, pt_contents},		/* very damaging */
+	{"smoke",	CONTENTS_SMOKE, pt_contents},
 	{"window",	CONTENTS_WINDOW, pt_contents},	/* solid, but doesn't eat internal textures */
 	{"mist",	CONTENTS_MIST, pt_contents},	/* non-solid window */
 	{"origin",	CONTENTS_ORIGIN, pt_contents},	/* center of rotating brushes */
 	{"playerclip",	CONTENTS_PLAYERCLIP, pt_contents},
-	{"monsterclip",	CONTENTS_MONSTERCLIP, pt_contents},
+/*	{"monsterclip",	CONTENTS_MONSTERCLIP, pt_contents},*/
 
 	/* utility surface attributes */
 	{"hint",	SURF_HINT, pt_flags},
@@ -583,7 +583,7 @@ void Cmd_Mip (void)
 	}
 
 	/* dword align the size */
-	while ((int)lump_p&3)
+	while ((intptr_t)lump_p&3)
 		*lump_p++ = 0;
 
 	/* write it out */
@@ -618,7 +618,7 @@ void Cmd_Mipdir (void)
 	GetToken (qfalse);
 	strcpy (mip_prefix, token);
 	/* create the directory if needed */
-	sprintf (filename, "%stextures", gamedir, mip_prefix);
+	sprintf (filename, "%stextures", gamedir);
 	Q_mkdir (filename);
 	sprintf (filename, "%stextures/%s", gamedir, mip_prefix);
 	Q_mkdir (filename);

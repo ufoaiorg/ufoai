@@ -95,9 +95,6 @@ float	LittleFloat (float l);
 
 char *COM_Parse (char *data);
 
-extern	char		com_token[1024];
-extern	qboolean	com_eof;
-
 char *copystring(char *s);
 
 void	CreatePath (char *path);

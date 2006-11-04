@@ -26,11 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qbsp.h"
 
-int		c_glfaces;
+static int c_glfaces = 0;
 
-int PortalVisibleSides (portal_t *p)
+/**
+ * @brief
+ */
+static int PortalVisibleSides (portal_t *p)
 {
-	int		fcon, bcon;
+	int fcon, bcon;
 
 	if (!p->onnode)
 		return 0;		/* outside */
@@ -50,14 +53,17 @@ int PortalVisibleSides (portal_t *p)
 	return 0;
 }
 
-void OutputWinding (winding_t *w, FILE *glview)
+/**
+ * @brief
+ */
+static void OutputWinding (winding_t *w, FILE *glview)
 {
-	static	int	level = 128;
-	vec_t		light;
-	int			i;
+	static int level = 128;
+	vec_t light;
+	int i;
 
 	fprintf (glview, "%i\n", w->numpoints);
-	level+=28;
+	level += 28;
 	light = (level&255)/255.0;
 	for (i=0 ; i<w->numpoints ; i++) {
 		fprintf (glview, "%6.3f %6.3f %6.3f %6.3f %6.3f %6.3f\n",
@@ -71,15 +77,13 @@ void OutputWinding (winding_t *w, FILE *glview)
 	fprintf (glview, "\n");
 }
 
-/*
-=============
-OutputPortal
-=============
-*/
-void OutputPortal (portal_t *p, FILE *glview)
+/**
+ * @brief
+ */
+static void OutputPortal (portal_t *p, FILE *glview)
 {
-	winding_t	*w;
-	int		sides;
+	winding_t *w;
+	int sides;
 
 	sides = PortalVisibleSides (p);
 	if (!sides)
@@ -98,14 +102,12 @@ void OutputPortal (portal_t *p, FILE *glview)
 		FreeWinding(w);
 }
 
-/*
-=============
-WriteGLView_r
-=============
-*/
-void WriteGLView_r (node_t *node, FILE *glview)
+/**
+ * @brief
+ */
+static void WriteGLView_r (node_t *node, FILE *glview)
 {
-	portal_t	*p, *nextp;
+	portal_t *p, *nextp;
 
 	if (node->planenum != PLANENUM_LEAF) {
 		WriteGLView_r (node->children[0], glview);
@@ -123,15 +125,14 @@ void WriteGLView_r (node_t *node, FILE *glview)
 	}
 }
 
-/*
-=============
-WriteGLView
-=============
-*/
-void WriteGLView (tree_t *tree, char *source)
+/**
+ * @brief
+ * @note Currently unused
+ */
+extern void WriteGLView (tree_t *tree, char *source)
 {
-	char	name[1024];
-	FILE	*glview;
+	char name[1024];
+	FILE *glview;
 
 	c_glfaces = 0;
 	sprintf (name, "%s%s.gl",outbase, source);

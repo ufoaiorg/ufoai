@@ -528,14 +528,12 @@ TOOLS_OBJS = \
 	$(BUILDDIR)/tools/ufo2map/writebsp.o \
 	$(BUILDDIR)/tools/ufo2map/common/bspfile.o \
 	$(BUILDDIR)/tools/ufo2map/common/cmdlib.o \
-	$(BUILDDIR)/tools/ufo2map/common/l3dslib.o \
 	$(BUILDDIR)/tools/ufo2map/common/lbmlib.o \
 	$(BUILDDIR)/tools/ufo2map/common/mathlib.o \
 	$(BUILDDIR)/tools/ufo2map/common/polylib.o \
 	$(BUILDDIR)/tools/ufo2map/common/scriplib.o \
 	$(BUILDDIR)/tools/ufo2map/common/threads.o \
-	$(BUILDDIR)/tools/ufo2map/common/trace.o \
-	$(BUILDDIR)/tools/ufo2map/common/trilib.o
+	$(BUILDDIR)/tools/ufo2map/common/trace.o
 
 $(BUILDDIR)/ufo2map : $(TOOLS_OBJS)
 	@echo " * [MAP] ...linking";
@@ -607,9 +605,6 @@ $(BUILDDIR)/tools/ufo2map/common/bspfile.o :    $(TOOLS_DIR)/ufo2map/common/bspf
 $(BUILDDIR)/tools/ufo2map/common/cmdlib.o :    $(TOOLS_DIR)/ufo2map/common/cmdlib.c
 	$(DO_TOOLS_CC)
 
-$(BUILDDIR)/tools/ufo2map/common/l3dslib.o :    $(TOOLS_DIR)/ufo2map/common/l3dslib.c
-	$(DO_TOOLS_CC)
-
 $(BUILDDIR)/tools/ufo2map/common/lbmlib.o :    $(TOOLS_DIR)/ufo2map/common/lbmlib.c
 	$(DO_TOOLS_CC)
 
@@ -626,9 +621,6 @@ $(BUILDDIR)/tools/ufo2map/common/threads.o :    $(TOOLS_DIR)/ufo2map/common/thre
 	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/common/trace.o :    $(TOOLS_DIR)/ufo2map/common/trace.c
-	$(DO_TOOLS_CC)
-
-$(BUILDDIR)/tools/ufo2map/common/trilib.o :    $(TOOLS_DIR)/ufo2map/common/trilib.c
 	$(DO_TOOLS_CC)
 
 

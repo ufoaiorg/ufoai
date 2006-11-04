@@ -132,8 +132,6 @@ extern qboolean	nopvs;
 extern qboolean noradiosity;
 extern char		inbase[32], outbase[32];
 
-extern	directlight_t	*directlights;
-
 extern	byte	nodehit[MAX_MAP_NODES];
 
 void BuildLightmaps (void);
@@ -143,9 +141,6 @@ void BuildFacelights (unsigned int facenum);
 void FinalLightFace (unsigned int facenum);
 
 qboolean PvsForOrigin (vec3_t org, byte *pvs);
-
-extern int neededContents;
-extern int forbiddenContents;
 
 void MakeTnodes ( int levels );
 int TestLine (vec3_t start, vec3_t stop);

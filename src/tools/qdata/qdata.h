@@ -1,20 +1,16 @@
 /* qdata.h */
 
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
 #include <sys/stat.h>
+#include <stdint.h>
 
-#include "cmdlib.h"
-#include "scriplib.h"
-#include "mathlib.h"
-#include "trilib.h"
-#include "lbmlib.h"
-#include "threads.h"
-#include "l3dslib.h"
-#include "bspfile.h"
+#include "../ufo2map/common/scriplib.h"
+#include "../ufo2map/common/mathlib.h"
+#include "../ufo2map/common/lbmlib.h"
+#include "../ufo2map/common/threads.h"
+#include "../ufo2map/common/bspfile.h"
+#include "common/trilib.h"
+#include "common/l3dslib.h"
 
 void Cmd_Modelname (void);
 void Cmd_Base (void);

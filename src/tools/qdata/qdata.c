@@ -69,8 +69,9 @@ packheader_t	pakheader;
 
 /**
  * @brief
+ * @sa FinishPak
  */
-void BeginPak (char *outname)
+static void BeginPak (char *outname)
 {
 	if (!g_pak)
 		return;
@@ -88,7 +89,7 @@ void BeginPak (char *outname)
  * @brief Filename should be gamedir relative.
  * Either copies the file to the release dir, or adds it to the pak file.
  */
-void ReleaseFile (char *filename)
+extern void ReleaseFile (char *filename)
 {
 	int		len;
 	byte	*buf;
@@ -144,13 +145,12 @@ void ReleaseFile (char *filename)
 
 /**
  * @brief
+ * @sa BeginPak
  */
 void FinishPak (void)
 {
-	int		dirlen;
-	int		d;
-	int		i;
-	unsigned	checksum;
+	int dirlen ,d, i;
+	unsigned checksum = 0;
 
 	if (!g_pak)
 		return;
@@ -193,7 +193,7 @@ void Cmd_File (void)
 /**
  * @brief
  */
-void PackDirectory_r (char *dir)
+static void PackDirectory_r (char *dir)
 {
 	struct _finddata_t fileinfo;
 	int		handle;
@@ -206,11 +206,9 @@ void PackDirectory_r (char *dir)
 	if (handle == -1)
 		return;
 
-	do
-	{
+	do {
 		sprintf (filename, "%s/%s", dir, fileinfo.name);
-		if (fileinfo.attrib & _A_SUBDIR)
-		{	/* directory */
+		if (fileinfo.attrib & _A_SUBDIR) {	/* directory */
 			if (fileinfo.name[0] != '.')	/* don't pak . and .. */
 				PackDirectory_r (filename);
 			continue;
@@ -227,13 +225,13 @@ void PackDirectory_r (char *dir)
 #ifdef NeXT
 #include <sys/dir.h>
 #else
-#include <sys/dirent.h>
+#include <dirent.h>
 #endif
 
 /**
  * @brief
  */
-void PackDirectory_r (char *dir)
+static void PackDirectory_r (char *dir)
 {
 #ifdef NeXT
 	struct direct **namelist, *ent;
@@ -243,7 +241,6 @@ void PackDirectory_r (char *dir)
 	int		count;
 	struct stat st;
 	int			i;
-	int			len;
 	char		fullname[1024];
 	char		dirstring[1024];
 	char		*name;
@@ -285,13 +282,13 @@ void Cmd_Dir (void)
 }
 
 #define	MAX_RTEX	16384
-int		numrtex;
-char	rtex[MAX_RTEX][64];
+static int numrtex;
+static char rtex[MAX_RTEX][64];
 
 /**
  * @brief
  */
-void ReleaseTexture (char *name)
+static void ReleaseTexture (char *name)
 {
 	int		i;
 	char	path[1024];
@@ -303,10 +300,10 @@ void ReleaseTexture (char *name)
 	if (numrtex == MAX_RTEX)
 		Error ("numrtex == MAX_RTEX");
 
-	strcpy (rtex[i], name);
+	strncpy (rtex[i], name, sizeof(rtex));
 	numrtex++;
 
-	sprintf (path, "textures/%s.wal", name);
+	snprintf (path, sizeof(path), "textures/%s.wal", name);
 	ReleaseFile (path);
 }
 
@@ -329,7 +326,7 @@ void Cmd_Maps (void)
 			continue;
 
 		/* get all the texture references */
-		sprintf (map, "%smaps/%s.bsp", gamedir, token);
+		snprintf (map, sizeof(map), "%smaps/%s.bsp", gamedir, token);
 		LoadBSPFileTexinfo (map);
 		for (i=0 ; i<numtexinfo ; i++)
 			ReleaseTexture (texinfo[i].texture);
@@ -341,7 +338,7 @@ void Cmd_Maps (void)
 /**
  * @brief
  */
-void ParseScript (void)
+static void ParseScript (void)
 {
 	while (1) {
 		do {	/* look for a line starting with a $ command */
@@ -426,12 +423,12 @@ int main (int argc, char **argv)
 		if (!strcmp(argv[i], "-archive")) {
 			/* -archive f:/quake2/release/dump_11_30 */
 			archive = qtrue;
-			strcpy (archivedir, argv[i+1]);
+			strncpy (archivedir, argv[i+1], sizeof(archivedir));
 			printf ("Archiving source to: %s\n", archivedir);
 			i++;
 		} else if (!strcmp(argv[i], "-release")) {
 			g_release = qtrue;
-			strcpy (g_releasedir, argv[i+1]);
+			strncpy (g_releasedir, argv[i+1], sizeof(g_releasedir));
 			printf ("Copy output to: %s\n", g_releasedir);
 			i++;
 		} else if (!strcmp(argv[i], "-compress")) {
@@ -444,7 +441,7 @@ int main (int argc, char **argv)
 			BeginPak (argv[i+1]);
 			i++;
 		} else if (!strcmp(argv[i], "-only")) {
-			strcpy (g_only, argv[i+1]);
+			strncpy (g_only, argv[i+1], sizeof(g_only));
 			printf ("Only grabbing %s\n", g_only);
 			i++;
 		} else if (!strcmp(argv[i], "-3ds")) {
@@ -457,7 +454,7 @@ int main (int argc, char **argv)
 	}
 
 	if (i >= argc)
-		Error ("usage: qgrab [-archive <directory>] [-release <directory>] [-only <model>] [-3ds] file.qgr");
+		Error ("usage: qdata [-archive <directory>] [-release <directory>] [-only <model>] [-3ds] [-pak <pakfile>] [-compress] file.qgr");
 
 	if (do3ds)
 		trifileext = ext_3ds;
@@ -467,7 +464,7 @@ int main (int argc, char **argv)
 	for ( ; i<argc ; i++) {
 		printf ("--------------- %s ---------------\n", argv[i]);
 		/* load the script */
-		strcpy (path, argv[i]);
+		strncpy (path, argv[i], sizeof(path));
 		DefaultExtension (path, ".qdt");
 		SetQdirFromPath (path);
 		LoadScriptFile (ExpandArg(path));

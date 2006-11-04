@@ -30,76 +30,71 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void GetLeafNums (void);
 
-/*============================================================================= */
+int nummodels;
+dmodel_t dmodels[MAX_MAP_MODELS];
 
-int			nummodels;
-dmodel_t	dmodels[MAX_MAP_MODELS];
+int routedatasize;
+byte droutedata[MAX_MAP_ROUTING];
 
-int			routedatasize;
-byte		droutedata[MAX_MAP_ROUTING];
-/*dvis_t		*dvis = (dvis_t *)droutedata; */
+int lightdatasize;
+byte dlightdata[MAX_MAP_LIGHTING];
 
-int			lightdatasize;
-byte		dlightdata[MAX_MAP_LIGHTING];
+int entdatasize;
+char dentdata[MAX_MAP_ENTSTRING];
 
-int			entdatasize;
-char		dentdata[MAX_MAP_ENTSTRING];
+int numleafs;
+dleaf_t dleafs[MAX_MAP_LEAFS];
 
-int			numleafs;
-dleaf_t		dleafs[MAX_MAP_LEAFS];
+int numplanes;
+dplane_t dplanes[MAX_MAP_PLANES];
 
-int			numplanes;
-dplane_t	dplanes[MAX_MAP_PLANES];
+int numvertexes;
+dvertex_t dvertexes[MAX_MAP_VERTS];
 
-int			numvertexes;
-dvertex_t	dvertexes[MAX_MAP_VERTS];
+int numnodes;
+dnode_t dnodes[MAX_MAP_NODES];
 
-int			numnodes;
-dnode_t		dnodes[MAX_MAP_NODES];
+int numtexinfo;
+texinfo_t texinfo[MAX_MAP_TEXINFO];
 
-int			numtexinfo;
-texinfo_t	texinfo[MAX_MAP_TEXINFO];
+int numfaces;
+dface_t dfaces[MAX_MAP_FACES];
 
-int			numfaces;
-dface_t		dfaces[MAX_MAP_FACES];
+int numedges;
+dedge_t dedges[MAX_MAP_EDGES];
 
-int			numedges;
-dedge_t		dedges[MAX_MAP_EDGES];
+int numleaffaces;
+unsigned short dleaffaces[MAX_MAP_LEAFFACES];
 
-int			numleaffaces;
-unsigned short		dleaffaces[MAX_MAP_LEAFFACES];
+int numleafbrushes;
+unsigned short dleafbrushes[MAX_MAP_LEAFBRUSHES];
 
-int			numleafbrushes;
-unsigned short		dleafbrushes[MAX_MAP_LEAFBRUSHES];
+int numsurfedges;
+int dsurfedges[MAX_MAP_SURFEDGES];
 
-int			numsurfedges;
-int			dsurfedges[MAX_MAP_SURFEDGES];
+int numbrushes;
+dbrush_t dbrushes[MAX_MAP_BRUSHES];
 
-int			numbrushes;
-dbrush_t	dbrushes[MAX_MAP_BRUSHES];
+int numbrushsides;
+dbrushside_t dbrushsides[MAX_MAP_BRUSHSIDES];
 
-int			numbrushsides;
-dbrushside_t	dbrushsides[MAX_MAP_BRUSHSIDES];
+int numareas;
+darea_t dareas[MAX_MAP_AREAS];
 
-int			numareas;
-darea_t		dareas[MAX_MAP_AREAS];
+int numareaportals;
+dareaportal_t dareaportals[MAX_MAP_AREAPORTALS];
 
-int			numareaportals;
-dareaportal_t	dareaportals[MAX_MAP_AREAPORTALS];
+byte dpop[256];
 
-byte		dpop[256];
-
-/*
-===============
-CompressRouting
-
-===============
-*/
-byte *CompressRouting( byte *dataStart, byte *destStart, int l )
+/**
+ * @brief Compress the routing data of a map
+ * @sa DeCompressRouting
+ */
+extern byte *CompressRouting( byte *dataStart, byte *destStart, int l )
 {
-	int		c;
-	byte	val;
-	byte	*data, *dend, *dest_p, *count_p;
+	int c;
+	byte val;
+	byte *data, *dend, *dest_p, *count_p;
 
 	dest_p = destStart;
 	data = dataStart;
@@ -111,7 +106,8 @@ byte *CompressRouting( byte *dataStart, byte *destStart, int l )
 			val = *data++;
 			c = 0;
 			while ( data+1 < dend && *data == *(data+1) ) {
-				if ( c >= 0x7F ) break;
+				if (c >= 0x7F)
+					break;
 				data++;
 				c++;
 			}
@@ -122,7 +118,8 @@ byte *CompressRouting( byte *dataStart, byte *destStart, int l )
 			count_p = dest_p++;
 			c = 0;
 			while ( (data+1 < dend && *data != *(data+1)) || data == dend-1 ) {
-				if ( c >= 0x7F ) break;
+				if (c >= 0x7F)
+					break;
 				*dest_p++ = *data++;
 				c++;
 			}
@@ -136,7 +133,12 @@ byte *CompressRouting( byte *dataStart, byte *destStart, int l )
 	return dest_p;
 }
 
-int DeCompressRouting( byte **source, byte *dataStart )
+/**
+ * @brief
+ * @sa CompressRouting
+ * @note unused
+ */
+extern int DeCompressRouting( byte **source, byte *dataStart )
 {
 	int	i, c;
 	byte	*data_p;
@@ -310,6 +312,9 @@ void SwapBSPFile (qboolean todisk)
 
 dheader_t	*header;
 
+/**
+ * @brief
+ */
 int CopyLump (int lump, void *dest, int size)
 {
 	int		length, ofs;
@@ -325,11 +330,9 @@ int CopyLump (int lump, void *dest, int size)
 	return length / size;
 }
 
-/*
-=============
-LoadBSPFile
-=============
-*/
+/**
+ * @brief
+ */
 void LoadBSPFile (char *filename)
 {
 	int			i;
@@ -380,9 +383,8 @@ void LoadBSPFile (char *filename)
  */
 void LoadBSPFileTexinfo (char *filename)
 {
-	int			i;
-	FILE		*f;
-	int		length, ofs;
+	int i, length, ofs;
+	FILE *f;
 
 	header = malloc(sizeof(dheader_t));
 
@@ -414,11 +416,12 @@ void LoadBSPFileTexinfo (char *filename)
 }
 
 
-/*============================================================================ */
+FILE *wadfile;
+dheader_t outheader;
 
-FILE		*wadfile;
-dheader_t	outheader;
-
+/**
+ * @brief
+ */
 void AddLump (int lumpnum, void *data, int len)
 {
 	lump_t *lump;
@@ -472,8 +475,6 @@ void WriteBSPFile (char *filename)
 	fclose (wadfile);
 }
 
-/*============================================================================ */
-
 /**
  * @brief Dumps info about current file
  */
@@ -517,11 +518,12 @@ void PrintBSPFileSizes (void)
 }
 
 
-/*============================================ */
+int num_entities;
+entity_t entities[MAX_MAP_ENTITIES];
 
-int			num_entities;
-entity_t	entities[MAX_MAP_ENTITIES];
-
+/**
+ * @brief
+ */
 void StripTrailing (char *e)
 {
 	char	*s;
@@ -533,11 +535,9 @@ void StripTrailing (char *e)
 	}
 }
 
-/*
-=================
-ParseEpair
-=================
-*/
+/**
+ * @brief
+ */
 epair_t *ParseEpair (void)
 {
 	epair_t	*e;
@@ -561,12 +561,11 @@ epair_t *ParseEpair (void)
 }
 
 
-/*
-================
-ParseEntity
-================
-*/
-qboolean	ParseEntity (void)
+/**
+ * @brief
+ * @sa ParseEntities
+ */
+qboolean ParseEntity (void)
 {
 	epair_t		*e;
 	entity_t	*mapent;
@@ -598,6 +597,8 @@ qboolean	ParseEntity (void)
 
 /**
  * @brief Parses the dentdata string into entities
+ * @sa UnparseEntities
+ * @sa ParseEntity
  */
 void ParseEntities (void)
 {
@@ -612,6 +613,7 @@ void ParseEntities (void)
 
 /**
  * @brief Generates the dentdata string from all the entities
+ * @sa ParseEntities
  */
 void UnparseEntities (void)
 {
@@ -634,9 +636,9 @@ void UnparseEntities (void)
 		end += 2;
 
 		for (ep = entities[i].epairs ; ep ; ep=ep->next) {
-			strcpy (key, ep->key);
+			strncpy (key, ep->key, sizeof(key));
 			StripTrailing (key);
-			strcpy (value, ep->value);
+			strncpy (value, ep->value, sizeof(value));
 			StripTrailing (value);
 
 			sprintf (line, "\"%s\" \"%s\"\n", key, value);
@@ -652,18 +654,24 @@ void UnparseEntities (void)
 	entdatasize = end - buf + 1;
 }
 
+/**
+ * @brief
+ */
 void PrintEntity (entity_t *ent)
 {
-	epair_t	*ep;
+	epair_t *ep;
 
 	printf ("------- entity %p -------\n", ent);
 	for (ep=ent->epairs ; ep ; ep=ep->next)
 		printf ("%s = %s\n", ep->key, ep->value);
 }
 
+/**
+ * @brief
+ */
 void SetKeyValue (entity_t *ent, char *key, char *value)
 {
-	epair_t	*ep;
+	epair_t *ep;
 
 	for (ep=ent->epairs ; ep ; ep=ep->next)
 		if (!strcmp (ep->key, key) ) {
@@ -678,9 +686,12 @@ void SetKeyValue (entity_t *ent, char *key, char *value)
 	ep->value = copystring(value);
 }
 
+/**
+ * @brief
+ */
 char *ValueForKey (entity_t *ent, char *key)
 {
-	epair_t	*ep;
+	epair_t *ep;
 
 	for (ep=ent->epairs ; ep ; ep=ep->next)
 		if (!strcmp (ep->key, key) )
@@ -688,18 +699,24 @@ char *ValueForKey (entity_t *ent, char *key)
 	return "";
 }
 
+/**
+ * @brief
+ */
 vec_t FloatForKey (entity_t *ent, char *key)
 {
-	char	*k;
+	char *k;
 
 	k = ValueForKey (ent, key);
 	return atof(k);
 }
 
+/**
+ * @brief
+ */
 void GetVectorForKey (entity_t *ent, char *key, vec3_t vec)
 {
-	char	*k;
-	double	v1, v2, v3;
+	char *k;
+	double v1, v2, v3;
 
 	k = ValueForKey (ent, key);
 	/* scanf into doubles, then assign, so it is vec_t size independent */
@@ -709,5 +726,3 @@ void GetVectorForKey (entity_t *ent, char *key, vec3_t vec)
 	vec[1] = v2;
 	vec[2] = v3;
 }
-
-

@@ -27,12 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "lbmlib.h"
 
 
-
 /*
 ============================================================================
-
-						LBM STUFF
-
+LBM STUFF
 ============================================================================
 */
 
@@ -69,9 +66,7 @@ typedef struct
 	short		pageWidth,pageHeight;
 } bmhd_t;
 
-extern	bmhd_t	bmhd;						/* will be in native byte order */
-
-
+static bmhd_t bmhd;						/* will be in native byte order */
 
 #define FORMID ('F'+('O'<<8)+((int)'R'<<16)+((int)'M'<<24))
 #define ILBMID ('I'+('L'<<8)+((int)'B'<<16)+((int)'M'<<24))
@@ -81,9 +76,10 @@ extern	bmhd_t	bmhd;						/* will be in native byte order */
 #define CMAPID ('C'+('M'<<8)+((int)'A'<<16)+((int)'P'<<24))
 
 
-bmhd_t  bmhd;
-
-int    Align (int l)
+/**
+ * @brief
+ */
+int Align (int l)
 {
 	if (l&1)
 		return l+1;
@@ -96,10 +92,10 @@ int    Align (int l)
  * @brief
  * @note Source must be evenly aligned!
  */
-byte  *LBMRLEDecompress (byte *source,byte *unpacked, int bpwidth)
+static byte *LBMRLEDecompress (byte *source,byte *unpacked, int bpwidth)
 {
-	int     count;
-	byte    b,rept;
+	int count;
+	byte b,rept;
 
 	count = 0;
 
@@ -129,21 +125,15 @@ byte  *LBMRLEDecompress (byte *source,byte *unpacked, int bpwidth)
 }
 
 
-/*
-=================
-LoadLBM
-=================
-*/
+/**
+ * @brief
+ * @sa WriteLBMfile
+ */
 void LoadLBM (char *filename, byte **picture, byte **palette)
 {
-	byte    *LBMbuffer, *picbuffer, *cmapbuffer;
-	int             y;
-	byte    *LBM_P, *LBMEND_P;
-	byte    *pic_p;
-	byte    *body_p;
-
-	int    formtype,formlength;
-	int    chunktype,chunklength;
+	byte *LBMbuffer, *picbuffer, *cmapbuffer;
+	byte *LBM_P, *LBMEND_P, *pic_p, *body_p;
+	int formtype,formlength, chunktype,chunklength, y;
 
 	/* qiet compiler warnings */
 	picbuffer = NULL;
@@ -155,7 +145,7 @@ void LoadLBM (char *filename, byte **picture, byte **palette)
 	/* parse the LBM header */
 	LBM_P = LBMbuffer;
 	if ( *(int *)LBMbuffer != LittleLong(FORMID) )
-	   Error ("No FORM ID at start of file!\n");
+		Error ("No FORM ID at start of file!\n");
 
 	LBM_P += 4;
 	formlength = BigLong( *(int *)LBM_P );
@@ -215,12 +205,9 @@ void LoadLBM (char *filename, byte **picture, byte **palette)
 			}
 			break;
 		}
-
 		LBM_P += Align(chunklength);
 	}
-
 	free (LBMbuffer);
-
 	*picture = picbuffer;
 
 	if (palette)
@@ -230,24 +217,19 @@ void LoadLBM (char *filename, byte **picture, byte **palette)
 
 /*
 ============================================================================
-
-							WRITE LBM
-
+WRITE LBM
 ============================================================================
 */
 
-/*
-==============
-WriteLBMfile
-==============
-*/
-void WriteLBMfile (char *filename, byte *data,
-				   int width, int height, byte *palette)
+/**
+ * @brief
+ * @sa LoadLBM
+ */
+void WriteLBMfile (char *filename, byte *data, int width, int height, byte *palette)
 {
-	byte    *lbm, *lbmptr;
-	int    *formlength, *bmhdlength, *cmaplength, *bodylength;
-	int    length;
-	bmhd_t  basebmhd;
+	byte *lbm, *lbmptr;
+	int *formlength, *bmhdlength, *cmaplength, *bodylength, length;
+	bmhd_t basebmhd;
 
 	lbm = lbmptr = malloc (width*height+1000);
 
@@ -339,9 +321,7 @@ void WriteLBMfile (char *filename, byte *data,
 
 /*
 ============================================================================
-
 LOAD PCX
-
 ============================================================================
 */
 
@@ -363,11 +343,10 @@ typedef struct
 } pcx_t;
 
 
-/*
-==============
-LoadPCX
-==============
-*/
+/**
+ * @brief
+ * @sa WritePCXfile
+ */
 void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *height)
 {
 	byte	*raw;
@@ -443,13 +422,11 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 	free (pcx);
 }
 
-/*
-==============
-WritePCXfile
-==============
-*/
-void WritePCXfile (char *filename, byte *data,
-				   int width, int height, byte *palette)
+/**
+ * @brief
+ * @sa LoadPCX
+ */
+void WritePCXfile (char *filename, byte *data, int width, int height, byte *palette)
 {
 	int		i, j, length;
 	pcx_t	*pcx;
@@ -501,18 +478,18 @@ void WritePCXfile (char *filename, byte *data,
 
 /*
 ============================================================================
-
 LOAD IMAGE
-
 ============================================================================
 */
 
 /**
  * @brief Will load either an lbm or pcx, depending on extension.
  * @note Any of the return pointers can be NULL if you don't want them.
+ * @sa LoadPCX
+ * @sa LoadLBM
+ * @sa Save256Image
  */
-void Load256Image (char *name, byte **pixels, byte **palette,
-				   int *width, int *height)
+void Load256Image (char *name, byte **pixels, byte **palette, int *width, int *height)
 {
 	char	ext[128];
 
@@ -532,11 +509,13 @@ void Load256Image (char *name, byte **pixels, byte **palette,
 
 /**
  * @brief Will save either an lbm or pcx, depending on extension.
+ * @sa Load256Image
+ * @sa WriteLBMfile
+ * @sa WritePCXfile
  */
-void Save256Image (char *name, byte *pixels, byte *palette,
-				   int width, int height)
+void Save256Image (char *name, byte *pixels, byte *palette, int width, int height)
 {
-	char	ext[128];
+	char ext[128];
 
 	ExtractFileExtension (name, ext);
 	if (!Q_strcasecmp (ext, "lbm"))
@@ -548,13 +527,9 @@ void Save256Image (char *name, byte *pixels, byte *palette,
 }
 
 
-
-
 /*
 ============================================================================
-
 TARGA IMAGE
-
 ============================================================================
 */
 
@@ -566,9 +541,12 @@ typedef struct _TargaHeader {
 	unsigned char	pixel_size, attributes;
 } TargaHeader;
 
-int fgetLittleShort (FILE *f)
+/**
+ * @brief
+ */
+static int fgetLittleShort (FILE *f)
 {
-	byte	b1, b2;
+	byte b1, b2;
 
 	b1 = fgetc(f);
 	b2 = fgetc(f);
@@ -576,32 +554,15 @@ int fgetLittleShort (FILE *f)
 	return (short)(b1 + b2*256);
 }
 
-int fgetLittleLong (FILE *f)
-{
-	byte	b1, b2, b3, b4;
-
-	b1 = fgetc(f);
-	b2 = fgetc(f);
-	b3 = fgetc(f);
-	b4 = fgetc(f);
-
-	return b1 + (b2<<8) + (b3<<16) + (b4<<24);
-}
-
-
-/*
-=============
-LoadTGA
-=============
-*/
+/**
+ * @brief
+ */
 void LoadTGA (char *name, byte **pixels, int *width, int *height)
 {
-	int				columns, rows, numPixels;
-	byte			*pixbuf;
-	int				row, column;
-	FILE			*fin;
-	byte			*targa_rgba;
-	TargaHeader		targa_header;
+	int columns, rows, numPixels, row, column;
+	byte *pixbuf, *targa_rgba;
+	FILE *fin;
+	TargaHeader targa_header;
 
 	fin = fopen (name, "rb");
 	if (!fin)
@@ -649,26 +610,25 @@ void LoadTGA (char *name, byte **pixels, int *width, int *height)
 			for (column=0; column<columns; column++) {
 				unsigned char red,green,blue,alphabyte;
 				switch (targa_header.pixel_size) {
-					case 24:
-
-							blue = getc(fin);
-							green = getc(fin);
-							red = getc(fin);
-							*pixbuf++ = red;
-							*pixbuf++ = green;
-							*pixbuf++ = blue;
-							*pixbuf++ = 255;
-							break;
-					case 32:
-							blue = getc(fin);
-							green = getc(fin);
-							red = getc(fin);
-							alphabyte = getc(fin);
-							*pixbuf++ = red;
-							*pixbuf++ = green;
-							*pixbuf++ = blue;
-							*pixbuf++ = alphabyte;
-							break;
+				case 24:
+					blue = getc(fin);
+					green = getc(fin);
+					red = getc(fin);
+					*pixbuf++ = red;
+					*pixbuf++ = green;
+					*pixbuf++ = blue;
+					*pixbuf++ = 255;
+					break;
+				case 32:
+					blue = getc(fin);
+					green = getc(fin);
+					red = getc(fin);
+					alphabyte = getc(fin);
+					*pixbuf++ = red;
+					*pixbuf++ = green;
+					*pixbuf++ = blue;
+					*pixbuf++ = alphabyte;
+					break;
 				}
 			}
 		}
@@ -682,18 +642,18 @@ void LoadTGA (char *name, byte **pixels, int *width, int *height)
 				packetSize = 1 + (packetHeader & 0x7f);
 				if (packetHeader & 0x80) {        /* run-length packet */
 					switch (targa_header.pixel_size) {
-						case 24:
-								blue = getc(fin);
-								green = getc(fin);
-								red = getc(fin);
-								alphabyte = 255;
-								break;
-						case 32:
-								blue = getc(fin);
-								green = getc(fin);
-								red = getc(fin);
-								alphabyte = getc(fin);
-								break;
+					case 24:
+						blue = getc(fin);
+						green = getc(fin);
+						red = getc(fin);
+						alphabyte = 255;
+						break;
+					case 32:
+						blue = getc(fin);
+						green = getc(fin);
+						red = getc(fin);
+						alphabyte = getc(fin);
+						break;
 					}
 
 					for (j=0;j<packetSize;j++) {
@@ -714,25 +674,25 @@ void LoadTGA (char *name, byte **pixels, int *width, int *height)
 				} else {                            /* non run-length packet */
 					for (j=0;j<packetSize;j++) {
 						switch (targa_header.pixel_size) {
-							case 24:
-									blue = getc(fin);
-									green = getc(fin);
-									red = getc(fin);
-									*pixbuf++ = red;
-									*pixbuf++ = green;
-									*pixbuf++ = blue;
-									*pixbuf++ = 255;
-									break;
-							case 32:
-									blue = getc(fin);
-									green = getc(fin);
-									red = getc(fin);
-									alphabyte = getc(fin);
-									*pixbuf++ = red;
-									*pixbuf++ = green;
-									*pixbuf++ = blue;
-									*pixbuf++ = alphabyte;
-									break;
+						case 24:
+							blue = getc(fin);
+							green = getc(fin);
+							red = getc(fin);
+							*pixbuf++ = red;
+							*pixbuf++ = green;
+							*pixbuf++ = blue;
+							*pixbuf++ = 255;
+							break;
+						case 32:
+							blue = getc(fin);
+							green = getc(fin);
+							red = getc(fin);
+							alphabyte = getc(fin);
+							*pixbuf++ = red;
+							*pixbuf++ = green;
+							*pixbuf++ = blue;
+							*pixbuf++ = alphabyte;
+							break;
 						}
 						column++;
 						if (column==columns) { /* pixel packet run spans across rows */
@@ -749,6 +709,5 @@ void LoadTGA (char *name, byte **pixels, int *width, int *height)
 			breakOut:;
 		}
 	}
-
 	fclose(fin);
 }

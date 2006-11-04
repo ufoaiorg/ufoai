@@ -47,24 +47,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 int myargc;
 char **myargv;
 
-char		com_token[1024];
-qboolean	com_eof;
-
-qboolean		archive;
-char			archivedir[1024];
+static char com_token[1024];
+qboolean com_eof, archive;
+char archivedir[1024];
 
 
-/*
-===================
-ExpandWildcards
-
-Mimic unix command line expansion
-===================
-*/
 #define	MAX_EX_ARGC	1024
-int		ex_argc;
-char	*ex_argv[MAX_EX_ARGC];
+int ex_argc;
+char *ex_argv[MAX_EX_ARGC];
+
 #ifdef _WIN32
+/**
+ * @brief Mimic unix command line expansion
+ */
 void ExpandWildcards (int *argc, char ***argv)
 {
 	struct _finddata_t fileinfo;
@@ -75,12 +70,9 @@ void ExpandWildcards (int *argc, char ***argv)
 	char	*path;
 
 	ex_argc = 0;
-	for (i=0 ; i<*argc ; i++)
-	{
+	for (i=0 ; i<*argc ; i++) {
 		path = (*argv)[i];
-		if ( path[0] == '-'
-			|| ( !strstr(path, "*") && !strstr(path, "?") ) )
-		{
+		if ( path[0] == '-' || ( !strstr(path, "*") && !strstr(path, "?") ) ) {
 			ex_argv[ex_argc++] = path;
 			continue;
 		}
@@ -91,8 +83,7 @@ void ExpandWildcards (int *argc, char ***argv)
 
 		ExtractFilePath (path, filebase);
 
-		do
-		{
+		do {
 			sprintf (filename, "%s%s", filebase, fileinfo.name);
 			ex_argv[ex_argc++] = copystring (filename);
 		} while (_findnext( handle, &fileinfo ) != -1);
@@ -127,8 +118,8 @@ void Error (char *error, ...)
 	vsprintf (text, error,argptr);
 	va_end (argptr);
 
-	sprintf (text2, "%s\nGetLastError() = %i", text, err);
-        MessageBox(NULL, text2, "Error", 0 /* MB_OK */ );
+	snprintf (text2, sizeof(text2), "%s\nGetLastError() = %i", text, err);
+	MessageBox(NULL, text2, "Error", 0 /* MB_OK */ );
 
 	exit (1);
 }
@@ -167,20 +158,19 @@ void qprintf (char *format, ...)
 }
 
 
-/*
+/**
+ * qdir will hold the path up to the quake directory, including the slash
+ * f:\quake\
+ * /raid/quake/
+ * gamedir will hold qdir + the game directory (id1, id2, etc)
+ */
 
-qdir will hold the path up to the quake directory, including the slash
+char qdir[1024];
+char gamedir[1024];
 
-  f:\quake\
-  /raid/quake/
-
-gamedir will hold qdir + the game directory (id1, id2, etc)
-
-  */
-
-char		qdir[1024];
-char		gamedir[1024];
-
+/**
+ * @brief
+ */
 void SetQdirFromPath (char *path)
 {
 	char	temp[1024];
@@ -194,7 +184,6 @@ void SetQdirFromPath (char *path)
 	}
 
 	/* search for ".gamedir"-file in path */
-
 	strncpy (c, path, strlen(path)-1);
 	for (pathlength=strlen(c)-1; pathlength > 0 ; pathlength--) {
 		c[pathlength] = 0;
@@ -202,7 +191,7 @@ void SetQdirFromPath (char *path)
 		&& (!c[strlen(c)-1] == '\\')
 		&& (!c[strlen(c)-1] == ':') )
 			continue;
-		sprintf (temp, "%s/%s", c, BASEDIR_ID_FILE);
+		snprintf (temp, sizeof(temp), "%s/%s", c, BASEDIR_ID_FILE);
 		if ( FileExists(temp) ) {
 			strncpy (gamedir, c, strlen(c)-1);
 			sprintf (gamedir, "%s/%s/", gamedir, BASEDIR);
@@ -213,6 +202,9 @@ void SetQdirFromPath (char *path)
 	Error ("SetQdirFromPath: No file '%s' found in any directory of the path %s", BASEDIR_ID_FILE, path);
 }
 
+/**
+ * @brief
+ */
 char *ExpandArg (char *path)
 {
 	static char full[1024];
@@ -220,12 +212,14 @@ char *ExpandArg (char *path)
 	if (path[0] != '/' && path[0] != '\\' && path[1] != ':') {
 		Q_getwd (full);
 		strcat (full, path);
-	}
-	else
-		strcpy (full, path);
+	} else
+		strncpy (full, path, sizeof(full));
 	return full;
 }
 
+/**
+ * @brief
+ */
 char *ExpandPath (char *path)
 {
 	static char full[1024];
@@ -233,25 +227,31 @@ char *ExpandPath (char *path)
 		Error ("ExpandPath called without qdir set");
 	if (path[0] == '/' || path[0] == '\\' || path[1] == ':')
 		return path;
-	sprintf (full, "%s%s", qdir, path);
+	snprintf (full, sizeof(full), "%s%s", qdir, path);
 	return full;
 }
 
+/**
+ * @brief
+ */
 char *ExpandPathAndArchive (char *path)
 {
-	char	*expanded;
-	char	archivename[1024];
+	char *expanded;
+	char archivename[1024];
 
 	expanded = ExpandPath (path);
 
 	if (archive) {
-		sprintf (archivename, "%s/%s", archivedir, path);
+		snprintf (archivename, sizeof(archivename), "%s/%s", archivedir, path);
 		QCopyFile (expanded, archivename);
 	}
 	return expanded;
 }
 
 
+/**
+ * @brief
+ */
 char *copystring(char *s)
 {
 	char	*b;
@@ -260,22 +260,16 @@ char *copystring(char *s)
 	return b;
 }
 
-
-
-/*
-================
-I_FloatTime
-================
-*/
+/**
+ * @brief
+ */
 double I_FloatTime (void)
 {
-	time_t	t;
-
+	time_t t;
 	time (&t);
-
 	return t;
 #if 0
-/* more precise, less portable */
+	/* more precise, less portable */
 	struct timeval tp;
 	struct timezone tzp;
 	static int		secbase;
@@ -291,6 +285,9 @@ double I_FloatTime (void)
 #endif
 }
 
+/**
+ * @brief
+ */
 void Q_getwd (char *out)
 {
 #ifdef _WIN32
@@ -303,6 +300,9 @@ void Q_getwd (char *out)
 }
 
 
+/**
+ * @brief
+ */
 void Q_mkdir (char *path)
 {
 #ifdef _WIN32
@@ -322,7 +322,7 @@ void Q_mkdir (char *path)
  */
 int	FileTime (char *path)
 {
-	struct	stat	buf;
+	struct stat buf;
 
 	if (stat (path,&buf) == -1)
 		return -1;
@@ -330,15 +330,12 @@ int	FileTime (char *path)
 	return buf.st_mtime;
 }
 
-
-
 /**
  * @brief Parse a token out of a string
  */
 char *COM_Parse (char *data)
 {
-	int		c;
-	int		len;
+	int c, len;
 
 	len = 0;
 	com_token[0] = 0;
@@ -400,7 +397,9 @@ skipwhite:
 	return data;
 }
 
-
+/**
+ * @brief
+ */
 int Q_strncasecmp (char *s1, char *s2, int n)
 {
 	int c1, c2;
@@ -425,15 +424,21 @@ int Q_strncasecmp (char *s1, char *s2, int n)
 	return 0;		/* strings are equal */
 }
 
+/**
+ * @brief
+ */
 int Q_strcasecmp (char *s1, char *s2)
 {
 	return Q_strncasecmp (s1, s2, 99999);
 }
 
 
+/**
+ * @brief
+ */
 char *strupr (char *start)
 {
-	char	*in;
+	char *in;
 	in = start;
 	while (*in) {
 		*in = toupper(*in);
@@ -442,9 +447,12 @@ char *strupr (char *start)
 	return start;
 }
 
+/**
+ * @brief
+ */
 char *strlower (char *start)
 {
-	char	*in;
+	char *in;
 	in = start;
 	while (*in) {
 		*in = tolower(*in);
@@ -456,9 +464,7 @@ char *strlower (char *start)
 
 /*
 =============================================================================
-
-						MISC FUNCTIONS
-
+MISC FUNCTIONS
 =============================================================================
 */
 
@@ -469,7 +475,7 @@ char *strlower (char *start)
  */
 int CheckParm (char *check)
 {
-	int             i;
+	int i;
 
 	for (i = 1;i<myargc;i++) {
 		if ( !Q_strcasecmp(check, myargv[i]) )
@@ -479,17 +485,12 @@ int CheckParm (char *check)
 	return 0;
 }
 
-
-
-/*
-================
-Q_filelength
-================
-*/
+/**
+ * @brief
+ */
 int Q_filelength (FILE *f)
 {
-	int		pos;
-	int		end;
+	int pos, end;
 
 	pos = ftell (f);
 	fseek (f, 0, SEEK_END);
@@ -499,25 +500,28 @@ int Q_filelength (FILE *f)
 	return end;
 }
 
-
+/**
+ * @brief
+ */
 FILE *SafeOpenWrite (char *filename)
 {
 	FILE	*f;
 
 	f = fopen(filename, "wb");
-
 	if (!f)
 		Error ("Error opening %s: %s",filename,strerror(errno));
 
 	return f;
 }
 
+/**
+ * @brief
+ */
 FILE *SafeOpenRead (char *filename)
 {
 	FILE	*f;
 
 	f = fopen(filename, "rb");
-
 	if (!f)
 		Error ("Error opening %s: %s",filename,strerror(errno));
 
@@ -525,6 +529,9 @@ FILE *SafeOpenRead (char *filename)
 }
 
 
+/**
+ * @brief
+ */
 void SafeRead (FILE *f, void *buffer, int count)
 {
 	if ( fread (buffer, 1, count, f) != (size_t)count)
@@ -532,6 +539,9 @@ void SafeRead (FILE *f, void *buffer, int count)
 }
 
 
+/**
+ * @brief
+ */
 void SafeWrite (FILE *f, void *buffer, int count)
 {
 	if (fwrite (buffer, 1, count, f) != (size_t)count)
@@ -539,11 +549,9 @@ void SafeWrite (FILE *f, void *buffer, int count)
 }
 
 
-/*
-==============
-FileExists
-==============
-*/
+/**
+ * @brief
+ */
 qboolean FileExists (char *filename)
 {
 	FILE	*f;
@@ -555,16 +563,15 @@ qboolean FileExists (char *filename)
 	return qtrue;
 }
 
-/*
-==============
-LoadFile
-==============
-*/
+/**
+ * @brief
+ * @sa SaveFile
+ */
 int LoadFile (char *filename, void **bufferptr)
 {
-	FILE	*f;
-	int    length;
-	void    *buffer;
+	FILE *f;
+	int length;
+	void *buffer;
 
 	f = SafeOpenRead (filename);
 	length = Q_filelength (f);
@@ -581,12 +588,13 @@ int LoadFile (char *filename, void **bufferptr)
 /**
  * @brief
  * @note Allows failure
+ * @sa LoadFile
  */
-int    TryLoadFile (char *filename, void **bufferptr)
+int TryLoadFile (char *filename, void **bufferptr)
 {
-	FILE	*f;
-	int    length;
-	void    *buffer;
+	FILE *f;
+	int length;
+	void *buffer;
 
 	*bufferptr = NULL;
 
@@ -603,23 +611,22 @@ int    TryLoadFile (char *filename, void **bufferptr)
 	return length;
 }
 
-
-/*
-==============
-SaveFile
-==============
-*/
+/**
+ * @brief
+ * @sa LoadFile
+ */
 void SaveFile (char *filename, void *buffer, int count)
 {
-	FILE	*f;
+	FILE *f;
 
 	f = SafeOpenWrite (filename);
 	SafeWrite (f, buffer, count);
 	fclose (f);
 }
 
-
-
+/**
+ * @brief
+ */
 void DefaultExtension (char *path, char *extension)
 {
 	char    *src;
@@ -636,22 +643,27 @@ void DefaultExtension (char *path, char *extension)
 	strcat (path, extension);
 }
 
-
+/**
+ * @brief
+ */
 void DefaultPath (char *path, char *basepath)
 {
-	char    temp[128];
+	char temp[128];
 
 	if (path[0] == PATHSEPERATOR)
 		return;                   /* absolute path location */
-	strcpy (temp,path);
-	strcpy (path,basepath);
-	strcat (path,temp);
+	strcpy(temp,path);
+	strcpy(path,basepath);
+	strcat(path,temp);
 }
 
 
+/**
+ * @brief
+ */
 void StripFilename (char *path)
 {
-	int             length;
+	int length;
 
 	length = strlen(path)-1;
 	while (length > 0 && path[length] != PATHSEPERATOR)
@@ -659,9 +671,12 @@ void StripFilename (char *path)
 	path[length] = 0;
 }
 
+/**
+ * @brief
+ */
 void StripExtension (char *path)
 {
-	int             length;
+	int length;
 
 	length = strlen(path)-1;
 	while (length > 0 && path[length] != '.') {
@@ -674,16 +689,14 @@ void StripExtension (char *path)
 }
 
 
-/*
-====================
-Extract file parts
-====================
-*/
-/* FIXME: should include the slash, otherwise */
-/* backing to an empty path will be wrong when appending a slash */
+/**
+ * @brief
+ * FIXME: should include the slash, otherwise
+ * backing to an empty path will be wrong when appending a slash
+ */
 void ExtractFilePath (char *path, char *dest)
 {
-	char    *src;
+	char *src;
 
 	src = path + strlen(path) - 1;
 
@@ -695,6 +708,9 @@ void ExtractFilePath (char *path, char *dest)
 	dest[src-path] = 0;
 }
 
+/**
+ * @brief
+ */
 void ExtractFileBase (char *path, char *dest)
 {
 	char    *src;
@@ -711,6 +727,9 @@ void ExtractFileBase (char *path, char *dest)
 	*dest = 0;
 }
 
+/**
+ * @brief
+ */
 void ExtractFileExtension (char *path, char *dest)
 {
 	char    *src;
@@ -729,11 +748,9 @@ void ExtractFileExtension (char *path, char *dest)
 }
 
 
-/*
-==============
-ParseNum / ParseHex
-==============
-*/
+/**
+ * @brief
+ */
 int ParseHex (char *hex)
 {
 	char    *str;
@@ -758,7 +775,9 @@ int ParseHex (char *hex)
 	return num;
 }
 
-
+/**
+ * @brief
+ */
 int ParseNum (char *str)
 {
 	if (str[0] == '$')
@@ -772,9 +791,7 @@ int ParseNum (char *str)
 
 /*
 ============================================================================
-
-					BYTE ORDER FUNCTIONS
-
+BYTE ORDER FUNCTIONS
 ============================================================================
 */
 
@@ -784,6 +801,9 @@ int ParseNum (char *str)
 
 #ifdef __BIG_ENDIAN__
 
+/**
+ * @brief
+ */
 short LittleShort (short l)
 {
 	byte    b1,b2;
@@ -794,12 +814,17 @@ short LittleShort (short l)
 	return (b1<<8) + b2;
 }
 
+/**
+ * @brief
+ */
 short BigShort (short l)
 {
 	return l;
 }
 
-
+/**
+ * @brief
+ */
 int LittleLong (int l)
 {
 	byte b1,b2,b3,b4;
@@ -812,12 +837,18 @@ int LittleLong (int l)
 	return ((int)b1<<24) + ((int)b2<<16) + ((int)b3<<8) + b4;
 }
 
+/**
+ * @brief
+ */
 int BigLong (int l)
 {
 	return l;
 }
 
 
+/**
+ * @brief
+ */
 float LittleFloat (float l)
 {
 	union {byte b[4]; float f;} in, out;
@@ -831,15 +862,19 @@ float LittleFloat (float l)
 	return out.f;
 }
 
+/**
+ * @brief
+ */
 float BigFloat (float l)
 {
 	return l;
 }
 
-
 #else
 
-
+/**
+ * @brief
+ */
 short BigShort (short l)
 {
 	byte b1,b2;
@@ -850,12 +885,18 @@ short BigShort (short l)
 	return (b1<<8) + b2;
 }
 
+/**
+ * @brief
+ */
 short LittleShort (short l)
 {
 	return l;
 }
 
 
+/**
+ * @brief
+ */
 int BigLong (int l)
 {
 	byte b1,b2,b3,b4;
@@ -868,11 +909,17 @@ int BigLong (int l)
 	return ((int)b1<<24) + ((int)b2<<16) + ((int)b3<<8) + b4;
 }
 
+/**
+ * @brief
+ */
 int LittleLong (int l)
 {
 	return l;
 }
 
+/**
+ * @brief
+ */
 float BigFloat (float l)
 {
 	union {byte b[4]; float f;} in, out;
@@ -886,14 +933,19 @@ float BigFloat (float l)
 	return out.f;
 }
 
+/**
+ * @brief
+ */
 float LittleFloat (float l)
 {
 	return l;
 }
-
-
 #endif
 
+
+/**
+ * @brief
+ */
 void CreatePath (char *path)
 {
 	char	*ofs, c;

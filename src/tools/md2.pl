@@ -22,6 +22,13 @@
 # Resources:
 # 	MD2 format description  and implemention for C++
 #		http://tfc.duke.free.fr/old/models/md2.htm
+#
+#	Parse::Binary documentation
+#		http://search.cpan.org/~smueller/Parse-Binary-0.10/lib/Parse/Binary.pm
+#
+#	The 'pack' commands character/string descriptions (used in Parse::Binary)
+#		http://www.unix.org.ua/orelly/perl/perlnut/c05_106.htm
+#
 #######################################
 
 #######################################
