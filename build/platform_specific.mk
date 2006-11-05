@@ -41,7 +41,7 @@ endif
 # Release flags
 #########################################################################################################################
 
-RELEASE_CFLAGS=-ffast-math -funroll-loops
+RELEASE_CFLAGS=-ffast-math -funroll-loops -D_FORTIFY_SOURCE=2
 
 #ifeq ($(TARGET_CPU),axp)
 #	RELEASE_CFLAGS+=-fomit-frame-pointer -fexpensive-optimizations

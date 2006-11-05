@@ -17,7 +17,7 @@ LIBTOOL_CC=$(LIBTOOL) --silent --mode=compile $(CC) -prefer-pic $(CFLAGS)
 
 ifeq ($(BUILD_DEBUG),1)
     BUILDDIR=debug-$(TARGET_OS)-$(TARGET_CPU)
-    CFLAGS+=-ggdb -O0 -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS) -fno-inline
+    CFLAGS+=-ggdb -O0 -DDEBUG $(PROFILER_CFLAGS) -fno-inline
 else
     BUILDDIR=release-$(TARGET_OS)-$(TARGET_CPU)
     CFLAGS+=-DNDEBUG $(RELEASE_CFLAGS)
