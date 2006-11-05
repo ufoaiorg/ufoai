@@ -294,6 +294,7 @@ void S_Init(void)
 		si.device = Cvar_Get("snd_device", "default", CVAR_ARCHIVE, "Default sound device");
 		si.khz = snd_khz;
 		si.Cvar_Get = Cvar_Get;
+		si.Cvar_Set = Cvar_Set;
 		si.Com_Printf = Com_Printf;
 		si.S_PaintChannels = S_PaintChannels;
 		si.paintedtime = &paintedtime;

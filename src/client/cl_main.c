@@ -1696,6 +1696,7 @@ void CL_Shutdown(void)
 	isdown = qtrue;
 
 	CL_WriteConfiguration();
+	Con_SaveConsoleHistory(FS_Gamedir());
 	if (CL_VideoRecording())
 		CL_CloseAVI();
 	CDAudio_Shutdown();

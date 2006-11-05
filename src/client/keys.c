@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 
 #define		MAXCMDLINE	256
-char key_lines[32][MAXCMDLINE];
+char key_lines[MAXKEYLINES][MAXCMDLINE];
 int key_linepos;
 static qboolean shift_down = qfalse;
 static int anykeydown;
@@ -44,7 +44,7 @@ static int anykeydown;
 static int key_insert = 1;
 
 int edit_line = 0;
-static int history_line = 0;
+int history_line = 0;
 
 int msg_mode;
 char msg_buffer[MAXCMDLINE];
@@ -311,7 +311,7 @@ static void Key_Console(int key)
 
 		Cbuf_AddText("\n");
 		Com_Printf("%s\n", key_lines[edit_line]);
-		edit_line = (edit_line + 1) & 31;
+		edit_line = (edit_line + 1) & (MAXKEYLINES-1);
 		history_line = edit_line;
 		key_lines[edit_line][0] = ']';
 		key_linepos = 1;
@@ -343,10 +343,12 @@ static void Key_Console(int key)
 
 	if (key == K_UPARROW || key == K_KP_UPARROW || ((tolower(key) == 'p') && keydown[K_CTRL])) {
 		do {
-			history_line = (history_line - 1) & 31;
+			history_line = (history_line - 1) & (MAXKEYLINES-1);
 		} while (history_line != edit_line && !key_lines[history_line][1]);
+
 		if (history_line == edit_line)
-			history_line = (edit_line + 1) & 31;
+			history_line = (edit_line + 1) & (MAXKEYLINES-1);
+
 		Q_strncpyz(key_lines[edit_line], key_lines[history_line], MAXCMDLINE);
 		key_linepos = strlen(key_lines[edit_line]);
 		return;
@@ -354,9 +356,9 @@ static void Key_Console(int key)
 		if (history_line == edit_line)
 			return;
 		do {
-			history_line = (history_line + 1) & 31;
-		}
-		while (history_line != edit_line && !key_lines[history_line][1]);
+			history_line = (history_line + 1) & (MAXKEYLINES-1);
+		} while (history_line != edit_line && !key_lines[history_line][1]);
+
 		if (history_line == edit_line) {
 			key_lines[edit_line][0] = ']';
 			key_linepos = 1;
@@ -743,7 +745,7 @@ static void Key_Bind_f(void)
 
 /**
  * @brief Writes lines containing "bind key value"
- * @param[in] f Filehandle to print the keybinding too
+ * @param[in] path path to print the keybinding too
  */
 void Key_WriteBindings(char* path)
 {
@@ -763,6 +765,7 @@ void Key_WriteBindings(char* path)
 	for (i = 0; i < K_LAST_KEY; i++)
 		if (keybindings[i] && keybindings[i][0])
 			fprintf(f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
+	fclose(f);
 }
 
 

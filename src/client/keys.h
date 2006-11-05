@@ -164,9 +164,14 @@ typedef enum {
 	KEYSPACE_MAX
 } keyBindSpace_t;
 
+#define MAXKEYLINES 32
+
 extern int msg_mode;
 extern char msg_buffer[MAXCMDLINE];
 extern size_t msg_bufferlen;
+extern char key_lines[MAXKEYLINES][MAXCMDLINE];
+extern int history_line;
+
 
 void Key_Event(int key, qboolean down, unsigned time);
 void Key_Init(void);

@@ -7,6 +7,8 @@
 #include <sys/shm.h>
 #include <sys/wait.h>
 #include <stdio.h>
+#include <errno.h>
+
 #if defined(__FreeBSD__)
 #include <sys/soundcard.h>
 #endif
