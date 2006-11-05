@@ -45,11 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../qcommon/ufotypes.h"
 
-/* to support the gnuc __attribute__ command */
-#ifndef __GNUC__
-#  define  __attribute__(x)
-#endif
-
 #ifdef _MSC_VER
 /* unknown pragmas are SUPPOSED to be ignored, but.... */
 #pragma warning(disable : 4244) /* MIPS */
@@ -108,6 +103,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #else                           /*HAVE_GETTEXT */
 /* no gettext support */
 #define _(String) String
+#endif
+
+/* to support the gnuc __attribute__ command */
+#ifndef __GNUC__
+#  define  __attribute__(x)  /*NOTHING*/
 #endif
 
 #if (defined _M_IX86 || defined __i386__) && !defined C_ONLY && !defined __sun__ && !defined _MSC_VER
