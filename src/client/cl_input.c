@@ -385,7 +385,7 @@ cvar_t *cl_anglespeedkey;
 #define MIN_CAMMOVE_ACCEL	150
 #define MAX_CAMMOVE_SPEED	3000
 #define MAX_CAMMOVE_ACCEL	3000
-#define ZOOM_SPEED			1.4
+#define ZOOM_SPEED			2.0
 #define MIN_CAMZOOM_QUANT	0.05
 #define MAX_CAMZOOM_QUANT	1.0
 #define LEVEL_SPEED			3.0
