@@ -101,7 +101,7 @@ void VID_Printf (int print_level, char *fmt, ...)
 /**
  * @brief
  */
-void __attribute__((noreturn)) VID_Error (int err_level, char *fmt, ...)
+void VID_Error (int err_level, char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
