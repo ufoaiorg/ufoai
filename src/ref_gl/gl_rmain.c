@@ -853,7 +853,7 @@ static void R_SetupGL(void)
 	/* set up projection matrix */
 	qglMatrixMode(GL_PROJECTION);
 	qglLoadIdentity();
-	MYgluPerspective(4, 2048);
+	MYgluPerspective(4., 4096.);
 
 	qglCullFace(GL_FRONT);
 

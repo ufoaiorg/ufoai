@@ -469,24 +469,32 @@ void CL_PrepRefresh(void)
 }
 
 /**
+ * @brief Calculates cl.refdef's FOV_X. 
+ * Should generally be called after any changes are made to the zoom level (via cl.cam.zoom)
+ * @sa
+ */
+void CalcFovX(void)
+{
+	if (cl_isometric->value) {
+		float zoom =  3.6*(cl.cam.zoom - cl_camzoommin->value) + 0.3*cl_camzoommin->value;
+		cl.refdef.fov_x = max(min(FOV / zoom, 140.0), 1.0);
+	} else {
+		cl.refdef.fov_x = max(min(FOV / cl.cam.zoom, 95.0), 55.0);
+	} 
+}
+
+/**
  * @brief
  * @param
  * @sa
  */
-static float CalcFov(float fov_x, float width, float height)
+static void CalcFovY(float width, float height)
 {
-	float a, x;
+	float x;
 
-	if (fov_x < 1 || fov_x > 179)
-		Com_Error(ERR_DROP, "Bad fov: %f", fov_x);
-
-	x = width / tan(fov_x / 360 * M_PI);
-	a = atan(height / x);
-	a = a * 360 / M_PI;
-
-	return a;
+	x = width / tan(cl.refdef.fov_x / 360 * M_PI);
+	cl.refdef.fov_y = atan(height / x) * 360 / M_PI;
 }
-
 
 /**
  * @brief
@@ -495,21 +503,17 @@ static float CalcFov(float fov_x, float width, float height)
  */
 void CL_CalcRefdef(void)
 {
-	float zoom = cl.cam.zoom;
-
 	VectorCopy(cl.cam.camorg, cl.refdef.vieworg);
 	VectorCopy(cl.cam.angles, cl.refdef.viewangles);
 
 	VectorSet(cl.refdef.blend, 0.0, 0.0, 0.0);
 
-	cl.refdef.fov_x = FOV / zoom;
-
 	/* set dependant variables */
+	CalcFovY(scr_vrect.width, scr_vrect.height);
 	cl.refdef.x = scr_vrect.x;
 	cl.refdef.y = scr_vrect.y;
 	cl.refdef.width = scr_vrect.width;
 	cl.refdef.height = scr_vrect.height;
-	cl.refdef.fov_y = CalcFov(cl.refdef.fov_x, scr_vrect.width, scr_vrect.height);
 	cl.refdef.time = cl.time * 0.001;
 	cl.refdef.areabits = 0;
 }

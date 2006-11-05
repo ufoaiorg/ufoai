@@ -464,7 +464,8 @@ void CL_StartGame( sizebuf_t *sb )
 	memset(&cl.cam, 0, sizeof(camera_t));
 	VectorSet(cl.cam.angles, 60.0, 60.0, 0.0);
 	VectorSet(cl.cam.omega, 0.0, 0.0, 0.0);
-	cl.cam.zoom = 1.0;
+	cl.cam.zoom = 1.25;
+	CalcFovX();
 	camera_mode = CAMERA_MODE_REMOTE;
 
 	/* center on first actor */

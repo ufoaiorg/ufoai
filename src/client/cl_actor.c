@@ -1560,7 +1560,7 @@ void CL_ResetActorMoveLength(void) {
 void CL_ActorMouseTrace(void)
 {
 	int i, restingLevel, intersectionLevel;
-	float cur[2], fov_x, frustumslope[2], projectiondistance = 2048;
+	float cur[2], frustumslope[2], projectiondistance = 2048;
 	float nDotP2minusP1, u;
 	vec3_t forward, right, up, stop;
 	vec3_t from, end, dir;
@@ -1592,11 +1592,10 @@ void CL_ActorMouseTrace(void)
 		intersectionLevel = cl_worldlevel->value;
 	}
 
-	fov_x = (FOV / cl.cam.zoom);
 	if (cl_isometric->value)
-		frustumslope[0] = 10. * fov_x;
+		frustumslope[0] = 10. * cl.refdef.fov_x;
 	else
-		frustumslope[0] = tan(fov_x * M_PI / 360) * projectiondistance;
+		frustumslope[0] = tan(cl.refdef.fov_x * M_PI / 360) * projectiondistance;
 	frustumslope[1] = frustumslope[0] * ((float)scr_vrect.height / scr_vrect.width);
 
 	/* transform cursor position into perspective space */

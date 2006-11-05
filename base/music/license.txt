@@ -11,3 +11,13 @@ The tracks can be grabbed from: http://sourceforge.net/projects/ufoai
 Tracks under Creative Commons
 =============================
 * dawn.ogg (author: Draikon)
+
+Tracks that are public domain
+=============================
+* greecei.ogg (taken from worldforge/golgotha)
+* alBasrahM.ogg, turinItalyM.ogg (from Golgotha, modified)
+
+Tracks contributed under GPL
+=============================
+* ufo1.ogg, ufo2.ogg (author: Paul B, http://www.myspace.com/s2zpaulb)
+* The Psymong series: Psymong*.ogg (Simon Green, http://www.8hz.co.uk/)
