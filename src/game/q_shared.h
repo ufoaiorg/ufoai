@@ -45,11 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../qcommon/ufotypes.h"
 
-/* to support the gnuc __attribute__ command */
-#ifndef __linux__
-#  define  __attribute__(x)  /*NOTHING*/
-#endif
-
 #ifdef _MSC_VER
 /* unknown pragmas are SUPPOSED to be ignored, but.... */
 #pragma warning(disable : 4244)	/* MIPS */
@@ -106,6 +101,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #else							/*HAVE_GETTEXT */
 /* no gettext support */
 #define _(String) String
+#endif
+
+/* to support the gnuc __attribute__ command */
+#ifndef __GNUC__
+#  define __attribute__(x)  /*NOTHING*/
 #endif
 
 #if (defined _M_IX86 || defined __i386__) && !defined C_ONLY && !defined __sun__ && !defined _MSC_VER
@@ -362,24 +362,24 @@ void Com_PageInMemory(byte * buffer, int size);
 /*============================================= */
 
 /* portable case insensitive compare */
-int Q_strncmp(const char *s1, const char *s2, size_t n);
-int Q_strcmp(const char *s1, const char *s2);
-int Q_stricmp(const char *s1, const char *s2);
-int Q_strcasecmp(const char *s1, const char *s2);
-int Q_strncasecmp(const char *s1, const char *s2, size_t n);
+int Q_strncmp(const char *s1, const char *s2, size_t n) __attribute__((nonnull));
+int Q_strcmp(const char *s1, const char *s2) __attribute__((nonnull));
+int Q_stricmp(const char *s1, const char *s2) __attribute__((nonnull));
+int Q_strcasecmp(const char *s1, const char *s2) __attribute__((nonnull));
+int Q_strncasecmp(const char *s1, const char *s2, size_t n) __attribute__((nonnull));
 
-int Q_StringSort(const void *string1, const void *string2);
+int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));
 
 #ifndef DEBUG
-void Q_strncpyz(char *dest, const char *src, size_t destsize);
+void Q_strncpyz(char *dest, const char *src, size_t destsize) __attribute__((nonnull));
 #else
-void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, char *file, int line);
+void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, char *file, int line) __attribute__((nonnull));
 #endif
-void Q_strcat(char *dest, const char *src, size_t size );
-char *Q_strlwr(char *str);
-char *Q_strdup(const char *str);
+void Q_strcat(char *dest, const char *src, size_t size) __attribute__((nonnull));
+char *Q_strlwr(char *str) __attribute__((nonnull));
+char *Q_strdup(const char *str) __attribute__((nonnull));
 int Q_putenv(const char *str);
-char *Q_getcwd(char *dest, size_t size);
+char *Q_getcwd(char *dest, size_t size) __attribute__((nonnull));
 
 /*============================================= */
 
@@ -421,7 +421,7 @@ char *strlwr(char *s);			/* this is non ansi and is defined for some OSs */
 /* large block stack allocation routines */
 void *Hunk_Begin(int maxsize);
 void *Hunk_Alloc(int size);
-void Hunk_Free(void *buf);
+void Hunk_Free(void *buf) __attribute__((nonnull));
 int Hunk_End(void);
 
 /* directory searching */
@@ -1093,25 +1093,25 @@ typedef struct character_s {
 	int empl_type;
 } character_t;
 
-void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility, int minSkill, int maxSkill);
-char *Com_CharGetBody(character_t* const chr);
-char *Com_CharGetHead(character_t* const chr);
+void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility, int minSkill, int maxSkill) __attribute__((nonnull));
+char *Com_CharGetBody(character_t* const chr) __attribute__((nonnull));
+char *Com_CharGetHead(character_t* const chr) __attribute__((nonnull));
 
 /* =========================================================== */
 
-void Com_InitCSI(csi_t * import);
-void Com_InitInventory(invList_t * invChain);
-qboolean Com_CheckToInventory(const inventory_t* const i, const int item, const int container, int x, int y);
-invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y);
-invList_t *Com_AddToInventory(inventory_t* const i, item_t item, int container, int x, int y);
-qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y);
-int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp);
-void Com_EmptyContainer(inventory_t* const i, const int container);
-void Com_DestroyInventory(inventory_t* const i);
-void Com_FindSpace(const inventory_t* const inv, const int item, const int container, int * const px, int * const py);
-int Com_TryAddToInventory(inventory_t* const inv, item_t item, int container);
-int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int container);
-void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS],  char *name);
+void Com_InitCSI(csi_t * import) __attribute__((nonnull));
+void Com_InitInventory(invList_t * invChain) __attribute__((nonnull));
+qboolean Com_CheckToInventory(const inventory_t* const i, const int item, const int container, int x, int y) __attribute__((nonnull(1)));
+invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
+invList_t *Com_AddToInventory(inventory_t* const i, item_t item, int container, int x, int y) __attribute__((nonnull(1)));
+qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
+int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1)));
+void Com_EmptyContainer(inventory_t* const i, const int container) __attribute__((nonnull(1)));
+void Com_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
+void Com_FindSpace(const inventory_t* const inv, const int item, const int container, int * const px, int * const py) __attribute__((nonnull(1)));
+int Com_TryAddToInventory(inventory_t* const inv, item_t item, int container) __attribute__((nonnull(1)));
+int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int container) __attribute__((nonnull(1)));
+void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS],  char *name) __attribute__((nonnull(1)));
 
 /* =========================================================== */
 

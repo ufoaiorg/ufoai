@@ -259,6 +259,24 @@ void SVC_DirectConnect(void)
 	strncpy(userinfo, Cmd_Argv(4), sizeof(userinfo) - 1);
 	userinfo[sizeof(userinfo) - 1] = 0;
 
+	if (!strlen(userinfo)) {  /* catch empty userinfo */
+		Com_Printf("Empty userinfo from %s\n", NET_AdrToString(adr)); 
+		Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nConnection refused.\n"); 
+		return;
+	} 
+
+	if (strchr(userinfo, '\xFF')) {  /* catch end of message in string exploit */
+		Com_Printf("Illegal userinfo contained xFF from %s\n", NET_AdrToString(adr)); 
+		Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nConnection refused.\n"); 
+		return;
+	} 
+
+	if (strlen(Info_ValueForKey(userinfo, "ip"))) {  /* catch spoofed ips  */
+		Com_Printf("Illegal userinfo contained ip from %s\n", NET_AdrToString(adr)); 
+		Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nConnection refused.\n"); 
+		return;
+	}
+
 	/* force the IP key/value pair so the game can filter based on ip */
 	Info_SetValueForKey(userinfo, "ip", NET_AdrToString(net_from));
 
@@ -275,8 +293,10 @@ void SVC_DirectConnect(void)
 	if (!NET_IsLocalAddress(adr)) {
 		for (i = 0; i < MAX_CHALLENGES; i++) {
 			if (NET_CompareBaseAdr(net_from, svs.challenges[i].adr)) {
-				if (challenge == svs.challenges[i].challenge)
+				if (challenge == svs.challenges[i].challenge) {
+					svs.challenges[i].challenge = 0; 
 					break;		/* good */
+				}
 				Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nBad challenge.\n");
 				return;
 			}

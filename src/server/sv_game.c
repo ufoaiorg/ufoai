@@ -131,10 +131,11 @@ static void PF_centerprintf(player_t * player, char *fmt, ...)
 }
 
 
+static void PF_error(char *fmt, ...) __attribute__((noreturn));
 /**
  * @brief Abort the server with a game error
  */
-static void __attribute__((noreturn)) PF_error(char *fmt, ...)
+static void PF_error(char *fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;

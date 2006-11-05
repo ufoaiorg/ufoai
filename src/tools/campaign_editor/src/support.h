@@ -96,7 +96,7 @@ extern void* globalFileBuffer;
 int file_exists (char *filename);
 int file_ext (char *filename, char *fileext);
 void file_strip_ext (char *in, char *out);
-char *va(char *format, ...) __attribute__(format(printf, 1, 2));
+char *va(char *format, ...) __attribute__((format(printf, 1, 2)));
 char *bool_translate( int value );
 typedef unsigned char byte;
 void fatal_error (char* errormessage);

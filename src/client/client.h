@@ -1060,4 +1060,7 @@ extern void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
 /* keys.c */
 extern char *keybindings[K_LAST_KEY];
 
+/* os specific video functions */
+void VID_Error (int err_level, char *fmt, ...) __attribute__((noreturn));
+
 #endif /* CLIENT_CLIENT_H */
