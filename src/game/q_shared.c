@@ -1859,8 +1859,12 @@ void Q_strncpyz(char *dest, const char *src, size_t destsize)
 		destsize--;
 	}
 	/* the rest is filled with null */
+#if 1
+	memset(dest, 0, destsize);
+#else
 	while ( destsize-- )
 		*dest++ = 0;
+#endif
 #endif
 }
 
