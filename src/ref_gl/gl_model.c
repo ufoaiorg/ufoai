@@ -703,7 +703,7 @@ static void R_AddMapTile(const char *name, int sX, int sY, int sZ)
 
 	/* init */
 	loadmodel->registration_sequence = registration_sequence;
-	loadmodel->extradata = Hunk_Begin(0x1000000);
+	loadmodel->extradata = Hunk_Begin(0x1500000);
 	loadmodel->type = mod_brush;
 
 	/* prepare shifting */
