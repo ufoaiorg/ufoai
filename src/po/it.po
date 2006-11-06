@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-11-04 17:37+0100\n"
+"POT-Creation-Date: 2006-11-06 09:01+0100\n"
 "PO-Revision-Date: 2006-10-24 13:28+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
@@ -494,7 +494,7 @@ msgstr "Torna alla mappa"
 msgid "Build base-facilities"
 msgstr "Costruisci edifici"
 
-#: ../base/ufos/menu_bases.ufo:98 ../base/ufos/research.ufo:67
+#: ../base/ufos/menu_bases.ufo:98 ../base/ufos/research.ufo:70
 msgid "Buildings"
 msgstr "Edifici"
 
@@ -508,7 +508,7 @@ msgid "Buy a new aircraft"
 msgstr "Compra aereo"
 
 #: ../base/ufos/menu_bases.ufo:141 ../base/ufos/menu_geoscape.ufo:715
-#: ../base/ufos/research.ufo:61 client/cl_map.c:324
+#: ../base/ufos/research.ufo:64 client/cl_map.c:324
 msgid "Aircraft"
 msgstr "Velivoli"
 
@@ -2001,35 +2001,40 @@ msgstr ""
 msgid "The Commonwealth of Oceania"
 msgstr "Commonwealth Oceanico"
 
-#: ../base/ufos/research.ufo:62
+#: ../base/ufos/research.ufo:63
+#, fuzzy
+msgid "News"
+msgstr "Nuovo"
+
+#: ../base/ufos/research.ufo:65
 msgid "Technologies & Discoveries"
 msgstr "Tecnologie e scoperte"
 
-#: ../base/ufos/research.ufo:63
+#: ../base/ufos/research.ufo:66
 msgid "Weapons"
 msgstr "Armi"
 
-#: ../base/ufos/research.ufo:64
+#: ../base/ufos/research.ufo:67
 msgid "Armors"
 msgstr "Armature"
 
-#: ../base/ufos/research.ufo:68
+#: ../base/ufos/research.ufo:71
 msgid "Alien Species"
 msgstr "Specie aliene"
 
-#: ../base/ufos/research.ufo:69
+#: ../base/ufos/research.ufo:72
 msgid "UFOs"
 msgstr "UFO"
 
-#: ../base/ufos/research.ufo:70
+#: ../base/ufos/research.ufo:73
 msgid "UGVs"
 msgstr "UGV"
 
-#: ../base/ufos/research.ufo:80
+#: ../base/ufos/research.ufo:83
 msgid "Advanced Laser Technology"
 msgstr "Tecnologia Laser Avanzata"
 
-#: ../base/ufos/research.ufo:82
+#: ../base/ufos/research.ufo:85
 msgid "laser_txt"
 msgstr ""
 "La tecnologia Laser è da tempo conosciuta al genere umano, ma i cosidetti "
@@ -2041,7 +2046,7 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:83
+#: ../base/ufos/research.ufo:86
 #, fuzzy
 msgid "laser_pre_txt"
 msgstr ""
@@ -2054,11 +2059,11 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:92
+#: ../base/ufos/research.ufo:97
 msgid "Advanced Plasma Control"
 msgstr "Controllo Avanzato del Plasma"
 
-#: ../base/ufos/research.ufo:94
+#: ../base/ufos/research.ufo:99
 msgid "plasma_txt"
 msgstr ""
 "Gli Antariani hanno raffinato la tecnologia per usare il concetto base del "
@@ -2068,7 +2073,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:95
+#: ../base/ufos/research.ufo:100
 #, fuzzy
 msgid "plasma_pre_txt"
 msgstr ""
@@ -2079,11 +2084,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:104
+#: ../base/ufos/research.ufo:116
 msgid "Tachyon Control"
 msgstr "Controllo dei tachioni"
 
-#: ../base/ufos/research.ufo:106
+#: ../base/ufos/research.ufo:118
 msgid "tachyon_txt"
 msgstr ""
 "Anche se i nostri ingegneri non comprendono totalmente i principi "
@@ -2101,7 +2106,7 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:107
+#: ../base/ufos/research.ufo:119
 #, fuzzy
 msgid "tachyon_pre_txt"
 msgstr ""
@@ -2120,11 +2125,11 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:116
+#: ../base/ufos/research.ufo:133
 msgid "Nano Technology"
 msgstr "Nanotecnologia"
 
-#: ../base/ufos/research.ufo:118
+#: ../base/ufos/research.ufo:135
 msgid "nano_txt"
 msgstr ""
 "La nanotecnologia apre un vasto campo di nuovi metodi di produzione "
@@ -2138,7 +2143,7 @@ msgstr ""
 "senza attraversarlo. E non solo, il nano-tessuto promette anche di essere "
 "più leggero di simili materiali convenzionali."
 
-#: ../base/ufos/research.ufo:119
+#: ../base/ufos/research.ufo:136
 #, fuzzy
 msgid "nano_pre_txt"
 msgstr ""
@@ -2153,23 +2158,23 @@ msgstr ""
 "senza attraversarlo. E non solo, il nano-tessuto promette anche di essere "
 "più leggero di simili materiali convenzionali."
 
-#: ../base/ufos/research.ufo:151
+#: ../base/ufos/research.ufo:168
 msgid "General UFO technology"
 msgstr "Tecnologia UFO generica"
 
-#: ../base/ufos/research.ufo:152
+#: ../base/ufos/research.ufo:169
 msgid "ufo_tech_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:153
+#: ../base/ufos/research.ufo:170
 msgid "ufo_tech_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:172
+#: ../base/ufos/research.ufo:189
 msgid "assault_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:173
+#: ../base/ufos/research.ufo:190
 #, fuzzy
 msgid "assault_pre_txt"
 msgstr ""
@@ -2180,7 +2185,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:188
+#: ../base/ufos/research.ufo:205
 #, fuzzy
 msgid "assault_mag_txt"
 msgstr ""
@@ -2191,7 +2196,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:189
+#: ../base/ufos/research.ufo:206
 #, fuzzy
 msgid "assault_mag_pre_txt"
 msgstr ""
@@ -2202,11 +2207,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:205
+#: ../base/ufos/research.ufo:222
 msgid "bolterrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:206
+#: ../base/ufos/research.ufo:223
 #, fuzzy
 msgid "bolterrifle_pre_txt"
 msgstr ""
@@ -2219,11 +2224,11 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:221
+#: ../base/ufos/research.ufo:238
 msgid "bolterrifle_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:222
+#: ../base/ufos/research.ufo:239
 #, fuzzy
 msgid "bolterrifle_mag_pre_txt"
 msgstr ""
@@ -2236,7 +2241,7 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:238
+#: ../base/ufos/research.ufo:255
 #, fuzzy
 msgid "chaingun_txt"
 msgstr ""
@@ -2252,7 +2257,7 @@ msgstr ""
 "Implicazioni di battaglia: Questa granata darà fuoco a una piccola area sul "
 "campo di battaglia, e a tutte le unità catturate dal suo raggio d'azione."
 
-#: ../base/ufos/research.ufo:239
+#: ../base/ufos/research.ufo:256
 #, fuzzy
 msgid "chaingun_pre_txt"
 msgstr ""
@@ -2268,11 +2273,11 @@ msgstr ""
 "Implicazioni di battaglia: Questa granata darà fuoco a una piccola area sul "
 "campo di battaglia, e a tutte le unità catturate dal suo raggio d'azione."
 
-#: ../base/ufos/research.ufo:255
+#: ../base/ufos/research.ufo:272
 msgid "chaingun_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:256
+#: ../base/ufos/research.ufo:273
 #, fuzzy
 msgid "chaingun_ammo_pre_txt"
 msgstr ""
@@ -2288,19 +2293,19 @@ msgstr ""
 "Implicazioni di battaglia: Questa granata darà fuoco a una piccola area sul "
 "campo di battaglia, e a tutte le unità catturate dal suo raggio d'azione."
 
-#: ../base/ufos/research.ufo:273
+#: ../base/ufos/research.ufo:290
 msgid "combatknife_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:274
+#: ../base/ufos/research.ufo:291
 msgid "combatknife_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:290
+#: ../base/ufos/research.ufo:307
 msgid "flamer_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:291
+#: ../base/ufos/research.ufo:308
 #, fuzzy
 msgid "flamer_pre_txt"
 msgstr ""
@@ -2313,7 +2318,7 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:306
+#: ../base/ufos/research.ufo:323
 #, fuzzy
 msgid "flamer_mag_txt"
 msgstr ""
@@ -2326,7 +2331,7 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:307
+#: ../base/ufos/research.ufo:324
 #, fuzzy
 msgid "flamer_mag_pre_txt"
 msgstr ""
@@ -2339,11 +2344,11 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:323
+#: ../base/ufos/research.ufo:340
 msgid "flashbang_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:324
+#: ../base/ufos/research.ufo:341
 #, fuzzy
 msgid "flashbang_pre_txt"
 msgstr ""
@@ -2354,15 +2359,15 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:339
+#: ../base/ufos/research.ufo:356
 msgid "fraggren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:340
+#: ../base/ufos/research.ufo:357
 msgid "fraggren_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:356
+#: ../base/ufos/research.ufo:373
 #, fuzzy
 msgid "incgren_txt"
 msgstr ""
@@ -2378,7 +2383,7 @@ msgstr ""
 "Implicazioni di battaglia: Questa granata darà fuoco a una piccola area sul "
 "campo di battaglia, e a tutte le unità catturate dal suo raggio d'azione."
 
-#: ../base/ufos/research.ufo:357
+#: ../base/ufos/research.ufo:374
 #, fuzzy
 msgid "incgren_pre_txt"
 msgstr ""
@@ -2394,11 +2399,11 @@ msgstr ""
 "Implicazioni di battaglia: Questa granata darà fuoco a una piccola area sul "
 "campo di battaglia, e a tutte le unità catturate dal suo raggio d'azione."
 
-#: ../base/ufos/research.ufo:373
+#: ../base/ufos/research.ufo:390
 msgid "grenl_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:374
+#: ../base/ufos/research.ufo:391
 #, fuzzy
 msgid "grenl_pre_txt"
 msgstr ""
@@ -2414,35 +2419,35 @@ msgstr ""
 "Implicazioni di battaglia: Questa granata darà fuoco a una piccola area sul "
 "campo di battaglia, e a tutte le unità catturate dal suo raggio d'azione."
 
-#: ../base/ufos/research.ufo:389
+#: ../base/ufos/research.ufo:406
 msgid "grenl_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:390
+#: ../base/ufos/research.ufo:407
 msgid "grenl_ammo_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:406
+#: ../base/ufos/research.ufo:423
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:407
+#: ../base/ufos/research.ufo:424
 msgid "grenl_fle_ammo_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:423
+#: ../base/ufos/research.ufo:440
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:424
+#: ../base/ufos/research.ufo:441
 msgid "grenl_incendiary_ammo_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:440
+#: ../base/ufos/research.ufo:457
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:441
+#: ../base/ufos/research.ufo:458
 #, fuzzy
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr ""
@@ -2455,11 +2460,11 @@ msgstr ""
 "solito un grande danno, hanno un raggio d'azione da corto a medio e una "
 "precisione mediocre."
 
-#: ../base/ufos/research.ufo:457
+#: ../base/ufos/research.ufo:474
 msgid "heavylaser_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:458
+#: ../base/ufos/research.ufo:475
 #, fuzzy
 msgid "heavylaser_pre_txt"
 msgstr ""
@@ -2472,7 +2477,7 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:475
+#: ../base/ufos/research.ufo:492
 #, fuzzy
 msgid "heavylaser_ammo_txt"
 msgstr ""
@@ -2485,23 +2490,23 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:476
+#: ../base/ufos/research.ufo:493
 msgid "heavylaser_ammo_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:492
+#: ../base/ufos/research.ufo:509
 msgid "irgoggles_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:493
+#: ../base/ufos/research.ufo:510
 msgid "irgoggles_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:508
+#: ../base/ufos/research.ufo:525
 msgid "kerrblade_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:509
+#: ../base/ufos/research.ufo:526
 #, fuzzy
 msgid "kerrblade_pre_txt"
 msgstr ""
@@ -2514,11 +2519,11 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:526
+#: ../base/ufos/research.ufo:543
 msgid "laserpistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:527
+#: ../base/ufos/research.ufo:544
 #, fuzzy
 msgid "laserpistol_pre_txt"
 msgstr ""
@@ -2531,7 +2536,7 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:543
+#: ../base/ufos/research.ufo:560
 #, fuzzy
 msgid "laserpistol_mag_txt"
 msgstr ""
@@ -2544,7 +2549,7 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:544
+#: ../base/ufos/research.ufo:561
 #, fuzzy
 msgid "laserpistol_mag_pre_txt"
 msgstr ""
@@ -2557,11 +2562,11 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:560
+#: ../base/ufos/research.ufo:577
 msgid "laserrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:561
+#: ../base/ufos/research.ufo:578
 #, fuzzy
 msgid "laserrifle_pre_txt"
 msgstr ""
@@ -2574,7 +2579,7 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:578
+#: ../base/ufos/research.ufo:595
 #, fuzzy
 msgid "laserrifle_mag_txt"
 msgstr ""
@@ -2587,7 +2592,7 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:579
+#: ../base/ufos/research.ufo:596
 #, fuzzy
 msgid "laserrifle_mag_pre_txt"
 msgstr ""
@@ -2600,19 +2605,19 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:595
+#: ../base/ufos/research.ufo:612
 msgid "medikit_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:596
+#: ../base/ufos/research.ufo:613
 msgid "medikit_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:611
+#: ../base/ufos/research.ufo:628
 msgid "pistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:612
+#: ../base/ufos/research.ufo:629
 #, fuzzy
 msgid "pistol_pre_txt"
 msgstr ""
@@ -2623,7 +2628,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:628
+#: ../base/ufos/research.ufo:645
 #, fuzzy
 msgid "pistol_mag_txt"
 msgstr ""
@@ -2634,7 +2639,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:629
+#: ../base/ufos/research.ufo:646
 #, fuzzy
 msgid "pistol_mag_pre_txt"
 msgstr ""
@@ -2645,7 +2650,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:646
+#: ../base/ufos/research.ufo:663
 #, fuzzy
 msgid "pistol2_txt"
 msgstr ""
@@ -2656,7 +2661,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:647
+#: ../base/ufos/research.ufo:664
 #, fuzzy
 msgid "pistol2_pre_txt"
 msgstr ""
@@ -2667,7 +2672,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:663
+#: ../base/ufos/research.ufo:680
 #, fuzzy
 msgid "pistol2_mag_txt"
 msgstr ""
@@ -2678,7 +2683,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:664
+#: ../base/ufos/research.ufo:681
 #, fuzzy
 msgid "pistol2_mag_pre_txt"
 msgstr ""
@@ -2689,11 +2694,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:681
+#: ../base/ufos/research.ufo:698
 msgid "plasatomizer_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:682
+#: ../base/ufos/research.ufo:699
 #, fuzzy
 msgid "plasatomizer_pre_txt"
 msgstr ""
@@ -2704,7 +2709,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:701
+#: ../base/ufos/research.ufo:718
 #, fuzzy
 msgid "plasatomizer_mag_txt"
 msgstr ""
@@ -2715,7 +2720,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:702
+#: ../base/ufos/research.ufo:719
 #, fuzzy
 msgid "plasatomizer_mag_pre_txt"
 msgstr ""
@@ -2726,11 +2731,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:718
+#: ../base/ufos/research.ufo:735
 msgid "plasblaster_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:719
+#: ../base/ufos/research.ufo:736
 #, fuzzy
 msgid "plasblaster_pre_txt"
 msgstr ""
@@ -2741,7 +2746,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:737
+#: ../base/ufos/research.ufo:754
 #, fuzzy
 msgid "plasblaster_mag_txt"
 msgstr ""
@@ -2752,7 +2757,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:738
+#: ../base/ufos/research.ufo:755
 #, fuzzy
 msgid "plasblaster_mag_pre_txt"
 msgstr ""
@@ -2763,11 +2768,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:754
+#: ../base/ufos/research.ufo:771
 msgid "plasblade_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:755
+#: ../base/ufos/research.ufo:772
 #, fuzzy
 msgid "plasblade_pre_txt"
 msgstr ""
@@ -2778,11 +2783,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:772
+#: ../base/ufos/research.ufo:789
 msgid "plasmagren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:773
+#: ../base/ufos/research.ufo:790
 #, fuzzy
 msgid "plasmagren_pre_txt"
 msgstr ""
@@ -2793,11 +2798,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:791
+#: ../base/ufos/research.ufo:808
 msgid "plasrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:792
+#: ../base/ufos/research.ufo:809
 #, fuzzy
 msgid "plasrifle_pre_txt"
 msgstr ""
@@ -2808,7 +2813,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:811
+#: ../base/ufos/research.ufo:828
 #, fuzzy
 msgid "plasrifle_mag_txt"
 msgstr ""
@@ -2819,7 +2824,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:812
+#: ../base/ufos/research.ufo:829
 #, fuzzy
 msgid "plasrifle_mag_pre_txt"
 msgstr ""
@@ -2830,11 +2835,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:828
+#: ../base/ufos/research.ufo:845
 msgid "rpg_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:829
+#: ../base/ufos/research.ufo:846
 #, fuzzy
 msgid "rpg_pre_txt"
 msgstr ""
@@ -2850,27 +2855,27 @@ msgstr ""
 "Implicazioni di battaglia: Questa granata darà fuoco a una piccola area sul "
 "campo di battaglia, e a tutte le unità catturate dal suo raggio d'azione."
 
-#: ../base/ufos/research.ufo:845
+#: ../base/ufos/research.ufo:862
 msgid "rpg_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:846
+#: ../base/ufos/research.ufo:863
 msgid "rpg_ammo_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:863
+#: ../base/ufos/research.ufo:880
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:864
+#: ../base/ufos/research.ufo:881
 msgid "rpg_incendiary_ammo_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:881
+#: ../base/ufos/research.ufo:898
 msgid "rpg_tachyon_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:882
+#: ../base/ufos/research.ufo:899
 #, fuzzy
 msgid "rpg_tachyon_ammo_pre_txt"
 msgstr ""
@@ -2886,11 +2891,11 @@ msgstr ""
 "danno medio, hanno un raggio d'azione da medio a lungo e una decente "
 "precisione."
 
-#: ../base/ufos/research.ufo:899
+#: ../base/ufos/research.ufo:916
 msgid "shotgun_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:900
+#: ../base/ufos/research.ufo:917
 #, fuzzy
 msgid "shotgun_pre_txt"
 msgstr ""
@@ -2909,11 +2914,11 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:916
+#: ../base/ufos/research.ufo:933
 msgid "shotgun_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:917
+#: ../base/ufos/research.ufo:934
 #, fuzzy
 msgid "shotgun_ammo_pre_txt"
 msgstr ""
@@ -2932,11 +2937,11 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:934
+#: ../base/ufos/research.ufo:951
 msgid "shotgun_slug_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:935
+#: ../base/ufos/research.ufo:952
 #, fuzzy
 msgid "shotgun_slug_ammo_pre_txt"
 msgstr ""
@@ -2955,7 +2960,7 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:952
+#: ../base/ufos/research.ufo:969
 #, fuzzy
 msgid "shotgun2_txt"
 msgstr ""
@@ -2974,7 +2979,7 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:953
+#: ../base/ufos/research.ufo:970
 #, fuzzy
 msgid "shotgun2_pre_txt"
 msgstr ""
@@ -2993,11 +2998,11 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:969
+#: ../base/ufos/research.ufo:986
 msgid "shotgun2_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:970
+#: ../base/ufos/research.ufo:987
 #, fuzzy
 msgid "shotgun2_ammo_pre_txt"
 msgstr ""
@@ -3016,7 +3021,7 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:987
+#: ../base/ufos/research.ufo:1004
 #, fuzzy
 msgid "shotgun_micro_txt"
 msgstr ""
@@ -3035,7 +3040,7 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:988
+#: ../base/ufos/research.ufo:1005
 #, fuzzy
 msgid "shotgun_micro_pre_txt"
 msgstr ""
@@ -3054,7 +3059,7 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:1004
+#: ../base/ufos/research.ufo:1021
 #, fuzzy
 msgid "shotgun_micro_ammo_txt"
 msgstr ""
@@ -3073,7 +3078,7 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:1005
+#: ../base/ufos/research.ufo:1022
 #, fuzzy
 msgid "shotgun_micro_ammo_pre_txt"
 msgstr ""
@@ -3092,11 +3097,11 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:1022
+#: ../base/ufos/research.ufo:1039
 msgid "smg_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1023
+#: ../base/ufos/research.ufo:1040
 #, fuzzy
 msgid "smg_pre_txt"
 msgstr ""
@@ -3107,7 +3112,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1039
+#: ../base/ufos/research.ufo:1056
 #, fuzzy
 msgid "smg_mag_txt"
 msgstr ""
@@ -3118,7 +3123,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1040
+#: ../base/ufos/research.ufo:1057
 #, fuzzy
 msgid "smg_mag_pre_txt"
 msgstr ""
@@ -3129,19 +3134,19 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1057
+#: ../base/ufos/research.ufo:1074
 msgid "smokegren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1058
+#: ../base/ufos/research.ufo:1075
 msgid "smokegren_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1074
+#: ../base/ufos/research.ufo:1091
 msgid "sniper_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1075
+#: ../base/ufos/research.ufo:1092
 #, fuzzy
 msgid "sniper_pre_txt"
 msgstr ""
@@ -3154,7 +3159,7 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:1091
+#: ../base/ufos/research.ufo:1108
 #, fuzzy
 msgid "sniper_mag_txt"
 msgstr ""
@@ -3167,7 +3172,7 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:1092
+#: ../base/ufos/research.ufo:1109
 #, fuzzy
 msgid "sniper_mag_pre_txt"
 msgstr ""
@@ -3180,11 +3185,11 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:1109
+#: ../base/ufos/research.ufo:1126
 msgid "stungren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1110
+#: ../base/ufos/research.ufo:1127
 #, fuzzy
 msgid "stungren_pre_txt"
 msgstr ""
@@ -3200,11 +3205,11 @@ msgstr ""
 "Implicazioni di battaglia: Questa granata darà fuoco a una piccola area sul "
 "campo di battaglia, e a tutte le unità catturate dal suo raggio d'azione."
 
-#: ../base/ufos/research.ufo:1128
+#: ../base/ufos/research.ufo:1145
 msgid "stunrod_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1129
+#: ../base/ufos/research.ufo:1146
 #, fuzzy
 msgid "stunrod_pre_txt"
 msgstr ""
@@ -3223,76 +3228,76 @@ msgstr ""
 "armi una volta che maggiori dettagli della loro costruzione verranno "
 "analizzati."
 
-#: ../base/ufos/research.ufo:1146
+#: ../base/ufos/research.ufo:1163
 msgid "tachyonpistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1147
+#: ../base/ufos/research.ufo:1164
 #, fuzzy
 msgid "tachyonpistol_pre_txt"
 msgstr "Pistola a Tachioni"
 
-#: ../base/ufos/research.ufo:1165
+#: ../base/ufos/research.ufo:1182
 #, fuzzy
 msgid "tachyonpistol_mag_txt"
 msgstr "Pistola a Tachioni"
 
-#: ../base/ufos/research.ufo:1166
+#: ../base/ufos/research.ufo:1183
 #, fuzzy
 msgid "tachyonpistol_mag_pre_txt"
 msgstr "Pistola a Tachioni"
 
-#: ../base/ufos/research.ufo:1183
+#: ../base/ufos/research.ufo:1200
 msgid "tachyonrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1184
+#: ../base/ufos/research.ufo:1201
 #, fuzzy
 msgid "tachyonrifle_pre_txt"
 msgstr "Fucile a Tachioni"
 
-#: ../base/ufos/research.ufo:1203
+#: ../base/ufos/research.ufo:1220
 #, fuzzy
 msgid "tachyonrifle_mag_txt"
 msgstr "Fucile a Tachioni"
 
-#: ../base/ufos/research.ufo:1204
+#: ../base/ufos/research.ufo:1221
 #, fuzzy
 msgid "tachyonrifle_mag_pre_txt"
 msgstr "Fucile a Tachioni"
 
-#: ../base/ufos/research.ufo:1221
+#: ../base/ufos/research.ufo:1238
 msgid "tachyonsniper_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1222
+#: ../base/ufos/research.ufo:1239
 #, fuzzy
 msgid "tachyonsniper_pre_txt"
 msgstr "Ricarica per fucile da Cecchini a Tachioni"
 
-#: ../base/ufos/research.ufo:1240
+#: ../base/ufos/research.ufo:1257
 #, fuzzy
 msgid "tachyonsniper_mag_txt"
 msgstr "Ricarica per fucile da Cecchini a Tachioni"
 
-#: ../base/ufos/research.ufo:1241
+#: ../base/ufos/research.ufo:1258
 #, fuzzy
 msgid "tachyonsniper_mag_pre_txt"
 msgstr "Ricarica per fucile da Cecchini a Tachioni"
 
-#: ../base/ufos/research.ufo:1262
+#: ../base/ufos/research.ufo:1279
 msgid "combat_armor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1263
+#: ../base/ufos/research.ufo:1280
 msgid "combat_armor_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1273
+#: ../base/ufos/research.ufo:1292
 msgid "nano_armor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1274
+#: ../base/ufos/research.ufo:1293
 #, fuzzy
 msgid "nano_armor_pre_txt"
 msgstr ""
@@ -3307,94 +3312,94 @@ msgstr ""
 "senza attraversarlo. E non solo, il nano-tessuto promette anche di essere "
 "più leggero di simili materiali convenzionali."
 
-#: ../base/ufos/research.ufo:1305
+#: ../base/ufos/research.ufo:1324
 #, fuzzy
 msgid "light_alien_armor"
 msgstr "Armatura Leggera"
 
-#: ../base/ufos/research.ufo:1306
+#: ../base/ufos/research.ufo:1325
 msgid "light_alien_pre_armor"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1317
+#: ../base/ufos/research.ufo:1335
 #, fuzzy
 msgid "medium_alien_armor"
 msgstr "Armatura Media"
 
-#: ../base/ufos/research.ufo:1318
+#: ../base/ufos/research.ufo:1336
 msgid "medium_alien_pre_armor"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1334
+#: ../base/ufos/research.ufo:1351
 msgid "Blast Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1345
+#: ../base/ufos/research.ufo:1363
 msgid "Fire Damage Type"
 msgstr "Danno da bruciatura"
 
-#: ../base/ufos/research.ufo:1356
+#: ../base/ufos/research.ufo:1375
 msgid "Laser Damage Type"
 msgstr "Danno laser"
 
-#: ../base/ufos/research.ufo:1372
+#: ../base/ufos/research.ufo:1391
 #, fuzzy
 msgid "Impact Damage Type"
 msgstr "Danno normale"
 
-#: ../base/ufos/research.ufo:1383 ../base/ufos/research.ufo:1410
+#: ../base/ufos/research.ufo:1403 ../base/ufos/research.ufo:1431
 msgid "Shock Damage Type"
 msgstr "Danno da urto"
 
-#: ../base/ufos/research.ufo:1394
+#: ../base/ufos/research.ufo:1415
 msgid "Plasma Damage Type"
 msgstr "Danno da plasma"
 
-#: ../base/ufos/research.ufo:1421
+#: ../base/ufos/research.ufo:1443
 msgid "Stun Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1432
+#: ../base/ufos/research.ufo:1455
 msgid "Tachyon Damage Type"
 msgstr "Danno di tipo tachionico"
 
-#: ../base/ufos/research.ufo:1452
+#: ../base/ufos/research.ufo:1475
 msgid "Accuracy Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1463
+#: ../base/ufos/research.ufo:1487
 msgid "Assault Guns Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1474
+#: ../base/ufos/research.ufo:1499
 msgid "Close Combat Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1485
+#: ../base/ufos/research.ufo:1511
 msgid "High-Explosives Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1496
+#: ../base/ufos/research.ufo:1523
 msgid "Heavy Weapons Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1507
+#: ../base/ufos/research.ufo:1535
 msgid "Mind Attribute"
 msgstr "Qualità mentali"
 
-#: ../base/ufos/research.ufo:1518
+#: ../base/ufos/research.ufo:1547
 msgid "Power Attribute"
 msgstr "Potenza"
 
-#: ../base/ufos/research.ufo:1529
+#: ../base/ufos/research.ufo:1559
 msgid "Sniper Rifles Proficiency"
 msgstr "Predisposizione per fucili di Precisione"
 
-#: ../base/ufos/research.ufo:1540
+#: ../base/ufos/research.ufo:1571
 msgid "Speed Attribute"
 msgstr "Velocità"
 
-#: ../base/ufos/research.ufo:1555
+#: ../base/ufos/research.ufo:1587
 #, fuzzy
 msgid "b_aliencontainment_txt"
 msgstr ""
@@ -3410,7 +3415,7 @@ msgstr ""
 "Implicazioni di battaglia: Questa granata darà fuoco a una piccola area sul "
 "campo di battaglia, e a tutte le unità catturate dal suo raggio d'azione."
 
-#: ../base/ufos/research.ufo:1556
+#: ../base/ufos/research.ufo:1588
 #, fuzzy
 msgid "b_aliencontainment_pre_txt"
 msgstr ""
@@ -3426,19 +3431,19 @@ msgstr ""
 "Implicazioni di battaglia: Questa granata darà fuoco a una piccola area sul "
 "campo di battaglia, e a tutte le unità catturate dal suo raggio d'azione."
 
-#: ../base/ufos/research.ufo:1571
+#: ../base/ufos/research.ufo:1603
 msgid "b_command_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1572
+#: ../base/ufos/research.ufo:1604
 msgid "b_command_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1587
+#: ../base/ufos/research.ufo:1619
 msgid "b_entrance_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1588
+#: ../base/ufos/research.ufo:1620
 #, fuzzy
 msgid "b_entrance_pre_txt"
 msgstr ""
@@ -3454,7 +3459,7 @@ msgstr ""
 "Implicazioni di battaglia: Questa granata darà fuoco a una piccola area sul "
 "campo di battaglia, e a tutte le unità catturate dal suo raggio d'azione."
 
-#: ../base/ufos/research.ufo:1598
+#: ../base/ufos/research.ufo:1631
 #, fuzzy
 msgid "b_large_hangar_txt"
 msgstr ""
@@ -3465,7 +3470,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1599
+#: ../base/ufos/research.ufo:1632
 #, fuzzy
 msgid "b_large_hangar_pre_txt"
 msgstr ""
@@ -3476,11 +3481,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1614
+#: ../base/ufos/research.ufo:1647
 msgid "b_hospital_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1615
+#: ../base/ufos/research.ufo:1648
 #, fuzzy
 msgid "b_hospital_pre_txt"
 msgstr ""
@@ -3491,7 +3496,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1630
+#: ../base/ufos/research.ufo:1663
 #, fuzzy
 msgid "b_small_hangar_txt"
 msgstr ""
@@ -3502,7 +3507,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1631
+#: ../base/ufos/research.ufo:1664
 #, fuzzy
 msgid "b_small_hangar_pre_txt"
 msgstr ""
@@ -3513,11 +3518,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1646
+#: ../base/ufos/research.ufo:1679
 msgid "b_lab_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1647
+#: ../base/ufos/research.ufo:1680
 #, fuzzy
 msgid "b_lab_pre_txt"
 msgstr ""
@@ -3528,19 +3533,19 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1662
+#: ../base/ufos/research.ufo:1695
 msgid "b_powerplant_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1663
+#: ../base/ufos/research.ufo:1696
 msgid "b_powerplant_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1678
+#: ../base/ufos/research.ufo:1711
 msgid "b_quarters_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1679
+#: ../base/ufos/research.ufo:1712
 #, fuzzy
 msgid "b_quarters_pre_txt"
 msgstr ""
@@ -3551,11 +3556,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1694
+#: ../base/ufos/research.ufo:1727
 msgid "b_radar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1695
+#: ../base/ufos/research.ufo:1728
 #, fuzzy
 msgid "b_radar_pre_txt"
 msgstr ""
@@ -3566,11 +3571,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1710
+#: ../base/ufos/research.ufo:1743
 msgid "b_storage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1711
+#: ../base/ufos/research.ufo:1744
 #, fuzzy
 msgid "b_storage_pre_txt"
 msgstr ""
@@ -3581,19 +3586,19 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1726
+#: ../base/ufos/research.ufo:1759
 msgid "b_teamroom_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1727
+#: ../base/ufos/research.ufo:1760
 msgid "b_teamroom_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1742
+#: ../base/ufos/research.ufo:1775
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1743
+#: ../base/ufos/research.ufo:1776
 #, fuzzy
 msgid "b_small_ufo_hangar_pre_txt"
 msgstr ""
@@ -3604,7 +3609,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1759
+#: ../base/ufos/research.ufo:1792
 #, fuzzy
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
@@ -3615,7 +3620,7 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1760
+#: ../base/ufos/research.ufo:1793
 #, fuzzy
 msgid "b_large_ufo_hangar_pre_txt"
 msgstr ""
@@ -3626,429 +3631,453 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1776
+#: ../base/ufos/research.ufo:1809
 msgid "b_workshop_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1777
+#: ../base/ufos/research.ufo:1810
 msgid "b_workshop_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1795
+#: ../base/ufos/research.ufo:1828
 msgid "dropship_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1796
+#: ../base/ufos/research.ufo:1829
 msgid "dropship_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1809
+#: ../base/ufos/research.ufo:1843
 msgid "interceptor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1810
+#: ../base/ufos/research.ufo:1844
 #, fuzzy
 msgid "interceptor_pre_txt"
 msgstr "Intercettatore"
 
-#: ../base/ufos/research.ufo:1843
+#: ../base/ufos/research.ufo:1878
 msgid "Small alien craft"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1844
+#: ../base/ufos/research.ufo:1879
 msgid "ufo_scout_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1845
+#: ../base/ufos/research.ufo:1880
 msgid "ufo_scout_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1865
+#: ../base/ufos/research.ufo:1900
 msgid "Big alien craft"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1866
+#: ../base/ufos/research.ufo:1901
 msgid "ufo_fighter_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1867
+#: ../base/ufos/research.ufo:1902
 msgid "ufo_fighter_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1893 ../base/ufos/research.ufo:1913
+#: ../base/ufos/research.ufo:1928 ../base/ufos/research.ufo:1948
 #, fuzzy
 msgid "Bloodspider - Combat notes"
 msgstr "Hovernet - Note di combattimento"
 
-#: ../base/ufos/research.ufo:1894 ../base/ufos/research.ufo:1914
+#: ../base/ufos/research.ufo:1929 ../base/ufos/research.ufo:1949
 msgid "bloodspider_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1895 ../base/ufos/research.ufo:1915
+#: ../base/ufos/research.ufo:1930 ../base/ufos/research.ufo:1950
 msgid "bloodspider_notes_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1929
+#: ../base/ufos/research.ufo:1964
 #, fuzzy
 msgid "Bloodspider - Autopsy"
 msgstr "Shevaar - Autopsia"
 
-#: ../base/ufos/research.ufo:1930
+#: ../base/ufos/research.ufo:1965
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1931
+#: ../base/ufos/research.ufo:1966
 #, fuzzy
 msgid "bloodspider_autopsy_pre_txt"
 msgstr "Shevaar - Autopsia"
 
-#: ../base/ufos/research.ufo:1947
+#: ../base/ufos/research.ufo:1982
 #, fuzzy
 msgid "Bloodspider - Xenobiology"
 msgstr "Shevaar - Xenobiologia"
 
-#: ../base/ufos/research.ufo:1948
+#: ../base/ufos/research.ufo:1983
 msgid "bloodspider_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1949
+#: ../base/ufos/research.ufo:1984
 #, fuzzy
 msgid "bloodspider_xenobiology_pre_txt"
 msgstr "Shevaar - Xenobiologia"
 
-#: ../base/ufos/research.ufo:1963
+#: ../base/ufos/research.ufo:1998
 #, fuzzy
 msgid "Bloodspider - Interrogation"
 msgstr "Ortnok - Interrogatorio"
 
-#: ../base/ufos/research.ufo:1964
+#: ../base/ufos/research.ufo:1999
 msgid "bloodspider_interrogation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1965
+#: ../base/ufos/research.ufo:2000
 #, fuzzy
 msgid "bloodspider_interrogation_pre_txt"
 msgstr "Ortnok - Interrogatorio"
 
-#: ../base/ufos/research.ufo:1981 ../base/ufos/research.ufo:2002
+#: ../base/ufos/research.ufo:2016 ../base/ufos/research.ufo:2037
 msgid "Ortnok - Combat notes"
 msgstr "Ortnok - Note di combattimento"
 
-#: ../base/ufos/research.ufo:1982 ../base/ufos/research.ufo:2003
+#: ../base/ufos/research.ufo:2017 ../base/ufos/research.ufo:2038
 msgid "ortnok_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1983 ../base/ufos/research.ufo:2004
+#: ../base/ufos/research.ufo:2018 ../base/ufos/research.ufo:2039
 msgid "ortnok_notes_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2019
+#: ../base/ufos/research.ufo:2054
 msgid "Ortnok - Autopsy"
 msgstr "Ortnok - Autopsia"
 
-#: ../base/ufos/research.ufo:2020
+#: ../base/ufos/research.ufo:2055
 msgid "ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2021
+#: ../base/ufos/research.ufo:2056
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2038
+#: ../base/ufos/research.ufo:2073
 msgid "Ortnok - Xenobiology"
 msgstr "Ortnok - Xenobiologia"
 
-#: ../base/ufos/research.ufo:2039
+#: ../base/ufos/research.ufo:2074
 msgid "ortnok_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2040
+#: ../base/ufos/research.ufo:2075
 #, fuzzy
 msgid "ortnok_xenobiology_pre_txt"
 msgstr "Ortnok - Xenobiologia"
 
-#: ../base/ufos/research.ufo:2055
+#: ../base/ufos/research.ufo:2090
 msgid "Ortnok - Interrogation"
 msgstr "Ortnok - Interrogatorio"
 
-#: ../base/ufos/research.ufo:2056
+#: ../base/ufos/research.ufo:2091
 msgid "ortnok_interrogation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2057
+#: ../base/ufos/research.ufo:2092
 #, fuzzy
 msgid "ortnok_interrogation_pre_txt"
 msgstr "Ortnok - Interrogatorio"
 
-#: ../base/ufos/research.ufo:2074
+#: ../base/ufos/research.ufo:2109
 msgid "Ortnok Worker"
 msgstr "Operaio Ortnok"
 
-#: ../base/ufos/research.ufo:2075
+#: ../base/ufos/research.ufo:2110
 msgid "ortnok_light_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2076
+#: ../base/ufos/research.ufo:2111
 msgid "ortnok_light_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2093
+#: ../base/ufos/research.ufo:2128
 msgid "Ortnok Warrior"
 msgstr "Guerriero Ortnok"
 
-#: ../base/ufos/research.ufo:2094
+#: ../base/ufos/research.ufo:2129
 msgid "ortnok_medium_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2095
+#: ../base/ufos/research.ufo:2130
 msgid "ortnok_medium_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2112
+#: ../base/ufos/research.ufo:2147
 msgid "Antarean - Combat notes"
 msgstr "Antariano - Note di combattimento"
 
-#: ../base/ufos/research.ufo:2113
+#: ../base/ufos/research.ufo:2148
 msgid "antarean_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2114
+#: ../base/ufos/research.ufo:2149
 msgid "antarean_notes_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2129
+#: ../base/ufos/research.ufo:2164
 msgid "Antarean - Autopsy"
 msgstr "Antariano - Autopsia"
 
-#: ../base/ufos/research.ufo:2130
+#: ../base/ufos/research.ufo:2165
 msgid "antarean_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2131
+#: ../base/ufos/research.ufo:2166
 #, fuzzy
 msgid "antarean_autopsy_pre_txt"
 msgstr "Antariano - Autopsia"
 
-#: ../base/ufos/research.ufo:2146
+#: ../base/ufos/research.ufo:2181
 msgid "Antarean - Xenobiology"
 msgstr "Antariano - Xenobiologia"
 
-#: ../base/ufos/research.ufo:2147
+#: ../base/ufos/research.ufo:2182
 msgid "antarean_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2148
+#: ../base/ufos/research.ufo:2183
 #, fuzzy
 msgid "antarean_xenobiology_pre_txt"
 msgstr "Antariano - Xenobiologia"
 
-#: ../base/ufos/research.ufo:2163
+#: ../base/ufos/research.ufo:2198
 msgid "Antarean - Interrogation"
 msgstr "Antariano - Interrogatorio"
 
-#: ../base/ufos/research.ufo:2164
+#: ../base/ufos/research.ufo:2199
 msgid "antarean_interrogation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2165
+#: ../base/ufos/research.ufo:2200
 #, fuzzy
 msgid "antarean_interrogation_pre_txt"
 msgstr "Antariano - Interrogatorio"
 
-#: ../base/ufos/research.ufo:2180
+#: ../base/ufos/research.ufo:2215
 msgid "Antarean - Commander interrogation"
 msgstr "Antariano - Interrogatorio al Comandante"
 
-#: ../base/ufos/research.ufo:2181
+#: ../base/ufos/research.ufo:2216
 msgid "antarean_interrogation_commander_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2182
+#: ../base/ufos/research.ufo:2217
 msgid "antarean_interrogation_commander_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2199
+#: ../base/ufos/research.ufo:2234
 msgid "Shevaar - Combat notes"
 msgstr "Shevaar - Note di combattimento"
 
-#: ../base/ufos/research.ufo:2200
+#: ../base/ufos/research.ufo:2235
 msgid "shevaar_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2201
+#: ../base/ufos/research.ufo:2236
 msgid "shevaar_notes_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2216
+#: ../base/ufos/research.ufo:2251
 msgid "Shevaar - Autopsy"
 msgstr "Shevaar - Autopsia"
 
-#: ../base/ufos/research.ufo:2217
+#: ../base/ufos/research.ufo:2252
 msgid "shevaar_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2218
+#: ../base/ufos/research.ufo:2253
 #, fuzzy
 msgid "shevaar_autopsy_pre_txt"
 msgstr "Shevaar - Autopsia"
 
-#: ../base/ufos/research.ufo:2233
+#: ../base/ufos/research.ufo:2268
 msgid "Shevaar - Xenobiology"
 msgstr "Shevaar - Xenobiologia"
 
-#: ../base/ufos/research.ufo:2234
+#: ../base/ufos/research.ufo:2269
 msgid "shevaar_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2235
+#: ../base/ufos/research.ufo:2270
 #, fuzzy
 msgid "shevaar_xenobiology_pre_txt"
 msgstr "Shevaar - Xenobiologia"
 
-#: ../base/ufos/research.ufo:2252
+#: ../base/ufos/research.ufo:2287
 msgid "Hovernet - Combat notes"
 msgstr "Hovernet - Note di combattimento"
 
-#: ../base/ufos/research.ufo:2253
+#: ../base/ufos/research.ufo:2288
 msgid "hovernet_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2254
+#: ../base/ufos/research.ufo:2289
 msgid "hovernet_notes_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2269
+#: ../base/ufos/research.ufo:2304
 msgid "Hovernet - wreck research"
 msgstr "Hovernet - studio del relitto"
 
-#: ../base/ufos/research.ufo:2270
+#: ../base/ufos/research.ufo:2305
 msgid "hovernet_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2271
+#: ../base/ufos/research.ufo:2306
 msgid "hovernet_autopsy_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2286
+#: ../base/ufos/research.ufo:2321
 msgid "Hovernet - design"
 msgstr "Hovernet - design"
 
-#: ../base/ufos/research.ufo:2287
+#: ../base/ufos/research.ufo:2322
 msgid "hovernet_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2288
+#: ../base/ufos/research.ufo:2323
 msgid "hovernet_xenobiology_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2305
+#: ../base/ufos/research.ufo:2340
 msgid "Cyborg Ortnok - Combat notes"
 msgstr "Cyborg Ortnok - Note di combattimento"
 
-#: ../base/ufos/research.ufo:2306
+#: ../base/ufos/research.ufo:2341
 msgid "cyborg_ortnok_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2307
+#: ../base/ufos/research.ufo:2342
 msgid "cyborg_ortnok_notes_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2322
+#: ../base/ufos/research.ufo:2357
 msgid "Cyborg Ortnok - Autopsy"
 msgstr "Cyborg Ortnok - Autopsia"
 
-#: ../base/ufos/research.ufo:2323
+#: ../base/ufos/research.ufo:2358
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2324
+#: ../base/ufos/research.ufo:2359
 #, fuzzy
 msgid "cyborg_ortnok_autopsy_pre_txt"
 msgstr "Cyborg Ortnok - Autopsia"
 
-#: ../base/ufos/research.ufo:2339
+#: ../base/ufos/research.ufo:2374
 msgid "Cyborg Ortnok - Xenobiology"
 msgstr "Cyborg Ortnok - Xenobiologia"
 
-#: ../base/ufos/research.ufo:2340
+#: ../base/ufos/research.ufo:2375
 msgid "cyborg_ortnok_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2341
+#: ../base/ufos/research.ufo:2376
 #, fuzzy
 msgid "cyborg_ortnok_xenobiology_pre_txt"
 msgstr "Cyborg Ortnok - Xenobiologia"
 
-#: ../base/ufos/research.ufo:2359
+#: ../base/ufos/research.ufo:2394
 msgid "UGV Phoenix"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2360
+#: ../base/ufos/research.ufo:2395
 msgid "ugv_phoenix_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2361
+#: ../base/ufos/research.ufo:2396
 msgid "ugv_phoenix_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2374
+#: ../base/ufos/research.ufo:2410
 msgid "UGV Triax"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2375
+#: ../base/ufos/research.ufo:2411
 msgid "ugv_triax_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2376
+#: ../base/ufos/research.ufo:2412
 msgid "ugv_triax_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2391
+#: ../base/ufos/research.ufo:2428
 msgid "Light Shield"
 msgstr "Scudo Leggero"
 
-#: ../base/ufos/research.ufo:2392
+#: ../base/ufos/research.ufo:2429
 msgid "craft_shield_light_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2393
+#: ../base/ufos/research.ufo:2430
 msgid "craft_shield_light_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2406
+#: ../base/ufos/research.ufo:2444
 msgid "Medium Shield"
 msgstr "Scudo Medio"
 
-#: ../base/ufos/research.ufo:2407
+#: ../base/ufos/research.ufo:2445
 msgid "craft_shield_medium_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2408
+#: ../base/ufos/research.ufo:2446
 msgid "craft_shield_medium_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2426
+#: ../base/ufos/research.ufo:2464
 msgid "Hard Shield"
 msgstr "Scudo Pesante"
 
-#: ../base/ufos/research.ufo:2427
+#: ../base/ufos/research.ufo:2465
 msgid "craft_shield_hard_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2428
+#: ../base/ufos/research.ufo:2466
 msgid "craft_shield_hard_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2446
+#: ../base/ufos/research.ufo:2484
 msgid "Flac Cannon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2447
+#: ../base/ufos/research.ufo:2485
 msgid "craft_weapon_flac_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2448
+#: ../base/ufos/research.ufo:2486
 msgid "craft_weapon_flac_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2501
+msgid "Political situation before the invasion"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2502
+msgid "news_initial_political_situation_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2513
+msgid "After the war"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2514
+msgid "news_after_the_war_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2525
+msgid "PHALANX And The Mumbai Aftermath"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2526
+msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:54 ../base/ufos/seq_credits.ufo:100
@@ -5032,9 +5061,9 @@ msgstr "Aereo decollato"
 #: client/cl_campaign.c:1133 client/cl_campaign.c:1140
 #: client/cl_campaign.c:1148 client/cl_campaign.c:2318
 #: client/cl_campaign.c:2355 client/cl_campaign.c:2357
-#: client/cl_campaign.c:2724 client/cl_map.c:298 client/cl_research.c:716
-#: client/cl_research.c:838 client/cl_research.c:841 client/cl_research.c:845
-#: client/cl_research.c:858 client/cl_research.c:887 client/cl_research.c:1138
+#: client/cl_campaign.c:2724 client/cl_map.c:298 client/cl_research.c:751
+#: client/cl_research.c:873 client/cl_research.c:876 client/cl_research.c:880
+#: client/cl_research.c:893 client/cl_research.c:922 client/cl_research.c:1174
 msgid "Notice"
 msgstr "Avviso"
 
@@ -5608,35 +5637,35 @@ msgstr "Max soldati per giocatore:\t%s\n"
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldati per team:\t%s\n"
 
-#: client/cl_main.c:1257
+#: client/cl_main.c:1260
 msgid "Unnamed"
 msgstr "Sena Nome"
 
-#: client/cl_main.c:1471
+#: client/cl_main.c:1474
 msgid "Chicken-hearted"
 msgstr "Pollo"
 
-#: client/cl_main.c:1473
+#: client/cl_main.c:1476
 msgid "Very Easy"
 msgstr "Facilissimo"
 
-#: client/cl_main.c:1476
+#: client/cl_main.c:1479
 msgid "Easy"
 msgstr "Facile"
 
-#: client/cl_main.c:1478
+#: client/cl_main.c:1481
 msgid "Normal"
 msgstr "Normale"
 
-#: client/cl_main.c:1481
+#: client/cl_main.c:1484
 msgid "Hard"
 msgstr "Difficile"
 
-#: client/cl_main.c:1483
+#: client/cl_main.c:1486
 msgid "Very Hard"
 msgstr "Molto duro"
 
-#: client/cl_main.c:1485
+#: client/cl_main.c:1488
 msgid "Insane"
 msgstr "Insano"
 
@@ -5777,54 +5806,54 @@ msgstr "Produzione iniziata"
 msgid "Queue full!"
 msgstr ""
 
-#: client/cl_research.c:589
+#: client/cl_research.c:624
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Scienziati liberi in questa base: %i"
 
-#: client/cl_research.c:590
+#: client/cl_research.c:625
 msgid "Not researched in any base."
 msgstr "Non ricercato in nessuna base."
 
-#: client/cl_research.c:596
+#: client/cl_research.c:631
 #, c-format
 msgid "Researched in %s"
 msgstr "Ricercato in %s"
 
-#: client/cl_research.c:598
+#: client/cl_research.c:633
 msgid "Researched in this base."
 msgstr "Ricercato in questa base,"
 
-#: client/cl_research.c:609
+#: client/cl_research.c:644
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Progressi: %.1f%%"
 
-#: client/cl_research.c:611
+#: client/cl_research.c:646
 msgid "Progress: Not available."
 msgstr "Progressi: Non disponibili."
 
-#: client/cl_research.c:615
+#: client/cl_research.c:650
 msgid "Status: Under research"
 msgstr "Stato: Ricerca in corso"
 
-#: client/cl_research.c:618
+#: client/cl_research.c:653
 msgid "Status: Research paused"
 msgstr "Stato: Ricerca in pausa"
 
-#: client/cl_research.c:621
+#: client/cl_research.c:656
 msgid "Status: Research finished"
 msgstr "Stato: Ricerca finita"
 
-#: client/cl_research.c:624
+#: client/cl_research.c:659
 msgid "Status: Unknown technology"
 msgstr "Stato: Tecnologia sconosciuta"
 
-#: client/cl_research.c:646
+#: client/cl_research.c:681
 msgid "Dependencies"
 msgstr "Dipendenze"
 
-#: client/cl_research.c:717
+#: client/cl_research.c:752
 msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
@@ -5834,19 +5863,19 @@ msgstr ""
 "Ne devi costruire o liberare uno\n"
 "per poter assegnare scienziati a questa ricerca.\n"
 
-#: client/cl_research.c:838
+#: client/cl_research.c:873
 msgid "This item is already under research by your scientists."
 msgstr "Questo oggetto è già sotto studio da parte dei tuoi scienziati."
 
-#: client/cl_research.c:841
+#: client/cl_research.c:876
 msgid "The research on this item continues."
 msgstr "Lo studio di questo oggetto continua."
 
-#: client/cl_research.c:845 client/cl_research.c:887
+#: client/cl_research.c:880 client/cl_research.c:922
 msgid "The research on this item is complete."
 msgstr "Lo studio di questo oggetto è completo."
 
-#: client/cl_research.c:858
+#: client/cl_research.c:893
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -5854,24 +5883,24 @@ msgstr ""
 "Non è ancora possibile studiare questo oggetto.\n"
 "Devi prima aver compreso le tecnologie su cui è basato."
 
-#: client/cl_research.c:926 client/cl_research.c:1037
+#: client/cl_research.c:962 client/cl_research.c:1073
 msgid " [not yet researchable]"
 msgstr " [non ancora ricercabile]"
 
-#: client/cl_research.c:1138
+#: client/cl_research.c:1174
 msgid "Build a laboratory first"
 msgstr "Costruisci un laboratorio prima"
 
-#: client/cl_research.c:1219
+#: client/cl_research.c:1255
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Ricerca di %s finita\n"
 
-#: client/cl_research.c:1220
+#: client/cl_research.c:1256
 msgid "Research finished"
 msgstr "Ricerca finita"
 
-#: client/cl_research.c:1456
+#: client/cl_research.c:1492
 msgid "No description available."
 msgstr "Nessuna descrizione"
 
