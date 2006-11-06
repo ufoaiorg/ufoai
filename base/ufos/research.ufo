@@ -60,8 +60,9 @@
 
 up_chapters main
 {
+	news	"_News"
 	crafts	"_Aircraft"
-	tech		"_Technologies & Discoveries"
+	tech	"_Technologies & Discoveries"
 	weapons	"_Weapons"
 	armors	"_Armors"
 //	damage	"_Damage Types"
@@ -2492,3 +2493,40 @@ tech rs_craft_weapon_flac
 	image_top	"techs/craftweapon_flac"
 }
 
+// NEWS
+
+tech news_initial_political_situation
+{
+	type	news
+	name	"_Political situation before the invasion"
+	description	"_news_initial_political_situation_txt"
+	up_chapter	news
+
+	require_AND { tech nothing }
+	time	0
+	researched	true
+}
+
+tech news_after_the_war
+{
+	type	news
+	name	"_After the war"
+	description	"_news_after_the_war_txt"
+	up_chapter	news
+
+	require_AND { tech nothing }
+	time	0
+	researched	true
+}
+
+tech news_phalanx_and_mumbai_aftermath
+{
+	type	news
+	name	"_PHALANX And The Mumbai Aftermath"
+	description	"_news_phalanx_and_mumbai_aftermath_txt"
+	up_chapter	news
+
+	require_AND { tech nothing }
+	time	0
+	researched	true
+}
