@@ -1,0 +1,7 @@
+base/*.cfg /usr/lib/games/ufoai/base/
+base/models /usr/lib/games/ufoai/base/
+base/pics /usr/lib/games/ufoai/base/
+base/shaders /usr/lib/games/ufoai/base/
+base/sound /usr/lib/games/ufoai/base/
+base/textures /usr/lib/games/ufoai/base/
+base/ufos /usr/lib/games/ufoai/base/

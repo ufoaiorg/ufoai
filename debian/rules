@@ -1,0 +1,152 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Copyright 2004, 2006 Yann Dirson.
+# Based on debhelper sample by Joey Hess.
+
+export LC_ALL=C
+vercmd=dpkg-parsechangelog | grep ^Version: | cut -c 10- | sed s/\\./\\./g
+
+FONTDIR=debian/ufoai-data/usr/lib/games/ufoai/base/media
+
+export DH_OPTIONS
+
+CFLAGS = -Wall -g
+
+# let's do debugging
+export DEB_BUILD_OPTIONS=nostrip
+
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+	CFLAGS += -O0
+else
+	CFLAGS += -O4
+endif
+ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+	INSTALL_PROGRAM += -s
+endif
+
+versionconfig:
+ # setup package version for SVN builds
+	set -e; if [ -d .svn ]; then \
+	  SRCVER=$(shell $(vercmd)) ;\
+	  CURVER=`svn info|grep ^Revision:| cut -c11-` ;\
+	  if [ -n "$$CURVER" ] ; then \
+	    sed 1s/$$SRCVER/$${SRCVER%svn*}svn$$CURVER/ < debian/changelog > debian/cl2;\
+	    mv debian/cl2 debian/changelog ;\
+	  fi ;\
+	fi
+
+config.status:
+	dh_testdir
+
+	./configure
+ # workaround
+	test -r svnversion.h || \
+	  echo "#define SVN \"unknown\""> svnversion.h
+
+build-arch: stamps/build-arch
+stamps/build-arch: config.status
+	dh_testdir
+
+	$(MAKE) BUILDDIR=$(CURDIR)/build
+
+	mkdir -p stamps
+	touch $@
+
+build-indep: stamps/build-indep
+stamps/build-indep: config.status
+	dh_testdir
+
+	$(MAKE) lang maps
+
+	mkdir -p stamps
+	touch $@
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -rf stamps
+
+	$(MAKE) distclean
+	find maps -name '*.bsp' | xargs --no-run-if-empty rm
+
+	set -e; if [ -d .svn ]; then \
+	  SRCVER=$(shell $(vercmd)) ;\
+	  sed 1s/$$SRCVER/$${SRCVER%svn*}svn/ < debian/changelog > debian/cl2;\
+	  mv debian/cl2 debian/changelog ;\
+	fi
+
+	dh_clean 
+
+install-arch: stamps/build-arch
+	dh_testdir
+	dh_testroot
+	dh_clean -k 
+	dh_installdirs
+
+	dh_install
+ # FIXME: dh_fixperms should handle that
+	chmod +x debian/ufoai/usr/games/ufo
+
+install-indep: stamps/build-indep
+	dh_testdir
+	dh_testroot
+	dh_clean -k 
+	dh_installdirs
+
+	dh_install
+
+  # remove unwanted stuff: svn metadata and source files
+	find debian/ufoai-data -name .svn | xargs rm -rf
+	find debian/ufoai-data -name '*.map' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.xcf' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.blend' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.mb' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.max' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.obj' | xargs --no-run-if-empty rm
+	find debian/ufoai-data -name '*.wings3d' | xargs --no-run-if-empty rm
+
+  # add links to fonts
+	mkdir $(FONTDIR)
+	ln -s /usr/share/fonts/truetype/freefont/FreeSans.ttf $(FONTDIR)
+	ln -s /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf $(FONTDIR)
+
+# No architecture-independent files here.
+binary-indep: DH_OPTIONS=-i
+binary-indep: versionconfig install-indep
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+# Build architecture-dependent files here.
+binary-arch: DH_OPTIONS=-a
+binary-arch: versionconfig install-arch
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installdocs
+	ln -s ../ufoai-data debian/ufoai/usr/share/doc/ufoai/docs
+	dh_buildinfo
+	dh_installexamples
+#	dh_install
+	dh_installmenu
+#	dh_installdebconf	
+#	dh_installman
+	dh_strip
+	dh_compress
+	dh_fixperms
+#	dh_makeshlibs
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+build: build-arch build-indep
+binary: binary-indep binary-arch
+.PHONY: build build-arch build-indep clean binary-indep binary-arch binary install

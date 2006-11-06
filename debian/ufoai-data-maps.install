@@ -1,0 +1,20 @@
+base/maps/*.bsp /usr/lib/games/ufoai/base/maps
+
+base/maps/villaged/*.bsp /usr/lib/games/ufoai/base/maps/villaged
+base/maps/villagen/*.bsp /usr/lib/games/ufoai/base/maps/villagen
+
+base/maps/frozend/*.bsp /usr/lib/games/ufoai/base/maps/frozend
+base/maps/frozenn/*.bsp /usr/lib/games/ufoai/base/maps/frozenn
+
+base/maps/orientald/*.bsp /usr/lib/games/ufoai/base/maps/orientald
+base/maps/orientaln/*.bsp /usr/lib/games/ufoai/base/maps/orientaln
+
+base/maps/ice/*.bsp /usr/lib/games/ufoai/base/maps/ice
+
+base/maps/tropicd/*.bsp /usr/lib/games/ufoai/base/maps/tropicd
+base/maps/tropicn/*.bsp /usr/lib/games/ufoai/base/maps/tropicn
+
+base/maps/b/*.bsp /usr/lib/games/ufoai/base/maps/b
+base/maps/b/a/*.bsp /usr/lib/games/ufoai/base/maps/b/a
+base/maps/b/d/*.bsp /usr/lib/games/ufoai/base/maps/b/d
+base/maps/b/g/*.bsp /usr/lib/games/ufoai/base/maps/b/g

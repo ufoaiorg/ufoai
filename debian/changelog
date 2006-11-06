@@ -1,4 +1,11 @@
-ufoai (0.0.svn) unstable; urgency=low
+ufoai (2.1~~svn4523) unstable; urgency=low
+
+  * Use new single-package layout, with autoconf-based build system.
+  * Added build-dependency on libarts1-dev.
+
+ -- Yann Dirson <dirson@debian.org>  Sun,  5 Nov 2006 17:01:29 +0100
+
+ufoai (2.0~rc5+svn) unstable; urgency=low
 
   * SVN snapshot.
   * Depend on newer data package.

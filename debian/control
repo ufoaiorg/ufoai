@@ -2,7 +2,7 @@ Source: ufoai
 Section: contrib/games
 Priority: optional
 Maintainer: Yann Dirson <dirson@debian.org>
-Build-Depends: debhelper (>= 4.0.0), dh-buildinfo, libx11-dev, libxext-dev, libjpeg-dev, libvorbis-dev, libglu1-mesa-dev, xlibmesa-gl-dev, libsdl-dev, libsdl-ttf2.0-dev
+Build-Depends: debhelper (>= 4.0.0), dh-buildinfo, libx11-dev, libxext-dev, libjpeg-dev, libvorbis-dev, libglu1-mesa-dev, xlibmesa-gl-dev, libsdl-dev, libsdl-ttf2.0-dev, libarts1-dev
 Standards-Version: 3.6.1
 
 Package: ufoai
@@ -36,3 +36,24 @@ Description: UFO: Alien Invasion - standalone game server
  .
  This package includes the standalone game server.  It is only needed
  if you want to setup a permanent game server.
+
+Package: ufoai-data
+Architecture: all
+Depends: ${misc:Depends}, ttf-freefont, ttf-dejavu
+Recommends: ufoai
+Description: Data for UFO: Alien Invasion
+ Models, units, sound effects, etc.
+
+Package: ufoai-data-maps
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: ufoai
+Description: Data for UFO: Alien Invasion
+ Maps.
+
+Package: ufoai-data-music
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: ufoai
+Description: Data for UFO: Alien Invasion
+ Music.

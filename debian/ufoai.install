@@ -1,0 +1,4 @@
+*.so /usr/lib/games/ufoai/
+base/game.so /usr/lib/games/ufoai/base/
+ufo /usr/lib/games/ufoai/
+debian/ufo /usr/games/
