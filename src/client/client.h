@@ -839,7 +839,7 @@ void CL_InitMessageSystem(void);
 #define C_UNIT				25
 #define C_UNDEFINED			0xFE
 
-#define MAX_MENUTEXTLEN		4096
+#define MAX_MENUTEXTLEN		32768
 
 #define LOOKFWD		 		qtrue
 #define LOOKBCK 			qfalse
