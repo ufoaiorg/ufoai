@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-11-06 09:01+0100\n"
-"PO-Revision-Date: 2006-11-06 18:46+0100\n"
-"Last-Translator: moe <maui_key@yahoo.de>\n"
+"PO-Revision-Date: 2006-11-07 15:41+0100\n"
+"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1714,29 +1714,24 @@ msgid "Statistics"
 msgstr "Statistiken"
 
 #: ../base/ufos/menu_stats.ufo:63
-#, fuzzy
 msgid "Missions"
-msgstr "Mission\t%s (%s)\n"
+msgstr "Missionen"
 
 #: ../base/ufos/menu_stats.ufo:79
-#, fuzzy
 msgid "Bases"
-msgstr "Basis"
+msgstr "Basen"
 
 #: ../base/ufos/menu_stats.ufo:95
-#, fuzzy
 msgid "Employees"
-msgstr "Rekrutierung"
+msgstr "Angestellte"
 
 #: ../base/ufos/menu_stats.ufo:111
-#, fuzzy
 msgid "Costs"
-msgstr "Kreuz"
+msgstr "Kosten"
 
 #: ../base/ufos/menu_stats.ufo:127
-#, fuzzy
 msgid "Nations"
-msgstr "Optionen"
+msgstr "Nationen"
 
 #: ../base/ufos/menu_team.ufo:234
 #: ../base/ufos/menu_team.ufo:244
@@ -2183,9 +2178,8 @@ msgid "The Commonwealth of Oceania"
 msgstr "Die Nationengemeinschaft von Ozeanien"
 
 #: ../base/ufos/research.ufo:63
-#, fuzzy
 msgid "News"
-msgstr "Neu"
+msgstr "Nachrichten"
 
 #: ../base/ufos/research.ufo:65
 msgid "Technologies & Discoveries"
@@ -5393,7 +5387,7 @@ msgstr ""
 "\n"
 "Wenn dieser Ablauf befolgt wird, ist der UFO Hangar nur von kleiner taktischer Wichtigkeit für Aliens und wird höchstwahrscheinlich von ihnen ignoriert. Uns die Zerlegung von UFOs zu verwehren ist nicht so wichtig wie unsere Forschung oder Produktion zu stoppen oder unsere Basis komplett zu zerstören.\n"
 "\n"
-"Wir werden sehr wahrscheinlich mehrere dieser Einrichtugnen beötigen, um mehrere UFOs gleichzeitig zu zerlegen. Sollte die Notwendigkeit bestehen, können wir auch gelagerte UFOs entsorgen, um Platz für ein neues zu machen. In diesem Fall werden alle Teile, die bereits im Lager sind, sofort verfügbar, aber alles, was nicht entfernt wurde, ist verloren.\n"
+"Wir werden sehr wahrscheinlich mehrere dieser Einrichtungen benötigen, um mehrere UFOs gleichzeitig zu zerlegen. Sollte die Notwendigkeit bestehen, können wir auch gelagerte UFOs entsorgen, um Platz für ein neues zu machen. In diesem Fall werden alle Teile, die bereits im Lager sind, sofort verfügbar, aber alles, was nicht entfernt wurde, ist verloren.\n"
 "\n"
 "\n"
 "Zusatz:\n"
@@ -5424,20 +5418,20 @@ msgstr ""
 "\n"
 "Überblick:\n"
 "\n"
-"Die PHALANX Werkstatt ist eine kleine Produktionsanlage, die mit den modernsten militäreischen Produktionsmitteln ausgerüstet ist. Sie ist für die Produktion von geheimen Materialien und Bauteilen gedacht, die keine andere Einrichtung auf der Erde bauen können; sogar die Replikation von außerirdischen Materialien.\n"
+"Die PHALANX Werkstatt ist eine kleine Produktionsanlage, die mit den modernsten militärischen Produktionsmitteln ausgerüstet ist. Sie ist für die Produktion von geheimen Materialien und Bauteilen gedacht, die keine andere Einrichtung auf der Erde bauen können; sogar die Replikation von außerirdischen Materialien.\n"
 "\n"
-"Alle von der Werkstatt produzierten Teile werden von Hand mit soviel robotischer Hilfe wie möglich gefertigt. Es bedürft den hochqualifiziertesten Technikern der Welt, um die fortgeschrittenen Maschinen zu bedienen und neue Maschinen einzubauen, wenn unsere Wissenschaftler ein neues oder verbessertes System entwickeln. Die Werkstatt bietet Platz für 10 Techniker gleichzeitig.\n"
+"Alle von der Werkstatt produzierten Teile werden von Hand mit soviel robotischer Hilfe wie möglich gefertigt. Es bedarf den hochqualifiziertesten Technikern der Welt, um die fortgeschrittenen Maschinen zu bedienen und neue Maschinen einzubauen, wenn unsere Wissenschaftler ein neues oder verbessertes System entwickeln. Die Werkstatt bietet Platz für 10 Techniker gleichzeitig.\n"
 "\n"
 "Um die Werkstatt zu benutzen, wird ein Kraftwerk benötigt. Ohne ein funktionierendes Kraftwerk müssen alle Produktionen angehalten werden, bis der Strom wieder fließt. Die Werkstatt braucht ebenfalls eine Kommandozentrale, um die verschiedenen Bauprojekte zu koordinieren.\n"
 "\n"
 "\n"
 "Empfohlener Einsatz:\n"
 "\n"
-"Während eines möglichen Krieges gegen Außerirdische werden wir shr von der Werkstatt abhängen, um die Waffen zu produzieren, die wir brauchen. Krieg der Welten von H.G. Wells zeigt uns in seiner angsteinflößenden Beschreibung, wie unsere derzeitige Technologie gegen eine Invasionsarmee funktionieren würde. Sogar eine Atombombe dürfte nicht genügen. Im schlimmsten Fall sind wir gezwungen, auf nukleare Raketen zurückzugreifen, falls wir keine andere Hoffnung haben, einen Angriff abzuwehren.\n"
+"Während eines möglichen Krieges gegen Außerirdische werden wir sehr von der Werkstatt abhängen, um die Waffen zu produzieren, die wir brauchen. Krieg der Welten von H.G. Wells zeigt uns in seiner angsteinflößenden Beschreibung, wie unsere derzeitige Technologie gegen eine Invasionsarmee funktionieren würde. Sogar eine Atombombe dürfte nicht genügen. Im schlimmsten Fall sind wir gezwungen, auf nukleare Raketen zurückzugreifen, falls wir keine andere Hoffnung haben, einen Angriff abzuwehren.\n"
 "\n"
-"Die Werkstatt ist eine Hochsicherheitseinrichtung aufgrund ihrer empfindlichen, oft geheimnen Projekten. Die verschiedenen gefährlichen oder flüchtigen Substanzen, die in der Produktion genutzt werden, können es zu einem wahrlich gefährlichen Ort machen und ist sehr wahrscheinlich während eines Basisangriffes gefährdet. Unsere Produktion für eine längere Zeit zu stoppen ist sicherlich ein Sieg für jeden außerirdischen Angreifer, vor allem, wenn sie es schaffen, ein großes Projekt zu zerstören, wie zum Beispiel die Konstruktion eines neuen Luftfahrzeuges.\n"
+"Die Werkstatt ist eine Hochsicherheitseinrichtung aufgrund ihrer empfindlichen, oft geheimen Projekten. Die verschiedenen gefährlichen oder flüchtigen Substanzen, die in der Produktion genutzt werden, können es zu einem wahrlich gefährlichen Ort machen und ist sehr wahrscheinlich während eines Basisangriffes gefährdet. Unsere Produktion für eine längere Zeit zu stoppen ist sicherlich ein Sieg für jeden außerirdischen Angreifer, vor allem, wenn sie es schaffen, ein großes Projekt zu zerstören, wie zum Beispiel die Konstruktion eines neuen Luftfahrzeuges.\n"
 "\n"
-"Interplanetare Raumfahrttechnologie zu reproduzieren wird eine der unbedingten Notwendigkeiten, wenn wir je die Initiative gegen eine außerirdische Macht ergreifen wollen. Wir können nicht auf der Erde bleiben und eine defensive Haltung annehmen, wenn wir ein Ende des möglichen Konfliktes herbeiführen wollen. Unsere gewissenhaften Werkstätten und Labore sind die, die uns für ein solches Horrorszenario bewaffnen werden.\n"
+"Interplanetare Raumfahrttechnologie zu reproduzieren wird eine der unbedingten Notwendigkeiten, wenn wir je die Initiative gegen eine außerirdische Macht ergreifen wollen. Wir können nicht auf der Erde bleiben und eine defensive Haltung annehmen, wenn wir ein Ende des möglichen Konflikts herbeiführen wollen. Unsere gewissenhaften Werkstätten und Labore sind die, die uns für ein solches Horrorszenario bewaffnen werden.\n"
 "\n"
 "\n"
 "Zusatz:\n"
@@ -5455,9 +5449,47 @@ msgstr ""
 "close combat."
 
 #: ../base/ufos/research.ufo:1828
-#, fuzzy
 msgid "dropship_txt"
-msgstr "Der H-92 Transporter ist der Truppentransporter der Phalanx-Eingreiftruppe"
+msgstr ""
+"KLASSIFIZIERUNGSSTUFE SCHWARZ\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Technisches Dokument, Freigabe Sigma -- Nur für den Kommandanten\n"
+"\n"
+"Gespeichert: 17. März 2084\n"
+"\n"
+"Von: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Kommando Atlantische Operationen\n"
+"\n"
+"\n"
+"\n"
+"Überblick\n"
+"\n"
+"Herr Kommandant, ich habe vor ihnen bereits einen Blick auf diese Unterlagen geworfen und entschieden, sie mit meiner eigenen Beurteilung und Schlussfolgerung über unser gewähltes Landungsschiff zu ersetzen. Falls ich damit meine Befugnisse überschreite, aber die alten verfügbaren PHALANX Landungsschiffe sind einfach nicht modern genug. Keins von ihnen kam über den Prototyp-Status hinaus, sogar als sie neu waren. Es gibt nur 2 'überlebende' Exemplare und beide waren in den letzten 60 Jahren in Regierungswarenhäusern eingemottet und waren es nicht wert, rausgeholt zu werden. Wir haben ein großes Durcheinander an Equipment geerbt, ich kann nicht mal die Hälfte davon finden, was wir bekommen sollten. Ich tue mein bestes, überlegene Alternativen für unsere Ausrüstung zu finden.\n"
+"\n"
+"Das bisschen Glück in dem Landungsschiff´durcheinander ist, dass ich es geschafft habe, unseren UN Vertretern ein bisschen mehr Geld abzuverlangen, um ein neues Landungsschiff zu bauen und ich denke, sie werden es mögen.\n"
+"\n"
+"Das Galeoth Firebird VTOL (Vertical Take-Off and Landing) ist das beste Luftfahrzeug, das wir als Landungsschiff einsetzen können. Es ist eigentlich als Frachtschlepper gedacht, aber es wurde schnell in ein Truppentransporter umgewandelt. Seitdem ist es eine beliebte Alternative zu Helikoptern, sowohl im militärischen und zivilen Bereich, geworden, aufgrund ihrer vier HM-5600 Sprengtriebwerken, die dem Firebird VTOL Fähigkeiten geben und mehr Treibstoffeffizienz wegen weniger Bewegungsteilen als beim Helikopter erreichen. Das erhöht die Verlässlichkeit und macht es aufgrund des Fehlens von Rotorblättern schneller. Das HM-5600 ist dennoch ein sehr durstiges Triebwerk und der Hochleistungstreibstoff ist zu teuer für zivile Nutzung.\n"
+"\n"
+"Die Reisegeschwindigkeit des Firebird ist Mach 0.74. Bei einer Maximalgeschwindigkeit von Mach 1.03 kann es sich gerade mal so durch die Schallmauer drücken, aber das verursacht einen großen Druck auf die Hülle und sollte, abgesehen von Notfällen, nicht angewandt werden. Es hat nur einen Waffenslot an der Nase, der Luftabwehrwaffen wie Luftkanonen oder Raketenbatterien eingebaut haben wird. Es kann auch Zusatzausrüstung aufnehmen, um z.B. die Flugeigenschaften oder Kampfperformance zu verbessern. Es gibt Beschleunigungshaltegurte für 8 Soldaten und einen Laderaum, der kleine Kampffahrzeuge aufnehmen und absetzen.\n"
+"\n"
+"Es gibt nichts besser geeignetes im Himmel, dass unseren Bedarf als Landungsschiff deckt, als der Firebird. Schneller als jeder Helikopter, manövrierfähiger als jeder Starrflügler und es kann schnell und effizient auf Bedrohungen auf der ganzen Welt reagieren.\n"
+"\n"
+"Der Firebird braucht einen großen Hangar für Lagerung, Wartung und Einsatz. Er hat einen mittleren Waffenslot auf der Nase.\n"
+"\n"
+"\n"
+"Empfohlener Einsatz\n"
+"\n"
+"Das Landungsschiff trägt unsere Soldaten über die ganze Welt, um auf Alienangriffe am Boden zu reagieren oder um UFO Absturzstellen für Bergung zu säubern. Es sollte sofort an Punkte mit Aliensichtung gebraucht werden, um abgeschossene UFOs zu bergen.\n"
+"\n"
+"Ist eine Absturzstelle erst einmal von lebenden Aliens gesäubert, werden schwer verletzte Soldaten sofort zur medizinischen Behandlung geschickt. Die verbleibenden Soldaten sichern das Gebiet, bis ein PHALANX Bergungsteam übernimmt und die Lieferung aller und jedes Artefaktes in unsere Basen sicherstellt. Das ist wichtig, da versuchtes Plündern von liegengelassenen Sachen ein Problem in dicht besiedelten gebieten werden könnte. Wir können uns nicht leisten, wertvolle Alientechnologie zu verlieren, nur weil irgendein Idiot glaubt, er müsse ein Souvenir mitnehmen.\n"
+"\n"
+"Obwohl bewaffnet ist der Firebird nicht in der Lage, gegen richtige Kampfschiffe anzukommen und sollte nie als Abfangjäger eingesetzt werden.\n"
+"\n"
+"\n"
+"Zusatz\n"
+"\n"
+"Keiner."
 
 #: ../base/ufos/research.ufo:1829
 #, fuzzy
@@ -6229,9 +6261,8 @@ msgstr ""
 "assumption because there is no evidence proving the existence of such a master-species."
 
 #: ../base/ufos/research.ufo:2525
-#, fuzzy
 msgid "PHALANX And The Mumbai Aftermath"
-msgstr "PHALANX And The Mumbai Aftermath"
+msgstr "PHALANX und die Folgen der Mumbai Attacke"
 
 #: ../base/ufos/research.ufo:2526
 #, fuzzy
@@ -6702,15 +6733,13 @@ msgstr "Sturmgewehrmunition"
 
 #: ../base/ufos/weapons_human.ufo:36
 #: ../base/ufos/weapons_human.ufo:404
-#, fuzzy
 msgid "Snap Burst"
-msgstr "Feuerstoß"
+msgstr "Hüftschuss"
 
 #: ../base/ufos/weapons_human.ufo:56
 #: ../base/ufos/weapons_human.ufo:423
-#, fuzzy
 msgid "Aimed Burst"
-msgstr "Gezielter Schuss"
+msgstr "Gezielter Feuerstoß"
 
 #: ../base/ufos/weapons_human.ufo:81
 msgid "Chaingun"
@@ -7579,7 +7608,7 @@ msgstr ""
 "\n"
 
 #: client/cl_campaign.c:1350
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Build:\t%i\n"
 "Active:\t%i\n"
@@ -7590,14 +7619,14 @@ msgstr ""
 "Angegriffen:\t%i\n"
 
 #: client/cl_campaign.c:1357
-#, fuzzy, c-format
+#, c-format
 msgid "%s\t%s\n"
-msgstr "Basis\t%s\n"
+msgstr "%s\t%s\n"
 
 #: client/cl_campaign.c:1364
-#, fuzzy, c-format
+#, c-format
 msgid "%s\t%i\n"
-msgstr "%02i:%i%i"
+msgstr "%s\t%i\n"
 
 #: client/cl_campaign.c:1390
 #, c-format
@@ -7605,9 +7634,9 @@ msgid "Employees:\t%i c\n"
 msgstr "Angestellte:\t%i c\n"
 
 #: client/cl_campaign.c:1399
-#, fuzzy, c-format
+#, c-format
 msgid "Aircrafts:\t%i c\n"
-msgstr "Fixkosten:\t%i c\n"
+msgstr "Flugzeuge:\t%i c\n"
 
 #: client/cl_campaign.c:1407
 #, c-format
@@ -7615,14 +7644,14 @@ msgid "Base (%s):\t%i c\n"
 msgstr "Basis (%s):\t%i c\n"
 
 #: client/cl_campaign.c:1412
-#, fuzzy, c-format
+#, c-format
 msgid "Administrative costs:\t%i c\n"
-msgstr "Variable Kosten:\t%i c\n"
+msgstr "Administrative Kosten:\t%i c\n"
 
 #: client/cl_campaign.c:1419
-#, fuzzy, c-format
+#, c-format
 msgid "Debt:\t%i c\n"
-msgstr "Arbeiterkosten:\t%i c\n"
+msgstr "Finanzkosten:\t%i c\n"
 
 #: client/cl_campaign.c:1422
 #, c-format
