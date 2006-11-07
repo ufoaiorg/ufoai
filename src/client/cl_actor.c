@@ -1643,10 +1643,6 @@ void CL_ActorMouseTrace(void)
 	VecToPos(end, testPos);
 	restingLevel = Grid_Fall(&clMap, testPos);
 
-	/* test if the selected grid is out of the world */
-	if (restingLevel < 0)
-		return;
-
 	/* if grid below intersection level, start a trace from the intersection */
 	if (restingLevel < intersectionLevel) {
 		VectorCopy(end, from);
@@ -1655,6 +1651,10 @@ void CL_ActorMouseTrace(void)
 		VecToPos(end, testPos);
 		restingLevel = Grid_Fall(&clMap, testPos);
 	}
+
+	/* test if the selected grid is out of the world */
+	if (restingLevel < 0)
+		return;
 
 	Vector2Copy(testPos, mousePos);
 	mousePos[2] = restingLevel;
