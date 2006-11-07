@@ -380,16 +380,9 @@ static void LET_PathMove(le_t * le)
 			if (le->team == cls.team && le == selActor && (int) cl_worldlevel->value == le->oldPos[2] && le->pos[2] != le->oldPos[2]) {
 				Cvar_SetValue("cl_worldlevel", le->pos[2]);
 			}
-			if (camera_mode == CAMERA_MODE_FIRSTPERSON && le == selActor) {
-				cl.cam.camorg[2] = selActor->origin[2];
-				if (!(le->state & STATE_CROUCHED))
-					cl.cam.camorg[2] += EYE_HT_OFFSET;
-			}
 		} else {
 			/* end of move */
 			le_t *floor;
-
-			Grid_PosToVec(&clMap, le->pos, le->origin);
 
 			CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
 			CL_ResetActorMoveLength();
@@ -406,6 +399,7 @@ static void LET_PathMove(le_t * le)
 	}
 
 	/* interpolate the position */
+	Grid_PosToVec(&clMap, le->pos, le->origin);
 	Grid_PosToVec(&clMap, le->oldPos, start);
 	Grid_PosToVec(&clMap, le->pos, dest);
 	VectorSubtract(dest, start, delta);

@@ -41,6 +41,7 @@ int dragFrom, dragFromX, dragFromY;
 item_t dragItem = {NONE,NONE,NONE}; /* to crash as soon as possible */
 float *rotateAngles;
 qboolean wasCrouched = qfalse, doCrouch = qfalse;
+float crouchHt = 0;
 
 static qboolean cameraRoute = qfalse;
 static vec3_t routeFrom, routeDelta;
@@ -307,12 +308,11 @@ void CL_CameraModeChange(camera_mode_t new_camera_mode)
 		camera_mode = CAMERA_MODE_FIRSTPERSON;
 		VectorCopy(selActor->origin, cl.cam.camorg);
 		Cvar_SetValue("cl_worldlevel", selActor->pos[2]);
-		if (!(selActor->state & STATE_CROUCHED))
-			cl.cam.camorg[2] += EYE_HT_OFFSET; /* raise from waist to head */
 		VectorCopy(selActor->angles, cl.cam.angles);
 		cl.refdef.fov_x = FOV_FPS;
 		cl.cam.zoom = 1.0;
 		wasCrouched = selActor->state & STATE_CROUCHED;
+		crouchHt = 0.;
 	}
 }
 
@@ -827,36 +827,46 @@ void CL_CameraMoveFirstPerson(void)
 	if ((in_turnup.state & 1) && (cl.cam.angles[PITCH] > -45))
 		cl.cam.angles[PITCH] -= cls.frametime * rotation_speed;
 
-	/* ensure camera's horizontal position is over actor */
-	Vector2Copy(selActor->origin, cl.cam.camorg);
+	/* ensure camera position matches actors origin */
+	VectorCopy(selActor->origin, cl.cam.camorg);
 
 	/* check if actor is starting a crouch/stand action */
 	if (wasCrouched != (selActor->state & STATE_CROUCHED)) {
 		doCrouch = qtrue;
+		crouchHt = 0.;
 		wasCrouched = selActor->state & STATE_CROUCHED;
 	}
 
-	/* if in process of crouching or standing, move camera vertically */
+	/* adjust camera if actor is standing vs crouching */
 	if (doCrouch) {
 		if (selActor->state & STATE_CROUCHED) {
-			cl.cam.camorg[2] -= 11.*cls.frametime;
-			if (cl.cam.camorg[2] < selActor->origin[2]) {
-				cl.cam.camorg[2] = selActor->origin[2];
+			cl.cam.camorg[2] += EYE_HT_STAND;
+			crouchHt += 8. * cls.frametime;
+			cl.cam.camorg[2] -= crouchHt;
+			if (cl.cam.camorg[2] < selActor->origin[2] + EYE_HT_CROUCH) {
+				cl.cam.camorg[2] = selActor->origin[2] + EYE_HT_CROUCH;
 				doCrouch = qfalse;
 			}
 		} else {
-			cl.cam.camorg[2] += 16.*cls.frametime;
-			if (cl.cam.camorg[2] > selActor->origin[2] + EYE_HT_OFFSET) {
-				cl.cam.camorg[2] = selActor->origin[2] + EYE_HT_OFFSET;
+			cl.cam.camorg[2] += EYE_HT_CROUCH;
+			crouchHt += 8. * cls.frametime;
+			cl.cam.camorg[2] += crouchHt;
+			if (cl.cam.camorg[2] > selActor->origin[2] + EYE_HT_STAND) {
+				cl.cam.camorg[2] = selActor->origin[2] + EYE_HT_STAND;
 				doCrouch = qfalse;
 			}
 		}
+	} else {
+		if (selActor->state & STATE_CROUCHED)
+			cl.cam.camorg[2] += EYE_HT_CROUCH;
+		else
+			cl.cam.camorg[2] += EYE_HT_STAND;
 	}
 
 	/* move camera forward horizontally to where soldier eyes are */
 	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
 	cl.cam.axis[0][2] = 0.;
-	VectorMA(cl.cam.camorg, 4., cl.cam.axis[0], cl.cam.camorg);
+	VectorMA(cl.cam.camorg, 5., cl.cam.axis[0], cl.cam.camorg);
 }
 
 /**
