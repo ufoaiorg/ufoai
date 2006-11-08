@@ -1952,6 +1952,7 @@ trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 	int tile, i;
 	chead_t *h;
 
+	memset(&tr, 0, sizeof(trace_t));
 	tr.fraction = 2.0f;
 
 	for (tile = 0; tile < numTiles; tile++) {

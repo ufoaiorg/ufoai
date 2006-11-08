@@ -272,7 +272,7 @@ menu_t *MN_GetMenuFromStack(int *pos, menu_t *menu, qboolean forward)
 menuNode_t *MN_GetNode(const menu_t* const menu, char *name)
 {
 	const menu_t *tmenu;
-	menuNode_t *node;
+	menuNode_t *node = NULL;
 
 	tmenu = menu;
 	while (tmenu) {
