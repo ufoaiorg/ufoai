@@ -1201,8 +1201,7 @@ void CL_CampaignRun(void)
 		} else if (day > 1)
 			gd.fund = qtrue;
 		Cvar_Set("mn_mapdate", va("%i %s %i", ccs.date.day / 365, CL_DateGetMonthName(month), day));	/* CL_DateGetMonthName is already "gettexted" */
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%02i:%i%i"), ccs.date.sec / 3600, (ccs.date.sec % 3600) / 60 / 10,
-					(ccs.date.sec % 3600) / 60 % 10);
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%02i:%02i"), ccs.date.sec / 3600, ((ccs.date.sec % 3600) / 60) + ((ccs.date.sec % 3600) / 60 % 10));
 		Cvar_Set("mn_maptime", messageBuffer);
 	}
 }

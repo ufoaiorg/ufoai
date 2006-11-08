@@ -800,8 +800,8 @@ typedef enum {
 } messagetype_t;
 
 #define MAX_MESSAGE_TEXT 1024
-#define TIMESTAMP_FORMAT "%02i %s %04i, %02i:%02i:%02i:\t"
-#define TIMESTAMP_TEXT 23
+#define TIMESTAMP_FORMAT "%02i %s %04i, %02i:%02i:\t"
+#define TIMESTAMP_TEXT 21
 typedef struct message_s {
 	char title[MAX_VAR];
 	char text[MAX_MESSAGE_TEXT];

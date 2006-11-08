@@ -219,6 +219,10 @@ void RS_InitTree(void)
 			if (!*tech->name)
 				Com_DPrintf("RS_InitTree: \"%s\" A type craftshield or craftweapon item needs to have a 'name\txxx' defined.", tech->id);
 			break;
+		case RS_NEWS:
+			if (!*tech->name)
+				Com_DPrintf("RS_InitTree: \"%s\" A 'type news' item needs to have a 'name\txxx' defined.", tech->id);
+			break;
 		case RS_TECH:
 			if (!*tech->name)
 				Com_DPrintf("RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", tech->id);
@@ -1150,6 +1154,8 @@ void RS_ParseTechnologies(char *id, char **text)
 				tech->type = RS_TECH;
 			else if (!Q_strncmp(token, "weapon", MAX_VAR))
 				tech->type = RS_WEAPON;
+			else if (!Q_strncmp(token, "news", MAX_VAR))
+				tech->type = RS_NEWS;
 			else if (!Q_strncmp(token, "armor", MAX_VAR))
 				tech->type = RS_ARMOR;
 			else if (!Q_strncmp(token, "craft", MAX_VAR))

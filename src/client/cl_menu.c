@@ -3189,8 +3189,8 @@ message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup,
 	CL_DateConvert(&ccs.date, &mess->d, &mess->m);
 	mess->y = ccs.date.day / 365;
 	mess->h = ccs.date.sec / 3600;
-	mess->min = (ccs.date.sec % 3600) / 60 / 10;
-	mess->s = (ccs.date.sec % 3600) / 60 % 10;
+	mess->min = ((ccs.date.sec % 3600) / 60) + ((ccs.date.sec % 3600) / 60 % 10);
+	mess->s = (ccs.date.sec % 3600) / 60 / 60;
 
 	Q_strncpyz(mess->title, title, MAX_VAR);
 	Q_strncpyz(mess->text, text, sizeof(mess->text));
@@ -3229,7 +3229,7 @@ message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup,
  */
 void MN_TimestampedText(char *text, size_t max_text, message_t *message)
 {
-	Q_strncpyz(text, va(TIMESTAMP_FORMAT, message->d, CL_DateGetMonthName(message->m), message->y, message->h, message->min, message->s), max_text);
+	Q_strncpyz(text, va(TIMESTAMP_FORMAT, message->d, CL_DateGetMonthName(message->m), message->y, message->h, message->min), max_text);
 	Q_strcat(text, message->text, max_text);
 }
 
