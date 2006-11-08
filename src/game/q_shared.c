@@ -1905,7 +1905,7 @@ qboolean Com_sprintf(char *dest, size_t size, char *fmt, ...)
 	static char bigbuffer[0x10000];
 
 	if (!fmt)
-		return;
+		return qfalse;
 
 	va_start(argptr, fmt);
 #ifndef _WIN32
