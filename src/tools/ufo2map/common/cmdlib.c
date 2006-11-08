@@ -194,7 +194,7 @@ void SetQdirFromPath (char *path)
 		snprintf (temp, sizeof(temp), "%s/%s", c, BASEDIR_ID_FILE);
 		if ( FileExists(temp) ) {
 			strncpy (gamedir, c, strlen(c)-1);
-			sprintf (gamedir, "%s/%s/", gamedir, BASEDIR);
+			strncat (gamedir, "/"BASEDIR"/", sizeof(gamedir));
 			qprintf ("gamedir: %s\n", gamedir);
 			return;
 		}
