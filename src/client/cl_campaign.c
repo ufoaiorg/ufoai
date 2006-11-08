@@ -1995,7 +1995,7 @@ int CL_GameLoad(char *filename)
 
 	CL_GameInit();
 
-	Cvar_Set("mn_main", "singleplayer");
+	Cvar_Set("mn_main", "singleplayerInGame");
 	Cvar_Set("mn_active", "map");
 	Cbuf_AddText("disconnect\n");
 
@@ -3796,7 +3796,7 @@ static void CL_GameNew(void)
 	int i;
 	char val[32];
 
-	Cvar_Set("mn_main", "singleplayer");
+	Cvar_Set("mn_main", "singleplayerInGame");
 	Cvar_Set("mn_active", "map");
 	Cvar_SetValue("maxclients", 1.0f);
 

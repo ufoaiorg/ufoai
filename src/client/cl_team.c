@@ -1673,7 +1673,7 @@ void CL_ParseResults(sizebuf_t * buf)
 		Q_strcat(resultText, va(_("Total item sale value\t%i\n\n"), credits_gained),sizeof(resultText));
 
 		MN_PopMenu(qtrue);
-		Cvar_Set("mn_main", "singleplayer");
+		Cvar_Set("mn_main", "singleplayerInGame");
 		Cvar_Set("mn_active", "map");
 		MN_PushMenu("map");
 	}
