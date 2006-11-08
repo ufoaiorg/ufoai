@@ -1266,6 +1266,33 @@
 ( 566 84 38 ) ( 523 84 38 ) ( 566 96 26 ) tex_material/c_yellow 8 0 0 0.5 0.5 0 128 0
 ( 523 47 40 ) ( 523 -57 40 ) ( 523 -57 4 ) tex_material/c_yellow 12 0 0 0.5 0.5 0 128 0
 }
+// brush 135
+{
+( 0 -345 67 ) ( 64 -345 67 ) ( 64 -417 67 ) tex_material/c_yellow 0 15 0 1 1 0 128 0
+( 64 -345 67 ) ( 0 -345 67 ) ( 64 -337 43 ) tex_material/c_yellow 0 11 0 1 1 0 128 0
+( 64 -353 91 ) ( 64 -353 59 ) ( 64 -481 91 ) tex_material/c_yellow 1 11 0 1 1 0 128 0
+( 0 -481 43 ) ( 64 -481 43 ) ( 0 -353 43 ) tex_material/c_yellow 0 15 0 1 1 0 128 0
+( 0 -417 67 ) ( 64 -417 67 ) ( 64 -433 43 ) tex_material/c_yellow 0 11 0 1 1 0 128 0
+( 0 -481 59 ) ( 0 -353 59 ) ( 0 -481 91 ) tex_material/c_yellow 1 11 0 1 1 0 128 0
+}
+// brush 136
+{
+( 64 -353 75 ) ( 64 -481 75 ) ( 0 -353 75 ) tex_material/c_orange2 0 14 0 0.5 0.5 65536 0 0
+( 64 -337 59 ) ( 0 -337 59 ) ( 64 -337 27 ) tex_material/c_orange2 0 11 0 1 1 65536 0 0
+( 64 -353 59 ) ( 64 -353 27 ) ( 64 -481 59 ) tex_material/c_orange2 1 11 0 1 1 65536 0 0
+( 0 -481 3 ) ( 64 -481 3 ) ( 0 -353 3 ) tex_material/c_orange2 0 15 0 1 1 65536 0 0
+( 0 -473 27 ) ( 0 -473 59 ) ( 64 -473 27 ) tex_material/c_orange2 0 11 0 1 1 65536 0 0
+( 0 -481 27 ) ( 0 -353 27 ) ( 0 -481 59 ) tex_material/c_orange2 1 11 0 1 1 65536 0 0
+}
+// brush 137
+{
+( 64 -353 43 ) ( 64 -481 43 ) ( 0 -353 43 ) tex_material/c_yellow 0 15 0 1 1 0 128 0
+( 64 -337 59 ) ( 0 -337 59 ) ( 64 -337 27 ) tex_material/c_yellow 0 11 0 1 1 0 128 0
+( 64 -353 59 ) ( 64 -353 27 ) ( 64 -481 59 ) tex_material/c_yellow 1 11 0 1 1 0 128 0
+( 0 -481 11 ) ( 64 -481 11 ) ( 0 -353 11 ) tex_material/c_yellow 0 15 0 1 1 0 128 0
+( 0 -473 27 ) ( 0 -473 59 ) ( 64 -473 27 ) tex_material/c_yellow 0 11 0 1 1 0 128 0
+( 0 -481 27 ) ( 0 -353 27 ) ( 0 -481 59 ) tex_material/c_yellow 1 11 0 1 1 0 128 0
+}
 }
 // entity 1
 {
@@ -2765,5 +2792,19 @@
 "classname" "misc_model"
 "origin" "420 87 36"
 "model" "models/objects/cars/van/van1t.md2"
+"spawnflags" "255"
+}
+// entity 20
+{
+"classname" "misc_model"
+"origin" "32 -405 35"
+"model" "models/objects/cars/4x4/4x4.md2"
+"spawnflags" "255"
+}
+// entity 21
+{
+"classname" "misc_model"
+"origin" "32 -405 35"
+"model" "models/objects/cars/4x4/4x4_t.md2"
 "spawnflags" "255"
 }
