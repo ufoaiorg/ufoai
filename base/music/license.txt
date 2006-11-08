@@ -1,12 +1,7 @@
-Music Licence Agreement
-=======================
-Music has been composed and produced by Vanethian (www.manuelmarino.com). 
-
-All rights reserved. Do not use the tracks in other projects.
-
-The tracks can be grabbed from: http://sourceforge.net/projects/ufoai
-
-
+Tracks contributed under GPL
+=============================
+* The Psymong series: Psymong*.ogg (Simon Green, http://www.8hz.co.uk/)
+* ufo1.ogg, ufo2.ogg (author: Paul B, http://www.myspace.com/s2zpaulb)
 
 Tracks under Creative Commons
 =============================
@@ -17,7 +12,15 @@ Tracks that are public domain
 * greecei.ogg (taken from worldforge/golgotha)
 * alBasrahM.ogg, turinItalyM.ogg (from Golgotha, modified)
 
-Tracks contributed under GPL
-=============================
-* ufo1.ogg, ufo2.ogg (author: Paul B, http://www.myspace.com/s2zpaulb)
-* The Psymong series: Psymong*.ogg (Simon Green, http://www.8hz.co.uk/)
+-----------------------------------------------------------------------
+
+Additional tracks composed by Vanethain for UFO:AI are available at:
+http://sourceforge.net/projects/ufoai
+
+Vanethian's tracks are licensed as follows:
+Music Licence Agreement
+=======================
+Music has been composed and produced by Vanethian (www.manuelmarino.com). 
+
+All rights reserved. Do not use the tracks in other projects.
+
