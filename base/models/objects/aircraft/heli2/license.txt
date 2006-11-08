@@ -1,0 +1,7 @@
+The original model has be released under the GPL and CC-by-sa.
+
+Author: Ingo Ruhnke <grumbel@gmx.de>
+
+Any modifications made so far are under the same licenses.
+
+Author of first texture & poly-reduction: Olivier Alloschery.
