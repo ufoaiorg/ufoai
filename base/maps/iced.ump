@@ -1,4 +1,4 @@
-// base/maps/ice.ump - 2006-09-05
+// base/maps/iced.ump
 
 // *********************************
 // ICE THEME
@@ -10,7 +10,7 @@
 // a: any
 
 
-base ice/ice_
+base iced/ice_
 
 // ---------------------------------
 // Dropship on ice map
