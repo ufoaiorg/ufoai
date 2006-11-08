@@ -146,7 +146,7 @@ typedef enum {
 
 	K_NUMLOCK,
 
-	K_LAST_KEY					/* this had better be <256! */
+	K_LAST_KEY
 } keyNum_t;
 
 typedef enum {
