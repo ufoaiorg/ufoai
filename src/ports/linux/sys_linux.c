@@ -79,12 +79,14 @@ char *Sys_GetCurrentUser( void )
 
 /**
  * @brief
+ * @return NULL if getcwd failed
  */
 char *Sys_Cwd( void )
 {
 	static char cwd[MAX_OSPATH];
 
-	getcwd( cwd, sizeof( cwd ) - 1 );
+	if (getcwd(cwd, sizeof(cwd) - 1) == NULL)
+		return NULL;
 	cwd[MAX_OSPATH-1] = 0;
 
 	return cwd;
@@ -127,7 +129,7 @@ char *Sys_BinName( const char *arg0 )
 	}
 
 	if (links) {
-		Com_sprintf( dst, MAX_OSPATH, Sys_Cwd());
+		Com_sprintf(dst, MAX_OSPATH, Sys_Cwd());
 		Q_strcat(dst, "/", MAX_OSPATH);
 		Q_strcat(dst, dir, MAX_OSPATH);
 		Q_strcat(dst, "/", MAX_OSPATH);
@@ -324,7 +326,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	void	*(*GetGameAPI) (void *);
 
 	char	name[MAX_OSPATH];
-	char	curpath[MAX_OSPATH];
+	char	*curpath;
 	char	*path;
 
 	setreuid(getuid(), getuid());
@@ -333,7 +335,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	if (game_library)
 		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 
-	getcwd(curpath, sizeof(curpath));
+	curpath = Sys_Cwd();
 
 	Com_Printf("------- Loading game.so -------\n");
 

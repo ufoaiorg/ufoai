@@ -294,7 +294,7 @@ void SVC_DirectConnect(void)
 		for (i = 0; i < MAX_CHALLENGES; i++) {
 			if (NET_CompareBaseAdr(net_from, svs.challenges[i].adr)) {
 				if (challenge == svs.challenges[i].challenge) {
-					svs.challenges[i].challenge = 0; 
+					svs.challenges[i].challenge = 0;
 					break;		/* good */
 				}
 				Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nBad challenge.\n");

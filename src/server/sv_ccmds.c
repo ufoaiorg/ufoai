@@ -381,8 +381,10 @@ void SV_ServerRecord_f(void)
 	/* write it to the demo file */
 	Com_DPrintf("signon message length: %i\n", buf.cursize);
 	len = LittleLong(buf.cursize);
-	fwrite(&len, 4, 1, svs.demofile);
-	fwrite(buf.data, buf.cursize, 1, svs.demofile);
+	if (fwrite(&len, 4, 1, svs.demofile) != 1)
+		Com_Printf("Error writing demofile\n");
+	if (fwrite(buf.data, buf.cursize, 1, svs.demofile) != 1)
+		Com_Printf("Error writing demofile\n");
 
 	/* the rest of the demo file will be individual frames */
 }

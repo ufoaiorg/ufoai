@@ -191,11 +191,11 @@ qboolean SND_Init(struct sndinfo *s)
 	si->Com_Printf("OSS: bits %i\n", si->dma->samplebits);
 
 	if ( ioctl(audio_fd, SNDCTL_DSP_GETOSPACE, &info) == -1 ) {
-		perror("GETOSPACE");
+/* 		perror("GETOSPACE"); */
 		si->Com_Printf("SND_Init: GETOSPACE ioctl failed. %s\n", strerror(errno));
-		close(audio_fd);
-		audio_fd = -1;
-		return qfalse;
+/* 		close(audio_fd); */
+/* 		audio_fd = -1; */
+/*		return qfalse;*/
 	}
 
 	si->dma->samples = info.fragstotal * info.fragsize / (si->dma->samplebits/8);

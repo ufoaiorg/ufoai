@@ -362,7 +362,8 @@ static void CL_TeamCommentsCmd(void)
 		}
 
 		/* read data */
-		fread(comment, 1, MAX_VAR, f);
+		if (fread(comment, 1, MAX_VAR, f) != MAX_VAR)
+			Com_Printf("Warning: Teamfile may have corrupted comment\n");
 		Cvar_Set(va("mn_slot%i", i), comment);
 		fclose(f);
 	}

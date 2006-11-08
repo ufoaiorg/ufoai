@@ -1907,6 +1907,9 @@ qboolean Com_sprintf(char *dest, size_t size, char *fmt, ...)
 	va_list argptr;
 	static char bigbuffer[0x10000];
 
+	if (!fmt)
+		return qfalse;
+
 	va_start(argptr, fmt);
 #ifndef _WIN32
 	len = vsnprintf(bigbuffer, 0x10000, fmt, argptr);

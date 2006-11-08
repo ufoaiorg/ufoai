@@ -65,7 +65,8 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 
 	iLevel = 0;
 
-	fread(&magic, sizeof(int), 1, input);
+	if (fread(&magic, sizeof(int), 1, input) != 1)
+		printf("LoadTriangleList: Read error\n");
 	if (BigLong(magic) != MAGIC)
 		Error ("%s is not a Alias object separated triangle file, magic number is wrong.", filename);
 
@@ -86,12 +87,14 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 					/* a file, but this does allow you to do error checking */
 					/* (which I'm not doing) on a per character basis.      */
 					++i;
-					fread( &(name[i]), sizeof( char ), 1, input);
+					if (fread( &(name[i]), sizeof( char ), 1, input) != 1)
+						printf("LoadTriangleList: Read error\n");
 				} while( name[i] != '\0' );
 
 /*				indent(); */
 /*				fprintf(stdout,"OBJECT START: %s\n",name); */
-				fread( &count, sizeof(int), 1, input);
+				if (fread( &count, sizeof(int), 1, input) != 1)
+					printf("LoadTriangleList: Read error\n");
 				count = BigLong(count);
 				++iLevel;
 				if (count != 0) {
@@ -101,7 +104,8 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 					i = -1;
 					do {
 						++i;
-						fread( &(tex[i]), sizeof( char ), 1, input);
+						if (fread( &(tex[i]), sizeof( char ), 1, input) != 1)
+							printf("LoadTriangleList: Read error\n");
 					} while( tex[i] != '\0' );
 
 /*					indent(); */
@@ -120,7 +124,8 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 				i = -1;
 				do {
 					++i;
-					fread( &(name[i]), sizeof( char ), 1, input);
+					if (fread( &(name[i]), sizeof( char ), 1, input) != 1)
+						printf("LoadTriangleList: Read error\n");
 				} while( name[i] != '\0' );
 
 /*				indent(); */
@@ -133,7 +138,8 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 		for (i = 0; i < count; ++i) {
 			int		j;
 
-			fread( &tri, sizeof(tf_triangle), 1, input );
+			if (fread( &tri, sizeof(tf_triangle), 1, input ) != 1)
+				printf("LoadTriangleList: Read error\n");
 			ByteSwapTri (&tri);
 			for (j=0 ; j<3 ; j++) {
 				int		k;

@@ -291,11 +291,12 @@ double I_FloatTime (void)
 void Q_getwd (char *out)
 {
 #ifdef _WIN32
-   _getcwd (out, 256);
-   strcat (out, "\\");
+	_getcwd (out, 256);
+	strcat (out, "\\");
 #else
-   getcwd( out, 256 );
-   strcat (out, "/");
+	if (getcwd(out, 256) == NULL)
+		printf("Warning, getcwd failed\n");
+	strcat (out, "/");
 #endif
 }
 

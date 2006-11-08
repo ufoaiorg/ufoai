@@ -389,7 +389,11 @@ void LoadBSPFileTexinfo (char *filename)
 	header = malloc(sizeof(dheader_t));
 
 	f = fopen (filename, "rb");
-	fread (header, sizeof(dheader_t), 1, f);
+	if (fread (header, sizeof(dheader_t), 1, f) != 1) {
+		printf("LoadBSPFileTexinfo: Header size mismatch\n");
+		free (header);
+		return;
+	}
 
 	/* swap the header */
 	for (i=0 ; i< sizeof(dheader_t)/4 ; i++)
@@ -405,7 +409,8 @@ void LoadBSPFileTexinfo (char *filename)
 	ofs = header->lumps[LUMP_TEXINFO].fileofs;
 
 	fseek (f, ofs, SEEK_SET);
-	fread (texinfo, length, 1, f);
+	if (fread (texinfo, length, 1, f) != 1)
+		printf("LoadBSPFileTexInfo: Warning, read error\n");
 	fclose (f);
 
 	numtexinfo = length / sizeof(texinfo_t);

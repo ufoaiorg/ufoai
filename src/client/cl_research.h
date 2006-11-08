@@ -50,7 +50,8 @@ typedef enum researchType_s {
 	RS_CRAFTSHIELD,
 	RS_BUILDING,
 	RS_ALIEN,
-	RS_UGV
+	RS_UGV,
+	RS_NEWS
 } researchType_t;
 
 #define DEPENDENCIES_OVERHAUL 1

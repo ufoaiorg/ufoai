@@ -94,7 +94,8 @@ static int ParseVertexL (FILE *input)
 	if (feof(input))
 		Error ("Error: unexpected end of file");
 
-	fread(&tshort, sizeof(tshort), 1, input);
+	if (fread(&tshort, sizeof(tshort), 1, input) != 1)
+		printf("ParseVertexL: read error\n");
 	bytesread += sizeof(tshort);
 	numverts = (int)tshort;
 
@@ -106,7 +107,8 @@ static int ParseVertexL (FILE *input)
 			if (feof(input))
 				Error ("Error: unexpected end of file");
 
-			fread(&fverts[i][j], sizeof(float), 1, input);
+			if (fread(&fverts[i][j], sizeof(float), 1, input) != 1)
+				printf("ParseVertexL: read error\n");
 			bytesread += sizeof(float);
 		}
 	}
@@ -136,7 +138,8 @@ static int ParseFaceL1 (FILE *input)
 	if (feof(input))
 		Error ("Error: unexpected end of file");
 
-	fread(&tshort, sizeof(tshort), 1, input);
+	if (fread(&tshort, sizeof(tshort), 1, input) != 1)
+		printf("ParseFaceL1: read error\n");
 	bytesread += sizeof(tshort);
 	numtris = (int)tshort;
 
@@ -148,7 +151,8 @@ static int ParseFaceL1 (FILE *input)
 			if (feof(input))
 				Error ("Error: unexpected end of file");
 
-			fread(&tshort, sizeof(tshort), 1, input);
+			if (fread(&tshort, sizeof(tshort), 1, input) != 1)
+				printf("ParseFaceL1: read error\n");
 			bytesread += sizeof(tshort);
 			tris[i].v[j] = (int)tshort;
 		}
@@ -178,14 +182,16 @@ static int ParseChunk (FILE *input)
 	if (feof(input))
 		Error ("Error: unexpected end of file");
 
-	fread(&type, sizeof(type), 1, input);
+	if (fread(&type, sizeof(type), 1, input) != 1)
+		printf("ParseChunk: read error\n");
 	bytesread += sizeof(type);
 
 	/* chunk length */
 	if (feof(input))
 		Error ("Error: unexpected end of file");
 
-	fread (&length, sizeof(length), 1, input);
+	if (fread (&length, sizeof(length), 1, input) != 1)
+		printf("ParseChunk: read error\n");
 	bytesread += sizeof(length);
 	w = length - 6;
 
@@ -207,7 +213,8 @@ static int ParseChunk (FILE *input)
 			if (feof(input))
 				Error ("Error: unexpected end of file");
 
-			fread (&temp[i], 1, 1, input);
+			if (fread (&temp[i], 1, 1, input) != 1)
+				printf("ParseChunk: read error\n");
 			i++;
 			w--;
 			bytesread++;
@@ -236,7 +243,8 @@ ParseSubchunk:
 			if (feof(input))
 				Error ("Error: unexpected end of file");
 
-			fread (&temp, t, 1, input);
+			if (fread (&temp, t, 1, input) != 1)
+				printf("ParseChunk: read error\n");
 			bytesread += t;
 			w -= t;
 		}
@@ -270,7 +278,8 @@ extern void Load3DSTriangleList (char *filename, triangle_t **pptri, int *numtri
 		exit(0);
 	}
 
-	fread(&tshort, sizeof(tshort), 1, input);
+	if (fread(&tshort, sizeof(tshort), 1, input) != 1)
+		printf("Load3DSTriangleList: read error\n");
 
 	/* should only be MAIN3DS, but some files seem to start with EDIT3DS, with */
 	/* no MAIN3DS */

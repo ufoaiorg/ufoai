@@ -1226,8 +1226,7 @@ void CL_CampaignRun(void)
 		} else if (day > 1)
 			gd.fund = qtrue;
 		Cvar_Set("mn_mapdate", va("%i %s %i", ccs.date.day / 365, CL_DateGetMonthName(month), day));	/* CL_DateGetMonthName is already "gettexted" */
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%02i:%i%i"), ccs.date.sec / 3600, (ccs.date.sec % 3600) / 60 / 10,
-					(ccs.date.sec % 3600) / 60 % 10);
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%02i:%02i"), ccs.date.sec / 3600, ((ccs.date.sec % 3600) / 60) + ((ccs.date.sec % 3600) / 60 % 10));
 		Cvar_Set("mn_maptime", messageBuffer);
 	}
 }
@@ -1743,7 +1742,8 @@ int CL_GameLoad(char *filename)
 	/* read compressed data into cbuf buffer */
 	clen = FS_filelength(f);
 	cbuf = (byte *) malloc(sizeof(byte) * clen);
-	fread(cbuf, 1, clen, f);
+	if (fread(cbuf, 1, clen, f) != clen)
+		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 	fclose(f);
 
 	/* uncompress data, skipping comment header */
@@ -2063,7 +2063,8 @@ static void CL_GameComments_f(void)
 		/* skip the globalData_t size */
 		/*fread(comment, sizeof(int), 1, f);*/
 		/* read the comment */
-		fread(comment, 1, MAX_VAR, f);
+		if (fread(comment, 1, MAX_VAR, f) != MAX_VAR)
+			Com_Printf("Warning: Savefile comment may be corrupted\n");
 		Cvar_Set(va("mn_slot%i", i), comment);
 		fclose(f);
 	}

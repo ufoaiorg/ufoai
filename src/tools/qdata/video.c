@@ -251,7 +251,8 @@ void LoadSoundtrack (void)
 	}
 	len = Q_filelength(f);
 	soundtrack = malloc(len);
-	fread (soundtrack, 1, len, f);
+	if (fread (soundtrack, 1, len, f) != 1)
+		printf("LoadSoundtrack: Warning, size mismatch\n");
 	fclose (f);
 
 	wavinfo = GetWavinfo (name, soundtrack, len);
@@ -292,10 +293,13 @@ void WriteSound (FILE *output, int frame)
 
 	for (i=0 ; i<count ; i++) {
 		sample = start+i;
-		if (sample > wavinfo.samples || !soundtrack)
-			fwrite (&empty, 1, width, output);
-		else
-			fwrite (soundtrack + wavinfo.dataofs + sample*width, 1, width,output);
+		if (sample > wavinfo.samples || !soundtrack) {
+			if (fwrite (&empty, 1, width, output) != width)
+				printf("WriteSound: Write error\n");
+		} else {
+			if (fwrite (soundtrack + wavinfo.dataofs + sample*width, 1, width,output) != width)
+				printf("WriteSound: Write error\n");
+		}
 	}
 }
 
@@ -796,7 +800,8 @@ static void Huffman1_Build (FILE *f)
 	printf ("%i bytes huffman1 compressed\n", total);
 #endif
 
-	fwrite (scaled, 1, sizeof(scaled), f);
+	if (fwrite (scaled, 1, sizeof(scaled), f) != sizeof(scaled))
+		printf("Huffman1_Build: Write error\n");
 }
 
 /**
@@ -979,15 +984,20 @@ extern void Cmd_Video (void)
 
 	/* write header info */
 	i = LittleLong (width);
-	fwrite (&i, 4, 1, output);
+	if (fwrite (&i, 4, 1, output) != 1)
+		printf("Cmd_Video: Write error\n");
 	i = LittleLong (height);
-	fwrite (&i, 4, 1, output);
+	if (fwrite (&i, 4, 1, output) != 1)
+		printf("Cmd_Video: Write error\n");
 	i = LittleLong (wavinfo.rate);
-	fwrite (&i, 4, 1, output);
+	if (fwrite (&i, 4, 1, output) != 1)
+		printf("Cmd_Video: Write error\n");
 	i = LittleLong (wavinfo.width);
-	fwrite (&i, 4, 1, output);
+	if (fwrite (&i, 4, 1, output) != 1)
+		printf("Cmd_Video: Write error\n");
 	i = LittleLong (wavinfo.channels);
-	fwrite (&i, 4, 1, output);
+	if (fwrite (&i, 4, 1, output) != 1)
+		printf("Cmd_Video: Write error\n");
 
 	/* build the dictionary */
 	for ( frame=startframe ;  ; frame++) {
@@ -1018,13 +1028,16 @@ extern void Cmd_Video (void)
 				/* write a palette change */
 				memcpy (current_palette, palette, sizeof(current_palette));
 				command = LittleLong(1);
-				fwrite (&command, 1, 4, output);
-				fwrite (current_palette, 1, sizeof(current_palette), output);
+				if (fwrite (&command, 1, 4, output) != 4)
+					printf("Cmd_Video: Write error\n");
+				if (fwrite (current_palette, 1, sizeof(current_palette), output) != sizeof(current_palette))
+					printf("Cmd_Video: Write error\n");
 				break;
 			}
 		if (i == 768) {
 			command = 0;	/* no palette change */
-			fwrite (&command, 1, 4, output);
+			if (fwrite (&command, 1, 4, output) != 4)
+				printf("Cmd_Video: Write error\n");
 		}
 
 		/* save the image */
@@ -1032,9 +1045,11 @@ extern void Cmd_Video (void)
 		printf ("%5i bytes after huffman1\n", huffman.count);
 
 		swap = LittleLong (huffman.count);
-		fwrite (&swap, 1, sizeof(swap), output);
+		if (fwrite (&swap, 1, sizeof(swap), output) != sizeof(swap))
+			printf("Cmd_Video: Write error\n");
 
-		fwrite (huffman.data, 1, huffman.count, output);
+		if (fwrite (huffman.data, 1, huffman.count, output) != huffman.count)
+			printf("Cmd_Video: Write error\n");
 
 		/* save some sound samples */
 		WriteSound (output, frame);
@@ -1047,7 +1062,8 @@ extern void Cmd_Video (void)
 
 	/* write end-of-file command */
 	command = 2;
-	fwrite (&command, 1, 4, output);
+	if (fwrite (&command, 1, 4, output) != 4)
+		printf("Cmd_Video: Write error\n");
 
 	printf ("Total size: %li\n", ftell (output));
 
