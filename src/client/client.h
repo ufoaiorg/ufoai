@@ -452,7 +452,6 @@ typedef enum {
 	MS_WORLD
 } mouseSpace_t;
 
-extern qboolean wasCrouched;
 extern int mouseSpace;
 extern int mx, my;
 extern int dragFrom, dragFromX, dragFromY;
@@ -618,8 +617,12 @@ void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb);
 void CL_ParticleFree(ptl_t *p);
 
 /* cl_actor.c */
-#define CURSOR_OFFSET UNIT_HEIGHT * 0.4 /* vertical cursor offset */
-#define EYE_HT_OFFSET UNIT_HEIGHT * 0.25 /* vertical distance from waist to head */
+/* vertical cursor offset */
+#define CURSOR_OFFSET UNIT_HEIGHT * 0.4
+/* distance from vertical center of grid-point to head when standing */
+#define EYE_HT_STAND  UNIT_HEIGHT * 0.25
+/* distance from vertical center of grid-point to head when crouched */
+#define EYE_HT_CROUCH UNIT_HEIGHT * 0.06
 extern le_t *selActor;
 extern int actorMoveLength;
 extern invList_t invList[MAX_INVLIST];
@@ -835,8 +838,6 @@ void CL_InitMessageSystem(void);
 
 #define MAX_MENUTEXTLEN		4096
 
-#define LOOKFWD		 		qtrue
-#define LOOKBCK 			qfalse
 
 typedef struct menuModel_s {
 	char id[MAX_VAR];
@@ -882,7 +883,6 @@ typedef struct menuNode_s {
 typedef struct menu_s {
 	char name[MAX_VAR];
 	menuNode_t *firstNode, *initNode, *closeNode, *renderNode, *popupNode, *hoverNode;
-	void *supermenu;
 } menu_t;
 
 typedef enum {

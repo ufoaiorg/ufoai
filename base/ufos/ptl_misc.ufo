@@ -1,4 +1,4 @@
-// See the wiki page 
+// See the wiki page
 //   http://ufo.myexp.de/wiki/index.php/UFO-Scripts/ptl_%2A.ufo#Datatypes
 // for the description of the particle language
 
@@ -162,6 +162,21 @@ particle explosion_2
 	think { kill }
 }
 
+particle flash
+{
+	init
+	{
+		image sfx/flashbang
+		blend add
+		style facing
+		ffade out
+		size  "250 250"
+		tps   10
+		v     "0 0 0"
+	}
+	think { kill }
+}
+
 particle smoketrail
 {
 	init
@@ -240,6 +255,28 @@ particle smoke
 	think { kill }
 }
 
+particle flashsmoke
+{
+	init
+	{
+		image  sfx/smoke
+		blend  invfilter
+		style  facing
+		tfade  out
+		tps    0.5
+		v      "0 0 0"
+		a      "0 0 0"
+	}
+	run
+	{
+		push pos "32 32"
+		mul  *t
+		add  pos "16 16"
+		pop  *size
+	}
+	think { kill }
+}
+
 particle smokesmall
 {
 	init
@@ -260,24 +297,6 @@ particle smokesmall
 		pop  *size
 	}
 	think { kill }
-}
-
-particle smokebig
-{
-	init
-	{
-		image  sfx/smoke
-		blend  invfilter
-		style  rotated
-		rounds 2
-		tfade  out
-		v      "0 0 0"
-		a      "0 0 0"
-	}
-	run
-	{
-		spawn  smokesmall
-	}
 }
 
 particle burnFlame
@@ -302,6 +321,90 @@ particle burnFlame
 		mul    *t
 		add    pos "10 10"
 		pop    *size
+	}
+	think { kill }
+}
+
+particle greensmokebig
+{
+	init
+	{
+		frame		6
+		endframe	7
+		image		+sfx/greenplas_
+		blend		blend
+		style		facing
+		tfade		out
+		rand		float 0.2
+		add			float 0.4
+		pop			*tps
+		crand		vector "20 20 20"
+		add			*s
+		pop			*s
+		crand		vector "150 150 1000"
+		add			*v
+	}
+	run
+	{
+		push		pos "20 20"
+		mul			*t
+		add			pos "10 10"
+		pop			*size
+	}
+	think { kill }
+}
+
+
+particle smokebig
+{
+	init
+	{
+		image		sfx/smoke
+		blend		add
+		style		facing
+		tfade		out
+		rand		float 0.2
+		add			float 0.4
+		pop			*tps
+		crand		vector "60 60 60"
+		add			*s
+		pop			*s
+		crand		vector "150 150 1000"
+		add			*v
+	}
+	run
+	{
+		push		pos "60 60"
+		mul			*t
+		add			pos "30 30"
+		pop			*size
+	}
+	think { kill }
+}
+
+particle smokeRound2
+{
+	init
+	{
+		image		sfx/smoke
+		blend		invfilter
+		style		facing
+		tfade		out
+		rand		float 0.2
+		add			float 0.4
+		pop			*tps
+		crand		vector "20 20 20"
+		add			*s
+		pop			*s
+		crand		vector "150 150 1000"
+		add			*v
+	}
+	run
+	{
+		push		pos "20 20"
+		mul			*t
+		add			pos "10 10"
+		pop			*size
 	}
 	think { kill }
 }
@@ -388,6 +491,38 @@ particle fire
 	think
 	{
 		spawn  burnFlame
+	}
+}
+
+particle smoke2
+{
+	init
+	{
+		v      "0 0 0"
+		tps    2.0
+		spawn  smokeRound
+		v      "0 0 0"
+		tps    25.0
+		spawn  smokeRound2
+	}
+	think
+	{
+		spawn  smokeRound
+		spawn  smokeRound2
+	}
+}
+
+particle green_smoke
+{
+	init
+	{
+		v      "0 0 0"
+		tps    25.0
+		spawn  greenSmokeMap
+	}
+	think
+	{
+		spawn  greenSmokeMap
 	}
 }
 

@@ -714,8 +714,6 @@ qboolean CL_ActorSelect(le_t * le)
 				CL_CameraModeChange(CAMERA_MODE_FIRSTPERSON);
 
 			cl.cmode = M_MOVE;
-			wasCrouched = le->state & STATE_CROUCHED;
-
 			return qtrue;
 		}
 	}
@@ -1575,8 +1573,11 @@ void CL_ActorMouseTrace(void)
 	/* get trace vectors */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON) {
 		VectorCopy(selActor->origin, from);
-		if (!(selActor->state & STATE_CROUCHED))
-			from[2] += EYE_HT_OFFSET;	/* raise from waist to head */
+		/* trace from eye-height */
+		if (selActor->state & STATE_CROUCHED)
+			from[2] += EYE_HT_CROUCH;
+		else
+			from[2] += EYE_HT_STAND;
 		AngleVectors(cl.cam.angles, forward, right, up);
 		/* set the intersection level to that of the selected actor */
 		VecToPos(from, testPos);
@@ -1642,10 +1643,6 @@ void CL_ActorMouseTrace(void)
 	VecToPos(end, testPos);
 	restingLevel = Grid_Fall(&clMap, testPos);
 
-	/* test if the selected grid is out of the world */
-	if (restingLevel < 0)
-		return;
-
 	/* if grid below intersection level, start a trace from the intersection */
 	if (restingLevel < intersectionLevel) {
 		VectorCopy(end, from);
@@ -1654,6 +1651,10 @@ void CL_ActorMouseTrace(void)
 		VecToPos(end, testPos);
 		restingLevel = Grid_Fall(&clMap, testPos);
 	}
+
+	/* test if the selected grid is out of the world */
+	if (restingLevel < 0)
+		return;
 
 	Vector2Copy(testPos, mousePos);
 	mousePos[2] = restingLevel;

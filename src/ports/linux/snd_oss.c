@@ -29,7 +29,7 @@ int audio_fd = -1;
 int snd_inited;
 static struct sndinfo *si;
 
-static int tryrates[] = { 11025, 22051, 44100, 48000, 8000 };
+static int tryrates[] = { 22050, 11025, 44100, 48000, 8000 };
 static unsigned long mmaplen;
 
 qboolean SND_Init(struct sndinfo *s)
@@ -57,16 +57,16 @@ qboolean SND_Init(struct sndinfo *s)
 	if (audio_fd == -1) {
 		seteuid (saved_euid);
 
-		/* see https://www.redhat.com/archives/sound-list/1999-September/msg00012.html for reason */
-		audio_fd = open(si->device->string, O_WRONLY|O_NONBLOCK);
+		audio_fd = open(si->device->string, O_RDWR);
 
 		if (audio_fd == -1) {
 			tmp = 3;
 			while ( (audio_fd < 0) && tmp-- &&
 				((errno == EAGAIN) || (errno == EBUSY)) ) {
 				sleep(1);
-				/* maybe O_WRONLY failed - try the original way */
-				audio_fd = open(si->device->string, O_RDWR|O_NONBLOCK);
+				/* maybe O_RDWR failed - try the original way */
+				/* see https://www.redhat.com/archives/sound-list/1999-September/msg00012.html for reason */
+				audio_fd = open(si->device->string, O_WRONLY|O_NONBLOCK);
 			}
 			if (audio_fd < 0) {
 				perror(si->device->string);
@@ -102,14 +102,6 @@ qboolean SND_Init(struct sndinfo *s)
 		return qfalse;
 	}
 
-	if ( ioctl(audio_fd, SNDCTL_DSP_GETOSPACE, &info) == -1 ) {
-		perror("GETOSPACE");
-		si->Com_Printf("SND_Init: GETOSPACE ioctl failed. %s\n", strerror(errno));
-		close(audio_fd);
-		audio_fd = -1;
-		return qfalse;
-	}
-
 	/* set sample bits & speed */
 	si->dma->samplebits = (int)si->bits->value;
 	if (si->dma->samplebits != 16 && si->dma->samplebits != 8) {
@@ -118,6 +110,52 @@ qboolean SND_Init(struct sndinfo *s)
 			si->dma->samplebits = 16;
 		else if (fmt & AFMT_U8)
 			si->dma->samplebits = 8;
+	}
+
+	if (si->khz->value == 48)
+		si->dma->speed = 48000;
+	else if (si->khz->value == 44)
+		si->dma->speed = 44100;
+	else if (si->khz->value == 22)
+		si->dma->speed = 22050;
+	else
+		si->dma->speed = 0;
+
+	if (!si->dma->speed) {
+		for ( i = 0 ; i < sizeof ( tryrates ) / 4 ; i++ )
+			if ( ! ioctl(audio_fd, SNDCTL_DSP_SPEED, &tryrates[i]) )
+				break;
+		si->dma->speed = tryrates[i];
+	}
+
+	si->dma->channels = (int)si->channels->value;
+	if (si->dma->channels < 1 || si->dma->channels > 2)
+		si->dma->channels = 2;
+
+	tmp = 0;
+	if (si->dma->channels == 2)
+		tmp = 1;
+	rc = ioctl(audio_fd, SNDCTL_DSP_STEREO, &tmp); /*FP: bugs here. */
+	if (rc < 0) {
+		perror(si->device->string);
+		si->Com_Printf("SND_Init: Could not set %s to stereo=%d. %s", si->device->string, si->dma->channels, strerror(errno));
+		close(audio_fd);
+		audio_fd = -1;
+		return qfalse;
+	}
+
+	if (tmp)
+		si->dma->channels = 2;
+	else
+		si->dma->channels = 1;
+
+	rc = ioctl(audio_fd, SNDCTL_DSP_SPEED, &si->dma->speed);
+	if (rc < 0) {
+		perror(si->device->string);
+		si->Com_Printf("SND_Init: Could not set %s speed to %d. %s", si->device->string, si->dma->speed, strerror(errno));
+		close(audio_fd);
+		audio_fd = -1;
+		return qfalse;
 	}
 
 	if (si->dma->samplebits == 16) {
@@ -148,48 +186,13 @@ qboolean SND_Init(struct sndinfo *s)
 		return qfalse;
 	}
 
-	if (si->khz->value == 48)
-		si->dma->speed = 48000;
-	else if (si->khz->value == 44)
-		si->dma->speed = 44100;
-	else if (si->khz->value == 22)
-		si->dma->speed = 22050;
-	else
-		si->dma->speed = 0;
+	si->Com_Printf("OSS: speed %i\n", si->dma->speed);
+	si->Com_Printf("OSS: channels %i\n", si->dma->channels);
+	si->Com_Printf("OSS: bits %i\n", si->dma->samplebits);
 
-	if (!si->dma->speed) {
-		for ( i = 0 ; i < sizeof ( tryrates ) / 4 ; i++ )
-			if ( ! ioctl(audio_fd, SNDCTL_DSP_SPEED, &tryrates[i]) )
-				break;
-		si->dma->speed = tryrates[i];
-	}
-
-	si->dma->channels = si->channels->value;
-	if (si->dma->channels < 1 || si->dma->channels > 2)
-		si->dma->channels = 2;
-
-	tmp = 0;
-	if (si->dma->channels == 2)
-		tmp = 1;
-	rc = ioctl(audio_fd, SNDCTL_DSP_STEREO, &tmp); /*FP: bugs here. */
-	if (rc < 0) {
-		perror(si->device->string);
-		si->Com_Printf("SND_Init: Could not set %s to stereo=%d. %s", si->device->string, si->dma->channels, strerror(errno));
-		close(audio_fd);
-		audio_fd = -1;
-		return qfalse;
-	}
-
-	if (tmp)
-		si->dma->channels = 2;
-	else
-		si->dma->channels = 1;
-
-
-	rc = ioctl(audio_fd, SNDCTL_DSP_SPEED, &si->dma->speed);
-	if (rc < 0) {
-		perror(si->device->string);
-		si->Com_Printf("SND_Init: Could not set %s speed to %d. %s", si->device->string, si->dma->speed, strerror(errno));
+	if ( ioctl(audio_fd, SNDCTL_DSP_GETOSPACE, &info) == -1 ) {
+		perror("GETOSPACE");
+		si->Com_Printf("SND_Init: GETOSPACE ioctl failed. %s\n", strerror(errno));
 		close(audio_fd);
 		audio_fd = -1;
 		return qfalse;
@@ -203,8 +206,16 @@ qboolean SND_Init(struct sndinfo *s)
 	mmaplen = info.fragstotal * info.fragsize;
 	mmaplen = (mmaplen + sz - 1) & ~(sz - 1);
 	if (!si->dma->buffer)
-		si->dma->buffer = (unsigned char *) mmap(NULL, mmaplen, PROT_READ|PROT_WRITE,
-					     MAP_FILE|MAP_SHARED, audio_fd, 0);
+		si->dma->buffer = (unsigned char *) mmap(NULL, mmaplen, 
+			PROT_READ|PROT_WRITE, MAP_FILE|MAP_SHARED, audio_fd, 0);
+	
+	if (si->dma->buffer == MAP_FAILED) {
+		si->Com_Printf("Could not mmap dma buffer PROT_WRITE|PROT_READ\n");
+		si->Com_Printf("trying mmap PROT_WRITE (with associated better compatibility / less performance code)\n");
+		si->dma->buffer = (unsigned char *) mmap(NULL, mmaplen
+			* info.fragsize, PROT_WRITE, MAP_FILE|MAP_SHARED, audio_fd, 0);
+	}
+
 	if (!si->dma->buffer || si->dma->buffer == MAP_FAILED) {
 		si->Com_Printf("SND_Init: Could not mmap %s. %s\n", si->device->string, strerror(errno));
 		close(audio_fd);
