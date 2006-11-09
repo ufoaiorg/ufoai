@@ -237,7 +237,7 @@ Section "Game" SEC01
 ;======================================================================
   SetOutPath "$INSTDIR\base\models\objects\aircraft\heli"
   File "..\..\..\base\models\objects\aircraft\heli\*.jpg"
-  File "..\..\..\base\models\objects\aircraft\heli\*.md2"
+;  File "..\..\..\base\models\objects\aircraft\heli\*.md2"
 ;======================================================================
 ; models/objects/aircraft/heli2
 ;======================================================================
@@ -323,7 +323,7 @@ Section "Game" SEC01
 ; models/objects/geoscape
 ;======================================================================
   SetOutPath "$INSTDIR\base\models\objects\geoscape"
-  File "..\..\..\base\models\objects\geoscape\*.jpg"
+;  File "..\..\..\base\models\objects\geoscape\*.jpg"
   File "..\..\..\base\models\objects\geoscape\*.md2"
 
 ;======================================================================
@@ -572,7 +572,7 @@ Section "Game" SEC01
   File "..\..\..\base\models\weapons\pistol\*.jpg"
   File "..\..\..\base\models\weapons\pistol\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\pistol2"
-  File "..\..\..\base\models\weapons\pistol2\*.jpg"
+  File "..\..\..\base\models\weapons\pistol2\*.tga"
   File "..\..\..\base\models\weapons\pistol2\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\plasblade"
   File "..\..\..\base\models\weapons\plasblade\*.jpg"
@@ -611,7 +611,7 @@ Section "Game" SEC01
   File "..\..\..\base\models\weapons\sniper\*.jpg"
   File "..\..\..\base\models\weapons\sniper\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\stungren"
-  File "..\..\..\base\models\weapons\stungren\*.jpg"
+  File "..\..\..\base\models\weapons\stungren\*.tga"
   File "..\..\..\base\models\weapons\stungren\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\stunrod"
   File "..\..\..\base\models\weapons\stunrod\*.jpg"
