@@ -2504,7 +2504,6 @@ tech news_initial_political_situation
 
 	require_AND { tech nothing }
 	time	0
-	researched	true
 }
 
 tech news_after_the_war
@@ -2516,7 +2515,6 @@ tech news_after_the_war
 
 	require_AND { tech nothing }
 	time	0
-	researched	true
 }
 
 tech news_phalanx_and_mumbai_aftermath
@@ -2528,5 +2526,4 @@ tech news_phalanx_and_mumbai_aftermath
 
 	require_AND { tech nothing }
 	time	0
-	researched	true
 }
