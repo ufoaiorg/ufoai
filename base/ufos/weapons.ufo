@@ -70,7 +70,7 @@ item irgoggles
 		name	"_Scan"
 		firesnd	misc/plopp03.wav
 		splrad	10
-		range	1.5
+		range	9.5
 		time	12
 		shots	1
 		irgoggles	true
