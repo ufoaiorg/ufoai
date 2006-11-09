@@ -364,12 +364,17 @@ static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		 * MAX_SPOT_DIST - use G_FindRadius function for this task
 		 * if found return a very low guete value to make sure the civ will walk there
 		 */
-		while ((checkPoint = G_FindRadius(ent, ent->origin, MAX_SPOT_DIST, ET_CIVILIANTARGET)) != NULL) {
+		while ((checkPoint = G_FindRadius(NULL, ent->origin, MAX_SPOT_DIST, ET_CIVILIANTARGET)) != NULL) {
+			Com_DPrintf("found checkpoint in radius %i\n", MAX_SPOT_DIST);
 			if (checkPoint->count < ent->count) {
 				Com_DPrintf("civ found civtarget\n");
+				ent->count = checkPoint->count;
 				return 10000.0;
+			} else {
+				Com_DPrintf("civ->count: %i, checkPoint->count: %i\n", ent->count, checkPoint->count);
 			}
 		}
+		Com_DPrintf("no checkpoint found in radius %i\n", MAX_SPOT_DIST);
 		ent->count = 100; /* reset the count value for this civilian to restart the search */
 	}
 
@@ -646,7 +651,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 			ent->chr.HP = GET_HP(ent->chr.skills[ABILITY_POWER]) / 2;
 			ent->HP = ent->chr.HP;
 			ent->chr.morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
-			ent->morale = (ent->chr.morale > 15 ? 15 : ent->chr.morale); /* low morale for civilians */
+			ent->morale = (ent->chr.morale > 45 ? 45 : ent->chr.morale); /* low morale for civilians */
 			ent->AP = 100;
 			ent->STUN = 0;
 

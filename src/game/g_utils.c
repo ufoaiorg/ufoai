@@ -109,8 +109,6 @@ edict_t *G_FindRadius(edict_t * from, vec3_t org, float rad, entity_type_t type)
 	for (; from < &g_edicts[globals.num_edicts]; from++) {
 		if (!from->inuse)
 			continue;
-		if (from->solid == SOLID_NOT)
-			continue;
 		for (j = 0; j < 3; j++)
 			eorg[j] = org[j] - (from->origin[j] + (from->mins[j] + from->maxs[j]) * 0.5);
 		if (VectorLength(eorg) > rad)
