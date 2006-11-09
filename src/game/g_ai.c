@@ -395,7 +395,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	vec3_t oldOrigin;
 	edict_t *checkPoint = NULL;
 	int xl, yl, xh, yh;
-	int i;
+	int i = 0;
 	float guete, best;
 
 #ifdef PARANOID
@@ -482,10 +482,12 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	if (ent->team == TEAM_CIVILIAN) {
 		while ((checkPoint = G_FindRadius(checkPoint, ent->origin, MAX_SPOT_DIST, ET_CIVILIANTARGET)) != NULL) {
 			if (checkPoint->count < ent->count) {
+				i++;
 				Com_DPrintf("civ found civtarget with %i\n", checkPoint->count);
 				/* test for time */
 				if (ent->TU - gi.MoveLength(gi.map, checkPoint->pos, qtrue) < 0) {
 					Com_DPrintf("civtarget to far away (%i)\n", checkPoint->count);
+					/* FIXME: Nevertheless walk to that direction */
 					continue;
 				}
 
@@ -493,7 +495,9 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 				VectorCopy(checkPoint->pos, bestAia.to);
 			}
 		}
-		ent->count = 100; /* reset the count value for this civilian to restart the search */
+		/* reset the count value for this civilian to restart the search */
+		if (!i)
+			ent->count = 100;
 	}
 
 	VectorCopy(oldPos, ent->pos);
