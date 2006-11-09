@@ -2111,10 +2111,10 @@ void CL_AddTargetingBox(pos3_t pos, qboolean pendBox)
 	/* ok, paint the green box if move is possible */
 	if (selActor && actorMoveLength < 0xFF && actorMoveLength <= selActor->TU)
 		VectorSet(ent.angles, 0, 1, 0);
-	/* and paint the blue one if move is impossible or the soldier */
+	/* and paint a dark blue one if move is impossible or the soldier */
 	/* does not have enough TimeUnits left */
 	else
-		VectorSet(ent.angles, 0, 0, 1);
+		VectorSet(ent.angles, 0, 0, 0.6);
 
 	VectorAdd(ent.origin, boxSize, ent.oldorigin);
 	/* color */
@@ -2133,6 +2133,8 @@ void CL_AddTargetingBox(pos3_t pos, qboolean pendBox)
 				VectorSet(ent.angles, 1, 0, 0);
 				break;
 			}
+		else /* paint a light blue box if on our team */
+			VectorSet(ent.angles, 0.2, 0.3, 1);
 		BoxSize(mouseActor->fieldSize, boxSize, realBoxSize);
 		VectorSubtract(ent.origin, realBoxSize, ent.origin);
 	} else {
