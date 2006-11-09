@@ -97,7 +97,7 @@ edict_t *G_Find(edict_t * from, int fieldofs, char *match)
  * @param[in] org origin
  * @param[in] rad radius to search an edict in
  */
-edict_t *findradius(edict_t * from, vec3_t org, float rad)
+edict_t *G_FindRadius(edict_t * from, vec3_t org, float rad, entity_type_t type)
 {
 	vec3_t eorg;
 	int j;
@@ -114,6 +114,8 @@ edict_t *findradius(edict_t * from, vec3_t org, float rad)
 		for (j = 0; j < 3; j++)
 			eorg[j] = org[j] - (from->origin[j] + (from->mins[j] + from->maxs[j]) * 0.5);
 		if (VectorLength(eorg) > rad)
+			continue;
+		if (type != ET_NULL && from->type != type)
 			continue;
 		return from;
 	}

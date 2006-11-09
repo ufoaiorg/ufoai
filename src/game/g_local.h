@@ -252,7 +252,7 @@ void Cmd_Score_f(edict_t * ent);
 
 /* g_utils.c */
 edict_t *G_Find(edict_t * from, int fieldofs, char *match);
-edict_t *findradius(edict_t * from, vec3_t org, float rad);
+edict_t *G_FindRadius(edict_t * from, vec3_t org, float rad, entity_type_t type);
 
 edict_t *G_Spawn(void);
 void G_FreeEdict(edict_t * e);
