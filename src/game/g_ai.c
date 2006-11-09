@@ -337,7 +337,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
  */
 static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 {
-	edict_t *check, *checkPoint;
+	edict_t *check;
 	int i, move, tu;
 	float dist, minDist;
 	float guete;
@@ -356,27 +356,6 @@ static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	/* test for time */
 	if (tu < 0)
 		return -10000.0;
-
-	/* also spaniced aliens might come here */
-	if (ent->team == TEAM_CIVILIAN) {
-		/**
-		 * TODO: Check whether there is a info_civilian_target with a lower count value than all the other in a given radius 
-		 * MAX_SPOT_DIST - use G_FindRadius function for this task
-		 * if found return a very low guete value to make sure the civ will walk there
-		 */
-		while ((checkPoint = G_FindRadius(NULL, ent->origin, MAX_SPOT_DIST, ET_CIVILIANTARGET)) != NULL) {
-			Com_DPrintf("found checkpoint in radius %i\n", MAX_SPOT_DIST);
-			if (checkPoint->count < ent->count) {
-				Com_DPrintf("civ found civtarget\n");
-				ent->count = checkPoint->count;
-				return 10000.0;
-			} else {
-				Com_DPrintf("civ->count: %i, checkPoint->count: %i\n", ent->count, checkPoint->count);
-			}
-		}
-		Com_DPrintf("no checkpoint found in radius %i\n", MAX_SPOT_DIST);
-		ent->count = 100; /* reset the count value for this civilian to restart the search */
-	}
 
 	/* run away */
 	minDist = RUN_AWAY_DIST;
@@ -414,6 +393,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	ai_action_t aia, bestAia;
 	pos3_t oldPos, to;
 	vec3_t oldOrigin;
+	edict_t *checkPoint = NULL;
 	int xl, yl, xh, yh;
 	int i;
 	float guete, best;
@@ -498,6 +478,23 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 						best = guete;
 					}
 				}
+
+	if (ent->team == TEAM_CIVILIAN) {
+		while ((checkPoint = G_FindRadius(checkPoint, ent->origin, MAX_SPOT_DIST, ET_CIVILIANTARGET)) != NULL) {
+			if (checkPoint->count < ent->count) {
+				Com_DPrintf("civ found civtarget with %i\n", checkPoint->count);
+				/* test for time */
+				if (ent->TU - gi.MoveLength(gi.map, checkPoint->pos, qtrue) < 0) {
+					Com_DPrintf("civtarget to far away (%i)\n", checkPoint->count);
+					continue;
+				}
+
+				ent->count = checkPoint->count;
+				VectorCopy(checkPoint->pos, bestAia.to);
+			}
+		}
+		ent->count = 100; /* reset the count value for this civilian to restart the search */
+	}
 
 	VectorCopy(oldPos, ent->pos);
 	VectorCopy(oldOrigin, ent->origin);
