@@ -95,6 +95,7 @@ void RS_MarkOneResearchable(int tech_idx)
 
 /**
  * @brief Marks all the techs that can be researched.
+ * Automatically researches 'free' techs such as ammo for a weapon.
  * Should be called when a new item is researched (RS_MarkResearched) and after
  * the tree-initialisation (RS_InitTree)
  */
@@ -156,6 +157,16 @@ void RS_MarkResearchable(void)
 						tech->statusResearchable = qtrue;
 						break;
 					}
+				}
+
+				/* If the tech is a 'free' one (such as ammo for a weapon),
+				   mark it as researched and loop back to see if it unlocks
+				   any other techs */
+				if (tech->statusResearchable && tech->time <= 0) {
+					tech->statusResearch = RS_FINISH;
+					Com_DPrintf("RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
+					/* restart the loop as this may have unlocked new possibilities */
+					i = 0;
 				}
 			}
 		}
@@ -839,9 +850,6 @@ void RS_MarkResearched(char *id)
 		if (!Q_strncmp(id, tech->id, MAX_VAR)) {
 			tech->statusResearch = RS_FINISH;
 			Com_Printf("Research of \"%s\" finished.\n", tech->id);
-		} else if (RS_DependsOn(tech->id, id) && (tech->time <= 0)) {
-			tech->statusResearch = RS_FINISH;
-			Com_Printf("Depending tech \"%s\" has been researched as well.\n", tech->id);
 		}
 	}
 	RS_MarkResearchable();

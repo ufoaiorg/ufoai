@@ -103,6 +103,7 @@ void RS_UpdateData(void);
 void RS_ParseTechnologies(char *title, char **text);
 qboolean RS_ItemIsResearched(char *id_provided);
 qboolean RS_TechIsResearched(int tech_idx);
+qboolean RS_TechIsResearchable(technology_t * tech);
 qboolean RS_IsResearched_idx(int idx);
 qboolean RS_IsResearched_ptr(technology_t * tech);
 int RS_Collected_(technology_t * tech);

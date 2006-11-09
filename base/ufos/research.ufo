@@ -35,6 +35,9 @@
 //		time the research needs.
 //		If time is 0 the item can be produced at the same time all the "required" items are finished.
 //		[Default] 0
+//  produceTime
+//		Time the production of one item takes. This value is similar to time.
+//		[Default] 0
 //	researched
 //		false or 0 - [Default] You need to research this tech.
 //		true or 1 - You can _produce_ it from the beginning.
@@ -78,7 +81,7 @@ tech rs_laser
 	description	"_laser_txt"
 
 	requires	initial
-	time	60
+	time	1500
 	researched	false
 	image_top	techs/laser
 }
@@ -91,7 +94,7 @@ tech rs_plasma
 	description	"_plasma_txt"
 
 	requires	nothing
-	time	90
+	time	2250
 	researched	false
 }
 
@@ -103,7 +106,7 @@ tech rs_tachyon
 	description	"_tachyon_txt"
 
 	requires	nothing
-	time	120
+	time	3000
 	researched	false
 }
 
@@ -115,7 +118,7 @@ tech rs_nano
 	description	"_nano_txt"
 
 	requires	"rs_laser rs_plasma"
-	time	100
+	time	2500
 	researched	false
 }
 
@@ -127,7 +130,7 @@ tech rs_nano
 // 	description	"_armor_fabrics_txt"
 // 
 // 	requires	"rs_nano rs_tachyon"
-// 	time	400
+// 	time	10000
 // 	researched	false
 // }
 
@@ -143,7 +146,7 @@ tech rs_craft_ufo_tech
 	// FIXME
 	requires	nothing
 	provides	found_ufo
-	time	100
+	time	2500
 	researched	false
 
 	//image_top  xxxxx
@@ -162,6 +165,7 @@ tech rs_weapon_assault
 	requires	rs_skill_assault
 	provides	assault
 	time	0
+	producetime 60
 	researched	true
 }
 
@@ -174,6 +178,7 @@ tech rs_weapon_assault_ammo
 	requires	"rs_damage_normal rs_weapon_assault"
 	provides	assault_ammo
 	time	0
+	producetime 4
 	researched	true
 }
 
@@ -186,6 +191,7 @@ tech rs_weapon_sniper
 	requires	rs_skill_sniper
 	provides	sniper
 	time	0
+	producetime 60
 	researched	true
 }
 
@@ -198,6 +204,7 @@ tech rs_weapon_sniper_ammo
 	requires	"rs_damage_normal rs_weapon_sniper"
 	provides	sniper_ammo
 	time	0
+	producetime 3
 	researched	true
 }
 
@@ -210,6 +217,7 @@ tech rs_weapon_smg
 	requires	rs_skill_assault
 	provides	smg
 	time	0
+	producetime 45
 	researched	true
 }
 
@@ -222,6 +230,7 @@ tech rs_weapon_smg_ammo
 	requires	"rs_damage_normal rs_weapon_smg"
 	provides	smg_ammo
 	time	0
+	producetime 2
 	researched	true
 }
 
@@ -234,6 +243,7 @@ tech rs_weapon_shotgun
 	requires	rs_skill_heavy
 	provides	shotgun
 	time	0
+	producetime 40
 	researched	true
 }
 
@@ -246,6 +256,7 @@ tech rs_weapon_shotgun_ammo
 	requires	"rs_damage_blast rs_weapon_shotgun"
 	provides	shotgun_ammo
 	time	0
+	producetime 2
 	researched	true
 }
 
@@ -258,6 +269,7 @@ tech rs_weapon_flamer
 	requires	rs_skill_heavy
 	provides	flamer
 	time	0
+	producetime 50
 	researched	true
 }
 
@@ -270,6 +282,7 @@ tech rs_weapon_flamer_ammo
 	requires	"rs_damage_fire rs_weapon_flamer"
 	provides	flamer_ammo
 	time	0
+	producetime 2
 	researched	true
 }
 
@@ -282,6 +295,7 @@ tech rs_weapon_pistol
 	requires	rs_skill_close
 	provides	pistol
 	time	0
+	producetime 25
 	researched	true
 }
 
@@ -294,6 +308,7 @@ tech rs_weapon_pistol_ammo
 	requires	"rs_damage_normal rs_weapon_pistol"
 	provides	pistol_ammo
 	time	0
+	producetime 2
 	researched	true
 }
 
@@ -306,6 +321,7 @@ tech rs_weapon_rpg
 	requires	rs_skill_explosive
 	provides	rpg
 	time	0
+	producetime 60
 	researched	true
 }
 
@@ -318,6 +334,7 @@ tech rs_weapon_rpg_ammo
 	requires	"rs_damage_blast rs_weapon_rpg"
 	provides	rpg_ammo
 	time	0
+	producetime 4
 	researched	true
 }
 
@@ -329,7 +346,8 @@ tech rs_weapon_rpg_incendiary_ammo
 
 	requires	"rs_damage_fire rs_weapon_rpg rs_weapon_alienincgrenade"
 	provides	rpg_incendiary_ammo
-	time	40
+	time	1000
+	producetime 4
 	researched	false
 }
 
@@ -341,7 +359,8 @@ tech rs_weapon_rpg_tachyon_ammo
 
 	requires	"rs_damage_tachyon rs_weapon_rpg"
 	provides	rpg_tachyon_ammo
-	time	120
+	time	3000
+	producetime 3
 	researched	false
 }
 
@@ -354,6 +373,7 @@ tech rs_weapon_fraggren
 	requires	"rs_skill_explosive rs_damage_blast"
 	provides	fraggrenade
 	time	0
+	producetime 2
 	researched	true
 }
 
@@ -366,6 +386,7 @@ tech rs_weapon_fraggren
 //	requires	rs_skill_explosive
 //	provides	smokegrenade
 //	time	0
+//	producetime 2
 //	researched	true
 //}
 
@@ -378,6 +399,7 @@ tech rs_weapon_combatknife
 	requires	"rs_skill_close rs_damage_normal"
 	provides	knife
 	time	0
+	producetime 3
 	researched	true
 }
 
@@ -389,7 +411,8 @@ tech rs_weapon_stunrod
 
 	requires	"rs_skill_close rs_damage_stun"
 	provides	stunrod
-	time	20
+	time	500
+	producetime 12
 	researched	false
 }
 
@@ -401,7 +424,8 @@ tech rs_medikit
 
 	requires	rs_skill_mind
 	provides	medikit
-	time	35
+	time	700
+	producetime 10
 	researched	false
 }
 
@@ -413,7 +437,8 @@ tech rs_irgoggles
 
 	requires	rs_skill_mind
 	provides	irgoggles
-	time	35
+	time	900
+	producetime 19
 	researched	false
 }
 
@@ -425,7 +450,8 @@ tech rs_weapon_stungren
 
 	requires	"rs_skill_explosive rs_damage_stun rs_weapon_stunrod"
 	provides	stungrenade
-	time	60
+	time	1500
+	producetime 1
 	researched	false
 }
 
@@ -437,7 +463,8 @@ tech rs_weapon_bolterrifle
 
 	requires	rs_skill_heavy
 	provides	bolterrifle
-	time	20
+	time	500
+	producetime 70
 	researched	false
 }
 
@@ -450,6 +477,7 @@ tech rs_weapon_bolterrifle_ammo
 	requires	"rs_damage_normal rs_weapon_bolterrifle"
 	provides	bolterrifle_ammo
 	time	0
+	producetime 3
 	researched	false
 }
 
@@ -461,7 +489,8 @@ tech rs_weapon_grenl
 
 	requires	rs_skill_explosive
 	provides	grenl
-	time	30
+	time	480
+	producetime 42
 	researched	false
 }
 
@@ -474,6 +503,7 @@ tech rs_weapon_grenl_ammo
 	requires	"rs_damage_blast rs_weapon_grenl"
 	provides	grenl_ammo
 	time	0
+	producetime 2
 	researched	false
 }
 
@@ -485,7 +515,8 @@ tech rs_weapon_grenl_plasma_ammo
 
 	requires	"rs_damage_plasma rs_weapon_grenl"
 	provides	grenl_plasma_ammo
-	time	50
+	time	1250
+	producetime 5
 	researched	false
 }
 
@@ -497,7 +528,8 @@ tech rs_weapon_laserpistol
 
 	requires	"rs_skill_close rs_laser"
 	provides	laserpistol
-	time	40
+	time	900
+	producetime 50
 	researched	false
 }
 
@@ -510,6 +542,7 @@ tech rs_weapon_laserpistol_ammo
 	requires	"rs_damage_laser rs_weapon_laserpistol"
 	provides	laserpistol_ammo
 	time	0
+	producetime 2
 	researched	false
 }
 
@@ -521,7 +554,8 @@ tech rs_weapon_laserrifle
 
 	requires	"rs_skill_sniper rs_skill_assault rs_weapon_laserpistol"
 	provides	laserrifle
-	time	70
+	time	1800
+	producetime 72
 	researched	false
 }
 
@@ -534,6 +568,7 @@ tech rs_weapon_laserrifle_ammo
 	requires	"rs_damage_laser rs_weapon_laserrifle"
 	provides	laserrifle_ammo
 	time	0
+	producetime 3
 	researched	false
 }
 
@@ -545,7 +580,8 @@ tech rs_weapon_heavylaser
 
 	requires	"rs_skill_sniper rs_skill_heavy rs_weapon_laserrifle"
 	provides	heavylaser
-	time	60
+	time	2050
+	producetime 80
 	researched	false
 }
 
@@ -558,6 +594,7 @@ tech rs_weapon_heavylaser_ammo
 	requires	"rs_damage_laser rs_weapon_heavylaser"
 	provides	heavylaser_ammo
 	time	0
+	producetime 6
 	researched	false
 }
 
@@ -573,9 +610,10 @@ tech rs_weapon_alienincgrenade
 
 	requires	"rs_skill_explosive rs_damage_fire"
 	provides	alienincgrenade
-	time	20
+	time	550
 	researched	false
 	needscollected	true
+	producetime 3
 }
 
 tech rs_weapon_plasmagren
@@ -586,9 +624,10 @@ tech rs_weapon_plasmagren
 
 	requires	"rs_skill_explosive rs_damage_plasma"
 	provides	plasmagrenade
-	time	60
+	time	1250
 	researched	false
 	needscollected	false
+	producetime 4
 }
 
 tech rs_weapon_kerrblade
@@ -599,9 +638,10 @@ tech rs_weapon_kerrblade
 
 	requires	"rs_skill_close rs_damage_normal"
 	provides	kerrblade
-	time	20
+	time	400
 	researched	false
 	needscollected	true
+	producetime 14
 }
 
 tech rs_weapon_plasblade
@@ -612,9 +652,10 @@ tech rs_weapon_plasblade
 
 	requires	"rs_skill_close rs_damage_plasma"
 	provides	plasblade
-	time	40
+	time	1100
 	researched	false
 	needscollected	true
+	producetime 18
 }
 
 tech rs_weapon_plasatomizer
@@ -625,7 +666,8 @@ tech rs_weapon_plasatomizer
 
 	requires	"rs_skill_assault rs_skill_heavy rs_plasma"
 	provides	plaspistol
-	time	80
+	time	2000
+	producetime 60
 	researched	false
 	needscollected	true
 }
@@ -639,6 +681,7 @@ tech rs_weapon_plasatomizer_ammo
 	requires	"rs_damage_plasma rs_weapon_plasatomizer"
 	provides	plaspistol_ammo
 	time	0
+	producetime 2
 	researched	false
 }
 
@@ -650,7 +693,8 @@ tech rs_weapon_plasrifle
 
 	requires	"rs_skill_assault rs_skill_heavy rs_plasma"
 	provides	plasrifle
-	time	130
+	time	3250
+	producetime 90
 	researched	false
 	needscollected	true
 }
@@ -664,6 +708,7 @@ tech rs_weapon_plasrifle_ammo
 	requires	"rs_damage_plasma rs_weapon_plasrifle"
 	provides	plasrifle_ammo
 	time	0
+	producetime 3
 	researched	false
 }
 
@@ -675,7 +720,8 @@ tech rs_weapon_plasblaster
 
 	requires	"rs_skill_explosive rs_skill_heavy rs_plasma"
 	provides	plasblaster
-	time	220
+	time	5400
+	producetime 100
 	researched	false
 	needscollected	true
 }
@@ -689,6 +735,7 @@ tech rs_weapon_plasblaster_ammo
 	requires	"rs_damage_plasma rs_weapon_plasblaster"
 	provides	plasblaster_ammo
 	time	0
+	producetime 5
 	researched	false
 }
 
@@ -700,7 +747,8 @@ tech rs_weapon_tachyonpistol
 
 	requires	"rs_skill_close rs_tachyon"
 	provides	tachyonpistol
-	time	150
+	time	3750
+	producetime 60
 	researched	false
 	needscollected	true
 }
@@ -714,6 +762,7 @@ tech rs_weapon_tachyonpistol_ammo
 	requires	"rs_damage_tachyon rs_weapon_tachyonpistol"
 	provides	tachyonpistol_ammo
 	time	0
+	producetime 4
 	researched	false
 }
 
@@ -725,7 +774,8 @@ tech rs_weapon_tachyonrifle
 
 	requires	"rs_skill_explosive rs_skill_assault rs_tachyon"
 	provides	tachyonrifle
-	time	240
+	time	5800
+	producetime 85
 	researched	false
 	needscollected	true
 }
@@ -739,6 +789,7 @@ tech rs_weapon_tachyonrifle_ammo
 	requires	"rs_damage_tachyon rs_weapon_tachyonrifle"
 	provides	tachyonrifle_ammo
 	time	0
+	producetime 6
 	researched	false
 }
 
@@ -750,7 +801,8 @@ tech rs_weapon_tachyonsniper
 
 	requires	"rs_skill_sniper rs_tachyon"
 	provides	tachyonsniper
-	time	310
+	time	7550
+	producetime 90
 	researched	false
 	needscollected	true
 }
@@ -764,6 +816,7 @@ tech rs_weapon_tachyonsniper_ammo
 	requires	"rs_damage_tachyon rs_weapon_tachyonsniper"
 	provides	tachyonsniper_ammo
 	time	0
+	producetime 6
 	researched	false
 }
 
@@ -780,6 +833,7 @@ tech rs_kevlar_armor
 	requires	initial
 	provides	light
 	time	0
+	producetime 11
 	researched	true
 }
 
@@ -791,7 +845,8 @@ tech rs_nano_armor
 
 	requires	rs_nano
 	provides	medium
-	time	100
+	time	2500
+	producetime 80
 	researched	false
 }
 
@@ -803,7 +858,8 @@ tech rs_nano_armor
 // 
 // 	requires	rs_advanced_armor
 // 	provides	heavy
-// 	time	400
+// 	time	5000
+//	producetime 120
 // 	researched	false
 // }
 
@@ -816,7 +872,7 @@ tech rs_light_alien
 
 	requires	nothing
 	provides	light_alien
-	time	    1000
+	time	    25000
 	researched	false
 	needscollected	true
 }
@@ -829,7 +885,7 @@ tech rs_medium_alien
 
 	requires	nothing
 	provides	medium_alien
-	time	    1000
+	time	    25000
 	researched	false
 	needscollected	true
 }
@@ -1281,7 +1337,7 @@ tech rs_craft_ufo_small
 	// FIXME
 	requires	rs_craft_ufo_tech
 	provides	craft_ufo_small
-	time	100
+	time	2500
 	researched	false
 
 	// TODO should come from craft-definition:
@@ -1298,7 +1354,7 @@ tech rs_craft_ufo_big
 	// FIXME
 	requires	rs_craft_ufo_tech
 	provides	craft_ufo_big
-	time	100
+	time	2500
 	researched	false
 
 	// TODO should come from craft-definition:
@@ -1320,7 +1376,7 @@ tech rs_alien_ortnok_notes
 
 	requires	nothing
 	provides	""
-	time	0
+	time	1500
 	researched	false
 	needscollected	true
 
@@ -1337,7 +1393,7 @@ tech rs_alien_ortnok_autopsy
 
 	requires	nothing
 	provides	""
-	time	60
+	time	2250
 	researched	false
 	needscollected	true
 
@@ -1356,7 +1412,7 @@ tech rs_alien_ortnok_xenobiology
 
 	requires	nothing
 	provides	""
-	time	90
+	time	1500
 	researched	false
 	needscollected	true
 
@@ -1373,7 +1429,7 @@ tech rs_alien_ortnok_interrogation
 
 	requires	nothing
 	provides	""
-	time	60
+	time	1500
 	researched	false
 	needscollected	true
 
@@ -1392,7 +1448,7 @@ tech rs_alien_ortnok_light
 
 	requires	nothing
 	provides	""
-	time	0
+	time	2250
 	researched	false
 	needscollected	true
 
@@ -1411,7 +1467,7 @@ tech rs_alien_ortnok_medium
 
 	requires	nothing
 	provides	""
-	time	0
+	time	1500
 	researched	false
 	needscollected	true
 
@@ -1430,7 +1486,7 @@ tech rs_alien_antarean_notes
 
 	requires	nothing
 	provides	""
-	time	0
+	time	4000
 	researched	false
 	needscollected	true
 
@@ -1447,7 +1503,7 @@ tech rs_alien_antarean_autopsy
 
 	requires	nothing
 	provides	""
-	time	60
+	time	1000
 	researched	false
 	needscollected	true
 
@@ -1464,7 +1520,7 @@ tech rs_alien_antarean_xenobiology
 
 	requires	nothing
 	provides	""
-	time	90
+	time	2200
 	researched	false
 	needscollected	true
 
@@ -1481,7 +1537,7 @@ tech rs_alien_antarean_interrogation
 
 	requires	nothing
 	provides	""
-	time	60
+	time	1500
 	researched	false
 	needscollected	true
 
@@ -1498,7 +1554,7 @@ tech rs_alien_antarean_interrogation_commander
 
 	requires	nothing
 	provides	""
-	time	240
+	time	5500
 	researched	false
 	needscollected	true
 
@@ -1517,7 +1573,7 @@ tech rs_alien_shevaar_notes
 
 	requires	nothing
 	provides	""
-	time	0
+	time	100
 	researched	false
 	needscollected	true
 
@@ -1534,7 +1590,7 @@ tech rs_alien_shevaar_autopsy
 
 	requires	nothing
 	provides	""
-	time	60
+	time	1450
 	researched	false
 	needscollected	true
 
@@ -1551,7 +1607,7 @@ tech rs_alien_shevaar_xenobiology
 
 	requires	nothing
 	provides	""
-	time	90
+	time	2300
 	researched	false
 	needscollected	true
 
@@ -1570,7 +1626,7 @@ tech rs_alien_hovernet_notes
 
 	requires	nothing
 	provides	""
-	time	0
+	time	2
 	researched	false
 	needscollected	true
 
@@ -1587,7 +1643,7 @@ tech rs_alien_hovernet_autopsy
 
 	requires	nothing
 	provides	""
-	time	60
+	time	1600
 	researched	false
 	needscollected	true
 
@@ -1604,7 +1660,7 @@ tech rs_alien_hovernet_xenobiology
 
 	requires	nothing
 	provides	""
-	time	90
+	time	2500
 	researched	false
 	needscollected	true
 
@@ -1623,7 +1679,7 @@ tech rs_alien_cyborg_ortnok_notes
 
 	requires	nothing
 	provides	""
-	time	0
+	time	2
 	researched	false
 	needscollected	true
 
@@ -1640,7 +1696,7 @@ tech rs_alien_cyborg_ortnok_autopsy
 
 	requires	nothing
 	provides	""
-	time	60
+	time	1500
 	researched	false
 	needscollected	true
 
@@ -1657,7 +1713,7 @@ tech rs_alien_cyborg_ortnok_xenobiology
 
 	requires	nothing
 	provides	""
-	time	90
+	time	2500
 	researched	false
 	needscollected	true
 
@@ -1677,6 +1733,7 @@ tech rs_ugv_phoenix
 	requires	initial
 	provides	ugv_phoenix
 	time	0
+	producetime 800
 	researched	true
 	needscollected	false
 
@@ -1693,6 +1750,7 @@ tech rs_ugv_triax
 	requires	initial
 	provides	ugv_triax
 	time	0
+	producetime 800
 	researched	true
 	needscollected	false
 
@@ -1711,7 +1769,7 @@ tech rs_craft_shield_light
 	requires	initial
 	// FIXME
 	provides	light
-	time	0
+	time 0
 	researched	true
 	needscollected	false
 
@@ -1728,7 +1786,7 @@ tech rs_craft_shield_medium
 	requires	rs_craft_shield_light
 	// FIXME
 	provides	medium
-	time	40
+	time 1000
 	researched	false
 	needscollected	false
 
@@ -1745,7 +1803,7 @@ tech rs_craft_shield_hard
 	requires	rs_craft_shield_medium
 	// FIXME
 	provides	light
-	time	100
+	time 2500
 	researched	false
 	needscollected	true
 

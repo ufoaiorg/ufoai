@@ -1149,6 +1149,27 @@ static void CL_HandleBudget(void)
 }
 
 /**
+ * @brief simulates one day of supply and demand on the market (adds items)
+ * @sa CL_CampaignRun
+ * @sa CL_GameNew
+ */
+static void CL_CampaignRunMarket(void)
+{
+	int i;
+	equipDef_t *ed;
+	/* find the relevant market */
+	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
+		if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR))
+			break;
+	assert (i != csi.numEDs);
+	/* supply and demand */
+	for (i = 0; i < csi.numODs; i++)
+		if ( RS_ItemIsResearched(csi.ods[i].kurz) )
+			if ( frand() < 0.15 && ccs.eMarket.num[i] < ceil((2.0 + ed->num[i] * 2.0) * pow(frand(), 5.0)) )
+				 ccs.eMarket.num[i] += ceil(ed->num[i] / 7.0 * frand());
+}
+
+/**
  * @brief Called every frame when we are in geoscape view
  *
  * Called for node types MN_MAP and MN_3DMAP
@@ -1176,6 +1197,8 @@ void CL_CampaignRun(void)
 		/* (this may run multiple times if the time stepping is > 1 hour at a time) */
 		while (currenthour < (int)floor(ccs.date.sec / 3600)) {
 			currenthour++;
+			CL_CheckResearchStatus();
+			PR_ProductionRun();
 		}
 
 		while (ccs.date.sec > 3600 * 24) {
@@ -1183,8 +1206,7 @@ void CL_CampaignRun(void)
 			ccs.date.day++;
 			/* every day */
 			B_UpdateBaseData();
-			CL_CheckResearchStatus();
-			PR_ProductionRun();
+			CL_CampaignRunMarket();
 		}
 
 		/* check for campaign events */
@@ -2528,8 +2550,6 @@ static void CL_GameResultsCmd(void)
 
 	employee_t* employee;
 	int numberofsoldiers = 0; /* DEBUG */
-	static equipDef_t *eSupplies = NULL;
-	equipDef_t *ed;
 	base_t *attackedbase = NULL;
 	character_t *chr = NULL;
 
@@ -2561,21 +2581,6 @@ static void CL_GameResultsCmd(void)
 	baseCurrent->storage = ccs.eMission; /* copied, including the arrays! */
 	ccs.eMarket = eTempMarket; /* copied, including the arrays! */
 	CL_UpdateCredits(eTempCredits);
-
-	/* our economical connections are stirring at the news of our fight */
-	if (!eSupplies) {
-		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
-			if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR))
-				break;
-		assert (i != csi.numEDs);
-		eSupplies = ed;
-	}
-	for (i = 0; i < csi.numODs; i++) {
-		if ( eSupplies->num[i]
-			 > (rand() % 60
-				+ ccs.eMarket.num[i] * 10 * frand()) ) /* supply-demand */
-			ccs.eMarket.num[i] += (2.0 + eSupplies->num[i] / 3.0) * frand();
-	}
 
 	civilians_killed = ccs.civiliansKilled;
 	aliens_killed = ccs.aliensKilled;
@@ -3364,6 +3369,9 @@ void CL_GameInit(void)
 	MAP_GameInit();
 }
 
+/* called by CL_GameNew */
+static void CL_CampaignRunMarket(void);
+
 /**
  * @brief Starts a new single-player game
  */
@@ -3441,6 +3449,10 @@ static void CL_GameNew(void)
 
 	/* create a base as first step */
 	Cbuf_ExecuteText(EXEC_NOW, "mn_select_base -1");
+	
+	/* add some items to the market so it does not start empty */
+	for (i = 0;i < 3;i++)
+		CL_CampaignRunMarket();
 
 	CL_GameInit();
 }
