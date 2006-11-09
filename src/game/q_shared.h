@@ -821,7 +821,9 @@ typedef enum {
 	ET_ITEM,
 	ET_BREAKABLE,
 	ET_UGVSPAWN,
-	ET_UGV
+	ET_UGV,
+	ET_CIVILIANTARGET,
+	ET_MISSION
 } entity_type_t;
 
 

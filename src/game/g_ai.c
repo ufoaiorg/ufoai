@@ -253,64 +253,63 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		tu -= best_time;
 	}
 
-  if (!(ent->state & STATE_RAGE)) {
-
-	/* hide */
-	if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTOM) & VIS_YES)) {
-		/* is a hiding spot */
-		guete += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
-	} else if (aia->target && tu >= 2) {
-			byte minX, maxX, minY, maxY;
-		/* reward short walking to shooting spot, when seen by enemies;
-		   TODO: do this decently, only penalizing the visible part of walk
-		   and penalizing much more for reaction shooters around;
-		   now it may remove some tactical options from aliens,
-		   e.g. they may now choose only the closer doors;
-		   however it's still better than going three times around soldier
-		   and only then firing at him */
-		guete += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
-
-		/* search hiding spot */
-		G_MoveCalc(0, to, HIDE_DIST);
-		ent->pos[2] = to[2];
-		minX = to[0] - HIDE_DIST > 0 ? to[0] - HIDE_DIST : 0;
-		minY = to[1] - HIDE_DIST > 0 ? to[1] - HIDE_DIST : 0;
-		maxX = to[0] + HIDE_DIST < 254 ? to[0] + HIDE_DIST : 254;
-		maxY = to[1] + HIDE_DIST < 254 ? to[1] + HIDE_DIST : 254;
-
-		for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
-			for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
-				/* time */
-				delta = gi.MoveLength(gi.map, ent->pos, qfalse);
-				if (delta > tu)
-					continue;
-
-				/* visibility */
-				gi.GridPosToVec(gi.map, ent->pos, ent->origin);
-				if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTOM) & VIS_YES)
-					continue;
-
-				still_searching = 0;
-				break;
+	if (!(ent->state & STATE_RAGE)) {
+		/* hide */
+		if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTOM) & VIS_YES)) {
+			/* is a hiding spot */
+			guete += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
+		} else if (aia->target && tu >= 2) {
+				byte minX, maxX, minY, maxY;
+			/* reward short walking to shooting spot, when seen by enemies;
+			TODO: do this decently, only penalizing the visible part of walk
+			and penalizing much more for reaction shooters around;
+			now it may remove some tactical options from aliens,
+			e.g. they may now choose only the closer doors;
+			however it's still better than going three times around soldier
+			and only then firing at him */
+			guete += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
+	
+			/* search hiding spot */
+			G_MoveCalc(0, to, HIDE_DIST);
+			ent->pos[2] = to[2];
+			minX = to[0] - HIDE_DIST > 0 ? to[0] - HIDE_DIST : 0;
+			minY = to[1] - HIDE_DIST > 0 ? to[1] - HIDE_DIST : 0;
+			maxX = to[0] + HIDE_DIST < 254 ? to[0] + HIDE_DIST : 254;
+			maxY = to[1] + HIDE_DIST < 254 ? to[1] + HIDE_DIST : 254;
+	
+			for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
+				for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
+					/* time */
+					delta = gi.MoveLength(gi.map, ent->pos, qfalse);
+					if (delta > tu)
+						continue;
+	
+					/* visibility */
+					gi.GridPosToVec(gi.map, ent->pos, ent->origin);
+					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTOM) & VIS_YES)
+						continue;
+	
+					still_searching = 0;
+					break;
+				}
+				if (!still_searching)
+					break;
 			}
-			if (!still_searching)
-				break;
+		}
+	
+		if (still_searching) {
+			/* nothing found */
+			VectorCopy(to, ent->pos);
+			gi.GridPosToVec(gi.map, to, ent->origin);
+		} else {
+			/* found a hiding spot */
+			VectorCopy(ent->pos, aia->stop);
+			guete += GUETE_HIDE;
+			tu -= delta;
+			/* TODO: also add bonus for fleeing from reaction fire
+			and a huge malus if more than 1 move under reaction */
 		}
 	}
-
-	if (still_searching) {
-		/* nothing found */
-		VectorCopy(to, ent->pos);
-		gi.GridPosToVec(gi.map, to, ent->origin);
-	} else {
-		/* found a hiding spot */
-		VectorCopy(ent->pos, aia->stop);
-		guete += GUETE_HIDE;
-		tu -= delta;
-		/* TODO: also add bonus for fleeing from reaction fire
-		   and a huge malus if more than 1 move under reaction */
-	}
-  }
 
 	/* reward closing in */
 	minDist = CLOSE_IN_DIST;
@@ -331,13 +330,14 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 #define GUETE_CIV_LAZINESS	5
 #define RUN_AWAY_DIST		160
 
+
 /**
  * @brief
  * @sa AI_ActorThink
  */
 static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 {
-	edict_t *check;
+	edict_t *check, *checkPoint;
 	int i, move, tu;
 	float dist, minDist;
 	float guete;
@@ -356,6 +356,22 @@ static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	/* test for time */
 	if (tu < 0)
 		return -10000.0;
+
+	/* also spaniced aliens might come here */
+	if (ent->team == TEAM_CIVILIAN) {
+		/**
+		 * TODO: Check whether there is a info_civilian_target with a lower count value than all the other in a given radius 
+		 * MAX_SPOT_DIST - use G_FindRadius function for this task
+		 * if found return a very low guete value to make sure the civ will walk there
+		 */
+		while ((checkPoint = G_FindRadius(ent, ent->origin, MAX_SPOT_DIST, ET_CIVILIANTARGET)) != NULL) {
+			if (checkPoint->count < ent->count) {
+				Com_DPrintf("civ found civtarget\n");
+				return 10000.0;
+			}
+		}
+		ent->count = 100; /* reset the count value for this civilian to restart the search */
+	}
 
 	/* run away */
 	minDist = RUN_AWAY_DIST;
@@ -488,9 +504,11 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	/* do the first move */
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
-/*	Com_DPrintf( "(%i %i %i) (%i %i %i)\n", */
-/*		(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2], */
-/*		(int)bestAia.stop[0], (int)bestAia.stop[1], (int)bestAia.stop[2] ); */
+#if 0
+	Com_DPrintf( "(%i %i %i) (%i %i %i)\n",
+		(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2],
+		(int)bestAia.stop[0], (int)bestAia.stop[1], (int)bestAia.stop[2] );
+#endif
 
 	/* shoot('n'hide) */
 	if (bestAia.target) {
@@ -628,7 +646,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 			ent->chr.HP = GET_HP(ent->chr.skills[ABILITY_POWER]) / 2;
 			ent->HP = ent->chr.HP;
 			ent->chr.morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
-			ent->morale = ent->chr.morale;
+			ent->morale = (ent->chr.morale > 15 ? 15 : ent->chr.morale); /* low morale for civilians */
 			ent->AP = 100;
 			ent->STUN = 0;
 

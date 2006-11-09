@@ -58,14 +58,14 @@ static spawn_t spawns[] = {
 	{"light", SP_light},
 	{"misc_model", SP_misc_dummy},
 	{"misc_particle", SP_misc_dummy},
+	{"misc_mission", SP_misc_mission},
 	{"info_player_start", SP_player_start},
 	{"info_human_start", SP_human_start},
 	{"info_alien_start", SP_alien_start},
 	{"info_civilian_start", SP_civilian_start},
+	{"info_civilian_target", SP_civilian_target},
 	{"info_ugv_start", SP_ugv_start},
 	{"func_breakable", SP_func_breakable},
-	{"misc_mission", SP_misc_mission},
-	{"info_civilian_target", SP_civilian_target},
 
 	{NULL, NULL}
 };
@@ -338,8 +338,9 @@ void SpawnEntities(char *mapname, char *entities)
 }
 
 
-/*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8)
-*/
+/**
+ * @brief QUAKED light (0 1 0) (-8 -8 -8) (8 8 8)
+ */
 static void SP_light(edict_t * self)
 {
 	/* lights aren't client-server communicated items */
@@ -347,6 +348,9 @@ static void SP_light(edict_t * self)
 	G_FreeEdict(self);
 }
 
+/**
+ * @brief
+ */
 static void G_ActorSpawn(edict_t * ent)
 {
 	/* set properties */
@@ -370,8 +374,8 @@ static void G_ActorSpawn(edict_t * ent)
 }
 
 /**
-  * @brief Spawn an singleplayer UGV
-  */
+ * @brief Spawn an singleplayer UGV
+ */
 static void G_UGVSpawn(edict_t * ent)
 {
 	/* set properties */
@@ -389,11 +393,12 @@ static void G_UGVSpawn(edict_t * ent)
 	ent->solid = SOLID_BBOX;
 }
 
-/*QUAKED info_player_start (1 0 0) (-16 -16 -24) (16 16 32)
-Starting point for a player.
-"team"	the number of the team for this player starting point
-"0" is reserved for civilians and critters (use info_civilian_start instead)
-*/
+/** 
+ * @brief QUAKED info_player_start (1 0 0) (-16 -16 -24) (16 16 32)
+ * Starting point for a player.
+ * "team"	the number of the team for this player starting point
+ * "0" is reserved for civilians and critters (use info_civilian_start instead)
+ */
 static void SP_player_start(edict_t * ent)
 {
 	static int soldierCount = 0;
@@ -430,9 +435,10 @@ static void SP_player_start(edict_t * ent)
 		G_FreeEdict(ent);
 }
 
-/*QUAKED info_human_start (1 0 0) (-16 -16 -24) (16 16 32)
-Starting point for a single player human.
-*/
+/**
+ * @brief QUAKED info_human_start (1 0 0) (-16 -16 -24) (16 16 32)
+ * Starting point for a single player human.
+ */
 static void SP_human_start(edict_t * ent)
 {
 	/* only used in single player */
@@ -448,9 +454,10 @@ static void SP_human_start(edict_t * ent)
 }
 
 
-/*QUAKED info_ugv_start (1 1 0) (-32 -32 -24) (32 32 32)
-Starting point for a ugv.
-*/
+/**
+ * @brief QUAKED info_ugv_start (1 1 0) (-32 -32 -24) (32 32 32)
+ * Starting point for a ugv.
+ */
 static void SP_ugv_start(edict_t * ent)
 {
 	/* no ugv in multiplayer */
@@ -471,9 +478,10 @@ static void SP_ugv_start(edict_t * ent)
 	G_UGVSpawn(ent);
 }
 
-/*QUAKED info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
-Starting point for a single player alien.
-*/
+/** 
+ * @brief QUAKED info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
+ * Starting point for a single player alien.
+ */
 static void SP_alien_start(edict_t * ent)
 {
 	/* only used in single player */
@@ -491,9 +499,10 @@ static void SP_alien_start(edict_t * ent)
 }
 
 
-/*QUAKED info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
-Starting point for a civilian.
-*/
+/**
+ * @brief QUAKED info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
+ * Starting point for a civilian.
+ */
 static void SP_civilian_start(edict_t * ent)
 {
 	ent->team = TEAM_CIVILIAN;
@@ -501,16 +510,25 @@ static void SP_civilian_start(edict_t * ent)
 	ent->STUN = 99;
 	ent->HP = MAX_HP;
 	ent->AP = 100;
+	ent->count = 100; /* current waypoint */
 	G_ActorSpawn(ent);
 }
 
 /**
- * @brief
+ * @brief QUAKED info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
+ * Way point for a civilian.
+ * @sa SP_civilian_start
  */
 static void SP_civilian_target(edict_t * ent)
 {
 	/* target point for which team */
 	ent->team = TEAM_CIVILIAN;
+	ent->classname = "civtarget";
+	ent->type = ET_CIVILIANTARGET;
+
+	/* fall to ground */
+	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
+	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 }
 
 /**
@@ -518,12 +536,17 @@ static void SP_civilian_target(edict_t * ent)
  */
 static void SP_misc_mission(edict_t * ent)
 {
-	/* should already be parsed */
+	ent->classname = "mission";
+	ent->type = ET_MISSION;
+
+	/* fall to ground */
+	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
+	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 }
 
-/*
-a dummy to get rid of local entities
-*/
+/**
+ * @brief a dummy to get rid of local entities
+ */
 static void SP_misc_dummy(edict_t * self)
 {
 	/* models and particles aren't client-server communicated items */
@@ -532,9 +555,10 @@ static void SP_misc_dummy(edict_t * self)
 }
 
 
-/*QUAKED func_breakable (0.3 0.3 0.3) ?
-Used for breakable objects.
-*/
+/**
+ * @brief QUAKED func_breakable (0.3 0.3 0.3) ?
+ * Used for breakable objects.
+ */
 static void SP_func_breakable(edict_t * self)
 {
 	self->type = ET_BREAKABLE;
@@ -542,20 +566,23 @@ static void SP_func_breakable(edict_t * self)
 	VectorSet(self->origin, 0, 0, 0);
 	gi.setmodel(self, self->model);
 
-/*	Com_Printf( "model (%s) num: %i mins: %i %i %i maxs: %i %i %i\n", */
-/*		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2], */
-/*		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2] ); */
+#if 0
+	Com_Printf( "model (%s) num: %i mins: %i %i %i maxs: %i %i %i\n",
+		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
+		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2] );
+#endif
 }
 
 
-/*QUAKED worldspawn (0 0 0) ?
-
-Only used for the world.
-"sounds"	music cd track number
-"gravity"	800 is default gravity
-"message"	text to print at user logon
-"maxlevel"	max. level to use in the map
-*/
+/**
+ * @brief QUAKED worldspawn (0 0 0) ?
+ *
+ * Only used for the world.
+ * "sounds"	music cd track number
+ * "gravity"	800 is default gravity
+ * "message"	text to print at user logon
+ * "maxlevel"	max. level to use in the map
+ */
 static void SP_worldspawn(edict_t * ent)
 {
 	ent->solid = SOLID_BSP;

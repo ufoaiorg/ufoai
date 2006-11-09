@@ -1345,8 +1345,8 @@ static void G_MoraleBehaviour(int team, qboolean quiet)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		/* this only applies to ET_ACTOR but not to ET_UGV */
 		if (ent->inuse && ent->type == ET_ACTOR && ent->team == team && !(ent->state & STATE_DEAD)) {
-			/* civilians have a 1:1 chance to randomly run away, will be changed: */
-			if (level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
+			/* civilians have a 1:1 chance to randomly run away in multiplayer */
+			if ((int) sv_maxclients->value >= 2 && level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
 				G_MoralePanic(ent, qfalse, quiet);
 			/* multiplayer needs enabled sv_enablemorale */
 			/* singleplayer has this in every case */
