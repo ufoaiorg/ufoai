@@ -151,11 +151,7 @@ void MakeTnodes ( int levels )
 
 	/* 32 byte align the structs */
 	tnodes = malloc( (numnodes+1) * sizeof(tnode_t));
-#ifndef __x86_64__
-	tnodes = (tnode_t *)(((int)tnodes + 31)&~31);
-#else
 	tnodes = (tnode_t *)(((ptrdiff_t)tnodes + 31)&~31);
-#endif
 	tnode_p = tnodes;
 	numtheads = 0;
 
