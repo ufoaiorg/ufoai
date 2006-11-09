@@ -36,7 +36,6 @@ nation latin
 	alien_friendly	15
 	soldiers 4
 	scientists 1
-	pos "100 100"
 }
 
 nation states
@@ -49,7 +48,6 @@ nation states
 	alien_friendly	40
 	soldiers 4
 	scientists 2
-	pos "100 100"
 }
 
 nation europa
@@ -62,7 +60,6 @@ nation europa
 	alien_friendly	45
 	soldiers 3
 	scientists 3
-	pos "10 10"
 }
 
 nation asia
