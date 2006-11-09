@@ -9,7 +9,8 @@ base/maps/frozenn/*.bsp /usr/lib/games/ufoai/base/maps/frozenn
 base/maps/orientald/*.bsp /usr/lib/games/ufoai/base/maps/orientald
 base/maps/orientaln/*.bsp /usr/lib/games/ufoai/base/maps/orientaln
 
-base/maps/ice/*.bsp /usr/lib/games/ufoai/base/maps/ice
+base/maps/iced/*.bsp /usr/lib/games/ufoai/base/maps/iced
+base/maps/icen/*.bsp /usr/lib/games/ufoai/base/maps/icen
 
 base/maps/tropicd/*.bsp /usr/lib/games/ufoai/base/maps/tropicd
 base/maps/tropicn/*.bsp /usr/lib/games/ufoai/base/maps/tropicn
