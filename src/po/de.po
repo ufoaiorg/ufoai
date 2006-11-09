@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-09-03 14:51+0200\n"
-"PO-Revision-Date: 2006-09-03 14:59+0100\n"
+"PO-Revision-Date: 2006-11-09 13:57+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,6 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 # ae: ä   oe: ö   ue: ü   sz: ß
-
 #: ../base/ufos/armor.ufo:3
 msgid "normal"
 msgstr "Normal"
@@ -1923,7 +1922,7 @@ msgstr "Nano Techologie"
 
 #: ../base/ufos/research.ufo:119
 msgid "nano_txt"
-msgstr "Grundlage für Forschung und Produktion von fortschrittlichen R�stungen."
+msgstr "Grundlage für Forschung und Produktion von fortschrittlichen Rüstungen."
 
 #: ../base/ufos/research.ufo:129
 msgid "Advanced Armor Fabrics"
@@ -1949,7 +1948,7 @@ msgstr "Das AR-80 ist die Standardwaffe der Phalanx. Durch die verbesserte Munit
 #: ../base/ufos/research.ufo:188
 #: ../base/ufos/research.ufo:200
 msgid "sniper_txt"
-msgstr "Scharfsch�tzenwaffe"
+msgstr "Scharfschützenwaffe"
 
 #: ../base/ufos/research.ufo:212
 #: ../base/ufos/research.ufo:224
@@ -2118,7 +2117,8 @@ msgstr "Plasmagewehr, schwere Waffe der Aliens"
 #: ../base/ufos/research.ufo:678
 #: ../base/ufos/research.ufo:691
 msgid "plasblaster_txt"
-msgstr "Plasmawerfer, verschiesst auf ballistischen Bahnen explosive Plasmabälle\n"
+msgstr ""
+"Plasmawerfer, verschiesst auf ballistischen Bahnen explosive Plasmabälle\n"
 "mit sehr starker Sprengwirkung."
 
 #: ../base/ufos/research.ufo:703
