@@ -76,7 +76,7 @@ void *Hunk_Alloc (int size)
 	buf = VirtualAlloc (membase, cursize+size, MEM_COMMIT, PAGE_READWRITE);
 	if (!buf) {
 		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) &buf, 0, NULL);
-		Sys_Error ("VirtualAlloc commit failed.\n%s", buf);
+		Sys_Error ("VirtualAlloc commit failed.\n%p", buf);
 	}
 #endif
 	cursize += size;

@@ -305,9 +305,11 @@ extern LIBINTL_DLL_EXPORTED int fprintf (FILE *, const char *, ...);
 #define vfprintf libintl_vfprintf
 extern LIBINTL_DLL_EXPORTED int vfprintf (FILE *, const char *, va_list);
 
+#if 0
 #undef printf
 #define printf libintl_printf
 extern LIBINTL_DLL_EXPORTED int printf (const char *, ...);
+#endif
 #undef vprintf
 #define vprintf libintl_vprintf
 extern LIBINTL_DLL_EXPORTED int vprintf (const char *, va_list);
