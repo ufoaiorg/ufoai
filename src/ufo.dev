@@ -7,9 +7,9 @@ Type=0
 Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DDEBUG _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DUSE_SDL_@@_-DSHADERS_@@_-DHAVE_GETTEXT_@@_
 CppCompiler=
 Includes=
-Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_-lz_@@_ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_ports/win32/libjpeg.lib_@@_
+Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_ports/win32/libjpeg.lib_@@_-lz_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=92
+UnitCount=93
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -948,14 +948,14 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_employee.c -o cl_employee.o $(CFLAGS)
 
 [Unit93]
-FileName=qcommon\unzip.h
-CompileCpp=1
-Folder=Header Files
+FileName=qcommon\ioapi.c
+CompileCpp=0
+Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c ioapi.c -o ioapi.o $(CFLAGS)
 
 [Unit56]
 FileName=client\os_types.h

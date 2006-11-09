@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_-lz_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=25
+UnitCount=26
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -130,14 +130,14 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit26]
-FileName=qcommon\unzip.c
+FileName=qcommon\ioapi.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c unzip.c -o unzip.o $(CFLAGS)
+BuildCmd=$(CC) -c ioapi.c -o ioapi.o $(CFLAGS)
 
 [Unit27]
 FileName=client\keys.c
