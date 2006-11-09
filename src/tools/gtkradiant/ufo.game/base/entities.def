@@ -90,6 +90,7 @@ Used as a positional target for spotlights, etc.
 
 /*QUAKED info_civilian_target (0.5 0.8 0.1) (-16 -16 -24) (16 16 32)
 Used as a target where civilians try to get in a mission (TODO: Implement me)
+"count"	The priority of this waypoint - the lower the number, the nearer the end-target
 */
 
 /*QUAKED misc_sound (0.5 1 0.5) (-4 -4 -4) (4 4 4)
