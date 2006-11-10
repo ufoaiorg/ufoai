@@ -378,11 +378,9 @@ void SV_ClipMoveToEntities(moveclip_t * clip)
 */
 		if (trace.allsolid || trace.startsolid || trace.fraction < clip->trace.fraction) {
 			trace.ent = touch;
-			if (clip->trace.startsolid) {
-				clip->trace = trace;
+			clip->trace = trace;
+			if (clip->trace.startsolid)
 				clip->trace.startsolid = qtrue;
-			} else
-				clip->trace = trace;
 		} else if (trace.startsolid)
 			clip->trace.startsolid = qtrue;
 	}
