@@ -268,7 +268,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 			however it's still better than going three times around soldier
 			and only then firing at him */
 			guete += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
-	
+
 			/* search hiding spot */
 			G_MoveCalc(0, to, HIDE_DIST);
 			ent->pos[2] = to[2];
@@ -276,19 +276,19 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 			minY = to[1] - HIDE_DIST > 0 ? to[1] - HIDE_DIST : 0;
 			maxX = to[0] + HIDE_DIST < 254 ? to[0] + HIDE_DIST : 254;
 			maxY = to[1] + HIDE_DIST < 254 ? to[1] + HIDE_DIST : 254;
-	
+
 			for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 				for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 					/* time */
 					delta = gi.MoveLength(gi.map, ent->pos, qfalse);
 					if (delta > tu)
 						continue;
-	
+
 					/* visibility */
 					gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTOM) & VIS_YES)
 						continue;
-	
+
 					still_searching = 0;
 					break;
 				}
@@ -296,7 +296,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 					break;
 			}
 		}
-	
+
 		if (still_searching) {
 			/* nothing found */
 			VectorCopy(to, ent->pos);
@@ -480,7 +480,8 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 				}
 
 	if (ent->team == TEAM_CIVILIAN) {
-		while ((checkPoint = G_FindRadius(checkPoint, ent->origin, MAX_SPOT_DIST, ET_CIVILIANTARGET)) != NULL) {
+		while ((checkPoint = G_FindRadius(checkPoint, ent->origin, 768, ET_CIVILIANTARGET)) != NULL) {
+			/* the lower the count value - the nearer the final target */
 			if (checkPoint->count < ent->count) {
 				i++;
 				Com_DPrintf("civ found civtarget with %i\n", checkPoint->count);

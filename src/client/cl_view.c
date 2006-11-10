@@ -154,7 +154,8 @@ void CL_ParseEntitystring(char *es)
 	char *com_token;
 	char keyname[256];
 
-	char classname[64];
+	char classname[MAX_VAR];
+	char animname[MAX_QPATH];
 	char model[MAX_VAR];
 	char particle[MAX_VAR];
 	float light;
@@ -165,6 +166,7 @@ void CL_ParseEntitystring(char *es)
 	int entnum;
 	int nosmooth;
 	int skin;
+	int frame;
 
 	/* dropship default values */
 	/* -1.0f means - don't use it */
@@ -195,12 +197,14 @@ void CL_ParseEntitystring(char *es)
 	while (1) {
 		/* initialize */
 		VectorCopy(vec3_origin, ambient);
-		VectorCopy(vec3_origin, color);
+		color[0] = color[1] = color[2] = 1.0f;
 		VectorCopy(vec3_origin, origin);
 		VectorCopy(vec3_origin, angles);
 		wait[0] = wait[1] = 0;
 		spawnflags = 0;
 		light = 0;
+		frame = 0;
+		animname[0] = 0;
 		model[0] = 0;
 		particle[0] = 0;
 		nosmooth = 0;
@@ -241,6 +245,12 @@ void CL_ParseEntitystring(char *es)
 
 			if (!Q_strcmp(keyname, "model"))
 				Q_strncpyz(model, com_token, MAX_VAR);
+
+			if (!Q_strcmp(keyname, "frame"))
+				frame = atoi(com_token);
+
+			if (!Q_strcmp(keyname, "anim"))
+				Q_strncpyz(animname, com_token, MAX_QPATH);
 
 			if (!Q_strcmp(keyname, "particle"))
 				Q_strncpyz(particle, com_token, MAX_VAR);
@@ -349,6 +359,11 @@ void CL_ParseEntitystring(char *es)
 				if (nosmooth)
 					lm->flags |= LMF_NOSMOOTH;
 				lm->skin = skin;
+				lm->frame = frame;
+				if (!lm->frame)
+					Q_strncpyz(lm->animname, animname, MAX_QPATH);
+				else
+					Com_Printf("Warning: Model has frame and anim parameters - using frame (no animation)\n");
 			}
 		} else if (!Q_strcmp(classname, "misc_particle")) {
 			CL_AddMapParticle(particle, origin, wait, strstart, (spawnflags & 0xFF));
@@ -476,7 +491,7 @@ void CL_PrepRefresh(void)
 }
 
 /**
- * @brief Calculates cl.refdef's FOV_X. 
+ * @brief Calculates cl.refdef's FOV_X.
  * Should generally be called after any changes are made to the zoom level (via cl.cam.zoom)
  * @sa
  */
@@ -487,7 +502,7 @@ void CalcFovX(void)
 		cl.refdef.fov_x = max(min(FOV / zoom, 140.0), 1.0);
 	} else {
 		cl.refdef.fov_x = max(min(FOV / cl.cam.zoom, 95.0), 55.0);
-	} 
+	}
 }
 
 /**

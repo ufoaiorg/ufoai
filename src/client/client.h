@@ -561,8 +561,11 @@ typedef struct lm_s {
 	int num;
 	int skin;
 	int flags;
+	int frame;	/* which frame to show */
+	char animname[MAX_QPATH];	/* is this an animated model */
 	int levelflags;
 	float sunfrac;
+	animState_t as;
 
 	struct model_s *model;
 } lm_t;							/* local models */

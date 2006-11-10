@@ -77,6 +77,11 @@ void LM_AddToScene(void)
 		VectorCopy(lm->angles, ent.angles);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
+		if (lm->animname[0]) {
+			ent.as = lm->as;
+			/* do animation */
+			re.AnimRun(&lm->as, ent.model, cls.frametime * 1000);
+		}
 
 		if (lm->flags & LMF_NOSMOOTH)
 			ent.flags |= RF_NOSMOOTH;
@@ -183,6 +188,8 @@ void CL_RegisterLocalModels(void)
 	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
 		/* register the model and recalculate routing info */
 		lm->model = re.RegisterModel(lm->name);
+		if (lm->animname[0])
+			re.AnimChange(&lm->as, lm->model, lm->animname);
 
 		/* calculate sun lighting and register model if not yet done */
 		VectorMA(lm->origin, 512, sunDir, sunOrigin);
