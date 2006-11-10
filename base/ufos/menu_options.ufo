@@ -643,7 +643,7 @@ menu options_sound
 		pos		"654 180"
 		size	"245 6"
 		color	"0 .8 0 1"
-		current	"*cvar s_volume"
+		current	"*cvar snd_volume"
 		max		1.0
 		align	ul
 		mousefx	true
@@ -664,7 +664,7 @@ menu options_sound
 		pos		"654 205"
 		size	"245 6"
 		color	"0 .8 0 1"
-		current	"*cvar ov_volume"
+		current	"*cvar snd_music_volume"
 		max		1.0
 		align	ul
 		mousefx true

@@ -1653,7 +1653,7 @@ void CL_ActorMouseTrace(void)
 	}
 
 	/* test if the selected grid is out of the world */
-	if (restingLevel < 0)
+	if (restingLevel < 0 || restingLevel >= HEIGHT)
 		return;
 
 	Vector2Copy(testPos, mousePos);

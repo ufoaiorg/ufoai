@@ -392,8 +392,10 @@ static void LET_PathMove(le_t * le)
 			/* end of move */
 			le_t *floor;
 
-			CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
-			CL_ResetActorMoveLength();
+			if (le == selActor) {
+				CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
+				CL_ResetActorMoveLength();
+			}
 
 			floor = LE_Find(ET_ITEM, le->pos);
 			if (floor)
