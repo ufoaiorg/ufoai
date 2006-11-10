@@ -2090,7 +2090,7 @@ void CM_MakeTnodes(void)
 	curTile->numtheads = 0;
 	curTile->numcheads = 0;
 
-	for (i = 0; i < 258; i++) {
+	for (i = 0; i < 257; i++) {
 		if (curTile->cmodels[i].headnode == -1)
 			continue;
 
