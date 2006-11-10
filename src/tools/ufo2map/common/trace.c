@@ -46,7 +46,7 @@ static int numtheads;
 static int thead[260];
 static int theadlevel[260];
 
-static int neededContents = (CONTENTS_SOLID | CONTENTS_STEPON | CONTENTS_PLAYERCLIP);
+static int neededContents = (CONTENTS_SOLID | CONTENTS_STEPON | CONTENTS_ACTORCLIP);
 static int forbiddenContents = (CONTENTS_PASSABLE);
 static vec3_t tr_end;
 

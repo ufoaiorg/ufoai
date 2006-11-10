@@ -320,7 +320,7 @@ typedef struct
 
 #define	CONTENTS_AREAPORTAL		0x8000
 
-#define	CONTENTS_PLAYERCLIP		0x10000
+#define	CONTENTS_ACTORCLIP		0x10000
 #define	CONTENTS_PASSABLE		0x20000
 
 /* currents can be added to any other contents, and may be mixed */
@@ -340,7 +340,7 @@ typedef struct
 #define	CONTENTS_LADDER			0x20000000
 #define CONTENTS_STEPON			0x40000000
 
-#define MASK_CLIP		( CONTENTS_PLAYERCLIP | CONTENTS_WEAPONCLIP | CONTENTS_STEPON )
+#define MASK_CLIP		( CONTENTS_ACTORCLIP | CONTENTS_WEAPONCLIP | CONTENTS_STEPON )
 
 
 #define	SURF_LIGHT		0x1		/* value will hold the light strength */

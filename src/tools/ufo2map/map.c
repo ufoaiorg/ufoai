@@ -669,7 +669,7 @@ void ParseBrush (entity_t *mapent)
 
 	/* brushes that will not be visible at all will never be */
 	/* used as bsp splitters */
-/*	if (b->contents & (CONTENTS_PLAYERCLIP|CONTENTS_MONSTERCLIP) )
+/*	if (b->contents & (CONTENTS_ACTORCLIP|CONTENTS_MONSTERCLIP) )
 	{
 		c_clipbrushes++;
 		for (i=0 ; i<b->numsides ; i++)

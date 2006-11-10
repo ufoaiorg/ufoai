@@ -488,7 +488,7 @@ typedef struct {
 
 #define	CONTENTS_AREAPORTAL		0x8000
 
-#define	CONTENTS_PLAYERCLIP		0x10000
+#define	CONTENTS_ACTORCLIP		0x10000
 #define	CONTENTS_PASSABLE		0x20000
 
 /* currents can be added to any other contents, and may be mixed */

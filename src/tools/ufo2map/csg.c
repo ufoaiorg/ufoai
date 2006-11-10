@@ -174,7 +174,7 @@ static qboolean IsInLevel( int contents, int level )
 	}
 
 	if ( level == 257 ) {
-		if (contents & CONTENTS_PLAYERCLIP)
+		if (contents & CONTENTS_ACTORCLIP)
 			return qtrue;
 		else
 			return qfalse;

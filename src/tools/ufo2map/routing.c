@@ -244,7 +244,7 @@ extern void DoRouting(void)
 	PushInfo();
 	nummodels += 1;
 
-	/* process playerclip-level */
+	/* process actorclip-level */
 /*	ProcessLevel(256); */
 	/* process stepon-level */
 	ProcessLevel(258);
