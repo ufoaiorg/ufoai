@@ -5,7 +5,7 @@
 
 sequence invasion
 {
-	cmd "music_stop;music mission;music_start;"
+	cmd "music ufo2;music_start;"
 	cmd "seq_animspeed 100;"
 
 	2dobj inv_sentence1
@@ -24,7 +24,7 @@ sequence invasion
 
 sequence ufos_are_coming
 {
-	cmd "music_stop;music mission;music_start;"
+	cmd "music ufo2;music_start;"
 	cmd "seq_animspeed 100;"
 
 	2dobj uac_sentence1
@@ -53,7 +53,7 @@ sequence ufos_are_coming
 
 sequence alienbase
 {
-	cmd "music_stop;music mission;music_start;"
+	cmd "music PsymongO2;music_start;"
 	cmd "seq_animspeed 100;"
 
 	2dobj ab_sentence1

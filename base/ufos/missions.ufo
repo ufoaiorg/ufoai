@@ -6,7 +6,7 @@ mission stadium
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map			stadium06
-	music		mission3
+	music		mission4
 	pos			"74 41"
 	aliens		4
 	alienteam	alien
@@ -26,7 +26,7 @@ mission terrain
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map			terrain08
-	music		mission3
+	music		mission2
 	pos			"-9 46"
 	aliens		4
 	alienteam	alien
@@ -46,7 +46,7 @@ mission spedition
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map			spedition06
-	music		mission3
+	music		geoscape
 	pos			"-10 60"
 	aliens		4
 	alienteam	alien
@@ -66,7 +66,7 @@ mission pdi
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map			pdi08
-	music		mission3
+	music		PsymongO5
 	pos			"-30 36"
 	aliens		4
 	alienteam	alien
@@ -86,7 +86,7 @@ mission mart
 	type		"_Terror Attack"
 	text		"_Protect civilians"
 	map			mart05
-	music		mission
+	music		PsymongO4
 	pos			"-13 52"
 	aliens		6
 	alienteam	antarean
@@ -126,7 +126,7 @@ mission mine
 	type		"_Terror Attack"
 	text		"_There are rumors of a mine being\overrun by aliens. Although this\source of information is doubtful,\you'll need to investigate."
 	map			mine01
-	music		mission3
+	music		alBasrahM
 	pos			"-174 -41"
 	aliens		7
 	alienteam	ortnok
@@ -166,7 +166,7 @@ mission africa
 	type		"_Crashed Alien Ship"
 	text		"_Secure area"
 	map			africa04
-	music		mission
+	music		alBasrahM
 	pos			"-30 18"
 	aliens		10
 	alienteam	alien
@@ -186,7 +186,7 @@ mission bunker
 	type		"_Terror Attack"
 	text		"_Protect the military installation crew"
 	map			bunker01
-	music		dawn
+	music		greecei
 	pos			"2 51"
 	aliens		8
 	alienteam	alien
@@ -246,7 +246,7 @@ mission africa_excavation
 	type		"_Terror Attack"
 	text		"_Protect the excavation site at all cost."
 	map			excavation06
-	music		mission4
+	music		theme
 	pos			"-29 -20"
 	aliens		5
 	alienteam	ortnok
@@ -266,7 +266,7 @@ mission italy
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			italy05
-	music		mission2
+	music		PsymongO2
 	pos			"-18 40"
 	aliens		3
 	alienteam	antarean
@@ -286,7 +286,7 @@ mission subway
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map			subway07
-	music		mission3
+	music		PsymongN4
 	pos			"74 40"
 	aliens		6
 	alienteam	alien
@@ -307,7 +307,7 @@ mission vil_lille
 	text		"_Protect inhabitants"
 	map			"+village"
 	param		recreational
-	music		mission2
+	music		PsymongN5
 	pos			"-3 50"
 	aliens		7
 	alienteam	ortnok
@@ -327,7 +327,7 @@ mission harbor
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			harbor07
-	music		mission2
+	music		dawn
 	pos			"-129 35"
 	aliens		8
 	alienteam	ortnok
@@ -387,7 +387,7 @@ mission farm
 	type		"_Landed Alien Ship"
 	text		"_Secure Alien Ship before Liftoff"
 	map			farm08
-	music		mission
+	music		PsymongN2
 	pos			"116 52"
 	aliens  	4
 	alienteam	antarean
@@ -426,7 +426,7 @@ mission frozen_groenland
 	text		"_Protect inhabitants"
 	map			"+frozen"
 	param		small
-	music		mission
+	music		theme
 	pos			"47 -42"
 	aliens		6
 	alienteam	alien
@@ -446,7 +446,7 @@ mission frozen_small
 	text		"_Protect inhabitants"
 	map			"+frozen"
 	param		small
-	music		mission
+	music		mission2
 	pos			"116 52"
 	aliens		7
 	alienteam	alien
@@ -466,7 +466,7 @@ mission frozen_landingnature
 	text		"_Secure Alien Ship before Liftoff"
 	map			"+frozen"
 	param		alienlandingnature
-	music		mission
+	music		mission3
 	pos			"32 -66"
 	aliens		7
 	alienteam	alien
@@ -486,7 +486,7 @@ mission frozen_industrial
 	text		"_Protect inhabitants"
 	map			"+frozen"
 	param		industrial
-	music		mission
+	music		mission4
 	pos			"54 75"
 	aliens		7
 	alienteam	alien
@@ -506,7 +506,7 @@ mission frozen_alienlandingindustrial
 	text		"_Secure Alien Ship before Liftoff"
 	map			"+frozen"
 	param		alienlandingindustrial
-	music		mission
+	music		alBasrahM
 	pos			"25 -64"
 	aliens		7
 	alienteam	alien
@@ -525,7 +525,7 @@ mission gasstation
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			gasstation05
-	music		mission2
+	music		credits
 	pos			"-111 21"
 	aliens		4
 	alienteam	antareans
@@ -583,7 +583,7 @@ mission dam
 	type		"_Terror Attack"
 	text		"_Secure Dam"
 	map			dam01
-	music		mission4
+	music		PsymongO1
 	pos			"-62 25"
 	aliens		7
 	alienteam	alien
@@ -591,6 +591,26 @@ mission dam
 	civilians	3
 	civteam		scientist
 	nation		"middle"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Wachau Valley, Austria
+mission estate
+{
+	location	"_Wachau"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			estate01
+	music		PsymongO3
+	pos			"-15 48"
+	aliens		7
+	alienteam	alien
+	alienequip	stage1_soldiers
+	civilians	3
+	civteam		european
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -659,7 +679,7 @@ mission tower
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map			tower06
-	music		mission3
+	music		greecei
 	pos			"119 34"
 	aliens		6
 	alienteam	alien
@@ -679,7 +699,7 @@ mission transport
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			transport06
-	music		mission4
+	music		PsymongO1
 	pos			"83 36"
 	aliens		3
 	alienteam	alien
@@ -740,7 +760,7 @@ mission village
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			village07
-	music		mission
+	music		PsymongO3
 	pos			"97 47"
 	aliens		4
 	alienteam	ortnok
@@ -820,7 +840,7 @@ mission baseattack
 	text		"_Aliens attacked one of our home bases"
 // 	. means that they attack a random base (only the first char counts)
 	map			".base"
-	music		base
+	music		turinItalyM
 	aliens		12
 	alienteam	alien
 	alienequip	stage4_soldiers

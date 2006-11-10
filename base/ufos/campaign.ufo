@@ -27,12 +27,12 @@ stage intro
 		expire		"0 8 0"  // average expire time is 4d
 			                 // minimum interval between missions is 3d
 			                 // so you have 2 or less on geoscape any time
-		missions	"africa_excavation transport mine mart italy"
+		missions	"africa_excavation transport mine mart italy estate"
 // TODO: mine does not really fit there, because civilians are safe
 // please add some spawn points down there or move this to another stage
 // the same for city; also make some alien spawns on the top level
 		number		11 // don't torment the player with the same missions
-		quota		4
+		quota		5
 	}
 	set soldier_terror
 	{
@@ -40,9 +40,9 @@ stage intro
 		delay		"0 10 7"
 		frame		"0 15 0" // big missions, but less traffic
 		expire		"0 45 0" // three at geoscape, but lots of time to do them
-		missions	"bunker japan dam"
-		number		3 // no mission will get repeated
-		quota		3
+		missions	"bunker japan dam spedition" //stadium... need a night version
+		number		4 // no mission will get repeated
+		quota		4
 	}
 // from this place on, due to not enough missions in RC5, 
 // and only 19 scientists total, I increase all "frame" settings
@@ -54,7 +54,7 @@ stage intro
 		frame		"0 27 0"
 		expire		"0 5 0"
 		missions	"oriental city subway gasstation tower village"
-		quota		4 // torment the player until he's done
+		quota		5 // torment the player until he's done
 		nextstage	ufos_are_coming
 	}
 	set stop
@@ -85,8 +85,8 @@ stage ufos_are_coming
 //		frame		"0 10 0"
 		frame		"0 23 0"
 		expire		"0 8 0"
-		missions	"construction farm2 office harbor" // pdi is broken
-		quota		3
+		missions	"construction farm2 office harbor pdi"
+		quota		4
 		commands	"addufo;"
 		nextstage	invasion
 	}
@@ -107,8 +107,8 @@ stage invasion
 //		frame		"0 10 0"
 		frame		"0 30 0"
 		expire		"0 7 0"
-		missions	"africa terrain baseattack lake"
-		quota		4
+		missions	"africa terrain baseattack lake falconcrash"
+		quota		5
 		nextstage	alienbase
 	}
 	set stop_invasion

@@ -2488,6 +2488,13 @@ void Grid_MoveStore(struct routing_s *map)
  */
 int Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored)
 {
+#ifdef PARANOID
+	if (to[2] >= HEIGHT) {
+		Com_DPrintf("Grid_MoveLength: WARNING to[2] = %i(>= HEIGHT)\n", to[2]);
+		return 0xFF;
+	}
+#endif
+
 	if (!stored)
 		return map->area[to[2]][to[1]][to[0]];
 	else
@@ -2614,6 +2621,10 @@ int Grid_Height(struct routing_s *map, pos3_t pos)
 int Grid_Fall(struct routing_s *map, pos3_t pos)
 {
 	int z = pos[2];
+
+	/* is z off-map? */
+	if (z >= HEIGHT)
+		return -1;
 
 	while (z >= 0 && map->fall[pos[1]][pos[0]] & (1 << z))
 		z--;
