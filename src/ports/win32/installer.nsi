@@ -421,6 +421,9 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\models\objects\furniture\trashcan"
   File "..\..\..\base\models\objects\furniture\trashcan\*.jpg"
   File "..\..\..\base\models\objects\furniture\trashcan\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\furniture\watertower"
+  File "..\..\..\base\models\objects\furniture\watertower\*.jpg"
+  File "..\..\..\base\models\objects\furniture\watertower\*.md2"
 
 ;======================================================================
 ; models/objects/vegi
