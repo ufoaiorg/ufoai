@@ -77,6 +77,7 @@ void LM_AddToScene(void)
 		VectorCopy(lm->angles, ent.angles);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
+		ent.as.frame = lm->frame;
 		if (lm->animname[0]) {
 			ent.as = lm->as;
 			/* do animation */
