@@ -263,7 +263,7 @@ menu map
 
 	func init
 	{
-		cmd "music PsymongN3;music_start;"
+		cmd "music PsymongN1;music_start;"
 	}
 }
 
