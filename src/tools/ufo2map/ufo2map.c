@@ -40,7 +40,10 @@ char name[1024];
  */
 void Check_BSP_Parameter ( int argc, char **argv )
 {
-	int i, nice = 0;
+	int i;
+#ifdef __linux__
+	int nice = 0;
+#endif
 	for (i=1 ; i<argc ; i++) {
 		if (!strcmp(argv[i],"-threads")) {
 			numthreads = atoi (argv[i+1]);
