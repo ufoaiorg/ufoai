@@ -1,5 +1,9 @@
+/**
+ * @file qal_null.c
+ */
+
 /*
-Copyright (C) 1997-2001 Id Software, Inc.
+Copyright (C) 1997-2001 UFO:AI team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -18,34 +22,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+/**
+ * @brief Binds our QAL function pointers to the appropriate AL stuff
+ * @sa QAL_Shutdown
+ */
+qboolean QAL_Init (void)
+{
+	Com_Printf("...OpenAL not supported\n");
+	return qfalse;
+}
 
-#ifndef __ALW_WIN_H__
-#define __ALW_WIN_H__
-
-
-#ifndef __linux__
-#error "You should not be including this file on this platform"
-#endif
-
-
-#include <AL/al.h>
-#include <AL/alc.h>
-#include <AL/altypes.h>
-#include <AL/eax.h>
-
-#define GPA(a)			dlsym(alwState.hInstOpenAL, a);
-
-typedef struct {
-	HINSTANCE	hInstOpenAL;
-
-	ALCdevice	*hDevice;
-	ALCcontext	*hALC;
-} oalState_t;
-
-extern oalState_t	alwState;
-
-qboolean	OAL_Init (void);
-void		OAL_Shutdown (void);
-
-
-#endif	// __ALW_WIN_H__
+/**
+ * @brief Unloads the specified DLL then nulls out all the proc pointers
+ * @sa QAL_Init
+ */
+void QAL_Shutdown (void)
+{
+}
