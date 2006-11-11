@@ -78,7 +78,7 @@ ALvoid			(ALAPIENTRY * qalGetSourcef)(ALuint source, ALenum param, ALfloat *valu
 ALvoid			(ALAPIENTRY * qalGetSourcefv)(ALuint source, ALenum param, ALfloat *values);
 ALvoid			(ALAPIENTRY * qalGetSourcei)(ALuint source, ALenum param, ALint *value);
 ALubyte *		(ALAPIENTRY * qalGetString)(ALenum param);
-ALvoid			(ALAPIENTRY * qalHint)(ALenum target, ALenum mode);
+/*ALvoid			(ALAPIENTRY * qalHint)(ALenum target, ALenum * mode);*/
 ALboolean		(ALAPIENTRY * qalIsBuffer)(ALuint buffer);
 ALboolean		(ALAPIENTRY * qalIsEnabled)(ALenum capability);
 ALboolean		(ALAPIENTRY * qalIsExtensionPresent)(ALubyte *extName);
@@ -172,7 +172,7 @@ void QAL_Unlink (void)
 	qalGetSourcefv				= NULL;
 	qalGetSourcei				= NULL;
 	qalGetString				= NULL;
-	qalHint						= NULL;
+	/*	qalHint						= NULL;*/
 	qalIsBuffer					= NULL;
 	qalIsEnabled				= NULL;
 	qalIsExtensionPresent		= NULL;
@@ -255,7 +255,7 @@ qboolean QAL_Link(void)
 	qalGetSourcefv				= GPAT("alGetSourcefv");
 	qalGetSourcei				= GPAT("alGetSourcei");
 	qalGetString				= GPAT("alGetString");
-	qalHint						= GPAT("alHint");
+	/*qalHint						= GPAT("alHint");*/
 	qalIsBuffer					= GPAT("alIsBuffer");
 	qalIsEnabled				= GPAT("alIsEnabled");
 	qalIsExtensionPresent		= GPAT("alIsExtensionPresent");
