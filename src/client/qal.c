@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client/client.h"
 #include "../client/snd_loc.h"
+#include <dlfcn.h>
 
 qboolean	openal_active;
 
@@ -101,6 +102,20 @@ ALvoid			(ALAPIENTRY * qalSourceStop)(ALuint source);
 ALvoid			(ALAPIENTRY * qalSourceStopv)(ALsizei n, ALuint *sources);
 ALvoid			(ALAPIENTRY * qalSourceUnqueueBuffers)(ALuint source, ALsizei n, ALuint *buffers);
 
+static qboolean alinit_fail = qfalse;
+
+static void *GPAT(char *str)
+{
+	void *rv;
+
+	rv = GPA(str);
+	if (!rv) {
+		Com_Printf( " Can't load symbol %s\n", str);
+		alinit_fail = qtrue;
+		return NULL;
+	}
+	return rv;
+}
 
 void QAL_Unlink (void)
 {
@@ -186,82 +201,90 @@ void QAL_Unlink (void)
  * @brief
  * @sa QAL_Init
  */
-void QAL_Link(void)
+qboolean QAL_Link(void)
 {
 	if (openal_active) {
 		Com_Printf("OpenAL already active\n");
-		return;
+		return qtrue;
 	}
-	qalcOpenDevice				= GPA("alcOpenDevice");
-	qalcCloseDevice				= GPA("alcCloseDevice");
-	qalcCreateContext			= GPA("alcCreateContext");
-	qalcDestroyContext			= GPA("alcDestroyContext");
-	qalcMakeContextCurrent		= GPA("alcMakeContextCurrent");
-	qalcProcessContext			= GPA("alcProcessContext");
-	qalcSuspendContext			= GPA("alcSuspendContext");
-	qalcGetCurrentContext		= GPA("alcGetCurrentContext");
-	qalcGetContextsDevice		= GPA("alcGetContextsDevice");
-	qalcGetString				= GPA("alcGetString");
-	qalcGetIntegerv				= GPA("alcGetIntegerv");
-	qalcGetError				= GPA("alcGetError");
-	qalcIsExtensionPresent		= GPA("alcIsExtensionPresent");
-	qalcGetProcAddress			= GPA("alcGetProcAddress");
-	qalcGetEnumValue			= GPA("alcGetEnumValue");
+	qalcOpenDevice				= GPAT("alcOpenDevice");
+	qalcCloseDevice				= GPAT("alcCloseDevice");
+	qalcCreateContext			= GPAT("alcCreateContext");
+	qalcDestroyContext			= GPAT("alcDestroyContext");
+	qalcMakeContextCurrent		= GPAT("alcMakeContextCurrent");
+	qalcProcessContext			= GPAT("alcProcessContext");
+	qalcSuspendContext			= GPAT("alcSuspendContext");
+	qalcGetCurrentContext		= GPAT("alcGetCurrentContext");
+	qalcGetContextsDevice		= GPAT("alcGetContextsDevice");
+	qalcGetString				= GPAT("alcGetString");
+	qalcGetIntegerv				= GPAT("alcGetIntegerv");
+	qalcGetError				= GPAT("alcGetError");
+	qalcIsExtensionPresent		= GPAT("alcIsExtensionPresent");
+	qalcGetProcAddress			= GPAT("alcGetProcAddress");
+	qalcGetEnumValue			= GPAT("alcGetEnumValue");
 
-	qalBufferData				= GPA("alBufferData");
-	qalDeleteBuffers			= GPA("alDeleteBuffers");
-	qalDeleteSources			= GPA("alDeleteSources");
-	qalDisable					= GPA("alDisable");
-	qalDistanceModel			= GPA("alDistanceModel");
-	qalDopplerFactor			= GPA("alDopplerFactor");
-	qalDopplerVelocity			= GPA("alDopplerVelocity");
-	qalEnable					= GPA("alEnable");
-	qalGenBuffers				= GPA("alGenBuffers");
-	qalGenSources				= GPA("alGenSources");
-	qalGetBoolean				= GPA("alGetBoolean");
-	qalGetBooleanv				= GPA("alGetBooleanv");
-	qalGetBufferf				= GPA("alGetBufferf");
-	qalGetBufferi				= GPA("alGetBufferi");
-	qalGetDouble				= GPA("alGetDouble");
-	qalGetDoublev				= GPA("alGetDoublev");
-	qalGetEnumValue				= GPA("alGetEnumValue");
-	qalGetError					= GPA("alGetError");
-	qalGetFloat					= GPA("alGetFloat");
-	qalGetFloatv				= GPA("alGetFloatv");
-	qalGetInteger				= GPA("alGetInteger");
-	qalGetIntegerv				= GPA("alGetIntegerv");
-	qalGetListener3f			= GPA("alGetListener3f");
-	qalGetListenerf				= GPA("alGetListenerf");
-	qalGetListenerfv			= GPA("alGetListenerfv");
-	qalGetListeneri				= GPA("alGetListeneri");
-	qalGetProcAddress			= GPA("alGetProcAddress");
-	qalGetSource3f				= GPA("alGetSource3f");
-	qalGetSourcef				= GPA("alGetSourcef");
-	qalGetSourcefv				= GPA("alGetSourcefv");
-	qalGetSourcei				= GPA("alGetSourcei");
-	qalGetString				= GPA("alGetString");
-	qalHint						= GPA("alHint");
-	qalIsBuffer					= GPA("alIsBuffer");
-	qalIsEnabled				= GPA("alIsEnabled");
-	qalIsExtensionPresent		= GPA("alIsExtensionPresent");
-	qalIsSource					= GPA("alIsSource");
-	qalListener3f				= GPA("alListener3f");
-	qalListenerf				= GPA("alListenerf");
-	qalListenerfv				= GPA("alListenerfv");
-	qalListeneri				= GPA("alListeneri");
-	qalSource3f					= GPA("alSource3f");
-	qalSourcef					= GPA("alSourcef");
-	qalSourcefv					= GPA("alSourcefv");
-	qalSourcei					= GPA("alSourcei");
-	qalSourcePause				= GPA("alSourcePause");
-	qalSourcePausev				= GPA("alSourcePausev");
-	qalSourcePlay				= GPA("alSourcePlay");
-	qalSourcePlayv				= GPA("alSourcePlayv");
-	qalSourceQueueBuffers		= GPA("alSourceQueueBuffers");
-	qalSourceRewind				= GPA("alSourceRewind");
-	qalSourceRewindv			= GPA("alSourceRewindv");
-	qalSourceStop				= GPA("alSourceStop");
-	qalSourceStopv				= GPA("alSourceStopv");
-	qalSourceUnqueueBuffers		= GPA("alSourceUnqueueBuffers");
+	qalBufferData				= GPAT("alBufferData");
+	qalDeleteBuffers			= GPAT("alDeleteBuffers");
+	qalDeleteSources			= GPAT("alDeleteSources");
+	qalDisable					= GPAT("alDisable");
+	qalDistanceModel			= GPAT("alDistanceModel");
+	qalDopplerFactor			= GPAT("alDopplerFactor");
+	qalDopplerVelocity			= GPAT("alDopplerVelocity");
+	qalEnable					= GPAT("alEnable");
+	qalGenBuffers				= GPAT("alGenBuffers");
+	qalGenSources				= GPAT("alGenSources");
+	qalGetBoolean				= GPAT("alGetBoolean");
+	qalGetBooleanv				= GPAT("alGetBooleanv");
+	qalGetBufferf				= GPAT("alGetBufferf");
+	qalGetBufferi				= GPAT("alGetBufferi");
+	qalGetDouble				= GPAT("alGetDouble");
+	qalGetDoublev				= GPAT("alGetDoublev");
+	qalGetEnumValue				= GPAT("alGetEnumValue");
+	qalGetError					= GPAT("alGetError");
+	qalGetFloat					= GPAT("alGetFloat");
+	qalGetFloatv				= GPAT("alGetFloatv");
+	qalGetInteger				= GPAT("alGetInteger");
+	qalGetIntegerv				= GPAT("alGetIntegerv");
+	qalGetListener3f			= GPAT("alGetListener3f");
+	qalGetListenerf				= GPAT("alGetListenerf");
+	qalGetListenerfv			= GPAT("alGetListenerfv");
+	qalGetListeneri				= GPAT("alGetListeneri");
+	qalGetProcAddress			= GPAT("alGetProcAddress");
+	qalGetSource3f				= GPAT("alGetSource3f");
+	qalGetSourcef				= GPAT("alGetSourcef");
+	qalGetSourcefv				= GPAT("alGetSourcefv");
+	qalGetSourcei				= GPAT("alGetSourcei");
+	qalGetString				= GPAT("alGetString");
+	qalHint						= GPAT("alHint");
+	qalIsBuffer					= GPAT("alIsBuffer");
+	qalIsEnabled				= GPAT("alIsEnabled");
+	qalIsExtensionPresent		= GPAT("alIsExtensionPresent");
+	qalIsSource					= GPAT("alIsSource");
+	qalListener3f				= GPAT("alListener3f");
+	qalListenerf				= GPAT("alListenerf");
+	qalListenerfv				= GPAT("alListenerfv");
+	qalListeneri				= GPAT("alListeneri");
+	qalSource3f					= GPAT("alSource3f");
+	qalSourcef					= GPAT("alSourcef");
+	qalSourcefv					= GPAT("alSourcefv");
+	qalSourcei					= GPAT("alSourcei");
+	qalSourcePause				= GPAT("alSourcePause");
+	qalSourcePausev				= GPAT("alSourcePausev");
+	qalSourcePlay				= GPAT("alSourcePlay");
+	qalSourcePlayv				= GPAT("alSourcePlayv");
+	qalSourceQueueBuffers		= GPAT("alSourceQueueBuffers");
+	qalSourceRewind				= GPAT("alSourceRewind");
+	qalSourceRewindv			= GPAT("alSourceRewindv");
+	qalSourceStop				= GPAT("alSourceStop");
+	qalSourceStopv				= GPAT("alSourceStopv");
+	qalSourceUnqueueBuffers		= GPAT("alSourceUnqueueBuffers");
+
+	if (alinit_fail) {
+		QAL_Shutdown();
+		Com_Printf( "QAL_Link: One or more symbols not found\n");
+		return qfalse;
+	}
+
+	return qtrue;
 }
 

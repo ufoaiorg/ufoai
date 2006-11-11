@@ -42,7 +42,9 @@ qboolean QAL_Init (void)
 		Com_Printf("failed\n");
 		return qfalse;
 	}
-	QAL_Link();
+
+	if (!QAL_Link())
+		return qfalse;
 
 	qalEAXGet					= NULL;
 	qalEAXSet					= NULL;

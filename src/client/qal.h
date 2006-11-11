@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 qboolean	QAL_Init (void);
 void		QAL_Shutdown (void);
-void		QAL_Link(void);
+qboolean	QAL_Link(void);
 void		QAL_Unlink(void);
 
 extern qboolean					openal_active;

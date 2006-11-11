@@ -34,7 +34,7 @@ oalState_t	oalState;
  */
 qboolean QAL_Init (void)
 {
-	Com_DPrintf("...calling LoadLibrary( "AL_DRIVER_OPENAL" ): ");
+	Com_DPrintf("QAL_Init: Loading \"%s\"...\n", AL_DRIVER_OPENAL);
 
 	if ((oalState.hInstOpenAL = dlopen(AL_DRIVER_OPENAL, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
 		char libPath[MAX_OSPATH];
@@ -55,8 +55,7 @@ qboolean QAL_Init (void)
 		}
 	}
 
-	QAL_Link();
-	return qtrue;
+	return QAL_Link();
 }
 
 /**
