@@ -47,6 +47,7 @@ static void SP_worldspawn(edict_t * ent);
 static void SP_ugv_start(edict_t * ent);
 static void SP_civilian_target(edict_t * ent);
 static void SP_misc_mission(edict_t * ent);
+static void SP_misc_mission_aliens(edict_t * ent);
 
 typedef struct {
 	char *name;
@@ -59,6 +60,7 @@ static spawn_t spawns[] = {
 	{"misc_model", SP_misc_dummy},
 	{"misc_particle", SP_misc_dummy},
 	{"misc_mission", SP_misc_mission},
+	{"misc_mission_aliens", SP_misc_mission_aliens},
 	{"info_player_start", SP_player_start},
 	{"info_human_start", SP_human_start},
 	{"info_alien_start", SP_alien_start},
@@ -393,7 +395,7 @@ static void G_UGVSpawn(edict_t * ent)
 	ent->solid = SOLID_BBOX;
 }
 
-/** 
+/**
  * @brief QUAKED info_player_start (1 0 0) (-16 -16 -24) (16 16 32)
  * Starting point for a player.
  * "team"	the number of the team for this player starting point
@@ -478,7 +480,7 @@ static void SP_ugv_start(edict_t * ent)
 	G_UGVSpawn(ent);
 }
 
-/** 
+/**
  * @brief QUAKED info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
  * Starting point for a single player alien.
  */
@@ -532,12 +534,27 @@ static void SP_civilian_target(edict_t * ent)
 }
 
 /**
- * @brief
+ * @brief Init the human/phalanx mission entity
  */
 static void SP_misc_mission(edict_t * ent)
 {
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
+	ent->team = TEAM_PHALANX;
+
+	/* fall to ground */
+	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
+	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
+}
+
+/**
+ * @brief Init the alien mission entity
+ */
+static void SP_misc_mission_aliens(edict_t * ent)
+{
+	ent->classname = "mission";
+	ent->type = ET_MISSION;
+	ent->team = TEAM_ALIEN;
 
 	/* fall to ground */
 	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
