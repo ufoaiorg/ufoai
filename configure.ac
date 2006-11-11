@@ -479,6 +479,22 @@ then
 fi
 
 #---------------------------------------------------------------------------------------------
+# Check PNG
+#---------------------------------------------------------------------------------------------
+
+AC_CHECK_HEADERS([png.h])
+if test "$ac_cv_header_png_h" = "no"
+then
+	AC_MSG_ERROR([You must have the PNG development headers])
+fi
+
+AC_SEARCH_LIBS([png_create_info_struct],[png])
+if test "$ac_cv_search_png_create_info_struct" = "no"
+then
+	AC_MSG_ERROR([You must have the JPEG development libraries])
+fi
+
+#---------------------------------------------------------------------------------------------
 # Check GLX
 #---------------------------------------------------------------------------------------------
 
