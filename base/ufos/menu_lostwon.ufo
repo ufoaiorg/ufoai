@@ -123,7 +123,7 @@ menu won
 
 	func close
 	{
-		cmd "game_results 1;"
+		cmd "game_results 1; music PsymongN1; music_start;"
 	}
 }
 

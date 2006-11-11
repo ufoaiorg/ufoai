@@ -1,7 +1,7 @@
 Tracks contributed under GPL
 =============================
 * The Psymong series: Psymong*.ogg (Simon Green, http://www.8hz.co.uk/)
-* ufo1.ogg, ufo2.ogg (author: Paul B, http://www.myspace.com/s2zpaulb)
+* ufo1.ogg, ufo2.ogg (Paul Bee, http://www.myspace.com/s2zpaulb)
 
 Tracks under Creative Commons
 =============================
@@ -9,15 +9,26 @@ Tracks under Creative Commons
 
 Tracks that are public domain
 =============================
-* greecei.ogg (taken from worldforge/golgotha)
+* greecei.ogg (taken from worldforge/Golgotha)
 * alBasrahM.ogg, turinItalyM.ogg (from Golgotha, modified)
 
 -----------------------------------------------------------------------
 
-Additional tracks composed by Vanethain for UFO:AI are available at:
+Additional tracks composed by Manuel Marino (Vanethian) for UFO:AI :
+
+credits.ogg
+geoscape.ogg
+mission.ogg
+mission2.ogg
+mission3.ogg
+mission4.ogg
+theme.ogg
+
+If these tracks are missing from your install, you can download them
+from the downloads section of:
 http://sourceforge.net/projects/ufoai
 
-Vanethian's tracks are licensed as follows:
+Note: Manuel Marino's tracks are licensed as follows:
 Music Licence Agreement
 =======================
 Music has been composed and produced by Vanethian (www.manuelmarino.com). 

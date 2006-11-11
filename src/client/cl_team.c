@@ -1613,10 +1613,10 @@ void CL_ParseResults(sizebuf_t * buf)
 
 		if (curCampaign) {
 			Q_strcat(resultText, va(_("Aliens captured\t%i\n\n"), thier_stunned), sizeof(resultText));
-			Q_strcat(resultText, va(_("Alien surviviurs\t%i\n\n"), thier_surviviurs), sizeof(resultText));
+			Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), thier_surviviurs), sizeof(resultText));
 		} else {
 			Q_strcat(resultText, va(_("Enemies captured\t%i\n\n"), thier_stunned), sizeof(resultText));
-			Q_strcat(resultText, va(_("Enemy surviviurs\t%i\n\n"), thier_surviviurs), sizeof(resultText));
+			Q_strcat(resultText, va(_("Enemy survivors\t%i\n\n"), thier_surviviurs), sizeof(resultText));
 		}
 
 		/* team stats */
