@@ -375,7 +375,7 @@ mission falconcrash
 	alienequip	stage4_soldiers
 	civilians	3
 	civteam		european
-	nation		"states"
+	nation		"latin"
 	onlose		""
 	onwin		""
 	storyrelated	true
