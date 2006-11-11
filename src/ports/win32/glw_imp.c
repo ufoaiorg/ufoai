@@ -189,8 +189,8 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 	GetWindowRect(desktop, &desktopRect);
 
 	ri.Con_Printf( PRINT_ALL, "Desktop resolution: %i:%i\n",
-		desktopRect.right - desktopRect.left,
-		desktopRect.bottom - desktopRect.top);
+		(int)(desktopRect.right - desktopRect.left),
+		(int)(desktopRect.bottom - desktopRect.top));
 
 	/* let the sound and input subsystems know about the new window */
 	ri.Vid_NewWindow (width, height);

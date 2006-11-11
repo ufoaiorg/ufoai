@@ -35,6 +35,218 @@ qboolean in_appactive;
 
 /*
 ============================================================
+KEYBOARD CONTROL
+============================================================
+*/
+
+#ifdef NEWKBCODE
+HKL		kbLayout;
+#endif /* NEWKBCODE */
+
+/**
+ * @brief Map from windows to ufo keynums
+ */
+int IN_MapKey (int wParam, int lParam)
+{
+	static const byte scanToKey[128] = {
+		0,			K_ESCAPE,	'1',		'2',		'3',		'4',		'5',		'6',
+		'7',		'8',		'9',		'0',		'-',		'=',		K_BACKSPACE,9,		// 0
+		'q',		'w',		'e',		'r',		't',		'y',		'u',		'i',
+		'o',		'p',		'[',		']',		K_ENTER,	K_CTRL,		'a',		's',	// 1
+		'd',		'f',		'g',		'h',		'j',		'k',		'l',		';',
+		'\'',		'`',		K_SHIFT,	'\\',		'z',		'x',		'c',		'v',	// 2
+		'b',		'n',		'm',		',',		'.',		'/',		K_SHIFT,	'*',
+		K_ALT,		' ',		K_CAPSLOCK,	K_F1,		K_F2,		K_F3,		K_F4,		K_F5,	// 3
+		K_F6,		K_F7,		K_F8,		K_F9,		K_F10,		K_PAUSE,	0,			K_HOME,
+		K_UPARROW,	K_PGUP,		K_KP_MINUS,	K_LEFTARROW,K_KP_5,		K_RIGHTARROW,K_KP_PLUS,	K_END,	// 4
+		K_DOWNARROW,K_PGDN,		K_INS,		K_DEL,		0,			0,			0,			K_F11,
+		K_F12,		0,			0,			0,			0,			0,			0,			0,		// 5
+		0,			0,			0,			0,			0,			0,			0,			0,
+		0,			0,			0,			0,			0,			0,			0,			0,		// 6
+		0,			0,			0,			0,			0,			0,			0,			0,
+		0,			0,			0,			0,			0,			0,			0,			0		// 7
+	};
+	int		modified;
+#ifdef NEWKBCODE
+	int		scanCode;
+	byte	kbState[256];
+	byte	result[4];
+
+	/* new stuff */
+	switch (wParam) {
+	case VK_TAB:
+		return K_TAB;
+	case VK_RETURN:
+		return K_ENTER;
+	case VK_ESCAPE:
+		return K_ESCAPE;
+	case VK_SPACE:
+		return K_SPACE;
+
+	case VK_BACK:
+		return K_BACKSPACE;
+	case VK_UP:
+		return K_UPARROW;
+	case VK_DOWN:
+		return K_DOWNARROW;
+	case VK_LEFT:
+		return K_LEFTARROW;
+	case VK_RIGHT:
+		return K_RIGHTARROW;
+
+/*	case VK_LMENU:
+	case VK_RMENU:*/
+	case VK_MENU:
+		return K_ALT;
+
+/*	case VK_LCONTROL:
+	case VK_RCONTROL:*/
+	case VK_CONTROL:
+		return K_CTRL;
+
+	case VK_SHIFT:
+		return K_SHIFT;
+	case VK_LSHIFT:
+		return K_LSHIFT;
+	case VK_RSHIFT:
+		return K_RSHIFT;
+
+	case VK_CAPITAL:
+		return K_CAPSLOCK;
+
+	case VK_F1:
+		return K_F1;
+	case VK_F2:
+		return K_F2;
+	case VK_F3:
+		return K_F3;
+	case VK_F4:
+		return K_F4;
+	case VK_F5:
+		return K_F5;
+	case VK_F6:
+		return K_F6;
+	case VK_F7:
+		return K_F7;
+	case VK_F8:
+		return K_F8;
+	case VK_F9:
+		return K_F9;
+	case VK_F10:
+		return K_F10;
+	case VK_F11:
+		return K_F11;
+	case VK_F12:
+		return K_F12;
+
+	case VK_INSERT:
+		return K_INS;
+	case VK_DELETE:
+		return K_DEL;
+	case VK_NEXT:
+		return K_PGDN;
+	case VK_PRIOR:
+		return K_PGUP;
+	case VK_HOME:
+		return K_HOME;
+	case VK_END:
+		return K_END;
+
+	case VK_NUMPAD7:
+		return K_KP_HOME;
+	case VK_NUMPAD8:
+		return K_KP_UPARROW;
+	case VK_NUMPAD9:
+		return K_KP_PGUP;
+	case VK_NUMPAD4:
+		return K_KP_LEFTARROW;
+	case VK_NUMPAD5:
+		return K_KP_FIVE;
+	case VK_NUMPAD6:
+		return K_KP_RIGHTARROW;
+	case VK_NUMPAD1:
+		return K_KP_END;
+	case VK_NUMPAD2:
+		return K_KP_DOWNARROW;
+	case VK_NUMPAD3:
+		return K_KP_PGDN;
+	case VK_NUMPAD0:
+		return K_KP_INS;
+	case VK_DECIMAL:
+		return K_KP_DEL;
+	case VK_DIVIDE:
+		return K_KP_SLASH;
+	case VK_SUBTRACT:
+		return K_KP_MINUS;
+	case VK_ADD:
+		return K_KP_PLUS;
+
+	case VK_PAUSE:
+		return K_PAUSE;
+
+	default:
+		break;
+	}
+#endif /* NEWKBCODE */
+
+	/* old stuff */
+	modified = (lParam >> 16) & 255;
+	if (modified < 128) {
+		modified = scanToKey[modified];
+		if (lParam & (1 << 24)) {
+			switch (modified) {
+			case 0x0D:
+				return K_KP_ENTER;
+			case 0x2F:
+				return K_KP_SLASH;
+			case 0xAF:
+				return K_KP_PLUS;
+			}
+		} else {
+			switch (modified) {
+			case K_HOME:
+				return K_KP_HOME;
+			case K_UPARROW:
+				return K_KP_UPARROW;
+			case K_PGUP:
+				return K_KP_PGUP;
+			case K_LEFTARROW:
+				return K_KP_LEFTARROW;
+			case K_RIGHTARROW:
+				return K_KP_RIGHTARROW;
+			case K_END:
+				return K_KP_END;
+			case K_DOWNARROW:
+				return K_KP_DOWNARROW;
+			case K_PGDN:
+				return K_KP_PGDN;
+			case K_INS:
+				return K_KP_INS;
+			case K_DEL:
+				return K_KP_DEL;
+			}
+		}
+	}
+
+#ifdef NEWKBCODE
+	/* get the VK_ keyboard state */
+	if (!GetKeyboardState (kbState))
+		return modified;
+
+	/* convert ascii */
+	scanCode = (lParam >> 16) & 255;
+	if (ToAsciiEx (wParam, scanCode, kbState, (uint16 *)result, 0, kbLayout) < 1)
+		return modified;
+
+	return result[0];
+#else
+	return modified;
+#endif /* NEWKBCODE */
+}
+
+
+/*
+============================================================
 MOUSE CONTROL
 ============================================================
 */
@@ -211,6 +423,9 @@ void IN_Init (void)
 	v_centerspeed = Cvar_Get ("v_centerspeed", "500", 0, NULL);
 
 	IN_StartupMouse ();
+#ifdef NEWKBCODE
+	kbLayout = GetKeyboardLayout(0);
+#endif /* NEWKBCODE */
 }
 
 /**
