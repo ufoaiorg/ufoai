@@ -62,7 +62,7 @@ endif
 
 ifeq ($(TARGET_OS),linux-gnu)
 	CLIENT_SRCS+= \
-		ports/linux/oal_linux.c \
+		ports/linux/qal_linux.c \
 		ports/linux/q_shlinux.c \
 		ports/linux/vid_so.c \
 		ports/linux/sys_linux.c \
@@ -74,7 +74,7 @@ endif
 
 ifeq ($(TARGET_OS),freebsd)
 	CLIENT_SRCS+= \
-		ports/null/oal_null.c \
+		ports/null/qal_null.c \
 		ports/linux/q_shlinux.c \
 		ports/linux/vid_so.c \
 		ports/linux/sys_linux.c \
@@ -86,7 +86,7 @@ endif
 
 ifeq ($(TARGET_OS),mingw32)
 	CLIENT_SRCS+=\
-		ports/win32/oal_win.c \
+		ports/win32/qal_win.c \
 		ports/win32/ufo.rc \
 		ports/win32/q_shwin.c \
 		ports/win32/vid_dll.c \
@@ -100,7 +100,7 @@ endif
 
 ifeq ($(TARGET_OS),darwin)
 	CLIENT_SRCS+= \
-		ports/null/oal_null.c \
+		ports/null/qal_null.c \
 		ports/macosx/sys_osx.m \
 		ports/macosx/vid_osx.m \
 		ports/macosx/in_osx.m \
