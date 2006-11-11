@@ -88,6 +88,8 @@ cvar_t *r_ext_max_anisotropy;
 cvar_t *r_texture_lod;			/* lod_bias */
 
 cvar_t *gl_allow_software;
+cvar_t *gl_screenshot;
+cvar_t *gl_screenshot_jpeg_quality;
 
 cvar_t *gl_vertex_arrays;
 
@@ -1096,6 +1098,9 @@ static void R_Register(void)
 	r_texture_lod = ri.Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
 
 	gl_allow_software = ri.Cvar_Get("gl_allow_software", "0", 0, NULL);
+
+	gl_screenshot = ri.Cvar_Get("gl_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
+	gl_screenshot_jpeg_quality = ri.Cvar_Get("gl_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 
 	gl_particle_min_size = ri.Cvar_Get("gl_particle_min_size", "2", CVAR_ARCHIVE, NULL);
 	gl_particle_max_size = ri.Cvar_Get("gl_particle_max_size", "40", CVAR_ARCHIVE, NULL);

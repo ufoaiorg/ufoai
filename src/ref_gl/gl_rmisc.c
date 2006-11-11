@@ -93,59 +93,108 @@ typedef struct _TargaHeader {
 	unsigned char pixel_size, attributes;
 } TargaHeader;
 
+enum {
+	SSHOTTYPE_JPG,
+	SSHOTTYPE_PNG,
+	SSHOTTYPE_TGA,
+};
 
 /**
  * @brief
  */
 void GL_ScreenShot_f(void)
 {
-	byte *buffer;
-	int i, c, temp;
-	FILE *f;
-	char checkname[MAX_OSPATH];
+	char	checkName[MAX_OSPATH];
+	int		type, shotNum, quality;
+	char	*ext;
+	byte	*buffer;
+	FILE	*f;
 
-	for (i = 0; i <= 99; i++) {
-		Com_sprintf(checkname, MAX_QPATH, "%s/scrnshot/ufo%i%i.tga", ri.FS_Gamedir(), i / 10, i % 10);
-		f = fopen(checkname, "rb");
-		/* file doesn't exist */
+	/* Find out what format to save in */
+	if (ri.Cmd_Argc () > 1)
+		ext = ri.Cmd_Argv (1);
+	else
+		ext = gl_screenshot->string;
+
+	if (!Q_stricmp (ext, "png"))
+		type = SSHOTTYPE_PNG;
+	else if (!Q_stricmp (ext, "jpg"))
+		type = SSHOTTYPE_JPG;
+	else
+		type = SSHOTTYPE_TGA;
+
+	/* Set necessary values */
+	switch (type) {
+	case SSHOTTYPE_TGA:
+		ri.Con_Printf (PRINT_ALL, "Taking TGA screenshot...\n");
+		quality = 100;
+		ext = "tga";
+		break;
+
+	case SSHOTTYPE_PNG:
+		ri.Con_Printf (PRINT_ALL, "Taking PNG screenshot...\n");
+		quality = 100;
+		ext = "png";
+		break;
+
+	case SSHOTTYPE_JPG:
+		if (ri.Cmd_Argc () == 3)
+			quality = atoi (ri.Cmd_Argv (2));
+		else
+			quality = (int)gl_screenshot_jpeg_quality->value;
+		if (quality > 100 || quality <= 0)
+			quality = 100;
+
+		ri.Con_Printf (PRINT_ALL, "Taking JPG screenshot (at %i%% quality)...\n", quality);
+		ext = "jpg";
+		break;
+	}
+
+	/* Find a file name to save it to */
+	for (shotNum = 0 ; shotNum < 1000 ; shotNum++) {
+		Com_sprintf(checkName, MAX_OSPATH, "%s/scrnshot/ufo%i%i.%s", ri.FS_Gamedir(), shotNum / 10, shotNum % 10, ext);
+		f = fopen (checkName, "rb");
 		if (!f)
 			break;
-		fclose(f);
+		fclose (f);
 	}
-	if (i == 100) {
-		ri.Con_Printf(PRINT_ALL, "GL_ScreenShot_f: Couldn't create a file\n");
+
+	/* Open it */
+	f = fopen (checkName, "wb");
+	if (shotNum == 1000 || !f) {
+		ri.Con_Printf (PRINT_ALL, "GL_ScreenShot_f: Couldn't create a file\n");
+		fclose (f);
 		return;
 	}
 
-	c = vid.width * vid.height * 3 + 18;
-	buffer = malloc(c);
-	if (!buffer) {
-		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of %i bytes", c);
-		return;					/* never reached. need for code analyst. */
+	/* Allocate room for a copy of the framebuffer */
+	buffer = malloc (vid.width * vid.height * 3);
+
+	/* Read the framebuffer into our storage */
+	qglReadPixels (0, 0, vid.width, vid.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+
+	/* Write */
+	switch (type) {
+	case SSHOTTYPE_TGA:
+		WriteTGA (f, buffer, vid.width, vid.height);
+		break;
+
+	case SSHOTTYPE_PNG:
+		WritePNG (f, buffer, vid.width, vid.height);
+		break;
+
+	case SSHOTTYPE_JPG:
+		WriteJPG (f, buffer, vid.width, vid.height, quality);
+		break;
 	}
 
-	memset(buffer, 0, 18);
-	/* uncompressed type */
-	buffer[2] = 2;
-	buffer[12] = vid.width & 255;
-	buffer[13] = vid.width >> 8;
-	buffer[14] = vid.height & 255;
-	buffer[15] = vid.height >> 8;
-	/* pixel size */
-	buffer[16] = 24;
+	/* Finish */
+	fclose (f);
+	free (buffer);
 
-	qglReadPixels(0, 0, vid.width, vid.height, GL_RGB, GL_UNSIGNED_BYTE, buffer + 18);
-
-	/* swap rgb to bgr */
-	for (i = 18; i < c; i += 3) {
-		temp = buffer[i];
-		buffer[i] = buffer[i + 2];
-		buffer[i + 2] = temp;
-	}
-	if (!ri.FS_WriteFile(buffer, c, checkname))
-		ri.Con_Printf(PRINT_ALL, "Could not write screenshot file to %s\n", checkname);
-	free(buffer);
+	ri.Con_Printf (PRINT_ALL, "Wrote %s\n", checkName);
 }
+
 
 /**
  * @brief

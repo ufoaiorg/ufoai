@@ -23,10 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client/ref.h"
 
-#ifdef _WIN32
-#  include <windows.h>
-#endif
-
 #if !defined __linux__ && !defined __FreeBSD__ && !defined _MSC_VER
 #ifndef GL_COLOR_INDEX8_EXT
 #define GL_COLOR_INDEX8_EXT GL_COLOR_INDEX
@@ -35,8 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #if !defined _MSC_VER && !defined __MINGW32__
 #include <jpeglib.h>
+#include <png.h>
 #else
 #include "../ports/win32/jpeglib.h"
+#include "../ports/win32/png.h"
 #endif
 
 /* this was taken from jmorecfg.h */
@@ -146,9 +144,14 @@ const void *RB_TakeVideoFrameCmd(const void *data);
 
 /*=================================================================== */
 
+void WritePNG (FILE *f, byte *buffer, int width, int height);
+void WriteJPG (FILE *f, byte *buffer, int width, int height, int quality);
+void WriteTGA (FILE *f, byte *buffer, int width, int height);
+
+/*=================================================================== */
+
 typedef enum {
 	rserr_ok,
-
 
 	rserr_invalid_fullscreen,
 	rserr_invalid_mode,
@@ -228,6 +231,9 @@ extern cvar_t *r_texture_lod;	/* lod_bias */
 extern cvar_t *r_displayrefresh;
 
 extern cvar_t *gl_vertex_arrays;
+
+extern cvar_t *gl_screenshot;
+extern cvar_t *gl_screenshot_jpeg_quality;
 
 extern cvar_t *gl_ext_swapinterval;
 extern cvar_t *gl_ext_multitexture;
@@ -385,8 +391,6 @@ void Anim_Run(animState_t * as, model_t * mod, int msec);
 char *Anim_GetName(animState_t * as, model_t * mod);
 
 struct image_s *R_RegisterSkin(const char *name);
-
-void WriteTGA(const char *filename, byte * data, int width, int height);
 
 image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
 image_t *GL_FindImage(const char *pname, imagetype_t type);
