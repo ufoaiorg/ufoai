@@ -105,6 +105,16 @@ Defines a mission target (TODO: Implement me)
 "model"	display a model
 "particle"	display a particle
 "time"	if set the entity has to be occupied x rounds to win the mission
+"radius"	if the entity has to be occupied this defines the radius that is needed
+"health"	if set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)
+*/
+
+/*QUAKED misc_mission_alien (0.1 0.6 0.3) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
+Defines the alien mission target (TODO: Implement me)
+"model"	display a model
+"particle"	display a particle
+"time"	if set the entity has to be occupied x rounds to win the mission
+"radius"	if the entity has to be occupied this defines the radius that is needed
 "health"	if set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)
 */
 
