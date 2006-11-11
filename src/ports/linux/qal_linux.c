@@ -1,5 +1,5 @@
 /**
- * @file qal_win.c
+ * @file qal_linux.c
  */
 
 /*
@@ -22,19 +22,38 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../client/qal.h"
+#include "qal_linux.h"
+#include <dlfcn.h>
+
 /**
  * @brief Binds our QAL function pointers to the appropriate AL stuff
  * @sa QAL_Shutdown
  */
 qboolean QAL_Init (void)
 {
-	Com_DPrintf("...calling LoadLibrary( '%s' ): ", path);
+	Com_DPrintf("...calling LoadLibrary( "AL_DRIVER_OPENAL" ): ");
 
-	if ((alwState.hInstOpenAL = LoadLibrary(AL_DRIVER_OPENAL)) == NULL) {
-		Com_Printf("failed\n");
-		return qfalse;
+	if ((oalState.hInstOpenAL = dlopen(AL_DRIVER_OPENAL, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
+		char libPath[MAX_OSPATH];
+		cvar_t* s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
+
+		/* try path given via cvar */
+		if (strlen(s_libdir->string))
+			Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
+		else
+			strcpy(libPath, ".");
+
+		Q_strcat(libPath, "/", sizeof(libPath));
+		Q_strcat(libPath, AL_DRIVER_OPENAL, sizeof(libPath));
+
+		if ((oalState.hInstOpenAL = dlopen(libPath, RTLD_LAZY)) == 0) {
+			Com_Printf("%s\n", dlerror());
+			return qfalse;
+		}
 	}
-	OAL_Link();
+
+	QAL_Link();
 	return qtrue;
 }
 
@@ -45,10 +64,10 @@ qboolean QAL_Init (void)
 void QAL_Shutdown (void)
 {
 	if (oalState.hInstOpenAL)
-		FreeLibrary(oalState.hInstOpenAL);
+		dlclose(oalState.hInstOpenAL);
 
 	oalState.hInstOpenAL = NULL;
 
 	/* general pointers */
-	OAL_UnLink();
+	QAL_Unlink();
 }

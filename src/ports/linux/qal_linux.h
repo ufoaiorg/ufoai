@@ -1,3 +1,7 @@
+/**
+ * @file qal_linux.h
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -19,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#ifndef __ALW_WIN_H__
-#define __ALW_WIN_H__
+#ifndef __QAL_LINUX_H__
+#define __QAL_LINUX_H__
 
 
 #ifndef __linux__
@@ -30,22 +34,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <AL/al.h>
 #include <AL/alc.h>
-#include <AL/altypes.h>
-#include <AL/eax.h>
 
-#define GPA(a)			dlsym(alwState.hInstOpenAL, a);
+#define GPA(a)			dlsym(oalState.hInstOpenAL, a);
 
 typedef struct {
-	HINSTANCE	hInstOpenAL;
+	void*	hInstOpenAL;
 
 	ALCdevice	*hDevice;
 	ALCcontext	*hALC;
 } oalState_t;
 
-extern oalState_t	alwState;
+extern oalState_t	oalState;
 
-qboolean	OAL_Init (void);
-void		OAL_Shutdown (void);
-
-
-#endif	// __ALW_WIN_H__
+#endif	/* __QAL_LINUX_H__ */

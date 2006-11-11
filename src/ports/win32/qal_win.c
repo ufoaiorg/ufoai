@@ -22,6 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include <windows.h>
+#include <float.h>
+#include "../../client/qal.h"
+#include "qal_win.h"
+
 /**
  * @brief Binds our QAL function pointers to the appropriate AL stuff
  * @sa QAL_Shutdown
@@ -34,7 +39,7 @@ qboolean QAL_Init (void)
 		Com_Printf("failed\n");
 		return qfalse;
 	}
-	OAL_Link();
+	QAL_Link();
 	return qtrue;
 }
 
@@ -50,5 +55,5 @@ void QAL_Shutdown (void)
 	oalState.hInstOpenAL = NULL;
 
 	/* general pointers */
-	OAL_UnLink();
+	QAL_Unlink();
 }

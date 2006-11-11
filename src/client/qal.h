@@ -22,19 +22,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __QAL_H__
 #define __QAL_H__
 
-#ifdef _WIN32
-#include "../win32/winquake.h"
-#endif
-
+#include "client.h"
 
 #ifdef _WIN32
-#include "../ports/win32/qal_win.h"
+	#include "../win32/winquake.h"
+	#include "../ports/win32/qal_win.h"
 #endif
+
 #ifdef __linux__
-#include "../ports/linux/qal_linux.h"
+	#include "../ports/linux/qal_linux.h"
 #endif
 
-qboolean	QAL_Init (const char *driver);
+#ifndef ALCAPI
+#  define ALCAPI
+#endif
+
+qboolean	QAL_Init (void);
 void		QAL_Shutdown (void);
 void		QAL_Link(void);
 void		QAL_Unlink(void);
@@ -216,25 +219,18 @@ typedef struct
 extern alConfig_t		alConfig;
 
 #ifdef _WIN32
-
-#define AL_DRIVER_OPENAL	"OpenAL32.dll"
-#define ALimp_Init			ALW_Init
-#define ALimp_Shutdown		ALW_Shutdown
-
+	#define AL_DRIVER_OPENAL	"OpenAL32.dll"
+	#define ALimp_Init			ALW_Init
+	#define ALimp_Shutdown		ALW_Shutdown
 #else
-#ifdef __linux__
-
-#define AL_DRIVER_OPENAL	"libopenal.so"
-#define ALimp_Init			AL_Init
-#define ALimp_Shutdown		AL_Shutdown
-
-#else
-
-#error "ALimp_* not available for this platform"
-
-#endif
-#endif
+	#ifdef __linux__
+		#define AL_DRIVER_OPENAL	"libopenal.so"
+		#define ALimp_Init			AL_Init
+		#define ALimp_Shutdown		AL_Shutdown
+	#else
+		#error "ALimp_* not available for this platform"
+	#endif
+#endif /* _WIN32 */
 
 
-
-#endif	// __QAL_H__
+#endif	/* __QAL_H__ */

@@ -1,3 +1,7 @@
+/**
+ * @file qal_win.h
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -19,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#ifndef __ALW_WIN_H__
-#define __ALW_WIN_H__
+#ifndef __QAL_WIN_H__
+#define __QAL_WIN_H__
 
 
 #ifndef _WIN32
@@ -33,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <AL/altypes.h>
 #include <AL/eax.h>
 
-#define GPA(a)			GetProcAddress(alwState.hInstOpenAL, a);
+#define GPA(a)			GetProcAddress(oalState.hInstOpenAL, a);
 
 typedef struct {
 	HINSTANCE	hInstOpenAL;
@@ -42,10 +46,6 @@ typedef struct {
 	ALCcontext	*hALC;
 } oalState_t;
 
-extern oalState_t	alwState;
+extern oalState_t	oalState;
 
-qboolean	OAL_Init (void);
-void		OAL_Shutdown (void);
-
-
-#endif	// __ALW_WIN_H__
+#endif	/* __QAL_WIN_H__ */
