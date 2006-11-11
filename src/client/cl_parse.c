@@ -766,9 +766,10 @@ void CL_PlaceItem( le_t *le )
 			 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
 			 && VectorCompare(actor->pos, le->pos) ) {
 #if PARANOID
-		Com_Printf("CL_PlaceItem: shared container: '%p'\n", FLOOR(le));
+			Com_Printf("CL_PlaceItem: shared container: '%p'\n", FLOOR(le));
 #endif
-		FLOOR(actor) = FLOOR(le);
+			if (FLOOR(le))
+				FLOOR(actor) = FLOOR(le);
 		}
 	
 	if (FLOOR(le)) {

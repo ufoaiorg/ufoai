@@ -364,12 +364,12 @@ mission japan
 
 mission falconcrash
 {
-	location	"_Revelstoke" // TODO: change location?
+	location	"_Atacama Desert"
 	type		"_Crashed Alien Ship"
 	text		"_Secure Alien Ship"
 	map			falcon_crash04
-	music		mission
-	pos			"116 52"
+	music		PsymongO4
+	pos			"70 -27"
 	aliens		7
 	alienteam	alien
 	alienequip	stage4_soldiers
