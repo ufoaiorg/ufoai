@@ -27,6 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/qal.h"
 #include "qal_win.h"
 
+ALEAXSET					qalEAXSet;
+ALEAXGET					qalEAXGet;
+
 /**
  * @brief Binds our QAL function pointers to the appropriate AL stuff
  * @sa QAL_Shutdown
@@ -40,6 +43,9 @@ qboolean QAL_Init (void)
 		return qfalse;
 	}
 	QAL_Link();
+
+	qalEAXGet					= NULL;
+	qalEAXSet					= NULL;
 	return qtrue;
 }
 
@@ -56,4 +62,7 @@ void QAL_Shutdown (void)
 
 	/* general pointers */
 	QAL_Unlink();
+
+	qalEAXSet					= NULL;
+	qalEAXGet					= NULL;
 }

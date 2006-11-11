@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qal_linux.h"
 #include <dlfcn.h>
 
+oalState_t	oalState;
+
 /**
  * @brief Binds our QAL function pointers to the appropriate AL stuff
  * @sa QAL_Shutdown

@@ -31,6 +31,7 @@ CLIENT_SRCS = \
 	client/snd_ref.c \
 	client/snd_mem.c \
 	client/snd_mix.c \
+	client/qal.c \
 	\
 	qcommon/cmd.c \
 	qcommon/ioapi.c \

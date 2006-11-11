@@ -106,6 +106,7 @@ cvar_t *snd_music_volume;
 cvar_t *snd_music_loop;
 
 cvar_t *snd_ref;
+cvar_t *snd_openal;
 
 /**< fading speed for music - see OGG_Read */
 static cvar_t* snd_fadingspeed;
@@ -316,6 +317,7 @@ void S_Init(void)
 #ifndef _WIN32
 			char libName[MAX_QPATH];
 #endif
+			snd_openal = Cvar_Get("snd_openal", "1", CVAR_ARCHIVE, "use OpenAL");
 			snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
 			/* don't restart right again */
 			snd_ref->modified = qfalse;
@@ -422,6 +424,10 @@ void S_Init(void)
 		paintedtime = 0;
 
 		Com_Printf("sound sampling rate: %i\n", dma.speed);
+
+		/* FIXME: Error checking */
+		if (snd_openal->value)
+			QAL_Init();
 
 		S_StopAllSounds();
 
