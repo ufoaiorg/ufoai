@@ -26,6 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qrad.h"
 #include "qbsp.h"
 
+#ifdef __linux__
+#include <sys/time.h>
+#include <sys/resource.h>
+#endif
+
 char source[1024];
 char name[1024];
 
@@ -36,6 +41,9 @@ char name[1024];
 void Check_BSP_Parameter ( int argc, char **argv )
 {
 	int i;
+#ifdef __linux__
+	int nice = 0;
+#endif
 	for (i=1 ; i<argc ; i++) {
 		if (!strcmp(argv[i],"-threads")) {
 			numthreads = atoi (argv[i+1]);
@@ -63,6 +71,16 @@ void Check_BSP_Parameter ( int argc, char **argv )
 		} else if (!strcmp(argv[i], "-nowater")) {
 			printf ("nowater = true\n");
 			nowater = qtrue;
+		} else if (!strcmp(argv[i], "-nice")) {
+#ifdef __linux__
+			nice = atoi(argv[i+1]);
+			printf ("nice = %i\n", nice);
+			if (setpriority(PRIO_PROCESS, 0, nice))
+				printf("failed to set nice level of %i\n", nice);
+#else
+			printf ("nice not implemented for this arch\n");
+#endif
+			i++;
 		} else if (!strcmp(argv[i], "-noopt")) {
 			printf ("noopt = true\n");
 			noopt = qtrue;
@@ -187,7 +205,7 @@ int main (int argc, char **argv)
 	Check_RAD_Parameter( argc, argv );
 
 	if (argc < 2)
-		Error ("usage: ufo2map [-threads num] [-glview] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] [-noradiosity] mapfile");
+		Error ("usage: ufo2map [-threads num] [-glview] [-nice prio] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] [-noradiosity] mapfile");
 
 	start = I_FloatTime ();
 

@@ -1443,9 +1443,9 @@ qboolean CL_GameSave(char *filename, char *comment)
 
 	/* store equipment */
 	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
-		for (i = 0; i < MAX_OBJDEFS; i++) {
-			MSG_WriteLong(&sb, base->storage.num[i]);
-			MSG_WriteByte(&sb, base->storage.num_loose[i]);
+		for (j = 0; j < MAX_OBJDEFS; j++) {
+			MSG_WriteLong(&sb, base->storage.num[j]);
+			MSG_WriteByte(&sb, base->storage.num_loose[j]);
 		}
 
 	/* store market */
@@ -1789,9 +1789,9 @@ int CL_GameLoad(char *filename)
 
 	/* read equipment */
 	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
-		for (i = 0; i < MAX_OBJDEFS; i++) {
-			base->storage.num[i] = MSG_ReadLong(&sb);
-			base->storage.num_loose[i] = MSG_ReadByte(&sb);
+		for (j = 0; j < MAX_OBJDEFS; j++) {
+			base->storage.num[j] = MSG_ReadLong(&sb);
+			base->storage.num_loose[j] = MSG_ReadByte(&sb);
 		}
 
 	/* read market */
@@ -1878,6 +1878,17 @@ int CL_GameLoad(char *filename)
 			mis--;
 			i--;
 			ccs.numMissions--;
+		}
+		/* manually set mission data and name for a base-attack */
+		/* TODO: consider adding mis->def->missionType to saved-game file */
+		if (!Q_strncmp(mis->def->name, "baseattack", 10)) {
+			mis->def->missionType = MIS_BASEATTACK;
+			for (j = 0, base = gd.bases; j < gd.numBases; j++, base++)
+				if (base->baseStatus == BASE_UNDER_ATTACK) {
+					Com_DPrintf("CL_GameLoad: Base %i (%s) is under attack\n", j, base->name);
+					Q_strncpyz(mis->def->location, gd.bases[j].name, MAX_VAR);
+					mis->def->data = (void*)base;
+				}
 		}
 	}
 

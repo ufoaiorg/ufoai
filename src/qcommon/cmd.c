@@ -415,7 +415,7 @@ void Cmd_Echo_f(void)
 void Cmd_Alias_f(void)
 {
 	cmdalias_t *a;
-	char cmd[1024];
+	char cmd[MAX_STRING_CHARS];
 	int i, c;
 	char *s;
 
