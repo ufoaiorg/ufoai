@@ -426,8 +426,12 @@ void S_Init(void)
 		Com_Printf("sound sampling rate: %i\n", dma.speed);
 
 		/* FIXME: Error checking */
-		if (snd_openal->value)
+		if (snd_openal->value) {
+			/* bindings */
 			QAL_Init();
+			/* client side init */
+			SND_OAL_Init();
+		}
 
 		S_StopAllSounds();
 
