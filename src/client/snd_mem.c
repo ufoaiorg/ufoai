@@ -57,10 +57,19 @@ static void ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data)
 
 	stepscale = (float) inrate / dma.speed;	/* this is usually 0.5, 1, or 2 */
 
-	outcount = sc->length / stepscale;
+	outcount = (int)(sc->length / stepscale);
+	if (outcount == 0) {
+		Com_Printf ("ResampleSfx: Invalid sound file '%s' (zero length)\n", sfx->name);
+		/* free at next opportunity */
+		Mem_Free (sfx->cache);
+		sfx->cache = NULL;
+		return;
+	}
+
 	sc->length = outcount;
+
 	if (sc->loopstart != -1)
-		sc->loopstart = sc->loopstart / stepscale;
+		sc->loopstart = (int)(sc->loopstart / stepscale);
 
 	sc->speed = dma.speed;
 	if (snd_loadas8bit->value)
@@ -133,6 +142,7 @@ extern sfxcache_t *S_LoadSound(sfx_t * s)
 	size = FS_LoadFile(namebuffer, (void **) (char *) &data);
 
 	if (!data) {
+		s->cache = NULL;
 		Com_DPrintf("Couldn't load %s\n", namebuffer);
 		return NULL;
 	}
@@ -145,7 +155,13 @@ extern sfxcache_t *S_LoadSound(sfx_t * s)
 	}
 
 	stepscale = (float) info.rate / dma.speed;
-	len = info.samples / stepscale;
+	len = (int)(info.samples / stepscale);
+
+	if (info.samples == 0 || len == 0) {
+		Com_Printf("WARNING: Zero length sound encountered: %s\n", s->name);
+		FS_FreeFile (data);
+		return NULL;
+	}
 
 	len = len * info.width * info.channels;
 	sc = s->cache = Mem_Alloc(len + sizeof(sfxcache_t));
@@ -219,12 +235,13 @@ static void FindNextChunk(char *name)
 	while (1) {
 		data_p = last_chunk;
 
+		data_p += 4;
+
 		if (data_p >= iff_end) {	/* didn't find the chunk */
 			data_p = NULL;
 			return;
 		}
 
-		data_p += 4;
 		iff_chunk_len = GetLittleLong();
 		if (iff_chunk_len < 0) {
 			data_p = NULL;
@@ -327,7 +344,7 @@ static wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength)
 		/* if the next chunk is a LIST chunk, look for a cue length marker */
 		FindNextChunk("LIST");
 		if (data_p) {
-			if (!strncmp((char *) data_p + 28, "mark", 4)) {	/* this is not a proper parse, but it works with cooledit... */
+			if ((data_p - wav) + 32 <= wavlength && !strncmp((char *) data_p + 28, "mark", 4)) {	/* this is not a proper parse, but it works with cooledit... */
 				data_p += 24;
 				i = GetLittleLong();	/* samples in loop */
 				info.samples = info.loopstart + i;
@@ -340,7 +357,7 @@ static wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength)
 	/* find data chunk */
 	FindChunk("data");
 	if (!data_p) {
-		Com_Printf("Missing data chunk\n");
+		Com_Printf("GetWavinfo: Missing data chunk (%s)\n", name);
 		return info;
 	}
 
@@ -353,7 +370,7 @@ static wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength)
 	} else
 		info.samples = samples;
 
-	info.dataofs = data_p - wav;
+	info.dataofs = (int)(data_p - wav);
 
 	return info;
 }
