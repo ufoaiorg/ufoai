@@ -32,10 +32,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 
+#ifdef _MSC_VER
+/* msvc users have to install the openAL sdk - which doesn't use the AL/* scheme */
+#include "al.h"
+#include "alc.h"
+#else
 #include <AL/al.h>
 #include <AL/alc.h>
-#include <AL/altypes.h>
-#include <AL/eax.h>
+#endif
+
+/*#include <AL/altypes.h>
+#include <AL/eax.h>*/
 
 #define GPA(a)			GetProcAddress(oalState.hInstOpenAL, a);
 
