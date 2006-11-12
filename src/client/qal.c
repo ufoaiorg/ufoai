@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/snd_loc.h"
 #include <dlfcn.h>
 
-qboolean	openal_active;
+qboolean	openal_active = qfalse;
 
 ALCdevice *		(ALCAPIENTRY * qalcOpenDevice)(ALCubyte *deviceName);
 ALCvoid			(ALCAPIENTRY * qalcCloseDevice)(ALCdevice *device);
@@ -288,7 +288,7 @@ qboolean QAL_Link(void)
 
 	if (alinit_fail) {
 		QAL_Shutdown();
-		Com_Printf( "QAL_Link: One or more symbols not found\n");
+		Com_Printf("QAL_Link: One or more symbols not found\n");
 		return qfalse;
 	}
 

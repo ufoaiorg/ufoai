@@ -57,7 +57,14 @@ qboolean SND_OAL_Init (char* device)
 		return qfalse;
 	}
 
+	Com_Printf("OpenAL: initialized:\n");
+	Com_Printf("..version: \"%s\"\n", qalGetString(AL_VERSION));
+	Com_Printf("..vendor: \"%s\"\n", qalGetString(AL_VENDOR));
+	Com_Printf("..renderer: \"%s\"\n", qalGetString(AL_RENDERER));
+	Com_Printf("..device: \"%s\"\n", qalcGetString (oalState.device, ALC_DEFAULT_DEVICE_SPECIFIER));
+
 	if ((oalState.context = qalcCreateContext(oalState.device, NULL)) == NULL) {
+		Com_Printf("Error: OpenAL context creation error\n");
 		/* TODO: close device here, too */
 		return qfalse;
 	}

@@ -49,6 +49,8 @@ qboolean QAL_Init (void)
 	qalEAXGet					= NULL;
 	qalEAXSet					= NULL;
 
+	openal_active = qtrue;
+
 	return qtrue;
 }
 

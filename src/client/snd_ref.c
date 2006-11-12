@@ -430,7 +430,7 @@ void S_Init(void)
 			/* bindings */
 			QAL_Init();
 			/* client side init */
-			SND_OAL_Init();
+			SND_OAL_Init(NULL);
 		}
 
 		S_StopAllSounds();

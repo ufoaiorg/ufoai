@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 qboolean QAL_Init (void)
 {
-	Com_DPrintf("QAL_Init: Loading \"%s\"...\n", AL_DRIVER_OPENAL);
+	Com_Printf("QAL_Init: Loading \"%s\"...\n", AL_DRIVER_OPENAL);
 
 	if ((oalState.hInstOpenAL = dlopen(AL_DRIVER_OPENAL, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
 		char libPath[MAX_OSPATH];
@@ -53,7 +53,11 @@ qboolean QAL_Init (void)
 		}
 	}
 
-	return QAL_Link();
+	if (QAL_Link()) {
+		openal_active = qtrue;
+		return qtrue;
+	} else
+		return qfalse;
 }
 
 /**
