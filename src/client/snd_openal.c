@@ -93,7 +93,7 @@ qboolean SND_OAL_LoadSound (char* filename, qboolean looping)
 /**
  * @brief
  */
-void PlaySound (void)
+void SND_OAL_PlaySound (void)
 {
 	qalSourcePlay(alSource);
 }
@@ -101,7 +101,7 @@ void PlaySound (void)
 /**
  * @brief
  */
-void StopSound (void)
+void SND_OAL_StopSound (void)
 {
 	qalSourceStop(alSource);
 }
@@ -109,7 +109,7 @@ void StopSound (void)
 /**
  * @brief
  */
-void DestroySound (void)
+void SND_OAL_DestroySound (void)
 {
 	qalDeleteSources(1,&alSource);
 	qalDeleteBuffers(1,&alSampleSet);
