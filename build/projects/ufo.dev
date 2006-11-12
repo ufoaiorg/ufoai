@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_../../src/ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_../../src/ports/win32/libjpeg.lib_@@_-lz_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=94
+UnitCount=100
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -978,14 +978,14 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_hospital.c -o cl_hospital.o $(CFLAGS)
 
 [Unit95]
-FileName=..\..\src\client\cl_hospital.c
+FileName=..\..\src\client\snd_openal.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_hospital.c -o cl_hospital.o $(CFLAGS)
+BuildCmd=$(CC) -c snd_openal.c -o snd_openal.o $(CFLAGS)
 
 [Unit70]
 FileName=..\..\src\client\cl_shader.c
@@ -996,4 +996,54 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_shader.c -o cl_shader.o $(CFLAGS)
+
+[Unit96]
+FileName=..\..\src\client\snd_openal.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit97]
+FileName=..\..\src\client\qal.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit98]
+FileName=..\..\src\client\qal.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c qal.c -o qal.o $(CFLAGS)
+
+[Unit99]
+FileName=..\..\src\ports\win32\qal_win.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit100]
+FileName=..\..\src\ports\win32\qal_win.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c qal_win.c -o qal_win.o $(CFLAGS)
 
