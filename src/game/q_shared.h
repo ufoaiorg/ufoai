@@ -258,6 +258,11 @@ extern long Q_ftol(float f);
 #define Q_ftol( f ) ( long ) (f)
 #endif
 
+typedef union {
+	float f[3];
+	int i[3];
+} vectorhack_t;
+
 #define VecToPos(v,p)       (p[0]=(((int)v[0]+4096)/UNIT_SIZE), p[1]=(((int)v[1]+4096)/UNIT_SIZE), p[2]=((int)v[2]/UNIT_HEIGHT))
 #define PosToVec(p,v)       (v[0]=((int)p[0]-128)*UNIT_SIZE+UNIT_SIZE/2, v[1]=((int)p[1]-128)*UNIT_SIZE+UNIT_SIZE/2, v[2]=(int)p[2]*UNIT_HEIGHT+UNIT_HEIGHT/2)
 
@@ -266,6 +271,7 @@ extern long Q_ftol(float f);
 #define VectorAdd(a,b,c)        (c[0]=a[0]+b[0],c[1]=a[1]+b[1],c[2]=a[2]+b[2])
 #define VectorMul(scalar,b,c)       (c[0]=scalar*b[0],c[1]=scalar*b[1],c[2]=scalar*b[2])
 #define Vector2Mul(scalar,b,c)      (c[0]=scalar*b[0],c[1]=scalar*b[1])
+#define FastVectorCopy(a,b)     (*(vectorhack_t*)&(b) = *(vectorhack_t*)&(a))
 #define VectorCopy(a,b)         (b[0]=a[0],b[1]=a[1],b[2]=a[2])
 #define Vector2Copy(a,b)            (b[0]=a[0],b[1]=a[1])
 #define Vector4Copy(a,b)        (b[0]=a[0],b[1]=a[1],b[2]=a[2],b[3]=a[3])

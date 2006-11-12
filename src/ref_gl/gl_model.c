@@ -697,7 +697,7 @@ static void R_AddMapTile(const char *name, int sX, int sY, int sZ)
 	/* load the file */
 	modfilelen = ri.FS_LoadFile(loadmodel->name, (void **) &buffer);
 	if (!buffer) {
-		ri.Sys_Error(ERR_DROP, "Mod_LoadBrushModel: %s not found", loadmodel->name);
+		ri.Sys_Error(ERR_DROP, "R_AddMapTile: %s not found", loadmodel->name);
 		return;					/* never reached. need for code analyst. */
 	}
 
@@ -713,7 +713,7 @@ static void R_AddMapTile(const char *name, int sX, int sY, int sZ)
 	header = (dheader_t *) buffer;
 	i = LittleLong(header->version);
 	if (i != BSPVERSION)
-		ri.Sys_Error(ERR_DROP, "Mod_LoadBrushModel: %s has wrong version number (%i should be %i)", loadmodel->name, i, BSPVERSION);
+		ri.Sys_Error(ERR_DROP, "R_AddMapTile: %s has wrong version number (%i should be %i)", loadmodel->name, i, BSPVERSION);
 
 	/* swap all the lumps */
 	mod_base = (byte *) header;
@@ -756,8 +756,8 @@ static void R_AddMapTile(const char *name, int sX, int sY, int sZ)
 		if (starmod->firstnode >= loadmodel->numnodes)
 			ri.Sys_Error(ERR_DROP, "Inline model %i has bad firstnode", i);
 
-		VectorCopy(bm->maxs, starmod->maxs);
-		VectorCopy(bm->mins, starmod->mins);
+		FastVectorCopy(bm->maxs, starmod->maxs);
+		FastVectorCopy(bm->mins, starmod->mins);
 		starmod->radius = bm->radius;
 
 		if (i == 0)

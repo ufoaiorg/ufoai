@@ -803,7 +803,7 @@ static void R_SetupFrame(void)
 	r_framecount++;
 
 	/* build the transformation matrix for the given view angles */
-	VectorCopy(r_newrefdef.vieworg, r_origin);
+	FastVectorCopy(r_newrefdef.vieworg, r_origin);
 
 	AngleVectors(r_newrefdef.viewangles, vpn, vright, vup);
 

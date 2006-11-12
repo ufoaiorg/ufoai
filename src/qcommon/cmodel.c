@@ -1815,10 +1815,10 @@ trace_t CM_BoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile
 		return trace_trace;
 
 	trace_contents = brushmask;
-	VectorCopy(start, trace_start);
-	VectorCopy(end, trace_end);
-	VectorCopy(mins, trace_mins);
-	VectorCopy(maxs, trace_maxs);
+	FastVectorCopy(*start, trace_start);
+	FastVectorCopy(*end, trace_end);
+	FastVectorCopy(*mins, trace_mins);
+	FastVectorCopy(*maxs, trace_maxs);
 
 	/* check for position test special case */
 	if (start[0] == end[0] && start[1] == end[1] && start[2] == end[2]) {
@@ -1840,7 +1840,7 @@ trace_t CM_BoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile
 			if (trace_trace.allsolid)
 				break;
 		}
-		VectorCopy(start, trace_trace.endpos);
+		FastVectorCopy(*start, trace_trace.endpos);
 		return trace_trace;
 	}
 
@@ -1859,7 +1859,7 @@ trace_t CM_BoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile
 	CM_RecursiveHullCheck(headnode, 0, 1, start, end);
 
 	if (trace_trace.fraction == 1) {
-		VectorCopy(end, trace_trace.endpos);
+		FastVectorCopy(*end, trace_trace.endpos);
 	} else {
 		for (i = 0; i < 3; i++)
 			trace_trace.endpos[i] = start[i] + trace_trace.fraction * (end[i] - start[i]);

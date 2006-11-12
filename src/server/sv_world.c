@@ -446,8 +446,8 @@ trace_t SV_Trace(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * p
 	clip.maxs = maxs;
 	clip.passedict = passedict;
 
-	VectorCopy(mins, clip.mins2);
-	VectorCopy(maxs, clip.maxs2);
+	FastVectorCopy(*mins, clip.mins2);
+	FastVectorCopy(*maxs, clip.maxs2);
 
 	/* create the bounding box of the entire move */
 	SV_TraceBounds(start, clip.mins2, clip.maxs2, end, clip.boxmins, clip.boxmaxs);

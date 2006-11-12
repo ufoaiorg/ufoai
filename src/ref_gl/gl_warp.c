@@ -91,17 +91,17 @@ static void SubdividePolygon(int numverts, float *verts)
 		/* wrap cases */
 		dist[j] = dist[0];
 		v -= i;
-		VectorCopy(verts, v);
+		FastVectorCopy(*verts, *v);
 
 		f = b = 0;
 		v = verts;
 		for (j = 0; j < numverts; j++, v += 3) {
 			if (dist[j] >= 0) {
-				VectorCopy(v, front[f]);
+				FastVectorCopy(*v, front[f]);
 				f++;
 			}
 			if (dist[j] <= 0) {
-				VectorCopy(v, back[b]);
+				FastVectorCopy(*v, back[b]);
 				b++;
 			}
 			if (dist[j] == 0 || dist[j + 1] == 0)
@@ -130,7 +130,7 @@ static void SubdividePolygon(int numverts, float *verts)
 	total_s = 0;
 	total_t = 0;
 	for (i = 0; i < numverts; i++, verts += 3) {
-		VectorCopy(verts, poly->verts[i + 1]);
+		FastVectorCopy(*verts, poly->verts[i + 1]);
 		s = DotProduct(verts, warpface->texinfo->vecs[0]);
 		t = DotProduct(verts, warpface->texinfo->vecs[1]);
 

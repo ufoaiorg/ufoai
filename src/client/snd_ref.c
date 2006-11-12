@@ -761,7 +761,7 @@ void S_Spatialize(channel_t * ch)
 		return;
 	}
 
-	VectorCopy(ch->origin, origin);
+	FastVectorCopy(ch->origin, origin);
 
 	S_SpatializeOrigin(origin, ch->master_vol, ch->dist_mult, &ch->leftvol, &ch->rightvol);
 }

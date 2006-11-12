@@ -692,7 +692,7 @@ void R_DrawBrushModel(entity_t * e)
 		vec3_t temp;
 		vec3_t forward, right, up;
 
-		VectorCopy(modelorg, temp);
+		FastVectorCopy(modelorg, temp);
 		AngleVectors(e->angles, forward, right, up);
 		modelorg[0] = DotProduct(temp, forward);
 		modelorg[1] = -DotProduct(temp, right);
@@ -815,7 +815,7 @@ static void R_DrawWorld(mnode_t * nodes)
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
-	VectorCopy(r_newrefdef.vieworg, modelorg);
+	FastVectorCopy(r_newrefdef.vieworg, modelorg);
 
 	/* auto cycle the world frame for texture animation */
 	memset(&ent, 0, sizeof(ent));
@@ -1045,7 +1045,6 @@ void GL_BuildPolygonFromSurface(msurface_t * fa, int shift[3])
 	}
 
 	poly->numverts = lnumverts;
-
 }
 
 /**
