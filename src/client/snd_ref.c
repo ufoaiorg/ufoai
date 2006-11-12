@@ -1179,6 +1179,12 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	if (snd_volume->modified)
 		S_InitScaletable();
 
+	/* re-sync music.fading if music volume modified */
+	if (snd_music_volume->modified) {
+		snd_music_volume->modified = qfalse;
+		music.fading = snd_music_volume->value;
+	}
+
 	VectorCopy(origin, listener_origin);
 	VectorCopy(forward, listener_forward);
 	VectorCopy(right, listener_right);
