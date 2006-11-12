@@ -33,9 +33,13 @@ static long alBufferLen;
 static unsigned int alSource;
 static unsigned int alSampleSet;
 
+static int alNumChannels;
+
 /* extern in system implementation */
 oalState_t	oalState;
 
+cvar_t *snd_openal_volume;
+cvar_t *snd_openal_device;
 
 /**
  * @brief Init function that should be called after system implementation QAL_Init was called
@@ -61,6 +65,10 @@ qboolean SND_OAL_Init (char* device)
 	qalcMakeContextCurrent(oalState.context);
 	/* clear error code */
 	qalGetError();
+
+	snd_openal_device = Cvar_Get ("snd_openal_device", "", CVAR_ARCHIVE, "Device for openAL");
+	snd_openal_volume = Cvar_Get ("snd_openal_volume", "", CVAR_ARCHIVE, "Volume for openAL");
+
 	return qtrue;
 }
 
@@ -119,6 +127,36 @@ qboolean SND_OAL_LoadSound (char* filename, qboolean looping)
 	qalSourcei(alSource, AL_LOOPING, AL_TRUE);
 	return qtrue;
 }
+
+#if 0
+static void S_OpenAL_AllocChannels (void)
+{
+	openal_channel_t *ch;
+	int i;
+
+	for (i = 0, ch = s_openal_channels; i < MAX_CHANNELS; i++, ch++) {
+		qalGenSources(1, &ch->sourceNum);
+
+		if (qalGetError() != AL_NO_ERROR)
+			break;
+
+		alNumChannels++;
+	}
+}
+
+static void S_OpenAL_FreeChannels (void)
+{
+	openal_channel_t	*ch;
+	int					i;
+
+	for (i = 0, ch = s_openal_channels; i < s_openal_numChannels; i++, ch++) {
+		qalDeleteSources(1, &ch->sourceNum);
+		memset(ch, 0, sizeof(*ch));
+	}
+
+	alNumChannels = 0;
+}
+#endif
 
 /**
  * @brief
