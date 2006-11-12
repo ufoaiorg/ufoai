@@ -28,6 +28,7 @@ CLIENT_SRCS = \
 	client/cl_view.c \
 	client/console.c \
 	client/keys.c \
+	client/snd_openal.c \
 	client/snd_ref.c \
 	client/snd_mem.c \
 	client/snd_mix.c \
