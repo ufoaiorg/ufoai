@@ -104,6 +104,9 @@ ALvoid			(ALAPIENTRY * qalSourceUnqueueBuffers)(ALuint source, ALsizei n, ALuint
 
 static qboolean alinit_fail = qfalse;
 
+/**
+ * @brief
+ */
 static void *GPAT(char *str)
 {
 	void *rv;
@@ -117,6 +120,10 @@ static void *GPAT(char *str)
 	return rv;
 }
 
+/**
+ * @brief Set all openAL bindings to NULL
+ * @sa QAL_Init
+ */
 void QAL_Unlink (void)
 {
 	if (openal_active) {
@@ -198,7 +205,7 @@ void QAL_Unlink (void)
 }
 
 /**
- * @brief
+ * @brief Bind openAL function to function pointers
  * @sa QAL_Init
  */
 qboolean QAL_Link(void)
