@@ -1557,12 +1557,19 @@ qboolean CL_GameSave(char *filename, char *comment)
 	MSG_WriteByte(&sb, ccs.numMissions);
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++) {
 		MSG_WriteString(&sb, mis->def->name);
+		MSG_WriteByte(&sb, mis->def->missionType);
+		MSG_WriteString(&sb, mis->def->location);
 		MSG_WriteString(&sb, mis->cause->def->name);
 
 		MSG_WriteFloat(&sb, mis->realPos[0]);
 		MSG_WriteFloat(&sb, mis->realPos[1]);
 		MSG_WriteLong(&sb, mis->expire.day);
 		MSG_WriteLong(&sb, mis->expire.sec);
+		/* save IDX of base under attack if required */
+		if (mis->def->missionType == MIS_BASEATTACK) {
+			base = (base_t*)mis->def->data;
+			MSG_WriteByte(&sb, base->idx);
+		}
 	}
 
 	/* stores the select mission on geoscape */
@@ -1937,7 +1944,12 @@ int CL_GameLoad(char *filename)
 		if (j >= numMissions)
 			Com_Printf("Warning: Mission '%s' not found\n", name);
 
-		/* get mission definition */
+		/* get mission type and location */
+		mis->def->missionType = MSG_ReadByte(&sb);
+		name = MSG_ReadString(&sb);
+		Q_strncpyz(mis->def->location, name, MAX_VAR);
+
+		/* get mission cause */
 		name = MSG_ReadString(&sb);
 
 		for (j = 0; j < numStageSets; j++)
@@ -1962,16 +1974,16 @@ int CL_GameLoad(char *filename)
 			i--;
 			ccs.numMissions--;
 		}
-		/* manually set mission data and name for a base-attack */
-		/* TODO: consider adding mis->def->missionType to saved-game file */
-		if (!Q_strncmp(mis->def->name, "baseattack", 10)) {
-			mis->def->missionType = MIS_BASEATTACK;
-			for (j = 0, base = gd.bases; j < gd.numBases; j++, base++)
-				if (base->baseStatus == BASE_UNDER_ATTACK) {
-					Com_DPrintf("CL_GameLoad: Base %i (%s) is under attack\n", j, base->name);
-					Q_strncpyz(mis->def->location, gd.bases[j].name, MAX_VAR);
-					mis->def->data = (void*)base;
-				}
+		/* manually set mission data for a base-attack */
+		if (mis->def->missionType == MIS_BASEATTACK) {
+			/* Load IDX of base under attack */
+			int baseidx = (int)MSG_ReadByte(&sb);
+			base = &gd.bases[baseidx];
+			if (base->baseStatus == BASE_UNDER_ATTACK && !Q_strncmp(selMis->def->location, base->name, MAX_VAR))
+				Com_DPrintf("CL_GameLoad: Base %i (%s) is under attack\n", j, base->name);
+			else
+				Com_Printf("CL_GameLoad: Warning: base %i (%s) is supposedly under attack but base status or mission location (%s) doesn't match!\n", j, base->name, selMis->def->location);
+			mis->def->data = (void*)base;
 		}
 	}
 
