@@ -27,8 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/qal.h"
 #include "qal_win.h"
 
-ALEAXSET					qalEAXSet;
-ALEAXGET					qalEAXGet;
+ALEAXSET qalEAXSet;
+ALEAXGET qalEAXGet;
 
 /**
  * @brief Binds our QAL function pointers to the appropriate AL stuff
@@ -38,7 +38,7 @@ qboolean QAL_Init (void)
 {
 	Com_DPrintf("...calling LoadLibrary( '%s' ): ", path);
 
-	if ((alwState.hInstOpenAL = LoadLibrary(AL_DRIVER_OPENAL)) == NULL) {
+	if ((oalState.hInstOpenAL = LoadLibrary(AL_DRIVER_OPENAL)) == NULL) {
 		Com_Printf("failed\n");
 		return qfalse;
 	}
@@ -48,6 +48,7 @@ qboolean QAL_Init (void)
 
 	qalEAXGet					= NULL;
 	qalEAXSet					= NULL;
+
 	return qtrue;
 }
 

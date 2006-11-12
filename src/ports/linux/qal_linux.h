@@ -40,8 +40,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct {
 	void*	hInstOpenAL;
 
-	ALCdevice	*hDevice;
-	ALCcontext	*hALC;
+	ALCdevice	*device;
+	ALCcontext	*context;
 } oalState_t;
 
 extern oalState_t	oalState;

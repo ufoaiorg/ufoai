@@ -24,13 +24,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "snd_openal.h"
+
 static char* alBuffer;
 static ALenum alFormatBuffer;
 static ALsizei alFreqBuffer;
 static long alBufferLen;
-static ALboolean alLoop;
 static unsigned int alSource;
 static unsigned int alSampleSet;
+
+/* extern in system implementation */
+oalState_t	oalState;
+
 
 /**
  * @brief Init function that should be called after system implementation QAL_Init was called
@@ -38,14 +43,21 @@ static unsigned int alSampleSet;
  */
 qboolean SND_OAL_Init (char* device)
 {
-	if ((oalState.device = qalcOpenDevice((ALubyte*)device) == NULL) {
-		Com_Printf("OpenAL device (%s) could not be opened\n", device);
+	if (!openal_active) {
+		Com_Printf("Error: OpenAL bindings not initialized yet\n");
 		return qfalse;
 	}
+
+	if ((oalState.device = qalcOpenDevice((ALubyte*)device) == NULL)) {
+		Com_Printf("Error: OpenAL device (%s) could not be opened\n", device);
+		return qfalse;
+	}
+
 	if ((oalState.context = qalcCreateContext(oalState.device, NULL)) == NULL) {
 		/* TODO: close device here, too */
 		return qfalse;
 	}
+
 	qalcMakeContextCurrent(oalState.context);
 	/* clear error code */
 	qalGetError();
@@ -56,9 +68,18 @@ qboolean SND_OAL_Init (char* device)
  * @brief
  * @sa SND_OAL_LoadSound
  */
-qboolean SND_OAL_LoadWAV (char* filename)
+static qboolean SND_OAL_LoadOGG (char* filename, ALboolean loop)
 {
-	qalutLoadWAVFile(fname,&alFormatBuffer, (void **) &alBuffer,(unsigned int *)&alBufferLen, &alFreqBuffer, &loop);
+	return qfalse;
+}
+
+/**
+ * @brief
+ * @sa SND_OAL_LoadSound
+ */
+static qboolean SND_OAL_LoadWAV (char* filename, ALboolean loop)
+{
+/*	qalutLoadWAVFile(filename, &alFormatBuffer, (void **) &alBuffer,(unsigned int *)&alBufferLen, &alFreqBuffer, &loop);
 
 	qalGenSources(1, &alSource);
 	qalGenBuffers(1, &alSampleSet);
@@ -67,6 +88,8 @@ qboolean SND_OAL_LoadWAV (char* filename)
 
 	qalutUnloadWAV(alFormatBuffer, alBuffer, alBufferLen, alFreqBuffer);
 	return qtrue;
+*/
+	return qfalse;
 }
 
 /**
@@ -77,17 +100,24 @@ qboolean SND_OAL_LoadWAV (char* filename)
 qboolean SND_OAL_LoadSound (char* filename, qboolean looping)
 {
 	/* load our sound */
-	ALboolean loop;
-	loop = looping;
-
-	SND_OAL_LoadWAV(filename);
+	if (strstr(filename, ".wav")) {
+		if (!SND_OAL_LoadWAV(filename, looping))
+			return qfalse;
+	} else if (strstr(filename, ".ogg")) {
+		if (!SND_OAL_LoadOGG(filename, looping))
+			return qfalse;
+	} else {
+		Com_Printf("Unknown file format for %s\n", filename);
+		return qfalse;
+	}
 
 	/* set the pitch */
-	qalSourcef(alSource,AL_PITCH,1.0f);
+	qalSourcef(alSource, AL_PITCH, 1.0f);
 	/* set the gain */
-	qalSourcef(alSource,AL_GAIN,1.0f);
+	qalSourcef(alSource, AL_GAIN, 1.0f);
 	/* set looping to true */
-	qalSourcei(alSource,AL_LOOPING,AL_TRUE);
+	qalSourcei(alSource, AL_LOOPING, AL_TRUE);
+	return qtrue;
 }
 
 /**

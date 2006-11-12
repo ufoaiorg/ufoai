@@ -25,8 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "client.h"
+
 qboolean SND_OAL_Init (char* device);
-qboolean SND_OAL_LoadWAV (char* filename);
 qboolean SND_OAL_LoadSound (char* filename, qboolean looping);
 void SND_OAL_PlaySound (void);
 void SND_OAL_StopSound (void);
