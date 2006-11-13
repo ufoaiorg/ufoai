@@ -443,10 +443,6 @@ do
 	 sed 's/\"/\\\"/g;$s/\\n$//' | 
 	 awk '{printf "'$END'i\"%s\"\n",$0}' |	
 	 sed 's/\\/\\\\/g'>> sed_commands
-	 if [ $english = "combat_armor_txt" ]
-	 then
-		 exit
-	 fi
 	 apply_sed $english
       elif [ "$test" -eq 1 ]
       then
