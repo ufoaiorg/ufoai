@@ -48,6 +48,10 @@ AC_ARG_WITH(vid_vidmode,
 	[AS_HELP_STRING([--with-vidmode], [compile with vidmode support @<:@default=check@:>@])],
 	[], [with_vid_vidmode=check])
 
+AC_ARG_WITH(openal_framework,
+	[AS_HELP_STRING([--with-openal-framework], [compile with given openal framework @<:@default=/System/Library/Frameworks/OpenAL.framework@:>@])],
+	[], [with_openal_framework=/System/Library/Frameworks/OpenAL.framework])
+
 AC_ARG_WITH(opengl_framework,
 	[AS_HELP_STRING([--with-opengl-framework], [compile with given opengl framework @<:@default=/System/Library/Frameworks/OpenGL.framework@:>@])],
 	[], [with_opengl_framework=/System/Library/Frameworks/OpenGL.framework])
@@ -59,6 +63,10 @@ AC_ARG_WITH(sdl_framework,
 AC_ARG_WITH(sdl_ttf_framework,
 	[AS_HELP_STRING([--with-sdl-ttf-framework], [compile with given sdl-ttf framework @<:@default=/Library/Frameworks/SDL_ttf.framework@:>@])],
 	[], [with_sdl_ttf_framework=/Library/Frameworks/SDL_ttf.framework])
+
+AC_ARG_ENABLE(openal,
+	[AS_HELP_STRING([--disable-openal], [build openal sound support @<:@default=enabled@:>@])],
+	[], [with_openal=check])
 
 AC_ARG_ENABLE(dedicated,
 	[AS_HELP_STRING([--disable-dedicated], [build dedicated server @<:@default=enabled@:>@])],
@@ -125,8 +133,8 @@ then
 elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	AC_SUBST([TARGET_OS],[darwin])
-	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_sdl_framework -F$with_sdl_ttf_framework"
-	LDFLAGS="$LDFLAGS -framework SDL -framework SDL_ttf -framework OpenGL"
+	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_openal_framework -F$with_sdl_framework -F$with_sdl_ttf_framework"
+	LDFLAGS="$LDFLAGS -framework SDL -framework SDL_ttf -framework OpenGL -framework OpenAL"
 else
 	AC_MSG_ERROR([The target operating system '$target_os' is unknown, please contact the developers])
 fi
@@ -325,10 +333,35 @@ fi
 # Check for openal
 #---------------------------------------------------------------------------------------------
 
-AC_SEARCH_LIBS([alSourcePlay],[openal])
-if test "$ac_cv_search_alSourcePlay" = "no"
+if test "$with_openal" = "check" || test "$with_openal" = "yes"
 then
-	AC_MSG_ERROR([couldn't find openAL!])
+   AC_CHECK_HEADERS([AL/al.h AL/alc.h])
+   if test "$ac_cv_header_AL_al_h" != "yes" || \
+      test "$ac_cv_header_AL_alc_h" != "yes"
+   then
+      AC_CHECK_HEADERS([OpenAL/al.h OpenAL/alc.h])
+      if test "$ac_cv_header_OpenAL_al_h" != "yes" || \
+        test "$ac_cv_header_OpenAL_alc_h" != "yes"
+      then
+        if test "$with_openal" = "yes"
+        then
+          AC_MSG_ERROR([specified --with-openal specified but cannot find OpenAL header!])
+        fi
+      else
+        AC_SUBST([HAVE_OPENAL],1)
+      fi
+   elif test "$with_openal" = "yes"
+   then
+     AC_MSG_ERROR([specified --with-openal specified but cannot find OpenAL header!])
+   else
+      AC_SUBST([HAVE_OPENAL],1)
+   fi
+
+   AC_SEARCH_LIBS([alSourcePlay],[openal])
+   if test "$ac_cv_search_alSourcePlay" = "no"
+   then
+      AC_MSG_ERROR([couldn't find OpenAL library!])
+   fi
 fi
 
 #---------------------------------------------------------------------------------------------
