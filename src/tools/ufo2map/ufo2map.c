@@ -23,6 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#define VERSION "1.0"
+
 #include "qrad.h"
 #include "qbsp.h"
 
@@ -137,8 +139,7 @@ void Check_BSP_Parameter ( int argc, char **argv )
 		} else if (!strcmp(argv[i], "-nobackclip")) {
 			printf ("nobackclip = true\n");
 			nobackclip = qtrue;
-		} else
-			break;
+		}
 	}
 }
 
@@ -153,6 +154,7 @@ void Check_RAD_Parameter( int argc, char** argv )
 			dumppatches = qtrue;
 		else if (!strcmp(argv[i],"-bounce")) {
 			numbounce = atoi (argv[i+1]);
+			printf ("light bounces = %i\n", numbounce);
 			i++;
 		} else if (!strcmp(argv[i],"-extra")) {
 			extrasamples = qtrue;
@@ -185,8 +187,7 @@ void Check_RAD_Parameter( int argc, char** argv )
 		} else if (!strcmp(argv[i], "-noradiosity")) {
 			printf ("noradiosity = true\n");
 			noradiosity = qtrue;
-		} else
-			break;
+		}
 	}
 }
 
@@ -199,7 +200,7 @@ int main (int argc, char **argv)
 	char path[1024];
 	char out[1024];
 
-	printf ("---- ufo2map ----\n");
+	printf ("---- ufo2map %s ----\n", VERSION);
 
 	Check_BSP_Parameter( argc, argv );
 	Check_RAD_Parameter( argc, argv );
