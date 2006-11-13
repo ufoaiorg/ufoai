@@ -28,11 +28,9 @@ CLIENT_SRCS = \
 	client/cl_view.c \
 	client/console.c \
 	client/keys.c \
-	client/snd_openal.c \
 	client/snd_ref.c \
 	client/snd_mem.c \
 	client/snd_mix.c \
-	client/qal.c \
 	\
 	qcommon/cmd.c \
 	qcommon/ioapi.c \
@@ -62,33 +60,51 @@ else
 	NET_UDP=net_udp
 endif
 
+ifeq ($(HAVE_OPENAL),1)
+	CLIENT_SRCS+= \
+		client/snd_openal.c \
+		client/qal.c
+endif
+
 ifeq ($(TARGET_OS),linux-gnu)
 	CLIENT_SRCS+= \
-		ports/linux/qal_linux.c \
 		ports/linux/q_shlinux.c \
 		ports/linux/vid_so.c \
 		ports/linux/sys_linux.c \
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
+
+	ifeq ($(HAVE_OPENAL),1)
+		CLIENT_SRCS+= \
+			ports/linux/qal_linux.c
+	else
+		CLIENT_SRCS+= \
+			ports/null/qal_null.c
+	endif
 	CLIENT_CD=ports/linux/cd_linux.c
 endif
 
 ifeq ($(TARGET_OS),freebsd)
 	CLIENT_SRCS+= \
-		ports/null/qal_null.c \
 		ports/linux/q_shlinux.c \
 		ports/linux/vid_so.c \
 		ports/linux/sys_linux.c \
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
+	ifeq ($(HAVE_OPENAL),1)
+		CLIENT_SRCS+=\
+			ports/linux/qal_linux.c
+	else
+		CLIENT_SRCS+=\
+			ports/null/qal_null.c
+	endif
 	CLIENT_CD=ports/linux/cd_linux.c
 endif
 
 ifeq ($(TARGET_OS),mingw32)
 	CLIENT_SRCS+=\
-		ports/win32/qal_win.c \
 		ports/win32/ufo.rc \
 		ports/win32/q_shwin.c \
 		ports/win32/vid_dll.c \
@@ -98,6 +114,14 @@ ifeq ($(TARGET_OS),mingw32)
 		ports/win32/net_wins.c \
 		ports/win32/ufo.rc
 	CLIENT_CD=ports/win32/cd_win.c
+
+	ifeq ($(HAVE_OPENAL),1)
+		CLIENT_SRCS+=\
+			ports/win32/qal_win.c
+	else
+		CLIENT_SRCS+=\
+			ports/null/qal_null.c
+	endif
 endif
 
 ifeq ($(TARGET_OS),darwin)
@@ -124,6 +148,10 @@ else
 	else
 		CLIENT_SRCS+=$(CLIENT_CD)
 	endif
+endif
+
+ifeq ($(HAVE_OPENAL),1)
+	CFLAGS+= -DHAVE_OPENAL
 endif
 
 CLIENT_OBJS= \

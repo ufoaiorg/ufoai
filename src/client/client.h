@@ -44,8 +44,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "console.h"
 #include "cdaudio.h"
 #include "cl_market.h"
-#ifndef DEDICATED_ONLY
-#include "qal.h"
+#ifdef HAVE_OPENAL
+	#ifndef DEDICATED_ONLY
+		#include "qal.h"
+		#include "snd_openal.h"
+	#endif
 #endif
 
 /*============================================================================= */

@@ -427,10 +427,14 @@ void S_Init(void)
 
 		/* FIXME: Error checking */
 		if (snd_openal->value) {
+#ifdef HAVE_OPENAL
 			/* bindings */
 			QAL_Init();
 			/* client side init */
 			SND_OAL_Init(NULL);
+#else
+			Com_Printf("No OpenAL support compiled into this binary\n");
+#endif
 		}
 
 		S_StopAllSounds();
