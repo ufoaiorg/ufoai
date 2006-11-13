@@ -666,6 +666,9 @@ WINDRES
 CPP
 GREP
 EGREP
+HAVE_OPENAL_CONFIG
+OPENAL_CFLAGS
+OPENAL_LIBS
 HAVE_OPENAL
 HAVE_SDL_CONFIG
 SDL_CFLAGS
@@ -1309,6 +1312,9 @@ Optional Packages:
   --with-sdl-ttf-framework
                           compile with given sdl-ttf framework
                           [default=/Library/Frameworks/SDL_ttf.framework]
+  --with-openal-config=FILE
+                          using the given openal-config
+                          [default=openal-config]
 
 Some influential environment variables:
   CC          C compiler command
@@ -2047,6 +2053,15 @@ if test "${enable_openal+set}" = set; then
   enableval=$enable_openal;
 else
   with_openal=check
+fi
+
+
+
+# Check whether --with-openal_config was given.
+if test "${with_openal_config+set}" = set; then
+  withval=$with_openal_config;
+else
+  with_openal_config=openal-config
 fi
 
 
@@ -5469,7 +5484,60 @@ echo "$as_me: error: couldn't find zlib!" >&2;}
 fi
 
 #---------------------------------------------------------------------------------------------
-# Check for openal
+# Check for openal-config
+#---------------------------------------------------------------------------------------------
+
+openal_config=$with_openal_config
+# Extract the first word of "$openal_config", so it can be a program name with args.
+set dummy $openal_config; ac_word=$2
+{ echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
+if test "${ac_cv_prog_HAVE_OPENAL_CONFIG+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test -n "$HAVE_OPENAL_CONFIG"; then
+  ac_cv_prog_HAVE_OPENAL_CONFIG="$HAVE_OPENAL_CONFIG" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_prog_HAVE_OPENAL_CONFIG="yes"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
+
+fi
+fi
+HAVE_OPENAL_CONFIG=$ac_cv_prog_HAVE_OPENAL_CONFIG
+if test -n "$HAVE_OPENAL_CONFIG"; then
+  { echo "$as_me:$LINENO: result: $HAVE_OPENAL_CONFIG" >&5
+echo "${ECHO_T}$HAVE_OPENAL_CONFIG" >&6; }
+else
+  { echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6; }
+fi
+
+
+if test "$ac_cv_prog_HAVE_OPENAL_CONFIG" = "yes"
+then
+	OPENAL_CFLAGS=`$openal_config --cflags`
+
+	OPENAL_LIBS=`$openal_config --libs`
+
+else
+	{ echo "$as_me:$LINENO: WARNING: cannot find $openal_config might fail to find OpenAL!" >&5
+echo "$as_me: WARNING: cannot find $openal_config might fail to find OpenAL!" >&2;}
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for OpenAL headers and libraries
 #---------------------------------------------------------------------------------------------
 
 if test "$with_openal" = "check" || test "$with_openal" = "yes"
@@ -5826,11 +5894,7 @@ echo "$as_me: error: specified --with-openal specified but cannot find OpenAL he
 echo "$as_me: error: specified --with-openal specified but cannot find OpenAL header!" >&2;}
    { (exit 1); exit 1; }; }
    else
-      HAVE_OPENAL=1
-
-   fi
-
-   { echo "$as_me:$LINENO: checking for library containing alSourcePlay" >&5
+     { echo "$as_me:$LINENO: checking for library containing alSourcePlay" >&5
 echo $ECHO_N "checking for library containing alSourcePlay... $ECHO_C" >&6; }
 if test "${ac_cv_search_alSourcePlay+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -5929,11 +5993,14 @@ if test "$ac_res" != no; then
 
 fi
 
-   if test "$ac_cv_search_alSourcePlay" = "no"
-   then
-      { { echo "$as_me:$LINENO: error: couldn't find OpenAL library!" >&5
+     if test "$ac_cv_search_alSourcePlay" = "no"
+     then
+        { { echo "$as_me:$LINENO: error: couldn't find OpenAL library!" >&5
 echo "$as_me: error: couldn't find OpenAL library!" >&2;}
    { (exit 1); exit 1; }; }
+     fi
+     HAVE_OPENAL=1
+
    fi
 fi
 
@@ -10831,6 +10898,9 @@ WINDRES!$WINDRES$ac_delim
 CPP!$CPP$ac_delim
 GREP!$GREP$ac_delim
 EGREP!$EGREP$ac_delim
+HAVE_OPENAL_CONFIG!$HAVE_OPENAL_CONFIG$ac_delim
+OPENAL_CFLAGS!$OPENAL_CFLAGS$ac_delim
+OPENAL_LIBS!$OPENAL_LIBS$ac_delim
 HAVE_OPENAL!$HAVE_OPENAL$ac_delim
 HAVE_SDL_CONFIG!$HAVE_SDL_CONFIG$ac_delim
 SDL_CFLAGS!$SDL_CFLAGS$ac_delim
@@ -10857,10 +10927,9 @@ PARANOID!$PARANOID$ac_delim
 PROFILING!$PROFILING$ac_delim
 EXE_EXT!$EXE_EXT$ac_delim
 LIBOBJS!$LIBOBJS$ac_delim
-LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 95; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
@@ -10879,6 +10948,48 @@ fi
 
 cat >>$CONFIG_STATUS <<_ACEOF
 cat >"\$tmp/subs-1.sed" <<\CEOF$ac_eof
+/@[a-zA-Z_][a-zA-Z_0-9]*@/!b
+_ACEOF
+sed '
+s/[,\\&]/\\&/g; s/@/@|#_!!_#|/g
+s/^/s,@/; s/!/@,|#_!!_#|/
+:n
+t n
+s/'"$ac_delim"'$/,g/; t
+s/$/\\/; p
+N; s/^.*\n//; s/[,\\&]/\\&/g; s/@/@|#_!!_#|/g; b n
+' >>$CONFIG_STATUS <conf$$subs.sed
+rm -f conf$$subs.sed
+cat >>$CONFIG_STATUS <<_ACEOF
+CEOF$ac_eof
+_ACEOF
+
+
+ac_delim='%!_!# '
+for ac_last_try in false false false false false :; do
+  cat >conf$$subs.sed <<_ACEOF
+LTLIBOBJS!$LTLIBOBJS$ac_delim
+_ACEOF
+
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 1; then
+    break
+  elif $ac_last_try; then
+    { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
+echo "$as_me: error: could not make $CONFIG_STATUS" >&2;}
+   { (exit 1); exit 1; }; }
+  else
+    ac_delim="$ac_delim!$ac_delim _$ac_delim!! "
+  fi
+done
+
+ac_eof=`sed -n '/^CEOF[0-9]*$/s/CEOF/0/p' conf$$subs.sed`
+if test -n "$ac_eof"; then
+  ac_eof=`echo "$ac_eof" | sort -nru | sed 1q`
+  ac_eof=`expr $ac_eof + 1`
+fi
+
+cat >>$CONFIG_STATUS <<_ACEOF
+cat >"\$tmp/subs-2.sed" <<\CEOF$ac_eof
 /@[a-zA-Z_][a-zA-Z_0-9]*@/!b end
 _ACEOF
 sed '
@@ -11136,7 +11247,7 @@ s&@builddir@&$ac_builddir&;t t
 s&@abs_builddir@&$ac_abs_builddir&;t t
 s&@abs_top_builddir@&$ac_abs_top_builddir&;t t
 $ac_datarootdir_hack
-" $ac_file_inputs | sed -f "$tmp/subs-1.sed" >$tmp/out
+" $ac_file_inputs | sed -f "$tmp/subs-1.sed" | sed -f "$tmp/subs-2.sed" >$tmp/out
 
 test -z "$ac_datarootdir_hack$ac_datarootdir_seen" &&
   { ac_out=`sed -n '/\${datarootdir}/p' "$tmp/out"`; test -n "$ac_out"; } &&

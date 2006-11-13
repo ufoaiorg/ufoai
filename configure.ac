@@ -68,6 +68,10 @@ AC_ARG_ENABLE(openal,
 	[AS_HELP_STRING([--disable-openal], [build openal sound support @<:@default=enabled@:>@])],
 	[], [with_openal=check])
 
+AC_ARG_WITH(openal_config,
+	[AC_HELP_STRING([--with-openal-config=FILE], [using the given openal-config @<:@default=openal-config@:>@])],
+	[], [with_openal_config=openal-config])
+
 AC_ARG_ENABLE(dedicated,
 	[AS_HELP_STRING([--disable-dedicated], [build dedicated server @<:@default=enabled@:>@])],
 	[], [enable_dedicated=yes])
@@ -330,7 +334,21 @@ then
 fi
 
 #---------------------------------------------------------------------------------------------
-# Check for openal
+# Check for openal-config
+#---------------------------------------------------------------------------------------------
+
+openal_config=$with_openal_config
+AC_CHECK_PROG(HAVE_OPENAL_CONFIG,$openal_config,yes)
+if test "$ac_cv_prog_HAVE_OPENAL_CONFIG" = "yes"
+then
+	AC_SUBST([OPENAL_CFLAGS],`$openal_config --cflags`)
+	AC_SUBST([OPENAL_LIBS],`$openal_config --libs`)
+else
+	AC_MSG_WARN([cannot find $openal_config might fail to find OpenAL!])
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for OpenAL headers and libraries
 #---------------------------------------------------------------------------------------------
 
 if test "$with_openal" = "check" || test "$with_openal" = "yes"
@@ -354,13 +372,12 @@ then
    then
      AC_MSG_ERROR([specified --with-openal specified but cannot find OpenAL header!])
    else
-      AC_SUBST([HAVE_OPENAL],1)
-   fi
-
-   AC_SEARCH_LIBS([alSourcePlay],[openal])
-   if test "$ac_cv_search_alSourcePlay" = "no"
-   then
-      AC_MSG_ERROR([couldn't find OpenAL library!])
+     AC_SEARCH_LIBS([alSourcePlay],[openal])
+     if test "$ac_cv_search_alSourcePlay" = "no"
+     then
+        AC_MSG_ERROR([couldn't find OpenAL library!])
+     fi
+     AC_SUBST([HAVE_OPENAL], 1)
    fi
 fi
 
