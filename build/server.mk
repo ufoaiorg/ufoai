@@ -23,6 +23,13 @@ SERVER_SRCS += \
 	ports/null/cl_null.c \
 	ports/null/cd_null.c
 
+ifeq ($(HAVE_IPV6),1)
+	# FIXME: flags!
+	NET_UDP=net_udp6
+else
+	NET_UDP=net_udp
+endif
+
 ifeq ($(TARGET_OS),linux-gnu)
 	SERVER_SRCS += \
 		ports/linux/q_shlinux.c \
@@ -59,14 +66,6 @@ ifeq ($(TARGET_OS),darwin)
 		ports/unix/$(NET_UDP).c \
 		ports/macosx/q_shosx.c
 endif
-
-ifeq ($(HAVE_IPV6),1)
-	# FIXME: flags!
-	NET_UDP=net_udp6
-else
-	NET_UDP=net_udp
-endif
-
 
 SERVER_OBJS= \
 	$(patsubst %.c, $(BUILDDIR)/server/%.o, $(filter %.c, $(SERVER_SRCS))) \
