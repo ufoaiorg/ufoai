@@ -259,11 +259,14 @@ static void CL_RefreshWeaponButtons(int time)
 	static int secondary_right = -1;
 	static int primary_left = -1;
 	static int secondary_left = -1;
+	static int reload_right = -1;
+	static int reload_left = -1;
 	invList_t *weapon;
 
 	if (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE) {
 		/* If we're not in move mode, leave the rendering of the fire buttons alone */
 		primary_right = secondary_right = primary_left = secondary_left = -2;
+		reload_right = reload_left = -2;
 		return;
 	} else if (primary_right == -2) {
 		/* skip one cycle to let things settle down */
@@ -297,6 +300,18 @@ static void CL_RefreshWeaponButtons(int time)
 		secondary_right = 1;
 	}
 
+	/* reload button  */
+	if ( !weapon || weapon->item.m == NONE
+		 || time < csi.ods[weapon->item.t].reload ) {
+    		if (reload_right != 0) {
+			Cbuf_AddText("disrr\n");
+			reload_right = 0;
+		}
+	} else if (reload_right != 1) {
+        	Cbuf_AddText("deselrr\n");
+		reload_right = 1;
+	} 
+
 	/* check for two-handed weapon - if not, switch to left hand */
 	if (!weapon || !csi.ods[weapon->item.t].holdtwohanded)
 		weapon = LEFT(selActor);
@@ -324,6 +339,18 @@ static void CL_RefreshWeaponButtons(int time)
 		Cbuf_AddText("deselsl\n");
 		secondary_left = 1;
 	}
+
+	/* reload button */
+	if ( !weapon || weapon->item.m == NONE
+		 || time < csi.ods[weapon->item.t].reload ) {
+    	if (reload_left != 0) {
+			Cbuf_AddText("disrl\n");
+			reload_left = 0;
+		}
+	} else if (reload_left != 1) {
+        	Cbuf_AddText("deselrl\n");
+		reload_left = 1;
+	} 
 }
 
 /**
@@ -418,23 +445,6 @@ void CL_ActorUpdateCVars(void)
 				cl.cmode = M_MOVE;
 			}
 			/* move or shoot */
-			if (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE) {
-				CL_RefreshWeaponButtons(0);
-				if (selWeapon && selFD) {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN,
-								"%s\n%s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
-					Com_sprintf(mousetext, MAX_MENUTEXTLEN,
-								"%s: %s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
-
-					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
-
-					time = selFD->time;
-				} else if (selWeapon) {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
-				} else {
-					cl.cmode = M_MOVE;
-				}
-			}
 			if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
 				/* If the mouse is outside the world, blank move */
 				if (mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE)
@@ -453,6 +463,28 @@ void CL_ActorUpdateCVars(void)
 					CL_RefreshWeaponButtons(selActor->TU);
 				}
 				time = actorMoveLength;
+			}
+			if (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE) {
+				CL_RefreshWeaponButtons(selActor->TU);
+				if (selWeapon && selFD) {
+					Com_sprintf(infoText, MAX_MENUTEXTLEN,
+								"%s\n%s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
+					Com_sprintf(mousetext, MAX_MENUTEXTLEN,
+								"%s: %s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
+
+					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
+
+					time = selFD->time;
+					if (selActor->TU < time || (!selFD->gravity && selWeapon->item.a <= 0)) {
+						cl.oldcmode = cl.cmode;
+						cl.cmode = M_MOVE;
+					}
+				} else if (selWeapon) {
+					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
+				} else {
+					cl.oldcmode = cl.cmode;
+					cl.cmode = M_MOVE;
+				}
 			}
 		}
 
