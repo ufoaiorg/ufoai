@@ -445,23 +445,6 @@ void CL_ActorUpdateCVars(void)
 				cl.cmode = M_MOVE;
 			}
 			/* move or shoot */
-			if (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE) {
-				CL_RefreshWeaponButtons(0);
-				if (selWeapon && selFD) {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN,
-								"%s\n%s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
-					Com_sprintf(mousetext, MAX_MENUTEXTLEN,
-								"%s: %s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
-
-					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
-
-					time = selFD->time;
-				} else if (selWeapon) {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
-				} else {
-					cl.cmode = M_MOVE;
-				}
-			}
 			if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
 				/* If the mouse is outside the world, blank move */
 				if (mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE)
@@ -480,6 +463,28 @@ void CL_ActorUpdateCVars(void)
 					CL_RefreshWeaponButtons(selActor->TU);
 				}
 				time = actorMoveLength;
+			}
+			if (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE) {
+				CL_RefreshWeaponButtons(selActor->TU);
+				if (selWeapon && selFD) {
+					Com_sprintf(infoText, MAX_MENUTEXTLEN,
+								"%s\n%s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
+					Com_sprintf(mousetext, MAX_MENUTEXTLEN,
+								"%s: %s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
+
+					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
+
+					time = selFD->time;
+					if (selActor->TU < time || (!selFD->gravity && selWeapon->item.a <= 0)) {
+						cl.oldcmode = cl.cmode;
+						cl.cmode = M_MOVE;
+					}
+				} else if (selWeapon) {
+					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
+				} else {
+					cl.oldcmode = cl.cmode;
+					cl.cmode = M_MOVE;
+				}
 			}
 		}
 
