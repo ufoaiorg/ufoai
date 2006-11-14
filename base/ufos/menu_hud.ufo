@@ -407,11 +407,15 @@ menu hud
 	confunc deselpr { *bt_pfire_right  image hud/buttons1 }
 	confunc deselsl { *bt_sfire_left   image hud/buttons1 }
 	confunc deselsr { *bt_sfire_right  image hud/buttons1 }
+	confunc deselrl { *bt_reload_left  image hud/buttons2 }
+	confunc deselrr { *bt_reload_right image hud/buttons2 }
 
 	confunc displ { *bt_pfire_left   image hud/buttons1g }
 	confunc dispr { *bt_pfire_right  image hud/buttons1g }
 	confunc dissl { *bt_sfire_left   image hud/buttons1g }
 	confunc dissr { *bt_sfire_right  image hud/buttons1g }
+	confunc disrl { *bt_reload_left  image hud/buttons2g }
+	confunc disrr { *bt_reload_right image hud/buttons2g }
 
 	pic bt_pfire_right
 	{

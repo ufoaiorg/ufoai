@@ -259,11 +259,14 @@ static void CL_RefreshWeaponButtons(int time)
 	static int secondary_right = -1;
 	static int primary_left = -1;
 	static int secondary_left = -1;
+	static int reload_right = -1;
+	static int reload_left = -1;
 	invList_t *weapon;
 
 	if (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE) {
 		/* If we're not in move mode, leave the rendering of the fire buttons alone */
 		primary_right = secondary_right = primary_left = secondary_left = -2;
+		reload_right = reload_left = -2;
 		return;
 	} else if (primary_right == -2) {
 		/* skip one cycle to let things settle down */
@@ -297,6 +300,18 @@ static void CL_RefreshWeaponButtons(int time)
 		secondary_right = 1;
 	}
 
+	/* reload button  */
+	if ( !weapon || weapon->item.m == NONE
+		 || time < csi.ods[weapon->item.t].reload ) {
+    		if (reload_right != 0) {
+			Cbuf_AddText("disrr\n");
+			reload_right = 0;
+		}
+	} else if (reload_right != 1) {
+        	Cbuf_AddText("deselrr\n");
+		reload_right = 1;
+	} 
+
 	/* check for two-handed weapon - if not, switch to left hand */
 	if (!weapon || !csi.ods[weapon->item.t].holdtwohanded)
 		weapon = LEFT(selActor);
@@ -324,6 +339,18 @@ static void CL_RefreshWeaponButtons(int time)
 		Cbuf_AddText("deselsl\n");
 		secondary_left = 1;
 	}
+
+	/* reload button */
+	if ( !weapon || weapon->item.m == NONE
+		 || time < csi.ods[weapon->item.t].reload ) {
+    	if (reload_left != 0) {
+			Cbuf_AddText("disrl\n");
+			reload_left = 0;
+		}
+	} else if (reload_left != 1) {
+        	Cbuf_AddText("deselrl\n");
+		reload_left = 1;
+	} 
 }
 
 /**
