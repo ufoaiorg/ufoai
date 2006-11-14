@@ -106,7 +106,7 @@ mission mine_crash
 	type		"_Crash Site"
 	text		"_Secure Area"
 	map			mine_crash05
-	music		mission
+	music		PsymongR2
 	pos			"-40 2"
 	aliens		7
 	alienteam	alien
@@ -166,7 +166,7 @@ mission africa
 	type		"_Crashed Alien Ship"
 	text		"_Secure area"
 	map			africa04
-	music		alBasrahM
+	music		mission4
 	pos			"-30 18"
 	aliens		10
 	alienteam	alien
@@ -226,7 +226,7 @@ mission construction
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			const05
-	music		dawn
+	music		PsymongR1
 	pos			"-17 60"
 	aliens		6
 	alienteam	alien
@@ -246,7 +246,7 @@ mission africa_excavation
 	type		"_Terror Attack"
 	text		"_Protect the excavation site at all cost."
 	map			excavation06
-	music		theme
+	music		PsymongN1
 	pos			"-29 -20"
 	aliens		5
 	alienteam	ortnok
@@ -327,7 +327,7 @@ mission harbor
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			harbor07
-	music		dawn
+	music		theme
 	pos			"-129 35"
 	aliens		8
 	alienteam	ortnok
@@ -368,7 +368,7 @@ mission falconcrash
 	type		"_Crashed Alien Ship"
 	text		"_Secure Alien Ship"
 	map			falcon_crash04
-	music		PsymongO4
+	music		PsymongR3
 	pos			"70 -27"
 	aliens		7
 	alienteam	alien
@@ -699,7 +699,7 @@ mission transport
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			transport06
-	music		PsymongO1
+	music		PsymongN1
 	pos			"83 36"
 	aliens		3
 	alienteam	alien
