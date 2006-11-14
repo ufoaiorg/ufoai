@@ -1979,7 +1979,7 @@ int CL_GameLoad(char *filename)
 			/* Load IDX of base under attack */
 			int baseidx = (int)MSG_ReadByte(&sb);
 			base = &gd.bases[baseidx];
-			if (base->baseStatus == BASE_UNDER_ATTACK && !Q_strncmp(selMis->def->location, base->name, MAX_VAR))
+			if (base->baseStatus == BASE_UNDER_ATTACK && !Q_strncmp(mis->def->location, base->name, MAX_VAR))
 				Com_DPrintf("CL_GameLoad: Base %i (%s) is under attack\n", j, base->name);
 			else
 				Com_Printf("CL_GameLoad: Warning: base %i (%s) is supposedly under attack but base status or mission location (%s) doesn't match!\n", j, base->name, selMis->def->location);

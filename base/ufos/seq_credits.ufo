@@ -1,6 +1,6 @@
 sequence credits
 {
-	cmd "music ufo2;music_start;"
+	cmd "music ufo1;music_start;"
 	cmd "seq_animspeed 730;"
 
 	precache models
