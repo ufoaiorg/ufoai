@@ -475,7 +475,7 @@ void CL_ActorUpdateCVars(void)
 					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
 
 					time = selFD->time;
-					if (selActor->TU < time || (!selFD->gravity && selWeapon->item.a <= 0)) {
+					if (selActor->TU < time || (csi.ods[selWeapon->item.t].reload && selWeapon->item.a <= 0)) {
 						cl.oldcmode = cl.cmode;
 						cl.cmode = M_MOVE;
 					}
