@@ -216,6 +216,7 @@ void CL_ActorGlobalCVars(void)
 	for (i = 0; i < MAX_TEAMLIST; i++) {
 		le = cl.teamList[i];
 		if (le && !(le->state & STATE_DEAD)) {
+			/* the model name is the first entry in model_t */
 			Cvar_Set(va("mn_head%i", i), (char *) le->model2);
 			Com_sprintf(str, MAX_VAR, "%i", le->HP);
 			Cvar_Set(va("mn_hp%i", i), str);
@@ -310,7 +311,7 @@ static void CL_RefreshWeaponButtons(int time)
 	} else if (reload_right != 1) {
         	Cbuf_AddText("deselrr\n");
 		reload_right = 1;
-	} 
+	}
 
 	/* check for two-handed weapon - if not, switch to left hand */
 	if (!weapon || !csi.ods[weapon->item.t].holdtwohanded)
@@ -350,7 +351,7 @@ static void CL_RefreshWeaponButtons(int time)
 	} else if (reload_left != 1) {
         	Cbuf_AddText("deselrl\n");
 		reload_left = 1;
-	} 
+	}
 }
 
 /**
