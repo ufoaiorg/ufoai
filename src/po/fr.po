@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-11-12 19:02+0100\n"
-"PO-Revision-Date: 2006-11-13 23:26+0100\n"
-"Last-Translator: moe <maui_key@yahoo.de>\n"
+"PO-Revision-Date: 2006-11-14 22:03+0100\n"
+"Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -317,7 +317,7 @@ msgstr "NC"
 
 #: ../base/ufos/menu_aircraft.ufo:103
 msgid "Aircraft away"
-msgstr "Appareil sorti"
+msgstr "Appareil absent"
 
 #: ../base/ufos/menu_aircraft.ufo:115
 msgid "Buy/Sell aircraft"
@@ -453,11 +453,11 @@ msgstr "Activez le tir de réaction"
 
 #: ../base/ufos/menu_althud.ufo:570
 msgid "Reload right hand weapon"
-msgstr "Recharger l'arme de la main droite"
+msgstr "Rechargez l'arme de la main droite"
 
 #: ../base/ufos/menu_althud.ufo:581
 msgid "Reload left hand weapon"
-msgstr "Recharger l'arme de la main gauche"
+msgstr "Rechargez l'arme de la main gauche"
 
 #: ../base/ufos/menu_althud.ufo:596
 #: ../base/ufos/menu_hud.ufo:515
@@ -1015,9 +1015,8 @@ msgid "Capacity"
 msgstr "Capacité"
 
 #: ../base/ufos/menu_hospital.ufo:85
-#, fuzzy
 msgid "Currently healing"
-msgstr "Equipe Actuelle"
+msgstr "Actuellement en soin"
 
 #: ../base/ufos/menu_hospital.ufo:264
 msgid "Health:"
@@ -1035,7 +1034,7 @@ msgstr "Soigner"
 #: ../base/ufos/menu_hospital.ufo:301
 #: ../base/ufos/menu_hospital.ufo:317
 msgid "Implants"
-msgstr "Implant"
+msgstr "Implants"
 
 #: ../base/ufos/menu_hud.ufo:62
 msgid "Level 1"
@@ -1133,7 +1132,6 @@ msgstr "Main Droite"
 
 #: ../base/ufos/menu_inventory.ufo:48
 #: ../base/ufos/menu_team.ufo:972
-#, fuzzy
 msgid "Extension"
 msgstr "Extension"
 
@@ -1425,9 +1423,8 @@ msgid "Image Filter:"
 msgstr "Filtre d'image:"
 
 #: ../base/ufos/menu_options.ufo:453
-#, fuzzy
 msgid "Isometric Mode:"
-msgstr "Isometric Mode:"
+msgstr " Mode Isométrique:"
 
 #: ../base/ufos/menu_options.ufo:491
 msgid "Gamma:"
@@ -1520,7 +1517,7 @@ msgstr "Confirmation nécessaire pour se déplacer ou tirer"
 
 #: ../base/ufos/menu_options.ufo:949
 msgid "Confirm Movement:"
-msgstr "Confirmer le Mouvement:"
+msgstr "Confirmer les mouvements:"
 
 #: ../base/ufos/menu_options.ufo:965
 msgid "No confirmation before walking"
@@ -1732,9 +1729,8 @@ msgid "Employees"
 msgstr "Employés"
 
 #: ../base/ufos/menu_stats.ufo:111
-#, fuzzy
 msgid "Costs"
-msgstr "Cross"
+msgstr "Coûts"
 
 #: ../base/ufos/menu_stats.ufo:127
 msgid "Nations"
@@ -1895,6 +1891,9 @@ msgstr "Attaque de terreur"
 #: ../base/ufos/missions.ufo:680
 #: ../base/ufos/missions.ufo:720
 #: ../base/ufos/missions.ufo:741
+msgid "Damn it, you've let some of them get\\away again! Reequip your squad and\\get after them!"
+msgstr "Ourg, vous en avez laisser partir ! Ré-équipez votre escouade et\\poursuivez les!\\ "
+
 #: ../base/ufos/missions.ufo:25
 msgid "Altdorf"
 msgstr "Altdorf"
@@ -1932,6 +1931,9 @@ msgid "Wellington"
 msgstr "Wellington"
 
 #: ../base/ufos/missions.ufo:127
+msgid "There are rumors of a mine being\\overrun by aliens. Although this\\source of information is doubtful,\\you'll need to investigate."
+msgstr "Il y a des rumeurs sur une mine\\envahie d'aliens. Même si cette\\source d'information est douteuse,\\vous allez enquêter là dessus.\\"
+
 #: ../base/ufos/missions.ufo:145
 msgid "Mackay"
 msgstr "Mackay"
@@ -4499,7 +4501,7 @@ msgstr "craft_shield_hard_txt"
 
 #: ../base/ufos/research.ufo:2523
 msgid "PHALANX And The Mumbai Aftermath"
-msgstr ""
+msgstr "Les conséquences de Mumbai et PHALANX"
 
 #: ../base/ufos/research.ufo:2524
 msgid "news_phalanx_and_mumbai_aftermath_txt"
@@ -5013,12 +5015,10 @@ msgid "Aimed Shot"
 msgstr "Tir Vis"
 
 #: ../base/ufos/weapons_human.ufo:228
-#, fuzzy
 msgid "7.62mm Pistol"
 msgstr "Pistolet 7.62mm"
 
 #: ../base/ufos/weapons_human.ufo:246
-#, fuzzy
 msgid "Pistol Clip 7.62mm"
 msgstr "Chargeur de Pistolet"
 
@@ -5076,7 +5076,6 @@ msgid "Double Shot"
 msgstr "Tir Double"
 
 #: ../base/ufos/weapons_human.ufo:542
-#, fuzzy
 msgid "Flechette Shells"
 msgstr "Cartouches à Fléchettes"
 
@@ -5457,7 +5456,7 @@ msgstr "Note"
 
 #: client/cl_aircraft.c:154
 msgid "ON RED ALERT"
-msgstr "stade d'alerte rouge"
+msgstr "EN ALERTE ROUGE"
 
 #: client/cl_aircraft.c:158
 msgid "Nothing - should not be displayed"
@@ -5680,6 +5679,10 @@ msgid "Alien activity"
 msgstr "Activité Alien"
 
 #: client/cl_campaign.c:854
+#, c-format
+msgid "Your base: %s has been ransacked! All employees killed and all equipment destroyed."
+msgstr "Votre base: %s a été mise à sac ! Tous les employés ont été tués et l'équipement a été détruit."
+
 #: client/cl_campaign.c:905
 #, c-format
 msgid "The mission expired and %i civilians died."
@@ -5778,6 +5781,10 @@ msgid "Exuberant"
 msgstr "Exubérant"
 
 #: client/cl_campaign.c:1057
+#, c-format
+msgid "Gained %i credits, %i scientists, %i medics, %i soldiers and %i workers from nation %s (%s)"
+msgstr "Vous avez gagné %i crédits, %i scientifiques, %i médecins, %i soldats et %i techniciens de la nation %s (%s)"
+
 #: client/cl_campaign.c:1067
 #, c-format
 msgid "Paid %i credits to soldiers"
@@ -5824,7 +5831,7 @@ msgid "Paid %i credits in interest on your debt."
 msgstr "%i c payés pour l'intérêt sur votre dette."
 
 #: client/cl_campaign.c:1229
-#, fuzzy, c-format
+#, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
@@ -5835,6 +5842,9 @@ msgid ""
 "Lost:\t%i\n"
 "\n"
 msgstr ""
+"Gagné:\t%i\n"
+"Perdu:\t%i\n"
+"\n"
 
 #: client/cl_campaign.c:1349
 #, c-format
@@ -5843,6 +5853,9 @@ msgid ""
 "Active:\t%i\n"
 "Attacked:\t%i\n"
 msgstr ""
+"Construit:\t%i\n"
+"Actif:\t%i\n"
+"Attaqué:\t%i\n"
 
 #: client/cl_campaign.c:1356
 #, c-format
@@ -5852,12 +5865,12 @@ msgstr "%s\t%s\n"
 #: client/cl_campaign.c:1363
 #, c-format
 msgid "%s\t%i\n"
-msgstr ""
+msgstr "%s\t%i\n"
 
 #: client/cl_campaign.c:1389
 #, c-format
 msgid "Employees:\t%i c\n"
-msgstr ""
+msgstr "Employés:\t%i c\n"
 
 #: client/cl_campaign.c:1398
 #, c-format
@@ -5875,11 +5888,9 @@ msgid "Administrative costs:\t%i c\n"
 msgstr "Coûts administratifs:\t%i c\n"
 
 #: client/cl_campaign.c:1418
-#, fuzzy, c-format
+#, c-format
 msgid "Debt:\t%i c\n"
-msgstr ""
-"Coût de\n"
-"production:\t%i c\n"
+msgstr "Dette:\t%i c\n"
 
 #: client/cl_campaign.c:1421
 #, c-format
@@ -5888,10 +5899,13 @@ msgid ""
 "\t-------\n"
 "Sum:\t%i c\n"
 msgstr ""
+"\n"
+"\t-------\n"
+"Somme:\t%i c\n"
 
 #: client/cl_campaign.c:1647
 msgid "Error saving game. Check free disk space!"
-msgstr ""
+msgstr "Erreur lors de la sauvegarde du jeu. Vérifiez l'espace disque disponible!"
 
 #: client/cl_campaign.c:1647
 #: client/cl_campaign.c:2216
@@ -6262,6 +6276,13 @@ msgid "The research on this item is complete."
 msgstr "La recherche sur cet objet est terminée."
 
 #: client/cl_research.c:897
+msgid ""
+"The research on this item is not yet possible.\n"
+"You need to research the technologies it's based on first."
+msgstr ""
+"La recherche sur cet objet n'est pas encore possible.\n"
+"Vous devez d'abord rechercher la technologie sur laquelle il est basé."
+
 #: client/cl_research.c:966
 #: client/cl_research.c:1077
 msgid " [not yet researchable]"
@@ -6311,7 +6332,7 @@ msgstr "%i sur %i"
 
 #: client/cl_team.c:1163
 msgid "Error saving team. Check free disk space!"
-msgstr ""
+msgstr "Erreur lors de la sauvegarde de l'équipe. Vérifiez l'espace disque disponible!"
 
 #: client/cl_team.c:1328
 msgid "Select a soldier from list"
@@ -6353,7 +6374,7 @@ msgid ""
 "Enemies captured\t%i\n"
 "\n"
 msgstr ""
-"Ennemis capturés\t%i\n"
+"Enemis capturés\t%i\n"
 "\n"
 
 #: client/cl_team.c:1619
@@ -6371,7 +6392,7 @@ msgid "Team losses\t%i\n"
 msgstr "Pertes de l'équipe\t%i\n"
 
 #: client/cl_team.c:1624
-#, fuzzy, c-format
+#, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Team missing in action\t%i\n"
 
