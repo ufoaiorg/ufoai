@@ -1255,9 +1255,15 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 		return;
 	}
 
-	/* animate */
-	re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
-	re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
+	/* animate - we have to check if it is right or left weapon usage */
+	if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
+		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
+		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
+	} else {
+		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
+		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
+	}
+
 	/* TODO: before CL_ConditionalMoveCalc() was implemented, forbidden list wasn't recalculated here */
 	CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE, fb_list, fb_length);
 }
@@ -1361,8 +1367,12 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 			ccs.eMission.num[type]--;
 	} */
 
-	/* animate */
-	re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
+	/* animate - we have to check if it is right or left weapon usage */
+	if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
+		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
+	} else {
+		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
+	}
 }
 
 
