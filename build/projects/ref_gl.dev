@@ -7,7 +7,7 @@ Type=3
 Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DSHADERS_@@_-DHAVE_GETTEXT_@@_-DDONT_TYPEDEF_INT32_@@_
 CppCompiler=
 Includes=
-Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lSDL_ttf_@@_-lSDL_@@_../../src/ports/win32/intl.lib_@@_-def ../../src/ref_gl/ref_gl.def_@@_
+Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lpng_@@_-lSDL_ttf_@@_-lSDL_@@_../../src/ports/win32/intl.lib_@@_-def ../../src/ref_gl/ref_gl.def_@@_
 Libs=
 UnitCount=35
 Folders="Header Files","Resource Files","Source Files"
