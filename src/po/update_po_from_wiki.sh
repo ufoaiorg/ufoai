@@ -212,15 +212,17 @@ update_one_sentence()
 		option=""
 	fi
 
-	awk 'BEGIN {RS="<p>"}
+	awk 'BEGIN {FS="]";RS="<p>"}
 	  $0 ~ /^[ \t]*$/ {next}
-	  test && ($0 ~ /^\[.*/ || $0 ~ /<.*>/) {exit}
+	  test && ($0 ~ /^\[/ || $0 ~ /<.*>/) {exit}
 	  $0 ~ /^\['$english'\]/ || test == 1 {
+	    gsub(/^\['$english'\][ \t]*/,"")
 	    gsub(/[ \t]*$/,"")
-	    if (test) {
+	    if (test && test2) {
 	      printf "\\n"
               if ('$1' == 1) {printf "\n\\n\n"}
             }
+	    if (length($0)>0) {test2=1}
 	    printf "%s",$0
 	    test=1}
 	    ' downloaded_page |
@@ -520,7 +522,7 @@ do
 	      printf "\\n\n%s\\n\n",$0
 	      test=0}
 	      ' downloaded_page | 
-	 sed 's/^[ \t]*//g;s/\"/\\\"/g;$s/\\n$//' | 
+	 sed 's/[[:space:]]*<.*>[[:space:]]*//g;s/^[ \t]*//g;s/\"/\\\"/g;$s/\\n$//' | 
 	 awk '{printf "'$END'i\"%s\"\n",$0}' |	
 	 sed 's/\\/\\\\/g'>> sed_commands
 	 apply_sed $english

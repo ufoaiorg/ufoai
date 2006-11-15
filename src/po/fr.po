@@ -179,7 +179,10 @@ msgstr "Campagne Très Difficile"
 
 #: ../base/ufos/campaign.ufo:145
 msgid "txt_veryhard_campaign"
-msgstr "Identique à la campagne standard, mais avec moins de recrues et de crédits"
+msgstr ""
+"Il s'agit d'une version extrêmement difficile de la Campagne Standard. Dans ce scénario, toutes les chances seront contre vous, vous ne recevrez que quelques recrues, et les différentes nations seront extrêmement exigeantes. Les aliens n'auront aucune pitié.\n"
+"\n"
+"Cette option représente le niveau de difficulté Très Difficile, et est recommandée pour les joueurs qui sont parvenus à terminer la Campagne Difficile et éprouvent encore le besoin de se faire souffrir."
 
 #: ../base/ufos/campaign.ufo:165
 msgid "Hard Campaign"
@@ -187,7 +190,10 @@ msgstr "Campagne Difficile"
 
 #: ../base/ufos/campaign.ufo:166
 msgid "txt_hard_campaign"
-msgstr "Identique à la campagne standard, mais avec moins de recrues et de crédits"
+msgstr ""
+"Il s'agit d'une version plus difficile que la Campagne Standard. Vous disposerez de moins de soldats, d'ingénieurs et de scientifiques. Les différentes nations seront plus difficiles à satisfaire, la recherche sera plus lente et plus exigeante, et les aliens seront plus forts.\n"
+"\n"
+"Cette option représente le niveau de difficulté Difficile, et est recommandée pour les joueurs experts."
 
 #: ../base/ufos/campaign.ufo:186
 msgid "Standard Campaign"
@@ -196,7 +202,10 @@ msgstr "Campagne Standard"
 #: ../base/ufos/campaign.ufo:187
 #: ../base/ufos/campaign.ufo:281
 msgid "txt_standard_campaign"
-msgstr "Le monde des Aliens est une petite planète en orbite autour de l'étoile Antares. Le développement des extraterrestres fût similaire à celui des humains : êtres unicellulaires, ils sont devenus organismes, amphibiens, puis mammifères ; jusqu'à développer le pouce en opposition. Leur technologie est aujourd'hui entrée dans l'âge de la fusion : la puissance des étoiles est contenue dans des dispositifs suffisamment petits pour être transportés. Ils ont également découvert une forme de voyage plus rapide que la lumière, même si un voyage interstellaire dure encore de longues années, et que l'équipage doit être placé en état d'hibernation pendant le trajet. En termes de progrès technologiques donc, les Antareans ont quelques centaines d'années d'avance ; cependant en termes de vie en société, ils ont plusieurs centaines d'années de retard. Leur société ressemble en effet au système féodal de notre moyen-âge. Le Roi Antarean est la plus haute autorité, et tout ses sujets lui doivent obéissance. Les Antareans sont une espèce guerrière. Ils ont déjà conquis plusieurs autres mondes, asservissant leurs populations indigènes et en ont forcés certaines, comme les Ortnoks, à combattre pour leur cause. Les seigneurs de guerre Antareans ont maintenant des vues sur la Terre. Mais à la différence des habitants de leurs conquêtes précédentes, les humains s'avèrent être prêts pour un défi intellectuel relevé. La Terre pourrait donc être bien plus difficile à conquérir que ce que les seigneurs de guerre Antarean avaient pu l'imaginer au départ..."
+msgstr ""
+"Il s'agit d'un scénario pour un joueur, sur une thématique militaire. Le joueur assume le commandement du Projet PHALANX, mis en place en réponse à la menace alienne. Il évoluera dans un jeu dynamique qui intègre de nombreux éléments aléatoires à une forte trame narrative.\n"
+"\n"
+"Cette campagne est disponible en plusieurs niveaux de difficulté. Cette option représente le niveau de difficulté Standard, et est recommandée pour les nouveaux joueurs qui apprécient les défis."
 
 #: ../base/ufos/campaign.ufo:217
 msgid "Easy Campaign"
@@ -204,7 +213,10 @@ msgstr "Campagne Facile"
 
 #: ../base/ufos/campaign.ufo:218
 msgid "txt_easy_campaign"
-msgstr "Identique à la campagne standard, mais avec plus de recrues et de crédits"
+msgstr ""
+"Il s'agit d'une version plus indulgente de la Campagne Standard. Les aliens seront moins véhéments, les apparitions d'OVNI moins fréquentes, et vous recevrez d'avantage de nouvelles recrues pour compenser les pertes au combat.\n"
+"\n"
+"Cette campagne représente le niveau de difficulté Facile, et est une option possible pour les nouveaux joueurs qui préfèrent explorer le jeu plus calmement que dans la Campagne Standard."
 
 #: ../base/ufos/campaign.ufo:238
 msgid "Very Easy Campaign"
@@ -212,7 +224,10 @@ msgstr "Campagne Très Facile"
 
 #: ../base/ufos/campaign.ufo:239
 msgid "txt_veryeasy_campaign"
-msgstr "Identique à la campagne standard, mais avec plus de recrues et de crédits"
+msgstr ""
+"Il s'agit d'une version très indulgente de la Campagne Standard. Vos forces seront plus puissantes, les aliens moins dangereux, et vos pertes seront peu nombreuses au cours de la campagne.\n"
+"\n"
+"Cette campagne représente le niveau de difficulté Très Facile, et est une option possible pour les nouveaux joueurs qui veulent juste tester les possibilités de UFO: AI."
 
 #: ../base/ufos/campaign.ufo:259
 msgid "Play the aliens"
@@ -511,7 +526,7 @@ msgstr "Acheter un appareil"
 #: ../base/ufos/research.ufo:64
 #: client/cl_map.c:324
 msgid "Aircraft"
-msgstr "Appareils"
+msgstr "Appareil"
 
 #: ../base/ufos/menu_bases.ufo:152
 msgid "Buy/Sell equipment"
@@ -2429,7 +2444,7 @@ msgstr ""
 "\n"
 "Le Programme Excalibur fut créé pour développer les armes les plus performantes sur Terre en réévaluant les qualités de fabrication, les résistances, et en réexaminant les performances en action de nos armes dans les situations où nous sommes parvenus à engager le combat avec les aliens.\n"
 "\n"
-"Le poignard de combat une solide lame de vingt-six centimètres d'acier tranchant qui peut être utilisé pour de nombreuses utilisations quotidiennes. En tant qu'arme, le fil du poignard de combat est renforcé par des céramiques résistantes pour améliorer sa capacité à percer les armures. Il est également équilibré pour le lancé si la situation le nécessite. Il dispose enfin d'un tenon pour le fixer sur le canon d'un vieux fusil de guerre et l'utiliser comme baïonnette.\n"
+"Le poignard de combat est une solide lame de vingt-six centimètres d'acier tranchant, et peut être utilisé pour de nombreuses utilisations quotidiennes. En tant qu'arme, le fil du poignard de combat est renforcé par des céramiques résistantes pour améliorer sa capacité à percer les armures. Il est également équilibré pour le lancé si la situation le nécessite. Il dispose enfin d'un tenon pour le fixer sur le canon d'un vieux fusil de guerre et l'utiliser comme baïonnette.\n"
 "\n"
 "L'ajout du poignard de combat dans notre arsenal fut le sujet d'un long débat. Mumbai nous a enseigné que même dans les conditions les plus favorables, un couteau n'est rien face à l'armement alien. Si un soldat armé d'un poignard n'est pas tué avant d'avoir réussi à atteindre sa cible, il sera probablement éviscéré par l'une de ces redoutable lame qui tranche même à travers une armure. Ce n'est qu'en de rares occasions qu'un combattant expérimenté au maniement du poignard est parvenu à prendre le dessus sur un alien.\n"
 "\n"
