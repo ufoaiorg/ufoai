@@ -88,8 +88,8 @@ equipment multiplayer
 	laserpistol_ammo	5
 	laserrifle			1
 	laserrifle_ammo		3
-//	heavylaser			1
-//	heavylaser_ammo		3
+	heavylaser			1
+	heavylaser_ammo		3
 	plaspistol			2
 	plaspistol_ammo		5
 	plasrifle			1
