@@ -820,6 +820,10 @@ void G_GetShotOrigin(edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t shotOri
 	}
 }
 
+/**
+ * @brief
+ * @sa G_ClientShoot
+ */
 qboolean G_GetShotFromType(edict_t *ent, int type, item_t **weapon, int *container, fireDef_t **fd)
 {
 	if (type >= ST_NUM_SHOOT_TYPES)
