@@ -301,7 +301,7 @@ item pistol2
 	name		"_9mm Pistol"
 	model		weapons/pistol2/pistol2
 	weapon		true
-	type		pistol2
+	type		pistol
 	category	2
 	holdtwohanded	false
 	firetwohanded 	false
