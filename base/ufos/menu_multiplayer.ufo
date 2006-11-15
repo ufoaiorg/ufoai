@@ -493,7 +493,7 @@ menu serverinfo
 	pic button_connect
 	{
 		pos	"80 360"
-		click	{ cmd "connect *mn_server_ip" }
+		click	{ cmd "connect *mn_server_ip; music_randomtrack" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
@@ -1278,7 +1278,7 @@ menu mp_create_server
 	pic button_server
 	{
 		pos	"570 630"
-		click	{ cmd "mn_startserver *mapname" }
+		click	{ cmd "mn_startserver *mapname; music_randomtrack" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"

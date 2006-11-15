@@ -256,6 +256,53 @@ void S_ModifyKhz_f(void)
 }
 
 /**
+ * @brief Sets the music cvar to a random track
+ * @note You have to start the music track afterwards
+ */
+void S_RandomTrack (void)
+{
+	char findname[MAX_OSPATH];
+	int i, ndirs, randomID, count = 0;
+	char **dirnames, *musicTrack = NULL;
+	char *path = NULL;
+
+	while ((path = FS_NextPath(path)) != NULL) {
+		Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", path);
+		FS_NormPath(findname);
+
+		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, 0)) != 0) {
+			for (i = 0; i < ndirs - 1; i++) {
+				count++;
+				free(dirnames[i]);
+			}
+			free(dirnames);
+		}
+	}
+
+	randomID = rand() & count;
+	Com_DPrintf("S_RandomTrack: random track id: %i/%i\n", randomID, count);
+
+	count = 0;
+	while ((path = FS_NextPath(path)) != NULL) {
+		Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", path);
+		FS_NormPath(findname);
+
+		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, 0)) != 0) {
+			for (i = 0; i < ndirs - 1; i++) {
+				count++;
+				if (randomID == count) {
+					musicTrack = COM_SkipPath(dirnames[i]);
+					Com_Printf("..playing next: '%s'\n", musicTrack);
+					Cvar_Set("music", musicTrack);
+				}
+				free(dirnames[i]);
+			}
+			free(dirnames);
+		}
+	}
+}
+
+/**
  * @brief List all available music tracks
  */
 void S_MusicList (void)
@@ -387,6 +434,7 @@ void S_Init(void)
 		Cmd_AddCommand("snd_list", S_SoundList_f, NULL);
 		Cmd_AddCommand("snd_info", S_SoundInfo_f, NULL);
 
+		Cmd_AddCommand("music_randomtrack", S_RandomTrack, NULL);
 		Cmd_AddCommand("music_play", S_PlayOGG, "Plays an ogg sound track");
 		Cmd_AddCommand("music_start", S_StartOGG, "Start the ogg music track from cvar music");
 		Cmd_AddCommand("music_stop", OGG_Stop, "Stop currently playing music tracks");
