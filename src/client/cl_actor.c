@@ -303,6 +303,7 @@ static void CL_RefreshWeaponButtons(int time)
 
 	/* reload button  */
 	if ( !weapon || weapon->item.m == NONE
+		 || !csi.ods[weapon->item.t].reload
 		 || time < csi.ods[weapon->item.t].reload ) {
     		if (reload_right != 0) {
 			Cbuf_AddText("disrr\n");
@@ -343,6 +344,7 @@ static void CL_RefreshWeaponButtons(int time)
 
 	/* reload button */
 	if ( !weapon || weapon->item.m == NONE
+		 || !csi.ods[weapon->item.t].reload
 		 || time < csi.ods[weapon->item.t].reload ) {
     	if (reload_left != 0) {
 			Cbuf_AddText("disrl\n");
@@ -476,6 +478,7 @@ void CL_ActorUpdateCVars(void)
 					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
 
 					time = selFD->time;
+					/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
 					if (selActor->TU < time || (csi.ods[selWeapon->item.t].reload && selWeapon->item.a <= 0)) {
 						cl.oldcmode = cl.cmode;
 						cl.cmode = M_MOVE;
@@ -1026,6 +1029,10 @@ void CL_ActorReload(int hand)
 		weapon = inv->c[hand]->item.t;
 	} else
 		/* otherwise we could use weapon uninitialized */
+		return;
+
+	/* return if the weapon is not reloadable */
+	if (!csi.ods[weapon].reload)
 		return;
 
 	if (!RS_ItemIsResearched(csi.ods[weapon].kurz)) {
