@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-09-03 14:51+0200\n"
-"PO-Revision-Date: 2006-11-09 13:57+0100\n"
+"PO-Revision-Date: 2006-11-15 09:51+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1825,14 +1825,12 @@ msgid "Aliens attacked one of our home bases"
 msgstr "Aliens greifen eine unserer Basen an"
 
 #: ../base/ufos/nations.ufo:24
-#, fuzzy
 msgid "South America"
-msgstr "Vereinigte Amerikas"
+msgstr "Südamerika"
 
 #: ../base/ufos/nations.ufo:38
-#, fuzzy
 msgid "North America"
-msgstr "Vereinigte Amerikas"
+msgstr "Nordamerika"
 
 #: ../base/ufos/nations.ufo:51
 msgid "Greater European Union"
@@ -2690,11 +2688,11 @@ msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:35
 msgid "This game is now community driven"
-msgstr ""
+msgstr "This game is now community driven"
 
 #: ../base/ufos/seq_credits.ufo:42
 msgid "To honor the original development team:"
-msgstr ""
+msgstr "To honor the original development team:"
 
 #: ../base/ufos/seq_credits.ufo:75
 msgid "Code, Visual Effects"
@@ -3486,7 +3484,6 @@ msgid "On transit"
 msgstr "Unterwegs"
 
 #: client/cl_aircraft.c:162
-#, fuzzy
 msgid "Moving to mission"
 msgstr "Fliegt zum Einsatz"
 
@@ -3606,7 +3603,7 @@ msgstr "Ausser Betrieb"
 
 #: client/cl_basemanagement.c:406
 msgid "Not enough credits to build this\n"
-msgstr "Nicht genug Kapital zum bau des Gebäudes\n"
+msgstr "Nicht genug Kapital zum Bau des Gebäudes\n"
 
 #: client/cl_basemanagement.c:534
 #, c-format
@@ -3843,6 +3840,10 @@ msgid ""
 "Bases:\n"
 "build:\t%i\tattacked:\t%i\n"
 msgstr ""
+"Missioneb:\n"
+"gewonnen:\t%i\tverloren:\t%i\n"
+"Basen:\n"
+"gebaut:\t%i\tangegriffen:\t%i\n"
 
 #: client/cl_campaign.c:2039
 msgid "Assemble or load a team"
@@ -4154,7 +4155,10 @@ msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
 "in order to assign scientists to research this technology.\n"
-msgstr "Es ist kein freies Labor verfügbar.\\Neues Labor bauen oder ein anderes freigeben\\um Forscher an dieser Technologie arbeiten zu lassen.\n"
+msgstr ""
+"Es ist kein freies Labor verfügbar.\n"
+"Neues Labor bauen oder ein anderes freigeben\n"
+"um Forscher an dieser Technologie arbeiten zu lassen.\n"
 
 #: client/cl_research.c:607
 msgid "This item is already under research by your scientists."
@@ -4175,7 +4179,7 @@ msgid ""
 "You need to research the technologies it's based on first."
 msgstr ""
 "Forschung kann nicht gestartet werden.\n"
-"Es fehlt eine zu grunde liegende Technologie."
+"Es fehlt eine zugrunde liegende Technologie."
 
 #: client/cl_research.c:693
 msgid " [not yet researchable]"
