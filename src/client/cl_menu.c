@@ -421,6 +421,9 @@ static void MN_StartServer(void)
 		return;
 	}
 
+	/* everything should be reasearched for multiplayer matches */
+/*	RS_MarkResearchedAll(); */
+
 	Cbuf_ExecuteText(EXEC_NOW, va("map %s\n", Cmd_Argv(1)));
 }
 

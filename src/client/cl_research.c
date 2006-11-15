@@ -117,9 +117,9 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 				}
 				break;
 			case RS_LINK_ITEM:
-				Com_DPrintf("RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]); 
+				Com_DPrintf("RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
 				/* TODO: required_AND->collected[i] was being used instead of RS_ItemInBase below,
-				 * but the collected count never seemed to be incremented... 
+				 * but the collected count never seemed to be incremented...
 				 * so either remove this and the RS_CheckCollected method or fix them */
 				if (RS_ItemInBase(required_AND->idx[i], baseCurrent) < required_AND->amount[i]) {
 					met_AND = qfalse;
@@ -1373,6 +1373,23 @@ void MN_ResearchInit(void)
 	CL_ResearchType();
 }
 
+/**
+ * @brief Mark everything as researched
+ * @sa CL_Connect_f
+ * @sa MN_StartServer
+ */
+void RS_MarkResearchedAll(void)
+{
+	int i;
+
+	for (i = 0; i < gd.numTechnologies; i++) {
+		Com_DPrintf("...mark %s as researched\n", gd.technologies[i].id);
+		gd.technologies[i].statusResearchable = qtrue;
+		gd.technologies[i].statusResearch = RS_FINISH;
+		/* TODO: Set all "collected" entries in the requirements to the "amount" value. */
+	}
+}
+
 #ifdef DEBUG
 /**
  * @brief Set all item to researched
@@ -1380,14 +1397,7 @@ void MN_ResearchInit(void)
  */
 static void RS_DebugResearchAll(void)
 {
-	int i;
-
-	for (i = 0; i < gd.numTechnologies; i++) {
-		Com_Printf("...mark %s as researched\n", gd.technologies[i].id);
-		gd.technologies[i].statusResearchable = qtrue;
-		gd.technologies[i].statusResearch = RS_FINISH;
-		/* TODO: Set all "collected" entries in the requirements to the "amount" value. */
-	}
+	RS_MarkResearchedAll();
 }
 #endif
 
@@ -1976,7 +1986,7 @@ technology_t *RS_GetTechWithMostScientists( int base_idx )
 	return tech;
 }
 
-/** 
+/**
  * @brief Returns the index (idx) of a "tech" entry given it's name.
  * @param[in] name the name of the tech
  * TODO: this method is extremely inefficient... it could be dramatically improved

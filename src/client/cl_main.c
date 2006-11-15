@@ -352,6 +352,10 @@ void CL_Connect_f(void)
 	CL_Disconnect();
 
 	cls.state = ca_connecting;
+
+	/* everything should be reasearched for multiplayer matches */
+/*	RS_MarkResearchedAll(); */
+
 	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
 	/* CL_CheckForResend() will fire immediately */
 	cls.connect_time = -99999;
@@ -601,12 +605,14 @@ static void CL_ParseStatusMessage(void)
 	menuText[TEXT_LIST] = serverText;
 }
 
+static char serverInfoText[MAX_MESSAGE_TEXT];
+
 /**
  * @brief Serverbrowser text
  *
  * This function fills the network browser server information with text
+ * @sa Netchan_OutOfBandPrint
  */
-static char serverInfoText[MAX_MESSAGE_TEXT];
 static void CL_ParseServerInfoMessage(void)
 {
 	char *s = MSG_ReadString(&net_message);
@@ -749,6 +755,7 @@ static void CL_BookmarkAdd_f(void)
 
 /**
  * @brief
+ * @sa CL_ParseServerInfoMessage
  */
 void CL_BookmarkListClick_f(void)
 {

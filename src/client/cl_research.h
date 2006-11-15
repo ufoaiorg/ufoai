@@ -154,6 +154,7 @@ void RS_InitTree(void);
 void RS_MarkCollected(equipDef_t *ed);
 void RS_MarkResearchable(void);
 void RS_MarkOneResearchable(int tech_idx);
+void RS_MarkResearchedAll(void);
 void RS_MarkResearched(char *id);
 void RS_AssignScientist(technology_t* tech);
 technology_t *RS_GetTechByID(const char *id);
