@@ -38,6 +38,7 @@ CLIENT_SRCS = \
 	qcommon/cmodel.c \
 	qcommon/common.c \
 	qcommon/cvar.c \
+	qcommon/irc.c \
 	qcommon/files.c \
 	qcommon/md4.c \
 	qcommon/net_chan.c \

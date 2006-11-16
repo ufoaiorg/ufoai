@@ -3,33 +3,29 @@ MASTERSERVER_SRCS = \
 
 ifeq ($(HAVE_IPV6),1)
 	# FIXME: flags!
-	NET_UDP=net_udp6
+	NET_MASTER=net_master6
 else
-	NET_UDP=net_udp
+	NET_MASTER=net_master
 endif
 
 ifeq ($(TARGET_OS),linux-gnu)
 	MASTERSERVER_SRCS += \
-		ports/unix/$(NET_UDP).c
+		ports/unix/$(NET_MASTER).c
 endif
 
 ifeq ($(TARGET_OS),freebsd)
 	MASTERSERVER_SRCS += \
-		ports/unix/$(NET_UDP).c
+		ports/unix/$(NET_MASTER).c
 endif
 
 ifeq ($(TARGET_OS),mingw32)
 	MASTERSERVER_SRCS+=\
-		ports/win32/net_wins.c
+		ports/win32/net_master.c
 endif
 
 ifeq ($(TARGET_OS),darwin)
 	MASTERSERVER_SRCS+=\
-		ports/macosx/sys_osx.m \
-		ports/unix/glob.c \
-		ports/unix/sys_unix.c \
-		ports/unix/$(NET_UDP).c \
-		ports/macosx/q_shosx.c
+		ports/unix/$(NET_MASTER).c
 endif
 
 MASTERSERVER_OBJS= \

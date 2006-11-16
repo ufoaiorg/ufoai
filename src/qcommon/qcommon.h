@@ -111,6 +111,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void Info_Print(char *s);
 
+
+/*
+==============================================================
+IRC
+==============================================================
+*/
+void Irc_Connect_f(void);
+void Irc_Disconnect_f(void);
+void Irc_Init(void);
+void Irc_Shutdown(void);
+
 /*
 ==============================================================
 PROTOCOL
