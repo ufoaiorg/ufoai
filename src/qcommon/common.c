@@ -1477,6 +1477,9 @@ void Qcommon_Init(int argc, char **argv)
 	}
 
 #ifndef DEDICATED_ONLY
+	/* init irc commands and cvars */
+	Irc_Init();
+
 	if ((int) Cvar_VariableValue("cl_precachemenus"))
 		MN_PrecacheMenus();
 #endif
