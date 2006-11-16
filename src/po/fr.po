@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-11-12 19:02+0100\n"
-"PO-Revision-Date: 2006-11-14 22:03+0100\n"
+"PO-Revision-Date: 2006-11-16 20:40+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -61,9 +61,8 @@ msgid "Medium armor"
 msgstr "Armure moyenne"
 
 #: ../base/ufos/basemanagement.ufo:62
-#, fuzzy
 msgid "Alien containment"
-msgstr "Activité Alien"
+msgstr "Unité de détention"
 
 #: ../base/ufos/basemanagement.ufo:76
 msgid "Entrance"
@@ -164,14 +163,12 @@ msgid "Interceptor"
 msgstr "Intercepteur"
 
 #: ../base/ufos/basemanagement.ufo:369
-#, fuzzy
 msgid "UFO - Scout"
-msgstr "UFO - Scout"
+msgstr "UFO - Éclaireur"
 
 #: ../base/ufos/basemanagement.ufo:383
-#, fuzzy
 msgid "UFO - Fighter"
-msgstr "UFO - Fighter"
+msgstr "UFO - Vaisseau de combat"
 
 #: ../base/ufos/campaign.ufo:144
 msgid "Very Hard Campaign"
@@ -322,9 +319,8 @@ msgid "Aircraft absent from base"
 msgstr "Appareil absent de la base"
 
 #: ../base/ufos/menu_aircraft.ufo:85
-#, fuzzy
 msgid "Assign Soldiers"
-msgstr "Soldats"
+msgstr "Affecter des Soldats"
 
 #: ../base/ufos/menu_aircraft.ufo:94
 msgid "NA"
@@ -1450,9 +1446,8 @@ msgid "Maintain resolution"
 msgstr "Garder la résolution"
 
 #: ../base/ufos/menu_options.ufo:554
-#, fuzzy
 msgid "Want To Maintain resolution"
-msgstr "Want To Maintain resolution"
+msgstr "Désire garder la résolution"
 
 #: ../base/ufos/menu_options.ufo:571
 msgid "Change the resolution"
@@ -1600,16 +1595,14 @@ msgid "Keys"
 msgstr "Touches clavier"
 
 #: ../base/ufos/menu_production.ufo:69
-#, fuzzy
 msgid "Productionlimit"
-msgstr "Production"
+msgstr "Limite de Production"
 
 #: ../base/ufos/menu_production.ufo:109
 msgid "Q"
 msgstr "Q"
 
 #: ../base/ufos/menu_production.ufo:116
-#, fuzzy
 msgid "Num"
 msgstr "Num"
 
@@ -2037,9 +2030,8 @@ msgid "Eliminate intruders"
 msgstr "Élimination des assaillants"
 
 #: ../base/ufos/missions.ufo:367
-#, fuzzy
 msgid "Atacama Desert"
-msgstr "Désertique"
+msgstr "Désert d'Atacama"
 
 #: ../base/ufos/missions.ufo:369
 #: ../base/ufos/missions.ufo:407
@@ -2197,9 +2189,8 @@ msgid "The Commonwealth of Oceania"
 msgstr "Commonwealth d'Océanie"
 
 #: ../base/ufos/research.ufo:63
-#, fuzzy
 msgid "News"
-msgstr "Nouveau"
+msgstr "Actualités"
 
 #: ../base/ufos/research.ufo:65
 msgid "Technologies & Discoveries"
@@ -3646,7 +3637,7 @@ msgstr "Une armure plus résistante offrant une protection décente contre presq
 #: ../base/ufos/research.ufo:1324
 #, fuzzy
 msgid "light_alien_armor"
-msgstr "Armure légère"
+msgstr "armure_légère_alienne"
 
 #: ../base/ufos/research.ufo:1325
 #, fuzzy
@@ -3676,9 +3667,8 @@ msgid "Laser Damage Type"
 msgstr "Dommage Laser"
 
 #: ../base/ufos/research.ufo:1391
-#, fuzzy
 msgid "Impact Damage Type"
-msgstr "Dommage par Explosion"
+msgstr "Type de Dommages"
 
 #: ../base/ufos/research.ufo:1403
 #: ../base/ufos/research.ufo:1431
@@ -4532,27 +4522,24 @@ msgid "Werner Hoehrer (hoehrer)"
 msgstr "Werner Hoehrer (hoehrer)"
 
 #: ../base/ufos/seq_credits.ufo:157
-#, fuzzy
 msgid "Storywriter"
-msgstr "Storywriter"
+msgstr "Scénariste"
 
 #: ../base/ufos/seq_credits.ufo:163
 msgid "Ryan A. Span. (Winter)"
 msgstr "Ryan A. Span. (Winter)"
 
 #: ../base/ufos/seq_credits.ufo:209
-#, fuzzy
 msgid "Co-Storywriter"
-msgstr "Co-Storywriter"
+msgstr "Co-Scénariste"
 
 #: ../base/ufos/seq_credits.ufo:215
 msgid "Bas Fournier (BTAxis)"
 msgstr "Bas Fournier (BTAxis)"
 
 #: ../base/ufos/seq_credits.ufo:261
-#, fuzzy
 msgid "Technology Consultant"
-msgstr "Technology Consultant"
+msgstr "Consultant Technologique"
 
 #: ../base/ufos/seq_credits.ufo:267
 msgid "Forest Hale (LordHavoc)"
@@ -4561,9 +4548,8 @@ msgstr "Forest Hale (LordHavoc)"
 #: ../base/ufos/seq_credits.ufo:313
 #: ../base/ufos/seq_credits.ufo:365
 #: ../base/ufos/seq_credits.ufo:416
-#, fuzzy
 msgid "Contributing Programmer"
-msgstr "Contributing Programmer"
+msgstr "Programmeur Participant"
 
 #: ../base/ufos/seq_credits.ufo:319
 msgid "Sheldon Hearn (sheldonh)"
@@ -4578,9 +4564,8 @@ msgid "Tom Shackell (archmoo/tomshackell)"
 msgstr "Tom Shackell (archmoo/tomshackell)"
 
 #: ../base/ufos/seq_credits.ufo:472
-#, fuzzy
 msgid "Contributing Artist and Modeller"
-msgstr "Contributing Artist and Modeller"
+msgstr "Artiste et Modeleur Participant"
 
 #: ../base/ufos/seq_credits.ufo:478
 msgid "Philipp Hummer (kaeau) - Nathan : INC :: www.ninc.at"
@@ -4946,7 +4931,7 @@ msgstr "Grenade à Fragmentation"
 #: ../base/ufos/weapons.ufo:391
 #: ../base/ufos/weapons.ufo:459
 msgid "Lob"
-msgstr ""
+msgstr "Lancer"
 
 #: ../base/ufos/weapons.ufo:141
 #: ../base/ufos/weapons.ufo:210
@@ -4987,23 +4972,21 @@ msgstr "Chargeur de Fusil d'Assaut"
 
 #: ../base/ufos/weapons_human.ufo:36
 #: ../base/ufos/weapons_human.ufo:404
-#, fuzzy
 msgid "Snap Burst"
-msgstr "Rafale"
+msgstr "Rafale rapide"
 
 #: ../base/ufos/weapons_human.ufo:56
 #: ../base/ufos/weapons_human.ufo:423
-#, fuzzy
 msgid "Aimed Burst"
-msgstr "Tir Vis"
+msgstr "Rafale visée"
 
 #: ../base/ufos/weapons_human.ufo:81
 msgid "Chaingun"
-msgstr ""
+msgstr "Mitrailleuse lourde"
 
 #: ../base/ufos/weapons_human.ufo:99
 msgid "Chaingun Magazine"
-msgstr ""
+msgstr "Bande pour Mitrailleuse"
 
 #: ../base/ufos/weapons_human.ufo:111
 msgid "Burst"
@@ -5048,7 +5031,6 @@ msgid "9mm Pistol"
 msgstr "Pistolet 9mm"
 
 #: ../base/ufos/weapons_human.ufo:319
-#, fuzzy
 msgid "Pistol Clip 9mm"
 msgstr "Chargeur de Pistolet"
 
@@ -5146,17 +5128,15 @@ msgstr "Grenades IC 25mm"
 #: ../base/ufos/weapons_human.ufo:1100
 #: ../base/ufos/weapons_human.ufo:1167
 #: ../base/ufos/weapons_human.ufo:1234
-#, fuzzy
 msgid "Airburst Grenade"
-msgstr "Grenade à Fragmentation"
+msgstr "Grenade aérienne"
 
 #: ../base/ufos/weapons_human.ufo:1059
 #: ../base/ufos/weapons_human.ufo:1126
 #: ../base/ufos/weapons_human.ufo:1193
 #: ../base/ufos/weapons_human.ufo:1260
-#, fuzzy
 msgid "Timed Grenade"
-msgstr "Grenade Fumigène"
+msgstr "Grenade à retardement"
 
 #: ../base/ufos/weapons_human.ufo:1088
 msgid "25mm Flechette Grenades"
@@ -5217,9 +5197,8 @@ msgid "Heavy Laser Charge"
 msgstr "Chargeur de Laser Lourd"
 
 #: ../base/ufos/weapons_laser.ufo:183
-#, fuzzy
 msgid "Rapid Pulses"
-msgstr "Impulsion"
+msgstr "Tir rapide"
 
 #: ../base/ufos/weapons_laser.ufo:202
 msgid "Overload"
@@ -5245,7 +5224,7 @@ msgstr "Assomer"
 
 #: ../base/ufos/weapons_melee.ufo:89
 msgid "Stun Twice"
-msgstr ""
+msgstr "Assommer deux fois"
 
 #: ../base/ufos/weapons_melee.ufo:111
 msgid "Kerrblade"
@@ -6159,9 +6138,9 @@ msgid "Settings doesn't make sense"
 msgstr "Les réglages ne sont pas cohérents"
 
 #: client/cl_menu.c:1382
-#, fuzzy, c-format
+#, c-format
 msgid "Key: %s"
-msgstr "Touches clavier"
+msgstr "Touche: %s"
 
 #: client/cl_parse.c:663
 msgid "Alien spotted!\n"
@@ -6204,9 +6183,9 @@ msgid "Costs per item\t%i c\n"
 msgstr "Coût par objet\t%i c\n"
 
 #: client/cl_produce.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "Productiontime\t%ih\n"
-msgstr "Production"
+msgstr "Durée de Production\t%ih\n"
 
 #: client/cl_produce.c:223
 msgid "No item selected"
@@ -6409,7 +6388,7 @@ msgstr "Pertes de l'équipe\t%i\n"
 #: client/cl_team.c:1624
 #, c-format
 msgid "Team missing in action\t%i\n"
-msgstr "Team missing in action\t%i\n"
+msgstr "Équipe disparue en mission\t%i\n"
 
 #: client/cl_team.c:1625
 #, c-format
@@ -6462,9 +6441,9 @@ msgid "Phalanx soldiers killed by Aliens\t%i\n"
 msgstr "Soldats Phalanx tués par les Aliens\t%i\n"
 
 #: client/cl_team.c:1663
-#, fuzzy, c-format
+#, c-format
 msgid "Phalanx soldiers missing in action\t%i\n"
-msgstr "Soldats Phalanx tués par les Aliens\t%i\n"
+msgstr "Soldats Phalanx disparus en mission\t%i\n"
 
 #: client/cl_team.c:1664
 #, c-format
