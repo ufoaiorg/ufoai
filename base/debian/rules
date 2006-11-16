@@ -14,7 +14,7 @@ configure:
 	set -e; if [ -d .svn ]; then \
 	  SRCVER=$(shell $(vercmd)) ;\
 	  CURVER=`svn info|grep ^Revision:| cut -c11-` ;\
-	  if [ -n "$$CURVER" ] ; then \
+	  if [ -n "$$CURVER" ] && expr >/dev/null "$$SRCVER" : '.*svn'; then \
 	    sed 1s/$$SRCVER/$${SRCVER%svn*}svn$$CURVER/ < debian/changelog > debian/cl2;\
 	    mv debian/cl2 debian/changelog ;\
 	  fi ;\
@@ -31,8 +31,10 @@ build-stamp: configure
 reset-version:
 	set -e; if [ -d .svn ]; then \
 	  SRCVER=$(shell $(vercmd)) ;\
-	  sed 1s/$$SRCVER/$${SRCVER%svn*}svn/ < debian/changelog > debian/cl2;\
-	  mv debian/cl2 debian/changelog ;\
+	  if expr >/dev/null "$$SRCVER" : '.*svn'; then \
+	    sed 1s/$$SRCVER/$${SRCVER%svn*}svn/ < debian/changelog > debian/cl2;\
+	    mv debian/cl2 debian/changelog ;\
+	  fi ;\
 	fi
 
 clean:
