@@ -76,6 +76,10 @@ AC_ARG_ENABLE(dedicated,
 	[AS_HELP_STRING([--disable-dedicated], [build dedicated server @<:@default=enabled@:>@])],
 	[], [enable_dedicated=yes])
 
+AC_ARG_ENABLE(master,
+	[AS_HELP_STRING([--enable-master], [build masterserver @<:@default=disabled@:>@])],
+	[], [enable_master=no])
+
 AC_ARG_ENABLE(ufo2map,
 	[AS_HELP_STRING([--disable-ufo2map], [build ufo2map @<:@default=enabled@:>@])],
 	[], [enable_ufo2map=yes])
@@ -216,7 +220,7 @@ then
 		if test "$HAVE_WINDRES" != "yes"
 		then
 			WINDRES=""
-			AC_MSG_ERROR([You must have the mkdir program installed])
+			AC_MSG_ERROR([You must have the windres program installed])
 		fi
 	fi
 fi
@@ -804,6 +808,17 @@ if test "$enable_dedicated" = "yes"
 then
 	AC_MSG_NOTICE([Enabling dedicated server])
 	AC_SUBST([BUILD_DEDICATED],1)
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for master
+#---------------------------------------------------------------------------------------------
+
+AC_SUBST([BUILD_MASTER],0)
+if test "$enable_master" = "yes"
+then
+	AC_MSG_NOTICE([Enabling masterserver])
+	AC_SUBST([BUILD_MASTER],1)
 fi
 
 #---------------------------------------------------------------------------------------------

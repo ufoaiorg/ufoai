@@ -688,6 +688,7 @@ HAVE_SND_DX
 HAVE_VID_DGA
 HAVE_VID_VIDMODE
 BUILD_DEDICATED
+BUILD_MASTER
 BUILD_UFO2MAP
 BUILD_QDATA
 BUILD_DEBUG
@@ -1280,6 +1281,7 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --disable-openal        build openal sound support [default=enabled]
   --disable-dedicated     build dedicated server [default=enabled]
+  --enable-master         build masterserver [default=disabled]
   --disable-ufo2map       build ufo2map [default=enabled]
   --disable-qdata         build qdata [default=enabled]
   --disable-gettext       build with multilanguage support [default=enabled]
@@ -2070,6 +2072,14 @@ if test "${enable_dedicated+set}" = set; then
   enableval=$enable_dedicated;
 else
   enable_dedicated=yes
+fi
+
+
+# Check whether --enable-master was given.
+if test "${enable_master+set}" = set; then
+  enableval=$enable_master;
+else
+  enable_master=no
 fi
 
 
@@ -3512,8 +3522,8 @@ fi
 		if test "$HAVE_WINDRES" != "yes"
 		then
 			WINDRES=""
-			{ { echo "$as_me:$LINENO: error: You must have the mkdir program installed" >&5
-echo "$as_me: error: You must have the mkdir program installed" >&2;}
+			{ { echo "$as_me:$LINENO: error: You must have the windres program installed" >&5
+echo "$as_me: error: You must have the windres program installed" >&2;}
    { (exit 1); exit 1; }; }
 		fi
 	fi
@@ -10134,6 +10144,20 @@ echo "$as_me: Enabling dedicated server" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
+# Check for master
+#---------------------------------------------------------------------------------------------
+
+BUILD_MASTER=0
+
+if test "$enable_master" = "yes"
+then
+	{ echo "$as_me:$LINENO: Enabling masterserver" >&5
+echo "$as_me: Enabling masterserver" >&6;}
+	BUILD_MASTER=1
+
+fi
+
+#---------------------------------------------------------------------------------------------
 # Check for ufo2map
 #---------------------------------------------------------------------------------------------
 
@@ -10920,13 +10944,13 @@ HAVE_SND_DX!$HAVE_SND_DX$ac_delim
 HAVE_VID_DGA!$HAVE_VID_DGA$ac_delim
 HAVE_VID_VIDMODE!$HAVE_VID_VIDMODE$ac_delim
 BUILD_DEDICATED!$BUILD_DEDICATED$ac_delim
+BUILD_MASTER!$BUILD_MASTER$ac_delim
 BUILD_UFO2MAP!$BUILD_UFO2MAP$ac_delim
 BUILD_QDATA!$BUILD_QDATA$ac_delim
 BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 PARANOID!$PARANOID$ac_delim
 PROFILING!$PROFILING$ac_delim
 EXE_EXT!$EXE_EXT$ac_delim
-LIBOBJS!$LIBOBJS$ac_delim
 _ACEOF
 
   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
@@ -10968,10 +10992,11 @@ _ACEOF
 ac_delim='%!_!# '
 for ac_last_try in false false false false false :; do
   cat >conf$$subs.sed <<_ACEOF
+LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 1; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 2; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5

@@ -38,6 +38,7 @@ HAVE_SND_DX=@HAVE_SND_DX@
 
 PROFILING=@PROFILING@
 PARANOID=@PARANOID@
+BUILD_MASTER=@BUILD_MASTER@
 BUILD_DEDICATED=@BUILD_DEDICATED@
 BUILD_UFO2MAP=@BUILD_UFO2MAP@
 BUILD_QDATA=@BUILD_QDATA@
@@ -55,7 +56,7 @@ include build/defs.mk
 #######################################################################################################
 
 # define all the modules that need to be compiled
-MODULES = client server tools game sound ref_gl
+MODULES = client server tools game sound ref_gl masterserver
 
 all: all2
 
