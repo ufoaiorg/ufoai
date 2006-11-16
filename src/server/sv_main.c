@@ -260,20 +260,20 @@ void SVC_DirectConnect(void)
 	userinfo[sizeof(userinfo) - 1] = 0;
 
 	if (!strlen(userinfo)) {  /* catch empty userinfo */
-		Com_Printf("Empty userinfo from %s\n", NET_AdrToString(adr)); 
-		Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nConnection refused.\n"); 
+		Com_Printf("Empty userinfo from %s\n", NET_AdrToString(adr));
+		Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nConnection refused.\n");
 		return;
-	} 
+	}
 
 	if (strchr(userinfo, '\xFF')) {  /* catch end of message in string exploit */
-		Com_Printf("Illegal userinfo contained xFF from %s\n", NET_AdrToString(adr)); 
-		Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nConnection refused.\n"); 
+		Com_Printf("Illegal userinfo contained xFF from %s\n", NET_AdrToString(adr));
+		Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nConnection refused.\n");
 		return;
-	} 
+	}
 
 	if (strlen(Info_ValueForKey(userinfo, "ip"))) {  /* catch spoofed ips  */
-		Com_Printf("Illegal userinfo contained ip from %s\n", NET_AdrToString(adr)); 
-		Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nConnection refused.\n"); 
+		Com_Printf("Illegal userinfo contained ip from %s\n", NET_AdrToString(adr));
+		Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nConnection refused.\n");
 		return;
 	}
 
@@ -821,20 +821,20 @@ void SV_Init(void)
 	Cvar_Get("timelimit", "0", CVAR_SERVERINFO, NULL);
 	Cvar_Get("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	Cvar_Get("protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
-	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, NULL);
-	hostname = Cvar_Get("hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE, NULL);
+	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
+	hostname = Cvar_Get("hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
 	timeout = Cvar_Get("timeout", "125", 0, NULL);
 	zombietime = Cvar_Get("zombietime", "2", 0, NULL);
 	sv_showclamp = Cvar_Get("showclamp", "0", 0, NULL);
 	sv_paused = Cvar_Get("paused", "0", 0, NULL);
 	sv_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
 	sv_enforcetime = Cvar_Get("sv_enforcetime", "0", 0, NULL);
-	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
+	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Enable morale changes in multiplayer");
 	maxsoldiers = Cvar_Get("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
 	maxsoldiersperplayer = Cvar_Get("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
 
 	sv_noreload = Cvar_Get("sv_noreload", "0", 0, NULL);
-	public_server = Cvar_Get("public", "0", 0, NULL);
+	public_server = Cvar_Get("public", "0", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, NULL);
 
 	if (dedicated->value)
