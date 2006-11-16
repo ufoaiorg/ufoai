@@ -29,7 +29,7 @@ configure:
 	  SRCVER=$(shell $(vercmd)) ;\
 	  CURVER=`svn info|grep ^Revision:| cut -c11-` ;\
 	  if [ -n "$$CURVER" ] ; then \
-	    sed 1s/$$SRCVER/0.0.svn$$CURVER/ < debian/changelog > debian/cl2;\
+	    sed 1s/$$SRCVER/$${SRCVER%svn*}svn$$CURVER/ < debian/changelog > debian/cl2;\
 	    mv debian/cl2 debian/changelog ;\
 	  fi ;\
 	fi
@@ -44,6 +44,13 @@ build-stamp: configure
 
 	touch build-stamp
 
+reset-version:
+	set -e; if [ -d .svn ]; then \
+	  SRCVER=$(shell $(vercmd)) ;\
+	  sed 1s/$$SRCVER/$${SRCVER%svn*}svn/ < debian/changelog > debian/cl2;\
+	  mv debian/cl2 debian/changelog ;\
+	fi
+
 clean:
 	dh_testdir
 	dh_testroot
@@ -52,11 +59,7 @@ clean:
 	-$(MAKE) clean BUILD_RELEASE_DIR=build
 	rm -rf build
 
-	set -e; if [ -d .svn ]; then \
-	  SRCVER=$(shell $(vercmd)) ;\
-	  sed 1s/$$SRCVER/0.0.svn/ < debian/changelog > debian/cl2;\
-	  mv debian/cl2 debian/changelog ;\
-	fi
+	$(MAKE) reset-version
 
 	dh_clean 
 
