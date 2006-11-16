@@ -161,8 +161,14 @@ void GL_ScreenShot_f(void)
 
 	/* Open it */
 	f = fopen (checkName, "wb");
-	if (shotNum == 1000 || !f) {
-		ri.Con_Printf (PRINT_ALL, "GL_ScreenShot_f: Couldn't create a file\n");
+
+	if (!f) {
+		ri.Con_Printf (PRINT_ALL, "GL_ScreenShot_f: Couldn't create file: %s\n", checkName);
+		return;
+	}
+
+	if (shotNum == 1000) {
+		ri.Con_Printf (PRINT_ALL, "GL_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
 		fclose (f);
 		return;
 	}
