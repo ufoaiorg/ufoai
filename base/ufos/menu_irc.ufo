@@ -41,6 +41,63 @@ menu irc
 		pos		"512 512"
 	}
 
+	string title
+	{
+		string	"_Lobby"
+		pos		"512 25"
+		align	uc
+		font	f_big
+	}
+
+	pic button_exit
+	{
+		image	hud/buttons2
+		mousefx true
+		pos		"950 720"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop; }
+	}
+
+	string users_string
+	{
+		string	"_Users"
+		pos		"860 80"
+		align	uc
+		font	f_small
+	}
+	text users_data
+	{
+		pos		"750 100"
+		size	"240 590"
+		bgcolor	"0.5 0.5 0.5 0.2"
+		format  "22 0"
+		num		"1"
+	}
+
+	text irc_data
+	{
+		pos		"30 80"
+		size	"690 620"
+		bgcolor	"0.5 0.5 0.5 0.2"
+		format  "22 0"
+	}
+
+	string irc_send_buffer
+	{
+		string	"*cvar irc_send_buffer"
+		pos		"30 715"
+		size	"690 25"
+		bgcolor	"0.5 0.5 0.5 0.2"
+		font	f_normal
+	}
+
+	confunc irc_activate_input
+	{
+		cmd "msgmenu ?irc_send_buffer"
+		*irc_send_buffer mousefx true
+	}
+
 	// ==================
 	// init
 	// ==================
