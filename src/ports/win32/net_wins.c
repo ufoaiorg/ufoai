@@ -97,6 +97,21 @@ void SockadrToNetadr (struct sockaddr *s, netadr_t *a)
 	}
 }
 
+/**
+ * @brief Converts sockaddr_in to string
+ * @sa SockadrToNetadr
+ */
+char *NET_SocketToString (void *s_ptr)
+{
+	netadr_t addr;
+	struct sockaddr_in *s = (struct sockaddr_in*)s_ptr;
+
+	if (!s)
+		return "";
+	memset(&addr, 0, sizeof(netadr_t));
+	SockadrToNetadr(s, &addr);
+	return NET_AdrToString(addr);
+}
 
 /**
  * @brief

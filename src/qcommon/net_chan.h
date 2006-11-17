@@ -47,6 +47,7 @@ qboolean NET_IsLocalAddress(netadr_t adr);
 char *NET_AdrToString(netadr_t a);
 qboolean NET_StringToAdr(char *s, netadr_t * a);
 void NET_Sleep(int msec);
+char *NET_SocketToString (void *s_ptr);
 
 /*============================================================================ */
 

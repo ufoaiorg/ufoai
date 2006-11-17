@@ -585,10 +585,12 @@ qboolean Irc_Net_Connect (const char *host, unsigned short port)
 			addr.sin_port = htons(port);
 			addr.sin_addr.s_addr = ((struct in_addr*) he->h_addr)->s_addr;
 			addr.sin_family = AF_INET;
+			Com_Printf("Irc_Net_Connect: IP: %s\n", NET_SocketToString(&addr));
 			status = connect(irc_socket, (const struct sockaddr*) &addr, sizeof(addr));
 			if (!status) {
 				/* connection successful */
 				failed = qfalse;
+				Com_Printf("Irc_Net_Connect: Connection successful\n");
 			} else {
 				Com_Printf("Irc_Net_Connect: Connection refused\n");
 #ifdef _WIN32
@@ -698,7 +700,7 @@ extern void Irc_Connect_f (void)
 			Com_Printf("Connect to %s:%s\n", irc_server->string, irc_port->string);
 			if (Irc_Proto_Connect(irc_server->string, (int)irc_port->value)) {
 				/* connect failed */
-				Com_Printf("Could not connect to %s.\n", irc_server->string);
+				Com_Printf("Could not connect to %s:%s.\n", irc_server->string, irc_port->string);
 			}
 		} else
 			Com_Printf("Already connected.\n");
@@ -729,7 +731,7 @@ extern void Irc_Init(void)
 
 	/* cvars */
 	irc_server = Cvar_Get("irc_server", "irc.freenode.org", CVAR_ARCHIVE, "IRC server to connect to");
-	irc_port = Cvar_Get("irc_port", "", CVAR_ARCHIVE, "IRC port to connect to");
+	irc_port = Cvar_Get("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");
 }
 
 /**
