@@ -1711,7 +1711,8 @@ void B_AssembleMap(void)
 			Com_DPrintf("Invalid baseID: %i\n", baseID);
 			return;
 		}
-		base = &gd.bases[baseID];
+		/* set baseCurrent to base under attack for the call to B_GetBuildingByIdx */
+		base = baseCurrent = &gd.bases[baseID];
 	}
 
 	if (!base) {
