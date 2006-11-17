@@ -1731,13 +1731,14 @@ int CL_GameLoad(char *filename)
 	byte *buf, *cbuf;
 	FILE *f;
 	char *name, *title, *text;
-	int res, clen, len = MAX_GAMESAVESIZE;
+	int res, clen;
 	int version, dataSize, mtype, idx;
 	int i, j, num, type;
 	char val[32];
 	message_t *mess;
 	base_t *base;
 	int selectedMission;
+	uLongf len = MAX_GAMESAVESIZE;
 
 	/* open file */
 	f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
@@ -1756,7 +1757,7 @@ int CL_GameLoad(char *filename)
 	/* uncompress data, skipping comment header */
 	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
-	res = uncompress(buf, (uLongf *)&len, cbuf + MAX_VAR, clen - MAX_VAR);
+	res = uncompress(buf, &len, cbuf + MAX_VAR, clen - MAX_VAR);
 	free(cbuf);
 
 	if (res != Z_OK) {
