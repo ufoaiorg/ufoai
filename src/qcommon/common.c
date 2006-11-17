@@ -1593,11 +1593,11 @@ float Qcommon_Frame(int msec)
 	if (cl_timer > 0) {
 		int frametime = max(cl_timer, 1000/(int)cl_maxfps->value);
 		frametime = min(frametime, 1000);
+#ifndef DEDICATED_ONLY
+		Irc_Logic_Frame(cl_timer);
+#endif
 		cl_timer -= frametime;
 		CL_Frame(frametime);
-#ifndef DEDICATED_ONLY
-		Irc_Logic_Frame(frametime);
-#endif
 	}
 
 	if (host_speeds->value) {

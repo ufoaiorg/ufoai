@@ -928,12 +928,10 @@ void Key_Event(int key, qboolean down, unsigned time)
 			return;
 
 		switch (cls.key_dest) {
-		case key_irc:
-			Irc_Input_KeyEvent(key);
-			break;
 		case key_message:
 			Key_Message(key);
 			break;
+		case key_irc:
 		case key_game:
 			Cbuf_AddText("mn_pop esc;");
 			break;

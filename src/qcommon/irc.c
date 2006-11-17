@@ -412,6 +412,7 @@ qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 			cmd.id.string = msg->id.string;
 			break;
 	}
+	Com_Printf("pre: '%s', param: '%s', trail: '%s'\n", msg->prefix, msg->params, msg->trailing);
 /*	Irc_Proto_CallListeners(cmd, msg->prefix, msg->params, msg->trailing);*/
 	return qfalse;
 }
@@ -584,6 +585,7 @@ static qboolean Irc_Proto_DrainBucket (void)
 	const double characterBucketBurst = irc_characterBucketBurst->value;
 	qboolean status = qfalse;
 	irc_bucket_message_t *msg;
+	Com_DPrintf("Irc_Proto_DrainBucket: Queue send\n");
 	/* remove messages whose size exceed our burst size (we can not send them) */
 	for (msg = irc_bucket.first_msg; msg && msg->msg_len > characterBucketBurst; msg = irc_bucket.first_msg) {
 		irc_bucket_message_t * const next = msg->next;
@@ -663,7 +665,7 @@ static void Irc_Logic_ReadMessages(void)
  */
 extern void Irc_Logic_Frame(int frame)
 {
-	if (irc_connected && !(frame % IRC_TRANSMIT_INTERVAL)) {
+	if (irc_connected && frame > 0) {
 		Irc_Logic_SendMessages();
 		Irc_Logic_ReadMessages();
 	}
@@ -883,7 +885,9 @@ Bindings
 static void Irc_Connect_f (void)
 {
 	const int argc = Cmd_Argc();
-	if (argc <= 3) {
+	if (argc <= 4) {
+		if (irc_connected)
+			Irc_Logic_Disconnect("reconnect");
 		if (!irc_connected) {
 			/* not connected yet */
 			if (argc >= 2)
@@ -892,10 +896,12 @@ static void Irc_Connect_f (void)
 				Cvar_Set("irc_port", Cmd_Argv(2));
 			Com_Printf("Connect to %s:%s\n", irc_server->string, irc_port->string);
 			Irc_Logic_Connect(irc_server->string, (int)irc_port->value);
+			if (argc >= 4)
+				Cbuf_AddText(va("irc_join %s\n", Cmd_Argv(3)));
 		} else
 			Com_Printf("Already connected.\n");
 	} else
-			Com_Printf("usage: irc_connect [<server>] [<port>]");
+			Com_Printf("usage: irc_connect [<server>] [<port>] [<channel>]");
 }
 
 /**
