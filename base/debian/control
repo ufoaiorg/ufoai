@@ -1,27 +1,27 @@
 Source: ufoai-data
-Section: non-free/games
+Section: games
 Priority: optional
 Maintainer: Yann Dirson <dirson@debian.org>
-Build-Depends: debhelper (>= 4.0.0), ufoai-tools (>= 0.0.svn2120)
-Standards-Version: 3.6.1
+Build-Depends: debhelper (>= 4.0.0), ufoai-tools (>= 2.0~rc6)
+Standards-Version: 3.7.2
 
 Package: ufoai-data
 Architecture: all
 Depends: ${misc:Depends}, ttf-freefont, ttf-dejavu
 Recommends: ufoai
-Description: Data for UFO: Alien Invasion
- Models, units, sound effects, etc.
+Replaces: ufoai-data-maps
+Conflicts: ufoai-data-maps
+Description: UFO: Alien Invasion - data files
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ This package contains the maps, models, sound effects and other data
+ files defining the UFO:AI game.
 
-Package: ufoai-data-maps
+Package: ufoai-music
 Architecture: all
 Depends: ${misc:Depends}
 Recommends: ufoai
-Description: Data for UFO: Alien Invasion
- Maps.
-
-Package: ufoai-data-music
-Architecture: all
-Depends: ${misc:Depends}
-Recommends: ufoai
-Description: Data for UFO: Alien Invasion
- Music.
+Description: UFO: Alien Invasion - music tracks
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ This package contains the music tracks covered by a free license.

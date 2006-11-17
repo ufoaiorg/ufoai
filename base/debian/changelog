@@ -1,7 +1,7 @@
 ufoai-data (2.0~rc7~svn) unstable; urgency=low
 
   * SVN snapshot.
-  * Do not provides ufoai-music any more.
+  * Merged ufoai-data-maps package into ufoai-data.
   * Adapted packaging to svn layout.
   * Build data from source using ufoai-tools.
   * Removed integration of 3rd-party scenarios in the campaign, removed
@@ -14,7 +14,7 @@ ufoai-data (2.0~rc7~svn) unstable; urgency=low
   * Includes the textures although their copyright status still has to be
     audited.
 
- -- Yann Dirson <dirson@debian.org>  Sun, 23 Apr 2006 17:47:43 +0200
+ -- Yann Dirson <dirson@debian.org>  Fri, 17 Nov 2006 22:53:20 +0100
 
 ufoai-data (0.0.040218-0.3.1) unstable; urgency=low
 

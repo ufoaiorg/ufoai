@@ -1,14 +1,15 @@
 Source: ufoai
-Section: contrib/games
+Section: games
 Priority: optional
 Maintainer: Yann Dirson <dirson@debian.org>
 Build-Depends: debhelper (>= 4.0.0), dh-buildinfo, libx11-dev, libxext-dev, libjpeg-dev, libvorbis-dev, libglu1-mesa-dev, xlibmesa-gl-dev, libsdl-dev, libsdl-ttf2.0-dev
-Standards-Version: 3.6.1
+Standards-Version: 3.7.2
 
 Package: ufoai
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 0.0.svn), ufoai-data-maps (>= 0.0.svn)
-Suggests: ufoai-data-music
+Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 2.0~rc6)
+Recommends: ufoai-music (>= 2.0~rc6)
+Suggests: ufoai-music-non-free
 Description: UFO: Alien Invasion - build your team and stop the aliens
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
@@ -30,7 +31,7 @@ Description: UFO: Alien Invasion - data-building tool
 Package: ufoai-server
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Suggests: ufoai-data-maps (>= 0.0.svn)
+Suggests: ufoai-data-maps (>= 2.0~rc6)
 Description: UFO: Alien Invasion - standalone game server
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .

@@ -11,7 +11,7 @@ ufoai (2.0~rc7~svn) unstable; urgency=low
   * Simplified /usr/games/ufo script much, now that ~/.ufoai is used by the
     game itself.
 
- -- Yann Dirson <dirson@debian.org>  Tue, 25 Jul 2006 23:44:20 +0200
+ -- Yann Dirson <dirson@debian.org>  Fri, 17 Nov 2006 22:53:07 +0100
 
 ufoai (0.0.040218-0.8) unstable; urgency=low
 

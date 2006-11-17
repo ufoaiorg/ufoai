@@ -5,3 +5,24 @@ shaders /usr/lib/games/ufoai/base/
 sound /usr/lib/games/ufoai/base/
 textures /usr/lib/games/ufoai/base/
 ufos /usr/lib/games/ufoai/base/
+
+maps/*.bsp /usr/lib/games/ufoai/base/maps
+
+maps/villaged/*.bsp /usr/lib/games/ufoai/base/maps/villaged
+maps/villagen/*.bsp /usr/lib/games/ufoai/base/maps/villagen
+
+maps/frozend/*.bsp /usr/lib/games/ufoai/base/maps/frozend
+maps/frozenn/*.bsp /usr/lib/games/ufoai/base/maps/frozenn
+
+maps/orientald/*.bsp /usr/lib/games/ufoai/base/maps/orientald
+maps/orientaln/*.bsp /usr/lib/games/ufoai/base/maps/orientaln
+
+maps/ice/*.bsp /usr/lib/games/ufoai/base/maps/ice
+
+maps/tropicd/*.bsp /usr/lib/games/ufoai/base/maps/tropicd
+maps/tropicn/*.bsp /usr/lib/games/ufoai/base/maps/tropicn
+
+maps/b/*.bsp /usr/lib/games/ufoai/base/maps/b
+maps/b/a/*.bsp /usr/lib/games/ufoai/base/maps/b/a
+maps/b/d/*.bsp /usr/lib/games/ufoai/base/maps/b/d
+maps/b/g/*.bsp /usr/lib/games/ufoai/base/maps/b/g
