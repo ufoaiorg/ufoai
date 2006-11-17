@@ -1,0 +1,59 @@
+// ==================
+// IRC MENU
+// ==================
+
+menu irc
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/irc_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/irc_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/irc_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/irc_lr
+		pos		"512 512"
+	}
+
+	// ==================
+	// init
+	// ==================
+	func init
+	{
+		cmd irc_activate;
+	}
+
+	// ==================
+	// close
+	// ==================
+	func close
+	{
+		cmd irc_deactivate;
+	}
+}

@@ -625,7 +625,7 @@ Logic functions
  * @brief
  * @sa Irc_Logic_Frame
  */
-static void Irc_Logic_SendMessages(void)
+static void Irc_Logic_SendMessages (void)
 {
 	if (Irc_Proto_Flush()) {
 		/* flush failed, server closed connection */
@@ -663,7 +663,7 @@ static void Irc_Logic_ReadMessages(void)
  */
 extern void Irc_Logic_Frame(int frame)
 {
-	if (!(frame % IRC_TRANSMIT_INTERVAL)) {
+	if (irc_connected && !(frame % IRC_TRANSMIT_INTERVAL)) {
 		Irc_Logic_SendMessages();
 		Irc_Logic_ReadMessages();
 	}
@@ -697,6 +697,8 @@ void Irc_Logic_Disconnect(const char *reason)
 		Irc_Proto_Quit(buf);
 		Irc_Proto_Disconnect();
 		irc_connected = qfalse;
+		Cvar_ForceSet("irc_defaultChannel", "");
+		Irc_Input_Deactivate();
 	} else
 		Com_Printf("Irc_Disconnect: not connected\n");
 }
@@ -1137,6 +1139,9 @@ extern void Irc_Init(void)
 	Cmd_AddCommand("irc_names", Irc_Client_Names_f, NULL);
 	Cmd_AddCommand("irc_kick", Irc_Client_Kick_f, NULL);
 
+	Cmd_AddCommand("irc_activate", Irc_Input_Activate, "IRC init when entering the menu");
+	Cmd_AddCommand("irc_deactivate", Irc_Input_Deactivate, "IRC deactivate when leaving the irc menu");
+
 	/* cvars */
 	irc_server = Cvar_Get("irc_server", "irc.freenode.org", CVAR_ARCHIVE, "IRC server to connect to");
 	irc_port = Cvar_Get("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");
@@ -1156,6 +1161,32 @@ extern void Irc_Shutdown(void)
 
 /**
  * @brief
+ * @sa Irc_Input_Deactivate
+ */
+extern void Irc_Input_Activate(void)
+{
+	if (irc_connected && *irc_defaultChannel->string)
+		cls.key_dest = key_irc;
+	else
+		Com_DPrintf("Warning: No irc input mode, not connected\n");
+}
+
+/**
+ * @brief
+ * @sa Irc_Input_Activate
+ */
+extern void Irc_Input_Deactivate(void)
+{
+	if (cls.key_dest == key_irc)
+		cls.key_dest = key_game;
+	else
+		Com_DPrintf("Note: No in irc input mode - thus we can not leave it\n");
+}
+
+/**
+ * @brief
+ * @sa Irc_Input_Activate
+ * @sa Irc_Input_Deactivate
  */
 extern void Irc_Input_KeyEvent(int key)
 {
