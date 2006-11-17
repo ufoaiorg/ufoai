@@ -59,6 +59,8 @@ static const char IRC_QUIT_MSG[] = "ufo.myexp.de";
 
 static irc_channel_t *chan = NULL;
 
+static char irc_buffer[4048];
+
 #define IRC_MESSAGEMODE_BUFSIZE 256
 static char	irc_messagemode_buf[IRC_MESSAGEMODE_BUFSIZE];
 static int	irc_messagemode_buflen = 0;
@@ -412,8 +414,8 @@ qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 			cmd.id.string = msg->id.string;
 			break;
 	}
-	Com_Printf("pre: '%s', param: '%s', trail: '%s'\n", msg->prefix, msg->params, msg->trailing);
-/*	Irc_Proto_CallListeners(cmd, msg->prefix, msg->params, msg->trailing);*/
+	Com_DPrintf("pre: '%s', param: '%s', trail: '%s'\n", msg->prefix, msg->params, msg->trailing);
+	Q_strcat(irc_buffer, va("%s\n", msg->trailing), sizeof(irc_buffer));
 	return qfalse;
 }
 
@@ -1154,6 +1156,9 @@ extern void Irc_Init(void)
 	irc_user = Cvar_Get("irc_user", "UfoAIPlayer", CVAR_ARCHIVE, NULL);
 	irc_password = Cvar_Get("irc_password", "", CVAR_ARCHIVE, NULL);
 	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET, NULL);
+
+	/* reset buffer */
+	memset(irc_buffer, 0, sizeof(irc_buffer));
 }
 
 /**
@@ -1171,9 +1176,10 @@ extern void Irc_Shutdown(void)
  */
 extern void Irc_Input_Activate(void)
 {
-	if (irc_connected && *irc_defaultChannel->string)
+	if (irc_connected && *irc_defaultChannel->string) {
 		cls.key_dest = key_irc;
-	else
+		menuText[TEXT_STANDARD] = irc_buffer;
+	} else
 		Com_DPrintf("Warning: No irc input mode, not connected\n");
 }
 

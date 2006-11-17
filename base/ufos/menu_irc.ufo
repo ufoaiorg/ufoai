@@ -56,7 +56,7 @@ menu irc
 		pos		"950 720"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd mn_pop; }
+		click	{ cmd "irc_deactivate; mn_pop;" }
 	}
 
 	string users_string
