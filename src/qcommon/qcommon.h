@@ -117,10 +117,10 @@ void Info_Print(char *s);
 IRC
 ==============================================================
 */
-void Irc_Connect_f(void);
-void Irc_Disconnect_f(void);
 void Irc_Init(void);
 void Irc_Shutdown(void);
+void Irc_Logic_Frame(int frame);
+void Irc_Input_KeyEvent(int key);
 
 /*
 ==============================================================

@@ -1747,6 +1747,7 @@ void CL_Shutdown(void)
 	}
 	isdown = qtrue;
 
+	Irc_Shutdown();
 	CL_WriteConfiguration();
 	Con_SaveConsoleHistory(FS_Gamedir());
 	if (CL_VideoRecording())

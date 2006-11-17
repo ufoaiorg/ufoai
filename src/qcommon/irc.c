@@ -1,6 +1,6 @@
 /**
- * @file ms_server.h
- * @brief Master server header file
+ * @file irc.c
+ * @brief IRC client implementation for UFO:AI
  */
 
 /*
@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../client/client.h"
 #include "qcommon.h"
 #include "irc.h"
 
@@ -45,9 +46,37 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static cvar_t *irc_server = NULL;
 static cvar_t *irc_port = NULL;
+static cvar_t *irc_user = NULL;
+static cvar_t *irc_password = NULL;
+static cvar_t *irc_defaultChannel = NULL;
+
 static qboolean irc_connected = qfalse;
 
 static irc_socket_t irc_socket = -1;
+
+static const qboolean IRC_INVISIBLE = qtrue;
+static const char IRC_QUIT_MSG[] = "ufo.myexp.de";
+
+static irc_channel_t *chan = NULL;
+
+#define IRC_MESSAGEMODE_BUFSIZE 256
+static char	irc_messagemode_buf[IRC_MESSAGEMODE_BUFSIZE];
+static int	irc_messagemode_buflen = 0;
+
+/*
+===============================================================
+Common functions
+===============================================================
+*/
+
+/**
+ * @brief
+ */
+static qboolean Irc_IsChannel(const char *target)
+{
+	assert(target);
+	return (*target == '#' || *target == '&');
+}
 
 /*
 ===============================================================
@@ -87,6 +116,7 @@ static irc_bucket_t irc_bucket;
 
 /**
  * @brief
+ * @sa Irc_Proto_Disconnect
  */
 qboolean Irc_Proto_Connect (const char *host, unsigned short port)
 {
@@ -112,6 +142,7 @@ qboolean Irc_Proto_Connect (const char *host, unsigned short port)
 
 /**
  * @brief
+ * @sa Irc_Proto_Connect
  */
 qboolean Irc_Proto_Disconnect (void)
 {
@@ -134,6 +165,7 @@ qboolean Irc_Proto_Disconnect (void)
 
 /**
  * @brief
+ * @sa Irc_Net_Send
  */
 qboolean Irc_Proto_Quit (const char *quitmsg)
 {
@@ -145,6 +177,7 @@ qboolean Irc_Proto_Quit (const char *quitmsg)
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_Nick (const char *nick)
 {
@@ -156,6 +189,7 @@ qboolean Irc_Proto_Nick (const char *nick)
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_User (const char *user, qboolean invisible, const char *name)
 {
@@ -167,6 +201,7 @@ qboolean Irc_Proto_User (const char *user, qboolean invisible, const char *name)
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_Password (const char *password)
 {
@@ -178,6 +213,7 @@ qboolean Irc_Proto_Password (const char *password)
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_Join (const char *channel, const char *password)
 {
@@ -191,6 +227,7 @@ qboolean Irc_Proto_Join (const char *channel, const char *password)
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_Part (const char *channel)
 {
@@ -202,6 +239,7 @@ qboolean Irc_Proto_Part (const char *channel)
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_Mode (const char *target, const char *modes, const char *params)
 {
@@ -215,6 +253,7 @@ qboolean Irc_Proto_Mode (const char *target, const char *modes, const char *para
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_Topic (const char *channel, const char *topic)
 {
@@ -228,6 +267,7 @@ qboolean Irc_Proto_Topic (const char *channel, const char *topic)
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_Msg (const char *target, const char *text)
 {
@@ -239,6 +279,7 @@ qboolean Irc_Proto_Msg (const char *target, const char *text)
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_Notice (const char *target, const char *text)
 {
@@ -250,6 +291,7 @@ qboolean Irc_Proto_Notice (const char *target, const char *text)
 
 /**
  * @brief
+ * @sa Irc_Net_Send
  */
 qboolean Irc_Proto_Pong (const char *nick, const char *server, const char *cookie)
 {
@@ -263,6 +305,7 @@ qboolean Irc_Proto_Pong (const char *nick, const char *server, const char *cooki
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_Kick (const char *channel, const char *nick, const char *reason)
 {
@@ -276,6 +319,7 @@ qboolean Irc_Proto_Kick (const char *channel, const char *nick, const char *reas
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_Who (const char *nick)
 {
@@ -287,6 +331,7 @@ qboolean Irc_Proto_Who (const char *nick)
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_Whois (const char *nick)
 {
@@ -298,6 +343,7 @@ qboolean Irc_Proto_Whois (const char *nick)
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
  */
 qboolean Irc_Proto_Whowas (const char *nick)
 {
@@ -309,6 +355,7 @@ qboolean Irc_Proto_Whowas (const char *nick)
 
 /**
  * @brief
+ * @sa Irc_Logic_ReadMessages
  */
 qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_complete)
 {
@@ -351,6 +398,7 @@ qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_complete)
 
 /**
  * @brief
+ * @sa Irc_Logic_ReadMessages
  */
 qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 {
@@ -457,6 +505,8 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
+ * @sa Irc_Proto_DrainBucket
  */
 qboolean Irc_Proto_Flush (void)
 {
@@ -466,12 +516,15 @@ qboolean Irc_Proto_Flush (void)
 
 /**
  * @brief
+ * @sa Irc_Proto_DrainBucket
+ * @sa Irc_Proto_RefillBucket
+ * @sa Irc_Proto_Flush
  */
 static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 {
 	/* create message node */
-	const double messageBucketSize = irc_messageBucketSize->value;
-	const double characterBucketSize = irc_characterBucketSize->value;
+	const int messageBucketSize = (int)irc_messageBucketSize->value;
+	const int characterBucketSize = (int)irc_characterBucketSize->value;
 	irc_bucket_message_t * const m = (irc_bucket_message_t*) Mem_Alloc(sizeof(irc_bucket_message_t));
 	irc_bucket_message_t * n = irc_bucket.first_msg;
 	if (irc_bucket.message_size + 1 <= messageBucketSize && irc_bucket.character_size + msg_len <= characterBucketSize) {
@@ -498,6 +551,8 @@ static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 
 /**
  * @brief
+ * @sa Irc_Proto_Enqueue
+ * @sa Irc_Proto_DrainBucket
  */
 static void Irc_Proto_RefillBucket (void)
 {
@@ -520,7 +575,9 @@ static void Irc_Proto_RefillBucket (void)
 }
 
 /**
- * @brief
+ * @brief Send all enqueued packets
+ * @sa Irc_Proto_Enqueue
+ * @sa Irc_Proto_RefillBucket
  */
 static qboolean Irc_Proto_DrainBucket (void)
 {
@@ -528,9 +585,7 @@ static qboolean Irc_Proto_DrainBucket (void)
 	qboolean status = qfalse;
 	irc_bucket_message_t *msg;
 	/* remove messages whose size exceed our burst size (we can not send them) */
-	for (msg = irc_bucket.first_msg;
-		msg && msg->msg_len > characterBucketBurst;
-		msg = irc_bucket.first_msg) {
+	for (msg = irc_bucket.first_msg; msg && msg->msg_len > characterBucketBurst; msg = irc_bucket.first_msg) {
 		irc_bucket_message_t * const next = msg->next;
 		/* update bucket sizes */
 		--irc_bucket.message_size;
@@ -558,6 +613,142 @@ static qboolean Irc_Proto_DrainBucket (void)
 		Mem_Free(msg);
 	}
 	return status;
+}
+
+/*
+===============================================================
+Logic functions
+===============================================================
+*/
+
+/**
+ * @brief
+ * @sa Irc_Logic_Frame
+ */
+static void Irc_Logic_SendMessages(void)
+{
+	if (Irc_Proto_Flush()) {
+		/* flush failed, server closed connection */
+		Com_Printf("Irc_Proto_Flush failed\n");
+		irc_connected = qfalse;
+	}
+}
+
+/**
+ * @brief
+ * @sa Irc_Logic_Frame
+ * @sa Irc_Logic_Disconnect
+ * @sa Irc_Proto_ProcessServerMsg
+ * @sa Irc_Proto_PollServerMsg
+ */
+static void Irc_Logic_ReadMessages(void)
+{
+	qboolean msg_complete;
+	do {
+		irc_server_msg_t msg;
+		if (!Irc_Proto_PollServerMsg(&msg, &msg_complete)) {
+			/* success */
+			if (msg_complete)
+				Irc_Proto_ProcessServerMsg(&msg);
+		} else
+			/* failure */
+			Irc_Logic_Disconnect("Server closed connection");
+	} while (msg_complete);
+}
+
+/**
+ * @brief
+ * @sa Irc_Logic_ReadMessages
+ * @sa Irc_Logic_SendMessages
+ */
+extern void Irc_Logic_Frame(int frame)
+{
+	if (!(frame % IRC_TRANSMIT_INTERVAL)) {
+		Irc_Logic_SendMessages();
+		Irc_Logic_ReadMessages();
+	}
+}
+
+/**
+ * @brief
+ */
+void Irc_Logic_Connect(const char *server, unsigned short port)
+{
+	if (!Irc_Proto_Connect(server, port)) {
+		/* connected to server, send NICK and USER commands */
+		const char * const pass = irc_password->string;
+		const char * const user = irc_user->string;
+		if (strlen(pass))
+			Irc_Proto_Password(pass);
+		Irc_Proto_Nick(Cvar_VariableString("name"));
+		Irc_Proto_User(user, IRC_INVISIBLE, user);
+		irc_connected = !Irc_Proto_Flush();
+	}
+}
+
+/**
+ * @brief
+ */
+void Irc_Logic_Disconnect(const char *reason)
+{
+	if (irc_connected) {
+		char buf[1024];
+		Com_Printf("Irc_Disconnect: %s\n", reason);
+		Irc_Proto_Quit(buf);
+		Irc_Proto_Disconnect();
+		irc_connected = qfalse;
+	} else
+		Com_Printf("Irc_Disconnect: not connected\n");
+}
+
+
+/**
+ * @brief
+ */
+const char *Irc_Logic_GetChannelName(const irc_channel_t *channel)
+{
+	assert(channel);
+	return channel->name;
+}
+
+/**
+ * @brief
+ */
+const char *Irc_Logic_GetChannelTopic(const irc_channel_t *channel)
+{
+	assert(channel);
+	return channel->topic;
+}
+
+/**
+ * @brief
+ */
+static void Irc_Logic_SetChannelTopic(irc_channel_t *channel, const char *topic)
+{
+	assert(channel);
+	assert(topic);
+	Mem_Free(channel->topic);
+	channel->topic = Mem_Alloc(strlen(topic) + 1);
+	strcpy(channel->topic, topic);
+}
+
+
+/**
+ * @brief
+ */
+static void Irc_Logic_RemoveChannel(irc_channel_t *channel)
+{
+	Mem_Free(channel->name);
+	Mem_Free(channel->topic);
+	Mem_Free(channel);
+}
+
+/**
+ * @brief
+ */
+irc_channel_t *Irc_Logic_GetChannel(const char *name)
+{
+	return chan;
 }
 
 /*
@@ -687,7 +878,7 @@ Bindings
 /**
  * @brief
  */
-extern void Irc_Connect_f (void)
+static void Irc_Connect_f (void)
 {
 	const int argc = Cmd_Argc();
 	if (argc <= 3) {
@@ -698,10 +889,7 @@ extern void Irc_Connect_f (void)
 			if (argc >= 3)
 				Cvar_Set("irc_port", Cmd_Argv(2));
 			Com_Printf("Connect to %s:%s\n", irc_server->string, irc_port->string);
-			if (Irc_Proto_Connect(irc_server->string, (int)irc_port->value)) {
-				/* connect failed */
-				Com_Printf("Could not connect to %s:%s.\n", irc_server->string, irc_port->string);
-			}
+			Irc_Logic_Connect(irc_server->string, (int)irc_port->value);
 		} else
 			Com_Printf("Already connected.\n");
 	} else
@@ -711,14 +899,223 @@ extern void Irc_Connect_f (void)
 /**
  * @brief
  */
-extern void Irc_Disconnect_f(void)
+static void Irc_Disconnect_f (void)
 {
-	if (irc_connected) {
-		/* still connected, proceed */
-		Irc_Net_Disconnect();
-	} else
-		Com_Printf("Not connected.\n");
+	Irc_Logic_Disconnect("normal exit");
 }
+
+/**
+ * @brief
+ */
+static void Irc_Client_Join_f (void)
+{
+	const int argc = Cmd_Argc();
+	if (argc >= 2 && argc <= 3) {
+		char * const channel = Cmd_Argv(1);
+		char * const channel_pass = argc == 3	/* password is optional */
+			? Cmd_Argv(2)
+			: NULL;
+		if (!Irc_IsChannel(channel)) {
+			Com_Printf("No valid channel name\n");
+			return;
+		}
+		Irc_Proto_Join(channel, channel_pass);	/* join desired channel */
+		Cvar_ForceSet("irc_defaultChannel", channel);
+	} else
+		Com_Printf("usage: irc_join <channel> [<password>]\n");
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_Part_f(void)
+{
+	const int argc = Cmd_Argc();
+	if (argc == 2) {
+		char * const channel = Cmd_Argv(1);
+		Irc_Proto_Part(channel);
+	} else
+		Com_Printf("usage: irc_part <channel>\n");
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_Msg_f(void)
+{
+	if (Cmd_Argc() >= 2) {
+		char cropped_msg[IRC_SEND_BUF_SIZE];
+		const char *msg = Cmd_Args();
+		const char * const nick = Cvar_VariableString("name");
+		char *channel = irc_defaultChannel->string;
+
+		if (*channel) {
+			if (*msg == '"') {
+				size_t msg_len = strlen(msg);
+				memcpy(cropped_msg, msg + 1, msg_len - 2);
+				cropped_msg[msg_len - 2] = '\0';
+				msg = cropped_msg;
+			}
+			Irc_Proto_Msg(channel, msg);
+			/* create echo */
+			/*Irc_Println(IRC_COLOR_YELLOW "%s " IRC_COLOR_WHITE "| " IRC_COLOR_GREEN "<%s> %s", IRC_COLOR_IRC_TO_WSW, channel, nick, colored_msg);*/
+		} else
+			Com_Printf("Join a channel first.\n");
+	} else
+		Com_Printf("usage: irc_chanmsg {<msg>}\n");
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_PrivMsg_f(void)
+{
+	if (Cmd_Argc() >= 3) {
+		char cropped_msg[IRC_SEND_BUF_SIZE];
+		const char * const target = Cmd_Argv(1);
+		const char *msg = Cmd_Args() + strlen(target) + 1;
+		if (*msg == '"') {
+			size_t msg_len = strlen(msg);
+			memcpy(cropped_msg, msg + 1, msg_len - 2);
+			cropped_msg[msg_len - 2] = '\0';
+			msg = cropped_msg;
+		}
+		Irc_Proto_Msg(target, msg);
+		/* create echo */
+		/*Irc_Println(format, IRC_COLOR_IRC_TO_WSW, target, Cvar_VariableString("name"), colored_msg);*/
+	} else
+		Com_Printf("usage: irc_privmsg <target> {<msg>}\n");
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_Mode_f(void)
+{
+	const int argc = Cmd_Argc();
+	if (argc >= 3) {
+		const char * const target = Cmd_Argv(1);
+		const char * const modes = Cmd_Argv(2);
+		const char * const params = argc >= 4
+			? Cmd_Args() + strlen(target) + strlen(modes) + 2
+			: NULL;
+		Irc_Proto_Mode(target, modes, params);
+	} else
+		Com_Printf("usage: irc_mode <target> <modes> {<param>}\n");
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_Topic_f(void)
+{
+	const int argc = Cmd_Argc();
+	if (argc >= 2) {
+		char * const channel = Cmd_Argv(1);
+		irc_channel_t *chan = Irc_Logic_GetChannel(channel);
+		if (chan) {
+			if (argc >= 3) {
+				char buf[1024];
+				const char *in = Cmd_Args();
+				char *out = buf;
+				if (*in == '"')
+					in += 2;
+				in += strlen(channel) + 1;
+				Q_strncpyz(out, in, sizeof(out));
+				if (*out == '"') {
+					size_t out_len;
+					++out;
+					out_len = strlen(out);
+					assert(out_len >= 1);
+					out[out_len - 1] = '\0';
+				}
+				Irc_Proto_Topic(channel, out);
+			} else
+				Com_Printf("%s topic: \"%s\"\n", channel, Irc_Logic_GetChannelTopic(chan));
+		} else
+			Com_Printf("Not joined: %s\n", channel);
+	} else
+		Com_Printf("usage: irc_topic <channel> [<topic>]\n");
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_Names_f(void)
+{
+	const int argc = Cmd_Argc();
+	if (argc == 2) {
+		char * const channel = Cmd_Argv(1);
+		irc_channel_t *chan = Irc_Logic_GetChannel(channel);
+		if (chan) {
+			/* TODO */
+		} else
+			Com_Printf("Not joined: %s\n", channel);
+	} else
+		Com_Printf("usage: irc_names <channel>\n");
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_Kick_f(void)
+{
+	const int argc = Cmd_Argc();
+	if (argc >= 3) {
+		char *channel = Cmd_Argv(1);
+		if (Irc_Logic_GetChannel(channel)) {
+			const char * const nick = Cmd_Argv(2);
+			const char *reason;
+			if (argc >= 4)
+				reason = Cmd_Args() + strlen(nick) + strlen(channel) + 2;
+			else
+				reason = NULL;
+			Irc_Proto_Kick(channel, nick, reason);
+		} else
+			Com_Printf("Not joined: %s.", channel);
+	} else
+		Com_Printf("usage: irc_kick <channel> <nick> [<reason>]\n");
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_Who_f(void)
+{
+	if (Cmd_Argc() == 2) {
+		Irc_Proto_Who(Cmd_Argv(1));
+	} else
+		Com_Printf("usage: irc_who <usermask>");
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_Whois_f(void)
+{
+	if (Cmd_Argc() == 2) {
+		Irc_Proto_Whois(Cmd_Argv(1));
+	} else
+		Com_Printf("usage: irc_whois <nick>");
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_Whowas_f(void)
+{
+	if (Cmd_Argc() == 2) {
+		Irc_Proto_Whowas(Cmd_Argv(1));
+	} else
+		Com_Printf("usage: irc_whowas <nick>");
+}
+
+
+/*
+===============================================================
+Init and Shutdown functions
+===============================================================
+*/
 
 /**
  * @brief
@@ -726,12 +1123,26 @@ extern void Irc_Disconnect_f(void)
 extern void Irc_Init(void)
 {
 	/* commands */
+	Cmd_AddCommand("irc_join", Irc_Client_Join_f, "Join an irc channel");
 	Cmd_AddCommand("irc_connect", Irc_Connect_f, "Connect to the irc network");
 	Cmd_AddCommand("irc_disconnect", Irc_Disconnect_f, "Disconnect from the irc network");
+	Cmd_AddCommand("irc_part", Irc_Client_Part_f, NULL);
+	Cmd_AddCommand("irc_privmsg", Irc_Client_PrivMsg_f, NULL);
+	Cmd_AddCommand("irc_mode", Irc_Client_Mode_f, NULL);
+	Cmd_AddCommand("irc_who", Irc_Client_Who_f, NULL);
+	Cmd_AddCommand("irc_whois", Irc_Client_Whois_f, NULL);
+	Cmd_AddCommand("irc_whowas", Irc_Client_Whowas_f, NULL);
+	Cmd_AddCommand("irc_chanmsg", Irc_Client_Msg_f, NULL);
+	Cmd_AddCommand("irc_topic", Irc_Client_Topic_f, NULL);
+	Cmd_AddCommand("irc_names", Irc_Client_Names_f, NULL);
+	Cmd_AddCommand("irc_kick", Irc_Client_Kick_f, NULL);
 
 	/* cvars */
 	irc_server = Cvar_Get("irc_server", "irc.freenode.org", CVAR_ARCHIVE, "IRC server to connect to");
 	irc_port = Cvar_Get("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");
+	irc_user = Cvar_Get("irc_user", "UfoAIPlayer", CVAR_ARCHIVE, NULL);
+	irc_password = Cvar_Get("irc_password", "", CVAR_ARCHIVE, NULL);
+	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET, NULL);
 }
 
 /**
@@ -739,5 +1150,39 @@ extern void Irc_Init(void)
  */
 extern void Irc_Shutdown(void)
 {
+	if (irc_connected)
+		Irc_Logic_Disconnect("shutdown");
+}
 
+/**
+ * @brief
+ */
+extern void Irc_Input_KeyEvent(int key)
+{
+	switch (key) {
+		case K_ENTER:
+		case K_KP_ENTER:
+			if (irc_messagemode_buflen > 0) {
+				Cbuf_AddText("irc_chanmsg \"");
+				Cbuf_AddText(irc_messagemode_buf);
+				Cbuf_AddText("\"\n");
+				irc_messagemode_buflen = 0;
+				irc_messagemode_buf[0] = '\0';
+			}
+			break;
+		case K_BACKSPACE:
+			if (irc_messagemode_buflen) {
+				--irc_messagemode_buflen;
+				irc_messagemode_buf[irc_messagemode_buflen] = '\0';
+			}
+			break;
+		case K_ESCAPE:
+			irc_messagemode_buflen = 0;
+			irc_messagemode_buf[0] = '\0';
+			break;
+		case 12:
+			irc_messagemode_buflen = 0;
+			irc_messagemode_buf[0] = '\0';
+			break;
+	}
 }

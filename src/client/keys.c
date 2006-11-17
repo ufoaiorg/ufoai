@@ -1000,6 +1000,9 @@ void Key_Event(int key, qboolean down, unsigned time)
 		key = keyshift[key];
 
 	switch (cls.key_dest) {
+	case key_irc:
+		Irc_Input_KeyEvent(key);
+		break;
 	case key_message:
 		Key_Message(key);
 		break;

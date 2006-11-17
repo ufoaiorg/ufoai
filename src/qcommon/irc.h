@@ -1,3 +1,30 @@
+/**
+ * @file irc.h
+ * @brief IRC client header for UFO:AI
+ */
+
+/*
+All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
+Most of this stuff comes from Warsow
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 #ifndef IRC_NET_H
 #define IRC_NET_H
 
@@ -11,7 +38,21 @@
 #define IRC_SEND_BUF_SIZE 512
 #define IRC_RECV_BUF_SIZE 1024
 
+#define IRC_DEFAULT_MESSAGE_BUCKET_SIZE		100		/* max 100 messages in bucket */
+#define IRC_DEFAULT_MESSAGE_BUCKET_BURST	5		/* max burst size is 5 messages */
+#define IRC_DEFAULT_MESSAGE_BUCKET_RATE		0.5		/* per second (5 messages in 10 seconds) */
+#define IRC_DEFAULT_CHARACTER_BUCKET_SIZE	2500	/* max 2,500 characters in bucket */
+#define IRC_DEFAULT_CHARACTER_BUCKET_BURST	250		/* max burst size is 250 characters */
+#define IRC_DEFAULT_CHARACTER_BUCKET_RATE	10		/* per second (100 characters in 10 seconds) */
+
+#define IRC_TRANSMIT_INTERVAL 10
+
 #define IRC_API_VERSION 0
+
+typedef struct irc_channel_s {
+	char *name;
+	char *topic;
+} irc_channel_t;
 
 /* numeric commands as specified by RFC 1459 - Internet Relay Chat Protocol */
 typedef enum irc_numeric_e {
@@ -194,5 +235,8 @@ qboolean Irc_Net_Disconnect(void);
 
 qboolean Irc_Net_Send(const char *msg, size_t msg_len);
 qboolean Irc_Net_Receive(char *buf, size_t buf_len, int *recvd);
+
+void Irc_Logic_Connect(const char *server, unsigned short port);
+void Irc_Logic_Disconnect(const char *reason);
 
 #endif

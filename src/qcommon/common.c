@@ -1595,6 +1595,9 @@ float Qcommon_Frame(int msec)
 		frametime = min(frametime, 1000);
 		cl_timer -= frametime;
 		CL_Frame(frametime);
+#ifndef DEDICATED_ONLY
+		Irc_Logic_Frame(frametime);
+#endif
 	}
 
 	if (host_speeds->value) {

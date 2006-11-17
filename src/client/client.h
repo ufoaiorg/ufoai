@@ -226,7 +226,7 @@ typedef enum {
 	ca_active					/* game views should be displayed */
 } connstate_t;
 
-typedef enum { key_game, key_console, key_message } keydest_t;
+typedef enum { key_game, key_irc, key_console, key_message } keydest_t;
 
 typedef struct {
 	connstate_t state;
