@@ -46,9 +46,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static cvar_t *irc_server = NULL;
 static cvar_t *irc_port = NULL;
+static cvar_t *irc_channel = NULL;
 static cvar_t *irc_user = NULL;
 static cvar_t *irc_password = NULL;
 static cvar_t *irc_defaultChannel = NULL;
+static cvar_t *irc_logConsole = NULL;
 
 static qboolean irc_connected = qfalse;
 
@@ -399,12 +401,30 @@ qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_complete)
 }
 
 /**
+ * @brief Append the irc message to the buffer
+ * @note the irc_buffer is linked to menuText array to display in the menu
+ * @param[in] msg the complete irc message (with \n)
+ */
+static void Irc_AppendToBuffer (const char* const msg)
+{
+	/* FIXME */
+	if (strlen(irc_buffer) + strlen(msg) >= sizeof(irc_buffer) )
+		memset(irc_buffer, 0, sizeof(irc_buffer));
+	Q_strcat(irc_buffer, msg, sizeof(irc_buffer));
+	if (irc_logConsole->value)
+		Com_Printf("IRC: %s", msg);
+	MN_TextScrollBottom("irc_data");
+}
+
+/**
  * @brief
  * @sa Irc_Logic_ReadMessages
  */
 qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 {
 	irc_command_t cmd;
+	char buffer[1024];
+	char *username = NULL;
 	cmd.type = msg->type;
 	switch (cmd.type) {
 		case IRC_COMMAND_NUMERIC:
@@ -415,7 +435,13 @@ qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 			break;
 	}
 	Com_DPrintf("pre: '%s', param: '%s', trail: '%s'\n", msg->prefix, msg->params, msg->trailing);
-	Q_strcat(irc_buffer, va("%s\n", msg->trailing), sizeof(irc_buffer));
+	username = strstr(msg->prefix, "!");
+	if (username) {
+		*username++ = '\0';
+		Com_sprintf(buffer, sizeof(buffer), "%s: %s\n", msg->prefix, msg->trailing);
+	} else
+		Com_sprintf(buffer, sizeof(buffer), "%s\n", msg->trailing);
+	Irc_AppendToBuffer(buffer);
 	return qfalse;
 }
 
@@ -587,7 +613,9 @@ static qboolean Irc_Proto_DrainBucket (void)
 	const double characterBucketBurst = irc_characterBucketBurst->value;
 	qboolean status = qfalse;
 	irc_bucket_message_t *msg;
+#if 0
 	Com_DPrintf("Irc_Proto_DrainBucket: Queue send\n");
+#endif
 	/* remove messages whose size exceed our burst size (we can not send them) */
 	for (msg = irc_bucket.first_msg; msg && msg->msg_len > characterBucketBurst; msg = irc_bucket.first_msg) {
 		irc_bucket_message_t * const next = msg->next;
@@ -729,29 +757,6 @@ const char *Irc_Logic_GetChannelTopic(const irc_channel_t *channel)
 /**
  * @brief
  */
-static void Irc_Logic_SetChannelTopic(irc_channel_t *channel, const char *topic)
-{
-	assert(channel);
-	assert(topic);
-	Mem_Free(channel->topic);
-	channel->topic = Mem_Alloc(strlen(topic) + 1);
-	strcpy(channel->topic, topic);
-}
-
-
-/**
- * @brief
- */
-static void Irc_Logic_RemoveChannel(irc_channel_t *channel)
-{
-	Mem_Free(channel->name);
-	Mem_Free(channel->topic);
-	Mem_Free(channel);
-}
-
-/**
- * @brief
- */
 irc_channel_t *Irc_Logic_GetChannel(const char *name)
 {
 	return chan;
@@ -887,9 +892,13 @@ Bindings
 static void Irc_Connect_f (void)
 {
 	const int argc = Cmd_Argc();
-	if (argc <= 4) {
+	if (!irc_port || !irc_server)
+		return;
+	if (argc >= 2 && argc <= 4) {
+#if 0
 		if (irc_connected)
 			Irc_Logic_Disconnect("reconnect");
+#endif
 		if (!irc_connected) {
 			/* not connected yet */
 			if (argc >= 2)
@@ -901,6 +910,11 @@ static void Irc_Connect_f (void)
 			if (argc >= 4)
 				Cbuf_AddText(va("irc_join %s\n", Cmd_Argv(3)));
 		} else
+			Com_Printf("Already connected.\n");
+	} else if (*irc_server->string && irc_port->value) {
+		if (!irc_connected)
+			Cbuf_AddText(va("irc_connect %s %s %s\n", irc_server->string, irc_port->string, irc_channel->string));
+		else
 			Com_Printf("Already connected.\n");
 	} else
 			Com_Printf("usage: irc_connect [<server>] [<port>] [<channel>]");
@@ -967,8 +981,7 @@ static void Irc_Client_Msg_f(void)
 				msg = cropped_msg;
 			}
 			Irc_Proto_Msg(channel, msg);
-			/* create echo */
-			/*Irc_Println(IRC_COLOR_YELLOW "%s " IRC_COLOR_WHITE "| " IRC_COLOR_GREEN "<%s> %s", IRC_COLOR_IRC_TO_WSW, channel, nick, colored_msg);*/
+
 		} else
 			Com_Printf("Join a channel first.\n");
 	} else
@@ -991,8 +1004,6 @@ static void Irc_Client_PrivMsg_f(void)
 			msg = cropped_msg;
 		}
 		Irc_Proto_Msg(target, msg);
-		/* create echo */
-		/*Irc_Println(format, IRC_COLOR_IRC_TO_WSW, target, Cvar_VariableString("name"), colored_msg);*/
 	} else
 		Com_Printf("usage: irc_privmsg <target> {<msg>}\n");
 }
@@ -1152,10 +1163,12 @@ extern void Irc_Init(void)
 
 	/* cvars */
 	irc_server = Cvar_Get("irc_server", "irc.freenode.org", CVAR_ARCHIVE, "IRC server to connect to");
+	irc_channel = Cvar_Get("irc_channel", "#ufo:ai", CVAR_ARCHIVE, "IRC channel to join into");
 	irc_port = Cvar_Get("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");
 	irc_user = Cvar_Get("irc_user", "UfoAIPlayer", CVAR_ARCHIVE, NULL);
 	irc_password = Cvar_Get("irc_password", "", CVAR_ARCHIVE, NULL);
 	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET, NULL);
+	irc_logConsole = Cvar_Get("irc_logConsole", "0", CVAR_ARCHIVE, NULL);
 
 	/* reset buffer */
 	memset(irc_buffer, 0, sizeof(irc_buffer));

@@ -1131,6 +1131,24 @@ static void MN_TextScroll_f(void)
 }
 
 /**
+ * @brief Scroll to the bottom
+ */
+void MN_TextScrollBottom(char* nodeName)
+{
+	menuNode_t *node = NULL;
+
+	node = MN_GetNodeFromCurrentMenu(nodeName);
+
+	if (!node) {
+		Com_DPrintf("Node '%s' could not be found\n", nodeName);
+		return;
+	}
+
+	Com_DPrintf("Scroll %i lines\n", node->textLines);
+	MN_TextScroll(node, node->textLines - node->height);
+}
+
+/**
  * @brief
  * @sa MAP_ResetAction
  * @sa MN_TextRightClick
