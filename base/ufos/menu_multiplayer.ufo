@@ -723,6 +723,28 @@ menu mp_join_internet
 	}
 
 	// ====================
+	// lobby
+	// ====================
+	pic button_inet_lobby
+	{
+		image	menu/multi_buttons3
+		click	{ cmd "irc_connect irc.freenode.org 6667 #ufo:ai; mn_push irc;" }
+		texh	"256 32"
+		texl	"0 0"
+		pos		"500 515"
+		out		{ *string_inet_lobby color "0 0.5 0 1" *button_inet_lobby image menu/multi_buttons3 }
+		in		{ *string_inet_lobby color "1 1 1 1" *button_inet_lobby image menu/multi_buttons3a }
+	}
+	string string_inet_lobby
+	{
+		string	"_Lobby"
+		pos		"628 514"
+		font	f_menu
+		color	"0 0.5 0 1"
+		align	uc
+	}
+
+	// ====================
 	// connect to ip button
 	// ====================
 	pic button_inet_connect_to_ip
