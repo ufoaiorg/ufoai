@@ -73,6 +73,9 @@ char *NET_ErrorString (void);
 
 /*============================================================================= */
 
+/**
+ * @brief
+ */
 void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 {
 	struct sockaddr_in6 *s6;
@@ -146,18 +149,18 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 	}
 }
 
+/**
+ * @brief
+ */
 void SockadrToNetadr (struct sockaddr_storage *s, netadr_t *a)
 {
 	struct sockaddr_in6 *s6;
 
-	if (s->ss_family == AF_INET)
-	{
+	if (s->ss_family == AF_INET) {
 		*(int *)&a->ip = *(int *)&((struct sockaddr_in*)s)->sin_addr;
 		a->port = ((struct sockaddr_in*)s)->sin_port;
 		a->type = NA_IP;
-	}
-	else if (s->ss_family == AF_INET6)
-	{
+	} else if (s->ss_family == AF_INET6) {
 		s6 = (struct sockaddr_in6 *)s;
 
 		if (IN6_IS_ADDR_V4MAPPED ((struct in6_addr *)&s6->sin6_addr)) {
@@ -171,12 +174,30 @@ void SockadrToNetadr (struct sockaddr_storage *s, netadr_t *a)
 			a->type = NA_IP6;
 			a->scope_id = s6->sin6_scope_id;
 		}
-	}
-	else
+	} else
 		s = NULL;
 }
 
 
+/**
+ * @brief Converts sockaddr_in to string
+ * @sa SockadrToNetadr
+ */
+char *NET_SocketToString (void *s_ptr)
+{
+	netadr_t addr;
+	struct sockaddr_in *s = (struct sockaddr_in*)s_ptr;
+
+	if (!s)
+		return "";
+	memset(&addr, 0, sizeof(netadr_t));
+	SockadrToNetadr(s, &addr);
+	return NET_AdrToString(addr);
+}
+
+/**
+ * @brief
+ */
 qboolean NET_CompareAdr (netadr_t a, netadr_t b)
 {
 	if (a.type != b.type)
@@ -185,14 +206,12 @@ qboolean NET_CompareAdr (netadr_t a, netadr_t b)
 	if (a.type == NA_LOOPBACK)
 		return qtrue;
 
-	if (a.type == NA_IP)
-	{
+	if (a.type == NA_IP) {
 		if (a.ip[0] == b.ip[0] && a.ip[1] == b.ip[1] && a.ip[2] == b.ip[2] && a.ip[3] == b.ip[3] && a.port == b.port)
 		return qtrue;
 	}
 
-	if (a.type == NA_IP6)
-	{
+	if (a.type == NA_IP6) {
 		if ((memcmp(a.ip, b.ip, 16) == 0) && a.port == b.port)
 			return qtrue;
 	}
@@ -200,13 +219,9 @@ qboolean NET_CompareAdr (netadr_t a, netadr_t b)
 	return qfalse;
 }
 
-/*
-===================
-NET_CompareBaseAdr
-
-Compares without the port
-===================
-*/
+/**
+ * @brief Compares without the port
+ */
 qboolean NET_CompareBaseAdr (netadr_t a, netadr_t b)
 {
 	if (a.type != b.type)
@@ -215,22 +230,19 @@ qboolean NET_CompareBaseAdr (netadr_t a, netadr_t b)
 	if (a.type == NA_LOOPBACK)
 		return qtrue;
 
-	if (a.type == NA_IP)
-	{
+	if (a.type == NA_IP) {
 		if (a.ip[0] == b.ip[0] && a.ip[1] == b.ip[1] && a.ip[2] == b.ip[2] && a.ip[3] == b.ip[3])
 			return qtrue;
 		return qfalse;
 	}
 
-	if (a.type == NA_IP6)
-	{
+	if (a.type == NA_IP6) {
 		if ((memcmp(a.ip, b.ip, 16) == 0))
 			return qtrue;
 		return qfalse;
 	}
 
-	if (a.type == NA_IPX)
-	{
+	if (a.type == NA_IPX) {
 		if ((memcmp(a.ipx, b.ipx, 10) == 0))
 			return qtrue;
 		return qfalse;
@@ -238,6 +250,9 @@ qboolean NET_CompareBaseAdr (netadr_t a, netadr_t b)
 	return qfalse;
 }
 
+/**
+ * @brief
+ */
 char *NET_BaseAdrToString (netadr_t a)
 {
 	static	char	s[64], tmp[64];
@@ -314,6 +329,9 @@ char *NET_BaseAdrToString (netadr_t a)
 	return s;
 }
 
+/**
+ * @brief
+ */
 char *NET_AdrToString (netadr_t a)
 {
 	static	char	s[64];
@@ -325,17 +343,14 @@ char *NET_AdrToString (netadr_t a)
 	return s;
 }
 
-/*
-=============
-NET_StringToAdr
-
-localhost
-idnewt
-idnewt:28000
-192.246.40.70
-192.246.40.70:28000
-=============
-*/
+/**
+ * @brief
+ * localhost
+ * idnewt
+ * idnewt:28000
+ * 192.246.40.70
+ * 192.246.40.70:28000
+ */
 qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 {
 	char	copy[128];
@@ -395,24 +410,20 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 	return qtrue;
 }
 
-/*
-=============
-NET_StringToAdr
-
-localhost
-idnewt
-idnewt:28000
-192.246.40.70
-192.246.40.70:28000
-=============
-*/
+/**
+ * @brief
+ * localhost
+ * idnewt
+ * idnewt:28000
+ * 192.246.40.70
+ * 192.246.40.70:28000
+ */
 qboolean NET_StringToAdr (char *s, netadr_t *a)
 {
 	struct sockaddr_storage sadr;
 
 	memset (a, 0, sizeof(*a));
-	if (!strcmp (s, "localhost"))
-	{
+	if (!strcmp (s, "localhost")) {
 		a->type = NA_LOOPBACK;
 		return qtrue;
 	}
@@ -426,6 +437,9 @@ qboolean NET_StringToAdr (char *s, netadr_t *a)
 }
 
 
+/**
+ * @brief
+ */
 qboolean NET_IsLocalAddress (netadr_t adr)
 {
 	return NET_CompareAdr (adr, net_local_adr);
@@ -433,12 +447,13 @@ qboolean NET_IsLocalAddress (netadr_t adr)
 
 /*
 =============================================================================
-
 LOOPBACK BUFFERS FOR LOCAL PLAYER
-
 =============================================================================
 */
 
+/**
+ * @brief
+ */
 qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int		i;
@@ -463,6 +478,9 @@ qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_me
 }
 
 
+/**
+ * @brief
+ */
 void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 {
 	int		i;
@@ -477,8 +495,9 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	loop->msgs[i].datalen = length;
 }
 
-/*============================================================================= */
-
+/**
+ * @brief
+ */
 qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int 	ret;
@@ -491,8 +510,7 @@ qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 	if (NET_GetLoopPacket (sock, net_from, net_message))
 		return qtrue;
 
-	for (protocol = 0 ; protocol < 3 ; protocol++)
-	{
+	for (protocol = 0 ; protocol < 3 ; protocol++) {
 		if (protocol == 0)
 			net_socket = ip_sockets[sock];
 		else if (protocol == 1)
@@ -509,8 +527,7 @@ qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 
 		SockadrToNetadr (&from, net_from);
 
-		if (ret == -1)
-		{
+		if (ret == -1) {
 			err = errno;
 
 			if (err == EWOULDBLOCK || err == ECONNREFUSED)
@@ -520,8 +537,7 @@ qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 			continue;
 		}
 
-		if (ret == net_message->maxsize)
-		{
+		if (ret == net_message->maxsize) {
 			Com_Printf ("Oversize packet from %s\n", NET_AdrToString (*net_from));
 			continue;
 		}
@@ -533,8 +549,9 @@ qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 	return qfalse;
 }
 
-/*============================================================================= */
-
+/**
+ * @brief
+ */
 void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 {
 	int		ret;
@@ -644,16 +661,9 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 
 
-/*============================================================================= */
-
-
-
-
-/*
-====================
-NET_OpenIP
-====================
-*/
+/**
+ * @brief
+ */
 void NET_OpenIP (void)
 {
 	cvar_t	*port, *ip;
@@ -671,74 +681,54 @@ void NET_OpenIP (void)
 		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY, NS_CLIENT, AF_INET);
 }
 
-/*
-====================
-NET_OpenIPX
-====================
-*/
+/**
+ * @brief
+ */
 void NET_OpenIPX (void)
 {
 }
 
 
-/*
-====================
-NET_Config
-
-A single player game will only use the loopback code
-====================
-*/
+/**
+ * @brief A single player game will only use the loopback code
+ */
 void NET_Config (qboolean multiplayer)
 {
 	int		i;
 
-	if (!multiplayer)
-	{	/* shut down any existing sockets */
-		for (i=0 ; i<2 ; i++)
-		{
-			if (ip_sockets[i])
-			{
+	if (!multiplayer) {	/* shut down any existing sockets */
+		for (i=0 ; i<2 ; i++) {
+			if (ip_sockets[i]) {
 				close (ip_sockets[i]);
 				ip_sockets[i] = 0;
 			}
-			if (ip6_sockets[i])
-			{
+			if (ip6_sockets[i]) {
 				close (ip6_sockets[i]);
 				ip6_sockets[i] = 0;
 			}
-			if (ipx_sockets[i])
-			{
+			if (ipx_sockets[i]) {
 				close (ipx_sockets[i]);
 				ipx_sockets[i] = 0;
 			}
 		}
-	}
-	else
-	{	/* open sockets */
+	} else {	/* open sockets */
 		NET_OpenIP ();
 		NET_OpenIPX ();
 	}
 }
 
 
-/*=================================================================== */
-
-
-/*
-====================
-NET_Init
-====================
-*/
+/**
+ * @brief
+ */
 void NET_Init (void)
 {
 }
 
 
-/*
-====================
-NET_Socket
-====================
-*/
+/**
+ * @brief
+ */
 int NET_Socket (char *net_interface, int port, netsrc_t type, int family)
 {
 	char Buf[BUFSIZ], *Host, *Service;
@@ -772,7 +762,7 @@ int NET_Socket (char *net_interface, int port, netsrc_t type, int family)
 	}
 
 	if ((Error = getaddrinfo (Host, Service, &hints, &res))) {
-/*                 Com_Printf("NET_Socket: getaddrinfo: %s\n", gai_strerror (Error)); */
+/*		Com_Printf("NET_Socket: getaddrinfo: %s\n", gai_strerror (Error)); */
 		return 0;
 	}
 
@@ -795,8 +785,7 @@ int NET_Socket (char *net_interface, int port, netsrc_t type, int family)
 #endif
 		if (family == AF_INET) {
 			/* make it broadcast capable */
-			if (setsockopt(newsocket, SOL_SOCKET, SO_BROADCAST, (char *)&i, sizeof(i)) == -1)
-			{
+			if (setsockopt(newsocket, SOL_SOCKET, SO_BROADCAST, (char *)&i, sizeof(i)) == -1) {
 				Com_Printf ("ERROR: NET_Socket: setsockopt SO_BROADCAST:%s\n", NET_ErrorString());
 				return 0;
 			}
@@ -853,22 +842,18 @@ int NET_Socket (char *net_interface, int port, netsrc_t type, int family)
 }
 
 
-/*
-====================
-NET_Shutdown
-====================
-*/
+/**
+ * @brief
+ */
 void NET_Shutdown (void)
 {
 	NET_Config (qfalse);	/* close sockets */
 }
 
 
-/*
-====================
-NET_ErrorString
-====================
-*/
+/**
+ * @brief
+ */
 char *NET_ErrorString (void)
 {
 	int		code;
@@ -877,7 +862,9 @@ char *NET_ErrorString (void)
 	return strerror (code);
 }
 
-/* sleeps msec or until net socket is ready */
+/**
+ * @brief sleeps msec or until net socket is ready
+ */
 void NET_Sleep(int msec)
 {
 	struct timeval timeout;
