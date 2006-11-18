@@ -47,11 +47,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cvar_t *irc_server = NULL;
 static cvar_t *irc_port = NULL;
 static cvar_t *irc_channel = NULL;
+static cvar_t *irc_nick = NULL;
 static cvar_t *irc_user = NULL;
 static cvar_t *irc_password = NULL;
 static cvar_t *irc_topic = NULL;
 static cvar_t *irc_defaultChannel = NULL;
 static cvar_t *irc_logConsole = NULL;
+/* menu cvar */
+static cvar_t *irc_send_buffer = NULL;
+
 
 static qboolean irc_connected = qfalse;
 
@@ -653,22 +657,19 @@ static void Irc_Client_CmdJoin (const char *prefix, const char *params, const ch
 {
 	char nick[IRC_SEND_BUF_SIZE];
 	irc_nick_prefix_t p;
-	const char *chan = params[0]
-		? params
-		: trailing;
 	Irc_ParseName(prefix, nick, &p);
-	Irc_AppendToBuffer(va("%s | Joins: %s (%s)", chan, nick, prefix));
+	Irc_AppendToBuffer(va("Joins: %s (%s)", nick, prefix));
 }
 
 /**
  * @brief
  */
-static void Irc_Client_CmdPart (const char *prefix, const char *params, const char *trailing)
+static void Irc_Client_CmdPart (const char *prefix, const char *trailing)
 {
 	char nick[IRC_SEND_BUF_SIZE];
 	irc_nick_prefix_t p;
 	Irc_ParseName(prefix, nick, &p);
-	Irc_AppendToBuffer(va("%s | Parts: %s (%s)", params, nick, prefix));
+	Irc_AppendToBuffer(va("Parts: %s (%s)", nick, prefix));
 }
 
 /**
@@ -706,24 +707,24 @@ static void Irc_Client_CmdKick (const char *prefix, const char *params, const ch
 	strcpy(buf, params);
 	chan = strtok(buf, " ");
 	victim = strtok(NULL, " ");
-	if (!strcmp(victim, Cvar_VariableString("name"))) {
+	if (!strcmp(victim, irc_nick->string)) {
 		/* we have been kicked */
 		Irc_AppendToBuffer(va("You were kicked from %s by %s (%s)", chan, nick, trailing));
 	} else {
 		/* someone else was kicked */
-		Irc_AppendToBuffer(va("%s | %s kicked %s (%s)", chan, nick, victim, trailing));
+		Irc_AppendToBuffer(va("%s kicked %s (%s)", nick, victim, trailing));
 	}
 }
 
 /**
  * @brief
  */
-static void Irc_Client_CmdTopic (const char *prefix, const char *params, const char *trailing)
+static void Irc_Client_CmdTopic (const char *prefix, const char *trailing)
 {
 	char nick[IRC_SEND_BUF_SIZE];
 	irc_nick_prefix_t p;
 	Irc_ParseName(prefix, nick, &p);
-	Irc_AppendToBuffer(va("%s | %s sets topic: \"%s\"", params, nick, trailing));
+	Irc_AppendToBuffer(va("%s sets topic: \"%s\"", nick, trailing));
 	Cvar_ForceSet("irc_topic", trailing);
 }
 
@@ -735,7 +736,7 @@ static void Irc_Client_CmdNick (const char *prefix, const char *params, const ch
 	char nick[IRC_SEND_BUF_SIZE];
 	irc_nick_prefix_t p;
 	Irc_ParseName(prefix, nick, &p);
-	if (!strcmp(Cvar_VariableString("name"), nick))
+	if (!strcmp(irc_nick->string, nick))
 		Cvar_ForceSet("name", trailing);
 	Irc_AppendToBuffer(va("%s is now known as %s", nick, trailing));
 }
@@ -752,10 +753,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		memcpy(nick, prefix, emph - prefix);
 	else
 		strcpy(nick, prefix);
-	if (*params == '#' || *params == '&')
-		Irc_AppendToBuffer(va("%s | <%s> %s", params, nick, trailing));
-	else
-		Irc_AppendToBuffer(va("%s | <%s> %s", nick, nick, trailing));
+	Irc_AppendToBuffer(va("<%s> %s", nick, trailing));
 }
 
 /**
@@ -945,9 +943,9 @@ qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		else if (!Q_strncmp(cmd.id.string, "JOIN", 4))
 			Irc_Client_CmdJoin(msg->prefix, msg->params, msg->trailing);
 		else if (!Q_strncmp(cmd.id.string, "PART", 4))
-			Irc_Client_CmdPart(msg->prefix, msg->params, msg->trailing);
+			Irc_Client_CmdPart(msg->prefix, msg->trailing);
 		else if (!Q_strncmp(cmd.id.string, "TOPIC", 5))
-			Irc_Client_CmdTopic(msg->prefix, msg->params, msg->trailing);
+			Irc_Client_CmdTopic(msg->prefix, msg->trailing);
 		else if (!Q_strncmp(cmd.id.string, "KILL", 4))
 			Irc_Client_CmdKill(msg->prefix, msg->params, msg->trailing);
 		else if (!Q_strncmp(cmd.id.string, "KICK", 4))
@@ -1230,7 +1228,7 @@ void Irc_Logic_Connect(const char *server, unsigned short port)
 		const char * const user = irc_user->string;
 		if (strlen(pass))
 			Irc_Proto_Password(pass);
-		Irc_Proto_Nick(Cvar_VariableString("name"));
+		Irc_Proto_Nick(irc_nick->string);
 		Irc_Proto_User(user, IRC_INVISIBLE, user);
 		irc_connected = !Irc_Proto_Flush();
 	}
@@ -1482,15 +1480,21 @@ static void Irc_Client_Part_f(void)
 }
 
 /**
- * @brief
+ * @brief Send a message from menu or commandline
+ * @note This function uses the irc_send_buffer cvar to handle the menu input for irc messages
+ *       See menu_irc.ufo for more information
  */
 static void Irc_Client_Msg_f(void)
 {
-	if (Cmd_Argc() >= 2) {
-		char cropped_msg[IRC_SEND_BUF_SIZE];
-		const char *msg = Cmd_Args();
-		char *channel = irc_defaultChannel->string;
+	char cropped_msg[IRC_SEND_BUF_SIZE];
+	const char *msg = NULL;
+	char *channel = irc_defaultChannel->string;
+	if (Cmd_Argc() >= 2)
+		msg = Cmd_Args();
+	else if (*irc_send_buffer->string)
+		msg = irc_send_buffer->string;
 
+	if (msg && *msg) {
 		if (*channel) {
 			if (*msg == '"') {
 				size_t msg_len = strlen(msg);
@@ -1499,7 +1503,10 @@ static void Irc_Client_Msg_f(void)
 				msg = cropped_msg;
 			}
 			Irc_Proto_Msg(channel, msg);
-
+			/* local echo */
+			Irc_AppendToBuffer(va("<%s> %s", irc_nick->string, msg));
+			if (*irc_send_buffer->string)
+				Cvar_ForceSet("irc_send_buffer", "");
 		} else
 			Com_Printf("Join a channel first.\n");
 	} else
@@ -1688,6 +1695,8 @@ extern void Irc_Init(void)
 	irc_topic = Cvar_Get("irc_topic", "", CVAR_NOSET, NULL);
 	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET, NULL);
 	irc_logConsole = Cvar_Get("irc_logConsole", "0", CVAR_ARCHIVE, NULL);
+	irc_send_buffer = Cvar_Get("irc_send_buffer", "", 0, NULL);
+	irc_nick = Cvar_Get("name", "", 0, NULL);
 
 	/* reset buffer */
 	memset(irc_buffer, 0, sizeof(irc_buffer));

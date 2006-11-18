@@ -89,23 +89,49 @@ menu irc
 	{
 		string	"*cvar irc_server"
 		pos		"512 44"
-		font	f_small
+		font	f_verysmall
+	}
+
+	string irc_server_topic
+	{
+		string	"*cvar irc_topic"
+		pos		"256 60"
+		font	f_verysmall
 	}
 
 	string irc_server_channel
 	{
 		string	"*cvar irc_channel"
 		pos		"756 44"
-		font	f_small
+		font	f_verysmall
+	}
+
+	pic irc_send_buffer_img
+	{
+		image	menu/irc_input
+		pos		"30 715"
+		texl	"0 0"
+		texh	"690 26"
+		click
+		{
+			cmd "msgmenu ?irc_send_buffer"
+			*irc_send_buffer mousefx true
+		}
 	}
 
 	string irc_send_buffer
 	{
 		string	"*cvar irc_send_buffer"
-		pos		"30 715"
-		size	"690 25"
+		pos		"34 718"
+		size	"682 20"
 		bgcolor	"0.5 0.5 0.5 0.2"
-		font	f_normal
+		font	f_small
+	}
+
+	confunc irc_send_buffer_changed
+	{
+		*irc_send_buffer mousefx false
+		cmd	"irc_chanmsg;"
 	}
 
 	pic irc_scrollup
@@ -130,12 +156,6 @@ menu irc
 		click	{ cmd "mn_textscroll irc_data 1;" }
 		out	{ *irc_scrolldown texl "32 48" *irc_scrolldown texh "48 64" }
 		in	{ *irc_scrolldown texl "48 48" *irc_scrolldown texh "64 64" }
-	}
-
-	confunc irc_activate_input
-	{
-		cmd "msgmenu ?irc_send_buffer"
-		*irc_send_buffer mousefx true
 	}
 
 	// ==================

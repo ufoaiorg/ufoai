@@ -1055,12 +1055,11 @@ static qboolean MN_TextScroll(menuNode_t *node, int offset)
 
 	if (abs(offset) >= node->height) {
 		/* Offset value is bigger than textbox height. */
-		node->textScroll = 0;
 		return qfalse;
 	}
 
 	if (node->textLines <= node->height ) {
-		/* Number of lines are less tehan the height of the textbox. */
+		/* Number of lines are less than the height of the textbox. */
 		node->textScroll = 0;
 		return qfalse;
 	}
@@ -1144,7 +1143,7 @@ void MN_TextScrollBottom(char* nodeName)
 		return;
 	}
 
-	Com_DPrintf("Scroll %i lines\n", node->textLines);
+	Com_DPrintf("Scroll %i lines\n", node->textLines - node->height);
 	if (node->textLines > node->height)
 		MN_TextScroll(node, node->textLines - node->height);
 }
