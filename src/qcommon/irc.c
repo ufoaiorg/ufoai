@@ -49,6 +49,7 @@ static cvar_t *irc_port = NULL;
 static cvar_t *irc_channel = NULL;
 static cvar_t *irc_user = NULL;
 static cvar_t *irc_password = NULL;
+static cvar_t *irc_topic = NULL;
 static cvar_t *irc_defaultChannel = NULL;
 static cvar_t *irc_logConsole = NULL;
 
@@ -80,6 +81,27 @@ static qboolean Irc_IsChannel(const char *target)
 {
 	assert(target);
 	return (*target == '#' || *target == '&');
+}
+
+/**
+ * @brief
+ */
+void Irc_ParseName(const char *mask, char *nick, irc_nick_prefix_t *prefix)
+{
+	const char *emph;
+	if (*mask == IRC_NICK_PREFIX_OP || *mask == IRC_NICK_PREFIX_VOICE) {
+		*prefix = (irc_nick_prefix_t) *mask;	/* read prefix */
+		++mask;									/* crop prefix from mask */
+	} else
+		*prefix = IRC_NICK_PREFIX_NONE;
+	emph = strchr(mask, '!');
+	if (emph) {
+		/* complete hostmask, crop anything after ! */
+		memcpy(nick, mask, emph - mask);
+		nick[emph - mask] = '\0';
+	} else
+		/* just the nickname, use as is */
+		strcpy(nick, mask);
 }
 
 /*
@@ -407,13 +429,349 @@ qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_complete)
  */
 static void Irc_AppendToBuffer (const char* const msg)
 {
+	char buf[IRC_RECV_BUF_SIZE];
 	/* FIXME */
-	if (strlen(irc_buffer) + strlen(msg) >= sizeof(irc_buffer) )
+	if (strlen(irc_buffer) + strlen(msg) >= sizeof(irc_buffer) ) {
+		Com_Printf("clear irc buffer\n");
 		memset(irc_buffer, 0, sizeof(irc_buffer));
-	Q_strcat(irc_buffer, msg, sizeof(irc_buffer));
+	}
+
+	Com_sprintf(buf, sizeof(buf), "%s\n", msg);
+	Q_strcat(irc_buffer, buf, sizeof(irc_buffer));
 	if (irc_logConsole->value)
-		Com_Printf("IRC: %s", msg);
+		Com_Printf("IRC: %s\n", msg);
 	MN_TextScrollBottom("irc_data");
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdRplWhowasuser(const char *params, const char *trailing)
+{
+	char buf[IRC_SEND_BUF_SIZE];
+	const char *nick = "", *user = "", *host = "", *real_name = trailing;
+	char *p;
+	unsigned int i = 0;
+
+	/* parse params "<nick> <user> <host> * :<real name>" */
+	Q_strncpyz(buf, params, sizeof(buf));
+	for (p = strtok(buf, " "); p; p = strtok(NULL, " "), ++i) {
+		switch (i) {
+			case 1:
+				nick = p;
+				break;
+			case 2:
+				user = p;
+				break;
+			case 3:
+				host = p;
+				break;
+		}
+	}
+	Irc_AppendToBuffer(va("%s was %s@%s : %s", nick, user, host, real_name));
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdRplTopic (const char *params, const char *trailing)
+{
+	const char *chan = strchr(params, ' ');
+	if (chan) {
+		++chan;
+		Irc_AppendToBuffer(va("%s | Topic is: \"%s\"", chan, trailing));
+	}
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdRplNotopic (const char *params)
+{
+	const char *chan = strchr(params, ' ');
+	if (chan) {
+		++chan;
+		Irc_AppendToBuffer(va("%s | No topic set.", chan));
+	}
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdRplWhoisuser (const char *params, const char *trailing)
+{
+	char buf[IRC_SEND_BUF_SIZE];
+	const char *nick = "", *user = "", *host = "", *real_name = trailing;
+	char *p;
+	unsigned int i = 0;
+
+	/* parse params "<nick> <user> <host> * :<real name>" */
+	strcpy(buf, params);
+	for (p = strtok(buf, " "); p; p = strtok(NULL, " "), ++i) {
+		switch (i) {
+			case 1:
+				nick = p;
+				break;
+			case 2:
+				user = p;
+				break;
+			case 3:
+				host = p;
+				break;
+		}
+	}
+	Irc_AppendToBuffer(va("%s is %s@%s : %s", nick, user, host, real_name));
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdRplWhoisserver (const char *params, const char *trailing)
+{
+	char buf[IRC_SEND_BUF_SIZE];
+	const char *nick = "", *server = "", *server_info = trailing;
+	char *p;
+	unsigned int i = 0;
+
+	/* parse params "<nick> <server> :<server info>" */
+	strcpy(buf, params);
+	for (p = strtok(buf, " "); p; p = strtok(NULL, " "), ++i) {
+		switch (i) {
+			case 1:
+				nick = p;
+				break;
+			case 2:
+				server = p;
+				break;
+		}
+	}
+	Irc_AppendToBuffer(va("%s using %s : %s", nick, server, server_info));
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdRplWhoisaccount (const char *params, const char *trailing)
+{
+	char buf[IRC_SEND_BUF_SIZE];
+	const char *nick = "", *account = "";
+	char *p;
+	unsigned int i = 0;
+
+	/* parse params "<nick> <account> :is logged in as" */
+	strcpy(buf, params);
+	for (p = strtok(buf, " "); p; p = strtok(NULL, " "), ++i) {
+		switch (i) {
+			case 1:
+				nick = p;
+				break;
+			case 2:
+				account = p;
+				break;
+		}
+	}
+	Irc_AppendToBuffer(va("%s %s %s", nick, trailing, account));
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdRplWhoisidle (const char *params, const char *trailing)
+{
+	char buf[IRC_SEND_BUF_SIZE];
+	const char *nick = "", *idle = "";
+	char *p;
+	unsigned int i = 0;
+
+	/* parse params "<nick> <integer> :seconds idle" */
+	strcpy(buf, params);
+	for (p = strtok(buf, " "); p; p = strtok(NULL, " "), ++i) {
+		switch (i) {
+			case 1:
+				nick = p;
+				break;
+			case 2:
+				idle = p;
+				break;
+		}
+	}
+	Irc_AppendToBuffer(va("%s is %s %s", nick, idle, trailing));
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdRplWhoreply (const char *params, const char *trailing)
+{
+	char buf[IRC_SEND_BUF_SIZE];
+	const char *channel = "", *user = "", *host = "", *server = "", *nick = "", *hg = "";
+	char *p;
+	unsigned int i = 0;
+
+	/* parse params "<channel> <user> <host> <server> <nick> <H|G>[*][@|+] :<hopcount> <real name>" */
+	strcpy(buf, params);
+	for (p = strtok(buf, " "); p; p = strtok(NULL, " "), ++i) {
+		switch (i) {
+			case 0:
+				channel = p;
+				break;
+			case 1:
+				user = p;
+				break;
+			case 2:
+				host = p;
+				break;
+			case 3:
+				server = p;
+				break;
+			case 4:
+				nick = p;
+				break;
+			case 5:
+				hg = p;
+				break;
+		}
+	}
+	Irc_AppendToBuffer(va("%s %s %s %s %s %s : %s", channel, user, host, server, nick, hg, trailing));
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdMode (const char *prefix, const char *params, const char *trailing)
+{
+	char nick[IRC_SEND_BUF_SIZE];
+	irc_nick_prefix_t pfx;
+	Irc_ParseName(prefix, nick, &pfx);
+	Irc_AppendToBuffer(va("%s sets mode %s", nick, params));
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdJoin (const char *prefix, const char *params, const char *trailing)
+{
+	char nick[IRC_SEND_BUF_SIZE];
+	irc_nick_prefix_t p;
+	const char *chan = params[0]
+		? params
+		: trailing;
+	Irc_ParseName(prefix, nick, &p);
+	Irc_AppendToBuffer(va("%s | Joins: %s (%s)", chan, nick, prefix));
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdPart (const char *prefix, const char *params, const char *trailing)
+{
+	char nick[IRC_SEND_BUF_SIZE];
+	irc_nick_prefix_t p;
+	Irc_ParseName(prefix, nick, &p);
+	Irc_AppendToBuffer(va("%s | Parts: %s (%s)", params, nick, prefix));
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdQuit (const char *prefix, const char *params, const char *trailing)
+{
+	char nick[IRC_SEND_BUF_SIZE];
+	irc_nick_prefix_t p;
+	Irc_ParseName(prefix, nick, &p);
+	Irc_AppendToBuffer(va("Quits: %s (%s)", nick, trailing));
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdKill (const char *prefix, const char *params, const char *trailing)
+{
+	char nick[IRC_SEND_BUF_SIZE];
+	irc_nick_prefix_t p;
+	Irc_ParseName(prefix, nick, &p);
+	Irc_AppendToBuffer(va("Killed: %s (%s)", nick, trailing));
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdKick (const char *prefix, const char *params, const char *trailing)
+{
+	char buf[IRC_SEND_BUF_SIZE];
+	char nick[IRC_SEND_BUF_SIZE];
+	irc_nick_prefix_t p;
+	const char *chan, *victim;
+	Irc_ParseName(prefix, nick, &p);
+	strcpy(buf, params);
+	chan = strtok(buf, " ");
+	victim = strtok(NULL, " ");
+	if (!strcmp(victim, Cvar_VariableString("name"))) {
+		/* we have been kicked */
+		Irc_AppendToBuffer(va("You were kicked from %s by %s (%s)", chan, nick, trailing));
+	} else {
+		/* someone else was kicked */
+		Irc_AppendToBuffer(va("%s | %s kicked %s (%s)", chan, nick, victim, trailing));
+	}
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdTopic (const char *prefix, const char *params, const char *trailing)
+{
+	char nick[IRC_SEND_BUF_SIZE];
+	irc_nick_prefix_t p;
+	Irc_ParseName(prefix, nick, &p);
+	Irc_AppendToBuffer(va("%s | %s sets topic: \"%s\"", params, nick, trailing));
+	Cvar_ForceSet("irc_topic", trailing);
+}
+
+/**
+ * @brief Changes the cvar 'name' with the new name you set
+ */
+static void Irc_Client_CmdNick (const char *prefix, const char *params, const char *trailing)
+{
+	char nick[IRC_SEND_BUF_SIZE];
+	irc_nick_prefix_t p;
+	Irc_ParseName(prefix, nick, &p);
+	if (!strcmp(Cvar_VariableString("name"), nick))
+		Cvar_ForceSet("name", trailing);
+	Irc_AppendToBuffer(va("%s is now known as %s", nick, trailing));
+}
+
+/**
+ * @brief
+ */
+static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const char *trailing)
+{
+	char nick[IRC_SEND_BUF_SIZE];
+	char * const emph = strchr(prefix, '!');
+	memset(nick, 0, sizeof(nick));
+	if (emph)
+		memcpy(nick, prefix, emph - prefix);
+	else
+		strcpy(nick, prefix);
+	if (*params == '#' || *params == '&')
+		Irc_AppendToBuffer(va("%s | <%s> %s", params, nick, trailing));
+	else
+		Irc_AppendToBuffer(va("%s | <%s> %s", nick, nick, trailing));
+}
+
+/**
+ * @brief
+ * @TODO: Implement me
+ */
+static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
+{
+}
+
+/**
+ * @brief
+ * @TODO: Implement me
+ */
+static void Irc_Client_CmdRplEndofnames (const char *params, const char *trailing)
+{
 }
 
 /**
@@ -423,25 +781,185 @@ static void Irc_AppendToBuffer (const char* const msg)
 qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 {
 	irc_command_t cmd;
-	char buffer[1024];
-	char *username = NULL;
+	const char *p = NULL;
 	cmd.type = msg->type;
-	switch (cmd.type) {
-		case IRC_COMMAND_NUMERIC:
-			cmd.id.numeric = msg->id.numeric;
-			break;
-		case IRC_COMMAND_STRING:
-			cmd.id.string = msg->id.string;
-			break;
-	}
+
+	/* some debug output */
 	Com_DPrintf("pre: '%s', param: '%s', trail: '%s'\n", msg->prefix, msg->params, msg->trailing);
-	username = strstr(msg->prefix, "!");
-	if (username) {
-		*username++ = '\0';
-		Com_sprintf(buffer, sizeof(buffer), "%s: %s\n", msg->prefix, msg->trailing);
-	} else
-		Com_sprintf(buffer, sizeof(buffer), "%s\n", msg->trailing);
-	Irc_AppendToBuffer(buffer);
+
+	switch (cmd.type) {
+	case IRC_COMMAND_NUMERIC:
+		cmd.id.numeric = msg->id.numeric;
+#ifdef DEBUG
+		Com_DPrintf("<%s> [%03d] %s : %s", msg->prefix, cmd.id.numeric, msg->params, msg->trailing);
+#endif
+		switch (cmd.id.numeric) {
+		case RPL_HELLO:
+		case RPL_WELCOME:
+		case RPL_YOURHOST:
+		case RPL_CREATED:
+		case RPL_MYINFO:
+		case RPL_MOTDSTART:
+		case RPL_MOTD:
+		case RPL_ENDOFMOTD:
+		case RPL_LOCALUSERS:
+		case RPL_GLOBALUSERS:
+			Irc_AppendToBuffer(msg->trailing);
+			return qtrue;
+
+		case RPL_ISUPPORT:
+		case RPL_LUSEROP:
+		case RPL_LUSERUNKNOWN:
+		case RPL_LUSERCHANNELS:
+		case RPL_LUSERCLIENT:
+		case RPL_LUSERME:
+			p = strchr(msg->params, ' ');	/* skip first param (nick) */
+			if (p) {
+				++p;
+				Irc_AppendToBuffer(va("%s %s", p, msg->trailing));
+			} else
+				Irc_AppendToBuffer(msg->trailing);
+			return qtrue;
+
+		case RPL_NAMREPLY:
+			Irc_Client_CmdRplNamreply(msg->params, msg->trailing);
+			return qtrue;
+		case RPL_ENDOFNAMES:
+			Irc_Client_CmdRplEndofnames(msg->params, msg->trailing);
+			return qtrue;
+		case RPL_TOPIC:
+			Irc_Client_CmdRplTopic(msg->params, msg->trailing);
+			return qtrue;
+		case RPL_NOTOPIC:
+			Irc_Client_CmdRplNotopic(msg->params);
+
+		case RPL_WHOISUSER:
+			Irc_Client_CmdRplWhoisuser(msg->params, msg->trailing);
+			return qtrue;
+		case RPL_WHOISSERVER:
+			Irc_Client_CmdRplWhoisserver(msg->params, msg->trailing);
+			return qtrue;
+		case RPL_WHOISIDLE:
+			Irc_Client_CmdRplWhoisidle(msg->params, msg->trailing);
+			return qtrue;
+		case RPL_WHOISACCOUNT:
+			Irc_Client_CmdRplWhoisaccount(msg->params, msg->trailing);
+			return qtrue;
+		case RPL_WHOREPLY:
+			Irc_Client_CmdRplWhoreply(msg->params, msg->trailing);
+			return qtrue;
+		case RPL_WHOWASUSER:
+			Irc_Client_CmdRplWhowasuser(msg->params, msg->trailing);
+			return qtrue;
+		case RPL_ENDOFWHO:
+		case RPL_WHOISCHANNELS:
+		case RPL_WHOISOPERATOR:
+		case RPL_ENDOFWHOIS:
+		case RPL_ENDOFWHOWAS:
+			p = strchr(msg->params, ' ');
+			if (p) {
+				++p;
+				Irc_AppendToBuffer(va("%s %s", p, msg->trailing));
+			}
+			return qtrue;
+
+		/* error codes */
+		case ERR_NOSUCHNICK:
+		case ERR_NOSUCHSERVER:
+		case ERR_NOSUCHCHANNEL:
+		case ERR_CANNOTSENDTOCHAN:
+		case ERR_TOOMANYCHANNELS:
+		case ERR_WASNOSUCHNICK:
+		case ERR_TOOMANYTARGETS:
+		case ERR_NOORIGIN:
+		case ERR_NORECIPIENT:
+		case ERR_NOTEXTTOSEND:
+		case ERR_NOTOPLEVEL:
+		case ERR_WILDTOPLEVEL:
+		case ERR_UNKNOWNCOMMAND:
+		case ERR_NOMOTD:
+		case ERR_NOADMININFO:
+		case ERR_FILEERROR:
+		case ERR_NONICKNAMEGIVEN:
+		case ERR_ERRONEUSNICKNAME:
+		case ERR_NICKNAMEINUSE:
+		case ERR_NICKCOLLISION:
+		case ERR_BANNICKCHANGE:
+		case ERR_NCHANGETOOFAST:
+		case ERR_USERNOTINCHANNEL:
+		case ERR_NOTONCHANNEL:
+		case ERR_USERONCHANNEL:
+		case ERR_NOLOGIN:
+		case ERR_SUMMONDISABLED:
+		case ERR_USERSDISABLED:
+		case ERR_NOTREGISTERED:
+		case ERR_NEEDMOREPARAMS:
+		case ERR_ALREADYREGISTRED:
+		case ERR_NOPERMFORHOST:
+		case ERR_PASSWDMISMATCH:
+		case ERR_YOUREBANNEDCREEP:
+		case ERR_BADNAME:
+		case ERR_KEYSET:
+		case ERR_CHANNELISFULL:
+		case ERR_UNKNOWNMODE:
+		case ERR_INVITEONLYCHAN:
+		case ERR_BANNEDFROMCHAN:
+		case ERR_BADCHANNELKEY:
+		case ERR_NOPRIVILEGES:
+		case ERR_CHANOPRIVSNEEDED:
+		case ERR_CANTKILLSERVER:
+		case ERR_NOOPERHOST:
+		case ERR_UMODEUNKNOWNFLAG:
+		case ERR_USERSDONTMATCH:
+		case ERR_GHOSTEDCLIENT:
+		case ERR_LAST_ERR_MSG:
+		case ERR_SILELISTFULL:
+		case ERR_NOSUCHGLINE:
+		case ERR_BADPING:
+		case ERR_TOOMANYDCC:
+		case ERR_LISTSYNTAX:
+		case ERR_WHOSYNTAX:
+		case ERR_WHOLIMEXCEED:
+			Irc_AppendToBuffer(va("%s : %s", msg->params, msg->trailing));
+			return qtrue;
+		default:
+			Irc_AppendToBuffer(msg->trailing);
+			return qtrue;
+		} /* switch */
+		break;
+	case IRC_COMMAND_STRING:
+		cmd.id.string = msg->id.string;
+#ifdef DEBUG
+		Com_DPrintf("<%s> [%s] %s : %s", msg->prefix, cmd.id.string, msg->params, msg->trailing);
+#endif
+		if (!Q_strncmp(cmd.id.string, "NICK", 4))
+			Irc_Client_CmdNick(msg->prefix, msg->params, msg->trailing);
+		else if (!Q_strncmp(cmd.id.string, "QUIT", 4))
+			Irc_Client_CmdQuit(msg->prefix, msg->params, msg->trailing);
+		else if (!Q_strncmp(cmd.id.string, "NOTICE", 6))
+			Irc_AppendToBuffer(msg->trailing);
+		else if (!Q_strncmp(cmd.id.string, "PRIVMSG", 7))
+			Irc_Client_CmdPrivmsg(msg->prefix, msg->params, msg->trailing);
+		else if (!Q_strncmp(cmd.id.string, "MODE", 4))
+			Irc_Client_CmdMode(msg->prefix, msg->params, msg->trailing);
+		else if (!Q_strncmp(cmd.id.string, "JOIN", 4))
+			Irc_Client_CmdJoin(msg->prefix, msg->params, msg->trailing);
+		else if (!Q_strncmp(cmd.id.string, "PART", 4))
+			Irc_Client_CmdPart(msg->prefix, msg->params, msg->trailing);
+		else if (!Q_strncmp(cmd.id.string, "TOPIC", 5))
+			Irc_Client_CmdTopic(msg->prefix, msg->params, msg->trailing);
+		else if (!Q_strncmp(cmd.id.string, "KILL", 4))
+			Irc_Client_CmdKill(msg->prefix, msg->params, msg->trailing);
+		else if (!Q_strncmp(cmd.id.string, "KICK", 4))
+			Irc_Client_CmdKick(msg->prefix, msg->params, msg->trailing);
+		else if (!Q_strncmp(cmd.id.string, "PING", 4))
+			Com_DPrintf("IRC: <PING> %s\n", msg->trailing);
+		else if (!Q_strncmp(cmd.id.string, "ERROR", 5))
+			Irc_Logic_Disconnect(msg->trailing);
+		else
+			Irc_AppendToBuffer(msg->trailing);
+		break;
+	} /* switch */
 	return qfalse;
 }
 
@@ -730,6 +1248,7 @@ void Irc_Logic_Disconnect(const char *reason)
 		Irc_Proto_Disconnect();
 		irc_connected = qfalse;
 		Cvar_ForceSet("irc_defaultChannel", "");
+		Cvar_ForceSet("irc_topic", "");
 		Irc_Input_Deactivate();
 	} else
 		Com_Printf("Irc_Disconnect: not connected\n");
@@ -970,7 +1489,6 @@ static void Irc_Client_Msg_f(void)
 	if (Cmd_Argc() >= 2) {
 		char cropped_msg[IRC_SEND_BUF_SIZE];
 		const char *msg = Cmd_Args();
-		const char * const nick = Cvar_VariableString("name");
 		char *channel = irc_defaultChannel->string;
 
 		if (*channel) {
@@ -1167,6 +1685,7 @@ extern void Irc_Init(void)
 	irc_port = Cvar_Get("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");
 	irc_user = Cvar_Get("irc_user", "UfoAIPlayer", CVAR_ARCHIVE, NULL);
 	irc_password = Cvar_Get("irc_password", "", CVAR_ARCHIVE, NULL);
+	irc_topic = Cvar_Get("irc_topic", "", CVAR_NOSET, NULL);
 	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET, NULL);
 	irc_logConsole = Cvar_Get("irc_logConsole", "0", CVAR_ARCHIVE, NULL);
 
@@ -1189,11 +1708,11 @@ extern void Irc_Shutdown(void)
  */
 extern void Irc_Input_Activate(void)
 {
+	menuText[TEXT_STANDARD] = irc_buffer;
 	if (irc_connected && *irc_defaultChannel->string) {
 		cls.key_dest = key_irc;
-		menuText[TEXT_STANDARD] = irc_buffer;
 	} else
-		Com_DPrintf("Warning: No irc input mode, not connected\n");
+		Com_Printf("Warning: IRC not connected\n");
 }
 
 /**

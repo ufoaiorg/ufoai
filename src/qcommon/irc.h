@@ -195,7 +195,7 @@ typedef enum irc_numeric_e {
 	ERR_LAST_ERR_MSG = 504,
 	ERR_SILELISTFULL = 511,
 	ERR_NOSUCHGLINE = 512,
-	ERR_TOOMANYWATCH = 512,
+/*	ERR_TOOMANYWATCH = 512,*/
 	ERR_BADPING = 513,
 	ERR_TOOMANYDCC = 514,
 	ERR_LISTSYNTAX = 521,
@@ -207,6 +207,12 @@ typedef enum irc_command_type_e {
 	IRC_COMMAND_NUMERIC,
 	IRC_COMMAND_STRING
 } irc_command_type_t;
+
+typedef enum irc_nick_prefix_e {
+	IRC_NICK_PREFIX_NONE = ' ',
+	IRC_NICK_PREFIX_OP = '@',
+	IRC_NICK_PREFIX_VOICE = '+'
+} irc_nick_prefix_t;
 
 /* commands can be numeric's or string */
 typedef struct irc_command_s {

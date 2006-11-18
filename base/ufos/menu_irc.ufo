@@ -44,7 +44,7 @@ menu irc
 	string title
 	{
 		string	"_Lobby"
-		pos		"512 25"
+		pos		"512 22"
 		align	uc
 		font	f_big
 	}
@@ -78,9 +78,25 @@ menu irc
 	text irc_data
 	{
 		pos		"30 80"
-		size	"690 620"
+		size	"675 620"
 		bgcolor	"0.5 0.5 0.5 0.2"
+		height	"28"
 		format  "22 0"
+		num		"0"
+	}
+
+	string irc_server_string
+	{
+		string	"*cvar irc_server"
+		pos		"512 44"
+		font	f_small
+	}
+
+	string irc_server_channel
+	{
+		string	"*cvar irc_channel"
+		pos		"756 44"
+		font	f_small
 	}
 
 	string irc_send_buffer
@@ -90,6 +106,30 @@ menu irc
 		size	"690 25"
 		bgcolor	"0.5 0.5 0.5 0.2"
 		font	f_normal
+	}
+
+	pic irc_scrollup
+	{
+		image menu/buttons_small
+		pos		"710 78"
+		texl	"32 32"
+		texh	"48 48"
+		mousefx	true
+		click	{ cmd "mn_textscroll irc_data -1;" }
+		out	{ *irc_scrollup texl "32 32" *irc_scrollup texh "48 48" }
+		in	{ *irc_scrollup texl "48 32" *irc_scrollup texh "64 48" }
+	}
+
+	pic irc_scrolldown
+	{
+		image menu/buttons_small
+		pos		"710 688"
+		texl	"32 48"
+		texh	"48 64"
+		mousefx	true
+		click	{ cmd "mn_textscroll irc_data 1;" }
+		out	{ *irc_scrolldown texl "32 48" *irc_scrolldown texh "48 64" }
+		in	{ *irc_scrolldown texl "48 48" *irc_scrolldown texh "64 64" }
 	}
 
 	confunc irc_activate_input
