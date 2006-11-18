@@ -44,7 +44,7 @@ clean:
 
 	find maps -name '*.bsp' | xargs --no-run-if-empty rm
 
-	$(MAKE) reset-version
+	$(MAKE) -f debian/rules reset-version
 
 	dh_clean
 

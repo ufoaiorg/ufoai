@@ -61,7 +61,7 @@ clean:
 	-$(MAKE) clean BUILD_RELEASE_DIR=build
 	rm -rf build
 
-	$(MAKE) reset-version
+	$(MAKE) -f debian/rules reset-version
 
 	dh_clean 
 
