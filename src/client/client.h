@@ -435,6 +435,7 @@ void CL_Disconnect_f(void);
 void CL_GetChallengePacket(void);
 void CL_PingServers_f(void);
 void CL_Snd_Restart_f(void);
+void S_ModifySndRef_f (void);
 void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank );
 int CL_GetRank(char* rankID);
 void CL_ParseUGVs(char *title, char **text);
