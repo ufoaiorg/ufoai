@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_../../src/ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_../../src/ports/win32/libjpeg.lib_@@_-lz_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=99
+UnitCount=101
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -1008,14 +1008,14 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit100]
-FileName=..\..\src\ports\win32\qal_win.c
+FileName=..\..\src\qcommon\irc.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c qal_win.c -o qal_win.o $(CFLAGS)
+BuildCmd=$(CC) -c irc.c -o irc.o $(CFLAGS)
 
 [Unit95]
 FileName=..\..\src\client\snd_openal.h
@@ -1039,6 +1039,16 @@ BuildCmd=
 
 [Unit99]
 FileName=..\..\src\client\cl_event.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit101]
+FileName=..\..\src\qcommon\irc.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
