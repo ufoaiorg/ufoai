@@ -377,18 +377,14 @@ static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	return guete;
 }
 
-
 /**
- * @brief The think function for the ai controlled aliens
+ * @brief Attempts to find the best action for an alien. Moves the alien
+ * into the starting position for that action and returns the action.
  * @param[in] player
  * @param[in] ent
- * @sa AI_FighterCalcGuete
- * @sa AI_CivilianCalcGuete
- * @sa G_ClientMove
- * @sa G_ClientShoot
  */
 #define AI_MAX_DIST	30
-void AI_ActorThink(player_t * player, edict_t * ent)
+ai_action_t prepBestAction(player_t * player, edict_t * ent)
 {
 	ai_action_t aia, bestAia;
 	pos3_t oldPos, to;
@@ -397,47 +393,6 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	int xl, yl, xh, yh;
 	int i = 0;
 	float guete, best;
-
-#ifdef PARANOID
-	Com_DPrintf( "AI_ActorThink: (ent %i, frame %i)\n", ent->number, level.framenum );
-#endif
-
-	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
-	if (!(ent->state & STATE_PANIC)) {
-		if ( RIGHT(ent) && gi.csi->ods[RIGHT(ent)->item.t].reload && RIGHT(ent)->item.a == 0 ) {
-			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idRight)) {
-#ifdef PARANOID
-				Com_DPrintf("AI_ActorThink: Reloading right hand weapon\n");
-#endif
-				G_ClientReload(player, ent->number, ST_RIGHT_RELOAD, QUIET);
-			} else {
-#ifdef PARANOID
-				Com_DPrintf("AI_ActorThink: Dropping right hand weapon\n");
-#endif
-				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, QUIET);
-			}
-		}
-		if ( LEFT(ent) && gi.csi->ods[LEFT(ent)->item.t].reload && LEFT(ent)->item.a == 0 ) {
-			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idLeft)) {
-#ifdef PARANOID
-				Com_DPrintf("AI_ActorThink: Reloading left hand weapon\n");
-#endif
-				G_ClientReload(player, ent->number, ST_LEFT_RELOAD, QUIET);
-			} else {
-#ifdef PARANOID
-				Com_DPrintf("AI_ActorThink: Dropping left hand weapon\n");
-#endif
-				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, QUIET);
-			}
-		}
-	}
-
-	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
-	if (!LEFT(ent) && !RIGHT(ent)) {
-		G_ClientGetWeaponFromInventory(player, ent->number, QUIET);
-		if (LEFT(ent) || RIGHT(ent))
-			Com_DPrintf("AI_ActorThink: Got weapon from inventory\n");
-	}
 
 	/* calculate move table */
 	G_MoveCalc(0, ent->pos, MAX_ROUTE);
@@ -505,10 +460,12 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	VectorCopy(oldOrigin, ent->origin);
 
 	/* nothing found to do */
-	if (best == -10000.0)
-		return;
+	if (best == -10000.0) {
+		bestAia.target = NULL;
+		return bestAia;
+	}
 
-	/* do the first move */
+	/* do the move */
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
 #if 0
@@ -516,13 +473,79 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 		(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2],
 		(int)bestAia.stop[0], (int)bestAia.stop[1], (int)bestAia.stop[2] );
 #endif
+	return bestAia;
+}
+
+
+/**
+ * @brief The think function for the ai controlled aliens
+ * @param[in] player
+ * @param[in] ent
+ * @sa AI_FighterCalcGuete
+ * @sa AI_CivilianCalcGuete
+ * @sa G_ClientMove
+ * @sa G_ClientShoot
+ */
+void AI_ActorThink(player_t * player, edict_t * ent)
+{
+	ai_action_t bestAia;
+
+#ifdef PARANOID
+	Com_DPrintf( "AI_ActorThink: (ent %i, frame %i)\n", ent->number, level.framenum );
+#endif
+
+	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
+	if (!(ent->state & STATE_PANIC)) {
+		if ( RIGHT(ent) && gi.csi->ods[RIGHT(ent)->item.t].reload && RIGHT(ent)->item.a == 0 ) {
+			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idRight)) {
+#ifdef PARANOID
+				Com_DPrintf("AI_ActorThink: Reloading right hand weapon\n");
+#endif
+				G_ClientReload(player, ent->number, ST_RIGHT_RELOAD, QUIET);
+			} else {
+#ifdef PARANOID
+				Com_DPrintf("AI_ActorThink: Dropping right hand weapon\n");
+#endif
+				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, QUIET);
+			}
+		}
+		if ( LEFT(ent) && gi.csi->ods[LEFT(ent)->item.t].reload && LEFT(ent)->item.a == 0 ) {
+			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idLeft)) {
+#ifdef PARANOID
+				Com_DPrintf("AI_ActorThink: Reloading left hand weapon\n");
+#endif
+				G_ClientReload(player, ent->number, ST_LEFT_RELOAD, QUIET);
+			} else {
+#ifdef PARANOID
+				Com_DPrintf("AI_ActorThink: Dropping left hand weapon\n");
+#endif
+				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, QUIET);
+			}
+		}
+	}
+
+	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
+	if (!LEFT(ent) && !RIGHT(ent)) {
+		G_ClientGetWeaponFromInventory(player, ent->number, QUIET);
+		if (LEFT(ent) || RIGHT(ent))
+			Com_DPrintf("AI_ActorThink: Got weapon from inventory\n");
+	}
+
+	bestAia = prepBestAction(player, ent);
 
 	/* shoot('n'hide) */
 	if (bestAia.target) {
 		/* TODO: check whether shoot is needed or enemy died already;
 		   use the remaining TUs for reaction fire */
-		for (i = 0; i < bestAia.shots; i++)
+		while (bestAia.shots) {
 			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, NULL, qtrue);
+			bestAia.shots--;
+			if (bestAia.target->state & STATE_DEAD) {
+				bestAia = prepBestAction(player, ent);
+				if (!bestAia.target)
+					return;
+			}
+		}
 		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse, QUIET);
 	}
 }
