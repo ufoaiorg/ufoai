@@ -728,7 +728,7 @@ menu mp_join_internet
 	pic button_inet_lobby
 	{
 		image	menu/multi_buttons3
-		click	{ cmd "irc_connect irc.freenode.org 6667 #ufo:ai; mn_push irc;" }
+		click	{ cmd "irc_connect; mn_push irc;" }
 		texh	"256 32"
 		texl	"0 0"
 		pos		"500 515"
