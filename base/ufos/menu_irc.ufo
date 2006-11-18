@@ -143,7 +143,7 @@ menu irc
 	// ==================
 	func init
 	{
-		cmd irc_activate;
+		cmd "irc_activate; set mn_scrollnode irc_data;"
 	}
 
 	// ==================
