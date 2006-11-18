@@ -647,6 +647,7 @@ void MSG_Write_PA(player_action_t player_action, int num, ...);
 void CL_CharacterCvars(character_t * chr);
 void CL_UGVCvars(character_t *chr);
 void CL_ActorUpdateCVars(void);
+qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode);
 
 void CL_DisplayHudMessage(char *text, int time);
 

@@ -471,11 +471,11 @@ void CL_ZoomOutQuant(void)
 }
 
 /**
- * @brief
+ * @brief Shoot right weapon in primary fire mode.
  */
 void CL_FireRightPrimary(void)
 {
-	if (!selActor)
+	if (!selActor || !CL_CheckMenuAction(selActor->TU, RIGHT(selActor), FD_PRIMARY))
 		return;
 	if (cl.cmode == M_FIRE_PR)
 		cl.cmode = M_MOVE;
@@ -484,11 +484,11 @@ void CL_FireRightPrimary(void)
 }
 
 /**
- * @brief
+ * @brief Shoot right weapon in secondary fire mode.
  */
 void CL_FireRightSecondary(void)
 {
-	if (!selActor)
+	if (!selActor || !CL_CheckMenuAction(selActor->TU, RIGHT(selActor), FD_SECONDARY))
 		return;
 	if (cl.cmode == M_FIRE_SR)
 		cl.cmode = M_MOVE;
@@ -497,11 +497,11 @@ void CL_FireRightSecondary(void)
 }
 
 /**
- * @brief
+ * @brief Shoot left weapon in primary fire mode.
  */
 void CL_FireLeftPrimary(void)
 {
-	if (!selActor)
+	if (!selActor || !CL_CheckMenuAction(selActor->TU, LEFT(selActor), FD_PRIMARY))
 		return;
 	if (cl.cmode == M_FIRE_PL)
 		cl.cmode = M_MOVE;
@@ -510,11 +510,11 @@ void CL_FireLeftPrimary(void)
 }
 
 /**
- * @brief
+ * @brief Shoot left weapon in secondary fire mode.
  */
 void CL_FireLeftSecondary(void)
 {
-	if (!selActor)
+	if (!selActor || !CL_CheckMenuAction(selActor->TU, LEFT(selActor), FD_SECONDARY))
 		return;
 	if (cl.cmode == M_FIRE_SL)
 		cl.cmode = M_MOVE;
@@ -541,18 +541,22 @@ void CL_ConfirmAction(void)
 
 
 /**
- * @brief
+ * @brief Reload left weapon.
  */
 void CL_ReloadLeft(void)
 {
+	if (!selActor || !CL_CheckMenuAction(selActor->TU, LEFT(selActor), EV_INV_RELOAD))
+		return;
 	CL_ActorReload(csi.idLeft);
 }
 
 /**
- * @brief
+ * @brief Reload right weapon.
  */
 void CL_ReloadRight(void)
 {
+	if (!selActor || !CL_CheckMenuAction(selActor->TU, RIGHT(selActor), EV_INV_RELOAD))
+		 return;
 	CL_ActorReload(csi.idRight);
 }
 

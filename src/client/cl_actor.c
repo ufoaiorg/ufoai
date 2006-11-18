@@ -357,6 +357,37 @@ static void CL_RefreshWeaponButtons(int time)
 }
 
 /**
+ * @brief Checks whether an action on hud menu is valid.
+ */
+qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode)
+{
+	/* no weapon */	
+	if ( !weapon || weapon->item.m == NONE ) {
+		Com_Printf("No weapon in hand!\n");
+		return qfalse;
+	}
+
+	/* shoot button */
+	if ( time < csi.ods[weapon->item.m].fd[(mode)].time ) {
+		Com_Printf("Can't perform action: not enough TUs.\n");
+		return qfalse;
+	}
+
+	/* reload button */
+	if ( (mode == EV_INV_RELOAD) && !csi.ods[weapon->item.t].reload ) {
+		Com_Printf("This weapon can not be reloaded!\n");
+		return qfalse;
+	}
+	if ( (mode == EV_INV_RELOAD) && time < csi.ods[weapon->item.t].reload ) {
+		Com_Printf("Can't perform action: not enough TUs.\n");
+		return qfalse;
+	}
+
+	return qtrue; 
+}
+
+
+/**
  * @brief Updates console vars for an actor.
  *
  * This function updates the cvars for the hud (battlefield)
