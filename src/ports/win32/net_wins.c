@@ -104,7 +104,7 @@ void SockadrToNetadr (struct sockaddr *s, netadr_t *a)
 char *NET_SocketToString (void *s_ptr)
 {
 	netadr_t addr;
-	struct sockaddr_in *s = (struct sockaddr_in*)s_ptr;
+	struct sockaddr *s = (struct sockaddr*)s_ptr;
 
 	if (!s)
 		return "";
