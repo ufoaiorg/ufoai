@@ -279,7 +279,8 @@ static void CL_RefreshWeaponButtons(int time)
 
 	if ( !weapon || weapon->item.m == NONE
 		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
-		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time ) {
+		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time 
+		 || (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) ) {
 		if (primary_right != 0) {
 			Cbuf_AddText("dispr\n");
 			primary_right = 0;
@@ -291,7 +292,8 @@ static void CL_RefreshWeaponButtons(int time)
 
 	if ( !weapon || weapon->item.m == NONE
 		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
-		 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time ) {
+		 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time
+		 || (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) ) {
 		if (secondary_right != 0) {
 			Cbuf_AddText("dissr\n");
 			secondary_right = 0;
@@ -367,20 +369,34 @@ qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode)
 		return qfalse;
 	}
 
-	/* shoot button */
-	if ( time < csi.ods[weapon->item.m].fd[(mode)].time ) {
-		Com_Printf("Can't perform action: not enough TUs.\n");
-		return qfalse;
-	}
-
-	/* reload button */
-	if ( (mode == EV_INV_RELOAD) && !csi.ods[weapon->item.t].reload ) {
-		Com_Printf("This weapon can not be reloaded!\n");
-		return qfalse;
-	}
-	if ( (mode == EV_INV_RELOAD) && time < csi.ods[weapon->item.t].reload ) {
-		Com_Printf("Can't perform action: not enough TUs.\n");
-		return qfalse;
+	switch (mode) {
+	case FD_PRIMARY:
+	case FD_SECONDARY:
+		if ( weapon->item.a <= 0 && csi.ods[weapon->item.t].reload) {
+			Com_Printf("Out of ammo!\n");
+			return qfalse;
+		}
+		if ( csi.ods[weapon->item.t].firetwohanded && LEFT(selActor) ) {
+			Com_Printf("Weapon cannot be fired one handed!\n");
+			return qfalse;
+		}
+		if ( time < csi.ods[weapon->item.m].fd[(mode)].time ) {
+			Com_Printf("Can't perform action: not enough TUs.\n");
+			return qfalse;
+		}
+		break;
+	case EV_INV_RELOAD:
+		if ( !csi.ods[weapon->item.t].reload ) {
+			Com_Printf("This weapon can not be reloaded!\n");
+			return qfalse;
+		}
+		if ( time < csi.ods[weapon->item.t].reload ) {
+			Com_Printf("Can't perform action: not enough TUs.\n");
+			return qfalse;
+		}
+		break;
+	default:
+		break;
 	}
 
 	return qtrue; 
