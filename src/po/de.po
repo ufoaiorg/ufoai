@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-11-12 19:02+0100\n"
-"PO-Revision-Date: 2006-11-18 20:17+0100\n"
+"PO-Revision-Date: 2006-11-18 23:10+0100\n"
 "Last-Translator: moe <maui_key@yahoo.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -177,7 +177,7 @@ msgstr "Sehr schwere Kampagne"
 
 #: ../base/ufos/campaign.ufo:145
 msgid "txt_veryhard_campaign"
-msgstr "Wie Standardkampagne aber mit weniger Rekruten und weniger Credits"
+msgstr "Dies ist eine extrem schwere Version der Standardkampagne. In diesem Szenario sind die Chancen stark gegen dich. Sie erhalten wenig Rekruten und die Nationen sind sehr anspruchsvoll. Die Aliens zeigen keine Gnade."
 
 #: ../base/ufos/campaign.ufo:165
 msgid "Hard Campaign"
@@ -185,7 +185,7 @@ msgstr "Schwere Kampagne"
 
 #: ../base/ufos/campaign.ufo:166
 msgid "txt_hard_campaign"
-msgstr "Wie Standardkampagne aber mit weniger Rekruten und weniger Credits"
+msgstr "Dies ist eine schwerere Version der Standardkampagne. Sie bekommen weniger Soldaten, Techniker und Wissenschaftler. Die Nationen sind schwerer zufrieden zu stellen, Forschung ist langsamer und braucht mehr Mittel und die Aliens sind stärker.Diese Option stellt die schwere Schwierigkeitsstufe dar und wird für fortgeschrittene Spieler empfohlen. "
 
 #: ../base/ufos/campaign.ufo:186
 msgid "Standard Campaign"
@@ -194,10 +194,7 @@ msgstr "Standardkampagne"
 #: ../base/ufos/campaign.ufo:187
 #: ../base/ufos/campaign.ufo:281
 msgid "txt_standard_campaign"
-msgstr ""
-"Dies ist ein Einzelspieler, militärbasiertes Invasionsszenario. Der Spieler erhält die Kontrolle über das Projekt PHALANX - die Antwort der Erde auf die Alieninvasion - und kann sich durch ein dynamisches Spiel mit bedeutsamen Zufallsereignissen sowie einer alles überspannenden Geschichte spielen.\n"
-"\n"
-"Diese Kampagne ist in mehreren Schwierigkeitsstufen verfügbar. Die aktuelle Option repräsentiert den Standardschwierigkeitsgrad - empfohlen für neue Spieler die eine Herausforderung suchen. "
+msgstr "Dies ist ein Einzelspieler, militärbasiertes Invasionsszenario. Der Spieler erhält die Kontrolle über das Projekt PHALANX - die Antwort der Erde auf die Alieninvasion - und kann sich durch ein dynamisches Spiel mit bedeutsamen Zufallsereignissen sowie einer alles überspannenden Geschichte spielen.Diese Kampagne ist in mehreren Schwierigkeitsstufen verfügbar. Die aktuelle Option repräsentiert den Standardschwierigkeitsgrad - empfohlen für neue Spieler die eine Herausforderung suchen. "
 
 #: ../base/ufos/campaign.ufo:217
 msgid "Easy Campaign"
@@ -205,7 +202,7 @@ msgstr "Einfache Kampagne"
 
 #: ../base/ufos/campaign.ufo:218
 msgid "txt_easy_campaign"
-msgstr "Wie Standardkampagne aber mit mehr Rekruten und mehr Credits"
+msgstr "Dies ist eine leichtere Version der Standardkampagne. Die Aliens sind schwächer, UFO Angriffe finden weniger statt und sie erhalten mehr neue Rekruten, um Verluste auszugleichen.Diese Kampagne stellt die leichte Schwierigkeitsstufe dar und ist eine gute Wahl für Spieler, die zum ersten Mal spielen und einfacheres Spielen wünschen, als es die Standardkampagne erlaub"
 
 #: ../base/ufos/campaign.ufo:238
 msgid "Very Easy Campaign"
@@ -213,7 +210,7 @@ msgstr "Sehr einfache Kampagne"
 
 #: ../base/ufos/campaign.ufo:239
 msgid "txt_veryeasy_campaign"
-msgstr "Wie Standardkampagne aber mit mehr Rekruten und mehr Credits"
+msgstr "Dies ist eine sehr leichte Version der Standardkampagne. Ihre Streitkräfte sind stärker, die Aliens weniger gefährlich und sie werden weniger Verluste während der Kampagne haben.Diese Kampagne repräsentiert den sehr leichten Schwierigkeitsgrad und ist eine gute Option für Spieler, die zum ersten Mal spielen und erst mal UFO:AI antesten wollen. "
 
 #: ../base/ufos/campaign.ufo:259
 msgid "Play the aliens"
@@ -3301,22 +3298,52 @@ msgstr ""
 "the weapon at great speeds. The detonation is controlled by a built in timer."
 
 #: ../base/ufos/research.ufo:525
-#, fuzzy
 msgid "kerrblade_txt"
 msgstr ""
-"Thanks to the recent advances in the laser technology Phalanx scientist were able to implement a\n"
-"really powerful 'laser reactor' into a hand held weapon. The laser beam is generated with a\n"
-"newly developed type of the common YAG laser technology. A advanced opical lense system is used\n"
-"to focus the beam very densely so it has the power to easily penetrate most known armors."
+"AN: Basiskommandeur, PHALANX, Kommando Atlantische Operationen\n"
+"\n"
+"VON: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Kommando Atlantische Operationen\n"
+"\n"
+"DATUM: 27. Mai 2084\n"
+"\n"
+"BETREFF: Alien Artefakt -- Kerrklinge\n"
+"\n"
+"\n"
+"Herr Kommandant, wir haben eine interessante Alienwaffe vom Schlachtfeld geborgen. Es scheint eine Art Messer oder Schwert zu sein, mit einer schärferen Klinge als alles, was wir auf der Erde kennen. Sie kann Stahl wie Papier schneiden und geht durch duie Rüstungen unserer Soldaten, als wäre sie nicht da. Die Soldaten haben sie 'Kerrklinge' getauft, nach dem charakteristischen Ton, den sie macht, wenn sie durch unsere Rüstungen schneidet.\n"
+"\n"
+"Wir sollten diese Klinge untersuchen, um ihre Funktionen zu ergründen und zu sehen, wie sie hergestellt wurde. Es könnte einen Weg geben, diese Technologie zu duplizieren, so dass unsere Truppen sie nutzen können. Dadurch sollten Nahkämpfe mit den Aliens für unsere Soldaten besser überlebbar sein, als mit dem Kampfmesser.\n"
+"\n"
+"Natürlich wird diese Forschung ihre Zustimmung für Laborzeit und Finanzierung brauchen.\n"
+"\n"
+"--Cdr. Navarre "
 
 #: ../base/ufos/research.ufo:526
-#, fuzzy
 msgid "kerrblade_pre_txt"
 msgstr ""
-"Thanks to the recent advances in the laser technology Phalanx scientist were able to implement a\n"
-"really powerful 'laser reactor' into a hand held weapon. The laser beam is generated with a\n"
-"newly developed type of the common YAG laser technology. A advanced opical lense system is used\n"
-"to focus the beam very densely so it has the power to easily penetrate most known armors."
+"AN: Basiskommandeur, PHALANX, Kommando Atlantische Operationen\n"
+"\n"
+"VON: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Kommando Atlantische Operationen\n"
+"\n"
+"DATUM: 30. Mai 2084\n"
+"\n"
+"BETREFF: Alien Artefakt -- Kerrklinge\n"
+"\n"
+"\n"
+"Unsere Analyse der Kerrklinge ist fertig, Herr Kommandant. Hier ist eine Zusammenfassung.\n"
+"\n"
+"Die Kerrklnge scheint auf den ersten Blick das Alienequivalent unseres Kampfmessers zu sein. Die Realität wäre ein besserer Ort, wenn das war wäre. Wir haben herausgefunden, dass die Klinge viel mehr als das ist und die Wahrheit ist nicht gerade beruhigend.\n"
+"\n"
+"Hergestellt mit Kohlenstoffverbindungen und Alienplastiken ist sie überraschend leicht und beinhaltet keinerlei Metall. Das Material selber ist sehr interessant für unsere Waffenproduktion. Weder splitterte die Klinge, noch bog sie sich oder bekam Scharten, egal wie sehr wir sie während der Tests missbrauchten. Wir glauben, dass wir dieses Material mit etwas mehr Forschung kopieren können.\n"
+"\n"
+"Ihre Form ähnelt den gekrümmten Schwertern der menschlichen Geschichte, obwohl es mehr Ähnlichkeit mit etwas aus Fantasiegeschichten hat. Sie ist zu groß, unhandlich und schlecht ausgewogen für Menschen. Die Klinge selbst ist unglaublich; wir haben gemessen, dass sie nur ein Molekül breit ist. Das gibt der Kerrklinge eine fantastische Schneidefähigkeit.\n"
+"\n"
+"In unseren Schlachtfeldaufzeichnungen haben wir gesehen, dass die Kerrklinge mit einem seltsamen, langgefingerten Griff -- der von menschlichen Händen nicht kopiert werden kann -- was zeigt, dass die Kerrklinge für etwas anderes als den gedachten Zweck genutzt wird. Die besten Ähnlichkeiten, die wir auf der Erde gefunden haben, sind die von Chirugenskalpellen und besondere uralten ausweidenden Werkzeugen. Dieser Vergleich war einer unserer ersten Hinweise zum wirklichen Gebrauch der Kerrklinge. Wir haben das mit den grauenhaften Aufzeichnungen aus Mumbai verbunden, die bis jetzt zu schlecht war, um herauszufinden, was die Aliens gemacht haben.\n"
+"\n"
+"Die Kerrklinge ist vielmehr ein Autopsiewerkzeug. Sie wird von Aliens benutzt, um lebende oder tote Menschen aufzuschneiden und jede Art Gewebe und Organe zu entnehmen, die die Aliens wollen. Die große, scharfe Spitze an der Unterseite der Klinge wird in die Magengrube gestoßen und wie eine Schere oder ein Büchsenöffner nach oben bewegt. Es geht mit beängstigender Leichtigkeit durch das Brustbein. Dann öffnet das Alien den Brustkorb und schneidet oder reißt das raus, was er will.\n"
+"\n"
+"Ich wünschte, wir könnten diese Dinger einfach nur verbrennen, aber leider sind sie viel zu kostbar. Obwohl sie primär nicht als Waffe konzipiert sind, sind die Kerrklingen weit effektiver als jedes menschliches Kampfmesser. Sie schneiden Aliens genauso gut auf wie Menschen. Der Griff ist höchst unhandlich für menschliche Hände aber wir können den Griff leicht genug anpassen. Jedoch sind die Klingen zu groß, um je in ein PHALANX Standardholster zu passen. Sie können von Soldaten nur im Rucksack getragen werden. Das kontrahiert irgendwie den Sinn eines Messers -- aber wir haben leider keine andere Nahkampfwaffe, die der Kraft der Kerrklinge auch nur nahe kommt.\n"
+"\n"
+"--Cdr. Navarre "
 
 #: ../base/ufos/research.ufo:543
 #, fuzzy
