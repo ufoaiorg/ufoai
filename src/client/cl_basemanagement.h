@@ -207,7 +207,7 @@ void B_BuildingInit(void);
 void B_AssembleMap(void);
 void B_BaseAttack(base_t* const base);
 void B_BaseResetStatus (base_t* const base);
-building_t *B_GetBuildingByIdx(int idx);
+building_t *B_GetBuildingByIdx(base_t* base, int idx);
 building_t *B_GetBuildingInBase(base_t* base, char* buildingID);
 building_t *B_GetBuildingType(char *buildingName);
 
