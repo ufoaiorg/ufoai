@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #error "You should not be including this file on this platform"
 #endif
 
+#include "winquake.h"
 
 #ifdef _MSC_VER
 /* msvc users have to install the OpenAL SDK - which doesn't use the AL/ scheme */

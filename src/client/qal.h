@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 
 #ifdef _WIN32
-	#include "../ports/win32/winquake.h"
 	#include "../ports/win32/qal_win.h"
 #endif
 

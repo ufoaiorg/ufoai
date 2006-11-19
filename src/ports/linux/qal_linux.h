@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* openal utility lib */
 #include <AL/alut.h>
 
+#include <dlfcn.h>
+
 #define GPA(a)	dlsym(oalState.hInstOpenAL, a);
 #define GPA2(a)	dlsym(oalState.hInstALUT, a);
 
