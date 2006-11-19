@@ -50,7 +50,12 @@ qboolean SND_OAL_Init (char* device)
 		return qfalse;
 	}
 
-	if ((oalState.device = qalcOpenDevice((ALubyte*)device) == NULL)) {
+	if (device)
+		oalState.device = qalcOpenDevice((ALubyte*)device);
+	else
+		oalState.device = qalcOpenDevice(NULL);
+
+	if (!oalState.device) {
 		Com_Printf("Error: OpenAL device (%s) could not be opened\n", device);
 		return qfalse;
 	}
@@ -91,12 +96,17 @@ static qboolean SND_OAL_LoadFile (char* filename, ALboolean loop)
 {
 	ALuint buffer;
 	ALenum error;
+	char* fullpath;
+
+	/* FIXME: get full path of sound file for qalutCreateBufferFromFile */
+	/* fullpath = "FS_GetFullPath(va("music/%s.ogg", filename));"*/
+	fullpath = filename;
 
 	/* Create an AL buffer from the given sound file. */
-	buffer = qalutCreateBufferFromFile(filename);
+	buffer = qalutCreateBufferFromFile(fullpath);
 	if (buffer == AL_NONE) {
 		error = qalutGetError();
-		Com_Printf("Error loading file: '%s'\n", qalutGetErrorString(error));
+		Com_Printf("Error loading file: '%s' reason: '%s'\n", filename, qalutGetErrorString(error));
 		return qfalse;
 	}
 
