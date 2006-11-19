@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-11-12 19:02+0100\n"
-"PO-Revision-Date: 2006-11-16 20:40+0100\n"
+"PO-Revision-Date: 2006-11-19 09:59+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgstr "Armure moyenne"
 
 #: ../base/ufos/basemanagement.ufo:62
 msgid "Alien containment"
-msgstr "Unité de détention"
+msgstr "Unité de Détention"
 
 #: ../base/ufos/basemanagement.ufo:76
 msgid "Entrance"
@@ -164,11 +164,11 @@ msgstr "Intercepteur"
 
 #: ../base/ufos/basemanagement.ufo:369
 msgid "UFO - Scout"
-msgstr "UFO - Éclaireur"
+msgstr "OVNI - Éclaireur"
 
 #: ../base/ufos/basemanagement.ufo:383
 msgid "UFO - Fighter"
-msgstr "UFO - Vaisseau de combat"
+msgstr "OVNI - Vaisseau de combat"
 
 #: ../base/ufos/campaign.ufo:144
 msgid "Very Hard Campaign"
@@ -340,7 +340,7 @@ msgstr "Acheter/Vendre"
 
 #: ../base/ufos/menu_aircraft.ufo:143
 msgid "Start your aircraft"
-msgstr "Faire décoler l'appareil"
+msgstr "Faire décoller l'appareil"
 
 #: ../base/ufos/menu_aircraft.ufo:159
 msgid "Start Aircraft"
@@ -1299,7 +1299,7 @@ msgstr "Internet"
 #: ../base/ufos/menu_multiplayer.ufo:772
 #: ../base/ufos/menu_multiplayer.ufo:1043
 msgid "Team preference:"
-msgstr "Préférence équipe:"
+msgstr "Équipe désirée:"
 
 #: ../base/ufos/menu_multiplayer.ufo:652
 msgid "Refresh"
@@ -1311,19 +1311,19 @@ msgstr "Marque-pages"
 
 #: ../base/ufos/menu_multiplayer.ufo:752
 msgid "Connect to IP"
-msgstr "Connecter  IP"
+msgstr "Se connecter à l'IP"
 
 #: ../base/ufos/menu_multiplayer.ufo:818
 msgid "Enable morale states:"
-msgstr "Activer le moral:"
+msgstr "Utiliser le moral:"
 
 #: ../base/ufos/menu_multiplayer.ufo:859
 msgid "Dedicated server:"
-msgstr "Serveur Dédié:"
+msgstr "Serveur dédié:"
 
 #: ../base/ufos/menu_multiplayer.ufo:900
 msgid "Teamplay:"
-msgstr "Jeu d'Equipe:"
+msgstr "Jeu en équipe:"
 
 #: ../base/ufos/menu_multiplayer.ufo:941
 msgid "Max. clients:"
@@ -1359,7 +1359,7 @@ msgstr "Max. joueurs par équipe:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1111
 msgid "Max. AI actors:"
-msgstr "Max. d'acteurs AIs:"
+msgstr "Max. d'acteurs IA:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1113
 msgid "Max AI actors for teamplay mode"
@@ -1375,7 +1375,7 @@ msgstr "RCON-Mot de Passe:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1191
 msgid "Hostname:"
-msgstr "Nom de l'Hote:"
+msgstr "Nom de l'Hôte:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1214
 msgid "Map"
@@ -1383,7 +1383,7 @@ msgstr "Carte"
 
 #: ../base/ufos/menu_multiplayer.ufo:1294
 msgid "Start server"
-msgstr "Démarrer le serveur"
+msgstr "Lancer serveur"
 
 #: ../base/ufos/menu_options.ufo:63
 msgid "Video"
@@ -1411,11 +1411,11 @@ msgstr "Plein Ecran:"
 
 #: ../base/ufos/menu_options.ufo:233
 msgid "Texture compression:"
-msgstr "Compression Texture :"
+msgstr "Compression des Textures :"
 
 #: ../base/ufos/menu_options.ufo:271
 msgid "Texture resolution cap:"
-msgstr "Limite Résolution Texture:"
+msgstr "Résolution des Textures:"
 
 #: ../base/ufos/menu_options.ufo:309
 msgid "Show FPS:"
@@ -1423,7 +1423,7 @@ msgstr "Montrer les FPS:"
 
 #: ../base/ufos/menu_options.ufo:347
 msgid "Texture anisotropy level:"
-msgstr "Niveau d'anisotropie des textures:"
+msgstr "Niveau d'Anisotropie des Textures:"
 
 #: ../base/ufos/menu_options.ufo:377
 msgid "Texture Lod:"
@@ -1431,11 +1431,11 @@ msgstr "Détail Texture:"
 
 #: ../base/ufos/menu_options.ufo:415
 msgid "Image Filter:"
-msgstr "Filtre d'image:"
+msgstr "Filtre d'Image:"
 
 #: ../base/ufos/menu_options.ufo:453
 msgid "Isometric Mode:"
-msgstr " Mode Isométrique:"
+msgstr "Mode Isométrique:"
 
 #: ../base/ufos/menu_options.ufo:491
 msgid "Gamma:"
@@ -1447,7 +1447,7 @@ msgstr "Garder la résolution"
 
 #: ../base/ufos/menu_options.ufo:554
 msgid "Want To Maintain resolution"
-msgstr "Désire garder la résolution"
+msgstr "Conserver cette résolution"
 
 #: ../base/ufos/menu_options.ufo:571
 msgid "Change the resolution"
@@ -1475,7 +1475,7 @@ msgstr "Musique:"
 
 #: ../base/ufos/menu_options.ufo:676
 msgid "Mixing Rate:"
-msgstr "Taux Mixage:"
+msgstr "Taux de Mixage:"
 
 #: ../base/ufos/menu_options.ufo:712
 msgid "Sound renderer:"
@@ -1491,7 +1491,7 @@ msgstr "Réglages du jeu"
 
 #: ../base/ufos/menu_options.ufo:820
 msgid "Start with employees:"
-msgstr "Commence avec du personnel:"
+msgstr "Commencer avec du personnel:"
 
 #: ../base/ufos/menu_options.ufo:836
 msgid "No employees hired at campaign start"
@@ -1503,7 +1503,7 @@ msgstr "Personnel déjà recruté au début de la campagne"
 
 #: ../base/ufos/menu_options.ufo:863
 msgid "Start with buildings:"
-msgstr "Commence avec les bâtiments:"
+msgstr "Commencer avec des bâtiments:"
 
 #: ../base/ufos/menu_options.ufo:879
 msgid "No buildings in the initial base"
@@ -1515,7 +1515,7 @@ msgstr "Bâtiments déjà construits dans la base initiale"
 
 #: ../base/ufos/menu_options.ufo:906
 msgid "Confirm Actions:"
-msgstr "Confirmer Actions:"
+msgstr "Confirmer les actions:"
 
 #: ../base/ufos/menu_options.ufo:922
 msgid "No confirmation before walking and shooting"
@@ -1539,7 +1539,7 @@ msgstr "Confirmation nécessaire pour se déplacer"
 
 #: ../base/ufos/menu_options.ufo:992
 msgid "HUD Design:"
-msgstr "Design du HUD:"
+msgstr "HUD utilisé (Système de fenêtrage):"
 
 #: ../base/ufos/menu_options.ufo:1008
 #: ../base/ufos/menu_options.ufo:1018
@@ -1560,7 +1560,7 @@ msgstr "Activer l'aide"
 
 #: ../base/ufos/menu_options.ufo:1070
 msgid "Center view:"
-msgstr "Vue centrale:"
+msgstr "Centrer la vue:"
 
 #: ../base/ufos/menu_options.ufo:1086
 msgid "No centering at soldier selecting, shooting and appearing"
@@ -1600,11 +1600,11 @@ msgstr "Limite de Production"
 
 #: ../base/ufos/menu_production.ufo:109
 msgid "Q"
-msgstr "Q"
+msgstr "Nb"
 
 #: ../base/ufos/menu_production.ufo:116
 msgid "Num"
-msgstr "Num"
+msgstr "Poss."
 
 #: ../base/ufos/menu_production.ufo:156
 msgid "Increase production by 1"
@@ -1801,7 +1801,7 @@ msgstr "Éditer le nom du soldat"
 #: ../base/ufos/menu_team.ufo:1114
 #: ../base/ufos/menu_team.ufo:1123
 msgid "Equip this soldier"
-msgstr "Equiper ce soldat"
+msgstr "Équiper ce soldat"
 
 #: ../base/ufos/menu_team.ufo:1206
 msgid "Show only primary weapons in store"
@@ -2297,7 +2297,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -2345,7 +2345,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -2423,7 +2423,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -2469,7 +2469,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -2521,7 +2521,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -2559,7 +2559,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -2607,7 +2607,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -2701,7 +2701,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -2757,7 +2757,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -2795,7 +2795,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -2833,7 +2833,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -2901,7 +2901,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -3003,7 +3003,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 19 Mars 2084\n"
+"Classé le : 19 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -3017,7 +3017,7 @@ msgstr ""
 "\n"
 "Chaque médikit contient un ordinateur de bord qui peut diagnostiquer les blessures par ultra-sons et rayons X. Il peut également réaliser des électrocardiogrammes et des électroencéphalogrammes, mesurer la pression sanguine et le pouls, et même calculer l'efficacité du soldat au combat en fonction de son dossier individuel (enregistré sur une petite puce sous-cutanée, qui permet de localiser et d'identifier le soldat). Toutes ces informations peuvent être affichées via un petit hologramme ou directement sur le système d'information du casque d'un soldat. Le médikit peut ensuite délivrer divers médicaments, déployer des outils chirurgicaux stériles pour une opération d'urgence, cautériser les blessures grâce à outil chauffant spécial, et (le plus important) appliquer son stock de nanorobots sur une blessure.\n"
 "\n"
-"La vieille idée d'utiliser des nanorobots a été mise en pratique pour la première fois par des chercheurs vietnamiens il y a une trentaine d'années. Aujourd'hui, la médecine ne peut plus se passer d'eux. Il s'agit de minuscules robots de plusieurs nanomètres de diamètre qui peuvent être programmés pour exécuter une tâche spécifique. Ils stériliseront rapidement une blessure, répareront une rupture artérielle, alerteront l'opérateur médical d'une hémorragie interne éventuelle ou de la nécessité d'une transfusion, refermeront une lésion à l'estomac ou à l'intestin, ranimeront ou détruiront des tissus nécrosés, et répareront des nerfs endommagés. Ils se dissolvent sans danger dans le sang du blessé après épuisement de leurs réserves énergétiques, ce qui ne prend pas plus de 10 ou 15 secondes. Ce délai est bien souvent trop court pour stabiliser un soldat grièvement blessé, et il sera nécessaire de lui injecter au moins une dose de nanorobots supplémentaire. Il n'y a pas de limite au nombre de doses qu'un individu peut prendre, les nanorobots étant métabolisés sans effets secondaires.\n"
+"La vieille idée d'utiliser des nanorobots a été mise en pratique pour la première fois par des chercheurs vietnamiens il y a une trentaine d'années. Aujourd'hui, la médecine ne peut plus se passer d'eux. Il s'agit de minuscules robots de quelques micromètres de diamètre qui peuvent être programmés pour exécuter une tâche spécifique. Ils stériliseront rapidement une blessure, répareront une rupture artérielle, alerteront l'opérateur médical d'une hémorragie interne éventuelle ou de la nécessité d'une transfusion, refermeront une lésion à l'estomac ou à l'intestin, ranimeront ou détruiront des tissus nécrosés, et répareront des nerfs endommagés. Ils se dissolvent sans danger dans le sang du blessé après épuisement de leurs réserves énergétiques, ce qui ne prend pas plus de 10 ou 15 secondes. Ce délai est bien souvent trop court pour stabiliser un soldat grièvement blessé, et il sera nécessaire de lui injecter au moins une dose de nanorobots supplémentaire. Il n'y a pas de limite au nombre de doses qu'un individu peut prendre, les nanorobots étant métabolisés sans effets secondaires.\n"
 "\n"
 "Cette technologie est la plus grande révolution jamais réalisée dans le monde de la chirurgie traumatique. Elle peut tout faire sauf régénérer les tissus. Si un travail plus important est nécessaire, par exemple lorsqu'un organe vital est touché, ou qu'une balle s'est logée dans un endroit critique, le médikit fournira l'équipement et les instructions nécessaires pour le soldat opérateur. Il ne remplacera pas une salle d'opération, mais est aussi proche d'un hôpital portable qu'il ne le sera jamais.\n"
 "\n"
@@ -3051,7 +3051,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -3067,7 +3067,7 @@ msgstr ""
 "\n"
 "Le Dolvich DV762 russe se distingue parmi la nouvelle génération de super-pistolets. Il suit la philosophie de conception de son pays natal : solide, puissant, fiable, et sans fioritures. Sa conception est très basique, et bien que les matériaux utilisés pour sa fabrication soient plus résistants afin de supporter les nouvelles poudres, les pièces du DV762 ne sont pas plus élaborées que celles de n'importe quel pistolet de la fin du XXème siècle.\n"
 "\n"
-"Le DV762 ne fait pas de compromis. Il ne s'agit pas d'une arme multi-fonction. Elle n'a qu'un objectif : traverser les armures et tuer la personne qui la porte. Pour cela, le DV utilise des balles de l'ancien pistolet 7,62mm Tokarev, logées dans un chargeur démontable à 12 balles. Il supporte le tir en mode semi-automatique, et en rafales de trois balles. Les munitions du Tokarev sont renommées pour leur excellente pénétration, qui a été significativement améliorée depuis son retour dans le domaine militaire. Ce pistolet peut pénétrer un casque balistique moderne jusqu'à 10 mètres de distance, et ressortir de l'autre côté.\n"
+"Le DV762 ne fait pas de compromis. Il ne s'agit pas d'une arme multi-fonction. Elle n'a qu'un objectif : traverser les armures et tuer la personne qui la porte. Pour cela, le DV utilise les anciennes balles Tokarev 7,62mm, logées dans un chargeur démontable à 12 balles. Il supporte le tir en mode semi-automatique, et en rafales de trois balles. Les munitions Tokarev sont renommées pour leur excellente pénétration, qui a été significativement améliorée depuis son retour dans le domaine militaire. Ce pistolet peut pénétrer un casque balistique moderne jusqu'à 10 mètres de distance, et ressortir de l'autre côté.\n"
 "\n"
 "Malheureusement, le prix de cette capacité de pénétration est payé par la puissance d'arrêt du DV. Les balles de 7,62mm font un trou très propre dans l'ennemi, et c'est là le problème : elles se prêtent très peu à la fragmentation et à la dispersion, et il est donc nécessaire de toucher directement un organe vital ou une artère principale pour immobiliser ou tuer un ennemi.\n"
 "\n"
@@ -3105,7 +3105,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -3113,7 +3113,7 @@ msgstr ""
 "\n"
 "Considérations générales:\n"
 "\n"
-"Ce chargeur contient 12 balles de 7,65x25mm pour le pistolet TT (Tokarev). Elles y sont disposées en un agencement classique d'une seule colonne. Bien que leur conception soit ancienne, les balles de ce chargeur sont de réalisation récente et prêtes pour le service. Elles ont un excellent facteur de pénétration, ce qui leur permet de traverser les armures lourdes à courte portée. Elles se prêtent cependant très peu à la fragmentation et à la dispersion, et il est donc nécessaire de toucher directement un organe vital ou une artère principale pour immobiliser ou tuer un ennemi. L'utilisation de poudre à très haute vélocité donne à cette arme une force de recul considérable.\n"
+"Ce chargeur contient 12 balles TT (Tokarev) de 7,65x25mm pour pistolet. Elles y sont disposées en un agencement classique d'une seule colonne. Bien que leur conception soit ancienne, les balles de ce chargeur sont de réalisation récente et prêtes pour le service. Elles ont un excellent facteur de pénétration, ce qui leur permet de traverser les armures lourdes à courte portée. Elles se prêtent cependant très peu à la fragmentation et à la dispersion, et il est donc nécessaire de toucher directement un organe vital ou une artère principale pour immobiliser ou tuer un ennemi. L'utilisation de poudre à très haute vélocité donne à cette arme une force de recul considérable.\n"
 "\n"
 "Le chargeur est conçu pour être utilisé avec le Pistolet P-12.\n"
 "\n"
@@ -3143,7 +3143,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -3195,7 +3195,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -3553,7 +3553,7 @@ msgstr ""
 "\n"
 "Document Technique, Autorisation Delta\n"
 "\n"
-"Fait le : 20 Mars 2084\n"
+"Classé le : 20 Mars 2084\n"
 "\n"
 "Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
 "\n"
@@ -3734,7 +3734,7 @@ msgstr ""
 "\n"
 "Document de Recherche, Autorisation Sigma – destiné au Commandant uniquement\n"
 "\n"
-"Fait le : 16 Février 1958\n"
+"Classé le : 16 Février 1958\n"
 "\n"
 "Auteur : Mjr Marcel LeClerc, Commandant de base, PHALANX, Commandement des Opérations du Pacifique\n"
 "\n"
@@ -3822,9 +3822,9 @@ msgstr ""
 "\n"
 "Unité de réaction extraterrestre PHALANX\n"
 "\n"
-"Document de Recherche, Autorisation Sigma – destiné au Commandant uniquement\n"
+"Synthèse de Construction, Autorisation Sigma – destiné au Commandant uniquement\n"
 "\n"
-"Fait le : 26 Janvier 1958\n"
+"Classé le : 26 Janvier 1958\n"
 "\n"
 "Auteur : Mjr Marcel LeClerc, Commandant de base, PHALANX, Commandement des Opérations du Pacifique\n"
 "\n"
@@ -3837,7 +3837,7 @@ msgstr ""
 "\n"
 "Doctrine recommandée:\n"
 "\n"
-"De par sa nature, l'Entrée est l'un des points les plus vulnérables d'une base. Des extraterrestres hostiles tenteront très certainement de pénétrer par ce chemin. Il s'agit d'un point crucial dans la défense d'une base, et elle devrait donc être située relativement près du Centre de Commandement de façon à ce que les soldats en service puissent réagir à une attaque le plus rapidement possible.\n"
+"De par sa nature, l'Entrée est l'un des points les plus vulnérables d'une base. Des extraterrestres hostiles tenteront très certainement de pénétrer par ce chemin. Il s'agit d'un point crucial dans la défense d'une base, et elle devrait donc être située à une distance raisonnable du Centre de Commandement. Elle devra en être suffisamment près pour que les soldats en service puissent réagir à une attaque le plus rapidement possible, mais en être également raisonnablement éloignée pour ne pas trop exposer le Centre de Commandement.\n"
 "\n"
 "En elle-même, l'Entrée a une très faible valeur stratégique. Il est très probable que des extraterrestres l'ayant prise essayeront de tenir leur position, mais choisiront des cibles plus tentantes pour lancer l'essentiel de leurs forces. En effet, cette salle ne contient habituellement aucun matériau explosif, et ne présente pas de zone particulièrement sensible à la destruction. Ne disposant d'aucun équipement ou composant avancé, elle est également rapide et économique à réparer. Si elle est endommagée, d'autres unités de la base peuvent temporairement remplir le rôle d'entrée sans nuire réellement au fonctionnement des opérations.\n"
 "\n"
@@ -3862,7 +3862,7 @@ msgstr ""
 "\n"
 "Synthèse de Construction, Autorisation Sigma – destiné au Commandant uniquement\n"
 "\n"
-"Fait le : 11 Août 2008\n"
+"Classé le : 11 Août 2008\n"
 "\n"
 "Auteur : Gen E. Baxter, Commandant de base, PHALANX, Commandement des Opérations du Pacifique\n"
 "\n"
@@ -3904,7 +3904,46 @@ msgstr "Le Hangar est la zone de stockage et de maintenance des avions de combat
 #: ../base/ufos/research.ufo:1647
 #, fuzzy
 msgid "b_hospital_txt"
-msgstr "b_hospital_txt"
+msgstr ""
+"Projet d'Aménagement : Hôpital\n"
+"\n"
+"NIVEAU DE CONFIDENTIALITE NOIR\n"
+"\n"
+"Unité de réaction extraterrestre PHALANX\n"
+"\n"
+"Synthèse de Construction, Autorisation Sigma – destiné au Commandant uniquement\n"
+"\n"
+"Classé le : 19 Mars 2084\n"
+"\n"
+"Auteur : Chirurgien en chef Helen Floydd, Division médicale, PHALANX, Commandement des Opérations Atlantique\n"
+"\n"
+"\n"
+"\n"
+"Considérations générales:\n"
+"\n"
+"Ce conflit sera sanglant, Commandant. Afin de traiter les hommes grièvement blessés que nous ne manqueront pas d'avoir au combat, nous avons besoin d'aménagements spéciaux pourvus en équipements dont aucun hôpital civil ou militaire classique ne dispose. Pensez simplement aux centaines d'individus inutilement morts dans les hôpitaux de Mumbai parce qu'aucun appareil convenable n'était disponible pour soigner les horribles brûlures causées jusqu'aux os par les armes au plasma aliennes. Nous devons être mieux préparer à ces situations.\n"
+"\n"
+"La conception des anciens hôpitaux PHALANX est déplorablement inadaptée à la menace approchant. Elle n'a jamais été revue depuis sa première copie en 1960 et intègre des équipements vétustes, voire inutiles. Avec l'aide du Cdt Navarre et de nos experts en bâtiments, j'ai dû refaire depuis le début tous ces plans. Je ne comprendrai jamais comment la direction précédente espérait faire face à des blessures infligées par l'armement d'aliens inconnus.\n"
+"\n"
+"Dans l'état actuel des choses, nos aménagements hospitaliers sont maintenant les meilleurs du monde. Nous sommes les premiers dans le traitements des brûlures graves, tout particulièrement pour l'enlèvement et la régénération des tissus calcinés. Nous favorisons la reconstruction des tissus grâce à une thérapie intensive comprenant la prescription massive de médicament, des stimulations électriques des nerfs et des muscles, et l'injection de nanorobots directement dans la plaie. Théoriquement, nous devrions être capable de remettre sur pied n'importe quel être humain en six semaines. Ce délai comprend l'évaluation psychologique et la rééducation. Les blessures plus légères seront bien sures plus rapides à soigner.\n"
+"\n"
+"Nous disposons également d'aménagements chirurgicaux permettant d'effectuer des amputations et des opérations bioniques majeures. Nos diverses sources militaires mondiales nous ont fourni des membres cybernétiques puissants, ainsi que des cages thoraciques renforcées, des yeux électroniques et autres dispositifs internes. Ils peuvent être installés sur nos soldats dans cet aménagement hospitalier afin d'améliorer leur efficacité au combat, si nous pouvons nous permettre de payer leur coût élevé et d'immobiliser le soldat pendant la durée de convalescence.\n"
+"\n"
+"L'Hôpital nécessite un Générateur de Puissance pour alimenter ses demandes électriques à la fois élevées et ininterrompues.\n"
+"\n"
+"\n"
+"Doctrine recommandée:\n"
+"\n"
+"Toute base abritant des troupes de combat devrait disposer d'un Hôpital pour les soins. Si aucun Hôpital PHALANX n'est présent, les soldats devront être envoyés dans des hôpitaux classiques où les traitements moins efficaces pourront provoquer des pertes permanentes de leurs capacités, voire leur mort.\n"
+"\n"
+"Les avantages à intégrer des dispositifs mécaniques sur nos soldats devraient être évidents. Ces procédures ne peuvent être appliquées que sur des individus en bonne santé ; les soldats convalescents qui ont subi de récents dommages physiques ou d'autres opérations doivent tout d'abord terminer leur période de convalescence avant de pouvoir supporter ces améliorations bioniques. Gardez également à l'esprit que l'implant de membres ou d'yeux bioniques peuvent provoquer une baisse de morale chez le patient.\n"
+"\n"
+"Stratégiquement, l'Hôpital est une zone modérément dangereuse. Les aliens peuvent tenter de tuer nos blessés et nous priver de nos installations médicales, mais il est peut probable qu'un assaillant choisisse l'Hôpital comme cible prioritaire. Cependant, en cas d'attaque, un garde devrait être posté à l'Hôpital immédiatement.\n"
+"\n"
+"\n"
+"Addenda:\n"
+"\n"
+"Aucun."
 
 #: ../base/ufos/research.ufo:1648
 #, fuzzy
@@ -4492,8 +4531,9 @@ msgid "Political situation before the invasion"
 msgstr "Situation politique avant l'invasion"
 
 #: ../base/ufos/research.ufo:2502
+#, fuzzy
 msgid "news_initial_political_situation_txt"
-msgstr ""
+msgstr "news_initial_political_situation_txt"
 
 #: ../base/ufos/research.ufo:2512
 msgid "After the war"
@@ -4509,13 +4549,14 @@ msgid "PHALANX And The Mumbai Aftermath"
 msgstr "Les conséquences de Mumbai et PHALANX"
 
 #: ../base/ufos/research.ufo:2524
+#, fuzzy
 msgid "news_phalanx_and_mumbai_aftermath_txt"
-msgstr ""
+msgstr "news_phalanx_and_mumbai_aftermath_txt"
 
 #: ../base/ufos/seq_credits.ufo:54
 #: ../base/ufos/seq_credits.ufo:100
 msgid "Project leader"
-msgstr "responsable de projet"
+msgstr "Chef de Projet"
 
 #: ../base/ufos/seq_credits.ufo:106
 msgid "Werner Hoehrer (hoehrer)"
@@ -4549,7 +4590,7 @@ msgstr "Forest Hale (LordHavoc)"
 #: ../base/ufos/seq_credits.ufo:365
 #: ../base/ufos/seq_credits.ufo:416
 msgid "Contributing Programmer"
-msgstr "Programmeur Participant"
+msgstr "Contributeur (Programmation)"
 
 #: ../base/ufos/seq_credits.ufo:319
 msgid "Sheldon Hearn (sheldonh)"
@@ -4565,7 +4606,7 @@ msgstr "Tom Shackell (archmoo/tomshackell)"
 
 #: ../base/ufos/seq_credits.ufo:472
 msgid "Contributing Artist and Modeller"
-msgstr "Artiste et Modeleur Participant"
+msgstr "Contributeur (Artiste et Modeleur)"
 
 #: ../base/ufos/seq_credits.ufo:478
 msgid "Philipp Hummer (kaeau) - Nathan : INC :: www.ninc.at"
@@ -4609,7 +4650,7 @@ msgstr "Vanethian"
 
 #: ../base/ufos/seq_credits.ufo:771
 msgid "Webdesign"
-msgstr "Webdesign"
+msgstr "Site Internet"
 
 #: ../base/ufos/seq_credits.ufo:777
 msgid "Ww 3"
@@ -4705,7 +4746,7 @@ msgstr "Quatre vingt sept heures après la première attaque sur Mumbai, la Terr
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Sans autre alternative, les Nations Unies prennent les choses en main. Le vieil équipement est remis en service, certaines pièces datant de plus d'un siècle. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
+msgstr "Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
@@ -4918,7 +4959,7 @@ msgstr "Lunettes IR"
 
 #: ../base/ufos/weapons.ufo:70
 msgid "Scan"
-msgstr "Scanner"
+msgstr "Scruter"
 
 #: ../base/ufos/weapons.ufo:103
 msgid "Frag Grenade"
@@ -4940,7 +4981,7 @@ msgstr "Lancer"
 #: ../base/ufos/weapons.ufo:415
 #: ../base/ufos/weapons.ufo:483
 msgid "Roll"
-msgstr "bouler"
+msgstr "Faire rouler"
 
 #: ../base/ufos/weapons.ufo:172
 msgid "Flashbang"
@@ -5010,7 +5051,7 @@ msgstr "Chargeur de Fusil de Précision"
 #: ../base/ufos/weapons_human.ufo:953
 #: ../base/ufos/weapons_human.ufo:975
 msgid "Aimed Shot"
-msgstr "Tir Vis"
+msgstr "Tir Visé"
 
 #: ../base/ufos/weapons_human.ufo:228
 msgid "7.62mm Pistol"
@@ -5063,7 +5104,7 @@ msgstr "Fusil à Pompe"
 #: ../base/ufos/weapons_human.ufo:466
 #: ../base/ufos/weapons_human.ufo:673
 msgid "Buckshots"
-msgstr "Cartouche"
+msgstr "Cartouche (F. à P.)"
 
 #: ../base/ufos/weapons_human.ufo:499
 #: ../base/ufos/weapons_human.ufo:575
@@ -5129,14 +5170,14 @@ msgstr "Grenades IC 25mm"
 #: ../base/ufos/weapons_human.ufo:1167
 #: ../base/ufos/weapons_human.ufo:1234
 msgid "Airburst Grenade"
-msgstr "Grenade aérienne"
+msgstr "Expl. aérienne"
 
 #: ../base/ufos/weapons_human.ufo:1059
 #: ../base/ufos/weapons_human.ufo:1126
 #: ../base/ufos/weapons_human.ufo:1193
 #: ../base/ufos/weapons_human.ufo:1260
 msgid "Timed Grenade"
-msgstr "Grenade à retardement"
+msgstr "Expl. retardée"
 
 #: ../base/ufos/weapons_human.ufo:1088
 msgid "25mm Flechette Grenades"
@@ -5515,7 +5556,7 @@ msgstr "Carburant:\t%i/%i\n"
 #: client/cl_ufopedia.c:284
 #: client/cl_ufopedia.c:285
 msgid "None"
-msgstr "Rien"
+msgstr "Aucun(e)"
 
 #: client/cl_aircraft.c:346
 #: client/cl_ufopedia.c:284
@@ -5555,15 +5596,15 @@ msgstr "Vous avez perdu la bataille"
 #: client/cl_aircraft.c:623
 #: client/cl_aircraft.c:634
 msgid "None\n"
-msgstr "Rien\n"
+msgstr "Aucun\n"
 
 #: client/cl_aircraft.c:674
 msgid "No weapon assigned"
-msgstr "Pas d'arme attribuée"
+msgstr "Aucune arme n'équipe cet appareil"
 
 #: client/cl_aircraft.c:724
 msgid "No shield assigned"
-msgstr "Pas d'armure attribuée"
+msgstr "Aucune armure n'équipe cet appareil"
 
 #: client/cl_aircraft.c:772
 msgid "Assign a team to aircraft"
@@ -5576,7 +5617,7 @@ msgstr "Pas encore construit"
 #: client/cl_basemanagement.c:150
 #, c-format
 msgid "Already %i in base"
-msgstr "Déjà %i  la base"
+msgstr "Déjà %i dans la base"
 
 #: client/cl_basemanagement.c:156
 msgid "Construction finished"
@@ -5607,9 +5648,7 @@ msgstr "%i Jours(s) de construction\n"
 #: client/cl_basemanagement.c:570
 #, c-format
 msgid "Running Costs:\t%1.0f c\n"
-msgstr ""
-"Coûts de\n"
-"fonctionnement:\t%1.0f c\n"
+msgstr "Coût d'entretien:\t%1.0f c\n"
 
 #: client/cl_basemanagement.c:1211
 #, c-format
@@ -6050,7 +6089,7 @@ msgstr "Facile"
 
 #: client/cl_main.c:1481
 msgid "Normal"
-msgstr "Normal"
+msgstr "Normale"
 
 #: client/cl_main.c:1484
 msgid "Hard"
@@ -6062,7 +6101,7 @@ msgstr "Très difficile"
 
 #: client/cl_main.c:1488
 msgid "Insane"
-msgstr "Dément"
+msgstr "Démentielle"
 
 #: client/cl_map.c:283
 msgid "Click"
@@ -6211,7 +6250,7 @@ msgstr "Recherché dans aucune base."
 #: client/cl_research.c:635
 #, c-format
 msgid "Researched in %s"
-msgstr "Recherché  %s"
+msgstr "Recherché dans %s"
 
 #: client/cl_research.c:637
 msgid "Researched in this base."
@@ -6555,7 +6594,7 @@ msgstr "Arme à %s sans munition\n"
 #: client/cl_ufopedia.c:180
 #, c-format
 msgid "%s auxiliary equipment with\n"
-msgstr "%s auxiliary equipment with\n"
+msgstr "Équipement auxiliaire à %s\n"
 
 #: client/cl_ufopedia.c:181
 #, c-format
