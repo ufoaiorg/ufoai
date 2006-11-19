@@ -34,11 +34,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <AL/al.h>
 #include <AL/alc.h>
+/* openal utility lib */
+#include <AL/alut.h>
 
 #define GPA(a)	dlsym(oalState.hInstOpenAL, a);
+#define GPA2(a)	dlsym(oalState.hInstALUT, a);
+
+#define AL_DRIVER_OPENAL	"libopenal.so"
+#define AL_DRIVER_ALUT		"libalut.so"
 
 typedef struct {
 	void*	hInstOpenAL;
+	void*	hInstALUT;
 
 	ALCdevice	*device;
 	ALCcontext	*context;

@@ -26,14 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "snd_openal.h"
 
-static char* alBuffer;
-static ALenum alFormatBuffer;
-static ALsizei alFreqBuffer;
-static long alBufferLen;
 static unsigned int alSource;
 static unsigned int alSampleSet;
-
-static int alNumChannels;
 
 /* extern in system implementation */
 oalState_t	oalState;
@@ -83,44 +77,41 @@ qboolean SND_OAL_Init (char* device)
  * @brief
  * @sa SND_OAL_LoadSound
  */
-static qboolean SND_OAL_LoadOGG (char* filename, ALboolean loop)
+static qboolean SND_OAL_LoadFile (char* filename, ALboolean loop)
 {
-	return qfalse;
-}
+	ALuint buffer;
+	ALenum error;
 
-/**
- * @brief
- * @sa SND_OAL_LoadSound
- */
-static qboolean SND_OAL_LoadWAV (char* filename, ALboolean loop)
-{
-/*	qalutLoadWAVFile(filename, &alFormatBuffer, (void **) &alBuffer,(unsigned int *)&alBufferLen, &alFreqBuffer, &loop);
+	/* Create an AL buffer from the given sound file. */
+	buffer = qalutCreateBufferFromFile(filename);
+	if (buffer == AL_NONE) {
+		error = qalutGetError();
+		Com_Printf("Error loading file: '%s'\n", qalutGetErrorString(error));
+		return qfalse;
+	}
 
+	/* Generate a single source, attach the buffer to it and start playing. */
 	qalGenSources(1, &alSource);
-	qalGenBuffers(1, &alSampleSet);
-	qalBufferData(alSampleSet, alFormatBuffer, alBuffer, alBufferLen, alFreqBuffer);
-	qalSourcei(alSource, AL_BUFFER, alSampleSet);
+	qalSourcei(alSource, AL_BUFFER, buffer);
 
-	qalutUnloadWAV(alFormatBuffer, alBuffer, alBufferLen, alFreqBuffer);
+	/* Normally nothing should go wrong above, but one never knows... */
+	error = qalGetError();
+	if (error != ALUT_ERROR_NO_ERROR) {
+		Com_Printf("%s\n", qalGetString (error));
+		return qfalse;
+	}
 	return qtrue;
-*/
-	return qfalse;
 }
 
 /**
  * @brief Loads a sound via openAL
- * @sa SND_OAL_LoadWAV
- * @sa SND_OAL_LoadOGG
+ * @sa SND_OAL_LoadFile
  */
 qboolean SND_OAL_LoadSound (char* filename, qboolean looping)
 {
 	/* load our sound */
-	if (strstr(filename, ".wav")) {
-		if (!SND_OAL_LoadWAV(filename, looping))
-			return qfalse;
-	} else if (strstr(filename, ".ogg")) {
-		if (!SND_OAL_LoadOGG(filename, looping))
-			return qfalse;
+	if (!SND_OAL_LoadFile(filename, looping)) {
+		return qfalse;
 	} else {
 		Com_Printf("Unknown file format for %s\n", filename);
 		return qfalse;
@@ -134,36 +125,6 @@ qboolean SND_OAL_LoadSound (char* filename, qboolean looping)
 	qalSourcei(alSource, AL_LOOPING, AL_TRUE);
 	return qtrue;
 }
-
-#if 0
-static void S_OpenAL_AllocChannels (void)
-{
-	openal_channel_t *ch;
-	int i;
-
-	for (i = 0, ch = s_openal_channels; i < MAX_CHANNELS; i++, ch++) {
-		qalGenSources(1, &ch->sourceNum);
-
-		if (qalGetError() != AL_NO_ERROR)
-			break;
-
-		alNumChannels++;
-	}
-}
-
-static void S_OpenAL_FreeChannels (void)
-{
-	openal_channel_t	*ch;
-	int					i;
-
-	for (i = 0, ch = s_openal_channels; i < s_openal_numChannels; i++, ch++) {
-		qalDeleteSources(1, &ch->sourceNum);
-		memset(ch, 0, sizeof(*ch));
-	}
-
-	alNumChannels = 0;
-}
-#endif
 
 /**
  * @brief

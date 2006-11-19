@@ -33,21 +33,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #ifdef _MSC_VER
-/* msvc users have to install the openAL sdk - which doesn't use the AL/* scheme */
+/* msvc users have to install the OpenAL SDK - which doesn't use the AL/ scheme */
 #include "al.h"
 #include "alc.h"
+#include "alut.h"
 #else
 #include <AL/al.h>
 #include <AL/alc.h>
+#include <AL/alut.h>
 #endif
 
-/*#include <AL/altypes.h>
-#include <AL/eax.h>*/
+/*
+#include <AL/eax.h>
+*/
 
 #define GPA(a)			GetProcAddress(oalState.hInstOpenAL, a);
+#define GPA2(a)			GetProcAddress(oalState.hInstALUT, a);
+
+#define AL_DRIVER_OPENAL	"OpenAL32.dll"
+#define AL_DRIVER_ALUT		"alut.dll"
 
 typedef struct {
 	HINSTANCE	hInstOpenAL;
+	HINSTANCE	hInstALUT;
 
 	ALCdevice	*device;
 	ALCcontext	*context;

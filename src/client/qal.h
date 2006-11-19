@@ -37,6 +37,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  define ALCAPIENTRY
 #endif
 
+#ifndef ALUT_ERROR_NO_ERROR
+#  define ALUT_ERROR_NO_ERROR 0
+#endif
+
 qboolean	QAL_Init (void);
 void		QAL_Shutdown (void);
 qboolean	QAL_Link(void);
@@ -116,6 +120,24 @@ extern ALvoid			(ALAPIENTRY * qalSourceStop)(ALuint source);
 extern ALvoid			(ALAPIENTRY * qalSourceStopv)(ALsizei n, ALuint *sources);
 extern ALvoid			(ALAPIENTRY * qalSourceUnqueueBuffers)(ALuint source, ALsizei n, ALuint *buffers);
 
+/* alut */
+extern ALboolean		(ALAPIENTRY * qalutInit)(int *argcp, char **argv);
+extern ALboolean		(ALAPIENTRY * qalutInitWithoutContext)(int *argcp, char **argv);
+extern ALboolean		(ALAPIENTRY * qalutExit)(void);
+extern ALenum			(ALAPIENTRY * qalutGetError)(void);
+extern const char *		(ALAPIENTRY * qalutGetErrorString)(ALenum error);
+extern ALuint			(ALAPIENTRY * qalutCreateBufferFromFile)(const char *fileName);
+extern ALuint			(ALAPIENTRY * qalutCreateBufferFromFileImage)(const ALvoid *data, ALsizei length);
+extern ALvoid *			(ALAPIENTRY * qalutLoadMemoryFromFile)(const char *fileName, ALenum *format, ALsizei *size, ALfloat *frequency);
+extern ALvoid *			(ALAPIENTRY * qalutLoadMemoryFromFileImage)(const ALvoid *data, ALsizei length, ALenum *format, ALsizei *size, ALfloat *frequency);
+extern const char *		(ALAPIENTRY * qalutGetMIMETypes)(ALenum loader);
+extern ALuint			(ALAPIENTRY * qalutCreateBufferHelloWorld)(void);
+extern ALuint			(ALAPIENTRY * qalutCreateBufferWaveform)(ALenum waveshape, ALfloat frequency, ALfloat phase, ALfloat duration);
+extern ALint			(ALAPIENTRY * qalutGetMajorVersion)(void);
+extern ALint			(ALAPIENTRY * qalutGetMinorVersion)(void);
+extern ALboolean		(ALAPIENTRY * qalutSleep)(ALfloat duration);
+
+
 /*
 =======================================================================
 IMPLEMENTATION SPECIFIC FUNCTIONS
@@ -137,20 +159,6 @@ typedef struct
 } alConfig_t;
 
 extern alConfig_t		alConfig;
-
-#ifdef _WIN32
-	#define AL_DRIVER_OPENAL	"OpenAL32.dll"
-	#define ALimp_Init			ALW_Init
-	#define ALimp_Shutdown		ALW_Shutdown
-#else
-	#ifdef __linux__
-		#define AL_DRIVER_OPENAL	"libopenal.so"
-		#define ALimp_Init			AL_Init
-		#define ALimp_Shutdown		AL_Shutdown
-	#else
-		#error "ALimp_* not available for this platform"
-	#endif
-#endif /* _WIN32 */
 
 
 #endif	/* __QAL_H__ */

@@ -27,8 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/qal.h"
 #include "qal_win.h"
 
-ALEAXSET qalEAXSet;
-ALEAXGET qalEAXGet;
+ALenum	(ALAPIENTRY * qalEAXSet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);
+ALenum	(ALAPIENTRY * qalEAXGet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);
 
 /**
  * @brief Binds our QAL function pointers to the appropriate AL stuff
@@ -36,18 +36,23 @@ ALEAXGET qalEAXGet;
  */
 qboolean QAL_Init (void)
 {
-	Com_DPrintf("...calling LoadLibrary( '%s' ): ", path);
+	Com_DPrintf("...calling LoadLibrary( '%s' ): ", AL_DRIVER_OPENAL);
 
 	if ((oalState.hInstOpenAL = LoadLibrary(AL_DRIVER_OPENAL)) == NULL) {
-		Com_Printf("failed\n");
+		Com_Printf("OpenAL loading failed\n");
+		return qfalse;
+	}
+
+	if ((oalState.hInstALUT = LoadLibrary(AL_DRIVER_ALUT)) == NULL) {
+		Com_Printf("ALUT loading failed\n");
 		return qfalse;
 	}
 
 	if (!QAL_Link())
 		return qfalse;
 
-	qalEAXGet					= NULL;
-	qalEAXSet					= NULL;
+	qalEAXGet					= GPA("alEAXGet");
+	qalEAXSet					= GPA("alEAXSet");
 
 	openal_active = qtrue;
 
