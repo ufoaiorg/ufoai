@@ -24,8 +24,8 @@ debug=0
 
 if [ -z $language ]
 then
-	echo "syntaxe : $0 lang"
-	echo "   where lang is the prefix of the .po file (en, de, fr, ...)"
+	echo "Usage : $0 lang"
+	echo "   where lang is the prefix of one .po file (en, de, fr, ...)"
 	exit
 fi
 
@@ -88,6 +88,14 @@ apply_sed()
 	if [ $test -gt 2 ]
 	then
 		sed -f 'sed_commands' $output_file > $output_file.tmp
+		BEGIN=$BEGIN-2
+		test=`awk 'NR == '$BEGIN' {print $0}' $output_file.tmp`
+		if [ "$test" = "#, fuzzy" ]
+		then
+			sed $BEGIN'd' $output_file.tmp > $output_file.tmp.tmp
+			mv -f $output_file.tmp.tmp $output_file.tmp
+		fi
+
 		test=`diff $output_file $output_file.tmp | awk 'NR==1 {print $0}'`
 		if [ ${#test} -gt 0 ]
 		then
@@ -99,17 +107,27 @@ apply_sed()
 		else 
 		   echo "   found same translation in wiki than in $language.po"
 	        fi
+		return 1
 	else
 		echo "   didn't find any associated translation"
+		return 0
 	fi
-	echo "" > sed_commands
 }
 
 clean_html()
 {
 # Procedure to clean up the download file of useless html tag. We keep the <p> tags to separate the different paragraphs.
-  sed ':a;N;$!ba;s/\n//g;s/^[ \t]*//g;s/[ \t]*$//g;s/&amp;/\&/g;s/&nbsp;/ /g;s/\s\+$//;s/<br \/>//g;s/<b>//g;s/<\/b>//g;s/<hr \/>//g;s/<\/p>/<p>/g;s/<i>//g;s/<\/i>//g;s/<\/h1>/<p>/g;s/<\/h2>/<p>/g;s/<\/h3>/<p>/g;s/<\/h4>/<p>/g;s/<dd>/<p>/g;s/<dl>/<p>/g;s/<\/dd>/<p>/g;s/<\/dl>/<p>/g;s/[ \t]*<p>[ \t]*/<p>/g;s/:/: /g;s/[ \t][ \t]*/ /g;s/class=\"image\"/><p></g' downloaded_page > temp 
-  mv -f temp downloaded_page
+# Warning : Never use clean_html after set_BEGIN_END or it will change the values of BEGIN and END
+
+BEGIN=`grep -n "<!-- start content -->" downloaded_page | cut -d : -f 1`
+  sed '1,'$BEGIN'd' downloaded_page > temp
+
+BEGIN=`grep -n "<div class=\"printfooter\">" temp | cut -d : -f 1`
+END=`wc -l temp | cut -d " " -f 1`
+  sed $BEGIN','$END'd' temp |
+  sed ':a;N;$!ba;s/\n//g;s/^[ \t]*//g;s/[ \t]*$//g;s/&amp;/\&/g;s/&nbsp;/ /g;s/\s\+$//;s/<br \/>//g;s/<b>//g;s/<\/b>//g;s/<hr \/>//g;s/<\/p>/<p>/g;s/<i>//g;s/<\/i>//g;s/<\/h1>/<p>/g;s/<\/h2>/<p>/g;s/<\/h3>/<p>/g;s/<\/h4>/<p>/g;s/<dd>/<p>/g;s/<dl>/<p>/g;s/<\/dd>/<p>/g;s/<\/dl>/<p>/g;s/[ \t]*<p>[ \t]*/<p>/g;s/:/: /g;s/[ \t][ \t]*/ /g;s/class=\"image\"/><p></g' > downloaded_page
+  rm -f temp
+
 }
 
 set_BEGIN_END()
@@ -134,7 +152,7 @@ set_BEGIN_END()
 
 download_description()
 {
-# Procedure looking for the url of the description of $english. It download it, then return 0 if it's OK, 1 if not.
+# Procedure looking for the url of the description of $english. It download it, then return 0 if it's OK, 1 if the english text is not on the wiki, and 2 if didn't find any translation in this language.
      number=`grep -iwnm 1 "<td> $english" ${index} | cut -d : -f 1`
      if [ $number -ge $FIRST_LINE ]
      then
@@ -165,6 +183,7 @@ download_description()
 		  if [ $? -ne 0 ]
 		  then
 			echo "Error whith wget" > $log_file
+     			return 1	
 		  fi
 		  return 0
 	  else
@@ -269,6 +288,54 @@ update_news()
    fi
 }
 
+update_txt()
+{
+# we scan the file to fill the sed_commands file.
+# $1 contains sur h1 section we want to get text from
+# $2 is 1 if we want to display h2 titles, 0 otherwise
+# $3 is the number of h3 title you want to read before stopping
+         set_BEGIN_END "1"
+	 awk -v working_h2=$1 -v display_title=$2 -v h3_nb=$3 'BEGIN {already_written_test=0;exit_test=0;RS="<p>"}
+	    h2 == working_h2 && $0 ~ /<h1>/ {exit}
+	    $0 ~ /<h2>/ {h2++}
+	    h2 < working_h2 {next}
+	    h2 > working_h2 {exit}
+	    $0 ~ /<h2>/ {
+	      if (display_title) {
+	        match($0,"<h2>");
+	        $0=substr($0,RSTART+RLENGTH,length($0)-RSTART-RLENGTH+1);
+		}
+	      else {next}
+      	      }
+	    $0 ~ /<h3>/ {h3++;
+	      match($0,"<h3>");
+	      $0=substr($0,RSTART+RLENGTH,length($0)-RSTART-RLENGTH+1);
+	      if (h3 == 1) {$0="\\n\n"$0}
+	      gsub (/[ \t]*$/,"")
+	      $0="\\n\n"$0""}
+	    h3 > h3_nb {exit}
+	    $0 ~ /<h4>/ {
+	        match($0,"<h4>");
+	        $0=substr($0,RSTART+RLENGTH,length($0)-RSTART-RLENGTH+1);
+	        $0="\\n\n"$0"\\n\n"
+      	      }
+	    $0 ~ /<.*>/ {
+	      if (h3 == h3_nb) {exit}}
+	    $0 ~ /^<.*>$/ {next}
+	    $0 !~ /^[ \t]*$/ {
+	      gsub (/[ \t]*$/,"")
+	      if (already_written_test) {printf "\\n\n\\n\n"}
+	      printf "%s",$0
+	      already_written_test=1;
+	      exit_test=0}
+	      ' downloaded_page | 
+	 sed 's/[[:space:]]*<.*>[[:space:]]*//g;s/^[ \t]*//g;s/\"/\\\"/g' | 
+	 awk '{printf "'$END'i\"%s\"\n",$0}' |	
+	 sed 's/\\/\\\\/g'>> sed_commands
+	 apply_sed $english
+	 return $?
+}
+ 
 
 
 
@@ -299,7 +366,7 @@ awk ' BEGIN {FS="</th><th>"}
   END {print begin" "NR" en"language}
   ' ${index} > Language_List
 echo "Creating Language_List : done." >> $log_file
-if [ "$debug" = "1" ]
+if [[ "$debug" = "1" ]]
 then
 	printf "__________________________________________\n\n" >> $log_file
 	echo "Language_List contains :" >> $log_file
@@ -312,6 +379,7 @@ fi
 
 # Declaration of the integer variables which will be used.
 declare -i number
+declare -i pre_txt	# value = 1 if the text should avec a _pre_txt version, 0 else
 declare -i loc 		# Contains the column of the array corresponding to the language
 declare -i BEGIN	# Contains the first line of the concerned msgid in the .po file
 declare -i END		# Contains the last line of the concerned msgid in the .po file
@@ -344,13 +412,13 @@ awk 'BEGIN {FS=" ";test=0}
 echo "Converted $language.po to $output_file : done." >> $log_file
 
 test=`diff $language.po $output_file | sed '/^</!d;/^<[ \t]*\"/d'`
-if [ ${#test} -gt 0 ]
+if [[ ${#test} -gt 0 ]]
 then
 	echo "Security stop : the line $test has been removed from $language.po and shouldn't have" | tee -a $log_file
 	exit
 fi
 
-if [ "$debug" = "1" ]
+if [[ "$debug" = "1" ]]
 then
 	printf "__________________________________________\n\n" >> $log_file
 	echo "$output_file 300 first lines are :" >> $log_file
@@ -367,7 +435,7 @@ fi
 sed '/^msgid \"/!d;s/^msgid[ \t]*\"\(.*\)[ \t]*\"/\1/g;s/^[ \t]*//g;s/[ \t]*$//g;/^[ \t]*$/d' $language.po > po_file.tmp
 
 echo "Creating po_file.tmp : done." >> $log_file
-if [ "$debug" = "1" ]
+if [[ "$debug" = "1" ]]
 then
 	printf "__________________________________________\n\n" >> $log_file
 	echo "po_file.tmp 50 first lines are :" >> $log_file
@@ -384,7 +452,7 @@ fi
 # We first begin to update the intro and prolog sentences, news and campaign descriptions, as they are on only 2 wiki page (it avoids useless downloading)
 FIRST_LINE=`awk 'BEGIN {FS=" "};NR==1 {print $1}' Language_List`
 FIRST_LINE=$FIRST_LINE-4
-if [ "$debug" = "1" ]
+if [[ "$debug" = "1" ]]
 then
 	printf "First line of %s containing data : %s\n\n" ${index}  $FIRST_LINE >> $log_file
 fi
@@ -395,7 +463,7 @@ i=1
 english=$base_sentence$i
 download_description $english
 
-if [ $? -eq 0 ]
+if [[ $? -eq 0 ]]
 then
   clean_html
 
@@ -406,7 +474,7 @@ then
   english=$base_sentence$i
   update_sentences $base_sentence
   
-  if [ "$debug" = "1" ]
+  if [[ "$debug" = "1" ]]
   then
 	  echo "Checking introduction sentences : done." >> $log_file
   fi
@@ -420,7 +488,7 @@ then
   english="news_phalanx_and_mumbai_aftermath_txt"
   update_news "3" "3" "1"
   
-  if [ "$debug" = "1" ]
+  if [[ "$debug" = "1" ]]
   then
 	  echo "Checking news descriptions : done." >> $log_file
   fi
@@ -428,7 +496,7 @@ fi
 
 english="txt_standard_campaign"
 download_description $english
-if [ $? -eq 0 ]
+if [[ $? -eq 0 ]]
 then
   clean_html
 
@@ -436,14 +504,28 @@ then
   do
      update_one_sentence "1"
   done
-  if [ "$debug" = "1" ]
+  if [[ "$debug" = "1" ]]
   then
 	echo "Checking campaign descriptions : done." >> $log_file
   fi
 fi
 
-
-
+# We set the variable default_pre_txt to the text to write for *_pre_txt if not on the wiki.
+english="default_pre_txt"
+download_description $english
+if [ $? -eq 0 ]
+then
+   clean_html
+   default_pre_txt=`awk 'BEGIN {RS="<p>"}
+      $0 ~ /</ {exit}
+      $0 !~ /^[ \t]*$/ {printf "%s",$0}
+      ' downloaded_page |
+   sed 's/[[:space:]]*<.*>[[:space:]]*//g;s/^[ \t]*//g;s/\"/\\\"/g'`
+fi
+if [ "$default_pre_txt" = "" ]
+then
+	default_pre_txt="<TODO>"
+fi
 
 
 # Then, we scan all the entries of the .po file and look for a translation on the web.
@@ -454,7 +536,7 @@ fi
 # 4. The entry is a short sentence, the translation is on the index page (no need to download a new page)
 # 5. The entry has no translation on the wiki. In this case, we just go to the next entry.
 printf "__________________________________________\n\n" >> $log_file
-if [ "$debug" = "1" ]
+if [[ "$debug" = "1" ]]
 then
 	  echo "Entering main part of the program..." >> $log_file
 fi
@@ -464,12 +546,12 @@ do
   if [[ "$english" != "intro_sentence"* ]] && [[ "$english" != "prolog_sentence"* ]] && [[ "$english" != "news_"*"_txt" ]] && [[ "$english" != "txt_"*"_campaign" ]]
   then
     printf "."
-    if [ "$debug" = "1" ]
+    if [[ "$debug" = "1" ]]
     then
 	  echo "Looking for a translation of $english..." >> $log_file
     fi
     number=`grep -iwnm 1 ">$english</a> (en)" ${index} | cut -d : -f 1`
-    if [ ${number} -gt 0 ]
+    if [[ ${number} -gt 0 ]]
     then
 	 # This is case 1. (translation of a title of the wiki)
 	 printf "\n"
@@ -479,57 +561,48 @@ do
 	 sed 's/<\/a>//g;/ ('$language')/!d;s/.*>\(.*\) ('$language').*/\1/;s/\"/\\\"/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g;s/\\/\\\\/g' >> sed_commands
 	 apply_sed $english
     else
+      pre_txt=0
+      if [[ ${english} = *"_txt" ]]
+      then
+          test=${english:0:${#english}-4}_pre_txt
+          test=`grep -im 1 "$test" po_file.tmp`
+          if [[ ${#test} -gt 0 ]]
+          then
+	      pre_txt=1
+          fi
+      fi
       download_description
       test=$?
-      if [ "$test" -eq 0 ]
+      if [[ "$test" -eq 0 ]]
       then
 	 # This is case 3. (_txt entry)
          clean_html
-         set_BEGIN_END "1"
 	 # There are (for now...) 2 types of descriptions : the autopsy and the others.
 	 # For autopsy we want the second part of the wiki page
 	 # For other descriptions, we want the first part.
 	 # We distinguish between both with the variable 'working_section'
-	 if [[ ${english} = "ufo_"*"_txt" ]] || [[ ${english} = *"_autopsy_txt"* ]]
+         if [[ ${english} = "ufo_"*"_txt" ]] || [[ ${english} = *"_autopsy_txt"* ]] || [[ ${english} = "kerrblade_txt" ]]
 	 then
-	    working_section=3
+	    # Case of Alien Research : only the second part of the text has to be taken
+	    update_txt 3 0 0
+
+	    english=${english:0:${#english}-4}_pre_txt
+	    update_txt 2 0 0
+	    if [[ $? -eq 0 ]]
+	    then
+		set_BEGIN_END 0
+		printf "\"$default_pre_txt\"" >> sed_commands
+	        apply_sed $english
+		pre_txt=0
+	    fi
 	 else
-	    working_section=2
+	    #update_txt 2 1 3
+	    update_txt 2 0 3
 	 fi
-	 # we scan the file until reaching the printfooter or 2 consecutive blank lines after the Addenda (third chapter)
-	 # we insert 3 blank lines before the first chapter, 2 before the other one. Otherwise, there are always only 1 blank lines between each paragraph.
-	 awk -v working_section=$working_section 'BEGIN {test=0;RS="<p>"}
-	    section == working_section && $0 ~ /<h1>/ {exit}
-	    $0 ~ /<h2>/ {section++}
-	    section == working_section && $0 ~ /<h2>/ {
-	      match($0,"<h2>");
-	      $0=substr($0,RSTART+RLENGTH,length($0)-RSTART-RLENGTH+1);
-	      gsub (/[ \t]*$/,"")
-	      printf "%s\\n\n",$0;
-	      next}
-	    section == working_section && $0 ~ /<h3>/ {chapter++;
-	      match($0,"<h3>");
-	      $0=substr($0,RSTART+RLENGTH,length($0)-RSTART-RLENGTH+1);
-	      if (chapter == 1) {$0="\\n\n"$0}
-	      $0="\\n\n"$0":"}
-	    section == working_section && $0 ~ /^[ \t]*$/ && chapter==3 {
-	      if (test) {exit}
-	      test=1}  
-	    section == working_section && $0 ~ /<.*>/ {
-	      if (chapter == 3) {exit}}
-	    section == working_section && chapter < 4 && $0 ~ /[a-zA-Z0-9]/ {
-	      gsub (/[ \t]*$/,"")
-	      printf "\\n\n%s\\n\n",$0
-	      test=0}
-	      ' downloaded_page | 
-	 sed 's/[[:space:]]*<.*>[[:space:]]*//g;s/^[ \t]*//g;s/\"/\\\"/g;$s/\\n$//' | 
-	 awk '{printf "'$END'i\"%s\"\n",$0}' |	
-	 sed 's/\\/\\\\/g'>> sed_commands
-	 apply_sed $english
-      elif [ "$test" -eq 1 ]
+      elif [[ "$test" -eq 1 ]]
       then
          number=`grep -iwnm 1 ">$english</a>" ${index} | cut -d : -f 1`
-	 if [ $number -ge $FIRST_LINE ]
+	 if [[ $number -ge $FIRST_LINE ]]
 	 then
 	    # This is case 4. (short entry)
 	    printf "\n"
@@ -537,7 +610,7 @@ do
             set_BEGIN_END "0"
 	    find_line "$number"
 	    loc=$?
-	    if [ $loc -ne 255 ]
+	    if [[ $loc -ne 255 ]]
 	    then
 	      awk -v number=$number 'BEGIN {FS="\""}
 	         NR > number && $0 ~ /<td>/ {n++}
@@ -557,12 +630,24 @@ do
 	 fi
       fi
     fi
+    if [[ $pre_txt -eq 1 ]]
+    then
+	english=${english:0:${#english}-4}_pre_txt
+	set_BEGIN_END 0
+	if [ $BEGIN -gt 1 ]
+	then
+		printf "\"$default_pre_txt\"" >> sed_commands
+        	apply_sed $english
+	fi
+    fi
+
   fi
 done < po_file.tmp
 
-printf "\n"
+printf "\n\n"
 printf "\nNew file %s created.\n" $output_file
 printf "The file %s contains the list of the modifications.\n" $log_file
+printf "You should CAREFULLY look at this log before uploading the updated file.\n"
 
 rm -f Language_List
 rm -f po_file.tmp
