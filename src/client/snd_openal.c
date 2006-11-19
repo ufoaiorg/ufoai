@@ -32,6 +32,10 @@ static unsigned int alSampleSet;
 /* extern in system implementation */
 oalState_t	oalState;
 
+/* currently playing music? */
+static qboolean openal_playing = qfalse;
+static qboolean openal_alut = qfalse;
+
 cvar_t *snd_openal_volume;
 cvar_t *snd_openal_device;
 
@@ -69,6 +73,12 @@ qboolean SND_OAL_Init (char* device)
 
 	snd_openal_device = Cvar_Get ("snd_openal_device", "", CVAR_ARCHIVE, "Device for openAL");
 	snd_openal_volume = Cvar_Get ("snd_openal_volume", "", CVAR_ARCHIVE, "Volume for openAL");
+
+	if (qalutInit(0, NULL))
+		openal_alut = qtrue;
+	else
+		Com_Printf("OpenAL utils init failed\n");
+
 
 	return qtrue;
 }
@@ -112,17 +122,34 @@ qboolean SND_OAL_LoadSound (char* filename, qboolean looping)
 	/* load our sound */
 	if (!SND_OAL_LoadFile(filename, looping)) {
 		return qfalse;
-	} else {
-		Com_Printf("Unknown file format for %s\n", filename);
-		return qfalse;
 	}
 
 	/* set the pitch */
 	qalSourcef(alSource, AL_PITCH, 1.0f);
 	/* set the gain */
 	qalSourcef(alSource, AL_GAIN, 1.0f);
-	/* set looping to true */
-	qalSourcei(alSource, AL_LOOPING, AL_TRUE);
+	if (looping) {
+		/* set looping to true */
+		qalSourcei(alSource, AL_LOOPING, AL_TRUE);
+	}
+	return qtrue;
+}
+
+/**
+ * @brief
+ */
+qboolean SND_OAL_Stream (char* filename)
+{
+	if (!openal_active || !openal_alut)
+		return qfalse;
+
+	if (!openal_playing)
+		SND_OAL_LoadSound(filename, qtrue);
+
+	if (!openal_playing)
+		return qfalse;
+
+	qalSourcePlay(alSource);
 	return qtrue;
 }
 
@@ -131,6 +158,9 @@ qboolean SND_OAL_LoadSound (char* filename, qboolean looping)
  */
 void SND_OAL_PlaySound (void)
 {
+	if (!openal_active)
+		return;
+
 	qalSourcePlay(alSource);
 }
 
@@ -139,7 +169,11 @@ void SND_OAL_PlaySound (void)
  */
 void SND_OAL_StopSound (void)
 {
-	qalSourceStop(alSource);
+	if (!openal_active)
+		return;
+
+	if (openal_playing)
+		qalSourceStop(alSource);
 }
 
 /**
@@ -147,6 +181,9 @@ void SND_OAL_StopSound (void)
  */
 void SND_OAL_DestroySound (void)
 {
+	if (!openal_active)
+		return;
+
 	qalDeleteSources(1,&alSource);
 	qalDeleteBuffers(1,&alSampleSet);
 }

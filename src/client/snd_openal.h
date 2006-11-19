@@ -24,6 +24,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+#ifndef __SND_OPENAL_H__
+#define __SND_OPENAL_H__
 
 #include "client.h"
 
@@ -32,4 +34,6 @@ qboolean SND_OAL_LoadSound (char* filename, qboolean looping);
 void SND_OAL_PlaySound (void);
 void SND_OAL_StopSound (void);
 void SND_OAL_DestroySound (void);
+qboolean SND_OAL_Stream (char* filename);
 
+#endif /* SND_OPENAL_H */
