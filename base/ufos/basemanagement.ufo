@@ -363,6 +363,23 @@ aircraft craft_interceptor
 	shield	rs_craft_shield_light
 }
 
+aircraft craft_saracen_interceptor
+{
+	speed	30.0
+	name	"_Saracen-class Interceptor"
+	type	interceptor
+	model	"saracen_interceptor"
+	fuel	60000
+	fuelsize	60000
+	size	1
+	price	2000000
+	building	building_intercept
+	image	air_saracen_interceptor
+	// FIXME: This is just testing
+	weapon	rs_craft_weapon_flac
+	shield	rs_craft_shield_light
+}
+
 aircraft craft_ufo_scout
 {
 	speed	25.0

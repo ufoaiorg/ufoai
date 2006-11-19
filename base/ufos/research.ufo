@@ -99,7 +99,7 @@ tech rs_plasma
 	description	"_plasma_txt"
 	pre_description	"_plasma_pre_txt"
 
-	require_OR 
+	require_OR
 	{
 		item plaspistol 1
 		item plasrifle 1
@@ -118,7 +118,7 @@ tech rs_tachyon
 	description	"_tachyon_txt"
 	pre_description	"_tachyon_pre_txt"
 
-	require_OR 
+	require_OR
 	{
 		item tachyonpistol 1
 		item tachyonrifle 1
@@ -1850,6 +1850,21 @@ tech rs_craft_interceptor
 
 	// TODO should come from craft-definition:
 	mdl_top		interceptor
+}
+
+tech rs_craft_saracen_interceptor
+{
+	type	craft
+	description	"_saracen_interceptor_txt"
+	pre_description	"_saracen_interceptor_pre_txt"
+	up_chapter	crafts
+
+	provides	craft_saracen_interceptor
+	require_AND { tech nothing }
+	time	0
+
+	// TODO should come from craft-definition:
+	mdl_top		saracen_interceptor
 }
 
 //tech rs_craftupgrade_dropship
