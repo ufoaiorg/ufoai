@@ -167,10 +167,10 @@ ALL_OBJS+=$(CLIENT_OBJS)
 ALL_DEPS+=$(CLIENT_DEPS)
 TARGETS+=$(CLIENT_TARGET)
 
-# Say how to like the exe
+# Say how to link the exe
 $(CLIENT_TARGET): $(CLIENT_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [UFO] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LIBS) $(CLIENT_LIBS) $(LIBS)
+		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LIBS) $(CLIENT_LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs

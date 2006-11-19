@@ -83,7 +83,7 @@ endif
 
 DEDICATED_CFLAGS=-DDEDICATED_ONLY
 
-# Say how to like the exe
+# Say how to link the exe
 $(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [DED] ... linking"; \
 		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) $(SDL_LIBS) $(LIBS)
