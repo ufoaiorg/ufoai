@@ -2508,6 +2508,22 @@ tech rs_craft_weapon_flac
 	image_top	"techs/craftweapon_flac"
 }
 
+tech rs_craft_weapon_shiva_rot
+{
+	type	craftweapon
+	up_chapter	crafts
+	name	"_SHIVA Rotary Cannon"
+	pre_description	"_craft_weapon_shiva_rot_pre_txt"
+	description	"_craft_weapon_shiva_rot_txt"
+
+	// FIXME
+	provides	assault
+	require_AND { tech nothing }
+	time	0
+
+	image_top	"techs/craftweapon_shiva_rot"
+}
+
 // NEWS
 
 tech news_initial_political_situation
