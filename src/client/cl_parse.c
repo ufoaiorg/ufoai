@@ -91,7 +91,7 @@ char *ev_format[] =
 	"bb",				/* EV_ACTOR_SHOOT_HIDDEN */
 	"sbbpp",			/* EV_ACTOR_THROW */
 	"ss",				/* EV_ACTOR_DIE */
-	"!sbsbbb",	    	/* EV_ACTOR_STATS; beware of the '!' */
+	"!sbsssbbb",	    /* EV_ACTOR_STATS; beware of the '!' */
 	"ss",				/* EV_ACTOR_STATECHANGE */
 
 	"s*",				/* EV_INV_ADD */
@@ -1027,7 +1027,7 @@ void CL_ParseEvent( void )
 				time = nextTime;
 
 			/* Theory: if impactTime > cl.eventTime and client receives a EV_ENT_APPEAR or EV_INV_ADD event then
-			 * this event corresponds to a dropped item event when an actor is killed due to the impact 
+			 * this event corresponds to a dropped item event when an actor is killed due to the impact
 			 * If this theory is wrong, then the following test is also wrong */
 			if ((eType == EV_ENT_APPEAR || eType == EV_INV_ADD) && impactTime > cl.eventTime )
 				time = impactTime + 600;
