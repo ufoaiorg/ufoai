@@ -2496,7 +2496,7 @@ tech rs_craft_weapon_flac
 {
 	type	craftweapon
 	up_chapter	crafts
-	name	"_Flac Cannon"
+	name	"_SHIVA Rotary Cannon"
 	pre_description	"_craft_weapon_flac_pre_txt"
 	description	"_craft_weapon_flac_txt"
 
@@ -2508,20 +2508,52 @@ tech rs_craft_weapon_flac
 	image_top	"techs/craftweapon_flac"
 }
 
-tech rs_craft_weapon_shiva_rot
+tech rs_craft_weapon_sparrowhawk
 {
 	type	craftweapon
 	up_chapter	crafts
-	name	"_SHIVA Rotary Cannon"
-	pre_description	"_craft_weapon_shiva_rot_pre_txt"
-	description	"_craft_weapon_shiva_rot_txt"
+	name	"_Sparrowhawk AA Missile Rack"
+	pre_description	"_craft_weapon_sparrowhawk_pre_txt"
+	description	"_craft_weapon_sparrowhawk_txt"
 
 	// FIXME
 	provides	assault
 	require_AND { tech nothing }
 	time	0
 
-	image_top	"techs/craftweapon_shiva_rot"
+	image_top	"techs/craftweapon_sparrowhawk"
+}
+
+tech rs_craft_weapon_tr20
+{
+	type	craftweapon
+	up_chapter	crafts
+	name	"_TR-20 Rocket Pod"
+	pre_description	"_craft_weapon_tr20_pre_txt"
+	description	"_craft_weapon_tr20_txt"
+
+	// FIXME
+	provides	assault
+	require_AND { tech nothing }
+	time	0
+
+	image_top	"techs/craftweapon_tr20"
+}
+
+tech rs_craft_weapon_particle_beam
+{
+	type	craftweapon
+	up_chapter	crafts
+	name	"_Particle Beam Weapon"
+	pre_description	"_craft_weapon_particle_beam_pre_txt"
+	description	"_craft_weapon_particle_beam_txt"
+
+	// FIXME
+	provides	assault
+	require_AND { tech nothing }
+	time	0
+
+	image_top	"techs/craftweapon_particle_beam"
 }
 
 // NEWS
