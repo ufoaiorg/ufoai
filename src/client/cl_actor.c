@@ -1612,6 +1612,7 @@ void CL_ActorMouseTrace(void)
 	vec3_t forward, right, up, stop;
 	vec3_t from, end, dir;
 	vec3_t mapNormal, P3, P2minusP1, P3minusP1;
+	vec3_t pA, pB, pC;
 	pos3_t testPos;
 	le_t *le;
 
@@ -1686,17 +1687,27 @@ void CL_ActorMouseTrace(void)
 		VectorScale(P2minusP1, (vec_t)u, dir);
 		VectorAdd(from, dir, end);
 	} else { /* otherwise do a full trace */
-		CM_EntTestLineDM(from, stop, end);
+		CM_TestLineDM(from, stop, end);
 	}
 
 	VecToPos(end, testPos);
 	restingLevel = Grid_Fall(&clMap, testPos);
 
+	/* hack to prevent cursor from getting stuck on the top of an invisible 
+	   playerclip surface (in most cases anyway) */
+	PosToVec(testPos, pA);
+	VectorCopy(pA, pB);
+	pA[2] += UNIT_HEIGHT; 
+	pB[2] -= UNIT_HEIGHT;
+	CM_TestLineDM(pA, pB, pC);
+	VecToPos(pC, testPos);
+	restingLevel = min(restingLevel, Grid_Fall(&clMap, testPos));
+
 	/* if grid below intersection level, start a trace from the intersection */
 	if (restingLevel < intersectionLevel) {
 		VectorCopy(end, from);
 		from[2] -= CURSOR_OFFSET;
-		CM_EntTestLineDM(from, stop, end);
+		CM_TestLineDM(from, stop, end);
 		VecToPos(end, testPos);
 		restingLevel = Grid_Fall(&clMap, testPos);
 	}

@@ -356,6 +356,8 @@ static void G_ActorSpawn(edict_t * ent)
 	ent->fieldSize = ACTOR_SIZE_NORMAL;
 
 	/* fall to ground */
+	if (ent->pos[2] >= HEIGHT)
+		ent->pos[2] = HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
 	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 
@@ -381,6 +383,8 @@ static void G_UGVSpawn(edict_t * ent)
 	ent->fieldSize = ACTOR_SIZE_UGV;
 
 	/* fall to ground */
+	if (ent->pos[2] >= HEIGHT)
+		ent->pos[2] = HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
 	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 

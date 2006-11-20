@@ -384,7 +384,7 @@ static void LET_PathMove(le_t * le)
 			/* end of move */
 			le_t *floor;
 
-			if (le == selActor) {
+			if (selActor) {
 				CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
 				CL_ResetActorMoveLength();
 			}

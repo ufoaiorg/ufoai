@@ -1284,6 +1284,9 @@ void CL_InitLocal(void)
 	Cmd_AddCommand("video", CL_Video_f, "Enable AVI recording - see stopvideo");
 	Cmd_AddCommand("stopvideo", CL_StopVideo_f, "Disable AVI recording - see video");
 
+	/* allow to change the sound renderer even if no sound was initialized */
+	Cmd_AddCommand("snd_modifyref", S_ModifySndRef_f, "Modify sound renderer");
+
 	/* forward to server commands */
 	/* the only thing this does is allow command completion */
 	/* to work -- all unknown commands are automatically */

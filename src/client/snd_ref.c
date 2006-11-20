@@ -339,7 +339,7 @@ void S_Init(void)
 
 	Com_Printf("\n------- sound initialization -------\n");
 
-	cv = Cvar_Get("snd_init", "1", 0, "Should the sound renderer get initialized");
+	cv = Cvar_Get("snd_init", "1", CVAR_ARCHIVE, "Should the sound renderer get initialized");
 
 	if (!cv->value) {
 		Com_Printf("not initializing.\n");
@@ -439,7 +439,6 @@ void S_Init(void)
 		Cmd_AddCommand("music_start", S_StartOGG, "Start the ogg music track from cvar music");
 		Cmd_AddCommand("music_stop", OGG_Stop, "Stop currently playing music tracks");
 
-		Cmd_AddCommand("snd_modifyref", S_ModifySndRef_f, "Modify sound renderer");
 		Cmd_AddCommand("snd_modifykhz", S_ModifyKhz_f, "Modify khz for sound renderer - use + or - as paramaters");
 
 		S_InitScaletable();

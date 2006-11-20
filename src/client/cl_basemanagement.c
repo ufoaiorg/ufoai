@@ -707,15 +707,16 @@ void B_BuildingInit(void)
 /**
  * @brief Gets the type of building by its index.
  *
+ * @param[in] base Pointer to base_t (base has to be founded already)
  * @param[in] idx The index of the building in gd.buildings[]
  * @return buildings_t pointer to gd.buildings[idx]
  */
-building_t *B_GetBuildingByIdx(int idx)
+building_t *B_GetBuildingByIdx(base_t* base, int idx)
 {
-	if (baseCurrent)
-		return &gd.buildings[baseCurrent->idx][idx];
+	if (base)
+		return &gd.buildings[base->idx][idx];
 	else
-		Sys_Error("Bases not initialized\n");
+		Sys_Error("B_GetBuildingByIdx: Base not initialized\n");
 
 	/*just that there are no warnings */
 	return NULL;
@@ -1140,7 +1141,7 @@ void B_DrawBase(menuNode_t * node)
 			baseCurrent->posY[row][col] = y;
 
 			if (baseCurrent->map[row][col] >= 0) {
-				building = B_GetBuildingByIdx(baseCurrent->map[row][col]);
+				building = B_GetBuildingByIdx(baseCurrent, baseCurrent->map[row][col]);
 				secondBuilding = NULL;
 
 				if (!building)
@@ -1710,7 +1711,7 @@ void B_AssembleMap(void)
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++) {
 			if (base->map[row][col] != -1) {
-				entry = B_GetBuildingByIdx(base->map[row][col]);
+				entry = B_GetBuildingByIdx(base, base->map[row][col]);
 				entry->used = 0;
 			}
 		}
@@ -1722,7 +1723,7 @@ void B_AssembleMap(void)
 			baseMapPart[0] = '\0';
 
 			if (base->map[row][col] != -1) {
-				entry = B_GetBuildingByIdx(base->map[row][col]);
+				entry = B_GetBuildingByIdx(base, base->map[row][col]);
 
 				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one */
 				/* this is why we check the used flag and continue if it was set already */
