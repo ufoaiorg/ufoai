@@ -1375,6 +1375,8 @@ void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 		MSG_WriteByte(buf, chr->skin);
 
 		MSG_WriteShort(buf, chr->HP);
+		MSG_WriteShort(buf, chr->STUN);
+		MSG_WriteShort(buf, chr->AP);
 		MSG_WriteByte(buf, chr->morale);
 
 		/* even new attributes */
@@ -1448,7 +1450,7 @@ void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
 typedef struct updateCharacter_s {
 	int ucn;
 	int kills[KILLED_NUM_TYPES];
-	int HP;
+	int HP, AP, STUN;
 	int morale;
 } updateCharacter_t;
 
@@ -1478,6 +1480,8 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 				continue;
 			}
 			chr->HP = updateCharacterArray[i].HP;
+			chr->STUN = updateCharacterArray[i].STUN;
+			chr->AP = updateCharacterArray[i].AP;
 			chr->morale = updateCharacterArray[i].morale;
 
 			for (j=0; j<KILLED_NUM_TYPES; j++)
@@ -1497,6 +1501,8 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 		for (i=0; i<num; i++) {
 			updateCharacterArray[i].ucn = MSG_ReadShort(buf);
 			updateCharacterArray[i].HP = MSG_ReadShort(buf);
+			updateCharacterArray[i].STUN = MSG_ReadShort(buf);
+			updateCharacterArray[i].AP = MSG_ReadShort(buf);
 			updateCharacterArray[i].morale = MSG_ReadByte(buf);
 
 			for (j=0; j<KILLED_NUM_TYPES; j++)

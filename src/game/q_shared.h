@@ -1086,7 +1086,7 @@ typedef struct character_s {
 	/* new abilities and skills: */
 	int skills[SKILL_NUM_TYPES];
 
-	int HP, morale;
+	int HP, STUN, AP, morale;
 
 	/* score */
 	int kills[KILLED_NUM_TYPES];

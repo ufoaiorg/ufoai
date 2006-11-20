@@ -1784,6 +1784,8 @@ void G_ClientTeamInfo(player_t * player)
 #endif
 
 			ent->chr.HP = gi.ReadShort();
+			ent->chr.STUN = gi.ReadShort();
+			ent->chr.AP = gi.ReadShort();
 			ent->chr.morale = gi.ReadByte();
 
 			/* new attributes */
