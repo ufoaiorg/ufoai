@@ -1431,6 +1431,8 @@ void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
 		MSG_WriteByte(buf, chr->skin);
 
 		MSG_WriteShort(buf, chr->HP);
+		MSG_WriteShort(buf, chr->STUN);
+		MSG_WriteShort(buf, chr->AP);
 		MSG_WriteByte(buf, chr->morale);
 
 		/* even new attributes */

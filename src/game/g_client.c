@@ -82,8 +82,8 @@ void G_SendStats(edict_t * ent)
 	gi.WriteShort(ent->number);
 	gi.WriteByte(ent->TU);
 	gi.WriteShort(ent->HP);
-	gi.WriteByte(ent->STUN);
-	gi.WriteByte(ent->AP);
+	gi.WriteShort(ent->STUN);
+	gi.WriteShort(ent->AP);
 	gi.WriteByte(ent->morale);
 }
 
@@ -1833,6 +1833,8 @@ void G_ClientTeamInfo(player_t * player)
 				gi.ReadString(); /* name, path, body, head */
 			gi.ReadByte(); /* skin */
 			gi.ReadShort(); /* HP */
+			gi.ReadShort(); /* STUN */
+			gi.ReadShort(); /* AP */
 			gi.ReadByte(); /* morale */
 			for (k = 0; k < SKILL_NUM_TYPES; k++)
 				gi.ReadByte(); /* skills */
