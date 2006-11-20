@@ -554,6 +554,7 @@ void CL_EntPerish( sizebuf_t *sb )
 			if ( actor->inuse
 				 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
 				 && VectorCompare(actor->pos, le->pos) ) {
+				Com_DPrintf("CL_EntPerish: le of type ET_ITEM destroyed.");
 				FLOOR(actor) = NULL;
 			}
 	} else {
@@ -1024,6 +1025,12 @@ void CL_ParseEvent( void )
 				time = shootTime;
 			else
 				time = nextTime;
+
+			/* Theory: if impactTime > cl.eventTime and client receives a EV_ENT_APPEAR or EV_INV_ADD event then
+			 * this event corresponds to a dropped item event when an actor is killed due to the impact 
+			 * If this theory is wrong, then the following test is also wrong */
+			if ((eType == EV_ENT_APPEAR || eType == EV_INV_ADD) && impactTime > cl.eventTime )
+				time = impactTime + 600;
 
 			/* calculate time interval before the next event */
 			switch ( eType ) {
