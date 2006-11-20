@@ -49,10 +49,11 @@ Olivier "Kracken" Alloschery
 * "4x4" and tires model&texture
 * "heli2" reduced polycount + texture (see also the license.txt)
 
-Winterslice
+Ryan "Winterslice" A. Span
 * "pistol2" model
 * "stungren" model + base texture
 * "shotgunmicro" model
+* "interceptor2" model
 
-
-
+<fixme>
+* "interceptor2" texture
