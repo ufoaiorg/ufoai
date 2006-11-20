@@ -1185,8 +1185,8 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 	chr->skin = MSG_ReadByte(sb);
 
 	chr->HP = MSG_ReadShort(sb);
-	chr->STUN = MSG_ReadShort(sb);
-	chr->AP = MSG_ReadShort(sb);
+	chr->STUN = MSG_ReadByte(sb);
+	chr->AP = MSG_ReadByte(sb);
 	chr->morale = MSG_ReadByte(sb);
 
 	/* new attributes */
@@ -1377,8 +1377,8 @@ void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 		MSG_WriteByte(buf, chr->skin);
 
 		MSG_WriteShort(buf, chr->HP);
-		MSG_WriteShort(buf, chr->STUN);
-		MSG_WriteShort(buf, chr->AP);
+		MSG_WriteByte(buf, chr->STUN);
+		MSG_WriteByte(buf, chr->AP);
 		MSG_WriteByte(buf, chr->morale);
 
 		/* even new attributes */
@@ -1431,8 +1431,8 @@ void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
 		MSG_WriteByte(buf, chr->skin);
 
 		MSG_WriteShort(buf, chr->HP);
-		MSG_WriteShort(buf, chr->STUN);
-		MSG_WriteShort(buf, chr->AP);
+		MSG_WriteByte(buf, chr->STUN);
+		MSG_WriteByte(buf, chr->AP);
 		MSG_WriteByte(buf, chr->morale);
 
 		/* even new attributes */
@@ -1505,8 +1505,8 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 		for (i=0; i<num; i++) {
 			updateCharacterArray[i].ucn = MSG_ReadShort(buf);
 			updateCharacterArray[i].HP = MSG_ReadShort(buf);
-			updateCharacterArray[i].STUN = MSG_ReadShort(buf);
-			updateCharacterArray[i].AP = MSG_ReadShort(buf);
+			updateCharacterArray[i].STUN = MSG_ReadByte(buf);
+			updateCharacterArray[i].AP = MSG_ReadByte(buf);
 			updateCharacterArray[i].morale = MSG_ReadByte(buf);
 
 			for (j=0; j<KILLED_NUM_TYPES; j++)

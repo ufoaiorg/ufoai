@@ -369,8 +369,8 @@ static void G_SendCharacterData( edict_t* ent )
 	gi.WriteShort(ent->chr.ucn);
 
 	gi.WriteShort(ent->HP);
-	gi.WriteShort(ent->STUN);
-	gi.WriteShort(ent->AP);
+	gi.WriteByte(ent->STUN);
+	gi.WriteByte(ent->AP);
 	gi.WriteByte(ent->morale);
 
 	/* scores */

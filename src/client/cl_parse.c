@@ -91,7 +91,7 @@ char *ev_format[] =
 	"bb",				/* EV_ACTOR_SHOOT_HIDDEN */
 	"sbbpp",			/* EV_ACTOR_THROW */
 	"ss",				/* EV_ACTOR_DIE */
-	"!sbsssbbb",	    /* EV_ACTOR_STATS; beware of the '!' */
+	"!sbsbbb",		    /* EV_ACTOR_STATS; beware of the '!' */
 	"ss",				/* EV_ACTOR_STATECHANGE */
 
 	"s*",				/* EV_INV_ADD */
@@ -685,6 +685,7 @@ void CL_ActorAppear( sizebuf_t *sb )
 
 /**
  * @brief
+ * @sa
  */
 void CL_ActorStats( sizebuf_t *sb )
 {
