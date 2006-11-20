@@ -1185,6 +1185,8 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 	chr->skin = MSG_ReadByte(sb);
 
 	chr->HP = MSG_ReadShort(sb);
+	chr->STUN = MSG_ReadShort(sb);
+	chr->AP = MSG_ReadShort(sb);
 	chr->morale = MSG_ReadByte(sb);
 
 	/* new attributes */
