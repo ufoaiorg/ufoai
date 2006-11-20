@@ -65,6 +65,7 @@ qboolean SND_OAL_Init (char* device)
 	Com_Printf("..vendor: \"%s\"\n", qalGetString(AL_VENDOR));
 	Com_Printf("..renderer: \"%s\"\n", qalGetString(AL_RENDERER));
 	Com_Printf("..device: \"%s\"\n", qalcGetString (oalState.device, ALC_DEFAULT_DEVICE_SPECIFIER));
+	Com_Printf("..extensions: %s\n", qalcGetString(oalState.device, ALC_EXTENSIONS));
 
 	if ((oalState.context = qalcCreateContext(oalState.device, NULL)) == NULL) {
 		Com_Printf("Error: OpenAL context creation error\n");
