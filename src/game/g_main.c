@@ -167,11 +167,11 @@ void InitGame(void)
 	ai_civilian = gi.cvar("ai_civilian", "civilian", 0, "Civilian team");
 	ai_equipment = gi.cvar("ai_equipment", "human_phalanx_initial", 0, "Initial equipment definition");
 	/* aliens in singleplayer (can differ each mission) */
-	ai_numaliens = gi.cvar("ai_numaliens", "8", 0, "How many aliens in this battle");
+	ai_numaliens = gi.cvar("ai_numaliens", "8", 0, "How many aliens in this battle (singleplayer)");
 	/* civilians for singleplayer */
 	ai_numcivilians = gi.cvar("ai_numcivilians", "8", 0, "How many civilians in this battle");
 	/* aliens in multiplayer */
-	ai_numactors = gi.cvar("ai_numactors", "8", CVAR_ARCHIVE, "How many (human controlled) actors in this battle");
+	ai_numactors = gi.cvar("ai_numactors", "8", CVAR_ARCHIVE, "How many (human controlled) actors in this battle (multiplayer)");
 	/* autojoin aliens */
 	ai_autojoin = gi.cvar("ai_autojoin", "0", 0, NULL);
 
