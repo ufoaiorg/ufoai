@@ -332,11 +332,17 @@ void SpawnEntities(char *mapname, char *entities)
 	}
 
 	/* spawn ai players, if needed */
-	if (level.num_spawnpoints[TEAM_CIVILIAN])
-		AI_CreatePlayer(TEAM_CIVILIAN);
-	/* FIXME: Check multiplayer coop */
-	if ((int) sv_maxclients->value == 1 && level.num_spawnpoints[TEAM_ALIEN])
-		AI_CreatePlayer(TEAM_ALIEN);
+	if (level.num_spawnpoints[TEAM_CIVILIAN]) {
+		if (AI_CreatePlayer(TEAM_CIVILIAN) == NULL)
+			Com_Printf("Could not create civilian\n");
+	} else
+		Com_Printf("No civilian spawn points in this map\n");
+
+	if (((int) sv_maxclients->value == 1 || ai_numactors->value) && level.num_spawnpoints[TEAM_ALIEN]) {
+		if (AI_CreatePlayer(TEAM_ALIEN) == NULL)
+			Com_Printf("Could not create alien\n");
+	} else
+		Com_Printf("No alien spawn points in this map or aliens are deactivated for multiplayer\n");
 }
 
 

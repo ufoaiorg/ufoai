@@ -712,8 +712,10 @@ player_t *AI_CreatePlayer(int team)
 	player_t *p;
 	int i;
 
-	if (!sv_ai->value)
+	if (!sv_ai->value) {
+		Com_Printf("AI deactivated - set sv_ai cvar to 1 to activate it\n");
 		return NULL;
+	}
 
 	for (i = 0, p = game.players + game.maxplayers; i < game.maxplayers; i++, p++)
 		if (!p->inuse) {
