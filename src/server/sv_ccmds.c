@@ -57,7 +57,7 @@ void SV_SetMaster_f(void)
 	for (i = 1; i < MAX_MASTERS; i++)
 		memset(&master_adr[i], 0, sizeof(master_adr[i]));
 
-	slot = 1;					/* slot 0 will always contain the id master */
+	slot = 1;	/* slot 0 will always contain the cvar master */
 	for (i = 1; i < Cmd_Argc(); i++) {
 		if (slot == MAX_MASTERS)
 			break;
@@ -67,7 +67,7 @@ void SV_SetMaster_f(void)
 			continue;
 		}
 		if (master_adr[slot].port == 0)
-			master_adr[slot].port = BigShort(PORT_MASTER);
+			master_adr[slot].port = BigShort((int)Cvar_VariableValue("masterserver_port"));
 
 		Com_Printf("Master server at %s\n", NET_AdrToString(master_adr[slot]));
 
@@ -458,7 +458,7 @@ void SV_InitOperatorCommands(void)
 	Cmd_AddCommand("dumpuser", SV_DumpUser_f, NULL);
 
 	Cmd_AddCommand("map", SV_Map_f, NULL);
-	Cmd_AddCommand ("demo", SV_Demo_f, NULL);
+	Cmd_AddCommand("demo", SV_Demo_f, NULL);
 	Cmd_AddCommand("maplist", SV_ListMaps_f, NULL);
 
 	Cmd_AddCommand("setmaster", SV_SetMaster_f, NULL);

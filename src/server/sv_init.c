@@ -814,7 +814,7 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 void SV_InitGame(void)
 {
 /*	edict_t	*ent; */
-	char idmaster[32];
+	char masterserver[32];
 
 	if (svs.initialized) {
 		/* cause any connected clients to reconnect */
@@ -844,8 +844,8 @@ void SV_InitGame(void)
 
 	/* heartbeats will always be sent to the id master */
 	svs.last_heartbeat = -99999;	/* send immediately */
-	Com_sprintf(idmaster, sizeof(idmaster), "%s:%i", IP_MASTER, PORT_MASTER);
-	NET_StringToAdr(idmaster, &master_adr[0]);
+	Com_sprintf(masterserver, sizeof(masterserver), "%s:%s", Cvar_VariableString("masterserver_ip"), Cvar_VariableString("masterserver_port"));
+	NET_StringToAdr(masterserver, &master_adr[0]);
 
 	/* init game */
 	SV_InitGameProgs();

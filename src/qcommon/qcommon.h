@@ -138,12 +138,8 @@ PROTOCOL
 
 /*========================================= */
 
-#define	PORT_MASTER	27900
 #define	PORT_CLIENT	27901
 #define	PORT_SERVER	27910
-
-/* FIXME: this is the id master server */
-#define IP_MASTER "192.246.40.37"
 
 /*========================================= */
 
