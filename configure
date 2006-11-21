@@ -687,6 +687,7 @@ HAVE_SND_WAPI
 HAVE_SND_DX
 HAVE_VID_DGA
 HAVE_VID_VIDMODE
+HAVE_IPV6
 BUILD_DEDICATED
 BUILD_MASTER
 BUILD_UFO2MAP
@@ -1305,6 +1306,7 @@ Optional Packages:
   --with-snd-dx           with directX sound support [default=check]
   --with-dga              compile with DGA support [default=check]
   --with-vidmode          compile with vidmode support [default=check]
+  --with-ipv6             compile with ipv6 support [default=no]
   --with-openal-framework compile with given openal framework
                           [default=/System/Library/Frameworks/OpenAL.framework]
   --with-opengl-framework compile with given opengl framework
@@ -2011,6 +2013,15 @@ if test "${with_vid_vidmode+set}" = set; then
   withval=$with_vid_vidmode;
 else
   with_vid_vidmode=check
+fi
+
+
+
+# Check whether --with-ipv6 was given.
+if test "${with_ipv6+set}" = set; then
+  withval=$with_ipv6;
+else
+  with_ipv6=no
 fi
 
 
@@ -10235,6 +10246,24 @@ fi
 
 
 #---------------------------------------------------------------------------------------------
+# Check for ipv6
+#---------------------------------------------------------------------------------------------
+
+HAVE_IPV6=0
+
+if test "$with_ipv6" = "yes"
+then
+	{ echo "$as_me:$LINENO: Enabling ipv6 support" >&5
+echo "$as_me: Enabling ipv6 support" >&6;}
+	HAVE_IPV6=1
+
+	cat >>confdefs.h <<\_ACEOF
+#define HAVE_IPV6 1
+_ACEOF
+
+fi
+
+#---------------------------------------------------------------------------------------------
 # Check for dedicated
 #---------------------------------------------------------------------------------------------
 
@@ -11048,6 +11077,7 @@ HAVE_SND_WAPI!$HAVE_SND_WAPI$ac_delim
 HAVE_SND_DX!$HAVE_SND_DX$ac_delim
 HAVE_VID_DGA!$HAVE_VID_DGA$ac_delim
 HAVE_VID_VIDMODE!$HAVE_VID_VIDMODE$ac_delim
+HAVE_IPV6!$HAVE_IPV6$ac_delim
 BUILD_DEDICATED!$BUILD_DEDICATED$ac_delim
 BUILD_MASTER!$BUILD_MASTER$ac_delim
 BUILD_UFO2MAP!$BUILD_UFO2MAP$ac_delim
@@ -11055,7 +11085,6 @@ BUILD_QDATA!$BUILD_QDATA$ac_delim
 BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 PARANOID!$PARANOID$ac_delim
 PROFILING!$PROFILING$ac_delim
-EXE_EXT!$EXE_EXT$ac_delim
 _ACEOF
 
   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
@@ -11097,11 +11126,12 @@ _ACEOF
 ac_delim='%!_!# '
 for ac_last_try in false false false false false :; do
   cat >conf$$subs.sed <<_ACEOF
+EXE_EXT!$EXE_EXT$ac_delim
 LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 2; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 3; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5

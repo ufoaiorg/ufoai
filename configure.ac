@@ -48,6 +48,10 @@ AC_ARG_WITH(vid_vidmode,
 	[AS_HELP_STRING([--with-vidmode], [compile with vidmode support @<:@default=check@:>@])],
 	[], [with_vid_vidmode=check])
 
+AC_ARG_WITH(ipv6,
+	[AS_HELP_STRING([--with-ipv6], [compile with ipv6 support @<:@default=no@:>@])],
+	[], [with_ipv6=no])
+
 AC_ARG_WITH(openal_framework,
 	[AS_HELP_STRING([--with-openal-framework], [compile with given openal framework @<:@default=/System/Library/Frameworks/OpenAL.framework@:>@])],
 	[], [with_openal_framework=/System/Library/Frameworks/OpenAL.framework])
@@ -803,6 +807,18 @@ then
 	fi
 fi
 
+
+#---------------------------------------------------------------------------------------------
+# Check for ipv6
+#---------------------------------------------------------------------------------------------
+
+AC_SUBST([HAVE_IPV6],0)
+if test "$with_ipv6" = "yes"
+then
+	AC_MSG_NOTICE([Enabling ipv6 support])
+	AC_SUBST([HAVE_IPV6],1)
+	AC_DEFINE([HAVE_IPV6],1)
+fi
 
 #---------------------------------------------------------------------------------------------
 # Check for dedicated
