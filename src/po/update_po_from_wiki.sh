@@ -322,6 +322,12 @@ update_txt()
 	    $0 ~ /<.*>/ {
 	      if (h3 == h3_nb) {exit}}
 	    $0 ~ /^<.*>$/ {next}
+	    $0 ~ /^SUB: / {
+	      gsub (/[ \t]*$/,"")
+	      $0=$0"\\n\n"}
+	    $0 ~ /statistics:[ /t]*$/ {
+	      gsub (/[ \t]*$/,"")
+	      $0="\\n\n"$0"\\n\n"}
 	    $0 !~ /^[ \t]*$/ {
 	      gsub (/[ \t]*$/,"")
 	      if (already_written_test) {printf "\\n\n\\n\n"}
@@ -329,7 +335,7 @@ update_txt()
 	      already_written_test=1;
 	      exit_test=0}
 	      ' downloaded_page | 
-	 sed 's/[[:space:]]*<.*>[[:space:]]*//g;s/^[ \t]*//g;s/\"/\\\"/g' | 
+	 sed 's/[[:space:]]*<.*>[[:space:]]*//g;/^[[:space:]]*$/d;s/^[ \t]*//g;s/\"/\\\"/g' | 
 	 awk '{printf "'$END'i\"%s\"\n",$0}' |	
 	 sed 's/\\/\\\\/g'>> sed_commands
 	 apply_sed $english
@@ -596,8 +602,7 @@ do
 		pre_txt=0
 	    fi
 	 else
-	    #update_txt 2 1 3
-	    update_txt 2 0 3
+	    update_txt 2 1 3
 	 fi
       elif [[ "$test" -eq 1 ]]
       then
@@ -640,7 +645,6 @@ do
         	apply_sed $english
 	fi
     fi
-
   fi
 done < po_file.tmp
 
