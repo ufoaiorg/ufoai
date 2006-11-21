@@ -17,7 +17,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* net_udp6.c */
 
 #include "../../qcommon/qcommon.h"
 
@@ -186,7 +185,7 @@ void SockadrToNetadr (struct sockaddr_storage *s, netadr_t *a)
 char *NET_SocketToString (void *s_ptr)
 {
 	netadr_t addr;
-	struct sockaddr_in *s = (struct sockaddr_in*)s_ptr;
+	struct sockaddr_storage *s = (struct sockaddr_storage*)s_ptr;
 
 	if (!s)
 		return "";
@@ -812,7 +811,7 @@ int NET_Socket (char *net_interface, int port, netsrc_t type, int family)
 	case AF_INET6:
 		/* Multicast outgoing interface is specified for
 		* client and server (+set multicast <ifname>) */
-		mcast = Cvar_Get ("multicast", "NULL", CVAR_NOSET);
+		mcast = Cvar_Get ("multicast", "NULL", CVAR_NOSET, NULL);
 		multicast_interface = (strcmp(mcast->string, "NULL") ? mcast->string : NULL);
 
 		if (multicast_interface != NULL) {
