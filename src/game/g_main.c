@@ -348,13 +348,14 @@ void CheckNeedPass(void)
 }
 
 /**
-  * @brief Sends character stats like assigned missions and kills back to client
-  *
-  * @note first short is the ucn to allow the client to identify the character
-  * @note parsed in CL_ParseCharacterData
-  * @sa CL_ParseCharacterData
-  * @sa G_EndGame
-  */
+ * @brief Sends character stats like assigned missions and kills back to client
+ *
+ * @note first short is the ucn to allow the client to identify the character
+ * @note parsed in CL_ParseCharacterData
+ * @sa CL_ParseCharacterData
+ * @sa G_EndGame
+ * @note you also have to update the pascal string size in G_EndGame if you change the buffer here
+ */
 static void G_SendCharacterData( edict_t* ent )
 {
 	int k;
@@ -379,10 +380,10 @@ static void G_SendCharacterData( edict_t* ent )
 }
 
 /**
-  * @brief Handles the end of a game
-  * @note Called by game_abort command (or sv win [team])
-  * @sa G_RunFrame
-  */
+ * @brief Handles the end of a game
+ * @note Called by game_abort command (or sv win [team])
+ * @sa G_RunFrame
+ */
 void G_EndGame(int team)
 {
 	edict_t *ent;
@@ -443,8 +444,8 @@ void G_EndGame(int team)
 			j++;
 
 	Com_DPrintf("Sending results with %i actors.\n", j);
-	/* this is (size of updateCharacter_t) * number of phalanx actors */
-	gi.WriteShort(((KILLED_NUM_TYPES + 2) * 2 + 1) * j );
+	/* this is (size of updateCharacter_t) * number of phalanx actors - see CL_ParseCharacterData for more info */
+	gi.WriteShort(((KILLED_NUM_TYPES + 2) * 2 + 3) * j );
 
 	if (j) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)

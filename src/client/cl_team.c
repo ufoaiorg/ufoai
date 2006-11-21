@@ -1461,6 +1461,8 @@ typedef struct updateCharacter_s {
 /**
  * @brief Parses the character data which was send by G_EndGame using G_SendCharacterData
  * @sa G_SendCharacterData
+ * @sa G_EndGame
+ * @note you also have to update the pascal string size in G_EndGame if you change the buffer here
  */
 void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 {
@@ -1497,7 +1499,15 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 		for (i=0; i<MAX_WHOLETEAM; i++) {
 			updateCharacterArray[i].ucn = -1;
 		}
-		num = MSG_ReadShort(buf) / ((KILLED_NUM_TYPES + 2) * 2 + 1);
+		/**
+		 * this is the size of updateCharacter_t - also change it in G_SendCharacterData
+		 * if you change something in updateCharacter_t
+		 * KILLED_NUM_TYPES => size of kills array
+		 * +2 => HP and ucn
+		 * *2 => for shorts
+		 * +3 => STUN and AP
+		 */
+		num = MSG_ReadShort(buf) / ((KILLED_NUM_TYPES + 2) * 2 + 3);
 		if (num > MAX_EMPLOYEES)
 			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
 		else if (num < 0)

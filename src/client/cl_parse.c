@@ -685,7 +685,7 @@ void CL_ActorAppear( sizebuf_t *sb )
 
 /**
  * @brief
- * @sa
+ * @sa CL_ParseEvent
  */
 void CL_ActorStats( sizebuf_t *sb )
 {
@@ -973,7 +973,8 @@ void CL_LogEvent( int num )
 
 
 /**
- * @brief
+ * @brief Called in case a svc_event was send via the network buffer
+ * @sa CL_ParseServerMessage
  */
 void CL_ParseEvent( void )
 {
