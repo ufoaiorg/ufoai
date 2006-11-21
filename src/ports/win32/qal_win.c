@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifdef HAVE_OPENAL
+
 #include <windows.h>
 #include <float.h>
 #include "../../client/qal.h"
@@ -76,3 +78,5 @@ void QAL_Shutdown (void)
 	qalEAXSet					= NULL;
 	qalEAXGet					= NULL;
 }
+
+#endif /* HAVE_OPENAL */

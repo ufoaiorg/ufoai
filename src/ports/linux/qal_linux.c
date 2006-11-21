@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifdef HAVE_OPENAL
+
 #include "../../client/qal.h"
 #include "qal_linux.h"
 
@@ -89,3 +91,5 @@ void QAL_Shutdown (void)
 	/* general pointers */
 	QAL_Unlink();
 }
+
+#endif /* HAVE_OPENAL */

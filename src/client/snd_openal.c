@@ -24,6 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifdef HAVE_OPENAL
+
 #include "snd_openal.h"
 
 static unsigned int alSource;
@@ -198,3 +200,5 @@ void SND_OAL_DestroySound (void)
 	qalDeleteSources(1,&alSource);
 	qalDeleteBuffers(1,&alSampleSet);
 }
+
+#endif /* HAVE_OPENAL */

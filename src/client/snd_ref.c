@@ -1277,11 +1277,12 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	/* mix some sound */
 	S_Update_();
 
-	if (!SND_OAL_Stream(music.ovPlaying)) {
+#ifdef HAVE_OPENAL
+	if (!SND_OAL_Stream(music.ovPlaying))
 		/* stream music */
+#endif
 		while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
 			OGG_Read();
-	}
 }
 
 /**

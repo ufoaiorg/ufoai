@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifdef HAVE_OPENAL
 
 #include "../client/client.h"
 #include "../client/snd_loc.h"
@@ -361,3 +362,4 @@ qboolean QAL_Link(void)
 	return qtrue;
 }
 
+#endif /* HAVE_OPENAL */
