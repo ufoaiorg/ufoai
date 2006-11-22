@@ -19,7 +19,7 @@ Jake "ProtoArmor" Gustafson
 
 Werner "hoehrer" Höhrer
 * "Stun Rod" model + 1. texture
-* "IR Goggles" model + 1. texture.
+* "IR Goggles" (the binocs-style) model + 1. texture.
 * "Laser tech" image/model
 * "Hovernet" model + basic texture.
 * "Crane" model (+ temp. texture)
@@ -38,6 +38,7 @@ Werner "hoehrer" Höhrer
 * "curtains" model + texture
 * "watertower" model + basic texture
 * "desk" model + texture
+* "goggles" (the swimming-goggle style) model + texture
 
 Denis "De_Nis"/"tdtv"/"Äåíèñ"
 * "Smoke Grenade" model
