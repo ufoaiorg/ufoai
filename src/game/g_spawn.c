@@ -330,11 +330,24 @@ void SpawnEntities(char *mapname, char *entities)
 	}
 
 	/* spawn ai players, if needed */
-	if (level.num_spawnpoints[TEAM_CIVILIAN])
-		AI_CreatePlayer(TEAM_CIVILIAN);
-	/* FIXME: Check multiplayer coop */
-	if ((int) sv_maxclients->value == 1 && level.num_spawnpoints[TEAM_ALIEN])
-		AI_CreatePlayer(TEAM_ALIEN);
+	if (level.num_spawnpoints[TEAM_CIVILIAN]) {
+		if (AI_CreatePlayer(TEAM_CIVILIAN) == NULL)
+			Com_Printf("Could not create civilian\n");
+	}
+#ifdef DEBUG
+	else
+		Com_Printf("No civilian spawn points in this map or civlians deactivated\n");
+#endif
+
+	if (((int) sv_maxclients->value == 1 || ai_numactors->value) && level.num_spawnpoints[TEAM_ALIEN]) {
+		if (AI_CreatePlayer(TEAM_ALIEN) == NULL)
+			Com_Printf("Could not create alien\n");
+#ifdef DEBUG
+	} else {
+		Com_Printf("No alien spawn points in this map or aliens are deactivated for multiplayer\n");
+		Com_Printf("sv_maxclients %.0f, ai_numactors: %.0f, alien spawnpoints: %i)\n", sv_maxclients->value, ai_numactors->value, level.num_spawnpoints[TEAM_ALIEN]);
+#endif
+	}
 }
 
 
@@ -415,7 +428,7 @@ static void SP_player_start(edict_t * ent)
 	/* in teamplay mode check whether the player has reached */
 	/* the max allowed soldiers per player */
 	if ((int) maxsoldiersperplayer->value && soldierCount >= (int) maxsoldiersperplayer->value && (int) sv_teamplay->value) {
-		gi.dprintf("Only %i/%i soldiers per player allowed\n", (int) maxsoldiersperplayer->value, soldierCount);
+		gi.dprintf("Only %i/%i soldiers per player allowed - don't use this starting point for team %i\n", (int) maxsoldiersperplayer->value, soldierCount, ent->team);
 		G_FreeEdict(ent);
 		return;
 	}
@@ -480,8 +493,8 @@ Starting point for a single player alien.
 */
 static void SP_alien_start(edict_t * ent)
 {
-	/* only used in single player */
-	if (sv_maxclients->value > 1) {
+	/* deactivateable in multiplayer */
+	if ((int)sv_maxclients->value > 1 && !ai_numactors->value) {
 		G_FreeEdict(ent);
 		return;
 	}
@@ -500,6 +513,11 @@ Starting point for a civilian.
 */
 static void SP_civilian_start(edict_t * ent)
 {
+	/* deactivateable in multiplayer */
+	if ((int)sv_maxclients->value > 1 && !ai_numcivilians->value) {
+		G_FreeEdict(ent);
+		return;
+	}
 	ent->team = TEAM_CIVILIAN;
 	/* set stats */
 	ent->STUN = 99;

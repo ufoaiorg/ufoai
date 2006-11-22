@@ -1396,7 +1396,9 @@ void Qcommon_Init(int argc, char **argv)
 
 	Cbuf_AddText("exec default.cfg\n");
 	Cbuf_AddText("exec config.cfg\n");
+#ifndef DEDICATED_ONLY
 	Cbuf_AddText("exec keys.cfg\n");
+#endif
 
 	Cbuf_AddEarlyCommands(qtrue);
 	Cbuf_Execute();
