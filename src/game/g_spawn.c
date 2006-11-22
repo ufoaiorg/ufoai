@@ -338,7 +338,7 @@ void SpawnEntities(char *mapname, char *entities)
 	}
 #ifdef DEBUG
 	else
-		Com_Printf("No civilian spawn points in this map\n");
+		Com_Printf("No civilian spawn points in this map or civlians deactivated\n");
 #endif
 
 	if (((int) sv_maxclients->value == 1 || ai_numactors->value) && level.num_spawnpoints[TEAM_ALIEN]) {
@@ -503,7 +503,7 @@ static void SP_ugv_start(edict_t * ent)
  */
 static void SP_alien_start(edict_t * ent)
 {
-	/* only used in single player */
+	/* deactivateable in multiplayer */
 	if ((int)sv_maxclients->value > 1 && !ai_numactors->value) {
 		G_FreeEdict(ent);
 		return;
@@ -524,6 +524,11 @@ static void SP_alien_start(edict_t * ent)
  */
 static void SP_civilian_start(edict_t * ent)
 {
+	/* deactivateable in multiplayer */
+	if ((int)sv_maxclients->value > 1 && !ai_numcivilians->value) {
+		G_FreeEdict(ent);
+		return;
+	}
 	ent->team = TEAM_CIVILIAN;
 	/* set stats */
 	ent->STUN = 99;
