@@ -1438,6 +1438,7 @@ void CL_ActorDie(sizebuf_t * sb)
 {
 	le_t *le;
 	int number, state;
+	int i;
 
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_DIE], &number, &state);
 
@@ -1467,11 +1468,36 @@ void CL_ActorDie(sizebuf_t * sb)
 	re.AnimChange(&le->as, le->model1, va("death%i", le->state & STATE_DEAD));
 	re.AnimAppend(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
 
+	/* print some info about the death */
+	if (le->team == cls.team && baseCurrent) {
+		for (i = 0; i < cl.numTeamList; i++)
+			if (cl.teamList[i] == le) {
+				Com_Printf(_("%s has been killed!\n"), baseCurrent->curTeam[i]->name);
+				break;
+			}
+	} else {
+		switch (le->team) {
+		case (TEAM_CIVILIAN):
+			Com_Printf(_("A civlian was killed!\n"));
+			break;
+		case (TEAM_ALIEN):
+			Com_Printf(_("An alien was killed!\n"));
+			break;
+		case (TEAM_PHALANX):
+			Com_Printf(_("A solider was killed\n"));
+			break;
+		default:
+			Com_Printf(_("A member of team %i was killed!\n"), le->team);
+			break;
+		}
+	}
+
 	CL_RemoveActorFromTeamList(le);
 
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
 	if (selActor)
 		CL_ResetActorMoveLength();
+
 }
 
 

@@ -1541,7 +1541,7 @@ void G_ActorDie(edict_t * ent, int state)
 		return;	/* never reached. need for code analyst. */
 #endif
 
-	gi.dprintf("G_ActorDie: kill actor on team %i\n", ent->team);
+	Com_DPrintf("G_ActorDie: kill actor on team %i\n", ent->team);
 	switch (state) {
 	case STATE_DEAD:
 		ent->state |= (1 + rand() % 3);
@@ -1587,7 +1587,7 @@ void G_KillTeam(void)
 	if (gi.argc() == 2)
 		teamToKill = atoi(gi.argv(1));
 
-	gi.dprintf("G_KillTeam: kill team %i\n", teamToKill);
+	Com_DPrintf("G_KillTeam: kill team %i\n", teamToKill);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD)) {
