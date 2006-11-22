@@ -160,24 +160,6 @@ tech rs_nano
 // 	time	10000
 // }
 
-// general ufo technology
-// FIXME: this should not be researched - but found via intercepter missions
-tech rs_craft_ufo_tech
-{
-	type	tech
-	name	"_General UFO technology"
-	description	"_ufo_tech_txt"
-	pre_description	"_ufo_tech_pre_txt"
-	up_chapter	tech
-
-	// FIXME
-	require_AND { tech TODO }
-	provides	found_ufo
-	time	2500
-
-	//image_top  xxxxx
-}
-
 //=================================
 // weapons and items
 //=================================
@@ -244,41 +226,6 @@ tech rs_weapon_bolterrifle_ammo
 		tech rs_weapon_bolterrifle
 	}
 	provides	bolterrifle_ammo
-	time	0
-	producetime	1
-}
-
-tech rs_weapon_chaingun
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_chaingun_txt"
-	pre_description	"_chaingun_pre_txt"
-
-	require_AND
-	{
-		tech rs_skill_heavy
-	}
-
-	provides	chaingun
-	time	0
-	producetime	40
-}
-
-tech rs_weapon_chaingun_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_chaingun_ammo_txt"
-	pre_description	"_chaingun_ammo_pre_txt"
-
-	require_AND
-	{
-		tech rs_damage_normal
-		tech rs_weapon_chaingun
-	}
-
-	provides	chaingun_ammo
 	time	0
 	producetime	1
 }
@@ -909,8 +856,46 @@ tech rs_weapon_rpg_tachyon_ammo
 	producetime	1
 }
 
+tech rs_weapon_chaingun
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	weapons
+	description	"_chaingun_txt"
+	pre_description	"_chaingun_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_heavy
+	}
+
+	provides	chaingun
+	time	0
+	producetime	40
+}
+
+tech rs_weapon_chaingun_ammo
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	weapons
+	description	"_chaingun_ammo_txt"
+	pre_description	"_chaingun_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_chaingun
+	}
+
+	provides	chaingun_ammo
+	time	0
+	producetime	1
+}
+
 tech rs_weapon_shotgun
 {
+	// Note: Multiplayer only
 	type	weapon
 	up_chapter	weapons
 	description	"_shotgun_txt"
@@ -946,6 +931,7 @@ tech rs_weapon_shotgun_ammo
 
 tech rs_weapon_shotgun_slug_ammo
 {
+	// Note: Multiplayer only
 	type	weapon
 	up_chapter	weapons
 	description	"_shotgun_slug_ammo_txt"
@@ -964,6 +950,7 @@ tech rs_weapon_shotgun_slug_ammo
 
 tech rs_weapon_shotgun2
 {
+	// Riot Shotgun
 	type	weapon
 	up_chapter	weapons
 	description	"_shotgun2_txt"
@@ -2400,7 +2387,9 @@ tech rs_alien_cyborg_ortnok_xenobiology
 	mdl_top	alien_cyborg_ortnok
 }
 
+//========================
 // UGVs
+//========================
 
 tech rs_ugv_phoenix
 {
@@ -2434,7 +2423,9 @@ tech rs_ugv_triax
 	mdl_top	"soldiers/ugv_triax/triax"
 }
 
-// CRAFT STUFF
+//========================
+// Craft Stuff
+//========================
 
 tech rs_craft_shield_light
 {
@@ -2556,7 +2547,9 @@ tech rs_craft_weapon_particle_beam
 	image_top	"techs/craftweapon_particle_beam"
 }
 
-// NEWS
+//========================
+// News
+//========================
 
 tech news_initial_political_situation
 {
