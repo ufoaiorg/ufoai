@@ -639,10 +639,10 @@ void VID_CheckChanges (void)
 			Com_sprintf( name, sizeof(name), "ref_%s64.dll", vid_ref->string );
 #endif
 #endif
-		}
-		if ( !VID_LoadRefresh( name ) ) {
-			Cmd_ExecuteString( "condump gl_debug" );
-			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
+			if ( !VID_LoadRefresh( name ) ) {
+				Cmd_ExecuteString( "condump gl_debug" );
+				Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
+			}
 		}
 		cls.disable_screen = qfalse;
 	}
