@@ -5915,6 +5915,8 @@ echo "$as_me: error: specified --with-openal specified but cannot find OpenAL he
 echo "$as_me: error: specified --with-openal specified but cannot find OpenAL header!" >&2;}
    { (exit 1); exit 1; }; }
    else
+     HAVE_OPENAL=1
+
      { echo "$as_me:$LINENO: checking for library containing alSourcePlay" >&5
 echo $ECHO_N "checking for library containing alSourcePlay... $ECHO_C" >&6; }
 if test "${ac_cv_search_alSourcePlay+set}" = set; then
@@ -6016,9 +6018,10 @@ fi
 
      if test "$ac_cv_search_alSourcePlay" = "no"
      then
-        { { echo "$as_me:$LINENO: error: couldn't find OpenAL library!" >&5
-echo "$as_me: error: couldn't find OpenAL library!" >&2;}
-   { (exit 1); exit 1; }; }
+        { echo "$as_me:$LINENO: WARNING: couldn't find OpenAL library!" >&5
+echo "$as_me: WARNING: couldn't find OpenAL library!" >&2;}
+        HAVE_OPENAL=0
+
      fi
      { echo "$as_me:$LINENO: checking for library containing alutLoadWAVFile" >&5
 echo $ECHO_N "checking for library containing alutLoadWAVFile... $ECHO_C" >&6; }
@@ -6121,12 +6124,11 @@ fi
 
      if test "$ac_cv_search_alutLoadWAVFile" = "no"
      then
-        { { echo "$as_me:$LINENO: error: couldn't find OpenAL utility library!" >&5
-echo "$as_me: error: couldn't find OpenAL utility library!" >&2;}
-   { (exit 1); exit 1; }; }
-     fi
-     HAVE_OPENAL=1
+        { echo "$as_me:$LINENO: WARNING: couldn't find OpenAL utility library!" >&5
+echo "$as_me: WARNING: couldn't find OpenAL utility library!" >&2;}
+        HAVE_OPENAL=0
 
+     fi
    fi
 fi
 

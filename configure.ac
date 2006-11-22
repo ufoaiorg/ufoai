@@ -380,17 +380,19 @@ then
    then
      AC_MSG_ERROR([specified --with-openal specified but cannot find OpenAL header!])
    else
+     AC_SUBST([HAVE_OPENAL], 1)
      AC_SEARCH_LIBS([alSourcePlay],[openal openal32])
      if test "$ac_cv_search_alSourcePlay" = "no"
      then
-        AC_MSG_ERROR([couldn't find OpenAL library!])
+        AC_MSG_WARN([couldn't find OpenAL library!])
+        AC_SUBST([HAVE_OPENAL], 0)
      fi
      AC_SEARCH_LIBS([alutLoadWAVFile],[alut])
      if test "$ac_cv_search_alutLoadWAVFile" = "no"
      then
-        AC_MSG_ERROR([couldn't find OpenAL utility library!])
+        AC_MSG_WARN([couldn't find OpenAL utility library!])
+        AC_SUBST([HAVE_OPENAL], 0)
      fi
-     AC_SUBST([HAVE_OPENAL], 1)
    fi
 fi
 
