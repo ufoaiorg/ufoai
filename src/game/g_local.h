@@ -74,14 +74,6 @@ typedef struct {
 	/* store latched cvars here that we want to get at often */
 	int maxplayers;
 	int maxentities;
-
-	/* cross level triggers */
-	int serverflags;
-
-	/* items */
-	int num_items;
-
-	qboolean autosaved;
 } game_locals_t;
 
 /* this structure is cleared as each map is entered */
