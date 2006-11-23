@@ -26,29 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include <string.h>
-#include <stdlib.h>
-
-/* FIXME: */
-#include "QF/cbuf.h"
-#include "QF/cmd.h"
-#include "QF/console.h"
-#include "QF/cvar.h"
-#include "QF/idparse.h"
-#include "QF/msg.h"
-#include "QF/qargs.h"
-#include "QF/qendian.h"
-#include "QF/sizebuf.h"
-#include "QF/sys.h"
-
-#include "compat.h"
-#include "netchan.h"
+#include "../../qcommon/qcommon.h"
 
 #define SV_TIMEOUT 450
 
-/* FIXME: */
 #define PORT_MASTER 26900
-#define PORT_SERVER 26950
 
 /**
  * M = master, S = server, C = client, A = any
@@ -59,7 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define S2C_CHALLENGE       'c'
 #define A2A_PING            'k'
 
-#define S2M_HEARTBEAT       'a' // + serverinfo + userlist + fraglist
+/* + serverinfo + userlist + fraglist */
+#define S2M_HEARTBEAT       'a'
 #define S2M_SHUTDOWN        'C'
 
 typedef struct filter_s {
@@ -76,18 +59,44 @@ typedef struct server_s {
 	double timeout;
 } server_t;
 
-static cvar_t *sv_console_plugin;
-SERVER_PLUGIN_PROTOS
-static plugin_list_t server_plugin_list[] = {
-	SERVER_PLUGIN_LIST
-};
-
 qboolean is_server = qtrue;
 
-static cbuf_t *mst_cbuf;
+extern sizebuf_t net_message;
 
 static server_t *sv_list = NULL;
 static filter_t *filter_list = NULL;
+
+static netadr_t net_local_adr;
+
+/**
+ * @brief Dynamic length version of Qgets. DO NOT free the buffer
+ */
+char* Qgetline (FILE *file)
+{
+	static int  size = 256;
+	static char *buf = 0;
+	int         len;
+
+	if (!buf)
+		buf = malloc (size);
+
+	if (!fgets (buf, size, file))
+		return 0;
+
+	len = strlen (buf);
+	while (buf[len - 1] != '\n') {
+		char       *t = realloc (buf, size + 256);
+
+		if (!t)
+			return 0;
+		buf = t;
+		size += 256;
+		if (!fgets (buf + len, size - len, file))
+			break;
+		len = strlen (buf);
+	}
+	return buf;
+}
 
 /**
  * @brief
@@ -270,25 +279,18 @@ static server_t * SVL_Find (netadr_t adr)
 static void SV_InitNet (void)
 {
 	const char *str;
-	int         port, p;
-	QFile      *filters;
+	FILE       *filters;
 
-	port = PORT_MASTER;
-	p = COM_CheckParm ("-port");
-	if (p && p < com_argc) {
-		port = atoi (com_argv[p + 1]);
-		Com_Printf ("Port: %i\n", port);
-	}
-	NET_Init (port);
+	NET_Init ();
 
 	/* Add filters */
-	if ((filters = Qopen ("filters.ini", "rt"))) {
+	if ((filters = fopen ("filters.ini", "r"))) {
 		while ((str = Qgetline (filters))) {
-			Cbuf_AddText (mst_cbuf, "filter add ");
-			Cbuf_AddText (mst_cbuf, str);
-			Cbuf_AddText (mst_cbuf, "\n");
+			Cbuf_AddText ("filter add ");
+			Cbuf_AddText (str);
+			Cbuf_AddText ("\n");
 		}
-		Qclose (filters);
+		fclose (filters);
 	}
 }
 
@@ -301,20 +303,20 @@ static void AnalysePacket (void)
 	byte       *p, *data;
 	int         i, size, rsize;
 
-	Com_Printf ("%s >> unknown packet:\n", NET_AdrToString (net_from));
+	printf ("%s >> unknown packet:\n", NET_AdrToString (net_from));
 
-	data = net_message->message->data;
-	size = net_message->message->cursize;
+	data = net_message.data;
+	size = net_message.cursize;
 
 	for (p = data; (rsize = min (size - (p - data), 16)); p += rsize) {
-		Com_Printf ("%04X:", (unsigned) (p - data));
+		printf ("%04X:", (unsigned) (p - data));
 		memcpy (buf, p, rsize);
 		for (i = 0; i < rsize; i++) {
-			Com_Printf (" %02X", buf[i]);
+			printf (" %02X", buf[i]);
 			if (buf[i] < ' ' || buf [i] > '~')
 				buf[i] = '.';
 		}
-		Com_Printf ("%*.*s\n", 1 + (16 - rsize) * 3 + rsize, rsize, buf);
+		printf ("%*.*s\n", 1 + (16 - rsize) * 3 + rsize, rsize, buf);
 	}
 }
 
@@ -323,7 +325,7 @@ static void AnalysePacket (void)
  */
 static void Mst_SendList (void)
 {
-	byte        buf[MAX_DATAGRAM];
+	byte        buf[MAX_MSGLEN];
 	sizebuf_t   msg;
 	server_t   *sv;
 	short int   sv_num = 0;
@@ -352,7 +354,7 @@ static void Mst_SendList (void)
 			MSG_WriteByte (&msg, sv->ip.ip[3]);
 			MSG_WriteShort (&msg, sv->ip.port);
 		}
-	NET_SendPacket (msg.cursize, msg.data, net_from);
+	NET_SendPacket (ip_sockets[NS_SERVER], msg.cursize, msg.data, net_from);
 }
 
 /**
@@ -366,41 +368,41 @@ static void Mst_Packet (void)
 #if 0
 	Filter ();
 #endif
-	msg = net_message->message->data[1];
+	msg = net_message.data[1];
 	if (msg == A2A_PING) {
 		Filter ();
-		Com_Printf ("%s >> A2A_PING\n", NET_AdrToString (net_from));
+		printf ("%s >> A2A_PING\n", NET_AdrToString (net_from));
 		if (!(sv = SVL_Find (net_from))) {
 			sv = SVL_New (&net_from);
 			SVL_Add (sv);
 		}
-		sv->timeout = Sys_DoubleTime ();
+		sv->timeout = Sys_Milliseconds ();
 	} else if (msg == S2M_HEARTBEAT) {
 		Filter ();
-		Com_Printf ("%s >> S2M_HEARTBEAT\n", NET_AdrToString (net_from));
+		printf ("%s >> S2M_HEARTBEAT\n", NET_AdrToString (net_from));
 		if (!(sv = SVL_Find (net_from))) {
 			sv = SVL_New (&net_from);
 			SVL_Add (sv);
 		}
-		sv->timeout = Sys_DoubleTime ();
+		sv->timeout = Sys_Milliseconds ();
 	} else if (msg == S2M_SHUTDOWN) {
 		Filter ();
-		Com_Printf ("%s >> S2M_SHUTDOWN\n", NET_AdrToString (net_from));
+		printf ("%s >> S2M_SHUTDOWN\n", NET_AdrToString (net_from));
 		if ((sv = SVL_Find (net_from))) {
 			SVL_Remove (sv);
 			free (sv);
 		}
 	} else if (msg == S2C_CHALLENGE) {
-		Com_Printf ("%s >> ", NET_AdrToString (net_from));
-		Com_Printf ("Gamespy server list request\n");
+		printf ("%s >> ", NET_AdrToString (net_from));
+		printf ("Gamespy server list request\n");
 		Mst_SendList ();
 	} else {
 		byte       *p;
 
-		p = net_message->message->data;
+		p = net_message.data;
 		if (p[0] == 0 && p[1] == 'y') {
-			Com_Printf ("%s >> ", NET_AdrToString (net_from));
-			Com_Printf ("Pingtool server list request\n");
+			printf ("%s >> ", NET_AdrToString (net_from));
+			printf ("Pingtool server list request\n");
 			Mst_SendList ();
 		} else {
 			AnalysePacket ();
@@ -413,7 +415,7 @@ static void Mst_Packet (void)
  */
 static void SV_ReadPackets (void)
 {
-	while (NET_GetPacket ()) {
+	while (NET_GetPacket(ip_sockets[NS_SERVER], &net_from, &net_message)) {
 		Mst_Packet ();
 	}
 }
@@ -421,51 +423,47 @@ static void SV_ReadPackets (void)
 /**
  * @brief
  */
-static void FilterAdd (int arg)
+static void FilterAdd (char* arg)
 {
 	filter_t   *filter;
 	netadr_t    to, from;
+	char		*d;
 
-	if (Cmd_Argc () - arg != 2) {
-		Com_Printf ("Invalid command parameters. "
-					"Usage:\nfilter add x.x.x.x:port x.x.x.x:port\n\n");
-		return;
-	}
-	NET_StringToAdr (Cmd_Argv (arg), &from);
-	NET_StringToAdr (Cmd_Argv (arg + 1), &to);
+	d = strstr(arg, " ");
+	if (d)
+		*d++ = '\0';
+	else
+		return; /* wrong parameters */
+
+	NET_StringToAdr (arg, &from);
+	NET_StringToAdr (d, &to);
 	if (to.port == 0)
 		from.port = BigShort (PORT_SERVER);
 	if (from.port == 0)
 		from.port = BigShort (PORT_SERVER);
 	if (!(filter = FL_Find (from))) {
-		Com_Printf ("Added filter %s\t\t%s\n", Cmd_Argv (arg),
-					Cmd_Argv (arg + 1));
+		printf ("Added filter %s\t\t%s\n", arg, d);
 		filter = FL_New (&from, &to);
 		FL_Add (filter);
 	} else
-		Com_Printf ("%s already defined\n\n", Cmd_Argv (arg));
+		printf ("%s already defined\n\n", arg);
 }
 
 /**
  * @brief
  */
-static void FilterRemove (int arg)
+static void FilterRemove (char* arg)
 {
 	filter_t   *filter;
 	netadr_t    from;
 
-	if (Cmd_Argc () - arg != 1) {
-		Com_Printf ("Invalid command parameters. Usage:\n"
-					"filter remove x.x.x.x:port\n\n");
-		return;
-	}
-	NET_StringToAdr (Cmd_Argv (arg), &from);
+	NET_StringToAdr (arg, &from);
 	if ((filter = FL_Find (from))) {
-		Com_Printf ("Removed %s\n\n", Cmd_Argv (arg));
+		printf ("Removed %s\n\n", arg);
 		FL_Remove (filter);
 		free (filter);
 	} else
-		Com_Printf ("Cannot find %s\n\n", Cmd_Argv (arg));
+		printf ("Cannot find %s\n\n", arg);
 }
 
 /**
@@ -476,12 +474,12 @@ static void FilterList (void)
 	filter_t   *filter;
 
 	for (filter = filter_list; filter; filter = filter->next) {
-		Com_Printf ("%s", NET_AdrToString (filter->from));
-		Com_Printf ("\t\t%s\n", NET_AdrToString (filter->to));
+		printf ("%s", NET_AdrToString (filter->from));
+		printf ("\t\t%s\n", NET_AdrToString (filter->to));
 	}
 	if (filter_list == NULL)
-		Com_Printf ("No filter\n");
-	Com_Printf ("\n");
+		printf ("No filter\n");
+	printf ("\n");
 }
 
 /**
@@ -489,25 +487,25 @@ static void FilterList (void)
  */
 static void FilterClear (void)
 {
-	Com_Printf ("Removed all filters\n\n");
+	printf ("Removed all filters\n\n");
 	FL_Clear ();
 }
 
 /**
  * @brief
  */
-static void Filter_f (void)
+static void Filter_f (char* action, char* param)
 {
-	if (!strcmp (Cmd_Argv (1), "add"))
-		FilterAdd (2);
-	else if (!strcmp (Cmd_Argv (1), "remove"))
-		FilterRemove (2);
-	else if (!strcmp (Cmd_Argv (1), "clear"))
+	if (!strcmp (action, "add"))
+		FilterAdd (param);
+	else if (!strcmp (action, "remove"))
+		FilterRemove (param);
+	else if (!strcmp (action, "clear"))
 		FilterClear ();
-	else if (Cmd_Argc () == 3) {
-		FilterAdd (1);
-	} else if (Cmd_Argc () == 2) {
-		FilterRemove (1);
+	else if (action && param) {
+		FilterAdd (action);
+	} else if (action && !param) {
+		FilterRemove (action);
 	} else
 		FilterList ();
 }
@@ -525,7 +523,7 @@ static void SV_WriteFilterList (void)
 
 	f = fopen("filters.ini", "w");
 	if (!f) {
-		Com_Printf("ERROR: couldn't open filters.ini.\n");
+		printf("ERROR: couldn't open filters.ini.\n");
 		return;
 	}
 
@@ -539,22 +537,22 @@ static void SV_WriteFilterList (void)
 /**
  * @brief
  */
-static void SV_Shutdown (void)
+static void MS_Shutdown (void)
 {
 	NET_Shutdown ();
 
 	/* write filter list */
 	SV_WriteFilterList ();
-	Con_Shutdown ();
+/*	Con_Shutdown ();*/
 }
 
 /**
  * @brief
  */
-static void SV_TimeOut (void)
+static void MS_TimeOut (void)
 {
 	/* Remove listed servers that haven't sent a heartbeat for some time */
-	double      time = Sys_DoubleTime ();
+	double      time = Sys_Milliseconds ();
 	server_t   *sv;
 	server_t   *next;
 
@@ -564,7 +562,7 @@ static void SV_TimeOut (void)
 	for (sv = sv_list; sv;) {
 		if (sv->timeout + SV_TIMEOUT < time) {
 			next = sv->next;
-			Com_Printf ("%s timed out\n", NET_AdrToString (sv->ip));
+			printf ("%s timed out\n", NET_AdrToString (sv->ip));
 			SVL_Remove (sv);
 			free (sv);
 			sv = next;
@@ -576,22 +574,68 @@ static void SV_TimeOut (void)
 /**
  * @brief
  */
-static void SV_Frame (void)
+int Sys_CheckInput (int idle, int net_socket)
 {
-	Sys_CheckInput (1, net_socket);
-	Con_ProcessInput ();
-	Cbuf_Execute_Stack (mst_cbuf);
-	SV_TimeOut ();
-	SV_ReadPackets ();
+	fd_set      fdset;
+	int         res;
+	struct timeval _timeout;
+	struct timeval *timeout = 0;
+
+#ifdef _WIN32
+	int         sleep_msec;
+	/* Now we want to give some processing time to other applications, */
+	/* such as qw_client, running on this machine. */
+	sleep_msec = 10;
+	if (sleep_msec > 0) {
+		if (sleep_msec > 13)
+			sleep_msec = 13;
+		Sleep (sleep_msec);
+	}
+
+	_timeout.tv_sec = 0;
+	_timeout.tv_usec = net_socket < 0 ? 0 : 100;
+#else
+	_timeout.tv_sec = 0;
+	_timeout.tv_usec = net_socket < 0 ? 0 : 10000;
+#endif
+	/**
+	 * select on the net socket and stdin
+	 * the only reason we have a timeout at all is so that if the last
+	 * connected client times out, the message would not otherwise
+	 * be printed until the next event.
+	 */
+	FD_ZERO (&fdset);
+
+#if 0
+	if (do_stdin)
+		FD_SET (0, &fdset);
+#endif
+
+	if (net_socket >= 0)
+		FD_SET (net_socket, &fdset);
+
+	if (!idle)
+		timeout = &_timeout;
+
+	res = select (max (net_socket, 0) + 1, &fdset, NULL, NULL, timeout);
+	if (res == 0 || res == -1)
+		return 0;
+#if 0
+	stdin_ready = FD_ISSET (0, &fdset);
+#endif
+	return 1;
 }
 
 /**
  * @brief
  */
-static void MST_Quit_f (void)
+static void MS_Frame (void)
 {
-	Com_Printf ("UFO:AI master shutdown\n");
-	Sys_Quit ();
+/*	Sys_CheckInput (1, ip_sockets[NS_SERVER]);
+	Con_ProcessInput ();
+	Cbuf_Execute();*/
+	MS_TimeOut ();
+	SV_ReadPackets ();
 }
 
 /**
@@ -599,31 +643,24 @@ static void MST_Quit_f (void)
  */
 int main (int argc, const char **argv)
 {
-	COM_InitArgv (argc, argv);
-
-	mst_cbuf = Cbuf_New (&id_interp);
-
-	Sys_RegisterShutdown (SV_Shutdown);
-
-	Cvar_Init_Hash ();
-	Cmd_Init_Hash ();
-	Cvar_Init ();
-	Sys_Init_Cvars ();
 	Sys_Init ();
-	Cmd_Init ();
 
+#if 0
 	Cmd_AddCommand ("quit", MST_Quit_f, "Shut down the master server");
 	Cmd_AddCommand ("clear", SVL_Clear, "Clear the server list");
 	Cmd_AddCommand ("filter", Filter_f, "Manipulate filtering");
 
-	Cmd_StuffCmds (mst_cbuf);
-	Cbuf_Execute_Sets (mst_cbuf);
+/*	Cmd_StuffCmds ();*/
+	Cbuf_Execute ();
 
+#endif
 	SV_InitNet ();
-	Com_Printf ("Exe: " __TIME__ " " __DATE__ "\n");
-	Com_Printf ("======== UFO:AI master initialized ========\n\n");
+	printf ("Exe: " __TIME__ " " __DATE__ "\n");
+	printf ("======== UFO:AI master initialized ========\n\n");
 	while (1) {
-		SV_Frame ();
+		MS_Frame ();
 	}
+	printf ("UFO:AI master shutdown\n");
+	MS_Shutdown();
 	return 0;
 }
