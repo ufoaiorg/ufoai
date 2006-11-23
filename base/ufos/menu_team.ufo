@@ -129,45 +129,83 @@ menu team
 	confunc listadd17 { *bt_actor17 image hud/buttons1a }
 	confunc listadd18 { *bt_actor18 image hud/buttons1a }
 
-	confunc listholdsequip0 { *bt_equip0 tooltip "_Soldier carries equipment" *bt_equip0 texl "48 16" *bt_equip0 texh "64 32" }
-	confunc listholdsequip1 { *bt_equip1 tooltip "_Soldier carries equipment" *bt_equip1 texl "48 16" *bt_equip1 texh "64 32" }
-	confunc listholdsequip2 { *bt_equip2 tooltip "_Soldier carries equipment" *bt_equip2 texl "48 16" *bt_equip2 texh "64 32" }
-	confunc listholdsequip3 { *bt_equip3 tooltip "_Soldier carries equipment" *bt_equip3 texl "48 16" *bt_equip3 texh "64 32" }
-	confunc listholdsequip4 { *bt_equip4 tooltip "_Soldier carries equipment" *bt_equip4 texl "48 16" *bt_equip4 texh "64 32" }
-	confunc listholdsequip5 { *bt_equip5 tooltip "_Soldier carries equipment" *bt_equip5 texl "48 16" *bt_equip5 texh "64 32" }
-	confunc listholdsequip6 { *bt_equip6 tooltip "_Soldier carries equipment" *bt_equip6 texl "48 16" *bt_equip6 texh "64 32" }
-	confunc listholdsequip7 { *bt_equip7 tooltip "_Soldier carries equipment" *bt_equip7 texl "48 16" *bt_equip7 texh "64 32" }
-	confunc listholdsequip8 { *bt_equip8 tooltip "_Soldier carries equipment" *bt_equip8 texl "48 16" *bt_equip8 texh "64 32" }
-	confunc listholdsequip9 { *bt_equip9 tooltip "_Soldier carries equipment" *bt_equip9 texl "48 16" *bt_equip9 texh "64 32" }
-	confunc listholdsequip10 { *bt_equip10 tooltip "_Soldier carries equipment" *bt_equip10 texl "48 16" *bt_equip10 texh "64 32" }
-	confunc listholdsequip11 { *bt_equip11 tooltip "_Soldier carries equipment" *bt_equip11 texl "48 16" *bt_equip11 texh "64 32" }
-	confunc listholdsequip12 { *bt_equip12 tooltip "_Soldier carries equipment" *bt_equip12 texl "48 16" *bt_equip12 texh "64 32" }
-	confunc listholdsequip13 { *bt_equip13 tooltip "_Soldier carries equipment" *bt_equip13 texl "48 16" *bt_equip13 texh "64 32" }
-	confunc listholdsequip14 { *bt_equip14 tooltip "_Soldier carries equipment" *bt_equip14 texl "48 16" *bt_equip14 texh "64 32" }
-	confunc listholdsequip15 { *bt_equip15 tooltip "_Soldier carries equipment" *bt_equip15 texl "48 16" *bt_equip15 texh "64 32" }
-	confunc listholdsequip16 { *bt_equip16 tooltip "_Soldier carries equipment" *bt_equip16 texl "48 16" *bt_equip16 texh "64 32" }
-	confunc listholdsequip17 { *bt_equip17 tooltip "_Soldier carries equipment" *bt_equip17 texl "48 16" *bt_equip17 texh "64 32" }
-	confunc listholdsequip18 { *bt_equip18 tooltip "_Soldier carries equipment" *bt_equip18 texl "48 16" *bt_equip18 texh "64 32" }
+	confunc listholdsequip0 { *bt_equip0 tooltip "_Soldier carries equipment"
+		*bt_equip0 texl "48 16" *bt_equip0 texh "64 32" }
+	confunc listholdsequip1 { *bt_equip1 tooltip "_Soldier carries equipment"
+		*bt_equip1 texl "48 16" *bt_equip1 texh "64 32" }
+	confunc listholdsequip2 { *bt_equip2 tooltip "_Soldier carries equipment"
+		*bt_equip2 texl "48 16" *bt_equip2 texh "64 32" }
+	confunc listholdsequip3 { *bt_equip3 tooltip "_Soldier carries equipment"
+		*bt_equip3 texl "48 16" *bt_equip3 texh "64 32" }
+	confunc listholdsequip4 { *bt_equip4 tooltip "_Soldier carries equipment"
+		*bt_equip4 texl "48 16" *bt_equip4 texh "64 32" }
+	confunc listholdsequip5 { *bt_equip5 tooltip "_Soldier carries equipment"
+		*bt_equip5 texl "48 16" *bt_equip5 texh "64 32" }
+	confunc listholdsequip6 { *bt_equip6 tooltip "_Soldier carries equipment"
+		*bt_equip6 texl "48 16" *bt_equip6 texh "64 32" }
+	confunc listholdsequip7 { *bt_equip7 tooltip "_Soldier carries equipment"
+		*bt_equip7 texl "48 16" *bt_equip7 texh "64 32" }
+	confunc listholdsequip8 { *bt_equip8 tooltip "_Soldier carries equipment"
+		*bt_equip8 texl "48 16" *bt_equip8 texh "64 32" }
+	confunc listholdsequip9 { *bt_equip9 tooltip "_Soldier carries equipment"
+		*bt_equip9 texl "48 16" *bt_equip9 texh "64 32" }
+	confunc listholdsequip10 { *bt_equip10 tooltip "_Soldier carries equipment"
+		*bt_equip10 texl "48 16" *bt_equip10 texh "64 32" }
+	confunc listholdsequip11 { *bt_equip11 tooltip "_Soldier carries equipment"
+		*bt_equip11 texl "48 16" *bt_equip11 texh "64 32" }
+	confunc listholdsequip12 { *bt_equip12 tooltip "_Soldier carries equipment"
+		*bt_equip12 texl "48 16" *bt_equip12 texh "64 32" }
+	confunc listholdsequip13 { *bt_equip13 tooltip "_Soldier carries equipment"
+		*bt_equip13 texl "48 16" *bt_equip13 texh "64 32" }
+	confunc listholdsequip14 { *bt_equip14 tooltip "_Soldier carries equipment"
+		*bt_equip14 texl "48 16" *bt_equip14 texh "64 32" }
+	confunc listholdsequip15 { *bt_equip15 tooltip "_Soldier carries equipment"
+		*bt_equip15 texl "48 16" *bt_equip15 texh "64 32" }
+	confunc listholdsequip16 { *bt_equip16 tooltip "_Soldier carries equipment"
+		*bt_equip16 texl "48 16" *bt_equip16 texh "64 32" }
+	confunc listholdsequip17 { *bt_equip17 tooltip "_Soldier carries equipment"
+		*bt_equip17 texl "48 16" *bt_equip17 texh "64 32" }
+	confunc listholdsequip18 { *bt_equip18 tooltip "_Soldier carries equipment"
+		*bt_equip18 texl "48 16" *bt_equip18 texh "64 32" }
 
-	confunc listholdsnoequip0 { *bt_equip0 tooltip "_Soldier carries no equipment" *bt_equip0 texl "48 32" *bt_equip0 texh "64 48" }
-	confunc listholdsnoequip1 { *bt_equip1 tooltip "_Soldier carries no equipment" *bt_equip1 texl "48 32" *bt_equip1 texh "64 48" }
-	confunc listholdsnoequip2 { *bt_equip2 tooltip "_Soldier carries no equipment" *bt_equip2 texl "48 32" *bt_equip2 texh "64 48" }
-	confunc listholdsnoequip3 { *bt_equip3 tooltip "_Soldier carries no equipment" *bt_equip3 texl "48 32" *bt_equip3 texh "64 48" }
-	confunc listholdsnoequip4 { *bt_equip4 tooltip "_Soldier carries no equipment" *bt_equip4 texl "48 32" *bt_equip4 texh "64 48" }
-	confunc listholdsnoequip5 { *bt_equip5 tooltip "_Soldier carries no equipment" *bt_equip5 texl "48 32" *bt_equip5 texh "64 48" }
-	confunc listholdsnoequip6 { *bt_equip6 tooltip "_Soldier carries no equipment" *bt_equip6 texl "48 32" *bt_equip6 texh "64 48" }
-	confunc listholdsnoequip7 { *bt_equip7 tooltip "_Soldier carries no equipment" *bt_equip7 texl "48 32" *bt_equip7 texh "64 48" }
-	confunc listholdsnoequip8 { *bt_equip8 tooltip "_Soldier carries no equipment" *bt_equip8 texl "48 32" *bt_equip8 texh "64 48" }
-	confunc listholdsnoequip9 { *bt_equip9 tooltip "_Soldier carries no equipment" *bt_equip9 texl "48 32" *bt_equip9 texh "64 48" }
-	confunc listholdsnoequip10 { *bt_equip10 tooltip "_Soldier carries no equipment" *bt_equip10 texl "48 32" *bt_equip10 texh "64 48" }
-	confunc listholdsnoequip11 { *bt_equip11 tooltip "_Soldier carries no equipment" *bt_equip11 texl "48 32" *bt_equip11 texh "64 48" }
-	confunc listholdsnoequip12 { *bt_equip12 tooltip "_Soldier carries no equipment" *bt_equip12 texl "48 32" *bt_equip12 texh "64 48" }
-	confunc listholdsnoequip13 { *bt_equip13 tooltip "_Soldier carries no equipment" *bt_equip13 texl "48 32" *bt_equip13 texh "64 48" }
-	confunc listholdsnoequip14 { *bt_equip14 tooltip "_Soldier carries no equipment" *bt_equip14 texl "48 32" *bt_equip14 texh "64 48" }
-	confunc listholdsnoequip15 { *bt_equip15 tooltip "_Soldier carries no equipment" *bt_equip15 texl "48 32" *bt_equip15 texh "64 48" }
-	confunc listholdsnoequip16 { *bt_equip16 tooltip "_Soldier carries no equipment" *bt_equip16 texl "48 32" *bt_equip16 texh "64 48" }
-	confunc listholdsnoequip17 { *bt_equip17 tooltip "_Soldier carries no equipment" *bt_equip17 texl "48 32" *bt_equip17 texh "64 48" }
-	confunc listholdsnoequip18 { *bt_equip18 tooltip "_Soldier carries no equipment" *bt_equip18 texl "48 32" *bt_equip18 texh "64 48" }
+	confunc listholdsnoequip0 { *bt_equip0 tooltip "_Soldier carries no equipment"
+		*bt_equip0 texl "48 32" *bt_equip0 texh "64 48" }
+	confunc listholdsnoequip1 { *bt_equip1 tooltip "_Soldier carries no equipment"
+		*bt_equip1 texl "48 32" *bt_equip1 texh "64 48" }
+	confunc listholdsnoequip2 { *bt_equip2 tooltip "_Soldier carries no equipment"
+		*bt_equip2 texl "48 32" *bt_equip2 texh "64 48" }
+	confunc listholdsnoequip3 { *bt_equip3 tooltip "_Soldier carries no equipment"
+		*bt_equip3 texl "48 32" *bt_equip3 texh "64 48" }
+	confunc listholdsnoequip4 { *bt_equip4 tooltip "_Soldier carries no equipment"
+		*bt_equip4 texl "48 32" *bt_equip4 texh "64 48" }
+	confunc listholdsnoequip5 { *bt_equip5 tooltip "_Soldier carries no equipment"
+		*bt_equip5 texl "48 32" *bt_equip5 texh "64 48" }
+	confunc listholdsnoequip6 { *bt_equip6 tooltip "_Soldier carries no equipment"
+		*bt_equip6 texl "48 32" *bt_equip6 texh "64 48" }
+	confunc listholdsnoequip7 { *bt_equip7 tooltip "_Soldier carries no equipment"
+		*bt_equip7 texl "48 32" *bt_equip7 texh "64 48" }
+	confunc listholdsnoequip8 { *bt_equip8 tooltip "_Soldier carries no equipment"
+		*bt_equip8 texl "48 32" *bt_equip8 texh "64 48" }
+	confunc listholdsnoequip9 { *bt_equip9 tooltip "_Soldier carries no equipment"
+		*bt_equip9 texl "48 32" *bt_equip9 texh "64 48" }
+	confunc listholdsnoequip10 { *bt_equip10 tooltip "_Soldier carries no equipment"
+		*bt_equip10 texl "48 32" *bt_equip10 texh "64 48" }
+	confunc listholdsnoequip11 { *bt_equip11 tooltip "_Soldier carries no equipment"
+		*bt_equip11 texl "48 32" *bt_equip11 texh "64 48" }
+	confunc listholdsnoequip12 { *bt_equip12 tooltip "_Soldier carries no equipment"
+		*bt_equip12 texl "48 32" *bt_equip12 texh "64 48" }
+	confunc listholdsnoequip13 { *bt_equip13 tooltip "_Soldier carries no equipment"
+		*bt_equip13 texl "48 32" *bt_equip13 texh "64 48" }
+	confunc listholdsnoequip14 { *bt_equip14 tooltip "_Soldier carries no equipment"
+		*bt_equip14 texl "48 32" *bt_equip14 texh "64 48" }
+	confunc listholdsnoequip15 { *bt_equip15 tooltip "_Soldier carries no equipment"
+		*bt_equip15 texl "48 32" *bt_equip15 texh "64 48" }
+	confunc listholdsnoequip16 { *bt_equip16 tooltip "_Soldier carries no equipment"
+		*bt_equip16 texl "48 32" *bt_equip16 texh "64 48" }
+	confunc listholdsnoequip17 { *bt_equip17 tooltip "_Soldier carries no equipment"
+		*bt_equip17 texl "48 32" *bt_equip17 texh "64 48" }
+	confunc listholdsnoequip18 { *bt_equip18 tooltip "_Soldier carries no equipment"
+		*bt_equip18 texl "48 32" *bt_equip18 texh "64 48" }
 
 	confunc listdisable0 { *bt_actor0 image hud/buttons1g }
 	confunc listdisable1 { *bt_actor1 image hud/buttons1g }
