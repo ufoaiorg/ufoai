@@ -10940,3 +10940,10 @@
 ( 113 426 20 ) ( 115 426 20 ) ( 115 428 24 ) tex_material/metall002 4.1659698486 57 0 -0.4567869902 0.5 256 0 0
 }
 }
+// entity 188
+{
+"classname" "misc_model"
+"origin" "-64 115 3"
+"model" "models/objects/rubbish/oil_can.md2"
+"spawnflags" "255"
+}
