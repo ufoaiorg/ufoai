@@ -209,8 +209,6 @@ void InitGame(void)
 
 	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET, "Difficulty level");
 
-	*game.helpmessage1 = *game.helpmessage2 = '\0';
-
 	game.maxentities = maxentities->value;
 	game.maxplayers = maxplayers->value;
 
