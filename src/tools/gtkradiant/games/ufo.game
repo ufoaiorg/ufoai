@@ -15,7 +15,7 @@
   no_patch="1"
   no_bsp_monitor="1"
   archivetypes="pk3"
-  texturetypes="pcx tga jpg"
+  texturetypes="pcx tga jpg png"
   modeltypes="md2"
   maptypes="mapq2"
   shaders="quake3"
