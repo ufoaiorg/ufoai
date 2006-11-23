@@ -1312,8 +1312,8 @@ item bolterrifle_ammo
 	model           weapons/bolterrifle/bolterrifle_clip
 	type            ammo
 	category        0
-	shape           "0 0 2 1"
-	center          "0 0 -1"
+	shape           "0 0 3 1"
+	center          "0 0 0"
 	scale           1.2
 	price           930
 	buytype         0
