@@ -8656,3 +8656,120 @@
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
 }
+// entity 112
+{
+"classname" "misc_model"
+"origin" "-960 543 10"
+"model" "models/objects/rubbish/car1.md2"
+"spawnflags" "255"
+"skin" "1"
+}
+// entity 113
+{
+"classname" "misc_model"
+"origin" "-925 689 3"
+"model" "models/objects/rubbish/container.md2"
+"spawnflags" "255"
+"skin" "1"
+}
+// entity 114
+{
+"classname" "misc_model"
+"origin" "-640 874 8"
+"model" "models/objects/rubbish/car2.md2"
+"angles" "0 180 0"
+"spawnflags" "255"
+"skin" "2"
+}
+// entity 115
+{
+"classname" "misc_model"
+"origin" "-789 934 3"
+"model" "models/objects/rubbish/bottle1.md2"
+"spawnflags" "255"
+}
+// entity 116
+{
+"classname" "misc_model"
+"origin" "-788 915 2"
+"model" "models/objects/rubbish/box2.md2"
+"spawnflags" "255"
+}
+// entity 117
+{
+"classname" "misc_model"
+"origin" "-790 881 5"
+"model" "models/objects/rubbish/box1.md2"
+"spawnflags" "255"
+}
+// entity 118
+{
+"classname" "misc_model"
+"origin" "-812 1092 10"
+}
+// entity 119
+{
+"classname" "misc_model"
+"origin" "-924 1117 8"
+"model" "models/objects/rubbish/car2.md2"
+"angles" "-0 0 8.58756"
+"spawnflags" "255"
+}
+// entity 120
+{
+"classname" "misc_model"
+"origin" "-927 1182 10"
+"model" "models/objects/rubbish/car1.md2"
+"spawnflags" "255"
+}
+// entity 121
+{
+"classname" "misc_model"
+"origin" "-927 943 3"
+"model" "models/objects/rubbish/container.md2"
+"spawnflags" "255"
+}
+// entity 122
+{
+"classname" "misc_model"
+"origin" "-820 909 3"
+"model" "models/objects/rubbish/bottle2.md2"
+"spawnflags" "255"
+}
+// entity 123
+{
+"classname" "misc_model"
+"origin" "-808 611 3"
+"model" "models/objects/rubbish/oil_can.md2"
+"spawnflags" "255"
+}
+// entity 124
+{
+"classname" "misc_model"
+"origin" "-576 824 3"
+"model" "models/objects/rubbish/scrap3.md2"
+"spawnflags" "255"
+}
+// entity 125
+{
+"classname" "misc_model"
+"origin" "-802 1311 3"
+"model" "models/objects/rubbish/scrap3.md2"
+"spawnflags" "255"
+}
+// entity 126
+{
+"classname" "misc_model"
+"origin" "-657 1087 3"
+"model" "models/objects/rubbish/woodern_plank1.md2"
+"spawnflags" "255"
+}
+// entity 127
+{
+"classname" "misc_model"
+"origin" "-832 802 8"
+"model" "models/objects/rubbish/car2.md2"
+"angles" "-0 0 8.58756"
+"spawnflags" "255"
+"skin" "2"
+}
