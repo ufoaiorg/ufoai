@@ -420,7 +420,7 @@ void Cmd_Alias_f(void)
 	cmd_alias_t *a;
 	char cmd[MAX_STRING_CHARS];
 	size_t len;
-	unsigned hash;
+	unsigned int hash;
 	int i, c;
 	char *s;
 
@@ -670,6 +670,7 @@ char* Cmd_GetCommandDesc(const char* cmd_name)
 {
 	cmd_function_t *cmd;
 	char *sep = NULL;
+	unsigned int hash;
 	char searchName[MAX_VAR];
 
 	/* remove paramters */
@@ -679,7 +680,8 @@ char* Cmd_GetCommandDesc(const char* cmd_name)
 		*sep = '\0';
 
 	/* fail if the command already exists */
-	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
+	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
+	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcmp(searchName, cmd->name)) {
 			if (cmd->description)
 				return cmd->description;
@@ -738,7 +740,7 @@ void Cmd_AddCommand(char *cmd_name, xcommand_t function, char *desc)
 void Cmd_RemoveCommand(const char *cmd_name)
 {
 	cmd_function_t *cmd, **back;
-	unsigned hash;
+	unsigned int hash;
 	hash = Com_HashKey (cmd_name, CMD_HASH_SIZE);
 	back = &cmd_functions_hash[hash];
 
@@ -840,7 +842,7 @@ void Cmd_ExecuteString(char *text)
 	cmd_function_t *cmd;
 	cmd_alias_t *a;
 	char *str;
-	unsigned hash;
+	unsigned int hash;
 
 #ifdef DEBUG
 	Com_DPrintf("ExecuteString: '%s'\n", text);
