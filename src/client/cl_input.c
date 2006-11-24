@@ -875,7 +875,7 @@ void CL_CameraMoveFirstPerson(void)
 
 /**
  * @brief forces the camera to stay within the horizontal bounds of the
- * map plus some border 
+ * map plus some border
  */
 void CL_ClampCamToMap(float border)
 {
