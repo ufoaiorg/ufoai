@@ -1438,9 +1438,9 @@ void Qcommon_Init(int argc, char **argv)
 	logfile_active = Cvar_Get("logfile", "1", 0, NULL);
 	showtrace = Cvar_Get("showtrace", "0", 0, NULL);
 #ifdef DEDICATED_ONLY
-	dedicated = Cvar_Get("dedicated", "1", CVAR_NOSET, NULL);
+	dedicated = Cvar_Get("dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 #else
-	dedicated = Cvar_Get("dedicated", "0", CVAR_NOSET, NULL);
+	dedicated = Cvar_Get("dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 #endif
 	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
 
@@ -1604,6 +1604,18 @@ float Qcommon_Frame(int msec)
 		SV_Frame(frametime);
 		sv_timer -= frametime;
 	}
+
+#if 0
+	/* currently not used - set dedicated cvar to CVAR_LATCH and remove CVAR_NOSET to use this */
+#ifndef DEDICATED_ONLY
+	if (dedicated->modified) {
+		dedicated->modified = qfalse;
+		if (dedicated->value) {
+			CL_Shutdown();
+		}
+	}
+#endif
+#endif
 
 	if (host_speeds->value)
 		time_between = Sys_Milliseconds();

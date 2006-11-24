@@ -1,9 +1,12 @@
 MASTERSERVER_SRCS = \
-	tools/masterserver/ms_main.c
+	qcommon/net_chan.c \
+	\
+	tools/masterserver/master.c
 
+#
 ifeq ($(HAVE_IPV6),1)
 	# FIXME: flags!
-	NET_MASTER=net_master6
+	NET_MASTER=net_master
 else
 	NET_MASTER=net_master
 endif
@@ -15,16 +18,6 @@ endif
 
 ifeq ($(TARGET_OS),freebsd)
 	MASTERSERVER_SRCS += \
-		ports/unix/$(NET_MASTER).c
-endif
-
-ifeq ($(TARGET_OS),mingw32)
-	MASTERSERVER_SRCS+=\
-		ports/win32/net_master.c
-endif
-
-ifeq ($(TARGET_OS),darwin)
-	MASTERSERVER_SRCS+=\
 		ports/unix/$(NET_MASTER).c
 endif
 

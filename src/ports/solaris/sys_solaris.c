@@ -291,26 +291,7 @@ int main (int argc, char **argv)
 {
 	int 	time, oldtime, newtime;
 
-#if 0
-	int newargc;
-	char **newargv;
-	int i;
-
-	/* force dedicated */
-	newargc = argc;
-	newargv = malloc((argc + 3) * sizeof(char *));
-	newargv[0] = argv[0];
-	newargv[1] = "+set";
-	newargv[2] = "dedicated";
-	newargv[3] = "1";
-	for (i = 1; i < argc; i++)
-		newargv[i + 3] = argv[i];
-	newargc += 3;
-
-	Qcommon_Init(newargc, newargv);
-#else
 	Qcommon_Init(argc, argv);
-#endif
 
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 

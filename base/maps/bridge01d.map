@@ -8773,3 +8773,10 @@
 "spawnflags" "255"
 "skin" "2"
 }
+// entity 128
+{
+"classname" "misc_model"
+"origin" "-600 1680 2"
+"model" "models/objects/vegi/buxus/buxus.md2"
+"spawnflags" "255"
+}

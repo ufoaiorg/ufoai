@@ -406,7 +406,7 @@ static void MN_StartServer(void)
 		return;
 	}
 
-	if (Cvar_VariableValue("dedicated") > 0)
+	if (dedicated->value > 0)
 		Com_DPrintf("Dedicated server needs no team\n");
 	/* FIXME: Spectator */
 	else if (!B_GetNumOnTeam()) {

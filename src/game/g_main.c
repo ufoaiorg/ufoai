@@ -131,7 +131,7 @@ void InitGame(void)
 	gi.dprintf("==== InitGame ====\n");
 
 	/* noset vars */
-	dedicated = gi.cvar("dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server");
+	dedicated = gi.cvar("dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 
 	/* latched vars */
 	sv_cheats = gi.cvar("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, "Activate cheats (see cheatcvars)");
