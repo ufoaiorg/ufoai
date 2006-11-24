@@ -2551,7 +2551,7 @@ tech rs_craft_weapon_particle_beam
 // News
 //========================
 
-tech news_initial_political_situation
+tech news_init_political_situation
 {
 	type	news
 	name	"_Political situation before the invasion"
@@ -2573,7 +2573,7 @@ tech news_after_the_war
 	time	0
 }
 
-tech news_phalanx_and_mumbai_aftermath
+tech news_phalanx_mumbai_aftermath
 {
 	type	news
 	name	"_PHALANX And The Mumbai Aftermath"

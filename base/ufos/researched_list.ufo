@@ -63,9 +63,9 @@ researched rslist_human
 	rs_ugv_triax
 	rs_craft_shield_light
 	rs_craft_weapon_flac
-	news_initial_political_situation
+	news_init_political_situation
 	news_after_the_war
-	news_phalanx_and_mumbai_aftermath
+	news_phalanx_mumbai_aftermath
 }
 
 // mark these as researchable
