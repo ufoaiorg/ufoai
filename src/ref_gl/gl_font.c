@@ -578,14 +578,15 @@ int Font_DrawString(const char *fontID, int align, int x, int y, int absX, int a
 		if (!strlen(buffer))
 			return returnHeight / vid.ry;
 
-		pos = Font_GetLineWrap(f, buffer, maxWidth, &w, &h);
+		pos = Font_GetLineWrap(f, buffer, maxWidth - (x - absX), &w, &h);
 		fh = h;
 
 		if (texh0 > 0) {
-/*			if (fh > texh0)*/
-/* something is broken with that warning, please test
+			/* FIXME: something is broken with that warning, please test */
+#if 0
+			if (fh > texh0)
 				ri.Con_Printf(PRINT_DEVELOPER, "Warning: font %s height=%f bigger than allowed line height=%f.\n", fontID, fh, texh0);
-*/
+#endif
 			fh = texh0; /* some extra space below the line */
 		}
 
