@@ -1279,6 +1279,38 @@ void CL_CheckResearchStatus(void)
 	}
 }
 
+/**
+ * @brief Returns a list of technologies for the given type
+ * @note this list is terminated by a NULL pointer
+ */
+static char *RS_TechTypeToName(researchType_t type)
+{
+	switch(type) {
+	case RS_TECH:
+		return "tech";
+	case RS_WEAPON:
+		return "weapon";
+	case RS_ARMOR:
+		return "armor";
+	case RS_CRAFT:
+		return "craft";
+	case RS_CRAFTWEAPON:
+		return "craftweapon";
+	case RS_CRAFTSHIELD:
+		return "craftshield";
+	case RS_BUILDING:
+		return "building";
+	case RS_ALIEN:
+		return "alien";
+	case RS_UGV:
+		return "ugv";
+	case RS_NEWS:
+		return "news";
+	default:
+		return "unknown";
+	}
+}
+
 #ifdef DEBUG
 /**
  * @brief List all parsed technologies and their attributes in commandline/console.
@@ -1290,6 +1322,7 @@ static void RS_TechnologyList_f(void)
 	technology_t *tech = NULL;
 	requirements_t *req = NULL;
 
+	Com_Printf("#techs: %i\n", gd.numTechnologies);
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 		Com_Printf("Tech: %s\n", tech->id);
@@ -1298,65 +1331,37 @@ static void RS_TechnologyList_f(void)
 		req = &tech->require_AND;
 		Com_Printf("... requires ALL  ->");
 		for (j = 0; j < req->numLinks; j++)
-			Com_Printf(" %i %s %i", req->type[j], req->id[j], req->idx[j]);
+			Com_Printf(" %s (%s) %i", req->id[j], RS_TechTypeToName(req->type[j]), req->idx[j]);
 		req = &tech->require_OR;
+		Com_Printf("\n");
 		Com_Printf("... requires ANY  ->");
 		for (j = 0; j < req->numLinks; j++)
-			Com_Printf(" %i %s %i", req->type[j], req->id[j], req->idx[j]);
+			Com_Printf(" %s (%s) %i", req->id[j], RS_TechTypeToName(req->type[j]), req->idx[j]);
 		Com_Printf("\n");
 		Com_Printf("... provides  -> %s", tech->provides);
 		Com_Printf("\n");
 
 		Com_Printf("... type      -> ");
-		switch (tech->type) {
-		case RS_TECH:
-			Com_Printf("tech");
-			break;
-		case RS_WEAPON:
-			Com_Printf("weapon");
-			break;
-		case RS_CRAFT:
-			Com_Printf("craft");
-			break;
-		case RS_CRAFTWEAPON:
-			Com_Printf("craftweapon");
-			break;
-		case RS_CRAFTSHIELD:
-			Com_Printf("craftshield");
-			break;
-		case RS_ARMOR:
-			Com_Printf("armor");
-			break;
-		case RS_BUILDING:
-			Com_Printf("building");
-			break;
-		case RS_UGV:
-			Com_Printf("ugv");
-			break;
-		default:
-			break;
-		}
-		Com_Printf("\n");
+		Com_Printf("%s\n", RS_TechTypeToName(tech->type));
 
 		Com_Printf("... research  -> ");
-		switch (tech->type) {
+		switch (tech->statusResearch) {
 		case RS_NONE:
-			Com_Printf("unknown tech");
+			Com_Printf("nothing\n");
 			break;
 		case RS_RUNNING:
-			Com_Printf("running");
+			Com_Printf("running\n");
 			break;
 		case RS_PAUSED:
-			Com_Printf("paused");
+			Com_Printf("paused\n");
 			break;
 		case RS_FINISH:
-			Com_Printf("done");
+			Com_Printf("done\n");
 			break;
 		default:
+			Com_Printf("unknown\n");
 			break;
 		}
-
-		Com_Printf("\n");
 	}
 }
 #endif /* DEBUG */
