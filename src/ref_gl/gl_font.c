@@ -485,8 +485,23 @@ static void Font_ConvertChars(char *buffer)
 
 /**
  * @brief
+ * @param[in] fontID the font id (defined in ufos/fonts.ufo)
+ * @param[in] align
+ * @param[in] x Current x position (may differ from absX due to tabs e.g.)
+ * @param[in] y Current y position (may differ from absY due to linebreaks)
+ * @param[in] absX Absolute x value for this string
+ * @param[in] absY Absolute y value for this string
+ * @param[in] maxWidth Max width - relative from absX
+ * @param[in] maxHeight Max height - relative from absY
+ * @param[in] lineHeight The lineheight of that node
+ * @param[in] c The string to draw
+ * @param[in] box_height
+ * @param[in] scroll_pos Starting line in this node (due to scrolling)
+ * @param[in] cur_line Current line (see lineHeight)
+ * @param[in] increaseLine If true cur_line is increased with every linebreak
  */
-int Font_DrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
+int Font_DrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
+	const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
 {
 	int w = 0, h = 0, locX;
 	float returnHeight = 0; /* rounding errors break mouse-text corelation */
