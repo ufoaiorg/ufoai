@@ -87,6 +87,7 @@ extern float LittleFloat(float l);
 int COM_Argc(void);
 char *COM_Argv(int arg);		/* range and null checked */
 void COM_ClearArgv(int arg);
+unsigned int Com_HashKey(const char *name, int hashsize);
 int COM_CheckParm(char *parm);
 void COM_AddParm(char *parm);
 
