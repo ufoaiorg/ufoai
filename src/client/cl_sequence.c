@@ -1176,13 +1176,13 @@ qboolean CL_OpenAVIForWriting(char *fileName)
 	afd.width = viddef.width;
 	afd.height = viddef.height;
 
-	Com_DPrintf("Capturing avi with resolution %i:%i\n", afd.width, afd.height );
+	Com_Printf("Capturing avi with resolution %i:%i\n", afd.width, afd.height );
 
 	if (cl_aviMotionJpeg->value) {
-		Com_DPrintf("...MotionJPEG codec\n");
+		Com_Printf("...MotionJPEG codec\n");
 		afd.motionJpeg = qtrue;
 	} else {
-		Com_DPrintf("...no MotionJPEG\n");
+		Com_Printf("...no MotionJPEG\n");
 		afd.motionJpeg = qfalse;
 	}
 
@@ -1204,7 +1204,7 @@ qboolean CL_OpenAVIForWriting(char *fileName)
 		Com_Printf("WARNING: cl_aviFrameRate is not a divisor of the audio rate, suggest %d\n", suggestRate);
 	}
 
-	if (!(int) Cvar_VariableValue("s_initsound")) {
+	if (!(int) Cvar_VariableValue("snd_init")) {
 		afd.audio = qfalse;
 		Com_Printf("No audio for video capturing\n");
 	} else {
