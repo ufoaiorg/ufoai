@@ -1766,7 +1766,6 @@ tech rs_building_small_ufo_hangar
 	require_AND
 	{
 		tech rs_building_lab
-		tech rs_craft_ufo_tech
 	}
 
 	provides	building_small_ufo_hangar
@@ -1783,7 +1782,6 @@ tech rs_building_large_ufo_hangar
 	require_AND
 	{
 		tech rs_building_lab
-		tech rs_craft_ufo_tech
 	}
 
 	provides	building_large_ufo_hangar
@@ -1885,8 +1883,7 @@ tech rs_craft_ufo_scout
 	// FIXME
 	require_AND
 	{
-		tech rs_craft_ufo_tech
-		// item craft_ufo_small 1
+		item craft_ufo_scout 1
 	}
 
 	provides	craft_ufo_scout
@@ -1907,8 +1904,7 @@ tech rs_craft_ufo_fighter
 	// FIXME
 	require_AND
 	{
-		tech rs_craft_ufo_tech
-		// item craft_ufo_big 1
+		item craft_ufo_fighter 1
 	}
 
 	provides	craft_ufo_fighter
