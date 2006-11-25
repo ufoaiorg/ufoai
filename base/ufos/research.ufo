@@ -1914,6 +1914,28 @@ tech rs_craft_ufo_fighter
 	mdl_top		ufobig
 }
 
+tech rs_craft_ufo_harvester
+{
+	type	tech
+	name	"_Harvester alien craft"
+	description	"_ufo_harvester_txt"
+	description	"_ufo_harvester_pre_txt"
+	up_chapter	ufos
+
+	// FIXME
+	require_AND
+	{
+		tech rs_craft_ufo_tech
+		// item craft_ufo_harvester
+	}
+
+	provides	craft_ufo_harvester
+	time	2500
+
+	// TODO should come from craft-definition:
+	mdl_top		ufobig
+}
+
 //========================
 // Aliens
 //========================
