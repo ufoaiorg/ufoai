@@ -1996,38 +1996,6 @@ tech rs_alien_bloodspider_autopsy
 	//TODO: autopsy image
 }
 
-tech rs_alien_bloodspider_xenobiology
-{
-	type	alien
-	name	"_Bloodspider - Xenobiology"
-	description	"_bloodspider_xenobiology_txt"
-	pre_description	"_bloodspider_xenobiology_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	2250
-	//needscollected	true
-
-	mdl_top	"aliens/bloodspider/bloodspider"
-}
-
-tech rs_alien_bloodspider_interrogation
-{
-	type	alien
-	name	"_Bloodspider - Interrogation"
-	description	"_bloodspider_interrogation_txt"
-	pre_description	"_bloodspider_interrogation_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	1500
-	//needscollected	true
-
-	mdl_top	"aliens/bloodspider/bloodspider"
-}
-
 // ORTNOK
 
 tech rs_alien_ortnok
@@ -2085,40 +2053,6 @@ tech rs_alien_ortnok_autopsy
 	mdl_top	alien_ortnok
 
 	//TODO: autopsy image
-}
-
-tech rs_alien_ortnok_xenobiology
-{
-	type	alien
-	name	"_Ortnok - Xenobiology"
-	description	"_ortnok_xenobiology_txt"
-	pre_description	"_ortnok_xenobiology_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	2250
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_ortnok
-}
-
-tech rs_alien_ortnok_interrogation
-{
-	type	alien
-	name	"_Ortnok - Interrogation"
-	description	"_ortnok_interrogation_txt"
-	pre_description	"_ortnok_interrogation_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	1500
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_ortnok
 }
 
 // ORTNOK LIGHT ..
@@ -2195,40 +2129,6 @@ tech rs_alien_antarean_autopsy
 	mdl_top	alien_antarean
 }
 
-tech rs_alien_antarean_xenobiology
-{
-	type	alien
-	name	"_Antarean - Xenobiology"
-	description	"_antarean_xenobiology_txt"
-	pre_description	"_antarean_xenobiology_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	2250
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_antarean
-}
-
-tech rs_alien_antarean_interrogation
-{
-	type	alien
-	name	"_Antarean - Interrogation"
-	description	"_antarean_interrogation_txt"
-	pre_description	"_antarean_interrogation_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	1500
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_antarean
-}
-
 tech rs_alien_antarean_interrogation_commander
 {
 	type	alien
@@ -2282,23 +2182,6 @@ tech rs_alien_shevaar_autopsy
 	mdl_top	alien_shevaar
 }
 
-tech rs_alien_shevaar_xenobiology
-{
-	type	alien
-	name	"_Shevaar - Xenobiology"
-	description	"_shevaar_xenobiology_txt"
-	pre_description	"_shevaar_xenobiology_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	2250
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_shevaar
-}
-
 // HOVERNET
 
 tech rs_alien_hovernet_notes
@@ -2335,23 +2218,6 @@ tech rs_alien_hovernet_autopsy
 	mdl_top	alien_hovernet
 }
 
-tech rs_alien_hovernet_xenobiology
-{
-	type	alien
-	name	"_Hovernet - design"
-	description	"_hovernet_xenobiology_txt"
-	pre_description	"_hovernet_xenobiology_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	2250
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_hovernet
-}
-
 // CYBORG ORTNOK
 
 tech rs_alien_cyborg_ortnok_notes
@@ -2382,23 +2248,6 @@ tech rs_alien_cyborg_ortnok_autopsy
 	require_AND { tech TODO }
 	provides	""
 	time	1500
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_cyborg_ortnok
-}
-
-tech rs_alien_cyborg_ortnok_xenobiology
-{
-	type	alien
-	name	"_Cyborg Ortnok - Xenobiology"
-	description	"_cyborg_ortnok_xenobiology_txt"
-	pre_description	"_cyborg_ortnok_xenobiology_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	2250
 	//needscollected	true
 
 	// menuModel - see models.ufo
