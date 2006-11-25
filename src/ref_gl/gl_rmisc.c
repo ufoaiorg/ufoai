@@ -159,6 +159,8 @@ void GL_ScreenShot_f(void)
 		fclose (f);
 	}
 
+	ri.FS_CreatePath(checkName);
+
 	/* Open it */
 	f = fopen (checkName, "wb");
 
