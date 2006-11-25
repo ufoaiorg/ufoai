@@ -893,19 +893,23 @@ void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame)
 
 	l = strlen(level);
 	if (l > 4 && !Q_strcmp(level + l - 4, ".cin")) {
-		SCR_BeginLoadingPlaque();	/* for local system */
+		if (dedicated->value)
+			SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
 		SV_SpawnServer(level, NULL, ss_cinematic, attractloop, loadgame);
 	} else if (l > 4 && !Q_strcmp(level + l - 4, ".dm2")) {
-		SCR_BeginLoadingPlaque();	/* for local system */
+		if (dedicated->value)
+			SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
 		SV_SpawnServer(level, NULL, ss_demo, attractloop, loadgame);
 	} else if (l > 4 && !Q_strcmp(level + l - 4, ".pcx")) {
-		SCR_BeginLoadingPlaque();	/* for local system */
+		if (dedicated->value)
+			SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
 		SV_SpawnServer(level, NULL, ss_pic, attractloop, loadgame);
 	} else {
-		SCR_BeginLoadingPlaque();	/* for local system */
+		if (dedicated->value)
+			SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
 		SV_SendClientMessages();
 		SV_SpawnServer(level, NULL, ss_game, attractloop, loadgame);
