@@ -1589,6 +1589,16 @@ skipwhite:
 		data++;
 	}
 
+	if (c == '/' && data[1] == '*') {
+		Com_DPrintf("Com_Parse: multiline comment (%s)\n", data);
+		data+=2;
+		while (!((data[0] && data[0] == '*') && (data[1] && data[1] == '/')))
+			data++;
+		if (data[0] && data[1])
+			data+=2; /* skip end of multiline comment */
+		goto skipwhite;
+	}
+
 	/* skip // comments */
 	if (c == '/' && data[1] == '/') {
 		while (*data && *data != '\n')
