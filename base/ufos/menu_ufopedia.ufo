@@ -78,6 +78,32 @@ menu ufopedia
 		click	{ cmd mn_upcontent; }
 	}
 
+	pic button_text_pre
+	{
+		tooltip "_Pre research text"
+		image	menu/ufopedia_buttons2
+		mousefx true
+		pos		"90 14"
+		texl	"0 0"
+		texh	"32 32"
+		click	{
+			cmd "set mn_uppretext 1; mn_upupdate;"
+		}
+	}
+
+	pic button_text_normal
+	{
+		tooltip "_Research results"
+		image	menu/ufopedia_buttons2
+		mousefx true
+		pos		"140 14"
+		texl	"32 0"
+		texh	"64 32"
+		click	{
+			cmd "set mn_uppretext 0; mn_upupdate;"
+		}
+	}
+
 	pic button_exit
 	{
 		tooltip "_Leave Ufopedia"
@@ -98,8 +124,8 @@ menu ufopedia
 		texh	"48 48"
 		texl	"32 32"
 		click	{ cmd "mn_textscroll ufopedia -1;" }
-		out	{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
-		in	{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
+		out		{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
+		in		{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
 	}
 
 	pic button_scrolldown
@@ -107,12 +133,12 @@ menu ufopedia
 		tooltip "_Scroll down"
 		image	menu/buttons_small
 		mousefx true
-		pos		"25 117"
+		pos		"25 450"
 		texl	"32 48"
 		texh	"48 64"
 		click	{ cmd "mn_textscroll ufopedia 1;" }
-		out	{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
-		in	{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
+		out		{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
+		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
 	}
 
 	// ==================
@@ -121,11 +147,12 @@ menu ufopedia
 
 	text ufopedia
 	{
-		pos		"50 85"
-		size	"700 390"
+		pos		"50 80"
+		size	"690 390"
 		num		2
 		format	"24 0"
 		click { cmd "mn_textscroll ufopedia 1;" }
+//		bgcolor " 0.5 1 0.5 0.3"
 		height	"21"
 	}
 
@@ -139,27 +166,70 @@ menu ufopedia
 
 	confunc mn_upfsmall
 	{
-		*ufopedia format  "18 0"
-		*ufopedia font    f_small
-		*ufopedia mousefx false
-		cmd "mn_textscroll ufopedia reset;"
+		*ufopedia	format	"18 0"
+		*ufopedia	font	f_small
+		*ufopedia	mousefx	false
+		cmd		"mn_textscroll ufopedia reset;"
 	}
 
 	text description
 	{
-		pos		"45 495"
-		size	"380 200"
+		pos		"30 495"
+		size	"495 200"
 		format	"20 0"
+//		bgcolor	" 1 0.5 0.5 0.3"
 	}
+
+/*
+	pic button_1
+	{
+		tooltip	"_Some button"
+		image	menu/button
+		mousefx	true
+		pos		"938 510"
+		texh	"310 123"
+		texl	"245 73"
+		click	{ }
+		out		{ *button_1 texl "245 73" *button_1 texh "310 123" }
+		in		{ *button_1 texl "8 73" *button_1 texh "73 123" }
+	}
+
+	pic button_2
+	{
+		tooltip	"_Some button 2"
+		image	menu/button
+		mousefx true
+		pos		"938 570"
+		texh	"310 123"
+		texl	"245 73"
+		click	{ }
+		out		{ *button_2 texl "245 73" *button_2 texh "310 123" }
+		in		{ *button_2 texl "8 73" *button_2 texh "73 123" }
+	}
+
+	pic button_3
+	{
+		tooltip	"_Some button 3"
+		image	menu/button
+		mousefx true
+		pos		"938 630"
+		texh	"310 123"
+		texl	"245 73"
+		click	{ }
+		out		{ *button_3 texl "245 73" *button_3 texh "310 123" }
+		in		{ *button_3 texl "8 73" *button_3 texh "73 123" }
+	}
+*/
 
 	text techtree
 	{
-		pos		"440 495"
-		size	"350 250"
+		pos		"550 495"
+		size	"354 246"
 		format	"20 0"
 		num	1
 		click
 		mousefx true
+//		bgcolor "0.5 0.5 0.5 0.3"
 	}
 
 	string title
@@ -172,11 +242,11 @@ menu ufopedia
 
 	model mdl_top
 	{
-		md2	"*cvar mn_upmodel_top"
+		md2		"*cvar mn_upmodel_top"
 		angles	"0 0 120"
 		color	"0.5 0.5 0.5 1"
-		origin	"870 205 0"
-		pos	"750 85"
+		origin	"870 215 0"
+		pos		"750 85"
 		size	"240 240"
 		mousefx	true
 		click
@@ -185,26 +255,28 @@ menu ufopedia
 	pic image_top
 	{
 		image	"*cvar mn_upimage_top"
-		pos	"750 85"
+		pos		"750 85"
 		size	"240 240"
+//		bgcolor "1 0.5 1 0.3"
 	}
 
 	model mdl_bottom
 	{
-		md2	"*cvar mn_upmodel_bottom"
+		md2		"*cvar mn_upmodel_bottom"
 		origin	"870 415 0"
 		angles	"0 0 120"
 		color	"0.5 0.5 0.5 1"
-		pos	"790 335"
+		pos		"790 335"
 		size	"140 140"
 		scale	"6 6 6"
 		click
+//		bgcolor "1 1 0.5 0.3"
 	}
 
 	pic image_bottom
 	{
 		image   "*cvar mn_upimage_bottom"
-		pos	"810 550"
+		pos		"810 550"
 		size	"120 120"
 	}
 

@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+static cvar_t *mn_uppretext = NULL;
+
 static pediaChapter_t	*upChapters_displaylist[MAX_PEDIACHAPTERS];
 static int numChapters_displaylist;
 
@@ -325,15 +327,10 @@ void UP_DrawEntry (technology_t* tech)
 		/* If researched -> display research text */
 		menuText[TEXT_UFOPEDIA] = _(tech->description);
 		if (*tech->pre_description) {
-			if (!Q_strncmp(Cvar_VariableString("mn_up_desc"), "pre", 3)) {
+			if (mn_uppretext->value) {
 				Com_Printf("research: use pre text\n");
 				menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
 			}
-			Cbuf_AddText("mn_upenable_button_switchtext\n");
-			Com_Printf("enable\n");
-		} else {
-			Com_Printf("disable\n");
-			Cbuf_AddText("mn_updisable_button_switchtext\n");
 		}
 
 		if (upCurrent) {
@@ -366,12 +363,10 @@ void UP_DrawEntry (technology_t* tech)
 	} else if (RS_Collected_(tech)) {
 		Cvar_Set("mn_uptitle", _(tech->name));
 		/* Not researched but some items collected -> display pre-research text if available. */
-		if (*tech->pre_description) {
-			Com_Printf("use pre text\n");
+		if (*tech->pre_description)
 			menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
-		} else
+		else
 			menuText[TEXT_UFOPEDIA] = _("No pre-research description available.");
-		Cbuf_AddText("mn_updisable_button_switchtext\n");
 	} else
 		Cvar_Set("mn_uptitle", _(tech->name));
 }
@@ -490,7 +485,7 @@ void UP_Content_f( void )
 	Cvar_Set("mn_upimage_bottom", "base/empty");
 	Cvar_Set("mn_uptitle", _("Ufopedia Content"));
 	/* confunc */
-	Cbuf_AddText("mn_upfbig;mn_updisable_button_switchtext\n");
+	Cbuf_AddText("mn_upfbig\n");
 }
 
 
@@ -728,6 +723,8 @@ void UP_ResetUfopedia( void )
 	Cmd_AddCommand("ufopedia", UP_FindEntry_f, NULL);
 	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
 	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
+
+	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, NULL);
 }
 
 /**
