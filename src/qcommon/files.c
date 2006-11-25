@@ -294,9 +294,9 @@ int FS_FOpenFileWrite(const char *filename, FILE ** f)
 {
 	int len;
 
-	len = FS_CheckFile(filename);
-	if (len <= 0)
-		*f = fopen(filename, "wb");
+	*f = fopen(filename, "wb");
+	if (!*f)
+		return 0;
 
 	return len;
 }

@@ -151,6 +151,7 @@ void VID_Init (void)
 	ri.Cmd_ExecuteText = Cbuf_ExecuteText;
 	ri.Con_Printf = VID_Printf;
 	ri.Sys_Error = VID_Error;
+	ri.FS_CreatePath = FS_CreatePath;
 	ri.FS_LoadFile = FS_LoadFile;
 	ri.FS_WriteFile = FS_WriteFile;
 	ri.FS_FreeFile = FS_FreeFile;

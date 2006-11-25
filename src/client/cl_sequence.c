@@ -893,7 +893,7 @@ void CL_Video_f(void)
 			last -= c * 10;
 			d = last;
 
-			Com_sprintf(filename, MAX_OSPATH, "videos/video%d%d%d%d.avi", a, b, c, d);
+			Com_sprintf(filename, MAX_OSPATH, "videos/ufo%d%d%d%d.avi", a, b, c, d);
 
 			if (FS_CheckFile(filename) <= 0)
 				break;			/* file doesn't exist */
@@ -905,7 +905,7 @@ void CL_Video_f(void)
 		}
 	}
 	/* create path if it does not exists */
-	FS_CreatePath(filename);
+	FS_CreatePath(va("%s/%s", FS_Gamedir(), filename));
 	CL_OpenAVIForWriting(filename);
 }
 
@@ -1156,13 +1156,13 @@ qboolean CL_OpenAVIForWriting(char *fileName)
 		return qfalse;
 	}
 
-	FS_FOpenFileWrite(fileName, &afd.f);
+	FS_FOpenFileWrite(va("%s/%s", FS_Gamedir(), fileName), &afd.f);
 	if (afd.f == NULL) {
 		Com_Printf("Could not open %s for writing\n", fileName);
 		return qfalse;
 	}
 
-	FS_FOpenFileWrite(va("%s" INDEX_FILE_EXTENSION, fileName), &afd.idxF);
+	FS_FOpenFileWrite(va("%s/%s" INDEX_FILE_EXTENSION, FS_Gamedir(), fileName), &afd.idxF);
 	if (afd.idxF == NULL) {
 		Com_Printf("Could not open index file for writing\n");
 		FS_FCloseFile(afd.f);
@@ -1216,6 +1216,7 @@ qboolean CL_OpenAVIForWriting(char *fileName)
 		}
 	}
 
+	Com_Printf("video frame rate: %i\naudio frame rate: %i\n", afd.frameRate, afd.a.rate);
 	/* This doesn't write a real header, but allocates the */
 	/* correct amount of space at the beginning of the file */
 	CL_WriteAVIHeader();
@@ -1229,6 +1230,8 @@ qboolean CL_OpenAVIForWriting(char *fileName)
 
 	afd.moviSize = 4;			/* For the "movi" */
 	afd.fileOpen = qtrue;
+
+	Com_Printf("Hint: Use a lower resolution for avi capturing will increase the speed\n");
 
 	return qtrue;
 }
@@ -1262,6 +1265,7 @@ static qboolean CL_CheckFileSize(int bytesToAdd)
 
 /**
  * @brief
+ * @sa R_TakeVideoFrame
  */
 void CL_WriteAVIVideoFrame(const byte * imageBuffer, int size)
 {

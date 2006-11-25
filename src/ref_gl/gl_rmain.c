@@ -1676,19 +1676,21 @@ static void R_TakeVideoFrame(int w, int h, byte * captureBuffer, byte * encodeBu
 	int frameSize;
 	int i;
 
-	qglReadPixels(0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, captureBuffer);
+	qglReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, captureBuffer);
 
 	if (motionJpeg) {
-		frameSize = SaveJPGToBuffer(encodeBuffer, 95, w, h, captureBuffer);
+		frameSize = SaveJPGToBuffer(encodeBuffer, 90, w, h, captureBuffer);
+		ri.CL_WriteAVIVideoFrame(encodeBuffer, frameSize);
 	} else {
-		frameSize = w * h * 4;
+		frameSize = w * h;
 
-		/* Vertically flip the image */
-		for (i = 0; i < h; i++)
-			memcpy(&encodeBuffer[i * (w * 4)], &captureBuffer[(h - i - 1) * (w * 4)], w * 4);
+		for( i = 0; i < frameSize; i++) {   /* Pack to 24bpp and swap R and B */
+			encodeBuffer[ i*3 ]     = captureBuffer[ i*4 + 2 ];
+			encodeBuffer[ i*3 + 1 ] = captureBuffer[ i*4 + 1 ];
+			encodeBuffer[ i*3 + 2 ] = captureBuffer[ i*4 ];
+		}
+		ri.CL_WriteAVIVideoFrame(encodeBuffer, frameSize * 3);
 	}
-
-	ri.CL_WriteAVIVideoFrame(encodeBuffer, frameSize);
 }
 
 /**

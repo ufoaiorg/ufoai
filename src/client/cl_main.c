@@ -63,6 +63,7 @@ cvar_t *cl_show_cursor_tooltips;
 cvar_t *cl_paused;
 cvar_t *cl_timedemo;
 
+cvar_t *cl_aviForceDemo;
 cvar_t *cl_aviFrameRate;
 cvar_t *cl_aviMotionJpeg;
 
@@ -1232,6 +1233,7 @@ void CL_InitLocal(void)
 
 	cl_precachemenus = Cvar_Get("cl_precachemenus", "0", CVAR_ARCHIVE, "Precache all menus at startup");
 
+	cl_aviForceDemo = Cvar_Get("cl_aviForceDemo", "1", CVAR_ARCHIVE, "AVI recording - record even if no game is loaded");
 	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "25", CVAR_ARCHIVE, "AVI recording - see video command");
 	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE, "AVI recording - see video command");
 
@@ -1609,7 +1611,7 @@ void CL_Frame(int msec)
 	/* if recording an avi, lock to a fixed fps */
 	if (CL_VideoRecording() && cl_aviFrameRate->value && msec) {
 		/* save the current screen */
-		if (cls.state == ca_active) {
+		if (cls.state == ca_active || cl_aviForceDemo->value) {
 			CL_TakeVideoFrame();
 
 			/* fixed time for next frame' */

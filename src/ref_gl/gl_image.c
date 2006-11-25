@@ -1249,7 +1249,7 @@ int SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_heigh
 
 	/* Step 1: allocate and initialize JPEG compression object */
 	cinfo.err = jpeg_std_error(&jerr);
-	/* colorspace of input image */
+	/* colorspace */
 	cinfo.jpeg_color_space = JCS_RGB;
 
 	/* Now we can initialize the JPEG compression object. */
@@ -1271,6 +1271,11 @@ int SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_heigh
 	jpeg_set_defaults(&cinfo);
 	/* limit to baseline-JPEG values */
 	jpeg_set_quality(&cinfo, quality, TRUE);
+	/* If quality is set high, disable chroma subsampling */
+	if (quality >= 85) {
+		cinfo.comp_info[0].h_samp_factor = 1;
+		cinfo.comp_info[0].v_samp_factor = 1;
+	}
 
 	/* Step 4: Start compressor */
 	jpeg_start_compress(&cinfo, TRUE);
