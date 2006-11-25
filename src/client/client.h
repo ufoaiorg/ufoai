@@ -1007,6 +1007,7 @@ extern char *ev_format[128];
 extern void (*ev_func[128]) (sizebuf_t * sb);
 extern qboolean blockEvents;
 
+void CL_SetLastMoving(le_t *le);
 void CL_ParseServerMessage(void);
 void CL_LoadClientinfo(clientinfo_t * ci, char *s);
 void SHOWNET(char *s);

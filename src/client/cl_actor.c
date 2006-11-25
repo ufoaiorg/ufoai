@@ -1309,6 +1309,10 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 		return;
 	}
 
+	/* if actor on our team, set this le as the last moving */
+	if (le->team == cls.team)
+		CL_SetLastMoving(le);
+
 	/* animate - we have to check if it is right or left weapon usage */
 	if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
