@@ -646,7 +646,10 @@ void CL_ActorAppear( sizebuf_t *sb )
 
 	le->contents = CONTENTS_ACTOR;
 	VectorCopy( player_mins, le->mins );
-	VectorCopy( player_maxs, le->maxs );
+	if (le->state & STATE_DEAD)
+		VectorCopy( player_dead_maxs, le->maxs );
+	else
+		VectorCopy( player_maxs, le->maxs );
 
 	le->think = LET_StartIdle;
 
@@ -748,8 +751,10 @@ void CL_ActorStateChange( sizebuf_t *sb )
 	le->think = LET_StartIdle;
 
 	/* killed by the server: no animation is played, etc. */
-	if (state & STATE_DEAD)
+	if (state & STATE_DEAD) {
+		VectorCopy(player_dead_maxs, le->maxs);
 		CL_RemoveActorFromTeamList(le);
+	}
 
 	/* state change may have affected move length */
 	if (selActor)

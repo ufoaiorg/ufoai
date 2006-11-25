@@ -598,6 +598,7 @@ extern int numLEs;
 
 static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN };
 static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
+static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD };
 /*extern vec3_t player_mins;
 extern vec3_t player_maxs;*/
 

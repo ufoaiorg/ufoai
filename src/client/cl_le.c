@@ -759,7 +759,7 @@ static void CL_ClipMoveToLEs(moveclip_t * clip)
 			continue;
 
 		/* might intersect, so do an exact clip */
-		/* TODO: make headnode = CM_HullForLe(le, &tile) ... the counterpart of SV_HullForEntity in server/sv_world.c */
+		/* TODO: make headnode = HullForLe(le, &tile) ... the counterpart of SV_HullForEntity in server/sv_world.c */
 		headnode = CM_HeadnodeForBox(0, le->mins, le->maxs);
 
 		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, 0, headnode, clip->contentmask, le->origin, vec3_origin);

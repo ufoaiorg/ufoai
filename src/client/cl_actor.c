@@ -1496,6 +1496,7 @@ void CL_ActorDie(sizebuf_t * sb)
 		}
 	}
 
+	VectorCopy(player_dead_maxs, le->maxs);
 	CL_RemoveActorFromTeamList(le);
 
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
