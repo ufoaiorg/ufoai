@@ -32,12 +32,56 @@ static pediaChapter_t	*upChapters_displaylist[MAX_PEDIACHAPTERS];
 static int numChapters_displaylist;
 
 static technology_t	*upCurrent;
+static int currentChapter = -1;
 
 #define MAX_UPTEXT 4096
 static char	upText[MAX_UPTEXT];
 
 /* this buffer is for stuff like aircraft or building info */
 static char	upBuffer[MAX_UPTEXT];
+
+enum {
+	UFOPEDIA_CHAPTERS,
+	UFOPEDIA_INDEX,
+	UFOPEDIA_ARTICLE,
+
+	UFOPEDIA_DISPLAYEND
+};
+static int upDisplay = UFOPEDIA_CHAPTERS;
+
+/**
+ * @brief Modify the global display var
+ */
+void UP_ChangeDisplay (int newDisplay)
+{
+	if (newDisplay < UFOPEDIA_DISPLAYEND && newDisplay >= 0)
+		upDisplay = newDisplay;
+	else
+		Com_Printf("Error in UP_ChangeDisplay (%i)\n", newDisplay);
+
+	switch (upDisplay) {
+	case UFOPEDIA_CHAPTERS:
+		/* confunc */
+		Cbuf_AddText("mn_upfbig\n");
+		Cvar_Set("mn_upmodel_top", "");
+		Cvar_Set("mn_upmodel_bottom", "");
+		Cvar_Set("mn_upmodel_big", "");
+		Cvar_Set("mn_upimage_top", "base/empty");
+		Cvar_Set("mn_upimage_bottom", "base/empty");
+		break;
+	case UFOPEDIA_INDEX:
+		Cvar_Set("mn_upmodel_top", "");
+		Cvar_Set("mn_upmodel_bottom", "");
+		Cvar_Set("mn_upmodel_big", "");
+		Cvar_Set("mn_upimage_top", "base/empty");
+		Cvar_Set("mn_upimage_bottom", "base/empty");
+		/* no break here */
+	case UFOPEDIA_ARTICLE:
+		/* confunc */
+		Cbuf_AddText("mn_upfsmall\n");
+		break;
+	}
+}
 
 /**
  * @brief Translate a weaponSkill int to a translated string
@@ -319,8 +363,10 @@ void UP_DrawEntry (technology_t* tech)
 		Cvar_Set("mn_upimage_top", tech->image_top);
 	if (!*tech->mdl_bottom && *tech->mdl_bottom)
 		Cvar_Set("mn_upimage_bottom", tech->image_bottom);
-	/* confunc */
-	Cbuf_AddText("mn_upfsmall\n");
+
+	currentChapter = tech->up_chapter;
+
+	UP_ChangeDisplay(UFOPEDIA_ARTICLE);
 
 	if (RS_IsResearched_ptr(tech)) {
 		Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
@@ -474,18 +520,61 @@ void UP_Content_f( void )
 		}
 	}
 
+	UP_ChangeDisplay(UFOPEDIA_CHAPTERS);
+
 	upCurrent = NULL;
 	menuText[TEXT_STANDARD] = NULL;
 	menuText[TEXT_UFOPEDIA] = upText;
 	menuText[TEXT_LIST] = NULL;
-	Cvar_Set("mn_upmodel_top", "");
-	Cvar_Set("mn_upmodel_bottom", "");
-	Cvar_Set("mn_upmodel_big", "");
-	Cvar_Set("mn_upimage_top", "base/empty");
-	Cvar_Set("mn_upimage_bottom", "base/empty");
 	Cvar_Set("mn_uptitle", _("Ufopedia Content"));
-	/* confunc */
-	Cbuf_AddText("mn_upfbig\n");
+}
+
+/**
+ * @brief Displays the index of the current chapter
+ * @sa UP_Content_f
+ */
+void UP_Index_f (void)
+{
+	technology_t* t;
+	char *upIndex = NULL;
+	int chapter = 0;
+
+	if (Cmd_Argc() < 2 && !currentChapter) {
+		Com_Printf("Usage: mn_upindex <chapter-id>\n");
+		return;
+	} else if (Cmd_Argc() == 2) {
+		chapter = atoi(Cmd_Argv(1));
+		if (chapter < gd.numChapters && chapter >= 0) {
+			currentChapter = chapter;
+		}
+	}
+
+	if (currentChapter < 0)
+		return;
+
+	UP_ChangeDisplay(UFOPEDIA_INDEX);
+
+	upIndex = upText;
+	*upIndex = '\0';
+
+	menuText[TEXT_STANDARD] = NULL;
+	menuText[TEXT_UFOPEDIA] = upIndex;
+	menuText[TEXT_LIST] = NULL;
+	Cvar_Set("mn_uptitle", va(_("Ufopedia Index: %s"), gd.upChapters[currentChapter].name));
+
+	t = &gd.technologies[gd.upChapters[currentChapter].first];
+
+	/* get next entry */
+	while (t) {
+		if (RS_IsResearched_ptr(t)) {
+			/* add this tech to the index - it is researched already */
+			Q_strcat(upText, va("%s\n", _(t->name)), sizeof(upText));
+		}
+		if (t->next >= 0)
+			t = &gd.technologies[t->next];
+		else
+			t = NULL;
+	}
 }
 
 
@@ -589,30 +678,65 @@ void UP_Next_f( void )
 void UP_Click_f (void)
 {
 	int num;
+	technology_t *t = NULL;
 
-	if (Cmd_Argc() < 2 || upCurrent)
+	if (Cmd_Argc() < 2)
 		return;
 	num = atoi(Cmd_Argv(1));
 
-	if ( num < numChapters_displaylist && upChapters_displaylist[num]->first ) {
-		upCurrent = &gd.technologies[upChapters_displaylist[num]->first];
-		do {
-			if (RS_IsResearched_ptr(upCurrent)) {
-				UP_DrawEntry( upCurrent );
-				return;
+	switch (upDisplay) {
+	case UFOPEDIA_CHAPTERS:
+		if ( num < numChapters_displaylist && upChapters_displaylist[num]->first ) {
+			upCurrent = &gd.technologies[upChapters_displaylist[num]->first];
+			do {
+				if (RS_IsResearched_ptr(upCurrent)) {
+					Cbuf_AddText(va("mn_upindex %i;", upCurrent->up_chapter));
+					return;
+				}
+				upCurrent = &gd.technologies[upCurrent->next];
+			} while (upCurrent);
+		}
+		break;
+	case UFOPEDIA_INDEX:
+		assert(currentChapter >= 0);
+		t = &gd.technologies[gd.upChapters[currentChapter].first];
+
+		/* get next entry */
+		while (t) {
+			if (RS_IsResearched_ptr(t)) {
+				/* add this tech to the index - it is researched already */
+				if (num > 0)
+					num--;
+				else
+					break;
 			}
-			upCurrent = &gd.technologies[upCurrent->next];
-		} while (upCurrent);
+			if (t->next >= 0)
+				t = &gd.technologies[t->next];
+			else
+				t = NULL;
+		}
+		upCurrent = t;
+		if (upCurrent)
+			UP_DrawEntry(upCurrent);
+		break;
+	case UFOPEDIA_ARTICLE:
+		/* we don't want the click function parameter in our index function */
+		Cmd_BufClear();
+		/* return back to the index */
+		UP_Index_f();
+		break;
+	default:
+		Com_Printf("Unknown ufopedia display value\n");
 	}
 }
+
 #if DEPENDENCIES_OVERHAUL
 /**
  * @brief
- * @param
  * @sa
  * @todo The "num" value and the link-index will most probably not match.
  */
-void UP_TechTreeClick_f( void )
+void UP_TechTreeClick_f (void)
 {
 	int num;
 	requirements_t *required_AND = NULL;
@@ -716,7 +840,8 @@ void UP_ResetUfopedia( void )
 	/* add commands and cvars */
 	Cmd_AddCommand("mn_upswitch", UP_SwitchDescriptions_f, "Cycles through the ufopedia emails that are available for the current tech");
 	Cmd_AddCommand("ufopedialist", UP_List_f, NULL);
-	Cmd_AddCommand("mn_upcontent", UP_Content_f, NULL);
+	Cmd_AddCommand("mn_upindex", UP_Index_f, "Shows the ufopedia index for the current chapter");
+	Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the ufopedia chapters");
 	Cmd_AddCommand("mn_upprev", UP_Prev_f, NULL);
 	Cmd_AddCommand("mn_upnext", UP_Next_f, NULL);
 	Cmd_AddCommand("mn_upupdate", UP_Update_f, NULL);
