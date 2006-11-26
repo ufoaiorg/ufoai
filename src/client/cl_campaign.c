@@ -2402,6 +2402,7 @@ void CL_GameAbort(void)
  * loop through all entities and put the ones that are stunned
  * as living aliens into our labs
  * TODO: put them into the labs
+ * @sa Com_ParseTeamDesc
  */
 void CL_CollectAliens(void)
 {

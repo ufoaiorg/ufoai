@@ -448,6 +448,7 @@ typedef struct teamDef_s {
 	char title[MAX_VAR];
 	char *cats;
 	int num;
+	qboolean armor, weapons; /* able to use weapons/armor */
 } teamDef_t;
 
 teamDesc_t teamDesc[MAX_TEAMDEFS];
@@ -547,14 +548,24 @@ char *Com_GiveName(int gender, char *category)
 	static char returnName[MAX_VAR];
 	nameCategory_t *nc;
 	char *pos;
-	int i, j, name;
+	int i, j, name = 0;
 
 	/* search the name */
 	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
 		if (!Q_strncmp(category, nc->title, MAX_VAR)) {
+#ifdef DEBUG
+			for (j = 0; j < NAME_NUM_TYPES; j++)
+				name += nc->numNames[j];
+			if (!name)
+				Sys_Error("Could not find any valid name definitions for category '%s'\n", category);
+#endif
 			/* found category */
-			if (!nc->numNames[gender])
+			if (!nc->numNames[gender]) {
+#ifdef DEBUG
+				Com_Printf("No valid name definitions for gender %i in category '%s'\n", gender, category);
+#endif
 				return NULL;
+			}
 			name = rand() % nc->numNames[gender];
 
 			/* skip names */
@@ -623,6 +634,7 @@ int Com_GetModelAndName(char *team, character_t * chr)
 	teamDef_t *td;
 	char *str;
 	int i, gender, category = 0;
+	int retry = 1000;
 
 	/* get team definition */
 	for (i = 0; i < numTeamDefs; i++)
@@ -649,7 +661,7 @@ int Com_GetModelAndName(char *team, character_t * chr)
 	}
 
 	/* get the models */
-	while (team) {
+	while (retry--) {
 		gender = rand() % NAME_LAST;
 		if (td)
 			category = (int) td->cats[rand() % td->num];
@@ -881,6 +893,7 @@ static value_t teamDescValues[] = {
 
 /**
  * @brief Parse the team descriptions (teamdesc) in the teams*.ufo files.
+ * @sa CL_CollectAliens
  */
 static void Com_ParseTeamDesc(char *title, char **text)
 {
@@ -934,9 +947,17 @@ static void Com_ParseTeamDesc(char *title, char **text)
 			}
 
 		if (!v->string)
-			Com_Printf("Com_ParseTeamDesc: unknown token \"%s\" ignored (teamdesc %s)\n", token, title);
+			Com_Printf("Com_ParseTeamDesc: unknown token \"%s\" ignored (team %s)\n", token, title);
 	} while (*text);
 }
+
+static value_t teamValues[] = {
+	{"armor", V_BOOL, offsetof(teamDef_t, armor)} /* are these team members able to wear armor? */
+	,
+	{"weapons", V_BOOL, offsetof(teamDef_t, weapons)} /* are these team members able to use weapons? */
+	,
+	{NULL, 0, 0}
+};
 
 /**
  * @brief
@@ -948,6 +969,7 @@ static void Com_ParseTeam(char *title, char **text)
 	char *errhead = "Com_ParseTeam: unexptected end of file (team ";
 	char *token;
 	int i;
+	value_t *v;
 
 	/* check for additions to existing name categories */
 	for (i = 0, td = teamDef; i < numTeamDefs; i++, td++)
@@ -988,15 +1010,39 @@ static void Com_ParseTeam(char *title, char **text)
 		if (*token == '}')
 			break;
 
-		for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
-			if (!Q_strncmp(token, nc->title, MAX_VAR)) {
-				*infoPos++ = (char) i;
-				td->num++;
+		if (*token == '{') {
+			for (;;) {
+				token = COM_EParse(text, errhead, title);
+				if (*token == '}') {
+					token = COM_EParse(text, errhead, title);
+					break;
+				}
+				for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
+					if (!Q_strncmp(token, nc->title, MAX_VAR)) {
+						*infoPos++ = (char) i;
+						td->num++;
+						break;
+					}
+				if (i == numNameCats)
+					Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, title);
+			}
+			if (*token == '}')
+				break;
+		}
+
+		for (v = teamValues; v->string; v++)
+			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
+				/* found a definition */
+				token = COM_EParse(text, errhead, title);
+				if (!*text)
+					return;
+
+				Com_ParseValue(td, token, v->type, v->ofs);
 				break;
 			}
 
-		if (i == numNameCats)
-			Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, title);
+		if (!v->string)
+			Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (teamdesc %s)\n", token, title);
 
 	} while (*text);
 }
