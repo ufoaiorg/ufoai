@@ -97,7 +97,7 @@ void UP_ChangeDisplay (int newDisplay)
  * The weaponSkills were defined in q_shared.h at abilityskills_t
  * @sa abilityskills_t
  */
-char* CL_WeaponSkillToName(int weaponSkill)
+static char* CL_WeaponSkillToName(int weaponSkill)
 {
 	switch (weaponSkill) {
 	case SKILL_CLOSE:
