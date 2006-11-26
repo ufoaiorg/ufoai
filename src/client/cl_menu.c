@@ -216,14 +216,11 @@ static int menuStackPos = -1;
 inventory_t *menuInventory = NULL;
 char *menuText[MAX_MENUTEXTS];
 
-cvar_t *mn_escpop;
-
+static cvar_t *mn_escpop;
 
 /*
 ==============================================================
-
 ACTION EXECUTION
-
 ==============================================================
 */
 

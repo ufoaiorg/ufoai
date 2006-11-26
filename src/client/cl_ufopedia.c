@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 static cvar_t *mn_uppretext = NULL;
+static cvar_t *mn_uppreavailable = NULL;
 
 static pediaChapter_t	*upChapters_displaylist[MAX_PEDIACHAPTERS];
 static int numChapters_displaylist;
@@ -40,6 +41,10 @@ static char	upText[MAX_UPTEXT];
 /* this buffer is for stuff like aircraft or building info */
 static char	upBuffer[MAX_UPTEXT];
 
+/**
+ * don't change the order or you have to change the if statements about mn_updisplay cvar
+ * in menu_ufopedia.ufo, too
+ */
 enum {
 	UFOPEDIA_CHAPTERS,
 	UFOPEDIA_INDEX,
@@ -58,6 +63,8 @@ void UP_ChangeDisplay (int newDisplay)
 		upDisplay = newDisplay;
 	else
 		Com_Printf("Error in UP_ChangeDisplay (%i)\n", newDisplay);
+
+	Cvar_SetValue("mn_uppreavailable", 0);
 
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
@@ -81,6 +88,7 @@ void UP_ChangeDisplay (int newDisplay)
 		Cbuf_AddText("mn_upfsmall\n");
 		break;
 	}
+	Cvar_SetValue("mn_updisplay", upDisplay);
 }
 
 /**
@@ -351,6 +359,7 @@ void UP_DrawEntry (technology_t* tech)
 
 	menuText[TEXT_LIST] = menuText[TEXT_STANDARD] = menuText[TEXT_UFOPEDIA] = NULL;
 
+	Cvar_Set("mn_uppreavailable", "0");
 	Cvar_Set("mn_upmodel_top", "");
 	Cvar_Set("mn_upmodel_bottom", "");
 	Cvar_Set("mn_upimage_top", "base/empty");
@@ -373,10 +382,10 @@ void UP_DrawEntry (technology_t* tech)
 		/* If researched -> display research text */
 		menuText[TEXT_UFOPEDIA] = _(tech->description);
 		if (*tech->pre_description) {
-			if (mn_uppretext->value) {
-				Com_Printf("research: use pre text\n");
+			if (mn_uppretext->value)
 				menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
-			}
+			Cvar_Set("mn_uppreavailable", "1");
+			Com_Printf("%s\n", tech->pre_description);
 		}
 
 		if (upCurrent) {
@@ -872,6 +881,7 @@ void UP_ResetUfopedia( void )
 	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
 
 	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, NULL);
+	mn_uppreavailable = Cvar_Get("mn_uppreavailable", "0", 0, NULL);
 }
 
 /**

@@ -80,6 +80,7 @@ menu ufopedia
 
 	pic button_text_pre
 	{
+		if	"mn_uppreavailable == 1"
 		tooltip "_Pre research text"
 		image	menu/ufopedia_buttons2
 		mousefx true
@@ -93,6 +94,7 @@ menu ufopedia
 
 	pic button_text_normal
 	{
+		if	"mn_updisplay == 2"
 		tooltip "_Research results"
 		image	menu/ufopedia_buttons2
 		mousefx true
@@ -148,7 +150,7 @@ menu ufopedia
 	text ufopedia
 	{
 		pos		"50 80"
-		size	"690 390"
+		size	"660 390"
 		num		2
 		format	"24 0"
 		click { cmd "mn_textscroll ufopedia 1;" }
