@@ -27,7 +27,7 @@ stage intro
 		expire		"0 8 0"  // average expire time is 4d
 			                 // minimum interval between missions is 3d
 			                 // so you have 2 or less on geoscape any time
-		missions	"africa_excavation transport mine mart italy estate"
+		missions	"africa_excavation transport mine mart italy estate frozen_alienlandingindustrial"
 // TODO: mine does not really fit there, because civilians are safe
 // please add some spawn points down there or move this to another stage
 // the same for city; also make some alien spawns on the top level
