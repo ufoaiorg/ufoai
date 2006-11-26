@@ -217,6 +217,7 @@ inventory_t *menuInventory = NULL;
 char *menuText[MAX_MENUTEXTS];
 
 static cvar_t *mn_escpop;
+static cvar_t *mn_debugmenu;
 
 /*
 ==============================================================
@@ -1974,7 +1975,11 @@ void MN_DrawMenus(void)
 				/* mouseover? */
 				if (node->state == qtrue)
 					menu->hoverNode = node;
+
+				if (mn_debugmenu->value)
+					re.FontDrawString("f_verysmall", ALIGN_UL, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], node->name, 0, 0, NULL, qfalse);
 			}	/* if */
+
 		}	/* for */
 		if (sp == menuStackPos && menu->hoverNode && cl_show_tooltips->value) {
 			MN_Tooltip(menu->hoverNode, mx, my);
@@ -2410,6 +2415,7 @@ void MN_ResetMenus(void)
 
 	/* add commands */
 	mn_escpop = Cvar_Get("mn_escpop", "1", 0, NULL);
+	mn_debugmenu = Cvar_Get("mn_debugmenu", "0", 0, "Prints node names for debugging purposes");
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_sequence", "sequence");
 

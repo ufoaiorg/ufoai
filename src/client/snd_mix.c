@@ -106,6 +106,7 @@ void S_TransferStereo16(unsigned long *pbuf, int endtime)
 
 /**
  * @brief
+ * @sa S_TransferStereo16
  */
 void S_TransferPaintBuffer(int endtime)
 {

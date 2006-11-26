@@ -632,7 +632,7 @@ void SND_BeginPainting (void)
 	while ((hresult = pDSBuf->lpVtbl->Lock(pDSBuf, 0, gSndBufSize, &pbuf, &locksize,
 								&pbuf2, &dwSize2, 0)) != DS_OK) {
 		if (hresult != DSERR_BUFFERLOST) {
-			si->Com_Printf( "S_TransferStereo16: Lock failed with error '%s'\n", DSoundError( hresult ) );
+			si->Com_Printf( "SND_BeginPainting: Lock failed with error '%s'\n", DSoundError( hresult ) );
 			/* FIXME: maybe a Sys_Error? */
 			SND_Shutdown();
 			SND_Init(si);
