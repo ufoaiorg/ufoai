@@ -121,7 +121,6 @@ char* CL_WeaponSkillToName(int weaponSkill)
 	}
 }
 
-#if DEPENDENCIES_OVERHAUL
 /**
  * @brief Diplays the tech tree dependencies in the ufopedia
  * @sa UP_DrawEntry
@@ -152,36 +151,6 @@ void UP_DisplayTechTree (technology_t* t)
 	/* and now set the buffer to the right menuText */
 	menuText[TEXT_LIST] = up_techtree;
 }
-#else /* overhaul */
-/**
- * @brief Diplays the tech tree dependencies in the ufopedia
- * @sa UP_DrawEntry
- */
-void UP_DisplayTechTree (technology_t* t)
-{
-	int i = 0;
-	static char up_techtree[1024];
-	stringlist_t *required = NULL;
-	technology_t *techRequired = NULL;
-	required = &t->requires;
-	up_techtree[0] = '\0';
-	for (; i<required->numEntries; i++) {
-		if (!Q_strncmp(required->string[i], "nothing", MAX_VAR)
-		|| !Q_strncmp(required->string[i], "initial", MAX_VAR)) {
-			Q_strcat(up_techtree, _("No requirements"), sizeof(up_techtree));
-			continue;
-		} else {
-			techRequired = RS_GetTechByID(required->string[i]);
-			if (!techRequired)
-				Sys_Error("Could not find the tech for '%s'\n", required->string[i]);
-			Q_strcat(up_techtree, techRequired->name, sizeof(up_techtree));
-		}
-		Q_strcat(up_techtree, "\n", sizeof(up_techtree));
-	}
-	/* and now set the buffer to the right menuText */
-	menuText[TEXT_LIST] = up_techtree;
-}
-#endif /* overhaul */
 
 /**
  * @brief Prints the (ufopedia and other) description for items (weapons, armor, ...)
@@ -736,7 +705,6 @@ void UP_Click_f (void)
 	}
 }
 
-#if DEPENDENCIES_OVERHAUL
 /**
  * @brief
  * @sa
@@ -770,41 +738,6 @@ void UP_TechTreeClick_f (void)
 
 	UP_OpenCopyWith(techRequired->id);
 }
-#else /* overhaul */
-/**
- * @brief
- * @param
- * @sa
- */
-void UP_TechTreeClick_f( void )
-{
-	int num;
-	stringlist_t *required = NULL;
-	technology_t *techRequired = NULL;
-
-	if (Cmd_Argc() < 2)
-		return;
-	num = atoi(Cmd_Argv(1));
-
-	if (!upCurrent)
-		return;
-
-	required = &upCurrent->requires;
-
-	if (!Q_strncmp(required->string[num], "nothing", MAX_VAR)
-		|| !Q_strncmp(required->string[num], "initial", MAX_VAR))
-		return;
-
-	if (num >= required->numEntries)
-		return;
-
-	techRequired = RS_GetTechByID(required->string[num]);
-	if (!techRequired)
-		Sys_Error("Could not find the tech for '%s'\n", required->string[num]);
-
-	UP_OpenCopyWith(techRequired->id);
-}
-#endif /* overhaul */
 
 /**
  * @brief

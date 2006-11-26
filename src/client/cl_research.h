@@ -54,10 +54,6 @@ typedef enum researchType_s {
 	RS_NEWS
 } researchType_t;
 
-#define DEPENDENCIES_OVERHAUL 1
-/* TODO: dependencies overhaul. Set to 1 to change to new dependency-calculation. */
-
-#if DEPENDENCIES_OVERHAUL
 typedef enum requirementType_s {
 	RS_LINK_TECH,
 	RS_LINK_ITEM,
@@ -75,7 +71,6 @@ typedef struct requirements_s {
 	int delay;			/* Number in days the system should wait until the tech is available. */
 					/* Starting from the time all other dependencies have been fulfilled. */
 } requirements_t;
-#endif
 
 typedef struct stringlist_s {
 	int numEntries;				/* The number of used strings/techs. */
@@ -91,17 +86,9 @@ typedef struct technology_s {
 	char pre_description[MAX_VAR];	/* Description of item before it's researched. Short text-id to get the full text via gettext. */
 	researchType_t type;
 
-
-#if DEPENDENCIES_OVERHAUL
 	requirements_t require_AND;	/* A list of requirements that ALL need to be met (= AND-related) See struct above. */
 	requirements_t require_OR;	/* A list of requirements where ANY need to be met (= OR-related) See struct above. */
 	qboolean statusCollected;	/* Did we loot all required items? This is (or _should be_) updated from the info stored in the require_X lists. */
-#else /* overhaul */
-	stringlist_t requires;
-	/* TODO: replace with 'require' entries. */
-	byte needsCollected;		/* Is a collected item neccessary to research this item? */
-	int statusCollected;		/* Did we loot this item (and how mach of it -> aliens/corpses) ? */
-#endif /* overhaul */
 
 	char provides[MAX_VAR];		/* The item that this technology enables. */
 	float overalltime, time;	/* The time that is needed to research this tech. (in days). */
@@ -141,12 +128,8 @@ qboolean RS_TechIsResearched(int tech_idx);
 qboolean RS_TechIsResearchable(technology_t * tech);
 qboolean RS_IsResearched_idx(int idx);
 qboolean RS_IsResearched_ptr(technology_t * tech);
-#if DEPENDENCIES_OVERHAUL
 int RS_Collected_(technology_t * tech);
 void RS_CheckAllCollected(void);
-#else /* overhaul */
-qboolean RS_ItemCollected(char *id_provided);
-#endif /* overhaul */
 
 void RS_AddObjectTechs(void);
 void RS_RequiredIdxAssign(void);
