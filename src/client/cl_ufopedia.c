@@ -143,7 +143,7 @@ void UP_DisplayTechTree (technology_t* t)
 				techRequired = RS_GetTechByIDX(required->idx[i]);
 				if (!techRequired)
 					Sys_Error("Could not find the tech for '%s'\n", required->id[i]);
-				Q_strcat(up_techtree, techRequired->name, sizeof(up_techtree));
+				Q_strcat(up_techtree, _(techRequired->name), sizeof(up_techtree));
 			}
 			Q_strcat(up_techtree, "\n", sizeof(up_techtree));
 		}
