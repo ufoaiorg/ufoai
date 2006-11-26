@@ -744,7 +744,7 @@ void R_DrawModelParticle(modelInfo_t * mi)
 
 	qglTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);
 	qglRotatef(mi->angles[1], 0, 0, 1);
-	qglRotatef(-mi->angles[0], 0, 1, 0);
+	qglRotatef(mi->angles[0], 0, 1, 0);
 	qglRotatef(-mi->angles[2], 1, 0, 0);
 
 	/* draw it */
