@@ -75,6 +75,7 @@ void UP_ChangeDisplay (int newDisplay)
 		Cvar_Set("mn_upmodel_big", "");
 		Cvar_Set("mn_upimage_top", "base/empty");
 		Cvar_Set("mn_upimage_bottom", "base/empty");
+		currentChapter = -1;
 		break;
 	case UFOPEDIA_INDEX:
 		Cvar_Set("mn_upmodel_top", "");
@@ -537,7 +538,7 @@ void UP_Index_f (void)
 	char *upIndex = NULL;
 	int chapter = 0;
 
-	if (Cmd_Argc() < 2 && !currentChapter) {
+	if (Cmd_Argc() < 2 && currentChapter == -1) {
 		Com_Printf("Usage: mn_upindex <chapter-id>\n");
 		return;
 	} else if (Cmd_Argc() == 2) {
