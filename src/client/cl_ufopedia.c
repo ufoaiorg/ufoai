@@ -736,6 +736,10 @@ void UP_TechTreeClick_f (void)
 	if (!techRequired)
 		Sys_Error("Could not find the tech for '%s'\n", required_AND->id[num]);
 
+	/* maybe there is no ufopedia chapter assigned - this tech should not be opened at all */
+	if (techRequired->up_chapter == -1)
+		return;
+
 	UP_OpenCopyWith(techRequired->id);
 }
 

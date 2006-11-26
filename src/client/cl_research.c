@@ -1296,6 +1296,7 @@ void RS_ParseTechnologies(char *id, char **text)
 	tech->prev = -1;
 	tech->next = -1;
 	tech->base_idx = -1;
+	tech->up_chapter = -1;
 
 	do {
 		/* get the name type */

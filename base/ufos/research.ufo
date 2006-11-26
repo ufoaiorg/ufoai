@@ -1460,7 +1460,7 @@ tech rs_skill_accuracy
 {
 	type	tech
 	name "_Accuracy Attribute"
-	up_chapter	skill
+//	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1472,7 +1472,7 @@ tech rs_skill_assault
 {
 	type	tech
 	name "_Assault Guns Proficiency"
-	up_chapter	skill
+//	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1484,7 +1484,7 @@ tech rs_skill_close
 {
 	type	tech
 	name "_Close Combat Proficiency"
-	up_chapter	skill
+//	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1496,7 +1496,7 @@ tech rs_skill_explosive
 {
 	type	tech
 	name "_High-Explosives Proficiency"
-	up_chapter	skill
+//	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1508,7 +1508,7 @@ tech rs_skill_heavy
 {
 	type	tech
 	name "_Heavy Weapons Proficiency"
-	up_chapter	skill
+//	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1520,7 +1520,7 @@ tech rs_skill_mind
 {
 	type	tech
 	name "_Mind Attribute"
-	up_chapter	skill
+//	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1532,7 +1532,7 @@ tech rs_skill_power
 {
 	type	tech
 	name "_Power Attribute"
-	up_chapter	skill
+//	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1544,7 +1544,7 @@ tech rs_skill_sniper
 {
 	type	tech
 	name "_Sniper Rifles Proficiency"
-	up_chapter	skill
+//	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1556,7 +1556,7 @@ tech rs_skill_speed
 {
 	type	tech
 	name "_Speed Attribute"
-	up_chapter	skill
+//	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
