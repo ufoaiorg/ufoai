@@ -623,7 +623,7 @@ le_t *LE_Add(int entnum);
 le_t *LE_Get(int entnum);
 le_t *LE_Find(int type, pos3_t pos);
 void LE_Cleanup(void);
-trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * passle, int contentmask);
+trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * passle, le_t * passle2, int contentmask);
 
 lm_t *CL_AddLocalModel(char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags);
 void CL_AddMapParticle(char *particle, vec3_t origin, vec2_t wait, char *info, int levelflags);

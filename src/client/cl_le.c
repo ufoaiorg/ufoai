@@ -734,7 +734,7 @@ typedef struct {
 	vec3_t mins2, maxs2;		/* size when clipping against mosnters */
 	float *start, *end;
 	trace_t trace;
-	le_t *passle;
+	le_t *passle, *passle2;
 	int contentmask;
 } moveclip_t;
 
@@ -755,7 +755,7 @@ static void CL_ClipMoveToLEs(moveclip_t * clip)
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse || !(le->contents & clip->contentmask))
 			continue;
-		if (le == clip->passle)
+		if (le == clip->passle || le == clip->passle2)
 			continue;
 
 		/* might intersect, so do an exact clip */
@@ -799,7 +799,7 @@ static void CL_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, v
  * @note Passedict and edicts owned by passedict are explicitly not checked.
  * @sa CL_TraceBounds
  */
-trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * passle, int contentmask)
+trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * passle, le_t * passle2, int contentmask)
 {
 	moveclip_t clip;
 
@@ -815,6 +815,7 @@ trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * pass
 	clip.mins = mins;
 	clip.maxs = maxs;
 	clip.passle = passle;
+	clip.passle2 = passle2;
 
 	/* create the bounding box of the entire move */
 	CL_TraceBounds(start, mins, maxs, end, clip.boxmins, clip.boxmaxs);
