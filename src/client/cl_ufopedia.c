@@ -385,7 +385,6 @@ void UP_DrawEntry (technology_t* tech)
 			if (mn_uppretext->value)
 				menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
 			Cvar_Set("mn_uppreavailable", "1");
-			Com_Printf("%s\n", tech->pre_description);
 		}
 
 		if (upCurrent) {
@@ -614,44 +613,32 @@ void UP_Index_f (void)
  */
 void UP_Prev_f( void )
 {
+	technology_t *t = NULL;
+
 	if (!upCurrent) /* if called from console */
 		return;
 
+	t = upCurrent;
+
 	/* get previous entry */
-	if (upCurrent->prev >= 0) {
+	if (t->prev >= 0) {
 		/* Check if the previous entry is researched already otherwise go to the next entry. */
 		do {
-			upCurrent = &gd.technologies[upCurrent->prev];
-			assert (upCurrent);
-			if (upCurrent->idx == upCurrent->prev)
-				Sys_Error("UP_Prev_f: The 'prev':%d entry equals to 'idx' entry for '%s'.\n", upCurrent->prev, upCurrent->id);
-		} while (upCurrent->prev >= 0 && !RS_IsResearched_ptr(upCurrent));
+			t = &gd.technologies[t->prev];
+			assert (t);
+			if (t->idx == t->prev)
+				Sys_Error("UP_Prev_f: The 'prev':%d entry equals to 'idx' entry for '%s'.\n", t->prev, t->id);
+		} while (t->prev >= 0 && !RS_IsResearched_ptr(t));
 
-		if (RS_IsResearched_ptr(upCurrent)) {
-			UP_DrawEntry( upCurrent );
+		if (RS_IsResearched_ptr(t)) {
+			upCurrent = t;
+			UP_DrawEntry(t);
 			return;
 		}
 	}
 
-	/* change chapter */
-	{
-		int upc = upCurrent->up_chapter;
-
-		/* get previous chapter */
-		while (upc-- > 0) {
-			if (gd.upChapters[upc].last >= 0) {
-				upCurrent = &gd.technologies[gd.upChapters[upc].last];
-				if (RS_IsResearched_ptr(upCurrent))
-					UP_DrawEntry(upCurrent);
-				else
-					UP_Prev_f();
-				return;
-			}
-		}
-	}
-
-	/* Go to pedia-index if no more previous entries available. */
-	UP_Content_f();
+	/* Go to chapter index if no more previous entries available. */
+	Cbuf_AddText("mn_upindex;");
 }
 
 /**
@@ -660,43 +647,32 @@ void UP_Prev_f( void )
  */
 void UP_Next_f( void )
 {
+	technology_t *t = NULL;
+
 	if (!upCurrent) /* if called from console */
 		return;
 
+	t = upCurrent;
+
 	/* get next entry */
-	if (upCurrent && (upCurrent->next >= 0)) {
+	if (t && (t->next >= 0)) {
 		/* Check if the next entry is researched already otherwise go to the next entry. */
 		do {
-			upCurrent = &gd.technologies[upCurrent->next];
+			t = &gd.technologies[t->next];
 			assert (upCurrent);
-			if (upCurrent->idx == upCurrent->next)
-				Sys_Error("UP_Next_f: The 'next':%d entry equals to 'idx' entry for '%s'.\n", upCurrent->next, upCurrent->id);
-		} while (upCurrent->next >= 0 && !RS_IsResearched_ptr(upCurrent));
+			if (t->idx == t->next)
+				Sys_Error("UP_Next_f: The 'next':%d entry equals to 'idx' entry for '%s'.\n", t->next, t->id);
+		} while (t->next >= 0 && !RS_IsResearched_ptr(t));
 
-		if (RS_IsResearched_ptr(upCurrent)) {
-			UP_DrawEntry(upCurrent);
+		if (RS_IsResearched_ptr(t)) {
+			upCurrent = t;
+			UP_DrawEntry(t);
 			return;
 		}
 	}
 
-	/* change chapter */
-	{
-		int upc = upCurrent->up_chapter;
-
-		/* get next chapter */
-		while (++upc < gd.numChapters) {
-			if (gd.upChapters[upc].first >= 0) {
-				upCurrent = &gd.technologies[gd.upChapters[upc].first];
-				if (RS_IsResearched_ptr(upCurrent))
-					UP_DrawEntry(upCurrent);
-				else
-					UP_Next_f();
-				return;
-			}
-		}
-	}
-
-	/* do nothing at the end */
+	/* Go to chapter index if no more previous entries available. */
+	Cbuf_AddText("mn_upindex;");
 }
 
 
