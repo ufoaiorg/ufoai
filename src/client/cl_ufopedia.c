@@ -532,6 +532,27 @@ void UP_Content_f( void )
 /**
  * @brief Displays the index of the current chapter
  * @sa UP_Content_f
+ * @sa UP_ChangeDisplay
+ * @sa UP_Index_f
+ * @sa UP_DrawEntry
+ */
+void UP_Back_f (void)
+{
+	switch (upDisplay) {
+	case UFOPEDIA_ARTICLE:
+		Cbuf_AddText("mn_upindex;");
+		break;
+	case UFOPEDIA_INDEX:
+		Cbuf_AddText("mn_upcontent;");
+		break;
+	default:
+		break;
+	}
+}
+
+/**
+ * @brief Displays the index of the current chapter
+ * @sa UP_Content_f
  */
 void UP_Index_f (void)
 {
@@ -842,6 +863,7 @@ void UP_ResetUfopedia( void )
 	Cmd_AddCommand("ufopedialist", UP_List_f, NULL);
 	Cmd_AddCommand("mn_upindex", UP_Index_f, "Shows the ufopedia index for the current chapter");
 	Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the ufopedia chapters");
+	Cmd_AddCommand("mn_upback", UP_Back_f, "Goes back from article to index or from index to chapters");
 	Cmd_AddCommand("mn_upprev", UP_Prev_f, NULL);
 	Cmd_AddCommand("mn_upnext", UP_Next_f, NULL);
 	Cmd_AddCommand("mn_upupdate", UP_Update_f, NULL);

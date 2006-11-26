@@ -75,7 +75,7 @@ menu ufopedia
 		pos		"10 720"
 		texl	"0 74"
 		texh	"64 111"
-		click	{ cmd mn_upcontent; }
+		click	{ cmd mn_upback; }
 	}
 
 	pic button_text_pre
