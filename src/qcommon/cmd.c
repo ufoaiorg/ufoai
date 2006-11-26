@@ -588,6 +588,21 @@ char *Cmd_MacroExpandString(char *text)
 	return scan;
 }
 
+/**
+ * @brief Clears the argv vector and set argc to zero
+ * @sa Cmd_TokenizeString
+ */
+void Cmd_BufClear (void)
+{
+	int i;
+
+	/* clear the args from the last string */
+	for (i = 0; i < cmd_argc; i++)
+		Mem_Free(cmd_argv[i]);
+
+	cmd_argc = 0;
+	cmd_args[0] = 0;
+}
 
 /**
  * @brief Parses the given string into command line tokens.
@@ -596,15 +611,9 @@ char *Cmd_MacroExpandString(char *text)
  */
 void Cmd_TokenizeString(char *text, qboolean macroExpand)
 {
-	int i;
 	char *com_token;
 
-	/* clear the args from the last string */
-	for (i = 0; i < cmd_argc; i++)
-		Mem_Free(cmd_argv[i]);
-
-	cmd_argc = 0;
-	cmd_args[0] = 0;
+	Cmd_BufClear();
 
 	/* macro expand the text */
 	if (macroExpand)

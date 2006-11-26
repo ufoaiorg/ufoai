@@ -126,3 +126,5 @@ void Cmd_ForwardToServer(void);
 
 
 char* Cmd_GetCommandDesc(const char* command);
+
+void Cmd_BufClear(void);
