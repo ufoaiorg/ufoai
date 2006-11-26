@@ -185,7 +185,6 @@ menu ufopedia
 /*
 	pic button_1
 	{
-		tooltip	"_Some button"
 		image	menu/button
 		mousefx	true
 		pos		"938 510"
@@ -198,7 +197,6 @@ menu ufopedia
 
 	pic button_2
 	{
-		tooltip	"_Some button 2"
 		image	menu/button
 		mousefx true
 		pos		"938 570"
@@ -211,7 +209,6 @@ menu ufopedia
 
 	pic button_3
 	{
-		tooltip	"_Some button 3"
 		image	menu/button
 		mousefx true
 		pos		"938 630"

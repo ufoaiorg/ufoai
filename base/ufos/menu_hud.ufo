@@ -229,10 +229,13 @@ menu hud
 	}
 	string numspotted
 	{
+		key "*binding nextalien"
 		string	"*cvar mn_numaliensspotted"
 		pos		"840 28"
+		size		"48 34"
 		align	cc
 		tooltip "_Click to cycle through the spotted enemies"
+		in
 	}
 
 	confunc hudselects0 { *bt_actor0 image hud/buttons1a }
@@ -524,14 +527,25 @@ menu hud
 		click	{ cmd standcrouch }
 	}
 
-	confunc startreactionmanys { *bt_reaction image hud/button_guardb }
-	confunc startreactiononces { *bt_reaction image hud/button_guarda }
-	confunc stopreactions { *bt_reaction image hud/button_guard }
+	confunc startreactionmanys
+	{
+		*bt_reaction image hud/button_guardb
+		*bt_reaction tooltip "_Multiple-shot reaction fire"
+	}
+	confunc startreactiononces
+	{
+		*bt_reaction image hud/button_guarda
+		*bt_reaction tooltip "_One-shot reaction fire"
+	}
+	confunc stopreactions
+	{
+		*bt_reaction image hud/button_guard
+		*bt_reaction tooltip "_No reaction fire"
+	}
 
 	pic bt_reaction
 	{
 		key "*binding togglereaction"
-		tooltip	"_Toggle reaction-fire"
 		mousefx true
 		pos		"303 686"
 		click	{ cmd togglereaction }

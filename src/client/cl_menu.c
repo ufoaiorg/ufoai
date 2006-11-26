@@ -284,6 +284,8 @@ static char *MN_GetReferenceString(const menu_t* const menu, char *ref)
 		char ident[MAX_VAR];
 		char *text;
 		char *token;
+		char command[MAX_VAR];
+		char param[MAX_VAR];
 
 		/* get the reference and the name */
 		text = ref + 1;
@@ -300,6 +302,13 @@ static char *MN_GetReferenceString(const menu_t* const menu, char *ref)
 			return Cvar_VariableString(token);
 		} else if (!Q_strncmp(ident, "binding", 7)) {
 			/* get the cvar value */
+			if (*text && *text <= ' ') {
+				/* check command and param */
+				Q_strncpyz(command, token, MAX_VAR);
+				token = COM_Parse(&text);
+				Q_strncpyz(param, token, MAX_VAR);
+				Com_sprintf(token, MAX_VAR, "%s %s", command, param);
+			}
 			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
 		} else if (!Q_strncmp(ident, "cmd", 3)) {
 			/* TODO: get the command output */
