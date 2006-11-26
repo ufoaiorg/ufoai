@@ -659,6 +659,7 @@ static void MN_FindContainer(menuNode_t* const node)
 
 /**
  * @brief
+ * @sa MN_Click
  */
 static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
 {
@@ -747,7 +748,10 @@ static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
 	/* on the node */
 	if (node->type == MN_TEXT) {
 		assert(node->texh[0]);
-		return (int) (ty / node->texh[0]) + 1;
+		if (node->textScroll)
+			return (int) (ty / node->texh[0]) + node->textScroll;
+		else
+			return (int) (ty / node->texh[0]) + 1;
 	} else
 		return qtrue;
 }
