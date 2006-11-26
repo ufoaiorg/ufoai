@@ -139,9 +139,11 @@ actors scientist
 
 team civilian
 {
+	{
 	european
 	oriental
 	scientist
 	americans
 	human_scientist
+	}
 }

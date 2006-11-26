@@ -201,11 +201,10 @@ actors hovernet
 
 // ==================
 // TEAM DESCRIPTIONS
-//
-// combat_notes	-	Will be unlocked after a battle against this enemy
-// autopsy	-	Research of the alien corpse/remains.
-// xenobiology	-	Research on the live alien.
-// interrogation	-	Information gathered from the captured live alien.
+// combat_notes			-	Will be unlocked after a battle against this enemy
+// autopsy				-	Research of the alien corpse/remains.
+// xenobiology			-	Research on the live alien.
+// interrogation		-	Information gathered from the captured live alie
 // interrogation_com	-	Information gathered from captured live alien commander.
 // ==================
 teamdesc ortnok
@@ -262,7 +261,6 @@ teamdesc cyborg_ortnok
 // ALIENS
 //========================================================================
 
-
 //==================
 // ortnok
 //==================
@@ -313,8 +311,17 @@ names ortnok
 	}
 }
 
+names bloodspider
+{
+	neutral
+	{
+	"Bloodspider"
+	}
+}
+
 actors bloodspider
 {
+	// FIXME: Bloodspider doesn't have a head atm
 	neutral
 	{
 		aliens/bloodspider bloodspider head 0
@@ -343,32 +350,43 @@ actors ortnok
 
 team alien
 {
+	{
 	ortnok
 	antarean
 // 	shevaar
 // 	hovernet
 // 	cyborg_ortnok
+//	bloodspider
+	}
 }
 
 team antarean
 {
+	{
 	antarean
+	}
 }
 
 team ortnok
 {
+	{
 	ortnok
+	}
 }
 
 team cyborg_ortnok
 {
+	{
 	cyborg_ortnok
+	}
 }
 
 team ortnok_all
 {
+	{
 	ortnok
 	cyborg_ortnok
+	}
 }
 
 // team shevaar
@@ -383,6 +401,10 @@ team ortnok_all
 
 team bloodspider
 {
+	{
 	bloodspider
+	}
+	armor false
+	weapons false
 }
 

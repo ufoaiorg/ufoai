@@ -1284,6 +1284,7 @@ actors african
 
 team human
 {
+	{
 	german
 	spanish_italian
 	french
@@ -1294,6 +1295,7 @@ team human
 	chinese
 	japanese
 	african
+	}
 }
 
 // ======================
@@ -1588,6 +1590,8 @@ actors ugv_triax
 
 team human_ugv
 {
+	{
 	ugv_triax
 	ugv_phoenix
+	}
 }
