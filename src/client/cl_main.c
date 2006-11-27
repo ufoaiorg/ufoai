@@ -370,6 +370,11 @@ void CL_Rcon_f(void)
 	int i;
 	netadr_t to;
 
+	if (Cmd_Argc() < 2) {
+		Com_Printf("usage: %s <command>\n", Cmd_Argv(0));
+		return;
+	}
+
 	if (!rcon_client_password->string) {
 		Com_Printf("You must set 'rcon_password' before issuing an rcon command.\n");
 		return;
@@ -401,7 +406,10 @@ void CL_Rcon_f(void)
 			Com_Printf("You must either be connected, or set the 'rcon_address' cvar\nto issue rcon commands\n");
 			return;
 		}
-		NET_StringToAdr(rcon_address->string, &to);
+		if (!NET_StringToAdr(rcon_address->string, &to)) {
+			Com_Printf("Bad address: %s\n", rcon_address->string);
+			return;
+		}
 		if (to.port == 0)
 			to.port = BigShort(PORT_SERVER);
 	}

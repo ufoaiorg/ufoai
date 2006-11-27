@@ -493,7 +493,6 @@ void S_Shutdown(void)
 	Cmd_RemoveCommand("music_start");
 	Cmd_RemoveCommand("music_stop");
 	Cmd_RemoveCommand("snd_modifykhz");
-	Cmd_RemoveCommand("snd_modifyref");
 
 	/* free all sounds */
 	for (i = 0, sfx = known_sfx; i < num_sfx; i++, sfx++) {
