@@ -1111,6 +1111,8 @@ typedef struct character_s {
 	/* Backlink to employee-struct. */
 	int empl_idx;
 	int empl_type;
+
+	qboolean armor, weapons; /* able to use weapons/armor */
 } character_t;
 
 /* The types of employees */
@@ -1149,7 +1151,7 @@ void Com_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
 void Com_FindSpace(const inventory_t* const inv, const int item, const int container, int * const px, int * const py) __attribute__((nonnull(1)));
 int Com_TryAddToInventory(inventory_t* const inv, item_t item, int container) __attribute__((nonnull(1)));
 int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int container) __attribute__((nonnull(1)));
-void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS],  char *name) __attribute__((nonnull(1)));
+void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS],  char *name, character_t* chr) __attribute__((nonnull(1)));
 
 /* =========================================================== */
 

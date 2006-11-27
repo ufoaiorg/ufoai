@@ -660,6 +660,13 @@ int Com_GetModelAndName(char *team, character_t * chr)
 			category = i;
 	}
 
+	/* set some team definition values to character, too */
+	/* make these values available to the game lib */
+	if (td) {
+		chr->weapons = td->weapons;
+		chr->armor = td->armor;
+	}
+
 	/* get the models */
 	while (retry--) {
 		gender = rand() % NAME_LAST;
@@ -1001,6 +1008,7 @@ static void Com_ParseTeam(char *title, char **text)
 	/* initialize list */
 	td->cats = infoPos;
 	td->num = 0;
+	td->armor = td->weapons = qtrue; /* default values */
 
 	do {
 		/* get the name type */

@@ -1530,7 +1530,7 @@ static void B_PackInitialEquipment_f(void)
 {
 	int i, price = 0;
 	equipDef_t *ed;
-	character_t *cp;
+	character_t *chr;
 	char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
 
 	/* check syntax */
@@ -1549,10 +1549,11 @@ static void B_PackInitialEquipment_f(void)
 		Com_DPrintf("B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
 	} else {
 		for (i = 0; i < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; i++) {
-			cp = baseCurrent->curTeam[i];
+			chr = baseCurrent->curTeam[i];
 			/* pack equipment */
-			Com_DPrintf("B_PackInitialEquipment_f: Packing initial equipment for %s.\n", cp->name);
-			Com_EquipActor(cp->inv, ed->num, name);
+			Com_DPrintf("B_PackInitialEquipment_f: Packing initial equipment for %s.\n", chr->name);
+			Com_EquipActor(chr->inv, ed->num, name, chr);
+			Com_DPrintf("B_PackInitialEquipment_f: armor: %i, weapons: %i\n", chr->armor, chr->weapons);
 		}
 		CL_AddCarriedToEq(&baseCurrent->storage);
 		CL_SwapSkills(baseCurrent->curTeam, baseCurrent->teamNum[baseCurrent->aircraftCurrent]);

@@ -2713,7 +2713,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
  * Beware: if two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *name)
+void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *name, character_t* chr)
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
@@ -2721,151 +2721,161 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 	int primary = 2; /* 0 tachyon or normal, 1 other, 2 no primary weapon */
 	objDef_t obj;
 
-	/* primary weapons */
-	max_price = INT_MAX;
-	do {
-		/* search for the most expensive primary weapon in the equipment */
-		prev_price = max_price;
-		max_price = 0;
-		for (i = 0; i < CSI->numODs; i++) {
-			obj = CSI->ods[i];
-			if ( equip[i] && obj.weapon && obj.buytype == 0 ) {
-				if ( obj.price > max_price && obj.price < prev_price ) {
-					max_price = obj.price;
-					weapon = i;
-				}
-			}
-		}
-		/* see if there is any */
-		if (max_price) {
-			/* see if the actor picks it */
-			if ( equip[weapon] >= (40 - PROB_COMPENSATION) * frand() ) {
-				/* not decrementing equip[weapon]
-				 * so that we get more possible squads */
-				has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
-				if (has_weapon) {
-					int ammo;
-
-					/* find the first possible ammo to check damage type */
-					for (ammo = 0; ammo < CSI->numODs; ammo++)
-						if ( equip[ammo] && CSI->ods[ammo].link == weapon )
-							break;
-					if (ammo < CSI->numODs) {
-						primary =
-							/* to avoid two tachyon weapons */
-							!(CSI->ods[ammo].fd[0].dmgtype
-							  == CSI->damTachyon)
-							/* to avoid SMG + Assault Rifle */
-							&& !(CSI->ods[ammo].fd[0].dmgtype
-								 == CSI->damNormal);
-					}
-					max_price = 0; /* one primary weapon is enough */
-					missed_primary = 0;
-				}
-			} else {
-				missed_primary += equip[weapon];
-			}
-		}
-	} while (max_price);
-
-	/* sidearms (secondary weapons with reload) */
-	if (!has_weapon)
-		repeat = WEAPONLESS_BONUS > frand ();
-	else
-		repeat = 0;
-	do {
-		max_price = primary ? INT_MAX : 0;
-		do {
-			prev_price = max_price;
-			/* if primary is a tachyon or normal damage weapon,
-			   we pick cheapest sidearms first */
-			max_price = primary ? 0 : INT_MAX;
-			for (i = 0; i < CSI->numODs; i++) {
-				obj = CSI->ods[i];
-				if ( equip[i] && obj.weapon
-					 && obj.buytype == 1 && obj.reload ) {
-					if ( primary
-						 ? obj.price > max_price && obj.price < prev_price
-						 : obj.price < max_price && obj.price > prev_price ) {
-						max_price = obj.price;
-						weapon = i;
-					}
-				}
-			}
-			if ( !(max_price == (primary ? 0 : INT_MAX)) ) {
-				if ( equip[weapon] >= 40 * frand() ) {
-					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, missed_primary, name);
-					if (has_weapon) {
-						/* try to get the second akimbo pistol */
-						if ( primary == 2
-							 && !CSI->ods[weapon].firetwohanded
-							 && frand() < AKIMBO_CHANCE ) {
-							Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
-						}
-						/* enough sidearms */
-						max_price = primary ? 0 : INT_MAX;
-					}
-				}
-			}
-		} while ( !(max_price == (primary ? 0 : INT_MAX)) );
-	} while (!has_weapon && repeat--);
-
-	/* misc items and secondary weapons without reload */
-	if (!has_weapon)
-		repeat = WEAPONLESS_BONUS > frand ();
-	else
-		repeat = 0;
-	do {
+	if (chr->weapons) {
+		/* primary weapons */
 		max_price = INT_MAX;
 		do {
+			/* search for the most expensive primary weapon in the equipment */
 			prev_price = max_price;
 			max_price = 0;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = CSI->ods[i];
-				if ( equip[i]
-					 && ((obj.weapon && obj.buytype == 1 && !obj.reload)
-						 || obj.buytype == 2) ) {
+				if ( equip[i] && obj.weapon && obj.buytype == 0 ) {
 					if ( obj.price > max_price && obj.price < prev_price ) {
 						max_price = obj.price;
 						weapon = i;
 					}
 				}
 			}
+			/* see if there is any */
 			if (max_price) {
-				int num;
-
-				num =
-					equip[weapon] / 40
-					+ (equip[weapon] % 40 >= 40 * frand());
-				while (num--)
+				/* see if the actor picks it */
+				if ( equip[weapon] >= (40 - PROB_COMPENSATION) * frand() ) {
+					/* not decrementing equip[weapon]
+					* so that we get more possible squads */
 					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
-			}
-		} while (max_price);
-	} while (repeat--); /* gives more if no serious weapons */
+					if (has_weapon) {
+						int ammo;
 
-	/* if no weapon at all, bad guys will always find a blade to wield */
-	if (!has_weapon) {
-		Com_DPrintf("Com_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", name);
-		max_price = 0;
-		for (i = 0; i < CSI->numODs; i++) {
-			obj = CSI->ods[i];
-			if ( equip[i]
-				 && obj.weapon && obj.buytype == 1 && !obj.reload ) {
-				if ( obj.price > max_price && obj.price < prev_price ) {
-					max_price = obj.price;
-					weapon = i;
+						/* find the first possible ammo to check damage type */
+						for (ammo = 0; ammo < CSI->numODs; ammo++)
+							if ( equip[ammo] && CSI->ods[ammo].link == weapon )
+								break;
+						if (ammo < CSI->numODs) {
+							primary =
+								/* to avoid two tachyon weapons */
+								!(CSI->ods[ammo].fd[0].dmgtype
+								== CSI->damTachyon)
+								/* to avoid SMG + Assault Rifle */
+								&& !(CSI->ods[ammo].fd[0].dmgtype
+									== CSI->damNormal);
+						}
+						max_price = 0; /* one primary weapon is enough */
+						missed_primary = 0;
+					}
+				} else {
+					missed_primary += equip[weapon];
 				}
 			}
-		}
-		if (max_price)
-			has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
-	}
-	/* if still no weapon, something is broken, or no blades in equip */
-	if (!has_weapon)
-		Com_DPrintf("Com_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", name);
+		} while (max_price);
 
-	/* armor; especially for those without primary weapons */
-	repeat = (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0;
+		/* sidearms (secondary weapons with reload) */
+		if (!has_weapon)
+			repeat = WEAPONLESS_BONUS > frand ();
+		else
+			repeat = 0;
+		do {
+			max_price = primary ? INT_MAX : 0;
+			do {
+				prev_price = max_price;
+				/* if primary is a tachyon or normal damage weapon,
+				we pick cheapest sidearms first */
+				max_price = primary ? 0 : INT_MAX;
+				for (i = 0; i < CSI->numODs; i++) {
+					obj = CSI->ods[i];
+					if ( equip[i] && obj.weapon
+						&& obj.buytype == 1 && obj.reload ) {
+						if ( primary
+							? obj.price > max_price && obj.price < prev_price
+							: obj.price < max_price && obj.price > prev_price ) {
+							max_price = obj.price;
+							weapon = i;
+						}
+					}
+				}
+				if ( !(max_price == (primary ? 0 : INT_MAX)) ) {
+					if ( equip[weapon] >= 40 * frand() ) {
+						has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, missed_primary, name);
+						if (has_weapon) {
+							/* try to get the second akimbo pistol */
+							if ( primary == 2
+								&& !CSI->ods[weapon].firetwohanded
+								&& frand() < AKIMBO_CHANCE ) {
+								Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+							}
+							/* enough sidearms */
+							max_price = primary ? 0 : INT_MAX;
+						}
+					}
+				}
+			} while ( !(max_price == (primary ? 0 : INT_MAX)) );
+		} while (!has_weapon && repeat--);
+
+		/* misc items and secondary weapons without reload */
+		if (!has_weapon)
+			repeat = WEAPONLESS_BONUS > frand ();
+		else
+			repeat = 0;
+		do {
+			max_price = INT_MAX;
+			do {
+				prev_price = max_price;
+				max_price = 0;
+				for (i = 0; i < CSI->numODs; i++) {
+					obj = CSI->ods[i];
+					if ( equip[i]
+						&& ((obj.weapon && obj.buytype == 1 && !obj.reload)
+							|| obj.buytype == 2) ) {
+						if ( obj.price > max_price && obj.price < prev_price ) {
+							max_price = obj.price;
+							weapon = i;
+						}
+					}
+				}
+				if (max_price) {
+					int num;
+
+					num =
+						equip[weapon] / 40
+						+ (equip[weapon] % 40 >= 40 * frand());
+					while (num--)
+						has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+				}
+			} while (max_price);
+		} while (repeat--); /* gives more if no serious weapons */
+
+		/* if no weapon at all, bad guys will always find a blade to wield */
+		if (!has_weapon) {
+			Com_DPrintf("Com_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", name);
+			max_price = 0;
+			for (i = 0; i < CSI->numODs; i++) {
+				obj = CSI->ods[i];
+				if ( equip[i]
+					&& obj.weapon && obj.buytype == 1 && !obj.reload ) {
+					if ( obj.price > max_price && obj.price < prev_price ) {
+						max_price = obj.price;
+						weapon = i;
+					}
+				}
+			}
+			if (max_price)
+				has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+		}
+		/* if still no weapon, something is broken, or no blades in equip */
+		if (!has_weapon)
+			Com_DPrintf("Com_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", name);
+
+		/* armor; especially for those without primary weapons */
+		repeat = (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0;
+	} else {
+		Com_Printf("Com_EquipActor: character '%s' may not carry weapons\n", chr->name);
+		return;
+	}
+
+	if (!chr->armor) {
+		Com_Printf("Com_EquipActor: character '%s' may not carry armor\n", chr->name);
+		return;
+	}
 
 	do {
 		max_price = INT_MAX;
