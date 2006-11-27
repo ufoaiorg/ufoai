@@ -142,6 +142,11 @@ names shevaar
 	Mkeek
 	Rniuk
 	}
+	lastname
+	{
+	"Uk Kronok"
+	"Np Zlrok"
+	}
 }
 
 actors shevaar
@@ -165,6 +170,11 @@ names cyborg_ortnok
 	Mkeek
 	Rniuk
 	}
+	lastname
+	{
+	"Uk Kronok"
+	"Np Zlrok"
+	}
 }
 
 actors cyborg_ortnok
@@ -187,6 +197,11 @@ names hovernet
 	Akrokk
 	Mkeek
 	Rniuk
+	}
+	lastname
+	{
+	"Uk Kronok"
+	"Np Zlrok"
 	}
 }
 
@@ -314,6 +329,10 @@ names ortnok
 names bloodspider
 {
 	neutral
+	{
+	"Bloodspider"
+	}
+	lastname
 	{
 	"Bloodspider"
 	}
