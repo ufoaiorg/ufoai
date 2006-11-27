@@ -2101,8 +2101,9 @@ static item_t cacheItem = {NONE,NONE,NONE}; /* to crash as soon as possible */
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] import
+ * @sa InitGame
+ * @sa Com_ParseScripts
  */
 void Com_InitCSI(csi_t * import)
 {
@@ -2112,8 +2113,10 @@ void Com_InitCSI(csi_t * import)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] invList
+ * @sa InitGame
+ * @sa CL_ResetSinglePlayerData
+ * @sa CL_InitLocal
  */
 void Com_InitInventory(invList_t * invList)
 {
@@ -2138,7 +2141,11 @@ static int cache_Com_CheckToInventory = 0;
 
 /**
  * @brief
- * @param
+ * @param[in] i
+ * @param[in] item
+ * @param[in] container
+ * @param[in] x
+ * @param[in] y
  * @sa
  */
 qboolean Com_CheckToInventory(const inventory_t * const i, const int item, const int container, int x, int y)
@@ -2223,8 +2230,12 @@ qboolean Com_CheckToInventory(const inventory_t * const i, const int item, const
 
 
 /**
-  * @brief Searches a suitable place in container of a given inventory
-  */
+ * @brief Searches a suitable place in container of a given inventory
+ * @param[in] i
+ * @param[in] container
+ * @param[in] x
+ * @param[in] y
+ */
 invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y)
 {
 	invList_t *ic;
@@ -2244,8 +2255,13 @@ invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int 
 
 
 /**
-  * @brief Add an item to a specified container in a given inventory
-  */
+ * @brief Add an item to a specified container in a given inventory
+ * @param[in] i
+ * @param[in] item
+ * @param[in] container
+ * @param[in] x
+ * @param[in] y
+ */
 invList_t *Com_AddToInventory(inventory_t * const i, item_t item, int container, int x, int y)
 {
 	invList_t *ic;
@@ -2283,7 +2299,10 @@ invList_t *Com_AddToInventory(inventory_t * const i, item_t item, int container,
 
 /**
  * @brief
- * @param
+ * @param[in] i
+ * @param[in] container
+ * @param[in] x
+ * @param[in] y
  * @sa
  */
 qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y)
@@ -2468,8 +2487,9 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] i
+ * @param[in] container
+ * @sa Com_DestroyInventory
  */
 void Com_EmptyContainer(inventory_t* const i, const int container)
 {
@@ -2508,8 +2528,8 @@ void Com_EmptyContainer(inventory_t* const i, const int container)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param i The invetory which should be erased
+ * @sa Com_EmptyContainer
  */
 void Com_DestroyInventory(inventory_t* const i)
 {
@@ -2527,8 +2547,12 @@ void Com_DestroyInventory(inventory_t* const i)
 
 /**
  * @brief Finds space for item in inv at container
- * @param
- * @sa
+ * @param[in] inv
+ * @param[in] time
+ * @param[in] container
+ * @param[in] px
+ * @param[in] py
+ * @sa Com_CheckToInventory
  */
 void Com_FindSpace(const inventory_t* const inv, const int item, const int container, int* const px, int* const py)
 {
