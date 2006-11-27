@@ -812,6 +812,9 @@ void CL_PlaceItem( le_t *le )
 		le->origin[2] -= 28;
 		le->angles[ROLL] = 90;
 /*		le->angles[YAW] = 10*(int)(le->origin[0] + le->origin[1] + le->origin[2]) % 360; */
+	} else {
+		/* if no items in floor inventory, don't draw this le */
+		le->inuse = qfalse;
 	}
 }
 
