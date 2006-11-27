@@ -146,7 +146,8 @@ void SV_DemoMap_f(void)
 void SV_Map_f(void)
 {
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: map <mapname>\n");
+		Com_Printf("Usage: %s <mapname>\n", Cmd_Argv(0));
+		Com_Printf("Use 'maplist' to get a list of all installed maps\n");
 		return;
 	}
 	/* change */
@@ -455,19 +456,19 @@ void SV_InitOperatorCommands(void)
 	Cmd_AddCommand("serverinfo", SV_Serverinfo_f, NULL);
 	Cmd_AddCommand("dumpuser", SV_DumpUser_f, NULL);
 
-	Cmd_AddCommand("map", SV_Map_f, NULL);
+	Cmd_AddCommand("map", SV_Map_f, "Quit client and load the new map");
 /*	Cmd_AddCommand ("demomap", SV_DemoMap_f, NULL);*/
-	Cmd_AddCommand("maplist", SV_ListMaps_f, NULL);
+	Cmd_AddCommand("maplist", SV_ListMaps_f, "List of all available maps");
 
 	Cmd_AddCommand("setmaster", SV_SetMaster_f, NULL);
 
 	if (dedicated->value)
-		Cmd_AddCommand("say", SV_ConSay_f, NULL);
+		Cmd_AddCommand("say", SV_ConSay_f, "Broadcasts server messages to all connected players");
 
 	Cmd_AddCommand("serverrecord", SV_ServerRecord_f, NULL);
 	Cmd_AddCommand("serverstop", SV_ServerStop_f, NULL);
 
 	Cmd_AddCommand("killserver", SV_KillServer_f, NULL);
 
-	Cmd_AddCommand("sv", SV_ServerCommand_f, NULL);
+	Cmd_AddCommand("sv", SV_ServerCommand_f, "Server command");
 }

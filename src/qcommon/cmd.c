@@ -34,16 +34,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qcommon.h"
 
 void Cmd_ForwardToServer(void);
+#define ALIAS_HASH_SIZE	32
 
 #define	MAX_ALIAS_NAME	32
 
-typedef struct cmdalias_s {
-	struct cmdalias_s *next;
+typedef struct cmd_alias_s {
+	struct cmd_alias_s *next;
 	char name[MAX_ALIAS_NAME];
+	struct cmd_alias_s *hash_next;
 	char *value;
-} cmdalias_t;
+} cmd_alias_t;
 
-static cmdalias_t *cmd_alias;
+static cmd_alias_t *cmd_alias;
+cmd_alias_t *cmd_alias_hash[ALIAS_HASH_SIZE];
 
 static qboolean cmd_wait, cmd_closed;
 
@@ -414,8 +417,10 @@ void Cmd_Echo_f(void)
  */
 void Cmd_Alias_f(void)
 {
-	cmdalias_t *a;
+	cmd_alias_t *a;
 	char cmd[MAX_STRING_CHARS];
+	size_t len;
+	unsigned int hash;
 	int i, c;
 	char *s;
 
@@ -427,13 +432,15 @@ void Cmd_Alias_f(void)
 	}
 
 	s = Cmd_Argv(1);
-	if (strlen(s) >= MAX_ALIAS_NAME) {
+	len = strlen(s);
+	if (len >= MAX_ALIAS_NAME) {
 		Com_Printf("Alias name is too long\n");
 		return;
 	}
 
 	/* if the alias already exists, reuse it */
-	for (a = cmd_alias; a; a = a->next) {
+	hash = Com_HashKey (s, ALIAS_HASH_SIZE);
+	for (a = cmd_alias_hash[hash] ; a ; a=a->hash_next) {
 		if (!Q_strncmp(s, a->name, MAX_ALIAS_NAME)) {
 			Mem_Free(a->value);
 			break;
@@ -441,8 +448,10 @@ void Cmd_Alias_f(void)
 	}
 
 	if (!a) {
-		a = Mem_Alloc(sizeof(cmdalias_t));
+		a = Mem_Alloc(sizeof(cmd_alias_t));
 		a->next = cmd_alias;
+		a->hash_next = cmd_alias_hash[hash];
+		cmd_alias_hash[hash] = a;
 		cmd_alias = a;
 	}
 	Q_strncpyz(a->name, s, MAX_ALIAS_NAME);
@@ -466,8 +475,11 @@ COMMAND EXECUTION
 =============================================================================
 */
 
+#define CMD_HASH_SIZE 32
+
 typedef struct cmd_function_s {
 	struct cmd_function_s *next;
+	struct cmd_function_s *hash_next;
 	char *name;
 	char *description;
 	xcommand_t function;
@@ -479,7 +491,7 @@ static char *cmd_null_string = "";
 static char cmd_args[MAX_STRING_CHARS];
 
 static cmd_function_t *cmd_functions;	/* possible commands to execute */
-
+static cmd_function_t *cmd_functions_hash[CMD_HASH_SIZE];
 /**
  * @brief
  * @return the number of arguments
@@ -658,6 +670,7 @@ char* Cmd_GetCommandDesc(const char* cmd_name)
 {
 	cmd_function_t *cmd;
 	char *sep = NULL;
+	unsigned int hash;
 	char searchName[MAX_VAR];
 
 	/* remove paramters */
@@ -667,7 +680,8 @@ char* Cmd_GetCommandDesc(const char* cmd_name)
 		*sep = '\0';
 
 	/* fail if the command already exists */
-	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
+	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
+	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcmp(searchName, cmd->name)) {
 			if (cmd->description)
 				return cmd->description;
@@ -688,6 +702,10 @@ char* Cmd_GetCommandDesc(const char* cmd_name)
 void Cmd_AddCommand(char *cmd_name, xcommand_t function, char *desc)
 {
 	cmd_function_t *cmd;
+	unsigned int hash;
+
+	if (!cmd_name || !cmd_name[0])
+		return;
 
 	/* fail if the command is a variable name */
 	if (Cvar_VariableString(cmd_name)[0]) {
@@ -696,7 +714,8 @@ void Cmd_AddCommand(char *cmd_name, xcommand_t function, char *desc)
 	}
 
 	/* fail if the command already exists */
-	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
+	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
+	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcmp(cmd_name, cmd->name)) {
 			Com_Printf("Cmd_AddCommand: %s already defined\n", cmd_name);
 			return;
@@ -707,6 +726,8 @@ void Cmd_AddCommand(char *cmd_name, xcommand_t function, char *desc)
 	cmd->name = cmd_name;
 	cmd->description = desc;
 	cmd->function = function;
+	cmd->hash_next = cmd_functions_hash[hash];
+	cmd_functions_hash[hash] = cmd;
 	cmd->next = cmd_functions;
 	cmd_functions = cmd;
 }
@@ -719,6 +740,22 @@ void Cmd_AddCommand(char *cmd_name, xcommand_t function, char *desc)
 void Cmd_RemoveCommand(const char *cmd_name)
 {
 	cmd_function_t *cmd, **back;
+	unsigned int hash;
+	hash = Com_HashKey (cmd_name, CMD_HASH_SIZE);
+	back = &cmd_functions_hash[hash];
+
+	while (1) {
+		cmd = *back;
+		if (!cmd) {
+			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmd_name);
+			return;
+		}
+		if (!Q_stricmp (cmd_name, cmd->name)) {
+			*back = cmd->hash_next;
+			break;
+		}
+		back = &cmd->hash_next;
+	}
 
 	back = &cmd_functions;
 	while (1) {
@@ -743,8 +780,10 @@ void Cmd_RemoveCommand(const char *cmd_name)
 qboolean Cmd_Exists(const char *cmd_name)
 {
 	cmd_function_t *cmd;
+	unsigned int hash;
+	hash = Com_HashKey (cmd_name, CMD_HASH_SIZE);
 
-	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
+	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcmp(cmd_name, cmd->name))
 			return qtrue;
 	}
@@ -761,7 +800,7 @@ qboolean Cmd_Exists(const char *cmd_name)
 int Cmd_CompleteCommand(const char *partial, char **match)
 {
 	cmd_function_t *cmd;
-	cmdalias_t *a;
+	cmd_alias_t *a;
 	char *localMatch = NULL;
 	int len, matches = 0;
 
@@ -801,7 +840,9 @@ int Cmd_CompleteCommand(const char *partial, char **match)
 void Cmd_ExecuteString(char *text)
 {
 	cmd_function_t *cmd;
-	cmdalias_t *a;
+	cmd_alias_t *a;
+	char *str;
+	unsigned int hash;
 
 #ifdef DEBUG
 	Com_DPrintf("ExecuteString: '%s'\n", text);
@@ -814,9 +855,12 @@ void Cmd_ExecuteString(char *text)
 		/* no tokens */
 		return;
 
+	str = cmd_argv[0];
+
 	/* check functions */
-	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
-		if (!Q_strcasecmp(cmd_argv[0], cmd->name)) {
+	hash = Com_HashKey (str, CMD_HASH_SIZE);
+	for (cmd = cmd_functions_hash[hash]; cmd; cmd=cmd->hash_next) {
+		if (!Q_strcasecmp(str, cmd->name)) {
 			if (!cmd->function) {	/* forward to server command */
 				Cmd_ExecuteString(va("cmd %s", text));
 			} else
@@ -826,7 +870,8 @@ void Cmd_ExecuteString(char *text)
 	}
 
 	/* check alias */
-	for (a = cmd_alias; a; a = a->next) {
+	hash = Com_HashKey (str, ALIAS_HASH_SIZE);
+	for (a = cmd_alias_hash[hash]; a; a = a->hash_next) {
 		if (!Q_strcasecmp(cmd_argv[0], a->name)) {
 			if (++alias_count == ALIAS_LOOP_COUNT) {
 				Com_Printf("ALIAS_LOOP_COUNT\n");
@@ -851,7 +896,7 @@ void Cmd_ExecuteString(char *text)
 void Cmd_List_f(void)
 {
 	cmd_function_t *cmd;
-	cmdalias_t *alias;
+	cmd_alias_t *alias;
 	int i = 0, j = 0, c, l = 0;
 	char *token = NULL;
 

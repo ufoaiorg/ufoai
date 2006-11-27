@@ -139,7 +139,7 @@ menu options
 
 menu options_video
 {
-	string showkeys
+	string videosettings
 	{
 		string	"_Video settings"
 		pos		"840 60"

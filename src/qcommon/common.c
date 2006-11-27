@@ -1007,6 +1007,23 @@ void SZ_Print(sizebuf_t * buf, const char *data)
 
 /*============================================================================ */
 
+/**
+ * @brief returns hash key for a string
+ */
+unsigned int Com_HashKey (const char *name, int hashsize)
+{
+	int i;
+	unsigned int v;
+	unsigned int c;
+
+	v = 0;
+	for (i = 0; name[i]; i++) {
+		c = name[i];
+		v = (v + i) * 37 + tolower( c );	/* case insensitivity */
+	}
+
+	return v % hashsize;
+}
 
 /**
  * @brief Checks whether a given commandline paramter was set

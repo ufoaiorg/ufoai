@@ -30,6 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qcommon.h"
 
+#define CVAR_HASH_SIZE          64
+
+cvar_t  *cvar_vars_hash[CVAR_HASH_SIZE];
+
 /**
  * @brief This is set each time a CVAR_USERINFO variable is changed
  * so that the client knows to send it to the server
@@ -64,9 +68,11 @@ static qboolean Cvar_InfoValidate(const char *s)
  */
 static cvar_t *Cvar_FindVar(const char *var_name)
 {
+	unsigned hash;
 	cvar_t *var;
 
-	for (var = cvar_vars; var; var = var->next)
+	hash = Com_HashKey (var_name, CVAR_HASH_SIZE);
+	for (var = cvar_vars_hash[hash]; var; var = var->next)
 		if (!Q_strcmp(var_name, var->name))
 			return var;
 
@@ -147,6 +153,7 @@ int Cvar_CompleteVariable(const char *partial, char **match)
  */
 cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, char* desc)
 {
+	unsigned hash;
 	cvar_t *var;
 
 	if (flags & (CVAR_USERINFO | CVAR_SERVERINFO))
@@ -155,13 +162,14 @@ cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, char* d
 			return NULL;
 		}
 
-	var = Cvar_FindVar(var_name);
-	if (var) {
-		var->flags |= flags;
-		if (desc)
-			var->description = desc;
-		return var;
-	}
+	hash = Com_HashKey (var_name, CVAR_HASH_SIZE);
+	for (var = cvar_vars_hash[hash]; var;  var=var->hash_next)
+		if (!Q_stricmp (var_name, var->name)) {
+			var->flags |= flags;
+			if (desc)
+				var->description = desc;
+			return var;
+		}
 
 	if (!var_value)
 		return NULL;
@@ -180,6 +188,8 @@ cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, char* d
 	var->description = desc;
 
 	/* link the variable in */
+	var->hash_next = cvar_vars_hash[hash];
+	cvar_vars_hash[hash] = var;
 	var->next = cvar_vars;
 	cvar_vars = var;
 

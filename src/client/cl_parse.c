@@ -580,6 +580,16 @@ void CL_EntPerish( sizebuf_t *sb )
 
 
 le_t	*lastMoving;
+
+/**
+* @brief Set the lastMoving entity (set to the actor who last
+* walked, turned, crouched or stood up).
+*/
+void CL_SetLastMoving( le_t *le )
+{
+	lastMoving = le;
+}
+
 /**
  * @brief
  */
@@ -589,7 +599,7 @@ void CL_ActorDoStartMove( sizebuf_t *sb )
 
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_MOVE], &entnum);
 
-	lastMoving = LE_Get(entnum);
+	CL_SetLastMoving(LE_Get(entnum));
 }
 
 
@@ -729,6 +739,11 @@ void CL_ActorStateChange( sizebuf_t *sb )
 		Com_Printf( "StateChange message ignored... LE not found or not an actor\n" );
 		return;
 	}
+
+	/* if standing up or crouching down, set this le as the last moving */
+	if ( (state & STATE_CROUCHED && !(le->state & STATE_CROUCHED)) || 
+		 (!(state & STATE_CROUCHED) && le->state & STATE_CROUCHED) )
+		CL_SetLastMoving(le);
 
 	le->state = state;
 	le->think = LET_StartIdle;
