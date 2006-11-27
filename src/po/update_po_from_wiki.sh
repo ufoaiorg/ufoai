@@ -21,7 +21,6 @@ output_file=updated_${language}.po
 log_file=updated_${language}.log
 debug=0
 
-
 if [ -z $language ]
 then
 	echo "Usage : $0 lang"
@@ -34,6 +33,20 @@ then
 	echo "Could not find the file "$input_file" in this directory."
 fi
 
+# we use gnu sed for several substitutions in this script. For linux, this program is called 'sed', but on other system (fresbsd), it is called gsed. We set sed_soft to the name of sed program.
+sed_soft="sed"
+test=`printf "rnt\n" | $sed_soft 's/\r//g;s/\n//g;s/\t//g'`
+if [ "$test" != "rnt" ]
+then
+	which gsed > /dev/null
+	if [ $? -eq 0 ]
+	then
+		sed_soft="gsed"
+	else
+		printf "Sorry, but this program needs a version of gnu sed to run (named sed or gsed).\nPlease install gsed (this is different from sed for other Unix than Linux).\n"
+		exit
+	fi	
+fi
 
 find_line()
 {
@@ -82,17 +95,19 @@ apply_sed()
 	test=${#test}
 	if [ $test -eq 0 ]
 	then
-		test=`wc -l sed_commands | cut -d " " -f 1`
+		#test=`wc -l sed_commands | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
+		test=`awk 'NR == 3 {print $0}' sed_commands`
+		test=${#test}
 	fi
 
-	if [ $test -gt 2 ]
+	if [ $test -gt 0 ]
 	then
-		sed -f 'sed_commands' $output_file > $output_file.tmp
+		$sed_soft -f 'sed_commands' $output_file > $output_file.tmp
 		BEGIN=$BEGIN-2
 		test=`awk 'NR == '$BEGIN' {print $0}' $output_file.tmp`
 		if [ "$test" = "#, fuzzy" ]
 		then
-			sed $BEGIN'd' $output_file.tmp > $output_file.tmp.tmp
+			$sed_soft $BEGIN'd' $output_file.tmp > $output_file.tmp.tmp
 			mv -f $output_file.tmp.tmp $output_file.tmp
 		fi
 
@@ -120,13 +135,13 @@ clean_html()
 # Warning : Never use clean_html after set_BEGIN_END or it will change the values of BEGIN and END
 
 	BEGIN=`grep -n "<!-- start content -->" downloaded_page | cut -d : -f 1`
-	sed '1,'$BEGIN'd' downloaded_page > temp
+	$sed_soft '1,'$BEGIN'd' downloaded_page > downloaded_page.tmp
 
-	BEGIN=`grep -n "<div class=\"printfooter\">" temp | cut -d : -f 1`
-	END=`wc -l temp | cut -d " " -f 1`
-	sed $BEGIN','$END'd' temp |
-	sed ':a;N;$!ba;s/\n//g;s/^[ \t]*//g;s/[ \t]*$//g;s/&amp;/\&/g;s/&nbsp;/ /g;s/\s\+$//;s/<br \/>//g;s/<b>//g;s/<\/b>//g;s/<hr \/>//g;s/<\/p>/<p>/g;s/<i>//g;s/<\/i>//g;s/<\/h1>/<p>/g;s/<\/h2>/<p>/g;s/<\/h3>/<p>/g;s/<\/h4>/<p>/g;s/<dd>/<p>/g;s/<dl>/<p>/g;s/<\/dd>/<p>/g;s/<\/dl>/<p>/g;s/[ \t]*<p>[ \t]*/<p>/g;s/:/: /g;s/[ \t][ \t]*/ /g;s/class=\"image\"/><p></g' > downloaded_page
-	rm -f temp
+	BEGIN=`grep -n "<div class=\"printfooter\">" downloaded_page.tmp | cut -d : -f 1`
+	END=`wc -l downloaded_page.tmp | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
+	$sed_soft $BEGIN','$END'd' downloaded_page.tmp |
+	$sed_soft ':a;N;$!ba;s/\n//g;s/^[ \t]*//g;s/[ \t]*$//g;s/&amp;/\&/g;s/&nbsp;/ /g;s/\s\+$//;s/<br \/>//g;s/<b>//g;s/<\/b>//g;s/<hr \/>//g;s/<\/p>/<p>/g;s/<i>//g;s/<\/i>//g;s/<\/h1>/<p>/g;s/<\/h2>/<p>/g;s/<\/h3>/<p>/g;s/<\/h4>/<p>/g;s/<dd>/<p>/g;s/<dl>/<p>/g;s/<\/dd>/<p>/g;s/<\/dl>/<p>/g;s/[ \t]*<p>[ \t]*/<p>/g;s/:/: /g;s/[ \t][ \t]*/ /g;s/class=\"image\"/><p></g' > downloaded_page
+	rm -f downloaded_page.tmp
 
 }
 
@@ -245,7 +260,7 @@ update_one_sentence()
 			printf "%s",$0
 			test=1}
 		' downloaded_page |
-	sed 's/^\['$english'\][ \t]*//g;s/\"/\\\"/g;s/\\/\\\\/g;/^[ \t]*$/d;s/^[ \t]*/'$option'\"/g;s/[ \t]*$/\"/g;s/[ \t][ \t]*/ /g' >> sed_commands
+	$sed_soft 's/^\['$english'\][ \t]*//g;s/\"/\\\"/g;s/\\/\\\\/g;/^[ \t]*$/d;s/^[ \t]*/'$option'\"/g;s/[ \t]*$/\"/g;s/[ \t][ \t]*/ /g' >> sed_commands
 	printf "\n"
 	echo "Found sentence msgid : " $english
 	apply_sed $english
@@ -279,7 +294,7 @@ update_news()
 				test=1}
 			END {printf "\n"}  
 		' downloaded_page | 
-		sed 's/^[ \t]*//g;/^[ \t]*$/d;s/\"/\\\"/g;s/\\/\\\\/g' |
+		$sed_soft 's/^[ \t]*//g;/^[ \t]*$/d;s/\"/\\\"/g;s/\\/\\\\/g' |
 		awk '$0 !~ /^[ \t]*$/ {
 			printf "'$END'i\"%s\"\n",$0}' >> sed_commands
 		printf "\n"
@@ -335,9 +350,9 @@ update_txt()
 			already_written_test=1;
 			exit_test=0}
 	' downloaded_page | 
-	sed 's/[[:space:]]*<.*>[[:space:]]*//g;/^[[:space:]]*$/d;s/^[ \t]*//g;s/\"/\\\"/g' | 
+	$sed_soft 's/[[:space:]]*<.*>[[:space:]]*//g;/^[[:space:]]*$/d;s/^[ \t]*//g;s/\"/\\\"/g' | 
 	awk '{printf "'$END'i\"%s\"\n",$0}' |	
-	sed 's/\\/\\\\/g'>> sed_commands
+	$sed_soft 's/\\/\\\\/g'>> sed_commands
 	apply_sed $english
 	return $?
 }
@@ -398,15 +413,8 @@ declare -i FIRST_LINE  # Contains the first interesting line of the wiki index. 
 # $output_file is converted from dos to unix if needed
 # Each input of msgstr (i.e. the part before any \n) is put on only 1 line
 BEGIN=`grep -nm 1 "#: " $language.po | cut -d : -f 1`
-END=`wc -l $language.po | cut -d " " -f 1`
-test=`echo "n" | sed 's/\r//g'`
-if [ "test" = "n" ]
-then
-	option=";s/\r//g"
-else
-	option=""
-fi
-sed $BEGIN','$END's/^\"\(.*\)\"$/\1/g'$option $language.po |
+END=`wc -l $language.po | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
+$sed_soft $BEGIN','$END's/^\"\(.*\)\"$/\1/g;s/\r//g' $language.po | 
 awk 'BEGIN {FS=" ";test=0}
 	$0 ~ /^[ \t]*$/ {if (test) {printf "\"\n";}; printf "\n"; test=0; next}
     $0 ~ /^#/ || $0 ~ /^\"/ || $0 ~ /^msgid \"/ || $0 ~ /^msgstr \"/ {
@@ -423,7 +431,7 @@ awk 'BEGIN {FS=" ";test=0}
 ' > $output_file
 echo "Converted $language.po to $output_file : done." >> $log_file
 
-test=`diff $language.po $output_file | sed '/^</!d;/^<[ \t]*\"/d'`
+test=`diff $language.po $output_file | $sed_soft '/^</!d;/^<[ \t]*\"/d'`
 if [[ ${#test} -gt 0 ]]
 then
 	echo "Security stop : the line $test has been removed from $language.po and shouldn't have" | tee -a $log_file
@@ -444,7 +452,7 @@ fi
 # Generation of a file 'po_file.tmp' which contains the list of the english msgid
 # present in the language .po file.
 
-sed '/^msgid \"/!d;s/^msgid[ \t]*\"\(.*\)[ \t]*\"/\1/g;s/^[ \t]*//g;s/[ \t]*$//g;/^[ \t]*$/d' $language.po > po_file.tmp
+$sed_soft '/^msgid \"/!d;s/^msgid[ \t]*\"\(.*\)[ \t]*\"/\1/g;s/^[ \t]*//g;s/[ \t]*$//g;/^[ \t]*$/d' $language.po > po_file.tmp
 
 echo "Creating po_file.tmp : done." >> $log_file
 if [[ "$debug" = "1" ]]
@@ -536,7 +544,7 @@ then
 		$0 ~ /</ {exit}
 		$0 !~ /^[ \t]*$/ {printf "%s",$0}
     ' downloaded_page |
-	sed 's/[[:space:]]*<.*>[[:space:]]*//g;s/^[ \t]*//g;s/\"/\\\"/g'`
+	$sed_soft 's/[[:space:]]*<.*>[[:space:]]*//g;s/^[ \t]*//g;s/\"/\\\"/g'`
 fi
 if [ "$default_pre_txt" = "" ]
 then
@@ -574,7 +582,7 @@ do
 			echo "Found section title msgid : " $english
 			set_BEGIN_END "0"
 			grep -iwm 1 ">$english</a> (en), <a href" ${index} |
-			sed 's/<\/a>//g;/ ('$language')/!d;s/.*>\(.*\) ('$language').*/\1/;s/\"/\\\"/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g;s/\\/\\\\/g' >> sed_commands
+			$sed_soft 's/<\/a>//g;/ ('$language')/!d;s/.*>\(.*\) ('$language').*/\1/;s/\"/\\\"/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g;s/\\/\\\\/g' >> sed_commands
 			apply_sed $english
 		else
 			pre_txt=0
@@ -597,7 +605,7 @@ do
 			# For other descriptions, we want the first part.
 			# We distinguish between both with the variable 'working_section'
 				clean_html
-				if [[ ${english} = "ufo_"*"_txt" ]] || [[ ${english} = *"_autopsy_txt"* ]] || [[ ${english} = "kerrblade_txt" ]] || [[ ${english} = "plas"*"_txt" ]] || [[ ${english} = "bolterrifle"*"_txt" ]]
+				if [[ ${english} = "ufo_"*"_txt" ]] || [[ ${english} = *"_autopsy_txt"* ]] || [[ ${english} = "kerrblade_txt" ]] || [[ ${english} = "plas"*"_txt" ]] || [[ ${english} = "bolterrifle"*"_txt" ]] || [[ ${english} = "nano_armor_txt" ]]
 				then
 				# Case of Alien Research : only the second part of the text has to be taken
 				update_txt 3 0 0
@@ -638,8 +646,8 @@ do
 								}
 							n > $loc {exit}
 						' ${index} |
-						sed 's/>\(.*\)<\/a>/\1/' | 
-						sed 's/\"/\\\"/g;s/\\/\\\\/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g' >> sed_commands
+						$sed_soft 's/>\(.*\)<\/a>/\1/' | 
+						$sed_soft 's/\"/\\\"/g;s/\\/\\\\/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g' >> sed_commands
 						apply_sed $english
 					fi
 				else
