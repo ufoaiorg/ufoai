@@ -642,8 +642,6 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 		if (team != TEAM_CIVILIAN) {
 			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_alien"), &ent->chr);
 
-			/* FIXME: chr.name should be Alien: Ortnok e.g. */
-			Q_strncpyz(ent->chr.name, _("Alien"), MAX_VAR);
 			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
 			gi.linkentity(ent);

@@ -777,6 +777,7 @@ static void Com_ParseNames(char *title, char **text)
 				} while (*text);
 
 				/* lastname is different */
+				/* fill female and male lastnames from neutral lastnames */
 				if (i == NAME_LAST)
 					for (i = NAME_NUM_TYPES - 1; i > NAME_LAST; i--) {
 						nc->names[i] = nc->names[NAME_LAST];
@@ -789,6 +790,13 @@ static void Com_ParseNames(char *title, char **text)
 			Com_Printf("Com_ParseNames: unknown token \"%s\" ignored (names %s)\n", token, title);
 
 	} while (*text);
+
+	if (nc->numNames[NAME_FEMALE] && !nc->numNames[NAME_FEMALE_LAST])
+		Sys_Error("Com_ParseNames: '%s' has no female lastname category\n", nc->title);
+	if (nc->numNames[NAME_MALE] && !nc->numNames[NAME_MALE_LAST])
+		Sys_Error("Com_ParseNames: '%s' has no male lastname category\n", nc->title);
+	if (nc->numNames[NAME_NEUTRAL] && !nc->numNames[NAME_LAST])
+		Sys_Error("Com_ParseNames: '%s' has no neutral lastname category\n", nc->title);
 }
 
 
