@@ -7489,3 +7489,23 @@
 "classname" "info_human_start"
 "origin" "816 -368 56"
 }
+// entity 146
+{
+"classname" "info_civilian_start"
+"origin" "-112 592 96"
+}
+// entity 147
+{
+"classname" "info_civilian_start"
+"origin" "688 240 32"
+}
+// entity 148
+{
+"classname" "info_civilian_start"
+"origin" "784 304 32"
+}
+// entity 149
+{
+"classname" "info_civilian_start"
+"origin" "336 592 96"
+}

@@ -68,24 +68,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* it should be initialized at dll load time, and read/written to */
 /* the server.ssv file for savegames */
 typedef struct {
-	char helpmessage1[512];
-	char helpmessage2[512];
-	int helpchanged;			/* flash F1 icon if non 0, play sound */
-	/* and increment only if 1, 2, or 3 */
-
 	player_t *players;			/* [maxplayers] */
 
 	/* store latched cvars here that we want to get at often */
 	int maxplayers;
 	int maxentities;
-
-	/* cross level triggers */
-	int serverflags;
-
-	/* items */
-	int num_items;
-
-	qboolean autosaved;
 } game_locals_t;
 
 /* this structure is cleared as each map is entered */

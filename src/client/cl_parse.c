@@ -211,6 +211,7 @@ qboolean blockEvents;
 int nextTime;
 int shootTime;
 int impactTime;
+qboolean parsedDeath = qfalse;
 
 /*============================================================================= */
 
@@ -440,6 +441,7 @@ void CL_Reset( sizebuf_t *sb )
 		last = et++;
 		et->next = last;
 	}
+	parsedDeath = qfalse;
 	etUnused = et;
 /*	Com_Printf("et: etUnused = %p\n", etUnused);*/
 	etCurrent = NULL;
@@ -556,6 +558,7 @@ void CL_EntPerish( sizebuf_t *sb )
 			if ( actor->inuse 
 				 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
 				 && VectorCompare(actor->pos, le->pos) ) {
+				Com_DPrintf("CL_EntPerish: le of type ET_ITEM destroyed.");
 				FLOOR(actor) = NULL;
 			}
 	} else {
@@ -733,6 +736,10 @@ void CL_ActorStateChange( sizebuf_t *sb )
 	/* killed by the server: no animation is played, etc. */
 	if (state & STATE_DEAD)
 		CL_RemoveActorFromTeamList(le);
+
+	/* state change may have affected move length */
+	if (selActor)
+		CL_ResetActorMoveLength();
 }
 
 
@@ -1016,12 +1023,21 @@ void CL_ParseEvent( void )
 			if ( impactTime < cl.eventTime )
 				impactTime = cl.eventTime;
 
-			if ( eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE )
+			if ( eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE ) {
 				time = impactTime;
-			else if ( eType == EV_ACTOR_SHOOT || eType == EV_ACTOR_SHOOT_HIDDEN )
+				parsedDeath = qtrue;
+			} else if ( eType == EV_ACTOR_SHOOT || eType == EV_ACTOR_SHOOT_HIDDEN ) {
 				time = shootTime;
-			else
+			} else {
 				time = nextTime;
+			}
+
+			if ((eType == EV_ENT_APPEAR || eType == EV_INV_ADD)) {
+				if (parsedDeath) /* drop items after death (caused by impact) */
+					time = impactTime + 400;
+				else if (impactTime > cl.eventTime) /* item thrown on the ground */
+					time = impactTime + 75;
+			}
 
 			/* calculate time interval before the next event */
 			switch ( eType ) {
@@ -1061,6 +1077,7 @@ void CL_ParseEvent( void )
 						if ( fd->rof )
 							shootTime += 1000 / fd->rof;
 					}
+					parsedDeath = qfalse;
 				}
 				break;
 			case EV_ACTOR_SHOOT:
@@ -1093,11 +1110,13 @@ void CL_ParseEvent( void )
 							nextTime = impactTime;
 						}
 					}
+					parsedDeath = qfalse;
 				}
 				break;
 			case EV_ACTOR_THROW:
 				nextTime += MSG_ReadShort( &net_message );
 				impactTime = shootTime = nextTime;
+				parsedDeath = qfalse;
 				break;
 			}
 
