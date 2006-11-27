@@ -562,7 +562,7 @@ char *Com_GiveName(int gender, char *category)
 			/* found category */
 			if (!nc->numNames[gender]) {
 #ifdef DEBUG
-				Com_Printf("No valid name definitions for gender %i in category '%s'\n", gender, category);
+				Com_DPrintf("No valid name definitions for gender %i in category '%s'\n", gender, category);
 #endif
 				return NULL;
 			}

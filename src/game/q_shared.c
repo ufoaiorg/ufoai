@@ -2351,7 +2351,15 @@ qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int
 
 /**
  * @brief
- * @param
+ * @param[in] i
+ * @param[in] from
+ * @param[in] fx
+ * @param[in] fy
+ * @param[in] to
+ * @param[in] tx
+ * @param[in] ty
+ * @param[in] TU
+ * @param[in] icp
  * @sa
  */
 int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp)
@@ -2729,11 +2737,9 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
  * @param[in] inv The inventory that will get the weapon
  * @param[in] equip The equipment that shows what is available
  * @param[in] name The name of the equipment for debug messages
+ * @param[in] chr Pointer to character data - to get the weapon and armor bools
  * @note The code below is a complete implementation
  * of the scheme sketched at the beginning of equipment_missions.ufo.
- * However, aliens cannot yet swap weapons,
- * so in their case only the weapon in the right hand will be used.
- * The rest will be just player's loot.
  * Beware: if two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
@@ -2892,12 +2898,12 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 		/* armor; especially for those without primary weapons */
 		repeat = (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0;
 	} else {
-		Com_Printf("Com_EquipActor: character '%s' may not carry weapons\n", chr->name);
+		Com_DPrintf("Com_EquipActor: character '%s' may not carry weapons\n", chr->name);
 		return;
 	}
 
 	if (!chr->armor) {
-		Com_Printf("Com_EquipActor: character '%s' may not carry armor\n", chr->name);
+		Com_DPrintf("Com_EquipActor: character '%s' may not carry armor\n", chr->name);
 		return;
 	}
 
