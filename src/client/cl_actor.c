@@ -1495,6 +1495,7 @@ void CL_ActorDie(sizebuf_t * sb)
 		}
 	}
 
+	VectorCopy(player_dead_maxs, le->maxs);
 	CL_RemoveActorFromTeamList(le);
 
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
@@ -2091,9 +2092,11 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 	vec3_t dir, mid;
 	vec3_t mins, maxs;
 	trace_t tr;
-	int oldLevel;
+	int oldLevel, i;
 	float d;
 	qboolean crossNo;
+	le_t *le;
+	le_t *target = NULL;
 
 	if (!selActor || !selFD)
 		return;
@@ -2121,7 +2124,15 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 	/* check for obstacles */
 	VectorSet(mins, 0, 0, 0);
 	VectorSet(maxs, 0, 0, 0);
-	tr = CL_Trace(start, mid, mins, maxs, selActor, MASK_SHOT);
+
+	/* search for an actor at target */
+	for (i = 0, le = LEs; i < numLEs; i++, le++)
+		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV) && VectorCompare(le->pos, toPos)) {
+			target = le;
+			break;
+		}
+
+	tr = CL_Trace(start, mid, mins, maxs, selActor, target, MASK_SHOT);
 	if (tr.fraction < 1.0) {
 		d = VectorDist(start, mid);
 		VectorMA(start, tr.fraction * d, dir, mid);
@@ -2161,6 +2172,8 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 	int oldLevel;
 	qboolean obstructed = qfalse;
 	int i;
+	le_t *le;
+	le_t *target = NULL;
 
 	if (!selActor || (fromPos[0] == toPos[0] && fromPos[1] == toPos[1]))
 		return;
@@ -2175,16 +2188,19 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 	cross[2] -= 9;
 	at[2] -= 28;
 
+	/* search for an actor at target */
+	for (i = 0, le = LEs; i < numLEs; i++, le++)
+		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV) && VectorCompare(le->pos, toPos)) {
+			target = le;
+			break;
+		}
+
 	/* calculate parabola */
 	dt = Com_GrenadeTarget(from, at, selFD->range, selFD->launched, selFD->rolled, v0);
 	if (!dt) {
 		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
 		return;
 	}
-	if (VectorLength(v0) > selFD->range)
-		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
-	else
-		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
 
 	dt /= GRENADE_PARTITIONS;
 	VectorSubtract(at, from, ds);
@@ -2206,7 +2222,7 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 		/* trace for obstacles */
 		VectorSet(mins, 0, 0, 0);
 		VectorSet(maxs, 0, 0, 0);
-		tr = CL_Trace(from, next, mins, maxs, selActor, MASK_SHOT);
+		tr = CL_Trace(from, next, mins, maxs, selActor, target, MASK_SHOT);
 
 		if (tr.fraction < 1.0) {
 			obstructed = qtrue;
@@ -2219,6 +2235,12 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 			CL_ParticleSpawn("inRangeTracer", 0, from, next, NULL);
 		VectorCopy(next, from);
 	}
+	/* draw targetting cross */
+	if (obstructed || VectorLength(at) > selFD->range)
+		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
+	else
+		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
+
 	selToHit = 100 * CL_TargetingToHit(toPos);
 
 	/* switch level back to where it was again */

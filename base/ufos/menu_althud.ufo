@@ -460,10 +460,13 @@ menu althud
 	}
 	string numspotted
 	{
+		key "*binding nextalien"
 		tooltip "_Click to cycle through the spotted enemies"
 		string	"*cvar mn_numaliensspotted"
 		pos		"865 30"
+		size    "48 34"
 		align	cc
+		in
 	}
 	pic nextround
 	{
@@ -550,13 +553,25 @@ menu althud
 		click	{ cmd firels; }
 	}
 
-	confunc startreactionmanya { *bt_reaction image althud/buttons_althud1b }
-	confunc startreactiononcea { *bt_reaction image althud/buttons_althud1a }
-	confunc stopreactiona  { *bt_reaction image althud/buttons_althud1 }
+	confunc startreactionmanya
+	{
+		*bt_reaction image althud/buttons_althud1b
+		*bt_reaction tooltip "_Multiple-shot reaction fire"
+	}
+	confunc startreactiononcea
+	{
+		*bt_reaction image althud/buttons_althud1a
+		*bt_reaction tooltip "_One-shot reaction fire"
+	}
+	confunc stopreactiona
+	{
+		*bt_reaction image althud/buttons_althud1
+		*bt_reaction tooltip "_No reaction fire"
+	}
 
 	pic bt_reaction
 	{
-		tooltip	"_Toggle reaction-fire"
+		key "*binding togglereaction"
 		image	althud/buttons_althud1
 		mousefx true
 		pos		"929 497"

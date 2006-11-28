@@ -414,9 +414,9 @@ void MSG_WriteCoord(sizebuf_t * sb, float f)
  */
 void MSG_WritePos(sizebuf_t * sb, vec3_t pos)
 {
-	MSG_WriteShort(sb, (int) (pos[0] * 8));
-	MSG_WriteShort(sb, (int) (pos[1] * 8));
-	MSG_WriteShort(sb, (int) (pos[2] * 8));
+	MSG_WriteLong(sb, (long) (pos[0] * 32.));
+	MSG_WriteLong(sb, (long) (pos[1] * 32.));
+	MSG_WriteLong(sb, (long) (pos[2] * 32.));
 }
 
 /**
@@ -725,9 +725,9 @@ float MSG_ReadCoord(sizebuf_t * msg_read)
  */
 void MSG_ReadPos(sizebuf_t * msg_read, vec3_t pos)
 {
-	pos[0] = MSG_ReadShort(msg_read) * (1.0 / 8);
-	pos[1] = MSG_ReadShort(msg_read) * (1.0 / 8);
-	pos[2] = MSG_ReadShort(msg_read) * (1.0 / 8);
+	pos[0] = MSG_ReadLong(msg_read) / 32.;
+	pos[1] = MSG_ReadLong(msg_read) / 32.;
+	pos[2] = MSG_ReadLong(msg_read) / 32.;
 }
 
 /**
@@ -900,7 +900,7 @@ int MSG_LengthFormat(sizebuf_t * sb, char *format)
 			delta = 4;
 			break;
 		case 'p':
-			delta = 6;
+			delta = 12;
 			break;
 		case 'g':
 			delta = 3;
