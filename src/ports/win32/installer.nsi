@@ -622,7 +622,7 @@ Section "Game" SEC01
   File "..\..\..\base\models\weapons\sniper\*.jpg"
   File "..\..\..\base\models\weapons\sniper\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\stungren"
-  File "..\..\..\base\models\weapons\stungren\*.tga"
+  File "..\..\..\base\models\weapons\stungren\*.jpg"
   File "..\..\..\base\models\weapons\stungren\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\stunrod"
   File "..\..\..\base\models\weapons\stunrod\*.jpg"
