@@ -1,13 +1,38 @@
 // character animations
 // frames_in_ufoai = frames_in_blender-1
 
+// Bloodspider info: xxxx0-xxx3 are always the same.
+// TODO: except for the "death" and "dead" sequences int he future
+
 // name				start	end	fps
 
 walk0				0	32	22
+walk1				0	32	22
+walk2				0	32	22
+walk3				0	32	22
+cwalk0				0	32	22
+cwalk1				0	32	22
+cwalk2				0	32	22
+cwalk3				0	32	22
+
 stand0				33	33	1
+stand1				33	33	1
+stand2				33	33	1
+stand3				33	33	1
+cstand0				33	33	1
+cstand1				33	33	1
+cstand2				33	33	1
+cstand3				33	33	1
+
 stand_still			33	33	1
 stand_menu			33	33	1
 shoot_melee			34	55	22
 
 death1				56	83	22
 dead1				83	83	1
+
+death2				56	83	22
+dead2				83	83	1
+
+death3				56	83	22
+dead3				83	83	1
