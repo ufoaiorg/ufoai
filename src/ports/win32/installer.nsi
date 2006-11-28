@@ -330,6 +330,14 @@ Section "Game" SEC01
   File "..\..\..\base\models\objects\geoscape\*.md2"
 
 ;======================================================================
+; models/objects/rubbish
+;======================================================================
+  SetOutPath "$INSTDIR\base\models\objects\rubbish"
+  File "..\..\..\base\models\objects\rubbish\*.jpg"
+  File "..\..\..\base\models\objects\rubbish\*.tga"
+  File "..\..\..\base\models\objects\rubbish\*.md2"
+
+;======================================================================
 ; models/objects/tank
 ;======================================================================
   SetOutPath "$INSTDIR\base\models\objects\tank"
