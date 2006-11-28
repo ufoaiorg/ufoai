@@ -3,7 +3,7 @@
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "UFO:Alien Invasion"
 !define PRODUCT_NAME_DEDICATED "UFO:Alien Invasion Dedicated Server"
-!define PRODUCT_VERSION "2.0-RC6"
+!define PRODUCT_VERSION "2.0"
 !define PRODUCT_PUBLISHER "UFO:AI Team"
 !define PRODUCT_WEB_SITE "http://www.ufoai.net"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\ufo.exe"
@@ -622,7 +622,7 @@ Section "Game" SEC01
   File "..\..\..\base\models\weapons\sniper\*.jpg"
   File "..\..\..\base\models\weapons\sniper\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\stungren"
-  File "..\..\..\base\models\weapons\stungren\*.jpg"
+  File "..\..\..\base\models\weapons\stungren\*.tga"
   File "..\..\..\base\models\weapons\stungren\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\stunrod"
   File "..\..\..\base\models\weapons\stunrod\*.jpg"
