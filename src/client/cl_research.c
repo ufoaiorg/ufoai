@@ -46,13 +46,32 @@ static int researchListPos;
 static stringlist_t curRequiredList;
 
 /**
+ * @brief Sets a technology status to researched and updates the date
+ * @param[in] tech The technology that was researched
+ */
+void RS_ResearchFinish (technology_t* tech)
+{
+	tech->statusResearch = RS_FINISH;
+	CL_DateConvert(&ccs.date, &tech->researchedDateDay, &tech->researchedDateMonth);
+	tech->researchedDateYear = ccs.date.day / 365;
+	if (!tech->statusResearchable) {
+		tech->statusResearchable = qtrue;
+		CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
+		tech->preResearchedDateYear = ccs.date.day / 365;
+	}
+}
+
+/**
  * @brief Marks one tech as researchable.
  * @param id unique id of a technology_t
  */
 void RS_MarkOneResearchable(int tech_idx)
 {
-	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", gd.technologies[tech_idx].id);
-	gd.technologies[tech_idx].statusResearchable = qtrue;
+	technology_t *tech = &gd.technologies[tech_idx];
+	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", tech->id);
+	tech->statusResearchable = qtrue;
+	CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
+	tech->preResearchedDateYear = ccs.date.day / 365;
 }
 
 /**
@@ -245,14 +264,14 @@ void RS_MarkResearchable(void)
 				/* All requirements are met. */
 				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR)) {
 					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
-					tech->statusResearchable = qtrue;
+					RS_MarkOneResearchable(tech->idx);
 				}
 
 				/* If the tech is a 'free' one (such as ammo for a weapon),
 				   mark it as researched and loop back to see if it unlocks
 				   any other techs */
 				if (tech->statusResearchable && tech->time <= 0) {
-					tech->statusResearch = RS_FINISH;
+					RS_ResearchFinish(tech);
 					Com_DPrintf("RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
 					/* restart the loop as this may have unlocked new possibilities */
 					i = 0;
@@ -370,6 +389,14 @@ void RS_InitTree(void)
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
+
+		for (j = 0; j < tech->markResearched.numDefinitions; j++) {
+			if (tech->markResearched.markOnly[j] && !Q_strncmp(tech->markResearched.campaign[j], curCampaign->id, MAX_VAR)) {
+				Com_Printf("Mark '%s' as researched\n", tech->id);
+				RS_ResearchFinish(tech);
+				break;
+			}
+		}
 
 		/* Save the idx to the id-names of the different requirement-types for quicker access. The id-strings themself are not really needed afterwards :-/ */
 		RS_InitRequirementList(&tech->require_AND);
@@ -757,7 +784,7 @@ static void RS_ResearchStart(void)
 	*/
 	if (!tech->statusResearchable) {
 		if (RS_CheckCollected(&tech->require_AND) && RS_CheckCollected(&tech->require_OR))
-			tech->statusCollected = qtrue;
+			RS_MarkOneResearchable(tech->idx);
 		RS_MarkResearchable();
 	}
 	/************/
@@ -997,11 +1024,11 @@ void RS_MarkResearched(char *id)
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 		if (!Q_strncmp(id, tech->id, MAX_VAR)) {
-			tech->statusResearch = RS_FINISH;
+			RS_ResearchFinish(tech);
 			Com_DPrintf("Research of \"%s\" finished.\n", tech->id);
 #if 0
 		} else if (RS_DependsOn(tech->id, id) && (tech->time <= 0) && RS_TechIsResearchable(tech)) {
-			tech->statusResearch = RS_FINISH;
+			RS_ResearchFinish(tech);
 			Com_DPrintf("Depending tech \"%s\" has been researched as well.\n", tech->id);
 #endif
 		}
@@ -1122,6 +1149,12 @@ static void RS_TechnologyList_f(void)
 		Com_Printf("... type      -> ");
 		Com_Printf("%s\n", RS_TechTypeToName(tech->type));
 
+		Com_Printf("... researchable -> %i\n", tech->statusResearchable);
+		if (tech->statusResearchable) {
+			Com_Printf("... researchable date: %02i %02i %i\n", tech->preResearchedDateDay, tech->preResearchedDateMonth,
+				tech->preResearchedDateYear);
+		}
+
 		Com_Printf("... research  -> ");
 		switch (tech->statusResearch) {
 		case RS_NONE:
@@ -1135,6 +1168,8 @@ static void RS_TechnologyList_f(void)
 			break;
 		case RS_FINISH:
 			Com_Printf("done\n");
+			Com_Printf("... research date: %02i %02i %i\n", tech->researchedDateDay, tech->researchedDateMonth,
+				tech->researchedDateYear);
 			break;
 		default:
 			Com_Printf("unknown\n");
@@ -1167,8 +1202,8 @@ void RS_MarkResearchedAll(void)
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		Com_DPrintf("...mark %s as researched\n", gd.technologies[i].id);
-		gd.technologies[i].statusResearchable = qtrue;
-		gd.technologies[i].statusResearch = RS_FINISH;
+		RS_MarkOneResearchable(i);
+		RS_ResearchFinish(&gd.technologies[i]);
 		/* TODO: Set all "collected" entries in the requirements to the "amount" value. */
 	}
 }

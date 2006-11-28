@@ -2953,11 +2953,6 @@ void CL_ParseResearchedCampaignItems(char *name, char **text)
 		return;
 	}
 
-	if (Q_strncmp(campaign->researched, name, MAX_VAR)) {
-		Com_DPrintf("..don't use '%s' as researched list\n", name);
-		return;
-	}
-
 	Com_DPrintf("..campaign research list '%s'\n", name);
 	do {
 		token = COM_EParse(text, errhead, name);
@@ -2966,7 +2961,10 @@ void CL_ParseResearchedCampaignItems(char *name, char **text)
 
 		for (i = 0; i < gd.numTechnologies; i++)
 			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
-				RS_MarkResearched(gd.technologies[i].id);
+				gd.technologies[i].markResearched.markOnly[gd.technologies[i].markResearched.numDefinitions] = qtrue;
+				Q_strncpyz(gd.technologies[i].markResearched.campaign[gd.technologies[i].markResearched.numDefinitions],
+					name, MAX_VAR);
+				gd.technologies[i].markResearched.numDefinitions++;
 				Com_DPrintf("...tech %s\n", gd.technologies[i].id);
 				break;
 			}
@@ -3868,6 +3866,12 @@ static void CL_GameNew(void)
 	selMis = NULL;
 	memset(&ccs, 0, sizeof(ccs_t));
 	ccs.date = curCampaign->date;
+
+	/* get day */
+	while (ccs.date.sec > 3600 * 24) {
+		ccs.date.sec -= 3600 * 24;
+		ccs.date.day++;
+	}
 
 	/* set map view */
 	ccs.center[0] = 0.5;

@@ -78,6 +78,12 @@ typedef struct stringlist_s {
 	int idx[MAX_TECHLINKS];		/* holds the indices of the tech for faster operation after finding it once */
 } stringlist_t;
 
+typedef struct markResearched_s {
+	qboolean markOnly[MAX_CAMPAIGNS];
+	char campaign[MAX_CAMPAIGNS][MAX_VAR];
+	int numDefinitions;
+} markResearched_t;
+
 typedef struct technology_s {
 	char id[MAX_VAR];			/* Short (unique) id/name. */
 	int idx;				/* Self-link in the global list */
@@ -108,6 +114,11 @@ typedef struct technology_s {
 	byte statusResearchable;	/* Is this item researchable? */
 
 	int produceTime;			/* how many days for self production */
+
+	int preResearchedDateDay, preResearchedDateMonth, preResearchedDateYear; /* date for ufopedia */
+	int researchedDateDay, researchedDateMonth, researchedDateYear; /* date for ufopedia */
+
+	markResearched_t markResearched;			/* mark as researched at parsing state - but i only know the date if we already started a campaign */
 
 	/* Pedia info */
 	int up_chapter;				/* pedia chapter as stored in research.ufo. */
