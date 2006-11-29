@@ -42,9 +42,6 @@ int map_maxlevel;
 int map_maxlevel_base = 0;
 sun_t map_sun;
 
-char cl_weaponmodels[MAX_CLIENTWEAPONMODELS][MAX_QPATH];
-int num_cl_weaponmodels;
-
 /* static vars */
 static cvar_t *cl_drawgrid;
 static cvar_t *cl_stats;
@@ -389,8 +386,9 @@ void CL_ParseEntitystring(char *es)
 void CL_PrepRefresh(void)
 {
 	le_t *le;
-	int i;
+	int i, max;
 	char name[37];
+	char *str;
 
 	/* this is needed to get shaders/image filters in game */
 	/* the renderer needs to know them before the textures get loaded */
@@ -400,6 +398,10 @@ void CL_PrepRefresh(void)
 
 	if (!cl.configstrings[CS_TILES][0])
 		return;					/* no map loaded */
+
+	loadingMessage = qtrue;
+	Com_sprintf (loadingMessages, sizeof(loadingMessages), _("loading %s"), cl.configstrings[CS_TILES]);
+	loadingPercent = 0;
 
 	SCR_AddDirtyPoint(0, 0);
 	SCR_AddDirtyPoint(viddef.width - 1, viddef.height - 1);
@@ -411,6 +413,8 @@ void CL_PrepRefresh(void)
 	CL_ParseEntitystring(map_entitystring);
 	Com_Printf("                                     \r");
 
+	Com_sprintf (loadingMessages, sizeof(loadingMessages), _("loading models..."));
+	loadingPercent += 10.0f;
 	/* precache status bar pics */
 	Com_Printf("pics\n");
 	SCR_UpdateScreen();
@@ -420,31 +424,29 @@ void CL_PrepRefresh(void)
 	CL_RegisterLocalModels();
 	CL_ParticleRegisterArt();
 
-	num_cl_weaponmodels = 1;
-	Q_strncpyz(cl_weaponmodels[0], "weapon.md2", 10);
+	for (i = 1, max = 0; i < MAX_MODELS && cl.configstrings[CS_MODELS+i][0]; i++)
+		max++;
+
+	max += csi.numODs;
 
 	for (i = 1; i < MAX_MODELS && cl.configstrings[CS_MODELS + i][0]; i++) {
 		Q_strncpyz(name, cl.configstrings[CS_MODELS + i], sizeof(name));
-		if (name[0] != '*')
+		if (name[0] != '*') {
 			Com_Printf("%s\r", name);
+			Com_sprintf (loadingMessages, sizeof(loadingMessages),
+				_("loading %s"), (strlen(name) > 40)? &name[strlen(name)-40]: name);
+		}
 		SCR_UpdateScreen();
 		Sys_SendKeyEvents();	/* pump message loop */
-		if (name[0] == '#') {
-			/* special player weapon model */
-			if (num_cl_weaponmodels < MAX_CLIENTWEAPONMODELS) {
-				Q_strncpyz(cl_weaponmodels[num_cl_weaponmodels], cl.configstrings[CS_MODELS + i] + 1, sizeof(cl_weaponmodels[num_cl_weaponmodels]));
-				num_cl_weaponmodels++;
-				Com_Printf("num_cl_weaponmodels\n");
-			}
-		} else {
-			cl.model_draw[i] = re.RegisterModel(cl.configstrings[CS_MODELS + i]);
-			if (name[0] == '*')
-				cl.model_clip[i] = CM_InlineModel(cl.configstrings[CS_MODELS + i]);
-			else
-				cl.model_clip[i] = NULL;
-		}
+		cl.model_draw[i] = re.RegisterModel(cl.configstrings[CS_MODELS + i]);
+		if (name[0] == '*')
+			cl.model_clip[i] = CM_InlineModel(cl.configstrings[CS_MODELS + i]);
+		else
+			cl.model_clip[i] = NULL;
 		if (name[0] != '*')
 			Com_Printf("                                     \r");
+
+		loadingPercent += 80.0f/(float)max;
 	}
 
 	/* update le model references */
@@ -457,32 +459,36 @@ void CL_PrepRefresh(void)
 		}
 
 	/* load weapons stuff */
-	for (i = 0; i < csi.numODs; i++)
-		cl.model_weapons[i] = re.RegisterModel(csi.ods[i].model);
+	for (i = 0; i < csi.numODs; i++) {
+		str = csi.ods[i].model;
+		SCR_UpdateScreen();
+		cl.model_weapons[i] = re.RegisterModel(str);
+		Com_sprintf (loadingMessages, sizeof(loadingMessages),
+			_("loading %s"), (strlen(str) > 40)? &str[strlen(str)-40]: str);
+		loadingPercent += 80.0f/(float)max;
+	}
 
 	/* images */
 	Com_Printf("images\n");
-	SCR_UpdateScreen();
+	for (i = 1, max = 0; i < MAX_IMAGES && cl.configstrings[CS_IMAGES + i][0]; i++)
+		max++;
+
 	for (i = 1; i < MAX_IMAGES && cl.configstrings[CS_IMAGES + i][0]; i++) {
-		cl.image_precache[i] = re.RegisterPic(cl.configstrings[CS_IMAGES + i]);
+		str = cl.configstrings[CS_IMAGES + i];
+		Com_sprintf (loadingMessages, sizeof(loadingMessages),
+			_("loading %s"), (strlen(str) > 40)? &str[strlen(str)-40]: str);
+		SCR_UpdateScreen();
+		cl.image_precache[i] = re.RegisterPic(str);
 		Sys_SendKeyEvents();	/* pump message loop */
+		loadingPercent += 10.0f/(float)max;
 	}
 
-	Com_Printf("                                     \r");
-	for (i = 0; i < MAX_CLIENTS; i++) {
-		if (!cl.configstrings[CS_PLAYERSKINS + i][0])
-			continue;
-		Com_Printf("client %i\n", i);
-		SCR_UpdateScreen();
-		Sys_SendKeyEvents();	/* pump message loop */
-		Com_Printf("                                     \r");
-	}
+	loadingPercent = 100.0f;
+	SCR_UpdateScreen();
 
 	/* the renderer can now free unneeded stuff */
 	re.EndRegistration();
 
-	/* clear any lines of console text */
-	Con_ClearNotify();
 	SCR_EndLoadingPlaque();
 
 	SCR_UpdateScreen();

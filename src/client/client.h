@@ -91,9 +91,6 @@ typedef struct {
 	struct model_s *weaponmodel[MAX_CLIENTWEAPONMODELS];
 } clientinfo_t;
 
-extern char cl_weaponmodels[MAX_CLIENTWEAPONMODELS][MAX_QPATH];
-extern int num_cl_weaponmodels;
-
 #define	CMD_BACKUP		64		/* allow a lot of command backups for very fast systems */
 
 #define FOV				75.0
@@ -441,6 +438,10 @@ void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank );
 int CL_GetRank(char* rankID);
 void CL_ParseUGVs(char *title, char **text);
 char* CL_ToDifficultyName(int difficulty);
+
+extern qboolean loadingMessage;
+extern char loadingMessages[96];
+extern float loadingPercent;
 
 /* cl_input */
 typedef struct {

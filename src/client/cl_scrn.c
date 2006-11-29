@@ -73,6 +73,9 @@ static void SCR_TimeRefresh_f(void);
 static void SCR_Loading_f(void);
 static void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont);
 
+qboolean loadingMessage;
+char loadingMessages[96];
+float loadingPercent;
 
 /*
 ===============================================================================
@@ -336,17 +339,36 @@ static void SCR_DrawPause(void)
 }
 
 /**
+ * @brief
+ * @sa SCR_DrawLoading
+ */
+void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
+{
+	static vec4_t color = {0.3f, 0.3f, 0.3f, 0.7f};
+	static vec4_t color_bar = {0.8f, 0.8f, 0.8f, 0.7f};
+
+	re.DrawFill(x, y, w, h, ALIGN_UL, color);
+	re.DrawColor(NULL);
+
+	if (percent != 0) {
+		re.DrawFill((int)(x+(h*0.2)), (int)(y+(h*0.2)), (int)((w-(h*0.4))*percent*0.01), (int)(h*0.6), ALIGN_UL, color_bar);
+		re.DrawColor(NULL);
+	}
+}
+
+/**
  * @brief Draws the current loading pic of the map from base/pics/maps/loading
+ * @sa SCR_DrawLoadingBar
  */
 static void SCR_DrawLoading(void)
 {
 	char loadingPic[MAX_QPATH];
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
+	char *mapmsg;
 
 	if (!scr_draw_loading)
 		return;
 
-	scr_draw_loading = 0;
 	if (!ccs.singleplayer || !selMis) {
 		Com_sprintf(loadingPic, MAX_QPATH, "maps/loading/default.jpg");
 	} else {
@@ -357,7 +379,21 @@ static void SCR_DrawLoading(void)
 	}
 	re.DrawStretchPic(0, 0, viddef.width, viddef.height, loadingPic);
 	re.DrawColor(color);
-	re.FontDrawString("f_menubig", ALIGN_CC, viddef.width / 2, viddef.height - 30, 0, 1, viddef.width, viddef.height, 50, _("Loading..."), 0, 0, NULL, qfalse);
+
+	if (cl.configstrings[CS_TILES][0]) {
+		mapmsg = va("Loading Map [%s]", cl.configstrings[CS_TILES]);
+		re.FontDrawString("f_menubig", ALIGN_UC,
+			(int)(viddef.width * 0.5),
+			(int)(viddef.height * 0.5 - 60),
+			0, 1, viddef.width, viddef.height, 50, mapmsg, 0, 0, NULL, qfalse);
+	}
+
+	re.FontDrawString("f_menu", ALIGN_UC,
+		(int)(viddef.width * 0.5),
+		(int)(viddef.height * 0.5),
+		0, 1, viddef.width, viddef.height, 50, loadingMessages, 0, 0, NULL, qfalse);
+
+	SCR_DrawLoadingBar(viddef.width * 0.5 - 300, viddef.height - 30, 600, 20, (int)loadingPercent);
 }
 
 /**
@@ -492,11 +528,8 @@ void SCR_BeginLoadingPlaque(void)
 	CDAudio_Stop();
 	if (developer->value)
 		return;
-	/* if at console, don't bring up the plaque */
-	if (cls.key_dest == key_console)
-		return;
 
-	scr_draw_loading = 1;		/* clear to black first */
+	scr_draw_loading = 1;
 
 	SCR_UpdateScreen();
 	cls.disable_screen = Sys_Milliseconds();
@@ -510,6 +543,8 @@ void SCR_BeginLoadingPlaque(void)
 void SCR_EndLoadingPlaque(void)
 {
 	cls.disable_screen = 0;
+	scr_draw_loading = 0;
+	/* clear any lines of console text */
 	Con_ClearNotify();
 }
 
@@ -634,11 +669,12 @@ void SCR_UpdateScreen(void)
 	/* if the screen is disabled (loading plaque is up, or vid mode changing) */
 	/* do nothing at all */
 	if (cls.disable_screen) {
-		if (Sys_Milliseconds() - cls.disable_screen > 120000) {
+		if (Sys_Milliseconds() - cls.disable_screen > 120000
+			&& cl.refresh_prepped) {
 			cls.disable_screen = 0;
 			Com_Printf("Loading plaque timed out.\n");
+			return;
 		}
-		return;
 	}
 
 	/* not initialized yet */
@@ -667,37 +703,37 @@ void SCR_UpdateScreen(void)
 	for (i = 0; i < numframes; i++) {
 		re.BeginFrame(separation[i]);
 
-		if (scr_draw_loading) {
-			SCR_DrawLoading();
-			continue;
-		} else {
-			MN_SetViewRect(MN_ActiveMenu());
+		if (cls.state == ca_disconnected && !scr_draw_loading)
+			SCR_EndLoadingPlaque();
 
-			/* draw scene */
-			V_RenderView(separation[i]);
+		MN_SetViewRect(MN_ActiveMenu());
 
-			/* draw the menus on top of the render view (for hud and so on) */
-			MN_DrawMenus();
+		/* draw scene */
+		V_RenderView(separation[i]);
 
-			SCR_DrawNet();
-			SCR_CheckDrawCenterString();
+		/* draw the menus on top of the render view (for hud and so on) */
+		MN_DrawMenus();
 
-			if (cl_fps->value)
-				SCR_DrawString(viddef.width - 80, 4, va("fps: %3.1f", cls.framerate), qtrue);
+		SCR_DrawNet();
+		SCR_CheckDrawCenterString();
 
-			if (scr_timegraph->value)
-				SCR_DebugGraph(cls.frametime * 300, 0);
+		if (cl_fps->value)
+			SCR_DrawString(viddef.width - 80, 4, va("fps: %3.1f", cls.framerate), qtrue);
 
-			if (scr_debuggraph->value || scr_timegraph->value || scr_netgraph->value)
-				SCR_DrawDebugGraph();
+		if (scr_timegraph->value)
+			SCR_DebugGraph(cls.frametime * 300, 0);
 
-			SCR_DrawPause();
+		if (scr_debuggraph->value || scr_timegraph->value || scr_netgraph->value)
+			SCR_DrawDebugGraph();
 
-			SCR_DrawConsole();
+		SCR_DrawPause();
 
-			if (cls.state != ca_sequence)
-				SCR_DrawCursor();
-		}
+		SCR_DrawConsole();
+
+		if (cls.state != ca_sequence)
+			SCR_DrawCursor();
+
+		SCR_DrawLoading();
 	}
 
 	re.EndFrame();
