@@ -241,6 +241,7 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 				}
 				gi.unlinkentity(ent);
 				ent->inuse = qfalse;
+				ent->HP = 0;
 				G_RecalcRouting(ent);
 				G_FreeEdict(ent);
 			} else
@@ -316,17 +317,20 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 	if (mock)
 		return;
 
+	/* HP shouldn't become negative */
+	ent->HP = max(ent->HP, 0);
+
 	/* check death/knockouth */
-	if (ent->HP <= 0 || ent->HP <= ent->STUN) {
+	if (ent->HP == 0 || ent->HP <= ent->STUN) {
 		G_SendStats(ent);
-		G_ActorDie(ent, ent->HP <= 0 ? STATE_DEAD : STATE_STUN);
+		G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN);
 
 		/* apply morale changes */
 		if (mor_panic->value)
 			G_Morale(ML_DEATH, ent, attacker, damage);
 
 		/* count kills */
-		if (ent->HP<=0)
+		if (ent->HP == 0)
 			level.num_kills[attacker->team][ent->team]++;
 		/*count stuns*/
 		else
@@ -345,8 +349,7 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 	} else {
 		if (damage > 0 && mor_panic->value) {
 			G_Morale(ML_WOUND, ent, attacker, damage);
-		}
-		else { /* medikit, etc. */
+		} else { /* medikit, etc. */
 			if (ent->HP > GET_HP(ent->chr.skills[ABILITY_POWER]))
 				ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
 		}

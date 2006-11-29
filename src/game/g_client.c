@@ -74,9 +74,12 @@ int G_VisToPM(int vis_mask)
  */
 void G_SendStats(edict_t * ent)
 {
-	/* extra sanity check for ent->TU */
-	if (ent->TU < 0)
-		ent->TU = 0;
+	/* extra sanity checks */
+	ent->TU = max(ent->TU, 0);
+	ent->HP = max(ent->HP, 0);
+	ent->AP = max(ent->AP, 0);
+	ent->STUN = min(ent->STUN, 255);
+	ent->morale = max(ent->morale, 0);
 
 	gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATS);
 	gi.WriteShort(ent->number);
