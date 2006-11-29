@@ -2,7 +2,7 @@
 // frames_in_ufoai = frames_in_blender-1
 
 // Bloodspider info: xxxx0-xxx3 are always the same.
-// TODO: except for the "death" and "dead" sequences int he future
+// TODO: except for the "death" and "dead" sequences in the future
 
 // name				start	end	fps
 
