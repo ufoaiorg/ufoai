@@ -37,17 +37,21 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "iscenegraph.h" // declaration of datastructure of the map
 #include "scenelib.h"    // declaration of datastructure of the map
 #include "qerplugin.h"   // declaration to use other interfaces as a plugin
+#include "ieclass.h"
 
 class UFOAIPluginDependencies :
   public GlobalRadiantModuleRef,    // basic class for all other module refs
   public GlobalUndoModuleRef,       // used to say radiant that something has changed and to undo that
-//  public GlobalBrushModuleRef,
+  public GlobalFilterModuleRef,
+  public GlobalBrushModuleRef,
   public GlobalSceneGraphModuleRef, // necessary to handle data in the mapfile (change, retrieve data)
-  public GlobalEntityModuleRef      // to access and modify the entities
+  public GlobalEntityModuleRef,     // to access and modify the entities
+  public GlobalEntityClassManagerModuleRef
 {
 public:
 	UFOAIPluginDependencies(void) :
-		GlobalEntityModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("entities"))
+		GlobalEntityModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("entities")),
+		GlobalEntityClassManagerModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("entityclass"))
 	{
 	}
 };
@@ -124,6 +128,7 @@ namespace UFOAI
 		}
 	}
 } // namespace
+
 
 class UFOAIModule : public TypeSystemRef
 {
