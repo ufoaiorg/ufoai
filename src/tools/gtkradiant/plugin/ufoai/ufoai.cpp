@@ -68,7 +68,7 @@ namespace UFOAI
 	const char* getCommandList()
 	{
 		/*GlobalRadiant().getGameName()*/
-		return "About;-;Level 1;Level 2;Level 3;Level 4;Level 5;Level 6;Level 7;Level 8;-;StepOn";
+		return "About;-;Level 1;Level 2;Level 3;Level 4;Level 5;Level 6;Level 7;Level 8;-;StepOn;ActorClip";
 	}
 	const char* getCommandTitleList()
 	{
@@ -117,6 +117,10 @@ namespace UFOAI
 		else if(string_equal(command, "StepOn"))
 		{
 			filter_stepon();
+		}
+		else if(string_equal(command, "ActorClip"))
+		{
+			filter_actorclip();
 		}
 	}
 } // namespace
