@@ -13,7 +13,7 @@ damagetypes standard
 //weights 100
 item light
 {
-	name		"_Kevlar Vest"
+	name		"_Combat Armor"
 	image		armor/light
 	model		soldiers/malelight/body
 	type		armor
