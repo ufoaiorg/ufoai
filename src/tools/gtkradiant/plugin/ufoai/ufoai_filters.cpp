@@ -78,6 +78,7 @@ bool level_filtered(Level& level)
 
 static int activeLevelFilter = 0;
 static int activeSteponFilter = 0;
+static int activeActorClipFilter = 0;
 
 /**
  * @brief Deactivates the level filter for the given level
@@ -111,6 +112,7 @@ void filter_level(int level)
 
 /**
  * @brief Deactivates the stepon filter
+ * @sa filter_stepon
  */
 void deactive_filter_stepon(void)
 {
@@ -120,8 +122,8 @@ void deactive_filter_stepon(void)
 }
 
 /**
- * @brief Activates the level filter for the given level
- * @param[in] level Which level to show?
+ * @brief Activates the stepon filter to hide stepon brushes
+ * @sa deactive_filter_stepon
  */
 void filter_stepon(void)
 {
@@ -131,6 +133,34 @@ void filter_stepon(void)
 	{
 		activeSteponFilter = 1;
 		globalOutputStream() << "filter_stepon\n";
+		globalOutputStream() << "TODO: Implement me\n";
+	}
+}
+
+
+/**
+ * @brief Deactivates the actorclip filter
+ * @sa filter_actorclip
+ */
+void deactive_filter_actorclip(void)
+{
+	globalOutputStream() << "deactive_filter_actorclip\n";
+	activeActorClipFilter = 0;
+	globalOutputStream() << "TODO: Implement me\n";
+}
+
+/**
+ * @brief Activates the actorclip filter to hide actorclip brushes
+ * @sa deactive_filter_actorclip
+ */
+void filter_actorclip(void)
+{
+	if (activeActorClipFilter == 1)
+		deactive_filter_actorclip();
+	else
+	{
+		activeActorClipFilter = 1;
+		globalOutputStream() << "filter_actorclip\n";
 		globalOutputStream() << "TODO: Implement me\n";
 	}
 }

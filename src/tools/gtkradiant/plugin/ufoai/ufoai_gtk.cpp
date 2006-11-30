@@ -66,7 +66,7 @@ static void close_window(GtkWidget *widget, gpointer data)
 
 /* =============================== */
 
-#define NUM_TOOLBARBUTTONS 9
+#define NUM_TOOLBARBUTTONS 10
 
 /**
  * @brief
@@ -95,6 +95,7 @@ public:
 		case 6: return "ufoai_level7.bmp";
 		case 7: return "ufoai_level8.bmp";
 		case 8: return "ufoai_stepon.bmp";
+		case 9: return "ufoai_actorclip.bmp";
 		}
 		return NULL;
 	}
@@ -119,6 +120,7 @@ public:
 		case 6: return "Level 7";
 		case 7: return "Level 8";
 		case 8: return "Stepon";
+		case 9: return "Actorclip";
 		}
 		return NULL;
 	}
@@ -135,6 +137,7 @@ public:
 		case 6: return "Show only level 7";
 		case 7: return "Show only level 8";
 		case 8: return "Hide stepon brushes";
+		case 9: return "Hide actorclip brushes";
 		}
 		return NULL;
 	}
@@ -152,6 +155,7 @@ public:
 		case 6: filter_level(7); break;
 		case 7: filter_level(8); break;
 		case 8: filter_stepon(); break;
+		case 9: filter_actorclip(); break;
 		}
 	}
 

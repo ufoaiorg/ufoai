@@ -36,6 +36,7 @@ bool level_filtered(Level& level);
 void add_level_filter(LevelFilter& filter, int mask, bool invert = false);
 void filter_level(int level);
 void filter_stepon(void);
+void filter_actorclip(void);
 
 class ClassnameFilter : public Filterable
 {
