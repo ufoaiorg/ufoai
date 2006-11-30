@@ -31,50 +31,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class Level;
 
 /**
- * @brief Let us filter some entities given by name
- */
-class filter_ufoai_entity_by_classname : public EntityFilter
-{
-	const char* m_classname;
-public:
-	filter_ufoai_entity_by_classname(const char* classname) : m_classname(classname)
-	{
-	}
-	bool filter(const Entity& entity) const
-	{
-		return string_equal(entity.getKeyValue("classname"), m_classname);
-	}
-};
-
-/**
- * @brief Let us filter the level flags
- */
-class filter_ufoai_level : public FaceFilter
-{
-	int m_level;
-public:
-	filter_ufoai_level(int level) : m_level(level)
-	{
-	}
-	bool filter(const Face& face) const
-	{
-//		return string_equal_n(face.getKeyValue("classname"), m_classgroup, m_length);
-		return true;
-	}
-};
-
-filter_ufoai_level g_filter_level_1(1);
-
-/**
- * @brief
- */
-void UFOAI_InitFilters()
-{
-	add_level_filter(g_filter_level_1, 0x100);
-	//_QERFaceData
-}
-
-/**
  * @brief find entities by class
  * @note from radiant/map.cpp
  */
