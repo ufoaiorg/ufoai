@@ -1060,10 +1060,15 @@ void CL_ParseEvent( void )
 			}
 
 			if ((eType == EV_ENT_APPEAR || eType == EV_INV_ADD)) {
-				if (parsedDeath) /* drop items after death (caused by impact) */
+				if (parsedDeath) { /* drop items after death (caused by impact) */
 					time = impactTime + 400;
-				else if (impactTime > cl.eventTime) /* item thrown on the ground */
+					/* EV_INV_ADD messages are the last event sent after a death */
+					if (eType == EV_INV_ADD)
+						parsedDeath = qfalse;
+				} else if (impactTime > cl.eventTime) { /* item thrown on the ground */
+					Com_Printf("Drop item from throw: eType %i\n", eType);
 					time = impactTime + 75;
+				}
 			}
 
 			/* calculate time interval before the next event */
