@@ -113,6 +113,19 @@ typedef struct {
 	qboolean autosound;			/* from an entity->sound, cleared each frame */
 } channel_t;
 
+typedef struct music_s {
+	OggVorbis_File ovFile; /**< currently playing ogg vorbis file */
+	char newFilename[MAX_QPATH]; /**< after fading out ovFile play newFilename */
+	char ovBuf[4096]; /**< ogg vorbis buffer */
+	int ovSection; /**< number of the current logical bitstream */
+	float fading; /**< current volumn - if le zero play newFilename */
+	char ovPlaying[MAX_QPATH]; /**< currently playing ogg tracks basename */
+	int rate;
+	unsigned format;
+} music_t;
+
+extern music_t music;
+
 typedef struct {
 	int rate;
 	int width;

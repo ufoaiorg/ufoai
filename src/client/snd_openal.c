@@ -101,17 +101,22 @@ static qboolean SND_OAL_LoadFile (char* filename, ALboolean loop)
 	ALenum error;
 	char* fullpath;
 
-	/* FIXME: get full path of sound file for qalutCreateBufferFromFile */
-	/* fullpath = "FS_GetFullPath(va("music/%s.ogg", filename));"*/
 	fullpath = filename;
 
-	/* Create an AL buffer from the given sound file. */
-	buffer = qalutCreateBufferFromFile(fullpath);
-	if (buffer == AL_NONE) {
-		error = qalutGetError();
-		Com_Printf("Error loading file: '%s' reason: '%s'\n", filename, qalutGetErrorString(error));
+	if (OGG_Open(filename)) {
+		qalGenBuffers(1, &buffer);
+		qalBufferData(buffer, music.format, music.ovBuf, sizeof(music.ovBuf), music.rate);
+		qalSourceQueueBuffers(alSource, 1, &buffer);
+	} else if (qalutCreateBufferFromFile) {
+		/* Create an AL buffer from the given sound file. */
+		buffer = qalutCreateBufferFromFile(fullpath);
+		if (buffer == AL_NONE) {
+			error = qalutGetError();
+			Com_Printf("Error loading file: '%s' reason: '%s'\n", filename, qalutGetErrorString(error));
+			return qfalse;
+		}
+	} else
 		return qfalse;
-	}
 
 	/* Generate a single source, attach the buffer to it and start playing. */
 	qalGenSources(1, &alSource);
@@ -134,6 +139,8 @@ qboolean SND_OAL_LoadSound (char* filename, qboolean looping)
 {
 	/* load our sound */
 	if (!SND_OAL_LoadFile(filename, looping)) {
+	Com_Printf("SND_OAL_LoadSound: %s\n", filename);
+
 		return qfalse;
 	}
 
@@ -144,16 +151,19 @@ qboolean SND_OAL_LoadSound (char* filename, qboolean looping)
 	if (looping) {
 		/* set looping to true */
 		qalSourcei(alSource, AL_LOOPING, AL_TRUE);
-	}
+	} else
+		qalSourcei(alSource, AL_LOOPING, AL_FALSE);
+
 	return qtrue;
 }
 
 /**
  * @brief
+ * @param[in] filename
  */
 qboolean SND_OAL_Stream (char* filename)
 {
-	if (!openal_active || !openal_alut)
+	if (!openal_active)
 		return qfalse;
 
 	if (!openal_playing)
@@ -161,6 +171,18 @@ qboolean SND_OAL_Stream (char* filename)
 
 	if (!openal_playing)
 		return qfalse;
+
+/*	qalGenBuffers(1, &buffer);
+	qalBufferData(buffer, s_bgTrack.format, data, size, s_bgTrack.rate);
+	qalSourceQueueBuffers(alSource, 1, &buffer);*/
+
+	qalSourcei(alSource, AL_BUFFER, 0);
+	qalSourcei(alSource, AL_SOURCE_RELATIVE, AL_TRUE);
+	qalSourcefv(alSource, AL_POSITION, vec3_origin);
+	qalSourcefv(alSource, AL_VELOCITY, vec3_origin);
+	qalSourcef(alSource, AL_REFERENCE_DISTANCE, 1.0);
+	qalSourcef(alSource, AL_MAX_DISTANCE, 1.0);
+	qalSourcef(alSource, AL_ROLLOFF_FACTOR, 0.0);
 
 	qalSourcePlay(alSource);
 	return qtrue;

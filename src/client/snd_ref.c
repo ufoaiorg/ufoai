@@ -51,6 +51,8 @@ void S_StopAllSounds(void);
 void S_PlayOGG(void);
 void S_StartOGG(void);
 
+channel_t* s_streamingChannel;
+
 /*
 =======================================================================
 Internal sound data & structures
@@ -128,16 +130,7 @@ OGG Vorbis stuff
 ==========================================================
 */
 
-typedef struct music_s {
-	OggVorbis_File ovFile; /**< currently playing ogg vorbis file */
-	char newFilename[MAX_QPATH]; /**< after fading out ovFile play newFilename */
-	char ovBuf[4096]; /**< ogg vorbis buffer */
-	int ovSection; /**< number of the current logical bitstream */
-	float fading; /**< current volumn - if le zero play newFilename */
-	char ovPlaying[MAX_QPATH]; /**< currently playing ogg tracks basename */
-} music_t;
-
-static music_t music;
+music_t music;
 
 /*
 ==========================================================
@@ -1277,12 +1270,8 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	/* mix some sound */
 	S_Update_();
 
-#ifdef HAVE_OPENAL
-	if (!SND_OAL_Stream(music.ovPlaying))
-		/* stream music */
-#endif
-		while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
-			OGG_Read();
+	while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
+		OGG_Read();
 }
 
 /**
@@ -1383,6 +1372,10 @@ qboolean OGG_Open(char *filename)
 	if (checkFilename)
 		*checkFilename = '\0';
 
+	/* FIXME */
+	music.rate = 44100;
+	music.format = AL_FORMAT_STEREO16;
+
 	/* check running music */
 	if (music.ovPlaying[0]) {
 		if (!Q_strcmp(music.ovPlaying, filename)) {
@@ -1396,6 +1389,7 @@ qboolean OGG_Open(char *filename)
 				OGG_Stop();
 		}
 	}
+
 	music.fading = snd_music_volume->value;
 
 	/* find file */
@@ -1454,14 +1448,17 @@ int OGG_Read(void)
 		music.newFilename[0] = '\0';
 		return 0;
 	}
-
 	/* read and resample */
 	res = ov_read(&music.ovFile, music.ovBuf, sizeof(music.ovBuf), 0, 2, 1, &music.ovSection);
-	S_RawSamples(res >> 2, 44100, 2, 2, (byte *) music.ovBuf, music.fading);
+	S_RawSamples(res >> 2, music.rate, 2, 2, (byte *) music.ovBuf, music.fading);
 	if (*music.newFilename) {
 		Com_DPrintf("fading ogg track: %.10f\n", music.fading);
 		music.fading -= snd_fadingspeed->value;
 	}
+
+#ifdef HAVE_OPENAL
+	SND_OAL_Stream(music.ovPlaying);
+#endif
 
 	/* end of file? */
 	if (!res) {
