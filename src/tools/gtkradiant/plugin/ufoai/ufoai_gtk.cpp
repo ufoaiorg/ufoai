@@ -151,7 +151,7 @@ public:
 		case 5: filter_level(6); break;
 		case 6: filter_level(7); break;
 		case 7: filter_level(8); break;
-		case 8: break;
+		case 8: filter_stepon(); break;
 		}
 	}
 

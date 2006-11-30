@@ -116,7 +116,7 @@ namespace UFOAI
 		}
 		else if(string_equal(command, "StepOn"))
 		{
-			globalOutputStream() << "StepOn\n";
+			filter_stepon();
 		}
 	}
 } // namespace
