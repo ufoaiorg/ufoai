@@ -550,10 +550,7 @@ void CL_Packet_f(void)
 }
 
 /**
- * @brief
- *
- * Just sent as a hint to the client that they should
- * drop to full console
+ * @brief Just sent as a hint to the client that they should drop to full console
  */
 void CL_Changing_f(void)
 {
@@ -591,15 +588,14 @@ void CL_Reconnect_f(void)
 	}
 }
 
-/**
- * @brief
- *
- * Handle a reply from a ping
- */
 #define MAX_SERVERLIST 32
 static char serverText[1024];
 static int serverListLength;
 static netadr_t serverList[MAX_SERVERLIST];
+
+/**
+ * @brief Handle a reply from a ping
+ */
 static void CL_ParseStatusMessage(void)
 {
 	char *s = MSG_ReadString(&net_message);
@@ -874,9 +870,7 @@ void CL_PingServers_f(void)
 
 
 /**
- * @brief
- *
- * Responses to broadcasts, etc
+ * @brief Responses to broadcasts, etc
  */
 void CL_ConnectionlessPacket(void)
 {
@@ -955,10 +949,7 @@ void CL_ConnectionlessPacket(void)
 
 
 /**
- * @brief
- *
- * A vain attempt to help bad TCP stacks that cause problems
- * when they overflow
+ * @brief A vain attempt to help bad TCP stacks that cause problems when they overflow
  */
 void CL_DumpPackets(void)
 {
@@ -1011,8 +1002,6 @@ void CL_ReadPackets(void)
 
 }
 
-
-/*============================================================================= */
 
 /**
  * @brief
