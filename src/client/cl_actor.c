@@ -38,6 +38,7 @@ invList_t invList[MAX_INVLIST];
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
 static pos3_t mousePendPos; /* for double-click movement ... */
+reactionmode_t selActorReactionState; /* keep track of reaction toggle */
 
 /**
  * @brief Writes player action with its data
@@ -659,6 +660,17 @@ void CL_ActorUpdateCVars(void)
 	}
 }
 
+/*
+ * @brief get state of the reaction-fire button
+ */
+int CL_GetReactionState(le_t *le) {
+	if (le->state & STATE_REACTION_MANY)
+		return R_FIRE_MANY;
+	else if (le->state & STATE_REACTION_ONCE)
+		return R_FIRE_ONCE;
+	else
+		return R_FIRE_OFF;
+}
 
 /*
 ==============================================================
@@ -777,6 +789,7 @@ qboolean CL_ActorSelect(le_t * le)
 	le->selected = qtrue;
 	selActor = le;
 	menuInventory = &selActor->i;
+	selActorReactionState = CL_GetReactionState(selActor);
 
 	for (i = 0; i < cl.numTeamList; i++) {
 		if (cl.teamList[i] == le) {
@@ -1248,11 +1261,22 @@ void CL_ActorToggleReaction(void)
 		return;
 
 	state = selActor->state & ~STATE_REACTION;
-	if (selActor->state & STATE_REACTION_MANY) {
-	} else if (selActor->state & STATE_REACTION_ONCE) {
-		state |= STATE_REACTION_MANY;
-	} else {
+
+	selActorReactionState++;
+	if (selActorReactionState > R_FIRE_MANY)
+		selActorReactionState = R_FIRE_OFF;
+
+	switch (selActorReactionState) {
+	case R_FIRE_OFF: 
+		break;
+	case R_FIRE_ONCE: 
 		state |= STATE_REACTION_ONCE;
+		break;
+	case R_FIRE_MANY: 
+		state |= STATE_REACTION_MANY;
+		break;
+	default: 
+		break;
 	}
 
 	/* send message to server */
