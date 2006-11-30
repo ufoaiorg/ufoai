@@ -1316,11 +1316,11 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 
 #if defined __linux__ || defined __FreeBSD__
 	ri.Cvar_SetValue("gl_finish", 1);
-#else
+#endif
+
 	/* MCD has buffering issues */
 	if (gl_config.renderer == GL_RENDERER_MCD)
 		ri.Cvar_SetValue("gl_finish", 1);
-#endif
 
 	/* grab extensions */
 	if (strstr(gl_config.extensions_string, "GL_EXT_compiled_vertex_array") || strstr(gl_config.extensions_string, "GL_SGI_compiled_vertex_array")) {
