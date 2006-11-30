@@ -19,66 +19,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_FILTERS_H)
 #define INCLUDED_FILTERS_H
 
-#include "ifilter.h"
-
-#include "generic/callback.h"
-#include "scenelib.h"
-
-class Level;
-
-class LevelFilter
-{
-public:
-	virtual bool filter(const Level& level) const = 0;
-};
-
-bool level_filtered(Level& level);
-void add_level_filter(LevelFilter& filter, int mask, bool invert = false);
+void init_filters(void);
 void filter_level(int level);
 void filter_stepon(void);
 void filter_actorclip(void);
-
-class ClassnameFilter : public Filterable
-{
-	scene::Node& m_node;
-public:
-	Level& m_level;
-
-	ClassnameFilter(Level& level, scene::Node& node) : m_node(node), m_level(level)
-	{
-	}
-	~ClassnameFilter()
-	{
-	}
-
-	void instanceAttach()
-	{
-		GlobalFilterSystem().registerFilterable(*this);
-	}
-	void instanceDetach()
-	{
-		GlobalFilterSystem().unregisterFilterable(*this);
-	}
-
-	void updateFiltered()
-	{
-		if(level_filtered(m_level))
-		{
-			m_node.enable(scene::Node::eFiltered);
-		}
-		else
-		{
-			m_node.disable(scene::Node::eFiltered);
-		}
-	}
-
-	void classnameChanged(const char* value)
-	{
-		updateFiltered();
-	}
-	typedef MemberCaller1<ClassnameFilter, const char*, &ClassnameFilter::classnameChanged> ClassnameChangedCaller;
-};
-
 
 #define CONTENTS_LEVEL8 0x8000
 #define CONTENTS_LEVEL7 0x4000
@@ -88,6 +32,7 @@ public:
 #define CONTENTS_LEVEL3 0x0400
 #define CONTENTS_LEVEL2 0x0200
 #define CONTENTS_LEVEL1 0x0100
+#define CONTENTS_ACTORCLIP 0x10000
 
 #define CONTENTS_STEPON 0x40000000
 
