@@ -298,7 +298,7 @@ item pistol_ammo
 // =======================
 item pistol2
 {
-	name		"_9mm Pistol"
+	name		"_Machine Pistol"
 	model		weapons/pistol2/pistol2
 	weapon		true
 	type		pistol
@@ -316,7 +316,7 @@ item pistol2
 
 item pistol2_ammo
 {
-	name		"_Pistol Clip 9mm"
+	name		"_Machine Pistol Clip"
 	model		weapons/pistol2/pistol2_clip
 	type		ammo
 	category	0
