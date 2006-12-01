@@ -1374,8 +1374,9 @@ qboolean OGG_Open(char *filename)
 
 	/* FIXME */
 	music.rate = 44100;
+#ifdef HAVE_OPENAL
 	music.format = AL_FORMAT_STEREO16;
-
+#endif
 	/* check running music */
 	if (music.ovPlaying[0]) {
 		if (!Q_strcmp(music.ovPlaying, filename)) {
