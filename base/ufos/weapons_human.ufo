@@ -316,7 +316,7 @@ item pistol2
 
 item pistol2_ammo
 {
-	name		"_Machine Pistol Clip"
+	name		"_4.2mm MP Magazine"
 	model		weapons/pistol2/pistol2_clip
 	type		ammo
 	category	0
