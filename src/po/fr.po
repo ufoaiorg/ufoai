@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-11-26 19:32+0100\n"
+"POT-Creation-Date: 2006-12-01 15:16+0100\n"
 "PO-Revision-Date: 2006-11-21 22:57+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -45,8 +45,108 @@ msgid "stun"
 msgstr "Assommant"
 
 #: ../base/ufos/armor.ufo:16
-msgid "Kevlar Vest"
-msgstr "Gilet Kevlar"
+#, fuzzy
+msgid "Combat Armor"
+msgstr ""
+"Spécifications techniques : Armure de Combat\n"
+"\n"
+"NIVEAU DE CONFIDENTIALITE JAUNE\n"
+"\n"
+"Unité de réaction extraterrestre PHALANX\n"
+"\n"
+"Document Technique, Autorisation Delta\n"
+"\n"
+"Classé le : 20 Mars 2084\n"
+"\n"
+"Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement "
+"des Opérations Atlantique\n"
+"\n"
+"\n"
+"\n"
+"Considérations générales\n"
+"\n"
+"L'attaque alienne sur Mumbai a rendu notre situation douloureusement claire. "
+"Leur technologie est beaucoup plus avancée que la nôtre. L'incapacité "
+"complète des troupes du Commonwealth à repousser l'offensive de Mumbai a "
+"révélé les failles de l'entraînement militaire actuel et des équipements "
+"utilisés. Elles perdirent trois bataillons, uniquement pour parvenir à "
+"stopper l'avancée alienne ; et sans pour autant leur infliger de pertes "
+"significatives. PHALANX doit parvenir à renverser le rapport de force, et "
+"pour cela nous avons besoin de ce que la technologie humaine propose de "
+"meilleur.\n"
+"\n"
+"Le Programme Excalibur fut créé non seulement pour fabriquer des armes "
+"adéquates pour combattre la menace alienne ; mais également pour développer "
+"des armures et autres objets d'utilité militaire afin d'aider les soldats à "
+"mener à bien leur mission et à revenir vivants à leur base. Ces inventions "
+"sont destinées à améliorer les capacités de combat des soldats, et d'une "
+"façon plus générale, leurs chances de survie.\n"
+"\n"
+"L'utilité des armures sur les champs de bataille n'a jamais vraiment "
+"disparue, bien qu'elles soient devenues de moins en moins efficaces du début "
+"du XVIIIème siècle jusqu'à la fin du XXème. Elles commencèrent à revenir sur "
+"le devant de la scène lors de la première guerre mondiale, sous la forme de "
+"casque en acier. Cette pratique continua jusqu'à la seconde guerre mondiale, "
+"puis disparue avec l'apparition du kevlar. De nos jours, cependant, le "
+"kevlar est devenu totalement obsolète sous presque toute ses formes. Il "
+"n'est plus utilisé que par les civils et les forces de police aux budgets "
+"limités. Même les formes plus avancées d'armure corporelle du XXème siècle "
+"sont devenues inutiles face aux armes modernes. De nouveaux matériaux "
+"étaient nécessaires, matériaux qui rendraient les armures plus résistantes "
+"et protégeraient leurs porteurs comme jamais auparavant.\n"
+"\n"
+"De façon surprenante, plusieurs dossiers que nous avons retrouvés semblent "
+"confirmer que PHALANX fut par le passé la source de quelques progrès "
+"technologiques stupéfiants. Ces technologies furent plus tard adoptées dans "
+"le monde entier. Tout les essais pour produire de la soie d'araignée "
+"artificielle avaient échoués, mais les chercheurs du centre de Commandement "
+"des Opérations du Pacifique PHALANX y parvinrent en 2017. Leur méthode est "
+"encore d'actualité aujourd'hui, basée sur l'utilisation d'un dispositif "
+"appelé 'le métier à tisser organique'. Il s'agit d'une grande armature sur "
+"laquelle sont fixées des centaines de glandes séricigènes et de filières, "
+"étudiée pour optimiser la production de masse de fil de soie.\n"
+"\n"
+"La première utilisation généralisée des armures de combat militaire à base "
+"de soie d'araignée fut le résultat d'une collaboration des forces de l'OTAN "
+"en 2023, après que des tests balistiques ont prouvé que leurs vestes en "
+"kevlar usuelles ne résistaient pas aux munitions chinoises. L'armure en elle "
+"même est un empilement de couches de fils de soie et de polyéthylène à très "
+"haute masse moléculaire traité, lui donnant une résistance et une "
+"flexibilité étonnante. Le tissu obtenu est environ 18 fois plus résistant "
+"que l'acier, et augmente la performance de l'armure de 300 à 400% par "
+"rapport au kevlar. Les premières combinaisons constituées uniquement de "
+"polyéthylène devinrent obsolètes après l'apparition du fil de soie "
+"d'araignée artificiel, et les nouvelles armures composites les remplacèrent "
+"bientôt dans les armées du monde entier. L'armure a évolué au cours du "
+"temps, et est devenue si efficace qu'elle est encore couramment utilisée "
+"aujourd'hui. Il est possible d'ajouter des plaques de céramique ou de métal "
+"dans des poches prévues à cet effet sur le torse et dans le dos, afin "
+"d'améliorer la protection des zones vitales.\n"
+"\n"
+"Le seul désavantage de l'Armure de Combat est son poids relativement élevé "
+"en comparaison des combinaisons plus anciennes. Cela est dû principalement "
+"au nombre de couches nécessaires pour la protection contre les armes "
+"modernes. Cependant, son poids est équitablement réparti, la rendant assez "
+"confortables à l'utilisation, et beaucoup moins encombrante que les armures "
+"expérimentales nanocomposites. En laissant une grande mobilité aux soldats, "
+"cette armure sauvera de nombreuses vies.\n"
+"\n"
+"\n"
+"Doctrine recommandée\n"
+"\n"
+"Hormis en cas d'impossibilité majeure, les troupes PHALANX doivent toujours "
+"porter une armure lorsqu'elles sont en situation de combat. L'Armure de "
+"Combat devrait être considérée comme la protection minium qu'un soldat doive "
+"porter pour partir en mission. Pour certains soldats, l'Armure de Combat "
+"reste un choix intéressant en comparaison d'armures plus évoluées, mais plus "
+"lourdes, par la mobilité plus importante qu'elle procure. Les tireurs "
+"embusqués et de façon générale tous ceux qui ne sont pas en première ligne "
+"feront un bon usage de cette liberté de mouvement.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"Aucun"
 
 #: ../base/ufos/armor.ufo:54
 msgid "Nano Armor"
@@ -296,8 +396,8 @@ msgstr "Scientifique"
 msgid "Medic"
 msgstr "Médecin"
 
-#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1553
-#: ../base/ufos/team_humans.ufo:1573 client/cl_employee.c:126
+#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1555
+#: ../base/ufos/team_humans.ufo:1575 client/cl_employee.c:126
 msgid "UGV"
 msgstr "UGV"
 
@@ -733,14 +833,14 @@ msgstr "L'appareil a atteint sa destination - Quels sont les ordres ?"
 #: ../base/ufos/menu_geoscape.ufo:320 ../base/ufos/menu_geoscape.ufo:436
 #: ../base/ufos/menu_geoscape.ufo:533 ../base/ufos/menu_geoscape.ufo:584
 #: ../base/ufos/menu_geoscape.ufo:676 ../base/ufos/menu_geoscape.ufo:744
-#: ../base/ufos/menu_options.ufo:560
+#: ../base/ufos/menu_options.ufo:599
 msgid "Close this dialog"
 msgstr "Ferme cette boite de dialogue"
 
 #: ../base/ufos/menu_geoscape.ufo:333 ../base/ufos/menu_geoscape.ufo:460
 #: ../base/ufos/menu_geoscape.ufo:546 ../base/ufos/menu_geoscape.ufo:597
 #: ../base/ufos/menu_geoscape.ufo:689 ../base/ufos/menu_geoscape.ufo:757
-#: ../base/ufos/menu_options.ufo:584
+#: ../base/ufos/menu_options.ufo:623
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -765,7 +865,7 @@ msgid "New base"
 msgstr "Nouvelle base"
 
 #: ../base/ufos/menu_geoscape.ufo:411 ../base/ufos/menu_geoscape.ufo:504
-#: ../base/ufos/menu_geoscape.ufo:660 ../base/ufos/menu_options.ufo:1204
+#: ../base/ufos/menu_geoscape.ufo:660 ../base/ufos/menu_options.ufo:1243
 msgid "Name:"
 msgstr "Nom:"
 
@@ -1325,159 +1425,163 @@ msgid "Isometric Mode:"
 msgstr "Mode Isométrique:"
 
 #: ../base/ufos/menu_options.ufo:491
+msgid "Multitexturing:"
+msgstr ""
+
+#: ../base/ufos/menu_options.ufo:529
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: ../base/ufos/menu_options.ufo:547
+#: ../base/ufos/menu_options.ufo:586
 msgid "Maintain resolution"
 msgstr "Garder la résolution"
 
-#: ../base/ufos/menu_options.ufo:554
+#: ../base/ufos/menu_options.ufo:593
 msgid "Want To Maintain resolution"
 msgstr "Conserver cette résolution"
 
-#: ../base/ufos/menu_options.ufo:571
+#: ../base/ufos/menu_options.ufo:610
 msgid "Change the resolution"
 msgstr "Changer la résolution"
 
-#: ../base/ufos/menu_options.ufo:592
+#: ../base/ufos/menu_options.ufo:631
 msgid "Accept"
 msgstr "Accepter"
 
-#: ../base/ufos/menu_options.ufo:620
+#: ../base/ufos/menu_options.ufo:659
 msgid "Sound settings"
 msgstr "Réglages du son"
 
-#: ../base/ufos/menu_options.ufo:628
+#: ../base/ufos/menu_options.ufo:667
 msgid "Volume Control"
 msgstr "Contrôle du volume "
 
-#: ../base/ufos/menu_options.ufo:633
+#: ../base/ufos/menu_options.ufo:672
 msgid "Effects:"
 msgstr "Effets:"
 
-#: ../base/ufos/menu_options.ufo:654
+#: ../base/ufos/menu_options.ufo:693
 msgid "Music:"
 msgstr "Musique:"
 
-#: ../base/ufos/menu_options.ufo:676
+#: ../base/ufos/menu_options.ufo:715
 msgid "Mixing Rate:"
 msgstr "Taux de Mixage:"
 
-#: ../base/ufos/menu_options.ufo:712
+#: ../base/ufos/menu_options.ufo:751
 msgid "Sound renderer:"
 msgstr "Interpréteur de sons:"
 
-#: ../base/ufos/menu_options.ufo:753
+#: ../base/ufos/menu_options.ufo:792
 msgid "Show key bindings"
 msgstr "Raccourcis claviers"
 
-#: ../base/ufos/menu_options.ufo:809
+#: ../base/ufos/menu_options.ufo:848
 msgid "Game settings"
 msgstr "Réglages du jeu"
 
-#: ../base/ufos/menu_options.ufo:820
+#: ../base/ufos/menu_options.ufo:859
 msgid "Start with employees:"
 msgstr "Commencer avec du personnel:"
 
-#: ../base/ufos/menu_options.ufo:836
+#: ../base/ufos/menu_options.ufo:875
 msgid "No employees hired at campaign start"
 msgstr "Pas de personnel recruté au début de la campagne"
 
-#: ../base/ufos/menu_options.ufo:850
+#: ../base/ufos/menu_options.ufo:889
 msgid "Employees already hired at campaign start"
 msgstr "Personnel déjà recruté au début de la campagne"
 
-#: ../base/ufos/menu_options.ufo:863
+#: ../base/ufos/menu_options.ufo:902
 msgid "Start with buildings:"
 msgstr "Commencer avec des bâtiments:"
 
-#: ../base/ufos/menu_options.ufo:879
+#: ../base/ufos/menu_options.ufo:918
 msgid "No buildings in the initial base"
 msgstr "Pas de bâtiments dans la base initiale"
 
-#: ../base/ufos/menu_options.ufo:893
+#: ../base/ufos/menu_options.ufo:932
 msgid "Buildings already built in the initial base"
 msgstr "Bâtiments déjà construits dans la base initiale"
 
-#: ../base/ufos/menu_options.ufo:906
+#: ../base/ufos/menu_options.ufo:945
 msgid "Confirm Actions:"
 msgstr "Confirmer les actions:"
 
-#: ../base/ufos/menu_options.ufo:922
+#: ../base/ufos/menu_options.ufo:961
 msgid "No confirmation before walking and shooting"
 msgstr "Pas de confirmation avant de se déplacer ou de tirer"
 
-#: ../base/ufos/menu_options.ufo:936
+#: ../base/ufos/menu_options.ufo:975
 msgid "Confirmation needed before walking and shooting"
 msgstr "Confirmation nécessaire pour se déplacer ou tirer"
 
-#: ../base/ufos/menu_options.ufo:949
+#: ../base/ufos/menu_options.ufo:988
 msgid "Confirm Movement:"
 msgstr "Confirmer les mouvements:"
 
-#: ../base/ufos/menu_options.ufo:965
+#: ../base/ufos/menu_options.ufo:1004
 msgid "No confirmation before walking"
 msgstr "Pas de confirmation avant de se déplacer"
 
-#: ../base/ufos/menu_options.ufo:979
+#: ../base/ufos/menu_options.ufo:1018
 msgid "Confirmation needed before walking"
 msgstr "Confirmation nécessaire pour se déplacer"
 
-#: ../base/ufos/menu_options.ufo:992
+#: ../base/ufos/menu_options.ufo:1031
 msgid "HUD Design:"
 msgstr "HUD utilisé (Système de fenêtrage):"
 
-#: ../base/ufos/menu_options.ufo:1008 ../base/ufos/menu_options.ufo:1018
+#: ../base/ufos/menu_options.ufo:1047 ../base/ufos/menu_options.ufo:1057
 msgid "Choose another hud"
 msgstr "Choisissez un autre HUD"
 
-#: ../base/ufos/menu_options.ufo:1027
+#: ../base/ufos/menu_options.ufo:1066
 msgid "Tooltips:"
 msgstr "Aides:"
 
-#: ../base/ufos/menu_options.ufo:1043
+#: ../base/ufos/menu_options.ufo:1082
 msgid "Deactivates tooltips"
 msgstr "Désactiver l'aide"
 
-#: ../base/ufos/menu_options.ufo:1057
+#: ../base/ufos/menu_options.ufo:1096
 msgid "Activates tooltips"
 msgstr "Activer l'aide"
 
-#: ../base/ufos/menu_options.ufo:1070
+#: ../base/ufos/menu_options.ufo:1109
 msgid "Center view:"
 msgstr "Centrer la vue:"
 
-#: ../base/ufos/menu_options.ufo:1086
+#: ../base/ufos/menu_options.ufo:1125
 msgid "No centering at soldier selecting, shooting and appearing"
 msgstr ""
 "Ne pas centrer lors de la sélection, du tir ou de l'apparition d'un soldat"
 
-#: ../base/ufos/menu_options.ufo:1100
+#: ../base/ufos/menu_options.ufo:1139
 msgid "Centering at soldier selecting, shooting and appearing"
 msgstr "Centrer lors de la sélection, du tir ou de l'apparition d'un soldat"
 
-#: ../base/ufos/menu_options.ufo:1113
+#: ../base/ufos/menu_options.ufo:1152
 msgid "Cursor tooltips:"
 msgstr "Curseurs d'aides:"
 
-#: ../base/ufos/menu_options.ufo:1129
+#: ../base/ufos/menu_options.ufo:1168
 msgid "Deactivates cursor tooltips"
 msgstr "Désactiver le curseur de l'aide"
 
-#: ../base/ufos/menu_options.ufo:1143
+#: ../base/ufos/menu_options.ufo:1182
 msgid "Activates cursor tooltips"
 msgstr "Activer le curseur de l'aide"
 
-#: ../base/ufos/menu_options.ufo:1156
+#: ../base/ufos/menu_options.ufo:1195
 msgid "Camera Scroll:"
 msgstr "Déplacement Camera:"
 
-#: ../base/ufos/menu_options.ufo:1178
+#: ../base/ufos/menu_options.ufo:1217
 msgid "Camera Rotation:"
 msgstr "Rotation Camera:"
 
-#: ../base/ufos/menu_options.ufo:1237
+#: ../base/ufos/menu_options.ufo:1276
 msgid "Keys"
 msgstr "Touches clavier"
 
@@ -6116,31 +6220,31 @@ msgstr "Passez en revue les ennemis visibles"
 msgid "End round"
 msgstr "Termine le tour"
 
-#: ../base/ufos/team_aliens.ufo:213
+#: ../base/ufos/team_aliens.ufo:227
 msgid "Ortnok"
 msgstr "Ortnok"
 
-#: ../base/ufos/team_aliens.ufo:223
+#: ../base/ufos/team_aliens.ufo:237
 msgid "Antarean"
 msgstr "antarean"
 
-#: ../base/ufos/team_aliens.ufo:233
+#: ../base/ufos/team_aliens.ufo:247
 msgid "Shevaar"
 msgstr "Shevaar"
 
-#: ../base/ufos/team_aliens.ufo:243
+#: ../base/ufos/team_aliens.ufo:257
 msgid "Hovernet"
 msgstr "Hovernet"
 
-#: ../base/ufos/team_aliens.ufo:253
+#: ../base/ufos/team_aliens.ufo:267
 msgid "Cyborg Ortnok"
 msgstr "Cyborg Ortnok"
 
-#: ../base/ufos/team_humans.ufo:1557
+#: ../base/ufos/team_humans.ufo:1559
 msgid "Phoenix"
 msgstr "Phoenix"
 
-#: ../base/ufos/team_humans.ufo:1577
+#: ../base/ufos/team_humans.ufo:1579
 msgid "Triax"
 msgstr "Triax"
 
@@ -6256,12 +6360,14 @@ msgid "Snap Shot"
 msgstr "Tir Normal"
 
 #: ../base/ufos/weapons_human.ufo:301
-msgid "9mm Pistol"
-msgstr "Pistolet 9mm"
+#, fuzzy
+msgid "Machine Pistol"
+msgstr "Pistolet à Tachyons"
 
 #: ../base/ufos/weapons_human.ufo:319
-msgid "Pistol Clip 9mm"
-msgstr "Chargeur de Pistolet"
+#, fuzzy
+msgid "4.2mm MP Magazine"
+msgstr "Chargeur de Pistolet Mitrailleur"
 
 #: ../base/ufos/weapons_human.ufo:331 ../base/ufos/weapons_human.ufo:478
 #: ../base/ufos/weapons_human.ufo:554 ../base/ufos/weapons_human.ufo:609
@@ -6522,56 +6628,56 @@ msgstr "Fusil de Sniper à Tachyons"
 msgid "Tachyon Sniper Charge"
 msgstr "Chargeur de Fusil Sniper à Tachyons"
 
-#: client/cl_actor.c:75
+#: client/cl_actor.c:76
 msgid "Pathetic"
 msgstr "Lamentable"
 
-#: client/cl_actor.c:77
+#: client/cl_actor.c:78
 msgid "Very Poor"
 msgstr "Très faible"
 
-#: client/cl_actor.c:79
+#: client/cl_actor.c:80
 msgid "Poor"
 msgstr "Faible"
 
-#: client/cl_actor.c:81
+#: client/cl_actor.c:82
 msgid "Mediocre"
 msgstr "Médiocre"
 
-#: client/cl_actor.c:83
+#: client/cl_actor.c:84
 msgid "Good"
 msgstr "Bon"
 
-#: client/cl_actor.c:85
+#: client/cl_actor.c:86
 msgid "Very Good"
 msgstr "Très bon"
 
-#: client/cl_actor.c:87
+#: client/cl_actor.c:88
 msgid "Excellent"
 msgstr "Excellent"
 
-#: client/cl_actor.c:89
+#: client/cl_actor.c:90
 msgid "Amazing"
 msgstr "Incroyable"
 
-#: client/cl_actor.c:91
+#: client/cl_actor.c:92
 msgid "Superhuman"
 msgstr "Surhumain"
 
-#: client/cl_actor.c:93
+#: client/cl_actor.c:94
 msgid "Godlike"
 msgstr "Divin"
 
-#: client/cl_actor.c:127
+#: client/cl_actor.c:128
 #, c-format
 msgid "Rank: %s"
 msgstr "Rang: %s"
 
-#: client/cl_actor.c:488
+#: client/cl_actor.c:489
 msgid "Currently panics!\n"
 msgstr "Panique !\n"
 
-#: client/cl_actor.c:494
+#: client/cl_actor.c:495
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -6579,7 +6685,7 @@ msgstr ""
 "Vous ne pouvez pas utiliser cet objet.\n"
 "Vous devez le rechercher d'abord.\n"
 
-#: client/cl_actor.c:504
+#: client/cl_actor.c:505
 #, c-format
 msgid ""
 "Armor  %i\tMorale  %i\n"
@@ -6588,12 +6694,12 @@ msgstr ""
 "Armure  %i\tMoral  %i\n"
 "Déplacement %i (%i UT restantes)\n"
 
-#: client/cl_actor.c:512
+#: client/cl_actor.c:513
 #, c-format
 msgid "Armor  %i\tMorale  %i\n"
 msgstr "Armure  %i\tMoral  %i\n"
 
-#: client/cl_actor.c:534
+#: client/cl_actor.c:535
 #, c-format
 msgid ""
 "%s\n"
@@ -6602,15 +6708,15 @@ msgstr ""
 "%s\n"
 "(empty)\n"
 
-#: client/cl_actor.c:941
+#: client/cl_actor.c:954
 msgid "Nobody selected\n"
 msgstr "Personne de Sélectionné\n"
 
-#: client/cl_actor.c:952
+#: client/cl_actor.c:965
 msgid "This isn't your round\n"
 msgstr "Ce n'est pas votre Tour\n"
 
-#: client/cl_actor.c:1086
+#: client/cl_actor.c:1099
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -6618,32 +6724,32 @@ msgstr ""
 "Vous ne pouvez pas charger cet objet inconnu.\n"
 "Vous devez le rechercher d'abord.\n"
 
-#: client/cl_actor.c:1479
+#: client/cl_actor.c:1503
 #, fuzzy, c-format
 msgid "%s has been killed!\n"
 msgstr "%s a été promu au rang de %s.\n"
 
-#: client/cl_actor.c:1485
+#: client/cl_actor.c:1509
 #, fuzzy
 msgid "A civlian was killed!\n"
 msgstr "Aliens tués\t%i\n"
 
-#: client/cl_actor.c:1488
+#: client/cl_actor.c:1512
 #, fuzzy
 msgid "An alien was killed!\n"
 msgstr "Aliens tués\t%i\n"
 
-#: client/cl_actor.c:1491
+#: client/cl_actor.c:1515
 #, fuzzy
 msgid "A solider was killed\n"
 msgstr "Aliens tués\t%i\n"
 
-#: client/cl_actor.c:1494
+#: client/cl_actor.c:1518
 #, c-format
 msgid "A member of team %i was killed!\n"
 msgstr ""
 
-#: client/cl_actor.c:1647
+#: client/cl_actor.c:1671
 msgid "Your round started!\n"
 msgstr "Votre Tour a commencé !\n"
 
@@ -6653,7 +6759,7 @@ msgstr "Appareil démarré"
 
 #: client/cl_aircraft.c:103 client/cl_aircraft.c:402 client/cl_aircraft.c:554
 #: client/cl_aircraft.c:772 client/cl_basemanagement.c:448
-#: client/cl_basemanagement.c:1907 client/cl_campaign.c:428
+#: client/cl_basemanagement.c:1908 client/cl_campaign.c:428
 #: client/cl_campaign.c:855 client/cl_campaign.c:906 client/cl_campaign.c:1058
 #: client/cl_campaign.c:1069 client/cl_campaign.c:1079
 #: client/cl_campaign.c:1089 client/cl_campaign.c:1099
@@ -6661,9 +6767,9 @@ msgstr "Appareil démarré"
 #: client/cl_campaign.c:1133 client/cl_campaign.c:1140
 #: client/cl_campaign.c:1148 client/cl_campaign.c:2343
 #: client/cl_campaign.c:2380 client/cl_campaign.c:2382
-#: client/cl_campaign.c:2749 client/cl_map.c:298 client/cl_research.c:646
-#: client/cl_research.c:768 client/cl_research.c:771 client/cl_research.c:775
-#: client/cl_research.c:788 client/cl_research.c:817 client/cl_research.c:956
+#: client/cl_campaign.c:2750 client/cl_map.c:298 client/cl_research.c:673
+#: client/cl_research.c:795 client/cl_research.c:798 client/cl_research.c:802
+#: client/cl_research.c:815 client/cl_research.c:844 client/cl_research.c:983
 msgid "Notice"
 msgstr "Note"
 
@@ -6830,29 +6936,29 @@ msgstr "La base est attaquée"
 msgid "NewTeam"
 msgstr "Nouvelle Equipe"
 
-#: client/cl_basemanagement.c:1592
+#: client/cl_basemanagement.c:1593
 #, c-format
 msgid "A new base has been built: %s."
 msgstr "Une nouvelle base a été construite: %s."
 
-#: client/cl_basemanagement.c:1593 client/cl_basemanagement.c:1634
+#: client/cl_basemanagement.c:1594 client/cl_basemanagement.c:1635
 msgid "Base built"
 msgstr "Base construite"
 
-#: client/cl_basemanagement.c:1633
+#: client/cl_basemanagement.c:1634
 msgid "Not enough credits to set up a new base."
 msgstr "Pas assez de crédits pour construire une nouvelle base"
 
-#: client/cl_basemanagement.c:1907
+#: client/cl_basemanagement.c:1908
 msgid "You've reached the base limit."
 msgstr "Vous avez atteint la limite de base."
 
-#: client/cl_basemanagement.c:2044
+#: client/cl_basemanagement.c:2045
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Construction du bâtiment %s terminée dans la base %s."
 
-#: client/cl_basemanagement.c:2045
+#: client/cl_basemanagement.c:2046
 msgid "Building finished"
 msgstr "Construction terminée"
 
@@ -7124,21 +7230,21 @@ msgstr "Assembler ou charger une équipe"
 msgid "Your dropship is not near the landing zone"
 msgstr "Votre Transport n'est pas près de la zone d'atterrissage"
 
-#: client/cl_campaign.c:2608
+#: client/cl_campaign.c:2609
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s a été promu au rang de %s.\n"
 
-#: client/cl_campaign.c:2609
+#: client/cl_campaign.c:2610
 msgid "Soldier promoted"
 msgstr "Soldat promu"
 
-#: client/cl_campaign.c:2748
+#: client/cl_campaign.c:2749
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Défense de la base: %s succès!"
 
-#: client/cl_campaign.c:3948
+#: client/cl_campaign.c:3953
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -7177,15 +7283,15 @@ msgstr "Termine le tour"
 msgid "Confirm the current action"
 msgstr "Confirmer l'action"
 
-#: client/cl_main.c:338 client/cl_main.c:699
+#: client/cl_main.c:338 client/cl_main.c:695
 msgid "Assemble a team first"
 msgstr "Assembler une équipe avant"
 
-#: client/cl_main.c:338 client/cl_main.c:699
+#: client/cl_main.c:338 client/cl_main.c:695
 msgid "Error"
 msgstr "Erreur"
 
-#: client/cl_main.c:639
+#: client/cl_main.c:635
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -7194,80 +7300,80 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:661
+#: client/cl_main.c:657
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Carte:\t%s\n"
 
-#: client/cl_main.c:663
+#: client/cl_main.c:659
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Version:\t%s\n"
 
-#: client/cl_main.c:665
+#: client/cl_main.c:661
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Nom du serveur:\t%s\n"
 
-#: client/cl_main.c:667
+#: client/cl_main.c:663
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Etats du moral:\t%s\n"
 
-#: client/cl_main.c:669
+#: client/cl_main.c:665
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Jeu en équipe:\t%s\n"
 
-#: client/cl_main.c:671
+#: client/cl_main.c:667
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Max. joueurs par équipe:\t%s\n"
 
-#: client/cl_main.c:673
+#: client/cl_main.c:669
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Max. clients:\t%s\n"
 
-#: client/cl_main.c:675
+#: client/cl_main.c:671
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max. soldats par joueur:\t%s\n"
 
-#: client/cl_main.c:677
+#: client/cl_main.c:673
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldats par équipe:\t%s\n"
 
-#: client/cl_main.c:1277
+#: client/cl_main.c:1266
 msgid "Unnamed"
 msgstr "Pas de Nom"
 
-#: client/cl_main.c:1494
+#: client/cl_main.c:1483
 msgid "Chicken-hearted"
 msgstr "Poule mouillée"
 
-#: client/cl_main.c:1496
+#: client/cl_main.c:1485
 msgid "Very Easy"
 msgstr "Très facile"
 
-#: client/cl_main.c:1499
+#: client/cl_main.c:1488
 msgid "Easy"
 msgstr "Facile"
 
-#: client/cl_main.c:1501
+#: client/cl_main.c:1490
 msgid "Normal"
 msgstr "Normale"
 
-#: client/cl_main.c:1504
+#: client/cl_main.c:1493
 msgid "Hard"
 msgstr "Difficile"
 
-#: client/cl_main.c:1506
+#: client/cl_main.c:1495
 msgid "Very Hard"
 msgstr "Très difficile"
 
-#: client/cl_main.c:1508
+#: client/cl_main.c:1497
 msgid "Insane"
 msgstr "Démentielle"
 
@@ -7406,50 +7512,50 @@ msgstr "Production commencée"
 msgid "Queue full!"
 msgstr "Liste pleine!"
 
-#: client/cl_research.c:538
+#: client/cl_research.c:565
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Scientifiques disponibles dans cette base: %i"
 
-#: client/cl_research.c:539
+#: client/cl_research.c:566
 msgid "Not researched in any base."
 msgstr "Recherché dans aucune base."
 
-#: client/cl_research.c:545
+#: client/cl_research.c:572
 #, c-format
 msgid "Researched in %s"
 msgstr "Recherché dans %s"
 
-#: client/cl_research.c:547
+#: client/cl_research.c:574
 msgid "Researched in this base."
 msgstr "Recherché dans cette base."
 
-#: client/cl_research.c:558
+#: client/cl_research.c:585
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Progression: %.1f%%"
 
-#: client/cl_research.c:560
+#: client/cl_research.c:587
 msgid "Progress: Not available."
 msgstr "Progrès: Non disponible."
 
-#: client/cl_research.c:564
+#: client/cl_research.c:591
 msgid "Status: Under research"
 msgstr "Statut: En cours de Recherche"
 
-#: client/cl_research.c:567
+#: client/cl_research.c:594
 msgid "Status: Research paused"
 msgstr "Statut: Recherche en attente"
 
-#: client/cl_research.c:570
+#: client/cl_research.c:597
 msgid "Status: Research finished"
 msgstr "Statut: Recherche terminée"
 
-#: client/cl_research.c:573
+#: client/cl_research.c:600
 msgid "Status: Unknown technology"
 msgstr "Statut: Technologie inconnue"
 
-#: client/cl_research.c:647
+#: client/cl_research.c:674
 msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
@@ -7459,19 +7565,19 @@ msgstr ""
 "Vous devez en construire ou en libérer un\n"
 "pour que des scientifiques recherchent cette technologie.\n"
 
-#: client/cl_research.c:768
+#: client/cl_research.c:795
 msgid "This item is already under research by your scientists."
 msgstr "Cette objet est déjà recherché par vos scientifiques."
 
-#: client/cl_research.c:771
+#: client/cl_research.c:798
 msgid "The research on this item continues."
 msgstr "La recherche sur cet objet continue."
 
-#: client/cl_research.c:775 client/cl_research.c:817
+#: client/cl_research.c:802 client/cl_research.c:844
 msgid "The research on this item is complete."
 msgstr "La recherche sur cet objet est terminée."
 
-#: client/cl_research.c:788
+#: client/cl_research.c:815
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -7479,30 +7585,31 @@ msgstr ""
 "La recherche sur cet objet n'est pas encore possible.\n"
 "Vous devez d'abord rechercher la technologie sur laquelle il est basé."
 
-#: client/cl_research.c:856
+#: client/cl_research.c:883
 msgid " [not yet researchable]"
 msgstr " [pas encore recherchable]"
 
-#: client/cl_research.c:956
+#: client/cl_research.c:983
 msgid "Build a laboratory first"
 msgstr "Construisez un laboratoire d'abord"
 
-#: client/cl_research.c:1037
+#: client/cl_research.c:1064
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Recherche de %s est terminée\n"
 
-#: client/cl_research.c:1038
+#: client/cl_research.c:1065
 msgid "Research finished"
 msgstr "Recherche Terminée"
 
-#: client/cl_research.c:1289
+#: client/cl_research.c:1324
 msgid "No description available."
 msgstr "Pas de description disponible."
 
-#: client/cl_scrn.c:360
-msgid "Loading..."
-msgstr "charger..."
+#: client/cl_scrn.c:384
+#, c-format
+msgid "Loading Map [%s]"
+msgstr ""
 
 #: client/cl_team.c:38
 msgid "Urban"
@@ -7878,68 +7985,75 @@ msgstr "Contenu Ufopedia"
 msgid "Ufopedia Index: %s"
 msgstr "Contenu Ufopedia"
 
-#: game/g_ai.c:646
-msgid "Alien"
-msgstr "Alien"
+#: client/cl_view.c:403 client/cl_view.c:437 client/cl_view.c:467
+#: client/cl_view.c:479
+#, fuzzy, c-format
+msgid "loading %s"
+msgstr "Bâtiments"
 
-#: game/g_client.c:583
+#: client/cl_view.c:416
+#, fuzzy
+msgid "loading models..."
+msgstr "charger..."
+
+#: game/g_client.c:586
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Ne peut faire l'action - ce n'est pas votre tour!\n"
 
-#: game/g_client.c:590
+#: game/g_client.c:593
 msgid "Can't perform action - object not present!\n"
 msgstr "Ne peut faire l'action - objet non présent!\n"
 
-#: game/g_client.c:595
+#: game/g_client.c:598
 msgid "Can't perform action - not an actor!\n"
 msgstr "Ne peut faire l'action - pas une unité!\n"
 
-#: game/g_client.c:600
+#: game/g_client.c:603
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Ne peut faire l'action - unité assomée!\n"
 
-#: game/g_client.c:605
+#: game/g_client.c:608
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Ne peut faire l'action - unité morte!\n"
 
-#: game/g_client.c:610
+#: game/g_client.c:613
 msgid "Can't perform action - not on same team!\n"
 msgstr "Ne peut faire l'action - pas dans la meme équipe!\n"
 
-#: game/g_client.c:615
+#: game/g_client.c:618
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Ne peut faire l'action - pas de controle sur les unités alliées!\n"
 
-#: game/g_client.c:620 game/g_client.c:721
+#: game/g_client.c:623 game/g_client.c:724
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Ne peut faire l'action - pas assez d'UT!\n"
 
-#: game/g_client.c:724
+#: game/g_client.c:727
 msgid ""
 "Can't perform action - weapon already fully loaded with the same "
 "ammunition!\n"
 msgstr "Ne peut faire l'action - arme déjà chargée!\n"
 
-#: game/g_client.c:1202
+#: game/g_client.c:1205
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "Secoué, ne baissera pas sa garde.\n"
 
-#: game/g_client.c:1263
+#: game/g_client.c:1266
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s Panique!\n"
 
-#: game/g_client.c:1316
+#: game/g_client.c:1319
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s fait un massacre.\n"
 
-#: game/g_client.c:1318
+#: game/g_client.c:1321
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s est fou de rage!\n"
 
-#: game/g_client.c:1371
+#: game/g_client.c:1374
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s est secoué.\n"
@@ -7951,6 +8065,22 @@ msgstr "Oui"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "Non"
+
+#, fuzzy
+#~ msgid "Machine Pistol Clip"
+#~ msgstr "Chargeur de Pistolet à Tachyons"
+
+#~ msgid "Kevlar Vest"
+#~ msgstr "Gilet Kevlar"
+
+#~ msgid "9mm Pistol"
+#~ msgstr "Pistolet 9mm"
+
+#~ msgid "Pistol Clip 9mm"
+#~ msgstr "Chargeur de Pistolet"
+
+#~ msgid "Alien"
+#~ msgstr "Alien"
 
 #~ msgid "Toggle reaction-fire"
 #~ msgstr "Activez le tir de réaction"
