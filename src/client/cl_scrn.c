@@ -381,7 +381,7 @@ static void SCR_DrawLoading(void)
 	re.DrawColor(color);
 
 	if (cl.configstrings[CS_TILES][0]) {
-		mapmsg = va("Loading Map [%s]", cl.configstrings[CS_TILES]);
+		mapmsg = va(_("Loading Map [%s]"), cl.configstrings[CS_TILES]);
 		re.FontDrawString("f_menubig", ALIGN_UC,
 			(int)(viddef.width * 0.5),
 			(int)(viddef.height * 0.5 - 60),
