@@ -43,7 +43,11 @@ fontRenderStyle_t fontStyle[] = {
 /*============================================================== */
 
 /**
- * @brief
+ * @brief Adds a new SDL_Surface to texture cache
+ * @param[in] s Surface that should be added to cache
+ * @sa Font_GenerateGLSurface
+ * @return texture id in OpenGL context
+ * @note a SDL_Surface won't be added twice to the cache
  */
 static GLuint Font_TextureAddToCache(SDL_Surface * s)
 {
@@ -75,6 +79,7 @@ static GLuint Font_TextureAddToCache(SDL_Surface * s)
 
 /**
  * @brief
+ * @sa Font_CleanCache
  */
 static void Font_TextureCleanCache(void)
 {
@@ -91,13 +96,13 @@ static void Font_TextureCleanCache(void)
 
 /**
  * @brief frees the SDL_ttf fonts
+ * @sa Font_CleanCache
  */
 void Font_Shutdown(void)
 {
 	int i;
 
 	Font_CleanCache();
-	Font_TextureCleanCache();
 
 	for (i = 0; i < numFonts; i++)
 		if (fonts[i].font)
@@ -172,6 +177,7 @@ static font_t *Font_GetFont(const char *name)
 
 /**
  * @brief
+ * @sa Font_GetFont
  */
 void Font_Length(const char *font, char *c, int *width, int *height)
 {
@@ -192,6 +198,7 @@ void Font_Length(const char *font, char *c, int *width, int *height)
 
 /**
  * @brief
+ * @sa Font_TextureCleanCache
  */
 void Font_CleanCache(void)
 {
@@ -205,6 +212,7 @@ void Font_CleanCache(void)
 	memset(fontCache, 0, sizeof(fontCache));
 	memset(hash, 0, sizeof(hash));
 	numInCache = 0;
+	Font_TextureCleanCache();
 }
 
 /**
@@ -239,6 +247,9 @@ void Font_ListCache_f(void)
 
 /**
  * @brief
+ * @param[in] string String to build the hash value for
+ * @param[in] maxlen Max length that should be used to calculate the hash value
+ * @return hash value for given string
  */
 static int Font_Hash(const char *string, int maxlen)
 {
@@ -254,6 +265,7 @@ static int Font_Hash(const char *string, int maxlen)
 
 /**
  * @brief
+ * @sa Font_Hash
  */
 static fontCache_t *Font_GetFromCache(const char *s)
 {
@@ -272,16 +284,17 @@ static fontCache_t *Font_GetFromCache(const char *s)
  * @brief We add the font string (e.g. f_small) to the beginning
  * of each string (char *s) because we can have the same strings
  * but other fonts.
+ * @sa Font_GenerateCache
+ * @sa Font_CleanCache
+ * @sa Font_Hash
  */
 static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 {
 	int hashValue;
 	fontCache_t *font = NULL;
 
-	if (numInCache >= MAX_FONT_CACHE) {
+	if (numInCache >= MAX_FONT_CACHE)
 		Font_CleanCache();
-		Font_TextureCleanCache();
-	}
 
 	hashValue = Font_Hash(s, MAX_HASH_STRING);
 	if (hash[hashValue]) {
@@ -307,6 +320,11 @@ static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 
 /**
  * @brief
+ * @sa Font_AddToCache
+ * @sa TTF_RenderUTF8_Blended
+ * @sa SDL_CreateRGBSurface
+ * @sa SDL_LowerBlit
+ * @sa SDL_FreeSurface
  */
 static fontCache_t *Font_GenerateCache(const char *s, const char *fontString, font_t * f)
 {
@@ -420,6 +438,7 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
  * @param[in] height The max height of the text
  * @return -1 for scrolling down (TODO)
  * @return +1 for scrolling up (TODO)
+ * @sa Font_TextureAddToCache
  */
 static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
 {
