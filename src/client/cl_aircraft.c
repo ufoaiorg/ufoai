@@ -343,8 +343,8 @@ void CL_AircraftSelect(void)
 	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\n"), aircraft->speed);
 	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->fuelSize / 1000), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), aircraft->weapon ? aircraft->weapon->name : _("None")), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Shield:\t%s"), aircraft->shield ? aircraft->shield->name : _("None")), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), aircraft->weapon ? _(aircraft->weapon->name) : _("None")), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Shield:\t%s"), aircraft->shield ? _(aircraft->shield->name) : _("None")), sizeof(aircraftInfo));
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 
@@ -625,7 +625,7 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 	while (*list) {
 		/*Com_Printf("%s\n", (*list)->id);*/
 		if (RS_IsResearched_ptr(*list))
-			Q_strcat(bufferShields, va("%s\n", (*list)->name), sizeof(bufferShields) );
+			Q_strcat(bufferShields, va("%s\n", _((*list)->name)), sizeof(bufferShields) );
 		list++;
 	}
 	menuText[TEXT_LIST] = bufferShields;
@@ -636,7 +636,7 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 	while (*list) {
 		/*Com_Printf("%s\n", (*list)->id);*/
 		if (RS_IsResearched_ptr(*list))
-			Q_strcat(bufferWeapons, va("%s\n", (*list)->name), sizeof(bufferWeapons) );
+			Q_strcat(bufferWeapons, va("%s\n", _((*list)->name)), sizeof(bufferWeapons) );
 		list++;
 	}
 	menuText[TEXT_AIRCRAFT_LIST] = bufferWeapons;
