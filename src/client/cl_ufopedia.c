@@ -285,7 +285,7 @@ void UP_BuildingDescription (technology_t* t)
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find building") );
 	} else {
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Depends:\t%s\n"), b->dependsBuilding >= 0 ? gd.buildingTypes[b->dependsBuilding].name : _("None") );
-		Q_strcat(upBuffer, va(_("Buildtime:\t%i day(s)\n"), (int)b->buildTime ), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(ngettext("Buildtime:\t%i day\n", "Buildtime:\t%i days\n", (int)b->buildTime), (int)b->buildTime ), sizeof(upBuffer));
 		Q_strcat(upBuffer, va(_("Fixcosts:\t%i c\n"), (int)b->fixCosts ), sizeof(upBuffer));
 		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), (int)b->varCosts ), sizeof(upBuffer));
 	}
@@ -305,8 +305,8 @@ void UP_AircraftDescription (technology_t* t)
 	} else {
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Speed:\t%.0f\n"), aircraft->speed );
 		Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), aircraft->fuelSize ), sizeof(upBuffer));
-		Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), aircraft->weapon ? aircraft->weapon->name : _("None") ), sizeof(upBuffer)); /* TODO: there is a weapon in a sample aircraft? */
-		Q_strcat(upBuffer, va(_("Shield:\t%s\n"), aircraft->shield ? aircraft->shield->name : _("None") ), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), aircraft->weapon ? _(aircraft->weapon->name) : _("None") ), sizeof(upBuffer)); /* TODO: there is a weapon in a sample aircraft? */
+		Q_strcat(upBuffer, va(_("Shield:\t%s\n"), aircraft->shield ? _(aircraft->shield->name) : _("None") ), sizeof(upBuffer));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 	UP_DisplayTechTree(t);

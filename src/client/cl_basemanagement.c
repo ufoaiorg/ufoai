@@ -564,7 +564,7 @@ static void B_DrawBuilding(void)
 		Com_sprintf(menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.0f c\n"), building->fixCosts);
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION)
-		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("%i Day(s) to build\n"), building->buildTime), MAX_LIST_CHAR );
+		Q_strcat(menuText[TEXT_BUILDING_INFO], va(ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime), MAX_LIST_CHAR );
 
 	if (building->varCosts)
 		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Running Costs:\t%1.0f c\n"), building->varCosts), MAX_LIST_CHAR);
@@ -1209,7 +1209,7 @@ void B_DrawBase(menuNode_t * node)
 					break;
 				case B_STATUS_UNDER_CONSTRUCTION:
 					time = building->buildTime - (ccs.date.day - building->timeStart);
-					re.FontDrawString("f_small", 0, x + 10, y + 10, x + 10, y + 10, node->size[0], 0, node->texh[0], va(_("%i days left"), time), 0, 0, NULL, qfalse);
+					re.FontDrawString("f_small", 0, x + 10, y + 10, x + 10, y + 10, node->size[0], 0, node->texh[0], va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse);
 					break;
 				default:
 					break;

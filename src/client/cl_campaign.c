@@ -902,7 +902,7 @@ void CL_CampaignCheckEvents(void)
 				case MIS_INTERCEPT:
 					/* Normal ground mission. */
 					CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
-					Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died."), mis->def->civilians), MAX_MESSAGE_TEXT);
+					Q_strncpyz(messageBuffer, va(ngettext("The mission expired and %i civilian died.", "The mission expired and %i civilians died.", mis->def->civilians), mis->def->civilians), MAX_MESSAGE_TEXT);
 					MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 					break;
 				default:
@@ -1054,7 +1054,13 @@ static void CL_HandleBudget(void)
 			new_workers++;
 		}
 
-		Com_sprintf(message, sizeof(message), _("Gained %i credits, %i scientists, %i medics, %i soldiers and %i workers from nation %s (%s)"), funding, new_scientists, new_medics, new_soldiers, new_workers, _(nation->name), CL_GetNationHappinessString(nation));
+		Com_sprintf(message, sizeof(message), _("Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"),
+					funding, ngettext("credit", "credits", funding),
+					new_scientists, ngettext("scientist", "scientists", new_scientists),
+					new_medics, ngettext("medic", "medics", new_medics),
+					new_soldiers, ngettext("soldier", "soldiers", new_soldiers),
+					new_workers, ngettext("worker", "workers", new_workers),
+					_(nation->name), CL_GetNationHappinessString(nation));
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 	}
 
@@ -1347,7 +1353,7 @@ void CL_Stats_Update(void)
 	pos += (strlen(pos) + 1);
 	menuText[TEXT_STATS_2] = pos;
 	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Build:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
-		stats.basesBuild, stats.basesAttacked, gd.numBases),
+		stats.basesBuild, gd.numBases, stats.basesAttacked),
 
 	/* nations */
 	pos += (strlen(pos) + 1);
@@ -3950,7 +3956,13 @@ static void CP_CampaignsClick_f(void)
 
 	Cvar_Set("campaign", campaigns[num].id);
 	/* FIXME: Translate the race to the name of a race */
-	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i soldiers, %i scientists, %i workers, %i medics\nCredits: %ic\nDifficulty: %s\n%s\n"), campaigns[num].team, campaigns[num].soldiers, campaigns[num].scientists, campaigns[num].workers, campaigns[num].medics, campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty), _(campaigns[num].text));
+	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\nCredits: %ic\nDifficulty: %s\n%s\n"),
+			campaigns[num].team,
+			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
+			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),
+			campaigns[num].workers, ngettext("worker", "workers", campaigns[num].workers),
+			campaigns[num].medics, ngettext("medic", "medics", campaigns[num].medics),
+			campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty), _(campaigns[num].text));
 	menuText[TEXT_STANDARD] = campaignDesc;
 }
 
