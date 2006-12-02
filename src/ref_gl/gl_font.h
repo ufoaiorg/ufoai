@@ -10,6 +10,8 @@
 typedef struct font_s {
 	char name[MAX_FONTNAME];
 	TTF_Font *font;
+	SDL_RWops *rw;
+	void *buffer;
 	int style;
 	int lineSkip;				/* TTF_FontLineSkip */
 	int height;

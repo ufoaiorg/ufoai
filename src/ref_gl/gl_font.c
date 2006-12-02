@@ -105,8 +105,11 @@ void Font_Shutdown(void)
 	Font_CleanCache();
 
 	for (i = 0; i < numFonts; i++)
-		if (fonts[i].font)
+		if (fonts[i].font) {
 			TTF_CloseFont(fonts[i].font);
+			ri.FS_FreeFile(fonts[i].buffer);
+			SDL_RWclose(fonts[i].rw);
+		}
 
 	/* now quit SDL_ttf, too */
 	TTF_Quit();
@@ -119,8 +122,6 @@ void Font_Shutdown(void)
 font_t *Font_Analyze(const char *name, const char *path, int renderStyle, int size)
 {
 	font_t *f = NULL;
-	SDL_RWops *rw = NULL;
-	void *buffer = NULL;
 	int ttfSize;
 
 	if (numFonts >= MAX_FONTS)
@@ -128,19 +129,20 @@ font_t *Font_Analyze(const char *name, const char *path, int renderStyle, int si
 
 	/* allocate new font */
 	f = &fonts[numFonts];
+	memset(f, 0, sizeof(f));
 
 	/* copy fontname */
 	Q_strncpyz(f->name, name, MAX_VAR);
 
-	ttfSize = ri.FS_LoadFile(path, &buffer);
+	ttfSize = ri.FS_LoadFile(path, &f->buffer);
 
-	rw = SDL_RWFromMem(buffer, ttfSize);
+	f->rw = SDL_RWFromMem(f->buffer, ttfSize);
 
 	/* norm size is 1024x768 (1.0) */
 	/* scale the fontsize */
 	size *= vid.rx;
 
-	f->font = TTF_OpenFontRW(rw, 0, size);
+	f->font = TTF_OpenFontRW(f->rw, 0, size);
 	if (!f->font)
 		ri.Sys_Error(ERR_FATAL, "...could not load font file %s\n", path);
 
@@ -148,10 +150,6 @@ font_t *Font_Analyze(const char *name, const char *path, int renderStyle, int si
 	f->style = renderStyle;
 	if (f->style)
 		TTF_SetFontStyle(f->font, f->style);
-
-	/* FIXME: We need to free this */
-/* 	ri.FS_FreeFile( buffer ); */
-/* 	SDL_RWclose( rw ); */
 
 	numFonts++;
 	f->lineSkip = TTF_FontLineSkip(f->font);
@@ -162,7 +160,8 @@ font_t *Font_Analyze(const char *name, const char *path, int renderStyle, int si
 }
 
 /**
- * @brief
+ * @brief Searches the array of available fonts (see fonts.ufo)
+ * @return font_t pointer or NULL
  */
 static font_t *Font_GetFont(const char *name)
 {
