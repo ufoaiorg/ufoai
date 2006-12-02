@@ -43,7 +43,7 @@ class UFOAIPluginDependencies :
   public GlobalRadiantModuleRef,    // basic class for all other module refs
   public GlobalUndoModuleRef,       // used to say radiant that something has changed and to undo that
   public GlobalFilterModuleRef,
-  public GlobalBrushModuleRef,
+  //public GlobalBrushModuleRef,
   public GlobalSceneGraphModuleRef, // necessary to handle data in the mapfile (change, retrieve data)
   public GlobalEntityModuleRef,     // to access and modify the entities
   public GlobalEntityClassManagerModuleRef
