@@ -442,9 +442,15 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
  */
 static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
 {
-	GLuint texture = Font_TextureAddToCache(cache->pixel);
+	GLuint texture = 0;
 	int h = cache->size[1];
 	vec2_t start = {0.0f, 0.0f}, end = {1.0f, 1.0f};
+
+	/* if height is too much we should be able to scroll down */
+	if (height > 0 && y+h > absY+height)
+		return 1;
+
+	texture = Font_TextureAddToCache(cache->pixel);
 
 	/* Tell GL about our new texture */
 	GL_Bind(texture);
@@ -452,10 +458,6 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	/* if height is too much we should be able to scroll down */
-	if (height > 0 && y+h > absY+height)
-		return 1;
 
 	/* draw it */
 	qglEnable(GL_BLEND);
