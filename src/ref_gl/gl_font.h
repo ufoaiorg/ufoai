@@ -10,10 +10,10 @@
 typedef struct font_s {
 	char name[MAX_FONTNAME];
 	TTF_Font *font;
-	SDL_RWops *rw;
-	void *buffer;
-	int style;
-	int lineSkip;				/* TTF_FontLineSkip */
+	SDL_RWops *rw;				/**< ttf font reading structure for SDL_RWops */
+	void *buffer;				/**< loaded file */
+	int style;					/**< see also fontRenderStyle_t */
+	int lineSkip;				/**< TTF_FontLineSkip */
 	int height;
 } font_t;
 
@@ -21,15 +21,15 @@ typedef struct font_s {
 font_t fonts[MAX_FONTS];
 int numFonts;
 typedef struct fontCache_s {
-	char string[MAX_HASH_STRING];
-	SDL_Surface *pixel;
-	struct fontCache_s *next;
-	vec2_t size;				/* real width and height */
+	char string[MAX_HASH_STRING];	/** hash id */
+	SDL_Surface *pixel;			/**< rendered font surface */
+	struct fontCache_s *next;	/**< next hash entry in case of collision */
+	vec2_t size;				/**< real width and height */
 } fontCache_t;
 
 typedef struct textureCache_s
 {
-	SDL_Surface * surface;
+	SDL_Surface * surface; /**< don't free this one - but SDL_Surface pixel in fontCache_t */
 	GLuint texture;
 } textureCache_t;
 
@@ -55,4 +55,4 @@ void Font_Register(const char *name, int size, char *path, char *style);
 void Font_Register(const char *name, int size, char *path, char *style);
 
 
-#endif							/* _GL_FONTS */
+#endif	/* _GL_FONTS */

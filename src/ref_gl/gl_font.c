@@ -63,7 +63,7 @@ static GLuint Font_TextureAddToCache(SDL_Surface * s)
 
 		if (lastTextureCache == firstTextureCache) {
 			qglDeleteTextures(1, &textureCache[i].texture);
-			textureCache[i].surface = 0;
+			textureCache[i].surface = NULL;
 			textureCache[i].texture = 0;
 
 			firstTextureCache++;
@@ -87,7 +87,7 @@ static void Font_TextureCleanCache(void)
 
 	for (i = firstTextureCache; i != lastTextureCache; i++, i %= MAX_TEXTURE_CACHE) {
 		qglDeleteTextures(1, &textureCache[i].texture);
-		textureCache[i].surface = 0;
+		textureCache[i].surface = NULL;
 		textureCache[i].texture = 0;
 	}
 
