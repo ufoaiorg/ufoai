@@ -63,14 +63,14 @@ static GLuint Font_TextureAddToCache(SDL_Surface * s)
 		lastTextureCache++;
 		lastTextureCache %= MAX_TEXTURE_CACHE;
 
-		/* in case we hit the cache limit we should delete old entries */
+		/* delete old cache entries to maintain at least one free slot */
 		if (lastTextureCache == firstTextureCache) {
-			qglDeleteTextures(1, &textureCache[i].texture);
+			qglDeleteTextures(1, &textureCache[firstTextureCache].texture);
 			/* don't free here but only set to NULL - will be freed in Font_CleanCache */
-			textureCache[i].surface = NULL;
-			textureCache[i].texture = 0;
+			textureCache[firstTextureCache].surface = NULL;
+			textureCache[firstTextureCache].texture = 0;
 
-			/*  */
+			/* increment firstTextureCache position (the oldest used slot) */
 			firstTextureCache++;
 			firstTextureCache %= MAX_TEXTURE_CACHE;
 		}
