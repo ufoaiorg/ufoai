@@ -225,16 +225,16 @@ BrushFilterWrapper* f_level8;
 
 void init_filters(void)
 {
-	f_stepon = add_ufoaibrush_filter(g_filter_brush_stepon, EXCLUDE_CLIP);
-	f_level1 = add_ufoaibrush_filter(g_filter_brush_level1, EXCLUDE_CLIP);
-	f_level2 = add_ufoaibrush_filter(g_filter_brush_level2, EXCLUDE_CLIP);
-	f_level3 = add_ufoaibrush_filter(g_filter_brush_level3, EXCLUDE_CLIP);
-	f_level4 = add_ufoaibrush_filter(g_filter_brush_level4, EXCLUDE_CLIP);
-	f_level5 = add_ufoaibrush_filter(g_filter_brush_level5, EXCLUDE_CLIP);
-	f_level6 = add_ufoaibrush_filter(g_filter_brush_level6, EXCLUDE_CLIP);
-	f_level7 = add_ufoaibrush_filter(g_filter_brush_level7, EXCLUDE_CLIP);
-	f_level8 = add_ufoaibrush_filter(g_filter_brush_level8, EXCLUDE_CLIP);
-	f_actorclip = add_ufoaibrush_filter(g_filter_brush_clip, EXCLUDE_CLIP);
+	f_stepon = add_ufoaibrush_filter(g_filter_brush_stepon, EXCLUDE_CLIP, 0);
+	f_level1 = add_ufoaibrush_filter(g_filter_brush_level1, EXCLUDE_CLIP, 0);
+	f_level2 = add_ufoaibrush_filter(g_filter_brush_level2, EXCLUDE_CLIP, 0);
+	f_level3 = add_ufoaibrush_filter(g_filter_brush_level3, EXCLUDE_CLIP, 0);
+	f_level4 = add_ufoaibrush_filter(g_filter_brush_level4, EXCLUDE_CLIP, 0);
+	f_level5 = add_ufoaibrush_filter(g_filter_brush_level5, EXCLUDE_CLIP, 0);
+	f_level6 = add_ufoaibrush_filter(g_filter_brush_level6, EXCLUDE_CLIP, 0);
+	f_level7 = add_ufoaibrush_filter(g_filter_brush_level7, EXCLUDE_CLIP, 0);
+	f_level8 = add_ufoaibrush_filter(g_filter_brush_level8, EXCLUDE_CLIP, 0);
+	f_actorclip = add_ufoaibrush_filter(g_filter_brush_clip, EXCLUDE_CLIP, 0);
 	globalOutputStream() << "initialized UFO:AI fiters\n";
 }
 
