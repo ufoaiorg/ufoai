@@ -102,6 +102,18 @@ apply_sed()
 
 	if [ $test -gt 0 ]
 	then
+		test=`awk 'NR == '$BEGIN' {print $0}' $output_file | grep "msgid_plural"`
+		if [ ${#test} -gt 0 ]
+		then
+				test=0
+		else
+				test=1
+		fi
+	fi
+
+
+	if [ $test -gt 0 ]
+	then
 		$sed_soft -f 'sed_commands' $output_file > $output_file.tmp
 		BEGIN=$BEGIN-2
 		test=`awk 'NR == '$BEGIN' {print $0}' $output_file.tmp`
@@ -417,7 +429,7 @@ END=`wc -l $language.po | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
 $sed_soft $BEGIN','$END's/^\"\(.*\)\"$/\1/g;s/\r//g' $language.po | 
 awk 'BEGIN {FS=" ";test=0}
 	$0 ~ /^[ \t]*$/ {if (test) {printf "\"\n";}; printf "\n"; test=0; next}
-    $0 ~ /^#/ || $0 ~ /^\"/ || $0 ~ /^msgid \"/ || $0 ~ /^msgstr \"/ {
+    $0 ~ /^#/ || $0 ~ /^\"/ || $0 ~ /^msgid/ || $0 ~ /^msgstr/ {
 		if (test) {printf "\"\n"}
 		printf "%s\n",$0
 		test=0
@@ -434,7 +446,8 @@ echo "Converted $language.po to $output_file : done." >> $log_file
 test=`diff $language.po $output_file | $sed_soft '/^</!d;/^<[ \t]*\"/d'`
 if [[ ${#test} -gt 0 ]]
 then
-	echo "Security stop : the line $test has been removed from $language.po and shouldn't have" | tee -a $log_file
+	echo $test
+	echo "Security stop : the previous line(s) has been removed from $language.po and shouldn't have" | tee -a $log_file
 	exit
 fi
 
