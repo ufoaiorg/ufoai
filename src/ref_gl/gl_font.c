@@ -46,6 +46,7 @@ fontRenderStyle_t fontStyle[] = {
  * @brief Adds a new SDL_Surface to texture cache
  * @param[in] s Surface that should be added to cache
  * @sa Font_GenerateGLSurface
+ * @sa Font_CleanCache
  * @return texture id in OpenGL context
  * @note a SDL_Surface won't be added twice to the cache
  */
@@ -57,19 +58,24 @@ static GLuint Font_TextureAddToCache(SDL_Surface * s)
 		if (textureCache[i].surface == s)
 			break;
 
+	/* maybe cache is empty or surface wasn't found */
 	if (i == lastTextureCache) {
 		lastTextureCache++;
 		lastTextureCache %= MAX_TEXTURE_CACHE;
 
+		/* in case we hit the cache limit we should delete old entries */
 		if (lastTextureCache == firstTextureCache) {
 			qglDeleteTextures(1, &textureCache[i].texture);
+			/* don't free here but only set to NULL - will be freed in Font_CleanCache */
 			textureCache[i].surface = NULL;
 			textureCache[i].texture = 0;
 
+			/*  */
 			firstTextureCache++;
 			firstTextureCache %= MAX_TEXTURE_CACHE;
 		}
 
+		/* bind the 'new' surface and generate OpenGL texture id */
 		textureCache[i].surface = s;
 		qglGenTextures(1, &textureCache[i].texture);
 	}
