@@ -215,7 +215,7 @@ void Font_CleanCache(void)
 }
 
 /**
- * @brief
+ * @brief Console command binding to show the font cache
  */
 void Font_ListCache_f(void)
 {
@@ -263,7 +263,8 @@ static int Font_Hash(const char *string, int maxlen)
 }
 
 /**
- * @brief
+ * @brief Searches the given string in cache
+ * @return NULL if not found
  * @sa Font_Hash
  */
 static fontCache_t *Font_GetFromCache(const char *s)
@@ -318,7 +319,8 @@ static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 }
 
 /**
- * @brief
+ * @brief Renders the text surface and coverts to 32bit SDL_Surface that is stored in font_t structure
+ * @todo maybe 32bit is overkill if the game is only using 16bit?
  * @sa Font_AddToCache
  * @sa TTF_RenderUTF8_Blended
  * @sa SDL_CreateRGBSurface
@@ -357,7 +359,6 @@ static fontCache_t *Font_GenerateCache(const char *s, const char *fontString, fo
 	h = textSurface->h;
 	SDL_FreeSurface(textSurface);
 
-/* 	SDL_SaveBMP( openGLSurface, buffer ); */
 	return Font_AddToCache(fontString, openGLSurface, w, h);
 }
 
@@ -472,7 +473,6 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 
 	qglDisable(GL_BLEND);
 
-/*	qglFinish();*/
 	return 0;
 }
 
