@@ -41,8 +41,8 @@ static struct sndinfo *si;
 
 /* starts at 0 for disabled */
 static int	snd_buffer_count = 0;
-static int	sample16;
-static int	snd_sent, snd_completed;
+static int	sample16 = 0;
+static int	snd_sent = 0, snd_completed = 0;
 
 /*
  * Global variables. Must be visible to window-procedure function
@@ -50,28 +50,24 @@ static int	snd_sent, snd_completed;
  */
 
 
-HANDLE hData;
-HPSTR lpData, lpData2;
+static HANDLE hData;
+static HPSTR lpData;
 
-HGLOBAL hWaveHdr;
-LPWAVEHDR lpWaveHdr;
+static HGLOBAL hWaveHdr;
+static LPWAVEHDR lpWaveHdr;
 
-HWAVEOUT hWaveOut;
+static HWAVEOUT hWaveOut;
 
-WAVEOUTCAPS wavecaps;
-
-DWORD gSndBufSize;
-
-MMTIME mmstarttime;
+static DWORD gSndBufSize;
 
 /**
  * @brief
  */
-void FreeSound (void)
+static void FreeSound (void)
 {
 	int i;
 
-	si->Com_Printf( "Shutting down win api sound system\n" );
+	si->Com_Printf("Shutting down win api sound system\n");
 
 	if ( hWaveOut ) {
 		waveOutReset (hWaveOut);
@@ -106,7 +102,7 @@ void FreeSound (void)
 /**
  * @brief Crappy windows multimedia base
  */
-qboolean SND_InitWav (void)
+static qboolean SND_InitWav (void)
 {
 	WAVEFORMATEX format;
 	int i;
@@ -141,11 +137,11 @@ qboolean SND_InitWav (void)
 	*format.nBlockAlign;
 
 	/* Open a waveform device for output using window callback. */
-	si->Com_Printf ("...opening waveform device: ");
+	si->Com_DPrintf ("...opening waveform device: ");
 	while ((hr = waveOutOpen((LPHWAVEOUT)&hWaveOut, WAVE_MAPPER, &format,
 			0, 0L, CALLBACK_NULL)) != MMSYSERR_NOERROR) {
 		if (hr != MMSYSERR_ALLOCATED) {
-			si->Com_Printf ("failed\n");
+			si->Com_DPrintf ("failed\n");
 			return qfalse;
 		}
 
@@ -154,78 +150,78 @@ qboolean SND_InitWav (void)
 				"Select Retry to try to start sound again or Cancel to run UFO with no sound.",
 				"Sound not available",
 				MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY) {
-			si->Com_Printf ("hw in use\n" );
+			si->Com_DPrintf ("hw in use\n" );
 			return qfalse;
 		}
 	}
-	si->Com_Printf("ok\n");
+	si->Com_DPrintf("ok\n");
 
 	/*
 	 * Allocate and lock memory for the waveform data. The memory
 	 * for waveform data must be globally allocated with
 	 * GMEM_MOVEABLE and GMEM_SHARE flags.
 	*/
-	si->Com_Printf ("...allocating waveform buffer: ");
+	si->Com_DPrintf ("...allocating waveform buffer: ");
 	gSndBufSize = WAV_BUFFERS*WAV_BUFFER_SIZE;
 	hData = GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE, gSndBufSize);
 	if (!hData) {
-		si->Com_Printf(" failed\n");
+		si->Com_DPrintf(" failed\n");
 		FreeSound ();
 		return qfalse;
 	}
-	si->Com_Printf("ok\n");
+	si->Com_DPrintf("ok\n");
 
-	si->Com_Printf ("...locking waveform buffer: ");
+	si->Com_DPrintf ("...locking waveform buffer: ");
 	lpData = GlobalLock(hData);
 	if (!lpData) {
-		si->Com_Printf( " failed\n" );
+		si->Com_DPrintf( " failed\n" );
 		FreeSound ();
 		return qfalse;
 	}
 	memset (lpData, 0, gSndBufSize);
-	si->Com_Printf("ok\n");
+	si->Com_DPrintf("ok\n");
 
 	/*
 	 * Allocate and lock memory for the header. This memory must
 	 * also be globally allocated with GMEM_MOVEABLE and
 	 * GMEM_SHARE flags.
 	 */
-	si->Com_Printf ("...allocating waveform header: ");
+	si->Com_DPrintf ("...allocating waveform header: ");
 	hWaveHdr = GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE,
 		(DWORD) sizeof(WAVEHDR) * WAV_BUFFERS);
 
 	if (hWaveHdr == NULL) {
-		si->Com_Printf("failed\n");
+		si->Com_DPrintf("failed\n");
 		FreeSound ();
 		return qfalse;
 	}
-	si->Com_Printf("ok\n");
+	si->Com_DPrintf("ok\n");
 
-	si->Com_Printf ("...locking waveform header: ");
+	si->Com_DPrintf ("...locking waveform header: ");
 	lpWaveHdr = (LPWAVEHDR) GlobalLock(hWaveHdr);
 
 	if (lpWaveHdr == NULL) {
-		si->Com_Printf("failed\n");
+		si->Com_DPrintf("failed\n");
 		FreeSound ();
 		return qfalse;
 	}
 	memset (lpWaveHdr, 0, sizeof(WAVEHDR) * WAV_BUFFERS);
-	si->Com_Printf("ok\n");
+	si->Com_DPrintf("ok\n");
 
 	/* After allocation, set up and prepare headers. */
-	si->Com_Printf("...preparing headers: ");
+	si->Com_DPrintf("...preparing headers: ");
 	for (i=0 ; i<WAV_BUFFERS ; i++) {
 		lpWaveHdr[i].dwBufferLength = WAV_BUFFER_SIZE;
 		lpWaveHdr[i].lpData = lpData + i*WAV_BUFFER_SIZE;
 
 		if (waveOutPrepareHeader(hWaveOut, lpWaveHdr+i, sizeof(WAVEHDR)) !=
 				MMSYSERR_NOERROR) {
-			si->Com_Printf("failed\n");
+			si->Com_DPrintf("failed\n");
 			FreeSound ();
 			return qfalse;
 		}
 	}
-	si->Com_Printf("ok\n");
+	si->Com_DPrintf("ok\n");
 
 	si->dma->samples = gSndBufSize/(si->dma->samplebits/8);
 	si->dma->samplepos = 0;
@@ -254,9 +250,9 @@ qboolean SND_Init(struct sndinfo *s)
 
 		if (snd_iswave) {
 			if (snd_firsttime)
-				si->Com_Printf ("Wave sound init succeeded\n");
+				si->Com_DPrintf ("Wave sound init succeeded\n");
 		} else {
-			si->Com_Printf ("Wave sound init failed\n");
+			si->Com_DPrintf ("Wave sound init failed\n");
 		}
 	}
 
@@ -266,7 +262,7 @@ qboolean SND_Init(struct sndinfo *s)
 
 	if (!wav_init) {
 		if (snd_firsttime)
-			si->Com_Printf ("*** No sound device initialized ***\n");
+			si->Com_DPrintf ("*** No sound device initialized ***\n");
 
 		return qfalse;
 	}
@@ -317,7 +313,7 @@ void SND_Submit(void)
 	/* find which sound blocks have completed */
 	while (1) {
 		if ( snd_completed == snd_sent ) {
-			si->Com_Printf ("Sound overrun\n");
+			si->Com_DPrintf ("Sound overrun\n");
 			break;
 		}
 
@@ -341,7 +337,7 @@ void SND_Submit(void)
 		wResult = waveOutWrite(hWaveOut, h, sizeof(WAVEHDR));
 
 		if (wResult != MMSYSERR_NOERROR) {
-			si->Com_Printf ("Failed to write block to device\n");
+			si->Com_DPrintf ("Failed to write block to device\n");
 			FreeSound ();
 			return;
 		}
