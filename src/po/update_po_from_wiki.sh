@@ -355,7 +355,7 @@ update_txt()
 		$0 ~ /statistics:[ /t]*$/ {
 			gsub (/[ \t]*$/,"")
 			$0="\\n\n"$0"\\n\n"}
-		$0 !~ /^[ \t]*$/ {
+		$0 !~ /^[ \t\n]*$/ {
 			gsub (/[ \t]*$/,"")
 			if (already_written_test) {printf "\\n\n\\n\n"}
 			printf "%s",$0
