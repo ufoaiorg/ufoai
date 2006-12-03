@@ -328,6 +328,21 @@ void S_MusicList (void)
 	}
 }
 
+static cmdList_t r_commands[] = {
+	{"musiclist", S_MusicList, "List all available music files"},
+	{"snd_play", S_Play_f, NULL},
+	{"snd_stop", S_StopAllSounds, "Stop all sounds"},
+	{"snd_list", S_SoundList_f, "List of loaded sounds"},
+	{"snd_info", S_SoundInfo_f, NULL},
+	{"music_randomtrack", S_RandomTrack, "Play random music track"},
+	{"music_play", S_PlayOGG, "Play an ogg sound track"},
+	{"music_start", S_StartOGG, "Start the ogg music track from cvar music"},
+	{"music_stop", OGG_Stop, "Stop currently playing music tracks"},
+	{"snd_modifykhz", S_ModifyKhz_f, "Modify khz for sound renderer - use + or - as paramaters"},
+
+	{NULL, NULL, NULL}
+};
+
 /**
  * @brief
  * @sa S_Shutdown
@@ -336,6 +351,7 @@ void S_MusicList (void)
 void S_Init(void)
 {
 	cvar_t *cv;
+	cmdList_t *commands;
 
 	Com_Printf("\n------- sound initialization -------\n");
 
@@ -428,18 +444,8 @@ void S_Init(void)
 			return;
 		}
 
-		Cmd_AddCommand("musiclist", S_MusicList, NULL);
-		Cmd_AddCommand("snd_play", S_Play_f, NULL);
-		Cmd_AddCommand("snd_stop", S_StopAllSounds, NULL);
-		Cmd_AddCommand("snd_list", S_SoundList_f, NULL);
-		Cmd_AddCommand("snd_info", S_SoundInfo_f, NULL);
-
-		Cmd_AddCommand("music_randomtrack", S_RandomTrack, NULL);
-		Cmd_AddCommand("music_play", S_PlayOGG, "Plays an ogg sound track");
-		Cmd_AddCommand("music_start", S_StartOGG, "Start the ogg music track from cvar music");
-		Cmd_AddCommand("music_stop", OGG_Stop, "Stop currently playing music tracks");
-
-		Cmd_AddCommand("snd_modifykhz", S_ModifyKhz_f, "Modify khz for sound renderer - use + or - as paramaters");
+		for (commands = r_commands; commands->name; commands++)
+			Cmd_AddCommand(commands->name, commands->function, commands->description);
 
 		S_InitScaletable();
 
@@ -476,6 +482,7 @@ void S_Shutdown(void)
 {
 	int i;
 	sfx_t *sfx;
+	cmdList_t *commands;
 
 	if (!sound_started)
 		return;
@@ -485,14 +492,8 @@ void S_Shutdown(void)
 
 	sound_started = 0;
 
-	Cmd_RemoveCommand("snd_play");
-	Cmd_RemoveCommand("snd_stop");
-	Cmd_RemoveCommand("snd_list");
-	Cmd_RemoveCommand("snd_info");
-	Cmd_RemoveCommand("music_play");
-	Cmd_RemoveCommand("music_start");
-	Cmd_RemoveCommand("music_stop");
-	Cmd_RemoveCommand("snd_modifykhz");
+	for (commands = r_commands; commands->name; commands++)
+		Cmd_RemoveCommand(commands->name);
 
 	/* free all sounds */
 	for (i = 0, sfx = known_sfx; i < num_sfx; i++, sfx++) {
