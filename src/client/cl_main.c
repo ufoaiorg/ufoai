@@ -933,6 +933,10 @@ void CL_ConnectionlessPacket(void)
 
 	/* challenge from the server we are connecting to */
 	if (!Q_strncmp(c, "challenge", 9)) {
+		if (cls.state != ca_connecting) {
+			Com_Printf("Dup challenge received.  Ignored.\n");
+			return;
+		}
 		cls.challenge = atoi(Cmd_Argv(1));
 		CL_SendConnectPacket();
 		return;
