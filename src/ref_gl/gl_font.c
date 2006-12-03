@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define BUF_SIZE 2048
 static const SDL_Color color = { 255, 255, 255, 0 };	/* The 4. value is unused */
 
+static cvar_t* gl_fontcache;
+
 /* holds the gettext string */
 static char buf[BUF_SIZE];
 static int numInCache = 0;
@@ -43,46 +45,62 @@ fontRenderStyle_t fontStyle[] = {
 /*============================================================== */
 
 /**
- * @brief
+ * @brief Adds a new SDL_Surface to texture cache
+ * @param[in] s Surface that should be added to cache
+ * @sa Font_GenerateGLSurface
+ * @sa Font_CleanCache
+ * @return texture id in OpenGL context
+ * @note a SDL_Surface won't be added twice to the cache
  */
 static GLuint Font_TextureAddToCache(SDL_Surface * s)
 {
+	GLuint gltexnum;
 	int i;
 
-	for (i = firstTextureCache; i != lastTextureCache; i++, i %= MAX_TEXTURE_CACHE)
+	for (i = firstTextureCache; i != lastTextureCache; i++, i %= (int)gl_fontcache->value)
 		if (textureCache[i].surface == s)
 			break;
 
+	gltexnum = textureCache[i].texture;
+
+	/* maybe cache is empty or surface wasn't found */
 	if (i == lastTextureCache) {
 		lastTextureCache++;
-		lastTextureCache %= MAX_TEXTURE_CACHE;
+		lastTextureCache %= (int)gl_fontcache->value;
 
+		/* delete old cache entries to maintain at least one free slot */
 		if (lastTextureCache == firstTextureCache) {
-			qglDeleteTextures(1, &textureCache[i].texture);
-			textureCache[i].surface = 0;
-			textureCache[i].texture = 0;
+			GLuint fgltexnum = textureCache[firstTextureCache].texture;
+			qglDeleteTextures(1, &fgltexnum);
+			/* don't free here but only set to NULL - will be freed in Font_CleanCache */
+			textureCache[fgltexnum].surface = NULL;
+			textureCache[fgltexnum].texture = 0;
 
+			/* increment firstTextureCache position (the oldest used slot) */
 			firstTextureCache++;
-			firstTextureCache %= MAX_TEXTURE_CACHE;
+			firstTextureCache %= (int)gl_fontcache->value;
 		}
 
+		/* bind the 'new' surface and generate OpenGL texture id */
 		textureCache[i].surface = s;
-		qglGenTextures(1, &textureCache[i].texture);
+		
+		qglGenTextures(1, &gltexnum);
 	}
 
-	return textureCache[i].texture;
+	return gltexnum;
 }
 
 /**
  * @brief
+ * @sa Font_CleanCache
  */
 static void Font_TextureCleanCache(void)
 {
 	int i;
 
-	for (i = firstTextureCache; i != lastTextureCache; i++, i %= MAX_TEXTURE_CACHE) {
+	for (i = firstTextureCache; i != lastTextureCache; i++, i %= (int)gl_fontcache->value) {
 		qglDeleteTextures(1, &textureCache[i].texture);
-		textureCache[i].surface = 0;
+		textureCache[i].surface = NULL;
 		textureCache[i].texture = 0;
 	}
 
@@ -91,17 +109,20 @@ static void Font_TextureCleanCache(void)
 
 /**
  * @brief frees the SDL_ttf fonts
+ * @sa Font_CleanCache
  */
 void Font_Shutdown(void)
 {
 	int i;
 
 	Font_CleanCache();
-	Font_TextureCleanCache();
 
 	for (i = 0; i < numFonts; i++)
-		if (fonts[i].font)
+		if (fonts[i].font) {
 			TTF_CloseFont(fonts[i].font);
+			ri.FS_FreeFile(fonts[i].buffer);
+			SDL_RWclose(fonts[i].rw);
+		}
 
 	/* now quit SDL_ttf, too */
 	TTF_Quit();
@@ -114,8 +135,6 @@ void Font_Shutdown(void)
 font_t *Font_Analyze(const char *name, const char *path, int renderStyle, int size)
 {
 	font_t *f = NULL;
-	SDL_RWops *rw = NULL;
-	void *buffer = NULL;
 	int ttfSize;
 
 	if (numFonts >= MAX_FONTS)
@@ -123,19 +142,20 @@ font_t *Font_Analyze(const char *name, const char *path, int renderStyle, int si
 
 	/* allocate new font */
 	f = &fonts[numFonts];
+	memset(f, 0, sizeof(f));
 
 	/* copy fontname */
 	Q_strncpyz(f->name, name, MAX_VAR);
 
-	ttfSize = ri.FS_LoadFile(path, &buffer);
+	ttfSize = ri.FS_LoadFile(path, &f->buffer);
 
-	rw = SDL_RWFromMem(buffer, ttfSize);
+	f->rw = SDL_RWFromMem(f->buffer, ttfSize);
 
 	/* norm size is 1024x768 (1.0) */
 	/* scale the fontsize */
 	size *= vid.rx;
 
-	f->font = TTF_OpenFontRW(rw, 0, size);
+	f->font = TTF_OpenFontRW(f->rw, 0, size);
 	if (!f->font)
 		ri.Sys_Error(ERR_FATAL, "...could not load font file %s\n", path);
 
@@ -143,10 +163,6 @@ font_t *Font_Analyze(const char *name, const char *path, int renderStyle, int si
 	f->style = renderStyle;
 	if (f->style)
 		TTF_SetFontStyle(f->font, f->style);
-
-	/* FIXME: We need to free this */
-/* 	ri.FS_FreeFile( buffer ); */
-/* 	SDL_RWclose( rw ); */
 
 	numFonts++;
 	f->lineSkip = TTF_FontLineSkip(f->font);
@@ -157,7 +173,8 @@ font_t *Font_Analyze(const char *name, const char *path, int renderStyle, int si
 }
 
 /**
- * @brief
+ * @brief Searches the array of available fonts (see fonts.ufo)
+ * @return font_t pointer or NULL
  */
 static font_t *Font_GetFont(const char *name)
 {
@@ -172,6 +189,7 @@ static font_t *Font_GetFont(const char *name)
 
 /**
  * @brief
+ * @sa Font_GetFont
  */
 void Font_Length(const char *font, char *c, int *width, int *height)
 {
@@ -192,6 +210,7 @@ void Font_Length(const char *font, char *c, int *width, int *height)
 
 /**
  * @brief
+ * @sa Font_TextureCleanCache
  */
 void Font_CleanCache(void)
 {
@@ -205,10 +224,11 @@ void Font_CleanCache(void)
 	memset(fontCache, 0, sizeof(fontCache));
 	memset(hash, 0, sizeof(hash));
 	numInCache = 0;
+	Font_TextureCleanCache();
 }
 
 /**
- * @brief
+ * @brief Console command binding to show the font cache
  */
 void Font_ListCache_f(void)
 {
@@ -239,6 +259,9 @@ void Font_ListCache_f(void)
 
 /**
  * @brief
+ * @param[in] string String to build the hash value for
+ * @param[in] maxlen Max length that should be used to calculate the hash value
+ * @return hash value for given string
  */
 static int Font_Hash(const char *string, int maxlen)
 {
@@ -253,7 +276,9 @@ static int Font_Hash(const char *string, int maxlen)
 }
 
 /**
- * @brief
+ * @brief Searches the given string in cache
+ * @return NULL if not found
+ * @sa Font_Hash
  */
 static fontCache_t *Font_GetFromCache(const char *s)
 {
@@ -272,16 +297,17 @@ static fontCache_t *Font_GetFromCache(const char *s)
  * @brief We add the font string (e.g. f_small) to the beginning
  * of each string (char *s) because we can have the same strings
  * but other fonts.
+ * @sa Font_GenerateCache
+ * @sa Font_CleanCache
+ * @sa Font_Hash
  */
 static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 {
 	int hashValue;
 	fontCache_t *font = NULL;
 
-	if (numInCache >= MAX_FONT_CACHE) {
+	if (numInCache >= MAX_FONT_CACHE)
 		Font_CleanCache();
-		Font_TextureCleanCache();
-	}
 
 	hashValue = Font_Hash(s, MAX_HASH_STRING);
 	if (hash[hashValue]) {
@@ -306,7 +332,13 @@ static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 }
 
 /**
- * @brief
+ * @brief Renders the text surface and coverts to 32bit SDL_Surface that is stored in font_t structure
+ * @todo maybe 32bit is overkill if the game is only using 16bit?
+ * @sa Font_AddToCache
+ * @sa TTF_RenderUTF8_Blended
+ * @sa SDL_CreateRGBSurface
+ * @sa SDL_LowerBlit
+ * @sa SDL_FreeSurface
  */
 static fontCache_t *Font_GenerateCache(const char *s, const char *fontString, font_t * f)
 {
@@ -340,7 +372,6 @@ static fontCache_t *Font_GenerateCache(const char *s, const char *fontString, fo
 	h = textSurface->h;
 	SDL_FreeSurface(textSurface);
 
-/* 	SDL_SaveBMP( openGLSurface, buffer ); */
 	return Font_AddToCache(fontString, openGLSurface, w, h);
 }
 
@@ -420,12 +451,29 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
  * @param[in] height The max height of the text
  * @return -1 for scrolling down (TODO)
  * @return +1 for scrolling up (TODO)
+ * @sa Font_TextureAddToCache
  */
 static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
 {
-	GLuint texture = Font_TextureAddToCache(cache->pixel);
+	GLuint texture = 0;
 	int h = cache->size[1];
 	vec2_t start = {0.0f, 0.0f}, end = {1.0f, 1.0f};
+
+	/* if height is too much we should be able to scroll down */
+	if (height > 0 && y+h > absY+height)
+		return 1;
+
+	if (gl_fontcache->modified) {
+		if (gl_fontcache->value > MAX_TEXTURE_CACHE || gl_fontcache->value < 32) {
+			ri.Con_Printf(PRINT_ALL, "setting gl_fontcache to %i\n", MAX_TEXTURE_CACHE);
+			ri.Cvar_SetValue("gl_fontcache", MAX_TEXTURE_CACHE);
+		}
+		gl_fontcache->modified = qfalse;
+		ri.Con_Printf(PRINT_ALL, "resetting fontcache\n");
+		Font_TextureCleanCache();
+	}
+
+	texture = Font_TextureAddToCache(cache->pixel);
 
 	/* Tell GL about our new texture */
 	GL_Bind(texture);
@@ -433,10 +481,6 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	/* if height is too much we should be able to scroll down */
-	if (height > 0 && y+h > absY+height)
-		return 1;
 
 	/* draw it */
 	qglEnable(GL_BLEND);
@@ -454,7 +498,6 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 
 	qglDisable(GL_BLEND);
 
-/*	qglFinish();*/
 	return 0;
 }
 
@@ -674,6 +717,8 @@ void Font_Init(void)
 	firstTextureCache = 0;
 	lastTextureCache = 0;
 	memset(textureCache, 0, sizeof(textureCache));
+	gl_fontcache = ri.Cvar_Get("gl_fontcache", "256", CVAR_ARCHIVE, "Max allowed entries int font texture cache");
+	gl_fontcache->modified = qfalse;
 
 	/* try and init SDL VIDEO if not previously initialized */
 	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
