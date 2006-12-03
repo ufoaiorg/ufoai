@@ -433,6 +433,7 @@ void S_Init(void)
 		si.Cvar_Get = Cvar_Get;
 		si.Cvar_Set = Cvar_Set;
 		si.Com_Printf = Com_Printf;
+		si.Com_DPrintf = Com_DPrintf;
 		si.S_PaintChannels = S_PaintChannels;
 		si.paintedtime = &paintedtime;
 #ifdef _WIN32

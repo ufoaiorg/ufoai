@@ -125,6 +125,7 @@ struct sndinfo {
 	cvar_t *khz;
 
 	void (*Com_Printf) (char *fmt, ...);
+	void (*Com_DPrintf) (char *fmt, ...);
 	void (*S_PaintChannels) (int);
 	cvar_t* (*Cvar_Get)(const char *var_name, const char *value, int flags, char *desc);
 	cvar_t* (*Cvar_Set)(const char *var_name, const char *value);
