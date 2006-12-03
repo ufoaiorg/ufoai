@@ -2072,7 +2072,7 @@ void GL_InitImages(void)
 	/* init intensity conversions */
 	intensity = ri.Cvar_Get("intensity", "2", CVAR_ARCHIVE, NULL);
 
-	if (intensity->value <= 1)
+	if (intensity->value < 1)
 		ri.Cvar_Set("intensity", "1");
 
 	gl_state.inverse_intensity = 1 / intensity->value;
