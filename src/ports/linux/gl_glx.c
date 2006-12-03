@@ -152,7 +152,7 @@ static void install_grabs(void)
 		XGrabPointer(dpy, win, True, 0, GrabModeAsync, GrabModeAsync, win, None, CurrentTime);
 
 	if (! in_dgamouse->value && ( !vid_grabmouse->value || vid_fullscreen->value ) ) {
-		XWarpPointer(dpy, None, win, 0, 0, 0, 0, 0, 0);
+		XWarpPointer(dpy, None, win, 0, 0, 0, 0, vid.width / 2, vid.height / 2);
 		sensitivity->value = 1;
 	} else if (in_dgamouse->value) {
 #ifdef HAVE_XF86_DGA
@@ -181,7 +181,7 @@ static void install_grabs(void)
 
 	mouse_active = qtrue;
 
-	XSync(dpy, True);
+/*	XSync(dpy, True);*/
 }
 
 /**
@@ -917,7 +917,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	/* let the sound and input subsystems know about the new window */
 	ri.Vid_NewWindow (width, height);
 
-	XSync(dpy, False);
+/*	XSync(dpy, False);*/
 
 	return rserr_ok;
 }
