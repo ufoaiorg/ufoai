@@ -54,11 +54,14 @@ fontRenderStyle_t fontStyle[] = {
  */
 static GLuint Font_TextureAddToCache(SDL_Surface * s)
 {
+	GLuint gltexnum;
 	int i;
 
 	for (i = firstTextureCache; i != lastTextureCache; i++, i %= (int)gl_fontcache->value)
 		if (textureCache[i].surface == s)
 			break;
+
+	gltexnum = textureCache[i].texture;
 
 	/* maybe cache is empty or surface wasn't found */
 	if (i == lastTextureCache) {
@@ -67,10 +70,11 @@ static GLuint Font_TextureAddToCache(SDL_Surface * s)
 
 		/* delete old cache entries to maintain at least one free slot */
 		if (lastTextureCache == firstTextureCache) {
-			qglDeleteTextures(1, &textureCache[firstTextureCache].texture);
+			GLuint fgltexnum = textureCache[firstTextureCache].texture;
+			qglDeleteTextures(1, &fgltexnum);
 			/* don't free here but only set to NULL - will be freed in Font_CleanCache */
-			textureCache[firstTextureCache].surface = NULL;
-			textureCache[firstTextureCache].texture = 0;
+			textureCache[fgltexnum].surface = NULL;
+			textureCache[fgltexnum].texture = 0;
 
 			/* increment firstTextureCache position (the oldest used slot) */
 			firstTextureCache++;
@@ -79,10 +83,11 @@ static GLuint Font_TextureAddToCache(SDL_Surface * s)
 
 		/* bind the 'new' surface and generate OpenGL texture id */
 		textureCache[i].surface = s;
-		qglGenTextures(1, &textureCache[i].texture);
+		
+		qglGenTextures(1, &gltexnum);
 	}
 
-	return textureCache[i].texture;
+	return gltexnum;
 }
 
 /**
