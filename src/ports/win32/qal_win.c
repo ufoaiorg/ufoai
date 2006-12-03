@@ -29,8 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/qal.h"
 #include "qal_win.h"
 
+/*
 ALenum	(ALAPIENTRY * qalEAXSet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);
 ALenum	(ALAPIENTRY * qalEAXGet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);
+*/
 
 /**
  * @brief Binds our QAL function pointers to the appropriate AL stuff
@@ -53,8 +55,10 @@ qboolean QAL_Init (void)
 	if (!QAL_Link())
 		return qfalse;
 
+/*
 	qalEAXGet					= GPA("alEAXGet");
 	qalEAXSet					= GPA("alEAXSet");
+*/
 
 	openal_active = qtrue;
 
@@ -75,8 +79,10 @@ void QAL_Shutdown (void)
 	/* general pointers */
 	QAL_Unlink();
 
+/*
 	qalEAXSet					= NULL;
 	qalEAXGet					= NULL;
+*/
 }
 
 #endif /* HAVE_OPENAL */

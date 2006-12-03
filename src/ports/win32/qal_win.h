@@ -64,7 +64,9 @@ typedef struct {
 
 extern oalState_t	oalState;
 
+/*
 extern ALenum			(ALAPIENTRY * qalEAXSet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);
 extern ALenum			(ALAPIENTRY * qalEAXGet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);
+*/
 
 #endif	/* __QAL_WIN_H__ */
