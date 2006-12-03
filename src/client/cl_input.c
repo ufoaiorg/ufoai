@@ -471,6 +471,22 @@ void CL_ZoomOutQuant(void)
 }
 
 /**
+ * @brief returns the weapon the actor's left hand is touching
+ */
+invList_t* CL_GetLeftHandWeapon(le_t *actor) 
+{
+	invList_t *weapon = LEFT(selActor);
+
+	if (!weapon || weapon->item.m == NONE) {
+		weapon = RIGHT(selActor);
+		if (!csi.ods[weapon->item.t].holdtwohanded)
+			weapon = NULL;
+	}
+
+	return weapon;
+}
+
+/**
  * @brief Shoot right weapon in primary fire mode.
  */
 void CL_FireRightPrimary(void)
@@ -501,7 +517,7 @@ void CL_FireRightSecondary(void)
  */
 void CL_FireLeftPrimary(void)
 {
-	if (!selActor || !CL_CheckMenuAction(selActor->TU, LEFT(selActor), FD_PRIMARY))
+	if (!selActor || !CL_CheckMenuAction(selActor->TU, CL_GetLeftHandWeapon(selActor), FD_PRIMARY))
 		return;
 	if (cl.cmode == M_FIRE_PL)
 		cl.cmode = M_MOVE;
@@ -514,7 +530,7 @@ void CL_FireLeftPrimary(void)
  */
 void CL_FireLeftSecondary(void)
 {
-	if (!selActor || !CL_CheckMenuAction(selActor->TU, LEFT(selActor), FD_SECONDARY))
+	if (!selActor || !CL_CheckMenuAction(selActor->TU, CL_GetLeftHandWeapon(selActor), FD_SECONDARY))
 		return;
 	if (cl.cmode == M_FIRE_SL)
 		cl.cmode = M_MOVE;
@@ -545,7 +561,7 @@ void CL_ConfirmAction(void)
  */
 void CL_ReloadLeft(void)
 {
-	if (!selActor || !CL_CheckMenuAction(selActor->TU, LEFT(selActor), EV_INV_RELOAD))
+	if (!selActor || !CL_CheckMenuAction(selActor->TU, CL_GetLeftHandWeapon(selActor), EV_INV_RELOAD))
 		return;
 	CL_ActorReload(csi.idLeft);
 }
