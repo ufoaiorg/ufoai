@@ -899,7 +899,7 @@ void G_InventoryToFloor(edict_t * ent)
 				ic->next = FLOOR(floor);
 				FLOOR(floor) = ic;
 #ifdef PARANOID
-				gi.dprintf("G_InventoryToFloor: item to floor: %s\n", gi.csi->ods[ic->item.t].kurz);
+				Com_DPrintf("G_InventoryToFloor: item to floor: %s\n", gi.csi->ods[ic->item.t].kurz);
 #endif
 			}
 		}
