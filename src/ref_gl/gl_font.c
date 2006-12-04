@@ -49,10 +49,10 @@ fontRenderStyle_t fontStyle[] = {
  * @param[in] s Surface that should be added to cache
  * @sa Font_GenerateGLSurface
  * @sa Font_CleanCache
- * @return texture id in OpenGL context
+ * @return id of texture stored in the textureCache
  * @note a SDL_Surface won't be added twice to the cache
  */
-static GLuint Font_TextureAddToCache(SDL_Surface * s)
+static int Font_TextureAddToCache(SDL_Surface * s)
 {
 	int i;
 
@@ -81,10 +81,9 @@ static GLuint Font_TextureAddToCache(SDL_Surface * s)
 		textureCache[i].surface = s;
 		
 		qglGenTextures(1, &(textureCache[i].texture));
-
 	}
 
-	return textureCache[i].texture;
+	return i;
 }
 
 /**
@@ -452,7 +451,7 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
  */
 static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
 {
-	GLuint texture = 0;
+	int gltxtcache = 0;
 	int h = cache->size[1];
 	vec2_t start = {0.0f, 0.0f}, end = {1.0f, 1.0f};
 
@@ -470,10 +469,10 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 		Font_TextureCleanCache();
 	}
 
-	texture = Font_TextureAddToCache(cache->pixel);
+	gltxtcache = Font_TextureAddToCache(cache->pixel);
 
 	/* Tell GL about our new texture */
-	GL_Bind(texture);
+	GL_Bind(textureCache[gltxtcache].texture);
 	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, cache->pixel->w, cache->pixel->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, cache->pixel->pixels);
 
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
