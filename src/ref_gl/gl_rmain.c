@@ -1069,7 +1069,7 @@ static void R_RenderFrame(refdef_t * fd)
 static cmdList_t r_commands[] = {
 	{"imagelist", GL_ImageList_f, NULL},
 	{"fontcachelist", Font_ListCache_f, NULL},
-	{"screenshot", GL_ScreenShot_f, NULL},
+	{"screenshot", GL_ScreenShot_f, "Take a screenshot"},
 	{"modellist", Mod_Modellist_f, NULL},
 	{"gl_strings", GL_Strings_f, NULL},
 
@@ -1178,7 +1178,7 @@ static void R_Register(void)
 	vid_grabmouse->modified = qfalse;
 
 	for (commands = r_commands; commands->name; commands++)
-		ri.Cmd_AddCommand(commands->name, commands->function, commands->description);
+		ri.Cmd_AddCommand(commands->name, commands->function, _(commands->description));
 }
 
 /**

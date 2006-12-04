@@ -2087,6 +2087,20 @@ static void MN_PushMenu_f(void)
 }
 
 /**
+ * @brief Console function to hide the HUD in battlescape mode
+ * Note: relies on a "nohud" menu existing
+ * @sa MN_PushMenu
+ */
+static void MN_PushNoHud_f(void)
+{
+	/* can't hide hud if we are not in battlescape */
+	if (!CL_OnBattlescape())
+		return;
+
+	MN_PushMenu("nohud");
+}
+
+/**
  * @brief Console function to push a menu, without deleting its copies
  * @sa MN_PushMenu
  */
@@ -2454,6 +2468,7 @@ void MN_ResetMenus(void)
 	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f, NULL);
 	Cmd_AddCommand("mn_translate", MN_Translate_f, NULL);
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
+	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 	/* get action data memory */
 	if (adataize)
 		memset(adata, 0, adataize);
