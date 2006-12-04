@@ -99,7 +99,8 @@ static void Font_TextureCleanCache(void)
 	int i;
 
 	for (i = firstTextureCache; i != lastTextureCache; i++, i %= (int)gl_fontcache->value) {
-		qglDeleteTextures(1, &textureCache[i].texture);
+		GLuint gltexnum = textureCache[i].texture;
+		qglDeleteTextures(1, &gltexnum);
 		textureCache[i].surface = NULL;
 		textureCache[i].texture = 0;
 	}
