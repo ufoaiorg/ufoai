@@ -395,7 +395,7 @@ equipment multiplayer_initial
 	rpg				    9
 	rpg_ammo			13
 //	rpg_incendiary_ammo	13
-	rpg_tachyon_ammo	13
+//	rpg_tachyon_ammo	13
 	grenl				10
 	grenl_ammo			23
 	grenl_plasma_ammo	13
