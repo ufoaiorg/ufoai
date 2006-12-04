@@ -116,7 +116,7 @@ item sniper_ammo
 		speed	0
 		spread	"3 3"
 		crouch	0.8
-		range	30
+		range	50
 		shots	1
 		ammo	1
 		time	13
@@ -134,7 +134,7 @@ item sniper_ammo
 		speed	0
 		spread	"1 1"
 		crouch	0.7
-		range	40
+		range	70
 		shots	1
 		ammo	1
 		time	18
@@ -188,7 +188,7 @@ item pistol_ammo
 		speed	0
 		spread	"3 3"
 		crouch	0.9
-		range	10
+		range	12
 		shots	1
 		ammo	1
 		time	7
@@ -206,7 +206,7 @@ item pistol_ammo
 		speed	0
 		spread	"5 7"
 		crouch	0.9
-		range	7
+		range	9
 		shots	3
 		ammo	3
 		rof		10
@@ -261,7 +261,7 @@ item smg_ammo
 		speed	0
 		spread	"3 7"
 		crouch	0.7
-		range	18
+		range	22
 		shots	6
 		ammo	6
 		rof		10
@@ -280,7 +280,7 @@ item smg_ammo
 		speed	0
 		spread	"5 9"
 		crouch	0.7
-		range	15
+		range	20
 		shots	18
 		ammo	18
 		rof		15
@@ -490,12 +490,12 @@ item rpg_ammo
 		speed	250
 		spread	"5 5"
 		crouch	0.8
-		range	40
+		range	50
 		shots	1
 		ammo	1
 		time	12
-		damage	"40 10"
-		spldmg	"80 30"
+		damage	"50 10"
+		spldmg	"85 20"
 		splrad	4
 		dmgtype blast
 	}
@@ -512,12 +512,12 @@ item rpg_ammo
 		speed	250
 		spread	"2.5 2.5"
 		crouch	0.6
-		range	40
+		range	50
 		shots	1
 		ammo	1
 		time	18
-		damage	"40 10"
-		spldmg	"80 30"
+		damage	"50 10"
+		spldmg	"85 20"
 		splrad	4
 		dmgtype blast
 	}
@@ -548,11 +548,11 @@ item rpg_incendiary_ammo
 		speed	250
 		spread	"5 5"
 		crouch	0.8
-		range	40
+		range	50
 		shots	1
 		ammo	1
 		time	12
-		damage	"20 10"
+		damage	"95 20"
 		spldmg	"40 10"
 		splrad	2
 		dmgtype fire
@@ -570,11 +570,11 @@ item rpg_incendiary_ammo
 		speed	250
 		spread	"2.5 2.5"
 		crouch	0.6
-		range	40
+		range	50
 		shots	1
 		ammo	1
 		time	18
-		damage	"20 10"
+		damage	"95 20"
 		spldmg	"40 10"
 		splrad	2
 		dmgtype fire
@@ -606,13 +606,13 @@ item rpg_tachyon_ammo
 		speed	250
 		spread	"5 5"
 		crouch	0.8
-		range	40
+		range	50
 		shots	1
 		ammo	1
 		time	12
-		damage	"20 20"
-		spldmg	"140 10"
-		splrad	3
+		damage	"30 15"
+		spldmg	"140 25"
+		splrad	4
 		dmgtype	tachyon
 	}
 	secondary
@@ -628,13 +628,13 @@ item rpg_tachyon_ammo
 		speed	250
 		spread	"2.5 2.5"
 		crouch	0.6
-		range   40
+		range   50
 		shots	1
 		ammo	1
 		time	18
-		damage	"20 20"
-		spldmg	"140 10"
-		splrad	3
+		damage	"30 15"
+		spldmg	"140 25"
+		splrad	4
 		dmgtype	tachyon
 	}
 }
@@ -657,7 +657,7 @@ item grenl
 	scale		1.1
 	ammo		6
 	reload		14
-	price		2450
+	price		2650
 	buytype		0
 }
 
@@ -688,13 +688,13 @@ item grenl_ammo
 		gravity	true
 		launched true
 		spread	"0 3"
-		range	15
+		range	18
 		shots	1
 		ammo	1
 		rof		1
-		time	8
+		time	10
 		damage	"20 10"
-		spldmg	"70 20"
+		spldmg	"75 20"
 		splrad	4
 		dmgtype blast
 	}
@@ -717,12 +717,12 @@ item grenl_ammo
 		bounce	10
 		bncfac	0.5
 		spread	"0 3"
-		range	15
+		range	18
 		shots	1
 		ammo	1
 		rof		1
-		time	8
-		spldmg	"70 20"
+		time	10
+		spldmg	"75 20"
 		splrad	4
 		dmgtype blast
 	}
@@ -737,7 +737,7 @@ item grenl_plasma_ammo
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		0.7
-	price		140
+	price		180
 	buytype		0
 
 	primary
@@ -756,13 +756,14 @@ item grenl_plasma_ammo
 		launched true
 		bounce	10
 		bncfac	0.5
-		spread	"5 5"
-		range	15
+		spread	"0 3"
+		range	18
 		shots	1
 		ammo	1
 		rof		1
-		time	8
-		spldmg	"100 20"
+		time	10
+		damage  "20 15"
+		spldmg	"120 25"
 		splrad	5
 		dmgtype plasma
 	}
@@ -784,13 +785,13 @@ item grenl_plasma_ammo
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"5 5"
-		range	15
+		spread	"0 3"
+		range	18
 		shots	1
 		ammo	1
 		rof		1
-		time	8
-		spldmg	"100 20"
+		time	10
+		spldmg	"120 25"
 		splrad	5
 		dmgtype plasma
 	}
@@ -839,7 +840,7 @@ item bolterrifle_ammo
 		hitbody blood
 		firesnd weapons/bolter.wav
 		speed   0
-		spread  "3.5 3.5"
+		spread  "3 3"
 		crouch  0.8
 		range   50
 		shots   1
@@ -858,8 +859,8 @@ item bolterrifle_ammo
 		hitbody blood
 		firesnd weapons/bolter2.wav
 		speed   0
-		spread  "7 11"
-		crouch  0.5
+		spread  "6 10"
+		crouch  0.4
 		range   50
 		shots   3
 		ammo    3

@@ -47,7 +47,7 @@ item plaspistol_ammo
 		ammo	1
 		rof		6
 		time	10
-		damage	"11 5"
+		damage	"13 6"
 		dmgtype plasma
 	}
 	secondary
@@ -67,7 +67,7 @@ item plaspistol_ammo
 		ammo	2
 		rof		32
 		time	15
-		damage	"6 2"
+		damage	"7 2"
 		dmgtype plasma
 	}
 }
@@ -122,7 +122,7 @@ item plasrifle_ammo
 		ammo	1
 		rof		5
 		time	13
-		damage	"14 5"
+		damage	"17 5"
 		dmgtype plasma
 	}
 	secondary
@@ -142,7 +142,7 @@ item plasrifle_ammo
 		ammo	3
 		rof		21
 		time	22
-		damage	"12 2"
+		damage	"14 2"
 		dmgtype plasma
 	}
 }
@@ -192,15 +192,15 @@ item plasblaster_ammo
 		impsnd	weapons/plasma_grenade.wav
 		bodysnd	weapons/plasma_grenade.wav
 		gravity	true
-		spread	"4 4"
+		spread	"3 3"
 		launched true		
-		range	17
+		range	20
 		shots	1
 		ammo	4
 		rof		1
-		time	16
-		damage	"60 10"
-		spldmg	"120 20"
+		time	15
+		damage	"60 15"
+		spldmg	"130 25"
 		splrad	5
 		dmgtype plasma
 	}

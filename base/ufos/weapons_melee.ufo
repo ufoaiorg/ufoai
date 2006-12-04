@@ -131,7 +131,7 @@ item kerrblade
 		range	1.5
 		shots	1
 		time	5
-		damage	"110 10"
+		damage	"115 10"
 		dmgtype normal
 	}
 	secondary
@@ -184,8 +184,8 @@ item plasblade
 		speed	0
 		range	1.5
 		shots	1
-		time	10
-		damage	"150 20"
+		time	8
+		damage	"170 20"
 		dmgtype plasma
 	}
 	secondary

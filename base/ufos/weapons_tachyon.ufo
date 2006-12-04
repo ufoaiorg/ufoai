@@ -42,7 +42,7 @@ item tachyonpistol_ammo
 		speed	0
 		spread	"4 4"
 		crouch	0.9
-		range	15
+		range	18
 		shots	1
 		ammo	1
 		time	8
@@ -60,7 +60,7 @@ item tachyonpistol_ammo
 		speed	0
 		spread	"4 4"
 		crouch	0.9
-		range	15
+		range	18
 		shots	4
 		ammo	4
 		rof		5
@@ -115,7 +115,7 @@ item tachyonrifle_ammo
 		speed	0
 		spread	"4 4"
 		crouch	0.8
-		range	23
+		range	28
 		shots	1
 		ammo	10
 		time	20
@@ -135,7 +135,7 @@ item tachyonrifle_ammo
 		speed	0
 		spread	"3 3"
 		crouch	0.6
-		range	27
+		range	28
 		shots	4
 		ammo	4
 		rof		5
@@ -190,7 +190,7 @@ item tachyonsniper_ammo
 		speed	0
 		spread	"2.5 2.5"
 		crouch	0.6
-		range	35
+		range	60
 		shots	1
 		ammo	1
 		time	14
@@ -208,7 +208,7 @@ item tachyonsniper_ammo
 		speed	0
 		spread	"1.5 1.5"
 		crouch	0.8
-		range	35
+		range	60
 		shots	4
 		ammo	4
 		rof		5
