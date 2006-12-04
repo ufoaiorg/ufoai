@@ -27,13 +27,6 @@ typedef struct fontCache_s {
 	vec2_t size;				/**< real width and height */
 } fontCache_t;
 
-typedef struct textureCache_s
-{
-	SDL_Surface * surface; /**< don't free this one - but SDL_Surface pixel in fontCache_t */
-	GLuint texture;
-} textureCache_t;
-
-textureCache_t textureCache[MAX_TEXTURE_CACHE];
 fontCache_t fontCache[MAX_FONT_CACHE];
 fontCache_t *hash[MAX_FONT_CACHE];
 
