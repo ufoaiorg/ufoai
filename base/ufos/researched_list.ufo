@@ -50,20 +50,20 @@ researched rslist_human
 	rs_building_quarters
 	rs_building_teamroom
 	rs_building_workshop
-	rs_building_hangar
+	rs_building_large_hangar
 	rs_building_radar
 	rs_building_command
-	rs_building_intercept
+	rs_building_small_hangar
 	rs_building_lab
 	rs_building_hospital
 	rs_building_small_ufo_hangar
 	rs_craft_dropship
-	rs_craft_interceptor
+	rs_craft_stiletto_interceptor
 	rs_ugv_phoenix
 	rs_ugv_triax
 	rs_craft_def_raven_ecm
 	rs_craft_def_polymer_armour
-	rs_craft_weapon_flac
+	rs_craft_weapon_shiva
 	rs_craft_weapon_sparrowhawk
 	rs_craft_weapon_tr20
 	news_init_political_situation
@@ -92,11 +92,11 @@ researchable rslist_human
 	rs_skill_explosive
 	rs_building_entrance
 	rs_craft_dropship
-	rs_craft_interceptor
+	rs_craft_stiletto_interceptor
 	rs_ugv_phoenix
 	rs_ugv_triax
-	rs_craft_shield_light
-	rs_craft_weapon_flac
+	rs_craft_def_raven_ecm
+	rs_craft_weapon_shiva
 	rs_alien_body_armour
 }
 
@@ -107,7 +107,7 @@ researchable rslist_human
 
 researched rslist_aliens
 {
-	rs_tachyon
+//	rs_tachyon
 	rs_weapon_tachyonpistol
 	rs_weapon_tachyonpistol_ammo
 	rs_weapon_plasatomizer
@@ -134,7 +134,7 @@ researched rslist_aliens
 	rs_skill_assault
 	rs_skill_sniper
 	rs_skill_explosive
-	rs_craft_ufo_small
+	rs_craft_ufo_scout
 }
 
 // mark these as researchable
@@ -167,7 +167,7 @@ researchable rslist_alien
 	rs_skill_assault
 	rs_skill_sniper
 	rs_skill_explosive
-	rs_craft_ufo_small
+	rs_craft_ufo_scout
 }
 
 // mark these explicit as not researchable
