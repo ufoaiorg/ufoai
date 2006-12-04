@@ -130,6 +130,12 @@ menu_model dropship
 	need	"dropship_top"
 }
 
+// ============== Saracen Interceptor ======================
+menu_model saracen_interceptor
+{
+	model	"models/aircraft/interceptor2/interceptor2.md2"
+}
+
 // ============== Interceptor ======================
 menu_model interceptor_glass
 {
