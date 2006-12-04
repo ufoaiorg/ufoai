@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const SDL_Color color = { 255, 255, 255, 0 };	/* The 4. value is unused */
 
 static cvar_t* gl_fontcache;
+static cvar_t* gl_usefonttexcache;
 
 /* holds the gettext string */
 static char buf[BUF_SIZE];
@@ -49,10 +50,10 @@ fontRenderStyle_t fontStyle[] = {
  * @param[in] s Surface that should be added to cache
  * @sa Font_GenerateGLSurface
  * @sa Font_CleanCache
- * @return id of texture stored in the textureCache
+ * @return texture id in OpenGL context
  * @note a SDL_Surface won't be added twice to the cache
  */
-static int Font_TextureAddToCache(SDL_Surface * s)
+static GLuint Font_TextureAddToCache(SDL_Surface * s)
 {
 	int i;
 
@@ -83,7 +84,7 @@ static int Font_TextureAddToCache(SDL_Surface * s)
 		qglGenTextures(1, &(textureCache[i].texture));
 	}
 
-	return i;
+	return textureCache[i].texture;
 }
 
 /**
@@ -451,7 +452,7 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
  */
 static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
 {
-	int gltxtcache = 0;
+	GLuint texture = 0;
 	int h = cache->size[1];
 	vec2_t start = {0.0f, 0.0f}, end = {1.0f, 1.0f};
 
@@ -469,10 +470,13 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 		Font_TextureCleanCache();
 	}
 
-	gltxtcache = Font_TextureAddToCache(cache->pixel);
+	if (!gl_usefonttexcache->value)
+		qglGenTextures(1, &texture);
+	else
+		texture = Font_TextureAddToCache(cache->pixel);
 
 	/* Tell GL about our new texture */
-	GL_Bind(textureCache[gltxtcache].texture);
+	GL_Bind(texture);
 	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, cache->pixel->w, cache->pixel->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, cache->pixel->pixels);
 
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -493,6 +497,9 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 	qglEnd();
 
 	qglDisable(GL_BLEND);
+
+	if (!gl_usefonttexcache->value)
+		qglDeleteTextures(1, &texture);
 
 	return 0;
 }
@@ -715,6 +722,7 @@ void Font_Init(void)
 	memset(textureCache, 0, sizeof(textureCache));
 	gl_fontcache = ri.Cvar_Get("gl_fontcache", "256", CVAR_ARCHIVE, "Max allowed entries int font texture cache");
 	gl_fontcache->modified = qfalse;
+	gl_usefonttexcache = ri.Cvar_Get("gl_usefonttexcache", "1", CVAR_ARCHIVE, "Enable the font texture cache");
 
 	/* try and init SDL VIDEO if not previously initialized */
 	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
