@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-02 17:08+0100\n"
-"PO-Revision-Date: 2006-12-02 18:37+0100\n"
+"POT-Creation-Date: 2006-12-04 21:45+0100\n"
+"PO-Revision-Date: 2006-12-04 23:11+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -168,10 +168,12 @@ msgid "Saracen-class Interceptor"
 msgstr "Intercepteur de classe Saracen"
 
 #: ../base/ufos/basemanagement.ufo:386
+#: ../base/ufos/research.ufo:1860
 msgid "UFO - Scout"
 msgstr "OVNI - Éclaireur"
 
 #: ../base/ufos/basemanagement.ufo:400
+#: ../base/ufos/research.ufo:1881
 msgid "UFO - Fighter"
 msgstr "OVNI - Vaisseau de combat"
 
@@ -519,7 +521,6 @@ msgid "Build base-facilities"
 msgstr "Construire des bâtiments"
 
 #: ../base/ufos/menu_bases.ufo:98
-#: ../base/ufos/research.ufo:70
 msgid "Buildings"
 msgstr "Bâtiments"
 
@@ -2246,86 +2247,47 @@ msgid "The Commonwealth of Oceania"
 msgstr "Commonwealth d'Océanie"
 
 #: ../base/ufos/research.ufo:63
-msgid "News"
-msgstr "Actualités"
+msgid "Background"
+msgstr "Contexte"
 
 #: ../base/ufos/research.ufo:65
-msgid "Technologies & Discoveries"
-msgstr "Technologies & Découvertes"
+msgid "Base Facilities"
+msgstr "Aménagements des bases"
 
 #: ../base/ufos/research.ufo:66
-msgid "Weapons"
-msgstr "Armes"
+msgid "Research Reports"
+msgstr "Rapports de Recherche"
 
 #: ../base/ufos/research.ufo:67
-msgid "Armors"
-msgstr "Protections"
+msgid "Equipment"
+msgstr "Équipement"
 
-#: ../base/ufos/research.ufo:71
-msgid "Alien Species"
-msgstr "Espèces Aliennes"
+#: ../base/ufos/research.ufo:68
+msgid "Alien Artifacts"
+msgstr "Découvertes Aliennes"
 
-#: ../base/ufos/research.ufo:72
-msgid "UFOs"
-msgstr "OVNIs"
+#: ../base/ufos/research.ufo:69
+msgid "Autopsies & Observation"
+msgstr "Autopsies et Observations"
 
-#: ../base/ufos/research.ufo:73
-msgid "UGVs"
-msgstr "UGVs"
+#: ../base/ufos/research.ufo:70
+msgid "The Alien Threat"
+msgstr "La Menace Alienne"
 
-#: ../base/ufos/research.ufo:83
+#: ../base/ufos/research.ufo:80
 msgid "Advanced Laser Technology"
 msgstr "Technologie Laser Avancée"
 
-#: ../base/ufos/research.ufo:85
+#: ../base/ufos/research.ufo:82
 #, fuzzy
 msgid "laser_txt"
 msgstr "Le Laser (Light Amplification by Stimulated Emission of Radiation) est connu depuis longtemps, mais le \"Laser Tactique Haute Energie\" ou LTHE est relativement récent. Bien qu'il existe déjà une variation appelée \"Laser Tactique Haute Energie Mobile\" ou LTHEM, ces systèmes d'armes sont encore trop volumineux et manquent d'efficacité comparés aux armes conventionnelles. Le design de base de ces armes utilise un laser chimique (laser de fluoride de deuterium) et nos scientifiques ont découverts récemment un moyen de le rendre environ cinq fois plus efficace et compact. Cela nous donnera probablement de nouvelles armes LTHEM légères dans un avenir proche."
 
-#: ../base/ufos/research.ufo:86
+#: ../base/ufos/research.ufo:83
 msgid "laser_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:97
-msgid "Advanced Plasma Control"
-msgstr "Maîtrise Avancée du Plasma"
-
-#: ../base/ufos/research.ufo:99
-#, fuzzy
-msgid "plasma_txt"
-msgstr "Les Antariens ont rafiné la technologie afin d'utiliser le concept de base du plasma (un gaz ionisé) et l'ont amlioré dans un but militaire. Ils l'utilisent non seulement pour des armes, mais ils ont même réussi à produire des propulseurs à ions plus puissants que ce qu'on croyait possible. Vos scientifiques pourraient reproduire le concept de base derrière ces améliorations et nous serons probablement capable de produire des équipements similaires d'ici peu."
-
-#: ../base/ufos/research.ufo:100
-msgid "plasma_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:116
-msgid "Tachyon Control"
-msgstr "Maîtrise du Tachyon"
-
-#: ../base/ufos/research.ufo:118
-#, fuzzy
-msgid "tachyon_txt"
-msgstr "La recherche sur les tachyons (ou tardyons, la variété qui se déplace moins vite que la lumière) a longtemps été un domaine laissé blanc dans la Science. L'espèce antarienne a non seulement trouvé comment les tachyons se placent par rapport au reste de la matière, mais aussi un moyen de les créer, manipuler et détruire à volonté. Le projectile en lui même ne se déplace pas à une vitesse proche de celle de la lumière, mais lors de l'impact l'énergie se transmet à la cible à une vitesse qui dépasse toutes les limites connues de l'Homme. Ce savoir a été utilisé pour créer des armes dévastatrices qu'ils utilisent pour terroriser l'Homme. Nos scientifiques croient que nous serons capables de reproduire ces armes lorsques nous aurons plus de détails."
-
-#: ../base/ufos/research.ufo:119
-msgid "tachyon_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:133
-msgid "Nano Technology"
-msgstr "Nano Technologie"
-
-#: ../base/ufos/research.ufo:135
-#, fuzzy
-msgid "nano_txt"
-msgstr "La technologie NANO ouvre un vaste champs de nouvelles méthodes de production spécialisées dans le design et la production d'armures. En utilisant la technologie NANO, il sera possible de créer des matériaux presque entièrement composés de fullerenes (dômes géodésiques à une échelle atomique), et de les utiliser pour fabriquer des armures plus robustes et plus résistantes à la chaleur que n'importe quel autre matériel connu jusqu'alors. En plus de cela, ces matériels seront plus léger que les matériels conventionnels similaires."
-
-#: ../base/ufos/research.ufo:136
-msgid "nano_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:171
+#: ../base/ufos/research.ufo:117
 msgid "assault_txt"
 msgstr ""
 "Spécifications techniques : Fusil d'Assaut FA-80\n"
@@ -2368,11 +2330,7 @@ msgstr ""
 "\n"
 "Même si le FA-80 est un bon fusil, il n'a pas été conçu pour combattre une force d'invasion alienne. Nous devrions développer nos propres armes dans ce but dès que possible."
 
-#: ../base/ufos/research.ufo:172
-msgid "assault_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:187
+#: ../base/ufos/research.ufo:133
 msgid "assault_mag_txt"
 msgstr ""
 "Spécifications techniques : Chargeur de Fusil d'Assaut\n"
@@ -2405,29 +2363,18 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:188
-msgid "assault_mag_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:204
+#: ../base/ufos/research.ufo:150
+#: ../base/ufos/research.ufo:166
 #, fuzzy
 msgid "bolterrifle_txt"
 msgstr "Le fusil électro-magnétique MkII propulse un projectile ferreux à très haute vélocité. Le projectile est plus gros que la munition standard utilisée par le fusil d'assaut AR-80, et à une vitesse supersonique, il est capable de produire des dégats significatifs à toute cible assez infortunée pour être sur le ligne de tir. Le fusil EM n'a pas de partie mobile et est ainsi silencieux, mis à part le son produit par le projectile lors du passage du mur du son. La munition étant plus volumineuse, la capacité d'emport s'en trouve réduite. De plus, le temps de rechargement entre chaque coup rend le tir automatique quasiment impossible, mais permet tout de même à l'utilisateur de tirer plusieurs fois."
 
-#: ../base/ufos/research.ufo:205
+#: ../base/ufos/research.ufo:151
+#: ../base/ufos/research.ufo:167
 msgid "bolterrifle_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:220
-#, fuzzy
-msgid "bolterrifle_mag_txt"
-msgstr "Le fusil électro-magnétique MkII propulse un projectile ferreux à très haute vélocité. Le projectile est plus gros que la munition standard utilisée par le fusil d'assaut AR-80, et à une vitesse supersonique, il est capable de produire des dégats significatifs à toute cible assez infortunée pour être sur le ligne de tir. Le fusil EM n'a pas de partie mobile et est ainsi silencieux, mis à part le son produit par le projectile lors du passage du mur du son. La munition étant plus volumineuse, la capacité d'emport s'en trouve réduite. De plus, le temps de rechargement entre chaque coup rend le tir automatique quasiment impossible, mais permet tout de même à l'utilisateur de tirer plusieurs fois."
-
-#: ../base/ufos/research.ufo:221
-msgid "bolterrifle_mag_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:237
+#: ../base/ufos/research.ufo:183
 msgid "combatknife_txt"
 msgstr ""
 "Spécifications techniques : Poignard de Combat\n"
@@ -2468,11 +2415,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:238
-msgid "combatknife_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:254
+#: ../base/ufos/research.ufo:200
 msgid "flamer_txt"
 msgstr ""
 "Spécifications techniques : Lance-Flammes LF-CRC\n"
@@ -2519,11 +2462,7 @@ msgstr ""
 "\n"
 "Cette arme ne devrait pas être utilisée si des civils sont proches de la zone ciblée."
 
-#: ../base/ufos/research.ufo:255
-msgid "flamer_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:270
+#: ../base/ufos/research.ufo:216
 msgid "flamer_mag_txt"
 msgstr ""
 "Spécifications techniques : Cartouche de C90\n"
@@ -2556,11 +2495,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:271
-msgid "flamer_mag_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:287
+#: ../base/ufos/research.ufo:233
 msgid "flashbang_txt"
 msgstr ""
 "Spécifications techniques : Grenade Étourdissante\n"
@@ -2603,11 +2538,7 @@ msgstr ""
 "\n"
 "La grenade étourdissante n'est évidemment efficace que contre des êtres organiques possédant yeux et oreilles."
 
-#: ../base/ufos/research.ufo:288
-msgid "flashbang_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:303
+#: ../base/ufos/research.ufo:249
 msgid "fraggren_txt"
 msgstr ""
 "Spécifications techniques : Grenade à Fragmentation\n"
@@ -2648,11 +2579,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:304
-msgid "fraggren_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:320
+#: ../base/ufos/research.ufo:266
 msgid "incgren_txt"
 msgstr ""
 "Spécifications techniques : Grenade Incendiaire\n"
@@ -2695,11 +2622,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:321
-msgid "incgren_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:337
+#: ../base/ufos/research.ufo:283
 msgid "grenl_txt"
 msgstr ""
 "Spécifications techniques : Lance-Grenades LGHP\n"
@@ -2750,11 +2673,7 @@ msgstr ""
 "\n"
 "Avec les fusils de précision et les lance-roquettes, il s'agit de l'une des rares armes humaines standard qui ne perdent pas de leur efficacité sur les robots aliens."
 
-#: ../base/ufos/research.ufo:338
-msgid "grenl_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:353
+#: ../base/ufos/research.ufo:299
 msgid "grenl_ammo_txt"
 msgstr ""
 "Spécifications techniques : Grenades ST 25mm\n"
@@ -2787,11 +2706,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:354
-msgid "grenl_ammo_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:370
+#: ../base/ufos/research.ufo:316
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 "Spécifications techniques : Grenade à Fléchettes 25mm\n"
@@ -2824,11 +2739,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:371
-msgid "grenl_fle_ammo_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:387
+#: ../base/ufos/research.ufo:333
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 "Spécifications techniques : Grenades IC 25mm\n"
@@ -2861,38 +2772,34 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:388
-msgid "grenl_incendiary_ammo_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:404
+#: ../base/ufos/research.ufo:350
 #, fuzzy
 msgid "grenl_plasma_ammo_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:405
+#: ../base/ufos/research.ufo:351
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:421
+#: ../base/ufos/research.ufo:367
 #, fuzzy
 msgid "heavylaser_txt"
 msgstr "Les Lasers Lourds sont encombrants et difficiles à manier à cause du triple générateur de laser qu'ils logent. A cause de son volume, le Laser Lourd est moins précis qu'un Fusil Laser, mais sa portée utile est plus grande. Il crée également beaucoup plus de dommages."
 
-#: ../base/ufos/research.ufo:422
+#: ../base/ufos/research.ufo:368
 msgid "heavylaser_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:439
+#: ../base/ufos/research.ufo:385
 #, fuzzy
 msgid "heavylaser_ammo_txt"
 msgstr "Les Lasers Lourds sont encombrants et difficiles à manier à cause du triple générateur de laser qu'ils logent. A cause de son volume, le Laser Lourd est moins précis qu'un Fusil Laser, mais sa portée utile est plus grande. Il crée également beaucoup plus de dommages."
 
-#: ../base/ufos/research.ufo:440
+#: ../base/ufos/research.ufo:386
 msgid "heavylaser_ammo_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:456
+#: ../base/ufos/research.ufo:402
 msgid "irgoggles_txt"
 msgstr ""
 "Spécifications techniques : Lunettes IR\n"
@@ -2939,11 +2846,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:457
-msgid "irgoggles_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:472
+#: ../base/ufos/research.ufo:418
 msgid "kerrblade_txt"
 msgstr ""
 "POUR: Commandant de Base, PHALANX, Commandement des Opérations Atlantique\n"
@@ -2970,7 +2873,7 @@ msgstr ""
 "\n"
 "--Cdt Navarre"
 
-#: ../base/ufos/research.ufo:473
+#: ../base/ufos/research.ufo:419
 msgid "kerrblade_pre_txt"
 msgstr ""
 "POUR: Commandant de Base, PHALANX, Commandement des Opérations Atlantique\n"
@@ -2989,43 +2892,43 @@ msgstr ""
 "\n"
 "--Cdt Navarre"
 
-#: ../base/ufos/research.ufo:490
+#: ../base/ufos/research.ufo:436
 #, fuzzy
 msgid "laserpistol_txt"
 msgstr "Utilisant une version plus petite et moins puissante que le 'réacteur laser YAG', le LAS-10 est comme son grand frère, le fusil laser LAS-24, un produit des récentes avancées réalisées dans le domaine du laser. A cause du 'Réacteur YAG' de plus petites dimensions, les photons ont une énergie cinétique inférieure et une puissance de pénétration plus faible. Les dégats occasionés sont limités mais l'arme est plus précise qu'un pistolet grâce à l'absence de recul. Comme les pistolets, les Pistolets Laser peuvent être utilisés des deux mains."
 
-#: ../base/ufos/research.ufo:491
+#: ../base/ufos/research.ufo:437
 msgid "laserpistol_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:507
+#: ../base/ufos/research.ufo:453
 #, fuzzy
 msgid "laserpistol_mag_txt"
 msgstr "Utilisant une version plus petite et moins puissante que le 'réacteur laser YAG', le LAS-10 est comme son grand frère, le fusil laser LAS-24, un produit des récentes avancées réalisées dans le domaine du laser. A cause du 'Réacteur YAG' de plus petites dimensions, les photons ont une énergie cinétique inférieure et une puissance de pénétration plus faible. Les dégats occasionés sont limités mais l'arme est plus précise qu'un pistolet grâce à l'absence de recul. Comme les pistolets, les Pistolets Laser peuvent être utilisés des deux mains."
 
-#: ../base/ufos/research.ufo:508
+#: ../base/ufos/research.ufo:454
 msgid "laserpistol_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:524
+#: ../base/ufos/research.ufo:470
 #, fuzzy
 msgid "laserrifle_txt"
 msgstr "Comme le fusil d'assaut, le fusil Laser est efficace à moyenne portée. Il provoque des dégats raisonnables et est plus précis que le fusil d'assaut grâce à l'absence de recul."
 
-#: ../base/ufos/research.ufo:525
+#: ../base/ufos/research.ufo:471
 msgid "laserrifle_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:542
+#: ../base/ufos/research.ufo:488
 #, fuzzy
 msgid "laserrifle_mag_txt"
 msgstr "Comme le fusil d'assaut, le fusil Laser est efficace à moyenne portée. Il provoque des dégats raisonnables et est plus précis que le fusil d'assaut grâce à l'absence de recul."
 
-#: ../base/ufos/research.ufo:543
+#: ../base/ufos/research.ufo:489
 msgid "laserrifle_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:559
+#: ../base/ufos/research.ufo:505
 msgid "medikit_txt"
 msgstr ""
 "Spécifications techniques : Médikit\n"
@@ -3068,11 +2971,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:560
-msgid "medikit_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:575
+#: ../base/ufos/research.ufo:521
 msgid "pistol_txt"
 msgstr ""
 "Spécifications techniques : Pistolet P-12\n"
@@ -3121,11 +3020,7 @@ msgstr ""
 "\n"
 "En dépit de sa bonne pénétration sur les être vivants, cette arme donne de très mauvais résultats sur les cibles robotiques."
 
-#: ../base/ufos/research.ufo:576
-msgid "pistol_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:592
+#: ../base/ufos/research.ufo:538
 msgid "pistol_mag_txt"
 msgstr ""
 "Spécifications techniques : Chargeur de Pistolet 7.62mm\n"
@@ -3158,11 +3053,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:593
-msgid "pistol_mag_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:610
+#: ../base/ufos/research.ufo:556
 msgid "pistol2_txt"
 msgstr ""
 "Spécifications techniques : Pistolet Automatique\n"
@@ -3209,11 +3100,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:611
-msgid "pistol2_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:627
+#: ../base/ufos/research.ufo:573
 msgid "pistol2_mag_txt"
 msgstr ""
 "Spécifications techniques : Chargeur de PA 4.2mm\n"
@@ -3246,317 +3133,262 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:628
-msgid "pistol2_mag_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:645
+#: ../base/ufos/research.ufo:591
+#: ../base/ufos/research.ufo:611
 #, fuzzy
 msgid "plasatomizer_txt"
 msgstr "Le Fusil à Plasma est l'arme la plus souvent employée par... les guerriers. Le plasma projeté par cette arme passe facilement au travers de la plupart des matériaux connus. Par conséquent le gilet standard Phalanx en kevlar n'assure qu'une protection limitée. Les soldats touchés par le rayon d'un Fusil à Plasma souffrent de graves brûlures qui sont, dans la plupart des cas, instantanément mortelles. Le plasma, constitué de gaz xénon fortement énergique surchauffé, est stocké à l'intérieur d'un intense champ magnétique intégré dans le chargeur de l'arme. Lorsque le mécanisme est activé, le champ magnétique est modifié de sorte qu'un rayon continu de plasma soit formé. Ce faisceau est focalisé par un deuxième champ magnétique puis est finalement expulsé à l'embout avant du Fusil à Plasma. "
 
-#: ../base/ufos/research.ufo:646
+#: ../base/ufos/research.ufo:592
+#: ../base/ufos/research.ufo:612
 msgid "plasatomizer_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:665
-#, fuzzy
-msgid "plasatomizer_mag_txt"
-msgstr "Le Fusil à Plasma est l'arme la plus souvent employée par... les guerriers. Le plasma projeté par cette arme passe facilement au travers de la plupart des matériaux connus. Par conséquent le gilet standard Phalanx en kevlar n'assure qu'une protection limitée. Les soldats touchés par le rayon d'un Fusil à Plasma souffrent de graves brûlures qui sont, dans la plupart des cas, instantanément mortelles. Le plasma, constitué de gaz xénon fortement énergique surchauffé, est stocké à l'intérieur d'un intense champ magnétique intégré dans le chargeur de l'arme. Lorsque le mécanisme est activé, le champ magnétique est modifié de sorte qu'un rayon continu de plasma soit formé. Ce faisceau est focalisé par un deuxième champ magnétique puis est finalement expulsé à l'embout avant du Fusil à Plasma. "
-
-#: ../base/ufos/research.ufo:666
-msgid "plasatomizer_mag_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:682
+#: ../base/ufos/research.ufo:628
+#: ../base/ufos/research.ufo:647
 #, fuzzy
 msgid "plasblaster_txt"
 msgstr "Le Fusil à Plasma est l'arme la plus souvent employée par... les guerriers. Le plasma projeté par cette arme passe facilement au travers de la plupart des matériaux connus. Par conséquent le gilet standard Phalanx en kevlar n'assure qu'une protection limitée. Les soldats touchés par le rayon d'un Fusil à Plasma souffrent de graves brûlures qui sont, dans la plupart des cas, instantanément mortelles. Le plasma, constitué de gaz xénon fortement énergique surchauffé, est stocké à l'intérieur d'un intense champ magnétique intégré dans le chargeur de l'arme. Lorsque le mécanisme est activé, le champ magnétique est modifié de sorte qu'un rayon continu de plasma soit formé. Ce faisceau est focalisé par un deuxième champ magnétique puis est finalement expulsé à l'embout avant du Fusil à Plasma. "
 
-#: ../base/ufos/research.ufo:683
+#: ../base/ufos/research.ufo:629
+#: ../base/ufos/research.ufo:648
 msgid "plasblaster_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:701
-#, fuzzy
-msgid "plasblaster_mag_txt"
-msgstr "Le Fusil à Plasma est l'arme la plus souvent employée par... les guerriers. Le plasma projeté par cette arme passe facilement au travers de la plupart des matériaux connus. Par conséquent le gilet standard Phalanx en kevlar n'assure qu'une protection limitée. Les soldats touchés par le rayon d'un Fusil à Plasma souffrent de graves brûlures qui sont, dans la plupart des cas, instantanément mortelles. Le plasma, constitué de gaz xénon fortement énergique surchauffé, est stocké à l'intérieur d'un intense champ magnétique intégré dans le chargeur de l'arme. Lorsque le mécanisme est activé, le champ magnétique est modifié de sorte qu'un rayon continu de plasma soit formé. Ce faisceau est focalisé par un deuxième champ magnétique puis est finalement expulsé à l'embout avant du Fusil à Plasma. "
-
-#: ../base/ufos/research.ufo:702
-msgid "plasblaster_mag_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:718
+#: ../base/ufos/research.ufo:664
 #, fuzzy
 msgid "plasblade_txt"
 msgstr "Cette arme de mêlée a prouvé sa grande valeur pour le combat au corps à corps en raison des brûlures dévastatrices qu'elle inflige lorsque quelqu'un touche sa lame. L'ennemi est généralement incapable de combattre juste après un impact. D'un autre côté la portée de cette arme est tout à fait limitée."
 
-#: ../base/ufos/research.ufo:719
+#: ../base/ufos/research.ufo:665
 msgid "plasblade_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:736
+#: ../base/ufos/research.ufo:682
 #, fuzzy
 msgid "plasmagren_txt"
 msgstr "Ce dispositif agit exactement comme la Grenade à Fragmentation, mais à la place d'une explosion il crée un sphère de plasma chaud dans son rayon d'action. Ce rayon est légèrement plus grand que celui de la Grenade à Fragmentation."
 
-#: ../base/ufos/research.ufo:737
+#: ../base/ufos/research.ufo:683
 msgid "plasmagren_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:755
+#: ../base/ufos/research.ufo:700
+#: ../base/ufos/research.ufo:720
 #, fuzzy
 msgid "plasrifle_txt"
 msgstr "Le Fusil à Plasma est l'arme la plus souvent employée par... les guerriers. Le plasma projeté par cette arme passe facilement au travers de la plupart des matériaux connus. Par conséquent le gilet standard Phalanx en kevlar n'assure qu'une protection limitée. Les soldats touchés par le rayon d'un Fusil à Plasma souffrent de graves brûlures qui sont, dans la plupart des cas, instantanément mortelles. Le plasma, constitué de gaz xénon fortement énergique surchauffé, est stocké à l'intérieur d'un intense champ magnétique intégré dans le chargeur de l'arme. Lorsque le mécanisme est activé, le champ magnétique est modifié de sorte qu'un rayon continu de plasma soit formé. Ce faisceau est focalisé par un deuxième champ magnétique puis est finalement expulsé à l'embout avant du Fusil à Plasma. "
 
-#: ../base/ufos/research.ufo:756
+#: ../base/ufos/research.ufo:701
+#: ../base/ufos/research.ufo:721
 msgid "plasrifle_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:775
-#, fuzzy
-msgid "plasrifle_mag_txt"
-msgstr "Le Fusil à Plasma est l'arme la plus souvent employée par... les guerriers. Le plasma projeté par cette arme passe facilement au travers de la plupart des matériaux connus. Par conséquent le gilet standard Phalanx en kevlar n'assure qu'une protection limitée. Les soldats touchés par le rayon d'un Fusil à Plasma souffrent de graves brûlures qui sont, dans la plupart des cas, instantanément mortelles. Le plasma, constitué de gaz xénon fortement énergique surchauffé, est stocké à l'intérieur d'un intense champ magnétique intégré dans le chargeur de l'arme. Lorsque le mécanisme est activé, le champ magnétique est modifié de sorte qu'un rayon continu de plasma soit formé. Ce faisceau est focalisé par un deuxième champ magnétique puis est finalement expulsé à l'embout avant du Fusil à Plasma. "
-
-#: ../base/ufos/research.ufo:776
-msgid "plasrifle_mag_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:792
-#, fuzzy
+#: ../base/ufos/research.ufo:737
 msgid "rpg_txt"
-msgstr "Le prédécesseur du RL-1056 était le missile Lance Roquette Anti-Aérien Stinger. Les scientifiques et les ingénieurs en armement de Phalanx ont développé un nouveau système d'acquisition et de poursuite capable d'engager des cibles aériennes aussi bien que terrestres. Les missiles du RL-1056 utilisent une combinaison de guidage laser et de caméras afin d'identifier la cible. Bien qu'il soit d'une bonne précision si le système de visé a suffisamment de temps pour verrouiller sa cible, ce lance roquette n'est pas très utile s'il doit être utilisé en tir instantané."
+msgstr ""
+"Spécifications techniques : Lance-Roquettes LMHP\n"
+"\n"
+"NIVEAU DE CONFIDENTIALITE JAUNE\n"
+"\n"
+"Unité de réaction extraterrestre PHALANX\n"
+"\n"
+"Document Technique, Autorisation Delta\n"
+"\n"
+"Classé le : 20 Mars 2084\n"
+"\n"
+"Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
+"\n"
+"\n"
+"\n"
+"Considérations générales\n"
+"\n"
+"L'attaque alienne sur Mumbai a rendu notre situation douloureusement claire. Leur technologie est beaucoup plus avancée que la nôtre. L'incapacité complète des troupes du Commonwealth à repousser l'offensive de Mumbai a révélé les failles de l'entraînement militaire actuel et des équipements utilisés. Elles perdirent trois bataillons, uniquement pour parvenir à stopper l'avancée alienne ; et sans pour autant leur infliger de pertes significatives. PHALANX doit parvenir à renverser le rapport de force, et pour cela nous avons besoin de ce que la technologie humaine propose de meilleur.\n"
+"\n"
+"Le Programme Excalibur fut créé pour développer les armes les plus performantes sur Terre en réévaluant les qualités de fabrication, les résistances, et en réexaminant les performances en action de nos armes dans les situations où nous sommes parvenus à engager le combat avec les aliens.\n"
+"\n"
+"Le SLMMF (Système de Lancement de Missiles Multi-Fonctions) sud-africain possède un nom classique, à la rigueur presque scientifique, que contredit totalement son utilisation. Il s'agit en réalité du lance-missiles le plus puissant disponible sur le marché, capable de tirer aussi bien des obus anti-tank que des roquettes hautement explosives qui réduisent l'infanterie en chair à saucisse. Initialement conçu comme arme d'artillerie légère, il s'agit d'un équipement très récent : sa seule expérience au combat a été à Mumbai dans les mains des troupes du Commonwealth. Il fait parti du faible nombre d'armes qui peuvent nous permettre de retourner les chances en notre faveur, et il y a une bonne raison à cela.\n"
+"\n"
+"Les vaisseaux aliens émettent une fois posés une quantité impressionnante d'ondes de brouillage et d'autres ondes créées par de nouvelles technologies électroniques. En fait, ils en émettent tant que les missiles guidés ordinaires sont rendus totalement inefficaces. Si une des technologies de brouillage aliennes ne parvient pas à tromper le cerveau électronique peu évolué de ces missiles, une autre y arrivera. Aucune amélioration proposée par les ingénieurs militaires des forces terrestres n'a pu contourner ce problème. Cependant, le SLMMF reste efficace contre les envahisseurs extraterrestres (et c'est l'un des rares lance-missiles humain qui puisse s'en vanter), car ses roquettes n'ont pas de système de guidage intégré.\n"
+"\n"
+"Les roquettes sont des monstres de 120mm, de la taille des obus d'artillerie. Elles sont tirées par un canon lisse, stabilisées en vol par des ailettes, et ont une portée effective maximale de 70 mètres. Elles ne sont étonnamment constitués que de trois parties : un propulseur, une ogive, et un déclencheur d'impact. Cette simplicité leur permet de rester efficaces et fiables dans les situations les plus dangereuses. Bien que les roquettes ne soient pas très précises, elles détruiront tout sur leur passage, même les aliens. Il suffit d'un seul tir réussi d'un SLMMF pour faire sauter l'ennemi.\n"
+"\n"
+"Les munitions standard de ce lanceur sont : roquettes HE (Hautement explosives), roquettes AA (Anti-Armure), et roquettes IC (Incendiaires). De nouvelles munitions étaient en cours d'élaboration par les fournisseurs du Commonwealth avant le début de la guerre. Nous avons toutes leurs données dans nos dossiers, et pouvons les utiliser pour créer de nouvelles sortes de roquettes révolutionnaires.\n"
+"\n"
+"Avec le Lance-Grenades LGHP, cette arme fournira à nos troupes le support d'artillerie dont elles ont besoin pour survivre et vaincre.\n"
+"\n"
+"Pour l'utilisation PHALANX, nous avons donné à ce lance-roquettes la classification LMHP.\n"
+"\n"
+"\n"
+"Doctrine recommandée\n"
+"\n"
+"Le LMHP trouve sa meilleure utilisation dans le tir de soutien, permettant un tir de barrage pour nos troupes d'assaut avec des roquettes hautement explosives et/ou des roquettes incendiaires. Il faudra rester cependant prudent à ce qu'aucun de nos hommes ne soit dans la zone de tir, cela pourrait avoir des effets désastreux lors d'une mission de combat.\n"
+"\n"
+"Les troupes amies ne devraient pas non plus se trouver derrière le lanceur lors de la mise à feu, les gaz chauds dégagés étant extrêmement dangereux pour les humains aux alentours. Le LMHP ne devrait pas être utilisé pour tirer sur des cibles à moins de 8 mètres de distance. Ne pas respecter ces principes de précautions pourrait provoquer des blessures graves, voire la mort du tireur ou de ses équipiers. Si une cible se trouve à moins de 8 mètres, le tireur devrait s'en remettre à son arme de poing ou son poignard de combat. Tout autre option serait suicidaire.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"Avec le Lance-Grenades LGHP, il s'agit d'une des rares armes dont nous disposons qui soit pleinement efficace contre les robots aliens."
 
-#: ../base/ufos/research.ufo:793
-msgid "rpg_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:809
+#: ../base/ufos/research.ufo:754
 #, fuzzy
 msgid "rpg_ammo_txt"
 msgstr "Le prédécesseur du RL-1056 était le missile Lance Roquette Anti-Aérien Stinger. Les scientifiques et les ingénieurs en armement de Phalanx ont développé un nouveau système d'acquisition et de poursuite capable d'engager des cibles aériennes aussi bien que terrestres. Les missiles du RL-1056 utilisent une combinaison de guidage laser et de caméras afin d'identifier la cible. Bien qu'il soit d'une bonne précision si le système de visé a suffisamment de temps pour verrouiller sa cible, ce lance roquette n'est pas très utile s'il doit être utilisé en tir instantané."
 
-#: ../base/ufos/research.ufo:810
-msgid "rpg_ammo_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:827
+#: ../base/ufos/research.ufo:772
 #, fuzzy
 msgid "rpg_incendiary_ammo_txt"
 msgstr "La capacité de lancer des obus explosifs anti-blindage conçus pour la neutralisation de véhicules et la destruction et, ultérieurement, son adaptation à d'autres roquettes spécialisées, font du RPG-37 une arme très polyvalente. Les moteurs modernes à carburant liquide rendent ses obus capables d'opérer sur de formidables distances. Le seul sérieux point noir de cette arme est son temps de rechargement. La roquette incendiaire, qui doit être recherchée séparément, a un rayon d'impact inférieur à celui d'une Grande Roquette Explosive, mais elle y enflamme tout, terrain et unités."
 
-#: ../base/ufos/research.ufo:828
-msgid "rpg_incendiary_ammo_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:845
-#, fuzzy
-msgid "rpg_tachyon_ammo_txt"
-msgstr "La capacité de lancer des obus explosifs anti-blindage conçus pour la neutralisation de véhicules et la destruction et, ultérieurement, son adaptation à d'autres roquettes spécialisées, font du RPG-37 une arme très polyvalente. Les moteurs modernes à carburant liquide rendent ses obus capables d'opérer sur de formidables distances. Le seul sérieux point noir de cette arme est son temps de rechargement. La plus évoluée de toutes les roquettes, la Roquette à Rayons-Tachyons a un rayon d'impact légèrement plus réduit que celui d'une Grande Roquette Explosive. Après avoir atteint sa cible, l'ogive rayonne de particules tachyon dans toutes les directions et est désintégrée par les radiations."
-
-#: ../base/ufos/research.ufo:846
-msgid "rpg_tachyon_ammo_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:864
+#: ../base/ufos/research.ufo:809
 #, fuzzy
 msgid "chaingun_txt"
 msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:865
+#: ../base/ufos/research.ufo:810
 msgid "chaingun_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:882
+#: ../base/ufos/research.ufo:827
 #, fuzzy
 msgid "chaingun_ammo_txt"
 msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:883
+#: ../base/ufos/research.ufo:828
 msgid "chaingun_ammo_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:901
+#: ../base/ufos/research.ufo:846
 #, fuzzy
 msgid "shotgun_txt"
 msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:902
-msgid "shotgun_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:918
+#: ../base/ufos/research.ufo:864
 #, fuzzy
 msgid "shotgun_ammo_txt"
 msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:919
-msgid "shotgun_ammo_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
+#: ../base/ufos/research.ufo:883
 #: ../base/ufos/research.ufo:937
 #, fuzzy
 msgid "shotgun_slug_ammo_txt"
 msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:938
-msgid "shotgun_slug_ammo_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:956
+#: ../base/ufos/research.ufo:902
 #, fuzzy
 msgid "shotgun2_txt"
 msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:957
-msgid "shotgun2_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:973
+#: ../base/ufos/research.ufo:919
+#: ../base/ufos/research.ufo:972
 #, fuzzy
 msgid "shotgun2_ammo_txt"
 msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:974
-msgid "shotgun2_ammo_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:991
+#: ../base/ufos/research.ufo:955
 #, fuzzy
 msgid "shotgun_micro_txt"
 msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:992
-msgid "shotgun_micro_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1008
-#, fuzzy
-msgid "shotgun_micro_ammo_txt"
-msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
-
-#: ../base/ufos/research.ufo:1009
-msgid "shotgun_micro_ammo_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1026
+#: ../base/ufos/research.ufo:990
 #, fuzzy
 msgid "smg_txt"
 msgstr "Comparé au fusil d'assaut AR-80, le SMG-68 a une cadence de tir supérieure, mais au prix d'une précision et d'une capacité de pénétration inférieures. Ces caractéristiques font du SMG-68 un choix idéal pour le combat rapproché. Les soldats de l'unité Phalanx utilisent le SMG-68 principalement en milieu urbain. Afin d'optimiser la cadence de tir, cette arme à deux canons aux travers desquels les balles sont tirées alternativement. Pour absorber le recul considérable, un système ingénieux d'équilibrage est utilisé grâce aux gaz produits par les cartouches. Le SMG-68 est relativement peu précis à moyenne portée, mais est très efficace à courte porte."
 
-#: ../base/ufos/research.ufo:1027
-msgid "smg_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1043
+#: ../base/ufos/research.ufo:1007
 #, fuzzy
 msgid "smg_mag_txt"
 msgstr "Comparé au fusil d'assaut AR-80, le SMG-68 a une cadence de tir supérieure, au prix d'une précision et d'une capacité de pénétration inférieure. Ces caractéristiques font du SMG-68 un choix idéal pour le combat rapproché. Les soldats de l'unité Phalanx utilisent le SMG-68 principalement en milieu urbain. Afin d'optimiser la cadence de tir, cette arme a deux canons à travers les quels les balles sont tirées alternativement. Pour absorber le recul considérable, un système ingénieux d'équilibrage est utilisé grâce aux gaz produits par les cartouches. Le SMG-68 est relativement peu précis à porte moyenne, mais très efficace à courte porte."
 
-#: ../base/ufos/research.ufo:1044
-msgid "smg_mag_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1061
+#: ../base/ufos/research.ufo:1025
 #, fuzzy
 msgid "smokegren_txt"
 msgstr "Cette grenade occasione très peu de dégats mais propage un nuage de fumée qui bloque la vue."
 
-#: ../base/ufos/research.ufo:1062
-msgid "smokegren_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1078
+#: ../base/ufos/research.ufo:1042
 #, fuzzy
 msgid "sniper_txt"
 msgstr "Utilisant une lunette puissante et un bi-pied pour la précision, le Fusil de Sniper WE-78 est parmi les armes les plus meurtrières des unités Phalanx. Grâce aux capacités améliorées de la munition en calibre 12.7, l'arme est capable de pénétrer efficacement le bloc moteur d'un véhicule à 150 mètres. L'arme est cependant difficile à manier et requiert plusieurs secondes pour viser correctement, ce qui la rend inadaptée au combat rapproché."
 
-#: ../base/ufos/research.ufo:1079
-msgid "sniper_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1095
+#: ../base/ufos/research.ufo:1059
 #, fuzzy
 msgid "sniper_mag_txt"
 msgstr "Utilisant une lunette puissante et un bi-pied pour la précision, le Fusil de Sniper WE-78 est parmi les armes les plus meurtrières des unités Phalanx. Grâce aux capacités améliorées de la munition en calibre 12.7, l'arme est capable de pénétrer efficacement le bloc moteur d'un véhicule à 150 mètres. L'arme est cependant difficile à manier et requiert plusieurs secondes pour viser correctement, ce qui la rend inadaptée au combat rapproché."
 
-#: ../base/ufos/research.ufo:1096
-msgid "sniper_mag_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1113
+#: ../base/ufos/research.ufo:1077
 #, fuzzy
 msgid "stungren_txt"
 msgstr "Quand cette grenade explose, elle émets des rayonnements sonores à ultra-haute fréquence qui paralysent temporairement le système nerveux de toutes les unités présentent dans son rayon d'action. Plus la victime est proche du centre de l'explosion, plus l'effet est fort, et plus la victime restera inconsciente longtemps. Mais les rayonnements sonores sont d'une fréquence si grande que leurs intensités diminuent très rapidement avec la distance. Les grenades doivent donc exploser très prêt de la cible pour obtenir l'effet désiré. Au delà d'une certaine distance, la grenade ne causera que des maux de tête. La grenade assommante n'est efficace que contre les organismes biologiques dotés d'un système auditif. Cela inclue heureusement la plupart des Aliens biologiques."
 
-#: ../base/ufos/research.ufo:1114
+#: ../base/ufos/research.ufo:1078
 msgid "stungren_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1132
+#: ../base/ufos/research.ufo:1096
 #, fuzzy
 msgid "stunrod_txt"
 msgstr "Appareil pour assomer et capturer facilement un adversaire. La difficulté réside dans le fait qu'il faille se tenir à coté de son adversaire pour le faire, mais l'appareil est plus efficace que les grenades assomantes. Le bâton assomant utilisé par les soldats de Phalanx est l'un des appareils les plus efficaces pour capturer vos ennemis vivants. Non seulement il transmet une puissante décharge lectrique à sa cible, mais il injecte aussi un mélange de narcotiques et de drogues. La combinaison de la décharge et de ces produits chimiques peut neutraliser même les plus grosses formes de vies connues de l'homme et devraient fonctionner sur n'importe quelle espèce extra-terrestre rencontrée. Le bâton est équipé de deux pics qui s'enfoncent dans la cible afin de libérer la décharge et les produits chimiques cités précédemment."
 
-#: ../base/ufos/research.ufo:1133
+#: ../base/ufos/research.ufo:1097
 msgid "stunrod_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1150
+#: ../base/ufos/research.ufo:1114
 #, fuzzy
 msgid "tachyonpistol_txt"
 msgstr "Cette arme est équipée d'une version miniature d'un accélérateur à  tachyons. Ainsi, le pistolet à tachyons a une cadence de tir et une précision inférieures comparées aux autres armes à tachyons. L'avantage majeur du pistolet à tachyons réside dans son faible poids et ses petites dimensions qui en font une arme de poing appréciable."
 
-#: ../base/ufos/research.ufo:1151
+#: ../base/ufos/research.ufo:1115
 msgid "tachyonpistol_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1169
+#: ../base/ufos/research.ufo:1133
 #, fuzzy
 msgid "tachyonpistol_mag_txt"
 msgstr "Cette arme est équipée d'une version miniature d'un accélérateur à  tachyons. Ainsi, le pistolet à tachyons a une cadence de tir et une précision inférieures comparées aux autres armes à tachyons. L'avantage majeur du pistolet à tachyons réside dans son faible poids et ses petites dimensions qui en font une arme de poing appréciable."
 
-#: ../base/ufos/research.ufo:1170
+#: ../base/ufos/research.ufo:1134
 msgid "tachyonpistol_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1187
+#: ../base/ufos/research.ufo:1151
 #, fuzzy
 msgid "tachyonrifle_txt"
 msgstr "Même si nos ingénieurs ne comprennent pas encore complètement les principes d'altération des tachyons à l'échelle sub-atomique, ils ont été capables de reproduire la technologie de l'accélérateur à tachyons. Apparemment, le spin des tachyons est fixé dans l'accélérateur afin qu'ils soient capable d'intéragir avec tous les matériaux. Ils ont toujours tendance à pénétrer facilement n'importe quelle armure et ne perdent leur énergie particulaire qu'après une distance de pénétration d'environ 10 cm. Ainsi, un soldat touché par une charge tachyons ne soufre que de blessures légères en surface, mais est pourtant gravement blessé dans ses organes internes."
 
-#: ../base/ufos/research.ufo:1188
+#: ../base/ufos/research.ufo:1152
 msgid "tachyonrifle_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1207
+#: ../base/ufos/research.ufo:1171
 #, fuzzy
 msgid "tachyonrifle_mag_txt"
 msgstr "Même si nos ingénieurs ne comprennent pas encore complètement les principes d'altération des tachyons à l'échelle sub-atomique, ils ont été capables de reproduire la technologie de l'accélérateur à tachyons. Apparemment, le spin des tachyons est fixé dans l'accélérateur afin qu'ils soient capable d'intéragir avec tous les matériaux. Ils ont toujours tendance à pénétrer facilement n'importe quelle armure et ne perdent leur énergie particulaire qu'après une distance de pénétration d'environ 10 cm. Ainsi, un soldat touché par une charge tachyons ne soufre que de blessures légères en surface, mais est pourtant gravement blessé dans ses organes internes."
 
-#: ../base/ufos/research.ufo:1208
+#: ../base/ufos/research.ufo:1172
 msgid "tachyonrifle_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1225
+#: ../base/ufos/research.ufo:1189
 #, fuzzy
 msgid "tachyonsniper_txt"
 msgstr "Le fusil de sniper à tachyons utilise aussi la technologie récemment découverte de l'accélérateur à tachyons, retrouvée initialement dans un vaisseau d'exploration Ortnok. A la différence du fusil à tachyons, cette arme a une cadence de tir relativement basse car il faut charger les particules avant de les tirer. Cela signifie que les coups tirés d'un fusil de sniper à tachyons sont plus concentrés, donc plus précis, et ont une meilleure capacité de pénétration."
 
-#: ../base/ufos/research.ufo:1226
+#: ../base/ufos/research.ufo:1190
 msgid "tachyonsniper_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1244
+#: ../base/ufos/research.ufo:1208
 #, fuzzy
 msgid "tachyonsniper_mag_txt"
 msgstr "Le fusil de sniper à tachyons utilise aussi la technologie récemment découverte de l'accélérateur à tachyons, retrouvée initialement dans un vaisseau d'exploration Ortnok. A la différence du fusil à tachyons, cette arme a une cadence de tir relativement basse car il faut charger les particules avant de les tirer. Cela signifie que les coups tirés d'un fusil de sniper à tachyons sont plus concentrés, donc plus précis, et ont une meilleure capacité de pénétration."
 
-#: ../base/ufos/research.ufo:1245
+#: ../base/ufos/research.ufo:1209
 msgid "tachyonsniper_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1266
+#: ../base/ufos/research.ufo:1230
 msgid "combat_armor_txt"
 msgstr ""
 "Spécifications techniques : Armure de Combat\n"
@@ -3597,109 +3429,116 @@ msgstr ""
 "\n"
 "Aucun"
 
-#: ../base/ufos/research.ufo:1267
-msgid "combat_armor_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1279
+#: ../base/ufos/research.ufo:1243
 #, fuzzy
-msgid "nano_armor_txt"
-msgstr "Une armure plus résistante offrant une protection décente contre presque tous les types de dommage, et qui est généralement plus durable qu'une armure en kevlar. Les nano-matériaux sont très résistants, mais leurs couches externes fondent facilement au contact du plasma. Les anneaux de fullerine sont actuellement plus légers que du kevlar, et le tissu est plus mince que ceux du gilet en kevlar, mais l'armure couvre presque tout le corps des soldats et pèse ainsi peu un plus. Les soldats faibles doivent être cependant capable d'en porter une sans problème."
+msgid "Nanocomposite Armour"
+msgstr "Nano Armure"
 
-#: ../base/ufos/research.ufo:1280
-msgid "nano_armor_pre_txt"
+#: ../base/ufos/research.ufo:1245
+#: ../base/ufos/research.ufo:1262
+#, fuzzy
+msgid "nano_txt"
+msgstr "La technologie NANO ouvre un vaste champs de nouvelles méthodes de production spécialisées dans le design et la production d'armures. En utilisant la technologie NANO, il sera possible de créer des matériaux presque entièrement composés de fullerenes (dômes géodésiques à une échelle atomique), et de les utiliser pour fabriquer des armures plus robustes et plus résistantes à la chaleur que n'importe quel autre matériel connu jusqu'alors. En plus de cela, ces matériels seront plus léger que les matériels conventionnels similaires."
+
+#: ../base/ufos/research.ufo:1246
+#: ../base/ufos/research.ufo:1263
+msgid "nano_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1311
+#: ../base/ufos/research.ufo:1260
+msgid "Alien Artifact - Alien Body Armour"
+msgstr "Découverte Alienne - Armure Corporelle Alienne "
+
+#: ../base/ufos/research.ufo:1290
 #, fuzzy
 msgid "light_alien_armor"
 msgstr "armure_légère_alienne"
 
-#: ../base/ufos/research.ufo:1312
+#: ../base/ufos/research.ufo:1291
 #, fuzzy
 msgid "light_alien_pre_armor"
 msgstr "light_alien_pre_armor"
 
-#: ../base/ufos/research.ufo:1322
+#: ../base/ufos/research.ufo:1301
 #, fuzzy
 msgid "medium_alien_armor"
 msgstr "Armure moyenne"
 
-#: ../base/ufos/research.ufo:1323
+#: ../base/ufos/research.ufo:1302
 #, fuzzy
 msgid "medium_alien_pre_armor"
 msgstr "medium_alien_pre_armor"
 
-#: ../base/ufos/research.ufo:1338
+#: ../base/ufos/research.ufo:1317
 msgid "Blast Damage Type"
 msgstr "Dommage par Explosion"
 
-#: ../base/ufos/research.ufo:1350
+#: ../base/ufos/research.ufo:1329
 msgid "Fire Damage Type"
 msgstr "Dommage par le Feu"
 
-#: ../base/ufos/research.ufo:1362
+#: ../base/ufos/research.ufo:1341
 msgid "Laser Damage Type"
 msgstr "Dommage Laser"
 
-#: ../base/ufos/research.ufo:1378
+#: ../base/ufos/research.ufo:1357
 msgid "Impact Damage Type"
 msgstr "Type de Dommages"
 
-#: ../base/ufos/research.ufo:1390
-#: ../base/ufos/research.ufo:1418
+#: ../base/ufos/research.ufo:1369
+#: ../base/ufos/research.ufo:1400
 msgid "Shock Damage Type"
 msgstr "Dommage Electrique"
 
-#: ../base/ufos/research.ufo:1402
+#: ../base/ufos/research.ufo:1381
 msgid "Plasma Damage Type"
 msgstr "Dommage Plasma"
 
-#: ../base/ufos/research.ufo:1430
+#: ../base/ufos/research.ufo:1412
 msgid "Stun Damage Type"
 msgstr "Dommage Assomant "
 
-#: ../base/ufos/research.ufo:1442
+#: ../base/ufos/research.ufo:1424
 msgid "Tachyon Damage Type"
 msgstr "Dommage Tachyon"
 
-#: ../base/ufos/research.ufo:1462
+#: ../base/ufos/research.ufo:1444
 msgid "Accuracy Attribute"
 msgstr "Attribut de précision"
 
-#: ../base/ufos/research.ufo:1474
+#: ../base/ufos/research.ufo:1456
 msgid "Assault Guns Proficiency"
 msgstr "Compétence en Armes d'Assaut"
 
-#: ../base/ufos/research.ufo:1486
+#: ../base/ufos/research.ufo:1468
 msgid "Close Combat Proficiency"
 msgstr "Compétence au corps à corps"
 
-#: ../base/ufos/research.ufo:1498
+#: ../base/ufos/research.ufo:1480
 msgid "High-Explosives Proficiency"
 msgstr "Compétences en Explosifs"
 
-#: ../base/ufos/research.ufo:1510
+#: ../base/ufos/research.ufo:1492
 msgid "Heavy Weapons Proficiency"
 msgstr "Compétence en Armes Lourdes"
 
-#: ../base/ufos/research.ufo:1522
+#: ../base/ufos/research.ufo:1504
 msgid "Mind Attribute"
 msgstr "Attribut d'Esprit"
 
-#: ../base/ufos/research.ufo:1534
+#: ../base/ufos/research.ufo:1516
 msgid "Power Attribute"
 msgstr "Attribut de puissance"
 
-#: ../base/ufos/research.ufo:1546
+#: ../base/ufos/research.ufo:1528
 msgid "Sniper Rifles Proficiency"
 msgstr "Compétence en Fusils de Sniper"
 
-#: ../base/ufos/research.ufo:1558
+#: ../base/ufos/research.ufo:1540
 msgid "Speed Attribute"
 msgstr "Attribut de Vitesse"
 
-#: ../base/ufos/research.ufo:1574
+#: ../base/ufos/research.ufo:1556
 msgid "b_aliencontainment_txt"
 msgstr ""
 "Projet d'Aménagement : Unité de Détention\n"
@@ -3738,11 +3577,7 @@ msgstr ""
 "\n"
 "Pour un éventuel futur commandant qui lirait ce dossier : gardez à l'esprit que les dispositifs de l'Unité de Détention, comme la majorité des équipements PHALANX, doivent encore subir des test à l'acide, que les forces extraterrestres pourraient utiliser. Des améliorations ou ajustements seront éventuellement nécessaires pour que l'unité satisfasse au cahier des charges."
 
-#: ../base/ufos/research.ufo:1575
-msgid "b_aliencontainment_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1590
+#: ../base/ufos/research.ufo:1572
 msgid "b_command_txt"
 msgstr ""
 "Projet d'Aménagement : Centre de Commande\n"
@@ -3783,11 +3618,7 @@ msgstr ""
 "\n"
 "L'ancien projet de CC a été mis à jour par nos ingénieurs afin de remplacer l'ancien ordinateur central H-9000 et ses terminaux par une station de travail holographique récente et une nouvelle installation de super ordinateurs. Tous les autres éléments sont toujours fiables et efficaces."
 
-#: ../base/ufos/research.ufo:1591
-msgid "b_command_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1606
+#: ../base/ufos/research.ufo:1588
 msgid "b_entrance_txt"
 msgstr ""
 "Projet d'Aménagement : Entrée\n"
@@ -3820,11 +3651,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1607
-msgid "b_entrance_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1618
+#: ../base/ufos/research.ufo:1600
 msgid "b_large_hangar_txt"
 msgstr ""
 "Projet d'Aménagement : Grand Hangar\n"
@@ -3869,11 +3696,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1619
-msgid "b_large_hangar_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1634
+#: ../base/ufos/research.ufo:1616
 msgid "b_hospital_txt"
 msgstr ""
 "Projet d'Aménagement : Hôpital\n"
@@ -3916,11 +3739,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1635
-msgid "b_hospital_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1650
+#: ../base/ufos/research.ufo:1632
 msgid "b_small_hangar_txt"
 msgstr ""
 "Projet d'Aménagement : Petit Hangar\n"
@@ -3965,11 +3784,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1651
-msgid "b_small_hangar_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1666
+#: ../base/ufos/research.ufo:1648
 msgid "b_lab_txt"
 msgstr ""
 "Projet d'Aménagement : Laboratoire\n"
@@ -4014,11 +3829,7 @@ msgstr ""
 "\n"
 "Après consultation des dossiers sur les aménagements de laboratoire PHALANX, il m'a semblé évident que ce projet était en avance sur son temps. Sa conception est toujours d'actualité, et peut être adaptée à nos besoin moyennant seulement quelques modifications mineures."
 
-#: ../base/ufos/research.ufo:1667
-msgid "b_lab_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1682
+#: ../base/ufos/research.ufo:1664
 msgid "b_powerplant_txt"
 msgstr ""
 "Projet d'Aménagement : Générateur de Puissance\n"
@@ -4059,11 +3870,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1683
-msgid "b_powerplant_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1698
+#: ../base/ufos/research.ufo:1680
 msgid "b_quarters_txt"
 msgstr ""
 "Projet d'Aménagement : Quartiers d'Habitation\n"
@@ -4104,11 +3911,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1699
-msgid "b_quarters_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1714
+#: ../base/ufos/research.ufo:1696
 msgid "b_radar_txt"
 msgstr ""
 "Projet d'Aménagement : Radar\n"
@@ -4155,11 +3958,7 @@ msgstr ""
 "\n"
 "Nous ne devons pas considérer les installations radar comme étant un système infaillible de détection des OVNIs. Même en déployant plusieurs installations, notre réseau de couverture n'est pas totalement fiable et nous devrions chercher d'autres moyens d'améliorer notre technologie de détection si nous voulons avoir une chance d'arrêter ces salauds."
 
-#: ../base/ufos/research.ufo:1715
-msgid "b_radar_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1730
+#: ../base/ufos/research.ufo:1712
 msgid "b_storage_txt"
 msgstr ""
 "Projet d'Aménagement : Entrepôt\n"
@@ -4202,11 +4001,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1731
-msgid "b_storage_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1746
+#: ../base/ufos/research.ufo:1728
 msgid "b_teamroom_txt"
 msgstr ""
 "Projet d'Aménagement : Quartiers de Repos\n"
@@ -4247,11 +4042,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1747
-msgid "b_teamroom_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1762
+#: ../base/ufos/research.ufo:1744
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
 "Projet d'Aménagement : Petit Hangar à OVNI\n"
@@ -4292,11 +4083,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1763
-msgid "b_small_ufo_hangar_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1778
+#: ../base/ufos/research.ufo:1760
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
 "Projet d'Aménagement : Grand Hangar à OVNI\n"
@@ -4337,11 +4124,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1779
-msgid "b_large_ufo_hangar_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1794
+#: ../base/ufos/research.ufo:1776
 msgid "b_workshop_txt"
 msgstr ""
 "Projet d'Aménagement : Atelier\n"
@@ -4381,418 +4164,257 @@ msgstr ""
 "Aucun."
 
 #: ../base/ufos/research.ufo:1795
-msgid "b_workshop_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1813
 #, fuzzy
 msgid "dropship_txt"
 msgstr "L'appareil de transport H-92 est le principal transport de troupes pour les unités d'intervention de Phalanx. Propulsé par quatre réacteurs General Electrics HM-5600, ce transport  atteint Mach 1. Les quatre tuyères peuvent être orientées afin que le H-92 puisse attérir et décoller verticalement. Cette capacité est essentielle pour déployer rapidement des troupes à n'importe quel endroit."
 
-#: ../base/ufos/research.ufo:1814
-msgid "dropship_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1828
+#: ../base/ufos/research.ufo:1810
 #, fuzzy
 msgid "interceptor_txt"
 msgstr "Le F-48 est le cheval de bataille de la composante aérienne des forces de Phalanx. Propulsé par deux réacteurs Volkot VO-36, l'appareil atteint la vitesse maximale de Mach 1.4. Ceci est notamment inférieur à la vitesse de nombreux OVNIs, mais la maneuvrabilité du F-48 lui permet de se comparer à n'importe quel de ses adversaires. Comme le transporteur H-92, le F-48 a la capacité de décoller et d'atterir verticalement. Ainsi, les bases Phalanx sont équipées de puits verticaux menant de la surface jusqu'aux hangars souterrains. Ceci étant la meilleure méthode pour garder la base quasiment indétectable."
 
-#: ../base/ufos/research.ufo:1829
-msgid "interceptor_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1843
+#: ../base/ufos/research.ufo:1825
 #, fuzzy
 msgid "saracen_interceptor_txt"
 msgstr "Le F-48 est le cheval de bataille de la composante aérienne des forces de Phalanx. Propulsé par deux réacteurs Volkot VO-36, l'appareil atteint la vitesse maximale de Mach 1.4. Ceci est notamment inférieur à la vitesse de nombreux OVNIs, mais la maneuvrabilité du F-48 lui permet de se comparer à n'importe quel de ses adversaires. Comme le transporteur H-92, le F-48 a la capacité de décoller et d'atterir verticalement. Ainsi, les bases Phalanx sont équipées de puits verticaux menant de la surface jusqu'aux hangars souterrains. Ceci étant la meilleure méthode pour garder la base quasiment indétectable."
 
-#: ../base/ufos/research.ufo:1844
-msgid "saracen_interceptor_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:1878
-msgid "Small alien craft"
-msgstr "Petit vaisseau alien"
-
-#: ../base/ufos/research.ufo:1879
+#: ../base/ufos/research.ufo:1861
 #, fuzzy
 msgid "ufo_scout_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1880
+#: ../base/ufos/research.ufo:1862
 msgid "ufo_scout_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1899
-msgid "Big alien craft"
-msgstr "Large vaisseau alien "
-
-#: ../base/ufos/research.ufo:1900
+#: ../base/ufos/research.ufo:1882
 #, fuzzy
 msgid "ufo_fighter_txt"
 msgstr "Les Vaisseaux de Guerre sont des vaisseaux qui offrent plus de puissance de feu que les croiseurs et transportent presque autant de troupes que les Tranports. Ces vaisseaux sont un danger même isolés et doivent être engagés avec prudence."
 
-#: ../base/ufos/research.ufo:1901
+#: ../base/ufos/research.ufo:1883
 msgid "ufo_fighter_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1920
+#: ../base/ufos/research.ufo:1903
 #, fuzzy
-msgid "Harvester alien craft"
-msgstr "Petit vaisseau alien"
+msgid "UFO - Harvester"
+msgstr "OVNI - Vaisseau de combat"
 
-#: ../base/ufos/research.ufo:1921
+#: ../base/ufos/research.ufo:1904
 #, fuzzy
 msgid "ufo_harvester_txt"
 msgstr "Les Vaisseaux de Guerre sont des vaisseaux qui offrent plus de puissance de feu que les croiseurs et transportent presque autant de troupes que les Tranports. Ces vaisseaux sont un danger même isolés et doivent être engagés avec prudence."
 
-#: ../base/ufos/research.ufo:1922
+#: ../base/ufos/research.ufo:1905
 msgid "ufo_harvester_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1948
-#: ../base/ufos/research.ufo:1968
-msgid "Bloodspider - Combat notes"
-msgstr "Bloodspider - Note de Combat"
+#: ../base/ufos/research.ufo:1932
+msgid "Live Specimen - Bloodspider"
+msgstr "Spécimen Vivant - Araignée sanglante"
 
-#: ../base/ufos/research.ufo:1949
-#: ../base/ufos/research.ufo:1969
+#: ../base/ufos/research.ufo:1933
 #, fuzzy
 msgid "bloodspider_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1950
-#: ../base/ufos/research.ufo:1970
+#: ../base/ufos/research.ufo:1934
 msgid "bloodspider_notes_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1984
-#, fuzzy
-msgid "Bloodspider - Autopsy"
-msgstr "Shevaar - Autopsie"
+#: ../base/ufos/research.ufo:1948
+msgid "Alien Autopsy - Bloodspider"
+msgstr "Autopsie Alienne - Araignée Sanglante"
 
-#: ../base/ufos/research.ufo:1985
+#: ../base/ufos/research.ufo:1949
 #, fuzzy
 msgid "bloodspider_autopsy_txt"
 msgstr "L'impressionnante masse musculaire d'un Shevaar est soutenue par un squelette trappu, donnant à l'espèce sa force terrifiante. Les deux machoires sont fixées sur les énormes clavicules de la créature, les rendant presques aussi large que la créature en elle même et leur donnant une force de broyage phénoménale. Le large museau humide de la bête est en fait son cerveau, couvert par un ensemble dense de senseurs variés. Bien que l'abilité du Shevaar à pourchasser sa proie soit augmentée par cet organe sensitif et cognitif combiné, sont emplacement proéminent et le manque d'os protecteur le rend sensible aux attaques psioniques ainsi qu'offrant un point faible évident en combat rapproché."
 
-#: ../base/ufos/research.ufo:1986
+#: ../base/ufos/research.ufo:1950
 msgid "bloodspider_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2004
-#: ../base/ufos/research.ufo:2025
-msgid "Ortnok - Combat notes"
-msgstr "Ortnok - Notes de Combat"
+#: ../base/ufos/research.ufo:1968
+msgid "Alien Autopsy - Ortnok"
+msgstr "Autopsie Alienne - Ortnok"
 
-#: ../base/ufos/research.ufo:2005
-#: ../base/ufos/research.ufo:2026
-#, fuzzy
-msgid "ortnok_notes_txt"
-msgstr "L'Ortnok, qui a la peau verte, est génétiquement très proche à la race humaine. Environ 80% de leur ADN est identique au notre. Les parties les plus différentes semblent avoir été modifiées génétiquement car elles ne montrent aucune variation entre les différents individus. Le fait qu'ils soient génétiquement modifiés et qu'ils ne possèdent aucun organe reproducteur fonctionnel suggère qu'ils ont été clonés par une espèces Alien inconnue jusqu'à ce jour. De plus les Ortnoks sont dotés de plusieurs implants cybernétiques qui modifient principalement le système cardio-vasculaire, les muscles, les yeux et le cerveau. Ils augmentent la force et la vigueur physique aussi bien que les sens à un niveau supérieur de celui des humains. Le but des implants du cerveau n'est pas clairement définit, et on tend à croire qu'ils servent de récepteurs d'ordres. Mais ce n'est actuellement qu'une hypothèse car aucune preuve ne démontre l'existence de maître d'espèce."
-
-#: ../base/ufos/research.ufo:2006
-#: ../base/ufos/research.ufo:2027
-msgid "ortnok_notes_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2042
-msgid "Ortnok - Autopsy"
-msgstr "Ortnok - Autopsie"
-
-#: ../base/ufos/research.ufo:2043
+#: ../base/ufos/research.ufo:1969
 #, fuzzy
 msgid "ortnok_autopsy_txt"
 msgstr "Leur peau verte est dure et composée d'écailles. L'analyse cellulaire indique une abondance de chlorophylle, la molécule qui rend les plantes vertes. Le système digestif n'apparaît pas comme sous-dimensionné. Nous pouvons ainsi supposer que l'Ortnok peut évoluer dans un environnement où la nourriture se fait rare, et se rabattre alors sur l'énergie solaire quand c'est la dernière option disponible. Les organes reproducteurs de cette espèce sont très actifs, et ils ne cessent seulement de fonctionner que 14 heures après la mort. Les Antareans les utilisent sans limite comme chair à canon dans tous les terrains qu'ils ont décidé de conquérir."
 
-#: ../base/ufos/research.ufo:2044
+#: ../base/ufos/research.ufo:1970
 msgid "ortnok_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2063
-msgid "Ortnok Worker"
-msgstr "Technicien Ortnok"
+#: ../base/ufos/research.ufo:1989
+msgid "Alien Autopsy - Antarean"
+msgstr "Autopsie Alienne - Antarean"
 
-#: ../base/ufos/research.ufo:2064
-#, fuzzy
-msgid "ortnok_light_txt"
-msgstr "Ayant les mêmes attributs génétiques que les autres Ortnoks, les Guerriers Ortnoks ont été considérablement modifiés à l'aide d'implants cybernétiques. Ces implants additionnels tendent évidemment à améliorer les performance en situation de combat. Ainsi les jambes et les bras ont été presque complètement remplacés par des prothèses cybernétiques, ce qui rend leur force physique bien supérieure au potentiel d'un être humain. Les mains en forme de griffe sont faites pour manipuler de lourdes charges. La zone du torse est couverte d'une épaisse plaque en acier qui est quasiment impénétrable pour les munitions standards de fusil. Le masque facial sert de protection contre les gaz dangereux aussi bien qu'à l'augmentation des voies aériennes supérieures, permettant un meilleur fonctionnement des poumons. Le désavantage de cette massive augmentation d'implants est la vulnérabilité accrue aux impulsions électro-magnétiques (EMP)."
-
-#: ../base/ufos/research.ufo:2065
-msgid "ortnok_light_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2082
-msgid "Ortnok Warrior"
-msgstr "Guerrier Ortnok"
-
-#: ../base/ufos/research.ufo:2083
-#, fuzzy
-msgid "ortnok_medium_txt"
-msgstr "Ayant les mêmes attributs génétiques que les autres Ortnoks, les Guerriers Ortnoks ont été considérablement modifiés à l'aide d'implants cybernétiques. Ces implants additionnels tendent évidemment à améliorer les performance en situation de combat. Ainsi les jambes et les bras ont été presque complètement remplacés par des prothèses cybernétiques, ce qui leur confère une force physique bien supérieure au potentiel d'un être humain. Les mains en forme de griffe sont faites pour manipuler de lourdes charges. La zone du torse est couverte d'une épaisse plaque en acier qui est quasiment impénétrable pour les munitions régulières de fusil. Le masque facial sert de protection contre les gaz dangereux aussi bien qu'à l'augmentation des voies aériennes supérieures, permettant un meilleur fonctionnement des poumons. Le désavantage de cette massive augmentation d'implants est la vulnérabilité accrue aux impulsions électro-magnétiques (EMP)."
-
-#: ../base/ufos/research.ufo:2084
-msgid "ortnok_medium_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2101
-msgid "Antarean - Combat notes"
-msgstr "Antarean - Notes de Combat"
-
-#: ../base/ufos/research.ufo:2102
-#, fuzzy
-msgid "antarean_notes_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2103
-msgid "antarean_notes_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2118
-msgid "Antarean - Autopsy"
-msgstr "Antarean - Autopsie"
-
-#: ../base/ufos/research.ufo:2119
+#: ../base/ufos/research.ufo:1990
 #, fuzzy
 msgid "antarean_autopsy_txt"
 msgstr "L'antarean possède un ensemble d'organes internes superficiellement similaires à ceux des humains. Une inspection plus minutieuse montre que le coeur a une structure plus compliquée, intégré de manière plus serrée avec les poumons et connecté à un petit organe similaire à un foie. En stimulant électriquement le coeur d'un antarean, on obtient un battement cardiaque à quatre temps qui prend le sang, l'aère dans les poumons, filtre le sang aéré des toxines et des polluants à travers l'organe additionnel, puis pompe le sang dans le reste du corps. Ce système circulatoire doit grandement contribuer à l'énergie de l'espèce. Les analyses ADN de spécimens de différents rangs révèlent des différences dans les quantités d'ADN parasite portées par chaque spécimen. Les rangs les plus élevés ont visiblement un ADN épuré et il semble qu'il ait été remplacé par de l'ADN contenant des schémas qui tendent vers des schémas mathématiques. Il est possible que cette espèce utilise la manipulation génétique pour transmettre le savoir à ceux qui sont destinés à reigner avant même qu'ils naissent. Des attaques psioniques poussées pourraient donner accès à une telle information."
 
-#: ../base/ufos/research.ufo:2120
+#: ../base/ufos/research.ufo:1991
 msgid "antarean_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2135
-msgid "Antarean - Commander interrogation"
-msgstr "Antarean - Interrogatoire d'un Commandant"
+#: ../base/ufos/research.ufo:2008
+msgid "Alien Autopsy - Shevaar"
+msgstr "Autopsie Alienne - Shevaar"
 
-#: ../base/ufos/research.ufo:2136
-#, fuzzy
-msgid "antarean_interrogation_commander_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2137
-msgid "antarean_interrogation_commander_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2154
-msgid "Shevaar - Combat notes"
-msgstr "Shevaar - Notes de Combat"
-
-#: ../base/ufos/research.ufo:2155
-#, fuzzy
-msgid "shevaar_notes_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2156
-msgid "shevaar_notes_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2171
-msgid "Shevaar - Autopsy"
-msgstr "Shevaar - Autopsie"
-
-#: ../base/ufos/research.ufo:2172
+#: ../base/ufos/research.ufo:2009
 #, fuzzy
 msgid "shevaar_autopsy_txt"
 msgstr "L'impressionnante masse musculaire d'un Shevaar est soutenue par un squelette trappu, donnant à l'espèce sa force terrifiante. Les deux machoires sont fixées sur les énormes clavicules de la créature, les rendant presques aussi large que la créature en elle même et leur donnant une force de broyage phénoménale. Le large museau humide de la bête est en fait son cerveau, couvert par un ensemble dense de senseurs variés. Bien que l'abilité du Shevaar à pourchasser sa proie soit augmentée par cet organe sensitif et cognitif combiné, sont emplacement proéminent et le manque d'os protecteur le rend sensible aux attaques psioniques ainsi qu'offrant un point faible évident en combat rapproché."
 
-#: ../base/ufos/research.ufo:2173
+#: ../base/ufos/research.ufo:2010
 msgid "shevaar_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2190
-msgid "Hovernet - Combat notes"
-msgstr "Hovernet - Note de Combat"
+#: ../base/ufos/research.ufo:2027
+msgid "Live Specimen - Stinger"
+msgstr "Spécimen Vivant - Stinger"
 
-#: ../base/ufos/research.ufo:2191
+#: ../base/ufos/research.ufo:2028
 #, fuzzy
 msgid "hovernet_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2192
+#: ../base/ufos/research.ufo:2029
 msgid "hovernet_notes_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2207
-msgid "Hovernet - wreck research"
-msgstr "Hovernet - Recherche sur l'épave"
+#: ../base/ufos/research.ufo:2044
+msgid "Alien Autopsy - Stinger"
+msgstr "Autopsie Alienne - Stinger"
 
-#: ../base/ufos/research.ufo:2208
+#: ../base/ufos/research.ufo:2045
 #, fuzzy
 msgid "hovernet_autopsy_txt"
 msgstr "Le démêlement du réseau de fibres molles, qui forme au moins 90% du hovernet, révèle un disque solide de fabrication inconnue. Les points de support des armements sont clairement visibles, et bien que les inscriptions situées à côté reste encore indéchiffrables, elles devraient être notre première succès dans la compréhension du langage Alien. Aucun joint n'est visible entre le disque et les douzaines de fibres qui sortent de lui, même sous un microscope électronique. Il est possible que les fibres soient expulsées du disque lui-même, qui doit fournir et distribuer la plus importante part d'énergie et de force de propulsion du hovernet. L'arrangement lâche des fibres suggère qu'un tir au but avec un projectile ou une arme à énergie dirigée est peu efficace, et les armes explosives ou incendiaires doivent causer plus de dégâts."
 
-#: ../base/ufos/research.ufo:2209
+#: ../base/ufos/research.ufo:2046
 msgid "hovernet_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2226
-msgid "Cyborg Ortnok - Combat notes"
-msgstr "Cyborg Ortnok - Notes de Combat"
+#: ../base/ufos/research.ufo:2063
+msgid "Alien Autopsy - Ortnok Cyborg"
+msgstr "Autopsie Alienne - Cyborg Ortnok"
 
-#: ../base/ufos/research.ufo:2227
-#, fuzzy
-msgid "cyborg_ortnok_notes_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2228
-msgid "cyborg_ortnok_notes_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2243
-msgid "Cyborg Ortnok - Autopsy"
-msgstr "Cyborg Ortnok - Autopsie"
-
-#: ../base/ufos/research.ufo:2244
+#: ../base/ufos/research.ufo:2064
 #, fuzzy
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr "La séparation de l'endo-squelette du cyborg de la chair du spécimen produit des étincelles et libère des vapeurs acides et explosives. L'intérieur de l'endo-squelette glisse hors des ouvertures d'accès de la structure d'os artificielle, attaché par des tendons implantés chirurgicalement et qui apparaissent être de nature biomécanique. Il semble que le système digestif et les organes de reproduction aient été enlevés et remplacés par de nombreux petits moteurs enchâssés à l'intérieur de l'endo-squelette. L'énergie créée par la chlorophylle de la peau de l'Ortnok semble démarrer les réactions dans ces micro-moteurs. Le but du programme cyborg d'Antarean est clairement la conversion de l'Ortnok en une machine de guerre biomécanique qui exige une production d'énergie beaucoup plus importante et la suppression de l'instinct reproducteur."
 
-#: ../base/ufos/research.ufo:2245
+#: ../base/ufos/research.ufo:2065
 msgid "cyborg_ortnok_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2265
-msgid "UGV Phoenix"
-msgstr "UGV Phoenix"
+#: ../base/ufos/research.ufo:2085
+#, fuzzy
+msgid "Phoenix UGV"
+msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:2266
+#: ../base/ufos/research.ufo:2086
 #, fuzzy
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2267
+#: ../base/ufos/research.ufo:2087
 msgid "ugv_phoenix_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2281
-msgid "UGV Triax"
-msgstr "UGV Triax"
+#: ../base/ufos/research.ufo:2101
+#, fuzzy
+msgid "Triax UGV"
+msgstr "Triax UGV"
 
-#: ../base/ufos/research.ufo:2282
+#: ../base/ufos/research.ufo:2102
 #, fuzzy
 msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2283
+#: ../base/ufos/research.ufo:2103
 msgid "ugv_triax_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2301
-msgid "Light Shield"
-msgstr "Armure légère"
+#: ../base/ufos/research.ufo:2121
+msgid "Raven ECM Unit"
+msgstr "Unité Raven ECM"
 
-#: ../base/ufos/research.ufo:2302
-msgid "craft_shield_light_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2303
+#: ../base/ufos/research.ufo:2123
+#: ../base/ufos/research.ufo:2139
 #, fuzzy
 msgid "craft_shield_light_txt"
 msgstr "craft_shield_light_txt"
 
-#: ../base/ufos/research.ufo:2317
-msgid "Medium Shield"
-msgstr "Armure moyenne"
+#: ../base/ufos/research.ufo:2137
+msgid "Polymer Aircraft Armour"
+msgstr "Armure Polymère pour Appareils"
 
-#: ../base/ufos/research.ufo:2318
-msgid "craft_shield_medium_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2319
-#, fuzzy
-msgid "craft_shield_medium_txt"
-msgstr "craft_shield_medium_txt"
-
-#: ../base/ufos/research.ufo:2337
-msgid "Hard Shield"
-msgstr "Armure lourde"
-
-#: ../base/ufos/research.ufo:2338
-msgid "craft_shield_hard_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2339
-#, fuzzy
-msgid "craft_shield_hard_txt"
-msgstr "craft_shield_hard_txt"
-
-#: ../base/ufos/research.ufo:2357
+#: ../base/ufos/research.ufo:2153
 msgid "SHIVA Rotary Cannon"
 msgstr "Canon Rotatif SHIVA"
 
-#: ../base/ufos/research.ufo:2358
-msgid "craft_weapon_flac_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2359
+#: ../base/ufos/research.ufo:2155
 #, fuzzy
 msgid "craft_weapon_flac_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2373
+#: ../base/ufos/research.ufo:2169
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Lance-missiles Sparrowhawk AA"
 
-#: ../base/ufos/research.ufo:2374
-msgid "craft_weapon_sparrowhawk_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2375
+#: ../base/ufos/research.ufo:2171
 #, fuzzy
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2389
+#: ../base/ufos/research.ufo:2185
 msgid "TR-20 Rocket Pod"
 msgstr "Lance_roquettes TR-20"
 
-#: ../base/ufos/research.ufo:2390
-msgid "craft_weapon_tr20_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2391
+#: ../base/ufos/research.ufo:2187
 #, fuzzy
 msgid "craft_weapon_tr20_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2405
+#: ../base/ufos/research.ufo:2201
 msgid "Particle Beam Weapon"
 msgstr "Arme à Faisceau de Particules"
 
-#: ../base/ufos/research.ufo:2406
-msgid "craft_weapon_particle_beam_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2407
+#: ../base/ufos/research.ufo:2203
 #, fuzzy
 msgid "craft_weapon_particle_beam_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2424
-msgid "Political situation before the invasion"
-msgstr "Situation politique avant l'invasion"
+#: ../base/ufos/research.ufo:2220
+msgid "Political Situation Before The Invasion"
+msgstr "Situation Politique Avant l'Invasion"
 
-#: ../base/ufos/research.ufo:2425
+#: ../base/ufos/research.ufo:2221
 #, fuzzy
 msgid "news_initial_political_situation_txt"
 msgstr "news_initial_political_situation_txt"
 
-#: ../base/ufos/research.ufo:2435
-msgid "After the war"
-msgstr "Après la guerre"
+#: ../base/ufos/research.ufo:2231
+msgid "After The War"
+msgstr "Après La Guerre"
 
-#: ../base/ufos/research.ufo:2436
+#: ../base/ufos/research.ufo:2232
 #, fuzzy
 msgid "news_after_the_war_txt"
 msgstr "craft_shield_hard_txt"
 
-#: ../base/ufos/research.ufo:2446
+#: ../base/ufos/research.ufo:2242
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "Les conséquences de Mumbai et PHALANX"
 
-#: ../base/ufos/research.ufo:2447
+#: ../base/ufos/research.ufo:2243
 #, fuzzy
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr "news_phalanx_and_mumbai_aftermath_txt"
@@ -5292,8 +4914,8 @@ msgstr "Chargeur de Fusil de Précision"
 #: ../base/ufos/weapons_human.ufo:859
 #: ../base/ufos/weapons_human.ufo:895
 #: ../base/ufos/weapons_human.ufo:917
-#: ../base/ufos/weapons_human.ufo:953
-#: ../base/ufos/weapons_human.ufo:975
+#: ../base/ufos/weapons_human.ufo:954
+#: ../base/ufos/weapons_human.ufo:976
 msgid "Aimed Shot"
 msgstr "Tir Visé"
 
@@ -5324,7 +4946,7 @@ msgstr "Chargeur de PA 4.2mm"
 #: ../base/ufos/weapons_human.ufo:554
 #: ../base/ufos/weapons_human.ufo:609
 #: ../base/ufos/weapons_human.ufo:685
-#: ../base/ufos/weapons_human.ufo:1323
+#: ../base/ufos/weapons_human.ufo:1324
 msgid "Single Shot"
 msgstr "Tir Simple"
 
@@ -5397,53 +5019,53 @@ msgstr "Roquette Explosive"
 msgid "Incendiary Rocket"
 msgstr "Roquette incendiaire"
 
-#: ../base/ufos/weapons_human.ufo:941
+#: ../base/ufos/weapons_human.ufo:942
 msgid "Tachyon-Beam Rocket"
 msgstr "Roquette à Rayons Tachyons"
 
-#: ../base/ufos/weapons_human.ufo:1003
+#: ../base/ufos/weapons_human.ufo:1004
 msgid "Grenade Launcher"
 msgstr "Lance-Grenades"
 
-#: ../base/ufos/weapons_human.ufo:1021
+#: ../base/ufos/weapons_human.ufo:1022
 msgid "25mm IC Grenades"
 msgstr "Grenades IC 25mm"
 
-#: ../base/ufos/weapons_human.ufo:1033
-#: ../base/ufos/weapons_human.ufo:1100
-#: ../base/ufos/weapons_human.ufo:1167
-#: ../base/ufos/weapons_human.ufo:1234
+#: ../base/ufos/weapons_human.ufo:1034
+#: ../base/ufos/weapons_human.ufo:1101
+#: ../base/ufos/weapons_human.ufo:1168
+#: ../base/ufos/weapons_human.ufo:1235
 msgid "Airburst Grenade"
 msgstr "Expl. aérienne"
 
-#: ../base/ufos/weapons_human.ufo:1059
-#: ../base/ufos/weapons_human.ufo:1126
-#: ../base/ufos/weapons_human.ufo:1193
-#: ../base/ufos/weapons_human.ufo:1260
+#: ../base/ufos/weapons_human.ufo:1060
+#: ../base/ufos/weapons_human.ufo:1127
+#: ../base/ufos/weapons_human.ufo:1194
+#: ../base/ufos/weapons_human.ufo:1261
 msgid "Timed Grenade"
 msgstr "Expl. retardée"
 
-#: ../base/ufos/weapons_human.ufo:1088
+#: ../base/ufos/weapons_human.ufo:1089
 msgid "25mm Flechette Grenades"
 msgstr "Grenades à Fléchettes 25mm"
 
-#: ../base/ufos/weapons_human.ufo:1155
+#: ../base/ufos/weapons_human.ufo:1156
 msgid "25mm HIT Grenades"
 msgstr "Grenades ST 25mm"
 
-#: ../base/ufos/weapons_human.ufo:1222
+#: ../base/ufos/weapons_human.ufo:1223
 msgid "Plasma Grenade Shells"
 msgstr "Grenade à Plasma"
 
-#: ../base/ufos/weapons_human.ufo:1293
+#: ../base/ufos/weapons_human.ufo:1294
 msgid "Bolter Rifle"
 msgstr "Fusil EM"
 
-#: ../base/ufos/weapons_human.ufo:1311
+#: ../base/ufos/weapons_human.ufo:1312
 msgid "Bolter Rifle Clip"
 msgstr "Chargeur de Fusil EM"
 
-#: ../base/ufos/weapons_human.ufo:1342
+#: ../base/ufos/weapons_human.ufo:1343
 msgid "Cannonade"
 msgstr "Mitraillage"
 
@@ -6304,25 +5926,87 @@ msgstr "Soins terminés"
 msgid "%s\t%s\t(%i/%i)\n"
 msgstr "%s\t%s\t(%i/%i)\n"
 
-#: client/cl_input.c:742
+#: client/cl_input.c:729
+msgid "Rotate battlescape camera anti-clockwise"
+msgstr "Tourner la vue dans le sens anti-horaire"
+
+#: client/cl_input.c:731
+msgid "Rotate battlescape camera clockwise"
+msgstr "Tourner la vue dans le sens horaire"
+
+#: client/cl_input.c:733
+msgid "Tilt battlescape camera up"
+msgstr "Tourner la caméra vers le haut"
+
+#: client/cl_input.c:735
+msgid "Tilt battlescape camera down"
+msgstr "Tourner la caméra vers le bas"
+
+#: client/cl_input.c:737
+msgid "Move battlescape camera left"
+msgstr "Déplacer la caméra vers la gauche"
+
+#: client/cl_input.c:741
+msgid "Move battlescape camera forward"
+msgstr "Déplacer la caméra vers l'avant"
+
+#: client/cl_input.c:743
+msgid "Move batlescape camera backward"
+msgstr "Déplacer la caméra vers l'arrière"
+
+#: client/cl_input.c:745
+#: client/cl_input.c:770
+msgid "Zoom in"
+msgstr "Zoomer"
+
+#: client/cl_input.c:747
+#: client/cl_input.c:771
+msgid "Zoom out"
+msgstr "dézoomer"
+
+#: client/cl_input.c:752
+msgid "Select objects/Walk to a square/In fire mode, fire etc"
+msgstr "Sélectionner un objet/Marcher jusqu'à une case/Tirer en mode tir, etc"
+
+#: client/cl_input.c:754
+msgid "Walk to a square/In fire mode, cancel action"
+msgstr "Marcher jusqu'à un carré/ Annuler le tir en mode tir"
+
+#: client/cl_input.c:756
+msgid "Turn soldier toward mouse pointer"
+msgstr "Tourner un soldat vers le curseur de la souris"
+
+#: client/cl_input.c:758
 msgid "Toggle stand/crounch"
 msgstr "Se relever/s'accroupir"
 
-#: client/cl_input.c:743
+#: client/cl_input.c:759
 msgid "Toggle reaction fire"
 msgstr "Activer/désactiver le tir de réaction"
 
-#: client/cl_input.c:744
+#: client/cl_input.c:760
 msgid "Toogle to next alien"
 msgstr "Passer à l'alien suivant"
 
-#: client/cl_input.c:751
+#: client/cl_input.c:767
 msgid "Ends current round"
 msgstr "Termine le tour"
 
-#: client/cl_input.c:756
+#: client/cl_input.c:768
+msgid "Slice through terrain at a higher level"
+msgstr "Voit à travers le terrain vers un niveau plus élevé"
+
+#: client/cl_input.c:769
+msgid "Slice through terrain at a lower level"
+msgstr "Voit à travers le terrain vers un niveau plus bas"
+
+#: client/cl_input.c:772
 msgid "Confirm the current action"
 msgstr "Confirmer l'action"
+
+#: client/cl_input.c:780
+msgid "Toggle first-person/third-person camera mode"
+msgstr "Bascule la caméra en mode première/troisième personne"
 
 #: client/cl_main.c:338
 #: client/cl_main.c:695
@@ -6388,35 +6072,35 @@ msgstr "Max. soldats par joueur:\t%s\n"
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldats par équipe:\t%s\n"
 
-#: client/cl_main.c:1266
+#: client/cl_main.c:1270
 msgid "Unnamed"
 msgstr "Pas de Nom"
 
-#: client/cl_main.c:1483
+#: client/cl_main.c:1487
 msgid "Chicken-hearted"
 msgstr "Poule mouillée"
 
-#: client/cl_main.c:1485
+#: client/cl_main.c:1489
 msgid "Very Easy"
 msgstr "Très facile"
 
-#: client/cl_main.c:1488
+#: client/cl_main.c:1492
 msgid "Easy"
 msgstr "Facile"
 
-#: client/cl_main.c:1490
+#: client/cl_main.c:1494
 msgid "Normal"
 msgstr "Normale"
 
-#: client/cl_main.c:1493
+#: client/cl_main.c:1497
 msgid "Hard"
 msgstr "Difficile"
 
-#: client/cl_main.c:1495
+#: client/cl_main.c:1499
 msgid "Very Hard"
 msgstr "Très difficile"
 
-#: client/cl_main.c:1497
+#: client/cl_main.c:1501
 msgid "Insane"
 msgstr "Démentielle"
 
@@ -6507,6 +6191,10 @@ msgstr "Les réglages ne sont pas cohérents"
 #, c-format
 msgid "Key: %s"
 msgstr "Touche: %s"
+
+#: client/cl_menu.c:2471
+msgid "Hide the HUD (press ESC to reactivate HUD)"
+msgstr "Cacher le HUD (Appuyer sur ESC pour réactiver le HUD)"
 
 #: client/cl_parse.c:685
 msgid "Alien spotted!\n"
@@ -7062,6 +6750,18 @@ msgstr "chargement %s"
 msgid "loading models..."
 msgstr "chargement des modèles..."
 
+#: client/console.c:361
+msgid "Bring up the in-game console"
+msgstr "Afficher la console interne au jeu"
+
+#: client/console.c:363
+msgid "Send a message to all players"
+msgstr "Envoyer un message à tous les joueurs"
+
+#: client/console.c:364
+msgid "Send a message to allied team members"
+msgstr "Envoyer un message aux membres des équipes alliées"
+
 #: game/g_client.c:586
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Ne peut faire l'action - ce n'est pas votre tour!\n"
@@ -7130,6 +6830,431 @@ msgstr "Oui"
 #: po/OTHER_STRINGS:3
 msgid "No"
 msgstr "Non"
+
+#~ msgid "News"
+#~ msgstr "Actualités"
+#~ msgid "Technologies & Discoveries"
+#~ msgstr "Technologies & Découvertes"
+#~ msgid "Weapons"
+#~ msgstr "Armes"
+#~ msgid "Armors"
+#~ msgstr "Protections"
+#~ msgid "Alien Species"
+#~ msgstr "Espèces Aliennes"
+#~ msgid "UFOs"
+#~ msgstr "OVNIs"
+#~ msgid "UGVs"
+#~ msgstr "UGVs"
+#~ msgid "Advanced Plasma Control"
+#~ msgstr "Maîtrise Avancée du Plasma"
+
+#, fuzzy
+#~ msgid "plasma_txt"
+#~ msgstr ""
+#~ "Les Antariens ont rafiné la technologie afin d'utiliser le concept de "
+#~ "base du plasma (un gaz ionisé) et l'ont amlioré dans un but militaire. "
+#~ "Ils l'utilisent non seulement pour des armes, mais ils ont même réussi à "
+#~ "produire des propulseurs à ions plus puissants que ce qu'on croyait "
+#~ "possible. Vos scientifiques pourraient reproduire le concept de base "
+#~ "derrière ces améliorations et nous serons probablement capable de "
+#~ "produire des équipements similaires d'ici peu."
+#~ msgid "plasma_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Tachyon Control"
+#~ msgstr "Maîtrise du Tachyon"
+
+#, fuzzy
+#~ msgid "tachyon_txt"
+#~ msgstr ""
+#~ "La recherche sur les tachyons (ou tardyons, la variété qui se déplace "
+#~ "moins vite que la lumière) a longtemps été un domaine laissé blanc dans "
+#~ "la Science. L'espèce antarienne a non seulement trouvé comment les "
+#~ "tachyons se placent par rapport au reste de la matière, mais aussi un "
+#~ "moyen de les créer, manipuler et détruire à volonté. Le projectile en lui "
+#~ "même ne se déplace pas à une vitesse proche de celle de la lumière, mais "
+#~ "lors de l'impact l'énergie se transmet à la cible à une vitesse qui "
+#~ "dépasse toutes les limites connues de l'Homme. Ce savoir a été utilisé "
+#~ "pour créer des armes dévastatrices qu'ils utilisent pour terroriser "
+#~ "l'Homme. Nos scientifiques croient que nous serons capables de reproduire "
+#~ "ces armes lorsques nous aurons plus de détails."
+#~ msgid "tachyon_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Nano Technology"
+#~ msgstr "Nano Technologie"
+#~ msgid "assault_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "assault_mag_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+
+#, fuzzy
+#~ msgid "bolterrifle_mag_txt"
+#~ msgstr ""
+#~ "Le fusil électro-magnétique MkII propulse un projectile ferreux à très "
+#~ "haute vélocité. Le projectile est plus gros que la munition standard "
+#~ "utilisée par le fusil d'assaut AR-80, et à une vitesse supersonique, il "
+#~ "est capable de produire des dégats significatifs à toute cible assez "
+#~ "infortunée pour être sur le ligne de tir. Le fusil EM n'a pas de partie "
+#~ "mobile et est ainsi silencieux, mis à part le son produit par le "
+#~ "projectile lors du passage du mur du son. La munition étant plus "
+#~ "volumineuse, la capacité d'emport s'en trouve réduite. De plus, le temps "
+#~ "de rechargement entre chaque coup rend le tir automatique quasiment "
+#~ "impossible, mais permet tout de même à l'utilisateur de tirer plusieurs "
+#~ "fois."
+#~ msgid "bolterrifle_mag_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "combatknife_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "flamer_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "flamer_mag_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "flashbang_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "fraggren_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "incgren_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "grenl_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "grenl_ammo_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "grenl_fle_ammo_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "grenl_incendiary_ammo_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "irgoggles_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "medikit_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "pistol_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "pistol_mag_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "pistol2_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "pistol2_mag_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+
+#, fuzzy
+#~ msgid "plasatomizer_mag_txt"
+#~ msgstr ""
+#~ "Le Fusil à Plasma est l'arme la plus souvent employée par... les "
+#~ "guerriers. Le plasma projeté par cette arme passe facilement au travers "
+#~ "de la plupart des matériaux connus. Par conséquent le gilet standard "
+#~ "Phalanx en kevlar n'assure qu'une protection limitée. Les soldats touchés "
+#~ "par le rayon d'un Fusil à Plasma souffrent de graves brûlures qui sont, "
+#~ "dans la plupart des cas, instantanément mortelles. Le plasma, constitué "
+#~ "de gaz xénon fortement énergique surchauffé, est stocké à l'intérieur "
+#~ "d'un intense champ magnétique intégré dans le chargeur de l'arme. Lorsque "
+#~ "le mécanisme est activé, le champ magnétique est modifié de sorte qu'un "
+#~ "rayon continu de plasma soit formé. Ce faisceau est focalisé par un "
+#~ "deuxième champ magnétique puis est finalement expulsé à l'embout avant du "
+#~ "Fusil à Plasma. "
+#~ msgid "plasatomizer_mag_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+
+#, fuzzy
+#~ msgid "plasblaster_mag_txt"
+#~ msgstr ""
+#~ "Le Fusil à Plasma est l'arme la plus souvent employée par... les "
+#~ "guerriers. Le plasma projeté par cette arme passe facilement au travers "
+#~ "de la plupart des matériaux connus. Par conséquent le gilet standard "
+#~ "Phalanx en kevlar n'assure qu'une protection limitée. Les soldats touchés "
+#~ "par le rayon d'un Fusil à Plasma souffrent de graves brûlures qui sont, "
+#~ "dans la plupart des cas, instantanément mortelles. Le plasma, constitué "
+#~ "de gaz xénon fortement énergique surchauffé, est stocké à l'intérieur "
+#~ "d'un intense champ magnétique intégré dans le chargeur de l'arme. Lorsque "
+#~ "le mécanisme est activé, le champ magnétique est modifié de sorte qu'un "
+#~ "rayon continu de plasma soit formé. Ce faisceau est focalisé par un "
+#~ "deuxième champ magnétique puis est finalement expulsé à l'embout avant du "
+#~ "Fusil à Plasma. "
+#~ msgid "plasblaster_mag_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+
+#, fuzzy
+#~ msgid "plasrifle_mag_txt"
+#~ msgstr ""
+#~ "Le Fusil à Plasma est l'arme la plus souvent employée par... les "
+#~ "guerriers. Le plasma projeté par cette arme passe facilement au travers "
+#~ "de la plupart des matériaux connus. Par conséquent le gilet standard "
+#~ "Phalanx en kevlar n'assure qu'une protection limitée. Les soldats touchés "
+#~ "par le rayon d'un Fusil à Plasma souffrent de graves brûlures qui sont, "
+#~ "dans la plupart des cas, instantanément mortelles. Le plasma, constitué "
+#~ "de gaz xénon fortement énergique surchauffé, est stocké à l'intérieur "
+#~ "d'un intense champ magnétique intégré dans le chargeur de l'arme. Lorsque "
+#~ "le mécanisme est activé, le champ magnétique est modifié de sorte qu'un "
+#~ "rayon continu de plasma soit formé. Ce faisceau est focalisé par un "
+#~ "deuxième champ magnétique puis est finalement expulsé à l'embout avant du "
+#~ "Fusil à Plasma. "
+#~ msgid "plasrifle_mag_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "rpg_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "rpg_ammo_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "rpg_incendiary_ammo_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+
+#, fuzzy
+#~ msgid "rpg_tachyon_ammo_txt"
+#~ msgstr ""
+#~ "La capacité de lancer des obus explosifs anti-blindage conçus pour la "
+#~ "neutralisation de véhicules et la destruction et, ultérieurement, son "
+#~ "adaptation à d'autres roquettes spécialisées, font du RPG-37 une arme "
+#~ "très polyvalente. Les moteurs modernes à carburant liquide rendent ses "
+#~ "obus capables d'opérer sur de formidables distances. Le seul sérieux "
+#~ "point noir de cette arme est son temps de rechargement. La plus évoluée "
+#~ "de toutes les roquettes, la Roquette à Rayons-Tachyons a un rayon "
+#~ "d'impact légèrement plus réduit que celui d'une Grande Roquette "
+#~ "Explosive. Après avoir atteint sa cible, l'ogive rayonne de particules "
+#~ "tachyon dans toutes les directions et est désintégrée par les radiations."
+#~ msgid "rpg_tachyon_ammo_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "shotgun_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "shotgun_ammo_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "shotgun_slug_ammo_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "shotgun2_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "shotgun2_ammo_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "shotgun_micro_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+
+#, fuzzy
+#~ msgid "shotgun_micro_ammo_txt"
+#~ msgstr ""
+#~ "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un "
+#~ "certain temps. Comparé aux autres fusils à pompe traditionnellement "
+#~ "utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de "
+#~ "mieux orienter les projectiles à la sortie du canon. La porte effective "
+#~ "de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable "
+#~ "non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon "
+#~ "choix pour le combat urbain, notamment pour nettoyer un immeuble. Son "
+#~ "avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le "
+#~ "rendant plus efficace contre les cibles renforcées."
+#~ msgid "shotgun_micro_ammo_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "smg_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "smg_mag_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "smokegren_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "sniper_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "sniper_mag_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "combat_armor_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+
+#, fuzzy
+#~ msgid "nano_armor_txt"
+#~ msgstr ""
+#~ "Une armure plus résistante offrant une protection décente contre presque "
+#~ "tous les types de dommage, et qui est généralement plus durable qu'une "
+#~ "armure en kevlar. Les nano-matériaux sont très résistants, mais leurs "
+#~ "couches externes fondent facilement au contact du plasma. Les anneaux de "
+#~ "fullerine sont actuellement plus légers que du kevlar, et le tissu est "
+#~ "plus mince que ceux du gilet en kevlar, mais l'armure couvre presque tout "
+#~ "le corps des soldats et pèse ainsi peu un plus. Les soldats faibles "
+#~ "doivent être cependant capable d'en porter une sans problème."
+#~ msgid "nano_armor_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_aliencontainment_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_command_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_entrance_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_large_hangar_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_hospital_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_small_hangar_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_lab_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_powerplant_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_quarters_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_radar_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_storage_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_teamroom_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_small_ufo_hangar_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_large_ufo_hangar_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "b_workshop_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "dropship_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "interceptor_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "saracen_interceptor_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Small alien craft"
+#~ msgstr "Petit vaisseau alien"
+#~ msgid "Big alien craft"
+#~ msgstr "Large vaisseau alien "
+
+#, fuzzy
+#~ msgid "Harvester alien craft"
+#~ msgstr "Petit vaisseau alien"
+#~ msgid "Bloodspider - Combat notes"
+#~ msgstr "Bloodspider - Note de Combat"
+
+#, fuzzy
+#~ msgid "Bloodspider - Autopsy"
+#~ msgstr "Shevaar - Autopsie"
+#~ msgid "Ortnok - Combat notes"
+#~ msgstr "Ortnok - Notes de Combat"
+
+#, fuzzy
+#~ msgid "ortnok_notes_txt"
+#~ msgstr ""
+#~ "L'Ortnok, qui a la peau verte, est génétiquement très proche à la race "
+#~ "humaine. Environ 80% de leur ADN est identique au notre. Les parties les "
+#~ "plus différentes semblent avoir été modifiées génétiquement car elles ne "
+#~ "montrent aucune variation entre les différents individus. Le fait qu'ils "
+#~ "soient génétiquement modifiés et qu'ils ne possèdent aucun organe "
+#~ "reproducteur fonctionnel suggère qu'ils ont été clonés par une espèces "
+#~ "Alien inconnue jusqu'à ce jour. De plus les Ortnoks sont dotés de "
+#~ "plusieurs implants cybernétiques qui modifient principalement le système "
+#~ "cardio-vasculaire, les muscles, les yeux et le cerveau. Ils augmentent la "
+#~ "force et la vigueur physique aussi bien que les sens à un niveau "
+#~ "supérieur de celui des humains. Le but des implants du cerveau n'est pas "
+#~ "clairement définit, et on tend à croire qu'ils servent de récepteurs "
+#~ "d'ordres. Mais ce n'est actuellement qu'une hypothèse car aucune preuve "
+#~ "ne démontre l'existence de maître d'espèce."
+#~ msgid "ortnok_notes_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Ortnok - Autopsy"
+#~ msgstr "Ortnok - Autopsie"
+#~ msgid "Ortnok Worker"
+#~ msgstr "Technicien Ortnok"
+
+#, fuzzy
+#~ msgid "ortnok_light_txt"
+#~ msgstr ""
+#~ "Ayant les mêmes attributs génétiques que les autres Ortnoks, les "
+#~ "Guerriers Ortnoks ont été considérablement modifiés à l'aide d'implants "
+#~ "cybernétiques. Ces implants additionnels tendent évidemment à améliorer "
+#~ "les performance en situation de combat. Ainsi les jambes et les bras ont "
+#~ "été presque complètement remplacés par des prothèses cybernétiques, ce "
+#~ "qui rend leur force physique bien supérieure au potentiel d'un être "
+#~ "humain. Les mains en forme de griffe sont faites pour manipuler de "
+#~ "lourdes charges. La zone du torse est couverte d'une épaisse plaque en "
+#~ "acier qui est quasiment impénétrable pour les munitions standards de "
+#~ "fusil. Le masque facial sert de protection contre les gaz dangereux aussi "
+#~ "bien qu'à l'augmentation des voies aériennes supérieures, permettant un "
+#~ "meilleur fonctionnement des poumons. Le désavantage de cette massive "
+#~ "augmentation d'implants est la vulnérabilité accrue aux impulsions "
+#~ "électro-magnétiques (EMP)."
+#~ msgid "ortnok_light_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Ortnok Warrior"
+#~ msgstr "Guerrier Ortnok"
+
+#, fuzzy
+#~ msgid "ortnok_medium_txt"
+#~ msgstr ""
+#~ "Ayant les mêmes attributs génétiques que les autres Ortnoks, les "
+#~ "Guerriers Ortnoks ont été considérablement modifiés à l'aide d'implants "
+#~ "cybernétiques. Ces implants additionnels tendent évidemment à améliorer "
+#~ "les performance en situation de combat. Ainsi les jambes et les bras ont "
+#~ "été presque complètement remplacés par des prothèses cybernétiques, ce "
+#~ "qui leur confère une force physique bien supérieure au potentiel d'un "
+#~ "être humain. Les mains en forme de griffe sont faites pour manipuler de "
+#~ "lourdes charges. La zone du torse est couverte d'une épaisse plaque en "
+#~ "acier qui est quasiment impénétrable pour les munitions régulières de "
+#~ "fusil. Le masque facial sert de protection contre les gaz dangereux aussi "
+#~ "bien qu'à l'augmentation des voies aériennes supérieures, permettant un "
+#~ "meilleur fonctionnement des poumons. Le désavantage de cette massive "
+#~ "augmentation d'implants est la vulnérabilité accrue aux impulsions "
+#~ "électro-magnétiques (EMP)."
+#~ msgid "ortnok_medium_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Antarean - Combat notes"
+#~ msgstr "Antarean - Notes de Combat"
+
+#, fuzzy
+#~ msgid "antarean_notes_txt"
+#~ msgstr "<TODO>"
+#~ msgid "antarean_notes_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Antarean - Autopsy"
+#~ msgstr "Antarean - Autopsie"
+#~ msgid "Antarean - Commander interrogation"
+#~ msgstr "Antarean - Interrogatoire d'un Commandant"
+
+#, fuzzy
+#~ msgid "antarean_interrogation_commander_txt"
+#~ msgstr "<TODO>"
+#~ msgid "antarean_interrogation_commander_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Shevaar - Combat notes"
+#~ msgstr "Shevaar - Notes de Combat"
+
+#, fuzzy
+#~ msgid "shevaar_notes_txt"
+#~ msgstr "<TODO>"
+#~ msgid "shevaar_notes_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Shevaar - Autopsy"
+#~ msgstr "Shevaar - Autopsie"
+#~ msgid "Hovernet - Combat notes"
+#~ msgstr "Hovernet - Note de Combat"
+#~ msgid "Hovernet - wreck research"
+#~ msgstr "Hovernet - Recherche sur l'épave"
+#~ msgid "Cyborg Ortnok - Combat notes"
+#~ msgstr "Cyborg Ortnok - Notes de Combat"
+
+#, fuzzy
+#~ msgid "cyborg_ortnok_notes_txt"
+#~ msgstr "<TODO>"
+#~ msgid "cyborg_ortnok_notes_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Cyborg Ortnok - Autopsy"
+#~ msgstr "Cyborg Ortnok - Autopsie"
+#~ msgid "UGV Phoenix"
+#~ msgstr "UGV Phoenix"
+#~ msgid "UGV Triax"
+#~ msgstr "UGV Triax"
+#~ msgid "Light Shield"
+#~ msgstr "Armure légère"
+#~ msgid "craft_shield_light_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Medium Shield"
+#~ msgstr "Armure moyenne"
+#~ msgid "craft_shield_medium_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+
+#, fuzzy
+#~ msgid "craft_shield_medium_txt"
+#~ msgstr "craft_shield_medium_txt"
+#~ msgid "Hard Shield"
+#~ msgstr "Armure lourde"
+#~ msgid "craft_shield_hard_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+
+#, fuzzy
+#~ msgid "craft_shield_hard_txt"
+#~ msgstr "craft_shield_hard_txt"
+#~ msgid "craft_weapon_flac_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "craft_weapon_sparrowhawk_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "craft_weapon_tr20_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "craft_weapon_particle_beam_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #, fuzzy
 #~ msgid "Machine Pistol Clip"

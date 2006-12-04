@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-02 15:38+0100\n"
-"PO-Revision-Date: 2006-12-03 18:39+0100\n"
+"POT-Creation-Date: 2006-12-04 21:45+0100\n"
+"PO-Revision-Date: 2006-12-04 22:54+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -167,10 +167,12 @@ msgid "Saracen-class Interceptor"
 msgstr "Saracen-class Interceptor"
 
 #: ../base/ufos/basemanagement.ufo:386
+#: ../base/ufos/research.ufo:1860
 msgid "UFO - Scout"
 msgstr "UFO - Scout"
 
 #: ../base/ufos/basemanagement.ufo:400
+#: ../base/ufos/research.ufo:1881
 msgid "UFO - Fighter"
 msgstr "UFO - Fighter"
 
@@ -518,7 +520,6 @@ msgid "Build base-facilities"
 msgstr "Build base-facilities"
 
 #: ../base/ufos/menu_bases.ufo:98
-#: ../base/ufos/research.ufo:70
 msgid "Buildings"
 msgstr "Buildings"
 
@@ -2243,82 +2244,46 @@ msgid "The Commonwealth of Oceania"
 msgstr "The Commonwealth of Oceania"
 
 #: ../base/ufos/research.ufo:63
-msgid "News"
-msgstr "News"
+msgid "Background"
+msgstr "Background"
 
 #: ../base/ufos/research.ufo:65
-msgid "Technologies & Discoveries"
-msgstr "Technologies & Discoveries"
+msgid "Base Facilities"
+msgstr "Base Facilities"
 
 #: ../base/ufos/research.ufo:66
-msgid "Weapons"
-msgstr "Weapons"
+msgid "Research Reports"
+msgstr "Research Reports"
 
 #: ../base/ufos/research.ufo:67
-msgid "Armors"
-msgstr "Armors"
+msgid "Equipment"
+msgstr "Equipment"
 
-#: ../base/ufos/research.ufo:71
-msgid "Alien Species"
-msgstr "Alien Species"
+#: ../base/ufos/research.ufo:68
+msgid "Alien Artifacts"
+msgstr "Alien Artifacts"
 
-#: ../base/ufos/research.ufo:72
-msgid "UFOs"
-msgstr "UFOs"
+#: ../base/ufos/research.ufo:69
+msgid "Autopsies & Observation"
+msgstr "Autopsies & Observation"
 
-#: ../base/ufos/research.ufo:73
-msgid "UGVs"
-msgstr "UGVs"
+#: ../base/ufos/research.ufo:70
+msgid "The Alien Threat"
+msgstr "The Alien Threat"
 
-#: ../base/ufos/research.ufo:83
+#: ../base/ufos/research.ufo:80
 msgid "Advanced Laser Technology"
 msgstr "Advanced Laser Technology"
 
-#: ../base/ufos/research.ufo:85
+#: ../base/ufos/research.ufo:82
 msgid "laser_txt"
 msgstr "Laser (Light Amplification by Stimulated Emission of Radiation) technology is long known by mankind, but so-called Tactical High-Energy Laser or THEL have only been around for a short period of time. Although a mobile variant called Mobile Tactical High-Energy Laser (MTHEL) already exists, such systems are too large and inefficient to have any real advantages over conventional weapons. The basic design of these weapons involves a chemical laser (in this case, a deuterium fluoride laser), which our scientists found out how to make significantly more efficient and compact. This may lead to new lightweight MTHEL weapons in the near future. "
 
-#: ../base/ufos/research.ufo:86
+#: ../base/ufos/research.ufo:83
 msgid "laser_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:97
-msgid "Advanced Plasma Control"
-msgstr "Advanced Plasma Control"
-
-#: ../base/ufos/research.ufo:99
-msgid "plasma_txt"
-msgstr "The Antareans have refined the technology to use the basic concept behind plasma (ionized gas) and perfected its use for military reasons. Not only do they use it for weapons, but they even managed to produce more powerful ion drives than mankind ever imagined possible. Your scientists could reproduce the basic concepts behind these improvements and we might even be able to produce similar equipment at some point in the near future."
-
-#: ../base/ufos/research.ufo:100
-msgid "plasma_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:116
-msgid "Tachyon Control"
-msgstr "Tachyon Control"
-
-#: ../base/ufos/research.ufo:118
-msgid "tachyon_txt"
-msgstr "Although our engineers not fully understand the principles of altering the tachyons on a subatomic level, they were able to reproduce the tachyon accelerator technology. Apparently the tachyons are given a defined spin inside the accelerator so they are able to interact with any material. They still tend to infiltrate easily through any known armor and lose their particle energy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon charge suffers only minor superficial injury but is heavily wounded in his viscera. These properties of tachyon particles have been used to create devastating weapons that the aliens now use to terrorize humanity. Our scientists believe that we may be able to reproduce these weapons once we analyze more details of it's construction."
-
-#: ../base/ufos/research.ufo:119
-msgid "tachyon_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:133
-msgid "Nano Technology"
-msgstr "Nano Technology"
-
-#: ../base/ufos/research.ufo:135
-msgid "nano_txt"
-msgstr "Nano technology opens up a wide field of new production methods especially in the design and production of armor and fabric. Prototype production lines based on advanced laser technology make it possible to create materials nearly completely composed of fullerenes (geodesic domes at an atomic level) and use them to fabricate armor that is more robust and has higher heat resistance than any known protection tested before. In particular, the recently analyzed charged plasma beams are reported to dissipate on the surface of the nano-material, consuming some of the fullerene fabric, but not passing through. Not only that, but the nano-fabric is promising to also be lighter than similar conventional materials."
-
-#: ../base/ufos/research.ufo:136
-msgid "nano_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:171
+#: ../base/ufos/research.ufo:117
 msgid "assault_txt"
 msgstr ""
 "Technical Specifications: AR-80 Assault Rifle\n"
@@ -2361,11 +2326,7 @@ msgstr ""
 "\n"
 "While the AR-80 is a fine rifle in all respects, it was not designed to fight an alien invasion force. We should develop our own purpose-built weapons as soon as it becomes feasible to do so."
 
-#: ../base/ufos/research.ufo:172
-msgid "assault_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:187
+#: ../base/ufos/research.ufo:133
 msgid "assault_mag_txt"
 msgstr ""
 "Technical Specifications: Assault Rifle Magazine\n"
@@ -2398,11 +2359,8 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:188
-msgid "assault_mag_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:204
+#: ../base/ufos/research.ufo:150
+#: ../base/ufos/research.ufo:166
 msgid "bolterrifle_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -2430,7 +2388,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:205
+#: ../base/ufos/research.ufo:151
+#: ../base/ufos/research.ufo:167
 msgid "bolterrifle_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -2452,57 +2411,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:220
-msgid "bolterrifle_mag_txt"
-msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Electromagnetic Rifle\n"
-"\n"
-"\n"
-"The EM rifle project has been a resounding success! For the first time in human history, we've created a viable man-portable electromagnetic weapon. We have named our weapon the Bolter Rifle to avoid ambiguity with other existing MAG (Magnetic Accelerator Gun) implementations. I'll do my best to explain its operation in this short summary.\n"
-"\n"
-"The Bolter Rifle is equipped with a railgun configuration, as opposed to a coilgun/Gauss gun configuration, due to the high inefficiency and generally poor operation of coilguns. Railguns work by utilising electromagnetic force to propel an electrically conductive projectile along two conducting rails. The electric current flowing through the rails sets up a magnetic field between them and through the projectile. The direction of the magnetic field is perpendicular to the current flowing through the rails and the projectile; this results in the rails and projectile pushing each other, thereby accelerating the projectile along the rails.\n"
-"\n"
-"The world's first large-scale railgun, built in the 1970s, used 500 MJ of stored energy from the largest homopolar generator ever built. The electrical equipment needed to power these guns has become much more compact in the past century or so, but it is still not small or light enough to create man-portable weapons capable of replacing chemical-propellant firearms. Another major failing of railguns is their extreme susceptibility to rail erosion. The rails suffer heavy damage from every shot fired along them, and when the contact points are badly damaged, the electric current cannot properly pass from the rails through the projectile. This causes successive shots to lose more and more of their power. Each round needs at least a short length of undamaged rail in order to build up velocity.\n"
-"\n"
-"Fortunately, we've managed to find a way around this problem -- by loading new rails into the gun after every series of shots.\n"
-"\n"
-"The concept of pre-loading all of a weapon's ammunition into the barrel has been around for a long time. Until now it has only been applied to conventional firearms, but we have come up with a new concept; a small, individually-powered and insulated length of rail loaded with every round. This gives each round a viable contact point and will allow the weapon to sustain power through all its shots. When all rounds in the current barrel have been depleted -- and therefore the rails thoroughly destroyed -- the soldier can simply unlock the old barrel, let it drop to the ground, and slot in a fresh spare. Then he can replace the battery pack for a new series of shots.\n"
-"\n"
-"The projectiles are specially-developed 3.2x40mm finned flechettes, stamped from large sheets of tungsten alloy. They are razor-sharp, with excellent armour-piercing qualities, and they tumble like demons inside the target. The holes that these flechettes cause are many times larger than their actual size.\n"
-"\n"
-"This choice of loading system makes the Bolter slow and clumsy to reload, with expensive, oversized magazines (a new barrel and battery pack for each reload) and a small ammo capacity of 4 shots per barrel. On the other hand, the Bolter's stopping power is far greater than any chemical firearm in our arsenal. It can be used both as a sniper rifle and a powerful assault weapon, depending on whether it is fired on semi-automatic or 4-round burst mode. It is a highly versatile weapon with many possible applications; its tactical value will certainly become apparent once we get some real combat experience with it.\n"
-"\n"
-"--Cdr. Navarre"
-
-#: ../base/ufos/research.ufo:221
-msgid "bolterrifle_mag_pre_txt"
-msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Electromagnetic Rifle\n"
-"\n"
-"\n"
-"Commander, we've received a number of research files from several UN nations concerning research and development for man-portable electromagnetic weaponry; various designs have been proposed and even prototyped for railguns, coilguns and quench guns. Of course, all these experiments have failed, since electromagnetic weapons require huge amounts of power -- and therefore banks of capacitors so heavy that no human soldier could possibly carry them. Even atomic batteries have not given us the power output we need to make man-portable electromagnetic guns a reality. It is impossible.\n"
-"\n"
-"At least, that's what we thought, until the aliens showed up.\n"
-"\n"
-"Seeing alien craft hurtling through our skies, advanced robots scuttling through our streets, and high-powered energy weapons tearing up our people has given us a whole host of new ideas. It has also caused us to take a very close look through our collected UN research data. It's nothing short of a gold mine in disguise. By combining the best of these individual cluttered pieces, we believe we may be able to devise a new weapon for our tactical teams that will be both man-portable and combat-effective. This weapon would have extreme range and power and may serve us well in the days ahead.\n"
-"\n"
-"This idea holds a lot of promise, Commander. We would like your authorisation for lab time and funding in order finally make electromagnetic weaponry a reality.\n"
-"\n"
-"--Cdr. Navarre"
-
-#: ../base/ufos/research.ufo:237
+#: ../base/ufos/research.ufo:183
 msgid "combatknife_txt"
 msgstr ""
 "Technical Specifications: Combat Knife\n"
@@ -2543,11 +2452,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:238
-msgid "combatknife_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:254
+#: ../base/ufos/research.ufo:200
 msgid "flamer_txt"
 msgstr ""
 "Technical Specifications: CRC-FL Flamethrower\n"
@@ -2594,11 +2499,7 @@ msgstr ""
 "\n"
 "This weapon should not be fired if there are civilians in or near the target zone."
 
-#: ../base/ufos/research.ufo:255
-msgid "flamer_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:270
+#: ../base/ufos/research.ufo:216
 msgid "flamer_mag_txt"
 msgstr ""
 "Technical Specifications: C90 Canister\n"
@@ -2631,11 +2532,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:271
-msgid "flamer_mag_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:287
+#: ../base/ufos/research.ufo:233
 msgid "flashbang_txt"
 msgstr ""
 "Technical Specifications: Flashbang\n"
@@ -2678,11 +2575,7 @@ msgstr ""
 "\n"
 "Naturally the flashbang is only effective against organic aliens with eyes and ears."
 
-#: ../base/ufos/research.ufo:288
-msgid "flashbang_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:303
+#: ../base/ufos/research.ufo:249
 msgid "fraggren_txt"
 msgstr ""
 "Technical Specifications: Fragmentation Grenade\n"
@@ -2723,11 +2616,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:304
-msgid "fraggren_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:320
+#: ../base/ufos/research.ufo:266
 msgid "incgren_txt"
 msgstr ""
 "Technical Specifications: Incendiary Grenade\n"
@@ -2770,11 +2659,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:321
-msgid "incgren_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:337
+#: ../base/ufos/research.ufo:283
 msgid "grenl_txt"
 msgstr ""
 "Technical Specifications: HPGL Grenade Launcher\n"
@@ -2825,11 +2710,7 @@ msgstr ""
 "\n"
 "Along with sniper rifles and rocket launchers, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:338
-msgid "grenl_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:353
+#: ../base/ufos/research.ufo:299
 msgid "grenl_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm HIT Grenades\n"
@@ -2862,11 +2743,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:354
-msgid "grenl_ammo_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:370
+#: ../base/ufos/research.ufo:316
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm Flechette Grenades\n"
@@ -2899,11 +2776,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:371
-msgid "grenl_fle_ammo_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:387
+#: ../base/ufos/research.ufo:333
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm IC Grenades\n"
@@ -2936,38 +2809,70 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:388
-msgid "grenl_incendiary_ammo_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:404
+#: ../base/ufos/research.ufo:350
 msgid "grenl_plasma_ammo_txt"
-msgstr "<TODO>"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Re: Plasma And The Grenade Launcher\n"
+"\n"
+"\n"
+"Commander, we've finished the testing and prototype phase of our new 25mm plasma grenades. We're ready to move it to mass-production and full field deployment.\n"
+"\n"
+"For this project, we already had ready access to all the required technology. We've made very few changes to the general design of the grenade. The only real challenge was to shrink the complex machinery enough to fit inside a standard 25mm shell. We've had to scale back the power of the plasma grenade somewhat in order to do that -- the hydrogen core of our new 25mm shell is a fair bit smaller, emitting less plasma than the alien hand grenade. However, this is offset by the fact that it can be fired en masse from our HPGL Grenade Launcher over relatively long distances.\n"
+"\n"
+"We've dubbed our creation the 25mm PB ('Plasma Burst') Grenade. We can manufacture them by the box or by the speedloader, both of which will be extremely expensive to produce. One full load of 25mm PB is essentially an entire magazine of miniature plasma grenades, miniatures which are even more difficult to create than the original.\n"
+"\n"
+"The amount of firepower we've added to our team grenadier(s) is frightening to behold. Launch a cylinder of these grenades into a crowded street, and the only thing left will be ash. They'll become a highly valuable addition to our arsenal.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:405
+#: ../base/ufos/research.ufo:351
 msgid "grenl_plasma_ammo_pre_txt"
-msgstr "No pre research info available"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Plasma And The Grenade Launcher\n"
+"\n"
+"\n"
+"Commander, my team and I have drawn up a research proposal for a new tac weapon based on our plasma grenade research.\n"
+"\n"
+"Now that we're able to reproduce these alien plasma grenades, we've been looking into the possibility of adapting the technology to be fired from a grenade launcher. This would be a challenge, as the plasma hand grenades are significantly larger than 25mm, but we may be able to produce a scaled-back version that -- while not as powerful -- will have all the advantages of being fired from our standard HPGL Grenade Launcher.\n"
+"\n"
+"If we can manage to design and produce magazines of this type, they'd lend the HPGL increased firepower and even more tactical applications, well worth the monetary cost.\n"
+"\n"
+"The project is waiting for your authorisation, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:421
+#: ../base/ufos/research.ufo:367
 msgid "heavylaser_txt"
 msgstr ""
 "The XLR-39 is a new implication of the revolutionary laser technology first seen in the XLR-24 laser rifle. The heavy laser uses three laser generators packed into one weapon. This causes the XLR-39 to be one of the most destructive innovations in the field of laser-generator technology. Another advantage of the heavy laser is that it also has much greater accuracy than its more explosive counterpart the RPG-37, as it is able to target specific parts of vehicles and buildings, allowing for a more predictable demolition operation.\n"
 "\n"
 "Battle Implications: Heavy Lasers are bulky and unwieldy due to the triple Laser generators it houses. Because of its bulk and the vibrations caused by overload, the heavy Laser is less accurate than a Laser Rifle, but it has a longer effective range. It also does a lot more damage. "
 
-#: ../base/ufos/research.ufo:422
+#: ../base/ufos/research.ufo:368
 msgid "heavylaser_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:439
+#: ../base/ufos/research.ufo:385
 msgid "heavylaser_ammo_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:440
+#: ../base/ufos/research.ufo:386
 msgid "heavylaser_ammo_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:456
+#: ../base/ufos/research.ufo:402
 msgid "irgoggles_txt"
 msgstr ""
 "Technical Specifications: IR Goggles\n"
@@ -3014,18 +2919,14 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:457
-msgid "irgoggles_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:472
+#: ../base/ufos/research.ufo:418
 msgid "kerrblade_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
 "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATE: 30 May 2084\n"
+"DATE: %02i %s %i\n"
 "\n"
 "SUB: Re: Alien Artifact -- Kerrblade\n"
 "\n"
@@ -3046,14 +2947,14 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:473
+#: ../base/ufos/research.ufo:419
 msgid "kerrblade_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
 "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATE: 27 May 2084\n"
+"DATE: %02i %s %i\n"
 "\n"
 "SUB: Proposal: Alien Artifact -- Kerrblade\n"
 "\n"
@@ -3066,45 +2967,45 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:490
+#: ../base/ufos/research.ufo:436
 msgid "laserpistol_txt"
 msgstr ""
 "Using a smaller and less powerful version of the 'YAG laser reactor', the LAS-10 is like its big brother, the LAS-24 Laser Rifle, a offspring of the recent advances made in the field of laser technology. Due to the smaller 'YAG reactor', the photons have a lower kinetic energy and therefore a lessened penetrating power.\n"
 "\n"
 "Battle Implications: A one-handed firearm that is very accurate at medium range, and can be fired at short notice. It deals limited damage, but is more accurate then the 9mm Pistol due to the lack of recoil. Like 9mm Pistols, Laser Pistols may be used ambidextrously. "
 
-#: ../base/ufos/research.ufo:491
+#: ../base/ufos/research.ufo:437
 msgid "laserpistol_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:507
+#: ../base/ufos/research.ufo:453
 msgid "laserpistol_mag_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:508
+#: ../base/ufos/research.ufo:454
 msgid "laserpistol_mag_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:524
+#: ../base/ufos/research.ufo:470
 msgid "laserrifle_txt"
 msgstr ""
 "The XLR-24 (Experimental Laser Rifle) is a revolution in modern day warfare. Using a highly complex system of light refraction, crystals, and high power-density batteries, the laser rifle is a deadly weapon. The lack of a detonation and recoil from a discharged bullet make the XLR-24 far more accurate than the standard assault rifle while still retaining medium-range capability and lethal firepower.\n"
 "\n"
 "Battle Implications: Like the Assault Rifle, the Laser Rifle is effective at medium range. It deals fair damage and is more accurate than the Assault Rifle due to the lack of recoil. "
 
-#: ../base/ufos/research.ufo:525
+#: ../base/ufos/research.ufo:471
 msgid "laserrifle_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:542
+#: ../base/ufos/research.ufo:488
 msgid "laserrifle_mag_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:543
+#: ../base/ufos/research.ufo:489
 msgid "laserrifle_mag_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:559
+#: ../base/ufos/research.ufo:505
 msgid "medikit_txt"
 msgstr ""
 "Technical Specifications: Medikit\n"
@@ -3147,11 +3048,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:560
-msgid "medikit_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:575
+#: ../base/ufos/research.ufo:521
 msgid "pistol_txt"
 msgstr ""
 "Technical Specifications: P-12 Pistol\n"
@@ -3200,11 +3097,7 @@ msgstr ""
 "\n"
 "Despite good penetration against organics, this weapon performs very poorly against robotic targets."
 
-#: ../base/ufos/research.ufo:576
-msgid "pistol_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:592
+#: ../base/ufos/research.ufo:538
 msgid "pistol_mag_txt"
 msgstr ""
 "Technical Specifications: 7.62mm Pistol Magazine\n"
@@ -3237,11 +3130,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:593
-msgid "pistol_mag_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:610
+#: ../base/ufos/research.ufo:556
 msgid "pistol2_txt"
 msgstr ""
 "Technical Specifications: MP-699 Machine Pistol\n"
@@ -3288,11 +3177,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:611
-msgid "pistol2_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:627
+#: ../base/ufos/research.ufo:573
 msgid "pistol2_mag_txt"
 msgstr ""
 "Technical Specifications: 4.2mm MP Magazine\n"
@@ -3325,11 +3210,8 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:628
-msgid "pistol2_mag_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:645
+#: ../base/ufos/research.ufo:591
+#: ../base/ufos/research.ufo:611
 msgid "plasatomizer_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3357,7 +3239,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:646
+#: ../base/ufos/research.ufo:592
+#: ../base/ufos/research.ufo:612
 msgid "plasatomizer_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3377,90 +3260,70 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:665
-msgid "plasatomizer_mag_txt"
-msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Artifact -- Plasma Pistol\n"
-"\n"
-"\n"
-"When the aliens need a sidearm, they don't screw around.\n"
-"\n"
-"This plasma pistol is a nasty piece of work, Commander. Its operation is extremely complex and inventive, requiring a great deal of technical skill to create. The power pack alone is hundreds of years ahead of our technology. It stores enough power to heat several charges of hydrogen to a plasmatic state inside the miniature fusion chamber, which are expelled as plasma using the ionised particles' own velocity.\n"
-"\n"
-"Unlike human firearms, the projectiles themselves are not stored in a magazine or reservoir. They are generated inside the pistol from hydrogen contained in the magazine, powered by the magazine's power-pack. Once the plasma is heated, a thin film of liquid plastic is created between the two 'spinnerets' located vertically opposite each other in front of the grip. The plasma particles are then rapidly fired into the film so that the plastic deforms into an orb or 'bolt'. The plastic contains and protects the plasma, keeping it from dispersing until it reaches the target. By the time a bolt reaches the target, the inside of the plastic will be so eaten away that it will burst upon impact like a soap bubble, splashing its payload across the target. The maximum range of a pistol bolt -- the point it can reach before the plasma eats into open air and disperses -- is approximately 20 metres.\n"
-"\n"
-"A bolt fired from the plasma pistol is so hot that even a near-miss can be lethal. The effects on a victim are truly horrific; I will try to list them all here.\n"
-"\n"
-"Any unarmoured human sprayed with this plasma will suffer extreme pain and injuries all across the splash zone. Adipose (fatty) tissue will melt like water. Blood and other bodily fluids boil in place. The plasma will actually eat its way into a human body, causing bone-deep charring in a large region around the splash zone. A large chunk of the body will be literally burnt to a crisp.\n"
-"\n"
-"Any kind of tough fabric will provide some protection against a plasma hit. High-tech armour in particular will disperse the heat as best it can, and will resist the burning plasma for a time. Hopefully this will be enough time to allow air-cooling to take place, bringing the plasma down to non-lethal temperatures.\n"
-"\n"
-"I won't pretend to know how the aliens managed to squeeze all this stuff into a pistol, but it does look as though they've made the same tradeoffs between power and size that we have done with our handguns. It's almost certain that larger, more powerful versions of these weapons exist and will appear against us in this war. However, my team and I have figured out the control scheme of the pistols, and we've written an appropriate field manual for human use. Our soldiers will now be able to employ the plasma pistol in a combat scenario as they would any other weapon.\n"
-"\n"
-"--Cdr. Navarre"
-
-#: ../base/ufos/research.ufo:666
-msgid "plasatomizer_mag_pre_txt"
-msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Artifact -- Plasma Pistol\n"
-"\n"
-"\n"
-"Commander, we've recovered the first alien plasma weapon of the war. I don't need to tell you how important this is. The alien armaments are highly-advanced, powerful and extremely lethal; we must figure out how they work in order to arm and armour ourselves against them.\n"
-"\n"
-"The alien plasma weapons represent a curious application of the plasma-thrower concept, which was previously believed to be unfeasible as a battlefield weapon. I would very much like to figure out how it works. My team and I are confident that -- with enough time and proper safety procedures -- we can hammer out the plasma pistol's function and controls and write a small operational manual; our soldiers could actually use the aliens' weapons against them!\n"
-"\n"
-"Of course, this program will need your approval for lab time and funding.\n"
-"\n"
-"--Cdr. Navarre"
-
-#: ../base/ufos/research.ufo:682
+#: ../base/ufos/research.ufo:628
+#: ../base/ufos/research.ufo:647
 msgid "plasblaster_txt"
 msgstr "A weapon normally used to destroy armored targets. Heavy and slow to fire, this weapon is more powerful than anything Earth-made. It fires large projectiles filled with plasma that burst upon impact or a powerful, but short range continuous streams of plasma particles."
 
-#: ../base/ufos/research.ufo:683
+#: ../base/ufos/research.ufo:629
+#: ../base/ufos/research.ufo:648
 msgid "plasblaster_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:701
-msgid "plasblaster_mag_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:702
-msgid "plasblaster_mag_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:718
+#: ../base/ufos/research.ufo:664
 msgid "plasblade_txt"
 msgstr "This melee weapon has proved to be of great value in hand to hand combat because of the devastating burns it can inflict when someone touches its blade. Generally the enemy is unable to fight onward just after one strike. Because of the small dimensions and the charging time of the miniaturized plasma generator, the weapon is as fast in melee as in throwning. However, the range of this weapon is utterly limited --- comparable to the range of ordinary combat knives."
 
-#: ../base/ufos/research.ufo:719
+#: ../base/ufos/research.ufo:665
 msgid "plasblade_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:736
+#: ../base/ufos/research.ufo:682
 msgid "plasmagren_txt"
 msgstr ""
-"Once our scientists understood the basics of plasma control they were able to reconstruct alien plasma grenade without even taking the risk of reverse engineering any original sample.\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
-"Battle Implications: This device acts just like a Frag Grenade, but instead of an explosive blast it creates a blast of hot plasma in its effective radius. This radius is slightly larger than that of a Frag Grenade. "
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Re: Alien Artifact -- Plasma Grenade\n"
+"\n"
+"\n"
+"Commander, our assessment of the alien plasma grenade is complete. Like all the alien weapons, it's very nasty and very dangerous.\n"
+"\n"
+"The device is essentially made up of six components: a casing, a trigger, a battery, a timer, an explosive charge, a plasma chamber and a solid hydrogen core. The casing is specially shaped to create a toroid-shaped blast zone around the grenade, concentrating power into a smaller area. The battery is highly powerful and barely within our power to duplicate. The trigger is of particular interest, because it contains a tiny thumbprint scanner which verifies that the grenade is not being accidentally activated. A legitimate (i.e. non-accidental) activation starts the timer countdown. The length of the countdown is variable depending on the number of seconds that the trigger is held down, but it has a built-in safe minimum of three seconds.\n"
+"\n"
+"Once the timer reaches zero, the battery unleashes its power, heating a core of hydrogen to plasma in milliseconds. The explosive charge sends the grenade tumbling into the air, and once the grenade achieves vertical orientation and ideal height, the plasma chamber containment is switched off. Rapid expansion of the plasma causes the casing to burst, spraying high-velocity fragments and plasma particles all over the area of effect. Due to the unstable nature of uncontained plasma, the grenade has a limited blast radius, beyond which the plasma particles cool and slow down too much to be dangerous. This radius is approximately 50% larger than that of a standard human frag grenade.\n"
+"\n"
+"Anything caught within the area of effect will be either severely injured or dead.\n"
+"\n"
+"We've drawn up a set of blueprints that will allow our Workshops to begin immediate construction, and a manual to train our soldiers in its use. They will now be able to use the plasma grenade as any other grenade in our arsenal.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:737
+#: ../base/ufos/research.ufo:683
 msgid "plasmagren_pre_txt"
-msgstr "No pre research info available"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Alien Artifact -- Plasma Grenade\n"
+"\n"
+"\n"
+"Commander, our last tac mission has brought back an alien plasma grenade. This is a highly powerful grenade-type weapon that, once thrown, explodes in a shower of superheated plasma. It's somewhat larger and appears to be a good deal more dangerous than our standard frag grenades.\n"
+"\n"
+"We should examine this weapon to see how it works, what it's made of, and how it's put together. Once we have those points figured out, we should be able to replicate it for our own use.\n"
+"\n"
+"The project is ready for research, just waiting on your authorisation, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:755
+#: ../base/ufos/research.ufo:700
+#: ../base/ufos/research.ufo:720
 msgid "plasrifle_txt"
 msgstr ""
 "The Plasma Rifle is the weapon most often used by alien soldiers. The plasma fired by this weapon easily cuts through almost every known material. Therefore the standard Phalanx Kevlar Vest only provides minor protection. Soldiers wounded by a Plasma Rifle's beam suffer of extensive burns which are in many cases instantly lethal.\n"
@@ -3468,19 +3331,12 @@ msgstr ""
 "\n"
 "Battle Implications: Standard issue weapons for Soldier-class Antareans. It does more damage to an unprotected target than an Assault Rifle, and is about as accurate as one."
 
-#: ../base/ufos/research.ufo:756
+#: ../base/ufos/research.ufo:701
+#: ../base/ufos/research.ufo:721
 msgid "plasrifle_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:775
-msgid "plasrifle_mag_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:776
-msgid "plasrifle_mag_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:792
+#: ../base/ufos/research.ufo:737
 msgid "rpg_txt"
 msgstr ""
 "Technical Specifications: HMPL Rocket Launcher\n"
@@ -3527,11 +3383,7 @@ msgstr ""
 "\n"
 "Along with sniper rifles and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:793
-msgid "rpg_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:809
+#: ../base/ufos/research.ufo:754
 msgid "rpg_ammo_txt"
 msgstr ""
 "Technical Specifications: HE Rocket\n"
@@ -3566,11 +3418,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:810
-msgid "rpg_ammo_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:827
+#: ../base/ufos/research.ufo:772
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 "Technical Specifications: IC Rocket\n"
@@ -3607,38 +3455,23 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:828
-msgid "rpg_incendiary_ammo_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:845
-msgid "rpg_tachyon_ammo_txt"
-msgstr ""
-"The tachyon ammo for RPG-37 is a definite human advantage over aliens in this devastating war. We are now convinced the only alien weapon with an explosive Tachyon effect is the Tachyon Rifle, and only in its primary attack mode. Our forces are now armed with a tachyon explosive weapon unavailable to the aliens: the Tachyon-Beam Rocket. It is a formidable projectile, propelled using the usual liquid fuel engines, emanating high-power tachyon radiation upon impact.\n"
-"\n"
-"Battle Implications: The most advanced of all rockets, the Tachyon-Beam Rocket has a somewhat smaller splash damage radius than High-Explosive Rocket, but the same long range. After reaching its target, the warhead powers off its miniaturized particle accelerator where the tachyon particles are stored. The particles beam in all directions and the warhead is consumed by the ensuing storm of tachyon particle explosions."
-
-#: ../base/ufos/research.ufo:846
-msgid "rpg_tachyon_ammo_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:864
+#: ../base/ufos/research.ufo:809
 msgid "chaingun_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:865
+#: ../base/ufos/research.ufo:810
 msgid "chaingun_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:882
+#: ../base/ufos/research.ufo:827
 msgid "chaingun_ammo_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:883
+#: ../base/ufos/research.ufo:828
 msgid "chaingun_ammo_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:901
+#: ../base/ufos/research.ufo:846
 msgid "shotgun_txt"
 msgstr ""
 "Technical Specifications: CRC-212 Riot Shotgun\n"
@@ -3683,11 +3516,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:902
-msgid "shotgun_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:918
+#: ../base/ufos/research.ufo:864
 msgid "shotgun_ammo_txt"
 msgstr ""
 "Technical Specifications: Flechette Shells\n"
@@ -3722,10 +3551,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:919
-msgid "shotgun_ammo_pre_txt"
-msgstr "No pre research info available"
-
+#: ../base/ufos/research.ufo:883
 #: ../base/ufos/research.ufo:937
 msgid "shotgun_slug_ammo_txt"
 msgstr ""
@@ -3759,27 +3585,16 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:938
-msgid "shotgun_slug_ammo_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:956
+#: ../base/ufos/research.ufo:902
 msgid "shotgun2_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:957
-msgid "shotgun2_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:973
+#: ../base/ufos/research.ufo:919
+#: ../base/ufos/research.ufo:972
 msgid "shotgun2_ammo_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:974
-msgid "shotgun2_ammo_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:991
+#: ../base/ufos/research.ufo:955
 msgid "shotgun_micro_txt"
 msgstr ""
 "Technical Specifications: CRC-M9 Micro Shotgun\n"
@@ -3828,50 +3643,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:992
-msgid "shotgun_micro_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1008
-msgid "shotgun_micro_ammo_txt"
-msgstr ""
-"Technical Specifications: Flechette Shells\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This magazine contains 7 shells of flechette shot. Each 12mm shell contains 8 tiny flechettes -- solid steel needles with fins to stabilise their flight. This ammunition is military-only, banned for all civilian use due to the flechettes' excellent performance against armour. The flechettes are prone to tumble after penetration, resulting in nasty wounds that will either kill the target or send it running for cover.\n"
-"\n"
-"This short shell -- only 90mm long -- was designed for pistol-configuration shotguns like the CRC-M9 Micro Shotgun. However, the CRC-212 Riot Shotgun can fire it just as easily, with all the performance increases of a full-sized weapon.\n"
-"\n"
-"The magazine is meant to be loaded into a CRC-212 Riot Shotgun or CRC-M9 Micro Shotgun.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"All soldiers equipped with shotguns should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
-
-#: ../base/ufos/research.ufo:1009
-msgid "shotgun_micro_ammo_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1026
+#: ../base/ufos/research.ufo:990
 msgid "smg_txt"
 msgstr ""
 "Technical Specifications: CRC-8 SMG\n"
@@ -3916,11 +3688,7 @@ msgstr ""
 "\n"
 "Despite good penetration against organics, this weapon performs very poorly against robotic targets."
 
-#: ../base/ufos/research.ufo:1027
-msgid "smg_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1043
+#: ../base/ufos/research.ufo:1007
 msgid "smg_mag_txt"
 msgstr ""
 "Technical Specifications: SMG Magazine\n"
@@ -3953,11 +3721,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1044
-msgid "smg_mag_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1061
+#: ../base/ufos/research.ufo:1025
 msgid "smokegren_txt"
 msgstr ""
 "Technical Specifications: Smoke Grenade\n"
@@ -3998,11 +3762,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1062
-msgid "smokegren_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1078
+#: ../base/ufos/research.ufo:1042
 msgid "sniper_txt"
 msgstr ""
 "Technical Specifications: S-1 Sniper Rifle\n"
@@ -4047,11 +3807,7 @@ msgstr ""
 "\n"
 "Along with high-explosive rockets and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:1079
-msgid "sniper_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1095
+#: ../base/ufos/research.ufo:1059
 msgid "sniper_mag_txt"
 msgstr ""
 "Technical Specifications: Sniper Rifle Magazine\n"
@@ -4084,87 +3840,83 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1096
-msgid "sniper_mag_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1113
+#: ../base/ufos/research.ufo:1077
 msgid "stungren_txt"
 msgstr ""
 "When this grenade goes off, it emits ultra-high frequency sound waves that temporarily paralyze the nervous system of all units caught in its effective blast radius. The closer a victim is to the center of the blast, the stronger the effect, and the longer the victim will stay unconscious. Because the sound waves are so high-pitched, they weaken very quickly with distance, so the grenade needs to go off fairly close to the target to have the desired effect. Beyond a certain radius, the grenade will only cause headaches.\n"
 "\n"
 "Battle Implications: The Stun Grenade is only effective against biologic organisms that have auditory senses. Fortunately, this includes all known biological aliens."
 
-#: ../base/ufos/research.ufo:1114
+#: ../base/ufos/research.ufo:1078
 msgid "stungren_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:1132
+#: ../base/ufos/research.ufo:1096
 msgid "stunrod_txt"
 msgstr ""
 "Easy to handle device for stunning and capturing your enemy. The only downside is that you need to stand next to him to do so, but then it's a few times more effective then stun grenades. The stun rod used by Phalanx soldiers is one of the most effective devices to capture your enemies alive. It not only deploys a huge electrical discharge onto the target, but also injects very powerful narcotics and drugs. The combination of the discharge and these chemicals can knock out even the biggest life-form known to mankind and will most likely also work on most of the aliens we have encountered yet. The rod is equipped with two roto-hammer like spikes that will be driven into the target and then deploy the before mentioned discharge and chemicals.\n"
 "\n"
 "Battle Implications: Does not fit into the holster, but one-handed. "
 
-#: ../base/ufos/research.ufo:1133
+#: ../base/ufos/research.ufo:1097
 msgid "stunrod_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:1150
+#: ../base/ufos/research.ufo:1114
 msgid "tachyonpistol_txt"
 msgstr ""
 "This weapon stores its ammunition in an especially miniaturized version of the alien tachyon clip (a portable tachyon accelerator, in fact). Therefore the Tachyon Pistol has a lower rate of fire as well as a diminished accuracy compared to the other two tachyon weapons. The major advantage of the Tachyon Pistol is its low weight and its small dimensions which makes it a valuable sidearm.\n"
 "\n"
 "Battle Implications: Good for close combat with well-armored enemies, especially when used ambidextrously. "
 
-#: ../base/ufos/research.ufo:1151
+#: ../base/ufos/research.ufo:1115
 msgid "tachyonpistol_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:1169
+#: ../base/ufos/research.ufo:1133
 msgid "tachyonpistol_mag_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1170
+#: ../base/ufos/research.ufo:1134
 msgid "tachyonpistol_mag_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:1187
+#: ../base/ufos/research.ufo:1151
 msgid "tachyonrifle_txt"
 msgstr ""
 "For a long time we couldn't understand the physics of the violent tachyon explosion caused by the primary attack mode of the Tachyon Rifle. Now we know it's caused by a dense beam of tachyons slowing down at the same time and place and thus gaining energy all at once. At long range, this powerful stream of tachyon particles looses focus, but a series of less dense and more focused beams created by the secondary attack mode can be used instead.\n"
 "\n"
 "Battle Implications:These rifles fire tachyon beams at medium range. They are not exceptionally accurate, but they are very powerful, especially against armored targets."
 
-#: ../base/ufos/research.ufo:1188
+#: ../base/ufos/research.ufo:1152
 msgid "tachyonrifle_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:1207
+#: ../base/ufos/research.ufo:1171
 msgid "tachyonrifle_mag_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1208
+#: ../base/ufos/research.ufo:1172
 msgid "tachyonrifle_mag_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:1225
+#: ../base/ufos/research.ufo:1189
 msgid "tachyonsniper_txt"
 msgstr "The Tachyon Sniper Rifle uses the newly discovered alien tachyon accelerator technology, first found in an Ortnok scout spaceship. Unlike the Tachyon Rifle, this weapon has a low rate of fire because the tachyon particles are very precisely focused before they are fired. This means that the shots fired by the Tachyon Sniper Rifle have greater accuracy as well as bigger penetrating power."
 
-#: ../base/ufos/research.ufo:1226
+#: ../base/ufos/research.ufo:1190
 msgid "tachyonsniper_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:1244
+#: ../base/ufos/research.ufo:1208
 msgid "tachyonsniper_mag_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1245
+#: ../base/ufos/research.ufo:1209
 msgid "tachyonsniper_mag_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:1266
+#: ../base/ufos/research.ufo:1230
 msgid "combat_armor_txt"
 msgstr ""
 "Technical Specifications: Combat Armour\n"
@@ -4205,146 +3957,110 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1267
-msgid "combat_armor_pre_txt"
+#: ../base/ufos/research.ufo:1243
+msgid "Nanocomposite Armour"
+msgstr "Nanocomposite Armour"
+
+#: ../base/ufos/research.ufo:1245
+#: ../base/ufos/research.ufo:1262
+msgid "nano_txt"
+msgstr "Nano technology opens up a wide field of new production methods especially in the design and production of armor and fabric. Prototype production lines based on advanced laser technology make it possible to create materials nearly completely composed of fullerenes (geodesic domes at an atomic level) and use them to fabricate armor that is more robust and has higher heat resistance than any known protection tested before. In particular, the recently analyzed charged plasma beams are reported to dissipate on the surface of the nano-material, consuming some of the fullerene fabric, but not passing through. Not only that, but the nano-fabric is promising to also be lighter than similar conventional materials."
+
+#: ../base/ufos/research.ufo:1246
+#: ../base/ufos/research.ufo:1263
+msgid "nano_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:1279
-msgid "nano_armor_txt"
-msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Nanocomposite Armour\n"
-"\n"
-"\n"
-"Commander, I would like to report the success of our nanocomposite production research!\n"
-"\n"
-"I won't bore you with the intricacies of CNT production; suffice it to say that, by close study of the telltale traces left by alien production lines, we've been able to identify some of their processes. Apparently they use some kind of plasma furnace in order to spin, shape and press the nanotubes into a latticework pattern. We've been able to create a prototype furnace of our own, and have made various modifications to our nanotube production methods based on the alien examples. The result is a significant increase in power efficiency and production volume.\n"
-"\n"
-"From here on I'll restrict my summary to the capabilities and tactical applications of the new armour, which I trust you will find both fascinating and encouraging.\n"
-"\n"
-"We've managed to duplicate almost all the functionality of the alien armour, from the nanocomposite plates to the servo-assisted movement. It is incredibly light for its bulk, though still considerably heavier than our Combat Armour. It is almost as protective as the alien model, and bestows similar quickness of movement and more precise aiming.\n"
-"\n"
-"However, there are some limitations that we just can't get around. The fact is that the aliens have a good deal more experience with these materials and can work them a lot more elegantly than we can. Our armour is bulkier and heavier, more stiffly-constructed, and its electronics do not perform as well. This may negatively impact firing speed and reaction time. Our version of the polymer isn't quite as good as theirs, it tends to crack more easily. Our servomotors in particular are large and unwieldy compared to the compact alien designs. There's no way to reduce their size any further than we already have.\n"
-"\n"
-"We're really quite embarrassed about the boots in particular, but they are honestly the best we could do. We simply don't have the precision machinery needed to make servos like the aliens do. Regardless, we've tried our best to make the boots safe and light, with a powerful suspension system in the soles to make them springy enough for rapid movement.\n"
-"\n"
-"The new armour's tactical applications are extensive. It's light enough to be worn by forward elements of our tac teams, yet protective enough to resist heavy weapons fire. It will serve exceptionally well for close assault troops that need both speed and armour to perform their best.\n"
-"\n"
-"--Cdr. Navarre"
+#: ../base/ufos/research.ufo:1260
+msgid "Alien Artifact - Alien Body Armour"
+msgstr "Alien Artifact - Alien Body Armour"
 
-#: ../base/ufos/research.ufo:1280
-msgid "nano_armor_pre_txt"
-msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Nanocomposite Armour\n"
-"\n"
-"\n"
-"Our examination of the alien body armour has led us to many interesting realisations. Obviously, the key to creating more effective mobile armour based on the alien suits lies in the direction of nanocomposites. This will require large amounts of carbon nanotubes.\n"
-"\n"
-"In the past, carbon nanotubes have been difficult and expensive to produce, and trying to work them into a proper shape was even worse. Because of this nanocomposite armour has never been used except in high-cost vehicles such as aircraft and tanks, and then only in plating that requires minimal shaping or other work. The alien armour, however, uses carbon nanotube composites in abundance. It's our manufacturing processes that are holding us back.\n"
-"\n"
-"With the alien armour in hand and enough resources at our disposal, I believe that we can devise new production methods and shaping processes that will allow us to mass-produce shaped nanocomposite plates, finally bringing this technology into our reach.\n"
-"\n"
-"This project will require a fair amount of lab time and funding. We'll start work as soon as we receive your authorisation, Commander.\n"
-"\n"
-"--Cdr. Navarre"
-
-#: ../base/ufos/research.ufo:1311
+#: ../base/ufos/research.ufo:1290
 msgid "light_alien_armor"
 msgstr "Light alien armor"
 
-#: ../base/ufos/research.ufo:1312
+#: ../base/ufos/research.ufo:1291
 msgid "light_alien_pre_armor"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1322
+#: ../base/ufos/research.ufo:1301
 msgid "medium_alien_armor"
 msgstr "Medium alien armor"
 
-#: ../base/ufos/research.ufo:1323
+#: ../base/ufos/research.ufo:1302
 msgid "medium_alien_pre_armor"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1338
+#: ../base/ufos/research.ufo:1317
 msgid "Blast Damage Type"
 msgstr "Blast Damage Type"
 
-#: ../base/ufos/research.ufo:1350
+#: ../base/ufos/research.ufo:1329
 msgid "Fire Damage Type"
 msgstr "Fire Damage Type"
 
-#: ../base/ufos/research.ufo:1362
+#: ../base/ufos/research.ufo:1341
 msgid "Laser Damage Type"
 msgstr "Laser Damage Type"
 
-#: ../base/ufos/research.ufo:1378
+#: ../base/ufos/research.ufo:1357
 msgid "Impact Damage Type"
 msgstr "Impact Damage Type"
 
-#: ../base/ufos/research.ufo:1390
-#: ../base/ufos/research.ufo:1418
+#: ../base/ufos/research.ufo:1369
+#: ../base/ufos/research.ufo:1400
 msgid "Shock Damage Type"
 msgstr "Shock Damage Type"
 
-#: ../base/ufos/research.ufo:1402
+#: ../base/ufos/research.ufo:1381
 msgid "Plasma Damage Type"
 msgstr "Plasma Damage Type"
 
-#: ../base/ufos/research.ufo:1430
+#: ../base/ufos/research.ufo:1412
 msgid "Stun Damage Type"
 msgstr "Stun Damage Type"
 
-#: ../base/ufos/research.ufo:1442
+#: ../base/ufos/research.ufo:1424
 msgid "Tachyon Damage Type"
 msgstr "Tachyon Damage Type"
 
-#: ../base/ufos/research.ufo:1462
+#: ../base/ufos/research.ufo:1444
 msgid "Accuracy Attribute"
 msgstr "Accuracy Attribute"
 
-#: ../base/ufos/research.ufo:1474
+#: ../base/ufos/research.ufo:1456
 msgid "Assault Guns Proficiency"
 msgstr "Assault Guns Proficiency"
 
-#: ../base/ufos/research.ufo:1486
+#: ../base/ufos/research.ufo:1468
 msgid "Close Combat Proficiency"
 msgstr "Close Combat Proficiency"
 
-#: ../base/ufos/research.ufo:1498
+#: ../base/ufos/research.ufo:1480
 msgid "High-Explosives Proficiency"
 msgstr "High-Explosives Proficiency"
 
-#: ../base/ufos/research.ufo:1510
+#: ../base/ufos/research.ufo:1492
 msgid "Heavy Weapons Proficiency"
 msgstr "Heavy Weapons Proficiency"
 
-#: ../base/ufos/research.ufo:1522
+#: ../base/ufos/research.ufo:1504
 msgid "Mind Attribute"
 msgstr "Mind Attribute"
 
-#: ../base/ufos/research.ufo:1534
+#: ../base/ufos/research.ufo:1516
 msgid "Power Attribute"
 msgstr "Power Attribute"
 
-#: ../base/ufos/research.ufo:1546
+#: ../base/ufos/research.ufo:1528
 msgid "Sniper Rifles Proficiency"
 msgstr "Sniper Rifles Proficiency"
 
-#: ../base/ufos/research.ufo:1558
+#: ../base/ufos/research.ufo:1540
 msgid "Speed Attribute"
 msgstr "Speed Attribute"
 
-#: ../base/ufos/research.ufo:1574
+#: ../base/ufos/research.ufo:1556
 msgid "b_aliencontainment_txt"
 msgstr ""
 "Blueprints -- Alien Containment Facility\n"
@@ -4383,11 +4099,7 @@ msgstr ""
 "\n"
 "To whatever future Commanders might be reviewing this file: Keep in mind that the machinery in the Containment Facility, like a fair portion of PHALANX equipment, has yet to undergo its true acid test against an extraterrestrial force. Upgrades or adjustments may be required for it to perform up to its design spec."
 
-#: ../base/ufos/research.ufo:1575
-msgid "b_aliencontainment_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1590
+#: ../base/ufos/research.ufo:1572
 msgid "b_command_txt"
 msgstr ""
 "Blueprints -- Command Centre\n"
@@ -4428,11 +4140,7 @@ msgstr ""
 "\n"
 "The old CC blueprints have been updated by our engineers to replace the ancient H-9000 mainframe and terminals with up-to-date holo-workstations and a fresh supercomputer installation. All other components are still viable and effective."
 
-#: ../base/ufos/research.ufo:1591
-msgid "b_command_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1606
+#: ../base/ufos/research.ufo:1588
 msgid "b_entrance_txt"
 msgstr ""
 "Blueprints -- Entrance\n"
@@ -4465,11 +4173,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1607
-msgid "b_entrance_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1618
+#: ../base/ufos/research.ufo:1600
 msgid "b_large_hangar_txt"
 msgstr ""
 "Blueprints -- Large Hangar\n"
@@ -4514,11 +4218,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1619
-msgid "b_large_hangar_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1634
+#: ../base/ufos/research.ufo:1616
 msgid "b_hospital_txt"
 msgstr ""
 "Blueprints -- Hospital\n"
@@ -4561,11 +4261,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1635
-msgid "b_hospital_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1650
+#: ../base/ufos/research.ufo:1632
 msgid "b_small_hangar_txt"
 msgstr ""
 "Blueprints -- Small Hangar\n"
@@ -4610,11 +4306,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1651
-msgid "b_small_hangar_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1666
+#: ../base/ufos/research.ufo:1648
 msgid "b_lab_txt"
 msgstr ""
 "Blueprints -- Laboratory\n"
@@ -4659,11 +4351,7 @@ msgstr ""
 "\n"
 "Reviewing the files on PHALANX laboratory facilities, I have concluded that these blueprints were well ahead of their time. The design is still viable and can be adapted to our use with only minor equipment upgrades."
 
-#: ../base/ufos/research.ufo:1667
-msgid "b_lab_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1682
+#: ../base/ufos/research.ufo:1664
 msgid "b_powerplant_txt"
 msgstr ""
 "Blueprints -- Power Plant\n"
@@ -4704,11 +4392,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1683
-msgid "b_powerplant_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1698
+#: ../base/ufos/research.ufo:1680
 msgid "b_quarters_txt"
 msgstr ""
 "Blueprints -- Living Quarters\n"
@@ -4749,11 +4433,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1699
-msgid "b_quarters_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1714
+#: ../base/ufos/research.ufo:1696
 msgid "b_radar_txt"
 msgstr ""
 "Blueprints -- Radar\n"
@@ -4800,11 +4480,7 @@ msgstr ""
 "\n"
 "We should not consider the Radar facility to be an end-all solution to UFO detection. Even with supplemental systems our coverage is not fully reliable, and we should research ways to improve our detection technology if we're to have any chance of stopping the bastards."
 
-#: ../base/ufos/research.ufo:1715
-msgid "b_radar_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1730
+#: ../base/ufos/research.ufo:1712
 msgid "b_storage_txt"
 msgstr ""
 "Blueprints -- Storage\n"
@@ -4847,11 +4523,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1731
-msgid "b_storage_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1746
+#: ../base/ufos/research.ufo:1728
 msgid "b_teamroom_txt"
 msgstr ""
 "Blueprints -- Team Room\n"
@@ -4892,11 +4564,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1747
-msgid "b_teamroom_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1762
+#: ../base/ufos/research.ufo:1744
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
 "Blueprints -- Small UFO Hangar\n"
@@ -4937,11 +4605,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1763
-msgid "b_small_ufo_hangar_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1778
+#: ../base/ufos/research.ufo:1760
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
 "Blueprints -- Large UFO Hangar\n"
@@ -4982,11 +4646,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1779
-msgid "b_large_ufo_hangar_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1794
+#: ../base/ufos/research.ufo:1776
 msgid "b_workshop_txt"
 msgstr ""
 "Blueprints -- Workshop\n"
@@ -5026,10 +4686,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:1795
-msgid "b_workshop_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1813
 msgid "dropship_txt"
 msgstr ""
 "Aircraft Evaluation -- Firebird-class Dropship\n"
@@ -5090,11 +4746,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Medium hardpoint (nose)"
 
-#: ../base/ufos/research.ufo:1814
-msgid "dropship_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1828
+#: ../base/ufos/research.ufo:1810
 msgid "interceptor_txt"
 msgstr ""
 "Aircraft Evaluation -- Stiletto-class Interceptor\n"
@@ -5161,11 +4813,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Small hardpoint (nose), 2 Medium hardpoints (wings)"
 
-#: ../base/ufos/research.ufo:1829
-msgid "interceptor_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1843
+#: ../base/ufos/research.ufo:1825
 msgid "saracen_interceptor_txt"
 msgstr ""
 "Aircraft Evaluation -- Saracen-class Interceptor\n"
@@ -5224,15 +4872,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 2 Medium hardpoints (belly)"
 
-#: ../base/ufos/research.ufo:1844
-msgid "saracen_interceptor_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:1878
-msgid "Small alien craft"
-msgstr "Small alien craft"
-
-#: ../base/ufos/research.ufo:1879
+#: ../base/ufos/research.ufo:1861
 msgid "ufo_scout_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5278,7 +4918,7 @@ msgstr ""
 "\n"
 "Weapon capacity: None"
 
-#: ../base/ufos/research.ufo:1880
+#: ../base/ufos/research.ufo:1862
 msgid "ufo_scout_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5294,11 +4934,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1899
-msgid "Big alien craft"
-msgstr "Big alien craft"
-
-#: ../base/ufos/research.ufo:1900
+#: ../base/ufos/research.ufo:1882
 msgid "ufo_fighter_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5340,7 +4976,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Particle Beam hardpoint"
 
-#: ../base/ufos/research.ufo:1901
+#: ../base/ufos/research.ufo:1883
 msgid "ufo_fighter_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5358,11 +4994,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1920
-msgid "Harvester alien craft"
-msgstr "Harvester alien craft"
+#: ../base/ufos/research.ufo:1903
+msgid "UFO - Harvester"
+msgstr "UFO - Harvester"
 
-#: ../base/ufos/research.ufo:1921
+#: ../base/ufos/research.ufo:1904
 msgid "ufo_harvester_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5404,7 +5040,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 2 Particle Beam hardpoints, 1 Alien Launcher hardpoint"
 
-#: ../base/ufos/research.ufo:1922
+#: ../base/ufos/research.ufo:1905
 msgid "ufo_harvester_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5422,13 +5058,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1948
-#: ../base/ufos/research.ufo:1968
-msgid "Bloodspider - Combat notes"
-msgstr "Bloodspider - Combat notes"
+#: ../base/ufos/research.ufo:1932
+msgid "Live Specimen - Bloodspider"
+msgstr "Live Specimen - Bloodspider"
 
-#: ../base/ufos/research.ufo:1949
-#: ../base/ufos/research.ufo:1969
+#: ../base/ufos/research.ufo:1933
 msgid "bloodspider_notes_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5448,16 +5082,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:1950
-#: ../base/ufos/research.ufo:1970
+#: ../base/ufos/research.ufo:1934
 msgid "bloodspider_notes_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:1984
-msgid "Bloodspider - Autopsy"
-msgstr "Bloodspider - Autopsy"
+#: ../base/ufos/research.ufo:1948
+msgid "Alien Autopsy - Bloodspider"
+msgstr "Alien Autopsy - Bloodspider"
 
-#: ../base/ufos/research.ufo:1985
+#: ../base/ufos/research.ufo:1949
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5489,7 +5122,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:1986
+#: ../base/ufos/research.ufo:1950
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5509,198 +5142,108 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2004
-#: ../base/ufos/research.ufo:2025
-msgid "Ortnok - Combat notes"
-msgstr "Ortnok - Combat notes"
+#: ../base/ufos/research.ufo:1968
+msgid "Alien Autopsy - Ortnok"
+msgstr "Alien Autopsy - Ortnok"
 
-#: ../base/ufos/research.ufo:2005
-#: ../base/ufos/research.ufo:2026
-msgid "ortnok_notes_txt"
-msgstr "Genetically the green skinned Ortnoks seem to be related very closely to the human race. About 80% of their DNA is identical compared to the human's. The parts that are different are most likely genetically engineered because they do not show any individual variability. The fact that they are genetically altered and that they do not seem to have any functional reproduction organs suggests that they are clones made by some as yet unknown alien species. Additionally the Ortnoks have several cybernetic implants which involve mainly the cardiovascular system, the muscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the senses to a level superior to any human. The purpose of the brain implants is mostly unclear but it is believed that they serve as receivers for commands. But currently this is only a assumption because there is no evidence proving the existence of such a master-species."
-
-#: ../base/ufos/research.ufo:2006
-#: ../base/ufos/research.ufo:2027
-msgid "ortnok_notes_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2042
-msgid "Ortnok - Autopsy"
-msgstr "Ortnok - Autopsy"
-
-#: ../base/ufos/research.ufo:2043
+#: ../base/ufos/research.ufo:1969
 msgid "ortnok_autopsy_txt"
 msgstr "The green skin is scaly and tough, and cellular analysis reveals an abundance of chlorophyll, the molecule that makes plant leaves green. The digestive system does not appear to be undersized so we can only surmise that the Ortnok must have evolved in an environment where food could be scarce and falling back on solar energy was the only option in such situations.The reproductive organs of this species are very active, only ceasing to function 14 hours after death. Small wonder the Antareans use them as a limitless supply of cannon fodder in every terrain they choose to conquer."
 
-#: ../base/ufos/research.ufo:2044
+#: ../base/ufos/research.ufo:1970
 msgid "ortnok_autopsy_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2063
-msgid "Ortnok Worker"
-msgstr "Ortnok Worker"
+#: ../base/ufos/research.ufo:1989
+msgid "Alien Autopsy - Antarean"
+msgstr "Alien Autopsy - Antarean"
 
-#: ../base/ufos/research.ufo:2064
-msgid "ortnok_light_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2065
-msgid "ortnok_light_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2082
-msgid "Ortnok Warrior"
-msgstr "Ortnok Warrior"
-
-#: ../base/ufos/research.ufo:2083
-msgid "ortnok_medium_txt"
-msgstr "Having the same genetic features as the regular Ortnoks, the Ortnok Warriors have beenextensively modified with cybernetic implants. All these additional implants obviously aim toachieve a better performance in combat. Therefore the legs and arms have been almost completelyreplaced by cybernetic prostheses which allow a physical strength far beyond the potential of ahuman being. The claw shaped hands are designed to handle extreme weights. The chest area iscovered with a thick steel plating which is almost impenetrable for regular rifle ammunition.The face mask serves as a protection against hazardous gases as well as a augmentation of theupper airways to allow a better lung function. The disadvantage of this massive cyberneticaugmentation is the increased vulnerability to electromagnetic pulses (EMP)."
-
-#: ../base/ufos/research.ufo:2084
-msgid "ortnok_medium_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2101
-msgid "Antarean - Combat notes"
-msgstr "Antarean - Combat notes"
-
-#: ../base/ufos/research.ufo:2102
-msgid "antarean_notes_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2103
-msgid "antarean_notes_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2118
-msgid "Antarean - Autopsy"
-msgstr "Antarean - Autopsy"
-
-#: ../base/ufos/research.ufo:2119
+#: ../base/ufos/research.ufo:1990
 msgid "antarean_autopsy_txt"
 msgstr "Possesses a superficially similar complement of internal organs to humans. On closer inspection the heart is found to have a more complicated structure, tighter integration with the lungs and a connection to a small, liver-like organ. Electrically stimulating the Antarean heart produces a smooth, four stroke heart beat that takes in blood, aerates the blood within the lungs, filters the aerated blood of pollutants and toxins through the additional organ, before pumping the blood around the body. This circulatory system must contribute greatly to the stamina of the species.DNA analysis of specimens of different rank reveals differences in the amount of junk DNA carried by each specimen. Specimens of a higher rank have noticeably less junk DNA, and it appears to have been replaced by DNA containing patterns that yield easily to mathematical modelling. It is possible that this species uses genetic manipulation to confer knowledge upon those who are destined to lead before they are even born. Advanced psionic attacks may provide access to this information."
 
-#: ../base/ufos/research.ufo:2120
+#: ../base/ufos/research.ufo:1991
 msgid "antarean_autopsy_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2135
-msgid "Antarean - Commander interrogation"
-msgstr "Antarean - Commander interrogation"
+#: ../base/ufos/research.ufo:2008
+msgid "Alien Autopsy - Shevaar"
+msgstr "Alien Autopsy - Shevaar"
 
-#: ../base/ufos/research.ufo:2136
-msgid "antarean_interrogation_commander_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2137
-msgid "antarean_interrogation_commander_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2154
-msgid "Shevaar - Combat notes"
-msgstr "Shevaar - Combat notes"
-
-#: ../base/ufos/research.ufo:2155
-msgid "shevaar_notes_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2156
-msgid "shevaar_notes_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2171
-msgid "Shevaar - Autopsy"
-msgstr "Shevaar - Autopsy"
-
-#: ../base/ufos/research.ufo:2172
+#: ../base/ufos/research.ufo:2009
 msgid "shevaar_autopsy_txt"
 msgstr "The sheer muscular bulk of the Shevaar is supported by a stout, rugged skeleton, giving the species its fearsome strength. The two sets of jaws are anchored on the creature's enormous shoulder blades, making them as wide as the creature itself, and provide phenomenal crushing force.The huge wet nose of the beast is in fact its brain, covered with a dense array of sensory cells of varying types. While the ability of the Shevaar to hunt down its prey is heightened by this combined sensory and cognitive organ, its prominent placement and lack of protective bone renders it susceptible to psionic attack, as well as providing an obvious weak point in melee combat."
 
-#: ../base/ufos/research.ufo:2173
+#: ../base/ufos/research.ufo:2010
 msgid "shevaar_autopsy_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2190
-msgid "Hovernet - Combat notes"
-msgstr "Hovernet - Combat notes"
+#: ../base/ufos/research.ufo:2027
+msgid "Live Specimen - Stinger"
+msgstr "Live Specimen - Stinger"
 
-#: ../base/ufos/research.ufo:2191
+#: ../base/ufos/research.ufo:2028
 msgid "hovernet_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2192
+#: ../base/ufos/research.ufo:2029
 msgid "hovernet_notes_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2207
-msgid "Hovernet - wreck research"
-msgstr "Hovernet - wreck research"
+#: ../base/ufos/research.ufo:2044
+msgid "Alien Autopsy - Stinger"
+msgstr "Alien Autopsy - Stinger"
 
-#: ../base/ufos/research.ufo:2208
+#: ../base/ufos/research.ufo:2045
 msgid "hovernet_autopsy_txt"
 msgstr "Untangling the network of loose, fibrous material that forms at least 90% of the hovernet reveals a solid disc of unknown construction. Mounting points for weaponry are clearly visible, though the markings alongside them have yet to be deciphered and would be our first breakthrough in understanding the alien language.No joints can be seen between the disc and the dozens of fibres that protrude from it, even under an electron microscope. It is possible that the fibres are extruded from the disc itself, which must provide the most efficient distribution of the hovernet's energy and propulsive force.The loose arrangement of the fibres suggests that a successful hit with a projectile or directed energy weapon is unlikely, and blast or incendiary weapons would have greater effect."
 
-#: ../base/ufos/research.ufo:2209
+#: ../base/ufos/research.ufo:2046
 msgid "hovernet_autopsy_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2226
-msgid "Cyborg Ortnok - Combat notes"
-msgstr "Cyborg Ortnok - Combat notes"
+#: ../base/ufos/research.ufo:2063
+msgid "Alien Autopsy - Ortnok Cyborg"
+msgstr "Alien Autopsy - Ortnok Cyborg"
 
-#: ../base/ufos/research.ufo:2227
-msgid "cyborg_ortnok_notes_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2228
-msgid "cyborg_ortnok_notes_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2243
-msgid "Cyborg Ortnok - Autopsy"
-msgstr "Cyborg Ortnok - Autopsy"
-
-#: ../base/ufos/research.ufo:2244
+#: ../base/ufos/research.ufo:2064
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr "Separating the cyborg endoskeleton from the specimen's flesh generates sparks and releases choking, acidic vapours. The internals of the endoskeleton slide out of access holes in the artificial bone structure, attached to surgically implanted tendrils that appear to be bio-mechanical. It seems that digestive systems and reproductive organs have been removed and replaced by numerous small engines encased within the endoskeleton. Energy created by the chlorophyll in the Ortnok's skin appears to kick-start the reactions in these micro-engines.The purpose of the Antarean cyborg programme is clearly the conversion of the Ortnok into a bio-mechanical weapons platform that demands much greater energy output and suppression of the reproductive instinct."
 
-#: ../base/ufos/research.ufo:2245
+#: ../base/ufos/research.ufo:2065
 msgid "cyborg_ortnok_autopsy_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2265
-msgid "UGV Phoenix"
-msgstr "UGV Phoenix"
+#: ../base/ufos/research.ufo:2085
+msgid "Phoenix UGV"
+msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:2266
+#: ../base/ufos/research.ufo:2086
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2267
+#: ../base/ufos/research.ufo:2087
 msgid "ugv_phoenix_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2281
-msgid "UGV Triax"
-msgstr "UGV Triax"
+#: ../base/ufos/research.ufo:2101
+msgid "Triax UGV"
+msgstr "Triax UGV"
 
-#: ../base/ufos/research.ufo:2282
+#: ../base/ufos/research.ufo:2102
 msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2283
+#: ../base/ufos/research.ufo:2103
 msgid "ugv_triax_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2301
-msgid "Light Shield"
-msgstr "Light Shield"
+#: ../base/ufos/research.ufo:2121
+msgid "Raven ECM Unit"
+msgstr "Raven ECM Unit"
 
-#: ../base/ufos/research.ufo:2302
-msgid "craft_shield_light_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2303
+#: ../base/ufos/research.ufo:2123
+#: ../base/ufos/research.ufo:2139
 msgid "craft_shield_light_txt"
 msgstr ""
 "Technical Specifications: \"Raven\" ECM Unit\n"
@@ -5739,39 +5282,15 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2317
-msgid "Medium Shield"
-msgstr "Medium Shield"
+#: ../base/ufos/research.ufo:2137
+msgid "Polymer Aircraft Armour"
+msgstr "Polymer Aircraft Armour"
 
-#: ../base/ufos/research.ufo:2318
-msgid "craft_shield_medium_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2319
-msgid "craft_shield_medium_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2337
-msgid "Hard Shield"
-msgstr "Hard Shield"
-
-#: ../base/ufos/research.ufo:2338
-msgid "craft_shield_hard_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2339
-msgid "craft_shield_hard_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2357
+#: ../base/ufos/research.ufo:2153
 msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA Rotary Cannon"
 
-#: ../base/ufos/research.ufo:2358
-msgid "craft_weapon_flac_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2359
+#: ../base/ufos/research.ufo:2155
 msgid "craft_weapon_flac_txt"
 msgstr ""
 "Technical Specifications: SHIVA Rotary Cannon\n"
@@ -5814,47 +5333,35 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2373
+#: ../base/ufos/research.ufo:2169
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Sparrowhawk AA Missile Rack"
 
-#: ../base/ufos/research.ufo:2374
-msgid "craft_weapon_sparrowhawk_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2375
+#: ../base/ufos/research.ufo:2171
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2389
+#: ../base/ufos/research.ufo:2185
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 Rocket Pod"
 
-#: ../base/ufos/research.ufo:2390
-msgid "craft_weapon_tr20_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2391
+#: ../base/ufos/research.ufo:2187
 msgid "craft_weapon_tr20_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2405
+#: ../base/ufos/research.ufo:2201
 msgid "Particle Beam Weapon"
 msgstr "Particle Beam Weapon"
 
-#: ../base/ufos/research.ufo:2406
-msgid "craft_weapon_particle_beam_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2407
+#: ../base/ufos/research.ufo:2203
 msgid "craft_weapon_particle_beam_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2424
-msgid "Political situation before the invasion"
-msgstr "Political situation before the invasion"
+#: ../base/ufos/research.ufo:2220
+msgid "Political Situation Before The Invasion"
+msgstr "Political Situation Before The Invasion"
 
-#: ../base/ufos/research.ufo:2425
+#: ../base/ufos/research.ufo:2221
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "In the year 2084, Earth is in better shape than it has been for more than a century. Perhaps for the first time, peace and cooperation are the norm rather than the exception. The current state of affairs, however, can only be explained through the brutal history of the 21st century.\n"
@@ -5873,11 +5380,11 @@ msgstr ""
 "\n"
 "The loyalist army suffered massive desertions in the days that followed; it was the single event that eventually spelled doom for the government. More than six million lives were lost before the surrender of loyalist forces on 15 August 2036, having fought tooth and nail and employed large-scale scorched earth tactics as the rebels slowly drove them into the Indian Ocean. This is the official ending of the Second Cold War."
 
-#: ../base/ufos/research.ufo:2435
-msgid "After the war"
-msgstr "After the war"
+#: ../base/ufos/research.ufo:2231
+msgid "After The War"
+msgstr "After The War"
 
-#: ../base/ufos/research.ufo:2436
+#: ../base/ufos/research.ufo:2232
 msgid "news_after_the_war_txt"
 msgstr ""
 "The Asian Republic:\n"
@@ -5990,11 +5497,11 @@ msgstr ""
 "\n"
 "Oceania's military consists mainly of a powerful navy. Its land army is minuscule compared to that of any nation except United America, and serves only in a defensive capacity, with average training and equipment. However, it can respond fairly quickly in emergency situations."
 
-#: ../base/ufos/research.ufo:2446
+#: ../base/ufos/research.ufo:2242
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX And The Mumbai Aftermath"
 
-#: ../base/ufos/research.ufo:2447
+#: ../base/ufos/research.ufo:2243
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "\"Project PHALANX\" was first conceived by the United States Department of Defense in 1955, after years of growing concern over increased numbers of UFO sightings all across the world. The possibility of an alien invasion plagued badly on the minds of politicians already unnerved by the nuclear power of the Soviet Union. The existence of hostile extraterrestrial life in the universe seemed a very remote possibility, even moreso that these hostiles might find Earth among all the vastness of space -- but could America afford to take that chance?\n"
@@ -6520,8 +6027,8 @@ msgstr "Sniper Rifle Magazine"
 #: ../base/ufos/weapons_human.ufo:859
 #: ../base/ufos/weapons_human.ufo:895
 #: ../base/ufos/weapons_human.ufo:917
-#: ../base/ufos/weapons_human.ufo:953
-#: ../base/ufos/weapons_human.ufo:975
+#: ../base/ufos/weapons_human.ufo:954
+#: ../base/ufos/weapons_human.ufo:976
 msgid "Aimed Shot"
 msgstr "Aimed Shot"
 
@@ -6552,7 +6059,7 @@ msgstr "4.2mm MP Magazine"
 #: ../base/ufos/weapons_human.ufo:554
 #: ../base/ufos/weapons_human.ufo:609
 #: ../base/ufos/weapons_human.ufo:685
-#: ../base/ufos/weapons_human.ufo:1323
+#: ../base/ufos/weapons_human.ufo:1324
 msgid "Single Shot"
 msgstr "Single Shot"
 
@@ -6625,53 +6132,53 @@ msgstr "High-Explosive Rocket"
 msgid "Incendiary Rocket"
 msgstr "Incendiary Rocket"
 
-#: ../base/ufos/weapons_human.ufo:941
+#: ../base/ufos/weapons_human.ufo:942
 msgid "Tachyon-Beam Rocket"
 msgstr "Tachyon-Beam Rocket"
 
-#: ../base/ufos/weapons_human.ufo:1003
+#: ../base/ufos/weapons_human.ufo:1004
 msgid "Grenade Launcher"
 msgstr "Grenade Launcher"
 
-#: ../base/ufos/weapons_human.ufo:1021
+#: ../base/ufos/weapons_human.ufo:1022
 msgid "25mm IC Grenades"
 msgstr "25mm IC Grenades"
 
-#: ../base/ufos/weapons_human.ufo:1033
-#: ../base/ufos/weapons_human.ufo:1100
-#: ../base/ufos/weapons_human.ufo:1167
-#: ../base/ufos/weapons_human.ufo:1234
+#: ../base/ufos/weapons_human.ufo:1034
+#: ../base/ufos/weapons_human.ufo:1101
+#: ../base/ufos/weapons_human.ufo:1168
+#: ../base/ufos/weapons_human.ufo:1235
 msgid "Airburst Grenade"
 msgstr "Airburst Grenade"
 
-#: ../base/ufos/weapons_human.ufo:1059
-#: ../base/ufos/weapons_human.ufo:1126
-#: ../base/ufos/weapons_human.ufo:1193
-#: ../base/ufos/weapons_human.ufo:1260
+#: ../base/ufos/weapons_human.ufo:1060
+#: ../base/ufos/weapons_human.ufo:1127
+#: ../base/ufos/weapons_human.ufo:1194
+#: ../base/ufos/weapons_human.ufo:1261
 msgid "Timed Grenade"
 msgstr "Timed Grenade"
 
-#: ../base/ufos/weapons_human.ufo:1088
+#: ../base/ufos/weapons_human.ufo:1089
 msgid "25mm Flechette Grenades"
 msgstr "25mm Flechette Grenades"
 
-#: ../base/ufos/weapons_human.ufo:1155
+#: ../base/ufos/weapons_human.ufo:1156
 msgid "25mm HIT Grenades"
 msgstr "25mm HIT Grenades"
 
-#: ../base/ufos/weapons_human.ufo:1222
+#: ../base/ufos/weapons_human.ufo:1223
 msgid "Plasma Grenade Shells"
 msgstr "Plasma Grenade Shells"
 
-#: ../base/ufos/weapons_human.ufo:1293
+#: ../base/ufos/weapons_human.ufo:1294
 msgid "Bolter Rifle"
 msgstr "Bolter Rifle"
 
-#: ../base/ufos/weapons_human.ufo:1311
+#: ../base/ufos/weapons_human.ufo:1312
 msgid "Bolter Rifle Clip"
 msgstr "Bolter Rifle Clip"
 
-#: ../base/ufos/weapons_human.ufo:1342
+#: ../base/ufos/weapons_human.ufo:1343
 msgid "Cannonade"
 msgstr "Cannonade"
 
@@ -7532,25 +7039,87 @@ msgstr "Healing complete"
 msgid "%s\t%s\t(%i/%i)\n"
 msgstr "%s\t%s\t(%i/%i)\n"
 
-#: client/cl_input.c:742
+#: client/cl_input.c:729
+msgid "Rotate battlescape camera anti-clockwise"
+msgstr "Rotate battlescape camera anti-clockwise"
+
+#: client/cl_input.c:731
+msgid "Rotate battlescape camera clockwise"
+msgstr "Rotate battlescape camera clockwise"
+
+#: client/cl_input.c:733
+msgid "Tilt battlescape camera up"
+msgstr "Tilt battlescape camera up"
+
+#: client/cl_input.c:735
+msgid "Tilt battlescape camera down"
+msgstr "Tilt battlescape camera down"
+
+#: client/cl_input.c:737
+msgid "Move battlescape camera left"
+msgstr "Move battlescape camera left"
+
+#: client/cl_input.c:741
+msgid "Move battlescape camera forward"
+msgstr "Move battlescape camera forward"
+
+#: client/cl_input.c:743
+msgid "Move batlescape camera backward"
+msgstr "Move batlescape camera backward"
+
+#: client/cl_input.c:745
+#: client/cl_input.c:770
+msgid "Zoom in"
+msgstr "Zoom in"
+
+#: client/cl_input.c:747
+#: client/cl_input.c:771
+msgid "Zoom out"
+msgstr "Zoom out"
+
+#: client/cl_input.c:752
+msgid "Select objects/Walk to a square/In fire mode, fire etc"
+msgstr "Select objects/Walk to a square/In fire mode, fire etc"
+
+#: client/cl_input.c:754
+msgid "Walk to a square/In fire mode, cancel action"
+msgstr "Walk to a square/In fire mode, cancel action"
+
+#: client/cl_input.c:756
+msgid "Turn soldier toward mouse pointer"
+msgstr "Turn soldier toward mouse pointer"
+
+#: client/cl_input.c:758
 msgid "Toggle stand/crounch"
 msgstr "Toggle stand/crounch"
 
-#: client/cl_input.c:743
+#: client/cl_input.c:759
 msgid "Toggle reaction fire"
 msgstr "Toggle reaction fire"
 
-#: client/cl_input.c:744
+#: client/cl_input.c:760
 msgid "Toogle to next alien"
 msgstr "Toogle to next alien"
 
-#: client/cl_input.c:751
+#: client/cl_input.c:767
 msgid "Ends current round"
 msgstr "Ends current round"
 
-#: client/cl_input.c:756
+#: client/cl_input.c:768
+msgid "Slice through terrain at a higher level"
+msgstr "Slice through terrain at a higher level"
+
+#: client/cl_input.c:769
+msgid "Slice through terrain at a lower level"
+msgstr "Slice through terrain at a lower level"
+
+#: client/cl_input.c:772
 msgid "Confirm the current action"
 msgstr "Confirm the current action"
+
+#: client/cl_input.c:780
+msgid "Toggle first-person/third-person camera mode"
+msgstr "Toggle first-person/third-person camera mode"
 
 #: client/cl_main.c:338
 #: client/cl_main.c:695
@@ -7616,35 +7185,35 @@ msgstr "Max. soldiers per player:\t%s\n"
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldiers per team:\t%s\n"
 
-#: client/cl_main.c:1266
+#: client/cl_main.c:1270
 msgid "Unnamed"
 msgstr "Unnamed"
 
-#: client/cl_main.c:1483
+#: client/cl_main.c:1487
 msgid "Chicken-hearted"
 msgstr "Chicken-hearted"
 
-#: client/cl_main.c:1485
+#: client/cl_main.c:1489
 msgid "Very Easy"
 msgstr "Very Easy"
 
-#: client/cl_main.c:1488
+#: client/cl_main.c:1492
 msgid "Easy"
 msgstr "Easy"
 
-#: client/cl_main.c:1490
+#: client/cl_main.c:1494
 msgid "Normal"
 msgstr "Normal"
 
-#: client/cl_main.c:1493
+#: client/cl_main.c:1497
 msgid "Hard"
 msgstr "Hard"
 
-#: client/cl_main.c:1495
+#: client/cl_main.c:1499
 msgid "Very Hard"
 msgstr "Very Hard"
 
-#: client/cl_main.c:1497
+#: client/cl_main.c:1501
 msgid "Insane"
 msgstr "Insane"
 
@@ -7735,6 +7304,10 @@ msgstr "Settings doesn't make sense"
 #, c-format
 msgid "Key: %s"
 msgstr "Key: %s"
+
+#: client/cl_menu.c:2471
+msgid "Hide the HUD (press ESC to reactivate HUD)"
+msgstr "Hide the HUD (press ESC to reactivate HUD)"
 
 #: client/cl_parse.c:685
 msgid "Alien spotted!\n"
@@ -8282,6 +7855,18 @@ msgstr "loading %s"
 msgid "loading models..."
 msgstr "loading models..."
 
+#: client/console.c:361
+msgid "Bring up the in-game console"
+msgstr "Bring up the in-game console"
+
+#: client/console.c:363
+msgid "Send a message to all players"
+msgstr "Send a message to all players"
+
+#: client/console.c:364
+msgid "Send a message to allied team members"
+msgstr "Send a message to allied team members"
+
 #: game/g_client.c:586
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Can't perform action - this isn't your round!\n"
@@ -8351,6 +7936,640 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
+#~ msgid "News"
+#~ msgstr "News"
+#~ msgid "Technologies & Discoveries"
+#~ msgstr "Technologies & Discoveries"
+#~ msgid "Weapons"
+#~ msgstr "Weapons"
+#~ msgid "Armors"
+#~ msgstr "Armors"
+#~ msgid "Alien Species"
+#~ msgstr "Alien Species"
+#~ msgid "UFOs"
+#~ msgstr "UFOs"
+#~ msgid "UGVs"
+#~ msgstr "UGVs"
+#~ msgid "Advanced Plasma Control"
+#~ msgstr "Advanced Plasma Control"
+#~ msgid "plasma_txt"
+#~ msgstr ""
+#~ "The Antareans have refined the technology to use the basic concept behind "
+#~ "plasma (ionized gas) and perfected its use for military reasons. Not only "
+#~ "do they use it for weapons, but they even managed to produce more "
+#~ "powerful ion drives than mankind ever imagined possible. Your scientists "
+#~ "could reproduce the basic concepts behind these improvements and we might "
+#~ "even be able to produce similar equipment at some point in the near "
+#~ "future."
+#~ msgid "plasma_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Tachyon Control"
+#~ msgstr "Tachyon Control"
+#~ msgid "tachyon_txt"
+#~ msgstr ""
+#~ "Although our engineers not fully understand the principles of altering "
+#~ "the tachyons on a subatomic level, they were able to reproduce the "
+#~ "tachyon accelerator technology. Apparently the tachyons are given a "
+#~ "defined spin inside the accelerator so they are able to interact with any "
+#~ "material. They still tend to infiltrate easily through any known armor "
+#~ "and lose their particle energy not before a penetrating distance of about "
+#~ "10 cm. Therefore a soldier hit by a tachyon charge suffers only minor "
+#~ "superficial injury but is heavily wounded in his viscera. These "
+#~ "properties of tachyon particles have been used to create devastating "
+#~ "weapons that the aliens now use to terrorize humanity. Our scientists "
+#~ "believe that we may be able to reproduce these weapons once we analyze "
+#~ "more details of it's construction."
+#~ msgid "tachyon_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Nano Technology"
+#~ msgstr "Nano Technology"
+#~ msgid "assault_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "assault_mag_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "bolterrifle_mag_txt"
+#~ msgstr ""
+#~ "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+#~ "\n"
+#~ "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+#~ "Operations Command\n"
+#~ "\n"
+#~ "DATE: %02i %s %i\n"
+#~ "\n"
+#~ "SUB: Re: Electromagnetic Rifle\n"
+#~ "\n"
+#~ "\n"
+#~ "The EM rifle project has been a resounding success! For the first time in "
+#~ "human history, we've created a viable man-portable electromagnetic "
+#~ "weapon. We have named our weapon the Bolter Rifle to avoid ambiguity with "
+#~ "other existing MAG (Magnetic Accelerator Gun) implementations. I'll do my "
+#~ "best to explain its operation in this short summary.\n"
+#~ "\n"
+#~ "The Bolter Rifle is equipped with a railgun configuration, as opposed to "
+#~ "a coilgun/Gauss gun configuration, due to the high inefficiency and "
+#~ "generally poor operation of coilguns. Railguns work by utilising "
+#~ "electromagnetic force to propel an electrically conductive projectile "
+#~ "along two conducting rails. The electric current flowing through the "
+#~ "rails sets up a magnetic field between them and through the projectile. "
+#~ "The direction of the magnetic field is perpendicular to the current "
+#~ "flowing through the rails and the projectile; this results in the rails "
+#~ "and projectile pushing each other, thereby accelerating the projectile "
+#~ "along the rails.\n"
+#~ "\n"
+#~ "The world's first large-scale railgun, built in the 1970s, used 500 MJ of "
+#~ "stored energy from the largest homopolar generator ever built. The "
+#~ "electrical equipment needed to power these guns has become much more "
+#~ "compact in the past century or so, but it is still not small or light "
+#~ "enough to create man-portable weapons capable of replacing chemical-"
+#~ "propellant firearms. Another major failing of railguns is their extreme "
+#~ "susceptibility to rail erosion. The rails suffer heavy damage from every "
+#~ "shot fired along them, and when the contact points are badly damaged, the "
+#~ "electric current cannot properly pass from the rails through the "
+#~ "projectile. This causes successive shots to lose more and more of their "
+#~ "power. Each round needs at least a short length of undamaged rail in "
+#~ "order to build up velocity.\n"
+#~ "\n"
+#~ "Fortunately, we've managed to find a way around this problem -- by "
+#~ "loading new rails into the gun after every series of shots.\n"
+#~ "\n"
+#~ "The concept of pre-loading all of a weapon's ammunition into the barrel "
+#~ "has been around for a long time. Until now it has only been applied to "
+#~ "conventional firearms, but we have come up with a new concept; a small, "
+#~ "individually-powered and insulated length of rail loaded with every "
+#~ "round. This gives each round a viable contact point and will allow the "
+#~ "weapon to sustain power through all its shots. When all rounds in the "
+#~ "current barrel have been depleted -- and therefore the rails thoroughly "
+#~ "destroyed -- the soldier can simply unlock the old barrel, let it drop to "
+#~ "the ground, and slot in a fresh spare. Then he can replace the battery "
+#~ "pack for a new series of shots.\n"
+#~ "\n"
+#~ "The projectiles are specially-developed 3.2x40mm finned flechettes, "
+#~ "stamped from large sheets of tungsten alloy. They are razor-sharp, with "
+#~ "excellent armour-piercing qualities, and they tumble like demons inside "
+#~ "the target. The holes that these flechettes cause are many times larger "
+#~ "than their actual size.\n"
+#~ "\n"
+#~ "This choice of loading system makes the Bolter slow and clumsy to reload, "
+#~ "with expensive, oversized magazines (a new barrel and battery pack for "
+#~ "each reload) and a small ammo capacity of 4 shots per barrel. On the "
+#~ "other hand, the Bolter's stopping power is far greater than any chemical "
+#~ "firearm in our arsenal. It can be used both as a sniper rifle and a "
+#~ "powerful assault weapon, depending on whether it is fired on semi-"
+#~ "automatic or 4-round burst mode. It is a highly versatile weapon with "
+#~ "many possible applications; its tactical value will certainly become "
+#~ "apparent once we get some real combat experience with it.\n"
+#~ "\n"
+#~ "--Cdr. Navarre"
+#~ msgid "bolterrifle_mag_pre_txt"
+#~ msgstr ""
+#~ "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+#~ "\n"
+#~ "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+#~ "Operations Command\n"
+#~ "\n"
+#~ "DATE: %02i %s %i\n"
+#~ "\n"
+#~ "SUB: Proposal: Electromagnetic Rifle\n"
+#~ "\n"
+#~ "\n"
+#~ "Commander, we've received a number of research files from several UN "
+#~ "nations concerning research and development for man-portable "
+#~ "electromagnetic weaponry; various designs have been proposed and even "
+#~ "prototyped for railguns, coilguns and quench guns. Of course, all these "
+#~ "experiments have failed, since electromagnetic weapons require huge "
+#~ "amounts of power -- and therefore banks of capacitors so heavy that no "
+#~ "human soldier could possibly carry them. Even atomic batteries have not "
+#~ "given us the power output we need to make man-portable electromagnetic "
+#~ "guns a reality. It is impossible.\n"
+#~ "\n"
+#~ "At least, that's what we thought, until the aliens showed up.\n"
+#~ "\n"
+#~ "Seeing alien craft hurtling through our skies, advanced robots scuttling "
+#~ "through our streets, and high-powered energy weapons tearing up our "
+#~ "people has given us a whole host of new ideas. It has also caused us to "
+#~ "take a very close look through our collected UN research data. It's "
+#~ "nothing short of a gold mine in disguise. By combining the best of these "
+#~ "individual cluttered pieces, we believe we may be able to devise a new "
+#~ "weapon for our tactical teams that will be both man-portable and combat-"
+#~ "effective. This weapon would have extreme range and power and may serve "
+#~ "us well in the days ahead.\n"
+#~ "\n"
+#~ "This idea holds a lot of promise, Commander. We would like your "
+#~ "authorisation for lab time and funding in order finally make "
+#~ "electromagnetic weaponry a reality.\n"
+#~ "\n"
+#~ "--Cdr. Navarre"
+#~ msgid "combatknife_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "flamer_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "flamer_mag_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "flashbang_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "fraggren_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "incgren_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "grenl_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "grenl_ammo_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "grenl_fle_ammo_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "grenl_incendiary_ammo_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "irgoggles_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "medikit_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "pistol_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "pistol_mag_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "pistol2_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "pistol2_mag_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "plasatomizer_mag_txt"
+#~ msgstr ""
+#~ "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+#~ "\n"
+#~ "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+#~ "Operations Command\n"
+#~ "\n"
+#~ "DATE: %02i %s %i\n"
+#~ "\n"
+#~ "SUB: Re: Alien Artifact -- Plasma Pistol\n"
+#~ "\n"
+#~ "\n"
+#~ "When the aliens need a sidearm, they don't screw around.\n"
+#~ "\n"
+#~ "This plasma pistol is a nasty piece of work, Commander. Its operation is "
+#~ "extremely complex and inventive, requiring a great deal of technical "
+#~ "skill to create. The power pack alone is hundreds of years ahead of our "
+#~ "technology. It stores enough power to heat several charges of hydrogen to "
+#~ "a plasmatic state inside the miniature fusion chamber, which are expelled "
+#~ "as plasma using the ionised particles' own velocity.\n"
+#~ "\n"
+#~ "Unlike human firearms, the projectiles themselves are not stored in a "
+#~ "magazine or reservoir. They are generated inside the pistol from hydrogen "
+#~ "contained in the magazine, powered by the magazine's power-pack. Once the "
+#~ "plasma is heated, a thin film of liquid plastic is created between the "
+#~ "two 'spinnerets' located vertically opposite each other in front of the "
+#~ "grip. The plasma particles are then rapidly fired into the film so that "
+#~ "the plastic deforms into an orb or 'bolt'. The plastic contains and "
+#~ "protects the plasma, keeping it from dispersing until it reaches the "
+#~ "target. By the time a bolt reaches the target, the inside of the plastic "
+#~ "will be so eaten away that it will burst upon impact like a soap bubble, "
+#~ "splashing its payload across the target. The maximum range of a pistol "
+#~ "bolt -- the point it can reach before the plasma eats into open air and "
+#~ "disperses -- is approximately 20 metres.\n"
+#~ "\n"
+#~ "A bolt fired from the plasma pistol is so hot that even a near-miss can "
+#~ "be lethal. The effects on a victim are truly horrific; I will try to list "
+#~ "them all here.\n"
+#~ "\n"
+#~ "Any unarmoured human sprayed with this plasma will suffer extreme pain "
+#~ "and injuries all across the splash zone. Adipose (fatty) tissue will melt "
+#~ "like water. Blood and other bodily fluids boil in place. The plasma will "
+#~ "actually eat its way into a human body, causing bone-deep charring in a "
+#~ "large region around the splash zone. A large chunk of the body will be "
+#~ "literally burnt to a crisp.\n"
+#~ "\n"
+#~ "Any kind of tough fabric will provide some protection against a plasma "
+#~ "hit. High-tech armour in particular will disperse the heat as best it "
+#~ "can, and will resist the burning plasma for a time. Hopefully this will "
+#~ "be enough time to allow air-cooling to take place, bringing the plasma "
+#~ "down to non-lethal temperatures.\n"
+#~ "\n"
+#~ "I won't pretend to know how the aliens managed to squeeze all this stuff "
+#~ "into a pistol, but it does look as though they've made the same tradeoffs "
+#~ "between power and size that we have done with our handguns. It's almost "
+#~ "certain that larger, more powerful versions of these weapons exist and "
+#~ "will appear against us in this war. However, my team and I have figured "
+#~ "out the control scheme of the pistols, and we've written an appropriate "
+#~ "field manual for human use. Our soldiers will now be able to employ the "
+#~ "plasma pistol in a combat scenario as they would any other weapon.\n"
+#~ "\n"
+#~ "--Cdr. Navarre"
+#~ msgid "plasatomizer_mag_pre_txt"
+#~ msgstr ""
+#~ "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+#~ "\n"
+#~ "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+#~ "Operations Command\n"
+#~ "\n"
+#~ "DATE: %02i %s %i\n"
+#~ "\n"
+#~ "SUB: Proposal: Alien Artifact -- Plasma Pistol\n"
+#~ "\n"
+#~ "\n"
+#~ "Commander, we've recovered the first alien plasma weapon of the war. I "
+#~ "don't need to tell you how important this is. The alien armaments are "
+#~ "highly-advanced, powerful and extremely lethal; we must figure out how "
+#~ "they work in order to arm and armour ourselves against them.\n"
+#~ "\n"
+#~ "The alien plasma weapons represent a curious application of the plasma-"
+#~ "thrower concept, which was previously believed to be unfeasible as a "
+#~ "battlefield weapon. I would very much like to figure out how it works. My "
+#~ "team and I are confident that -- with enough time and proper safety "
+#~ "procedures -- we can hammer out the plasma pistol's function and controls "
+#~ "and write a small operational manual; our soldiers could actually use the "
+#~ "aliens' weapons against them!\n"
+#~ "\n"
+#~ "Of course, this program will need your approval for lab time and "
+#~ "funding.\n"
+#~ "\n"
+#~ "--Cdr. Navarre"
+#~ msgid "plasblaster_mag_txt"
+#~ msgstr "<TODO>"
+#~ msgid "plasblaster_mag_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "plasrifle_mag_txt"
+#~ msgstr "<TODO>"
+#~ msgid "plasrifle_mag_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "rpg_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "rpg_ammo_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "rpg_incendiary_ammo_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "rpg_tachyon_ammo_txt"
+#~ msgstr ""
+#~ "The tachyon ammo for RPG-37 is a definite human advantage over aliens in "
+#~ "this devastating war. We are now convinced the only alien weapon with an "
+#~ "explosive Tachyon effect is the Tachyon Rifle, and only in its primary "
+#~ "attack mode. Our forces are now armed with a tachyon explosive weapon "
+#~ "unavailable to the aliens: the Tachyon-Beam Rocket. It is a formidable "
+#~ "projectile, propelled using the usual liquid fuel engines, emanating high-"
+#~ "power tachyon radiation upon impact.\n"
+#~ "\n"
+#~ "Battle Implications: The most advanced of all rockets, the Tachyon-Beam "
+#~ "Rocket has a somewhat smaller splash damage radius than High-Explosive "
+#~ "Rocket, but the same long range. After reaching its target, the warhead "
+#~ "powers off its miniaturized particle accelerator where the tachyon "
+#~ "particles are stored. The particles beam in all directions and the "
+#~ "warhead is consumed by the ensuing storm of tachyon particle explosions."
+#~ msgid "rpg_tachyon_ammo_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "shotgun_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "shotgun_ammo_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "shotgun_slug_ammo_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "shotgun2_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "shotgun2_ammo_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "shotgun_micro_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "shotgun_micro_ammo_txt"
+#~ msgstr ""
+#~ "Technical Specifications: Flechette Shells\n"
+#~ "\n"
+#~ "CLASSIFIED LEVEL YELLOW\n"
+#~ "\n"
+#~ "PHALANX Extraterrestrial Response Unit\n"
+#~ "\n"
+#~ "Technical Document, Delta Clearance\n"
+#~ "\n"
+#~ "Filed: 20 March 2084\n"
+#~ "\n"
+#~ "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+#~ "Operations Command\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Overview\n"
+#~ "\n"
+#~ "This magazine contains 7 shells of flechette shot. Each 12mm shell "
+#~ "contains 8 tiny flechettes -- solid steel needles with fins to stabilise "
+#~ "their flight. This ammunition is military-only, banned for all civilian "
+#~ "use due to the flechettes' excellent performance against armour. The "
+#~ "flechettes are prone to tumble after penetration, resulting in nasty "
+#~ "wounds that will either kill the target or send it running for cover.\n"
+#~ "\n"
+#~ "This short shell -- only 90mm long -- was designed for pistol-"
+#~ "configuration shotguns like the CRC-M9 Micro Shotgun. However, the CRC-"
+#~ "212 Riot Shotgun can fire it just as easily, with all the performance "
+#~ "increases of a full-sized weapon.\n"
+#~ "\n"
+#~ "The magazine is meant to be loaded into a CRC-212 Riot Shotgun or CRC-M9 "
+#~ "Micro Shotgun.\n"
+#~ "\n"
+#~ "\n"
+#~ "Recommended Doctrine\n"
+#~ "\n"
+#~ "All soldiers equipped with shotguns should carry at least one reload "
+#~ "whenever they go out in the field. It is not advisable to send our troops "
+#~ "into combat without spare magazines.\n"
+#~ "\n"
+#~ "\n"
+#~ "Addenda\n"
+#~ "\n"
+#~ "None."
+#~ msgid "shotgun_micro_ammo_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "smg_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "smg_mag_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "smokegren_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "sniper_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "sniper_mag_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "combat_armor_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "nano_armor_txt"
+#~ msgstr ""
+#~ "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+#~ "\n"
+#~ "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+#~ "Operations Command\n"
+#~ "\n"
+#~ "DATE: %02i %s %i\n"
+#~ "\n"
+#~ "SUB: Re: Nanocomposite Armour\n"
+#~ "\n"
+#~ "\n"
+#~ "Commander, I would like to report the success of our nanocomposite "
+#~ "production research!\n"
+#~ "\n"
+#~ "I won't bore you with the intricacies of CNT production; suffice it to "
+#~ "say that, by close study of the telltale traces left by alien production "
+#~ "lines, we've been able to identify some of their processes. Apparently "
+#~ "they use some kind of plasma furnace in order to spin, shape and press "
+#~ "the nanotubes into a latticework pattern. We've been able to create a "
+#~ "prototype furnace of our own, and have made various modifications to our "
+#~ "nanotube production methods based on the alien examples. The result is a "
+#~ "significant increase in power efficiency and production volume.\n"
+#~ "\n"
+#~ "From here on I'll restrict my summary to the capabilities and tactical "
+#~ "applications of the new armour, which I trust you will find both "
+#~ "fascinating and encouraging.\n"
+#~ "\n"
+#~ "We've managed to duplicate almost all the functionality of the alien "
+#~ "armour, from the nanocomposite plates to the servo-assisted movement. It "
+#~ "is incredibly light for its bulk, though still considerably heavier than "
+#~ "our Combat Armour. It is almost as protective as the alien model, and "
+#~ "bestows similar quickness of movement and more precise aiming.\n"
+#~ "\n"
+#~ "However, there are some limitations that we just can't get around. The "
+#~ "fact is that the aliens have a good deal more experience with these "
+#~ "materials and can work them a lot more elegantly than we can. Our armour "
+#~ "is bulkier and heavier, more stiffly-constructed, and its electronics do "
+#~ "not perform as well. This may negatively impact firing speed and reaction "
+#~ "time. Our version of the polymer isn't quite as good as theirs, it tends "
+#~ "to crack more easily. Our servomotors in particular are large and "
+#~ "unwieldy compared to the compact alien designs. There's no way to reduce "
+#~ "their size any further than we already have.\n"
+#~ "\n"
+#~ "We're really quite embarrassed about the boots in particular, but they "
+#~ "are honestly the best we could do. We simply don't have the precision "
+#~ "machinery needed to make servos like the aliens do. Regardless, we've "
+#~ "tried our best to make the boots safe and light, with a powerful "
+#~ "suspension system in the soles to make them springy enough for rapid "
+#~ "movement.\n"
+#~ "\n"
+#~ "The new armour's tactical applications are extensive. It's light enough "
+#~ "to be worn by forward elements of our tac teams, yet protective enough to "
+#~ "resist heavy weapons fire. It will serve exceptionally well for close "
+#~ "assault troops that need both speed and armour to perform their best.\n"
+#~ "\n"
+#~ "--Cdr. Navarre"
+#~ msgid "nano_armor_pre_txt"
+#~ msgstr ""
+#~ "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+#~ "\n"
+#~ "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+#~ "Operations Command\n"
+#~ "\n"
+#~ "DATE: %02i %s %i\n"
+#~ "\n"
+#~ "SUB: Proposal: Nanocomposite Armour\n"
+#~ "\n"
+#~ "\n"
+#~ "Our examination of the alien body armour has led us to many interesting "
+#~ "realisations. Obviously, the key to creating more effective mobile armour "
+#~ "based on the alien suits lies in the direction of nanocomposites. This "
+#~ "will require large amounts of carbon nanotubes.\n"
+#~ "\n"
+#~ "In the past, carbon nanotubes have been difficult and expensive to "
+#~ "produce, and trying to work them into a proper shape was even worse. "
+#~ "Because of this nanocomposite armour has never been used except in high-"
+#~ "cost vehicles such as aircraft and tanks, and then only in plating that "
+#~ "requires minimal shaping or other work. The alien armour, however, uses "
+#~ "carbon nanotube composites in abundance. It's our manufacturing processes "
+#~ "that are holding us back.\n"
+#~ "\n"
+#~ "With the alien armour in hand and enough resources at our disposal, I "
+#~ "believe that we can devise new production methods and shaping processes "
+#~ "that will allow us to mass-produce shaped nanocomposite plates, finally "
+#~ "bringing this technology into our reach.\n"
+#~ "\n"
+#~ "This project will require a fair amount of lab time and funding. We'll "
+#~ "start work as soon as we receive your authorisation, Commander.\n"
+#~ "\n"
+#~ "--Cdr. Navarre"
+#~ msgid "b_aliencontainment_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_command_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_entrance_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_large_hangar_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_hospital_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_small_hangar_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_lab_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_powerplant_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_quarters_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_radar_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_storage_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_teamroom_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_small_ufo_hangar_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_large_ufo_hangar_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "b_workshop_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "dropship_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "interceptor_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "saracen_interceptor_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Small alien craft"
+#~ msgstr "Small alien craft"
+#~ msgid "Big alien craft"
+#~ msgstr "Big alien craft"
+#~ msgid "Harvester alien craft"
+#~ msgstr "Harvester alien craft"
+#~ msgid "Bloodspider - Combat notes"
+#~ msgstr "Bloodspider - Combat notes"
+#~ msgid "Bloodspider - Autopsy"
+#~ msgstr "Bloodspider - Autopsy"
+#~ msgid "Ortnok - Combat notes"
+#~ msgstr "Ortnok - Combat notes"
+#~ msgid "ortnok_notes_txt"
+#~ msgstr ""
+#~ "Genetically the green skinned Ortnoks seem to be related very closely to "
+#~ "the human race. About 80% of their DNA is identical compared to the "
+#~ "human's. The parts that are different are most likely genetically "
+#~ "engineered because they do not show any individual variability. The fact "
+#~ "that they are genetically altered and that they do not seem to have any "
+#~ "functional reproduction organs suggests that they are clones made by some "
+#~ "as yet unknown alien species. Additionally the Ortnoks have several "
+#~ "cybernetic implants which involve mainly the cardiovascular system, the "
+#~ "muscles, the eyes and the brain. They enhance the physical strenght and "
+#~ "stamnia as well as the senses to a level superior to any human. The "
+#~ "purpose of the brain implants is mostly unclear but it is believed that "
+#~ "they serve as receivers for commands. But currently this is only a "
+#~ "assumption because there is no evidence proving the existence of such a "
+#~ "master-species."
+#~ msgid "ortnok_notes_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Ortnok - Autopsy"
+#~ msgstr "Ortnok - Autopsy"
+#~ msgid "Ortnok Worker"
+#~ msgstr "Ortnok Worker"
+#~ msgid "ortnok_light_txt"
+#~ msgstr "<TODO>"
+#~ msgid "ortnok_light_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Ortnok Warrior"
+#~ msgstr "Ortnok Warrior"
+#~ msgid "ortnok_medium_txt"
+#~ msgstr ""
+#~ "Having the same genetic features as the regular Ortnoks, the Ortnok "
+#~ "Warriors have beenextensively modified with cybernetic implants. All "
+#~ "these additional implants obviously aim toachieve a better performance in "
+#~ "combat. Therefore the legs and arms have been almost completelyreplaced "
+#~ "by cybernetic prostheses which allow a physical strength far beyond the "
+#~ "potential of ahuman being. The claw shaped hands are designed to handle "
+#~ "extreme weights. The chest area iscovered with a thick steel plating "
+#~ "which is almost impenetrable for regular rifle ammunition.The face mask "
+#~ "serves as a protection against hazardous gases as well as a augmentation "
+#~ "of theupper airways to allow a better lung function. The disadvantage of "
+#~ "this massive cyberneticaugmentation is the increased vulnerability to "
+#~ "electromagnetic pulses (EMP)."
+#~ msgid "ortnok_medium_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Antarean - Combat notes"
+#~ msgstr "Antarean - Combat notes"
+#~ msgid "antarean_notes_txt"
+#~ msgstr "<TODO>"
+#~ msgid "antarean_notes_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Antarean - Autopsy"
+#~ msgstr "Antarean - Autopsy"
+#~ msgid "Antarean - Commander interrogation"
+#~ msgstr "Antarean - Commander interrogation"
+#~ msgid "antarean_interrogation_commander_txt"
+#~ msgstr "<TODO>"
+#~ msgid "antarean_interrogation_commander_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Shevaar - Combat notes"
+#~ msgstr "Shevaar - Combat notes"
+#~ msgid "shevaar_notes_txt"
+#~ msgstr "<TODO>"
+#~ msgid "shevaar_notes_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Shevaar - Autopsy"
+#~ msgstr "Shevaar - Autopsy"
+#~ msgid "Hovernet - Combat notes"
+#~ msgstr "Hovernet - Combat notes"
+#~ msgid "Hovernet - wreck research"
+#~ msgstr "Hovernet - wreck research"
+#~ msgid "Cyborg Ortnok - Combat notes"
+#~ msgstr "Cyborg Ortnok - Combat notes"
+#~ msgid "cyborg_ortnok_notes_txt"
+#~ msgstr "<TODO>"
+#~ msgid "cyborg_ortnok_notes_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Cyborg Ortnok - Autopsy"
+#~ msgstr "Cyborg Ortnok - Autopsy"
+#~ msgid "UGV Phoenix"
+#~ msgstr "UGV Phoenix"
+#~ msgid "UGV Triax"
+#~ msgstr "UGV Triax"
+#~ msgid "Light Shield"
+#~ msgstr "Light Shield"
+#~ msgid "craft_shield_light_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Medium Shield"
+#~ msgstr "Medium Shield"
+#~ msgid "craft_shield_medium_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "craft_shield_medium_txt"
+#~ msgstr "<TODO>"
+#~ msgid "Hard Shield"
+#~ msgstr "Hard Shield"
+#~ msgid "craft_shield_hard_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "craft_shield_hard_txt"
+#~ msgstr "<TODO>"
+#~ msgid "craft_weapon_flac_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "craft_weapon_sparrowhawk_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "craft_weapon_tr20_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "craft_weapon_particle_beam_pre_txt"
+#~ msgstr "No pre research info available"
 #~ msgid "Machine Pistol Clip"
 #~ msgstr "Machine Pistol Clip"
 #~ msgid "Kevlar Vest"

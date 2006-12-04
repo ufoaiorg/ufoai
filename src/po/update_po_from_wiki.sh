@@ -33,8 +33,9 @@ then
 	echo "Could not find the file "$input_file" in this directory."
 fi
 
-# we use gnu sed for several substitutions in this script. For linux, this program is called 'sed', but on other system (fresbsd), it is called gsed. We set sed_soft to the name of sed program.
+# we use gnu sed and gnu awk a lot of times in this script. For linux, those programs are called 'sed' and 'awk', but on other system (fresbsd), they are called gsed and gawk. We set sed_soft and awk_soft to the name of those programs.
 sed_soft="sed"
+awk_soft="awk"
 test=`printf "rnt\n" | $sed_soft 's/\r//g;s/\n//g;s/\t//g'`
 if [ "$test" != "rnt" ]
 then
@@ -42,8 +43,9 @@ then
 	if [ $? -eq 0 ]
 	then
 		sed_soft="gsed"
+		awk_soft="gawk"
 	else
-		printf "Sorry, but this program needs a version of gnu sed to run (named sed or gsed).\nPlease install gsed (this is different from sed for other Unix than Linux).\n"
+		printf "Sorry, but this program needs a version of gnu sed and gnu awk to run (named sed or gsed and awk or gawk).\nPlease install gsed and gawk(this is different from sed and awk for other Unixes than Linux).\n"
 		exit
 	fi	
 fi
@@ -90,19 +92,19 @@ apply_sed()
 		printf "\n\n" >> $log_file
 	fi
 
-	test=`awk ' BEGIN {FS="\""}
+	test=`$awk_soft ' BEGIN {FS="\""}
 		NR == 2 {print $2}' sed_commands`
 	test=${#test}
 	if [ $test -eq 0 ]
 	then
 		#test=`wc -l sed_commands | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
-		test=`awk 'NR == 3 {print $0}' sed_commands`
+		test=`$awk_soft 'NR == 3 {print $0}' sed_commands`
 		test=${#test}
 	fi
 
 	if [ $test -gt 0 ]
 	then
-		test=`awk 'NR == '$BEGIN' {print $0}' $output_file | grep "msgid_plural"`
+		test=`$awk_soft 'NR == '$BEGIN' {print $0}' $output_file | grep "msgid_plural"`
 		if [ ${#test} -gt 0 ]
 		then
 				test=0
@@ -116,14 +118,14 @@ apply_sed()
 	then
 		$sed_soft -f 'sed_commands' $output_file > $output_file.tmp
 		BEGIN=$BEGIN-2
-		test=`awk 'NR == '$BEGIN' {print $0}' $output_file.tmp`
+		test=`$awk_soft 'NR == '$BEGIN' {print $0}' $output_file.tmp`
 		if [ "$test" = "#, fuzzy" ]
 		then
 			$sed_soft $BEGIN'd' $output_file.tmp > $output_file.tmp.tmp
 			mv -f $output_file.tmp.tmp $output_file.tmp
 		fi
 
-		test=`diff $output_file $output_file.tmp | awk 'NR==1 {print $0}'`
+		test=`diff $output_file $output_file.tmp | $awk_soft 'NR==1 {print $0}'`
 		if [ ${#test} -gt 0 ]
 		then
 			echo "   $language.po file updated"
@@ -163,7 +165,7 @@ set_BEGIN_END()
 # The first argument is 1 if this is a long description which need several lines of msgstr.
 	BEGIN=`grep -n "msgid \"$english\"" $output_file |
 	cut -d : -f 1`
-	END=`awk 'NR > '$BEGIN' && $0 ~ /^#:[ \t]/ {print NR;exit}' $output_file`
+	END=`$awk_soft 'NR > '$BEGIN' && $0 ~ /^#:[ \t]/ {print NR;exit}' $output_file`
 	BEGIN=$BEGIN+1    
 	END=$END-2
 	 
@@ -190,7 +192,7 @@ download_description()
 		loc=$?+1
 		if [ $loc -ne 256 ]
 		then
-			content=`awk 'BEGIN {FS="\""}
+			content=`$awk_soft 'BEGIN {FS="\""}
 			NR > '$number' && $0 ~ /<td>/ {n++}
 			NR > '$number' && n == '$loc'+1 && $0 ~ /^<ul><li>/ {
 				match($0,"<a href=")
@@ -258,7 +260,7 @@ update_one_sentence()
 			option=""
 	fi
 
-	awk 'BEGIN {FS="]";RS="<p>"}
+	$awk_soft 'BEGIN {FS="]";RS="<p>"}
 		$0 ~ /^[ \t]*$/ {next}
 		test && ($0 ~ /^\[/ || $0 ~ /<.*>/) {exit}
 		$0 ~ /^\['$english'\]/ || test == 1 {
@@ -286,7 +288,7 @@ update_news()
 	set_BEGIN_END "1"
 	if [ ${BEGIN} -gt 1 ]
 	then
-		awk -v section=$1 -v news=$2 -v max_h4=$3 'BEGIN {RS="<p>"}
+		$awk_soft -v section=$1 -v news=$2 -v max_h4=$3 'BEGIN {RS="<p>"}
 			$0 ~ /^[ \t]*$/ {next}
 			$0 ~ /<h2>/ {h2++;next}
 			h2 == section && $0 ~ /<h3>/ {h3++; if (h3>news) {exit};next}
@@ -307,7 +309,7 @@ update_news()
 			END {printf "\n"}  
 		' downloaded_page | 
 		$sed_soft 's/^[ \t]*//g;/^[ \t]*$/d;s/\"/\\\"/g;s/\\/\\\\/g' |
-		awk '$0 !~ /^[ \t]*$/ {
+		$awk_soft '$0 !~ /^[ \t]*$/ {
 			printf "'$END'i\"%s\"\n",$0}' >> sed_commands
 		printf "\n"
 		echo "Found news msgid : " $english
@@ -322,7 +324,7 @@ update_txt()
 # $2 is 1 if we want to display h2 titles, 0 otherwise
 # $3 is the number of h3 title you want to read before stopping
 	set_BEGIN_END "1"
-	awk -v working_h2=$1 -v display_title=$2 -v h3_nb=$3 'BEGIN {already_written_test=0;exit_test=0;RS="<p>"}
+	$awk_soft -v working_h2=$1 -v display_title=$2 -v h3_nb=$3 'BEGIN {already_written_test=0;exit_test=0;RS="<p>"}
 		h2 == working_h2 && $0 ~ /<h1>/ {exit}
 		$0 ~ /<h2>/ {h2++}
 		h2 < working_h2 {next}
@@ -363,7 +365,7 @@ update_txt()
 			exit_test=0}
 	' downloaded_page | 
 	$sed_soft 's/[[:space:]]*<.*>[[:space:]]*//g;/^[[:space:]]*$/d;s/^[ \t]*//g;s/\"/\\\"/g' | 
-	awk '{printf "'$END'i\"%s\"\n",$0}' |	
+	$awk_soft '{printf "'$END'i\"%s\"\n",$0}' |	
 	$sed_soft 's/\\/\\\\/g'>> sed_commands
 	apply_sed $english
 	return $?
@@ -388,7 +390,7 @@ then
 	exit
 fi
 
-awk ' BEGIN {FS="</th><th>"}
+$awk_soft ' BEGIN {FS="</th><th>"}
 	$0 ~ /^<th> msgid <\/th><th> status <\/th><th> en / {
 		if (begin > 0) {print begin" "NR-1" en"language}
 		begin=NR
@@ -427,7 +429,7 @@ declare -i FIRST_LINE  # Contains the first interesting line of the wiki index. 
 BEGIN=`grep -nm 1 "#: " $language.po | cut -d : -f 1`
 END=`wc -l $language.po | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
 $sed_soft $BEGIN','$END's/^\"\(.*\)\"$/\1/g;s/\r//g' $language.po | 
-awk 'BEGIN {FS=" ";test=0}
+$awk_soft 'BEGIN {FS=" ";test=0}
 	$0 ~ /^[ \t]*$/ {if (test) {printf "\"\n";}; printf "\n"; test=0; next}
     $0 ~ /^#/ || $0 ~ /^\"/ || $0 ~ /^msgid/ || $0 ~ /^msgstr/ {
 		if (test) {printf "\"\n"}
@@ -455,7 +457,7 @@ if [[ "$debug" = "1" ]]
 then
 	printf "__________________________________________\n\n" >> $log_file
 	echo "$output_file 300 first lines are :" >> $log_file
-	awk 'NR <=300 {print $0}' $output_file >> $log_file
+	$awk_soft 'NR <=300 {print $0}' $output_file >> $log_file
 	printf "__________________________________________\n\n" >> $log_file
 fi
 
@@ -472,7 +474,7 @@ if [[ "$debug" = "1" ]]
 then
 	printf "__________________________________________\n\n" >> $log_file
 	echo "po_file.tmp 50 first lines are :" >> $log_file
-	awk 'NR <=50 {print $0}' po_file.tmp >> $log_file
+	$awk_soft 'NR <=50 {print $0}' po_file.tmp >> $log_file
 	printf "__________________________________________\n\n" >> $log_file
 fi
 
@@ -487,7 +489,7 @@ touch unfound_msgid.tmp
 # MAIN PART OF THE PROGRAM
 #
 # We first begin to update the intro and prolog sentences, news and campaign descriptions, as they are on only 2 wiki page (it avoids useless downloading)
-FIRST_LINE=`awk 'BEGIN {FS=" "};NR==1 {print $1}' Language_List`
+FIRST_LINE=`$awk_soft 'BEGIN {FS=" "};NR==1 {print $1}' Language_List`
 FIRST_LINE=$FIRST_LINE-4
 if [[ "$debug" = "1" ]]
 then
@@ -553,7 +555,7 @@ download_description $english
 if [ $? -eq 0 ]
 then
 	clean_html
-	default_pre_txt=`awk 'BEGIN {RS="<p>"}
+	default_pre_txt=`$awk_soft 'BEGIN {RS="<p>"}
 		$0 ~ /</ {exit}
 		$0 !~ /^[ \t]*$/ {printf "%s",$0}
     ' downloaded_page |
@@ -602,7 +604,7 @@ do
 			if [[ ${english} = *"_txt" ]]
 			then
 				test=${english:0:${#english}-4}_pre_txt
-				test=`grep -im 1 "$test" po_file.tmp`
+				test=`grep -iwm 1 "$test" po_file.tmp`
 				if [[ ${#test} -gt 0 ]]
 				then
 					pre_txt=1
@@ -618,7 +620,8 @@ do
 			# For other descriptions, we want the first part.
 			# We distinguish between both with the variable 'working_section'
 				clean_html
-				if [[ ${english} = "ufo_"*"_txt" ]] || [[ ${english} = *"_autopsy_txt"* ]] || [[ ${english} = "kerrblade_txt" ]] || [[ ${english} = "plas"*"_txt" ]] || [[ ${english} = "bolterrifle"*"_txt" ]] || [[ ${english} = "nano_armor_txt" ]]
+#				if [[ ${english} = "ufo_"*"_txt" ]] || [[ ${english} = *"_autopsy_txt"* ]] || [[ ${english} = "kerrblade_txt" ]] || [[ ${english} = "plas"*"_txt" ]] || [[ ${english} = "bolterrifle"*"_txt" ]] || [[ ${english} = "nano_armor_txt" ]]
+				if [[ $pre_txt -eq 1 ]]
 				then
 				# Case of Alien Research : only the second part of the text has to be taken
 				update_txt 3 0 0
@@ -648,7 +651,7 @@ do
 					loc=$?
 					if [[ $loc -ne 255 ]]
 					then
-						awk -v number=$number 'BEGIN {FS="\""}
+						$awk_soft -v number=$number 'BEGIN {FS="\""}
 							NR > number && $0 ~ /<td>/ {n++}
 							NR >= number && n == '$loc' && $0 ~ /^<ul><li>/ {
 								match($0,"title=\"")
