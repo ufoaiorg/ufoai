@@ -54,14 +54,12 @@ fontRenderStyle_t fontStyle[] = {
  */
 static GLuint Font_TextureAddToCache(SDL_Surface * s)
 {
-	GLuint gltexnum;
+	GLuint gltexnum = 0;
 	int i;
 
 	for (i = firstTextureCache; i != lastTextureCache; i++, i %= (int)gl_fontcache->value)
 		if (textureCache[i].surface == s)
 			break;
-
-	gltexnum = textureCache[i].texture;
 
 	/* maybe cache is empty or surface wasn't found */
 	if (i == lastTextureCache) {
@@ -85,6 +83,7 @@ static GLuint Font_TextureAddToCache(SDL_Surface * s)
 		textureCache[i].surface = s;
 		
 		qglGenTextures(1, &gltexnum);
+		textureCache[i].texture = gltexnum;
 	}
 
 	return gltexnum;
