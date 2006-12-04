@@ -60,17 +60,14 @@
 
 up_chapters main
 {
-	news	"_News"
+	news		"_Background"
 	crafts	"_Aircraft"
-	tech	"_Technologies & Discoveries"
-	weapons	"_Weapons"
-	armors	"_Armors"
-//	damage	"_Damage Types"
-//	skill	"_Soldier Skills"
-	buildings	"_Buildings"
-	aliens	"_Alien Species"
-	ufos		"_UFOs"
-	ugv		"_UGVs"
+	buildings	"_Base Facilities"
+	tech		"_Research Reports"
+	equipment	"_Equipment"
+	artifacts	"_Alien Artifacts"
+	aliens	"_Autopsies & Observation"
+	threat	"_The Alien Threat"
 }
 
 //========================
@@ -91,74 +88,23 @@ tech rs_laser
 	image_top	techs/laser
 }
 
-tech rs_plasma
-{
-	type	tech
-	name	"_Advanced Plasma Control"
-	up_chapter	tech
-	description	"_plasma_txt"
-	pre_description	"_plasma_pre_txt"
-
-	require_OR
-	{
-		item plaspistol 1
-		item plasrifle 1
-		item plasmagrenade 1
-		item plasblade 1
-		item plasblaster 1
-	}
-	time	2250
-}
-
-tech rs_tachyon
-{
-	type	tech
-	name	"_Tachyon Control"
-	up_chapter	tech
-	description	"_tachyon_txt"
-	pre_description	"_tachyon_pre_txt"
-
-	require_OR
-	{
-		item tachyonpistol 1
-		item tachyonrifle 1
-		item tachyonsniper 1
-	}
-	time	3000
-}
-
-tech rs_nano
-{
-	type	tech
-	name	"_Nano Technology"
-	up_chapter	tech
-	description	"_nano_txt"
-	pre_description	"_nano_pre_txt"
-
-	require_AND
-	{
-		tech rs_laser
-		tech rs_plasma
-	}
-	time	2500
-}
-
-// tech rs_advanced_armor
+// tech rs_tachyon
 // {
 // 	type	tech
-// 	name	"_Advanced Armor Fabrics"
+// 	name	"_Tachyon Control"
 // 	up_chapter	tech
-// 	description	"_armor_fabrics_txt"
-//	pre_description	"_armor_fabrics_pre_txt"
-//	provides	"armor_fabrics"
+// 	description	"_tachyon_txt"
+// 	pre_description	"_tachyon_pre_txt"
 //
-// 	require_AND
-//	{
-//		tech rs_nano
-//		tech rs_tachyon
-//	}
-// 	time	10000
+// 	require_OR
+// 	{
+// 		item tachyonpistol 1
+// 		item tachyonrifle 1
+// 		item tachyonsniper 1
+// 	}
+// 	time	3000
 // }
+
 
 //=================================
 // weapons and items
@@ -183,7 +129,7 @@ tech rs_weapon_assault
 tech rs_weapon_assault_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_assault_mag_txt"
 	pre_description	"_assault_mag_pre_txt"
 
@@ -200,13 +146,13 @@ tech rs_weapon_assault_ammo
 tech rs_weapon_bolterrifle
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_bolterrifle_txt"
 	pre_description	"_bolterrifle_pre_txt"
 
 	require_AND
 	{
-		tech rs_skill_heavy
+		tech rs_skill_assault
 	}
 	provides	bolterrifle
 	time	500
@@ -216,9 +162,9 @@ tech rs_weapon_bolterrifle
 tech rs_weapon_bolterrifle_ammo
 {
 	type	weapon
-	up_chapter	weapons
-	description	"_bolterrifle_mag_txt"
-	pre_description	"_bolterrifle_mag_pre_txt"
+	up_chapter	equipment
+	description	"_bolterrifle_txt"
+	pre_description	"_bolterrifle_pre_txt"
 
 	require_AND
 	{
@@ -227,13 +173,13 @@ tech rs_weapon_bolterrifle_ammo
 	}
 	provides	bolterrifle_ammo
 	time	0
-	producetime	1
+	producetime	2
 }
 
 tech rs_weapon_combatknife
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_combatknife_txt"
 	pre_description	"_combatknife_pre_txt"
 
@@ -244,13 +190,13 @@ tech rs_weapon_combatknife
 	}
 	provides	knife
 	time	0
-	producetime	3
+	producetime	2
 }
 
 tech rs_weapon_flamer
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_flamer_txt"
 	pre_description	"_flamer_pre_txt"
 
@@ -266,7 +212,7 @@ tech rs_weapon_flamer
 tech rs_weapon_flamer_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_flamer_mag_txt"
 	pre_description	"_flamer_mag_pre_txt"
 
@@ -283,7 +229,7 @@ tech rs_weapon_flamer_ammo
 tech rs_weapon_flashbang
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_flashbang_txt"
 	pre_description	"_flashbang_pre_txt"
 
@@ -299,7 +245,7 @@ tech rs_weapon_flashbang
 tech rs_weapon_fraggren
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_fraggren_txt"
 	pre_description	"_fraggren_pre_txt"
 
@@ -316,7 +262,7 @@ tech rs_weapon_fraggren
 tech rs_weapon_incgren
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_incgren_txt"
 	pre_description	"_incgren_pre_txt"
 
@@ -333,7 +279,7 @@ tech rs_weapon_incgren
 tech rs_weapon_grenl
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_grenl_txt"
 	pre_description	"_grenl_pre_txt"
 
@@ -349,7 +295,7 @@ tech rs_weapon_grenl
 tech rs_weapon_grenl_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_grenl_ammo_txt"
 	pre_description	"_grenl_ammo_pre_txt"
 
@@ -366,7 +312,7 @@ tech rs_weapon_grenl_ammo
 tech rs_weapon_grenl_fle_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_grenl_fle_ammo_txt"
 	pre_description	"_grenl_fle_ammo_pre_txt"
 
@@ -383,7 +329,7 @@ tech rs_weapon_grenl_fle_ammo
 tech rs_weapon_grenl_incendiary_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_grenl_incendiary_ammo_txt"
 	pre_description	"_grenl_incendiary_ammo_pre_txt"
 
@@ -400,7 +346,7 @@ tech rs_weapon_grenl_incendiary_ammo
 tech rs_weapon_grenl_plasma_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_grenl_plasma_ammo_txt"
 	pre_description	"_grenl_plasma_ammo_pre_txt"
 
@@ -417,7 +363,7 @@ tech rs_weapon_grenl_plasma_ammo
 tech rs_weapon_heavylaser
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_heavylaser_txt"
 	pre_description	"_heavylaser_pre_txt"
 
@@ -435,7 +381,7 @@ tech rs_weapon_heavylaser
 tech rs_weapon_heavylaser_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_heavylaser_ammo_txt"
 	pre_description	"_heavylaser_ammo_pre_txt"
 
@@ -452,7 +398,7 @@ tech rs_weapon_heavylaser_ammo
 tech rs_irgoggles
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_irgoggles_txt"
 	pre_description	"_irgoggles_pre_txt"
 
@@ -468,7 +414,7 @@ tech rs_irgoggles
 tech rs_weapon_kerrblade
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	artifacts
 	description	"_kerrblade_txt"
 	pre_description	"_kerrblade_pre_txt"
 
@@ -486,7 +432,7 @@ tech rs_weapon_kerrblade
 tech rs_weapon_laserpistol
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_laserpistol_txt"
 	pre_description	"_laserpistol_pre_txt"
 
@@ -503,7 +449,7 @@ tech rs_weapon_laserpistol
 tech rs_weapon_laserpistol_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_laserpistol_mag_txt"
 	pre_description	"_laserpistol_mag_pre_txt"
 
@@ -520,7 +466,7 @@ tech rs_weapon_laserpistol_ammo
 tech rs_weapon_laserrifle
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_laserrifle_txt"
 	pre_description	"_laserrifle_pre_txt"
 
@@ -538,7 +484,7 @@ tech rs_weapon_laserrifle
 tech rs_weapon_laserrifle_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_laserrifle_mag_txt"
 	pre_description	"_laserrifle_mag_pre_txt"
 
@@ -555,7 +501,7 @@ tech rs_weapon_laserrifle_ammo
 tech rs_medikit
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_medikit_txt"
 	pre_description	"_medikit_pre_txt"
 
@@ -571,7 +517,7 @@ tech rs_medikit
 tech rs_weapon_pistol
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_pistol_txt"
 	pre_description	"_pistol_pre_txt"
 
@@ -588,7 +534,7 @@ tech rs_weapon_pistol
 tech rs_weapon_pistol_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_pistol_mag_txt"
 	pre_description	"_pistol_mag_pre_txt"
 
@@ -606,7 +552,7 @@ tech rs_weapon_pistol_ammo
 tech rs_weapon_pistol2
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_pistol2_txt"
 	pre_description	"_pistol2_pre_txt"
 
@@ -623,7 +569,7 @@ tech rs_weapon_pistol2
 tech rs_weapon_pistol2_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_pistol2_mag_txt"
 	pre_description	"_pistol2_mag_pre_txt"
 
@@ -641,7 +587,7 @@ tech rs_weapon_pistol2_ammo
 tech rs_weapon_plasatomizer
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	artifacts
 	description	"_plasatomizer_txt"
 	pre_description	"_plasatomizer_pre_txt"
 
@@ -650,7 +596,7 @@ tech rs_weapon_plasatomizer
 		tech rs_skill_assault
 		tech rs_skill_heavy
 		tech rs_plasma
-		item plaspistol 3
+		item plaspistol 1
 	}
 
 	provides	plaspistol
@@ -661,9 +607,9 @@ tech rs_weapon_plasatomizer
 tech rs_weapon_plasatomizer_ammo
 {
 	type	weapon
-	up_chapter	weapons
-	description	"_plasatomizer_mag_txt"
-	pre_description	"_plasatomizer_mag_pre_txt"
+	up_chapter	artifacts
+	description	"_plasatomizer_txt"
+	pre_description	"_plasatomizer_pre_txt"
 
 	require_AND
 	{
@@ -678,7 +624,7 @@ tech rs_weapon_plasatomizer_ammo
 tech rs_weapon_plasblaster
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	artifacts
 	description	"_plasblaster_txt"
 	pre_description	"_plasblaster_pre_txt"
 
@@ -687,7 +633,7 @@ tech rs_weapon_plasblaster
 		tech rs_skill_explosive
 		tech rs_skill_heavy
 		tech rs_plasma
-		item plasblaster 5
+		item plasblaster 1
 	}
 	provides	plasblaster
 	time	5500
@@ -697,9 +643,9 @@ tech rs_weapon_plasblaster
 tech rs_weapon_plasblaster_ammo
 {
 	type	weapon
-	up_chapter	weapons
-	description	"_plasblaster_mag_txt"
-	pre_description	"_plasblaster_mag_pre_txt"
+	up_chapter	artifacts
+	description	"_plasblaster_txt"
+	pre_description	"_plasblaster_pre_txt"
 
 	require_AND
 	{
@@ -714,7 +660,7 @@ tech rs_weapon_plasblaster_ammo
 tech rs_weapon_plasblade
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	artifacts
 	description	"_plasblade_txt"
 	pre_description	"_plasblade_pre_txt"
 
@@ -722,7 +668,7 @@ tech rs_weapon_plasblade
 	{
 		tech rs_skill_close
 		tech rs_damage_plasma
-		item plasblade 5
+		item plasblade 1
 	}
 	provides	plasblade
 	time	1000
@@ -732,15 +678,14 @@ tech rs_weapon_plasblade
 tech rs_weapon_plasmagren
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	artifacts
 	description	"_plasmagren_txt"
 	pre_description	"_plasmagren_pre_txt"
 
 	require_AND
 	{
 		tech rs_skill_explosive
-		tech rs_damage_plasma
-		item plasmagrenade 2
+		item plasmagrenade 1
 	}
 
 	provides	plasmagrenade
@@ -751,7 +696,7 @@ tech rs_weapon_plasmagren
 tech rs_weapon_plasrifle
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	artifacts
 	description	"_plasrifle_txt"
 	pre_description	"_plasrifle_pre_txt"
 
@@ -760,7 +705,7 @@ tech rs_weapon_plasrifle
 		tech rs_skill_assault
 		tech rs_skill_heavy
 		tech rs_plasma
-		item plasrifle 4
+		item plasrifle 1
 	}
 
 	provides	plasrifle
@@ -771,9 +716,9 @@ tech rs_weapon_plasrifle
 tech rs_weapon_plasrifle_ammo
 {
 	type	weapon
-	up_chapter	weapons
-	description	"_plasrifle_mag_txt"
-	pre_description	"_plasrifle_mag_pre_txt"
+	up_chapter	artifacts
+	description	"_plasrifle_txt"
+	pre_description	"_plasrifle_pre_txt"
 
 	require_AND
 	{
@@ -788,7 +733,7 @@ tech rs_weapon_plasrifle_ammo
 tech rs_weapon_rpg
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_rpg_txt"
 	pre_description	"_rpg_pre_txt"
 
@@ -805,7 +750,7 @@ tech rs_weapon_rpg
 tech rs_weapon_rpg_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_rpg_ammo_txt"
 	pre_description	"_rpg_ammo_pre_txt"
 
@@ -823,7 +768,7 @@ tech rs_weapon_rpg_ammo
 tech rs_weapon_rpg_incendiary_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_rpg_incendiary_ammo_txt"
 	pre_description	"_rpg_incendiary_ammo_pre_txt"
 
@@ -838,29 +783,29 @@ tech rs_weapon_rpg_incendiary_ammo
 	producetime	1
 }
 
-tech rs_weapon_rpg_tachyon_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_rpg_tachyon_ammo_txt"
-	pre_description	"_rpg_tachyon_ammo_pre_txt"
-
-	require_AND
-	{
-		tech rs_damage_tachyon
-		tech rs_weapon_rpg
-	}
-
-	provides	rpg_tachyon_ammo
-	time	3000
-	producetime	1
-}
+// tech rs_weapon_rpg_tachyon_ammo
+// {
+// 	type	weapon
+// 	up_chapter	equipment
+// 	description	"_rpg_tachyon_ammo_txt"
+// 	pre_description	"_rpg_tachyon_ammo_pre_txt"
+//
+// 	require_AND
+// 	{
+// 		tech rs_damage_tachyon
+// 		tech rs_weapon_rpg
+// 	}
+//
+// 	provides	rpg_tachyon_ammo
+// 	time	3000
+// 	producetime	1
+// }
 
 tech rs_weapon_chaingun
 {
 	// Note: Multiplayer only
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_chaingun_txt"
 	pre_description	"_chaingun_pre_txt"
 
@@ -878,7 +823,7 @@ tech rs_weapon_chaingun_ammo
 {
 	// Note: Multiplayer only
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_chaingun_ammo_txt"
 	pre_description	"_chaingun_ammo_pre_txt"
 
@@ -897,7 +842,7 @@ tech rs_weapon_shotgun
 {
 	// Note: Multiplayer only
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_shotgun_txt"
 	pre_description	"_shotgun_pre_txt"
 
@@ -913,8 +858,9 @@ tech rs_weapon_shotgun
 
 tech rs_weapon_shotgun_ammo
 {
+	// Note: Multiplayer only
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_shotgun_ammo_txt"
 	pre_description	"_shotgun_ammo_pre_txt"
 
@@ -933,7 +879,7 @@ tech rs_weapon_shotgun_slug_ammo
 {
 	// Note: Multiplayer only
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_shotgun_slug_ammo_txt"
 	pre_description	"_shotgun_slug_ammo_pre_txt"
 
@@ -952,7 +898,7 @@ tech rs_weapon_shotgun2
 {
 	// Riot Shotgun
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_shotgun2_txt"
 	pre_description	"_shotgun2_pre_txt"
 
@@ -969,7 +915,7 @@ tech rs_weapon_shotgun2
 tech rs_weapon_shotgun2_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_shotgun2_ammo_txt"
 	pre_description	"_shotgun2_ammo_pre_txt"
 
@@ -984,10 +930,28 @@ tech rs_weapon_shotgun2_ammo
 	producetime	1
 }
 
+tech rs_weapon_shotgun2_slug_ammo
+{
+	type	weapon
+	up_chapter	equipment
+	description	"_shotgun_slug_ammo_txt"
+	pre_description	"_shotgun_slug_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_blast
+		tech rs_weapon_shotgun2
+	}
+
+	provides	shotgun2_slug_ammo
+	time	0
+	producetime	1
+}
+
 tech rs_weapon_shotgun_micro
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_shotgun_micro_txt"
 	pre_description	"_shotgun_micro_pre_txt"
 
@@ -1004,9 +968,9 @@ tech rs_weapon_shotgun_micro
 tech rs_weapon_shotgun_micro_ammo
 {
 	type	weapon
-	up_chapter	weapons
-	description	"_shotgun_micro_ammo_txt"
-	pre_description	"_shotgun_micro_ammo_pre_txt"
+	up_chapter	equipment
+	description	"_shotgun2_ammo_txt"
+	pre_description	"_shotgun2_ammo_pre_txt"
 
 	require_AND
 	{
@@ -1022,7 +986,7 @@ tech rs_weapon_shotgun_micro_ammo
 tech rs_weapon_smg
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_smg_txt"
 	pre_description	"_smg_pre_txt"
 
@@ -1039,7 +1003,7 @@ tech rs_weapon_smg
 tech rs_weapon_smg_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_smg_mag_txt"
 	pre_description	"_smg_mag_pre_txt"
 
@@ -1057,7 +1021,7 @@ tech rs_weapon_smg_ammo
 tech rs_weapon_smokegren
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_smokegren_txt"
 	pre_description	"_smokegren_pre_txt"
 
@@ -1074,7 +1038,7 @@ tech rs_weapon_smokegren
 tech rs_weapon_sniper
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_sniper_txt"
 	pre_description	"_sniper_pre_txt"
 
@@ -1091,7 +1055,7 @@ tech rs_weapon_sniper
 tech rs_weapon_sniper_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_sniper_mag_txt"
 	pre_description	"_sniper_mag_pre_txt"
 
@@ -1109,7 +1073,7 @@ tech rs_weapon_sniper_ammo
 tech rs_weapon_stungren
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_stungren_txt"
 	pre_description	"_stungren_pre_txt"
 
@@ -1117,7 +1081,7 @@ tech rs_weapon_stungren
 	{
 		tech rs_skill_explosive
 		tech rs_damage_stun
-		tech rs_weapon_stunrod
+		tech rs_anti_alien_gas
 	}
 
 	provides	stungrenade
@@ -1128,7 +1092,7 @@ tech rs_weapon_stungren
 tech rs_weapon_stunrod
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_stunrod_txt"
 	pre_description	"_stunrod_pre_txt"
 
@@ -1146,14 +1110,14 @@ tech rs_weapon_stunrod
 tech rs_weapon_tachyonpistol
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	artifacts
 	description	"_tachyonpistol_txt"
 	pre_description	"_tachyonpistol_pre_txt"
 
 	require_AND
 	{
 		tech rs_skill_close
-		tech rs_tachyon
+//		tech rs_tachyon
 		item tachyonpistol 4
 	}
 
@@ -1165,7 +1129,7 @@ tech rs_weapon_tachyonpistol
 tech rs_weapon_tachyonpistol_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	artifacts
 	description	"_tachyonpistol_mag_txt"
 	pre_description	"_tachyonpistol_mag_pre_txt"
 
@@ -1183,7 +1147,7 @@ tech rs_weapon_tachyonpistol_ammo
 tech rs_weapon_tachyonrifle
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	artifacts
 	description	"_tachyonrifle_txt"
 	pre_description	"_tachyonrifle_pre_txt"
 
@@ -1203,7 +1167,7 @@ tech rs_weapon_tachyonrifle
 tech rs_weapon_tachyonrifle_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	artifacts
 	description	"_tachyonrifle_mag_txt"
 	pre_description	"_tachyonrifle_mag_pre_txt"
 
@@ -1221,7 +1185,7 @@ tech rs_weapon_tachyonrifle_ammo
 tech rs_weapon_tachyonsniper
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	artifacts
 	description	"_tachyonsniper_txt"
 	pre_description	"_tachyonsniper_pre_txt"
 
@@ -1240,7 +1204,7 @@ tech rs_weapon_tachyonsniper
 tech rs_weapon_tachyonsniper_ammo
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	artifacts
 	description	"_tachyonsniper_mag_txt"
 	pre_description	"_tachyonsniper_mag_pre_txt"
 
@@ -1262,7 +1226,7 @@ tech rs_weapon_tachyonsniper_ammo
 tech rs_combat_armor
 {
 	type	armor
-	up_chapter	armors
+	up_chapter	equipment
 	description	"_combat_armor_txt"
 	pre_description	"_combat_armor_pre_txt"
 
@@ -1275,19 +1239,34 @@ tech rs_combat_armor
 
 tech rs_nano_armor
 {
-	type	armor
-	description	"_nano_armor_txt"
-	pre_description	"_nano_armor_pre_txt"
-	up_chapter	armors
+	type	tech
+	name	"_Nanocomposite Armour"
+	up_chapter	equipment
+	description	"_nano_txt"
+	pre_description	"_nano_pre_txt"
 
 	require_AND
 	{
-		tech rs_nano
+		tech rs_alien_body_armour
 	}
-
 	provides	medium
 	time	2500
-	producetime	80
+	producetime	100
+}
+
+tech rs_alien_body_armour
+{
+	type	tech
+	name	"_Alien Artifact - Alien Body Armour"
+	up_chapter	tech
+	description	"_nano_txt"
+	pre_description	"_nano_pre_txt"
+
+	require_AND
+	{
+		item light_alien 1
+	}
+	time	2500
 }
 
 // tech rs_heavy_nano_armor
@@ -1295,7 +1274,7 @@ tech rs_nano_armor
 // 	type	armor
 // 	description	"_nano_heavy_armor_txt"
 // 	pre_description	"_nano_heavy_armor_pre_txt"
-//	up_chapter	armors
+//	up_chapter	equipment
 //
 // 	require_AND { tech rs_advanced_armor }
 // 	provides	heavy
@@ -1307,7 +1286,7 @@ tech rs_nano_armor
 tech rs_light_alien
 {
 	type	armor
-	up_chapter	armors
+	up_chapter	artifacts
 	description	"_light_alien_armor"
 	pre_description	"_light_alien_pre_armor"
 
@@ -1321,7 +1300,7 @@ tech rs_medium_alien
 	type	armor
 	description	"_medium_alien_armor"
 	pre_description	"_medium_alien_pre_armor"
-	up_chapter	armors
+	up_chapter	artifacts
 
 	provides	medium_alien
 	time	    25000
@@ -1403,9 +1382,12 @@ tech rs_damage_plasma
 	up_chapter	damage
 	description	"none"
 
-	require_AND
+	require_OR
 	{
-		tech rs_plasma
+		tech rs_weapon_plasatomizer
+		tech rs_weapon_plasblaster
+		tech rs_weapon_plasrifle
+		tech rs_weapon_plasmagren
 	}
 
 	time	0
@@ -1460,7 +1442,7 @@ tech rs_skill_accuracy
 {
 	type	tech
 	name "_Accuracy Attribute"
-//	up_chapter	skill
+	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1472,7 +1454,7 @@ tech rs_skill_assault
 {
 	type	tech
 	name "_Assault Guns Proficiency"
-//	up_chapter	skill
+	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1484,7 +1466,7 @@ tech rs_skill_close
 {
 	type	tech
 	name "_Close Combat Proficiency"
-//	up_chapter	skill
+	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1496,7 +1478,7 @@ tech rs_skill_explosive
 {
 	type	tech
 	name "_High-Explosives Proficiency"
-//	up_chapter	skill
+	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1508,7 +1490,7 @@ tech rs_skill_heavy
 {
 	type	tech
 	name "_Heavy Weapons Proficiency"
-//	up_chapter	skill
+	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1520,7 +1502,7 @@ tech rs_skill_mind
 {
 	type	tech
 	name "_Mind Attribute"
-//	up_chapter	skill
+	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1532,7 +1514,7 @@ tech rs_skill_power
 {
 	type	tech
 	name "_Power Attribute"
-//	up_chapter	skill
+	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1544,7 +1526,7 @@ tech rs_skill_sniper
 {
 	type	tech
 	name "_Sniper Rifles Proficiency"
-//	up_chapter	skill
+	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1556,7 +1538,7 @@ tech rs_skill_speed
 {
 	type	tech
 	name "_Speed Attribute"
-//	up_chapter	skill
+	up_chapter	skill
 	description	"none"
 	require_AND { tech nothing }
 
@@ -1577,7 +1559,7 @@ tech rs_building_aliencontainment
 
 	require_AND
 	{
-		tech nothing
+		tech rs_building_powerplant
 	}
 
 	provides	building_aliencontainment
@@ -1612,7 +1594,7 @@ tech rs_building_entrance
 	time	0
 }
 
-tech rs_building_hangar
+tech rs_building_large_hangar
 {
 	type	building
 	description	"_b_large_hangar_txt"
@@ -1644,7 +1626,7 @@ tech rs_building_hospital
 	time	0
 }
 
-tech rs_building_intercept
+tech rs_building_small_hangar
 {
 	type	building
 	description	"_b_small_hangar_txt"
@@ -1822,7 +1804,7 @@ tech rs_craft_dropship
 	mdl_top		dropship
 }
 
-tech rs_craft_interceptor
+tech rs_craft_stiletto_interceptor
 {
 	type	craft
 	description	"_interceptor_txt"
@@ -1875,10 +1857,10 @@ tech rs_craft_saracen_interceptor
 tech rs_craft_ufo_scout
 {
 	type	tech
-	name	"_Small alien craft"
+	name	"_UFO - Scout"
 	description	"_ufo_scout_txt"
 	pre_description	"_ufo_scout_pre_txt"
-	up_chapter	ufos
+	up_chapter	crafts
 
 	// FIXME
 	require_AND
@@ -1886,7 +1868,7 @@ tech rs_craft_ufo_scout
 		item craft_ufo_scout 1
 	}
 
-	provides	craft_ufo_scout
+	provides	""
 	time	2500
 
 	// TODO should come from craft-definition:
@@ -1896,18 +1878,19 @@ tech rs_craft_ufo_scout
 tech rs_craft_ufo_fighter
 {
 	type	tech
-	name	"_Big alien craft"
+	name	"_UFO - Fighter"
 	description	"_ufo_fighter_txt"
 	description	"_ufo_fighter_pre_txt"
-	up_chapter	ufos
+	up_chapter	crafts
 
 	// FIXME
 	require_AND
 	{
 		item craft_ufo_fighter 1
+		tech rs_craft_ufo_scout
 	}
 
-	provides	craft_ufo_fighter
+	provides	""
 	time	2500
 
 	// TODO should come from craft-definition:
@@ -1917,19 +1900,20 @@ tech rs_craft_ufo_fighter
 tech rs_craft_ufo_harvester
 {
 	type	tech
-	name	"_Harvester alien craft"
+	name	"_UFO - Harvester"
 	description	"_ufo_harvester_txt"
 	description	"_ufo_harvester_pre_txt"
-	up_chapter	ufos
+	up_chapter	crafts
 
 	// FIXME
 	require_AND
 	{
+		tech rs_craft_ufo_scout
 		tech rs_craft_ufo_tech
-		// item craft_ufo_harvester
+		// item craft_ufo_harvester 1
 	}
 
-	provides	craft_ufo_harvester
+	provides	""
 	time	2500
 
 	// TODO should come from craft-definition:
@@ -1942,30 +1926,10 @@ tech rs_craft_ufo_harvester
 
 // BLOODSPIDER
 
-tech rs_alien_bloodspider
-{
-	type	tech
-	name	"_Bloodspider - Combat notes"
-	description	"_bloodspider_notes_txt"
-	pre_description	"_bloodspider_notes_pre_txt"
-	up_chapter	tech
-
-	require_AND
-	{
-		tech rs_alien_bloodspider_notes
-	}
-
-	provides	""
-	time	0
-	//needscollected	true
-
-	mdl_top	"aliens/bloodspider/bloodspider"
-}
-
-tech rs_alien_bloodspider_notes
+tech rs_alien_bloodspider_live
 {
 	type	alien
-	name	"_Bloodspider - Combat notes"
+	name	"_Live Specimen - Bloodspider"
 	description	"_bloodspider_notes_txt"
 	pre_description	"_bloodspider_notes_pre_txt"
 	up_chapter	aliens
@@ -1981,7 +1945,7 @@ tech rs_alien_bloodspider_notes
 tech rs_alien_bloodspider_autopsy
 {
 	type	alien
-	name	"_Bloodspider - Autopsy"
+	name	"_Alien Autopsy - Bloodspider"
 	description	"_bloodspider_autopsy_txt"
 	pre_description	"_bloodspider_autopsy_pre_txt"
 	up_chapter	aliens
@@ -1998,48 +1962,10 @@ tech rs_alien_bloodspider_autopsy
 
 // ORTNOK
 
-tech rs_alien_ortnok
-{
-	type	tech
-	name	"_Ortnok - Combat notes"
-	description	"_ortnok_notes_txt"
-	pre_description	"_ortnok_notes_pre_txt"
-	up_chapter	tech
-
-	require_AND
-	{
-		tech rs_alien_ortnok_notes
-	}
-
-	provides	""
-	time	0
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_ortnok
-}
-
-tech rs_alien_ortnok_notes
-{
-	type	alien
-	name	"_Ortnok - Combat notes"
-	description	"_ortnok_notes_txt"
-	pre_description	"_ortnok_notes_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	0
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_ortnok
-}
-
 tech rs_alien_ortnok_autopsy
 {
 	type	alien
-	name	"_Ortnok - Autopsy"
+	name	"_Alien Autopsy - Ortnok"
 	description	"_ortnok_autopsy_txt"
 	pre_description	"_ortnok_autopsy_pre_txt"
 	up_chapter	aliens
@@ -2055,67 +1981,12 @@ tech rs_alien_ortnok_autopsy
 	//TODO: autopsy image
 }
 
-// ORTNOK LIGHT ..
-
-tech rs_alien_ortnok_light
-{
-	type	alien
-	name	 "_Ortnok Worker"
-	description	"_ortnok_light_txt"
-	pre_description	"_ortnok_light_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	0
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_ortnok_light
-}
-
-// ORTNOK MEDIUM ..
-
-tech rs_alien_ortnok_medium
-{
-	type	alien
-	name	 "_Ortnok Warrior"
-	description	"_ortnok_medium_txt"
-	pre_description	"_ortnok_medium_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	0
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_ortnok_medium
-}
-
 // ANTAREAN
-
-tech rs_alien_antarean_notes
-{
-	type	alien
-	name	"_Antarean - Combat notes"
-	description	"_antarean_notes_txt"
-	pre_description	"_antarean_notes_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	0
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_antarean
-}
 
 tech rs_alien_antarean_autopsy
 {
 	type	alien
-	name	"_Antarean - Autopsy"
+	name	"_Alien Autopsy - Antarean"
 	description	"_antarean_autopsy_txt"
 	pre_description	"_antarean_autopsy_pre_txt"
 	up_chapter	aliens
@@ -2129,46 +2000,12 @@ tech rs_alien_antarean_autopsy
 	mdl_top	alien_antarean
 }
 
-tech rs_alien_antarean_interrogation_commander
-{
-	type	alien
-	name	"_Antarean - Commander interrogation"
-	description	"_antarean_interrogation_commander_txt"
-	pre_description	"_antarean_interrogation_commander_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	6000
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_antarean
-}
-
 // SHEVAAR
-
-tech rs_alien_shevaar_notes
-{
-	type	alien
-	name	"_Shevaar - Combat notes"
-	description	"_shevaar_notes_txt"
-	pre_description	"_shevaar_notes_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	0
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_shevaar
-}
 
 tech rs_alien_shevaar_autopsy
 {
 	type	alien
-	name	"_Shevaar - Autopsy"
+	name	"_Alien Autopsy - Shevaar"
 	description	"_shevaar_autopsy_txt"
 	pre_description	"_shevaar_autopsy_pre_txt"
 	up_chapter	aliens
@@ -2184,10 +2021,10 @@ tech rs_alien_shevaar_autopsy
 
 // HOVERNET
 
-tech rs_alien_hovernet_notes
+tech rs_alien_stinger_notes
 {
 	type	alien
-	name	"_Hovernet - Combat notes"
+	name	"_Live Specimen - Stinger"
 	description	"_hovernet_notes_txt"
 	pre_description	"_hovernet_notes_pre_txt"
 	up_chapter	aliens
@@ -2201,10 +2038,10 @@ tech rs_alien_hovernet_notes
 	mdl_top	alien_hovernet
 }
 
-tech rs_alien_hovernet_autopsy
+tech rs_alien_stinger_autopsy
 {
 	type	alien
-	name	"_Hovernet - wreck research"
+	name	"_Alien Autopsy - Stinger"
 	description	"_hovernet_autopsy_txt"
 	pre_description	"_hovernet_autopsy_pre_txt"
 	up_chapter	aliens
@@ -2220,27 +2057,10 @@ tech rs_alien_hovernet_autopsy
 
 // CYBORG ORTNOK
 
-tech rs_alien_cyborg_ortnok_notes
-{
-	type	alien
-	name	"_Cyborg Ortnok - Combat notes"
-	description	"_cyborg_ortnok_notes_txt"
-	pre_description	"_cyborg_ortnok_notes_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	provides	""
-	time	0
-	//needscollected	true
-
-	// menuModel - see models.ufo
-	mdl_top	alien_cyborg_ortnok
-}
-
 tech rs_alien_cyborg_ortnok_autopsy
 {
 	type	alien
-	name	"_Cyborg Ortnok - Autopsy"
+	name	"_Alien Autopsy - Ortnok Cyborg"
 	description	"_cyborg_ortnok_autopsy_txt"
 	pre_description	"_cyborg_ortnok_autopsy_pre_txt"
 	up_chapter	aliens
@@ -2261,8 +2081,8 @@ tech rs_alien_cyborg_ortnok_autopsy
 tech rs_ugv_phoenix
 {
 	type	ugv
-	up_chapter	ugv
-	name	"_UGV Phoenix"
+	up_chapter	equipment
+	name	"_Phoenix UGV"
 	description	"_ugv_phoenix_txt"
 	pre_description	"_ugv_phoenix_pre_txt"
 
@@ -2277,8 +2097,8 @@ tech rs_ugv_phoenix
 tech rs_ugv_triax
 {
 	type	ugv
-	up_chapter	ugv
-	name	"_UGV Triax"
+	up_chapter	equipment
+	name	"_Triax UGV"
 	description	"_ugv_triax_txt"
 	pre_description	"_ugv_triax_pre_txt"
 
@@ -2294,11 +2114,11 @@ tech rs_ugv_triax
 // Craft Stuff
 //========================
 
-tech rs_craft_shield_light
+tech rs_craft_def_raven_ecm
 {
 	type	craftshield
 	up_chapter	crafts
-	name	"_Light Shield"
+	name	"_Raven ECM Unit"
 	pre_description	"_craft_shield_light_pre_txt"
 	description	"_craft_shield_light_txt"
 
@@ -2310,47 +2130,23 @@ tech rs_craft_shield_light
 	image_top	"techs/craftshield_light"
 }
 
-tech rs_craft_shield_medium
+tech rs_craft_def_polymer_armour
 {
 	type	craftshield
 	up_chapter	crafts
-	name	"_Medium Shield"
-	pre_description	"_craft_shield_medium_pre_txt"
-	description	"_craft_shield_medium_txt"
-
-	require_AND
-	{
-		tech rs_craft_shield_light
-	}
+	name	"_Polymer Aircraft Armour"
+	pre_description	"_craft_shield_light_pre_txt"
+	description	"_craft_shield_light_txt"
 
 	// FIXME
-	provides	medium
-	time	1000
+	provides	light
+	require_AND { tech nothing }
+	time	0
 
-	image_top	"techs/craftshield_medium"
+	image_top	"techs/craftshield_light"
 }
 
-tech rs_craft_shield_hard
-{
-	type	craftshield
-	up_chapter	crafts
-	name	"_Hard Shield"
-	pre_description	"_craft_shield_hard_pre_txt"
-	description	"_craft_shield_hard_txt"
-
-	require_AND
-	{
-		tech rs_craft_shield_medium
-	}
-
-	// FIXME
-	provides	heavy
-	time	2500
-
-	image_top	"techs/craftshield_hard"
-}
-
-tech rs_craft_weapon_flac
+tech rs_craft_weapon_shiva
 {
 	type	craftweapon
 	up_chapter	crafts
@@ -2421,7 +2217,7 @@ tech rs_craft_weapon_particle_beam
 tech news_init_political_situation
 {
 	type	news
-	name	"_Political situation before the invasion"
+	name	"_Political Situation Before The Invasion"
 	description	"_news_initial_political_situation_txt"
 	up_chapter	news
 
@@ -2432,7 +2228,7 @@ tech news_init_political_situation
 tech news_after_the_war
 {
 	type	news
-	name	"_After the war"
+	name	"_After The War"
 	description	"_news_after_the_war_txt"
 	up_chapter	news
 

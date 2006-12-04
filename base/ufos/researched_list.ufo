@@ -61,8 +61,11 @@ researched rslist_human
 	rs_craft_interceptor
 	rs_ugv_phoenix
 	rs_ugv_triax
-	rs_craft_shield_light
+	rs_craft_def_raven_ecm
+	rs_craft_def_polymer_armour
 	rs_craft_weapon_flac
+	rs_craft_weapon_sparrowhawk
+	rs_craft_weapon_tr20
 	news_init_political_situation
 	news_after_the_war
 	news_phalanx_mumbai_aftermath
@@ -94,6 +97,7 @@ researchable rslist_human
 	rs_ugv_triax
 	rs_craft_shield_light
 	rs_craft_weapon_flac
+	rs_alien_body_armour
 }
 
 // mark these explicit as not researchable
@@ -103,7 +107,6 @@ researchable rslist_human
 
 researched rslist_aliens
 {
-	rs_plasma
 	rs_tachyon
 	rs_weapon_tachyonpistol
 	rs_weapon_tachyonpistol_ammo
@@ -132,14 +135,11 @@ researched rslist_aliens
 	rs_skill_sniper
 	rs_skill_explosive
 	rs_craft_ufo_small
-	rs_craft_shield_light
-	rs_craft_weapon_flac
 }
 
 // mark these as researchable
 researchable rslist_alien
 {
-	rs_plasma
 	rs_tachyon
 	rs_weapon_tachyonpistol
 	rs_weapon_tachyonpistol_ammo
@@ -168,8 +168,6 @@ researchable rslist_alien
 	rs_skill_sniper
 	rs_skill_explosive
 	rs_craft_ufo_small
-	rs_craft_shield_light
-	rs_craft_weapon_flac
 }
 
 // mark these explicit as not researchable
