@@ -1,0 +1,3 @@
+The licence of this model is currently unclear - we - the UFO:AI team - have the permission to use this model in UFO:AI.
+
+But until we don't get a response from the author to be allowed to release it under some OpenSource licence, we won't use this model
