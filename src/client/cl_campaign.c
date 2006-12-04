@@ -3458,6 +3458,12 @@ static void CL_GameNew(void)
 	memset(&ccs, 0, sizeof(ccs_t));
 	ccs.date = curCampaign->date;
 
+	/* get day */
+	while (ccs.date.sec > 3600 * 24) {
+		ccs.date.sec -= 3600 * 24;
+		ccs.date.day++;
+	}
+
 	/* set map view */
 	ccs.center[0] = 0.5;
 	ccs.center[1] = 0.5;
