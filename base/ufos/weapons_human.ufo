@@ -936,6 +936,7 @@ item rpg_incendiary_ammo
 	}
 }
 
+/*
 item rpg_tachyon_ammo
 {
 	name	"_Tachyon-Beam Rocket"
@@ -993,7 +994,7 @@ item rpg_tachyon_ammo
 		dmgtype	tachyon
 	}
 }
-
+*/
 
 // =======================
 // GRENADE LAUNCHER
