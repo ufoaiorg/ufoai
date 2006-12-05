@@ -146,6 +146,9 @@ typedef struct mleaf_s {
 	int nummarksurfaces;
 } mleaf_t;
 
+typedef struct mnormals_s {
+	vec3_t ijk;
+} mnormals_t;
 
 #define MAX_ANIMS		128
 #define MAX_ANIMNAME	16
@@ -160,7 +163,7 @@ typedef struct manim_s {
 
 /* Whole model */
 
-typedef enum {mod_bad, mod_brush, mod_sprite, mod_alias, mod_alias_md3 } modtype_t;
+typedef enum {mod_bad, mod_brush, mod_sprite, mod_alias, mod_alias_md3, mod_obj} modtype_t;
 
 typedef struct model_s {
 	/* the name needs to be the first entry in the struct */
@@ -215,6 +218,9 @@ typedef struct model_s {
 
 	int nummarksurfaces;
 	msurface_t **marksurfaces;
+
+	int numnormals;			/* number of normal vectors */
+	mnormals_t *normals;
 
 	int lightquant;
 	byte *lightdata;

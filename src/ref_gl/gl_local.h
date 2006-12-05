@@ -348,6 +348,8 @@ void R_DrawAllBrushModels(void);
 void R_DrawBeam(entity_t * e);
 void R_DrawBox(entity_t * e);
 void R_DrawLevelBrushes(void);
+void R_DrawOBJModel (entity_t *e);
+int Mod_LoadOBJModel (model_t* mod, void* buffer);
 void R_RenderDlights(void);
 void R_DrawAlphaSurfaces(void);
 void R_InitParticleTexture(void);

@@ -560,6 +560,9 @@ static void R_DrawEntitiesOnList(void)
 			case mod_sprite:
 				R_DrawSpriteModel(currententity);
 				break;
+			case mod_obj:
+				R_DrawOBJModel(currententity);
+				break;
 			default:
 				ri.Sys_Error(ERR_DROP, "Bad %s modeltype: %i", currentmodel->name, currentmodel->type);
 				break;

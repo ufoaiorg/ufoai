@@ -162,7 +162,9 @@ static model_t *Mod_ForName(const char *name, qboolean crash)
 		break;
 
 	default:
-		ri.Sys_Error(ERR_DROP, "Mod_ForName: unknown fileid for %s", mod->name);
+		loadmodel->extradata = Hunk_Begin(0x400000);
+		if (!Mod_LoadOBJModel(mod, buf))
+			ri.Sys_Error(ERR_DROP, "Mod_ForName: unknown fileid for %s", mod->name);
 		break;
 	}
 
