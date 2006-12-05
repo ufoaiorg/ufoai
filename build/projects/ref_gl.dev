@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lpng_@@_-lSDL_ttf_@@_-lSDL_@@_../../src/ports/win32/intl.lib_@@_-def ../../src/ref_gl/ref_gl.def_@@_
 Libs=
-UnitCount=35
+UnitCount=36
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=
@@ -406,4 +406,14 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c gl_drawmd3.c -o gl_drawmd3.o $(CFLAGS)
+
+[Unit36]
+FileName=..\..\src\ref_gl\gl_obj.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c gl_obj.c -o gl_obj.o $(CFLAGS)
 
