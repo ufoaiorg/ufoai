@@ -280,6 +280,8 @@ void CL_DateConvert(date_t * date, int *day, int *month);
 char *CL_DateGetMonthName(int month);
 void CL_CampaignRun(void);
 void CL_GameTimeStop(void);
+void CL_GameTimeFast(void);
+void CL_GameTimeSlow(void);
 extern byte *CL_GetMapColor(const vec2_t pos, mapType_t type);
 extern qboolean CL_NewBase(vec2_t pos);
 void CL_ParseMission(char *name, char **text);
