@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-04 21:45+0100\n"
+"POT-Creation-Date: 2006-12-05 09:39+0100\n"
 "PO-Revision-Date: 2006-10-24 13:26+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -4504,7 +4504,7 @@ msgstr "Истребитель запущен"
 
 #: client/cl_aircraft.c:103 client/cl_aircraft.c:402 client/cl_aircraft.c:554
 #: client/cl_aircraft.c:772 client/cl_basemanagement.c:448
-#: client/cl_basemanagement.c:1908 client/cl_campaign.c:428
+#: client/cl_basemanagement.c:1910 client/cl_campaign.c:428
 #: client/cl_campaign.c:855 client/cl_campaign.c:906 client/cl_campaign.c:1064
 #: client/cl_campaign.c:1075 client/cl_campaign.c:1085
 #: client/cl_campaign.c:1095 client/cl_campaign.c:1105
@@ -4696,24 +4696,24 @@ msgstr "НовыйОтряд"
 msgid "A new base has been built: %s."
 msgstr "Построена новая база: %s."
 
-#: client/cl_basemanagement.c:1594 client/cl_basemanagement.c:1635
+#: client/cl_basemanagement.c:1594 client/cl_basemanagement.c:1637
 msgid "Base built"
 msgstr "База построена"
 
-#: client/cl_basemanagement.c:1634
+#: client/cl_basemanagement.c:1636
 msgid "Not enough credits to set up a new base."
 msgstr "Недостаточно средств для строительства базы."
 
-#: client/cl_basemanagement.c:1908
+#: client/cl_basemanagement.c:1910
 msgid "You've reached the base limit."
 msgstr "Вы построили максимальное количество баз."
 
-#: client/cl_basemanagement.c:2045
+#: client/cl_basemanagement.c:2047
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Завершено строительство: %s на базе: %s."
 
-#: client/cl_basemanagement.c:2046
+#: client/cl_basemanagement.c:2048
 msgid "Building finished"
 msgstr "Завершено строительство"
 
@@ -5083,7 +5083,7 @@ msgid "Move battlescape camera forward"
 msgstr ""
 
 #: client/cl_input.c:743
-msgid "Move batlescape camera backward"
+msgid "Move battlescape camera backward"
 msgstr ""
 
 #: client/cl_input.c:745 client/cl_input.c:770

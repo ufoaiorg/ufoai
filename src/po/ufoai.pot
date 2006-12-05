@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-04 21:45+0100\n"
+"POT-Creation-Date: 2006-12-05 09:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.ufo.po (UFO Alien Invasion)  #-#-#-#-#\n"
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: http://www.sourceforge.net/projects/ufoai/\n"
-"POT-Creation-Date: 2006-12-04 21:45+0100\n"
+"POT-Creation-Date: 2006-12-05 09:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3625,7 +3625,7 @@ msgstr ""
 
 #: client/cl_aircraft.c:103 client/cl_aircraft.c:402 client/cl_aircraft.c:554
 #: client/cl_aircraft.c:772 client/cl_basemanagement.c:448
-#: client/cl_basemanagement.c:1908 client/cl_campaign.c:428
+#: client/cl_basemanagement.c:1910 client/cl_campaign.c:428
 #: client/cl_campaign.c:855 client/cl_campaign.c:906 client/cl_campaign.c:1064
 #: client/cl_campaign.c:1075 client/cl_campaign.c:1085
 #: client/cl_campaign.c:1095 client/cl_campaign.c:1105
@@ -3812,24 +3812,24 @@ msgstr ""
 msgid "A new base has been built: %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:1594 client/cl_basemanagement.c:1635
+#: client/cl_basemanagement.c:1594 client/cl_basemanagement.c:1637
 msgid "Base built"
 msgstr ""
 
-#: client/cl_basemanagement.c:1634
+#: client/cl_basemanagement.c:1636
 msgid "Not enough credits to set up a new base."
 msgstr ""
 
-#: client/cl_basemanagement.c:1908
+#: client/cl_basemanagement.c:1910
 msgid "You've reached the base limit."
 msgstr ""
 
-#: client/cl_basemanagement.c:2045
+#: client/cl_basemanagement.c:2047
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:2046
+#: client/cl_basemanagement.c:2048
 msgid "Building finished"
 msgstr ""
 
@@ -4179,7 +4179,7 @@ msgid "Move battlescape camera forward"
 msgstr ""
 
 #: client/cl_input.c:743
-msgid "Move batlescape camera backward"
+msgid "Move battlescape camera backward"
 msgstr ""
 
 #: client/cl_input.c:745 client/cl_input.c:770
