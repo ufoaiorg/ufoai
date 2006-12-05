@@ -1,6 +1,6 @@
 !!ARBfp1.0
 OPTION ARB_precision_hint_fastest;
-PARAM c[1] = { { 2.75 } };
+PARAM c[1] = { { 1.00 } };
 TEMP R0;
 TEX R0.zw, fragment.texcoord[1], texture[1], 2D;
 MUL R0.xy, -R0.zwzw, fragment.color.primary.x;
