@@ -1625,11 +1625,11 @@ void B_BuildBase(void)
 				for (i = 0; i < csi.numODs; i++)
 					price += baseCurrent->storage.num[i] * csi.ods[i].price;
 				CL_UpdateCredits(ccs.credits - price);
-
+				CL_GameTimeFast();
+				CL_GameTimeFast();
 			}
 			Cbuf_AddText(va("mn_select_base %i;", baseCurrent->idx));
-			CL_GameTimeFast();
-			CL_GameTimeFast();
+
 			return;
 		}
 	} else {
