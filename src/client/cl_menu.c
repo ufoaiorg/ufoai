@@ -2418,7 +2418,7 @@ void MN_InitKeyList_f (void)
 			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(keybindings[i])), sizeof(keylist));
 		}
 
-	menuText[TEXT_STANDARD] = keylist;
+	menuText[TEXT_LIST] = keylist;
 }
 
 /**
