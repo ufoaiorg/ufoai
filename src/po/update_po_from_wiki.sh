@@ -324,7 +324,7 @@ update_txt()
 # $2 is 1 if we want to display h2 titles, 0 otherwise
 # $3 is the number of h3 title you want to read before stopping
 	set_BEGIN_END "1"
-	$awk_soft -v working_h2=$1 -v display_title=$2 -v h3_nb=$3 'BEGIN {already_written_test=0;exit_test=0;RS="<p>"}
+	$awk_soft -v working_h2=$1 -v display_title=$2 -v h3_nb=$3 'BEGIN {already_written_test=0;exit_test=0;line=0;RS="<p>"}
 		h2 == working_h2 && $0 ~ /<h1>/ {exit}
 		$0 ~ /<h2>/ {h2++}
 		h2 < working_h2 {next}
@@ -351,16 +351,15 @@ update_txt()
 		$0 ~ /<.*>/ {
 			if (h3 == h3_nb) {exit}}
 		$0 ~ /^<.*>$/ {next}
-		$0 ~ /^SUB: / {
-			gsub (/[ \t]*$/,"")
-			$0=$0"\\n\n"}
 		$0 ~ /statistics:[ /t]*$/ {
 			gsub (/[ \t]*$/,"")
 			$0="\\n\n"$0"\\n\n"}
 		$0 !~ /^[ \t\n]*$/ {
+			if (line == 4 && '$pre_txt'==1) {printf "\\n\n"}
 			gsub (/[ \t]*$/,"")
 			if (already_written_test) {printf "\\n\n\\n\n"}
 			printf "%s",$0
+			line++
 			already_written_test=1;
 			exit_test=0}
 	' downloaded_page | 
@@ -641,6 +640,13 @@ do
 			elif [[ "$test" -eq 1 ]]
 			then
 				number=`grep -iwnm 1 ">$english</a>" ${index} | cut -d : -f 1`
+				if [[ $number -lt $FIRST_LINE ]]
+				then
+					# This part looks for $english where "-" would be replaced by "--" (like in UFO -- Scout)
+					test=`echo $english | sed 's/-/--/g'`
+					number=`grep -iwnm 1 ">$test</a>" ${index} | cut -d : -f 1`
+				fi
+				
 				if [[ $number -ge $FIRST_LINE ]]
 				then
 				# This is case 4. (short entry)
@@ -662,7 +668,7 @@ do
 								}
 							n > $loc {exit}
 						' ${index} |
-						$sed_soft 's/>\(.*\)<\/a>/\1/' | 
+						$sed_soft 's/>\(.*\)<\/a>/\1/;s/--/-/g' | 
 						$sed_soft 's/\"/\\\"/g;s/\\/\\\\/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g' >> sed_commands
 						apply_sed $english
 					fi
@@ -684,12 +690,20 @@ do
 	fi
 done < po_file.tmp
 
+printf "\n"
 #Copying all unfound msgids to log file
-printf "__________________________________________\n\n" >> $log_file
-printf "List of unfound msgids in the wiki page :\n" >> $log_file
-cat unfound_msgid.tmp >> $log_file
-printf "__________________________________________\n\n" >> $log_file
+if [[ "$debug" = "1" ]]
+then
+	printf "__________________________________________\n\n" >> $log_file
+	printf "List of unfound msgids in the wiki page :\n" >> $log_file
+	cat unfound_msgid.tmp >> $log_file
+fi
+printf "__________________________________________\n\n" | tee -a $log_file
 
+printf "\n\n"
+printf "List of modified long text msgids in %s :\n" $input_file | tee -a $log_file
+grep "\*\*\* " $log_file | $sed_soft '/_txt/!d' | tee -a $log_file
+printf "__________________________________________\n\n" >> $log_file
 
 printf "\n\n"
 printf "\nNew file %s created.\n" $output_file
