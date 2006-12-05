@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-05 09:39+0100\n"
+"POT-Creation-Date: 2006-12-05 17:10+0100\n"
 "PO-Revision-Date: 2006-12-03 20:08+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team:  <cs@li.org>\n"
@@ -774,6 +774,10 @@ msgstr "Jméno:"
 #: ../base/ufos/menu_geoscape.ufo:424
 msgid "Cost:"
 msgstr "Cena:"
+
+#: ../base/ufos/menu_geoscape.ufo:429
+msgid "100000 c"
+msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:447
 msgid "Build the base"
@@ -4173,6 +4177,11 @@ msgstr[0] "zbývá %i den"
 msgstr[1] "zbývají %i dny"
 msgstr[2] "zbývá %i dnů"
 
+#: client/cl_basemanagement.c:1240 client/cl_campaign.c:1329
+#, c-format
+msgid "%i c"
+msgstr ""
+
 #: client/cl_basemanagement.c:1346
 msgid "Base is under attack"
 msgstr "Probíhá útok na základnu"
@@ -4865,9 +4874,18 @@ msgstr "Doba výroby\t%ih\n"
 msgid "No item selected"
 msgstr "Nic nevybráno"
 
+#: client/cl_produce.c:470
+#, fuzzy, c-format
+msgid "Production of %s started"
+msgstr "Výroba zahájena"
+
 #: client/cl_produce.c:471
 msgid "Production started"
 msgstr "Výroba zahájena"
+
+#: client/cl_produce.c:478
+msgid "You cannot queue any more items!"
+msgstr ""
 
 #: client/cl_produce.c:479
 msgid "Queue full!"

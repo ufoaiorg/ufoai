@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-05 09:39+0100\n"
+"POT-Creation-Date: 2006-12-05 17:10+0100\n"
 "PO-Revision-Date: 2006-10-24 13:25+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: inzenir <simon.cedula@guest.arnes.si>\n"
@@ -780,6 +780,10 @@ msgstr "Ime:"
 #: ../base/ufos/menu_geoscape.ufo:424
 msgid "Cost:"
 msgstr "Stroški:"
+
+#: ../base/ufos/menu_geoscape.ufo:429
+msgid "100000 c"
+msgstr "100000 c"
 
 #: ../base/ufos/menu_geoscape.ufo:447
 msgid "Build the base"
@@ -4018,6 +4022,11 @@ msgid_plural "%i days left"
 msgstr[0] "%i dni do konca"
 msgstr[1] "%i dni do konca"
 
+#: client/cl_basemanagement.c:1240 client/cl_campaign.c:1329
+#, c-format
+msgid "%i c"
+msgstr ""
+
 #: client/cl_basemanagement.c:1346
 #, fuzzy
 msgid "Base is under attack"
@@ -4719,10 +4728,19 @@ msgstr "Zgradba končana"
 msgid "No item selected"
 msgstr "Nihče ni izbran\n"
 
+#: client/cl_produce.c:470
+#, fuzzy, c-format
+msgid "Production of %s started"
+msgstr "Plovilo pripravljeno"
+
 #: client/cl_produce.c:471
 #, fuzzy
 msgid "Production started"
 msgstr "Plovilo pripravljeno"
+
+#: client/cl_produce.c:478
+msgid "You cannot queue any more items!"
+msgstr ""
 
 #: client/cl_produce.c:479
 msgid "Queue full!"
@@ -5801,9 +5819,6 @@ msgstr "Ne"
 
 #~ msgid "Difficulty:"
 #~ msgstr "Težavnost:"
-
-#~ msgid "100000 c"
-#~ msgstr "100000 c"
 
 #~ msgid "Soundsystem:"
 #~ msgstr "Zvočni sistem:"

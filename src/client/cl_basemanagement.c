@@ -1237,7 +1237,7 @@ void B_BaseInit(void)
 	Cvar_SetValue("mn_soldiers_in_base", E_CountHired(baseCurrent, EMPL_SOLDIER));
 	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
 
-	Cvar_Set("mn_credits", va("%i c", ccs.credits));
+	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
 }
 
 /**

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-05 09:39+0100\n"
-"PO-Revision-Date: 2006-12-05 09:39+0100\n"
+"POT-Creation-Date: 2006-12-05 17:10+0100\n"
+"PO-Revision-Date: 2006-12-05 17:10+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -852,6 +852,10 @@ msgstr "Name:"
 #: ../base/ufos/menu_geoscape.ufo:424
 msgid "Cost:"
 msgstr "Cost:"
+
+#: ../base/ufos/menu_geoscape.ufo:429
+msgid "100000 c"
+msgstr "100000 c"
 
 #: ../base/ufos/menu_geoscape.ufo:447
 msgid "Build the base"
@@ -6662,6 +6666,12 @@ msgid_plural "%i days left"
 msgstr[0] "%i day left"
 msgstr[1] "%i days left"
 
+#: client/cl_basemanagement.c:1240
+#: client/cl_campaign.c:1329
+#, c-format
+msgid "%i c"
+msgstr "%i c"
+
 #: client/cl_basemanagement.c:1346
 msgid "Base is under attack"
 msgstr "Base is under attack"
@@ -7358,9 +7368,18 @@ msgstr "Productiontime\t%ih\n"
 msgid "No item selected"
 msgstr "No item selected"
 
+#: client/cl_produce.c:470
+#, c-format
+msgid "Production of %s started"
+msgstr "Production of %s started"
+
 #: client/cl_produce.c:471
 msgid "Production started"
 msgstr "Production started"
+
+#: client/cl_produce.c:478
+msgid "You cannot queue any more items!"
+msgstr "You cannot queue any more items!"
 
 #: client/cl_produce.c:479
 msgid "Queue full!"

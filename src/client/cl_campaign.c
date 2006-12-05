@@ -1326,7 +1326,7 @@ void CL_UpdateCredits(int credits)
 	if (credits > MAX_CREDITS)
 		credits = MAX_CREDITS;
 	ccs.credits = credits;
-	Cvar_Set("mn_credits", va("%i c", ccs.credits));
+	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
 }
 
 

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-05 09:39+0100\n"
+"POT-Creation-Date: 2006-12-05 17:10+0100\n"
 "PO-Revision-Date: 2006-10-24 13:31+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -751,6 +751,10 @@ msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:424
 msgid "Cost:"
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:429
+msgid "100000 c"
 msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:447
@@ -3853,6 +3857,11 @@ msgid_plural "%i days left"
 msgstr[0] ""
 msgstr[1] ""
 
+#: client/cl_basemanagement.c:1240 client/cl_campaign.c:1329
+#, c-format
+msgid "%i c"
+msgstr ""
+
 #: client/cl_basemanagement.c:1346
 msgid "Base is under attack"
 msgstr ""
@@ -4528,10 +4537,19 @@ msgstr "Bygninger"
 msgid "No item selected"
 msgstr "Ingen er valgt"
 
+#: client/cl_produce.c:470
+#, fuzzy, c-format
+msgid "Production of %s started"
+msgstr "Luftfartøj"
+
 #: client/cl_produce.c:471
 #, fuzzy
 msgid "Production started"
 msgstr "Luftfartøj"
+
+#: client/cl_produce.c:478
+msgid "You cannot queue any more items!"
+msgstr ""
 
 #: client/cl_produce.c:479
 msgid "Queue full!"

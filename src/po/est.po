@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-05 09:39+0100\n"
+"POT-Creation-Date: 2006-12-05 17:10+0100\n"
 "PO-Revision-Date: 2006-11-13 05:27+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -743,6 +743,10 @@ msgstr "Nimi:"
 #: ../base/ufos/menu_geoscape.ufo:424
 msgid "Cost:"
 msgstr "Maksumus:"
+
+#: ../base/ufos/menu_geoscape.ufo:429
+msgid "100000 c"
+msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:447
 msgid "Build the base"
@@ -4570,6 +4574,11 @@ msgid_plural "%i days left"
 msgstr[0] "%i päeva järel"
 msgstr[1] "%i päeva järel"
 
+#: client/cl_basemanagement.c:1240 client/cl_campaign.c:1329
+#, c-format
+msgid "%i c"
+msgstr ""
+
 #: client/cl_basemanagement.c:1346
 msgid "Base is under attack"
 msgstr "Sinu baasi on rünnakku all"
@@ -5261,9 +5270,18 @@ msgstr "Tootmisele kuluv aeg:\t%ih\n"
 msgid "No item selected"
 msgstr "Ühtegi eseti pole valitud"
 
+#: client/cl_produce.c:470
+#, fuzzy, c-format
+msgid "Production of %s started"
+msgstr "Tootmist alustatud"
+
 #: client/cl_produce.c:471
 msgid "Production started"
 msgstr "Tootmist alustatud"
+
+#: client/cl_produce.c:478
+msgid "You cannot queue any more items!"
+msgstr ""
 
 #: client/cl_produce.c:479
 msgid "Queue full!"

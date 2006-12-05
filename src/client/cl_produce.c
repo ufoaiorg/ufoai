@@ -467,7 +467,7 @@ void PR_ProductionIncrease(void)
 			return;
 		prod = PR_QueueNew(queue, selectedIndex, amount);
 		if (prod) {
-			Com_sprintf(messageBuffer, sizeof(messageBuffer), "Production of %s started", csi.ods[selectedIndex].name);
+			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), csi.ods[selectedIndex].name);
 			MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
 
 			/* now we select the item we just created */
@@ -475,7 +475,7 @@ void PR_ProductionIncrease(void)
 			selectedIndex = queue->numItems-1;
 		} else {
 			/* oops! too many items! */
-			Com_sprintf(messageBuffer, sizeof(messageBuffer), "You cannot queue any more items!");
+			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("You cannot queue any more items!"));
 			MN_AddNewMessage(_("Queue full!"), messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 		}
 	}
