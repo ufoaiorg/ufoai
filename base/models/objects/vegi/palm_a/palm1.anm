@@ -1,0 +1,6 @@
+// palm animations
+// name			start	end	fps
+
+strongwind		0	40	10
+moving1			41	80	10
+moving2			81	100	10
