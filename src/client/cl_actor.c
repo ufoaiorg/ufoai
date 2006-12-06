@@ -729,6 +729,17 @@ void CL_RemoveActorFromTeamList(le_t * le)
 	if (!le)
 		return;
 
+	for (i = 0; i < cl.numTeamList; i++) {
+		if (cl.teamList[i] == le) {
+			/* disable hud button */
+			Cbuf_AddText(va("huddisable%i\n", i));
+
+			/* remove from list */
+			cl.teamList[i] = NULL;
+			break;
+		}
+	}
+
 	/* check selection */
 	if (selActor == le) {
 		/* TODO: This should probably be a while loop */
@@ -740,17 +751,6 @@ void CL_RemoveActorFromTeamList(le_t * le)
 		if (i == cl.numTeamList) {
 			selActor->selected = qfalse;
 			selActor = NULL;
-		}
-	}
-
-	for (i = 0; i < cl.numTeamList; i++) {
-		if (cl.teamList[i] == le) {
-			/* disable hud button */
-			Cbuf_AddText(va("huddisable%i\n", i));
-
-			/* remove from list */
-			cl.teamList[i] = NULL;
-			return;
 		}
 	}
 }
