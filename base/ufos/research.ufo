@@ -875,25 +875,6 @@ tech rs_weapon_shotgun_ammo
 	producetime	1
 }
 
-tech rs_weapon_shotgun_slug_ammo
-{
-	// Note: Multiplayer only
-	type	weapon
-	up_chapter	equipment
-	description	"_shotgun_slug_ammo_txt"
-	// pre_description	"_shotgun_slug_ammo_pre_txt"
-
-	require_AND
-	{
-		tech rs_damage_blast
-		tech rs_weapon_shotgun
-	}
-
-	provides	shotgun_slug_ammo
-	time	0
-	producetime	1
-}
-
 tech rs_weapon_shotgun2
 {
 	// Riot Shotgun
@@ -934,8 +915,8 @@ tech rs_weapon_shotgun2_slug_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_shotgun_slug_ammo_txt"
-	// pre_description	"_shotgun_slug_ammo_pre_txt"
+	description	"_shotgun2_slug_ammo_txt"
+	// pre_description	"_shotgun2_slug_ammo_pre_txt"
 
 	require_AND
 	{
