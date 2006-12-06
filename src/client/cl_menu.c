@@ -2499,6 +2499,7 @@ void MN_ResetMenus(void)
 	PR_ResetProduction();
 	E_Reset();
 	HOS_Reset();
+	AC_Reset();
 	MAP_ResetAction();
 	UFO_Reset();
 }

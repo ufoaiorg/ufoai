@@ -855,6 +855,9 @@ void CL_InitMessageSystem(void);
 
 #include "cl_campaign.h"
 
+/* cl_aliencont.c */
+void AC_Reset (void);
+
 /* cl_menu.c */
 #define MAX_MENUS			64
 #define MAX_MENUNODES		4096
