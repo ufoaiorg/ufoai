@@ -187,6 +187,7 @@ void B_HireForBuilding (building_t * building, int num)
 		case B_WORKSHOP:
 			employeeType = EMPL_WORKER;
 			break;
+		case B_ALIEN_CONTAINMENT:
 		case B_LAB:
 			employeeType = EMPL_SCIENTIST;
 			break;
@@ -226,6 +227,10 @@ void B_UpdateBaseBuildingStatus(building_t* building, base_t* base, buildingStat
 	building->buildingStatus = status;
 
 	switch (building->buildingType) {
+	case B_ALIEN_CONTAINMENT:
+		if (building->buildingStatus == B_STATUS_WORKING)
+			base->hasAlienCont = qtrue;
+		break;
 	case B_LAB:
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasLab = qtrue;
@@ -882,6 +887,8 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 					building->buildingType = B_LAB;
 				} else if (!Q_strncmp(token, "hospital", MAX_VAR)) {
 					building->buildingType = B_HOSPITAL;
+				} else if (!Q_strncmp(token, "aliencont", MAX_VAR)) {
+					building->buildingType = B_ALIEN_CONTAINMENT;
 				} else if (!Q_strncmp(token, "hangar", MAX_VAR)) {
 					building->buildingType = B_HANGAR;
 				} else if (!Q_strncmp(token, "quarters", MAX_VAR)) {
@@ -1941,6 +1948,9 @@ void B_BuildingOpen_f (void)
 				break;
 			case B_HOSPITAL:
 				MN_PushMenu("hospital");
+				break;
+			case B_ALIEN_CONTAINMENT:
+				MN_PushMenu("aliencont");
 				break;
 			case B_QUARTERS:
 				MN_PushMenu("employees");

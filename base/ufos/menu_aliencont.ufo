@@ -1,0 +1,44 @@
+// ======================
+// ALIEN CONTAINMENU MENU
+// ======================
+menu aliencont
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/aliencont_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/aliencont_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/aliencont_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/aliencont_lr
+		pos		"512 512"
+	}
+
+
+}

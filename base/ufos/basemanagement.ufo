@@ -62,6 +62,7 @@ building building_aliencontainment
 	name		"_Alien containment"
 	image		base/aliencont
 	fixcosts	500000
+	type     	aliencont
 	build_time	10
 	varcosts	1000
 	map_name	"aliencont"
@@ -69,6 +70,7 @@ building building_aliencontainment
 	firstbase	false
 	pos		    "2 4"
 	more_than_one	true
+	onclick		"building_open"
 }
 
 building building_entrance
