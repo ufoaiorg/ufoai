@@ -1058,7 +1058,6 @@ static qboolean MN_TextScroll(menuNode_t *node, int offset)
 
 	if (abs(offset) >= node->height) {
 		/* Offset value is bigger than textbox height. */
-		node->textScroll = 0;
 		return qfalse;
 	}
 	
@@ -1097,7 +1096,7 @@ static void MN_TextScrollKeyBinding_f(void)
 	}
 	if (!MN_GetNodeFromCurrentMenu(Cvar_VariableString("mn_scrollnode")))
 		return;
-	Cbuf_AddText(va("mn_textscroll %s %s", Cvar_VariableString("mn_scrollnode"), Cmd_Argv(1)));
+	Cbuf_AddText(va("mn_textscroll %s %s1;", Cvar_VariableString("mn_scrollnode"), Cmd_Argv(1)));
 }
 
 /**
