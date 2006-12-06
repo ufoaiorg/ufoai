@@ -1212,7 +1212,7 @@ void B_BaseInit(void)
 	Cvar_SetValue("mn_soldiers_in_base", E_CountHired(baseCurrent, EMPL_SOLDIER));
 	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
 
-	Cvar_Set("mn_credits", va("%i c", ccs.credits));
+	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
 }
 
 /**
@@ -1599,9 +1599,11 @@ void B_BuildBase(void)
 				for (i = 0; i < csi.numODs; i++)
 					price += baseCurrent->storage.num[i] * csi.ods[i].price;
 				CL_UpdateCredits(ccs.credits - price);
+				CL_GameTimeFast();
+				CL_GameTimeFast();
 			}
-
 			Cbuf_AddText(va("mn_select_base %i;", baseCurrent->idx));
+
 			return;
 		}
 	} else {

@@ -680,7 +680,7 @@ char* Cmd_GetCommandDesc(const char* cmd_name)
 		*sep = '\0';
 
 	/* fail if the command already exists */
-	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
+	hash = Com_HashKey(searchName, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcmp(searchName, cmd->name)) {
 			if (cmd->description)

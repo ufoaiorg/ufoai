@@ -1687,22 +1687,31 @@ void MN_DrawMenus(void)
 
 							/* maybe due to scrolling this line is not visible */
 							if (node->textLines > node->textScroll) {
+								int offset = 0;
 								char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
-								MN_TimestampedText(text, sizeof(text), message);
+								/* get formatted date text and pixel width of text */
+								MN_TimestampedText(text, message);
+								re.FontLength(font, text, &offset, &height);
+								/* append remainder of message */
+								Q_strcat(text, message->text, sizeof(text));
 								re.FontLength(font, text, &width, &height);
 								if (!width)
 									break;
 								if (width > node->pos[0] + node->size[0]) {
-									/* TODO: not tested this.... */
-									/* we use a backslash to determine where to break the line */
+									int indent = node->pos[0];
 									tab = text;
-									while ((end = strstr(tab, "\\")) != NULL) {
+									while (qtrue) {
+										y += re.FontDrawString(font, ALIGN_UL, indent, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab, 0, 0, NULL, qfalse);
+										/* we use a backslash to determine where to break the line */
+										end = strstr(tab, "\\");
+										if (!end)
+											break;
 										*end++ = '\0';
-										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab, 0, 0, NULL, qfalse);
 										tab = end;
 										node->textLines++;
 										if (node->textLines >= node->height)
 											break;
+										indent = offset;
 									}
 								} else {
 									/* newline to space - we don't need this */
@@ -2049,6 +2058,20 @@ static void MN_PushMenu_f(void)
 }
 
 /**
+ * @brief Console function to hide the HUD in battlescape mode
+ * Note: relies on a "nohud" menu existing
+ * @sa MN_PushMenu
+ */
+static void MN_PushNoHud_f(void)
+{
+	/* can't hide hud if we are not in battlescape */
+	if (!CL_OnBattlescape())
+		return;
+
+	MN_PushMenu("nohud");
+}
+
+/**
  * @brief Console function to push a menu, without deleting its copies
  * @sa MN_PushMenu
  */
@@ -2366,7 +2389,7 @@ void MN_InitKeyList_f (void)
 			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(keybindings[i])), sizeof(keylist));
 		}
 
-	menuText[TEXT_STANDARD] = keylist;
+	menuText[TEXT_LIST] = keylist;
 }
 
 /**
@@ -2415,6 +2438,7 @@ void MN_ResetMenus(void)
 	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f, NULL);
 	Cmd_AddCommand("mn_translate", MN_Translate_f, NULL);
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
+	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 	/* get action data memory */
 	if (adataize)
 		memset(adata, 0, adataize);
@@ -3231,15 +3255,13 @@ message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup,
 }
 
 /**
- * @brief Prepends timestamps to the message text displayed in the geoscape
+ * @brief Returns formatted text of a message timestamp
  * @param[in] text Buffer to hold the final result
- * @param[in] max_text Total size of the text buffer
  * @param[in] message The message to convert into text
  */
-void MN_TimestampedText(char *text, size_t max_text, message_t *message)
+void MN_TimestampedText(char *text, message_t *message)
 {
-	Q_strncpyz(text, va(TIMESTAMP_FORMAT, message->d, CL_DateGetMonthName(message->m), message->y, message->h, message->min), max_text);
-	Q_strcat(text, message->text, max_text);
+	Q_strncpyz(text, va(TIMESTAMP_FORMAT, message->d, CL_DateGetMonthName(message->m), message->y, message->h, message->min), TIMESTAMP_TEXT);
 }
 
 /**

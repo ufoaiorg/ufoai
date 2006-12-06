@@ -724,34 +724,34 @@ void CL_MakeBaseMapShot(void)
  */
 void CL_InitInput(void)
 {
-	Cmd_AddCommand("+turnleft", IN_TurnLeftDown, NULL);
+	Cmd_AddCommand("+turnleft", IN_TurnLeftDown, _("Rotate battlescape camera anti-clockwise"));
 	Cmd_AddCommand("-turnleft", IN_TurnLeftUp, NULL);
-	Cmd_AddCommand("+turnright", IN_TurnRightDown, NULL);
+	Cmd_AddCommand("+turnright", IN_TurnRightDown, _("Rotate battlescape camera clockwise"));
 	Cmd_AddCommand("-turnright", IN_TurnRightUp, NULL);
-	Cmd_AddCommand("+turnup", IN_TurnUpDown, NULL);
+	Cmd_AddCommand("+turnup", IN_TurnUpDown, _("Tilt battlescape camera up"));
 	Cmd_AddCommand("-turnup", IN_TurnUpUp, NULL);
-	Cmd_AddCommand("+turndown", IN_TurnDownDown, NULL);
+	Cmd_AddCommand("+turndown", IN_TurnDownDown, _("Tilt battlescape camera down"));
 	Cmd_AddCommand("-turndown", IN_TurnDownUp, NULL);
-	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown, NULL);
+	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown, _("Move battlescape camera left"));
 	Cmd_AddCommand("-shiftleft", IN_ShiftLeftUp, NULL);
-	Cmd_AddCommand("+shiftright", IN_ShiftRightDown, NULL);
+	Cmd_AddCommand("+shiftright", IN_ShiftRightDown, ("Move battlescape camera right"));
 	Cmd_AddCommand("-shiftright", IN_ShiftRightUp, NULL);
-	Cmd_AddCommand("+shiftup", IN_ShiftUpDown, NULL);
+	Cmd_AddCommand("+shiftup", IN_ShiftUpDown, _("Move battlescape camera forward"));
 	Cmd_AddCommand("-shiftup", IN_ShiftUpUp, NULL);
-	Cmd_AddCommand("+shiftdown", IN_ShiftDownDown, NULL);
+	Cmd_AddCommand("+shiftdown", IN_ShiftDownDown, _("Move battlescape camera backward"));
 	Cmd_AddCommand("-shiftdown", IN_ShiftDownUp, NULL);
-	Cmd_AddCommand("+zoomin", IN_ZoomInDown, NULL);
+	Cmd_AddCommand("+zoomin", IN_ZoomInDown, _("Zoom in"));
 	Cmd_AddCommand("-zoomin", IN_ZoomInUp, NULL);
-	Cmd_AddCommand("+zoomout", IN_ZoomOutDown, NULL);
+	Cmd_AddCommand("+zoomout", IN_ZoomOutDown, _("Zoom out"));
 	Cmd_AddCommand("-zoomout", IN_ZoomOutUp, NULL);
 
 	Cmd_AddCommand("impulse", IN_Impulse, NULL);
 
-	Cmd_AddCommand("+select", CL_SelectDown, NULL);
+	Cmd_AddCommand("+select", CL_SelectDown, _("Select objects/Walk to a square/In fire mode, fire etc"));
 	Cmd_AddCommand("-select", CL_SelectUp, NULL);
-	Cmd_AddCommand("+action", CL_ActionDown, NULL);
+	Cmd_AddCommand("+action", CL_ActionDown, _("Walk to a square/In fire mode, cancel action"));
 	Cmd_AddCommand("-action", CL_ActionUp, NULL);
-	Cmd_AddCommand("+turn", CL_TurnDown, NULL);
+	Cmd_AddCommand("+turn", CL_TurnDown, _("Turn soldier toward mouse pointer"));
 	Cmd_AddCommand("-turn", CL_TurnUp, NULL);
 	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch, _("Toggle stand/crounch"));
 	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction, _("Toggle reaction fire"));
@@ -763,10 +763,10 @@ void CL_InitInput(void)
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft, NULL);
 	Cmd_AddCommand("reloadright", CL_ReloadRight, NULL);
 	Cmd_AddCommand("nextround", CL_NextRound, _("Ends current round"));
-	Cmd_AddCommand("levelup", CL_LevelUp, NULL);
-	Cmd_AddCommand("leveldown", CL_LevelDown, NULL);
-	Cmd_AddCommand("zoominquant", CL_ZoomInQuant, NULL);
-	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant, NULL);
+	Cmd_AddCommand("levelup", CL_LevelUp, _("Slice through terrain at a higher level"));
+	Cmd_AddCommand("leveldown", CL_LevelDown, _("Slice through terrain at a lower level"));
+	Cmd_AddCommand("zoominquant", CL_ZoomInQuant, _("Zoom in"));
+	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant, _("Zoom out"));
 	Cmd_AddCommand("confirmaction", CL_ConfirmAction, _("Confirm the current action"));
 
 #ifdef DEBUG
@@ -775,7 +775,7 @@ void CL_InitInput(void)
 	Cmd_AddCommand("camsetangles", CL_CamSetAngles, NULL);
 	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot, NULL);
 
-	Cmd_AddCommand("cameramode", CL_CameraMode, NULL);
+	Cmd_AddCommand("cameramode", CL_CameraMode, _("Toggle first-person/third-person camera mode"));
 }
 
 

@@ -763,6 +763,7 @@ menu options_keys
 		size	"460 580"
 		pos	"480 110"
 		height	30
+		num	1
 //		bgcolor	"1 1 1 0.4"
 	}
 

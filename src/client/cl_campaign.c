@@ -1317,7 +1317,7 @@ void CL_UpdateCredits(int credits)
 	if (credits > MAX_CREDITS)
 		credits = MAX_CREDITS;
 	ccs.credits = credits;
-	Cvar_Set("mn_credits", va("%i c", ccs.credits));
+	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
 }
 
 
@@ -2512,18 +2512,18 @@ void CL_UpdateCharacterStats(int won)
 					chr->skills[j]++;
 
 			/* Check if the soldier meets the requirements for a higher rank -> Promotion; also, perhaps use "won" in some way */
-			/* TODO: Check if it's really "> 0" or rather ">= 0" */
 			if (gd.numRanks >= 2) {
-				for (j = gd.numRanks - 1; j > 0; j--) {
+				for (j = gd.numRanks - 1; j > chr->rank; j--) {
 					rank = &gd.ranks[j];
 					if ((chr->skills[ABILITY_MIND] >= rank->mind)
 						&& (chr->kills[KILLED_ALIENS] >= rank->killed_enemies)
 						&& ((chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM]) <= rank->killed_others)) {
-						if (chr->rank != j) {
-							chr->rank = j;
+						chr->rank = j;
+						if (chr->HP > 0)
 							Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%s has been promoted to %s.\n"), chr->name, rank->name);
-							MN_AddNewMessage(_("Soldier promoted"), messageBuffer, qfalse, MSG_PROMOTION, NULL);
-						}
+						else
+							Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"), chr->name, rank->name);
+						MN_AddNewMessage(_("Soldier promoted"), messageBuffer, qfalse, MSG_PROMOTION, NULL);
 						break;
 					}
 				}
@@ -2551,8 +2551,10 @@ static void CL_DebugChangeCharacterStats_f(void)
 
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			chr->kills[j]++;
+		if (chr) {
+			for (j = 0; j < KILLED_NUM_TYPES; j++)
+				chr->kills[j]++;
+		}
 	}
 	CL_UpdateCharacterStats(1);
 }
@@ -2596,9 +2598,6 @@ static void CL_GameResultsCmd(void)
 	}
 	won = atoi(Cmd_Argv(1));
 
-	/* update stats */
-	CL_UpdateCharacterStats(won);
-
 	baseCurrent = CL_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
 
 	/* add the looted goods to base storage and market */
@@ -2613,6 +2612,9 @@ static void CL_GameResultsCmd(void)
 
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
+
+	/* update stats */
+	CL_UpdateCharacterStats(won);
 
 	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
 	for (i = gd.numEmployees[EMPL_SOLDIER]-1; i >= 0 ; i-- ) {

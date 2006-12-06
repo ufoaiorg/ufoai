@@ -260,7 +260,7 @@ void PR_ProductionIncrease(void)
 
 	if (gd.productions[baseCurrent->idx].objID >= 0) {
 		if (gd.productions[baseCurrent->idx].amount == 0) {
-			Com_sprintf(messageBuffer, sizeof(messageBuffer), "Production of %s started", csi.ods[gd.productions[baseCurrent->idx].objID].name);
+			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), csi.ods[gd.productions[baseCurrent->idx].objID].name);
 			MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[gd.productions[baseCurrent->idx].objID].tech);
 		}
 		/* FIXME: overflow possible - check max item count */

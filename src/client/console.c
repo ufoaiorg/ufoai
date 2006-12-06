@@ -358,10 +358,10 @@ void Con_Init(void)
 	con_notifytime = Cvar_Get("con_notifytime", "3", 0, NULL);
 	con_history = Cvar_Get("con_history", "1", CVAR_ARCHIVE, "Permanent console history");
 
-	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, NULL);
+	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, _("Bring up the in-game console"));
 	Cmd_AddCommand("togglechat", Con_ToggleChat_f, NULL);
-	Cmd_AddCommand("messagesay", Con_MessageModeSay_f, NULL);
-	Cmd_AddCommand("messagesayteam", Con_MessageModeSayTeam_f, NULL);
+	Cmd_AddCommand("messagesay", Con_MessageModeSay_f, _("Send a message to all players"));
+	Cmd_AddCommand("messagesayteam", Con_MessageModeSayTeam_f, _("Send a message to allied team members"));
 	Cmd_AddCommand("messagemenu", Con_MessageModeMenu_f, NULL);
 	Cmd_AddCommand("clear", Con_Clear_f, NULL);
 	Cmd_AddCommand("condump", Con_Dump_f, NULL);
