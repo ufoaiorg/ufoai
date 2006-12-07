@@ -1152,6 +1152,8 @@ void MN_TextScrollBottom(char* nodeName)
  * @sa MN_TextRightClick
  * @sa MN_ExecuteActions
  * @sa MN_Click
+ * @sa MN_MiddleClick
+ * @sa MN_MouseWheel
  */
 void MN_RightClick(int x, int y)
 {
@@ -1200,6 +1202,9 @@ void MN_RightClick(int x, int y)
 
 /**
  * @brief
+ * @sa MN_Click
+ * @sa MN_RightClick
+ * @sa MN_MouseWheel
  */
 void MN_MiddleClick(int x, int y)
 {
@@ -1243,6 +1248,11 @@ void MN_MiddleClick(int x, int y)
 
 /**
  * @brief
+ * @sa MN_Click
+ * @sa MN_RightClick
+ * @sa MN_MiddleClick
+ * @sa CL_ZoomInQuant
+ * @sa CL_ZoomOutQuant
  */
 void MN_MouseWheel(qboolean down, int x, int y)
 {
