@@ -722,8 +722,8 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 	Com_Printf("------- Server Initialization -------\n");
 
 	Com_DPrintf("SpawnServer: %s\n", server);
-	if (sv.demofile)
-		fclose(sv.demofile);
+	if (sv.demofile.f)
+		fclose(sv.demofile.f);
 
 	svs.spawncount++;
 	/* any partially connected client will be restarted */

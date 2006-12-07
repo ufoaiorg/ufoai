@@ -39,13 +39,13 @@ typedef struct {
 
 typedef struct pack_s {
 	char filename[MAX_OSPATH];
-	FILE *handle;
+	qFILE handle;
 	int numfiles;
 	packfile_t *files;
 } pack_t;
 
-char fs_gamedir[MAX_OSPATH];
-cvar_t *fs_basedir;
+static char fs_gamedir[MAX_OSPATH];
+static cvar_t *fs_basedir;
 cvar_t *fs_gamedirvar;
 
 typedef struct filelink_s {
@@ -121,15 +121,15 @@ void FS_NormPath(char *path)
 /**
  * @brief
  */
-int FS_filelength(FILE * f)
+int FS_FileLength(qFILE * f)
 {
 	int pos;
 	int end;
 
-	pos = ftell(f);
-	fseek(f, 0, SEEK_END);
-	end = ftell(f);
-	fseek(f, pos, SEEK_SET);
+	pos = ftell(f->f);
+	fseek(f->f, 0, SEEK_END);
+	end = ftell(f->f);
+	fseek(f->f, pos, SEEK_SET);
 
 	return end;
 }
@@ -156,18 +156,22 @@ void FS_CreatePath(char *path)
  * @brief For some reason, other dll's can't just call fclose()
  * on files returned by FS_FOpenFile...
  */
-void FS_FCloseFile(FILE * f)
+void FS_FCloseFile(qFILE * f)
 {
-	fclose(f);
+	if (f->f)
+		fclose (f->f);
+	else if (f->z)
+		unzCloseCurrentFile(f->z);
+
+	f->f = f->z = NULL;
 }
 
 /**
  * @brief Finds the file in the search path.
- * @return filesize and an open FILE *
+ * @return filesize and an open qFILE *
  * @note Used for streaming data out of either a pak file or a seperate file.
  */
-int file_from_pak = 0;
-int FS_FOpenFileSingle(const char *filename, FILE ** file)
+static int FS_FOpenFileSingle(const char *filename, qFILE * file)
 {
 	searchpath_t *search;
 	char netpath[MAX_OSPATH];
@@ -175,16 +179,16 @@ int FS_FOpenFileSingle(const char *filename, FILE ** file)
 	int i;
 	filelink_t *link;
 
-	file_from_pak = 0;
+	file->z = file->f = NULL;
 
 	/* check for links first */
 	for (link = fs_links; link; link = link->next)
 		if (!Q_strncmp((char *) filename, link->from, link->fromlength)) {
 			Com_sprintf(netpath, sizeof(netpath), "%s%s", link->to, filename + link->fromlength);
-			*file = fopen(netpath, "rb");
-			if (*file) {
+			file->f = fopen(netpath, "rb");
+			if (file->f) {
 				Com_DPrintf("link file: %s\n", netpath);
-				return FS_filelength(*file);
+				return FS_FileLength(file);
 			}
 			return -1;
 		}
@@ -198,61 +202,100 @@ int FS_FOpenFileSingle(const char *filename, FILE ** file)
 			for (i = 0; i < pak->numfiles; i++)
 				/* found it! */
 				if (!Q_strcasecmp(pak->files[i].name, (char *) filename)) {
-					file_from_pak = 1;
 					Com_DPrintf("PackFile: %s : %s\n", pak->filename, filename);
 					/* open a new file on the pakfile */
-					*file = fopen(pak->filename, "rb");
-					if (!*file)
-						Com_Error(ERR_FATAL, "Couldn't reopen %s", pak->filename);
-					fseek(*file, pak->files[i].filepos->pos_in_zip_directory, SEEK_SET);
+					if (unzLocateFile(pak->handle.z, filename, 2) == UNZ_OK) {	/* found it! */
+						if (unzOpenCurrentFile(pak->handle.z) == UNZ_OK) {
+		  					unz_file_info info;
+				  			Com_DPrintf ("PackFile: %s : %s\n", pak->filename, filename);
+							if (unzGetCurrentFileInfo (pak->handle.z, &info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK)
+		  						Com_Error (ERR_FATAL, "Couldn't get size of %s in %s", filename, pak->filename);
+							file->z = pak->handle.z;
+		  					return info.uncompressed_size;
+	  					}
+  					}
+					/*fseek(*file, pak->files[i].filepos->pos_in_zip_directory, SEEK_SET);*/
 					return pak->files[i].filelen;
 				}
 		} else {
 			/* check a file in the directory tree */
 			Com_sprintf(netpath, sizeof(netpath), "%s/%s", search->filename, filename);
 
-			*file = fopen(netpath, "rb");
-			if (!*file)
+			file->f = fopen(netpath, "rb");
+			if (!file->f)
 				continue;
 
 			Com_DPrintf("FindFile: %s\n", netpath);
-			return FS_filelength(*file);
+			return FS_FileLength(file);
 		}
 	}
 
-	*file = NULL;
+	file->f = NULL;
 	return -1;
 }
 
+#define PK3_SEEK_BUFFER_SIZE 65536
 /**
  * @brief
  */
-int FS_Seek(FILE * f, long offset, int origin)
+int FS_Seek(qFILE * f, long offset, int origin)
 {
 	int _origin;
 
-	switch (origin) {
-	case FS_SEEK_CUR:
-		_origin = SEEK_CUR;
-		break;
-	case FS_SEEK_END:
-		_origin = SEEK_END;
-		break;
-	case FS_SEEK_SET:
-		_origin = SEEK_SET;
-		break;
-	default:
-		_origin = SEEK_CUR;
-		Sys_Error("Bad origin in FS_Seek\n");
-		break;
+	if (f->z) {
+		byte	buffer[PK3_SEEK_BUFFER_SIZE];
+		int		remainder = offset;
+
+		if (offset < 0 || origin == FS_SEEK_END) {
+			Com_Error(ERR_FATAL, "Negative offsets and FS_SEEK_END not implemented "
+					"for FS_Seek on pk3 file contents\n" );
+			return -1;
+		}
+
+		switch (origin) {
+		case FS_SEEK_SET:
+			/* FIXME */
+			/*unzSetCurrentFileInfoPosition(f->z, f->zipFilePos);*/
+			unzOpenCurrentFile(f->z);
+			/* fallthrough */
+		case FS_SEEK_CUR:
+			while (remainder > PK3_SEEK_BUFFER_SIZE) {
+				FS_Read(buffer, PK3_SEEK_BUFFER_SIZE, f);
+				remainder -= PK3_SEEK_BUFFER_SIZE;
+			}
+			FS_Read(buffer, remainder, f);
+			return offset;
+			break;
+
+		default:
+			Com_Error( ERR_FATAL, "Bad origin in FS_Seek\n" );
+			return -1;
+			break;
+		}
+	} else {
+		switch (origin) {
+		case FS_SEEK_CUR:
+			_origin = SEEK_CUR;
+			break;
+		case FS_SEEK_END:
+			_origin = SEEK_END;
+			break;
+		case FS_SEEK_SET:
+			_origin = SEEK_SET;
+			break;
+		default:
+			_origin = SEEK_CUR;
+			Sys_Error("Bad origin in FS_Seek\n");
+			break;
+		}
+		return fseek(f->f, offset, _origin);
 	}
-	return fseek(f, offset, _origin);
 }
 
 /**
  * @brief
  */
-int FS_FOpenFile(const char *filename, FILE ** file)
+int FS_FOpenFile(const char *filename, qFILE * file)
 {
 	int result, len;
 
@@ -271,7 +314,7 @@ int FS_FOpenFile(const char *filename, FILE ** file)
 /**
  * @brief
  */
-int FS_FOpenFileRead(const char *filename, FILE ** f)
+int FS_FOpenFileRead(const char *filename, qFILE * f)
 {
 	char *ospath = NULL;
 	int l;
@@ -279,9 +322,9 @@ int FS_FOpenFileRead(const char *filename, FILE ** f)
 	if ((l = FS_CheckFile(filename)) > 0) {
 		/* don't let sound stutter */
 /* 		S_ClearBuffer(); */
-		*f = fopen(ospath, "rb");
+		f->f = fopen(ospath, "rb");
 	} else
-		*f = NULL;
+		f->f = NULL;
 
 	return l;
 }
@@ -290,12 +333,15 @@ int FS_FOpenFileRead(const char *filename, FILE ** f)
 /**
  * @brief
  */
-int FS_FOpenFileWrite(const char *filename, FILE ** f)
+int FS_FOpenFileWrite(const char *filename, qFILE * f)
 {
 	int len;
 
-	*f = fopen(filename, "wb");
-	if (!*f)
+	if (f->z)
+		return 0;
+
+	f->f = fopen(filename, "wb");
+	if (!f->f)
 		return 0;
 
 	return len;
@@ -309,11 +355,11 @@ int FS_FOpenFileWrite(const char *filename, FILE ** f)
 int FS_CheckFile(const char *filename)
 {
 	int result;
-	FILE *file;
+	qFILE file;
 
 	result = FS_FOpenFileSingle(filename, &file);
 	if (result != -1)
-		fclose(file);
+		fclose(file.f);
 
 	return result;
 }
@@ -324,14 +370,21 @@ void CDAudio_Stop(void);
 /**
  * @brief Properly handles partial reads
  */
-void FS_Read(void *buffer, int len, FILE * f)
+int FS_Read(void *buffer, int len, qFILE * f)
 {
 	int block, remaining;
-	int read;
+	int read, sum = 0;
 	byte *buf;
 	int tries;
 
 	buf = (byte *) buffer;
+
+	if (f->z) {
+		read = unzReadCurrentFile(f->z, buf, len);
+		if (read == -1)
+			Com_Error (ERR_FATAL, "FS_ReadFromZipFile: -1 bytes read");
+		return read;
+	}
 
 	/* read in chunks for progress bar */
 	remaining = len;
@@ -340,22 +393,14 @@ void FS_Read(void *buffer, int len, FILE * f)
 		block = remaining;
 		if (block > MAX_READ)
 			block = MAX_READ;
-		read = fread(buf, 1, block, f);
+		read = fread(buf, 1, block, f->f);
 		if (read == 0) {
 			/* we might have been trying to read from a CD */
 			if (!tries) {
 				tries = 1;
 				CDAudio_Stop();
-			} else {
-#if 0 /* Pk3 file support is not working atm */
-				read = unzReadCurrentFile(f, buffer, len);
-				if (read == 0)
-					Com_Error(ERR_FATAL, "FS_Read: 0 bytes read");
-				else
-					break;
-#endif
+			} else
 				Com_Error(ERR_FATAL, "FS_Read: 0 bytes read");
-			}
 		}
 
 		if (read == -1)
@@ -365,7 +410,9 @@ void FS_Read(void *buffer, int len, FILE * f)
 
 		remaining -= read;
 		buf += read;
+		sum += read;
 	}
+	return sum;
 }
 
 /**
@@ -375,7 +422,7 @@ void FS_Read(void *buffer, int len, FILE * f)
  */
 int FS_LoadFile(const char *path, void **buffer)
 {
-	FILE *h;
+	qFILE h;
 	byte *buf;
 	int len;
 
@@ -383,24 +430,25 @@ int FS_LoadFile(const char *path, void **buffer)
 
 	/* look for it in the filesystem or pack files */
 	len = FS_FOpenFile(path, &h);
-	if (!h) {
+	if (!h.f && !h.z) {
+		Com_Printf("FS_LoadFile: Could not open %s\n", path);
 		if (buffer)
 			*buffer = NULL;
 		return -1;
 	}
 
 	if (!buffer) {
-		fclose(h);
+		FS_FCloseFile(&h);
 		return len;
 	}
 
 	buf = Mem_Alloc(len + 1);
 	*buffer = buf;
 
-	FS_Read(buf, len, h);
+	FS_Read(buf, len, &h);
 	buf[len] = 0;
 
-	fclose(h);
+	FS_FCloseFile(&h);
 
 	return len;
 }
@@ -453,7 +501,8 @@ pack_t *FS_LoadPackFile(const char *packfile)
 
 		pack = Mem_Alloc(sizeof(pack_t));
 		Q_strncpyz(pack->filename, packfile, MAX_QPATH);
-		pack->handle = uf;
+		pack->handle.z = uf;
+		pack->handle.f = NULL;
 		pack->numfiles = gi.number_entry;
 		unzGoToFirstFile(uf);
 
@@ -473,7 +522,7 @@ pack_t *FS_LoadPackFile(const char *packfile)
 		}
 		pack->files = newfiles;
 
-		Com_Printf("Added packfile %s (%li files) (NOTE: support for pk3 is not fully implemented)\n", packfile, gi.number_entry);
+		Com_Printf("Added packfile %s (%li files)\n", packfile, gi.number_entry);
 		return pack;
 	} else {
 		/* Unrecognized file type! */
@@ -483,15 +532,18 @@ pack_t *FS_LoadPackFile(const char *packfile)
 }
 
 
+#define MAX_PACKFILES 1024
 /**
-  * @brief Sets fs_gamedir, adds the directory to the head of the path
-  */
+ * @brief Sets fs_gamedir, adds the directory to the head of the path
+ */
 void FS_AddGameDirectory(const char *dir)
 {
 	searchpath_t *search;
 	pack_t *pak;
 	char **dirnames = NULL;
 	int ndirs = 0, i;
+	char pakfile_list[MAX_PACKFILES][MAX_OSPATH];
+	int pakfile_count = 0;
 
 	Q_strncpyz(fs_gamedir, dir, MAX_QPATH);
 
@@ -507,17 +559,30 @@ void FS_AddGameDirectory(const char *dir)
 	if ((dirnames = FS_ListFiles(va("%s/*.pk3", dir), &ndirs, 0, 0)) != 0) {
 		for (i = 0; i < ndirs - 1; i++) {
 			if (strrchr(dirnames[i], '/')) {
-				pak = FS_LoadPackFile(dirnames[i]);
-				if (!pak)
-					continue;
-				search = Mem_Alloc(sizeof(searchpath_t));
-				search->pack = pak;
-				search->next = fs_searchpaths;
-				fs_searchpaths = search;
+				Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], MAX_OSPATH);
+				pakfile_count++;
+				if (pakfile_count >= MAX_PACKFILES) {
+					Com_Printf("Warning: Max allowed pakfiles reached (%i) - skipping the rest\n", MAX_PACKFILES);
+					break;
+				}
 			}
 			free(dirnames[i]);
 		}
 		free(dirnames);
+	}
+
+	/* Sort our list alphabetically */
+	qsort((void *)pakfile_list, pakfile_count, MAX_OSPATH, Q_StringSort);
+
+	for (i = 0; i < pakfile_count; i++) {
+		pak = FS_LoadPackFile (pakfile_list[i]);
+		if (!pak)
+			continue;
+
+		search = Mem_Alloc (sizeof(searchpath_t));
+		search->pack = pak;
+		search->next = fs_searchpaths;
+		fs_searchpaths = search;
 	}
 }
 
@@ -588,7 +653,8 @@ void FS_SetGamedir(const char *dir)
 	/* free up any current game dir info */
 	while (fs_searchpaths != fs_base_searchpaths) {
 		if (fs_searchpaths->pack) {
-			fclose(fs_searchpaths->pack->handle);
+			FS_FCloseFile(&fs_searchpaths->pack->handle);
+
 			Mem_Free(fs_searchpaths->pack->files);
 			Mem_Free(fs_searchpaths->pack);
 		}
@@ -1127,14 +1193,14 @@ void FS_GetMaps(qboolean reset)
 /**
  * @brief Properly handles partial writes
  */
-int FS_Write(const void *buffer, int len, FILE * f)
+int FS_Write(const void *buffer, int len, qFILE * f)
 {
 	int block, remaining;
 	int written;
 	byte *buf;
 	int tries;
 
-	if (!f)
+	if (!f->f)
 		return 0;
 
 	buf = (byte *) buffer;
@@ -1143,7 +1209,7 @@ int FS_Write(const void *buffer, int len, FILE * f)
 	tries = 0;
 	while (remaining) {
 		block = remaining;
-		written = fwrite(buf, 1, block, f);
+		written = fwrite(buf, 1, block, f->f);
 		if (written == 0) {
 			if (!tries) {
 				tries = 1;
@@ -1161,7 +1227,7 @@ int FS_Write(const void *buffer, int len, FILE * f)
 		remaining -= written;
 		buf += written;
 	}
-/* 	fflush( f ); */
+/* 	fflush( f->f ); */
 	return len;
 }
 
@@ -1171,20 +1237,20 @@ int FS_Write(const void *buffer, int len, FILE * f)
  */
 int FS_WriteFile(const void *buffer, int len, const char *filename)
 {
-	FILE *f;
+	qFILE f;
 	int c, lencheck;
 
 	FS_CreatePath((char *) filename);
 
-	f = fopen(filename, "wb");
+	f.f = fopen(filename, "wb");
 
-	if (f)
-		c = fwrite(buffer, 1, len, f);
+	if (f.f)
+		c = fwrite(buffer, 1, len, f.f);
 	else
 		return 0;
 
-	lencheck = FS_filelength(f);
-	fclose(f);
+	lencheck = FS_FileLength(&f);
+	fclose(f.f);
 
 	/* if file write failed (file is incomplete) then delete it */
 	if (c != len || lencheck != len) {

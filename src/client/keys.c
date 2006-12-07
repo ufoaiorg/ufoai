@@ -743,6 +743,7 @@ static void Key_Bind_f(void)
 		Key_SetBinding(b, cmd, KEYSPACE_GAME);
 }
 
+#if 0
 /**
  * @brief Writes lines containing "bind key value"
  * @param[in] path path to print the keybinding too
@@ -767,7 +768,7 @@ void Key_WriteBindings(char* path)
 			fprintf(f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
 	fclose(f);
 }
-
+#endif
 
 /**
  * @brief List all binded keys with its function

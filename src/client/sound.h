@@ -37,6 +37,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct sfx_s;
 
+typedef struct snd_stream_s
+{
+	qFILE file;
+	int length;
+	int pos;
+	void *ptr;
+} snd_stream_t;
+
 void S_Init(void);
 void S_Shutdown(void);
 void S_Activate(qboolean active);

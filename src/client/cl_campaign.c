@@ -1735,7 +1735,7 @@ int CL_GameLoad(char *filename)
 	setState_t dummy;
 	sizebuf_t sb;
 	byte *buf, *cbuf;
-	FILE *f;
+	qFILE f;
 	char *name, *title, *text;
 	int res, clen;
 	int version, dataSize, mtype, idx;
@@ -1747,18 +1747,18 @@ int CL_GameLoad(char *filename)
 	uLongf len = MAX_GAMESAVESIZE;
 
 	/* open file */
-	f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
-	if (!f) {
+	f.f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
+	if (!f.f) {
 		Com_Printf("Couldn't open file '%s'.\n", filename);
 		return 1;
 	}
 
 	/* read compressed data into cbuf buffer */
-	clen = FS_filelength(f);
+	clen = FS_FileLength(&f);
 	cbuf = (byte *) malloc(sizeof(byte) * clen);
-	if (fread(cbuf, 1, clen, f) != clen)
+	if (fread(cbuf, 1, clen, f.f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
-	fclose(f);
+	fclose(f.f);
 
 	/* uncompress data, skipping comment header */
 	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);

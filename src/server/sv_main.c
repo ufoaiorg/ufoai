@@ -894,16 +894,16 @@ void SV_Shutdown(char *finalmsg, qboolean reconnect)
 	SV_ShutdownGameProgs();
 
 	/* free current level */
-	if (sv.demofile)
-		fclose(sv.demofile);
+	if (sv.demofile.f)
+		fclose(sv.demofile.f);
 	memset(&sv, 0, sizeof(sv));
 	Com_SetServerState(sv.state);
 
 	/* free server static data */
 	if (svs.clients)
 		Mem_Free(svs.clients);
-	if (svs.demofile)
-		fclose(svs.demofile);
+	if (svs.demofile.f)
+		fclose(svs.demofile.f);
 	memset(&svs, 0, sizeof(svs));
 
 	/* maybe we shut down before we init - e.g. in case of an error */

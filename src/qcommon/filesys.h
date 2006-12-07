@@ -8,6 +8,11 @@ extern char *maps[MAX_MAPS];
 extern int anzInstalledMaps;
 extern int mapInstalledIndex;
 
+typedef struct qFILE_s {
+	void *z; /* in case of the file being a zip archive */
+	FILE *f; /* in case the file being part of a pak or the actual file */
+} qFILE;
+
 typedef enum {
 	FS_READ,
 	FS_WRITE,
@@ -21,11 +26,11 @@ typedef enum {
 	FS_SEEK_SET
 } fsOrigin_t;
 
-int FS_filelength(FILE * f);
-int FS_FOpenFileWrite(const char *filename, FILE ** f);
-int FS_Seek(FILE * f, long offset, int origin);
+int FS_FileLength(qFILE * f);
+int FS_FOpenFileWrite(const char *filename, qFILE * f);
+int FS_Seek(qFILE * f, long offset, int origin);
 int FS_WriteFile(const void *buffer, int len, const char *filename);
-int FS_Write(const void *buffer, int len, FILE * f);
+int FS_Write(const void *buffer, int len, qFILE * f);
 void FS_InitFilesystem(void);
 void FS_SetGamedir(const char *dir);
 char *FS_Gamedir(void);
@@ -38,8 +43,8 @@ char* FS_GetBasePath(char* filename);
 
 void FS_GetMaps(qboolean reset);
 
-int FS_FOpenFile(const char *filename, FILE ** file);
-void FS_FCloseFile(FILE * f);
+int FS_FOpenFile(const char *filename, qFILE * file);
+void FS_FCloseFile(qFILE * f);
 
 /* note: this can't be called from another DLL, due to MS libc issues */
 
@@ -48,7 +53,7 @@ int FS_LoadFile(const char *path, void **buffer);
 /* a null buffer will just return the file length without loading */
 /* a -1 length is not present */
 
-void FS_Read(void *buffer, int len, FILE * f);
+int FS_Read(void *buffer, int len, qFILE * f);
 
 /* properly handles partial reads */
 

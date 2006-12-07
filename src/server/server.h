@@ -75,7 +75,7 @@ typedef struct {
 	byte multicast_buf[MAX_MSGLEN];
 
 	/* demo server information */
-	FILE *demofile;
+	qFILE demofile;
 	qboolean timedemo;			/* don't time sync */
 } server_t;
 
@@ -175,7 +175,7 @@ typedef struct {
 	challenge_t challenges[MAX_CHALLENGES];	/* to prevent invalid IPs from connecting */
 
 	/* serverrecord values */
-	FILE *demofile;
+	qFILE demofile;
 	sizebuf_t demo_multicast;
 	byte demo_multicast_buf[MAX_MSGLEN];
 } server_static_t;

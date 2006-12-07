@@ -1355,15 +1355,178 @@ OGG Vorbis decoding
 */
 
 /**
+ * @brief fread() replacement
+ */
+static size_t S_OGG_Callback_read(void *ptr, size_t size, size_t nmemb, void *datasource)
+{
+	snd_stream_t *stream;
+	int byteSize = 0;
+	int bytesRead = 0;
+	size_t nMembRead = 0;
+
+	/* check if input is valid */
+	if (!ptr) {
+		errno = EFAULT;
+		return 0;
+	}
+
+	if (!(size && nmemb)) {
+		/* It's not an error, caller just wants zero bytes! */
+		errno = 0;
+		return 0;
+	}
+
+	if (!datasource) {
+		errno = EBADF;
+		return 0;
+	}
+
+	/* we use a snd_stream_t in the generic pointer to pass around */
+	stream = (snd_stream_t *) datasource;
+
+	/* FS_Read does not support multi-byte elements */
+	byteSize = nmemb * size;
+
+	/* read it with the Q3 function FS_Read() */
+	bytesRead = FS_Read(ptr, byteSize, &stream->file);
+
+	/* update the file position */
+	stream->pos += bytesRead;
+
+	/* this function returns the number of elements read not the number of bytes */
+	nMembRead = bytesRead / size;
+
+	/* even if the last member is only read partially */
+	/* it is counted as a whole in the return value */
+	if(bytesRead % size)
+		nMembRead++;
+
+	return nMembRead;
+}
+
+/**
+ * @brief fseek() replacement
+ */
+static int S_OGG_Callback_seek(void *datasource, ogg_int64_t offset, int whence)
+{
+	snd_stream_t *stream;
+	int retVal = 0;
+
+	/* check if input is valid */
+	if (!datasource) {
+		errno = EBADF;
+		return -1;
+	}
+
+	/* snd_stream_t in the generic pointer */
+	stream = (snd_stream_t *) datasource;
+
+	/* we must map the whence to its Q3 counterpart */
+	switch (whence) {
+		case SEEK_SET :
+		{
+			/* set the file position in the actual file with the Q3 function */
+			retVal = FS_Seek(&stream->file, (long) offset, FS_SEEK_SET);
+
+			/* something has gone wrong, so we return here */
+			if (!(retVal == 0))
+				return retVal;
+
+			/* keep track of file position */
+			stream->pos = (int) offset;
+			break;
+		}
+
+		case SEEK_CUR :
+		{
+			/* set the file position in the actual file with the Q3 function */
+			retVal = FS_Seek(&stream->file, (long) offset, FS_SEEK_CUR);
+
+			/* something has gone wrong, so we return here */
+			if (!(retVal == 0))
+				return retVal;
+
+			/* keep track of file position */
+			stream->pos += (int) offset;
+			break;
+		}
+
+		case SEEK_END :
+		{
+			/* Quake 3 seems to have trouble with FS_SEEK_END */
+			/* so we use the file length and FS_SEEK_SET */
+
+			/* set the file position in the actual file with the Q3 function */
+			retVal = FS_Seek(&stream->file, (long)stream->length + (long) offset, FS_SEEK_SET);
+
+			/* something has gone wrong, so we return here */
+			if (!(retVal == 0))
+				return retVal;
+
+			/* keep track of file position */
+			stream->pos = stream->length + (int) offset;
+			break;
+		}
+
+		default :
+		{
+			/* unknown whence, so we return an error */
+			errno = EINVAL;
+			return -1;
+		}
+	}
+
+	/* stream->pos shouldn't be smaller than zero or bigger than the filesize */
+	stream->pos = (stream->pos < 0) ? 0 : stream->pos;
+	stream->pos = (stream->pos > stream->length) ? stream->length : stream->pos;
+
+	return 0;
+}
+
+/**
+ * @brief fclose() replacement
+ */
+static int S_OGG_Callback_close(void *datasource)
+{
+	/* we do nothing here and close all things manually in S_OGG_CodecCloseStream() */
+	return 0;
+}
+
+/**
+ * @brief ftell() replacement
+ */
+static long S_OGG_Callback_tell(void *datasource)
+{
+	/* check if input is valid */
+	if (!datasource) {
+		errno = EBADF;
+		return -1;
+	}
+
+	/* we keep track of the file position in stream->pos */
+	return (long)(((snd_stream_t *)datasource)->pos);
+}
+
+/* the callback structure */
+const ov_callbacks S_OGG_Callbacks = {
+	&S_OGG_Callback_read,
+	&S_OGG_Callback_seek,
+	&S_OGG_Callback_close,
+	&S_OGG_Callback_tell
+};
+
+
+/**
  * @brief Opens the given ogg file
  * @sa OGG_Stop
  */
 qboolean OGG_Open(char *filename)
 {
-	FILE *f;
-	int res, length;
+	qFILE f;
+	int length;
 	vorbis_info *vi;
 	char *checkFilename = NULL;
+	snd_stream_t* stream = NULL;
 
 	assert(filename);
 
@@ -1398,23 +1561,31 @@ qboolean OGG_Open(char *filename)
 
 	/* find file */
 	length = FS_FOpenFile(va("music/%s.ogg", filename), &f);
-	if (!f) {
+	if (!f.f && !f.z) {
 		Com_Printf("Couldn't open 'music/%s.ogg'\n", filename);
 		return qfalse;
 	}
 
+	/* Allocate a stream */
+	stream = Mem_Alloc(sizeof(snd_stream_t));
+	if (!stream) {
+		FS_FCloseFile(&f);
+		return qfalse;
+	}
+
+	stream->file = f;
+	stream->length = length;
+
 	/* open ogg vorbis file */
-	res = ov_open(f, &music.ovFile, NULL, 0);
-	if (res < 0) {
-		Com_Printf("'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n", filename, res);
-		fclose(f);
+	if (ov_open_callbacks(stream, &music.ovFile, NULL, 0, S_OGG_Callbacks) != 0) {
+		Com_Printf("'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n", filename, errno);
 		return qfalse;
 	}
 
 	vi = ov_info(&music.ovFile, -1);
 	if ((vi->channels != 1) && (vi->channels != 2)) {
 		Com_Printf("%s has an unsupported number of channels: %i\n", filename, vi->channels);
-		fclose(f);
+		fclose(f.f);
 		return qfalse;
 	}
 

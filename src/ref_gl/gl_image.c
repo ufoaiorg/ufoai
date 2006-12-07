@@ -402,7 +402,7 @@ static void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, in
 	/* load the file */
 	len = ri.FS_LoadFile(filename, (void **) &raw);
 	if (!raw) {
-		ri.Con_Printf(PRINT_DEVELOPER, "Bad pcx file %s\n", filename);
+		ri.Con_Printf(PRINT_DEVELOPER, "LoadPCX: Could not load pcx file '%s'\n", filename);
 		return;
 	}
 
@@ -421,7 +421,14 @@ static void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, in
 	raw = &pcx->data;
 
 	if (pcx->manufacturer != 0x0a || pcx->version != 5 || pcx->encoding != 1 || pcx->bits_per_pixel != 8 || pcx->xmax >= 640 || pcx->ymax >= 480) {
-		ri.Con_Printf(PRINT_ALL, "Bad pcx file %s\n", filename);
+		ri.Con_Printf(PRINT_ALL, "LoadPCX: Bad pcx file %s\n", filename);
+		ri.Con_Printf(PRINT_ALL, "manufacturer: %x, version: %i, encoding: %i, bits_per_pixel: %i, xmax: %i, ymax: %i\n",
+			pcx->manufacturer,
+			pcx->version,
+			pcx->encoding,
+			pcx->bits_per_pixel,
+			pcx->xmax,
+			pcx->ymax);
 		ri.FS_FreeFile(raw);
 		return;
 	}

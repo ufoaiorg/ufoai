@@ -331,7 +331,7 @@ void SV_ServerRecord_f(void)
 		return;
 	}
 
-	if (svs.demofile) {
+	if (svs.demofile.f) {
 		Com_Printf("Already recording.\n");
 		return;
 	}
@@ -346,8 +346,8 @@ void SV_ServerRecord_f(void)
 
 	Com_Printf("recording to %s.\n", name);
 	FS_CreatePath(name);
-	svs.demofile = fopen(name, "wb");
-	if (!svs.demofile) {
+	svs.demofile.f = fopen(name, "wb");
+	if (!svs.demofile.f) {
 		Com_Printf("ERROR: couldn't open.\n");
 		return;
 	}
@@ -382,9 +382,9 @@ void SV_ServerRecord_f(void)
 	/* write it to the demo file */
 	Com_DPrintf("signon message length: %i\n", buf.cursize);
 	len = LittleLong(buf.cursize);
-	if (fwrite(&len, 4, 1, svs.demofile) != 1)
+	if (fwrite(&len, 4, 1, svs.demofile.f) != 1)
 		Com_Printf("Error writing demofile\n");
-	if (fwrite(buf.data, buf.cursize, 1, svs.demofile) != 1)
+	if (fwrite(buf.data, buf.cursize, 1, svs.demofile.f) != 1)
 		Com_Printf("Error writing demofile\n");
 
 	/* the rest of the demo file will be individual frames */
@@ -396,12 +396,12 @@ void SV_ServerRecord_f(void)
  */
 void SV_ServerStop_f(void)
 {
-	if (!svs.demofile) {
+	if (!svs.demofile.f) {
 		Com_Printf("Not doing a serverrecord.\n");
 		return;
 	}
-	fclose(svs.demofile);
-	svs.demofile = NULL;
+	fclose(svs.demofile.f);
+	svs.demofile.f = NULL;
 	Com_Printf("Recording completed.\n");
 }
 

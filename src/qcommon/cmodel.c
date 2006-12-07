@@ -554,19 +554,19 @@ int CheckBSPFile(char *filename)
 {
 	int i;
 	int header[2];
-	FILE *file = NULL;
+	qFILE file;
 	char name[MAX_QPATH];
 
 	/* load the file */
 	Com_sprintf(name, MAX_QPATH, "maps/%s.bsp", filename);
 
 	FS_FOpenFile(name, &file);
-	if (!file)
+	if (!file.f && !file.z)
 		return 1;
 
-	FS_Read(header, sizeof(header), file);
+	FS_Read(header, sizeof(header), &file);
 
-	FS_FCloseFile(file);
+	FS_FCloseFile(&file);
 
 	for (i = 0; i < 2; i++)
 		header[i] = LittleLong(header[i]);

@@ -257,7 +257,7 @@ typedef struct {
 	/* demo recording info must be here, so it isn't cleared on level change */
 	qboolean demorecording;
 	qboolean demowaiting;		/* don't record until a non-delta message is received */
-	FILE *demofile;
+	qFILE demofile;
 
 	/* needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;
