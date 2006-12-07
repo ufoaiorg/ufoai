@@ -106,6 +106,7 @@ menu campaigns
 		format	"20 0"
 		num	13
 		click	{ }
+		wheel
 	}
 
 	text campaign_desc
@@ -115,6 +116,7 @@ menu campaigns
 		size	"420 400"
 		num	0
 		height	20
+		wheel
 	}
 
 	pic cp_scrollup
@@ -143,6 +145,6 @@ menu campaigns
 
 	func init
 	{
-		cmd "getcampaigns; set mn_scrollnode campaign_desc;"
+		cmd "getcampaigns;"
 	}
 }

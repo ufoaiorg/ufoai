@@ -68,6 +68,7 @@ typedef enum ne_s {
 	NE_CLICK,
 	NE_RCLICK,
 	NE_MCLICK,
+	NE_WHEEL,
 	NE_MOUSEIN,
 	NE_MOUSEOUT,
 
@@ -80,6 +81,7 @@ static char *ne_strings[NE_NUM_NODEEVENT] = {
 	"click",
 	"rclick",
 	"mclick",
+	"wheel",
 	"in",
 	"out"
 };
@@ -89,6 +91,7 @@ size_t ne_values[NE_NUM_NODEEVENT] = {
 	offsetof(menuNode_t, click),
 	offsetof(menuNode_t, rclick),
 	offsetof(menuNode_t, mclick),
+	offsetof(menuNode_t, wheel),
 	offsetof(menuNode_t, mouseIn),
 	offsetof(menuNode_t, mouseOut)
 };
@@ -626,9 +629,7 @@ static void MN_Command(void)
 
 /*
 ==============================================================
-
 MENU ZONE DETECTION
-
 ==============================================================
 */
 
@@ -721,7 +722,7 @@ static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
 	}
 
 	/* check for click action */
-	if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->mouseIn && !node->mouseOut))
+	if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->wheel && !node->mouseIn && !node->mouseOut))
 		return qfalse;
 
 	if (!node->size[0] || !node->size[1]) {
@@ -1094,20 +1095,6 @@ static qboolean MN_TextScroll(menuNode_t *node, int offset)
 }
 
 /**
- * @brief Bind this function to a key to scroll the node given via cvar mn_scrollnode
- */
-static void MN_TextScrollKeyBinding_f(void)
-{
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <+/-offset>\n", Cmd_Argv(0));
-		return;
-	}
-	if (!MN_GetNodeFromCurrentMenu(Cvar_VariableString("mn_scrollnode")))
-		return;
-	Cbuf_AddText(va("mn_textscroll %s %s1;", Cvar_VariableString("mn_scrollnode"), Cmd_Argv(1)));
-}
-
-/**
  * @brief Scriptfunction that gets the wanted text node and scrolls the text.
  */
 static void MN_TextScroll_f(void)
@@ -1211,7 +1198,6 @@ void MN_RightClick(int x, int y)
 	}
 }
 
-
 /**
  * @brief
  */
@@ -1245,6 +1231,61 @@ void MN_MiddleClick(int x, int y)
 				break;
 			default:
 				MN_ExecuteActions(menu, node->mclick);
+				break;
+			}
+		}
+
+		if (menu->renderNode || menu->popupNode)
+			/* don't care about non-rendered windows */
+			return;
+	}
+}
+
+/**
+ * @brief
+ */
+void MN_MouseWheel(qboolean down, int x, int y)
+{
+	menuNode_t *node;
+	menu_t *menu;
+	int sp, mouseOver;
+
+	sp = menuStackPos;
+
+	while (sp > 0) {
+		menu = menuStack[--sp];
+		for (node = menu->firstNode; node; node = node->next) {
+			/* no middle click for this node defined */
+			if (!node->wheel)
+				continue;
+
+			/* check whether mouse if over this node */
+			mouseOver = MN_CheckNodeZone(node, x, y);
+			if (!mouseOver)
+				continue;
+
+			/* found a node -> do actions */
+			switch (node->type) {
+			case MN_MAP:
+				ccs.zoom *= pow(0.995, (down ? 10: -10));
+				if (ccs.zoom < 1.0)
+					ccs.zoom = 1.0;
+				else if (ccs.zoom > 6.0)
+					ccs.zoom = 6.0;
+
+				if (ccs.center[1] < 0.5 / ccs.zoom)
+					ccs.center[1] = 0.5 / ccs.zoom;
+				if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
+					ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
+				break;
+			case MN_3DMAP:
+				mouseSpace = MS_ZOOM3DMAP;
+				break;
+			case MN_TEXT:
+				MN_TextScroll(node, (down ? 1 : -1));
+				break;
+			default:
+				MN_ExecuteActions(menu, node->wheel);
 				break;
 			}
 		}
@@ -2453,7 +2494,6 @@ void MN_ResetMenus(void)
 
 	/* textbox */
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
-	Cmd_AddCommand("mn_textscroll_key", MN_TextScrollKeyBinding_f, NULL);
 
 	/* print the keybindings to menuText */
 	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);

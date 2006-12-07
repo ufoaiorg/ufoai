@@ -423,24 +423,28 @@ void CL_ZoomInQuant(void)
 {
 	float quant;
 
-	/* no zooming in first person mode */
-	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
-		return;
+	if (mouseSpace == MS_MENU)
+		MN_MouseWheel(qfalse, mx, my);
+	else {
+		/* no zooming in first person mode */
+		if (camera_mode == CAMERA_MODE_FIRSTPERSON)
+			return;
 
-	/* check zoom quant */
-	if (cl_camzoomquant->value < MIN_CAMZOOM_QUANT)
-		quant = 1 + MIN_CAMZOOM_QUANT;
-	else if (cl_camzoomquant->value > MAX_CAMZOOM_QUANT)
-		quant = 1 + MAX_CAMZOOM_QUANT;
-	else
-		quant = 1 + cl_camzoomquant->value;
+		/* check zoom quant */
+		if (cl_camzoomquant->value < MIN_CAMZOOM_QUANT)
+			quant = 1 + MIN_CAMZOOM_QUANT;
+		else if (cl_camzoomquant->value > MAX_CAMZOOM_QUANT)
+			quant = 1 + MAX_CAMZOOM_QUANT;
+		else
+			quant = 1 + cl_camzoomquant->value;
 
-	/* change zoom */
-	cl.cam.zoom *= quant;
+		/* change zoom */
+		cl.cam.zoom *= quant;
 
-	/* ensure zoom doesnt exceed either MAX_ZOOM or cl_camzoommax */
-	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
-	CalcFovX();
+		/* ensure zoom doesnt exceed either MAX_ZOOM or cl_camzoommax */
+		cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
+		CalcFovX();
+	}
 }
 
 /**
@@ -450,30 +454,34 @@ void CL_ZoomOutQuant(void)
 {
 	float quant;
 
-	/* no zooming in first person mode */
-	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
-		return;
+	if (mouseSpace == MS_MENU)
+		MN_MouseWheel(qtrue, mx, my);
+	else {
+		/* no zooming in first person mode */
+		if (camera_mode == CAMERA_MODE_FIRSTPERSON)
+			return;
 
-	/* check zoom quant */
-	if (cl_camzoomquant->value < MIN_CAMZOOM_QUANT)
-		quant = 1 + MIN_CAMZOOM_QUANT;
-	else if (cl_camzoomquant->value > MAX_CAMZOOM_QUANT)
-		quant = 1 + MAX_CAMZOOM_QUANT;
-	else
-		quant = 1 + cl_camzoomquant->value;
+		/* check zoom quant */
+		if (cl_camzoomquant->value < MIN_CAMZOOM_QUANT)
+			quant = 1 + MIN_CAMZOOM_QUANT;
+		else if (cl_camzoomquant->value > MAX_CAMZOOM_QUANT)
+			quant = 1 + MAX_CAMZOOM_QUANT;
+		else
+			quant = 1 + cl_camzoomquant->value;
 
-	/* change zoom */
-	cl.cam.zoom /= quant;
+		/* change zoom */
+		cl.cam.zoom /= quant;
 
-	/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
-	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
-	CalcFovX();
+		/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
+		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
+		CalcFovX();
+	}
 }
 
 /**
  * @brief returns the weapon the actor's left hand is touching
  */
-invList_t* CL_GetLeftHandWeapon(le_t *actor) 
+invList_t* CL_GetLeftHandWeapon(le_t *actor)
 {
 	invList_t *weapon = LEFT(selActor);
 
@@ -621,9 +629,8 @@ void CL_ActionUp(void)
 	mouseSpace = MS_NULL;
 }
 
-
 /**
- * @brief
+ * @brief Turn button is hit - middle mouse button
  */
 void CL_TurnDown(void)
 {

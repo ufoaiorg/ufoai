@@ -73,6 +73,7 @@ menu irc
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 0"
 		num		"1"
+		wheel
 	}
 
 	text irc_data
@@ -83,6 +84,7 @@ menu irc
 		height	"28"
 		format  "22 0"
 		num		"0"
+		wheel
 	}
 
 	string irc_server_string
@@ -163,7 +165,7 @@ menu irc
 	// ==================
 	func init
 	{
-		cmd "irc_activate; set mn_scrollnode irc_data;"
+		cmd "irc_activate;"
 	}
 
 	// ==================

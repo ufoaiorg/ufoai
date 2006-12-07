@@ -648,8 +648,22 @@ void UP_Next_f( void )
 
 /**
  * @brief
- * @param
- * @sa
+ * @sa UP_Click_f
+ */
+void UP_RightClick_f (void)
+{
+	switch (upDisplay) {
+	case UFOPEDIA_INDEX:
+	case UFOPEDIA_ARTICLE:
+		Cbuf_AddText("mn_upback;");
+	default:
+		break;
+	}
+}
+
+/**
+ * @brief
+ * @sa UP_RightClick_f
  */
 void UP_Click_f (void)
 {
@@ -792,6 +806,7 @@ void UP_ResetUfopedia( void )
 	Cmd_AddCommand("mn_upupdate", UP_Update_f, NULL);
 	Cmd_AddCommand("ufopedia", UP_FindEntry_f, NULL);
 	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
+	Cmd_AddCommand("ufopedia_rclick", UP_RightClick_f, NULL);
 	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
 
 	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, NULL);

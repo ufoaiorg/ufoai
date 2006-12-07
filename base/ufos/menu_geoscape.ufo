@@ -21,7 +21,7 @@ menu map
 	{
 		pos		"0 96"
 		size	"1024 672"
-		click mclick
+		click mclick wheel
 		rclick { cmd "mn_mapaction_reset;" }
 	}
 
@@ -34,6 +34,7 @@ menu map
 		height	1
 		// TEXT_MESSAGESYSTEM
 		num	12
+		wheel
 	}
 
 	pic back_ul

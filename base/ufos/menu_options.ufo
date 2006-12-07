@@ -796,13 +796,13 @@ menu options_keys
 	}
 
 	// only show the current binding - no support for changing them atm
-	// FIXME: Scrollable
 	text keylist
 	{
 		size	"460 580"
 		pos	"480 110"
 		height	30
 		num	1
+		wheel
 //		bgcolor	"1 1 1 0.4"
 	}
 
@@ -832,7 +832,7 @@ menu options_keys
 
 	func init
 	{
-		cmd "mn_init_keylist; set mn_scrollnode keylist;"
+		cmd "mn_init_keylist;"
 	}
 }
 

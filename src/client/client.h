@@ -911,7 +911,7 @@ typedef struct menuNode_s {
 	int num, height;			/* textfields - num: menutexts-id; height: max. rows to show */
 	vec4_t color;				/* rgba */
 	vec4_t bgcolor;				/* rgba */
-	menuAction_t *click, *rclick, *mclick, *mouseIn, *mouseOut;
+	menuAction_t *click, *rclick, *mclick, *wheel, *mouseIn, *mouseOut;
 	menuDepends_t depends;
 	struct menuNode_s *next;
 } menuNode_t;
@@ -957,6 +957,7 @@ qboolean MN_CursorOnMenu(int x, int y);
 void MN_Click(int x, int y);
 void MN_RightClick(int x, int y);
 void MN_MiddleClick(int x, int y);
+void MN_MouseWheel(qboolean down, int x, int y);
 void MN_SetViewRect(const menu_t* menu);
 void MN_DrawMenus(void);
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color);
