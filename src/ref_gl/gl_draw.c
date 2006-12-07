@@ -823,6 +823,9 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 	gl = GL_FindImage(va("pics/menu/%s_day", map), it_wrappic);
 	GL_Bind(gl->texnum);
 
+	if (gl_wire->value)
+		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 	qglTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 	qglTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -857,6 +860,9 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 			qglEnd();			/* TRIANGLE_STRIP */
 		}
 	}
+
+	if (gl_wire->value)
+		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	/* test for multitexture and env_combine support */
 	if (!qglSelectTextureSGIS && !qglActiveTextureARB) {
