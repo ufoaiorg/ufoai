@@ -453,15 +453,14 @@ typedef struct {
 
 typedef enum {
 	MS_NULL,
-	MS_MENU,
-	MS_DRAG,
-	MS_ROTATE,
-	MS_SHIFTMAP,
-	MS_ZOOMMAP,
-	MS_SHIFT3DMAP,
-	MS_ZOOM3DMAP,
-	MS_SCROLLTEXTNODE,
-	MS_WORLD
+	MS_MENU,	/**< we are over some menu node */
+	MS_DRAG,	/**< we are dragging some stuff / equipment */
+	MS_ROTATE,	/**< we are rotating models (ufopedia) */
+	MS_SHIFTMAP,	/**< we move the geoscape map */
+	MS_ZOOMMAP,		/**< we zoom the geoscape map (also possible via mousewheels)*/
+	MS_SHIFT3DMAP,	/**< we rotate the 3d globe */
+	MS_ZOOM3DMAP,	/**< we zoom the 3d globe */
+	MS_WORLD		/**< we are in tactical mode */
 } mouseSpace_t;
 
 extern int mouseSpace;
