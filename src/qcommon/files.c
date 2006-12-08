@@ -308,7 +308,7 @@ int FS_FOpenFile(const char *filename, qFILE * file)
 
 	/* nothing corresponding found */
 	if (result == -1)
-		Com_Printf("FindFile: can't find %s\n", filename);
+		Com_DPrintf("FS_FOpenFile: can't find %s\n", filename);
 
 	return result;
 }
@@ -372,7 +372,11 @@ void CDAudio_Stop(void);
 /**
  * @brief Properly handles partial reads
  */
+#ifdef DEBUG
+int FS_ReadDebug(void *buffer, int len, qFILE * f, char* file, int line)
+#else
 int FS_Read(void *buffer, int len, qFILE * f)
+#endif
 {
 	int block, remaining;
 	int read, sum = 0;
@@ -383,8 +387,12 @@ int FS_Read(void *buffer, int len, qFILE * f)
 
 	if (f->z) {
 		read = unzReadCurrentFile(f->z, buf, len);
-		if (read == -1)
+		if (read == -1) {
+#ifdef DEBUG
+			Com_Printf("FS_Read: %s:%i\n", file, line);
+#endif
 			Com_Error (ERR_FATAL, "FS_ReadFromZipFile: -1 bytes read");
+		}
 		return read;
 	}
 
@@ -401,12 +409,20 @@ int FS_Read(void *buffer, int len, qFILE * f)
 			if (!tries) {
 				tries = 1;
 				CDAudio_Stop();
-			} else
+			} else {
+#ifdef DEBUG
+				Com_Printf("FS_Read: %s:%i\n", file, line);
+#endif
 				Com_Error(ERR_FATAL, "FS_Read: 0 bytes read");
+			}
 		}
 
-		if (read == -1)
+		if (read == -1) {
+#ifdef DEBUG
+			Com_Printf("FS_Read: %s:%i\n", file, line);
+#endif
 			Com_Error(ERR_FATAL, "FS_Read: -1 bytes read");
+		}
 
 		/* do some progress bar thing here... */
 
@@ -433,7 +449,7 @@ int FS_LoadFile(const char *path, void **buffer)
 	/* look for it in the filesystem or pack files */
 	len = FS_FOpenFile(path, &h);
 	if (!h.f && !h.z) {
-		Com_Printf("FS_LoadFile: Could not open %s\n", path);
+		Com_DPrintf("FS_LoadFile: Could not open %s\n", path);
 		if (buffer)
 			*buffer = NULL;
 		return -1;
