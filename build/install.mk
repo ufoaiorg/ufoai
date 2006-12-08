@@ -22,12 +22,11 @@ sourcearchive:
 	rm -rf ./tarsrc
 
 packfiles:
-#	cd base; zip -r 0textures.zip textures -x \*.svn\*
-#	cd base; zip -r 0sounds.zip sound -x \*.svn\*
-#	cd base; zip -r 0pics.zip pics -x \*.svn\*
-#	cd base; zip -r 0music.zip music -x \*.svn\*
-#	cd base; zip -r 0maps.zip maps -x \*.svn\*
-#	cd base; zip -r 0models.zip models -x \*.svn\*
+	cd base; zip -r 0textures.zip textures -x \*.svn\*
+	cd base; zip -r 0sounds.zip sound -x \*.svn\*
+	cd base; zip -r 0pics.zip pics -x \*.svn\*
+	cd base; zip -r 0music.zip music -x \*.svn\*
+	cd base; zip -r 0maps.zip maps -x \*.svn\*
+	cd base; zip -r 0models.zip models -x \*.svn\*
 	cd base; zip -r 0ufos.zip ufos -x \*.svn\*
-	cd base; zip -r 0i18n.zip i18n -x \*.svn\*
 
