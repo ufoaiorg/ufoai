@@ -359,6 +359,7 @@ void CL_Connect_f(void)
 
 	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
 	/* CL_CheckForResend() will fire immediately */
+	Cvar_Set("mn_main", "multiplayerInGame");
 	cls.connect_time = -99999;
 }
 
