@@ -42,7 +42,6 @@ typedef struct snd_stream_s
 	qFILE file;
 	int length;
 	int pos;
-	void *ptr;
 } snd_stream_t;
 
 void S_Init(void);

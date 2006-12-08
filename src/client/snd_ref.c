@@ -53,6 +53,8 @@ void S_StartOGG(void);
 
 channel_t* s_streamingChannel;
 
+static snd_stream_t* stream = NULL;
+
 /*
 =======================================================================
 Internal sound data & structures
@@ -516,6 +518,10 @@ void S_Shutdown(void)
 
 	SND_Shutdown();
 	OGG_Stop();
+	if (stream) {
+		Mem_Free(stream);
+		stream = NULL;
+	}
 
 	sound_started = 0;
 
@@ -1387,7 +1393,7 @@ static size_t S_OGG_Callback_read(void *ptr, size_t size, size_t nmemb, void *da
 	/* FS_Read does not support multi-byte elements */
 	byteSize = nmemb * size;
 
-	/* read it with the Q3 function FS_Read() */
+	/* read it with the UFO function FS_Read() */
 	bytesRead = FS_Read(ptr, byteSize, &stream->file);
 
 	/* update the file position */
@@ -1398,7 +1404,7 @@ static size_t S_OGG_Callback_read(void *ptr, size_t size, size_t nmemb, void *da
 
 	/* even if the last member is only read partially */
 	/* it is counted as a whole in the return value */
-	if(bytesRead % size)
+	if (bytesRead % size)
 		nMembRead++;
 
 	return nMembRead;
@@ -1421,7 +1427,7 @@ static int S_OGG_Callback_seek(void *datasource, ogg_int64_t offset, int whence)
 	/* snd_stream_t in the generic pointer */
 	stream = (snd_stream_t *) datasource;
 
-	/* we must map the whence to its Q3 counterpart */
+	/* we must map the whence to its UFO counterpart */
 	switch (whence) {
 		case SEEK_SET :
 		{
@@ -1453,7 +1459,7 @@ static int S_OGG_Callback_seek(void *datasource, ogg_int64_t offset, int whence)
 
 		case SEEK_END :
 		{
-			/* Quake 3 seems to have trouble with FS_SEEK_END */
+			/* UFO seems to have trouble with FS_SEEK_END */
 			/* so we use the file length and FS_SEEK_SET */
 
 			/* set the file position in the actual file with the Q3 function */
@@ -1522,16 +1528,21 @@ const ov_callbacks S_OGG_Callbacks = {
  */
 qboolean OGG_Open(char *filename)
 {
-	qFILE f;
 	int length;
 	vorbis_info *vi;
 	char *checkFilename = NULL;
-	snd_stream_t* stream = NULL;
 
 	assert(filename);
 
 	if (snd_music_volume->value <= 0)
 		return qfalse;
+
+	if (!stream) {
+		/* Allocate a stream */
+		stream = Mem_Alloc(sizeof(snd_stream_t));
+		if (!stream)
+			return qfalse;
+	}
 
 	/* strip extension */
 	checkFilename = strstr(filename, ".ogg");
@@ -1560,20 +1571,12 @@ qboolean OGG_Open(char *filename)
 	music.fading = snd_music_volume->value;
 
 	/* find file */
-	length = FS_FOpenFile(va("music/%s.ogg", filename), &f);
-	if (!f.f && !f.z) {
+	length = FS_FOpenFile(va("music/%s.ogg", filename), &stream->file);
+	if (!stream->file.f && !stream->file.z) {
 		Com_Printf("Couldn't open 'music/%s.ogg'\n", filename);
 		return qfalse;
 	}
 
-	/* Allocate a stream */
-	stream = Mem_Alloc(sizeof(snd_stream_t));
-	if (!stream) {
-		FS_FCloseFile(&f);
-		return qfalse;
-	}
-
-	stream->file = f;
 	stream->length = length;
 
 	/* open ogg vorbis file */
@@ -1585,7 +1588,7 @@ qboolean OGG_Open(char *filename)
 	vi = ov_info(&music.ovFile, -1);
 	if ((vi->channels != 1) && (vi->channels != 2)) {
 		Com_Printf("%s has an unsupported number of channels: %i\n", filename, vi->channels);
-		fclose(f.f);
+		FS_FCloseFile(&stream->file);
 		return qfalse;
 	}
 
@@ -1603,9 +1606,14 @@ qboolean OGG_Open(char *filename)
  */
 void OGG_Stop(void)
 {
+	if (!stream)
+		return;
+
 	music.ovPlaying[0] = 0;
 	music.fading = snd_music_volume->value;
 	ov_clear(&music.ovFile);
+
+	FS_FCloseFile(&stream->file);
 }
 
 /**
@@ -1616,6 +1624,9 @@ void OGG_Stop(void)
 int OGG_Read(void)
 {
 	int res;
+
+	if (!stream)
+		Sys_Error("No stream allocated\n");
 
 	if (music.fading <= 0.0) {
 		OGG_Stop();
