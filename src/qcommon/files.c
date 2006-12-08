@@ -404,6 +404,16 @@ int FS_Read(void *buffer, int len, qFILE * f)
 		if (block > MAX_READ)
 			block = MAX_READ;
 		read = fread(buf, 1, block, f->f);
+
+		/* end of file reached */
+#if 1
+		if (feof(f->f))
+			return len;
+#else
+		if (read == 0 && !errno)
+			return len;
+#endif
+
 		if (read == 0) {
 			/* we might have been trying to read from a CD */
 			if (!tries) {
@@ -411,10 +421,9 @@ int FS_Read(void *buffer, int len, qFILE * f)
 				CDAudio_Stop();
 			} else {
 #ifdef DEBUG
-				Com_Printf("FS_Read: %s:%i (%s) [errno %i]\n", file, line, f->name, errno);
-				perror("FS_Read");
+				Com_Printf("FS_Read: %s:%i (%s)\n", file, line, f->name);
 #endif
-				Com_Error(ERR_FATAL, "FS_Read: 0 bytes read buf: %p, file: %p, block: %i, remaining: %i, len: %i\n", buf, f->f, block, remaining, len);
+				Com_Error(ERR_FATAL, "FS_Read: 0 bytes read\n");
 			}
 		}
 
