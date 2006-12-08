@@ -1724,6 +1724,11 @@ void CL_ParseResults(sizebuf_t * buf)
 int CL_GetRank(char* rankID)
 {
 	int i;
+
+	/* only check in singleplayer */
+	if (!ccs.singleplayer)
+		return -1;
+
 	for (i = 0; i < gd.numRanks; i++) {
 		if (!Q_strncmp(gd.ranks[i].id, rankID, MAX_VAR))
 			return i;
