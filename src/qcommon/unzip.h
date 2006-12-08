@@ -254,6 +254,20 @@ extern int ZEXPORT unzGetCurrentFileInfo OF((unzFile file,
    from it, and close it (you can close it before reading all the file)
    */
 
+extern int unzSetCurrentFileInfoPosition (unzFile file, unsigned long pos );
+
+/*
+  Set the position of the info of the current file in the zip.
+  return UNZ_OK if there is no problem
+*/
+
+extern int unzGetCurrentFileInfoPosition (unzFile file, unsigned long *pos );
+
+/*
+  Get the position of the info of the current file in the zip.
+  return UNZ_OK if there is no problem
+*/
+
 extern int ZEXPORT unzOpenCurrentFile OF((unzFile file));
 /*
   Open for reading data the current file in the zipfile.

@@ -11,6 +11,8 @@ extern int mapInstalledIndex;
 typedef struct qFILE_s {
 	void *z; /* in case of the file being a zip archive */
 	FILE *f; /* in case the file being part of a pak or the actual file */
+	char name[MAX_OSPATH];
+	unsigned long filepos;
 } qFILE;
 
 typedef enum {

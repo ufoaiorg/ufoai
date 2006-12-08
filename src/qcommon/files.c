@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct {
 	char name[MAX_QPATH];
-	unz_file_pos* filepos;
+	unsigned long filepos;
 	unsigned long filelen;
 } packfile_t;
 
@@ -181,6 +181,8 @@ static int FS_FOpenFileSingle(const char *filename, qFILE * file)
 
 	file->z = file->f = NULL;
 
+	Q_strncpyz(file->name, filename, MAX_OSPATH);
+
 	/* check for links first */
 	for (link = fs_links; link; link = link->next)
 		if (!Q_strncmp((char *) filename, link->from, link->fromlength)) {
@@ -210,6 +212,7 @@ static int FS_FOpenFileSingle(const char *filename, qFILE * file)
 				  			Com_DPrintf ("PackFile: %s : %s\n", pak->filename, filename);
 							if (unzGetCurrentFileInfo (pak->handle.z, &info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK)
 		  						Com_Error (ERR_FATAL, "Couldn't get size of %s in %s", filename, pak->filename);
+							unzGetCurrentFileInfoPosition(pak->handle.z, &file->filepos);
 							file->z = pak->handle.z;
 		  					return info.uncompressed_size;
 	  					}
@@ -254,8 +257,7 @@ int FS_Seek(qFILE * f, long offset, int origin)
 
 		switch (origin) {
 		case FS_SEEK_SET:
-			/* FIXME */
-			/*unzSetCurrentFileInfoPosition(f->z, f->zipFilePos);*/
+			unzSetCurrentFileInfoPosition(f->z, (unsigned long)f->filepos);
 			unzOpenCurrentFile(f->z);
 			/* fallthrough */
 		case FS_SEEK_CUR:
@@ -359,7 +361,7 @@ int FS_CheckFile(const char *filename)
 
 	result = FS_FOpenFileSingle(filename, &file);
 	if (result != -1)
-		fclose(file.f);
+		FS_FCloseFile(&file);
 
 	return result;
 }
@@ -483,10 +485,12 @@ pack_t *FS_LoadPackFile(const char *packfile)
 
 	if (!Q_strncmp(packfile + len - 4, ".pk3", 4) || !Q_strncmp(packfile + len - 4, ".zip", 4)) {
 		uf = unzOpen(packfile);
-		err = unzGetGlobalInfo (uf,&gi);
+		err = unzGetGlobalInfo(uf, &gi);
 
-		if (err != UNZ_OK)
+		if (err != UNZ_OK) {
+			Com_Printf("Could not load '%s'\n", packfile);
 			return NULL;
+		}
 
 		len = 0;
 		unzGoToFirstFile(uf);
@@ -515,7 +519,7 @@ pack_t *FS_LoadPackFile(const char *packfile)
 				break;
 			Q_strlwr(filename_inzip);
 
-			unzGetFilePos(uf, newfiles[i].filepos);
+			unzGetCurrentFileInfoPosition(uf, &newfiles[i].filepos);
 			Q_strncpyz(newfiles[i].name, filename_inzip, MAX_QPATH);
 			newfiles[i].filelen = file_info.compressed_size;
 			unzGoToNextFile(uf);
@@ -544,6 +548,7 @@ void FS_AddGameDirectory(const char *dir)
 	int ndirs = 0, i;
 	char pakfile_list[MAX_PACKFILES][MAX_OSPATH];
 	int pakfile_count = 0;
+	char pattern[MAX_OSPATH];
 
 	Q_strncpyz(fs_gamedir, dir, MAX_QPATH);
 
@@ -556,7 +561,24 @@ void FS_AddGameDirectory(const char *dir)
 	search->next = fs_searchpaths;
 	fs_searchpaths = search;
 
-	if ((dirnames = FS_ListFiles(va("%s/*.pk3", dir), &ndirs, 0, 0)) != 0) {
+	Com_sprintf(pattern, sizeof(pattern), "%s/*.zip", dir);
+	if ((dirnames = FS_ListFiles(pattern, &ndirs, 0, 0)) != 0) {
+		for (i = 0; i < ndirs - 1; i++) {
+			if (strrchr(dirnames[i], '/')) {
+				Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], MAX_OSPATH);
+				pakfile_count++;
+				if (pakfile_count >= MAX_PACKFILES) {
+					Com_Printf("Warning: Max allowed pakfiles reached (%i) - skipping the rest\n", MAX_PACKFILES);
+					break;
+				}
+			}
+			free(dirnames[i]);
+		}
+		free(dirnames);
+	}
+
+	Com_sprintf(pattern, sizeof(pattern), "%s/*.pk3", dir);
+	if ((dirnames = FS_ListFiles(pattern, &ndirs, 0, 0)) != 0) {
 		for (i = 0; i < ndirs - 1; i++) {
 			if (strrchr(dirnames[i], '/')) {
 				Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], MAX_OSPATH);
@@ -724,6 +746,7 @@ void FS_Link_f(void)
  * @sa Sys_FindFirst
  * @sa Sys_FindNext
  * @sa Sys_FindClose
+ * @note Don't forget to free the filelist array and the file itself
  */
 char **FS_ListFiles(const char *findname, int *numfiles, unsigned musthave, unsigned canthave)
 {
@@ -1006,6 +1029,8 @@ void FS_BuildFileList(char *fileList)
 			}
 			free(filenames);
 		}
+		/* qsort */
+		/* search the packfiles */
 	}
 
 	/* terminalize the list */

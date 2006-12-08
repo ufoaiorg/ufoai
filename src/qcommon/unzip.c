@@ -696,7 +696,7 @@ local int unzlocal_GetCurrentFileInfoInternal (
 		} else {
 			err=UNZ_ERRNO;
 		}
-		
+
 		if ((file_info.size_file_extra>0) && (extraFieldBufferSize>0))
 			if (ZREAD(s->z_filefunc, s->filestream,extraField,uSizeRead)!=uSizeRead)
 				err=UNZ_ERRNO;
@@ -721,7 +721,7 @@ local int unzlocal_GetCurrentFileInfoInternal (
 		} else {
 			err=UNZ_ERRNO;
 		}
-		
+
 		if ((file_info.size_file_comment>0) && (commentBufferSize>0))
 			if (ZREAD(s->z_filefunc, s->filestream,szComment,uSizeRead)!=uSizeRead)
 				err=UNZ_ERRNO;
@@ -1600,4 +1600,42 @@ extern int ZEXPORT unzSetOffset (file, pos)
                                               NULL,0,NULL,0,NULL,0);
     s->current_file_ok = (err == UNZ_OK);
     return err;
+}
+
+
+/*
+  Set the position of the info of the current file in the zip.
+  return UNZ_OK if there is no problem
+*/
+extern int ZEXPORT unzSetCurrentFileInfoPosition (unzFile file, unsigned long pos )
+{
+	unz_s* s;
+	int err;
+
+	if (file==NULL)
+		return UNZ_PARAMERROR;
+	s=(unz_s*)file;
+
+	s->pos_in_central_dir = pos;
+	err = unzlocal_GetCurrentFileInfoInternal(file,&s->cur_file_info,
+											  &s->cur_file_info_internal,
+											  NULL,0,NULL,0,NULL,0);
+	s->current_file_ok = (err == UNZ_OK);
+	return UNZ_OK;
+}
+
+/*
+  Get the position of the info of the current file in the zip.
+  return UNZ_OK if there is no problem
+*/
+extern int ZEXPORT unzGetCurrentFileInfoPosition (unzFile file, unsigned long *pos )
+{
+	unz_s* s;
+
+	if (file==NULL)
+		return UNZ_PARAMERROR;
+	s=(unz_s*)file;
+
+	*pos = s->pos_in_central_dir;
+	return UNZ_OK;
 }
