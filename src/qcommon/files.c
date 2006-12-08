@@ -526,6 +526,9 @@ pack_t *FS_LoadPackFile(const char *packfile)
 		}
 		pack->files = newfiles;
 
+		/* Sort our list alphabetically - also rearrange the unsigned long values */
+		qsort((void *)pack->files, i, sizeof(packfile_t), Q_StringSort);
+
 		Com_Printf("Added packfile %s (%li files)\n", packfile, gi.number_entry);
 		return pack;
 	} else {
@@ -921,19 +924,70 @@ typedef struct listBlock_s {
 static listBlock_t *fs_blocklist = NULL;
 
 /**
+ * @brief Add one name to the filelist
+ * @note also checks for duplicates
+ * @sa FS_BuildFileList
+ */
+static void _AddToListBlock(char** fl, listBlock_t* block, listBlock_t* tblock, char* name)
+{
+	char *f, *tl = NULL;
+	int len;
+
+	f = strrchr(name, '/');
+	if (!f)
+		f = name;
+	else
+		f++;
+
+	/* check for double occurences */
+	for (tblock = block; tblock; tblock = tblock->next) {
+		tl = tblock->files;
+		while (*tl) {
+			if (!Q_strcmp(tl, f))
+				break;
+			tl += strlen(tl) + 1;
+		}
+		if (*tl)
+			break;
+	}
+
+	if (tl && !*tl) {
+		len = strlen(f);
+		if (*fl - block->files + len >= FL_BLOCKSIZE) {
+			/* terminalize the last block */
+			**fl = 0;
+
+			/* allocate a new block */
+			tblock = Mem_Alloc(sizeof(listBlock_t));
+			tblock->next = block->next;
+			block->next = tblock;
+
+			Q_strncpyz(tblock->path, block->path, MAX_QPATH);
+			*fl = tblock->files;
+			block = tblock;
+		}
+
+		/* add the new file */
+		Q_strncpyz(*fl, f, len + 1);
+		*fl += len + 1;
+	}
+}
+
+/**
  * @brief Build a filelist
  * @param[in] fileList e.g. ufos\*.ufo to get all ufo files in the gamedir/ufos dir
  */
 void FS_BuildFileList(char *fileList)
 {
 	listBlock_t *block, *tblock;
-	char *path;
+	searchpath_t *search;
 	char files[MAX_QPATH];
 	char findname[1024];
 	char **filenames;
-	char *f, *fl, *tl;
+	char *fl, *ext;
 	int nfiles;
-	int len;
+	int i, l;
+	pack_t *pak;
 
 	/* bring it into normal form */
 	Q_strncpyz(files, fileList, MAX_QPATH);
@@ -970,67 +1024,43 @@ void FS_BuildFileList(char *fileList)
 	/* store the search string */
 	Q_strncpyz(block->path, files, MAX_QPATH);
 
-/*	Com_Printf( "pattern: '%s' path: '%s'\n", block->pattern, block->path ); */
-
 	/* search for the files */
-	path = NULL;
 	fl = block->files;
-	tl = 0;
 	nfiles = 0;
 
-	while ((path = FS_NextPath(path)) != NULL) {
-		Com_sprintf(findname, sizeof(findname), "%s/%s", path, files);
-		FS_NormPath(findname);
+	/* search through the path, one element at a time */
+	for (search = fs_searchpaths; search; search = search->next) {
+		/* is the element a pak file? */
+		if (search->pack) {
+			ext = strrchr(files, '.');
+			/* *.* is not implemented here - only e.g. *.ufo */
+			if (!ext)
+				break;
+			l = strlen(search->filename);
+			Com_sprintf(findname, sizeof(findname), search->filename);
+			FS_NormPath(findname);
 
-		if ((filenames = FS_ListFiles(findname, &nfiles, 0, 0)) != 0) {
-			int i;
-
-			for (i = 0; i < nfiles - 1; i++) {
-				f = strrchr(filenames[i], '/');
-				if (!f)
-					f = filenames[i];
-				else
-					f++;
-
-				/* check for double occurences */
-				for (tblock = block; tblock; tblock = tblock->next) {
-					tl = tblock->files;
-					while (*tl) {
-						if (!Q_strcmp(tl, f))
-							break;
-						tl += strlen(tl) + 1;
-					}
-					if (*tl)
-						break;
+			/* look through all the pak file elements */
+			pak = search->pack;
+			for (i = 0; i < pak->numfiles; i++)
+				/* found it! */
+				if (!Q_strncmp(pak->files[i].name, findname, l) && strstr(pak->files[i].name, ext)) {
+					_AddToListBlock(&fl, block, tblock, pak->files[i].name);
 				}
+		} else {
+			Com_sprintf(findname, sizeof(findname), "%s/%s", search->filename, files);
+			FS_NormPath(findname);
 
-				if (!*tl) {
-					len = strlen(f);
-					if (fl - block->files + len >= FL_BLOCKSIZE) {
-						/* terminalize the last block */
-						*fl = 0;
+			if ((filenames = FS_ListFiles(findname, &nfiles, 0, 0)) != 0) {
+				int i;
 
-						/* allocate a new block */
-						tblock = Mem_Alloc(sizeof(listBlock_t));
-						tblock->next = block->next;
-						block->next = tblock;
-
-						Q_strncpyz(tblock->path, block->path, MAX_QPATH);
-						fl = tblock->files;
-						block = tblock;
-					}
-
-					/* add the new file */
-					Q_strncpyz(fl, f, len + 1);
-					fl += len + 1;
+				for (i = 0; i < nfiles - 1; i++) {
+					_AddToListBlock(&fl, block, tblock, filenames[i]);
+					free(filenames[i]);
 				}
-
-				free(filenames[i]);
+				free(filenames);
 			}
-			free(filenames);
 		}
-		/* qsort */
-		/* search the packfiles */
 	}
 
 	/* terminalize the list */
