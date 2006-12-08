@@ -1685,12 +1685,13 @@ void G_GetTeam(player_t * player)
 		gi.dprintf("Get a team for teamplay\n");
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
 		/* civilians are at team zero */
-		if (i > 0)
+		if (i > 0 /* FIXME: Check level maxteams value */)
 			player->pers.team = i;
 		else
-			player->pers.team = 1;
+			player->pers.team = DEFAULT_TEAMNUM;
 	} else {
 		/* search team */
+		/* FIXME: */
 		gi.dprintf("Get a team for multiplayer\n");
 		for (i = 1; i < MAX_TEAMS; i++)
 			if (level.num_spawnpoints[i]) {

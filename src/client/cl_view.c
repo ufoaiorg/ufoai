@@ -160,6 +160,8 @@ void CL_ParseEntitystring(char *es)
 	vec2_t wait;
 	int spawnflags;
 	int maxlevel = 8;
+	int maxmultiplayerteams = 2;
+	cvar_t* team = Cvar_Get("teamnum", "DEFAULT_TEAMNUM", CVAR_ARCHIVE, NULL);
 	int entnum;
 	int nosmooth;
 	int skin;
@@ -279,6 +281,9 @@ void CL_ParseEntitystring(char *es)
 			if (!Q_strcmp(keyname, "maxlevel"))
 				maxlevel = atoi(com_token);
 
+			if (!Q_strcmp(keyname, "maxteams"))
+				maxmultiplayerteams = atoi(com_token);
+
 			if (!Q_strcmp(keyname, "dropship_coord"))
 				sscanf(com_token, "%f %f %f", &(dropship_coord[0]), &(dropship_coord[1]), &(dropship_coord[2]));
 
@@ -315,6 +320,14 @@ void CL_ParseEntitystring(char *es)
 			/* maximum level */
 			map_maxlevel = maxlevel;
 			VectorCopy(map_dropship_coord, dropship_coord);
+
+			if (team->value > maxmultiplayerteams || team->value <= TEAM_CIVILIAN) {
+				Com_Printf("The selected team is not useable. "
+					"The map doesn't support %.0f teams but only %i teams\n",
+					team->value, maxmultiplayerteams);
+				Cvar_SetValue("teamnum", DEFAULT_TEAMNUM);
+				Com_Printf("Set teamnum to %.0f\n", team->value);
+			}
 		} else if (!Q_strcmp(classname, "light") && light) {
 			dlight_t *newlight;
 

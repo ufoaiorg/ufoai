@@ -137,6 +137,8 @@ typedef uint8_t byte;
 #define min(a,b) ((a)<(b)?(a):(b))
 #endif
 
+#define DEFAULT_TEAMNUM 1
+
 /* NOTE: place this macro after stddef.h inclusion. */
 /*#if !defined offsetof*/
 /*#define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)*/
