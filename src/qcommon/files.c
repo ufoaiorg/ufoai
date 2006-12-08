@@ -407,7 +407,7 @@ int FS_Read(void *buffer, int len, qFILE * f)
 
 		/* end of file reached */
 #if 1
-		if (feof(f->f))
+		if (read == 0 && feof(f->f))
 			return len;
 #else
 		if (read == 0 && !errno)
