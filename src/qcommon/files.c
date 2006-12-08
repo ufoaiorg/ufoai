@@ -274,7 +274,7 @@ int FS_Seek(qFILE * f, long offset, int origin)
 			return -1;
 			break;
 		}
-	} else {
+	} else if (f->f) {
 		switch (origin) {
 		case FS_SEEK_CUR:
 			_origin = SEEK_CUR;
@@ -291,7 +291,8 @@ int FS_Seek(qFILE * f, long offset, int origin)
 			break;
 		}
 		return fseek(f->f, offset, _origin);
-	}
+	} else
+		Sys_Error("FS_Seek: no file opened\n");
 }
 
 /**
@@ -379,7 +380,7 @@ int FS_Read(void *buffer, int len, qFILE * f)
 #endif
 {
 	int block, remaining;
-	int read, sum = 0;
+	int read;
 	byte *buf;
 	int tries;
 
@@ -389,14 +390,13 @@ int FS_Read(void *buffer, int len, qFILE * f)
 		read = unzReadCurrentFile(f->z, buf, len);
 		if (read == -1) {
 #ifdef DEBUG
-			Com_Printf("FS_Read: %s:%i\n", file, line);
+			Com_Printf("FS_Read: %s:%i (%s)\n", file, line, f->name);
 #endif
-			Com_Error (ERR_FATAL, "FS_ReadFromZipFile: -1 bytes read");
+			Com_Error (ERR_FATAL, "FS_Read (zipfile): -1 bytes read");
 		}
 		return read;
 	}
 
-	/* read in chunks for progress bar */
 	remaining = len;
 	tries = 0;
 	while (remaining) {
@@ -411,26 +411,25 @@ int FS_Read(void *buffer, int len, qFILE * f)
 				CDAudio_Stop();
 			} else {
 #ifdef DEBUG
-				Com_Printf("FS_Read: %s:%i\n", file, line);
+				Com_Printf("FS_Read: %s:%i (%s) [errno %i]\n", file, line, f->name, errno);
+				perror("FS_Read");
 #endif
-				Com_Error(ERR_FATAL, "FS_Read: 0 bytes read");
+				Com_Error(ERR_FATAL, "FS_Read: 0 bytes read buf: %p, file: %p, block: %i, remaining: %i, len: %i\n", buf, f->f, block, remaining, len);
 			}
 		}
 
 		if (read == -1) {
 #ifdef DEBUG
-			Com_Printf("FS_Read: %s:%i\n", file, line);
+			Com_Printf("FS_Read: %s:%i (%s)\n", file, line, f->name);
 #endif
 			Com_Error(ERR_FATAL, "FS_Read: -1 bytes read");
 		}
 
 		/* do some progress bar thing here... */
-
 		remaining -= read;
 		buf += read;
-		sum += read;
 	}
-	return sum;
+	return len;
 }
 
 /**
