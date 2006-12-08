@@ -54,7 +54,7 @@ menu multiplayerInGame
 	pic button_continue
 	{
 		pos	"640 170"
-		click	{ cmd mn_pop esc }
+		click	{ cmd mn_pop }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
