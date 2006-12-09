@@ -119,6 +119,26 @@ mission mine_crash
 	storyrelated	true
 }
 
+// FIXME, America
+mission bridge
+{
+	location	"_FIXME"
+	type		"_Crash Site"
+	text		"_Secure Area"
+	map			bridge01
+	music		PsymongR2
+	pos			"-40 2"
+	aliens		7
+	alienteam	alien
+	alienequip	stage2_soldiers
+	civilians	6
+	civteam		americans
+	nation		"states"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
 // New Zealand
 mission mine
 {
@@ -317,7 +337,7 @@ mission vil_lille
 	nation		"europa"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 // Korea
@@ -436,7 +456,7 @@ mission frozen_groenland
 	nation		"states"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 mission frozen_small
@@ -456,7 +476,7 @@ mission frozen_small
 	nation		"states"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 mission frozen_landingnature
@@ -476,7 +496,7 @@ mission frozen_landingnature
 	nation		"oceania"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 mission frozen_industrial
@@ -496,7 +516,7 @@ mission frozen_industrial
 	nation		"latin"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 mission frozen_alienlandingindustrial
@@ -516,7 +536,7 @@ mission frozen_alienlandingindustrial
 	nation		"oceania"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 mission gasstation
@@ -632,7 +652,7 @@ mission or_asyut
 	nation		"middle"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 mission or_tabelbala
@@ -651,7 +671,7 @@ mission or_tabelbala
 	nation		"middle"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 // this map is not finished right now
@@ -730,7 +750,7 @@ mission tropic_river
 	nation		"latin"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 // Jamaica
@@ -751,7 +771,7 @@ mission tropic_drug
 	nation		"latin"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 mission village
@@ -790,7 +810,7 @@ mission vil_grenchen
 	nation		"europa"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 mission vil_albany
@@ -810,7 +830,7 @@ mission vil_albany
 	nation		"europa"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 mission vil_shannon
@@ -830,7 +850,7 @@ mission vil_shannon
 	nation		"europa"
 	onlose		""
 	onwin		""
-	storyrelated	true
+	storyrelated	false
 }
 
 mission baseattack
