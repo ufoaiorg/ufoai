@@ -430,6 +430,8 @@ static void MN_StartServer(void)
 		return;
 	}
 
+	Cvar_Set("mn_main", "multiplayerInGame");
+
 	Cbuf_ExecuteText(EXEC_NOW, va("map %s\n", Cmd_Argv(1)));
 }
 

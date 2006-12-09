@@ -1112,8 +1112,10 @@ qboolean CL_SaveTeam(char *filename)
 
 	/* store aircraft soldier content for multi-player */
 	MSG_WriteByte(&sb, aircraft->size);
-	for (i = 0; i < min(aircraft->size, baseCurrent->teamNum[0]); i++)
-		MSG_WriteByte(&sb, aircraft->teamIdxs[i]);
+	for (i = 0; i < aircraft->size; i++) {
+		if (aircraft->teamIdxs[i] >= 0)
+			MSG_WriteByte(&sb, aircraft->teamIdxs[i]);
+	}
 
 	/* store equipment in baseCurrent so soldiers can be properly equipped */
 	for (i = 0; i < MAX_OBJDEFS; i++) {
