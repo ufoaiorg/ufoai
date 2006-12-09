@@ -1370,6 +1370,7 @@ static int numcheatvars = 0;
 
 /**
  * @brief
+ * @sa CL_SendCommand
  */
 void CL_FixCvarCheats(void)
 {
@@ -1418,6 +1419,7 @@ void CL_SendCmd(void)
 
 /**
  * @brief
+ * @sa CL_Frame
  */
 void CL_SendCommand(void)
 {
