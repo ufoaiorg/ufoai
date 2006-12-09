@@ -1243,6 +1243,7 @@ typedef enum {
 #define CS_MAXSOLDIERS      5   /* max soldiers per team */
 #define CS_MAXSOLDIERSPERPLAYER 6   /* max soldiers per player when in teamplay mode */
 #define CS_ENABLEMORALE     7   /* enable the morale states in multiplayer */
+#define CS_MAXTEAMS         8   /* how many multiplayer teams for this map */
 
 #define CS_TILES            16
 #define CS_POSITIONS        (CS_TILES+MAX_TILESTRINGS)

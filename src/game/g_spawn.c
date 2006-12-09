@@ -117,6 +117,7 @@ static field_t fields[] = {
 	{"origin", offsetof(edict_t, origin), F_VECTOR, 0},
 	{"angles", offsetof(edict_t, angles), F_VECTOR, 0},
 	{"angle", offsetof(edict_t, angle), F_FLOAT, 0},
+	{"maxteams", offsetof(spawn_temp_t, maxteams), F_INT, 0},
 
 	/*need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves */
 	{"gravity", offsetof(spawn_temp_t, gravity), F_LSTRING, FFL_SPAWNTEMP},
@@ -627,6 +628,7 @@ static void SP_func_breakable(edict_t * self)
  * "gravity"	800 is default gravity
  * "message"	text to print at user logon
  * "maxlevel"	max. level to use in the map
+ * "maxteams"	max team amount for multiplayergames for the current map
  */
 static void SP_worldspawn(edict_t * ent)
 {
@@ -636,6 +638,10 @@ static void SP_worldspawn(edict_t * ent)
 
 	if (st.nextmap)
 		Q_strncpyz(level.nextmap, st.nextmap, MAX_QPATH);
+
+	/* default value */
+	if (st.maxteams < 2)
+		st.maxteams = 2;
 
 	/* make some data visible to the server */
 	if (ent->message && ent->message[0]) {
@@ -653,6 +659,8 @@ static void SP_worldspawn(edict_t * ent)
 		gi.configstring(CS_MAXSOLDIERS, va("%i", (int) (maxsoldiers->value)));
 		gi.configstring(CS_MAXSOLDIERSPERPLAYER, va("%i", (int) (maxsoldiersperplayer->value)));
 		gi.configstring(CS_ENABLEMORALE, va("%i", (int) (sv_enablemorale->value)));
+		gi.configstring(CS_MAXTEAMS, va("%i", st.maxteams));
+		gi.cvar_set("sv_maxteams", va("%i", st.maxteams));
 	}
 
 	if (!st.gravity)

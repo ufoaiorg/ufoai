@@ -82,13 +82,13 @@ typedef struct {
 	int framenum;
 	float time;
 
-	char level_name[MAX_QPATH];	/* the descriptive name (Outer Base, etc) */
-	char mapname[MAX_QPATH];	/* the server name (base1, etc) */
-	char nextmap[MAX_QPATH];	/* go here when fraglimit is hit */
+	char level_name[MAX_QPATH];	/**< the descriptive name (Outer Base, etc) */
+	char mapname[MAX_QPATH];	/**< the server name (base1, etc) */
+	char nextmap[MAX_QPATH];	/**< go here when fraglimit is hit */
 	qboolean routed;
+	int maxteams; /**< the max team amount for multiplayer games for the current map */
 
 	/* intermission state */
-	char *changemap;
 	float intermissionTime;
 	int winningTeam;
 
@@ -125,6 +125,7 @@ typedef struct {
 	float maxyaw;
 	float minpitch;
 	float maxpitch;
+	int maxteams; /**< the max team amount for multiplayer games for the current map */
 } spawn_temp_t;
 
 /* used in shot probability calculations */
