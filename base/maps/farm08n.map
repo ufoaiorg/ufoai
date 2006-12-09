@@ -10348,6 +10348,7 @@
 "origin" "502 288 36"
 "model" "models/animals/cow/cow.md2"
 "spawnflags" "1"
+"anim" "idle"
 }
 // entity 173
 {
