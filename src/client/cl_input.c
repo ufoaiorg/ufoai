@@ -743,7 +743,7 @@ void CL_InitInput(void)
 	Cmd_AddCommand("-turndown", IN_TurnDownUp, NULL);
 	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown, _("Move battlescape camera left"));
 	Cmd_AddCommand("-shiftleft", IN_ShiftLeftUp, NULL);
-	Cmd_AddCommand("+shiftright", IN_ShiftRightDown, ("Move battlescape camera right"));
+	Cmd_AddCommand("+shiftright", IN_ShiftRightDown, _("Move battlescape camera right"));
 	Cmd_AddCommand("-shiftright", IN_ShiftRightUp, NULL);
 	Cmd_AddCommand("+shiftup", IN_ShiftUpDown, _("Move battlescape camera forward"));
 	Cmd_AddCommand("-shiftup", IN_ShiftUpUp, NULL);
