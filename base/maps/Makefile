@@ -1,6 +1,6 @@
 MAPSDIR = .
 
-UFO2MAP = ../../ufo2map
+UFO2MAP = ufo2map
 
 MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' -not -name 'tutorial*' -not -name '*autosave*' -not -name 'prefab*' -not -name 'test*' )
 BSPS = $(MAPSRCS:.map=.bsp)

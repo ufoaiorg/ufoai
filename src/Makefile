@@ -453,7 +453,7 @@ echo_info:
 	@echo
 	@echo "Maps"
 	@echo "-----------------------"
-	@echo "Type 'make' in base/maps to compile the maps"
+	@echo "Type 'make maps' to compile the maps"
 	@echo
 	@echo Build for $(ARCH)
 	@echo
@@ -499,7 +499,7 @@ build_release:
 	@echo
 	@echo "Maps"
 	@echo "-----------------------"
-	@echo "Type 'make' in base/maps to compile the maps"
+	@echo "Type 'make maps' to compile the maps"
 	@echo
 
 targets: $(TARGETS)
@@ -1355,7 +1355,7 @@ docs:
 	doxygen docs/doxyall
 
 maps:
-	cd ../base/maps; PATH=$(PATH):../../debugi386/; make
+	cd ../base/maps; PATH=$(PATH):../../src/$(BUILD_DEBUG_DIR)/:../../src/$(BUILD_RELEASE_DIR)/; make
 
 rsync:
 	export RSYNC_PROXY=rsync-svn.sourceforge.net:80; rsync -a rsync-svn-u::svn/ufoai/* /var/lib/svn/
