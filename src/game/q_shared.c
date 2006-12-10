@@ -2351,8 +2351,10 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 	assert(i);
 
 	/* if weapon is twohanded and is moved from hand to hand do nothing. */
-	/* twohanded weapon are only in CSI->idRight */
-	if (CSI->ods[cacheItem.t].firetwohanded && to == CSI->idLeft && from == CSI->idRight)
+	/* twohanded weapons are only in CSI->idRight */
+	if ( (CSI->ods[cacheItem.t].holdtwohanded 
+		  || CSI->ods[cacheItem.t].firetwohanded)
+		 && to == CSI->idLeft && from == CSI->idRight )
 		return IA_NONE;
 
 	/* break if source item is not removeable */
@@ -2425,16 +2427,19 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 		return IA_NONE;
 	}
 
-	/* twohanded exception - only CSI->idRight is allowed for firetwohanded weapons */
-	if (CSI->ods[cacheItem.t].firetwohanded && to == CSI->idLeft) {
+	/* twohanded exception --- only CSI->idRight is allowed for such weapons */
+	if ( (CSI->ods[cacheItem.t].holdtwohanded 
+		  || CSI->ods[cacheItem.t].firetwohanded)
+		 && to == CSI->idLeft ) {
 #ifdef DEBUG
-		Com_DPrintf("Com_MoveInInventory - don't move the item to CSI->idLeft it's firetwohanded\n");
+		Com_DPrintf("Com_MoveInInventory - don't move the item to CSI->idLeft it's twohanded\n");
 #endif
 		to = CSI->idRight;
 	}
 #ifdef PARANOID
-	else if (CSI->ods[cacheItem.t].firetwohanded)
-		Com_DPrintf("Com_MoveInInventory: move firetwohanded item to container: %s\n", CSI->ids[to].name);
+	else if (CSI->ods[cacheItem.t].holdtwohanded 
+			 || CSI->ods[cacheItem.t].firetwohanded)
+		Com_DPrintf("Com_MoveInInventory: move twohanded item to container: %s\n", CSI->ids[to].name);
 #endif
 
 	/* successful */
@@ -2600,6 +2605,7 @@ CHARACTER GENERATION AND HANDLING
 #define AKIMBO_CHANCE		0.3
 #define WEAPONLESS_BONUS	0.4
 #define PROB_COMPENSATION   3.0
+#define CONSTANT_CAUSED_BY_15_PERCENT_FREE_PICK 12
 
 /**
  * @brief Pack a weapon, possibly with some ammo
@@ -2628,13 +2634,33 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 	item.t = weapon;
 
 	/* are we going to allow trying the left hand */
-	allowLeft = !(inv->c[CSI->idRight] && CSI->ods[inv->c[CSI->idRight]->item.t].firetwohanded);
+	allowLeft = !(inv->c[CSI->idRight] 
+				  && (CSI->ods[inv->c[CSI->idRight]->item.t].holdtwohanded
+					  || CSI->ods[inv->c[CSI->idRight]->item.t].firetwohanded));
 
 	if (!CSI->ods[weapon].reload) {
 		item.m = item.t; /* no ammo needed, so fire definitions are in t */
 	} else {
+		/* the following code is overcomplicated, 
+		   e.g., max_price is not needed;
+		   consider reverting or simplyfying to the equivalent
+
+						for (ammo = 0; ammo < CSI->numODs; ammo++)
+							if ( equip[ammo] && CSI->ods[ammo].link == weapon )
+								break;
+						if (ammo < CSI->numODs) {
+
+		   or complicating so that not the last available ammo
+		   but the best ammo (most expensive) is loaded into the weapon,
+		   which will be equivalent (but bigger code) to reverting;
+		   BTW, ammoMult tries to accomplish a similar thing that 
+             + missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0
+		   does below, that is give more ammo if the sidearm 
+		   gets to the right hand (plays the role of the main weapon),
+		   perhaps one method would be enough (plus tweak the script files)?
+		*/
 		max_price = 0;
-		/* find some suitable ammo for the weapon */
+		/* find first (last, actually) suitable ammo for the weapon */
 		for (i = CSI->numODs - 1; i >= 0; i--)
 			if ( equip[i] && CSI->ods[i].link == weapon && CSI->ods[i].price > max_price ) {
 				ammo = i;
@@ -2643,16 +2669,11 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 
 		if (ammo < 0) {
 			Com_DPrintf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].kurz, name);
-			return 0;
+			return qfalse;
 		} 
 		/* load ammo */
 		item.a = CSI->ods[weapon].ammo;
 		item.m = ammo;
-	}
-
-	if (item.m == NONE) {
-		Com_Printf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].kurz, name);
-		return 0;
 	}
 
 	/* now try to pack the weapon */
@@ -2666,7 +2687,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 	if (!packed)
 		packed = Com_TryAddToInventory(inv, item, CSI->idHolster);
 	if (!packed)
-		return 0;
+		return qfalse;
 
 	max_price = INT_MAX;
 	do {
@@ -2704,6 +2725,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 				numpacked += Com_TryAddToInventory(inv, mun, CSI->idBackpack);
 				/* no problem if no space left; one ammo already loaded */
 				if (numpacked > ammoMult || numpacked*CSI->ods[weapon].ammo > 11)
+					/* Bandobras: what is this? I'm all for restricting ammo, but why not do this in the equipment scripts, where I've increased ammo under a joint pressure of numerous people on IRC? And numpacked*CSI->ods[weapon].ammo > 11 is obviously broken --- it means that most weapon types will never get 3 and many never get 2 spare clips, even if they are the sole weapon this actor gets. Why restrict this instead of repairing the ufo scripts? */
 					break;
 			}
 		}
@@ -2740,10 +2762,11 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			max_price = 0;
 			for (i = lastPos; i >= 0; i--) {
 				obj = CSI->ods[i];
-				if ( equip[i] && obj.weapon && obj.buytype == 0 && obj.firetwohanded ) {
-					if (frand() < 0.15) { /* small chance to pick any weapon */
-						weapon = i;
+				if ( equip[i] && obj.weapon && obj.buytype == 0 ) {
+					/* why was there "&& obj.firetwohanded" before? */
+					if (frand() < 0.15) { /* a small chance to pick any weapon --- Bandobras:this is very suspect; this is 15% that the last weapon in the .ufo files (depending on their loading order, which may be, for instance, different on different OSes) will be considered first even if it's not the most expensive; this favours weapons that are listed later in the script files instead of those that are most expensive (for which the equipment data has been optimized and tested); I'd suggest to lower the number of the most espensive weapons in the equipments instead, if they are too numerous in any particular case; moreover lastPos complicates the code (and gives only marginal speedups, because all this is already in cache); moreover the same trick is not done for sidearms, etc. */
 						max_price = obj.price;
+						weapon = i;
 						lastPos = i - 1;
 						break;
 					} else if ( obj.price > max_price && obj.price < prev_price ) {
@@ -2756,9 +2779,10 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			/* see if there is any */
 			if (max_price) {
 				/* see if the actor picks it */
-				if ( equip[weapon] >= (28 - PROB_COMPENSATION) * frand() ) {
+				/* Bandobras: the equipment definitions in script files are meant for 40-person squads, so e.g. an equipment definition consisting of only 40 rifles will most often result in one rifle per soldier, while 20 rifles will most often result in half the soldiers having riles */
+				if ( equip[weapon] >= (40 - PROB_COMPENSATION - CONSTANT_CAUSED_BY_15_PERCENT_FREE_PICK) * frand() ) {
 					/* not decrementing equip[weapon]
-					* so that we get more possible squads */
+					 * so that we get more possible squads */
 					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 					if (has_weapon) {
 						int ammo;
@@ -2800,10 +2824,10 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = CSI->ods[i];
 					if ( equip[i] && obj.weapon
-						&& obj.buytype == 1 && obj.reload ) {
+						 && obj.buytype == 1 && obj.reload ) {
 						if ( primary
-							? obj.price > max_price && obj.price < prev_price
-							: obj.price < max_price && obj.price > prev_price ) {
+							 ? obj.price > max_price && obj.price < prev_price
+							 : obj.price < max_price && obj.price > prev_price ) {
 							max_price = obj.price;
 							weapon = i;
 						}
@@ -2815,8 +2839,8 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 						if (has_weapon) {
 							/* try to get the second akimbo pistol */
 							if ( primary == 2
-								&& !CSI->ods[weapon].firetwohanded
-								&& frand() < AKIMBO_CHANCE ) {
+								 && !CSI->ods[weapon].firetwohanded
+								 && frand() < AKIMBO_CHANCE ) {
 								Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 							}
 							/* enough sidearms */
@@ -2840,8 +2864,8 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = CSI->ods[i];
 					if ( equip[i]
-						&& ((obj.weapon && obj.buytype == 1 && !obj.reload)
-							|| obj.buytype == 2) ) {
+						 && ((obj.weapon && obj.buytype == 1 && !obj.reload)
+							 || obj.buytype == 2) ) {
 						if ( obj.price > max_price && obj.price < prev_price ) {
 							max_price = obj.price;
 							weapon = i;
@@ -2867,7 +2891,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = CSI->ods[i];
 				if ( equip[i]
-					&& obj.weapon && obj.buytype == 1 && !obj.reload ) {
+					 && obj.weapon && obj.buytype == 1 && !obj.reload ) {
 					if ( obj.price > max_price && obj.price < prev_price ) {
 						max_price = obj.price;
 						weapon = i;
