@@ -75,7 +75,7 @@ static void GL_DrawSphere (void)
 			qglEnd ();
 		}
 
-		glEndList ();
+		qglEndList ();
 	}
 }
 
@@ -721,8 +721,8 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 	float value = iz;
 	float fullscale = value / 4;
 	float halfscale = value / 8;
-	float reducedfull = (value / 4) * 0.9;
-	float reducedhalf = (value / 8) * 0.9;
+	float reducedfull = fullscale * 0.9;
+	float reducedhalf = halfscale * 0.9;
 
 	image_t* gl;
 	float nx, ny, nw, nh;
