@@ -1030,8 +1030,11 @@ void MN_Click(int x, int y)
 				MN_BaseMapClick(node, x, y);
 				break;
 			case MN_MAP:
-				MAP_MapClick(node, x, y);
-				break;
+				if (!cl_3dmap->value) {
+					MAP_MapClick(node, x, y);
+					break;
+				}
+				/* otherwise fall through */
 			case MN_3DMAP:
 				MAP_3DMapClick(node, x, y);
 				break;
@@ -1179,9 +1182,12 @@ void MN_RightClick(int x, int y)
 			/* found a node -> do actions */
 			switch (node->type) {
 			case MN_MAP:
-				MAP_ResetAction();
-				mouseSpace = MS_SHIFTMAP;
-				break;
+				if (!cl_3dmap->value) {
+					MAP_ResetAction();
+					mouseSpace = MS_SHIFTMAP;
+					break;
+				}
+				/* otherwise fall through */
 			case MN_3DMAP:
 				MAP_ResetAction();
 				mouseSpace = MS_SHIFT3DMAP;
@@ -1230,8 +1236,11 @@ void MN_MiddleClick(int x, int y)
 			/* found a node -> do actions */
 			switch (node->type) {
 			case MN_MAP:
-				mouseSpace = MS_ZOOMMAP;
-				break;
+				if (!cl_3dmap->value) {
+					mouseSpace = MS_ZOOMMAP;
+					break;
+				}
+				/* otherwise fall through */
 			case MN_3DMAP:
 				mouseSpace = MS_ZOOM3DMAP;
 				break;
@@ -1284,17 +1293,20 @@ void MN_MouseWheel(qboolean down, int x, int y)
 			/* found a node -> do actions */
 			switch (node->type) {
 			case MN_MAP:
-				ccs.zoom *= pow(0.995, (down ? 10: -10));
-				if (ccs.zoom < 1.0)
-					ccs.zoom = 1.0;
-				else if (ccs.zoom > 6.0)
-					ccs.zoom = 6.0;
+				if (!cl_3dmap->value) {
+					ccs.zoom *= pow(0.995, (down ? 10: -10));
+					if (ccs.zoom < 1.0)
+						ccs.zoom = 1.0;
+					else if (ccs.zoom > 6.0)
+						ccs.zoom = 6.0;
 
-				if (ccs.center[1] < 0.5 / ccs.zoom)
-					ccs.center[1] = 0.5 / ccs.zoom;
-				if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
-					ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
-				break;
+					if (ccs.center[1] < 0.5 / ccs.zoom)
+						ccs.center[1] = 0.5 / ccs.zoom;
+					if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
+						ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
+					break;
+				}
+				/* otherwise fall through */
 			case MN_3DMAP:
 				mouseSpace = MS_ZOOM3DMAP;
 				break;

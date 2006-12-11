@@ -312,6 +312,8 @@ extern cvar_t *cl_centerview;
 extern cvar_t *cl_worldlevel;
 extern cvar_t *cl_selected;
 
+extern cvar_t *cl_3dmap;
+
 extern cvar_t *cl_numnames;
 
 extern cvar_t *difficulty;
