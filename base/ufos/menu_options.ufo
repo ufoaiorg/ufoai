@@ -1189,6 +1189,49 @@ menu options_game
 		}
 	}
 
+	// =====================
+	// 3DMAP
+	// =====================
+	string 3dmap_str
+	{
+		string	"_3D Geoscape:"
+		pos		"500 305"
+	}
+	string 3dmap_value
+	{
+		string	"*cvar mn_3dmap"
+		pos		"840 305"
+		align	ur
+	}
+	pic 3dmap_dec
+	{
+		image	menu/buttons_small
+		pos		"868 309"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		tooltip	"_Use a flat geoscape"
+		click
+		{
+			cmd "mn_modify cl_3dmap -1 0 1;"
+			cmd "mn_translate cl_3dmap mn_3dmap 0:No,1:Yes;"
+		}
+	}
+	pic 3dmap_inc
+	{
+		image	menu/buttons_small
+		pos		"884 309"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		tooltip	"_Use a 3D geoscape"
+		click
+		{
+			cmd "mn_modify cl_3dmap +1 0 1;"
+			cmd "mn_translate cl_3dmap mn_3dmap 0:No,1:Yes;"
+		}
+	}
+
 	// ===================
 	// CAMERA
 	// ===================
@@ -1282,6 +1325,7 @@ menu options_game
 
 	func init
 	{
+		cmd "mn_translate cl_3dmap mn_3dmap 0:No,1:Yes;"
 		cmd "mn_translate cl_start_employees mn_start_employees 0:No,1:Yes;"
 		cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
 		cmd "mn_translate cl_centerview mn_centerview 0:No,1:Yes;"
