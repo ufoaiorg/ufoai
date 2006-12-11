@@ -765,15 +765,15 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 	/* go to a new matrix */
 	qglPushMatrix ();
 
-	/* center it on the players position */
+	/* center it */
 	qglTranslatef (x+w/2, y+h/2, 0);
 
 	/* flatten the sphere */
 	qglScalef (fullscale, fullscale, halfscale);
 
 	if (lastcx != cx || lastcy != cy) {
-		rotateX += (cx);
-		rotateY += (cy);
+		rotateX += cx;
+		rotateY += cy;
 		lastcx = cx;
 		lastcy = cy;
 		if (rotateX > 360.0f)
@@ -808,18 +808,18 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 	/* go to a new matrix */
 	qglPushMatrix ();
 
-	/* center it on the players position */
-	qglTranslatef (r_origin[0], r_origin[1], r_origin[2]);
+	/* center it */
+	qglTranslatef (x+w/2, y+h/2, 0);
 
 	/* flatten the sphere and shrink it a little - the reduced scale prevents artefacts appearing when */
 	/* corners on the globesphere may potentially overlap */
 	qglScalef (reducedfull, reducedfull, reducedhalf);
 
 	/* orient it so that the poles are unobtrusive */
-	qglRotatef (-90, 1, 0, 0);
+	qglRotatef (rotateX, 1, 0, 0);
 
 	/* make it not always at right angles to the player */
-	qglRotatef (-22, 0 ,1, 0);
+	qglRotatef (rotateY, 0, 1, 0);
 
 	/* rotate it around the poles */
 	qglRotatef (-rotateFore, 0, 0, 1);
