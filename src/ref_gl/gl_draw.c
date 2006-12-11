@@ -30,6 +30,110 @@ extern qboolean scrap_dirty;
 void Scrap_Upload(void);
 image_t *shadow;
 
+static float globe_fog[4];
+static int spherelist = -1;
+#define GLOBE_TRIS 10
+#define GLOBE_TEXES (GLOBE_TRIS+1)*(GLOBE_TRIS+1)*4
+#define GLOBE_VERTS (GLOBE_TRIS+1)*(GLOBE_TRIS+1)*6
+static float globetexes[GLOBE_TEXES];
+static float globeverts[GLOBE_VERTS];
+/**
+ * @brief Draw a sphere! The verts and texcoords are precalculated for extra efficiency.
+ * @note The sphere is put into a display list to reduce overhead even further.
+ */
+static void GL_DrawSphere (void)
+{
+	if (spherelist == -1) {
+		int i;
+		int j;
+
+		int vertspos = 0;
+		int texespos = 0;
+
+		/* build the sphere display list */
+		spherelist = glGenLists(1);
+
+		glNewList (spherelist, GL_COMPILE);
+
+		for (i = 0; i < GLOBE_TRIS; i++) {
+			glBegin (GL_TRIANGLE_STRIP);
+
+			for (j = 0; j <= GLOBE_TRIS; j++) {
+				glTexCoord2fv (&globetexes[texespos]);
+				glVertex3fv (&globeverts[vertspos]);
+
+				texespos += 2;
+				vertspos += 3;
+
+				glTexCoord2fv (&globetexes[texespos]);
+				glVertex3fv (&globeverts[vertspos]);
+
+				texespos += 2;
+				vertspos += 3;
+			}
+
+			glEnd ();
+		}
+
+		glEndList ();
+	}
+}
+
+
+/**
+ * @brief Initialize the globe chain arrays
+ */
+static void GL_InitGlobeChain (void)
+{
+	const float drho = 0.3141592653589;
+	const float dtheta = 0.6283185307180;
+
+	const float ds = 0.1;
+	const float dt = 0.1;
+
+	float t = 1.0f;
+	float s = 0.0f;
+
+	int i;
+	int j;
+
+	int vertspos = 0;
+	int texespos = 0;
+
+	for (i = 0; i < GLOBE_TRIS; i++) {
+		float rho = (float) i * drho;
+		float srho = (float) (sin (rho));
+		float crho = (float) (cos (rho));
+		float srhodrho = (float) (sin (rho + drho));
+		float crhodrho = (float) (cos (rho + drho));
+
+		s = 0.0f;
+
+		for (j = 0; j <= GLOBE_TRIS; j++) {
+			float theta = (j == GLOBE_TRIS) ? 0.0f : j * dtheta;
+			float stheta = (float) (-sin( theta));
+			float ctheta = (float) (cos (theta));
+
+			globetexes[texespos++] = s * 2;
+			globetexes[texespos++] = t * 2;
+
+			globeverts[vertspos++] = stheta * srho * 4096.0;
+			globeverts[vertspos++] = ctheta * srho * 4096.0;
+			globeverts[vertspos++] = crho * 4096.0;
+
+			globetexes[texespos++] = s * 2;
+			globetexes[texespos++] = (t - dt) * 2;
+
+			globeverts[vertspos++] = stheta * srhodrho * 4096.0;
+			globeverts[vertspos++] = ctheta * srhodrho * 4096.0;
+			globeverts[vertspos++] = crhodrho * 4096.0;
+
+			s += ds;
+		}
+
+		t -= dt;
+	}
+}
 
 /* console font */
 image_t *draw_chars;
@@ -47,6 +151,8 @@ void Draw_InitLocal(void)
 	GL_Bind(draw_chars->texnum);
 
 	Font_Init();
+	GL_InitGlobeChain();
+	GL_DrawSphere();
 }
 
 
@@ -584,170 +690,6 @@ void Draw_LineStrip(int points, int *verts)
 	qglEnable(GL_TEXTURE_2D);
 }
 
-/**
- * @brief vertices of a unit icosahedron
- */
-static globe_triangle_t icosahedron[MAX_ICOSAHEDRON] = {
-	/* "north" pole */
-
-	{{Ip1, Ip0, Ip2},},
-	{{Ip5, Ip0, Ip1},},
-	{{Ip4, Ip0, Ip5},},
-	{{Ip3, Ip0, Ip4},},
-	{{Ip2, Ip0, Ip3},},
-
-	/* mid */
-	{{Ip1, Im1, Im0},},
-	{{Im0, Ip5, Ip1},},
-	{{Ip5, Im0, Im4},},
-	{{Im4, Ip4, Ip5},},
-	{{Ip4, Im4, Im3},},
-	{{Im3, Ip3, Ip4},},
-	{{Ip3, Im3, Im2},},
-	{{Im2, Ip2, Ip3},},
-	{{Ip2, Im2, Im1},},
-	{{Im1, Ip1, Ip2},},
-
-	/* "south" pole */
-	{{Im3, Im5, Im2},},
-	{{Im4, Im5, Im3},},
-	{{Im0, Im5, Im4},},
-	{{Im1, Im5, Im0},},
-	{{Im2, Im5, Im1},},
-};
-
-/**
- * @brief This function fills v with the x-, y-, and z-coordinate
- * for the specified point on the surface.
- */
-void Globe_CoordToVec(double lat, double lon, vec3_t v)
-{
-	v[0] = (float) sin(lon * GLOBE_TORAD) * cos(lat * GLOBE_TORAD);
-	v[1] = (float) sin(lat * GLOBE_TORAD);
-	v[2] = (float) cos(lon * GLOBE_TORAD) * cos(lat * GLOBE_TORAD);
-}
-
-/**
- * @brief returns the longitude of a point on the unit sphere.
- * (Longitudes are the "x" axis on a mercator projection map.)
- */
-double Globe_ToLong(vec3_t v)
-{
-	double s;
-
-	if (v[1] == 1.0 || v[1] == -1.0)
-		return (5000.0);		/* Problem! The texture will warp! Actually these */
-	s = sqrt(1 - v[1] * v[1]);	/* points (the poles) are on ALL the longitudes! */
-	return ((atan2(v[0] / s, v[2] / s) * GLOBE_TODEG));
-}
-
-/**
- * @brief returns the latitude of a point on the unit sphere.
- * (Latitudes are the "y" axis on a mercator projection map.)
- */
-double Globe_ToLat(vec3_t v)
-{
-	return (atan2(v[1], sqrt(1 - v[1] * v[1])) * GLOBE_TODEG);
-}
-
-/**
- * @brief returns the actual theoretical minimum
- * distance (in meters) the signal has to travel.
- */
-unsigned long Globe_Distance(int site)
-{
-	unsigned long distance_covered = 0;
-
-#if 0
-	int i;
-	float angle;
-	vec3_t v1, v2;
-
-	for (i = 1; i <= site; i++) {
-		/* This is not really the way to do this. This assumes that
-		   earth is round (it isn't!). I'm sure there's a good way to
-		   compute the actual distance between two locations on earth. */
-
-		/*    Angle is arccos(Ax*Bx + Ay*By + Az*Bz)    */
-
-		Globe_CoordToVec(sites[i].lat, sites[i].lon, v1);
-		Globe_CoordToVec(sites[i - 1].lat, sites[i - 1].lon, v2);
-
-		angle = acos((float) (v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2])) * GLOBE_TODEG;
-
-		distance_covered += (int) rint((angle / 360.0) * PHYSICAL_EARTH_CIRC);
-	}
-#endif
-	return distance_covered;
-}
-
-/**
- * @brief normalize vector r
- */
-void Globe_Normalize(vec3_t r)
-{
-	float mag;
-
-	mag = r[0] * r[0] + r[1] * r[1] + r[2] * r[2];
-	if (mag != 0.0f) {
-		mag = 1.0f / sqrt(mag);
-		r[0] *= mag;
-		r[1] *= mag;
-		r[2] *= mag;
-	}
-}
-
-/**
- * @brief linearly interpolate between a & b, by fraction f
- */
-void Globe_Lerp(vec3_t a, vec3_t b, float f, vec3_t r)
-{
-	r[0] = a[0] + f * (b[0] - a[0]);
-	r[1] = a[1] + f * (b[1] - a[1]);
-	r[2] = a[2] + f * (b[2] - a[2]);
-}
-
-/**
- * @brief Convenience function used only in Draw_3DGlobe.
- * Adds a vertex to a tstrip.
- */
-void Globe_AddVertex(vec3_t v, double *lastlon)
-{
-	double a, b, dist;
-	vec3_t x;
-
-	VectorCopy(v, x);
-	Globe_Normalize(x);
-	qglNormal3fv(x);
-	a = Globe_ToLong(x);
-	b = Globe_ToLat(x);
-
-	/* 5000 is the slightly unintuitive value tolon() */
-	if (a == 5000.0) {
-		/* returns when it finds a value on a pole. */
-		if (b > 0) {
-			/* If it's the north pole */
-			a = *lastlon - 36.0;
-		} else {
-			/* South pole. */
-			a = *lastlon + 36.0;
-		}
-	} else if (*lastlon != 4000.0) {	/* Not the first vertex in a tstrip. */
-		/* This stuff is to get the wraparoud at the backside of the
-		   sphere to work. (Or you'd get a weird zigzag line down the
-		   back of the sphere.) */
-
-		dist = a - *lastlon;
-		if (dist > 100.0) {
-			a -= 360.0;
-		} else if (dist < -100.0) {
-			a += 360.0;
-		}
-	}
-	*lastlon = a;
-	qglTexCoord2f(a / 360.0 + 0.5, -(b / 180.0 + 0.5));
-	qglVertex3fv(x);
-}
 
 /**
  * @brief
@@ -765,45 +707,6 @@ void Draw_3DMapMarkers(float latitude, float longitude, char *image)
  */
 void Draw_3DMapLine(int n, float dist, vec2_t * path)
 {
-	float vink;
-	float linesweep;
-	vec3_t v1, v2;
-
-	qglPushMatrix();
-/* 	qglMaterialfv(GL_FRONT, GL_DIFFUSE, lineColor); */
-
-	/*    Angle is arccos(Ax*Bx + Ay*By + Az*Bz)    */
-	Globe_CoordToVec(path[n][0], path[n][1], v1);
-	Globe_CoordToVec(path[0][0], path[0][1], v2);
-	linesweep = acos((float) (v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]) * GLOBE_TODEG);
-
-	/*   This mess calculates the angle to rotate "to" to a position
-	   'south' of "from". It's a somewhat adapted version of a formula
-	   that calculates an angle in a triangle on a sphere given all three
-	   sides. (Found the original in Beta.)                           */
-	vink = GLOBE_TODEG * acos((sin(path[n][0] * GLOBE_TORAD) - sin(path[0][0] * GLOBE_TORAD) * cos(linesweep * GLOBE_TORAD)) /
-							  (cos(path[0][0] * GLOBE_TORAD) * sin(linesweep * GLOBE_TORAD)));
-
-	/*   Compensate for the usual arccos problem. (It checks if "to" is
-	   'to the right' or 'to the left' of "from")                 */
-
-	if (path[0][1] > 0.0 && (path[n][1] > path[0][1] || path[n][1] < path[0][1] - 180.0))
-		vink = -vink;
-	else if (path[n][1] > path[0][1] && path[n][1] < path[0][1] + 180.0)
-		vink = -vink;
-
-	/*   Rotate "to" to a position 'south' of "from".   */
-	qglRotatef(vink, v2[0], v2[1], v2[2]);
-
-	/*   ...and rotate them onto the z=0 plane.   */
-	qglRotatef(90.0 + path[0][1], 0.0, 1.0, 0.0);
-
-	/*   Fix incorrect names on the lines, identifying them as the
-	   sitemarker we just drew.             */
-/* 	qglLoadName(NOT_SELECTABLE); */
-
-/* 	partialtorus((GLfloat)path[0]->[1]-180.0, (GLfloat)linesweep, zoom); */
-	qglPopMatrix();
 }
 
 /**
@@ -811,93 +714,123 @@ void Draw_3DMapLine(int n, float dist, vec2_t * path)
  */
 void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
 {
-	int nrows = 1 << 3;
-	int s, i, j;
-	double last_lon;
-	vec3_t v0, v1, v2, v3, veca, vecb;
-	globe_triangle_t *t = NULL;
-	image_t *gl;
+	/* globe scaling */
+	float value = iz;
+	float fullscale = value / 4;
+	float halfscale = value / 8;
+	float reducedfull = (value / 4) * 0.9;
+	float reducedhalf = (value / 8) * 0.9;
 
-	qglPushMatrix();
-	qglEnable(GL_TEXTURE_2D);
+	/* rotation */
+	float rotateBack = anglemod (q * 12);
+	float rotateFore = anglemod (p * 20);
+
+	image_t* gl;
+	float nx, ny, nw, nh;
+
+	/* normalize */
+	nx = x * vid.rx;
+	ny = y * vid.ry;
+	nw = w * vid.rx;
+	nh = h * vid.ry;
+
+	/* load day image */
 	gl = GL_FindImage(va("pics/menu/%s_day", map), it_wrappic);
-	GL_Bind(gl->texnum);
 
-	if (gl_wire->value)
-		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	/* turn on fogging.  fog looks good on the skies - it gives them a more */
+	/* "airy" far-away look, and has the knock-on effect of preventing the */
+	/* old "texture distortion at the poles" problem. */
+	if (gl_fog->value) {
+		qglFogi (GL_FOG_MODE, GL_LINEAR);
+		qglFogfv (GL_FOG_COLOR, globe_fog);
+		qglFogf (GL_FOG_START, 5);
 
-	qglTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-	qglTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	/* iterate over the 20 sides of the icosahedron */
-	for (s = 0; s < MAX_ICOSAHEDRON; s++) {
-		t = &icosahedron[s];
-		for (i = 0; i < nrows; i++) {
-			/* create a tstrip for each row */
-			/* number of triangles in this row is number in previous +2 */
-			/* strip the ith trapezoid block */
-			Globe_Lerp(t->vec[1], t->vec[0], (float) (i + 1) / nrows, v0);
-			Globe_Lerp(t->vec[1], t->vec[0], (float) i / nrows, v1);
-			Globe_Lerp(t->vec[1], t->vec[2], (float) (i + 1) / nrows, v2);
-			Globe_Lerp(t->vec[1], t->vec[2], (float) i / nrows, v3);
-
-			/* Hack to get the texturing right. */
-			last_lon = 4000.0;
-
-			qglBegin(GL_TRIANGLE_STRIP);
-			Globe_AddVertex(v0, &last_lon);
-			Globe_AddVertex(v1, &last_lon);
-			for (j = 0; j < i; j++) {
-				/* calculate 2 more vertices at a time */
-				Globe_Lerp(v0, v2, (float) (j + 1) / (i + 1), veca);
-				Globe_Lerp(v1, v3, (float) (j + 1) / i, vecb);
-				Globe_AddVertex(veca, &last_lon);
-				Globe_AddVertex(vecb, &last_lon);
-			}
-			Globe_AddVertex(v2, &last_lon);
-			qglEnd();			/* TRIANGLE_STRIP */
-		}
+		/* must tweak the fog end too!!! */
+		qglFogf (GL_FOG_END, r_newrefdef.fog);
+		qglEnable (GL_FOG);
 	}
 
-	if (gl_wire->value)
-		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	/* globe texture scaling */
+	/* previous releases made a tiled version of the globe texture.  here i just shrink it using the */
+	/* texture matrix, for much the same effect */
+	qglMatrixMode (GL_TEXTURE);
+	qglLoadIdentity ();
+	qglScalef (2, 1, 1);
+	qglMatrixMode (GL_MODELVIEW);
 
-	/* test for multitexture and env_combine support */
-	if (!qglSelectTextureSGIS && !qglActiveTextureARB) {
-		qglPopMatrix();
-		return;
-	}
+	/* background */
+	/* go to a new matrix */
+	qglPushMatrix ();
 
-	/* init combiner */
-	qglEnable(GL_BLEND);
+	/* center it on the players position */
+	qglTranslatef (x+w/2, y+h/2, 0);
 
-	GL_SelectTexture(gl_texture0);
+	/* flatten the sphere */
+	qglScalef (fullscale, fullscale, halfscale);
+
+	/* orient it so that the poles are unobtrusive */
+	qglRotatef (-90, 1, 0, 0);
+
+	/* make it not always at right angles to the player */
+	qglRotatef (-22, 0 ,1, 0);
+
+	/* rotate it around the poles */
+	qglRotatef (-rotateBack, 0, 0, 1);
+
+	/* solid globe texture */
+	qglBindTexture (GL_TEXTURE_2D, gl->texnum);
+
+	/* draw the sphere */
+	qglCallList (spherelist);
+
+	/* restore the previous matrix */
+	qglPopMatrix ();
+
+	/* foreground */
+	/* go to a new matrix */
+	qglPushMatrix ();
+
+	/* center it on the players position */
+	qglTranslatef (r_origin[0], r_origin[1], r_origin[2]);
+
+	/* flatten the sphere and shrink it a little - the reduced scale prevents artefacts appearing when */
+	/* corners on the globesphere may potentially overlap */
+	qglScalef (reducedfull, reducedfull, reducedhalf);
+
+	/* orient it so that the poles are unobtrusive */
+	qglRotatef (-90, 1, 0, 0);
+
+	/* make it not always at right angles to the player */
+	qglRotatef (-22, 0 ,1, 0);
+
+	/* rotate it around the poles */
+	qglRotatef (-rotateFore, 0, 0, 1);
+
 	gl = GL_FindImage(va("pics/menu/%s_night", map), it_wrappic);
-	GL_Bind(gl->texnum);
+	/* maybe the campaign map doesn't have a night image */
+	if (gl) {
+		/* blend mode */
+		qglEnable (GL_BLEND);
 
-	GL_SelectTexture(gl_texture1);
-	if (!DaN || lastQ != q) {
-		GL_CalcDayAndNight(q);
-		lastQ = q;
+		/* alpha globe texture */
+		qglBindTexture (GL_TEXTURE_2D, gl->texnum);
+
+		/* draw the sphere */
+		qglCallList (spherelist);
+
+		/* back to normal mode */
+		qglDisable (GL_BLEND);
 	}
 
-	assert(DaN);
-#ifdef DEBUG
-	if (!DaN)
-		return;					/* never reached. need for code analyst. */
-#endif
+	/* restore the previous matrix */
+	qglPopMatrix ();
 
-	GL_Bind(DaN->texnum);
-	qglEnable(GL_TEXTURE_2D);
+	if (gl_fog->value) {
+		/* turn off fog */
+		qglDisable (GL_FOG);
+	}
 
-	/* TODO: draw night image */
-
-	/* reset mode */
-	qglDisable(GL_TEXTURE_2D);
-	GL_SelectTexture(gl_texture0);
-
-	qglDisable(GL_BLEND);
-	qglPopMatrix();
+	qglMatrixMode (GL_TEXTURE);
+	qglLoadIdentity ();
+	qglMatrixMode (GL_MODELVIEW);
 }
