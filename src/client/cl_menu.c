@@ -1030,13 +1030,10 @@ void MN_Click(int x, int y)
 				MN_BaseMapClick(node, x, y);
 				break;
 			case MN_MAP:
-				if (!cl_3dmap->value) {
-					MAP_MapClick(node, x, y);
-					break;
-				}
-				/* otherwise fall through */
+				MAP_MapClick(node, x, y, cl_3dmap->value);
+				break;
 			case MN_3DMAP:
-				MAP_3DMapClick(node, x, y);
+				MAP_MapClick(node, x, y, qtrue);
 				break;
 			case MN_MODEL:
 				MN_ModelClick(node);

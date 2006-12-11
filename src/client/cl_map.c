@@ -72,12 +72,12 @@ static void MAP_MultiSelectExecuteAction_f(void);
 static void MAP_MultiSelectNotifyMissionRemoved(const actMis_t* mission);
 static void MAP_MultiSelectNotifyUfoRemoved(const aircraft_t* ufo);
 static void MAP_MultiSelectNotifyUfoDisappeared(const aircraft_t* ufo);
-extern void MAP_3DMapClick(const menuNode_t* node, int x, int y);
-extern void MAP_MapClick(const menuNode_t* node, int x, int y);
+extern void MAP_MapClick(const menuNode_t* node, int x, int y, qboolean globe);
 
 /* Functions : Drawing map and coordinates */
 static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y);
 extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
+static void MAP_ScreenTo3DMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void PolarToVec(const vec2_t a, vec3_t v);
 static void VecToPolar(const vec3_t v, vec2_t a);
@@ -255,19 +255,12 @@ static void MAP_MultiSelectNotifyUfoDisappeared(const aircraft_t* ufo)
 	MAP_MultiSelectNotifyUfoRemoved(ufo);
 }
 
-/**
- * @brief: Click on the 3D map/geoscape
- */
-extern void MAP_3DMapClick(const menuNode_t* node, int x, int y)
-{
-}
-
 #define MN_MAP_DIST_SELECTION 15
 
 /**
  * @brief Click on the map/geoscape
  */
-extern void MAP_MapClick(const menuNode_t* node, int x, int y)
+extern void MAP_MapClick(const menuNode_t* node, int x, int y, qboolean globe)
 {
 	aircraft_t *aircraft = NULL;
 	actMis_t *ms;
@@ -277,7 +270,11 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 	char clickBuffer[30];
 
 	/* get map position */
-	MAP_ScreenToMap(node, x, y, pos);
+	if (globe) {
+		MAP_ScreenTo3DMap(node, x, y, pos);
+	} else {
+		MAP_ScreenToMap(node, x, y, pos);
+	}
 	if (cl_showCoords->value) {
 		Com_sprintf(clickBuffer, sizeof(clickBuffer), "Long: %.1f Lat: %.1f", pos[0], pos[1]);
 		MN_AddNewMessage(_("Click"), clickBuffer, qfalse, MSG_DEBUG, NULL);
@@ -405,6 +402,21 @@ extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x
  * @brief
  */
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
+{
+	pos[0] = (((node->pos[0] - x) / node->size[0] + 0.5) / ccs.zoom - (ccs.center[0] - 0.5)) * 360.0;
+	pos[1] = (((node->pos[1] - y) / node->size[1] + 0.5) / ccs.zoom - (ccs.center[1] - 0.5)) * 180.0;
+
+	while (pos[0] > 180.0)
+		pos[0] -= 360.0;
+	while (pos[0] < -180.0)
+		pos[0] += 360.0;
+}
+
+/**
+ * @brief
+ * FIXME
+ */
+static void MAP_ScreenTo3DMap(const menuNode_t* node, int x, int y, vec2_t pos)
 {
 	pos[0] = (((node->pos[0] - x) / node->size[0] + 0.5) / ccs.zoom - (ccs.center[0] - 0.5)) * 360.0;
 	pos[1] = (((node->pos[1] - y) / node->size[1] + 0.5) / ccs.zoom - (ccs.center[1] - 0.5)) * 180.0;

@@ -724,10 +724,6 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 	float reducedfull = (value / 4) * 0.9;
 	float reducedhalf = (value / 8) * 0.9;
 
-	/* rotation */
-	float rotateBack = anglemod (q * 12);
-	float rotateFore = anglemod (p * 20);
-
 	image_t* gl;
 	float nx, ny, nw, nh;
 
@@ -792,9 +788,6 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 	/* rotate in y direction */
 	qglRotatef (rotateY, 0, 1, 0);
 
-	/* rotate it around the poles */
-	qglRotatef (-rotateBack, 0, 0, 1);
-
 	/* solid globe texture */
 	qglBindTexture (GL_TEXTURE_2D, gl->texnum);
 
@@ -820,9 +813,6 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 
 	/* make it not always at right angles to the player */
 	qglRotatef (rotateY, 0, 1, 0);
-
-	/* rotate it around the poles */
-	qglRotatef (-rotateFore, 0, 0, 1);
 
 	gl = GL_FindImage(va("pics/menu/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
