@@ -688,6 +688,7 @@ HAVE_SND_DX
 HAVE_VID_DGA
 HAVE_VID_VIDMODE
 HAVE_IPV6
+BUILD_CLIENT
 BUILD_DEDICATED
 BUILD_MASTER
 BUILD_UFO2MAP
@@ -1282,6 +1283,7 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --disable-openal        build openal sound support [default=enabled]
   --disable-dedicated     build dedicated server [default=enabled]
+  --disable-client        build client [default=enabled]
   --enable-master         build masterserver [default=disabled]
   --disable-ufo2map       build ufo2map [default=enabled]
   --disable-qdata         build qdata [default=enabled]
@@ -2083,6 +2085,15 @@ if test "${enable_dedicated+set}" = set; then
   enableval=$enable_dedicated;
 else
   enable_dedicated=yes
+fi
+
+
+# FIXME: Don't check for client libs if client is disabled
+# Check whether --enable-client was given.
+if test "${enable_client+set}" = set; then
+  enableval=$enable_client;
+else
+  enable_client=yes
 fi
 
 
@@ -10266,6 +10277,20 @@ _ACEOF
 fi
 
 #---------------------------------------------------------------------------------------------
+# Check for client
+#---------------------------------------------------------------------------------------------
+
+BUILD_CLIENT=0
+
+if test "$enable_client" = "yes"
+then
+	{ echo "$as_me:$LINENO: Enabling client" >&5
+echo "$as_me: Enabling client" >&6;}
+	BUILD_CLIENT=1
+
+fi
+
+#---------------------------------------------------------------------------------------------
 # Check for dedicated
 #---------------------------------------------------------------------------------------------
 
@@ -11080,13 +11105,13 @@ HAVE_SND_DX!$HAVE_SND_DX$ac_delim
 HAVE_VID_DGA!$HAVE_VID_DGA$ac_delim
 HAVE_VID_VIDMODE!$HAVE_VID_VIDMODE$ac_delim
 HAVE_IPV6!$HAVE_IPV6$ac_delim
+BUILD_CLIENT!$BUILD_CLIENT$ac_delim
 BUILD_DEDICATED!$BUILD_DEDICATED$ac_delim
 BUILD_MASTER!$BUILD_MASTER$ac_delim
 BUILD_UFO2MAP!$BUILD_UFO2MAP$ac_delim
 BUILD_QDATA!$BUILD_QDATA$ac_delim
 BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 PARANOID!$PARANOID$ac_delim
-PROFILING!$PROFILING$ac_delim
 _ACEOF
 
   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
@@ -11128,12 +11153,13 @@ _ACEOF
 ac_delim='%!_!# '
 for ac_last_try in false false false false false :; do
   cat >conf$$subs.sed <<_ACEOF
+PROFILING!$PROFILING$ac_delim
 EXE_EXT!$EXE_EXT$ac_delim
 LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 3; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 4; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5

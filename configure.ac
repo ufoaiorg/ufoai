@@ -80,6 +80,11 @@ AC_ARG_ENABLE(dedicated,
 	[AS_HELP_STRING([--disable-dedicated], [build dedicated server @<:@default=enabled@:>@])],
 	[], [enable_dedicated=yes])
 
+# FIXME: Don't check for client libs if client is disabled
+AC_ARG_ENABLE(client,
+	[AS_HELP_STRING([--disable-client], [build client @<:@default=enabled@:>@])],
+	[], [enable_client=yes])
+
 AC_ARG_ENABLE(master,
 	[AS_HELP_STRING([--enable-master], [build masterserver @<:@default=disabled@:>@])],
 	[], [enable_master=no])
@@ -820,6 +825,17 @@ then
 	AC_MSG_NOTICE([Enabling ipv6 support])
 	AC_SUBST([HAVE_IPV6],1)
 	AC_DEFINE([HAVE_IPV6],1)
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for client
+#---------------------------------------------------------------------------------------------
+
+AC_SUBST([BUILD_CLIENT],0)
+if test "$enable_client" = "yes"
+then
+	AC_MSG_NOTICE([Enabling client])
+	AC_SUBST([BUILD_CLIENT],1)
 fi
 
 #---------------------------------------------------------------------------------------------
