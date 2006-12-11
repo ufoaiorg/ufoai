@@ -51,28 +51,28 @@ static void GL_DrawSphere (void)
 		int texespos = 0;
 
 		/* build the sphere display list */
-		spherelist = glGenLists(1);
+		spherelist = qglGenLists(1);
 
-		glNewList (spherelist, GL_COMPILE);
+		qglNewList (spherelist, GL_COMPILE);
 
 		for (i = 0; i < GLOBE_TRIS; i++) {
-			glBegin (GL_TRIANGLE_STRIP);
+			qglBegin (GL_TRIANGLE_STRIP);
 
 			for (j = 0; j <= GLOBE_TRIS; j++) {
-				glTexCoord2fv (&globetexes[texespos]);
-				glVertex3fv (&globeverts[vertspos]);
+				qglTexCoord2fv (&globetexes[texespos]);
+				qglVertex3fv (&globeverts[vertspos]);
 
 				texespos += 2;
 				vertspos += 3;
 
-				glTexCoord2fv (&globetexes[texespos]);
-				glVertex3fv (&globeverts[vertspos]);
+				qglTexCoord2fv (&globetexes[texespos]);
+				qglVertex3fv (&globeverts[vertspos]);
 
 				texespos += 2;
 				vertspos += 3;
 			}
 
-			glEnd ();
+			qglEnd ();
 		}
 
 		glEndList ();
@@ -114,15 +114,15 @@ static void GL_InitGlobeChain (void)
 			float stheta = (float) (-sin( theta));
 			float ctheta = (float) (cos (theta));
 
-			globetexes[texespos++] = s * 2;
-			globetexes[texespos++] = t * 2;
+			globetexes[texespos++] = s;
+			globetexes[texespos++] = t;
 
 			globeverts[vertspos++] = stheta * srho * 4096.0;
 			globeverts[vertspos++] = ctheta * srho * 4096.0;
 			globeverts[vertspos++] = crho * 4096.0;
 
-			globetexes[texespos++] = s * 2;
-			globetexes[texespos++] = (t - dt) * 2;
+			globetexes[texespos++] = s;
+			globetexes[texespos++] = (t - dt);
 
 			globeverts[vertspos++] = stheta * srhodrho * 4096.0;
 			globeverts[vertspos++] = ctheta * srhodrho * 4096.0;
@@ -714,6 +714,9 @@ void Draw_3DMapLine(int n, float dist, vec2_t * path)
  */
 void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
 {
+	static float rotateX = 0.0f;
+	static float rotateY = 0.0f;
+	static float lastcx = 0.0f, lastcy = 0.0f;
 	/* globe scaling */
 	float value = iz;
 	float fullscale = value / 4;
@@ -768,11 +771,26 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 	/* flatten the sphere */
 	qglScalef (fullscale, fullscale, halfscale);
 
-	/* orient it so that the poles are unobtrusive */
-	qglRotatef (-90, 1, 0, 0);
+	if (lastcx != cx || lastcy != cy) {
+		rotateX += (cx);
+		rotateY += (cy);
+		lastcx = cx;
+		lastcy = cy;
+		if (rotateX > 360.0f)
+			rotateX -= 360.0f;
+		if (rotateY > 360.0f)
+			rotateY -= 360.0f;
+		if (rotateX < 0.0f)
+			rotateX += 360.0f;
+		if (rotateY < 0.0f)
+			rotateY += 360.0f;
+	}
 
-	/* make it not always at right angles to the player */
-	qglRotatef (-22, 0 ,1, 0);
+	/* rotate in x direction */
+	qglRotatef (rotateX, 1, 0, 0);
+
+	/* rotate in y direction */
+	qglRotatef (rotateY, 0, 1, 0);
 
 	/* rotate it around the poles */
 	qglRotatef (-rotateBack, 0, 0, 1);

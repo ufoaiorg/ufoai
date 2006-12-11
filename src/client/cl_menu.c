@@ -1181,16 +1181,13 @@ void MN_RightClick(int x, int y)
 
 			/* found a node -> do actions */
 			switch (node->type) {
-			case MN_MAP:
-				if (!cl_3dmap->value) {
-					MAP_ResetAction();
-					mouseSpace = MS_SHIFTMAP;
-					break;
-				}
-				/* otherwise fall through */
 			case MN_3DMAP:
 				MAP_ResetAction();
 				mouseSpace = MS_SHIFT3DMAP;
+				break;
+			case MN_MAP:
+				MAP_ResetAction();
+				mouseSpace = MS_SHIFTMAP;
 				break;
 			case MN_TEXT:
 				MN_TextRightClick(node, mouseOver);
@@ -1235,14 +1232,9 @@ void MN_MiddleClick(int x, int y)
 
 			/* found a node -> do actions */
 			switch (node->type) {
-			case MN_MAP:
-				if (!cl_3dmap->value) {
-					mouseSpace = MS_ZOOMMAP;
-					break;
-				}
-				/* otherwise fall through */
 			case MN_3DMAP:
-				mouseSpace = MS_ZOOM3DMAP;
+			case MN_MAP:
+				mouseSpace = MS_ZOOMMAP;
 				break;
 			default:
 				MN_ExecuteActions(menu, node->mclick);
@@ -1293,22 +1285,23 @@ void MN_MouseWheel(qboolean down, int x, int y)
 			/* found a node -> do actions */
 			switch (node->type) {
 			case MN_MAP:
-				if (!cl_3dmap->value) {
-					ccs.zoom *= pow(0.995, (down ? 10: -10));
-					if (ccs.zoom < 1.0)
-						ccs.zoom = 1.0;
-					else if (ccs.zoom > 6.0)
-						ccs.zoom = 6.0;
+				ccs.zoom *= pow(0.995, (down ? 10: -10));
+				if (ccs.zoom < 1.0)
+					ccs.zoom = 1.0;
+				else if (ccs.zoom > 6.0)
+					ccs.zoom = 6.0;
 
-					if (ccs.center[1] < 0.5 / ccs.zoom)
-						ccs.center[1] = 0.5 / ccs.zoom;
-					if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
-						ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
-					break;
-				}
-				/* otherwise fall through */
+				if (ccs.center[1] < 0.5 / ccs.zoom)
+					ccs.center[1] = 0.5 / ccs.zoom;
+				if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
+					ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
+				break;
 			case MN_3DMAP:
-				mouseSpace = MS_ZOOM3DMAP;
+				ccs.zoom *= pow(0.995, (down ? 10: -10));
+				if (ccs.zoom < 1.0)
+					ccs.zoom = 1.0;
+				else if (ccs.zoom > 6.0)
+					ccs.zoom = 6.0;
 				break;
 			case MN_TEXT:
 				MN_TextScroll(node, (down ? 1 : -1));

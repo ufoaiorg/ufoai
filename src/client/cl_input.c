@@ -1133,7 +1133,7 @@ void CL_ParseInput(void)
 
 	case MS_SHIFTMAP:
 		/* shift the map */
-		ccs.center[0] -= (float) (mx - oldx) / (1024 * ccs.zoom);
+		ccs.center[0] -= (float) (mx - oldx) / (VID_NORM_WIDTH * ccs.zoom);
 		ccs.center[1] -= (float) (my - oldy) / (512 * ccs.zoom);
 		for (i = 0; i < 2; i++) {
 			while (ccs.center[i] < 0.0)
@@ -1145,6 +1145,12 @@ void CL_ParseInput(void)
 			ccs.center[1] = 0.5 / ccs.zoom;
 		if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
 			ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
+		return;
+
+	case MS_SHIFT3DMAP:
+		/* shift the map */
+		ccs.center[0] -= (float) (mx - oldx);
+		ccs.center[1] -= (float) (my - oldy);
 		return;
 
 	case MS_ZOOMMAP:
