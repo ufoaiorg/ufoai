@@ -642,12 +642,16 @@ static void CL_ParseTeamInfoMessage (void)
 	char *s = MSG_ReadString(&net_message);
 	char *var = NULL;
 	char *value = NULL;
-	int cnt = 0;
+	int cnt = 0, n;
 
 	if (!s)
 		return;
 
 	memset(&teamData, 0, sizeof(teamData_t));
+
+#if 0
+	Com_Printf("CL_ParseTeamInfoMessage: %s\n", s);
+#endif
 
 	value = s;
 	var = strstr(value, "\n");
@@ -676,11 +680,13 @@ static void CL_ParseTeamInfoMessage (void)
 		else
 			break;
 		/* get teamnum */
-		var = strstr(s, " ");
+		var = strstr(s, "\t");
 		if (var)
 			*var++ = '\0';
 
-		teamData.teamCount[atoi(s)]++;
+		n = atoi(s);
+		if (n > 0 && n < MAX_TEAMS)
+			teamData.teamCount[n]++;
 		s = value;
 		cnt++;
 	};
@@ -689,11 +695,8 @@ static void CL_ParseTeamInfoMessage (void)
 	if (!cnt)
 		Q_strcat(teamData.teamInfoText, _("No player connected\n"), sizeof(teamData.teamInfoText));
 
-#ifdef DEBUG
-	Com_Printf("maxteams: %i\n", teamData.maxteams);
-	Com_Printf("teamplay: %i\n", teamData.teamplay);
-	Com_Printf("maxplayersperteam: %i\n", teamData.maxplayersperteam);
-#endif
+	Cvar_SetValue("mn_maxteams", teamData.maxteams);
+	Cvar_SetValue("mn_maxplayersperteam", teamData.maxplayersperteam);
 
 	menuText[TEXT_LIST] = teamData.teamInfoText;
 }
@@ -935,8 +938,7 @@ void CL_SelectTeam_Init_f (void)
 		return;
 
 	Netchan_OutOfBandPrint(NS_CLIENT, adr, "teaminfo %i", PROTOCOL_VERSION);
-	menuText[TEXT_STANDARD] = _("Select a team");
-	menuText[TEXT_LIST] = NULL;
+	menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
 }
 
 /**
@@ -1146,12 +1148,14 @@ void CL_Snd_Restart_f(void)
 
 /**
  * @brief Increase or decrease the teamnum
+ * TODO: If no team is free - change to spectator
  */
 void CL_TeamNum_f (void)
 {
 	int max = 4;
 	int maxteamnum = 0;
 	int i = (int)teamnum->value;
+	static char buf[MAX_STRING_CHARS];
 
 	maxteamnum = (int)Cvar_VariableValue("mn_maxteams");
 
@@ -1169,28 +1173,37 @@ void CL_TeamNum_f (void)
 		for (i--; i > TEAM_CIVILIAN; i--) {
 			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
 				Cvar_SetValue("teamnum", i);
+				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
+				menuText[TEXT_STANDARD] = buf;
 				break;
-			}
-#if 0
-			else
-				Com_Printf("team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
+			} else {
+				menuText[TEXT_STANDARD] = _("Team is already in use");
+#if DEBUG
+				Com_DPrintf("team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
 #endif
+			}
 		}
 	} else {
 		for (i++; i <= teamData.maxteams; i++) {
 			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
 				Cvar_SetValue("teamnum", i);
+				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
+				menuText[TEXT_STANDARD] = buf;
 				break;
-			}
-#if 0
-			else
-				Com_Printf("team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
+			} else {
+				menuText[TEXT_STANDARD] = _("Team is already in use");
+#if DEBUG
+				Com_DPrintf("team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
 #endif
+			}
 		}
 	}
 
+#if 0
 	if (!teamnum->modified)
-		menuText[TEXT_STANDARD] = _("Invalid team");
+		menuText[TEXT_STANDARD] = _("Invalid or full team");
+#endif
+	CL_SelectTeam_Init_f();
 }
 
 static int spawnCountFromServer = -1;
@@ -1207,7 +1220,7 @@ void CL_SpawnSoldiers_f (void)
 
 	if (!ccs.singleplayer && baseCurrent) {
 		if (n <= TEAM_CIVILIAN || teamData.maxplayersperteam <= teamData.teamCount[n]) {
-			menuText[TEXT_STANDARD] = _("Invalid team");
+			menuText[TEXT_STANDARD] = _("Invalid or full team");
 			return;
 		}
 	}

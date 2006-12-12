@@ -138,17 +138,20 @@ static char* SV_TeamInfoString (void)
 	int i;
 	client_t *cl;
 
+	Q_strncpyz(teaminfo, Cvar_VariableString("sv_teamplay"), sizeof(teaminfo));
+	Q_strcat(teaminfo, "\n", sizeof(teaminfo));
+	Q_strcat(teaminfo, Cvar_VariableString("sv_maxteams"), sizeof(teaminfo));
+	Q_strcat(teaminfo, "\n", sizeof(teaminfo));
+	Q_strcat(teaminfo, Cvar_VariableString("maxplayers"), sizeof(teaminfo));
+	Q_strcat(teaminfo, "\n", sizeof(teaminfo));
 	for (i = 0; i < sv_maxclients->value; i++) {
 		cl = &svs.clients[i];
-		Q_strncpyz(teaminfo, Cvar_VariableString("sv_teamplay"), sizeof(teaminfo));
-		Q_strcat(teaminfo, "\n", sizeof(teaminfo));
-		Q_strcat(teaminfo, Cvar_VariableString("sv_maxteams"), sizeof(teaminfo));
-		Q_strcat(teaminfo, "\n", sizeof(teaminfo));
-		Q_strcat(teaminfo, Cvar_VariableString("maxplayers"), sizeof(teaminfo));
-		Q_strcat(teaminfo, "\n", sizeof(teaminfo));
 		if (cl->state == cs_connected || cl->state == cs_spawned) {
-			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
-			Q_strcat(teaminfo, player, sizeof(teaminfo));
+			/* show only players that already has a team */
+			if (ge->ClientGetTeamNum(cl->player)) {
+				Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
+				Q_strcat(teaminfo, player, sizeof(teaminfo));
+			}
 		}
 	}
 

@@ -1357,30 +1357,12 @@ menu multiplayer_selectteam
 		pos	"256 128"
 	}
 
-	string maxteams
-	{
-		font	f_small
-		color	"1 1 1 1"
-		string	"_Max. teams for this map"
-		pos	"208 230"
-		align	uc
-	}
-
 	string teamselection
 	{
 		font	f_big
 		color	"1 1 1 1"
 		string	"_Team selection"
 		pos	"512 156"
-		align	uc
-	}
-
-	string maxteams
-	{
-		font	f_small
-		color	"0 0.5 0 1"
-		string	"*cvar mn_maxteams"
-		pos	"358 230"
 		align	uc
 	}
 
@@ -1404,22 +1386,46 @@ menu multiplayer_selectteam
 
 	text team_info
 	{
-		pos		"280 200"
-		size	"462 320"
+		pos		"300 200"
+		size	"422 320"
 		format	"16 60"
-//		bgcolor	"1 1 1 0.5"
+		bgcolor	"1 1 1 0.5"
 		height	20
 		num		1
 	}
 
 	text teamnum_status
 	{
-		pos		"280 530"
-		size	"462 32"
+		pos		"300 530"
+		size	"422 16"
 		format	"16 60"
-//		bgcolor	"1 1 1 0.5"
+		bgcolor	"1 1 1 0.5"
 		num		0
-		height	2
+		height	1
+	}
+
+	string maxplayersperteams_str
+	{
+		string	"_Max. players per team"
+		pos		"300 560"
+	}
+
+	string maxplayersperteams_value
+	{
+		string	"*cvar mn_maxplayersperteam"
+		pos	"550 560"
+	}
+
+	string maxteams_str
+	{
+		string	"_Max. teams for this map"
+		pos		"300 580"
+	}
+
+	string maxteams_value
+	{
+		string	"*cvar mn_maxteams"
+		pos	"550 580"
 	}
 
 	string teamnum_str
