@@ -2106,7 +2106,6 @@ float CL_TargetingToHit(pos3_t toPos)
 	return (hitchance * (0.125) * n);
 }
 
-#define RADIUS_DRAW_POINTS	40
 /**
  * @brief Show weapon radius
  * @param[in] pos The center of the circle

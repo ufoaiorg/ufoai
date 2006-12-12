@@ -545,6 +545,9 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
  * @param[in] s starting/location vector
  * @param[in] v velocity vector
  * @param[in] a acceleration vector
+ * @sa CL_ParticleFree
+ * @sa V_UpdateRefDef
+ * @sa R_DrawPtls
  */
 ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a)
 {
@@ -610,6 +613,7 @@ ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a
 /**
  * @brief Free a particle and all it's children
  * @param[in] p the particle to free
+ * @sa CL_ParticleSpawn
  */
 void CL_ParticleFree(ptl_t *p)
 {
@@ -624,6 +628,7 @@ void CL_ParticleFree(ptl_t *p)
 /**
  * @brief Spawn a particle given by EV_SPAWN_PARTICLE event
  * @param[in] sb sizebuf that holds the network transfer
+ * @sa CL_ParticleSpawn
  */
 void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb)
 {
