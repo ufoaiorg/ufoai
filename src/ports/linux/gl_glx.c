@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 #if !defined(__FreeBSD__)
-#include <sys/vt.h>
+#  include <sys/vt.h>
 #endif
 #include <signal.h>
 #include <X11/Xlib.h>
@@ -50,10 +50,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif /* HAVE_DGA */
 
 #ifdef HAVE_VIDMODE
-#include <X11/extensions/xf86vmode.h>
-#ifdef _XF86VIDMODE_H_
-#define HAVE_XF86_VIDMODE
-#endif
+#  include <X11/extensions/xf86vmode.h>
+#  ifdef _XF86VIDMODE_H_
+#    define HAVE_XF86_VIDMODE
+#  endif
 #endif /* HAVE_VIDMODE */
 
 /* include this after vidmode */
