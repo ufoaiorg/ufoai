@@ -1112,11 +1112,12 @@ void CL_TeamNum_f (void)
 		max = teamnum;
 
 	if (Cmd_Argv(0) == "teamnum_dec")
-		Cbuf_AddText(va("mn_modify teamnum -1 1 %i;", max))
+		Cbuf_AddText(va("mn_modify teamnum -1 1 %i;", max));
 	else
-		Cbuf_AddText(va("mn_modify teamnum +1 1 %i;", max))
+		Cbuf_AddText(va("mn_modify teamnum +1 1 %i;", max));
 }
 
+static int spawnCountFromServer = -1;
 /**
  * @brief Send the clc_teaminfo command to server
  * @sa CL_SendCurTeamInfo
@@ -1133,7 +1134,7 @@ void CL_SpawnSoldiers_f (void)
 
 	/* send begin */
 	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-	MSG_WriteString(&cls.netchan.message, va("begin %i\n", atoi(Cmd_Argv(1))));
+	MSG_WriteString(&cls.netchan.message, va("begin %i\n", spawnCountFromServer));
 
 	soldiersSpawned = qtrue;
 }
@@ -1155,7 +1156,7 @@ void CL_Precache_f (void)
 	CL_PrepRefresh();
 
 	soldiersSpawned = qfalse;
-
+	spawnCountFromServer = atoi(Cmd_Argv(1));
 	/* for singleplayer the soldiers get spawned here */
 	if (ccs.singleplayer) {
 		CL_SpawnSoldiers_f();
