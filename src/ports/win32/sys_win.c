@@ -123,7 +123,7 @@ void Sys_Quit (void)
 /**
  * @brief
  */
-void WinError (void)
+static void WinError (void)
 {
 	LPVOID lpMsgBuf;
 
@@ -262,8 +262,10 @@ void Sys_Init (void)
 	Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
 
 	if (dedicated->value) {
-		if (!AllocConsole ())
+		if (!AllocConsole ()) {
+			WinError();
 			Sys_Error ("Couldn't create dedicated server console");
+		}
 		hinput = GetStdHandle (STD_INPUT_HANDLE);
 		houtput = GetStdHandle (STD_OUTPUT_HANDLE);
 
@@ -550,7 +552,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 /**
  * @brief
  */
-void ParseCommandLine (LPSTR lpCmdLine)
+static void ParseCommandLine (LPSTR lpCmdLine)
 {
 	argc = 1;
 	argv[0] = "exe";
