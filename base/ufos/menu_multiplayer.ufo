@@ -1405,46 +1405,59 @@ menu multiplayer_selectteam
 	text team_info
 	{
 		pos		"280 200"
-		size	"462 360"
+		size	"462 320"
 		format	"16 60"
-//		bgcolor	"1 1 1 0.1"
-		num		2
+//		bgcolor	"1 1 1 0.5"
+		height	20
+		num		1
+	}
+
+	text teamnum_status
+	{
+		pos		"280 530"
+		size	"462 32"
+		format	"16 60"
+//		bgcolor	"1 1 1 0.5"
+		num		0
+		height	2
 	}
 
 	string teamnum_str
 	{
 		string	"_Team preference:"
-		pos	"400 600"
+		pos		"400 600"
 	}
 	string teamnum_value
 	{
 		string	"*cvar teamnum"
-		pos	"550 600"
+		pos		"550 600"
 		align	ur
-	}
-	pic teamnum_dec
-	{
-		image	menu/buttons_small
-		pos	"568 602"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "teamnum_dec;" }
 	}
 	pic teamnum_inc
 	{
+		tooltip	"_Next free team"
 		image	menu/buttons_small
-		pos	"584 602"
+		pos		"568 602"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "teamnum_inc;" }
+	}
+	pic teamnum_dec
+	{
+		tooltip	"_Previous free team"
+		image	menu/buttons_small
+		pos		"584 602"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		click	{ cmd "teamnum_inc;" }
+		click	{ cmd "teamnum_dec;" }
 	}
 
 	pic button_exit
 	{
 		image	hud/buttons2
-		mousefx true
+		mousefx	true
 		pos		"684 594"
 		texl	"0 0"
 		texh	"64 37"
