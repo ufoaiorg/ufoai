@@ -144,6 +144,8 @@ static char* SV_TeamInfoString (void)
 		Q_strcat(teaminfo, "\n", sizeof(teaminfo));
 		Q_strcat(teaminfo, Cvar_VariableString("sv_maxteams"), sizeof(teaminfo));
 		Q_strcat(teaminfo, "\n", sizeof(teaminfo));
+		Q_strcat(teaminfo, Cvar_VariableString("maxplayers"), sizeof(teaminfo));
+		Q_strcat(teaminfo, "\n", sizeof(teaminfo));
 		if (cl->state == cs_connected || cl->state == cs_spawned) {
 			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
 			Q_strcat(teaminfo, player, sizeof(teaminfo));

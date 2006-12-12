@@ -58,7 +58,7 @@ cvar_t *logfile_active;			/* 1 = buffer log, 2 = flush after each print */
 cvar_t *showtrace;
 cvar_t *dedicated;
 cvar_t *cl_maxfps;
-
+cvar_t *teamnum;
 static FILE *logfile;
 
 static int server_state;
@@ -1443,6 +1443,7 @@ void Qcommon_Init(int argc, char **argv)
 	dedicated = Cvar_Get("dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 #endif
 	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
+	teamnum = Cvar_Get("teamnum", "DEFAULT_TEAMNUM", CVAR_ARCHIVE, NULL);
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 	Cvar_Get("version", s, CVAR_NOSET, NULL);

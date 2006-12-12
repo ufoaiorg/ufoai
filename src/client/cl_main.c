@@ -44,6 +44,9 @@ cvar_t *adr6;
 cvar_t *adr7;
 cvar_t *adr8;
 
+cvar_t *noudp;
+cvar_t *noipx;
+
 cvar_t *cl_isometric;
 cvar_t *cl_stereo_separation;
 cvar_t *cl_stereo;
@@ -113,6 +116,16 @@ client_state_t cl;
 centity_t cl_entities[MAX_EDICTS];
 
 static qboolean soldiersSpawned = qfalse;
+
+typedef struct teamData_s {
+	int teamCount[MAX_TEAMS];	/**< team counter - parsed from server data 'teaminfo' */
+	qboolean teamplay;
+	int maxteams;
+	int maxplayersperteam;		/**< max players per team */
+	char teamInfoText[MAX_MESSAGE_TEXT];
+} teamData_t;
+
+static teamData_t teamData;
 
 /*====================================================================== */
 
@@ -600,6 +613,7 @@ static netadr_t serverList[MAX_SERVERLIST];
 
 /**
  * @brief Handle a reply from a ping
+ * @sa CL_PingServers_f
  */
 static void CL_ParseStatusMessage(void)
 {
@@ -615,49 +629,73 @@ static void CL_ParseStatusMessage(void)
 	menuText[TEXT_LIST] = serverText;
 }
 
-static char teamInfoText[MAX_MESSAGE_TEXT];
 /**
  * @brief Team selection text
  *
  * This function fills the multiplayer_selectteam menu with content
  * @sa Netchan_OutOfBandPrint
  * @sa SV_TeamInfoString
+ * @sa CL_SelectTeam_Init_f
  */
 static void CL_ParseTeamInfoMessage (void)
 {
 	char *s = MSG_ReadString(&net_message);
 	char *var = NULL;
 	char *value = NULL;
-	int teamCount[MAX_TEAMS];
+	int cnt = 0;
 
 	if (!s)
 		return;
 
-	Com_Printf("CL_ParseTeamInfoMessage: %s\n", s);
+	memset(&teamData, 0, sizeof(teamData_t));
+
 	value = s;
 	var = strstr(value, "\n");
 	*var++ = '\0';
 
-	Cvar_Set("mn_teamplay", value);
+	teamData.teamplay = atoi(value);
 
 	value = var;
 	var = strstr(var, "\n");
 	*var++ = '\0';
-	Cvar_Set("mn_maxteams", value);
+	teamData.maxteams = atoi(value);
+
+	value = var;
+	var = strstr(var, "\n");
+	*var++ = '\0';
+	teamData.maxplayersperteam = atoi(value);
 
 	s = var;
+	if (s)
+		Q_strncpyz(teamData.teamInfoText, s, sizeof(teamData.teamInfoText));
+
 	while (s != NULL) {
 		value = strstr(s, "\n");
 		if (value)
 			*value++ = '\0';
-		Q_strcat(teamInfoText, s, sizeof(teamInfoText));
+		else
+			break;
 		/* get teamnum */
 		var = strstr(s, " ");
+		if (var)
+			*var++ = '\0';
 
+		teamData.teamCount[atoi(s)]++;
 		s = value;
+		cnt++;
 	};
 
-	menuText[TEXT_STANDARD] = teamInfoText;
+	/* no players are connected atm */
+	if (!cnt)
+		Q_strcat(teamData.teamInfoText, _("No player connected\n"), sizeof(teamData.teamInfoText));
+
+#ifdef DEBUG
+	Com_Printf("maxteams: %i\n", teamData.maxteams);
+	Com_Printf("teamplay: %i\n", teamData.teamplay);
+	Com_Printf("maxplayersperteam: %i\n", teamData.maxplayersperteam);
+#endif
+
+	menuText[TEXT_LIST] = teamData.teamInfoText;
 }
 
 static char serverInfoText[MAX_MESSAGE_TEXT];
@@ -888,6 +926,7 @@ void CL_ServerListClick_f (void)
 
 /**
  * @brief
+ * @sa CL_ParseTeamInfoMessage
  */
 void CL_SelectTeam_Init_f (void)
 {
@@ -896,16 +935,16 @@ void CL_SelectTeam_Init_f (void)
 		return;
 
 	Netchan_OutOfBandPrint(NS_CLIENT, adr, "teaminfo %i", PROTOCOL_VERSION);
+	menuText[TEXT_LIST] = NULL;
 }
 
 /**
  * @brief The first function called when entering the multiplayer menu, then CL_Frame takes over
+ * @sa CL_ParseStatusMessage
  */
 void CL_PingServers_f (void)
 {
 	netadr_t adr;
-	cvar_t *noudp;
-	cvar_t *noipx;
 
 	menuText[TEXT_LIST] = NULL;
 
@@ -913,17 +952,17 @@ void CL_PingServers_f (void)
 
 	/* send a broadcast packet */
 	Com_DPrintf("pinging broadcast...\n");
+
+	/* reset current list */
 	serverText[0] = 0;
 	serverListLength = 0;
 
-	noudp = Cvar_Get("noudp", "0", CVAR_NOSET, "Don't use UDP as network protocol'");
 	if (!noudp->value) {
 		adr.type = NA_BROADCAST;
 		adr.port = BigShort(PORT_SERVER);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
 	}
 
-	noipx = Cvar_Get("noipx", "0", CVAR_NOSET, "Don't use IPX as network protocol");
 	if (!noipx->value) {
 		adr.type = NA_BROADCAST_IPX;
 		adr.port = BigShort(PORT_SERVER);
@@ -934,6 +973,8 @@ void CL_PingServers_f (void)
 
 /**
  * @brief Responses to broadcasts, etc
+ * @sa CL_ReadPackets
+ * @sa CL_Frame
  */
 void CL_ConnectionlessPacket (void)
 {
@@ -1033,6 +1074,9 @@ void CL_DumpPackets(void)
 
 /**
  * @brief
+ * @sa CL_ConnectionlessPacket
+ * @sa CL_Frame
+ * @sa CL_ParseServerMessage
  */
 void CL_ReadPackets(void)
 {
@@ -1105,16 +1149,34 @@ void CL_Snd_Restart_f(void)
 void CL_TeamNum_f (void)
 {
 	int max = 4;
-	int teamnum = 0;
+	int maxteamnum = 0;
+	int i = (int)teamnum->value;
 
-	teamnum = (int)Cvar_VariableValue("mn_maxteams");
-	if (teamnum > 0)
-		max = teamnum;
+	maxteamnum = (int)Cvar_VariableValue("mn_maxteams");
 
-	if (Cmd_Argv(0) == "teamnum_dec")
-		Cbuf_AddText(va("mn_modify teamnum -1 1 %i;", max));
-	else
-		Cbuf_AddText(va("mn_modify teamnum +1 1 %i;", max));
+	if (maxteamnum > 0)
+		max = maxteamnum;
+
+	if (i <= TEAM_CIVILIAN || i > teamData.maxteams) {
+		Cvar_Set("teamnum", "DEFAULT_TEAMNUM");
+		i = DEFAULT_TEAMNUM;
+	}
+
+	if (Cmd_Argv(0) == "teamnum_dec") {
+		for (i--; i > TEAM_CIVILIAN; i--) {
+			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
+				Cvar_SetValue("teamnum", i);
+				break;
+			}
+		}
+	} else {
+		for (i++; i <= teamData.maxteams; i++) {
+			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
+				Cvar_SetValue("teamnum", i);
+				break;
+			}
+		}
+	}
 }
 
 static int spawnCountFromServer = -1;
@@ -1157,8 +1219,9 @@ void CL_Precache_f (void)
 
 	soldiersSpawned = qfalse;
 	spawnCountFromServer = atoi(Cmd_Argv(1));
+
 	/* for singleplayer the soldiers get spawned here */
-	if (ccs.singleplayer) {
+	if (ccs.singleplayer || !baseCurrent) {
 		CL_SpawnSoldiers_f();
 	} else {
 		/* for multiplayer we first have to select our team */
@@ -1389,6 +1452,9 @@ void CL_InitLocal(void)
 	rate = Cvar_Get("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE, NULL);	/* FIXME */
 	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, "If maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
+
+	noudp = Cvar_Get("noudp", "0", CVAR_NOSET, "Don't use UDP as network protocol'");
+	noipx = Cvar_Get("noipx", "0", CVAR_NOSET, "Don't use IPX as network protocol");
 
 	/* register our commands */
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");

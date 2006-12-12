@@ -1313,7 +1313,7 @@ void COM_StripExtension(const char *in, char *out)
 }
 
 /**
- * @brief
+ * @brief Return the file extension from the first .
  * @param
  * @sa
  */
@@ -1561,7 +1561,7 @@ char *va(char *format, ...)
 /**
  * @brief Parse a token out of a string
  * @param
- * @sa
+ * @sa COM_EParse
  */
 char *COM_Parse(char **data_p)
 {
@@ -1591,7 +1591,7 @@ skipwhite:
 
 	if (c == '/' && data[1] == '*') {
 		Com_DPrintf("Com_Parse: multiline comment (%s)\n", data);
-		data+=2;
+		data += 2;
 		while (!((data[0] && data[0] == '*') && (data[1] && data[1] == '/')))
 			data++;
 		if (data[0] && data[1])
@@ -1649,7 +1649,7 @@ skipwhite:
 /**
  * @brief
  * @param
- * @sa
+ * @sa Com_Parse
  */
 char *COM_EParse(char **text, char *errhead, char *errinfo)
 {
@@ -1669,12 +1669,12 @@ char *COM_EParse(char **text, char *errhead, char *errinfo)
 }
 
 
+static int paged_total;
 /**
  * @brief
  * @param
  * @sa
  */
-static int paged_total;
 void Com_PageInMemory(byte * buffer, int size)
 {
 	int i;
@@ -1714,9 +1714,9 @@ char *Q_strlwr(char *str)
 }
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief Duplicates a string
+ * @param[in] str String to duplicate
+ * @note Don't forget to free it afterwards
  */
 char *Q_strdup(const char *str)
 {
@@ -1760,7 +1760,7 @@ char *Q_getcwd(char *dest, size_t size)
 /**
  * @brief
  * @param
- * @sa
+ * @sa Q_strncmp
  */
 int Q_strcmp(const char *s1, const char *s2)
 {
@@ -1770,7 +1770,7 @@ int Q_strcmp(const char *s1, const char *s2)
 /**
  * @brief
  * @param
- * @sa
+ * @sa Q_strcmp
  */
 int Q_strncmp(const char *s1, const char *s2, size_t n)
 {
@@ -2659,7 +2659,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 	int i, max_price, prev_price;
 	objDef_t obj;
 	qboolean allowLeft;
-	qboolean packed; 
+	qboolean packed;
 	int ammoMult = 1;
 
 #ifdef PARANOID
@@ -2688,7 +2688,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 		if (ammo < 0) {
 			Com_DPrintf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].kurz, name);
 			return 0;
-		} 
+		}
 		/* load ammo */
 		item.a = CSI->ods[weapon].ammo;
 		item.m = ammo;

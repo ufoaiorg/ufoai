@@ -280,7 +280,7 @@ static void CL_RefreshWeaponButtons(int time)
 
 	if ( !weapon || weapon->item.m == NONE
 		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
-		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time 
+		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time
 		 || (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) ) {
 		if (primary_right != 0) {
 			Cbuf_AddText("dispr\n");
@@ -364,7 +364,7 @@ static void CL_RefreshWeaponButtons(int time)
  */
 qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode)
 {
-	/* no weapon */	
+	/* no weapon */
 	if ( !weapon || weapon->item.m == NONE ) {
 		Com_Printf("No weapon in hand!\n");
 		return qfalse;
@@ -400,7 +400,7 @@ qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode)
 		break;
 	}
 
-	return qtrue; 
+	return qtrue;
 }
 
 
@@ -1267,15 +1267,15 @@ void CL_ActorToggleReaction(void)
 		selActorReactionState = R_FIRE_OFF;
 
 	switch (selActorReactionState) {
-	case R_FIRE_OFF: 
+	case R_FIRE_OFF:
 		break;
-	case R_FIRE_ONCE: 
+	case R_FIRE_ONCE:
 		state |= STATE_REACTION_ONCE;
 		break;
-	case R_FIRE_MANY: 
+	case R_FIRE_MANY:
 		state |= STATE_REACTION_MANY;
 		break;
-	default: 
+	default:
 		break;
 	}
 
@@ -1796,11 +1796,11 @@ void CL_ActorMouseTrace(void)
 	VecToPos(end, testPos);
 	restingLevel = Grid_Fall(&clMap, testPos);
 
-	/* hack to prevent cursor from getting stuck on the top of an invisible 
+	/* hack to prevent cursor from getting stuck on the top of an invisible
 	   playerclip surface (in most cases anyway) */
 	PosToVec(testPos, pA);
 	VectorCopy(pA, pB);
-	pA[2] += UNIT_HEIGHT; 
+	pA[2] += UNIT_HEIGHT;
 	pB[2] -= UNIT_HEIGHT;
 	CM_TestLineDM(pA, pB, pC);
 	VecToPos(pC, testPos);
