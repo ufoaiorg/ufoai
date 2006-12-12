@@ -659,6 +659,42 @@ void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float c
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+/**
+ * @brief Draws a circle out of lines
+ * @param[in] mid Center of the circle
+ * @param[in] radius Radius of the circle
+ * @param[in] color The color of the circle lines
+ * FIXME: Doesn't work atm
+ */
+void Draw_Circle (vec3_t mid, float radius, const vec4_t color)
+{
+	qglDisable(GL_TEXTURE_2D);
+	qglEnable(GL_LINE_SMOOTH);
+	qglEnable(GL_BLEND);
+
+	Draw_Color(color);
+
+	qglBegin(GL_LINE_STRIP);
+
+	/* circle points */
+	qglVertex3f(10.0 * radius, 0.0, mid[2]);
+	qglVertex3f(7.0 * radius, -7.0 * radius, mid[2]);
+	qglVertex3f(0.0, -10.0 * radius, mid[2]);
+	qglVertex3f(-7.0 * radius, -7.0 * radius, mid[2]);
+	qglVertex3f(-10.0 * radius, 0.0, mid[2]);
+	qglVertex3f(-7.0 * radius, 7.0 * radius, mid[2]);
+	qglVertex3f(0.0, 10.0 * radius, mid[2]);
+	qglVertex3f(7.0 * radius, 7.0 * radius, mid[2]);
+	qglVertex3f(10.0 * radius, 0.0, mid[2]);
+
+	qglEnd();
+	Draw_Color(NULL);
+
+	qglDisable(GL_BLEND);
+	qglDisable(GL_LINE_SMOOTH);
+	qglEnable(GL_TEXTURE_2D);
+}
+
 #define MAX_LINEVERTS 256
 /**
  * @brief

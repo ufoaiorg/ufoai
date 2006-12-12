@@ -2106,6 +2106,21 @@ float CL_TargetingToHit(pos3_t toPos)
 	return (hitchance * (0.125) * n);
 }
 
+#define RADIUS_DRAW_POINTS	40
+/**
+ * @brief Show weapon radius
+ * @param[in] pos The center of the circle
+ */
+static void CL_Targeting_Radius(vec3_t center)
+{
+	const vec4_t color = {0, 1, 0, 1};
+
+	assert(selFD);
+
+	re.DrawCircle(center, selFD->splrad, color);
+}
+
+
 /**
  * @brief Draws line to target.
  * @param[in] fromPos
@@ -2137,7 +2152,7 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 	if (VectorDistSqr(start, end) > selFD->range * selFD->range) {
 		VectorMA(start, selFD->range, dir, mid);
 		crossNo = qtrue;
-	}else{
+	} else{
 		VectorCopy(end, mid);
 		crossNo = qfalse;
 	}
@@ -2171,9 +2186,13 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 	CL_ParticleSpawn("inRangeTracer", 0, start, mid, NULL);
 	if (crossNo) {
 		CL_ParticleSpawn("longRangeTracer", 0, mid, end, NULL);
+		if (selFD->splrad)
+			CL_Targeting_Radius(end);
 		CL_ParticleSpawn("cross_no", 0, end, NULL, NULL);
-	}else{
+	} else {
 		CL_ParticleSpawn("cross", 0, end, NULL, NULL);
+		if (selFD->splrad)
+			CL_Targeting_Radius(end);
 	}
 
 	selToHit = 100 * CL_TargetingToHit(toPos);

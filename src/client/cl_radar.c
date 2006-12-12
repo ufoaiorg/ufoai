@@ -38,10 +38,10 @@ extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 	const aircraft_t* ufo, qboolean wasUfoSensored);
 
 #define RADAR_DRAW_POINTS	60
-/** 
+/**
  * @brief Show Radar coverage
  */
-extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec2_t pos) 
+extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec2_t pos)
 {
 	int i, xCircle, yCircle;
 	int pts[RADAR_DRAW_POINTS * 2 + 2];
@@ -82,7 +82,7 @@ extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x,
 	const vec4_t color = {0, 1, 0, 1};
 	int pts[4];
 
-	if (radar->numUfos==0) 
+	if (radar->numUfos==0)
 		return;
 
 	/* Show radar range zones */

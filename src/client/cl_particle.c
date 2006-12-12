@@ -539,7 +539,12 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 
 
 /**
- * @brief
+ * @brief Spawn a new particle to the map
+ * @param[in] name The id of the particle (see ptl_*.ufo script files in base/ufos)
+ * @param[in] levelFlags Show at which levels
+ * @param[in] s starting/location vector
+ * @param[in] v velocity vector
+ * @param[in] a acceleration vector
  */
 ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a)
 {
