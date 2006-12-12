@@ -1404,11 +1404,11 @@ menu multiplayer_selectteam
 
 	text team_info
 	{
-		pos	"280 200"
+		pos		"280 200"
 		size	"462 360"
 		format	"16 60"
-//		bgcolor "1 1 1 0.5"
-		num	0
+//		bgcolor	"1 1 1 0.1"
+		num		2
 	}
 
 	string teamnum_str
