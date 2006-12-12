@@ -28,8 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <termios.h>
 #include <sys/ioctl.h>
 #include <sys/stat.h>
-#if defined(__FreeBSD__)
-#else
+#if !defined(__FreeBSD__)
 #include <sys/vt.h>
 #endif
 #include <signal.h>
@@ -44,11 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 #ifdef HAVE_DGA
-#  ifdef __x86_64__
-#    ifndef XMD_H
-#      define XMD_H
-#    endif
-#  endif
 #  include <X11/extensions/xf86dga.h>
 #  ifdef _XF86DGA_H_
 #    define HAVE_XF86_DGA
