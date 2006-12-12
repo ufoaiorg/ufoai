@@ -252,6 +252,7 @@ typedef struct {
 	void (*ClientAction) (player_t * client);
 	void (*ClientEndRound) (player_t * client, qboolean quiet);
 	void (*ClientTeamInfo) (player_t * client);
+	int (*ClientGetTeamNum) (player_t * client);
 
 	void (*RunFrame) (void);
 

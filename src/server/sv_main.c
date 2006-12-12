@@ -98,7 +98,7 @@ CONNECTIONLESS COMMANDS
 /**
  * @brief Builds the string that is sent as heartbeats and status replies
  */
-char *SV_StatusString(void)
+static char *SV_StatusString(void)
 {
 	char player[1024];
 	static char status[MAX_MSGLEN - 16];
@@ -127,9 +127,45 @@ char *SV_StatusString(void)
 }
 
 /**
- * @brief Responds with all the info that qplug or qspy can see
+ * @brief Builds the string that is send as teaminfo reply
+ * @sa SVC_Teaminfo
+ * @sa CL_ParseTeamInfoMessage
  */
-void SVC_Status(void)
+static char* SV_TeamInfoString (void)
+{
+	char player[1024];
+	static char teaminfo[MAX_MSGLEN - 16];
+	int i;
+	client_t *cl;
+
+	for (i = 0; i < sv_maxclients->value; i++) {
+		cl = &svs.clients[i];
+		Q_strncpyz(teaminfo, Cvar_VariableString("sv_teamplay"), sizeof(teaminfo));
+		Q_strcat(teaminfo, "\n", sizeof(teaminfo));
+		Q_strcat(teaminfo, Cvar_VariableString("sv_maxteams"), sizeof(teaminfo));
+		Q_strcat(teaminfo, "\n", sizeof(teaminfo));
+		if (cl->state == cs_connected || cl->state == cs_spawned) {
+			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
+			Q_strcat(teaminfo, player, sizeof(teaminfo));
+		}
+	}
+
+	return teaminfo;
+}
+
+/**
+ * @brief Responds with teaminfo such as free team num
+ */
+static void SVC_TeamInfo(void)
+{
+	Netchan_OutOfBandPrint(NS_SERVER, net_from, "teaminfo\n%s", SV_TeamInfoString());
+}
+
+/**
+ * @brief Responds with all the info that qplug or qspy can see
+ * @sa SV_StatusString
+ */
+static void SVC_Status(void)
 {
 	Netchan_OutOfBandPrint(NS_SERVER, net_from, "print\n%s", SV_StatusString());
 #if 0
@@ -142,7 +178,7 @@ void SVC_Status(void)
 /**
  * @brief Sends an acknowledge
  */
-void SVC_Ack(void)
+static void SVC_Ack(void)
 {
 	Com_Printf("Ping acknowledge from %s\n", NET_AdrToString(net_from));
 }
@@ -151,7 +187,7 @@ void SVC_Ack(void)
  * @brief Responds with short info for broadcast scans
  * @note The second parameter should be the current protocol version number.
  */
-void SVC_Info(void)
+static void SVC_Info(void)
 {
 	char string[64];
 	int i, count;
@@ -179,7 +215,7 @@ void SVC_Info(void)
 /**
  * @brief Just responds with an acknowledgement
  */
-void SVC_Ping(void)
+static void SVC_Ping(void)
 {
 	Netchan_OutOfBandPrint(NS_SERVER, net_from, "ack");
 }
@@ -192,7 +228,7 @@ void SVC_Ping(void)
  * flood the server with invalid connection IPs.  With a
  * challenge, they must give a valid IP address.
  */
-void SVC_GetChallenge(void)
+static void SVC_GetChallenge(void)
 {
 	int i;
 	int oldest;
@@ -226,7 +262,7 @@ void SVC_GetChallenge(void)
 /**
  * @brief A connection request that did not come from the master
  */
-void SVC_DirectConnect(void)
+static void SVC_DirectConnect(void)
 {
 	char userinfo[MAX_INFO_STRING];
 	netadr_t adr;
@@ -459,6 +495,8 @@ void SV_ConnectionlessPacket(void)
 		SVC_Ack();
 	else if (!strcmp(c, "status"))
 		SVC_Status();
+	else if (!strcmp(c, "teaminfo"))
+		SVC_TeamInfo();
 	else if (!strcmp(c, "info"))
 		SVC_Info();
 	else if (!strcmp(c, "getchallenge"))

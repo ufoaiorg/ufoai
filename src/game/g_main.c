@@ -62,6 +62,8 @@ cvar_t *sv_gravity;
 
 cvar_t *sv_cheats;
 
+cvar_t *sv_maxteams;
+
 cvar_t *sv_ai;
 cvar_t *sv_teamplay;
 cvar_t *sv_maxclients;
@@ -149,6 +151,8 @@ void InitGame(void)
 	sv_enablemorale = gi.cvar("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
 	maxspectators = gi.cvar("maxspectators", "8", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	maxentities = gi.cvar("maxentities", "1024", CVAR_LATCH, NULL);
+
+	sv_maxteams = gi.cvar("sv_maxteams", "2", CVAR_SERVERINFO, "How many teams for current running map");
 
 	/* change anytime vars */
 	password = gi.cvar("password", "", CVAR_USERINFO, NULL);
@@ -266,6 +270,7 @@ game_export_t *GetGameAPI(game_import_t * import)
 	globals.ClientAction = G_ClientAction;
 	globals.ClientEndRound = G_ClientEndRound;
 	globals.ClientTeamInfo = G_ClientTeamInfo;
+	globals.ClientGetTeamNum = G_ClientGetTeamNum;
 
 	globals.RunFrame = G_RunFrame;
 

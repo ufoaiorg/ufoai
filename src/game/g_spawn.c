@@ -117,7 +117,6 @@ static field_t fields[] = {
 	{"origin", offsetof(edict_t, origin), F_VECTOR, 0},
 	{"angles", offsetof(edict_t, angles), F_VECTOR, 0},
 	{"angle", offsetof(edict_t, angle), F_FLOAT, 0},
-	{"maxteams", offsetof(spawn_temp_t, maxteams), F_INT, 0},
 
 	/*need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves */
 	{"gravity", offsetof(spawn_temp_t, gravity), F_LSTRING, FFL_SPAWNTEMP},
@@ -126,6 +125,7 @@ static field_t fields[] = {
 	{"minpitch", offsetof(spawn_temp_t, minpitch), F_FLOAT, FFL_SPAWNTEMP},
 	{"maxpitch", offsetof(spawn_temp_t, maxpitch), F_FLOAT, FFL_SPAWNTEMP},
 	{"nextmap", offsetof(spawn_temp_t, nextmap), F_LSTRING, FFL_SPAWNTEMP},
+	{"maxteams", offsetof(spawn_temp_t, maxteams), F_INT, FFL_SPAWNTEMP},
 
 	{0, 0, 0, 0}
 };
@@ -348,7 +348,7 @@ void SpawnEntities(char *mapname, char *entities)
 #ifdef DEBUG
 	} else {
 		Com_Printf("No alien spawn points in this map or aliens are deactivated for multiplayer\n");
-		Com_Printf("sv_maxclients %.0f, ai_numactors: %.0f, alien spawnpoints: %i)\n", sv_maxclients->value, ai_numactors->value, level.num_spawnpoints[TEAM_ALIEN]);
+		Com_Printf("(sv_maxclients %.0f, ai_numactors: %.0f, alien spawnpoints: %i)\n", sv_maxclients->value, ai_numactors->value, level.num_spawnpoints[TEAM_ALIEN]);
 #endif
 	}
 }

@@ -953,6 +953,7 @@ typedef enum {
 	MAX_MENUTEXTS
 } texts_t;
 
+void CL_SpawnSoldiers (void);
 qboolean MN_CursorOnMenu(int x, int y);
 void MN_Click(int x, int y);
 void MN_RightClick(int x, int y);

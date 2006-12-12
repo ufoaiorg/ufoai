@@ -112,6 +112,8 @@ client_state_t cl;
 
 centity_t cl_entities[MAX_EDICTS];
 
+static qboolean soldiersSpawned = qfalse;
+
 /*====================================================================== */
 
 /**
@@ -613,8 +615,52 @@ static void CL_ParseStatusMessage(void)
 	menuText[TEXT_LIST] = serverText;
 }
 
-static char serverInfoText[MAX_MESSAGE_TEXT];
+static char teamInfoText[MAX_MESSAGE_TEXT];
+/**
+ * @brief Team selection text
+ *
+ * This function fills the multiplayer_selectteam menu with content
+ * @sa Netchan_OutOfBandPrint
+ * @sa SV_TeamInfoString
+ */
+static void CL_ParseTeamInfoMessage (void)
+{
+	char *s = MSG_ReadString(&net_message);
+	char *var = NULL;
+	char *value = NULL;
+	int teamCount[MAX_TEAMS];
 
+	if (!s)
+		return;
+
+	Com_Printf("CL_ParseTeamInfoMessage: %s\n", s);
+	value = s;
+	var = strstr(value, "\n");
+	*var++ = '\0';
+
+	Cvar_Set("mn_teamplay", value);
+
+	value = var;
+	var = strstr(var, "\n");
+	*var++ = '\0';
+	Cvar_Set("mn_maxteams", value);
+
+	s = var;
+	while (s != NULL) {
+		value = strstr(s, "\n");
+		if (value)
+			*value++ = '\0';
+		Q_strcat(teamInfoText, s, sizeof(teamInfoText));
+		/* get teamnum */
+		var = strstr(s, " ");
+
+		s = value;
+	};
+
+	menuText[TEXT_STANDARD] = teamInfoText;
+}
+
+static char serverInfoText[MAX_MESSAGE_TEXT];
 /**
  * @brief Serverbrowser text
  *
@@ -668,6 +714,8 @@ static void CL_ParseServerInfoMessage(void)
 			Q_strcat(serverInfoText, va(_("Teamplay:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxplayers", 10))
 			Q_strcat(serverInfoText, va(_("Max. players per team:\t%s\n"), value), sizeof(serverInfoText));
+		else if (!Q_strncmp(var, "sv_maxteams", 11))
+			Q_strcat(serverInfoText, va(_("Max. teams allowed in this map:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxclients", 10))
 			Q_strcat(serverInfoText, va(_("Max. clients:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxsoldiersperplayer", 20))
@@ -821,7 +869,7 @@ void CL_ServerInfo_f (void)
 /**
  * @brief
  */
-void CL_ServerListClick_f(void)
+void CL_ServerListClick_f (void)
 {
 	int num;
 
@@ -839,9 +887,21 @@ void CL_ServerListClick_f(void)
 }
 
 /**
+ * @brief
+ */
+void CL_SelectTeam_Init_f (void)
+{
+	netadr_t adr;
+	if (!NET_StringToAdr(cls.servername, &adr))
+		return;
+
+	Netchan_OutOfBandPrint(NS_CLIENT, adr, "teaminfo %i", PROTOCOL_VERSION);
+}
+
+/**
  * @brief The first function called when entering the multiplayer menu, then CL_Frame takes over
  */
-void CL_PingServers_f(void)
+void CL_PingServers_f (void)
 {
 	netadr_t adr;
 	cvar_t *noudp;
@@ -875,7 +935,7 @@ void CL_PingServers_f(void)
 /**
  * @brief Responses to broadcasts, etc
  */
-void CL_ConnectionlessPacket(void)
+void CL_ConnectionlessPacket (void)
 {
 	char *s;
 	char *c;
@@ -922,9 +982,16 @@ void CL_ConnectionlessPacket(void)
 		Cbuf_AddText("\n");
 		return;
 	}
+
 	/* print command from somewhere */
 	if (!Q_strncmp(c, "print", 5)) {
 		CL_ParseServerInfoMessage();
+		return;
+	}
+
+	/* teaminfo command */
+	if (!Q_strncmp(c, "teaminfo", 8)) {
+		CL_ParseTeamInfoMessage();
 		return;
 	}
 
@@ -1033,9 +1100,48 @@ void CL_Snd_Restart_f(void)
 }
 
 /**
+ * @brief Increase or decrease the teamnum
+ */
+void CL_TeamNum_f (void)
+{
+	int max = 4;
+	int teamnum = 0;
+
+	teamnum = (int)Cvar_VariableValue("mn_maxteams");
+	if (teamnum > 0)
+		max = teamnum;
+
+	if (Cmd_Argv(0) == "teamnum_dec")
+		Cbuf_AddText(va("mn_modify teamnum -1 1 %i;", max))
+	else
+		Cbuf_AddText(va("mn_modify teamnum +1 1 %i;", max))
+}
+
+/**
+ * @brief Send the clc_teaminfo command to server
+ * @sa CL_SendCurTeamInfo
+ */
+void CL_SpawnSoldiers_f (void)
+{
+	if (soldiersSpawned)
+		return;
+
+	/* maybe we start the map directly from commandline for testing */
+	if (baseCurrent)
+		/* send team info */
+		CL_SendCurTeamInfo(&cls.netchan.message, baseCurrent->curTeam, B_GetNumOnTeam());
+
+	/* send begin */
+	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
+	MSG_WriteString(&cls.netchan.message, va("begin %i\n", atoi(Cmd_Argv(1))));
+
+	soldiersSpawned = qtrue;
+}
+
+/**
  * @brief The server will send this command right before allowing the client into the server
  */
-void CL_Precache_f(void)
+void CL_Precache_f (void)
 {
 	/* stop sound, back to the console */
 	S_StopAllSounds();
@@ -1048,14 +1154,15 @@ void CL_Precache_f(void)
 	CL_RegisterSounds();
 	CL_PrepRefresh();
 
-	/* maybe we start the map directly from commandline for testing */
-	if ( baseCurrent )
-		/* send team info */
-		CL_SendCurTeamInfo(&cls.netchan.message, baseCurrent->curTeam, B_GetNumOnTeam());
+	soldiersSpawned = qfalse;
 
-	/* send begin */
-	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-	MSG_WriteString(&cls.netchan.message, va("begin %i\n", atoi(Cmd_Argv(1))));
+	/* for singleplayer the soldiers get spawned here */
+	if (ccs.singleplayer) {
+		CL_SpawnSoldiers_f();
+	} else {
+		/* for multiplayer we first have to select our team */
+		MN_PushMenu("multiplayer_selectteam");
+	}
 }
 
 /**
@@ -1063,7 +1170,7 @@ void CL_Precache_f(void)
  *
  * parses all *.ufos that are needed for single- and multiplayer
  */
-void CL_ParseClientData ( char *type, char *name, char **text )
+void CL_ParseClientData (char *type, char *name, char **text)
 {
 	if (!Q_strncmp(type, "shader", 6))
 		CL_ParseShaders(name, text);
@@ -1313,6 +1420,10 @@ void CL_InitLocal(void)
 	Cmd_AddCommand("setenv", CL_Setenv_f, NULL);
 
 	Cmd_AddCommand("precache", CL_Precache_f, "Function that is called at mapload to precache map data");
+	Cmd_AddCommand("selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
+	Cmd_AddCommand("spawnsoldiers", CL_SpawnSoldiers_f, "Spawns the soldiers for the selected teamnum");
+	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the prefered teamnum");
+	Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the prefered teamnum");
 
 	Cmd_AddCommand("seq_click", CL_SequenceClick_f, NULL);
 	Cmd_AddCommand("seq_start", CL_SequenceStart_f, NULL);

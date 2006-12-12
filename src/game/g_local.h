@@ -169,6 +169,8 @@ extern cvar_t *maxsoldiersperplayer;
 extern cvar_t *sv_enablemorale;
 extern cvar_t *maxspectators;
 
+extern cvar_t *sv_maxteams;
+
 extern cvar_t *sv_ai;
 extern cvar_t *sv_teamplay;
 
@@ -282,6 +284,7 @@ void G_ActorDie(edict_t * ent, int state);
 void G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player, qboolean quiet);
 void G_ClientTeamInfo(player_t * player);
+int G_ClientGetTeamNum(player_t * player);
 
 void G_ClientCommand(player_t * player);
 void G_ClientUserinfoChanged(player_t * player, char *userinfo);

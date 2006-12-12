@@ -1678,17 +1678,19 @@ void G_GetTeam(player_t * player)
 	if (sv_maxclients->value == 1)
 		player->pers.team = TEAM_PHALANX;
 	else if (atoi(Info_ValueForKey(player->pers.userinfo, "spectator"))) {
-		/* TODO: spectors get an in game menu to select the team */
+		/* TODO: spectors get in a game menu to select the team */
 		player->pers.spectator = qtrue;
 	} else if (sv_teamplay->value) {
 		/* set the team specified in the userinfo */
 		gi.dprintf("Get a team for teamplay\n");
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
 		/* civilians are at team zero */
-		if (i > 0 /* FIXME: Check level maxteams value */)
+		if (i > 0 && (int)sv_maxteams->value >= i)
 			player->pers.team = i;
-		else
+		else {
+			gi.dprintf("Team %i is not valid - choose a team between 1 and %i\n", i, (int)sv_maxteams->value);
 			player->pers.team = DEFAULT_TEAMNUM;
+		}
 	} else {
 		/* search team */
 		/* FIXME: */
@@ -1728,10 +1730,19 @@ void G_GetTeam(player_t * player)
 
 /**
  * @brief
+ */
+int G_ClientGetTeamNum (player_t * player)
+{
+	assert(player);
+	return player->pers.team;
+}
+
+/**
+ * @brief
  * @sa CL_SendTeamInfo
  * @TODO: Check size (fieldSize here)
  */
-void G_ClientTeamInfo(player_t * player)
+void G_ClientTeamInfo (player_t * player)
 {
 	edict_t *ent;
 	int i, j, k, length;

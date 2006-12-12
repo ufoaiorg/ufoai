@@ -1399,9 +1399,9 @@ void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 
 /**
  * @brief Stores the curTteam info to buffer (which might be a network buffer, too)
- * see G_ClientTeamInfo
+ * @sa G_ClientTeamInfo
  *
- * Called in cl_main.c CL_Precache_f to send the team info to server
+ * @note Called in cl_main.c CL_Precache_f to send the team info to server
  */
 void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
 {
