@@ -1332,3 +1332,120 @@ menu mp_create_server
 		cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
 	}
 }
+
+// ==========================
+// MULTIPLAYER TEAM SELECTION
+// ==========================
+menu multiplayer_selectteam
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis	true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/multiplayer_teamsel
+		pos	"256 128"
+	}
+
+	string maxteams
+	{
+		font	f_small
+		color	"1 1 1 1"
+		string	"_Max. teams for this map"
+		pos	"208 230"
+		align	uc
+	}
+
+	string teamselection
+	{
+		font	f_big
+		color	"1 1 1 1"
+		string	"_Team selection"
+		pos	"512 156"
+		align	uc
+	}
+
+	string maxteams
+	{
+		font	f_small
+		color	"0 0.5 0 1"
+		string	"*cvar mn_maxteams"
+		pos	"358 230"
+		align	uc
+	}
+
+	string teamplay
+	{
+		font	f_small
+		color	"0 0.5 0 1"
+		string	"_Teamplay"
+		pos	"208 230"
+		align	uc
+	}
+
+	string teamplay
+	{
+		font	f_small
+		color	"0 0.5 0 1"
+		string	"*cvar mn_teamplay"
+		pos	"358 230"
+		align	uc
+	}
+
+	text team_info
+	{
+		pos	"280 200"
+		size	"462 360"
+		format	"16 60"
+//		bgcolor "1 1 1 0.5"
+		num	0
+	}
+
+	string teamnum_str
+	{
+		string	"_Team preference:"
+		pos	"400 600"
+	}
+	string teamnum_value
+	{
+		string	"*cvar teamnum"
+		pos	"550 600"
+		align	ur
+	}
+	pic teamnum_dec
+	{
+		image	menu/buttons_small
+		pos	"568 602"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "teamnum_dec;" }
+	}
+	pic teamnum_inc
+	{
+		image	menu/buttons_small
+		pos	"584 602"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "teamnum_inc;" }
+	}
+
+	// ===================
+	// INIT
+	// ===================
+	func init
+	{
+		cmd "selectteam_init;"
+	}
+}
