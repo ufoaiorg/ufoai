@@ -46,8 +46,7 @@ static int lastofs;
 
 /**
  * @brief
- * @param
- * @sa
+ * @sa CL_Frame
  */
 void CL_RunLightStyles (void)
 {
@@ -76,8 +75,9 @@ void CL_RunLightStyles (void)
 
 /**
  * @brief
- * @param
- * @sa
+ * @param[in] i Which lightstyle in configstrings array
+ * @note Bounds for i are already checked
+ * @sa CL_ParseConfigString
  */
 void CL_SetLightstyle (int i)
 {
@@ -92,28 +92,27 @@ void CL_SetLightstyle (int i)
 
 	cl_lightstyle[i].length = j;
 
-	for (k=0 ; k<j ; k++)
+	for (k = 0; k < j; k++)
 		cl_lightstyle[i].map[k] = (float)(s[k]-'a')/(float)('m'-'a');
 }
 
 /**
  * @brief
- * @param
- * @sa
+ * @sa V_AddLightStyle
+ * @sa V_RenderView
  */
 void CL_AddLightStyles (void)
 {
 	int		i;
 	clightstyle_t	*ls;
 
-	for (i=0,ls=cl_lightstyle ; i<MAX_LIGHTSTYLES ; i++, ls++)
+	for (i = 0, ls = cl_lightstyle; i < MAX_LIGHTSTYLES; i++, ls++)
 		V_AddLightStyle (i, ls->value[0], ls->value[1], ls->value[2]);
 }
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief Clear all lightstyles
+ * @sa CL_ClearState
  */
 void CL_ClearEffects (void)
 {

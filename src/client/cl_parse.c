@@ -294,7 +294,7 @@ void CL_ParseServerData (void)
 
 	if (cl.pnum >= 0) {
 		/* seperate the printfs so the server message can have a color */
-		Com_Printf ("%c%s\n", 2, str);
+/*		Com_Printf ("%c%s\n", 2, str);*/
 		/* need to prep refresh at next oportunity */
 		cl.refresh_prepped = qfalse;
 	}
@@ -743,7 +743,7 @@ void CL_ActorStateChange( sizebuf_t *sb )
 	}
 
 	/* if standing up or crouching down, set this le as the last moving */
-	if ( (state & STATE_CROUCHED && !(le->state & STATE_CROUCHED)) || 
+	if ( (state & STATE_CROUCHED && !(le->state & STATE_CROUCHED)) ||
 		 (!(state & STATE_CROUCHED) && le->state & STATE_CROUCHED) )
 		CL_SetLastMoving(le);
 
@@ -1264,6 +1264,7 @@ void SHOWNET(char *s)
 
 /**
  * @brief
+ * @sa CL_ReadPackets
  */
 void CL_ParseServerMessage (void)
 {

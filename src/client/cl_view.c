@@ -65,8 +65,7 @@ static vec4_t map_fogColor;
 
 /**
  * @brief
- * @param
- * @sa
+ * @sa V_RenderView
  */
 void V_ClearScene(void)
 {
@@ -78,7 +77,6 @@ void V_ClearScene(void)
 
 /**
  * @brief
- * @param
  * @sa
  */
 entity_t *V_GetEntity(void)
@@ -89,7 +87,7 @@ entity_t *V_GetEntity(void)
 
 /**
  * @brief
- * @param
+ * @param[in] ent
  * @sa
  */
 void V_AddEntity(entity_t * ent)
@@ -124,7 +122,7 @@ void V_AddLight(vec3_t org, float intensity, float r, float g, float b)
 /**
  * @brief
  * @param
- * @sa
+ * @sa CL_AddLightStyles
  */
 void V_AddLightStyle(int style, float r, float g, float b)
 {
