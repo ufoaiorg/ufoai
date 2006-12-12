@@ -935,6 +935,7 @@ void CL_SelectTeam_Init_f (void)
 		return;
 
 	Netchan_OutOfBandPrint(NS_CLIENT, adr, "teaminfo %i", PROTOCOL_VERSION);
+	menuText[TEXT_STANDARD] = _("Select a team");
 	menuText[TEXT_LIST] = NULL;
 }
 
@@ -1157,17 +1158,23 @@ void CL_TeamNum_f (void)
 	if (maxteamnum > 0)
 		max = maxteamnum;
 
+	teamnum->modified = qfalse;
+
 	if (i <= TEAM_CIVILIAN || i > teamData.maxteams) {
 		Cvar_Set("teamnum", "DEFAULT_TEAMNUM");
 		i = DEFAULT_TEAMNUM;
 	}
 
-	if (Cmd_Argv(0) == "teamnum_dec") {
+	if (Q_strncmp(Cmd_Argv(0), "teamnum_dec", 11)) {
 		for (i--; i > TEAM_CIVILIAN; i--) {
 			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
 				Cvar_SetValue("teamnum", i);
 				break;
 			}
+#if 0
+			else
+				Com_Printf("team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
+#endif
 		}
 	} else {
 		for (i++; i <= teamData.maxteams; i++) {
@@ -1175,8 +1182,15 @@ void CL_TeamNum_f (void)
 				Cvar_SetValue("teamnum", i);
 				break;
 			}
+#if 0
+			else
+				Com_Printf("team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
+#endif
 		}
 	}
+
+	if (!teamnum->modified)
+		menuText[TEXT_STANDARD] = _("Invalid team");
 }
 
 static int spawnCountFromServer = -1;
@@ -1186,8 +1200,17 @@ static int spawnCountFromServer = -1;
  */
 void CL_SpawnSoldiers_f (void)
 {
+	int n = (int)teamnum->value;
+
 	if (soldiersSpawned)
 		return;
+
+	if (!ccs.singleplayer && baseCurrent) {
+		if (n <= TEAM_CIVILIAN || teamData.maxplayersperteam <= teamData.teamCount[n]) {
+			menuText[TEXT_STANDARD] = _("Invalid team");
+			return;
+		}
+	}
 
 	/* maybe we start the map directly from commandline for testing */
 	if (baseCurrent)
