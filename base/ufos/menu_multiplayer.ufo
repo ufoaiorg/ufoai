@@ -1441,6 +1441,16 @@ menu multiplayer_selectteam
 		click	{ cmd "teamnum_inc;" }
 	}
 
+	pic button_exit
+	{
+		image	hud/buttons2
+		mousefx true
+		pos		"684 594"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd "spawnsoldiers;" }
+	}
+
 	// ===================
 	// INIT
 	// ===================
