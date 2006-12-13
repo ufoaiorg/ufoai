@@ -1456,7 +1456,6 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 	}
 }
 
-
 /**
  * @brief Kills actor.
  * @param[in] sb
@@ -1471,13 +1470,14 @@ void CL_ActorDie(sizebuf_t * sb)
 
 	/* get le */
 	le = LE_Get(number);
-	if ( !le || (le->type != ET_ACTOR && le->type != ET_UGV) ) {
-		Com_Printf("Can't kill, LE doesn't exist or is not an actor\n");
+	if ( !le ) { /* this will usually happen if CL_EntPerish has been called on the le */
+		Com_DPrintf("CL_ActorDie: Can't kill, LE doesn't exist or is hidden from client\n");
 		return;
-	}
-
-	if (le->state & STATE_DEAD) {
-		Com_Printf( "Can't kill, actor already dead\n" );
+	} else if ( le->type != ET_UGV && le->type != ET_ACTOR ) {
+		Com_Printf("CL_ActorDie: Can't kill, LE is not an actor\n");
+		return;
+	} else if (le->state & STATE_DEAD) {
+		Com_Printf("CL_ActorDie: Can't kill, actor already dead\n");
 		return;
 	}
 
@@ -1522,10 +1522,10 @@ void CL_ActorDie(sizebuf_t * sb)
 	VectorCopy(player_dead_maxs, le->maxs);
 	CL_RemoveActorFromTeamList(le);
 
-	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
-	if (selActor)
+	if (selActor) {
+		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
 		CL_ResetActorMoveLength();
-
+	}
 }
 
 
