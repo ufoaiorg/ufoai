@@ -401,7 +401,7 @@ qboolean VID_GetModeInfo( int *width, int *height, int mode )
 /**
  * @brief
  */
-void VID_UpdateWindowPosAndSize( int x, int y )
+static void VID_UpdateWindowPosAndSize( int x, int y )
 {
 	RECT r;
 	int		style;
