@@ -1166,7 +1166,7 @@ void CL_TeamNum_f (void)
 	teamnum->modified = qfalse;
 
 	if (i <= TEAM_CIVILIAN || i > teamData.maxteams) {
-		Cvar_Set("teamnum", "DEFAULT_TEAMNUM");
+		Cvar_SetValue("teamnum", DEFAULT_TEAMNUM);
 		i = DEFAULT_TEAMNUM;
 	}
 
