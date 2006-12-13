@@ -526,7 +526,7 @@ void CL_EntAppear( sizebuf_t *sb )
 
 
 /**
- * @brief Called whenever an entity dies
+ * @brief Called whenever an entity disappears from view
  */
 void CL_EntPerish( sizebuf_t *sb )
 {
@@ -557,21 +557,15 @@ void CL_EntPerish( sizebuf_t *sb )
 			if ( actor->inuse
 				 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
 				 && VectorCompare(actor->pos, le->pos) ) {
-				Com_DPrintf("CL_EntPerish: le of type ET_ITEM destroyed.");
+				Com_DPrintf("CL_EntPerish: le of type ET_ITEM hidden\n");
 				FLOOR(actor) = NULL;
 			}
 	} else {
 		Com_DestroyInventory(&le->i);
 	}
 
-	/* FIXME: Check whether this call is needed */
-	/* the actor die event should handle this already - doesn't it? */
-#if 0
-	if ( le->type == ET_ACTOR || le->type == ET_UGV )
-		CL_RemoveActorFromTeamList( le );
-#endif
-
-	le->inuse = qfalse;
+	if ( !( le->team && le->state && le->team == cls.team && !(le->state & STATE_DEAD) ) )
+		le->inuse = qfalse;
 
 /*	le->startTime = cl.time; */
 /*	le->think = LET_Perish; */
@@ -1051,14 +1045,15 @@ void CL_ParseEvent( void )
 			if ( impactTime < cl.eventTime )
 				impactTime = cl.eventTime;
 
-			if ( eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE ) {
-				time = impactTime;
+			if (eType == EV_ACTOR_DIE)
 				parsedDeath = qtrue;
-			} else if ( eType == EV_ACTOR_SHOOT || eType == EV_ACTOR_SHOOT_HIDDEN ) {
+
+			if ( eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE )
+				time = impactTime;
+			else if ( eType == EV_ACTOR_SHOOT || eType == EV_ACTOR_SHOOT_HIDDEN )
 				time = shootTime;
-			} else {
+			else
 				time = nextTime;
-			}
 
 			if ((eType == EV_ENT_APPEAR || eType == EV_INV_ADD)) {
 				if (parsedDeath) { /* drop items after death (caused by impact) */
@@ -1067,7 +1062,6 @@ void CL_ParseEvent( void )
 					if (eType == EV_INV_ADD)
 						parsedDeath = qfalse;
 				} else if (impactTime > cl.eventTime) { /* item thrown on the ground */
-					Com_Printf("Drop item from throw: eType %i\n", eType);
 					time = impactTime + 75;
 				}
 			}
