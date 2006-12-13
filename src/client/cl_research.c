@@ -1394,10 +1394,15 @@ void RS_ParseTechnologies(char *id, char **text)
 					if (*token == '}')
 						break;
 
-					if (!Q_strcmp(token, "tech")) {
+					if ( (!Q_strcmp(token, "tech")) ||  (!Q_strcmp(token, "weapon")) ) {
 						if (required_temp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
-							required_temp->type[required_temp->numLinks] = RS_LINK_TECH;
+							if (!Q_strcmp(token, "tech")) {
+								required_temp->type[required_temp->numLinks] = RS_LINK_TECH;
+							} else {	/* weapon */
+								/* Ammo only: Defines what weapon can use this ammo. */
+								required_temp->type[required_temp->numLinks] = RS_LINK_WEAPON;
+							}
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
 							Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
@@ -1407,6 +1412,7 @@ void RS_ParseTechnologies(char *id, char **text)
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
 						}
 					} else if (!Q_strcmp(token, "item")) {
+						/* Defines what items need to be collected for this item to be researchable. */
 						if (required_temp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
 							required_temp->type[required_temp->numLinks] = RS_LINK_ITEM;

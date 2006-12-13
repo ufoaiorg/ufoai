@@ -58,6 +58,7 @@ typedef enum requirementType_s {
 	RS_LINK_TECH,
 	RS_LINK_ITEM,
 	RS_LINK_EVENT,
+	RS_LINK_WEAPON,	/* Ammo only: What weapons can use this ammo. */
 	MAX_RS_LINKTYPES
 } requirementType_t;
 
