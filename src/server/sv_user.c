@@ -156,6 +156,7 @@ static void SV_Configstrings_f(void)
 
 /**
  * @brief
+ * @sa SV_Spawn_f
  */
 static void SV_Begin_f(void)
 {
@@ -168,10 +169,24 @@ static void SV_Begin_f(void)
 		return;
 	}
 
-	sv_client->state = cs_spawned;
-
 	/* call the game begin function */
 	ge->ClientBegin(sv_player);
+
+	Cbuf_InsertFromDefer();
+}
+
+/**
+ * @brief
+ * @sa SV_Begin_f
+ */
+static void SV_Spawn_f(void)
+{
+	Com_DPrintf("Spawn() from %s\n", sv_client->name);
+
+	/* call the game begin function */
+	ge->ClientSpawn(sv_player);
+
+	sv_client->state = cs_spawned;
 
 	Cbuf_InsertFromDefer();
 }
@@ -249,6 +264,7 @@ static ucmd_t ucmds[] = {
 	{"new", SV_New_f},
 	{"configstrings", SV_Configstrings_f},
 	{"begin", SV_Begin_f},
+	{"spawn", SV_Spawn_f},
 
 	{"nextserver", SV_Nextserver_f},
 

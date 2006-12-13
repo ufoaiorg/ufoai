@@ -480,9 +480,10 @@ void CL_StartGame( sizebuf_t *sb )
 	/* activate the renderer */
 	cls.state = ca_active;
 
-	/* activate hud */
-	MN_PushMenu(mn_hud->string);
-	Cvar_Set("mn_active", mn_hud->string);
+	if (!ccs.singleplayer) {
+		MN_PushMenu("multiplayer_selectteam");
+		Cvar_Set("mn_active", "multiplayer_selectteam");
+	}
 }
 
 

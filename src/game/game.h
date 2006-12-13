@@ -245,6 +245,7 @@ typedef struct {
 
 	qboolean(*ClientConnect) (player_t * client, char *userinfo);
 	void (*ClientBegin) (player_t * client);
+	void (*ClientSpawn) (player_t * client);
 	void (*ClientUserinfoChanged) (player_t * client, char *userinfo);
 	void (*ClientDisconnect) (player_t * client);
 	void (*ClientCommand) (player_t * client);

@@ -266,6 +266,7 @@ game_export_t *GetGameAPI(game_import_t * import)
 	globals.ClientUserinfoChanged = G_ClientUserinfoChanged;
 	globals.ClientDisconnect = G_ClientDisconnect;
 	globals.ClientBegin = G_ClientBegin;
+	globals.ClientSpawn = G_ClientSpawn;
 	globals.ClientCommand = G_ClientCommand;
 	globals.ClientAction = G_ClientAction;
 	globals.ClientEndRound = G_ClientEndRound;

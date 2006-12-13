@@ -1967,11 +1967,11 @@ void G_ClientEndRound(player_t * player, qboolean quiet)
 			p->ready = qfalse;
 }
 
-
 /**
- * @brief
+ * @brief This functions starts the client
+ * @sa G_ClientSpawn
  */
-void G_ClientBegin(player_t * player)
+void G_ClientBegin(player_t* player)
 {
 	/* this doesn't belong here, but it works */
 	if (!level.routed) {
@@ -1979,6 +1979,28 @@ void G_ClientBegin(player_t * player)
 		G_CompleteRecalcRouting();
 	}
 
+	level.numplayers++;
+
+	/* spawn camera (starts client rendering) */
+	gi.AddEvent(P_MASK(player), EV_START | INSTANTLY);
+
+	/* send events */
+	gi.EndEvents();
+
+	/* inform all clients */
+	gi.bprintf(PRINT_HIGH, "%s has joined\n", player->pers.netname);
+}
+
+
+/**
+ * @brief Sets the team, init the TU and sends the player stats
+ * @sa G_SendPlayerStats
+ * @sa G_GetTeam
+ * @sa G_GiveTimeUnits
+ * @sa G_ClientBegin
+ */
+void G_ClientSpawn(player_t * player)
+{
 	/* get a team */
 	G_GetTeam(player);
 
@@ -1987,8 +2009,6 @@ void G_ClientBegin(player_t * player)
 		level.activeTeam = player->pers.team;
 		turnTeam = level.activeTeam;
 	}
-
-	level.numplayers++;
 
 	/* do all the init events here... */
 	/* reset the data */
@@ -2003,9 +2023,6 @@ void G_ClientBegin(player_t * player)
 
 	/* give time units */
 	G_GiveTimeUnits(player->pers.team);
-
-	/* spawn camera (starts client rendering) */
-	gi.AddEvent(P_MASK(player), EV_START);
 
 	/* send events */
 	gi.EndEvents();

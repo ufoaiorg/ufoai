@@ -934,6 +934,7 @@ void CL_ServerListClick_f (void)
 void CL_SelectTeam_Init_f (void)
 {
 	netadr_t adr;
+
 	if (!NET_StringToAdr(cls.servername, &adr))
 		return;
 
@@ -1230,11 +1231,15 @@ void CL_SpawnSoldiers_f (void)
 		/* send team info */
 		CL_SendCurTeamInfo(&cls.netchan.message, baseCurrent->curTeam, B_GetNumOnTeam());
 
-	/* send begin */
+	/* send spawn */
 	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-	MSG_WriteString(&cls.netchan.message, va("begin %i\n", spawnCountFromServer));
+	MSG_WriteString(&cls.netchan.message, va("spawn %i\n", spawnCountFromServer));
 
 	soldiersSpawned = qtrue;
+
+	/* activate hud */
+	MN_PushMenu(mn_hud->string);
+	Cvar_Set("mn_active", mn_hud->string);
 }
 
 /**
@@ -1256,13 +1261,13 @@ void CL_Precache_f (void)
 	soldiersSpawned = qfalse;
 	spawnCountFromServer = atoi(Cmd_Argv(1));
 
+	/* send begin */
+	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
+	MSG_WriteString(&cls.netchan.message, va("begin %i\n", spawnCountFromServer));
+
 	/* for singleplayer the soldiers get spawned here */
-	if (ccs.singleplayer || !baseCurrent) {
+	if (ccs.singleplayer || !baseCurrent)
 		CL_SpawnSoldiers_f();
-	} else {
-		/* for multiplayer we first have to select our team */
-		MN_PushMenu("multiplayer_selectteam");
-	}
 }
 
 /**
