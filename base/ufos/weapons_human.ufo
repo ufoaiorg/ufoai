@@ -75,6 +75,7 @@ item assault_ammo
 
 // =======================
 // CHAINGUN
+// (should be multiplayer only)
 // =======================
 item chaingun
 {
@@ -573,6 +574,7 @@ item shotgun2_slug_ammo
 
 // =======================
 // SHOTGUN
+// (should be multiplayer only)
 // =======================
 item shotgun
 {
@@ -671,7 +673,7 @@ item shotgun_micro
 
 item shotgun_micro_ammo
 {
-	name		"_Buckshots"
+	name		"_Flechette Shells"
 	model		weapons/shotgunmicro/shotgunmicro_clip
 	type		ammo
 	category	0
