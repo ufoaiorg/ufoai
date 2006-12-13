@@ -928,7 +928,7 @@ void CL_ServerListClick_f (void)
 }
 
 /**
- * @brief
+ * @brief Send the teaminfo string to server
  * @sa CL_ParseTeamInfoMessage
  */
 void CL_SelectTeam_Init_f (void)
@@ -1149,6 +1149,7 @@ void CL_Snd_Restart_f(void)
 
 /**
  * @brief Increase or decrease the teamnum
+ * @sa CL_SelectTeam_Init_f
  * TODO: If no team is free - change to spectator
  */
 void CL_TeamNum_f (void)
