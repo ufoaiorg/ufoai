@@ -313,11 +313,10 @@ void IN_ActivateMouse (void)
 	old_x = window_center_x;
 	old_y = window_center_y;
 
-#if 0
-	if (vid_grabmouse->value)
-#endif
-		SetCapture ( cl_hwnd );
-	ClipCursor (&window_rect);
+	if (vid_grabmouse->value) {
+		SetCapture (cl_hwnd);
+		ClipCursor (&window_rect);
+	}
 	while (ShowCursor (FALSE) >= 0);
 }
 
@@ -337,11 +336,10 @@ void IN_DeactivateMouse (void)
 
 	mouseactive = qfalse;
 
-	ClipCursor (NULL);
-#if 0
-	if (vid_grabmouse->value)
-#endif
+	if (vid_grabmouse->value) {
+		ClipCursor (NULL);
 		ReleaseCapture ();
+	}
 	while (ShowCursor (TRUE) < 0);
 }
 
@@ -373,12 +371,22 @@ void IN_MouseEvent (int mstate)
 		return;
 
 	/* perform button actions */
-	for (i=0 ; i<mouse_buttons ; i++) {
+	for (i = 0; i < mouse_buttons; i++) {
 		if ( (mstate & (1<<i)) && !(mouse_oldbuttonstate & (1<<i)) )
 			Key_Event (K_MOUSE1 + i, qtrue, sys_msg_time);
 
 		if ( !(mstate & (1<<i)) && (mouse_oldbuttonstate & (1<<i)) )
 				Key_Event (K_MOUSE1 + i, qfalse, sys_msg_time);
+	}
+
+	if (vid_grabmouse->modified) {
+		if (!vid_grabmouse->value) {
+			ClipCursor (NULL);
+			ReleaseCapture ();
+		} else {
+			SetCapture (cl_hwnd);
+			ClipCursor (&window_rect);
+		}
 	}
 
 	mouse_oldbuttonstate = mstate;
