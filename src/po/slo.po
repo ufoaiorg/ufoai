@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-12 07:35+0100\n"
+"POT-Creation-Date: 2006-12-13 18:55+0100\n"
 "PO-Revision-Date: 2006-10-24 13:25+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: inzenir <simon.cedula@guest.arnes.si>\n"
@@ -1186,7 +1186,7 @@ msgstr "Novo"
 msgid "Generate a team automatically"
 msgstr "Ustvari novo ekipo"
 
-#: ../base/ufos/menu_multiplayer.ufo:349 ../base/ufos/weapons_human.ufo:130
+#: ../base/ufos/menu_multiplayer.ufo:349 ../base/ufos/weapons_human.ufo:131
 msgid "Auto"
 msgstr "Samodejno "
 
@@ -1216,6 +1216,7 @@ msgstr "Internet"
 
 #: ../base/ufos/menu_multiplayer.ufo:610 ../base/ufos/menu_multiplayer.ufo:794
 #: ../base/ufos/menu_multiplayer.ufo:1065
+#: ../base/ufos/menu_multiplayer.ufo:1433
 msgid "Team preference:"
 msgstr "Željena ekipa"
 
@@ -1303,6 +1304,34 @@ msgstr "Zemljevid:"
 #: ../base/ufos/menu_multiplayer.ufo:1316
 msgid "Start server"
 msgstr "Zaženi strežnik:"
+
+#: ../base/ufos/menu_multiplayer.ufo:1364
+#, fuzzy
+msgid "Team selection"
+msgstr "Nihče ni izbran\n"
+
+#: ../base/ufos/menu_multiplayer.ufo:1373
+#, fuzzy
+msgid "Teamplay"
+msgstr "Ekipno igranje:"
+
+#: ../base/ufos/menu_multiplayer.ufo:1409
+#, fuzzy
+msgid "Max. players per team"
+msgstr "Največje število igralcev v ekipi:"
+
+#: ../base/ufos/menu_multiplayer.ufo:1421
+msgid "Max. teams for this map"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:1444
+msgid "Next free team"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:1455
+#, fuzzy
+msgid "Previous free team"
+msgstr "Prejšnji vnos"
 
 #: ../base/ufos/menu_multiplayeringame.ufo:109
 #, fuzzy
@@ -3405,191 +3434,191 @@ msgstr "Jurišna puška"
 msgid "Assault Rifle Magazine"
 msgstr "Nabojnik jurišne puške"
 
-#: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:404
+#: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:405
 #, fuzzy
 msgid "Snap Burst"
 msgstr "Rafal"
 
-#: ../base/ufos/weapons_human.ufo:56 ../base/ufos/weapons_human.ufo:423
+#: ../base/ufos/weapons_human.ufo:56 ../base/ufos/weapons_human.ufo:424
 #, fuzzy
 msgid "Aimed Burst"
 msgstr "Naciljan strel"
 
-#: ../base/ufos/weapons_human.ufo:81
+#: ../base/ufos/weapons_human.ufo:82
 msgid "Chaingun"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:99
+#: ../base/ufos/weapons_human.ufo:100
 msgid "Chaingun Magazine"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:111
+#: ../base/ufos/weapons_human.ufo:112
 msgid "Burst"
 msgstr "Rafal"
 
-#: ../base/ufos/weapons_human.ufo:154
+#: ../base/ufos/weapons_human.ufo:155
 msgid "Sniper Rifle"
 msgstr "Ostrostrelska puška"
 
-#: ../base/ufos/weapons_human.ufo:172
+#: ../base/ufos/weapons_human.ufo:173
 #, fuzzy
 msgid "Sniper Rifle Magazine"
 msgstr "Nabojnik ostrostrelske puške"
 
-#: ../base/ufos/weapons_human.ufo:184 ../base/ufos/weapons_human.ufo:203
-#: ../base/ufos/weapons_human.ufo:276 ../base/ufos/weapons_human.ufo:838
-#: ../base/ufos/weapons_human.ufo:860 ../base/ufos/weapons_human.ufo:896
-#: ../base/ufos/weapons_human.ufo:918 ../base/ufos/weapons_human.ufo:955
-#: ../base/ufos/weapons_human.ufo:977
+#: ../base/ufos/weapons_human.ufo:185 ../base/ufos/weapons_human.ufo:204
+#: ../base/ufos/weapons_human.ufo:277 ../base/ufos/weapons_human.ufo:840
+#: ../base/ufos/weapons_human.ufo:862 ../base/ufos/weapons_human.ufo:898
+#: ../base/ufos/weapons_human.ufo:920 ../base/ufos/weapons_human.ufo:957
+#: ../base/ufos/weapons_human.ufo:979
 msgid "Aimed Shot"
 msgstr "Naciljan strel"
 
-#: ../base/ufos/weapons_human.ufo:228
+#: ../base/ufos/weapons_human.ufo:229
 #, fuzzy
 msgid "7.62mm Pistol"
 msgstr "9milimetrska pištola"
 
-#: ../base/ufos/weapons_human.ufo:246
+#: ../base/ufos/weapons_human.ufo:247
 #, fuzzy
 msgid "Pistol Clip 7.62mm"
 msgstr "Pištolin nabojnik"
 
-#: ../base/ufos/weapons_human.ufo:258 ../base/ufos/weapons_tachyon.ufo:36
+#: ../base/ufos/weapons_human.ufo:259 ../base/ufos/weapons_tachyon.ufo:36
 #: ../base/ufos/weapons_tachyon.ufo:184
 msgid "Snap Shot"
 msgstr "Hiter strel"
 
-#: ../base/ufos/weapons_human.ufo:301
+#: ../base/ufos/weapons_human.ufo:302
 #, fuzzy
 msgid "Machine Pistol"
 msgstr "Tahionska pištola"
 
-#: ../base/ufos/weapons_human.ufo:319
+#: ../base/ufos/weapons_human.ufo:320
 msgid "4.2mm MP Magazine"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:331 ../base/ufos/weapons_human.ufo:478
-#: ../base/ufos/weapons_human.ufo:533 ../base/ufos/weapons_human.ufo:609
-#: ../base/ufos/weapons_human.ufo:686 ../base/ufos/weapons_human.ufo:1317
+#: ../base/ufos/weapons_human.ufo:332 ../base/ufos/weapons_human.ufo:479
+#: ../base/ufos/weapons_human.ufo:534 ../base/ufos/weapons_human.ufo:611
+#: ../base/ufos/weapons_human.ufo:688 ../base/ufos/weapons_human.ufo:1319
 msgid "Single Shot"
 msgstr "En strel"
 
-#: ../base/ufos/weapons_human.ufo:349
+#: ../base/ufos/weapons_human.ufo:350
 msgid "Rapid Fire"
 msgstr "Rafalno streljanje"
 
-#: ../base/ufos/weapons_human.ufo:374
+#: ../base/ufos/weapons_human.ufo:375
 msgid "Submachine Gun"
 msgstr "Polavtomatska puška"
 
-#: ../base/ufos/weapons_human.ufo:392
+#: ../base/ufos/weapons_human.ufo:393
 msgid "SMG Magazine"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:448 ../base/ufos/weapons_human.ufo:579
+#: ../base/ufos/weapons_human.ufo:449 ../base/ufos/weapons_human.ufo:581
 #, fuzzy
 msgid "Riot Shotgun"
 msgstr "Šibrovka "
 
-#: ../base/ufos/weapons_human.ufo:466 ../base/ufos/weapons_human.ufo:674
+#: ../base/ufos/weapons_human.ufo:467
 msgid "Buckshots"
 msgstr "Šibre "
 
-#: ../base/ufos/weapons_human.ufo:499 ../base/ufos/weapons_human.ufo:554
-#: ../base/ufos/weapons_human.ufo:630 ../base/ufos/weapons_human.ufo:707
+#: ../base/ufos/weapons_human.ufo:500 ../base/ufos/weapons_human.ufo:555
+#: ../base/ufos/weapons_human.ufo:632 ../base/ufos/weapons_human.ufo:709
 msgid "Double Shot"
 msgstr "Dvojni strel"
 
-#: ../base/ufos/weapons_human.ufo:521
+#: ../base/ufos/weapons_human.ufo:522
 msgid "Saboted Slugs"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:597
+#: ../base/ufos/weapons_human.ufo:599 ../base/ufos/weapons_human.ufo:676
 #, fuzzy
 msgid "Flechette Shells"
 msgstr "Drobci eksplozivne granate"
 
-#: ../base/ufos/weapons_human.ufo:656
+#: ../base/ufos/weapons_human.ufo:658
 #, fuzzy
 msgid "Shotgun"
 msgstr "Šibrovka "
 
-#: ../base/ufos/weapons_human.ufo:732
+#: ../base/ufos/weapons_human.ufo:734
 msgid "Flamethrower"
 msgstr "Metalec ognja"
 
-#: ../base/ufos/weapons_human.ufo:750
+#: ../base/ufos/weapons_human.ufo:752
 msgid "C90 Canister"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:762
+#: ../base/ufos/weapons_human.ufo:764
 msgid "Candlelight"
 msgstr "Soj sveče"
 
-#: ../base/ufos/weapons_human.ufo:782
+#: ../base/ufos/weapons_human.ufo:784
 msgid "Inferno"
 msgstr "Pekel"
 
-#: ../base/ufos/weapons_human.ufo:808
+#: ../base/ufos/weapons_human.ufo:810
 msgid "Rocket Launcher"
 msgstr "Lanser raket"
 
-#: ../base/ufos/weapons_human.ufo:826
+#: ../base/ufos/weapons_human.ufo:828
 msgid "High-Explosive Rocket"
 msgstr "Eksplozivna raketa"
 
-#: ../base/ufos/weapons_human.ufo:884
+#: ../base/ufos/weapons_human.ufo:886
 msgid "Incendiary Rocket"
 msgstr "Zažigalna raketa"
 
-#: ../base/ufos/weapons_human.ufo:943
+#: ../base/ufos/weapons_human.ufo:945
 msgid "Tachyon-Beam Rocket"
 msgstr "Tahionska raketa"
 
-#: ../base/ufos/weapons_human.ufo:1005
+#: ../base/ufos/weapons_human.ufo:1007
 msgid "Grenade Launcher"
 msgstr "Metalec granat"
 
-#: ../base/ufos/weapons_human.ufo:1023
+#: ../base/ufos/weapons_human.ufo:1025
 #, fuzzy
 msgid "25mm IC Grenades"
 msgstr "Drobci plazemske granate"
 
-#: ../base/ufos/weapons_human.ufo:1035 ../base/ufos/weapons_human.ufo:1100
-#: ../base/ufos/weapons_human.ufo:1165 ../base/ufos/weapons_human.ufo:1230
+#: ../base/ufos/weapons_human.ufo:1037 ../base/ufos/weapons_human.ufo:1102
+#: ../base/ufos/weapons_human.ufo:1167 ../base/ufos/weapons_human.ufo:1232
 #, fuzzy
 msgid "Airburst Grenade"
 msgstr "Eksplozivna granata"
 
-#: ../base/ufos/weapons_human.ufo:1060 ../base/ufos/weapons_human.ufo:1125
-#: ../base/ufos/weapons_human.ufo:1190 ../base/ufos/weapons_human.ufo:1255
+#: ../base/ufos/weapons_human.ufo:1062 ../base/ufos/weapons_human.ufo:1127
+#: ../base/ufos/weapons_human.ufo:1192 ../base/ufos/weapons_human.ufo:1257
 #, fuzzy
 msgid "Timed Grenade"
 msgstr "Omamna granata"
 
-#: ../base/ufos/weapons_human.ufo:1088
+#: ../base/ufos/weapons_human.ufo:1090
 #, fuzzy
 msgid "25mm Flechette Grenades"
 msgstr "Drobci eksplozivne granate"
 
-#: ../base/ufos/weapons_human.ufo:1153
+#: ../base/ufos/weapons_human.ufo:1155
 #, fuzzy
 msgid "25mm HIT Grenades"
 msgstr "Drobci plazemske granate"
 
-#: ../base/ufos/weapons_human.ufo:1218
+#: ../base/ufos/weapons_human.ufo:1220
 msgid "Plasma Grenade Shells"
 msgstr "Drobci plazemske granate"
 
-#: ../base/ufos/weapons_human.ufo:1287
+#: ../base/ufos/weapons_human.ufo:1289
 msgid "Bolter Rifle"
 msgstr "Bolterica"
 
-#: ../base/ufos/weapons_human.ufo:1305
+#: ../base/ufos/weapons_human.ufo:1307
 msgid "Bolter Rifle Clip"
 msgstr "Nabojnik bolterice"
 
-#: ../base/ufos/weapons_human.ufo:1336
+#: ../base/ufos/weapons_human.ufo:1338
 msgid "Cannonade"
 msgstr "Kanonada"
 
@@ -4521,15 +4550,19 @@ msgstr "Potrdi dejanja:"
 msgid "Toggle first-person/third-person camera mode"
 msgstr ""
 
-#: client/cl_main.c:340 client/cl_main.c:698
+#: client/cl_main.c:355 client/cl_main.c:787
 msgid "Assemble a team first"
 msgstr "Najprej sestavi ekipo"
 
-#: client/cl_main.c:340 client/cl_main.c:698
+#: client/cl_main.c:355 client/cl_main.c:787
 msgid "Error"
 msgstr "Napaka"
 
-#: client/cl_main.c:638
+#: client/cl_main.c:696
+msgid "No player connected\n"
+msgstr ""
+
+#: client/cl_main.c:725
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -4538,83 +4571,106 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:660
+#: client/cl_main.c:747
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Karta:\t%s\n"
 
-#: client/cl_main.c:662
+#: client/cl_main.c:749
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Različica:\t%s\n"
 
-#: client/cl_main.c:664
+#: client/cl_main.c:751
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Ime strežnika:\t%s\n"
 
-#: client/cl_main.c:666
+#: client/cl_main.c:753
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moralna načela:\t%s\n"
 
-#: client/cl_main.c:668
+#: client/cl_main.c:755
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Ekipna igra:\t%s\n"
 
-#: client/cl_main.c:670
+#: client/cl_main.c:757
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Največje število igralcev v ekipi:\t%s\n"
 
-#: client/cl_main.c:672
+#: client/cl_main.c:759
+#, c-format
+msgid "Max. teams allowed in this map:\t%s\n"
+msgstr ""
+
+#: client/cl_main.c:761
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Največje število klientov:\t%s\n"
 
-#: client/cl_main.c:674
+#: client/cl_main.c:763
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Največje število vojakov na igralca:\t%s\n"
 
-#: client/cl_main.c:676
+#: client/cl_main.c:765
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Največje število vojakov na ekipo:\t%s\n"
 
-#: client/cl_main.c:1275
+#: client/cl_main.c:942
+msgid "Select a free team or your coop team"
+msgstr ""
+
+#: client/cl_main.c:1178 client/cl_main.c:1192
+#, fuzzy, c-format
+msgid "Current team: %i"
+msgstr "Trenutna ekipa"
+
+#: client/cl_main.c:1182 client/cl_main.c:1196
+#, fuzzy
+msgid "Team is already in use"
+msgstr "Že %i v bazi"
+
+#: client/cl_main.c:1206 client/cl_main.c:1225
+msgid "Invalid or full team"
+msgstr ""
+
+#: client/cl_main.c:1488
 #, fuzzy
 msgid "Unnamed"
 msgstr "neimenovan"
 
-#: client/cl_main.c:1494
+#: client/cl_main.c:1714
 msgid "Chicken-hearted"
 msgstr ""
 
-#: client/cl_main.c:1496
+#: client/cl_main.c:1716
 msgid "Very Easy"
 msgstr ""
 
-#: client/cl_main.c:1499
+#: client/cl_main.c:1719
 msgid "Easy"
 msgstr ""
 
-#: client/cl_main.c:1501
+#: client/cl_main.c:1721
 #, fuzzy
 msgid "Normal"
 msgstr "običajen"
 
-#: client/cl_main.c:1504
+#: client/cl_main.c:1724
 #, fuzzy
 msgid "Hard"
 msgstr "Hangar"
 
-#: client/cl_main.c:1506
+#: client/cl_main.c:1726
 msgid "Very Hard"
 msgstr ""
 
-#: client/cl_main.c:1508
+#: client/cl_main.c:1728
 #, fuzzy
 msgid "Insane"
 msgstr "neimenovan"
@@ -4712,15 +4768,15 @@ msgstr ""
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr ""
 
-#: client/cl_parse.c:685
+#: client/cl_parse.c:680
 msgid "Alien spotted!\n"
 msgstr "Nezemljan odkrit!\n"
 
-#: client/cl_parse.c:687
+#: client/cl_parse.c:682
 msgid "Enemy spotted!\n"
 msgstr "Nasprotnik odkrit!\n"
 
-#: client/cl_parse.c:689
+#: client/cl_parse.c:684
 msgid "Civilian spotted!\n"
 msgstr "Odkrit civil!\n"
 
@@ -5255,13 +5311,13 @@ msgstr "Vsebina NLPedije"
 msgid "Ufopedia Index: %s"
 msgstr "Vsebina NLPedije"
 
-#: client/cl_view.c:416 client/cl_view.c:450 client/cl_view.c:480
-#: client/cl_view.c:492
+#: client/cl_view.c:413 client/cl_view.c:447 client/cl_view.c:477
+#: client/cl_view.c:489
 #, fuzzy, c-format
 msgid "loading %s"
 msgstr "Zgradbe"
 
-#: client/cl_view.c:429
+#: client/cl_view.c:426
 msgid "loading models..."
 msgstr ""
 
