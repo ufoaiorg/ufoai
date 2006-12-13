@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern	unsigned sys_msg_time;
 
 cvar_t *in_mouse;
-
+extern cvar_t *vid_grabmouse;
 qboolean in_appactive;
 
 /*
@@ -38,6 +38,8 @@ qboolean in_appactive;
 KEYBOARD CONTROL
 ============================================================
 */
+
+#define NEWKBCODE
 
 #ifdef NEWKBCODE
 HKL		kbLayout;
@@ -104,12 +106,10 @@ int IN_MapKey (int wParam, int lParam)
 	case VK_CONTROL:
 		return K_CTRL;
 
+	case VK_LSHIFT:
+	case VK_RSHIFT:
 	case VK_SHIFT:
 		return K_SHIFT;
-	case VK_LSHIFT:
-		return K_LSHIFT;
-	case VK_RSHIFT:
-		return K_RSHIFT;
 
 	case VK_CAPITAL:
 		return K_CAPSLOCK;
@@ -161,7 +161,7 @@ int IN_MapKey (int wParam, int lParam)
 	case VK_NUMPAD4:
 		return K_KP_LEFTARROW;
 	case VK_NUMPAD5:
-		return K_KP_FIVE;
+		return K_KP_5;
 	case VK_NUMPAD6:
 		return K_KP_RIGHTARROW;
 	case VK_NUMPAD1:
@@ -235,7 +235,7 @@ int IN_MapKey (int wParam, int lParam)
 
 	/* convert ascii */
 	scanCode = (lParam >> 16) & 255;
-	if (ToAsciiEx (wParam, scanCode, kbState, (uint16 *)result, 0, kbLayout) < 1)
+	if (ToAsciiEx (wParam, scanCode, kbState, (uint16_t *)result, 0, kbLayout) < 1)
 		return modified;
 
 	return result[0];
@@ -387,6 +387,7 @@ void IN_MouseEvent (int mstate)
 			SetCapture (cl_hwnd);
 			ClipCursor (&window_rect);
 		}
+		vid_grabmouse->modified = qfalse;
 	}
 
 	mouse_oldbuttonstate = mstate;
