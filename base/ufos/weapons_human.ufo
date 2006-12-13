@@ -1021,7 +1021,7 @@ item grenl
 item grenl_incendiary_ammo
 {
 	name		"_25mm IC Grenades"
-	model		weapons/grenl/grenl_clip
+	model		weapons/grenl/grenl_ic_clip
 	type		ammo
 	category	0
 	shape		"0 0 1 1"
@@ -1086,7 +1086,7 @@ item grenl_incendiary_ammo
 item grenl_fle_ammo
 {
 	name		"_25mm Flechette Grenades"
-	model		weapons/grenl/grenl_clip
+	model		weapons/grenl/grenl_flechette_clip
 	type		ammo
 	category	0
 	shape		"0 0 1 1"
