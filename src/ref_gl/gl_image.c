@@ -261,7 +261,7 @@ void GL_TextureSolidMode(const char *string)
 }
 
 /**
- * @brief
+ * @brief Shows all loaded images
  */
 void GL_ImageList_f(void)
 {
@@ -310,7 +310,7 @@ void GL_ImageList_f(void)
 =============================================================================
 scrap allocation
 
-Allocate all the little status bar obejcts into a single texture
+Allocate all the little status bar objects into a single texture
 to crutch up inefficient hardware / drivers
 =============================================================================
 */
@@ -386,6 +386,10 @@ PCX LOADING
 
 /**
  * @brief
+ * @sa LoadTGA
+ * @sa LoadJPG
+ * @sa LoadPNG
+ * @sa GL_FindImage
  */
 static void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, int *height)
 {
@@ -502,6 +506,7 @@ void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
  * @sa LoadPCX
  * @sa LoadTGA
  * @sa LoadJPG
+ * @sa GL_FindImage
  */
 static int LoadPNG (char *name, byte **pic, int *width, int *height)
 {
@@ -599,6 +604,10 @@ static int LoadPNG (char *name, byte **pic, int *width, int *height)
 
 /**
  * @brief
+ * @sa LoadTGA
+ * @sa LoadJPG
+ * @sa LoadPCX
+ * @sa GL_FindImage
  */
 void WritePNG (FILE *f, byte *buffer, int width, int height)
 {
@@ -658,6 +667,10 @@ typedef struct _TargaHeader {
 
 /**
  * @brief
+ * @sa LoadPCX
+ * @sa LoadJPG
+ * @sa LoadPNG
+ * @sa GL_FindImage
  */
 void LoadTGA(const char *name, byte ** pic, int *width, int *height)
 {
@@ -939,6 +952,8 @@ void jpeg_mem_src(j_decompress_ptr cinfo, byte * mem, int len)
  * @brief
  * @sa LoadPCX
  * @sa LoadTGA
+ * @sa LoadPNG
+ * @sa GL_FindImage
  */
 void LoadJPG(const char *filename, byte ** pic, int *width, int *height)
 {
@@ -1132,6 +1147,7 @@ void jpegDest(j_compress_ptr cinfo, byte * outfile, int size)
 
 /**
  * @brief
+ * @sa LoadJPG
  */
 void SaveJPG(char *filename, int quality, int image_width, int image_height, unsigned char *image_buffer)
 {
@@ -1242,6 +1258,8 @@ void SaveJPG(char *filename, int quality, int image_width, int image_height, uns
 
 /**
  * @brief
+ * @sa SaveJPG
+ * @sa LoadJPG
  */
 int SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_height, byte * image_buffer)
 {
@@ -1313,6 +1331,8 @@ int SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_heigh
 /**
  * @brief
  * @sa GL_ScreenShot_f
+ * @sa SaveJPG
+ * @sa LoadJPG
  */
 void WriteJPG (FILE *f, byte *buffer, int width, int height, int quality)
 {
@@ -2122,6 +2142,10 @@ image_t *GL_FindImageForShader(const char *name)
  * @sa Draw_FindPic
  * @param pname Image name
  * @note the image name has to be at least 5 chars long
+ * @sa LoadTGA
+ * @sa LoadJPG
+ * @sa LoadPNG
+ * @sa LoadPCX
  */
 image_t *GL_FindImage(const char *pname, imagetype_t type)
 {
