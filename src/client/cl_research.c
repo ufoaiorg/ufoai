@@ -142,6 +142,9 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 					met_AND = qfalse;
 				}
 				break;
+			case RS_LINK_WEAPON:
+				/* This is no real requirement, so no checks here. */
+				break;
 			case RS_LINK_EVENT:
 				break;
 			default:
@@ -166,6 +169,9 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 				/* TODO: required_OR->collected[i] should be used instead of RS_ItemInBase, see equivalent TODO above */
 				if (RS_ItemInBase(required_OR->idx[i], baseCurrent) >= required_OR->amount[i])
 					met_OR = qtrue;
+				break;
+			case RS_LINK_WEAPON:
+				/* This is no real requirement, so no checks here. */
 				break;
 			case RS_LINK_EVENT:
 				break;
@@ -273,7 +279,7 @@ void RS_MarkResearchable(void)
 				if (tech->statusResearchable && tech->time <= 0) {
 					RS_ResearchFinish(tech);
 					Com_DPrintf("RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
-					/* restart the loop as this may have unlocked new possibilities */
+					/* Restart the loop as this may have unlocked new possibilities. */
 					i = 0;
 				}
 			}
@@ -375,7 +381,8 @@ void RS_RequiredIdxAssign(void)
  * @brief Gets all needed names/file-paths/etc... for each technology entry.
  * Should be executed after the parsing of _all_ the ufo files and e.g. the
  * research tree/inventory/etc... are initialised.
- * TODO: add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
+ * @todo Add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
+ * @todo Correct ammo model-search (see comment in code)
  */
 void RS_InitTree(void)
 {
@@ -435,6 +442,8 @@ void RS_InitTree(void)
 					if (!*tech->mdl_bottom) {
 						if (tech->type == RS_WEAPON) {
 							/* Find ammo for weapon. */
+							/* TODO: This needs to search the techtree for the ammo-entries ("weapon" requirement) and _then_ get the correct model path.
+							This might also simplify this loop so we can use a nice subroutine instead. */
 							for (k = 0; k < csi.numODs; k++) {
 								item_ammo = &csi.ods[k];
 								if (j == item_ammo->link) {
