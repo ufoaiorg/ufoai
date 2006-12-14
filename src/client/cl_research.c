@@ -306,48 +306,8 @@ void RS_AddObjectTechs(void)
 }
 
 /**
- * @brief
- */
-static void RS_InitRequirementList(requirements_t *required)
-{
-	int i, k;
-	technology_t *tech_required = NULL;
-	objDef_t *item = NULL;
-
-	for (i = 0; i < required->numLinks; i++) {	/* i = link index */
-		switch (required->type[i]) {
-		case RS_LINK_TECH:
-			/* Get index of technology by its id-name. */
-			tech_required = RS_GetTechByID(required->id[i]);
-			required->idx[i] = -1;
-			if (tech_required) {
-				required->idx[i] = tech_required->idx;
-			}
-			break;
-		case RS_LINK_ITEM:
-			/* Get index of item by its id-name. */
-			required->idx[i] = -1;
-			for (k = 0; k < csi.numODs; k++) {	/* k = item index */
-				item = &csi.ods[k];
-				if (!Q_strncmp(required->id[i], item->kurz, MAX_VAR)) {
-					required->idx[i] = k;
-					break;
-				}
-			}
-			break;
-		case RS_LINK_EVENT:
-			/* TODO: get index of event */
-			break;
-		default:
-			break;
-		}
-
-	}
-
-}
-
-/**
- * @brief Assign required tech IDXs for a single requirements list.
+ * @brief Assign required tech/item/etc... IDXs for a single requirements list.
+ * @note A function with the same behaviour was formerly also known as RS_InitRequirementList
  */
 void RS_AssignTechIdxs(requirements_t *req)
 {
@@ -356,13 +316,17 @@ void RS_AssignTechIdxs(requirements_t *req)
 	for (i = 0; i < req->numLinks; i++) {
 		switch (req->type[i]) {
 		case RS_LINK_TECH:
+			/* Get the index in the techtree. */
 			req->idx[i] = RS_GetTechIdxByName(req->id[i]);
 			break;
-		case RS_LINK_WEAPON:
 		case RS_LINK_ITEM:
-			/* Get index in item-list */
+		case RS_LINK_WEAPON:
+			/* Get index in item-list. */
 			req->idx[i] = RS_GetItem(req->id[i]);
-			break;			
+			break;		
+		case RS_LINK_EVENT:
+			/* TODO: Get index of event in event-list. */
+			break;		
 		default:
 			break;
 		}
@@ -370,7 +334,8 @@ void RS_AssignTechIdxs(requirements_t *req)
 }
 
 /**
- * @brief Assign IDXs to all required techs.
+ * @brief Assign IDXs to all required techs/items/etc...
+ * @note This replaces the RS_InitRequirementList function (since the switch to the _OR and _AND list)
  */
 void RS_RequiredIdxAssign(void)
 {
@@ -385,7 +350,6 @@ void RS_RequiredIdxAssign(void)
 			RS_AssignTechIdxs(&tech->require_OR);
 	}
 }
-
 
 /**
  * @brief Gets all needed names/file-paths/etc... for each technology entry.
@@ -416,8 +380,8 @@ void RS_InitTree(void)
 		}
 
 		/* Save the idx to the id-names of the different requirement-types for quicker access. The id-strings themself are not really needed afterwards :-/ */
-		RS_InitRequirementList(&tech->require_AND);
-		RS_InitRequirementList(&tech->require_OR);
+		RS_AssignTechIdxs(&tech->require_AND);
+		RS_AssignTechIdxs(&tech->require_OR);
 
 		/* Search in correct data/.ufo */
 		switch (tech->type) {
