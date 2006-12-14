@@ -742,13 +742,17 @@ void CL_ActorStateChange( sizebuf_t *sb )
 		 (!(state & STATE_CROUCHED) && le->state & STATE_CROUCHED) )
 		CL_SetLastMoving(le);
 
-	le->state = state;
-	le->think = LET_StartIdle;
-
 	/* killed by the server: no animation is played, etc. */
-	if (state & STATE_DEAD) {
+	if (state & STATE_DEAD && !(le->state & STATE_DEAD)) {
+		le->state = state;
+		FLOOR(le) = NULL;
+		le->think = NULL;
 		VectorCopy(player_dead_maxs, le->maxs);
 		CL_RemoveActorFromTeamList(le);
+		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
+	} else {
+		le->state = state;
+		le->think = LET_StartIdle;
 	}
 
 	/* state change may have affected move length */

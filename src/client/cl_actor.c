@@ -780,7 +780,8 @@ qboolean CL_ActorSelect(le_t * le)
 	int i;
 
 	/* test team */
-	if (!le || le->team != cls.team || (le->state & STATE_DEAD))
+	if (!le || le->team != cls.team || 
+		(le->state & STATE_DEAD) || !le->inuse)
 		return qfalse;
 
 	/* select him */
@@ -881,7 +882,7 @@ qboolean CL_ActorSelectNext()
 		if (CL_ActorSelectList(i))
 			return qtrue;
 	}
-	return qtrue;
+	return qfalse;
 }
 
 
@@ -1470,9 +1471,12 @@ void CL_ActorDie(sizebuf_t * sb)
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_DIE], &number, &state);
 
 	/* get le */
-	le = LE_Get(number);
-	if ( !le ) { /* this will usually happen if CL_EntPerish has been called on the le */
-		Com_DPrintf("CL_ActorDie: Can't kill, LE doesn't exist or is hidden from client\n");
+	for (i = 0, le = LEs; i < numLEs; i++, le++)
+		if (le->entnum == number)
+			break;
+	
+	if (le->entnum != number) {
+		Com_DPrintf("CL_ActorDie: Can't kill, LE doesn't exist\n");
 		return;
 	} else if ( le->type != ET_UGV && le->type != ET_ACTOR ) {
 		Com_Printf("CL_ActorDie: Can't kill, LE is not an actor\n");
@@ -1480,6 +1484,8 @@ void CL_ActorDie(sizebuf_t * sb)
 	} else if (le->state & STATE_DEAD) {
 		Com_Printf("CL_ActorDie: Can't kill, actor already dead\n");
 		return;
+	} else if (!le->inuse) { /* this will usually happen if CL_EntPerish has been called on the le */
+		Com_Printf("CL_ActorDie: Warning - actor not in-use\n");
 	}
 
 	/* count spotted aliens */
@@ -1703,7 +1709,7 @@ void CL_ResetActorMoveLength(void) {
 }
 
 /**
- * @brief Selects the actor on the battlescape.
+ * @brief Battlescape cursor positioning.
  * @note Sets global var mouseActor to current selected le
  * @sa CL_ParseInput
  */
