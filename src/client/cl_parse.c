@@ -512,10 +512,12 @@ void CL_EntAppear( sizebuf_t *sb )
 
 	/* check if the ent is already visible */
 	le = LE_Get(entnum);
-	if ( !le )
+	if ( !le ) {
 		le = LE_Add(entnum);
-	else
+	} else {
 		Com_Printf("Entity appearing already visible... overwriting the old one\n");
+		le->inuse = qtrue;
+	}
 
 	le->type = type;
 	le->pos[0] = pos[0]; /* how to write this more elegantly? */
@@ -614,6 +616,7 @@ void CL_ActorAppear( sizebuf_t *sb )
 		newActor = qtrue;
 	} else {
 /*		Com_Printf( "Actor appearing already visible... overwriting the old one\n" ); */
+		le->inuse = qtrue;
 		newActor = qfalse;
 	}
 
