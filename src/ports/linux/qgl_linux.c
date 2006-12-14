@@ -71,13 +71,31 @@ void QGL_Shutdown( void )
 	qglXGetConfig                = NULL;
 }
 
+#ifdef DEBUG
+/**
+ * @brief Debug function for library symbol loading
+ */
+static void *GPA2(char* symbol)
+{
+	void *sym = NULL;
+	sym = GPA(symbol);
+	if (!sym)
+		Com_Printf("Could not get symbol '%s'\n", symbol);
+	return sym;
+}
+#endif
+
 /**
  * @brief
  */
 void *qwglGetProcAddress(char *symbol)
 {
 	if (glw_state.OpenGLLib)
-		return GPA ( symbol );
+#ifdef DEBUG
+		return GPA2(symbol);
+#else
+		return GPA(symbol);
+#endif
 	return NULL;
 }
 
