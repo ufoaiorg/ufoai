@@ -653,15 +653,15 @@ then
 		then
 			AC_MSG_RESULT([yes])
 			AC_SUBST([HAVE_SHADERS],1)
-			AC_DEFINE([SHADERS],1)
+			AC_DEFINE([HAVE_SHADERS],1)
 			shaders_enabled=yes
 		else
 			AC_MSG_RESULT([no])
+			if test "$with_shaders" = "yes"
+			then
+				AC_MSG_ERROR([--with-shaders specified but couldn't use OpenGL shaders!])
+			fi
 		fi
-	fi
-	if test "$with_shaders" = "yes" && test "shaders_enabled" != "yes"
-	then
-		AC_MSG_ERROR([--with-shaders specified but couldn't use OpenGL shaders!])
 	fi
 fi
 

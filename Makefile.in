@@ -46,6 +46,7 @@ BUILD_QDATA=@BUILD_QDATA@
 BUILD_DEBUG=@BUILD_DEBUG@
 
 HAVE_IPV6=@HAVE_IPV6@
+HAVE_SHADERS=@HAVE_SHADERS@
 
 #######################################################################################################
 

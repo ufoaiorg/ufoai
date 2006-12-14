@@ -3,6 +3,18 @@ SRCDIR=src
 
 CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe -DHAVE_SVNVERSION_H
 
+ifeq ($(HAVE_SHADERS),1)
+	CFLAGS+= -DHAVE_SHADERS
+endif
+
+ifeq ($(HAVE_OPENAL),1)
+	CFLAGS+= -DHAVE_OPENAL
+endif
+
+ifeq ($(HAVE_IPV6),1)
+	CFLAGS+= -DHAVE_IPV6
+endif
+
 # Common things
 _BUILDDIR=$(strip $(BUILDDIR))
 _MODULE=$(strip $(MODULE))

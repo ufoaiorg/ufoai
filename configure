@@ -8861,20 +8861,20 @@ echo "${ECHO_T}yes" >&6; }
 			HAVE_SHADERS=1
 
 			cat >>confdefs.h <<\_ACEOF
-#define SHADERS 1
+#define HAVE_SHADERS 1
 _ACEOF
 
 			shaders_enabled=yes
 		else
 			{ echo "$as_me:$LINENO: result: no" >&5
 echo "${ECHO_T}no" >&6; }
-		fi
-	fi
-	if test "$with_shaders" = "yes" && test "shaders_enabled" != "yes"
-	then
-		{ { echo "$as_me:$LINENO: error: --with-shaders specified but couldn't use OpenGL shaders!" >&5
+			if test "$with_shaders" = "yes"
+			then
+				{ { echo "$as_me:$LINENO: error: --with-shaders specified but couldn't use OpenGL shaders!" >&5
 echo "$as_me: error: --with-shaders specified but couldn't use OpenGL shaders!" >&2;}
    { (exit 1); exit 1; }; }
+			fi
+		fi
 	fi
 fi
 
