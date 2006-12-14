@@ -347,20 +347,30 @@ static void RS_InitRequirementList(requirements_t *required)
 }
 
 /**
- * @brief assign required tech IDXs for a single requirements list
+ * @brief Assign required tech IDXs for a single requirements list.
  */
 void RS_AssignTechIdxs(requirements_t *req)
 {
 	int i;
 
 	for (i = 0; i < req->numLinks; i++) {
-	 	if (req->type[i] == RS_LINK_TECH)
+		switch (req->type[i]) {
+		case RS_LINK_TECH:
 			req->idx[i] = RS_GetTechIdxByName(req->id[i]);
+			break;
+		case RS_LINK_WEAPON:
+		case RS_LINK_ITEM:
+			/* Get index in item-list */
+			req->idx[i] = RS_GetItem(req->id[i]);
+			break;			
+		default:
+			break;
+		}
 	}
 }
 
 /**
- * @brief assign IDXs to all required techs
+ * @brief Assign IDXs to all required techs.
  */
 void RS_RequiredIdxAssign(void)
 {
@@ -1637,6 +1647,26 @@ void RS_GetProvided(char *id, char *provided)
 	Com_Printf("RS_GetProvided: research item \"%s\" not found.\n", id);
 }
 #endif
+
+/**
+ * @brief Returns the index of this item in the inventory.
+ * @todo This function should be located in a inventory-related file.
+ */
+int RS_GetItem(char *id)
+{
+	int i;
+	objDef_t *item = NULL;
+
+	for (i = 0; i < csi.numODs; i++) {	/* i = item index */
+		item = &csi.ods[i];
+		if (!Q_strncmp(id, item->kurz, MAX_VAR)) {
+			return i;
+		}
+	}
+
+	Com_Printf("RS_GetItem: Item \"%s\" not found.\n", id);
+	return -1;
+}
 
 
 /**

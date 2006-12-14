@@ -158,7 +158,7 @@ technology_t **RS_GetTechsByType(researchType_t type);
 technology_t* RS_GetTechByIDX(int tech_idx);
 technology_t *RS_GetTechWithMostScientists( int base_idx );
 int RS_GetTechIdxByName(char *name);
-
+int RS_GetItem(char *id);
 
 /* ufopedia function - but needs technology_t */
 void UP_DrawEntry( technology_t* tech );
