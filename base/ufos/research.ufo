@@ -595,7 +595,6 @@ tech rs_weapon_plasatomizer
 	{
 		tech rs_skill_assault
 		tech rs_skill_heavy
-		tech rs_plasma
 		item plaspistol 1
 	}
 
@@ -632,7 +631,6 @@ tech rs_weapon_plasblaster
 	{
 		tech rs_skill_explosive
 		tech rs_skill_heavy
-		tech rs_plasma
 		item plasblaster 1
 	}
 	provides	plasblaster
@@ -704,7 +702,6 @@ tech rs_weapon_plasrifle
 	{
 		tech rs_skill_assault
 		tech rs_skill_heavy
-		tech rs_plasma
 		item plasrifle 1
 	}
 
@@ -950,8 +947,8 @@ tech rs_weapon_shotgun_micro_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_shotgun2_ammo_txt"
-	// pre_description	"_shotgun2_ammo_pre_txt"
+	description	"_shotgun_micro_ammo_txt"
+	// pre_description	"_shotgun_micro_ammo_pre_txt"
 
 	require_AND
 	{
@@ -1136,7 +1133,7 @@ tech rs_weapon_tachyonrifle
 	{
 		tech rs_skill_explosive
 		tech rs_skill_assault
-		tech rs_tachyon
+//		tech rs_tachyon
 		item tachyonrifle 7
 	}
 
@@ -1173,7 +1170,7 @@ tech rs_weapon_tachyonsniper
 	require_AND
 	{
 		tech rs_skill_sniper
-		tech rs_tachyon
+//		tech rs_tachyon
 		item tachyonrifle 7
 	}
 
