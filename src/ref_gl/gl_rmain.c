@@ -1477,8 +1477,9 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 		gl_state.fog_coord = qfalse;
 	}
 
+	gl_state.glsl_program = qfalse;
 	gl_state.arb_fragment_program = qfalse;
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 	if (strstr(gl_config.extensions_string, "GL_ARB_fragment_program")) {
 		ri.Con_Printf(PRINT_ALL, "...using GL_ARB_fragment_program\n");
 		gl_state.arb_fragment_program = qtrue;
@@ -1509,7 +1510,29 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 		ri.Con_Printf(PRINT_ALL, "...GL_ARB_fragment_program not found\n");
 		gl_state.arb_fragment_program = qfalse;
 	}
-#endif							/* SHADERS */
+
+	/* FIXME: Is this the right extension to check for? */
+	if (strstr(gl_config.extensions_string, "GL_ARB_shading_language_100")) {
+		ri.Con_Printf(PRINT_ALL, "...using GL_ARB_shading_language_100\n");
+		qglCreateShader  = (void *) qwglGetProcAddress("glCreateShaderObjectARB");
+		qglShaderSource  = (void *) qwglGetProcAddress("glShaderSourceARB");
+		qglCompileShader = (void *) qwglGetProcAddress("glCompileShaderARB");
+		qglCreateProgram = (void *) qwglGetProcAddress("glCreateProgramObjectARB");
+		qglAttachShader  = (void *) qwglGetProcAddress("glAttachObjectARB");
+		qglLinkProgram   = (void *) qwglGetProcAddress("glLinkProgramARB");
+		qglUseProgram    = (void *) qwglGetProcAddress("glUseProgramObjectARB");
+		/* FIXME: I don't know the names of these two function */
+		/* will currently segfault on shader shutdown */
+		qglDeleteShader  = (void *) qwglGetProcAddress("glDeleteShadersARB");
+		qglDeleteProgram = (void *) qwglGetProcAddress("glDeleteProgramsARB");
+		if (!qglCreateShader)
+			Sys_Error("bla\n");
+		gl_state.glsl_program = qtrue;
+	} else {
+		ri.Con_Printf(PRINT_ALL, "...GL_ARB_shading_language_100 not found\n");
+		gl_state.glsl_program = qfalse;
+	}
+#endif							/* HAVE_SHADERS */
 
 	gl_state.ati_separate_stencil = qfalse;
 	if (strstr(gl_config.extensions_string, "GL_ATI_separate_stencil")) {
@@ -1581,7 +1604,7 @@ static void R_Shutdown(void)
 	Mod_FreeAll();
 
 	GL_ShutdownImages();
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 	GL_ShutdownShaders();
 #endif
 	Font_Shutdown();

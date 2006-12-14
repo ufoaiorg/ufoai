@@ -1,7 +1,7 @@
 /**
  * @file gl_arb_shader.c
  * @brief Shader and image filter stuff
- * @note This code is only active if SHADERS is true (see Makefile)
+ * @note This code is only active if HAVE_SHADERS is true
  */
 
 /*
@@ -26,9 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 static unsigned int SH_LoadProgram_ARB_FP(char *path);
 static unsigned int SH_LoadProgram_ARB_VP(char *path);
+static unsigned int SH_LoadProgram_GLSL(shader_t* s);
 static qboolean shaderInited = qfalse;
 
 /**
@@ -40,13 +41,19 @@ void GL_ShaderInit(void)
 	int i = 0;
 	shader_t *s;
 
-	Com_DPrintf("Init shaders (num_shaders: %i)\n", r_newrefdef.num_shaders);
+	ri.Con_Printf(PRINT_DEVELOPER, "Init shaders (num_shaders: %i)\n", r_newrefdef.num_shaders);
 	for (i = 0; i < r_newrefdef.num_shaders; i++) {
 		s = &r_newrefdef.shaders[i];
-		if (s->frag)
-			s->fpid = SH_LoadProgram_ARB_FP(s->filename);
-		else if (s->vertex)
+		if (s->glsl) {
+			if (gl_state.glsl_program) {
+				/* a glsl can be a shader or a vertex program */
+				SH_LoadProgram_GLSL(s);
+			}
+		} else if (s->vertex) {
 			s->vpid = SH_LoadProgram_ARB_VP(s->filename);
+		} else if (s->frag) {
+			s->fpid = SH_LoadProgram_ARB_FP(s->filename);
+		}
 	}
 	shaderInited = qtrue;
 }
@@ -62,7 +69,7 @@ shader_t* GL_GetShaderForImage(char* image)
 	int i = 0;
 	shader_t *s;
 
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 	/* init the shaders */
 	if (!shaderInited && r_newrefdef.num_shaders)
 		GL_ShaderInit();
@@ -71,13 +78,15 @@ shader_t* GL_GetShaderForImage(char* image)
 	/* search for shader title and check whether it matches an image name */
 	for (i = 0; i < r_newrefdef.num_shaders; i++) {
 		s = &r_newrefdef.shaders[i];
-		if (!Q_strcmp(s->title, image))
+		if (!Q_strcmp(s->title, image)) {
+			ri.Con_Printf(PRINT_DEVELOPER, "shader for '%s' found\n", image);
 			return s;
+		}
 	}
 	return NULL;
 }
 
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 /**
  * @brief Delete all ARB shader programs at shutdown
  * GL_ShaderInit
@@ -95,15 +104,23 @@ void GL_ShutdownShaders(void)
 	/* search for shader title and check whether it matches an image name */
 	for (i = 0; i < r_newrefdef.num_shaders; i++) {
 		s = &r_newrefdef.shaders[i];
-		if (s->fpid) {
+		if (s->glsl && gl_state.glsl_program) {
+			if (s->fpid > 0)
+				qglDeleteShader(s->fpid);
+			if (s->fpid > 0)
+				qglDeleteShader(s->vpid);
+			qglDeleteProgram(s->glslpid);
+			s->fpid = s->vpid = -1;
+		}
+		if (s->fpid > 0) {
 			ri.Con_Printf(PRINT_DEVELOPER, "..unload shader %s\n", s->filename);
 			qglDeleteProgramsARB(1, &s->fpid);
 		}
-		if (s->vpid) {
+		if (s->vpid > 0) {
 			ri.Con_Printf(PRINT_DEVELOPER, "..unload shader %s\n", s->filename);
 			qglDeleteProgramsARB(1, &s->vpid);
 		}
-		s->fpid = s->vpid = 0;
+		s->fpid = s->vpid = -1;
 	}
 }
 
@@ -210,6 +227,50 @@ unsigned int SH_LoadProgram_ARB_VP(char *path)
 }
 
 /**
+ * @brief Loads vertex program shader
+ * @param[in] path The shader file path (relative to game-dir)
+ * @return vpid - id of shader
+ */
+unsigned int SH_LoadProgram_GLSL(shader_t* s)
+{
+	char *fbuf;
+	unsigned int size;
+
+	size = ri.FS_LoadFile(s->filename, (void **) &fbuf);
+
+	if (!fbuf) {
+		ri.Con_Printf(PRINT_ALL, "Could not load shader %s\n", s->filename);
+		return -1;
+	}
+
+	if (size < 16) {
+		ri.Con_Printf(PRINT_ALL, "Could not load invalid shader with size %i: %s\n", size, s->filename);
+		ri.FS_FreeFile(fbuf);
+		return -1;
+	}
+
+	s->glslpid = qglCreateProgram();
+
+	if (s->frag) {
+		s->fpid = qglCreateShader(GL_FRAGMENT_SHADER);
+		qglShaderSource(s->fpid, 1, (const char**)&fbuf, NULL);
+		qglCompileShader(s->fpid);
+		qglAttachShader(s->glslpid, s->fpid);
+	} else if (s->vertex) {
+		s->vpid = qglCreateShader(GL_VERTEX_SHADER);
+		qglShaderSource(s->vpid, 1, (const char**)&fbuf, NULL);
+		qglCompileShader(s->vpid);
+		qglAttachShader(s->glslpid, s->vpid);
+	}
+
+	qglLinkProgram(s->glslpid);
+
+	ri.FS_FreeFile(fbuf);
+	ri.Con_Printf(PRINT_DEVELOPER, "...loaded glsl shader %s (pid: %i)\n", s->filename, s->glslpid);
+	return s->glslpid;
+}
+
+/**
  * @brief Activate fragment shaders
  * @param[in] fpid the shader id
  * @sa SH_LoadProgram_ARB_FP
@@ -251,16 +312,21 @@ void SH_UseShader(shader_t * shader, qboolean deactivate)
 	/* no shaders supported */
 	if (gl_state.arb_fragment_program == qfalse)
 		return;
-	if (shader->fpid > 0) {
+	if (shader->glslpid > 0) {
 		if (deactivate)
-			SH_UseProgram_ARB_FP(-1);
+			qglUseProgram(0);
+		else
+			qglUseProgram(shader->glslpid);
+	} else if (shader->fpid > 0) {
+		if (deactivate)
+			SH_UseProgram_ARB_FP(0);
 		else {
 			qglActiveTextureARB(GL_TEXTURE0_ARB);
 			SH_UseProgram_ARB_FP(shader->fpid);
 		}
 	} else if (shader->vpid > 0) {
 		if (deactivate)
-			SH_UseProgram_ARB_VP(-1);
+			SH_UseProgram_ARB_VP(0);
 		else {
 			qglActiveTextureARB(GL_TEXTURE0_ARB);
 			SH_UseProgram_ARB_VP(shader->vpid);
@@ -268,4 +334,4 @@ void SH_UseShader(shader_t * shader, qboolean deactivate)
 	}
 }
 
-#endif /* SHADERS */
+#endif /* HAVE_SHADERS */

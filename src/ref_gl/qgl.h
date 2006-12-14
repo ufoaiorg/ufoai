@@ -418,7 +418,7 @@ extern void (APIENTRY * qglSelectTextureSGIS) (GLenum);
 extern void (APIENTRY * qglActiveTextureARB) (GLenum);
 extern void (APIENTRY * qglClientActiveTextureARB) (GLenum);
 
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 /* arb shader stuff */
 extern void (APIENTRY * qglProgramStringARB) (GLenum, GLenum, GLsizei, const GLvoid *);
 extern void (APIENTRY * qglBindProgramARB) (GLenum, GLuint);
@@ -443,7 +443,19 @@ extern void (APIENTRY * qglGetVertexAttribfvARB) (GLuint, GLenum, GLfloat *);
 extern void (APIENTRY * qglGetVertexAttribivARB) (GLuint, GLenum, GLint *);
 extern void (APIENTRY * qglGetVertexAttribPointervARB) (GLuint, GLenum, GLvoid * *);
 extern GLboolean(APIENTRY * qglIsProgramARB) (GLuint);
-#endif							/* SHADERS */
+
+/* GLSL */
+extern GLuint (APIENTRY * qglCreateShader) (GLenum  shaderType);
+extern void (APIENTRY * qglShaderSource) (GLuint shader, int numOfStrings, const char **strings, int *lenOfStrings);
+extern void (APIENTRY * qglCompileShader) (GLuint shader);
+extern GLuint (APIENTRY * qglCreateProgram) (void);
+extern void (APIENTRY * qglAttachShader) (GLuint program, GLuint shader);
+extern void (APIENTRY * qglLinkProgram) (GLuint program);
+extern void (APIENTRY * qglUseProgram) (GLuint program);
+extern void (APIENTRY * qglDeleteShader) (GLuint id);
+extern void (APIENTRY * qglDeleteProgram) (GLuint id);
+
+#endif							/* HAVE_SHADERS */
 
 extern void (APIENTRY * qglActiveStencilFaceEXT) (GLenum face);
 extern void (APIENTRY * qglStencilOpSeparateATI) (GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);

@@ -45,6 +45,7 @@ static value_t shader_values[] = {
 	{"filename",	V_STRING,	offsetof( shader_t, filename)},
 	{"frag",	V_BOOL,	offsetof( shader_t, frag)},
 	{"vertex",	V_BOOL,	offsetof( shader_t, vertex)},
+	{"glsl",	V_BOOL,	offsetof( shader_t, glsl)},
 	{"glmode",	V_BLEND,	offsetof( shader_t, glMode)},
 	{"emboss",	V_BOOL,	offsetof( shader_t, emboss)},
 	{"emboss_high",	V_BOOL,	offsetof( shader_t, embossHigh)},

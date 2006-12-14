@@ -751,7 +751,7 @@ static void ( APIENTRY * dllVertex4sv )(const GLshort *v);
 static void ( APIENTRY * dllVertexPointer )(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
 static void ( APIENTRY * dllViewport )(GLint x, GLint y, GLsizei width, GLsizei height);
 
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 /* arb shader stuff */
 void (APIENTRY * qglProgramStringARB) (GLenum, GLenum, GLsizei, const GLvoid *);
 void (APIENTRY * qglBindProgramARB) (GLenum, GLuint);
@@ -776,7 +776,19 @@ void (APIENTRY * qglGetVertexAttribfvARB) (GLuint, GLenum, GLfloat *);
 void (APIENTRY * qglGetVertexAttribivARB) (GLuint, GLenum, GLint *);
 void (APIENTRY * qglGetVertexAttribPointervARB) (GLuint, GLenum, GLvoid * *);
 GLboolean(APIENTRY * qglIsProgramARB) (GLuint);
-#endif							/* SHADERS */
+
+/* GLSL */
+GLuint (APIENTRY * qglCreateShader) (GLenum  shaderType);
+void (APIENTRY * qglShaderSource) (GLuint shader, int numOfStrings, const char **strings, int *lenOfStrings);
+void (APIENTRY * qglCompileShader) (GLuint shader);
+GLuint (APIENTRY * qglCreateProgram) (void);
+void (APIENTRY * qglAttachShader) (GLuint program, GLuint shader);
+void (APIENTRY * qglLinkProgram) (GLuint program);
+void (APIENTRY * qglUseProgram) (GLuint program);
+void (APIENTRY * qglDeleteShader) (GLuint id);
+void (APIENTRY * qglDeleteProgram) (GLuint id);
+
+#endif							/* HAVE_SHADERS */
 
 
 /**
@@ -4853,7 +4865,7 @@ void QGL_UnLink(void)
 	qglActiveStencilFaceEXT      = NULL;
 	qglStencilOpSeparateATI      = NULL;
 	qglStencilFuncSeparateATI    = NULL;
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 	qglProgramStringARB          = NULL;
 	qglBindProgramARB            = NULL;
 	qglDeleteProgramsARB         = NULL;
@@ -4877,6 +4889,16 @@ void QGL_UnLink(void)
 	qglGetVertexAttribivARB       = NULL;
 	qglGetVertexAttribPointervARB = NULL;
 	qglIsProgramARB               = NULL;
+
+	qglCreateShader  = NULL;
+	qglShaderSource  = NULL;
+	qglCompileShader = NULL;
+	qglCreateProgram = NULL;
+	qglAttachShader  = NULL;
+	qglLinkProgram   = NULL;
+	qglUseProgram    = NULL;
+	qglDeleteShader  = NULL;
+	qglDeleteProgram = NULL;
 #endif
 }
 
@@ -5231,7 +5253,7 @@ void QGL_Link(void)
 	qglActiveStencilFaceEXT      = NULL;
 	qglStencilOpSeparateATI      = NULL;
 	qglStencilFuncSeparateATI    = NULL;
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 	qglProgramStringARB          = NULL;
 	qglBindProgramARB            = NULL;
 	qglDeleteProgramsARB         = NULL;
@@ -5255,5 +5277,15 @@ void QGL_Link(void)
 	qglGetVertexAttribPointervARB    = NULL;
 	qglGetProgramLocalParameterdvARB = NULL;
 	qglGetProgramLocalParameterfvARB = NULL;
+
+	qglCreateShader  = NULL;
+	qglShaderSource  = NULL;
+	qglCompileShader = NULL;
+	qglCreateProgram = NULL;
+	qglAttachShader  = NULL;
+	qglLinkProgram   = NULL;
+	qglUseProgram    = NULL;
+	qglDeleteShader  = NULL;
+	qglDeleteProgram = NULL;
 #endif
 }

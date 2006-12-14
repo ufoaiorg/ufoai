@@ -272,7 +272,7 @@ void Draw_StretchPic(int x, int y, int w, int h, char *pic)
 	if (scrap_dirty)
 		Scrap_Upload();
 
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 	if (gl->shader)
 		SH_UseShader(gl->shader, qfalse);
 #endif
@@ -289,7 +289,7 @@ void Draw_StretchPic(int x, int y, int w, int h, char *pic)
 	qglVertex2f(x, y + h);
 	qglEnd();
 
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 	if (gl->shader)
 		SH_UseShader(gl->shader, qtrue);
 #endif
@@ -365,7 +365,7 @@ void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float 
 	if (blend)
 		qglEnable(GL_BLEND);
 
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 	if (gl->shader)
 		SH_UseShader(gl->shader, qfalse);
 #endif
@@ -385,7 +385,7 @@ void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float 
 	if (blend)
 		qglDisable(GL_BLEND);
 
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 	if (gl->shader)
 		SH_UseShader(gl->shader, qtrue);
 #endif
@@ -408,7 +408,7 @@ void Draw_Pic(int x, int y, char *pic)
 	if (scrap_dirty)
 		Scrap_Upload();
 
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 	if (gl->shader)
 		SH_UseShader(gl->shader, qfalse);
 #endif
@@ -423,7 +423,7 @@ void Draw_Pic(int x, int y, char *pic)
 	qglTexCoord2f(gl->sl, gl->th);
 	qglVertex2f(x, y + gl->height);
 	qglEnd();
-#ifdef SHADERS
+#ifdef HAVE_SHADERS
 	if (gl->shader)
 		SH_UseShader(gl->shader, qtrue);
 #endif
@@ -442,6 +442,10 @@ void Draw_TileClear(int x, int y, int w, int h, char *name)
 		return;
 	}
 
+#ifdef HAVE_SHADERS
+	if (image->shader)
+		SH_UseShader(image->shader, qfalse);
+#endif
 	GL_Bind(image->texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(x / 64.0, y / 64.0);
@@ -453,6 +457,10 @@ void Draw_TileClear(int x, int y, int w, int h, char *name)
 	qglTexCoord2f(x / 64.0, (y + h) / 64.0);
 	qglVertex2f(x, y + h);
 	qglEnd();
+#ifdef HAVE_SHADERS
+	if (image->shader)
+		SH_UseShader(image->shader, qtrue);
+#endif
 }
 
 
@@ -545,6 +553,11 @@ void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, fl
 	/* load day image */
 	gl = GL_FindImage(va("pics/menu/%s_day", map), it_wrappic);
 
+#ifdef HAVE_SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qfalse);
+#endif
+
 	/* draw day image */
 	GL_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
@@ -558,6 +571,10 @@ void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, fl
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
 
+#ifdef HAVE_SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qtrue);
+#endif
 	/* test for multitexture and env_combine support */
 	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
 		return;
@@ -567,6 +584,10 @@ void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, fl
 	if (!gl)
 		return;
 
+#ifdef HAVE_SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qfalse);
+#endif
 	/* init combiner */
 	qglEnable(GL_BLEND);
 
@@ -604,6 +625,11 @@ void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, fl
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
 
+#ifdef HAVE_SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qtrue);
+#endif
+
 	/* reset mode */
 	qglDisable(GL_TEXTURE_2D);
 	GL_SelectTexture(gl_texture0);
@@ -633,6 +659,10 @@ void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float c
 	nw = w * vid.rx;
 	nh = h * vid.ry;
 
+#ifdef HAVE_SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qfalse);
+#endif
 	/* init combiner */
 	qglEnable(GL_BLEND);
 	qglBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR);
@@ -652,6 +682,10 @@ void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float c
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
 
+#ifdef HAVE_SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qtrue);
+#endif
 	/* reset mode */
 	qglDisable(GL_TEXTURE_2D);
 
@@ -772,6 +806,11 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 	/* load day image */
 	gl = GL_FindImage(va("pics/menu/%s_day", map), it_wrappic);
 
+#ifdef HAVE_SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qfalse);
+#endif
+
 	/* turn on fogging.  fog looks good on the skies - it gives them a more */
 	/* "airy" far-away look, and has the knock-on effect of preventing the */
 	/* old "texture distortion at the poles" problem. */
@@ -827,6 +866,9 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 	/* solid globe texture */
 	qglBindTexture (GL_TEXTURE_2D, gl->texnum);
 
+	qglEnable(GL_CULL_FACE);
+	qglCullFace(GL_BACK);
+
 	/* draw the sphere */
 	qglCallList (spherelist);
 
@@ -866,6 +908,8 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 		qglDisable (GL_BLEND);
 	}
 
+	qglDisable(GL_CULL_FACE);
+
 	/* restore the previous matrix */
 	qglPopMatrix ();
 
@@ -873,6 +917,11 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 		/* turn off fog */
 		qglDisable (GL_FOG);
 	}
+
+#ifdef HAVE_SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qtrue);
+#endif
 
 	qglMatrixMode (GL_TEXTURE);
 	qglLoadIdentity ();

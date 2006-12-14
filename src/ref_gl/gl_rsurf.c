@@ -351,6 +351,11 @@ static void R_RenderBrushPoly(msurface_t * fa)
 
 	image = R_TextureAnimation(fa->texinfo);
 
+#ifdef HAVE_SHADERS
+	if (image->shader)
+		SH_UseShader(image->shader, qfalse);
+#endif
+
 	if (fa->flags & SURF_DRAWTURB) {
 		GL_Bind(image->texnum);
 
@@ -410,6 +415,11 @@ static void R_RenderBrushPoly(msurface_t * fa)
 		fa->lightmapchain = gl_lms.lightmap_surfaces[fa->lightmaptexturenum];
 		gl_lms.lightmap_surfaces[fa->lightmaptexturenum] = fa;
 	}
+
+#ifdef HAVE_SHADERS
+	if (image->shader)
+		SH_UseShader(image->shader, qtrue);
+#endif
 }
 
 

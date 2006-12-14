@@ -495,6 +495,7 @@ typedef struct {
 	qboolean anisotropic;
 	qboolean lod_bias;
 	qboolean arb_fragment_program;
+	qboolean glsl_program;
 
 	unsigned char originalRedGammaTable[256];
 	unsigned char originalGreenGammaTable[256];

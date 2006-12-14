@@ -143,6 +143,7 @@ typedef struct shader_s {
 	/* filename is for an external filename to load the shader from */
 	char filename[MAX_VAR];
 
+	qboolean glsl;				/* glsl shader */
 	qboolean frag;				/* fragment-shader */
 	qboolean vertex;			/* vertex-shader */
 
@@ -157,7 +158,7 @@ typedef struct shader_s {
 	/* TODO: */
 
 	/* vpid and fpid are vertexpid and fragmentpid for binding */
-	unsigned int vpid, fpid;
+	unsigned int vpid, fpid, glslpid;
 } shader_t;
 
 typedef struct {
