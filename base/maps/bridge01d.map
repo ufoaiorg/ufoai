@@ -9040,8 +9040,9 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "428 368 12"
+"origin" "404 368 12"
 "model" "models/objects/alien/ufo_crashed/acrash_wing_2.md2"
+"angles" "0 100 0"
 }
 // entity 5
 {
@@ -11206,4 +11207,81 @@
 {
 "classname" "info_human_start"
 "origin" "-656 2064 32"
+}
+// entity 164
+{
+"classname" "misc_particle"
+"particle" "crashsite_fire"
+"origin" "360 368 24"
+"spawnflags" "255"
+}
+// entity 165
+{
+"classname" "misc_particle"
+"origin" "304 592 24"
+"particle" "crashsite_fire"
+"spawnflags" "255"
+}
+// entity 166
+{
+"classname" "misc_particle"
+"origin" "432 624 24"
+"particle" "crashsite_fire"
+"spawnflags" "255"
+}
+// entity 167
+{
+"classname" "misc_particle"
+"origin" "528 688 24"
+"particle" "crashsite_fire"
+"spawnflags" "255"
+}
+// entity 168
+{
+"classname" "misc_particle"
+"origin" "368 624 24"
+"particle" "crashsite_fire"
+"spawnflags" "255"
+}
+// entity 169
+{
+"classname" "misc_particle"
+"origin" "432 656 24"
+"particle" "crashsite_fire"
+"spawnflags" "255"
+}
+// entity 170
+{
+"classname" "misc_particle"
+"origin" "496 656 24"
+"particle" "crashsite_fire"
+"spawnflags" "255"
+}
+// entity 171
+{
+"classname" "misc_particle"
+"particle" "crashsite_fire"
+"origin" "208 528 24"
+"spawnflags" "255"
+}
+// entity 172
+{
+"classname" "misc_particle"
+"particle" "crashsite_fire"
+"origin" "440 352 24"
+"spawnflags" "255"
+}
+// entity 173
+{
+"classname" "misc_particle"
+"particle" "crashsite_fire"
+"origin" "400 368 24"
+"spawnflags" "255"
+}
+// entity 174
+{
+"classname" "misc_particle"
+"particle" "crashsite_fire"
+"origin" "528 368 24"
+"spawnflags" "255"
 }
