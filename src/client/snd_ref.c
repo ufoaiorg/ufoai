@@ -1436,7 +1436,7 @@ static int S_OGG_Callback_seek(void *datasource, ogg_int64_t offset, int whence)
 			retVal = FS_Seek(&stream->file, (long) offset, FS_SEEK_SET);
 
 			/* something has gone wrong, so we return here */
-			if (!(retVal == 0))
+			if (retVal < 0)
 				return retVal;
 
 			/* keep track of file position */
@@ -1450,7 +1450,7 @@ static int S_OGG_Callback_seek(void *datasource, ogg_int64_t offset, int whence)
 			retVal = FS_Seek(&stream->file, (long) offset, FS_SEEK_CUR);
 
 			/* something has gone wrong, so we return here */
-			if (!(retVal == 0))
+			if (retVal < 0)
 				return retVal;
 
 			/* keep track of file position */
@@ -1467,7 +1467,7 @@ static int S_OGG_Callback_seek(void *datasource, ogg_int64_t offset, int whence)
 			retVal = FS_Seek(&stream->file, (long)stream->length + (long) offset, FS_SEEK_SET);
 
 			/* something has gone wrong, so we return here */
-			if (!(retVal == 0))
+			if (retVal < 0)
 				return retVal;
 
 			/* keep track of file position */
@@ -1646,7 +1646,7 @@ int OGG_Read(void)
 	} else if (res == OV_EBADLINK) {
 		Com_Printf("OGG_Read: invalid stream section was supplied to libvorbisfile, or the requested link is corrupt\n");
 		res = 0;
-	} 
+	}
 	S_RawSamples(res >> 2, music.rate, 2, 2, (byte *) music.ovBuf, music.fading);
 	if (*music.newFilename) {
 		Com_DPrintf("fading ogg track: %.10f\n", music.fading);
