@@ -189,6 +189,8 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 
 /**
  * @brief Checks if any items have been collected (in the current base) and correct the value for each requirement.
+ * @return Returns qtrue if all required items are collected otherwise qfalse.
+ * @todo Iterate into logic blocks.
  */
 qboolean RS_CheckCollected(requirements_t *required)
 {
@@ -211,6 +213,8 @@ qboolean RS_CheckCollected(requirements_t *required)
 				required->collected[i] = 0;
 				all_collected = qfalse;
 			}
+		} else if (required->type[i] == RS_LINK_TECH) {
+			/* TODO: Check if it is a logic block (RS_LOGIC) and interate into it if that is the case.*/
 		}
 	}
 	return all_collected;
@@ -218,6 +222,7 @@ qboolean RS_CheckCollected(requirements_t *required)
 
 /**
  * @brief Checks if any items have been collected in the current base and correct the values for each requirement.
+ * @todo Add support for items in the require_OR list.
  */
 void RS_CheckAllCollected(void)
 {
@@ -233,6 +238,8 @@ void RS_CheckAllCollected(void)
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
+
+		/* TODO: Add support for require_OR here. */
 		if (RS_CheckCollected(&tech->require_AND)) {
 			tech->statusCollected = qtrue;
 		}
@@ -483,6 +490,10 @@ void RS_InitTree(void)
 		case RS_UGV:
 			/* TODO: Implement me */
 			break;
+		case RS_LOGIC:
+			/* Does not need any additional data. */
+			break;
+
 		} /* switch */
 	}
 	/*
@@ -1096,6 +1107,8 @@ static char *RS_TechTypeToName(researchType_t type)
 		return "ugv";
 	case RS_NEWS:
 		return "news";
+	case RS_LOGIC:
+		return "logic";
 	default:
 		return "unknown";
 	}
@@ -1378,6 +1391,8 @@ void RS_ParseTechnologies(char *id, char **text)
 				tech->type = RS_ALIEN;
 			else if (!Q_strncmp(token, "ugv", MAX_VAR))
 				tech->type = RS_UGV;
+			else if (!Q_strncmp(token, "logic", MAX_VAR))
+				tech->type = RS_LOGIC;
 			else
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
 		} else {

@@ -2177,6 +2177,8 @@ tech rs_craft_weapon_particle_beam
 	{
 		tech rs_craft_ufo_fighter
 		tech rs_craft_ufo_harvester
+		// tech rs_craft_ufo_fighter_AND_craft_weapon_particle_beam
+		// tech rs_craft_ufo_harvester_AND_craft_weapon_particle_beam
 	}
 
 	time	100
@@ -2225,14 +2227,26 @@ tech news_phalanx_mumbai_aftermath
 // WIPs
 //========================
 
-// Concept of using dummy techs for extended requirements (they should not be displayed anywhere - thus the "dummy" type)
+// Concept of using dummy techs for extended requirements (they should not be displayed anywhere - thus the "logic" type)
 //
-// tech rs_craft_ufo_fighter_AND_craft_weapon_particle_beam
+//tech rs_craft_ufo_fighter_AND_craft_weapon_particle_beam
 //{
-//	type	dummy
+//	type	logic
+//	name	"LOGIC:Fighter AND 1beamweapon"
 //	require_AND
 //	{
 //		item craft_weapon_particle_beam 1
 //		tech rs_craft_ufo_fighter
+//	}
+//}
+
+//tech rs_craft_ufo_harvester_AND_craft_weapon_particle_beam
+//{
+//	type	logic
+//	name	"LOGIC:Harvester AND 1beamweapon"
+//	require_AND
+//	{
+//		item craft_weapon_particle_beam 1
+//		tech rs_craft_ufo_harvester
 //	}
 //}

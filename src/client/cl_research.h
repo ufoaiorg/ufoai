@@ -51,7 +51,8 @@ typedef enum researchType_s {
 	RS_BUILDING,
 	RS_ALIEN,
 	RS_UGV,
-	RS_NEWS
+	RS_NEWS,
+	RS_LOGIC
 } researchType_t;
 
 typedef enum requirementType_s {
