@@ -29,7 +29,7 @@
 //		"item" type	-	e.g "item coolweapon 10"
 //			You need to collect at least 10 items of this thing so it can be researched.
 //	require_OR { type id [amount] }
-//		Works the same as require_AND with the difference that ANY of the entries will enable the tech to bew researchable.
+//		Works the same as require_AND with the difference that ANY of the entries will enable the tech to be researchable.
 //	delay
 //		The number of days until a 'successor' technology-item will be available for research.
 //		i.e. Every requirement from above is met, but this nubmer of days hasn't passed yet => tech not yet available for research.
@@ -87,24 +87,6 @@ tech rs_laser
 	time	1500
 	image_top	techs/laser
 }
-
-// tech rs_tachyon
-// {
-// 	type	tech
-// 	name	"_Tachyon Control"
-// 	up_chapter	tech
-// 	description	"_tachyon_txt"
-// 	pre_description	"_tachyon_pre_txt"
-//
-// 	require_OR
-// 	{
-// 		item tachyonpistol 1
-// 		item tachyonrifle 1
-// 		item tachyonsniper 1
-// 	}
-// 	time	3000
-// }
-
 
 //=================================
 // weapons and items
@@ -2196,7 +2178,14 @@ tech rs_craft_weapon_particle_beam
 	// FIXME
 	provides	assault
 	require_AND { tech nothing }
-	time	0
+
+	require_OR
+	{
+		tech rs_craft_ufo_fighter
+		tech rs_craft_ufo_harvester
+	}
+
+	time	100
 
 	image_top	"techs/craftweapon_particle_beam"
 }
