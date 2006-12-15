@@ -1270,7 +1270,6 @@ tech rs_light_alien
 
 	provides	light_alien
 	time	    25000
-	//needscollected	true
 }
 
 tech rs_medium_alien
@@ -1282,7 +1281,6 @@ tech rs_medium_alien
 
 	provides	medium_alien
 	time	    25000
-	//needscollected	true
 }
 
 //========================
@@ -1832,6 +1830,12 @@ tech rs_craft_saracen_interceptor
 //========================
 // Crafts - UFOs
 //========================
+item craft_ufo_scout
+{
+	// dummy package to that we can link
+	weapon false
+}
+
 tech rs_craft_ufo_scout
 {
 	type	tech
@@ -1846,11 +1850,23 @@ tech rs_craft_ufo_scout
 		item craft_ufo_scout 1
 	}
 
-	provides	""
+	require_OR
+	{
+		tech rs_building_small_ufo_hangar
+		tech rs_building_large_ufo_hangar
+	}
+
+	provides	"craft_ufo_scout"
 	time	2500
 
 	// TODO should come from craft-definition:
 	mdl_top		ufo1
+}
+
+item craft_ufo_fighter
+{
+	// dummy package to that we can link
+	weapon false
 }
 
 tech rs_craft_ufo_fighter
@@ -1868,11 +1884,17 @@ tech rs_craft_ufo_fighter
 		tech rs_craft_ufo_scout
 	}
 
-	provides	""
+	provides	"craft_ufo_fighter"
 	time	2500
 
 	// TODO should come from craft-definition:
 	mdl_top		ufobig
+}
+
+item craft_ufo_harvester
+{
+	// dummy package to that we can link
+	weapon false
 }
 
 tech rs_craft_ufo_harvester
@@ -1887,11 +1909,10 @@ tech rs_craft_ufo_harvester
 	require_AND
 	{
 		tech rs_craft_ufo_scout
-		tech rs_craft_ufo_tech
-		// item craft_ufo_harvester 1
+		item craft_ufo_harvester 1
 	}
 
-	provides	""
+	provides	"craft_ufo_harvester"
 	time	2500
 
 	// TODO should come from craft-definition:
@@ -1915,7 +1936,6 @@ tech rs_alien_bloodspider_live
 	require_AND { tech nothing }
 	provides	""
 	time	0
-	//needscollected	true
 
 	mdl_top	"aliens/bloodspider/bloodspider"
 }
@@ -1931,7 +1951,6 @@ tech rs_alien_bloodspider_autopsy
 	require_AND { tech TODO }
 	provides	""
 	time	1500
-	//needscollected	true
 
 	mdl_top	"aliens/bloodspider/bloodspider"
 
@@ -1951,7 +1970,6 @@ tech rs_alien_ortnok_autopsy
 	require_AND { tech TODO }
 	provides	""
 	time	1500
-	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_ortnok
@@ -1972,7 +1990,6 @@ tech rs_alien_antarean_autopsy
 	require_AND { tech TODO }
 	provides	""
 	time	1500
-	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_antarean
@@ -1991,7 +2008,6 @@ tech rs_alien_shevaar_autopsy
 	require_AND { tech TODO }
 	provides	""
 	time	1500
-	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_shevaar
@@ -2010,7 +2026,6 @@ tech rs_alien_stinger_notes
 	require_AND { tech TODO }
 	provides	""
 	time	0
-	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_hovernet
@@ -2027,7 +2042,6 @@ tech rs_alien_stinger_autopsy
 	require_AND { tech TODO }
 	provides	""
 	time	1500
-	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_hovernet
@@ -2046,7 +2060,6 @@ tech rs_alien_cyborg_ortnok_autopsy
 	require_AND { tech TODO }
 	provides	""
 	time	1500
-	//needscollected	true
 
 	// menuModel - see models.ufo
 	mdl_top	alien_cyborg_ortnok
