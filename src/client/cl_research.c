@@ -46,8 +46,8 @@ static int researchListPos;
 static stringlist_t curRequiredList;
 
 /**
- * @brief Sets a technology status to researched and updates the date
- * @param[in] tech The technology that was researched
+ * @brief Sets a technology status to researched and updates the date.
+ * @param[in] tech The technology that was researched.
  */
 void RS_ResearchFinish (technology_t* tech)
 {
@@ -105,10 +105,10 @@ int RS_ItemInBase(int item_idx, base_t *base)
 }
 
 /**
- * @brief Checks if all requirements of a tech have been met.
+ * @brief Checks if all requirements of a tech have been met so that it becomes researchable.
  * @param[in] require_AND pointer to a list of AND-related requirements.
  * @param[in] require_OR pointer to a list of OR-related requirements.
- * @return qtrue if all requirements are satisfied otherwise qfalse.
+ * @return Returns qtrue if all requirements are satisfied otherwise qfalse.
  */
 static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t *required_OR)
 {
@@ -279,7 +279,7 @@ void RS_MarkResearchable(void)
 
 	for (i = 0; i < gd.numTechnologies; i++) {	/* i = tech-index */
 		tech = &gd.technologies[i];
-		if (!tech->statusResearchable) {	/* Redundant, since we set them all to false, but you never know. */
+		if (!tech->statusResearchable) { /* In case we loopback we need to check for already marked techs. */
 			/* Check for collected items/aliens/etc... */
 
 			if (tech->statusResearch != RS_FINISH) {
@@ -1605,7 +1605,7 @@ int RS_Collected_(technology_t * tech)
 /**
  * @brief Checks if the technology (tech-id) has been researched.
  * @param[in] tech_idx index of the technology.
- * @return qboolean
+ * @return qboolean Returns qtrue if the technology has been researched, otherwise qfalse;
  */
 qboolean RS_TechIsResearched(int tech_idx)
 {
