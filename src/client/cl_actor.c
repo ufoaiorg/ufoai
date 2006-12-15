@@ -91,6 +91,7 @@ static char *CL_GetSkillString(const int skill)
 	case 8:
 		return _("Superhuman");
 	case 9:
+	case 10:
 		return _("Godlike");
 	default:
 		Com_Printf("CL_GetSkillString: Unknown skill: %i (index: %i)\n", skill, skill*10/MAX_SKILL);
