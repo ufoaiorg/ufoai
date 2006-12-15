@@ -189,14 +189,16 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 
 /**
  * @brief Checks if any items have been collected (in the current base) and correct the value for each requirement.
+ * @note Does not check if the collected items satisfy the needed "amount". This is done in RS_RequirementsMet.
  * @return Returns qtrue if all required items are collected otherwise qfalse.
- * @todo Iterate into logic blocks.
+ * @todo Extend to support require_OR (see RS_CheckAllCollected for more info)
  */
 qboolean RS_CheckCollected(requirements_t *required)
 {
 	int i;
 	int item_amount;
 	qboolean all_collected = qtrue;
+	technology_t *tech = NULL;
 
 	if (!required)
 		return qfalse;
@@ -214,7 +216,16 @@ qboolean RS_CheckCollected(requirements_t *required)
 				all_collected = qfalse;
 			}
 		} else if (required->type[i] == RS_LINK_TECH) {
-			/* TODO: Check if it is a logic block (RS_LOGIC) and interate into it if that is the case.*/
+			tech = &gd.technologies[required->idx[i]];
+			/* Check if it is a logic block (RS_LOGIC) and interate into it if so.*/
+			if (tech->type == RS_LOGIC) {
+				if (!RS_CheckCollected(&tech->require_AND)) {
+					tech->statusCollected = qfalse;
+					all_collected = qfalse;
+				} else {
+					tech->statusCollected = qtrue;
+				}
+			}
 		}
 	}
 	return all_collected;
@@ -239,7 +250,9 @@ void RS_CheckAllCollected(void)
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 
-		/* TODO: Add support for require_OR here. */
+		/* TODO: Add support for require_OR here. Change this to the following:
+		 * if (RS_CheckCollected(&tech) - does return AND||OR 
+		 */
 		if (RS_CheckCollected(&tech->require_AND)) {
 			tech->statusCollected = qtrue;
 		}
