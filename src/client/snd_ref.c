@@ -1210,12 +1210,13 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	channel_t *ch;
 	channel_t *combine;
 
-
+	/* did we switch the sound renderer */
 	if (snd_ref->modified) {
 		snd_ref->modified = qfalse;
 		CL_Snd_Restart_f();
 	}
 
+	/* maybe no sound initialized */
 	if (!sound_started)
 		return;
 
@@ -1628,13 +1629,16 @@ int OGG_Read(void)
 	if (!stream)
 		Sys_Error("No stream allocated\n");
 
+	/* music faded out - so stop is and open the new track */
 	if (music.fading <= 0.0) {
 		OGG_Stop();
 		OGG_Open(music.newFilename);
 		music.newFilename[0] = '\0';
 		return 0;
 	}
+
 	/* read and resample */
+	/* this read function will use our callbacks to be even able to read from zip files */
 	res = ov_read(&music.ovFile, music.ovBuf, sizeof(music.ovBuf), 0, 2, 1, &music.ovSection);
 	S_RawSamples(res >> 2, music.rate, 2, 2, (byte *) music.ovBuf, music.fading);
 	if (*music.newFilename) {
