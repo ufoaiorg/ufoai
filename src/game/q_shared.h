@@ -1256,6 +1256,7 @@ typedef enum {
 #define CS_GENERAL          (CS_PLAYERSKINS+MAX_CLIENTS)
 #define MAX_CONFIGSTRINGS   (CS_GENERAL+MAX_GENERAL)
 
+void Com_PrintItemDescription(int i);
 void Com_InventoryList_f(void);
 
 /* g_spawn.c */

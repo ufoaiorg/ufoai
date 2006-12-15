@@ -826,35 +826,43 @@ void CL_PlaceItem( le_t *le )
  */
 void CL_InvAdd( sizebuf_t *sb )
 {
-	int		number;
+	int		number, nr, i;
+	int 	container, x, y;
 	le_t	*le;
+	item_t 	item;
 
 	number = MSG_ReadShort( sb );
 
-	le = LE_Get( number );
-	if ( !le ) {
-		Com_Printf( "InvAdd message ignored... LE not found\n" );
-		return;
-	}
+	for (i = 0, le = LEs; i < numLEs; i++, le++)
+		if (le->entnum == number)
+           	break;
 
-	{
-		item_t item;
-		int container, x, y;
-		int nr = MSG_ReadShort(sb) / 6;
-
+	if (le->entnum != number) {
+		nr = MSG_ReadShort(sb) / 6;
+		Com_Printf( "InvAdd: message ignored... LE %i not found\n", number );
 		for (; nr-- > 0;) {
-
 			CL_ReceiveItem(sb, &item, &container, &x, &y);
-
-			Com_AddToInventory(&le->i, item, container, x, y);
-
-			if ( container == csi.idRight )
-				le->right = item.t;
-			else if ( container == csi.idLeft )
-				le->left = item.t;
-			else if ( container == csi.idExtension )
-				le->extension = item.t;
+			Com_Printf("InvAdd: ignoring:\n");
+			Com_PrintItemDescription(item.t);
 		}
+		return;
+	} 
+	if (!le->inuse)
+		Com_Printf( "InvAdd: warning... LE found but not in-use\n" );
+
+	nr = MSG_ReadShort(sb) / 6;
+
+	for (; nr-- > 0;) {
+		CL_ReceiveItem(sb, &item, &container, &x, &y);
+
+		Com_AddToInventory(&le->i, item, container, x, y);
+
+		if ( container == csi.idRight )
+			le->right = item.t;
+		else if ( container == csi.idLeft )
+			le->left = item.t;
+		else if ( container == csi.idExtension )
+			le->extension = item.t;
 	}
 
 	switch ( le->type ) {

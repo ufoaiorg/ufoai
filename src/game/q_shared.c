@@ -3729,23 +3729,33 @@ char *Com_ValueToStr(void *base, int type, int ofs)
 }
 
 /**
+ * @brief Prints a description of an object
+ * @param[in] index of object in CSI
+ */
+void Com_PrintItemDescription(int i)
+{
+	objDef_t *ods_temp;
+
+	ods_temp = &CSI->ods[i];
+	Com_Printf("Item: %s\n", ods_temp->kurz);
+	Com_Printf("... name          -> %s\n", ods_temp->name);
+	Com_Printf("... type          -> %s\n", ods_temp->type);
+	Com_Printf("... category      -> %i\n", ods_temp->category);
+	Com_Printf("... weapon        -> %i\n", ods_temp->weapon);
+	Com_Printf("... holdtwohanded -> %i\n", ods_temp->holdtwohanded);
+	Com_Printf("... firetwohanded -> %i\n", ods_temp->firetwohanded);
+	Com_Printf("... twohanded     -> %i\n", ods_temp->holdtwohanded);
+	Com_Printf("... thrown        -> %i\n", ods_temp->thrown);
+}
+
+
+/**
  * @brief Lists all object definitions
  */
 void Com_InventoryList_f(void)
 {
 	int i;
-	objDef_t *ods_temp;
 
-	for (i = 0; i < CSI->numODs; i++) {
-		ods_temp = &CSI->ods[i];
-		Com_Printf("Item: %s\n", ods_temp->kurz);
-		Com_Printf("... name          -> %s\n", ods_temp->name);
-		Com_Printf("... type          -> %s\n", ods_temp->type);
-		Com_Printf("... category      -> %i\n", ods_temp->category);
-		Com_Printf("... weapon        -> %i\n", ods_temp->weapon);
-		Com_Printf("... holdtwohanded -> %i\n", ods_temp->holdtwohanded);
-		Com_Printf("... firetwohanded -> %i\n", ods_temp->firetwohanded);
-		Com_Printf("... twohanded     -> %i\n", ods_temp->holdtwohanded);
-		Com_Printf("... thrown        -> %i\n", ods_temp->thrown);
-	}
+	for (i = 0; i < CSI->numODs; i++)
+		Com_PrintItemDescription(i);
 }
