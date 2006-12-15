@@ -96,7 +96,9 @@ typedef struct technology_s {
 
 	requirements_t require_AND;	/* A list of requirements that ALL need to be met (= AND-related) See struct above. */
 	requirements_t require_OR;	/* A list of requirements where ANY need to be met (= OR-related) See struct above. */
-	qboolean statusCollected;	/* Did we loot all required items? This is (or _should be_) updated from the info stored in the require_X lists. */
+	qboolean statusCollected;	/* Did we loot any items of this tech?
+					 * This is updated from the info stored in the require_OR and require_AND lists.
+					 * See RS_CheckCollected and RS_CheckAllCollected. */
 
 	char provides[MAX_VAR];		/* The item that this technology enables. */
 	float overalltime, time;	/* The time that is needed to research this tech. (in days). */

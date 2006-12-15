@@ -190,7 +190,7 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 /**
  * @brief Checks if any items have been collected (in the current base) and correct the value for each requirement.
  * @note Does not check if the collected items satisfy the needed "amount". This is done in RS_RequirementsMet.
- * @return Returns qtrue if there are any collected items qfalse.
+ * @return Returns qtrue if there are any collected items otherwise qfalse.
  * @todo Extend to support require_OR (see RS_CheckAllCollected for more info)
  */
 qboolean RS_CheckCollected(requirements_t *required)
