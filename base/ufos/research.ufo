@@ -2161,6 +2161,12 @@ tech rs_craft_weapon_tr20
 	image_top	"techs/craftweapon_tr20"
 }
 
+item craft_weapon_particle_beam
+{
+	// dummy package to that we can link
+	weapon false
+}
+
 tech rs_craft_weapon_particle_beam
 {
 	type	craftweapon
@@ -2169,16 +2175,14 @@ tech rs_craft_weapon_particle_beam
 	// pre_description	"_craft_weapon_particle_beam_pre_txt"
 	description	"_craft_weapon_particle_beam_txt"
 
-	// FIXME
-	provides	assault
-	require_AND { tech nothing }
+	provides	craft_weapon_particle_beam
 
 	require_OR
 	{
-		tech rs_craft_ufo_fighter
-		tech rs_craft_ufo_harvester
-		// tech rs_craft_ufo_fighter_AND_craft_weapon_particle_beam
-		// tech rs_craft_ufo_harvester_AND_craft_weapon_particle_beam
+//		tech rs_craft_ufo_fighter
+//		tech rs_craft_ufo_harvester
+		tech rs_craft_ufo_fighter_AND_craft_weapon_particle_beam
+		tech rs_craft_ufo_harvester_AND_craft_weapon_particle_beam
 	}
 
 	time	100
@@ -2228,25 +2232,26 @@ tech news_phalanx_mumbai_aftermath
 //========================
 
 // Concept of using dummy techs for extended requirements (they should not be displayed anywhere - thus the "logic" type)
-//
-//tech rs_craft_ufo_fighter_AND_craft_weapon_particle_beam
-//{
-//	type	logic
-//	name	"LOGIC:Fighter AND 1beamweapon"
-//	require_AND
-//	{
-//		item craft_weapon_particle_beam 1
-//		tech rs_craft_ufo_fighter
-//	}
-//}
+// These entries can later be moved in front of the rs_craft_weapon_particle_beam entry.
 
-//tech rs_craft_ufo_harvester_AND_craft_weapon_particle_beam
-//{
-//	type	logic
-//	name	"LOGIC:Harvester AND 1beamweapon"
-//	require_AND
-//	{
-//		item craft_weapon_particle_beam 1
-//		tech rs_craft_ufo_harvester
-//	}
-//}
+tech rs_craft_ufo_fighter_AND_craft_weapon_particle_beam
+{
+	type	logic
+	name	"LOGIC:Fighter AND 1beamweapon"
+	require_AND
+	{
+		item craft_weapon_particle_beam 1
+		tech rs_craft_ufo_fighter
+	}
+}
+
+tech rs_craft_ufo_harvester_AND_craft_weapon_particle_beam
+{
+	type	logic
+	name	"LOGIC:Harvester AND 1beamweapon"
+	require_AND
+	{
+		item craft_weapon_particle_beam 1
+		tech rs_craft_ufo_harvester
+	}
+}

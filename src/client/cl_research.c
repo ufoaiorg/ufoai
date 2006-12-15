@@ -1226,7 +1226,16 @@ void RS_MarkResearchedAll(void)
  */
 static void RS_DebugResearchAll(void)
 {
-	RS_MarkResearchedAll();
+	technology_t *tech = NULL;
+	
+	if (Cmd_Argc() != 2) {
+		RS_MarkResearchedAll();
+	} else {
+		tech= RS_GetTechByID(Cmd_Argv(1));
+		Com_DPrintf("...mark %s as researched\n", tech->id);
+		RS_MarkOneResearchable(tech->idx);
+		RS_ResearchFinish(tech);
+	}
 }
 
 /**
@@ -1236,20 +1245,21 @@ static void RS_DebugResearchAll(void)
 static void RS_DebugResearchableAll(void)
 {
 	int i;
+	technology_t *tech = NULL;
 
 	if (Cmd_Argc() != 2) {
 		for (i = 0; i < gd.numTechnologies; i++) {
-			Com_Printf("...mark %s as researchable\n", gd.technologies[i].id);
+			tech = &gd.technologies[i];
+			Com_Printf("...mark %s as researchable\n", tech->id);
 			RS_MarkOneResearchable(i);
-			gd.technologies[i].statusCollected = qtrue;
+			tech->statusCollected = qtrue;
 		}
 	} else {
-		for (i = 0; i < gd.numTechnologies; i++) {
-			if (!Q_strcmp(gd.technologies[i].id, Cmd_Argv(1))) {
-				Com_Printf("...mark %s as researchable\n", gd.technologies[i].id);
-				RS_MarkOneResearchable(i);
-				gd.technologies[i].statusCollected = qtrue;
-			}
+		tech = RS_GetTechByID(Cmd_Argv(1));
+		if (tech) {
+				Com_Printf("...mark %s as researchable\n", tech->id);
+				RS_MarkOneResearchable(tech->idx);
+				tech->statusCollected = qtrue;
 		}
 	}
 }
