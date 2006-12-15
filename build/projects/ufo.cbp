@@ -10,19 +10,19 @@
 		<Build>
 			<Target title="default">
 				<Option output="..\..\ufo.exe" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\client" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-Wall" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-D_M_IX86=500" />
-			<Add option="-Wall" />
 			<Add option="-DDEBUG" />
 			<Add option="-DDEVCPP" />
 			<Add option="-DC_ONLY" />
-			<Add option="-DUSE_SDL" />
-			<Add option="-DSHADERS" />
+			<Add option="-DHAVE_SHADERS" />
 			<Add option="-DHAVE_GETTEXT" />
 		</Compiler>
 		<Linker>
@@ -39,6 +39,7 @@
 			<Add library="gmon" />
 			<Add library="SDL" />
 			<Add library="SDL_ttf" />
+			<Add library="z" />
 			<Add directory="C:\Dev-Cpp\lib" />
 		</Linker>
 		<Unit filename="..\..\src\client\anorms.h">
@@ -62,6 +63,16 @@
 			<Option target="default" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_aircraft.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_aliencont.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_aliencont.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
@@ -375,10 +386,6 @@
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\ioapi.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
 		<Unit filename="..\..\src\qcommon\cvar.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
@@ -400,6 +407,26 @@
 			<Option target="default" />
 		</Unit>
 		<Unit filename="..\..\src\qcommon\filesys.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\ioapi.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\ioapi.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\irc.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\irc.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
@@ -497,6 +524,8 @@
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Extensions />
+		<Extensions>
+			<code_completion />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
