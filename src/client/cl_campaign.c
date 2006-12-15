@@ -2279,6 +2279,63 @@ static void CL_GameGo(void)
 }
 
 /**
+ * @brief For things like craft_ufo_scout that are no real items this function will
+ * increase the collected counter by one
+ * @note Mission trigger function
+ * @sa CP_MissionTriggerFunctions
+ * @sa CP_ExecuteMissionTrigger
+ */
+static void CP_AddItemAsCollected (void)
+{
+	int i, baseID;
+	objDef_t *item = NULL;
+	char* id = NULL;
+
+	/* baseid is appened in mission trigger function */
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <item>\n", Cmd_Argv(0));
+		return;
+	}
+
+	id = Cmd_Argv(1);
+	baseID = atoi(Cmd_Argv(2));
+
+	/* i = item index */
+	for (i = 0; i < csi.numODs; i++) {
+		item = &csi.ods[i];
+		if (!Q_strncmp(id, item->kurz, MAX_VAR)) {
+			gd.bases[baseID].storage.num[i]++;
+			Com_DPrintf("add item: '%s'\n", item->kurz);
+			assert(item->tech);
+			((technology_t*)(item->tech))->statusCollected = qtrue;
+		}
+	}
+}
+
+/**< mission trigger functions */
+static cmdList_t cp_commands[] = {
+	{"cp_add_item", CP_AddItemAsCollected, "Add an item as collected"},
+
+	{NULL, NULL, NULL}
+};
+
+/**
+ * @brief Add/Remove temporary mission trigger functions
+ * @note These function can be defined via onwin/onlose parameters in missions.ufo
+ * @param[in] add If true, add the trigger functions, otherwise delete them
+ */
+static void CP_MissionTriggerFunctions(qboolean add)
+{
+	cmdList_t *commands;
+
+	for (commands = cp_commands; commands->name; commands++)
+		if (add)
+			Cmd_AddCommand(commands->name, commands->function, commands->description);
+		else
+			Cmd_RemoveCommand(commands->name);
+}
+
+/**
  * @brief Executes console commands after a mission
  *
  * @param m Pointer to mission_t
@@ -2286,12 +2343,21 @@ static void CL_GameGo(void)
  * Can execute console commands (triggers) on win and lose
  * This can be used for story dependent missions
  */
-static void CP_ExecuteMissionTrigger(mission_t * m, int won)
+static void CP_ExecuteMissionTrigger(mission_t * m, int won, base_t* base)
 {
-	if (won && *m->onwin)
-		Cbuf_ExecuteText(EXEC_NOW, m->onwin);
-	else if (!won && *m->onlose)
-		Cbuf_ExecuteText(EXEC_NOW, m->onlose);
+	/* we add them only here - and remove them afterwards to prevent cheating */
+	CP_MissionTriggerFunctions(qtrue);
+	Com_DPrintf("Execute mission triggers\n");
+	if (won && *m->onwin) {
+		assert(base);
+		Com_DPrintf("...won - executing '%s'\n", m->onwin);
+		Cbuf_ExecuteText(EXEC_NOW, va("%s %i", m->onwin, base->idx));
+	} else if (!won && *m->onlose) {
+		assert(base);
+		Com_DPrintf("...lost - executing '%s'\n", m->onlose);
+		Cbuf_ExecuteText(EXEC_NOW, va("%s %i", m->onlose, base->idx));
+	}
+	CP_MissionTriggerFunctions(qfalse);
 }
 
 /**
@@ -2378,7 +2444,7 @@ void CL_GameAutoGo(void)
 	}
 
 	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(selMis->def, won);
+	CP_ExecuteMissionTrigger(selMis->def, won, aircraft->homebase);
 
 	CL_CampaignRemoveMission(selMis);
 
@@ -2735,7 +2801,7 @@ static void CL_GameResultsCmd(void)
 	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n");
 
 	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(selMis->def, won);
+	CP_ExecuteMissionTrigger(selMis->def, won, baseCurrent);
 
 	/* send the dropship back to base */
 	CL_AircraftReturnToBase_f();

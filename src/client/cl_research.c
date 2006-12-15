@@ -78,7 +78,7 @@ void RS_MarkOneResearchable(int tech_idx)
  * @brief Check if the item has been collected (in storage or quarantine) in the giveb base.
  * @param[in] item_idx The index of the item in the inv.
  * @param[in] base The base to searrch in.
- * @return qboolean
+ * @return amount of available items in base (TODO/FIXME: and on market)
  * @todo quarantine
  */
 int RS_ItemInBase(int item_idx, base_t *base)
@@ -217,7 +217,7 @@ qboolean RS_CheckCollected(requirements_t *required)
 }
 
 /**
- * @brief Checks if any items have been collected int he current base and correct the values for each requirement.
+ * @brief Checks if any items have been collected in the current base and correct the values for each requirement.
  */
 void RS_CheckAllCollected(void)
 {
@@ -236,7 +236,6 @@ void RS_CheckAllCollected(void)
 		if (RS_CheckCollected(&tech->require_AND)) {
 			tech->statusCollected = qtrue;
 		}
-
 	}
 }
 
@@ -323,10 +322,10 @@ void RS_AssignTechIdxs(requirements_t *req)
 		case RS_LINK_WEAPON:
 			/* Get index in item-list. */
 			req->idx[i] = RS_GetItem(req->id[i]);
-			break;		
+			break;
 		case RS_LINK_EVENT:
 			/* TODO: Get index of event in event-list. */
-			break;		
+			break;
 		default:
 			break;
 		}
@@ -950,8 +949,11 @@ void RS_UpdateData(void)
 }
 
 /**
- * @brief
- * TODO: document this
+ * @brief Checks whether there are items in the research list and there is a base
+ * otherwise leave the research menu again
+ * @note if there is a base but no lab a popup appears
+ * @sa RS_UpdateData
+ * @sa MN_ResearchInit
  */
 void CL_ResearchType(void)
 {
@@ -1163,11 +1165,11 @@ static void RS_TechnologyList_f(void)
 #endif /* DEBUG */
 
 /**
- * @brief
- * Command to call this: research_init
+ * @brief Research menu init function binding
+ * @note Command to call this: research_init
  *
- * Should be called whenever the research menu
- * gets active
+ * @note Should be called whenever the research menu gets active
+ * @sa CL_ResearchType
  */
 void MN_ResearchInit(void)
 {
@@ -1200,6 +1202,31 @@ static void RS_DebugResearchAll(void)
 {
 	RS_MarkResearchedAll();
 }
+
+/**
+ * @brief Set all item to researched
+ * @note Just for debugging purposes
+ */
+static void RS_DebugResearchableAll(void)
+{
+	int i;
+
+	if (Cmd_Argc() != 2) {
+		for (i = 0; i < gd.numTechnologies; i++) {
+			Com_Printf("...mark %s as researchable\n", gd.technologies[i].id);
+			RS_MarkOneResearchable(i);
+			gd.technologies[i].statusCollected = qtrue;
+		}
+	} else {
+		for (i = 0; i < gd.numTechnologies; i++) {
+			if (!Q_strcmp(gd.technologies[i].id, Cmd_Argv(1))) {
+				Com_Printf("...mark %s as researchable\n", gd.technologies[i].id);
+				RS_MarkOneResearchable(i);
+				gd.technologies[i].statusCollected = qtrue;
+			}
+		}
+	}
+}
 #endif
 
 /**
@@ -1230,7 +1257,7 @@ void RS_ResetResearch(void)
 {
 	researchListLength = 0;
 	/* add commands and cvars */
-	Cmd_AddCommand("research_init", MN_ResearchInit, NULL);
+	Cmd_AddCommand("research_init", MN_ResearchInit, "Research menu init function binding");
 	Cmd_AddCommand("research_select", CL_ResearchSelectCmd, NULL);
 	Cmd_AddCommand("research_type", CL_ResearchType, NULL);
 	Cmd_AddCommand("mn_start_research", RS_ResearchStart, NULL);
@@ -1243,6 +1270,7 @@ void RS_ResetResearch(void)
 #ifdef DEBUG
 	Cmd_AddCommand("techlist", RS_TechnologyList_f, NULL);
 	Cmd_AddCommand("research_all", RS_DebugResearchAll, NULL);
+	Cmd_AddCommand("researchable_all", RS_DebugResearchableAll, NULL);
 #endif
 }
 
