@@ -6,6 +6,7 @@
 //
 //	tech rs_xxx
 //		The _unique_ name of the research item in the tree is xxx.
+//		This is commonly named "id" in the C-code.
 //	type
 //		Just says where to look for more information (this is internal information and will not be displayed anywhere, but is needed to check/find information)
 //		tech
@@ -20,23 +21,34 @@
 //		The full description to be displayed after research.
 //		A short string that is used by gettext to be translatable (e.g. "description _itemname_txt").
 //		This needs to be a unique string in all descriptions. See the po files in the source directory (src/po/*.po)
-// pre_description
+//	pre_description
 //		The description to be displayed when an item has been collected, but it's not yet researched. Usage is the same as 'description'
+// ===============
 //	require_AND { type id [amount] }
 //		A list of requirements that ALL need to be met in order to be able to research it.
 //		"tech" type	-	e.g "tech rs_xxx"
 //			Another technology that has to be researched.
 //		"item" type	-	e.g "item coolweapon 10"
 //			You need to collect at least 10 items of this thing so it can be researched.
+//		"weapon" type	-	e.g "weapon coolweapon"
+//			Use only with ammo. Tells the game which weapons this ammo can used in. Is not evaluated for research.
 //	require_OR { type id [amount] }
 //		Works the same as require_AND with the difference that ANY of the entries will enable the tech to be researchable.
+//	
+//	NOTE: require_AND and require_OR are logically connected like (require_AND || require_OR).
+//	This means that if the the requirements in require_AND and/or in require_OR are met the tech can be researched (i.e it is researchable).
+//
+//	NOTE: Every tech entry must have a require_AND or require_OR section if
+//	it is to be researchable (even if it is just a null requirement like "require_AND { tech nothing }")
+//	If these are skipped then both entries default to 0 (i.e. not met).
+//=================
 //	delay
 //		The number of days until a 'successor' technology-item will be available for research.
 //		i.e. Every requirement from above is met, but this nubmer of days hasn't passed yet => tech not yet available for research.
 //	provides yyy
-//		The item (only one allowed) name (yyy) in the correct ufo file or data-structure (e.g inventory).
-//		The given names are _not_ "tech" items.
-//		This items can be produced once the "tech" item has been finished.
+//		The item (only one allowed) name (yyy) in the correct ufo file or data-structure (e.g. inventory).
+//		The given name is _not_ a "tech", it is an identifier for the item/craft/etc...
+//		This item can be produced once the "tech" item has been finished.
 //	time
 //		Time the research needs to be finished. Consider that this value doesn't reflect _real_ time, but it will depend on the number of scientists working on the item.
 //		If time is 0 the item can be produced at the same time all the "require_X" items are finished.
@@ -49,8 +61,6 @@
 //	mdl_top / mdl_bottom
 //		Same as the image but for 3d-models.
 //		It overrides the image-definitions if it is provided.
-// NB: Every tech entry must have a require_AND or require_OR section if
-// it is to be researable (even if it is just a null requirement like "require_AND { tech nothing }")
 //==========================================
 
 
