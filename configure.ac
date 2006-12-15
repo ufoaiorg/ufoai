@@ -761,6 +761,8 @@ fi
 # Check for DGA
 #---------------------------------------------------------------------------------------------
 
+# FIXME: on some systems the headerfile is: X11/extensions/xf86dga1.h
+
 if test "$with_vid_dga" = "check" || test "$with_vid_dga" = "yes"
 then
 	if test "$ac_cv_header_X11_Xlib_h" = "yes"
