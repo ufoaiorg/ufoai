@@ -416,7 +416,7 @@ mission farm
 	civteam		european
 	nation		"states"
 	onlose		""
-	onwin		""
+	onwin		"cp_add_item craft_ufo_scout;"
 	storyrelated	true
 }
 
