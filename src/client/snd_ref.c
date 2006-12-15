@@ -1640,6 +1640,13 @@ int OGG_Read(void)
 	/* read and resample */
 	/* this read function will use our callbacks to be even able to read from zip files */
 	res = ov_read(&music.ovFile, music.ovBuf, sizeof(music.ovBuf), 0, 2, 1, &music.ovSection);
+	if (res == OV_HOLE) {
+		Com_Printf("OGG_Read: interruption in the data (one of: garbage between pages, loss of sync followed by recapture, or a corrupt page)\n");
+		res = 0;
+	} else if (res == OV_EBADLINK) {
+		Com_Printf("OGG_Read: invalid stream section was supplied to libvorbisfile, or the requested link is corrupt\n");
+		res = 0;
+	} 
 	S_RawSamples(res >> 2, music.rate, 2, 2, (byte *) music.ovBuf, music.fading);
 	if (*music.newFilename) {
 		Com_DPrintf("fading ogg track: %.10f\n", music.fading);
