@@ -253,8 +253,8 @@ menu bases
 
 	pic production
 	{
-		// only if base is not under attack
-		if "mn_base_status_id != 1"
+		// only if base is able to produce items
+		if "mn_base_prod_allowed == 1"
 		tooltip	"_Produce new equipment"
 		image	menu/button
 		pos	"755 480"
@@ -270,13 +270,14 @@ menu bases
 	}
 	pic production_na
 	{
-		// only if base is not under attack
-		if "mn_base_status_id == 1"
-		tooltip	"_Build base-facilities"
+		// only if base is unable to produce items
+		if "mn_base_prod_allowed == 0"
+		tooltip	"_Workshop not operational"
 		image	menu/button
 		pos	"755 480"
 		texl	"0 64"
 		texh	"230 128"
+		in
 	}
 	string txt_production
 	{
@@ -442,6 +443,16 @@ menu bases
 	confunc set_base_transfer
 	{
 		*txt_transfer color "0 0.8 0 1"
+	}
+
+	confunc set_prod_disabled
+	{
+		*txt_production color "0.5 0.5 0.5 1"
+	}
+
+	confunc set_prod_enabled
+	{
+		*txt_production color "0 0.8 0 1"
 	}
 
 	func init
