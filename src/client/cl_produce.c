@@ -89,6 +89,9 @@ static void PR_QueueDelete(production_queue_t *queue, int index)
 	int i;
 
 	queue->numItems--;
+	if (queue->numItems < 0)
+		queue->numItems = 0;
+
 	/* copy up other items */
 	for (i = index; i < queue->numItems; i++) {
 		queue->items[i] = queue->items[i+1];
@@ -134,13 +137,16 @@ static void PR_QueueNext(int base)
 
 	PR_QueueDelete(queue, 0);
 	if (queue->numItems == 0) {
+		selectedQueueItem = qfalse;
+		selectedIndex = -1;
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production queue for base %s is empty"), gd.bases[base].name);
 		MN_AddNewMessage(_("Production queue empty"), messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 		CL_GameTimeStop();
 		return;
+	} else if (selectedIndex >= queue->numItems) {
+		selectedIndex = queue->numItems - 1;
 	}
 }
-
 
 /**
  * @brief Checks whether an item is finished
