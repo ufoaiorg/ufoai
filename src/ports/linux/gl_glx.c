@@ -158,7 +158,7 @@ static void install_grabs(void)
 #ifdef HAVE_XF86_DGA
 		int MajorVersion, MinorVersion;
 
-		if (!XDGAQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
+		if (!XF86DGAQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
 			/* unable to query, probalby not supported */
 			ri.Con_Printf( PRINT_ALL, "Failed to detect XF86DGA Mouse\n" );
 			ri.Cvar_Set( "in_dgamouse", "0" );
