@@ -481,8 +481,7 @@ void PR_ProductionIncrease(void)
 			selectedIndex = queue->numItems-1;
 		} else {
 			/* oops! too many items! */
-			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("You cannot queue any more items!"));
-			MN_AddNewMessage(_("Queue full!"), messageBuffer, qfalse, MSG_PRODUCTION, NULL);
+			MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));
 		}
 	}
 
