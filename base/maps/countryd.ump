@@ -1,0 +1,16 @@
+// ******************
+// COUNTRY SIDE - Day
+// ******************
+
+base countryd/c_
+
+// Dropship on grass with 5 trees
+tile +drop
+{
+5 4
+
+0      ab     ab     ab     0
+ac     +a     +a     +a     ac
+ac     +a     +a     +a     ac
+0      ab     ab     ab     0
+}
