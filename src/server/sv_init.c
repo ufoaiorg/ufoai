@@ -171,9 +171,10 @@ static void RandomList(int n, short *list)
 #define SOLID 255
 
 /**
- * @brief
+ * @brief Convert to tile spec
+ * @sa SV_ParseMapTile
  */
-static byte tileChar(char chr)
+static byte tileChar(const char chr)
 {
 	if (chr == '+')
 		return SOLID;
@@ -206,7 +207,7 @@ static void SV_ParseMapTile(char *filename, char **text)
 		Com_Printf("SV_ParseMapTile: Too many map tile types (%s)\n", filename);
 		return;
 	}
-	t = &mTile[numTiles++];
+	t = &mTile[numTiles];
 	memset(t, 0, sizeof(mTile_t));
 	Q_strncpyz(t->name, token, MAX_VAR);
 
@@ -240,22 +241,30 @@ static void SV_ParseMapTile(char *filename, char **text)
 	for (y = t->h - 1; y >= 0; y--)
 		for (x = 0; x < t->w; x++) {
 			token = COM_EParse(text, errhead, filename);
-			if (!*text)
+			if (!*text || *token == '}') {
+				Com_Printf("SV_ParseMapTile: Bad tile desc in '%s'\n", t->name);
+				*text = strchr(*text, '}') + 1;
 				return;
+			}
 			chr = (char *) &t->spec[y][x][0];
-			for (i = 0; token[i] && i < MAX_TILEALTS; i++, chr++)
+			for (i = 0; token[i] && i < MAX_TILEALTS; i++, chr++) {
 				*chr = tileChar(token[i]);
+			}
 		}
 
 	/* get connections */
-	*text = strchr(*text, '}') + 1;
+	if (strchr(*text, '}'))
+		*text = strchr(*text, '}') + 1;
+
+	/* successfully parsed - this tile counts */
+	numTiles++;
 }
 
 
 /**
  * @brief Parses an assembly block
  * @sa SV_AssembleMap
- *
+ * @sa SV_ParseMapTile
  * @note: format of size: "size x y"
  * @note: format of fix: "fix [tilename] x y"
  * @note: format of tile: "[tilename] min max"
@@ -297,6 +306,7 @@ static void SV_ParseAssembly(char *filename, char **text)
 
 			sscanf(token, "%i %i", &a->w, &a->h);
 			continue;
+		/* fix tilename x y */
 		} else if (!Q_strncmp(token, "fix", 3)) {
 			/* get tile */
 			token = COM_EParse(text, errhead, filename);
@@ -520,8 +530,9 @@ static qboolean SV_AddRegion(byte map[32][32][MAX_TILEALTS], byte * num)
 
 
 /**
- * @brief
+ * @brief Add those part to the map that are mandatory for this assembly
  * @sa SV_FitTile
+ * @sa SV_AddTile
  */
 static qboolean SV_AddMandatoryParts(byte map[32][32][MAX_TILEALTS], byte * num)
 {
@@ -540,8 +551,11 @@ static qboolean SV_AddMandatoryParts(byte map[32][32][MAX_TILEALTS], byte * num)
 					break;
 				}
 			}
-			if (n >= mapSize)
+			/* no tile fit */
+			if (n >= mapSize) {
+				Com_Printf("SV_AddMandatoryParts: Could not find a tile that fits\n");
 				return qfalse;
+			}
 		}
 		num[i] = mAsm->min[i];
 	}
@@ -599,6 +613,7 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 		else if (!Q_strcmp(token, "assembly"))
 			SV_ParseAssembly(filename, &text);
 		else if (!Q_strcmp(token, "{")) {
+			Com_Printf("SV_AssembleMap: Skipping unknown block\n");
 			/* ignore unknown block */
 			text = strchr(text, '}') + 1;
 			if (!text)
@@ -613,8 +628,17 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 	/* check for parsed tiles and assemblies */
 	if (!numTiles)
 		Com_Error(ERR_DROP, "No map tiles defined (%s)!\n", filename);
+#ifdef DEBUG
+	else
+		Com_DPrintf("numTiles: %i\n", numTiles);
+#endif
+
 	if (!numAssemblies)
 		Com_Error(ERR_DROP, "No map assemblies defined (%s)!\n", filename);
+#ifdef DEBUG
+	else
+		Com_DPrintf("numAssemblies: %i\n", numAssemblies);
+#endif
 
 	/* get assembly */
 	if (assembly && assembly[0]) {
@@ -646,7 +670,7 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 		memset(&curMap[0][0][0], 0, sizeof(curMap));
 		memset(&curNum[0], 0, sizeof(curNum));
 
-		/* place fixed parts */
+		/* place fixed parts - defined in ump via fix parameter */
 		for (i = 0; i < mAsm->numFixed; i++)
 			SV_AddTile(curMap, &mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], NULL);
 
