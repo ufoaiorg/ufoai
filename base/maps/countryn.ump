@@ -1,10 +1,10 @@
-// ******************
-// COUNTRY SIDE - Day
-// ******************
+// ********************
+// COUNTRY SIDE - Night
+// ********************
 
-base countryd/c_
+base countryn/c_
 
-// Dropship on grass with 5 trees
+// Dropship
 tile +drop
 {
 5 4
@@ -14,3 +14,28 @@ ac     +a     +a     +a     ac
 ac     +a     +a     +a     ac
 0      ab     ab     ab     0
 }
+
+// old fallen house
+tile +c01
+{
+4 5
+
+0      ab     ab     0
+ac      +a     +a     ac
+ac      +a     +a     ac
+ac      +a     +a     ac
+0      ab      ab      0
+}
+
+// house + watertower
+tile +c02
+{
+4 5
+
+0      ab     ab     0
+ac      +a     +a     ac
+ac      +a     +a     ac
+ac      +a     +a     ac
+0      ab      ab      0
+}
+

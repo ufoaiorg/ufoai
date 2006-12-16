@@ -5,6 +5,7 @@
 "ambient" "0.3 0.3 0.32"
 "light" "50"
 "_color" "0.8 0.8 1"
+"angles" "15 60"
 // brush 0
 {
 ( 176 204 60 ) ( 176 244 60 ) ( 128 244 60 ) tex_material/c_yellow 4 8 90 0.5 0.5 0 128 0
