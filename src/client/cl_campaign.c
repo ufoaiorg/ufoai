@@ -4049,6 +4049,7 @@ static void CP_GetCampaigns_f(void)
 static void CP_CampaignsClick_f(void)
 {
 	int num;
+	char *racetype;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -4069,9 +4070,11 @@ static void CP_CampaignsClick_f(void)
 		return;
 
 	Cvar_Set("campaign", campaigns[num].id);
-	/* FIXME: Translate the race to the name of a race */
+    racetype = campaigns[num].team;
+    (!Q_strncmp(racetype, "human", 5)) ? (racetype = _("Human")) : (racetype = _("Aliens"));
+
 	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\nCredits: %ic\nDifficulty: %s\n%s\n"),
-			campaigns[num].team,
+			racetype,
 			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
 			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),
 			campaigns[num].workers, ngettext("worker", "workers", campaigns[num].workers),
