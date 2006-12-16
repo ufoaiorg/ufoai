@@ -616,7 +616,7 @@ int B_GetNumberOfBuildingsInBaseByTypeIDX(int base_idx, int type_idx)
 	int NumberOfBuildings = 0;
 
 	if (base_idx < 0 || base_idx >= gd.numBases) {
-		Com_Printf("Bad base-index given: %i\n", base_idx);
+		Com_Printf("B_GetNumberOfBuildingsInBaseByTypeIDX: Bad base-index given: %i (numbases %i)\n", base_idx, gd.numBases);
 		return -1;
 	}
 
@@ -641,7 +641,7 @@ int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type)
 	int NumberOfBuildings = 0;
 
 	if (base_idx < 0 || base_idx >= gd.numBases) {
-		Com_Printf("Bad base-index given: %i\n", base_idx);
+		Com_Printf("B_GetNumberOfBuildingsInBaseByType: Bad base-index given: %i (numbases: %i)\n", base_idx, gd.numBases);
 		return -1;
 	}
 
@@ -668,7 +668,7 @@ buildingStatus_t B_GetMaximumBuildingStatus(int base_idx, buildingType_t buildin
 	buildingStatus_t status = B_STATUS_NOT_SET;
 
 	if (base_idx < 0) {
-		Com_Printf("Bad base-index given: %i\n", base_idx);
+		Com_Printf("B_GetMaximumBuildingStatus: Bad base-index given: %i (numbases %i)\n", base_idx, gd.numBases);
 		return -1;
 	}
 
@@ -1363,23 +1363,29 @@ void B_SelectBase(void)
 	} else
 		return;
 
-	/* activate or deactivate the aircraft button */
-	if (baseCurrent->numAircraftInBase <= 0)
-		Cbuf_ExecuteText(EXEC_NOW, "set_base_no_aircraft");
-	else
-		Cbuf_ExecuteText(EXEC_NOW, "set_base_aircraft");
+	/**
+	 * this is only needed when we are going to be show up the base
+	 * in our base view port
+	 */
+	if (gd.mapAction != MA_NEWBASE) {
+		/* activate or deactivate the aircraft button */
+		if (baseCurrent->numAircraftInBase <= 0)
+			Cbuf_ExecuteText(EXEC_NOW, "set_base_no_aircraft");
+		else
+			Cbuf_ExecuteText(EXEC_NOW, "set_base_aircraft");
 
-	Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
-	Cvar_SetValue("mn_base_prod_allowed", PR_ProductionAllowed());
-	Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
-	Cvar_SetValue("mn_base_id", baseCurrent->idx);
-	Cvar_SetValue("mn_numbases", gd.numBases);
-	if (gd.numBases > 1) {
-		Cbuf_AddText("set_base_transfer;");
-	} else {
-		Cbuf_AddText("set_base_no_transfer;");
+		Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
+		Cvar_SetValue("mn_base_prod_allowed", PR_ProductionAllowed());
+		Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
+		Cvar_SetValue("mn_base_id", baseCurrent->idx);
+		Cvar_SetValue("mn_numbases", gd.numBases);
+		if (gd.numBases > 1) {
+			Cbuf_AddText("set_base_transfer;");
+		} else {
+			Cbuf_AddText("set_base_no_transfer;");
+		}
+		Cvar_Set("mn_base_title", baseCurrent->name);
 	}
-	Cvar_Set("mn_base_title", baseCurrent->name);
 }
 
 #undef RIGHT
