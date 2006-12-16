@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-13 18:55+0100\n"
+"POT-Creation-Date: 2006-12-16 09:57+0100\n"
 "PO-Revision-Date: 2006-12-12 20:17+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -165,11 +165,11 @@ msgstr "Intercepteur"
 msgid "Saracen-class Interceptor"
 msgstr "Intercepteur de classe Saracen"
 
-#: ../base/ufos/basemanagement.ufo:388 ../base/ufos/research.ufo:1841
+#: ../base/ufos/basemanagement.ufo:388 ../base/ufos/research.ufo:1828
 msgid "UFO - Scout"
 msgstr "OVNI - Éclaireur"
 
-#: ../base/ufos/basemanagement.ufo:402 ../base/ufos/research.ufo:1862
+#: ../base/ufos/basemanagement.ufo:402 ../base/ufos/research.ufo:1861
 msgid "UFO - Fighter"
 msgstr "OVNI - Vaisseau de Combat"
 
@@ -518,7 +518,7 @@ msgid "Buy a new aircraft"
 msgstr "Acheter un appareil"
 
 #: ../base/ufos/menu_bases.ufo:141 ../base/ufos/menu_geoscape.ufo:716
-#: ../base/ufos/research.ufo:64 client/cl_map.c:321
+#: ../base/ufos/research.ufo:74 client/cl_map.c:321
 msgid "Aircraft"
 msgstr "Appareil"
 
@@ -735,7 +735,7 @@ msgstr "L'appareil a atteint sa destination - Quels sont les ordres ?"
 #: ../base/ufos/menu_geoscape.ufo:321 ../base/ufos/menu_geoscape.ufo:437
 #: ../base/ufos/menu_geoscape.ufo:534 ../base/ufos/menu_geoscape.ufo:585
 #: ../base/ufos/menu_geoscape.ufo:677 ../base/ufos/menu_geoscape.ufo:745
-#: ../base/ufos/menu_options.ufo:599
+#: ../base/ufos/menu_geoscape.ufo:798 ../base/ufos/menu_options.ufo:599
 msgid "Close this dialog"
 msgstr "Ferme cette boite de dialogue"
 
@@ -822,6 +822,10 @@ msgstr "Action:"
 #: ../base/ufos/menu_geoscape.ufo:729
 msgid "Description:"
 msgstr "Description:"
+
+#: ../base/ufos/menu_geoscape.ufo:811
+msgid "OK"
+msgstr ""
 
 #: ../base/ufos/menu_hire.ufo:192 ../base/ufos/menu_hire.ufo:201
 #: ../base/ufos/menu_hire.ufo:210 ../base/ufos/menu_hire.ufo:219
@@ -1300,7 +1304,7 @@ msgstr ""
 msgid "Next free team"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1455
+#: ../base/ufos/menu_multiplayer.ufo:1454
 #, fuzzy
 msgid "Previous free team"
 msgstr "Entrée précédente "
@@ -2074,39 +2078,39 @@ msgstr "Russie"
 msgid "The Commonwealth of Oceania"
 msgstr "Commonwealth d'Océanie"
 
-#: ../base/ufos/research.ufo:63
+#: ../base/ufos/research.ufo:73
 msgid "Background"
 msgstr "Contexte"
 
-#: ../base/ufos/research.ufo:65
+#: ../base/ufos/research.ufo:75
 msgid "Base Facilities"
 msgstr "Aménagements des bases"
 
-#: ../base/ufos/research.ufo:66
+#: ../base/ufos/research.ufo:76
 msgid "Research Reports"
 msgstr "Rapports de Recherche"
 
-#: ../base/ufos/research.ufo:67
+#: ../base/ufos/research.ufo:77
 msgid "Equipment"
 msgstr "Équipement"
 
-#: ../base/ufos/research.ufo:68
+#: ../base/ufos/research.ufo:78
 msgid "Alien Artifacts"
 msgstr "Découvertes Aliennes"
 
-#: ../base/ufos/research.ufo:69
+#: ../base/ufos/research.ufo:79
 msgid "Autopsies & Observation"
 msgstr "Autopsies et Observations"
 
-#: ../base/ufos/research.ufo:70
+#: ../base/ufos/research.ufo:80
 msgid "The Alien Threat"
 msgstr "La Menace Alienne"
 
-#: ../base/ufos/research.ufo:80
+#: ../base/ufos/research.ufo:90
 msgid "Advanced Laser Technology"
 msgstr "Technologie Laser Avancée"
 
-#: ../base/ufos/research.ufo:82
+#: ../base/ufos/research.ufo:92
 #, fuzzy
 msgid "laser_txt"
 msgstr ""
@@ -2121,11 +2125,11 @@ msgstr ""
 "Cela nous donnera probablement de nouvelles armes LTHEM légères dans un "
 "avenir proche."
 
-#: ../base/ufos/research.ufo:83
+#: ../base/ufos/research.ufo:93
 msgid "laser_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:117
+#: ../base/ufos/research.ufo:109
 msgid "assault_txt"
 msgstr ""
 "Spécifications techniques : Fusil d'Assaut FA-80\n"
@@ -2212,7 +2216,7 @@ msgstr ""
 "force d'invasion alienne. Nous devrions développer nos propres armes dans ce "
 "but dès que possible."
 
-#: ../base/ufos/research.ufo:133
+#: ../base/ufos/research.ufo:125
 msgid "assault_mag_txt"
 msgstr ""
 "Spécifications techniques : Chargeur de Fusil d'Assaut\n"
@@ -2252,7 +2256,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:150 ../base/ufos/research.ufo:166
+#: ../base/ufos/research.ufo:142 ../base/ufos/research.ufo:158
 #, fuzzy
 msgid "bolterrifle_txt"
 msgstr ""
@@ -2267,11 +2271,11 @@ msgstr ""
 "tir automatique quasiment impossible, mais permet tout de même à "
 "l'utilisateur de tirer plusieurs fois."
 
-#: ../base/ufos/research.ufo:151 ../base/ufos/research.ufo:167
+#: ../base/ufos/research.ufo:143 ../base/ufos/research.ufo:159
 msgid "bolterrifle_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:183
+#: ../base/ufos/research.ufo:175
 msgid "combatknife_txt"
 msgstr ""
 "Spécifications techniques : Poignard de Combat\n"
@@ -2347,7 +2351,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:200
+#: ../base/ufos/research.ufo:192
 msgid "flamer_txt"
 msgstr ""
 "Spécifications techniques : Lance-Flammes LF-CRC\n"
@@ -2444,7 +2448,7 @@ msgstr ""
 "Cette arme ne devrait pas être utilisée si des civils sont proches de la "
 "zone ciblée."
 
-#: ../base/ufos/research.ufo:216
+#: ../base/ufos/research.ufo:208
 msgid "flamer_mag_txt"
 msgstr ""
 "Spécifications techniques : Cartouche de C90\n"
@@ -2494,7 +2498,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:233
+#: ../base/ufos/research.ufo:225
 msgid "flashbang_txt"
 msgstr ""
 "Spécifications techniques : Grenade Étourdissante\n"
@@ -2588,7 +2592,7 @@ msgstr ""
 "La grenade étourdissante n'est évidemment efficace que contre des êtres "
 "organiques possédant yeux et oreilles."
 
-#: ../base/ufos/research.ufo:249
+#: ../base/ufos/research.ufo:241
 msgid "fraggren_txt"
 msgstr ""
 "Spécifications techniques : Grenade à Fragmentation\n"
@@ -2676,7 +2680,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:266
+#: ../base/ufos/research.ufo:258
 msgid "incgren_txt"
 msgstr ""
 "Spécifications techniques : Grenade Incendiaire\n"
@@ -2759,7 +2763,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:283
+#: ../base/ufos/research.ufo:275
 msgid "grenl_txt"
 msgstr ""
 "Spécifications techniques : Lance-Grenades LGHP\n"
@@ -2879,7 +2883,7 @@ msgstr ""
 "rares armes humaines standard qui ne perdent pas de leur efficacité sur les "
 "robots aliens."
 
-#: ../base/ufos/research.ufo:299
+#: ../base/ufos/research.ufo:291
 msgid "grenl_ammo_txt"
 msgstr ""
 "Spécifications techniques : Grenades ST 25mm\n"
@@ -2921,7 +2925,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:316
+#: ../base/ufos/research.ufo:308
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 "Spécifications techniques : Grenade à Fléchettes 25mm\n"
@@ -2965,7 +2969,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:333
+#: ../base/ufos/research.ufo:325
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 "Spécifications techniques : Grenades IC 25mm\n"
@@ -3008,16 +3012,16 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:350
+#: ../base/ufos/research.ufo:342
 #, fuzzy
 msgid "grenl_plasma_ammo_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:351
+#: ../base/ufos/research.ufo:343
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:367
+#: ../base/ufos/research.ufo:359
 #, fuzzy
 msgid "heavylaser_txt"
 msgstr ""
@@ -3026,11 +3030,11 @@ msgstr ""
 "moins précis qu'un Fusil Laser, mais sa portée utile est plus grande. Il "
 "crée également beaucoup plus de dommages."
 
-#: ../base/ufos/research.ufo:368
+#: ../base/ufos/research.ufo:360
 msgid "heavylaser_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:385
+#: ../base/ufos/research.ufo:377
 #, fuzzy
 msgid "heavylaser_ammo_txt"
 msgstr ""
@@ -3039,11 +3043,11 @@ msgstr ""
 "moins précis qu'un Fusil Laser, mais sa portée utile est plus grande. Il "
 "crée également beaucoup plus de dommages."
 
-#: ../base/ufos/research.ufo:386
+#: ../base/ufos/research.ufo:378
 msgid "heavylaser_ammo_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:402
+#: ../base/ufos/research.ufo:394
 msgid "irgoggles_txt"
 msgstr ""
 "Spécifications techniques : Lunettes IR\n"
@@ -3142,7 +3146,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:418
+#: ../base/ufos/research.ufo:410
 msgid "kerrblade_txt"
 msgstr ""
 "POUR: Commandant de Base, PHALANX, Commandement des Opérations Atlantique\n"
@@ -3208,7 +3212,7 @@ msgstr ""
 "\n"
 "--Cdt Navarre"
 
-#: ../base/ufos/research.ufo:419
+#: ../base/ufos/research.ufo:411
 msgid "kerrblade_pre_txt"
 msgstr ""
 "POUR: Commandant de Base, PHALANX, Commandement des Opérations Atlantique\n"
@@ -3240,7 +3244,7 @@ msgstr ""
 "\n"
 "--Cdt Navarre"
 
-#: ../base/ufos/research.ufo:436
+#: ../base/ufos/research.ufo:428
 #, fuzzy
 msgid "laserpistol_txt"
 msgstr ""
@@ -3253,11 +3257,11 @@ msgstr ""
 "l'absence de recul. Comme les pistolets, les Pistolets Laser peuvent être "
 "utilisés des deux mains."
 
-#: ../base/ufos/research.ufo:437
+#: ../base/ufos/research.ufo:429
 msgid "laserpistol_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:453
+#: ../base/ufos/research.ufo:445
 #, fuzzy
 msgid "laserpistol_mag_txt"
 msgstr ""
@@ -3270,11 +3274,11 @@ msgstr ""
 "l'absence de recul. Comme les pistolets, les Pistolets Laser peuvent être "
 "utilisés des deux mains."
 
-#: ../base/ufos/research.ufo:454
+#: ../base/ufos/research.ufo:446
 msgid "laserpistol_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:470
+#: ../base/ufos/research.ufo:462
 #, fuzzy
 msgid "laserrifle_txt"
 msgstr ""
@@ -3282,11 +3286,11 @@ msgstr ""
 "provoque des dégats raisonnables et est plus précis que le fusil d'assaut "
 "grâce à l'absence de recul."
 
-#: ../base/ufos/research.ufo:471
+#: ../base/ufos/research.ufo:463
 msgid "laserrifle_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:488
+#: ../base/ufos/research.ufo:480
 #, fuzzy
 msgid "laserrifle_mag_txt"
 msgstr ""
@@ -3294,11 +3298,11 @@ msgstr ""
 "provoque des dégats raisonnables et est plus précis que le fusil d'assaut "
 "grâce à l'absence de recul."
 
-#: ../base/ufos/research.ufo:489
+#: ../base/ufos/research.ufo:481
 msgid "laserrifle_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:505
+#: ../base/ufos/research.ufo:497
 msgid "medikit_txt"
 msgstr ""
 "Spécifications techniques : Médikit\n"
@@ -3404,7 +3408,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:521
+#: ../base/ufos/research.ufo:513
 msgid "pistol_txt"
 msgstr ""
 "Spécifications techniques : Pistolet P-12\n"
@@ -3509,7 +3513,7 @@ msgstr ""
 "En dépit de sa bonne pénétration sur les être vivants, cette arme donne de "
 "très mauvais résultats sur les cibles robotiques."
 
-#: ../base/ufos/research.ufo:538
+#: ../base/ufos/research.ufo:530
 msgid "pistol_mag_txt"
 msgstr ""
 "Spécifications techniques : Chargeur de Pistolet 7.62mm\n"
@@ -3554,7 +3558,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:556
+#: ../base/ufos/research.ufo:548
 msgid "pistol2_txt"
 msgstr ""
 "Spécifications techniques : Pistolet Automatique\n"
@@ -3655,7 +3659,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:573
+#: ../base/ufos/research.ufo:565
 msgid "pistol2_mag_txt"
 msgstr ""
 "Spécifications techniques : Chargeur de PA 4.2mm\n"
@@ -3698,7 +3702,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:591 ../base/ufos/research.ufo:611
+#: ../base/ufos/research.ufo:583 ../base/ufos/research.ufo:602
 #, fuzzy
 msgid "plasatomizer_txt"
 msgstr ""
@@ -3714,11 +3718,11 @@ msgstr ""
 "formé. Ce faisceau est focalisé par un deuxième champ magnétique puis est "
 "finalement expulsé à l'embout avant du Fusil à Plasma. "
 
-#: ../base/ufos/research.ufo:592 ../base/ufos/research.ufo:612
+#: ../base/ufos/research.ufo:584 ../base/ufos/research.ufo:603
 msgid "plasatomizer_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:628 ../base/ufos/research.ufo:647
+#: ../base/ufos/research.ufo:619 ../base/ufos/research.ufo:637
 #, fuzzy
 msgid "plasblaster_txt"
 msgstr ""
@@ -3734,11 +3738,11 @@ msgstr ""
 "formé. Ce faisceau est focalisé par un deuxième champ magnétique puis est "
 "finalement expulsé à l'embout avant du Fusil à Plasma. "
 
-#: ../base/ufos/research.ufo:629 ../base/ufos/research.ufo:648
+#: ../base/ufos/research.ufo:620 ../base/ufos/research.ufo:638
 msgid "plasblaster_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:664
+#: ../base/ufos/research.ufo:654
 #, fuzzy
 msgid "plasblade_txt"
 msgstr ""
@@ -3747,11 +3751,11 @@ msgstr ""
 "touche sa lame. L'ennemi est généralement incapable de combattre juste après "
 "un impact. D'un autre côté la portée de cette arme est tout à fait limitée."
 
-#: ../base/ufos/research.ufo:665
+#: ../base/ufos/research.ufo:655
 msgid "plasblade_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:682
+#: ../base/ufos/research.ufo:672
 #, fuzzy
 msgid "plasmagren_txt"
 msgstr ""
@@ -3760,11 +3764,11 @@ msgstr ""
 "d'action. Ce rayon est légèrement plus grand que celui de la Grenade à "
 "Fragmentation."
 
-#: ../base/ufos/research.ufo:683
+#: ../base/ufos/research.ufo:673
 msgid "plasmagren_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:700 ../base/ufos/research.ufo:720
+#: ../base/ufos/research.ufo:690 ../base/ufos/research.ufo:709
 #, fuzzy
 msgid "plasrifle_txt"
 msgstr ""
@@ -3780,11 +3784,11 @@ msgstr ""
 "formé. Ce faisceau est focalisé par un deuxième champ magnétique puis est "
 "finalement expulsé à l'embout avant du Fusil à Plasma. "
 
-#: ../base/ufos/research.ufo:701 ../base/ufos/research.ufo:721
+#: ../base/ufos/research.ufo:691 ../base/ufos/research.ufo:710
 msgid "plasrifle_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:737
+#: ../base/ufos/research.ufo:726
 msgid "rpg_txt"
 msgstr ""
 "Spécifications techniques : Lance-Roquettes LMHP\n"
@@ -3888,7 +3892,7 @@ msgstr ""
 "Avec le Lance-Grenades LGHP, il s'agit d'une des rares armes dont nous "
 "disposons qui soit pleinement efficace contre les robots aliens."
 
-#: ../base/ufos/research.ufo:754
+#: ../base/ufos/research.ufo:743
 msgid "rpg_ammo_txt"
 msgstr ""
 "Spécifications techniques : Roquette HE\n"
@@ -3938,7 +3942,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:772
+#: ../base/ufos/research.ufo:761
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 "Spécifications techniques : Roquette IC\n"
@@ -3991,7 +3995,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:809
+#: ../base/ufos/research.ufo:798
 #, fuzzy
 msgid "chaingun_txt"
 msgstr ""
@@ -4005,11 +4009,11 @@ msgstr ""
 "pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace "
 "contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:810
+#: ../base/ufos/research.ufo:799
 msgid "chaingun_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:827
+#: ../base/ufos/research.ufo:816
 #, fuzzy
 msgid "chaingun_ammo_txt"
 msgstr ""
@@ -4023,11 +4027,11 @@ msgstr ""
 "pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace "
 "contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:828
+#: ../base/ufos/research.ufo:817
 msgid "chaingun_ammo_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:846
+#: ../base/ufos/research.ufo:835
 #, fuzzy
 msgid "shotgun_txt"
 msgstr ""
@@ -4041,7 +4045,7 @@ msgstr ""
 "pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace "
 "contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:864
+#: ../base/ufos/research.ufo:853
 #, fuzzy
 msgid "shotgun_ammo_txt"
 msgstr ""
@@ -4055,7 +4059,7 @@ msgstr ""
 "pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace "
 "contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:883
+#: ../base/ufos/research.ufo:872
 msgid "shotgun2_txt"
 msgstr ""
 "Spécifications techniques : Fusil à pompe CRC-212\n"
@@ -4154,7 +4158,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:900 ../base/ufos/research.ufo:953
+#: ../base/ufos/research.ufo:889
 msgid "shotgun2_ammo_txt"
 msgstr ""
 "Spécifications techniques : Cartouches à Fléchettes\n"
@@ -4203,7 +4207,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:918
+#: ../base/ufos/research.ufo:907
 msgid "shotgun2_slug_ammo_txt"
 msgstr ""
 "Spécifications techniques : Cartouches Sabotées\n"
@@ -4247,7 +4251,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:936
+#: ../base/ufos/research.ufo:925
 #, fuzzy
 msgid "shotgun_micro_txt"
 msgstr ""
@@ -4261,7 +4265,21 @@ msgstr ""
 "pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace "
 "contre les cibles renforcées."
 
-#: ../base/ufos/research.ufo:971
+#: ../base/ufos/research.ufo:942
+#, fuzzy
+msgid "shotgun_micro_ammo_txt"
+msgstr ""
+"Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un "
+"certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés "
+"par beaucoup d'unités d'intervention, le SG-260 est capable de mieux "
+"orienter les projectiles à la sortie du canon. La porte effective de cette "
+"arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement "
+"à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le "
+"combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le "
+"pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace "
+"contre les cibles renforcées."
+
+#: ../base/ufos/research.ufo:960
 msgid "smg_txt"
 msgstr ""
 "Spécifications techniques : Pistolet Mitrailleur CRC-8\n"
@@ -4352,7 +4370,7 @@ msgstr ""
 "En dépit de ses bonnes performances contre les cibles organiques, cette "
 "armes révélera des capacités bien mauvaises contre des cibles robotiques."
 
-#: ../base/ufos/research.ufo:988
+#: ../base/ufos/research.ufo:977
 msgid "smg_mag_txt"
 msgstr ""
 "Spécifications techniques : Chargeur de Pistolet Mitrailleur\n"
@@ -4393,14 +4411,14 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1006
+#: ../base/ufos/research.ufo:995
 #, fuzzy
 msgid "smokegren_txt"
 msgstr ""
 "Cette grenade occasione très peu de dégats mais propage un nuage de fumée "
 "qui bloque la vue."
 
-#: ../base/ufos/research.ufo:1023
+#: ../base/ufos/research.ufo:1012
 #, fuzzy
 msgid "sniper_txt"
 msgstr ""
@@ -4411,7 +4429,7 @@ msgstr ""
 "L'arme est cependant difficile à manier et requiert plusieurs secondes pour "
 "viser correctement, ce qui la rend inadaptée au combat rapproché."
 
-#: ../base/ufos/research.ufo:1040
+#: ../base/ufos/research.ufo:1029
 #, fuzzy
 msgid "sniper_mag_txt"
 msgstr ""
@@ -4422,7 +4440,7 @@ msgstr ""
 "L'arme est cependant difficile à manier et requiert plusieurs secondes pour "
 "viser correctement, ce qui la rend inadaptée au combat rapproché."
 
-#: ../base/ufos/research.ufo:1058
+#: ../base/ufos/research.ufo:1047
 #, fuzzy
 msgid "stungren_txt"
 msgstr ""
@@ -4438,11 +4456,11 @@ msgstr ""
 "organismes biologiques dotés d'un système auditif. Cela inclue heureusement "
 "la plupart des Aliens biologiques."
 
-#: ../base/ufos/research.ufo:1059
+#: ../base/ufos/research.ufo:1048
 msgid "stungren_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1077
+#: ../base/ufos/research.ufo:1066
 #, fuzzy
 msgid "stunrod_txt"
 msgstr ""
@@ -4459,11 +4477,11 @@ msgstr ""
 "dans la cible afin de libérer la décharge et les produits chimiques cités "
 "précédemment."
 
-#: ../base/ufos/research.ufo:1078
+#: ../base/ufos/research.ufo:1067
 msgid "stunrod_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1095
+#: ../base/ufos/research.ufo:1084
 #, fuzzy
 msgid "tachyonpistol_txt"
 msgstr ""
@@ -4473,11 +4491,11 @@ msgstr ""
 "majeur du pistolet à tachyons réside dans son faible poids et ses petites "
 "dimensions qui en font une arme de poing appréciable."
 
-#: ../base/ufos/research.ufo:1096
+#: ../base/ufos/research.ufo:1085
 msgid "tachyonpistol_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1114
+#: ../base/ufos/research.ufo:1102
 #, fuzzy
 msgid "tachyonpistol_mag_txt"
 msgstr ""
@@ -4487,11 +4505,11 @@ msgstr ""
 "majeur du pistolet à tachyons réside dans son faible poids et ses petites "
 "dimensions qui en font une arme de poing appréciable."
 
-#: ../base/ufos/research.ufo:1115
+#: ../base/ufos/research.ufo:1103
 msgid "tachyonpistol_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1132
+#: ../base/ufos/research.ufo:1120
 #, fuzzy
 msgid "tachyonrifle_txt"
 msgstr ""
@@ -4505,11 +4523,11 @@ msgstr ""
 "touché par une charge tachyons ne soufre que de blessures légères en "
 "surface, mais est pourtant gravement blessé dans ses organes internes."
 
-#: ../base/ufos/research.ufo:1133
+#: ../base/ufos/research.ufo:1121
 msgid "tachyonrifle_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1152
+#: ../base/ufos/research.ufo:1139
 #, fuzzy
 msgid "tachyonrifle_mag_txt"
 msgstr ""
@@ -4523,11 +4541,11 @@ msgstr ""
 "touché par une charge tachyons ne soufre que de blessures légères en "
 "surface, mais est pourtant gravement blessé dans ses organes internes."
 
-#: ../base/ufos/research.ufo:1153
+#: ../base/ufos/research.ufo:1140
 msgid "tachyonrifle_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1170
+#: ../base/ufos/research.ufo:1157
 #, fuzzy
 msgid "tachyonsniper_txt"
 msgstr ""
@@ -4539,11 +4557,11 @@ msgstr ""
 "de sniper à tachyons sont plus concentrés, donc plus précis, et ont une "
 "meilleure capacité de pénétration."
 
-#: ../base/ufos/research.ufo:1171
+#: ../base/ufos/research.ufo:1158
 msgid "tachyonsniper_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1189
+#: ../base/ufos/research.ufo:1175
 #, fuzzy
 msgid "tachyonsniper_mag_txt"
 msgstr ""
@@ -4555,11 +4573,11 @@ msgstr ""
 "de sniper à tachyons sont plus concentrés, donc plus précis, et ont une "
 "meilleure capacité de pénétration."
 
-#: ../base/ufos/research.ufo:1190
+#: ../base/ufos/research.ufo:1176
 msgid "tachyonsniper_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1211
+#: ../base/ufos/research.ufo:1197
 msgid "combat_armor_txt"
 msgstr ""
 "Spécifications techniques : Armure de Combat\n"
@@ -4662,12 +4680,12 @@ msgstr ""
 "\n"
 "Aucun"
 
-#: ../base/ufos/research.ufo:1224
+#: ../base/ufos/research.ufo:1210
 #, fuzzy
 msgid "Nanocomposite Armour"
 msgstr "Nano Armure"
 
-#: ../base/ufos/research.ufo:1226 ../base/ufos/research.ufo:1243
+#: ../base/ufos/research.ufo:1212 ../base/ufos/research.ufo:1229
 #, fuzzy
 msgid "nano_txt"
 msgstr ""
@@ -4680,103 +4698,103 @@ msgstr ""
 "jusqu'alors. En plus de cela, ces matériels seront plus léger que les "
 "matériels conventionnels similaires."
 
-#: ../base/ufos/research.ufo:1227 ../base/ufos/research.ufo:1244
+#: ../base/ufos/research.ufo:1213 ../base/ufos/research.ufo:1230
 msgid "nano_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1241
+#: ../base/ufos/research.ufo:1227
 msgid "Alien Artifact - Alien Body Armour"
 msgstr "Découverte Alienne - Armure Corporelle Alienne "
 
-#: ../base/ufos/research.ufo:1271
+#: ../base/ufos/research.ufo:1257
 #, fuzzy
 msgid "light_alien_armor"
 msgstr "armure_légère_alienne"
 
-#: ../base/ufos/research.ufo:1272
+#: ../base/ufos/research.ufo:1258
 #, fuzzy
 msgid "light_alien_pre_armor"
 msgstr "light_alien_pre_armor"
 
-#: ../base/ufos/research.ufo:1282
+#: ../base/ufos/research.ufo:1267
 #, fuzzy
 msgid "medium_alien_armor"
 msgstr "Armure moyenne"
 
-#: ../base/ufos/research.ufo:1283
+#: ../base/ufos/research.ufo:1268
 #, fuzzy
 msgid "medium_alien_pre_armor"
 msgstr "medium_alien_pre_armor"
 
-#: ../base/ufos/research.ufo:1298
+#: ../base/ufos/research.ufo:1282
 msgid "Blast Damage Type"
 msgstr "Dommage par Explosion"
 
-#: ../base/ufos/research.ufo:1310
+#: ../base/ufos/research.ufo:1294
 msgid "Fire Damage Type"
 msgstr "Dommage par le Feu"
 
-#: ../base/ufos/research.ufo:1322
+#: ../base/ufos/research.ufo:1306
 msgid "Laser Damage Type"
 msgstr "Dommage Laser"
 
-#: ../base/ufos/research.ufo:1338
+#: ../base/ufos/research.ufo:1322
 msgid "Impact Damage Type"
 msgstr "Type de Dommages"
 
-#: ../base/ufos/research.ufo:1350 ../base/ufos/research.ufo:1381
+#: ../base/ufos/research.ufo:1334 ../base/ufos/research.ufo:1365
 msgid "Shock Damage Type"
 msgstr "Dommage Electrique"
 
-#: ../base/ufos/research.ufo:1362
+#: ../base/ufos/research.ufo:1346
 msgid "Plasma Damage Type"
 msgstr "Dommage Plasma"
 
-#: ../base/ufos/research.ufo:1393
+#: ../base/ufos/research.ufo:1377
 msgid "Stun Damage Type"
 msgstr "Dommage Assomant "
 
-#: ../base/ufos/research.ufo:1405
+#: ../base/ufos/research.ufo:1389
 msgid "Tachyon Damage Type"
 msgstr "Dommage Tachyon"
 
-#: ../base/ufos/research.ufo:1425
+#: ../base/ufos/research.ufo:1406
 msgid "Accuracy Attribute"
 msgstr "Attribut de précision"
 
-#: ../base/ufos/research.ufo:1437
+#: ../base/ufos/research.ufo:1418
 msgid "Assault Guns Proficiency"
 msgstr "Compétence en Armes d'Assaut"
 
-#: ../base/ufos/research.ufo:1449
+#: ../base/ufos/research.ufo:1430
 msgid "Close Combat Proficiency"
 msgstr "Compétence au corps à corps"
 
-#: ../base/ufos/research.ufo:1461
+#: ../base/ufos/research.ufo:1442
 msgid "High-Explosives Proficiency"
 msgstr "Compétences en Explosifs"
 
-#: ../base/ufos/research.ufo:1473
+#: ../base/ufos/research.ufo:1454
 msgid "Heavy Weapons Proficiency"
 msgstr "Compétence en Armes Lourdes"
 
-#: ../base/ufos/research.ufo:1485
+#: ../base/ufos/research.ufo:1466
 msgid "Mind Attribute"
 msgstr "Attribut d'Esprit"
 
-#: ../base/ufos/research.ufo:1497
+#: ../base/ufos/research.ufo:1478
 msgid "Power Attribute"
 msgstr "Attribut de puissance"
 
-#: ../base/ufos/research.ufo:1509
+#: ../base/ufos/research.ufo:1490
 msgid "Sniper Rifles Proficiency"
 msgstr "Compétence en Fusils de Sniper"
 
-#: ../base/ufos/research.ufo:1521
+#: ../base/ufos/research.ufo:1502
 msgid "Speed Attribute"
 msgstr "Attribut de Vitesse"
 
-#: ../base/ufos/research.ufo:1537
+#: ../base/ufos/research.ufo:1518
 msgid "b_aliencontainment_txt"
 msgstr ""
 "Projet d'Aménagement : Unité de Détention\n"
@@ -4860,7 +4878,7 @@ msgstr ""
 "extraterrestres pourraient utiliser. Des améliorations ou ajustements seront "
 "éventuellement nécessaires pour que l'unité satisfasse au cahier des charges."
 
-#: ../base/ufos/research.ufo:1553
+#: ../base/ufos/research.ufo:1534
 msgid "b_command_txt"
 msgstr ""
 "Projet d'Aménagement : Centre de Commande\n"
@@ -4934,7 +4952,7 @@ msgstr ""
 "travail holographique récente et une nouvelle installation de super "
 "ordinateurs. Tous les autres éléments sont toujours fiables et efficaces."
 
-#: ../base/ufos/research.ufo:1569
+#: ../base/ufos/research.ufo:1550
 msgid "b_entrance_txt"
 msgstr ""
 "Projet d'Aménagement : Entrée\n"
@@ -4992,7 +5010,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1581
+#: ../base/ufos/research.ufo:1562
 msgid "b_large_hangar_txt"
 msgstr ""
 "Projet d'Aménagement : Grand Hangar\n"
@@ -5076,7 +5094,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1597
+#: ../base/ufos/research.ufo:1578
 msgid "b_hospital_txt"
 msgstr ""
 "Projet d'Aménagement : Hôpital\n"
@@ -5165,7 +5183,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1613
+#: ../base/ufos/research.ufo:1594
 msgid "b_small_hangar_txt"
 msgstr ""
 "Projet d'Aménagement : Petit Hangar\n"
@@ -5248,7 +5266,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1629
+#: ../base/ufos/research.ufo:1610
 msgid "b_lab_txt"
 msgstr ""
 "Projet d'Aménagement : Laboratoire\n"
@@ -5341,7 +5359,7 @@ msgstr ""
 "conception est toujours d'actualité, et peut être adaptée à nos besoin "
 "moyennant seulement quelques modifications mineures."
 
-#: ../base/ufos/research.ufo:1645
+#: ../base/ufos/research.ufo:1626
 msgid "b_powerplant_txt"
 msgstr ""
 "Projet d'Aménagement : Générateur de Puissance\n"
@@ -5437,7 +5455,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1661
+#: ../base/ufos/research.ufo:1642
 msgid "b_quarters_txt"
 msgstr ""
 "Projet d'Aménagement : Quartiers d'Habitation\n"
@@ -5510,7 +5528,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1677
+#: ../base/ufos/research.ufo:1658
 msgid "b_radar_txt"
 msgstr ""
 "Projet d'Aménagement : Radar\n"
@@ -5602,7 +5620,7 @@ msgstr ""
 "nous devrions chercher d'autres moyens d'améliorer notre technologie de "
 "détection si nous voulons avoir une chance d'arrêter ces salauds."
 
-#: ../base/ufos/research.ufo:1693
+#: ../base/ufos/research.ufo:1674
 msgid "b_storage_txt"
 msgstr ""
 "Projet d'Aménagement : Entrepôt\n"
@@ -5678,7 +5696,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1709
+#: ../base/ufos/research.ufo:1690
 msgid "b_teamroom_txt"
 msgstr ""
 "Projet d'Aménagement : Quartiers de Repos\n"
@@ -5750,7 +5768,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1725
+#: ../base/ufos/research.ufo:1706
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
 "Projet d'Aménagement : Petit Hangar à OVNI\n"
@@ -5828,7 +5846,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1741
+#: ../base/ufos/research.ufo:1722
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
 "Projet d'Aménagement : Grand Hangar à OVNI\n"
@@ -5906,7 +5924,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1757
+#: ../base/ufos/research.ufo:1738
 msgid "b_workshop_txt"
 msgstr ""
 "Projet d'Aménagement : Atelier\n"
@@ -5978,7 +5996,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:1776
+#: ../base/ufos/research.ufo:1757
 #, fuzzy
 msgid "dropship_txt"
 msgstr ""
@@ -5989,7 +6007,7 @@ msgstr ""
 "Cette capacité est essentielle pour déployer rapidement des troupes à "
 "n'importe quel endroit."
 
-#: ../base/ufos/research.ufo:1791
+#: ../base/ufos/research.ufo:1772
 #, fuzzy
 msgid "interceptor_txt"
 msgstr ""
@@ -6003,7 +6021,7 @@ msgstr ""
 "souterrains. Ceci étant la meilleure méthode pour garder la base quasiment "
 "indétectable."
 
-#: ../base/ufos/research.ufo:1806
+#: ../base/ufos/research.ufo:1787
 #, fuzzy
 msgid "saracen_interceptor_txt"
 msgstr ""
@@ -6017,16 +6035,16 @@ msgstr ""
 "souterrains. Ceci étant la meilleure méthode pour garder la base quasiment "
 "indétectable."
 
-#: ../base/ufos/research.ufo:1842
+#: ../base/ufos/research.ufo:1829
 #, fuzzy
 msgid "ufo_scout_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1843
+#: ../base/ufos/research.ufo:1830
 msgid "ufo_scout_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1863
+#: ../base/ufos/research.ufo:1862
 #, fuzzy
 msgid "ufo_fighter_txt"
 msgstr ""
@@ -6035,15 +6053,15 @@ msgstr ""
 "Tranports. Ces vaisseaux sont un danger même isolés et doivent être engagés "
 "avec prudence."
 
-#: ../base/ufos/research.ufo:1864
+#: ../base/ufos/research.ufo:1863
 msgid "ufo_fighter_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1884
+#: ../base/ufos/research.ufo:1889
 msgid "UFO - Harvester"
 msgstr "OVNI - Moissonneuse"
 
-#: ../base/ufos/research.ufo:1885
+#: ../base/ufos/research.ufo:1890
 #, fuzzy
 msgid "ufo_harvester_txt"
 msgstr ""
@@ -6052,28 +6070,28 @@ msgstr ""
 "Tranports. Ces vaisseaux sont un danger même isolés et doivent être engagés "
 "avec prudence."
 
-#: ../base/ufos/research.ufo:1886
+#: ../base/ufos/research.ufo:1891
 msgid "ufo_harvester_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1913
+#: ../base/ufos/research.ufo:1917
 msgid "Live Specimen - Bloodspider"
 msgstr "Spécimen Vivant - Araignée sanglante"
 
-#: ../base/ufos/research.ufo:1914
+#: ../base/ufos/research.ufo:1918
 #, fuzzy
 msgid "bloodspider_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1915
+#: ../base/ufos/research.ufo:1919
 msgid "bloodspider_notes_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1929
+#: ../base/ufos/research.ufo:1932
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Autopsie Alienne - Araignée Sanglante"
 
-#: ../base/ufos/research.ufo:1930
+#: ../base/ufos/research.ufo:1933
 #, fuzzy
 msgid "bloodspider_autopsy_txt"
 msgstr ""
@@ -6088,15 +6106,15 @@ msgstr ""
 "protecteur le rend sensible aux attaques psioniques ainsi qu'offrant un "
 "point faible évident en combat rapproché."
 
-#: ../base/ufos/research.ufo:1931
+#: ../base/ufos/research.ufo:1934
 msgid "bloodspider_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1949
+#: ../base/ufos/research.ufo:1951
 msgid "Alien Autopsy - Ortnok"
 msgstr "Autopsie Alienne - Ortnok"
 
-#: ../base/ufos/research.ufo:1950
+#: ../base/ufos/research.ufo:1952
 #, fuzzy
 msgid "ortnok_autopsy_txt"
 msgstr ""
@@ -6110,15 +6128,15 @@ msgstr ""
 "heures après la mort. Les Antareans les utilisent sans limite comme chair à "
 "canon dans tous les terrains qu'ils ont décidé de conquérir."
 
-#: ../base/ufos/research.ufo:1951
+#: ../base/ufos/research.ufo:1953
 msgid "ortnok_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:1970
+#: ../base/ufos/research.ufo:1971
 msgid "Alien Autopsy - Antarean"
 msgstr "Autopsie Alienne - Antarean"
 
-#: ../base/ufos/research.ufo:1971
+#: ../base/ufos/research.ufo:1972
 #, fuzzy
 msgid "antarean_autopsy_txt"
 msgstr ""
@@ -6139,7 +6157,7 @@ msgstr ""
 "ceux qui sont destinés à reigner avant même qu'ils naissent. Des attaques "
 "psioniques poussées pourraient donner accès à une telle information."
 
-#: ../base/ufos/research.ufo:1972
+#: ../base/ufos/research.ufo:1973
 msgid "antarean_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
@@ -6166,24 +6184,24 @@ msgstr ""
 msgid "shevaar_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2008
+#: ../base/ufos/research.ufo:2007
 msgid "Live Specimen - Stinger"
 msgstr "Spécimen Vivant - Stinger"
 
-#: ../base/ufos/research.ufo:2009
+#: ../base/ufos/research.ufo:2008
 #, fuzzy
 msgid "hovernet_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2010
+#: ../base/ufos/research.ufo:2009
 msgid "hovernet_notes_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2025
+#: ../base/ufos/research.ufo:2023
 msgid "Alien Autopsy - Stinger"
 msgstr "Autopsie Alienne - Stinger"
 
-#: ../base/ufos/research.ufo:2026
+#: ../base/ufos/research.ufo:2024
 #, fuzzy
 msgid "hovernet_autopsy_txt"
 msgstr ""
@@ -6200,15 +6218,15 @@ msgstr ""
 "ou une arme à énergie dirigée est peu efficace, et les armes explosives ou "
 "incendiaires doivent causer plus de dégâts."
 
-#: ../base/ufos/research.ufo:2027
+#: ../base/ufos/research.ufo:2025
 msgid "hovernet_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2044
+#: ../base/ufos/research.ufo:2041
 msgid "Alien Autopsy - Ortnok Cyborg"
 msgstr "Autopsie Alienne - Cyborg Ortnok"
 
-#: ../base/ufos/research.ufo:2045
+#: ../base/ufos/research.ufo:2042
 #, fuzzy
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
@@ -6225,110 +6243,110 @@ msgstr ""
 "biomécanique qui exige une production d'énergie beaucoup plus importante et "
 "la suppression de l'instinct reproducteur."
 
-#: ../base/ufos/research.ufo:2046
+#: ../base/ufos/research.ufo:2043
 msgid "cyborg_ortnok_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2066
+#: ../base/ufos/research.ufo:2062
 #, fuzzy
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:2067
+#: ../base/ufos/research.ufo:2063
 #, fuzzy
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2068
+#: ../base/ufos/research.ufo:2064
 msgid "ugv_phoenix_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2082
+#: ../base/ufos/research.ufo:2078
 #, fuzzy
 msgid "Triax UGV"
 msgstr "Triax UGV"
 
-#: ../base/ufos/research.ufo:2083
+#: ../base/ufos/research.ufo:2079
 #, fuzzy
 msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2084
+#: ../base/ufos/research.ufo:2080
 msgid "ugv_triax_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2102
+#: ../base/ufos/research.ufo:2098
 msgid "Raven ECM Unit"
 msgstr "Unité Raven ECM"
 
-#: ../base/ufos/research.ufo:2104 ../base/ufos/research.ufo:2120
+#: ../base/ufos/research.ufo:2100 ../base/ufos/research.ufo:2116
 #, fuzzy
 msgid "craft_shield_light_txt"
 msgstr "craft_shield_light_txt"
 
-#: ../base/ufos/research.ufo:2118
+#: ../base/ufos/research.ufo:2114
 msgid "Polymer Aircraft Armour"
 msgstr "Armure Polymère pour Appareils"
 
-#: ../base/ufos/research.ufo:2134
+#: ../base/ufos/research.ufo:2130
 msgid "SHIVA Rotary Cannon"
 msgstr "Canon Rotatif SHIVA"
 
-#: ../base/ufos/research.ufo:2136
+#: ../base/ufos/research.ufo:2132
 #, fuzzy
 msgid "craft_weapon_flac_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2150
+#: ../base/ufos/research.ufo:2146
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Lance-missiles Sparrowhawk AA"
 
-#: ../base/ufos/research.ufo:2152
+#: ../base/ufos/research.ufo:2148
 #, fuzzy
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2166
+#: ../base/ufos/research.ufo:2162
 msgid "TR-20 Rocket Pod"
 msgstr "Lance_roquettes TR-20"
 
-#: ../base/ufos/research.ufo:2168
+#: ../base/ufos/research.ufo:2164
 #, fuzzy
 msgid "craft_weapon_tr20_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2182
+#: ../base/ufos/research.ufo:2184
 msgid "Particle Beam Weapon"
 msgstr "Arme à Faisceau de Particules"
 
-#: ../base/ufos/research.ufo:2184
+#: ../base/ufos/research.ufo:2186
 #, fuzzy
 msgid "craft_weapon_particle_beam_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2201
+#: ../base/ufos/research.ufo:2210
 msgid "Political Situation Before The Invasion"
 msgstr "Situation Politique Avant l'Invasion"
 
-#: ../base/ufos/research.ufo:2202
+#: ../base/ufos/research.ufo:2211
 #, fuzzy
 msgid "news_initial_political_situation_txt"
 msgstr "news_initial_political_situation_txt"
 
-#: ../base/ufos/research.ufo:2212
+#: ../base/ufos/research.ufo:2221
 msgid "After The War"
 msgstr "Après La Guerre"
 
-#: ../base/ufos/research.ufo:2213
+#: ../base/ufos/research.ufo:2222
 #, fuzzy
 msgid "news_after_the_war_txt"
 msgstr "craft_shield_hard_txt"
 
-#: ../base/ufos/research.ufo:2223
+#: ../base/ufos/research.ufo:2232
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "Les conséquences de Mumbai et PHALANX"
 
-#: ../base/ufos/research.ufo:2224
+#: ../base/ufos/research.ufo:2233
 #, fuzzy
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr "news_phalanx_and_mumbai_aftermath_txt"
@@ -7212,20 +7230,20 @@ msgstr "Incroyable"
 msgid "Superhuman"
 msgstr "Surhumain"
 
-#: client/cl_actor.c:94
+#: client/cl_actor.c:95
 msgid "Godlike"
 msgstr "Divin"
 
-#: client/cl_actor.c:128
+#: client/cl_actor.c:129
 #, c-format
 msgid "Rank: %s"
 msgstr "Rang: %s"
 
-#: client/cl_actor.c:489
+#: client/cl_actor.c:490
 msgid "Currently panics!\n"
 msgstr "Panique !\n"
 
-#: client/cl_actor.c:495
+#: client/cl_actor.c:496
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -7233,7 +7251,7 @@ msgstr ""
 "Vous ne pouvez pas utiliser cet objet.\n"
 "Vous devez le rechercher d'abord.\n"
 
-#: client/cl_actor.c:505
+#: client/cl_actor.c:506
 #, c-format
 msgid ""
 "Armor  %i\tMorale  %i\n"
@@ -7242,12 +7260,12 @@ msgstr ""
 "Armure  %i\tMoral  %i\n"
 "Déplacement %i (%i UT restantes)\n"
 
-#: client/cl_actor.c:513
+#: client/cl_actor.c:514
 #, c-format
 msgid "Armor  %i\tMorale  %i\n"
 msgstr "Armure  %i\tMoral  %i\n"
 
-#: client/cl_actor.c:535
+#: client/cl_actor.c:536
 #, c-format
 msgid ""
 "%s\n"
@@ -7256,15 +7274,15 @@ msgstr ""
 "%s\n"
 "(empty)\n"
 
-#: client/cl_actor.c:954
+#: client/cl_actor.c:956
 msgid "Nobody selected\n"
 msgstr "Personne de Sélectionné\n"
 
-#: client/cl_actor.c:965
+#: client/cl_actor.c:967
 msgid "This isn't your round\n"
 msgstr "Ce n'est pas votre Tour\n"
 
-#: client/cl_actor.c:1099
+#: client/cl_actor.c:1101
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -7272,29 +7290,29 @@ msgstr ""
 "Vous ne pouvez pas charger cet objet inconnu.\n"
 "Vous devez le rechercher d'abord.\n"
 
-#: client/cl_actor.c:1503
+#: client/cl_actor.c:1510
 #, c-format
 msgid "%s has been killed!\n"
 msgstr "%s a été tué !\n"
 
-#: client/cl_actor.c:1509
+#: client/cl_actor.c:1516
 msgid "A civlian was killed!\n"
 msgstr "Un civil est mort !\n"
 
-#: client/cl_actor.c:1512
+#: client/cl_actor.c:1519
 msgid "An alien was killed!\n"
 msgstr "Un alien est mort !\n"
 
-#: client/cl_actor.c:1515
+#: client/cl_actor.c:1522
 msgid "A solider was killed\n"
 msgstr "Un soldat est mort\n"
 
-#: client/cl_actor.c:1518
+#: client/cl_actor.c:1525
 #, c-format
 msgid "A member of team %i was killed!\n"
 msgstr "Un membre de l'équipe %i a été tué !\n"
 
-#: client/cl_actor.c:1671
+#: client/cl_actor.c:1678
 msgid "Your round started!\n"
 msgstr "Votre Tour a commencé !\n"
 
@@ -7310,11 +7328,11 @@ msgstr "Appareil démarré"
 #: client/cl_campaign.c:1095 client/cl_campaign.c:1105
 #: client/cl_campaign.c:1116 client/cl_campaign.c:1129
 #: client/cl_campaign.c:1139 client/cl_campaign.c:1146
-#: client/cl_campaign.c:1154 client/cl_campaign.c:2349
-#: client/cl_campaign.c:2386 client/cl_campaign.c:2388
-#: client/cl_campaign.c:2758 client/cl_map.c:295 client/cl_research.c:673
-#: client/cl_research.c:795 client/cl_research.c:798 client/cl_research.c:802
-#: client/cl_research.c:815 client/cl_research.c:844 client/cl_research.c:983
+#: client/cl_campaign.c:1154 client/cl_campaign.c:2415
+#: client/cl_campaign.c:2452 client/cl_campaign.c:2454
+#: client/cl_campaign.c:2824 client/cl_map.c:295 client/cl_research.c:679
+#: client/cl_research.c:801 client/cl_research.c:804 client/cl_research.c:808
+#: client/cl_research.c:821 client/cl_research.c:850 client/cl_research.c:992
 #: client/cl_ufo.c:195 client/cl_ufo.c:200
 msgid "Notice"
 msgstr "Note"
@@ -7405,11 +7423,11 @@ msgstr "Votre transporteur n'a presque plus de carburant et retourne à la base"
 msgid "Interception"
 msgstr "Interception"
 
-#: client/cl_aircraft.c:593 client/cl_campaign.c:2386
+#: client/cl_aircraft.c:593 client/cl_campaign.c:2452
 msgid "You've won the battle"
 msgstr "Vous avez gagné la bataille"
 
-#: client/cl_aircraft.c:600 client/cl_campaign.c:2388
+#: client/cl_aircraft.c:600 client/cl_campaign.c:2454
 msgid "You've lost the battle"
 msgstr "Vous avez perdu la bataille"
 
@@ -7487,7 +7505,7 @@ msgstr "%i c"
 msgid "Base is under attack"
 msgstr "La base est attaquée"
 
-#: client/cl_basemanagement.c:1520 client/cl_team.c:1120 client/cl_team.c:1313
+#: client/cl_basemanagement.c:1520 client/cl_team.c:1122 client/cl_team.c:1315
 msgid "NewTeam"
 msgstr "Nouvelle Equipe"
 
@@ -7655,25 +7673,25 @@ msgid_plural "credits"
 msgstr[0] "crédit"
 msgstr[1] "crédits"
 
-#: client/cl_campaign.c:1059 client/cl_campaign.c:3964
+#: client/cl_campaign.c:1059 client/cl_campaign.c:4030
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "scientifique"
 msgstr[1] "scientifiques"
 
-#: client/cl_campaign.c:1060 client/cl_campaign.c:3966
+#: client/cl_campaign.c:1060 client/cl_campaign.c:4032
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "médecin"
 msgstr[1] "médecins"
 
-#: client/cl_campaign.c:1061 client/cl_campaign.c:3963
+#: client/cl_campaign.c:1061 client/cl_campaign.c:4029
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldat"
 msgstr[1] "soldats"
 
-#: client/cl_campaign.c:1062 client/cl_campaign.c:3965
+#: client/cl_campaign.c:1062 client/cl_campaign.c:4031
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "techniciens"
@@ -7802,7 +7820,7 @@ msgid "Error saving game. Check free disk space!"
 msgstr ""
 "Erreur lors de la sauvegarde du jeu. Vérifiez l'espace disque disponible!"
 
-#: client/cl_campaign.c:1660 client/cl_campaign.c:2246 client/cl_team.c:1165
+#: client/cl_campaign.c:1660 client/cl_campaign.c:2246 client/cl_team.c:1167
 msgid "Note"
 msgstr "Note"
 
@@ -7810,16 +7828,16 @@ msgstr "Note"
 msgid "Assemble or load a team"
 msgstr "Assembler ou charger une équipe"
 
-#: client/cl_campaign.c:2349
+#: client/cl_campaign.c:2415
 msgid "Your dropship is not near the landing zone"
 msgstr "Votre Transport n'est pas près de la zone d'atterrissage"
 
-#: client/cl_campaign.c:2614
+#: client/cl_campaign.c:2680
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s a été promu au rang de %s.\n"
 
-#: client/cl_campaign.c:2616
+#: client/cl_campaign.c:2682
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
@@ -7828,16 +7846,16 @@ msgstr ""
 "%s a été décoré de façon posthume au rang de %s\\pour sa bravoure exemplaire "
 "dans les situations les\\plus dangereuses.\n"
 
-#: client/cl_campaign.c:2617
+#: client/cl_campaign.c:2683
 msgid "Soldier promoted"
 msgstr "Soldat promu"
 
-#: client/cl_campaign.c:2757
+#: client/cl_campaign.c:2823
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Défense de la base: %s succès!"
 
-#: client/cl_campaign.c:3961
+#: client/cl_campaign.c:4027
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -8160,15 +8178,15 @@ msgstr "Touche: %s"
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Cacher le HUD (Appuyer sur ESC pour réactiver le HUD)"
 
-#: client/cl_parse.c:680
+#: client/cl_parse.c:683
 msgid "Alien spotted!\n"
 msgstr "Alien en vue !\n"
 
-#: client/cl_parse.c:682
+#: client/cl_parse.c:685
 msgid "Enemy spotted!\n"
 msgstr "Ennemi en vue !\n"
 
-#: client/cl_parse.c:684
+#: client/cl_parse.c:687
 msgid "Civilian spotted!\n"
 msgstr "Civil en vue !\n"
 
@@ -8186,90 +8204,90 @@ msgstr "Arrêt\n"
 msgid "Mission\t%s (%s)\n"
 msgstr "Mission\t%s (%s)\n"
 
-#: client/cl_produce.c:137
+#: client/cl_produce.c:142
 #, c-format
 msgid "Production queue for base %s is empty"
 msgstr "La liste de production de la base %s est vide"
 
-#: client/cl_produce.c:138
+#: client/cl_produce.c:143
 msgid "Production queue empty"
 msgstr "Liste de production vide"
 
-#: client/cl_produce.c:217
+#: client/cl_produce.c:223
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "Coût par objet\t%i c\n"
 
-#: client/cl_produce.c:219
+#: client/cl_produce.c:225
 #, c-format
 msgid "Productiontime\t%ih\n"
 msgstr "Durée de Production\t%ih\n"
 
-#: client/cl_produce.c:223
+#: client/cl_produce.c:229
 msgid "No item selected"
 msgstr "Pas d'objet sélectionné"
 
-#: client/cl_produce.c:470
+#: client/cl_produce.c:476
 #, c-format
 msgid "Production of %s started"
 msgstr "Production de %s commencée"
 
-#: client/cl_produce.c:471
+#: client/cl_produce.c:477
 msgid "Production started"
 msgstr "Production commencée"
 
-#: client/cl_produce.c:478
-msgid "You cannot queue any more items!"
-msgstr "Vous ne pouvez plus ajouter d'objets à la liste!"
-
-#: client/cl_produce.c:479
+#: client/cl_produce.c:484
 msgid "Queue full!"
 msgstr "Liste pleine!"
 
-#: client/cl_research.c:565
+#: client/cl_produce.c:484
+msgid "You cannot queue any more items!"
+msgstr "Vous ne pouvez plus ajouter d'objets à la liste!"
+
+#: client/cl_research.c:571
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Scientifiques disponibles dans cette base: %i"
 
-#: client/cl_research.c:566
+#: client/cl_research.c:572
 msgid "Not researched in any base."
 msgstr "Recherché dans aucune base."
 
-#: client/cl_research.c:572
+#: client/cl_research.c:578
 #, c-format
 msgid "Researched in %s"
 msgstr "Recherché dans %s"
 
-#: client/cl_research.c:574
+#: client/cl_research.c:580
 msgid "Researched in this base."
 msgstr "Recherché dans cette base."
 
-#: client/cl_research.c:585
+#: client/cl_research.c:591
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Progression: %.1f%%"
 
-#: client/cl_research.c:587
+#: client/cl_research.c:593
 msgid "Progress: Not available."
 msgstr "Progrès: Non disponible."
 
-#: client/cl_research.c:591
+#: client/cl_research.c:597
 msgid "Status: Under research"
 msgstr "Statut: En cours de Recherche"
 
-#: client/cl_research.c:594
+#: client/cl_research.c:600
 msgid "Status: Research paused"
 msgstr "Statut: Recherche en attente"
 
-#: client/cl_research.c:597
+#: client/cl_research.c:603
 msgid "Status: Research finished"
 msgstr "Statut: Recherche terminée"
 
-#: client/cl_research.c:600
+#: client/cl_research.c:606
 msgid "Status: Unknown technology"
 msgstr "Statut: Technologie inconnue"
 
-#: client/cl_research.c:674
+#: client/cl_research.c:680
 msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
@@ -8279,19 +8297,19 @@ msgstr ""
 "Vous devez en construire ou en libérer un\n"
 "pour que des scientifiques recherchent cette technologie.\n"
 
-#: client/cl_research.c:795
+#: client/cl_research.c:801
 msgid "This item is already under research by your scientists."
 msgstr "Cette objet est déjà recherché par vos scientifiques."
 
-#: client/cl_research.c:798
+#: client/cl_research.c:804
 msgid "The research on this item continues."
 msgstr "La recherche sur cet objet continue."
 
-#: client/cl_research.c:802 client/cl_research.c:844
+#: client/cl_research.c:808 client/cl_research.c:850
 msgid "The research on this item is complete."
 msgstr "La recherche sur cet objet est terminée."
 
-#: client/cl_research.c:815
+#: client/cl_research.c:821
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -8299,24 +8317,24 @@ msgstr ""
 "La recherche sur cet objet n'est pas encore possible.\n"
 "Vous devez d'abord rechercher la technologie sur laquelle il est basé."
 
-#: client/cl_research.c:883
+#: client/cl_research.c:889
 msgid " [not yet researchable]"
 msgstr " [pas encore recherchable]"
 
-#: client/cl_research.c:983
+#: client/cl_research.c:992
 msgid "Build a laboratory first"
 msgstr "Construisez un laboratoire d'abord"
 
-#: client/cl_research.c:1064
+#: client/cl_research.c:1073
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Recherche de %s est terminée\n"
 
-#: client/cl_research.c:1065
+#: client/cl_research.c:1074
 msgid "Research finished"
 msgstr "Recherche Terminée"
 
-#: client/cl_research.c:1324
+#: client/cl_research.c:1371
 msgid "No description available."
 msgstr "Pas de description disponible."
 
@@ -8341,36 +8359,36 @@ msgstr "Désertique"
 msgid "Arctic"
 msgstr "Arctique"
 
-#: client/cl_team.c:754
+#: client/cl_team.c:756
 #, c-format
 msgid "%i of %i"
 msgstr "%i sur %i"
 
-#: client/cl_team.c:1165
+#: client/cl_team.c:1167
 msgid "Error saving team. Check free disk space!"
 msgstr ""
 "Erreur lors de la sauvegarde de l'équipe. Vérifiez l'espace disque "
 "disponible!"
 
-#: client/cl_team.c:1336
+#: client/cl_team.c:1338
 msgid "Select a soldier from list"
 msgstr "Sélectionnez un soldat de la liste"
 
-#: client/cl_team.c:1337
+#: client/cl_team.c:1339
 msgid "Toggle to next soldier"
 msgstr "Passer au soldat suivant"
 
-#: client/cl_team.c:1633 client/cl_team.c:1681
+#: client/cl_team.c:1635 client/cl_team.c:1683
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens tués\t%i\n"
 
-#: client/cl_team.c:1636
+#: client/cl_team.c:1638
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Ennemis tués\t%i\n"
 
-#: client/cl_team.c:1641
+#: client/cl_team.c:1643
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -8379,7 +8397,7 @@ msgstr ""
 "Aliens capturés\t%i\n"
 "\n"
 
-#: client/cl_team.c:1642 client/cl_team.c:1685
+#: client/cl_team.c:1644 client/cl_team.c:1687
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -8388,7 +8406,7 @@ msgstr ""
 "Aliens survivants\t%i\n"
 "\n"
 
-#: client/cl_team.c:1644
+#: client/cl_team.c:1646
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
@@ -8397,7 +8415,7 @@ msgstr ""
 "Enemis capturés\t%i\n"
 "\n"
 
-#: client/cl_team.c:1645
+#: client/cl_team.c:1647
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -8406,22 +8424,22 @@ msgstr ""
 "Ennemis survivants\t%i\n"
 "\n"
 
-#: client/cl_team.c:1649
+#: client/cl_team.c:1651
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Pertes de l'équipe\t%i\n"
 
-#: client/cl_team.c:1650
+#: client/cl_team.c:1652
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Équipe disparue en mission\t%i\n"
 
-#: client/cl_team.c:1651
+#: client/cl_team.c:1653
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Pertes des tirs amis\t%i\n"
 
-#: client/cl_team.c:1652
+#: client/cl_team.c:1654
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -8430,22 +8448,22 @@ msgstr ""
 "Survivants de l'équipe\t%i\n"
 "\n"
 
-#: client/cl_team.c:1655
+#: client/cl_team.c:1657
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civils tués par les Aliens\t%i\n"
 
-#: client/cl_team.c:1657
+#: client/cl_team.c:1659
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civils tués par l'Ennemi\t%i\n"
 
-#: client/cl_team.c:1659
+#: client/cl_team.c:1661
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civils tués par votre équipe\t%i\n"
 
-#: client/cl_team.c:1660
+#: client/cl_team.c:1662
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -8456,27 +8474,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1684
+#: client/cl_team.c:1686
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Aliens capturés\t%i\n"
 
-#: client/cl_team.c:1688
+#: client/cl_team.c:1690
 #, c-format
 msgid "Phalanx soldiers killed by Aliens\t%i\n"
 msgstr "Soldats Phalanx tués par les Aliens\t%i\n"
 
-#: client/cl_team.c:1689
+#: client/cl_team.c:1691
 #, c-format
 msgid "Phalanx soldiers missing in action\t%i\n"
 msgstr "Soldats Phalanx disparus en mission\t%i\n"
 
-#: client/cl_team.c:1690
+#: client/cl_team.c:1692
 #, c-format
 msgid "Phalanx friendly fire losses\t%i\n"
 msgstr "Soldats Phalanx tués par des tirs amis\t%i\n"
 
-#: client/cl_team.c:1691
+#: client/cl_team.c:1693
 #, c-format
 msgid ""
 "Phalanx survivors\t%i\n"
@@ -8485,17 +8503,17 @@ msgstr ""
 "Soldats Phalanx survivants\t%i\n"
 "\n"
 
-#: client/cl_team.c:1693
+#: client/cl_team.c:1695
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civils tués par les Aliens\t%i\n"
 
-#: client/cl_team.c:1694
+#: client/cl_team.c:1696
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civils tués par des tirs amis\t%i\n"
 
-#: client/cl_team.c:1695
+#: client/cl_team.c:1697
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -8504,12 +8522,12 @@ msgstr ""
 "Civils sauvés\t%i\n"
 "\n"
 
-#: client/cl_team.c:1699
+#: client/cl_team.c:1701
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
 msgstr "Objets récoltés et vendus\t%i\n"
 
-#: client/cl_team.c:1700
+#: client/cl_team.c:1702
 #, c-format
 msgid ""
 "Total item sale value\t%i\n"
@@ -9032,19 +9050,6 @@ msgstr "Non"
 
 #~ msgid "shotgun_micro_pre_txt"
 #~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#, fuzzy
-#~ msgid "shotgun_micro_ammo_txt"
-#~ msgstr ""
-#~ "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un "
-#~ "certain temps. Comparé aux autres fusils à pompe traditionnellement "
-#~ "utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de "
-#~ "mieux orienter les projectiles à la sortie du canon. La porte effective "
-#~ "de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable "
-#~ "non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon "
-#~ "choix pour le combat urbain, notamment pour nettoyer un immeuble. Son "
-#~ "avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le "
-#~ "rendant plus efficace contre les cibles renforcées."
 
 #~ msgid "shotgun_micro_ammo_pre_txt"
 #~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
