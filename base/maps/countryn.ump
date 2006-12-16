@@ -18,9 +18,10 @@ ac     +a     +a     +a     ac
 // old fallen house
 tile +c01
 {
-4 5
+4 6
 
 0      ab     ab     0
+ac      +a     +a     ac
 ac      +a     +a     ac
 ac      +a     +a     ac
 ac      +a     +a     ac
@@ -30,9 +31,10 @@ ac      +a     +a     ac
 // house + watertower
 tile +c02
 {
-4 5
+4 6
 
 0      ab     ab     0
+ac      +a     +a     ac
 ac      +a     +a     ac
 ac      +a     +a     ac
 ac      +a     +a     ac
@@ -80,6 +82,18 @@ abc     +a     abc
 0      abc     0
 }
 
+// a rock
+tile +d05
+{
+4 5
+
+0      ab     ab     0
+ac      +a     +a     ac
+ac      +a     +a     ac
+ac      +a     +a     ac
+0      ab      ab    0
+}
+
 assembly test
 {
 size "7 7"
@@ -89,5 +103,6 @@ size "7 7"
 +d02 "1 31"
 +d03 "1 31"
 +d04 "1 31"
++d05 "1 31"
 +drop "1 3"
 }
