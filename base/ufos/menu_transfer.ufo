@@ -1,11 +1,136 @@
 // ==================
 // TRANSFER MENU
 // ==================
-
 menu transfer
 {
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/trans_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/trans_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/trans_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/trans_lr
+		pos		"512 512"
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	confunc trans_reset
+	{
+		*s_items	color "1 1 1 0.6"
+		*s_humans	color "1 1 1 0.6"
+		*s_techs	color "1 1 1 0.6"
+	}
+	confunc trans_items		{ cmd "trans_select 0;" trans_reset *s_items	color "1 1 1 1" }
+	confunc trans_humans	{ cmd "trans_select 1;" trans_reset *s_humans	color "1 1 1 1" }
+	confunc trans_techs		{ cmd "trans_select 2;" trans_reset *s_techs	color "1 1 1 1" }
+
+	pic bt_items
+	{
+		tooltip	"_Show only items"
+		image	menu/button_blue
+		mousefx	true
+		pos		"615 585"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ trans_items }
+	}
+
+	string s_items
+	{
+		pos	"679 595"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Equipment/Items"
+	}
+
+	pic bt_humans
+	{
+		tooltip	"_Show only employees"
+		image	menu/button_blue
+		mousefx	true
+		pos		"615 655"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ trans_humans }
+	}
+
+	string s_humans
+	{
+		pos	"679 665"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Employees"
+	}
+
+	pic bt_techs
+	{
+		tooltip	"_Show only technologies"
+		image	menu/button_blue
+		mousefx	true
+		pos		"765 585"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ trans_techs }
+	}
+
+	string s_techs
+	{
+		pos	"829 595"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Technologies"
+	}
+
+	pic bt_continue
+	{
+		tooltip	"_Back to baseview"
+		image	hud/buttons2
+		mousefx	true
+		pos		"940 686"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop }
+	}
+
+	// ==================
+	// init function
+	// ==================
 
 	func init
 	{
+		cmd "transfer_init 0;"
 	}
 }
