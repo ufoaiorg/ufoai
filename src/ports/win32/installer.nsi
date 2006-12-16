@@ -805,6 +805,10 @@ Section "Game" SEC01
   File "..\..\..\base\maps\villaged\*.bsp"
   SetOutPath "$INSTDIR\base\maps\villagen"
   File "..\..\..\base\maps\villagen\*.bsp"
+  SetOutPath "$INSTDIR\base\maps\countryd"
+  File "..\..\..\base\maps\countryd\*.bsp"
+  SetOutPath "$INSTDIR\base\maps\countryn"
+  File "..\..\..\base\maps\countryn\*.bsp"
 
 ;======================================================================
 ; to let the game start up
