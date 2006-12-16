@@ -242,7 +242,7 @@ static void SV_ParseMapTile(char *filename, char **text)
 		for (x = 0; x < t->w; x++) {
 			token = COM_EParse(text, errhead, filename);
 			if (!*text || *token == '}') {
-				Com_Printf("SV_ParseMapTile: Bad tile desc in '%s'\n", t->name);
+				Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - not enough entries for size\n", t->name);
 				*text = strchr(*text, '}') + 1;
 				return;
 			}
@@ -252,9 +252,11 @@ static void SV_ParseMapTile(char *filename, char **text)
 			}
 		}
 
+	token = COM_EParse(text, errhead, filename);
+
 	/* get connections */
-	if (strchr(*text, '}'))
-		*text = strchr(*text, '}') + 1;
+	if (*token != '}')
+		Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - too many entries for size\n", t->name);
 
 	/* successfully parsed - this tile counts */
 	numTiles++;
