@@ -205,6 +205,7 @@ menu bases
 		pos	"755 340"
 		texl	"0 64"
 		texh	"230 128"
+		in
 	}
 	string txt_transfer
 	{
