@@ -1058,8 +1058,7 @@ static void R_BuildTriangleNeighbors (int *neighbors, index_t *indexes, int numt
 	int i, *n;
 	index_t *index;
 
-	for (i = 0, index = indexes, n = neighbors; i < numtris; i++, index += 3, n += 3)
-	{
+	for (i = 0, index = indexes, n = neighbors; i < numtris; i++, index += 3, n += 3) {
 		n[0] = R_FindTriangleWithEdge (indexes, numtris, index[1], index[0], i);
 		n[1] = R_FindTriangleWithEdge (indexes, numtris, index[2], index[1], i);
 		n[2] = R_FindTriangleWithEdge (indexes, numtris, index[0], index[2], i);
