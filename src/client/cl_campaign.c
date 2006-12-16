@@ -582,6 +582,52 @@ static void CL_CampaignExecute(setState_t * set)
 	CL_CampaignActivateStageSets(set->stage);
 }
 
+#define DETAILSWIDTH 14
+/**
+ * @brief Console command to list all available missions
+ */
+void CP_MissionList_f (void)
+{
+	int i;
+	qboolean details = qfalse;
+	char tmp[DETAILSWIDTH+1];
+
+	if (Cmd_Argc() > 1)
+		details = qtrue;
+	else
+		Com_Printf("Use defails as parameter to get a more detailed list\n");
+
+	/* detail header */
+	if (details) {
+		Com_Printf("| %-14s | %-14s | %-14s | %-14s | #  | %-14s | %-14s | #  |\n|", "id", "map", "param", "alienteam", "alienequip", "civteam");
+		for (i = 0; i < 4; i++)
+			Com_Printf("----------------|");
+		Com_Printf("----|----------------|----------------|----|");
+		Com_Printf("\n");
+	}
+
+	for (i = 0; i < numMissions; i++) {
+		if (details) {
+			Q_strncpyz(tmp, missions[i].name, sizeof(tmp));
+			Com_Printf("| %-*s | ", DETAILSWIDTH, tmp);
+			Q_strncpyz(tmp, missions[i].map, sizeof(tmp));
+			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
+			Q_strncpyz(tmp, missions[i].param, sizeof(tmp));
+			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
+			Q_strncpyz(tmp, missions[i].alienTeam, sizeof(tmp));
+			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
+			Q_strncpyz(tmp, missions[i].alienTeam, sizeof(tmp));
+			Com_Printf("%02i | ", missions[i].aliens);
+			Q_strncpyz(tmp, missions[i].alienEquipment, sizeof(tmp));
+			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
+			Q_strncpyz(tmp, missions[i].civTeam, sizeof(tmp));
+			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
+			Com_Printf("%02i |", missions[i].civilians);
+			Com_Printf("\n");
+		} else
+			Com_Printf("%s\n", missions[i].name);
+	}
+}
 
 /**
  * @brief
@@ -4114,6 +4160,7 @@ void CL_ResetCampaign(void)
 	Cmd_AddCommand("campaign_stats", CP_CampaignStats, NULL);
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, NULL);
+	Cmd_AddCommand("missionlist", CP_MissionList_f, "Shows all missions from the script files");
 	Cmd_AddCommand("game_new", CL_GameNew, NULL);
 	Cmd_AddCommand("game_continue", CL_GameContinue, NULL);
 	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
