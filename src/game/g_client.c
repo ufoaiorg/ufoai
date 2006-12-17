@@ -1160,7 +1160,6 @@ static void G_ClientTurn(player_t * player, int num, int dv)
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
 	gi.WriteShort(ent->number);
 	gi.WriteByte(ent->dir);
-	Com_Printf("G_ClientTurn: new ent dir: %i\n", ent->dir);
 
 	/* send the new TUs */
 	G_SendStats(ent);
