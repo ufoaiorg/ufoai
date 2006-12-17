@@ -171,6 +171,7 @@ void G_SendInventory(int player_mask, edict_t * ent)
 
 	/* test for pointless player mask */
 	if (!player_mask)
+		return;
 
 	for (j = 0; j < gi.csi->numIDs; j++)
 		for (ic = ent->i.c[j]; ic; ic = ic->next)
