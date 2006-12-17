@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-16 09:57+0100\n"
-"PO-Revision-Date: 2006-12-16 09:58+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"POT-Creation-Date: 2006-12-17 18:06+0100\n"
+"PO-Revision-Date: 2006-12-17 18:16+0100\n"
+"Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -155,23 +155,35 @@ msgid "Base #8"
 msgstr "Base #8"
 
 #: ../base/ufos/basemanagement.ufo:340
-msgid "Dropship"
-msgstr "Dropship"
+msgid "Firebird-class Dropship"
+msgstr "Firebird-class Dropship"
 
-#: ../base/ufos/basemanagement.ufo:354
-msgid "Interceptor"
-msgstr "Interceptor"
+#: ../base/ufos/basemanagement.ufo:341
+msgid "Firebird D"
+msgstr "Firebird D"
 
-#: ../base/ufos/basemanagement.ufo:371
+#: ../base/ufos/basemanagement.ufo:355
+msgid "Stiletto-class Interceptor"
+msgstr "Stiletto-class Interceptor"
+
+#: ../base/ufos/basemanagement.ufo:356
+msgid "Stiletto I"
+msgstr "Stiletto I"
+
+#: ../base/ufos/basemanagement.ufo:373
 msgid "Saracen-class Interceptor"
 msgstr "Saracen-class Interceptor"
 
-#: ../base/ufos/basemanagement.ufo:388
+#: ../base/ufos/basemanagement.ufo:374
+msgid "Saracen I"
+msgstr "Saracen I"
+
+#: ../base/ufos/basemanagement.ufo:391
 #: ../base/ufos/research.ufo:1828
 msgid "UFO - Scout"
 msgstr "UFO - Scout"
 
-#: ../base/ufos/basemanagement.ufo:402
+#: ../base/ufos/basemanagement.ufo:405
 #: ../base/ufos/research.ufo:1861
 msgid "UFO - Fighter"
 msgstr "UFO - Fighter"
@@ -361,12 +373,12 @@ msgid "Call back"
 msgstr "Call back"
 
 #: ../base/ufos/menu_aircraft.ufo:196
-#: ../base/ufos/menu_bases.ufo:186
+#: ../base/ufos/menu_bases.ufo:187
 msgid "Transfer equipment or personnel"
 msgstr "Transfer equipment or personnel"
 
 #: ../base/ufos/menu_aircraft.ufo:211
-#: ../base/ufos/menu_bases.ufo:201
+#: ../base/ufos/menu_bases.ufo:212
 msgid "Transfer"
 msgstr "Transfer"
 
@@ -513,9 +525,8 @@ msgstr "Back to worldview"
 #: ../base/ufos/menu_bases.ufo:73
 #: ../base/ufos/menu_bases.ufo:90
 #: ../base/ufos/menu_bases.ufo:169
-#: ../base/ufos/menu_bases.ufo:229
-#: ../base/ufos/menu_bases.ufo:265
-#: ../base/ufos/menu_bases.ufo:301
+#: ../base/ufos/menu_bases.ufo:240
+#: ../base/ufos/menu_bases.ufo:313
 msgid "Build base-facilities"
 msgstr "Build base-facilities"
 
@@ -546,28 +557,36 @@ msgstr "Buy/Sell equipment"
 msgid "Buy/Sell Equipment"
 msgstr "Buy/Sell Equipment"
 
-#: ../base/ufos/menu_bases.ufo:212
+#: ../base/ufos/menu_bases.ufo:203
+msgid "Can't transfer - only one base"
+msgstr "Can't transfer - only one base"
+
+#: ../base/ufos/menu_bases.ufo:223
 msgid "Research new technology"
 msgstr "Research new technology"
 
-#: ../base/ufos/menu_bases.ufo:237
+#: ../base/ufos/menu_bases.ufo:248
 msgid "Research"
 msgstr "Research"
 
-#: ../base/ufos/menu_bases.ufo:248
+#: ../base/ufos/menu_bases.ufo:259
 msgid "Produce new equipment"
 msgstr "Produce new equipment"
 
-#: ../base/ufos/menu_bases.ufo:273
+#: ../base/ufos/menu_bases.ufo:276
+msgid "Workshop not operational"
+msgstr "Workshop not operational"
+
+#: ../base/ufos/menu_bases.ufo:285
 msgid "Production"
 msgstr "Production"
 
-#: ../base/ufos/menu_bases.ufo:284
-#: ../base/ufos/menu_bases.ufo:309
+#: ../base/ufos/menu_bases.ufo:296
+#: ../base/ufos/menu_bases.ufo:321
 msgid "Hire employees"
 msgstr "Hire employees"
 
-#: ../base/ufos/menu_bases.ufo:322
+#: ../base/ufos/menu_bases.ufo:334
 #: ../base/ufos/menu_buildings.ufo:76
 #: ../base/ufos/menu_buy.ufo:708
 #: ../base/ufos/menu_buy.ufo:1146
@@ -577,24 +596,24 @@ msgstr "Hire employees"
 msgid "CREDIT"
 msgstr "CREDIT"
 
-#: ../base/ufos/menu_bases.ufo:330
+#: ../base/ufos/menu_bases.ufo:342
 #: ../base/ufos/menu_geoscape.ufo:95
 msgid "Organisation capital"
 msgstr "Organisation capital"
 
-#: ../base/ufos/menu_bases.ufo:339
+#: ../base/ufos/menu_bases.ufo:351
 msgid "Name of this base"
 msgstr "Name of this base"
 
-#: ../base/ufos/menu_bases.ufo:353
+#: ../base/ufos/menu_bases.ufo:365
 msgid "Rename your base"
 msgstr "Rename your base"
 
-#: ../base/ufos/menu_bases.ufo:367
+#: ../base/ufos/menu_bases.ufo:379
 msgid "Switch to the previous base"
 msgstr "Switch to the previous base"
 
-#: ../base/ufos/menu_bases.ufo:378
+#: ../base/ufos/menu_bases.ufo:390
 msgid "Switch to the next base"
 msgstr "Switch to the next base"
 
@@ -603,6 +622,7 @@ msgstr "Switch to the next base"
 #: ../base/ufos/menu_hire.ufo:786
 #: ../base/ufos/menu_production.ufo:341
 #: ../base/ufos/menu_research.ufo:945
+#: ../base/ufos/menu_transfer.ufo:119
 msgid "Back to baseview"
 msgstr "Back to baseview"
 
@@ -1813,6 +1833,7 @@ msgid "Bases"
 msgstr "Bases"
 
 #: ../base/ufos/menu_stats.ufo:95
+#: ../base/ufos/menu_transfer.ufo:94
 msgid "Employees"
 msgstr "Employees"
 
@@ -1928,6 +1949,26 @@ msgstr "Object Info"
 #: ../base/ufos/menu_team.ufo:1472
 msgid "Actor Abilities"
 msgstr "Actor Abilities"
+
+#: ../base/ufos/menu_transfer.ufo:59
+msgid "Show only items"
+msgstr "Show only items"
+
+#: ../base/ufos/menu_transfer.ufo:74
+msgid "Equipment/Items"
+msgstr "Equipment/Items"
+
+#: ../base/ufos/menu_transfer.ufo:79
+msgid "Show only employees"
+msgstr "Show only employees"
+
+#: ../base/ufos/menu_transfer.ufo:99
+msgid "Show only technologies"
+msgstr "Show only technologies"
+
+#: ../base/ufos/menu_transfer.ufo:114
+msgid "Technologies"
+msgstr "Technologies"
 
 #: ../base/ufos/menu_ufopedia.ufo:50
 msgid "Previous entry"
@@ -2262,7 +2303,7 @@ msgid "Stop them"
 msgstr "Stop them"
 
 #: ../base/ufos/missions.ufo:859
-#: client/cl_campaign.c:667
+#: client/cl_campaign.c:713
 msgid "Base Attack"
 msgstr "Base Attack"
 
@@ -3398,7 +3439,7 @@ msgstr "No pre research info available"
 #: ../base/ufos/research.ufo:726
 msgid "rpg_txt"
 msgstr ""
-"Technical Specifications: HMPL Rocket Launcher\n"
+"Technical Specifications: HPML Rocket Launcher\n"
 "\n"
 "CLASSIFIED LEVEL YELLOW\n"
 "\n"
@@ -3612,11 +3653,83 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:872
 msgid "shotgun2_txt"
-msgstr "<TODO>"
+msgstr ""
+"Technical Specifications: CRC-212 Riot Shotgun\n"
+"\n"
+"CLASSIFIED LEVEL YELLOW\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Technical Document, Delta Clearance\n"
+"\n"
+"Filed: 20 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
+"\n"
+"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
+"\n"
+"From our experiences in Mumbai and other stricken cities, we've concluded that the aliens seem to concentrate their efforts on population centres, especially dense urban areas. A majority of engagements have taken place at knife-fighting range. For the purposes of the Excalibur Program, we've chosen several high-performance weapons for our Close Range Combat package.\n"
+"\n"
+"Many great shotguns have come out of Italy over the past two centuries; the latest is the Rossi AAA, a semi-automatic combat shotgun developed for use by SWAT and anti-terrorist units. It features several ground-breaking technologies, but its most impressive feature is without a doubt the specially-developed 'Twist' barrel. The Twist is a new type of shotgun barrel that, with a sharp twist of the front handguard, can protrude or flatten the rifling inside the barrel. With this mechanism, the AAA can change its barrel from smoothbore to rifled and back in a tenth of a second. The barrel even adjusts its own diameter and choke to fit whatever type of shell is in the chamber. These two innovations allow the AAA to fire any kind of shotgun ammo at a moment's notice.\n"
+"\n"
+"The most commonly used military and SWAT ammunition is the 12mm centerfire flechette shell. Each shell contains 8 tiny flechettes -- solid steel needles with fins to stabilise their flight. This ammunition has superior accuracy compared to buckshot and performs excellently against armour. The flechettes are also prone to tumble after penetration, resulting in impressive wounding capability for such a small projectile. Their drawbacks are vulnerability to wind conditions and other deflecting factors. Other types of ammo are available to deal with these situations, however -- and the AAA can fire them all.\n"
+"\n"
+"In conclusion, the Rossi AAA is a highly versatile shotgun that is among the most effective close-range weapons available. It has a longer range than the CRC-FL Flamethrower and causes more damage than the CRC-8 SMG, providing a good compromise between speed, range and stopping power.\n"
+"\n"
+"For PHALANX use, we have given this shotgun the classification CRC-212.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"The CRC-212 performs very well at close quarters but quickly loses power as the range increases. Flechette shot tends to spread too far to be effective at range (though less so than ordinary buckshot), while rifled slugs suffer a pronounced projectile drop and are highly susceptible to wind conditions. Though the shotgun can shoot out to medium range, don't expect it to be very effective.\n"
+"\n"
+"Where this weapon will truly shine is in urban situations where the enemy has little cover to hide behind and can be engaged at close range. However, it can be too long to manoeuvre properly in tight spaces. The CRC-M9 Micro Shotgun may be preferable in these situations.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:889
 msgid "shotgun2_ammo_txt"
-msgstr "<TODO>"
+msgstr ""
+"Technical Specifications: Flechette Shells\n"
+"\n"
+"CLASSIFIED LEVEL YELLOW\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Technical Document, Delta Clearance\n"
+"\n"
+"Filed: 20 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"This magazine contains 7 shells of flechette shot. Each 12mm shell contains 8 tiny flechettes -- solid steel needles with fins to stabilise their flight. This ammunition is military-only, banned for all civilian use due to the flechettes' excellent performance against armour. The flechettes are prone to tumble after penetration, resulting in nasty wounds that will either kill the target or send it running for cover.\n"
+"\n"
+"This short shell -- only 90mm long -- was designed for pistol-configuration shotguns like the CRC-M9 Micro Shotgun. However, the CRC-212 Riot Shotgun can fire it just as easily, with all the performance increases of a full-sized weapon.\n"
+"\n"
+"The magazine is meant to be loaded into a CRC-212 Riot Shotgun or CRC-M9 Micro Shotgun.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"All soldiers equipped with shotguns should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:907
 msgid "shotgun2_slug_ammo_txt"
@@ -4971,7 +5084,7 @@ msgstr ""
 "\n"
 "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATE: 15 June 2084\n"
+"DATE: %02i %s %i\n"
 "\n"
 "SUB: Re: UFO -- Scout\n"
 "\n"
@@ -5017,7 +5130,7 @@ msgstr ""
 "\n"
 "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATE: 03 June 2084\n"
+"DATE: %02i %s %i\n"
 "\n"
 "SUB: UFO -- Scout\n"
 "\n"
@@ -5033,7 +5146,7 @@ msgstr ""
 "\n"
 "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATE: 28 August 2084\n"
+"DATE: %02i %s %i\n"
 "\n"
 "SUB: Re: UFO -- Fighter\n"
 "\n"
@@ -5075,7 +5188,7 @@ msgstr ""
 "\n"
 "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATE: 12 August 2084\n"
+"DATE: %02i %s %i\n"
 "\n"
 "SUB: UFO -- Fighter\n"
 "\n"
@@ -5097,7 +5210,7 @@ msgstr ""
 "\n"
 "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATE: 08 October 2084\n"
+"DATE: %02i %s %i\n"
 "\n"
 "SUB: Re: UFO -- Harvester\n"
 "\n"
@@ -5139,7 +5252,7 @@ msgstr ""
 "\n"
 "FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATE: 20 September 2084\n"
+"DATE: %02i %s %i\n"
 "\n"
 "SUB: UFO -- Harvester\n"
 "\n"
@@ -5189,7 +5302,7 @@ msgstr ""
 "\n"
 "FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATE: 06 June 2084\n"
+"DATE: %02i %s %i\n"
 "\n"
 "SUB: Re: Alien Autopsy -- Bloodspider\n"
 "\n"
@@ -5221,7 +5334,7 @@ msgstr ""
 "\n"
 "FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATE: 01 June 2084\n"
+"DATE: %02i %s %i\n"
 "\n"
 "SUB: Proposal: Alien Autopsy -- Bloodspider\n"
 "\n"
@@ -5240,11 +5353,57 @@ msgstr "Alien Autopsy - Ortnok"
 
 #: ../base/ufos/research.ufo:1952
 msgid "ortnok_autopsy_txt"
-msgstr "The green skin is scaly and tough, and cellular analysis reveals an abundance of chlorophyll, the molecule that makes plant leaves green. The digestive system does not appear to be undersized so we can only surmise that the Ortnok must have evolved in an environment where food could be scarce and falling back on solar energy was the only option in such situations.The reproductive organs of this species are very active, only ceasing to function 14 hours after death. Small wonder the Antareans use them as a limitless supply of cannon fodder in every terrain they choose to conquer."
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Re: Alien Autopsy -- Ortnok\n"
+"\n"
+"\n"
+"Commander,\n"
+"\n"
+"The autopsy and evaluation of the green alien specimen is complete. I'm hereby submitting my summary for your review.\n"
+"\n"
+"The first thing we noticed about this species, which has been named the 'Ortnok', is its immense, humanoid structure. While not genetically related to humanity, the Ortnok's hulking appearance can be quite disturbing to our field agents. In proportion to its body weight, it has more muscle than a professional body builder. At first we concluded this was solely the product of an extreme-heavy-gravity homeworld, but subsequent DNA and toxicology work on our specimen revealed something interesting. The subject seems to have been raised from birth on a heavy diet of anabolic steroids. This, combined with the incredible density of the muscle tissue, makes the Ortnok physically stronger than any biological entity on Earth.\n"
+"\n"
+"During our first incisions, we were surprised to find the Ortnok to be without blood. It has lungs, viscera and something akin to digestive organs, but no liver or heart that we can identify. Instead of veins there is a very well-developed nervous system that seems to power and control the muscles by direct electrical stimulation. The needed electricity is generated through digestion of organic matter and stored in a set of large eel-like organs underneath the lungs. The whole chest cavity has been richly furnished with armour plating inserted just underneath the leathery green skin.\n"
+"\n"
+"The eyes are covered with surgically-implanted lenses that improve the Ortnok's already excellent vision, possibly stretching into the infrared spectrum. The ears consist of a series of small cavities, three on either side of the head, which are surprisingly large and well-developed. Given the evidence we must conclude that Ortnoks have acute hearing, though the nose and olfactory organs are quite small, atrophied almost to the point of being vestigial.\n"
+"\n"
+"From the autopsy and our analysis of battlefield footage, we can conclude the following:\n"
+"\n"
+"- The brain is fairly small for a hominid of such size, no larger than that of Homo erectus, but it is perhaps sufficient for the role of foot soldier. Ortnoks certainly don't display any tactical sluggishness on the battlefield.\n"
+"\n"
+"- The three-fingered hand is able to carry and use a wide variety of equipment. However, Ortnoks are most often equipped with heavy weapons to match their size.\n"
+"\n"
+"- Ortnoks are strong, tough and dangerous. Their internal armour enhances their natural endurance even further, making them difficult to take down. Armour-piercing rounds or incendiary weapons are recommended. Lasers, explosives and cutting weapons will not be very effective due to the extensive armouring.\n"
+"\n"
+"- All Ortnok specimens we've seen so far were not equipped with reproductive organs. From surgical scarring around the groin area, we believe they may have been neutered for some reason.\n"
+"\n"
+"In combat, specimens seem to be used most often in the role of heavy infantry and fire support. They are not particularly accurate with their somewhat cumbersome weapons, but when working in numbers they usually lay down enough fire to suppress and then annihilate a PHALANX squad. Ortnoks do not seem to serve in many specialist capacities; they are never used as technicians, according to our camera observations, and usually busy themselves handling perimeter security for the Greys when not engaged in combat."
 
 #: ../base/ufos/research.ufo:1953
 msgid "ortnok_autopsy_pre_txt"
-msgstr "No pre research info available"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Alien Autopsy -- Ortnok\n"
+"\n"
+"\n"
+"Commander,\n"
+"\n"
+"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:1971
 msgid "Alien Autopsy - Antarean"
@@ -5445,9 +5604,49 @@ msgstr "<TODO>"
 msgid "Particle Beam Weapon"
 msgstr "Particle Beam Weapon"
 
+#: ../base/ufos/research.ufo:2185
+msgid "craft_weapon_particle_beam_pre_txt"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Particle Beam Weapon\n"
+"\n"
+"\n"
+"Commander, one of the UFOs we've recovered was equipped with a very interesting type of weapon that we'd like to research right away. It seems to fire some kind of high-velocity particle beam; if we can master this technology, or at least adapt it for use on our own aircraft, we could make air engagements with armed alien craft significantly more survivable for our craft and pilots.\n"
+"\n"
+"--Cdr. Navarre"
+
 #: ../base/ufos/research.ufo:2186
 msgid "craft_weapon_particle_beam_txt"
-msgstr "<TODO>"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Re: Particle Beam Weapon\n"
+"\n"
+"\n"
+"Our report on the alien PBW (Particle Beam Weapon) is ready for your review, Commander.\n"
+"\n"
+"The general idea of particle-beam weaponry is to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. The alien weapon is an elegantly simple application of this concept. It is essentially nothing more than a big particle accelerator and a set of focusing equipment, consisting of a high-powered magnetic containment and pinch system.\n"
+"\n"
+"My team could've built a particle accelerator to nearly the same standards, but the focusing array shows us just how far ahead the aliens really are. The accelerator is little more than a high-energy synchrotron, speeding particles round and round in a circle until they've achieved sufficient velocity. The particles are then diverted via a magnetic field into the focusing array, where they are magnetically constricted -- 'pinched' -- into a coherent beam. The level of magnetic control the aliens achieve here is far greater than anything we've managed before. The pinch system is intelligently controlled by the UFO's targeting computer, directing the beam to its target with dead-on accuracy.\n"
+"\n"
+"When active, the weapon is powered directly by the UFO's electrical system, constantly tracking one target of choice. Once the target has been destroyed, the computer will immediately lock on to the next hostile contact in the chain, if any.\n"
+"\n"
+"Defending against this weapon is going to be a challenge, Commander. There is very little that can be done against a particle beam travelling at near the speed of light, carrying enough energy to knock anything we can field right out of the sky. Additional armour for our aircraft will protect against glancing blows, but in the case of a direct hit, it may as well not be there. It seems the only realistic defence against this weapon is to cause it to miss. We should recover and investigate an intact alien ECM unit as soon as we can.\n"
+"\n"
+"It will be a similar challenge for us to fit the PBW to our own craft. We've rigged up brackets that we can mount to any medium-sized hardpoint, but we can't generate enough power to suit this weapon just from in-flight electricity. If we want to use the PBW in combat, we're going to have to run it off its own antimatter-powered electrical system. This may require more research into antimatter storage and control, and it means that ammunition will certainly be limited.\n"
+"\n"
+"On a brighter note, we've confirmed that all the weapon's components are within our ability to replicate, and their specs have been loaded into our Workshop machinery. We should be able to begin production straight away.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2210
 msgid "Political Situation Before The Invasion"
@@ -6553,24 +6752,24 @@ msgstr "Aircraft started"
 #: client/cl_aircraft.c:554
 #: client/cl_aircraft.c:772
 #: client/cl_basemanagement.c:453
-#: client/cl_basemanagement.c:1917
+#: client/cl_basemanagement.c:1930
 #: client/cl_campaign.c:428
-#: client/cl_campaign.c:855
-#: client/cl_campaign.c:906
-#: client/cl_campaign.c:1064
-#: client/cl_campaign.c:1075
-#: client/cl_campaign.c:1085
-#: client/cl_campaign.c:1095
-#: client/cl_campaign.c:1105
-#: client/cl_campaign.c:1116
-#: client/cl_campaign.c:1129
-#: client/cl_campaign.c:1139
-#: client/cl_campaign.c:1146
-#: client/cl_campaign.c:1154
-#: client/cl_campaign.c:2415
-#: client/cl_campaign.c:2452
-#: client/cl_campaign.c:2454
-#: client/cl_campaign.c:2824
+#: client/cl_campaign.c:901
+#: client/cl_campaign.c:952
+#: client/cl_campaign.c:1110
+#: client/cl_campaign.c:1121
+#: client/cl_campaign.c:1131
+#: client/cl_campaign.c:1141
+#: client/cl_campaign.c:1151
+#: client/cl_campaign.c:1162
+#: client/cl_campaign.c:1175
+#: client/cl_campaign.c:1185
+#: client/cl_campaign.c:1192
+#: client/cl_campaign.c:1200
+#: client/cl_campaign.c:2461
+#: client/cl_campaign.c:2498
+#: client/cl_campaign.c:2500
+#: client/cl_campaign.c:2870
 #: client/cl_map.c:295
 #: client/cl_research.c:679
 #: client/cl_research.c:801
@@ -6679,12 +6878,12 @@ msgid "Interception"
 msgstr "Interception"
 
 #: client/cl_aircraft.c:593
-#: client/cl_campaign.c:2452
+#: client/cl_campaign.c:2498
 msgid "You've won the battle"
 msgstr "You've won the battle"
 
 #: client/cl_aircraft.c:600
-#: client/cl_campaign.c:2454
+#: client/cl_campaign.c:2500
 msgid "You've lost the battle"
 msgstr "You've lost the battle"
 
@@ -6755,7 +6954,7 @@ msgstr[0] "%i day left"
 msgstr[1] "%i days left"
 
 #: client/cl_basemanagement.c:1247
-#: client/cl_campaign.c:1329
+#: client/cl_campaign.c:1375
 #, c-format
 msgid "%i c"
 msgstr "%i c"
@@ -6764,36 +6963,36 @@ msgstr "%i c"
 msgid "Base is under attack"
 msgstr "Base is under attack"
 
-#: client/cl_basemanagement.c:1520
+#: client/cl_basemanagement.c:1533
 #: client/cl_team.c:1122
 #: client/cl_team.c:1315
 msgid "NewTeam"
 msgstr "NewTeam"
 
-#: client/cl_basemanagement.c:1600
+#: client/cl_basemanagement.c:1613
 #, c-format
 msgid "A new base has been built: %s."
 msgstr "A new base has been built: %s."
 
-#: client/cl_basemanagement.c:1601
-#: client/cl_basemanagement.c:1644
+#: client/cl_basemanagement.c:1614
+#: client/cl_basemanagement.c:1657
 msgid "Base built"
 msgstr "Base built"
 
-#: client/cl_basemanagement.c:1643
+#: client/cl_basemanagement.c:1656
 msgid "Not enough credits to set up a new base."
 msgstr "Not enough credits to set up a new base."
 
-#: client/cl_basemanagement.c:1917
+#: client/cl_basemanagement.c:1930
 msgid "You've reached the base limit."
 msgstr "You've reached the base limit."
 
-#: client/cl_basemanagement.c:2057
+#: client/cl_basemanagement.c:2070
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Construction of %s building finished in base %s."
 
-#: client/cl_basemanagement.c:2058
+#: client/cl_basemanagement.c:2071
 msgid "Building finished"
 msgstr "Building finished"
 
@@ -6802,214 +7001,214 @@ msgstr "Building finished"
 msgid "Could not set up your base at this location"
 msgstr "Could not set up your base at this location"
 
-#: client/cl_campaign.c:666
+#: client/cl_campaign.c:712
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "Your base %s is under attack."
 
-#: client/cl_campaign.c:691
+#: client/cl_campaign.c:737
 #, c-format
 msgid "Alien activity has been reported: '%s'"
 msgstr "Alien activity has been reported: '%s'"
 
-#: client/cl_campaign.c:692
+#: client/cl_campaign.c:738
 msgid "Alien activity"
 msgstr "Alien activity"
 
-#: client/cl_campaign.c:854
+#: client/cl_campaign.c:900
 #, c-format
 msgid "Your base: %s has been ransacked! All employees killed and all equipment destroyed."
 msgstr "Your base: %s has been ransacked! All employees killed and all equipment destroyed."
 
-#: client/cl_campaign.c:905
+#: client/cl_campaign.c:951
 #, c-format
 msgid "The mission expired and %i civilian died."
 msgid_plural "The mission expired and %i civilians died."
 msgstr[0] "The mission expired and %i civilian died."
 msgstr[1] "The mission expired and %i civilians died."
 
-#: client/cl_campaign.c:947
+#: client/cl_campaign.c:993
 msgid "Jan"
 msgstr "Jan"
 
-#: client/cl_campaign.c:949
+#: client/cl_campaign.c:995
 msgid "Feb"
 msgstr "Feb"
 
-#: client/cl_campaign.c:951
+#: client/cl_campaign.c:997
 msgid "Mar"
 msgstr "Mar"
 
-#: client/cl_campaign.c:953
+#: client/cl_campaign.c:999
 msgid "Apr"
 msgstr "Apr"
 
-#: client/cl_campaign.c:955
+#: client/cl_campaign.c:1001
 msgid "May"
 msgstr "May"
 
-#: client/cl_campaign.c:957
+#: client/cl_campaign.c:1003
 msgid "Jun"
 msgstr "Jun"
 
-#: client/cl_campaign.c:959
+#: client/cl_campaign.c:1005
 msgid "Jul"
 msgstr "Jul"
 
-#: client/cl_campaign.c:961
+#: client/cl_campaign.c:1007
 msgid "Aug"
 msgstr "Aug"
 
-#: client/cl_campaign.c:963
+#: client/cl_campaign.c:1009
 msgid "Sep"
 msgstr "Sep"
 
-#: client/cl_campaign.c:965
+#: client/cl_campaign.c:1011
 msgid "Oct"
 msgstr "Oct"
 
-#: client/cl_campaign.c:967
+#: client/cl_campaign.c:1013
 msgid "Nov"
 msgstr "Nov"
 
-#: client/cl_campaign.c:969
+#: client/cl_campaign.c:1015
 msgid "Dec"
 msgstr "Dec"
 
-#: client/cl_campaign.c:983
+#: client/cl_campaign.c:1029
 msgid "Giving up"
 msgstr "Giving up"
 
-#: client/cl_campaign.c:985
+#: client/cl_campaign.c:1031
 msgid "Furious"
 msgstr "Furious"
 
-#: client/cl_campaign.c:987
+#: client/cl_campaign.c:1033
 msgid "Angry"
 msgstr "Angry"
 
-#: client/cl_campaign.c:989
+#: client/cl_campaign.c:1035
 msgid "Mad"
 msgstr "Mad"
 
-#: client/cl_campaign.c:991
+#: client/cl_campaign.c:1037
 msgid "Upset"
 msgstr "Upset"
 
-#: client/cl_campaign.c:993
+#: client/cl_campaign.c:1039
 msgid "Tolerant"
 msgstr "Tolerant"
 
-#: client/cl_campaign.c:995
+#: client/cl_campaign.c:1041
 msgid "Neutral"
 msgstr "Neutral"
 
-#: client/cl_campaign.c:997
+#: client/cl_campaign.c:1043
 msgid "Content"
 msgstr "Content"
 
-#: client/cl_campaign.c:999
+#: client/cl_campaign.c:1045
 msgid "Pleased"
 msgstr "Pleased"
 
-#: client/cl_campaign.c:1001
+#: client/cl_campaign.c:1047
 msgid "Happy"
 msgstr "Happy"
 
-#: client/cl_campaign.c:1003
+#: client/cl_campaign.c:1049
 msgid "Exuberant"
 msgstr "Exuberant"
 
-#: client/cl_campaign.c:1057
+#: client/cl_campaign.c:1103
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 
-#: client/cl_campaign.c:1058
+#: client/cl_campaign.c:1104
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "credit"
 msgstr[1] "credits"
 
-#: client/cl_campaign.c:1059
-#: client/cl_campaign.c:4030
+#: client/cl_campaign.c:1105
+#: client/cl_campaign.c:4079
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "scientist"
 msgstr[1] "scientists"
 
-#: client/cl_campaign.c:1060
-#: client/cl_campaign.c:4032
+#: client/cl_campaign.c:1106
+#: client/cl_campaign.c:4081
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "medic"
 msgstr[1] "medics"
 
-#: client/cl_campaign.c:1061
-#: client/cl_campaign.c:4029
+#: client/cl_campaign.c:1107
+#: client/cl_campaign.c:4078
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldier"
 msgstr[1] "soldiers"
 
-#: client/cl_campaign.c:1062
-#: client/cl_campaign.c:4031
+#: client/cl_campaign.c:1108
+#: client/cl_campaign.c:4080
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "worker"
 msgstr[1] "workers"
 
-#: client/cl_campaign.c:1073
+#: client/cl_campaign.c:1119
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Paid %i credits to soldiers"
 
-#: client/cl_campaign.c:1083
+#: client/cl_campaign.c:1129
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr "Paid %i credits to workers"
 
-#: client/cl_campaign.c:1093
+#: client/cl_campaign.c:1139
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Paid %i credits to scientists"
 
-#: client/cl_campaign.c:1103
+#: client/cl_campaign.c:1149
 #, c-format
 msgid "Paid %i credits to medics"
 msgstr "Paid %i credits to medics"
 
-#: client/cl_campaign.c:1114
+#: client/cl_campaign.c:1160
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr "Paid %i credits for robots"
 
-#: client/cl_campaign.c:1127
+#: client/cl_campaign.c:1173
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Paid %i credits for aircraft"
 
-#: client/cl_campaign.c:1138
+#: client/cl_campaign.c:1184
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "Paid %i credits for upkeep of base %s"
 
-#: client/cl_campaign.c:1144
+#: client/cl_campaign.c:1190
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Paid %i credits for administrative overhead."
 
-#: client/cl_campaign.c:1152
+#: client/cl_campaign.c:1198
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Paid %i credits in interest on your debt."
 
-#: client/cl_campaign.c:1235
+#: client/cl_campaign.c:1281
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/cl_campaign.c:1350
+#: client/cl_campaign.c:1396
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -7020,7 +7219,7 @@ msgstr ""
 "Lost:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:1355
+#: client/cl_campaign.c:1401
 #, c-format
 msgid ""
 "Build:\t%i\n"
@@ -7031,42 +7230,42 @@ msgstr ""
 "Active:\t%i\n"
 "Attacked:\t%i\n"
 
-#: client/cl_campaign.c:1362
+#: client/cl_campaign.c:1408
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_campaign.c:1369
+#: client/cl_campaign.c:1415
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cl_campaign.c:1395
+#: client/cl_campaign.c:1441
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Employees:\t%i c\n"
 
-#: client/cl_campaign.c:1404
+#: client/cl_campaign.c:1450
 #, c-format
 msgid "Aircrafts:\t%i c\n"
 msgstr "Aircrafts:\t%i c\n"
 
-#: client/cl_campaign.c:1412
+#: client/cl_campaign.c:1458
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Base (%s):\t%i c\n"
 
-#: client/cl_campaign.c:1417
+#: client/cl_campaign.c:1463
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Administrative costs:\t%i c\n"
 
-#: client/cl_campaign.c:1424
+#: client/cl_campaign.c:1470
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Debt:\t%i c\n"
 
-#: client/cl_campaign.c:1427
+#: client/cl_campaign.c:1473
 #, c-format
 msgid ""
 "\n"
@@ -7077,44 +7276,52 @@ msgstr ""
 "\t-------\n"
 "Sum:\t%i c\n"
 
-#: client/cl_campaign.c:1660
+#: client/cl_campaign.c:1706
 msgid "Error saving game. Check free disk space!"
 msgstr "Error saving game. Check free disk space!"
 
-#: client/cl_campaign.c:1660
-#: client/cl_campaign.c:2246
+#: client/cl_campaign.c:1706
+#: client/cl_campaign.c:2292
 #: client/cl_team.c:1167
 msgid "Note"
 msgstr "Note"
 
-#: client/cl_campaign.c:2246
+#: client/cl_campaign.c:2292
 msgid "Assemble or load a team"
 msgstr "Assemble or load a team"
 
-#: client/cl_campaign.c:2415
+#: client/cl_campaign.c:2461
 msgid "Your dropship is not near the landing zone"
 msgstr "Your dropship is not near the landing zone"
 
-#: client/cl_campaign.c:2680
+#: client/cl_campaign.c:2726
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s has been promoted to %s.\n"
 
-#: client/cl_campaign.c:2682
+#: client/cl_campaign.c:2728
 #, c-format
 msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 
-#: client/cl_campaign.c:2683
+#: client/cl_campaign.c:2729
 msgid "Soldier promoted"
 msgstr "Soldier promoted"
 
-#: client/cl_campaign.c:2823
+#: client/cl_campaign.c:2869
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Defense of base: %s successful!"
 
-#: client/cl_campaign.c:4027
+#: client/cl_campaign.c:4074
+msgid "Aliens"
+msgstr "Aliens"
+
+#: client/cl_campaign.c:4074
+msgid "Human"
+msgstr "Human"
+
+#: client/cl_campaign.c:4076
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -7494,20 +7701,20 @@ msgstr "Productiontime\t%ih\n"
 msgid "No item selected"
 msgstr "No item selected"
 
-#: client/cl_produce.c:476
+#: client/cl_produce.c:491
 #, c-format
 msgid "Production of %s started"
 msgstr "Production of %s started"
 
-#: client/cl_produce.c:477
+#: client/cl_produce.c:492
 msgid "Production started"
 msgstr "Production started"
 
-#: client/cl_produce.c:484
+#: client/cl_produce.c:499
 msgid "Queue full!"
 msgstr "Queue full!"
 
-#: client/cl_produce.c:484
+#: client/cl_produce.c:499
 msgid "You cannot queue any more items!"
 msgstr "You cannot queue any more items!"
 
@@ -8081,6 +8288,10 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
+#~ msgid "Dropship"
+#~ msgstr "Dropship"
+#~ msgid "Interceptor"
+#~ msgstr "Interceptor"
 #~ msgid "News"
 #~ msgstr "News"
 #~ msgid "Technologies & Discoveries"
@@ -8126,8 +8337,6 @@ msgstr "No"
 #~ "more details of it's construction."
 #~ msgid "tachyon_pre_txt"
 #~ msgstr "No pre research info available"
-#~ msgid "Nano Technology"
-#~ msgstr "Nano Technology"
 #~ msgid "assault_pre_txt"
 #~ msgstr "No pre research info available"
 #~ msgid "assault_mag_pre_txt"
@@ -8668,8 +8877,6 @@ msgstr "No"
 #~ msgstr "No pre research info available"
 #~ msgid "craft_weapon_tr20_pre_txt"
 #~ msgstr "No pre research info available"
-#~ msgid "craft_weapon_particle_beam_pre_txt"
-#~ msgstr "No pre research info available"
 #~ msgid "Machine Pistol Clip"
 #~ msgstr "Machine Pistol Clip"
 #~ msgid "Kevlar Vest"
@@ -8678,8 +8885,6 @@ msgstr "No"
 #~ msgstr "9mm Pistol"
 #~ msgid "Pistol Clip 9mm"
 #~ msgstr "Pistol Clip 9mm"
-#~ msgid "Alien"
-#~ msgstr "Alien"
 #~ msgid "Toggle reaction-fire"
 #~ msgstr "Toggle reaction-fire"
 #~ msgid "General UFO technology"

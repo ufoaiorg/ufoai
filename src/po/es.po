@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-12-16 09:57+0100\n"
+"POT-Creation-Date: 2006-12-17 18:06+0100\n"
 "PO-Revision-Date: 2006-10-24 13:31+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -175,23 +175,36 @@ msgid "Base #8"
 msgstr "Base #8"
 
 #: ../base/ufos/basemanagement.ufo:340
-msgid "Dropship"
-msgstr "Nave Transportadora"
+msgid "Firebird-class Dropship"
+msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:354
-msgid "Interceptor"
+#: ../base/ufos/basemanagement.ufo:341
+msgid "Firebird D"
+msgstr ""
+
+#: ../base/ufos/basemanagement.ufo:355
+#, fuzzy
+msgid "Stiletto-class Interceptor"
 msgstr "Interceptor"
 
-#: ../base/ufos/basemanagement.ufo:371
+#: ../base/ufos/basemanagement.ufo:356
+msgid "Stiletto I"
+msgstr ""
+
+#: ../base/ufos/basemanagement.ufo:373
 #, fuzzy
 msgid "Saracen-class Interceptor"
 msgstr "Interceptor"
 
-#: ../base/ufos/basemanagement.ufo:388 ../base/ufos/research.ufo:1828
+#: ../base/ufos/basemanagement.ufo:374
+msgid "Saracen I"
+msgstr ""
+
+#: ../base/ufos/basemanagement.ufo:391 ../base/ufos/research.ufo:1828
 msgid "UFO - Scout"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:402 ../base/ufos/research.ufo:1861
+#: ../base/ufos/basemanagement.ufo:405 ../base/ufos/research.ufo:1861
 msgid "UFO - Fighter"
 msgstr ""
 
@@ -380,11 +393,11 @@ msgstr "Vender Aeronave"
 msgid "Call back"
 msgstr "Llamar de Vuelta"
 
-#: ../base/ufos/menu_aircraft.ufo:196 ../base/ufos/menu_bases.ufo:186
+#: ../base/ufos/menu_aircraft.ufo:196 ../base/ufos/menu_bases.ufo:187
 msgid "Transfer equipment or personnel"
 msgstr "Transfiere equipo o personal"
 
-#: ../base/ufos/menu_aircraft.ufo:211 ../base/ufos/menu_bases.ufo:201
+#: ../base/ufos/menu_aircraft.ufo:211 ../base/ufos/menu_bases.ufo:212
 msgid "Transfer"
 msgstr "Transferir"
 
@@ -513,8 +526,8 @@ msgid "Back to worldview"
 msgstr "Regresar al mapa del mundo"
 
 #: ../base/ufos/menu_bases.ufo:73 ../base/ufos/menu_bases.ufo:90
-#: ../base/ufos/menu_bases.ufo:169 ../base/ufos/menu_bases.ufo:229
-#: ../base/ufos/menu_bases.ufo:265 ../base/ufos/menu_bases.ufo:301
+#: ../base/ufos/menu_bases.ufo:169 ../base/ufos/menu_bases.ufo:240
+#: ../base/ufos/menu_bases.ufo:313
 msgid "Build base-facilities"
 msgstr "Construir Instalaciones de la Base"
 
@@ -543,56 +556,64 @@ msgstr "Compre/Venda Equipamiento"
 msgid "Buy/Sell Equipment"
 msgstr "Compre/Venda Equipamiento"
 
-#: ../base/ufos/menu_bases.ufo:212
+#: ../base/ufos/menu_bases.ufo:203
+msgid "Can't transfer - only one base"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:223
 msgid "Research new technology"
 msgstr "Investigar Nueva Tecnología"
 
-#: ../base/ufos/menu_bases.ufo:237
+#: ../base/ufos/menu_bases.ufo:248
 msgid "Research"
 msgstr "Investigación"
 
-#: ../base/ufos/menu_bases.ufo:248
+#: ../base/ufos/menu_bases.ufo:259
 msgid "Produce new equipment"
 msgstr "Producir nuevos Equipos"
 
-#: ../base/ufos/menu_bases.ufo:273
+#: ../base/ufos/menu_bases.ufo:276
+msgid "Workshop not operational"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:285
 msgid "Production"
 msgstr "Producción"
 
-#: ../base/ufos/menu_bases.ufo:284 ../base/ufos/menu_bases.ufo:309
+#: ../base/ufos/menu_bases.ufo:296 ../base/ufos/menu_bases.ufo:321
 msgid "Hire employees"
 msgstr "Contratar empleados"
 
-#: ../base/ufos/menu_bases.ufo:322 ../base/ufos/menu_buildings.ufo:76
+#: ../base/ufos/menu_bases.ufo:334 ../base/ufos/menu_buildings.ufo:76
 #: ../base/ufos/menu_buy.ufo:708 ../base/ufos/menu_buy.ufo:1146
 #: ../base/ufos/menu_geoscape.ufo:87 ../base/ufos/menu_production.ufo:49
 #: ../base/ufos/menu_research.ufo:900
 msgid "CREDIT"
 msgstr "CRÉDITOS"
 
-#: ../base/ufos/menu_bases.ufo:330 ../base/ufos/menu_geoscape.ufo:95
+#: ../base/ufos/menu_bases.ufo:342 ../base/ufos/menu_geoscape.ufo:95
 msgid "Organisation capital"
 msgstr "Organización del Capital"
 
-#: ../base/ufos/menu_bases.ufo:339
+#: ../base/ufos/menu_bases.ufo:351
 msgid "Name of this base"
 msgstr "Nombre de esta Base"
 
-#: ../base/ufos/menu_bases.ufo:353
+#: ../base/ufos/menu_bases.ufo:365
 msgid "Rename your base"
 msgstr "Renombre su Base"
 
-#: ../base/ufos/menu_bases.ufo:367
+#: ../base/ufos/menu_bases.ufo:379
 msgid "Switch to the previous base"
 msgstr "Cambie a la Base Anterior"
 
-#: ../base/ufos/menu_bases.ufo:378
+#: ../base/ufos/menu_bases.ufo:390
 msgid "Switch to the next base"
 msgstr "Cambie a la Base Siguiente"
 
 #: ../base/ufos/menu_buildings.ufo:58 ../base/ufos/menu_buy.ufo:820
 #: ../base/ufos/menu_hire.ufo:786 ../base/ufos/menu_production.ufo:341
-#: ../base/ufos/menu_research.ufo:945
+#: ../base/ufos/menu_research.ufo:945 ../base/ufos/menu_transfer.ufo:119
 msgid "Back to baseview"
 msgstr "Regresar al mapa de la Base"
 
@@ -1674,7 +1695,7 @@ msgstr "Misión\t%s (%s)\n"
 msgid "Bases"
 msgstr "Base:"
 
-#: ../base/ufos/menu_stats.ufo:95
+#: ../base/ufos/menu_stats.ufo:95 ../base/ufos/menu_transfer.ufo:94
 #, fuzzy
 msgid "Employees"
 msgstr "Contratar empleados"
@@ -1763,6 +1784,31 @@ msgstr "Información del Objeto"
 #: ../base/ufos/menu_team.ufo:1472
 msgid "Actor Abilities"
 msgstr "Habilidades del Personaje"
+
+#: ../base/ufos/menu_transfer.ufo:59
+#, fuzzy
+msgid "Show only items"
+msgstr "Mostrar solamente Armadura"
+
+#: ../base/ufos/menu_transfer.ufo:74
+#, fuzzy
+msgid "Equipment/Items"
+msgstr "Equipe"
+
+#: ../base/ufos/menu_transfer.ufo:79
+#, fuzzy
+msgid "Show only employees"
+msgstr "Mostrar solamente Armadura"
+
+#: ../base/ufos/menu_transfer.ufo:99
+#, fuzzy
+msgid "Show only technologies"
+msgstr "Mostrar solamente armamento secundario"
+
+#: ../base/ufos/menu_transfer.ufo:114
+#, fuzzy
+msgid "Technologies"
+msgstr "Nano Tecnología"
 
 #: ../base/ufos/menu_ufopedia.ufo:50
 msgid "Previous entry"
@@ -2071,7 +2117,7 @@ msgstr "Gran intrusión Extraterrestre"
 msgid "Stop them"
 msgstr "Detenlos"
 
-#: ../base/ufos/missions.ufo:859 client/cl_campaign.c:667
+#: ../base/ufos/missions.ufo:859 client/cl_campaign.c:713
 msgid "Base Attack"
 msgstr "Ataque a la ase"
 
@@ -3996,6 +4042,11 @@ msgstr "<TODO>"
 msgid "Particle Beam Weapon"
 msgstr ""
 
+#: ../base/ufos/research.ufo:2185
+#, fuzzy
+msgid "craft_weapon_particle_beam_pre_txt"
+msgstr "<TODO>"
+
 #: ../base/ufos/research.ufo:2186
 #, fuzzy
 msgid "craft_weapon_particle_beam_txt"
@@ -5023,15 +5074,15 @@ msgstr "Aeronave"
 
 #: client/cl_aircraft.c:103 client/cl_aircraft.c:402 client/cl_aircraft.c:554
 #: client/cl_aircraft.c:772 client/cl_basemanagement.c:453
-#: client/cl_basemanagement.c:1917 client/cl_campaign.c:428
-#: client/cl_campaign.c:855 client/cl_campaign.c:906 client/cl_campaign.c:1064
-#: client/cl_campaign.c:1075 client/cl_campaign.c:1085
-#: client/cl_campaign.c:1095 client/cl_campaign.c:1105
-#: client/cl_campaign.c:1116 client/cl_campaign.c:1129
-#: client/cl_campaign.c:1139 client/cl_campaign.c:1146
-#: client/cl_campaign.c:1154 client/cl_campaign.c:2415
-#: client/cl_campaign.c:2452 client/cl_campaign.c:2454
-#: client/cl_campaign.c:2824 client/cl_map.c:295 client/cl_research.c:679
+#: client/cl_basemanagement.c:1930 client/cl_campaign.c:428
+#: client/cl_campaign.c:901 client/cl_campaign.c:952 client/cl_campaign.c:1110
+#: client/cl_campaign.c:1121 client/cl_campaign.c:1131
+#: client/cl_campaign.c:1141 client/cl_campaign.c:1151
+#: client/cl_campaign.c:1162 client/cl_campaign.c:1175
+#: client/cl_campaign.c:1185 client/cl_campaign.c:1192
+#: client/cl_campaign.c:1200 client/cl_campaign.c:2461
+#: client/cl_campaign.c:2498 client/cl_campaign.c:2500
+#: client/cl_campaign.c:2870 client/cl_map.c:295 client/cl_research.c:679
 #: client/cl_research.c:801 client/cl_research.c:804 client/cl_research.c:808
 #: client/cl_research.c:821 client/cl_research.c:850 client/cl_research.c:992
 #: client/cl_ufo.c:195 client/cl_ufo.c:200
@@ -5132,11 +5183,11 @@ msgstr "Su nave transportadora no esta cerca de la zona de aterrizaje."
 msgid "Interception"
 msgstr "Interceptor"
 
-#: client/cl_aircraft.c:593 client/cl_campaign.c:2452
+#: client/cl_aircraft.c:593 client/cl_campaign.c:2498
 msgid "You've won the battle"
 msgstr "Haz Ganado la Batalla"
 
-#: client/cl_aircraft.c:600 client/cl_campaign.c:2454
+#: client/cl_aircraft.c:600 client/cl_campaign.c:2500
 msgid "You've lost the battle"
 msgstr "Haz Perdido la Batalla"
 
@@ -5208,7 +5259,7 @@ msgid_plural "%i days left"
 msgstr[0] "Faltan %i Días."
 msgstr[1] "Faltan %i Días."
 
-#: client/cl_basemanagement.c:1247 client/cl_campaign.c:1329
+#: client/cl_basemanagement.c:1247 client/cl_campaign.c:1375
 #, c-format
 msgid "%i c"
 msgstr ""
@@ -5218,33 +5269,33 @@ msgstr ""
 msgid "Base is under attack"
 msgstr "Su base, %s, esta siendo atacada."
 
-#: client/cl_basemanagement.c:1520 client/cl_team.c:1122 client/cl_team.c:1315
+#: client/cl_basemanagement.c:1533 client/cl_team.c:1122 client/cl_team.c:1315
 msgid "NewTeam"
 msgstr "Equipo Nuevo"
 
-#: client/cl_basemanagement.c:1600
+#: client/cl_basemanagement.c:1613
 #, c-format
 msgid "A new base has been built: %s."
 msgstr "Una base nueva ha sido construida: %s."
 
-#: client/cl_basemanagement.c:1601 client/cl_basemanagement.c:1644
+#: client/cl_basemanagement.c:1614 client/cl_basemanagement.c:1657
 msgid "Base built"
 msgstr "Base Construida."
 
-#: client/cl_basemanagement.c:1643
+#: client/cl_basemanagement.c:1656
 msgid "Not enough credits to set up a new base."
 msgstr "No tiene créditos suficientes para crear una base nueva."
 
-#: client/cl_basemanagement.c:1917
+#: client/cl_basemanagement.c:1930
 msgid "You've reached the base limit."
 msgstr "Haz alcanzado el limite de la base."
 
-#: client/cl_basemanagement.c:2057
+#: client/cl_basemanagement.c:2070
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "La Construcción del edificio %s ha terminado en la base %s."
 
-#: client/cl_basemanagement.c:2058
+#: client/cl_basemanagement.c:2071
 msgid "Building finished"
 msgstr "Construcción ha terminado"
 
@@ -5252,21 +5303,21 @@ msgstr "Construcción ha terminado"
 msgid "Could not set up your base at this location"
 msgstr "No se pudo establecer su base en esta localidad."
 
-#: client/cl_campaign.c:666
+#: client/cl_campaign.c:712
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "Su base, %s, esta siendo atacada."
 
-#: client/cl_campaign.c:691
+#: client/cl_campaign.c:737
 #, c-format
 msgid "Alien activity has been reported: '%s'"
 msgstr "Actividad Extraterrestre ha sido reportada: '%s'"
 
-#: client/cl_campaign.c:692
+#: client/cl_campaign.c:738
 msgid "Alien activity"
 msgstr "Actividad Extraterrestre"
 
-#: client/cl_campaign.c:854
+#: client/cl_campaign.c:900
 #, c-format
 msgid ""
 "Your base: %s has been ransacked! All employees killed and all equipment "
@@ -5275,7 +5326,7 @@ msgstr ""
 "¡Tu base: %s ha sido saqueada! Todos los empledos asesinados y el equipo "
 "destruido."
 
-#: client/cl_campaign.c:905
+#: client/cl_campaign.c:951
 #, fuzzy, c-format
 msgid "The mission expired and %i civilian died."
 msgid_plural "The mission expired and %i civilians died."
@@ -5284,193 +5335,193 @@ msgstr[0] ""
 msgstr[1] ""
 "La misión ha expirado y %i civiles murieron. Haz perdido %i créditos."
 
-#: client/cl_campaign.c:947
+#: client/cl_campaign.c:993
 msgid "Jan"
 msgstr "Ene"
 
-#: client/cl_campaign.c:949
+#: client/cl_campaign.c:995
 msgid "Feb"
 msgstr "Feb"
 
-#: client/cl_campaign.c:951
+#: client/cl_campaign.c:997
 msgid "Mar"
 msgstr "Mar"
 
-#: client/cl_campaign.c:953
+#: client/cl_campaign.c:999
 msgid "Apr"
 msgstr "Abr"
 
-#: client/cl_campaign.c:955
+#: client/cl_campaign.c:1001
 msgid "May"
 msgstr "May"
 
-#: client/cl_campaign.c:957
+#: client/cl_campaign.c:1003
 msgid "Jun"
 msgstr "Jun"
 
-#: client/cl_campaign.c:959
+#: client/cl_campaign.c:1005
 msgid "Jul"
 msgstr "Jul"
 
-#: client/cl_campaign.c:961
+#: client/cl_campaign.c:1007
 msgid "Aug"
 msgstr "Ago"
 
-#: client/cl_campaign.c:963
+#: client/cl_campaign.c:1009
 msgid "Sep"
 msgstr "Sep"
 
-#: client/cl_campaign.c:965
+#: client/cl_campaign.c:1011
 msgid "Oct"
 msgstr "Oct"
 
-#: client/cl_campaign.c:967
+#: client/cl_campaign.c:1013
 msgid "Nov"
 msgstr "Nov"
 
-#: client/cl_campaign.c:969
+#: client/cl_campaign.c:1015
 msgid "Dec"
 msgstr "Dic"
 
-#: client/cl_campaign.c:983
+#: client/cl_campaign.c:1029
 msgid "Giving up"
 msgstr "Rindiéndose"
 
-#: client/cl_campaign.c:985
+#: client/cl_campaign.c:1031
 msgid "Furious"
 msgstr "Furioso"
 
-#: client/cl_campaign.c:987
+#: client/cl_campaign.c:1033
 msgid "Angry"
 msgstr "Molesto"
 
-#: client/cl_campaign.c:989
+#: client/cl_campaign.c:1035
 msgid "Mad"
 msgstr "Loco"
 
-#: client/cl_campaign.c:991
+#: client/cl_campaign.c:1037
 msgid "Upset"
 msgstr "Preocupado"
 
-#: client/cl_campaign.c:993
+#: client/cl_campaign.c:1039
 msgid "Tolerant"
 msgstr "Tolerante"
 
-#: client/cl_campaign.c:995
+#: client/cl_campaign.c:1041
 msgid "Neutral"
 msgstr "Neutral"
 
-#: client/cl_campaign.c:997
+#: client/cl_campaign.c:1043
 msgid "Content"
 msgstr "Contenido"
 
-#: client/cl_campaign.c:999
+#: client/cl_campaign.c:1045
 #, fuzzy
 msgid "Pleased"
 msgstr "Láser"
 
-#: client/cl_campaign.c:1001
+#: client/cl_campaign.c:1047
 #, fuzzy
 msgid "Happy"
 msgstr "Pesado"
 
-#: client/cl_campaign.c:1003
+#: client/cl_campaign.c:1049
 msgid "Exuberant"
 msgstr "Exuberante"
 
-#: client/cl_campaign.c:1057
+#: client/cl_campaign.c:1103
 #, fuzzy, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr ""
 "Ganaste %i créditos, %i científicos, %i medicos, %i soldados y %i "
 "trabajadores de la nación %s (%s)"
 
-#: client/cl_campaign.c:1058
+#: client/cl_campaign.c:1104
 #, fuzzy
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "Créditos"
 msgstr[1] "Créditos"
 
-#: client/cl_campaign.c:1059 client/cl_campaign.c:4030
+#: client/cl_campaign.c:1105 client/cl_campaign.c:4079
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "Científico"
 msgstr[1] "Científico"
 
-#: client/cl_campaign.c:1060 client/cl_campaign.c:4032
+#: client/cl_campaign.c:1106 client/cl_campaign.c:4081
 #, fuzzy
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "Médico"
 msgstr[1] "Médico"
 
-#: client/cl_campaign.c:1061 client/cl_campaign.c:4029
+#: client/cl_campaign.c:1107 client/cl_campaign.c:4078
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Soldados"
 msgstr[1] "Soldados"
 
-#: client/cl_campaign.c:1062 client/cl_campaign.c:4031
+#: client/cl_campaign.c:1108 client/cl_campaign.c:4080
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "Trabajador"
 msgstr[1] "Trabajador"
 
-#: client/cl_campaign.c:1073
+#: client/cl_campaign.c:1119
 #, fuzzy, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Ganó %i créditos de la nación %s"
 
-#: client/cl_campaign.c:1083
+#: client/cl_campaign.c:1129
 #, fuzzy, c-format
 msgid "Paid %i credits to workers"
 msgstr "Ganó %i créditos de la nación %s"
 
-#: client/cl_campaign.c:1093
+#: client/cl_campaign.c:1139
 #, fuzzy, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Ganó %i créditos de la nación %s"
 
-#: client/cl_campaign.c:1103
+#: client/cl_campaign.c:1149
 #, fuzzy, c-format
 msgid "Paid %i credits to medics"
 msgstr "Ganó %i créditos de la nación %s"
 
-#: client/cl_campaign.c:1114
+#: client/cl_campaign.c:1160
 #, fuzzy, c-format
 msgid "Paid %i credits for robots"
 msgstr "Ganó %i créditos de la nación %s"
 
-#: client/cl_campaign.c:1127
+#: client/cl_campaign.c:1173
 #, fuzzy, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Ganó %i créditos de la nación %s"
 
-#: client/cl_campaign.c:1138
+#: client/cl_campaign.c:1184
 #, fuzzy, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "Ganó %i créditos de la nación %s"
 
-#: client/cl_campaign.c:1144
+#: client/cl_campaign.c:1190
 #, fuzzy, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Ganó %i créditos de la nación %s"
 
-#: client/cl_campaign.c:1152
+#: client/cl_campaign.c:1198
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Abonaste %i créditos de interés a tu deuda."
 
-#: client/cl_campaign.c:1235
+#: client/cl_campaign.c:1281
 #, fuzzy, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%i%i"
 
-#: client/cl_campaign.c:1350
+#: client/cl_campaign.c:1396
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -5478,7 +5529,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: client/cl_campaign.c:1355
+#: client/cl_campaign.c:1401
 #, c-format
 msgid ""
 "Build:\t%i\n"
@@ -5486,44 +5537,44 @@ msgid ""
 "Attacked:\t%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:1362
+#: client/cl_campaign.c:1408
 #, fuzzy, c-format
 msgid "%s\t%s\n"
 msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_campaign.c:1369
+#: client/cl_campaign.c:1415
 #, c-format
 msgid "%s\t%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:1395
+#: client/cl_campaign.c:1441
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr ""
 
-#: client/cl_campaign.c:1404
+#: client/cl_campaign.c:1450
 #, fuzzy, c-format
 msgid "Aircrafts:\t%i c\n"
 msgstr "Costo Fijo:\t%i c\n"
 
-#: client/cl_campaign.c:1412
+#: client/cl_campaign.c:1458
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr ""
 
-#: client/cl_campaign.c:1417
+#: client/cl_campaign.c:1463
 #, fuzzy, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Costos de la Operación:\t%i c\n"
 
-#: client/cl_campaign.c:1424
+#: client/cl_campaign.c:1470
 #, fuzzy, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Costo Fijo:\t%i c\n"
 
-#: client/cl_campaign.c:1427
+#: client/cl_campaign.c:1473
 #, c-format
 msgid ""
 "\n"
@@ -5531,44 +5582,54 @@ msgid ""
 "Sum:\t%i c\n"
 msgstr ""
 
-#: client/cl_campaign.c:1660
+#: client/cl_campaign.c:1706
 msgid "Error saving game. Check free disk space!"
 msgstr ""
 
-#: client/cl_campaign.c:1660 client/cl_campaign.c:2246 client/cl_team.c:1167
+#: client/cl_campaign.c:1706 client/cl_campaign.c:2292 client/cl_team.c:1167
 msgid "Note"
 msgstr "Nota"
 
-#: client/cl_campaign.c:2246
+#: client/cl_campaign.c:2292
 msgid "Assemble or load a team"
 msgstr "Construye o Carga un Equipo"
 
-#: client/cl_campaign.c:2415
+#: client/cl_campaign.c:2461
 msgid "Your dropship is not near the landing zone"
 msgstr "Su nave transportadora no esta cerca de la zona de aterrizaje."
 
-#: client/cl_campaign.c:2680
+#: client/cl_campaign.c:2726
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s ha sido ascendido a %s\n"
 
-#: client/cl_campaign.c:2682
+#: client/cl_campaign.c:2728
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
 "in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2683
+#: client/cl_campaign.c:2729
 msgid "Soldier promoted"
 msgstr "Soldado Ascendido"
 
-#: client/cl_campaign.c:2823
+#: client/cl_campaign.c:2869
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Defensa  de la base: %s exitosa!"
 
-#: client/cl_campaign.c:4027
+#: client/cl_campaign.c:4074
+#, fuzzy
+msgid "Aliens"
+msgstr "Extraterrestre"
+
+#: client/cl_campaign.c:4074
+#, fuzzy
+msgid "Human"
+msgstr "Busan"
+
+#: client/cl_campaign.c:4076
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -5951,20 +6012,20 @@ msgstr "Producción"
 msgid "No item selected"
 msgstr "No hay nadie seleccionado.\n"
 
-#: client/cl_produce.c:476
+#: client/cl_produce.c:491
 #, fuzzy, c-format
 msgid "Production of %s started"
 msgstr "Producción iniciada"
 
-#: client/cl_produce.c:477
+#: client/cl_produce.c:492
 msgid "Production started"
 msgstr "Producción iniciada"
 
-#: client/cl_produce.c:484
+#: client/cl_produce.c:499
 msgid "Queue full!"
 msgstr ""
 
-#: client/cl_produce.c:484
+#: client/cl_produce.c:499
 msgid "You cannot queue any more items!"
 msgstr ""
 
@@ -6537,6 +6598,12 @@ msgstr "Sí"
 msgid "No"
 msgstr "No"
 
+#~ msgid "Dropship"
+#~ msgstr "Nave Transportadora"
+
+#~ msgid "Interceptor"
+#~ msgstr "Interceptor"
+
 #, fuzzy
 #~ msgid "News"
 #~ msgstr "Nuevo"
@@ -6618,9 +6685,6 @@ msgstr "No"
 #~ "devastadoras que los extraterrestres usan ahora para aterrorizar a la "
 #~ "humanidad. Nuestros científicos creen que podremos reproducir estas armas "
 #~ "una vez que tengamos mas detalles."
-
-#~ msgid "Nano Technology"
-#~ msgstr "Nano Tecnología"
 
 #, fuzzy
 #~ msgid "assault_pre_txt"
@@ -7686,10 +7750,6 @@ msgstr "No"
 #~ msgstr "<TODO>"
 
 #, fuzzy
-#~ msgid "craft_weapon_particle_beam_pre_txt"
-#~ msgstr "<TODO>"
-
-#, fuzzy
 #~ msgid "Machine Pistol Clip"
 #~ msgstr "Cartucho de Pistola de Taquión"
 
@@ -7702,9 +7762,6 @@ msgstr "No"
 #, fuzzy
 #~ msgid "Pistol Clip 9mm"
 #~ msgstr "Cartucho de Pistola"
-
-#~ msgid "Alien"
-#~ msgstr "Extraterrestre"
 
 #~ msgid "Toggle reaction-fire"
 #~ msgstr "Cambia Reacción de Disparo"
