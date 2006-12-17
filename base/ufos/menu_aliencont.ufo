@@ -40,5 +40,189 @@ menu aliencont
 		pos		"512 512"
 	}
 
+	// ==================
+	// General info
+	// ==================
+	string txt_credits_caption
+	{
+		string	"_CREDIT"
+		pos	"650 70"
+		font	f_big
+		align	ul
+	}
+
+	string txt_credits
+	{
+		font	"f_big"
+		string	"*cvar mn_credits"
+		pos	"944 70"
+		align	ur
+	}
+
+
+	// ==================
+	// buttons
+	// ==================
+	pic bt_continue
+	{
+		tooltip	"_Back to baseview"
+		image	hud/buttons2
+		mousefx	true
+		pos	"920 630"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop }
+	}
+
+	//FIXME
+	//add proper tooltip, image and command
+	//for pic bt_alc_ufopedia and pic bt_alc_1
+
+	pic bt_alc_ufopedia
+	{
+		tooltip	"_Check Ufopedia Entry"
+		image	menu/button_research
+		mousefx	true
+		pos	"650 696"
+		texl	"0 64"
+		texh	"64 128"
+		click	{ cmd mn_pop }
+	}
+
+	pic bt_alc_1
+	{
+		tooltip	"TODO"
+		image	menu/button_research
+		mousefx	true
+		pos	"720 700"
+		texl    "0 0"
+		texh    "64 64"
+		click	{ cmd mn_pop }
+	}
+
+	
+	// ==================
+	// main window
+	// ==================
+
+	string txt_all_aliens
+	{
+		string "_Alive Aliens in all bases:"
+		pos "50 40"
+		color "0 .78 0 1"
+		size "275 16"
+	}
+
+	//FIXME
+	//count and add proper value
+	string txt_all_aliens_v
+	{
+		string "42"
+		pos "380 40"
+		color "0 .78 0 1"
+	}
+
+	//FIXME
+	//list of aliens should be calculate whenever AC_Init() is called
+	//all values below should be calculate
+	string txt_alientypes_g { string "_Aliens available to process:"	pos "50 100"	color "0 .78 0 1" }
+	string txt_alcheader_1 { string "_Alien type"	pos "50 130"	color "0 .78 0 1" }
+	string txt_alcheader_2 { string "_Examinated"	pos "220 130"	color "0 .78 0 1" }
+	string txt_alcheader_3 { string "_Amount"		pos "380 130"	color "0 .78 0 1" }
+	
+	string txt_alcal1_h1 	{ string "_Ortnok"	pos "50 165"	color "0 .78 0 1" }
+	string txt_alcal1_h2	{ string "_yes"		pos "220 165"	color "0 .78 0 1" }
+	string txt_alcal1_h3 	{ string "42"		pos "380 165"	color "0 .78 0 1" }
+	
+	string txt_alcal2_h1	{ string "_Antarean"	pos "50 180"	color "0 .78 0 1" }
+	string txt_alcal2_h2	{ string "_needs autopsy"		pos "220 180"	color "6 .78 7 1" }
+	string txt_alcal2_h3 	{ string "42"		pos "380 180"	color "0 .78 0 1" }
+
+
+	// ==================
+	// info window
+	// ==================
+
+	string txt_base_name
+	{
+		string "_Base Info"
+		pos "615 200"
+	}
+
+	//FIXME
+	//add proper alien type
+	string txt_alc_alientype
+	{
+		string "_Alien Type:"
+		pos "645 230"
+		color "0 .78 0 1"
+	}
+
+	//FIXME
+	//add proper value
+	string txt_alc_alientype_v
+	{
+		string "42"
+		pos "880 230"
+		color "0 .78 0 1"
+	}
+
+	//FIXME
+	//add proper alien model
+	model mdl_alc_alien
+	{
+		md2	"aliens/bloodspider/bloodspider"
+		angles	"0 0 120"
+		color	"0.5 0.5 0.5 1"
+		origin	"805 340 0"
+		size	"240 240"
+	}
+
+	//FIXME
+	//count and display
+	string txt_alc_capturedhere
+	{
+		string "_In this base:"
+		pos "645 500"
+		color "0 .78 0 1"
+	}
+
+	//FIXME
+	//add proper value
+	string txt_alc_capturedhere_v
+	{
+		string "42"
+		pos "880 500"
+		color "0 .78 0 1"
+	}
+
+
+	//FIXME
+	//count and display
+	string txt_alc_capturedall
+	{
+		string "_In all bases:"
+		pos "645 530"
+		color "0 .78 0 1"
+	}
+
+	//FIXME
+	//add proper value
+	string txt_alc_capturedall_v
+	{
+		string "42"
+		pos "880 530"
+		color "0 .78 0 1"
+	}
+
+	// ==================
+	// init
+	// ==================
+	func init
+	{
+		cmd aliencont_init;
+	}
 
 }
+
+

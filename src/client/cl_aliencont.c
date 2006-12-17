@@ -29,8 +29,10 @@ static char aliencontText[1024];
 
 /**
  * @brief Alien containment menu init function
+ * @note Command to call this: aliencont_init
+ * @note Should be called whenever the research menu gets active
  */
-static void AC_Init (void)
+void AC_Init (void)
 {
 	menuText[TEXT_STANDARD] = aliencontText;
 }
@@ -39,10 +41,10 @@ static void AC_Init (void)
  * @brief Defines commands and cvars for the alien containment menu(s)
  * @sa MN_ResetMenus
  */
-extern void AC_Reset (void)
+void AC_Reset (void)
 {
 	/* add commands */
-	Cmd_AddCommand("ac_init", AC_Init, "Init function for alien containment menu");
+	Cmd_AddCommand("aliencont_init", AC_Init, "Init function for alien containment menu");
 
 	/* add cvars */
 	/* TODO */

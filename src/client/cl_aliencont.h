@@ -26,11 +26,47 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-#if 0
-struct aliens_cont {
-	int id;
-	int state;
-} aliens_cont_t;
-#endif
+#define ALIENS_AMOUNT	0	/* store current alive aliens amount */
+
+typedef enum {			/* types of aliens */
+	AL_ORTNOK,
+	AL_ANTAREAN,
+	AL_THIRD
+} alienType_t;
+
+typedef enum {			/* specializations of aliens */
+	AS_PILOT,
+	AS_GUNNER,
+	AS_HARVESTER,
+	AS_SOLDIER
+} alienSpec_t;
+
+typedef enum {			/* cases of alien amount calculation */
+	ALC_MISSION,
+	ALC_RESEARCH
+} alienCalcType_t;
+
+typedef struct aliensCont {
+	int id;			/* used to count */
+	int alienType_t;	/* type of alien */
+	int state;		/* dead or alive */
+	int alienSpec_t;	/* alien specialization */
+} aliensCont_t;
+
+typedef struct aliensTmp {
+	int alienType_t;	/* type of alien */
+	int alienSpec_t;	/* alien specialization */
+	int state;		/* dead or alive */
+	int amount;		/* amount */
+} aliensTmp_t;
+
+/*
+Collecting aliens functions
+*/
+
+
+/*
+Menu functions
+*/
 
 
