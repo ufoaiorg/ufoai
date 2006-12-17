@@ -222,13 +222,17 @@ void G_SendInventory(int player_mask, edict_t * ent)
 	if (!player_mask)
 		return;
 
-	gi.AddEvent(player_mask, EV_INV_ADD);
-
-	gi.WriteShort(ent->number);
-
 	for (j = 0; j < gi.csi->numIDs; j++)
 		for (ic = ent->i.c[j]; ic; ic = ic->next)
 			nr++;
+
+	/* return if no inventory items to send */
+	if (nr == 0)
+		return;
+
+	gi.AddEvent(player_mask, EV_INV_ADD);
+
+	gi.WriteShort(ent->number);
 
 	/* size of inventory */
 	gi.WriteShort(nr*6);

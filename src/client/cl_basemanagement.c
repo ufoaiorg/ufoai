@@ -1338,8 +1338,15 @@ void B_SelectBase(void)
 		Cbuf_ExecuteText(EXEC_NOW, "set_base_aircraft");
 
 	Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
+	Cvar_SetValue("mn_base_prod_allowed", PR_ProductionAllowed());
 	Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
 	Cvar_SetValue("mn_base_id", baseCurrent->idx);
+	Cvar_SetValue("mn_numbases", gd.numBases);
+	if (gd.numBases > 1) {
+		Cbuf_AddText("set_base_transfer;");
+	} else {
+		Cbuf_AddText("set_base_no_transfer;");
+	}
 	Cvar_Set("mn_base_title", baseCurrent->name);
 }
 

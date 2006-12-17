@@ -547,6 +547,9 @@ ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a
 	ptl_t *p;
 	int i;
 
+	if (!name || strlen(name) <= 0)
+		return NULL;
+
 	/* find the particle definition */
 	for (i = 0; i < numPtlDefs; i++)
 		if (!Q_strncmp(name, ptlDef[i].name, MAX_VAR))

@@ -667,12 +667,14 @@ static void CL_SelectCmd(void)
 	}
 
 	if (!Q_strncmp(command, "equip", 5)) {
+		if (!baseCurrent || baseCurrent->aircraftCurrent < 0)
+			return;
 		if (baseCurrent->teamNum[baseCurrent->aircraftCurrent] <= 0) {
 			if (!ccs.singleplayer)
 				Cbuf_AddText("mn_pop;mn_push mp_team;");
 			return;
 		}
-		if (!baseCurrent || baseCurrent->aircraftCurrent < 0 || num >= baseCurrent->teamNum[baseCurrent->aircraftCurrent])
+		if (num >= baseCurrent->teamNum[baseCurrent->aircraftCurrent])
 			return;
 		if (menuInventory && menuInventory != baseCurrent->curTeam[num]->inv) {
 			baseCurrent->curTeam[num]->inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];

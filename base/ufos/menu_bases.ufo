@@ -183,6 +183,7 @@ menu bases
 
 	pic transfer
 	{
+		if "mn_numbases > 1"
 		tooltip	"_Transfer equipment or personnel"
 		image	menu/button
 		pos	"755 340"
@@ -195,6 +196,15 @@ menu bases
 		}
 		out		{ *txt_transfer color "0 0.8 0 1" *transfer texl "0 0" *transfer texh "230 64" }
 		in		{ *txt_transfer color "1 1 1 1" *transfer texl "230 0" *transfer texh "460 64" }
+	}
+	pic transfer_na
+	{
+		if "mn_numbases == 1"
+		tooltip	"_Can't transfer - only one base"
+		image	menu/button
+		pos	"755 340"
+		texl	"0 64"
+		texh	"230 128"
 	}
 	string txt_transfer
 	{
@@ -243,8 +253,8 @@ menu bases
 
 	pic production
 	{
-		// only if base is not under attack
-		if "mn_base_status_id != 1"
+		// only if base is able to produce items
+		if "mn_base_prod_allowed == 1"
 		tooltip	"_Produce new equipment"
 		image	menu/button
 		pos	"755 480"
@@ -260,13 +270,14 @@ menu bases
 	}
 	pic production_na
 	{
-		// only if base is not under attack
-		if "mn_base_status_id == 1"
-		tooltip	"_Build base-facilities"
+		// only if base is unable to produce items
+		if "mn_base_prod_allowed == 0"
+		tooltip	"_Workshop not operational"
 		image	menu/button
 		pos	"755 480"
 		texl	"0 64"
 		texh	"230 128"
+		in
 	}
 	string txt_production
 	{
@@ -422,6 +433,26 @@ menu bases
 	confunc set_base_aircraft
 	{
 //		*txt_aircraft color "0 0.8 0 1"
+	}
+
+	confunc set_base_no_transfer
+	{
+		*txt_transfer color "0.5 0.5 0.5 1"
+	}
+
+	confunc set_base_transfer
+	{
+		*txt_transfer color "0 0.8 0 1"
+	}
+
+	confunc set_prod_disabled
+	{
+		*txt_production color "0.5 0.5 0.5 1"
+	}
+
+	confunc set_prod_enabled
+	{
+		*txt_production color "0 0.8 0 1"
 	}
 
 	func init

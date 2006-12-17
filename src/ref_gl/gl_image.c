@@ -1821,7 +1821,7 @@ image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagety
 			image->has_alpha = GL_Upload8(pic, width, height, (image->type != it_pic), image->type, image);
 		else
 			image->has_alpha = GL_Upload32((unsigned *) pic, width, height,
-										   (image->type != it_pic && image->type != it_wrappic), image->type == it_pic, image->type, image);
+										   (image->type != it_pic), image->type == it_pic, image->type, image);
 		image->upload_width = upload_width;	/* after power of 2 and scales */
 		image->upload_height = upload_height;
 		image->paletted = qfalse;
