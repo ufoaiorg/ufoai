@@ -82,9 +82,9 @@ MISC
  */
 void MakeBackplanes (void)
 {
-	int		i;
+	int i;
 
-	for (i=0 ; i<numplanes ; i++) {
+	for (i = 0; i < numplanes; i++) {
 		backplanes[i].dist = -dplanes[i].dist;
 		VectorSubtract (vec3_origin, dplanes[i].normal, backplanes[i].normal);
 	}
@@ -104,7 +104,7 @@ void MakeParents (int nodenum, int parent)
 	nodeparents[nodenum] = parent;
 	node = &dnodes[nodenum];
 
-	for (i=0 ; i<2 ; i++) {
+	for (i = 0; i < 2; i++) {
 		j = node->children[i];
 		if (j < 0)
 			leafparents[-j - 1] = nodenum;
