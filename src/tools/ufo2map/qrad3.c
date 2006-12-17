@@ -90,29 +90,6 @@ void MakeBackplanes (void)
 	}
 }
 
-int leafparents[MAX_MAP_LEAFS];
-int nodeparents[MAX_MAP_NODES];
-
-/**
- * @brief
- */
-void MakeParents (int nodenum, int parent)
-{
-	int		i, j;
-	dnode_t	*node;
-
-	nodeparents[nodenum] = parent;
-	node = &dnodes[nodenum];
-
-	for (i = 0; i < 2; i++) {
-		j = node->children[i];
-		if (j < 0)
-			leafparents[-j - 1] = nodenum;
-		else
-			MakeParents (j, nodenum);
-	}
-}
-
 #if 0
 /**
  * @brief
@@ -510,7 +487,6 @@ void RadWorld (void)
 	if (numnodes == 0 || numfaces == 0)
 		Error ("Empty map");
 	MakeBackplanes ();
-	MakeParents (0, -1);
 
 	MakeTnodes ( 256 );
 
