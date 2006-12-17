@@ -398,6 +398,168 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 
 #endif
 
+
+/*
+=======================================================================
+Linux pthreads
+=======================================================================
+*/
+
+#if defined( __linux__ ) || defined( __APPLE__ )
+#define USED
+
+/* Setting default Threads to 1 */
+int		numthreads = 1;
+
+/**
+ * @brief
+ */
+void ThreadSetDefault (void)
+{
+	if (numthreads == -1) {	/* not set manually */
+		/* default to one thread, only multi-thread when specifically told to */
+		numthreads = 1;
+	}
+
+	if (numthreads > 1)
+		printf("threads: %d\n", numthreads);
+}
+
+#include <pthread.h>
+
+typedef struct pt_mutex_s
+{
+	pthread_t       *owner;
+	pthread_mutex_t a_mutex;
+	pthread_cond_t  cond;
+	unsigned int    lock;
+} pt_mutex_t;
+
+pt_mutex_t global_lock;
+
+/**
+ * @brief
+ */
+void ThreadLock(void)
+{
+	pt_mutex_t *pt_mutex = &global_lock;
+
+	if(!threaded)
+		return;
+
+	pthread_mutex_lock(&pt_mutex->a_mutex);
+	if(pthread_equal(pthread_self(), (pthread_t)&pt_mutex->owner))
+		pt_mutex->lock++;
+	else {
+		if((!pt_mutex->owner) && (pt_mutex->lock == 0)) {
+			pt_mutex->owner = (pthread_t *)pthread_self();
+			pt_mutex->lock  = 1;
+		} else {
+			while(1) {
+				pthread_cond_wait(&pt_mutex->cond, &pt_mutex->a_mutex);
+				if((!pt_mutex->owner) && (pt_mutex->lock == 0)) {
+					pt_mutex->owner = (pthread_t *)pthread_self();
+					pt_mutex->lock  = 1;
+					break;
+				}
+			}
+		}
+	}
+	pthread_mutex_unlock(&pt_mutex->a_mutex);
+}
+
+/**
+ * @brief
+ */
+void ThreadUnlock(void)
+{
+	pt_mutex_t *pt_mutex = &global_lock;
+
+	if(!threaded)
+		return;
+
+	pthread_mutex_lock(&pt_mutex->a_mutex);
+	pt_mutex->lock--;
+
+	if(pt_mutex->lock == 0) {
+		pt_mutex->owner = NULL;
+		pthread_cond_signal(&pt_mutex->cond);
+	}
+
+	pthread_mutex_unlock(&pt_mutex->a_mutex);
+}
+
+/**
+ * @brief
+ */
+void recursive_mutex_init(pthread_mutexattr_t attribs)
+{
+	pt_mutex_t *pt_mutex = &global_lock;
+
+	pt_mutex->owner = NULL;
+	if(pthread_mutex_init(&pt_mutex->a_mutex, &attribs) != 0)
+		Error("pthread_mutex_init failed\n");
+	if(pthread_cond_init(&pt_mutex->cond, NULL) != 0)
+		Error("pthread_cond_init failed\n");
+
+	pt_mutex->lock = 0;
+}
+
+/**
+ * @brief
+ */
+void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int))
+{
+	pthread_mutexattr_t         mattrib;
+	pthread_t work_threads[MAX_THREADS];
+
+	int	  start, end;
+	int   i=0, status=0;
+
+	start     = I_FloatTime ();
+	pacifier  = showpacifier;
+
+	dispatch  = 0;
+	oldf      = -1;
+	workcount = workcnt;
+
+	if(numthreads == 1)
+		func(0);
+	else {
+		threaded = qtrue;
+
+		if (pacifier)
+			setbuf(stdout, NULL);
+
+		if (pthread_mutexattr_init(&mattrib) != 0)
+			Error("pthread_mutexattr_init failed");
+#if __GLIBC_MINOR__ == 1
+		if (pthread_mutexattr_settype(&mattrib, PTHREAD_MUTEX_FAST_NP) != 0)
+#else
+		if (pthread_mutexattr_settype(&mattrib, PTHREAD_MUTEX_ADAPTIVE_NP) != 0)
+#endif
+			Error ("pthread_mutexattr_settype failed");
+		recursive_mutex_init(mattrib);
+
+		for (i = 0; i<numthreads ; i++) {
+			/* Default pthread attributes: joinable & non-realtime scheduling */
+			if (pthread_create(&work_threads[i], NULL, (void*)func, (void*)i) != 0)
+				Error("pthread_create failed");
+		}
+		for (i = 0; i<numthreads ; i++) {
+			if (pthread_join(work_threads[i], (void **)&status) != 0)
+				Error("pthread_join failed");
+		}
+		pthread_mutexattr_destroy(&mattrib);
+		threaded = qfalse;
+	}
+
+	end = I_FloatTime();
+	if (pacifier)
+		printf (" (%i)\n", end-start);
+}
+#endif /* __linux__ */
+
 /*
 =======================================================================
 SINGLE THREAD
