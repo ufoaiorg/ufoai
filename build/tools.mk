@@ -20,6 +20,7 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/textures.c \
 	tools/ufo2map/tree.c \
 	tools/ufo2map/writebsp.c \
+	tools/ufo2map/convert_ase.c \
 	tools/ufo2map/common/bspfile.c \
 	tools/ufo2map/common/cmdlib.c \
 	tools/ufo2map/common/mathlib.c \
@@ -42,7 +43,7 @@ endif
 # Say how to like the exe
 $(UFO2MAP_TARGET): $(UFO2MAP_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [MAP] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(UFO2MAP_OBJS) -lm
+		$(CC) $(LDFLAGS) -o $@ $(UFO2MAP_OBJS) -lm -lpthread
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -92,7 +93,7 @@ endif
 # Say how to like the exe
 $(QDATA_TARGET): $(QDATA_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [QDT] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(QDATA_OBJS) -lm
+		$(CC) $(LDFLAGS) -o $@ $(QDATA_OBJS) -lm -lpthread
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/tools/qdata/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
