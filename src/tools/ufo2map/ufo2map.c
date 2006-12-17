@@ -36,6 +36,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 char source[1024];
 char name[1024];
 
+/**< convert function pointer */
+int (*convertFunc) (char *);
+
+/**< BSP2ASE Convert prototype */
+int ConvertBSPToASE (char *bspName);
+
 /**
  * @brief Check for bsping command line parameters
  * @note Some are also used for radiosity (e.g. threads)
@@ -58,6 +64,9 @@ void Check_BSP_Parameter ( int argc, char **argv )
 		} else if (!strcmp(argv[i], "-draw")) {
 			printf ("drawflag = true\n");
 			drawflag = qtrue;
+		} else if (!strcmp(argv[i], "-convert")) {
+			printf ("convert bsp to ase = true\n");
+			convertFunc = ConvertBSPToASE;
 		} else if (!strcmp(argv[i], "-noweld")) {
 			printf ("noweld = true\n");
 			noweld = qtrue;
@@ -200,13 +209,15 @@ int main (int argc, char **argv)
 	char path[1024];
 	char out[1024];
 
+	convertFunc = NULL;
+
 	printf ("---- ufo2map %s ----\n", VERSION);
 
 	Check_BSP_Parameter( argc, argv );
 	Check_RAD_Parameter( argc, argv );
 
 	if (argc < 2)
-		Error ("usage: ufo2map [-threads num] [-glview] [-nice prio] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] [-noradiosity] mapfile");
+		Error ("usage: ufo2map [-threads num] [-convert] [-glview] [-nice prio] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] [-noradiosity] mapfile");
 
 	start = I_FloatTime ();
 
@@ -240,6 +251,8 @@ int main (int argc, char **argv)
 		UnparseEntities ();
 
 		WriteBSPFile (out);
+	} else if (convertFunc) {
+		convertFunc(source);
 	} else {
 		/* start from scratch */
 		LoadMapFile (name);
@@ -252,7 +265,7 @@ int main (int argc, char **argv)
 	end = I_FloatTime ();
 	printf ("%5.0f seconds elapsed\n", end-start);
 
-	if (!onlyents && !noradiosity) {
+	if (!convertFunc && !onlyents && !noradiosity) {
 		printf ("----- Radiosity ----\n");
 
 		begin = start;
