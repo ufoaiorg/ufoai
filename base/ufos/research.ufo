@@ -2182,7 +2182,7 @@ tech rs_craft_weapon_particle_beam
 	type	craftweapon
 	up_chapter	crafts
 	name	"_Particle Beam Weapon"
-	// pre_description	"_craft_weapon_particle_beam_pre_txt"
+	pre_description	"_craft_weapon_particle_beam_pre_txt"
 	description	"_craft_weapon_particle_beam_txt"
 
 	provides	craft_weapon_particle_beam
