@@ -49,8 +49,7 @@ void EmitPlanes (void)
 	int		planetranslate[MAX_MAP_PLANES];
 
 	mp = mapplanes;
-	for (i=0 ; i<nummapplanes ; i++, mp++)
-	{
+	for (i = 0; i < nummapplanes; i++, mp++) {
 		dp = &dplanes[numplanes];
 		planetranslate[i] = numplanes;
 		VectorCopy ( mp->normal, dp->normal);

@@ -141,7 +141,7 @@ void ProcessModels (void)
 {
 	BeginBSPFile ();
 
-	for (entity_num=0 ; entity_num< num_entities ; entity_num++) {
+	for (entity_num = 0; entity_num < num_entities; entity_num++) {
 		if (!entities[entity_num].numbrushes)
 			continue;
 
