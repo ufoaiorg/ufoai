@@ -360,7 +360,7 @@ extern void CL_DisplayPopupIntercept(actMis_t* mission, aircraft_t* ufo)
 			if (mission && *air->teamSize <= 0)
 				continue;
 
-			s = va("%s (%i/%i)\t%s\t%s\n", air->name, *air->teamSize, air->size, CL_AircraftStatusToName(air), gd.bases[j].name);
+			s = va("%s (%i/%i)\t%s\t%s\n", air->shortname, *air->teamSize, air->size, CL_AircraftStatusToName(air), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 			popupIntercept.idBaseAircraft[popupIntercept.numAircraft] = j;
 			popupIntercept.idInBaseAircraft[popupIntercept.numAircraft] = i;

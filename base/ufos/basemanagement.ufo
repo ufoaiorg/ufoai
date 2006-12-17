@@ -337,7 +337,8 @@ base main
 aircraft craft_dropship
 {
 	speed	10.0
-	name	"_Dropship"
+	name	"_Firebird-class Dropship"
+	shortname	"_Firebird D"
 	type	transporter
 	model	"dropship"
 	price	3500000
@@ -351,7 +352,8 @@ aircraft craft_dropship
 aircraft craft_interceptor
 {
 	speed	30.0
-	name	"_Interceptor"
+	name	"_Stiletto-class Interceptor"
+	shortname	"_Stiletto I"
 	type	interceptor
 	model	"interceptor"
 	fuel	60000
@@ -369,6 +371,7 @@ aircraft craft_saracen_interceptor
 {
 	speed	30.0
 	name	"_Saracen-class Interceptor"
+	shortname	"_Saracen I"
 	type	interceptor
 	model	"saracen_interceptor"
 	fuel	60000

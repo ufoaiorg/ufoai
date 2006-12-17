@@ -798,6 +798,8 @@ extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission
 static value_t aircraft_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(aircraft_t, name)}
 	,
+	{"shortname", V_TRANSLATION_STRING, offsetof(aircraft_t, shortname)}
+	,
 	{"speed", V_FLOAT, offsetof(aircraft_t, speed)}
 	,
 	{"size", V_INT, offsetof(aircraft_t, size)}

@@ -51,6 +51,7 @@ typedef struct aircraft_s {
 	int idx_sample;				/* self-link in aircraft_sample list */
 	char id[MAX_VAR];			/* internal id from script file */
 	char name[MAX_VAR];			/* translateable name */
+	char shortname[MAX_VAR];		/* translateable shortname */
 	char image[MAX_VAR];		/* image on geoscape */
 	aircraftType_t type;
 	int status;					/* see aircraftStatus_t */
