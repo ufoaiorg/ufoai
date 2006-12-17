@@ -171,15 +171,18 @@ void G_SendInventory(int player_mask, edict_t * ent)
 
 	/* test for pointless player mask */
 	if (!player_mask)
+
+	for (j = 0; j < gi.csi->numIDs; j++)
+		for (ic = ent->i.c[j]; ic; ic = ic->next)
+			nr++;
+
+	/* return if no inventory items to send */
+	if (nr == 0)
 		return;
 
 	gi.AddEvent(player_mask, EV_INV_ADD);
 
 	gi.WriteShort(ent->number);
-
-	for (j = 0; j < gi.csi->numIDs; j++)
-		for (ic = ent->i.c[j]; ic; ic = ic->next)
-			nr++;
 
 	/* size of inventory */
 	gi.WriteShort(nr*6);
@@ -1156,6 +1159,7 @@ static void G_ClientTurn(player_t * player, int num, int dv)
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
 	gi.WriteShort(ent->number);
 	gi.WriteByte(ent->dir);
+	Com_Printf("G_ClientTurn: new ent dir: %i\n", ent->dir);
 
 	/* send the new TUs */
 	G_SendStats(ent);
