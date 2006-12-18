@@ -864,6 +864,7 @@ extern char *pa_format[128];
 /* this is the absolute max for now */
 #define MAX_OBJDEFS     128
 #define MAX_DAMAGETYPES 32
+#define MAX_TECHLINKS	16 /* Needs to be synced with MAX_TECHLINKS in cl_research.h */
 
 #define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[!!(type & 0x80)])
 
@@ -928,6 +929,8 @@ typedef struct objDef_s {
 	int price;
 	int buytype;
 	int link;
+	int forWeapon[MAX_TECHLINKS];	/* Ammo-only: A list of weapons this ammo can be used in.
+					 * The information is taken from the "weapon" requirements in the technology. */
 
 	/* Weapon specific */
 	int ammo;

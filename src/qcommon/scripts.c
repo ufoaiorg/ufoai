@@ -1140,6 +1140,25 @@ MAIN SCRIPT PARSING FUNCTION
 ==============================================================================
 */
 
+/**
+ * @brief Checks if an ammo-item can be used in a weapon.
+ * @param[in] od The Object definition of the ammo.
+ * @param[in] weapon_idx The index of the weapon to check the ammo with.
+ * @return qboolean Returns qtrue if the ammo can be used inthe given weapon, otherwise qfalse.
+ * @todo Move this to a better suited place/file.
+ */
+qboolean INV_AmmoUsableForWeapon (objDef_t *od, int weapon_idx)
+{
+	int i;
+
+	for (i = 0; i < MAX_TECHLINKS; i++) {
+		if (od->forWeapon[i] < 0)
+			break;
+		if (weapon_idx == od->forWeapon[i])
+			return qtrue;
+	}
+	return qfalse;
+}
 
 /**
  * @brief Creates links to the technology entries in the pedia and to other items (i.e ammo<->weapons)
@@ -1150,7 +1169,8 @@ void Com_AddObjectLinks(void)
 	objDef_t *od = NULL;
 	char kurz[MAX_VAR];
 	char *underline = NULL;
-	int i, j;
+	technology_t *tech = NULL;
+	int i, j, k;
 
 	/* Reset links. */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++)
@@ -1160,15 +1180,28 @@ void Com_AddObjectLinks(void)
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		
 		/* Add links to technologies. */
-		od->tech = RS_GetTechByProvided(od->kurz);
+		tech = RS_GetTechByProvided(od->kurz);
+		od->tech = tech;
 #ifdef DEBUG
 		if (!od->tech)
 			Sys_Error("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->kurz);
 #endif /* DEBUG */
 		
 		/* Add weapon-link to ammo items. */
-		/* TODO: Change code so we can use more than one weapon. See require_AND->"weapon" in cl_research */
 		if (!Q_strncmp(od->type, "ammo", 4)) {
+#if 0
+/* TODO: Change code so we can use more than one weapon. See require_AND->"weapon" in cl_research */
+			/* Add weapon-links to ammo items. */
+			k = 0;
+			for (j = 0; j < tech->require_AND.numLinks; j++) {
+				od->forWeapon[k] = -1;
+				if (tech->require_AND.type[j] == RS_LINK_WEAPON) {
+					od->forWeapon[k] = tech->require_AND.idx[j];
+					k++;
+				} 
+			}
+#else
+		
 			/* Check for the underline. */
 			Q_strncpyz(kurz, od->kurz, MAX_VAR);
 			underline = strchr(kurz, '_');
@@ -1182,6 +1215,12 @@ void Com_AddObjectLinks(void)
 					csi.ods[i].link = j;
 					break;
 				}
+#endif
+#if 0
+		} else {
+			/* Non-ammo items. */
+			od->forWeapon[0] = -1;
+#endif
 		}
 	}
 
