@@ -3892,8 +3892,8 @@ void CL_GameInit(void)
 
 	CL_GameTimeStop();
 
-	/* init research tree */
-	RS_AddObjectTechs();
+	/* Init research tree. */
+	Com_AddObjectLinks();
 	RS_InitTree();
 
 	/* after inited the techtree */

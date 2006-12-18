@@ -308,23 +308,6 @@ void RS_MarkResearchable(void)
 }
 
 /**
- * @brief Link the tech pointers to object definitions
- */
-void RS_AddObjectTechs(void)
-{
-	objDef_t *od;
-	int i;
-
-	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		od->tech = RS_GetTechByProvided(od->kurz);
-#ifdef DEBUG
-		if (!od->tech)
-			Sys_Error("Com_AddObjectTechs: Could not find a valid tech for item %s\n", od->kurz);
-#endif /* DEBUG */
-	}
-}
-
-/**
  * @brief Assign required tech/item/etc... IDXs for a single requirements list.
  * @note A function with the same behaviour was formerly also known as RS_InitRequirementList
  */

@@ -40,6 +40,7 @@ char *Com_GiveName(int gender, char *category);
 char *Com_GiveModel(int type, int gender, char *category);
 int Com_GetModelAndName(char *team, character_t * chr);
 
+void Com_AddObjectLinks(void);
 void Com_ParseScripts(void);
 
 

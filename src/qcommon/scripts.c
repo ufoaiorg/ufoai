@@ -22,6 +22,7 @@
 
 
 #include "qcommon.h"
+#include "../client/cl_research.h"
 
 /*
 ==============================================================================
@@ -1141,30 +1142,41 @@ MAIN SCRIPT PARSING FUNCTION
 
 
 /**
- * @brief
+ * @brief Creates links to the technology entries in the pedia and to other items (i.e ammo<->weapons)
+ * @todo Change code to use require_AND->"weapon" entries.
  */
 void Com_AddObjectLinks(void)
 {
-	objDef_t *od;
+	objDef_t *od = NULL;
 	char kurz[MAX_VAR];
-	char *underline;
+	char *underline = NULL;
 	int i, j;
 
-	/* reset links */
+	/* Reset links. */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++)
 		od->link = NONE;
 
-	/* add weapon link to ammo */
+	
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		
+		/* Add links to technologies. */
+		od->tech = RS_GetTechByProvided(od->kurz);
+#ifdef DEBUG
+		if (!od->tech)
+			Sys_Error("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->kurz);
+#endif /* DEBUG */
+		
+		/* Add weapon-link to ammo items. */
+		/* TODO: Change code so we can use more than one weapon. See require_AND->"weapon" in cl_research */
 		if (!Q_strncmp(od->type, "ammo", 4)) {
-			/* check for the underline */
+			/* Check for the underline. */
 			Q_strncpyz(kurz, od->kurz, MAX_VAR);
 			underline = strchr(kurz, '_');
 			if (!underline)
 				continue;
 			*underline = 0;
 
-			/* search corresponding weapon */
+			/* Search corresponding weapon */
 			for (j = 0; j < csi.numODs; j++)
 				if (!Q_strncmp(csi.ods[j].kurz, kurz, MAX_VAR)) {
 					csi.ods[i].link = j;
@@ -1172,6 +1184,7 @@ void Com_AddObjectLinks(void)
 				}
 		}
 	}
+
 }
 
 /**
@@ -1223,10 +1236,11 @@ void Com_ParseScripts(void)
 			CL_ParseClientData(type, name, &text);
 	}
 
-	/* add object links */
+	/* Add object links and tech links.*/
+	/* TODO: Is this still needed here or is the one in cl_campaign.c->CL_GameInit enough? */
 	Com_AddObjectLinks();
 
-	/* stage two parsing (weapon/inventory dependant stuff) */
+	/* Stage two parsing (weapon/inventory dependant stuff). */
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
