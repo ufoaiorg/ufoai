@@ -1166,12 +1166,12 @@ qboolean INV_AmmoUsableInWeapon (objDef_t *od, int weapon_idx)
  */
 void Com_AddObjectLinks(void)
 {
+#ifndef DEDICATED_ONLY
 	objDef_t *od = NULL;
 	technology_t *tech = NULL;
 	int i, j, k;
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		
 		/* Add links to technologies. */
 		tech = RS_GetTechByProvided(od->kurz);
 		od->tech = tech;
@@ -1179,7 +1179,7 @@ void Com_AddObjectLinks(void)
 		if (!od->tech)
 			Sys_Error("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->kurz);
 #endif /* DEBUG */
-		
+
 		if (!Q_strncmp(od->type, "ammo", 4)) {
 			/* Add weapon-links to ammo items. */
 			k = 0;
@@ -1188,14 +1188,14 @@ void Com_AddObjectLinks(void)
 				if (tech->require_AND.type[j] == RS_LINK_WEAPON) {
 					od->forWeapon[k] = tech->require_AND.idx[j];
 					k++;
-				} 
+				}
 			}
 		} else {
 			/* Non-ammo items. */
 			od->forWeapon[0] = -1;
 		}
 	}
-
+#endif
 }
 
 /**

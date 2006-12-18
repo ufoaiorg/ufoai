@@ -72,8 +72,6 @@ int MSG_LengthFormat(sizebuf_t * sb, char *format);
 
 /*============================================================================ */
 
-extern qboolean bigendien;
-
 extern short BigShort(short l);
 extern short LittleShort(short l);
 extern int BigLong(int l);
