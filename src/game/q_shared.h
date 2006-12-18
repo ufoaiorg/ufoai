@@ -900,41 +900,46 @@ typedef struct fireDef_s {
 	int irgoggles;
 } fireDef_t;
 
+/**
+ * @brief Defines all attributes of obejcts used in the inventory.
+ * @todo Document the various (and mostly not obvious) varables here. The documentation in the .ufo file(s) might be a good starting point.
+ */
 typedef struct objDef_s {
-	/* common */
+	/* Common */
 	char name[MAX_VAR];
-	char kurz[MAX_VAR];
+	char kurz[MAX_VAR];	/* Equals the object-"id" TODO: Should be renamed as such sometime in the future. */
 	char model[MAX_VAR];
 	char image[MAX_VAR];
 	char type[MAX_VAR];
 	char extends_item[MAX_VAR];
 	int shape;
-	/* size in x and y direction */
-	byte sx, sy;
+
+	byte sx, sy;		/* Size in x and y direction. */
 	float scale;
 	vec3_t center;
 	char category;
-	byte weapon;
-	byte holdtwohanded;
-	byte firetwohanded;
+	byte weapon;		/* This item is a weapon or ammo. */
+	byte holdtwohanded;	/* The soldier needs both hands to hold this object.
+				 * Influences model-animations and which hands are blocked int he inventory screen.*/
+	byte firetwohanded;	/* The soldier needs both hands to fire this object.
+				 * Influences model-animations. */
 	byte extension;
-	byte thrown;
+	byte thrown;		/* This item is thrown. */
 	int price;
 	int buytype;
 	int link;
 
-	/* weapon specific */
+	/* Weapon specific */
 	int ammo;
 	int reload;
 	fireDef_t fd[2];
 
-	/* technology link */
-	void *tech;
-	/* technology link to item to use this extension for (if this is an extension) */
+	/* Technology link */
+	void *tech;		/* Technology link to item to use this extension for (if this is an extension) */
 	/* TODO: Can be used for menu highlightning and in ufopedia */
 	void *extension_tech;
 
-	/* armor specific */
+	/* Armor specific */
 	short protection[MAX_DAMAGETYPES];
 	short hardness[MAX_DAMAGETYPES];
 } objDef_t;
