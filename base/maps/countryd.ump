@@ -128,6 +128,17 @@ ac      +r     +a     ac
 0      re      ab    0
 }
 
+// mountain
+tile +r04
+{
+4 4
+
+0      re     ab     0
+ac      +r     +a     ac
+ac      +r     +a     ac
+0      re      ab    0
+}
+
 // mountain end
 tile +re01
 {
@@ -187,6 +198,7 @@ size "7 7"
 +r01 "0 2"
 +r02 "1 2"
 +r03 "0 2"
++r04 "0 2"
 +re01 "0 1"
 +re02 "0 1"
 +re03 "0 1"
