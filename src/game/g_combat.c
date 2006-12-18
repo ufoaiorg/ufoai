@@ -282,7 +282,7 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 				int armorDamage;
 
 				armorDamage = (totalDamage - damage) / ad->hardness[dmgtype];
-				ent->AP = armorDamage < ent->AP ? ent->AP - armorDamage : 0;
+				ent->AP = MAX(0, ent->AP - armorDamage);
 			}
 		}
 	}
