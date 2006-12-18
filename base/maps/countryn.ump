@@ -92,15 +92,105 @@ ac      +a     +a     ac
 0      ab      ab    0
 }
 
+// mountain
+tile +r01
+{
+4 5
+
+0      re     ab     0
+ac      +r     +a     ac
+ac      +r     +a     ac
+ac      +r     +a     ac
+0      re      ab    0
+}
+
+// mountain #2
+tile +r02
+{
+4 5
+
+0      re     ab     0
+ac      +r     +a     ac
+ac      +r     +a     ac
+ac      +r     +a     ac
+0      re      ab    0
+}
+
+// mountain
+tile +r03
+{
+4 5
+
+0      re     ab     0
+ac      +r     +a     ac
+ac      +r     +a     ac
+ac      +r     +a     ac
+0      re      ab    0
+}
+
+// mountain end
+tile +re01
+{
+4 5
+
+0      ab     ab     0
+ac      +a     +a     ac
+ac      +e     +a     ac
+ac      +e     +a     ac
+0      r      ab    0
+}
+
+// mountain end #2
+tile +re02
+{
+4 5
+
+0      r     ab     0
+ac      +e     +a     ac
+ac      +a     +a     ac
+ac      +a     +a     ac
+0      ab      ab    0
+}
+
+// mountain end #3
+tile +re03
+{
+4 4
+
+0      ab     ab     0
+ac      +a     +a     ac
+ac      +e     +a     ac
+0      r      ab    0
+}
+
+// mountain end #4
+tile +re04
+{
+4 4
+
+0      r     ab     0
+ac      +e     +a     ac
+ac      +a     +a     ac
+0      ab      ab    0
+}
+
 assembly test
 {
 size "7 7"
 +c01 "0 1"
 +c02 "0 1"
-+d01 "0 1"
++d01 "0 8"
 +d02 "0 8"
 +d03 "0 8"
 +d04 "0 8"
-+d05 "0 8"
++d05 "0 2"
++r01 "0 2"
++r02 "1 2"
++r03 "0 2"
++re01 "0 1"
++re02 "0 1"
++re03 "0 1"
++re04 "0 1"
++d05 "0 2"
 +drop "1 1"
 }
