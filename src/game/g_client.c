@@ -1092,8 +1092,8 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 				/* check for anything appearing, seen by "the moving one" */
 				status = G_CheckVisTeam(ent->team, NULL, qfalse);
 
-				/* set ent->TU because the reaction code relies on ent->TU being accurate */
-				ent->TU = initTU - (int) tu;
+				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
+				ent->TU = max(0, initTU - (int) tu);
 
 				/* check for reaction fire */
 				if (G_ReactToMove(ent, qtrue)){
@@ -1103,8 +1103,8 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 					sentAppearPerishEvent = qfalse;
 				}
 
-				/* restore ent->TU because the movement code relies on it not being modified! */
-				ent->TU = initTU;
+				/* Restore ent->TU because the movement code relies on it not being modified! */
+				ent->TU = max(0, initTU);
 
 				/* check for death */
 				if (ent->state & STATE_DEAD)
@@ -1120,7 +1120,7 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 			}
 
 			/* submit the TUs / round down */
-			ent->TU = initTU - (int) tu;
+			ent->TU = max(0, initTU - (int) tu);
 			G_SendStats(ent);
 
 			/* end the move */
