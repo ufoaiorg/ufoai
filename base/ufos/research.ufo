@@ -1160,7 +1160,7 @@ tech rs_weapon_tachyonsniper
 	require_AND
 	{
 		tech rs_skill_sniper
-		item tachyonrifle 7
+		item tachyonsniper 7
 	}
 
 	provides	tachyonsniper
