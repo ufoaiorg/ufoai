@@ -541,10 +541,9 @@ void CL_ActorUpdateCVars(void)
 			}
 		}
 
-		/* calc remaining TUs */
-		time = selActor->TU - time;
-		if (time < 0)
-			time = 0;
+		/* Calculate remaining TUs. */
+		time = max(0, selActor->TU - time);
+
 		Cvar_Set("mn_turemain", va("%i", time));
 
 		/* print ammo */
