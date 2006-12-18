@@ -1147,7 +1147,7 @@ MAIN SCRIPT PARSING FUNCTION
  * @return qboolean Returns qtrue if the ammo can be used inthe given weapon, otherwise qfalse.
  * @todo Move this to a better suited place/file.
  */
-qboolean INV_AmmoUsableForWeapon (objDef_t *od, int weapon_idx)
+qboolean INV_AmmoUsableInWeapon (objDef_t *od, int weapon_idx)
 {
 	int i;
 
@@ -1167,16 +1167,9 @@ qboolean INV_AmmoUsableForWeapon (objDef_t *od, int weapon_idx)
 void Com_AddObjectLinks(void)
 {
 	objDef_t *od = NULL;
-	char kurz[MAX_VAR];
-	char *underline = NULL;
 	technology_t *tech = NULL;
 	int i, j, k;
 
-	/* Reset links. */
-	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++)
-		od->link = NONE;
-
-	
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		
 		/* Add links to technologies. */
@@ -1187,10 +1180,7 @@ void Com_AddObjectLinks(void)
 			Sys_Error("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->kurz);
 #endif /* DEBUG */
 		
-		/* Add weapon-link to ammo items. */
 		if (!Q_strncmp(od->type, "ammo", 4)) {
-#if 0
-/* TODO: Change code so we can use more than one weapon. See require_AND->"weapon" in cl_research */
 			/* Add weapon-links to ammo items. */
 			k = 0;
 			for (j = 0; j < tech->require_AND.numLinks; j++) {
@@ -1200,27 +1190,9 @@ void Com_AddObjectLinks(void)
 					k++;
 				} 
 			}
-#else
-		
-			/* Check for the underline. */
-			Q_strncpyz(kurz, od->kurz, MAX_VAR);
-			underline = strchr(kurz, '_');
-			if (!underline)
-				continue;
-			*underline = 0;
-
-			/* Search corresponding weapon */
-			for (j = 0; j < csi.numODs; j++)
-				if (!Q_strncmp(csi.ods[j].kurz, kurz, MAX_VAR)) {
-					csi.ods[i].link = j;
-					break;
-				}
-#endif
-#if 0
 		} else {
 			/* Non-ammo items. */
 			od->forWeapon[0] = -1;
-#endif
 		}
 	}
 

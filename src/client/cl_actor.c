@@ -1108,8 +1108,8 @@ void CL_ActorReload(int hand)
 			/* to retrieve the ammo from them than the one */
 			/* we've already found. */
 			for (ic = inv->c[container]; ic; ic = ic->next)
-				if ( csi.ods[ic->item.t].link == weapon
-					 && RS_ItemIsResearched(csi.ods[ic->item.t].kurz) ) {
+				if (INV_AmmoUsableInWeapon(&csi.ods[ic->item.t], weapon)
+				&& RS_ItemIsResearched(csi.ods[ic->item.t].kurz) ) {
 					x = ic->x;
 					y = ic->y;
 					tu = csi.ids[container].out;

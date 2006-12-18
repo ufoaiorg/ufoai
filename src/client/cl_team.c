@@ -408,12 +408,12 @@ void CL_AddCarriedToEq(equipDef_t * ed)
  */
 item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 {
-	int i = -1, type = item.t;
+	int i = -1, type = item.t; /* 'type' equals 'idx' */
 
 	assert (ed->num[type] > 0);
 	ed->num[type]--;
 
-	if (csi.ods[type].link != NONE) { /* ammo */
+	if (csi.ods[type].forWeapon[0] >= 0) { /* ammo */
 		return item;
 	} else if (!csi.ods[type].reload) {
 		item.m = item.t; /* no ammo needed, so fire definitions are in t */
@@ -441,9 +441,9 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 		return item;
 	}
 
-	/* Search for any complete clips */
+	/* Search for any complete clips. */
 	for (i = 0; i < csi.numODs; i++) {
-		if (csi.ods[i].link == type) {
+		if ( INV_AmmoUsableInWeapon(&csi.ods[i], type) ) {
 			if (ed->num[i] > 0) {
 				ed->num[i]--;
 				item.a = csi.ods[type].ammo;
@@ -470,7 +470,8 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 	/* See if there's any loose ammo */
 	item.a = 0;
 	for (i = 0; i < csi.numODs; i++) {
-		if (csi.ods[i].link == type && ed->num_loose[i] > item.a) {
+		if (INV_AmmoUsableInWeapon(&csi.ods[i], type)
+		&& (ed->num_loose[i] > item.a) ) {
 			if (item.a > 0) {
 				/* We previously found some ammo, but we've now found other */
 				/* loose ammo of a different (but appropriate) type with */

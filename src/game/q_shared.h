@@ -928,7 +928,7 @@ typedef struct objDef_s {
 	byte thrown;		/* This item is thrown. */
 	int price;
 	int buytype;
-	int link;
+
 	int forWeapon[MAX_TECHLINKS];	/* Ammo-only: A list of weapons this ammo can be used in.
 					 * The information is taken from the "weapon" requirements in the technology. */
 
@@ -939,7 +939,7 @@ typedef struct objDef_s {
 
 	/* Technology link */
 	void *tech;		/* Technology link to item to use this extension for (if this is an extension) */
-	/* TODO: Can be used for menu highlightning and in ufopedia */
+	/* TODO: Can be used for menu highlighting and in ufopedia */
 	void *extension_tech;
 
 	/* Armor specific */

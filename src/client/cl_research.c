@@ -358,7 +358,7 @@ void RS_RequiredIdxAssign(void)
  * Should be executed after the parsing of _all_ the ufo files and e.g. the
  * research tree/inventory/etc... are initialised.
  * @todo Add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
- * @todo Correct ammo model-search (see comment in code)
+ * @todo Enhance ammo model display (see comment in code).
  */
 void RS_InitTree(void)
 {
@@ -418,11 +418,10 @@ void RS_InitTree(void)
 					if (!*tech->mdl_bottom) {
 						if (tech->type == RS_WEAPON) {
 							/* Find ammo for weapon. */
-							/* TODO: This needs to search the techtree for the ammo-entries ("weapon" requirement) and _then_ get the correct model path.
-							This might also simplify this loop so we can use a nice subroutine instead. */
+							/* TODO: Add code+structure to display several ammo-types (even reseachable ones). */
 							for (k = 0; k < csi.numODs; k++) {
 								item_ammo = &csi.ods[k];
-								if (j == item_ammo->link) {
+								if ( INV_AmmoUsableInWeapon(item_ammo, j) ) {
 									Com_sprintf(tech->mdl_bottom, MAX_VAR, item_ammo->model);
 									break;
 								}
@@ -433,7 +432,7 @@ void RS_InitTree(void)
 					break;
 				}
 			}
-			/*no id found in csi.ods */
+			/* No id found in csi.ods */
 			if (!found) {
 				Com_sprintf(tech->name, MAX_VAR, tech->id);
 				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);

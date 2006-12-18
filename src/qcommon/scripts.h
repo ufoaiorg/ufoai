@@ -43,4 +43,4 @@ int Com_GetModelAndName(char *team, character_t * chr);
 void Com_AddObjectLinks(void);
 void Com_ParseScripts(void);
 
-
+qboolean INV_AmmoUsableInWeapon (objDef_t *od, int weapon_idx);

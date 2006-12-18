@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "q_shared.h"
+#include "../qcommon/qcommon.h" /* Needed for INV_AmmoUsableInWeapon */
 
 #ifdef Q2_MMX_ENABLED
 /* used for mmx optimizations */
@@ -2418,7 +2419,7 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 	} else if (!Com_CheckToInventory(i, cacheItem.t, to, tx, ty)) {
 		ic = Com_SearchInInventory(i, to, tx, ty);
 
-		if (ic && CSI->ods[cacheItem.t].link == ic->item.t) {
+		if (ic && INV_AmmoUsableInWeapon(&CSI->ods[cacheItem.t], ic->item.t)) {
 			/* TODO (or do this in two places in cl_menu.c):
 			if ( !RS_ItemIsResearched(CSI->ods[ic->item.t].kurz)
 				 || !RS_ItemIsResearched(CSI->ods[cacheItem.t].kurz) ) {
@@ -2680,7 +2681,9 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 		max_price = 0;
 		/* find some suitable ammo for the weapon */
 		for (i = CSI->numODs - 1; i >= 0; i--)
-			if ( equip[i] && CSI->ods[i].link == weapon && CSI->ods[i].price > max_price ) {
+			if (equip[i]
+			&& INV_AmmoUsableInWeapon(&CSI->ods[i], weapon)
+			&& (CSI->ods[i].price > max_price) ) {
 				ammo = i;
 				max_price = CSI->ods[i].price;
 			}
@@ -2719,7 +2722,8 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 		max_price = 0;
 		for (i = 0; i < CSI->numODs; i++) {
 			obj = CSI->ods[i];
-			if ( equip[i] && obj.link == weapon ) {
+			if ( equip[i]
+			&& INV_AmmoUsableInWeapon(&obj, weapon) ) {
 				if ( obj.price > max_price && obj.price < prev_price ) {
 					max_price = obj.price;
 					ammo = i;
@@ -2811,7 +2815,8 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 
 						/* find the first possible ammo to check damage type */
 						for (ammo = 0; ammo < CSI->numODs; ammo++)
-							if ( equip[ammo] && CSI->ods[ammo].link == weapon )
+							if ( equip[ammo]
+							&& INV_AmmoUsableInWeapon(&CSI->ods[ammo], weapon) )
 								break;
 						if (ammo < CSI->numODs) {
 							primary =
