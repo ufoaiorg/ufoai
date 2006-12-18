@@ -244,8 +244,9 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 				ent->HP = 0;
 				G_RecalcRouting(ent);
 				G_FreeEdict(ent);
-			} else
-				ent->HP -= damage;
+			} else {
+				ent->HP = MAX(ent->HP - damage, 0);
+			}
 		}
 		return;
 	}
@@ -310,17 +311,19 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 				return;
 			}
 		} else {
-			ent->HP -= damage;
+			ent->HP = MAX(ent->HP - damage, 0);
 		}
 	}
 
 	if (mock)
 		return;
 
-	/* HP shouldn't become negative */
-	ent->HP = max(ent->HP, 0);
+	/* HP shouldn't become negative.
+	 * Note: This check needs to be done for every assignment to HP above anyway since a "return" could pop up in between.
+	 * I'll leave this one in here just in case. */
+	ent->HP = MAX(ent->HP, 0);
 
-	/* check death/knockouth */
+	/* Check death/knockouth. */
 	if (ent->HP == 0 || ent->HP <= ent->STUN) {
 		G_SendStats(ent);
 		G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN);
@@ -351,7 +354,7 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 			G_Morale(ML_WOUND, ent, attacker, damage);
 		} else { /* medikit, etc. */
 			if (ent->HP > GET_HP(ent->chr.skills[ABILITY_POWER]))
-				ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
+				ent->HP = MAX(GET_HP(ent->chr.skills[ABILITY_POWER]), 0);
 		}
 		G_SendStats(ent);
 	}
@@ -996,7 +999,7 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 	if (!mock) {
 		/* send TUs if ent still alive */
 		if (ent->inuse && !(ent->state & STATE_DEAD)) {
-			ent->TU -= fd->time;
+			ent->TU = MAX(ent->TU - fd->time, 0);
 			G_SendStats(ent);
 		}
 
