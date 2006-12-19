@@ -7176,9 +7176,12 @@ done
 
 	if test "$ac_cv_header_SDL_SDL_h" != "yes"
 	then
-		{ { echo "$as_me:$LINENO: error: You must have the SDL development headers" >&5
+		if test "$enable_client" = "yes"
+		then
+			{ { echo "$as_me:$LINENO: error: You must have the SDL development headers" >&5
 echo "$as_me: error: You must have the SDL development headers" >&2;}
    { (exit 1); exit 1; }; }
+		fi
 	else
 		SDL_HEADER="SDL/SDL.h"
 		cat >>confdefs.h <<\_ACEOF
@@ -7296,9 +7299,12 @@ fi
 
 if test "$ac_cv_search_SDL_Init" = "no"
 then
-	{ { echo "$as_me:$LINENO: error: You must have the SDL development libraries" >&5
+	if test "$enable_client" = "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: You must have the SDL development libraries" >&5
 echo "$as_me: error: You must have the SDL development libraries" >&2;}
    { (exit 1); exit 1; }; }
+	fi
 fi
 LDFLAGS=$OLD_LDFLAGS
 

@@ -500,7 +500,10 @@ then
 	AC_CHECK_HEADERS([SDL/SDL.h])
 	if test "$ac_cv_header_SDL_SDL_h" != "yes"
 	then
-		AC_MSG_ERROR([You must have the SDL development headers])
+		if test "$enable_client" = "yes"
+		then
+			AC_MSG_ERROR([You must have the SDL development headers])
+		fi
 	else
 		SDL_HEADER="SDL/SDL.h"
 		AC_DEFINE([USE_SDL_FRAMEWORK])
@@ -517,7 +520,10 @@ LDFLAGS="$LDFLAGS $SDL_LDFLAGS"
 AC_SEARCH_LIBS([SDL_Init],[SDL])
 if test "$ac_cv_search_SDL_Init" = "no"
 then
-	AC_MSG_ERROR([You must have the SDL development libraries])
+	if test "$enable_client" = "yes"
+	then
+		AC_MSG_ERROR([You must have the SDL development libraries])
+	fi
 fi
 LDFLAGS=$OLD_LDFLAGS
 
