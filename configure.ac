@@ -408,7 +408,10 @@ fi
 AC_SEARCH_LIBS([ogg_stream_init],[ogg])
 if test "$ac_cv_search_ogg_stream_init" = "no"
 then
-	AC_MSG_ERROR([couldn't find libogg!])
+	if test "$enable_client" = "yes"
+	then
+		AC_MSG_ERROR([couldn't find libogg!])
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -418,7 +421,10 @@ fi
 AC_SEARCH_LIBS([vorbis_info_init],[vorbis])
 if test "$ac_cv_search_ogg_stream_init" = "no"
 then
-	AC_MSG_ERROR([couldn't find libvorbis!])
+	if test "$enable_client" = "yes"
+	then
+		AC_MSG_ERROR([couldn't find libvorbis!])
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -428,7 +434,10 @@ fi
 AC_SEARCH_LIBS([ov_open],[vorbisfile])
 if test "$ac_cv_search_ov_open" = "no"
 then
-	AC_MSG_ERROR([couldn't find libvorbisfile!])
+	if test "$enable_client" = "yes"
+	then
+		AC_MSG_ERROR([couldn't find libvorbisfile!])
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -529,7 +538,10 @@ then
 		])
 	if test "$ac_cv_header_SDL_ttf_SDL_ttf_h" != "yes"
 	then
-		AC_MSG_ERROR([You must have the SDL_ttf development headers])
+		if test "$enable_client" = "yes"
+		then
+			AC_MSG_ERROR([You must have the SDL_ttf development headers])
+		fi
 	else
 		AC_DEFINE([USE_SDL_TTF_FRAMEWORK])
 	fi
@@ -539,7 +551,10 @@ CFLAGS=$OLD_CFLAGS
 AC_SEARCH_LIBS([TTF_Init],[SDL_ttf])
 if test "$ac_cv_search_TTF_Init" = "no"
 then
-	AC_MSG_ERROR([You must have the SDL_ttf development libraries])
+	if test "$enable_client" = "yes"
+	then
+		AC_MSG_ERROR([You must have the SDL_ttf development libraries])
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -549,13 +564,19 @@ fi
 AC_CHECK_HEADERS([jpeglib.h])
 if test "$ac_cv_header_jpeglib_h" = "no"
 then
-	AC_MSG_ERROR([You must have the JPEG development headers])
+	if test "$enable_client" = "yes"
+	then
+		AC_MSG_ERROR([You must have the JPEG development headers])
+	fi
 fi
 
 AC_SEARCH_LIBS([jpeg_CreateDecompress],[jpeg])
 if test "$ac_cv_search_jpeg_create_decompress" = "no"
 then
-	AC_MSG_ERROR([You must have the JPEG development libraries])
+	if test "$enable_client" = "yes"
+	then
+		AC_MSG_ERROR([You must have the JPEG development libraries])
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -565,13 +586,19 @@ fi
 AC_CHECK_HEADERS([png.h])
 if test "$ac_cv_header_png_h" = "no"
 then
-	AC_MSG_ERROR([You must have the PNG development headers])
+	if test "$enable_client" = "yes"
+	then
+		AC_MSG_ERROR([You must have the PNG development headers])
+	fi
 fi
 
 AC_SEARCH_LIBS([png_create_info_struct],[png])
 if test "$ac_cv_search_png_create_info_struct" = "no"
 then
-	AC_MSG_ERROR([You must have the JPEG development libraries])
+	if test "$enable_client" = "yes"
+	then
+		AC_MSG_ERROR([You must have the PNG development libraries])
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -617,7 +644,10 @@ then
 	if test "$ac_cv_header_OpenGL_gl_h" != "yes" || \
    	   test "$ac_cv_header_OpenGL_glu_h" != "yes"
 	then
-		AC_MSG_ERROR([Couldn't find OpenGL development headers!])
+		if test "$enable_client" = "yes"
+		then
+			AC_MSG_ERROR([Couldn't find OpenGL development headers!])
+		fi
 	else
 		AC_DEFINE([GL_H_WITHOUT_GL_DIR],1)
 	fi

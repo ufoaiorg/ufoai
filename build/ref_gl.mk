@@ -54,10 +54,12 @@ REF_GLX_OBJS=$(REF_GLX_SRCS:%.c=$(BUILDDIR)/ref_gl/%.o)
 REF_GLX_DEPS=$(REF_GLX_OBJS:%.o=%.d)
 REF_GLX_TARGET=ref_glx.$(SHARED_EXT)
 
+ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_VID_GLX), 1)
 	TARGETS += $(REF_GLX_TARGET)
 	ALL_OBJS += $(REF_GL_OBJS) $(REF_GLX_OBJS)
 	ALL_DEPS += $(REF_GL_DEPS) $(REF_GLX_DEPS)
+endif
 endif
 
 # Say about to build the target
@@ -70,10 +72,12 @@ $(REF_GLX_TARGET) : $(REF_GLX_OBJS) $(REF_GL_OBJS) $(BUILDDIR)/.dirs
 REF_SDL_OBJS=$(REF_SDL_SRCS:%.c=$(BUILDDIR)/ref_gl/%.o)
 REF_SDL_DEPS=$(REF_SDL_OBJS:%.o=%.d)
 
+ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SDL), 1)
 	TARGETS += $(REF_SDL_TARGET)
 	ALL_OBJS += $(REF_GL_OBJS) $(REF_SDL_OBJS)
 	ALL_DEPS += $(REF_GL_DEPS) $(REF_SDL_DEPS)
+endif
 endif
 
 # Say about to build the target

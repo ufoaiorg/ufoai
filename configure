@@ -6248,9 +6248,12 @@ fi
 
 if test "$ac_cv_search_ogg_stream_init" = "no"
 then
-	{ { echo "$as_me:$LINENO: error: couldn't find libogg!" >&5
+	if test "$enable_client" = "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: couldn't find libogg!" >&5
 echo "$as_me: error: couldn't find libogg!" >&2;}
    { (exit 1); exit 1; }; }
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -6358,9 +6361,12 @@ fi
 
 if test "$ac_cv_search_ogg_stream_init" = "no"
 then
-	{ { echo "$as_me:$LINENO: error: couldn't find libvorbis!" >&5
+	if test "$enable_client" = "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: couldn't find libvorbis!" >&5
 echo "$as_me: error: couldn't find libvorbis!" >&2;}
    { (exit 1); exit 1; }; }
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -6468,9 +6474,12 @@ fi
 
 if test "$ac_cv_search_ov_open" = "no"
 then
-	{ { echo "$as_me:$LINENO: error: couldn't find libvorbisfile!" >&5
+	if test "$enable_client" = "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: couldn't find libvorbisfile!" >&5
 echo "$as_me: error: couldn't find libvorbisfile!" >&2;}
    { (exit 1); exit 1; }; }
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -7458,9 +7467,12 @@ done
 
 	if test "$ac_cv_header_SDL_ttf_SDL_ttf_h" != "yes"
 	then
-		{ { echo "$as_me:$LINENO: error: You must have the SDL_ttf development headers" >&5
+		if test "$enable_client" = "yes"
+		then
+			{ { echo "$as_me:$LINENO: error: You must have the SDL_ttf development headers" >&5
 echo "$as_me: error: You must have the SDL_ttf development headers" >&2;}
    { (exit 1); exit 1; }; }
+		fi
 	else
 		cat >>confdefs.h <<\_ACEOF
 #define USE_SDL_TTF_FRAMEWORK 1
@@ -7571,9 +7583,12 @@ fi
 
 if test "$ac_cv_search_TTF_Init" = "no"
 then
-	{ { echo "$as_me:$LINENO: error: You must have the SDL_ttf development libraries" >&5
+	if test "$enable_client" = "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: You must have the SDL_ttf development libraries" >&5
 echo "$as_me: error: You must have the SDL_ttf development libraries" >&2;}
    { (exit 1); exit 1; }; }
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -7746,9 +7761,12 @@ done
 
 if test "$ac_cv_header_jpeglib_h" = "no"
 then
-	{ { echo "$as_me:$LINENO: error: You must have the JPEG development headers" >&5
+	if test "$enable_client" = "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: You must have the JPEG development headers" >&5
 echo "$as_me: error: You must have the JPEG development headers" >&2;}
    { (exit 1); exit 1; }; }
+	fi
 fi
 
 { echo "$as_me:$LINENO: checking for library containing jpeg_CreateDecompress" >&5
@@ -7852,9 +7870,12 @@ fi
 
 if test "$ac_cv_search_jpeg_create_decompress" = "no"
 then
-	{ { echo "$as_me:$LINENO: error: You must have the JPEG development libraries" >&5
+	if test "$enable_client" = "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: You must have the JPEG development libraries" >&5
 echo "$as_me: error: You must have the JPEG development libraries" >&2;}
    { (exit 1); exit 1; }; }
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -8027,9 +8048,12 @@ done
 
 if test "$ac_cv_header_png_h" = "no"
 then
-	{ { echo "$as_me:$LINENO: error: You must have the PNG development headers" >&5
+	if test "$enable_client" = "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: You must have the PNG development headers" >&5
 echo "$as_me: error: You must have the PNG development headers" >&2;}
    { (exit 1); exit 1; }; }
+	fi
 fi
 
 { echo "$as_me:$LINENO: checking for library containing png_create_info_struct" >&5
@@ -8133,9 +8157,12 @@ fi
 
 if test "$ac_cv_search_png_create_info_struct" = "no"
 then
-	{ { echo "$as_me:$LINENO: error: You must have the JPEG development libraries" >&5
-echo "$as_me: error: You must have the JPEG development libraries" >&2;}
+	if test "$enable_client" = "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: You must have the PNG development libraries" >&5
+echo "$as_me: error: You must have the PNG development libraries" >&2;}
    { (exit 1); exit 1; }; }
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -8687,9 +8714,12 @@ done
 	if test "$ac_cv_header_OpenGL_gl_h" != "yes" || \
    	   test "$ac_cv_header_OpenGL_glu_h" != "yes"
 	then
-		{ { echo "$as_me:$LINENO: error: Couldn't find OpenGL development headers!" >&5
+		if test "$enable_client" = "yes"
+		then
+			{ { echo "$as_me:$LINENO: error: Couldn't find OpenGL development headers!" >&5
 echo "$as_me: error: Couldn't find OpenGL development headers!" >&2;}
    { (exit 1); exit 1; }; }
+		fi
 	else
 		cat >>confdefs.h <<\_ACEOF
 #define GL_H_WITHOUT_GL_DIR 1
@@ -9943,6 +9973,8 @@ fi
 #---------------------------------------------------------------------------------------------
 # Check for DGA
 #---------------------------------------------------------------------------------------------
+
+# FIXME: on some systems the headerfile is: X11/extensions/xf86dga1.h
 
 if test "$with_vid_dga" = "check" || test "$with_vid_dga" = "yes"
 then
