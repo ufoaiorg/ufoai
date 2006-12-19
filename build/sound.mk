@@ -7,10 +7,12 @@ SND_SDL_OBJS=$(SND_SDL_SRCS:%.c=$(BUILDDIR)/snd-sdl/%.o)
 SND_SDL_DEPS=$(SND_SDL_OBJS:%.o=%.d)
 SND_SDL_TARGET=snd_sdl.$(SHARED_EXT)
 
+ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SND_SDL),1)
 	TARGETS += $(SND_SDL_TARGET)
 	ALL_DEPS += $(SND_SDL_DEPS)
 	ALL_OBJS += $(SND_SDL_OBJS)
+endif
 endif
 
 # Say about to build the target
@@ -36,10 +38,12 @@ SND_ALSA_OBJS=$(SND_ALSA_SRCS:%.c=$(BUILDDIR)/snd-alsa/%.o)
 SND_ALSA_DEPS=$(SND_ALSA_OBJS:%.o=%.d)
 SND_ALSA_TARGET=snd_alsa.$(SHARED_EXT)
 
+ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SND_ALSA),1)
 	TARGETS += $(SND_ALSA_TARGET)
 	ALL_DEPS += $(SND_ALSA_DEPS)
 	ALL_OBJS += $(SND_ALSA_OBJS)
+endif
 endif
 
 # Say about to build the target
@@ -65,10 +69,12 @@ SND_OSS_OBJS=$(SND_OSS_SRCS:%.c=$(BUILDDIR)/snd-oss/%.o)
 SND_OSS_DEPS=$(SND_OSS_OBJS:%.o=%.d)
 SND_OSS_TARGET=snd_oss.$(SHARED_EXT)
 
+ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SND_OSS),1)
 	TARGETS += $(SND_OSS_TARGET)
 	ALL_DEPS += $(SND_OSS_DEPS)
 	ALL_OBJS += $(SND_OSS_OBJS)
+endif
 endif
 
 # Say about to build the target
@@ -94,10 +100,12 @@ SND_ARTS_OBJS=$(SND_ARTS_SRCS:%.c=$(BUILDDIR)/snd-arts/%.o)
 SND_ARTS_DEPS=$(SND_ARTS_OBJS:%.o=%.d)
 SND_ARTS_TARGET=snd_arts.$(SHARED_EXT)
 
+ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SND_ARTS),1)
 	TARGETS += $(SND_ARTS_TARGET)
 	ALL_DEPS += $(SND_ARTS_DEPS)
 	ALL_OBJS += $(SND_ARTS_OBJS)
+endif
 endif
 
 # Say about to build the target
@@ -124,10 +132,12 @@ SND_WAPI_OBJS=$(SND_WAPI_SRCS:%.c=$(BUILDDIR)/snd-wapi/%.o)
 SND_WAPI_DEPS=$(SND_WAPI_OBJS:%.o=%.d)
 SND_WAPI_TARGET=snd_wapi.$(SHARED_EXT)
 
+ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SND_WAPI),1)
 	TARGETS += $(SND_WAPI_TARGET)
 	ALL_DEPS += $(SND_WAPI_DEPS)
 	ALL_OBJS += $(SND_WAPI_OBJS)
+endif
 endif
 
 # Say about to build the target
@@ -153,10 +163,12 @@ SND_DX_OBJS=$(SND_DX_SRCS:%.c=$(BUILDDIR)/snd-dx/%.o)
 SND_DX_DEPS=$(SND_DX_OBJS:%.o=%.d)
 SND_DX_TARGET=snd_dx.$(SHARED_EXT)
 
+ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SND_DX),1)
 	TARGETS += $(SND_DX_TARGET)
 	ALL_DEPS += $(SND_DX_DEPS)
 	ALL_OBJS += $(SND_DX_OBJS)
+endif
 endif
 
 # Say about to build the target
