@@ -69,7 +69,6 @@ void (*RW_IN_Init_fp)(in_state_t *in_state_p);
 void (*RW_IN_Shutdown_fp)(void);
 void (*RW_IN_Activate_fp)(qboolean active);
 void (*RW_IN_Commands_fp)(void);
-void (*RW_IN_Move_fp)(usercmd_t *cmd);
 void (*RW_IN_Frame_fp)(void);
 
 void Real_IN_Init (void);
@@ -204,7 +203,6 @@ void VID_FreeReflib (void)
 	RW_IN_Shutdown_fp = NULL;
 	RW_IN_Activate_fp = NULL;
 	RW_IN_Commands_fp = NULL;
-	RW_IN_Move_fp = NULL;
 	RW_IN_Frame_fp = NULL;
 
 	memset (&re, 0, sizeof(re));
@@ -309,7 +307,6 @@ qboolean VID_LoadRefresh( char *name )
 		(RW_IN_Shutdown_fp = dlsym(reflib_library, "RW_IN_Shutdown")) == NULL ||
 		(RW_IN_Activate_fp = dlsym(reflib_library, "RW_IN_Activate")) == NULL ||
 		(RW_IN_Commands_fp = dlsym(reflib_library, "RW_IN_Commands")) == NULL ||
-		(RW_IN_Move_fp = dlsym(reflib_library, "RW_IN_Move")) == NULL ||
 		(RW_IN_Frame_fp = dlsym(reflib_library, "RW_IN_Frame")) == NULL)
 		Sys_Error("No RW_IN functions in REF.\n");
 #else
@@ -317,7 +314,6 @@ qboolean VID_LoadRefresh( char *name )
 	    void RW_IN_Init(in_state_t *in_state_p);
 	    void RW_IN_Shutdown(void);
 	    void RW_IN_Commands (void);
-	    void RW_IN_Move (usercmd_t *cmd);
 	    void RW_IN_Frame (void);
 	    void RW_IN_Activate(void);
 
@@ -325,7 +321,6 @@ qboolean VID_LoadRefresh( char *name )
 	    RW_IN_Shutdown_fp = RW_IN_Shutdown;
 	    RW_IN_Activate_fp = RW_IN_Activate;
 	    RW_IN_Commands_fp = RW_IN_Commands;
-	    RW_IN_Move_fp = RW_IN_Move;
 	    RW_IN_Frame_fp = RW_IN_Frame;
 	}
 #endif
@@ -473,15 +468,6 @@ void IN_Commands (void)
 {
 	if (RW_IN_Commands_fp)
 		RW_IN_Commands_fp();
-}
-
-/**
- * @brief
- */
-void IN_Move (usercmd_t *cmd)
-{
-	if (RW_IN_Move_fp)
-		RW_IN_Move_fp(cmd);
 }
 
 /**

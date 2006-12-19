@@ -603,23 +603,47 @@ void B_BuildingAddToList(building_t * building)
  *
  * @param[in] base_idx Which base
  * @param[in] type_idx Which buildingtype
+ * @sa B_GetNumberOfBuildingsInBaseByType
  */
-int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx)
+int B_GetNumberOfBuildingsInBaseByTypeIDX(int base_idx, int type_idx)
 {
 	int i;
-	int NumberOfBuildings;
+	int NumberOfBuildings = 0;
 
 	if (base_idx < 0 || base_idx >= gd.numBases) {
-		Com_Printf("Bad base-index given: %i\n", base_idx);
+		Com_Printf("B_GetNumberOfBuildingsInBaseByTypeIDX: Bad base-index given: %i (numbases %i)\n", base_idx, gd.numBases);
 		return -1;
 	}
 
-	NumberOfBuildings = 0;
 	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
 		if (gd.buildings[base_idx][i].type_idx == type_idx)
 			NumberOfBuildings++;
 	}
 	Com_DPrintf("B_GetNumOfBuildType: base: '%s' - num_b: %i - type_idx: %s\n", gd.bases[base_idx].name, NumberOfBuildings, gd.buildingTypes[type_idx].id);
+	return NumberOfBuildings;
+}
+
+/**
+ * @brief Counts the number of buildings of a particular type in a base.
+ *
+ * @param[in] base_idx Which base
+ * @param[in] type Building type value
+ * @sa B_GetNumberOfBuildingsInBaseByTypeIDX
+ */
+int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type)
+{
+	int i;
+	int NumberOfBuildings = 0;
+
+	if (base_idx < 0 || base_idx >= gd.numBases) {
+		Com_Printf("B_GetNumberOfBuildingsInBaseByType: Bad base-index given: %i (numbases: %i)\n", base_idx, gd.numBases);
+		return -1;
+	}
+
+	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
+		if (gd.buildings[base_idx][i].buildingType == type)
+			NumberOfBuildings++;
+	}
 	return NumberOfBuildings;
 }
 
@@ -639,7 +663,7 @@ buildingStatus_t B_GetMaximumBuildingStatus(int base_idx, buildingType_t buildin
 	buildingStatus_t status = B_STATUS_NOT_SET;
 
 	if (base_idx < 0) {
-		Com_Printf("Bad base-index given: %i\n", base_idx);
+		Com_Printf("B_GetMaximumBuildingStatus: Bad base-index given: %i (numbases %i)\n", base_idx, gd.numBases);
 		return -1;
 	}
 
@@ -1331,23 +1355,29 @@ void B_SelectBase(void)
 	} else
 		return;
 
-	/* activate or deactivate the aircraft button */
-	if (baseCurrent->numAircraftInBase <= 0)
-		Cbuf_ExecuteText(EXEC_NOW, "set_base_no_aircraft");
-	else
-		Cbuf_ExecuteText(EXEC_NOW, "set_base_aircraft");
+	/**
+	 * this is only needed when we are going to be show up the base
+	 * in our base view port
+	 */
+	if (gd.mapAction != MA_NEWBASE) {
+		/* activate or deactivate the aircraft button */
+		if (baseCurrent->numAircraftInBase <= 0)
+			Cbuf_ExecuteText(EXEC_NOW, "set_base_no_aircraft");
+		else
+			Cbuf_ExecuteText(EXEC_NOW, "set_base_aircraft");
 
-	Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
-	Cvar_SetValue("mn_base_prod_allowed", PR_ProductionAllowed());
-	Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
-	Cvar_SetValue("mn_base_id", baseCurrent->idx);
-	Cvar_SetValue("mn_numbases", gd.numBases);
-	if (gd.numBases > 1) {
-		Cbuf_AddText("set_base_transfer;");
-	} else {
-		Cbuf_AddText("set_base_no_transfer;");
+		Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
+		Cvar_SetValue("mn_base_prod_allowed", PR_ProductionAllowed());
+		Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
+		Cvar_SetValue("mn_base_id", baseCurrent->idx);
+		Cvar_SetValue("mn_numbases", gd.numBases);
+		if (gd.numBases > 1) {
+			Cbuf_AddText("set_base_transfer;");
+		} else {
+			Cbuf_AddText("set_base_no_transfer;");
+		}
+		Cvar_Set("mn_base_title", baseCurrent->name);
 	}
-	Cvar_Set("mn_base_title", baseCurrent->name);
 }
 
 #undef RIGHT

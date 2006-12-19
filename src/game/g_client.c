@@ -2316,7 +2316,7 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 
 	if (!mock) {
 		/* send TUs */
-		if (ent->inuse) {
+		if (ent->inuse && !(ent->state & STATE_DEAD)) {
 			ent->TU -= fd->time;
 			G_SendStats(ent);
 		}

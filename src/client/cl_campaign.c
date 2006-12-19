@@ -585,6 +585,52 @@ static void CL_CampaignExecute(setState_t * set)
 	CL_CampaignActivateStageSets(set->stage);
 }
 
+#define DETAILSWIDTH 14
+/**
+ * @brief Console command to list all available missions
+ */
+void CP_MissionList_f (void)
+{
+	int i;
+	qboolean details = qfalse;
+	char tmp[DETAILSWIDTH+1];
+
+	if (Cmd_Argc() > 1)
+		details = qtrue;
+	else
+		Com_Printf("Use defails as parameter to get a more detailed list\n");
+
+	/* detail header */
+	if (details) {
+		Com_Printf("| %-14s | %-14s | %-14s | %-14s | #  | %-14s | %-14s | #  |\n|", "id", "map", "param", "alienteam", "alienequip", "civteam");
+		for (i = 0; i < 4; i++)
+			Com_Printf("----------------|");
+		Com_Printf("----|----------------|----------------|----|");
+		Com_Printf("\n");
+	}
+
+	for (i = 0; i < numMissions; i++) {
+		if (details) {
+			Q_strncpyz(tmp, missions[i].name, sizeof(tmp));
+			Com_Printf("| %-*s | ", DETAILSWIDTH, tmp);
+			Q_strncpyz(tmp, missions[i].map, sizeof(tmp));
+			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
+			Q_strncpyz(tmp, missions[i].param, sizeof(tmp));
+			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
+			Q_strncpyz(tmp, missions[i].alienTeam, sizeof(tmp));
+			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
+			Q_strncpyz(tmp, missions[i].alienTeam, sizeof(tmp));
+			Com_Printf("%02i | ", missions[i].aliens);
+			Q_strncpyz(tmp, missions[i].alienEquipment, sizeof(tmp));
+			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
+			Q_strncpyz(tmp, missions[i].civTeam, sizeof(tmp));
+			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
+			Com_Printf("%02i |", missions[i].civilians);
+			Com_Printf("\n");
+		} else
+			Com_Printf("%s\n", missions[i].name);
+	}
+}
 
 /**
  * @brief
@@ -3522,6 +3568,7 @@ static void CP_GetCampaigns_f(void)
 static void CP_CampaignsClick_f(void)
 {
 	int num;
+	char *racetype;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -3542,8 +3589,16 @@ static void CP_CampaignsClick_f(void)
 		return;
 
 	Cvar_Set("campaign", campaigns[num].id);
-	/* FIXME: Translate the race to the name of a race */
-	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i soldiers, %i scientists, %i workers, %i medics\nCredits: %ic\nDifficulty: %s\n%s\n"), campaigns[num].team, campaigns[num].soldiers, campaigns[num].scientists, campaigns[num].workers, campaigns[num].medics, campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty), _(campaigns[num].text));
+	racetype = campaigns[num].team;
+	(!Q_strncmp(racetype, "human", 5)) ? (racetype = _("Human")) : (racetype = _("Aliens"));
+
+	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\nCredits: %ic\nDifficulty: %s\n%s\n"),
+			racetype,
+			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
+			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),
+			campaigns[num].workers, ngettext("worker", "workers", campaigns[num].workers),
+			campaigns[num].medics, ngettext("medic", "medics", campaigns[num].medics),
+			campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty), _(campaigns[num].text));
 	menuText[TEXT_STANDARD] = campaignDesc;
 }
 
@@ -3605,6 +3660,7 @@ void CL_ResetCampaign(void)
 	Cmd_AddCommand("campaign_stats", CP_CampaignStats, NULL);
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, NULL);
+	Cmd_AddCommand("missionlist", CP_MissionList_f, "Shows all missions from the script files");
 	Cmd_AddCommand("game_new", CL_GameNew, NULL);
 	Cmd_AddCommand("game_continue", CL_GameContinue, NULL);
 	Cmd_AddCommand("game_exit", CL_GameExit, NULL);

@@ -238,7 +238,8 @@ static void PR_ProductionList (void)
 /**
  * @brief Returns true if the current base is able to produce items
  */
-qboolean PR_ProductionAllowed(void) {
+qboolean PR_ProductionAllowed(void)
+{
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK &&
 		B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP) > 0 &&
 		E_CountHired(baseCurrent, EMPL_WORKER) > 0 ) {

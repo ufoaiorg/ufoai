@@ -784,7 +784,6 @@ menu popup
 	{
 		pos	"440 280"
 		align	uc
-		size	"38 256"
 		num	7
 	}
 
@@ -792,5 +791,24 @@ menu popup
 	{
 		pos	"300 340"
 		num	8
+	}
+	pic bt_ok
+	{
+		tooltip	"_Close this dialog"
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 33"
+		pos	"560 450"
+		out	{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
+		in	{ *string_ok color "1 1 1 1" *bt_ok image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;" }
+	}
+	string string_ok
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_OK"
+		pos	"650 448"
+		align	uc
 	}
 }
