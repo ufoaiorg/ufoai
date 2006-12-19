@@ -200,9 +200,30 @@ tile +h01
 {
 4 3
 
-0      ab     ab 0
-ac     +a     +a ac
-0      ab     ab 0
+0      ab     ab     0
+ac     +a     +a     ac
+0      ab     ab     0
+}
+
+// house
+tile +h02
+{
+4 3
+
+0      ab     ab     0
+ac     +a     +a     ac
+0      ab     ab     0
+}
+
+// house
+tile +h03
+{
+4 4
+
+0      ab     ab     0
+ac     +a     +a     ac
+ac     +a     +a     ac
+0      ab     ab     0
 }
 
 assembly test
@@ -216,7 +237,9 @@ size "7 7"
 +d04 "0 8"
 +d05 "0 2"
 +d07 "0 2"
-+h01 "1 2"
++h01 "0 2"
++h02 "0 2"
++h03 "0 2"
 +r01 "0 2"
 +r02 "1 2"
 +r03 "0 2"
