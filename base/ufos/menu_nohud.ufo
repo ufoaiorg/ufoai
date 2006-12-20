@@ -27,7 +27,6 @@ menu nohud
 	confunc	hudselect6 { cmd hudselects6;hudselecta6; }
 	confunc	hudselect7 { cmd hudselects7;hudselecta7; }
 	
-	confunc tomov { cmd tomovs;tomova; }
 	confunc towpl { cmd towpls;towpla; }
 	confunc towpr { cmd towprs;towpra; }
 	confunc towsl { cmd towsls;towsla; }

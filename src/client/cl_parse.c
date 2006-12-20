@@ -686,6 +686,10 @@ void CL_ActorAppear( sizebuf_t *sb )
 					CL_DisplayHudMessage( _("Enemy spotted!\n"), 2000 );
 			} else
 				CL_DisplayHudMessage( _("Civilian spotted!\n"), 2000 );
+
+			/* update pathing as new actor could block path */
+			if (newActor)
+				CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 		}
 	}
 
@@ -703,7 +707,7 @@ void CL_ActorAppear( sizebuf_t *sb )
 void CL_ActorStats( sizebuf_t *sb )
 {
 	le_t	*le;
-	int		number;
+	int		number, selActorTU;
 
 	number = MSG_ReadShort( sb );
 	le = LE_Get( number );
@@ -713,6 +717,9 @@ void CL_ActorStats( sizebuf_t *sb )
 		return;
 	}
 
+	if (le == selActor)
+		selActorTU = selActor->TU;
+
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_STATS], &le->TU, &le->HP, &le->STUN, &le->AP, &le->morale);
 
 	if ( le->TU > le->maxTU )
@@ -721,6 +728,12 @@ void CL_ActorStats( sizebuf_t *sb )
 		le->maxHP = le->HP;
 	if ( le->morale > le->maxMorale )
 		le->maxMorale = le->morale;
+
+	/* if selActor's timeunits have changed, update movelength */
+	if (le == selActor)
+		if (le->TU != selActorTU) {
+			CL_ResetActorMoveLength();
+		}
 }
 
 
@@ -752,7 +765,8 @@ void CL_ActorStateChange( sizebuf_t *sb )
 		le->think = NULL;
 		VectorCopy(player_dead_maxs, le->maxs);
 		CL_RemoveActorFromTeamList(le);
-		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
+		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
+		return;
 	} else {
 		le->state = state;
 		le->think = LET_StartIdle;

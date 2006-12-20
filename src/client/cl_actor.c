@@ -40,6 +40,29 @@ static pos3_t mouseLastPos;
 static pos3_t mousePendPos; /* for double-click movement ... */
 reactionmode_t selActorReactionState; /* keep track of reaction toggle */
 
+/* to optimise painting of HUD in move-mode, keep track of some globals: */
+le_t *lastHUDActor; /* keeps track of selActor */
+int lastMoveLength; /* keeps track of actorMoveLength */
+int lastTU; /* keeps track of selActor->TU */
+
+/* a cbuf string for each shoot_types_t,
+ * note: array size ST_NUM_SHOOT_TYPES + 3 to include reload types */
+static char *shoot_type_strings[ST_NUM_SHOOT_TYPES + 3] = {
+	"pr\n",
+	"\n",
+	"sr\n",
+	"\n",
+	"pl\n",
+	"\n",
+	"sl\n",
+	"\n",
+	"\n",
+	"rr\n",
+	"rl\n"
+};
+
+int weaponButtonState[ST_NUM_SHOOT_TYPES + 3];
+
 /**
  * @brief Writes player action with its data
  */
@@ -250,72 +273,91 @@ void CL_ActorGlobalCVars(void)
 }
 
 /**
- * @brief Refreshes the buttons on the UI?
+ * @brief calculate total reload time for selected actor
+ * returns a time of >= 999 units if no suitable ammo found.
+ */
+static int CL_CalcReloadTime(int weapon_id) 
+{
+	invList_t *ic;
+	int container;
+	int tu = 999;
+
+	for (container = 0; container < csi.numIDs; container++) {
+		if (csi.ids[container].out < tu) {
+			for (ic = selActor->i.c[container]; ic; ic = ic->next)
+				if ( csi.ods[ic->item.t].link == weapon_id ) {
+					tu = csi.ids[container].out;
+					break;
+				}
+		}
+	}
+
+	tu += csi.ods[weapon_id].reload;
+	return tu;
+}
+
+void CL_ResetWeaponButtons(void)
+{
+	memset(weaponButtonState, -1, sizeof(weaponButtonState));
+}
+
+/*
+ * @brief Sets the display for a single weapon/reload HUD button
+ */
+static void SetWeaponButton(int button, int state)
+{
+	char cbufText[MAX_VAR];
+	int currentState = weaponButtonState[button];
+
+	if (currentState == state)
+		return;
+
+	if (state == 1)
+		Q_strncpyz(cbufText, "desel", MAX_VAR);
+	else
+		Q_strncpyz(cbufText, "dis", MAX_VAR);
+
+	Q_strcat(cbufText, shoot_type_strings[button], MAX_VAR);
+
+	Cbuf_AddText(cbufText);
+	weaponButtonState[button] = state;
+}
+
+/**
+ * @brief Refreshes the weapon/reload buttons on the HUD
  *
  * @warning selActor may not be null in most cases
  * @sa CL_ActorUpdateCVars
  */
 static void CL_RefreshWeaponButtons(int time)
 {
-	static int primary_right = -1;
-	static int secondary_right = -1;
-	static int primary_left = -1;
-	static int secondary_left = -1;
-	static int reload_right = -1;
-	static int reload_left = -1;
 	invList_t *weapon;
-
-	if (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE) {
-		/* If we're not in move mode, leave the rendering of the fire buttons alone */
-		primary_right = secondary_right = primary_left = secondary_left = -2;
-		reload_right = reload_left = -2;
-		return;
-	} else if (primary_right == -2) {
-		/* skip one cycle to let things settle down */
-		primary_right = -1;
-		return;
-	}
 
 	weapon = RIGHT(selActor);
 
 	if ( !weapon || weapon->item.m == NONE
 		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
-		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time 
-		 || (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) ) {
-		if (primary_right != 0) {
-			Cbuf_AddText("dispr\n");
-			primary_right = 0;
-		}
-	} else if (primary_right != 1) {
-		Cbuf_AddText("deselpr\n");
-		primary_right = 1;
-	}
+		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time
+		 || (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) )
+		SetWeaponButton(ST_RIGHT_PRIMARY, qfalse);
+	else
+		SetWeaponButton(ST_RIGHT_PRIMARY, qtrue);
 
 	if ( !weapon || weapon->item.m == NONE
 		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
 		 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time
-		 || (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) ) {
-		if (secondary_right != 0) {
-			Cbuf_AddText("dissr\n");
-			secondary_right = 0;
-		}
-	} else if (secondary_right != 1) {
-		Cbuf_AddText("deselsr\n");
-		secondary_right = 1;
-	}
+		 || (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) )
+		SetWeaponButton(ST_RIGHT_SECONDARY, qfalse);
+	else
+		SetWeaponButton(ST_RIGHT_SECONDARY, qtrue);
 
 	/* reload button  */
 	if ( !weapon || weapon->item.m == NONE
 		 || !csi.ods[weapon->item.t].reload
-		 || time < csi.ods[weapon->item.t].reload ) {
-    		if (reload_right != 0) {
-			Cbuf_AddText("disrr\n");
-			reload_right = 0;
-		}
-	} else if (reload_right != 1) {
-        	Cbuf_AddText("deselrr\n");
-		reload_right = 1;
-	} 
+		 || time < CL_CalcReloadTime(weapon->item.t) )
+		SetWeaponButton(ST_RIGHT_RELOAD, qfalse);
+	else
+		SetWeaponButton(ST_RIGHT_RELOAD, qtrue);
 
 	/* check for two-handed weapon - if not, switch to left hand */
 	if (!weapon || !csi.ods[weapon->item.t].holdtwohanded)
@@ -323,40 +365,25 @@ static void CL_RefreshWeaponButtons(int time)
 
 	if ( !weapon || weapon->item.m == NONE
 		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
-		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time ) {
-		if (primary_left != 0) {
-			Cbuf_AddText("displ\n");
-			primary_left = 0;
-		}
-	} else if (primary_left != 1) {
-		Cbuf_AddText("deselpl\n");
-		primary_left = 1;
-	}
+		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time )
+		SetWeaponButton(ST_LEFT_PRIMARY, qfalse);
+	else
+		SetWeaponButton(ST_LEFT_PRIMARY, qtrue);
 
 	if ( !weapon || weapon->item.m == NONE
 		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
-		 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time ) {
-		if (secondary_left != 0) {
-			Cbuf_AddText("dissl\n");
-			secondary_left = 0;
-		}
-	} else if (secondary_left != 1) {
-		Cbuf_AddText("deselsl\n");
-		secondary_left = 1;
-	}
+		 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time )
+		SetWeaponButton(ST_LEFT_SECONDARY, qfalse);
+	else
+		SetWeaponButton(ST_LEFT_SECONDARY, qtrue);
 
 	/* reload button */
 	if ( !weapon || weapon->item.m == NONE
 		 || !csi.ods[weapon->item.t].reload
-		 || time < csi.ods[weapon->item.t].reload ) {
-    	if (reload_left != 0) {
-			Cbuf_AddText("disrl\n");
-			reload_left = 0;
-		}
-	} else if (reload_left != 1) {
-        	Cbuf_AddText("deselrl\n");
-		reload_left = 1;
-	} 
+		 || time < CL_CalcReloadTime(weapon->item.t) )
+		SetWeaponButton(ST_LEFT_RELOAD, qfalse);
+	else
+		SetWeaponButton(ST_LEFT_RELOAD, qtrue);
 }
 
 /**
@@ -391,7 +418,7 @@ qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode)
 			Com_Printf("This weapon can not be reloaded!\n");
 			return qfalse;
 		}
-		if ( time < csi.ods[weapon->item.t].reload ) {
+		if ( time < CL_CalcReloadTime(weapon->item.t) ) {
 			Com_Printf("Can't perform action: not enough TUs.\n");
 			return qfalse;
 		}
@@ -439,8 +466,6 @@ void CL_ActorUpdateCVars(void)
 	Cvar_Set("mn_rweapon", "");
 	Cvar_Set("mn_lweapon", "");
 
-	menuText[TEXT_MOUSECURSOR_RIGHT] = "";
-
 	if (selActor) {
 		invList_t *selWeapon;
 
@@ -481,43 +506,47 @@ void CL_ActorUpdateCVars(void)
 
 		/* write info */
 		time = 0;
-		if (cl.time < cl.msgTime) {
-			/* special message */
+
+		/* display special message */
+		if (cl.time < cl.msgTime)
 			Com_sprintf(infoText, MAX_MENUTEXTLEN, cl.msgText);
-		} else if (selActor->state & STATE_PANIC) {
+
+		/* update HUD stats etc */
+		if (selActor->state & STATE_PANIC) {
 			/* panic */
 			Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Currently panics!\n"));
+			menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
 		} else {
-			/* in multiplayer RS_ItemIsResearched always returns true,
-			   so we are able to use the aliens weapons */
-			if ( cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE && selWeapon
-				 && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].kurz) ) {
-				CL_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
-				cl.cmode = M_MOVE;
-			}
 			/* move or shoot */
 			if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
 				/* If the mouse is outside the world, blank move */
-				if (mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE)
+				if (mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) {
+					CL_RefreshWeaponButtons(selActor->TU);
 					actorMoveLength = 0xFF;
-
-				if (actorMoveLength < 0xFF) {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
+					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
+					menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
+				} else if ( cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
+							|| lastMoveLength != actorMoveLength || lastTU != selActor->TU ) {
 					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
+					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
 					if ( actorMoveLength <= selActor->TU )
 						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "%i (%i)\n", actorMoveLength, selActor->TU);
 					else
 						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "- (-)\n" );
-					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
-				} else {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
-					CL_RefreshWeaponButtons(selActor->TU);
+					lastHUDActor = selActor;
+					lastMoveLength = actorMoveLength;
+					lastTU = selActor->TU;
+					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;
 				}
 				time = actorMoveLength;
-			}
-			if (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE) {
-				CL_RefreshWeaponButtons(selActor->TU);
-				if (selWeapon && selFD) {
+			} else {
+				menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
+				/* in multiplayer RS_ItemIsResearched always returns true,
+				so we are able to use the aliens weapons */
+				if ( selWeapon && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].kurz) ) {
+					CL_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
+					cl.cmode = M_MOVE;
+				} else if (selWeapon && selFD) {
 					Com_sprintf(infoText, MAX_MENUTEXTLEN,
 								"%s\n%s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
 					Com_sprintf(mousetext, MAX_MENUTEXTLEN,
@@ -528,22 +557,21 @@ void CL_ActorUpdateCVars(void)
 					time = selFD->time;
 					/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
 					if (selActor->TU < time || (csi.ods[selWeapon->item.t].reload && selWeapon->item.a <= 0)) {
-						cl.oldcmode = cl.cmode;
 						cl.cmode = M_MOVE;
+						CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
 					}
 				} else if (selWeapon) {
 					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
 				} else {
-					cl.oldcmode = cl.cmode;
 					cl.cmode = M_MOVE;
+					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
 				}
 			}
 		}
 
-		/* calc remaining TUs */
-		time = selActor->TU - time;
-		if (time < 0)
-			time = 0;
+		/* Calculate remaining TUs. */
+		time = max(0, selActor->TU - time);
+
 		Cvar_Set("mn_turemain", va("%i", time));
 
 		/* print ammo */
@@ -635,9 +663,6 @@ void CL_ActorUpdateCVars(void)
 			Cbuf_AddText("towsr\n");
 			break;
 		default:
-			/* If we've just changing between move modes, don't reset */
-			if (cl.oldcmode != M_MOVE && cl.oldcmode != M_PEND_MOVE)
-				Cbuf_AddText("tomov\n");
 			break;
 		}
 		cl.oldcmode = cl.cmode;
@@ -756,18 +781,6 @@ void CL_RemoveActorFromTeamList(le_t * le)
 }
 
 /**
- * @brief Recalculate forbidden list and available moves, if the passed le is the selected actor.
- */
-void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance, byte ** fb_list, int fb_length)
-{
-
-	if (selActor && le->entnum == selActor->entnum) {
-		CL_BuildForbiddenList();
-		Grid_MoveCalc(map, le->pos, distance, fb_list, fb_length);
-	}
-}
-
-/**
  * @brief Selects an actor.
  *
  * @param le Pointer to local entity struct
@@ -804,7 +817,7 @@ qboolean CL_ActorSelect(le_t * le)
 				CL_UGVCvars(selChr);
 			}
 
-			CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE, fb_list, fb_length);
+			CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE);
 
 			/* move first person camera to new actor */
 			if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -941,6 +954,19 @@ void CL_BuildForbiddenList(void)
 
 	if (fb_length > MAX_FB_LIST)
 		Com_Error(ERR_DROP, "CL_BuildForbiddenList: list too long");
+}
+
+/**
+ * @brief Recalculate forbidden list, available moves and actor's move length
+ * if given le is the selected Actor.
+ */
+void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance)
+{
+	if (selActor && selActor == le) {
+		CL_BuildForbiddenList();
+		Grid_MoveCalc(map, le->pos, distance, fb_list, fb_length);
+		CL_ResetActorMoveLength();
+	}
 }
 
 /**
@@ -1213,9 +1239,6 @@ void CL_ActorDoTurn(sizebuf_t *sb)
 
 	le->dir = dir;
 	le->angles[YAW] = dangle[le->dir];
-
-	/* TODO: before CL_ConditionalMoveCalc() was implemented, forbidden list wasn't recalculated here */
-	CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE, fb_list, fb_length);
 }
 
 
@@ -1346,9 +1369,6 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
 	}
-
-	/* TODO: before CL_ConditionalMoveCalc() was implemented, forbidden list wasn't recalculated here */
-	CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE, fb_list, fb_length);
 }
 
 
@@ -1484,9 +1504,13 @@ void CL_ActorDie(sizebuf_t * sb)
 	} else if (le->state & STATE_DEAD) {
 		Com_Printf("CL_ActorDie: Can't kill, actor already dead\n");
 		return;
-	} else if (!le->inuse) { /* this will usually happen if CL_EntPerish has been called on the le */
-		Com_Printf("CL_ActorDie: Warning - actor not in-use\n");
-	}
+	}/* else if (!le->inuse) {
+		* LE not in use condition normally arises when CL_EntPerish has been 
+		* called on the le to hide it from the client's sight.
+		* Probably can return without killing unused LEs, but testing reveals
+		* killing an unused LE here doesn't cause any problems and there is 
+		* an outside chance it fixes some subtle bugs.
+	}*/
 
 	/* count spotted aliens */
 	if (le->team != cls.team && le->team != TEAM_CIVILIAN)
@@ -1529,10 +1553,7 @@ void CL_ActorDie(sizebuf_t * sb)
 	VectorCopy(player_dead_maxs, le->maxs);
 	CL_RemoveActorFromTeamList(le);
 
-	if (selActor) {
-		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
-		CL_ResetActorMoveLength();
-	}
+	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
 
@@ -1676,7 +1697,7 @@ void CL_DoEndRound(sizebuf_t * sb)
 		Cbuf_AddText("startround\n");
 		CL_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart.wav");
-		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
+		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 	}
 }
 
@@ -1688,16 +1709,6 @@ MOUSE SCANNING
 
 ==============================================================
 */
-
-/**
- * @brief Resets mouse possition.
- *
- * TODO: This really doesn't sound like it belongs in here.
- */
-void CL_ResetMouseLastPos(void)
-{
-	mouseLastPos[0] = mouseLastPos[1] = mouseLastPos[2] = 0.0;
-}
 
 /**
  * @brief Recalculates the currently selected Actor's move length.

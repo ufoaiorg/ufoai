@@ -380,6 +380,8 @@ void CL_PrepRefresh(void)
 	if (!cl.configstrings[CS_TILES][0])
 		return;					/* no map loaded */
 
+	CL_ResetWeaponButtons();
+
 	SCR_AddDirtyPoint(0, 0);
 	SCR_AddDirtyPoint(viddef.width - 1, viddef.height - 1);
 
