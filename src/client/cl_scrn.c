@@ -373,13 +373,12 @@ static void SCR_DrawCursor(void)
 	if (mouseSpace != MS_DRAG) {
 		re.DrawNormPic(mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
 
-		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
+		if (cls.state == ca_active) {
 			if (cls.team != cl.actTeam) {
 				re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
 				icon_offset_y += 32;	/* Height of 'wait' icon. ... just in case we add further icons below.*/
 				icon_offset_y += icon_spacing;
-			}
-			else if (selActor){
+			} else if (selActor && mouseSpace == MS_WORLD ){
 				/* Display 'crouch' icon if actor is crouched. */
 				if (selActor->state & STATE_CROUCHED)
 					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");

@@ -466,11 +466,6 @@ void CL_Disconnect(void)
 
 	VectorClear(cl.refdef.blend);
 
-	/* go to main menu and bring up console */
-	if (!ccs.singleplayer) {
-		MN_PopMenu(qtrue);
-		MN_PushMenu(mn_main->string);
-	}
 	cls.connect_time = 0;
 
 	/* send a disconnect message to the server */
