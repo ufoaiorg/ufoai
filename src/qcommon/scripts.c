@@ -891,7 +891,9 @@ static void Com_ParseActors(char *title, char **text)
 }
 
 static value_t teamDescValues[] = {
-	{"name", V_TRANSLATION_STRING, offsetof(teamDesc_t, name)}
+	{"tech", V_TRANSLATION_STRING, offsetof(teamDesc_t, tech)} /**< tech id from research.ufo */
+	,
+	{"name", V_TRANSLATION_STRING, offsetof(teamDesc_t, name)} /**< internal team name */
 	,
 	{"combat_notes", V_TRANSLATION2_STRING, offsetof(teamDesc_t, combat_notes)}
 	,
@@ -968,9 +970,9 @@ static void Com_ParseTeamDesc(char *title, char **text)
 }
 
 static value_t teamValues[] = {
-	{"armor", V_BOOL, offsetof(teamDef_t, armor)} /* are these team members able to wear armor? */
+	{"armor", V_BOOL, offsetof(teamDef_t, armor)} /**< are these team members able to wear armor? */
 	,
-	{"weapons", V_BOOL, offsetof(teamDef_t, weapons)} /* are these team members able to use weapons? */
+	{"weapons", V_BOOL, offsetof(teamDef_t, weapons)} /**< are these team members able to use weapons? */
 	,
 	{NULL, 0, 0}
 };

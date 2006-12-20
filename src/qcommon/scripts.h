@@ -29,6 +29,7 @@ typedef struct teamDesc_s {
 	char xenobiology[MAX_VAR];
 	char interrogation[MAX_VAR];
 	char interrogation_com[MAX_VAR];
+	char tech[MAX_VAR]; /**< tech id from research.ufo */
 } teamDesc_t;
 
 extern teamDesc_t teamDesc[MAX_TEAMDEFS];

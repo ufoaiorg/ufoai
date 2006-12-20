@@ -230,6 +230,8 @@ teamdesc ortnok
 	xenobiology "rs_alien_ortnok_xenobiology"
 	interrogation "rs_alien_ortnok_interrogation"
 	interrogation_com ""
+	// FIXME
+	tech rs_alien_ortnok_autopsy
 }
 
 teamdesc antarean
