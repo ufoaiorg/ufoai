@@ -357,7 +357,7 @@ menu hud
 
 	confunc endround
 	{
-		*bt_nextround image hud/buttons2
+		*bt_nextround image hud/buttons2g
 	}
 
 	// ==================
@@ -392,18 +392,10 @@ menu hud
 		pos		"768 512"
 	}
 
-	func bt_weapon_clear
-	{
-		*bt_pfire_left   image hud/buttons1
-		*bt_pfire_right  image hud/buttons1
-		*bt_sfire_left   image hud/buttons1
-		*bt_sfire_right  image hud/buttons1
-	}
-
-	confunc towpls { bt_weapon_clear *bt_pfire_left   image hud/buttons1a }
-	confunc towprs { bt_weapon_clear *bt_pfire_right  image hud/buttons1a }
-	confunc towsls { bt_weapon_clear *bt_sfire_left   image hud/buttons1a }
-	confunc towsrs { bt_weapon_clear *bt_sfire_right  image hud/buttons1a }
+	confunc towpls { *bt_pfire_left   image hud/buttons1a }
+	confunc towprs { *bt_pfire_right  image hud/buttons1a }
+	confunc towsls { *bt_sfire_left   image hud/buttons1a }
+	confunc towsrs { *bt_sfire_right  image hud/buttons1a }
 
 	confunc deselpl { *bt_pfire_left   image hud/buttons1 }
 	confunc deselpr { *bt_pfire_right  image hud/buttons1 }
@@ -512,8 +504,10 @@ menu hud
 		pos		"256 640"
 	}
 
-	confunc tostands { *bt_duck image hud/buttons2 }
-	confunc tocrouchs { *bt_duck image hud/buttons2a }
+	confunc deselstands { *bt_duck image hud/buttons2 }
+	confunc deselcrouch { *bt_duck image hud/buttons2a }
+	confunc disstand { *bt_duck image hud/buttons2g }
+	confunc discrouch { *bt_duck image hud/buttons2ag }
 
 	pic bt_duck
 	{
@@ -541,6 +535,8 @@ menu hud
 		*bt_reaction image hud/button_guard
 		*bt_reaction tooltip "_No reaction fire"
 	}
+	confunc deselreactions { *bt_reaction image hud/button_guard }
+	confunc disreactions { *bt_reaction image hud/button_guardg }
 
 	pic bt_reaction
 	{
