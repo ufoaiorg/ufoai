@@ -347,6 +347,10 @@ aircraft craft_dropship
 	fuel	100000
 	fuelsize	100000
 	image	air_dropship
+	angles	"-20 -40 120"
+	scale	"1.1 1.1 1.1"
+	angles_equip	"90 0 180"
+	scale_equip	"1.1 1.1 1.1"
 }
 
 aircraft craft_interceptor
@@ -362,6 +366,10 @@ aircraft craft_interceptor
 	price	2000000
 	building	building_intercept
 	image	air_interceptor
+	angles	"-20 -40 120"
+	scale	"1.1 1.1 1.1"
+	angles_equip	"90 0 180"
+	scale_equip	"1.1 1.1 1.1"
 	// FIXME: This is just testing
 	weapon	rs_craft_weapon_flac
 	shield	rs_craft_shield_light
@@ -380,6 +388,10 @@ aircraft craft_saracen_interceptor
 	price	2000000
 	building	building_intercept
 	image	air_saracen_interceptor
+	angles	"-20 -40 120"
+	scale	"1.1 1.1 1.1"
+	angles_equip	"90 0 180"
+	scale_equip	"1.1 1.1 1.1"
 	// FIXME: This is just testing
 	weapon	rs_craft_weapon_flac
 	shield	rs_craft_shield_light
@@ -397,6 +409,10 @@ aircraft craft_ufo_scout
 	fuel	100000
 	fuelsize	100000
 	image	air_ufo
+	angles	"-20 -40 120"
+	scale	"1.1 1.1 1.1"
+	angles_equip	"90 0 180"
+	scale_equip	"1.1 1.1 1.1"
 }
 
 aircraft craft_ufo_fighter
@@ -412,4 +428,8 @@ aircraft craft_ufo_fighter
 	fuelsize	1000000
 	price	4000000
 	image	air_ufo
+	angles	"-20 -40 120"
+	scale	"1.1 1.1 1.1"
+	angles_equip	"90 0 180"
+	scale_equip	"1.1 1.1 1.1"
 }

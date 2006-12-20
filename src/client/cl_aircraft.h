@@ -56,6 +56,12 @@ typedef struct aircraft_s {
 	aircraftType_t type;
 	int status;					/* see aircraftStatus_t */
 	float speed;
+	vec3_t angles;				/* menu values for rotating */
+	vec3_t scale;				/* menu values for scaling */
+	vec3_t center;				/* menu values for shifting */
+	vec3_t anglesEquip;			/* menu values for rotating - aircraft_equip menu */
+	vec3_t scaleEquip;			/* menu values for scaling - aircraft_equip menu */
+	vec3_t centerEquip;			/* menu values for shifting - aircraft_equip menu */
 	int price;
 	int fuel;					/* actual fuel */
 	int fuelSize;				/* max fuel */

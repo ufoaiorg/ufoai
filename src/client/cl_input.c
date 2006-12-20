@@ -39,6 +39,10 @@ int mouseSpace;
 int mx, my;
 int dragFrom, dragFromX, dragFromY;
 item_t dragItem = {NONE,NONE,NONE}; /* to crash as soon as possible */
+/**
+ * rotate angles for menu models - pointer to menu node angles vec3_t
+ * modify the node->angles values to rotate a model
+ */
 float *rotateAngles;
 qboolean wasCrouched = qfalse, doCrouch = qfalse;
 float crouchHt = 0;

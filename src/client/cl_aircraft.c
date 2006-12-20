@@ -55,8 +55,8 @@ static qboolean AIR_Fight(aircraft_t* air, aircraft_t* ufo)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ */
 void CL_ListAircraft_f(void)
 {
 	int i, j;
@@ -82,8 +82,8 @@ void CL_ListAircraft_f(void)
 }
 
 /**
-  * @brief Start an aircraft or stops the current mission and let the aircraft idle around
-  */
+ * @brief Start an aircraft or stops the current mission and let the aircraft idle around
+ */
 void CL_AircraftStart_f(void)
 {
 	aircraft_t *aircraft;
@@ -110,8 +110,8 @@ void CL_AircraftStart_f(void)
 }
 
 /**
-  * @brief Assigns the tech pointers, homebase and teamsize pointers to all aircraft
-  */
+ * @brief Assigns the tech pointers, homebase and teamsize pointers to all aircraft
+ */
 void CL_AircraftInit(void)
 {
 	aircraft_t *air_samp;
@@ -141,9 +141,9 @@ void CL_AircraftInit(void)
 }
 
 /**
-  * @brief Translates the aircraft status id to a translateable string
-  * @param[in] aircraft Aircraft to translate the status of
-  */
+ * @brief Translates the aircraft status id to a translateable string
+ * @param[in] aircraft Aircraft to translate the status of
+ */
 char *CL_AircraftStatusToName(aircraft_t * aircraft)
 {
 	assert(aircraft);
@@ -210,9 +210,9 @@ int CL_EquipSoldierState(aircraft_t * aircraft)
 }
 
 /**
-  * @brief Calls CL_NewAircraft for given base with given aircraft type
-  * @sa CL_NewAircraft
-  */
+ * @brief Calls CL_NewAircraft for given base with given aircraft type
+ * @sa CL_NewAircraft
+ */
 void CL_NewAircraft_f(void)
 {
 	int i = -1;
@@ -240,9 +240,9 @@ void CL_NewAircraft_f(void)
 }
 
 /**
-  * @brief Switch to next aircraft in base
-  * @sa CL_AircraftSelect
-  */
+ * @brief Switch to next aircraft in base
+ * @sa CL_AircraftSelect
+ */
 void MN_NextAircraft_f(void)
 {
 	if (!baseCurrent)
@@ -256,9 +256,9 @@ void MN_NextAircraft_f(void)
 }
 
 /**
-  * @brief Switch to previous aircraft in base
-  * @sa CL_AircraftSelect
-  */
+ * @brief Switch to previous aircraft in base
+ * @sa CL_AircraftSelect
+ */
 void MN_PrevAircraft_f(void)
 {
 	if ((int) Cvar_VariableValue("mn_aircraft_id") > 0) {
@@ -268,11 +268,11 @@ void MN_PrevAircraft_f(void)
 }
 
 /**
-  * @brief Returns the given aircraft back to homebase
-  *
-  * call this from baseview via "aircraft_return"
-  * calculates the way back to homebase
-  */
+ * @brief Returns the given aircraft back to homebase
+ *
+ * call this from baseview via "aircraft_return"
+ * calculates the way back to homebase
+ */
 extern void CL_AircraftReturnToBase(aircraft_t *aircraft)
 {
 	base_t *base;
@@ -288,11 +288,11 @@ extern void CL_AircraftReturnToBase(aircraft_t *aircraft)
 }
 
 /**
-  * @brief Script function for CL_AircraftReturnToBase
-  *
-  * Sends the current aircraft back to homebase and updates
-  * the cvars
-  */
+ * @brief Script function for CL_AircraftReturnToBase
+ *
+ * Sends the current aircraft back to homebase and updates
+ * the cvars
+ */
 void CL_AircraftReturnToBase_f(void)
 {
 	aircraft_t *aircraft;
@@ -305,13 +305,14 @@ void CL_AircraftReturnToBase_f(void)
 }
 
 /**
-  * @brief Sets aircraftCurrent and updates cvars
-  *
-  * uses cvar mn_aircraft_id to determine which aircraft to select
-  */
+ * @brief Sets aircraftCurrent and updates cvars
+ *
+ * uses cvar mn_aircraft_id to determine which aircraft to select
+ */
 void CL_AircraftSelect(void)
 {
 	aircraft_t *aircraft;
+	menuNode_t *node;
 	int aircraftID = (int) Cvar_VariableValue("mn_aircraft_id");
 	static char aircraftInfo[256];
 
@@ -319,11 +320,25 @@ void CL_AircraftSelect(void)
 	if (!baseCurrent || !baseCurrent->numAircraftInBase)
 		return;
 
+	node = MN_GetNodeFromCurrentMenu("aircraft");
+
+	/* we are not in the aircraft menu */
+	if (!node) {
+		Com_DPrintf("CL_AircraftSelect: Error - node aircraft not found\n");
+		return;
+	}
+
 	/* selecting the first aircraft in base (every base has at least one aircraft) */
 	if (aircraftID >= baseCurrent->numAircraftInBase || aircraftID < 0)
 		aircraftID = 0;
 
 	aircraft = &baseCurrent->aircraft[aircraftID];
+
+	/* copy the menu align values */
+	VectorCopy(aircraft->scale, node->scale);
+	VectorCopy(aircraft->center, node->center);
+	VectorCopy(aircraft->angles, node->angles);
+	rotateAngles = aircraft->angles;
 
 	baseCurrent->aircraftCurrent = aircraftID;
 
@@ -349,10 +364,10 @@ void CL_AircraftSelect(void)
 }
 
 /**
-  * @brief Searches the global array of aircraft types for a given aircraft
-  * @param[in] name Aircraft id
-  * @return aircraft_t pointer or NULL if not found
-  */
+ * @brief Searches the global array of aircraft types for a given aircraft
+ * @param[in] name Aircraft id
+ * @return aircraft_t pointer or NULL if not found
+ */
 aircraft_t *CL_GetAircraft(char *name)
 {
 	int i;
@@ -367,10 +382,10 @@ aircraft_t *CL_GetAircraft(char *name)
 }
 
 /**
-  * @brief Places a new aircraft in the given base
-  * @param[in] base Pointer to base where aircraft should be added
-  * @param[in] name Name of the aircraft to add
-  */
+ * @brief Places a new aircraft in the given base
+ * @param[in] base Pointer to base where aircraft should be added
+ * @param[in] name Name of the aircraft to add
+ */
 void CL_NewAircraft(base_t *base, char *name)
 {
 	aircraft_t *aircraft;
@@ -449,10 +464,10 @@ void CL_DeleteAircraft(aircraft_t *aircraft)
 }
 
 /**
-  * @brief Set pos to a random position on geoscape
-  * @param[in] pos Pointer to vec2_t for aircraft position
-  * @note Used to place UFOs on geoscape
-  */
+ * @brief Set pos to a random position on geoscape
+ * @param[in] pos Pointer to vec2_t for aircraft position
+ * @note Used to place UFOs on geoscape
+ */
 extern void CP_GetRandomPosForAircraft(float *pos)
 {
 	pos[0] = (rand() % 180) - (rand() % 180);
@@ -489,10 +504,10 @@ extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft)
 }
 
 /**
-  * @brief
-  *
-  * TODO: Fuel
-  */
+ * @brief
+ *
+ * TODO: Fuel
+ */
 #define GROUND_MISSION 0.5
 void CL_CampaignRunAircraft(int dt)
 {
@@ -618,6 +633,27 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 	static char bufferShields[1024];
 	static char bufferWeapons[1024];
 	technology_t **list;
+	menuNode_t *node;
+	aircraft_t *aircraft;
+
+	node = MN_GetNodeFromCurrentMenu("aircraftequip");
+
+	/* we are not in the aircraft menu */
+	if (!node) {
+		Com_DPrintf("CL_AircraftEquipmenuMenuInit_f: Error - node aircraftequip not found\n");
+		return;
+	}
+
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+
+	assert(aircraft);
+	assert(node);
+
+	/* copy the menu align values */
+	VectorCopy(aircraft->scaleEquip, node->scale);
+	VectorCopy(aircraft->centerEquip, node->center);
+	VectorCopy(aircraft->anglesEquip, node->angles);
+	rotateAngles = aircraft->angles;
 
 	/* shields */
 	Com_sprintf(bufferShields, sizeof(bufferShields), _("None\n"));
@@ -808,6 +844,18 @@ static value_t aircraft_vals[] = {
 	,
 	{"fuelsize", V_INT, offsetof(aircraft_t, fuelSize)}
 	,
+	{"angles", V_VECTOR, offsetof(aircraft_t, angles)}
+	,
+	{"center", V_VECTOR, offsetof(aircraft_t, center)}
+	,
+	{"scale", V_VECTOR, offsetof(aircraft_t, scale)}
+	,
+	{"angles_equip", V_VECTOR, offsetof(aircraft_t, anglesEquip)}
+	,
+	{"center_equip", V_VECTOR, offsetof(aircraft_t, centerEquip)}
+	,
+	{"scale_equip", V_VECTOR, offsetof(aircraft_t, scaleEquip)}
+	,
 	{"image", V_STRING, offsetof(aircraft_t, image)}
 	,
 
@@ -831,8 +879,10 @@ static value_t aircraft_vals[] = {
 };
 
 /**
-  * @brief
-  */
+ * @brief Parses all aircraft that are defined in our UFO-scripts
+ * @sa CL_ParseClientData
+ * @note parses the aircraft into our aircraft_sample array to use as reference
+ */
 void CL_ParseAircraft(char *name, char **text)
 {
 	char *errhead = "CL_ParseAircraft: unexptected end of file (aircraft ";
@@ -1028,7 +1078,7 @@ void CL_RemoveFromAircraftTeam(aircraft_t *aircraft,int idx)
 {
 	int i;
 
-	if  (aircraft==NULL) {
+	if (aircraft==NULL) {
 		Com_DPrintf("CL_RemoveFromAircraftTeam: null aircraft \n");
 		return ;
 	}

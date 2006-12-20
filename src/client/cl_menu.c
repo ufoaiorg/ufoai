@@ -956,7 +956,9 @@ static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 
 
 /**
- * @brief
+ * @brief Activates the model rotation
+ * @note set the mouse space to MS_ROTATE
+ * @sa rotateAngles
  */
 static void MN_ModelClick(menuNode_t * node)
 {

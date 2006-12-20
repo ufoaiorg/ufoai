@@ -252,8 +252,6 @@ menu aircraft
 	{
 		md2		"*cvar mn_aircraft_model"
 		origin	"690 240 0"
-		angles	"-20 -40 120"
-		scale	"1.1 1.1 1.1"
 		color	"0.5 0.5 0.5 1"
 	}
 
@@ -397,8 +395,6 @@ menu aircraft_equip
 	{
 		md2		"*cvar mn_aircraft_model"
 		origin	"228 384 0"
-		angles	"90 0 180"
-		scale	"1.1 1.1 1.1"
 		color	"0.5 0.5 0.5 1"
 		pos	"20 20"
 		size	"415 728"
