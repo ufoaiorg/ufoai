@@ -1710,8 +1710,17 @@ void CL_ParseResults(sizebuf_t * buf)
 	/* show win screen */
 	if (winner == we)
 		MN_PushMenu("won");
-	else
+	else if (ccs.singleplayer && winner != 0)
 		MN_PushMenu("lost");
+
+	if (!ccs.singleplayer) {
+		if (winner == we)
+			MN_Popup(_("Congratulations"), _("You won the game!"));
+		else if (winner == 0)
+			MN_Popup(_("Game Drawn!"), _("The game was a draw!"));
+		else
+			MN_Popup(_("Better luck next time"), _("You lost the game"));
+	}
 
 	/* we can safely wipe all mission data now */
 	/* TODO: I don't understand how this works
