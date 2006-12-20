@@ -127,6 +127,7 @@ tech rs_weapon_assault_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_assault
 		tech rs_damage_normal
 		tech rs_weapon_assault
 	}
@@ -160,6 +161,7 @@ tech rs_weapon_bolterrifle_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_bolterrifle
 		tech rs_damage_normal
 		tech rs_weapon_bolterrifle
 	}
@@ -210,6 +212,7 @@ tech rs_weapon_flamer_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_flamer
 		tech rs_damage_fire
 		tech rs_weapon_flamer
 	}
@@ -293,6 +296,7 @@ tech rs_weapon_grenl_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_grenl
 		tech rs_damage_blast
 		tech rs_weapon_grenl
 	}
@@ -310,6 +314,7 @@ tech rs_weapon_grenl_fle_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_grenl
 		tech rs_damage_normal
 		tech rs_weapon_grenl
 	}
@@ -327,6 +332,7 @@ tech rs_weapon_grenl_incendiary_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_grenl
 		tech rs_damage_fire
 		tech rs_weapon_grenl
 	}
@@ -344,6 +350,7 @@ tech rs_weapon_grenl_plasma_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_grenl
 		tech rs_damage_plasma
 		tech rs_weapon_grenl
 	}
@@ -379,6 +386,7 @@ tech rs_weapon_heavylaser_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_heavylaser
 		tech rs_damage_laser
 		tech rs_weapon_heavylaser
 	}
@@ -447,6 +455,7 @@ tech rs_weapon_laserpistol_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_laserpistol
 		tech rs_damage_laser
 		tech rs_weapon_laserpistol
 	}
@@ -482,6 +491,7 @@ tech rs_weapon_laserrifle_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_laserrifle
 		tech rs_damage_laser
 		tech rs_weapon_laserrifle
 	}
@@ -532,6 +542,7 @@ tech rs_weapon_pistol_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_pistol
 		tech rs_damage_normal
 		tech rs_weapon_pistol
 	}
@@ -567,6 +578,7 @@ tech rs_weapon_pistol2_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_pistol2
 		tech rs_damage_normal
 		tech rs_weapon_pistol2
 	}
@@ -604,6 +616,7 @@ tech rs_weapon_plasatomizer_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_plasatomizer
 		tech rs_damage_plasma
 		tech rs_weapon_plasatomizer
 	}
@@ -639,6 +652,7 @@ tech rs_weapon_plasblaster_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_plasblaster
 		tech rs_damage_plasma
 		tech rs_weapon_plasblaster
 	}
@@ -711,6 +725,7 @@ tech rs_weapon_plasrifle_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_plasrifle
 		tech rs_damage_plasma
 		tech rs_weapon_plasrifle
 	}
@@ -745,6 +760,7 @@ tech rs_weapon_rpg_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_rpg
 		tech rs_damage_blast
 		tech rs_weapon_rpg
 	}
@@ -763,6 +779,7 @@ tech rs_weapon_rpg_incendiary_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_rpg
 		tech rs_damage_fire
 		tech rs_weapon_rpg
 	}
@@ -781,6 +798,7 @@ tech rs_weapon_rpg_incendiary_ammo
 //
 // 	require_AND
 // 	{
+//		weapon rs_weapon_rpg
 // 		tech rs_damage_tachyon
 // 		tech rs_weapon_rpg
 // 	}
@@ -818,6 +836,7 @@ tech rs_weapon_chaingun_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_chaingun
 		tech rs_damage_normal
 		tech rs_weapon_chaingun
 	}
@@ -855,6 +874,7 @@ tech rs_weapon_shotgun_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_shotgun
 		tech rs_damage_blast
 		tech rs_weapon_shotgun
 	}
@@ -891,6 +911,7 @@ tech rs_weapon_shotgun2_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_shotgun2
 		tech rs_damage_blast
 		tech rs_weapon_shotgun2
 	}
@@ -909,6 +930,7 @@ tech rs_weapon_shotgun2_slug_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_shotgun2
 		tech rs_damage_blast
 		tech rs_weapon_shotgun2
 	}
@@ -944,6 +966,8 @@ tech rs_weapon_shotgun_micro_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_shotgun2
+		weapon rs_weapon_shotgun_micro
 		tech rs_damage_blast
 		tech rs_weapon_shotgun_micro
 	}
@@ -979,6 +1003,7 @@ tech rs_weapon_smg_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_smg
 		tech rs_damage_normal
 		tech rs_weapon_smg
 	}
@@ -1031,6 +1056,7 @@ tech rs_weapon_sniper_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_sniper
 		tech rs_damage_normal
 		tech rs_weapon_sniper
 	}
@@ -1104,6 +1130,7 @@ tech rs_weapon_tachyonpistol_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_tachyonpistol
 		tech rs_damage_tachyon
 		tech rs_weapon_tachyonpistol
 	}
@@ -1141,6 +1168,7 @@ tech rs_weapon_tachyonrifle_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_tachyonrifle
 		tech rs_damage_tachyon
 		tech rs_weapon_tachyonrifle
 	}
@@ -1177,6 +1205,7 @@ tech rs_weapon_tachyonsniper_ammo
 
 	require_AND
 	{
+		weapon rs_weapon_tachyonsniper
 		tech rs_damage_tachyon
 		tech rs_weapon_tachyonsniper
 	}
