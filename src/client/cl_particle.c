@@ -713,6 +713,7 @@ void CL_ParticleCheckRounds(void)
 
 /**
  * @brief
+ * @sa CL_Frame
  */
 void CL_ParticleRun(void)
 {
