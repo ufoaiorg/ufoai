@@ -28,9 +28,9 @@
 //		A list of requirements that ALL need to be met in order to be able to research it.
 //		"tech" type	-	e.g "tech rs_xxx"
 //			Another technology that has to be researched.
-//		"item" type	-	e.g "item coolweapon 10"
+//		"item" type	-	e.g "item inv_coolweapon 10"
 //			You need to collect at least 10 items of this thing so it can be researched.
-//		"weapon" type	-	e.g "weapon coolweapon"
+//		"weapon" type	-	e.g "weapon rs_coolweapon"
 //			Use only with ammo. Tells the game which weapons this ammo can used in. Is not evaluated for research.
 //	require_OR { type id [amount] }
 //		Works the same as require_AND with the difference that ANY of the entries will enable the tech to be researchable.

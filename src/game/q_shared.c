@@ -3766,21 +3766,26 @@ void Com_InventoryList_f(void)
 }
 
 /**
- * @brief Checks if an ammo-item can be used in a weapon.
- * @param[in] od The Object definition of the ammo.
- * @param[in] weapon_idx The index of the weapon to check the ammo with.
- * @return qboolean Returns qtrue if the ammo can be used inthe given weapon, otherwise qfalse.
- * @todo Move this to a better suited place/file.
+ * @brief Checks if an item can be used to reload a weapon.
+ * @param[in] od The object definition of the ammo.
+ * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
+ * @return qboolean Returns qtrue if the item can be used in the given weapon, otherwise qfalse.
  */
 qboolean INV_AmmoUsableInWeapon (objDef_t *od, int weapon_idx)
 {
 	int i;
-
+	qboolean usable = qfalse;
+	 
 	for (i = 0; i < MAX_TECHLINKS; i++) {
 		if (od->forWeapon[i] < 0)
 			break;
-		if (weapon_idx == od->forWeapon[i])
-			return qtrue;
+		if (weapon_idx == od->forWeapon[i]) {
+			usable = qtrue;
+			break;
+		}
 	}
-	return qfalse;
+#if 0
+	Com_DPrintf("INV_AmmoUsableInWeapon: item '%s' usable (%i) in weapon '%s'.\n", od->kurz,usable, CSI->ods[weapon_idx].kurz );
+#endif
+	return usable;
 }

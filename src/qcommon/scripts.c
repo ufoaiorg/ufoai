@@ -1148,6 +1148,7 @@ void Com_AddObjectLinks(void)
 #ifndef DEDICATED_ONLY
 	objDef_t *od = NULL;
 	technology_t *tech = NULL;
+	technology_t *tech_weapon = NULL;
 	int i, j, k;
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
@@ -1165,7 +1166,9 @@ void Com_AddObjectLinks(void)
 			for (j = 0; j < tech->require_AND.numLinks; j++) {
 				od->forWeapon[k] = -1;
 				if (tech->require_AND.type[j] == RS_LINK_WEAPON) {
-					od->forWeapon[k] = tech->require_AND.idx[j];
+					/* "tech->require_AND.idx[j]" is the technology-index of the weapon */
+					tech_weapon = RS_GetTechByIDX(tech->require_AND.idx[j]);
+					od->forWeapon[k] = RS_GetItem(tech_weapon->provides);
 					k++;
 				}
 			}

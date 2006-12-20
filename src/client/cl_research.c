@@ -318,11 +318,11 @@ void RS_AssignTechIdxs(requirements_t *req)
 	for (i = 0; i < req->numLinks; i++) {
 		switch (req->type[i]) {
 		case RS_LINK_TECH:
+		case RS_LINK_WEAPON:
 			/* Get the index in the techtree. */
 			req->idx[i] = RS_GetTechIdxByName(req->id[i]);
 			break;
 		case RS_LINK_ITEM:
-		case RS_LINK_WEAPON:
 			/* Get index in item-list. */
 			req->idx[i] = RS_GetItem(req->id[i]);
 			break;
