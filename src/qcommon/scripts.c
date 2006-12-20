@@ -897,13 +897,13 @@ static value_t teamDescValues[] = {
 	,
 	{"combat_notes", V_TRANSLATION2_STRING, offsetof(teamDesc_t, combat_notes)}
 	,
-	{"autopsy", V_TRANSLATION2_STRING, offsetof(teamDesc_t, autopsy)}
+	{"autopsy", V_STRING, offsetof(teamDesc_t, autopsy)}
 	,
-	{"xenobiology", V_TRANSLATION2_STRING, offsetof(teamDesc_t, xenobiology)}
+	{"xenobiology", V_STRING, offsetof(teamDesc_t, xenobiology)}
 	,
-	{"interrogation", V_TRANSLATION2_STRING, offsetof(teamDesc_t, interrogation)}
+	{"interrogation", V_STRING, offsetof(teamDesc_t, interrogation)}
 	,
-	{"interrogation_com", V_TRANSLATION2_STRING, offsetof(teamDesc_t, interrogation_com)}
+	{"interrogation_com", V_STRING, offsetof(teamDesc_t, interrogation_com)}
 	,
 	{NULL, 0, 0}
 };
@@ -921,7 +921,7 @@ static void Com_ParseTeamDesc(char *title, char **text)
 	int i;
 	value_t *v;
 
-	/* check for additions to existing team descriptions */
+	/* check whether team description already exists */
 	for (i = 0, td = teamDesc; i < numTeamDesc; i++, td++)
 		if (!Q_strncmp(td->id, title, MAX_VAR))
 			break;
@@ -931,8 +931,14 @@ static void Com_ParseTeamDesc(char *title, char **text)
 		Com_Printf("Too many team descriptions, '%s' ignored.\n", title);
 		return;
 	}
+
+	if (i <= numTeamDesc) {
+		Com_Printf("Com_ParseTeamDesc: found defition with same name - second ignored\n");
+		return;
+	}
+
+	td = &teamDesc[numTeamDesc++];
 	memset(td, 0, sizeof(teamDesc_t));
-	numTeamDesc++;
 	Q_strncpyz(td->id, title, MAX_VAR);
 
 	/* get name list body body */
