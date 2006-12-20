@@ -390,8 +390,8 @@ aircraft craft_saracen_interceptor
 	image	air_saracen_interceptor
 	angles	"-20 -40 120"
 	scale	"1.1 1.1 1.1"
-	angles_equip	"90 0 180"
-	scale_equip	"1.1 1.1 1.1"
+	angles_equip	"-90 0 180"
+	scale_equip	"0.9 0.9 0.9"
 	// FIXME: This is just testing
 	weapon	rs_craft_weapon_flac
 	shield	rs_craft_shield_light
