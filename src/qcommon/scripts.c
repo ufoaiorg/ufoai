@@ -1154,10 +1154,10 @@ void Com_AddObjectLinks(void)
 		/* Add links to technologies. */
 		tech = RS_GetTechByProvided(od->kurz);
 		od->tech = tech;
-#ifdef DEBUG
-		if (!od->tech)
-			Sys_Error("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->kurz);
-#endif /* DEBUG */
+		if (!od->tech) {
+			Com_Printf("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->kurz);
+			continue;
+		}
 
 		if (!Q_strncmp(od->type, "ammo", 4)) {
 			/* Add weapon-links to ammo items. */
