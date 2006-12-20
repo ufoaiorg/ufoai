@@ -6090,11 +6090,12 @@ msgstr "загрузка модели..."
 
 #: client/console.c:361
 msgid "Bring up the in-game console"
-msgstr ""
-63
+msgstr "Показать игровую консоль"
+
 msgid "Send a message to all players"
-msgstr ""
-gid "Send a message to allied team members"
+msgstr "Послать сообщение всем игрокам"
+
+msgid "Send a message to allied team members"
 msgstr ""
 
 #: game/g_client.c:586
