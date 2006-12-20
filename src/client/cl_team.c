@@ -1710,7 +1710,7 @@ void CL_ParseResults(sizebuf_t * buf)
 	/* show win screen */
 	if (winner == we)
 		MN_PushMenu("won");
-	else if (ccs.singleplayer && winner != 0)
+	else if (ccs.singleplayer || (!ccs.singlplayer && winner != 0))
 		MN_PushMenu("lost");
 
 	if (!ccs.singleplayer) {
