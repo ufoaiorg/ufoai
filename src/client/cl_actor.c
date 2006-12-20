@@ -539,62 +539,61 @@ void CL_ActorUpdateCVars(void)
 		if (cl.time < cl.msgTime)
 			Com_sprintf(infoText, MAX_MENUTEXTLEN, cl.msgText);
 
-		/* update HUD stats etc */
+		/* update HUD stats etc in more or shoot modes */
+		if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
+			/* If the mouse is outside the world, blank move */
+			if (mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) {
+				CL_RefreshWeaponButtons(selActor->TU);
+				actorMoveLength = 0xFF;
+				Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
+				menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
+			} else if ( cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
+						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU ) {
+				CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
+				Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
+				if ( actorMoveLength <= selActor->TU )
+					Com_sprintf(mousetext, MAX_MENUTEXTLEN, "%i (%i)\n", actorMoveLength, selActor->TU);
+				else
+					Com_sprintf(mousetext, MAX_MENUTEXTLEN, "- (-)\n" );
+				lastHUDActor = selActor;
+				lastMoveLength = actorMoveLength;
+				lastTU = selActor->TU;
+				menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;
+			}
+			time = actorMoveLength;
+		} else {
+			menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
+			/* in multiplayer RS_ItemIsResearched always returns true,
+			so we are able to use the aliens weapons */
+			if ( selWeapon && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].kurz) ) {
+				CL_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
+				cl.cmode = M_MOVE;
+			} else if (selWeapon && selFD) {
+				Com_sprintf(infoText, MAX_MENUTEXTLEN,
+							"%s\n%s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
+				Com_sprintf(mousetext, MAX_MENUTEXTLEN,
+							"%s: %s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
+
+				menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
+
+				time = selFD->time;
+				/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
+				if (selActor->TU < time || (csi.ods[selWeapon->item.t].reload && selWeapon->item.a <= 0)) {
+					cl.cmode = M_MOVE;
+					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
+				}
+			} else if (selWeapon) {
+				Com_sprintf(infoText, MAX_MENUTEXTLEN, _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
+			} else {
+				cl.cmode = M_MOVE;
+				CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
+			}
+		}
+
+		/* handle actor in a panic */
 		if (selActor->state & STATE_PANIC) {
-			/* panic */
 			Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Currently panics!\n"));
 			menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
-		} else {
-			/* move or shoot */
-			if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
-				/* If the mouse is outside the world, blank move */
-				if (mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) {
-					CL_RefreshWeaponButtons(selActor->TU);
-					actorMoveLength = 0xFF;
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
-					menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
-				} else if ( cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
-							|| lastMoveLength != actorMoveLength || lastTU != selActor->TU ) {
-					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
-					if ( actorMoveLength <= selActor->TU )
-						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "%i (%i)\n", actorMoveLength, selActor->TU);
-					else
-						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "- (-)\n" );
-					lastHUDActor = selActor;
-					lastMoveLength = actorMoveLength;
-					lastTU = selActor->TU;
-					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;
-				}
-				time = actorMoveLength;
-			} else {
-				menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
-				/* in multiplayer RS_ItemIsResearched always returns true,
-				so we are able to use the aliens weapons */
-				if ( selWeapon && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].kurz) ) {
-					CL_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
-					cl.cmode = M_MOVE;
-				} else if (selWeapon && selFD) {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN,
-								"%s\n%s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
-					Com_sprintf(mousetext, MAX_MENUTEXTLEN,
-								"%s: %s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
-
-					menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
-
-					time = selFD->time;
-					/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
-					if (selActor->TU < time || (csi.ods[selWeapon->item.t].reload && selWeapon->item.a <= 0)) {
-						cl.cmode = M_MOVE;
-						CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
-					}
-				} else if (selWeapon) {
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
-				} else {
-					cl.cmode = M_MOVE;
-					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
-				}
-			}
 		}
 
 		/* Calculate remaining TUs. */
