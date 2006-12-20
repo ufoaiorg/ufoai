@@ -648,18 +648,22 @@ void CL_ActorUpdateCVars(void)
 		switch (cl.cmode) {
 		case M_FIRE_PL:
 		case M_PEND_FIRE_PL:
+			weaponButtonState[ST_LEFT_PRIMARY] = 2; 
 			Cbuf_AddText("towpl\n");
 			break;
 		case M_FIRE_SL:
 		case M_PEND_FIRE_SL:
+			weaponButtonState[ST_LEFT_SECONDARY] = 2; 
 			Cbuf_AddText("towsl\n");
 			break;
 		case M_FIRE_PR:
 		case M_PEND_FIRE_PR:
+			weaponButtonState[ST_RIGHT_PRIMARY] = 2; 
 			Cbuf_AddText("towpr\n");
 			break;
 		case M_FIRE_SR:
 		case M_PEND_FIRE_SR:
+			weaponButtonState[ST_RIGHT_SECONDARY] = 2; 
 			Cbuf_AddText("towsr\n");
 			break;
 		default:
