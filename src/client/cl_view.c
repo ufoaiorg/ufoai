@@ -413,6 +413,8 @@ void CL_PrepRefresh(void)
 	Com_sprintf (loadingMessages, sizeof(loadingMessages), _("loading %s"), cl.configstrings[CS_TILES]);
 	loadingPercent = 0;
 
+	CL_ResetWeaponButtons();
+
 	SCR_AddDirtyPoint(0, 0);
 	SCR_AddDirtyPoint(viddef.width - 1, viddef.height - 1);
 

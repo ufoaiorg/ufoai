@@ -667,8 +667,9 @@ void CL_ActorUpdateCVars(void);
 qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode);
 
 void CL_DisplayHudMessage(char *text, int time);
+void CL_ResetWeaponButtons(void);
 
-void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance, byte ** fb_list, int fb_length);
+void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance);
 qboolean CL_ActorSelect(le_t * le);
 qboolean CL_ActorSelectList(int num);
 qboolean CL_ActorSelectNext();

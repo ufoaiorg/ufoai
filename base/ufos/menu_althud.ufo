@@ -506,7 +506,6 @@ menu althud
 		*bt_secondaryright image althud/buttons_althud1
 	}
 
-	confunc tomova { bt_weapon_clear }
 	confunc towpla { bt_weapon_clear *bt_primaryleft    image althud/buttons_althud1a }
 	confunc towpra { bt_weapon_clear *bt_primaryright   image althud/buttons_althud1a }
 	confunc towsla { bt_weapon_clear *bt_secondaryleft  image althud/buttons_althud1a }

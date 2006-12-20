@@ -130,7 +130,7 @@ static void LM_Delete(lm_t * lm)
 	LM_GenerateList();
 	Grid_RecalcRouting(&clMap, backup.name, lmList);
 	/* TODO: before CL_ConditionalMoveCalc() was implemented, forbidden list wasn't recalculated here */
-	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
+	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
 
@@ -367,6 +367,7 @@ static void LET_PathMove(le_t * le)
 {
 	byte dv;
 	float frac;
+	int tuCost = 0;
 	vec3_t start, dest, delta;
 
 	/* check for start */
@@ -381,6 +382,12 @@ static void LET_PathMove(le_t * le)
 			/* next part */
 			dv = le->path[le->pathPos++];
 			PosAddDV(le->pos, dv);
+			tuCost = Grid_MoveLength(&clMap, le->pos, qfalse) - Grid_MoveLength(&clMap, le->oldPos, qfalse);
+			if (le->state & STATE_CROUCHED)
+				tuCost *= 1.5;
+			le->TU -= tuCost;
+			if (le == selActor)
+				actorMoveLength -= tuCost;
 			le->dir = dv & 7;
 			le->angles[YAW] = dangle[le->dir];
 			le->startTime = le->endTime;
@@ -392,10 +399,7 @@ static void LET_PathMove(le_t * le)
 			/* end of move */
 			le_t *floor;
 
-			if (selActor) {
-				CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE, fb_list, fb_length);
-				CL_ResetActorMoveLength();
-			}
+			CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 
 			floor = LE_Find(ET_ITEM, le->pos);
 			if (floor)

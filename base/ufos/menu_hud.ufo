@@ -400,7 +400,6 @@ menu hud
 		*bt_sfire_right  image hud/buttons1
 	}
 
-	confunc tomovs { bt_weapon_clear }
 	confunc towpls { bt_weapon_clear *bt_pfire_left   image hud/buttons1a }
 	confunc towprs { bt_weapon_clear *bt_pfire_right  image hud/buttons1a }
 	confunc towsls { bt_weapon_clear *bt_sfire_left   image hud/buttons1a }
