@@ -1266,7 +1266,7 @@ typedef enum {
 
 void Com_PrintItemDescription(int i);
 void Com_InventoryList_f(void);
-qboolean INV_AmmoUsableInWeapon (objDef_t *od, int weapon_idx);
+qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx);
 
 
 /* g_spawn.c */

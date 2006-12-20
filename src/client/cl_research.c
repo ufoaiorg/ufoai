@@ -421,7 +421,7 @@ void RS_InitTree(void)
 							/* TODO: Add code+structure to display several ammo-types (even reseachable ones). */
 							for (k = 0; k < csi.numODs; k++) {
 								item_ammo = &csi.ods[k];
-								if ( INV_AmmoUsableInWeapon(item_ammo, j) ) {
+								if ( INV_LoadableInWeapon(item_ammo, j) ) {
 									Com_sprintf(tech->mdl_bottom, MAX_VAR, item_ammo->model);
 									break;
 								}

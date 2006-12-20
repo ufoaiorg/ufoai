@@ -24,7 +24,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "g_local.h"
-#include "../qcommon/qcommon.h" /* Needed for INV_AmmoUsableInWeapon */
+/* TODO: still needed for INV_AmmoUsableInWeapon  in windows?
+#include "../qcommon/qcommon.h"
+*/
 
 #define VIS_APPEAR	1
 #define VIS_PERISH	2
@@ -1446,7 +1448,7 @@ void G_ClientReload(player_t *player, int entnum, shoot_types_t st, qboolean qui
 			/* to retrieve the ammo from them than the one */
 			/* we've already found. */
 			for (ic = ent->i.c[container]; ic; ic = ic->next)
-				if ( INV_AmmoUsableInWeapon(&gi.csi->ods[ic->item.t], weapon) ) {
+				if ( INV_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon) ) {
 					x = ic->x;
 					y = ic->y;
 					tu = gi.csi->ids[container].out;
@@ -1490,7 +1492,7 @@ qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st)
 
 	for (container = 0; container < gi.csi->numIDs; container++)
 		for (ic = ent->i.c[container]; ic; ic = ic->next)
-			if ( INV_AmmoUsableInWeapon(&gi.csi->ods[ic->item.t], weapon) )
+			if ( INV_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon) )
 				return qtrue;
 	return qfalse;
 }
