@@ -45,23 +45,23 @@ le_t *lastHUDActor; /* keeps track of selActor */
 int lastMoveLength; /* keeps track of actorMoveLength */
 int lastTU; /* keeps track of selActor->TU */
 
-/* a cbuf string for each shoot_types_t,
- * note: array size ST_NUM_SHOOT_TYPES + 3 to include reload types */
-static char *shoot_type_strings[ST_NUM_SHOOT_TYPES + 3] = {
+/* a cbuf string for each button_types_t */
+static char *shoot_type_strings[BT_NUM_TYPES] = {
 	"pr\n",
-	"\n",
+	"reactions\n",
 	"sr\n",
 	"\n",
 	"pl\n",
 	"\n",
 	"sl\n",
 	"\n",
-	"\n",
 	"rr\n",
-	"rl\n"
+	"rl\n",
+	"stand\n",
+	"crouch\n"
 };
 
-int weaponButtonState[ST_NUM_SHOOT_TYPES + 3];
+int weaponButtonState[BT_NUM_TYPES];
 
 /**
  * @brief Writes player action with its data
@@ -332,59 +332,86 @@ static void SetWeaponButton(int button, int state)
  */
 static void CL_RefreshWeaponButtons(int time)
 {
-	invList_t *weapon;
+	invList_t *weaponr, *weaponl = NULL;
 
-	weapon = RIGHT(selActor);
-
-	if ( !weapon || weapon->item.m == NONE
-		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
-		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time
-		 || (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) )
-		SetWeaponButton(ST_RIGHT_PRIMARY, qfalse);
-	else
-		SetWeaponButton(ST_RIGHT_PRIMARY, qtrue);
-
-	if ( !weapon || weapon->item.m == NONE
-		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
-		 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time
-		 || (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) )
-		SetWeaponButton(ST_RIGHT_SECONDARY, qfalse);
-	else
-		SetWeaponButton(ST_RIGHT_SECONDARY, qtrue);
-
-	/* reload button  */
-	if ( !weapon || weapon->item.m == NONE
-		 || !csi.ods[weapon->item.t].reload
-		 || time < CL_CalcReloadTime(weapon->item.t) )
-		SetWeaponButton(ST_RIGHT_RELOAD, qfalse);
-	else
-		SetWeaponButton(ST_RIGHT_RELOAD, qtrue);
+	weaponr = RIGHT(selActor);
 
 	/* check for two-handed weapon - if not, switch to left hand */
-	if (!weapon || !csi.ods[weapon->item.t].holdtwohanded)
-		weapon = LEFT(selActor);
+	if (!weaponr || !csi.ods[weaponr->item.t].holdtwohanded)
+		weaponl = LEFT(selActor);
 
-	if ( !weapon || weapon->item.m == NONE
-		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
-		 || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time )
-		SetWeaponButton(ST_LEFT_PRIMARY, qfalse);
-	else
-		SetWeaponButton(ST_LEFT_PRIMARY, qtrue);
+	/* crouch/stand button */
+	if (selActor->state & STATE_CROUCHED) {
+		weaponButtonState[BT_STAND] = -1;
+		if (time < TU_CROUCH)
+			SetWeaponButton(BT_CROUCH, qfalse);
+		else
+			SetWeaponButton(BT_CROUCH, qtrue);
+	} else {
+		weaponButtonState[BT_CROUCH] = -1;
+		if (time < TU_CROUCH)
+			SetWeaponButton(BT_STAND, qfalse);
+		else
+			SetWeaponButton(BT_STAND, qtrue);
+	}
 
-	if ( !weapon || weapon->item.m == NONE
-		 || (csi.ods[weapon->item.t].reload && weapon->item.a == 0)
-		 || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time )
-		SetWeaponButton(ST_LEFT_SECONDARY, qfalse);
-	else
-		SetWeaponButton(ST_LEFT_SECONDARY, qtrue);
+	/* reaction-fire button */
+	if (selActorReactionState == R_FIRE_OFF) {
+		if (time < TU_REACTION)
+			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qfalse);
+		else
+			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qtrue);
+	}
 
-	/* reload button */
-	if ( !weapon || weapon->item.m == NONE
-		 || !csi.ods[weapon->item.t].reload
-		 || time < CL_CalcReloadTime(weapon->item.t) )
-		SetWeaponButton(ST_LEFT_RELOAD, qfalse);
+	/* reload buttons */
+	if ( !weaponr || weaponr->item.m == NONE
+		 || !csi.ods[weaponr->item.t].reload
+		 || time < CL_CalcReloadTime(weaponr->item.t) )
+		SetWeaponButton(BT_RIGHT_RELOAD, qfalse);
 	else
-		SetWeaponButton(ST_LEFT_RELOAD, qtrue);
+		SetWeaponButton(BT_RIGHT_RELOAD, qtrue);
+
+	if ( !weaponl || weaponl->item.m == NONE
+		 || !csi.ods[weaponl->item.t].reload
+		 || time < CL_CalcReloadTime(weaponl->item.t) )
+		SetWeaponButton(BT_LEFT_RELOAD, qfalse);
+	else
+		SetWeaponButton(BT_LEFT_RELOAD, qtrue);
+
+	/* skip update of weapon buttons if in a fire-mode */
+	if (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE)
+		return;
+
+	if ( !weaponr || weaponr->item.m == NONE
+		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a == 0)
+		 || time < csi.ods[weaponr->item.m].fd[FD_PRIMARY].time
+		 || (csi.ods[weaponr->item.t].firetwohanded && LEFT(selActor)) )
+		SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
+	else
+		SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
+
+	if ( !weaponr || weaponr->item.m == NONE
+		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a == 0)
+		 || time < csi.ods[weaponr->item.m].fd[FD_SECONDARY].time
+		 || (csi.ods[weaponr->item.t].firetwohanded && LEFT(selActor)) )
+		SetWeaponButton(BT_RIGHT_SECONDARY, qfalse);
+	else
+		SetWeaponButton(BT_RIGHT_SECONDARY, qtrue);
+
+	if ( !weaponl || weaponl->item.m == NONE
+		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a == 0)
+		 || time < csi.ods[weaponl->item.m].fd[FD_PRIMARY].time )
+		SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
+	else
+		SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
+
+	if ( !weaponl || weaponl->item.m == NONE
+		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a == 0)
+		 || time < csi.ods[weaponl->item.m].fd[FD_SECONDARY].time )
+		SetWeaponButton(BT_LEFT_SECONDARY, qfalse);
+	else
+		SetWeaponButton(BT_LEFT_SECONDARY, qtrue);
+
 }
 
 /**
@@ -591,22 +618,22 @@ void CL_ActorUpdateCVars(void)
 			&& csi.ods[RIGHT(selActor)->item.t].holdtwohanded)
 			Cvar_Set("mn_ammoleft", Cvar_VariableString("mn_ammoright"));
 
-		/* change stand-crouch */
+		/* change stand-crouch & reaction button state */
 		if (cl.oldstate != selActor->state || refresh) {
 			cl.oldstate = selActor->state;
-			if (selActor->state & STATE_CROUCHED) {
-				Cbuf_AddText("tocrouch\n");
-			} else {
-				Cbuf_AddText("tostand\n");
-			}
 
 			if (selActor->state & STATE_REACTION_ONCE) {
 				Cbuf_AddText("startreactiononce\n");
 			} else if (selActor->state & STATE_REACTION_MANY) {
 				Cbuf_AddText("startreactionmany\n");
-			} else {
-				Cbuf_AddText("stopreaction\n");
+			} else { /* let RefreshWeaponButtons work it out */
+				weaponButtonState[BT_RIGHT_PRIMARY_REACTION] = -1;
 			}
+			if (actorMoveLength < 0xFF
+				&& (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE))
+				CL_RefreshWeaponButtons(time);
+			else
+				CL_RefreshWeaponButtons(selActor->TU);
 		} else {
 			/* no actor selected, reset cvars */
 			/* TODO: this overwrites the correct values a bit to often.
@@ -623,7 +650,7 @@ void CL_ActorUpdateCVars(void)
 			Cvar_Set("mn_ap", "0");
 			*/
 			if (refresh)
-				Cbuf_AddText("tostand\n");
+				Cbuf_AddText("deselstand\n");
 
 			/* this allows us to display messages even with no actor selected */
 			if (cl.time < cl.msgTime) {
@@ -649,22 +676,22 @@ void CL_ActorUpdateCVars(void)
 		switch (cl.cmode) {
 		case M_FIRE_PL:
 		case M_PEND_FIRE_PL:
-			weaponButtonState[ST_LEFT_PRIMARY] = 2; 
+			weaponButtonState[BT_LEFT_PRIMARY] = 2; 
 			Cbuf_AddText("towpl\n");
 			break;
 		case M_FIRE_SL:
 		case M_PEND_FIRE_SL:
-			weaponButtonState[ST_LEFT_SECONDARY] = 2; 
+			weaponButtonState[BT_LEFT_SECONDARY] = 2; 
 			Cbuf_AddText("towsl\n");
 			break;
 		case M_FIRE_PR:
 		case M_PEND_FIRE_PR:
-			weaponButtonState[ST_RIGHT_PRIMARY] = 2; 
+			weaponButtonState[BT_RIGHT_PRIMARY] = 2; 
 			Cbuf_AddText("towpr\n");
 			break;
 		case M_FIRE_SR:
 		case M_PEND_FIRE_SR:
-			weaponButtonState[ST_RIGHT_SECONDARY] = 2; 
+			weaponButtonState[BT_RIGHT_SECONDARY] = 2; 
 			Cbuf_AddText("towsr\n");
 			break;
 		default:

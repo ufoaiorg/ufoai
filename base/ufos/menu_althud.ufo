@@ -601,8 +601,8 @@ menu althud
 		click	{ cmd reloadleft; }
 	}
 
-	confunc tostanda  { *bt_duck texl "27 37" *bt_duck texh "52 70" }
-	confunc tocroucha { *bt_duck texl "54 37" *bt_duck texh "79 70" }
+	confunc deselstanda  { *bt_duck texl "27 37" *bt_duck texh "52 70" }
+	confunc deselcroucha { *bt_duck texl "54 37" *bt_duck texh "79 70" }
 
 	pic bt_duck
 	{

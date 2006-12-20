@@ -639,6 +639,9 @@ void CL_ParticleFree(ptl_t *p);
 #define EYE_HT_STAND  UNIT_HEIGHT * 0.25
 /* distance from vertical center of grid-point to head when crouched */
 #define EYE_HT_CROUCH UNIT_HEIGHT * 0.06
+/* time-unit costs to reserve reaction fire and crouch/stand. Must match defines in game/g_local.h */
+#define TU_REACTION			7
+#define TU_CROUCH			1
 
 /* reaction fire toggle state, don't mess with the order!!! */
 typedef enum {
@@ -646,6 +649,22 @@ typedef enum {
 	R_FIRE_ONCE,
 	R_FIRE_MANY
 } reactionmode_t;
+
+typedef enum {
+	BT_RIGHT_PRIMARY,
+	BT_RIGHT_PRIMARY_REACTION,
+	BT_RIGHT_SECONDARY,
+	BT_RIGHT_SECONDARY_REACTION, /* unused */
+	BT_LEFT_PRIMARY,
+	BT_LEFT_PRIMARY_REACTION,
+	BT_LEFT_SECONDARY,
+	BT_LEFT_SECONDARY_REACTION, /* unused */
+	BT_RIGHT_RELOAD,
+	BT_LEFT_RELOAD,
+	BT_STAND,
+	BT_CROUCH,
+	BT_NUM_TYPES
+} button_types_t;
 
 extern le_t *selActor;
 extern int actorMoveLength;
