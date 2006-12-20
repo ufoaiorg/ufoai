@@ -368,7 +368,7 @@ aircraft craft_interceptor
 	image	air_interceptor
 	angles	"-20 -40 120"
 	scale	"1.1 1.1 1.1"
-	angles_equip	"90 0 180"
+	angles_equip	"0 0 180"
 	scale_equip	"1.1 1.1 1.1"
 	// FIXME: This is just testing
 	weapon	rs_craft_weapon_flac
