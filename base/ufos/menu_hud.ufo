@@ -505,7 +505,7 @@ menu hud
 	}
 
 	confunc deselstands { *bt_duck image hud/buttons2 }
-	confunc deselcrouch { *bt_duck image hud/buttons2a }
+	confunc deselcrouchs { *bt_duck image hud/buttons2a }
 	confunc disstand { *bt_duck image hud/buttons2g }
 	confunc discrouch { *bt_duck image hud/buttons2ag }
 
