@@ -1141,8 +1141,7 @@ MAIN SCRIPT PARSING FUNCTION
 */
 
 /**
- * @brief Creates links to the technology entries in the pedia and to other items (i.e ammo<->weapons)
- * @todo Change code to use require_AND->"weapon" entries.
+ * @brief Creates links to the technology entries in the pedia and to other items (i.e. ammo<->weapons)
  */
 void Com_AddObjectLinks(void)
 {
