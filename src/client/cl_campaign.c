@@ -3892,13 +3892,11 @@ void CL_GameInit(void)
 
 	CL_GameTimeStop();
 
-	/* Init research tree. */
-	Com_AddObjectLinks();
-	RS_InitTree();
+	Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
+	RS_InitTree();		/* Initialise all data in the research tree. */
 
-	/* after inited the techtree */
-	/* we can assign the weapons */
-	/* and shields to aircrafts. */
+	/* After inited the techtree we can assign the weapons
+	 * and shields to aircrafts. */
 	CL_AircraftInit();
 
 	/* Init popup and map/geoscape */

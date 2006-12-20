@@ -1226,10 +1226,6 @@ void Com_ParseScripts(void)
 			CL_ParseClientData(type, name, &text);
 	}
 
-	/* Add object links and tech links.*/
-	/* TODO: Is this still needed here or is the one in cl_campaign.c->CL_GameInit enough? */
-	Com_AddObjectLinks();
-
 	/* Stage two parsing (weapon/inventory dependant stuff). */
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
