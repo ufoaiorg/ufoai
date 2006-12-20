@@ -932,7 +932,7 @@ static void Com_ParseTeamDesc(char *title, char **text)
 		return;
 	}
 
-	if (i <= numTeamDesc) {
+	if (i < numTeamDesc) {
 		Com_Printf("Com_ParseTeamDesc: found defition with same name - second ignored\n");
 		return;
 	}
