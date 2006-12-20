@@ -3764,3 +3764,23 @@ void Com_InventoryList_f(void)
 	for (i = 0; i < CSI->numODs; i++)
 		Com_PrintItemDescription(i);
 }
+
+/**
+ * @brief Checks if an ammo-item can be used in a weapon.
+ * @param[in] od The Object definition of the ammo.
+ * @param[in] weapon_idx The index of the weapon to check the ammo with.
+ * @return qboolean Returns qtrue if the ammo can be used inthe given weapon, otherwise qfalse.
+ * @todo Move this to a better suited place/file.
+ */
+qboolean INV_AmmoUsableInWeapon (objDef_t *od, int weapon_idx)
+{
+	int i;
+
+	for (i = 0; i < MAX_TECHLINKS; i++) {
+		if (od->forWeapon[i] < 0)
+			break;
+		if (weapon_idx == od->forWeapon[i])
+			return qtrue;
+	}
+	return qfalse;
+}

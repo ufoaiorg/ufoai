@@ -1141,26 +1141,6 @@ MAIN SCRIPT PARSING FUNCTION
 */
 
 /**
- * @brief Checks if an ammo-item can be used in a weapon.
- * @param[in] od The Object definition of the ammo.
- * @param[in] weapon_idx The index of the weapon to check the ammo with.
- * @return qboolean Returns qtrue if the ammo can be used inthe given weapon, otherwise qfalse.
- * @todo Move this to a better suited place/file.
- */
-qboolean INV_AmmoUsableInWeapon (objDef_t *od, int weapon_idx)
-{
-	int i;
-
-	for (i = 0; i < MAX_TECHLINKS; i++) {
-		if (od->forWeapon[i] < 0)
-			break;
-		if (weapon_idx == od->forWeapon[i])
-			return qtrue;
-	}
-	return qfalse;
-}
-
-/**
  * @brief Creates links to the technology entries in the pedia and to other items (i.e ammo<->weapons)
  * @todo Change code to use require_AND->"weapon" entries.
  */
