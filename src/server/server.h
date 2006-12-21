@@ -196,6 +196,10 @@ extern cvar_t *sv_noreload;		/* don't reload level state when reentering */
 					/* development tool */
 extern cvar_t *sv_enforcetime;
 
+extern cvar_t *public_server;			/* should heartbeats be sent */
+extern cvar_t *masterserver_ip;
+extern cvar_t *masterserver_port;
+
 extern client_t *sv_client;
 extern player_t *sv_player;
 
@@ -249,6 +253,7 @@ void SV_ExecuteClientMessage(client_t * cl);
 /* sv_ccmds.c */
 void SV_ReadLevelFile(void);
 void SV_Status_f(void);
+void SV_SetMaster_f(void);
 
 /* sv_ents.c */
 void SV_WriteFrameToClient(client_t * client, sizebuf_t * msg);

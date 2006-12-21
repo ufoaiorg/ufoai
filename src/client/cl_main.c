@@ -44,6 +44,9 @@ cvar_t *adr6;
 cvar_t *adr7;
 cvar_t *adr8;
 
+cvar_t *masterserver_ip;
+cvar_t *masterserver_port;
+
 cvar_t *noudp;
 cvar_t *noipx;
 
@@ -126,6 +129,17 @@ typedef struct teamData_s {
 } teamData_t;
 
 static teamData_t teamData;
+
+typedef struct _SERVERINFO {
+	unsigned int ip;
+	/* char host[256]; */
+	unsigned short port;
+	int temporary;
+} SERVERINFO;
+
+#define MAX_SERVERS 64
+static SERVERINFO servers[MAX_SERVERS];
+static int numServers = 0;
 
 /*====================================================================== */
 
@@ -938,16 +952,140 @@ void CL_SelectTeam_Init_f (void)
 }
 
 /**
+ * @brief
+ */
+void CL_GetServerList (void)
+{
+	netadr_t master;
+	struct sockaddr_in dgFrom;
+	int i, result;
+	size_t fromlen;
+	struct timeval delay;
+	fd_set stoc;
+	char recvBuff[0xFFFF], *p;
+	cvar_t	*port, *ip;
+	int		ip_sockets[2];
+	int		ipx_sockets[2];
+	int		net_socket;
+
+	if (!NET_StringToAdr (masterserver_ip->string, &master)) {
+		Com_Printf ("Bad Master IP");
+		return;
+	}
+	if (master.port == 0)
+		master.port = BigShort((int)masterserver_port->value);
+
+	Com_Printf ("Master server at %s\n", NET_AdrToString (master));
+
+	port = Cvar_Get ("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);
+	ip = Cvar_Get ("ip", "localhost", CVAR_NOSET, NULL);
+
+	if (!ip_sockets[NS_SERVER]) {
+		ip_sockets[NS_SERVER] = NET_Socket (ip->string, port->value);
+	}
+	if (!ip_sockets[NS_CLIENT]) {
+		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY);
+	}
+
+	if (master.type == NA_BROADCAST) {
+		net_socket = ip_sockets[NS_CLIENT];
+		if (!net_socket)
+			return;
+	} else if (master.type == NA_IP) {
+		net_socket = ip_sockets[NS_CLIENT];
+		if (!net_socket)
+			return;
+	} else if (master.type == NA_IPX) {
+		net_socket = ipx_sockets[NS_CLIENT];
+		if (!net_socket)
+			return;
+	} else if (master.type == NA_BROADCAST_IPX) {
+		net_socket = ipx_sockets[NS_CLIENT];
+		if (!net_socket)
+			return;
+	} else
+		Com_Error (ERR_FATAL, "NET_SendPacket: bad address type");
+
+	NetadrToSockadr (&master, &dgFrom);
+
+	memset (recvBuff, 0, sizeof(recvBuff));
+
+	/**
+	 * this function may block => sound channels might not be updated
+	 * while it does so => prevent 'looping sound effect' while waiting
+	 */
+	OGG_Stop ();
+
+	for (i = 0; i < 3; i++) {
+		dgFrom.sin_family = AF_INET;
+		dgFrom.sin_port = htons (master.port);
+
+		/* Com_Printf("Master IP: %s\n", inet_ntoa(dgFrom.sin_addr)); */
+		result = sendto (net_socket, "query", 5, 0, (struct sockaddr *)&dgFrom, sizeof(dgFrom) );
+		if (result == -1) {
+			Com_Printf("Couldn't reach first stage of contacting Master Server\n");
+			return; /* couldn't contact master server */
+		}
+		memset (&stoc, 0, sizeof(stoc));
+		FD_SET (net_socket, &stoc);
+		delay.tv_sec = 2;
+		delay.tv_usec = 0;
+		result = select (0, &stoc, NULL, NULL, &delay);
+
+		fromlen = sizeof(dgFrom);
+		result = recvfrom (net_socket, recvBuff, sizeof(recvBuff), 0, (struct sockaddr *)&dgFrom, &fromlen);
+		if (result >= 0) {
+			break;
+		} else if (result == -1) {
+			Com_Printf("Couldn't reach second stage of contacting master server %i\n", errno);
+			return; /* couldn't contact master server */
+		}
+	}
+
+	if (!result) {
+		Com_Printf("Couldn't contact master server\n");
+		return; /* couldn't contact master server */
+	}
+
+	p = recvBuff + 12;
+
+	result -= 12;
+
+	numServers = 0;
+
+	while (result > 0) {
+		servers[numServers].temporary = 1;
+		memcpy (&servers[numServers].ip, p, 4);
+		p += 4;
+		memcpy (&servers[numServers].port, p, 2);
+		servers[numServers].port = ntohs(servers[numServers].port);
+		p += 2;
+		result -= 6;
+
+		if (++numServers == MAX_SERVERS)
+			break;
+	}
+
+	Cbuf_AddText("music_start");
+}
+
+/**
  * @brief The first function called when entering the multiplayer menu, then CL_Frame takes over
  * @sa CL_ParseStatusMessage
  */
 void CL_PingServers_f (void)
 {
 	netadr_t adr;
+	int i;
+	char name[6];
+	char *adrstring;
+	struct in_addr tmp;
 
 	menuText[TEXT_LIST] = NULL;
 
 	NET_Config(qtrue);			/* allow remote */
+
+	CL_GetServerList();
 
 	/* send a broadcast packet */
 	Com_DPrintf("pinging broadcast...\n");
@@ -966,6 +1104,41 @@ void CL_PingServers_f (void)
 		adr.type = NA_BROADCAST_IPX;
 		adr.port = BigShort(PORT_SERVER);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
+	}
+	for (i = 0; i < 16; i++) {
+		Com_sprintf (name, sizeof(name), "adr%i", i);
+		adrstring = Cvar_VariableString (name);
+		if (!adrstring || !adrstring[0])
+			continue;
+
+		Com_Printf ("pinging %s...\n", adrstring);
+		if (!NET_StringToAdr (adrstring, &adr)) {
+			Com_Printf ("Bad address: %s\n", adrstring);
+			continue;
+		}
+		if (!adr.port)
+			adr.port = BigShort(PORT_SERVER);
+		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
+	}
+
+	/* query masterserver */
+	for (i = 0; i < numServers; i++) {
+#ifdef _WIN32
+		tmp.S_un.S_addr = servers[i].ip; /* done so that we can print the ip for testing */
+#else
+		tmp.s_addr = servers[i].ip;
+#endif
+		/* Com_Printf ("From Master, IP: %s:%i\n",inet_ntoa(tmp), servers[i].port); */
+		Com_Printf ("pinging %s...\n", inet_ntoa(tmp));
+		if (!NET_StringToAdr (inet_ntoa(tmp), &adr)) {
+			Com_Printf ("Bad address: %s\n", inet_ntoa(tmp));
+			continue;
+		}
+		adr.port = BigShort(servers[i].port);
+		if (!adr.port) {
+			adr.port = BigShort(PORT_SERVER);
+		}
+		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
 	}
 }
 
@@ -1492,6 +1665,8 @@ void CL_InitLocal(void)
 
 	noudp = Cvar_Get("noudp", "0", CVAR_NOSET, "Don't use UDP as network protocol'");
 	noipx = Cvar_Get("noipx", "0", CVAR_NOSET, "Don't use IPX as network protocol");
+	masterserver_ip = Cvar_Get("masterserver_ip", "195.136.48.62", CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
+	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
 
 	/* register our commands */
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");

@@ -276,6 +276,7 @@ void Com_Quit(void)
 
 /**
  * @brief Check whether we are the server or have a singleplayer tactical mission
+ * @sa Com_SetServerState
  */
 int Com_ServerState(void)
 {
@@ -285,6 +286,7 @@ int Com_ServerState(void)
 /**
  * @brief
  * @sa SV_SpawnServer
+ * @sa Com_ServerState
  */
 void Com_SetServerState(int state)
 {

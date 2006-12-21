@@ -60,6 +60,9 @@ cvar_t *public_server;			/* should heartbeats be sent */
 
 cvar_t *sv_reconnect_limit;		/* minimum seconds between connect messages */
 
+cvar_t *masterserver_ip;
+cvar_t *masterserver_port;
+
 void Master_Shutdown(void);
 
 
@@ -740,7 +743,7 @@ void SV_Frame(int msec)
 	/* send messages back to the clients that had packets read this frame */
 	SV_SendClientMessages();
 
-	/* TODO: send a heartbeat to the master if needed */
+	/* send a heartbeat to the master if needed */
 	Master_Heartbeat();
 }
 
@@ -756,10 +759,11 @@ void Master_Heartbeat(void)
 	char *string;
 	int i;
 
+#if 0
 	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
 	if (!dedicated || !dedicated->value)
 		return;					/* only dedicated servers send heartbeats */
-
+#endif
 	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
 	if (!public_server || !public_server->value)
 		return;					/* a private dedicated game */
@@ -862,8 +866,8 @@ void SV_Init(void)
 	Cvar_Get("timelimit", "0", CVAR_SERVERINFO, NULL);
 	Cvar_Get("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	Cvar_Get("protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
-	Cvar_Get("masterserver_ip", "195.136.48.62", CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
-	Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
+	masterserver_ip = Cvar_Get("masterserver_ip", "195.136.48.62", CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
+	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
 	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
 	hostname = Cvar_Get("hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
 	timeout = Cvar_Get("timeout", "125", 0, NULL);

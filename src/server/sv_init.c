@@ -875,6 +875,9 @@ void SV_InitGame(void)
 
 	/* init game */
 	SV_InitGameProgs();
+
+	if (!dedicated->value && public_server->value)
+		SV_SetMaster_f();
 }
 
 

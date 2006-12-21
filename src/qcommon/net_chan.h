@@ -6,6 +6,14 @@ NET
 
 /* net.h -- quake's interface to the networking layer */
 
+#ifdef _WINDOWS
+#include <winsock.h>
+#endif
+
+#ifdef __linux__
+#include <arpa/inet.h>
+#endif
+
 #define	PORT_ANY	-1
 
 #define	MAX_MSGLEN		7400	/* max length of a message */
@@ -48,6 +56,16 @@ char *NET_AdrToString(netadr_t a);
 qboolean NET_StringToAdr(char *s, netadr_t * a);
 void NET_Sleep(int msec);
 char *NET_SocketToString (void *s_ptr);
+int NET_Socket (char *net_interface, int port);
+#ifdef HAVE_IPV6
+void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s);
+#else
+# ifdef _WIN32
+void NetadrToSockadr (netadr_t *a, struct sockaddr *s);
+# else
+void NetadrToSockadr (netadr_t *a, struct sockaddr_in *s);
+# endif
+#endif
 
 /*============================================================================ */
 
