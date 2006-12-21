@@ -1,13 +1,10 @@
 /**
  * @file master.c
- * @brief Master server implementation
- * @TODO: Adopt for UFO:AI
+ * @brief Master server for UFO:AI
  */
 
 /*
-Copyright (C) 2002-2006 UFO: Alien Invasion team.
-
-Original file from Quakeforge hw/source/master.c
+Copyright (C) 2002-2003 r1ch.net
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -26,641 +23,456 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../qcommon/qcommon.h"
-
-#define SV_TIMEOUT 450
-
-#define PORT_MASTER 26900
-
 /**
- * M = master, S = server, C = client, A = any
- * the second character will allways be \n if the message isn't a single
- * byte long (?? not true anymore?)
+ * gloommaster 0.0.3 (c) 2002-2003 r1ch.net
+ * quake 2 compatible master server for gloom
  */
 
-#define S2C_CHALLENGE       'c'
-#define A2A_PING            'k'
-
-/* + serverinfo + userlist + fraglist */
-#define S2M_HEARTBEAT       'a'
-#define S2M_SHUTDOWN        'C'
-
-typedef struct filter_s {
-	netadr_t    from;
-	netadr_t    to;
-	struct filter_s *next;
-	struct filter_s *previous;
-} filter_t;
-
-typedef struct server_s {
-	netadr_t    ip;
-	struct server_s *next;
-	struct server_s *previous;
-	double timeout;
-} server_t;
-
-qboolean is_server = qtrue;
-
-extern sizebuf_t net_message;
-
-static server_t *sv_list = NULL;
-static filter_t *filter_list = NULL;
-
-static netadr_t net_local_adr;
-
-/**
- * @brief Dynamic length version of Qgets. DO NOT free the buffer
- */
-char* Qgetline (FILE *file)
-{
-	static int  size = 256;
-	static char *buf = 0;
-	int         len;
-
-	if (!buf)
-		buf = malloc (size);
-
-	if (!fgets (buf, size, file))
-		return 0;
-
-	len = strlen (buf);
-	while (buf[len - 1] != '\n') {
-		char       *t = realloc (buf, size + 256);
-
-		if (!t)
-			return 0;
-		buf = t;
-		size += 256;
-		if (!fgets (buf + len, size - len, file))
-			break;
-		len = strlen (buf);
-	}
-	return buf;
-}
-
-/**
- * @brief
- */
-static void FL_Remove (filter_t * filter)
-{
-	if (filter->previous)
-		filter->previous->next = filter->next;
-	if (filter->next)
-		filter->next->previous = filter->previous;
-	filter->next = NULL;
-	filter->previous = NULL;
-	if (filter_list == filter)
-		filter_list = NULL;
-}
-
-/**
- * @brief
- */
-static void FL_Clear (void)
-{
-	filter_t   *filter;
-
-	for (filter = filter_list; filter;) {
-		if (filter) {
-			filter_t   *next = filter->next;
-
-			FL_Remove (filter);
-			free (filter);
-			filter = next;
-		}
-	}
-	filter_list = NULL;
-}
-
-/**
- * @brief
- */
-static filter_t * FL_New (netadr_t *adr1, netadr_t *adr2)
-{
-	filter_t   *filter;
-
-	filter = (filter_t *) calloc (1, sizeof (filter_t));
-	if (adr1)
-		filter->from = *adr1;
-	if (adr2)
-		filter->to = *adr2;
-	return filter;
-}
-
-/**
- * @brief
- */
-static void FL_Add (filter_t * filter)
-{
-	filter->next = filter_list;
-	filter->previous = NULL;
-	if (filter_list)
-		filter_list->previous = filter;
-	filter_list = filter;
-}
-
-/**
- * @brief
- */
-static filter_t * FL_Find (netadr_t adr)
-{
-	filter_t   *filter;
-
-	for (filter = filter_list; filter; filter = filter->next) {
-		if (NET_CompareBaseAdr (filter->from, adr))
-			return filter;
-	}
-	return NULL;
-}
-
-/**
- * @brief
- */
-static void Filter (void)
-{
-	int         hold_port;
-	netadr_t    filter_adr;
-	filter_t   *filter;
-
-	hold_port = net_from.port;
-	NET_StringToAdr ("127.0.0.1:26950", &filter_adr);
-	if (NET_CompareBaseAdr (net_from, filter_adr)) {
-		NET_StringToAdr ("0.0.0.0:26950", &filter_adr);
-		if (!NET_CompareBaseAdr (net_local_adr, filter_adr)) {
-			net_from = net_local_adr;
-			net_from.port = hold_port;
-		}
-		return;
-	}
-
-	/* if no compare with filter list */
-	if ((filter = FL_Find (net_from))) {
-		net_from = filter->to;
-		net_from.port = hold_port;
-	}
-}
-
-/**
- * @brief
- */
-static void SVL_Remove (server_t *sv)
-{
-	if (sv_list == sv)
-		sv_list = sv->next;
-	if (sv->previous)
-		sv->previous->next = sv->next;
-	if (sv->next)
-		sv->next->previous = sv->previous;
-	sv->next = NULL;
-	sv->previous = NULL;
-}
-
-/**
- * @brief
- */
-static void SVL_Clear (void)
-{
-	server_t   *sv;
-
-	for (sv = sv_list; sv;) {
-		if (sv) {
-			server_t   *next = sv->next;
-
-			SVL_Remove (sv);
-			free (sv);
-			sv = next;
-		}
-	}
-	sv_list = NULL;
-}
-
-/**
- * @brief
- */
-static server_t * SVL_New (netadr_t *adr)
-{
-	server_t   *sv;
-
-	sv = (server_t *) calloc (1, sizeof (server_t));
-	if (adr)
-		sv->ip = *adr;
-	return sv;
-}
-
-/**
- * @brief
- */
-static void SVL_Add (server_t *sv)
-{
-	sv->next = sv_list;
-	sv->previous = NULL;
-	if (sv_list)
-		sv_list->previous = sv;
-	sv_list = sv;
-}
-
-/**
- * @brief
- */
-static server_t * SVL_Find (netadr_t adr)
-{
-	server_t   *sv;
-
-	for (sv = sv_list; sv; sv = sv->next) {
-		if (NET_CompareAdr (sv->ip, adr))
-			return sv;
-	}
-	return NULL;
-}
-
-/**
- * @brief
- */
-static void SV_InitNet (void)
-{
-	const char *str;
-	FILE       *filters;
-
-	NET_Init ();
-
-	/* Add filters */
-	if ((filters = fopen ("filters.ini", "r"))) {
-		while ((str = Qgetline (filters))) {
-			Cbuf_AddText ("filter add ");
-			Cbuf_AddText (str);
-			Cbuf_AddText ("\n");
-		}
-		fclose (filters);
-	}
-}
-
-/**
- * @brief
- */
-static void AnalysePacket (void)
-{
-	byte        buf[16];
-	byte       *p, *data;
-	int         i, size, rsize;
-
-	printf ("%s >> unknown packet:\n", NET_AdrToString (net_from));
-
-	data = net_message.data;
-	size = net_message.cursize;
-
-	for (p = data; (rsize = min (size - (p - data), 16)); p += rsize) {
-		printf ("%04X:", (unsigned) (p - data));
-		memcpy (buf, p, rsize);
-		for (i = 0; i < rsize; i++) {
-			printf (" %02X", buf[i]);
-			if (buf[i] < ' ' || buf [i] > '~')
-				buf[i] = '.';
-		}
-		printf ("%*.*s\n", 1 + (16 - rsize) * 3 + rsize, rsize, buf);
-	}
-}
-
-/**
- * @brief
- */
-static void Mst_SendList (void)
-{
-	byte        buf[MAX_MSGLEN];
-	sizebuf_t   msg;
-	server_t   *sv;
-	short int   sv_num = 0;
-
-	msg.data = buf;
-	msg.maxsize = sizeof (buf);
-	msg.cursize = 0;
-	msg.allowoverflow = qtrue;
-	msg.overflowed = qfalse;
-
-	/* number of servers: */
-	for (sv = sv_list; sv; sv = sv->next)
-		sv_num++;
-	MSG_WriteByte (&msg, 255);
-	MSG_WriteByte (&msg, 255);
-	MSG_WriteByte (&msg, 255);
-	MSG_WriteByte (&msg, 255);
-	MSG_WriteByte (&msg, 255);
-	MSG_WriteByte (&msg, 'd');
-	MSG_WriteByte (&msg, '\n');
-	if (sv_num > 0)
-		for (sv = sv_list; sv; sv = sv->next) {
-			MSG_WriteByte (&msg, sv->ip.ip[0]);
-			MSG_WriteByte (&msg, sv->ip.ip[1]);
-			MSG_WriteByte (&msg, sv->ip.ip[2]);
-			MSG_WriteByte (&msg, sv->ip.ip[3]);
-			MSG_WriteShort (&msg, sv->ip.port);
-		}
-	NET_SendPacket (ip_sockets[NS_SERVER], msg.cursize, msg.data, net_from);
-}
-
-/**
- * @brief
- */
-static void Mst_Packet (void)
-{
-	char        msg;
-	server_t   *sv;
-
-#if 0
-	Filter ();
-#endif
-	msg = net_message.data[1];
-	if (msg == A2A_PING) {
-		Filter ();
-		printf ("%s >> A2A_PING\n", NET_AdrToString (net_from));
-		if (!(sv = SVL_Find (net_from))) {
-			sv = SVL_New (&net_from);
-			SVL_Add (sv);
-		}
-		sv->timeout = Sys_Milliseconds ();
-	} else if (msg == S2M_HEARTBEAT) {
-		Filter ();
-		printf ("%s >> S2M_HEARTBEAT\n", NET_AdrToString (net_from));
-		if (!(sv = SVL_Find (net_from))) {
-			sv = SVL_New (&net_from);
-			SVL_Add (sv);
-		}
-		sv->timeout = Sys_Milliseconds ();
-	} else if (msg == S2M_SHUTDOWN) {
-		Filter ();
-		printf ("%s >> S2M_SHUTDOWN\n", NET_AdrToString (net_from));
-		if ((sv = SVL_Find (net_from))) {
-			SVL_Remove (sv);
-			free (sv);
-		}
-	} else if (msg == S2C_CHALLENGE) {
-		printf ("%s >> ", NET_AdrToString (net_from));
-		printf ("Gamespy server list request\n");
-		Mst_SendList ();
-	} else {
-		byte       *p;
-
-		p = net_message.data;
-		if (p[0] == 0 && p[1] == 'y') {
-			printf ("%s >> ", NET_AdrToString (net_from));
-			printf ("Pingtool server list request\n");
-			Mst_SendList ();
-		} else {
-			AnalysePacket ();
-		}
-	}
-}
-
-/**
- * @brief
- */
-static void SV_ReadPackets (void)
-{
-	while (NET_GetPacket(ip_sockets[NS_SERVER], &net_from, &net_message)) {
-		Mst_Packet ();
-	}
-}
-
-/**
- * @brief
- */
-static void FilterAdd (char* arg)
-{
-	filter_t   *filter;
-	netadr_t    to, from;
-	char		*d;
-
-	d = strstr(arg, " ");
-	if (d)
-		*d++ = '\0';
-	else
-		return; /* wrong parameters */
-
-	NET_StringToAdr (arg, &from);
-	NET_StringToAdr (d, &to);
-	if (to.port == 0)
-		from.port = BigShort (PORT_SERVER);
-	if (from.port == 0)
-		from.port = BigShort (PORT_SERVER);
-	if (!(filter = FL_Find (from))) {
-		printf ("Added filter %s\t\t%s\n", arg, d);
-		filter = FL_New (&from, &to);
-		FL_Add (filter);
-	} else
-		printf ("%s already defined\n\n", arg);
-}
-
-/**
- * @brief
- */
-static void FilterRemove (char* arg)
-{
-	filter_t   *filter;
-	netadr_t    from;
-
-	NET_StringToAdr (arg, &from);
-	if ((filter = FL_Find (from))) {
-		printf ("Removed %s\n\n", arg);
-		FL_Remove (filter);
-		free (filter);
-	} else
-		printf ("Cannot find %s\n\n", arg);
-}
-
-/**
- * @brief
- */
-static void FilterList (void)
-{
-	filter_t   *filter;
-
-	for (filter = filter_list; filter; filter = filter->next) {
-		printf ("%s", NET_AdrToString (filter->from));
-		printf ("\t\t%s\n", NET_AdrToString (filter->to));
-	}
-	if (filter_list == NULL)
-		printf ("No filter\n");
-	printf ("\n");
-}
-
-/**
- * @brief
- */
-static void FilterClear (void)
-{
-	printf ("Removed all filters\n\n");
-	FL_Clear ();
-}
-
-/**
- * @brief
- */
-static void Filter_f (char* action, char* param)
-{
-	if (!strcmp (action, "add"))
-		FilterAdd (param);
-	else if (!strcmp (action, "remove"))
-		FilterRemove (param);
-	else if (!strcmp (action, "clear"))
-		FilterClear ();
-	else if (action && param) {
-		FilterAdd (action);
-	} else if (action && !param) {
-		FilterRemove (action);
-	} else
-		FilterList ();
-}
-
-/**
- * @brief
- */
-static void SV_WriteFilterList (void)
-{
-	FILE *f;
-	filter_t *filter;
-
-	if (filter_list == NULL)
-		return;
-
-	f = fopen("filters.ini", "w");
-	if (!f) {
-		printf("ERROR: couldn't open filters.ini.\n");
-		return;
-	}
-
-	for (filter = filter_list; filter; filter = filter->next) {
-		fprintf(f, "%s", NET_AdrToString (filter->from));
-		fprintf(f, " %s\n", NET_AdrToString (filter->to));
-	}
-	fclose(f);
-}
-
-/**
- * @brief
- */
-static void MS_Shutdown (void)
-{
-	NET_Shutdown ();
-
-	/* write filter list */
-	SV_WriteFilterList ();
-/*	Con_Shutdown ();*/
-}
-
-/**
- * @brief
- */
-static void MS_TimeOut (void)
-{
-	/* Remove listed servers that haven't sent a heartbeat for some time */
-	double      time = Sys_Milliseconds ();
-	server_t   *sv;
-	server_t   *next;
-
-	if (sv_list == NULL)
-		return;
-
-	for (sv = sv_list; sv;) {
-		if (sv->timeout + SV_TIMEOUT < time) {
-			next = sv->next;
-			printf ("%s timed out\n", NET_AdrToString (sv->ip));
-			SVL_Remove (sv);
-			free (sv);
-			sv = next;
-		} else
-			sv = sv->next;
-	}
-}
-
-/**
- * @brief
- */
-int Sys_CheckInput (int idle, int net_socket)
-{
-	fd_set      fdset;
-	int         res;
-	struct timeval _timeout;
-	struct timeval *timeout = 0;
-
-#ifdef _WIN32
-	int         sleep_msec;
-	/* Now we want to give some processing time to other applications, */
-	/* such as qw_client, running on this machine. */
-	sleep_msec = 10;
-	if (sleep_msec > 0) {
-		if (sleep_msec > 13)
-			sleep_msec = 13;
-		Sleep (sleep_msec);
-	}
-
-	_timeout.tv_sec = 0;
-	_timeout.tv_usec = net_socket < 0 ? 0 : 100;
+/* change this to the game name of servers you only wish to accept */
+#define ACCEPTED_MOD "base"
+#define MASTER_SERVER "195.136.48.62" /* sponsored by NineX */
+#define VERSION "0.0.3"
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+
+#ifdef WIN32
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
+# include <malloc.h>
+# include <winsock.h>
 #else
-	_timeout.tv_sec = 0;
-	_timeout.tv_usec = net_socket < 0 ? 0 : 10000;
+# include <errno.h>
+# include <arpa/inet.h>
+# define SOCKET int
+# define SOCKET_ERROR -1
+# define TIMEVAL struct timeval
+# define WSAGetLastError() errno
+# define strnicmp strncasecmp
 #endif
-	/**
-	 * select on the net socket and stdin
-	 * the only reason we have a timeout at all is so that if the last
-	 * connected client times out, the message would not otherwise
-	 * be printed until the next event.
-	 */
-	FD_ZERO (&fdset);
+
+#ifndef DEBUG
+#define dprintf printf
+#else
+#define dprintf printf
+#endif
+
+typedef struct server_s server_t;
+
+struct server_s {
+	server_t		*prev;
+	server_t		*next;
+	struct sockaddr_in	ip;
+	unsigned short	port;
+	unsigned int	queued_pings;
+	unsigned int	heartbeats;
+	unsigned long	last_heartbeat;
+	unsigned long	last_ping;
+	unsigned char	shutdown_issued;
+	unsigned char	validated;
+};
+
+server_t servers;
+
+struct sockaddr_in listenaddress;
+SOCKET out;
+SOCKET listener;
+TIMEVAL delay;
+#ifdef WIN32
+WSADATA ws;
+#endif
+fd_set set;
+char incoming[150000];
+int retval;
+FILE *logfile;
 
 #if 0
-	if (do_stdin)
-		FD_SET (0, &fdset);
-#endif
-
-	if (net_socket >= 0)
-		FD_SET (net_socket, &fdset);
-
-	if (!idle)
-		timeout = &_timeout;
-
-	res = select (max (net_socket, 0) + 1, &fdset, NULL, NULL, timeout);
-	if (res == 0 || res == -1)
-		return 0;
-#if 0
-	stdin_ready = FD_ISSET (0, &fdset);
-#endif
-	return 1;
-}
-
 /**
  * @brief
+ * @TODO: Call this on signals send to the server
  */
-static void MS_Frame (void)
+static void MS_ExitNicely (void)
 {
-/*	Sys_CheckInput (1, ip_sockets[NS_SERVER]);
-	Con_ProcessInput ();
-	Cbuf_Execute();*/
-	MS_TimeOut ();
-	SV_ReadPackets ();
-}
+	server_t	*server = &servers;
+	server_t	*old = NULL;
 
-/**
- * @brief
- */
-int main (int argc, const char **argv)
-{
-	Sys_Init ();
+	printf ("[I] shutting down.\n");
 
-#if 0
-	Cmd_AddCommand ("quit", MST_Quit_f, "Shut down the master server");
-	Cmd_AddCommand ("clear", SVL_Clear, "Clear the server list");
-	Cmd_AddCommand ("filter", Filter_f, "Manipulate filtering");
-
-/*	Cmd_StuffCmds ();*/
-	Cbuf_Execute ();
-
-#endif
-	SV_InitNet ();
-	printf ("Exe: " __TIME__ " " __DATE__ "\n");
-	printf ("======== UFO:AI master initialized ========\n\n");
-	while (1) {
-		MS_Frame ();
+	while (server->next) {
+		if (old)
+			free (old);
+		server = server->next;
+		old = server;
 	}
-	printf ("UFO:AI master shutdown\n");
-	MS_Shutdown();
-	return 0;
+
+	if (old)
+		free (old);
+}
+#endif
+
+/**
+ * @brief
+ */
+static void MS_DropServer (server_t *server)
+{
+	/* unlink */
+	if (server->next)
+		server->next->prev = server->prev;
+
+	if (server->prev)
+		server->prev->next = server->next;
+
+	/* free */
+	free (server);
+}
+
+/**
+ * @brief
+ */
+static void MS_AddServer (struct sockaddr_in *from, int normal)
+{
+	server_t	*server = &servers;
+	int			preserved_heartbeats = 0;
+
+	while (server->next) {
+		server = server->next;
+		if (*(int *)&from->sin_addr == *(int *)&server->ip.sin_addr && from->sin_port == server->port) {
+			/* already exists - could be a pending shutdown (ie killserver, change of map, etc) */
+			if (server->shutdown_issued) {
+				dprintf ("[I] scheduled shutdown server %s sent another ping!\n", inet_ntoa (from->sin_addr));
+				MS_DropServer (server);
+				server = &servers;
+				while (server->next)
+					server = server->next;
+				break;
+			} else {
+				dprintf ("[W] dupe ping from %s!! ignored.\n", inet_ntoa (server->ip.sin_addr));
+				return;
+			}
+		}
+	}
+
+	server->next = (server_t *)malloc(sizeof(server_t));
+
+	server->next->prev = server;
+	server = server->next;
+
+	server->heartbeats = preserved_heartbeats;
+	memcpy (&server->ip, from, sizeof(server->ip));
+	server->last_heartbeat = time(0);
+	server->next = NULL;
+	server->port = from->sin_port;
+	server->shutdown_issued = server->queued_pings = server->last_ping = server->validated = 0;
+
+	dprintf ("[I] server %s added to queue! (%d)\n", inet_ntoa (from->sin_addr), normal);
+	/* write out to log file, I want to track this */
+#if 0
+	logfile = fopen(inet_ntoa(from->sin_addr), "w");
+	fprintf(logfile, "%s\n", inet_ntoa(from->sin_addr));
+	fclose(logfile);
+#endif
+	if (normal) {
+		struct sockaddr_in addr;
+		memcpy (&addr.sin_addr, &server->ip.sin_addr, sizeof(addr.sin_addr));
+		addr.sin_family = AF_INET;
+		addr.sin_port = server->port;
+		memset (&addr.sin_zero, 0, sizeof(addr.sin_zero));
+		sendto (listener, "ack", 7, 0, (struct sockaddr *)&addr, sizeof(addr));
+	}
+}
+
+/**
+ * @brief
+ */
+static void MS_QueueShutdown (struct sockaddr_in *from, server_t *myserver)
+{
+	server_t	*server = &servers;
+
+	if (!myserver) {
+		while (server->next) {
+			server = server->next;
+			if (*(int *)&from->sin_addr == *(int *)&server->ip.sin_addr && from->sin_port == server->port) {
+				myserver = server;
+				break;
+			}
+		}
+	}
+
+	if (myserver) {
+		struct sockaddr_in addr;
+		memcpy (&addr.sin_addr, &myserver->ip.sin_addr, sizeof(addr.sin_addr));
+		addr.sin_family = AF_INET;
+		addr.sin_port = server->port;
+		memset (&addr.sin_zero, 0, sizeof(addr.sin_zero));
+
+		/* hack, server will drop in next minute IF it doesn't respond to our ping */
+		myserver->shutdown_issued = 1;
+
+		dprintf ("[I] %s shutdown queued\n", inet_ntoa (myserver->ip.sin_addr));
+		sendto (listener, "ping", 8, 0, (struct sockaddr *)&addr, sizeof(addr));
+		return;
+	} else {
+		dprintf ("[W] shutdown issued from unregistered server %s!\n", inet_ntoa (from->sin_addr));
+	}
+}
+
+/**
+ * @brief
+ */
+static void MS_RunFrame (void)
+{
+	server_t		*server = &servers;
+	unsigned int	curtime = time(0);
+
+	while (server->next) {
+		server = server->next;
+		if (curtime - server->last_heartbeat > 30) {
+			server_t *old = server;
+
+			server = old->prev;
+
+			if (old->shutdown_issued || old->queued_pings > 6) {
+				dprintf ("[I] %s shut down.\n", inet_ntoa (old->ip.sin_addr));
+				MS_DropServer (old);
+				continue;
+			}
+
+			server = old;
+			if (curtime - server->last_ping >= 10) {
+				struct sockaddr_in addr;
+				memcpy (&addr.sin_addr, &server->ip.sin_addr, sizeof(addr.sin_addr));
+				addr.sin_family = AF_INET;
+				addr.sin_port = server->port;
+				memset (&addr.sin_zero, 0, sizeof(addr.sin_zero));
+				server->queued_pings++;
+				server->last_ping = curtime;
+				dprintf ("[I] ping %s\n", inet_ntoa (server->ip.sin_addr));
+				sendto (listener, "ping", 8, 0, (struct sockaddr *)&addr, sizeof(addr));
+			}
+		}
+	}
+}
+
+/**
+ * @brief
+ */
+static void MS_SendServerListToClient (struct sockaddr_in *from)
+{
+	/* unsigned short	port; */
+	int				buflen;
+	char			buff[0xFFFF];
+	server_t		*server = &servers;
+	struct sockaddr_in ufoservers;
+	unsigned int addr;
+
+	buflen = 0;
+	memset (buff, 0, sizeof(buff));
+
+	memcpy (buff, "servers ", 12);
+	buflen += 12;
+
+	while (server->next) {
+		server = server->next;
+		/*if (server->heartbeats >= 2 && !server->shutdown_issued && server->validated) { */
+			memcpy (buff + buflen, &server->ip.sin_addr, 4);
+			buflen += 4;
+			/*port = ntohs(server->port); */
+			memcpy (buff + buflen, &server->port, 2);
+			buflen += 2;
+		/*}*/
+	}
+
+	addr = inet_addr(MASTER_SERVER);
+
+	ufoservers.sin_port = htons (27910);
+	memcpy (buff + buflen, &addr, 4);
+	buflen +=4;
+	memcpy (buff + buflen, &ufoservers.sin_port, 4);
+	buflen +=2;
+
+	ufoservers.sin_port = htons (27920);
+	memcpy (buff + buflen, &addr, 4);
+	buflen +=4;
+	memcpy (buff + buflen, &ufoservers.sin_port, 4);
+	buflen +=2;
+
+	ufoservers.sin_port = htons (27930);
+	memcpy (buff + buflen, &addr, 4);
+	buflen +=4;
+	memcpy (buff + buflen, &ufoservers.sin_port, 4);
+	buflen +=2;
+
+	/* dprintf ("[I] query response (%d bytes) sent to %s:%d\n", buflen, inet_ntoa (from->sin_addr), ntohs (from->sin_port)); */
+
+	if ((sendto (listener, buff, buflen, 0, (struct sockaddr *)from, sizeof(*from))) == SOCKET_ERROR) {
+		dprintf ("[E] socket error on send! code %d.\n", WSAGetLastError());
+	}
+
+	dprintf ("[I] sent server list to client %s\n", inet_ntoa (from->sin_addr));
+}
+
+/**
+ * @brief
+ */
+static void MS_Ack (struct sockaddr_in *from)
+{
+	server_t	*server = &servers;
+
+	/* iterate through known servers */
+	while (server->next) {
+		server = server->next;
+		/* a match! */
+		if (*(int *)&from->sin_addr == *(int *)&server->ip.sin_addr && from->sin_port == server->port) {
+			printf ("[I] ack from %s (%d).\n", inet_ntoa (server->ip.sin_addr), server->queued_pings);
+			server->last_heartbeat = time(0);
+			server->queued_pings = 0;
+			server->heartbeats++;
+			return;
+		}
+	}
+}
+
+/**
+ * @brief
+ */
+static void MS_HeartBeat (struct sockaddr_in *from, char *data)
+{
+	server_t	*server = &servers;
+
+	/* iterate through known servers */
+	while (server->next) {
+		server = server->next;
+		/* a match! */
+		if (*(int *)&from->sin_addr == *(int *)&server->ip.sin_addr && from->sin_port == server->port) {
+			struct sockaddr_in addr;
+
+			memcpy (&addr.sin_addr, &server->ip.sin_addr, sizeof(addr.sin_addr));
+			addr.sin_family = AF_INET;
+			addr.sin_port = server->port;
+			memset (&addr.sin_zero, 0, sizeof(addr.sin_zero));
+
+			if (!strstr (data, "\\gamedir\\" ACCEPTED_MOD "\\")) {
+				dprintf ("[W] dropped non " ACCEPTED_MOD " server %s\n", inet_ntoa (server->ip.sin_addr));
+				sendto (listener, "this master server only accepts " ACCEPTED_MOD " servers!", 54, 0, (struct sockaddr *)&addr, sizeof(addr));
+				MS_DropServer (server);
+				return;
+			}
+
+			server->validated = 1;
+			server->last_heartbeat = time(0);
+			dprintf ("[I] heartbeat from %s.\n", inet_ntoa (server->ip.sin_addr));
+			sendto (listener, "ack", 7, 0, (struct sockaddr *)&addr, sizeof(addr));
+			return;
+		}
+	}
+
+	/* we didn't find server in our list!! */
+	if (strstr (data, "\\gamedir\\" ACCEPTED_MOD "\\"))
+		MS_AddServer (from, 0);
+}
+
+/**
+ * @brief
+ */
+static void MS_ParseResponse (struct sockaddr_in *from, char *data, int dglen)
+{
+	char *cmd = data;
+	char *line = data;
+
+	if (strnicmp (data, "query", 5) == 0 || strnicmp (data, "getservers", 14) == 0) {
+		/* dprintf ("[I] %s:%d : query (%d bytes)\n", inet_ntoa(from->sin_addr), htons(from->sin_port), dglen); */
+		MS_SendServerListToClient (from);
+	} else {
+		while (*line && *line != '\n')
+			line++;
+
+		*(line++) = '\0';
+		cmd += 4;
+
+		/* dprintf ("[I] %s: %s (%d bytes)\n", inet_ntoa(from->sin_addr), cmd, dglen); */
+
+		if (strnicmp (cmd, "ping", 4) == 0) {
+			MS_AddServer (from, 1);
+		} else if (strnicmp (cmd, "heartbeat", 9) == 0 || strnicmp (cmd, "print", 5) == 0) {
+			MS_HeartBeat (from, line);
+		} else if (strncmp (cmd, "ack", 3) == 0) {
+			MS_Ack (from);
+		} else if (strnicmp (cmd, "shutdown", 8) == 0) {
+			MS_QueueShutdown (from, NULL);
+		} else {
+			printf ("[W] Unknown command from %s!\n", inet_ntoa (from->sin_addr));
+		}
+	}
+}
+
+/**
+ * @brief
+ */
+int main (int argc, char **argv)
+{
+	int len;
+	size_t fromlen;
+	struct sockaddr_in from;
+
+	printf ("ufomaster %s\n", VERSION);
+
+#ifdef WIN32
+	WSAStartup ((WORD)MAKEWORD (1,1), &ws);
+#endif
+
+	listener = socket (AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	out = socket (AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+
+	memset (&listenaddress, 0, sizeof(listenaddress));
+
+	listenaddress.sin_family = AF_INET;
+	listenaddress.sin_port = htons(27900);
+	listenaddress.sin_addr.s_addr = INADDR_ANY;
+
+	if ((bind (listener, (struct sockaddr *)&listenaddress, sizeof(listenaddress))) == SOCKET_ERROR) {
+		printf ("[E] Couldn't bind to port 27900 UDP (something is probably using it)\n");
+		return 1;
+	}
+
+	delay.tv_sec = 1;
+	delay.tv_usec = 0;
+
+	FD_SET (listener, &set);
+
+	/* listen (listener, SOMAXCONN); */
+
+	fromlen = sizeof(from);
+
+	memset (&servers, 0, sizeof(servers));
+
+	printf ("listening on port 27900 (UDP)\n");
+
+	while (1) {
+		FD_SET (listener, &set);
+		delay.tv_sec = 1;
+		delay.tv_usec = 0;
+
+		retval = select(listener+1, &set, NULL, NULL, &delay);
+		if (retval == 1) {
+			len = recvfrom (listener, incoming, sizeof(incoming), 0, (struct sockaddr *)&from, &fromlen);
+			if (len != SOCKET_ERROR) {
+				if (len > 4) {
+					/* parse this packet */
+					MS_ParseResponse (&from, incoming, len);
+				} else {
+					dprintf ("[W] runt packet from %s:%d\n", inet_ntoa (from.sin_addr), ntohs(from.sin_port));
+				}
+
+				/* reset for next packet */
+				memset (incoming, 0, sizeof(incoming));
+			} else {
+				dprintf ("[E] socket error during select from %s:%d (%d)\n", inet_ntoa (from.sin_addr), ntohs(from.sin_port), WSAGetLastError());
+			}
+		}
+
+		/* destroy old servers, etc */
+		MS_RunFrame ();
+	}
 }
