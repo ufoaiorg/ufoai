@@ -48,7 +48,7 @@ int lastTU; /* keeps track of selActor->TU */
 /* a cbuf string for each button_types_t */
 static char *shoot_type_strings[BT_NUM_TYPES] = {
 	"pr\n",
-	"reactions\n",
+	"reaction\n",
 	"sr\n",
 	"\n",
 	"pl\n",
@@ -484,6 +484,7 @@ void CL_ActorUpdateCVars(void)
 	if (refresh) {
 		Cvar_Set("hud_refresh", "0");
 		Cvar_Set("cl_worldlevel", cl_worldlevel->string);
+		CL_ResetWeaponButtons();
 	}
 
 	/* set Cvars for all actors */

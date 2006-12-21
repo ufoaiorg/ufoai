@@ -498,18 +498,24 @@ menu althud
 		click	{ cmd mn_pop; }
 	}
 
-	func bt_weapon_clear
-	{
-		*bt_primaryleft    image althud/buttons_althud1
-		*bt_secondaryleft  image althud/buttons_althud1
-		*bt_primaryright   image althud/buttons_althud1
-		*bt_secondaryright image althud/buttons_althud1
-	}
+	confunc towpla { *bt_primaryleft    image althud/buttons_althud1a }
+	confunc towpra { *bt_primaryright   image althud/buttons_althud1a }
+	confunc towsla { *bt_secondaryleft  image althud/buttons_althud1a }
+	confunc towsra { *bt_secondaryright image althud/buttons_althud1a }
 
-	confunc towpla { bt_weapon_clear *bt_primaryleft    image althud/buttons_althud1a }
-	confunc towpra { bt_weapon_clear *bt_primaryright   image althud/buttons_althud1a }
-	confunc towsla { bt_weapon_clear *bt_secondaryleft  image althud/buttons_althud1a }
-	confunc towsra { bt_weapon_clear *bt_secondaryright image althud/buttons_althud1a }
+	confunc deselpla { *bt_primaryleft     image althud/buttons_althud1 }
+	confunc deselpra { *bt_primaryright    image althud/buttons_althud1 }
+	confunc deselsla { *bt_secondaryleft   image althud/buttons_althud1 }
+	confunc deselsra { *bt_secondaryright  image althud/buttons_althud1 }
+	confunc deselrla { *bt_reloadleft      image althud/buttons_althud1 }
+	confunc deselrra { *bt_reloadright     image althud/buttons_althud1 }
+
+	confunc displa { *bt_primaryleft     image althud/buttons_althud1g }
+	confunc dispra { *bt_primaryright    image althud/buttons_althud1g }
+	confunc dissla { *bt_secondaryleft   image althud/buttons_althud1g }
+	confunc dissra { *bt_secondaryright  image althud/buttons_althud1g }
+	confunc disrla { *bt_reloadleft      image althud/buttons_althud1g }
+	confunc disrra { *bt_reloadright     image althud/buttons_althud1g }
 
 	pic bt_primaryright
 	{
@@ -562,11 +568,12 @@ menu althud
 		*bt_reaction image althud/buttons_althud1a
 		*bt_reaction tooltip "_One-shot reaction fire"
 	}
-	confunc stopreactiona
+	confunc deselreactiona
 	{
 		*bt_reaction image althud/buttons_althud1
 		*bt_reaction tooltip "_No reaction fire"
 	}
+	confunc disreactiona { *bt_reaction image althud/buttons_althud1g }
 
 	pic bt_reaction
 	{
@@ -601,8 +608,10 @@ menu althud
 		click	{ cmd reloadleft; }
 	}
 
-	confunc deselstanda  { *bt_duck texl "27 37" *bt_duck texh "52 70" }
-	confunc deselcroucha { *bt_duck texl "54 37" *bt_duck texh "79 70" }
+	confunc deselstanda  { *bt_duck texl "27 37" *bt_duck texh "52 70" *bt_duck image althud/buttons_althud1 }
+	confunc deselcroucha { *bt_duck texl "54 37" *bt_duck texh "79 70" *bt_duck image althud/buttons_althud1 }
+	confunc disstanda    { *bt_duck texl "27 37" *bt_duck texh "52 70" *bt_duck image althud/buttons_althud1g }
+	confunc discroucha   { *bt_duck texl "54 37" *bt_duck texh "79 70" *bt_duck image althud/buttons_althud1g }
 
 	pic bt_duck
 	{
