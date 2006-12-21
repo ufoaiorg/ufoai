@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <time.h>
 
-#ifdef WIN32
+#ifdef _WIN32
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 # include <malloc.h>
@@ -80,7 +80,7 @@ struct sockaddr_in listenaddress;
 SOCKET out;
 SOCKET listener;
 TIMEVAL delay;
-#ifdef WIN32
+#ifdef _WIN32
 WSADATA ws;
 #endif
 fd_set set;
@@ -256,7 +256,7 @@ static void MS_RunFrame (void)
 }
 
 /**
- * @brief
+ * @brief Submit the server list to the requesting client
  */
 static void MS_SendServerListToClient (struct sockaddr_in *from)
 {
@@ -418,7 +418,7 @@ int main (int argc, char **argv)
 
 	printf ("ufomaster %s\n", VERSION);
 
-#ifdef WIN32
+#ifdef _WIN32
 	WSAStartup ((WORD)MAKEWORD (1,1), &ws);
 #endif
 
