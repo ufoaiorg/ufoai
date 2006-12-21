@@ -339,7 +339,7 @@ void SpawnEntities(char *mapname, char *entities)
 	}
 #ifdef DEBUG
 	else
-		Com_Printf("No civilian spawn points in this map or civlians deactivated\n");
+		Com_Printf("No civilian spawn points in this map or civilians deactivated\n");
 #endif
 
 	if (((int) sv_maxclients->value == 1 || ai_numactors->value) && level.num_spawnpoints[TEAM_ALIEN]) {

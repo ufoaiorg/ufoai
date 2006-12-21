@@ -1568,7 +1568,7 @@ void CL_ActorDie(sizebuf_t * sb)
 	} else {
 		switch (le->team) {
 		case (TEAM_CIVILIAN):
-			Com_Printf(_("A civlian was killed!\n"));
+			Com_Printf(_("A civilian was killed!\n"));
 			break;
 		case (TEAM_ALIEN):
 			Com_Printf(_("An alien was killed!\n"));
