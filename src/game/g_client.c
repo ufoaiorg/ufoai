@@ -24,9 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "g_local.h"
-/* TODO: still needed for INV_AmmoUsableInWeapon  in windows?
-#include "../qcommon/qcommon.h"
-*/
 
 #define VIS_APPEAR	1
 #define VIS_PERISH	2
