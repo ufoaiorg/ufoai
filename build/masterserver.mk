@@ -1,25 +1,5 @@
 MASTERSERVER_SRCS = \
-	qcommon/net_chan.c \
-	\
 	tools/masterserver/master.c
-
-#
-ifeq ($(HAVE_IPV6),1)
-	# FIXME: flags!
-	NET_MASTER=net_master
-else
-	NET_MASTER=net_master
-endif
-
-ifeq ($(TARGET_OS),linux-gnu)
-	MASTERSERVER_SRCS += \
-		ports/unix/$(NET_MASTER).c
-endif
-
-ifeq ($(TARGET_OS),freebsd)
-	MASTERSERVER_SRCS += \
-		ports/unix/$(NET_MASTER).c
-endif
 
 MASTERSERVER_OBJS= \
 	$(patsubst %.c, $(BUILDDIR)/masterserver/%.o, $(filter %.c, $(MASTERSERVER_SRCS))) \
