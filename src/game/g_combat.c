@@ -347,8 +347,6 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 		else
 			attacker->chr.kills[KILLED_ALIENS]++;
 
-		/* check for win conditions */
-		G_CheckEndGame();
 	} else {
 		if (damage > 0 && mor_panic->value) {
 			G_Morale(ML_WOUND, ent, attacker, damage);
@@ -1005,6 +1003,9 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 
 		/* end events */
 		gi.EndEvents();
+
+		/* check for win/draw conditions */
+		G_CheckEndGame();
 
 		/* check for Reaction fire against the shooter */
 		if (allowReaction)
