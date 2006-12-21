@@ -1708,18 +1708,27 @@ void CL_ParseResults(sizebuf_t * buf)
 		MN_PushMenu("map");
 	}
 	/* show win screen */
-	if (winner == we)
-		MN_PushMenu("won");
-	else if (ccs.singleplayer || (!ccs.singleplayer && winner != 0))
-		MN_PushMenu("lost");
-
-	if (!ccs.singleplayer) {
+	if (ccs.singleplayer) {
 		if (winner == we)
-			MN_Popup(_("Congratulations"), _("You won the game!"));
-		else if (winner == 0)
-			MN_Popup(_("Game Drawn!"), _("The game was a draw!"));
+			MN_PushMenu("won");
 		else
-			MN_Popup(_("Better luck next time"), _("You lost the game"));
+			MN_PushMenu("lost");
+	} else {
+		static char popupText[MAX_MENUTEXTLEN];
+
+		Com_sprintf(resultText, MAX_MENUTEXTLEN, _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), thier_killed + thier_stunned, our_surviviurs);
+		if (winner == we) {
+			Q_strncpyz(popupText, _("You won the game!"), MAX_VAR);
+			Q_strcat(popupText, resultText, MAX_MENUTEXTLEN);
+			MN_Popup(_("Congratulations"), popupText);
+		} else if (winner == 0) {
+			Q_strncpyz(popupText, _("The game was a draw!\n\nNo survivors left on any side."), MAX_VAR);
+			MN_Popup(_("Game Drawn!"), popupText);
+		} else {
+			Q_strncpyz(popupText, _("You lost the game"), MAX_VAR);
+			Q_strcat(popupText, resultText, MAX_MENUTEXTLEN);
+			MN_Popup(_("Better luck next time"), popupText);
+		}
 	}
 
 	/* we can safely wipe all mission data now */
