@@ -951,6 +951,8 @@ Section "SourceCode" SEC03
   File "..\..\tools\blender\*.py"
   SetOutPath "$INSTDIR\src\tools\gtkradiant"
   File "..\..\tools\gtkradiant\*.diff"
+  SetOutPath "$INSTDIR\src\tools\masterserver"
+  File "..\..\tools\masterserver\*.c"
   SetOutPath "$INSTDIR\src\tools\gtkradiant\games"
   File "..\..\tools\gtkradiant\games\*.game"
   SetOutPath "$INSTDIR\src\tools\gtkradiant\plugin"
