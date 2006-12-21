@@ -1241,7 +1241,7 @@ void CL_LoadTeamMultiplayer(char *filename)
 
 	/* get aircraft soldier content for multi-player */
 	aircraft = &gd.bases[0].aircraft[0];
-	Com_Printf("Multiplayer aircraft IDX = %i\n", aircraft->idx);
+	Com_DPrintf("Multiplayer aircraft IDX = %i\n", aircraft->idx);
 	aircraft->size = MSG_ReadByte(&sb);
 	for (i = 0; i < aircraft->size; i++) {
 		if (i < gd.bases[0].teamNum[0])

@@ -397,19 +397,19 @@ menu hud
 	confunc towsls { *bt_sfire_left   image hud/buttons1a }
 	confunc towsrs { *bt_sfire_right  image hud/buttons1a }
 
-	confunc deselpl { *bt_pfire_left   image hud/buttons1 }
-	confunc deselpr { *bt_pfire_right  image hud/buttons1 }
-	confunc deselsl { *bt_sfire_left   image hud/buttons1 }
-	confunc deselsr { *bt_sfire_right  image hud/buttons1 }
-	confunc deselrl { *bt_reload_left  image hud/buttons2 }
-	confunc deselrr { *bt_reload_right image hud/buttons2 }
+	confunc deselpls { *bt_pfire_left   image hud/buttons1 }
+	confunc deselprs { *bt_pfire_right  image hud/buttons1 }
+	confunc deselsls { *bt_sfire_left   image hud/buttons1 }
+	confunc deselsrs { *bt_sfire_right  image hud/buttons1 }
+	confunc deselrls { *bt_reload_left  image hud/buttons2 }
+	confunc deselrrs { *bt_reload_right image hud/buttons2 }
 
-	confunc displ { *bt_pfire_left   image hud/buttons1g }
-	confunc dispr { *bt_pfire_right  image hud/buttons1g }
-	confunc dissl { *bt_sfire_left   image hud/buttons1g }
-	confunc dissr { *bt_sfire_right  image hud/buttons1g }
-	confunc disrl { *bt_reload_left  image hud/buttons2g }
-	confunc disrr { *bt_reload_right image hud/buttons2g }
+	confunc displs { *bt_pfire_left   image hud/buttons1g }
+	confunc disprs { *bt_pfire_right  image hud/buttons1g }
+	confunc dissls { *bt_sfire_left   image hud/buttons1g }
+	confunc dissrs { *bt_sfire_right  image hud/buttons1g }
+	confunc disrls { *bt_reload_left  image hud/buttons2g }
+	confunc disrrs { *bt_reload_right image hud/buttons2g }
 
 	pic bt_pfire_right
 	{
@@ -506,8 +506,8 @@ menu hud
 
 	confunc deselstands { *bt_duck image hud/buttons2 }
 	confunc deselcrouchs { *bt_duck image hud/buttons2a }
-	confunc disstand { *bt_duck image hud/buttons2g }
-	confunc discrouch { *bt_duck image hud/buttons2ag }
+	confunc disstands { *bt_duck image hud/buttons2g }
+	confunc discrouchs { *bt_duck image hud/buttons2ag }
 
 	pic bt_duck
 	{
@@ -530,12 +530,11 @@ menu hud
 		*bt_reaction image hud/button_guarda
 		*bt_reaction tooltip "_One-shot reaction fire"
 	}
-	confunc stopreactions
+	confunc deselreactions
 	{
 		*bt_reaction image hud/button_guard
 		*bt_reaction tooltip "_No reaction fire"
 	}
-	confunc deselreactions { *bt_reaction image hud/button_guard }
 	confunc disreactions { *bt_reaction image hud/button_guardg }
 
 	pic bt_reaction

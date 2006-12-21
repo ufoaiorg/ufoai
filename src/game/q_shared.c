@@ -2289,7 +2289,7 @@ qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int
 	ic = i->c[container];
 	if (!ic) {
 #ifdef PARANOID
-		Com_Printf("Com_RemoveFromInventory - empty container %s\n", CSI->ids[container].name);
+		Com_DPrintf("Com_RemoveFromInventory - empty container %s\n", CSI->ids[container].name);
 #endif
 		return qfalse;
 	}
@@ -2471,7 +2471,7 @@ void Com_EmptyContainer(inventory_t* const i, const int container)
 #ifdef DEBUG
 	int cnt = 0;
 	if (CSI->ids[container].temp)
-		Com_Printf("Com_EmptyContainer: Emptying temp container %s.\n", CSI->ids[container].name);
+		Com_DPrintf("Com_EmptyContainer: Emptying temp container %s.\n", CSI->ids[container].name);
 #endif
 
 	assert(i);

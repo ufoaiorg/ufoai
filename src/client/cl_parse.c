@@ -516,7 +516,7 @@ void CL_EntAppear( sizebuf_t *sb )
 	if ( !le ) {
 		le = LE_Add(entnum);
 	} else {
-		Com_Printf("Entity appearing already visible... overwriting the old one\n");
+		Com_DPrintf("Entity appearing already visible... overwriting the old one\n");
 		le->inuse = qtrue;
 	}
 
@@ -541,7 +541,7 @@ void CL_EntPerish( sizebuf_t *sb )
 	le = LE_Get(entnum);
 
 	if ( !le ) {
-		Com_Printf( "Delete request ignored... LE not found\n" );
+		Com_DPrintf( "Delete request ignored... LE not found\n" );
 		return;
 	}
 
@@ -814,7 +814,7 @@ void CL_PlaceItem( le_t *le )
 			 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
 			 && VectorCompare(actor->pos, le->pos) ) {
 #if PARANOID
-			Com_Printf("CL_PlaceItem: shared container: '%p'\n", FLOOR(le));
+			Com_DPrintf("CL_PlaceItem: shared container: '%p'\n", FLOOR(le));
 #endif
 			if (FLOOR(le))
 				FLOOR(actor) = FLOOR(le);
@@ -862,7 +862,7 @@ void CL_InvAdd( sizebuf_t *sb )
 		return;
 	} 
 	if (!le->inuse)
-		Com_Printf( "InvAdd: warning... LE found but not in-use\n" );
+		Com_DPrintf( "InvAdd: warning... LE found but not in-use\n" );
 
 	nr = MSG_ReadShort(sb) / 6;
 
@@ -903,7 +903,7 @@ void CL_InvDel( sizebuf_t *sb )
 
 	le = LE_Get( number );
 	if ( !le ) {
-		Com_Printf( "InvDel message ignored... LE not found\n" );
+		Com_DPrintf( "InvDel message ignored... LE not found\n" );
 		return;
 	}
 
@@ -1324,7 +1324,7 @@ void CL_ParseServerMessage (void)
 			break;
 
 		case svc_disconnect:
-			Com_Error (ERR_DISCONNECT,"Server disconnected\n");
+			Com_Error (ERR_DISCONNECT,"Server disconnected. Not attempting to reconnect.\n");
 			break;
 
 		case svc_reconnect:

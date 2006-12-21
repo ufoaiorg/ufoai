@@ -31,10 +31,28 @@ menu nohud
 	confunc towpr { cmd towprs;towpra; }
 	confunc towsl { cmd towsls;towsla; }
 	confunc towsr { cmd towsrs;towsra; }
+
+	confunc deselpl { cmd deselpls;deselpla; }
+	confunc deselpr { cmd deselprs;deselpra; }
+	confunc deselsl { cmd deselsls;deselsla; }
+	confunc deselsr { cmd deselsrs;deselsra; }
+	confunc deselrl { cmd deselrls;deselrla; }
+	confunc deselrr { cmd deselrrs;deselrra; }
+
+	confunc displ { cmd displs;displa; }
+	confunc dispr { cmd disprs;dispra; }
+	confunc dissl { cmd dissls;dissla; }
+	confunc dissr { cmd dissrs;dissra; }
+	confunc disrl { cmd disrls;disrla; }
+	confunc disrr { cmd disrrs;disrra; }
 	
 	confunc deselstand { cmd deselstands;deselstanda; }
 	confunc deselcrouch { cmd deselcrouchs;deselcroucha; }
+	confunc disstand { cmd disstands;disstanda; }
+	confunc discrouch { cmd discrouchs;discroucha; }
+
 	confunc startreactionmany { cmd startreactionmanys;startreactionmanya; }
 	confunc startreactiononce { cmd startreactiononces;startreactiononcea; }
-	confunc stopreaction { cmd stopreactions;stopreactiona; }
+	confunc deselreaction { cmd deselreactions;deselreactiona; }
+	confunc disreaction { cmd disreactions;disreactiona; }
 }

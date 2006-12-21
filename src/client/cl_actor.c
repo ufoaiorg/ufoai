@@ -48,7 +48,7 @@ int lastTU; /* keeps track of selActor->TU */
 /* a cbuf string for each button_types_t */
 static char *shoot_type_strings[BT_NUM_TYPES] = {
 	"pr\n",
-	"reactions\n",
+	"reaction\n",
 	"sr\n",
 	"\n",
 	"pl\n",
@@ -483,6 +483,7 @@ void CL_ActorUpdateCVars(void)
 	if (refresh) {
 		Cvar_Set("hud_refresh", "0");
 		Cvar_Set("cl_worldlevel", cl_worldlevel->string);
+		CL_ResetWeaponButtons();
 	}
 
 	/* set Cvars for all actors */
@@ -1543,7 +1544,7 @@ void CL_ActorDie(sizebuf_t * sb)
 	}*/
 
 	/* count spotted aliens */
-	if (le->team != cls.team && le->team != TEAM_CIVILIAN)
+	if (le->team != cls.team && le->team != TEAM_CIVILIAN && le->inuse)
 		cl.numAliensSpotted--;
 
 	/* set relevant vars */
@@ -2191,7 +2192,7 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
 	oldLevel = cl_worldlevel->value;
-	Cvar_SetValue("cl_worldlevel", map_maxlevel-1);
+	cl_worldlevel->value = map_maxlevel-1;
 
 	/* check for obstacles */
 	VectorSet(mins, 0, 0, 0);
@@ -2212,7 +2213,7 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 	}
 
 	/* switch level back to where it was again */
-	Cvar_SetValue("cl_worldlevel", oldLevel);
+	cl_worldlevel->value = oldLevel;
 
 	/* spawn particles */
 	CL_ParticleSpawn("inRangeTracer", 0, start, mid, NULL);
@@ -2281,7 +2282,7 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
 	oldLevel = cl_worldlevel->value;
-	Cvar_SetValue("cl_worldlevel", map_maxlevel-1);
+	cl_worldlevel->value = map_maxlevel-1;
 
 	/* paint */
 	vz = v0[2];
@@ -2316,7 +2317,7 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 	selToHit = 100 * CL_TargetingToHit(toPos);
 
 	/* switch level back to where it was again */
-	Cvar_SetValue("cl_worldlevel", oldLevel);
+	cl_worldlevel->value = oldLevel;
 }
 
 
