@@ -2239,7 +2239,7 @@ image_t *GL_FindImage(const char *pname, imagetype_t type)
 	image = r_notexture;
 
 	*ename = 0;
-	ri.Con_Printf(PRINT_ALL, "Can't find %s\n", lname);
+	ri.Con_Printf(PRINT_ALL, "GL_FindImage: Can't find %s (%s)\n", lname, pname);
 
 	if ((glerrortexend - glerrortex) + strlen(lname) < MAX_GLERRORTEX) {
 		Q_strncpyz(glerrortexend, lname, MAX_QPATH);
