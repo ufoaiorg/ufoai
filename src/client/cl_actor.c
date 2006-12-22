@@ -1328,8 +1328,8 @@ void CL_ActorStandCrouch(void)
 
 	if (selActor->fieldSize == ACTOR_SIZE_UGV )
 		return;
-	/* send message to server */
-	MSG_Write_PA(PA_STATE, selActor->entnum, selActor->state ^ STATE_CROUCHED);
+	/* send a request to toggle crouch to the server */
+	MSG_Write_PA(PA_STATE, selActor->entnum, STATE_CROUCHED);
 }
 
 
@@ -1345,8 +1345,9 @@ void CL_ActorStun(void)
 	if (!CL_CheckAction())
 		return;
 
-	/* send message to server */
-	MSG_Write_PA(PA_STATE, selActor->entnum, selActor->state ^ STATE_STUN);
+	/* send a request to the server to stun this actor */
+	/* the server currently will refuse to stun an actor sent via PA_STATE */
+	MSG_Write_PA(PA_STATE, selActor->entnum, STATE_STUN);
 }
 
 
@@ -1355,12 +1356,10 @@ void CL_ActorStun(void)
  */
 void CL_ActorToggleReaction(void)
 {
-	int state;
+	int state = 0;
 
 	if (!CL_CheckAction())
 		return;
-
-	state = selActor->state & ~STATE_REACTION;
 
 	selActorReactionState++;
 	if (selActorReactionState > R_FIRE_MANY)
@@ -1368,18 +1367,19 @@ void CL_ActorToggleReaction(void)
 
 	switch (selActorReactionState) {
 	case R_FIRE_OFF:
+		state = ~STATE_REACTION;
 		break;
 	case R_FIRE_ONCE:
-		state |= STATE_REACTION_ONCE;
+		state = STATE_REACTION_ONCE;
 		break;
 	case R_FIRE_MANY:
-		state |= STATE_REACTION_MANY;
+		state = STATE_REACTION_MANY;
 		break;
 	default:
-		break;
+		return;
 	}
 
-	/* send message to server */
+	/* send request to update actor's reaction state to the server */
 	MSG_Write_PA(PA_STATE, selActor->entnum, state);
 }
 

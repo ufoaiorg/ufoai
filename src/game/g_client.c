@@ -1173,12 +1173,11 @@ static void G_ClientTurn(player_t * player, int num, int dv)
  * @brief Changes the thate of a player/soldier.
  * @param[in,out] player TODO Writeme
  * @param[in] num TODO Writeme
- * @param[in] newState The bit-map of the new states.
+ * @param[in] reqState The bit-map of the requested state change
  */
-static void G_ClientStateChange(player_t * player, int num, int newState)
+static void G_ClientStateChange(player_t * player, int num, int reqState)
 {
 	edict_t *ent;
-	int changeState;
 
 	ent = g_edicts + num;
 
@@ -1186,11 +1185,11 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 	if (!G_ActionCheck(player, ent, 0, NOISY))
 		return;
 
-	changeState = ent->state ^ newState;
-	if (!changeState)
+	if (!reqState)
 		return;
 
-	if (changeState & STATE_CROUCHED)
+	switch (reqState) {
+	case STATE_CROUCHED: /* toggle between crouch/stand */
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
 		if (G_ActionCheck(player, ent, TU_CROUCH, NOISY)) {
 			ent->state ^= STATE_CROUCHED;
@@ -1202,8 +1201,8 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
 			gi.linkentity(ent);
 		}
-
-	if (changeState & STATE_REACTION) {
+		break;
+	case ~STATE_REACTION: /* request to turn off reactio fire */
 		if (ent->state & STATE_REACTION_MANY) {
 			if (ent->state & STATE_SHAKEN)
 				gi.cprintf(player, PRINT_HIGH, _("Currently shaken, won't let it's guard down.\n"));
@@ -1223,10 +1222,16 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 					Com_DPrintf("G_ClientStateChange: 0 value saved for reaction while reaction is activated.\n");
 				}
 			}
-		} else if (ent->state & STATE_REACTION_ONCE) {
+		}
+		break;
+	case STATE_REACTION_MANY: /* request to turn on multi-reaction fire mode */
+		if (ent->state & STATE_REACTION_ONCE) {
 			ent->state &= ~STATE_REACTION;
 			ent->state |= STATE_REACTION_MANY;
-		} else if (G_ActionCheck(player, ent, TU_REACTION, NOISY)) {
+		}
+		break;
+	case STATE_REACTION_ONCE: /* request to turn on single-reaction fire mode */
+		if (G_ActionCheck(player, ent, TU_REACTION, NOISY)) {
 			/* Turn on reaction fire and save the used TUs to the list. */
 			ent->state |= STATE_REACTION_ONCE;
 
@@ -1244,6 +1249,10 @@ static void G_ClientStateChange(player_t * player, int num, int newState)
 				   Can be activated without TU-loss. */
 			}
 		}
+		break;
+	default:
+		Com_Printf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
+		return;
 	}
 
 	/* Send the state change. */
