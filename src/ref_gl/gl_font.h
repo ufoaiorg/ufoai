@@ -18,7 +18,6 @@ typedef struct font_s {
 
 /* font definitions */
 font_t fonts[MAX_FONTS];
-int numFonts;
 typedef struct fontCache_s {
 	char string[MAX_HASH_STRING];	/** hash id */
 	SDL_Surface *pixel;			/**< rendered font surface */

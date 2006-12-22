@@ -3419,7 +3419,7 @@ void CL_InitMessageSystem(void)
 /* ==================== USE_SDL_TTF stuff ===================== */
 
 #define MAX_FONTS 16
-int numFonts;
+static int numFonts = 0;
 font_t fonts[MAX_FONTS];
 
 font_t *fontBig;
