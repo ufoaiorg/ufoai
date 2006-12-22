@@ -1040,7 +1040,7 @@ void CL_PingServers_f (void)
 				adr.port = BigShort((int)masterserver_port->value);
 			adr.type = NA_IP;
 			Com_Printf("Send master server query request to '%s:%s'\n", masterserver_ip->string, masterserver_port->string);
-			Netchan_OutOfBandPrint (NS_CLIENT, adr, va("getservers %i", PROTOCOL_VERSION));
+			Netchan_OutOfBandPrint (NS_CLIENT, adr, "getservers");
 		}
 	}
 }

@@ -287,9 +287,9 @@ static void MS_SendServerListToClient (struct sockaddr_in *from)
 
 	ufoservers.sin_port = htons (27910);
 	memcpy (buff + buflen, &addr, 4);
-	buflen +=4;
+	buflen += 4;
 	memcpy (buff + buflen, &ufoservers.sin_port, 4);
-	buflen +=2;
+	buflen += 2;
 
 	dprintf ("[I] query response (%d bytes) sent to %s:%d\n", buflen, inet_ntoa (from->sin_addr), ntohs (from->sin_port));
 
@@ -368,29 +368,26 @@ static void MS_ParseResponse (struct sockaddr_in *from, char *data, int dglen)
 	char *cmd = data;
 	char *line = data;
 
-	if (strnicmp (data, "query", 5) == 0 || strnicmp (data, "getservers", 14) == 0) {
-		/* dprintf ("[I] %s:%d : query (%d bytes)\n", inet_ntoa(from->sin_addr), htons(from->sin_port), dglen); */
+	while (*line && *line != '\n')
+		line++;
+
+	*(line++) = '\0';
+	cmd += 4;
+
+	/* dprintf ("[I] %s:%d : query (%d bytes) '%s'\n", inet_ntoa(from->sin_addr), htons(from->sin_port), dglen, data); */
+
+	if (strnicmp (cmd, "ping", 4) == 0) {
+		MS_AddServer (from, 1);
+	} else if (strnicmp (cmd, "heartbeat", 9) == 0 || strnicmp (cmd, "print", 5) == 0) {
+		MS_HeartBeat (from, line);
+	} else if (strncmp (cmd, "ack", 3) == 0) {
+		MS_Ack (from);
+	} else if (strnicmp (cmd, "shutdown", 8) == 0) {
+		MS_QueueShutdown (from, NULL);
+	} else if (strnicmp (cmd, "getservers", 10) == 0) {
 		MS_SendServerListToClient (from);
 	} else {
-		while (*line && *line != '\n')
-			line++;
-
-		*(line++) = '\0';
-		cmd += 4;
-
-		/* dprintf ("[I] %s: %s (%d bytes)\n", inet_ntoa(from->sin_addr), cmd, dglen); */
-
-		if (strnicmp (cmd, "ping", 4) == 0) {
-			MS_AddServer (from, 1);
-		} else if (strnicmp (cmd, "heartbeat", 9) == 0 || strnicmp (cmd, "print", 5) == 0) {
-			MS_HeartBeat (from, line);
-		} else if (strncmp (cmd, "ack", 3) == 0) {
-			MS_Ack (from);
-		} else if (strnicmp (cmd, "shutdown", 8) == 0) {
-			MS_QueueShutdown (from, NULL);
-		} else {
-			printf ("[W] Unknown command from %s!\n", inet_ntoa (from->sin_addr));
-		}
+		printf ("[W] Unknown command from %s!\n... cmd: '%s'", inet_ntoa (from->sin_addr), cmd);
 	}
 }
 
