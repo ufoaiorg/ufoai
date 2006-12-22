@@ -1015,6 +1015,7 @@ void CL_PingServers_f (void)
 		adr.port = BigShort(PORT_SERVER);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
 	}
+
 	for (i = 0; i < 16; i++) {
 		Com_sprintf (name, sizeof(name), "adr%i", i);
 		adrstring = Cvar_VariableString (name);
@@ -1032,12 +1033,14 @@ void CL_PingServers_f (void)
 	}
 
 	/* query master server? */
-	if (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local")) {
+	if (!noudp->value && (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local"))) {
+		adr.type = NA_IP;
+		adr.port = (int)masterserver_port->value;
 		if (!NET_StringToAdr (masterserver_ip->string, &adr))
 			return;
 		if (!adr.port)
 			adr.port = (int)masterserver_port->value;
-		Com_Printf("Send master server query request\n");
+		Com_Printf("Send master server query request to '%s:%s'\n", masterserver_ip->string, masterserver_port->string);
 		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("getservers %i", PROTOCOL_VERSION));
 	}
 }

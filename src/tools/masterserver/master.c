@@ -427,36 +427,36 @@ int main (int argc, char **argv)
 	delay.tv_sec = 1;
 	delay.tv_usec = 0;
 
-	FD_SET (listener, &set);
-
 	/* listen (listener, SOMAXCONN); */
-
-	fromlen = sizeof(from);
 
 	memset (&servers, 0, sizeof(servers));
 
 	printf ("listening on port 27900 (UDP)\n");
 
 	while (1) {
+		FD_ZERO(&set);
 		FD_SET (listener, &set);
 		delay.tv_sec = 1;
 		delay.tv_usec = 0;
 
 		retval = select(listener+1, &set, NULL, NULL, &delay);
-		if (retval == 1) {
-			len = recvfrom (listener, incoming, sizeof(incoming), 0, (struct sockaddr *)&from, &fromlen);
-			if (len != SOCKET_ERROR) {
-				if (len > 4) {
-					/* parse this packet */
-					MS_ParseResponse (&from, incoming, len);
-				} else {
-					dprintf ("[W] runt packet from %s:%d\n", inet_ntoa (from.sin_addr), ntohs(from.sin_port));
-				}
+		if (retval > 0) {
+			if (FD_ISSET(listener, &set)) {
+				fromlen = sizeof(from);
+				len = recvfrom (listener, incoming, sizeof(incoming), 0, (struct sockaddr *)&from, &fromlen);
+				if (len > 0) {
+					if (len > 4) {
+						/* parse this packet */
+						MS_ParseResponse (&from, incoming, len);
+					} else {
+						dprintf ("[W] runt packet from %s:%d\n", inet_ntoa (from.sin_addr), ntohs(from.sin_port));
+					}
 
-				/* reset for next packet */
-				memset (incoming, 0, sizeof(incoming));
-			} else {
-				dprintf ("[E] socket error during select from %s:%d (%d)\n", inet_ntoa (from.sin_addr), ntohs(from.sin_port), WSAGetLastError());
+					/* reset for next packet */
+					memset (incoming, 0, sizeof(incoming));
+				} else {
+					dprintf ("[E] socket error during select from %s:%d (%d)\n", inet_ntoa (from.sin_addr), ntohs(from.sin_port), WSAGetLastError());
+				}
 			}
 		}
 
