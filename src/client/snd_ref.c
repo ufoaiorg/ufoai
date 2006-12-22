@@ -358,141 +358,142 @@ void S_Init(void)
 
 	if (!cv->value) {
 		Com_Printf("not initializing.\n");
-	} else {
-		snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
-		snd_khz = Cvar_Get("snd_khz", "48", CVAR_ARCHIVE, "Khz value for sound renderer - default is 48");
-		snd_loadas8bit = Cvar_Get("snd_loadas8bit", "0", CVAR_ARCHIVE, NULL);
-		snd_mixahead = Cvar_Get("snd_mixahead", "0.2", CVAR_ARCHIVE, NULL);
-		snd_show = Cvar_Get("snd_show", "0", 0, NULL);
-		snd_testsound = Cvar_Get("snd_testsound", "0", 0, NULL);
-		snd_music_volume = Cvar_Get("snd_music_volume", "0.5", CVAR_ARCHIVE, "Music volume");
-		snd_music_loop = Cvar_Get("snd_music_loop", "1", 0, "Music loop");
-		snd_fadingspeed = Cvar_Get("snd_fadingspeed", "0.01", 0, "Music fading speed");
-		snd_fadingenable = Cvar_Get("snd_fadingenable", "1", 0, "Music fading enabled");
+		return;
+	}
 
-		{
-			char libPath[MAX_OSPATH];
+	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
+	snd_khz = Cvar_Get("snd_khz", "48", CVAR_ARCHIVE, "Khz value for sound renderer - default is 48");
+	snd_loadas8bit = Cvar_Get("snd_loadas8bit", "0", CVAR_ARCHIVE, NULL);
+	snd_mixahead = Cvar_Get("snd_mixahead", "0.2", CVAR_ARCHIVE, NULL);
+	snd_show = Cvar_Get("snd_show", "0", 0, NULL);
+	snd_testsound = Cvar_Get("snd_testsound", "0", 0, NULL);
+	snd_music_volume = Cvar_Get("snd_music_volume", "0.5", CVAR_ARCHIVE, "Music volume");
+	snd_music_loop = Cvar_Get("snd_music_loop", "1", 0, "Music loop");
+	snd_fadingspeed = Cvar_Get("snd_fadingspeed", "0.01", 0, "Music fading speed");
+	snd_fadingenable = Cvar_Get("snd_fadingenable", "1", 0, "Music fading enabled");
+
+	{
+		char libPath[MAX_OSPATH];
 #ifndef _WIN32
-			char libName[MAX_QPATH];
+		char libName[MAX_QPATH];
 #endif
-			/* TODO: make openal the default when it is working (i.e. change 0 below to a 1) */
-			snd_openal = Cvar_Get("snd_openal", "0", CVAR_ARCHIVE, "use OpenAL");
-			snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
-			/* don't restart right again */
-			snd_ref->modified = qfalse;
+		/* TODO: make openal the default when it is working (i.e. change 0 below to a 1) */
+		snd_openal = Cvar_Get("snd_openal", "0", CVAR_ARCHIVE, "use OpenAL");
+		snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
+		/* don't restart right again */
+		snd_ref->modified = qfalse;
 
-			Com_Printf("Loading snd_%s sound driver\n", snd_ref->string);
+		Com_Printf("Loading snd_%s sound driver\n", snd_ref->string);
 #ifdef _WIN32
-			Com_sprintf(libPath, sizeof(libPath), "snd_%s.dll", snd_ref->string);
-			if ((snd_ref_lib = LoadLibrary(libPath)) == 0) {
+		Com_sprintf(libPath, sizeof(libPath), "snd_%s.dll", snd_ref->string);
+		if ((snd_ref_lib = LoadLibrary(libPath)) == 0) {
 #if defined _M_IX86
 #ifdef DEBUG
-				Com_sprintf(libPath, sizeof(libPath), "snd_%s32d.dll", snd_ref->string);
+			Com_sprintf(libPath, sizeof(libPath), "snd_%s32d.dll", snd_ref->string);
 #else
-				Com_sprintf(libPath, sizeof(libPath), "snd_%s32.dll", snd_ref->string);
+			Com_sprintf(libPath, sizeof(libPath), "snd_%s32.dll", snd_ref->string);
 #endif
 #elif defined _M_X64
 #ifdef DEBUG
-				Com_sprintf(libPath, sizeof(libPath), "snd_%s64d.dll", snd_ref->string);
+			Com_sprintf(libPath, sizeof(libPath), "snd_%s64d.dll", snd_ref->string);
 #else
-				Com_sprintf(libPath, sizeof(libPath), "snd_%s64.dll", snd_ref->string);
+			Com_sprintf(libPath, sizeof(libPath), "snd_%s64.dll", snd_ref->string);
 #endif
 #endif
-				if ((snd_ref_lib = LoadLibrary(libPath)) == 0) {
-					Com_Printf("Load library failed - no sound available\n");
-					return;
-				}
+			if ((snd_ref_lib = LoadLibrary(libPath)) == 0) {
+				Com_Printf("Load library failed - no sound available\n");
+				return;
+			}
 #else
-			s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
+		s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
 
 			/* try path given via cvar */
-			if (strlen(s_libdir->string))
-				Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
-			else
-				strcpy(libPath, ".");
+		if (strlen(s_libdir->string))
+			Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
+		else
+			strcpy(libPath, ".");
 
-			Com_Printf("...library search path: '%s'\n", libPath);
+		Com_Printf("...library search path: '%s'\n", libPath);
 
-			/* first try system wide */
-			Com_sprintf(libName, sizeof(libName), "snd_%s.so", snd_ref->string);
-			if ((snd_ref_lib = dlopen(libName, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
-				/* then use s_libdir cvar */
-				Com_sprintf(libPath, sizeof(libPath), "%s/%s", libPath, libName);
-				if ((snd_ref_lib = dlopen(libPath, RTLD_LAZY)) == 0) {
-					Com_Printf("Load library failed: %s\n", dlerror());
-					return;
-				}
-#endif
+		/* first try system wide */
+		Com_sprintf(libName, sizeof(libName), "snd_%s.so", snd_ref->string);
+		if ((snd_ref_lib = dlopen(libName, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
+			/* then use s_libdir cvar */
+			Com_sprintf(libPath, sizeof(libPath), "%s/%s", libPath, libName);
+			if ((snd_ref_lib = dlopen(libPath, RTLD_LAZY)) == 0) {
+				Com_Printf("Load library failed: %s\n", dlerror());
+				return;
 			}
-
-			if ((SND_Init = (SND_Init_t) dlladdr(snd_ref_lib, "SND_Init")) == 0)
-				Com_Error(ERR_FATAL, "dladdr failed loading SND_Init\n");
-			if ((SND_Shutdown = (SND_Shutdown_t) dlladdr(snd_ref_lib, "SND_Shutdown")) == 0)
-				Com_Error(ERR_FATAL, "dladdr failed loading SND_Shutdown\n");
-			if ((SND_GetDMAPos = (SND_GetDMAPos_t) dlladdr(snd_ref_lib, "SND_GetDMAPos")) == 0)
-				Com_Error(ERR_FATAL, "dladdr failed loading SND_GetDMAPos\n");
-			if ((SND_BeginPainting = (SND_BeginPainting_t) dlladdr(snd_ref_lib, "SND_BeginPainting")) == 0)
-				Com_Error(ERR_FATAL, "dladdr failed loading SND_BeginPainting\n");
-			if ((SND_Submit = (SND_Submit_t) dlladdr(snd_ref_lib, "SND_Submit")) == 0)
-				Com_Error(ERR_FATAL, "dladdr failed loading SND_Submit\n");
-			if ((SND_Activate = (SND_Activate_t) dlladdr(snd_ref_lib, "SND_Activate")) == 0)
-				Com_Error(ERR_FATAL, "dladdr failed loading SND_Activate\n");
-
-			snd_ref_active = qtrue;
-		}
-
-		si.dma = &dma;
-		si.bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, "Sound bits");
-		si.channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, "Sound channels");
-		si.device = Cvar_Get("snd_device", "default", CVAR_ARCHIVE, "Default sound device");
-		si.khz = snd_khz;
-		si.Cvar_Get = Cvar_Get;
-		si.Cvar_Set = Cvar_Set;
-		si.Com_Printf = Com_Printf;
-		si.Com_DPrintf = Com_DPrintf;
-		si.S_PaintChannels = S_PaintChannels;
-		si.paintedtime = &paintedtime;
-#ifdef _WIN32
-		si.cl_hwnd = cl_hwnd;
-#endif
-
-		if (!SND_Init(&si)) {
-			Com_Printf("SND_Init failed\n");
-			return;
-		}
-
-		for (commands = r_commands; commands->name; commands++)
-			Cmd_AddCommand(commands->name, commands->function, commands->description);
-
-		S_InitScaletable();
-
-		sound_started = 1;
-		num_sfx = 0;
-
-		music.ovPlaying[0] = 0;
-		soundtime = 0;
-		paintedtime = 0;
-
-		Com_Printf("sound sampling rate: %i\n", dma.speed);
-
-		/* FIXME: Error checking */
-		if (snd_openal->value) {
-#ifdef HAVE_OPENAL
-			/* bindings */
-			QAL_Init();
-			/* client side init */
-			SND_OAL_Init(NULL);
-#else
-			Com_Printf("No OpenAL support compiled into this binary\n");
 #endif
 		}
 
-		S_StopAllSounds();
+		if ((SND_Init = (SND_Init_t) dlladdr(snd_ref_lib, "SND_Init")) == 0)
+			Com_Error(ERR_FATAL, "dladdr failed loading SND_Init\n");
+		if ((SND_Shutdown = (SND_Shutdown_t) dlladdr(snd_ref_lib, "SND_Shutdown")) == 0)
+			Com_Error(ERR_FATAL, "dladdr failed loading SND_Shutdown\n");
+		if ((SND_GetDMAPos = (SND_GetDMAPos_t) dlladdr(snd_ref_lib, "SND_GetDMAPos")) == 0)
+			Com_Error(ERR_FATAL, "dladdr failed loading SND_GetDMAPos\n");
+		if ((SND_BeginPainting = (SND_BeginPainting_t) dlladdr(snd_ref_lib, "SND_BeginPainting")) == 0)
+			Com_Error(ERR_FATAL, "dladdr failed loading SND_BeginPainting\n");
+		if ((SND_Submit = (SND_Submit_t) dlladdr(snd_ref_lib, "SND_Submit")) == 0)
+			Com_Error(ERR_FATAL, "dladdr failed loading SND_Submit\n");
+		if ((SND_Activate = (SND_Activate_t) dlladdr(snd_ref_lib, "SND_Activate")) == 0)
+			Com_Error(ERR_FATAL, "dladdr failed loading SND_Activate\n");
 
-		/* start music again */
-		if (*Cvar_VariableString("music"))
-			S_StartOGG();
+		snd_ref_active = qtrue;
 	}
+
+	si.dma = &dma;
+	si.bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, "Sound bits");
+	si.channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, "Sound channels");
+	si.device = Cvar_Get("snd_device", "default", CVAR_ARCHIVE, "Default sound device");
+	si.khz = snd_khz;
+	si.Cvar_Get = Cvar_Get;
+	si.Cvar_Set = Cvar_Set;
+	si.Com_Printf = Com_Printf;
+	si.Com_DPrintf = Com_DPrintf;
+	si.S_PaintChannels = S_PaintChannels;
+	si.paintedtime = &paintedtime;
+#ifdef _WIN32
+	si.cl_hwnd = cl_hwnd;
+#endif
+
+	if (!SND_Init(&si)) {
+		Com_Printf("SND_Init failed\n");
+		return;
+	}
+
+	for (commands = r_commands; commands->name; commands++)
+		Cmd_AddCommand(commands->name, commands->function, commands->description);
+
+	S_InitScaletable();
+
+	sound_started = 1;
+	num_sfx = 0;
+
+	music.ovPlaying[0] = 0;
+	soundtime = 0;
+	paintedtime = 0;
+
+	Com_Printf("sound sampling rate: %i\n", dma.speed);
+
+	/* FIXME: Error checking */
+	if (snd_openal->value) {
+#ifdef HAVE_OPENAL
+		/* bindings */
+		QAL_Init();
+		/* client side init */
+		SND_OAL_Init(NULL);
+#else
+		Com_Printf("No OpenAL support compiled into this binary\n");
+#endif
+	}
+
+	S_StopAllSounds();
+
+	/* start music again */
+	if (*Cvar_VariableString("music"))
+		S_StartOGG();
 }
 
 
@@ -1210,15 +1211,15 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	channel_t *ch;
 	channel_t *combine;
 
+	/* maybe no sound initialized */
+	if (!sound_started)
+		return;
+
 	/* did we switch the sound renderer */
 	if (snd_ref->modified) {
 		snd_ref->modified = qfalse;
 		CL_Snd_Restart_f();
 	}
-
-	/* maybe no sound initialized */
-	if (!sound_started)
-		return;
 
 	/* if the loading plaque is up, clear everything */
 	/* out to make sure we aren't looping a dirty */
