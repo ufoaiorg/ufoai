@@ -49,6 +49,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 #endif /* HAVE_DGA */
 
+#ifdef HAVE_DGA1
+#  define HAVE_DGA
+#  include <X11/extensions/xf86dga1.h>
+#  ifdef _XF86DGA_H_
+#    define HAVE_XF86_DGA
+#  endif
+#endif /* HAVE_DGA1 */
+
 #ifdef HAVE_VIDMODE
 #  include <X11/extensions/xf86vmode.h>
 #  ifdef _XF86VIDMODE_H_

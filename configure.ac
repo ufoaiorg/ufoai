@@ -797,27 +797,40 @@ fi
 # Check for DGA
 #---------------------------------------------------------------------------------------------
 
-# FIXME: on some systems the headerfile is: X11/extensions/xf86dga1.h
-
 if test "$with_vid_dga" = "check" || test "$with_vid_dga" = "yes"
 then
 	if test "$ac_cv_header_X11_Xlib_h" = "yes"
 	then
-		AC_CHECK_HEADERS([X11/extensions/xf86dga.h], [], [], [
+		AC_CHECK_HEADERS([X11/extensions/xf86dga1.h], [], [], [
 			#if HAVE_X11_XLIB_H
 			#include <X11/Xlib.h>
 			#endif
 			])
 	fi
 
-	if test "$ac_cv_header_X11_extensions_xf86dga_h" = "yes"
+	if test "$ac_cv_header_X11_extensions_xf86dga1_h" = "no"
 	then
-		AC_SUBST([HAVE_VID_DGA], 1)
-		AC_DEFINE([HAVE_DGA],1)
-	elif test "$with_vid_dga" = "yes"
-	then
-		AC_MSG_ERROR([--with-dga specified but couldn't find X11/extensions/xf86dga.h])
+		if test "$ac_cv_header_X11_Xlib_h" = "yes"
+		then
+			AC_CHECK_HEADERS([X11/extensions/xf86dga.h], [], [], [
+				#if HAVE_X11_XLIB_H
+				#include <X11/Xlib.h>
+				#endif
+				])
+		fi
+		if test "$ac_cv_header_X11_extensions_xf86dga_h" = "yes"
+		then
+			AC_SUBST([HAVE_DGA], 1)
+			AC_DEFINE([HAVE_DGA],1)
+		elif test "$with_vid_dga" = "yes"
+		then
+			AC_MSG_ERROR([--with-dga specified but couldn't find X11/extensions/xf86dga.h])
+		fi
+	else
+		AC_SUBST([HAVE_DGA1], 1)
+		AC_DEFINE([HAVE_DGA1],1)
 	fi
+
 fi
 
 #---------------------------------------------------------------------------------------------
