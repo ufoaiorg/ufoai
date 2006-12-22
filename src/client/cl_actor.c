@@ -277,7 +277,7 @@ void CL_ActorGlobalCVars(void)
  * @brief calculate total reload time for selected actor
  * returns a time of >= 999 units if no suitable ammo found.
  */
-static int CL_CalcReloadTime(int weapon_id) 
+static int CL_CalcReloadTime(int weapon_id)
 {
 	invList_t *ic;
 	int container;
@@ -543,7 +543,8 @@ void CL_ActorUpdateCVars(void)
 		/* update HUD stats etc in more or shoot modes */
 		if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
 			/* If the mouse is outside the world, blank move */
-			if (mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) {
+			/* or the movelength is 255 - not reachable e.g. */
+			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == 0xFF) {
 				CL_RefreshWeaponButtons(selActor->TU);
 				actorMoveLength = 0xFF;
 				Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
@@ -676,22 +677,22 @@ void CL_ActorUpdateCVars(void)
 		switch (cl.cmode) {
 		case M_FIRE_PL:
 		case M_PEND_FIRE_PL:
-			weaponButtonState[BT_LEFT_PRIMARY] = 2; 
+			weaponButtonState[BT_LEFT_PRIMARY] = 2;
 			Cbuf_AddText("towpl\n");
 			break;
 		case M_FIRE_SL:
 		case M_PEND_FIRE_SL:
-			weaponButtonState[BT_LEFT_SECONDARY] = 2; 
+			weaponButtonState[BT_LEFT_SECONDARY] = 2;
 			Cbuf_AddText("towsl\n");
 			break;
 		case M_FIRE_PR:
 		case M_PEND_FIRE_PR:
-			weaponButtonState[BT_RIGHT_PRIMARY] = 2; 
+			weaponButtonState[BT_RIGHT_PRIMARY] = 2;
 			Cbuf_AddText("towpr\n");
 			break;
 		case M_FIRE_SR:
 		case M_PEND_FIRE_SR:
-			weaponButtonState[BT_RIGHT_SECONDARY] = 2; 
+			weaponButtonState[BT_RIGHT_SECONDARY] = 2;
 			Cbuf_AddText("towsr\n");
 			break;
 		default:
@@ -825,7 +826,7 @@ qboolean CL_ActorSelect(le_t * le)
 	int i;
 
 	/* test team */
-	if (!le || le->team != cls.team || 
+	if (!le || le->team != cls.team ||
 		(le->state & STATE_DEAD) || !le->inuse)
 		return qfalse;
 
@@ -1526,7 +1527,7 @@ void CL_ActorDie(sizebuf_t * sb)
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
 		if (le->entnum == number)
 			break;
-	
+
 	if (le->entnum != number) {
 		Com_DPrintf("CL_ActorDie: Can't kill, LE doesn't exist\n");
 		return;
@@ -1537,10 +1538,10 @@ void CL_ActorDie(sizebuf_t * sb)
 		Com_Printf("CL_ActorDie: Can't kill, actor already dead\n");
 		return;
 	}/* else if (!le->inuse) {
-		* LE not in use condition normally arises when CL_EntPerish has been 
+		* LE not in use condition normally arises when CL_EntPerish has been
 		* called on the le to hide it from the client's sight.
 		* Probably can return without killing unused LEs, but testing reveals
-		* killing an unused LE here doesn't cause any problems and there is 
+		* killing an unused LE here doesn't cause any problems and there is
 		* an outside chance it fixes some subtle bugs.
 	}*/
 
