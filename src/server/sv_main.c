@@ -776,9 +776,11 @@ void Master_Heartbeat(void)
 {
 	char *string;
 
-	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
+	if (!dedicated || !dedicated->value)
+		return;		/* only dedicated servers send heartbeats */
+
 	if (!public_server || !public_server->value)
-		return;					/* a private dedicated game */
+		return;		/* a private dedicated game */
 
 	/* check for time wraparound */
 	if (svs.last_heartbeat > svs.realtime)
