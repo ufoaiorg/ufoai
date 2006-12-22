@@ -143,16 +143,19 @@ void Font_Length(const char *font, char *c, int *width, int *height)
 }
 
 /**
- * @brief
+ * @brief Clears font cache and frees memory associated with the cache
  */
 void Font_CleanCache(void)
 {
 	int i = 0;
 
 	/* free the surfaces */
-	for (; i < numInCache; i++)
+	for (; i < numInCache; i++) {
 		if (fontCache[i].pixel)
 			SDL_FreeSurface(fontCache[i].pixel);
+		if (fontCache[i].texPos >= 0)
+			qglDeleteTextures(1, &fontTextures[fontCache[i].texPos]); 
+	}
 
 	memset(fontCache, 0, sizeof(fontCache));
 	memset(hash, 0, sizeof(hash));
@@ -226,12 +229,27 @@ static fontCache_t *Font_GetFromCache(const char *s)
 }
 
 /**
+ * @brief generate a new opengl texture out of the sdl-surface, bind and cache it
+ */
+static void Font_CacheGLSurface (fontCache_t *cache)
+{
+	fontTextures[numInCache] = 0;
+	qglGenTextures(1, &fontTextures[numInCache]);
+	cache->texPos = numInCache;
+	GL_Bind(fontTextures[cache->texPos]);
+	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, cache->pixel->w, cache->pixel->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, cache->pixel->pixels);
+	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+}
+
+/**
  * @brief We add the font string (e.g. f_small) to the beginning
  * of each string (char *s) because we can have the same strings
  * but other fonts.
  * @sa Font_GenerateCache
  * @sa Font_CleanCache
  * @sa Font_Hash
+ * @sa Font_CacheGLSurface
  */
 static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 {
@@ -256,6 +274,7 @@ static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 		fontCache[numInCache].pixel = pixel;
 		fontCache[numInCache].size[0] = w;
 		fontCache[numInCache].size[1] = h;
+		Font_CacheGLSurface(&fontCache[numInCache]);
 	} else
 		ri.Sys_Error(ERR_FATAL, "...font cache exceeded with %i\n", hashValue);
 
@@ -371,7 +390,7 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
 }
 
 /**
- * @brief generate the opengl texture out of the sdl-surface, bind it, and draw it
+ * @brief draw cached opengl texture
  * FIXME: Make scrolling possible
  * @param[in] s SDL surface pointer which holds the image/text
  * @param[in] x x coordinate on screen to draw the text to
@@ -386,7 +405,6 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
  */
 static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
 {
-	GLuint texture = 0;
 	int h = cache->size[1];
 	vec2_t start = {0.0f, 0.0f}, end = {1.0f, 1.0f};
 
@@ -394,14 +412,7 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 	if (height > 0 && y+h > absY+height)
 		return 1;
 
-	qglGenTextures(1, &texture);
-
-	/* Tell GL about our new texture */
-	GL_Bind(texture);
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, cache->pixel->w, cache->pixel->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, cache->pixel->pixels);
-
-	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	GL_Bind(fontTextures[cache->texPos]);
 
 	/* draw it */
 	qglEnable(GL_BLEND);
@@ -418,8 +429,6 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 	qglEnd();
 
 	qglDisable(GL_BLEND);
-
-	qglDeleteTextures(1, &texture);
 
 	return 0;
 }
