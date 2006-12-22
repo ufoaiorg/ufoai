@@ -731,7 +731,8 @@ void CL_ActorUpdateCVars(void)
 			ClearHighlights();
 		}
 		cl.oldcmode = cl.cmode;
-		CL_RefreshWeaponButtons(selActor->TU);
+		if (selActor)
+			CL_RefreshWeaponButtons(selActor->TU);
 	}
 
 	/* player bar */
