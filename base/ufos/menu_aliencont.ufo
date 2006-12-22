@@ -125,19 +125,58 @@ menu aliencont
 	//FIXME
 	//list of aliens should be calculate whenever AC_Init() is called
 	//all values below should be calculate
-	string txt_alientypes_g { string "_Aliens available to process:"	pos "50 100"	color "0 .78 0 1" }
-	string txt_alcheader_1 { string "_Alien type"	pos "50 130"	color "0 .78 0 1" }
-	string txt_alcheader_2 { string "_Examinated"	pos "220 130"	color "0 .78 0 1" }
-	string txt_alcheader_3 { string "_Amount"		pos "380 130"	color "0 .78 0 1" }
+	string txt_alientypes_g { 
+	    string "_Aliens available to process:"
+	    pos "50 100"	
+	    color "0 .78 0 1" 
+	}
+	string txt_alcheader_1 { 
+	    string "_Alien type"
+	    pos "50 130"
+	    color "0 .78 0 1"
+	}
+	string txt_alcheader_2 { 
+	    string "_Examinated"
+	    pos "220 130"	
+	    color "0 .78 0 1"
+	}
+	string txt_alcheader_3 { 
+	    string "_Amount"
+	    pos "380 130"
+	    color "0 .78 0 1"
+	}
 	
-	string txt_alcal1_h1 	{ string "_Ortnok"	pos "50 165"	color "0 .78 0 1" }
-	string txt_alcal1_h2	{ string "_yes"		pos "220 165"	color "0 .78 0 1" }
-	string txt_alcal1_h3 	{ string "42"		pos "380 165"	color "0 .78 0 1" }
+	string txt_alcal1_h1 	{ 
+	    string "_Ortnok"
+	    pos "50 165"
+	    color "0 .78 0 1"
+	}
+	string txt_alcal1_h2	{ 
+	    string "_yes"
+	    pos "220 165"
+	    color "0 .78 0 1"
+	}
+	string txt_alcal1_h3 	{ 
+	    string "42"
+	    pos "380 165"
+	    color "0 .78 0 1"
+	}
 	
-	string txt_alcal2_h1	{ string "_Antarean"	pos "50 180"	color "0 .78 0 1" }
-	string txt_alcal2_h2	{ string "_needs autopsy"		pos "220 180"	color "6 .78 7 1" }
-	string txt_alcal2_h3 	{ string "42"		pos "380 180"	color "0 .78 0 1" }
-
+	string txt_alcal2_h1	{ 
+	    string "_Antarean"
+	    pos "50 180"
+	    color "0 .78 0 1"
+	}
+	string txt_alcal2_h2	{ 
+	    string "_needs autopsy"
+	    pos "220 180"
+	    color "6 .78 7 1"
+	}
+	string txt_alcal2_h3 	{ 
+	    string "42"
+	    pos "380 180"
+	    color "0 .78 0 1"
+	}
 
 	// ==================
 	// info window
