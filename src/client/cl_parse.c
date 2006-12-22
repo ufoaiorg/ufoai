@@ -470,6 +470,8 @@ void CL_StartGame( sizebuf_t *sb )
 	CalcFovX();
 	camera_mode = CAMERA_MODE_REMOTE;
 
+	Com_Printf("Starting the game...\n");
+
 	/* center on first actor */
 	cl_worldlevel->modified = qtrue;
 	if (cl.numTeamList) {
