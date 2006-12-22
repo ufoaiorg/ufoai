@@ -789,7 +789,7 @@ static void CL_ParseMasterServerResponse(void)
 	netadr_t adr;
 	char adrstring[MAX_VAR];
 
-	buffptr = net_message.data;
+	buffptr = net_message.data + 12;
 	buffend = buffptr + net_message.cursize;
 
 	Com_Printf("Parse master server response: '%s'\n", buffptr);
@@ -809,9 +809,9 @@ static void CL_ParseMasterServerResponse(void)
 			Com_Printf("Invalid masterserver response '%s'\n", adrstring);
 			break;
 		}
-		Com_Printf("server: %s\n", adrstring);
 		if (!adr.port)
-			adr.port = BigShort(PORT_SERVER);
+			break;
+		Com_Printf("server: %s\n", adrstring);
 		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
 	}
 }
