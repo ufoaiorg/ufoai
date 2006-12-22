@@ -392,7 +392,7 @@ static void signal_handler(int sig)
 int main (int argc, char **argv)
 {
 	int len;
-	size_t fromlen;
+	socklen_t fromlen;
 	struct sockaddr_in from;
 
 	printf ("ufomaster %s\n", VERSION);
