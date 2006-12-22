@@ -292,19 +292,7 @@ static void MS_SendServerListToClient (struct sockaddr_in *from)
 	memcpy (buff + buflen, &ufoservers.sin_port, 4);
 	buflen +=2;
 
-	ufoservers.sin_port = htons (27920);
-	memcpy (buff + buflen, &addr, 4);
-	buflen +=4;
-	memcpy (buff + buflen, &ufoservers.sin_port, 4);
-	buflen +=2;
-
-	ufoservers.sin_port = htons (27930);
-	memcpy (buff + buflen, &addr, 4);
-	buflen +=4;
-	memcpy (buff + buflen, &ufoservers.sin_port, 4);
-	buflen +=2;
-
-	/* dprintf ("[I] query response (%d bytes) sent to %s:%d\n", buflen, inet_ntoa (from->sin_addr), ntohs (from->sin_port)); */
+	dprintf ("[I] query response (%d bytes) sent to %s:%d\n", buflen, inet_ntoa (from->sin_addr), ntohs (from->sin_port));
 
 	if ((sendto (listener, buff, buflen, 0, (struct sockaddr *)from, sizeof(*from))) == SOCKET_ERROR) {
 		dprintf ("[E] socket error on send! code %d.\n", WSAGetLastError());
