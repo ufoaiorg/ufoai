@@ -43,6 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <malloc.h>
 # include <winsock.h>
 #else
+# include <signal.h>
 # include <errno.h>
 # include <arpa/inet.h>
 # define SOCKET int
@@ -86,10 +87,10 @@ char incoming[150000];
 int retval;
 FILE *logfile;
 
-#if 0
+#ifndef _WIN32
 /**
- * @brief
- * @TODO: Call this on signals send to the server
+ * @brief Shutdown function
+ * @sa signal_handler
  */
 static void MS_ExitNicely (void)
 {
@@ -262,8 +263,6 @@ static void MS_SendServerListToClient (struct sockaddr_in *from)
 	int				buflen;
 	char			buff[0xFFFF];
 	server_t		*server = &servers;
-	struct sockaddr_in ufoservers;
-	unsigned int addr;
 
 	buflen = 0;
 	memset (buff, 0, sizeof(buff));
@@ -273,22 +272,15 @@ static void MS_SendServerListToClient (struct sockaddr_in *from)
 
 	while (server->next) {
 		server = server->next;
-		/*if (server->heartbeats >= 2 && !server->shutdown_issued && server->validated) { */
+		/* at least one heartbeat */
+		if (server->validated) {
 			memcpy (buff + buflen, &server->ip.sin_addr, 4);
 			buflen += 4;
 			/*port = ntohs(server->port); */
 			memcpy (buff + buflen, &server->port, 2);
 			buflen += 2;
-		/*}*/
+		}
 	}
-
-	addr = inet_addr(MASTER_SERVER);
-
-	ufoservers.sin_port = htons (27910);
-	memcpy (buff + buflen, &addr, 4);
-	buflen += 4;
-	memcpy (buff + buflen, &ufoservers.sin_port, 4);
-	buflen += 2;
 
 	dprintf ("[I] query response (%d bytes) sent to %s:%d\n", buflen, inet_ntoa (from->sin_addr), ntohs (from->sin_port));
 
@@ -381,6 +373,19 @@ static void MS_ParseResponse (struct sockaddr_in *from, char *data, int dglen)
 	}
 }
 
+#ifndef _WIN32
+/**
+ * @brief Signal handler function that calls the shutdown function
+ * @sa MS_ExitNicely
+ */
+static void signal_handler(int sig)
+{
+	printf("Received signal %d, exiting...\n", sig);
+	MS_ExitNicely();
+	exit(0);
+}
+#endif
+
 /**
  * @brief
  */
@@ -417,6 +422,19 @@ int main (int argc, char **argv)
 	memset (&servers, 0, sizeof(servers));
 
 	printf ("listening on port 27900 (UDP)\n");
+
+#ifndef _WIN32
+	signal(SIGHUP, signal_handler);
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
+	signal(SIGILL, signal_handler);
+	signal(SIGTRAP, signal_handler);
+	signal(SIGIOT, signal_handler);
+	signal(SIGBUS, signal_handler);
+	signal(SIGFPE, signal_handler);
+	signal(SIGSEGV, signal_handler);
+	signal(SIGTERM, signal_handler);
+#endif
 
 	while (1) {
 		FD_ZERO(&set);
