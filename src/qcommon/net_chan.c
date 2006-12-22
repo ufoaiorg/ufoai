@@ -73,8 +73,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qcommon.h"
 
-static cvar_t *showpackets;
-static cvar_t *showdrop;
+static cvar_t *net_showpackets;
+static cvar_t *net_showdrop;
 static cvar_t *qport;
 
 netadr_t net_from;
@@ -91,8 +91,8 @@ void Netchan_Init(void)
 	/* pick a port value that should be nice and random */
 	port = Sys_Milliseconds() & 0xffff;
 
-	showpackets = Cvar_Get("showpackets", "0", 0, NULL);
-	showdrop = Cvar_Get("showdrop", "0", 0, NULL);
+	net_showpackets = Cvar_Get("net_showpackets", "0", 0, NULL);
+	net_showdrop = Cvar_Get("net_showdrop", "0", 0, NULL);
 	qport = Cvar_Get("qport", va("%i", port), CVAR_NOSET, NULL);
 }
 
@@ -246,7 +246,7 @@ void Netchan_Transmit(netchan_t * chan, int length, byte * data)
 	/* send the datagram */
 	NET_SendPacket(chan->sock, send.cursize, send.data, chan->remote_address);
 
-	if (showpackets->value) {
+	if (net_showpackets->value) {
 		if (send_reliable)
 			Com_Printf("send %4i : s=%i reliable=%i ack=%i rack=%i\n", send.cursize, chan->outgoing_sequence - 1, chan->reliable_sequence,
 					chan->incoming_sequence, chan->incoming_reliable_sequence);
@@ -281,7 +281,7 @@ qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 	sequence &= ~(1 << 31);
 	sequence_ack &= ~(1 << 31);
 
-	if (showpackets->value) {
+	if (net_showpackets->value) {
 		if (reliable_message)
 			Com_Printf("recv %4i : s=%i reliable=%i ack=%i rack=%i\n", msg->cursize, sequence, chan->incoming_reliable_sequence ^ 1, sequence_ack,
 					reliable_ack);
@@ -291,7 +291,7 @@ qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 
 	/* discard stale or duplicated packets */
 	if (sequence <= chan->incoming_sequence) {
-		if (showdrop->value)
+		if (net_showdrop->value)
 			Com_Printf("%s:Out of order packet %i at %i\n", NET_AdrToString(chan->remote_address),
 					sequence, chan->incoming_sequence);
 		return qfalse;
@@ -300,7 +300,7 @@ qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 	/* dropped packets don't keep the message from being used */
 	chan->dropped = sequence - (chan->incoming_sequence + 1);
 	if (chan->dropped > 0) {
-		if (showdrop->value)
+		if (net_showdrop->value)
 			Com_Printf("%s:Dropped %i packets at %i\n", NET_AdrToString(chan->remote_address),
 					chan->dropped, sequence);
 	}
