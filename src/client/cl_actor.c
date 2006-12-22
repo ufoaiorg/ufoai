@@ -276,12 +276,17 @@ void CL_ActorGlobalCVars(void)
 /**
  * @brief calculate total reload time for selected actor
  * returns a time of >= 999 units if no suitable ammo found.
+ * NB: this routine assumes the time to reload a weapon in
+ * in the right hand is the same as the left hand.
  */
 static int CL_CalcReloadTime(int weapon_id)
 {
 	invList_t *ic;
 	int container;
 	int tu = 999;
+
+	if (!selActor)
+		return tu;
 
 	for (container = 0; container < csi.numIDs; container++) {
 		if (csi.ids[container].out < tu) {
@@ -293,8 +298,34 @@ static int CL_CalcReloadTime(int weapon_id)
 		}
 	}
 
-	tu += csi.ods[weapon_id].reload;
+	/* total TU cost is the sum of 3 numbers:
+	   TU for weapon reload + TU to get ammo out + TU to put ammo in hands */
+	tu += csi.ods[weapon_id].reload + csi.ids[csi.idRight].in;
 	return tu;
+}
+
+static void ClearHighlights()
+{
+	int i;
+
+	for (i = 0; i < BT_NUM_TYPES; i++)
+		if (weaponButtonState[i] == 2) {
+			weaponButtonState[i] = -1;
+			return;
+		}
+}
+
+static void HighlightWeaponButton(int button)
+{
+	char cbufText[MAX_VAR];
+
+	/* only one button can be highlighted at once, so reset other buttons */
+	ClearHighlights();
+
+	Q_strncpyz(cbufText, "sel", MAX_VAR);
+	Q_strcat(cbufText, shoot_type_strings[button], MAX_VAR);
+	Cbuf_AddText(cbufText);
+	weaponButtonState[button] = 2;
 }
 
 void CL_ResetWeaponButtons(void)
@@ -310,7 +341,9 @@ static void SetWeaponButton(int button, int state)
 	char cbufText[MAX_VAR];
 	int currentState = weaponButtonState[button];
 
-	if (currentState == state)
+	/* don't reset it already in current state or if highlighted,
+	 * as HighlightWeaponButton deals with the highlighted state */
+	if (currentState == state || currentState == 2)
 		return;
 
 	if (state == 1)
@@ -327,16 +360,18 @@ static void SetWeaponButton(int button, int state)
 /**
  * @brief Refreshes the weapon/reload buttons on the HUD
  *
- * @warning selActor may not be null in most cases
  * @sa CL_ActorUpdateCVars
  */
 static void CL_RefreshWeaponButtons(int time)
 {
 	invList_t *weaponr, *weaponl = NULL;
 
+	if (!selActor)
+		return;
+
 	weaponr = RIGHT(selActor);
 
-	/* check for two-handed weapon - if not, switch to left hand */
+	/* check for two-handed weapon - if not, also define weaponl */
 	if (!weaponr || !csi.ods[weaponr->item.t].holdtwohanded)
 		weaponl = LEFT(selActor);
 
@@ -378,12 +413,9 @@ static void CL_RefreshWeaponButtons(int time)
 	else
 		SetWeaponButton(BT_LEFT_RELOAD, qtrue);
 
-	/* skip update of weapon buttons if in a fire-mode */
-	if (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE)
-		return;
-
+	/* weapon firing buttons */
 	if ( !weaponr || weaponr->item.m == NONE
-		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a == 0)
+		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a <= 0)
 		 || time < csi.ods[weaponr->item.m].fd[FD_PRIMARY].time
 		 || (csi.ods[weaponr->item.t].firetwohanded && LEFT(selActor)) )
 		SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
@@ -391,7 +423,7 @@ static void CL_RefreshWeaponButtons(int time)
 		SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
 
 	if ( !weaponr || weaponr->item.m == NONE
-		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a == 0)
+		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a <= 0)
 		 || time < csi.ods[weaponr->item.m].fd[FD_SECONDARY].time
 		 || (csi.ods[weaponr->item.t].firetwohanded && LEFT(selActor)) )
 		SetWeaponButton(BT_RIGHT_SECONDARY, qfalse);
@@ -399,14 +431,14 @@ static void CL_RefreshWeaponButtons(int time)
 		SetWeaponButton(BT_RIGHT_SECONDARY, qtrue);
 
 	if ( !weaponl || weaponl->item.m == NONE
-		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a == 0)
+		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a <= 0)
 		 || time < csi.ods[weaponl->item.m].fd[FD_PRIMARY].time )
 		SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
 	else
 		SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
 
 	if ( !weaponl || weaponl->item.m == NONE
-		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a == 0)
+		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a <= 0)
 		 || time < csi.ods[weaponl->item.m].fd[FD_SECONDARY].time )
 		SetWeaponButton(BT_LEFT_SECONDARY, qfalse);
 	else
@@ -545,18 +577,22 @@ void CL_ActorUpdateCVars(void)
 			/* If the mouse is outside the world, blank move */
 			/* or the movelength is 255 - not reachable e.g. */
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == 0xFF) {
-				CL_RefreshWeaponButtons(selActor->TU);
 				actorMoveLength = 0xFF;
 				Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
 				menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
-			} else if ( cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
+			}
+			if ( cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
 						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU ) {
-				CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
-				Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
-				if ( actorMoveLength <= selActor->TU )
-					Com_sprintf(mousetext, MAX_MENUTEXTLEN, "%i (%i)\n", actorMoveLength, selActor->TU);
-				else
-					Com_sprintf(mousetext, MAX_MENUTEXTLEN, "- (-)\n" );
+				if (actorMoveLength != 0xFF) {
+					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
+					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
+					if ( actorMoveLength <= selActor->TU )
+						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "%i (%i)\n", actorMoveLength, selActor->TU);
+					else
+						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "- (-)\n" );
+				} else {
+					CL_RefreshWeaponButtons(selActor->TU);
+				}
 				lastHUDActor = selActor;
 				lastMoveLength = actorMoveLength;
 				lastTU = selActor->TU;
@@ -677,28 +713,25 @@ void CL_ActorUpdateCVars(void)
 		switch (cl.cmode) {
 		case M_FIRE_PL:
 		case M_PEND_FIRE_PL:
-			weaponButtonState[BT_LEFT_PRIMARY] = 2;
-			Cbuf_AddText("towpl\n");
+			HighlightWeaponButton(BT_LEFT_PRIMARY);
 			break;
 		case M_FIRE_SL:
 		case M_PEND_FIRE_SL:
-			weaponButtonState[BT_LEFT_SECONDARY] = 2;
-			Cbuf_AddText("towsl\n");
+			HighlightWeaponButton(BT_LEFT_SECONDARY);
 			break;
 		case M_FIRE_PR:
 		case M_PEND_FIRE_PR:
-			weaponButtonState[BT_RIGHT_PRIMARY] = 2;
-			Cbuf_AddText("towpr\n");
+			HighlightWeaponButton(BT_RIGHT_PRIMARY);
 			break;
 		case M_FIRE_SR:
 		case M_PEND_FIRE_SR:
-			weaponButtonState[BT_RIGHT_SECONDARY] = 2;
-			Cbuf_AddText("towsr\n");
+			HighlightWeaponButton(BT_RIGHT_SECONDARY);
 			break;
 		default:
-			break;
+			ClearHighlights();
 		}
 		cl.oldcmode = cl.cmode;
+		CL_RefreshWeaponButtons(selActor->TU);
 	}
 
 	/* player bar */

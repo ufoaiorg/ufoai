@@ -392,10 +392,10 @@ menu hud
 		pos		"768 512"
 	}
 
-	confunc towpls { *bt_pfire_left   image hud/buttons1a }
-	confunc towprs { *bt_pfire_right  image hud/buttons1a }
-	confunc towsls { *bt_sfire_left   image hud/buttons1a }
-	confunc towsrs { *bt_sfire_right  image hud/buttons1a }
+	confunc selpls { *bt_pfire_left   image hud/buttons1a }
+	confunc selprs { *bt_pfire_right  image hud/buttons1a }
+	confunc selsls { *bt_sfire_left   image hud/buttons1a }
+	confunc selsrs { *bt_sfire_right  image hud/buttons1a }
 
 	confunc deselpls { *bt_pfire_left   image hud/buttons1 }
 	confunc deselprs { *bt_pfire_right  image hud/buttons1 }

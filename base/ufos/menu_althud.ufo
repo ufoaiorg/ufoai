@@ -498,10 +498,10 @@ menu althud
 		click	{ cmd mn_pop; }
 	}
 
-	confunc towpla { *bt_primaryleft    image althud/buttons_althud1a }
-	confunc towpra { *bt_primaryright   image althud/buttons_althud1a }
-	confunc towsla { *bt_secondaryleft  image althud/buttons_althud1a }
-	confunc towsra { *bt_secondaryright image althud/buttons_althud1a }
+	confunc selpla { *bt_primaryleft    image althud/buttons_althud1a }
+	confunc selpra { *bt_primaryright   image althud/buttons_althud1a }
+	confunc selsla { *bt_secondaryleft  image althud/buttons_althud1a }
+	confunc selsra { *bt_secondaryright image althud/buttons_althud1a }
 
 	confunc deselpla { *bt_primaryleft     image althud/buttons_althud1 }
 	confunc deselpra { *bt_primaryright    image althud/buttons_althud1 }
