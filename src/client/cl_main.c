@@ -1300,12 +1300,15 @@ void CL_SpawnSoldiers_f (void)
 {
 	int n = (int)teamnum->value;
 
-	if (soldiersSpawned)
+	if (soldiersSpawned) {
+		Com_DPrintf("CL_SpawnSoldiers_f: Soldiers are already spawned\n");
 		return;
+	}
 
 	if (!ccs.singleplayer && baseCurrent) {
 		if (n <= TEAM_CIVILIAN || teamData.maxplayersperteam <= teamData.teamCount[n]) {
 			menuText[TEXT_STANDARD] = _("Invalid or full team");
+			Com_DPrintf("CL_SpawnSoldiers_f: Invalid or full team\n");
 			return;
 		}
 	}

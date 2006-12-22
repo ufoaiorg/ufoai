@@ -470,6 +470,10 @@ static void PF_AddEvent(int mask, int eType)
 		pfe_pending = qtrue;
 		pfe_mask = mask;
 		MSG_WriteByte(&sv.multicast, svc_event);
+#ifdef DEBUG
+	} else {
+		Com_Printf("AddEvent call but no svc_event will be send. mask: %i, eType: %i\n", mask, eType);
+#endif
 	}
 
 	/* write header */

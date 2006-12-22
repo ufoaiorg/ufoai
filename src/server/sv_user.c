@@ -178,6 +178,7 @@ static void SV_Begin_f(void)
 /**
  * @brief
  * @sa SV_Begin_f
+ * @sa CL_SpawnSoldiers_f
  */
 static void SV_Spawn_f(void)
 {

@@ -2089,8 +2089,10 @@ qboolean G_ClientConnect(player_t * player, char *userinfo)
 	}
 
 	/* fix for fast reconnects after a disconnect */
-	if (player->inuse)
+	if (player->inuse) {
+		gi.bprintf(PRINT_HIGH, "%s already in use.\n", player->pers.netname);
 		G_ClientDisconnect(player);
+	}
 
 	/* reset persistant data */
 	memset(&player->pers, 0, sizeof(client_persistant_t));
