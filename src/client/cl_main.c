@@ -800,12 +800,12 @@ static void CL_ParseMasterServerResponse(void)
 		/* parse out port */
 		port = (*buffptr++)<<8;
 		port += *buffptr++;
-		port = BigShort(port);
 		Com_sprintf(adrstring, sizeof(adrstring), "%d.%d.%d.%d:%d", ip[0], ip[1], ip[2], ip[3], port);
 		if (!NET_StringToAdr (adrstring, &adr)) {
 			Com_Printf("Invalid masterserver response '%s'\n", adrstring);
 			break;
 		}
+		Com_Printf("server: %s\n", adrstring);
 		if (!adr.port)
 			adr.port = BigShort(PORT_SERVER);
 		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));

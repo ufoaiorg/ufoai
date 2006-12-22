@@ -177,7 +177,7 @@ static void MS_AddServer (struct sockaddr_in *from, int normal)
 		addr.sin_family = AF_INET;
 		addr.sin_port = server->port;
 		memset (&addr.sin_zero, 0, sizeof(addr.sin_zero));
-		sendto (listener, "ack", 7, 0, (struct sockaddr *)&addr, sizeof(addr));
+		sendto (listener, "\xFF\xFF\xFF\xFFack", 7, 0, (struct sockaddr *)&addr, sizeof(addr));
 	}
 }
 
@@ -209,7 +209,7 @@ static void MS_QueueShutdown (struct sockaddr_in *from, server_t *myserver)
 		myserver->shutdown_issued = 1;
 
 		dprintf ("[I] %s shutdown queued\n", inet_ntoa (myserver->ip.sin_addr));
-		sendto (listener, "ping", 8, 0, (struct sockaddr *)&addr, sizeof(addr));
+		sendto (listener, "\xFF\xFF\xFF\xFFping", 8, 0, (struct sockaddr *)&addr, sizeof(addr));
 		return;
 	} else {
 		dprintf ("[W] shutdown issued from unregistered server %s!\n", inet_ntoa (from->sin_addr));
@@ -247,7 +247,7 @@ static void MS_RunFrame (void)
 				server->queued_pings++;
 				server->last_ping = curtime;
 				dprintf ("[I] ping %s\n", inet_ntoa (server->ip.sin_addr));
-				sendto (listener, "ping", 8, 0, (struct sockaddr *)&addr, sizeof(addr));
+				sendto (listener, "\xFF\xFF\xFF\xFFping", 8, 0, (struct sockaddr *)&addr, sizeof(addr));
 			}
 		}
 	}
@@ -268,7 +268,7 @@ static void MS_SendServerListToClient (struct sockaddr_in *from)
 	buflen = 0;
 	memset (buff, 0, sizeof(buff));
 
-	memcpy (buff, "servers ", 12);
+	memcpy (buff, "\xFF\xFF\xFF\xFFservers ", 12);
 	buflen += 12;
 
 	while (server->next) {
@@ -342,7 +342,7 @@ static void MS_HeartBeat (struct sockaddr_in *from, char *data)
 			server->validated = 1;
 			server->last_heartbeat = time(0);
 			dprintf ("[I] heartbeat from %s.\n", inet_ntoa (server->ip.sin_addr));
-			sendto (listener, "ack", 7, 0, (struct sockaddr *)&addr, sizeof(addr));
+			sendto (listener, "\xFF\xFF\xFF\xFFack", 7, 0, (struct sockaddr *)&addr, sizeof(addr));
 			return;
 		}
 	}
