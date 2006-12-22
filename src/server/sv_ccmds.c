@@ -76,9 +76,7 @@ void SV_SetMaster_f(void)
 		if (master_adr[slot].port == 0)
 			master_adr[slot].port = BigShort((int)Cvar_VariableValue("masterserver_port"));
 
-		Com_Printf("Master server at %s\n", NET_AdrToString(master_adr[slot]));
-
-		Com_Printf("Sending a ping.\n");
+		Com_Printf("Master server at %s - sending a ping\n", NET_AdrToString(master_adr[slot]));
 
 		Netchan_OutOfBandPrint(NS_SERVER, master_adr[slot], "ping");
 

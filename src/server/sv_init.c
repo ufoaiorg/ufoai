@@ -868,7 +868,7 @@ void SV_InitGame(void)
 	/* init network stuff */
 	NET_Config((sv_maxclients->value > 1));
 
-	/* heartbeats will always be sent to the id master */
+	/* heartbeats will always be sent to the ufo master */
 	svs.last_heartbeat = -99999;	/* send immediately */
 	Com_sprintf(masterserver, sizeof(masterserver), "%s:%s", Cvar_VariableString("masterserver_ip"), Cvar_VariableString("masterserver_port"));
 	NET_StringToAdr(masterserver, &master_adr[0]);
