@@ -717,6 +717,10 @@ static void CL_ParseServerInfoMessage(void)
 		return;
 
 	var = strstr(s, "\n");
+	if (!var) {
+		Com_Printf("CL_ParseServerInfoMessage: Invalid status response\n")
+		return;
+	}
 	*var = '\0';
 	Com_DPrintf("%s\n", s);
 	Cvar_Set("mn_mappic", "maps/shots/na.jpg");
