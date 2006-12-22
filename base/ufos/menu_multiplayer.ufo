@@ -1433,7 +1433,7 @@ menu multiplayer_selectteam
 		pos		"300 200"
 		size	"422 320"
 		format	"16 60"
-		bgcolor	"1 1 1 0.5"
+//		bgcolor	"1 1 1 0.5"
 		height	20
 		num		1
 	}
@@ -1443,7 +1443,7 @@ menu multiplayer_selectteam
 		pos		"300 530"
 		size	"422 16"
 		format	"16 60"
-		bgcolor	"1 1 1 0.5"
+//		bgcolor	"1 1 1 0.5"
 		num		0
 		height	1
 	}
