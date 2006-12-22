@@ -99,6 +99,7 @@ playsound_t s_pendingplays;
 
 static int s_beginofs;
 
+cvar_t *snd_init;
 cvar_t *snd_volume;
 cvar_t *snd_testsound;
 cvar_t *snd_loadas8bit;
@@ -346,7 +347,6 @@ static cmdList_t r_commands[] = {
  */
 void S_Init(void)
 {
-	cvar_t *cv;
 #ifndef _WIN32
 	cvar_t *s_libdir;
 #endif
@@ -354,9 +354,9 @@ void S_Init(void)
 
 	Com_Printf("\n------- sound initialization -------\n");
 
-	cv = Cvar_Get("snd_init", "1", CVAR_ARCHIVE, "Should the sound renderer get initialized");
+	snd_init = Cvar_Get("snd_init", "1", CVAR_ARCHIVE, "Should the sound renderer get initialized");
 
-	if (!cv->value) {
+	if (!snd_init->value) {
 		Com_Printf("not initializing.\n");
 		return;
 	}
@@ -1211,8 +1211,8 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	channel_t *ch;
 	channel_t *combine;
 
-	/* maybe no sound initialized */
-	if (!sound_started)
+	/* maybe the sound system is not meant to be initalized */
+	if (!snd_init->value)
 		return;
 
 	/* did we switch the sound renderer */
@@ -1220,6 +1220,10 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 		snd_ref->modified = qfalse;
 		CL_Snd_Restart_f();
 	}
+
+	/* maybe no sound initialized */
+	if (!sound_started)
+		return;
 
 	/* if the loading plaque is up, clear everything */
 	/* out to make sure we aren't looping a dirty */
