@@ -718,7 +718,7 @@ static void CL_ParseServerInfoMessage(void)
 
 	var = strstr(s, "\n");
 	if (!var) {
-		Com_Printf("CL_ParseServerInfoMessage: Invalid status response\n")
+		Com_Printf("CL_ParseServerInfoMessage: Invalid status response\n");
 		return;
 	}
 	*var = '\0';
