@@ -57,15 +57,6 @@ qboolean NET_StringToAdr(char *s, netadr_t * a);
 void NET_Sleep(int msec);
 char *NET_SocketToString (void *s_ptr);
 int NET_Socket (char *net_interface, int port);
-#ifdef HAVE_IPV6
-void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s);
-#else
-# ifdef _WIN32
-void NetadrToSockadr (netadr_t *a, struct sockaddr *s);
-# else
-void NetadrToSockadr (netadr_t *a, struct sockaddr_in *s);
-# endif
-#endif
 
 /*============================================================================ */
 
