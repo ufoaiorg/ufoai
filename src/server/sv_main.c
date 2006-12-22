@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 
-netadr_t master_adr[MAX_MASTERS];	/* address of group servers */
+netadr_t master_adr;	/* address of group servers */
 
 client_t *sv_client;			/* current client */
 
@@ -775,7 +775,6 @@ void SV_Frame(int msec)
 void Master_Heartbeat(void)
 {
 	char *string;
-	int i;
 
 	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
 	if (!public_server || !public_server->value)
@@ -793,12 +792,11 @@ void Master_Heartbeat(void)
 	/* send the same string that we would give for a status OOB command */
 	string = SV_StatusString();
 
-	/* send to group master */
-	for (i = 0; i < MAX_MASTERS; i++)
-		if (master_adr[i].port) {
-			Com_Printf("Sending heartbeat to %s\n", NET_AdrToString(master_adr[i]));
-			Netchan_OutOfBandPrint(NS_SERVER, master_adr[i], "heartbeat\n%s", string);
-		}
+	/* send to master */
+	if (master_adr.port) {
+		Com_Printf("Sending heartbeat to %s (%s)\n", NET_AdrToString(master_adr), string);
+		Netchan_OutOfBandPrint(NS_SERVER, master_adr, "heartbeat\n%s", string);
+	}
 }
 
 /**
@@ -806,8 +804,6 @@ void Master_Heartbeat(void)
  */
 void Master_Shutdown(void)
 {
-	int i;
-
 	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
 	if (!dedicated || !dedicated->value)
 		return;					/* only dedicated servers send heartbeats */
@@ -816,12 +812,11 @@ void Master_Shutdown(void)
 	if (!public_server || !public_server->value)
 		return;					/* a private dedicated game */
 
-	/* send to group master */
-	for (i = 0; i < MAX_MASTERS; i++)
-		if (master_adr[i].port) {
-			Com_Printf("Sending shutdown to %s\n", NET_AdrToString(master_adr[i]));
-			Netchan_OutOfBandPrint(NS_SERVER, master_adr[i], "shutdown");
-		}
+	/* send to master */
+	if (master_adr.port) {
+		Com_Printf("Sending shutdown to %s\n", NET_AdrToString(master_adr));
+		Netchan_OutOfBandPrint(NS_SERVER, master_adr, "shutdown");
+	}
 }
 
 /*============================================================================ */

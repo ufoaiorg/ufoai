@@ -871,7 +871,7 @@ void SV_InitGame(void)
 	/* heartbeats will always be sent to the ufo master */
 	svs.last_heartbeat = -99999;	/* send immediately */
 	Com_sprintf(masterserver, sizeof(masterserver), "%s:%s", Cvar_VariableString("masterserver_ip"), Cvar_VariableString("masterserver_port"));
-	NET_StringToAdr(masterserver, &master_adr[0]);
+	NET_StringToAdr(masterserver, &master_adr);
 
 	/* init game */
 	SV_InitGameProgs();

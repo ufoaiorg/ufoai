@@ -39,8 +39,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*============================================================================= */
 
-#define	MAX_MASTERS	8			/* max recipients for heartbeat packets */
-
 typedef enum {
 	ss_dead,					/* no map loaded */
 	ss_loading,					/* spawning level edicts */
@@ -186,7 +184,7 @@ extern netadr_t net_from;
 
 /*extern	sizebuf_t	net_message; */
 
-extern netadr_t master_adr[MAX_MASTERS];	/* address of the master server */
+extern netadr_t master_adr;	/* address of the master server */
 
 extern server_static_t svs;		/* persistant server info */
 extern server_t sv;				/* local server */

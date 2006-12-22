@@ -43,45 +43,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void SV_SetMaster_f(void)
 {
-	int i, slot;
-
 	/* make sure the server is listed public */
 	Cvar_Set("public", "1");
 
 	/* do the first slot for all servers */
-	if (!NET_StringToAdr (masterserver_ip->string, &master_adr[0])) {
+	if (!NET_StringToAdr (masterserver_ip->string, &master_adr)) {
 		Com_Printf ("Bad Master IP");
 	}
-	if (master_adr[0].port == 0)
-		master_adr[0].port = BigShort((int)masterserver_port->value);
+	if (master_adr.port == 0)
+		master_adr.port = BigShort((int)masterserver_port->value);
 
-	Com_Printf ("Master server at %s - sending a ping\n", NET_AdrToString (master_adr[0]));
+	Com_Printf ("Master server at %s - sending a ping\n", NET_AdrToString (master_adr));
 
-	Netchan_OutOfBandPrint (NS_SERVER, master_adr[0], "ping");
+	Netchan_OutOfBandPrint (NS_SERVER, master_adr, "ping");
 	if (!dedicated->value)
 		return;
-
-	for (i = 1; i < MAX_MASTERS; i++)
-		memset(&master_adr[i], 0, sizeof(master_adr[i]));
-
-	slot = 1;	/* slot 0 will always contain the cvar master */
-	for (i = 1; i < Cmd_Argc(); i++) {
-		if (slot == MAX_MASTERS)
-			break;
-
-		if (!NET_StringToAdr(Cmd_Argv(i), &master_adr[i])) {
-			Com_Printf("Bad address: %s\n", Cmd_Argv(i));
-			continue;
-		}
-		if (master_adr[slot].port == 0)
-			master_adr[slot].port = BigShort((int)Cvar_VariableValue("masterserver_port"));
-
-		Com_Printf("Master server at %s - sending a ping\n", NET_AdrToString(master_adr[slot]));
-
-		Netchan_OutOfBandPrint(NS_SERVER, master_adr[slot], "ping");
-
-		slot++;
-	}
 
 	svs.last_heartbeat = -9999999;
 }
