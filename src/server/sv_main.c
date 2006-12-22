@@ -777,11 +777,6 @@ void Master_Heartbeat(void)
 	char *string;
 	int i;
 
-#if 0
-	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
-	if (!dedicated || !dedicated->value)
-		return;					/* only dedicated servers send heartbeats */
-#endif
 	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
 	if (!public_server || !public_server->value)
 		return;					/* a private dedicated game */
@@ -824,8 +819,7 @@ void Master_Shutdown(void)
 	/* send to group master */
 	for (i = 0; i < MAX_MASTERS; i++)
 		if (master_adr[i].port) {
-			if (i > 0)
-				Com_Printf("Sending heartbeat to %s\n", NET_AdrToString(master_adr[i]));
+			Com_Printf("Sending shutdown to %s\n", NET_AdrToString(master_adr[i]));
 			Netchan_OutOfBandPrint(NS_SERVER, master_adr[i], "shutdown");
 		}
 }
@@ -976,7 +970,7 @@ void SV_Shutdown(char *finalmsg, qboolean reconnect)
 /*
  * @brief Will eventually shutdown the server once all clients have disconnected
  */
-void SV_ShutdownWhenEmpty() 
+void SV_ShutdownWhenEmpty (void)
 {
 	abandon = qtrue;
 	/* pretend server is already dead, otherwise clients may try and reconnect */
