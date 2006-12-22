@@ -86,8 +86,8 @@ AC_ARG_ENABLE(client,
 	[], [enable_client=yes])
 
 AC_ARG_ENABLE(master,
-	[AS_HELP_STRING([--enable-master], [build masterserver @<:@default=disabled@:>@])],
-	[], [enable_master=no])
+	[AS_HELP_STRING([--enable-master], [build masterserver @<:@default=enabled@:>@])],
+	[], [enable_master=yes])
 
 AC_ARG_ENABLE(ufo2map,
 	[AS_HELP_STRING([--disable-ufo2map], [build ufo2map @<:@default=enabled@:>@])],
