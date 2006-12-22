@@ -325,6 +325,7 @@ void MN_PrecacheMenus(void);
 
 void SV_Init(void);
 void SV_Shutdown(char *finalmsg, qboolean reconnect);
+void SV_ShutdownWhenEmpty(void);
 void SV_Frame(int msec);
 
 #endif							/* QCOMMON_DEFINED */

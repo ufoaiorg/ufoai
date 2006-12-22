@@ -525,7 +525,8 @@ void CL_Disconnect(void)
  */
 void CL_Disconnect_f(void)
 {
-	Com_Drop();
+	SV_ShutdownWhenEmpty();
+	CL_Drop();
 }
 
 

@@ -65,6 +65,8 @@ cvar_t *masterserver_port;
 
 void Master_Shutdown(void);
 
+qboolean abandon = qfalse;		/* shutdown server when all clients disconnect and don't accept new connections */
+qboolean killserver = qfalse;	/* will initiate shutdown once abandon is set */
 
 /*============================================================================ */
 
@@ -88,6 +90,16 @@ void SV_DropClient(client_t * drop)
 	drop->player->inuse = qfalse;
 	drop->state = cs_zombie;	/* become free in a few seconds */
 	drop->name[0] = 0;
+
+	if (abandon) {
+		int count = 0;
+		int i;
+		for (i = 0; i < sv_maxclients->value; i++)
+			if (svs.clients[i].state >= cs_connected)
+				count++;
+		if (count == 0)
+			killserver = qtrue;
+	}
 }
 
 
@@ -745,6 +757,12 @@ void SV_Frame(int msec)
 
 	/* send a heartbeat to the master if needed */
 	Master_Heartbeat();
+
+	if (abandon && killserver) {
+		abandon = qfalse;
+		killserver = qfalse;
+		SV_Shutdown("Server disconnected\n", qfalse);
+	}
 }
 
 /*============================================================================ */
@@ -926,8 +944,6 @@ void SV_FinalMessage(char *message, qboolean reconnect)
 			Netchan_Transmit(&cl->netchan, net_message.cursize, net_message.data);
 }
 
-
-
 /**
  * @brief Called when each game quits, before Sys_Quit or Sys_Error
  */
@@ -955,4 +971,14 @@ void SV_Shutdown(char *finalmsg, qboolean reconnect)
 	/* maybe we shut down before we init - e.g. in case of an error */
 	if (sv_maxclients)
 		sv_maxclients->flags &= ~CVAR_LATCH;
+}
+
+/*
+ * @brief Will eventually shutdown the server once all clients have disconnected
+ */
+void SV_ShutdownWhenEmpty() 
+{
+	abandon = qtrue;
+	/* pretend server is already dead, otherwise clients may try and reconnect */
+	Com_SetServerState(ss_dead);
 }
