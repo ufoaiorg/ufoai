@@ -814,6 +814,8 @@ static void CL_ParseMasterServerResponse(void)
 		Com_Printf("server: %s\n", adrstring);
 		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
 	}
+	/* end of stream */
+	net_message.readcount = net_message.cursize;
 }
 
 /**
