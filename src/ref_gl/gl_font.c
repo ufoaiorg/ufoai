@@ -151,8 +151,6 @@ void Font_CleanCache(void)
 
 	/* free the surfaces */
 	for (; i < numInCache; i++) {
-		if (fontCache[i].pixel)
-			SDL_FreeSurface(fontCache[i].pixel);
 		if (fontCache[i].texPos >= 0)
 			qglDeleteTextures(1, &fontTextures[fontCache[i].texPos]); 
 	}
@@ -231,13 +229,13 @@ static fontCache_t *Font_GetFromCache(const char *s)
 /**
  * @brief generate a new opengl texture out of the sdl-surface, bind and cache it
  */
-static void Font_CacheGLSurface (fontCache_t *cache)
+static void Font_CacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
 {
 	fontTextures[numInCache] = 0;
 	qglGenTextures(1, &fontTextures[numInCache]);
 	cache->texPos = numInCache;
 	GL_Bind(fontTextures[cache->texPos]);
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, cache->pixel->w, cache->pixel->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, cache->pixel->pixels);
+	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixel->w, pixel->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixel->pixels);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
@@ -251,7 +249,7 @@ static void Font_CacheGLSurface (fontCache_t *cache)
  * @sa Font_Hash
  * @sa Font_CacheGLSurface
  */
-static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
+static fontCache_t* Font_AddToCache(const char *s, SDL_Surface *pixel, int w, int h)
 {
 	int hashValue;
 	fontCache_t *font = NULL;
@@ -271,10 +269,11 @@ static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 
 	if (numInCache < MAX_FONT_CACHE) {
 		Q_strncpyz(fontCache[numInCache].string, s, MAX_HASH_STRING);
-		fontCache[numInCache].pixel = pixel;
 		fontCache[numInCache].size[0] = w;
 		fontCache[numInCache].size[1] = h;
-		Font_CacheGLSurface(&fontCache[numInCache]);
+		fontCache[numInCache].texsize[0] = pixel->w;
+		fontCache[numInCache].texsize[1] = pixel->h;
+		Font_CacheGLSurface(&fontCache[numInCache], pixel);
 	} else
 		ri.Sys_Error(ERR_FATAL, "...font cache exceeded with %i\n", hashValue);
 
@@ -297,6 +296,7 @@ static fontCache_t *Font_GenerateCache(const char *s, const char *fontString, fo
 	SDL_Surface *textSurface = NULL;
 	SDL_Surface *openGLSurface = NULL;
 	SDL_Rect rect = { 0, 0, 0, 0 };
+	fontCache_t *result;
 
 	textSurface = TTF_RenderUTF8_Blended(f->font, s, color);
 	if (!textSurface) {
@@ -323,7 +323,9 @@ static fontCache_t *Font_GenerateCache(const char *s, const char *fontString, fo
 	h = textSurface->h;
 	SDL_FreeSurface(textSurface);
 
-	return Font_AddToCache(fontString, openGLSurface, w, h);
+	result = Font_AddToCache(fontString, openGLSurface, w, h);
+	SDL_FreeSurface(openGLSurface);
+	return result;
 }
 
 /**
@@ -406,6 +408,8 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
 static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
 {
 	int h = cache->size[1];
+	int tw = cache->texsize[0];
+	int th = cache->texsize[1];
 	vec2_t start = {0.0f, 0.0f}, end = {1.0f, 1.0f};
 
 	/* if height is too much we should be able to scroll down */
@@ -421,11 +425,11 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 	qglTexCoord2f(start[0], start[1]);
 	qglVertex2f(x, y);
 	qglTexCoord2f(end[0], start[1]);
-	qglVertex2f(x + cache->pixel->w, y);
+	qglVertex2f(x + tw, y);
 	qglTexCoord2f(start[0], end[1]);
-	qglVertex2f(x, y + cache->pixel->h);
+	qglVertex2f(x, y + th);
 	qglTexCoord2f(end[0], end[1]);
-	qglVertex2f(x + cache->pixel->w, y + cache->pixel->h);
+	qglVertex2f(x + tw, y + th);
 	qglEnd();
 
 	qglDisable(GL_BLEND);
