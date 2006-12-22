@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
 /* change this to the game name of servers you only wish to accept */
-#define ACCEPTED_MOD "base"
 #define MASTER_SERVER "195.136.48.62" /* sponsored by NineX */
 #define VERSION "0.0.3"
 
@@ -340,13 +339,6 @@ static void MS_HeartBeat (struct sockaddr_in *from, char *data)
 			addr.sin_port = server->port;
 			memset (&addr.sin_zero, 0, sizeof(addr.sin_zero));
 
-			if (!strstr (data, "\\gamedir\\" ACCEPTED_MOD "\\")) {
-				dprintf ("[W] dropped non " ACCEPTED_MOD " server %s\n", inet_ntoa (server->ip.sin_addr));
-				sendto (listener, "this master server only accepts " ACCEPTED_MOD " servers!", 54, 0, (struct sockaddr *)&addr, sizeof(addr));
-				MS_DropServer (server);
-				return;
-			}
-
 			server->validated = 1;
 			server->last_heartbeat = time(0);
 			dprintf ("[I] heartbeat from %s.\n", inet_ntoa (server->ip.sin_addr));
@@ -355,9 +347,7 @@ static void MS_HeartBeat (struct sockaddr_in *from, char *data)
 		}
 	}
 
-	/* we didn't find server in our list!! */
-	if (strstr (data, "\\gamedir\\" ACCEPTED_MOD "\\"))
-		MS_AddServer (from, 0);
+	MS_AddServer (from, 0);
 }
 
 /**
