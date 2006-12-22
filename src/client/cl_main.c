@@ -130,17 +130,6 @@ typedef struct teamData_s {
 
 static teamData_t teamData;
 
-typedef struct _SERVERINFO {
-	unsigned int ip;
-	/* char host[256]; */
-	unsigned short port;
-	int temporary;
-} SERVERINFO;
-
-#define MAX_SERVERS 64
-static SERVERINFO servers[MAX_SERVERS];
-static int numServers = 0;
-
 /*====================================================================== */
 
 /**
@@ -783,6 +772,47 @@ static void CL_ParseServerInfoMessage(void)
 }
 
 /**
+ * @brief Masterserver server list
+ * @sa Netchan_OutOfBandPrint
+ * @sa CL_ConnectionlessPacket
+ */
+static void CL_ParseMasterServerResponse(void)
+{
+	byte* buffptr;
+	byte* buffend;
+	byte ip[4];
+	unsigned short port;
+	netadr_t adr;
+	char adrstring[MAX_VAR];
+
+	buffptr = net_message.data;
+	buffend = buffptr + net_message.cursize;
+
+	Com_Printf("Parse master server response: '%s'\n", buffptr);
+
+	while (buffptr+1 < buffend) {
+		/* parse the ip */
+		ip[0] = *buffptr++;
+		ip[1] = *buffptr++;
+		ip[2] = *buffptr++;
+		ip[3] = *buffptr++;
+
+		/* parse out port */
+		port = (*buffptr++)<<8;
+		port += *buffptr++;
+		port = BigShort(port);
+		Com_sprintf(adrstring, sizeof(adrstring), "%d.%d.%d.%d:%d", ip[0], ip[1], ip[2], ip[3], port);
+		if (!NET_StringToAdr (adrstring, &adr)) {
+			Com_Printf("Invalid masterserver response '%s'\n", adrstring);
+			break;
+		}
+		if (!adr.port)
+			adr.port = BigShort(PORT_SERVER);
+		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
+	}
+}
+
+/**
  * @brief
  *
  * called via server_connect
@@ -953,124 +983,6 @@ void CL_SelectTeam_Init_f (void)
 }
 
 /**
- * @brief
- */
-void CL_GetServerList (void)
-{
-	netadr_t master;
-	struct sockaddr_in dgFrom;
-	int i, result;
-	size_t fromlen;
-	struct timeval delay;
-	fd_set stoc;
-	char recvBuff[0xFFFF], *p;
-	cvar_t	*port, *ip;
-	int		ip_sockets[2];
-	int		ipx_sockets[2];
-	int		net_socket;
-
-	if (!NET_StringToAdr (masterserver_ip->string, &master)) {
-		Com_Printf ("Bad Master IP");
-		return;
-	}
-	if (master.port == 0)
-		master.port = BigShort((int)masterserver_port->value);
-
-	Com_Printf ("Master server at %s\n", NET_AdrToString (master));
-
-	port = Cvar_Get ("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);
-	ip = Cvar_Get ("ip", "localhost", CVAR_NOSET, NULL);
-
-	if (!ip_sockets[NS_SERVER]) {
-		ip_sockets[NS_SERVER] = NET_Socket (ip->string, port->value);
-	}
-	if (!ip_sockets[NS_CLIENT]) {
-		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY);
-	}
-
-	if (master.type == NA_BROADCAST) {
-		net_socket = ip_sockets[NS_CLIENT];
-		if (!net_socket)
-			return;
-	} else if (master.type == NA_IP) {
-		net_socket = ip_sockets[NS_CLIENT];
-		if (!net_socket)
-			return;
-	} else if (master.type == NA_IPX) {
-		net_socket = ipx_sockets[NS_CLIENT];
-		if (!net_socket)
-			return;
-	} else if (master.type == NA_BROADCAST_IPX) {
-		net_socket = ipx_sockets[NS_CLIENT];
-		if (!net_socket)
-			return;
-	} else
-		Com_Error (ERR_FATAL, "NET_SendPacket: bad address type");
-
-	NetadrToSockadr (&master, &dgFrom);
-
-	memset (recvBuff, 0, sizeof(recvBuff));
-
-	/**
-	 * this function may block => sound channels might not be updated
-	 * while it does so => prevent 'looping sound effect' while waiting
-	 */
-	OGG_Stop ();
-
-	for (i = 0; i < 3; i++) {
-		dgFrom.sin_family = AF_INET;
-		dgFrom.sin_port = htons (master.port);
-
-		/* Com_Printf("Master IP: %s\n", inet_ntoa(dgFrom.sin_addr)); */
-		result = sendto (net_socket, "query", 5, 0, (struct sockaddr *)&dgFrom, sizeof(dgFrom) );
-		if (result == -1) {
-			Com_Printf("Couldn't reach first stage of contacting Master Server\n");
-			return; /* couldn't contact master server */
-		}
-		memset (&stoc, 0, sizeof(stoc));
-		FD_SET (net_socket, &stoc);
-		delay.tv_sec = 2;
-		delay.tv_usec = 0;
-		result = select (0, &stoc, NULL, NULL, &delay);
-
-		fromlen = sizeof(dgFrom);
-		result = recvfrom (net_socket, recvBuff, sizeof(recvBuff), 0, (struct sockaddr *)&dgFrom, &fromlen);
-		if (result >= 0) {
-			break;
-		} else if (result == -1) {
-			Com_Printf("Couldn't reach second stage of contacting master server %i\n", errno);
-			return; /* couldn't contact master server */
-		}
-	}
-
-	if (!result) {
-		Com_Printf("Couldn't contact master server\n");
-		return; /* couldn't contact master server */
-	}
-
-	p = recvBuff + 12;
-
-	result -= 12;
-
-	numServers = 0;
-
-	while (result > 0) {
-		servers[numServers].temporary = 1;
-		memcpy (&servers[numServers].ip, p, 4);
-		p += 4;
-		memcpy (&servers[numServers].port, p, 2);
-		servers[numServers].port = ntohs(servers[numServers].port);
-		p += 2;
-		result -= 6;
-
-		if (++numServers == MAX_SERVERS)
-			break;
-	}
-
-	Cbuf_AddText("music_start");
-}
-
-/**
  * @brief The first function called when entering the multiplayer menu, then CL_Frame takes over
  * @sa CL_ParseStatusMessage
  */
@@ -1080,13 +992,10 @@ void CL_PingServers_f (void)
 	int i;
 	char name[6];
 	char *adrstring;
-	struct in_addr tmp;
 
 	menuText[TEXT_LIST] = NULL;
 
 	NET_Config(qtrue);			/* allow remote */
-
-	CL_GetServerList();
 
 	/* send a broadcast packet */
 	Com_DPrintf("pinging broadcast...\n");
@@ -1122,24 +1031,14 @@ void CL_PingServers_f (void)
 		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
 	}
 
-	/* query masterserver */
-	for (i = 0; i < numServers; i++) {
-#ifdef _WIN32
-		tmp.S_un.S_addr = servers[i].ip; /* done so that we can print the ip for testing */
-#else
-		tmp.s_addr = servers[i].ip;
-#endif
-		/* Com_Printf ("From Master, IP: %s:%i\n",inet_ntoa(tmp), servers[i].port); */
-		Com_Printf ("pinging %s...\n", inet_ntoa(tmp));
-		if (!NET_StringToAdr (inet_ntoa(tmp), &adr)) {
-			Com_Printf ("Bad address: %s\n", inet_ntoa(tmp));
-			continue;
-		}
-		adr.port = BigShort(servers[i].port);
-		if (!adr.port) {
-			adr.port = BigShort(PORT_SERVER);
-		}
-		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
+	/* query master server? */
+	if (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local")) {
+		if (!NET_StringToAdr (masterserver_ip->string, &adr))
+			return;
+		if (!adr.port)
+			adr.port = (int)masterserver_port->value;
+		Com_Printf("Send master server query request\n");
+		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("getservers %i", PROTOCOL_VERSION));
 	}
 }
 
@@ -1212,6 +1111,12 @@ void CL_ConnectionlessPacket (void)
 	/* ping from somewhere */
 	if (!Q_strncmp(c, "ping", 4)) {
 		Netchan_OutOfBandPrint(NS_CLIENT, net_from, "ack");
+		return;
+	}
+
+	/* serverlist from masterserver */
+	if (!Q_strncmp(c, "servers", 7)) {
+		CL_ParseMasterServerResponse();
 		return;
 	}
 
