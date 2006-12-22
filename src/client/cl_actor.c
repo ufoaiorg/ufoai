@@ -39,6 +39,7 @@ static le_t *mouseActor;
 static pos3_t mouseLastPos;
 static pos3_t mousePendPos; /* for double-click movement ... */
 reactionmode_t selActorReactionState; /* keep track of reaction toggle */
+reactionmode_t selActorOldReactionState = R_FIRE_OFF; /* and another to help set buttons! */
 
 /* to optimise painting of HUD in move-mode, keep track of some globals: */
 le_t *lastHUDActor; /* keeps track of selActor */
@@ -271,6 +272,18 @@ void CL_ActorGlobalCVars(void)
 			Cvar_Set(va("mn_ap%i", i), "0");
 		}
 	}
+}
+
+/*
+ * @brief get state of the reaction-fire button
+ */
+int CL_GetReactionState(le_t *le) {
+	if (le->state & STATE_REACTION_MANY)
+		return R_FIRE_MANY;
+	else if (le->state & STATE_REACTION_ONCE)
+		return R_FIRE_ONCE;
+	else
+		return R_FIRE_OFF;
 }
 
 /**
@@ -657,15 +670,23 @@ void CL_ActorUpdateCVars(void)
 
 		/* change stand-crouch & reaction button state */
 		if (cl.oldstate != selActor->state || refresh) {
-			cl.oldstate = selActor->state;
-
-			if (selActor->state & STATE_REACTION_ONCE) {
-				Cbuf_AddText("startreactiononce\n");
-			} else if (selActor->state & STATE_REACTION_MANY) {
-				Cbuf_AddText("startreactionmany\n");
-			} else { /* let RefreshWeaponButtons work it out */
-				weaponButtonState[BT_RIGHT_PRIMARY_REACTION] = -1;
+			selActorReactionState = CL_GetReactionState(selActor);
+			if (selActorOldReactionState != selActorReactionState) {
+				selActorOldReactionState = selActorReactionState;
+				switch (selActorReactionState) {
+				case R_FIRE_MANY:
+					Cbuf_AddText("startreactionmany\n");
+					break;
+				case R_FIRE_ONCE:
+					Cbuf_AddText("startreactiononce\n");
+					break;
+				case R_FIRE_OFF: /* let RefreshWeaponButtons work it out */
+					weaponButtonState[BT_RIGHT_PRIMARY_REACTION] = -1;
+					break;
+				}
 			}
+
+			cl.oldstate = selActor->state;
 			if (actorMoveLength < 0xFF
 				&& (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE))
 				CL_RefreshWeaponButtons(time);
@@ -750,18 +771,6 @@ void CL_ActorUpdateCVars(void)
 		}
 		cl_selected->modified = qfalse;
 	}
-}
-
-/*
- * @brief get state of the reaction-fire button
- */
-int CL_GetReactionState(le_t *le) {
-	if (le->state & STATE_REACTION_MANY)
-		return R_FIRE_MANY;
-	else if (le->state & STATE_REACTION_ONCE)
-		return R_FIRE_ONCE;
-	else
-		return R_FIRE_OFF;
 }
 
 /*
