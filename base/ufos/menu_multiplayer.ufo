@@ -832,6 +832,49 @@ menu mp_join_internet
 
 menu mp_create_server
 {
+	// =====================
+	// PUBLIC - MASTERSERVER
+	// =====================
+	string public_str
+	{
+		string	"_Make this server public:"
+		pos	"500 120"
+	}
+	string public_value
+	{
+		string	"*cvar mn_public"
+		pos	"840 120"
+		align	ur
+	}
+	pic public_dec
+	{
+		tooltip "_Don't make it public via masterserver"
+		image	menu/buttons_small
+		pos	"868 122"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modify public -1 0 1;"
+			cmd "mn_translate public mn_public 0:No,1:Yes;"
+		}
+	}
+	pic public_inc
+	{
+		tooltip "_Publish server address via masterserver"
+		image	menu/buttons_small
+		pos	"884 122"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modify public +1 0 1;"
+			cmd "mn_translate public mn_public 0:No,1:Yes;"
+		}
+	}
+
 	// ===================
 	// MORALE
 	// ===================
@@ -1328,6 +1371,7 @@ menu mp_create_server
 		cmd "set maxplayers 8; set ai_numactors 0"
 		cmd "mn_modify sv_teamplay -1 0 1;"
 		cmd "mn_translate dedicated mn_dedicated 0:No,1:Yes;"
+		cmd "mn_translate public mn_public 0:No,1:Yes;"
 		cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"
 		cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
 	}
