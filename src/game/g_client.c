@@ -1974,6 +1974,7 @@ void G_ClientEndRound(player_t * player, qboolean quiet)
 /**
  * @brief This functions starts the client
  * @sa G_ClientSpawn
+ * @sa CL_StartGame
  */
 void G_ClientBegin(player_t* player)
 {
@@ -2002,6 +2003,7 @@ void G_ClientBegin(player_t* player)
  * @sa G_GetTeam
  * @sa G_GiveTimeUnits
  * @sa G_ClientBegin
+ * @sa CL_Reset
  */
 void G_ClientSpawn(player_t * player)
 {

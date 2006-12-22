@@ -422,6 +422,7 @@ void CL_ParseStartSoundPacket(void)
 
 /**
  * @brief
+ * @sa G_ClientSpawn
  */
 void CL_Reset( sizebuf_t *sb )
 {
@@ -457,6 +458,7 @@ void CL_Reset( sizebuf_t *sb )
 
 /**
  * @brief
+ * @sa G_ClientBegin
  */
 void CL_StartGame( sizebuf_t *sb )
 {
@@ -860,7 +862,7 @@ void CL_InvAdd( sizebuf_t *sb )
 			Com_PrintItemDescription(item.t);
 		}
 		return;
-	} 
+	}
 	if (!le->inuse)
 		Com_DPrintf( "InvAdd: warning... LE found but not in-use\n" );
 
