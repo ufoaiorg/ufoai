@@ -80,9 +80,6 @@ ifeq ($(TARGET_OS),linux-gnu)
 	ifeq ($(HAVE_OPENAL),1)
 		CLIENT_SRCS+= \
 			ports/linux/qal_linux.c
-	else
-		CLIENT_SRCS+= \
-			ports/null/qal_null.c
 	endif
 	CLIENT_CD=ports/linux/cd_linux.c
 endif
@@ -98,9 +95,6 @@ ifeq ($(TARGET_OS),freebsd)
 	ifeq ($(HAVE_OPENAL),1)
 		CLIENT_SRCS+=\
 			ports/linux/qal_linux.c
-	else
-		CLIENT_SRCS+=\
-			ports/null/qal_null.c
 	endif
 	CLIENT_CD=ports/linux/cd_linux.c
 endif
@@ -120,15 +114,11 @@ ifeq ($(TARGET_OS),mingw32)
 	ifeq ($(HAVE_OPENAL),1)
 		CLIENT_SRCS+=\
 			ports/win32/qal_win.c
-	else
-		CLIENT_SRCS+=\
-			ports/null/qal_null.c
 	endif
 endif
 
 ifeq ($(TARGET_OS),darwin)
 	CLIENT_SRCS+= \
-		ports/null/qal_null.c \
 		ports/macosx/sys_osx.m \
 		ports/macosx/vid_osx.m \
 		ports/macosx/in_osx.m \
