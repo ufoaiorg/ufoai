@@ -1034,14 +1034,14 @@ void CL_PingServers_f (void)
 
 	/* query master server? */
 	if (!noudp->value && (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local"))) {
-		adr.type = NA_IP;
 		adr.port = (int)masterserver_port->value;
-		if (!NET_StringToAdr (masterserver_ip->string, &adr))
-			return;
-		if (!adr.port)
-			adr.port = (int)masterserver_port->value;
-		Com_Printf("Send master server query request to '%s:%s'\n", masterserver_ip->string, masterserver_port->string);
-		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("getservers %i", PROTOCOL_VERSION));
+		if (NET_StringToAdr (masterserver_ip->string, &adr)) {
+			if (!adr.port)
+				adr.port = BigShort((int)masterserver_port->value);
+			adr.type = NA_IP;
+			Com_Printf("Send master server query request to '%s:%s'\n", masterserver_ip->string, masterserver_port->string);
+			Netchan_OutOfBandPrint (NS_CLIENT, adr, va("getservers %i", PROTOCOL_VERSION));
+		}
 	}
 }
 

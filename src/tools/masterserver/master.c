@@ -77,7 +77,6 @@ struct server_s {
 server_t servers;
 
 struct sockaddr_in listenaddress;
-SOCKET out;
 SOCKET listener;
 TIMEVAL delay;
 #ifdef _WIN32
@@ -411,7 +410,6 @@ int main (int argc, char **argv)
 #endif
 
 	listener = socket (AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	out = socket (AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
 	memset (&listenaddress, 0, sizeof(listenaddress));
 
