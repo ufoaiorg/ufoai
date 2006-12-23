@@ -207,7 +207,7 @@ void CL_ForwardToServer_f(void)
 /**
  * @brief Allow server (singleplayer and multiplayer) to pause the game
  */
-void CL_Pause_f(void)
+static void CL_Pause_f(void)
 {
 	/* never pause in multiplayer (as client - server is allowed) */
 	if (!ccs.singleplayer || !Com_ServerState()) {
@@ -221,7 +221,7 @@ void CL_Pause_f(void)
 /**
  * @brief
  */
-void CL_Quit_f(void)
+static void CL_Quit_f(void)
 {
 	CL_Disconnect();
 	Com_Quit();
@@ -512,16 +512,16 @@ void CL_Disconnect(void)
 /**
  * @brief
  */
-void CL_Disconnect_f(void)
+static void CL_Disconnect_f(void)
 {
 	SV_ShutdownWhenEmpty();
 	CL_Drop();
 }
 
-
 /**
- * @brief
- *
+ * @brief This function allows you to send network commands from commandline
+ * @note This function is only for debugging and testing purposes
+ * It is dangerous to leave this activated in final releases
  * packet [destination] [contents]
  * Contents allows \n escape character
  */
@@ -569,7 +569,7 @@ void CL_Packet_f(void)
 /**
  * @brief Just sent as a hint to the client that they should drop to full console
  */
-void CL_Changing_f(void)
+static void CL_Changing_f(void)
 {
 	SCR_BeginLoadingPlaque();
 	cls.state = ca_connected;	/* not active anymore, but not disconnected */
@@ -582,12 +582,11 @@ void CL_Changing_f(void)
  *
  * The server is changing levels
  */
-void CL_Reconnect_f(void)
+static void CL_Reconnect_f(void)
 {
 	S_StopAllSounds();
 	if (cls.state == ca_connected) {
 		Com_Printf("reconnecting...\n");
-		cls.state = ca_connected;
 		MSG_WriteChar(&cls.netchan.message, clc_stringcmd);
 		MSG_WriteString(&cls.netchan.message, "new");
 		return;
@@ -1612,7 +1611,10 @@ void CL_InitLocal(void)
 
 	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
 
-/* 	Cmd_AddCommand ("packet", CL_Packet_f); // this is dangerous to leave in */
+#if 0
+	/* this is dangerous to leave in */
+	Cmd_AddCommand ("packet", CL_Packet_f, "Dangerous debug function for network testing");
+#endif
 
 	Cmd_AddCommand("setenv", CL_Setenv_f, NULL);
 

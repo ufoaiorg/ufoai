@@ -93,7 +93,7 @@ static void SV_New_f(void)
 	MSG_WriteByte(&sv_client->netchan.message, sv.attractloop);
 	MSG_WriteString(&sv_client->netchan.message, gamedir);
 
-	if (sv.state == ss_cinematic || sv.state == ss_pic)
+	if (sv.state == ss_pic)
 		playernum = -1;
 	else
 		playernum = sv_client - svs.clients;

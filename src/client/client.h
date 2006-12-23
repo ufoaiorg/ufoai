@@ -176,14 +176,6 @@ typedef struct {
 	int numTeamList;
 	int numAliensSpotted;
 
-	/* non-gameserver infornamtion */
-	/* FIXME: move this cinematic stuff into the cin_t structure */
-	FILE *cinematic_file;
-	int cinematictime;			/* cls.realtime for first cinematic frame */
-	int cinematicframe;
-	char cinematicpalette[768];
-	qboolean cinematicpalette_active;
-
 	/* server state information */
 	qboolean attractloop;		/* running the attract loop, any key will menu */
 	int servercount;			/* server identification for prespawns */
@@ -366,31 +358,8 @@ extern shader_t r_shaders[MAX_SHADERS];
 
 /* ================================================= */
 
-typedef struct particle_s {
-	struct particle_s *next;
-
-	float time;
-
-	vec3_t org;
-	vec3_t vel;
-	vec3_t accel;
-
-	float color;
-	float colorvel;
-	float alpha;
-	float alphavel;
-} cparticle_t;
-
-
-#define	PARTICLE_GRAVITY	40
-#define BLASTER_PARTICLE_COLOR		0xe0
-
 void CL_ClearEffects(void);
-void CL_ClearTEnts(void);
 
-int CL_ParseEntityBits(unsigned *bits);
-
-void CL_ParseTEnt(void);
 void CL_ParseConfigString(void);
 
 void CL_SetLightstyle(int i);
@@ -398,15 +367,12 @@ void CL_RunLightStyles(void);
 void CL_AddLightStyles(void);
 
 void CL_AddEntities(void);
-void CL_AddTEnts(void);
 
 /*================================================= */
 
 void CL_PrepRefresh(void);
 void CL_RegisterSounds(void);
 void CL_RegisterLocalModels(void);
-
-void CL_Quit_f(void);
 
 void IN_Accumulate(void);
 
@@ -429,9 +395,7 @@ void CL_ParseScriptFirst(char *type, char *name, char **text);
 void CL_ReadSinglePlayerData( void );
 
 void CL_StartSingleplayer(qboolean singleplayer);
-void CL_FixUpGender(void);
 void CL_Disconnect(void);
-void CL_Disconnect_f(void);
 void CL_GetChallengePacket(void);
 void CL_PingServers_f(void);
 void CL_Snd_Restart_f(void);
@@ -481,8 +445,6 @@ void CL_ParseInput(void);
 void CL_ClearState(void);
 
 void CL_ReadPackets(void);
-
-int CL_ReadFromServer(void);
 
 float CL_KeyState(kbutton_t * key);
 char *Key_KeynumToString(int keynum);
