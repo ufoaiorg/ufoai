@@ -239,8 +239,8 @@ typedef struct {
 	char servername[MAX_OSPATH];	/* name of server from original connect */
 	float connect_time;			/* for connection retransmits */
 
-	int quakePort;				/* a 16 bit value that allows quake servers */
-	/* to work around address translating routers */
+	int ufoPort;				/* a 16 bit value that allows ufo servers */
+								/* to work around address translating routers */
 	netchan_t netchan;
 	int serverProtocol;			/* in case we are doing some kind of version hack */
 

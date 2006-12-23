@@ -297,6 +297,8 @@ void CL_SendConnectPacket(void)
 	port = Cvar_VariableValue("qport");
 	userinfo_modified = qfalse;
 
+	cls.ufoPort = port;
+
 	Netchan_OutOfBandPrint(NS_CLIENT, adr, "connect %i %i %i \"%s\"\n", PROTOCOL_VERSION, port, cls.challenge, Cvar_Userinfo());
 }
 
@@ -980,8 +982,13 @@ void CL_SelectTeam_Init_f (void)
 {
 	netadr_t adr;
 
-	if (!NET_StringToAdr(cls.servername, &adr))
+	/* reset menu text */
+	menuText[TEXT_STANDARD] = NULL;
+
+	if (!NET_StringToAdr(cls.servername, &adr)) {
+		Com_Printf("CL_SelectTeam_Init_f: Invalid servername '%s'\n", cls.servername);
 		return;
+	}
 
 	Netchan_OutOfBandPrint(NS_CLIENT, adr, "teaminfo %i", PROTOCOL_VERSION);
 	menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
@@ -1078,7 +1085,7 @@ void CL_ConnectionlessPacket (void)
 			Com_Printf("Dup connect received. Ignored.\n");
 			return;
 		}
-		Netchan_Setup(NS_CLIENT, &cls.netchan, net_from, cls.quakePort);
+		Netchan_Setup(NS_CLIENT, &cls.netchan, net_from, cls.ufoPort);
 		MSG_WriteChar(&cls.netchan.message, clc_stringcmd);
 		MSG_WriteString(&cls.netchan.message, "new");
 		cls.state = ca_connected;
