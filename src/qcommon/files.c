@@ -1360,7 +1360,9 @@ char *FS_GetCwd(void)
 }
 
 /**
- * @brief
+ * @brief Checks whether a file exists (not in virtuel filesystem)
+ * @sa FS_CheckFile
+ * @param[in] filename Full filesystem path to the file
  */
 qboolean FS_FileExists(const char *filename)
 {

@@ -1113,6 +1113,11 @@ void CM_LoadMap(char *tiles, char *pos)
 	memset(&(clMap.step[0][0]), 0, 256 * 256);
 	memset(&(clMap.route[0][0][0]), 0, 256 * 256 * 8);
 
+	if (!name || !name[0]) {
+		/* cinematic servers won't have anything at all */
+		return;
+	}
+
 	/* load tiles */
 	while (tiles) {
 		/* get tile name */
