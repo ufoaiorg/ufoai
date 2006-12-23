@@ -407,7 +407,6 @@ static void SVC_DirectConnect(void)
 	playernum = newcl - svs.clients;
 	player = PLAYER_NUM(playernum);
 	newcl->player = player;
-	newcl->player->inuse = qtrue;
 	newcl->player->num = playernum;
 	newcl->challenge = challenge;	/* save challenge for checksumming */
 
@@ -420,6 +419,9 @@ static void SVC_DirectConnect(void)
 		Com_DPrintf("Game rejected a connection.\n");
 		return;
 	}
+
+	/* new player */
+	newcl->player->inuse = qtrue;
 
 	/* parse some info from the info strings */
 	strncpy(newcl->userinfo, userinfo, sizeof(newcl->userinfo) - 1);
