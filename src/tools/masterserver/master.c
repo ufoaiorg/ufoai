@@ -42,6 +42,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <windows.h>
 # include <malloc.h>
 # include <winsock.h>
+# ifndef socklen_t
+#  define socklen_t size_t
+# endif
 #else
 # include <signal.h>
 # include <errno.h>
