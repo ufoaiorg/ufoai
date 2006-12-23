@@ -264,6 +264,8 @@ void Com_Quit(void)
 	SV_Shutdown("Server quit\n", qfalse);
 #ifndef DEDICATED_ONLY
 	CL_Shutdown();
+#else
+	Cvar_WriteVariables(va("%s/config.cfg", FS_Gamedir()));
 #endif
 	if (logfile) {
 		fclose(logfile);
