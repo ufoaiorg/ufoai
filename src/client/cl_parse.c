@@ -419,6 +419,24 @@ void CL_ParseStartSoundPacket(void)
 	S_StartSound (pos, ent, channel, cl.sound_precache[sound_num], volume, attenuation, ofs);
 }
 
+/**
+ * @brief Reset the events
+ * @note Also sets etUnused - if you get Timetable overflow messages, etUnused is NULL
+ */
+static void CL_EventReset (void)
+{
+	evTimes_t	*last, *et;
+	int		i;
+
+	/* reset events */
+	for ( i = 0, et = evTimes; i < EV_TIMES-1; i++ ) {
+		last = et++;
+		et->next = last;
+	}
+	etUnused = et;
+	/*	Com_Printf("et: etUnused = %p\n", etUnused);*/
+	etCurrent = NULL;
+}
 
 /**
  * @brief
@@ -426,24 +444,14 @@ void CL_ParseStartSoundPacket(void)
  */
 void CL_Reset( sizebuf_t *sb )
 {
-	evTimes_t	*last, *et;
-	int		i;
-
 	/* clear local entities */
 	numLEs = 0;
 	selActor = NULL;
 	cl.numTeamList = 0;
 	Cbuf_AddText( "numonteam1\n" );
 
-	/* reset events */
-	for ( i = 0, et = evTimes; i < EV_TIMES-1; i++ ) {
-		last = et++;
-		et->next = last;
-	}
+	CL_EventReset();
 	parsedDeath = qfalse;
-	etUnused = et;
-/*	Com_Printf("et: etUnused = %p\n", etUnused);*/
-	etCurrent = NULL;
 	cl.eventTime = 0;
 	nextTime = 0;
 	shootTime = 0;
@@ -483,6 +491,8 @@ void CL_StartGame( sizebuf_t *sb )
 
 	/* activate the renderer */
 	cls.state = ca_active;
+
+	CL_EventReset();
 
 	if (!ccs.singleplayer && baseCurrent) {
 		MN_PushMenu("multiplayer_selectteam");
@@ -1015,6 +1025,7 @@ void CL_InvReload( sizebuf_t *sb )
 
 /**
  * @brief
+ * @sa CL_Events
  */
 void CL_LogEvent( int num )
 {
@@ -1182,14 +1193,14 @@ void CL_ParseEvent( void )
 
 			/* add to timetable */
 			last = NULL;
-			for ( et = etCurrent; et; et = et->next ) {
-				if ( et->start > time )
+			for (et = etCurrent; et; et = et->next) {
+				if (et->start > time)
 					break;
 				last = et;
 			}
 
-			if ( !etUnused )
-				Com_Error( ERR_DROP, "CL_ParseEvent: timetable overflow\n" );
+			if (!etUnused)
+				Com_Error(ERR_DROP, "CL_ParseEvent: timetable overflow - no EV_RESET event?\n")
 			cur = etUnused;
 			etUnused = cur->next;
 /*			Com_Printf("cur->next: etUnused = %p\n", etUnused);*/
@@ -1197,7 +1208,7 @@ void CL_ParseEvent( void )
 			cur->start = time;
 			cur->pos = evWp - evBuf;
 
-			if ( last )
+			if (last)
 				last->next = cur;
 			else
 				etCurrent = cur;
@@ -1236,6 +1247,8 @@ void CL_ParseEvent( void )
 
 /**
  * @brief
+ * @sa CL_Frame
+ * @sa CL_LogEvent
  */
 void CL_Events( void )
 {

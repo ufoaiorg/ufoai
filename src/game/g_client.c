@@ -1993,6 +1993,7 @@ void G_ClientBegin(player_t* player)
 		G_CompleteRecalcRouting();
 	}
 
+	/* FIXME: This should be a client side error */
 	if (!P_MASK(player)) {
 		gi.bprintf(PRINT_HIGH, "%s tried to join - but server is full\n", player->pers.netname);
 		return;
