@@ -40,16 +40,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void Cmd_Players_f(player_t * player)
 {
 	int i;
-	int count;					/*TODO: why is this needed at all? */
+	int count = 0;
 	char small[64];
 	char large[1280];
-
-	count = 0;
 
 	/* print information */
 	large[0] = 0;
 
-	for (i = 0; i < maxplayers->value; i++) {
+	for (i = 0; i < game.maxplayers; i++) {
 		if (!game.players[i].pers.team)
 			continue;
 
@@ -61,6 +59,7 @@ static void Cmd_Players_f(player_t * player)
 			break;
 		}
 		Q_strcat(large, small, sizeof(large));
+		count++;
 	}
 
 	gi.cprintf(player, PRINT_HIGH, "%s\n%i players\n", large, count);
@@ -127,7 +126,7 @@ static void Cmd_PlayerList_f(player_t * player)
 
 	/* team, ping, name */
 	*text = 0;
-	for (i = 0, e2 = game.players; i < maxplayers->value; i++, e2++) {
+	for (i = 0, e2 = game.players; i < game.maxplayers; i++, e2++) {
 		if (!e2->inuse)
 			continue;
 

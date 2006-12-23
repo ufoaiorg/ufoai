@@ -1200,7 +1200,8 @@ void CL_ParseEvent( void )
 			}
 
 			if (!etUnused)
-				Com_Error(ERR_DROP, "CL_ParseEvent: timetable overflow - no EV_RESET event?\n")
+				Com_Error(ERR_DROP, "CL_ParseEvent: timetable overflow - no EV_RESET event?\n");
+
 			cur = etUnused;
 			etUnused = cur->next;
 /*			Com_Printf("cur->next: etUnused = %p\n", etUnused);*/
