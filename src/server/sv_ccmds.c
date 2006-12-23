@@ -116,7 +116,7 @@ qboolean SV_SetPlayer(void)
  */
 void SV_Demo_f(void)
 {
-	SV_Map(qtrue, va("%s.dm2", Cmd_Argv(1)), qfalse);
+	SV_Map(qtrue, va("%s.dm2", Cmd_Argv(1)));
 }
 
 /**
@@ -126,24 +126,30 @@ void SV_Demo_f(void)
  */
 void SV_Map_f(void)
 {
+	char	*map;
+	char	expanded[MAX_QPATH];
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <mapname>\n", Cmd_Argv(0));
 		Com_Printf("Use 'maplist' to get a list of all installed maps\n");
 		return;
 	}
-	/* change */
-	sv.state = ss_dead;
-	sv.loadgame = qfalse;
-	sv.attractloop = qfalse;
-	svs.initialized = qfalse;
-	SV_InitGame();
 
-	SV_BroadcastCommand("changing\n");
-	SV_SendClientMessages();
-	SV_SpawnServer(Cmd_Argv(1), Cmd_Argv(2), ss_game, qfalse, qfalse);
-	Cbuf_CopyToDefer();
+	/* if not a pcx, demo, or cinematic, check to make sure the level exists */
+	map = Cmd_Argv(1);
+	if (!strstr(map, ".")) {
+		Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
+		if (FS_CheckFile(expanded) < 0) {
+			Com_Printf ("Can't find %s\n", expanded);
+			return;
+		}
+	}
 
-	SV_BroadcastCommand("reconnect\n");
+	sv.state = ss_dead;		/* don't save current level when changing */
+	SV_Map(qfalse, map);
+
+	/* archive server state */
+	Q_strncpyz (svs.mapcmd, map, sizeof(svs.mapcmd));
 }
 
 /**

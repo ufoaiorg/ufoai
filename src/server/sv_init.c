@@ -736,7 +736,7 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
  * @sa CM_LoadMap
  * @sa Com_SetServerState
  */
-void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qboolean attractloop, qboolean loadgame)
+void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qboolean attractloop)
 {
 	int i;
 	unsigned checksum = 0;
@@ -759,7 +759,6 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 	/* wipe the entire per-level structure */
 	memset(&sv, 0, sizeof(sv));
 	svs.realtime = 0;
-	sv.loadgame = loadgame;
 	sv.attractloop = attractloop;
 
 	/* save name for levels that don't set message */
@@ -797,11 +796,8 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 
 		CM_LoadMap(map, pos);
 		break;
-	case ss_demo:
-		Com_Printf("Play demo\n");
-		CM_LoadMap(server, NULL);
-		break;
 	default:
+		CM_LoadMap("", NULL);
 		break;
 	}
 
@@ -894,16 +890,15 @@ void SV_InitGame(void)
  * @sa SV_Map_f
  * @sa SV_Demo_f
  */
-void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame)
+void SV_Map(qboolean attractloop, char *levelstring)
 {
 	char level[MAX_QPATH];
 	char *ch;
 	int l;
 
-	sv.loadgame = loadgame;
 	sv.attractloop = attractloop;
 
-	if (sv.state == ss_dead && !sv.loadgame)
+	if (sv.state == ss_dead)
 		SV_InitGame();			/* the game is just starting */
 
 	Q_strncpyz(level, levelstring, MAX_QPATH);
@@ -922,26 +917,22 @@ void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame)
 
 	l = strlen(level);
 	if (l > 4 && !Q_strcmp(level + l - 4, ".cin")) {
-		if (dedicated->value)
-			SCR_BeginLoadingPlaque();	/* for local system */
+		SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
-		SV_SpawnServer(level, NULL, ss_cinematic, attractloop, loadgame);
+		SV_SpawnServer(level, NULL, ss_cinematic, attractloop);
 	} else if (l > 4 && !Q_strcmp(level + l - 4, ".dm2")) {
-		if (dedicated->value)
-			SCR_BeginLoadingPlaque();	/* for local system */
+		SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
-		SV_SpawnServer(level, NULL, ss_demo, attractloop, loadgame);
+		SV_SpawnServer(level, NULL, ss_demo, attractloop);
 	} else if (l > 4 && !Q_strcmp(level + l - 4, ".pcx")) {
-		if (dedicated->value)
-			SCR_BeginLoadingPlaque();	/* for local system */
+		SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
-		SV_SpawnServer(level, NULL, ss_pic, attractloop, loadgame);
+		SV_SpawnServer(level, NULL, ss_pic, attractloop);
 	} else {
-		if (dedicated->value)
-			SCR_BeginLoadingPlaque();	/* for local system */
+		SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
 		SV_SendClientMessages();
-		SV_SpawnServer(level, NULL, ss_game, attractloop, loadgame);
+		SV_SpawnServer(level, NULL, ss_game, attractloop);
 		Cbuf_CopyToDefer();
 	}
 

@@ -57,7 +57,6 @@ typedef struct {
 	qboolean active;			/* false if only a net client */
 
 	qboolean attractloop;		/* running cinematics and demos for the local system only */
-	qboolean loadgame;			/* client begins should reuse existing entity */
 
 	unsigned time;				/* always sv.framenum * 100 msec */
 	int framenum;
@@ -218,14 +217,14 @@ void SV_InitOperatorCommands(void);
 void SV_SendServerinfo(client_t * client);
 void SV_UserinfoChanged(client_t * cl);
 
-void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qboolean attractloop, qboolean loadgame);
+void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qboolean attractloop);
 
 void Master_Heartbeat(void);
 void Master_Packet(void);
 
 /* sv_init.c */
 void SV_InitGame(void);
-void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame);
+void SV_Map(qboolean attractloop, char *levelstring);
 
 /* sv_send.c */
 typedef enum { RD_NONE, RD_CLIENT, RD_PACKET } redirect_t;
