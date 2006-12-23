@@ -719,8 +719,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	}
 
 	ret = sendto (net_socket, data, length, 0, (struct sockaddr *)&addr, addr_size );
-	if (ret == -1)
-	{
+	if (ret == -1) {
 		int err = WSAGetLastError();
 
 		/* wouldblock is silent */

@@ -978,7 +978,7 @@ void CL_ServerListClick_f (void)
  * @brief Send the teaminfo string to server
  * @sa CL_ParseTeamInfoMessage
  */
-void CL_SelectTeam_Init_f (void)
+static void CL_SelectTeam_Init_f (void)
 {
 	netadr_t adr;
 
