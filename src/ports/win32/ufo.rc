@@ -62,7 +62,11 @@ END
 #ifndef __MINGW32__
 IDI_ICON1               ICON    DISCARDABLE     "ufo.ico"
 #else
+#ifdef _WIN32 /* DEV_CPP */
+IDI_ICON1               ICON    DISCARDABLE     "ufo.ico"
+#else
 IDI_ICON1               ICON    DISCARDABLE     "build/projects/ufo.ico"
+#endif
 #endif    // __MINGW32__
 
 /////////////////////////////////////////////////////////////////////////////
@@ -74,7 +78,7 @@ IDD_SERVER_GUI DIALOGEX 0, 0, 357, 222
 STYLE DS_SETFONT | DS_CENTER | WS_MINIMIZEBOX | WS_VISIBLE | WS_CAPTION |
 WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "UFO:AI server console (hostname)"
+CAPTION "UFO:AI server console"
 FONT 10, "Courier New", 0, 0, 0x0
 BEGIN
 	EDITTEXT        IDC_COMMAND,0,209,305,12,ES_AUTOHSCROLL
@@ -83,7 +87,8 @@ BEGIN
 END
 
 
-/////////////////////////////////////////////////////////////////////////////
+////////////////////
+/////////////////////////////////////////////////////////
 //
 // DESIGNINFO
 //
