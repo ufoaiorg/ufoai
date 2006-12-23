@@ -9,7 +9,7 @@ CppCompiler=
 Includes=D:\Programme\Dev-Cpp\include
 Linker=_@@__@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=29
+UnitCount=30
 Folders=
 ObjFiles=
 PrivateResource=
@@ -160,14 +160,14 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c lbmlib.c -o lbmlib.o $(CFLAGS)
 
 [Unit30]
-FileName=..\..\src\tools\ufo2map\common\l3dslib.h
+FileName=..\..\src\tools\ufo2map\convert_ase.c
 Folder=ufo2map
 Compile=1
-CompileCpp=1
+CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c convert_ase.c -o convert_ase.o $(CFLAGS)
 
 [Unit31]
 FileName=..\..\src\tools\ufo2map\common\lbmlib.c
