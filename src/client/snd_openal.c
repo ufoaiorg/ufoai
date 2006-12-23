@@ -139,8 +139,7 @@ qboolean SND_OAL_LoadSound (char* filename, qboolean looping)
 {
 	/* load our sound */
 	if (!SND_OAL_LoadFile(filename, looping)) {
-	Com_Printf("SND_OAL_LoadSound: %s\n", filename);
-
+		Com_Printf("SND_OAL_LoadSound: %s\n", filename);
 		return qfalse;
 	}
 
