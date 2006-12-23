@@ -31,18 +31,18 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE DISCARDABLE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE DISCARDABLE
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE DISCARDABLE
 BEGIN
     "\r\n"
     "\0"
@@ -65,3 +65,74 @@ IDI_ICON1               ICON    DISCARDABLE     "ufo.ico"
 IDI_ICON1               ICON    DISCARDABLE     "build/projects/ufo.ico"
 #endif    // __MINGW32__
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SERVER_GUI DIALOGEX 0, 0, 357, 222
+STYLE DS_SETFONT | DS_CENTER | WS_MINIMIZEBOX | WS_VISIBLE | WS_CAPTION |
+WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "UFO:AI server console (hostname)"
+FONT 10, "Courier New", 0, 0, 0x0
+BEGIN
+	EDITTEXT        IDC_COMMAND,0,209,305,12,ES_AUTOHSCROLL
+	DEFPUSHBUTTON   "Send",IDOK,307,209,50,12
+	EDITTEXT        IDC_CONSOLE,0,0,354,207,ES_MULTILINE | WS_VSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+	IDD_SERVER_GUI, DIALOG
+	BEGIN
+		LEFTMARGIN, 7
+		RIGHTMARGIN, 354
+		TOPMARGIN, 7
+		BOTTOMMARGIN, 215
+	END
+END
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+	FILEFLAGS 0x3L
+#else
+	FILEFLAGS 0x2L
+#endif
+FILEOS 0x4L
+FILETYPE 0x1L
+FILESUBTYPE 0x0L
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "040004b0"
+		BEGIN
+			VALUE "Comments", "http://www.ufoai.net"
+			VALUE "CompanyName", "UFO:Alien Invasion Team"
+			VALUE "FileDescription", "UFO:Alien Invasion"
+			VALUE "InternalName", "ufoai"
+			VALUE "LegalCopyright", "Copyright (C) 2002-2004"
+			VALUE "OriginalFilename", "ufo.exe"
+			VALUE "ProductName", "UFO:AI"
+			VALUE "ProductVersion", "Release"
+		END
+	END
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x400, 1200
+	END
+END

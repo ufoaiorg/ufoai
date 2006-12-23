@@ -449,8 +449,10 @@ void Sys_Init (void)
 			HICON hIcon;
 			hwnd_Server = CreateDialog (global_hInstance, MAKEINTRESOURCE(IDD_SERVER_GUI), NULL, (DLGPROC)ServerWindowProc);
 
-			if (!hwnd_Server)
+			if (!hwnd_Server) {
+				WinError();
 				Sys_Error ("Couldn't create dedicated server window. GetLastError() = %d", (int)GetLastError());
+			}
 
 			SendDlgItemMessage (hwnd_Server, IDC_CONSOLE, EM_SETREADONLY, TRUE, 0);
 
@@ -1171,12 +1173,14 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			if (Minimized)
 				Sys_Sleep(1);
 
-			while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE)) {
+			while (PeekMessage (&msg, NULL, 0, 0, PM_REMOVE)) {
 				if (!GetMessage (&msg, NULL, 0, 0))
 					Com_Quit ();
 				sys_msg_time = msg.time;
-				TranslateMessage (&msg);
-				DispatchMessage (&msg);
+				if (!hwnd_Server || !IsDialogMessage(hwnd_Server, &msg)) {
+					TranslateMessage (&msg);
+					DispatchMessage (&msg);
+				}
 			}
 
 			do {
