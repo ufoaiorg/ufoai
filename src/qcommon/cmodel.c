@@ -724,6 +724,7 @@ qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboole
  * @param[in] x
  * @param[in] y
  * @param[in] z
+ * @sa Grid_RecalcRouting
  */
 void CM_CheckUnit(routing_t * map, int x, int y, int z)
 {

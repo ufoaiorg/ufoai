@@ -437,6 +437,30 @@ void SV_ListMaps_f(void)
 /**
  * @brief
  */
+static void SV_Trayicon_f (void)
+{
+	if (Cmd_Argc() < 2) {
+		Com_Printf ("Usage tray [on|off]\n");
+		return;
+	}
+
+	if (!Q_stricmp(Cmd_Argv(1), "on"))
+		Sys_EnableTray();
+	else
+		Sys_DisableTray();
+}
+
+/**
+ * @brief
+ */
+static void SV_Minimize_f (void)
+{
+	Sys_Minimize();
+}
+
+/**
+ * @brief
+ */
 void SV_InitOperatorCommands(void)
 {
 	Cmd_AddCommand("heartbeat", SV_Heartbeat_f, NULL);
@@ -450,6 +474,8 @@ void SV_InitOperatorCommands(void)
 	Cmd_AddCommand("maplist", SV_ListMaps_f, "List of all available maps");
 
 	Cmd_AddCommand("setmaster", SV_SetMaster_f, NULL);
+	Cmd_AddCommand("tray", SV_Trayicon_f, "Enable or disable minimize to notifcation area");
+	Cmd_AddCommand("minimize", SV_Minimize_f, "Minimize");
 
 	if (dedicated->value)
 		Cmd_AddCommand("say", SV_ConSay_f, "Broadcasts server messages to all connected players");

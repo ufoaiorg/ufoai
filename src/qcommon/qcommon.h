@@ -308,6 +308,10 @@ void Sys_Quit(void);
 char *Sys_GetClipboardData(void);
 char *Sys_GetHomeDirectory(void);
 
+void Sys_Minimize (void);
+void Sys_DisableTray (void);
+void Sys_EnableTray (void);
+
 /*
 ==============================================================
 CLIENT / SERVER SYSTEMS

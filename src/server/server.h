@@ -246,6 +246,7 @@ void SV_BroadcastCommand(char *fmt, ...) __attribute__((format(printf,1,2)));
 
 /* sv_user.c */
 void SV_ExecuteClientMessage(client_t * cl);
+int SV_CountPlayers (void);
 
 /* sv_ccmds.c */
 void SV_ReadLevelFile(void);
