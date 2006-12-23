@@ -226,10 +226,45 @@ void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
  */
 void Sys_ConsoleOutput (char *string)
 {
+	char text[2048];
+	int i, j;
+
 	if (nostdout && nostdout->value)
 		return;
 
+	i = j = 0;
+
+	/* strip high bits */
+	while (string[j]) {
+		text[i] = string[j] & SCHAR_MAX;
+
+		/* strip low bits */
+		if (text[i] >= 32 || text[i] == '\n' || text[i] == '\t')
+			i++;
+
+		j++;
+
+		if (i == sizeof(text) - 2) {
+			text[i++] = '\n';
+			break;
+		}
+	}
+	text[i] = 0;
+
 	fputs(string, stdout);
+}
+
+/**
+ * @brief
+ */
+int Sys_FileLength (const char *path)
+{
+	struct stat st;
+
+	if (stat (path, &st) || (st.st_mode & S_IFDIR))
+		return -1;
+
+	return st.st_size;
 }
 
 /**
@@ -241,15 +276,15 @@ void Sys_Printf (char *fmt, ...)
 	char		text[1024];
 	unsigned char		*p;
 
+	if (nostdout && nostdout->value)
+		return;
+
 	va_start (argptr,fmt);
 	vsnprintf (text,1024,fmt,argptr);
 	va_end (argptr);
 
 	if (strlen(text) > sizeof(text))
 		Sys_Error("memory overwrite in Sys_Printf");
-
-	if (nostdout && nostdout->value)
-		return;
 
 	for (p = (unsigned char *)text; *p; p++) {
 		*p &= SCHAR_MAX;
@@ -302,6 +337,29 @@ void Sys_Init(void)
 
 /**
  * @brief
+ * @sa Sys_DisableTray
+ */
+void Sys_EnableTray (void)
+{
+}
+
+/**
+ * @brief
+ * @sa Sys_EnableTray
+ */
+void Sys_DisableTray (void)
+{
+}
+
+/**
+ * @brief
+ */
+void Sys_Minimize (void)
+{
+}
+
+/**
+ * @brief
  */
 void Sys_Error (char *error, ...)
 {
@@ -311,7 +369,9 @@ void Sys_Error (char *error, ...)
 	/* change stdin to non blocking */
 	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
+#ifndef DEDICATED_ONLY
 	CL_Shutdown ();
+#endif
 	Qcommon_Shutdown ();
 
 	va_start (argptr,error);
