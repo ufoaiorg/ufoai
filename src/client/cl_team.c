@@ -1735,6 +1735,7 @@ void CL_ParseResults(sizebuf_t * buf)
 	/* TODO: I don't understand how this works
 	   and why, when I move this to CL_GameResultsCmd,
 	   the "won" menu get's garbled at "killteam 7" */
+	/* FIXME: For multiplayer there should be a map reload now */
 	Cbuf_AddText("disconnect\n");
 	Cbuf_Execute();
 }

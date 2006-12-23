@@ -165,7 +165,6 @@ void (*ev_func[])( sizebuf_t *sb ) =
 	CL_EntAppear,
 	CL_EntPerish,
 
-
 	CL_ActorAppear,
 	CL_ActorDoStartMove,
 	CL_ActorDoTurn,
