@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <limits.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#include <unistd.h>
 #include <fcntl.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -41,6 +40,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/wait.h>
 #include <sys/mman.h>
 #include <errno.h>
+#include <execinfo.h>
+#include <sys/utsname.h>
+#include <link.h>
+#include <sys/ucontext.h>
+
 #if defined(__FreeBSD__)
 #else
 #include <mntent.h>
@@ -48,6 +52,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <pwd.h>
 #include <dirent.h>
 #include <libgen.h> /* dirname */
+
+/* for old headers */
+#ifndef REG_EIP
+#ifndef EIP
+#define EIP 12 /* aiee */
+#endif
+#define REG_EIP EIP
+#endif
 
 #include <dlfcn.h>
 
@@ -148,6 +160,63 @@ char *Sys_GetHomeDirectory (void)
 }
 
 
+/**
+ * @brief Obtain a backtrace and print it to stderr.
+ * @note Adapted from http://www.delorie.com/gnu/docs/glibc/libc_665.html
+ */
+#ifdef __x86_64__
+void Sys_Backtrace (int sig)
+#else
+void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
+#endif
+{
+	void		*array[32];
+	struct utsname	info;
+	size_t		size;
+	size_t		i;
+	char		**strings;
+#ifndef __x86_64__
+	ucontext_t 	*uc = (ucontext_t *)secret;
+#endif
+
+	signal (SIGSEGV, SIG_DFL);
+
+	fprintf (stderr, "=====================================================\n"
+		"Segmentation Fault\n"
+		"=====================================================\n"
+		"A crash has occured within UFO:AI or the Game library\n"
+		"that you are running.\n"
+		"\n"
+		"If possible, re-building UFO:AI to ensure it is not a\n"
+		"compile problem. If the crash still persists,  please\n"
+		"put the following debug info on the UFO:AI forum with\n"
+		"details including the version, Linux distribution and\n"
+		"any other pertinent information.\n"
+		"\n");
+
+	size = backtrace (array, sizeof(array)/sizeof(void*));
+
+#ifndef __x86_64__
+	array[1] = (void *) uc->uc_mcontext.gregs[REG_EIP];
+#endif
+
+	strings = backtrace_symbols (array, size);
+
+	fprintf (stderr, "Stack dump (%zd frames):\n", size);
+
+	for (i = 0; i < size; i++)
+		fprintf (stderr, "%.2zd: %s\n", i, strings[i]);
+
+	fprintf (stderr, "\nVersion: " UFO_VERSION " (" BUILDSTRING " " CPUSTRING ")\n");
+
+	uname (&info);
+	fprintf (stderr, "OS Info: %s %s %s %s %s\n\n", info.sysname, info.nodename, info.release, info.version, info.machine);
+
+	free (strings);
+
+	raise (SIGSEGV);
+}
+
 /* ======================================================================= */
 /* General routines */
 /* ======================================================================= */
@@ -210,6 +279,24 @@ void Sys_Init(void)
 	Cvar_Get("sys_os", "linux", CVAR_SERVERINFO, NULL);
 #if id386
 /*	Sys_SetFPCW(); */
+#endif
+#ifndef __x86_64__
+	struct sigaction sa;
+
+	if (sizeof(uint32_t) != 4)
+		Sys_Error ("uint32 != 32 bits");
+	else if (sizeof(uint64_t) != 8)
+		Sys_Error ("uint64 != 64 bits");
+	else if (sizeof(uint16_t) != 2)
+		Sys_Error ("uint16 != 16 bits");
+
+	sa.sa_handler = (void *)Sys_Backtrace;
+	sigemptyset (&sa.sa_mask);
+	sa.sa_flags = SA_RESTART | SA_SIGINFO;
+
+	sigaction(SIGSEGV, &sa, NULL);
+#else
+	signal (SIGSEGV, Sys_Backtrace);
 #endif
 }
 
