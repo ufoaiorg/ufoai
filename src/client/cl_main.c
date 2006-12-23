@@ -126,6 +126,7 @@ typedef struct teamData_s {
 	int maxteams;
 	int maxplayersperteam;		/**< max players per team */
 	char teamInfoText[MAX_MESSAGE_TEXT];
+	qboolean parsed;
 } teamData_t;
 
 static teamData_t teamData;
@@ -699,6 +700,7 @@ static void CL_ParseTeamInfoMessage (void)
 	Cvar_SetValue("mn_maxplayersperteam", teamData.maxplayersperteam);
 
 	menuText[TEXT_LIST] = teamData.teamInfoText;
+	teamData.parsed = qtrue;
 }
 
 static char serverInfoText[MAX_MESSAGE_TEXT];
@@ -1306,8 +1308,13 @@ void CL_SpawnSoldiers_f (void)
 {
 	int n = (int)teamnum->value;
 
+	if (!ccs.singleplayer && baseCurrent && !teamData.parsed) {
+		Com_Printf("CL_SpawnSoldiers_f: teaminfo unparsed\n");
+		return;
+	}
+
 	if (soldiersSpawned) {
-		Com_DPrintf("CL_SpawnSoldiers_f: Soldiers are already spawned\n");
+		Com_Printf("CL_SpawnSoldiers_f: Soldiers are already spawned\n");
 		return;
 	}
 
@@ -2049,6 +2056,8 @@ void CL_Init(void)
 /*	Cbuf_AddText( "loadteam current\n" ); */
 	FS_ExecAutoexec();
 	Cbuf_Execute();
+
+	memset(&teamData, 0, sizeof(teamData_t));
 }
 
 

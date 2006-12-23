@@ -1993,8 +1993,14 @@ void G_ClientBegin(player_t* player)
 		G_CompleteRecalcRouting();
 	}
 
+	if (!P_MASK(player)) {
+		gi.bprintf(PRINT_HIGH, "%s tried to join - but server is full\n", player->pers.netname);
+		return;
+	}
+
 	level.numplayers++;
 
+	/*Com_Printf("G_ClientBegin: player: %i - pnum: %i , game.maxplayers: %i	\n", P_MASK(player), player->num, game.maxplayers);*/
 	/* spawn camera (starts client rendering) */
 	gi.AddEvent(P_MASK(player), EV_START | INSTANTLY);
 

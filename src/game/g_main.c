@@ -214,7 +214,7 @@ void InitGame(void)
 	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET, "Difficulty level");
 
 	game.maxentities = maxentities->value;
-	game.maxplayers = maxplayers->value;
+	game.maxplayers = sv_maxclients->value;
 
 	/* initialize all entities for this game */
 	g_edicts = gi.TagMalloc(game.maxentities * sizeof(g_edicts[0]), TAG_GAME);
