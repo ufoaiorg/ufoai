@@ -132,8 +132,8 @@ static void SV_Configstrings_f(void)
 
 	Com_DPrintf("Configstrings() from %s\n", sv_client->name);
 
-	if (sv_client->state != cs_connected) {
-		Com_Printf("configstrings not valid -- already spawned\n");
+	if (sv_client->state != cs_spawning) {
+		Com_Printf("configstrings not valid -- already spawning\n");
 		return;
 	}
 
