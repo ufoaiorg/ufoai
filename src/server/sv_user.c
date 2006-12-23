@@ -72,7 +72,13 @@ static void SV_New_f(void)
 	Com_DPrintf("New() from %s\n", sv_client->name);
 
 	if (sv_client->state != cs_connected) {
-		Com_Printf("New not valid -- already spawned\n");
+		if (sv_client->state == cs_spawning) {
+			/* client typed 'reconnect/new' while connecting. */
+			MSG_WriteByte(&sv_client->netchan.message, svc_stufftext);
+			MSG_WriteString (&sv_client->netchan.message, "\ndisconnect\nreconnect\n");
+			SV_DropClient (sv_client);
+		} else
+			Com_DPrintf ("WARNING: Illegal 'new' from %s, client state %d. This shouldn't happen...\n", sv_client->name, sv_client->state);
 		return;
 	}
 
@@ -81,6 +87,13 @@ static void SV_New_f(void)
 		SV_BeginDemoserver();
 		return;
 	}
+
+	/* client state to prevent multiple new from causing high cpu / overflows. */
+	sv_client->state = cs_spawning;
+
+	/* fix for old clients that don't respond to stufftext due to pending cmd buffer */
+	MSG_WriteByte(&sv_client->netchan.message, svc_stufftext);
+	MSG_WriteString (&sv_client->netchan.message, "\n");
 
 	/* serverdata needs to go over for all types of servers */
 	/* to make sure the protocol is right, and to set the gamedir */
@@ -162,6 +175,13 @@ static void SV_Begin_f(void)
 {
 	Com_DPrintf("Begin() from %s\n", sv_client->name);
 
+	/* could be abused to respawn or cause spam/other mod-specific problems */
+	if (sv_client->state != cs_spawning) {
+		Com_Printf("EXPLOIT: Illegal 'begin' from %s (already spawned), client dropped.\n", sv_client->name);
+		SV_DropClient(sv_client);
+		return;
+	}
+
 	/* handle the case of a level changing while a client was connecting */
 	if (atoi(Cmd_Argv(1)) != svs.spawncount) {
 		Com_Printf("SV_Begin_f from different level\n");
@@ -183,6 +203,13 @@ static void SV_Begin_f(void)
 static void SV_Spawn_f(void)
 {
 	Com_DPrintf("Spawn() from %s\n", sv_client->name);
+
+	/* handle the case of a level changing while a client was connecting */
+	if (atoi(Cmd_Argv(1)) != svs.spawncount) {
+		Com_Printf("SV_Spawn_f from different level\n");
+		SV_New_f();
+		return;
+	}
 
 	/* call the game begin function */
 	ge->ClientSpawn(sv_player);

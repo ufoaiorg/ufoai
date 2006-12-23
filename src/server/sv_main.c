@@ -223,7 +223,7 @@ static void SVC_Info(void)
 	else {
 		count = 0;
 		for (i = 0; i < sv_maxclients->value; i++)
-			if (svs.clients[i].state >= cs_connected)
+			if (svs.clients[i].state >= cs_spawning)
 				count++;
 
 		Com_sprintf(string, sizeof(string), "%s\t%s\t%2i/%2i\n", hostname->string, sv.name, count, (int) sv_maxclients->value);

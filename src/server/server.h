@@ -86,6 +86,7 @@ typedef enum {
 	cs_zombie,					/* client has been disconnected, but don't reuse */
 								/* connection for a couple seconds */
 	cs_connected,				/* has been assigned to a client_t, but not in game yet */
+	cs_spawning,				/* received new, not begin yet */
 	cs_spawned					/* client is fully in game */
 } client_state_t;
 

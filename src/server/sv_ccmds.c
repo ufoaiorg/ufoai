@@ -202,7 +202,7 @@ void SV_Status_f(void)
 			continue;
 		Com_Printf("%3i ", i);
 
-		if (cl->state == cs_connected)
+		if (cl->state == cs_connected || cl->state == cs_spawning)
 			Com_Printf("CNCT ");
 		else if (cl->state == cs_zombie)
 			Com_Printf("ZMBI ");

@@ -54,6 +54,11 @@ static void PF_Unicast(player_t * player)
 
 	client = svs.clients + player->num;
 
+	if (client->state <= cs_spawning) {
+		Com_Printf("PF_Unicast: GAME ERROR: Attempted to write '%s' to disconnected client, ignored.\n", sv.multicast.data);
+		return;
+	}
+
 	SZ_Write(&client->netchan.message, sv.multicast.data, sv.multicast.cursize);
 
 	SZ_Clear(&sv.multicast);
