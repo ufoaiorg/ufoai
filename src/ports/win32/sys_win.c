@@ -191,8 +191,11 @@ void Sys_Quit (void)
 	CL_Shutdown();
 	Qcommon_Shutdown ();
 	CloseHandle (qwclsemaphore);
-	if (dedicated && dedicated->value)
+	if (dedicated && dedicated->value && oldconsole)
 		FreeConsole ();
+
+	if (procShell_NotifyIcon)
+		procShell_NotifyIcon (NIM_DELETE, &pNdata);
 
 	/* shut down QHOST hooks if necessary */
 	DeinitConProc ();
