@@ -90,7 +90,7 @@ qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 {
 	edict_t *check;
-	int move, delta, tu;
+	int move, delta = 0, tu;
 	int i, fm, shots, reaction_trap = 0;
 	float dist, minDist, nspread;
 	float guete, dmg, maxDmg, best_time = -1, vis;
