@@ -63,7 +63,7 @@ tile +r05
 b      +b     +b	ac
 b      +b     +b	b
 0      ac     +b	b
-0       0     ac        0
+0       0     ac    0
 
 }
 
@@ -170,8 +170,28 @@ abc     +a     +a	abc
 0      abc      abc	0
 }
 
+// small plants and bushes
+tile +f07
+{
+3 3
 
-// ---------------------------------
+0      abc     0
+abc     +a     abc
+0      abc     0
+}
+
+// 5 palms
+tile +p01
+{
+3 3
+
+0      abc     0
+abc     +a     abc
+0      abc     0
+}
+
+
+// dropship
 tile +drop
 {
 5 4
@@ -207,6 +227,8 @@ size "8 5"
 +f06 "0 3"
 +f07 "0 3"
 
++p01 "0 3"
+
 +drop "1 1"
 }
 
@@ -227,6 +249,8 @@ size "6 6"
 +f05 "0 3"
 +f06 "0 3"
 +f07 "0 3"
+
++p01 "0 8"
 
 +drop "1 1"
 }
