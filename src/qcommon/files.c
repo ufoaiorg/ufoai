@@ -126,6 +126,10 @@ int FS_FileLength(qFILE * f)
 	int pos;
 	int end;
 
+	/* FIXME: Implement for zips */
+	if (!f->f)
+		return 0;
+
 	pos = ftell(f->f);
 	fseek(f->f, 0, SEEK_END);
 	end = ftell(f->f);
@@ -336,18 +340,12 @@ int FS_FOpenFileRead(const char *filename, qFILE * f)
 /**
  * @brief
  */
-int FS_FOpenFileWrite(const char *filename, qFILE * f)
+void FS_FOpenFileWrite(const char *filename, qFILE * f)
 {
-	int len;
-
 	if (f->z)
-		return 0;
+		return;
 
 	f->f = fopen(filename, "wb");
-	if (!f->f)
-		return 0;
-
-	return len;
 }
 
 

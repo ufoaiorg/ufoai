@@ -29,7 +29,7 @@ typedef enum {
 } fsOrigin_t;
 
 int FS_FileLength(qFILE * f);
-int FS_FOpenFileWrite(const char *filename, qFILE * f);
+void FS_FOpenFileWrite(const char *filename, qFILE * f);
 int FS_Seek(qFILE * f, long offset, int origin);
 int FS_WriteFile(const void *buffer, int len, const char *filename);
 int FS_Write(const void *buffer, int len, qFILE * f);
