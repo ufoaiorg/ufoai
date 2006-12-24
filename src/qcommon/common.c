@@ -1120,8 +1120,7 @@ void COM_AddParm(char *parm)
 
 /**
  * @brief
- *
- * just for debugging
+ * @note just for debugging
  */
 int memsearch(byte * start, int count, int search)
 {
@@ -1193,11 +1192,9 @@ void Info_Print(char *s)
 
 /*
 ==============================================================================
-
 ZONE MEMORY ALLOCATION
 
 just cleared malloc with counters now...
-
 ==============================================================================
 */
 
@@ -1335,24 +1332,24 @@ void Qcommon_LocaleInit(void)
 
 #ifdef _WIN32
 	char languageID[32];
-#endif
+#endif /* _WIN32 */
 	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, NULL);
 	s_language->modified = qfalse;
 
 #ifdef _WIN32
 	Com_sprintf(languageID, 32, "LANG=%s", s_language->string);
 	Q_putenv(languageID);
-#else
-#ifndef SOLARIS
+#else /* _WIN32 */
+# ifndef SOLARIS
 	unsetenv("LANGUAGE");
-#endif
-#ifdef __APPLE__
+# endif /* SOLARIS */
+# ifdef __APPLE__
 	if (setenv("LANGUAGE", s_language->string, 1) == -1)
 		Com_Printf("...setenv for LANGUAGE failed: %s\n", s_language->string);
 	if (setenv("LC_ALL", s_language->string, 1) == -1)
 		Com_Printf("...setenv for LC_ALL failed: %s\n", s_language->string);
-#endif
-#endif
+# endif /* __APPLE__ */
+#endif /* _WIN32 */
 
 	/* set to system default */
 	setlocale(LC_ALL, "C");
@@ -1370,7 +1367,7 @@ void Qcommon_LocaleInit(void)
 		s_language->modified = qfalse;
 	}
 }
-#endif
+#endif /* HAVE_GETTEXT */
 
 /**
  * @brief Init function
@@ -1389,10 +1386,12 @@ void Qcommon_Init(int argc, char **argv)
 {
 	char *s;
 
+#ifndef DEDICATED_ONLY
 #ifdef HAVE_GETTEXT
 	/* i18n through gettext */
 	char languagePath[MAX_OSPATH];
-#endif
+#endif /* HAVE_GETTEXT */
+#endif /* DEDICATED_ONLY */
 
 	if (setjmp(abortframe))
 		Sys_Error("Error during initialization");
@@ -1464,6 +1463,7 @@ void Qcommon_Init(int argc, char **argv)
 	SV_Init();
 	CL_Init();
 
+#ifndef DEDICATED_ONLY /* no gettext support for dedicated servers please */
 #ifdef HAVE_GETTEXT
 	/* i18n through gettext */
 	setlocale(LC_ALL, "C");
@@ -1477,12 +1477,14 @@ void Qcommon_Init(int argc, char **argv)
 	textdomain(TEXT_DOMAIN);
 
 	Qcommon_LocaleInit();
-#else
+#else /* HAVE_GETTEXT */
 	Com_Printf("..no gettext compiled into this binary\n");
-#endif
+#endif /* HAVE_GETTEXT */
+#endif /* DEDICATED_ONLY */
+
 #ifdef SVN
 	Com_Printf("...svn revision: %s\n", SVN);
-#endif
+#endif /* SVN */
 
 	Com_ParseScripts();
 

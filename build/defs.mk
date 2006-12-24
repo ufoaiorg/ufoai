@@ -2,6 +2,7 @@
 SRCDIR=src
 
 CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe -DHAVE_SVNVERSION_H
+#-combine -fwhole-program
 
 ifeq ($(HAVE_SHADERS),1)
 	CFLAGS+= -DHAVE_SHADERS
