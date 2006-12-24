@@ -666,7 +666,7 @@ void Sys_SendKeyEvents (void)
 {
 	MSG        msg;
 
-	while (PeekMessage (&msg, NULL, 0, 0, PM_REMOVE)) {
+	while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE)) {
 		if (!GetMessage (&msg, NULL, 0, 0))
 			Sys_Quit ();
 		sys_msg_time = msg.time;
@@ -1197,14 +1197,12 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			if (Minimized)
 				Sys_Sleep(1);
 
-			while (PeekMessage (&msg, NULL, 0, 0, PM_REMOVE)) {
+			while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE)) {
 				if (!GetMessage (&msg, NULL, 0, 0))
 					Com_Quit ();
 				sys_msg_time = msg.time;
-				if (!hwnd_Server || !IsDialogMessage(hwnd_Server, &msg)) {
-					TranslateMessage (&msg);
-					DispatchMessage (&msg);
-				}
+				TranslateMessage (&msg);
+				DispatchMessage (&msg);
 			}
 
 			do {
