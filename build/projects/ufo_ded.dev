@@ -1,8 +1,8 @@
 [Project]
 FileName=ufo_ded.dev
 Name=ufoded
-UnitCount=24
-Type=1
+UnitCount=26
+Type=0
 Ver=1
 ObjFiles=
 Includes=
@@ -10,17 +10,17 @@ Libs=
 PrivateResource=ufo_ded_private.rc
 ResourceIncludes=
 MakeIncludes=
-Compiler=-DDEDICATED_ONLY_@@_-Wall_@@_-DC_ONLY_@@_-DDEBUG_@@_
+Compiler=-DDEDICATED_ONLY_@@_-Wall_@@_-DC_ONLY_@@_-DDEBUG_@@__@@_
 CppCompiler=
 Linker=-lwinmm_@@_-lwsock32_@@_-lkernel32_@@_-luser32_@@_-lgdi32_@@_-lgmon_@@_-lz_@@_
 IsCpp=0
-Icon=ufo_ded.ico
+Icon=
 ExeOutput=..\..\
 ObjectOutput=
 OverrideOutput=0
 OverrideOutputName=ufo_ded.exe
 HostApplication=
-Folders="Header Files","Source Files"
+Folders="Header Files","Ressource Files","Source Files"
 CommandLine=
 UseCustomMakefile=0
 CustomMakefile=
@@ -281,6 +281,25 @@ BuildCmd=
 FileName=..\..\src\ports\win32\q_shwin.c
 CompileCpp=0
 Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit25]
+FileName=..\..\src\ports\win32\ufo.rc
+Folder=Ressource Files
+Compile=1
+Link=0
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit26]
+FileName=..\..\src\server\server.h
+CompileCpp=0
+Folder=Header Files
 Compile=1
 Link=1
 Priority=1000
