@@ -513,7 +513,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 	dt = 0;
 	bounce = 0;
 	flags = SF_BOUNCING;
-	while (qtrue) {
+	for (;;) {
 		/* kinematics */
 		VectorMA(oldPos, GRENADE_DT, curV, newPos);
 		newPos[2] -= 0.5 * GRAVITY * GRENADE_DT * GRENADE_DT;
@@ -684,7 +684,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 	range = fd->range;
 	bounce = 0;
 	flags = 0;
-	do {
+	for (;;) {
 		/* Calc 'impact' vector that is located at the end of the range
 		   defined by the fireDef_t. This is not really the impact location,
 		   but rather the 'endofrange' location, see below for another use.*/
@@ -760,8 +760,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 		VectorAdd(temp, dir, dir);
 		VectorAdd(temp, dir, dir);
 		flags |= SF_BOUNCED;
-	}
-	while (1);
+	};
 
 	if (!mock) {
 		/* spawn the knife on the floor */
