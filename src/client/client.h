@@ -51,6 +51,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	#endif
 #endif
 
+#ifndef _MSC_VER
+#include <zlib.h>
+#else
+#include "../ports/win32/zlib.h"
+#endif
+
 /*============================================================================= */
 typedef struct tutorial_s {
 	char name[MAX_VAR];
