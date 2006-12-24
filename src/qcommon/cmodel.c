@@ -1035,6 +1035,11 @@ static unsigned CM_AddMapTile(char *name, int sX, int sY, int sZ)
 	int length;
 	dheader_t header;
 
+	if (!name || !name[0]) {
+		/* cinematic servers won't have anything at all */
+		return;
+	}
+
 	/* load the file */
 	Com_sprintf(filename, MAX_QPATH, "maps/%s.bsp", name);
 	length = FS_LoadFile(filename, (void **) &buf);
@@ -1113,11 +1118,6 @@ void CM_LoadMap(char *tiles, char *pos)
 	memset(&(clMap.fall[0][0]), 0xFF, 256 * 256);
 	memset(&(clMap.step[0][0]), 0, 256 * 256);
 	memset(&(clMap.route[0][0][0]), 0, 256 * 256 * 8);
-
-	if (!name || !name[0]) {
-		/* cinematic servers won't have anything at all */
-		return;
-	}
 
 	/* load tiles */
 	while (tiles) {
