@@ -92,6 +92,17 @@ ac      +a     +a     ac
 0      ab      ab    0
 }
 
+// cows
+tile +h06
+{
+4 4
+
+0      ab     ab     0
+ac     +a     +a     ac
+ac     +a     +a     ac
+0      ab     ab     0
+}
+
 // fountain
 tile +d07
 {
@@ -236,6 +247,7 @@ size "7 7"
 +d03 "0 8"
 +d04 "0 8"
 +d05 "0 2"
++d06 "0 2"
 +d07 "0 2"
 +h01 "0 2"
 +h02 "1 2"
