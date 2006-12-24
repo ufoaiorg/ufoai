@@ -2615,6 +2615,12 @@ int Grid_MoveNext(struct routing_s *map, pos3_t from)
  */
 int Grid_Height(struct routing_s *map, pos3_t pos)
 {
+	/* max 8 levels */
+	if (pos[2] > 7) {
+		Com_Printf("Grid_Height: Warning: z level is bigger than 7: %i\n", pos[2]);
+		pos[2] &= 7;
+	}
+
 	return (map->route[pos[2]][pos[1]][pos[0]] & 0x0F) * QUANT;
 }
 
@@ -2644,6 +2650,10 @@ int Grid_Fall(struct routing_s *map, pos3_t pos)
 void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec)
 {
 	PosToVec(pos, vec);
+#ifdef PARANOID
+	if (pos[2] > 7)
+		Com_Printf("Grid_PosToVec: Warning - z level bigger than 7 (%i - source: %.02f)\n", pos[2], vec[2]);
+#endif
 	vec[2] += Grid_Height(map, pos);
 }
 
