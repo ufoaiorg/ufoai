@@ -1,6 +1,6 @@
 /*{{NO_DEPENDENCIES}} */
 /* Microsoft Developer Studio generated include file. */
-/* Used by q2.rc */
+/* Used by ufo.rc */
 #define IDI_ICON1                       101
 #define IDD_SERVER_GUI                  103
 #define IDI_ICON2                       107
