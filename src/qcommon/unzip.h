@@ -55,7 +55,11 @@ extern "C" {
 #endif
 
 #ifndef _ZLIB_H
-#include "zlib.h"
+#ifndef _MSC_VER
+#include <zlib.h>
+#else
+#include "../ports/win32/zlib.h"
+#endif
 #endif
 
 #ifndef _ZLIBIOAPI_H
