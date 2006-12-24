@@ -53,7 +53,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma warning(disable : 4018) /* signed/unsigned mismatch */
 #pragma warning(disable : 4305) /* truncation from const double to float */
-
+#pragma warning(disable : 4100) /* unreferenced formal parameter */
+#pragma warning(disable : 4127) /* conditional expression is constant */
 #endif
 
 #ifdef HAVE_CONFIG_H

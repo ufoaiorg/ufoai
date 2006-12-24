@@ -1751,7 +1751,7 @@ int Q_putenv(const char *str)
 char *Q_getcwd(char *dest, size_t size)
 {
 #ifdef _MSC_VER
-	return _getcwd(dest, size);
+	return _getcwd(dest, (int)size);
 #else
 	return getcwd(dest, size);
 #endif
