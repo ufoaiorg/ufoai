@@ -356,7 +356,7 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
 				AdditionalDependencies="kernel32.lib user32.lib winmm.lib wsock32.lib advapi32.lib"
-				OutputFile="..\ufo.exe"
+				OutputFile="..\..\ufo.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				GenerateManifest="false"
@@ -498,227 +498,227 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 			>
 			<File
-				RelativePath="ports\win32\cd_win.c"
+				RelativePath="..\..\src\ports\win32\cd_win.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_actor.c"
+				RelativePath="..\..\src\client\cl_actor.c"
 				>
 			</File>
 			<File
-				RelativePath=".\client\cl_aircraft.c"
+				RelativePath="..\..\src\client\cl_aircraft.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_basemanagement.c"
+				RelativePath="..\..\src\client\cl_basemanagement.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_campaign.c"
+				RelativePath="..\..\src\client\cl_campaign.c"
 				>
 			</File>
 			<File
-				RelativePath=".\client\cl_employee.c"
+				RelativePath="..\..\src\client\cl_employee.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_fx.c"
+				RelativePath="..\..\src\client\cl_fx.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_input.c"
+				RelativePath="..\..\src\client\cl_input.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_le.c"
+				RelativePath="..\..\src\client\cl_le.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_main.c"
+				RelativePath="..\..\src\client\cl_main.c"
 				>
 			</File>
 			<File
-				RelativePath=".\client\cl_map.c"
+				RelativePath="..\..\src\client\cl_map.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_market.c"
+				RelativePath="..\..\src\client\cl_market.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_menu.c"
+				RelativePath="..\..\src\client\cl_menu.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_parse.c"
+				RelativePath="..\..\src\client\cl_parse.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_particle.c"
+				RelativePath="..\..\src\client\cl_particle.c"
 				>
 			</File>
 			<File
-				RelativePath=".\client\cl_popup.c"
+				RelativePath="..\..\src\client\cl_popup.c"
 				>
 			</File>
 			<File
-				RelativePath=".\client\cl_produce.c"
+				RelativePath="..\..\src\client\cl_produce.c"
 				>
 			</File>
 			<File
-				RelativePath=".\client\cl_radar.c"
+				RelativePath="..\..\src\client\cl_radar.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_research.c"
+				RelativePath="..\..\src\client\cl_research.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_scrn.c"
+				RelativePath="..\..\src\client\cl_scrn.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_sequence.c"
+				RelativePath="..\..\src\client\cl_sequence.c"
 				>
 			</File>
 			<File
-				RelativePath=".\client\cl_shader.c"
+				RelativePath="..\..\src\client\cl_shader.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_team.c"
+				RelativePath="..\..\src\client\cl_team.c"
 				>
 			</File>
 			<File
-				RelativePath=".\client\cl_ufo.c"
+				RelativePath="..\..\src\client\cl_ufo.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_ufopedia.c"
+				RelativePath="..\..\src\client\cl_ufopedia.c"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_view.c"
+				RelativePath="..\..\src\client\cl_view.c"
 				>
 			</File>
 			<File
-				RelativePath="qcommon\cmd.c"
+				RelativePath="..\..\src\qcommon\cmd.c"
 				>
 			</File>
 			<File
-				RelativePath="qcommon\cmodel.c"
+				RelativePath="..\..\src\qcommon\cmodel.c"
 				>
 			</File>
 			<File
-				RelativePath="qcommon\common.c"
+				RelativePath="..\..\src\qcommon\common.c"
 				>
 			</File>
 			<File
-				RelativePath="ports\win32\conproc.c"
+				RelativePath="..\..\src\ports\win32\conproc.c"
 				>
 			</File>
 			<File
-				RelativePath="client\console.c"
+				RelativePath="..\..\src\client\console.c"
 				>
 			</File>
 			<File
-				RelativePath="qcommon\ioapi.c"
+				RelativePath="..\..\src\qcommon\ioapi.c"
 				>
 			</File>
 			<File
-				RelativePath="qcommon\cvar.c"
+				RelativePath="..\..\src\qcommon\cvar.c"
 				>
 			</File>
 			<File
-				RelativePath="qcommon\files.c"
+				RelativePath="..\..\src\qcommon\files.c"
 				>
 			</File>
 			<File
-				RelativePath="ports\win32\in_win.c"
+				RelativePath="..\..\src\ports\win32\in_win.c"
 				>
 			</File>
 			<File
-				RelativePath="client\keys.c"
+				RelativePath="..\..\src\client\keys.c"
 				>
 			</File>
 			<File
-				RelativePath="qcommon\md4.c"
+				RelativePath="..\..\src\qcommon\md4.c"
 				>
 			</File>
 			<File
-				RelativePath="qcommon\net_chan.c"
+				RelativePath="..\..\src\qcommon\net_chan.c"
 				>
 			</File>
 			<File
-				RelativePath="ports\win32\net_wins.c"
+				RelativePath="..\..\src\ports\win32\net_wins.c"
 				>
 			</File>
 			<File
-				RelativePath="game\q_shared.c"
+				RelativePath="..\..\src\game\q_shared.c"
 				>
 			</File>
 			<File
-				RelativePath="ports\win32\q_shwin.c"
+				RelativePath="..\..\src\ports\win32\q_shwin.c"
 				>
 			</File>
 			<File
-				RelativePath="qcommon\scripts.c"
+				RelativePath="..\..\src\qcommon\scripts.c"
 				>
 			</File>
 			<File
-				RelativePath="client\snd_mem.c"
+				RelativePath="..\..\src\client\snd_mem.c"
 				>
 			</File>
 			<File
-				RelativePath="client\snd_mix.c"
+				RelativePath="..\..\src\client\snd_mix.c"
 				>
 			</File>
 			<File
-				RelativePath="client\snd_ref.c"
+				RelativePath="..\..\src\client\snd_ref.c"
 				>
 			</File>
 			<File
-				RelativePath="server\sv_ccmds.c"
+				RelativePath="..\..\src\server\sv_ccmds.c"
 				>
 			</File>
 			<File
-				RelativePath="server\sv_game.c"
+				RelativePath="..\..\src\server\sv_game.c"
 				>
 			</File>
 			<File
-				RelativePath="server\sv_init.c"
+				RelativePath="..\..\src\server\sv_init.c"
 				>
 			</File>
 			<File
-				RelativePath="server\sv_main.c"
+				RelativePath="..\..\src\server\sv_main.c"
 				>
 			</File>
 			<File
-				RelativePath="server\sv_send.c"
+				RelativePath="..\..\src\server\sv_send.c"
 				>
 			</File>
 			<File
-				RelativePath="server\sv_user.c"
+				RelativePath="..\..\src\server\sv_user.c"
 				>
 			</File>
 			<File
-				RelativePath="server\sv_world.c"
+				RelativePath="..\..\src\server\sv_world.c"
 				>
 			</File>
 			<File
-				RelativePath="ports\win32\sys_win.c"
+				RelativePath="..\..\src\ports\win32\sys_win.c"
 				>
 			</File>
 			<File
-				RelativePath=".\qcommon\unzip.c"
+				RelativePath="..\..\src\qcommon\unzip.c"
 				>
 			</File>
 			<File
-				RelativePath="ports\win32\vid_dll.c"
+				RelativePath="..\..\src\ports\win32\vid_dll.c"
 				>
 			</File>
 			<File
-				RelativePath="client\x86.c"
+				RelativePath="..\..\src\client\x86.c"
 				>
 			</File>
 		</Filter>
@@ -727,95 +727,95 @@
 			Filter="h;hpp;hxx;hm;inl;fi;fd"
 			>
 			<File
-				RelativePath="client\anorms.h"
+				RelativePath="..\..\src\client\anorms.h"
 				>
 			</File>
 			<File
-				RelativePath="qcommon\bspfile.h"
+				RelativePath="..\..\src\qcommon\bspfile.h"
 				>
 			</File>
 			<File
-				RelativePath="client\cdaudio.h"
+				RelativePath="..\..\src\client\cdaudio.h"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_basemanagement.h"
+				RelativePath="..\..\src\client\cl_basemanagement.h"
 				>
 			</File>
 			<File
-				RelativePath=".\client\cl_employee.h"
+				RelativePath="..\..\src\client\cl_employee.h"
 				>
 			</File>
 			<File
-				RelativePath="client\cl_research.h"
+				RelativePath="..\..\src\client\cl_research.h"
 				>
 			</File>
 			<File
-				RelativePath="client\client.h"
+				RelativePath="..\..\src\client\client.h"
 				>
 			</File>
 			<File
-				RelativePath="ports\win32\conproc.h"
+				RelativePath="..\..\src\ports\win32\conproc.h"
 				>
 			</File>
 			<File
-				RelativePath="client\console.h"
+				RelativePath="..\..\src\client\console.h"
 				>
 			</File>
 			<File
-				RelativePath="game\game.h"
+				RelativePath="..\..\src\game\game.h"
 				>
 			</File>
 			<File
-				RelativePath="client\input.h"
+				RelativePath="..\..\src\client\input.h"
 				>
 			</File>
 			<File
-				RelativePath="client\keys.h"
+				RelativePath="..\..\src\client\keys.h"
 				>
 			</File>
 			<File
-				RelativePath="game\q_shared.h"
+				RelativePath="..\..\src\game\q_shared.h"
 				>
 			</File>
 			<File
-				RelativePath="qcommon\qcommon.h"
+				RelativePath="..\..\src\qcommon\qcommon.h"
 				>
 			</File>
 			<File
-				RelativePath="qcommon\qfiles.h"
+				RelativePath="..\..\src\qcommon\qfiles.h"
 				>
 			</File>
 			<File
-				RelativePath="client\ref.h"
+				RelativePath="..\..\src\client\ref.h"
 				>
 			</File>
 			<File
-				RelativePath="client\screen.h"
+				RelativePath="..\..\src\client\screen.h"
 				>
 			</File>
 			<File
-				RelativePath="server\server.h"
+				RelativePath="..\..\src\server\server.h"
 				>
 			</File>
 			<File
-				RelativePath="client\snd_loc.h"
+				RelativePath="..\..\src\client\snd_loc.h"
 				>
 			</File>
 			<File
-				RelativePath="client\sound.h"
+				RelativePath="..\..\src\client\sound.h"
 				>
 			</File>
 			<File
-				RelativePath=".\qcommon\unzip.h"
+				RelativePath="..\..\src\qcommon\unzip.h"
 				>
 			</File>
 			<File
-				RelativePath="client\vid.h"
+				RelativePath="..\..\src\client\vid.h"
 				>
 			</File>
 			<File
-				RelativePath="ports\win32\winquake.h"
+				RelativePath="..\..\src\ports\win32\winquake.h"
 				>
 			</File>
 		</Filter>
@@ -824,19 +824,19 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 			>
 			<File
-				RelativePath="ports\win32\intl.lib"
+				RelativePath="..\..\src\ports\win32\intl.lib"
 				>
 			</File>
 			<File
-				RelativePath="ports\win32\ogg.lib"
+				RelativePath="..\..\src\ports\win32\ogg.lib"
 				>
 			</File>
 			<File
-				RelativePath="ports\win32\q2.ico"
+				RelativePath="ufo.ico"
 				>
 			</File>
 			<File
-				RelativePath="ports\win32\q2.rc"
+				RelativePath="..\..\src\ports\win32\ufo.rc"
 				>
 				<FileConfiguration
 					Name="Release Alpha|Win32"
@@ -844,7 +844,7 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="win32"
+						AdditionalIncludeDirectories="..\..\src\ports\win32"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -853,7 +853,7 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="ports\win32"
+						AdditionalIncludeDirectories="..\..\src\ports\win32"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -862,7 +862,7 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="ports\win32"
+						AdditionalIncludeDirectories="..\..\src\ports\win32"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -871,7 +871,7 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="ports\win32"
+						AdditionalIncludeDirectories="..\..\src\ports\win32"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -880,25 +880,25 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="ports\win32"
+						AdditionalIncludeDirectories="..\..\src\ports\win32"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="ports\win32\ufo.ico"
+				RelativePath="ufo.ico"
 				>
 			</File>
 			<File
-				RelativePath="ports\win32\vorbisfile.lib"
+				RelativePath="..\..\src\ports\win32\vorbisfile.lib"
 				>
 			</File>
 		</Filter>
 		<File
-			RelativePath="ports\win32\libintl.h"
+			RelativePath="..\..\src\ports\win32\libintl.h"
 			>
 		</File>
 		<File
-			RelativePath="ports\win32\vorbisfile.h"
+			RelativePath="..\..\src\ports\win32\vorbisfile.h"
 			>
 		</File>
 	</Files>
