@@ -178,8 +178,10 @@ void G_SendInventory(int player_mask, edict_t * ent)
 			nr++;
 
 	/* return if no inventory items to send */
-	if (nr == 0)
+	if (nr == 0 && ent->type != ET_ITEM) {
+		Com_Printf("G_SendInventory, no inventory items to send\n");
 		return;
+	}
 
 	gi.AddEvent(player_mask, EV_INV_ADD);
 
