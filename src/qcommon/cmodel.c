@@ -1037,7 +1037,7 @@ static unsigned CM_AddMapTile(char *name, int sX, int sY, int sZ)
 
 	if (!name || !name[0]) {
 		/* cinematic servers won't have anything at all */
-		return;
+		return 0;
 	}
 
 	/* load the file */
