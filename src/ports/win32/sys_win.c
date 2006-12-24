@@ -62,10 +62,12 @@ static qboolean	oldconsole = qfalse;
 
 static HANDLE		hinput, houtput;
 
-unsigned	sys_msg_time;
-unsigned	sys_frame_time;
+uint32_t	sys_msg_time;
+uint32_t	sys_frame_time;
 
-HWND        cl_hwnd;            /* Main window handle for life of program */
+/* Main window handle for life of the client */
+HWND        cl_hwnd;
+/* Main server console handle for life of the server */
 HWND		hwnd_Server;
 
 int consoleBufferPointer = 0;
@@ -97,10 +99,14 @@ void Sys_EnableTray (void)
 	memset (&pNdata, 0, sizeof(pNdata));
 
 	pNdata.cbSize = sizeof(NOTIFYICONDATA);
+#ifdef DEDICATED_ONLY
+	pNdata.hWnd = hwnd_Server;
+#else
 	pNdata.hWnd = cl_hwnd;
+#endif
 	pNdata.uID = 0;
 	pNdata.uCallbackMessage = WM_USER + 4;
-	GetWindowText (cl_hwnd, pNdata.szTip, sizeof(pNdata.szTip)-1);
+	GetWindowText (pNdata.hWnd, pNdata.szTip, sizeof(pNdata.szTip)-1);
 	pNdata.hIcon = LoadIcon (global_hInstance, MAKEINTRESOURCE(IDI_ICON2));
 	pNdata.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
 
@@ -118,7 +124,11 @@ void Sys_EnableTray (void)
  */
 void Sys_DisableTray (void)
 {
+#ifdef DEDICATED_ONLY
+	ShowWindow (hwnd_Server, SW_RESTORE);
+#else
 	ShowWindow (cl_hwnd, SW_RESTORE);
+#endif
 	procShell_NotifyIcon (NIM_DELETE, &pNdata);
 
 	if (hSh32)
@@ -134,7 +144,11 @@ void Sys_DisableTray (void)
  */
 void Sys_Minimize (void)
 {
+#ifdef DEDICATED_ONLY
+	SendMessage (hwnd_Server, WM_ACTIVATE, MAKELONG(WA_INACTIVE,1), 0);
+#else
 	SendMessage (cl_hwnd, WM_ACTIVATE, MAKELONG(WA_INACTIVE,1), 0);
+#endif
 }
 
 /**
@@ -271,7 +285,7 @@ static LRESULT CALLBACK ServerWindowProc(HWND hwnd, UINT message, WPARAM wParam,
 		Cbuf_AddText ("quit terminated by local request.\n");
 		return FALSE;
 	case WM_CREATE:
-		SetTimer(hwnd_Server, 1, 1000, NULL); 
+		SetTimer(hwnd_Server, 1, 1000, NULL);
 		break;
 	case WM_ACTIVATE:
 		{

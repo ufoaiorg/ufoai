@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/client.h"
 #include "winquake.h"
 
-extern	unsigned sys_msg_time;
+extern	uint32_t sys_msg_time;
 
 cvar_t *in_mouse;
 extern cvar_t *vid_grabmouse;
