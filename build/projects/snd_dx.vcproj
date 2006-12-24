@@ -417,7 +417,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\ports\win32\snd_dx.c"
+				RelativePath="..\..\src\ports\win32\snd_dx.c"
 				>
 			</File>
 		</Filter>

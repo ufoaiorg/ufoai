@@ -88,12 +88,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib gdi32.lib winmm.lib sdl.lib sdl_ttf.lib $(IntDir)\q_shared.obj $(IntDir)\q_shwin.obj"
-				OutputFile="$(OutDir)\ref_gl32d.dll"
+				OutputFile="$(OutDir)\ref_gl.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=""
 				GenerateManifest="false"
-				ModuleDefinitionFile=".\ref_gl.def"
+				ModuleDefinitionFile="..\..\src\ref_gl\ref_gl.def"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=""
 				GenerateMapFile="true"
@@ -499,75 +499,79 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 			>
 			<File
-				RelativePath=".\gl_anim.c"
+				RelativePath="..\..\src\ref_gl\gl_anim.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_arb_shader.c"
+				RelativePath="..\..\src\ref_gl\gl_arb_shader.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_draw.c"
+				RelativePath="..\..\src\ref_gl\gl_draw.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_drawmd3.c"
+				RelativePath="..\..\src\ref_gl\gl_drawmd3.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_font.c"
+				RelativePath="..\..\src\ref_gl\gl_font.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_image.c"
+				RelativePath="..\..\src\ref_gl\gl_image.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_light.c"
+				RelativePath="..\..\src\ref_gl\gl_light.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_mesh.c"
+				RelativePath="..\..\src\ref_gl\gl_mesh.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_model.c"
+				RelativePath="..\..\src\ref_gl\gl_model.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_particle.c"
+				RelativePath="..\..\src\ref_gl\gl_obj.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_rmain.c"
+				RelativePath="..\..\src\ref_gl\gl_particle.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_rmisc.c"
+				RelativePath="..\..\src\ref_gl\gl_rmain.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_rsurf.c"
+				RelativePath="..\..\src\ref_gl\gl_rmisc.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_shadows.c"
+				RelativePath="..\..\src\ref_gl\gl_rsurf.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_warp.c"
+				RelativePath="..\..\src\ref_gl\gl_shadows.c"
 				>
 			</File>
 			<File
-				RelativePath="..\ports\win32\glw_imp.c"
+				RelativePath="..\..\src\ref_gl\gl_warp.c"
 				>
 			</File>
 			<File
-				RelativePath=".\qgl.c"
+				RelativePath="..\..\src\ports\win32\glw_imp.c"
 				>
 			</File>
 			<File
-				RelativePath="..\ports\win32\qgl_win.c"
+				RelativePath="..\..\src\ref_gl\qgl.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ports\win32\qgl_win.c"
 				>
 			</File>
 		</Filter>
@@ -576,43 +580,43 @@
 			Filter="h;hpp;hxx;hm;inl;fi;fd"
 			>
 			<File
-				RelativePath=".\anorms.h"
+				RelativePath="..\..\src\ref_gl\anorms.h"
 				>
 			</File>
 			<File
-				RelativePath=".\anormtab.h"
+				RelativePath="..\..\src\ref_gl\anormtab.h"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_arb_shader.h"
+				RelativePath="..\..\src\ref_gl\gl_arb_shader.h"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_font.h"
+				RelativePath="..\..\src\ref_gl\gl_font.h"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_local.h"
+				RelativePath="..\..\src\ref_gl\gl_local.h"
 				>
 			</File>
 			<File
-				RelativePath=".\gl_model.h"
+				RelativePath="..\..\src\ref_gl\gl_model.h"
 				>
 			</File>
 			<File
-				RelativePath=".\glext.h"
+				RelativePath="..\..\src\ref_gl\glext.h"
 				>
 			</File>
 			<File
-				RelativePath="..\ports\win32\glw_win.h"
+				RelativePath="..\..\src\ports\win32\glw_win.h"
 				>
 			</File>
 			<File
-				RelativePath=".\qgl.h"
+				RelativePath="..\..\src\ref_gl\qgl.h"
 				>
 			</File>
 			<File
-				RelativePath=".\warpsin.h"
+				RelativePath="..\..\src\ref_gl\warpsin.h"
 				>
 			</File>
 		</Filter>
@@ -621,15 +625,15 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 			>
 			<File
-				RelativePath="..\ports\win32\intl.lib"
+				RelativePath="..\..\src\ports\win32\libjpeg.lib"
 				>
 			</File>
 			<File
-				RelativePath="..\ports\win32\libjpeg.lib"
+				RelativePath="..\..\src\ports\win32\libpng.lib"
 				>
 			</File>
 			<File
-				RelativePath="ref_gl.def"
+				RelativePath="..\..\src\ref_gl\ref_gl.def"
 				>
 			</File>
 		</Filter>

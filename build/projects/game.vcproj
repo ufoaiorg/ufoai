@@ -86,12 +86,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib opengl32.lib"
 				OutputFile="$(OutDir)\game32d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateManifest="false"
-				ModuleDefinitionFile=".\game.def"
+				ModuleDefinitionFile="..\..\src\game\game.def"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=""
 				GenerateMapFile="true"
@@ -487,47 +486,39 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 			>
 			<File
-				RelativePath=".\g_ai.c"
+				RelativePath="..\..\src\game\g_ai.c"
 				>
 			</File>
 			<File
-				RelativePath=".\g_client.c"
+				RelativePath="..\..\src\game\g_client.c"
 				>
 			</File>
 			<File
-				RelativePath=".\g_cmds.c"
+				RelativePath="..\..\src\game\g_cmds.c"
 				>
 			</File>
 			<File
-				RelativePath=".\g_main.c"
+				RelativePath="..\..\src\game\g_combat.c"
 				>
 			</File>
 			<File
-				RelativePath=".\g_spawn.c"
+				RelativePath="..\..\src\game\g_main.c"
 				>
 			</File>
 			<File
-				RelativePath=".\g_svcmds.c"
+				RelativePath="..\..\src\game\g_spawn.c"
 				>
 			</File>
 			<File
-				RelativePath=".\g_utils.c"
+				RelativePath="..\..\src\game\g_svcmds.c"
 				>
 			</File>
 			<File
-				RelativePath=".\q_shared.c"
+				RelativePath="..\..\src\game\g_utils.c"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\ports\win32\q_shwin.c"
+				RelativePath="..\..\src\game\q_shared.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -544,23 +535,19 @@
 			Filter="h;hpp;hxx;hm;inl;fi;fd"
 			>
 			<File
-				RelativePath=".\g_local.h"
+				RelativePath="..\..\src\game\g_local.h"
 				>
 			</File>
 			<File
-				RelativePath=".\game.h"
+				RelativePath="..\..\src\game\game.h"
 				>
 			</File>
 			<File
-				RelativePath="..\common\mem.h"
+				RelativePath="..\..\src\game\q_shared.h"
 				>
 			</File>
 			<File
-				RelativePath=".\q_shared.h"
-				>
-			</File>
-			<File
-				RelativePath="..\common\ufotypes.h"
+				RelativePath="..\..\src\common\ufotypes.h"
 				>
 			</File>
 		</Filter>
@@ -569,11 +556,7 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 			>
 			<File
-				RelativePath="game.def"
-				>
-			</File>
-			<File
-				RelativePath="..\ports\win32\intl.lib"
+				RelativePath="..\..\src\game\game.def"
 				>
 			</File>
 		</Filter>

@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="ufo"
-	ProjectGUID="{81666F07-269F-43B1-BE2E-2762520E562E}"
+	Name="ufoded"
+	ProjectGUID="{F6AF12F3-9630-4768-8939-FA582EE4FBDE}"
 	RootNamespace="ufo"
 	>
 	<Platforms>
@@ -49,7 +49,7 @@
 				AdditionalOptions="/QA21164 /QAieee1 "
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;C_ONLY;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN32;DEBUG;_WINDOWS;C_ONLY;_CRT_SECURE_NO_DEPRECATE;DEDICATED_ONLY"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
@@ -142,7 +142,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/QA21164 /MTd /QAieee1 "
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;C_ONLY;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN32;DEBUG;_WINDOWS;C_ONLY;_CRT_SECURE_NO_DEPRECATE;DEDICATED_ONLY"
 				RuntimeLibrary="1"
 				PrecompiledHeaderFile=".\DebugAxp/ufo.pch"
 				AssemblerListingLocation=".\DebugAxp/"
@@ -236,7 +236,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;SHADERS;HAVE_GETTEXT"
+				PreprocessorDefinitions="WIN32;DEBUG;_WINDOWS;C_ONLY;_CRT_SECURE_NO_DEPRECATE;DEDICATED_ONLY"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
@@ -330,7 +330,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF;HAVE_GETTEXT"
+				PreprocessorDefinitions="WIN32;DEBUG;_WINDOWS;C_ONLY;_CRT_SECURE_NO_DEPRECATE;DEDICATED_ONLY"
 				RuntimeLibrary="1"
 				PrecompiledHeaderFile=".\debug/ufo.pch"
 				AssemblerListingLocation=".\debug/"
@@ -427,7 +427,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF;HAVE_GETTEXT"
+				PreprocessorDefinitions="WIN32;DEBUG;_WINDOWS;C_ONLY;_CRT_SECURE_NO_DEPRECATE;DEDICATED_ONLY"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
@@ -453,7 +453,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
-				AdditionalDependencies="kernel32.lib user32.lib winmm.lib wsock32.lib advapi32.lib sdl.lib sdl_ttf.lib"
+				AdditionalDependencies="kernel32.lib user32.lib winmm.lib wsock32.lib advapi32.lib"
 				OutputFile=".\../ufo.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -498,111 +498,11 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 			>
 			<File
-				RelativePath="..\..\src\ports\win32\cd_win.c"
+				RelativePath="..\..\src\ports\null\cd_null.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\cl_actor.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_aircraft.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_aliencont.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_basemanagement.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_campaign.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_employee.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_fx.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_input.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_le.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_main.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_map.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_market.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_menu.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_parse.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_particle.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_popup.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_produce.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_radar.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_research.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_scrn.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_sequence.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_shader.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_team.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_ufo.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_ufopedia.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_view.c"
+				RelativePath="..\..\src\ports\null\cl_null.c"
 				>
 			</File>
 			<File
@@ -622,10 +522,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\console.c"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\qcommon\cvar.c"
 				>
 			</File>
@@ -634,19 +530,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\ports\win32\in_win.c"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\qcommon\ioapi.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\qcommon\irc.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\keys.c"
 				>
 			</File>
 			<File
@@ -671,18 +555,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\qcommon\scripts.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\snd_mem.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\snd_mix.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\snd_ref.c"
 				>
 			</File>
 			<File
@@ -725,136 +597,16 @@
 				RelativePath="..\..\src\ports\win32\vid_dll.c"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\client\x86.c"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;fi;fd"
 			>
-			<File
-				RelativePath="..\..\src\client\anorms.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\qcommon\bspfile.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cdaudio.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_aliencont.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_basemanagement.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_employee.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_research.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\client.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\ports\win32\conproc.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\console.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\game\game.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\input.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\keys.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\ports\win32\libintl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\game\q_shared.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\qcommon\qcommon.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\qcommon\qfiles.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\ref.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\screen.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\server\server.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\snd_loc.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\sound.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\qcommon\unzip.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\vid.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\ports\win32\vorbisfile.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\ports\win32\winquake.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 			>
-			<File
-				RelativePath="..\..\src\ports\win32\intl.lib"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\ports\win32\ogg.lib"
-				>
-			</File>
-			<File
-				RelativePath="ufo.ico"
-				>
-			</File>
 			<File
 				RelativePath="..\..\src\ports\win32\ufo.rc"
 				>
@@ -904,11 +656,15 @@
 					/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath="..\..\src\ports\win32\vorbisfile.lib"
-				>
-			</File>
 		</Filter>
+		<File
+			RelativePath="..\..\src\ports\win32\libintl.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\ports\win32\vorbisfile.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
