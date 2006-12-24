@@ -146,9 +146,9 @@ static qboolean SND_InitWav (void)
 		}
 
 		if (MessageBox (NULL,
-				"The sound hardware is in use by another app.\n\n"
+				(LPCWSTR)"The sound hardware is in use by another app.\n\n"
 				"Select Retry to try to start sound again or Cancel to run UFO with no sound.",
-				"Sound not available",
+				(LPCWSTR)"Sound not available",
 				MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY) {
 			si->Com_DPrintf ("hw in use\n" );
 			return qfalse;
@@ -277,7 +277,7 @@ qboolean SND_Init(struct sndinfo *s)
  */
 int SND_GetDMAPos(void)
 {
-	int		s;
+	int		s = 0;
 
 	if (wav_init)
 		s = snd_sent * WAV_BUFFER_SIZE;
