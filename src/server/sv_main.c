@@ -966,8 +966,9 @@ void SV_Shutdown(char *finalmsg, qboolean reconnect)
 		sv_maxclients->flags &= ~CVAR_LATCH;
 }
 
-/*
+/**
  * @brief Will eventually shutdown the server once all clients have disconnected
+ * @sa SV_CountPlayers
  */
 void SV_ShutdownWhenEmpty (void)
 {

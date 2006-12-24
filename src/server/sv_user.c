@@ -168,6 +168,7 @@ static void SV_Configstrings_f(void)
 
 /**
  * @brief Returns the number of spawned players
+ * @sa SV_ShutdownWhenEmpty
  */
 int SV_CountPlayers (void)
 {
