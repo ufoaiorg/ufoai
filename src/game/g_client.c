@@ -2026,6 +2026,8 @@ void G_ClientSpawn(player_t * player)
 	/* get a team */
 	G_GetTeam(player);
 
+	/* TODO: Check player->pers.team here */
+
 	/* activate his round if he's first to join */
 	if (level.activeTeam == -1) {
 		level.activeTeam = player->pers.team;
