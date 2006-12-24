@@ -257,7 +257,7 @@ float vectoyaw(vec3_t vec)
 char *G_CopyString(char *in)
 {
 	char *out;
-	int l = strlen(in);
+	size_t l = strlen(in);
 
 	out = gi.TagMalloc(l + 1, TAG_LEVEL);
 	Q_strncpyz(out, in, l + 1);
