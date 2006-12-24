@@ -420,7 +420,10 @@ void InitSig(void)
 	signal(SIGIOT, signal_handler);
 	signal(SIGBUS, signal_handler);
 	signal(SIGFPE, signal_handler);
+#ifdef __linux__
+	/* linux has it's own backtrace handler in sys_linux.c */
 	signal(SIGSEGV, signal_handler);
+#endif
 	signal(SIGTERM, signal_handler);
 }
 

@@ -40,10 +40,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/wait.h>
 #include <sys/mman.h>
 #include <errno.h>
-#include <execinfo.h>
-#include <sys/utsname.h>
-#include <link.h>
-#include <sys/ucontext.h>
+
+#ifdef __linux__
+# include <execinfo.h>
+# include <sys/utsname.h>
+# define __USE_GNU
+# include <link.h>
+# include <sys/ucontext.h>
+
+/* for old headers */
+# ifndef REG_EIP
+#  ifndef EIP
+#   define EIP 12 /* aiee */
+#  endif
+#  define REG_EIP EIP
+# endif
+#endif /* __linux__ */
 
 #if defined(__FreeBSD__)
 #else
@@ -52,14 +64,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <pwd.h>
 #include <dirent.h>
 #include <libgen.h> /* dirname */
-
-/* for old headers */
-#ifndef REG_EIP
-#ifndef EIP
-#define EIP 12 /* aiee */
-#endif
-#define REG_EIP EIP
-#endif
 
 #include <dlfcn.h>
 
@@ -159,6 +163,40 @@ char *Sys_GetHomeDirectory (void)
 	return getenv ( "HOME" );
 }
 
+#ifdef __linux__
+
+/* gcc 2.7.2 has trouble understanding this unfortunately at compile time */
+/* and 2.95.3 won't find it at link time. blah. */
+#define GCC_VERSION (__GNUC__ * 10000 \
+	+ __GNUC_MINOR__ * 100 \
+	+ __GNUC_PATCHLEVEL__)
+#if GCC_VERSION > 30000
+/**
+ * @brief
+ */
+static int dlcallback (struct dl_phdr_info *info, size_t size, void *data)
+{
+	int j;
+	int end;
+
+	end = 0;
+
+	if (!info->dlpi_name || !info->dlpi_name[0])
+		return 0;
+
+	for (j = 0; j < info->dlpi_phnum; j++) {
+		end += info->dlpi_phdr[j].p_memsz;
+	}
+
+	/* this is terrible. */
+#if __WORDSIZE == 64
+	fprintf (stderr, "[0x%lux-0x%lux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
+#else
+	fprintf (stderr, "[0x%ux-0x%ux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
+#endif
+	return 0;
+}
+#endif
 
 /**
  * @brief Obtain a backtrace and print it to stderr.
@@ -212,10 +250,17 @@ void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
 	uname (&info);
 	fprintf (stderr, "OS Info: %s %s %s %s %s\n\n", info.sysname, info.nodename, info.release, info.version, info.machine);
 
+#if GCC_VERSION > 30000
+	fprintf (stderr, "Loaded libraries:\n");
+	dl_iterate_phdr(dlcallback, NULL);
+#endif
+
 	free (strings);
 
 	raise (SIGSEGV);
 }
+
+#endif /* __linux__ */
 
 /* ======================================================================= */
 /* General routines */
@@ -315,7 +360,8 @@ void Sys_Init(void)
 #if id386
 /*	Sys_SetFPCW(); */
 #endif
-#ifndef __x86_64__
+#ifdef __linux__
+# ifndef __x86_64__
 	struct sigaction sa;
 
 	if (sizeof(uint32_t) != 4)
@@ -330,9 +376,10 @@ void Sys_Init(void)
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 
 	sigaction(SIGSEGV, &sa, NULL);
-#else
+# else
 	signal (SIGSEGV, Sys_Backtrace);
-#endif
+# endif
+#endif /* __linux__ */
 }
 
 /**
