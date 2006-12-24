@@ -37,7 +37,11 @@ woven in by Terry Thorsen 1/2003.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "zlib.h"
+#ifdef _MSC_VER
+# include "../ports/win32/zlib.h"
+#else
+# include <zlib.h>
+#endif
 #include "unzip.h"
 
 #ifdef STDC
