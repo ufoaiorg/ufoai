@@ -795,8 +795,6 @@ static void CL_ParseMasterServerResponse(void)
 	buffptr = net_message.data + 12;
 	buffend = buffptr + net_message.cursize;
 
-	Com_Printf("Parse master server response: '%s'\n", buffptr);
-
 	while (buffptr+1 < buffend) {
 		/* parse the ip */
 		ip[0] = *buffptr++;
@@ -814,7 +812,7 @@ static void CL_ParseMasterServerResponse(void)
 		}
 		if (!adr.port)
 			break;
-		Com_Printf("server: %s\n", adrstring);
+		Com_DPrintf("server: %s\n", adrstring);
 		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
 	}
 	/* end of stream */
@@ -1047,6 +1045,7 @@ void CL_PingServers_f (void)
 	}
 
 	/* query master server? */
+	/* TODO: Cache this to save bandwidth */
 	if (!noudp->value && (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local"))) {
 		adr.port = (int)masterserver_port->value;
 		if (NET_StringToAdr (masterserver_ip->string, &adr)) {
