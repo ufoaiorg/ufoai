@@ -50,7 +50,7 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif
+#endif    // AFX_RESOURCE_DLL || AFX_TARG_ENU
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -61,11 +61,14 @@ END
 // remains consistent on all systems.
 #ifndef __MINGW32__
 IDI_ICON1               ICON    DISCARDABLE     "ufo.ico"
+IDI_ICON2               ICON    DISCARDABLE     "ufo_ded.ico"
 #else
 #ifdef _WIN32 /* DEV_CPP */
 IDI_ICON1               ICON    DISCARDABLE     "ufo.ico"
+IDI_ICON2               ICON    DISCARDABLE     "ufo_ded.ico"
 #else
 IDI_ICON1               ICON    DISCARDABLE     "build/projects/ufo.ico"
+IDI_ICON2               ICON    DISCARDABLE     "build/projects/ufo_ded.ico"
 #endif
 #endif    // __MINGW32__
 
@@ -113,7 +116,7 @@ END
 
 VS_VERSION_INFO VERSIONINFO
 FILEFLAGSMASK 0x17L
-#ifdef _DEBUG
+#ifdef DEBUG
 	FILEFLAGS 0x3L
 #else
 	FILEFLAGS 0x2L

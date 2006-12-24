@@ -269,6 +269,9 @@ static LRESULT CALLBACK ServerWindowProc(HWND hwnd, UINT message, WPARAM wParam,
 				return TRUE;
 		}
 		Cbuf_AddText ("quit terminated by local request.\n");
+		return FALSE;
+	case WM_CREATE:
+		SetTimer(hwnd_Server, 1, 1000, NULL); 
 		break;
 	case WM_ACTIVATE:
 		{
@@ -469,7 +472,9 @@ void Sys_Init (void)
 			if(hIcon)
 				SendMessage(hwnd_Server, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
 
-			SetFocus (GetDlgItem (hwnd_Server, IDC_COMMAND));
+			UpdateWindow(hwnd_Server);
+			SetForegroundWindow(hwnd_Server);
+			SetFocus(GetDlgItem (hwnd_Server, IDC_COMMAND));
 		}
 	}
 }
@@ -644,7 +649,7 @@ void Sys_SendKeyEvents (void)
 {
 	MSG        msg;
 
-	while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE)) {
+	while (PeekMessage (&msg, NULL, 0, 0, PM_REMOVE)) {
 		if (!GetMessage (&msg, NULL, 0, 0))
 			Sys_Quit ();
 		sys_msg_time = msg.time;
@@ -691,8 +696,10 @@ WINDOWS CRAP
  */
 void Sys_AppActivate (void)
 {
-	ShowWindow ( cl_hwnd, SW_RESTORE);
-	SetForegroundWindow ( cl_hwnd );
+#ifndef DEDICATED_ONLY
+	ShowWindow(cl_hwnd, SW_RESTORE);
+	SetForegroundWindow(cl_hwnd);
+#endif
 }
 
 /*
