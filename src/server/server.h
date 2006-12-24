@@ -224,7 +224,7 @@ void Master_Packet(void);
 
 /* sv_init.c */
 void SV_InitGame(void);
-void SV_Map(qboolean attractloop, char *levelstring);
+void SV_Map(qboolean attractloop, char *levelstring, char *positionstring);
 
 /* sv_send.c */
 typedef enum { RD_NONE, RD_CLIENT, RD_PACKET } redirect_t;

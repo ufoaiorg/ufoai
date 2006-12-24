@@ -116,7 +116,7 @@ qboolean SV_SetPlayer(void)
  */
 void SV_Demo_f(void)
 {
-	SV_Map(qtrue, va("%s.dm2", Cmd_Argv(1)));
+	SV_Map(qtrue, va("%s.dm2", Cmd_Argv(1)), NULL);
 }
 
 /**
@@ -126,7 +126,7 @@ void SV_Demo_f(void)
  */
 void SV_Map_f(void)
 {
-	char	*map;
+	char	*map, *pos = NULL;
 	char	expanded[MAX_QPATH];
 
 	if (Cmd_Argc() < 2) {
@@ -137,7 +137,11 @@ void SV_Map_f(void)
 
 	/* if not a pcx, demo, or cinematic, check to make sure the level exists */
 	map = Cmd_Argv(1);
-	if (!strstr(map, ".")) {
+	/* random maps uses position strings */
+	if (Cmd_Argc() == 2)
+		pos = Cmd_Argv(2);
+	/* base attacks starts with . and random maps with + */
+	if (!strstr(map, ".") && !map[0] == '+') {
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
 		if (FS_CheckFile(expanded) < 0) {
 			Com_Printf ("Can't find %s\n", expanded);
@@ -146,7 +150,7 @@ void SV_Map_f(void)
 	}
 
 	sv.state = ss_dead;		/* don't save current level when changing */
-	SV_Map(qfalse, map);
+	SV_Map(qfalse, map, pos);
 
 	/* archive server state */
 	Q_strncpyz (svs.mapcmd, map, sizeof(svs.mapcmd));

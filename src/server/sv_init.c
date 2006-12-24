@@ -890,7 +890,7 @@ void SV_InitGame(void)
  * @sa SV_Map_f
  * @sa SV_Demo_f
  */
-void SV_Map(qboolean attractloop, char *levelstring)
+void SV_Map(qboolean attractloop, char *levelstring, char *positionstring)
 {
 	char level[MAX_QPATH];
 	char *ch;
@@ -905,7 +905,7 @@ void SV_Map(qboolean attractloop, char *levelstring)
 
 	/* if there is a + in the map, set nextserver to the remainder */
 	ch = strstr(level, "+");
-	if (ch) {
+	if (ch && !positionstring) {
 		*ch = 0;
 		Cvar_Set("nextserver", va("gamemap \"%s\"", ch + 1));
 	} else
@@ -928,7 +928,8 @@ void SV_Map(qboolean attractloop, char *levelstring)
 		SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
 		SV_SendClientMessages();
-		SV_SpawnServer(level, NULL, ss_game, attractloop);
+		Com_Printf("positionstring: '%s'\n", positionstring);
+		SV_SpawnServer(level, positionstring, ss_game, attractloop);
 		Cbuf_CopyToDefer();
 	}
 
