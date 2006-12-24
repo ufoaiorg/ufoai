@@ -928,7 +928,7 @@ void SV_Map(qboolean attractloop, char *levelstring, char *positionstring)
 		SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
 		SV_SendClientMessages();
-		Com_Printf("positionstring: '%s'\n", positionstring);
+		Com_DPrintf("positionstring: '%s'\n", positionstring);
 		SV_SpawnServer(level, positionstring, ss_game, attractloop);
 		Cbuf_CopyToDefer();
 	}
