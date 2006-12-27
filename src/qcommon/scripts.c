@@ -1182,6 +1182,8 @@ void Com_AddObjectLinks(void)
 					k++;
 				}
 			}
+			if (k == 0)
+				Com_Printf("Com_AddObjectLinks: Ammo '%s' is not useable in any weapon\n", od->kurz);
 		}
 	}
 #endif
@@ -1189,6 +1191,9 @@ void Com_AddObjectLinks(void)
 
 /**
  * @brief
+ * @sa CL_ParseClientData
+ * @sa CL_ParseScriptFirst
+ * @sa CL_ParseScriptSecond
  */
 void Com_ParseScripts(void)
 {

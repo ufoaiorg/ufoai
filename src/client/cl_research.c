@@ -251,7 +251,7 @@ void RS_CheckAllCollected(void)
 		tech = &gd.technologies[i];
 
 		/* TODO: Add support for require_OR here. Change this to the following:
-		 * if (RS_CheckCollected(&tech) - does return AND||OR 
+		 * if (RS_CheckCollected(&tech) - does return AND||OR
 		 */
 		if (RS_CheckCollected(&tech->require_AND)) {
 			tech->statusCollected = qtrue;
@@ -1209,7 +1209,7 @@ void RS_MarkResearchedAll(void)
 static void RS_DebugResearchAll(void)
 {
 	technology_t *tech = NULL;
-	
+
 	if (Cmd_Argc() != 2) {
 		RS_MarkResearchedAll();
 	} else {
@@ -1663,12 +1663,18 @@ void RS_GetProvided(char *id, char *provided)
 /**
  * @brief Returns the index of this item in the inventory.
  * @todo This function should be located in a inventory-related file.
+ * @note id may not be null or empty
+ * @param[in] id the item id in our object definition array (csi.ods)
  */
 int RS_GetItem(char *id)
 {
 	int i;
 	objDef_t *item = NULL;
 
+#ifdef DEBUG
+	if (!id || !*id)
+		Com_Printf("RS_GetItem: Called with empty id\n");
+#endif
 	for (i = 0; i < csi.numODs; i++) {	/* i = item index */
 		item = &csi.ods[i];
 		if (!Q_strncmp(id, item->kurz, MAX_VAR)) {

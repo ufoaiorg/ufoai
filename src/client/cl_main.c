@@ -1371,8 +1371,15 @@ void CL_Precache_f (void)
 
 /**
  * @brief Called at client startup
- *
+ * @note not called for dedicated servers
  * parses all *.ufos that are needed for single- and multiplayer
+ * @sa Com_ParseScripts
+ * @sa CL_ParseScriptSecond
+ * @sa CL_ParseScriptFirst
+ * @note Nothing here should depends on items, equipments, actors and all other
+ * entities that are parsed in Com_ParseScripts (because maybe items are not parsed
+ * but e.g. techs would need those parsed items - thus we have to parse e.g. techs
+ * at a later stage)
  */
 void CL_ParseClientData (char *type, char *name, char **text)
 {
@@ -1404,6 +1411,8 @@ void CL_ParseClientData (char *type, char *name, char **text)
  * parsed if we are no dedicated server
  * first stage parses all the main data into their struct
  * see CL_ParseScriptSecond for more details about parsing stages
+ * @sa Com_ParseScripts
+ * @sa CL_ParseScriptSecond
  */
 void CL_ParseScriptFirst(char *type, char *name, char **text)
 {
@@ -1441,6 +1450,8 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
  * second stage links all the parsed data from first stage
  * example: we need a techpointer in a building - in the second stage the buildings and the
  * techs are already parsed - so now we can link them
+ * @sa Com_ParseScripts
+ * @sa CL_ParseScriptFirst
  */
 void CL_ParseScriptSecond(char *type, char *name, char **text)
 {
@@ -1885,6 +1896,7 @@ void CL_Frame(int msec)
 {
 	static int extratime = 0;
 	static int lasttimecalled = 0;
+	char *type, *name, *text;
 
 	if (sv_maxclients->modified) {
 		if ((int) sv_maxclients->value > 1) {
@@ -1902,7 +1914,22 @@ void CL_Frame(int msec)
 			Com_Printf("Changing to Multiplayer\n");
 			/* no campaign equipment but for multiplayer */
 			Cvar_Set("map_dropship", "craft_dropship");
-			CL_Disconnect();
+			/* disconnect already running session */
+			if (cls.state >= ca_connecting)
+				CL_Disconnect();
+
+			/* pre-stage parsing */
+			FS_BuildFileList( "ufos/*.ufo" );
+			FS_NextScriptHeader( NULL, NULL, NULL );
+			text = NULL;
+
+			while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 )
+				if (!Q_strncmp(type, "tech", 4))
+					RS_ParseTechnologies(name, &text);
+
+			/* fill in IDXs for required research techs */
+			RS_RequiredIdxAssign();
+			Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
 		} else {
 			CL_StartSingleplayer(qtrue);
 			Com_Printf("Changing to Singleplayer\n");

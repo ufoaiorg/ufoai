@@ -2651,6 +2651,7 @@ CHARACTER GENERATION AND HANDLING
  * @param[in] weapon The weapon type index in gi.csi->ods
  * @param[in] equip The equipment that shows how many clips to pack
  * @param[in] name The name of the equipment for debug messages
+ * @sa INV_LoadableInWeapon
  */
 int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, char *name)
 {
@@ -3777,6 +3778,7 @@ void Com_InventoryList_f(void)
  * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
  * @return qboolean Returns qtrue if the item can be used in the given weapon, otherwise qfalse.
  * @note Formerly named INV_AmmoUsableInWeapon.
+ * @sa Com_PackAmmoAndWeapon
  */
 qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
 {
