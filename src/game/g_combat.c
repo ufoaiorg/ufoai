@@ -233,6 +233,7 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 				gi.WriteShort(ent->mapNum);
 				if (ent->particle && Q_strcmp(ent->particle, "null")) {
 					/* TODO: Spawn the breaking particle here */
+					/* NOTE: This should already be called in LM_Explode */
 					gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 					gi.WriteShort(ent->spawnflags);
 					gi.WriteGPos(ent->pos);
@@ -296,8 +297,7 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 		return;	/* never reached. need for code analyst. */
 #endif
 
-	if (g_nodamage != NULL && !g_nodamage->value)
-	{
+	if (g_nodamage != NULL && !g_nodamage->value) {
 		/* hit */
 		if (mock) {
 			G_UpdateShotMock(mock, attacker, ent, damage);

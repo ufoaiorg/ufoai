@@ -147,8 +147,11 @@ void SV_Map_f(void)
 	}
 
 	/* base attacks starts with . and random maps with + */
-	if (!strstr(map, ".") && !map[0] == '+') {
-		Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
+	if (!strstr(map, ".")) {
+		if (!map[0] == '+')
+			Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
+		else
+			Com_sprintf(expanded, sizeof(expanded), "maps/%s.ump", map+1);
 		if (FS_CheckFile(expanded) < 0) {
 			Com_Printf ("Can't find %s\n", expanded);
 			return;
