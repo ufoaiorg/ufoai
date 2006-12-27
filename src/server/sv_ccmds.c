@@ -147,6 +147,7 @@ void SV_Map_f(void)
 	}
 
 	/* base attacks starts with . and random maps with + */
+	/* also check the . to determine whether a pcx or demo should be loaded */
 	if (!strstr(map, ".")) {
 		if (!map[0] == '+')
 			Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
