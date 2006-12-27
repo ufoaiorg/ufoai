@@ -241,6 +241,9 @@ static void Com_ParseItem(char *name, char **text)
 	od = &csi.ods[csi.numODs++];
 	memset(od, 0, sizeof(objDef_t));
 
+	/* default value is no ammo */
+	memset(od->forWeapon, -1, sizeof(od->forWeapon));
+
 	Q_strncpyz(od->kurz, name, MAX_VAR);
 
 	/* get it's body */
@@ -1172,7 +1175,6 @@ void Com_AddObjectLinks(void)
 			/* Add weapon-links to ammo items. */
 			k = 0;
 			for (j = 0; j < tech->require_AND.numLinks; j++) {
-				od->forWeapon[k] = -1;
 				if (tech->require_AND.type[j] == RS_LINK_WEAPON) {
 					/* "tech->require_AND.idx[j]" is the technology-index of the weapon */
 					tech_weapon = RS_GetTechByIDX(tech->require_AND.idx[j]);
@@ -1180,9 +1182,6 @@ void Com_AddObjectLinks(void)
 					k++;
 				}
 			}
-		} else {
-			/* Non-ammo items. */
-			od->forWeapon[0] = -1;
 		}
 	}
 #endif
