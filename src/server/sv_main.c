@@ -892,7 +892,7 @@ void SV_Init(void)
 	maxsoldiersperplayer = Cvar_Get("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
 
 	sv_noreload = Cvar_Get("sv_noreload", "0", 0, NULL);
-	public_server = Cvar_Get("public", "0", 0, "Should heartbeats be send to the masterserver");
+	public_server = Cvar_Get("public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, NULL);
 
 	if (dedicated->value)
