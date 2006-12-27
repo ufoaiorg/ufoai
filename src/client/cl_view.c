@@ -260,8 +260,11 @@ void CL_ParseEntitystring(char *es)
 			if (!Q_strcmp(keyname, "ambient") || !Q_strcmp(keyname, "lightambient"))
 				sscanf(com_token, "%f %f %f", &(ambient[0]), &(ambient[1]), &(ambient[2]));
 
-			if (!Q_strcmp(keyname, "angles"))
-				sscanf(com_token, "%f %f %f", &(angles[0]), &(angles[1]), &(angles[2]));
+			if (!Q_strcmp(keyname, "angles") && !angles[YAW])
+				sscanf(com_token, "%f %f %f", &(angles[PITCH]), &(angles[YAW]), &(angles[ROLL]));
+
+			if (!Q_strcmp(keyname, "angle") && !angles[YAW])
+				angles[YAW] = atof(com_token);
 
 			if (!Q_strcmp(keyname, "wait"))
 				sscanf(com_token, "%f %f", &(wait[0]), &(wait[1]));
