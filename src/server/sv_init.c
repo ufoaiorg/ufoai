@@ -655,8 +655,10 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 		mAsm = NULL;
 
 	/* use random assembly, if no valid one has been specified */
-	if (!mAsm)
+	if (!mAsm) {
 		mAsm = &mAssembly[rand() % numAssemblies];
+		Com_DPrintf("Use random assembly: '%s'\n", mAsm->name);
+	}
 
 	/* calculate regions */
 	regNumX = mAsm->w / MAX_REGIONSIZE + 1;
@@ -781,9 +783,13 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 	switch (serverstate) {
 	case ss_game:
 		/* assemble and load the map */
-		if (server[0] == '+')
+		if (server[0] == '+') {
 			SV_AssembleMap(server + 1, param, &map, &pos);
-		else {
+			if (!map || !pos) {
+				Com_Printf("Could not load assembly for map '%s'\n", server);
+				return;
+			}
+		} else {
 			map = server;
 			pos = param;
 		}
@@ -885,7 +891,7 @@ void SV_InitGame(void)
  * Map can also be a .pcx, or .dm2 file
  * Nextserver is used to allow a cinematic to play, then proceed to
  * another level:
- * map tram.pcx+jail_e3
+ * map tram.pcx#jail_e3
  * @sa SV_SpawnServer
  * @sa SV_Map_f
  * @sa SV_Demo_f
@@ -903,8 +909,8 @@ void SV_Map(qboolean attractloop, char *levelstring, char *assembly)
 
 	Q_strncpyz(level, levelstring, MAX_QPATH);
 
-	/* if there is a + in the map, set nextserver to the remainder */
-	ch = strstr(level, "+");
+	/* if there is a # in the map, set nextserver to the remainder */
+	ch = strstr(level, "#");
 	if (ch && !assembly) {
 		*ch = 0;
 		Cvar_Set("nextserver", va("gamemap \"%s\"", ch + 1));
