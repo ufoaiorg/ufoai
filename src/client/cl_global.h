@@ -120,6 +120,12 @@ typedef struct globalData_s
 	/* UFOs on geoscape: TODO update their inner pointers if needed */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUfos;
+
+	/* == Alien Containment == */
+	/* uncomment this if you want to test Alien Containment (WIP) stuff 
+	aliensTmp_t cargo[MAX_CARGO];
+	int aliensAmount; */
+
 } globalData_t;
 
 

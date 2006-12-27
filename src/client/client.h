@@ -758,6 +758,9 @@ const struct aircraft_s* ufo, qboolean wasUfoSensored);
 /* cl_hospital.c */
 #include "cl_hospital.h"
 
+/* cl_aliencont.c */
+#include "cl_aliencont.h"
+
 /* MISC */
 /* TODO: needs to be sorted (e.g what file is it defined?) */
 #define MAX_TEAMDATASIZE	32768
