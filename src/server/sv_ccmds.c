@@ -129,7 +129,7 @@ void SV_Demo_f(void)
  */
 void SV_Map_f(void)
 {
-	char	*map, *pos = NULL;
+	char	*map, *assembly = NULL;
 	char	expanded[MAX_QPATH];
 
 	if (Cmd_Argc() < 2) {
@@ -141,8 +141,11 @@ void SV_Map_f(void)
 	/* if not a pcx, demo, or cinematic, check to make sure the level exists */
 	map = Cmd_Argv(1);
 	/* random maps uses position strings */
-	if (Cmd_Argc() == 2)
-		pos = Cmd_Argv(2);
+	if (Cmd_Argc() == 3) {
+		assembly = Cmd_Argv(2);
+		Com_DPrintf("SV_Map_f: assembly: '%s'\n", assembly);
+	}
+
 	/* base attacks starts with . and random maps with + */
 	if (!strstr(map, ".") && !map[0] == '+') {
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
@@ -153,7 +156,7 @@ void SV_Map_f(void)
 	}
 
 	sv.state = ss_dead;		/* don't save current level when changing */
-	SV_Map(qfalse, map, pos);
+	SV_Map(qfalse, map, assembly);
 
 	/* archive server state */
 	Q_strncpyz (svs.mapcmd, map, sizeof(svs.mapcmd));
