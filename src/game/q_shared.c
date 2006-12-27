@@ -3750,6 +3750,13 @@ void Com_PrintItemDescription(int i)
 	Com_Printf("... firetwohanded -> %i\n", ods_temp->firetwohanded);
 	Com_Printf("... twohanded     -> %i\n", ods_temp->holdtwohanded);
 	Com_Printf("... thrown        -> %i\n", ods_temp->thrown);
+	Com_Printf("... usable for weapon (if type is ammo):\n");
+	for (i = 0; i < MAX_TECHLINKS; i++) {
+		if (ods_temp->forWeapon[i] < 0)
+			break;
+		Com_Printf("    ... %s\n", CSI->ods[ods_temp->forWeapon[i]].name);
+	}
+	Com_Printf("\n");
 }
 
 
@@ -3775,7 +3782,7 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
 {
 	int i;
 	qboolean usable = qfalse;
-	 
+
 	for (i = 0; i < MAX_TECHLINKS; i++) {
 		if (od->forWeapon[i] < 0)
 			break;
