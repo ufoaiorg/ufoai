@@ -43,12 +43,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void SV_SetMaster_f(void)
 {
+	if (sv_maxclients->value == 1.0f)
+		return;
+
 	/* make sure the server is listed public */
 	Cvar_Set("public", "1");
 
 	/* do the first slot for all servers */
 	if (!NET_StringToAdr (masterserver_ip->string, &master_adr)) {
-		Com_Printf ("Bad Master IP");
+		Com_Printf ("SV_SetMaster_f: Bad Master IP");
 	}
 	if (master_adr.port == 0)
 		master_adr.port = BigShort((int)masterserver_port->value);
