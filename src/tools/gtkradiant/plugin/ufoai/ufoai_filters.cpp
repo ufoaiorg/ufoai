@@ -18,416 +18,301 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "ufoai_filters.h"
 
-#include "ifilter.h"
 #include "ibrush.h"
+#include "ientity.h"
 
+// believe me, i'm sorry
 #include "../../radiant/brush.h"
 
 #include "generic/callback.h"
 
 #include <list>
 
+int actorclip_active = 0;
+int stepon_active = 0;
+int level_active = 0;
 
-class ufoai_filter_face_shader : public FaceFilter
+// TODO: This should be added to ibrush.h
+// like already done for Node_getEntity in ientity.h
+// FIXME: Doesn't belong here
+inline Brush* Node_getBrush(scene::Node& node)
 {
-  const char* m_shader;
-public:
-  ufoai_filter_face_shader(const char* shader) : m_shader(shader)
-  {
-  }
-  bool filter(const Face& face) const
-  {
-    return shader_equal(face.GetShader(), m_shader);
-  }
-};
-
-class ufoai_filter_face_shader_prefix : public FaceFilter
-{
-  const char* m_prefix;
-public:
-  ufoai_filter_face_shader_prefix(const char* prefix) : m_prefix(prefix)
-  {
-  }
-  bool filter(const Face& face) const
-  {
-    return shader_equal_n(face.GetShader(), m_prefix, strlen(m_prefix));
-  }
-};
-
-class ufoai_filter_face_flags : public FaceFilter
-{
-  int m_flags;
-public:
-  ufoai_filter_face_flags(int flags) : m_flags(flags)
-  {
-  }
-  bool filter(const Face& face) const
-  {
-    return (face.getShader().shaderFlags() & m_flags) != 0;
-  }
-};
-
-class ufoai_filter_face_contents : public FaceFilter
-{
-  int m_contents;
-public:
-  ufoai_filter_face_contents(int contents) : m_contents(contents)
-  {
-  }
-  bool filter(const Face& face) const
-  {
-    return (face.getShader().m_flags.m_contentFlags & m_contents) != 0;
-  }
-};
-
-
-
-class FaceFilterAny
-{
-  FaceFilter* m_filter;
-  bool& m_filtered;
-public:
-  FaceFilterAny(FaceFilter* filter, bool& filtered) : m_filter(filter), m_filtered(filtered)
-  {
-    m_filtered = false;
-  }
-  void operator()(Face& face) const
-  {
-    if(m_filter->filter(face))
-    {
-      m_filtered = true;
-    }
-  }
-};
-
-class filter_brush_any_face : public BrushFilter
-{
-  FaceFilter* m_filter;
-public:
-  filter_brush_any_face(FaceFilter* filter) : m_filter(filter)
-  {
-  }
-  bool filter(const Brush& brush) const
-  {
-    bool filtered;
-    Brush_forEachFace(brush, FaceFilterAny(m_filter, filtered));
-    return filtered;
-  }
-};
-
-class FaceFilterAll
-{
-  FaceFilter* m_filter;
-  bool& m_filtered;
-public:
-  FaceFilterAll(FaceFilter* filter, bool& filtered) : m_filter(filter), m_filtered(filtered)
-  {
-    m_filtered = true;
-  }
-  void operator()(Face& face) const
-  {
-    if(!m_filter->filter(face))
-    {
-      m_filtered = false;
-    }
-  }
-};
-
-class filter_brush_all_faces : public BrushFilter
-{
-  FaceFilter* m_filter;
-public:
-  filter_brush_all_faces(FaceFilter* filter) : m_filter(filter)
-  {
-  }
-  bool filter(const Brush& brush) const
-  {
-    bool filtered;
-    Brush_forEachFace(brush, FaceFilterAll(m_filter, filtered));
-    return filtered;
-  }
-};
-
-
-class BrushFilterWrapper : public Filter
-{
-  bool m_active;
-  bool m_invert;
-  BrushFilter& m_filter;
-public:
-  BrushFilterWrapper(BrushFilter& filter, bool invert) : m_invert(invert), m_filter(filter)
-  {
-  }
-  void setActive(bool active)
-  {
-    m_active = active;
-  }
-  bool active()
-  {
-    return m_active;
-  }
-  bool filter(const Brush& brush)
-  {
-    return m_invert ^ m_filter.filter(brush);
-  }
-};
-
-typedef std::list<BrushFilterWrapper> BrushFilters;
-BrushFilters g_brushFilters;
-
-BrushFilterWrapper* add_ufoaibrush_filter(BrushFilter& filter, int mask, bool invert)
-{
-  g_brushFilters.push_back(BrushFilterWrapper(filter, invert));
-  GlobalFilterSystem().addFilter(g_brushFilters.back(), mask);
-  return &g_brushFilters.back();
+	return NodeTypeCast<Brush>::cast(node);
 }
 
-ufoai_filter_face_flags g_ufoai_filter_face_clip(CONTENTS_ACTORCLIP);
-filter_brush_all_faces g_filter_brush_clip(&g_ufoai_filter_face_clip);
-
-ufoai_filter_face_flags g_ufoai_filter_face_stepon(CONTENTS_STEPON);
-filter_brush_all_faces g_filter_brush_stepon(&g_ufoai_filter_face_stepon);
-
-ufoai_filter_face_flags g_ufoai_filter_face_level1(CONTENTS_LEVEL1);
-filter_brush_all_faces g_filter_brush_level1(&g_ufoai_filter_face_level1);
-
-ufoai_filter_face_flags g_ufoai_filter_face_level2(CONTENTS_LEVEL2);
-filter_brush_all_faces g_filter_brush_level2(&g_ufoai_filter_face_level2);
-
-ufoai_filter_face_flags g_ufoai_filter_face_level3(CONTENTS_LEVEL3);
-filter_brush_all_faces g_filter_brush_level3(&g_ufoai_filter_face_level3);
-
-ufoai_filter_face_flags g_ufoai_filter_face_level4(CONTENTS_LEVEL4);
-filter_brush_all_faces g_filter_brush_level4(&g_ufoai_filter_face_level4);
-
-ufoai_filter_face_flags g_ufoai_filter_face_level5(CONTENTS_LEVEL5);
-filter_brush_all_faces g_filter_brush_level5(&g_ufoai_filter_face_level5);
-
-ufoai_filter_face_flags g_ufoai_filter_face_level6(CONTENTS_LEVEL6);
-filter_brush_all_faces g_filter_brush_level6(&g_ufoai_filter_face_level6);
-
-ufoai_filter_face_flags g_ufoai_filter_face_level7(CONTENTS_LEVEL7);
-filter_brush_all_faces g_filter_brush_level7(&g_ufoai_filter_face_level7);
-
-ufoai_filter_face_flags g_ufoai_filter_face_level8(CONTENTS_LEVEL8);
-filter_brush_all_faces g_filter_brush_level8(&g_ufoai_filter_face_level8);
-
-BrushFilterWrapper* f_stepon;
-BrushFilterWrapper* f_actorclip;
-BrushFilterWrapper* f_level1;
-BrushFilterWrapper* f_level2;
-BrushFilterWrapper* f_level3;
-BrushFilterWrapper* f_level4;
-BrushFilterWrapper* f_level5;
-BrushFilterWrapper* f_level6;
-BrushFilterWrapper* f_level7;
-BrushFilterWrapper* f_level8;
-
-void init_filters(void)
+void hide_node(scene::Node& node, bool hide)
 {
-	f_stepon = add_ufoaibrush_filter(g_filter_brush_stepon, EXCLUDE_CLIP, 0);
-	f_level1 = add_ufoaibrush_filter(g_filter_brush_level1, EXCLUDE_CLIP, 0);
-	f_level2 = add_ufoaibrush_filter(g_filter_brush_level2, EXCLUDE_CLIP, 0);
-	f_level3 = add_ufoaibrush_filter(g_filter_brush_level3, EXCLUDE_CLIP, 0);
-	f_level4 = add_ufoaibrush_filter(g_filter_brush_level4, EXCLUDE_CLIP, 0);
-	f_level5 = add_ufoaibrush_filter(g_filter_brush_level5, EXCLUDE_CLIP, 0);
-	f_level6 = add_ufoaibrush_filter(g_filter_brush_level6, EXCLUDE_CLIP, 0);
-	f_level7 = add_ufoaibrush_filter(g_filter_brush_level7, EXCLUDE_CLIP, 0);
-	f_level8 = add_ufoaibrush_filter(g_filter_brush_level8, EXCLUDE_CLIP, 0);
-	f_actorclip = add_ufoaibrush_filter(g_filter_brush_clip, EXCLUDE_CLIP, 0);
-	globalOutputStream() << "initialized UFO:AI fiters\n";
+	hide
+	? node.enable(scene::Node::eHidden)
+	: node.disable(scene::Node::eHidden);
 }
 
-static int activeLevelFilter = 0;
-static int activeSteponFilter = 0;
-static int activeActorClipFilter = 0;
+typedef std::list<Entity*> entitylist_t;
 
-/**
- * @brief Deactivates the level filter for the given level
- */
-void deactive_filter_level(int level)
+class EntityFindByClassname : public scene::Graph::Walker
 {
-	globalOutputStream() << "deactive_filter_level: " << level << "\n";
-	activeLevelFilter = 0;
-	switch (level) {
-	case 1:
-		f_level1->setActive(0);
-		break;
-	case 2:
-		f_level2->setActive(0);
-		break;
-	case 3:
-		f_level3->setActive(0);
-		break;
-	case 4:
-		f_level4->setActive(0);
-		break;
-	case 5:
-		f_level5->setActive(0);
-		break;
-	case 6:
-		f_level6->setActive(0);
-		break;
-	case 7:
-		f_level7->setActive(0);
-		break;
-	case 8:
-		f_level8->setActive(0);
-		break;
-	};
-}
+	const char* m_name;
+	entitylist_t& m_entitylist;
+	int m_flag;
+
+public:
+	EntityFindByClassname(const char* name, entitylist_t& entitylist, int flag)
+		: m_name(name), m_entitylist(entitylist), m_flag(flag)
+	{
+	}
+	bool pre(const scene::Path& path, scene::Instance& instance) const
+	{
+		int spawnflagsInt;
+		Entity* entity = Node_getEntity(path.top());
+		if (entity != 0)
+		{
+			if (string_equal(m_name, entity->getKeyValue("classname")))
+			{
+				const char *spawnflags = entity->getKeyValue("spawnflags");
+				if (!string_empty(spawnflags)) {
+					spawnflagsInt = atoi(spawnflags);
+					if (!(spawnflagsInt & m_flag))
+					{
+						hide_node(path.top(), true); // hide
+						m_entitylist.push_back(entity);
+					}
+					else
+					{
+						// maybe it was already hidden?
+						hide_node(path.top(), false); // unhide
+					}
+				}
+				else
+				{
+					globalOutputStream() << "no spawnflags for "<< m_name << ".\n";
+				}
+				globalOutputStream() << "entity match entity name we are searching for: "<< m_name << ".\n";
+			}
+			else
+			{
+				globalOutputStream() << "entity does not match entity name we are searching for: "<< m_name << ".\n";
+			}
+		}
+		else
+		{
+			globalOutputStream() << "no entity: "<< m_name << ".\n";
+		}
+		return true;
+	}
+};
+
+class ForEachFace : public BrushVisitor
+{
+	Brush &m_brush;
+public:
+	mutable int m_contentFlagsVis;
+	mutable int m_surfaceFlagsVis;
+
+	ForEachFace(Brush& brush)
+		: m_brush(brush)
+	{
+		m_contentFlagsVis = -1;
+		m_surfaceFlagsVis = -1;
+	}
+
+	void visit(Face& face) const
+	{
+#if 0
+		if (m_surfaceFlagsVis < 0)
+			m_surfaceFlagsVis = face.getShader().m_flags.m_surfaceFlags;
+		else if (m_surfaceFlagsVis != face.getShader().m_flags.m_surfaceFlags)
+			globalOutputStream() << "Faces with different surfaceflags at brush\n";
+		if (m_contentFlagsVis < 0)
+			m_contentFlagsVis = face.getShader().m_flags.m_contentFlags;
+		else if (m_contentFlagsVis != face.getShader().m_flags.m_contentFlags)
+			globalOutputStream() << "Faces with different contentflags at brush\n";
+#endif
+		m_surfaceFlagsVis = face.getShader().m_flags.m_surfaceFlags;
+		m_contentFlagsVis = face.getShader().m_flags.m_contentFlags;
+	}
+};
+
+typedef std::list<Brush*> brushlist_t;
+
+class BrushGetLevel : public scene::Graph::Walker
+{
+	brushlist_t& m_brushlist;
+	int m_flag;
+	bool m_content; // if true - use m_contentFlags - otherwise m_surfaceFlags
+	mutable bool m_notset;
+	mutable bool hide;
+public:
+	BrushGetLevel(brushlist_t& brushlist, int flag, bool content, bool notset)
+		: m_brushlist(brushlist), m_flag(flag), m_content(content), m_notset(notset)
+	{
+		hide = false;
+	}
+	bool pre(const scene::Path& path, scene::Instance& instance) const
+	{
+		Brush* brush = Node_getBrush(path.top());
+		if (brush != 0)
+		{
+			if (!m_flag)
+			{
+				hide_node(path.top(), false);
+			}
+			else
+			{
+				ForEachFace faces(*brush);
+				brush->forEachFace(faces);
+				if (m_content)
+				{
+//					if (faces.m_contentFlagsVis > 0)
+//						globalOutputStream() << "contentflags: " << faces.m_contentFlagsVis << " flag: " << m_flag << "\n";
+					if (faces.m_contentFlagsVis > 0)
+					{
+						if (m_notset && (!(faces.m_contentFlagsVis & m_flag)))
+						{
+							hide_node(path.top(), true);
+							hide = true;
+						}
+						else if (!m_notset && ((faces.m_contentFlagsVis & m_flag)))
+						{
+							hide_node(path.top(), true);
+							hide = true;
+						}
+					}
+				}
+				else
+				{
+//					if (faces.m_surfaceFlagsVis > 0)
+//						globalOutputStream() << "surfaceflags: " << faces.m_surfaceFlagsVis << " flag: " << m_flag << "\n";
+					if (faces.m_surfaceFlagsVis > 0)
+					{
+						if (m_notset && (!(faces.m_surfaceFlagsVis & m_flag)))
+						{
+							hide_node(path.top(), true);
+							hide = true;
+						}
+						else if (!m_notset && ((faces.m_surfaceFlagsVis & m_flag)))
+						{
+							hide_node(path.top(), true);
+							hide = true;
+						}
+					}
+				}
+
+				/* make it visible again */
+				if (!hide)
+					hide_node(path.top(), false);
+				else
+					m_brushlist.push_back(brush);
+			}
+		}
+		return true;
+	}
+};
 
 /**
  * @brief Activates the level filter for the given level
  * @param[in] level Which level to show?
+ * @todo Entities
  */
-void filter_level(int level)
+void filter_level(int flag)
 {
-	int flag = 1;
-	if (activeLevelFilter > 0)
-		deactive_filter_level(activeLevelFilter);
-	if (activeLevelFilter != level)
+	int level;
+
+	level = (flag >> 8);
+
+	if (level_active)
 	{
-		activeLevelFilter = level;
-		flag <<= (level - 1);
-		switch (level) {
-		case 0:
-			f_level1->setActive(1);
-			break;
-		case 1:
-			f_level2->setActive(1);
-			break;
-		case 2:
-			f_level3->setActive(1);
-			break;
-		case 3:
-			f_level4->setActive(1);
-			break;
-		case 4:
-			f_level5->setActive(1);
-			break;
-		case 5:
-			f_level6->setActive(1);
-			break;
-		case 6:
-			f_level7->setActive(1);
-			break;
-		case 7:
-			f_level8->setActive(1);
-			break;
-		};
-		globalOutputStream() << "filter_level: " << activeLevelFilter << " flag: " << flag << "\n";
+		flag = 0;
+		level_active = 0;
 	}
 	else
 	{
-		globalOutputStream() << "Level filters deactivated\n";
+		level_active = level;
 	}
-}
 
-/**
- * @brief Deactivates the stepon filter
- * @sa filter_stepon
- */
-void deactive_filter_stepon(void)
-{
-	globalOutputStream() << "deactive_filter_stepon\n";
-	activeSteponFilter = 0;
-	f_stepon->setActive(activeSteponFilter);
-}
+	brushlist_t brushes;
+	entitylist_t entities;
 
-/**
- * @brief Activates the stepon filter to hide stepon brushes
- * @sa deactive_filter_stepon
- */
-void filter_stepon(void)
-{
-	if (activeSteponFilter == 1)
-		deactive_filter_stepon();
+	// first all brushes
+	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, true));
+
+	// now all entities
+	// TODO/FIXME: This currently doesn't result in any entities - i don't know why
+	GlobalSceneGraph().traverse(EntityFindByClassname("func_breakable", entities, flag));
+	GlobalSceneGraph().traverse(EntityFindByClassname("misc_model", entities, flag));
+
+	if (brushes.empty())
+	{
+		globalOutputStream() << "UFO:AI: No brushes.\n";
+	}
 	else
 	{
-		activeSteponFilter = 1;
-		f_stepon->setActive(activeSteponFilter);
-		globalOutputStream() << "filter_stepon\n";
+		globalOutputStream() << "UFO:AI: Found " << Unsigned(brushes.size()) << " brushes.\n";
 	}
-}
 
-
-/**
- * @brief Deactivates the actorclip filter
- * @sa filter_actorclip
- */
-void deactive_filter_actorclip(void)
-{
-	globalOutputStream() << "deactive_filter_actorclip\n";
-	activeActorClipFilter = 0;
-	f_actorclip->setActive(activeSteponFilter);
-}
-
-/**
- * @brief Activates the actorclip filter to hide actorclip brushes
- * @sa deactive_filter_actorclip
- */
-void filter_actorclip(void)
-{
-	if (activeActorClipFilter == 1)
-		deactive_filter_actorclip();
+	// now let's filter all entities like misc_model and func_breakable that have the spawnflags set
+	if (entities.empty())
+	{
+		globalOutputStream() << "UFO:AI: No entities.\n";
+	}
 	else
 	{
-		activeActorClipFilter = 1;
-		f_actorclip->setActive(activeSteponFilter);
-		globalOutputStream() << "filter_actorclip\n";
+		globalOutputStream() << "UFO:AI: Found " << Unsigned(entities.size()) << " entities.\n";
 	}
+
+	SceneChangeNotify();
+
+	globalOutputStream() << "filter_level: " << level << " flag: " << flag << "\n";
 }
 
-bool brush_filtered(Brush& brush)
+void filter_stepon (void)
 {
-  for(BrushFilters::iterator i = g_brushFilters.begin(); i != g_brushFilters.end(); ++i)
-  {
-    if((*i).active() && (*i).filter(brush))
-    {
-      return true;
-    }
-  }
-  return false;
+	int flag = CONTENTS_STEPON;
+	if (stepon_active) {
+		flag = 0;
+		stepon_active = 0;
+	} else {
+		stepon_active = 1;
+	}
+	brushlist_t brushes;
+	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, false));
+
+	if (brushes.empty())
+	{
+		globalOutputStream() << "UFO:AI: No brushes.\n";
+	}
+	else
+	{
+		globalOutputStream() << "UFO:AI: Hiding " << Unsigned(brushes.size()) << " stepon brushes.\n";
+	}
+
+	SceneChangeNotify();
+
+	globalOutputStream() << "filter_stepon: flag: " << flag << "\n";
 }
 
-class ClassnameFilter : public Filterable
+void filter_actorclip (void)
 {
-  scene::Node& m_node;
-public:
-  Brush& m_brush;
+	int flag = CONTENTS_ACTORCLIP;
+	if (actorclip_active) {
+		flag = 0;
+		actorclip_active = 0;
+	} else {
+		actorclip_active = 1;
+	}
+	actorclip_active = 1;
+	brushlist_t brushes;
+	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, false));
 
-  ClassnameFilter(Brush& brush, scene::Node& node) : m_node(node), m_brush(brush)
-  {
-  }
-  ~ClassnameFilter()
-  {
-  }
+	if (brushes.empty())
+	{
+		globalOutputStream() << "UFO:AI: No brushes.\n";
+	}
+	else
+	{
+		globalOutputStream() << "UFO:AI: Hiding " << Unsigned(brushes.size()) << " actorclip brushes.\n";
+	}
 
-  void instanceAttach()
-  {
-    GlobalFilterSystem().registerFilterable(*this);
-  }
-  void instanceDetach()
-  {
-    GlobalFilterSystem().unregisterFilterable(*this);
-  }
+	SceneChangeNotify();
 
-  void updateFiltered()
-  {
-    if(brush_filtered(m_brush))
-    {
-      m_node.enable(scene::Node::eFiltered);
-    }
-    else
-    {
-      m_node.disable(scene::Node::eFiltered);
-    }
-  }
-
-  void classnameChanged(const char* value)
-  {
-    updateFiltered();
-  }
-  typedef MemberCaller1<ClassnameFilter, const char*, &ClassnameFilter::classnameChanged> ClassnameChangedCaller;
-};
+	globalOutputStream() << "filter_actorclip: flag: " << flag << "\n";
+}

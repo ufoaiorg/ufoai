@@ -25,10 +25,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "iplugin.h"
 
+#include "version.h"
+
 #include "string/string.h"
 #include "modulesystem/singletonmodule.h"
 
 #include <gtk/gtk.h>
+
+#define PLUGIN_VERSION "0.1"
 
 #include "ifilter.h"
 #include "ibrush.h"
@@ -42,8 +46,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class UFOAIPluginDependencies :
   public GlobalRadiantModuleRef,    // basic class for all other module refs
   public GlobalUndoModuleRef,       // used to say radiant that something has changed and to undo that
-  public GlobalFilterModuleRef,
-  //public GlobalBrushModuleRef,
   public GlobalSceneGraphModuleRef, // necessary to handle data in the mapfile (change, retrieve data)
   public GlobalEntityModuleRef,     // to access and modify the entities
   public GlobalEntityClassManagerModuleRef
@@ -63,7 +65,6 @@ namespace UFOAI
 	const char* init(void* hApp, void* pMainWidget)
 	{
 		g_mainwnd = GTK_WINDOW(pMainWidget);
-		init_filters();
 		return "Initializing GTKRadiant UFOAI plugin";
 	}
 	const char* getName()
@@ -81,43 +82,44 @@ namespace UFOAI
 	}
 	void dispatch(const char* command, float* vMin, float* vMax, bool bSingleBrush)
 	{
+#define START 9
 		if(string_equal(command, "About"))
 		{
 			GlobalRadiant().m_pfnMessageBox(GTK_WIDGET(g_mainwnd),
-				"UFO:AI Plugin (http://www.ufoai.net)\n", "About",
+				"UFO:AI Plugin (http://www.ufoai.net)\nBuild: " __DATE__ "\nRadiant version: " RADIANT_VERSION "\nPlugin version: " PLUGIN_VERSION "\n", "About",
 				eMB_OK, eMB_ICONDEFAULT);
 		}
 		else if(string_equal(command, "Level 1"))
 		{
-			filter_level(1);
+			filter_level(CONTENTS_LEVEL1);
 		}
 		else if(string_equal(command, "Level 2"))
 		{
-			filter_level(2);
+			filter_level(CONTENTS_LEVEL2);
 		}
 		else if(string_equal(command, "Level 3"))
 		{
-			filter_level(3);
+			filter_level(CONTENTS_LEVEL3);
 		}
 		else if(string_equal(command, "Level 4"))
 		{
-			filter_level(4);
+			filter_level(CONTENTS_LEVEL4);
 		}
 		else if(string_equal(command, "Level 5"))
 		{
-			filter_level(5);
+			filter_level(CONTENTS_LEVEL5);
 		}
 		else if(string_equal(command, "Level 6"))
 		{
-			filter_level(6);
+			filter_level(CONTENTS_LEVEL6);
 		}
 		else if(string_equal(command, "Level 7"))
 		{
-			filter_level(7);
+			filter_level(CONTENTS_LEVEL7);
 		}
 		else if(string_equal(command, "Level 8"))
 		{
-			filter_level(8);
+			filter_level(CONTENTS_LEVEL8);
 		}
 		else if(string_equal(command, "StepOn"))
 		{
@@ -136,7 +138,7 @@ class UFOAIModule : public TypeSystemRef
 	_QERPluginTable m_plugin;
 public:
 	typedef _QERPluginTable Type;
-	STRING_CONSTANT(Name, "ufo:ai");
+	STRING_CONSTANT(Name, "UFO:AI");
 
 	UFOAIModule()
 	{
@@ -160,7 +162,7 @@ SingletonUFOAIModule g_UFOAIModule;
 class UFOAIToolbarDependencies : public ModuleRef<_QERPluginTable>
 {
 public:
-	UFOAIToolbarDependencies() : ModuleRef<_QERPluginTable>("ufo:ai")
+	UFOAIToolbarDependencies() : ModuleRef<_QERPluginTable>("UFO:AI")
 	{
 	}
 };
@@ -170,7 +172,7 @@ class UFOAIToolbarModule : public TypeSystemRef
 	_QERPlugToolbarTable m_table;
 public:
 	typedef _QERPlugToolbarTable Type;
-	STRING_CONSTANT(Name, "ufo:ai");
+	STRING_CONSTANT(Name, "UFO:AI");
 
 	UFOAIToolbarModule()
 	{

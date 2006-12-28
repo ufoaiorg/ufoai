@@ -19,7 +19,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_FILTERS_H)
 #define INCLUDED_FILTERS_H
 
-void init_filters(void);
 void filter_level(int level);
 void filter_stepon(void);
 void filter_actorclip(void);
