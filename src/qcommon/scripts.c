@@ -640,6 +640,11 @@ int Com_GetModelAndName(char *team, character_t * chr)
 	int i, gender, category = 0;
 	int retry = 1000;
 
+	if (!numTeamDefs) {
+		/*Sys_Error("Com_GetModelAndName: No team definitions found\n");*/
+		return 0;
+	}
+
 	/* get team definition */
 	for (i = 0; i < numTeamDefs; i++)
 		if (!Q_strncmp(team, teamDef[i].title, MAX_VAR))
@@ -656,10 +661,9 @@ int Com_GetModelAndName(char *team, character_t * chr)
 				break;
 		if (i == numNameCats) {
 			/* use default team */
-			if (!numTeamDefs)
-				return 0;
-			else
-				td = &teamDef[0];
+			td = &teamDef[0];
+			assert(td);
+			Com_DPrintf("Com_GetModelAndName: could not find team '%s' in name definitions - using the first team definition now: '%s'\n", team, td->title);
 		} else
 			category = i;
 	}
@@ -669,6 +673,10 @@ int Com_GetModelAndName(char *team, character_t * chr)
 	if (td) {
 		chr->weapons = td->weapons;
 		chr->armor = td->armor;
+#ifdef DEBUG
+	} else {
+		Com_DPrintf("Com_GetModelAndName: Warning - this team (%s) could not be handled via aliencont code - no tech pointer will be available\n", team);
+#endif
 	}
 
 	/* get the models */
@@ -676,6 +684,11 @@ int Com_GetModelAndName(char *team, character_t * chr)
 		gender = rand() % NAME_LAST;
 		if (td)
 			category = (int) td->cats[rand() % td->num];
+
+		for (i = 0; i < numTeamDesc; i++)
+			if (!Q_strcmp(teamDesc[i].id, nameCat[category].title))
+				/* transfered as byte - 0 means, not found - no -1 possible */
+				chr->teamDesc = i + 1;
 
 		/* get name */
 		str = Com_GiveName(gender, nameCat[category].title);

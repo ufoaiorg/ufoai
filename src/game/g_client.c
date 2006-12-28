@@ -214,6 +214,7 @@ void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 			gi.AddEvent(player_mask, EV_ACTOR_APPEAR);
 			gi.WriteShort(check->number);
 			gi.WriteByte(check->team);
+			gi.WriteByte(check->chr.teamDesc);
 			gi.WriteByte(check->pnum);
 			gi.WriteGPos(check->pos);
 			gi.WriteByte(check->dir);

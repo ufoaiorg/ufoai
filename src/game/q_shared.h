@@ -1125,6 +1125,7 @@ typedef struct character_s {
 	int empl_type;
 
 	qboolean armor, weapons; /* able to use weapons/armor */
+	int teamDesc;
 } character_t;
 
 /* The types of employees */

@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef enum {			/* types of aliens */
 	AL_ORTNOK,
-	AL_ANTAREAN,
+	AL_TAMAN,
 	AL_THIRD
 } alienType_t;
 
@@ -53,16 +53,17 @@ typedef struct aliensCont {
 
 typedef struct aliensTmp {
 	char alientype[MAX_VAR];	/* type of alien */
+	int state;			/* dead or alive */
 	int amount;			/* amount */
 } aliensTmp_t;
 
-/*
-Collecting aliens functions
-*/
+/**
+ * Collecting aliens functions
+ */
 void CL_CollectingAliens(void);
 
-/*
-Menu functions
-*/
+/**
+ * Menu functions
+ */
 
 

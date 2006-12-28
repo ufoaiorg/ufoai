@@ -481,7 +481,6 @@ typedef struct le_s {
 	int AP;
 	int state;
 	int reaction_minhit;
-	int chr_ucn;
 
 	float angles[3];
 	float sunfrac;
@@ -514,6 +513,7 @@ typedef struct le_s {
 	inventory_t i;
 	int left, right, extension;
 	int fieldSize;				/* ACTOR_SIZE_* */
+	int teamDesc;
 
 	/* is called before adding a le to scene */
 	qboolean(*addFunc) (struct le_s * le, entity_t * ent);

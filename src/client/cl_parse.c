@@ -82,7 +82,7 @@ char *ev_format[] =
 	"sbg",				/* EV_ENT_APPEAR */
 	"s",				/* EV_ENT_PERISH */
 
-	"!sbbgbbbssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
+	"!sbbbgbbbssbsbbbs",		/* EV_ACTOR_APPEAR; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
 	"!s*",				/* EV_ACTOR_MOVE; beware of the '!' */
@@ -635,7 +635,7 @@ void CL_ActorAppear( sizebuf_t *sb )
 
 	/* get the info */
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_APPEAR],
-				   &le->team, &le->pnum, &le->pos,
+				   &le->team, &le->teamDesc, &le->pnum, &le->pos,
 				   &le->dir, &le->right, &le->left,
 				   &modelnum1, &modelnum2, &le->skinnum,
 				   &le->state, &le->fieldSize,
@@ -692,9 +692,13 @@ void CL_ActorAppear( sizebuf_t *sb )
 
 			/* message */
 			if ( le->team != TEAM_CIVILIAN ) {
-				if ( curCampaign )
-					CL_DisplayHudMessage( _("Alien spotted!\n"), 2000 );
-				else
+				if (curCampaign) {
+					if (le->teamDesc)
+						/* TODO: Display the alien race name */
+						CL_DisplayHudMessage( _("Alien spotted!\n"), 2000 );
+					else
+						CL_DisplayHudMessage( _("Alien spotted!\n"), 2000 );
+				} else
 					CL_DisplayHudMessage( _("Enemy spotted!\n"), 2000 );
 			} else
 				CL_DisplayHudMessage( _("Civilian spotted!\n"), 2000 );
