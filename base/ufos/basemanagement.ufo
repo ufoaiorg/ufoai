@@ -388,8 +388,8 @@ aircraft craft_saracen_interceptor
 	price	2000000
 	building	building_intercept
 	image	air_saracen_interceptor
-	angles	"-20 -40 120"
-	scale	"1.1 1.1 1.1"
+	angles	"170 10 -110"
+	scale	"0.8 1.1 1.1"
 	angles_equip	"-90 0 180"
 	scale_equip	"0.9 0.9 0.9"
 	// FIXME: This is just testing
@@ -409,10 +409,10 @@ aircraft craft_ufo_scout
 	fuel	100000
 	fuelsize	100000
 	image	air_ufo
-	angles	"-20 -40 120"
-	scale	"1.1 1.1 1.1"
-	angles_equip	"90 0 180"
-	scale_equip	"1.1 1.1 1.1"
+	angles	"170 -30 -100"
+	scale	"1.1 0.9 1.0"
+	angles_equip	"0 0 180"
+	scale_equip	"0.9 0.9 0.9"
 }
 
 aircraft craft_ufo_fighter
