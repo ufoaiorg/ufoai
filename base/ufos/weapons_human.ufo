@@ -454,8 +454,8 @@ item shotgun2
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 4 2"
-	center		"0 0 1"
-	scale		1
+	center		"1.5 0 1"
+	scale		0.98
 	ammo		8
 	reload		20
 	price		3500
