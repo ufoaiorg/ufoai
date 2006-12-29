@@ -218,9 +218,30 @@ static void SV_Begin_f(void)
 }
 
 /**
+ * @brief Spawns all connected clients if they are not already spawned
+ * @sa CL_SpawnSoldiers_f
+ */
+void SV_SpawnAllPending (void)
+{
+	int i;
+	client_t *cl;
+
+	if (!svs.initialized)
+		return;
+
+ 	/* TODO: how to handle spectators (skip spawning them?) */
+
+	for (i = 0, cl = svs.clients; i < (int)sv_maxclients->value; i++, cl++) {
+		if (cl && cl->state == cs_spawning) {
+			if (ge->ClientSpawn(cl->player))
+				cl->state = cs_spawned;
+		}
+	}
+}
+
+/**
  * @brief
  * @sa SV_Begin_f
- * @sa CL_SpawnSoldiers_f
  */
 static void SV_Spawn_f(void)
 {
@@ -233,10 +254,8 @@ static void SV_Spawn_f(void)
 		return;
 	}
 
-	/* call the game begin function */
-	ge->ClientSpawn(sv_player);
-
-	sv_client->state = cs_spawned;
+	/* try and spawn any connected but unspawned players */
+	SV_SpawnAllPending();
 
 	Cbuf_InsertFromDefer();
 }

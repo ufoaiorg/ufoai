@@ -1676,16 +1676,41 @@ void G_ClientAction(player_t * player)
 /**
  * @brief Sets the teanum var for this match
  * @param[in] player Pointer to connected player
- * @TODO: Check whether there are enough free spawnpoints
+ * @TODO: Check whether there are enough free spawnpoints in all cases
  */
 void G_GetTeam(player_t * player)
 {
 	player_t *p;
 	int i, j;
+	int playersInGame = 0;
+
+	/* number of currently connected players */
+	for (j = 0, p = game.players; j < game.maxplayers; j++, p++)
+		if (p->inuse && !p->pers.spectator)
+			playersInGame++;
 
 	/* player has already a team */
 	if (player->pers.team) {
 		gi.dprintf("You are already on team %i\n", player->pers.team);
+		return;
+	}
+
+	if (playersInGame <= 1 && sv_maxclients->value > 1) {
+		int spawnCheck[MAX_TEAMS];
+		int spawnSpots = 0;
+		int randomSpot = -1;
+		for (i = 1; i < MAX_TEAMS; i++)
+			if (level.num_spawnpoints[i])
+				spawnCheck[spawnSpots++] = i;
+		if (spawnSpots <= 1) {
+			gi.dprintf("G_GetTeam: Not enough spawn spots in map!\n");
+			player->pers.team = -1;
+			return;
+		}
+		/* assign random valid team number */
+		randomSpot = (int)(frand() * (spawnSpots - 1) + 0.5);
+		player->pers.team = spawnCheck[randomSpot];
+		/*gi.dprintf("You have been randomly assigned to team %i\n", player->pers.team);*/
 		return;
 	}
 
@@ -1750,6 +1775,48 @@ int G_ClientGetTeamNum (player_t * player)
 {
 	assert(player);
 	return player->pers.team;
+}
+
+/**
+ * @brief Tests if all teams are connected for a multiplayer match and if so,
+ * randomly assigns the first turn to a team.
+ */
+void G_ClientTeamAssign(player_t * player)
+{
+	int i, j, teamCount = 1;
+	int knownTeams[MAX_TEAMS];
+	player_t *p;
+	knownTeams[0] = player->pers.team;
+
+	/* return with no action if activeTeam already assigned or if in single-player mode*/
+	if (level.activeTeam != -1 || sv_maxclients->value == 1)
+		return;
+
+	/* count number of currently connected unique teams */
+	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
+		if (p->inuse && !p->pers.spectator)
+			for (j = 0; j < teamCount; j++)
+				if (p->pers.team != knownTeams[j]) {
+					knownTeams[teamCount++] = p->pers.team;
+					break;
+				}
+	}
+	Com_DPrintf("G_ClientTeamAssign: Unique teams in game: %i\n", teamCount);
+
+	/* if all teams/players have joined the game, randomly assign which team gets the first turn */
+	if (teamCount == sv_maxteams->value || teamCount == level.maxteams) {
+		char buffer[MAX_VAR];
+		Q_strncpyz(buffer, "", MAX_VAR);
+		level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
+		turnTeam = level.activeTeam;
+		for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
+			if (p->inuse && !p->pers.spectator && p->pers.team == level.activeTeam) {
+				Q_strcat(buffer, p->pers.netname, MAX_VAR);
+				Q_strcat(buffer, " ", MAX_VAR);
+			}
+		}
+		gi.bprintf(PRINT_HIGH, _("Team %i ( %s) will get the first turn.\n"), turnTeam, buffer);
+	}
 }
 
 /**
@@ -1883,6 +1950,7 @@ void G_ClientTeamInfo (player_t * player)
 			&& player->pers.team == ent->team)
 				break;
 	}
+	G_ClientTeamAssign(player);
 }
 
 
@@ -2006,6 +2074,7 @@ void G_ClientBegin(player_t* player)
 	/*Com_Printf("G_ClientBegin: player: %i - pnum: %i , game.maxplayers: %i	\n", P_MASK(player), player->num, game.maxplayers);*/
 	/* spawn camera (starts client rendering) */
 	gi.AddEvent(P_MASK(player), EV_START | INSTANTLY);
+	gi.WriteByte(sv_teamplay->value);
 
 	/* send events */
 	gi.EndEvents();
@@ -2014,26 +2083,28 @@ void G_ClientBegin(player_t* player)
 	gi.bprintf(PRINT_HIGH, "%s has joined\n", player->pers.netname);
 }
 
-
 /**
- * @brief Sets the team, init the TU and sends the player stats
+ * @brief Sets the team, init the TU and sends the player stats. Returns
+ * true if player spawns.
  * @sa G_SendPlayerStats
  * @sa G_GetTeam
  * @sa G_GiveTimeUnits
  * @sa G_ClientBegin
  * @sa CL_Reset
  */
-void G_ClientSpawn(player_t * player)
+qboolean G_ClientSpawn(player_t * player)
 {
-	/* get a team */
-	G_GetTeam(player);
-
 	/* TODO: Check player->pers.team here */
-
-	/* activate his round if he's first to join */
 	if (level.activeTeam == -1) {
-		level.activeTeam = player->pers.team;
-		turnTeam = level.activeTeam;
+		/* activate round if in single-player */
+		if (sv_maxclients->value == 1) {
+			level.activeTeam = player->pers.team;
+			turnTeam = level.activeTeam;
+		} else { 
+			/* return since not all multiplayer teams have joined */
+			/* (G_ClientTeamAssign sets level.activeTeam once all teams have joined) */
+			return qfalse;
+		}
 	}
 
 	/* do all the init events here... */
@@ -2055,6 +2126,7 @@ void G_ClientSpawn(player_t * player)
 
 	/* inform all clients */
 	gi.bprintf(PRINT_HIGH, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);
+	return qtrue;
 }
 
 

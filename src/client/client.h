@@ -412,6 +412,7 @@ void CL_ParseUGVs(char *title, char **text);
 char* CL_ToDifficultyName(int difficulty);
 
 extern qboolean loadingMessage;
+extern qboolean teamplay;
 extern char loadingMessages[96];
 extern float loadingPercent;
 

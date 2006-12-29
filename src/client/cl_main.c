@@ -130,6 +130,7 @@ typedef struct teamData_s {
 } teamData_t;
 
 static teamData_t teamData;
+qboolean teamplay;
 
 /*====================================================================== */
 
@@ -703,6 +704,10 @@ static void CL_ParseTeamInfoMessage (void)
 
 	menuText[TEXT_LIST] = teamData.teamInfoText;
 	teamData.parsed = qtrue;
+
+	/* spawn multi-player death match soldiers here */
+	if (!ccs.singleplayer && baseCurrent && !teamplay)
+		CL_SpawnSoldiers_f();
 }
 
 static char serverInfoText[MAX_MESSAGE_TEXT];
@@ -1332,15 +1337,19 @@ void CL_SpawnSoldiers_f (void)
 		/* send team info */
 		CL_SendCurTeamInfo(&cls.netchan.message, baseCurrent->curTeam, B_GetNumOnTeam());
 
-	/* send spawn */
 	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
 	MSG_WriteString(&cls.netchan.message, va("spawn %i\n", spawnCountFromServer));
 
 	soldiersSpawned = qtrue;
 
-	/* activate hud */
-	MN_PushMenu(mn_hud->string);
-	Cvar_Set("mn_active", mn_hud->string);
+	/* spawn immediately if in single-player, otherwise wait for other players to join */
+	if (ccs.singleplayer) {
+		/* activate hud */
+		MN_PushMenu(mn_hud->string);
+		Cvar_Set("mn_active", mn_hud->string);
+	} else {
+		MN_PushMenu("multiplayer_wait");
+	}
 }
 
 /**

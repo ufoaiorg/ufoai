@@ -73,7 +73,7 @@ char *ev_format[] =
 {
 	"",					/* EV_NULL */
 	"bb",				/* EV_RESET */
-	"",					/* EV_START */
+	"b",				/* EV_START */
 	"b",				/* EV_ENDROUND */
 
 	"bb****",			/* EV_RESULTS */
@@ -211,6 +211,7 @@ int nextTime;
 int shootTime;
 int impactTime;
 qboolean parsedDeath = qfalse;
+qboolean teamplay;
 
 /*============================================================================= */
 
@@ -460,8 +461,17 @@ void CL_Reset( sizebuf_t *sb )
 	/* set the active player */
 	MSG_ReadFormat(sb, ev_format[EV_RESET], &cls.team, &cl.actTeam);
 	Com_Printf( "(player %i) It's team %i's round\n", cl.pnum, cl.actTeam );
+	/* if in multiplayer spawn the soldiers */
+	if (!ccs.singleplayer) {
+		/* pop any waiting menu and activate the HUD */
+		MN_PopMenu(qtrue);
+		MN_PushMenu(mn_hud->string);
+		Cvar_Set("mn_active", mn_hud->string);
+	}
 	if (cls.team == cl.actTeam)
 		Cbuf_AddText("startround\n");
+	else
+		Com_Printf("You lost the coin-toss for first-turn");
 }
 
 
@@ -471,6 +481,8 @@ void CL_Reset( sizebuf_t *sb )
  */
 void CL_StartGame( sizebuf_t *sb )
 {
+	teamplay = MSG_ReadByte(sb);
+
 	/* init camera position and angles */
 	memset(&cl.cam, 0, sizeof(camera_t));
 	VectorSet(cl.cam.angles, 60.0, 60.0, 0.0);
@@ -496,8 +508,12 @@ void CL_StartGame( sizebuf_t *sb )
 	CL_EventReset();
 
 	if (!ccs.singleplayer && baseCurrent) {
-		MN_PushMenu("multiplayer_selectteam");
-		Cvar_Set("mn_active", "multiplayer_selectteam");
+		if (teamplay) {
+			MN_PushMenu("multiplayer_selectteam");
+			Cvar_Set("mn_active", "multiplayer_selectteam");
+		} else {
+			Cbuf_AddText("selectteam_init\n");
+		}
 	}
 }
 
