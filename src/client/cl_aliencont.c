@@ -66,14 +66,14 @@ void CL_CollectingAliens(void)
 				continue;
 			}
 
-			if (le->HP <= 0 || (le->state && STATE_STUN)) {
+			if (le->HP <= 0 || (le->state & STATE_STUN)) {
 				if (le->HP <= 0)
 					/* alien body */
 					alstate = 0;
 				else
 					/* alive alien */
 					alstate = 1;
-				
+
 				j = 0;
 				while (j < alienTypeNum) {
 					/* search alien type (dead/alive are two types) and increase amount */
