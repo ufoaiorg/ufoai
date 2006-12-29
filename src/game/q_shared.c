@@ -1590,12 +1590,14 @@ skipwhite:
 	}
 
 	if (c == '/' && data[1] == '*') {
-		Com_DPrintf("Com_Parse: multiline comment (%s)\n", data);
+		int clen = 0;
 		data += 2;
-		while (!((data[0] && data[0] == '*') && (data[1] && data[1] == '/')))
-			data++;
-		if (data[0] && data[1])
-			data+=2; /* skip end of multiline comment */
+		while (!((data[clen] && data[clen] == '*') && (data[clen+1] && data[clen+1] == '/'))) {
+			clen++;
+		}
+		data[clen] = 0;
+		Com_DPrintf("Com_Parse: multiline comment: %s\n", data);
+		data += clen + 2; /* skip end of multiline comment */
 		goto skipwhite;
 	}
 
