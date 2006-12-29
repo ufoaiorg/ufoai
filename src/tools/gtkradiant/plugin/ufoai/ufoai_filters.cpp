@@ -53,11 +53,12 @@ class EntityFindByClassname : public scene::Graph::Walker
 {
 	const char* m_name;
 	entitylist_t& m_entitylist;
+	/* this starts at 1 << level */
 	int m_flag;
-
+	int m_hide;
 public:
-	EntityFindByClassname(const char* name, entitylist_t& entitylist, int flag)
-		: m_name(name), m_entitylist(entitylist), m_flag(flag)
+	EntityFindByClassname(const char* name, entitylist_t& entitylist, int flag, bool hide)
+		: m_name(name), m_entitylist(entitylist), m_flag(flag), m_hide(hide)
 	{
 	}
 	bool pre(const scene::Path& path, scene::Instance& instance) const
@@ -69,17 +70,14 @@ public:
 			if (string_equal(m_name, entity->getKeyValue("classname")))
 			{
 				const char *spawnflags = entity->getKeyValue("spawnflags");
+				globalOutputStream() << "spawnflags for " << m_name << ": " << spawnflags << ".\n";
+
 				if (!string_empty(spawnflags)) {
 					spawnflagsInt = atoi(spawnflags);
 					if (!(spawnflagsInt & m_flag))
 					{
-						hide_node(path.top(), true); // hide
+						hide_node(path.top(), m_hide); // hide/unhide
 						m_entitylist.push_back(entity);
-					}
-					else
-					{
-						// maybe it was already hidden?
-						hide_node(path.top(), false); // unhide
 					}
 				}
 				else
@@ -140,69 +138,56 @@ class BrushGetLevel : public scene::Graph::Walker
 	int m_flag;
 	bool m_content; // if true - use m_contentFlags - otherwise m_surfaceFlags
 	mutable bool m_notset;
-	mutable bool hide;
+	mutable bool m_hide;
 public:
-	BrushGetLevel(brushlist_t& brushlist, int flag, bool content, bool notset)
-		: m_brushlist(brushlist), m_flag(flag), m_content(content), m_notset(notset)
+	BrushGetLevel(brushlist_t& brushlist, int flag, bool content, bool notset, bool hide)
+		: m_brushlist(brushlist), m_flag(flag), m_content(content), m_notset(notset), m_hide(hide)
 	{
-		hide = false;
 	}
 	bool pre(const scene::Path& path, scene::Instance& instance) const
 	{
 		Brush* brush = Node_getBrush(path.top());
 		if (brush != 0)
 		{
-			if (!m_flag)
+			ForEachFace faces(*brush);
+			brush->forEachFace(faces);
+			if (m_content)
 			{
-				hide_node(path.top(), false);
+//				if (faces.m_contentFlagsVis > 0)
+//					globalOutputStream() << "contentflags: " << faces.m_contentFlagsVis << " flag: " << m_flag << "\n";
+				if (faces.m_contentFlagsVis > 0)
+				{
+					if (m_notset && (!(faces.m_contentFlagsVis & m_flag)))
+					{
+						hide_node(path.top(), m_hide);
+						m_brushlist.push_back(brush);
+					}
+					else if (!m_notset && ((faces.m_contentFlagsVis & m_flag)))
+					{
+						hide_node(path.top(), m_hide);
+						m_brushlist.push_back(brush);
+					}
+				}
 			}
 			else
 			{
-				ForEachFace faces(*brush);
-				brush->forEachFace(faces);
-				if (m_content)
+//				if (faces.m_surfaceFlagsVis > 0)
+//					globalOutputStream() << "surfaceflags: " << faces.m_surfaceFlagsVis << " flag: " << m_flag << "\n";
+				if (faces.m_surfaceFlagsVis > 0)
 				{
-//					if (faces.m_contentFlagsVis > 0)
-//						globalOutputStream() << "contentflags: " << faces.m_contentFlagsVis << " flag: " << m_flag << "\n";
-					if (faces.m_contentFlagsVis > 0)
+					if (m_notset && (!(faces.m_surfaceFlagsVis & m_flag)))
 					{
-						if (m_notset && (!(faces.m_contentFlagsVis & m_flag)))
-						{
-							hide_node(path.top(), true);
-							hide = true;
-						}
-						else if (!m_notset && ((faces.m_contentFlagsVis & m_flag)))
-						{
-							hide_node(path.top(), true);
-							hide = true;
-						}
+						hide_node(path.top(), m_hide);
+						m_brushlist.push_back(brush);
+					}
+					else if (!m_notset && ((faces.m_surfaceFlagsVis & m_flag)))
+					{
+						hide_node(path.top(), m_hide);
+						m_brushlist.push_back(brush);
 					}
 				}
-				else
-				{
-//					if (faces.m_surfaceFlagsVis > 0)
-//						globalOutputStream() << "surfaceflags: " << faces.m_surfaceFlagsVis << " flag: " << m_flag << "\n";
-					if (faces.m_surfaceFlagsVis > 0)
-					{
-						if (m_notset && (!(faces.m_surfaceFlagsVis & m_flag)))
-						{
-							hide_node(path.top(), true);
-							hide = true;
-						}
-						else if (!m_notset && ((faces.m_surfaceFlagsVis & m_flag)))
-						{
-							hide_node(path.top(), true);
-							hide = true;
-						}
-					}
-				}
-
-				/* make it visible again */
-				if (!hide)
-					hide_node(path.top(), false);
-				else
-					m_brushlist.push_back(brush);
 			}
+
 		}
 		return true;
 	}
@@ -216,29 +201,40 @@ public:
 void filter_level(int flag)
 {
 	int level;
+	brushlist_t brushes;
+	entitylist_t entities;
 
 	level = (flag >> 8);
 
 	if (level_active)
 	{
-		flag = 0;
+		GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, true, false));
+		GlobalSceneGraph().traverse(EntityFindByClassname("func_breakable", entities, level, false));
+		GlobalSceneGraph().traverse(EntityFindByClassname("misc_model", entities, level, false));
+		entities.erase(entities.begin(), entities.end());
+		brushes.erase(brushes.begin(), brushes.end());
+		if (level_active == level)
+		{
+			level_active = 0;
+			SceneChangeNotify();
+			// just disabĺe level filter
+			return;
+		}
 		level_active = 0;
 	}
 	else
 	{
+		globalOutputStream() << "UFO:AI: level_active: " << level_active << ", flag: " << flag << ".\n";
 		level_active = level;
 	}
 
-	brushlist_t brushes;
-	entitylist_t entities;
-
 	// first all brushes
-	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, true));
+	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, true, true));
 
 	// now all entities
 	// TODO/FIXME: This currently doesn't result in any entities - i don't know why
-	GlobalSceneGraph().traverse(EntityFindByClassname("func_breakable", entities, flag));
-	GlobalSceneGraph().traverse(EntityFindByClassname("misc_model", entities, flag));
+	GlobalSceneGraph().traverse(EntityFindByClassname("func_breakable", entities, level, true));
+	GlobalSceneGraph().traverse(EntityFindByClassname("misc_model", entities, level, true));
 
 	if (brushes.empty())
 	{
@@ -267,14 +263,15 @@ void filter_level(int flag)
 void filter_stepon (void)
 {
 	int flag = CONTENTS_STEPON;
+	bool status = true;
 	if (stepon_active) {
-		flag = 0;
+		status = false;
 		stepon_active = 0;
 	} else {
 		stepon_active = 1;
 	}
 	brushlist_t brushes;
-	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, false));
+	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, false, status));
 
 	if (brushes.empty())
 	{
@@ -293,15 +290,15 @@ void filter_stepon (void)
 void filter_actorclip (void)
 {
 	int flag = CONTENTS_ACTORCLIP;
+	bool status = true;
 	if (actorclip_active) {
-		flag = 0;
+		status = false;
 		actorclip_active = 0;
 	} else {
 		actorclip_active = 1;
 	}
-	actorclip_active = 1;
 	brushlist_t brushes;
-	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, false));
+	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, false, status));
 
 	if (brushes.empty())
 	{

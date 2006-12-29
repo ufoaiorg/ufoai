@@ -146,14 +146,14 @@ public:
 	{
 		switch( mIndex )
 		{
-		case 0: filter_level(1); break;
-		case 1: filter_level(2); break;
-		case 2: filter_level(3); break;
-		case 3: filter_level(4); break;
-		case 4: filter_level(5); break;
-		case 5: filter_level(6); break;
-		case 6: filter_level(7); break;
-		case 7: filter_level(8); break;
+		case 0: filter_level(CONTENTS_LEVEL1); break;
+		case 1: filter_level(CONTENTS_LEVEL2); break;
+		case 2: filter_level(CONTENTS_LEVEL3); break;
+		case 3: filter_level(CONTENTS_LEVEL4); break;
+		case 4: filter_level(CONTENTS_LEVEL5); break;
+		case 5: filter_level(CONTENTS_LEVEL6); break;
+		case 6: filter_level(CONTENTS_LEVEL7); break;
+		case 7: filter_level(CONTENTS_LEVEL8); break;
 		case 8: filter_stepon(); break;
 		case 9: filter_actorclip(); break;
 		}
