@@ -1732,26 +1732,26 @@ void G_GetTeam(player_t * player)
 			player->pers.team = DEFAULT_TEAMNUM;
 		}
 	} else {
+		qboolean teamAvailable;
 		/* search team */
-		/* FIXME: */
-		gi.dprintf("Get a team for multiplayer\n");
-		for (i = 1; i < MAX_TEAMS; i++)
+		gi.dprintf("Getting a team for multiplayer\n");
+		for (i = 1; i < MAX_TEAMS; i++) {
 			if (level.num_spawnpoints[i]) {
+				teamAvailable = qtrue;
 				/* check if team is in use */
 				/* FIXME: If someone left the game and rejoins he should get his "old" team back */
 				/*        maybe we could identify such a situation */
 				for (j = 0, p = game.players; j < game.maxplayers; j++, p++)
 					if (p->inuse && p->pers.team == i) {
-						Com_Printf("Team %i is already in use\n", i);
+						Com_DPrintf("Team %i is already in use\n", i);
 						/* team already in use */
+						teamAvailable = qfalse;
 						break;
 					}
-				/* TODO: disconnect the player or convert to spectator */
-				if (j >= game.maxplayers) {
-					player->pers.spectator = qtrue;
+				if (teamAvailable)
 					break;
-				}
 			}
+		}
 
 		/* set the team */
 		if (i < MAX_TEAMS) {
@@ -1762,9 +1762,13 @@ void G_GetTeam(player_t * player)
 					p->inuse = qfalse;
 					break;
 				}
+			Com_DPrintf("Assigning %s to Team %i\n", player->pers.netname, i);
 			player->pers.team = i;
-		} else
+		} else {
+			/* TODO: disconnect the player or convert to spectator */
+			player->pers.spectator = qtrue;
 			player->pers.team = -1;
+		}
 	}
 }
 
