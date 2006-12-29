@@ -410,6 +410,7 @@ void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank );
 int CL_GetRank(char* rankID);
 void CL_ParseUGVs(char *title, char **text);
 char* CL_ToDifficultyName(int difficulty);
+void CL_SpawnSoldiers_f(void);
 
 extern qboolean loadingMessage;
 extern qboolean teamplay;
