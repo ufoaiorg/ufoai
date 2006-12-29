@@ -1522,3 +1522,30 @@ menu multiplayer_selectteam
 		cmd "selectteam_init;"
 	}
 }
+
+// ==========================
+// MULTIPLAYER WAIT POPUP
+// ==========================
+menu multiplayer_wait
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image   menu/popup
+		pos "256 256"
+	}
+	string title
+	{
+		string "_Please wait"
+		pos "440 280"
+		font f_big
+	}
+	string message
+	{
+		string "_Waiting for other players to join the game"
+		pos "300 340"
+	}
+}
