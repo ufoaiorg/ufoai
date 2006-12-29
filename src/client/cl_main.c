@@ -373,6 +373,7 @@ void CL_Connect_f(void)
 	/* allow remote */
 	NET_Config(qtrue);
 
+	/* FIXME: why a second time? */
 	CL_Disconnect();
 
 	cls.state = ca_connecting;
@@ -500,6 +501,7 @@ void CL_Disconnect(void)
 	final[0] = clc_stringcmd;
 	Q_strncpyz((char *) final + 1, "disconnect", sizeof(final) - 1);
 	Netchan_Transmit(&cls.netchan, strlen((char *) final), final);
+	/* FIXME: why 3 times? */
 	Netchan_Transmit(&cls.netchan, strlen((char *) final), final);
 	Netchan_Transmit(&cls.netchan, strlen((char *) final), final);
 
@@ -1857,6 +1859,11 @@ void CL_CvarCheck(void)
 	/* worldlevel */
 	if (cl_worldlevel->modified) {
 		int i;
+		if ((int) cl_worldlevel->value < 0) {
+			CL_Disconnect();
+			Com_DPrintf("CL_CvarCheck: Called disconnect - something went wrong\n");
+			return;
+		}
 
 		if ((int) cl_worldlevel->value >= map_maxlevel - 1)
 			Cvar_SetValue("cl_worldlevel", map_maxlevel - 1);
