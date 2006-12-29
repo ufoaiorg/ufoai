@@ -328,7 +328,7 @@ void Con_SaveConsoleHistory(char *path)
 
 	assert(path);
 
-	if (!con_history->value)
+	if (!con_history || con_history->value)
 		return;
 
 	Com_sprintf(filename, sizeof(filename), "%s/%s", path, CONSOLE_HISTORY_FILENAME);
