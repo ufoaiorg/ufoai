@@ -1860,8 +1860,8 @@ void CL_CvarCheck(void)
 	if (cl_worldlevel->modified) {
 		int i;
 		if ((int) cl_worldlevel->value < 0) {
-			CL_Disconnect();
-			Com_DPrintf("CL_CvarCheck: Called disconnect - something went wrong\n");
+			CL_Drop();
+			Com_DPrintf("CL_CvarCheck: Called drop - something went wrong\n");
 			return;
 		}
 

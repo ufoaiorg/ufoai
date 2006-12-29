@@ -721,6 +721,9 @@ void CL_ParticleRun(void)
 	ptl_t *p;
 	int i;
 
+	if (cls.state != ca_active)
+		return;
+
 	for (i = 0, p = ptl; i < numPtls; i++, p++)
 		if (p->inuse) {
 			/* advance time */
@@ -848,6 +851,9 @@ void CL_RunMapParticles(void)
 	mp_t *mp;
 	ptl_t *ptl;
 	int i;
+
+	if (cls.state != ca_active)
+		return;
 
 	for (i = 0, mp = MPs; i < numMPs; i++, mp++)
 		if (mp->nextTime && cl.time >= mp->nextTime) {
