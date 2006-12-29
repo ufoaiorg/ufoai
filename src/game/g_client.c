@@ -1808,7 +1808,7 @@ void G_ClientTeamAssign(player_t * player)
 	Com_DPrintf("G_ClientTeamAssign: Unique teams in game: %i\n", teamCount);
 
 	/* if all teams/players have joined the game, randomly assign which team gets the first turn */
-	if (teamCount >= sv_maxteams->value || teamCount >= level.maxteams) {
+	if (teamCount >= (int)sv_maxteams->value) {
 		char buffer[MAX_VAR];
 		Q_strncpyz(buffer, "", MAX_VAR);
 		level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
