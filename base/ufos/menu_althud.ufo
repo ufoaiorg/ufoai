@@ -472,7 +472,7 @@ menu althud
 	{
 		key "*binding nextround"
 		tooltip	"_Finish round"
-		image	althud/buttons_althud1
+		image	althud/buttons_althud1g
 		pos		"888 11"
 		texl	"0 0"
 		texh	"40 34"
@@ -516,6 +516,19 @@ menu althud
 	confunc dissra { *bt_secondaryright  image althud/buttons_althud1g }
 	confunc disrla { *bt_reloadleft      image althud/buttons_althud1g }
 	confunc disrra { *bt_reloadright     image althud/buttons_althud1g }
+
+	// ==================
+	// round events
+	// ==================
+
+	confunc startrounda
+	{
+		*nextround image althud/buttons_althud1
+	}
+	confunc endrounda
+	{
+		*nextround image althud/buttons_althud1g
+	}
 
 	pic bt_primaryright
 	{

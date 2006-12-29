@@ -460,6 +460,8 @@ void CL_Reset( sizebuf_t *sb )
 	/* set the active player */
 	MSG_ReadFormat(sb, ev_format[EV_RESET], &cls.team, &cl.actTeam);
 	Com_Printf( "(player %i) It's team %i's round\n", cl.pnum, cl.actTeam );
+	if (cls.team == cl.actTeam)
+		Cbuf_AddText("startround\n");
 }
 
 

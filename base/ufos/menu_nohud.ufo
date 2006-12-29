@@ -55,4 +55,7 @@ menu nohud
 	confunc startreactiononce { cmd startreactiononces;startreactiononcea; }
 	confunc deselreaction { cmd deselreactions;deselreactiona; }
 	confunc disreaction { cmd disreactions;disreactiona; }
+
+	confunc startround { cmd startrounds;startrounda; }
+	confunc endround { cmd endrounds;endrounda; }
 }

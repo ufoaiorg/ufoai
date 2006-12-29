@@ -211,7 +211,7 @@ menu hud
 	{
 		key "*binding nextround"
 		tooltip	"_Finish round"
-		image	hud/buttons2
+		image	hud/buttons2g
 		mousefx true
 		pos		"950 10"
 		texl	"0 0"
@@ -350,12 +350,12 @@ menu hud
 	// round events
 	// ==================
 
-	confunc startround
+	confunc startrounds
 	{
-		*bt_nextround image hud/buttons2a
+		*bt_nextround image hud/buttons2
 	}
 
-	confunc endround
+	confunc endrounds
 	{
 		*bt_nextround image hud/buttons2g
 	}
