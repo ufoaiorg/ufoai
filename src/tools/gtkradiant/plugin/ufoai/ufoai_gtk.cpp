@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "ufoai_filters.h"
 
 #include "itoolbar.h"
+#include "iscenegraph.h"
 
 #include <gtk/gtk.h>
 
@@ -104,7 +105,8 @@ public:
 		switch( mIndex )
 		{
 /*		case 3: return eButton;*/
-		default: return eToggleButton;
+/*		default: return eToggleButton;*/
+		default: return eButton;
 		}
 	}
 	virtual const char* getText() const
@@ -157,6 +159,7 @@ public:
 		case 8: filter_stepon(); break;
 		case 9: filter_actorclip(); break;
 		}
+		SceneChangeNotify();
 	}
 
 	std::size_t mIndex;

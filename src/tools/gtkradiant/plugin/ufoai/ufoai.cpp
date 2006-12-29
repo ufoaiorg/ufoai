@@ -129,6 +129,7 @@ namespace UFOAI
 		{
 			filter_actorclip();
 		}
+		SceneChangeNotify();
 	}
 } // namespace
 

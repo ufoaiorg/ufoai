@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "ibrush.h"
 #include "ientity.h"
+#include "iscenegraph.h"
 
 // believe me, i'm sorry
 #include "../../radiant/brush.h"
@@ -49,7 +50,7 @@ void hide_node(scene::Node& node, bool hide)
 
 typedef std::list<Entity*> entitylist_t;
 
-class EntityFindByClassname : public scene::Graph::Walker
+class EntityFindByName : public scene::Graph::Walker
 {
 	const char* m_name;
 	entitylist_t& m_entitylist;
@@ -57,7 +58,7 @@ class EntityFindByClassname : public scene::Graph::Walker
 	int m_flag;
 	int m_hide;
 public:
-	EntityFindByClassname(const char* name, entitylist_t& entitylist, int flag, bool hide)
+	EntityFindByName(const char* name, entitylist_t& entitylist, int flag, bool hide)
 		: m_name(name), m_entitylist(entitylist), m_flag(flag), m_hide(hide)
 	{
 	}
@@ -153,8 +154,6 @@ public:
 			brush->forEachFace(faces);
 			if (m_content)
 			{
-//				if (faces.m_contentFlagsVis > 0)
-//					globalOutputStream() << "contentflags: " << faces.m_contentFlagsVis << " flag: " << m_flag << "\n";
 				if (faces.m_contentFlagsVis > 0)
 				{
 					if (m_notset && (!(faces.m_contentFlagsVis & m_flag)))
@@ -171,8 +170,6 @@ public:
 			}
 			else
 			{
-//				if (faces.m_surfaceFlagsVis > 0)
-//					globalOutputStream() << "surfaceflags: " << faces.m_surfaceFlagsVis << " flag: " << m_flag << "\n";
 				if (faces.m_surfaceFlagsVis > 0)
 				{
 					if (m_notset && (!(faces.m_surfaceFlagsVis & m_flag)))
@@ -208,33 +205,28 @@ void filter_level(int flag)
 
 	if (level_active)
 	{
-		GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, true, false));
-		GlobalSceneGraph().traverse(EntityFindByClassname("func_breakable", entities, level, false));
-		GlobalSceneGraph().traverse(EntityFindByClassname("misc_model", entities, level, false));
+		GlobalSceneGraph().traverse(BrushGetLevel(brushes, (level_active << 8), true, true, false));
+		GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level_active, false));
+		GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level_active, false));
 		entities.erase(entities.begin(), entities.end());
 		brushes.erase(brushes.begin(), brushes.end());
 		if (level_active == level)
 		{
 			level_active = 0;
-			SceneChangeNotify();
 			// just disabĺe level filter
 			return;
 		}
-		level_active = 0;
 	}
-	else
-	{
-		globalOutputStream() << "UFO:AI: level_active: " << level_active << ", flag: " << flag << ".\n";
-		level_active = level;
-	}
+	level_active = level;
+	globalOutputStream() << "UFO:AI: level_active: " << level_active << ", flag: " << flag << ".\n";
 
 	// first all brushes
 	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, true, true));
 
 	// now all entities
 	// TODO/FIXME: This currently doesn't result in any entities - i don't know why
-	GlobalSceneGraph().traverse(EntityFindByClassname("func_breakable", entities, level, true));
-	GlobalSceneGraph().traverse(EntityFindByClassname("misc_model", entities, level, true));
+	GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level, true));
+	GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level, true));
 
 	if (brushes.empty())
 	{
@@ -254,8 +246,6 @@ void filter_level(int flag)
 	{
 		globalOutputStream() << "UFO:AI: Found " << Unsigned(entities.size()) << " entities.\n";
 	}
-
-	SceneChangeNotify();
 
 	globalOutputStream() << "filter_level: " << level << " flag: " << flag << "\n";
 }
@@ -282,8 +272,6 @@ void filter_stepon (void)
 		globalOutputStream() << "UFO:AI: Hiding " << Unsigned(brushes.size()) << " stepon brushes.\n";
 	}
 
-	SceneChangeNotify();
-
 	globalOutputStream() << "filter_stepon: flag: " << flag << "\n";
 }
 
@@ -308,8 +296,6 @@ void filter_actorclip (void)
 	{
 		globalOutputStream() << "UFO:AI: Hiding " << Unsigned(brushes.size()) << " actorclip brushes.\n";
 	}
-
-	SceneChangeNotify();
 
 	globalOutputStream() << "filter_actorclip: flag: " << flag << "\n";
 }
