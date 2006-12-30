@@ -29,8 +29,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <list>
 
-int actorclip_active = 0;
-int stepon_active = 0;
+bool actorclip_active = false;
+bool stepon_active = false;
 int level_active = 0;
 
 // TODO: This should be added to ibrush.h
@@ -83,18 +83,9 @@ public:
 				}
 				else
 				{
-					globalOutputStream() << "no spawnflags for "<< m_name << ".\n";
+					globalOutputStream() << "UFO:AI: Warning: no spawnflags for " << m_name << ".\n";
 				}
-				globalOutputStream() << "entity match entity name we are searching for: "<< m_name << ".\n";
 			}
-			else
-			{
-				globalOutputStream() << "entity does not match entity name we are searching for: "<< m_name << ".\n";
-			}
-		}
-		else
-		{
-			globalOutputStream() << "no entity: "<< m_name << ".\n";
 		}
 		return true;
 	}
@@ -116,18 +107,19 @@ public:
 
 	void visit(Face& face) const
 	{
-#if 0
+#if _DEBUG
 		if (m_surfaceFlagsVis < 0)
 			m_surfaceFlagsVis = face.getShader().m_flags.m_surfaceFlags;
-		else if (m_surfaceFlagsVis != face.getShader().m_flags.m_surfaceFlags)
+		else if (m_surfaceFlagsVis >= 0 && m_surfaceFlagsVis != face.getShader().m_flags.m_surfaceFlags)
 			globalOutputStream() << "Faces with different surfaceflags at brush\n";
 		if (m_contentFlagsVis < 0)
 			m_contentFlagsVis = face.getShader().m_flags.m_contentFlags;
-		else if (m_contentFlagsVis != face.getShader().m_flags.m_contentFlags)
+		else if (m_contentFlagsVis >= 0 && m_contentFlagsVis != face.getShader().m_flags.m_contentFlags)
 			globalOutputStream() << "Faces with different contentflags at brush\n";
-#endif
+#else
 		m_surfaceFlagsVis = face.getShader().m_flags.m_surfaceFlags;
 		m_contentFlagsVis = face.getShader().m_flags.m_contentFlags;
+#endif
 	}
 };
 
@@ -152,15 +144,19 @@ public:
 		{
 			ForEachFace faces(*brush);
 			brush->forEachFace(faces);
+			// contentflags?
 			if (m_content)
 			{
+				// are any flags set?
 				if (faces.m_contentFlagsVis > 0)
 				{
+					// flag should not be set
 					if (m_notset && (!(faces.m_contentFlagsVis & m_flag)))
 					{
 						hide_node(path.top(), m_hide);
 						m_brushlist.push_back(brush);
 					}
+					// check whether flag is set
 					else if (!m_notset && ((faces.m_contentFlagsVis & m_flag)))
 					{
 						hide_node(path.top(), m_hide);
@@ -168,15 +164,19 @@ public:
 					}
 				}
 			}
+			// surfaceflags?
 			else
 			{
+				// are any flags set?
 				if (faces.m_surfaceFlagsVis > 0)
 				{
+					// flag should not be set
 					if (m_notset && (!(faces.m_surfaceFlagsVis & m_flag)))
 					{
 						hide_node(path.top(), m_hide);
 						m_brushlist.push_back(brush);
 					}
+					// check whether flag is set
 					else if (!m_notset && ((faces.m_surfaceFlagsVis & m_flag)))
 					{
 						hide_node(path.top(), m_hide);
@@ -224,10 +224,10 @@ void filter_level(int flag)
 	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, true, true));
 
 	// now all entities
-	// TODO/FIXME: This currently doesn't result in any entities - i don't know why
 	GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level, true));
 
+#ifdef _DEBUG
 	if (brushes.empty())
 	{
 		globalOutputStream() << "UFO:AI: No brushes.\n";
@@ -246,22 +246,18 @@ void filter_level(int flag)
 	{
 		globalOutputStream() << "UFO:AI: Found " << Unsigned(entities.size()) << " entities.\n";
 	}
-
-	globalOutputStream() << "filter_level: " << level << " flag: " << flag << "\n";
+#endif
 }
 
 void filter_stepon (void)
 {
-	int flag = CONTENTS_STEPON;
-	bool status = true;
 	if (stepon_active) {
-		status = false;
-		stepon_active = 0;
+		stepon_active = false;
 	} else {
-		stepon_active = 1;
+		stepon_active = true;
 	}
 	brushlist_t brushes;
-	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, false, status));
+	GlobalSceneGraph().traverse(BrushGetLevel(brushes, CONTENTS_STEPON, true, false, stepon_active));
 
 	if (brushes.empty())
 	{
@@ -271,23 +267,19 @@ void filter_stepon (void)
 	{
 		globalOutputStream() << "UFO:AI: Hiding " << Unsigned(brushes.size()) << " stepon brushes.\n";
 	}
-
-	globalOutputStream() << "filter_stepon: flag: " << flag << "\n";
 }
 
 void filter_actorclip (void)
 {
-	int flag = CONTENTS_ACTORCLIP;
-	bool status = true;
 	if (actorclip_active) {
-		status = false;
-		actorclip_active = 0;
+		actorclip_active = false;
 	} else {
-		actorclip_active = 1;
+		actorclip_active = true;
 	}
 	brushlist_t brushes;
-	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, false, status));
+	GlobalSceneGraph().traverse(BrushGetLevel(brushes, CONTENTS_ACTORCLIP, true, false, actorclip_active));
 
+#ifdef _DEBUG
 	if (brushes.empty())
 	{
 		globalOutputStream() << "UFO:AI: No brushes.\n";
@@ -296,6 +288,5 @@ void filter_actorclip (void)
 	{
 		globalOutputStream() << "UFO:AI: Hiding " << Unsigned(brushes.size()) << " actorclip brushes.\n";
 	}
-
-	globalOutputStream() << "filter_actorclip: flag: " << flag << "\n";
+#endif
 }
