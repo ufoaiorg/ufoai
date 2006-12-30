@@ -1,3 +1,9 @@
 /* we can use this file to put in string here that are not found in the source via direct translations */
 _("Yes")
 _("No")
+_("5 sec")
+_("5 mins")
+_("1 hour")
+_("12 hour")
+_("1 day")
+_("5 days")
