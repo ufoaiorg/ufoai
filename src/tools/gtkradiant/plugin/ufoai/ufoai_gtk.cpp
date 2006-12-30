@@ -105,7 +105,8 @@ public:
 		switch( mIndex )
 		{
 /*		case 3: return eButton;*/
-/*		default: return eToggleButton;*/
+		case 8: return eToggleButton;
+		case 9: return eToggleButton;
 		default: return eButton;
 		}
 	}
