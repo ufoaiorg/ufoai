@@ -854,10 +854,11 @@ tech rs_weapon_shotgun
 	description	"_shotgun_txt"
 	// pre_description	"_shotgun_pre_txt"
 
-	require_AND
-	{
-		tech rs_skill_heavy
-	}
+// multiplayer only thus not needed at production menu
+//	require_AND
+//	{
+//		tech rs_skill_heavy
+//	}
 
 	provides	shotgun
 	time	0
