@@ -1217,7 +1217,7 @@ item grenl_ammo
 
 item grenl_plasma_ammo
 {
-	name		"_Plasma Grenade Shells"
+	name		"_25mm PB Grenades"
 	model		weapons/grenl/grenl_plasma_clip
 	type		ammo
 	category	0
