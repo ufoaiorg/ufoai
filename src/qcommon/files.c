@@ -404,13 +404,8 @@ int FS_Read(void *buffer, int len, qFILE * f)
 		read = fread(buf, 1, block, f->f);
 
 		/* end of file reached */
-#if 1
-		if (read == 0 && feof(f->f))
-			return len;
-#else
-		if (read == 0 && !errno)
-			return len;
-#endif
+		if (read != block && feof(f->f))
+			return (len - remaining + read);
 
 		if (read == 0) {
 			/* we might have been trying to read from a CD */
