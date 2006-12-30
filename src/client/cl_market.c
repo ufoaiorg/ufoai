@@ -384,18 +384,12 @@ static void CL_SellAircraft(void)
 		/* ok, we've found an empty aircraft (no team) in a base
 		   so now we can sell it */
 		if (found) {
-			/* FIXME: Do the selling here...
-			   reassign the aircraft-array in base_t
-			   maybe a linked list would be the best in base_t
-			   delete this aircraft in base */
+			Com_DPrintf("CL_SellAircraft: Selling aircraft with IDX %i\n", aircraft->idx);
+			CL_DeleteAircraft(aircraft);
 
-			memset(&base->aircraft[j], 0, sizeof(aircraft_t));
-
-			/* last entry - we don't have to search for this anymore */
-			if (j == base->numAircraftInBase - 1)
-				base->numAircraftInBase--;
-
-			CL_UpdateCredits(ccs.credits + aircraft->price);
+			Cbuf_AddText(va("buyselect%i\n;", num));
+			CL_UpdateCredits(ccs.credits + aircraft_samples[aircraftID].price);
+			Cbuf_AddText("buy_type 4;");
 			return;
 		}
 	}

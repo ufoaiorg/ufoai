@@ -450,8 +450,14 @@ void CL_DeleteAircraft(aircraft_t *aircraft)
 			aircraft_temp->idxInBase = i;
 		}
 
-		/* Reduce number of total (global) aircraft. */
-		gd.numAircraft--;
+		/* Note: It is tempting here to reduce the number of total (global) aircraft: gd.numAircraft
+		 * BUT we can't do this currently since unique aircraft IDXs are tied to gd.numAircraft,
+		 * so if we add another aircraft we could end up with two aircrafts with identical IDXs. By not
+		 * decrementing gd.numAircraft we accept that the the global count is wrong but that should be ok
+		 * since functions that use aircraft IDXs will not be able to find any deleted aircrafts and so 
+		 * should still work (albiet less efficiently). Of course this is all theoretical and needs to be
+		 * tested by buying/selling  aircraft and play-testing but ultimately the IDX assignment/lookup 
+		 * method for aircrafts probably needs to be fixed */
 
 		/* Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
