@@ -74,7 +74,7 @@ namespace UFOAI
 	const char* getCommandList()
 	{
 		/*GlobalRadiant().getGameName()*/
-		return "About;-;Worldspawn (day);Worldspawn (night);Perform check;-;Level 1;Level 2;Level 3;Level 4;Level 5;Level 6;Level 7;Level 8;-;StepOn;ActorClip";
+		return "About;-;Worldspawn reset (day);Worldspawn reset (night);Worldspawn (day);Worldspawn (night);Perform check;-;Level 1;Level 2;Level 3;Level 4;Level 5;Level 6;Level 7;Level 8;-;StepOn;ActorClip";
 	}
 	const char* getCommandTitleList()
 	{
@@ -103,29 +103,23 @@ namespace UFOAI
 		}
 		else if(string_equal(command, "Worldspawn (day)"))
 		{
-			assign_default_values_to_worldspawn(true);
+			assign_default_values_to_worldspawn(false, true, &message);
 		}
 		else if(string_equal(command, "Worldspawn (night)"))
 		{
-			assign_default_values_to_worldspawn(false);
+			assign_default_values_to_worldspawn(false, false, &message);
+		}
+		else if(string_equal(command, "Worldspawn reset (day)"))
+		{
+			assign_default_values_to_worldspawn(true, true, &message);
+		}
+		else if(string_equal(command, "Worldspawn reset (night)"))
+		{
+			assign_default_values_to_worldspawn(true, false, &message);
 		}
 		else if(string_equal(command, "Perform check"))
 		{
 			check_map_values(&message);
-			if (message != NULL)
-			{
-				// check message
-				GlobalRadiant().m_pfnMessageBox(GTK_WIDGET(g_mainwnd),
-					message, "Check",
-					eMB_OK, eMB_ICONDEFAULT);
-			}
-			else
-			{
-				// check message
-				GlobalRadiant().m_pfnMessageBox(GTK_WIDGET(g_mainwnd),
-					"No warnings - everything ok", "Check",
-					eMB_OK, eMB_ICONDEFAULT);
-			}
 		}
 		else if(string_equal(command, "Level 4"))
 		{
@@ -154,6 +148,13 @@ namespace UFOAI
 		else if(string_equal(command, "ActorClip"))
 		{
 			filter_actorclip();
+		}
+
+		if (message != NULL)
+		{
+			GlobalRadiant().m_pfnMessageBox(GTK_WIDGET(g_mainwnd),
+				message, "Note",
+				eMB_OK, eMB_ICONDEFAULT);
 		}
 		SceneChangeNotify();
 	}
