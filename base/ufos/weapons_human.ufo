@@ -578,7 +578,7 @@ item shotgun2_slug_ammo
 // =======================
 item shotgun
 {
-	name		"_Riot Shotgun"
+	name		"_Shotgun"
 	model		weapons/shotgun/shotgun
 	weapon		true
 	type		biggun
@@ -655,7 +655,7 @@ item shotgun_ammo
 // =======================
 item shotgun_micro
 {
-	name		"_Shotgun"
+	name		"_Micro Shotgun"
 	model		weapons/shotgunmicro/shotgunmicro
 	weapon		true
 	type		biggun
