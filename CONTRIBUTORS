@@ -52,7 +52,7 @@ Olivier "Kracken" Alloschery
 * "heli2" reduced polycount + texture (see also the license.txt)
 
 Ryan "Winterslice" A. Span
-* "pistol2" model
+* "pistol2" model (aka. machinepistol)
 * "stungren" model + base texture
 * "shotgunmicro" model
 * "interceptor2" model
@@ -61,6 +61,7 @@ Ryan "Winterslice" A. Span
 "Yoshiboy"
 * "interceptor2" texture
 * "plasmagren" texture
+* "pistol2" texture (aka. machinepistol)
 
 "A M D G"
 * "tachyon rocket" texture (might get renamed later on)
