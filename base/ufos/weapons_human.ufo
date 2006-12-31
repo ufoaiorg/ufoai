@@ -464,8 +464,8 @@ item shotgun2
 
 item shotgun2_ammo
 {
-	name		"_Buckshots"
-	model		weapons/shotgun2/shotgun_clip
+	name		"_Flechette Shells"
+	model		weapons/shotgun/shotgun_clip
 	type		ammo
 	category	0
 	shape		"0 0 1 1"
