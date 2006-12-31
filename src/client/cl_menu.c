@@ -1144,9 +1144,10 @@ void MN_TextScrollBottom(char* nodeName)
 		return;
 	}
 
-	Com_DPrintf("Scroll %i lines\n", node->textLines - node->height);
-	if (node->textLines > node->height)
-		MN_TextScroll(node, node->textLines - node->height);
+	if (node->textLines > node->height) {
+		Com_DPrintf("\nMN_TextScrollBottom: Scrolling to line %i\n", node->textLines - node->height + 1);
+		node->textScroll = node->textLines - node->height + 1;
+	}
 }
 
 /**

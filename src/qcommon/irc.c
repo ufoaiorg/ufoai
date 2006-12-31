@@ -429,21 +429,26 @@ qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_complete)
 /**
  * @brief Append the irc message to the buffer
  * @note the irc_buffer is linked to menuText array to display in the menu
- * @param[in] msg the complete irc message (with \n)
+ * @param[in] msg the complete irc message (without \n)
  */
 static void Irc_AppendToBuffer (const char* const msg)
 {
 	char buf[IRC_RECV_BUF_SIZE];
-	/* FIXME */
-	if (strlen(irc_buffer) + strlen(msg) >= sizeof(irc_buffer) ) {
-		Com_Printf("clear irc buffer\n");
-		memset(irc_buffer, 0, sizeof(irc_buffer));
+
+	while (strlen(irc_buffer) + strlen(msg) + 1 >= sizeof(irc_buffer) ) {
+		char *n;
+		if(!(n = strchr(irc_buffer, '\n'))) {
+			irc_buffer[0] = '\0';
+			break;
+		}
+		memmove(irc_buffer, n + 1, strlen(n));
 	}
 
 	Com_sprintf(buf, sizeof(buf), "%s\n", msg);
 	Q_strcat(irc_buffer, buf, sizeof(irc_buffer));
 	if (irc_logConsole->value)
 		Com_Printf("IRC: %s\n", msg);
+
 	MN_TextScrollBottom("irc_data");
 }
 
