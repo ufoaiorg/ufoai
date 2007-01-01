@@ -1256,8 +1256,8 @@ tech rs_alien_body_armour
 	type	tech
 	name	"_Alien Artifact - Alien Body Armour"
 	up_chapter	tech
-	description	"_nano_txt"
-	pre_description	"_nano_pre_txt"
+	description	"_alien_body_armour_txt"
+	pre_description	"_alien_body_armour_pre_txt"
 
 	require_AND
 	{
