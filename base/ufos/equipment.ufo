@@ -15,7 +15,7 @@ equipment campaign_player
 	smg				1
 	smg_ammo		10
 	shotgun2		1
-	shotgun_ammo2		12
+	shotgun2_ammo		12
 	flamer			1
 	flamer_ammo		6
 	rpg				1
