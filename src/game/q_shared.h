@@ -392,7 +392,7 @@ void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, char *file, i
 void Q_strcat(char *dest, const char *src, size_t size) __attribute__((nonnull));
 char *Q_strlwr(char *str) __attribute__((nonnull));
 char *Q_strdup(const char *str) __attribute__((nonnull));
-int Q_putenv(const char *str);
+int Q_putenv(const char *var, const char *value);
 char *Q_getcwd(char *dest, size_t size) __attribute__((nonnull));
 
 /*============================================= */

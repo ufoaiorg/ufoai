@@ -1736,13 +1736,20 @@ char *Q_strdup(const char *str)
  * @param
  * @sa
  */
-int Q_putenv(const char *str)
+int Q_putenv(const char *var, const char *value)
 {
-#ifdef _MSC_VER
-	return _putenv(str);
+#ifdef __APPLE__
+	return setenv(var, value, 1) == -1)
 #else
+	char str[32];
+
+	Com_sprintf(str, sizeof(str), "%s=%s", var, value);
+# ifdef _MSC_VER
+	return _putenv(str);
+# else
 	return putenv((char *) str);
-#endif
+# endif
+#endif /* __APPLE__ */
 }
 
 /**

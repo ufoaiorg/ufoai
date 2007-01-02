@@ -1330,23 +1330,20 @@ void Qcommon_LocaleInit(void)
 {
 	char *locale;
 
-#ifdef _WIN32
-	char languageID[32];
-#endif /* _WIN32 */
 	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, NULL);
 	s_language->modified = qfalse;
 
 #ifdef _WIN32
-	Com_sprintf(languageID, 32, "LANG=%s", s_language->string);
-	Q_putenv(languageID);
+	Q_putenv("LANG", s_language->string);
+	Q_putenv("LANGUAGE", s_language->string);
 #else /* _WIN32 */
 # ifndef SOLARIS
 	unsetenv("LANGUAGE");
 # endif /* SOLARIS */
 # ifdef __APPLE__
-	if (setenv("LANGUAGE", s_language->string, 1) == -1)
+	if (Q_putenv("LANGUAGE", s_language->string) == -1)
 		Com_Printf("...setenv for LANGUAGE failed: %s\n", s_language->string);
-	if (setenv("LC_ALL", s_language->string, 1) == -1)
+	if (Q_putenv("LC_ALL", s_language->string) == -1)
 		Com_Printf("...setenv for LC_ALL failed: %s\n", s_language->string);
 # endif /* __APPLE__ */
 #endif /* _WIN32 */

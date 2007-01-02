@@ -158,25 +158,15 @@ void Cmd_ForwardToServer(void)
 }
 
 /**
- * @brief
+ * @brief Set or print some environment variables via console command
+ * @sa Q_putenv
  */
-void CL_Setenv_f(void)
+void CL_Env_f(void)
 {
 	int argc = Cmd_Argc();
 
-	if (argc > 2) {
-		char buffer[1000];
-		int i;
-
-		Q_strncpyz(buffer, Cmd_Argv(1), sizeof(buffer));
-		Q_strcat(buffer, "=", sizeof(buffer));
-
-		for (i = 2; i < argc; i++) {
-			Q_strcat(buffer, Cmd_Argv(i), sizeof(buffer));
-			Q_strcat(buffer, " ", sizeof(buffer));
-		}
-
-		Q_putenv(buffer);
+	if (argc == 3) {
+		Q_putenv(Cmd_Argv(1), Cmd_Argv(2));
 	} else if (argc == 2) {
 		char *env = getenv(Cmd_Argv(1));
 
@@ -1651,7 +1641,7 @@ void CL_InitLocal(void)
 	Cmd_AddCommand ("packet", CL_Packet_f, "Dangerous debug function for network testing");
 #endif
 
-	Cmd_AddCommand("setenv", CL_Setenv_f, NULL);
+	Cmd_AddCommand("env", CL_Env_f, NULL);
 
 	Cmd_AddCommand("precache", CL_Precache_f, "Function that is called at mapload to precache map data");
 	Cmd_AddCommand("selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
