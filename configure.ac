@@ -144,6 +144,9 @@ then
 elif test `echo $target_os | sed "s/\(freebsd\).*/\1/"` = "freebsd"
 then
 	AC_SUBST([TARGET_OS],[freebsd])
+elif test `echo $target_os | sed "s/\(netbsd\).*/\1/"` = "netbsd"
+then
+	AC_SUBST([TARGET_OS],[netbsd])
 elif test `echo $target_os | sed "s/\(mingw32\).*/\1/"` = "mingw32"
 then
 	AC_SUBST([TARGET_OS],[mingw32])

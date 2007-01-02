@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qrad.h"
 #include "qbsp.h"
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__NetBSD__) || defined(__FreeBSD__)
 #include <sys/time.h>
 #include <sys/resource.h>
 #endif
@@ -49,7 +49,7 @@ int ConvertBSPToASE (char *bspName);
 void Check_BSP_Parameter ( int argc, char **argv )
 {
 	int i;
-#ifdef __linux__
+#if defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
 	int nice = 0;
 #endif
 	for (i=1 ; i<argc ; i++) {
@@ -83,7 +83,7 @@ void Check_BSP_Parameter ( int argc, char **argv )
 			printf ("nowater = true\n");
 			nowater = qtrue;
 		} else if (!strcmp(argv[i], "-nice")) {
-#ifdef __linux__
+#if defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
 			nice = atoi(argv[i+1]);
 			printf ("nice = %i\n", nice);
 			if (setpriority(PRIO_PROCESS, 0, nice))

@@ -48,6 +48,15 @@ ifeq ($(TARGET_OS),freebsd)
 		ports/unix/$(NET_UDP).c
 endif
 
+ifeq ($(TARGET_OS),netbsd)
+	SERVER_SRCS += \
+		ports/linux/q_shlinux.c \
+		ports/linux/sys_linux.c \
+		ports/unix/sys_unix.c \
+		ports/unix/glob.c \
+		ports/unix/$(NET_UDP).c
+endif
+
 ifeq ($(TARGET_OS),mingw32)
 	SERVER_SRCS+=\
 		ports/win32/q_shwin.c \

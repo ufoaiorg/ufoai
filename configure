@@ -2264,6 +2264,10 @@ elif test `echo $target_os | sed "s/\(freebsd\).*/\1/"` = "freebsd"
 then
 	TARGET_OS=freebsd
 
+elif test `echo $target_os | sed "s/\(netbsd\).*/\1/"` = "netbsd"
+then
+	TARGET_OS=netbsd
+
 elif test `echo $target_os | sed "s/\(mingw32\).*/\1/"` = "mingw32"
 then
 	TARGET_OS=mingw32

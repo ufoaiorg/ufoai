@@ -29,11 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/stat.h>
 #include <sys/mman.h>
 #include <sys/time.h>
-
 #include "../unix/glob.h"
 
 #include "../../qcommon/qcommon.h"
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 #include <machine/param.h>
 #endif
 
@@ -51,7 +50,7 @@ void *Hunk_Begin (int maxsize)
 	/* reserve a huge chunk of memory, but don't commit any yet */
 	maxhunksize = maxsize + sizeof(int);
 	curhunksize = 0;
-#if (defined __FreeBSD__)
+#if (defined __FreeBSD__) || (defined __NetBSD__)
 	membase = mmap(0, maxhunksize, PROT_READ|PROT_WRITE,
 		MAP_PRIVATE|MAP_ANON, -1, 0);
 #else
@@ -87,7 +86,7 @@ void *Hunk_Alloc (int size)
  */
 int Hunk_End (void)
 {
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	long pgsz, newsz, modsz;
 
 	pgsz = sysconf(_SC_PAGESIZE);
@@ -175,7 +174,7 @@ char *strlwr (char *s)
 {
 	char* origs = s;
 	while (*s) {
-		*s = tolower(*s);
+		*s = (char)tolower(*s);
 		s++;
 	}
 	return origs;

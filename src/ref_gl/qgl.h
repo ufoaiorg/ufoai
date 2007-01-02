@@ -50,7 +50,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #endif
 
-#if defined __linux__ || defined __FreeBSD__
+#if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
 #ifdef USE_OPENGL_FRAMEWORK
 #	include <OpenGL/glx.h>
 #else
@@ -485,7 +485,7 @@ extern BOOL(WINAPI * qwglGetDeviceGammaRampEXT) (unsigned char *pRed, unsigned c
 extern BOOL(WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, const unsigned char *pGreen, const unsigned char *pBlue);
 #endif
 
-#if defined __linux__ || defined __FreeBSD__
+#if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
 /* local function in dll */
 extern void *qwglGetProcAddress(char *symbol);
 /*GLX Functions */

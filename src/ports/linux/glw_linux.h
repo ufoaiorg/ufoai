@@ -19,7 +19,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #ifndef __linux__
 #ifndef __FreeBSD__
+#ifndef __NetBSD__
 #error You shouldnt be including this file on non-Linux platforms
+#endif
 #endif
 #endif
 

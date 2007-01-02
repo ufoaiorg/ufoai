@@ -73,6 +73,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CPUSTRING "Unknown"
 #endif							/* __i386__ */
 
+#elif defined __NetBSD__			/* _WIN32 */
+
+#define BUILDSTRING "NetBSD"
+
+#ifdef __i386__
+#define CPUSTRING "i386"
+#elif defined __alpha__			/* __i386__ */
+#define CPUSTRING "axp"
+#else							/* __i386__ */
+#define CPUSTRING "Unknown"
+#endif							/* __i386__ */
+
 #elif defined __sun__			/* _WIN32 */
 
 #define BUILDSTRING "Solaris"

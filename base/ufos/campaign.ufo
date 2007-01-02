@@ -188,7 +188,7 @@ campaign main
 	team		human
 	soldiers	9
 	scientists	6
-	workers		4
+	workers		14
 	medics		2
 	difficulty	0
 	character_data {

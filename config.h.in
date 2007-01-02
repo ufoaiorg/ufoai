@@ -1,5 +1,5 @@
 #undef stricmp
-#undef OSS_HEADER
+#undef OSS_HEADER_SYS
 
 #undef USE_ALSA
 #undef HAVE_DGA

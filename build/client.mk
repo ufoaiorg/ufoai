@@ -99,6 +99,22 @@ ifeq ($(TARGET_OS),freebsd)
 	CLIENT_CD=ports/linux/cd_linux.c
 endif
 
+# Exactly the same as freebsd.  Is there a better way to do this?
+ifeq ($(TARGET_OS),netbsd)
+	CLIENT_SRCS+= \
+		ports/linux/q_shlinux.c \
+		ports/linux/vid_so.c \
+		ports/linux/sys_linux.c \
+		ports/unix/sys_unix.c \
+		ports/unix/glob.c \
+		ports/unix/$(NET_UDP).c
+	ifeq ($(HAVE_OPENAL),1)
+		CLIENT_SRCS+=\
+			ports/linux/qal_linux.c
+	endif
+	CLIENT_CD=ports/linux/cd_linux.c
+endif
+
 ifeq ($(TARGET_OS),mingw32)
 	CLIENT_SRCS+=\
 		ports/win32/ufo.rc \

@@ -28,6 +28,10 @@ ifeq ($(TARGET_OS),freebsd)
 	CFLAGS +=-D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
 endif
 
+ifeq ($(TARGET_OS),netbsd)
+	CFLAGS +=-I/usr/X11R6/include -D_BSD_SOURCE -D_NETBSD_SOURCE -std=c89
+endif
+
 # Darwin
 ifeq ($(TARGET_OS),darwin)
 	SHARED_EXT=dylib

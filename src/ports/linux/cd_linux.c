@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <time.h>
 #include <errno.h>
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
   #include <sys/cdio.h>
 #else
   #include <linux/cdrom.h>
@@ -71,7 +71,7 @@ static void CDAudio_Eject(void)
 	if (cdfile == -1 || !enabled)
 		return; /* no cd init'd */
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	if ( ioctl(cdfile, CDIOCEJECT) == -1 )
 		Com_DPrintf("ioctl cdioeject failed\n");
 #else
@@ -88,7 +88,7 @@ static void CDAudio_CloseDoor(void)
 	if (cdfile == -1 || !enabled)
 		return; /* no cd init'd */
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	if ( ioctl(cdfile, CDIOCCLOSE) == -1 )
 		Com_DPrintf("ioctl cdiocclose failed\n");
 #else
@@ -102,7 +102,7 @@ static void CDAudio_CloseDoor(void)
  */
 static int CDAudio_GetAudioDiskInfo(void)
 {
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	struct ioc_toc_header tochdr;
 #endif
 #ifdef __linux__
@@ -111,7 +111,7 @@ static int CDAudio_GetAudioDiskInfo(void)
 
 	cdValid = qfalse;
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	if ( ioctl(cdfile, CDIOREADTOCHEADER, &tochdr) == -1 ) {
 		Com_DPrintf("ioctl cdioreadtocheader failed\n");
 #endif
@@ -122,7 +122,7 @@ static int CDAudio_GetAudioDiskInfo(void)
 		return -1;
 	}
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	if (tochdr.starting_track < 1) {
 #endif
 #ifdef __linux__
@@ -133,7 +133,7 @@ static int CDAudio_GetAudioDiskInfo(void)
 	}
 
 	cdValid = qtrue;
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	maxTrack = tochdr.ending_track;
 #endif
 #ifdef __linux__
@@ -148,7 +148,7 @@ static int CDAudio_GetAudioDiskInfo(void)
  */
 void CDAudio_Play(int track, qboolean looping)
 {
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	struct ioc_read_toc_entry entry;
 	struct cd_toc_entry toc_buffer;
 	struct ioc_play_track ti;
@@ -174,7 +174,7 @@ void CDAudio_Play(int track, qboolean looping)
 		return;
 	}
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	#define CDROM_DATA_TRACK 4
 	bzero((char *)&toc_buffer, sizeof(toc_buffer));
 	entry.data_len = sizeof(toc_buffer);
@@ -207,7 +207,7 @@ void CDAudio_Play(int track, qboolean looping)
 			return;
 		CDAudio_Stop();
 	}
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	ti.start_track = track;
 	ti.end_track = track;
 	ti.start_index = 1;
@@ -220,7 +220,7 @@ void CDAudio_Play(int track, qboolean looping)
 	ti.cdti_ind1 = 0;
 #endif
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	if ( ioctl(cdfile, CDIOCPLAYTRACKS, &ti) == -1 ) {
 #endif
 #if defined(__linux__)
@@ -230,7 +230,7 @@ void CDAudio_Play(int track, qboolean looping)
 		return;
 	}
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	if ( ioctl(cdfile, CDIOCRESUME) == -1 )
 #endif
 #if defined(__linux__)
@@ -254,7 +254,7 @@ void CDAudio_RandomPlay(void)
 	int track, i = 0, free_tracks = 0, remap_track;
 	float f;
 	byte* track_bools;
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	struct ioc_read_toc_entry entry;
 	struct cd_toc_entry toc_buffer;
 	struct ioc_play_track ti;
@@ -274,7 +274,7 @@ void CDAudio_RandomPlay(void)
 
 	/*create array of available audio tracknumbers */
 	for (; i < maxTrack; i++) {
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 		#define CDROM_DATA_TRACK 4
 		bzero((char *)&toc_buffer, sizeof(toc_buffer));
 		entry.data_len = sizeof(toc_buffer);
@@ -321,7 +321,7 @@ void CDAudio_RandomPlay(void)
 			CDAudio_Stop();
 		}
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 		#define CDROMPLAYTRKIND 0x5304
 
 		ti.start_track = remap_track;
@@ -362,7 +362,7 @@ void CDAudio_Stop(void)
 	if (!playing)
 		return;
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	if ( ioctl(cdfile, CDIOCSTOP) == -1 )
 		Com_DPrintf("ioctl cdiocstop failed (%d)\n", errno);
 #endif
@@ -386,7 +386,7 @@ void CDAudio_Pause(void)
 	if (!playing)
 		return;
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	if ( ioctl(cdfile, CDIOCPAUSE) == -1 )
 		Com_DPrintf("ioctl cdiocpause failed\n");
 #endif
@@ -413,7 +413,7 @@ void CDAudio_Resume(void)
 	if (!wasPlaying)
 		return;
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	if ( ioctl(cdfile, CDIOCRESUME) == -1 )
 		Com_DPrintf("ioctl cdiocresume failed\n");
 #endif
@@ -535,7 +535,7 @@ static void CD_f (void)
  */
 void CDAudio_Update(void)
 {
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 	struct ioc_read_subchannel subchnl;
 	struct cd_sub_channel_info data;
 #endif
@@ -561,7 +561,7 @@ void CDAudio_Update(void)
 
 	if (playing && lastchk < time(NULL)) {
 		lastchk = time(NULL) + 2; /*two seconds between chks */
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__)
 		subchnl.address_format = CD_MSF_FORMAT;
 		subchnl.data_format = CD_CURRENT_POSITION;
 		subchnl.data_len = sizeof(data);
