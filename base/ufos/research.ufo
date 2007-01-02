@@ -1239,8 +1239,8 @@ tech rs_nano_armor
 	type	tech
 	name	"_Nanocomposite Armour"
 	up_chapter	equipment
-	description	"_nano_txt"
-	pre_description	"_nano_pre_txt"
+	description	"_nano_armor_txt"
+	pre_description	"_nano_armor_pre_txt"
 
 	require_AND
 	{
