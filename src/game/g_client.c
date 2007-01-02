@@ -1800,7 +1800,7 @@ void G_ClientTeamAssign(player_t * player)
 	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
 		if (p->inuse && !p->pers.spectator)
 			for (j = 0; j < teamCount; j++)
-				if (p->pers.team != 0 && p->pers.team != knownTeams[j]) {
+				if (p->pers.team > 0 && p->pers.team != knownTeams[j]) {
 					knownTeams[teamCount++] = p->pers.team;
 					break;
 				}
