@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-01-02 18:10+0100\n"
-"PO-Revision-Date: 2006-12-10 18:33+0100\n"
+"POT-Creation-Date: 2007-01-02 20:18+0100\n"
+"PO-Revision-Date: 2007-01-02 22:07+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -91,7 +91,8 @@ msgstr "Řídící středisko"
 msgid "Living Quarters"
 msgstr "Ubikace"
 
-#: ../base/ufos/basemanagement.ufo:156 ../base/ufos/basemanagement.ufo:176
+#: ../base/ufos/basemanagement.ufo:156
+#: ../base/ufos/basemanagement.ufo:176
 msgid "Large Hangar"
 msgstr "Velký hangár"
 
@@ -111,7 +112,8 @@ msgstr "Velký hangár pro UFO"
 msgid "Team Room"
 msgstr "Společenská místnost"
 
-#: ../base/ufos/basemanagement.ufo:246 ../base/ufos/basemanagement.ufo:265
+#: ../base/ufos/basemanagement.ufo:246
+#: ../base/ufos/basemanagement.ufo:265
 msgid "Workshop"
 msgstr "Dílna"
 
@@ -161,20 +163,19 @@ msgstr "Základna 8"
 
 #: ../base/ufos/basemanagement.ufo:340
 msgid "Firebird-class Dropship"
-msgstr ""
+msgstr "Transportér třídy Firebird"
 
 #: ../base/ufos/basemanagement.ufo:341
 msgid "Firebird D"
-msgstr ""
+msgstr "t. Firebird"
 
 #: ../base/ufos/basemanagement.ufo:359
-#, fuzzy
 msgid "Stiletto-class Interceptor"
-msgstr "Stíhačka třídy Saracen"
+msgstr "Stíhačka třídy Stiletto"
 
 #: ../base/ufos/basemanagement.ufo:360
 msgid "Stiletto I"
-msgstr ""
+msgstr "s. Stiletto"
 
 #: ../base/ufos/basemanagement.ufo:381
 msgid "Saracen-class Interceptor"
@@ -182,13 +183,15 @@ msgstr "Stíhačka třídy Saracen"
 
 #: ../base/ufos/basemanagement.ufo:382
 msgid "Saracen I"
-msgstr ""
+msgstr "s. Saracen"
 
-#: ../base/ufos/basemanagement.ufo:403 ../base/ufos/research.ufo:1858
+#: ../base/ufos/basemanagement.ufo:403
+#: ../base/ufos/research.ufo:1858
 msgid "UFO - Scout"
 msgstr "UFO - Průzkumník"
 
-#: ../base/ufos/basemanagement.ufo:421 ../base/ufos/research.ufo:1891
+#: ../base/ufos/basemanagement.ufo:421
+#: ../base/ufos/research.ufo:1891
 msgid "UFO - Fighter"
 msgstr "UFO - Stíhačka"
 
@@ -198,14 +201,12 @@ msgstr "Velice náročná kampaň"
 
 # This is an extremely difficult version of the Standard Campaign. In this scenario, all the odds will be stacked against you, you will receive few recruits, and the nations will be extremely demanding. The aliens will show you no mercy.\n
 # This option represents the Very Hard difficulty level, and is recommended for those who have managed to beat the Hard campaign and still feel the need to further punish themselves.
+# [15.11.2006]
 #: ../base/ufos/campaign.ufo:145
 msgid "txt_veryhard_campaign"
 msgstr ""
-"Velice obtížná varianta Standardní kampaně. V tomto scénáři bude veškerá "
-"pravděpodobnost proti tobě. Dostaneš málo rekrutů a národy budou velice "
-"náročné. Cizáci nepředvedou jakékoliv slitování.\n"
-"Tato volba představuje neskutečnou obtížnost a je doporučena masochystům, "
-"kteří vyhráli Náročnou kampaň a stále nemají dost."
+"Velice obtížná varianta Standardní kampaně. V tomto scénáři bude veškerá pravděpodobnost proti tobě. Dostaneš málo rekrutů a národy budou velice náročné. Cizáci nepředvedou jakékoliv slitování.\n"
+"Tato volba představuje neskutečnou obtížnost a je doporučena masochystům, kteří vyhráli Náročnou kampaň a stále nemají dost."
 
 #: ../base/ufos/campaign.ufo:165
 msgid "Hard Campaign"
@@ -213,12 +214,11 @@ msgstr "Náročná kampaň"
 
 # This is a more difficult version of the Standard Campaign. You will receive fewer soldiers, engineers and scientists, nations will be more difficult to please, research will be slower and more demanding, and the aliens will be tougher.\n
 # This option represents the Hard difficulty level, and is recommended for expert players.
+# [15.11.2006]
 #: ../base/ufos/campaign.ufo:166
 msgid "txt_hard_campaign"
 msgstr ""
-"Složitější varianta Standardní kampaně. Dostaneš méně vojáků, dělníků a "
-"vědců, potěšit národy bude mnohem těžší, výzkum se stane pomalejším a "
-"náročnějším a cizáci budou klást větší odpor.\n"
+"Složitější varianta Standardní kampaně. Dostaneš méně vojáků, dělníků a vědců, potěšit národy bude mnohem těžší, výzkum se stane pomalejším a náročnějším a cizáci budou klást větší odpor.\n"
 "Tato volba představuje velkou obtížnost a je doporučena zkušeným hráčům."
 
 #: ../base/ufos/campaign.ufo:186
@@ -227,15 +227,13 @@ msgstr "Standardní kampaň"
 
 # This is a single-player, military-themed invasion scenario. The player assumes command of Project PHALANX, Earth's response to the alien threat, and can play through a dynamic game with both significant random elements and a strong overarching storyline.\n
 # This campaign is available at several difficulty levels. This option represents the Standard difficulty level, and is recommended for first-time players who like a challenge.
-#: ../base/ufos/campaign.ufo:187 ../base/ufos/campaign.ufo:281
+# [15.11.2006]
+#: ../base/ufos/campaign.ufo:187
+#: ../base/ufos/campaign.ufo:281
 msgid "txt_standard_campaign"
 msgstr ""
-"Válečně založený scénář o invazi pro jednoho hráče. Ten převezme velení nad "
-"projektem PHALANX, který je odpovědí Země na cizáckou hrozbu, a může tak "
-"hrát dynamickou hru s významným podílem náhodných prvků a zajímavým "
-"příběhem.\n"
-"Kampaň je dostupná v několika úrovních obtížnosti. Tato volba představuje "
-"standardní obtížnost a je doporučena pro nováčky kteří mají rádi výzvu."
+"Válečně založený scénář o invazi pro jednoho hráče. Ten převezme velení nad projektem PHALANX, který je odpovědí Země na cizáckou hrozbu, a může tak hrát dynamickou hru s významným podílem náhodných prvků a zajímavým příběhem.\n"
+"Kampaň je dostupná v několika úrovních obtížnosti. Tato volba představuje standardní obtížnost a je doporučena pro nováčky kteří mají rádi výzvu."
 
 #: ../base/ufos/campaign.ufo:217
 msgid "Easy Campaign"
@@ -243,13 +241,12 @@ msgstr "Snadná kampaň"
 
 # This is a more forgiving version of the Standard Campaign. The aliens will be less tough, UFO incursions will be less frequent, and you will receive more new recruits to make up for combat losses.\n
 # This campaign represents the Easy difficulty level, and is an option for first-time players who prefer smoother sailing than the Standard Campaign might offer.
+# [15.11.2006]
 #: ../base/ufos/campaign.ufo:218
 msgid "txt_easy_campaign"
 msgstr ""
-"Shovívavější varianta Standardní kampaně. Cizáci budou méně houževnatí, "
-"nájezdy UFO méně časté a dostaneš více rekrutů k pokrytí bojových ztrát.\n"
-"Tato volba představuje snadnou obtížnost a je určena pro hráče kteří dávají "
-"přednost méně trnité cestě než jim může nabídnout Standardní kampaň."
+"Shovívavější varianta Standardní kampaně. Cizáci budou méně houževnatí, nájezdy UFO méně časté a dostaneš více rekrutů k pokrytí bojových ztrát.\n"
+"Tato volba představuje snadnou obtížnost a je určena pro hráče kteří dávají přednost méně trnité cestě než jim může nabídnout Standardní kampaň."
 
 #: ../base/ufos/campaign.ufo:238
 msgid "Very Easy Campaign"
@@ -257,13 +254,12 @@ msgstr "Velice snadná kampaň"
 
 # This is a very forgiving version of the Standard Campaign. Your forces will be more powerful, the aliens less dangerous, and you will experience few losses throughout the campaign.\n
 # This campaign represents the Very Easy difficulty level, and is an option for first-time players who are only just testing the waters of UFO:AI.
+# [15.11.2006]
 #: ../base/ufos/campaign.ufo:239
 msgid "txt_veryeasy_campaign"
 msgstr ""
-"Toto je velice shovívavá varianta Standardní kampaně. Tvé jednotky budou "
-"silnější, cizáci méně nebezpeční a během kampaně zažiješ málo porážek.\n"
-"Tato volba představuje velice snadnou obtížnost a je určena pro nováčky "
-"kteří pronikají do tajů UFO:AI."
+"Toto je velice shovívavá varianta Standardní kampaně. Tvé jednotky budou silnější, cizáci méně nebezpeční a během kampaně zažiješ málo porážek.\n"
+"Tato volba představuje velice snadnou obtížnost a je určena pro nováčky kteří pronikají do tajů UFO:AI."
 
 #: ../base/ufos/campaign.ufo:259
 msgid "Play the aliens"
@@ -285,12 +281,15 @@ msgstr "Zničující cizácké tažení v Bombaji"
 msgid "Alien stealth aircraft sighted"
 msgstr "Spatřen cizácký tajný letoun"
 
-#: ../base/ufos/fonts.ufo:15 ../base/ufos/fonts.ufo:21
-#: ../base/ufos/fonts.ufo:27 ../base/ufos/fonts.ufo:33
+#: ../base/ufos/fonts.ufo:15
+#: ../base/ufos/fonts.ufo:21
+#: ../base/ufos/fonts.ufo:27
+#: ../base/ufos/fonts.ufo:33
 msgid "media/DejaVuSans.ttf"
 msgstr "media/DejaVuSans.ttf"
 
-#: ../base/ufos/fonts.ufo:39 ../base/ufos/fonts.ufo:45
+#: ../base/ufos/fonts.ufo:39
+#: ../base/ufos/fonts.ufo:45
 #: ../base/ufos/fonts.ufo:52
 msgid "media/FreeSans.ttf"
 msgstr "media/FreeSans.ttf"
@@ -303,20 +302,25 @@ msgstr "Kříž"
 msgid "Coin"
 msgstr "Medaile"
 
-#: ../base/ufos/medals.ufo:30 client/cl_employee.c:120
+#: ../base/ufos/medals.ufo:30
+#: client/cl_employee.c:120
 msgid "Scientist"
 msgstr "Vědec"
 
-#: ../base/ufos/medals.ufo:37 client/cl_employee.c:124
+#: ../base/ufos/medals.ufo:37
+#: client/cl_employee.c:124
 msgid "Medic"
 msgstr "Lékař"
 
-#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1525
-#: ../base/ufos/team_humans.ufo:1545 client/cl_employee.c:126
+#: ../base/ufos/medals.ufo:44
+#: ../base/ufos/team_humans.ufo:1525
+#: ../base/ufos/team_humans.ufo:1545
+#: client/cl_employee.c:126
 msgid "UGV"
 msgstr "PVBO"
 
-#: ../base/ufos/medals.ufo:51 client/cl_employee.c:122
+#: ../base/ufos/medals.ufo:51
+#: client/cl_employee.c:122
 msgid "Worker"
 msgstr "Dělník"
 
@@ -380,15 +384,18 @@ msgstr "Odstartovat"
 msgid "Call back aircraft"
 msgstr "Přivolat letoun zpět"
 
-#: ../base/ufos/menu_aircraft.ufo:184 ../base/ufos/menu_aircraft.ufo:311
+#: ../base/ufos/menu_aircraft.ufo:184
+#: ../base/ufos/menu_aircraft.ufo:311
 msgid "Call back"
 msgstr "Návrat na základnu"
 
-#: ../base/ufos/menu_aircraft.ufo:196 ../base/ufos/menu_bases.ufo:187
+#: ../base/ufos/menu_aircraft.ufo:196
+#: ../base/ufos/menu_bases.ufo:187
 msgid "Transfer equipment or personnel"
 msgstr "Přesun vybavení nebo osob"
 
-#: ../base/ufos/menu_aircraft.ufo:211 ../base/ufos/menu_bases.ufo:212
+#: ../base/ufos/menu_aircraft.ufo:211
+#: ../base/ufos/menu_bases.ufo:212
 msgid "Transfer"
 msgstr "Přesun"
 
@@ -400,9 +407,12 @@ msgstr "Vybavit zbraněmi a štíty"
 msgid "Equip"
 msgstr "Vybavit"
 
-#: ../base/ufos/menu_aircraft.ufo:278 ../base/ufos/menu_aircraft.ufo:455
-#: ../base/ufos/menu_hospital.ufo:125 ../base/ufos/menu_hospital.ufo:330
-#: ../base/ufos/menu_team.ufo:932 ../base/ufos/menu_team.ufo:1541
+#: ../base/ufos/menu_aircraft.ufo:278
+#: ../base/ufos/menu_aircraft.ufo:455
+#: ../base/ufos/menu_hospital.ufo:125
+#: ../base/ufos/menu_hospital.ufo:330
+#: ../base/ufos/menu_team.ufo:932
+#: ../base/ufos/menu_team.ufo:1541
 msgid "Done"
 msgstr "Hotovo"
 
@@ -414,7 +424,8 @@ msgstr "Přejít na předchozí letoun"
 msgid "Switch to the next aircraft"
 msgstr "Přejít na další letoun"
 
-#: ../base/ufos/menu_aircraft.ufo:324 ../base/ufos/menu_team.ufo:916
+#: ../base/ufos/menu_aircraft.ufo:324
+#: ../base/ufos/menu_team.ufo:916
 msgid "Team Members:"
 msgstr "Členové týmu:"
 
@@ -430,132 +441,150 @@ msgstr "Zbraň"
 msgid "Available equipment:"
 msgstr "Dostupné vybavení"
 
-#: ../base/ufos/menu_aliencont.ufo:48 ../base/ufos/menu_bases.ufo:334
-#: ../base/ufos/menu_buildings.ufo:76 ../base/ufos/menu_buy.ufo:708
-#: ../base/ufos/menu_buy.ufo:1146 ../base/ufos/menu_geoscape.ufo:87
-#: ../base/ufos/menu_production.ufo:49 ../base/ufos/menu_research.ufo:900
+#: ../base/ufos/menu_aliencont.ufo:48
+#: ../base/ufos/menu_bases.ufo:334
+#: ../base/ufos/menu_buildings.ufo:76
+#: ../base/ufos/menu_buy.ufo:708
+#: ../base/ufos/menu_buy.ufo:1146
+#: ../base/ufos/menu_geoscape.ufo:87
+#: ../base/ufos/menu_production.ufo:49
+#: ../base/ufos/menu_research.ufo:900
 msgid "CREDIT"
 msgstr "ZŮSTATEK"
 
-#: ../base/ufos/menu_aliencont.ufo:68 ../base/ufos/menu_buildings.ufo:58
-#: ../base/ufos/menu_buy.ufo:820 ../base/ufos/menu_hire.ufo:786
-#: ../base/ufos/menu_production.ufo:341 ../base/ufos/menu_research.ufo:945
+#: ../base/ufos/menu_aliencont.ufo:68
+#: ../base/ufos/menu_buildings.ufo:58
+#: ../base/ufos/menu_buy.ufo:820
+#: ../base/ufos/menu_hire.ufo:786
+#: ../base/ufos/menu_production.ufo:341
+#: ../base/ufos/menu_research.ufo:945
 #: ../base/ufos/menu_transfer.ufo:119
 msgid "Back to baseview"
 msgstr "Zpět na zobrazení základny"
 
 #: ../base/ufos/menu_aliencont.ufo:83
-#, fuzzy
 msgid "Check Ufopedia Entry"
-msgstr "Obsah Ufopedie"
+msgstr "Podívat se do Ufopedie"
 
 #: ../base/ufos/menu_aliencont.ufo:110
 msgid "Alive Aliens in all bases:"
-msgstr ""
+msgstr "Živí cizáci na všech základnách:"
 
 #: ../base/ufos/menu_aliencont.ufo:129
 msgid "Aliens available to process:"
-msgstr ""
+msgstr "Cizáci dostupní ke zkoumání:"
 
 #: ../base/ufos/menu_aliencont.ufo:134
-#, fuzzy
 msgid "Alien type"
-msgstr "Cizácké druhy"
+msgstr "Cizácký druh"
 
 #: ../base/ufos/menu_aliencont.ufo:139
 msgid "Examinated"
-msgstr ""
+msgstr "Přezkoumáni"
 
 #: ../base/ufos/menu_aliencont.ufo:144
-#, fuzzy
 msgid "Amount"
-msgstr "Automat"
+msgstr "Počet"
 
 # Prekladat rasy?
-#: ../base/ufos/menu_aliencont.ufo:150 ../base/ufos/team_aliens.ufo:227
+#: ../base/ufos/menu_aliencont.ufo:150
+#: ../base/ufos/team_aliens.ufo:227
 msgid "Ortnok"
 msgstr "Ortnok"
 
 #: ../base/ufos/menu_aliencont.ufo:155
-#, fuzzy
 msgid "yes"
-msgstr "Ano"
+msgstr "ano"
 
 # Prekladat rasy?
-#: ../base/ufos/menu_aliencont.ufo:166 ../base/ufos/team_aliens.ufo:239
+#: ../base/ufos/menu_aliencont.ufo:166
+#: ../base/ufos/team_aliens.ufo:239
 msgid "Antarean"
 msgstr "Antaran"
 
 #: ../base/ufos/menu_aliencont.ufo:171
 msgid "needs autopsy"
-msgstr ""
+msgstr "vyžaduje pitvu"
 
-#: ../base/ufos/menu_aliencont.ufo:187 ../base/ufos/menu_research.ufo:825
+#: ../base/ufos/menu_aliencont.ufo:187
+#: ../base/ufos/menu_research.ufo:825
 msgid "Base Info"
 msgstr "Informace o základně"
 
 #: ../base/ufos/menu_aliencont.ufo:195
-#, fuzzy
 msgid "Alien Type:"
-msgstr "Cizácké druhy"
+msgstr "Cizácký druh:"
 
 #: ../base/ufos/menu_aliencont.ufo:224
-#, fuzzy
 msgid "In this base:"
-msgstr "Jméno této základny"
+msgstr "Na této základně:"
 
 #: ../base/ufos/menu_aliencont.ufo:243
 msgid "In all bases:"
-msgstr ""
+msgstr "Na všech základnách:"
 
-#: ../base/ufos/menu_althud.ufo:45 ../base/ufos/menu_inventory.ufo:169
+#: ../base/ufos/menu_althud.ufo:45
+#: ../base/ufos/menu_inventory.ufo:169
 #: ../base/ufos/menu_physdat.ufo:175
 msgid "Inventory and physical stats"
 msgstr "Inventář a fyzické statistiky"
 
-#: ../base/ufos/menu_althud.ufo:76 ../base/ufos/menu_hud.ufo:601
+#: ../base/ufos/menu_althud.ufo:76
+#: ../base/ufos/menu_hud.ufo:601
 msgid "Chat"
 msgstr "Pokec"
 
-#: ../base/ufos/menu_althud.ufo:89 ../base/ufos/menu_hud.ufo:614
+#: ../base/ufos/menu_althud.ufo:89
+#: ../base/ufos/menu_hud.ufo:614
 msgid "Teamchat"
 msgstr "Týmový pokec"
 
-#: ../base/ufos/menu_althud.ufo:103 ../base/ufos/menu_hud.ufo:628
+#: ../base/ufos/menu_althud.ufo:103
+#: ../base/ufos/menu_hud.ufo:628
 msgid "Chat messages"
 msgstr "Zprávy z pokecu"
 
-#: ../base/ufos/menu_althud.ufo:456 ../base/ufos/menu_hud.ufo:225
+#: ../base/ufos/menu_althud.ufo:456
+#: ../base/ufos/menu_hud.ufo:225
 msgid "Enemy spotted"
 msgstr "Spatřen nepřítel"
 
-#: ../base/ufos/menu_althud.ufo:464 ../base/ufos/menu_hud.ufo:237
+#: ../base/ufos/menu_althud.ufo:464
+#: ../base/ufos/menu_hud.ufo:237
 msgid "Click to cycle through the spotted enemies"
 msgstr "Klikni k procházení spatřených nepřátel"
 
-#: ../base/ufos/menu_althud.ufo:474 ../base/ufos/menu_hud.ufo:213
+#: ../base/ufos/menu_althud.ufo:474
+#: ../base/ufos/menu_hud.ufo:213
 msgid "Finish round"
 msgstr "Ukončit tah"
 
-#: ../base/ufos/menu_althud.ufo:535 ../base/ufos/menu_althud.ufo:555
-#: ../base/ufos/menu_hud.ufo:416 ../base/ufos/menu_hud.ufo:426
+#: ../base/ufos/menu_althud.ufo:535
+#: ../base/ufos/menu_althud.ufo:555
+#: ../base/ufos/menu_hud.ufo:416
+#: ../base/ufos/menu_hud.ufo:426
 msgid "Primary fire mode"
 msgstr "Hlavní režim střelby"
 
-#: ../base/ufos/menu_althud.ufo:545 ../base/ufos/menu_althud.ufo:565
-#: ../base/ufos/menu_hud.ufo:436 ../base/ufos/menu_hud.ufo:446
+#: ../base/ufos/menu_althud.ufo:545
+#: ../base/ufos/menu_althud.ufo:565
+#: ../base/ufos/menu_hud.ufo:436
+#: ../base/ufos/menu_hud.ufo:446
 msgid "Secondary fire mode"
 msgstr "Dopňkový režim střelby"
 
-#: ../base/ufos/menu_althud.ufo:577 ../base/ufos/menu_hud.ufo:526
+#: ../base/ufos/menu_althud.ufo:577
+#: ../base/ufos/menu_hud.ufo:526
 msgid "Multiple-shot reaction fire"
 msgstr "Několik výstřelů při zpětné palbě"
 
-#: ../base/ufos/menu_althud.ufo:582 ../base/ufos/menu_hud.ufo:531
+#: ../base/ufos/menu_althud.ufo:582
+#: ../base/ufos/menu_hud.ufo:531
 msgid "One-shot reaction fire"
 msgstr "Jeden výstřel při zpětné palbě"
 
-#: ../base/ufos/menu_althud.ufo:587 ../base/ufos/menu_hud.ufo:536
+#: ../base/ufos/menu_althud.ufo:587
+#: ../base/ufos/menu_hud.ufo:536
 msgid "No reaction fire"
 msgstr "Bez zpětné palby"
 
@@ -567,7 +596,8 @@ msgstr "Nabít zbraň v pravé ruce"
 msgid "Reload left hand weapon"
 msgstr "Nabít zbraň v levé ruce"
 
-#: ../base/ufos/menu_althud.ufo:632 ../base/ufos/menu_hud.ufo:515
+#: ../base/ufos/menu_althud.ufo:632
+#: ../base/ufos/menu_hud.ufo:515
 msgid "Crouch/Stand up"
 msgstr "Zakleknout/postavit se"
 
@@ -591,8 +621,10 @@ msgstr "Přepnout na zbraň v levé ruce"
 msgid "Back to worldview"
 msgstr "Zpět na mapu světa"
 
-#: ../base/ufos/menu_bases.ufo:73 ../base/ufos/menu_bases.ufo:90
-#: ../base/ufos/menu_bases.ufo:169 ../base/ufos/menu_bases.ufo:240
+#: ../base/ufos/menu_bases.ufo:73
+#: ../base/ufos/menu_bases.ufo:90
+#: ../base/ufos/menu_bases.ufo:169
+#: ../base/ufos/menu_bases.ufo:240
 #: ../base/ufos/menu_bases.ufo:313
 msgid "Build base-facilities"
 msgstr "Vybudovat zařízení základny"
@@ -609,8 +641,10 @@ msgstr "Spravovat letouny"
 msgid "Buy a new aircraft"
 msgstr "Koupit nový letoun"
 
-#: ../base/ufos/menu_bases.ufo:141 ../base/ufos/menu_geoscape.ufo:716
-#: ../base/ufos/research.ufo:74 client/cl_map.c:321
+#: ../base/ufos/menu_bases.ufo:141
+#: ../base/ufos/menu_geoscape.ufo:716
+#: ../base/ufos/research.ufo:74
+#: client/cl_map.c:321
 msgid "Aircraft"
 msgstr "Letouny"
 
@@ -624,7 +658,7 @@ msgstr "Nákup / Prodej"
 
 #: ../base/ufos/menu_bases.ufo:203
 msgid "Can't transfer - only one base"
-msgstr ""
+msgstr "Nelze přesouvat - pouze jedna základna"
 
 #: ../base/ufos/menu_bases.ufo:223
 msgid "Research new technology"
@@ -640,18 +674,20 @@ msgstr "Vyrobit nové vybavení"
 
 #: ../base/ufos/menu_bases.ufo:276
 msgid "Workshop not operational"
-msgstr ""
+msgstr "Dílna není v provozu"
 
 #: ../base/ufos/menu_bases.ufo:285
 msgid "Production"
 msgstr "Výroba"
 
 # Je to moc dlouhe do tlacitka
-#: ../base/ufos/menu_bases.ufo:296 ../base/ufos/menu_bases.ufo:321
+#: ../base/ufos/menu_bases.ufo:296
+#: ../base/ufos/menu_bases.ufo:321
 msgid "Hire employees"
 msgstr "Najmout zaměst."
 
-#: ../base/ufos/menu_bases.ufo:342 ../base/ufos/menu_geoscape.ufo:95
+#: ../base/ufos/menu_bases.ufo:342
+#: ../base/ufos/menu_geoscape.ufo:95
 msgid "Organisation capital"
 msgstr "Finance k dispozici"
 
@@ -671,89 +707,135 @@ msgstr "Přejít na předchozí základnu"
 msgid "Switch to the next base"
 msgstr "Přejít na další základnu"
 
-#: ../base/ufos/menu_buy.ufo:255 ../base/ufos/menu_buy.ufo:271
-#: ../base/ufos/menu_buy.ufo:287 ../base/ufos/menu_buy.ufo:303
-#: ../base/ufos/menu_buy.ufo:319 ../base/ufos/menu_buy.ufo:335
-#: ../base/ufos/menu_buy.ufo:351 ../base/ufos/menu_buy.ufo:367
-#: ../base/ufos/menu_buy.ufo:383 ../base/ufos/menu_buy.ufo:399
-#: ../base/ufos/menu_buy.ufo:415 ../base/ufos/menu_buy.ufo:431
-#: ../base/ufos/menu_buy.ufo:447 ../base/ufos/menu_buy.ufo:463
-#: ../base/ufos/menu_buy.ufo:479 ../base/ufos/menu_buy.ufo:495
-#: ../base/ufos/menu_buy.ufo:511 ../base/ufos/menu_buy.ufo:527
-#: ../base/ufos/menu_buy.ufo:543 ../base/ufos/menu_buy.ufo:559
-#: ../base/ufos/menu_buy.ufo:575 ../base/ufos/menu_buy.ufo:591
-#: ../base/ufos/menu_buy.ufo:607 ../base/ufos/menu_buy.ufo:623
-#: ../base/ufos/menu_buy.ufo:639 ../base/ufos/menu_buy.ufo:655
-#: ../base/ufos/menu_buy.ufo:671 ../base/ufos/menu_buy.ufo:687
+#: ../base/ufos/menu_buy.ufo:255
+#: ../base/ufos/menu_buy.ufo:271
+#: ../base/ufos/menu_buy.ufo:287
+#: ../base/ufos/menu_buy.ufo:303
+#: ../base/ufos/menu_buy.ufo:319
+#: ../base/ufos/menu_buy.ufo:335
+#: ../base/ufos/menu_buy.ufo:351
+#: ../base/ufos/menu_buy.ufo:367
+#: ../base/ufos/menu_buy.ufo:383
+#: ../base/ufos/menu_buy.ufo:399
+#: ../base/ufos/menu_buy.ufo:415
+#: ../base/ufos/menu_buy.ufo:431
+#: ../base/ufos/menu_buy.ufo:447
+#: ../base/ufos/menu_buy.ufo:463
+#: ../base/ufos/menu_buy.ufo:479
+#: ../base/ufos/menu_buy.ufo:495
+#: ../base/ufos/menu_buy.ufo:511
+#: ../base/ufos/menu_buy.ufo:527
+#: ../base/ufos/menu_buy.ufo:543
+#: ../base/ufos/menu_buy.ufo:559
+#: ../base/ufos/menu_buy.ufo:575
+#: ../base/ufos/menu_buy.ufo:591
+#: ../base/ufos/menu_buy.ufo:607
+#: ../base/ufos/menu_buy.ufo:623
+#: ../base/ufos/menu_buy.ufo:639
+#: ../base/ufos/menu_buy.ufo:655
+#: ../base/ufos/menu_buy.ufo:671
+#: ../base/ufos/menu_buy.ufo:687
 msgid "Buy item"
 msgstr "Koupit položku"
 
-#: ../base/ufos/menu_buy.ufo:263 ../base/ufos/menu_buy.ufo:279
-#: ../base/ufos/menu_buy.ufo:295 ../base/ufos/menu_buy.ufo:311
-#: ../base/ufos/menu_buy.ufo:327 ../base/ufos/menu_buy.ufo:343
-#: ../base/ufos/menu_buy.ufo:359 ../base/ufos/menu_buy.ufo:375
-#: ../base/ufos/menu_buy.ufo:391 ../base/ufos/menu_buy.ufo:407
-#: ../base/ufos/menu_buy.ufo:423 ../base/ufos/menu_buy.ufo:439
-#: ../base/ufos/menu_buy.ufo:455 ../base/ufos/menu_buy.ufo:471
-#: ../base/ufos/menu_buy.ufo:487 ../base/ufos/menu_buy.ufo:503
-#: ../base/ufos/menu_buy.ufo:519 ../base/ufos/menu_buy.ufo:535
-#: ../base/ufos/menu_buy.ufo:551 ../base/ufos/menu_buy.ufo:567
-#: ../base/ufos/menu_buy.ufo:583 ../base/ufos/menu_buy.ufo:599
-#: ../base/ufos/menu_buy.ufo:615 ../base/ufos/menu_buy.ufo:631
-#: ../base/ufos/menu_buy.ufo:647 ../base/ufos/menu_buy.ufo:663
-#: ../base/ufos/menu_buy.ufo:679 ../base/ufos/menu_buy.ufo:695
+#: ../base/ufos/menu_buy.ufo:263
+#: ../base/ufos/menu_buy.ufo:279
+#: ../base/ufos/menu_buy.ufo:295
+#: ../base/ufos/menu_buy.ufo:311
+#: ../base/ufos/menu_buy.ufo:327
+#: ../base/ufos/menu_buy.ufo:343
+#: ../base/ufos/menu_buy.ufo:359
+#: ../base/ufos/menu_buy.ufo:375
+#: ../base/ufos/menu_buy.ufo:391
+#: ../base/ufos/menu_buy.ufo:407
+#: ../base/ufos/menu_buy.ufo:423
+#: ../base/ufos/menu_buy.ufo:439
+#: ../base/ufos/menu_buy.ufo:455
+#: ../base/ufos/menu_buy.ufo:471
+#: ../base/ufos/menu_buy.ufo:487
+#: ../base/ufos/menu_buy.ufo:503
+#: ../base/ufos/menu_buy.ufo:519
+#: ../base/ufos/menu_buy.ufo:535
+#: ../base/ufos/menu_buy.ufo:551
+#: ../base/ufos/menu_buy.ufo:567
+#: ../base/ufos/menu_buy.ufo:583
+#: ../base/ufos/menu_buy.ufo:599
+#: ../base/ufos/menu_buy.ufo:615
+#: ../base/ufos/menu_buy.ufo:631
+#: ../base/ufos/menu_buy.ufo:647
+#: ../base/ufos/menu_buy.ufo:663
+#: ../base/ufos/menu_buy.ufo:679
+#: ../base/ufos/menu_buy.ufo:695
 msgid "Sell item"
 msgstr "Prodat položku"
 
-#: ../base/ufos/menu_buy.ufo:740 ../base/ufos/menu_production.ufo:253
+#: ../base/ufos/menu_buy.ufo:740
+#: ../base/ufos/menu_production.ufo:253
 msgid "Show only primary weapons"
 msgstr "Ukázat jen hlavní zbraně"
 
-#: ../base/ufos/menu_buy.ufo:755 ../base/ufos/menu_production.ufo:268
+#: ../base/ufos/menu_buy.ufo:755
+#: ../base/ufos/menu_production.ufo:268
 #: ../base/ufos/menu_team.ufo:1259
 msgid "Primary"
 msgstr "Hlavní"
 
-#: ../base/ufos/menu_buy.ufo:760 ../base/ufos/menu_production.ufo:273
+#: ../base/ufos/menu_buy.ufo:760
+#: ../base/ufos/menu_production.ufo:273
 msgid "Show only secondary weapons"
 msgstr "Ukázat jen doplňkové zbraně"
 
-#: ../base/ufos/menu_buy.ufo:775 ../base/ufos/menu_production.ufo:288
+#: ../base/ufos/menu_buy.ufo:775
+#: ../base/ufos/menu_production.ufo:288
 #: ../base/ufos/menu_team.ufo:1279
 msgid "Secondary"
 msgstr "Doplňkové"
 
-#: ../base/ufos/menu_buy.ufo:780 ../base/ufos/menu_production.ufo:293
+#: ../base/ufos/menu_buy.ufo:780
+#: ../base/ufos/menu_production.ufo:293
 msgid "Show other equipment"
 msgstr "Ukázat ostatní vybavení"
 
-#: ../base/ufos/menu_buy.ufo:795 ../base/ufos/menu_production.ufo:308
+#: ../base/ufos/menu_buy.ufo:795
+#: ../base/ufos/menu_production.ufo:308
 #: ../base/ufos/menu_team.ufo:1299
 msgid "Misc"
 msgstr "Ostatní"
 
-#: ../base/ufos/menu_buy.ufo:800 ../base/ufos/menu_production.ufo:313
+#: ../base/ufos/menu_buy.ufo:800
+#: ../base/ufos/menu_production.ufo:313
 msgid "Show only armor"
 msgstr "Ukázat jen zbroj"
 
-#: ../base/ufos/menu_buy.ufo:815 ../base/ufos/menu_production.ufo:328
+#: ../base/ufos/menu_buy.ufo:815
+#: ../base/ufos/menu_production.ufo:328
 #: ../base/ufos/menu_team.ufo:1319
 msgid "Armor"
 msgstr "Zbroj"
 
-#: ../base/ufos/menu_buy.ufo:981 ../base/ufos/menu_buy.ufo:997
-#: ../base/ufos/menu_buy.ufo:1013 ../base/ufos/menu_buy.ufo:1029
-#: ../base/ufos/menu_buy.ufo:1045 ../base/ufos/menu_buy.ufo:1061
-#: ../base/ufos/menu_buy.ufo:1077 ../base/ufos/menu_buy.ufo:1093
-#: ../base/ufos/menu_buy.ufo:1109 ../base/ufos/menu_buy.ufo:1125
+#: ../base/ufos/menu_buy.ufo:981
+#: ../base/ufos/menu_buy.ufo:997
+#: ../base/ufos/menu_buy.ufo:1013
+#: ../base/ufos/menu_buy.ufo:1029
+#: ../base/ufos/menu_buy.ufo:1045
+#: ../base/ufos/menu_buy.ufo:1061
+#: ../base/ufos/menu_buy.ufo:1077
+#: ../base/ufos/menu_buy.ufo:1093
+#: ../base/ufos/menu_buy.ufo:1109
+#: ../base/ufos/menu_buy.ufo:1125
 msgid "Buy aircraft"
 msgstr "Koupit letoun"
 
-#: ../base/ufos/menu_buy.ufo:989 ../base/ufos/menu_buy.ufo:1005
-#: ../base/ufos/menu_buy.ufo:1021 ../base/ufos/menu_buy.ufo:1037
-#: ../base/ufos/menu_buy.ufo:1053 ../base/ufos/menu_buy.ufo:1069
-#: ../base/ufos/menu_buy.ufo:1085 ../base/ufos/menu_buy.ufo:1101
-#: ../base/ufos/menu_buy.ufo:1117 ../base/ufos/menu_buy.ufo:1133
+#: ../base/ufos/menu_buy.ufo:989
+#: ../base/ufos/menu_buy.ufo:1005
+#: ../base/ufos/menu_buy.ufo:1021
+#: ../base/ufos/menu_buy.ufo:1037
+#: ../base/ufos/menu_buy.ufo:1053
+#: ../base/ufos/menu_buy.ufo:1069
+#: ../base/ufos/menu_buy.ufo:1085
+#: ../base/ufos/menu_buy.ufo:1101
+#: ../base/ufos/menu_buy.ufo:1117
+#: ../base/ufos/menu_buy.ufo:1133
 msgid "Sell aircraft"
 msgstr "Prodat letoun"
 
@@ -769,11 +851,14 @@ msgstr "Kampaně"
 msgid "Start campaign"
 msgstr "Zahájit kampaň"
 
-#: ../base/ufos/menu_campaign.ufo:96 ../base/ufos/menu_multiplayer.ufo:123
-#: ../base/ufos/menu_multiplayer.ufo:528 ../base/ufos/menu_options.ufo:123
+#: ../base/ufos/menu_campaign.ufo:96
+#: ../base/ufos/menu_multiplayer.ufo:123
+#: ../base/ufos/menu_multiplayer.ufo:528
+#: ../base/ufos/menu_options.ufo:123
 #: ../base/ufos/menu_singleplayer.ufo:129
 #: ../base/ufos/menu_singleplayer.ufo:497
-#: ../base/ufos/menu_singleplayer.ufo:672 ../base/ufos/menu_tutorials.ufo:66
+#: ../base/ufos/menu_singleplayer.ufo:672
+#: ../base/ufos/menu_tutorials.ufo:66
 msgid "Back"
 msgstr "Zpět"
 
@@ -801,8 +886,10 @@ msgstr "Ufopedie"
 msgid "Create base"
 msgstr "Vybudovat základnu"
 
-#: ../base/ufos/menu_geoscape.ufo:226 ../base/ufos/menu_hud.ufo:639
-#: ../base/ufos/menu_main.ufo:110 ../base/ufos/menu_multiplayeringame.ufo:89
+#: ../base/ufos/menu_geoscape.ufo:226
+#: ../base/ufos/menu_hud.ufo:639
+#: ../base/ufos/menu_main.ufo:110
+#: ../base/ufos/menu_multiplayeringame.ufo:89
 #: ../base/ufos/menu_singleplayer.ufo:173
 #: ../base/ufos/menu_singleplayer.ufo:315
 msgid "Options"
@@ -820,25 +907,34 @@ msgstr "Připraven"
 msgid "Aircraft reached desired location - what to do?"
 msgstr "Letoun dosáhl cíle - co nyní?"
 
-#: ../base/ufos/menu_geoscape.ufo:321 ../base/ufos/menu_geoscape.ufo:437
-#: ../base/ufos/menu_geoscape.ufo:534 ../base/ufos/menu_geoscape.ufo:585
-#: ../base/ufos/menu_geoscape.ufo:677 ../base/ufos/menu_geoscape.ufo:745
-#: ../base/ufos/menu_geoscape.ufo:798 ../base/ufos/menu_options.ufo:599
+#: ../base/ufos/menu_geoscape.ufo:321
+#: ../base/ufos/menu_geoscape.ufo:437
+#: ../base/ufos/menu_geoscape.ufo:534
+#: ../base/ufos/menu_geoscape.ufo:585
+#: ../base/ufos/menu_geoscape.ufo:677
+#: ../base/ufos/menu_geoscape.ufo:745
+#: ../base/ufos/menu_geoscape.ufo:798
+#: ../base/ufos/menu_options.ufo:599
 msgid "Close this dialog"
 msgstr "Zavřít tuto nabídku"
 
-#: ../base/ufos/menu_geoscape.ufo:334 ../base/ufos/menu_geoscape.ufo:461
-#: ../base/ufos/menu_geoscape.ufo:547 ../base/ufos/menu_geoscape.ufo:598
-#: ../base/ufos/menu_geoscape.ufo:690 ../base/ufos/menu_geoscape.ufo:758
+#: ../base/ufos/menu_geoscape.ufo:334
+#: ../base/ufos/menu_geoscape.ufo:461
+#: ../base/ufos/menu_geoscape.ufo:547
+#: ../base/ufos/menu_geoscape.ufo:598
+#: ../base/ufos/menu_geoscape.ufo:690
+#: ../base/ufos/menu_geoscape.ufo:758
 #: ../base/ufos/menu_options.ufo:623
 msgid "Cancel"
 msgstr "Pryč odsud"
 
-#: ../base/ufos/menu_geoscape.ufo:341 ../base/ufos/menu_geoscape.ufo:605
+#: ../base/ufos/menu_geoscape.ufo:341
+#: ../base/ufos/menu_geoscape.ufo:605
 msgid "Enter the battlefield"
 msgstr "Zahájit boj"
 
-#: ../base/ufos/menu_geoscape.ufo:354 ../base/ufos/menu_geoscape.ufo:618
+#: ../base/ufos/menu_geoscape.ufo:354
+#: ../base/ufos/menu_geoscape.ufo:618
 msgid "Enter"
 msgstr "Na ně!!!"
 
@@ -854,8 +950,10 @@ msgstr "Automise"
 msgid "New base"
 msgstr "Nová základna"
 
-#: ../base/ufos/menu_geoscape.ufo:412 ../base/ufos/menu_geoscape.ufo:505
-#: ../base/ufos/menu_geoscape.ufo:661 ../base/ufos/menu_options.ufo:1288
+#: ../base/ufos/menu_geoscape.ufo:412
+#: ../base/ufos/menu_geoscape.ufo:505
+#: ../base/ufos/menu_geoscape.ufo:661
+#: ../base/ufos/menu_options.ufo:1288
 msgid "Name:"
 msgstr "Jméno:"
 
@@ -913,80 +1011,109 @@ msgstr "Popis:"
 
 #: ../base/ufos/menu_geoscape.ufo:811
 msgid "OK"
-msgstr ""
+msgstr "Budiž"
 
-#: ../base/ufos/menu_hire.ufo:192 ../base/ufos/menu_hire.ufo:201
-#: ../base/ufos/menu_hire.ufo:210 ../base/ufos/menu_hire.ufo:219
-#: ../base/ufos/menu_hire.ufo:228 ../base/ufos/menu_hire.ufo:237
-#: ../base/ufos/menu_hire.ufo:246 ../base/ufos/menu_hire.ufo:255
-#: ../base/ufos/menu_hire.ufo:264 ../base/ufos/menu_hire.ufo:273
-#: ../base/ufos/menu_hire.ufo:282 ../base/ufos/menu_hire.ufo:291
-#: ../base/ufos/menu_hire.ufo:300 ../base/ufos/menu_hire.ufo:309
-#: ../base/ufos/menu_hire.ufo:318 ../base/ufos/menu_hire.ufo:327
-#: ../base/ufos/menu_hire.ufo:336 ../base/ufos/menu_hire.ufo:345
+#: ../base/ufos/menu_hire.ufo:192
+#: ../base/ufos/menu_hire.ufo:201
+#: ../base/ufos/menu_hire.ufo:210
+#: ../base/ufos/menu_hire.ufo:219
+#: ../base/ufos/menu_hire.ufo:228
+#: ../base/ufos/menu_hire.ufo:237
+#: ../base/ufos/menu_hire.ufo:246
+#: ../base/ufos/menu_hire.ufo:255
+#: ../base/ufos/menu_hire.ufo:264
+#: ../base/ufos/menu_hire.ufo:273
+#: ../base/ufos/menu_hire.ufo:282
+#: ../base/ufos/menu_hire.ufo:291
+#: ../base/ufos/menu_hire.ufo:300
+#: ../base/ufos/menu_hire.ufo:309
+#: ../base/ufos/menu_hire.ufo:318
+#: ../base/ufos/menu_hire.ufo:327
+#: ../base/ufos/menu_hire.ufo:336
+#: ../base/ufos/menu_hire.ufo:345
 #: ../base/ufos/menu_hire.ufo:354
 msgid "Hire/Unhire"
 msgstr "Najmout/Propustit"
 
-#: ../base/ufos/menu_hire.ufo:541 ../base/ufos/menu_hospital.ufo:219
-#: ../base/ufos/menu_physdat.ufo:52 ../base/ufos/menu_team.ufo:829
+#: ../base/ufos/menu_hire.ufo:541
+#: ../base/ufos/menu_hospital.ufo:219
+#: ../base/ufos/menu_physdat.ufo:52
+#: ../base/ufos/menu_team.ufo:829
 #: ../base/ufos/menu_team.ufo:1365
 msgid "Power:"
 msgstr "Síla:"
 
-#: ../base/ufos/menu_hire.ufo:554 ../base/ufos/menu_hospital.ufo:224
-#: ../base/ufos/menu_physdat.ufo:57 ../base/ufos/menu_team.ufo:834
+#: ../base/ufos/menu_hire.ufo:554
+#: ../base/ufos/menu_hospital.ufo:224
+#: ../base/ufos/menu_physdat.ufo:57
+#: ../base/ufos/menu_team.ufo:834
 #: ../base/ufos/menu_team.ufo:1370
 msgid "Speed:"
 msgstr "Rychlost:"
 
-#: ../base/ufos/menu_hire.ufo:568 ../base/ufos/menu_hospital.ufo:229
-#: ../base/ufos/menu_physdat.ufo:62 ../base/ufos/menu_team.ufo:839
+#: ../base/ufos/menu_hire.ufo:568
+#: ../base/ufos/menu_hospital.ufo:229
+#: ../base/ufos/menu_physdat.ufo:62
+#: ../base/ufos/menu_team.ufo:839
 #: ../base/ufos/menu_team.ufo:1375
 msgid "Accuracy:"
 msgstr "Přesnost:"
 
-#: ../base/ufos/menu_hire.ufo:582 ../base/ufos/menu_hospital.ufo:234
-#: ../base/ufos/menu_physdat.ufo:67 ../base/ufos/menu_team.ufo:844
+#: ../base/ufos/menu_hire.ufo:582
+#: ../base/ufos/menu_hospital.ufo:234
+#: ../base/ufos/menu_physdat.ufo:67
+#: ../base/ufos/menu_team.ufo:844
 #: ../base/ufos/menu_team.ufo:1380
 msgid "Mind:"
 msgstr "Intelekt:"
 
-#: ../base/ufos/menu_hire.ufo:595 ../base/ufos/menu_hospital.ufo:239
-#: ../base/ufos/menu_physdat.ufo:72 ../base/ufos/menu_team.ufo:849
+#: ../base/ufos/menu_hire.ufo:595
+#: ../base/ufos/menu_hospital.ufo:239
+#: ../base/ufos/menu_physdat.ufo:72
+#: ../base/ufos/menu_team.ufo:849
 #: ../base/ufos/menu_team.ufo:1385
 msgid "Close Combat:"
 msgstr "Boj zblízka:"
 
-#: ../base/ufos/menu_hire.ufo:608 ../base/ufos/menu_hospital.ufo:244
-#: ../base/ufos/menu_physdat.ufo:77 ../base/ufos/menu_team.ufo:854
+#: ../base/ufos/menu_hire.ufo:608
+#: ../base/ufos/menu_hospital.ufo:244
+#: ../base/ufos/menu_physdat.ufo:77
+#: ../base/ufos/menu_team.ufo:854
 #: ../base/ufos/menu_team.ufo:1390
 msgid "Heavy Weapons:"
 msgstr "Těžké zbraně:"
 
-#: ../base/ufos/menu_hire.ufo:621 ../base/ufos/menu_hospital.ufo:249
-#: ../base/ufos/menu_physdat.ufo:82 ../base/ufos/menu_team.ufo:859
+#: ../base/ufos/menu_hire.ufo:621
+#: ../base/ufos/menu_hospital.ufo:249
+#: ../base/ufos/menu_physdat.ufo:82
+#: ../base/ufos/menu_team.ufo:859
 #: ../base/ufos/menu_team.ufo:1395
 msgid "Assault Guns:"
 msgstr "Útočné pušky:"
 
-#: ../base/ufos/menu_hire.ufo:634 ../base/ufos/menu_hospital.ufo:254
-#: ../base/ufos/menu_physdat.ufo:87 ../base/ufos/menu_team.ufo:864
+#: ../base/ufos/menu_hire.ufo:634
+#: ../base/ufos/menu_hospital.ufo:254
+#: ../base/ufos/menu_physdat.ufo:87
+#: ../base/ufos/menu_team.ufo:864
 #: ../base/ufos/menu_team.ufo:1400
 msgid "Sniper Rifles:"
 msgstr "Ostřelovačské pušky:"
 
-#: ../base/ufos/menu_hire.ufo:647 ../base/ufos/menu_hospital.ufo:259
-#: ../base/ufos/menu_physdat.ufo:92 ../base/ufos/menu_team.ufo:869
+#: ../base/ufos/menu_hire.ufo:647
+#: ../base/ufos/menu_hospital.ufo:259
+#: ../base/ufos/menu_physdat.ufo:92
+#: ../base/ufos/menu_team.ufo:869
 #: ../base/ufos/menu_team.ufo:1405
 msgid "High-Explosives:"
 msgstr "Silné výbušniny:"
 
-#: ../base/ufos/menu_hire.ufo:661 ../base/ufos/menu_team.ufo:874
+#: ../base/ufos/menu_hire.ufo:661
+#: ../base/ufos/menu_team.ufo:874
 msgid "Survived Missions:"
 msgstr "Počet misí:"
 
-#: ../base/ufos/menu_hire.ufo:668 ../base/ufos/menu_team.ufo:876
+#: ../base/ufos/menu_hire.ufo:668
+#: ../base/ufos/menu_team.ufo:876
 msgid "Killed Enemies:"
 msgstr "Zabitých nepřátel:"
 
@@ -1010,7 +1137,8 @@ msgstr "Vědci"
 msgid "Hire workers"
 msgstr "Najmout dělníky"
 
-#: ../base/ufos/menu_hire.ufo:761 ../base/ufos/menu_production.ufo:89
+#: ../base/ufos/menu_hire.ufo:761
+#: ../base/ufos/menu_production.ufo:89
 msgid "Workers"
 msgstr "Dělníci"
 
@@ -1018,7 +1146,8 @@ msgstr "Dělníci"
 msgid "Hire medics"
 msgstr "Najmout lékaře"
 
-#: ../base/ufos/menu_hire.ufo:781 ../base/ufos/menu_hospital.ufo:105
+#: ../base/ufos/menu_hire.ufo:781
+#: ../base/ufos/menu_hospital.ufo:105
 msgid "Medics"
 msgstr "Lékaři"
 
@@ -1038,11 +1167,13 @@ msgstr "Zdraví"
 msgid "Heal this soldier"
 msgstr "Léčit tohoto vojáka"
 
-#: ../base/ufos/menu_hospital.ufo:292 ../base/ufos/weapons.ufo:20
+#: ../base/ufos/menu_hospital.ufo:292
+#: ../base/ufos/weapons.ufo:20
 msgid "Heal"
 msgstr "Léčit"
 
-#: ../base/ufos/menu_hospital.ufo:301 ../base/ufos/menu_hospital.ufo:317
+#: ../base/ufos/menu_hospital.ufo:301
+#: ../base/ufos/menu_hospital.ufo:317
 msgid "Implants"
 msgstr "Implantáty"
 
@@ -1110,7 +1241,8 @@ msgstr "Voják 7"
 msgid "Soldier 8"
 msgstr "Voják 8"
 
-#: ../base/ufos/menu_hud.ufo:456 ../base/ufos/menu_hud.ufo:467
+#: ../base/ufos/menu_hud.ufo:456
+#: ../base/ufos/menu_hud.ufo:467
 #: ../base/ufos/seq_tutorials.ufo:600
 msgid "Reload weapon"
 msgstr "Nabít zbraň"
@@ -1119,31 +1251,38 @@ msgstr "Nabít zbraň"
 msgid "Physical stats of this soldier"
 msgstr "Stav vojáka"
 
-#: ../base/ufos/menu_hud.ufo:661 ../base/ufos/seq_tutorials.ufo:518
+#: ../base/ufos/menu_hud.ufo:661
+#: ../base/ufos/seq_tutorials.ufo:518
 msgid "Inventory"
 msgstr "Inventář"
 
-#: ../base/ufos/menu_inventory.ufo:21 ../base/ufos/menu_team.ufo:983
+#: ../base/ufos/menu_inventory.ufo:21
+#: ../base/ufos/menu_team.ufo:983
 msgid "Backpack"
 msgstr "Batoh"
 
-#: ../base/ufos/menu_inventory.ufo:30 ../base/ufos/menu_team.ufo:992
+#: ../base/ufos/menu_inventory.ufo:30
+#: ../base/ufos/menu_team.ufo:992
 msgid "Left Hand"
 msgstr "Levá ruka"
 
-#: ../base/ufos/menu_inventory.ufo:39 ../base/ufos/menu_team.ufo:1001
+#: ../base/ufos/menu_inventory.ufo:39
+#: ../base/ufos/menu_team.ufo:1001
 msgid "Right Hand"
 msgstr "Pravá ruka"
 
-#: ../base/ufos/menu_inventory.ufo:48 ../base/ufos/menu_team.ufo:1010
+#: ../base/ufos/menu_inventory.ufo:48
+#: ../base/ufos/menu_team.ufo:1010
 msgid "Extension"
 msgstr "Nástavec"
 
-#: ../base/ufos/menu_inventory.ufo:57 ../base/ufos/menu_team.ufo:1019
+#: ../base/ufos/menu_inventory.ufo:57
+#: ../base/ufos/menu_team.ufo:1019
 msgid "Holster"
 msgstr "Pouzdro"
 
-#: ../base/ufos/menu_inventory.ufo:66 ../base/ufos/menu_team.ufo:1028
+#: ../base/ufos/menu_inventory.ufo:66
+#: ../base/ufos/menu_team.ufo:1028
 msgid "Belt"
 msgstr "Opasek"
 
@@ -1152,24 +1291,29 @@ msgid "Floor"
 msgstr "Podlaha"
 
 # Lepší nápady? :)
-#: ../base/ufos/menu_irc.ufo:46 ../base/ufos/menu_multiplayer.ufo:740
+#: ../base/ufos/menu_irc.ufo:46
+#: ../base/ufos/menu_multiplayer.ufo:740
 msgid "Lobby"
-msgstr "Ufisti"
+msgstr "Ufisti (IRC)"
 
 #: ../base/ufos/menu_irc.ufo:64
 msgid "Users"
 msgstr "Uživatelé"
 
-#: ../base/ufos/menu_lostwon.ufo:61 ../base/ufos/menu_lostwon.ufo:190
+#: ../base/ufos/menu_lostwon.ufo:61
+#: ../base/ufos/menu_lostwon.ufo:190
 msgid "Retry this mission"
 msgstr "Opakovat tuto misi"
 
-#: ../base/ufos/menu_lostwon.ufo:76 ../base/ufos/menu_lostwon.ufo:205
+#: ../base/ufos/menu_lostwon.ufo:76
+#: ../base/ufos/menu_lostwon.ufo:205
 msgid "Try again"
 msgstr "Zkusit znovu"
 
-#: ../base/ufos/menu_lostwon.ufo:101 ../base/ufos/menu_lostwon.ufo:116
-#: ../base/ufos/menu_lostwon.ufo:230 ../base/ufos/menu_lostwon.ufo:245
+#: ../base/ufos/menu_lostwon.ufo:101
+#: ../base/ufos/menu_lostwon.ufo:116
+#: ../base/ufos/menu_lostwon.ufo:230
+#: ../base/ufos/menu_lostwon.ufo:245
 #: ../base/ufos/menu_multiplayeringame.ufo:69
 #: ../base/ufos/menu_singleplayer.ufo:153
 #: ../base/ufos/menu_singleplayer.ufo:255
@@ -1184,7 +1328,8 @@ msgstr "Jeden hráč"
 msgid "Multiplayer"
 msgstr "Více hráčů"
 
-#: ../base/ufos/menu_main.ufo:130 ../base/ufos/menu_tutorials.ufo:46
+#: ../base/ufos/menu_main.ufo:130
+#: ../base/ufos/menu_tutorials.ufo:46
 msgid "Tutorials"
 msgstr "Jak hrát"
 
@@ -1192,7 +1337,8 @@ msgstr "Jak hrát"
 msgid "Credits"
 msgstr "Titulky"
 
-#: ../base/ufos/menu_main.ufo:170 ../base/ufos/menu_singleplayer.ufo:181
+#: ../base/ufos/menu_main.ufo:170
+#: ../base/ufos/menu_singleplayer.ufo:181
 #: ../base/ufos/menu_singleplayer.ufo:335
 msgid "Exit"
 msgstr "Konec"
@@ -1213,7 +1359,8 @@ msgstr "Tým"
 msgid "Load team from current selected slot"
 msgstr "Načíst tým z vybrané pozice"
 
-#: ../base/ufos/menu_multiplayer.ufo:247 ../base/ufos/menu_singleplayer.ufo:89
+#: ../base/ufos/menu_multiplayer.ufo:247
+#: ../base/ufos/menu_singleplayer.ufo:89
 #: ../base/ufos/menu_singleplayer.ufo:393
 msgid "Load"
 msgstr "Načíst"
@@ -1236,7 +1383,8 @@ msgstr "Současný tým"
 msgid "Edit your team after loading"
 msgstr "Upravit tým po načtení"
 
-#: ../base/ufos/menu_multiplayer.ufo:302 ../base/ufos/menu_team.ufo:802
+#: ../base/ufos/menu_multiplayer.ufo:302
+#: ../base/ufos/menu_team.ufo:802
 msgid "Edit"
 msgstr "Upravit"
 
@@ -1252,7 +1400,8 @@ msgstr "Nová hra"
 msgid "Generate a team automatically"
 msgstr "Automaticky vytvořit nový tým"
 
-#: ../base/ufos/menu_multiplayer.ufo:349 ../base/ufos/weapons_human.ufo:131
+#: ../base/ufos/menu_multiplayer.ufo:349
+#: ../base/ufos/weapons_human.ufo:131
 msgid "Auto"
 msgstr "Automat"
 
@@ -1268,19 +1417,23 @@ msgstr "Jméno"
 msgid "Bookmark"
 msgstr "Oblíbené"
 
-#: ../base/ufos/menu_multiplayer.ufo:508 ../base/ufos/menu_multiplayer.ufo:762
+#: ../base/ufos/menu_multiplayer.ufo:508
+#: ../base/ufos/menu_multiplayer.ufo:762
 msgid "Connect"
 msgstr "Připojit se"
 
-#: ../base/ufos/menu_multiplayer.ufo:579 ../base/ufos/menu_multiplayer.ufo:693
+#: ../base/ufos/menu_multiplayer.ufo:579
+#: ../base/ufos/menu_multiplayer.ufo:693
 msgid "LAN"
 msgstr "LAN"
 
-#: ../base/ufos/menu_multiplayer.ufo:587 ../base/ufos/menu_multiplayer.ufo:701
+#: ../base/ufos/menu_multiplayer.ufo:587
+#: ../base/ufos/menu_multiplayer.ufo:701
 msgid "Internet"
 msgstr "Internet"
 
-#: ../base/ufos/menu_multiplayer.ufo:610 ../base/ufos/menu_multiplayer.ufo:794
+#: ../base/ufos/menu_multiplayer.ufo:610
+#: ../base/ufos/menu_multiplayer.ufo:794
 #: ../base/ufos/menu_multiplayer.ufo:1108
 #: ../base/ufos/menu_multiplayer.ufo:1477
 msgid "Team preference:"
@@ -1300,15 +1453,15 @@ msgstr "Připojit se na IP"
 
 #: ../base/ufos/menu_multiplayer.ufo:840
 msgid "Make this server public:"
-msgstr ""
+msgstr "Zveřejnit tento server:"
 
 #: ../base/ufos/menu_multiplayer.ufo:851
 msgid "Don't make it public via masterserver"
-msgstr ""
+msgstr "Nezveřejňovat přes hlavní server"
 
 #: ../base/ufos/menu_multiplayer.ufo:865
 msgid "Publish server address via masterserver"
-msgstr ""
+msgstr "Zveřejnit adresu serveru přes hlavní server"
 
 #: ../base/ufos/menu_multiplayer.ufo:883
 msgid "Enable morale states:"
@@ -1340,7 +1493,7 @@ msgstr "Nastaví nejvyšší povolený počet vojáků v jednom týmu"
 
 #: ../base/ufos/menu_multiplayer.ufo:1074
 msgid "Max. soldiers per player:"
-msgstr "Max. vojáků na hráče:"
+msgstr "Maximu vojáků na hráče:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1076
 msgid "Sets the max allowed soldiers per player when in teamplay"
@@ -1352,15 +1505,16 @@ msgstr "Nastaví preferovaný tým"
 
 #: ../base/ufos/menu_multiplayer.ufo:1143
 msgid "Max. players per team:"
-msgstr "Max. vojáků na tým:"
+msgstr "Maximum vojáků na tým:"
 
+# hráčů řízených počítačem
 #: ../base/ufos/menu_multiplayer.ufo:1176
 msgid "Max. AI actors:"
-msgstr "Maximum hráčů řízených počítačem:"
+msgstr "Maximum botů:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1178
 msgid "Max AI actors for teamplay mode"
-msgstr "Max. počet botů pro týmovou hru"
+msgstr "Maximální počet botů pro týmovou hru"
 
 #: ../base/ufos/menu_multiplayer.ufo:1210
 msgid "Server-Password:"
@@ -1383,41 +1537,36 @@ msgid "Start server"
 msgstr "Spustit server"
 
 #: ../base/ufos/menu_multiplayer.ufo:1408
-#, fuzzy
 msgid "Team selection"
-msgstr "Nic nevybráno"
+msgstr "Výběr týmu"
 
 #: ../base/ufos/menu_multiplayer.ufo:1417
-#, fuzzy
 msgid "Teamplay"
-msgstr "Týmová hra:"
+msgstr "Týmová hra"
 
 #: ../base/ufos/menu_multiplayer.ufo:1453
-#, fuzzy
 msgid "Max. players per team"
-msgstr "Max. vojáků na tým:"
+msgstr "Maximum hráčů na tým"
 
 #: ../base/ufos/menu_multiplayer.ufo:1465
 msgid "Max. teams for this map"
-msgstr ""
+msgstr "Maximum týmů pro tuto mapu"
 
 #: ../base/ufos/menu_multiplayer.ufo:1488
 msgid "Next free team"
-msgstr ""
+msgstr "Další volný tým"
 
 #: ../base/ufos/menu_multiplayer.ufo:1498
-#, fuzzy
 msgid "Previous free team"
-msgstr "Předchozí položka"
+msgstr "Předchozí volný tým"
 
 #: ../base/ufos/menu_multiplayer.ufo:1542
-#, fuzzy
 msgid "Please wait"
-msgstr "Spokojený"
+msgstr "Čekejte prosím"
 
 #: ../base/ufos/menu_multiplayer.ufo:1548
 msgid "Waiting for other players to join the game"
-msgstr ""
+msgstr "Čekám až se ke hře připojí ostatní hráči"
 
 #: ../base/ufos/menu_multiplayeringame.ufo:109
 msgid "Abort Game"
@@ -1583,7 +1732,8 @@ msgstr "Je vyžadováno potvrzení pohybů"
 msgid "HUD Design:"
 msgstr "Design HUDu:"
 
-#: ../base/ufos/menu_options.ufo:1049 ../base/ufos/menu_options.ufo:1059
+#: ../base/ufos/menu_options.ufo:1049
+#: ../base/ufos/menu_options.ufo:1059
 msgid "Choose another hud"
 msgstr "Zvolit jiný HUD"
 
@@ -1627,15 +1777,15 @@ msgstr "Zapne vyskakovací nápovědu"
 
 #: ../base/ufos/menu_options.ufo:1197
 msgid "3D Geoscape:"
-msgstr ""
+msgstr "Mapa světa ve 3D:"
 
 #: ../base/ufos/menu_options.ufo:1213
 msgid "Use a flat geoscape"
-msgstr ""
+msgstr "Používat dvourozměrnou mapu světa"
 
 #: ../base/ufos/menu_options.ufo:1227
 msgid "Use a 3D geoscape"
-msgstr ""
+msgstr "Používat prostorovou mapu světa"
 
 #: ../base/ufos/menu_options.ufo:1240
 msgid "Camera Scroll:"
@@ -1691,37 +1841,65 @@ msgstr "Zvýšit důležitost"
 msgid "Decrease priority"
 msgstr "Snížit důležitost"
 
-#: ../base/ufos/menu_research.ufo:373 ../base/ufos/menu_research.ufo:389
-#: ../base/ufos/menu_research.ufo:405 ../base/ufos/menu_research.ufo:421
-#: ../base/ufos/menu_research.ufo:437 ../base/ufos/menu_research.ufo:453
-#: ../base/ufos/menu_research.ufo:469 ../base/ufos/menu_research.ufo:485
-#: ../base/ufos/menu_research.ufo:501 ../base/ufos/menu_research.ufo:517
-#: ../base/ufos/menu_research.ufo:533 ../base/ufos/menu_research.ufo:549
-#: ../base/ufos/menu_research.ufo:565 ../base/ufos/menu_research.ufo:581
-#: ../base/ufos/menu_research.ufo:597 ../base/ufos/menu_research.ufo:613
-#: ../base/ufos/menu_research.ufo:629 ../base/ufos/menu_research.ufo:645
-#: ../base/ufos/menu_research.ufo:661 ../base/ufos/menu_research.ufo:677
-#: ../base/ufos/menu_research.ufo:693 ../base/ufos/menu_research.ufo:709
-#: ../base/ufos/menu_research.ufo:725 ../base/ufos/menu_research.ufo:741
-#: ../base/ufos/menu_research.ufo:757 ../base/ufos/menu_research.ufo:773
-#: ../base/ufos/menu_research.ufo:789 ../base/ufos/menu_research.ufo:805
+#: ../base/ufos/menu_research.ufo:373
+#: ../base/ufos/menu_research.ufo:389
+#: ../base/ufos/menu_research.ufo:405
+#: ../base/ufos/menu_research.ufo:421
+#: ../base/ufos/menu_research.ufo:437
+#: ../base/ufos/menu_research.ufo:453
+#: ../base/ufos/menu_research.ufo:469
+#: ../base/ufos/menu_research.ufo:485
+#: ../base/ufos/menu_research.ufo:501
+#: ../base/ufos/menu_research.ufo:517
+#: ../base/ufos/menu_research.ufo:533
+#: ../base/ufos/menu_research.ufo:549
+#: ../base/ufos/menu_research.ufo:565
+#: ../base/ufos/menu_research.ufo:581
+#: ../base/ufos/menu_research.ufo:597
+#: ../base/ufos/menu_research.ufo:613
+#: ../base/ufos/menu_research.ufo:629
+#: ../base/ufos/menu_research.ufo:645
+#: ../base/ufos/menu_research.ufo:661
+#: ../base/ufos/menu_research.ufo:677
+#: ../base/ufos/menu_research.ufo:693
+#: ../base/ufos/menu_research.ufo:709
+#: ../base/ufos/menu_research.ufo:725
+#: ../base/ufos/menu_research.ufo:741
+#: ../base/ufos/menu_research.ufo:757
+#: ../base/ufos/menu_research.ufo:773
+#: ../base/ufos/menu_research.ufo:789
+#: ../base/ufos/menu_research.ufo:805
 msgid "Add scientist"
 msgstr "Přidat vědce"
 
-#: ../base/ufos/menu_research.ufo:381 ../base/ufos/menu_research.ufo:397
-#: ../base/ufos/menu_research.ufo:413 ../base/ufos/menu_research.ufo:429
-#: ../base/ufos/menu_research.ufo:445 ../base/ufos/menu_research.ufo:461
-#: ../base/ufos/menu_research.ufo:477 ../base/ufos/menu_research.ufo:493
-#: ../base/ufos/menu_research.ufo:509 ../base/ufos/menu_research.ufo:525
-#: ../base/ufos/menu_research.ufo:541 ../base/ufos/menu_research.ufo:557
-#: ../base/ufos/menu_research.ufo:573 ../base/ufos/menu_research.ufo:589
-#: ../base/ufos/menu_research.ufo:605 ../base/ufos/menu_research.ufo:621
-#: ../base/ufos/menu_research.ufo:637 ../base/ufos/menu_research.ufo:653
-#: ../base/ufos/menu_research.ufo:669 ../base/ufos/menu_research.ufo:685
-#: ../base/ufos/menu_research.ufo:701 ../base/ufos/menu_research.ufo:717
-#: ../base/ufos/menu_research.ufo:733 ../base/ufos/menu_research.ufo:749
-#: ../base/ufos/menu_research.ufo:765 ../base/ufos/menu_research.ufo:781
-#: ../base/ufos/menu_research.ufo:797 ../base/ufos/menu_research.ufo:813
+#: ../base/ufos/menu_research.ufo:381
+#: ../base/ufos/menu_research.ufo:397
+#: ../base/ufos/menu_research.ufo:413
+#: ../base/ufos/menu_research.ufo:429
+#: ../base/ufos/menu_research.ufo:445
+#: ../base/ufos/menu_research.ufo:461
+#: ../base/ufos/menu_research.ufo:477
+#: ../base/ufos/menu_research.ufo:493
+#: ../base/ufos/menu_research.ufo:509
+#: ../base/ufos/menu_research.ufo:525
+#: ../base/ufos/menu_research.ufo:541
+#: ../base/ufos/menu_research.ufo:557
+#: ../base/ufos/menu_research.ufo:573
+#: ../base/ufos/menu_research.ufo:589
+#: ../base/ufos/menu_research.ufo:605
+#: ../base/ufos/menu_research.ufo:621
+#: ../base/ufos/menu_research.ufo:637
+#: ../base/ufos/menu_research.ufo:653
+#: ../base/ufos/menu_research.ufo:669
+#: ../base/ufos/menu_research.ufo:685
+#: ../base/ufos/menu_research.ufo:701
+#: ../base/ufos/menu_research.ufo:717
+#: ../base/ufos/menu_research.ufo:733
+#: ../base/ufos/menu_research.ufo:749
+#: ../base/ufos/menu_research.ufo:765
+#: ../base/ufos/menu_research.ufo:781
+#: ../base/ufos/menu_research.ufo:797
+#: ../base/ufos/menu_research.ufo:813
 msgid "Remove scientist"
 msgstr "Odebrat vědce"
 
@@ -1757,7 +1935,8 @@ msgstr "Misí"
 msgid "Bases"
 msgstr "Základen"
 
-#: ../base/ufos/menu_stats.ufo:95 ../base/ufos/menu_transfer.ufo:94
+#: ../base/ufos/menu_stats.ufo:95
+#: ../base/ufos/menu_transfer.ufo:94
 msgid "Employees"
 msgstr "Zaměstnanci"
 
@@ -1769,41 +1948,68 @@ msgstr "Náklady"
 msgid "Nations"
 msgstr "Státy"
 
-#: ../base/ufos/menu_team.ufo:132 ../base/ufos/menu_team.ufo:134
-#: ../base/ufos/menu_team.ufo:136 ../base/ufos/menu_team.ufo:138
-#: ../base/ufos/menu_team.ufo:140 ../base/ufos/menu_team.ufo:142
-#: ../base/ufos/menu_team.ufo:144 ../base/ufos/menu_team.ufo:146
-#: ../base/ufos/menu_team.ufo:148 ../base/ufos/menu_team.ufo:150
-#: ../base/ufos/menu_team.ufo:152 ../base/ufos/menu_team.ufo:154
-#: ../base/ufos/menu_team.ufo:156 ../base/ufos/menu_team.ufo:158
-#: ../base/ufos/menu_team.ufo:160 ../base/ufos/menu_team.ufo:162
-#: ../base/ufos/menu_team.ufo:164 ../base/ufos/menu_team.ufo:166
+#: ../base/ufos/menu_team.ufo:132
+#: ../base/ufos/menu_team.ufo:134
+#: ../base/ufos/menu_team.ufo:136
+#: ../base/ufos/menu_team.ufo:138
+#: ../base/ufos/menu_team.ufo:140
+#: ../base/ufos/menu_team.ufo:142
+#: ../base/ufos/menu_team.ufo:144
+#: ../base/ufos/menu_team.ufo:146
+#: ../base/ufos/menu_team.ufo:148
+#: ../base/ufos/menu_team.ufo:150
+#: ../base/ufos/menu_team.ufo:152
+#: ../base/ufos/menu_team.ufo:154
+#: ../base/ufos/menu_team.ufo:156
+#: ../base/ufos/menu_team.ufo:158
+#: ../base/ufos/menu_team.ufo:160
+#: ../base/ufos/menu_team.ufo:162
+#: ../base/ufos/menu_team.ufo:164
+#: ../base/ufos/menu_team.ufo:166
 #: ../base/ufos/menu_team.ufo:168
 msgid "Soldier carries equipment"
 msgstr "Voják nese vybavení"
 
-#: ../base/ufos/menu_team.ufo:171 ../base/ufos/menu_team.ufo:173
-#: ../base/ufos/menu_team.ufo:175 ../base/ufos/menu_team.ufo:177
-#: ../base/ufos/menu_team.ufo:179 ../base/ufos/menu_team.ufo:181
-#: ../base/ufos/menu_team.ufo:183 ../base/ufos/menu_team.ufo:185
-#: ../base/ufos/menu_team.ufo:187 ../base/ufos/menu_team.ufo:189
-#: ../base/ufos/menu_team.ufo:191 ../base/ufos/menu_team.ufo:193
-#: ../base/ufos/menu_team.ufo:195 ../base/ufos/menu_team.ufo:197
-#: ../base/ufos/menu_team.ufo:199 ../base/ufos/menu_team.ufo:201
-#: ../base/ufos/menu_team.ufo:203 ../base/ufos/menu_team.ufo:205
+#: ../base/ufos/menu_team.ufo:171
+#: ../base/ufos/menu_team.ufo:173
+#: ../base/ufos/menu_team.ufo:175
+#: ../base/ufos/menu_team.ufo:177
+#: ../base/ufos/menu_team.ufo:179
+#: ../base/ufos/menu_team.ufo:181
+#: ../base/ufos/menu_team.ufo:183
+#: ../base/ufos/menu_team.ufo:185
+#: ../base/ufos/menu_team.ufo:187
+#: ../base/ufos/menu_team.ufo:189
+#: ../base/ufos/menu_team.ufo:191
+#: ../base/ufos/menu_team.ufo:193
+#: ../base/ufos/menu_team.ufo:195
+#: ../base/ufos/menu_team.ufo:197
+#: ../base/ufos/menu_team.ufo:199
+#: ../base/ufos/menu_team.ufo:201
+#: ../base/ufos/menu_team.ufo:203
+#: ../base/ufos/menu_team.ufo:205
 #: ../base/ufos/menu_team.ufo:207
 msgid "Soldier carries no equipment"
 msgstr "Voják nenese vybavení"
 
-#: ../base/ufos/menu_team.ufo:462 ../base/ufos/menu_team.ufo:471
-#: ../base/ufos/menu_team.ufo:480 ../base/ufos/menu_team.ufo:489
-#: ../base/ufos/menu_team.ufo:498 ../base/ufos/menu_team.ufo:507
-#: ../base/ufos/menu_team.ufo:516 ../base/ufos/menu_team.ufo:525
-#: ../base/ufos/menu_team.ufo:534 ../base/ufos/menu_team.ufo:543
-#: ../base/ufos/menu_team.ufo:552 ../base/ufos/menu_team.ufo:561
-#: ../base/ufos/menu_team.ufo:570 ../base/ufos/menu_team.ufo:579
-#: ../base/ufos/menu_team.ufo:588 ../base/ufos/menu_team.ufo:597
-#: ../base/ufos/menu_team.ufo:606 ../base/ufos/menu_team.ufo:615
+#: ../base/ufos/menu_team.ufo:462
+#: ../base/ufos/menu_team.ufo:471
+#: ../base/ufos/menu_team.ufo:480
+#: ../base/ufos/menu_team.ufo:489
+#: ../base/ufos/menu_team.ufo:498
+#: ../base/ufos/menu_team.ufo:507
+#: ../base/ufos/menu_team.ufo:516
+#: ../base/ufos/menu_team.ufo:525
+#: ../base/ufos/menu_team.ufo:534
+#: ../base/ufos/menu_team.ufo:543
+#: ../base/ufos/menu_team.ufo:552
+#: ../base/ufos/menu_team.ufo:561
+#: ../base/ufos/menu_team.ufo:570
+#: ../base/ufos/menu_team.ufo:579
+#: ../base/ufos/menu_team.ufo:588
+#: ../base/ufos/menu_team.ufo:597
+#: ../base/ufos/menu_team.ufo:606
+#: ../base/ufos/menu_team.ufo:615
 #: ../base/ufos/menu_team.ufo:624
 msgid "Add/remove this soldier"
 msgstr "Přidat/odebrat vojáka"
@@ -1812,10 +2018,14 @@ msgstr "Přidat/odebrat vojáka"
 msgid "Edit name of the soldier"
 msgstr "Upravit jméno vojáka"
 
-#: ../base/ufos/menu_team.ufo:1098 ../base/ufos/menu_team.ufo:1107
-#: ../base/ufos/menu_team.ufo:1116 ../base/ufos/menu_team.ufo:1125
-#: ../base/ufos/menu_team.ufo:1134 ../base/ufos/menu_team.ufo:1143
-#: ../base/ufos/menu_team.ufo:1152 ../base/ufos/menu_team.ufo:1161
+#: ../base/ufos/menu_team.ufo:1098
+#: ../base/ufos/menu_team.ufo:1107
+#: ../base/ufos/menu_team.ufo:1116
+#: ../base/ufos/menu_team.ufo:1125
+#: ../base/ufos/menu_team.ufo:1134
+#: ../base/ufos/menu_team.ufo:1143
+#: ../base/ufos/menu_team.ufo:1152
+#: ../base/ufos/menu_team.ufo:1161
 msgid "Equip this soldier"
 msgstr "Vybavit vojáka"
 
@@ -1844,29 +2054,24 @@ msgid "Actor Abilities"
 msgstr "Schopnosti vojáka"
 
 #: ../base/ufos/menu_transfer.ufo:59
-#, fuzzy
 msgid "Show only items"
-msgstr "Ukázat jen zbroj"
+msgstr "Ukázat jen předměty"
 
 #: ../base/ufos/menu_transfer.ufo:74
-#, fuzzy
 msgid "Equipment/Items"
-msgstr "Vybavení"
+msgstr "Vybavení/předměty"
 
 #: ../base/ufos/menu_transfer.ufo:79
-#, fuzzy
 msgid "Show only employees"
-msgstr "Ukázat jen zbroj"
+msgstr "Ukázat jen zaměstnance"
 
 #: ../base/ufos/menu_transfer.ufo:99
-#, fuzzy
 msgid "Show only technologies"
-msgstr "Ukázat jen doplňkové zbraně"
+msgstr "Ukázat jen technologie"
 
 #: ../base/ufos/menu_transfer.ufo:114
-#, fuzzy
 msgid "Technologies"
-msgstr "Nanotechnologie"
+msgstr "Technologie"
 
 #: ../base/ufos/menu_ufopedia.ufo:50
 msgid "Previous entry"
@@ -1900,39 +2105,56 @@ msgstr "Posunout nahoru"
 msgid "Scroll down"
 msgstr "Posunout dolů"
 
-#: ../base/ufos/missions.ufo:5 ../base/ufos/missions.ufo:305
+#: ../base/ufos/missions.ufo:5
+#: ../base/ufos/missions.ufo:305
 msgid "New York"
 msgstr "New York"
 
-#: ../base/ufos/missions.ufo:6 ../base/ufos/missions.ufo:26
-#: ../base/ufos/missions.ufo:46 ../base/ufos/missions.ufo:66
-#: ../base/ufos/missions.ufo:86 ../base/ufos/missions.ufo:146
-#: ../base/ufos/missions.ufo:166 ../base/ufos/missions.ufo:206
-#: ../base/ufos/missions.ufo:226 ../base/ufos/missions.ufo:246
-#: ../base/ufos/missions.ufo:266 ../base/ufos/missions.ufo:286
-#: ../base/ufos/missions.ufo:306 ../base/ufos/missions.ufo:326
-#: ../base/ufos/missions.ufo:347 ../base/ufos/missions.ufo:445
-#: ../base/ufos/missions.ufo:465 ../base/ufos/missions.ufo:505
-#: ../base/ufos/missions.ufo:545 ../base/ufos/missions.ufo:564
-#: ../base/ufos/missions.ufo:583 ../base/ufos/missions.ufo:603
-#: ../base/ufos/missions.ufo:623 ../base/ufos/missions.ufo:642
-#: ../base/ufos/missions.ufo:661 ../base/ufos/missions.ufo:699
-#: ../base/ufos/missions.ufo:719 ../base/ufos/missions.ufo:739
-#: ../base/ufos/missions.ufo:760 ../base/ufos/missions.ufo:780
-#: ../base/ufos/missions.ufo:799 ../base/ufos/missions.ufo:819
+#: ../base/ufos/missions.ufo:6
+#: ../base/ufos/missions.ufo:26
+#: ../base/ufos/missions.ufo:46
+#: ../base/ufos/missions.ufo:66
+#: ../base/ufos/missions.ufo:86
+#: ../base/ufos/missions.ufo:146
+#: ../base/ufos/missions.ufo:166
+#: ../base/ufos/missions.ufo:206
+#: ../base/ufos/missions.ufo:226
+#: ../base/ufos/missions.ufo:246
+#: ../base/ufos/missions.ufo:266
+#: ../base/ufos/missions.ufo:286
+#: ../base/ufos/missions.ufo:306
+#: ../base/ufos/missions.ufo:326
+#: ../base/ufos/missions.ufo:347
+#: ../base/ufos/missions.ufo:445
+#: ../base/ufos/missions.ufo:465
+#: ../base/ufos/missions.ufo:505
+#: ../base/ufos/missions.ufo:545
+#: ../base/ufos/missions.ufo:564
+#: ../base/ufos/missions.ufo:583
+#: ../base/ufos/missions.ufo:603
+#: ../base/ufos/missions.ufo:623
+#: ../base/ufos/missions.ufo:642
+#: ../base/ufos/missions.ufo:661
+#: ../base/ufos/missions.ufo:699
+#: ../base/ufos/missions.ufo:719
+#: ../base/ufos/missions.ufo:739
+#: ../base/ufos/missions.ufo:760
+#: ../base/ufos/missions.ufo:780
+#: ../base/ufos/missions.ufo:799
+#: ../base/ufos/missions.ufo:819
 msgid "Terror Attack"
 msgstr "Zastrašování"
 
-#: ../base/ufos/missions.ufo:7 ../base/ufos/missions.ufo:27
-#: ../base/ufos/missions.ufo:47 ../base/ufos/missions.ufo:67
-#: ../base/ufos/missions.ufo:307 ../base/ufos/missions.ufo:700
-#: ../base/ufos/missions.ufo:740 ../base/ufos/missions.ufo:761
-msgid ""
-"Damn it, you've let some of them get\\away again! Reequip your squad and"
-"\\get after them!"
-msgstr ""
-"Zatraceně, zase jste nechali několik cizáků\\uniknout! Vybavte znovu jednotku"
-"\\a dejte se do stíhání!"
+#: ../base/ufos/missions.ufo:7
+#: ../base/ufos/missions.ufo:27
+#: ../base/ufos/missions.ufo:47
+#: ../base/ufos/missions.ufo:67
+#: ../base/ufos/missions.ufo:307
+#: ../base/ufos/missions.ufo:700
+#: ../base/ufos/missions.ufo:740
+#: ../base/ufos/missions.ufo:761
+msgid "Damn it, you've let some of them get\\away again! Reequip your squad and\\get after them!"
+msgstr "Zatraceně, zase jste nechali několik cizáků\\uniknout! Vybavte znovu jednotku\\a dejte se do stíhání!"
 
 #: ../base/ufos/missions.ufo:25
 msgid "Altdorf"
@@ -1958,11 +2180,13 @@ msgstr "Ochrana civilistů"
 msgid "Wajir"
 msgstr "Wajir"
 
-#: ../base/ufos/missions.ufo:106 ../base/ufos/missions.ufo:126
+#: ../base/ufos/missions.ufo:106
+#: ../base/ufos/missions.ufo:126
 msgid "Crash Site"
 msgstr "Místo havárie"
 
-#: ../base/ufos/missions.ufo:107 ../base/ufos/missions.ufo:127
+#: ../base/ufos/missions.ufo:107
+#: ../base/ufos/missions.ufo:127
 msgid "Secure Area"
 msgstr "Zabezpečit oblast"
 
@@ -1975,26 +2199,31 @@ msgid "Wellington"
 msgstr "Wellington"
 
 #: ../base/ufos/missions.ufo:147
-msgid ""
-"There are rumors of a mine being\\overrun by aliens. Although this\\source "
-"of information is doubtful,\\you'll need to investigate."
-msgstr ""
-"Kolují skazky o dolu ovládaném\\cizáky. I když informace nepochází\\z "
-"důvěryhodného zdroje,\\je třeba abyste to prověřili."
+msgid "There are rumors of a mine being\\overrun by aliens. Although this\\source of information is doubtful,\\you'll need to investigate."
+msgstr "Kolují skazky o dolu ovládaném\\cizáky. I když informace nepochází\\z důvěryhodného zdroje,\\je třeba abyste to prověřili."
 
 #: ../base/ufos/missions.ufo:165
 msgid "Mackay"
 msgstr "Mackay"
 
-#: ../base/ufos/missions.ufo:167 ../base/ufos/missions.ufo:227
-#: ../base/ufos/missions.ufo:247 ../base/ufos/missions.ufo:287
-#: ../base/ufos/missions.ufo:327 ../base/ufos/missions.ufo:348
-#: ../base/ufos/missions.ufo:446 ../base/ufos/missions.ufo:466
-#: ../base/ufos/missions.ufo:506 ../base/ufos/missions.ufo:546
-#: ../base/ufos/missions.ufo:565 ../base/ufos/missions.ufo:584
-#: ../base/ufos/missions.ufo:624 ../base/ufos/missions.ufo:643
-#: ../base/ufos/missions.ufo:662 ../base/ufos/missions.ufo:720
-#: ../base/ufos/missions.ufo:781 ../base/ufos/missions.ufo:800
+#: ../base/ufos/missions.ufo:167
+#: ../base/ufos/missions.ufo:227
+#: ../base/ufos/missions.ufo:247
+#: ../base/ufos/missions.ufo:287
+#: ../base/ufos/missions.ufo:327
+#: ../base/ufos/missions.ufo:348
+#: ../base/ufos/missions.ufo:446
+#: ../base/ufos/missions.ufo:466
+#: ../base/ufos/missions.ufo:506
+#: ../base/ufos/missions.ufo:546
+#: ../base/ufos/missions.ufo:565
+#: ../base/ufos/missions.ufo:584
+#: ../base/ufos/missions.ufo:624
+#: ../base/ufos/missions.ufo:643
+#: ../base/ufos/missions.ufo:662
+#: ../base/ufos/missions.ufo:720
+#: ../base/ufos/missions.ufo:781
+#: ../base/ufos/missions.ufo:800
 #: ../base/ufos/missions.ufo:820
 msgid "Protect inhabitants"
 msgstr "Ochrana obyvatelstva"
@@ -2003,7 +2232,8 @@ msgstr "Ochrana obyvatelstva"
 msgid "Dongola"
 msgstr "Dongola"
 
-#: ../base/ufos/missions.ufo:186 ../base/ufos/missions.ufo:388
+#: ../base/ufos/missions.ufo:186
+#: ../base/ufos/missions.ufo:388
 msgid "Crashed Alien Ship"
 msgstr "Havarovaná cizácká loď"
 
@@ -2063,21 +2293,26 @@ msgstr "Odstranit narušitele"
 msgid "Atacama Desert"
 msgstr "Poušť Atacama"
 
-#: ../base/ufos/missions.ufo:389 ../base/ufos/missions.ufo:427
+#: ../base/ufos/missions.ufo:389
+#: ../base/ufos/missions.ufo:427
 msgid "Secure Alien Ship"
 msgstr "Zajistit cizáckou loď"
 
-#: ../base/ufos/missions.ufo:406 ../base/ufos/missions.ufo:425
+#: ../base/ufos/missions.ufo:406
+#: ../base/ufos/missions.ufo:425
 #: ../base/ufos/missions.ufo:464
 msgid "Revelstoke"
 msgstr "Revelstoke"
 
-#: ../base/ufos/missions.ufo:407 ../base/ufos/missions.ufo:426
-#: ../base/ufos/missions.ufo:485 ../base/ufos/missions.ufo:525
+#: ../base/ufos/missions.ufo:407
+#: ../base/ufos/missions.ufo:426
+#: ../base/ufos/missions.ufo:485
+#: ../base/ufos/missions.ufo:525
 msgid "Landed Alien Ship"
 msgstr "Místo přistání cizáků"
 
-#: ../base/ufos/missions.ufo:408 ../base/ufos/missions.ufo:486
+#: ../base/ufos/missions.ufo:408
+#: ../base/ufos/missions.ufo:486
 #: ../base/ufos/missions.ufo:526
 msgid "Secure Alien Ship before Liftoff"
 msgstr "Zajistit cizáckou loď než odstartuje"
@@ -2170,7 +2405,8 @@ msgstr "Významné cizácké obtěžování"
 msgid "Stop them"
 msgstr "Zastav je"
 
-#: ../base/ufos/missions.ufo:859 client/cl_campaign.c:712
+#: ../base/ufos/missions.ufo:859
+#: client/cl_campaign.c:712
 msgid "Base Attack"
 msgstr "Útok na základnu"
 
@@ -2258,11 +2494,13 @@ msgstr ""
 msgid "assault_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:143 ../base/ufos/research.ufo:159
+#: ../base/ufos/research.ufo:143
+#: ../base/ufos/research.ufo:159
 msgid "bolterrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:144 ../base/ufos/research.ufo:160
+#: ../base/ufos/research.ufo:144
+#: ../base/ufos/research.ufo:160
 msgid "bolterrifle_pre_txt"
 msgstr ""
 
@@ -2394,19 +2632,23 @@ msgstr ""
 msgid "pistol2_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:595 ../base/ufos/research.ufo:614
+#: ../base/ufos/research.ufo:595
+#: ../base/ufos/research.ufo:614
 msgid "plasatomizer_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:596 ../base/ufos/research.ufo:615
+#: ../base/ufos/research.ufo:596
+#: ../base/ufos/research.ufo:615
 msgid "plasatomizer_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:632 ../base/ufos/research.ufo:650
+#: ../base/ufos/research.ufo:632
+#: ../base/ufos/research.ufo:650
 msgid "plasblaster_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:633 ../base/ufos/research.ufo:651
+#: ../base/ufos/research.ufo:633
+#: ../base/ufos/research.ufo:651
 msgid "plasblaster_pre_txt"
 msgstr ""
 
@@ -2426,11 +2668,13 @@ msgstr ""
 msgid "plasmagren_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:704 ../base/ufos/research.ufo:723
+#: ../base/ufos/research.ufo:704
+#: ../base/ufos/research.ufo:723
 msgid "plasrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:705 ../base/ufos/research.ufo:724
+#: ../base/ufos/research.ufo:705
+#: ../base/ufos/research.ufo:724
 msgid "plasrifle_pre_txt"
 msgstr ""
 
@@ -2634,7 +2878,8 @@ msgstr "Druh poškození - Laser"
 msgid "Impact Damage Type"
 msgstr "Druh poškození - Náraz"
 
-#: ../base/ufos/research.ufo:1364 ../base/ufos/research.ufo:1395
+#: ../base/ufos/research.ufo:1364
+#: ../base/ufos/research.ufo:1395
 msgid "Shock Damage Type"
 msgstr "Druh poškození - Působí šok"
 
@@ -2911,7 +3156,8 @@ msgstr ""
 msgid "Raven ECM Unit"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2130 ../base/ufos/research.ufo:2146
+#: ../base/ufos/research.ufo:2130
+#: ../base/ufos/research.ufo:2146
 msgid "craft_shield_light_txt"
 msgstr ""
 
@@ -2977,183 +3223,30 @@ msgstr "Politická situace před invazí"
 # The ensuing civil war was like nothing Earth had ever seen. Officers often referred to it as the bastard child of Vietnam and the First World War. It saw firebombing of entire populations, mass executions of prisoners of war, and tactical nuclear strikes on several cities -- including Shanghai, Seoul and New Delhi -- on 7 June 2034. Government loyalists dropped a total of six 50-kiloton devices on heavily-defended rebel positions, including the civilian populations the rebels were protecting.\n
 # \n
 # The loyalist army suffered massive desertions in the days that followed; it was the single event that eventually spelled doom for the government. More than six million lives were lost before the surrender of loyalist forces on 15 August 2036, having fought tooth and nail and employed large-scale scorched earth tactics as the rebels slowly drove them into the Indian Ocean. This is the official ending of the Second Cold War.
+# [10.11.2006]
 #: ../base/ufos/research.ufo:2241
 msgid "news_initial_political_situation_txt"
 msgstr ""
-"V roce 2048 je Země v lepší formě než tomu bylo po více než století. Asi "
-"poprvé jsou mír a spolupráce standardem a nikoliv vyjímkou. Nicméně současná "
-"situace může být vysvětlena pouze prostřednictvím krutého průběhu 21. "
-"století.\n"
+"V roce 2048 je Země v lepší formě než tomu bylo po více než století. Asi poprvé jsou mír a spolupráce standardem a nikoliv vyjímkou. Nicméně současná situace může být vysvětlena pouze prostřednictvím krutého průběhu 21. století.\n"
 "\n"
-"V prvním desetiletí 21. století se zájem států celého světa nejvíce "
-"soustředil na Střední východ. Napětí se zvýšilo když Írán, Sýrie, Jordánsko "
-"a Afghánistán utvořili Středovýchodní Koalici, prvotní politický krok ke "
-"sjednocení muslimského světa. Nedlouho poté proběhly demokratické volby v "
-"Iráku a to způsobilo, že zde Spojené státy ztratily svůj vliv a Irák se "
-"koncem roku připojil ke Středovýchodní Koalici společně s Pákistánem a "
-"Libanonen. Izrael v panice vsadil na rozrůstající se Evropskou Unii a přiměl "
-"se tak dodržovat stále více se zpřísňující EU zákony o lidských právech a "
-"válčení. Následkem toho došlo v průběhu let k výraznému snížení jeho "
-"vojenských aktivit v tomto regionu.\n"
+"V prvním desetiletí 21. století se zájem států celého světa nejvíce soustředil na Střední východ. Napětí se zvýšilo když Írán, Sýrie, Jordánsko a Afghánistán utvořili Středovýchodní Koalici, prvotní politický krok ke sjednocení muslimského světa. Nedlouho poté proběhly demokratické volby v Iráku a to způsobilo, že zde Spojené státy ztratily svůj vliv a Irák se koncem roku připojil ke Středovýchodní Koalici společně s Pákistánem a Libanonen. Izrael v panice vsadil na rozrůstající se Evropskou Unii a přiměl se tak dodržovat stále více se zpřísňující EU zákony o lidských právech a válčení. Následkem toho došlo v průběhu let k výraznému snížení jeho vojenských aktivit v tomto regionu.\n"
 "\n"
-"Ale jak rok 2009 přecházel do 2010, pozornost se odvracela od Středního "
-"východu k vlnobití, které způsobovala Čína se svojí vzrůstající mocí. Lidová "
-"Republika několik let dorážela na své sousedy, ale v prosinci 2010, po "
-"desetiletích nevrlých slov a zlověstných slibů, byl Taiwan definitivně "
-"podroben rozsáhlou invazí Čínské armády. Spojené Národy dali několik "
-"strohých pokárání, které byly souhrnně ignorovány. Mezinárodní společenství "
-"obšírně probírala tuto událost ale nedělala nic.\n"
+"Ale jak rok 2009 přecházel do 2010, pozornost se odvracela od Středního východu k vlnobití, které způsobovala Čína se svojí vzrůstající mocí. Lidová Republika několik let dorážela na své sousedy, ale v prosinci 2010, po desetiletích nevrlých slov a zlověstných slibů, byl Taiwan definitivně podroben rozsáhlou invazí Čínské armády. Spojené Národy dali několik strohých pokárání, které byly souhrnně ignorovány. Mezinárodní společenství obšírně probírala tuto událost ale nedělala nic.\n"
 "\n"
-"Druhá studená válka mezi původmími Spojenými státy a Čínou začala když Čína "
-"anektovala Severní a Jižní Koreu v roce 2012 poté, co se tajným agentům "
-"podařilo vyřadit veškeré jaderné zbraně Jižní Koreje na celou dobu třídenní "
-"invaze. Velice dobře vycvičená a vybavená Lidová armáda mnohonásobně "
-"přečíslila Korejské divize a obsadila obě země dlouho před tím, než Korejci "
-"vůbec mohli začít přijímat pomoc se zámoří. Tento tah vyvolal ještě více "
-"zloby od Spojených Národů a ochladil diplomatické vztahy mezi Čínou a Ruskem "
-"na několik následujících desetiletí.\n"
+"Druhá studená válka mezi původmími Spojenými státy a Čínou začala když Čína anektovala Severní a Jižní Koreu v roce 2012 poté, co se tajným agentům podařilo vyřadit veškeré jaderné zbraně Jižní Koreje na celou dobu třídenní invaze. Velice dobře vycvičená a vybavená Lidová armáda mnohonásobně přečíslila Korejské divize a obsadila obě země dlouho před tím, než Korejci vůbec mohli začít přijímat pomoc se zámoří. Tento tah vyvolal ještě více zloby od Spojených Národů a ochladil diplomatické vztahy mezi Čínou a Ruskem na několik následujících desetiletí.\n"
 "\n"
-"Po celou délku Druhé studené války zůstávalo celosvětové napětí  vysoké. Na "
-"nově podrobených územích denodenně probíhaly vzpoury, ale nakonec se ani "
-"Čína ani USA neodhodlaly vyvolat nukleární zkázu.\n"
+"Po celou délku Druhé studené války zůstávalo celosvětové napětí  vysoké. Na nově podrobených územích denodenně probíhaly vzpoury, ale nakonec se ani Čína ani USA neodhodlaly vyvolat nukleární zkázu.\n"
 "\n"
-"Válka víceméně zkončila v roce 2031 ve chvíli, kdy se ekonomika USA "
-"zhroutila pod ohromným vojenským rozpočtem a deficit dosáhl úrovně "
-"překonávající celostátní hrubý národní produkt. Čína se během Studené války "
-"stala liberálnější a převzala na sebe roli světového vůdce bez jakékoliv "
-"znalosti co si s ní počít. Její vůdci se pravděpodobně opili mocí, příliš "
-"lační, příliš domýšliví. Pomocí armády chtěli prosadit svoji vůli a pokusili "
-"se obrátit zem do násilného Stalinského útlaku z 20. století. Lid s tím "
-"nesouhlasil.\n"
+"Válka víceméně zkončila v roce 2031 ve chvíli, kdy se ekonomika USA zhroutila pod ohromným vojenským rozpočtem a deficit dosáhl úrovně překonávající celostátní hrubý národní produkt. Čína se během Studené války stala liberálnější a převzala na sebe roli světového vůdce bez jakékoliv znalosti co si s ní počít. Její vůdci se pravděpodobně opili mocí, příliš lační, příliš domýšliví. Pomocí armády chtěli prosadit svoji vůli a pokusili se obrátit zem do násilného Stalinského útlaku z 20. století. Lid s tím nesouhlasil.\n"
 "\n"
-"Následovala občanská válka jakou Země ještě nepoznala. Důstojníci ji často "
-"přirovnávali ke křiženci války ve Vietnamu a První světové války. Bylo během "
-"ní vybombárdováno veškeré obyvatelstvo, váleční zajatci byli hromadně "
-"popravováni a bylo použito taktických nukleárních úderů na několik měst -- "
-"včetně Šanghaje, Soulu a Nového Dili -- 7. června 2034. Vládní jednotky "
-"shodili celkem šest padesátikilotunových bomb na silně bráněné pozice "
-"povstalců a zasáhli i civilní populaci, kterou povstalci chránili.\n"
+"Následovala občanská válka jakou Země ještě nepoznala. Důstojníci ji často přirovnávali ke křiženci války ve Vietnamu a První světové války. Bylo během ní vybombárdováno veškeré obyvatelstvo, váleční zajatci byli hromadně popravováni a bylo použito taktických nukleárních úderů na několik měst -- včetně Šanghaje, Soulu a Nového Dili -- 7. června 2034. Vládní jednotky shodili celkem šest padesátikilotunových bomb na silně bráněné pozice povstalců a zasáhli i civilní populaci, kterou povstalci chránili.\n"
 "\n"
-"Ve dnech které následovaly vládní armáda utrpěla hromadné dezerce; tato "
-"jediná událost konečně přivodila vládě záhubu. Jednotky musely bojovat zuby "
-"nehty a operovat roztroušeny na rozlehlém území sežehnuté země zatímco je "
-"povstalci pomalu zatlačovali do Indického oceánu. Více než šest miliónů "
-"životů bylo ztraceno než vládní síly 15. srpna 2036 kapitulovaly. To byl "
-"oficiální konec Druhé studené války."
+"Ve dnech které následovaly vládní armáda utrpěla hromadné dezerce; tato jediná událost konečně přivodila vládě záhubu. Jednotky musely bojovat zuby nehty a operovat roztroušeny na rozlehlém území sežehnuté země zatímco je povstalci pomalu zatlačovali do Indického oceánu. Více než šest miliónů životů bylo ztraceno než vládní síly 15. srpna 2036 kapitulovaly. To byl oficiální konec Druhé studené války."
 
 #: ../base/ufos/research.ufo:2251
 msgid "After The War"
 msgstr "Po válce"
 
-# The Asian Republic\n
-# \n
-# In the years that followed, the reformed Republic of China -- taking up its old, pre-Communist name -- slowly relinquished its conquered territories, including those seized in centuries past, offering them a choice between independence or a seat on the new governmental council as an equal and respected part of the new Republic. Having fought on the rebel side throughout the civil war, Taiwan was the first to merge with the new Republic, reconciling its differences with the mainland after the Communist government surrendered. Taiwan quickly became a major player in the new council and was instrumental in sending the captured government leaders off to The Hague to face a war crimes tribunal. North Korea, another rebel nation, also elected to remain in the Republic, sensing opportunities for greater economic growth and freedom from dictatorship. They would not be disappointed.\n
-# \n
-# The resurgence of the Chinese economy was dubbed a miracle by contemporary historians. The first breakthroughs in nanotechnology were made by Chinese researchers, bringing in vast medical-industrial contracts from all over the world. Despite old hatreds and mistrust, other east-Asian nations slowly joined the Republic, which was soon redubbed the Asian Republic to honour its new members. Even Japan eventually joined to bolster its flagging economy and a population which had dwindled through the war years. The Republic continued mostly true to its principles with the civil war still fresh in mind. Over the years it made a reputation for dealing with all its member nations in good faith, and built enough trust and solidarity that it can now speak with a single voice for all the billions of people of south-east Asia.\n
-# \n
-# Today, the Asian Republic's economy has all but recovered due to the commercialisation of nanotech and holographics. It still possesses a strong and up-to-date military, trained to a higher standard than any other country.\n
-# \n
-# \n
-# \n
-# The Revolutionary Countries\n
-# \n
-# With the successive fall of both the United States and China, Socialism in South-America waxed and waned during the post-war years. The US's economic death brought on a surge of revolutionary fervor, swaying several nations away from the influence of capitalism. However, with a democratic framework already halfway in place in most countries, the ideal of rule of the people could for the first time be realised without corruption. This new wave proposed to unite the principles of democracy with true Socialist ideals.\n
-# \n
-# The whole continent watched in horror at the nuking of Shanghai during the Second Cold War, televised all over the globe right up to the final second. The new wave suffered another major blow when China fell. In that, everyone could see a first-hand example of what might happen to the revolution if it went the way of dictatorship and totalitarianism. It didn't take long for the leaders to respond. \n
-# \n
-# Several dictator-led countries immediately tried to turn on the thumbscrews, trying to head off a rebellion before it began, which caused a huge backlash in the larger democratic nations, particularly Cuba, Brazil and Argentina. Suddenly, the last remaining kings of South-America were left with no friends at all. \n
-# \n
-# One by one, they caved to public and political pressure and were replaced by elected houses. The revolution picked up speed instead of losing it; they encouraged greater trade, closer integration, and eventually followed Europe's example of open borders. A new network of highways all over the continent strengthened economies and allowed far more efficient use of arable land. South-America's natural riches were tapped like never before, and they demanded fair prices for every bit of it. \n
-# \n
-# Today, the member nations have merged so closely that they are better known as a single body: the Revolutionary Countries. One joint government represents the entire continent, and they manage an economical juggernaut surpassed only by the Greater European Union. Their military is small but has state-of-the-art equipment. Their training is not exceptional. \n
-# \n
-# \n
-# \n
-# United America\n
-# \n
-# As the US economy started to break down in the late 2020s, more and more people abandoned the country for the greener pastures of Canada and, ironically, Mexico. The value of the dollar plummeted to unprecedented depths, impoverishing millions until its price was fixed by the IMF and the international banking community. The country was then saddled with a brutal reform plan, requiring it to sell off or mothball over half of its military arsenal. To cope with the repayment on sixteen trillion dollars of debt, its interest rate was frozen and its exports shifted to technology and luxury goods. Successful restructuring of NASA, combined with a functional spaceplane prototype, also turned outer space into a money-maker for the post-collapse US. Cape Canaveral began offering the cheapest space launches anywhere on the planet, first with their prototype, later with fully-functional advanced spaceplane designs. This significantly helped the beleaguered country claw its way back towards the black. \n
-# \n
-# The cooperation between North-American nations began with financial aid from Canada and Mexico, which saw their exports to the US dipping dangerously and wanted to help fix their most important trading partner. The growing number of expatriates also served to create closer ties. Then, in the most unexpected political turnaround in 2042, Mexico elected the US expatriate Esteban Villa-Lobos Garcia to the office of president. \n
-# \n
-# The election was hotly contested. However, the decision held through two recounts, and the new president was inaugurated in July of 2042. Eventually, a combination of sound policies and personal charisma brought most of the country around on Garcia; and then he proposed the Tomorrow Plan. \n
-# \n
-# Under the plan, Mexico, Canada and the USA would unite into one country to reawaken the North American superpower. In a number of controversial public votes, the general population in all three countries gave majority support for the Tomorrow Plan; 52% in the United States, 64% in Canada, and 71% in Mexico. The merger was eventually finalised in 2050, creating a United America out of the dominant powers of the New World. The booming space industry quickly spread throughout the new country, and despite a few stumbles along the way, North America steamed headlong towards recovery. \n
-# \n
-# Today, UA's debt has decreased from sixteen trillion to two, and standards of living have nearly recovered to what they were before the crash. UA has the most advanced space industry on the planet; NASA performs almost 70% of commercial space launches around the globe. It exports vast quantities of goods to every other nation and is projected to return to solvency in less than three years. Militarily, the UA is the weakest of all the meganations. It has only a small volunteer army and a tiny defence budget as mandated by the IMF. However, what forces the UA does have are highly-trained and can turn on a dime, able to reach any place in the country within two hours. \n
-# \n
-# \n
-# \n
-# The Greater European Union\n
-# \n
-# Slowly but surely, the European Union has expanded borders further and further with every passing decade. It first moved into the Middle-East when it accepted Israel as an associate member in 2011, and then upgraded both Israel and Turkey to full membership in 2017. Several Atlantic islands were also accepted in the same resolution, making it the single greatest EU expansion of the 21st century. \n
-# \n
-# Following Israel's controversial entrance as an associate member, the EU passed stricter laws on human rights, freedom of religion and separation of church and state. It was also the first Western superpower to officially recognise the Middle-Eastern Alliance, and fostered close relations with the Alliance -- despite United States protests -- in the hope of reducing culture clash and the ongoing threat of terrorism. For the most part, they were successful. \n
-# \n
-# In 2028, Greenland -- having grown strong due to immigration from the United States -- formally declared its independence from Denmark. No battles were fought; the Danish government grudgingly recognised the independence due to political pressure from other European countries. In the following months, Greenland briefly considered joining the US as a protectorate, but reconsidered when the EU offered a full membership. This, along with the defection of several US island protectorates in the Atlantic, impelled the EU to rename itself the 'Greater European Union'. \n
-# \n
-# In the aftermath of the Second Cold War, the GEU has always been on the forefront of political development. It was the only Western nation to second the Middle-Eastern Alliance's vote of no confidence on the old United Nations, after the UN's complete failure to act during the Chinese expansion and eventual civil war. The GEU also strongly supported the Alliance's efforts to create a new UN, providing fair representation to all the world's nations, and with enough teeth to live up to the principles under which it was first created. \n
-# \n
-# Today, the GEU is the strongest economical and political force in the world. However, its vast bureaucracy and large number of members -- members who don't always see eye-to-eye -- make it slow to manoeuvre in every way. Its military is large and powerful but poorly-integrated, with each individual army sticking to the language and traditions of their country. Military cooperation is difficult to achieve and requires going through huge amounts of red tape. The GEU contributes a majority of UN troops, but they are only ever used as peacekepeers. Whether or not the GEU militaries have lost their 'edge' has been a subject of hot debate in Brussels for many years, and there appears to be no decision in sight. \n
-# \n
-# \n
-# \n
-# The Middle-Eastern Alliance\n
-# \n
-# The rise of the Middle-Eastern Alliance was a surprise to everyone, including the people involved. It was designed solely to weaken Western influence in the Middle-East. The principal designers and first members -- Iran, Syria, Jordan and Afghanistan -- never meant the Alliance to last more than a decade, by which time they expected it to fragment and disband under the weight of its own differences. \n
-# \n
-# The Second Cold War changed everything. The People's Republic of China was no longer a nearby ally against the West; it became an expanding threat with an appetite, casting hungry eyes on Nepal, chunks of India, and possibly even the sovereign states on China's western border. Pakistan, Tajikistan and Kyrgyzstan rushed into the arms of the Alliance in order to guard themselves against invasion. The Arabian subcontinent joined the Alliance not a year later, seeking to expand their political pull with the West. Without even realising it, they had formed a power block covering nearly the entire Middle-East. Their position was simply too good to allow it to crumble. \n
-# \n
-# The expanded Alliance, now recognised by the European Union, stepped onto the international stage with knife in hand. They had a stranglehold on most of the world's remaining oil supplies and the will to exploit it. \n
-# \n
-# The Alliance's economic power grew as outside oil reserves dwindled. Pharmaceutical manufacturers packed up in droves and moved to the Middle-East, the only place left in the world where oil was cheap and plentiful. This, along with the many other applications of crude oil, allowed the Middle-East to survive the Russian 'nuclear revolution' and the subsequent worldwide migration to nuclear power. It continued its expansion with Egypt, Uzbekistan, Turkmenistan, and disputed chunks of Africa around the Red Sea. The entire Red Sea region was quickly pacified when the Alliance moved in its military to assist the new African members. \n
-# \n
-# Today, the spread of prosperity has turned the Middle-East away from dogma and towards secular law and gender equality. It is still ruled by individuals -- Sultans, Emirs, Maliks, Presidents and Generals -- but their personal power is kept in check by the rest of the Alliance, rulers who do not want their colleagues stepping out of line. Political dissent is tolerated due to pressure from the EU and other nations, but even in 2084 few of the Alliance's member nations have a functioning democratic process. \n
-# \n
-# The Alliance military is large, fast and mean. It is one of the most elite and well-equipped forces in the world, and it uses more permissive rules of engagement than either United America or the Asian Republic. Their clause for 'acceptable civilian casualties' has been the source of huge amounts of criticism from across the world, but the Alliance has stubbornly maintained this clause throughout the four decades it has been in effect. \n
-# \n
-# \n
-# \n
-# New Africa\n
-# \n
-# Born out of violence and strife, New Africa found its unification in separation. It languished onwards for three decades into the 21st century, as it had done for far too long, with its civil wars and ethnic purges and atrocities beyond measure. That is, until several central-African nations undertook a massive project in 2039 to break the notorious diamond cartels and seize their revenue for long-term national improvement. \n
-# \n
-# It resulted in a military and economic bloodbath. The UN attempted various measures to stop the fighting but, even more toothless than ever before, it accomplished nothing. However, the league of nations was eventually joined by several others, tired of being pushed around by Western conglomerates, and after several years of bitter fighting they were successful in taking down the cartels one by one. This left them with some of the largest, most advanced diamond and gold mines in the world; it made their combined territory the largest single supplier of natural diamonds in the world. It also gave them a new sense of what they could accomplish together. The core of New Africa was born. \n
-# \n
-# All the African nations involved in the anti-cartel war, with the exception of territories loyal to the Commonwealth of Oceania and the Middle-Eastern Alliance, began to work much more closely together, taking cues from South-America in building a dependable road network to fuel trade and communication. It also allowed a much better distribution of food. Over the next thirty years, New Africa completely eliminated famine within its borders, which it changed completely to accomodate ethnicity and a desire for independence within its territories, and brought socialised public health-care to its people at near-ruinous cost. However, it also found new exports in the commercialised, sustainable growth of tropical hardwood and exotic fruit. The new cooperation made price agreements across the continent possible for the first time; like the Revolutionary Countries, New Africa forced the rest of the world to pay fairly for all goods and services. \n
-# \n
-# Today, New Africa is still the weakest of the great powers economically, but it is growing fast. It has a large, motivated standing army, but the troops are not well-equipped, armed mostly with former US antiques and even century-old Soviet equipment. They also have trouble getting to remote locations due to frequent equipment failures and the continent's difficult geography. Most of the time, the best the New Africans can do is spot UFOs as they land with one of thousands of scouts and small patrols out in the country to combat poaching and smuggling. \n
-# \n
-# \n
-# \n
-# Russia\n
-# \n
-# Russia took decades to recover from the fall of the Soviet Union and the ravages of the Soviet system on the country's economy. It festered like an open wound for the first half of the 21st century, still trying to quash the constant rebellions in Chechnya, still trying to reform after 70 years of state domination, still trying to get back its lost position as a world superpower. \n
-# \n
-# Things finally started getting better for Russia when then-prime minister Yevgeny Karamazov granted complete independence to Chechnya in 2047. While the newly official Chechen Republic imploded in a storm of violence about who exactly should rule, Russia turned away and set itself to fixing its own problems, leaving Chechnya to itself -- and to the new and improved UN, which immediately took an interest in trying to stop the bloodshed. Unfortunately that wouldn't happen for a long time, and even then Chechnya could only return to Russia's sphere of influence, but for the first time it did so as a fully-recognised independent voice. \n
-# \n
-# Economic salvation for Russia -- especially with oil supplies from the Middle-East dwindling -- began with drilling the country's own oil in Siberia, with new techniques and equipment able to survive the harsh winter conditions, and later with the construction of a series of new nuclear power plants. Russia invested heavily in research to make the new plants smaller, safer and -- more importantly -- sustainable. This involved a switch from enriched uranium to thorium as the main nuclear fuel for all the new Russian plants, and advanced new designs based upon the 'energy amplifier', a new type of fission reactor first test-built near Rome from 2004 to 2011. Two of the new reactors even consumed plutonium from dismantled nuclear weapons and from the stored waste of older power plants. \n
-# \n
-# Then, eight years after the Chechen independence, Russia's 'nuclear revolution' really came into its own with the invention of the depleted element postprocessor, which could convert 90% of an energy amplifier's waste into radiation-free elements in weeks instead of centuries. The Russians ended the age-old energy crisis almost overnight; nuclear fission became safe, relatively clean, and global thorium supplies would see the world clear into the year 3000. \n
-# \n
-# Today, many of the ex-Soviet republics have rejoined Russia, following the example of the other great nations, eager to take advantage of the power generation and nuclear technology that are now Russia's main exports. The nuclear revolution continues even today with the gradual development and commercialisation of fusion power. Though its economy is still troubled, the country is now in better shape than it has been for centuries -- whether under the khans, the czars or the Soviets. Its military is somewhat antiquated but highly-trained, well-disciplined and professional, and it does not lack for manpower. \n
-# \n
-# \n
-# \n
-# The Commonwealth of Oceania\n
-# \n
-# The Commonwealth of Nations, a political organisation made up of most of the countries of the old British Empire, lost a great deal of power going into the Second Cold War. First, Pakistan cut its ties to the Commonwealth when joining the Middle-Eastern Alliance. Then, as the United States crashed and burned, Britain and Canada became more and more concerned with their own parts of the world and let their participation dwindle to nothing. By 2030, they were members in name only. \n
-# \n
-# The growing power of China throughout the war caused a huge expansion in military budgets for India and Australia, budgets which their economies had trouble supporting. Then, in 2035, India became one more battlefield in the Chinese civil war. Veteran government troops easily defeated the Indian military in several short but bloody engagements and seized most of the country while the rebels pursued. \n
-# \n
-# Australia pledged a full-scale military intervention along with several South-African Commonwealth members. After weeks of brutal fighting, the Australian divisions managed to link up with Chinese rebel forces and the surviving regiments of the Indian army, and together they nearly annihilated the governmental army before the surrender in 2036. \n
-# \n
-# The cost was high. The conquered parts of India were a wasteland, the country had no government left after the nuking of New Delhi, and famines were already starting to grip the population. It began ceding worthless parts of land to other nations and gave independence to several small regions along its border. The remaining Commonwealth nations undertook the vast task of reconstructing India, though many abandoned the project and the Commonwealth in favour of the other growing superpowers. \n
-# \n
-# The reconstruction of India eventually united the Commonwealth into one great nation, taking advantage of their geographic location around the Indian Ocean and the South Pacific to charge strategic tariffs for ships passing through their waters. Commonwealth shipping, on the other hand, was free from tariffs and quickly rose to dominance in the competitive market. Later, with the breaking of the diamond cartels in Africa, the Commonwealth seized several leaderless mines inside its borders and used them to their full. \n
-# \n
-# Today, the Commonwealth of Nations is better known as the 'Commonwealth of Oceania' or just 'Oceania'. Since its inception it has accepted several non-Commonwealth countries into its midst, notably Madagascar, Zimbabwe and Indonesia, extending its control over the Oceanian waters. While it still can't compete economically with the richer nations, it has carved out its own niche, and is quite happy to go on prospering in it. \n
-# \n
-# Oceania's military consists mainly of a powerful navy. Its land army is minuscule compared to that of any nation except United America, and serves only in a defensive capacity, with average training and equipment. However, it can respond fairly quickly in emergency situations.
 #: ../base/ufos/research.ufo:2252
 msgid "news_after_the_war_txt"
 msgstr ""
@@ -3189,11 +3282,40 @@ msgstr "PHALANX a následky Bombajského masakru"
 # By unanimous vote, it was decided to keep the project as secret as possible, known only to the highest-ranking politicians and military commanders in the world. The public was comforted with smokescreens and sweet lies while a hand-picked team of operatives from all over the world struggled to resurrect PHALANX and whip it back into fighting trim. Old equipment was tracked down and recovered from gutted warehouses, crumbling manuals were dusted off, and stockpiles of weapons were reassembled for use. With the secret backing of all eight great powers, the project had funding, support and the men it needed to go to war.\n
 # \n
 # All it lacked was a leader.
+# [10.12.2006]
 #: ../base/ufos/research.ufo:2263
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
+"\"Projekt PHALANX\" byl poprvé založen Ministerstvem obrany Spojených států v roce 1955 po létech vzrůstajícího zájmu o celostvětově rostoucí počet pozorování UFO. Možnost cizácké invaze těžce sužovala mysli politiků vynervovaných jadernou silou Sovětského svazu. Existence nepřátelského mimozemského života ve vesmíru se zdála jako velice nepatrná možnost, dokonce ještě menší než že by tito nepřátelé mohli najít Zemi obklopenou celým širým prostorem -- ale mohla si Amerika dovolit takové riziko?\n"
+"\n"
+"Zastánci projektu strávili dva roky budováním podpory v nejvyšších vládních kruzích. Konečně, v roce 1957, PHALANX dostal svoji první finanční dotaci. Podstatná část ročního 'černého rozpočtu' padla na výstavbu vyspělého podzemního komplexu v Nevadské poušti kdesi v prostoru letecké základny Nellis. Komplex byl pojmenován \"Velitelství tichomořských operací PHALANX\", vybaven nejmodernějším zařízením a osazen těmi nejlepšími s jasnou vizí jak nejlépe bojovat proti mimozemské invazi na americkou půdu.\n"
+"\n"
+"Ve svých počátcích byl projekt ohromný úspěch, pod jeho záštitou byly vyvýjeny průkopnické technologie a vyráběny funkční prototypy věcí, které svět nikdy předtím neviděl. A to vše za zlomek nákladů které by měli podnikatelé v civilním sektoru. Díky své skutečné podstatě byl PHALANX předmětem každoročních bitev o finanční rozpočet, ale jeho výzkumné a vývojové úspěchy byly pokaždé důvodem pokračovat dokonce i pro nekompromisní praktiky.\n"
+"\n"
+"Zatímco PHALANX se stále připravoval na něco, co se nikdy nestalo, svět se bohužel vydal jiným směrem. Válka ve Vietnamu přinesla obrovský nárůst ve vojenských výdajích a jen velice málo bylo přiděleno PHALANXu nebo podobným projektům. Ti viděli své rozpočty seškrtané a spálené tváří v tvář válce. Navzdory opakovaným žádostem o více financí se Generální štáb vzdal exotického programu z roku 1950 jako zbytečného mrhání penězi a nechal ho pokračovat pouze kvůli jeho výzkumným snahám. Většina zbylých financí šla na udržení starého vybavení v provozuschopném stavu. Pokud laboratoře pracovaly tak jen s obtížemi.\n"
+"\n"
+"Po válce již nebyl PHALANX zcela obnoven a už nikdy nezískal finance které měl v padesátých letech -- roky slávy pominuly. V rámci projektu sice vznikla nějaká nová technologiie použitá při Válce v zálivu a díky stoupajícímu rozpočtu Americké armády v prvních letech 21. století nastal krátký návrat na výsluní, ale po těchto záblescích tvořivosti projekt opět upadl v zapomnění.\n"
+"\n"
+"Druhá studená válka vysála z projektu poslední známky života. Velitelé bojovali o jeho přežití dokonce bez peněz potřebných k udržení provozuschopných letounů, nicméně i vynalezení umělého pavoučího hedvábí je nemohlo zachránit před krachující ekonomikou Spojených států. Státní úpadek do skázy utáhl opasek všem 'nepodstatným' vojenským programům v zemi, jednomu po druhém. PHALANX byl nakonec stažen z rozpočtu v roce 2027, pět měsíců před jeho 70. výročím. Zaměstnanci byli propuštěni, základna vyklizena, jedinečné vybavení zakonzervováno a uloženo do skladu. Projekt byl rychle zapomenut.\n"
+"\n"
+"Dokud nebyl znovu objeven 9. března 2084 starým mužem, který se rozpomněl, že o něm četl v zaprášeném archívu ve své dávno zbořené kanceláři.\n"
+"\n"
+"Hrůza a ohavnost událostí v Bombaji otřásla celým světem. Existence inteligentního cizáckého života ve vesmíru již nebyla věcí víry. Nejenže existoval, ale provedl kontakt tou nejhorší možnou cestou. Krveprolití byla natolik rozsáhlá a očividná, že je vlády na celé Zemi nebyly schopny ututlat. Obraz kouřících zakrvácených ulic ukazovaly televizory na celém světě. Cizáci nenechali žádný jiný důkaz své návštěvy. Než odtáhli tak pečlivě schromáždili své mrtvé a sebrali každý kousek upadlé techniky.\n"
+"\n"
+"Panika se šířila jako požár bezprostředně za Bombajským vysíláním a věci se ještě zhoršili jak se široká veřejnost dozvěděla o jatkách v Bonnu, Johannesburgu a Bangkoku. Svět věděl, že byl navštíven a nyní si začínal uvědomovat, že byl napaden.\n"
+"\n"
+"Hledání nějakých řešení bylo zoufalé. Spojené Národy zasedaly nepřetržitě déle než týden. Rychlostí světla byly plány navrhovány a hned zas házeny do koše. Svět byl proti cizácké invazi naprosto bezbranný a to jak vojensky tak psychologicky. Na tohle nebyl nikdo připraven. Byl to jeden ze zapomenutých scénářů o konci světa, které se rozpadaly v prach v zapadlém kumbálu jakési kanceláře pro plánování strategie, nepřečtený a nepovšimnutý. Leč veřejnost požadovala odpovědi které nikdo neznal a činnost kterou nikdo nedokázal zajistit.\n"
+"\n"
+"Spojené Národy schválily pouze s pár symbolických gest: z rozkazu Rady bezpečnosti NASA evakuovala Mezinárovní vesmírné stanice 1 a 2, stejně jako stálou kolonii na Měsíci. Veškeré plánované mise na Mars byly odloženy na neurčito. Ve všech ostatních důležitých záležitostech byly Spojené Národy v koncích. Některé státy chtěly vybudovat obrovské orbitální opevnění, jiné naléhaly, aby směly zastavit UFO použitím jaderných střel. Ostatní prosazovaly ještě exotičtější projekty. Situace byla den ode dne horší dokud si jeden postarší diplomat nevzpomněl na projekt PHALANX.\n"
+"\n"
+"S úplným přístupem ke starým americkým záznamům SN s překvapením nalezly plány, návrhy, vybavení a výcvikové příručky -- podrobně propracovanou reakci na obdobnou invazi. Okamžitě se rozhodly obnovit PHALANX a vybavit ho k obraně Země před cizáckou hrozbou. Bohužel všichni kteří někdy byli součástí PHALANXu byli mrtví nebo umírali. Bylo třeba dát dohromady nový personál.\n"
+"\n"
+"Jednohlasně bylo rozhodnuto uchovat projekt tak tajný jak to jen bude možné, známý pouze nejvýšším světovým politikům a vojenským velitelům. Veřejnost byla uchlácholena krycí legendou a vlídnou lží zatímco vybraný tým agentů z celého světa usiloval o oživení PHALANXu a jeho návrat do vrcholné formy. Bylo vyhledáno a ze zapadlých skladišť zachráněno staré vybavení, oprášeny rozpadající se příručky a uskladněné zbraně znovu sestaveny. S tajnou finanční podporou všech osmi velmocí měl projekt zázemí, podporu a lidi. To vše potřeboval aby mohl vstoupit do války.\n"
+"\n"
+"Jediné co scházelo byl vůdce."
 
-#: ../base/ufos/seq_credits.ufo:54 ../base/ufos/seq_credits.ufo:100
+#: ../base/ufos/seq_credits.ufo:54
+#: ../base/ufos/seq_credits.ufo:100
 msgid "Project leader"
 msgstr "Vedoucí projektu"
 
@@ -3225,7 +3347,8 @@ msgstr "Technický poradce"
 msgid "Forest Hale (LordHavoc)"
 msgstr "Forest Hale (LordHavoc)"
 
-#: ../base/ufos/seq_credits.ufo:313 ../base/ufos/seq_credits.ufo:365
+#: ../base/ufos/seq_credits.ufo:313
+#: ../base/ufos/seq_credits.ufo:365
 #: ../base/ufos/seq_credits.ufo:416
 msgid "Contributing Programmer"
 msgstr "Spolupracující programátor"
@@ -3349,8 +3472,7 @@ msgstr "Cizáci zahájili jejich invazi..."
 
 #: ../base/ufos/seq_ingame.ufo:33
 msgid "UFOs appear in the sky around the world ..."
-msgstr ""
-"Na obloze celého světa se objevují neidentifikované létající objekty..."
+msgstr "Na obloze celého světa se objevují neidentifikované létající objekty..."
 
 #: ../base/ufos/seq_ingame.ufo:42
 msgid "(Catch them with your Interceptor to shoot them down.)"
@@ -3363,95 +3485,45 @@ msgstr "Nakonec: Útok na cizáckou základnu..."
 # It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th.
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr ""
-"Píše se rok 2084. Země, která nikdy nepatřila k poklidným místům, si užívá "
-"období relativního míru. Násilnické začátky 21. století jsou již historií. "
-"Zapadlé vzpomínky. Nikoliv však tak zapadlé aby byly zcela zapomenuty. Pro "
-"většinu Pozemšťanů je Druhá studená válka temným stínem z minulosti, stejně "
-"jako byly Světové války pro děti konce století dvacátého."
+msgstr "Píše se rok 2084. Země, která nikdy nepatřila k poklidným místům, si užívá období relativního míru. Násilnické začátky 21. století jsou již historií. Zapadlé vzpomínky. Nikoliv však tak zapadlé aby byly zcela zapomenuty. Pro většinu Pozemšťanů je Druhá studená válka temným stínem z minulosti, stejně jako byly Světové války pro děti konce století dvacátého."
 
 # Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world.
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr ""
-"Ke konci století se spory stávaly méně častými, ruku v ruce s tím, jak se do "
-"zemí třetího světa dostávaly nové technologie a všeobecná zdravotní péče. "
-"Dokonce i ohně terorismu pohasly při nástupu Druhé studené války, jejíž "
-"hrůzy a nelidskost jsou stále pevně vryty do myslí všech, od původních "
-"Spojených států až po zpustošený indický kontinent. Nyní má každý stát "
-"zaručeno rovnocenné zastoupení ve Spojených Národech a třídní boje se "
-"přesunuly na politická bojiště. Celosvětová životní úroveň se tak pomalu "
-"dostává i do nejchudších koutů planety. Státy se semkly kolem "
-"přeorganizovaných Spojených Národů, které úspěšně dozírají na světové vlády. "
-"Roztříštěné skupinky malých států, které byly nejprve vystrašeny ohromnými "
-"silnými mocnostmi, se přičlenily k Číně a Evropské Unii a vytvořily společně "
-"vlivný politický svaz -- poté zjistili, že jsou bez sousedů se kterými by "
-"mohly bezpečně bojovat. Poprve v celé historii lidstva je právo a řád ve "
-"více než třech čtvrtinách světa."
+msgstr "Ke konci století se spory stávaly méně častými, ruku v ruce s tím, jak se do zemí třetího světa dostávaly nové technologie a všeobecná zdravotní péče. Dokonce i ohně terorismu pohasly při nástupu Druhé studené války, jejíž hrůzy a nelidskost jsou stále pevně vryty do myslí všech, od původních Spojených států až po zpustošený indický kontinent. Nyní má každý stát zaručeno rovnocenné zastoupení ve Spojených Národech a třídní boje se přesunuly na politická bojiště. Celosvětová životní úroveň se tak pomalu dostává i do nejchudších koutů planety. Státy se semkly kolem přeorganizovaných Spojených Národů, které úspěšně dozírají na světové vlády. Roztříštěné skupinky malých států, které byly nejprve vystrašeny ohromnými silnými mocnostmi, se přičlenily k Číně a Evropské Unii a vytvořily společně vlivný politický svaz -- poté zjistili, že jsou bez sousedů se kterými by mohly bezpečně bojovat. Poprve v celé historii lidstva je právo a řád ve více než třech čtvrtinách světa."
 
 # To many people on Earth, it seems like things are going all right.
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr ""
-"Na Zemi je příliš mnoho lidí, kterým se zdá, že všechno jde naprosto skvěle."
+msgstr "Na Zemi je příliš mnoho lidí, kterým se zdá, že všechno jde naprosto skvěle."
 
 # The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence.
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr ""
-"První útok zasáhl Bombaj třetího března 2084. Z prázdnoty se zjevilo šest "
-"malých cizáckých plavidel. S jekotem se přiřítili z oběžné dráhy nezjištěni "
-"rozsáhlým radarovým systémem, který pokrývá vzdušný prostor nad Bombají a "
-"napadli nejlidnatější město na Zemi. Bez varování, bez vysvětlení. Dvacet "
-"tisíc nevinných civilistů a tři prapory elitních vojsk byly zmasakrovány v "
-"průběhu dvanácti strašlivých hodin, než se vojákům Společenství podařilo "
-"cizácký postup zastavit. Poté cizáci ustoupili do svých plavidel a stejně "
-"nečekaně jako se objevili zmizeli zpět na oběžnou dráhu, nechávajíc za sebou "
-"pouze zpustošené ulice Bombaje jako důkaz."
+msgstr "První útok zasáhl Bombaj třetího března 2084. Z prázdnoty se zjevilo šest malých cizáckých plavidel. S jekotem se přiřítili z oběžné dráhy nezjištěni rozsáhlým radarovým systémem, který pokrývá vzdušný prostor nad Bombají a napadli nejlidnatější město na Zemi. Bez varování, bez vysvětlení. Dvacet tisíc nevinných civilistů a tři prapory elitních vojsk byly zmasakrovány v průběhu dvanácti strašlivých hodin, než se vojákům Společenství podařilo cizácký postup zastavit. Poté cizáci ustoupili do svých plavidel a stejně nečekaně jako se objevili zmizeli zpět na oběžnou dráhu, nechávajíc za sebou pouze zpustošené ulice Bombaje jako důkaz."
 
 # An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back.
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr ""
-"Krizové shromáždění Spojených Národů nestanovilo jakýkoliv rozhodný pokyn. "
-"Invaze pokračovaly rychleji, ve větším rozsahu a byly krutější než poprvé, "
-"tentokráte v Bonnu, Johannesburgu a Bangkoku. Některé státy se pokoušely o "
-"diplomacii, posílajíc zprávy v tisíci různých jazycích cizákům drancujícím "
-"oblast. Jejich slova nebyla vyslyšena. Během několika hodin byli obyvatelé "
-"všech tří měst vyhlazeni. Útok skončil dříve než většina armád dostala "
-"povolení k protiakci. Cizáci za sebou nenechali nic kromě rozvalin a krve. "
-"Všechny cizácké lodě zmizely beze stop, ale nikdo nepochyboval o tom, že se "
-"vrátí."
+msgstr "Krizové shromáždění Spojených Národů nestanovilo jakýkoliv rozhodný pokyn. Invaze pokračovaly rychleji, ve větším rozsahu a byly krutější než poprvé, tentokráte v Bonnu, Johannesburgu a Bangkoku. Některé státy se pokoušely o diplomacii, posílajíc zprávy v tisíci různých jazycích cizákům drancujícím oblast. Jejich slova nebyla vyslyšena. Během několika hodin byli obyvatelé všech tří měst vyhlazeni. Útok skončil dříve než většina armád dostala povolení k protiakci. Cizáci za sebou nenechali nic kromě rozvalin a krve. Všechny cizácké lodě zmizely beze stop, ale nikdo nepochyboval o tom, že se vrátí."
 
 # Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes.
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr ""
-"Země vyhlásila válku osmdesát sedm hodin po prvotním útoku v Bombaji. Dva "
-"týdny každá z armád lidstva zkoušela zastavit nevyzpytatelné cizácké "
-"útočníky všemi svými dostupnými prostředky. Zaznamenaly žalostně málo "
-"úspěchů."
+msgstr "Země vyhlásila válku osmdesát sedm hodin po prvotním útoku v Bombaji. Dva týdny každá z armád lidstva zkoušela zastavit nevyzpytatelné cizácké útočníky všemi svými dostupnými prostředky. Zaznamenaly žalostně málo úspěchů."
 
 # Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs.
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr ""
-"Spojené Národy se uchylují k poslední možnosti která jim zbývá. Je oprášeno "
-"letité vybavení, některé i století staré a dávno zrušená anti-mimozemská "
-"agentura dřívějších Spojených Států -- PHALANX -- je vzkříšena nově pod "
-"vlajkou SN. Její místopřísežnou povinností je boj proti cizácké hrozbě a "
-"musí za každou cenu zaručit přežití lidské rasy."
+msgstr "Spojené Národy se uchylují k poslední možnosti která jim zbývá. Je oprášeno letité vybavení, některé i století staré a dávno zrušená anti-mimozemská agentura dřívějších Spojených Států -- PHALANX -- je vzkříšena nově pod vlajkou SN. Její místopřísežnou povinností je boj proti cizácké hrozbě a musí za každou cenu zaručit přežití lidské rasy."
 
 # Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance.
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr ""
-"Financována všemi osmi vládními silami a získávající elitní vojáky jejich "
-"armád je PHALANX tím nejlepším z nejlepších. Je to první a jediná Zemská "
-"obranná linie. Nemůže si dovolit selhat. Pokud by se tak stalo, lidstvo by "
-"ztratilo jakoukoliv naději."
+msgstr "Financována všemi osmi vládními silami a získávající elitní vojáky jejich armád je PHALANX tím nejlepším z nejlepších. Je to první a jediná Zemská obranná linie. Nemůže si dovolit selhat. Pokud by se tak stalo, lidstvo by ztratilo jakoukoliv naději."
 
-#: ../base/ufos/seq_intro.ufo:73 ../base/ufos/seq_intro.ufo:192
+#: ../base/ufos/seq_intro.ufo:73
+#: ../base/ufos/seq_intro.ufo:192
 msgid "Click to continue"
 msgstr "Klikni pro pokračování"
 
@@ -3478,45 +3550,27 @@ msgstr "PŘEDMĚT: Hodně štěstí"
 # Welcome to your new post, Commander. You now have full command over the PHALANX Extraterrestrial Response Unit. Your mission is to protect the citizens of Earth and stop the alien threat at all costs. How you accomplish this is up to you; our only requirement is that you succeed.
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr ""
-"Vítejte na svém novém stanovišti, veliteli. Máte nyní na povel celý Útvar "
-"Mimozemské Reakce PHALANX. Vaším úkolem je ochrana obyvatel Země a zastavení "
-"cizácké hrozby za jakoukoliv cenu. Jak toho dosáhnete je na Vás. Jediným "
-"požadavkem je abyste uspěl."
+msgstr "Vítejte na svém novém stanovišti, veliteli. Máte nyní na povel celý Útvar Mimozemské Reakce PHALANX. Vaším úkolem je ochrana obyvatel Země a zastavení cizácké hrozby za jakoukoliv cenu. Jak toho dosáhnete je na Vás. Jediným požadavkem je abyste uspěl."
 
 # Your first order of business is to set up a headquarters. The UN has access to military bases all over the world, so you may consider any region for your base of operations. Choose the location wisely, because it will have great influence on the success of the PHALANX project.
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr ""
-"Vaším prvním úkolem je vybudování hlavního štábu. Spojené Národy mají "
-"přístup k vojenským základnám na celém světě, takže si pro základnu můžete "
-"zvolit jakýkoliv region. Vybírejte moudře neboť Vaše rozhodnutí bude mít "
-"velký vliv na úspěch projektu PHALANX."
+msgstr "Vaším prvním úkolem je vybudování hlavního štábu. Spojené Národy mají přístup k vojenským základnám na celém světě, takže si pro základnu můžete zvolit jakýkoliv region. Vybírejte moudře neboť Vaše rozhodnutí bude mít velký vliv na úspěch projektu PHALANX."
 
 # A recent analysis of the attacks on Mumbai and Bonn reveal that UFO sightings and alien activity seems to focus on the most densely populated regions of Earth, including coastal North- and South-America, Europe, Eastasia, South and Mediterranean Africa, and Australia. You should consider including these territories in your field of operations.
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr ""
-"Podle nejnovějšího rozboru útoků na Bombaj a Bonn se zdá, že pozorování UFO "
-"a cizácké aktivity se soustředí na nejlidnatější oblasti Země, včetně "
-"přímořské Severní a Jižní Ameriky, Evropy, východní Asie, Jižní a "
-"vnitrozemské Afriky a Austrálie. Měl byste tyto oblasti zahrnout do sféry "
-"svých operací."
+msgstr "Podle nejnovějšího rozboru útoků na Bombaj a Bonn se zdá, že pozorování UFO a cizácké aktivity se soustředí na nejlidnatější oblasti Země, včetně přímořské Severní a Jižní Ameriky, Evropy, východní Asie, Jižní a vnitrozemské Afriky a Austrálie. Měl byste tyto oblasti zahrnout do sféry svých operací."
 
 # Once you've established your first base, you must prepare your soldiers. The recruits we have assigned to PHALANX must be stationed on your dropship, then equipped for battle.
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr ""
-"Jakmile zajistíte Vaši první základnu, musíte připravit vojáky. Rekruti "
-"které jsme přiřadili k PHALANXu musí být umístěni do Transportéru a poté "
-"vybaveni k boji."
+msgstr "Jakmile zajistíte Vaši první základnu, musíte připravit vojáky. Rekruti které jsme přiřadili k PHALANXu musí být umístěni do Transportéru a poté vybaveni k boji."
 
 # Take care of them, Commander. The rest of us are all counting on you, and praying for you.
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr ""
-"Postarejte se o ně, veliteli. My všichni ostatní na Vás spoléháme a modlíme "
-"se za Vás."
+msgstr "Postarejte se o ně, veliteli. My všichni ostatní na Vás spoléháme a modlíme se za Vás."
 
 # That is all. Good luck and good hunting.
 #: ../base/ufos/seq_intro.ufo:182
@@ -3667,8 +3721,10 @@ msgstr "Triax"
 msgid "Medikit"
 msgstr "Lékárnička"
 
-#: ../base/ufos/weapons.ufo:33 ../base/ufos/weapons.ufo:80
-#: ../base/ufos/weapons_melee.ufo:35 ../base/ufos/weapons_melee.ufo:140
+#: ../base/ufos/weapons.ufo:33
+#: ../base/ufos/weapons.ufo:80
+#: ../base/ufos/weapons_melee.ufo:35
+#: ../base/ufos/weapons_melee.ufo:140
 #: ../base/ufos/weapons_melee.ufo:194
 msgid "Throw"
 msgstr "Hod"
@@ -3685,15 +3741,21 @@ msgstr "Snímání"
 msgid "Frag Grenade"
 msgstr "Tříštivý granát"
 
-#: ../base/ufos/weapons.ufo:117 ../base/ufos/weapons.ufo:186
-#: ../base/ufos/weapons.ufo:254 ../base/ufos/weapons.ufo:322
-#: ../base/ufos/weapons.ufo:391 ../base/ufos/weapons.ufo:459
+#: ../base/ufos/weapons.ufo:117
+#: ../base/ufos/weapons.ufo:186
+#: ../base/ufos/weapons.ufo:254
+#: ../base/ufos/weapons.ufo:322
+#: ../base/ufos/weapons.ufo:391
+#: ../base/ufos/weapons.ufo:459
 msgid "Lob"
 msgstr "Vrh"
 
-#: ../base/ufos/weapons.ufo:141 ../base/ufos/weapons.ufo:210
-#: ../base/ufos/weapons.ufo:278 ../base/ufos/weapons.ufo:346
-#: ../base/ufos/weapons.ufo:415 ../base/ufos/weapons.ufo:483
+#: ../base/ufos/weapons.ufo:141
+#: ../base/ufos/weapons.ufo:210
+#: ../base/ufos/weapons.ufo:278
+#: ../base/ufos/weapons.ufo:346
+#: ../base/ufos/weapons.ufo:415
+#: ../base/ufos/weapons.ufo:483
 msgid "Roll"
 msgstr "Kutálení"
 
@@ -3725,11 +3787,13 @@ msgstr "Útočná puška"
 msgid "Assault Rifle Magazine"
 msgstr "Zásobník útočné pušky"
 
-#: ../base/ufos/weapons_human.ufo:36 ../base/ufos/weapons_human.ufo:405
+#: ../base/ufos/weapons_human.ufo:36
+#: ../base/ufos/weapons_human.ufo:405
 msgid "Snap Burst"
 msgstr "Dávka odboku"
 
-#: ../base/ufos/weapons_human.ufo:56 ../base/ufos/weapons_human.ufo:424
+#: ../base/ufos/weapons_human.ufo:56
+#: ../base/ufos/weapons_human.ufo:424
 msgid "Aimed Burst"
 msgstr "Mířená dávka"
 
@@ -3753,10 +3817,14 @@ msgstr "Ostřelovačská puška"
 msgid "Sniper Rifle Magazine"
 msgstr "Zásobník ostřelovačské pušky"
 
-#: ../base/ufos/weapons_human.ufo:185 ../base/ufos/weapons_human.ufo:204
-#: ../base/ufos/weapons_human.ufo:277 ../base/ufos/weapons_human.ufo:840
-#: ../base/ufos/weapons_human.ufo:862 ../base/ufos/weapons_human.ufo:898
-#: ../base/ufos/weapons_human.ufo:920 ../base/ufos/weapons_human.ufo:957
+#: ../base/ufos/weapons_human.ufo:185
+#: ../base/ufos/weapons_human.ufo:204
+#: ../base/ufos/weapons_human.ufo:277
+#: ../base/ufos/weapons_human.ufo:840
+#: ../base/ufos/weapons_human.ufo:862
+#: ../base/ufos/weapons_human.ufo:898
+#: ../base/ufos/weapons_human.ufo:920
+#: ../base/ufos/weapons_human.ufo:957
 #: ../base/ufos/weapons_human.ufo:979
 msgid "Aimed Shot"
 msgstr "Cílený výstřel"
@@ -3769,7 +3837,8 @@ msgstr "Pistole ráže 7.62 mm"
 msgid "Pistol Clip 7.62mm"
 msgstr "Zásobník pistole ráže 7.62 mm"
 
-#: ../base/ufos/weapons_human.ufo:259 ../base/ufos/weapons_tachyon.ufo:36
+#: ../base/ufos/weapons_human.ufo:259
+#: ../base/ufos/weapons_tachyon.ufo:36
 #: ../base/ufos/weapons_tachyon.ufo:184
 msgid "Snap Shot"
 msgstr "Výstřel od boku"
@@ -3782,9 +3851,12 @@ msgstr "Automatická pistole"
 msgid "4.2mm MP Magazine"
 msgstr "Zásobník automatické pistole 4.2 mm"
 
-#: ../base/ufos/weapons_human.ufo:332 ../base/ufos/weapons_human.ufo:479
-#: ../base/ufos/weapons_human.ufo:534 ../base/ufos/weapons_human.ufo:611
-#: ../base/ufos/weapons_human.ufo:688 ../base/ufos/weapons_human.ufo:1319
+#: ../base/ufos/weapons_human.ufo:332
+#: ../base/ufos/weapons_human.ufo:479
+#: ../base/ufos/weapons_human.ufo:534
+#: ../base/ufos/weapons_human.ufo:611
+#: ../base/ufos/weapons_human.ufo:688
+#: ../base/ufos/weapons_human.ufo:1319
 msgid "Single Shot"
 msgstr "Jeden výstřel"
 
@@ -3804,13 +3876,16 @@ msgstr "Zásobník samopalu"
 msgid "Riot Shotgun"
 msgstr "Víceranná brokovnice"
 
-#: ../base/ufos/weapons_human.ufo:467 ../base/ufos/weapons_human.ufo:599
+#: ../base/ufos/weapons_human.ufo:467
+#: ../base/ufos/weapons_human.ufo:599
 #: ../base/ufos/weapons_human.ufo:676
 msgid "Flechette Shells"
 msgstr "Flešetové střely"
 
-#: ../base/ufos/weapons_human.ufo:500 ../base/ufos/weapons_human.ufo:555
-#: ../base/ufos/weapons_human.ufo:632 ../base/ufos/weapons_human.ufo:709
+#: ../base/ufos/weapons_human.ufo:500
+#: ../base/ufos/weapons_human.ufo:555
+#: ../base/ufos/weapons_human.ufo:632
+#: ../base/ufos/weapons_human.ufo:709
 msgid "Double Shot"
 msgstr "Dvojitý výstřel"
 
@@ -3824,9 +3899,8 @@ msgid "Shotgun"
 msgstr "Brokovnice"
 
 #: ../base/ufos/weapons_human.ufo:658
-#, fuzzy
 msgid "Micro Shotgun"
-msgstr "Víceranná brokovnice"
+msgstr "Minibrokovnice"
 
 #: ../base/ufos/weapons_human.ufo:734
 msgid "Flamethrower"
@@ -3869,13 +3943,17 @@ msgid "25mm IC Grenades"
 msgstr "25mm zápalné granáty"
 
 # Moc dlouhé, nějaké nápady?
-#: ../base/ufos/weapons_human.ufo:1037 ../base/ufos/weapons_human.ufo:1102
-#: ../base/ufos/weapons_human.ufo:1167 ../base/ufos/weapons_human.ufo:1232
+#: ../base/ufos/weapons_human.ufo:1037
+#: ../base/ufos/weapons_human.ufo:1102
+#: ../base/ufos/weapons_human.ufo:1167
+#: ../base/ufos/weapons_human.ufo:1232
 msgid "Airburst Grenade"
 msgstr "Ve vzduchu explodující"
 
-#: ../base/ufos/weapons_human.ufo:1062 ../base/ufos/weapons_human.ufo:1127
-#: ../base/ufos/weapons_human.ufo:1192 ../base/ufos/weapons_human.ufo:1257
+#: ../base/ufos/weapons_human.ufo:1062
+#: ../base/ufos/weapons_human.ufo:1127
+#: ../base/ufos/weapons_human.ufo:1192
+#: ../base/ufos/weapons_human.ufo:1257
 msgid "Timed Grenade"
 msgstr "Časovaný"
 
@@ -3888,9 +3966,8 @@ msgid "25mm HIT Grenades"
 msgstr "25mm výbušné granáty"
 
 #: ../base/ufos/weapons_human.ufo:1220
-#, fuzzy
 msgid "25mm PB Grenades"
-msgstr "25mm zápalné granáty"
+msgstr "25mm plasmové granáty"
 
 # FIXME
 #: ../base/ufos/weapons_human.ufo:1289
@@ -3913,11 +3990,13 @@ msgstr "Laserová pistole"
 msgid "Laser Pistol Charge"
 msgstr "Zásobník laserové pistole"
 
-#: ../base/ufos/weapons_laser.ufo:36 ../base/ufos/weapons_laser.ufo:109
+#: ../base/ufos/weapons_laser.ufo:36
+#: ../base/ufos/weapons_laser.ufo:109
 msgid "Single Pulse"
 msgstr "Jednotlivý pulz"
 
-#: ../base/ufos/weapons_laser.ufo:54 ../base/ufos/weapons_laser.ufo:127
+#: ../base/ufos/weapons_laser.ufo:54
+#: ../base/ufos/weapons_laser.ufo:127
 msgid "Multiple Pulses"
 msgstr "Několik pulzů"
 
@@ -3949,7 +4028,8 @@ msgstr "Silný náboj"
 msgid "Combat Knife"
 msgstr "Bojový nůž"
 
-#: ../base/ufos/weapons_melee.ufo:20 ../base/ufos/weapons_melee.ufo:125
+#: ../base/ufos/weapons_melee.ufo:20
+#: ../base/ufos/weapons_melee.ufo:125
 #: ../base/ufos/weapons_melee.ufo:179
 msgid "Stab"
 msgstr "Bodnutí"
@@ -3983,11 +4063,13 @@ msgstr "Plasmový rozprskovač"
 msgid "Plasma Atomizer Charge"
 msgstr "Zásobník plasmového rozprskovače"
 
-#: ../base/ufos/weapons_plasma.ufo:36 ../base/ufos/weapons_plasma.ufo:111
+#: ../base/ufos/weapons_plasma.ufo:36
+#: ../base/ufos/weapons_plasma.ufo:111
 msgid "Charged Pulse"
 msgstr "Nasycený pulz"
 
-#: ../base/ufos/weapons_plasma.ufo:55 ../base/ufos/weapons_plasma.ufo:130
+#: ../base/ufos/weapons_plasma.ufo:55
+#: ../base/ufos/weapons_plasma.ufo:130
 msgid "Continuous Stream"
 msgstr "Souvislý paprsek"
 
@@ -4023,7 +4105,8 @@ msgstr "Tachyonová pistole"
 msgid "Tachyon Pistol Clip"
 msgstr "Zásobník tachyonové pistole"
 
-#: ../base/ufos/weapons_tachyon.ufo:54 ../base/ufos/weapons_tachyon.ufo:129
+#: ../base/ufos/weapons_tachyon.ufo:54
+#: ../base/ufos/weapons_tachyon.ufo:129
 #: ../base/ufos/weapons_tachyon.ufo:202
 msgid "Rapid Shots"
 msgstr "Dávka"
@@ -4150,7 +4233,6 @@ msgid "%s has been killed!\n"
 msgstr "%s byl zabit!\n"
 
 #: client/cl_actor.c:1615
-#, fuzzy
 msgid "A civilian was killed!\n"
 msgstr "Byl zabit civilista!\n"
 
@@ -4175,20 +4257,39 @@ msgstr "Začal tvůj tah!\n"
 msgid "Aircraft started"
 msgstr "Letoun odstartován"
 
-#: client/cl_aircraft.c:103 client/cl_aircraft.c:417 client/cl_aircraft.c:575
-#: client/cl_aircraft.c:814 client/cl_basemanagement.c:453
-#: client/cl_basemanagement.c:1930 client/cl_campaign.c:427
-#: client/cl_campaign.c:900 client/cl_campaign.c:951 client/cl_campaign.c:1109
-#: client/cl_campaign.c:1120 client/cl_campaign.c:1130
-#: client/cl_campaign.c:1140 client/cl_campaign.c:1150
-#: client/cl_campaign.c:1161 client/cl_campaign.c:1174
-#: client/cl_campaign.c:1184 client/cl_campaign.c:1191
-#: client/cl_campaign.c:1199 client/cl_campaign.c:2460
-#: client/cl_campaign.c:2497 client/cl_campaign.c:2499
-#: client/cl_campaign.c:2869 client/cl_map.c:295 client/cl_research.c:661
-#: client/cl_research.c:783 client/cl_research.c:786 client/cl_research.c:790
-#: client/cl_research.c:803 client/cl_research.c:832 client/cl_research.c:974
-#: client/cl_ufo.c:195 client/cl_ufo.c:200
+#: client/cl_aircraft.c:103
+#: client/cl_aircraft.c:417
+#: client/cl_aircraft.c:575
+#: client/cl_aircraft.c:814
+#: client/cl_basemanagement.c:453
+#: client/cl_basemanagement.c:1930
+#: client/cl_campaign.c:427
+#: client/cl_campaign.c:900
+#: client/cl_campaign.c:951
+#: client/cl_campaign.c:1109
+#: client/cl_campaign.c:1120
+#: client/cl_campaign.c:1130
+#: client/cl_campaign.c:1140
+#: client/cl_campaign.c:1150
+#: client/cl_campaign.c:1161
+#: client/cl_campaign.c:1174
+#: client/cl_campaign.c:1184
+#: client/cl_campaign.c:1191
+#: client/cl_campaign.c:1199
+#: client/cl_campaign.c:2460
+#: client/cl_campaign.c:2497
+#: client/cl_campaign.c:2499
+#: client/cl_campaign.c:2869
+#: client/cl_map.c:295
+#: client/cl_research.c:661
+#: client/cl_research.c:783
+#: client/cl_research.c:786
+#: client/cl_research.c:790
+#: client/cl_research.c:803
+#: client/cl_research.c:832
+#: client/cl_research.c:974
+#: client/cl_ufo.c:195
+#: client/cl_ufo.c:200
 msgid "Notice"
 msgstr "Poznámka"
 
@@ -4241,22 +4342,29 @@ msgstr "Přepravní mise"
 msgid "Back to base"
 msgstr "Vrací se na základnu"
 
-#: client/cl_aircraft.c:359 client/cl_map.c:788 client/cl_ufopedia.c:306
+#: client/cl_aircraft.c:359
+#: client/cl_map.c:788
+#: client/cl_ufopedia.c:306
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr "Rychlost:\t%.0f\n"
 
-#: client/cl_aircraft.c:360 client/cl_map.c:789
+#: client/cl_aircraft.c:360
+#: client/cl_map.c:789
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Palivo:\t%i/%i\n"
 
-#: client/cl_aircraft.c:361 client/cl_aircraft.c:362 client/cl_ufopedia.c:287
-#: client/cl_ufopedia.c:308 client/cl_ufopedia.c:309
+#: client/cl_aircraft.c:361
+#: client/cl_aircraft.c:362
+#: client/cl_ufopedia.c:287
+#: client/cl_ufopedia.c:308
+#: client/cl_ufopedia.c:309
 msgid "None"
 msgstr "Žádný"
 
-#: client/cl_aircraft.c:361 client/cl_ufopedia.c:308
+#: client/cl_aircraft.c:361
+#: client/cl_ufopedia.c:308
 #, c-format
 msgid "Weapon:\t%s\n"
 msgstr "Zbraň:\t%s\n"
@@ -4275,19 +4383,23 @@ msgstr "Na základně %2$s je nový letoun (%1$s)"
 msgid "Your dropship has low fuel and returns to base"
 msgstr "Transportér má málo paliva a vrací se na základnu"
 
-#: client/cl_aircraft.c:614 client/cl_aircraft.c:621
+#: client/cl_aircraft.c:614
+#: client/cl_aircraft.c:621
 msgid "Interception"
 msgstr "Stíhání"
 
-#: client/cl_aircraft.c:614 client/cl_campaign.c:2497
+#: client/cl_aircraft.c:614
+#: client/cl_campaign.c:2497
 msgid "You've won the battle"
 msgstr "Vyhrál jsi bitvu"
 
-#: client/cl_aircraft.c:621 client/cl_campaign.c:2499
+#: client/cl_aircraft.c:621
+#: client/cl_campaign.c:2499
 msgid "You've lost the battle"
 msgstr "Prohrál jsi bitvu"
 
-#: client/cl_aircraft.c:665 client/cl_aircraft.c:676
+#: client/cl_aircraft.c:665
+#: client/cl_aircraft.c:676
 msgid "None\n"
 msgstr "Žádný\n"
 
@@ -4354,7 +4466,8 @@ msgstr[0] "zbývá %i den"
 msgstr[1] "zbývají %i dny"
 msgstr[2] "zbývá %i dnů"
 
-#: client/cl_basemanagement.c:1247 client/cl_campaign.c:1374
+#: client/cl_basemanagement.c:1247
+#: client/cl_campaign.c:1374
 #, c-format
 msgid "%i c"
 msgstr "%i k"
@@ -4363,7 +4476,9 @@ msgstr "%i k"
 msgid "Base is under attack"
 msgstr "Probíhá útok na základnu"
 
-#: client/cl_basemanagement.c:1533 client/cl_team.c:1123 client/cl_team.c:1316
+#: client/cl_basemanagement.c:1533
+#: client/cl_team.c:1123
+#: client/cl_team.c:1316
 msgid "NewTeam"
 msgstr "Nový tým"
 
@@ -4372,7 +4487,8 @@ msgstr "Nový tým"
 msgid "A new base has been built: %s."
 msgstr "Byla vybudována nová základna: %s."
 
-#: client/cl_basemanagement.c:1614 client/cl_basemanagement.c:1657
+#: client/cl_basemanagement.c:1614
+#: client/cl_basemanagement.c:1657
 msgid "Base built"
 msgstr "Základna vybudována"
 
@@ -4393,7 +4509,8 @@ msgstr "Dokončena stavba budovy »%s« na základně »%s«."
 msgid "Building finished"
 msgstr "Stavba dokončena"
 
-#: client/cl_campaign.c:427 client/cl_map.c:295
+#: client/cl_campaign.c:427
+#: client/cl_map.c:295
 msgid "Could not set up your base at this location"
 msgstr "Na tomto místě nelze vybudovat základnu"
 
@@ -4413,19 +4530,15 @@ msgstr "Cizácká činnost"
 
 #: client/cl_campaign.c:899
 #, c-format
-msgid ""
-"Your base: %s has been ransacked! All employees killed and all equipment "
-"destroyed."
-msgstr ""
-"Tvoje základna »%s« byla vypleněna! Všichni zaměstnanci byli zabiti a "
-"veškeré vybavení zničeno."
+msgid "Your base: %s has been ransacked! All employees killed and all equipment destroyed."
+msgstr "Tvoje základna »%s« byla vypleněna! Všichni zaměstnanci byli zabiti a veškeré vybavení zničeno."
 
 #: client/cl_campaign.c:950
 #, c-format
 msgid "The mission expired and %i civilian died."
 msgid_plural "The mission expired and %i civilians died."
 msgstr[0] "Možnost zásahu vypršela a zemřel %i civilista."
-msgstr[1] "Možnost zásahu vypršela a zemřeli %i civilisti."
+msgstr[1] "Možnost zásahu vypršela a zemřeli %i civilisté."
 msgstr[2] "Možnost zásahu vypršela a zemřelo %i civilistů."
 
 #: client/cl_campaign.c:992
@@ -4532,28 +4645,32 @@ msgstr[0] "kredit"
 msgstr[1] "kredity"
 msgstr[2] "kreditů"
 
-#: client/cl_campaign.c:1104 client/cl_campaign.c:4076
+#: client/cl_campaign.c:1104
+#: client/cl_campaign.c:4076
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "vědec"
 msgstr[1] "vědci"
 msgstr[2] "vědců"
 
-#: client/cl_campaign.c:1105 client/cl_campaign.c:4078
+#: client/cl_campaign.c:1105
+#: client/cl_campaign.c:4078
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "lékař"
 msgstr[1] "lékaři"
 msgstr[2] "lékařů"
 
-#: client/cl_campaign.c:1106 client/cl_campaign.c:4075
+#: client/cl_campaign.c:1106
+#: client/cl_campaign.c:4075
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "voják"
 msgstr[1] "vojáci"
 msgstr[2] "vojáků"
 
-#: client/cl_campaign.c:1107 client/cl_campaign.c:4077
+#: client/cl_campaign.c:1107
+#: client/cl_campaign.c:4077
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "dělník"
@@ -4680,10 +4797,11 @@ msgstr ""
 
 #: client/cl_campaign.c:1705
 msgid "Error saving game. Check free disk space!"
-msgstr ""
-"Chyba při ukládání hry. Zkontroluj zda je na disku dostatek volného místa!"
+msgstr "Chyba při ukládání hry. Zkontroluj zda je na disku dostatek volného místa!"
 
-#: client/cl_campaign.c:1705 client/cl_campaign.c:2291 client/cl_team.c:1168
+#: client/cl_campaign.c:1705
+#: client/cl_campaign.c:2291
+#: client/cl_team.c:1168
 msgid "Note"
 msgstr "Poznámka"
 
@@ -4702,12 +4820,8 @@ msgstr "%s byl povýšen na %s.\n"
 
 #: client/cl_campaign.c:2727
 #, c-format
-msgid ""
-"%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
-"in the face of overwhelming odds.\n"
-msgstr ""
-"%s byl posmrtně povýšen do hosnosti %s\\za příkladnou statečnost tváří v "
-"tvář drtivé převaze.\n"
+msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
+msgstr "%s byl posmrtně povýšen do hosnosti %s\\za příkladnou statečnost tváří v tvář drtivé převaze.\n"
 
 #: client/cl_campaign.c:2728
 msgid "Soldier promoted"
@@ -4720,14 +4834,12 @@ msgstr "Obrana základny %s byla úspěšná!"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
 #: client/cl_campaign.c:4071
-#, fuzzy
 msgid "Aliens"
-msgstr "Cizák"
+msgstr "Cizáci"
 
 #: client/cl_campaign.c:4071
-#, fuzzy
 msgid "Human"
-msgstr "Busan"
+msgstr "Lidé"
 
 #: client/cl_campaign.c:4073
 #, c-format
@@ -4789,11 +4901,13 @@ msgstr "Posune kameru nad bojištěm dopředu"
 msgid "Move battlescape camera backward"
 msgstr "Posune kameru nad bojištěm dozadu"
 
-#: client/cl_input.c:753 client/cl_input.c:778
+#: client/cl_input.c:753
+#: client/cl_input.c:778
 msgid "Zoom in"
 msgstr "Přiblížit"
 
-#: client/cl_input.c:755 client/cl_input.c:779
+#: client/cl_input.c:755
+#: client/cl_input.c:779
 msgid "Zoom out"
 msgstr "Oddálit"
 
@@ -4841,17 +4955,19 @@ msgstr "Potvrdí aktuální akci"
 msgid "Toggle first-person/third-person camera mode"
 msgstr "Přepne režim pohledu mezi první a třetí osobou"
 
-#: client/cl_main.c:352 client/cl_main.c:831
+#: client/cl_main.c:352
+#: client/cl_main.c:831
 msgid "Assemble a team first"
 msgstr "Nejprve sestav tým"
 
-#: client/cl_main.c:352 client/cl_main.c:831
+#: client/cl_main.c:352
+#: client/cl_main.c:831
 msgid "Error"
 msgstr "Chyba"
 
 #: client/cl_main.c:690
 msgid "No player connected\n"
-msgstr ""
+msgstr "Žádný hráč není připojen\n"
 
 #: client/cl_main.c:728
 #, c-format
@@ -4890,45 +5006,47 @@ msgstr "Týmová hra:\t%s\n"
 #: client/cl_main.c:760
 #, c-format
 msgid "Max. players per team:\t%s\n"
-msgstr "Max. hráčů na tým:\t%s\n"
+msgstr "Maximum hráčů na tým:\t%s\n"
 
 #: client/cl_main.c:762
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
-msgstr ""
+msgstr "Maximum týmů povolených v této mapě:\t%s\n"
 
 #: client/cl_main.c:764
 #, c-format
 msgid "Max. clients:\t%s\n"
-msgstr "Max. klientů:\t%s\n"
+msgstr "Maximum klientů:\t%s\n"
 
 #: client/cl_main.c:766
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
-msgstr "Max. vojáků na hráče:\t%s\n"
+msgstr "Maximum vojáků na hráče:\t%s\n"
 
 #: client/cl_main.c:768
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
-msgstr "Max. vojáků na tým:\t%s\n"
+msgstr "Maximum vojáků na tým:\t%s\n"
 
 #: client/cl_main.c:991
 msgid "Select a free team or your coop team"
-msgstr ""
+msgstr "Zvolte volný tým nebo tým pro spolupráci"
 
-#: client/cl_main.c:1265 client/cl_main.c:1279
-#, fuzzy, c-format
+#: client/cl_main.c:1265
+#: client/cl_main.c:1279
+#, c-format
 msgid "Current team: %i"
-msgstr "Současný tým"
+msgstr "Současný tým: %i"
 
-#: client/cl_main.c:1269 client/cl_main.c:1283
-#, fuzzy
+#: client/cl_main.c:1269
+#: client/cl_main.c:1283
 msgid "Team is already in use"
-msgstr "Na základně již %i"
+msgstr "Tým je již používán"
 
-#: client/cl_main.c:1293 client/cl_main.c:1319
+#: client/cl_main.c:1293
+#: client/cl_main.c:1319
 msgid "Invalid or full team"
-msgstr ""
+msgstr "Neplatný nebo plný tým"
 
 #: client/cl_main.c:1598
 msgid "Unnamed"
@@ -5027,11 +5145,13 @@ msgstr "Jméno:\t%s (%i/%i)\n"
 msgid "Status:\t%s\n"
 msgstr "Stav:\t%s\n"
 
-#: client/cl_market.c:62 client/cl_market.c:63
+#: client/cl_market.c:62
+#: client/cl_market.c:63
 msgid "TODO\n"
 msgstr "UDĚLAT\n"
 
-#: client/cl_market.c:65 client/cl_ufopedia.c:225
+#: client/cl_market.c:65
+#: client/cl_ufopedia.c:225
 msgid "Unknown - need to research this"
 msgstr "Neznámo - nutno vyzkoumat"
 
@@ -5053,7 +5173,8 @@ msgstr "Klávesa: %s"
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Skryje HUD (stiskni ESC pro zobrazení HUDu)"
 
-#: client/cl_parse.c:716 client/cl_parse.c:718
+#: client/cl_parse.c:716
+#: client/cl_parse.c:718
 msgid "Alien spotted!\n"
 msgstr "Spatřen cizák!\n"
 
@@ -5180,7 +5301,8 @@ msgstr "Tato položka je již vědci zkoumána."
 msgid "The research on this item continues."
 msgstr "Výzkum této položky pokračuje."
 
-#: client/cl_research.c:790 client/cl_research.c:832
+#: client/cl_research.c:790
+#: client/cl_research.c:832
 msgid "The research on this item is complete."
 msgstr "Výzkum této položky je dokončen."
 
@@ -5241,8 +5363,7 @@ msgstr "%i z %i"
 
 #: client/cl_team.c:1168
 msgid "Error saving team. Check free disk space!"
-msgstr ""
-"Chyba při ukládání týmu. Zkontroluj zda je na disku dostatek volného místa!"
+msgstr "Chyba při ukládání týmu. Zkontroluj zda je na disku dostatek volného místa!"
 
 #: client/cl_team.c:1339
 msgid "Select a soldier from list"
@@ -5252,7 +5373,8 @@ msgstr "Zvol vojáka ze seznamu"
 msgid "Toggle to next soldier"
 msgstr "Na dalšího vojáka"
 
-#: client/cl_team.c:1636 client/cl_team.c:1684
+#: client/cl_team.c:1636
+#: client/cl_team.c:1684
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Zabitých cizáků\t%i\n"
@@ -5271,7 +5393,8 @@ msgstr ""
 "Zajatých cizáků\t%i\n"
 "\n"
 
-#: client/cl_team.c:1645 client/cl_team.c:1688
+#: client/cl_team.c:1645
+#: client/cl_team.c:1688
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -5418,15 +5541,18 @@ msgid ""
 "Enemies killed:  %i\n"
 "Team survivors:  %i"
 msgstr ""
+"\n"
+"\n"
+"Zabito nepřátel:  %i\n"
+"Tým - přeživší:  %i"
 
 #: client/cl_team.c:1721
-#, fuzzy
 msgid "You won the game!"
-msgstr "Vyhrál jsi bitvu"
+msgstr "Vyhrál jsi hru!"
 
 #: client/cl_team.c:1723
 msgid "Congratulations"
-msgstr ""
+msgstr "Blahopřejeme"
 
 #: client/cl_team.c:1725
 msgid ""
@@ -5434,19 +5560,21 @@ msgid ""
 "\n"
 "No survivors left on any side."
 msgstr ""
+"Hra dopadla nerozhodně!\n"
+"\n"
+"Na žádné straně nikdo nepřežil."
 
 #: client/cl_team.c:1726
 msgid "Game Drawn!"
-msgstr ""
+msgstr "Nerozhodně!"
 
 #: client/cl_team.c:1728
-#, fuzzy
 msgid "You lost the game"
-msgstr "Prohrál jsi bitvu"
+msgstr "Prohrál jsi hru"
 
 #: client/cl_team.c:1730
 msgid "Better luck next time"
-msgstr ""
+msgstr "Příště více štestí"
 
 #: client/cl_ufo.c:195
 msgid "UFO appears on our radar"
@@ -5493,11 +5621,15 @@ msgstr "Zbroj\n"
 msgid "%s weapon with\n"
 msgstr "%s zbraň\n"
 
-#: client/cl_ufopedia.c:196 client/cl_ufopedia.c:199 client/cl_ufopedia.c:204
+#: client/cl_ufopedia.c:196
+#: client/cl_ufopedia.c:199
+#: client/cl_ufopedia.c:204
 msgid "One-handed"
 msgstr "Jednoruční"
 
-#: client/cl_ufopedia.c:196 client/cl_ufopedia.c:199 client/cl_ufopedia.c:204
+#: client/cl_ufopedia.c:196
+#: client/cl_ufopedia.c:199
+#: client/cl_ufopedia.c:204
 msgid "Two-handed"
 msgstr "Obouruční"
 
@@ -5629,7 +5761,9 @@ msgstr "Obsah Ufopedie"
 msgid "Ufopedia Index: %s"
 msgstr "Oddíl Ufopedie: %s"
 
-#: client/cl_view.c:417 client/cl_view.c:453 client/cl_view.c:483
+#: client/cl_view.c:417
+#: client/cl_view.c:453
+#: client/cl_view.c:483
 #: client/cl_view.c:495
 #, c-format
 msgid "loading %s"
@@ -5679,14 +5813,13 @@ msgstr "Nelze provést - není ve stejném týmu!\n"
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Nelze provést - neovládáš spojenecké osoby!\n"
 
-#: game/g_client.c:629 game/g_client.c:730
+#: game/g_client.c:629
+#: game/g_client.c:730
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Nelze provést - nedostatek času!\n"
 
 #: game/g_client.c:733
-msgid ""
-"Can't perform action - weapon already fully loaded with the same "
-"ammunition!\n"
+msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Nelze provést - zbraň je již plně nabita stejnou municí!\n"
 
 # Asi takhle?
@@ -5717,7 +5850,7 @@ msgstr "%s je právě v šoku.\n"
 #: game/g_client.c:1822
 #, c-format
 msgid "Team %i ( %s) will get the first turn.\n"
-msgstr ""
+msgstr "Tým %i (%s) bude na tahu jako první.\n"
 
 #: po/OTHER_STRINGS:2
 msgid "Yes"
@@ -5729,183 +5862,133 @@ msgstr "Ne"
 
 #: po/OTHER_STRINGS:4
 msgid "5 sec"
-msgstr ""
+msgstr "5 sekund"
 
 #: po/OTHER_STRINGS:5
 msgid "5 mins"
-msgstr ""
+msgstr "5 minut"
 
 #: po/OTHER_STRINGS:6
 msgid "1 hour"
-msgstr ""
+msgstr "1 hodina"
 
 #: po/OTHER_STRINGS:7
 msgid "12 hour"
-msgstr ""
+msgstr "12 hodin"
 
 #: po/OTHER_STRINGS:8
 msgid "1 day"
-msgstr ""
+msgstr "1 den"
 
 #: po/OTHER_STRINGS:9
 msgid "5 days"
-msgstr ""
+msgstr "5 dnů"
 
+#~ msgid "Dropship"
+#~ msgstr "Transportér"
+#~ msgid "Interceptor"
+#~ msgstr "Stíhačka"
 #~ msgid "Buckshots"
 #~ msgstr "Patrony s broky"
 
 # FIXME?
 #~ msgid "Plasma Grenade Shells"
 #~ msgstr "Plasmové granátové střely"
-
-#~ msgid "Dropship"
-#~ msgstr "Transportér"
-
-#~ msgid "Interceptor"
-#~ msgstr "Stíhačka"
-
 #~ msgid "News"
 #~ msgstr "Zprávy"
-
 #~ msgid "Technologies & Discoveries"
 #~ msgstr "Technologie & objevy"
-
 #~ msgid "Weapons"
 #~ msgstr "Zbraně"
-
 #~ msgid "Armors"
 #~ msgstr "Zbroje"
-
 #~ msgid "UFOs"
 #~ msgstr "UFO"
-
 #~ msgid "UGVs"
 #~ msgstr "PVBO"
-
 #~ msgid "Advanced Plasma Control"
 #~ msgstr "Pokročilé ovládání plasmy"
-
 #~ msgid "Tachyon Control"
 #~ msgstr "Ovládání tachyonu"
-
 #~ msgid "Small alien craft"
 #~ msgstr "Malý cizácký letoun"
-
 #~ msgid "Big alien craft"
 #~ msgstr "Velký cizácký letoun"
-
 #~ msgid "Harvester alien craft"
 #~ msgstr "Cizácký letoun \"Sklízeč\""
-
 #~ msgid "Bloodspider - Combat notes"
 #~ msgstr "Bloodspider - poznámky k boji"
-
 #~ msgid "Bloodspider - Autopsy"
 #~ msgstr "Bloodspider - pitva"
-
 #~ msgid "Ortnok - Combat notes"
 #~ msgstr "Ortnok - poznámky k boji"
-
 #~ msgid "Ortnok - Autopsy"
 #~ msgstr "Ortnok - pitva"
-
 #~ msgid "Ortnok Worker"
 #~ msgstr "Ortnok dělník"
-
 #~ msgid "Ortnok Warrior"
 #~ msgstr "Ortnok voják"
-
 #~ msgid "Antarean - Combat notes"
 #~ msgstr "Antaran - poznámky k boji"
-
 #~ msgid "Antarean - Autopsy"
 #~ msgstr "Antaran - pitva"
-
 #~ msgid "Antarean - Commander interrogation"
 #~ msgstr "Antarean - výslech velitele"
-
 #~ msgid "Shevaar - Combat notes"
 #~ msgstr "Shevaar - poznámky k boji"
-
 #~ msgid "Shevaar - Autopsy"
 #~ msgstr "Shevaar - pitva"
-
 #~ msgid "Hovernet - Combat notes"
 #~ msgstr "Hovernet - poznámky k boji"
-
 #~ msgid "Hovernet - wreck research"
 #~ msgstr "Hovernet - výzkum vraku"
-
 #~ msgid "Cyborg Ortnok - Combat notes"
 #~ msgstr "Kybortnok - poznámky k boji"
-
 #~ msgid "Cyborg Ortnok - Autopsy"
 #~ msgstr "Kybortnok - pitva"
-
 #~ msgid "UGV Phoenix"
 #~ msgstr "PVBO Phoenix"
-
 #~ msgid "UGV Triax"
 #~ msgstr "PVBO Triax"
-
 #~ msgid "Light Shield"
 #~ msgstr "Slabý štít"
-
 #~ msgid "Medium Shield"
 #~ msgstr "Střední štít"
-
 #~ msgid "Hard Shield"
 #~ msgstr "Silný štít"
-
 #~ msgid "Kevlar Vest"
 #~ msgstr "Neprůstřelná vesta"
-
 #~ msgid "Toggle reaction-fire"
 #~ msgstr "Vyhradit čas na zpětnou palbu"
-
 #~ msgid "Bloodspider - Xenobiology"
 #~ msgstr "Bloodspider - biologie cizáků"
-
 #~ msgid "Bloodspider - Interrogation"
 #~ msgstr "Bloodspider - výslech"
-
 #~ msgid "Ortnok - Xenobiology"
 #~ msgstr "Ortnok - biologie cizáků"
-
 #~ msgid "Ortnok - Interrogation"
 #~ msgstr "Ortnok - výslech"
-
 #~ msgid "Antarean - Xenobiology"
 #~ msgstr "Antaran - biologie cizáků"
-
 #~ msgid "Antarean - Interrogation"
 #~ msgstr "Antarean - výslech"
-
 #~ msgid "Shevaar - Xenobiology"
 #~ msgstr "Shevaar - biologie cizáků"
-
 #~ msgid "Hovernet - design"
 #~ msgstr "Hovernet - konstrukce"
-
 #~ msgid "Cyborg Ortnok - Xenobiology"
 #~ msgstr "Kybortnok - biologie cizáků"
-
 #~ msgid "9mm Pistol"
 #~ msgstr "Pistole ráže 9 mm"
-
 #~ msgid "Pistol Clip 9mm"
 #~ msgstr "Zásobník pistole ráže 9 mm"
-
 #~ msgid "Dependencies"
 #~ msgstr "Závislosti"
-
 #~ msgid "General UFO technology"
 #~ msgstr "Všeobecná UFO technologie"
-
 # To je asi úplně mimo, ale vůbec nevím co by mělo FLAC být :(
 #~ msgid "Flac Cannon"
 #~ msgstr "Rychlopalné dělo"
-
 #, fuzzy
 #~ msgid ""
 #~ "Alien surviviurs\t%i\n"
@@ -5913,7 +5996,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Přeživší cizáci\t%i\n"
 #~ "\n"
-
 #~ msgid ""
 #~ "Missions:\n"
 #~ "won:\t%i\tlost:\t%i\n"
@@ -5924,37 +6006,26 @@ msgstr ""
 #~ "vyhrané:\t%i\tprohrané:\t%i\n"
 #~ "Základny:\n"
 #~ "vybudované:\t%i\tnapadené:\t%i\n"
-
 #~ msgid "Full Auto"
 #~ msgstr "Automat"
-
 #~ msgid "Equip Aircraft"
 #~ msgstr "Vybavit letoun"
-
 #~ msgid "Can't perform action - impossible throw!\n"
 #~ msgstr "Nelze provést - nemožný hod!\n"
-
 #~ msgid "Can't perform action - no ammo!\n"
 #~ msgstr "Nelze provést - není munice!\n"
-
 #~ msgid "Can't perform action - not enough ammo!\n"
 #~ msgstr "Nelze provést - nedostatek munice!\n"
-
 #~ msgid "SMG Clip"
 #~ msgstr "Zásobník samopalu"
-
 #~ msgid "Napalm Tank"
 #~ msgstr "Napalm"
-
 #~ msgid "Asian Commonwealth"
 #~ msgstr "Asijské společenství"
-
 #~ msgid "African Union"
 #~ msgstr "Africká unie"
-
 #~ msgid "Oceania"
 #~ msgstr "Oceania"
-
 #~ msgid "Advanced Armor Fabrics"
 #~ msgstr "Pokročilé materiály zbroje"
 
@@ -5965,39 +6036,30 @@ msgstr ""
 #~ msgstr ""
 #~ "Několika cizákům se podařilo z dolu\\uprchnout a jejich stopa míří na jih"
 #~ "\\k nedalekým vykopávkám.\\Toto místo musíte za každou cenu ochránit.\\"
-
 #~ msgid "Heavy Nano Armor"
 #~ msgstr "Těžká nanozbroj"
 
 #, fuzzy
 #~ msgid "Interceptors"
 #~ msgstr "Stíhačky"
-
 #~ msgid ""
 #~ "Health\t%i\n"
 #~ "Move\t%i\n"
 #~ msgstr ""
 #~ "Zdraví\t%i\n"
 #~ "Pohyb\t%i\n"
-
 #~ msgid "Health\t%i\n"
 #~ msgstr "Zdraví\t%i\n"
-
 #~ msgid "Free labs in this base: %i"
 #~ msgstr "Volné laboratoře na této základně: %i"
-
 #~ msgid "%i max.\n"
 #~ msgstr "%i max.\n"
-
 #~ msgid "Collected alien technology\t%i c\n"
 #~ msgstr "Získaná cizácká technologie\t%i c\n"
-
 #~ msgid "Aliens killed\t%i c\n"
 #~ msgstr "Cizáků zabito\t%i $\n"
-
 #~ msgid "Civilians saved\t%i c\n"
 #~ msgstr "Zachránění civilisté\t%i c\n"
-
 #~ msgid ""
 #~ "Total reward\t%i c\n"
 #~ "\n"
@@ -6006,102 +6068,76 @@ msgstr ""
 #~ "Celková odměna\t%i c\n"
 #~ "\n"
 #~ "\n"
-
 #~ msgid "New Recruits\t%i\n"
 #~ msgstr "Noví rekruti\t%i\n"
 
 #, fuzzy
 #~ msgid "The Aliens have taken over a rocket silo. Go and capture it again."
 #~ msgstr "Cizáci obsadili raketovou základnu. Dobijte ji zpět."
-
 #~ msgid "Intercept alien craft or visit alien (crash) site."
 #~ msgstr ""
 #~ "Stíhat cizácký letoun nebo prozkoumat místo cizácké aktivity či havárie."
-
 #~ msgid "Difficulty:"
 #~ msgstr "Obtížnost:"
-
 #~ msgid "Soundsystem:"
 #~ msgstr "Zvukový systém:"
-
 #~ msgid "Returning to homebase"
 #~ msgstr "Vrací se na domovskou základnu"
-
 #~ msgid "Grenades"
 #~ msgstr "Granáty"
-
 #~ msgid "Plasma Pistol"
 #~ msgstr "Plasmová pistole"
-
 #~ msgid "Plasma Pistol Charge"
 #~ msgstr "Zásobník plasmové pistole"
-
 #~ msgid "Location: Asyut\\Type: Terror Attack\\Objective: Protect inhabitants"
 #~ msgstr "Místo: Asyut\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
-
 #~ msgid ""
 #~ "Location: Gwandaf\\Type: Terror Attack\\Objective: Protect inhabitants"
 #~ msgstr "Místo: Gwandaf\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
-
 #~ msgid ""
 #~ "Location: Uppsala\\Type: Terror Attack\\Objective: Protect inhabitants"
 #~ msgstr "Místo: Uppsala\\Typ: Cizácký terror\\Úkol: Ochránit obyvatelstvo"
-
 #~ msgid ""
 #~ "Location: Revelstoke\\Type: Landed Alien Ship\\Objective: Secure Alien "
 #~ "Ship before Liftoff"
 #~ msgstr ""
 #~ "Místo: Revelstoke\\Typ: Přistání cizácké lodi\\Úkol: Zajistit cizáckou "
 #~ "loď než uletí"
-
 #~ msgid ""
 #~ "Location: Marina Serra\\Type: Terror Attack\\Objective: Protect "
 #~ "inhabitants"
 #~ msgstr ""
 #~ "Místo: Marina Serra\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
-
 #~ msgid ""
 #~ "Location: Morioka\\Type: Alien Hideout\\Objective: Eliminate intruders"
 #~ msgstr "Místo: Morioka\\Typ: Cizácký úkryt\\Úkol: Zlikvidovat vetřelce"
-
 #~ msgid ""
 #~ "Location: Tazovskij\\Type: Terror Attack\\Objective: Protect inhabitants"
 #~ msgstr "Místo: Tazovsk\\Type: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
-
 #~ msgid ""
 #~ "Location: Mackay\\Type: Terror Attack\\Objective: Protect inhabitants"
 #~ msgstr "Místo: Mackay\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
-
 #~ msgid ""
 #~ "Location: Tabelbala\\Type: Terror Attack\\Objective: Protect inhabitants"
 #~ msgstr "Místo: Tabelbala\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
-
 #~ msgid "Location: Fargo\\Type: Terror Attack\\Objective: Protect inhabitants"
 #~ msgstr "Místo: Fargo\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
-
 #~ msgid ""
 #~ "Location: Grenchen\\Type: Terror Attack\\Objective: Protect inhabitants"
 #~ msgstr "Místo: Grenchen\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
-
 #~ msgid "Location: Lille\\Type: Terror Attack\\Objective: Protect inhabitants"
 #~ msgstr "Místo:Lille\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
-
 #~ msgid ""
 #~ "Location: Albany\\Type: Terror Attack\\Objective: Protect inhabitants"
 #~ msgstr "Místo: Albany\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
-
 #~ msgid "Location: Shannon\\Type: Major Alien Intrusion\\Objective: Stop them"
 #~ msgstr "Místo: Shannon\\Typ: Velký cizácký průnik\\Úkol: Zastavit cizáky"
-
 #~ msgid "Knife"
 #~ msgstr "Nůž"
-
 #~ msgid "%s (%s) died on his last mission.\n"
 #~ msgstr "%s (%s) na své poslední misi zemřel.\n"
-
 #~ msgid "Soldier died"
 #~ msgstr "Voják zemřel"
-
 #~ msgid ""
 #~ "We are going put you in charge of a\\mission of utmost importance. We've"
 #~ "\\shot down one of their crafts. Get\\there before the E.T.'s do. "
@@ -6110,36 +6146,26 @@ msgstr ""
 #~ "Rozhodli jsme se vám svěřit nanejvýše\\důležitou misi. Sestřelili jsme "
 #~ "\\jeden z jejich letounů. Musíte\\se k němu dostat dříve než cizáci. "
 #~ "(obtížné) \\"
-
 #~ msgid "Refuel the selected aircraft"
 #~ msgstr "Doplnit palivo"
-
 #~ msgid "Equip your personnel"
 #~ msgstr "Vybavit vojáky"
-
 #~ msgid "Allow Download:"
 #~ msgstr "Povolit stahování:"
-
 #~ msgid "Repairing"
 #~ msgstr "Opravy"
-
 #~ msgid "Energy:\t%1.0f\n"
 #~ msgstr "Energie:\t%1.0f\n"
-
 #~ msgid "Level:\t%i\n"
 #~ msgstr "Úroveň:\t%i\n"
-
 #~ msgid " [under research]"
 #~ msgstr " [zkoumá se]"
-
 #~ msgid " [finished]"
 #~ msgstr " [dokončeno]"
-
 #~ msgid " [paused]"
 #~ msgstr " [pozastaveno]"
-
 #~ msgid " [unknown]"
 #~ msgstr " [neznámo]"
-
 #~ msgid "Energy:\t%i\n"
 #~ msgstr "Energie:\t%i\n"
+
