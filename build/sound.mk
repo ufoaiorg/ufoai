@@ -18,7 +18,7 @@ endif
 # Say about to build the target
 $(SND_SDL_TARGET) : $(SND_SDL_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [SDL] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_SDL_OBJS) $(LIBS) $(SDL_LIBS)
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_SDL_OBJS) $(LIBS) $(LNKFLAGS) $(SDL_LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-sdl/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -49,7 +49,7 @@ endif
 # Say about to build the target
 $(SND_ALSA_TARGET) : $(SND_ALSA_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [ALSA] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_ALSA_OBJS) $(LIBS) $(SDL_LIBS)
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_ALSA_OBJS) $(LIBS) $(LNKFLAGS) $(SDL_LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-alsa/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -80,7 +80,7 @@ endif
 # Say about to build the target
 $(SND_OSS_TARGET) : $(SND_OSS_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [OSS] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_OSS_OBJS) $(LIBS)
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_OSS_OBJS) $(LIBS) $(LNKFLAGS) 
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-oss/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -111,7 +111,7 @@ endif
 # Say about to build the target
 $(SND_ARTS_TARGET) : $(SND_ARTS_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [ARTS] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_ARTS_OBJS) $(LIBS) $(ARTS_LIBS)
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_ARTS_OBJS) $(LIBS) $(LNKFLAGS) $(ARTS_LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-arts/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -143,7 +143,7 @@ endif
 # Say about to build the target
 $(SND_WAPI_TARGET) : $(SND_WAPI_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [WAPI] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_WAPI_OBJS) $(LIBS)
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_WAPI_OBJS) $(LIBS) $(LNKFLAGS) 
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-wapi/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -174,7 +174,7 @@ endif
 # Say about to build the target
 $(SND_DX_TARGET) : $(SND_DX_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [DX] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_DX_OBJS) $(LIBS)
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_DX_OBJS) $(LIBS) $(LNKFLAGS) 
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-dx/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs

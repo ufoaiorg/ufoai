@@ -43,7 +43,7 @@ endif
 # Say how to like the exe
 $(UFO2MAP_TARGET): $(UFO2MAP_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [MAP] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(UFO2MAP_OBJS) -lm -lpthread
+		$(CC) $(LDFLAGS) -o $@ $(UFO2MAP_OBJS) -lm -lpthread $(LNKFLAGS) 
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -93,7 +93,7 @@ endif
 # Say how to like the exe
 $(QDATA_TARGET): $(QDATA_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [QDT] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(QDATA_OBJS) -lm -lpthread
+		$(CC) $(LDFLAGS) $(LNKFLAGS) -o $@ $(QDATA_OBJS) -lm -lpthread
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/tools/qdata/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs

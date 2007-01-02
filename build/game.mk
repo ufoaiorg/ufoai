@@ -21,7 +21,7 @@ TARGETS +=$(GAME_TARGET)
 # Say how about to build the target
 $(GAME_TARGET) : $(GAME_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [GAM] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(GAME_OBJS) -lm
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(GAME_OBJS) -lm $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/game/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
