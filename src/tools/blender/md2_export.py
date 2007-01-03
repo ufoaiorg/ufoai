@@ -1,7 +1,7 @@
 #!BPY
 
 """
-Name: 'MD2 (.md2)'
+Name: 'MD2 (.md2) xx'
 Blender: 241
 Group: 'Export'
 Tooltip: 'Export to Quake file format (.md2).'
@@ -120,7 +120,7 @@ def draw_gui():
 
 	########## Scale slider-default is 1/8 which is a good scale for md2->blender
 	g_scale= Slider("Scale Factor: ", EVENT_NOEVENT, 10, 95, 210, 18,
-                    g_scale.val, 0.001, 100.0, 0, "Scale factor for obj Model");
+                    1.0, 0.001, 10.0, 1, "Scale factor for obj Model");
 
 	######### Draw and Exit Buttons
 	Button("Export",EVENT_SAVE_MD2 , 10, 10, 80, 18)
@@ -1187,8 +1187,8 @@ def build_GL_commands(md2):
 				cmd=md2_GL_command()										
 				s=md2.tex_coords[best_st[command_counter]].u
 				t=md2.tex_coords[best_st[command_counter]].v
-				cmd.s=s/md2.skin_width
-				cmd.t=t/md2.skin_height
+				cmd.s=s/float(md2.skin_width)
+				cmd.t=t/float(md2.skin_height)
 				cmd.vert_index=best_verts[command_counter]
 				num_commands+=3
 				cmd_list.cmd_list.append(cmd)
