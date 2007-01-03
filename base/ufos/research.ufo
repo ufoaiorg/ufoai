@@ -903,24 +903,24 @@ tech rs_weapon_shotgun2
 	producetime	40
 }
 
-tech rs_weapon_shotgun2_ammo
-{
-	type	weapon
-	up_chapter	equipment
-	description	"_shotgun2_ammo_txt"
-	// pre_description	"_shotgun2_ammo_pre_txt"
-
-	require_AND
-	{
-		weapon rs_weapon_shotgun2
-		tech rs_damage_blast
-		tech rs_weapon_shotgun2
-	}
-
-	provides	shotgun2_ammo
-	time	0
-	producetime	1
-}
+//tech rs_weapon_shotgun2_ammo
+//{
+//	type	weapon
+//	up_chapter	equipment
+//	description	"_shotgun2_ammo_txt"
+//	// pre_description	"_shotgun2_ammo_pre_txt"
+//
+//	require_AND
+//	{
+//		weapon rs_weapon_shotgun2
+//		tech rs_damage_blast
+//		tech rs_weapon_shotgun2
+//	}
+//
+//	provides	shotgun2_ammo
+//	time	0
+//	producetime	1
+//}
 
 tech rs_weapon_shotgun2_slug_ammo
 {
