@@ -986,6 +986,8 @@ static void CL_SelectTeam_Init_f (void)
 		Com_Printf("CL_SelectTeam_Init_f: Invalid servername '%s'\n", cls.servername);
 		return;
 	}
+	if (!adr.port)
+		adr.port = BigShort(PORT_SERVER);
 
 	Netchan_OutOfBandPrint(NS_CLIENT, adr, "teaminfo %i", PROTOCOL_VERSION);
 	menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
