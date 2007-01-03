@@ -895,7 +895,7 @@ typedef struct menuNode_s {
 	vec2_t pos, size, texh, texl;
 	menuModel_t *menuModel;
 	byte state;
-	byte align;
+	int align;
 	byte invis, blend;
 	int mousefx;
 	int textScroll;				/* textfields - current scroll position */

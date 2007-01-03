@@ -2494,6 +2494,89 @@ void MN_InitKeyList_f (void)
 }
 
 /**
+ * @brief This function allows you inline editing of menus
+ * @note Changes you made are lost on quit
+ * @sa MN_PrintMenu_f
+ */
+static void MN_EditMenuNode_f (void)
+{
+	menuNode_t* node;
+	value_t* val;
+	menu_t* current;
+	char *nodeID, *var, *value;
+	int np = -1, cnt = 0;
+
+	/* not initialized yet - commandline? */
+	if (menuStackPos <= 0)
+		return;
+
+	if (Cmd_Argc() < 4) {
+		Com_Printf("usage: mn_editnode <node> <var> <value>\n");
+	}
+	Com_Printf("!!WARNING!! This function may be dangerous and should only be used if you know what you are doing\n");
+
+	current = menuStack[menuStackPos-1];
+	nodeID = Cmd_Argv(1);
+	var = Cmd_Argv(2);
+	value = Cmd_Argv(3);
+	/* search the node */
+	node = MN_GetNode(current, nodeID);
+
+	if (!node) {
+		/* didn't find node -> "kill" action and print error */
+		Com_Printf("MN_EditMenuNode_f: node \"%s\" doesn't exist\n", nodeID);
+		return;
+	}
+
+	for (val = nps; val->type; val++) {
+		if (!Q_strcmp(val->string, var)) {
+			Com_Printf("Found %s at offset %x\n", var, val->ofs);
+			np = cnt;
+			break;
+		}
+		cnt++;
+	}
+
+	if (np == -1) {
+		Com_Printf("%s is no variable in menuNode_t\n", var);
+		return;
+	}
+
+	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
+	if ((nps[np].ofs > 0) && (nps[np].ofs < (size_t)-5))
+		Com_SetValue(node, value, nps[np].type, nps[np].ofs);
+	else
+		Com_Printf("This var is not supported by inline editing\n");
+}
+
+/**
+ * @brief Callback function that prints the current menu from stack to game console
+ */
+static void MN_PrintMenu_f (void)
+{
+	menuNode_t* node;
+	value_t* val;
+	menu_t* current;
+
+	/* not initialized yet - commandline? */
+	if (menuStackPos <= 0)
+		return;
+
+	current = menuStack[menuStackPos-1];
+	assert(current);
+	Com_Printf("menu %s {\n", current->name);
+	for (node = current->firstNode; node; node = node->next) {
+		Com_Printf("  %s %s {\n", nt_strings[node->type], node->name);
+		for (val = nps; val->type; val++) {
+			if ((val->ofs > 0) && (val->ofs < (size_t)-5))
+				Com_Printf("    %s  \"%s\"\n", val->string, Com_ValueToStr(node, val->type, val->ofs));
+		}
+		Com_Printf("  }\n");
+	}
+	Com_Printf("}\n");
+}
+
+/**
  * @brief
  */
 void MN_ResetMenus(void)
@@ -2539,6 +2622,8 @@ void MN_ResetMenus(void)
 	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f, NULL);
 	Cmd_AddCommand("mn_translate", MN_Translate_f, NULL);
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
+	Cmd_AddCommand("mn_debugprintmenu", MN_PrintMenu_f, "Shows the current menu as text on the game console");
+	Cmd_AddCommand("mn_editnode", MN_EditMenuNode_f, "This function is for inline editing of nodes - dangerous!!");
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 	/* get action data memory */
 	if (adataize)
