@@ -454,9 +454,9 @@ void CL_DeleteAircraft(aircraft_t *aircraft)
 		 * BUT we can't do this currently since unique aircraft IDXs are tied to gd.numAircraft,
 		 * so if we add another aircraft we could end up with two aircrafts with identical IDXs. By not
 		 * decrementing gd.numAircraft we accept that the the global count is wrong but that should be ok
-		 * since functions that use aircraft IDXs will not be able to find any deleted aircrafts and so 
+		 * since functions that use aircraft IDXs will not be able to find any deleted aircrafts and so
 		 * should still work (albiet less efficiently). Of course this is all theoretical and needs to be
-		 * tested by buying/selling  aircraft and play-testing but ultimately the IDX assignment/lookup 
+		 * tested by buying/selling  aircraft and play-testing but ultimately the IDX assignment/lookup
 		 * method for aircrafts probably needs to be fixed */
 
 		/* Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
@@ -571,7 +571,7 @@ void CL_CampaignRunAircraft(int dt)
 				}
 
 				/* Check aircraft low fuel */
-				if (aircraft->fuel <= 0 && aircraft->status >= AIR_IDLE) {
+				if (aircraft->fuel <= 0 && aircraft->status >= AIR_IDLE && aircraft->status != AIR_RETURNING) {
 					MN_AddNewMessage(_("Notice"), _("Your dropship has low fuel and returns to base"), qfalse, MSG_STANDARD, NULL);
 					CL_AircraftReturnToBase(aircraft);
 				}
