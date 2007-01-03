@@ -1993,12 +1993,12 @@ tech rs_alien_ortnok_autopsy
 	//TODO: autopsy image
 }
 
-// ANTAREAN
+// TAMAN
 
 tech rs_alien_antarean_autopsy
 {
 	type	alien
-	name	"_Alien Autopsy - Antarean"
+	name	"_Alien Autopsy - Taman"
 	description	"_antarean_autopsy_txt"
 	pre_description	"_antarean_autopsy_pre_txt"
 	up_chapter	aliens

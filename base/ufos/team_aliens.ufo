@@ -71,10 +71,10 @@ actors ortnok
 }
 
 // ==================
-// antarean
+// taman
 // ==================
 
-names antarean
+names taman
 {
 	neutral
 	{
@@ -121,7 +121,7 @@ names antarean
 	}
 }
 
-actors antarean
+actors taman
 {
 	neutral
 	{
@@ -234,9 +234,9 @@ teamdesc ortnok
 	tech rs_alien_ortnok_autopsy
 }
 
-teamdesc antarean
+teamdesc taman
 {
-	name "_Antarean"
+	name "_Taman"
 	combat_notes "rs_alien_antarean_notes"
 	autopsy "rs_alien_antarean_autopsy"
 	xenobiology "rs_alien_antarean_xenobiology"
@@ -373,7 +373,7 @@ team alien
 {
 	{
 	ortnok
-	antarean
+	taman	
 // 	shevaar
 // 	hovernet
 // 	cyborg_ortnok
@@ -381,10 +381,10 @@ team alien
 	}
 }
 
-team antarean
+team taman
 {
 	{
-	antarean
+	taman
 	}
 }
 

@@ -89,7 +89,7 @@ mission mart
 	music		PsymongO4
 	pos			"-13 52"
 	aliens		6
-	alienteam	antarean
+	alienteam	taman
 	alienequip	stage1_workers
 	civilians	6
 	civteam		european
@@ -169,7 +169,7 @@ mission office
 	music		dawn
 	pos			"-149 -21"
 	aliens		8
-	alienteam	antarean
+	alienteam	taman
 	alienequip	stage3_soldiers
 	civilians	2
 	civteam		scientist
@@ -229,7 +229,7 @@ mission city
 	music		ufo1
 	pos			"96 19"
 	aliens		6
-	alienteam	antarean
+	alienteam	taman
 	alienequip	stage2_workers
 	civilians	3
 	civteam		americans
@@ -289,7 +289,7 @@ mission italy
 	music		PsymongO2
 	pos			"-18 40"
 	aliens		3
-	alienteam	antarean
+	alienteam	taman
 	alienequip	stage1_soldiers
 	civilians	8
 	civteam		european
@@ -370,7 +370,7 @@ mission japan
 	music		mission3
 	pos			"-141 39"
 	aliens		10
-	alienteam	antarean
+	alienteam	taman
 	alienequip	stage2_soldiers_melee
 	civilians	3
 	civteam		european
@@ -410,7 +410,7 @@ mission farm
 	music		PsymongN2
 	pos			"116 52"
 	aliens  	4
-	alienteam	antarean
+	alienteam	taman	
 	alienequip	stage1_workers
 	civilians	3
 	civteam		european
@@ -548,7 +548,7 @@ mission gasstation
 	music		credits
 	pos			"-111 21"
 	aliens		4
-	alienteam	antareans
+	alienteam	taman
 	alienequip	stage2_soldiers
 	civilians	6
 	civteam		european
