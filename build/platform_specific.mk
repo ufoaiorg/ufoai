@@ -57,6 +57,7 @@ RELEASE_CFLAGS=-ffast-math -funroll-loops -D_FORTIFY_SOURCE=2
 
 ifeq ($(TARGET_CPU),powerpc)
 	RELEASE_CFLAGS+=-O2 -fomit-frame-pointer -fexpensive-optimizations
+	CFLAGS+=-DALIGN_BYTES=4
 endif
 
 ifeq ($(TARGET_CPU),i386)

@@ -3380,64 +3380,64 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 
 	switch (type) {
 	case V_NULL:
-		return 0;
+		return ALIGN(0);
 
 	case V_BOOL:
 		if (!Q_strncmp(token, "true", 4) || *token == '1')
 			*b = qtrue;
 		else
 			*b = qfalse;
-		return sizeof(byte);
+		return ALIGN(sizeof(byte));
 
 	case V_CHAR:
 		*(char *) b = *token;
-		return sizeof(char);
+		return ALIGN(sizeof(char));
 
 	case V_INT:
 		*(int *) b = atoi(token);
-		return sizeof(int);
+		return ALIGN(sizeof(int));
 
 	case V_FLOAT:
 		*(float *) b = atof(token);
-		return sizeof(float);
+		return ALIGN(sizeof(float));
 
 	case V_POS:
 		if (strstr(token, " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal pos statement\n");
 		sscanf(token, "%f %f", &((float *) b)[0], &((float *) b)[1]);
-		return 2 * sizeof(float);
+		return ALIGN(2 * sizeof(float));
 
 	case V_VECTOR:
 		if (strstr(strstr(token, " "), " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal vector statement\n");
 		sscanf(token, "%f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2]);
-		return 3 * sizeof(float);
+		return ALIGN(3 * sizeof(float));
 
 	case V_COLOR:
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal color statement\n");
 		sscanf(token, "%f %f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2], &((float *) b)[3]);
-		return 4 * sizeof(float);
+		return ALIGN(4 * sizeof(float));
 
 	case V_RGBA:
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal rgba statement\n");
 		sscanf(token, "%i %i %i %i", &((int *) b)[0], &((int *) b)[1], &((int *) b)[2], &((int *) b)[3]);
-		return 4;
+		return ALIGN(4);
 
 	case V_STRING:
 		Q_strncpyz((char *) b, token, MAX_VAR);
 		w = strlen(token) + 1;
 		if (w > MAX_VAR)
 			w = MAX_VAR;
-		return w;
+		return ALIGN(w);
 
 	case V_TRANSLATION_STRING:
 		if (*token == '_')
 			token++;
 
 		Q_strncpyz((char *) b, _(token), MAX_VAR);
-		return strlen((char *) b) + 1;
+		return ALIGN(strlen((char *) b) + 1);
 
 	/* just remove the _ but don't translate */
 	case V_TRANSLATION2_STRING:
@@ -3446,16 +3446,16 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 
 		Q_strncpyz((char *) b, token, MAX_VAR);
 		w = strlen((char *) b) + 1;
-		return w;
+		return ALIGN(w);
 
 	case V_LONGSTRING:
 		strcpy((char *) b, token);
 		w = strlen(token) + 1;
-		return w;
+		return ALIGN(w);
 
 	case V_POINTER:
 		*(void **) b = (void *) token;
-		return sizeof(void *);
+		return ALIGN(sizeof(void *));
 
 	case V_ALIGN:
 		for (w = 0; w < ALIGN_LAST; w++)
@@ -3465,7 +3465,7 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 			*b = 0;
 		else
 			*b = w;
-		return 1;
+		return ALIGN(1);
 
 	case V_BLEND:
 		for (w = 0; w < BLEND_LAST; w++)
@@ -3475,7 +3475,7 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 			*b = 0;
 		else
 			*b = w;
-		return 1;
+		return ALIGN(1);
 
 	case V_STYLE:
 		for (w = 0; w < STYLE_LAST; w++)
@@ -3485,7 +3485,7 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 			*b = 0;
 		else
 			*b = w;
-		return 1;
+		return ALIGN(1);
 
 	case V_FADE:
 		for (w = 0; w < FADE_LAST; w++)
@@ -3495,7 +3495,7 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 			*b = 0;
 		else
 			*b = w;
-		return 1;
+		return ALIGN(1);
 
 	case V_SHAPE_SMALL:
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
@@ -3503,7 +3503,7 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
 		for (h += y; y < h; y++)
 			*(int *) b |= ((1 << w) - 1) << x << (y * 8);
-		return 4;
+		return ALIGN(4);
 
 	case V_SHAPE_BIG:
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
@@ -3512,7 +3512,7 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 		w = ((1 << w) - 1) << x;
 		for (h += y; y < h; y++)
 			((int *) b)[y] |= w;
-		return 64;
+		return ALIGN(64);
 
 	case V_DMGTYPE:
 		for (w = 0; w < CSI->numDTs; w++)
@@ -3522,7 +3522,7 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 			*b = 0;
 		else
 			*b = w;
-		return 1;
+		return ALIGN(1);
 
 	case V_DATE:
 		if (strstr(strstr(token, " "), " ") == NULL)
@@ -3530,7 +3530,7 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 		sscanf(token, "%i %i %i", &x, &y, &w);
 		((date_t *) b)->day = 365 * x + y;
 		((date_t *) b)->sec = 3600 * w;
-		return sizeof(date_t);
+		return ALIGN(sizeof(date_t));
 
 	case V_IF:
 		if (strstr(strstr(token, " "), " ") == NULL)
@@ -3540,7 +3540,7 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 		Q_strncpyz(((menuDepends_t *) b)->var, string, MAX_VAR);
 		Q_strncpyz(((menuDepends_t *) b)->value, string2, MAX_VAR);
 		((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, token);
-		return sizeof(menuDepends_t);
+		return ALIGN(sizeof(menuDepends_t));
 
 	default:
 		Sys_Error("Com_ParseValue: unknown value type\n");
