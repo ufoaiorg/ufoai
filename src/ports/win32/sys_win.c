@@ -885,7 +885,7 @@ static void FixWorkingDirectory (void)
 	p[0] = 0;
 
 	if (strlen(curDir) > (MAX_OSPATH - MAX_QPATH))
-		Sys_Error ("Current path is too long. Please move your Quake II installation to a shorter path.");
+		Sys_Error ("Current path is too long. Please move your UFO:AI installation to a shorter path.");
 
 	SetCurrentDirectory (curDir);
 }
