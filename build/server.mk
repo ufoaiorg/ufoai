@@ -94,13 +94,13 @@ DEDICATED_CFLAGS=-DDEDICATED_ONLY
 # Say how to link the exe
 # FIXME: detect via configure script
 ifeq ($(TARGET_OS),netbsd)
-	$(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
- 		@echo " * [DED] ... linking"; \
-			$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) -lz -lm -lintl
+$(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
+	@echo " * [DED] ... linking"; \
+		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) -lz -lm -lintl
 else
-	$(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
-		@echo " * [DED] ... linking"; \
-	 		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) -lz -lm -ldl
+$(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
+	@echo " * [DED] ... linking"; \
+		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) -lz -lm -ldl
 endif
 
 # Say how to build .o files from .c files for this module
