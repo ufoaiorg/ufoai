@@ -2512,6 +2512,7 @@ static void MN_EditMenuNode_f (void)
 
 	if (Cmd_Argc() < 4) {
 		Com_Printf("usage: mn_editnode <node> <var> <value>\n");
+		return;
 	}
 	Com_Printf("!!WARNING!! This function may be dangerous and should only be used if you know what you are doing\n");
 
