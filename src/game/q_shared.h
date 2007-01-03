@@ -685,22 +685,22 @@ typedef enum {
 	V_CHAR,
 	V_INT,
 	V_FLOAT,
-	V_POS,
+	V_POS = 5,
 	V_VECTOR,
 	V_COLOR,
 	V_RGBA,
 	V_STRING,
-	V_TRANSLATION_STRING,       /* translate via gettext */
+	V_TRANSLATION_STRING = 10,       /* translate via gettext */
 	V_TRANSLATION2_STRING,      /* remove _ but don't translate */
 	V_LONGSTRING,
 	V_POINTER,
 	V_ALIGN,
-	V_BLEND,
+	V_BLEND = 15,
 	V_STYLE,
 	V_FADE,
 	V_SHAPE_SMALL,
 	V_SHAPE_BIG,
-	V_DMGTYPE,
+	V_DMGTYPE = 20,
 	V_DATE,
 	V_IF,
 

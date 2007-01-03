@@ -3688,7 +3688,7 @@ char *Com_ValueToStr(void *base, int type, int ofs)
 		return valuestr;
 
 	case V_FLOAT:
-		Com_sprintf(valuestr, MAX_VAR, "%f", *(float *) b);
+		Com_sprintf(valuestr, MAX_VAR, "%.2f", *(float *) b);
 		return valuestr;
 
 	case V_POS:
@@ -3714,30 +3714,38 @@ char *Com_ValueToStr(void *base, int type, int ofs)
 		return (char *) b;
 
 	case V_ALIGN:
-		return align_names[*b];
+		assert(*(int *)b < ALIGN_LAST);
+		return align_names[*(align_t *)b];
 
 	case V_BLEND:
-		return blend_names[*b];
+		assert(*(blend_t *)b < BLEND_LAST);
+		return blend_names[*(blend_t *)b];
 
 	case V_STYLE:
-		return style_names[*b];
+		assert(*(style_t *)b < STYLE_LAST);
+		return style_names[*(style_t *)b];
 
 	case V_FADE:
-		return fade_names[*b];
+		assert(*(fade_t *)b < FADE_LAST);
+		return fade_names[*(fade_t *)b];
 
 	case V_SHAPE_SMALL:
 	case V_SHAPE_BIG:
 		return "";
 
 	case V_DMGTYPE:
-		return CSI->dts[*b];
+		assert(*(int *)b < MAX_DAMAGETYPES);
+		return CSI->dts[*(int *)b];
 
 	case V_DATE:
 		Com_sprintf(valuestr, MAX_VAR, "%i %i %i", ((date_t *) b)->day / 365, ((date_t *) b)->day % 365, ((date_t *) b)->sec);
 		return valuestr;
 
+	case V_IF:
+		return "";
+
 	default:
-		Sys_Error("Com_ParseValue: unknown value type\n");
+		Sys_Error("Com_ParseValue: unknown value type %i\n", type);
 		return NULL;
 	}
 }
