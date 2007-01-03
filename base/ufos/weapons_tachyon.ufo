@@ -89,7 +89,7 @@ item tachyonrifle
 	ammo		8
 	reload		16
 	price		44000
-	buytype		2
+	buytype		0
 }
 
 item tachyonrifle_ammo
@@ -102,7 +102,7 @@ item tachyonrifle_ammo
 	center		"0 0 -0.2"
 	scale		1.0
 	price		3000
-	buytype		2
+	buytype		0
 
 	primary
 	{
