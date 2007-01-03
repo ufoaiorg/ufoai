@@ -1078,7 +1078,7 @@ tech rs_weapon_stungren
 	{
 		tech rs_skill_explosive
 		tech rs_damage_stun
-		tech rs_anti_alien_gas
+//		tech rs_anti_alien_gas	(TODO: what's this supposed to do? add the tech or remove.)
 	}
 
 	provides	stungrenade
