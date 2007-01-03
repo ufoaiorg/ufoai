@@ -663,8 +663,8 @@ item shotgun_micro
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 3 2"
-	center		"2 0 1"
-	scale		1.1
+	center		"1 0 1"
+	scale		2.0
 	ammo		8
 	reload		20
 	price		3500
@@ -679,7 +679,7 @@ item shotgun_micro_ammo
 	category	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
-	scale		1.4
+	scale		2.0
 	price		35
 	buytype		1
 
