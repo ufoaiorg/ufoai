@@ -1994,6 +1994,37 @@ void B_CheckMaxBases_f(void)
 }
 
 /**
+ * @brief
+ * @sa B_TransferStart_f
+ * @sa B_TransferInit_f
+ */
+static void B_TransferSelect_f (void)
+{
+
+}
+
+/**
+ * @brief
+ * @sa B_TransferSelect_f
+ * @sa B_TransferInit_f
+ */
+static void B_TransferStart_f (void)
+{
+
+}
+
+/**
+ * @brief Callback for transfer menu init function
+ * @sa B_TransferStart_f
+ * @sa B_TransferSelect_f
+ */
+static void B_TransferInit_f (void)
+{
+	menuText[TEXT_LIST] = NULL;
+	menuText[TEXT_STANDARD] = NULL;
+}
+
+/**
  * @brief Resets console commands.
  * @sa MN_ResetMenus
  */
@@ -2026,6 +2057,11 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("buildinglist", B_BuildingList_f, NULL);
 	Cmd_AddCommand("pack_initial", B_PackInitialEquipment_f, NULL);
 	Cmd_AddCommand("assign_initial", B_AssignInitial_f, NULL);
+
+	Cmd_AddCommand("trans_start", B_TransferStart_f, "Starts the tranfer");
+	Cmd_AddCommand("trans_select", B_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
+	Cmd_AddCommand("trans_init", B_TransferInit_f, "Init transfer menu");
+
 	mn_base_count = Cvar_Get("mn_base_count", "0", 0, NULL);
 }
 
