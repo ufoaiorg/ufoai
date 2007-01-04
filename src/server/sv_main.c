@@ -162,11 +162,12 @@ static char* SV_TeamInfoString (void)
 	for (i = 0; i < sv_maxclients->value; i++) {
 		cl = &svs.clients[i];
 		if (cl->state == cs_connected || cl->state == cs_spawned) {
-			/* show only players that already has a team */
-			if (ge->ClientGetTeamNum(cl->player)) {
+			/* show players that already have a team with their teamnum */
+			if (ge->ClientGetTeamNum(cl->player))
 				Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
-				Q_strcat(teaminfo, player, sizeof(teaminfo));
-			}
+			else
+				Com_sprintf(player, sizeof(player), "-\t\"%s\"\n", cl->name);
+			Q_strcat(teaminfo, player, sizeof(teaminfo));
 		}
 	}
 

@@ -537,7 +537,7 @@ void G_RunFrame(void)
 	if (level.intermissionTime && level.time > level.intermissionTime) {
 		G_EndGame(level.winningTeam);
 #if 0
-		/* It still happens that game resulsts are send twice --- dangerous */
+		/* It still happens that game results are send twice --- dangerous */
 
 		/* if the message gets lost, the game will not end
 		   until you kill someone else, so we'll try again later,
