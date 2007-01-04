@@ -2551,6 +2551,43 @@ static void MN_EditMenuNode_f (void)
 }
 
 /**
+ * @brief Callback function that reloads the menus from file
+ */
+static void MN_ReloadMenus_f (void)
+{
+	char *type, *name, *text;
+
+	/* not initialized yet - commandline? */
+	if (menuStackPos <= 0)
+		return;
+
+	/* pre-stage parsing */
+	FS_BuildFileList( "ufos/*.ufo" );
+	FS_NextScriptHeader( NULL, NULL, NULL );
+	text = NULL;
+
+	/* reset menu structures */
+	numActions = 0;
+	numNodes = 0;
+	numMenus = 0;
+	numMenuModels = 0;
+
+	/* get action data memory */
+	if (adataize)
+		memset(adata, 0, adataize);
+	else {
+		Hunk_Begin(0x40000);
+		adata = Hunk_Alloc(0x40000);
+		adataize = Hunk_End();
+	}
+	curadata = adata;
+
+	while ((type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text)) != 0 )
+		if (!Q_strncmp(type, "menu", 4))
+			MN_ParseMenu(name, &text);
+}
+
+/**
  * @brief Callback function that prints the current menu from stack to game console
  */
 static void MN_PrintMenu_f (void)
@@ -2626,6 +2663,7 @@ void MN_ResetMenus(void)
 	Cmd_AddCommand("mn_debugprintmenu", MN_PrintMenu_f, "Shows the current menu as text on the game console");
 	Cmd_AddCommand("mn_editnode", MN_EditMenuNode_f, "This function is for inline editing of nodes - dangerous!!");
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
+	Cmd_AddCommand("mn_debugreload", MN_ReloadMenus_f, "Reloads the menus to show updates without the need to restart");
 	/* get action data memory */
 	if (adataize)
 		memset(adata, 0, adataize);
@@ -2986,7 +3024,7 @@ qboolean MN_ParseMenuBody(menu_t * menu, char **text)
 
 	/* if inheriting another menu, link in the super menu's nodes */
 	for (node = menu->firstNode; node; node = node->next) {
-		if (numNodes>=MAX_MENUNODES)
+		if (numNodes >= MAX_MENUNODES)
 			Sys_Error("MAX_MENUNODES exceeded\n");
 		iNode = &menuNodes[numNodes++];
 		*iNode = *node;
