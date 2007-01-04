@@ -852,7 +852,7 @@ void CL_InitMessageSystem(void);
 void AC_Reset (void);
 
 /* cl_menu.c */
-#define MAX_MENUS			64
+#define MAX_MENUS			128
 #define MAX_MENUNODES		4096
 #define MAX_MENUACTIONS		4096
 #define MAX_MENUSTACK		16
@@ -942,6 +942,9 @@ typedef enum {
 	TEXT_STATS_3,
 	TEXT_STATS_4 = 25,
 	TEXT_STATS_5,
+	TEXT_BASE_LIST,
+	TEXT_BASE_INFO,
+	TEXT_TRANSFER_LIST,
 
 	MAX_MENUTEXTS
 } texts_t;

@@ -75,6 +75,7 @@ typedef enum {
 	B_MISC,
 	B_LAB,
 	B_QUARTERS,
+	B_STORAGE,
 	B_WORKSHOP,
 	B_HOSPITAL,
 	B_HANGAR,
@@ -147,6 +148,8 @@ typedef struct base_s {
 	qboolean hasLab;
 	qboolean hasHospital;
 	qboolean hasAlienCont;
+	qboolean hasStorage;
+	qboolean hasQuarters;
 
 	/*this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];

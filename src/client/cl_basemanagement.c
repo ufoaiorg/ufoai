@@ -231,6 +231,14 @@ void B_UpdateBaseBuildingStatus(building_t* building, base_t* base, buildingStat
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasAlienCont = qtrue;
 		break;
+	case B_QUARTERS:
+		if (building->buildingStatus == B_STATUS_WORKING)
+			base->hasQuarters = qtrue;
+		break;
+	case B_STORAGE:
+		if (building->buildingStatus == B_STATUS_WORKING)
+			base->hasStorage = qtrue;
+		break;
 	case B_LAB:
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasLab = qtrue;
@@ -889,6 +897,8 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 					building->buildingType = B_HOSPITAL;
 				} else if (!Q_strncmp(token, "aliencont", MAX_VAR)) {
 					building->buildingType = B_ALIEN_CONTAINMENT;
+				} else if (!Q_strncmp(token, "storage", MAX_VAR)) {
+					building->buildingType = B_STORAGE;
 				} else if (!Q_strncmp(token, "hangar", MAX_VAR)) {
 					building->buildingType = B_HANGAR;
 				} else if (!Q_strncmp(token, "quarters", MAX_VAR)) {
@@ -1993,6 +2003,12 @@ void B_CheckMaxBases_f(void)
 	}
 }
 
+/** @brief current selected base for transfer */
+static base_t* transferBase = NULL;
+
+/** @brief current selected aircraft */
+static aircraft_t* transferAircraft = NULL;
+
 /**
  * @brief
  * @sa B_TransferStart_f
@@ -2000,7 +2016,49 @@ void B_CheckMaxBases_f(void)
  */
 static void B_TransferSelect_f (void)
 {
+	static char transferList[1024];
+	int type;
 
+	if (Cmd_Argc() < 2) {
+		Com_Printf("usage: trans_select <type>\n");
+		return;
+	}
+
+	if (!transferBase)
+		return;
+
+	type = atoi(Cmd_Argv(1));
+
+	transferList[0] = '\0';
+
+	switch (type) {
+	/* items */
+	case 0:
+		if (transferBase->hasStorage)
+			Q_strcat(transferList, "TODO: items", sizeof(transferList));
+		else
+			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a storage building"), sizeof(transferList));
+		break;
+	/* humans */
+	case 1:
+		if (transferBase->hasQuarters)
+			Q_strcat(transferList, "TODO: employees", sizeof(transferList));
+		else
+			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have quarters"), sizeof(transferList));
+		break;
+	/* techs */
+	case 2:
+		if (transferBase->hasQuarters)
+			Q_strcat(transferList, "TODO: techs", sizeof(transferList));
+		else
+			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a lab"), sizeof(transferList));
+		break;
+	default:
+		Com_Printf("B_TransferStart_f: Unknown type id\n");
+		return;
+	}
+
+	menuText[TEXT_TRANSFER_LIST] = transferList;
 }
 
 /**
@@ -2010,7 +2068,132 @@ static void B_TransferSelect_f (void)
  */
 static void B_TransferStart_f (void)
 {
+	if (!transferAircraft) {
+		Com_Printf("B_TransferStart_f: No aircraft selected\n");
+		return;
+	}
+	transferAircraft->status = AIR_TRANSPORT;
+	/* TODO */
+}
 
+/**
+ * @brief
+ * @sa B_TransferSelect_f
+ * @sa B_TransferInit_f
+ */
+static void B_TransferListSelect_f (void)
+{
+	int num;
+
+	if (!baseCurrent)
+		return;
+
+	if (Cmd_Argc() < 2)
+		return;
+
+	num = atoi(Cmd_Argv(1));
+}
+
+/**
+ * @brief Display current selected aircraft info in transfer menu
+ * @note TODO
+ */
+static void B_TransferDisplayAircraftInfo (void)
+{
+	if (!transferAircraft)
+		return;
+}
+
+/**
+ * @brief Callback for aircraft list click
+ */
+static void B_TransferAircraftListClick_f (void)
+{
+	int i, j = -1, num;
+	aircraft_t* aircraft;
+
+	if (!baseCurrent)
+		return;
+
+	if (Cmd_Argc() < 2)
+		return;
+
+	num = atoi(Cmd_Argv(1));
+
+	for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
+		aircraft = &baseCurrent->aircraft[i];
+		if (aircraft->status == AIR_HOME) {
+			j++;
+			if (j == num)
+				break;
+		}
+	}
+
+	if (j < 0)
+		return;
+
+	transferAircraft = aircraft;
+	B_TransferDisplayAircraftInfo();
+}
+
+/**
+ * @brief Callback for base list click
+ */
+static void B_TransferBaseSelect_f (void)
+{
+	static char baseInfo[1024];
+	/*char str[128];*/
+	int j = -1, num, i;
+	base_t* base;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("usage: trans_bases_click <type>\n");
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
+		if (base->founded == qfalse || base == baseCurrent)
+			continue;
+		j++;
+		if (j == num) {
+			break;
+		}
+	}
+
+	/* no base founded */
+	if (j < 0) {
+		menuText[TEXT_BASE_INFO] = NULL;
+		return;
+	}
+
+	Com_sprintf(baseInfo, sizeof(baseInfo), "%s\n\n", base->name);
+
+	if (base->hasStorage) {
+		/* TODO: Check whether they are free */
+		Q_strcat(baseInfo, _("You can transfer equipment - this base has a storage building\n"), sizeof(baseInfo));
+		/*Com_sprintf(str, sizeof(str), _(""), base->);*/
+	} else {
+		Q_strcat(baseInfo, _("No storage building in this base\n"), sizeof(baseInfo));
+	}
+	if (base->hasQuarters) {
+		/* TODO: Check whether they are free */
+		Q_strcat(baseInfo, _("You can transfer employees - this base has quarters\n"), sizeof(baseInfo));
+		/*Com_sprintf(str, sizeof(str), _(""), base->);*/
+	} else {
+		Q_strcat(baseInfo, _("No quarters in this base\n"), sizeof(baseInfo));
+	}
+	if (base->hasLab) {
+		Q_strcat(baseInfo, _("You can transfer techs - this base has a laboratory\n"), sizeof(baseInfo));
+	} else {
+		Q_strcat(baseInfo, _("No laboratory in this base\n"), sizeof(baseInfo));
+	}
+
+	menuText[TEXT_BASE_INFO] = baseInfo;
+
+	/* set global pointer to current selected base */
+	transferBase = base;
 }
 
 /**
@@ -2020,8 +2203,50 @@ static void B_TransferStart_f (void)
  */
 static void B_TransferInit_f (void)
 {
-	menuText[TEXT_LIST] = NULL;
-	menuText[TEXT_STANDARD] = NULL;
+	static char baseList[1024];
+	static char aircraftList[1024];
+	int i;
+	base_t* base;
+	aircraft_t* aircraft;
+
+	if (!baseCurrent)
+		return;
+
+	transferAircraft = NULL;
+	transferBase = NULL;
+
+	baseList[0] = '\0';
+	aircraftList[0] = '\0';
+
+	if (Cmd_Argc() < 2)
+		Com_Printf("warning: you should call trans_init with parameter 0\n");
+
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
+		if (base->founded == qfalse || base == baseCurrent)
+			continue;
+		Q_strcat(baseList, base->name, sizeof(baseList));
+		Q_strcat(baseList, "\n", sizeof(baseList));
+	}
+
+	/* select the first base */
+	B_TransferBaseSelect_f();
+
+	/* select first item list */
+	B_TransferSelect_f();
+
+	for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
+		aircraft = &baseCurrent->aircraft[i];
+		if (aircraft->status == AIR_HOME) {
+			/* first suitable aircraft will be default selection */
+			if (!transferAircraft)
+				transferAircraft = aircraft;
+			Q_strcat(aircraftList, aircraft->name, sizeof(aircraftList));
+			Q_strcat(aircraftList, "\n", sizeof(aircraftList));
+		}
+	}
+
+	menuText[TEXT_BASE_LIST] = baseList;
+	menuText[TEXT_AIRCRAFT_LIST] = aircraftList;
 }
 
 /**
@@ -2061,7 +2286,9 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("trans_start", B_TransferStart_f, "Starts the tranfer");
 	Cmd_AddCommand("trans_select", B_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
 	Cmd_AddCommand("trans_init", B_TransferInit_f, "Init transfer menu");
-
+	Cmd_AddCommand("trans_bases_click", B_TransferBaseSelect_f, "Callback for base list node click");
+	Cmd_AddCommand("trans_list_click", B_TransferListSelect_f, "Callback for transfer list node click");
+	Cmd_AddCommand("trans_aircraft_click", B_TransferAircraftListClick_f, "Callback for aircraft list node click");
 	mn_base_count = Cvar_Get("mn_base_count", "0", 0, NULL);
 }
 

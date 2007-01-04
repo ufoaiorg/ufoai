@@ -40,6 +40,88 @@ menu transfer
 		pos		"512 512"
 	}
 
+	string s_aircraft
+	{
+		pos	"900 130"
+		align	uc
+		color "1 1 1 1"
+		font	"f_normal"
+		string	"_Aircraft"
+	}
+
+	string s_base
+	{
+		pos	"680 130"
+		align	uc
+		color "1 1 1 1"
+		font	"f_normal"
+		string	"_Base"
+	}
+
+	text trans_bases
+	{
+		num	27
+		pos	"600 160"
+		mousefx	true
+		click
+		size	"165 280"
+		format	"16 0"
+		height	"8"
+//		bgcolor	"1 1 1 0.5"
+	}
+
+	text trans_aircraft
+	{
+		num	9
+		pos	"824 160"
+		mousefx	true
+		click
+		size	"165 280"
+		format	"16 0"
+		height	"20" // FIXME
+//		bgcolor	"1 1 1 0.5"
+	}
+
+	string s_baseinfo
+	{
+		pos	"290 50"
+		align	uc
+		color "1 1 1 1"
+		font	"f_normal"
+		string	"_Baseinfo"
+	}
+
+	text t_baseinfo
+	{
+		num	28
+		pos	"60 80"
+		size	"460 240"
+		format	"16 0"
+//		bgcolor	"1 1 1 0.5"
+	}
+
+	string s_transferlist
+	{
+		pos	"290 340"
+		align	uc
+		color "1 1 1 1"
+		font	"f_normal"
+		string	"_Transfer"
+	}
+
+	text trans_list
+	{
+		num 29
+		pos	"60 370"
+		size	"460 360"
+		mousefx	true
+		click
+		format	"16 0"
+		height	"20" // FIXME
+//		bgcolor	"1 1 1 0.5"
+	}
+
+
 	// ==================
 	// buttons
 	// ==================
@@ -59,7 +141,7 @@ menu transfer
 		tooltip	"_Show only items"
 		image	menu/button_blue
 		mousefx	true
-		pos		"615 585"
+		pos		"635 525"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ trans_items }
@@ -67,11 +149,11 @@ menu transfer
 
 	string s_items
 	{
-		pos	"679 595"
+		pos	"699 540"
 		align	uc
 		color "1 1 1 0.6"
 		font	"f_big"
-		string	"_Equipment/Items"
+		string	"_Equipment"
 	}
 
 	pic bt_humans
@@ -79,7 +161,7 @@ menu transfer
 		tooltip	"_Show only employees"
 		image	menu/button_blue
 		mousefx	true
-		pos		"615 655"
+		pos		"635 615"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ trans_humans }
@@ -87,7 +169,7 @@ menu transfer
 
 	string s_humans
 	{
-		pos	"679 665"
+		pos	"699 630"
 		align	uc
 		color "1 1 1 0.6"
 		font	"f_big"
@@ -99,7 +181,7 @@ menu transfer
 		tooltip	"_Show only technologies"
 		image	menu/button_blue
 		mousefx	true
-		pos		"765 585"
+		pos		"820 525"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ trans_techs }
@@ -107,10 +189,10 @@ menu transfer
 
 	string s_techs
 	{
-		pos	"829 595"
+		pos	"884 540"
 		align	uc
 		color "1 1 1 0.6"
-		font	"f_big"
+		font	"f_normal"
 		string	"_Technologies"
 	}
 
@@ -119,7 +201,7 @@ menu transfer
 		tooltip	"_Back to baseview"
 		image	hud/buttons2
 		mousefx	true
-		pos		"940 686"
+		pos		"940 720"
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd mn_pop }
@@ -131,6 +213,6 @@ menu transfer
 
 	func init
 	{
-		cmd "transfer_init 0;"
+		cmd "trans_init 0;"
 	}
 }
