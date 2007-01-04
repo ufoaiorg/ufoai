@@ -94,6 +94,7 @@ building building_storage
 	image		base/storage
 	fixcosts	75000
 	depends		building_entrance // storage base needs just entrance
+	type     	storage
 	build_time	5
 	varcosts	200
 	map_name	"storage"
