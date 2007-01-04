@@ -547,7 +547,8 @@ void MN_Popup(const char *title, const char *text)
 {
 	menuText[TEXT_POPUP] = (char *) title;
 	menuText[TEXT_POPUP_INFO] = (char *) text;
-	Cbuf_ExecuteText(EXEC_NOW, "game_timestop");
+	if (ccs.singleplayer)
+		Cbuf_ExecuteText(EXEC_NOW, "game_timestop");
 	MN_PushMenu("popup");
 }
 
