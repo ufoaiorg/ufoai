@@ -2009,6 +2009,9 @@ static base_t* transferBase = NULL;
 /** @brief current selected aircraft */
 static aircraft_t* transferAircraft = NULL;
 
+/** @brief current transfer type (item, employee, tech, ...) */
+static int transferType = 0;
+
 /**
  * @brief
  * @sa B_TransferStart_f
@@ -2019,15 +2022,13 @@ static void B_TransferSelect_f (void)
 	static char transferList[1024];
 	int type;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("usage: trans_select <type>\n");
-		return;
-	}
-
 	if (!transferBase)
 		return;
 
-	type = atoi(Cmd_Argv(1));
+	if (Cmd_Argc() < 2)
+		type = transferType;
+	else
+		type = atoi(Cmd_Argv(1));
 
 	transferList[0] = '\0';
 
@@ -2058,6 +2059,7 @@ static void B_TransferSelect_f (void)
 		return;
 	}
 
+	transferType = type;
 	menuText[TEXT_TRANSFER_LIST] = transferList;
 }
 
@@ -2194,6 +2196,9 @@ static void B_TransferBaseSelect_f (void)
 
 	/* set global pointer to current selected base */
 	transferBase = base;
+
+	/* update item list */
+	B_TransferSelect_f();
 }
 
 /**
