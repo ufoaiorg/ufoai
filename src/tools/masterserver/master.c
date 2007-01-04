@@ -132,6 +132,7 @@ static void MS_DropServer (server_t *server)
 
 /**
  * @brief
+ * @param[in] normal if 1 it is a listenserver - otherwise a dedicated sends a heartbeat
  */
 static void MS_AddServer (struct sockaddr_in *from, int normal)
 {
