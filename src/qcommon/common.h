@@ -5,9 +5,9 @@
 /*============================================================================ */
 
 typedef struct sizebuf_s {
+	byte *data;
 	qboolean allowoverflow;		/* if false, do a Com_Error */
 	qboolean overflowed;		/* set to true if the buffer size failed */
-	byte *data;
 	int maxsize;
 	int cursize;
 	int readcount;

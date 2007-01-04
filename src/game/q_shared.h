@@ -682,7 +682,7 @@ typedef struct menuDepends_s {
 #ifndef ALIGN_BYTES
 #define ALIGN_BYTES 1
 #endif
-#define ALIGN(size)  (size + ALIGN_BYTES - (size % ALIGN_BYTES))
+#define ALIGN(size)  ((size) + ((ALIGN_BYTES - ((size) % ALIGN_BYTES)) % ALIGN_BYTES))
 
 typedef enum {
 	V_NULL,
