@@ -1848,7 +1848,7 @@ void G_ClientTeamInfo (player_t * player)
 
 	memset(count, 0, sizeof(count));
 	for (i = 0; i < length; i++) {
-		if (j < globals.num_edicts) {
+		if (j < globals.num_edicts && i < (int)maxsoldiersperplayer->value) {
 			/* here the actors actually spawn */
 			level.num_alive[ent->team]++;
 			level.num_spawned[ent->team]++;

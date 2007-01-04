@@ -413,9 +413,6 @@ static void G_UGVSpawn(edict_t * ent)
 	ent->solid = SOLID_BBOX;
 }
 
-/** @brief Count soldier spawn points for multiplayer games */
-static int soldierCount[MAX_TEAMS];
-
 /**
  * @brief QUAKED info_player_start (1 0 0) (-16 -16 -24) (16 16 32)
  * Starting point for a player.
@@ -430,28 +427,12 @@ static void SP_player_start(edict_t * ent)
 		return;
 	}
 
-	/* mapchange? */
-	if (!level.num_spawnpoints[ent->team])
-		soldierCount[ent->team] = 0;
-
-	/* in teamplay mode check whether the player has reached */
-	/* the max allowed soldiers per player */
-	if ((int) maxsoldiersperplayer->value && soldierCount[ent->team] >= (int) maxsoldiersperplayer->value && (int) sv_teamplay->value) {
-		gi.dprintf("Only %i/%i soldiers per player allowed - don't use this starting point for team %i\n", (int) maxsoldiersperplayer->value, soldierCount[ent->team], ent->team);
-		G_FreeEdict(ent);
-		return;
-	}
-
 	/* maybe there are already the max soldiers allowed per team connected */
 	if ((int) (maxsoldiers->value) > level.num_spawnpoints[ent->team]) {
 		ent->STUN = 0;
 		ent->HP = MAX_HP;
 		ent->AP = 100;
 		G_ActorSpawn(ent);
-		soldierCount[ent->team]++;
-	} else if (soldierCount <= 0) {
-		gi.dprintf("No free soldier slots available - please choose another team\n");
-		G_FreeEdict(ent);
 	} else
 		G_FreeEdict(ent);
 }
@@ -643,8 +624,6 @@ static void SP_worldspawn(edict_t * ent)
 	/* default value */
 	if (st.maxteams < 2)
 		st.maxteams = 2;
-
-	memset(soldierCount, 0, sizeof(soldierCount));
 
 	/* make some data visible to the server */
 	if (ent->message && ent->message[0]) {
