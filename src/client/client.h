@@ -572,7 +572,6 @@ static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD
 /*extern vec3_t player_mins;
 extern vec3_t player_maxs;*/
 
-void LE_Status(void);
 void LE_Think(void);
 char *LE_GetAnim(char *anim, int right, int left, int state);
 

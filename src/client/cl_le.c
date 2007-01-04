@@ -235,34 +235,6 @@ LE thinking
 =========================================================================== */
 
 /**
- * @brief Checks whether there are soldiers alive if not - end round automatically
- */
-void LE_Status(void)
-{
-	le_t *le;
-	int i;
-	qboolean endRound = qtrue;
-
-	if (!numLEs)
-		return;
-
-	/* only multiplayer - but maybe not our round? */
-	if ((int) Cvar_VariableValue("maxclients") > 1 && cls.team != cl.actTeam)
-		return;
-
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && le->team == cls.team && !(le->state & STATE_DEAD))
-			/* call think function */
-			endRound = qfalse;
-
-	/* ok, no players alive in multiplayer - end this round automatically */
-	if (endRound) {
-		CL_NextRound();
-		Com_Printf("End round automatically - no soldiers left\n");
-	}
-}
-
-/**
  * @brief Calls the le think function
  * @sa LET_StartIdle
  * @sa LET_PathMove
