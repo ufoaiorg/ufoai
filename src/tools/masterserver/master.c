@@ -310,6 +310,7 @@ static void MS_Ack (struct sockaddr_in *from)
 			server->last_heartbeat = time(0);
 			server->queued_pings = 0;
 			server->heartbeats++;
+			server->validated = 1;
 			return;
 		}
 	}
