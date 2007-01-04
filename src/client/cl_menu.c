@@ -936,7 +936,7 @@ static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 
 				if (*entry->onClick) {
 					baseCurrent->buildingCurrent = entry;
-					Cbuf_ExecuteText(EXEC_NOW, va("%s %i;", entry->onDestroy, baseCurrent->idx));
+					Cbuf_ExecuteText(EXEC_NOW, va("%s %i;", entry->onClick, baseCurrent->idx));
 					baseCurrent->buildingCurrent = NULL;
 				}
 #if 0
