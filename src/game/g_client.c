@@ -1957,10 +1957,24 @@ void G_ClientTeamInfo (player_t * player)
 	G_ClientTeamAssign(player);
 }
 
+/**
+ * @brief Counts the still living actors for a player
+ */
+static int G_PlayerSoldiersCount (player_t* player)
+{
+	int i, cnt = 0;
+	edict_t *ent;
+
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->pnum == player->num)
+			cnt++;
+
+	return cnt;
+}
 
 /**
  * @brief
- * @TODO: Check if we are in multiplayer and there are other teams
+ * @sa G_PlayerSoldiersCount
  */
 void G_ClientEndRound(player_t * player, qboolean quiet)
 {
@@ -1979,7 +1993,8 @@ void G_ClientEndRound(player_t * player, qboolean quiet)
 	/* check if all team members are ready */
 	player->ready = qtrue;
 	for (i = 0, p = game.players; i < game.maxplayers * 2; i++, p++)
-		if (p->inuse && p->pers.team == level.activeTeam && !p->ready)
+		if (p->inuse && p->pers.team == level.activeTeam
+			&& !p->ready && G_PlayerSoldiersCount(p) > 0)
 			return;
 
 	/* clear any remaining reaction fire */
@@ -2104,7 +2119,7 @@ qboolean G_ClientSpawn(player_t * player)
 		if (sv_maxclients->value == 1) {
 			level.activeTeam = player->pers.team;
 			turnTeam = level.activeTeam;
-		} else { 
+		} else {
 			/* return since not all multiplayer teams have joined */
 			/* (G_ClientTeamAssign sets level.activeTeam once all teams have joined) */
 			return qfalse;
