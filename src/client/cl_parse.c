@@ -211,7 +211,6 @@ int nextTime;
 int shootTime;
 int impactTime;
 qboolean parsedDeath = qfalse;
-qboolean teamplay;
 
 /*============================================================================= */
 
@@ -481,7 +480,7 @@ void CL_Reset( sizebuf_t *sb )
  */
 void CL_StartGame( sizebuf_t *sb )
 {
-	teamplay = MSG_ReadByte(sb);
+	qboolean team_play = MSG_ReadByte(sb);
 
 	/* init camera position and angles */
 	memset(&cl.cam, 0, sizeof(camera_t));
@@ -508,7 +507,7 @@ void CL_StartGame( sizebuf_t *sb )
 	CL_EventReset();
 
 	if (!ccs.singleplayer && baseCurrent) {
-		if (teamplay) {
+		if (team_play) {
 			MN_PushMenu("multiplayer_selectteam");
 			Cvar_Set("mn_active", "multiplayer_selectteam");
 		} else {

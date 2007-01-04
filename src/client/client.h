@@ -413,7 +413,6 @@ char* CL_ToDifficultyName(int difficulty);
 void CL_SpawnSoldiers_f(void);
 
 extern qboolean loadingMessage;
-extern qboolean teamplay;
 extern char loadingMessages[96];
 extern float loadingPercent;
 

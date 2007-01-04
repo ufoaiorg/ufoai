@@ -130,7 +130,6 @@ typedef struct teamData_s {
 } teamData_t;
 
 static teamData_t teamData;
-qboolean teamplay;
 
 /*====================================================================== */
 
@@ -696,7 +695,7 @@ static void CL_ParseTeamInfoMessage (void)
 	teamData.parsed = qtrue;
 
 	/* spawn multi-player death match soldiers here */
-	if (!ccs.singleplayer && baseCurrent && !teamplay)
+	if (!ccs.singleplayer && baseCurrent && !teamData.teamplay)
 		CL_SpawnSoldiers_f();
 }
 
