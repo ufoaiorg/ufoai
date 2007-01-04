@@ -385,6 +385,7 @@ aircraft_t *CL_GetAircraft(char *name)
  * @brief Places a new aircraft in the given base
  * @param[in] base Pointer to base where aircraft should be added
  * @param[in] name Name of the aircraft to add
+ * @TODO: What about credits? maybe handle them in CL_NewAircraft_f?
  */
 void CL_NewAircraft(base_t *base, char *name)
 {
