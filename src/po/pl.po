@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-01-02 18:10+0100\n"
+"POT-Creation-Date: 2007-01-05 00:30+0100\n"
 "PO-Revision-Date: 2007-01-02 00:06+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team: \n"
@@ -72,115 +72,115 @@ msgstr "Wejście"
 msgid "Storage"
 msgstr "Magazyn"
 
-#: ../base/ufos/basemanagement.ufo:108
+#: ../base/ufos/basemanagement.ufo:109
 msgid "Power Plant"
 msgstr "Elektrownia"
 
-#: ../base/ufos/basemanagement.ufo:124
+#: ../base/ufos/basemanagement.ufo:125
 msgid "Command Center"
 msgstr "Centrum Dowodzenia"
 
-#: ../base/ufos/basemanagement.ufo:138
+#: ../base/ufos/basemanagement.ufo:139
 msgid "Living Quarters"
 msgstr "Kwatery"
 
-#: ../base/ufos/basemanagement.ufo:156 ../base/ufos/basemanagement.ufo:176
+#: ../base/ufos/basemanagement.ufo:157 ../base/ufos/basemanagement.ufo:177
 msgid "Large Hangar"
 msgstr "Duży hangar"
 
-#: ../base/ufos/basemanagement.ufo:185
+#: ../base/ufos/basemanagement.ufo:186
 msgid "Small Hangar"
 msgstr "Mały hangar"
 
-#: ../base/ufos/basemanagement.ufo:204
+#: ../base/ufos/basemanagement.ufo:205
 msgid "Small UFO Hangar"
 msgstr "Mały hangar UFO"
 
-#: ../base/ufos/basemanagement.ufo:219
+#: ../base/ufos/basemanagement.ufo:220
 msgid "Large UFO Hangar"
 msgstr "Duży hangar UFO"
 
-#: ../base/ufos/basemanagement.ufo:234
+#: ../base/ufos/basemanagement.ufo:235
 msgid "Team Room"
 msgstr "Świetlica"
 
-#: ../base/ufos/basemanagement.ufo:246 ../base/ufos/basemanagement.ufo:265
+#: ../base/ufos/basemanagement.ufo:247 ../base/ufos/basemanagement.ufo:266
 msgid "Workshop"
 msgstr "Warsztat"
 
-#: ../base/ufos/basemanagement.ufo:274
+#: ../base/ufos/basemanagement.ufo:275
 msgid "Radar"
 msgstr "Radar"
 
-#: ../base/ufos/basemanagement.ufo:291
+#: ../base/ufos/basemanagement.ufo:292
 msgid "Laboratory"
 msgstr "Laboratorium"
 
-#: ../base/ufos/basemanagement.ufo:309
+#: ../base/ufos/basemanagement.ufo:310
 msgid "Hospital"
 msgstr "Szpital"
 
-#: ../base/ufos/basemanagement.ufo:327
+#: ../base/ufos/basemanagement.ufo:328
 msgid "Home"
 msgstr "Kwatera główna"
 
-#: ../base/ufos/basemanagement.ufo:328
+#: ../base/ufos/basemanagement.ufo:329
 msgid "Base #2"
 msgstr "Baza #2"
 
-#: ../base/ufos/basemanagement.ufo:329
+#: ../base/ufos/basemanagement.ufo:330
 msgid "Base #3"
 msgstr "Baza #3"
 
-#: ../base/ufos/basemanagement.ufo:330
+#: ../base/ufos/basemanagement.ufo:331
 msgid "Base #4"
 msgstr "Baza #4"
 
-#: ../base/ufos/basemanagement.ufo:331
+#: ../base/ufos/basemanagement.ufo:332
 msgid "Base #5"
 msgstr "Baza #5"
 
-#: ../base/ufos/basemanagement.ufo:332
+#: ../base/ufos/basemanagement.ufo:333
 msgid "Base #6"
 msgstr "Baza #6"
 
-#: ../base/ufos/basemanagement.ufo:333
+#: ../base/ufos/basemanagement.ufo:334
 msgid "Base #7"
 msgstr "Baza #7"
 
-#: ../base/ufos/basemanagement.ufo:334
+#: ../base/ufos/basemanagement.ufo:335
 msgid "Base #8"
 msgstr "Baza #8"
 
-#: ../base/ufos/basemanagement.ufo:340
+#: ../base/ufos/basemanagement.ufo:341
 msgid "Firebird-class Dropship"
 msgstr "Transportowiec, klasa Firebird"
 
-#: ../base/ufos/basemanagement.ufo:341
+#: ../base/ufos/basemanagement.ufo:342
 msgid "Firebird D"
 msgstr "Firebird D"
 
-#: ../base/ufos/basemanagement.ufo:359
+#: ../base/ufos/basemanagement.ufo:360
 msgid "Stiletto-class Interceptor"
 msgstr "Samolot przechwytujący, klasa Stiletto"
 
-#: ../base/ufos/basemanagement.ufo:360
+#: ../base/ufos/basemanagement.ufo:361
 msgid "Stiletto I"
 msgstr "Stiletto I"
 
-#: ../base/ufos/basemanagement.ufo:381
+#: ../base/ufos/basemanagement.ufo:382
 msgid "Saracen-class Interceptor"
 msgstr "Samolot przechwytujący, klasa Saracen"
 
-#: ../base/ufos/basemanagement.ufo:382
+#: ../base/ufos/basemanagement.ufo:383
 msgid "Saracen I"
 msgstr "Saracen I"
 
-#: ../base/ufos/basemanagement.ufo:403 ../base/ufos/research.ufo:1858
+#: ../base/ufos/basemanagement.ufo:404 ../base/ufos/research.ufo:1898
 msgid "UFO - Scout"
 msgstr "UFO - Pojazd zwiadowczy"
 
-#: ../base/ufos/basemanagement.ufo:421 ../base/ufos/research.ufo:1891
+#: ../base/ufos/basemanagement.ufo:422 ../base/ufos/research.ufo:1931
 msgid "UFO - Fighter"
 msgstr "UFO - Myśliwiec"
 
@@ -343,11 +343,12 @@ msgstr "Odwołaj pojazd"
 msgid "Call back"
 msgstr "Odwołaj"
 
-#: ../base/ufos/menu_aircraft.ufo:196 ../base/ufos/menu_bases.ufo:187
+#: ../base/ufos/menu_aircraft.ufo:196 ../base/ufos/menu_bases.ufo:188
 msgid "Transfer equipment or personnel"
 msgstr "Dokonaj transferu ekwipunku lub personelu"
 
-#: ../base/ufos/menu_aircraft.ufo:211 ../base/ufos/menu_bases.ufo:212
+#: ../base/ufos/menu_aircraft.ufo:211 ../base/ufos/menu_bases.ufo:213
+#: ../base/ufos/menu_transfer.ufo:109
 msgid "Transfer"
 msgstr "Transfer"
 
@@ -389,7 +390,7 @@ msgstr "Broń"
 msgid "Available equipment:"
 msgstr "Dostępny ekwipunek:"
 
-#: ../base/ufos/menu_aliencont.ufo:48 ../base/ufos/menu_bases.ufo:334
+#: ../base/ufos/menu_aliencont.ufo:48 ../base/ufos/menu_bases.ufo:335
 #: ../base/ufos/menu_buildings.ufo:76 ../base/ufos/menu_buy.ufo:708
 #: ../base/ufos/menu_buy.ufo:1146 ../base/ufos/menu_geoscape.ufo:87
 #: ../base/ufos/menu_production.ufo:49 ../base/ufos/menu_research.ufo:900
@@ -399,7 +400,7 @@ msgstr "KREDYTY"
 #: ../base/ufos/menu_aliencont.ufo:68 ../base/ufos/menu_buildings.ufo:58
 #: ../base/ufos/menu_buy.ufo:820 ../base/ufos/menu_hire.ufo:786
 #: ../base/ufos/menu_production.ufo:341 ../base/ufos/menu_research.ufo:945
-#: ../base/ufos/menu_transfer.ufo:119
+#: ../base/ufos/menu_transfer.ufo:201
 msgid "Back to baseview"
 msgstr "Wróć do podglądu bazy"
 
@@ -435,7 +436,7 @@ msgstr ""
 msgid "yes"
 msgstr "tak"
 
-#: ../base/ufos/menu_aliencont.ufo:166 ../base/ufos/team_aliens.ufo:239
+#: ../base/ufos/menu_aliencont.ufo:166
 msgid "Antarean"
 msgstr ""
 
@@ -538,88 +539,122 @@ msgstr "Przełącz na broń w prawej ręce"
 msgid "Switch to left hand weapon"
 msgstr "Przełącz na broń w lewej ręce"
 
-#: ../base/ufos/menu_bases.ufo:48
+#: ../base/ufos/menu_bases.ufo:49
 msgid "Back to worldview"
 msgstr "Wróć do podglądu świata"
 
-#: ../base/ufos/menu_bases.ufo:73 ../base/ufos/menu_bases.ufo:90
-#: ../base/ufos/menu_bases.ufo:169 ../base/ufos/menu_bases.ufo:240
-#: ../base/ufos/menu_bases.ufo:313
+#: ../base/ufos/menu_bases.ufo:74 ../base/ufos/menu_bases.ufo:91
+#: ../base/ufos/menu_bases.ufo:170 ../base/ufos/menu_bases.ufo:241
+#: ../base/ufos/menu_bases.ufo:314
 msgid "Build base-facilities"
 msgstr "Zbuduj moduły bazy"
 
-#: ../base/ufos/menu_bases.ufo:98
+#: ../base/ufos/menu_bases.ufo:99
 msgid "Buildings"
 msgstr "Budynki"
 
-#: ../base/ufos/menu_bases.ufo:109
+#: ../base/ufos/menu_bases.ufo:110
 msgid "Manage your aircraft"
 msgstr "Zarządzaj pojazdami"
 
-#: ../base/ufos/menu_bases.ufo:126
+#: ../base/ufos/menu_bases.ufo:127
 msgid "Buy a new aircraft"
 msgstr "Kup nowy pojazd"
 
-#: ../base/ufos/menu_bases.ufo:141 ../base/ufos/menu_geoscape.ufo:716
-#: ../base/ufos/research.ufo:74 client/cl_map.c:321
+#: ../base/ufos/menu_bases.ufo:142 ../base/ufos/menu_geoscape.ufo:716
+#: ../base/ufos/menu_transfer.ufo:49 ../base/ufos/research.ufo:74
+#: client/cl_map.c:321
 msgid "Aircraft"
 msgstr "Pojazdy powietrzne"
 
-#: ../base/ufos/menu_bases.ufo:152
+#: ../base/ufos/menu_bases.ufo:153
 msgid "Buy/Sell equipment"
 msgstr "Kup/sprzedaj"
 
-#: ../base/ufos/menu_bases.ufo:177
+#: ../base/ufos/menu_bases.ufo:178
 msgid "Buy/Sell Equipment"
 msgstr "Kup/sprzedaj"
 
-#: ../base/ufos/menu_bases.ufo:203
+#: ../base/ufos/menu_bases.ufo:204
 msgid "Can't transfer - only one base"
 msgstr "Nie można dokonać transferu - tylko jedna baza"
 
-#: ../base/ufos/menu_bases.ufo:223
+#: ../base/ufos/menu_bases.ufo:224
 msgid "Research new technology"
 msgstr "Badaj nową technologię"
 
-#: ../base/ufos/menu_bases.ufo:248
+#: ../base/ufos/menu_bases.ufo:249
 msgid "Research"
 msgstr "Badania"
 
-#: ../base/ufos/menu_bases.ufo:259
+#: ../base/ufos/menu_bases.ufo:260
 msgid "Produce new equipment"
 msgstr "Produkuj nowy sprzęt"
 
-#: ../base/ufos/menu_bases.ufo:276
+#: ../base/ufos/menu_bases.ufo:277
 msgid "Workshop not operational"
 msgstr "Warsztaty nie mogą zostać użyte"
 
-#: ../base/ufos/menu_bases.ufo:285
+#: ../base/ufos/menu_bases.ufo:286
 msgid "Production"
 msgstr "Produkcja"
 
-#: ../base/ufos/menu_bases.ufo:296 ../base/ufos/menu_bases.ufo:321
+#: ../base/ufos/menu_bases.ufo:297 ../base/ufos/menu_bases.ufo:322
 msgid "Hire employees"
 msgstr "Zatrudnij"
 
-#: ../base/ufos/menu_bases.ufo:342 ../base/ufos/menu_geoscape.ufo:95
+#: ../base/ufos/menu_bases.ufo:343 ../base/ufos/menu_geoscape.ufo:95
 msgid "Organisation capital"
 msgstr "Kapitał organizacji"
 
-#: ../base/ufos/menu_bases.ufo:351
+#: ../base/ufos/menu_bases.ufo:352
 msgid "Name of this base"
 msgstr "Nazwa tej bazy"
 
-#: ../base/ufos/menu_bases.ufo:365
+#: ../base/ufos/menu_bases.ufo:366
 msgid "Rename your base"
 msgstr "Zmień nazwę bazy"
 
-#: ../base/ufos/menu_bases.ufo:379
+#: ../base/ufos/menu_bases.ufo:380
 msgid "Switch to the previous base"
 msgstr "Przełącz na poprzednią bazę"
 
-#: ../base/ufos/menu_bases.ufo:390
+#: ../base/ufos/menu_bases.ufo:391
 msgid "Switch to the next base"
 msgstr "Przełącz na następną bazę"
+
+#: ../base/ufos/menu_bases.ufo:484
+msgid "Destroy building"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:493
+msgid "Are you sure, that you want to destroy this building?"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:500 ../base/ufos/menu_geoscape.ufo:321
+#: ../base/ufos/menu_geoscape.ufo:437 ../base/ufos/menu_geoscape.ufo:534
+#: ../base/ufos/menu_geoscape.ufo:585 ../base/ufos/menu_geoscape.ufo:677
+#: ../base/ufos/menu_geoscape.ufo:745 ../base/ufos/menu_geoscape.ufo:798
+#: ../base/ufos/menu_options.ufo:599
+msgid "Close this dialog"
+msgstr "Zamknij to okno"
+
+#: ../base/ufos/menu_bases.ufo:513 ../base/ufos/menu_geoscape.ufo:334
+#: ../base/ufos/menu_geoscape.ufo:461 ../base/ufos/menu_geoscape.ufo:547
+#: ../base/ufos/menu_geoscape.ufo:598 ../base/ufos/menu_geoscape.ufo:690
+#: ../base/ufos/menu_geoscape.ufo:758 ../base/ufos/menu_options.ufo:623
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: ../base/ufos/menu_bases.ufo:520
+#, fuzzy
+msgid "Destroy the building"
+msgstr "Zacznij z budynkami:"
+
+#: ../base/ufos/menu_bases.ufo:533
+#, fuzzy
+msgid "Destroy"
+msgstr "Ponów"
 
 #: ../base/ufos/menu_buy.ufo:255 ../base/ufos/menu_buy.ufo:271
 #: ../base/ufos/menu_buy.ufo:287 ../base/ufos/menu_buy.ufo:303
@@ -769,20 +804,6 @@ msgstr "Gotowy"
 #: ../base/ufos/menu_geoscape.ufo:315
 msgid "Aircraft reached desired location - what to do?"
 msgstr "Pojazd osiągnął zamierzony cel - co zrobić?"
-
-#: ../base/ufos/menu_geoscape.ufo:321 ../base/ufos/menu_geoscape.ufo:437
-#: ../base/ufos/menu_geoscape.ufo:534 ../base/ufos/menu_geoscape.ufo:585
-#: ../base/ufos/menu_geoscape.ufo:677 ../base/ufos/menu_geoscape.ufo:745
-#: ../base/ufos/menu_geoscape.ufo:798 ../base/ufos/menu_options.ufo:599
-msgid "Close this dialog"
-msgstr "Zamknij to okno"
-
-#: ../base/ufos/menu_geoscape.ufo:334 ../base/ufos/menu_geoscape.ufo:461
-#: ../base/ufos/menu_geoscape.ufo:547 ../base/ufos/menu_geoscape.ufo:598
-#: ../base/ufos/menu_geoscape.ufo:690 ../base/ufos/menu_geoscape.ufo:758
-#: ../base/ufos/menu_options.ufo:623
-msgid "Cancel"
-msgstr "Anuluj"
 
 #: ../base/ufos/menu_geoscape.ufo:341 ../base/ufos/menu_geoscape.ufo:605
 msgid "Enter the battlefield"
@@ -1698,7 +1719,7 @@ msgstr "Misje"
 msgid "Bases"
 msgstr "Bazy"
 
-#: ../base/ufos/menu_stats.ufo:95 ../base/ufos/menu_transfer.ufo:94
+#: ../base/ufos/menu_stats.ufo:95 ../base/ufos/menu_transfer.ufo:176
 msgid "Employees"
 msgstr "Personel"
 
@@ -1784,23 +1805,32 @@ msgstr "Specyfikacja"
 msgid "Actor Abilities"
 msgstr "Właściwości postaci"
 
-#: ../base/ufos/menu_transfer.ufo:59
+#: ../base/ufos/menu_transfer.ufo:58 client/cl_map.c:315
+msgid "Base"
+msgstr "Baza"
+
+#: ../base/ufos/menu_transfer.ufo:91
+#, fuzzy
+msgid "Baseinfo"
+msgstr "Informacje"
+
+#: ../base/ufos/menu_transfer.ufo:141
 msgid "Show only items"
 msgstr "Pokaż tylko rzeczy"
 
-#: ../base/ufos/menu_transfer.ufo:74
-msgid "Equipment/Items"
+#: ../base/ufos/menu_transfer.ufo:156 ../base/ufos/research.ufo:77
+msgid "Equipment"
 msgstr "Ekwipunek"
 
-#: ../base/ufos/menu_transfer.ufo:79
+#: ../base/ufos/menu_transfer.ufo:161
 msgid "Show only employees"
 msgstr "Pokaż tylko pracowników"
 
-#: ../base/ufos/menu_transfer.ufo:99
+#: ../base/ufos/menu_transfer.ufo:181
 msgid "Show only technologies"
 msgstr "Pokaż tylko technologie"
 
-#: ../base/ufos/menu_transfer.ufo:114
+#: ../base/ufos/menu_transfer.ufo:196
 msgid "Technologies"
 msgstr "Technologie"
 
@@ -1864,9 +1894,11 @@ msgstr "Atak terrorystyczny"
 #: ../base/ufos/missions.ufo:307 ../base/ufos/missions.ufo:700
 #: ../base/ufos/missions.ufo:740 ../base/ufos/missions.ufo:761
 msgid ""
-"Damn it, you've let some of them get\\away again! Reequip your squad and\\get after them!"
+"Damn it, you've let some of them get\\away again! Reequip your squad and"
+"\\get after them!"
 msgstr ""
-"A niech to, pozwoliłeś ucieć kilku z nich!\\Wyposaż ponownie swoją drużynę i\\spróbuj ich dopaść!"
+"A niech to, pozwoliłeś ucieć kilku z nich!\\Wyposaż ponownie swoją drużynę i"
+"\\spróbuj ich dopaść!"
 
 #: ../base/ufos/missions.ufo:25
 msgid "Altdorf"
@@ -1910,7 +1942,8 @@ msgstr "Wellington"
 
 #: ../base/ufos/missions.ufo:147
 msgid ""
-"There are rumors of a mine being\\overrun by aliens. Although this\\source of information is doubtful,\\you'll need to investigate."
+"There are rumors of a mine being\\overrun by aliens. Although this\\source "
+"of information is doubtful,\\you'll need to investigate."
 msgstr "Usłyszeliśmy pogłoski o kopalni\\spenetrowanej przez Obcych."
 
 #: ../base/ufos/missions.ufo:165
@@ -2153,10 +2186,6 @@ msgstr "Moduły"
 msgid "Research Reports"
 msgstr "Informacje badawcze"
 
-#: ../base/ufos/research.ufo:77
-msgid "Equipment"
-msgstr "Ekwipunek"
-
 #: ../base/ufos/research.ufo:78
 msgid "Alien Artifacts"
 msgstr "Artefakty Obcych"
@@ -2181,7 +2210,21 @@ msgstr ""
 msgid "laser_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:109
+#: ../base/ufos/research.ufo:117
+#, fuzzy
+msgid "Anti-Alien Gas"
+msgstr "Obcy"
+
+#: ../base/ufos/research.ufo:119
+msgid "anti_alien_gas_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:120
+#, fuzzy
+msgid "anti_alien_gas_pre_txt"
+msgstr "Brak informacji przed wynalezieniem."
+
+#: ../base/ufos/research.ufo:149
 msgid "assault_txt"
 msgstr ""
 "Specyfikacja techniczna: Karabin szturmowy AR-80\n"
@@ -2194,37 +2237,84 @@ msgstr ""
 "\n"
 "Sporządzony: 20 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Operacji Atlantyckich\n"
 "\n"
 "\n"
 "\n"
 "Przegląd\n"
 "\n"
-"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi poważniejszych strat. Zadaniem nowotworzonych sił PHALANX będzie zmiana tych statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co dzisiejsza ziemska technologia ma do zaoferowania.\n"
+"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi "
+"technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania "
+"wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne "
+"słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. "
+"Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie "
+"powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi "
+"poważniejszych strat. Zadaniem nowotworzonych sił PHALANX będzie zmiana tych "
+"statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co dzisiejsza "
+"ziemska technologia ma do zaoferowania.\n"
 "\n"
-"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak np. osobiste pancerze), pozwalających na nawiązanie skutecznej i równorzędnej walki z Obcymi. Środki te projektowane są pod kątem podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na przetrwanie podczas starcia.\n"
+"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i "
+"stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak "
+"np. osobiste pancerze), pozwalających na nawiązanie skutecznej i "
+"równorzędnej walki z Obcymi. Środki te projektowane są pod kątem "
+"podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na "
+"przetrwanie podczas starcia.\n"
 "\n"
-"Francuski karabin LeBlanc FAA-191 (oryginalna nazwa: Fusil Assaut Automatique) łączy w sobie najlepsze cechy klasy broni, do której należy, czyli karabinów szturmowych.Bezkolbowa konstrukcja (uchwyt znajduje się w przedniej części karabinu) pozwalająca na zmniejszenie jego wagi; ponadprzeciętny zasięg skutecznego ognia, pojemny magazynek (mieszczący 30 naboi) i duża siła penetracji wystrzeliwanych pocisków decydują wspólnie o dużej uniwersalności tego karabinu. FAA-191, jako broń zaprojektowana do walki na krótkich i średnich dystansach, używa bezłuskowej amunicji kalibru 4.7 mm z wolframowym rdzeniem, która jest przy tego typu zastosowaniach idealnym wyborem ze względu na jej wysokie parametry penetracji.Nie jest natomiast polecane używanie FAA-191 do prowadzenia ostrzału z dużej odległości.\n"
+"Francuski karabin LeBlanc FAA-191 (oryginalna nazwa: Fusil Assaut "
+"Automatique) łączy w sobie najlepsze cechy klasy broni, do której należy, "
+"czyli karabinów szturmowych.Bezkolbowa konstrukcja (uchwyt znajduje się w "
+"przedniej części karabinu) pozwalająca na zmniejszenie jego wagi; "
+"ponadprzeciętny zasięg skutecznego ognia, pojemny magazynek (mieszczący 30 "
+"naboi) i duża siła penetracji wystrzeliwanych pocisków decydują wspólnie o "
+"dużej uniwersalności tego karabinu. FAA-191, jako broń zaprojektowana do "
+"walki na krótkich i średnich dystansach, używa bezłuskowej amunicji kalibru "
+"4.7 mm z wolframowym rdzeniem, która jest przy tego typu zastosowaniach "
+"idealnym wyborem ze względu na jej wysokie parametry penetracji.Nie jest "
+"natomiast polecane używanie FAA-191 do prowadzenia ostrzału z dużej "
+"odległości.\n"
 "\n"
-"Pomimo tego, że pierwszy prototyp broni zaprezentowano w 2057, jego konstrukcja nie zestarzała się zbytnio, i do dziś trudno wskazać karabin szturmowy o bezdyskusyjnie lepszych parametrach.Wygoda użycia, łatwość i szybkość przeładowywania, odporność na zacinanie się w warunkach dużej wilgotności, wysokich i niskich temperatur - wszystko to czyni FAA-191 bronią, na której można polegać.Dodatkową zaletą jest niski koszt i łatwość uzyskania części zamiennych z racji rozpowszechnienia tej broni na całym świecie.\n"
+"Pomimo tego, że pierwszy prototyp broni zaprezentowano w 2057, jego "
+"konstrukcja nie zestarzała się zbytnio, i do dziś trudno wskazać karabin "
+"szturmowy o bezdyskusyjnie lepszych parametrach.Wygoda użycia, łatwość i "
+"szybkość przeładowywania, odporność na zacinanie się w warunkach dużej "
+"wilgotności, wysokich i niskich temperatur - wszystko to czyni FAA-191 "
+"bronią, na której można polegać.Dodatkową zaletą jest niski koszt i łatwość "
+"uzyskania części zamiennych z racji rozpowszechnienia tej broni na całym "
+"świecie.\n"
 "\n"
-"W specyfikacji wewnętrznej PHALANX opisywany karabin szturmowy został sklasyfikowany jako AR-80.\n"
+"W specyfikacji wewnętrznej PHALANX opisywany karabin szturmowy został "
+"sklasyfikowany jako AR-80.\n"
 "\n"
 "\n"
 "Sugerowana Doktryna Postępowania\n"
 "\n"
-"AR-80 powinien być używany jako podstawowy karabin szturmowy naszych żołnierzy; przeznaczony do walki na średnich dystansach, ze względu na dużą siłę ognia i większy zasięg niż jakakolwiek broń krótka w naszym arsenale.\n"
+"AR-80 powinien być używany jako podstawowy karabin szturmowy naszych "
+"żołnierzy; przeznaczony do walki na średnich dystansach, ze względu na dużą "
+"siłę ognia i większy zasięg niż jakakolwiek broń krótka w naszym arsenale.\n"
 "\n"
-"Ta ostatnia jednak może być skuteczniejsza podczas walki w bliskim starciu, np. przy zajmowaniu budynków. Taktyka walki naszych odddziałów powinna wykorzystywać zrównoważenie obu typów broni; żołnierze uzbrojeni w karabiny szturmowe powinni tu odgrywać rolę bezpośredniego wsparcia dla towarzyszy uzbrojonych w broń krótką, zabójczą w starciach na bardzo bliskie odległości.\n"
+"Ta ostatnia jednak może być skuteczniejsza podczas walki w bliskim starciu, "
+"np. przy zajmowaniu budynków. Taktyka walki naszych odddziałów powinna "
+"wykorzystywać zrównoważenie obu typów broni; żołnierze uzbrojeni w karabiny "
+"szturmowe powinni tu odgrywać rolę bezpośredniego wsparcia dla towarzyszy "
+"uzbrojonych w broń krótką, zabójczą w starciach na bardzo bliskie "
+"odległości.\n"
 "\n"
-"W przypadkach, kiedy sytuacja wymusi starcie w otwartym terenie, nasi żołnierze muszą wykorzystywać każdą osłonę terenu, by zbliżyć się na odległość, z której będą mogli prowadzić skuteczny ogień. Snajperzy (których obecność w każdej drużynie powinna być warunkiem sine qua non) w takiej sytuacji powinni zapewnić ogień osłonowy.\n"
+"W przypadkach, kiedy sytuacja wymusi starcie w otwartym terenie, nasi "
+"żołnierze muszą wykorzystywać każdą osłonę terenu, by zbliżyć się na "
+"odległość, z której będą mogli prowadzić skuteczny ogień. Snajperzy (których "
+"obecność w każdej drużynie powinna być warunkiem sine qua non) w takiej "
+"sytuacji powinni zapewnić ogień osłonowy.\n"
 "\n"
 "\n"
 "Dodatki\n"
 "\n"
-"Pomimo wszystkich zalet AR-80, z pewnością nie jest to broń, która na dłuższą metę pozwoli nam pokonać Obcych. Powinniśmy podjąć badania nad bardziej zaawansowanym i wyspecjalizowanym uzbrojeniem, jak tylko stanie się to możliwe."
+"Pomimo wszystkich zalet AR-80, z pewnością nie jest to broń, która na "
+"dłuższą metę pozwoli nam pokonać Obcych. Powinniśmy podjąć badania nad "
+"bardziej zaawansowanym i wyspecjalizowanym uzbrojeniem, jak tylko stanie się "
+"to możliwe."
 
-#: ../base/ufos/research.ufo:125
+#: ../base/ufos/research.ufo:165
 msgid "assault_mag_txt"
 msgstr ""
 "Specyfikacja techniczna: Magazynek do karabinu szturmowego AR-80\n"
@@ -2237,35 +2327,41 @@ msgstr ""
 "\n"
 "Sporządzony: 20 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Operacji Atlantyckich\n"
 "\n"
 "\n"
 "\n"
 "Przegląd\n"
 "\n"
-"Magazynek klasycznego, lekko zakrzywionego kształtu zawiera 30 sztuk bezłuskowych naboi kalibru 4.7x33 mm typu penetrującego, ułożonych w dwóch kolumnach. Naboje posiadają stalowy płaszcz z wolframowym rdzeniem; charakteryzują się znakomitymi właściwościami przebijającymi na krótkich i średnich dystansach.\n"
+"Magazynek klasycznego, lekko zakrzywionego kształtu zawiera 30 sztuk "
+"bezłuskowych naboi kalibru 4.7x33 mm typu penetrującego, ułożonych w dwóch "
+"kolumnach. Naboje posiadają stalowy płaszcz z wolframowym rdzeniem; "
+"charakteryzują się znakomitymi właściwościami przebijającymi na krótkich i "
+"średnich dystansach.\n"
 "\n"
 "Opisywany magazynek przewidziany jest dla karabinu szturmowego AR-80.\n"
 "\n"
 "\n"
 "Sugerowana Doktryna Postępowania\n"
 "\n"
-"Każdy z żołnierzy wyposażonych w karabin szturmowy AR-80 powinien mieć przy sobie przynajmniej jeden zapasowy magazynek.\n"
+"Każdy z żołnierzy wyposażonych w karabin szturmowy AR-80 powinien mieć przy "
+"sobie przynajmniej jeden zapasowy magazynek.\n"
 "\n"
 "\n"
 "Dodatki\n"
 "\n"
 "Brak."
 
-#: ../base/ufos/research.ufo:143 ../base/ufos/research.ufo:159
+#: ../base/ufos/research.ufo:183 ../base/ufos/research.ufo:199
 msgid "bolterrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:144 ../base/ufos/research.ufo:160
+#: ../base/ufos/research.ufo:184 ../base/ufos/research.ufo:200
 msgid "bolterrifle_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:177
+#: ../base/ufos/research.ufo:217
 msgid "combatknife_txt"
 msgstr ""
 "Specyfikacja techniczna: Nóż bojowy\n"
@@ -2278,35 +2374,73 @@ msgstr ""
 "\n"
 "Sporządzony: 20 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Operacji Atlantyckich\n"
 "\n"
 "\n"
 "\n"
 "Przegląd\n"
 "\n"
-"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi poważniejszych strat. Zadaniem nowo tworzonych sił PHALANX będzie zmiana tych statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co dzisiejsza ziemska technologia ma do zaoferowania.\n"
+"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi "
+"technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania "
+"wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne "
+"słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. "
+"Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie "
+"powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi "
+"poważniejszych strat. Zadaniem nowo tworzonych sił PHALANX będzie zmiana "
+"tych statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co "
+"dzisiejsza ziemska technologia ma do zaoferowania.\n"
 "\n"
-"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak np. osobiste pancerze), pozwalających na nawiązanie skutecznej i równorzędnej walki z Obcymi. Środki te projektowane są pod kątem podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na przetrwanie podczas starcia.\n"
+"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i "
+"stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak "
+"np. osobiste pancerze), pozwalających na nawiązanie skutecznej i "
+"równorzędnej walki z Obcymi. Środki te projektowane są pod kątem "
+"podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na "
+"przetrwanie podczas starcia.\n"
 "\n"
-"Nóż bojowy to nieodłączny przyjaciel każdego żołnierza, przydatny zarówno w walce wręcz, jak i przy bardziej prozaicznym otwieraniu konserwy.Model używany przez naszych żołnierzy, długości 26 cm, wykonany z hartowanej stali z ceramicznym ostrzem, świetnie sprawdza się w obu rolach.Znakomicie wyważony, może być miotany, jeśli zajdzie taka potrzeba; posiada także uchwyt umożliwiający zamontowanie go na lufie karabinu w roli bagnetu.\n"
+"Nóż bojowy to nieodłączny przyjaciel każdego żołnierza, przydatny zarówno w "
+"walce wręcz, jak i przy bardziej prozaicznym otwieraniu konserwy.Model "
+"używany przez naszych żołnierzy, długości 26 cm, wykonany z hartowanej stali "
+"z ceramicznym ostrzem, świetnie sprawdza się w obu rolach.Znakomicie "
+"wyważony, może być miotany, jeśli zajdzie taka potrzeba; posiada także "
+"uchwyt umożliwiający zamontowanie go na lufie karabinu w roli bagnetu.\n"
 "\n"
-"Decyzja o umieszczeniu noża bojowego w arsenale żołnierzy PHALANX poprzedzona była gorącą dyskusją.Świeże doświadczenie z walk w Mumbaiu zdawało się wskazywać, że w większości przypadków żołnierze sił Sprzymierzonych mieli niewielkie szanse na nawiązanie walki wręcz z Obcymi.Gdy do takich starć dochodziło - ostrza używane przez Obcych okazywały się znacznie skuteczniejsze, niż nasze.Odnotowano tylko kilka zwycięstw w bezpośrednim starciu, które przypadły walczącym po naszej stronie - w większości przypadków było to wspólnym efektem szczęścia i perfekcyjnego opanowania sztuki walki wręcz przez niektórych spośród żołnierzy Sił Sprzymierzonych.\n"
+"Decyzja o umieszczeniu noża bojowego w arsenale żołnierzy PHALANX "
+"poprzedzona była gorącą dyskusją.Świeże doświadczenie z walk w Mumbaiu "
+"zdawało się wskazywać, że w większości przypadków żołnierze sił "
+"Sprzymierzonych mieli niewielkie szanse na nawiązanie walki wręcz z Obcymi."
+"Gdy do takich starć dochodziło - ostrza używane przez Obcych okazywały się "
+"znacznie skuteczniejsze, niż nasze.Odnotowano tylko kilka zwycięstw w "
+"bezpośrednim starciu, które przypadły walczącym po naszej stronie - w "
+"większości przypadków było to wspólnym efektem szczęścia i perfekcyjnego "
+"opanowania sztuki walki wręcz przez niektórych spośród żołnierzy Sił "
+"Sprzymierzonych.\n"
 "\n"
-"Z drugiej strony, niejednokrotnie w przeszłości nóż bojowy ocalił życie wielu żołnierzy - w przypadkach, kiedy skończyła im się amunicja, bądź kiedy ich broń uległa zacięciu.Jest znaczące, że różne formy noży nie wyszły z użycia przez całą historię wojskowości; nawet Obcy używają ostrzy w walce w zwarciu.W sytuacji, gdy pozbawiony bardziej zaawansownej broni (z dowolnej przyczyny) żołnierz zmuszony będzie do walki wręcz, nóż wciąż jest lepszy niż gołe pięści.Tonący brzytwy się chwyta, jak głosi przysłowie.\n"
+"Z drugiej strony, niejednokrotnie w przeszłości nóż bojowy ocalił życie "
+"wielu żołnierzy - w przypadkach, kiedy skończyła im się amunicja, bądź kiedy "
+"ich broń uległa zacięciu.Jest znaczące, że różne formy noży nie wyszły z "
+"użycia przez całą historię wojskowości; nawet Obcy używają ostrzy w walce w "
+"zwarciu.W sytuacji, gdy pozbawiony bardziej zaawansownej broni (z dowolnej "
+"przyczyny) żołnierz zmuszony będzie do walki wręcz, nóż wciąż jest lepszy "
+"niż gołe pięści.Tonący brzytwy się chwyta, jak głosi przysłowie.\n"
 "\n"
-"Jeśli nasi żołnierze znajdą się w sytuacji zmuszającej do walki w bezpośrednim kontakcie, nóż bojowy będzie im dobrze służył.\n"
+"Jeśli nasi żołnierze znajdą się w sytuacji zmuszającej do walki w "
+"bezpośrednim kontakcie, nóż bojowy będzie im dobrze służył.\n"
 "\n"
 "\n"
 "Sugerowana Doktryna Postępowania\n"
 "\n"
-"Podczas walki, nóż jest \"ostatnią instancją\", która może ocalić życie żołnierza.W walce z Obcymi nóż bojowy może być użyteczny tylko w wyjątkowych przypadkach; atak przy użyciu jedynie noża na w pełni sprawnego przeciwnika to prawie pewne samobójstwo.\n"
+"Podczas walki, nóż jest \"ostatnią instancją\", która może ocalić życie "
+"żołnierza.W walce z Obcymi nóż bojowy może być użyteczny tylko w wyjątkowych "
+"przypadkach; atak przy użyciu jedynie noża na w pełni sprawnego przeciwnika "
+"to prawie pewne samobójstwo.\n"
 "\n"
 "\n"
 "Dodatki\n"
 "\n"
 "Brak."
 
-#: ../base/ufos/research.ufo:194
+#: ../base/ufos/research.ufo:234
 msgid "flamer_txt"
 msgstr ""
 "Specyfikacja techniczna: Miotacz ognia ADA 22\n"
@@ -2319,41 +2453,95 @@ msgstr ""
 "\n"
 "Sporządzony: 20 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Operacji Atlantyckich\n"
 "\n"
 "\n"
 "\n"
 "Przegląd\n"
 "\n"
-"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi poważniejszych strat. Zadaniem nowotworzonych sił PHALANX będzie zmiana tych statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co dzisiejsza ziemska technologia ma do zaoferowania.\n"
+"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi "
+"technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania "
+"wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne "
+"słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. "
+"Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie "
+"powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi "
+"poważniejszych strat. Zadaniem nowotworzonych sił PHALANX będzie zmiana tych "
+"statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co dzisiejsza "
+"ziemska technologia ma do zaoferowania.\n"
 "\n"
-"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak np. osobiste pancerze), pozwalających na nawiązanie skutecznej i równorzędnej walki z Obcymi. Środki te projektowane są pod kątem podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na przetrwanie podczas starcia.\n"
+"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i "
+"stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak "
+"np. osobiste pancerze), pozwalających na nawiązanie skutecznej i "
+"równorzędnej walki z Obcymi. Środki te projektowane są pod kątem "
+"podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na "
+"przetrwanie podczas starcia.\n"
 "\n"
-"Atak na Mumbai, a także raporty o innych starciach z Obcymi wskazują, że ci ostatni najczęściej obierają za cel rejony o gęstym zaludnieniu.Przeważająca większość dotychczasowych potyczek z Obcymi odbywała się w specyficznych realiach walki w mieście.Nie pozostało to niezauważone w konkluzjach Programu Excalibur, dla potrzeb którego przeanalizowano i wyselekcjonowano uzbrojenie o największej bojowej efektywności w starciu na średnie i krótkie dystanse.\n"
+"Atak na Mumbai, a także raporty o innych starciach z Obcymi wskazują, że ci "
+"ostatni najczęściej obierają za cel rejony o gęstym zaludnieniu.Przeważająca "
+"większość dotychczasowych potyczek z Obcymi odbywała się w specyficznych "
+"realiach walki w mieście.Nie pozostało to niezauważone w konkluzjach "
+"Programu Excalibur, dla potrzeb którego przeanalizowano i wyselekcjonowano "
+"uzbrojenie o największej bojowej efektywności w starciu na średnie i krótkie "
+"dystanse.\n"
 "\n"
-"ADA-22, miotacz ognia produkcji irańskiej (nazywany przez żołnierzy Sprzymierzonych \"Pochodnią Boga\"), to prawdziwie imponujące osiągnięcie inżynierii wojskowej.Prawie w niczym nie przypomina ciężkiej i niezgrabnej broni z XX wieku, wymagającej zbiorników mieszczących łatwopalny materiał pod ciśnieniem, zwykle dźwiganych na plecach obsługującego miotacz żołnierza.W projekcie miotacza ADA-22 zbiornik ten został wyeliminowany, co pozwoliło jednocześnie usunąć całą plątaninę rurek i wężyków nieodłącznie przypisanych do takiego rozwiązania oraz radykalnie obniżyć wagę broni.Zamiast ciężkiego i dużego pojemnika, irańska konstrukcja wykorzystuje zamienne ładunki (pojemności jedynie 200 ml), które po opróżnieniu są odrzucane, robiąc miejsce na załadowanie kolejnego naboju, co jest łatwe i wygodne.Cały system jest genialny w swojej prostocie i zaskakująco niezawodny.\n"
+"ADA-22, miotacz ognia produkcji irańskiej (nazywany przez żołnierzy "
+"Sprzymierzonych \"Pochodnią Boga\"), to prawdziwie imponujące osiągnięcie "
+"inżynierii wojskowej.Prawie w niczym nie przypomina ciężkiej i niezgrabnej "
+"broni z XX wieku, wymagającej zbiorników mieszczących łatwopalny materiał "
+"pod ciśnieniem, zwykle dźwiganych na plecach obsługującego miotacz żołnierza."
+"W projekcie miotacza ADA-22 zbiornik ten został wyeliminowany, co pozwoliło "
+"jednocześnie usunąć całą plątaninę rurek i wężyków nieodłącznie przypisanych "
+"do takiego rozwiązania oraz radykalnie obniżyć wagę broni.Zamiast ciężkiego "
+"i dużego pojemnika, irańska konstrukcja wykorzystuje zamienne ładunki "
+"(pojemności jedynie 200 ml), które po opróżnieniu są odrzucane, robiąc "
+"miejsce na załadowanie kolejnego naboju, co jest łatwe i wygodne.Cały system "
+"jest genialny w swojej prostocie i zaskakująco niezawodny.\n"
 "\n"
-"Najważniejszą częścią miotacza jest potężna pompa, zakończona dyszą rozpylającą rozprężoną zawartość zbiornika z substancją C-90. Mieszanka C-90 z powietrzem jest następnie zapalana przez iskrowniki (jeden główny i trzy rezerwowe), generujące 10 iskier na sekundę każdy, by zapewnić zapłon natychmiast po rozpyleniu mieszanki i nie pozwolić na zbytnie rozrzedzenie mieszaniny w powietrzu, co zmieniłoby jej parametry i mogło doprowadzić do zapłonu eksplozywnego.\n"
+"Najważniejszą częścią miotacza jest potężna pompa, zakończona dyszą "
+"rozpylającą rozprężoną zawartość zbiornika z substancją C-90. Mieszanka C-90 "
+"z powietrzem jest następnie zapalana przez iskrowniki (jeden główny i trzy "
+"rezerwowe), generujące 10 iskier na sekundę każdy, by zapewnić zapłon "
+"natychmiast po rozpyleniu mieszanki i nie pozwolić na zbytnie rozrzedzenie "
+"mieszaniny w powietrzu, co zmieniłoby jej parametry i mogło doprowadzić do "
+"zapłonu eksplozywnego.\n"
 "\n"
-"Substancja C-90 używana w ładunkach miotacza ADA-22 charakteryzuje się wyjątkowymi właściwościami. Tworząc mieszaninę z powietrzem, spala się w sposób opisywany przez spowolnioną reakcję termobaryczną, nie powodując eksplozji.Płonąca mieszanina jest w stanie upiec każdą żywą tkankę w przeciągu sekund; temperatura, osiągająca w środku obłoku blisko 1700 stopni Celsjusza, wystarcza do stopienia tytanu.Jednocześnie, ze względu na swoją gazową, a nie koloidalną naturę, nie ma bezpośredniego kontaktu z celem ani nie osadza się w otoczeniu (jak np. ma to miejsce z napalmem), dzięki czemu wygenerowane ciepło łatwiej się rozprasza.Ta ostatnia cecha czyni C-90 zdecydowanie bezpieczniejszym w użyciu w terenie zamieszkanym przez ludzi, niż napalm.\n"
+"Substancja C-90 używana w ładunkach miotacza ADA-22 charakteryzuje się "
+"wyjątkowymi właściwościami. Tworząc mieszaninę z powietrzem, spala się w "
+"sposób opisywany przez spowolnioną reakcję termobaryczną, nie powodując "
+"eksplozji.Płonąca mieszanina jest w stanie upiec każdą żywą tkankę w "
+"przeciągu sekund; temperatura, osiągająca w środku obłoku blisko 1700 stopni "
+"Celsjusza, wystarcza do stopienia tytanu.Jednocześnie, ze względu na swoją "
+"gazową, a nie koloidalną naturę, nie ma bezpośredniego kontaktu z celem ani "
+"nie osadza się w otoczeniu (jak np. ma to miejsce z napalmem), dzięki czemu "
+"wygenerowane ciepło łatwiej się rozprasza.Ta ostatnia cecha czyni C-90 "
+"zdecydowanie bezpieczniejszym w użyciu w terenie zamieszkanym przez ludzi, "
+"niż napalm.\n"
 "\n"
-"Jedyne wady miotacza ADA-22 to krótki zasięg i stosunkowo trudna w naprawie mechanika.Nie są to jednak wady rzeczywiście poważne.\n"
+"Jedyne wady miotacza ADA-22 to krótki zasięg i stosunkowo trudna w naprawie "
+"mechanika.Nie są to jednak wady rzeczywiście poważne.\n"
 "\n"
-"W specyfikacji wewnętrznej PHALANX opisywany miotacz ognia został sklasyfikowany jako CRC-FL.\n"
+"W specyfikacji wewnętrznej PHALANX opisywany miotacz ognia został "
+"sklasyfikowany jako CRC-FL.\n"
 "\n"
 "\n"
 "Sugerowana Doktryna Postępowania\n"
 "\n"
-"Miotacz ognia CRC-FL jest bronią przeznaczoną do walki w starciu bezpośrednim.Ze względu na powyższy fakt oraz sporą wagę broni, obsługujący go żołnierze powinni posiadać dobrą szybkość i siłę, by w pełni wykorzystać jej potencjał.\n"
+"Miotacz ognia CRC-FL jest bronią przeznaczoną do walki w starciu "
+"bezpośrednim.Ze względu na powyższy fakt oraz sporą wagę broni, obsługujący "
+"go żołnierze powinni posiadać dobrą szybkość i siłę, by w pełni wykorzystać "
+"jej potencjał.\n"
 "\n"
-"Warto zauważyć, że miotacze ognia zwykle świetnie sprawdzają się przy urządzaniu zasadzek.\n"
+"Warto zauważyć, że miotacze ognia zwykle świetnie sprawdzają się przy "
+"urządzaniu zasadzek.\n"
 "\n"
 "\n"
 "Dodatki\n"
 "\n"
-"CRC-FL nie powinien być używany, jeśli zachodzi obawa, że w bezpośredniej strefie rażenia mogą znaleźć się cywile."
+"CRC-FL nie powinien być używany, jeśli zachodzi obawa, że w bezpośredniej "
+"strefie rażenia mogą znaleźć się cywile."
 
-#: ../base/ufos/research.ufo:210
+#: ../base/ufos/research.ufo:250
 msgid "flamer_mag_txt"
 msgstr ""
 "Specyfikacja techniczna: Zbiornik C-90\n"
@@ -2366,29 +2554,41 @@ msgstr ""
 "\n"
 "Sporządzony: 20 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Operacji Atlantyckich\n"
 "\n"
 "\n"
 "\n"
 "Przegląd\n"
 "\n"
-"Zbiornik zawierający substancję C-90, o pojemności 200 ml, wyposażony w trzy niezależne systemy zabezpieczeń.\n"
+"Zbiornik zawierający substancję C-90, o pojemności 200 ml, wyposażony w trzy "
+"niezależne systemy zabezpieczeń.\n"
 "\n"
-"C-90 charakteryzuje się wyjątkowymi właściwościami. Tworząc mieszaninę z powietrzem, spala się w sposób opisywany przez spowolnioną reakcję termobaryczną, nie powodując eksplozji. Płonąca mieszanina jest w stanie upiec każdą żywą tkankę w przeciągu sekund; temperatura, osiągająca w środku obłoku blisko 1700 stopni Celsjusza, wystarcza do stopienia tytanu. Jednocześnie, ze względu na swoją gazową, a nie koloidalną naturę, nie ma bezpośredniego kontaktu z celem ani nie osadza się w otoczeniu (jak np. ma to miejsce z napalmem), dzięki czemu wygenerowane ciepło łatwiej się rozprasza. Ta ostatnia cecha czyni C-90 zdecydowanie bezpieczniejszym w użyciu w terenie zamieszkanym przez ludzi, niż napalm.\n"
+"C-90 charakteryzuje się wyjątkowymi właściwościami. Tworząc mieszaninę z "
+"powietrzem, spala się w sposób opisywany przez spowolnioną reakcję "
+"termobaryczną, nie powodując eksplozji. Płonąca mieszanina jest w stanie "
+"upiec każdą żywą tkankę w przeciągu sekund; temperatura, osiągająca w środku "
+"obłoku blisko 1700 stopni Celsjusza, wystarcza do stopienia tytanu. "
+"Jednocześnie, ze względu na swoją gazową, a nie koloidalną naturę, nie ma "
+"bezpośredniego kontaktu z celem ani nie osadza się w otoczeniu (jak np. ma "
+"to miejsce z napalmem), dzięki czemu wygenerowane ciepło łatwiej się "
+"rozprasza. Ta ostatnia cecha czyni C-90 zdecydowanie bezpieczniejszym w "
+"użyciu w terenie zamieszkanym przez ludzi, niż napalm.\n"
 "\n"
 "Opisywany pojemnik przewidziany jest jako ładunek miotacza ognia CRC-FL.\n"
 "\n"
 "\n"
 "Sugerowana Doktryna Postępowania\n"
 "\n"
-"Każdy z żołnierzy wysposażonych w miotacz ognia CRC-FL powinien mieć przy sobie przynajmniej jeden zapasowy pojemnik z C-90.\n"
+"Każdy z żołnierzy wysposażonych w miotacz ognia CRC-FL powinien mieć przy "
+"sobie przynajmniej jeden zapasowy pojemnik z C-90.\n"
 "\n"
 "\n"
 "Dodatki\n"
 "\n"
 "Brak."
 
-#: ../base/ufos/research.ufo:228
+#: ../base/ufos/research.ufo:268
 msgid "flashbang_txt"
 msgstr ""
 "Specyfikacja techniczna: Granat ogłuszający\n"
@@ -2401,37 +2601,81 @@ msgstr ""
 "\n"
 "Sporządzony: 20 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Operacji Atlantyckich\n"
 "\n"
 "\n"
 "\n"
 "Przegląd\n"
 "\n"
-"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi poważniejszych strat. Zadaniem nowotworzonych sił PHALANX będzie zmiana tych statystyk na naszą korzyść; do czego potrzebne będzie wszystko, co dzisiejsza ziemska technologia ma do zaoferowania.\n"
+"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi "
+"technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania "
+"wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne "
+"słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. "
+"Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie "
+"powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi "
+"poważniejszych strat. Zadaniem nowotworzonych sił PHALANX będzie zmiana tych "
+"statystyk na naszą korzyść; do czego potrzebne będzie wszystko, co "
+"dzisiejsza ziemska technologia ma do zaoferowania.\n"
 "\n"
-"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak np. osobiste pancerze), pozwalających na nawiązanie skutecznej i równorzędnej walki z Obcymi. Środki te projektowane są pod kątem podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na przetrwanie podczas starcia.\n"
+"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i "
+"stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak "
+"np. osobiste pancerze), pozwalających na nawiązanie skutecznej i "
+"równorzędnej walki z Obcymi. Środki te projektowane są pod kątem "
+"podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na "
+"przetrwanie podczas starcia.\n"
 "\n"
-"Granat ogłuszający reprezentuje typ broni służącej przede wszystkim do obezwładnienia i chwilowej dezorientacji przeciwnika.Jedynym efektem detonacji jest oślepiający błysk i potężny huk (stąd rzadziej używana nazwa - granat hukowo-błyskowy); skorupa granatu nie ulega przy tym fragmentacji, pozwalając na jej wielokrotne użycie po uzupełnieniu ładunku.\n"
+"Granat ogłuszający reprezentuje typ broni służącej przede wszystkim do "
+"obezwładnienia i chwilowej dezorientacji przeciwnika.Jedynym efektem "
+"detonacji jest oślepiający błysk i potężny huk (stąd rzadziej używana nazwa "
+"- granat hukowo-błyskowy); skorupa granatu nie ulega przy tym fragmentacji, "
+"pozwalając na jej wielokrotne użycie po uzupełnieniu ładunku.\n"
 "\n"
-"Każdy, kto znajdzie się w obszarze rażenia granatu, zostaje na chwilę pozbawiony słuchu, cierpi na zaburzenia równowagi i koordynacji oraz (na skutek silnego błysku) utratę ostrości widzenia, trwającą nawet do pięciu sekund.Wszystko to czyni z opisywanego granatu znakomitą broń, pozwalającą na przejęcie inicjatywy podczas ataku na silnie bronione pozycje przeciwnika.Dotychczasowe raporty z użycia granatów ogłuszających podczas walk z Obcymi nie pozostawiają wątpliwości, iż efekty wywołane detonacją dotykają ich w zbliżonym stopniu, co ludzi. Z pewnością jednak różne rasy Obcych reprezentują różne poziomy odporności na oszołomienie wywołane eksplozją.\n"
+"Każdy, kto znajdzie się w obszarze rażenia granatu, zostaje na chwilę "
+"pozbawiony słuchu, cierpi na zaburzenia równowagi i koordynacji oraz (na "
+"skutek silnego błysku) utratę ostrości widzenia, trwającą nawet do pięciu "
+"sekund.Wszystko to czyni z opisywanego granatu znakomitą broń, pozwalającą "
+"na przejęcie inicjatywy podczas ataku na silnie bronione pozycje przeciwnika."
+"Dotychczasowe raporty z użycia granatów ogłuszających podczas walk z Obcymi "
+"nie pozostawiają wątpliwości, iż efekty wywołane detonacją dotykają ich w "
+"zbliżonym stopniu, co ludzi. Z pewnością jednak różne rasy Obcych "
+"reprezentują różne poziomy odporności na oszołomienie wywołane eksplozją.\n"
 "\n"
-"Dezorientujące działanie granatu może być szczególnie przydatne podczas walki wręcz, pozwalając na uzyskanie kluczowego dla niej efektu zaskoczenia.Przeciwnik obdarzony znakomitym refleksem może podjąć próbę najprostszego przeciwdziałania efektom detonacji granatu ogłuszającego, poprzez zasłonięcie uszu i zamknięcie oczu, na ogół jednak nie będzie miał czasu na uświadomienie sobie, że został zaatakowany.Dane z wspominanych powyżej raportów sugerują również, iż żołnierze Obcych nie mają obeznania z tym typem broni i nie przechodzili treningów uczących ich radzenia sobie z efektami jej użycia.Nawet jednak jeśli ten stan rzeczy ulegnie zmianie, bojowa skuteczność tego typu granatów wciąż pozostanie wysoką.\n"
+"Dezorientujące działanie granatu może być szczególnie przydatne podczas "
+"walki wręcz, pozwalając na uzyskanie kluczowego dla niej efektu zaskoczenia."
+"Przeciwnik obdarzony znakomitym refleksem może podjąć próbę najprostszego "
+"przeciwdziałania efektom detonacji granatu ogłuszającego, poprzez "
+"zasłonięcie uszu i zamknięcie oczu, na ogół jednak nie będzie miał czasu na "
+"uświadomienie sobie, że został zaatakowany.Dane z wspominanych powyżej "
+"raportów sugerują również, iż żołnierze Obcych nie mają obeznania z tym "
+"typem broni i nie przechodzili treningów uczących ich radzenia sobie z "
+"efektami jej użycia.Nawet jednak jeśli ten stan rzeczy ulegnie zmianie, "
+"bojowa skuteczność tego typu granatów wciąż pozostanie wysoką.\n"
 "\n"
-"Zalety granatu ogłuszającego zdecydowanie przeważają nad jego słabościami. Wykorzystywany w walce praktycznie podczas każdego współczesnego konfliktu zbrojnego, niejednokrotnie dowiódł swojej przydatności. Jak na razie, na horyzoncie nie rysuje się nic, co mogłoby przejąć jego rolę w wyposażeniu armii świata.\n"
+"Zalety granatu ogłuszającego zdecydowanie przeważają nad jego słabościami. "
+"Wykorzystywany w walce praktycznie podczas każdego współczesnego konfliktu "
+"zbrojnego, niejednokrotnie dowiódł swojej przydatności. Jak na razie, na "
+"horyzoncie nie rysuje się nic, co mogłoby przejąć jego rolę w wyposażeniu "
+"armii świata.\n"
 "\n"
 "\n"
 "Sugerowana Doktryna Postępowania\n"
 "\n"
-"Ze względu na opisane powyżej właściwości granatu ogłuszającego, jego użycie w zastępstwie innych broni o szerokim polu rażenia powinno być rozważone wszędzie tam, gdzie występuje ryzyko poszkodowania cywili.\n"
+"Ze względu na opisane powyżej właściwości granatu ogłuszającego, jego użycie "
+"w zastępstwie innych broni o szerokim polu rażenia powinno być rozważone "
+"wszędzie tam, gdzie występuje ryzyko poszkodowania cywili.\n"
 "\n"
-"Jest to broń niezastąpiona podczas szturmów w terenie miejskim oraz każdym innym udostępniającym dużą liczbę osłon i kryjówek. Możliwość dezorientacji przeciwnika i przejęcia inicjatywy powinna być właściwie doceniona.\n"
+"Jest to broń niezastąpiona podczas szturmów w terenie miejskim oraz każdym "
+"innym udostępniającym dużą liczbę osłon i kryjówek. Możliwość dezorientacji "
+"przeciwnika i przejęcia inicjatywy powinna być właściwie doceniona.\n"
 "\n"
 "\n"
 "Dodatki\n"
 "\n"
-"Nie należy zapominać, że granat ogłuszający jest kompletnie nieskuteczny przeciwko celom mechanicznym."
+"Nie należy zapominać, że granat ogłuszający jest kompletnie nieskuteczny "
+"przeciwko celom mechanicznym."
 
-#: ../base/ufos/research.ufo:244
+#: ../base/ufos/research.ufo:284
 msgid "fraggren_txt"
 msgstr ""
 "Specyfikacja techniczna: Granat odłamkowy\n"
@@ -2444,37 +2688,80 @@ msgstr ""
 "\n"
 "Sporządzony: 20 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Operacji Atlantyckich\n"
 "\n"
 "\n"
 "\n"
 "Przegląd\n"
 "\n"
-"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi poważniejszych strat. Zadaniem nowo tworzonych sił PHALANX będzie zmiana tych statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co dzisiejsza ziemska technologia ma do zaoferowania.\n"
+"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi "
+"technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania "
+"wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne "
+"słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. "
+"Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie "
+"powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi "
+"poważniejszych strat. Zadaniem nowo tworzonych sił PHALANX będzie zmiana "
+"tych statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co "
+"dzisiejsza ziemska technologia ma do zaoferowania.\n"
 "\n"
-"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak np. osobiste pancerze), pozwalających na nawiązanie skutecznej i równorzędnej walki z Obcymi. Środki te projektowane są pod kątem podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na przetrwanie podczas starcia.\n"
+"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i "
+"stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak "
+"np. osobiste pancerze), pozwalających na nawiązanie skutecznej i "
+"równorzędnej walki z Obcymi. Środki te projektowane są pod kątem "
+"podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na "
+"przetrwanie podczas starcia.\n"
 "\n"
-"Zasadnicza koncepcja granatu odłamkowego pozostaje niezmieniona od prawie tysiąca lat, kiedy to chińscy żołnierze jako pierwsi wpadli na pomysł wypełniania prochem ceramicznych i metalowych naczyń. Od tego czasu rozwój technologiczny uczynił z granatu broń nieco bardziej wygodną w użyciu i nieco bardziej śmiercionośną; głównie dzięki postępowi w dziedzinie materiałów tworzących skorupę granatu i ładunek wybuchowy. Sam schemat konstrukcji natomiast nie zmienił się ani o jotę – wnętrze granatu wypełnia materiał wybuchowy (czasem wzbogacony dodatkowym ładunkiem fosforowym), którego eksplozja rozrywa skorupę na kawałki rażące wszystko, co znajdzie się w bezpośredniej bliskości wybuchu. Większość granatów wyposażona jest w zapalnik czasowy, powodujący detonację właściwego ładunku z pewnym opóźnieniem; uruchomienie zapalnika następuje w momencie odskoczenia tzw. łyżki, normalnie zabezpieczonej zawleczką.\n"
+"Zasadnicza koncepcja granatu odłamkowego pozostaje niezmieniona od prawie "
+"tysiąca lat, kiedy to chińscy żołnierze jako pierwsi wpadli na pomysł "
+"wypełniania prochem ceramicznych i metalowych naczyń. Od tego czasu rozwój "
+"technologiczny uczynił z granatu broń nieco bardziej wygodną w użyciu i "
+"nieco bardziej śmiercionośną; głównie dzięki postępowi w dziedzinie "
+"materiałów tworzących skorupę granatu i ładunek wybuchowy. Sam schemat "
+"konstrukcji natomiast nie zmienił się ani o jotę – wnętrze granatu wypełnia "
+"materiał wybuchowy (czasem wzbogacony dodatkowym ładunkiem fosforowym), "
+"którego eksplozja rozrywa skorupę na kawałki rażące wszystko, co znajdzie "
+"się w bezpośredniej bliskości wybuchu. Większość granatów wyposażona jest w "
+"zapalnik czasowy, powodujący detonację właściwego ładunku z pewnym "
+"opóźnieniem; uruchomienie zapalnika następuje w momencie odskoczenia tzw. "
+"łyżki, normalnie zabezpieczonej zawleczką.\n"
 "\n"
-"Jako najbardziej odpowiedni dla żołnierzy PHALANX, spośród wielu dostępnych konstrukcji wybrany został granat odłamkowy HG15, produkcji australijskiej.Stalowy płaszcz granatu pokrywa wewnętrzną warstwę prefabrykowanych odłamków (maksymalizujących efekt detonacji), pod którą znajduje się standardowa porcja materiału wybuchowego C8.Zewnętrzna warstwa skorupy HG15 jest gładka i niepoddawana żebrowaniu (w przeciwieństwie np. do najpopularniejszych podczas II wojny światowej granatów o charakterystycznej, „spękanej” powierzchni), co znacznie poprawia precyzję rzutów (turlania) po zróżnicowanych podłożach.\n"
+"Jako najbardziej odpowiedni dla żołnierzy PHALANX, spośród wielu dostępnych "
+"konstrukcji wybrany został granat odłamkowy HG15, produkcji australijskiej."
+"Stalowy płaszcz granatu pokrywa wewnętrzną warstwę prefabrykowanych odłamków "
+"(maksymalizujących efekt detonacji), pod którą znajduje się standardowa "
+"porcja materiału wybuchowego C8.Zewnętrzna warstwa skorupy HG15 jest gładka "
+"i niepoddawana żebrowaniu (w przeciwieństwie np. do najpopularniejszych "
+"podczas II wojny światowej granatów o charakterystycznej, „spękanej” "
+"powierzchni), co znacznie poprawia precyzję rzutów (turlania) po "
+"zróżnicowanych podłożach.\n"
 "\n"
-"Użyty w HG15 materiał wybuchowy C8, razem ze sprawdzonym zapalnikiem, decydują o wysokiej niezawodności tej broni.\n"
+"Użyty w HG15 materiał wybuchowy C8, razem ze sprawdzonym zapalnikiem, "
+"decydują o wysokiej niezawodności tej broni.\n"
 "\n"
 "\n"
 "Sugerowana Doktryna Postępowania\n"
 "\n"
-"Granat odłamkowy to broń o charakterze uzupełniającym osobiste uzbrojenie żołnierza, szczególnie efektywna podczas walk z piechotą. Pomimo ograniczonego zasięgu, w pewnych sytuacjach (np. podczas natarcia na dobrze ubezpieczone pozycje wroga) jest to najwygodniejsza broń wsparcia bezpośredniego.\n"
+"Granat odłamkowy to broń o charakterze uzupełniającym osobiste uzbrojenie "
+"żołnierza, szczególnie efektywna podczas walk z piechotą. Pomimo "
+"ograniczonego zasięgu, w pewnych sytuacjach (np. podczas natarcia na dobrze "
+"ubezpieczone pozycje wroga) jest to najwygodniejsza broń wsparcia "
+"bezpośredniego.\n"
 "\n"
-"Jej użycie nie jest zalecane, jeśli w strefie rażenia występuje ryzyko pojawienia się cywili. W takich sytuacjach dobrą alternatywą może być granat ogłuszający.\n"
+"Jej użycie nie jest zalecane, jeśli w strefie rażenia występuje ryzyko "
+"pojawienia się cywili. W takich sytuacjach dobrą alternatywą może być granat "
+"ogłuszający.\n"
 "\n"
-"Wszyscy żołnierze PHALANX nie obsługujący broni ciężkiej powinni być wyposażeni w co najmniej jeden granat dowolnego typu (odłamkowy, zapalający, ogłuszający lub inny).\n"
+"Wszyscy żołnierze PHALANX nie obsługujący broni ciężkiej powinni być "
+"wyposażeni w co najmniej jeden granat dowolnego typu (odłamkowy, zapalający, "
+"ogłuszający lub inny).\n"
 "\n"
 "\n"
 "Dodatki\n"
 "\n"
 "Brak."
 
-#: ../base/ufos/research.ufo:261
+#: ../base/ufos/research.ufo:301
 msgid "incgren_txt"
 msgstr ""
 "Specyfikacja techniczna: Granat zapalający\n"
@@ -2487,319 +2774,354 @@ msgstr ""
 "\n"
 "Sporządzony: 20 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Operacji Atlantyckich\n"
 "\n"
 "\n"
 "\n"
 "Przegląd\n"
 "\n"
-"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi poważniejszych strat. Zadaniem nowo tworzonych sił PHALANX będzie zmiana tych statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co dzisiejsza ziemska technologia ma do zaoferowania.\n"
+"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi "
+"technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania "
+"wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne "
+"słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. "
+"Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie "
+"powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi "
+"poważniejszych strat. Zadaniem nowo tworzonych sił PHALANX będzie zmiana "
+"tych statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co "
+"dzisiejsza ziemska technologia ma do zaoferowania.\n"
 "\n"
-"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak np. osobiste pancerze), pozwalających na nawiązanie skutecznej i równorzędnej walki z Obcymi. Środki te projektowane są pod kątem podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na przetrwanie podczas starcia.\n"
+"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i "
+"stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak "
+"np. osobiste pancerze), pozwalających na nawiązanie skutecznej i "
+"równorzędnej walki z Obcymi. Środki te projektowane są pod kątem "
+"podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na "
+"przetrwanie podczas starcia.\n"
 "\n"
-"Granat zapalający należy do specyficznej kategorii broni, których efekt działania polega głównie na wykorzystaniu niszczących właściwości ognia. Ładunek wybuchowy granatu służy tu do rozpylenia materiału łatwopalnego w strefie rażenia, przy jego jednoczesnym podpaleniu. Główne składniki materiału łatwopalnego to termit (mieszanina glinu z tlenkami metali), azotan baru, siarka oraz substancja wiążąca, których mieszaniny w różnych proporcjach są wykorzystywane w broniach zapalających praktycznie od końca II wojny światowej. Większość granatów wyposażona jest w zapalnik czasowy powodujący detonację właściwego ładunku z pewnym opóźnieniem; uruchomienie zapalnika następuje w momencie odskoczenia tzw. łyżki, normalnie zabezpieczonej zawleczką.\n"
+"Granat zapalający należy do specyficznej kategorii broni, których efekt "
+"działania polega głównie na wykorzystaniu niszczących właściwości ognia. "
+"Ładunek wybuchowy granatu służy tu do rozpylenia materiału łatwopalnego w "
+"strefie rażenia, przy jego jednoczesnym podpaleniu. Główne składniki "
+"materiału łatwopalnego to termit (mieszanina glinu z tlenkami metali), "
+"azotan baru, siarka oraz substancja wiążąca, których mieszaniny w różnych "
+"proporcjach są wykorzystywane w broniach zapalających praktycznie od końca "
+"II wojny światowej. Większość granatów wyposażona jest w zapalnik czasowy "
+"powodujący detonację właściwego ładunku z pewnym opóźnieniem; uruchomienie "
+"zapalnika następuje w momencie odskoczenia tzw. łyżki, normalnie "
+"zabezpieczonej zawleczką.\n"
 "\n"
-"Do wyposażenia żołnierzy PHALANX został wybrany granat zapalający M-71, produkcji amerykańskiej. Jego zewnętrzną warstwę wykonano z tworzywa sztucznego, którego rozerwanie nie spowalnia rozproszenia płonącego materiału w obrębie strefy rażenia. Jako materiału wybuchowego użyto C8.Zewnętrzna warstwa skorupy M-71 jest gładka i niepoddawana żebrowaniu (w przeciwieństwie np. do najpopularniejszych podczas II wojny światowej granatów o charakterystycznej, „spękanej” powierzchni), co znacznie poprawia precyzję rzutów (turlania) po zróżnicowanych podłożach.\n"
+"Do wyposażenia żołnierzy PHALANX został wybrany granat zapalający M-71, "
+"produkcji amerykańskiej. Jego zewnętrzną warstwę wykonano z tworzywa "
+"sztucznego, którego rozerwanie nie spowalnia rozproszenia płonącego "
+"materiału w obrębie strefy rażenia. Jako materiału wybuchowego użyto C8."
+"Zewnętrzna warstwa skorupy M-71 jest gładka i niepoddawana żebrowaniu (w "
+"przeciwieństwie np. do najpopularniejszych podczas II wojny światowej "
+"granatów o charakterystycznej, „spękanej” powierzchni), co znacznie poprawia "
+"precyzję rzutów (turlania) po zróżnicowanych podłożach.\n"
 "\n"
 "\n"
 "Sugerowana Doktryna Postępowania\n"
 "\n"
-"Granaty zapalające, oprócz standardowego zastosowania jako broń wsparcia bezpośredniego, mogą być wykorzystywane dla osiągnięcia przewagi taktycznej także na inne sposoby. Ich rozciągnięty w czasie efekt działania może pozwolić np. na zamknięcie dróg ewakuacji wroga czy zmuszenie go do przemieszczenia się.\n"
+"Granaty zapalające, oprócz standardowego zastosowania jako broń wsparcia "
+"bezpośredniego, mogą być wykorzystywane dla osiągnięcia przewagi taktycznej "
+"także na inne sposoby. Ich rozciągnięty w czasie efekt działania może "
+"pozwolić np. na zamknięcie dróg ewakuacji wroga czy zmuszenie go do "
+"przemieszczenia się.\n"
 "\n"
-"Użycie granatów zapalających nie jest polecane, jeśli w strefie rażenia występuje ryzyko pojawienia się cywili. W takich sytuacjach dobrą alternatywą może być granat ogłuszający.\n"
+"Użycie granatów zapalających nie jest polecane, jeśli w strefie rażenia "
+"występuje ryzyko pojawienia się cywili. W takich sytuacjach dobrą "
+"alternatywą może być granat ogłuszający.\n"
 "\n"
-"Wszyscy żołnierze PHALANX nieobsługujący broni ciężkiej powinni być wyposażeni w co najmniej jeden granat dowolnego typu (odłamkowy, zapalający, ogłuszający lub inny).\n"
+"Wszyscy żołnierze PHALANX nieobsługujący broni ciężkiej powinni być "
+"wyposażeni w co najmniej jeden granat dowolnego typu (odłamkowy, zapalający, "
+"ogłuszający lub inny).\n"
 "\n"
 "\n"
 "Dodatki\n"
 "\n"
 "Brak."
 
-#: ../base/ufos/research.ufo:278
+#: ../base/ufos/research.ufo:318
 msgid "grenl_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:294
+#: ../base/ufos/research.ufo:334
 msgid "grenl_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:312
+#: ../base/ufos/research.ufo:352
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:330
+#: ../base/ufos/research.ufo:370
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:348
+#: ../base/ufos/research.ufo:388
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:349
+#: ../base/ufos/research.ufo:389
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:366
+#: ../base/ufos/research.ufo:406
 msgid "heavylaser_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:367
+#: ../base/ufos/research.ufo:407
 msgid "heavylaser_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:384
+#: ../base/ufos/research.ufo:424
 msgid "heavylaser_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:385
+#: ../base/ufos/research.ufo:425
 msgid "heavylaser_ammo_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:402
+#: ../base/ufos/research.ufo:442
 msgid "irgoggles_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:418
+#: ../base/ufos/research.ufo:458
 msgid "kerrblade_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:419
+#: ../base/ufos/research.ufo:459
 msgid "kerrblade_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:436
+#: ../base/ufos/research.ufo:476
 msgid "laserpistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:437
+#: ../base/ufos/research.ufo:477
 msgid "laserpistol_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:453
+#: ../base/ufos/research.ufo:493
 msgid "laserpistol_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:454
+#: ../base/ufos/research.ufo:494
 msgid "laserpistol_mag_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:471
+#: ../base/ufos/research.ufo:511
 msgid "laserrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:472
+#: ../base/ufos/research.ufo:512
 msgid "laserrifle_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:489
+#: ../base/ufos/research.ufo:529
 msgid "laserrifle_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:490
+#: ../base/ufos/research.ufo:530
 msgid "laserrifle_mag_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:507
+#: ../base/ufos/research.ufo:547
 msgid "medikit_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:523
+#: ../base/ufos/research.ufo:563
 msgid "pistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:540
+#: ../base/ufos/research.ufo:580
 msgid "pistol_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:559
+#: ../base/ufos/research.ufo:599
 msgid "pistol2_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:576
+#: ../base/ufos/research.ufo:616
 msgid "pistol2_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:595 ../base/ufos/research.ufo:614
+#: ../base/ufos/research.ufo:635 ../base/ufos/research.ufo:654
 msgid "plasatomizer_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:596 ../base/ufos/research.ufo:615
+#: ../base/ufos/research.ufo:636 ../base/ufos/research.ufo:655
 msgid "plasatomizer_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:632 ../base/ufos/research.ufo:650
+#: ../base/ufos/research.ufo:672 ../base/ufos/research.ufo:690
 msgid "plasblaster_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:633 ../base/ufos/research.ufo:651
+#: ../base/ufos/research.ufo:673 ../base/ufos/research.ufo:691
 msgid "plasblaster_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:668
+#: ../base/ufos/research.ufo:708
 msgid "plasblade_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:669
+#: ../base/ufos/research.ufo:709
 msgid "plasblade_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:686
+#: ../base/ufos/research.ufo:726
 msgid "plasmagren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:687
+#: ../base/ufos/research.ufo:727
 msgid "plasmagren_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:704 ../base/ufos/research.ufo:723
+#: ../base/ufos/research.ufo:744 ../base/ufos/research.ufo:763
 msgid "plasrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:705 ../base/ufos/research.ufo:724
+#: ../base/ufos/research.ufo:745 ../base/ufos/research.ufo:764
 msgid "plasrifle_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:741
+#: ../base/ufos/research.ufo:781
 msgid "rpg_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:758
+#: ../base/ufos/research.ufo:798
 msgid "rpg_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:777
+#: ../base/ufos/research.ufo:817
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:816
+#: ../base/ufos/research.ufo:856
 msgid "chaingun_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:817
+#: ../base/ufos/research.ufo:857
 msgid "chaingun_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:834
+#: ../base/ufos/research.ufo:874
 msgid "chaingun_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:835
+#: ../base/ufos/research.ufo:875
 msgid "chaingun_ammo_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:854
+#: ../base/ufos/research.ufo:894
 msgid "shotgun_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:873
+#: ../base/ufos/research.ufo:913
 msgid "shotgun_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:893
+#: ../base/ufos/research.ufo:933
 msgid "shotgun2_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:910
-msgid "shotgun2_ammo_txt"
-msgstr ""
-
-#: ../base/ufos/research.ufo:929
+#: ../base/ufos/research.ufo:969
 msgid "shotgun2_slug_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:948
+#: ../base/ufos/research.ufo:988
 msgid "shotgun_micro_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:965
+#: ../base/ufos/research.ufo:1005
 msgid "shotgun_micro_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:985
+#: ../base/ufos/research.ufo:1025
 msgid "smg_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1002
+#: ../base/ufos/research.ufo:1042
 msgid "smg_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1021
+#: ../base/ufos/research.ufo:1061
 msgid "smokegren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1038
+#: ../base/ufos/research.ufo:1078
 msgid "sniper_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1055
+#: ../base/ufos/research.ufo:1095
 msgid "sniper_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1074
+#: ../base/ufos/research.ufo:1114
 msgid "stungren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1075
+#: ../base/ufos/research.ufo:1115
 msgid "stungren_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1093
+#: ../base/ufos/research.ufo:1133
 msgid "stunrod_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1094
+#: ../base/ufos/research.ufo:1134
 msgid "stunrod_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1111
+#: ../base/ufos/research.ufo:1151
 msgid "tachyonpistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1112
+#: ../base/ufos/research.ufo:1152
 msgid "tachyonpistol_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1129
+#: ../base/ufos/research.ufo:1169
 msgid "tachyonpistol_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1130
+#: ../base/ufos/research.ufo:1170
 msgid "tachyonpistol_mag_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1148
+#: ../base/ufos/research.ufo:1188
 msgid "tachyonrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1149
+#: ../base/ufos/research.ufo:1189
 msgid "tachyonrifle_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1167
+#: ../base/ufos/research.ufo:1207
 msgid "tachyonrifle_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1168
+#: ../base/ufos/research.ufo:1208
 msgid "tachyonrifle_mag_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1186
+#: ../base/ufos/research.ufo:1226
 msgid "tachyonsniper_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1187
+#: ../base/ufos/research.ufo:1227
 msgid "tachyonsniper_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1204
+#: ../base/ufos/research.ufo:1244
 msgid "tachyonsniper_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1205
+#: ../base/ufos/research.ufo:1245
 msgid "tachyonsniper_mag_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1227
+#: ../base/ufos/research.ufo:1267
 msgid "combat_armor_txt"
 msgstr ""
 "Specyfikacja techniczna: Pancerz Bojowy\n"
@@ -2812,511 +3134,673 @@ msgstr ""
 "\n"
 "Sporządzony: 20 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Operacji Atlantyckich\n"
 "\n"
 "\n"
 "\n"
 "Przegląd\n"
 "\n"
-"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi technologicznej wroga.Niezdolność wojsk Sprzymierzonych do uzyskania wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi poważniejszych strat.Zadaniem nowotworzonych sił PHALANX będzie zmiana tych statystyk na naszą korzyść; do czego potrzebne będzie wszystko, co dzisiejsza ziemska technologia ma do zaoferowania.\n"
+"Atak Obcych przeprowadzony na Mumbai jasno dowiódł niewątpliwej przewagi "
+"technologicznej wroga.Niezdolność wojsk Sprzymierzonych do uzyskania "
+"wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne "
+"słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. "
+"Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie "
+"powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi "
+"poważniejszych strat.Zadaniem nowotworzonych sił PHALANX będzie zmiana tych "
+"statystyk na naszą korzyść; do czego potrzebne będzie wszystko, co "
+"dzisiejsza ziemska technologia ma do zaoferowania.\n"
 "\n"
-"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak np. osobiste pancerze), pozwalających na nawiązanie skutecznej i równorzędnej walki z Obcymi. Środki te projektowane są pod kątem podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na przetrwanie podczas starcia.\n"
+"Powołanie do życia programu \"Excalibur\" ma na celu zaprojektowanie i "
+"stworzenie broni (oraz innych środków nowoczesnego wyposażenia takich jak "
+"np. osobiste pancerze), pozwalających na nawiązanie skutecznej i "
+"równorzędnej walki z Obcymi. Środki te projektowane są pod kątem "
+"podniesienia efektywności żołnierzy w boju oraz zwiększenia ich szans na "
+"przetrwanie podczas starcia.\n"
 "\n"
-"Różne formy osobistego opancerzenia były obecne na polu walki prawie od zawsze; aczkolwiek w okresie od początku wieku XVIII do końca XX ich zastosowanie ograniczone było niewielką skutecznością. Przykładem takiego opancerzenia są stalowe hełmy używane podczas I i II wojny światowej.Krokiem milowym w powrocie osobistych pancerzy na pole walki było zastosowanie kevlaru; dziś już technologii zdecydowanie przebrzmiałej; wykorzystywanej jeszcze przez cywilów bądź niedofinansowaną policję.Nawet najbardziej zaawansowane opancerzenie XX wieku stało się mało skuteczną ochroną w stosunku do nowoczesnych broni. Zastosowanie nowych materiałów, które uczyniłyby pancerze odporniejszymi, a ich użytkowników groźniejszymi niż dotąd, stało się koniecznością.\n"
+"Różne formy osobistego opancerzenia były obecne na polu walki prawie od "
+"zawsze; aczkolwiek w okresie od początku wieku XVIII do końca XX ich "
+"zastosowanie ograniczone było niewielką skutecznością. Przykładem takiego "
+"opancerzenia są stalowe hełmy używane podczas I i II wojny światowej.Krokiem "
+"milowym w powrocie osobistych pancerzy na pole walki było zastosowanie "
+"kevlaru; dziś już technologii zdecydowanie przebrzmiałej; wykorzystywanej "
+"jeszcze przez cywilów bądź niedofinansowaną policję.Nawet najbardziej "
+"zaawansowane opancerzenie XX wieku stało się mało skuteczną ochroną w "
+"stosunku do nowoczesnych broni. Zastosowanie nowych materiałów, które "
+"uczyniłyby pancerze odporniejszymi, a ich użytkowników groźniejszymi niż "
+"dotąd, stało się koniecznością.\n"
 "\n"
-"Co zaskakujące, część danych, do których dotarliśmy, zdaje się potwierdzać, że naukowcy PHALANX przyczynili się do technologicznego przełomu już w przeszłości, wynajdując technikę wykorzystywaną później na całym świecie. W 2017 roku pracownikom Centrum Operacji Pacyficznych PHALANX udało się ostatecznie dopracować metodę produkcji włókien sztucznej sieci pajęczej, czego wszelkie poprzednie próby kończyły się niepowodzeniem. Opracowana wówczas technologia pozostaje w użyciu do dziś; jej jądro stanowi wynalazek nazywany 'organicznym krosnem'; jest to w istocie specjalny szkielet podtrzymujący setki wytworzonych przez inżynierię genetyczną sztucznych gruczołów i brodawek przędzalniczych, pozwalający produkować białko sieci pajęczej na skalę masową.\n"
+"Co zaskakujące, część danych, do których dotarliśmy, zdaje się potwierdzać, "
+"że naukowcy PHALANX przyczynili się do technologicznego przełomu już w "
+"przeszłości, wynajdując technikę wykorzystywaną później na całym świecie. W "
+"2017 roku pracownikom Centrum Operacji Pacyficznych PHALANX udało się "
+"ostatecznie dopracować metodę produkcji włókien sztucznej sieci pajęczej, "
+"czego wszelkie poprzednie próby kończyły się niepowodzeniem. Opracowana "
+"wówczas technologia pozostaje w użyciu do dziś; jej jądro stanowi wynalazek "
+"nazywany 'organicznym krosnem'; jest to w istocie specjalny szkielet "
+"podtrzymujący setki wytworzonych przez inżynierię genetyczną sztucznych "
+"gruczołów i brodawek przędzalniczych, pozwalający produkować białko sieci "
+"pajęczej na skalę masową.\n"
 "\n"
-"Pierwszy pancerz bojowy, którego konstrukcja oparta była na włóknach sieci pajęczej, trafił do ewkipunku NATO w 2023 roku, po serii testów pokazujących kompletną nieprzydatność kamizelek i pancerzy kevlarowych wszelkiego typu w ochronie przed nowoczesną amunicją wprowadzoną do użytku przez armię Chin.Jego budowa opiera się na szeregu przeplatających się warstw włókien sieci pajęczej oraz specjalnie hartowanego, wysokocząsteczkowego polietylenu, co zapewnia pancerzowi nadzwyczajną wytrzymałość i znakomitą giętkość.Jak się ocenia, uzyskana łączona tkanina jest około 18 razy bardziej wytrzymała niż stal, i blisko 3-, 4-krotnie bardziej wytrzymała niż kevlar.Po wprowadzeniu jej na rynek szybko znalazła zastosowanie w kamizelkach i pancerzach ochronnych dla żołnierzy na całym świecie, czyniąc inne rozwiązania przestarzałymi.Pancerze bojowe wykorzystujące włókna sieci pajęczej, sukcesywnie modyfikowane i ulepszane przez lata, do dziś pozostają w powszechnym użyciu.Najbardziej powszechny model posiada specjalne kieszenie, w których można umieszczać dodatkowe ceramiczne bądź wykonane ze stopów metali wkłady ochronne.\n"
+"Pierwszy pancerz bojowy, którego konstrukcja oparta była na włóknach sieci "
+"pajęczej, trafił do ewkipunku NATO w 2023 roku, po serii testów pokazujących "
+"kompletną nieprzydatność kamizelek i pancerzy kevlarowych wszelkiego typu w "
+"ochronie przed nowoczesną amunicją wprowadzoną do użytku przez armię Chin."
+"Jego budowa opiera się na szeregu przeplatających się warstw włókien sieci "
+"pajęczej oraz specjalnie hartowanego, wysokocząsteczkowego polietylenu, co "
+"zapewnia pancerzowi nadzwyczajną wytrzymałość i znakomitą giętkość.Jak się "
+"ocenia, uzyskana łączona tkanina jest około 18 razy bardziej wytrzymała niż "
+"stal, i blisko 3-, 4-krotnie bardziej wytrzymała niż kevlar.Po wprowadzeniu "
+"jej na rynek szybko znalazła zastosowanie w kamizelkach i pancerzach "
+"ochronnych dla żołnierzy na całym świecie, czyniąc inne rozwiązania "
+"przestarzałymi.Pancerze bojowe wykorzystujące włókna sieci pajęczej, "
+"sukcesywnie modyfikowane i ulepszane przez lata, do dziś pozostają w "
+"powszechnym użyciu.Najbardziej powszechny model posiada specjalne kieszenie, "
+"w których można umieszczać dodatkowe ceramiczne bądź wykonane ze stopów "
+"metali wkłady ochronne.\n"
 "\n"
-"Najczęściej przytaczaną wadą Pancerza Bojowego jest jego stosunkowo spory ciężar; duża liczba warstw materiałów ochronnych jest jednak niezbędna dla zapewnienia skutecznej ochrony przed nowoczesnymi broniami.Waga pancerza jest rozłożona równomiernie, co pozwala używającym go żołnierzom na pełną swobodę ruchów. Dzięki tej właściwości poruszanie się jest znacznie ułatwione w stosunku do np. eksperymentalnego pancerza nanokompozytowego.Pancerz Bojowy chroni życie naszych żołnierzy, zapewniając im przy tym kluczową na polu walki mobilność.\n"
+"Najczęściej przytaczaną wadą Pancerza Bojowego jest jego stosunkowo spory "
+"ciężar; duża liczba warstw materiałów ochronnych jest jednak niezbędna dla "
+"zapewnienia skutecznej ochrony przed nowoczesnymi broniami.Waga pancerza "
+"jest rozłożona równomiernie, co pozwala używającym go żołnierzom na pełną "
+"swobodę ruchów. Dzięki tej właściwości poruszanie się jest znacznie "
+"ułatwione w stosunku do np. eksperymentalnego pancerza nanokompozytowego."
+"Pancerz Bojowy chroni życie naszych żołnierzy, zapewniając im przy tym "
+"kluczową na polu walki mobilność.\n"
 "\n"
 "\n"
 "Sugerowana Doktryna Postępowania\n"
 "\n"
-"Pancerz Bojowy powinien być nieodzownym elementem ekwipunku żołnierza PHALANX podczas każdej akcji bojowej. Jego użycie powinno być rozważane jako podstawowy środek ochrony na polu walki, przynajmniej do czasu wprowadzenia bardziej zaawansowanych rozwiązań.Dla wielu żołnierzy (na przykład takich jak snajperzy, rażących ogniem z dystansu) możliwość szybkiego przemieszczenia, którą zapewnia Pancerz Bojowy, może być bardziej istotna niż zwiększona ochrona zapewniana przez cięższe pancerze.\n"
+"Pancerz Bojowy powinien być nieodzownym elementem ekwipunku żołnierza "
+"PHALANX podczas każdej akcji bojowej. Jego użycie powinno być rozważane jako "
+"podstawowy środek ochrony na polu walki, przynajmniej do czasu wprowadzenia "
+"bardziej zaawansowanych rozwiązań.Dla wielu żołnierzy (na przykład takich "
+"jak snajperzy, rażących ogniem z dystansu) możliwość szybkiego "
+"przemieszczenia, którą zapewnia Pancerz Bojowy, może być bardziej istotna "
+"niż zwiększona ochrona zapewniana przez cięższe pancerze.\n"
 "\n"
 "\n"
 "Dodatki\n"
 "\n"
 "Brak."
 
-#: ../base/ufos/research.ufo:1240
+#: ../base/ufos/research.ufo:1280
 msgid "Nanocomposite Armour"
 msgstr "Pancerz nanokompozytowy"
 
-#: ../base/ufos/research.ufo:1242
+#: ../base/ufos/research.ufo:1282
 msgid "nano_armor_txt"
 msgstr ""
 "DO: Dowódca Bazy, Centrum Operacji Atlantyckich\n"
 "\n"
-"OD: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"OD: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji "
+"Atlantyckich\n"
 "\n"
 "DATA: %02i %s %i\n"
 "\n"
 "TEMAT: Re: Pancerz nanokompozytowy\n"
 "\n"
 "\n"
-"Dowódco, mam przyjemność zameldować o sukcesie naszych badań dotyczących nowych metod produkcji nanokompozytów!\n"
+"Dowódco, mam przyjemność zameldować o sukcesie naszych badań dotyczących "
+"nowych metod produkcji nanokompozytów!\n"
 "\n"
-"Nie zamierzam zanudzać Pana detalami nowej technologii produkcji nanorurek; pozwolę sobie tylko na podkreślenie, że dzięki uważnym studiom śladów obróbki nanorurek w zbroi obcych byliśmy w stanie wydedukować to i owo na temat samych procesów formowania, którym były one poddawane.Proces ich prasowania i układania w mikrostruktury, w których poszczególne nanorurki mogą być wzajemnie splatane, opiera się w głównej mierze na wypalaniu w specjalnie do tego przystosowanym piecu plazmowym. Prototyp takiego urządzenia udało nam się stworzyć, a z jego pomocą nauczyliśmy się formować węglowe nanorurki w prawie dowolny geometryczny kształt, przy jednoczesnej dużej oszczędności energii w porównaniu do starszych metod, i znacznym zwiększeniu wydajności produkcji.\n"
+"Nie zamierzam zanudzać Pana detalami nowej technologii produkcji nanorurek; "
+"pozwolę sobie tylko na podkreślenie, że dzięki uważnym studiom śladów "
+"obróbki nanorurek w zbroi obcych byliśmy w stanie wydedukować to i owo na "
+"temat samych procesów formowania, którym były one poddawane.Proces ich "
+"prasowania i układania w mikrostruktury, w których poszczególne nanorurki "
+"mogą być wzajemnie splatane, opiera się w głównej mierze na wypalaniu w "
+"specjalnie do tego przystosowanym piecu plazmowym. Prototyp takiego "
+"urządzenia udało nam się stworzyć, a z jego pomocą nauczyliśmy się formować "
+"węglowe nanorurki w prawie dowolny geometryczny kształt, przy jednoczesnej "
+"dużej oszczędności energii w porównaniu do starszych metod, i znacznym "
+"zwiększeniu wydajności produkcji.\n"
 "\n"
-"Od tego miejsca niniejszego opracowania pozwolę sobie na skupienie się na fascynujących możliwościach i potencjalnych zastosowaniach nowego pancerza, który zaprojektowaliśmy.\n"
+"Od tego miejsca niniejszego opracowania pozwolę sobie na skupienie się na "
+"fascynujących możliwościach i potencjalnych zastosowaniach nowego pancerza, "
+"który zaprojektowaliśmy.\n"
 "\n"
-"W naszej konstrukcji udało się zachować prawie pełną funkcjonalność pancerza obcych, począwszy od płytek nanokompozytowych, a skończywszy na wspomagającym poruszanie się serwomechanizmie.Nowy pancerz jest nadspodziewanie lekki, biorąc pod uwagę ilość wkomponowanych warstw materiałów i mechanizmów, jednak wciąż znacząco cięższy niż Pancerz Bojowy.Zapewnia prawie taką samą ochronę i swobodę poruszania jak pancerz obcych, pozwalając przy tym na bardziej stabilne celowanie.\n"
+"W naszej konstrukcji udało się zachować prawie pełną funkcjonalność pancerza "
+"obcych, począwszy od płytek nanokompozytowych, a skończywszy na "
+"wspomagającym poruszanie się serwomechanizmie.Nowy pancerz jest "
+"nadspodziewanie lekki, biorąc pod uwagę ilość wkomponowanych warstw "
+"materiałów i mechanizmów, jednak wciąż znacząco cięższy niż Pancerz Bojowy."
+"Zapewnia prawie taką samą ochronę i swobodę poruszania jak pancerz obcych, "
+"pozwalając przy tym na bardziej stabilne celowanie.\n"
 "\n"
-"Pewnych ograniczeń jednak nie udało nam się uniknąć, co wynika głównie z naszego stosunkowo niewielkiego doświadczenia w pracy z nanokompozytami.Ogólnie rzecz biorąc, nasz pancerz jest nieco sztywniejszy i bardziej masywny niż jego odpowiednik u Obcych; analogicznie, nasza elektronika ustępuje tu nieco pola, co ma negatywny wpływ na szybkość prowadzenia ognia i czas reakcji naszych żołnierzy.Również polimer używany przez nas cechuje się nieco większą kruchością niż oryginalny, zaś serwomotory są cięższe i mniej uniwersalne, niż te z oryginalnego pancerza; nie widzimy jednak szybkiego sposobu na zredukowanie ich rozmiarów.\n"
+"Pewnych ograniczeń jednak nie udało nam się uniknąć, co wynika głównie z "
+"naszego stosunkowo niewielkiego doświadczenia w pracy z nanokompozytami."
+"Ogólnie rzecz biorąc, nasz pancerz jest nieco sztywniejszy i bardziej "
+"masywny niż jego odpowiednik u Obcych; analogicznie, nasza elektronika "
+"ustępuje tu nieco pola, co ma negatywny wpływ na szybkość prowadzenia ognia "
+"i czas reakcji naszych żołnierzy.Również polimer używany przez nas cechuje "
+"się nieco większą kruchością niż oryginalny, zaś serwomotory są cięższe i "
+"mniej uniwersalne, niż te z oryginalnego pancerza; nie widzimy jednak "
+"szybkiego sposobu na zredukowanie ich rozmiarów.\n"
 "\n"
-"Najbardziej widoczną niekorzystną różnicą pomiędzy modelem Obcych i naszym są buty.Pomimo tego, że zrobiliśmy co w naszej mocy, wydajność naszych serwomechanizmów jest daleko niższa niż Obcych; ich konstrukcja wymaga użycia narzędzi, których nie posiadamy.Bez względu jednak na to ograniczenie, nasze obuwie jest lekkie, pozwalające na maksymalnie szybką reakcję i wciąż zapewniające wystarczającą ochronę.\n"
+"Najbardziej widoczną niekorzystną różnicą pomiędzy modelem Obcych i naszym "
+"są buty.Pomimo tego, że zrobiliśmy co w naszej mocy, wydajność naszych "
+"serwomechanizmów jest daleko niższa niż Obcych; ich konstrukcja wymaga "
+"użycia narzędzi, których nie posiadamy.Bez względu jednak na to "
+"ograniczenie, nasze obuwie jest lekkie, pozwalające na maksymalnie szybką "
+"reakcję i wciąż zapewniające wystarczającą ochronę.\n"
 "\n"
-"Zastosowanie nowego pancerza na polu walki zwiększy bojową skuteczność naszych żołnierzy. Ochrona, którą zapewnia, przy jego relatywnej lekkości, predestynuje go jako pancerz szczególnie odpowiedni dla żolnierzy walczących w pierwszej linii.\n"
+"Zastosowanie nowego pancerza na polu walki zwiększy bojową skuteczność "
+"naszych żołnierzy. Ochrona, którą zapewnia, przy jego relatywnej lekkości, "
+"predestynuje go jako pancerz szczególnie odpowiedni dla żolnierzy walczących "
+"w pierwszej linii.\n"
 "\n"
 "--Mjr Navarre"
 
-#: ../base/ufos/research.ufo:1243
+#: ../base/ufos/research.ufo:1283
 msgid "nano_armor_pre_txt"
 msgstr ""
 "DO: Dowódca Bazy, Dowództwo Operacji Atlantyckich\n"
 "\n"
-"OD: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"OD: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji "
+"Atlantyckich\n"
 "\n"
 "DATA: %02i %s %i\n"
 "\n"
 "TEMAT: Propozycja: Pancerz nanokompozytowy\n"
 "\n"
 "\n"
-"Wstępne badanie pancerza osobistego wykorzystywanego przez Obcych przyniosło kilkanaście ważnych obserwacji, z których najważniejszą jest ta, iż kluczem do jego nadzwyczajnej efektywności jest wykorzystanie nanokompozytów.Jesteśmy w stanie skopiować rozwiązania tej technologii, do czego potrzebować będziemy dużych ilości węglowych nanorurek.\n"
+"Wstępne badanie pancerza osobistego wykorzystywanego przez Obcych przyniosło "
+"kilkanaście ważnych obserwacji, z których najważniejszą jest ta, iż kluczem "
+"do jego nadzwyczajnej efektywności jest wykorzystanie nanokompozytów."
+"Jesteśmy w stanie skopiować rozwiązania tej technologii, do czego "
+"potrzebować będziemy dużych ilości węglowych nanorurek.\n"
 "\n"
-"Dotychczas produkcja nanorurek była czasochłonna, skomplikowana i kosztowna; jeszcze trudniejsze było łączenie ich w bardziej złożone struktury.Z wyżej wymienionych względów ich użycie dla celów technicznych ograniczone było do pokrywania niewielkich powierzchni najbardziej zaawansowanych technicznie samolotów i czołgów, praktycznie bez dalszych prób ich specyficznego kształtowania.Dla kontrastu, nanorurki, które znalazły się w zbroi obcych, skoncentowane są w wielu warstwach i noszą ślady niespotykanych sposobów formowania.Nasze metody wytwarzania węglowych nanorurek powinny ulec znaczącym modyfikacjom.\n"
+"Dotychczas produkcja nanorurek była czasochłonna, skomplikowana i kosztowna; "
+"jeszcze trudniejsze było łączenie ich w bardziej złożone struktury.Z wyżej "
+"wymienionych względów ich użycie dla celów technicznych ograniczone było do "
+"pokrywania niewielkich powierzchni najbardziej zaawansowanych technicznie "
+"samolotów i czołgów, praktycznie bez dalszych prób ich specyficznego "
+"kształtowania.Dla kontrastu, nanorurki, które znalazły się w zbroi obcych, "
+"skoncentowane są w wielu warstwach i noszą ślady niespotykanych sposobów "
+"formowania.Nasze metody wytwarzania węglowych nanorurek powinny ulec "
+"znaczącym modyfikacjom.\n"
 "\n"
-"Wierzę, że dysponując pancerzem pozyskanym od obcych, i angażując środki pozostające w naszym posiadaniu, uda nam się opracować nowe metody produkcji i obróbki nanorurek węglowych, co w efekcie powinno pozwolić na rozwinięcie technologii wytwarzania płytek nanokompozytowych, które, dalej, będą mogły być użyte przy produkcji nowego rodzaju pancerzy ochronnych.\n"
+"Wierzę, że dysponując pancerzem pozyskanym od obcych, i angażując środki "
+"pozostające w naszym posiadaniu, uda nam się opracować nowe metody produkcji "
+"i obróbki nanorurek węglowych, co w efekcie powinno pozwolić na rozwinięcie "
+"technologii wytwarzania płytek nanokompozytowych, które, dalej, będą mogły "
+"być użyte przy produkcji nowego rodzaju pancerzy ochronnych.\n"
 "\n"
-"Niniejszy projekt będzie wymagał zużycia zasobów (finansowych i roboczogodzin) na znaczącym poziomie. Prace ruszą jak tylko otrzymamy pańską autoryzację, Dowódco.\n"
+"Niniejszy projekt będzie wymagał zużycia zasobów (finansowych i "
+"roboczogodzin) na znaczącym poziomie. Prace ruszą jak tylko otrzymamy pańską "
+"autoryzację, Dowódco.\n"
 "\n"
 "--Mjr Navarre"
 
-#: ../base/ufos/research.ufo:1257
+#: ../base/ufos/research.ufo:1297
 msgid "Alien Artifact - Alien Body Armour"
 msgstr "Artefakt Obcych - Pancerz Obcych"
 
-#: ../base/ufos/research.ufo:1259
+#: ../base/ufos/research.ufo:1299
 msgid "alien_body_armour_txt"
 msgstr ""
 "DO: Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich\n"
 "\n"
-"OD: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"OD: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji "
+"Atlantyckich\n"
 "\n"
 "DATA: %02i %s %i\n"
 "\n"
 "TEMAT: Re: Artefakt Obcych -- Pancerz Obcych\n"
 "\n"
 "\n"
-"Dowódco, pozwalam sobie przedstawić pełny raport dotyczący wyników badań Pancerza Obcych.\n"
+"Dowódco, pozwalam sobie przedstawić pełny raport dotyczący wyników badań "
+"Pancerza Obcych.\n"
 "\n"
-"Główne spostrzeżenie płynące z naszych dociekań jest dosyć zaskakujące - jego konstrukcja w całości opiera się na kompozytach i nie wykorzystuje ani grama metalu.Co więcej, najważniejszym tworzywem użytym przez Obcych są węglowe nanorurki, materiał znany już ziemskiej nauce i charakteryzujący się niesłychaną wytrzymałością.\n"
+"Główne spostrzeżenie płynące z naszych dociekań jest dosyć zaskakujące - "
+"jego konstrukcja w całości opiera się na kompozytach i nie wykorzystuje ani "
+"grama metalu.Co więcej, najważniejszym tworzywem użytym przez Obcych są "
+"węglowe nanorurki, materiał znany już ziemskiej nauce i charakteryzujący się "
+"niesłychaną wytrzymałością.\n"
 "\n"
-"Jak sama nazwa wskazuje, węglowa nanorurka zbudowana jest z atomów węgla ułożonych przestrzennie w cylindryczny kształt o średnicy kilku nanometrów.Jak dotąd, nanorurki nie były szeroko używane w przemyśle, ze względu na bardzo wysokie koszty produkcji; stosowano je na ograniczoną skalę w niektórych (posiadających wielkie budżety) programach aeronautyki, eksploracji kosmosu i eksperymentalnych projektach wojskowych.\n"
+"Jak sama nazwa wskazuje, węglowa nanorurka zbudowana jest z atomów węgla "
+"ułożonych przestrzennie w cylindryczny kształt o średnicy kilku nanometrów."
+"Jak dotąd, nanorurki nie były szeroko używane w przemyśle, ze względu na "
+"bardzo wysokie koszty produkcji; stosowano je na ograniczoną skalę w "
+"niektórych (posiadających wielkie budżety) programach aeronautyki, "
+"eksploracji kosmosu i eksperymentalnych projektach wojskowych.\n"
 "\n"
-"W pancerzu Obcych nanorurki tworzą wierzchnią warstwę nachodzących na siebie różnokształtnych płytek skutecznie zatrzymującą różne rodzaje pocisków.Warstwa ta zakotwiczona jest w kolejnej (wykonanej z niezwykle twardego polimeru), spoczywającej na półpłynnym tworzywie, którego funkcją jest rozprowadzanie niesionej przez pocisk energii kinetycznej na możliwie dużej powierzchni.Ostatnia warstwa, zbudowana z włókien aramidowych, spełnia funkcję dwojaką: pojemnika na wyżej wspomniane półpłynne tworzywo, oraz zabezpieczenia przed ewentualnymi odpryskami fragmentów pancerza powstałymi na skutek uderzenia.\n"
+"W pancerzu Obcych nanorurki tworzą wierzchnią warstwę nachodzących na siebie "
+"różnokształtnych płytek skutecznie zatrzymującą różne rodzaje pocisków."
+"Warstwa ta zakotwiczona jest w kolejnej (wykonanej z niezwykle twardego "
+"polimeru), spoczywającej na półpłynnym tworzywie, którego funkcją jest "
+"rozprowadzanie niesionej przez pocisk energii kinetycznej na możliwie dużej "
+"powierzchni.Ostatnia warstwa, zbudowana z włókien aramidowych, spełnia "
+"funkcję dwojaką: pojemnika na wyżej wspomniane półpłynne tworzywo, oraz "
+"zabezpieczenia przed ewentualnymi odpryskami fragmentów pancerza powstałymi "
+"na skutek uderzenia.\n"
 "\n"
-"Dzięki znakomitemu przewodnictwu cieplnemu rurek węglowych, pancerz zapewnia bardzo dobrą ochronę nie tylko przed zwykłymi pociskami, ale także bronią plazmową i laserową.Zaleta ta jednak łatwo może obrócić się w wadę, kiedy pancerz narażony jest na atak bronią zapalającą - ta, podgrzewając powietrze wokół niego, uniemożliwia skuteczne odprowadzenie gromadzącego się ciepła. Wiąże się to z niezwykle nieprzyjemnymi następstwami dla noszącego pancerz Obcego, który łatwo w takim wypadku może zostać upieczony żywcem.\n"
+"Dzięki znakomitemu przewodnictwu cieplnemu rurek węglowych, pancerz zapewnia "
+"bardzo dobrą ochronę nie tylko przed zwykłymi pociskami, ale także bronią "
+"plazmową i laserową.Zaleta ta jednak łatwo może obrócić się w wadę, kiedy "
+"pancerz narażony jest na atak bronią zapalającą - ta, podgrzewając powietrze "
+"wokół niego, uniemożliwia skuteczne odprowadzenie gromadzącego się ciepła. "
+"Wiąże się to z niezwykle nieprzyjemnymi następstwami dla noszącego pancerz "
+"Obcego, który łatwo w takim wypadku może zostać upieczony żywcem.\n"
 "\n"
-"Integralną cześcią konstrukcji pancerza jest system serwomechanizmów, z których część zlokalizowana jest w butach i pozwala na szybkie poruszanie się, a część tworzy system wzmocnień i podparć dla przedramienia, ułatwiając dokładne celowanie.Widzimy wiele potencjalnych zastosowań dla tej technologii.\n"
+"Integralną cześcią konstrukcji pancerza jest system serwomechanizmów, z "
+"których część zlokalizowana jest w butach i pozwala na szybkie poruszanie "
+"się, a część tworzy system wzmocnień i podparć dla przedramienia, ułatwiając "
+"dokładne celowanie.Widzimy wiele potencjalnych zastosowań dla tej "
+"technologii.\n"
 "\n"
-"Przystosowanie tego pancerza dla potrzeb ludzkiego ciała nie wydaje się możliwe.Jednakże, wiele rozwiązań, które poznaliśmy, jesteśmy w stanie wykorzystać w zupełnie nowej konstrukcji. Przygotowaliśmy szczegółową specyfikację i plan badań nad nowym pancerzem; znajdzie go Pan w swojej poczcie.\n"
+"Przystosowanie tego pancerza dla potrzeb ludzkiego ciała nie wydaje się "
+"możliwe.Jednakże, wiele rozwiązań, które poznaliśmy, jesteśmy w stanie "
+"wykorzystać w zupełnie nowej konstrukcji. Przygotowaliśmy szczegółową "
+"specyfikację i plan badań nad nowym pancerzem; znajdzie go Pan w swojej "
+"poczcie.\n"
 "\n"
 "--Mjr Navarre"
 
-#: ../base/ufos/research.ufo:1260
+#: ../base/ufos/research.ufo:1300
 msgid "alien_body_armour_pre_txt"
 msgstr ""
 "DO: Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich\n"
 "\n"
-"OD: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"OD: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji "
+"Atlantyckich\n"
 "\n"
 "DATA: %02i %s %i\n"
 "\n"
 "TEMAT: Artefakt Obcych -- Pancerz Obcych\n"
 "\n"
 "\n"
-"Dowódco, z pola walki udało nam się pozyskać praktycznie nieuszkodzony pancerz Obcych.Relacje naszych żołnierzy opisujące jego niespotykaną odporność nie wydają się ani o jotę przesadzone; noszący go Obcy z łatwością byli w stanie znieść ciężki ostrzał praktycznie każdego typu broni znajdującej się w naszym arsenale.Wystarczy, że powiem, iż żadne z naszych narzędzi - jak dotąd - nie było w stanie przegryźć się przez jego konstrukcję. Naszym priorytetem jest jak najszybsze poznanie silnych i słabych punktów tego pancerza, co może pozwolić na wykorzystanie tej wiedzy dla naszych przedsięwzięć.\n"
+"Dowódco, z pola walki udało nam się pozyskać praktycznie nieuszkodzony "
+"pancerz Obcych.Relacje naszych żołnierzy opisujące jego niespotykaną "
+"odporność nie wydają się ani o jotę przesadzone; noszący go Obcy z łatwością "
+"byli w stanie znieść ciężki ostrzał praktycznie każdego typu broni "
+"znajdującej się w naszym arsenale.Wystarczy, że powiem, iż żadne z naszych "
+"narzędzi - jak dotąd - nie było w stanie przegryźć się przez jego "
+"konstrukcję. Naszym priorytetem jest jak najszybsze poznanie silnych i "
+"słabych punktów tego pancerza, co może pozwolić na wykorzystanie tej wiedzy "
+"dla naszych przedsięwzięć.\n"
 "\n"
-"Niniejszy projekt będzie wymagał zużycia zasobów (finansowych i roboczogodzin) na poziomie średnim. Prace ruszą, jak tylko otrzymamy Pańską autoryzację.\n"
+"Niniejszy projekt będzie wymagał zużycia zasobów (finansowych i "
+"roboczogodzin) na poziomie średnim. Prace ruszą, jak tylko otrzymamy Pańską "
+"autoryzację.\n"
 "\n"
 "--Mjr. Navarre"
 
-#: ../base/ufos/research.ufo:1287
+#: ../base/ufos/research.ufo:1327
 msgid "light_alien_armor"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1288
+#: ../base/ufos/research.ufo:1328
 msgid "light_alien_pre_armor"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1297
+#: ../base/ufos/research.ufo:1337
 msgid "medium_alien_armor"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1298
+#: ../base/ufos/research.ufo:1338
 msgid "medium_alien_pre_armor"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1312
+#: ../base/ufos/research.ufo:1352
 msgid "Blast Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1324
+#: ../base/ufos/research.ufo:1364
 msgid "Fire Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1336
+#: ../base/ufos/research.ufo:1376
 msgid "Laser Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1352
+#: ../base/ufos/research.ufo:1392
 msgid "Impact Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1364 ../base/ufos/research.ufo:1395
+#: ../base/ufos/research.ufo:1404 ../base/ufos/research.ufo:1435
 msgid "Shock Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1376
+#: ../base/ufos/research.ufo:1416
 msgid "Plasma Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1407
+#: ../base/ufos/research.ufo:1447
 msgid "Stun Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1419
+#: ../base/ufos/research.ufo:1459
 msgid "Tachyon Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1436
+#: ../base/ufos/research.ufo:1476
 msgid "Accuracy Attribute"
 msgstr "Atrybut celności"
 
-#: ../base/ufos/research.ufo:1448
+#: ../base/ufos/research.ufo:1488
 msgid "Assault Guns Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1460
+#: ../base/ufos/research.ufo:1500
 msgid "Close Combat Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1472
+#: ../base/ufos/research.ufo:1512
 msgid "High-Explosives Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1484
+#: ../base/ufos/research.ufo:1524
 msgid "Heavy Weapons Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1496
+#: ../base/ufos/research.ufo:1536
 msgid "Mind Attribute"
 msgstr "Atrybut umysłu"
 
-#: ../base/ufos/research.ufo:1508
+#: ../base/ufos/research.ufo:1548
 msgid "Power Attribute"
 msgstr "Atrybut siły"
 
-#: ../base/ufos/research.ufo:1520
+#: ../base/ufos/research.ufo:1560
 msgid "Sniper Rifles Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1532
+#: ../base/ufos/research.ufo:1572
 msgid "Speed Attribute"
 msgstr "Atrybut szybkości"
 
-#: ../base/ufos/research.ufo:1548
+#: ../base/ufos/research.ufo:1588
 msgid "b_aliencontainment_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1564
+#: ../base/ufos/research.ufo:1604
 msgid "b_command_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1580
+#: ../base/ufos/research.ufo:1620
 msgid "b_entrance_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1592
+#: ../base/ufos/research.ufo:1632
 msgid "b_large_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1608
+#: ../base/ufos/research.ufo:1648
 msgid "b_hospital_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1624
+#: ../base/ufos/research.ufo:1664
 msgid "b_small_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1640
+#: ../base/ufos/research.ufo:1680
 msgid "b_lab_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1656
+#: ../base/ufos/research.ufo:1696
 msgid "b_powerplant_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1672
+#: ../base/ufos/research.ufo:1712
 msgid "b_quarters_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1688
+#: ../base/ufos/research.ufo:1728
 msgid "b_radar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1704
+#: ../base/ufos/research.ufo:1744
 msgid "b_storage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1720
+#: ../base/ufos/research.ufo:1760
 msgid "b_teamroom_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1736
+#: ../base/ufos/research.ufo:1776
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1752
+#: ../base/ufos/research.ufo:1792
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1768
+#: ../base/ufos/research.ufo:1808
 msgid "b_workshop_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1787
+#: ../base/ufos/research.ufo:1827
 msgid "dropship_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1802
+#: ../base/ufos/research.ufo:1842
 msgid "interceptor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1817
+#: ../base/ufos/research.ufo:1857
 msgid "saracen_interceptor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1859
+#: ../base/ufos/research.ufo:1899
 msgid "ufo_scout_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1860
+#: ../base/ufos/research.ufo:1900
 msgid "ufo_scout_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1892
+#: ../base/ufos/research.ufo:1932
 msgid "ufo_fighter_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1893
+#: ../base/ufos/research.ufo:1933
 msgid "ufo_fighter_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1919
+#: ../base/ufos/research.ufo:1959
 msgid "UFO - Harvester"
 msgstr "UFO - Żniwiarz"
 
-#: ../base/ufos/research.ufo:1920
+#: ../base/ufos/research.ufo:1960
 msgid "ufo_harvester_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1921
+#: ../base/ufos/research.ufo:1961
 msgid "ufo_harvester_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1947
+#: ../base/ufos/research.ufo:1987
 msgid "Live Specimen - Bloodspider"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1948
+#: ../base/ufos/research.ufo:1988
 msgid "bloodspider_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1949
+#: ../base/ufos/research.ufo:1989
 msgid "bloodspider_notes_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1962
+#: ../base/ufos/research.ufo:2002
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Autopsja Obcego - Bloodspider"
 
-#: ../base/ufos/research.ufo:1963
+#: ../base/ufos/research.ufo:2003
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1964
+#: ../base/ufos/research.ufo:2004
 msgid "bloodspider_autopsy_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1981
+#: ../base/ufos/research.ufo:2021
 msgid "Alien Autopsy - Ortnok"
 msgstr "Autopsja Obcego - Ortnok"
 
-#: ../base/ufos/research.ufo:1982
+#: ../base/ufos/research.ufo:2022
 msgid "ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1983
+#: ../base/ufos/research.ufo:2023
 msgid "ortnok_autopsy_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2001
-msgid "Alien Autopsy - Antarean"
-msgstr ""
+#: ../base/ufos/research.ufo:2041
+#, fuzzy
+msgid "Alien Autopsy - Taman"
+msgstr "Autopsja Obcego - Ortnok"
 
-#: ../base/ufos/research.ufo:2002
+#: ../base/ufos/research.ufo:2042
 msgid "taman_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2003
+#: ../base/ufos/research.ufo:2043
 msgid "taman_autopsy_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2019
+#: ../base/ufos/research.ufo:2059
 msgid "Alien Autopsy - Shevaar"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2020
+#: ../base/ufos/research.ufo:2060
 msgid "shevaar_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2021
+#: ../base/ufos/research.ufo:2061
 msgid "shevaar_autopsy_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2037
+#: ../base/ufos/research.ufo:2077
 msgid "Live Specimen - Stinger"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2038
+#: ../base/ufos/research.ufo:2078
 msgid "hovernet_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2039
+#: ../base/ufos/research.ufo:2079
 msgid "hovernet_notes_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2053
+#: ../base/ufos/research.ufo:2093
 msgid "Alien Autopsy - Stinger"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2054
+#: ../base/ufos/research.ufo:2094
 msgid "hovernet_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2055
+#: ../base/ufos/research.ufo:2095
 msgid "hovernet_autopsy_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2071
+#: ../base/ufos/research.ufo:2111
 msgid "Alien Autopsy - Ortnok Cyborg"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2072
+#: ../base/ufos/research.ufo:2112
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2073
+#: ../base/ufos/research.ufo:2113
 msgid "cyborg_ortnok_autopsy_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2092
+#: ../base/ufos/research.ufo:2132
 msgid "Phoenix UGV"
 msgstr "BWN Phoenix"
 
-#: ../base/ufos/research.ufo:2093
+#: ../base/ufos/research.ufo:2133
 msgid "ugv_phoenix_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2094
+#: ../base/ufos/research.ufo:2134
 msgid "ugv_phoenix_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2108
+#: ../base/ufos/research.ufo:2148
 msgid "Triax UGV"
 msgstr "BWN Triax"
 
-#: ../base/ufos/research.ufo:2109
+#: ../base/ufos/research.ufo:2149
 msgid "ugv_triax_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2110
+#: ../base/ufos/research.ufo:2150
 msgid "ugv_triax_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2128
+#: ../base/ufos/research.ufo:2168
 msgid "Raven ECM Unit"
 msgstr "Zasobnik ESZ \"Raven\""
 
-#: ../base/ufos/research.ufo:2130 ../base/ufos/research.ufo:2146
+#: ../base/ufos/research.ufo:2170 ../base/ufos/research.ufo:2186
 msgid "craft_shield_light_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2144
+#: ../base/ufos/research.ufo:2184
 msgid "Polymer Aircraft Armour"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2160
+#: ../base/ufos/research.ufo:2200
 msgid "SHIVA Rotary Cannon"
 msgstr "Działo SHIVA systemu Gatling"
 
-#: ../base/ufos/research.ufo:2162
+#: ../base/ufos/research.ufo:2202
 msgid "craft_weapon_flac_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2176
+#: ../base/ufos/research.ufo:2216
 msgid "Sparrowhawk AA Missile Rack"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2178
+#: ../base/ufos/research.ufo:2218
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2192
+#: ../base/ufos/research.ufo:2232
 msgid "TR-20 Rocket Pod"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2194
+#: ../base/ufos/research.ufo:2234
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2214
+#: ../base/ufos/research.ufo:2254
 msgid "Particle Beam Weapon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2215
+#: ../base/ufos/research.ufo:2255
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2216
+#: ../base/ufos/research.ufo:2256
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2240
+#: ../base/ufos/research.ufo:2280
 msgid "Political Situation Before The Invasion"
 msgstr "Sytuacja polityczna przed inwazją"
 
-#: ../base/ufos/research.ufo:2241
+#: ../base/ufos/research.ufo:2281
 msgid "news_initial_political_situation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2251
+#: ../base/ufos/research.ufo:2291
 msgid "After The War"
 msgstr "Po Wojnie"
 
-#: ../base/ufos/research.ufo:2252
+#: ../base/ufos/research.ufo:2292
 msgid "news_after_the_war_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2262
+#: ../base/ufos/research.ufo:2302
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2263
+#: ../base/ufos/research.ufo:2303
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 
@@ -3678,6 +4162,11 @@ msgstr "Przełącza widok między kolejnymi wrogami w polu widzenia"
 msgid "End round"
 msgstr "Koniec rundy"
 
+#: ../base/ufos/team_aliens.ufo:239
+#, fuzzy
+msgid "Taman"
+msgstr "Drużyna"
+
 #: ../base/ufos/team_aliens.ufo:249
 msgid "Shevaar"
 msgstr ""
@@ -3789,10 +4278,10 @@ msgid "Sniper Rifle Magazine"
 msgstr "Magazynek do karabinu snajperskiego"
 
 #: ../base/ufos/weapons_human.ufo:185 ../base/ufos/weapons_human.ufo:204
-#: ../base/ufos/weapons_human.ufo:277 ../base/ufos/weapons_human.ufo:840
-#: ../base/ufos/weapons_human.ufo:862 ../base/ufos/weapons_human.ufo:898
-#: ../base/ufos/weapons_human.ufo:920 ../base/ufos/weapons_human.ufo:957
-#: ../base/ufos/weapons_human.ufo:979
+#: ../base/ufos/weapons_human.ufo:277 ../base/ufos/weapons_human.ufo:843
+#: ../base/ufos/weapons_human.ufo:865 ../base/ufos/weapons_human.ufo:901
+#: ../base/ufos/weapons_human.ufo:923 ../base/ufos/weapons_human.ufo:960
+#: ../base/ufos/weapons_human.ufo:982
 msgid "Aimed Shot"
 msgstr "Strz. celowany"
 
@@ -3817,9 +4306,9 @@ msgstr "Pistolet samoczynny"
 msgid "4.2mm MP Magazine"
 msgstr "Magazynek do PS kal. 4.2mm"
 
-#: ../base/ufos/weapons_human.ufo:332 ../base/ufos/weapons_human.ufo:479
-#: ../base/ufos/weapons_human.ufo:534 ../base/ufos/weapons_human.ufo:611
-#: ../base/ufos/weapons_human.ufo:688 ../base/ufos/weapons_human.ufo:1319
+#: ../base/ufos/weapons_human.ufo:332 ../base/ufos/weapons_human.ufo:537
+#: ../base/ufos/weapons_human.ufo:614 ../base/ufos/weapons_human.ufo:691
+#: ../base/ufos/weapons_human.ufo:1322
 msgid "Single Shot"
 msgstr "Strz. pojed."
 
@@ -3839,99 +4328,98 @@ msgstr "Magazynek do pistoletu maszynowego"
 msgid "Riot Shotgun"
 msgstr "Strzelba"
 
-#: ../base/ufos/weapons_human.ufo:467 ../base/ufos/weapons_human.ufo:599
-#: ../base/ufos/weapons_human.ufo:676
-msgid "Flechette Shells"
-msgstr "Fleszetki"
-
-#: ../base/ufos/weapons_human.ufo:500 ../base/ufos/weapons_human.ufo:555
-#: ../base/ufos/weapons_human.ufo:632 ../base/ufos/weapons_human.ufo:709
-msgid "Double Shot"
-msgstr "Strz. podw."
-
-#: ../base/ufos/weapons_human.ufo:522
+#: ../base/ufos/weapons_human.ufo:525
 msgid "Saboted Slugs"
 msgstr "Pociski podkalibrowe"
 
-#: ../base/ufos/weapons_human.ufo:581
+#: ../base/ufos/weapons_human.ufo:558 ../base/ufos/weapons_human.ufo:635
+#: ../base/ufos/weapons_human.ufo:712
+msgid "Double Shot"
+msgstr "Strz. podw."
+
+#: ../base/ufos/weapons_human.ufo:584
 msgid "Shotgun"
 msgstr "Strzelba"
 
-#: ../base/ufos/weapons_human.ufo:658
+#: ../base/ufos/weapons_human.ufo:602 ../base/ufos/weapons_human.ufo:679
+msgid "Flechette Shells"
+msgstr "Fleszetki"
+
+#: ../base/ufos/weapons_human.ufo:661
 msgid "Micro Shotgun"
 msgstr "Mini-strzelba"
 
-#: ../base/ufos/weapons_human.ufo:734
+#: ../base/ufos/weapons_human.ufo:737
 msgid "Flamethrower"
 msgstr "Miotacz ognia"
 
-#: ../base/ufos/weapons_human.ufo:752
+#: ../base/ufos/weapons_human.ufo:755
 msgid "C90 Canister"
 msgstr "Zbiornik C90"
 
-#: ../base/ufos/weapons_human.ufo:764
+#: ../base/ufos/weapons_human.ufo:767
 msgid "Candlelight"
 msgstr "Mały płomień"
 
-#: ../base/ufos/weapons_human.ufo:784
+#: ../base/ufos/weapons_human.ufo:787
 msgid "Inferno"
 msgstr "Pełna moc"
 
-#: ../base/ufos/weapons_human.ufo:810
+#: ../base/ufos/weapons_human.ufo:813
 msgid "Rocket Launcher"
 msgstr "Wyrzutnia rakiet"
 
-#: ../base/ufos/weapons_human.ufo:828
+#: ../base/ufos/weapons_human.ufo:831
 msgid "High-Explosive Rocket"
 msgstr "Rakieta burząca"
 
-#: ../base/ufos/weapons_human.ufo:886
+#: ../base/ufos/weapons_human.ufo:889
 msgid "Incendiary Rocket"
 msgstr "Rakieta zapalająca"
 
-#: ../base/ufos/weapons_human.ufo:945
+#: ../base/ufos/weapons_human.ufo:948
 msgid "Tachyon-Beam Rocket"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1007
+#: ../base/ufos/weapons_human.ufo:1010
 msgid "Grenade Launcher"
 msgstr "Granatnik ręczny"
 
-#: ../base/ufos/weapons_human.ufo:1025
+#: ../base/ufos/weapons_human.ufo:1028
 msgid "25mm IC Grenades"
 msgstr "Granaty zapalające kal. 25mm"
 
-#: ../base/ufos/weapons_human.ufo:1037 ../base/ufos/weapons_human.ufo:1102
-#: ../base/ufos/weapons_human.ufo:1167 ../base/ufos/weapons_human.ufo:1232
+#: ../base/ufos/weapons_human.ufo:1040 ../base/ufos/weapons_human.ufo:1105
+#: ../base/ufos/weapons_human.ufo:1170 ../base/ufos/weapons_human.ufo:1235
 msgid "Airburst Grenade"
 msgstr "Bezpośredni"
 
-#: ../base/ufos/weapons_human.ufo:1062 ../base/ufos/weapons_human.ufo:1127
-#: ../base/ufos/weapons_human.ufo:1192 ../base/ufos/weapons_human.ufo:1257
+#: ../base/ufos/weapons_human.ufo:1065 ../base/ufos/weapons_human.ufo:1130
+#: ../base/ufos/weapons_human.ufo:1195 ../base/ufos/weapons_human.ufo:1260
 msgid "Timed Grenade"
 msgstr "Z opóźnieniem"
 
-#: ../base/ufos/weapons_human.ufo:1090
+#: ../base/ufos/weapons_human.ufo:1093
 msgid "25mm Flechette Grenades"
 msgstr "Granaty fleszetkowe kal. 25mm"
 
-#: ../base/ufos/weapons_human.ufo:1155
+#: ../base/ufos/weapons_human.ufo:1158
 msgid "25mm HIT Grenades"
 msgstr "Granaty odłamkowe kal. 25mm"
 
-#: ../base/ufos/weapons_human.ufo:1220
+#: ../base/ufos/weapons_human.ufo:1223
 msgid "25mm PB Grenades"
 msgstr "Granaty plazmowe kal. 25mm"
 
-#: ../base/ufos/weapons_human.ufo:1289
+#: ../base/ufos/weapons_human.ufo:1292
 msgid "Bolter Rifle"
 msgstr "Bolter Rifle"
 
-#: ../base/ufos/weapons_human.ufo:1307
+#: ../base/ufos/weapons_human.ufo:1310
 msgid "Bolter Rifle Clip"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1338
+#: ../base/ufos/weapons_human.ufo:1341
 msgid "Cannonade"
 msgstr "Kanonada"
 
@@ -4204,9 +4692,9 @@ msgstr "Rozpoczęła się Twoja runda!\n"
 msgid "Aircraft started"
 msgstr "Pojazd powietrzny wystartował"
 
-#: client/cl_aircraft.c:103 client/cl_aircraft.c:417 client/cl_aircraft.c:575
-#: client/cl_aircraft.c:814 client/cl_basemanagement.c:453
-#: client/cl_basemanagement.c:1930 client/cl_campaign.c:427
+#: client/cl_aircraft.c:103 client/cl_aircraft.c:418 client/cl_aircraft.c:576
+#: client/cl_aircraft.c:815 client/cl_basemanagement.c:544
+#: client/cl_basemanagement.c:2049 client/cl_campaign.c:427
 #: client/cl_campaign.c:900 client/cl_campaign.c:951 client/cl_campaign.c:1109
 #: client/cl_campaign.c:1120 client/cl_campaign.c:1130
 #: client/cl_campaign.c:1140 client/cl_campaign.c:1150
@@ -4294,128 +4782,166 @@ msgstr "Uzbrojenie:\t%s\n"
 msgid "Shield:\t%s"
 msgstr "Tarcza:\t%s"
 
-#: client/cl_aircraft.c:416
+#: client/cl_aircraft.c:417
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Nowy pojazd powietrzny (%s) w bazie %s"
 
-#: client/cl_aircraft.c:575
+#: client/cl_aircraft.c:576
 msgid "Your dropship has low fuel and returns to base"
 msgstr "Transportowiec ma mało paliwa i wraca do bazy"
 
-#: client/cl_aircraft.c:614 client/cl_aircraft.c:621
+#: client/cl_aircraft.c:615 client/cl_aircraft.c:622
 msgid "Interception"
 msgstr ""
 
-#: client/cl_aircraft.c:614 client/cl_campaign.c:2497
+#: client/cl_aircraft.c:615 client/cl_campaign.c:2497
 msgid "You've won the battle"
 msgstr "Bitwa wygrana"
 
-#: client/cl_aircraft.c:621 client/cl_campaign.c:2499
+#: client/cl_aircraft.c:622 client/cl_campaign.c:2499
 msgid "You've lost the battle"
 msgstr "Bitwa przegrana"
 
-#: client/cl_aircraft.c:665 client/cl_aircraft.c:676
+#: client/cl_aircraft.c:666 client/cl_aircraft.c:677
 msgid "None\n"
 msgstr "Brak\n"
 
-#: client/cl_aircraft.c:716
+#: client/cl_aircraft.c:717
 msgid "No weapon assigned"
 msgstr "Brak przydzielonej broni"
 
-#: client/cl_aircraft.c:766
+#: client/cl_aircraft.c:767
 msgid "No shield assigned"
 msgstr "Brak przydzielonej tarczy"
 
-#: client/cl_aircraft.c:814
+#: client/cl_aircraft.c:815
 msgid "Assign a team to aircraft"
 msgstr "Przydziel drużynę do pojazdu"
 
-#: client/cl_basemanagement.c:144
+#: client/cl_basemanagement.c:246
 msgid "Not set"
 msgstr "Brak w bazie"
 
-#: client/cl_basemanagement.c:150
+#: client/cl_basemanagement.c:252
 #, c-format
 msgid "Already %i in base"
 msgstr "Istnieje w bazie, sztuk %i"
 
-#: client/cl_basemanagement.c:156
+#: client/cl_basemanagement.c:258
 msgid "Construction finished"
 msgstr "Budowa ukończona"
 
-#: client/cl_basemanagement.c:159
+#: client/cl_basemanagement.c:261
 msgid "Working 100%"
 msgstr ""
 
-#: client/cl_basemanagement.c:162
+#: client/cl_basemanagement.c:264
 msgid "Down"
 msgstr ""
 
-#: client/cl_basemanagement.c:453
+#: client/cl_basemanagement.c:544
 msgid "Not enough credits to build this\n"
 msgstr "Zbyt mało kredytów do budowy\n"
 
-#: client/cl_basemanagement.c:569
+#: client/cl_basemanagement.c:682
 #, c-format
 msgid "Costs:\t%1.0f c\n"
 msgstr "Koszta:\t%1.0f c\n"
 
-#: client/cl_basemanagement.c:572
+#: client/cl_basemanagement.c:685
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i dzień do ukończenia\n"
 msgstr[1] "%i dni do ukończenia\n"
 
-#: client/cl_basemanagement.c:575
+#: client/cl_basemanagement.c:688
 #, c-format
 msgid "Running Costs:\t%1.0f c\n"
 msgstr "Koszta użytkowe:\t%1.0f c\n"
 
-#: client/cl_basemanagement.c:1219
+#: client/cl_basemanagement.c:1338
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "pozostał %i dzień"
 msgstr[1] "pozostało %i dni"
 
-#: client/cl_basemanagement.c:1247 client/cl_campaign.c:1374
+#: client/cl_basemanagement.c:1366 client/cl_campaign.c:1374
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/cl_basemanagement.c:1353
+#: client/cl_basemanagement.c:1472
 msgid "Base is under attack"
 msgstr "Baza jest atakowana"
 
-#: client/cl_basemanagement.c:1533 client/cl_team.c:1123 client/cl_team.c:1316
+#: client/cl_basemanagement.c:1652 client/cl_team.c:1123 client/cl_team.c:1316
 msgid "NewTeam"
 msgstr "NowaDrużyna"
 
-#: client/cl_basemanagement.c:1613
+#: client/cl_basemanagement.c:1732
 #, c-format
 msgid "A new base has been built: %s."
 msgstr "Zbudowano nową bazę: %s."
 
-#: client/cl_basemanagement.c:1614 client/cl_basemanagement.c:1657
+#: client/cl_basemanagement.c:1733 client/cl_basemanagement.c:1776
 msgid "Base built"
 msgstr "Zbudowano bazę."
 
-#: client/cl_basemanagement.c:1656
+#: client/cl_basemanagement.c:1775
 msgid "Not enough credits to set up a new base."
 msgstr "Brak kredytów do utworzenia nowej bazy."
 
-#: client/cl_basemanagement.c:1930
+#: client/cl_basemanagement.c:2049
 msgid "You've reached the base limit."
 msgstr "Osiągnąłeś limit bazy."
 
-#: client/cl_basemanagement.c:2070
+#: client/cl_basemanagement.c:2150
+msgid "Transfer is not possible - the base doesn't have a storage building"
+msgstr ""
+
+#: client/cl_basemanagement.c:2157
+msgid "Transfer is not possible - the base doesn't have quarters"
+msgstr ""
+
+#: client/cl_basemanagement.c:2164
+msgid "Transfer is not possible - the base doesn't have a lab"
+msgstr ""
+
+#: client/cl_basemanagement.c:2286
+msgid "You can transfer equipment - this base has a storage building\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2289
+#, fuzzy
+msgid "No storage building in this base\n"
+msgstr "Brak modułów w pierwszej bazie"
+
+#: client/cl_basemanagement.c:2293
+msgid "You can transfer employees - this base has quarters\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2296
+#, fuzzy
+msgid "No quarters in this base\n"
+msgstr "Nazwa tej bazy"
+
+#: client/cl_basemanagement.c:2299
+msgid "You can transfer techs - this base has a laboratory\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2301
+msgid "No laboratory in this base\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2448
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Konstrukcja modułu %s w bazie %s zakończona."
 
-#: client/cl_basemanagement.c:2071
+#: client/cl_basemanagement.c:2449
 msgid "Building finished"
 msgstr "Budowa zakończona"
 
@@ -4440,7 +4966,8 @@ msgstr "Aktywność Obcych"
 #: client/cl_campaign.c:899
 #, c-format
 msgid ""
-"Your base: %s has been ransacked! All employees killed and all equipment destroyed."
+"Your base: %s has been ransacked! All employees killed and all equipment "
+"destroyed."
 msgstr ""
 
 #: client/cl_campaign.c:950
@@ -4719,9 +5246,11 @@ msgstr "%s uzyskał(a) promocję do stopnia %s.\n"
 #: client/cl_campaign.c:2727
 #, c-format
 msgid ""
-"%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
+"%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
+"in the face of overwhelming odds.\n"
 msgstr ""
-"%s został(a) pośmiertnie promowany(a) do stopnia %s\\za odważne zachowanie w obliczu przeciwności losu na polu bitwy.\n"
+"%s został(a) pośmiertnie promowany(a) do stopnia %s\\za odważne zachowanie w "
+"obliczu przeciwności losu na polu bitwy.\n"
 
 #: client/cl_campaign.c:2728
 msgid "Soldier promoted"
@@ -4852,19 +5381,19 @@ msgstr "Potwierdź bieżącą akcję"
 msgid "Toggle first-person/third-person camera mode"
 msgstr "Przełącz widok z pierwszej/trzeciej perspektywy"
 
-#: client/cl_main.c:352 client/cl_main.c:831
+#: client/cl_main.c:351 client/cl_main.c:830
 msgid "Assemble a team first"
 msgstr "Najpierw przydziel drużynę"
 
-#: client/cl_main.c:352 client/cl_main.c:831
+#: client/cl_main.c:351 client/cl_main.c:830
 msgid "Error"
 msgstr "Błąd"
 
-#: client/cl_main.c:690
+#: client/cl_main.c:689
 msgid "No player connected\n"
 msgstr "Brak połączonych graczy\n"
 
-#: client/cl_main.c:728
+#: client/cl_main.c:727
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -4873,112 +5402,108 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:750
+#: client/cl_main.c:749
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Mapa:\t%s\n"
 
-#: client/cl_main.c:752
+#: client/cl_main.c:751
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Wersja:\t%s\n"
 
-#: client/cl_main.c:754
+#: client/cl_main.c:753
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Nazwa serwera:\t%s\n"
 
-#: client/cl_main.c:756
+#: client/cl_main.c:755
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:758
+#: client/cl_main.c:757
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Gra drużynowa:\t%s\n"
 
-#: client/cl_main.c:760
+#: client/cl_main.c:759
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Max. liczba graczy w drużynie:\t%s\n"
 
-#: client/cl_main.c:762
+#: client/cl_main.c:761
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Max. liczba drużyn na tej mapie:\t%s\n"
 
-#: client/cl_main.c:764
+#: client/cl_main.c:763
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Max. liczba klientów:\t%s\n"
 
-#: client/cl_main.c:766
+#: client/cl_main.c:765
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max. liczba żołnierzy gracza:\t%s\n"
 
-#: client/cl_main.c:768
+#: client/cl_main.c:767
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. liczba żołnierzy w drużynie:\t%s\n"
 
-#: client/cl_main.c:991
+#: client/cl_main.c:992
 msgid "Select a free team or your coop team"
 msgstr "Wybierz wolną drużynę lub drużynę współpracującą"
 
-#: client/cl_main.c:1265 client/cl_main.c:1279
+#: client/cl_main.c:1266 client/cl_main.c:1280
 #, c-format
 msgid "Current team: %i"
 msgstr "Bieżąca drużyna: %i"
 
-#: client/cl_main.c:1269 client/cl_main.c:1283
+#: client/cl_main.c:1270 client/cl_main.c:1284
 msgid "Team is already in use"
 msgstr "Drużyna już jest w użyciu"
 
-#: client/cl_main.c:1293 client/cl_main.c:1319
+#: client/cl_main.c:1294 client/cl_main.c:1320
 msgid "Invalid or full team"
 msgstr "Zła drużyna lub drużyna pełna"
 
-#: client/cl_main.c:1598
+#: client/cl_main.c:1599
 msgid "Unnamed"
 msgstr "Nienazwany"
 
-#: client/cl_main.c:1829
+#: client/cl_main.c:1830
 msgid "Chicken-hearted"
 msgstr "Tchórz"
 
-#: client/cl_main.c:1831
+#: client/cl_main.c:1832
 msgid "Very Easy"
 msgstr "Bardzo łatwy"
 
-#: client/cl_main.c:1834
+#: client/cl_main.c:1835
 msgid "Easy"
 msgstr "Łatwy"
 
-#: client/cl_main.c:1836
+#: client/cl_main.c:1837
 msgid "Normal"
 msgstr "Standardowy"
 
-#: client/cl_main.c:1839
+#: client/cl_main.c:1840
 msgid "Hard"
 msgstr "Trudny"
 
-#: client/cl_main.c:1841
+#: client/cl_main.c:1842
 msgid "Very Hard"
 msgstr "Bardzo trudny"
 
-#: client/cl_main.c:1843
+#: client/cl_main.c:1844
 msgid "Insane"
 msgstr "Szalony"
 
 #: client/cl_map.c:280
 msgid "Click"
 msgstr ""
-
-#: client/cl_map.c:315
-msgid "Base"
-msgstr "Baza"
 
 #: client/cl_map.c:332
 msgid "UFO"
@@ -5053,24 +5578,24 @@ msgstr ""
 msgid "Settings doesn't make sense"
 msgstr "Ustawienia nie mają sensu"
 
-#: client/cl_menu.c:1477
+#: client/cl_menu.c:1503
 #, c-format
 msgid "Key: %s"
 msgstr "Klawisz: %s"
 
-#: client/cl_menu.c:2542
+#: client/cl_menu.c:2691
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Ukryj HUD (ESC by przywrócić HUD)"
 
-#: client/cl_parse.c:716 client/cl_parse.c:718
+#: client/cl_parse.c:715 client/cl_parse.c:717
 msgid "Alien spotted!\n"
 msgstr "Zauważono Obcego!\n"
 
-#: client/cl_parse.c:720
+#: client/cl_parse.c:719
 msgid "Enemy spotted!\n"
 msgstr "Zauważono wroga!\n"
 
-#: client/cl_parse.c:722
+#: client/cl_parse.c:721
 msgid "Civilian spotted!\n"
 msgstr "Zauważono cywila!\n"
 
@@ -5697,7 +6222,8 @@ msgstr "Nie można wykonać - za mało jednostek czasu!\n"
 
 #: game/g_client.c:733
 msgid ""
-"Can't perform action - weapon already fully loaded with the same ammunition!\n"
+"Can't perform action - weapon already fully loaded with the same "
+"ammunition!\n"
 msgstr "Nie można wykonać - broń jest już w pełni załadowana!\n"
 
 #: game/g_client.c:1210
@@ -5760,6 +6286,9 @@ msgstr ""
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr ""
+
+#~ msgid "Equipment/Items"
+#~ msgstr "Ekwipunek"
 
 #~ msgid "Plasma Grenade Shells"
 #~ msgstr "Granaty plazmowe kal. 25mm"
