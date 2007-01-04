@@ -904,7 +904,7 @@ static void MN_BarClick(menu_t * menu, menuNode_t * node, int x)
 }
 
 /**
- * @brief
+ * @brief Left click on the basemap
  */
 static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 {
@@ -936,7 +936,7 @@ static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 
 				if (*entry->onClick) {
 					baseCurrent->buildingCurrent = entry;
-					Cbuf_ExecuteText(EXEC_NOW, entry->onClick);
+					Cbuf_ExecuteText(EXEC_NOW, va("%s %i;", entry->onDestroy, baseCurrent->idx));
 					baseCurrent->buildingCurrent = NULL;
 				}
 #if 0
@@ -954,6 +954,28 @@ static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 			}
 }
 
+/**
+ * @brief Right click on the basemap
+ */
+static void MN_BaseMapRightClick(menuNode_t * node, int x, int y)
+{
+	int row, col;
+	building_t	*entry;
+
+	assert(baseCurrent);
+
+	for (row = 0; row < BASE_SIZE; row++)
+		for (col = 0; col < BASE_SIZE; col++)
+			if (baseCurrent->map[row][col] != -1 && x >= baseCurrent->posX[row][col]
+				&& x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE && y >= baseCurrent->posY[row][col]
+				&& y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE) {
+				entry = B_GetBuildingByIdx(baseCurrent, baseCurrent->map[row][col]);
+				if (!entry)
+					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
+				B_BuildingDestroy(entry, baseCurrent);
+				return;
+			}
+}
 
 /**
  * @brief Activates the model rotation
@@ -1184,6 +1206,9 @@ void MN_RightClick(int x, int y)
 			case MN_3DMAP:
 				MAP_ResetAction();
 				mouseSpace = MS_SHIFT3DMAP;
+				break;
+			case MN_BASEMAP:
+				MN_BaseMapRightClick(node, x, y);
 				break;
 			case MN_MAP:
 				MAP_ResetAction();

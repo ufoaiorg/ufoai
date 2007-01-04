@@ -306,7 +306,7 @@ menu popup_intercept_ready
 	string title
 	{
 		string	"_Ready"
-		pos	"290 276"
+		pos	"290 280"
 		font	f_big
 	}
 

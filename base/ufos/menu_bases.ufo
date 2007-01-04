@@ -16,7 +16,8 @@ menu bases
 	{
 		pos	"0 96"
 		size	"725 672"
-		click	{ cmd "basemap_click" }
+		click
+		rclick
 		rclick
 		mclick
 	}
@@ -461,3 +462,77 @@ menu bases
 		cmd base_init;
 	}
 }
+
+// ==================
+// DESTROY POPUP
+// ==================
+
+menu building_destroy
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+
+	string title
+	{
+		string	"_Destroy building"
+		pos	"290 280"
+		font	f_big
+	}
+
+	string warning
+	{
+		font	f_small
+		color	"1 1 1 1"
+		string	"_Are you sure, that you want to destroy this building?"
+		pos	"512 358"
+		align	uc
+	}
+
+	pic bt_cancel
+	{
+		tooltip	"_Close this dialog"
+		image	menu/multi_buttons3
+		texh	"180 64"
+		texl	"0 33"
+		pos	"310 450"
+		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;" }
+	}
+	string string_cancel
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Cancel"
+		pos	"400 448"
+		align	uc
+	}
+
+	pic bt_destroy
+	{
+		tooltip	"_Destroy the building"
+		image	menu/multi_buttons3
+		pos	"530 450"
+		texh	"180 64"
+		texl	"0 33"
+		out	{ *bt_destroy image menu/multi_buttons3 *string_destroy color "0 0.5 0 1" }
+		in	{ *bt_destroy image menu/multi_buttons3a *string_destroy color "1 1 1 1" }
+		click	{ cmd "building_destroy;mn_pop;" }
+	}
+	string string_destroy
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Destroy"
+		pos	"620 448"
+		align	uc
+	}
+}
+

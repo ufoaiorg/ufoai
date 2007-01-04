@@ -112,16 +112,16 @@ typedef struct building_s {
 	char onRepair[MAX_VAR];
 	char onClick[MAX_VAR];
 
-	/*more than one building of the same type allowed? */
+	/* more than one building of the same type allowed? */
 	int moreThanOne;
 
-	/*position of autobuild */
+	/* position of autobuild */
 	vec2_t pos;
 
-	/*autobuild when base is set up */
+	/* autobuild when base is set up */
 	qboolean autobuild;
 
-	/*autobuild when base is set up */
+	/* autobuild when base is set up */
 	qboolean firstbase;
 
 	/* How many employees to hire on construction in the first base */
@@ -150,6 +150,7 @@ typedef struct base_s {
 	qboolean hasAlienCont;
 	qboolean hasStorage;
 	qboolean hasQuarters;
+	qboolean hasWorkshop;
 
 	/*this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];
@@ -235,4 +236,7 @@ int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type);
 
 aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index);
 void B_ReviveSoldiersInBase(base_t* base); /* TODO */
+
+void B_BuildingDestroy (building_t* building, base_t* base);
+
 #endif /* CLIENT_CL_BASEMANGEMENT_H */

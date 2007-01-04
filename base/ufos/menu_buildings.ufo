@@ -20,7 +20,7 @@ menu buildings
 	{
 		pos	"0 96"
 		size	"725 522"
-		click   { cmd "basemap_click" }
+		click
 		rclick
 		mclick
 	}

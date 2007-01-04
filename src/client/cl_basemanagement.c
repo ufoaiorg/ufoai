@@ -37,24 +37,27 @@ static int BuildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
 
 /**
- * @brief Resets the currently selected building.
- *
- * Is called e.g. when leaving the build-menu but also several times from cl_basemanagement.c.
+ * @brief
  */
-void B_ResetBuildingCurrent(void)
+static void B_ResetBuildingCurrent (void)
 {
-	if (Cmd_Argc() > 2) {
-		Com_Printf("Usage: reset_building_current [arg]\n");
-		return;
-	}
-
-	if (Cmd_Argc() > 1)
-		gd.instant_build = atoi(Cmd_Argv(1));
-
 	if (baseCurrent) {
 		baseCurrent->buildingCurrent = NULL;
 		baseCurrent->buildingToBuild = -1;
 	}
+}
+
+/**
+ * @brief Resets the currently selected building.
+ *
+ * Is called e.g. when leaving the build-menu but also several times from cl_basemanagement.c.
+ */
+static void B_ResetBuildingCurrent_f (void)
+{
+	if (Cmd_Argc() == 2)
+		gd.instant_build = atoi(Cmd_Argv(1));
+
+	B_ResetBuildingCurrent();
 }
 
 /**
@@ -121,6 +124,105 @@ void B_SetSensor(void)
 		RADAR_ChangeRange(&(base->radar), -amount);	/* dec_sensor */
 }
 
+/**
+ * @brief We are doing the real destroy of a buliding here
+ * @sa B_BuildingDestroy
+ */
+static void B_BuildingDestroy_f (void)
+{
+	building_t *b1, *b2 = NULL;
+
+	if (!baseCurrent || !baseCurrent->buildingCurrent)
+		return;
+
+	b1 = baseCurrent->buildingCurrent;
+
+	if (baseCurrent->map[(int)b1->pos[0]][(int)b1->pos[1]] >= 0) {
+		if (*b1->needs) {
+			b2 = B_GetBuildingType(b1->needs);
+			assert(b2);
+			baseCurrent->map[(int)b2->pos[0]][(int)b2->pos[1]] = -1;
+		}
+
+		baseCurrent->map[(int)b1->pos[0]][(int)b1->pos[1]] = -1;
+	}
+	b1->buildingStatus = B_STATUS_NOT_SET;
+	if (b2)
+		b2->buildingStatus = B_STATUS_NOT_SET;
+
+#if 0 /* this would be a clean approach - but we have to fix all the linkage */
+	gd.numBuildings[baseCurrent->idx]--;
+
+	if (b1->idx == gd.numBuildings[baseCurrent->idx]) {
+	memset(b1, 0, sizeof(building_t));
+	} else {
+		for (i = b1->idx; i < gd.numBuildings[baseCurrent->idx]; i++) {
+			Com_Printf("Move building %i to pos %i (%i)\n", i+1, i, gd.numBuildings[baseCurrent->idx]);
+			memmove(&gd.buildings[baseCurrent->idx][i], &gd.buildings[baseCurrent->idx][i+1], sizeof(building_t));
+			gd.buildings[baseCurrent->idx][i].idx = i;
+		}
+	}
+#endif
+
+	switch (b1->buildingType) {
+	case B_WORKSHOP:
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
+			baseCurrent->hasWorkshop = qfalse;
+		break;
+	case B_STORAGE:
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
+			baseCurrent->hasStorage = qfalse;
+		break;
+	case B_ALIEN_CONTAINMENT:
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
+			baseCurrent->hasAlienCont = qfalse;
+		break;
+	case B_LAB:
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
+			baseCurrent->hasLab = qfalse;
+		break;
+	case B_HOSPITAL:
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
+			baseCurrent->hasHospital = qfalse;
+		break;
+	case B_HANGAR: /* the Dropship Hangar */
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
+			baseCurrent->hasHangar = qfalse;
+		break;
+	case B_QUARTERS:
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
+			baseCurrent->hasQuarters = qfalse;
+		break;
+	case B_MISC:
+		break;
+	default:
+		Com_Printf("B_BuildingDestroy_f: Unknown bulding type: %i.\n", b1->buildingType);
+		break;
+	}
+
+	/* call ondestroy trigger */
+	if (*b1->onDestroy) {
+		Com_DPrintf("B_BuildingDestroy: %s %i;\n", baseCurrent->buildingCurrent->onDestroy, baseCurrent->idx);
+		Cbuf_AddText(va("%s %i;", baseCurrent->buildingCurrent->onDestroy, baseCurrent->idx));
+	}
+
+	B_ResetBuildingCurrent();
+	B_BuildingStatus();
+}
+
+/**
+ * @brief Mark a building for destruction - you only have to confirm it now
+ * @note Also calls the ondestroy trigger
+ */
+extern void B_BuildingDestroy (building_t* building, base_t* base)
+{
+	assert(base);
+	assert(building);
+
+	base->buildingCurrent = building;
+
+	MN_PushMenu("building_destroy");
+}
 
 /**
  * @brief Displays the status of a building for baseview.
@@ -243,6 +345,10 @@ void B_UpdateBaseBuildingStatus(building_t* building, base_t* base, buildingStat
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasLab = qtrue;
 		break;
+	case B_WORKSHOP:
+		if (building->buildingStatus == B_STATUS_WORKING)
+			base->hasWorkshop = qtrue;
+		break;
 	case B_HOSPITAL:
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasHospital = qtrue;
@@ -338,31 +444,6 @@ building_t *B_GetBuildingType(char *buildingName)
 }
 
 /**
- * @brief Removes the current selected building.
- *
- * This is only allowed if its still under construction. You will not get any money back.
- */
-static void B_RemoveBuilding(void)
-{
-	building_t *building = NULL;
-
-	/*maybe someone call this command before the buildings are parsed?? */
-	if (!baseCurrent || !baseCurrent->buildingCurrent)
-		return;
-
-	building = baseCurrent->buildingCurrent;
-
-	/*only allowed when it is still under construction */
-	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-		building->buildingStatus = B_STATUS_NOT_SET;
-/*		baseCurrent->map[building->pos[0]][building->pos[1]] = -1; */
-/*		if ( building->dependsBuilding >= 0) */
-/*			baseCurrent->map[building->dependsBuilding->pos[0]][building->dependsBuilding->pos[1]] = -1; */
-		B_BuildingStatus();
-	}
-}
-
-/**
  * @brief Checks whether you have enough credits to build this building
  * @param costs buildcosts of the building
  * @return qboolean true - enough credits
@@ -448,6 +529,8 @@ void B_NewBuilding(void)
  */
 void B_SetBuildingByClick(int row, int col)
 {
+	int j;
+	qboolean freeSlot;
 	building_t *building = NULL;
 	building_t *secondBuildingPart = NULL;
 
@@ -465,12 +548,29 @@ void B_SetBuildingByClick(int row, int col)
 	/*TODO: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTypes at all ... it's just not logical) */
 	/* if the building is in gd.buildingTypes[] */
 	if (baseCurrent->buildingCurrent->base_idx < 0) {
+		/* search for a free slot - in case of building destruction */
+		for (j = 0; j < gd.numBuildings[baseCurrent->idx]; j++) {
+			if (gd.buildings[baseCurrent->idx][j].buildingStatus == B_STATUS_NOT_SET) {
+				building = &gd.buildings[baseCurrent->idx][j];
+				freeSlot = qtrue;
+				break;
+			}
+		}
+		if (!building)
+			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
+
 		/* copy building from type-list to base-buildings-list */
-		building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 		memcpy(building, &gd.buildingTypes[baseCurrent->buildingCurrent->type_idx], sizeof(building_t));
-		/* self-link to building-list in base */
-		building->idx = gd.numBuildings[baseCurrent->idx];
-		gd.numBuildings[baseCurrent->idx]++;
+
+		if (!freeSlot) {
+			/* self-link to building-list in base */
+			building->idx = gd.numBuildings[baseCurrent->idx];
+			gd.numBuildings[baseCurrent->idx]++;
+		} else {
+			/* use existing slot */
+			building->idx = j;
+		}
+
 		/* Link to the base. */
 		building->base_idx = baseCurrent->idx;
 		baseCurrent->buildingCurrent = building;
@@ -497,6 +597,9 @@ void B_SetBuildingByClick(int row, int col)
 
 				baseCurrent->map[row][col + 1] = baseCurrent->buildingCurrent->idx;
 				baseCurrent->buildingToBuild = secondBuildingPart->idx;
+				/* where is this building located in our base? */
+				secondBuildingPart->pos[1] = col + 1;
+				secondBuildingPart->pos[0] = row;
 			} else {
 				baseCurrent->buildingToBuild = -1;
 			}
@@ -504,6 +607,10 @@ void B_SetBuildingByClick(int row, int col)
 			B_NewBuilding();
 
 			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->idx;
+
+			/* where is this building located in our base? */
+			baseCurrent->buildingCurrent->pos[0] = row;
+			baseCurrent->buildingCurrent->pos[1] = col;
 
 			B_ResetBuildingCurrent();
 			B_BuildingInit();	/* update the building-list */
@@ -549,8 +656,6 @@ static void B_NewBuildingFromList(void)
 
 	if (baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
 		B_NewBuilding();
-	else
-		B_RemoveBuilding();
 }
 
 /**
@@ -629,7 +734,8 @@ int B_GetNumberOfBuildingsInBaseByTypeIDX(int base_idx, int type_idx)
 	}
 
 	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
-		if (gd.buildings[base_idx][i].type_idx == type_idx)
+		if (gd.buildings[base_idx][i].type_idx == type_idx
+		 && gd.buildings[base_idx][i].buildingStatus != B_STATUS_NOT_SET)
 			NumberOfBuildings++;
 	}
 	Com_DPrintf("B_GetNumOfBuildType: base: '%s' - num_b: %i - type_idx: %s\n", gd.bases[base_idx].name, NumberOfBuildings, gd.buildingTypes[type_idx].id);
@@ -654,7 +760,8 @@ int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type)
 	}
 
 	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
-		if (gd.buildings[base_idx][i].buildingType == type)
+		if (gd.buildings[base_idx][i].buildingType == type
+		 && gd.buildings[base_idx][i].buildingStatus != B_STATUS_NOT_SET)
 			NumberOfBuildings++;
 	}
 	return NumberOfBuildings;
@@ -897,6 +1004,8 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 					building->buildingType = B_HOSPITAL;
 				} else if (!Q_strncmp(token, "aliencont", MAX_VAR)) {
 					building->buildingType = B_ALIEN_CONTAINMENT;
+				} else if (!Q_strncmp(token, "workshop", MAX_VAR)) {
+					building->buildingType = B_WORKSHOP;
 				} else if (!Q_strncmp(token, "storage", MAX_VAR)) {
 					building->buildingType = B_STORAGE;
 				} else if (!Q_strncmp(token, "hangar", MAX_VAR)) {
@@ -2280,9 +2389,10 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("building_open", B_BuildingOpen_f, NULL);
 	Cmd_AddCommand("building_init", B_BuildingInit, NULL);
 	Cmd_AddCommand("building_status", B_BuildingStatus, NULL);
+	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a buliding (select via right click in baseview first)");
 	Cmd_AddCommand("buildinginfo_click", B_BuildingInfoClick_f, NULL);
 	Cmd_AddCommand("buildings_click", B_BuildingClick_f, NULL);
-	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent, NULL);
+	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
 	Cmd_AddCommand("baselist", B_BaseList_f, NULL);
 	Cmd_AddCommand("buildinglist", B_BuildingList_f, NULL);
 	Cmd_AddCommand("pack_initial", B_PackInitialEquipment_f, NULL);
