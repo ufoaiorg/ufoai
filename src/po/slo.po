@@ -2918,12 +2918,12 @@ msgid "Alien Autopsy - Antarean"
 msgstr ""
 
 #: ../base/ufos/research.ufo:2002
-msgid "antarean_autopsy_txt"
+msgid "taman_autopsy_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:2003
 #, fuzzy
-msgid "antarean_autopsy_pre_txt"
+msgid "taman_autopsy_pre_txt"
 msgstr "Antarean - obdukcija"
 
 #: ../base/ufos/research.ufo:2019

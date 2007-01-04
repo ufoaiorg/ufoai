@@ -4927,12 +4927,12 @@ msgstr "Autopsia alienígena - Antareano"
 
 #: ../base/ufos/research.ufo:2002
 #, fuzzy
-msgid "antarean_autopsy_txt"
+msgid "taman_autopsy_txt"
 msgstr ""
 "Possesses a superficially similar complement of internal organs to humans. On closer inspection the heart is found to have a more complicated structure, tighter integration with the lungs and a connection to a small, liver-like organ. Electrically stimulating the Antarean heart produces a smooth, four stroke heart beat that takes in blood, aerates the blood within the lungs, filters the aerated blood of pollutants and toxins through the additional organ, before pumping the blood around the body. This circulatory system must contribute greatly to the stamina of the species.DNA analysis of specimens of different rank reveals differences in the amount of junk DNA carried by each specimen. Specimens of a higher rank have noticeably less junk DNA, and it appears to have been replaced by DNA containing patterns that yield easily to mathematical modelling. It is possible that this species uses genetic manipulation to confer knowledge upon those who are destined to lead before they are even born. Advanced psionic attacks may provide access to this information."
 
 #: ../base/ufos/research.ufo:2003
-msgid "antarean_autopsy_pre_txt"
+msgid "taman_autopsy_pre_txt"
 msgstr "No hay información previa a la investigación diponible."
 
 #: ../base/ufos/research.ufo:2019

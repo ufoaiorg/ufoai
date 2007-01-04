@@ -4780,11 +4780,11 @@ msgstr "Autopsie Alienne - Antarean"
 
 #: ../base/ufos/research.ufo:2002
 #, fuzzy
-msgid "antarean_autopsy_txt"
+msgid "taman_autopsy_txt"
 msgstr "L'antarean possède un ensemble d'organes internes superficiellement similaires à ceux des humains. Une inspection plus minutieuse montre que le coeur a une structure plus compliquée, intégré de manière plus serrée avec les poumons et connecté à un petit organe similaire à un foie. En stimulant électriquement le coeur d'un antarean, on obtient un battement cardiaque à quatre temps qui prend le sang, l'aère dans les poumons, filtre le sang aéré des toxines et des polluants à travers l'organe additionnel, puis pompe le sang dans le reste du corps. Ce système circulatoire doit grandement contribuer à l'énergie de l'espèce. Les analyses ADN de spécimens de différents rangs révèlent des différences dans les quantités d'ADN parasite portées par chaque spécimen. Les rangs les plus élevés ont visiblement un ADN épuré et il semble qu'il ait été remplacé par de l'ADN contenant des schémas qui tendent vers des schémas mathématiques. Il est possible que cette espèce utilise la manipulation génétique pour transmettre le savoir à ceux qui sont destinés à reigner avant même qu'ils naissent. Des attaques psioniques poussées pourraient donner accès à une telle information."
 
 #: ../base/ufos/research.ufo:2003
-msgid "antarean_autopsy_pre_txt"
+msgid "taman_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:2019

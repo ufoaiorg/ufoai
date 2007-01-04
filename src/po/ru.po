@@ -3545,12 +3545,12 @@ msgid "Alien Autopsy - Antarean"
 msgstr "Вскрытие пришельца - Antarean"
 
 #: ../base/ufos/research.ufo:2002
-msgid "antarean_autopsy_txt"
+msgid "taman_autopsy_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:2003
 #, fuzzy
-msgid "antarean_autopsy_pre_txt"
+msgid "taman_autopsy_pre_txt"
 msgstr "Антареан - Вскрытие"
 
 #: ../base/ufos/research.ufo:2019

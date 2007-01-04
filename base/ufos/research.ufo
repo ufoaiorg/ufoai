@@ -98,6 +98,46 @@ tech rs_laser
 	image_top	techs/laser
 }
 
+//tech rs_live_alien
+//{
+//	type	logic
+//	name	"LOGIC:One Live Alien"
+//	require_OR
+//	{
+//TODO: live alien support (i.e. containment)
+//		alien alien_taman
+//		alien alien_ortnok
+//		alien alien_shevaar
+//	}
+//}
+
+tech rs_anti_alien_gas
+{
+	type	tech
+	name "_Anti-Alien Gas"
+	up_chapter	aliens
+	description	"_anti_alien_gas_txt"
+	pre_description	"_anti_alien_gas_pre_txt"
+
+	require_AND
+	{
+		tech nothing
+	}
+
+	require_OR
+	{
+//TODO: these are not correct yet.
+		tech rs_alien_ortnok_autopsy
+		tech rs_alien_taman_autopsy
+		tech rs_alien_shevaar_autopsy
+//		tech rs_live_alien	//TODO: see rs_live_alien
+	}
+
+	time	1500
+// TODO: add nice image of a gas-cloud or something (color?)
+//	image_top	techs/aliengas
+}
+
 //=================================
 // weapons and items
 //=================================
@@ -1076,13 +1116,13 @@ tech rs_weapon_stungren
 
 	require_AND
 	{
+		tech rs_anti_alien_gas
 		tech rs_skill_explosive
 		tech rs_damage_stun
-//		tech rs_anti_alien_gas	(TODO: what's this supposed to do? add the tech or remove.)
 	}
 
 	provides	stungrenade
-	time	1500
+	time	0
 	producetime	1
 }
 
@@ -1995,12 +2035,12 @@ tech rs_alien_ortnok_autopsy
 
 // TAMAN
 
-tech rs_alien_antarean_autopsy
+tech rs_alien_taman_autopsy
 {
 	type	alien
 	name	"_Alien Autopsy - Taman"
-	description	"_antarean_autopsy_txt"
-	pre_description	"_antarean_autopsy_pre_txt"
+	description	"_taman_autopsy_txt"
+	pre_description	"_taman_autopsy_pre_txt"
 	up_chapter	aliens
 
 	require_AND { tech TODO }

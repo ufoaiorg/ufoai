@@ -5366,7 +5366,7 @@ msgid "Alien Autopsy - Antarean"
 msgstr ""
 
 #: ../base/ufos/research.ufo:2002
-msgid "antarean_autopsy_txt"
+msgid "taman_autopsy_txt"
 msgstr ""
 "AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
 "\n"
@@ -5390,7 +5390,7 @@ msgstr ""
 "Das Subjekt hat eine einfache Reihe lebenswichtiger Organe; Herz, Lungen, Leber etc. Es hat nicht die ungebrauchten und überflüssigen Organe, die die Menschen durch ihre Evolution getragen haben. Biologisch gesehen ist der Verdauungstrakt des Subjekts am interessantesten. Die Kreatur hat 3 Mägen, die für die Verdauung für sehr zähe pflanzliche Materie gedacht sind. Sie sind unfähig, irgendeine Art Fleisch zu verdauen. Daraus schließen wir, dass die Tamans Pflanzenfresser sind, die sich von irgendeiner Art Flora ernähren, wo auch immer sie herkommen. Dieser Fund hat einige unserer nervöseren Teammitglieder beruhigt. Wenigstens wissen wir jetzt, dass die Aliens uns nicht wegen unseres Fleisches ernten."
 
 #: ../base/ufos/research.ufo:2003
-msgid "antarean_autopsy_pre_txt"
+msgid "taman_autopsy_pre_txt"
 msgstr ""
 "AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
 "\n"

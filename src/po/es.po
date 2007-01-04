@@ -3945,7 +3945,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2002
 #, fuzzy
-msgid "antarean_autopsy_txt"
+msgid "taman_autopsy_txt"
 msgstr ""
 "Possesses a superficially similar complement of internal organs to humans. "
 "On closer inspection the heart is found to have a more complicated "
@@ -3965,7 +3965,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2003
 #, fuzzy
-msgid "antarean_autopsy_pre_txt"
+msgid "taman_autopsy_pre_txt"
 msgstr ""
 "Possesses a superficially similar complement of internal organs to humans. "
 "On closer inspection the heart is found to have a more complicated "
