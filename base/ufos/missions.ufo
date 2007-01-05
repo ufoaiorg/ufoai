@@ -719,7 +719,7 @@ mission transport
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			transport06
-	music		PsymongN1
+	music		dbsea
 	pos			"83 36"
 	aliens		3
 	alienteam	alien

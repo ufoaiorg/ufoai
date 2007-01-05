@@ -24,7 +24,7 @@ sequence invasion
 
 sequence ufos_are_coming
 {
-	cmd "music ufo2;music_start;"
+	cmd "music space;music_start;"
 	cmd "seq_animspeed 100;"
 
 	2dobj uac_sentence1
