@@ -331,20 +331,20 @@ static void G_Damage(edict_t * ent, fireDef_t *fd, int damage, edict_t * attacke
 		if (sv_maxclients->integer > 1) {
 			if (ent->pnum != attacker->pnum) {
 				if (ent->team != attacker->team) {
-					Com_Printf("[STATS] %s (%s) %s %s (%s) with %s\n",
+					Com_Printf("[STATS] %s (%s) %s %s (%s) with %s of %s\n",
 						G_GetPlayerName(attacker->pnum), attacker->chr.name,
 						(ent->HP == 0 ? "kills" : "stuns"),
-						G_GetPlayerName(ent->pnum), ent->chr.name, fd->name);
+						G_GetPlayerName(ent->pnum), ent->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 				} else {
-					Com_Printf("[STATS] %s (%s) %s %s (%s) (teamkill) with %s\n",
+					Com_Printf("[STATS] %s (%s) %s %s (%s) (teamkill) with %s of %s\n",
 						G_GetPlayerName(attacker->pnum), attacker->chr.name,
 						(ent->HP == 0 ? "kills" : "stuns"),
-						G_GetPlayerName(ent->pnum), ent->chr.name, fd->name);
+						G_GetPlayerName(ent->pnum), ent->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 				}
 			} else {
-				Com_Printf("[STATS] %s %s %s (own team) with %s\n",
+				Com_Printf("[STATS] %s %s %s (own team) with %s of %s\n",
 						G_GetPlayerName(ent->pnum), (ent->HP == 0 ? "kills" : "stuns"),
-						ent->chr.name, fd->name);
+						ent->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 			}
 		}
 

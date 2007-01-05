@@ -244,6 +244,7 @@ void Cmd_Score_f(edict_t * ent);
 edict_t *G_Find(edict_t * from, int fieldofs, char *match);
 edict_t *G_FindRadius(edict_t * from, vec3_t org, float rad, entity_type_t type);
 const char* G_GetPlayerName (int pnum);
+const char* G_GetWeaponNameForFiredef (fireDef_t* fd);
 
 edict_t *G_Spawn(void);
 void G_FreeEdict(edict_t * e);

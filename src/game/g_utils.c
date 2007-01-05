@@ -61,6 +61,41 @@ void G_FreeEdict(edict_t * ed)
 }
 
 /**
+ * @brief Searches for the obj that has the given firedef
+ */
+static const objDef_t* G_GetObjectForFiredef (fireDef_t* fd)
+{
+	int i;
+	fireDef_t *csiFD;
+
+	for (i = 0; i < gi.csi->numODs; i++) {
+		csiFD = &gi.csi->ods[i].fd[0];
+		if (csiFD == fd)
+			return &gi.csi->ods[i];
+		csiFD = &gi.csi->ods[i].fd[1];
+		if (csiFD == fd)
+			return &gi.csi->ods[i];
+	}
+
+	Com_DPrintf("Could nor find a objDef_t for fireDef_t '%s'\n", fd->name);
+
+	return NULL;
+}
+
+/**
+ * @brief Return the corresponding weapon name for a give firedef
+ * @sa G_GetObjectForFiredef
+ */
+const char* G_GetWeaponNameForFiredef (fireDef_t* fd)
+{
+	const objDef_t* obj = G_GetObjectForFiredef(fd);
+	if (!obj)
+		return "unknown";
+	else
+		return obj->name;
+}
+
+/**
  * @brief Returns the player name for a give player number
  */
 const char* G_GetPlayerName (int pnum)
