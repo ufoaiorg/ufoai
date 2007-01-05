@@ -530,7 +530,7 @@ void B_NewBuilding(void)
 void B_SetBuildingByClick(int row, int col)
 {
 	int j;
-	qboolean freeSlot;
+	qboolean freeSlot = qfalse;
 	building_t *building = NULL;
 	building_t *secondBuildingPart = NULL;
 
