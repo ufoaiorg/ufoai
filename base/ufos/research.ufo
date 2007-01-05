@@ -55,7 +55,8 @@
 //		[Default] 0
 //	produceTime
 //		Time the production of one item takes. This value is similar to time.
-//		[Default] 0
+//		0 [Default] The items are produced in (nearly) no time.
+//		-1 Will prevent the item to be produced.
 //	image_top / image_bottom
 //		Path to the image that should be displayed on the top (big) or bottom (small) in the ufopedia.
 //	mdl_top / mdl_bottom
@@ -480,7 +481,7 @@ tech rs_weapon_kerrblade
 	}
 	provides	kerrblade
 	time	200
-	producetime	10
+	producetime	-1
 }
 
 tech rs_weapon_laserpistol
@@ -1309,7 +1310,7 @@ tech rs_alien_body_armour
 {
 	type	tech
 	name	"_Alien Artifact - Alien Body Armour"
-	up_chapter	tech
+	up_chapter	artifacts
 	description	"_alien_body_armour_txt"
 	pre_description	"_alien_body_armour_pre_txt"
 
@@ -1318,6 +1319,7 @@ tech rs_alien_body_armour
 		item light_alien 1
 	}
 	time	2500
+	producetime	-1
 }
 
 // tech rs_heavy_nano_armor
@@ -1332,29 +1334,6 @@ tech rs_alien_body_armour
 // 	time	5000
 //	producetime	120
 // }
-
-//fake techs for alien armor
-tech rs_light_alien
-{
-	type	armor
-	up_chapter	artifacts
-	description	"_light_alien_armor"
-	pre_description	"_light_alien_pre_armor"
-
-	provides	light_alien
-	time	    25000
-}
-
-tech rs_medium_alien
-{
-	type	armor
-	description	"_medium_alien_armor"
-	pre_description	"_medium_alien_pre_armor"
-	up_chapter	artifacts
-
-	provides	medium_alien
-	time	    25000
-}
 
 //========================
 // Damage Types
@@ -2004,7 +1983,6 @@ tech rs_alien_bloodspider_live
 	up_chapter	aliens
 
 	require_AND { tech nothing }
-	provides	""
 	time	0
 
 	mdl_top	"aliens/bloodspider/bloodspider"
@@ -2019,7 +1997,6 @@ tech rs_alien_bloodspider_autopsy
 	up_chapter	aliens
 
 	require_AND { tech TODO }
-	provides	""
 	time	1500
 
 	mdl_top	"aliens/bloodspider/bloodspider"
@@ -2038,7 +2015,6 @@ tech rs_alien_ortnok_autopsy
 	up_chapter	aliens
 
 	require_AND { tech TODO }
-	provides	""
 	time	1500
 
 	// menuModel - see models.ufo
@@ -2058,7 +2034,6 @@ tech rs_alien_taman_autopsy
 	up_chapter	aliens
 
 	require_AND { tech TODO }
-	provides	""
 	time	1500
 
 	// menuModel - see models.ufo
@@ -2076,7 +2051,6 @@ tech rs_alien_shevaar_autopsy
 	up_chapter	aliens
 
 	require_AND { tech TODO }
-	provides	""
 	time	1500
 
 	// menuModel - see models.ufo
@@ -2094,8 +2068,7 @@ tech rs_alien_stinger_notes
 	up_chapter	aliens
 
 	require_AND { tech TODO }
-	provides	""
-	time	0
+	time	2000
 
 	// menuModel - see models.ufo
 	mdl_top	alien_hovernet
@@ -2110,7 +2083,6 @@ tech rs_alien_stinger_autopsy
 	up_chapter	aliens
 
 	require_AND { tech TODO }
-	provides	""
 	time	1500
 
 	// menuModel - see models.ufo
@@ -2128,7 +2100,6 @@ tech rs_alien_cyborg_ortnok_autopsy
 	up_chapter	aliens
 
 	require_AND { tech TODO }
-	provides	""
 	time	1500
 
 	// menuModel - see models.ufo
