@@ -366,7 +366,7 @@ particle smokebig
 		rand		float 0.2
 		add			float 0.4
 		pop			*tps
-		crand		vector "60 60 60"
+		crand		vector "60 60 20"
 		add			*s
 		pop			*s
 		crand		vector "150 150 1000"
