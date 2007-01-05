@@ -1695,7 +1695,7 @@ void G_GetTeam(player_t * player)
 		return;
 	}
 
-	if (playersInGame <= 1 && sv_maxclients->value > 1) {
+	if (playersInGame <= 1 && sv_maxclients->integer > 1) {
 		int spawnCheck[MAX_TEAMS];
 		int spawnSpots = 0;
 		int randomSpot = -1;
@@ -1715,12 +1715,12 @@ void G_GetTeam(player_t * player)
 	}
 
 	/* find a team */
-	if (sv_maxclients->value == 1)
+	if (sv_maxclients->integer == 1)
 		player->pers.team = TEAM_PHALANX;
 	else if (atoi(Info_ValueForKey(player->pers.userinfo, "spectator"))) {
 		/* TODO: spectors get in a game menu to select the team */
 		player->pers.spectator = qtrue;
-	} else if (sv_teamplay->value) {
+	} else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
 		gi.dprintf("Get a team for teamplay\n");
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
@@ -1802,7 +1802,7 @@ void G_ClientTeamAssign(player_t * player)
 	knownTeams[0] = player->pers.team;
 
 	/* return with no action if activeTeam already assigned or if in single-player mode*/
-	if (level.activeTeam != -1 || sv_maxclients->value == 1)
+	if (level.activeTeam != -1 || sv_maxclients->integer == 1)
 		return;
 
 	/* count number of currently connected unique teams */
@@ -2047,7 +2047,7 @@ void G_ClientEndRound(player_t * player, qboolean quiet)
 				break;
 			}
 
-		if (level.activeTeam == -1 && sv_ai->value && ai_autojoin->value) {
+		if (level.activeTeam == -1 && sv_ai->integer && ai_autojoin->integer) {
 			/* no corresponding player found - create ai player */
 			p = AI_CreatePlayer(nextTeam);
 			if (p)
@@ -2103,7 +2103,7 @@ void G_ClientBegin(player_t* player)
 	/*Com_Printf("G_ClientBegin: player: %i - pnum: %i , game.maxplayers: %i	\n", P_MASK(player), player->num, game.maxplayers);*/
 	/* spawn camera (starts client rendering) */
 	gi.AddEvent(P_MASK(player), EV_START | INSTANTLY);
-	gi.WriteByte(sv_teamplay->value);
+	gi.WriteByte(sv_teamplay->integer);
 
 	/* send events */
 	gi.EndEvents();
@@ -2126,7 +2126,7 @@ qboolean G_ClientSpawn(player_t * player)
 	/* TODO: Check player->pers.team here */
 	if (level.activeTeam == -1) {
 		/* activate round if in single-player */
-		if (sv_maxclients->value == 1) {
+		if (sv_maxclients->integer == 1) {
 			level.activeTeam = player->pers.team;
 			turnTeam = level.activeTeam;
 		} else {

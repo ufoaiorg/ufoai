@@ -257,11 +257,11 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 		return;
 
 	/* Apply difficulty settings. */
-	if (sv_maxclients->value == 1) {
+	if (sv_maxclients->integer == 1) {
 		if (attacker->team == TEAM_ALIEN && ent->team < TEAM_ALIEN)
-			damage *= pow(1.3, difficulty->value);
+			damage *= pow(1.3, difficulty->integer);
 		else if (attacker->team < TEAM_ALIEN && ent->team == TEAM_ALIEN)
-			damage *= pow(1.3, -difficulty->value);
+			damage *= pow(1.3, -difficulty->integer);
 	}
 
 	/* Apply armor effects. */
@@ -297,7 +297,7 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 		return;	/* never reached. need for code analyst. */
 #endif
 
-	if (g_nodamage != NULL && !g_nodamage->value) {
+	if (g_nodamage != NULL && !g_nodamage->integer) {
 		/* hit */
 		if (mock) {
 			G_UpdateShotMock(mock, attacker, ent, damage);
@@ -1158,24 +1158,24 @@ int G_GetFiringTUs(edict_t *ent, edict_t *target, int *hand)
 			&& gi.csi->ods[RIGHT(ent)->item.t].weapon
 			&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
 				|| RIGHT(ent)->item.a > 0)
-			&& gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->value <= ent->TU
+			&& gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->integer <= ent->TU
 			&& gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
 
 		if (hand)
 			*hand = ST_RIGHT_PRIMARY_REACTION;
-		return gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->value;
+		return gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->integer;
 	}
 	if (LEFT(ent)
 		&& (LEFT(ent)->item.m != NONE)
 		&& gi.csi->ods[LEFT(ent)->item.t].weapon
 		&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 			|| LEFT(ent)->item.a > 0)
-		&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->value <= ent->TU
+		&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->integer <= ent->TU
 		&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
 
 		if (hand)
 			*hand = ST_LEFT_PRIMARY_REACTION;
-		return gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->value;
+		return gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->integer;
 	}
 	return -1;
 }
