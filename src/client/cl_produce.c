@@ -384,7 +384,7 @@ static void PR_UpdateProductionList(void)
 	/* then go through all object definitions */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		/* we can produce what was researched before */
-		if (od->buytype == produceCategory && RS_IsResearched_ptr(od->tech)) {
+		if (od->buytype == produceCategory && RS_IsResearched_ptr(od->tech) && *od->name) {
 			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
 			Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[i]), sizeof(productionAmount));
 			Q_strcat(productionQueued, "\n", sizeof(productionQueued));
