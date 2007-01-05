@@ -302,6 +302,7 @@ void GL_ImageList_f(void)
 				image->upload_width, image->upload_height, palstrings[image->paletted], image->name,
 				(image->shader ? image->shader->title : "NONE"));
 	}
+	ri.Con_Printf(PRINT_ALL, "Total textures: %i (max textures: %i)\n", numgltextures, MAX_GLTEXTURES);
 	ri.Con_Printf(PRINT_ALL, "Total texel count (not counting mipmaps): %i\n", texels);
 }
 
