@@ -104,6 +104,32 @@ menu production
 	// list
 	// ==================
 
+	pic button_scrollup
+	{
+		tooltip "_Scroll up"
+		image	menu/buttons_small
+		mousefx true
+		pos		"430 65"
+		texh	"48 48"
+		texl	"32 32"
+		click	{ cmd "mn_textscroll prodlist -1;" }
+		out		{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
+		in		{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
+	}
+
+	pic button_scrolldown
+	{
+		tooltip "_Scroll down"
+		image	menu/buttons_small
+		mousefx true
+		pos		"430 720"
+		texl	"32 48"
+		texh	"48 64"
+		click	{ cmd "mn_textscroll prodlist 1;" }
+		out		{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
+		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
+	}
+
 	string txt_queued
 	{
 		string 	"_Q"
@@ -121,7 +147,7 @@ menu production
 	text prodlist
 	{
 		pos		"40 70"
-		size	"402 670"
+		size	"376 670"
 //		bgcolor "1 1 1 0.5"
 		format	"22 0"
 		num	15
