@@ -159,15 +159,17 @@ static char* SV_TeamInfoString (void)
 	Q_strcat(teaminfo, "\n", sizeof(teaminfo));
 	Q_strcat(teaminfo, Cvar_VariableString("maxplayers"), sizeof(teaminfo));
 	Q_strcat(teaminfo, "\n", sizeof(teaminfo));
-	for (i = 0; i < sv_maxclients->value; i++) {
-		cl = &svs.clients[i];
-		if (cl->state == cs_connected || cl->state == cs_spawned) {
+	for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {
+		if (cl->state == cs_connected || cl->state == cs_spawned || cl->state == cs_spawning) {
+			Com_DPrintf("SV_TeamInfoString: connected client: %i %s\n", i, cl->name);
 			/* show players that already have a team with their teamnum */
 			if (ge->ClientGetTeamNum(cl->player))
 				Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
 			else
 				Com_sprintf(player, sizeof(player), "-\t\"%s\"\n", cl->name);
 			Q_strcat(teaminfo, player, sizeof(teaminfo));
+		} else {
+			Com_DPrintf("SV_TeamInfoString: unconnected client: %i %s\n", i, cl->name);
 		}
 	}
 
