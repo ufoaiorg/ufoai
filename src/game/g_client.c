@@ -1782,7 +1782,7 @@ int G_ClientGetTeamNum (player_t * player)
 }
 
 /**
- * @brief Returns the preferred team number the player 
+ * @brief Returns the preferred team number for the player
  */
 int G_ClientGetTeamNumPref (player_t * player)
 {
@@ -1862,6 +1862,7 @@ void G_ClientTeamInfo (player_t * player)
 			level.num_alive[ent->team]++;
 			level.num_spawned[ent->team]++;
 			ent->pnum = player->num;
+			Com_DPrintf("Team %i - player: %i\n", ent->team, player->num);
 			ent->chr.fieldSize = gi.ReadByte();
 			ent->fieldSize = ent->chr.fieldSize;
 			switch (ent->fieldSize) {
