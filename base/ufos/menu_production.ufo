@@ -121,29 +121,33 @@ menu production
 	text prodlist
 	{
 		pos		"40 70"
-		size	"402 710"
+		size	"402 670"
 //		bgcolor "1 1 1 0.5"
 		format	"22 0"
 		num	15
 		click
 		rclick
+		wheel	{ cmd "prod_scroll" }
+		height "30"
 		mousefx	true
 	}
 
 	text prodlist_amount
 	{
 		pos		"505 70"
-		size	"60 710"
+		size	"30 670"
 //		bgcolor "1 1 1 0.5"
 		format	"22 0"
 		num	16
+		height "30"
 		mousefx	true
 	}
 
 	text prodlist_queued
 	{
 		pos		"465 70"
-		size	"60 710"
+		size	"30 670"
+//		bgcolor "1 1 1 0.5"
 		format	"22 0"
 		num 20
 		mousefx true

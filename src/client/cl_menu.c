@@ -245,6 +245,7 @@ menu_t *MN_GetMenu(char *name)
 
 /**
  * @brief Searches all nodes in the given menu for a given nodename
+ * @sa MN_GetNodeFromCurrentMenu
  */
 menuNode_t *MN_GetNode(const menu_t* const menu, char *name)
 {
@@ -259,6 +260,7 @@ menuNode_t *MN_GetNode(const menu_t* const menu, char *name)
 
 /**
  * @brief Searches a given node in the current menu
+ * @sa MN_GetNode
  */
 menuNode_t* MN_GetNodeFromCurrentMenu(char*name)
 {
@@ -1332,6 +1334,8 @@ void MN_MouseWheel(qboolean down, int x, int y)
 				break;
 			case MN_TEXT:
 				MN_TextScroll(node, (down ? 1 : -1));
+				/* they can also have script commands assigned */
+				MN_ExecuteActions(menu, node->wheel);
 				break;
 			default:
 				MN_ExecuteActions(menu, node->wheel);

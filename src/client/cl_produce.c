@@ -452,6 +452,24 @@ qboolean PR_ProductionAllowed(void)
 }
 
 /**
+ * @brief Function binding for prod_scroll that scrolls other text nodes
+ * simultan with the
+ */
+static void PR_ProductionListScroll_f (void)
+{
+	menuNode_t *node1, *node2, *prodlist;
+
+	prodlist = MN_GetNodeFromCurrentMenu("prodlist");
+	node1 = MN_GetNodeFromCurrentMenu("prodlist_amount");
+	node2 = MN_GetNodeFromCurrentMenu("prodlist_queued");
+
+	if (!prodlist || !node1 || !node2)
+		return;
+
+	node1->textScroll = node2->textScroll = prodlist->textScroll;
+}
+
+/**
  * @brief Sets the production array to 0
  */
 void PR_ProductionInit(void)
@@ -606,6 +624,7 @@ void PR_ResetProduction(void)
 {
 	/* add commands */
 	Cmd_AddCommand("prod_init", PR_ProductionList, NULL);
+	Cmd_AddCommand("prod_scroll", PR_ProductionListScroll_f, "Scrolls the production lists");
 	Cmd_AddCommand("prod_select", PR_ProductionSelect, NULL);
 	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
 	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
