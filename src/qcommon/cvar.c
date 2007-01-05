@@ -131,6 +131,26 @@ char *Cvar_VariableString(const char *var_name)
 	return var->string;
 }
 
+/**
+ * @brief Returns the old value of cvar as string before we changed it
+ * @sa Cvar_VariableValue
+ * @sa Cvar_FindVar
+ *
+ * Even if the cvar does not exist this function will not return a null pointer
+ * but an empty string
+ */
+char *Cvar_VariableStringOld(const char *var_name)
+{
+	cvar_t *var;
+
+	var = Cvar_FindVar(var_name);
+	if (!var)
+		return "";
+	if (var->old_string)
+		return var->old_string;
+	else
+		return "";
+}
 
 /**
  * @brief Unix like tab completion for console variables

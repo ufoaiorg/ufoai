@@ -49,6 +49,10 @@ char *Cvar_VariableString(const char *var_name);
 
 /* returns an empty string if not defined */
 
+char *Cvar_VariableStringOld(const char *var_name);
+
+/* returns an empty string if not defined */
+
 int Cvar_CompleteVariable(const char *partial, char **match);
 
 /* attempts to match a partial variable name for command line completion */
