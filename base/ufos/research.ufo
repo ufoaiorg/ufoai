@@ -98,18 +98,37 @@ tech rs_laser
 	image_top	techs/laser
 }
 
-//tech rs_live_alien
+//tech rs_contained_organic_alien
 //{
 //	type	logic
 //	name	"LOGIC:One Live Alien"
 //	require_OR
 //	{
 //TODO: live alien support (i.e. containment)
-//		alien alien_taman
-//		alien alien_ortnok
-//		alien alien_shevaar
+//		alien alien_taman 1
+//		alien alien_ortnok 1
+//		alien alien_shevaar 1
 //	}
 //}
+
+tech rs_live_alien
+{
+	type	tech
+	name	"_Live Alien"
+	up_chapter	aliens
+	description	"_live_alien_txt"
+	pre_description	"_live_alien_pre_txt"
+	require_OR
+	{
+		tech nothing
+//TODO: live alien support (i.e. containment)
+//		alien alien_taman 1
+//		alien alien_ortnok 1
+//		alien alien_shevaar 1
+	}
+		time	1500
+//	image_top	techs/livealien	//TODO:add image
+}
 
 tech rs_anti_alien_gas
 {
@@ -121,16 +140,11 @@ tech rs_anti_alien_gas
 
 	require_AND
 	{
-		tech nothing
-	}
-
-	require_OR
-	{
-//TODO: these are not correct yet.
+		tech rs_live_alien
 		tech rs_alien_ortnok_autopsy
 		tech rs_alien_taman_autopsy
 		tech rs_alien_shevaar_autopsy
-//		tech rs_live_alien	//TODO: see rs_live_alien
+//		tech rs_contained_organic_alien	//TODO: see rs_contained_organic_alien
 	}
 
 	time	1500
