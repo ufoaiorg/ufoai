@@ -210,11 +210,12 @@ static void G_UpdateShotMock(shot_mock_t *mock, edict_t *shooter, edict_t *struc
 
 /**
  * @brief Deals damage of a give type and amount to a target.
+ * @sa G_SplashDamage
  */
-static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker, shot_mock_t *mock)
+static void G_Damage(edict_t * ent, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
 {
-	qboolean stun = (dmgtype == gi.csi->damStun);
-	qboolean shock = (dmgtype == gi.csi->damShock);
+	qboolean stun = (fd->dmgtype == gi.csi->damStun);
+	qboolean shock = (fd->dmgtype == gi.csi->damShock);
 
 	assert (ent);
 	assert (ent->type == ET_ACTOR
@@ -273,16 +274,16 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 
 		totalDamage = damage;
 
-		if (ad->protection[dmgtype] > 0)
-			damage *= 1.0 - ad->protection[dmgtype] * ent->AP * 0.0001;
+		if (ad->protection[fd->dmgtype] > 0)
+			damage *= 1.0 - ad->protection[fd->dmgtype] * ent->AP * 0.0001;
 		else
-			damage *= 1.0 - ad->protection[dmgtype] * 0.01;
+			damage *= 1.0 - ad->protection[fd->dmgtype] * 0.01;
 
 		if (!mock) {
-			if (ad->hardness[dmgtype]) {
+			if (ad->hardness[fd->dmgtype]) {
 				int armorDamage;
 
-				armorDamage = (totalDamage - damage) / ad->hardness[dmgtype];
+				armorDamage = (totalDamage - damage) / ad->hardness[fd->dmgtype];
 				ent->AP = MAX(0, ent->AP - armorDamage);
 			}
 		}
@@ -326,10 +327,26 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 	/* Check death/knockouth. */
 	if (ent->HP == 0 || ent->HP <= ent->STUN) {
 		G_SendStats(ent);
-		Com_Printf("[STATS] %s (%s) %s %s (%s) with %s\n",
-			G_GetPlayerName(attacker->pnum), attacker->chr.name,
-			(ent->HP == 0 ? "kills" : "stuns"),
-			G_GetPlayerName(ent->pnum), ent->chr.name, "");
+		/* prints stats for multiplayer to game console */
+		if (sv_maxclients->integer > 1) {
+			if (ent->pnum != attacker->pnum) {
+				if (ent->team != attacker->team) {
+					Com_Printf("[STATS] %s (%s) %s %s (%s) with %s\n",
+						G_GetPlayerName(attacker->pnum), attacker->chr.name,
+						(ent->HP == 0 ? "kills" : "stuns"),
+						G_GetPlayerName(ent->pnum), ent->chr.name, fd->name);
+				} else {
+					Com_Printf("[STATS] %s (%s) %s %s (%s) (teamkill) with %s\n",
+						G_GetPlayerName(attacker->pnum), attacker->chr.name,
+						(ent->HP == 0 ? "kills" : "stuns"),
+						G_GetPlayerName(ent->pnum), ent->chr.name, fd->name);
+				}
+			} else {
+				Com_Printf("[STATS] %s %s %s (own team) with %s\n",
+						G_GetPlayerName(ent->pnum), (ent->HP == 0 ? "kills" : "stuns"),
+						ent->chr.name, fd->name);
+			}
+
 		G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN);
 
 		/* apply morale changes */
@@ -458,7 +475,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 
 		if (mock)
 			mock->allow_self = qtrue;
-		G_Damage(check, fd->dmgtype, damage, ent, mock);
+		G_Damage(check, fd, damage, ent, mock);
 		if (mock)
 			mock->allow_self = qfalse;
 	}
@@ -749,7 +766,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 		/* do damage */
 		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV || tr.ent->type == ET_BREAKABLE)) {
 			damage = fd->damage[0]; /* + fd->damage[1] * crand(); //  REMOVED random component - it's quite random enough already */
-			G_Damage(tr.ent, fd->dmgtype, damage, ent, mock);
+			G_Damage(tr.ent, fd, damage, ent, mock);
 			break;
 		}
 
