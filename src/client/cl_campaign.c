@@ -3984,6 +3984,9 @@ static void CL_GameNew(void)
 	memset(&ccs, 0, sizeof(ccs_t));
 	ccs.date = curCampaign->date;
 
+	/* ensure ccs.singleplayer is set to true */
+	CL_StartSingleplayer(qtrue);
+
 	/* get day */
 	while (ccs.date.sec > 3600 * 24) {
 		ccs.date.sec -= 3600 * 24;
