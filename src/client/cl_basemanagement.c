@@ -2119,7 +2119,7 @@ static base_t* transferBase = NULL;
 static aircraft_t* transferAircraft = NULL;
 
 /** @brief current transfer type (item, employee, tech, ...) */
-static int transferType = 0;
+static int transferType = -1;
 
 /**
  * @brief
@@ -2132,7 +2132,6 @@ static void B_TransferSelect_f (void)
 	int type;
 	int i, cnt = 0;
 	char str[128];
-	equipDef_t ed;
 
 	if (!transferBase)
 		return;
@@ -2148,9 +2147,8 @@ static void B_TransferSelect_f (void)
 	/* items */
 	case 0:
 		if (transferBase->hasStorage) {
-			ed = transferBase->storage;
 			for (i = 0; i < csi.numODs; i++)
-				if (ed.num[i]) {
+				if (baseCurrent->storage.num[i]) {
 					Com_sprintf(str, sizeof(str), "%s\n", csi.ods[i].name);
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
@@ -2205,15 +2203,51 @@ static void B_TransferStart_f (void)
  */
 static void B_TransferListSelect_f (void)
 {
-	int num;
+	int num, cnt = 0, i;
 
 	if (!baseCurrent)
 		return;
+
+	if (!transferBase) {
+		MN_Popup(_("No target base selected"), _("Please select the target base from the list"));
+		return;
+	}
+
+	if (!transferAircraft) {
+		MN_Popup(_("No aircraft selected"), _("Please select the aircraft to use from the list"));
+		return;
+	}
 
 	if (Cmd_Argc() < 2)
 		return;
 
 	num = atoi(Cmd_Argv(1));
+
+	switch (transferType) {
+	case -1:
+		/* no list was inited before you call this */
+		return;
+	/* items */
+	case 0:
+		if (transferBase->hasStorage) {
+			for (i = 0; i < csi.numODs; i++)
+				if (baseCurrent->storage.num[i]) {
+					if (cnt == num) {
+						/* TODO: Check space */
+						transferAircraft->num[i]++;
+						break;
+					}
+					cnt++;
+				}
+		}
+		break;
+	/* humans */
+	case 1:
+		break;
+	/* techs */
+	case 2:
+		break;
+	}
 }
 
 /**
@@ -2255,6 +2289,8 @@ static void B_TransferAircraftListClick_f (void)
 		return;
 
 	transferAircraft = aircraft;
+	Cvar_Set("mn_trans_aircraft_name", transferAircraft->shortname);
+
 	B_TransferDisplayAircraftInfo();
 }
 
@@ -2317,6 +2353,8 @@ static void B_TransferBaseSelect_f (void)
 	/* set global pointer to current selected base */
 	transferBase = base;
 
+	Cvar_Set("mn_trans_base_name", transferBase->shortname);
+
 	/* update item list */
 	B_TransferSelect_f();
 }
@@ -2365,10 +2403,15 @@ static void B_TransferInit_f (void)
 			/* first suitable aircraft will be default selection */
 			if (!transferAircraft)
 				transferAircraft = aircraft;
-			Q_strcat(aircraftList, aircraft->name, sizeof(aircraftList));
+			Q_strcat(aircraftList, aircraft->shortname, sizeof(aircraftList));
 			Q_strcat(aircraftList, "\n", sizeof(aircraftList));
 		}
 	}
+
+	if (transferAircraft)
+		Cvar_Set("mn_trans_aircraft_name", transferAircraft->shortname);
+	if (transferBase)
+		Cvar_Set("mn_trans_base_name", transferBase->shortname);
 
 	menuText[TEXT_BASE_LIST] = baseList;
 	menuText[TEXT_AIRCRAFT_LIST] = aircraftList;

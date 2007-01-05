@@ -49,6 +49,24 @@ menu transfer
 		string	"_Aircraft"
 	}
 
+	string s_current_aircraft
+	{
+		pos	"900 30"
+		align	uc
+		color "0.7 0.7 0.7 1"
+		font	"f_small"
+		string	"_Selected aircraft"
+	}
+
+	string s_current_aircraft_var
+	{
+		pos	"900 60"
+		align	uc
+		color "1 1 1 1"
+		font	"f_small"
+		string	"*cvar mn_trans_aircraft_name"
+	}
+
 	string s_base
 	{
 		pos	"680 130"
@@ -56,6 +74,24 @@ menu transfer
 		color "1 1 1 1"
 		font	"f_normal"
 		string	"_Base"
+	}
+
+	string s_current_base
+	{
+		pos	"680 30"
+		align	uc
+		color "0.7 0.7 0.7 1"
+		font	"f_small"
+		string	"_Selected base"
+	}
+
+	string s_current_base_var
+	{
+		pos	"680 60"
+		align	uc
+		color "1 1 1 1"
+		font	"f_small"
+		string	"*cvar mn_trans_base_name"
 	}
 
 	text trans_bases

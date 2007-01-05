@@ -746,6 +746,10 @@ const struct aircraft_s* ufo, qboolean wasUfoSensored);
 #define SAVE_FILE_VERSION 5
 #endif							/* SAVE_FILE_VERSION */
 
+/* cl_basemanagment.c */
+/* we need this in cl_aircraft.h */
+#define MAX_EMPLOYEES 256
+
 #include "cl_aircraft.h"
 
 /* cl_basemanagment.c */

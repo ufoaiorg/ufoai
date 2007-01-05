@@ -75,6 +75,12 @@ typedef struct aircraft_s {
 	int *teamSize;				/* how many soldiers on board */
 	int teamIdxs[MAX_ACTIVETEAM];              /* array of team members on board employee idx*/
 
+	/* equipment on board */
+	/* only indexes from global array */
+	int num[MAX_OBJDEFS];
+	int techs[MAX_TECHNOLOGIES];
+	int employees[MAX_EMPLOYEES];
+
 	char model[MAX_QPATH];
 	char weapon_string[MAX_VAR];
 	/* NOTE: these pointers needs reinit after loading a saved game */
