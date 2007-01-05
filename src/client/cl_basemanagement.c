@@ -2130,6 +2130,9 @@ static void B_TransferSelect_f (void)
 {
 	static char transferList[1024];
 	int type;
+	int i, cnt = 0;
+	char str[128];
+	equipDef_t ed;
 
 	if (!transferBase)
 		return;
@@ -2144,9 +2147,17 @@ static void B_TransferSelect_f (void)
 	switch (type) {
 	/* items */
 	case 0:
-		if (transferBase->hasStorage)
-			Q_strcat(transferList, "TODO: items", sizeof(transferList));
-		else
+		if (transferBase->hasStorage) {
+			ed = transferBase->storage;
+			for (i = 0; i < csi.numODs; i++)
+				if (ed.num[i]) {
+					Com_sprintf(str, sizeof(str), "%s\n", csi.ods[i].name);
+					Q_strcat(transferList, str, sizeof(transferList));
+					cnt++;
+				}
+			if (!cnt)
+				Q_strncpyz(transferList, _("Storage is empty\n"), sizeof(transferList));
+		} else
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a storage building"), sizeof(transferList));
 		break;
 	/* humans */
@@ -2158,7 +2169,7 @@ static void B_TransferSelect_f (void)
 		break;
 	/* techs */
 	case 2:
-		if (transferBase->hasQuarters)
+		if (transferBase->hasLab)
 			Q_strcat(transferList, "TODO: techs", sizeof(transferList));
 		else
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a lab"), sizeof(transferList));
