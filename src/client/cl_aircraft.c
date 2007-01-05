@@ -249,7 +249,7 @@ void MN_NextAircraft_f(void)
 		return;
 
 	if (Cvar_VariableInteger("mn_aircraft_id") < baseCurrent->numAircraftInBase - 1) {
-		Cvar_SetValue("mn_aircraft_id", Cvar_VariableValue("mn_aircraft_id") + 1.0f);
+		Cvar_SetValue("mn_aircraft_id", Cvar_VariableInteger("mn_aircraft_id") + 1);
 		CL_AircraftSelect();
 	} else
 		Com_DPrintf("mn_aircraft_id: %i - numAircraftInBase: %i\n", Cvar_VariableInteger("mn_aircraft_id"), baseCurrent->numAircraftInBase);
@@ -262,7 +262,7 @@ void MN_NextAircraft_f(void)
 void MN_PrevAircraft_f(void)
 {
 	if (Cvar_VariableInteger("mn_aircraft_id") > 0) {
-		Cvar_SetValue("mn_aircraft_id", Cvar_VariableValue("mn_aircraft_id") - 1.0f);
+		Cvar_SetValue("mn_aircraft_id", Cvar_VariableInteger("mn_aircraft_id") - 1);
 		CL_AircraftSelect();
 	}
 }
