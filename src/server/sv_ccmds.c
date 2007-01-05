@@ -54,7 +54,7 @@ void SV_SetMaster_f(void)
 		Com_Printf ("SV_SetMaster_f: Bad Master IP");
 	}
 	if (master_adr.port == 0)
-		master_adr.port = BigShort((int)masterserver_port->value);
+		master_adr.port = BigShort(masterserver_port->integer);
 
 	Com_Printf ("Master server at %s - sending a ping\n", NET_AdrToString (master_adr));
 

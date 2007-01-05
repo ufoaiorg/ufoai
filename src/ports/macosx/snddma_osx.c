@@ -170,7 +170,7 @@ qboolean SNDDMA_Init (struct sndinfo *si__) /* argument ignored */
 
 	/* check sample bits: */
 	cvar_t* s_loadas8bit = Cvar_Get("s_loadas8bit", "16", CVAR_ARCHIVE, NULL);
-	if ((int) s_loadas8bit->value) {
+	if (s_loadas8bit->integer) {
 		dma.samplebits = 8;
 		SNDDMA_AudioIOProc = SNDDMA_Audio8BitIOProc;
 	} else {

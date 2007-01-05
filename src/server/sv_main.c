@@ -229,7 +229,7 @@ static void SVC_Info(void)
 			if (svs.clients[i].state >= cs_spawning)
 				count++;
 
-		Com_sprintf(string, sizeof(string), "%s\t%s\t%2i/%2i\n", hostname->string, sv.name, count, (int) sv_maxclients->value);
+		Com_sprintf(string, sizeof(string), "%s\t%s\t%2i/%2i\n", hostname->string, sv.name, count, sv_maxclients->integer);
 	}
 
 	Netchan_OutOfBandPrint(NS_SERVER, net_from, "info\n%s", string);
@@ -373,7 +373,7 @@ static void SVC_DirectConnect(void)
 			continue;
 		if (NET_CompareBaseAdr(adr, cl->netchan.remote_address)
 			&& (cl->netchan.qport == qport || adr.port == cl->netchan.remote_address.port)) {
-			if (!NET_IsLocalAddress(adr) && (svs.realtime - cl->lastconnect) < ((int) sv_reconnect_limit->value * 1000)) {
+			if (!NET_IsLocalAddress(adr) && (svs.realtime - cl->lastconnect) < (sv_reconnect_limit->integer * 1000)) {
 				Com_DPrintf("%s:reconnect rejected : too soon\n", NET_AdrToString(adr));
 				return;
 			}

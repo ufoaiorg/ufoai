@@ -72,7 +72,7 @@ static void E_EmployeeList (void)
 
 		employeesInCurrentList++;
 		/* we can't display more than 19 employees */
-		if (employeesInCurrentList>=(int)cl_numnames->value)
+		if (employeesInCurrentList >= cl_numnames->integer)
 			break;
 	}
 
@@ -84,7 +84,7 @@ static void E_EmployeeList (void)
 	}
 
 	i = employeesInCurrentList;
-	for (;i<(int)cl_numnames->value;i++) {
+	for (;i < cl_numnames->integer;i++) {
 		Cvar_ForceSet(va("mn_name%i", i), "");
 		Cbuf_AddText(va("employeedisable%i\n", i));
 	}
@@ -801,7 +801,7 @@ static void E_EmployeeSelect_f(void)
 		return;
 
 	/* console commands */
-	Cbuf_AddText(va("employeedeselect%i\n", (int) cl_selected->value));
+	Cbuf_AddText(va("employeedeselect%i\n", cl_selected->integer));
 	Cbuf_AddText(va("employeeselect%i\n", num));
 	Cvar_ForceSet("cl_selected", va("%i", num));
 

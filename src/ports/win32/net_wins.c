@@ -509,14 +509,14 @@ void NET_OpenIP (void)
 
 	ip = Cvar_Get ("ip", "localhost", CVAR_NOSET, NULL);
 
-	dedicated = Cvar_VariableValue ("dedicated");
+	dedicated = Cvar_VariableInteger ("dedicated");
 
 	if (!ip_sockets[NS_SERVER]) {
-		port = Cvar_Get("ip_hostport", "0", CVAR_NOSET, NULL)->value;
+		port = Cvar_Get("ip_hostport", "0", CVAR_NOSET, NULL)->integer;
 		if (!port) {
-			port = Cvar_Get("hostport", "0", CVAR_NOSET, NULL)->value;
+			port = Cvar_Get("hostport", "0", CVAR_NOSET, NULL)->integer;
 			if (!port) {
-				port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->value;
+				port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->integer;
 			}
 		}
 		ip_sockets[NS_SERVER] = NET_IPSocket (ip->string, port);
@@ -597,7 +597,7 @@ void NET_OpenIPX (void)
 	int		port;
 	int		dedicated;
 
-	dedicated = Cvar_VariableValue ("dedicated");
+	dedicated = Cvar_VariableInteger ("dedicated");
 
 	if (!ipx_sockets[NS_SERVER]) {
 		port = Cvar_Get("ipx_hostport", "0", CVAR_NOSET, NULL)->value;

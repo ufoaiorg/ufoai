@@ -292,7 +292,7 @@ void HGS_StartHealing_f (void)
 {
 	if (!baseCurrent || !currentEmployeeInHospital)
 		return;
-	if ((int)mn_hosp_heal_limit->value > employeesInHospitalListCount)
+	if (mn_hosp_heal_limit->integer > employeesInHospitalListCount)
 		HOS_AddToEmployeeList(currentEmployeeInHospital);
 }
 

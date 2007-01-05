@@ -67,7 +67,7 @@ void LM_AddToScene(void)
 
 	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
 		/* check for visibility */
-		if (!((1 << (int) cl_worldlevel->value) & lm->levelflags))
+		if (!((1 << cl_worldlevel->integer) & lm->levelflags))
 			continue;
 
 		/* set entity values */
@@ -364,7 +364,7 @@ static void LET_PathMove(le_t * le)
 			le->angles[YAW] = dangle[le->dir];
 			le->startTime = le->endTime;
 			le->endTime += ((dv & 7) > 3 ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
-			if (le->team == cls.team && le == selActor && (int) cl_worldlevel->value == le->oldPos[2] && le->pos[2] != le->oldPos[2]) {
+			if (le->team == cls.team && le == selActor && cl_worldlevel->integer == le->oldPos[2] && le->pos[2] != le->oldPos[2]) {
 				Cvar_SetValue("cl_worldlevel", le->pos[2]);
 			}
 		} else {
@@ -780,7 +780,7 @@ trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * pass
 	moveclip_t clip;
 
 	/* clip to world */
-	clip.trace = CM_CompleteBoxTrace(start, end, mins, maxs, (1 << ((int) cl_worldlevel->value + 1)) - 1, contentmask);
+	clip.trace = CM_CompleteBoxTrace(start, end, mins, maxs, (1 << (cl_worldlevel->integer + 1)) - 1, contentmask);
 	clip.trace.le = NULL;
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */

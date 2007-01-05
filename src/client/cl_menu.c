@@ -425,7 +425,7 @@ static void MN_StartServer(void)
 	} else
 		Com_DPrintf("There are %i members on team\n", B_GetNumOnTeam());
 
-	if (Cvar_VariableValue("sv_teamplay")
+	if (Cvar_VariableInteger("sv_teamplay")
 		&& Cvar_VariableValue("maxsoldiersperplayer") > Cvar_VariableValue("maxsoldiers")) {
 		MN_Popup(_("Settings doesn't make sense"), _("Set playersoldiers lower than teamsoldiers"));
 		return;
@@ -1704,9 +1704,9 @@ void MN_DrawMenus(void)
 						int pt;
 
 						if (node->name[4] == 'm')
-							pt = Cvar_VariableValue("mn_morale") / 2;
+							pt = Cvar_VariableInteger("mn_morale") / 2;
 						else
-							pt = Cvar_VariableValue("mn_hp");
+							pt = Cvar_VariableInteger("mn_hp");
 						node->texl[1] = (3 - (int) (pt < 60 ? pt : 60) / 20) * 32;
 						node->texh[1] = node->texl[1] + 32;
 						node->texl[0] = -(int) (0.01 * (node->name[4] - 'a') * cl.time) % 64;
@@ -2263,7 +2263,7 @@ static void MN_PopMenu_f(void)
 	} else {
 		int i;
 
-		for (i = 0; i < (int) mn_escpop->value; i++)
+		for (i = 0; i < mn_escpop->integer; i++)
 			MN_PopMenu(qfalse);
 
 		Cvar_Set("mn_escpop", "1");

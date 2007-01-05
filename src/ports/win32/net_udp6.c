@@ -846,7 +846,7 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
 			/* multicast_interface is a global variable. Also used in NET_SendPacket() */
 
 #ifdef _WIN32
-			mreq.ipv6mr_interface = (int)mcast->value;
+			mreq.ipv6mr_interface = mcast->integer;
 #else
 			if ((mreq.ipv6mr_interface = if_nametoindex(multicast_interface)) == 0) {
 				Com_Printf("NET_IPSocket: invalid interface: %s\n", multicast_interface);
@@ -910,14 +910,14 @@ void NET_OpenIP (void)
 
 	ip = Cvar_Get ("ip", "localhost", CVAR_NOSET, NULL);
 
-	dedicated = Cvar_VariableValue ("dedicated");
+	dedicated = Cvar_VariableInteger ("dedicated");
 
 	if (!ip_sockets[NS_SERVER]) {
-		port = Cvar_Get("ip_hostport", "0", CVAR_NOSET, NULL)->value;
+		port = Cvar_Get("ip_hostport", "0", CVAR_NOSET, NULL)->integer;
 		if (!port) {
-			port = Cvar_Get("hostport", "0", CVAR_NOSET, NULL)->value;
+			port = Cvar_Get("hostport", "0", CVAR_NOSET, NULL)->integer;
 			if (!port) {
-				port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->value;
+				port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->integer;
 			}
 		}
 		ip6_sockets[NS_SERVER] = NET_IPSocket (ip->string, port, NS_SERVER, AF_INET6);
@@ -1002,14 +1002,14 @@ void NET_OpenIPX (void)
 	int		port;
 	int		dedicated;
 
-	dedicated = Cvar_VariableValue("dedicated");
+	dedicated = Cvar_VariableInteger("dedicated");
 
 	if (!ipx_sockets[NS_SERVER]) {
-		port = Cvar_Get("ipx_hostport", "0", CVAR_NOSET, NULL)->value;
+		port = Cvar_Get("ipx_hostport", "0", CVAR_NOSET, NULL)->integer;
 		if (!port) {
-			port = Cvar_Get("hostport", "0", CVAR_NOSET, NULL)->value;
+			port = Cvar_Get("hostport", "0", CVAR_NOSET, NULL)->integer;
 			if (!port) {
-				port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->value;
+				port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->integer;
 			}
 		}
 		ipx_sockets[NS_SERVER] = NET_IPXSocket (port);

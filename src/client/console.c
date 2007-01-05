@@ -74,7 +74,7 @@ void Con_ToggleConsole_f(void)
 		Cbuf_AddText("killserver\n");
 		return;
 	}
-	maxclients = (int)Cvar_VariableValue("maxclients");
+	maxclients = Cvar_VariableInteger("maxclients");
 
 	Key_ClearTyping();
 	Con_ClearNotify();

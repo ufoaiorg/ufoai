@@ -333,7 +333,7 @@ static void CL_ChangeSkinCmd(void)
 
 	sel = cl_selected->value;
 	if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
-		newSkin = (int) Cvar_VariableValue("mn_skin") + 1;
+		newSkin = Cvar_VariableInteger("mn_skin") + 1;
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
 
@@ -571,7 +571,7 @@ static void CL_GenerateEquipmentCmd(void)
 
 	/* Store hired names. */
 	Cvar_ForceSet("cl_selected", "0");
-	for (i = 0, p = 0; i < (int)cl_numnames->value; i++)
+	for (i = 0, p = 0; i < cl_numnames->integer; i++)
 		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
 			/* maybe we already have soldiers in this aircraft */
 			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
@@ -705,7 +705,7 @@ static void CL_SelectCmd(void)
 	}
 
 	/* console commands */
-	Cbuf_AddText(va("%sdeselect%i\n", command, (int) cl_selected->value));
+	Cbuf_AddText(va("%sdeselect%i\n", command, cl_selected->integer));
 	Cbuf_AddText(va("%sselect%i\n", command, num));
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
@@ -757,7 +757,7 @@ void CL_UpdateHireVar(void)
 	Cvar_Set("mn_hired", va(_("%i of %i"), baseCurrent->teamNum[baseCurrent->aircraftCurrent], aircraft->size));
 
 	/* update curTeam list */
-	for (i = 0, p = 0; i < (int)cl_numnames->value; i++) {
+	for (i = 0, p = 0; i < cl_numnames->integer; i++) {
 		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
@@ -850,7 +850,7 @@ static void CL_MarkTeamCmd(void)
 	CL_UpdateHireVar();
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 
-	for (i = 0; i < (int)cl_numnames->value; i++) {
+	for (i = 0; i < cl_numnames->integer; i++) {
 		alreadyInOtherShip = qfalse;
 		/* don't show other base's recruits */
 		if (!gd.employees[EMPL_SOLDIER][i].hired || gd.employees[EMPL_SOLDIER][i].baseIDHired != baseCurrent->idx)
@@ -884,7 +884,7 @@ static void CL_MarkTeamCmd(void)
 		k++;
 	}
 
-	for (;k < (int) cl_numnames->value; k++) {
+	for (;k < cl_numnames->integer; k++) {
 		Cbuf_AddText(va("listdisable%i\n", k));
 		Cvar_ForceSet(va("mn_name%i", k), "");
 		Cbuf_AddText(va("listholdsnoequip%i\n", k));
@@ -1025,7 +1025,7 @@ static void CL_AssignSoldierCmd(void)
 	}
 	num = atoi(Cmd_Argv(1));
 
-	if (num >= E_CountHired(baseCurrent, EMPL_SOLDIER) || num >= (int)cl_numnames->value)
+	if (num >= E_CountHired(baseCurrent, EMPL_SOLDIER) || num >= cl_numnames->integer)
 		return;
 
 	employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, -(num+1));
@@ -1084,17 +1084,17 @@ static void CL_MessageMenuCmd(void)
 	} else if (msg[0] == '!') {
 		/* cancel */
 		Cvar_ForceSet(cvarName, nameBackup);
-		Cvar_ForceSet(va("%s%i", cvarName, (int) cl_selected->value), nameBackup);
+		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), nameBackup);
 		Cbuf_AddText(va("%s_changed\n", cvarName));
 	} else if (msg[0] == ':') {
 		/* end */
 		Cvar_ForceSet(cvarName, msg + 1);
-		Cvar_ForceSet(va("%s%i", cvarName, (int) cl_selected->value), msg + 1);
+		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), msg + 1);
 		Cbuf_AddText(va("%s_changed\n", cvarName));
 	} else {
 		/* continue */
 		Cvar_ForceSet(cvarName, msg);
-		Cvar_ForceSet(va("%s%i", cvarName, (int) cl_selected->value), msg);
+		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), msg);
 	}
 }
 

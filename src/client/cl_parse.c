@@ -682,12 +682,12 @@ void CL_ActorAppear( sizebuf_t *sb )
 	le->think = LET_StartIdle;
 
 	/* count spotted aliens */
-	if ( !(le->state & STATE_DEAD) && newActor && le->team != cls.team && le->team != TEAM_CIVILIAN )
+	if (!(le->state & STATE_DEAD) && newActor && le->team != cls.team && le->team != TEAM_CIVILIAN)
 		cl.numAliensSpotted++;
 
-	if ( cls.state == ca_active && !(le->state & STATE_DEAD) ) {
+	if (cls.state == ca_active && !(le->state & STATE_DEAD)) {
 		/* center view (if wanted) */
-		if ( (int)cl_centerview->value > 1 || ((int)cl_centerview->value == 1 && cl.actTeam != cls.team) ) {
+		if (cl_centerview->integer> 1 || (cl_centerview->integer == 1 && cl.actTeam != cls.team)) {
 			VectorCopy( le->origin, cl.cam.reforg );
 			Cvar_SetValue( "cl_worldlevel", le->pos[2] );
 		}

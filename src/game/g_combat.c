@@ -107,7 +107,7 @@ static void G_Morale(int type, edict_t * victim, edict_t * attacker, int param)
 				if (victim->team == TEAM_CIVILIAN)
 					mod *= mof_civilian->value;
 				/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
-				if (victim->team == ent->team || (victim->team == TEAM_CIVILIAN && ent->team != TEAM_ALIEN && (int) sv_maxclients->value == 1))
+				if (victim->team == ent->team || (victim->team == TEAM_CIVILIAN && ent->team != TEAM_ALIEN && sv_maxclients->integer == 1))
 					mod *= -1;
 				/* if you stand near to the attacker or the victim, the morale change is higher. */
 				mod *= mor_default->value + pow(0.5, VectorDist(ent->origin, victim->origin) / mor_distance->value)

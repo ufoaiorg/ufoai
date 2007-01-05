@@ -225,24 +225,24 @@ void S_ModifyKhz_f(void)
 		return;
 
 	if (*Cmd_Argv(1) == '+') {
-		if ((int)snd_khz->value == 11)
+		if (snd_khz->integer == 11)
 			Cvar_SetValue("snd_khz", 22);
-		else if ((int)snd_khz->value == 22)
+		else if (snd_khz->integer == 22)
 			Cvar_SetValue("snd_khz", 44);
-		else if ((int)snd_khz->value == 44)
+		else if (snd_khz->integer == 44)
 			Cvar_SetValue("snd_khz", 48);
-		else if ((int)snd_khz->value == 48)
+		else if (snd_khz->integer == 48)
 			Cvar_SetValue("snd_khz", 11);
 		else
 			Cvar_SetValue("snd_khz", 48);
 	} else if (*Cmd_Argv(1) == '-') {
-		if ((int)snd_khz->value == 48)
+		if (snd_khz->integer == 48)
 			Cvar_SetValue("snd_khz", 44);
-		else if ((int)snd_khz->value == 44)
+		else if (snd_khz->integer == 44)
 			Cvar_SetValue("snd_khz", 22);
-		else if ((int)snd_khz->value == 22)
+		else if (snd_khz->integer == 22)
 			Cvar_SetValue("snd_khz", 11);
-		else if ((int)snd_khz->value == 11)
+		else if (snd_khz->integer == 11)
 			Cvar_SetValue("snd_khz", 48);
 		else
 			Cvar_SetValue("snd_khz", 48);
@@ -1664,7 +1664,7 @@ int OGG_Read(void)
 
 	/* end of file? */
 	if (!res) {
-		if ((int) snd_music_loop->value)
+		if (snd_music_loop->integer)
 			ov_raw_seek(&music.ovFile, 0);
 		else
 			OGG_Stop();

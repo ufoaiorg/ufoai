@@ -141,7 +141,7 @@ void GL_ScreenShot_f(void)
 		if (ri.Cmd_Argc () == 3)
 			quality = atoi (ri.Cmd_Argv (2));
 		else
-			quality = (int)gl_screenshot_jpeg_quality->value;
+			quality = gl_screenshot_jpeg_quality->integer;
 		if (quality > 100 || quality <= 0)
 			quality = 100;
 

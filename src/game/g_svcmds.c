@@ -153,9 +153,9 @@ qboolean SV_FilterPacket(char *from)
 
 	for (i = 0; i < numipfilters; i++)
 		if ((in & ipfilters[i].mask) == ipfilters[i].compare)
-			return (int) filterban->value;
+			return filterban->integer;
 
-	return (int) !filterban->value;
+	return !filterban->integer;
 }
 
 
@@ -262,7 +262,7 @@ void SVCmd_WriteIP_f(void)
 		return;
 	}
 
-	fprintf(f, "set filterban %d\n", (int) filterban->value);
+	fprintf(f, "set filterban %d\n", filterban->integer);
 
 	for (i = 0; i < numipfilters; i++) {
 		*(unsigned *) b = ipfilters[i].compare;

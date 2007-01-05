@@ -101,7 +101,7 @@ qboolean SND_Init(struct sndinfo *s)
 		}
 	}
 
-	si->dma->channels = (int)si->channels->value;
+	si->dma->channels = si->channels->integer;
 
 	if (si->dma->channels < 1 || si->dma->channels > 2)
 		si->dma->channels = 2;  /* ensure either stereo or mono */

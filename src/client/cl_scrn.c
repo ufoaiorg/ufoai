@@ -156,7 +156,7 @@ static void SCR_DrawDebugGraph(void)
 
 		if (v < 0)
 			v += scr_graphheight->value * (1 + (int) (-v / scr_graphheight->value));
-		h = (int) v % (int) scr_graphheight->value;
+		h = (int)v % scr_graphheight->integer;
 		re.DrawFill(x + w - 1 - a, y - h, 1, h, 0, color);
 	}
 }
@@ -627,7 +627,7 @@ void SCR_TouchPics(void)
 
 		re.RegisterPic("wait");
 		re.RegisterPic("ducked");
-		Com_sprintf(cursor_pic, sizeof(cursor_pic), "cursor%i", (int) (cursor->value));
+		Com_sprintf(cursor_pic, sizeof(cursor_pic), "cursor%i", cursor->integer);
 		if (!re.RegisterPic(cursor_pic))
 			cursor_pic[0] = 0;
 	}

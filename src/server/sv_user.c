@@ -179,7 +179,7 @@ int SV_CountPlayers (void)
 	if (!svs.initialized)
 		return 0;
 
-	for (i = 0, cl = svs.clients; i < (int)sv_maxclients->value; i++, cl++) {
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl->state != cs_spawned)
 			continue;
 
@@ -231,7 +231,7 @@ void SV_SpawnAllPending (void)
 
  	/* TODO: how to handle spectators (skip spawning them?) */
 
-	for (i = 0, cl = svs.clients; i < (int)sv_maxclients->value; i++, cl++) {
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl && cl->state == cs_spawning) {
 			if (ge->ClientSpawn(cl->player))
 				cl->state = cs_spawned;

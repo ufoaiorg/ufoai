@@ -342,7 +342,7 @@ void SpawnEntities(char *mapname, char *entities)
 		Com_Printf("No civilian spawn points in this map or civilians deactivated\n");
 #endif
 
-	if (((int) sv_maxclients->value == 1 || ai_numactors->value) && level.num_spawnpoints[TEAM_ALIEN]) {
+	if ((sv_maxclients->integer == 1 || ai_numactors->value) && level.num_spawnpoints[TEAM_ALIEN]) {
 		if (AI_CreatePlayer(TEAM_ALIEN) == NULL)
 			Com_Printf("Could not create alien\n");
 #ifdef DEBUG
@@ -422,13 +422,13 @@ static void G_UGVSpawn(edict_t * ent)
 static void SP_player_start(edict_t * ent)
 {
 	/* only used in multi player */
-	if (sv_maxclients->value == 1) {
+	if (sv_maxclients->integer == 1) {
 		G_FreeEdict(ent);
 		return;
 	}
 
 	/* maybe there are already the max soldiers allowed per team connected */
-	if ((int) (maxsoldiers->value) > level.num_spawnpoints[ent->team]) {
+	if (maxsoldiers->integer > level.num_spawnpoints[ent->team]) {
 		ent->STUN = 0;
 		ent->HP = MAX_HP;
 		ent->AP = 100;
@@ -444,7 +444,7 @@ static void SP_player_start(edict_t * ent)
 static void SP_human_start(edict_t * ent)
 {
 	/* only used in single player */
-	if (sv_maxclients->value > 1) {
+	if (sv_maxclients->integer > 1) {
 		G_FreeEdict(ent);
 		return;
 	}
@@ -463,7 +463,7 @@ static void SP_human_start(edict_t * ent)
 static void SP_ugv_start(edict_t * ent)
 {
 	/* no ugv in multiplayer */
-	if (sv_maxclients->value > 1) {
+	if (sv_maxclients->integer > 1) {
 		G_FreeEdict(ent);
 		return;
 	}
@@ -487,7 +487,7 @@ static void SP_ugv_start(edict_t * ent)
 static void SP_alien_start(edict_t * ent)
 {
 	/* deactivateable in multiplayer */
-	if ((int)sv_maxclients->value > 1 && !ai_numactors->value) {
+	if (sv_maxclients->integer > 1 && !ai_numactors->integer) {
 		G_FreeEdict(ent);
 		return;
 	}
@@ -508,7 +508,7 @@ static void SP_alien_start(edict_t * ent)
 static void SP_civilian_start(edict_t * ent)
 {
 	/* deactivateable in multiplayer */
-	if ((int)sv_maxclients->value > 1 && !ai_numcivilians->value) {
+	if (sv_maxclients->integer > 1 && !ai_numcivilians->integer) {
 		G_FreeEdict(ent);
 		return;
 	}
@@ -634,13 +634,13 @@ static void SP_worldspawn(edict_t * ent)
 
 	gi.configstring(CS_CDTRACK, va("%i", ent->sounds));
 
-	gi.configstring(CS_MAXCLIENTS, va("%i", (int) (maxplayers->value)));
+	gi.configstring(CS_MAXCLIENTS, va("%i", maxplayers->integer));
 
 	/* only used in multi player */
 	if (sv_maxclients->value >= 2) {
-		gi.configstring(CS_MAXSOLDIERS, va("%i", (int) (maxsoldiers->value)));
-		gi.configstring(CS_MAXSOLDIERSPERPLAYER, va("%i", (int) (maxsoldiersperplayer->value)));
-		gi.configstring(CS_ENABLEMORALE, va("%i", (int) (sv_enablemorale->value)));
+		gi.configstring(CS_MAXSOLDIERS, va("%i", maxsoldiers->integer));
+		gi.configstring(CS_MAXSOLDIERSPERPLAYER, va("%i", maxsoldiersperplayer->integer));
+		gi.configstring(CS_ENABLEMORALE, va("%i", sv_enablemorale->integer));
 		gi.configstring(CS_MAXTEAMS, va("%i", st.maxteams));
 		gi.cvar_set("sv_maxteams", va("%i", st.maxteams));
 	}

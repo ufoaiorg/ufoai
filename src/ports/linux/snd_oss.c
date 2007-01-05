@@ -103,7 +103,7 @@ qboolean SND_Init(struct sndinfo *s)
 	}
 
 	/* set sample bits & speed */
-	si->dma->samplebits = (int)si->bits->value;
+	si->dma->samplebits = si->bits->integer;
 	if (si->dma->samplebits != 16 && si->dma->samplebits != 8) {
 		ioctl(audio_fd, SNDCTL_DSP_GETFMTS, &fmt);
 		if (fmt & AFMT_S16_LE)
@@ -128,7 +128,7 @@ qboolean SND_Init(struct sndinfo *s)
 		si->dma->speed = tryrates[i];
 	}
 
-	si->dma->channels = (int)si->channels->value;
+	si->dma->channels = si->channels->integer;
 	if (si->dma->channels < 1 || si->dma->channels > 2)
 		si->dma->channels = 2;
 
@@ -206,9 +206,9 @@ qboolean SND_Init(struct sndinfo *s)
 	mmaplen = info.fragstotal * info.fragsize;
 	mmaplen = (mmaplen + sz - 1) & ~(sz - 1);
 	if (!si->dma->buffer)
-		si->dma->buffer = (unsigned char *) mmap(NULL, mmaplen, 
+		si->dma->buffer = (unsigned char *) mmap(NULL, mmaplen,
 			PROT_READ|PROT_WRITE, MAP_FILE|MAP_SHARED, audio_fd, 0);
-	
+
 	if (si->dma->buffer == MAP_FAILED) {
 		si->Com_Printf("Could not mmap dma buffer PROT_WRITE|PROT_READ\n");
 		si->Com_Printf("trying mmap PROT_WRITE (with associated better compatibility / less performance code)\n");

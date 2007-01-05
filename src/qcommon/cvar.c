@@ -83,6 +83,7 @@ static cvar_t *Cvar_FindVar(const char *var_name)
  * @brief Returns the float value of a cvar
  * @sa Cvar_VariableString
  * @sa Cvar_FindVar
+ * @sa Cvar_VariableInteger
  * @return 0 if not defined
  */
 float Cvar_VariableValue(const char *var_name)
@@ -95,6 +96,22 @@ float Cvar_VariableValue(const char *var_name)
 	return atof(var->string);
 }
 
+/**
+ * @brief Returns the int value of a cvar
+ * @sa Cvar_VariableValue
+ * @sa Cvar_VariableString
+ * @sa Cvar_FindVar
+ * @return 0 if not defined
+ */
+int Cvar_VariableInteger(const char *var_name)
+{
+	cvar_t *var;
+
+	var = Cvar_FindVar(var_name);
+	if (!var)
+		return 0;
+	return atoi(var->string);
+}
 
 /**
  * @brief Returns the value of cvar as string

@@ -1355,7 +1355,7 @@ void B_DrawBase(menuNode_t * node)
  */
 void B_BaseInit(void)
 {
-	int baseID = (int) Cvar_VariableValue("mn_base_id");
+	int baseID = Cvar_VariableInteger("mn_base_id");
 
 	baseCurrent = &gd.bases[baseID];
 
@@ -1387,7 +1387,7 @@ void B_RenameBase(void)
  */
 void B_NextBase(void)
 {
-	int baseID = (int) Cvar_VariableValue("mn_base_id");
+	int baseID = Cvar_VariableInteger("mn_base_id");
 
 	Com_DPrintf("cur-base=%i num-base=%i\n", baseID, gd.numBases);
 	if (baseID < gd.numBases - 1)
@@ -1410,7 +1410,7 @@ void B_NextBase(void)
  */
 void B_PrevBase(void)
 {
-	int baseID = (int) Cvar_VariableValue("mn_base_id");
+	int baseID = Cvar_VariableInteger("mn_base_id");
 
 	Com_DPrintf("cur-base=%i num-base=%i\n", baseID, gd.numBases);
 	if (baseID > 0)

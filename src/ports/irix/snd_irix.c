@@ -55,7 +55,7 @@ qboolean SND_Init(struct sndinfo *s)
 	si = s;
 
 	snd_loadas8bit = Cvar_Get("snd_loadas8bit", "16", CVAR_ARCHIVE, NULL);
-	if ((int)s_loadas8bit->value)
+	if (s_loadas8bit->integer)
 		si->dma->samplebits = 8;
     else
 		si->dma->samplebits = 16;
@@ -68,7 +68,7 @@ qboolean SND_Init(struct sndinfo *s)
 	}
 
 	snd_khz = Cvar_Get("snd_khz", "0", CVAR_ARCHIVE, NULL);
-	switch ((int)snd_khz->value) {
+	switch (snd_khz->integer) {
 	case 48:
 		si->dma->speed = AL_RATE_48000;
 		break;
@@ -93,13 +93,13 @@ qboolean SND_Init(struct sndinfo *s)
     default:
 		si->dma->speed = AL_RATE_22050;
 		Com_Printf("Don't currently support %i kHz sample rate.  Using %i.\n",
-			(int)snd_khz->value, (int)(si->dma->speed/1000));
+			snd_khz->integer, (int)(si->dma->speed/1000));
     }
 
 	snd_channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, NULL);
-	si->dma->channels = (int)sndchannels->value;
+	si->dma->channels = sndchannels->integer;
 	if (si->dma->channels != 2)
-		Com_Printf("Don't currently support %.0f sound channels.  Try 2.\n", snd_channels->value);
+		Com_Printf("Don't currently support %i sound channels.  Try 2.\n", snd_channels->integer);
 
 	ac = alNewConfig();
 	alSetChannels(ac, AL_STEREO);

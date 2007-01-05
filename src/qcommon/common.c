@@ -1503,7 +1503,7 @@ void Qcommon_Init(int argc, char **argv)
 	/* init irc commands and cvars */
 	Irc_Init();
 
-	if ((int) Cvar_VariableValue("cl_precachemenus"))
+	if (Cvar_VariableInteger("cl_precachemenus"))
 		MN_PrecacheMenus();
 #endif
 
@@ -1626,7 +1626,7 @@ float Qcommon_Frame(int msec)
 
 	/* run client frames according to cl_maxfps */
 	if (cl_timer > 0) {
-		int frametime = max(cl_timer, 1000/(int)cl_maxfps->value);
+		int frametime = max(cl_timer, 1000/cl_maxfps->integer);
 		frametime = min(frametime, 1000);
 #ifndef DEDICATED_ONLY
 		Irc_Logic_Frame(cl_timer);

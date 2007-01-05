@@ -1364,12 +1364,12 @@ static void G_MoraleBehaviour(int team, qboolean quiet)
 		/* this only applies to ET_ACTOR but not to ET_UGV */
 		if (ent->inuse && ent->type == ET_ACTOR && ent->team == team && !(ent->state & STATE_DEAD)) {
 			/* civilians have a 1:1 chance to randomly run away in multiplayer */
-			if ((int) sv_maxclients->value >= 2 && level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
+			if (sv_maxclients->integer >= 2 && level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
 				G_MoralePanic(ent, qfalse, quiet);
 			/* multiplayer needs enabled sv_enablemorale */
 			/* singleplayer has this in every case */
-			if (((int) sv_maxclients->value >= 2 && (int) sv_enablemorale->value == 1)
-				|| (int) sv_maxclients->value == 1) {
+			if ((sv_maxclients->integer >= 2 && sv_enablemorale->integer == 1)
+				|| sv_maxclients->integer == 1) {
 				/* if panic, determine what kind of panic happens: */
 				if (ent->morale <= mor_panic->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
 					if ((float) ent->morale / mor_panic->value > (m_sanity->value * frand()))
@@ -1725,10 +1725,10 @@ void G_GetTeam(player_t * player)
 		gi.dprintf("Get a team for teamplay\n");
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
 		/* civilians are at team zero */
-		if (i > 0 && (int)sv_maxteams->value >= i)
+		if (i > 0 && sv_maxteams->integer >= i)
 			player->pers.team = i;
 		else {
-			gi.dprintf("Team %i is not valid - choose a team between 1 and %i\n", i, (int)sv_maxteams->value);
+			gi.dprintf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
 			player->pers.team = DEFAULT_TEAMNUM;
 		}
 	} else {
@@ -1808,7 +1808,7 @@ void G_ClientTeamAssign(player_t * player)
 	Com_DPrintf("G_ClientTeamAssign: Unique teams in game: %i\n", teamCount);
 
 	/* if all teams/players have joined the game, randomly assign which team gets the first turn */
-	if (teamCount >= (int)sv_maxteams->value) {
+	if (teamCount >= sv_maxteams->integer) {
 		char buffer[MAX_VAR];
 		Q_strncpyz(buffer, "", MAX_VAR);
 		level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
@@ -1848,7 +1848,7 @@ void G_ClientTeamInfo (player_t * player)
 
 	memset(count, 0, sizeof(count));
 	for (i = 0; i < length; i++) {
-		if (j < globals.num_edicts && i < (int)maxsoldiersperplayer->value) {
+		if (j < globals.num_edicts && i < maxsoldiersperplayer->integer) {
 			/* here the actors actually spawn */
 			level.num_alive[ent->team]++;
 			level.num_spawned[ent->team]++;

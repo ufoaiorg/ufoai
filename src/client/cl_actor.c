@@ -525,7 +525,7 @@ void CL_ActorUpdateCVars(void)
 	if (cls.state != ca_active)
 		return;
 
-	refresh = (int) Cvar_VariableValue("hud_refresh");
+	refresh = Cvar_VariableInteger("hud_refresh");
 	if (refresh) {
 		Cvar_Set("hud_refresh", "0");
 		Cvar_Set("cl_worldlevel", cl_worldlevel->string);
@@ -763,7 +763,7 @@ void CL_ActorUpdateCVars(void)
 		for (i = 0; i < MAX_TEAMLIST; i++) {
 			if (!cl.teamList[i] || cl.teamList[i]->state & STATE_DEAD) {
 				Cbuf_AddText(va("huddisable%i\n", i));
-			} else if (i == (int) cl_selected->value) {
+			} else if (i == cl_selected->integer) {
 				Cbuf_AddText(va("hudselect%i\n", i));
 			} else {
 				Cbuf_AddText(va("huddeselect%i\n", i));
@@ -933,7 +933,7 @@ qboolean CL_ActorSelectList(int num)
 		return qfalse;
 
 	/* center view (if wanted) */
-	if ((int)cl_centerview->value)
+	if (cl_centerview->integer)
 		VectorCopy(le->origin, cl.cam.reforg);
 	/* change to worldlevel were actor is right now */
 	Cvar_SetValue("cl_worldlevel", le->pos[2]);
@@ -1519,7 +1519,7 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 	le = LE_Get(number);
 
 	/* center view (if wanted) */
-	if ((int) cl_centerview->value && cl.actTeam != cls.team)
+	if (cl_centerview->integer && cl.actTeam != cls.team)
 		CL_CameraRoute(from, target);
 
 	/* first shot */

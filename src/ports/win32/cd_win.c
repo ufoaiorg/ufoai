@@ -178,7 +178,7 @@ void CDAudio_Play2(int track, qboolean looping)
 	playTrack = track;
 	playing = qtrue;
 
-	if ( Cvar_VariableValue( "cd_nocd" ) )
+	if (Cvar_VariableInteger("cd_nocd"))
 		CDAudio_Pause ();
 }
 

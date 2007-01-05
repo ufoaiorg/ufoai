@@ -179,7 +179,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 					&& !(check->state & STATE_DEAD)) {
 
 					/* don't shoot civilians in mp */
-					if (check->team == TEAM_CIVILIAN && (int) sv_maxclients->value > 1 && !(ent->state & STATE_INSANE))
+					if (check->team == TEAM_CIVILIAN && sv_maxclients->integer > 1 && !(ent->state & STATE_INSANE))
 						continue;
 
 					/* check range */

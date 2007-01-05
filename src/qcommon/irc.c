@@ -1073,8 +1073,8 @@ qboolean Irc_Proto_Flush (void)
 static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 {
 	/* create message node */
-	const int messageBucketSize = (int)irc_messageBucketSize->value;
-	const int characterBucketSize = (int)irc_characterBucketSize->value;
+	const int messageBucketSize = irc_messageBucketSize->integer;
+	const int characterBucketSize = irc_characterBucketSize->integer;
 	irc_bucket_message_t * const m = (irc_bucket_message_t*) Mem_Alloc(sizeof(irc_bucket_message_t));
 	irc_bucket_message_t * n = irc_bucket.first_msg;
 	if (irc_bucket.message_size + 1 <= messageBucketSize && irc_bucket.character_size + msg_len <= characterBucketSize) {
@@ -1428,7 +1428,7 @@ static void Irc_Connect_f (void)
 			if (argc >= 3)
 				Cvar_Set("irc_port", Cmd_Argv(2));
 			Com_Printf("Connect to %s:%s\n", irc_server->string, irc_port->string);
-			Irc_Logic_Connect(irc_server->string, (int)irc_port->value);
+			Irc_Logic_Connect(irc_server->string, irc_port->integer);
 			if (argc >= 4)
 				Cbuf_AddText(va("irc_join %s\n", Cmd_Argv(3)));
 		} else

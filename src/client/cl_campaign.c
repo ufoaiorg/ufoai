@@ -2303,7 +2303,7 @@ static void CL_GameGo(void)
 	Cvar_Set("map_dropship", aircraft->id);
 
 	/* retrieve the correct team */
-	for (i = 0, p = 0; i < (int)cl_numnames->value; i++)
+	for (i = 0, p = 0; i < cl_numnames->integer; i++)
 		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
 			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
@@ -2467,9 +2467,9 @@ void CL_GameAutoGo(void)
 	MN_PopMenu(qfalse);
 
 	/* FIXME: This needs work */
-	won = mis->aliens * (int) difficulty->value > *(aircraft->teamSize) ? 0 : 1;
+	won = mis->aliens * difficulty->integer > *(aircraft->teamSize) ? 0 : 1;
 
-	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int) difficulty->value, *(aircraft->teamSize));
+	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * difficulty->integer, *(aircraft->teamSize));
 
 	/* update nation opinions */
 	if (won) {
@@ -2788,7 +2788,7 @@ static void CL_GameResultsCmd(void)
 		return;
 
 	/* check for replay */
-	if ((int) Cvar_VariableValue("game_tryagain")) {
+	if (Cvar_VariableInteger("game_tryagain")) {
 		/* don't collect things and update stats --- we retry the mission */
 		CL_GameGo();
 		return;
@@ -3964,9 +3964,9 @@ static void CL_GameNew(void)
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
 	Cvar_ForceSet("difficulty", val);
 
-	if ((int) difficulty->value < -4)
+	if (difficulty->integer < -4)
 		Cvar_ForceSet("difficulty", "-4");
-	else if ((int) difficulty->value > 4)
+	else if (difficulty->integer > 4)
 		Cvar_ForceSet("difficulty", "4");
 
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);

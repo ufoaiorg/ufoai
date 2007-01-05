@@ -454,7 +454,7 @@ void Sys_Init (void)
 	Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
 
 	if (dedicated->value) {
-		oldconsole = (int)Cvar_VariableValue("oldconsole");
+		oldconsole = Cvar_VariableInteger("oldconsole");
 		if (oldconsole) {
 			if (!AllocConsole ()) {
 				WinError();

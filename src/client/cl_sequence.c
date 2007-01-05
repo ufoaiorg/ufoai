@@ -1204,7 +1204,7 @@ qboolean CL_OpenAVIForWriting(char *fileName)
 		Com_Printf("WARNING: cl_aviFrameRate is not a divisor of the audio rate, suggest %d\n", suggestRate);
 	}
 
-	if (!(int) Cvar_VariableValue("snd_init")) {
+	if (!Cvar_VariableInteger("snd_init")) {
 		afd.audio = qfalse;
 		Com_Printf("No audio for video capturing\n");
 	} else {

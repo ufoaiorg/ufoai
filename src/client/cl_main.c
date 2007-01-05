@@ -285,7 +285,7 @@ void CL_SendConnectPacket(void)
 	if (adr.port == 0)
 		adr.port = BigShort(PORT_SERVER);
 
-	port = Cvar_VariableValue("qport");
+	port = Cvar_VariableInteger("qport");
 	userinfo_modified = qfalse;
 
 	cls.ufoPort = port;
@@ -1045,10 +1045,10 @@ void CL_PingServers_f (void)
 	/* query master server? */
 	/* TODO: Cache this to save bandwidth */
 	if (!noudp->value && (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local"))) {
-		adr.port = (int)masterserver_port->value;
+		adr.port = masterserver_port->integer;
 		if (NET_StringToAdr (masterserver_ip->string, &adr)) {
 			if (!adr.port)
-				adr.port = BigShort((int)masterserver_port->value);
+				adr.port = BigShort(masterserver_port->integer);
 			adr.type = NA_IP;
 			Com_Printf("Send master server query request to '%s:%s'\n", masterserver_ip->string, masterserver_port->string);
 			Netchan_OutOfBandPrint (NS_CLIENT, adr, "getservers");
@@ -1244,10 +1244,10 @@ void CL_TeamNum_f (void)
 {
 	int max = 4;
 	int maxteamnum = 0;
-	int i = (int)teamnum->value;
+	int i = teamnum->value;
 	static char buf[MAX_STRING_CHARS];
 
-	maxteamnum = (int)Cvar_VariableValue("mn_maxteams");
+	maxteamnum = Cvar_VariableInteger("mn_maxteams");
 
 	if (maxteamnum > 0)
 		max = maxteamnum;
@@ -1303,7 +1303,7 @@ static int spawnCountFromServer = -1;
  */
 void CL_SpawnSoldiers_f (void)
 {
-	int n = (int)teamnum->value;
+	int n = teamnum->integer;
 
 	if (!ccs.singleplayer && baseCurrent && !teamData.parsed) {
 		Com_Printf("CL_SpawnSoldiers_f: teaminfo unparsed\n");
@@ -1859,21 +1859,21 @@ void CL_CvarCheck(void)
 	/* worldlevel */
 	if (cl_worldlevel->modified) {
 		int i;
-		if ((int) cl_worldlevel->value < 0) {
+		if (cl_worldlevel->integer < 0) {
 			CL_Drop();
 			Com_DPrintf("CL_CvarCheck: Called drop - something went wrong\n");
 			return;
 		}
 
-		if ((int) cl_worldlevel->value >= map_maxlevel - 1)
+		if (cl_worldlevel->integer >= map_maxlevel - 1)
 			Cvar_SetValue("cl_worldlevel", map_maxlevel - 1);
-		else if ((int) cl_worldlevel->value < 0.0f)
-			Cvar_SetValue("cl_worldlevel", 0.0f);
+		else if (cl_worldlevel->integer < 0)
+			Cvar_SetValue("cl_worldlevel", 0);
 		for (i = 0; i < map_maxlevel; i++)
 			Cbuf_AddText(va("deselfloor%i\n", i));
 		for (; i < 8; i++)
 			Cbuf_AddText(va("disfloor%i\n", i));
-		Cbuf_AddText(va("selfloor%i\n", (int) cl_worldlevel->value));
+		Cbuf_AddText(va("selfloor%i\n", cl_worldlevel->integer));
 		cl_worldlevel->modified = qfalse;
 	}
 
@@ -1884,10 +1884,10 @@ void CL_CvarCheck(void)
 #endif
 
 	/* gl_mode and fullscreen */
-	v = Cvar_VariableValue("mn_glmode");
+	v = Cvar_VariableInteger("mn_glmode");
 	if (v < 0 || v >= maxVidModes) {
 		Com_Printf("Max gl_mode mode is %i (%i)\n", maxVidModes, v);
-		v = Cvar_VariableValue("gl_mode");
+		v = Cvar_VariableInteger("gl_mode");
 		Cvar_SetValue("mn_glmode", v);
 	}
 	Cvar_Set("mn_glmodestr", va("%i*%i", vid_modes[v].width, vid_modes[v].height));
@@ -1906,7 +1906,7 @@ void CL_Frame(int msec)
 	char *type, *name, *text;
 
 	if (sv_maxclients->modified) {
-		if ((int) sv_maxclients->value > 1) {
+		if (sv_maxclients->integer > 1) {
 			CL_StartSingleplayer(qfalse);
 			curCampaign = NULL;
 			selMis = NULL;
