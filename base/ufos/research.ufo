@@ -1318,6 +1318,25 @@ tech rs_alien_body_armour
 	{
 		item light_alien 1
 	}
+	provides	light_alien
+	time	2500
+	producetime	-1
+}
+
+//TODO: proper name
+tech rs_alien_body_armour2
+{
+	type	tech
+	name	"TODO: alien armor2"
+	up_chapter	artifacts
+	description	"TODO"
+	pre_description	"TODO"
+
+	require_AND
+	{
+		item medium_alien 1
+	}
+	provides	medium_alien
 	time	2500
 	producetime	-1
 }
