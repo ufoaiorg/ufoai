@@ -470,7 +470,7 @@ void CL_Reset( sizebuf_t *sb )
 	if (cls.team == cl.actTeam)
 		Cbuf_AddText("startround\n");
 	else
-		Com_Printf("You lost the coin-toss for first-turn");
+		Com_Printf("You lost the coin-toss for first-turn\n");
 }
 
 
