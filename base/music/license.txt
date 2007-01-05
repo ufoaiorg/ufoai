@@ -3,6 +3,8 @@ Tracks contributed under GPL
 * The Psymong series: Psymong*.ogg (Simon Green, http://www.8hz.co.uk/)
 * ufo1.ogg, ufo2.ogg (Paul Bee, http://www.myspace.com/s2zpaulb)
 * dawn.ogg (author: Draikon)
+* space.ogg (author: Draikon)
+* dbsea.ogg (author: Draikon)
 
 Tracks that are public domain
 =============================
