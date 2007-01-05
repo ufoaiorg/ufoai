@@ -160,7 +160,7 @@ tech rs_anti_alien_gas
 tech rs_weapon_assault
 {
 	type	weapon
-	up_chapter	weapons
+	up_chapter	equipment
 	description	"_assault_txt"
 	// pre_description	"_assault_pre_txt"
 
