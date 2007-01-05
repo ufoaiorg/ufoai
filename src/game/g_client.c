@@ -1797,6 +1797,7 @@ int G_ClientGetTeamNumPref (player_t * player)
 void G_ClientTeamAssign(player_t * player)
 {
 	int i, j, teamCount = 1;
+	int playerCount = 0;
 	int knownTeams[MAX_TEAMS];
 	player_t *p;
 	knownTeams[0] = player->pers.team;
@@ -1805,19 +1806,22 @@ void G_ClientTeamAssign(player_t * player)
 	if (level.activeTeam != -1 || sv_maxclients->integer == 1)
 		return;
 
-	/* count number of currently connected unique teams */
+	/* count number of currently connected unique teams and players */
 	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
-		if (p->inuse && !p->pers.spectator)
+		if (p->inuse && !p->pers.spectator && p->pers.team > 0) {
+			playerCount++;
 			for (j = 0; j < teamCount; j++)
-				if (p->pers.team > 0 && p->pers.team != knownTeams[j]) {
+				if (p->pers.team != knownTeams[j]) {
 					knownTeams[teamCount++] = p->pers.team;
 					break;
 				}
+		}
 	}
-	Com_DPrintf("G_ClientTeamAssign: Unique teams in game: %i\n", teamCount);
+	Com_DPrintf("G_ClientTeamAssign: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
 
 	/* if all teams/players have joined the game, randomly assign which team gets the first turn */
-	if (teamCount >= sv_maxteams->integer) {
+	if ( (!sv_teamplay->integer && teamCount >= sv_maxteams->integer) ||
+		(sv_teamplay->integer && playerCount >= sv_maxclients->integer) ) {
 		char buffer[MAX_VAR];
 		Q_strncpyz(buffer, "", MAX_VAR);
 		level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
