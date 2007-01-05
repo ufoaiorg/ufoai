@@ -1309,7 +1309,7 @@ tech rs_nano_armor
 tech rs_alien_body_armour
 {
 	type	tech
-	name	"_Alien Artifact - Alien Body Armour"
+	name	"_Alien Body Armour"
 	up_chapter	artifacts
 	description	"_alien_body_armour_txt"
 	pre_description	"_alien_body_armour_pre_txt"
