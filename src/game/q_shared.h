@@ -475,13 +475,15 @@ CVARS (console variables)
 
 /* nothing outside the Cvar_*() functions should modify these fields! */
 typedef struct cvar_s {
-	char *name;
-	char *string;
-	char *latched_string;       /* for CVAR_LATCH vars */
-	char *description;
-	int flags;
-	qboolean modified;          /* set each time the cvar is changed */
-	float value;
+	char *name;				/* cvar name */
+	char *string;			/* value as string */
+	char *latched_string;	/* for CVAR_LATCH vars */
+	char *old_string;		/* value of the cvar before we changed it */
+	char *description;		/* cvar description */
+	int flags;				/* cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */
+	qboolean modified;		/* set each time the cvar is changed */
+	float value;			/* value as float */
+	int integer;			/* value as integer */
 	struct cvar_s *next;
 	struct cvar_s *hash_next;
 } cvar_t;

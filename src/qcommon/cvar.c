@@ -183,8 +183,10 @@ cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, char* d
 	var = Mem_Alloc(sizeof(*var));
 	var->name = CopyString(var_name);
 	var->string = CopyString(var_value);
+	var->old_string = NULL;
 	var->modified = qtrue;
 	var->value = atof(var->string);
+	var->integer = atoi(var->string);
 	var->description = desc;
 
 	/* link the variable in */
@@ -236,12 +238,15 @@ cvar_t *Cvar_Set2(const char *var_name, const char *value, qboolean force)
 					return var;
 			}
 
+			/* if we are running a server */
 			if (Com_ServerState()) {
 				Com_Printf("%s will be changed for next game.\n", var_name);
 				var->latched_string = CopyString(value);
 			} else {
+				var->old_string = CopyString(var->string);
 				var->string = CopyString(value);
 				var->value = atof(var->string);
+				var->integer = atoi(var->string);
 				if (!Q_strncmp(var->name, "game", MAX_VAR)) {
 					FS_SetGamedir(var->string);
 					FS_ExecAutoexec();
@@ -259,6 +264,7 @@ cvar_t *Cvar_Set2(const char *var_name, const char *value, qboolean force)
 	if (!Q_strcmp(value, var->string))
 		return var;				/* not changed */
 
+	var->old_string = CopyString(var->string);
 	var->modified = qtrue;
 
 	if (var->flags & CVAR_USERINFO)
@@ -268,6 +274,7 @@ cvar_t *Cvar_Set2(const char *var_name, const char *value, qboolean force)
 
 	var->string = CopyString(value);
 	var->value = atof(var->string);
+	var->integer = atoi(var->string);
 
 	return var;
 }
@@ -325,6 +332,7 @@ cvar_t *Cvar_FullSet(const char *var_name, const char *value, int flags)
 
 	var->string = CopyString(value);
 	var->value = atof(var->string);
+	var->integer = atoi(var->string);
 	var->flags = flags;
 
 	return var;
@@ -356,10 +364,11 @@ void Cvar_GetLatchedVars(void)
 	for (var = cvar_vars; var; var = var->next) {
 		if (!var->latched_string)
 			continue;
-		Mem_Free(var->string);
+		var->old_string = var->string;
 		var->string = var->latched_string;
 		var->latched_string = NULL;
 		var->value = atof(var->string);
+		var->integer = atoi(var->string);
 		if (!Q_strncmp(var->name, "game", MAX_VAR)) {
 			FS_SetGamedir(var->string);
 			FS_ExecAutoexec();
@@ -398,11 +407,34 @@ qboolean Cvar_Command(void)
 	return qtrue;
 }
 
+/**
+ * @brief Allows resetting cvars to old value from console
+ */
+static void Cvar_SetOld_f(void)
+{
+	int c;
+	cvar_t *v;
+
+	c = Cmd_Argc();
+	if (c != 2) {
+		Com_Printf("usage: setold <variable>\n");
+		return;
+	}
+
+	/* check variables */
+	v = Cvar_FindVar(Cmd_Argv(1));
+	if (!v) {
+		Com_Printf("cvar '%s' not found\n", Cmd_Argv(1));
+		return;
+	}
+	if (v->old_string)
+		Cvar_Set(Cmd_Argv(1), v->old_string);
+}
 
 /**
  * @brief Allows setting and defining of arbitrary cvars from console
  */
-void Cvar_Set_f(void)
+static void Cvar_Set_f(void)
 {
 	int c;
 	int flags;
@@ -561,6 +593,7 @@ char *Cvar_Serverinfo(void)
  */
 void Cvar_Init(void)
 {
+	Cmd_AddCommand("setold", Cvar_SetOld_f, NULL);
 	Cmd_AddCommand("set", Cvar_Set_f, NULL);
 	Cmd_AddCommand("copy", Cvar_Copy_f, NULL);
 	Cmd_AddCommand("cvarlist", Cvar_List_f, NULL);
