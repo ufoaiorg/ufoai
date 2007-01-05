@@ -2353,7 +2353,7 @@ static void B_TransferBaseSelect_f (void)
 	/* set global pointer to current selected base */
 	transferBase = base;
 
-	Cvar_Set("mn_trans_base_name", transferBase->shortname);
+	Cvar_Set("mn_trans_base_name", transferBase->name);
 
 	/* update item list */
 	B_TransferSelect_f();
@@ -2411,7 +2411,7 @@ static void B_TransferInit_f (void)
 	if (transferAircraft)
 		Cvar_Set("mn_trans_aircraft_name", transferAircraft->shortname);
 	if (transferBase)
-		Cvar_Set("mn_trans_base_name", transferBase->shortname);
+		Cvar_Set("mn_trans_base_name", transferBase->name);
 
 	menuText[TEXT_BASE_LIST] = baseList;
 	menuText[TEXT_AIRCRAFT_LIST] = aircraftList;
