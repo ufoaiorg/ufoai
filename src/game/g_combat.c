@@ -326,6 +326,10 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker,
 	/* Check death/knockouth. */
 	if (ent->HP == 0 || ent->HP <= ent->STUN) {
 		G_SendStats(ent);
+		Com_Printf("[STATS] %s (%s) %s %s (%s) with %s\n",
+			G_GetPlayerName(attacker->pnum), attacker->chr.name,
+			(ent->HP == 0 ? "kills" : "stuns"),
+			G_GetPlayerName(ent->pnum), ent->chr.name, "");
 		G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN);
 
 		/* apply morale changes */

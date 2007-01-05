@@ -60,6 +60,16 @@ void G_FreeEdict(edict_t * ed)
 	ed->inuse = qfalse;
 }
 
+/**
+ * @brief Returns the player name for a give player number
+ */
+const char* G_GetPlayerName (int pnum)
+{
+	if (pnum >= game.maxplayers)
+		return "";
+	else
+		return game.players[pnum].pers.netname;
+}
 
 /**
  * @brief Searches all active entities for the next one that holds
