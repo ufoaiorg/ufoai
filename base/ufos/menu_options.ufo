@@ -286,8 +286,8 @@ menu options_video
 		mousefx	true
 		click
 		{
-			cmd "mn_modifystring gl_maxtexres -1 256:512:1024:2048;"
-			cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:High,2048:Excellent;"
+			cmd "mn_modifystring gl_maxtexres -1 256:512:1024:2048:4096:8192;"
+			cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:Normal,2048:High,4096:Excellent,8192:Extreme;"
 		}
 	}
 	pic texres_inc
@@ -299,8 +299,8 @@ menu options_video
 		mousefx	true
 		click
 		{
-			cmd "mn_modifystring gl_maxtexres +1 256:512:1024:2048;"
-			cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:High,2048:Excellent;"
+			cmd "mn_modifystring gl_maxtexres +1 256:512:1024:2048:4096:8192;"
+			cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:Normal,2048:High,4096:Excellent,8192:Extreme;"
 		}
 	}
 
