@@ -322,19 +322,20 @@ static void PR_ProductionListClick_f (void)
 		selectedQueueItem = qtrue;
 		selectedIndex = num;
 		PR_ProductionInfo();
-	}else if (num >= queue->numItems + QUEUE_SPACERS) {
+	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* clicked the tech list */
 		idx = num - queue->numItems - QUEUE_SPACERS;
-		for (j=0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		for (j = 0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			t = (technology_t*)(od->tech);
 #ifdef DEBUG
 			if (!t)
 				Sys_Error("PR_ProductionListClick_f: No tech pointer for object id %i ('%s')\n", i, od->kurz);
 #endif
 			/* we can produce what was researched before */
-			if (od->buytype == produceCategory && RS_IsResearched_ptr(t)) {
+			if (od->buytype == produceCategory && RS_IsResearched_ptr(t) && *od->name) {
 				if (j==idx) {
-#if 0	/* FIXME: don't start production yet .. */
+#if 0
+					/* FIXME: don't start production yet .. */
 					gd.productions[baseCurrent->idx].objID = i;
 					gd.productions[baseCurrent->idx].amount = 0;
 					gd.productions[baseCurrent->idx].timeLeft = t->produceTime;
