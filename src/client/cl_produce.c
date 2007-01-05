@@ -331,8 +331,12 @@ static void PR_ProductionListClick_f (void)
 			if (!t)
 				Sys_Error("PR_ProductionListClick_f: No tech pointer for object id %i ('%s')\n", i, od->kurz);
 #endif
-			/* we can produce what was researched before */
-			if (od->buytype == produceCategory && RS_IsResearched_ptr(t) && *od->name) {
+			/* We can only produce items that fulfill the following conditions... */
+			if (	od->buytype == produceCategory	/* Item is int he current inventory-category */
+				&& RS_IsResearched_ptr(t)		/* Tech is researched */
+				&& *od->name				/* Item has a name defined. TODO: produce error if this is not true? */
+				&& t->produceTime >= 0		/* Item is produceable */
+			) {
 				if (j==idx) {
 #if 0
 					/* FIXME: don't start production yet .. */
