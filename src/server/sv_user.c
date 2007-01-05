@@ -363,7 +363,6 @@ static void SV_ExecuteUserCommand(char *s)
 			break;
 		}
 
-
 	if (!u->name && sv.state == ss_game)
 		ge->ClientCommand(sv_player);
 

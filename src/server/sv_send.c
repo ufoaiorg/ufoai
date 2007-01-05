@@ -41,15 +41,21 @@ Com_Printf redirection
 
 char sv_outputbuf[SV_OUTPUTBUF_LENGTH];
 
+/**
+ * @brief
+ * @sa Com_BeginRedirect
+ */
 void SV_FlushRedirect(int sv_redirected, char *outputbuf)
 {
-	if (sv_redirected == RD_PACKET) {
+	if (sv_redirected == RD_PACKET)
 		Netchan_OutOfBandPrint(NS_SERVER, net_from, "print\n%s", outputbuf);
+#if 0
 	} else if (sv_redirected == RD_CLIENT) {
 		MSG_WriteByte(&sv_client->netchan.message, svc_print);
 		MSG_WriteByte(&sv_client->netchan.message, PRINT_HIGH);
 		MSG_WriteString(&sv_client->netchan.message, outputbuf);
 	}
+#endif
 }
 
 

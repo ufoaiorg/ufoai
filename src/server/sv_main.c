@@ -102,7 +102,26 @@ void SV_DropClient(client_t * drop)
 	}
 }
 
+/**
+ * @brief Transfers a netadr to player name
+ */
+static const char *SV_FindPlayer (netadr_t from)
+{
+	int			i;
+	client_t	*cl;
 
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++ ) {
+		if (cl->state == cs_free)
+			continue;
+
+		if (!NET_CompareBaseAdr (from, cl->netchan.remote_address))
+			continue;
+
+		return cl->name;
+	}
+
+	return "";
+}
 
 /*
 ==============================================================================
@@ -473,15 +492,17 @@ void SVC_RemoteCommand(void)
 	i = Rcon_Validate();
 
 	if (i == 0)
-		Com_Printf("Bad rcon from %s:\n%s\n", NET_AdrToString(net_from), net_message.data + 4);
+		Com_Printf("Bad rcon from %s (%s):\n%s\n", SV_FindPlayer(net_from), NET_AdrToString(net_from), net_message.data + 4);
 	else
-		Com_Printf("Rcon from %s:\n%s\n", NET_AdrToString(net_from), net_message.data + 4);
+		Com_Printf("Rcon from %s (%s):\n%s\n", SV_FindPlayer(net_from), NET_AdrToString(net_from), net_message.data + 4);
 
 	Com_BeginRedirect(RD_PACKET, sv_outputbuf, SV_OUTPUTBUF_LENGTH, SV_FlushRedirect);
 
 	if (!Rcon_Validate())
+		/* inform the client */
 		Com_Printf("Bad rcon_password.\n");
 	else {
+		/* execute the rcon commands */
 		remaining[0] = 0;
 
 		for (i = 2; i < Cmd_Argc(); i++) {
@@ -489,6 +510,7 @@ void SVC_RemoteCommand(void)
 			Q_strcat(remaining, " ", sizeof(remaining));
 		}
 
+		/* execute the string */
 		Cmd_ExecuteString(remaining);
 	}
 
