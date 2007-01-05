@@ -1773,12 +1773,21 @@ void G_GetTeam(player_t * player)
 }
 
 /**
- * @brief
+ * @brief Returns the assigned team number of the player
  */
 int G_ClientGetTeamNum (player_t * player)
 {
 	assert(player);
 	return player->pers.team;
+}
+
+/**
+ * @brief Returns the preferred team number the player 
+ */
+int G_ClientGetTeamNumPref (player_t * player)
+{
+	assert(player);
+	return atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
 }
 
 /**

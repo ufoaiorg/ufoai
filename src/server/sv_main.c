@@ -165,6 +165,8 @@ static char* SV_TeamInfoString (void)
 			/* show players that already have a team with their teamnum */
 			if (ge->ClientGetTeamNum(cl->player))
 				Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
+			else if (ge->ClientGetTeamNumPref(cl->player))
+				Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", ge->ClientGetTeamNumPref(cl->player), cl->name);
 			else
 				Com_sprintf(player, sizeof(player), "-\t\"%s\"\n", cl->name);
 			Q_strcat(teaminfo, player, sizeof(teaminfo));

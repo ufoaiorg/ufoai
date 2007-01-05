@@ -272,6 +272,7 @@ game_export_t *GetGameAPI(game_import_t * import)
 	globals.ClientEndRound = G_ClientEndRound;
 	globals.ClientTeamInfo = G_ClientTeamInfo;
 	globals.ClientGetTeamNum = G_ClientGetTeamNum;
+	globals.ClientGetTeamNumPref = G_ClientGetTeamNumPref;
 
 	globals.RunFrame = G_RunFrame;
 
