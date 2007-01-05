@@ -1020,7 +1020,7 @@ menu mp_create_server
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		click	{ cmd "mn_modify maxclients -1 1 16;" }
+		click	{ cmd "mn_modify maxclients -1 2 16;" }
 	}
 	pic maxclients_inc
 	{
@@ -1029,7 +1029,7 @@ menu mp_create_server
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		click	{ cmd "mn_modify maxclients +1 1 16;" }
+		click	{ cmd "mn_modify maxclients +1 2 16;" }
 	}
 
 	// ===================
