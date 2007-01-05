@@ -412,11 +412,9 @@ qboolean Cvar_Command(void)
  */
 static void Cvar_SetOld_f(void)
 {
-	int c;
 	cvar_t *v;
 
-	c = Cmd_Argc();
-	if (c != 2) {
+	if (Cmd_Argc() != 2) {
 		Com_Printf("usage: setold <variable>\n");
 		return;
 	}
