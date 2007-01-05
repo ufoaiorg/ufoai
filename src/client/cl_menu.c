@@ -2815,7 +2815,7 @@ qboolean MN_ParseAction(menuNode_t * menuNode, menuAction_t * action, char **tex
 				action->data = curadata;
 
 				strcpy((char *) curadata, &(*token)[1]);
-				curadata += strlen((char *) curadata) + 1;
+				curadata += ALIGN(strlen((char *) curadata) + 1);
 
 				/* get the node property */
 				*token = COM_EParse(text, errhead, NULL);
