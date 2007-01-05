@@ -59,7 +59,7 @@
 
 building building_aliencontainment
 {
-	name		"_Alien containment"
+	name		"_Alien Containment Facility"
 	image		base/aliencont
 	fixcosts	500000
 	type     	aliencont
@@ -122,7 +122,7 @@ building building_powerplant
 
 building building_command
 {
-	name		"_Command Center"
+	name		"_Command Centre"
 	image		base/commando
 	fixcosts	740000 // next stage in base costs
 	depends		building_powerplant
