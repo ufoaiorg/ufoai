@@ -346,6 +346,7 @@ static void G_Damage(edict_t * ent, fireDef_t *fd, int damage, edict_t * attacke
 						G_GetPlayerName(ent->pnum), (ent->HP == 0 ? "kills" : "stuns"),
 						ent->chr.name, fd->name);
 			}
+		}
 
 		G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN);
 
