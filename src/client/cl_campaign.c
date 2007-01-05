@@ -3858,7 +3858,6 @@ static void CL_GameExit(void)
 	Cbuf_AddText("disconnect\n");
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_active", "");
-	ccs.singleplayer = qfalse;
 	MN_ShutdownMessageSystem();
 	CL_InitMessageSystem();
 	/* singleplayer commands are no longer available */

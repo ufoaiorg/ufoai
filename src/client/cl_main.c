@@ -234,11 +234,30 @@ void CL_StartSingleplayer(qboolean singleplayer)
 			CL_Disconnect();
 		}
 		Cvar_ForceSet("maxclients", "1");
+
+		/* reset maxsoldiersperplayer and maxsoldiers(perteam) to default values */
+		/* FIXME: these should probably default to something bigger */
+		if (Cvar_VariableInteger("maxsoldiers") != 4)
+			Cvar_SetValue("maxsoldiers", 4);
+		if (Cvar_VariableInteger("maxsoldiersperplayer") != 8)
+			Cvar_SetValue("maxsoldiersperplayer", 8);
+
 		/* this is needed to let 'soldier_select 0' do
 		   the right thing while we are on geoscape */
 		sv_maxclients->modified = qtrue;
-	} else
+	} else {
+		char *max_s, *max_spp;
+		max_s = Cvar_VariableStringOld("maxsoldiers");
+		max_spp = Cvar_VariableStringOld("maxsoldiersperplayer");
+
+		/* restore old maxsoldiersperplayer and maxsoldiers cvars if values were previously set */
+		if (strlen(max_s))
+			Cvar_Set("maxsoldiers", max_s);
+		if (strlen(max_spp))
+			Cvar_Set("maxsoldiersperplayer", max_spp);
+
 		ccs.singleplayer = qfalse;
+	}
 }
 
 /**
@@ -1906,7 +1925,7 @@ void CL_Frame(int msec)
 	char *type, *name, *text;
 
 	if (sv_maxclients->modified) {
-		if (sv_maxclients->integer > 1) {
+		if (sv_maxclients->integer > 1 && ccs.singleplayer) {
 			CL_StartSingleplayer(qfalse);
 			curCampaign = NULL;
 			selMis = NULL;
@@ -1937,7 +1956,7 @@ void CL_Frame(int msec)
 			/* fill in IDXs for required research techs */
 			RS_RequiredIdxAssign();
 			Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
-		} else {
+		} else if (sv_maxclients->integer == 1) {
 			CL_StartSingleplayer(qtrue);
 			Com_Printf("Changing to Singleplayer\n");
 		}
@@ -2090,6 +2109,8 @@ void CL_Init(void)
 	Cbuf_Execute();
 
 	memset(&teamData, 0, sizeof(teamData_t));
+	/* Default to single-player mode */
+	ccs.singleplayer = qtrue;
 }
 
 
