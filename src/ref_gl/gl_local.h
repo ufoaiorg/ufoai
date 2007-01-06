@@ -128,6 +128,9 @@ typedef struct image_s {
 #define		MAX_GLERRORTEX	4096
 #define		MAX_GLTEXTURES	1024
 
+/* starting offset for font texture numbers (used in font-cache) */
+#define	TEXNUM_FONTS		TEXNUM_IMAGES + MAX_GLTEXTURES
+
 /*=================================================================== */
 
 typedef struct {

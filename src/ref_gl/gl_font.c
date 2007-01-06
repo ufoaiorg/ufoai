@@ -152,7 +152,7 @@ void Font_CleanCache(void)
 	/* free the surfaces */
 	for (; i < numInCache; i++) {
 		if (fontCache[i].texPos >= 0)
-			qglDeleteTextures(1, &fontTextures[fontCache[i].texPos]); 
+			qglDeleteTextures(1, &(fontCache[i].texPos)); 
 	}
 
 	memset(fontCache, 0, sizeof(fontCache));
@@ -231,10 +231,9 @@ static fontCache_t *Font_GetFromCache(const char *s)
  */
 static void Font_CacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
 {
-	fontTextures[numInCache] = 0;
-	qglGenTextures(1, &fontTextures[numInCache]);
-	cache->texPos = numInCache;
-	GL_Bind(fontTextures[cache->texPos]);
+	/* use a fixed texture number allocation scheme, starting offset at TEXNUM_FONTS */
+	cache->texPos = TEXNUM_FONTS + numInCache;
+	GL_Bind(cache->texPos);
 	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixel->w, pixel->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixel->pixels);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -416,7 +415,7 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 	if (height > 0 && y+h > absY+height)
 		return 1;
 
-	GL_Bind(fontTextures[cache->texPos]);
+	GL_Bind(cache->texPos);
 
 	/* draw it */
 	qglEnable(GL_BLEND);

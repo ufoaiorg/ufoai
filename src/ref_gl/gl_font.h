@@ -23,12 +23,11 @@ typedef struct fontCache_s {
 	struct fontCache_s *next;	/**< next hash entry in case of collision */
 	vec2_t size;				/**< real width and height */
 	vec2_t texsize;				/**< texture width and height */
-	int texPos;	/**< the index in fontTextures of the cached font texture, -1 if not set */
+	GLuint texPos;				/**< the bound texture number/identifier*/
 } fontCache_t;
 
 fontCache_t fontCache[MAX_FONT_CACHE];
 fontCache_t *hash[MAX_FONT_CACHE];
-GLuint fontTextures[MAX_FONT_CACHE];
 
 typedef struct {
 	char *name;
