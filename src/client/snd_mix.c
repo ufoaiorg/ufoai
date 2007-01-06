@@ -360,7 +360,7 @@ void S_InitScaletable(void)
 
 	snd_volume->modified = qfalse;
 	for (i = 0; i < 32; i++) {
-		scale = i * 8 * 256 * snd_volume->integer;
+		scale = (int)(i * 8 * 256 * snd_volume->value);
 		for (j = 0; j < 256; j++)
 			/**
 			 * When compiling with gcc-4.1.0 at optimisations O1 and

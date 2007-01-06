@@ -1263,7 +1263,7 @@ void CL_TeamNum_f (void)
 {
 	int max = 4;
 	int maxteamnum = 0;
-	int i = teamnum->value;
+	int i = teamnum->integer;
 	static char buf[MAX_STRING_CHARS];
 
 	maxteamnum = Cvar_VariableInteger("mn_maxteams");
