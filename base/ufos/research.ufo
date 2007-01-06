@@ -99,10 +99,26 @@ tech rs_laser
 	image_top	techs/laser
 }
 
-//tech rs_contained_organic_alien
+// Should contain _every_ enemy possible.
+//tech rs_contained_alien
 //{
 //	type	logic
 //	name	"LOGIC:One Live Alien"
+//	require_OR
+//	{
+//TODO: live alien support (i.e. containment)
+//		alien alien_taman 1
+//		alien alien_ortnok 1
+//		alien alien_shevaar 1
+//		alien alien_bloodspider 1
+//	}
+//}
+
+// Should contain _every_ organic enemy possible.
+//tech rs_contained_organic_alien
+//{
+//	type	logic
+//	name	"LOGIC:One Live Organic Alien"
 //	require_OR
 //	{
 //TODO: live alien support (i.e. containment)
