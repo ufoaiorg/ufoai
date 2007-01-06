@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-01-05 21:20+0100\n"
+"POT-Creation-Date: 2007-01-06 18:53+0100\n"
 "PO-Revision-Date: 2006-10-24 13:28+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
@@ -52,19 +52,32 @@ msgstr "Spara"
 
 #: ../base/ufos/armor.ufo:16
 #, fuzzy
-msgid "Combat Armor"
+msgid "Combat Armour"
 msgstr "Nano Armatura"
 
 #: ../base/ufos/armor.ufo:54
-msgid "Nano Armor"
+#, fuzzy
+msgid "Nanocomposite Armour"
 msgstr "Nano Armatura"
 
 #: ../base/ufos/armor.ufo:129
-msgid "Light armor"
-msgstr "Armatura Leggera"
+#, fuzzy
+msgid "Alien Body Armour"
+msgstr ""
+"La nanotecnologia apre un vasto campo di nuovi metodi di produzione "
+"particolarmente nel design di armature e vestiario. Prototipi basati sulla "
+"tecnologia laser avanzata rendono possibile la creazione di materiali quasi "
+"del tutto composti da fullereni e il loro utilizzo per la creazione di "
+"armature che sono più robuste e hanno una maggiore resistenza al calore di "
+"qualsiasi altra protezione testata finora. In particolare, i raggi di plasma "
+"carichi recentemente analizzati sono stati osservati dissiparsi sulla "
+"superficie del nano-materiale, consumando parte del tessuto fullerenico, ma "
+"senza attraversarlo. E non solo, il nano-tessuto promette anche di essere "
+"più leggero di simili materiali convenzionali."
 
 #: ../base/ufos/armor.ufo:167
-msgid "Medium armor"
+#, fuzzy
+msgid "Medium Alien Armour"
 msgstr "Armatura Media"
 
 #: ../base/ufos/basemanagement.ufo:62
@@ -191,11 +204,11 @@ msgstr "Intercettatore"
 msgid "Saracen I"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:404 ../base/ufos/research.ufo:1910
+#: ../base/ufos/basemanagement.ufo:404 ../base/ufos/research.ufo:1911
 msgid "UFO - Scout"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:422 ../base/ufos/research.ufo:1943
+#: ../base/ufos/basemanagement.ufo:422 ../base/ufos/research.ufo:1944
 msgid "UFO - Fighter"
 msgstr ""
 
@@ -389,7 +402,7 @@ msgid "Transfer equipment or personnel"
 msgstr "Trasferisci equipaggiamento o personale"
 
 #: ../base/ufos/menu_aircraft.ufo:211 ../base/ufos/menu_bases.ufo:213
-#: ../base/ufos/menu_transfer.ufo:109
+#: ../base/ufos/menu_transfer.ufo:145
 msgid "Transfer"
 msgstr "Trasferisci"
 
@@ -441,7 +454,7 @@ msgstr "CREDITO"
 #: ../base/ufos/menu_aliencont.ufo:68 ../base/ufos/menu_buildings.ufo:58
 #: ../base/ufos/menu_buy.ufo:820 ../base/ufos/menu_hire.ufo:786
 #: ../base/ufos/menu_production.ufo:371 ../base/ufos/menu_research.ufo:945
-#: ../base/ufos/menu_transfer.ufo:201
+#: ../base/ufos/menu_transfer.ufo:264
 msgid "Back to baseview"
 msgstr "Torna alla vista-base"
 
@@ -482,9 +495,10 @@ msgstr ""
 msgid "yes"
 msgstr "Sì"
 
-#: ../base/ufos/menu_aliencont.ufo:166
-msgid "Antarean"
-msgstr "Antariano"
+#: ../base/ufos/menu_aliencont.ufo:166 ../base/ufos/team_aliens.ufo:239
+#, fuzzy
+msgid "Taman"
+msgstr "Squadra"
 
 #: ../base/ufos/menu_aliencont.ufo:171
 msgid "needs autopsy"
@@ -1700,11 +1714,13 @@ msgstr "Pulsanti"
 msgid "Productionlimit"
 msgstr "Produzione"
 
-#: ../base/ufos/menu_production.ufo:109 ../base/ufos/menu_ufopedia.ufo:122
+#: ../base/ufos/menu_production.ufo:109 ../base/ufos/menu_transfer.ufo:163
+#: ../base/ufos/menu_ufopedia.ufo:122
 msgid "Scroll up"
 msgstr ""
 
-#: ../base/ufos/menu_production.ufo:122 ../base/ufos/menu_ufopedia.ufo:135
+#: ../base/ufos/menu_production.ufo:122 ../base/ufos/menu_transfer.ufo:176
+#: ../base/ufos/menu_ufopedia.ufo:135
 msgid "Scroll down"
 msgstr ""
 
@@ -1814,7 +1830,7 @@ msgstr "Missione\t%s (%s)\n"
 msgid "Bases"
 msgstr "Base"
 
-#: ../base/ufos/menu_stats.ufo:95 ../base/ufos/menu_transfer.ufo:176
+#: ../base/ufos/menu_stats.ufo:95 ../base/ufos/menu_transfer.ufo:239
 #, fuzzy
 msgid "Employees"
 msgstr "Assumi impiegati"
@@ -1904,36 +1920,46 @@ msgstr "Informazioni"
 msgid "Actor Abilities"
 msgstr "Abilità Attori"
 
-#: ../base/ufos/menu_transfer.ufo:58 client/cl_map.c:315
+#: ../base/ufos/menu_transfer.ufo:58
+#, fuzzy
+msgid "Selected aircraft"
+msgstr "Seleziona aereo"
+
+#: ../base/ufos/menu_transfer.ufo:76 client/cl_map.c:315
 msgid "Base"
 msgstr "Base"
 
-#: ../base/ufos/menu_transfer.ufo:91
+#: ../base/ufos/menu_transfer.ufo:85
+#, fuzzy
+msgid "Selected base"
+msgstr "Seleziona oggetto"
+
+#: ../base/ufos/menu_transfer.ufo:127
 #, fuzzy
 msgid "Baseinfo"
 msgstr "Info Base"
 
-#: ../base/ufos/menu_transfer.ufo:141
+#: ../base/ufos/menu_transfer.ufo:204
 #, fuzzy
 msgid "Show only items"
 msgstr "Mostra solo armatura"
 
-#: ../base/ufos/menu_transfer.ufo:156 ../base/ufos/research.ufo:78
+#: ../base/ufos/menu_transfer.ufo:219 ../base/ufos/research.ufo:78
 #, fuzzy
 msgid "Equipment"
 msgstr "Equipaggia"
 
-#: ../base/ufos/menu_transfer.ufo:161
+#: ../base/ufos/menu_transfer.ufo:224
 #, fuzzy
 msgid "Show only employees"
 msgstr "Mostra solo armatura"
 
-#: ../base/ufos/menu_transfer.ufo:181
+#: ../base/ufos/menu_transfer.ufo:244
 #, fuzzy
 msgid "Show only technologies"
 msgstr "Mostra solo armi secondarie"
 
-#: ../base/ufos/menu_transfer.ufo:196
+#: ../base/ufos/menu_transfer.ufo:259
 #, fuzzy
 msgid "Technologies"
 msgstr "Nanotecnologia"
@@ -3020,12 +3046,7 @@ msgstr "Ricarica per fucile da Cecchini a Tachioni"
 msgid "combat_armor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1295
-#, fuzzy
-msgid "Nanocomposite Armour"
-msgstr "Nano Armatura"
-
-#: ../base/ufos/research.ufo:1297
+#: ../base/ufos/research.ufo:1298
 #, fuzzy
 msgid "nano_armor_txt"
 msgstr ""
@@ -3040,7 +3061,7 @@ msgstr ""
 "senza attraversarlo. E non solo, il nano-tessuto promette anche di essere "
 "più leggero di simili materiali convenzionali."
 
-#: ../base/ufos/research.ufo:1298
+#: ../base/ufos/research.ufo:1299
 #, fuzzy
 msgid "nano_armor_pre_txt"
 msgstr ""
@@ -3055,22 +3076,7 @@ msgstr ""
 "senza attraversarlo. E non solo, il nano-tessuto promette anche di essere "
 "più leggero di simili materiali convenzionali."
 
-#: ../base/ufos/research.ufo:1312
-#, fuzzy
-msgid "Alien Body Armour"
-msgstr ""
-"La nanotecnologia apre un vasto campo di nuovi metodi di produzione "
-"particolarmente nel design di armature e vestiario. Prototipi basati sulla "
-"tecnologia laser avanzata rendono possibile la creazione di materiali quasi "
-"del tutto composti da fullereni e il loro utilizzo per la creazione di "
-"armature che sono più robuste e hanno una maggiore resistenza al calore di "
-"qualsiasi altra protezione testata finora. In particolare, i raggi di plasma "
-"carichi recentemente analizzati sono stati osservati dissiparsi sulla "
-"superficie del nano-materiale, consumando parte del tessuto fullerenico, ma "
-"senza attraversarlo. E non solo, il nano-tessuto promette anche di essere "
-"più leggero di simili materiali convenzionali."
-
-#: ../base/ufos/research.ufo:1314
+#: ../base/ufos/research.ufo:1315
 #, fuzzy
 msgid "alien_body_armour_txt"
 msgstr ""
@@ -3085,7 +3091,7 @@ msgstr ""
 "senza attraversarlo. E non solo, il nano-tessuto promette anche di essere "
 "più leggero di simili materiali convenzionali."
 
-#: ../base/ufos/research.ufo:1315
+#: ../base/ufos/research.ufo:1316
 #, fuzzy
 msgid "alien_body_armour_pre_txt"
 msgstr ""
@@ -3100,76 +3106,76 @@ msgstr ""
 "senza attraversarlo. E non solo, il nano-tessuto promette anche di essere "
 "più leggero di simili materiali convenzionali."
 
-#: ../base/ufos/research.ufo:1364
+#: ../base/ufos/research.ufo:1365
 msgid "Blast Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1376
+#: ../base/ufos/research.ufo:1377
 msgid "Fire Damage Type"
 msgstr "Danno da bruciatura"
 
-#: ../base/ufos/research.ufo:1388
+#: ../base/ufos/research.ufo:1389
 msgid "Laser Damage Type"
 msgstr "Danno laser"
 
-#: ../base/ufos/research.ufo:1404
+#: ../base/ufos/research.ufo:1405
 #, fuzzy
 msgid "Impact Damage Type"
 msgstr "Danno normale"
 
-#: ../base/ufos/research.ufo:1416 ../base/ufos/research.ufo:1447
+#: ../base/ufos/research.ufo:1417 ../base/ufos/research.ufo:1448
 msgid "Shock Damage Type"
 msgstr "Danno da urto"
 
-#: ../base/ufos/research.ufo:1428
+#: ../base/ufos/research.ufo:1429
 msgid "Plasma Damage Type"
 msgstr "Danno da plasma"
 
-#: ../base/ufos/research.ufo:1459
+#: ../base/ufos/research.ufo:1460
 msgid "Stun Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1471
+#: ../base/ufos/research.ufo:1472
 msgid "Tachyon Damage Type"
 msgstr "Danno di tipo tachionico"
 
-#: ../base/ufos/research.ufo:1488
+#: ../base/ufos/research.ufo:1489
 msgid "Accuracy Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1500
+#: ../base/ufos/research.ufo:1501
 msgid "Assault Guns Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1512
+#: ../base/ufos/research.ufo:1513
 msgid "Close Combat Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1524
+#: ../base/ufos/research.ufo:1525
 msgid "High-Explosives Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1536
+#: ../base/ufos/research.ufo:1537
 msgid "Heavy Weapons Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1548
+#: ../base/ufos/research.ufo:1549
 msgid "Mind Attribute"
 msgstr "Qualità mentali"
 
-#: ../base/ufos/research.ufo:1560
+#: ../base/ufos/research.ufo:1561
 msgid "Power Attribute"
 msgstr "Potenza"
 
-#: ../base/ufos/research.ufo:1572
+#: ../base/ufos/research.ufo:1573
 msgid "Sniper Rifles Proficiency"
 msgstr "Predisposizione per fucili di Precisione"
 
-#: ../base/ufos/research.ufo:1584
+#: ../base/ufos/research.ufo:1585
 msgid "Speed Attribute"
 msgstr "Velocità"
 
-#: ../base/ufos/research.ufo:1600
+#: ../base/ufos/research.ufo:1601
 #, fuzzy
 msgid "b_aliencontainment_txt"
 msgstr ""
@@ -3185,15 +3191,15 @@ msgstr ""
 "Implicazioni di battaglia: Questa granata darà fuoco a una piccola area sul "
 "campo di battaglia, e a tutte le unità catturate dal suo raggio d'azione."
 
-#: ../base/ufos/research.ufo:1616
+#: ../base/ufos/research.ufo:1617
 msgid "b_command_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1632
+#: ../base/ufos/research.ufo:1633
 msgid "b_entrance_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1644
+#: ../base/ufos/research.ufo:1645
 #, fuzzy
 msgid "b_large_hangar_txt"
 msgstr ""
@@ -3204,11 +3210,11 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1660
+#: ../base/ufos/research.ufo:1661
 msgid "b_hospital_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1676
+#: ../base/ufos/research.ufo:1677
 #, fuzzy
 msgid "b_small_hangar_txt"
 msgstr ""
@@ -3219,35 +3225,35 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1692
+#: ../base/ufos/research.ufo:1693
 msgid "b_lab_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1708
+#: ../base/ufos/research.ufo:1709
 msgid "b_powerplant_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1724
+#: ../base/ufos/research.ufo:1725
 msgid "b_quarters_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1740
+#: ../base/ufos/research.ufo:1741
 msgid "b_radar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1756
+#: ../base/ufos/research.ufo:1757
 msgid "b_storage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1772
+#: ../base/ufos/research.ufo:1773
 msgid "b_teamroom_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1788
+#: ../base/ufos/research.ufo:1789
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1804
+#: ../base/ufos/research.ufo:1805
 #, fuzzy
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
@@ -3258,45 +3264,45 @@ msgstr ""
 "potrebbero carpire i concetti base dietro queste migliorie e potremmo anche "
 "essere capaci di sviluppare equipaggiamento simile in un futuro prossimo."
 
-#: ../base/ufos/research.ufo:1820
+#: ../base/ufos/research.ufo:1821
 msgid "b_workshop_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1839
+#: ../base/ufos/research.ufo:1840
 msgid "dropship_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1854
+#: ../base/ufos/research.ufo:1855
 msgid "interceptor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1869
+#: ../base/ufos/research.ufo:1870
 #, fuzzy
 msgid "saracen_interceptor_txt"
 msgstr "Intercettatore"
 
-#: ../base/ufos/research.ufo:1911
+#: ../base/ufos/research.ufo:1912
 msgid "ufo_scout_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1912
+#: ../base/ufos/research.ufo:1913
 msgid "ufo_scout_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1944
+#: ../base/ufos/research.ufo:1945
 msgid "ufo_fighter_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1945
+#: ../base/ufos/research.ufo:1946
 msgid "ufo_fighter_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1971
+#: ../base/ufos/research.ufo:1972
 #, fuzzy
 msgid "UFO - Harvester"
 msgstr "UFO - classe Destroyer"
 
-#: ../base/ufos/research.ufo:1972
+#: ../base/ufos/research.ufo:1973
 #, fuzzy
 msgid "ufo_harvester_txt"
 msgstr ""
@@ -3309,7 +3315,7 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:1973
+#: ../base/ufos/research.ufo:1974
 #, fuzzy
 msgid "ufo_harvester_pre_txt"
 msgstr ""
@@ -3322,200 +3328,200 @@ msgstr ""
 "hanno saputo rendere più efficiente e compatto. Questo potrebbe portare ad "
 "armi MTHEL più leggere nel futuro prossimo."
 
-#: ../base/ufos/research.ufo:1999
+#: ../base/ufos/research.ufo:2000
 msgid "Live Specimen - Bloodspider"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2000
+#: ../base/ufos/research.ufo:2001
 msgid "bloodspider_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2001
+#: ../base/ufos/research.ufo:2002
 msgid "bloodspider_notes_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2013
+#: ../base/ufos/research.ufo:2014
 msgid "Alien Autopsy - Bloodspider"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2014
+#: ../base/ufos/research.ufo:2015
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2015
+#: ../base/ufos/research.ufo:2016
 #, fuzzy
 msgid "bloodspider_autopsy_pre_txt"
 msgstr "Shevaar - Autopsia"
 
-#: ../base/ufos/research.ufo:2031
+#: ../base/ufos/research.ufo:2032
 msgid "Alien Autopsy - Ortnok"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2032
+#: ../base/ufos/research.ufo:2033
 msgid "ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2033
+#: ../base/ufos/research.ufo:2034
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2050
+#: ../base/ufos/research.ufo:2051
 msgid "Alien Autopsy - Taman"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2051
+#: ../base/ufos/research.ufo:2052
 msgid "taman_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2052
+#: ../base/ufos/research.ufo:2053
 #, fuzzy
 msgid "taman_autopsy_pre_txt"
 msgstr "Antariano - Autopsia"
 
-#: ../base/ufos/research.ufo:2067
+#: ../base/ufos/research.ufo:2068
 msgid "Alien Autopsy - Shevaar"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2068
+#: ../base/ufos/research.ufo:2069
 msgid "shevaar_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2069
+#: ../base/ufos/research.ufo:2070
 #, fuzzy
 msgid "shevaar_autopsy_pre_txt"
 msgstr "Shevaar - Autopsia"
 
-#: ../base/ufos/research.ufo:2084
+#: ../base/ufos/research.ufo:2085
 msgid "Live Specimen - Stinger"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2085
+#: ../base/ufos/research.ufo:2086
 msgid "hovernet_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2086
+#: ../base/ufos/research.ufo:2087
 msgid "hovernet_notes_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2099
+#: ../base/ufos/research.ufo:2100
 msgid "Alien Autopsy - Stinger"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2100
+#: ../base/ufos/research.ufo:2101
 msgid "hovernet_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2101
+#: ../base/ufos/research.ufo:2102
 msgid "hovernet_autopsy_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2116
+#: ../base/ufos/research.ufo:2117
 msgid "Alien Autopsy - Ortnok Cyborg"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2117
+#: ../base/ufos/research.ufo:2118
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2118
+#: ../base/ufos/research.ufo:2119
 #, fuzzy
 msgid "cyborg_ortnok_autopsy_pre_txt"
 msgstr "Cyborg Ortnok - Autopsia"
 
-#: ../base/ufos/research.ufo:2136
+#: ../base/ufos/research.ufo:2137
 msgid "Phoenix UGV"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2137
+#: ../base/ufos/research.ufo:2138
 msgid "ugv_phoenix_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2138
+#: ../base/ufos/research.ufo:2139
 msgid "ugv_phoenix_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2152
+#: ../base/ufos/research.ufo:2153
 msgid "Triax UGV"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2153
+#: ../base/ufos/research.ufo:2154
 msgid "ugv_triax_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2154
+#: ../base/ufos/research.ufo:2155
 msgid "ugv_triax_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2172
+#: ../base/ufos/research.ufo:2173
 msgid "Raven ECM Unit"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2174 ../base/ufos/research.ufo:2190
+#: ../base/ufos/research.ufo:2175 ../base/ufos/research.ufo:2191
 msgid "craft_shield_light_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2188
+#: ../base/ufos/research.ufo:2189
 msgid "Polymer Aircraft Armour"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2204
+#: ../base/ufos/research.ufo:2205
 msgid "SHIVA Rotary Cannon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2206
+#: ../base/ufos/research.ufo:2207
 msgid "craft_weapon_flac_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2220
+#: ../base/ufos/research.ufo:2221
 msgid "Sparrowhawk AA Missile Rack"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2222
+#: ../base/ufos/research.ufo:2223
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2236
+#: ../base/ufos/research.ufo:2237
 msgid "TR-20 Rocket Pod"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2238
+#: ../base/ufos/research.ufo:2239
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2258
+#: ../base/ufos/research.ufo:2259
 msgid "Particle Beam Weapon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2259
+#: ../base/ufos/research.ufo:2260
 #, fuzzy
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr "Fucile a Tachioni"
 
-#: ../base/ufos/research.ufo:2260
+#: ../base/ufos/research.ufo:2261
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2284
+#: ../base/ufos/research.ufo:2285
 msgid "Political Situation Before The Invasion"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2285
+#: ../base/ufos/research.ufo:2286
 msgid "news_initial_political_situation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2295
+#: ../base/ufos/research.ufo:2296
 msgid "After The War"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2296
+#: ../base/ufos/research.ufo:2297
 msgid "news_after_the_war_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2306
+#: ../base/ufos/research.ufo:2307
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2307
+#: ../base/ufos/research.ufo:2308
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 
@@ -3955,11 +3961,6 @@ msgstr "Prossimo nemico visibile"
 msgid "End round"
 msgstr "Fine turno"
 
-#: ../base/ufos/team_aliens.ufo:239
-#, fuzzy
-msgid "Taman"
-msgstr "Squadra"
-
 #: ../base/ufos/team_aliens.ufo:249
 msgid "Shevaar"
 msgstr ""
@@ -4092,8 +4093,8 @@ msgstr "Pistola da 9mm"
 
 #: ../base/ufos/weapons_human.ufo:247
 #, fuzzy
-msgid "Pistol Clip 7.62mm"
-msgstr "Caricatore per pistola da 9mm"
+msgid "7.62mm Pistol Magazine"
+msgstr "Pistola da 9mm"
 
 #: ../base/ufos/weapons_human.ufo:259 ../base/ufos/weapons_tachyon.ufo:36
 #: ../base/ufos/weapons_tachyon.ufo:184
@@ -4177,11 +4178,13 @@ msgid "Rocket Launcher"
 msgstr "Lanciamissili"
 
 #: ../base/ufos/weapons_human.ufo:831
-msgid "High-Explosive Rocket"
+#, fuzzy
+msgid "HE Rocket"
 msgstr "Missile ad alto potenziale"
 
 #: ../base/ufos/weapons_human.ufo:889
-msgid "Incendiary Rocket"
+#, fuzzy
+msgid "IC Rocket"
 msgstr "Razzo incendiario"
 
 #: ../base/ufos/weapons_human.ufo:948
@@ -4229,8 +4232,9 @@ msgid "Bolter Rifle"
 msgstr "Fucile bolter"
 
 #: ../base/ufos/weapons_human.ufo:1310
-msgid "Bolter Rifle Clip"
-msgstr "Caricatore per fucile bolter"
+#, fuzzy
+msgid "Bolter Rifle Magazine"
+msgstr "Caricatore per fucile da cecchino"
 
 #: ../base/ufos/weapons_human.ufo:1341
 msgid "Cannonade"
@@ -4308,12 +4312,12 @@ msgstr "Lama al plasma"
 
 #: ../base/ufos/weapons_plasma.ufo:6
 #, fuzzy
-msgid "Plasma Atomizer"
+msgid "Plasma Pistol"
 msgstr "Fucile al plasma"
 
 #: ../base/ufos/weapons_plasma.ufo:24
 #, fuzzy
-msgid "Plasma Atomizer Charge"
+msgid "Plasma Pistol Charger"
 msgstr "Ricarica per fucile al plasma"
 
 #: ../base/ufos/weapons_plasma.ufo:36 ../base/ufos/weapons_plasma.ufo:111
@@ -4329,7 +4333,8 @@ msgid "Plasma Rifle"
 msgstr "Fucile al plasma"
 
 #: ../base/ufos/weapons_plasma.ufo:99
-msgid "Plasma Rifle Charge"
+#, fuzzy
+msgid "Plasma Rifle Charger"
 msgstr "Ricarica per fucile al plasma"
 
 #: ../base/ufos/weapons_plasma.ufo:156
@@ -4722,50 +4727,72 @@ msgstr "Non hai abbastanza soldi per una nuova base."
 msgid "You've reached the base limit."
 msgstr "Hai raggiunto il limite di basi."
 
-#: client/cl_basemanagement.c:2150
+#: client/cl_basemanagement.c:2157
+msgid "Storage is empty\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2159
 msgid "Transfer is not possible - the base doesn't have a storage building"
 msgstr ""
 
-#: client/cl_basemanagement.c:2157
+#: client/cl_basemanagement.c:2166
 msgid "Transfer is not possible - the base doesn't have quarters"
 msgstr ""
 
-#: client/cl_basemanagement.c:2164
+#: client/cl_basemanagement.c:2173
 msgid "Transfer is not possible - the base doesn't have a lab"
 msgstr ""
 
-#: client/cl_basemanagement.c:2286
+#: client/cl_basemanagement.c:2212
+#, fuzzy
+msgid "No target base selected"
+msgstr "Non hai selezionato nessuno!\n"
+
+#: client/cl_basemanagement.c:2212
+msgid "Please select the target base from the list"
+msgstr ""
+
+#: client/cl_basemanagement.c:2217
+#, fuzzy
+msgid "No aircraft selected"
+msgstr "Non hai selezionato nessuno!\n"
+
+#: client/cl_basemanagement.c:2217
+msgid "Please select the aircraft to use from the list"
+msgstr ""
+
+#: client/cl_basemanagement.c:2333
 msgid "You can transfer equipment - this base has a storage building\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2289
+#: client/cl_basemanagement.c:2336
 #, fuzzy
 msgid "No storage building in this base\n"
 msgstr "Nessun edificio nella base iniziale"
 
-#: client/cl_basemanagement.c:2293
+#: client/cl_basemanagement.c:2340
 msgid "You can transfer employees - this base has quarters\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2296
+#: client/cl_basemanagement.c:2343
 #, fuzzy
 msgid "No quarters in this base\n"
 msgstr "Nome della base"
 
-#: client/cl_basemanagement.c:2299
+#: client/cl_basemanagement.c:2346
 msgid "You can transfer techs - this base has a laboratory\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2301
+#: client/cl_basemanagement.c:2348
 msgid "No laboratory in this base\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2448
+#: client/cl_basemanagement.c:2502
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Costruzione di %s edificio finita nella base %s."
 
-#: client/cl_basemanagement.c:2449
+#: client/cl_basemanagement.c:2503
 msgid "Building finished"
 msgstr "Costruzione finita"
 
@@ -6120,6 +6147,30 @@ msgstr ""
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr ""
+
+#~ msgid "Antarean"
+#~ msgstr "Antariano"
+
+#, fuzzy
+#~ msgid "Pistol Clip 7.62mm"
+#~ msgstr "Caricatore per pistola da 9mm"
+
+#~ msgid "Bolter Rifle Clip"
+#~ msgstr "Caricatore per fucile bolter"
+
+#, fuzzy
+#~ msgid "Plasma Atomizer"
+#~ msgstr "Fucile al plasma"
+
+#, fuzzy
+#~ msgid "Plasma Atomizer Charge"
+#~ msgstr "Ricarica per fucile al plasma"
+
+#~ msgid "Nano Armor"
+#~ msgstr "Nano Armatura"
+
+#~ msgid "Light armor"
+#~ msgstr "Armatura Leggera"
 
 #, fuzzy
 #~ msgid "light_alien_armor"
