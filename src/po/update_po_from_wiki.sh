@@ -581,7 +581,7 @@ fi
 
 while read english
 do
-	if [[ "$english" != "intro_sentence"* ]] && [[ "$english" != "prolog_sentence"* ]] && [[ "$english" != "news_"*"_txt" ]] && [[ "$english" != "txt_"*"_campaign" ]]
+	if [[ "$english" != "intro_sentence"* ]] && [[ "$english" != "prolog_sentence"* ]] && [[ "$english" != "news_"*"_txt" ]] && [[ "$english" != "txt_"*"_campaign" ]] && [[ "$english" != "Aliens" ]]
 	then
 		printf "."
 		if [[ "$debug" = "1" ]]
@@ -639,12 +639,19 @@ do
 				fi
 			elif [[ "$test" -eq 1 ]]
 			then
+				test_artifact="0"
 				number=`grep -iwnm 1 ">$english</a>" ${index} | cut -d : -f 1`
 				if [[ $number -lt $FIRST_LINE ]]
 				then
 					# This part looks for $english where "-" would be replaced by "--" (like in UFO -- Scout)
 					test=`echo $english | sed 's/-/--/g'`
 					number=`grep -iwnm 1 ">$test</a>" ${index} | cut -d : -f 1`
+				fi
+				if [[ $number -lt $FIRST_LINE ]]
+				then
+					# This part looks for " -- $english" in case this is a Alien Artifact msgid
+					test_artifact="1"
+					number=`grep -inm 1 " -- $english</a>" ${index} | cut -d : -f 1`
 				fi
 				
 				if [[ $number -ge $FIRST_LINE ]]
@@ -669,6 +676,9 @@ do
 							n > $loc {exit}
 						' ${index} |
 						$sed_soft 's/>\(.*\)<\/a>/\1/;s/--/-/g' | 
+						$awk_soft ' 
+							'$test_artifact' == 1 {gsub(/^.* -/,"")}
+							{print $0}' |
 						$sed_soft 's/\"/\\\"/g;s/\\/\\\\/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g' >> sed_commands
 						apply_sed $english
 					fi
