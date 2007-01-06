@@ -61,7 +61,7 @@ item knifemono
 	type		melee
 	category	2
 	shape		"0 0 1 3"	// TODO: This seriously needs to be changed to "0 0 3 1" as soon as we have "rotation" suppor tin the inventory.
-	center		"-1 0 1"
+	center		"-1 0 5"
 	scale		1.0
 	price		210
 	buytype		1
