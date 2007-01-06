@@ -1,3 +1,4 @@
+// What's this "extension" exactly?
 inventory extension
 {
 	shape	"0 0 5 1"
@@ -7,6 +8,7 @@ inventory extension
 	out		0
 }
 
+// Right hand
 inventory right
 {
 	shape	"0 0 5 2"
@@ -15,6 +17,7 @@ inventory right
 	out		0
 }
 
+// Left hand
 inventory left
 {
 	shape	"0 0 5 2"
@@ -23,6 +26,7 @@ inventory left
 	out		0
 }
 
+// Backpack
 inventory backpack
 {
 	shape	"1 0 3 1"
@@ -31,6 +35,7 @@ inventory backpack
 	out		5
 }
 
+// Belt (L shape)
 inventory belt
 {
 	shape	"0 0 3 1"
@@ -39,6 +44,7 @@ inventory belt
 	out		1
 }
 
+// Holster
 inventory holster
 {
 	shape	"0 0 3 2"
@@ -46,6 +52,7 @@ inventory holster
 	out		1
 }
 
+// Armor (Region=Soldier)
 inventory armor
 {
 	shape	"0 0 6 6"
@@ -55,6 +62,7 @@ inventory armor
 	out		200
 }
 
+// Battlescape floor
 inventory floor
 {
 	shape	"3 0 12 1"
@@ -65,6 +73,7 @@ inventory floor
 	out		2
 }
 
+// Base equipment place
 inventory equip
 {
 	shape	"0 0 24 13"
@@ -72,3 +81,14 @@ inventory equip
 	temp	true
 	all		true
 }
+
+// Headgear slot (WIP)
+inventory headgear
+{
+	shape	"0 0 2 2"
+	single	true
+//	headgear	true
+	in		1
+	out		0
+}
+

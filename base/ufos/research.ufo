@@ -153,6 +153,23 @@ tech rs_anti_alien_gas
 //	image_top	techs/aliengas
 }
 
+tech rs_monomolecular_blades
+{
+	type	tech
+	name	"_Monomolecular Blades"
+	up_chapter	artifacts
+	description	"_monomolecular_blades_txt"
+	pre_description	"_monomolecular_blades_pre_txt"
+
+	require_OR
+	{
+		item	kerrblade 1
+//TODO: live alien support (i.e. containment)
+//		alien alien_bloodspider 1
+	}
+	time	1500
+}
+
 //=================================
 // weapons and items
 //=================================
@@ -240,6 +257,24 @@ tech rs_weapon_combatknife
 	provides	knife
 	time	0
 	producetime	2
+}
+
+tech rs_weapon_monoknife
+{
+	type	weapon
+	up_chapter	equipment
+	description	"_monoknife_txt"
+	pre_description	"_monoknife_pre_txt"
+
+	require_AND
+	{
+		tech rs_monomolecular_blades
+		tech rs_skill_close
+		tech rs_damage_normal
+	}
+	provides	knifemono
+	time	100
+	producetime	5
 }
 
 tech rs_weapon_flamer
