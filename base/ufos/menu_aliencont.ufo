@@ -163,7 +163,7 @@ menu aliencont
 	}
 	
 	string txt_alcal2_h1	{ 
-	    string "_Antarean"
+	    string "_Taman"
 	    pos "50 180"
 	    color "0 .78 0 1"
 	}

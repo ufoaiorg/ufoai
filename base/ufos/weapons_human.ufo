@@ -244,7 +244,7 @@ item pistol
 
 item pistol_ammo
 {
-	name		"_Pistol Clip 7.62mm"
+	name		"_7.62mm Pistol Magazine"
 	model		weapons/pistol/pistol_clip
 	type		ammo
 	category	0
@@ -828,7 +828,7 @@ item rpg
 
 item rpg_ammo
 {
-	name		"_High-Explosive Rocket"
+	name		"_HE Rocket"
 	model		weapons/rpg/rpg_ammo
 	type		ammo
 	category	0
@@ -886,7 +886,7 @@ item rpg_ammo
 
 item rpg_incendiary_ammo
 {
-	name		"_Incendiary Rocket"
+	name		"_IC Rocket"
 	model		weapons/rpg/rpg_inc_ammo
 	type		ammo
 	category	0
@@ -1307,7 +1307,7 @@ item bolterrifle
 
 item bolterrifle_ammo
 {
-	name            "_Bolter Rifle Clip"
+	name            "_Bolter Rifle Magazine"
 	model           weapons/bolterrifle/bolterrifle_clip
 	type            ammo
 	category        0

@@ -1292,7 +1292,8 @@ tech rs_combat_armor
 tech rs_nano_armor
 {
 	type	tech
-	name	"_Nanocomposite Armour"
+	// name	"_Nanocomposite Armour"
+	// names are defined in armor.ufo
 	up_chapter	equipment
 	description	"_nano_armor_txt"
 	pre_description	"_nano_armor_pre_txt"
@@ -1309,7 +1310,7 @@ tech rs_nano_armor
 tech rs_alien_body_armour
 {
 	type	tech
-	name	"_Alien Body Armour"
+	// name	"_Alien Body Armour"
 	up_chapter	artifacts
 	description	"_alien_body_armour_txt"
 	pre_description	"_alien_body_armour_pre_txt"
@@ -1327,7 +1328,7 @@ tech rs_alien_body_armour
 tech rs_alien_body_armour2
 {
 	type	tech
-	name	"TODO: alien armor2"
+	// name	"TODO: alien armor2"
 	up_chapter	artifacts
 	description	"TODO"
 	pre_description	"TODO"

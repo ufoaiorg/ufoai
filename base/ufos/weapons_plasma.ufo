@@ -3,7 +3,7 @@
 // ================
 item plaspistol
 {
-	name		"_Plasma Atomizer"
+	name		"_Plasma Pistol"
 	model		weapons/plaspistol/plaspistol
 	weapon		true
 	type		pistol
@@ -21,7 +21,7 @@ item plaspistol
 
 item plaspistol_ammo
 {
-	name		"_Plasma Atomizer Charge"
+	name		"_Plasma Pistol Charge"
 	model		weapons/plaspistol/plaspistol_clip
 	type		ammo
 	category	0
