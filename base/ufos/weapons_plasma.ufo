@@ -21,7 +21,7 @@ item plaspistol
 
 item plaspistol_ammo
 {
-	name		"_Plasma Pistol Charge"
+	name		"_Plasma Pistol Charger"
 	model		weapons/plaspistol/plaspistol_clip
 	type		ammo
 	category	0
@@ -96,7 +96,7 @@ item plasrifle
 
 item plasrifle_ammo
 {
-	name		"_Plasma Rifle Charge"
+	name		"_Plasma Rifle Charger"
 	model		weapons/plasrifle/plasrifle_clip
 	type		ammo
 	category	0
