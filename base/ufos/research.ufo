@@ -177,11 +177,10 @@ tech rs_monomolecular_blades
 	description	"_monomolecular_blades_txt"
 	pre_description	"_monomolecular_blades_pre_txt"
 
-	require_OR
+	require_AND
 	{
 		item	kerrblade 1
-//TODO: live alien support (i.e. containment)
-//		alien alien_bloodspider 1
+		rech rs_alien_bloodspider_autopsy
 	}
 	time	1500
 }
