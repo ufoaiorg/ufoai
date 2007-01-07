@@ -237,13 +237,15 @@ static void SVC_Info(void)
 	int i, count;
 	int version;
 
-	if (sv_maxclients->value == 1)
+	if (sv_maxclients->value == 1) {
+		Com_DPrintf("Ignore info string in singleplayer mode\n");
 		return;	/* ignore in single player */
+	}
 
 	version = atoi(Cmd_Argv(1));
 
 	if (version != PROTOCOL_VERSION)
-		Com_sprintf(string, sizeof(string), "%s: wrong version\n", hostname->string);
+		Com_sprintf(string, sizeof(string), "%s: wrong version (client: %i, host: %i)\n", hostname->string, version, PROTOCOL_VERSION);
 	else {
 		count = 0;
 		for (i = 0; i < sv_maxclients->value; i++)

@@ -52,6 +52,87 @@ int			ipx_sockets[2];
 
 char *NET_ErrorString (void);
 
+#define	MAX_IPS		16
+static	int		numIP;
+static	byte	localIP[MAX_IPS][4];
+
+static int net_inittime;
+
+static uint64 net_total_in;
+static uint64 net_total_out;
+static uint64 net_packets_in;
+static uint64 net_packets_out;
+
+/**
+ * @brief
+ */
+void Net_Stats_f (void)
+{
+	unsigned int now = (unsigned int)time(NULL);
+	unsigned int diff = now - net_inittime;
+
+	Com_Printf ("Network up for %u seconds.\n"
+		"%I64u bytes in %I64u packets received (av: %i kbps)\n"
+		"%I64u bytes in %I64u packets sent (av: %i kbps)\n", diff,
+		net_total_in, net_packets_in, (int)(((net_total_in * 8) / 1024) / diff),
+		net_total_out, net_packets_out, (int)((net_total_out * 8) / 1024) / diff);
+}
+
+/**
+ * @brief
+ */
+void Sys_ShowIP(void)
+{
+	int i;
+
+	for (i = 0; i < numIP; i++)
+		Com_Printf("IP: %i.%i.%i.%i\n", localIP[i][0], localIP[i][1], localIP[i][2], localIP[i][3]);
+}
+
+/**
+ * @brief
+ */
+void NET_GetLocalAddress (void)
+{
+	char				hostname[256];
+	struct hostent		*hostInfo;
+	int					error;
+	char				*p;
+	int					ip;
+	int					n;
+
+	if (gethostname(hostname, 256) == SOCKET_ERROR) {
+		error = WSAGetLastError();
+		return;
+	}
+
+	hostInfo = gethostbyname(hostname);
+	if (!hostInfo) {
+		error = WSAGetLastError();
+		return;
+	}
+
+	Com_Printf("Hostname: %s\n", hostInfo->h_name);
+	n = 0;
+	while ((p = hostInfo->h_aliases[n++]) != NULL)
+		Com_Printf("Alias: %s\n", p);
+
+	if (hostInfo->h_addrtype != AF_INET)
+		return;
+
+	numIP = 0;
+	while ((p = hostInfo->h_addr_list[numIP]) != NULL && numIP < MAX_IPS) {
+		ip = ntohl( *(int *)p );
+		localIP[numIP][0] = p[0];
+		localIP[numIP][1] = p[1];
+		localIP[numIP][2] = p[2];
+		localIP[numIP][3] = p[3];
+		Com_Printf("IP: %i.%i.%i.%i\n", ( ip >> 24 ) & 0xff, ( ip >> 16 ) & 0xff, ( ip >> 8 ) & 0xff, ip & 0xff);
+		numIP++;
+	}
+}
+
+
 /**
  * @brief
  */
@@ -287,6 +368,7 @@ LOOPBACK BUFFERS FOR LOCAL PLAYER
 
 /**
  * @brief
+ * @sa NET_SendLoopPacket
  */
 qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
@@ -315,6 +397,7 @@ qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_me
 
 /**
  * @brief
+ * @sa NET_GetLoopPacket
  */
 void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 {
@@ -332,6 +415,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 /**
  * @brief
+ * @sa NET_SendPacket
  */
 qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
@@ -357,6 +441,9 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 		fromlen = sizeof(from);
 		ret = recvfrom (net_socket, (char *)(net_message->data), net_message->maxsize
 			, 0, (struct sockaddr *)&from, &fromlen);
+
+		net_packets_in++;
+		net_total_in += ret;
 
 		SockadrToNetadr (&from, net_from);
 
@@ -390,6 +477,7 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 
 /**
  * @brief
+ * @sa NET_GetPacket
  */
 void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 {
@@ -397,22 +485,24 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	struct sockaddr	addr;
 	int		net_socket = 0;
 
-	if ( to.type == NA_LOOPBACK ) {
+	switch (to.type) {
+#ifndef DEDICATED_ONLY
+	case NA_LOOPBACK:
 		NET_SendLoopPacket (sock, length, data, to);
 		return;
-	}
-
-	if (to.type == NA_BROADCAST) {
+#endif
+	case NA_BROADCAST:
+	case NA_IP:
 		net_socket = ip_sockets[sock];
-	} else if (to.type == NA_IP) {
-		net_socket = ip_sockets[sock];
-	} else if (to.type == NA_IPX) {
+		break;
+	case NA_BROADCAST_IPX:
+	case NA_IPX:
 		net_socket = ipx_sockets[sock];
-	} else if (to.type == NA_BROADCAST_IPX) {
-		net_socket = ipx_sockets[sock];
-	} else
+		break;
+	default:
 		Com_Error (ERR_FATAL, "NET_SendPacket: bad address type");
-
+		return;
+	}
 	if (!net_socket)
 		return;
 
@@ -423,7 +513,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 		int err = WSAGetLastError();
 
 		/* wouldblock is silent */
-		if (err == WSAEWOULDBLOCK)
+		if (err == WSAEWOULDBLOCK || err == WSAEINTR)
 			return;
 
 		/* some PPP links dont allow broadcasts */
@@ -431,23 +521,42 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 			return;
 
 		if (dedicated->value) { /* let dedicated servers continue after errors */
-			Com_Printf ("NET_SendPacket ERROR: %s to %s\n", NET_ErrorString(),
-				NET_AdrToString (to));
+			/* this error is "normal" in Win2k TCP/IP stack */
+			if (err != WSAECONNRESET)
+				Com_Printf ("NET_SendPacket Warning: %s to %s\n", NET_ErrorString(),
+					NET_AdrToString (to));
 		} else {
-			if (err == WSAEADDRNOTAVAIL) {
-				Com_DPrintf ("NET_SendPacket Warning: %s : %s\n",
-						NET_ErrorString(), NET_AdrToString (to));
+			/* WSAEHOSTDOWN and WSAEHOSTUNREACH for master server response via lan */
+			if (err == WSAEADDRNOTAVAIL || err == WSAEHOSTDOWN || err == WSAEHOSTUNREACH) {
+				Com_Printf ("NET_SendPacket Warning: %s : %s\n",
+					NET_ErrorString(), NET_AdrToString (to));
+			/**
+			 *  r1: ignore "errors" from connectionless info packets (FUCKING UGLY HACK)
+			 *      if the first 4 bytes are connectionless and len=10 (info 3) ignore.
+			 */
+
+			/**
+			 * r1: also ignore 10053 (connection reset by peer) messages if we are running
+			 *     a server. 2k/xp ip stack seems to send a bunch of these if a client disconnects
+			 *     - if we are a listen server then we would Com_Error out at this point without
+			 *     this fix (or hack if you prefer).
+			 */
 			} else {
-				Com_Error (ERR_DROP, "NET_SendPacket ERROR: %s to %s\n",
-						NET_ErrorString(), NET_AdrToString (to));
+				if (to->type != NA_BROADCAST && !(sock == NS_CLIENT && length == 11 && *(int *)data == -1) &&
+					!(sock == NS_SERVER && err == WSAECONNRESET))
+					Com_Error (ERR_NET, "NET_SendPacket ERROR: %s", NET_ErrorString());
 			}
 		}
+	} else {
+		net_packets_out++;
+		net_total_out += ret;
 	}
 }
 
 
 /**
  * @brief
+ * @sa NET_IPXSocket
  */
 int NET_IPSocket (char *net_interface, int port)
 {
@@ -500,6 +609,7 @@ int NET_IPSocket (char *net_interface, int port)
 
 /**
  * @brief
+ * @sa NET_OpenIPX
  */
 void NET_OpenIP (void)
 {
@@ -524,15 +634,16 @@ void NET_OpenIP (void)
 			Com_Error (ERR_FATAL, "Couldn't allocate dedicated server IP port");
 	}
 
+	NET_GetLocalAddress();
 
 	/* dedicated servers don't need client ports */
 	if (dedicated)
 		return;
 
 	if (!ip_sockets[NS_CLIENT]) {
-		port = Cvar_Get("ip_clientport", "0", CVAR_NOSET, NULL)->value;
+		port = Cvar_Get("ip_clientport", "0", CVAR_NOSET, NULL)->integer;
 		if (!port) {
-			port = Cvar_Get("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->value;
+			port = Cvar_Get("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->integer;
 			if (!port)
 				port = PORT_ANY;
 		}
@@ -540,10 +651,14 @@ void NET_OpenIP (void)
 		if (!ip_sockets[NS_CLIENT])
 			ip_sockets[NS_CLIENT] = NET_IPSocket (ip->string, PORT_ANY);
 	}
+
+	net_total_in = net_packets_in = net_total_out = net_packets_out = 0;
+	net_inittime = (unsigned int)time(NULL);
 }
 
 /**
  * @brief
+ * @sa NET_IPSocket
  */
 int NET_IPXSocket (int port)
 {
@@ -591,6 +706,7 @@ int NET_IPXSocket (int port)
 
 /**
  * @brief
+ * @sa NET_OpenIP
  */
 void NET_OpenIPX (void)
 {
@@ -610,6 +726,8 @@ void NET_OpenIPX (void)
 		ipx_sockets[NS_SERVER] = NET_IPXSocket (port);
 	}
 
+	NET_GetLocalAddress();
+
 	/* dedicated servers don't need client ports */
 	if (dedicated)
 		return;
@@ -625,16 +743,19 @@ void NET_OpenIPX (void)
 		if (!ipx_sockets[NS_CLIENT])
 			ipx_sockets[NS_CLIENT] = NET_IPXSocket (PORT_ANY);
 	}
+
+	net_total_in = net_packets_in = net_total_out = net_packets_out = 0;
+	net_inittime = (unsigned int)time(NULL);
 }
 
 
 /**
  * @brief A single player game will only use the loopback code
  */
-void	NET_Config (qboolean multiplayer)
+void NET_Config (qboolean multiplayer)
 {
-	int		i;
-	static	qboolean	old_config;
+	int i;
+	static qboolean old_config;
 
 	if (old_config == multiplayer)
 		return;
@@ -642,7 +763,7 @@ void	NET_Config (qboolean multiplayer)
 	old_config = multiplayer;
 
 	if (!multiplayer) {	/* shut down any existing sockets */
-		for (i=0 ; i<2 ; i++) {
+		for (i = 0; i < 2; i++) {
 			if (ip_sockets[i]) {
 				closesocket (ip_sockets[i]);
 				ip_sockets[i] = 0;
@@ -653,9 +774,9 @@ void	NET_Config (qboolean multiplayer)
 			}
 		}
 	} else {	/* open sockets */
-		if (! noudp->value)
+		if (!noudp->value)
 			NET_OpenIP ();
-		if (! noipx->value)
+		if (!noipx->value)
 			NET_OpenIPX ();
 	}
 }
@@ -715,6 +836,8 @@ void NET_Init (void)
 	noipx = Cvar_Get("noipx", "0", CVAR_NOSET, NULL);
 
 	net_shownet = Cvar_Get("net_shownet", "0", 0, NULL);
+
+	NET_GetLocalAddress();
 }
 
 
@@ -762,6 +885,8 @@ char *NET_ErrorString (void)
 	case WSAENETDOWN: return "WSAENETDOWN";
 	case WSAENETUNREACH: return "WSAENETUNREACH";
 	case WSAENETRESET: return "WSAENETRESET";
+	case WSAEHOSTDOWN: return "WSAEHOSTDOWN";
+	case WSAEHOSTUNREACH: return "WSAEHOSTUNREACH";
 	case WSAECONNABORTED: return "WSWSAECONNABORTEDAEINTR";
 	case WSAECONNRESET: return "WSAECONNRESET";
 	case WSAENOBUFS: return "WSAENOBUFS";

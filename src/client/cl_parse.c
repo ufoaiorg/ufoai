@@ -492,6 +492,9 @@ void CL_StartGame( sizebuf_t *sb )
 
 	Com_Printf("Starting the game...\n");
 
+	/* make sure selActor is null (after reconnect or server change this is needed) */
+	selActor = NULL;
+
 	/* center on first actor */
 	cl_worldlevel->modified = qtrue;
 	if (cl.numTeamList) {

@@ -3850,6 +3850,8 @@ static const cmdList_t game_commands[] = {
 
 /**
  * @brief
+ * @sa CL_GameNew
+ * @sa CL_GameLoad
  */
 static void CL_GameExit(void)
 {

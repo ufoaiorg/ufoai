@@ -459,6 +459,8 @@ void CL_Rcon_f(void)
 
 /**
  * @brief
+ * @sa CL_ParseServerData
+ * @sa CL_Disconnect
  */
 void CL_ClearState(void)
 {
@@ -481,9 +483,10 @@ void CL_ClearState(void)
 }
 
 /**
- * @brief
- *
- * Goes from a connected state to full screen console state
+ * @brief Sets the cls.state to ca_disconnected and informs the server
+ * @sa CL_Disconnect_f
+ * @sa CL_CloseAVI
+ * @note Goes from a connected state to full screen console state
  * Sends a disconnect message to the server
  * This is also called on Com_Error, so it shouldn't cause any errors
  */
@@ -524,7 +527,10 @@ void CL_Disconnect(void)
 }
 
 /**
- * @brief
+ * @brief Binding for disconnect console command
+ * @sa CL_Disconnect
+ * @sa CL_Drop
+ * @sa SV_ShutdownWhenEmpty
  */
 static void CL_Disconnect_f(void)
 {
@@ -532,6 +538,9 @@ static void CL_Disconnect_f(void)
 	CL_Drop();
 }
 
+/* it's dangerous to activate this */
+/*#define ACTIVATE_PACKET_COMMAND*/
+#ifdef ACTIVATE_PACKET_COMMAND
 /**
  * @brief This function allows you to send network commands from commandline
  * @note This function is only for debugging and testing purposes
@@ -539,7 +548,7 @@ static void CL_Disconnect_f(void)
  * packet [destination] [contents]
  * Contents allows \n escape character
  */
-void CL_Packet_f(void)
+static void CL_Packet_f(void)
 {
 	char send[2048];
 
@@ -579,6 +588,7 @@ void CL_Packet_f(void)
 
 	NET_SendPacket(NS_CLIENT, out - send, send, adr);
 }
+#endif
 
 /**
  * @brief Just sent as a hint to the client that they should drop to full console
@@ -751,6 +761,8 @@ static void CL_ParseServerInfoMessage(void)
 		/* var */
 		var = s;
 		s = strstr(s, "\\");
+		if (!s)
+			break;
 		*s++ = '\0';
 
 		/* value */
@@ -1518,6 +1530,15 @@ void CL_ReadSinglePlayerData( void )
 /**
  * @brief
  */
+static void CL_ShowIP_f (void)
+{
+	Sys_ShowIP();
+}
+
+
+/**
+ * @brief
+ */
 void CL_InitLocal(void)
 {
 	cls.state = ca_disconnected;
@@ -1635,6 +1656,8 @@ void CL_InitLocal(void)
 	Cmd_AddCommand("pause", CL_Pause_f, "Pause the current server (singleplayer and multiplayer when you are server)");
 	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
 
+	Cmd_AddCommand("showip", CL_ShowIP_f, "Command to show your ip");
+
 	/* text id is servers in menu_multiplayer.ufo */
 	Cmd_AddCommand("server_info", CL_ServerInfo_f, NULL);
 	Cmd_AddCommand("servers_click", CL_ServerListClick_f, NULL);
@@ -1656,7 +1679,7 @@ void CL_InitLocal(void)
 
 	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
 
-#if 0
+#ifdef ACTIVATE_PACKET_COMMAND
 	/* this is dangerous to leave in */
 	Cmd_AddCommand ("packet", CL_Packet_f, "Dangerous debug function for network testing");
 #endif

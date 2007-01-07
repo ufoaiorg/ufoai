@@ -878,7 +878,7 @@ void SV_InitGame(void)
 	/* init game */
 	SV_InitGameProgs();
 
-	if (sv_maxclients->value != 1.0f && (dedicated->value || public_server->value))
+	if (sv_maxclients->integer != 1 && (dedicated->value || public_server->value))
 		SV_SetMaster_f();
 }
 

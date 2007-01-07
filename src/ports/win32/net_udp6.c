@@ -18,15 +18,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-/* #include "winsock.h" */
+#include "../../qcommon/qcommon.h"
+
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <tpipv6.h>
-#include "wsipx.h"
-#include "../qcommon/qcommon.h"
+#include <wsipx.h>
 
 #define	MAX_LOOPBACK	4
-#define QUAKE2MCAST "ff12::666"
+#define UFOAIMCAST "ff12::666"
 
 typedef struct
 {
@@ -53,6 +53,22 @@ int ipx_sockets[2];
 char *multicast_interface;
 
 char *NET_ErrorString (void);
+
+/* extern in net_chan.c */
+int net_inittime;
+
+uint64_t net_total_in;
+uint64_t net_total_out;
+uint64_t net_packets_in;
+uint64_t net_packets_out;
+
+/**
+ * @brief
+ * @sa NET_GetLocalAddress
+ */
+void Sys_ShowIP(void)
+{
+}
 
 /**
  * @brief
@@ -84,9 +100,9 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 		memset(&hints, 0, sizeof(hints));
 		hints.ai_family = AF_INET6;
 		hints.ai_socktype = SOCK_DGRAM;
-		hints.ai_flags =  AI_NUMERICHOST;
+		hints.ai_flags = AI_NUMERICHOST;
 
-		error = getaddrinfo (QUAKE2MCAST, NULL, &hints, &res);
+		error = getaddrinfo (UFOAIMCAST, NULL, &hints, &res);
 		if (error) {
 			Com_Printf("NET_NetadrToSockadr: inet_pton: %s", gai_strerror(error));
 			return;
@@ -102,7 +118,7 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 
 		break;
 
-	case NA_IP6:
+	case NA_IPV6:
 		if (IN6_IS_ADDR_V4MAPPED ((struct in6_addr *) a->ip)) {
 #ifdef HAVE_SIN6_LEN
 			s->ss_len = sizeof (struct sockaddr_in);
@@ -158,7 +174,7 @@ void SockadrToNetadr (struct sockaddr_storage *s, netadr_t *a)
 		} else {
 			memcpy(a->ip, &s6->sin6_addr, sizeof(a->ip));
 			a->port = s6->sin6_port;
-			a->type = NA_IP6;
+			a->type = NA_IPV6;
 			a->scope_id = s6->sin6_scope_id;
 		}
 	} else
@@ -182,7 +198,7 @@ qboolean NET_CompareAdr (netadr_t a, netadr_t b)
 		return qfalse;
 	}
 
-	if (a.type == NA_IP6) {
+	if (a.type == NA_IPV6) {
 		if ((memcmp(a.ip, b.ip, 16) == 0) && a.port == b.port)
 			return qtrue;
 	}
@@ -214,7 +230,7 @@ qboolean NET_CompareBaseAdr (netadr_t a, netadr_t b)
 		return qfalse;
 	}
 
-	if (a.type == NA_IP6) {
+	if (a.type == NA_IPV6) {
 		if ((memcmp(a.ip, b.ip, 16) == 0))
 			return qtrue;
 		return qfalse;
@@ -247,7 +263,7 @@ char *NET_BaseAdrToString (netadr_t a)
 	case NA_BROADCAST:
 		Com_sprintf (s, sizeof(s), "255.255.255.255");
 		break;
-	case NA_IP6:
+	case NA_IPV6:
 	case NA_MULTICAST6:
 		memset (&ss, 0, sizeof (ss));
 		s6 = (struct sockaddr_in6 *)&ss;
@@ -373,7 +389,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 		for (; *space && *space != ']'; space++);
 		if (!*space) {
 				Com_Printf ("NET_StringToSockaddr: invalid IPv6 address %s\n", s);
-				return 0;
+				return qfalse;
 		}
 		*space++ = '\0';
 	}
@@ -388,7 +404,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 	if ((err = getaddrinfo (addrs, ports, &hints, &resultp))) {
 		/* Error */
 		Com_Printf ("NET_StringToSockaddr: string %s:\n%s\n", s, gai_strerror(err));
-		return 0;
+		return qfalse;
 	}
 
 	switch (resultp->ai_family) {
@@ -405,7 +421,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 	default:
 		Com_Printf("NET_StringToSockaddr: string %s:\nprotocol family %d not supported\n",
 			s, resultp->ai_family);
-		return 0;
+		return qfalse;
 	}
 
 	/* Detection of IPX address clashes with IPv6 addresses. Resolve this later. */
@@ -561,6 +577,9 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 		ret = recvfrom (net_socket, net_message->data, net_message->maxsize,
 			0, (struct sockaddr *)&from, &fromlen);
 
+		net_packets_in++;
+		net_total_in += ret;
+
 		SockadrToNetadr (&from, net_from);
 
 		if (ret == -1) {
@@ -606,45 +625,41 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	int		addr_size = sizeof(struct sockaddr_in);
 
 	switch (to.type) {
-
+#ifndef DEDICATED_ONLY
 	case NA_LOOPBACK:
 		NET_SendLoopPacket (sock, length, data, to);
 		return;
-		break;
+#endif
 	case NA_BROADCAST:
 	case NA_IP:
 		net_socket = ip_sockets[sock];
-		if (!net_socket)
-			return;
 		break;
-	case NA_IP6:
+	case NA_IPV6:
 	case NA_MULTICAST6:
 		net_socket = ip6_sockets[sock];
 		addr_size = sizeof(struct sockaddr_in6);
-		if (!net_socket)
-			return;
 		break;
 	case NA_IPX:
 	case NA_BROADCAST_IPX:
 		net_socket = ipx_sockets[sock];
-		if (!net_socket)
-			return;
 		break;
 	default:
-		Com_Printf("NET_SendPacket: bad address type");
+		Com_Error (ERR_FATAL, "NET_SendPacket: bad address type");
 		return;
-		break;
 	}
+
+	if (!net_socket)
+		return;
 
 	NetadrToSockadr (&to, &addr);
 
 	/**
-	 * Re-check the address family. If to.type is NA_IP6 but
+	 * Re-check the address family. If to.type is NA_IPV6 but
 	 * contains an IPv4 mapped address, NetadrToSockadr will
 	 * return an AF_INET struct.  If so, switch back to AF_INET
 	 * socket.
 	 */
-	if (to.type == NA_IP6 && addr.ss_family == AF_INET) {
+	if (to.type == NA_IPV6 && addr.ss_family == AF_INET) {
 		net_socket = ip_sockets[sock];
 		addr_size = sizeof(struct sockaddr_in);
 		if (!net_socket)
@@ -690,11 +705,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 					On Win32, we don't. More tests required.
 				*/
-#ifdef _WIN32
 				Com_sprintf (mcast_addr, sizeof(mcast_addr), "%s", tmp);
-#else
-				Com_sprintf (mcast_addr, sizeof(mcast_addr), "%s%%%s", tmp, multicast_interface);
-#endif
 				Com_sprintf (mcast_port, sizeof(mcast_port), "%d", ntohs(s6->sin6_port));
 				memset(&hints, 0, sizeof(hints));
 				hints.ai_family = AF_INET6;
@@ -732,8 +743,8 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 		if (dedicated->value) {
 			/* let dedicated servers continue after errors */
-			Com_Printf ("NET_SendPacket ERROR: %s to %s\n", NET_ErrorString(),
-						NET_AdrToString (to));
+			Com_Printf ("NET_SendPacket Warning: %s to %s\n", NET_ErrorString(),
+				NET_AdrToString (to));
 		} else {
 			if (err == WSAEADDRNOTAVAIL) {
 				Com_DPrintf ("NET_SendPacket Warning: %s : %s\n",
@@ -743,6 +754,9 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 					NET_ErrorString(), NET_AdrToString (to));
 			}
 		}
+	} else {
+		net_packets_out++;
+		net_total_out += ret;
 	}
 }
 
@@ -845,13 +859,7 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
 		if (multicast_interface != NULL) {
 			/* multicast_interface is a global variable. Also used in NET_SendPacket() */
 
-#ifdef _WIN32
 			mreq.ipv6mr_interface = mcast->integer;
-#else
-			if ((mreq.ipv6mr_interface = if_nametoindex(multicast_interface)) == 0) {
-				Com_Printf("NET_IPSocket: invalid interface: %s\n", multicast_interface);
-			}
-#endif
 			if (setsockopt(newsocket, IPPROTO_IPV6, IPV6_MULTICAST_IF, (char*)&mreq.ipv6mr_interface,
 					sizeof(mreq.ipv6mr_interface)) < 0) {
 				Com_Printf("NET_IPSocket: IPV6_MULTICAST_IF: %s\n", strerror (errno));
@@ -864,7 +872,7 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
 				hints.ai_protocol = IPPROTO_UDP;
 				hints.ai_flags = AI_PASSIVE;
 
-				if ((Error = getaddrinfo (QUAKE2MCAST, NULL, &hints, &res))) {
+				if ((Error = getaddrinfo (UFOAIMCAST, NULL, &hints, &res))) {
 					Com_Printf("NET_IPSocket: getaddrinfo: %s\n", gai_strerror (Error));
 					break;
 				}
@@ -944,6 +952,9 @@ void NET_OpenIP (void)
 			ip_sockets[NS_CLIENT] = NET_IPSocket (ip->string, PORT_ANY, NS_CLIENT, AF_INET);
 		}
 	}
+
+	net_total_in = net_packets_in = net_total_out = net_packets_out = 0;
+	net_inittime = (unsigned int)time(NULL);
 }
 
 
@@ -1030,6 +1041,9 @@ void NET_OpenIPX (void)
 		if (!ipx_sockets[NS_CLIENT])
 			ipx_sockets[NS_CLIENT] = NET_IPXSocket (PORT_ANY);
 	}
+
+	net_total_in = net_packets_in = net_total_out = net_packets_out = 0;
+	net_inittime = (unsigned int)time(NULL);
 }
 
 
@@ -1182,6 +1196,8 @@ char *NET_ErrorString (void)
 	case WSAENETDOWN: return "WSAENETDOWN";
 	case WSAENETUNREACH: return "WSAENETUNREACH";
 	case WSAENETRESET: return "WSAENETRESET";
+	case WSAEHOSTDOWN: return "WSAEHOSTDOWN";
+	case WSAEHOSTUNREACH: return "WSAEHOSTUNREACH";
 	case WSAECONNABORTED: return "WSWSAECONNABORTEDAEINTR";
 	case WSAECONNRESET: return "WSAECONNRESET";
 	case WSAENOBUFS: return "WSAENOBUFS";

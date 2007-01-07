@@ -62,6 +62,80 @@ int NET_Socket (char *net_interface, int port);
 char *NET_ErrorString (void);
 
 
+#define	MAX_IPS		16
+static	int		numIP;
+static	byte	localIP[MAX_IPS][4];
+
+static unsigned int net_inittime;
+
+static unsigned long long net_total_in;
+static unsigned long long net_total_out;
+static unsigned long long net_packets_in;
+static unsigned long long net_packets_out;
+
+/**
+ * @brief
+ */
+void Net_Stats_f (void)
+{
+	int now = time(0);
+	int diff = now - net_inittime;
+
+	Com_Printf ("Network up for %i seconds.\n"
+			"%llu bytes in %llu packets received (av: %i kbps)\n"
+			"%llu bytes in %llu packets sent (av: %i kbps)\n", diff,
+	net_total_in, net_packets_in, (int)(((net_total_in * 8) / 1024) / diff),
+	net_total_out, net_packets_out, (int)((net_total_out * 8) / 1024) / diff);
+}
+
+/**
+ * @brief
+ * @sa NET_GetLocalAddress
+ */
+void Sys_ShowIP(void)
+{
+	int i;
+
+	for (i = 0; i < numIP; i++)
+		Com_Printf( "IP: %i.%i.%i.%i\n", localIP[i][0], localIP[i][1], localIP[i][2], localIP[i][3] );
+}
+
+/**
+ * @brief
+ */
+void NET_GetLocalAddress( void )
+{
+	char hostname[256];
+	struct hostent *hostInfo;
+	char *p;
+	int ip, n;
+
+	if (gethostname(hostname, 256) == -1)
+		return;
+
+	hostInfo = gethostbyname(hostname);
+	if (!hostInfo)
+		return;
+
+	Com_Printf("Hostname: %s\n", hostInfo->h_name);
+	n = 0;
+	while ((p = hostInfo->h_aliases[n++]) != NULL)
+		Com_Printf("Alias: %s\n", p);
+
+	if (hostInfo->h_addrtype != AF_INET)
+		return;
+
+	numIP = 0;
+	while ((p = hostInfo->h_addr_list[numIP++]) != NULL && numIP < MAX_IPS) {
+		ip = ntohl(*(int *)p);
+		localIP[numIP][0] = p[0];
+		localIP[numIP][1] = p[1];
+		localIP[numIP][2] = p[2];
+		localIP[numIP][3] = p[3];
+		Com_Printf("IP: %i.%i.%i.%i\n", ( ip >> 24 ) & 0xff, ( ip >> 16 ) & 0xff, ( ip >> 8 ) & 0xff, ip & 0xff);
+	}
+}
+
 /**
  * @brief
  */
@@ -73,7 +147,7 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_in *s)
 		s->sin_family = AF_INET;
 
 		s->sin_port = a->port;
-		*(int *)&s->sin_addr = -1;
+		*(int *)&s->sin_addr = PORT_ANY;
 	} else if (a->type == NA_IP) {
 		s->sin_family = AF_INET;
 
@@ -325,6 +399,9 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 		ret = recvfrom (net_socket, net_message->data, net_message->maxsize
 			, 0, (struct sockaddr *)&from, &fromlen);
 
+		net_packets_in++;
+		net_total_in += ret;
+
 		SockadrToNetadr (&from, net_from);
 
 		if (ret == -1) {
@@ -359,40 +436,36 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	struct sockaddr_in	addr;
 	int		net_socket = 0;
 
+	switch (to.type) {
 #ifndef DEDICATED_ONLY
-	if ( to.type == NA_LOOPBACK ) {
+	case NA_LOOPBACK:
 		NET_SendLoopPacket (sock, length, data, to);
 		return;
-	}
 #endif
-
-	if (to.type == NA_BROADCAST) {
+	case NA_BROADCAST:
+	case NA_IP:
 		net_socket = ip_sockets[sock];
-		if (!net_socket)
-			return;
-	} else if (to.type == NA_IP) {
-		net_socket = ip_sockets[sock];
-		if (!net_socket)
-			return;
-	} else if (to.type == NA_IPX) {
+		break;
+	case NA_BROADCAST_IPX:
+	case NA_IPX:
 		net_socket = ipx_sockets[sock];
-		if (!net_socket)
-			return;
-	} else if (to.type == NA_BROADCAST_IPX) {
-		net_socket = ipx_sockets[sock];
-		if (!net_socket)
-			return;
-	} else {
+		break;
+	default:
 		Com_Error (ERR_FATAL, "NET_SendPacket: bad address type");
 		return;
 	}
+	if (!net_socket)
+		return;
 
 	NetadrToSockadr (&to, &addr);
 
 	ret = sendto (net_socket, data, length, 0, (struct sockaddr *)&addr, sizeof(addr) );
 	if (ret == -1) {
-		Com_Printf ("NET_SendPacket ERROR: %s to %s\n", NET_ErrorString(),
-				NET_AdrToString (to));
+		Com_Printf ("NET_SendPacket Warning: %s to %s\n", NET_ErrorString(),
+			NET_AdrToString (to));
+	} else {
+		net_packets_out++;
+		net_total_out += ret;
 	}
 }
 
@@ -407,10 +480,20 @@ void NET_OpenIP (void)
 	port = Cvar_Get ("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);
 	ip = Cvar_Get ("ip", "localhost", CVAR_NOSET, NULL);
 
-	if (!ip_sockets[NS_SERVER])
-		ip_sockets[NS_SERVER] = NET_Socket (ip->string, port->value);
-	if (!ip_sockets[NS_CLIENT])
-		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY);
+	if (!ip_sockets[NS_SERVER]) {
+		ip_sockets[NS_SERVER] = NET_Socket (ip->string, port->integer);
+		if (!ip_sockets[NS_SERVER] && dedicated)
+			Com_Error (ERR_FATAL, "Couldn't allocate dedicated server IP port");
+	}
+	port = Cvar_Get ("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL);
+	if (!ip_sockets[NS_CLIENT]) {
+		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, port->integer);
+		if (!ip_sockets[NS_CLIENT])
+			ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY);
+	}
+
+	net_total_in = net_packets_in = net_total_out = net_packets_out = 0;
+	net_inittime = (unsigned int)time(NULL);
 }
 
 /**
@@ -418,6 +501,8 @@ void NET_OpenIP (void)
  */
 void NET_OpenIPX (void)
 {
+	net_total_in = net_packets_in = net_total_out = net_packets_out = 0;
+	net_inittime = (unsigned int)time(NULL);
 }
 
 
@@ -426,10 +511,10 @@ void NET_OpenIPX (void)
  */
 void NET_Config (qboolean multiplayer)
 {
-	int		i;
+	int i;
 
 	if (!multiplayer) {	/* shut down any existing sockets */
-		for (i=0 ; i<2 ; i++) {
+		for (i = 0; i < 2; i++) {
 			if (ip_sockets[i]) {
 				close (ip_sockets[i]);
 				ip_sockets[i] = 0;
@@ -440,8 +525,8 @@ void NET_Config (qboolean multiplayer)
 			}
 		}
 	} else {	/* open sockets */
-		NET_OpenIP ();
-		NET_OpenIPX ();
+		NET_OpenIP();
+		NET_OpenIPX();
 	}
 }
 
@@ -451,6 +536,7 @@ void NET_Config (qboolean multiplayer)
  */
 void NET_Init (void)
 {
+	NET_GetLocalAddress();
 }
 
 

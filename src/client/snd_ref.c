@@ -1653,10 +1653,8 @@ int OGG_Read(void)
 		res = 0;
 	}
 	S_RawSamples(res >> 2, music.rate, 2, 2, (byte *) music.ovBuf, music.fading);
-	if (*music.newFilename) {
-		Com_DPrintf("fading ogg track: %.10f\n", music.fading);
+	if (*music.newFilename)
 		music.fading -= snd_fadingspeed->value;
-	}
 
 #ifdef HAVE_OPENAL
 	SND_OAL_Stream(music.ovPlaying);

@@ -324,6 +324,8 @@ void Sys_Minimize (void);
 void Sys_DisableTray (void);
 void Sys_EnableTray (void);
 
+void Sys_ShowIP (void);
+
 /*
 ==============================================================
 CLIENT / SERVER SYSTEMS

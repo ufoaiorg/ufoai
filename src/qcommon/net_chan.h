@@ -56,8 +56,11 @@ char *NET_AdrToString(netadr_t a);
 qboolean NET_StringToAdr(char *s, netadr_t * a);
 void NET_Sleep(int msec);
 char *NET_SocketToString (void *s_ptr);
+#ifdef HAVE_IPV6
+int NET_Socket (char *net_interface, int port, netsrc_t type, int family);
+#else
 int NET_Socket (char *net_interface, int port);
-
+#endif
 /*============================================================================ */
 
 #define	OLD_AVG		0.99		/* total = oldtotal*OLD_AVG + new*(1-OLD_AVG) */
@@ -108,3 +111,5 @@ void Netchan_Setup(netsrc_t sock, netchan_t * chan, netadr_t adr, int qport);
 void Netchan_Transmit(netchan_t * chan, int length, byte * data);
 void Netchan_OutOfBandPrint(int net_socket, netadr_t adr, char *format, ...) __attribute__((format(printf, 3, 4)));
 qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg);
+
+void Net_Stats_f (void);

@@ -94,6 +94,8 @@ void Netchan_Init(void)
 	net_showpackets = Cvar_Get("net_showpackets", "0", 0, NULL);
 	net_showdrop = Cvar_Get("net_showdrop", "0", 0, NULL);
 	qport = Cvar_Get("qport", va("%i", port), CVAR_NOSET, NULL);
+
+	Cmd_AddCommand("net_stats", Net_Stats_f, "Network statistics");
 }
 
 /**

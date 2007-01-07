@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Specify a list of master servers
+ * @sa SV_InitGame
  */
 void SV_SetMaster_f(void)
 {

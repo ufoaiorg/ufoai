@@ -96,7 +96,7 @@ static model_t *Mod_ForName(const char *name, qboolean crash)
 	if (name[0] == '*') {
 		i = atoi(name + 1) - 1;
 		if (i < 0 || i >= numInline)
-			ri.Sys_Error(ERR_DROP, "bad inline model number");
+			ri.Sys_Error(ERR_DROP, "bad inline model number '%s' (%i/%i)", name, i, numInline);
 		return &mod_inline[i];
 	}
 

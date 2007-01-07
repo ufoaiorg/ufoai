@@ -45,7 +45,7 @@ netadr_t	net_local_adr;
 
 #define	MAX_LOOPBACK	4
 
-#define QUAKE2MCAST "ff12::666"
+#define UFOAIMCAST "ff12::666"
 #include <net/if.h>
 
 typedef struct
@@ -70,7 +70,39 @@ char *multicast_interface = NULL;
 int NET_Socket (char *net_interface, int port, netsrc_t type, int family);
 char *NET_ErrorString (void);
 
+static unsigned int net_inittime;
+
+static unsigned long long net_total_in;
+static unsigned long long net_total_out;
+static unsigned long long net_packets_in;
+static unsigned long long net_packets_out;
+
+/**
+ * @brief
+ */
+void Net_Stats_f (void)
+{
+	int now = time(0);
+	int diff = now - net_inittime;
+
+	Com_Printf ("Network up for %i seconds.\n"
+			"%llu bytes in %llu packets received (av: %i kbps)\n"
+			"%llu bytes in %llu packets sent (av: %i kbps)\n", diff,
+	net_total_in, net_packets_in, (int)(((net_total_in * 8) / 1024) / diff),
+	net_total_out, net_packets_out, (int)((net_total_out * 8) / 1024) / diff);
+}
+
+
+
 /*============================================================================= */
+
+/**
+ * @brief
+ * @sa NET_GetLocalAddress
+ */
+void Sys_ShowIP(void)
+{
+}
 
 /**
  * @brief
@@ -99,7 +131,7 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 
 		s6 = (struct sockaddr_in6 *)s;
 
-		if (inet_pton(AF_INET6, QUAKE2MCAST,  &s6->sin6_addr.s6_addr) != 1) {
+		if (inet_pton(AF_INET6, UFOAIMCAST,  &s6->sin6_addr.s6_addr) != 1) {
 			Com_Printf("NET_NetadrToSockadr: inet_pton: %s", strerror (errno));
 			return;
 		}
@@ -497,7 +529,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 /**
  * @brief
  */
-qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
+qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int 	ret;
 	struct sockaddr_storage	from;
@@ -513,8 +545,8 @@ qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 		if (protocol == 0)
 			net_socket = ip_sockets[sock];
 		else if (protocol == 1)
-                        net_socket = ip6_sockets[sock];
-                else
+			net_socket = ip6_sockets[sock];
+		else
 			net_socket = ipx_sockets[sock];
 
 		if (!net_socket)
@@ -522,7 +554,10 @@ qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 
 		fromlen = sizeof(from);
 		ret = recvfrom (net_socket, net_message->data, net_message->maxsize,
-                                0, (struct sockaddr *)&from, &fromlen);
+			0, (struct sockaddr *)&from, &fromlen);
+
+		net_packets_in++;
+		net_total_in += ret;
 
 		SockadrToNetadr (&from, net_from);
 
@@ -532,7 +567,7 @@ qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 			if (err == EWOULDBLOCK || err == ECONNREFUSED)
 				continue;
 			Com_Printf ("NET_GetPacket: %s from %s\n", NET_ErrorString(),
-						NET_AdrToString(*net_from));
+				NET_AdrToString(*net_from));
 			continue;
 		}
 
@@ -559,35 +594,31 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	int		addr_size = sizeof(struct sockaddr_in);
 
 	switch (to.type) {
-
+#ifndef DEDICATED_SERVER
 	case NA_LOOPBACK:
 		NET_SendLoopPacket (sock, length, data, to);
 		return;
-                break;
+#endif
 	case NA_BROADCAST:
 	case NA_IP:
 		net_socket = ip_sockets[sock];
-		if (!net_socket)
-			return;
-                break;
+		break;
 	case NA_IP6:
 	case NA_MULTICAST6:
 		net_socket = ip6_sockets[sock];
 		addr_size = sizeof(struct sockaddr_in6);
-		if (!net_socket)
-			return;
-                break;
+		break;
 	case NA_IPX:
 	case NA_BROADCAST_IPX:
 		net_socket = ipx_sockets[sock];
-		if (!net_socket)
-			return;
-                break;
+		break;
 	default:
 		Com_Error (ERR_FATAL, "NET_SendPacket: bad address type");
 		return;
-		break;
 	}
+
+	if (!net_socket)
+		return;
 
 	NetadrToSockadr (&to, &addr);
 
@@ -656,6 +687,10 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	ret = sendto (net_socket, data, length, 0, (struct sockaddr *)&addr, addr_size );
 	if (ret == -1)
 		Com_Printf ("NET_SendPacket ERROR: %s to %s\n", NET_ErrorString(), NET_AdrToString (to));
+	else {
+		net_packets_out++;
+		net_total_out += ret;
+	}
 }
 
 
@@ -672,12 +707,20 @@ void NET_OpenIP (void)
 
 	if (!ip6_sockets[NS_SERVER])
 		ip6_sockets[NS_SERVER] = NET_Socket (ip->string, port->value, NS_SERVER, AF_INET6);
-	if (!ip6_sockets[NS_CLIENT])
-		ip6_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY, NS_CLIENT, AF_INET6);
 	if (!ip_sockets[NS_SERVER])
 		ip_sockets[NS_SERVER] = NET_Socket (ip->string, port->value, NS_SERVER, AF_INET);
-	if (!ip_sockets[NS_CLIENT])
-		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY, NS_CLIENT, AF_INET);
+
+	port = Cvar_Get ("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL);
+	if (!ip6_sockets[NS_CLIENT]) {
+		ip6_sockets[NS_CLIENT] = NET_Socket (ip->string, port->integer, NS_CLIENT, AF_INET6);
+		if (!ip_sockets[NS_CLIENT])
+			ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY, NS_CLIENT, AF_INET);
+	}
+	if (!ip_sockets[NS_CLIENT]) {
+		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, port->integer, NS_CLIENT, AF_INET);
+		if (!ip_sockets[NS_CLIENT])
+			ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY, NS_CLIENT, AF_INET);
+	}
 }
 
 /**
@@ -826,7 +869,7 @@ int NET_Socket (char *net_interface, int port, netsrc_t type, int family)
 
 			/* Join multicast group ONLY if server */
 			if (type == NS_SERVER) {
-				if (inet_pton(AF_INET6, QUAKE2MCAST, &mreq.ipv6mr_multiaddr.s6_addr) != 1) {
+				if (inet_pton(AF_INET6, UFOAIMCAST, &mreq.ipv6mr_multiaddr.s6_addr) != 1) {
 					Com_Printf("NET_Socket: inet_pton: %s", strerror (errno));
 				}
 				if (setsockopt(newsocket, IPPROTO_IPV6, IPV6_JOIN_GROUP, &mreq, sizeof(mreq)) < 0) {

@@ -114,12 +114,12 @@ Protokoll functions
 ===============================================================
 */
 
-cvar_t *irc_messageBucketSize = NULL;
-cvar_t *irc_messageBucketBurst = NULL;
-cvar_t *irc_messageBucketRate = NULL;
-cvar_t *irc_characterBucketSize = NULL;
-cvar_t *irc_characterBucketBurst = NULL;
-cvar_t *irc_characterBucketRate = NULL;
+static cvar_t *irc_messageBucketSize = NULL;
+static cvar_t *irc_messageBucketBurst = NULL;
+static cvar_t *irc_messageBucketRate = NULL;
+static cvar_t *irc_characterBucketSize = NULL;
+static cvar_t *irc_characterBucketBurst = NULL;
+static cvar_t *irc_characterBucketRate = NULL;
 
 typedef struct irc_bucket_message_s {
 	char *msg;
@@ -1072,9 +1072,17 @@ qboolean Irc_Proto_Flush (void)
  */
 static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 {
+	int messageBucketSize;
+	int characterBucketSize;
+
+	/* connection failed if this is null */
+	if (!irc_messageBucketSize || !irc_connected)
+		return qtrue;
+
+	messageBucketSize = irc_messageBucketSize->integer;
+	characterBucketSize = irc_characterBucketSize->integer;
+
 	/* create message node */
-	const int messageBucketSize = irc_messageBucketSize->integer;
-	const int characterBucketSize = irc_characterBucketSize->integer;
 	irc_bucket_message_t * const m = (irc_bucket_message_t*) Mem_Alloc(sizeof(irc_bucket_message_t));
 	irc_bucket_message_t * n = irc_bucket.first_msg;
 	if (irc_bucket.message_size + 1 <= messageBucketSize && irc_bucket.character_size + msg_len <= characterBucketSize) {
@@ -1723,6 +1731,7 @@ extern void Irc_Shutdown(void)
 extern void Irc_Input_Activate(void)
 {
 	menuText[TEXT_STANDARD] = irc_buffer;
+	menuText[TEXT_LIST] = NULL; /* TODO: Userlist */
 	if (irc_connected && *irc_defaultChannel->string) {
 		cls.key_dest = key_irc;
 	} else
