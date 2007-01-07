@@ -109,10 +109,10 @@ menu production
 		tooltip "_Scroll up"
 		image	menu/buttons_small
 		mousefx true
-		pos		"430 65"
+		pos		"430 68"
 		texh	"48 48"
 		texl	"32 32"
-		click	{ cmd "mn_textscroll prodlist -1;" }
+		click	{ cmd "mn_textscroll prodlist -1;mn_textscroll prodlist_amount -1" }
 		out		{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
 		in		{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
 	}
@@ -122,10 +122,10 @@ menu production
 		tooltip "_Scroll down"
 		image	menu/buttons_small
 		mousefx true
-		pos		"430 720"
+		pos		"430 715"
 		texl	"32 48"
 		texh	"48 64"
-		click	{ cmd "mn_textscroll prodlist 1;" }
+		click	{ cmd "mn_textscroll prodlist 1;mn_textscroll prodlist_amount 1" }
 		out		{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
 		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
 	}
