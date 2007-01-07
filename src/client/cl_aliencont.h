@@ -23,32 +23,37 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#define ALIENS_AMOUNT	0	/* store current alive aliens amount */
-#define MAX_CARGO	256
+#ifndef CLIENT_CL_ALIENCONT_H
+#define CLIENT_CL_ALIENCONT_H
 
-typedef enum {			/* types of aliens */
+#define MAX_CARGO		256
+#define MAX_ALIENCONT_CAP	512
+
+typedef enum {		/* types of aliens */
 	AL_ORTNOK,
 	AL_TAMAN,
-	AL_THIRD
+	AL_SHEVAAR,
+	AL_FLYER,
+	AL_UNKNOWN	/* dummy, to get all */
 } alienType_t;
 
-typedef enum {			/* specializations of aliens */
+typedef enum {		/* specializations of aliens */
 	AS_PILOT,
 	AS_GUNNER,
 	AS_HARVESTER,
 	AS_SOLDIER
 } alienSpec_t;
 
-typedef enum {			/* cases of alien amount calculation */
+typedef enum {		/* cases of alien amount calculation */
 	ALC_MISSION,
 	ALC_RESEARCH
 } alienCalcType_t;
 
 typedef struct aliensCont {
-	int id;			/* used to count */
-	int alienType_t;	/* type of alien */
-	int state;		/* dead or alive */
-	int alienSpec_t;	/* alien specialization */
+	int idx;			/* self link */
+	char alientype[MAX_VAR];	/* type of alien */ /* FIXME: alienType_t here */
+	int state;			/* dead or alive */
+	int amount;			/* amount */
 } aliensCont_t;
 
 typedef struct aliensTmp {
@@ -60,10 +65,15 @@ typedef struct aliensTmp {
 /**
  * Collecting aliens functions
  */
+
+char *AL_AlienTypeToName(alienType_t type);
 void CL_CollectingAliens(void);
+void AL_AddAliens(void);
+void AL_CountAll(void);
 
 /**
  * Menu functions
  */
 
+#endif /* CLIENT_CL_ALIENCONT_H */
 

@@ -89,6 +89,8 @@ typedef struct aircraft_s {
 	technology_t *shield;
 	mapline_t route;
 	void *homebase;				/* pointer to homebase */
+	aliensTmp_t aliencargo[MAX_CARGO];	/* cargo of aliens */
+	int alientypes;				/* how many types we collected */
 
 	char building[MAX_VAR];		/* id of the building needed as hangar */
 

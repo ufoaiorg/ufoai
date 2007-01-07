@@ -2574,3 +2574,18 @@ aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index)
 	}
 }
 
+/**
+ * @brief Do anything when dropship returns to base
+ * @param[in] aircraft
+ * @param[in] base
+ * @note Place here any stuff, which should be called
+ * when Drophip returns to base.
+ */
+void CL_DropshipReturned(base_t* base, aircraft_t* aircraft)
+{
+	baseCurrent = base;
+	AL_AddAliens(); /* Add aliens to Alien Containment */
+	AL_CountAll(); /* Count all alive aliens */
+	RS_MarkResearchable(); /* Mark new technologies researchable */
+}
+

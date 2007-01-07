@@ -177,6 +177,8 @@ typedef struct base_s {
 	/* building_radar increases the sensor width */
 	radar_t	radar;
 
+	aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/* alien containment capacity */
+
 	/* weapons, etc. stored in base */
 	equipDef_t storage;
 
@@ -237,5 +239,6 @@ aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index);
 void B_ReviveSoldiersInBase(base_t* base); /* TODO */
 
 void B_BuildingDestroy (building_t* building, base_t* base);
+void CL_DropshipReturned(base_t* base, aircraft_t* aircraft);
 
 #endif /* CLIENT_CL_BASEMANGEMENT_H */

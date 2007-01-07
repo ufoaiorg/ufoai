@@ -33,26 +33,59 @@ aliensTmp_t cargo[MAX_CARGO];
  */
 
 /**
+ * @brief Type of alien to its name
+ * @param[in] type
+ * @return name
+ */
+char *AL_AlienTypeToName(alienType_t type)
+{
+	switch (type) {
+		case AL_ORTNOK:
+			return "Ortnok";
+		case AL_TAMAN:
+			return "Taman";
+		case AL_SHEVAAR:
+			return "Shevaar";
+		case AL_FLYER:
+			return "Flyer";
+		default:
+			return "Unknown";
+    }
+}
+
+/**
  * @brief Collecting stunned aliens and alien bodies after the mission
- * @note This function should be called by CL_ParseResults() in cl_team.c
- * in place of already called CL_CollectAliens there (for testing purposes
- * just rename CL_CollectAliens to CL_CollectingAliens in cl_team.c)
- * @sa CL_CollectingAliens
- * @sa CL_CollectAliens
+ * @sa CL_ParseResults
  */
 void CL_CollectingAliens(void)
 {
 	int i, j;
 	int alstate;
-	int alienTypeNum = 0;
 	int teamDescID = -1;
 
 	le_t *le = NULL;
 	aliensTmp_t *cargo = NULL;
+	aircraft_t *aircraft = NULL;
 
-	/* uncomment this if you want to test Alien Containment (WIP) stuff
-	cargo = &gd.cargo[MAX_CARGO];
-	*/
+	if (!baseCurrent) {
+		/* should never happen */
+		Com_Printf("CL_CollectingAliens()... No base selected!\n");
+		return;
+	}
+
+	if (baseCurrent->aircraftCurrent >= 0) {
+		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	} else {
+		/* should never happen */
+		Com_Printf("CL_CollectingAliens()... No aircraft selected!\n");
+		return;
+	}
+
+	/* make sure dropship aliencargo is empty */
+	memset(aircraft->aliencargo,0,sizeof(aircraft->aliencargo));
+
+	cargo = aircraft->aliencargo;
+	aircraft->alientypes = 0;
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse)
@@ -75,21 +108,21 @@ void CL_CollectingAliens(void)
 					alstate = 1;
 
 				j = 0;
-				while (j < alienTypeNum) {
+				while (j < aircraft->alientypes) {
 					/* search alien type (dead/alive are two types) and increase amount */
 					if ((Q_strncmp(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR) == 0) && (cargo[j].state == alstate)) {
 						cargo[j].amount++;
-						Com_Printf("Counting: %s state: %i count: %i\n", cargo[j].alientype, cargo[j].state, cargo[j].amount);
+						Com_DPrintf("Counting: %s state: %i count: %i\n", cargo[j].alientype, cargo[j].state, cargo[j].amount);
 						break;
 					}
 					j++;
 				}
-				if (j == alienTypeNum) {
+				if (j == aircraft->alientypes) {
 					/* otherwise add new alien type */
 					Q_strncpyz(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR);
 					cargo[j].state = alstate;
-					alienTypeNum++;
-					Com_Printf("Adding: %s state: %i count: %i\n", cargo[j].alientype, cargo[j].state, cargo[j].amount);
+					aircraft->alientypes++;
+					Com_DPrintf("Adding: %s state: %i count: %i\n", cargo[j].alientype, cargo[j].state, cargo[j].amount);
 				}
 			}
 		}
@@ -97,13 +130,98 @@ void CL_CollectingAliens(void)
 
 	/* print all of them */
 	j = 0;
-	while (j < alienTypeNum) {
+	while (j < aircraft->alientypes) {
 		if (cargo[j].state == 0)
-			Com_Printf("Collecting alien bodies... type: %s amount: %i\n", cargo[j].alientype, cargo[j].amount+1);
+			Com_DPrintf("Collecting alien bodies... type: %s amount: %i\n", cargo[j].alientype, cargo[j].amount+1);
 		if (cargo[j].state == 1)
-			Com_Printf("Alive aliens captured... type: %s amount: %i\n", cargo[j].alientype, cargo[j].amount+1);
+			Com_DPrintf("Alive aliens captured... type: %s amount: %i\n", cargo[j].alientype, cargo[j].amount+1);
 		j++;
 	}
+}
+
+/**
+ * @brief Puts alien cargo into Alien Containment
+ * @sa CL_DropshipReturned
+ */
+void AL_AddAliens()
+{
+	int i, j;
+	int alienTypeNum = 0;
+	base_t *tobase = NULL;
+	aliensTmp_t *cargo = NULL;
+	aircraft_t *aircraft = NULL;
+
+	if (baseCurrent) {
+		tobase = baseCurrent;
+	} else {
+		/* should never happen */
+		Com_Printf("AL_AddAliens()... No base selected!\n");
+		return;
+	}
+
+	if (tobase->aircraftCurrent >= 0) {
+		aircraft = &tobase->aircraft[tobase->aircraftCurrent];
+	} else {
+		/* should never happen */
+		Com_Printf("AL_AddAliens()... No aircraft selected!\n");
+		return;
+	}
+
+	cargo = aircraft->aliencargo;
+
+	j = 0; i = 0;
+	while (i < aircraft->alientypes) {
+		if ((Q_strncmp(tobase->alienscont[i].alientype, cargo[j].alientype, MAX_VAR) == 0) && (tobase->alienscont[i].state == cargo[j].state)) {
+			tobase->alienscont[i].amount += cargo[j].amount;
+			i++; j++;
+			continue;
+		}
+
+		if (i == alienTypeNum) {
+			Q_strncpyz(tobase->alienscont[i].alientype, cargo[j].alientype, MAX_VAR);
+			tobase->alienscont[i].amount = cargo[j].amount;
+			tobase->alienscont[i].state = cargo[j].state;
+			alienTypeNum++;
+		}
+
+		i++; j++;
+	}    
+
+	/* print all of them */
+	j = 0;
+	while (j < aircraft->alientypes) {
+		if (tobase->alienscont[j].state == 1)
+			Com_Printf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount+1);
+		if (tobase->alienscont[j].state == 0)
+				Com_Printf("AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount+1);
+		j++;
+	}
+}
+
+/**
+ * @brief Counts alive aliens in all bases
+ * @note This should be called whenever you add or remove
+ * aliens from alien containment.
+ * @sa CL_DropshipReturned
+ */
+void AL_CountAll(void)
+{
+	int i, j;
+	int amount = 0;
+	base_t *base;
+
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
+		if (!base->founded)
+			continue;
+		if (!base->hasAlienCont)
+			continue;
+		for (j = 0; j < AL_UNKNOWN; j++) {
+			if ((base->alienscont[j].alientype) && (base->alienscont[j].state == 1))
+				amount += base->alienscont[j].amount;
+		}
+	}
+
+	Cvar_SetValue("al_globalamount", amount);
 }
 
 /**
