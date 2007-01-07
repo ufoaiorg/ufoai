@@ -1520,17 +1520,18 @@ menu equipment
 	}
 
 	// ==================
-	// containers
+	// Containers (see inventory.ufo for the definition)
 	// ==================
 
 	container extension	{ pos "548 104" }
 	container right		{ pos "548 178" }
 	container left		{ pos "872 178" }
-	container armor		{ pos "700 100" invis true }
+	container armor	{ pos "700 100" invis true }
 	container backpack	{ pos "872 54" }
 	container belt		{ pos "569 273" }
 	container holster	{ pos "898 270" }
-	container equip		{ pos "397 370" }
+	container equip	{ pos "397 370" }
+	container headgear	{ pos "548 54" }
 
 	// ==================
 	// additional stuff

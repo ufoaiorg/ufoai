@@ -64,6 +64,7 @@ static value_t od_vals[] = {
 	{"firetwohanded", V_BOOL, offsetof(objDef_t, firetwohanded)},
 	{"extends_item", V_STRING, offsetof(objDef_t, extends_item)},
 	{"extension", V_BOOL, offsetof(objDef_t, extension)},
+	{"headgear", V_BOOL, offsetof(objDef_t, headgear)},
 	{"thrown", V_BOOL, offsetof(objDef_t, thrown)},
 	{"ammo", V_INT, offsetof(objDef_t, ammo)},
 	{"reload", V_INT, offsetof(objDef_t, reload)},
@@ -396,6 +397,8 @@ static void Com_ParseInventory(char *name, char **text)
 		csi.idFloor = id - csi.ids;
 	else if (!Q_strncmp(name, "equip", 5))
 		csi.idEquip = id - csi.ids;
+	else if (!Q_strncmp(name, "headgear", 8))
+		csi.idHeadgear = id - csi.ids;
 
 	do {
 		token = COM_EParse(text, errhead, name);
@@ -1214,7 +1217,7 @@ void Com_ParseScripts(void)
 
 	/* reset csi basic info */
 	Com_InitCSI(&csi);
-	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmor = csi.idFloor = csi.idEquip = NONE;
+	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmor = csi.idFloor = csi.idEquip = csi.idHeadgear = NONE;
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damTachyon = csi.damStun = NONE;
 
 	/* I guess this is needed, too, if not please remove */

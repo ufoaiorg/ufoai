@@ -932,10 +932,11 @@ typedef struct objDef_s {
 				 * Influences model-animations and which hands are blocked int he inventory screen.*/
 	byte firetwohanded;	/* The soldier needs both hands to fire this object.
 				 * Influences model-animations. */
-	byte extension;
+	byte extension;	/* Boolean: Is an extension. */
+	byte headgear;	/* Boolean: Is a headgear. */
 	byte thrown;		/* This item is thrown. */
 	int price;
-	int buytype;
+	int buytype;		/* In which category of the buy menu is this item listed. */
 
 	int forWeapon[MAX_TECHLINKS];	/* Ammo-only: A list of weapons this ammo can be used in.
 					 * The information is taken from the "weapon" requirements in the technology. */
@@ -959,7 +960,7 @@ typedef struct objDef_s {
 
 typedef struct invDef_s {
 	char name[MAX_VAR];
-	byte single, armor, all, temp, extension;
+	byte single, armor, all, temp, extension, headgear;
 	int shape[16];
 	int in, out;
 } invDef_t;
@@ -1001,7 +1002,8 @@ typedef struct csi_s {
 	/* inventory definitions */
 	invDef_t ids[MAX_INVDEFS];
 	int numIDs;
-	int idRight, idLeft, idExtension, idBackpack, idBelt, idHolster;
+	int idRight, idLeft, idExtension;
+	int idHeadgear, idBackpack, idBelt, idHolster;
 	int idArmor, idFloor, idEquip;
 
 	/* damage type ids */

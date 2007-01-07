@@ -84,15 +84,18 @@ menu inventory
 	}
 
 	// ==================
-	// containers
+	// Containers (see inventory.ufo for the definition)
 	// ==================
 
+	container extension	{ pos "289 203" }
 	container right		{ pos "289 277" }
 	container left		{ pos "613 277" }
+	// Armor is not switchable in combat - thus no display of "container armor" needed.
 	container floor		{ pos "284 458" }
 	container backpack	{ pos "613 155" }
 	container belt		{ pos "310 372" }
 	container holster	{ pos "639 369" }
+	container headgear	{ pos "289 54" }
 
 	// ==================
 	// model

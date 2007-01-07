@@ -87,7 +87,7 @@ inventory headgear
 {
 	shape	"0 0 2 2"
 	single	true
-//	headgear	true
+	headgear	true
 	in		1
 	out		0
 }
