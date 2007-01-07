@@ -542,9 +542,9 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 			 *     this fix (or hack if you prefer).
 			 */
 			} else {
-				if (to->type != NA_BROADCAST && !(sock == NS_CLIENT && length == 11 && *(int *)data == -1) &&
+				if (to.type != NA_BROADCAST && !(sock == NS_CLIENT && length == 11 && *(int *)data == -1) &&
 					!(sock == NS_SERVER && err == WSAECONNRESET))
-					Com_Error (ERR_NET, "NET_SendPacket ERROR: %s", NET_ErrorString());
+					Com_Error (ERR_FATAL, "NET_SendPacket ERROR: %s", NET_ErrorString());
 			}
 		}
 	} else {
@@ -898,7 +898,6 @@ char *NET_ErrorString (void)
 	case WSAECONNREFUSED: return "WSAECONNREFUSED";
 	case WSAELOOP: return "WSAELOOP";
 	case WSAENAMETOOLONG: return "WSAENAMETOOLONG";
-	case WSAEHOSTDOWN: return "WSAEHOSTDOWN";
 	case WSASYSNOTREADY: return "WSASYSNOTREADY";
 	case WSAVERNOTSUPPORTED: return "WSAVERNOTSUPPORTED";
 	case WSANOTINITIALISED: return "WSANOTINITIALISED";
