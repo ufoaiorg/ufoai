@@ -239,9 +239,9 @@ static void PR_ProductionInfo (void)
 static void PR_ProductionListRightClick_f (void)
 {
 	int i, j, num, idx;
-	technology_t *t;
-	objDef_t *od;
-	production_queue_t *queue;
+	technology_t *t = NULL;
+	objDef_t *od = NULL;
+	production_queue_t *queue = NULL;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
@@ -257,21 +257,21 @@ static void PR_ProductionListRightClick_f (void)
 	/* clicked which item? */
 	num = atoi(Cmd_Argv(1));
 
-	/* is that part of the queue */
+	/* Clicked the production queue or the item list? */
 	if (num < queue->numItems) {
 		od = &csi.ods[queue->items[num].objID];
 		t = (technology_t*)(od->tech);
 		UP_OpenWith(t->id);
 	}else if (num >= queue->numItems + QUEUE_SPACERS) {
-		/* clicked in the tech list */
+		/* Clicked in the item list. */
 		idx = num - queue->numItems - QUEUE_SPACERS;
 		for (j=0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			t = (technology_t*)(od->tech);
 #ifdef DEBUG
 			if (!t)
-				Sys_Error("PR_ProductionListClick_f: No tech pointer for object id %i ('%s')\n", i, od->kurz);
+				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object id %i ('%s')\n", i, od->kurz);
 #endif
-			/* we can produce what was researched before */
+			/* Open up ufopedia for this entry. */
 			if (od->buytype == produceCategory && RS_IsResearched_ptr(t)) {
 				if (j==idx) {
 					UP_OpenWith(t->id);
@@ -281,18 +281,22 @@ static void PR_ProductionListRightClick_f (void)
 			}
 		}
 	}
+#ifdef DEBUG
+	else
+		Com_DPrintf("PR_ProductionListRightClick_f: Click on spacer %i\n", num);
+#endif
 }
 
 /**
- * @brief Click function for production list
+ * @brief Click function for production list.
  */
 static void PR_ProductionListClick_f (void)
 {
 	int i, j, num, idx;
-	objDef_t *od;
-	technology_t *t;
-	production_queue_t *queue;
-	production_t *prod;
+	objDef_t *od = NULL;
+	technology_t *t = NULL;
+	production_queue_t *queue = NULL;
+	production_t *prod = NULL;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
@@ -316,14 +320,14 @@ static void PR_ProductionListClick_f (void)
 	/* clicked which item? */
 	num = atoi(Cmd_Argv(1));
 
-	/* clicked the production queue or the tech list? */
+	/* Clicked the production queue or the item list? */
 	if (num < queue->numItems) {
 		prod = &queue->items[num];
 		selectedQueueItem = qtrue;
 		selectedIndex = num;
 		PR_ProductionInfo();
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
-		/* clicked the tech list */
+		/* Clicked in the item list. */
 		idx = num - queue->numItems - QUEUE_SPACERS;
 		for (j = 0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			t = (technology_t*)(od->tech);
@@ -353,6 +357,10 @@ static void PR_ProductionListClick_f (void)
 			}
 		}
 	}
+#ifdef DEBUG
+	else
+		Com_DPrintf("PR_ProductionListClick_f: Click on spacer %i\n", num);
+#endif
 }
 
 /** @brief update the list of queued and available items */
