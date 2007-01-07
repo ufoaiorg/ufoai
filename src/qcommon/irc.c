@@ -1076,7 +1076,7 @@ static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 	int characterBucketSize;
 
 	/* connection failed if this is null */
-	if (!irc_messageBucketSize || !irc_connected)
+	if (!irc_messageBucketSize)
 		return qtrue;
 
 	messageBucketSize = irc_messageBucketSize->integer;
@@ -1086,6 +1086,7 @@ static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 	irc_bucket_message_t * const m = (irc_bucket_message_t*) Mem_Alloc(sizeof(irc_bucket_message_t));
 	irc_bucket_message_t * n = irc_bucket.first_msg;
 	if (irc_bucket.message_size + 1 <= messageBucketSize && irc_bucket.character_size + msg_len <= characterBucketSize) {
+		/* TODO: strip high bits - or unprintable chars */
 		m->msg = (char*) Mem_Alloc(msg_len);
 		memcpy(m->msg, msg, msg_len);
 		m->msg_len = msg_len;
@@ -1735,7 +1736,7 @@ extern void Irc_Input_Activate(void)
 	if (irc_connected && *irc_defaultChannel->string) {
 		cls.key_dest = key_irc;
 	} else
-		Com_Printf("Warning: IRC not connected\n");
+		Com_DPrintf("Irc_Input_Activate: Warning - IRC not connected\n");
 }
 
 /**
@@ -1758,29 +1759,29 @@ extern void Irc_Input_Deactivate(void)
 extern void Irc_Input_KeyEvent(int key)
 {
 	switch (key) {
-		case K_ENTER:
-		case K_KP_ENTER:
-			if (irc_messagemode_buflen > 0) {
-				Cbuf_AddText("irc_chanmsg \"");
-				Cbuf_AddText(irc_messagemode_buf);
-				Cbuf_AddText("\"\n");
-				irc_messagemode_buflen = 0;
-				irc_messagemode_buf[0] = '\0';
-			}
-			break;
-		case K_BACKSPACE:
-			if (irc_messagemode_buflen) {
-				--irc_messagemode_buflen;
-				irc_messagemode_buf[irc_messagemode_buflen] = '\0';
-			}
-			break;
-		case K_ESCAPE:
+	case K_ENTER:
+	case K_KP_ENTER:
+		if (irc_messagemode_buflen > 0) {
+			Cbuf_AddText("irc_chanmsg \"");
+			Cbuf_AddText(irc_messagemode_buf);
+			Cbuf_AddText("\"\n");
 			irc_messagemode_buflen = 0;
 			irc_messagemode_buf[0] = '\0';
-			break;
-		case 12:
-			irc_messagemode_buflen = 0;
-			irc_messagemode_buf[0] = '\0';
-			break;
+		}
+		break;
+	case K_BACKSPACE:
+		if (irc_messagemode_buflen) {
+			--irc_messagemode_buflen;
+			irc_messagemode_buf[irc_messagemode_buflen] = '\0';
+		}
+		break;
+	case K_ESCAPE:
+		irc_messagemode_buflen = 0;
+		irc_messagemode_buf[0] = '\0';
+		break;
+	case 12:
+		irc_messagemode_buflen = 0;
+		irc_messagemode_buf[0] = '\0';
+		break;
 	}
 }
