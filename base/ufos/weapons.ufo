@@ -58,9 +58,9 @@ item irgoggles
 	weapon		false
 	type		melee
 	category	2
-	shape		"0 0 2 2"
-	center		"-1.5 -4 -4.5"
-	scale		0.85
+	shape		"0 0 2 1"
+	center		"0 0 0"
+	scale		1.0
 	price		200
 	buytype		2
 	thrown		true
