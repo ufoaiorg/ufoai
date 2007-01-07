@@ -322,6 +322,9 @@ static value_t idps[] = {
 	/* this is the armor container */
 	{"armor", V_BOOL, offsetof(invDef_t, armor)}
 	,
+	/* this is the headgear container */
+	{"headgear", V_BOOL, offsetof(invDef_t, headgear)}
+	,
 	/* allow everything to be stored in this container (e.g armor and weapons) */
 	{"all", V_BOOL, offsetof(invDef_t, all)}
 	,

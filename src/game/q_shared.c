@@ -2184,9 +2184,15 @@ qboolean Com_CheckToInventory(const inventory_t * const i, const int item, const
 		if (!CSI->ids[container].extension && !CSI->ids[container].all) {
 			return qfalse;
 		}
+	} else if (!Q_strncmp(CSI->ods[item].type, "headgear", MAX_VAR)) {
+		if (!CSI->ids[container].headgear && !CSI->ids[container].all) {
+			return qfalse;
+		}
 	} else if (CSI->ids[container].armor) {
 		return qfalse;
 	} else if (CSI->ids[container].extension) {
+		return qfalse;
+	} else if (CSI->ids[container].headgear) {
 		return qfalse;
 	}
 

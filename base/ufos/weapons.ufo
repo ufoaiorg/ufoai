@@ -64,6 +64,7 @@ item irgoggles
 	price		200
 	buytype		2
 	thrown		true
+	headgear		true
 
 	primary
 	{
