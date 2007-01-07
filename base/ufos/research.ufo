@@ -2261,7 +2261,7 @@ tech rs_craft_weapon_shiva
 	require_AND { tech nothing }
 	time	0
 
-	image_top	"techs/craftweapon_flac"
+	mdl_top		"aircraft/shiva/shiva"
 }
 
 tech rs_craft_weapon_sparrowhawk
