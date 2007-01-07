@@ -58,10 +58,10 @@ static	byte	localIP[MAX_IPS][4];
 
 static int net_inittime;
 
-static uint64 net_total_in;
-static uint64 net_total_out;
-static uint64 net_packets_in;
-static uint64 net_packets_out;
+static uint64_t net_total_in;
+static uint64_t net_total_out;
+static uint64_t net_packets_in;
+static uint64_t net_packets_out;
 
 /**
  * @brief
