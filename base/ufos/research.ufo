@@ -180,7 +180,7 @@ tech rs_monomolecular_blades
 	require_AND
 	{
 		item	kerrblade 1
-		rech rs_alien_bloodspider_autopsy
+		tech rs_alien_bloodspider_autopsy
 	}
 	time	1500
 }
