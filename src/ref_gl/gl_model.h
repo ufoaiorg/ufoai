@@ -257,4 +257,4 @@ void Hunk_Free(void *base);
 
 void Mod_FreeAll(void);
 
-void Mod_DrawModelBBox (vec3_t bbox[8], entity_t *e);
+void Mod_DrawModelBBox (vec4_t bbox[8], entity_t *e);

@@ -161,14 +161,13 @@ static void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp, int framen
 /**
  * @brief
  */
-static qboolean R_CullAliasModel(vec3_t bbox[8], entity_t * e)
+static qboolean R_CullAliasModel(vec4_t bbox[8], entity_t * e)
 {
 	int i, p, mask, f, aggregatemask = ~0;
 	vec3_t mins, maxs;
 	dmdl_t *paliashdr;
-	vec3_t tmp, thismins, oldmins, thismaxs, oldmaxs;
+	vec3_t thismins, oldmins, thismaxs, oldmaxs;
 	daliasframe_t *pframe, *poldframe;
-	vec3_t vectors[3];
 	float dp;
 
 	assert (currentmodel->type == mod_alias);
@@ -206,20 +205,38 @@ static qboolean R_CullAliasModel(vec3_t bbox[8], entity_t * e)
 		}
 	}
 
-	/* jitspoe's bbox rotation fix */
-	/* compute and rotate bonding box */
-	e->angles[ROLL] = -e->angles[ROLL]; /* roll is backwards */
-	AngleVectors(e->angles, vectors[0], vectors[1], vectors[2]);
-	e->angles[ROLL] = -e->angles[ROLL]; /* roll is backwards */
-	VectorSubtract(vec3_origin, vectors[1], vectors[1]); /* AngleVectors returns "right" instead of "left" */
+	/*
+	** compute a full bounding box
+	*/
 	for (i = 0; i < 8; i++) {
-		tmp[0] = ((i & 1) ? mins[0] : maxs[0]);
-		tmp[1] = ((i & 2) ? mins[1] : maxs[1]);
-		tmp[2] = ((i & 4) ? mins[2] : maxs[2]);
+		vec3_t tmp;
 
-		bbox[i][0] = vectors[0][0] * tmp[0] + vectors[1][0] * tmp[1] + vectors[2][0] * tmp[2] + e->origin[0];
-		bbox[i][1] = vectors[0][1] * tmp[0] + vectors[1][1] * tmp[1] + vectors[2][1] * tmp[2] + e->origin[1];
-		bbox[i][2] = vectors[0][2] * tmp[0] + vectors[1][2] * tmp[1] + vectors[2][2] * tmp[2] + e->origin[2];
+		if (i & 1)
+			tmp[0] = mins[0];
+		else
+			tmp[0] = maxs[0];
+
+		if (i & 2)
+			tmp[1] = mins[1];
+		else
+			tmp[1] = maxs[1];
+
+		if (i & 4)
+			tmp[2] = mins[2];
+		else
+			tmp[2] = maxs[2];
+
+		VectorCopy(tmp, bbox[i]);
+		bbox[i][3] = 1.0;
+	}
+	/*
+	** transform the bounding box
+	*/
+	for (i = 0; i < 8; i++) {
+		vec4_t tmp;
+
+		Vector4Copy(bbox[i], tmp);
+		GLVectorTransform(trafo[e - r_newrefdef.entities].matrix, tmp, bbox[i]);
 	}
 
 	/* cull */
@@ -331,7 +348,7 @@ void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lig
 void R_DrawAliasModel(entity_t * e)
 {
 	qboolean lightfixed;
-	vec3_t bbox[8];
+	vec4_t bbox[8];
 	dmdl_t *paliashdr;
 	image_t *skin;
 

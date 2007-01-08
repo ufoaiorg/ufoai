@@ -1543,7 +1543,7 @@ void Mod_FreeAll(void)
  * @brief Draws the model bounding box
  * @sa R_DrawAliasModel
  */
-void Mod_DrawModelBBox (vec3_t bbox[8], entity_t *e)
+void Mod_DrawModelBBox (vec4_t bbox[8], entity_t *e)
 {
 	if (!gl_showbox->value)
 		return;
