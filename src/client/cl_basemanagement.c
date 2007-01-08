@@ -1987,7 +1987,7 @@ static void B_BuildingList_f(void)
 		for (j = 0; j < gd.numBuildings[base->idx]; j++) {
 
 			Com_Printf("...Building: %s #%i - id: %i\n", building->id, B_GetNumberOfBuildingsInBaseByTypeIDX(baseCurrent->idx, building->buildingType),
-					   building->idx);
+				building->idx);
 			Com_Printf("...image: %s\n", building->image);
 			Com_Printf(".....Status:\n");
 			for (k = 0; k < BASE_SIZE * BASE_SIZE; k++) {
