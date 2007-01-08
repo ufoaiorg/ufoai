@@ -45,8 +45,8 @@ typedef enum {		/* specializations of aliens */
 } alienSpec_t;
 
 typedef enum {		/* cases of alien amount calculation */
-	ALC_MISSION,
-	ALC_RESEARCH
+	AL_RESEARCH,
+	AL_KILL
 } alienCalcType_t;
 
 typedef struct aliensCont {
@@ -66,10 +66,12 @@ typedef struct aliensTmp {
  * Collecting aliens functions
  */
 
+void AL_FillInContainment(void);
 char *AL_AlienTypeToName(alienType_t type);
 void CL_CollectingAliens(void);
 void AL_AddAliens(void);
 void AL_CountAll(void);
+void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action);
 
 /**
  * Menu functions

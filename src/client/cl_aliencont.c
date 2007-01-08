@@ -33,28 +33,64 @@ aliensTmp_t cargo[MAX_CARGO];
  */
 
 /**
- * @brief Type of alien to its name
+ * @brief Prepares Alien Containment - names, states, and zeroed amount.
+ */
+void AL_FillInContainment(void)
+{
+	int i, j;
+	char name[MAX_VAR];
+	base_t *base = NULL;
+	aliensCont_t *containment = NULL;
+
+	if (baseCurrent) {
+		base = baseCurrent;
+	} else {
+		/* should never happen */
+		Com_Printf("AL_FillInContainment()... No base selected!\n");
+		return;
+	}
+
+	containment = base->alienscont;
+
+	for (i = 0, j = 0; i < (AL_UNKNOWN * 2); i+=2, j++) {
+		Q_strncpyz(name, AL_AlienTypeToName(j), MAX_VAR);
+		/* dead */
+		containment[i].idx = i;
+		Q_strncpyz(containment[i].alientype, name, MAX_VAR);
+		containment[i].state = 0;
+		containment[i].amount = 0;
+		/* alive */
+		containment[i+1].idx = i+1;
+		Q_strncpyz(containment[i+1].alientype, name, MAX_VAR);
+		containment[i+1].state = 1;
+		containment[i+1].amount = 0;
+	}
+}
+
+/**
+ * @brief Type of alien to its name.
  * @param[in] type
  * @return name
  */
 char *AL_AlienTypeToName(alienType_t type)
 {
 	switch (type) {
-		case AL_ORTNOK:
-			return "Ortnok";
-		case AL_TAMAN:
-			return "Taman";
-		case AL_SHEVAAR:
-			return "Shevaar";
-		case AL_FLYER:
-			return "Flyer";
-		default:
-			return "Unknown";
+	case AL_ORTNOK:
+		return "Ortnok";
+	case AL_TAMAN:
+		return "Taman";
+	case AL_SHEVAAR:
+		return "Shevaar";
+	case AL_FLYER:
+		return "Flyer";
+	case AL_UNKNOWN:
+	default:
+		return "Unknown";
     }
 }
 
 /**
- * @brief Collecting stunned aliens and alien bodies after the mission
+ * @brief Collecting stunned aliens and alien bodies after the mission.
  * @sa CL_ParseResults
  */
 void CL_CollectingAliens(void)
@@ -140,7 +176,7 @@ void CL_CollectingAliens(void)
 }
 
 /**
- * @brief Puts alien cargo into Alien Containment
+ * @brief Puts alien cargo into Alien Containment.
  * @sa CL_DropshipReturned
  */
 void AL_AddAliens()
@@ -199,7 +235,7 @@ void AL_AddAliens()
 }
 
 /**
- * @brief Counts alive aliens in all bases
+ * @brief Counts alive aliens in all bases.
  * @note This should be called whenever you add or remove
  * aliens from alien containment.
  * @sa CL_DropshipReturned
@@ -215,13 +251,75 @@ void AL_CountAll(void)
 			continue;
 		if (!base->hasAlienCont)
 			continue;
-		for (j = 0; j < AL_UNKNOWN; j++) {
+		for (j = 0; j < (AL_UNKNOWN * 2); j++) {
 			if ((base->alienscont[j].alientype) && (base->alienscont[j].state == 1))
 				amount += base->alienscont[j].amount;
 		}
 	}
 
 	Cvar_SetValue("al_globalamount", amount);
+}
+
+/**
+ * @brief Removes alien(s) from Alien Containment.
+ * @param[in] alientype
+ * @param[in] amount of alientype to be removed
+ * @param[in] type of action
+ * @note Call it with alientype AL_UNKNOWN when it does not
+ * matter what type.
+ */
+void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action)
+{
+	int j;
+	int maxamount = 0; /* amount (of alive type), which is max in Containment) */
+	int maxidx = 0;
+	char name[MAX_VAR];
+	base_t *base = NULL;
+	aliensCont_t *containment = NULL;
+
+	if (baseCurrent) {
+		base = baseCurrent;
+	} else {
+		/* should never happen */
+		Com_Printf("AL_RemoveAliens()... No base selected!\n");
+		return;
+	}
+
+	containment = base->alienscont;
+	Q_strncpyz(name, AL_AlienTypeToName(alientype), MAX_VAR);
+
+	switch (action) {
+	case AL_RESEARCH:
+		if (alientype == AL_UNKNOWN) {
+			/* search for the type of alien, which has max amount
+			   in Alien Containment; then remove (amount) */
+			/* FIXME: do not let to remove to negative value */
+			for (j = 0; j < (AL_UNKNOWN * 2); j++) {
+				if (containment[j].state == 0)
+					continue;
+				if (maxamount < containment[j].amount) {
+					maxamount = containment[j].amount;
+					maxidx = j;
+				}
+			}
+
+			containment[maxidx].amount -= amount;
+			return;
+		}
+
+		for (j = 0; j < (AL_UNKNOWN * 2); j++) {
+			if (containment[j].state == 0)
+				continue;
+			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
+				containment[j].amount -= amount;
+				return;
+			}
+		}
+	case AL_KILL:
+		/* TODO: killing aliens during base defence */
+	default:
+		return;
+	}
 }
 
 /**
