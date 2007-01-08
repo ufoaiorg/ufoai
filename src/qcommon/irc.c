@@ -790,6 +790,8 @@ qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 	/* some debug output */
 	Com_DPrintf("pre: '%s', param: '%s', trail: '%s'\n", msg->prefix, msg->params, msg->trailing);
 
+	/* TODO: Skip non printable chars here */
+
 	switch (cmd.type) {
 	case IRC_COMMAND_NUMERIC:
 		cmd.id.numeric = msg->id.numeric;
@@ -1748,7 +1750,7 @@ extern void Irc_Input_Deactivate(void)
 	if (cls.key_dest == key_irc)
 		cls.key_dest = key_game;
 	else
-		Com_DPrintf("Note: No in irc input mode - thus we can not leave it\n");
+		Com_DPrintf("Note: Not in irc input mode - thus we can not leave it\n");
 }
 
 /**
@@ -1778,6 +1780,7 @@ extern void Irc_Input_KeyEvent(int key)
 	case K_ESCAPE:
 		irc_messagemode_buflen = 0;
 		irc_messagemode_buf[0] = '\0';
+		/*Irc_Input_Deactivate();*/
 		break;
 	case 12:
 		irc_messagemode_buflen = 0;
