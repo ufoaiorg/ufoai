@@ -169,52 +169,7 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=.\win32\cd_win.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CD_WI=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CD_WI=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\client\cl_actor.c
+SOURCE=..\..\src\ports\win32\cd_win.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -229,7 +184,7 @@ SOURCE=.\client\cl_actor.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cl_basemanagement.c
+SOURCE=..\..\src\client\cl_actor.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -244,7 +199,7 @@ SOURCE=.\client\cl_basemanagement.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cl_campaign.c
+SOURCE=..\..\src\client\cl_aircraft.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -259,142 +214,7 @@ SOURCE=.\client\cl_campaign.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cl_cin.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CL_CI=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CL_CI=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\client\cl_fx.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CL_FX=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CL_FX=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\client\cl_input.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CL_IN=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CL_IN=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\client\cl_le.c
+SOURCE=..\..\src\client\cl_aliencont.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -409,52 +229,7 @@ SOURCE=.\client\cl_le.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cl_main.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CL_MA=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CL_MA=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\client\cl_menu.c
+SOURCE=...\..\src\client\cl_basemanagement.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -469,52 +244,7 @@ SOURCE=.\client\cl_menu.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cl_parse.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CL_PA=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CL_PA=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\client\cl_particle.c
+SOURCE=...\..\src\client\cl_campaign.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -529,7 +259,7 @@ SOURCE=.\client\cl_particle.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cl_research.c
+SOURCE=...\..\src\client\cl_cin.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -544,52 +274,7 @@ SOURCE=.\client\cl_research.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cl_scrn.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CL_SC=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CL_SC=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\client\cl_sequence.c
+SOURCE=..\..\src\client\cl_employee.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -604,7 +289,7 @@ SOURCE=.\client\cl_sequence.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cl_team.c
+SOURCE=..\..\src\client\cl_event.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -619,7 +304,7 @@ SOURCE=.\client\cl_team.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cl_ufopedia.c
+SOURCE=...\..\src\client\cl_fx.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -634,376 +319,7 @@ SOURCE=.\client\cl_ufopedia.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cl_view.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CL_VI=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CL_VI=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\qcommon\cmd.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CMD_C=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CMD_C=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\qcommon\cmodel.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CMODE=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CMODE=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\qcommon\common.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_COMMO=\
-	".\client\anorms.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_COMMO=\
-	".\client\anorms.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\win32\conproc.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CONPR=\
-	".\win32\conproc.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CONPR=\
-	".\win32\conproc.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\client\console.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CONSO=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CONSO=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\qcommon\ioapi.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CRC_C=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CRC_C=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\qcommon\cvar.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_CVAR_=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_CVAR_=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\qcommon\files.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_FILES=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_FILES=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\win32\in_win.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_IN_WI=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\win32\winquake.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_IN_WI=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\win32\winquake.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\client\keys.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_KEYS_=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_KEYS_=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\qcommon\md4.c
+SOURCE=..\..\src\client\cl_hospital.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1018,113 +334,7 @@ SOURCE=.\qcommon\md4.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\qcommon\net_chan.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_NET_C=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_NET_C=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\win32\net_wins.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_NET_W=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_NET_W=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\game\q_shared.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_Q_SHA=\
-	".\game\q_shared.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_Q_SHA=\
-	".\game\q_shared.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\win32\q_shwin.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-DEP_CPP_Q_SHW=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\win32\winquake.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_Q_SHW=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\win32\winquake.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\qcommon\scripts.c
+SOURCE=...\..\src\client\cl_input.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1139,7 +349,7 @@ SOURCE=.\qcommon\scripts.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\snd_ref.c
+SOURCE=..\..\src\client\cl_inventory.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1147,46 +357,14 @@ SOURCE=.\client\snd_ref.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_SND_D=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\snd_loc.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_SND_D=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\snd_loc.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\snd_mem.c
+SOURCE=...\..\src\client\cl_le.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1194,46 +372,14 @@ SOURCE=.\client\snd_mem.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_SND_M=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\snd_loc.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_SND_M=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\snd_loc.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\snd_mix.c
+SOURCE=...\..\src\client\cl_main.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1241,46 +387,14 @@ SOURCE=.\client\snd_mix.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_SND_MI=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\snd_loc.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_SND_MI=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\snd_loc.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\snd_win.c
+SOURCE=..\..\src\client\cl_map.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1288,48 +402,14 @@ SOURCE=.\win32\snd_win.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_SND_W=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\snd_loc.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\win32\winquake.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_SND_W=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\snd_loc.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\win32\winquake.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\server\sv_ccmds.c
+SOURCE=..\..\src\client\cl_market.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1337,30 +417,14 @@ SOURCE=.\server\sv_ccmds.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_SV_CC=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_SV_CC=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\server\sv_game.c
+SOURCE=...\..\src\client\cl_menu.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1368,30 +432,14 @@ SOURCE=.\server\sv_game.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_SV_GA=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_SV_GA=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\server\sv_init.c
+SOURCE=...\..\src\client\cl_parse.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1399,30 +447,14 @@ SOURCE=.\server\sv_init.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_SV_IN=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_SV_IN=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\server\sv_main.c
+SOURCE=...\..\src\client\cl_particle.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1430,30 +462,14 @@ SOURCE=.\server\sv_main.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_SV_MA=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_SV_MA=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\server\sv_send.c
+SOURCE=..\..\src\client\cl_popup.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1461,30 +477,14 @@ SOURCE=.\server\sv_send.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_SV_SE=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_SV_SE=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\server\sv_user.c
+SOURCE=..\..\src\client\cl_produce.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1492,30 +492,14 @@ SOURCE=.\server\sv_user.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_SV_US=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_SV_US=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\server\sv_world.c
+SOURCE=..\..\src\client\cl_radar.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1523,30 +507,14 @@ SOURCE=.\server\sv_world.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_SV_WO=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_SV_WO=\
-	".\game\game.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\server\server.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\sys_win.c
+SOURCE=...\..\src\client\cl_research.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1554,30 +522,14 @@ SOURCE=.\win32\sys_win.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_SYS_W=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\win32\conproc.h"\
-	".\win32\winquake.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_SYS_W=\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\win32\conproc.h"\
-	".\win32\winquake.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\vid_dll.c
+SOURCE=...\..\src\client\cl_scrn.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1585,46 +537,14 @@ SOURCE=.\win32\vid_dll.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_VID_D=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\win32\winquake.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-DEP_CPP_VID_D=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	".\win32\winquake.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\x86.c
+SOURCE=..\..\src\client\cl_sequence.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1632,37 +552,532 @@ SOURCE=.\client\x86.c
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
-DEP_CPP_X86_C=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_shader.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
 
-DEP_CPP_X86_C=\
-	".\client\cdaudio.h"\
-	".\client\client.h"\
-	".\client\console.h"\
-	".\client\input.h"\
-	".\client\keys.h"\
-	".\client\ref.h"\
-	".\client\screen.h"\
-	".\client\sound.h"\
-	".\client\vid.h"\
-	".\game\q_shared.h"\
-	".\qcommon\qcommon.h"\
-	".\qcommon\qfiles.h"\
-	
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_team.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_ufo.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_ufopedia.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_view.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\cmd.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\cmodel.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\common.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\conproc.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\console.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\cvar.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\files.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\in_win.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\ioapi.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\keys.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\md4.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\net_chan.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\net_wins.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\game\q_shared.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\q_shwin.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\scripts.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\snd_mem.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\snd_mix.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\snd_openal.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\snd_ref.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\server\sv_ccmds.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\server\sv_game.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\server\sv_init.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\server\sv_main.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\server\sv_send.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\server\sv_user.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\server\sv_world.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\sys_win.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\vid_dll.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\x86.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
 
 !ENDIF 
 
@@ -1673,87 +1088,123 @@ DEP_CPP_X86_C=\
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\client\anorms.h
+SOURCE=..\..\src\client\adivtab.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\qcommon\bspfile.h
+SOURCE=..\..\src\client\anorms.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cdaudio.h
+SOURCE=..\..\src\client\asm_i386.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cl_basemanagement.h
+SOURCE=..\..\src\client\block16.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\cl_research.h
+SOURCE=..\..\src\client\block8.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\client.h
+SOURCE=..\..\src\client\cdaudio.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\conproc.h
+SOURCE=..\..\src\client\cl_aircraft.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\console.h
+SOURCE=..\..\src\client\cl_aliencont.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\game\game.h
+SOURCE=..\..\src\client\cl_basemanagement.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\input.h
+SOURCE=..\..\src\client\cl_campaign.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\keys.h
+SOURCE=..\..\src\client\cl_employee.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\game\q_shared.h
+SOURCE=..\..\src\client\cl_event.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\qcommon\qcommon.h
+SOURCE=..\..\src\client\cl_global.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\qcommon\qfiles.h
+SOURCE=..\..\src\client\cl_hospital.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\ref.h
+SOURCE=..\..\src\client\cl_market.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\screen.h
+SOURCE=..\..\src\client\cl_produce.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\server\server.h
+SOURCE=..\..\src\client\cl_research.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\snd_loc.h
+SOURCE=..\..\src\client\cl_ufopedia.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\sound.h
+SOURCE=..\..\src\client\client.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\vid.h
+SOURCE=..\..\src\client\console.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\winquake.h
+SOURCE=..\..\src\client\input.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\keys.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\os_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\qal.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\ref.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\screen.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\snd_loc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\snd_openal.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\sound.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\vid.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -1761,36 +1212,45 @@ SOURCE=.\win32\winquake.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\win32\q2.ico
+SOURCE=ufo.ico
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\q2.rc
+SOURCE=..\..\src\ports\win32\ufo.rc
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\ufo.ico
+SOURCE=..\..\src\ports\win32\ogg.lib
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\ogg.lib
+SOURCE=..\..\src\ports\win32\vorbisfile.lib
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\vorbisfile.lib
+SOURCE=..\..\src\ports\win32\intl.lib
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\intl.lib
+SOURCE=..\..\src\ports\win32\ALc.lib
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\ALu.lib
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\ALut.lib
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\OpenAL32.lib
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\zlib1.lib
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\win32\libintl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\win32\vorbisfile.h
-# End Source File
 # End Target
 # End Project

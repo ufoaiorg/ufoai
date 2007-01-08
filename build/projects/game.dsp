@@ -163,7 +163,7 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=.\g_ai.c
+SOURCE=..\..\src\game\g_ai.c
 
 !IF  "$(CFG)" == "game - Win32 Release"
 
@@ -178,7 +178,7 @@ SOURCE=.\g_ai.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\g_client.c
+SOURCE=..\..\src\game\g_client.c
 
 !IF  "$(CFG)" == "game - Win32 Release"
 
@@ -193,7 +193,7 @@ SOURCE=.\g_client.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\g_cmds.c
+SOURCE=..\..\src\game\g_cmds.c
 
 !IF  "$(CFG)" == "game - Win32 Release"
 
@@ -208,34 +208,7 @@ SOURCE=.\g_cmds.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\g_main.c
-
-!IF  "$(CFG)" == "game - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "game - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "game - Win32 Debug Alpha"
-
-DEP_CPP_G_MAI=\
-	".\g_local.h"\
-	".\game.h"\
-	".\q_shared.h"\
-	
-
-!ELSEIF  "$(CFG)" == "game - Win32 Release Alpha"
-
-DEP_CPP_G_MAI=\
-	".\g_local.h"\
-	".\game.h"\
-	".\q_shared.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\g_spawn.c
+SOURCE=..\..\src\game\g_combat.c
 
 !IF  "$(CFG)" == "game - Win32 Release"
 
@@ -250,7 +223,7 @@ SOURCE=.\g_spawn.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\g_svcmds.c
+SOURCE=..\..\src\game\g_main.c
 
 !IF  "$(CFG)" == "game - Win32 Release"
 
@@ -258,26 +231,14 @@ SOURCE=.\g_svcmds.c
 
 !ELSEIF  "$(CFG)" == "game - Win32 Debug Alpha"
 
-DEP_CPP_G_SVC=\
-	".\g_local.h"\
-	".\game.h"\
-	".\q_shared.h"\
-	
-
 !ELSEIF  "$(CFG)" == "game - Win32 Release Alpha"
-
-DEP_CPP_G_SVC=\
-	".\g_local.h"\
-	".\game.h"\
-	".\q_shared.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\g_utils.c
+SOURCE=..\..\src\game\g_spawn.c
 
 !IF  "$(CFG)" == "game - Win32 Release"
 
@@ -285,26 +246,14 @@ SOURCE=.\g_utils.c
 
 !ELSEIF  "$(CFG)" == "game - Win32 Debug Alpha"
 
-DEP_CPP_G_UTI=\
-	".\g_local.h"\
-	".\game.h"\
-	".\q_shared.h"\
-	
-
 !ELSEIF  "$(CFG)" == "game - Win32 Release Alpha"
-
-DEP_CPP_G_UTI=\
-	".\g_local.h"\
-	".\game.h"\
-	".\q_shared.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\q_shared.c
+SOURCE=..\..\src\game\g_svcmds.c
 
 !IF  "$(CFG)" == "game - Win32 Release"
 
@@ -312,15 +261,37 @@ SOURCE=.\q_shared.c
 
 !ELSEIF  "$(CFG)" == "game - Win32 Debug Alpha"
 
-DEP_CPP_Q_SHA=\
-	".\q_shared.h"\
-	
+!ELSEIF  "$(CFG)" == "game - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\game\g_utils.c
+
+!IF  "$(CFG)" == "game - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "game - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "game - Win32 Debug Alpha"
 
 !ELSEIF  "$(CFG)" == "game - Win32 Release Alpha"
 
-DEP_CPP_Q_SHA=\
-	".\q_shared.h"\
-	
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\game\q_shared.c
+
+!IF  "$(CFG)" == "game - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "game - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "game - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "game - Win32 Release Alpha"
 
 !ENDIF 
 
@@ -331,15 +302,15 @@ DEP_CPP_Q_SHA=\
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\g_local.h
+SOURCE=..\..\src\game\g_local.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\game.h
+SOURCE=..\..\src\game\game.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\q_shared.h
+SOURCE=..\..\src\game\q_shared.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -347,11 +318,7 @@ SOURCE=.\q_shared.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\game.def
-# End Source File
-# Begin Source File
-
-SOURCE=..\win32\intl.lib
+SOURCE=..\..\src\game\game.def
 # End Source File
 # End Group
 # End Target

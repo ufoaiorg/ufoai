@@ -165,7 +165,7 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=.\gl_anim.c
+SOURCE=..\..\src\ref_gl\gl_anim.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
 
@@ -180,226 +180,7 @@ SOURCE=.\gl_anim.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\gl_draw.c
-
-!IF  "$(CFG)" == "ref_gl - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
-
-DEP_CPP_GL_DR=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_DR=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
-
-DEP_CPP_GL_DR=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_DR=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\gl_image.c
-
-!IF  "$(CFG)" == "ref_gl - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
-
-DEP_CPP_GL_IM=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_IM=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
-
-DEP_CPP_GL_IM=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_IM=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\gl_light.c
-
-!IF  "$(CFG)" == "ref_gl - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
-
-DEP_CPP_GL_LI=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_LI=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
-
-DEP_CPP_GL_LI=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_LI=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\gl_mesh.c
-
-!IF  "$(CFG)" == "ref_gl - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
-
-DEP_CPP_GL_ME=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\anorms.h"\
-	".\anormtab.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_ME=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
-
-DEP_CPP_GL_ME=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\anorms.h"\
-	".\anormtab.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_ME=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\gl_model.c
-
-!IF  "$(CFG)" == "ref_gl - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
-
-DEP_CPP_GL_MO=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_MO=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
-
-DEP_CPP_GL_MO=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_MO=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\gl_particle.c
+SOURCE=..\..\src\ref_gl\gl_draw.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
 
@@ -414,7 +195,7 @@ SOURCE=.\gl_particle.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\gl_rmain.c
+SOURCE=..\..\src\ref_gl\gl_image.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
 
@@ -422,42 +203,14 @@ SOURCE=.\gl_rmain.c
 
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
 
-DEP_CPP_GL_RM=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_RM=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
-
-DEP_CPP_GL_RM=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_RM=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\gl_rmisc.c
+SOURCE=..\..\src\ref_gl\gl_light.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
 
@@ -465,42 +218,14 @@ SOURCE=.\gl_rmisc.c
 
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
 
-DEP_CPP_GL_RMI=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_RMI=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
-
-DEP_CPP_GL_RMI=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_RMI=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\gl_rsurf.c
+SOURCE=..\..\src\ref_gl\gl_mesh.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
 
@@ -508,42 +233,14 @@ SOURCE=.\gl_rsurf.c
 
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
 
-DEP_CPP_GL_RS=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_RS=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
-
-DEP_CPP_GL_RS=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GL_RS=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\gl_warp.c
+SOURCE=..\..\src\ref_gl\gl_model.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
 
@@ -551,44 +248,14 @@ SOURCE=.\gl_warp.c
 
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
 
-DEP_CPP_GL_WA=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	".\warpsin.h"\
-	
-NODEP_CPP_GL_WA=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
-
-DEP_CPP_GL_WA=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	".\warpsin.h"\
-	
-NODEP_CPP_GL_WA=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=..\win32\glw_imp.c
+SOURCE=..\..\src\ref_gl\gl_particle.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
 
@@ -596,46 +263,14 @@ SOURCE=..\win32\glw_imp.c
 
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
 
-DEP_CPP_GLW_I=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	"..\win32\glw_win.h"\
-	"..\win32\winquake.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GLW_I=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
-
-DEP_CPP_GLW_I=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	"..\win32\glw_win.h"\
-	"..\win32\winquake.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_GLW_I=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=..\game\q_shared.c
+SOURCE=..\..\src\ref_gl\gl_rmain.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
 
@@ -643,22 +278,14 @@ SOURCE=..\game\q_shared.c
 
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
 
-DEP_CPP_Q_SHA=\
-	"..\game\q_shared.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
-
-DEP_CPP_Q_SHA=\
-	"..\game\q_shared.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=..\win32\q_shwin.c
+SOURCE=..\..\src\ref_gl\gl_rmisc.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
 
@@ -666,28 +293,14 @@ SOURCE=..\win32\q_shwin.c
 
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
 
-DEP_CPP_Q_SHW=\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	"..\win32\winquake.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
-
-DEP_CPP_Q_SHW=\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	"..\win32\winquake.h"\
-	
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=..\win32\qgl_win.c
+SOURCE=..\..\src\ref_gl\gl_rsurf.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
 
@@ -695,37 +308,82 @@ SOURCE=..\win32\qgl_win.c
 
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
 
-DEP_CPP_QGL_W=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	"..\win32\glw_win.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_QGL_W=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ref_gl\gl_warp.c
+
+!IF  "$(CFG)" == "ref_gl - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
 
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
 
-DEP_CPP_QGL_W=\
-	"..\client\ref.h"\
-	"..\game\q_shared.h"\
-	"..\qcommon\qcommon.h"\
-	"..\qcommon\qfiles.h"\
-	"..\win32\glw_win.h"\
-	".\gl_local.h"\
-	".\gl_model.h"\
-	".\qgl.h"\
-	
-NODEP_CPP_QGL_W=\
-	".\L\gl.h"\
-	".\L\glu.h"\
-	
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\glw_imp.c
+
+!IF  "$(CFG)" == "ref_gl - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\game\q_shared.c
+
+!IF  "$(CFG)" == "ref_gl - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\q_shwin.c
+
+!IF  "$(CFG)" == "ref_gl - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\qgl_win.c
+
+!IF  "$(CFG)" == "ref_gl - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
 
 !ENDIF 
 
@@ -736,63 +394,63 @@ NODEP_CPP_QGL_W=\
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\anorms.h
+SOURCE=..\..\src\client\anorms.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\anormtab.h
+SOURCE=..\..\src\ref_gl\anormtab.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\gl_local.h
+SOURCE=..\..\src\ref_gl\gl_local.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\gl_model.h
+SOURCE=..\..\src\ref_gl\gl_model.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\win32\glw_win.h
+SOURCE=..\..\src\ports\win32\glw_win.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\jpeg-6\jpeglib.h
+SOURCE=..\..\src\ports\win32\jpeglib.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\win32\libintl.h
+SOURCE=..\..\src\ports\win32\png.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\game\q_shared.h
+SOURCE=..\..\src\ports\win32\pngconf.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\qcommon\qcommon.h
+SOURCE=..\..\src\game\q_shared.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\qcommon\qfiles.h
+SOURCE=..\..\src\qcommon\qcommon.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\qgl.h
+SOURCE=..\..\src\qcommon\qfiles.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\qmenu.h
+SOURCE=..\..\src\ref_gl\qgl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\client\ref.h
+SOURCE=..\..\src\client\ref.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\warpsin.h
+SOURCE=..\..\src\ref_gl\warpsin.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\win32\winquake.h
+SOURCE=..\..\src\win32\winquake.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -800,15 +458,19 @@ SOURCE=..\win32\winquake.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\ref_gl.def
+SOURCE=..\..\src\ref_gl\ref_gl.def
 # End Source File
 # Begin Source File
 
-SOURCE=..\win32\libjpeg.lib
+SOURCE=..\..\src\ports\win32\libjpeg.lib
 # End Source File
 # Begin Source File
 
-SOURCE=..\win32\intl.lib
+SOURCE=..\..\src\ports\win32\libpng.lib
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\zlib1.lib
 # End Source File
 # End Group
 # End Target
