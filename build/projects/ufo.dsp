@@ -86,7 +86,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386
-# ADD LINK32 winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib /nologo /subsystem:windows /incremental:no /map /debug /machine:I386 /out:"..\ufo.exe"
+# ADD LINK32 winmm.lib wsock32.lib gdi32.lib kernel32.lib /nologo /subsystem:windows /incremental:no /map /debug /machine:I386 /out:"..\..\ufo.exe"
 # SUBTRACT LINK32 /nodefaultlib
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
@@ -229,7 +229,7 @@ SOURCE=..\..\src\client\cl_aliencont.c
 # End Source File
 # Begin Source File
 
-SOURCE=...\..\src\client\cl_basemanagement.c
+SOURCE=..\..\src\client\cl_basemanagement.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -244,22 +244,7 @@ SOURCE=...\..\src\client\cl_basemanagement.c
 # End Source File
 # Begin Source File
 
-SOURCE=...\..\src\client\cl_campaign.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=...\..\src\client\cl_cin.c
+SOURCE=..\..\src\client\cl_campaign.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -304,7 +289,7 @@ SOURCE=..\..\src\client\cl_event.c
 # End Source File
 # Begin Source File
 
-SOURCE=...\..\src\client\cl_fx.c
+SOURCE=..\..\src\client\cl_fx.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -334,7 +319,7 @@ SOURCE=..\..\src\client\cl_hospital.c
 # End Source File
 # Begin Source File
 
-SOURCE=...\..\src\client\cl_input.c
+SOURCE=..\..\src\client\cl_input.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -364,7 +349,7 @@ SOURCE=..\..\src\client\cl_inventory.c
 # End Source File
 # Begin Source File
 
-SOURCE=...\..\src\client\cl_le.c
+SOURCE=..\..\src\client\cl_le.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -379,7 +364,7 @@ SOURCE=...\..\src\client\cl_le.c
 # End Source File
 # Begin Source File
 
-SOURCE=...\..\src\client\cl_main.c
+SOURCE=..\..\src\client\cl_main.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -424,7 +409,7 @@ SOURCE=..\..\src\client\cl_market.c
 # End Source File
 # Begin Source File
 
-SOURCE=...\..\src\client\cl_menu.c
+SOURCE=..\..\src\client\cl_menu.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -439,7 +424,7 @@ SOURCE=...\..\src\client\cl_menu.c
 # End Source File
 # Begin Source File
 
-SOURCE=...\..\src\client\cl_parse.c
+SOURCE=..\..\src\client\cl_parse.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -454,7 +439,7 @@ SOURCE=...\..\src\client\cl_parse.c
 # End Source File
 # Begin Source File
 
-SOURCE=...\..\src\client\cl_particle.c
+SOURCE=..\..\src\client\cl_particle.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -514,7 +499,7 @@ SOURCE=..\..\src\client\cl_radar.c
 # End Source File
 # Begin Source File
 
-SOURCE=...\..\src\client\cl_research.c
+SOURCE=..\..\src\client\cl_research.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -529,7 +514,7 @@ SOURCE=...\..\src\client\cl_research.c
 # End Source File
 # Begin Source File
 
-SOURCE=...\..\src\client\cl_scrn.c
+SOURCE=..\..\src\client\cl_scrn.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 

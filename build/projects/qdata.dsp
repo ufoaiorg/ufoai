@@ -73,7 +73,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 /nologo /subsystem:console /debug /machine:I386
 
 !ENDIF 
 
@@ -86,63 +86,59 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=..\common\bspfile.c
+SOURCE=..\..\src\tools\ufo2map\common\bspfile.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\cmdlib.c
+SOURCE=..\..\src\tools\ufo2map\common\cmdlib.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\images.c
+SOURCE=..\..\src\tools\qdata\images.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\l3dslib.c
+SOURCE=..\..\src\tools\qdata\common\l3dslib.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\lbmlib.c
+SOURCE=..\..\src\tools\ufo2map\common\lbmlib.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\mathlib.c
+SOURCE=..\..\src\tools\ufo2map\common\mathlib.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\md4.c
+SOURCE=..\..\src\tools\qdata\models.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\models.c
+SOURCE=..\..\src\tools\qdata\qdata.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\qdata.c
+SOURCE=..\..\src\tools\ufo2map\common\scriplib.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\scriplib.c
+SOURCE=..\..\src\tools\qdata\sprites.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\sprites.c
+SOURCE=..\..\src\tools\qdata\tables.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\tables.c
+SOURCE=..\..\src\tools\ufo2map\common\threads.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\threads.c
+SOURCE=..\..\src\tools\qdata\common\trilib.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\trilib.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\video.c
+SOURCE=..\..\src\tools\qdata\video.c
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -150,51 +146,39 @@ SOURCE=.\video.c
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\anorms.h
+SOURCE=..\..\src\tools\ufo2map\common\bspfile.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\bspfile.h
+SOURCE=..\..\src\tools\ufo2map\common\cmdlib.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\cmdlib.h
+SOURCE=..\..\src\tools\qdata\common\l3dslib.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\l3dslib.h
+SOURCE=..\..\src\tools\ufo2map\common\lbmlib.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\lbmlib.h
+SOURCE=..\..\src\tools\ufo2map\common\mathlib.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\mathlib.h
+SOURCE=..\..\src\tools\ufo2map\common\qfiles.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\modelgen.h
+SOURCE=..\..\src\tools\ufo2map\common\scriplib.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\qdata.h
+SOURCE=..\..\src\tools\ufo2map\common\threads.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\qfiles.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\common\scriplib.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\common\threads.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\common\trilib.h
+SOURCE=..\..\src\tools\qdata\common\trilib.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
