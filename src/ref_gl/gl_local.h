@@ -258,6 +258,8 @@ extern cvar_t *gl_mode;
 extern cvar_t *gl_log;
 extern cvar_t *gl_lightmap;
 
+extern cvar_t *gl_showbox;
+
 /* shadow stuff */
 void R_ShadowBlend(void);
 void R_DrawShadowVolume(entity_t * e);

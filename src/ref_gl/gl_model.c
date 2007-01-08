@@ -1538,3 +1538,48 @@ void Mod_FreeAll(void)
 	}
 	mod_numknown = 0;
 }
+
+/**
+ * @brief Draws the model bounding box
+ * @sa R_DrawAliasModel
+ */
+void Mod_DrawModelBBox (vec3_t bbox[8], entity_t *e)
+{
+	if (!gl_showbox->value)
+		return;
+
+	if (e->flags & RF_WEAPONMODEL || e->flags & RF_VIEWERMODEL || e->flags & RF_BEAM)
+		return;
+
+	qglDisable (GL_CULL_FACE);
+	qglPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
+
+	/* Draw top and sides */
+	qglBegin(GL_TRIANGLE_STRIP);
+	qglVertex3fv( bbox[2] );
+	qglVertex3fv( bbox[1] );
+	qglVertex3fv( bbox[0] );
+	qglVertex3fv( bbox[1] );
+	qglVertex3fv( bbox[4] );
+	qglVertex3fv( bbox[5] );
+	qglVertex3fv( bbox[1] );
+	qglVertex3fv( bbox[7] );
+	qglVertex3fv( bbox[3] );
+	qglVertex3fv( bbox[2] );
+	qglVertex3fv( bbox[7] );
+	qglVertex3fv( bbox[6] );
+	qglVertex3fv( bbox[2] );
+	qglVertex3fv( bbox[4] );
+	qglVertex3fv( bbox[0] );
+	qglEnd();
+
+  	/* Draw bottom */
+	qglBegin(GL_TRIANGLE_STRIP);
+	qglVertex3fv(bbox[4]);
+	qglVertex3fv(bbox[6]);
+	qglVertex3fv(bbox[7]);
+	qglEnd();
+
+	qglPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+	qglEnable (GL_CULL_FACE);
+}

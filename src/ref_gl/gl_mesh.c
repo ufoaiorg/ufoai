@@ -161,14 +161,15 @@ static void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp, int framen
 /**
  * @brief
  */
-static qboolean R_CullAliasModel(entity_t * e)
+static qboolean R_CullAliasModel(vec3_t bbox[8], entity_t * e)
 {
-	int i;
+	int i, p, mask, f, aggregatemask = ~0;
 	vec3_t mins, maxs;
 	dmdl_t *paliashdr;
-	vec3_t thismins, oldmins, thismaxs, oldmaxs;
+	vec3_t tmp, thismins, oldmins, thismaxs, oldmaxs;
 	daliasframe_t *pframe, *poldframe;
-	vec4_t bbox[8];
+	vec3_t vectors[3];
+	float dp;
 
 	assert (currentmodel->type == mod_alias);
 	paliashdr = (dmdl_t *) currentmodel->extradata;
@@ -205,62 +206,39 @@ static qboolean R_CullAliasModel(entity_t * e)
 		}
 	}
 
-	/*
-	 ** compute a full bounding box
-	 */
+	/* jitspoe's bbox rotation fix */
+	/* compute and rotate bonding box */
+	e->angles[ROLL] = -e->angles[ROLL]; /* roll is backwards */
+	AngleVectors(e->angles, vectors[0], vectors[1], vectors[2]);
+	e->angles[ROLL] = -e->angles[ROLL]; /* roll is backwards */
+	VectorSubtract(vec3_origin, vectors[1], vectors[1]); /* AngleVectors returns "right" instead of "left" */
 	for (i = 0; i < 8; i++) {
-		vec3_t tmp;
+		tmp[0] = ((i & 1) ? mins[0] : maxs[0]);
+		tmp[1] = ((i & 2) ? mins[1] : maxs[1]);
+		tmp[2] = ((i & 4) ? mins[2] : maxs[2]);
 
-		if (i & 1)
-			tmp[0] = mins[0];
-		else
-			tmp[0] = maxs[0];
-
-		if (i & 2)
-			tmp[1] = mins[1];
-		else
-			tmp[1] = maxs[1];
-
-		if (i & 4)
-			tmp[2] = mins[2];
-		else
-			tmp[2] = maxs[2];
-
-		VectorCopy(tmp, bbox[i]);
-		bbox[i][3] = 1.0;
+		bbox[i][0] = vectors[0][0] * tmp[0] + vectors[1][0] * tmp[1] + vectors[2][0] * tmp[2] + e->origin[0];
+		bbox[i][1] = vectors[0][1] * tmp[0] + vectors[1][1] * tmp[1] + vectors[2][1] * tmp[2] + e->origin[1];
+		bbox[i][2] = vectors[0][2] * tmp[0] + vectors[1][2] * tmp[1] + vectors[2][2] * tmp[2] + e->origin[2];
 	}
 
-	/*
-	 ** transform the bounding box
-	 */
-	for (i = 0; i < 8; i++) {
-		vec4_t tmp;
+	/* cull */
+	for (p = 0; p < 8; p++) {
+		mask = 0;
 
-		Vector4Copy(bbox[i], tmp);
-		GLVectorTransform(trafo[e - r_newrefdef.entities].matrix, tmp, bbox[i]);
-	}
+		for (f = 0; f < 4; f++) {
+			dp = DotProduct( frustum[f].normal, bbox[p] );
 
-	{
-		int p, f, aggregatemask = ~0;
-
-		for (p = 0; p < 8; p++) {
-			int mask = 0;
-
-			for (f = 0; f < 4; f++) {
-				float dp = DotProduct(frustum[f].normal, bbox[p]);
-
-				if ((dp - frustum[f].dist) < 0)
-					mask |= (1 << f);
-			}
-
-			aggregatemask &= mask;
+			if ((dp - frustum[f].dist) < 0)
+				mask |= (1 << f);
 		}
-
-		if (aggregatemask)
-			return qtrue;
-
-		return qfalse;
+		aggregatemask &= mask;
 	}
+
+	if (aggregatemask)
+		return qtrue;
+
+	return qfalse;
 }
 
 /**
@@ -353,6 +331,7 @@ void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lig
 void R_DrawAliasModel(entity_t * e)
 {
 	qboolean lightfixed;
+	vec3_t bbox[8];
 	dmdl_t *paliashdr;
 	image_t *skin;
 
@@ -373,7 +352,7 @@ void R_DrawAliasModel(entity_t * e)
 		e->as.backlerp = 0;
 
 	/* check if model is out of fov */
-	if (R_CullAliasModel(e))
+	if (R_CullAliasModel(bbox, e))
 		return;
 
 	/* select skin */
@@ -519,6 +498,9 @@ void R_DrawAliasModel(entity_t * e)
 
 	if (e->flags & RF_DEPTHHACK)
 		qglDepthRange(gldepthmin, gldepthmax);
+
+	/* show model bounding box */
+	Mod_DrawModelBBox (bbox, e);
 
 	if (gl_fog->value && r_newrefdef.fog)
 		qglEnable(GL_FOG);

@@ -144,6 +144,7 @@ cvar_t *gl_texturealphamode;
 cvar_t *gl_texturesolidmode;
 cvar_t *gl_wire;
 cvar_t *gl_fog;
+cvar_t *gl_showbox;
 
 cvar_t *gl_3dlabs_broken;
 
@@ -1149,6 +1150,7 @@ static void R_Register(void)
 	gl_texturesolidmode = ri.Cvar_Get("gl_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
 	gl_wire = ri.Cvar_Get("gl_wire", "0", 0, NULL);
 	gl_fog = ri.Cvar_Get("gl_fog", "1", CVAR_ARCHIVE, NULL);
+	gl_showbox = ri.Cvar_Get("gl_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 	gl_vertex_arrays = ri.Cvar_Get("gl_vertex_arrays", "0", CVAR_ARCHIVE, NULL);
 
 	gl_ext_swapinterval = ri.Cvar_Get("gl_ext_swapinterval", "1", CVAR_ARCHIVE, NULL);
