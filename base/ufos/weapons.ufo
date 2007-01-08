@@ -302,11 +302,11 @@ item smokegrenade
 }
 
 // =======================
-// STUN GRENADE
+// STUNGAS GRENADE
 // =======================
 item stungrenade
 {
-	name		"_Stun Grenade"
+	name		"_Gas Grenade"
 	model		weapons/stungren/stungren
 	weapon		true
 	type		grenade
