@@ -147,6 +147,12 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 				break;
 			case RS_LINK_EVENT:
 				break;
+			case RS_LINK_ALIEN:
+				/* TODO:  Check if the the required amount of the alien with the index required->idx[i] has been captured alive, if not set met_AND = qfalse; */
+				break;
+			case RS_LINK_ALIEN_DEAD:
+				/* TODO:  Check if the the required amount of the alien with the index required->idx[i] has been captured dead, if not set met_AND = qfalse; */
+				break;
 			default:
 				break;
 			}
@@ -174,6 +180,12 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 				/* This is no real requirement, so no checks here. */
 				break;
 			case RS_LINK_EVENT:
+				break;
+			case RS_LINK_ALIEN:
+				/* TODO:  Check if the the required amount of the alien with the index required->idx[i] has been captured alive, if so set met_OR = qtrue; */
+				break;
+			case RS_LINK_ALIEN_DEAD:
+				/* TODO:  Check if the the required amount of the alien with the index required->idx[i] has been captured dead, if so set met_OR = qtrue; */
 				break;
 			default:
 				break;
@@ -207,7 +219,8 @@ qboolean RS_CheckCollected(requirements_t *required)
 		return qfalse;
 
 	for (i = 0; i < required->numLinks; i++) {
-		if (required->type[i] == RS_LINK_ITEM) {
+		switch (required->type[i]) {
+		case RS_LINK_ITEM:
 			item_amount = RS_ItemInBase(required->idx[i], baseCurrent);
 			if (item_amount > 0) {
 				required->collected[i] = item_amount;
@@ -215,7 +228,8 @@ qboolean RS_CheckCollected(requirements_t *required)
 				required->collected[i] = 0;
 				all_collected = qfalse;
 			}
-		} else if (required->type[i] == RS_LINK_TECH) {
+			break;
+		case RS_LINK_TECH:
 			tech = &gd.technologies[required->idx[i]];
 			/* Check if it is a logic block (RS_LOGIC) and interate into it if so.*/
 			if (tech->type == RS_LOGIC) {
@@ -226,6 +240,15 @@ qboolean RS_CheckCollected(requirements_t *required)
 					tech->statusCollected = qtrue;
 				}
 			}
+			break;
+		case RS_LINK_ALIEN:
+			/* TODO: Check if the alien with the index required->idx[i] has been captured alive, if not set tech->statusCollected = qfalse; */
+			break;
+		case RS_LINK_ALIEN_DEAD:
+			/* TODO:  Check if the alien with the index required->idx[i] has been captured dead. if not set tech->statusCollected = qfalse; */
+			break;
+		default:
+			break;
 		}
 	}
 	return all_collected;
@@ -328,6 +351,12 @@ void RS_AssignTechIdxs(requirements_t *req)
 			break;
 		case RS_LINK_EVENT:
 			/* TODO: Get index of event in event-list. */
+			break;
+		case RS_LINK_ALIEN:
+			/* TODO:  Get index of live alien with the identifier req->id[i] and set req->idx[i] ti this value. */
+			break;
+		case RS_LINK_ALIEN_DEAD:
+			/* TODO:  Get index of dead alien with the identifier req->id[i] and set req->idx[i] ti this value. */
 			break;
 		default:
 			break;
@@ -1430,14 +1459,16 @@ void RS_ParseTechnologies(char *id, char **text)
 							/* Set requirement-type. */
 							if (!Q_strcmp(token, "tech")) {
 								required_temp->type[required_temp->numLinks] = RS_LINK_TECH;
+								Com_DPrintf("RS_ParseTechnologies: tech - %s\n", required_temp->id[required_temp->numLinks]);
 							} else {	/* weapon */
 								/* Ammo only: Defines what weapon can use this ammo. */
 								required_temp->type[required_temp->numLinks] = RS_LINK_WEAPON;
+								Com_DPrintf("RS_ParseTechnologies: weapon - %s\n", required_temp->id[required_temp->numLinks]);
 							}
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
 							Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
-							Com_DPrintf("RS_ParseTechnologies: tech - %s\n", required_temp->id[required_temp->numLinks]);
+							
 							required_temp->numLinks++;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
@@ -1461,8 +1492,36 @@ void RS_ParseTechnologies(char *id, char **text)
 					} else if (!Q_strcmp(token, "event")) {
 						token = COM_Parse(text);
 						Com_DPrintf("RS_ParseTechnologies: event - %s\n", token);
+						required_temp->type[required_temp->numLinks] = RS_LINK_EVENT;
 						/* Get name/id & amount of required item. */
 						/* TODO: Implement final event esystem, so this can work 100% */
+					} else if ( (!Q_strcmp(token, "alien_dead")) ||  (!Q_strcmp(token, "alien")) ) { /* Does this only check the beginning of the string? */
+						/* Defines what live or dead aliens need to be collected for this item to be researchable. */
+						if (required_temp->numLinks < MAX_TECHLINKS) {
+							/* Set requirement-type. */
+							if (!Q_strcmp(token, "alien_dead")) {
+								required_temp->type[required_temp->numLinks] = RS_LINK_ALIEN_DEAD;
+								Com_DPrintf("RS_ParseTechnologies: alien dead - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
+							} else {
+								required_temp->type[required_temp->numLinks] = RS_LINK_ALIEN;
+								Com_DPrintf("RS_ParseTechnologies: alien alive - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
+							}
+							/* Set requirement-name (id). */
+							token = COM_Parse(text);
+							Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
+							/* Set requirement-amount of item. */
+							token = COM_Parse(text);
+							required_temp->amount[required_temp->numLinks] = atoi(token);
+							required_temp->numLinks++;
+						} else {
+							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
+						}
+					} else if (!Q_strcmp(token, "alien_dead")) {
+						token = COM_Parse(text);
+						Com_DPrintf("RS_ParseTechnologies: alien dead - %s\n", token);
+						required_temp->type[required_temp->numLinks] = RS_LINK_ALIEN_DEAD;
+						/* Get name/id & amount of required item. */
+						/* TODO */
 					} else {
 						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", id, token);
 					}
