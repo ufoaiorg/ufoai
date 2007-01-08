@@ -903,6 +903,8 @@ typedef struct menuNode_s {
 	int textScroll;				/* textfields - current scroll position */
 	int textLines;				/* How many lines there are (set by MN_DrawMenus)*/
 	int timeOut;				/* ms value until invis is set (see cl.time) */
+	int timePushed;				/* when a menu was pushed this value is set to cl.time */
+	qboolean timeOutOnce;		/* timeOut is decreased if this value is true */
 	int num, height;			/* textfields - num: menutexts-id; height: max. rows to show */
 	vec4_t color;				/* rgba */
 	vec4_t bgcolor;				/* rgba */

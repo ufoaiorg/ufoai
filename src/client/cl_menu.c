@@ -116,6 +116,7 @@ static value_t nps[] = {
 	{"height", V_INT, offsetof(menuNode_t, height)},
 	{"text_scroll", V_INT, offsetof(menuNode_t, textScroll)},
 	{"timeout", V_INT, offsetof(menuNode_t, timeOut)},
+	{"timeout_once", V_BOOL, offsetof(menuNode_t, timeOutOnce)},
 	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor)},
 	{"key", V_STRING, offsetof(menuNode_t, key)},
 	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
@@ -1661,6 +1662,18 @@ void MN_DrawMenus(void)
 					}
 				}
 
+				/* timeout? */
+				if (node->timePushed) {
+					if (node->timePushed + node->timeOut < cl.time) {
+						node->timePushed = 0;
+						node->invis = qtrue;
+						/* only timeout this once, otherwise there is a new timeout after every new stack push */
+						if (node->timeOutOnce)
+							node->timeOut = 0;
+						continue;
+					}
+				}
+
 				/* mouse effects */
 				if (sp > pp) {
 					/* in and out events */
@@ -2143,6 +2156,7 @@ menu_t* MN_ActiveMenu(void)
 menu_t* MN_PushMenuDelete(char *name, qboolean delete)
 {
 	int i;
+	menuNode_t *node;
 
 	for (i = 0; i < numMenus; i++)
 		if (!Q_strncmp(menus[i].name, name, MAX_VAR)) {
@@ -2160,6 +2174,13 @@ menu_t* MN_PushMenuDelete(char *name, qboolean delete)
 				MN_ExecuteActions(&menus[i], menus[i].initNode->click);
 
 			cls.key_dest = key_game;
+			for (node = menus[i].firstNode; node; node = node->next) {
+				/* if there is a timeout value set, init the menu with current
+				 * client time */
+				if (node->timeOut)
+					node->timePushed = cl.time;
+			}
+
 			return menus + i;
 		}
 
