@@ -605,36 +605,6 @@ menu mp_join_lan
 	// preferences
 	// ==================
 
-	string lan_teamnum_str
-	{
-		string	"_Team preference:"
-		pos	"500 660"
-	}
-	string lan_teamnum_value
-	{
-		string	"*cvar teamnum"
-		pos	"650 660"
-		align	ur
-	}
-	pic lan_teamnum_dec
-	{
-		image	menu/buttons_small
-		pos	"668 662"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "mn_modify teamnum -1 1 4;" }
-	}
-	pic lan_teamnum_inc
-	{
-		image	menu/buttons_small
-		pos	"684 662"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify teamnum +1 1 4;" }
-	}
-
 	pic button_lan_refresh
 	{
 		image	menu/multi_buttons3
@@ -788,36 +758,6 @@ menu mp_join_internet
 		color	"0 .78 0 1"
 	}
 	confunc mn_server_ip_changed { *txt_inet_ip color "0 .78 0 1" *txt_inet_ip mousefx false }
-
-	string inet_teamnum_str
-	{
-		string	"_Team preference:"
-		pos	"500 660"
-	}
-	string inet_teamnum_value
-	{
-		string	"*cvar teamnum"
-		pos	"650 660"
-		align	ur
-	}
-	pic inet_teamnum_dec
-	{
-		image	menu/buttons_small
-		pos	"668 662"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "mn_modify teamnum -1 1 4;" }
-	}
-	pic inet_teamnum_inc
-	{
-		image	menu/buttons_small
-		pos	"684 662"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify teamnum +1 1 4;" }
-	}
 
 	func init
 	{
@@ -1101,58 +1041,24 @@ menu mp_create_server
 	}
 
 	// ===================
-	// TEAM
-	// ===================
-	string server_teamnum_str
-	{
-		string	"_Team preference:"
-		pos	"500 260"
-		tooltip	"_Sets the preferred team"
-	}
-	string server_teamnum_value
-	{
-		string	"*cvar teamnum"
-		pos	"840 260"
-		align	ur
-	}
-	pic server_teamnum_dec
-	{
-		image	menu/buttons_small
-		pos	"868 262"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "mn_modify teamnum -1 1 4;" }
-	}
-	pic server_teamnum_inc
-	{
-		image	menu/buttons_small
-		pos	"884 262"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify teamnum +1 1 4;" }
-	}
-
-	// ===================
 	// MAX PLAYER PER TEAM
 	// max is half of maxclients
 	// ===================
 	string server_maxplayerperteam_str
 	{
 		string	"_Max. players per team:"
-		pos	"500 280"
+		pos	"500 260"
 	}
 	string server_maxplayerperteam_value
 	{
 		string	"*cvar maxplayers"
-		pos	"840 280"
+		pos	"840 260"
 		align	ur
 	}
 	pic server_maxplayerperteam_dec
 	{
 		image	menu/buttons_small
-		pos	"868 282"
+		pos	"868 262"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1161,7 +1067,7 @@ menu mp_create_server
 	pic server_maxplayerperteam_inc
 	{
 		image	menu/buttons_small
-		pos	"884 282"
+		pos	"884 262"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1174,19 +1080,19 @@ menu mp_create_server
 	string ai_numactors_str
 	{
 		string	"_Max. AI actors:"
-		pos	"500 300"
+		pos	"500 280"
 		tooltip	"_Max AI actors for teamplay mode"
 	}
 	string ai_numactors_value
 	{
 		string	"*cvar ai_numactors"
-		pos	"840 300"
+		pos	"840 280"
 		align	ur
 	}
 	pic ai_numactors_dec
 	{
 		image	menu/buttons_small
-		pos	"868 302"
+		pos	"868 282"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1195,7 +1101,7 @@ menu mp_create_server
 	pic ai_numactors_inc
 	{
 		image	menu/buttons_small
-		pos	"884 302"
+		pos	"884 282"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
