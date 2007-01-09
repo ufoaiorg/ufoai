@@ -480,6 +480,9 @@ static void GL_RenderLightmappedPoly(msurface_t * surf)
 	unsigned lmtex = surf->lightmaptexturenum;
 	glpoly_t *p;
 
+	if (surf->texinfo->flags & SURF_ALPHATEST)
+		qglEnable(GL_ALPHA_TEST);
+
 	for (map = 0; map < MAXLIGHTMAPS && surf->styles[map] != 255; map++) {
 		if (r_newrefdef.lightstyles[surf->styles[map]].white != surf->cached_light[map])
 			goto dynamic;
@@ -595,6 +598,8 @@ static void GL_RenderLightmappedPoly(msurface_t * surf)
 			}
 		}
 	}
+
+	qglDisable(GL_ALPHA_TEST);
 }
 
 /**

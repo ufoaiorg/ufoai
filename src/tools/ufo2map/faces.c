@@ -843,15 +843,15 @@ face_t *FaceFromPortal (portal_t *p, int pside)
 	f->planenum = (side->planenum & ~1) | pside;
 	f->portal = p;
 
-	if ( (p->nodes[pside]->contents & CONTENTS_WINDOW)
-		&& VisibleContents(p->nodes[!pside]->contents^p->nodes[pside]->contents) == CONTENTS_WINDOW )
+	if ((p->nodes[pside]->contents & CONTENTS_WINDOW)
+		&& VisibleContents(p->nodes[!pside]->contents^p->nodes[pside]->contents) == CONTENTS_WINDOW)
 		return NULL;	/* don't show insides of windows */
 
 	/* do back-clipping */
 	if (!nobackclip && mapplanes[f->planenum].normal[2] < -0.9)
 		return NULL;
 
-	if ( texinfo[f->texinfo].flags & SURF_NODRAW )
+	if (texinfo[f->texinfo].flags & SURF_NODRAW)
 		return NULL;
 
 	if (pside) {

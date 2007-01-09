@@ -547,6 +547,7 @@ COLLISION DETECTION
 #define SURF_FLOWING    0x40    /* scroll towards angle */
 #define SURF_NODRAW     0x80    /* don't bother referencing the texture */
 
+#define SURF_ALPHATEST	0x2000000	/* alpha test for transparent textures */
 
 /* content masks */
 #define MASK_ALL                (-1)

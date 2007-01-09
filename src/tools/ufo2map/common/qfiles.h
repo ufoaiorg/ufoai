@@ -26,9 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 ========================================================================
-
 The .pak files are just a linear collapse of a directory tree
-
 ========================================================================
 */
 
@@ -43,19 +41,19 @@ PCX files are used for as many images as possible
 
 typedef struct
 {
-    char	manufacturer;
-    char	version;
-    char	encoding;
-    char	bits_per_pixel;
-    unsigned short	xmin,ymin,xmax,ymax;
-    unsigned short	hres,vres;
-    unsigned char	palette[48];
-    char	reserved;
-    char	color_planes;
-    unsigned short	bytes_per_line;
-    unsigned short	palette_type;
-    char	filler[58];
-    unsigned char	data;			/* unbounded */
+	char	manufacturer;
+	char	version;
+	char	encoding;
+	char	bits_per_pixel;
+	unsigned short	xmin,ymin,xmax,ymax;
+	unsigned short	hres,vres;
+	unsigned char	palette[48];
+	char	reserved;
+	char	color_planes;
+	unsigned short	bytes_per_line;
+	unsigned short	palette_type;
+	char	filler[58];
+	unsigned char	data;			/* unbounded */
 } pcx_t;
 
 
@@ -353,6 +351,7 @@ typedef struct
 #define	SURF_HINT		0x100	/* make a primary bsp splitter */
 #define	SURF_SKIP		0x200	/* completely ignore, allowing non-closed brushes */
 
+#define SURF_ALPHATEST	0x2000000	/* alpha test for transparent textures */
 
 
 typedef struct
