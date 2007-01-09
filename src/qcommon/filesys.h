@@ -31,7 +31,7 @@ typedef enum {
 int FS_FileLength(qFILE * f);
 void FS_FOpenFileWrite(const char *filename, qFILE * f);
 int FS_Seek(qFILE * f, long offset, int origin);
-int FS_WriteFile(const void *buffer, int len, const char *filename);
+int FS_WriteFile(const void *buffer, size_t len, const char *filename);
 int FS_Write(const void *buffer, int len, qFILE * f);
 void FS_InitFilesystem(void);
 void FS_SetGamedir(const char *dir);

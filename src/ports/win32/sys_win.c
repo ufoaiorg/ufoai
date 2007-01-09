@@ -36,7 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <conio.h>
 #include "conproc.h"
 #include <process.h>
-#include <strings.h>
 
 #ifdef _MSC_VER
 #include <dbghelp.h>
@@ -1181,7 +1180,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	/* always change to the current working dir */
 	FixWorkingDirectory();
 
-#ifdef _MSC_VER
+#if 0
 	__try
 	{
 #endif
@@ -1216,7 +1215,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			timescale = Qcommon_Frame (time);
 			oldtime = newtime;
 		}
-#ifdef _MSC_VER
+#if 0
 	}
 	__except (UFOAIExceptionHandler(GetExceptionCode(), GetExceptionInformation()))
 	{

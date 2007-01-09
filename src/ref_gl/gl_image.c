@@ -491,7 +491,7 @@ PNG LOADING
 
 typedef struct pngBuf_s {
 	byte	*buffer;
-	int		pos;
+	size_t	pos;
 } pngBuf_t;
 
 void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
@@ -1074,6 +1074,8 @@ void init_destination(j_compress_ptr cinfo)
 	dest->pub.free_in_buffer = dest->size;
 }
 
+static size_t hackSize;
+
 /**
  * @brief Terminate destination --- called by jpeg_finish_compress
  * after all data has been written.  Usually needs to flush buffer.
@@ -1082,7 +1084,6 @@ void init_destination(j_compress_ptr cinfo)
  * application must deal with any cleanup that should happen even
  * for error exit.
  */
-static int hackSize;
 void term_destination(j_compress_ptr cinfo)
 {
 	my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
@@ -1262,7 +1263,7 @@ void SaveJPG(char *filename, int quality, int image_width, int image_height, uns
  * @sa SaveJPG
  * @sa LoadJPG
  */
-int SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_height, byte * image_buffer)
+size_t SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_height, byte * image_buffer)
 {
 	struct jpeg_compress_struct cinfo;
 	struct jpeg_error_mgr jerr;
@@ -2013,7 +2014,8 @@ void GL_CalcDayAndNight(float q)
 image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits)
 {
 	image_t *image;
-	int len, i;
+	int i;
+	size_t len;
 
 	/* find a free image_t */
 	for (i = 0, image = gltextures; i < numgltextures; i++, image++)
@@ -2035,7 +2037,7 @@ image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagety
 	Q_strncpyz(image->name, name, MAX_QPATH);
 	image->registration_sequence = registration_sequence;
 	/* drop extension */
-	if ((*image).name[len - 4] == '.')
+	if (len >= 4 && (*image).name[len - 4] == '.')
 		(*image).name[len - 4] = '\0';
 
 	image->width = width;
@@ -2154,7 +2156,8 @@ image_t *GL_FindImage(const char *pname, imagetype_t type)
 	char *ename;
 	char *etex;
 	image_t *image;
-	int i, l, len;
+	int i;
+	size_t len;
 	byte *pic, *palette;
 	int width, height;
 
@@ -2180,12 +2183,12 @@ image_t *GL_FindImage(const char *pname, imagetype_t type)
 
 	/* look for it in the error list */
 	etex = glerrortex;
-	while ((l = strlen(etex)) != 0) {
+	while ((len = strlen(etex)) != 0) {
 		if (!Q_strncmp(lname, etex, MAX_QPATH))
 			/* it's in the error list */
 			return r_notexture;
 
-		etex += l + 1;
+		etex += len + 1;
 	}
 
 	/* load the pic from disk */

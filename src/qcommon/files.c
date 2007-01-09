@@ -1307,7 +1307,7 @@ int FS_Write(const void *buffer, int len, qFILE * f)
 /**
  * @brief
  */
-int FS_WriteFile(const void *buffer, int len, const char *filename)
+int FS_WriteFile(const void *buffer, size_t len, const char *filename)
 {
 	qFILE f;
 	int c, lencheck;

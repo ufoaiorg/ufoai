@@ -1076,6 +1076,7 @@ static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 {
 	int messageBucketSize;
 	int characterBucketSize;
+	irc_bucket_message_t *m, *n;
 
 	/* connection failed if this is null */
 	if (!irc_messageBucketSize)
@@ -1085,8 +1086,8 @@ static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 	characterBucketSize = irc_characterBucketSize->integer;
 
 	/* create message node */
-	irc_bucket_message_t * const m = (irc_bucket_message_t*) Mem_Alloc(sizeof(irc_bucket_message_t));
-	irc_bucket_message_t * n = irc_bucket.first_msg;
+	m = (irc_bucket_message_t*) Mem_Alloc(sizeof(irc_bucket_message_t));
+	n = irc_bucket.first_msg;
 	if (irc_bucket.message_size + 1 <= messageBucketSize && irc_bucket.character_size + msg_len <= characterBucketSize) {
 		/* TODO: strip high bits - or unprintable chars */
 		m->msg = (char*) Mem_Alloc(msg_len);

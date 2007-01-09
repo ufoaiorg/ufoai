@@ -893,6 +893,7 @@ MD2 ALIAS MODELS
 static void Mod_LoadAliasModel(model_t * mod, void *buffer)
 {
 	int i, j;
+	size_t l;
 	dmdl_t *pinmodel, *pheader;
 	dstvert_t *pinst, *poutst;
 	dtriangle_t *pintri, *pouttri;
@@ -986,8 +987,8 @@ static void Mod_LoadAliasModel(model_t * mod, void *buffer)
 
 	/* load the tags */
 	Q_strncpyz(mod->tagname, mod->name, MAX_QPATH);
-	i = strlen(mod->tagname) - 4;
-	strcpy(&(mod->tagname[i]), ".tag");
+	l = strlen(mod->tagname) - 4;
+	strcpy(&(mod->tagname[l]), ".tag");
 
 	/* try to load the tag file */
 	if (ri.FS_CheckFile(mod->tagname) != -1) {
@@ -999,8 +1000,8 @@ static void Mod_LoadAliasModel(model_t * mod, void *buffer)
 
 	/* load the animations */
 	Q_strncpyz(mod->animname, mod->name, MAX_QPATH);
-	i = strlen(mod->animname) - 4;
-	strcpy(&(mod->animname[i]), ".anm");
+	l = strlen(mod->animname) - 4;
+	strcpy(&(mod->animname[l]), ".anm");
 
 	/* try to load the animation file */
 	if (ri.FS_CheckFile(mod->animname) != -1) {

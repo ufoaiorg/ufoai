@@ -81,19 +81,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <dirent.h>
 #endif
 
+#if defined(_WIN32)
+# ifndef snprintf
+#  define snprintf _snprintf
+# endif
+#endif
+
 /* i18n support via gettext */
 /* needs to be activated via -DHAVE_GETTEXT */
 #ifdef HAVE_GETTEXT
 #if defined(_WIN32)
-#define snprintf _snprintf
-#ifdef _MSC_VER
-#ifndef LC_MESSAGES
-#define LC_MESSAGES 3
-#endif /* LC_MESSAGES */
-#endif /* _MSC_VER */
-#include "../ports/win32/libintl.h"
+# ifdef _MSC_VER
+#  ifndef LC_MESSAGES
+#   define LC_MESSAGES 3
+#  endif /* LC_MESSAGES */
+# endif /* _MSC_VER */
+# include "../ports/win32/libintl.h"
 #else
-#include <libintl.h>
+# include <libintl.h>
 #endif
 
 /* the used textdomain for gettext */
@@ -105,6 +110,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #else                           /*HAVE_GETTEXT */
 /* no gettext support */
 #define _(String) String
+#define ngettext(x, y, cnt) x
 #endif
 
 /* to support the gnuc __attribute__ command */

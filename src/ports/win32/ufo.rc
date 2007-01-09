@@ -7,11 +7,8 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#ifndef __MINGW32__
-#include "winres.h"
-#else
 #include <winresrc.h>
-#endif
+//#include "winres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -63,13 +60,13 @@ END
 IDI_ICON1               ICON    DISCARDABLE     "ufo.ico"
 IDI_ICON2               ICON    DISCARDABLE     "ufo_ded.ico"
 #else
-#ifdef _WIN32 /* DEV_CPP */
+#ifdef DEVCPP /* DEVCPP */
 IDI_ICON1               ICON    DISCARDABLE     "ufo.ico"
 IDI_ICON2               ICON    DISCARDABLE     "ufo_ded.ico"
 #else
 IDI_ICON1               ICON    DISCARDABLE     "build/projects/ufo.ico"
 IDI_ICON2               ICON    DISCARDABLE     "build/projects/ufo_ded.ico"
-#endif
+#endif /* DEVCPP */
 #endif    // __MINGW32__
 
 /////////////////////////////////////////////////////////////////////////////

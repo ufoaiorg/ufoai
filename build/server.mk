@@ -1,3 +1,6 @@
+#FIXME: Don't build with HAVE_GETTEXT - the server don't need this
+#FIXME: check for -ldl (mingw doesn't have this)
+
 SERVER_SRCS += \
 	qcommon/cmd.c \
 	qcommon/ioapi.c \

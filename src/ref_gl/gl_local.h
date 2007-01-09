@@ -141,7 +141,7 @@ typedef struct {
 	qboolean motionJpeg;
 } videoFrameCommand_t;
 
-int SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_height, byte * image_buffer);
+size_t SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_height, byte * image_buffer);
 void RE_TakeVideoFrame(int width, int height, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg);
 const void *RB_TakeVideoFrameCmd(const void *data);
 
