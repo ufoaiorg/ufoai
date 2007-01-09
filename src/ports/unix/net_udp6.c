@@ -362,6 +362,7 @@ char *NET_BaseAdrToString (netadr_t a)
 
 /**
  * @brief
+ * @note Never return a null pointer here
  */
 char *NET_AdrToString (netadr_t a)
 {

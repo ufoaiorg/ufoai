@@ -1900,7 +1900,6 @@ int CL_GameLoad(char *filename)
 	/* load inventories */
 	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
-
 			/* clear the mess of stray loaded pointers */
 			memset(&gd.employees[type][i].inv, 0, sizeof(inventory_t));
 

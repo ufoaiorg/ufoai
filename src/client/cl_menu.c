@@ -1624,6 +1624,16 @@ void MN_DrawMenus(void)
 
 	while (sp < menuStackPos) {
 		menu = menuStack[sp++];
+		/* event node */
+		if (menu->eventNode) {
+			if (!menu->eventTime || (menu->eventTime + menu->eventNode->timeOut < cls.realtime)) {
+				menu->eventTime = cls.realtime;
+				MN_ExecuteActions(menu, menu->eventNode->click);
+#ifdef DEBUG
+				Com_DPrintf("Event node '%s' '%i\n", menu->eventNode->name, menu->eventNode->timeOut);
+#endif
+			}
+		}
 		for (node = menu->firstNode; node; node = node->next) {
 			if (!node->invis && (node->data[0] /* 0 are images, models and strings e.g. */
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP
@@ -1664,12 +1674,13 @@ void MN_DrawMenus(void)
 
 				/* timeout? */
 				if (node->timePushed) {
-					if (node->timePushed + node->timeOut < cl.time) {
+					if (node->timePushed + node->timeOut < cls.realtime) {
 						node->timePushed = 0;
 						node->invis = qtrue;
 						/* only timeout this once, otherwise there is a new timeout after every new stack push */
 						if (node->timeOutOnce)
 							node->timeOut = 0;
+						Com_DPrintf("MN_DrawMenus: timeout for node '%s'\n", node->name);
 						continue;
 					}
 				}
@@ -2882,7 +2893,8 @@ qboolean MN_ParseAction(menuNode_t * menuNode, menuAction_t * action, char **tex
 
 			/* function calls */
 			for (node = menus[numMenus - 1].firstNode; node; node = node->next)
-				if ((node->type == MN_FUNC || node->type == MN_CONFUNC) && !Q_strncmp(node->name, *token, sizeof(node->name))) {
+				if ((node->type == MN_FUNC || node->type == MN_CONFUNC || node->type == MN_CVARFUNC)
+					&& !Q_strncmp(node->name, *token, sizeof(node->name))) {
 /*					Com_Printf( "   %s\n", node->name ); */
 
 					/* add the action */
@@ -2913,8 +2925,18 @@ qboolean MN_ParseAction(menuNode_t * menuNode, menuAction_t * action, char **tex
 			/* finished */
 			return qtrue;
 		} else {
-			/* unknown token, print message and continue */
-			Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, menuNode->name);
+			if (!Q_strcmp(*token, "timeout")) {
+				/* get new token */
+				*token = COM_EParse(text, errhead, NULL);
+				if (!*token || **token == '}') {
+					Com_Printf("MN_ParseAction: timeout with no value (in event) (node: %s)\n", menuNode->name);
+					return qfalse;
+				}
+				menuNode->timeOut = atoi(*token);
+			} else {
+				/* unknown token, print message and continue */
+				Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, menuNode->name);
+			}
 		}
 	} while (*text);
 
@@ -2932,7 +2954,7 @@ qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 	int i;
 
 	/* functions are a special case */
-	if (node->type == MN_CONFUNC || node->type == MN_FUNC) {
+	if (node->type == MN_CONFUNC || node->type == MN_FUNC || node->type == MN_CVARFUNC) {
 		menuAction_t **action;
 
 		/* add new actions to end of list */
@@ -3123,7 +3145,7 @@ qboolean MN_ParseMenuBody(menu_t * menu, char **text)
 
 					/* initialize node */
 					if (!node) {
-						if (numNodes>=MAX_MENUNODES)
+						if (numNodes >= MAX_MENUNODES)
 							Sys_Error("MAX_MENUNODES exceeded\n");
 						node = &menuNodes[numNodes++];
 						memset(node, 0, sizeof(menuNode_t));
@@ -3155,6 +3177,12 @@ qboolean MN_ParseMenuBody(menu_t * menu, char **text)
 								menu->closeNode = node;
 							else
 								Com_Printf("MN_ParseMenuBody: second close function ignored (menu \"%s\")\n", menu->name);
+						} else if (!Q_strncmp(node->name, "event", 5)) {
+							if (!menu->eventNode) {
+								menu->eventNode = node;
+								menu->eventNode->timeOut = 2000; /* default value */
+							} else
+								Com_Printf("MN_ParseMenuBody: second event function ignored (menu \"%s\")\n", menu->name);
 						}
 						break;
 					case MN_ZONE:

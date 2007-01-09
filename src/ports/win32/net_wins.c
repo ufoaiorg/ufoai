@@ -250,6 +250,7 @@ qboolean NET_CompareBaseAdr (netadr_t a, netadr_t b)
 
 /**
  * @brief
+ * @note Never return a null pointer here
  */
 char *NET_AdrToString (netadr_t a)
 {

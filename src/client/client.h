@@ -915,7 +915,8 @@ typedef struct menuNode_s {
 
 typedef struct menu_s {
 	char name[MAX_VAR];
-	menuNode_t *firstNode, *initNode, *closeNode, *renderNode, *popupNode, *hoverNode;
+	int eventTime;
+	menuNode_t *firstNode, *initNode, *closeNode, *renderNode, *popupNode, *hoverNode, *eventNode;
 } menu_t;
 
 typedef enum {
