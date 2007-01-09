@@ -656,15 +656,11 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\ufo_ded.ico"
+				>
+			</File>
 		</Filter>
-		<File
-			RelativePath="..\..\src\ports\win32\libintl.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\ports\win32\vorbisfile.h"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

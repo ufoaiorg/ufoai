@@ -142,7 +142,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/QA21164 /MTd /QAieee1 "
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;C_ONLY;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;C_ONLY;_CRT_SECURE_NO_DEPRECATE;HAVE_GETTEXT;Z_PREFIX"
 				RuntimeLibrary="1"
 				PrecompiledHeaderFile=".\DebugAxp/ufo.pch"
 				AssemblerListingLocation=".\DebugAxp/"
@@ -530,6 +530,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\client\cl_hospital.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\client\cl_input.c"
 				>
 			</File>
@@ -844,11 +848,27 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 			>
 			<File
+				RelativePath="..\..\src\ports\win32\ALc.lib"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ports\win32\ALu.lib"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ports\win32\ALut.lib"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\ports\win32\intl.lib"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\ports\win32\ogg.lib"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ports\win32\OpenAL32.lib"
 				>
 			</File>
 			<File
@@ -906,6 +926,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\ports\win32\vorbisfile.lib"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ports\win32\zlib1.lib"
 				>
 			</File>
 		</Filter>

@@ -87,7 +87,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib winmm.lib sdl.lib sdl_ttf.lib $(IntDir)\q_shared.obj $(IntDir)\q_shwin.obj"
+				AdditionalDependencies="user32.lib gdi32.lib winmm.lib sdl.lib sdl_ttf.lib"
 				OutputFile="$(OutDir)\ref_gl.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -501,6 +501,14 @@
 			<File
 				RelativePath="..\..\src\ref_gl\gl_anim.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions="C_ONLY "
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\ref_gl\gl_arb_shader.c"
@@ -564,6 +572,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\ports\win32\glw_imp.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\q_shared.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ports\win32\q_shwin.c"
 				>
 			</File>
 			<File
