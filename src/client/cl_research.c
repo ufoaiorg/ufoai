@@ -1431,12 +1431,17 @@ void RS_ParseTechnologies(char *id, char **text)
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
 		} else {
 
-			if ((!Q_strncmp(token, "require_AND", MAX_VAR)) || (!Q_strncmp(token, "require_OR", MAX_VAR))) {
+			if ( (!Q_strncmp(token, "require_AND", MAX_VAR))
+			|| (!Q_strncmp(token, "require_OR", MAX_VAR))
+			|| (!Q_strncmp(token, "require_for_production", MAX_VAR))
+			) {
 				/* Link to correct list. */
-				if (!Q_strncmp(token, "require_AND", MAX_VAR)) {
+				if (!Q_strncmp(token, "require_AND", MAX_VAR)) { 
 					required_temp = &tech->require_AND;
-				} else {
+				} else if (!Q_strncmp(token, "require_OR", MAX_VAR)) {
 					required_temp = &tech->require_OR;
+				} else { /* It's "require_for_production" */
+					required_temp = &tech->require_for_production;
 				}
 
 				token = COM_EParse(text, errhead, id);

@@ -91,27 +91,27 @@ typedef struct markResearched_s {
 
 typedef struct technology_s {
 	char id[MAX_VAR];			/* Short (unique) id/name. */
-	int idx;				/* Self-link in the global list */
+	int idx;					/* Self-link in the global list */
 	char name[MAX_VAR];			/* Full name of this technology. */
-	char description[MAX_VAR];	/* Description of researched item. Short text-id to get the full text via gettext. */
+	char description[MAX_VAR];		/* Description of researched item. Short text-id to get the full text via gettext. */
 	char pre_description[MAX_VAR];	/* Description of item before it's researched. Short text-id to get the full text via gettext. */
 	researchType_t type;
 
 	requirements_t require_AND;	/* A list of requirements that ALL need to be met (= AND-related) See struct above. */
 	requirements_t require_OR;	/* A list of requirements where ANY need to be met (= OR-related) See struct above. */
 	qboolean statusCollected;	/* Did we loot any items of this tech?
-					 * This is updated from the info stored in the require_OR and require_AND lists.
-					 * See RS_CheckCollected and RS_CheckAllCollected. */
+							* This is updated from the info stored in the require_OR and require_AND lists.
+							* See RS_CheckCollected and RS_CheckAllCollected. */
 
 	char provides[MAX_VAR];		/* The item that this technology enables. */
 	float overalltime, time;	/* The time that is needed to research this tech. (in days). */
-					/* "overalltime" stays always the same, */
-					/* "time" will be modified when it is under research.*/
+						/* "overalltime" stays always the same, */
+						/* "time" will be modified when it is under research.*/
 
 	researchStatus_t statusResearch;	/* Current status of the research. */
 
 	int base_idx;				/* The base this tech is researched in. */
-	int scientists;					/* How many scientists are researching this tech. */
+	int scientists;				/* How many scientists are researching this tech. */
 
 	char image_top[MAX_VAR];
 	char image_bottom[MAX_VAR];
@@ -120,22 +120,22 @@ typedef struct technology_s {
 
 	byte statusResearchable;	/* Is this item researchable? */
 
-	int produceTime;			/* how many days for self production */
+	int produceTime;			/* How many days the production of this items runs. */
+	requirements_t require_for_production;	/* A list of items that are needed (and used up) on production of _this_ item.
+									 * Only "item"-type is allowed.
+									 * All requirements need to be fulfilled in order for _one_ item to be produced.
+									 * This check is done for each item.*/
 
-	int preResearchedDateDay, preResearchedDateMonth, preResearchedDateYear; /* date for ufopedia */
-	int researchedDateDay, researchedDateMonth, researchedDateYear; /* date for ufopedia */
+	int preResearchedDateDay, preResearchedDateMonth, preResearchedDateYear; /* Date for ufopedia. */
+	int researchedDateDay, researchedDateMonth, researchedDateYear; /* Date for ufopedia. */
 
-	markResearched_t markResearched;			/* mark as researched at parsing state - but i only know the date if we already started a campaign */
+	markResearched_t markResearched;	/* Mark as researched at parsing state - but i only know the date if we already started a campaign. */
 
 	/* Pedia info */
-	int up_chapter;				/* pedia chapter as stored in research.ufo. */
+	int up_chapter;			/* pedia chapter as stored in research.ufo. */
 	int prev;					/* Previous tech in pedia. */
 	int next;					/* Next tech in pedia. */
 } technology_t;
-
-/* use this for saving and allocating */
-/*extern	technology_t	technologies[MAX_TECHNOLOGIES]; */
-/*extern	int	numTechnologies; */
 
 void RS_ResetResearch(void);
 void CL_CheckResearchStatus(void);
