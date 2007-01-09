@@ -628,10 +628,52 @@ static void CL_Reconnect_f(void)
 	}
 }
 
-#define MAX_SERVERLIST 32
+typedef struct serverList_s
+{
+	netadr_t adr;
+	char name[MAX_VAR];
+	char map[MAX_VAR];
+	int maxclient;
+} serverList_t;
+
+#define MAX_SERVERLIST 128
 static char serverText[1024];
 static int serverListLength;
-static netadr_t serverList[MAX_SERVERLIST];
+static serverList_t serverList[MAX_SERVERLIST];
+
+/**
+ * @brief Adds a server to the serverlist cache
+ * @return false if it is no valid address or server already exists
+ */
+static qboolean CL_AddServerToList (netadr_t* adr, char *msg)
+{
+	int i;
+
+	/* check whether the port was set */
+	if (!adr->port)
+		return qfalse;
+
+	for (i = 0; i < serverListLength; i++) {
+		if (!memcmp(&(serverList[i].adr), adr, sizeof(adr->port))) {
+			if (!msg) {
+#ifdef DEBUG
+				Com_DPrintf("Server '%s' is alrady in cache\n", NET_AdrToString(*adr));
+#endif
+				return qfalse;
+			} else {
+				/* TODO: parse server info and put it into serverList_t */
+
+				/* we don't want to ping again - because msg is already the response */
+				return qtrue;
+			}
+		}
+	}
+	memcpy(&(serverList[serverListLength++].adr), adr, sizeof(netadr_t));
+
+	Com_Printf ("pinging %s...\n", NET_AdrToString(*adr));
+	Netchan_OutOfBandPrint (NS_CLIENT, *adr, va("info %i", PROTOCOL_VERSION));
+	return qtrue;
+}
 
 /**
  * @brief Handle a reply from a ping
@@ -646,7 +688,9 @@ static void CL_ParseStatusMessage(void)
 	if (serverListLength >= MAX_SERVERLIST)
 		return;
 
-	serverList[serverListLength++] = net_from;
+	/* update the server string */
+	CL_AddServerToList(&net_from, s);
+
 	Q_strcat(serverText, s, sizeof(serverText));
 	menuText[TEXT_LIST] = serverText;
 }
@@ -840,7 +884,8 @@ static void CL_ParseMasterServerResponse(void)
 		if (!adr.port)
 			break;
 		Com_DPrintf("server: %s\n", adrstring);
-		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
+		CL_AddServerToList(&adr, NULL);
+/*		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));*/
 	}
 	/* end of stream */
 	net_message.readcount = net_message.cursize;
@@ -996,8 +1041,8 @@ void CL_ServerListClick_f (void)
 
 	menuText[TEXT_STANDARD] = serverInfoText;
 	if (num >= 0 && num < serverListLength) {
-		Netchan_OutOfBandPrint(NS_CLIENT, serverList[num], "status %i", PROTOCOL_VERSION);
-		Cvar_Set("mn_server_ip", NET_AdrToString(serverList[num]));
+		Netchan_OutOfBandPrint(NS_CLIENT, serverList[num].adr, "status %i", PROTOCOL_VERSION);
+		Cvar_Set("mn_server_ip", NET_AdrToString(serverList[num].adr));
 	}
 }
 
@@ -1023,9 +1068,18 @@ static void CL_SelectTeam_Init_f (void)
 	menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
 }
 
+/**< this is true if pingservers was already executed */
+static qboolean serversAlreadyQueried = qfalse;
+
+static int lastServerQuery = 0;
+
+/* ms until the server query timed out */
+#define SERVERQUERYTIMEOUT 40000
+
 /**
  * @brief The first function called when entering the multiplayer menu, then CL_Frame takes over
  * @sa CL_ParseStatusMessage
+ * @note Use a parameter for pingservers to update the current serverlist
  */
 void CL_PingServers_f (void)
 {
@@ -1034,16 +1088,20 @@ void CL_PingServers_f (void)
 	char name[6];
 	char *adrstring;
 
+	/* refresh the list */
+	if (Cmd_Argc() == 2) {
+		/* reset current list */
+		serverText[0] = 0;
+		serverListLength = 0;
+		serversAlreadyQueried = qfalse;
+	}
+
 	menuText[TEXT_LIST] = NULL;
 
 	NET_Config(qtrue);			/* allow remote */
 
 	/* send a broadcast packet */
 	Com_DPrintf("pinging broadcast...\n");
-
-	/* reset current list */
-	serverText[0] = 0;
-	serverListLength = 0;
 
 	if (!noudp->value) {
 		adr.type = NA_BROADCAST;
@@ -1063,15 +1121,25 @@ void CL_PingServers_f (void)
 		if (!adrstring || !adrstring[0])
 			continue;
 
-		Com_Printf ("pinging %s...\n", adrstring);
 		if (!NET_StringToAdr (adrstring, &adr)) {
 			Com_Printf ("Bad address: %s\n", adrstring);
 			continue;
 		}
+
 		if (!adr.port)
 			adr.port = BigShort(PORT_SERVER);
-		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
+		CL_AddServerToList(&adr, NULL);
 	}
+
+	/* don't query the masterservers with every call */
+	if (serversAlreadyQueried) {
+		menuText[TEXT_LIST] = serverText;
+		if (lastServerQuery + SERVERQUERYTIMEOUT > Sys_Milliseconds())
+			return;
+	} else
+		serversAlreadyQueried = qtrue;
+
+	lastServerQuery = Sys_Milliseconds();
 
 	/* query master server? */
 	/* TODO: Cache this to save bandwidth */

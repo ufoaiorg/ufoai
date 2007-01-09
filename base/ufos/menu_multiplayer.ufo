@@ -608,7 +608,7 @@ menu mp_join_lan
 	pic button_lan_refresh
 	{
 		image	menu/multi_buttons3
-		click	{ cmd "pingservers;" }
+		click	{ cmd "pingservers refresh;" }
 		texh	"256 64"
 		texl	"0 33"
 		pos	"726 650"
@@ -627,6 +627,12 @@ menu mp_join_lan
 	func init
 	{
 		cmd	"pingservers;"
+	}
+
+	func event
+	{
+		timeout	60000
+		cmd "pingservers refresh;"
 	}
 }
 
