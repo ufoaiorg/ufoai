@@ -186,7 +186,7 @@ ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
 	@echo " * [RC ] $<"; \
-		$(WINDRES) -i $< -o $@
+		$(WINDRES) -DCROSSBUILD -i $< -o $@
 endif
 
 # Say how to build .o files from .m files for this module
