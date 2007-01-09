@@ -108,6 +108,12 @@ menu irc
 		font	f_verysmall
 	}
 
+	confunc irc_send_buffer_clicked
+	{
+		cmd "msgmenu ?irc_send_buffer"
+		*irc_send_buffer mousefx true
+	}
+
 	pic irc_send_buffer_img
 	{
 		image	menu/irc_input
@@ -116,8 +122,7 @@ menu irc
 		texh	"690 26"
 		click
 		{
-			cmd "msgmenu ?irc_send_buffer"
-			*irc_send_buffer mousefx true
+			cmd "irc_send_buffer_clicked;"
 		}
 	}
 
@@ -165,7 +170,7 @@ menu irc
 	// ==================
 	func init
 	{
-		cmd "irc_activate;"
+		cmd "irc_activate;irc_send_buffer_clicked;"
 	}
 
 	// ==================
