@@ -671,6 +671,7 @@ void PR_ResetProduction(void)
 /**
  * @brief Check if the production requirements are met for a defined amount.
  * @param[in] amount How many items are planned to be produced. 
+ * @param[in] req The production requirements of the item that is to be produced.
  * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
  */
 static int PR_RequirementsMet(int amount, requirements_t *req)
@@ -698,3 +699,25 @@ static int PR_RequirementsMet(int amount, requirements_t *req)
 	return produceable_amount;
 }
 
+/**
+ * @brief Remove or add the requried items from/to the current base.
+ * @param[in] amount How many items are planned to be added (positive number) or removed (negative number).
+ * @param[in] req The production requirements of the item that is to be produced. Thes included numbers are multiplied with 'amount')
+ */
+static void PR_UpdateRequiredItemsInBasestorage(int amount, requirements_t *req)
+{
+	int i;
+	
+	if (amount == 0)
+		return;
+
+	for (i = 0; i < req->numLinks; i++) {
+		if (req->type[i] == RS_LINK_ITEM) {
+			if (amount > 0) {
+				/* TODO: Add items (req->amount * amount) to the base. */
+			} else { /* amount < 0 */
+				/* TODO: Remove items (req->amount * -amount) from the base. */
+			}
+		}
+	}
+}
