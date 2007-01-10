@@ -275,6 +275,8 @@ void PR_ProductionRun(void)
 
 			/* queue the next production */
 			if (prod->amount<=0) {
+				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."),od->name);
+				MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 				PR_QueueNext(i);
 			}
 		}
@@ -624,7 +626,8 @@ void PR_ProductionIncrease(void)
 			}
 
 			if (produceable_amount < amount) {
-				/* TODO: Tell the player that not all items could be added. */
+				 /* TODO: make the numbers work here. */
+				MN_Popup("Not enough material!", "You don't have enough material to produce all (xx) items. Production will continue with a reduced (xx) number.");
 			}
 
 			if (prod) {
@@ -639,6 +642,7 @@ void PR_ProductionIncrease(void)
 				MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));
 			}
 		} else { /*produceable_amount <= 0 */
+			MN_Popup("Not enough material!", "To produce this item you need at least the following materials ..."); /* TODO: better messages needed - therefore i skip the gettext code for now */
 			/* TODO:
 			 * If the requirements are not met (produceable_amount<=0) we
 			 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
