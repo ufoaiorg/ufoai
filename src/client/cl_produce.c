@@ -88,10 +88,13 @@ static void PR_QueueDelete(production_queue_t *queue, int index)
 {
 	int i;
 
-	/* If prod->items_cached is qtrue we need to ...
-	 *  -) add all items listed in the prod.-requirements /multiplied by amount) to the storage again.
-	 *  -) set prod->items_cached to qfalse
-	*/
+#if 0
+	if (prod->items_cached) {
+		/* TODO: Add all items listed in the prod.-requirements /multiplied by amount) to the storage again. */
+		PR_UpdateRequiredItemsInBasestorage(amount, &req);
+		prod->items_cached = qfalse;
+	}
+#endif
 
 	queue->numItems--;
 	if (queue->numItems < 0)
@@ -522,27 +525,32 @@ void PR_ProductionIncrease(void)
 	} else {
 		if (selectedIndex < 0)
 			return;
-		/* TODO:
-		 * Check if production requirements have been met. "produceable_amount = PR_RequirementsMet(amount, req);"
-		 * If that's the case (produceable_amount > 0) we
-		 *  -) remove the additionally required items (multiplied by 'produceable_amount' .. if I understand the code corretly) from storage.
-		 *  -) if produceable_amount < amount we tell the player that not all items could be added.
-		 *  -) and set prod->items_cached to qtrue.
-		 * If the requirements are not met (produceable_amount<=0) we
-		 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
-		 *     This info should also be displayed in the item-info.
-		 *  -) can can (if possible) thange the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).
-		*/
+#if 0
+		produceable_amount = PR_RequirementsMet(amount, req);
+		if (produceable_amount > 0) {	/* Check if production requirements have been (even partially) met. */
+			/* Remove the additionally required items (multiplied by 'produceable_amount') from base-storage.*/
+			PR_UpdateRequiredItemsInBasestorage(-amount, &req);
+			/* TODO: if produceable_amount < amount we tell the player that not all items could be added.*/
+			prod->items_cached = qtrue;
+			/*  -) move "prod" code into this code-branch. */
+		} else { /*produceable_amount <= 0 */
+			/* TODO:
+			 * If the requirements are not met (produceable_amount<=0) we
+			 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
+			 *     This info should also be displayed in the item-info.
+			 *  -) can can (if possible) thange the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/
+		}
+#endif
 		prod = PR_QueueNew(queue, selectedIndex, amount);
 		if (prod) {
 			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), csi.ods[selectedIndex].name);
 			MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
 			
-			/* now we select the item we just created */
+			/* Now we select the item we just created. */
 			selectedQueueItem = qtrue;
 			selectedIndex = queue->numItems-1;
 		} else {
-			/* oops! too many items! */
+			/* Oops! Too many items! */
 			MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));
 		}
 	}
@@ -682,7 +690,7 @@ static int PR_RequirementsMet(int amount, requirements_t *req)
 			if (req->type[i] == RS_LINK_ITEM) {
 				/* The same code is used in "RS_RequirementsMet" */
 				Com_DPrintf("PR_RequirementsMet: %s / %i\n", req->id[i], req->idx[i]);
-				if (B_ItemInBase(req->idx[i], baseCurrent) < req->amount[i]) {
+				if (B_ItemInBase2(req->idx[i], baseCurrent) < req->amount[i]) {
 					produceable = qfalse;
 				}
 			}
@@ -704,16 +712,26 @@ static int PR_RequirementsMet(int amount, requirements_t *req)
 static void PR_UpdateRequiredItemsInBasestorage(int amount, requirements_t *req)
 {
 	int i;
+	equipDef_t *ed = NULL;
 	
+	if (!baseCurrent)
+		return;
+	
+	ed = &baseCurrent->storage;
+	if (!ed)
+		return;
+
 	if (amount == 0)
 		return;
 
 	for (i = 0; i < req->numLinks; i++) {
 		if (req->type[i] == RS_LINK_ITEM) {
 			if (amount > 0) {
-				/* TODO: Add items (req->amount * amount) to the base. */
+				/* Add items to the base-storage. */
+				ed->num[req->idx[i]] += (req->amount[i] * amount);
 			} else { /* amount < 0 */
-				/* TODO: Remove items (req->amount * -amount) from the base. */
+				/* Remove items from the base-storage. */
+				ed->num[req->idx[i]] -= (req->amount[i] * -amount);
 			}
 		}
 	}
