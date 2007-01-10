@@ -134,6 +134,7 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 				}
 				break;
 			case RS_LINK_ITEM:
+				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf("RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
 				/* TODO: required_AND->collected[i] was being used instead of RS_ItemInBase below,
 				 * but the collected count never seemed to be incremented...

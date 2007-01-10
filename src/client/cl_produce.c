@@ -25,6 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+int RS_ItemInBase(int item_idx, base_t *base);	/* Only used for PR_RequirementsMet.
+						 * I hope this works correctly.
+						 * This function needs to be fixed BTW. See the TODO there.*/
+
 
 /* holds the current active production category */
 static int produceCategory = 0;
@@ -523,11 +527,12 @@ void PR_ProductionIncrease(void)
 		if (selectedIndex < 0)
 			return;
 		/* TODO:
-		 * Check if production requirements have been met.
-		 * If that's the case we
-		 *  -) remove the additionally required items (multiplied by 'amount' .. if i understand the code corretly) from storage 
+		 * Check if production requirements have been met. "produceable_amount = PR_RequirementsMet(amount, req);"
+		 * If that's the case (produceable_amount > 0) we
+		 *  -) remove the additionally required items (multiplied by 'produceable_amount' .. if I understand the code corretly) from storage.
+		 *  -) if produceable_amount < amount we tell the player that not all items could be added.
 		 *  -) and set prod->items_cached to qtrue.
-		 * If the requirements are not met we
+		 * If the requirements are not met (produceable_amount<=0) we
 		 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
 		 *     This info should also be displayed in the item-info.
 		 *  -) can can (if possible) thange the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).
@@ -661,5 +666,35 @@ void PR_ResetProduction(void)
 	Cmd_AddCommand("prod_stop", PR_ProductionStop, NULL);
 	Cmd_AddCommand("prod_up", PR_ProductionUp, NULL);
 	Cmd_AddCommand("prod_down", PR_ProductionDown, NULL);
+}
+
+/**
+ * @brief Check if the production requirements are met for a defined amount.
+ * @param[in] amount How many items are planned to be produced. 
+ * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
+ */
+static int PR_RequirementsMet(int amount, requirements_t *req)
+{
+	int a,i;
+	int produceable_amount;
+	qboolean produceable = qfalse;
+	
+	for (a = 0; a < amount; a++) {
+		produceable = qtrue;
+		for (i = 0; i < req->numLinks; i++) {
+			if (req->type[i] == RS_LINK_ITEM) {
+				/* The same code is used in "RS_RequirementsMet" */
+				Com_DPrintf("PR_RequirementsMet: %s / %i\n", req->id[i], req->idx[i]);
+				if (RS_ItemInBase(req->idx[i], baseCurrent) < req->amount[i]) {
+					produceable = qfalse;
+				}
+			}
+		}
+		if (produceable)
+			produceable_amount++;
+		else
+			break;
+	}
+	return produceable_amount;
 }
 
