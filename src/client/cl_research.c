@@ -75,36 +75,6 @@ void RS_MarkOneResearchable(int tech_idx)
 }
 
 /**
- * @brief Check if the item has been collected (in storage or quarantine) in the giveb base.
- * @param[in] item_idx The index of the item in the inv.
- * @param[in] base The base to searrch in.
- * @return amount of available items in base (TODO/FIXME: and on market)
- * @todo quarantine
- */
-int RS_ItemInBase(int item_idx, base_t *base)
-{
-	equipDef_t *ed = NULL;
-
-	if (!base)
-		return -1;
-
-	ed = &base->storage;
-
-	if (!ed)
-		return -1;
-
-	/* Com_DPrintf("RS_ItemInBase: DEBUG idx %s\n",  csi.ods[item_idx].kurz); */
-
-	/* FIXME/TODO: currently since all alien artifacts are added to the
-	 * market, this check ensures market items are researchable too...
-	 * otherwise the user must buy each item before researching it.
-	 * Suggestion: if an unknown alien tech is found, sell all but the
-	 * required number of items to perform research on that tech. Then
-	 * the eMarket addition below would not be required */
-	return ed->num[item_idx] + ccs.eMarket.num[item_idx];
-}
-
-/**
  * @brief Checks if all requirements of a tech have been met so that it becomes researchable.
  * @param[in] require_AND pointer to a list of AND-related requirements.
  * @param[in] require_OR pointer to a list of OR-related requirements.
@@ -136,10 +106,10 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 			case RS_LINK_ITEM:
 				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf("RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
-				/* TODO: required_AND->collected[i] was being used instead of RS_ItemInBase below,
+				/* TODO: required_AND->collected[i] was being used instead of B_ItemInBase below,
 				 * but the collected count never seemed to be incremented...
 				 * so either remove this and the RS_CheckCollected method or fix them */
-				if (RS_ItemInBase(required_AND->idx[i], baseCurrent) < required_AND->amount[i]) {
+				if (B_ItemInBase(required_AND->idx[i], baseCurrent) < required_AND->amount[i]) {
 					met_AND = qfalse;
 				}
 				break;
@@ -172,9 +142,10 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 					met_OR = qtrue;
 				break;
 			case RS_LINK_ITEM:
+				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf("RS_RequirementsMet: ORitem: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
-				/* TODO: required_OR->collected[i] should be used instead of RS_ItemInBase, see equivalent TODO above */
-				if (RS_ItemInBase(required_OR->idx[i], baseCurrent) >= required_OR->amount[i])
+				/* TODO: required_OR->collected[i] should be used instead of B_ItemInBase, see equivalent TODO above */
+				if (B_ItemInBase(required_OR->idx[i], baseCurrent) >= required_OR->amount[i])
 					met_OR = qtrue;
 				break;
 			case RS_LINK_WEAPON:
@@ -222,7 +193,7 @@ qboolean RS_CheckCollected(requirements_t *required)
 	for (i = 0; i < required->numLinks; i++) {
 		switch (required->type[i]) {
 		case RS_LINK_ITEM:
-			item_amount = RS_ItemInBase(required->idx[i], baseCurrent);
+			item_amount = B_ItemInBase(required->idx[i], baseCurrent);
 			if (item_amount > 0) {
 				required->collected[i] = item_amount;
 			} else {

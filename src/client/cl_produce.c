@@ -25,10 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
-int RS_ItemInBase(int item_idx, base_t *base);	/* Only used for PR_RequirementsMet.
-						 * I hope this works correctly.
-						 * This function needs to be fixed BTW. See the TODO there.*/
-
 
 /* holds the current active production category */
 static int produceCategory = 0;
@@ -686,7 +682,7 @@ static int PR_RequirementsMet(int amount, requirements_t *req)
 			if (req->type[i] == RS_LINK_ITEM) {
 				/* The same code is used in "RS_RequirementsMet" */
 				Com_DPrintf("PR_RequirementsMet: %s / %i\n", req->id[i], req->idx[i]);
-				if (RS_ItemInBase(req->idx[i], baseCurrent) < req->amount[i]) {
+				if (B_ItemInBase(req->idx[i], baseCurrent) < req->amount[i]) {
 					produceable = qfalse;
 				}
 			}
@@ -703,6 +699,7 @@ static int PR_RequirementsMet(int amount, requirements_t *req)
  * @brief Remove or add the requried items from/to the current base.
  * @param[in] amount How many items are planned to be added (positive number) or removed (negative number).
  * @param[in] req The production requirements of the item that is to be produced. Thes included numbers are multiplied with 'amount')
+ * @todo This doesn't check yet if there are more items removed than are in the base-storage (might be fixed if we used a storage-fuction with checks, otherwise we can make it a 'contition' in order to run this function.
  */
 static void PR_UpdateRequiredItemsInBasestorage(int amount, requirements_t *req)
 {
