@@ -173,9 +173,9 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 
 /**
  * @brief Checks if any items have been collected (in the current base) and correct the value for each requirement.
- * @note Does not check if the collected items satisfy the needed "amount". This is done in RS_RequirementsMet.
+ * @note Does not check if the collected items satisfy the needed "amount". This is done in RS_RequirementsMet. tech->statusCollected is just needed so the item is at least displayed somewhere.
  * @return Returns qtrue if there are any collected items otherwise qfalse.
- * @todo Extend to support require_OR (see RS_CheckAllCollected for more info)
+ * @todo Get rid (or improve) this statusCollected stuff.
  */
 qboolean RS_CheckCollected(requirements_t *required)
 {
@@ -245,10 +245,7 @@ void RS_CheckAllCollected(void)
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 
-		/* TODO: Add support for require_OR here. Change this to the following:
-		 * if (RS_CheckCollected(&tech) - does return AND||OR
-		 */
-		if (RS_CheckCollected(&tech->require_AND)) {
+		if (RS_CheckCollected(&tech->require_AND) || RS_CheckCollected(&tech->require_OR)) {
 			tech->statusCollected = qtrue;
 		}
 	}
