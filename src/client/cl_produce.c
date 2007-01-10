@@ -50,14 +50,79 @@ static cvar_t* mn_production_workers;
 #define QUEUE_SPACERS 2
 
 /**
+ * @brief Check if the production requirements are met for a defined amount.
+ * @param[in] amount How many items are planned to be produced. 
+ * @param[in] req The production requirements of the item that is to be produced.
+ * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
+ */
+static int PR_RequirementsMet(int amount, requirements_t *req)
+{
+	int a,i;
+	int produceable_amount;
+	qboolean produceable = qfalse;
+	
+	for (a = 0; a < amount; a++) {
+		produceable = qtrue;
+		for (i = 0; i < req->numLinks; i++) {
+			if (req->type[i] == RS_LINK_ITEM) {
+				/* The same code is used in "RS_RequirementsMet" */
+				Com_DPrintf("PR_RequirementsMet: %s / %i\n", req->id[i], req->idx[i]);
+				if (B_ItemInBase2(req->idx[i], baseCurrent) < req->amount[i]) {
+					produceable = qfalse;
+				}
+			}
+		}
+		if (produceable)
+			produceable_amount++;
+		else
+			break;
+	}
+	return produceable_amount;
+}
+
+/**
+ * @brief Remove or add the requried items from/to the current base.
+ * @param[in] amount How many items are planned to be added (positive number) or removed (negative number).
+ * @param[in] req The production requirements of the item that is to be produced. Thes included numbers are multiplied with 'amount')
+ * @todo This doesn't check yet if there are more items removed than are in the base-storage (might be fixed if we used a storage-fuction with checks, otherwise we can make it a 'contition' in order to run this function.
+ */
+static void PR_UpdateRequiredItemsInBasestorage(int amount, requirements_t *req)
+{
+	int i;
+	equipDef_t *ed = NULL;
+	
+	if (!baseCurrent)
+		return;
+	
+	ed = &baseCurrent->storage;
+	if (!ed)
+		return;
+
+	if (amount == 0)
+		return;
+
+	for (i = 0; i < req->numLinks; i++) {
+		if (req->type[i] == RS_LINK_ITEM) {
+			if (amount > 0) {
+				/* Add items to the base-storage. */
+				ed->num[req->idx[i]] += (req->amount[i] * amount);
+			} else { /* amount < 0 */
+				/* Remove items from the base-storage. */
+				ed->num[req->idx[i]] -= (req->amount[i] * -amount);
+			}
+		}
+	}
+}
+
+/**
  * @brief add a new item to the bottom of the production queue
  */
 static production_t *PR_QueueNew(production_queue_t *queue, signed int objID, signed int amount)
 {
-	technology_t *t;
-	objDef_t *od;
 	int numWorkshops = 0;
-	production_t *prod;
+	technology_t *t = NULL;
+	objDef_t *od = NULL;
+	production_t *prod = NULL;
 
 	assert(baseCurrent);
 
@@ -81,20 +146,31 @@ static production_t *PR_QueueNew(production_queue_t *queue, signed int objID, si
 	return prod;
 }
 
+
 /**
  * @brief Delete the selected entry from the queue.
  */
 static void PR_QueueDelete(production_queue_t *queue, int index)
 {
 	int i;
-
-#if 0
+	objDef_t *od = NULL;
+	technology_t *tech = NULL;
+	production_t *prod = NULL;
+	
+	prod = &queue->items[index];
+	
 	if (prod->items_cached) {
-		/* TODO: Add all items listed in the prod.-requirements /multiplied by amount) to the storage again. */
-		PR_UpdateRequiredItemsInBasestorage(amount, &req);
+		/* Get technology of the item in the selected queue-entry. */
+		od = &csi.ods[prod->objID];
+		tech = (technology_t*)(od->tech);
+		if (tech) {
+			/* Add all items listed in the prod.-requirements /multiplied by amount) to the storage again. */
+			PR_UpdateRequiredItemsInBasestorage(prod->amount, &tech->require_for_production);
+		} else {
+			Com_DPrintf("PR_QueueDelete: Problem getting technology entry for %i\n", index);
+		}			
 		prod->items_cached = qfalse;
 	}
-#endif
 
 	queue->numItems--;
 	if (queue->numItems < 0)
@@ -501,15 +577,19 @@ void PR_ProductionInit(void)
 	mn_production_workers = Cvar_Get("mn_production_workers", "0", 0, NULL);
 }
 
+	
 /**
  * @brief Increase the production amount by given parameter
  */
 void PR_ProductionIncrease(void)
 {
 	int amount = 1;
+	int produceable_amount;
 	char messageBuffer[256];
-	production_queue_t *queue;
-	production_t *prod;
+	production_queue_t *queue = NULL;
+	objDef_t *od = NULL;
+	technology_t *tech = NULL;
+	production_t *prod = NULL;
 
 	if (Cmd_Argc() == 2)
 		amount = atoi(Cmd_Argv(1));
@@ -525,33 +605,45 @@ void PR_ProductionIncrease(void)
 	} else {
 		if (selectedIndex < 0)
 			return;
-#if 0
-		produceable_amount = PR_RequirementsMet(amount, req);
+		prod = PR_QueueNew(queue, selectedIndex, amount);
+		
+		/* Get technology of the item in the selected queue-entry. */
+		od = &csi.ods[prod->objID];
+		tech = (technology_t*)(od->tech);
+		
+		if (tech)
+			produceable_amount = PR_RequirementsMet(amount,  &tech->require_for_production);
+		else
+			produceable_amount = amount;
+
 		if (produceable_amount > 0) {	/* Check if production requirements have been (even partially) met. */
-			/* Remove the additionally required items (multiplied by 'produceable_amount') from base-storage.*/
-			PR_UpdateRequiredItemsInBasestorage(-amount, &req);
-			/* TODO: if produceable_amount < amount we tell the player that not all items could be added.*/
-			prod->items_cached = qtrue;
-			/*  -) move "prod" code into this code-branch. */
+			if (tech) {
+				/* Remove the additionally required items (multiplied by 'produceable_amount') from base-storage.*/
+				PR_UpdateRequiredItemsInBasestorage(-amount, &tech->require_for_production);
+				prod->items_cached = qtrue;
+			}
+
+			if (produceable_amount < amount) {
+				/* TODO: Tell the player that not all items could be added. */
+			}
+
+			if (prod) {
+				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), csi.ods[selectedIndex].name);
+				MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
+				
+				/* Now we select the item we just created. */
+				selectedQueueItem = qtrue;
+				selectedIndex = queue->numItems-1;
+			} else {
+				/* Oops! Too many items! */
+				MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));
+			}
 		} else { /*produceable_amount <= 0 */
 			/* TODO:
 			 * If the requirements are not met (produceable_amount<=0) we
 			 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
 			 *     This info should also be displayed in the item-info.
 			 *  -) can can (if possible) thange the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/
-		}
-#endif
-		prod = PR_QueueNew(queue, selectedIndex, amount);
-		if (prod) {
-			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), csi.ods[selectedIndex].name);
-			MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
-			
-			/* Now we select the item we just created. */
-			selectedQueueItem = qtrue;
-			selectedIndex = queue->numItems-1;
-		} else {
-			/* Oops! Too many items! */
-			MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));
 		}
 	}
 
@@ -670,69 +762,4 @@ void PR_ResetProduction(void)
 	Cmd_AddCommand("prod_stop", PR_ProductionStop, NULL);
 	Cmd_AddCommand("prod_up", PR_ProductionUp, NULL);
 	Cmd_AddCommand("prod_down", PR_ProductionDown, NULL);
-}
-
-/**
- * @brief Check if the production requirements are met for a defined amount.
- * @param[in] amount How many items are planned to be produced. 
- * @param[in] req The production requirements of the item that is to be produced.
- * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
- */
-static int PR_RequirementsMet(int amount, requirements_t *req)
-{
-	int a,i;
-	int produceable_amount;
-	qboolean produceable = qfalse;
-	
-	for (a = 0; a < amount; a++) {
-		produceable = qtrue;
-		for (i = 0; i < req->numLinks; i++) {
-			if (req->type[i] == RS_LINK_ITEM) {
-				/* The same code is used in "RS_RequirementsMet" */
-				Com_DPrintf("PR_RequirementsMet: %s / %i\n", req->id[i], req->idx[i]);
-				if (B_ItemInBase2(req->idx[i], baseCurrent) < req->amount[i]) {
-					produceable = qfalse;
-				}
-			}
-		}
-		if (produceable)
-			produceable_amount++;
-		else
-			break;
-	}
-	return produceable_amount;
-}
-
-/**
- * @brief Remove or add the requried items from/to the current base.
- * @param[in] amount How many items are planned to be added (positive number) or removed (negative number).
- * @param[in] req The production requirements of the item that is to be produced. Thes included numbers are multiplied with 'amount')
- * @todo This doesn't check yet if there are more items removed than are in the base-storage (might be fixed if we used a storage-fuction with checks, otherwise we can make it a 'contition' in order to run this function.
- */
-static void PR_UpdateRequiredItemsInBasestorage(int amount, requirements_t *req)
-{
-	int i;
-	equipDef_t *ed = NULL;
-	
-	if (!baseCurrent)
-		return;
-	
-	ed = &baseCurrent->storage;
-	if (!ed)
-		return;
-
-	if (amount == 0)
-		return;
-
-	for (i = 0; i < req->numLinks; i++) {
-		if (req->type[i] == RS_LINK_ITEM) {
-			if (amount > 0) {
-				/* Add items to the base-storage. */
-				ed->num[req->idx[i]] += (req->amount[i] * amount);
-			} else { /* amount < 0 */
-				/* Remove items from the base-storage. */
-				ed->num[req->idx[i]] -= (req->amount[i] * -amount);
-			}
-		}
-	}
 }
