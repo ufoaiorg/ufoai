@@ -82,17 +82,22 @@ static production_t *PR_QueueNew(production_queue_t *queue, signed int objID, si
 }
 
 /**
- * @brief delete the selected index from the queue
+ * @brief Delete the selected entry from the queue.
  */
 static void PR_QueueDelete(production_queue_t *queue, int index)
 {
 	int i;
 
+	/* If prod->items_cached is qtrue we need to ...
+	 *  -) add all items listed in the prod.-requirements /multiplied by amount) to the storage again.
+	 *  -) set prod->items_cached to qfalse
+	*/
+
 	queue->numItems--;
 	if (queue->numItems < 0)
 		queue->numItems = 0;
-
-	/* copy up other items */
+	
+	/* Copy up other items. */
 	for (i = index; i < queue->numItems; i++) {
 		queue->items[i] = queue->items[i+1];
 	}
@@ -517,11 +522,21 @@ void PR_ProductionIncrease(void)
 	} else {
 		if (selectedIndex < 0)
 			return;
+		/* TODO:
+		 * Check if production requirements have been met.
+		 * If that's the case we
+		 *  -) remove the additionally required items (multiplied by 'amount' .. if i understand the code corretly) from storage 
+		 *  -) and set prod->items_cached to qtrue.
+		 * If the requirements are not met we
+		 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
+		 *     This info should also be displayed in the item-info.
+		 *  -) can can (if possible) thange the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).
+		*/
 		prod = PR_QueueNew(queue, selectedIndex, amount);
 		if (prod) {
 			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), csi.ods[selectedIndex].name);
 			MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
-
+			
 			/* now we select the item we just created */
 			selectedQueueItem = qtrue;
 			selectedIndex = queue->numItems-1;
