@@ -351,6 +351,8 @@ void RS_RequiredIdxAssign(void)
 			RS_AssignTechIdxs(&tech->require_AND);
 		if (&tech->require_OR.numLinks)
 			RS_AssignTechIdxs(&tech->require_OR);
+		if (&tech->require_for_production.numLinks)
+			RS_AssignTechIdxs(&tech->require_for_production);
 	}
 }
 
