@@ -11,7 +11,11 @@
 //		Just says where to look for more information (this is internal information and will not be displayed anywhere, but is needed to check/find information)
 //		tech
 //			Items have all the information in here. Especially the name and the model/image.
-//		everything else (weapon, craft, building, alien, etc...)
+//		logic
+//			"logic" defines that this entry is onbly used for complex requirements as defined in "require_*". This is not displayed anywhere.
+//		weapon
+//			This is an entry for an item that is defined in "weapon*.ufo".
+//		everything else (craft, building, alien, etc...)
 //			See the correct .ufo file.
 //	name
 //		Self-explaining I hope :) Only needed when type=tech
@@ -32,17 +36,24 @@
 //			You need to collect at least 10 items of this thing so it can be researched.
 //		"weapon" type	-	e.g "weapon rs_coolweapon"
 //			Use only with ammo. Tells the game which weapons this ammo can used in. Is not evaluated for research.
+//		"
 //	require_OR { type id [amount] }
 //		Works the same as require_AND with the difference that ANY of the entries will enable the tech to be researchable.
 //	
 //	NOTE: require_AND and require_OR are logically connected like (require_AND || require_OR).
-//	This means that if the the requirements in require_AND and/or in require_OR are met the tech can be researched (i.e it is researchable).
+//	This means that if the the requirements in require_AND and/or in require_OR are met the tech can be researched (i.e. it is researchable).
 //
-//	NOTE: Every tech entry must have a require_AND or require_OR section if
-//	it is to be researchable (even if it is just a null requirement like "require_AND { tech nothing }")
-//	If these are skipped then both entries default to 0 (i.e. not met).
+//	[Still true? 	NOTE: Every tech entry must have a require_AND or require_OR section if
+//	[		it is to be researchable (even if it is just a null requirement like "require_AND { tech nothing }")
+//	[		If these are skipped then both entries default to 0 (i.e. not met).
 //=================
-//	delay
+//	require_for_production { item id amount }
+//		A list of requirements that ALL need to be met in order that one item (of 'provides') can be produced.
+//		"item" type -	the only type supported here.
+//				e.g "item inv_weaponpart 2"
+//				You need to collect at least 2 items of inv_weaponpart so one item can be produced.
+//=================
+//	delay [WIP - not yet implemented]
 //		The number of days until a 'successor' technology-item will be available for research.
 //		i.e. Every requirement from above is met, but this nubmer of days hasn't passed yet => tech not yet available for research.
 //	provides yyy
