@@ -119,10 +119,22 @@ tile +r01
 4 5
 
 0      re     ab     0
-ac      +r     +a     ac
-ac      +r     +a     ac
-ac      +r     +a     ac
+r      +r     +a     ac
+r      +r     +a     ac
+r      +r     +a     ac
 0      re      ab    0
+}
+
+// mountain
+tile +r01_2
+{
+4 5
+
+0      ab     rf     0
+ac      +a     +r     r
+ac      +a     +r     r
+ac      +a     +r     r
+0      ab      rf    0
 }
 
 // mountain #2
@@ -131,33 +143,68 @@ tile +r02
 4 5
 
 0      re     ab     0
-ac      +r     +a     ac
-ac      +r     +a     ac
-ac      +r     +a     ac
+r      +r     +a     ac
+r      +r     +a     ac
+r      +r     +a     ac
 0      re      ab    0
 }
 
-// mountain
+// mountain #2
+tile +r02_2
+{
+4 5
+
+0      ab     rf     0
+ac      +a     +r     r
+ac      +a     +r     r
+ac      +a     +r     r
+0      ab      rf    0
+}
+
+// mountain #3
 tile +r03
 {
 4 5
 
 0      re     ab     0
-ac      +r     +a     ac
-ac      +r     +a     ac
-ac      +r     +a     ac
+r      +r     +a     ac
+r      +r     +a     ac
+r      +r     +a     ac
 0      re      ab    0
 }
 
-// mountain
+// mountain #3
+tile +r03_2
+{
+4 5
+
+0      ab     rf     0
+ac      +a     +r     r
+ac      +a     +r     r
+ac      +a     +r     r
+0      ab      rf    0
+}
+
+// mountain #4
 tile +r04
 {
 4 4
 
 0      re     ab     0
-ac      +r     +a     ac
-ac      +r     +a     ac
+r      +r     +a     ac
+r      +r     +a     ac
 0      re      ab    0
+}
+
+// mountain #4
+tile +r04_2
+{
+4 4
+
+0      ab     rf     0
+ac      +a     +r     r
+ac      +a     +r     r
+0      ab      rf    0
 }
 
 // mountain end
@@ -166,10 +213,22 @@ tile +re01
 4 5
 
 0      ab     ab     0
-ac      +a     +a     ac
-ac      +e     +a     ac
-ac      +e     +a     ac
+ac     +a     +a     ac
+f      +e     +a     ac
+f      +e     +a     ac
 0      r      ab    0
+}
+
+// mountain end
+tile +re01_2
+{
+4 5
+
+0      ab     ab     0
+ac      +a     +a     ac
+ac      +a     +f     e
+ac      +a     +f     e
+0      ab      r    0
 }
 
 // mountain end #2
@@ -178,7 +237,19 @@ tile +re02
 4 5
 
 0      r     ab     0
-ac      +e     +a     ac
+f       +e     +a     ac
+ac      +a     +a     ac
+ac      +a     +a     ac
+0      ab      ab    0
+}
+
+// mountain end #2
+tile +re02_2
+{
+4 5
+
+0      ab     r     0
+ac      +a     +f     e
 ac      +a     +a     ac
 ac      +a     +a     ac
 0      ab      ab    0
@@ -191,8 +262,19 @@ tile +re03
 
 0      ab     ab     0
 ac      +a     +a     ac
-ac      +e     +a     ac
+f       +e     +a     ac
 0      r      ab    0
+}
+
+// mountain end #3
+tile +re03_2
+{
+4 4
+
+0      ab     ab     0
+ac      +a     +a     ac
+ac      +a     +f     e
+0      ab      r    0
 }
 
 // mountain end #4
@@ -201,7 +283,18 @@ tile +re04
 4 4
 
 0      r     ab     0
-ac      +e     +a     ac
+f       +e     +a     ac
+ac      +a     +a     ac
+0      ab      ab    0
+}
+
+// mountain end #4
+tile +re04_2
+{
+4 4
+
+0      ab     r     0
+ac      +a     +f     e
 ac      +a     +a     ac
 0      ab      ab    0
 }
@@ -256,9 +349,17 @@ size "7 7"
 +r02 "1 2"
 +r03 "0 2"
 +r04 "0 2"
-+re01 "0 1"
++r01_2 "0 2"
++r02_2 "1 2"
++r03_2 "0 2"
++r04_2 "0 2"
++re01 "1 1"
 +re02 "0 1"
 +re03 "0 1"
 +re04 "0 1"
++re01_2 "0 1"
++re02_2 "0 1"
++re03_2 "0 1"
++re04_2 "0 1"
 +drop "1 1"
 }
