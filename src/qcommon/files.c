@@ -1237,7 +1237,6 @@ void FS_GetMaps(qboolean reset)
 
 		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, 0)) != 0) {
 			for (i = 0; i < ndirs - 1; i++) {
-				anzInstalledMaps++;
 				Com_DPrintf("... found map: '%s' (pos %i out of %i)\n", dirnames[i], i+1, ndirs);
 				baseMapName = COM_SkipPath(dirnames[i]);
 				COM_StripExtension(baseMapName, filename);
@@ -1251,6 +1250,7 @@ void FS_GetMaps(qboolean reset)
 						continue;
 					}
 					Q_strncpyz(maps[anzInstalledMaps], filename, MAX_QPATH);
+					anzInstalledMaps++;
 				} else
 					Com_Printf("invalid mapstatus: %i (%s)\n", status, dirnames[i]);
 				free(dirnames[i]);
