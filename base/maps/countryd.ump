@@ -145,16 +145,38 @@ abc     +a     abc
 0      abcef     0
 }
 
-// mountain
+// cave entry (g)
+tile +v01
+{
+4 4
+
+0      reg    ab     0
+rg      +g     +a     ac
+rg      +g     +a     ac
+0      reg    ab    0
+}
+
+// cave entry
+tile +v01_2
+{
+4 4
+
+0      ab    reh     0
+ac      +a     +g     rg
+ac      +a     +g     rg
+0      ab    reh    0
+}
+
+// mountain (r)
 tile +r01
 {
 4 5
 
-0      re     ab     0
+0      regh     ab     0
 r      +r     +a     ac
 r      +r     +a     ac
 r      +r     +a     ac
-0      re      ab    0
+0      regh      ab    0
 }
 
 // mountain
@@ -162,11 +184,11 @@ tile +r01_2
 {
 4 5
 
-0      ab     rf     0
+0      ab     rfgh     0
 ac      +a     +r     r
 ac      +a     +r     r
 ac      +a     +r     r
-0      ab      rf    0
+0      ab      rfgh    0
 }
 
 // mountain #2
@@ -174,11 +196,11 @@ tile +r02
 {
 4 5
 
-0      re     ab     0
+0      regh     ab     0
 r      +r     +a     ac
 r      +r     +a     ac
 r      +r     +a     ac
-0      re      ab    0
+0      regh      ab    0
 }
 
 // mountain #2
@@ -186,11 +208,11 @@ tile +r02_2
 {
 4 5
 
-0      ab     rf     0
+0      ab     rfgh     0
 ac      +a     +r     r
 ac      +a     +r     r
 ac      +a     +r     r
-0      ab      rf    0
+0      ab      rfgh    0
 }
 
 // mountain #3
@@ -210,11 +232,11 @@ tile +r03_2
 {
 4 5
 
-0      ab     rf     0
+0      ab     rfgh     0
 ac      +a     +r     r
 ac      +a     +r     r
 ac      +a     +r     r
-0      ab      rf    0
+0      ab      rfgh    0
 }
 
 // mountain #4
@@ -222,10 +244,10 @@ tile +r04
 {
 4 4
 
-0      re     ab     0
+0      regh     ab     0
 r      +r     +a     ac
 r      +r     +a     ac
-0      re      ab    0
+0      regh      ab    0
 }
 
 // mountain #4
@@ -233,10 +255,30 @@ tile +r04_2
 {
 4 4
 
-0      ab     rf     0
+0      ab     rfgh     0
 ac      +a     +r     r
 ac      +a     +r     r
-0      ab      rf    0
+0      ab      rfgh    0
+}
+
+// mountain #5
+tile +r05
+{
+4 3
+
+0      regh     ab    0
+ac      +r     +a     r
+0      regh     ab    0
+}
+
+// mountain #5
+tile +r05_2
+{
+4 3
+
+0      ab     rfgh     0
+ac      +a     +r     r
+0      ab      rfgh    0
 }
 
 // mountain end
@@ -248,7 +290,7 @@ tile +re01
 ac     +a     +a     ac
 f      +e     +a     ac
 f      +e     +a     ac
-0      re     ab    0
+0      regh     ab    0
 }
 
 // mountain end
@@ -260,7 +302,7 @@ tile +re01_2
 ac      +a     +a     ac
 ac      +a     +f     e
 ac      +a     +f     e
-0      ab      rf    0
+0      ab      rfgh    0
 }
 
 // mountain end #2
@@ -268,10 +310,10 @@ tile +re02
 {
 4 5
 
-0      re     ab     0
+0      regh     ab     0
 f       +e     +a     ac
 ac      +a     +a     ac
-ac      +ae    +a     ac
+ac      +a    +a     ac
 0      abe     ab    0
 }
 
@@ -280,7 +322,7 @@ tile +re02_2
 {
 4 5
 
-0      ab     rf     0
+0      ab     rfgh     0
 ac      +a     +f     e
 ac      +a     +a     ac
 ac      +a     +a     ac
@@ -295,7 +337,7 @@ tile +re03
 0      abe    ab     0
 ac      +a     +a     ac
 f       +e     +a     ac
-0      re      ab    0
+0      regh      ab    0
 }
 
 // mountain end #3
@@ -303,10 +345,10 @@ tile +re03_2
 {
 4 4
 
-0      ab     abf    0
+0      ab     abfgh    0
 ac      +a     +a     ac
 ac      +a     +f     e
-0      ab     rf     0
+0      ab     rfgh     0
 }
 
 // mountain end #4
@@ -314,7 +356,7 @@ tile +re04
 {
 4 4
 
-0      re     ab     0
+0      regh     ab     0
 f       +e     +a     ac
 ac      +a     +a     ac
 0      abe    ab     0
@@ -325,7 +367,7 @@ tile +re04_2
 {
 4 4
 
-0      ab     rf     0
+0      ab     rfgh     0
 ac      +a     +f     e
 ac      +a     +a     ac
 0      ab     abf    0
@@ -372,22 +414,26 @@ size "7 7"
 +d03 "0 8"
 +d04 "0 8"
 +d05 "0 2"
-+d06 "0 2"
-+d07 "0 2"
-+d08 "0 2"
-+d09 "0 2"
-+d10 "0 4"
++d06 "0 3"
++d07 "0 3"
++d08 "0 3"
++d09 "0 3"
++d10 "0 6"
 +h01 "0 2"
 +h02 "1 2"
 +h03 "1 2"
 +r01 "0 2"
-+r02 "1 2"
++r02 "0 2"
 +r03 "0 2"
 +r04 "0 2"
++r05 "0 2"
 +r01_2 "0 2"
 +r02_2 "1 2"
 +r03_2 "0 2"
 +r04_2 "0 2"
++r05_2 "0 2"
++v01 "1 1"
++v01_2 "0 1"
 +re01 "1 1"
 +re02 "0 1"
 +re03 "0 1"
