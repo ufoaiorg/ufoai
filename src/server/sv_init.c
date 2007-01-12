@@ -555,7 +555,7 @@ static qboolean SV_AddMandatoryParts(byte map[32][32][MAX_TILEALTS], byte * num)
 			}
 			/* no tile fit */
 			if (n >= mapSize) {
-				Com_Printf("SV_AddMandatoryParts: Could not find a tile that fits\n");
+				Com_Printf("SV_AddMandatoryParts: Could not find a tile that fits for '%s'\n", tile->name);
 				return qfalse;
 			}
 		}
