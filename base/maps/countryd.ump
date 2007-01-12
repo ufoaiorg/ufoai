@@ -10,8 +10,8 @@ tile +drop
 5 4
 
 0      abef     abef     abef     0
-ac     +a     +a     +a     ac
-ac     +a     +a     +a     ac
+arfc     +a     +a     +a     arec
+arfc     +a     +a     +a     arec
 0      abef     abef     abef     0
 }
 
@@ -21,9 +21,9 @@ tile +c01
 4 5
 
 0      abef     abef     0
-ac      +a     +a     ac
-ac      +a     +a     ac
-ac      +a     +a     ac
+arfc      +a     +a     arec
+arfc      +a     +a     arec
+arfc      +a     +a     arec
 0      abef      abef      0
 }
 
@@ -33,9 +33,9 @@ tile +c02
 4 5
 
 0      abef     abef     0
-ac      +a     +a     ac
-ac      +a     +a     ac
-ac      +a     +a     ac
+arfc      +a     +a     arec
+arfc      +a     +a     arec
+arfc      +a     +a     arec
 0      abef      abef      0
 }
 
@@ -45,8 +45,8 @@ tile +d01
 4 4
 
 0      abef     abef     0
-ac      +a     +a     ac
-ac      +a     +a     ac
+arfc      +a     +a     arce
+arfc      +a     +a     arce
 0      abef      abef    0
 }
 
@@ -56,7 +56,7 @@ tile +d02
 3 3
 
 0      abcef     0
-abc     +a     abc
+abrfc     +a     abrec
 0      abcef     0
 }
 
@@ -66,7 +66,7 @@ tile +d03
 3 3
 
 0      abcef     0
-abc     +a     abc
+abfrc     +a     abrec
 0      abcef     0
 }
 
@@ -76,7 +76,7 @@ tile +d04
 3 3
 
 0      abcef     0
-abc     +a     abc
+fabrc     +a     abrce
 0      abcef     0
 }
 
@@ -86,9 +86,9 @@ tile +d05
 4 5
 
 0      abef     abef     0
-ac      +a     +a     ac
-ac      +a     +a     ac
-ac      +a     +a     ac
+arfc      +a     +a     arce
+arfc      +a     +a     arce
+arfc      +a     +a     arce
 0      abef     abef    0
 }
 
@@ -98,8 +98,8 @@ tile +d06
 4 4
 
 0      abef     abef     0
-ac     +a     +a     ac
-ac     +a     +a     ac
+arfc     +a     +a     arce
+arfc     +a     +a     arce
 0      abef     abef     0
 }
 
@@ -109,7 +109,7 @@ tile +d07
 3 3
 
 0      abef     0
-ac     +a     ac
+arfc     +a     acre
 0      abef     0
 }
 
@@ -119,8 +119,8 @@ tile +d08
 4 4
 
 0      abef     abef     0
-ac     +a     +a     ac
-ac     +a     +a     ac
+arcf     +a     +a     arce
+arcf     +a     +a     arce
 0      abef     abef     0
 }
 
@@ -130,8 +130,8 @@ tile +d09
 4 4
 
 0      abef     abef     0
-ac     +a     +a     ac
-ac     +a     +a     ac
+acrf     +a     +a     acre
+acrf     +a     +a     acre
 0      abef     abef     0
 }
 
@@ -141,7 +141,7 @@ tile +d10
 3 3
 
 0      abcef     0
-abc     +a     abc
+abcrf     +a     abcre
 0      abcef     0
 }
 
@@ -161,10 +161,10 @@ tile +v01_2
 {
 4 4
 
-0      ab    reh     0
+0      ab    rfh     0
 ac      +a     +g     rg
 ac      +a     +g     rg
-0      ab    reh    0
+0      ab    rfh    0
 }
 
 // mountain (r)
@@ -220,11 +220,11 @@ tile +r03
 {
 4 5
 
-0      re     ab     0
+0      regh     ab     0
 r      +r     +a     ac
 r      +r     +a     ac
 r      +r     +a     ac
-0      re      ab    0
+0      regh      ab    0
 }
 
 // mountain #3
@@ -404,7 +404,7 @@ ac     +a     +a     ac
 0      ab     ab     0
 }
 
-assembly test
+assembly cave
 {
 size "7 7"
 +c01 "0 1"
@@ -428,13 +428,54 @@ size "7 7"
 +r04 "0 2"
 +r05 "0 2"
 +r01_2 "0 2"
-+r02_2 "1 2"
++r02_2 "0 2"
 +r03_2 "0 2"
 +r04_2 "0 2"
 +r05_2 "0 2"
-+v01 "1 1"
++v01 "0 1"
++v01_2 "1 1"
++re01 "0 1"
++re02 "0 1"
++re03 "0 1"
++re04 "0 1"
++re01_2 "0 1"
++re02_2 "0 1"
++re03_2 "0 1"
++re04_2 "0 1"
++drop "1 1"
+}
+
+assembly large
+{
+size "8 8"
++c01 "0 1"
++c02 "0 1"
++d01 "0 8"
++d02 "0 8"
++d03 "0 8"
++d04 "0 8"
++d05 "1 2"
++d06 "0 3"
++d07 "0 3"
++d08 "0 3"
++d09 "0 3"
++d10 "0 6"
++h01 "1 2"
++h02 "3 5"
++h03 "1 2"
++r01 "0 2"
++r02 "0 2"
++r03 "0 2"
++r04 "0 2"
++r05 "0 2"
++r01_2 "1 2"
++r02_2 "0 2"
++r03_2 "0 2"
++r04_2 "0 2"
++r05_2 "0 2"
++v01 "0 1"
 +v01_2 "0 1"
-+re01 "1 1"
++re01 "0 1"
 +re02 "0 1"
 +re03 "0 1"
 +re04 "0 1"
