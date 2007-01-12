@@ -9,10 +9,10 @@ tile +drop
 {
 5 4
 
-0      ab     ab     ab     0
+0      abef     abef     abef     0
 ac     +a     +a     +a     ac
 ac     +a     +a     +a     ac
-0      ab     ab     ab     0
+0      abef     abef     abef     0
 }
 
 // old fallen house
@@ -20,11 +20,11 @@ tile +c01
 {
 4 5
 
-0      ab     ab     0
+0      abef     abef     0
 ac      +a     +a     ac
 ac      +a     +a     ac
 ac      +a     +a     ac
-0      ab      ab      0
+0      abef      abef      0
 }
 
 // house + watertower
@@ -32,11 +32,11 @@ tile +c02
 {
 4 5
 
-0      ab     ab     0
+0      abef     abef     0
 ac      +a     +a     ac
 ac      +a     +a     ac
 ac      +a     +a     ac
-0      ab      ab      0
+0      abef      abef      0
 }
 
 // just a little rock
@@ -44,10 +44,10 @@ tile +d01
 {
 4 4
 
-0      ab     ab     0
+0      abef     abef     0
 ac      +a     +a     ac
 ac      +a     +a     ac
-0      ab      ab    0
+0      abef      abef    0
 }
 
 // cactus
@@ -55,9 +55,9 @@ tile +d02
 {
 3 3
 
-0      abc     0
+0      abcef     0
 abc     +a     abc
-0      abc     0
+0      abcef     0
 }
 
 // cactus and plant
@@ -65,9 +65,9 @@ tile +d03
 {
 3 3
 
-0      abc     0
+0      abcef     0
 abc     +a     abc
-0      abc     0
+0      abcef     0
 }
 
 // cactus and waste
@@ -75,9 +75,9 @@ tile +d04
 {
 3 3
 
-0      abc     0
+0      abcef     0
 abc     +a     abc
-0      abc     0
+0      abcef     0
 }
 
 // a rock
@@ -85,11 +85,11 @@ tile +d05
 {
 4 5
 
-0      ab     ab     0
+0      abef     abef     0
 ac      +a     +a     ac
 ac      +a     +a     ac
 ac      +a     +a     ac
-0      ab      ab    0
+0      abef     abef    0
 }
 
 // cows
@@ -97,10 +97,10 @@ tile +d06
 {
 4 4
 
-0      ab     ab     0
+0      abef     abef     0
 ac     +a     +a     ac
 ac     +a     +a     ac
-0      ab     ab     0
+0      abef     abef     0
 }
 
 // fountain
@@ -108,9 +108,20 @@ tile +d07
 {
 3 3
 
-0      ab     0
+0      abef     0
 ac     +a     ac
-0      ab     0
+0      abef     0
+}
+
+// stroh
+tile +d08
+{
+4 4
+
+0      abef     abef     0
+ac     +a     +a     ac
+ac     +a     +a     ac
+0      abef     abef     0
 }
 
 // mountain
@@ -212,11 +223,11 @@ tile +re01
 {
 4 5
 
-0      ab     ab     0
+0      abe    ab     0
 ac     +a     +a     ac
 f      +e     +a     ac
 f      +e     +a     ac
-0      r      ab    0
+0      re     ab    0
 }
 
 // mountain end
@@ -224,11 +235,11 @@ tile +re01_2
 {
 4 5
 
-0      ab     ab     0
+0      ab     abf    0
 ac      +a     +a     ac
 ac      +a     +f     e
 ac      +a     +f     e
-0      ab      r    0
+0      ab      rf    0
 }
 
 // mountain end #2
@@ -236,11 +247,11 @@ tile +re02
 {
 4 5
 
-0      r     ab     0
+0      re     ab     0
 f       +e     +a     ac
 ac      +a     +a     ac
-ac      +a     +a     ac
-0      ab      ab    0
+ac      +ae    +a     ac
+0      abe     ab    0
 }
 
 // mountain end #2
@@ -248,11 +259,11 @@ tile +re02_2
 {
 4 5
 
-0      ab     r     0
+0      ab     rf     0
 ac      +a     +f     e
 ac      +a     +a     ac
 ac      +a     +a     ac
-0      ab      ab    0
+0      ab      abf   0
 }
 
 // mountain end #3
@@ -260,10 +271,10 @@ tile +re03
 {
 4 4
 
-0      ab     ab     0
+0      abe    ab     0
 ac      +a     +a     ac
 f       +e     +a     ac
-0      r      ab    0
+0      re      ab    0
 }
 
 // mountain end #3
@@ -271,10 +282,10 @@ tile +re03_2
 {
 4 4
 
-0      ab     ab     0
+0      ab     abf    0
 ac      +a     +a     ac
 ac      +a     +f     e
-0      ab      r    0
+0      ab     rf     0
 }
 
 // mountain end #4
@@ -282,10 +293,10 @@ tile +re04
 {
 4 4
 
-0      r     ab     0
+0      re     ab     0
 f       +e     +a     ac
 ac      +a     +a     ac
-0      ab      ab    0
+0      abe    ab     0
 }
 
 // mountain end #4
@@ -293,10 +304,10 @@ tile +re04_2
 {
 4 4
 
-0      ab     r     0
+0      ab     rf     0
 ac      +a     +f     e
 ac      +a     +a     ac
-0      ab      ab    0
+0      ab     abf    0
 }
 
 // house
@@ -342,6 +353,7 @@ size "7 7"
 +d05 "0 2"
 +d06 "0 2"
 +d07 "0 2"
++d08 "1 2"
 +h01 "0 2"
 +h02 "1 2"
 +h03 "1 2"
