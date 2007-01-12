@@ -54,6 +54,12 @@ actors americans
 		civilians/female body01 head02b 2
 		civilians/female body02 head02b 0
 		civilians/female body02 head02b 1
+		civilians/female body04 head01c 0
+		civilians/female body04 head01b 0
+		civilians/female body04 head01a 0
+		civilians/female body04 head02c 0
+		civilians/female body04 head02b 0
+		civilians/female body04 head02a 0
 	}
 	male
 	{
@@ -88,6 +94,12 @@ actors european
 		civilians/female body01 head02b 2
 		civilians/female body02 head02b 0
 		civilians/female body02 head02b 1
+		civilians/female body04 head01c 0
+		civilians/female body04 head01b 0
+		civilians/female body04 head01a 0
+		civilians/female body04 head02c 0
+		civilians/female body04 head02b 0
+		civilians/female body04 head02a 0
 	}
 	male
 	{
