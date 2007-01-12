@@ -3412,6 +3412,10 @@ void MN_MapInfo(void)
 	Cvar_Set("mn_mappic2", "maps/shots/na.jpg");
 	Cvar_Set("mn_mappic3", "maps/shots/na.jpg");
 
+	/* check whether there are maps */
+	if (anzInstalledMaps == -1)
+		return;
+
 	/* remove the day and night char */
 	Q_strncpyz(normalizedName, maps[mapInstalledIndex], MAX_VAR);
 	length = strlen(normalizedName);

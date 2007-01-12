@@ -1227,6 +1227,11 @@ void FS_GetMaps(qboolean reset)
 	/* force a reread */
 	if (!reset && mapsInstalledInit)
 		return;
+	else if (mapsInstalledInit) {
+		Com_DPrintf("Free old list with %i entries\n", anzInstalledMaps);
+		for (i = 0; i < anzInstalledMaps; i++)
+			free (maps[i]);
+	}
 
 	mapInstalledIndex = 0;
 	anzInstalledMaps = -1;
