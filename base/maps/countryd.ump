@@ -124,6 +124,27 @@ ac     +a     +a     ac
 0      abef     abef     0
 }
 
+//
+tile +d09
+{
+4 4
+
+0      abef     abef     0
+ac     +a     +a     ac
+ac     +a     +a     ac
+0      abef     abef     0
+}
+
+// plants/small hills
+tile +d10
+{
+3 3
+
+0      abcef     0
+abc     +a     abc
+0      abcef     0
+}
+
 // mountain
 tile +r01
 {
@@ -353,7 +374,9 @@ size "7 7"
 +d05 "0 2"
 +d06 "0 2"
 +d07 "0 2"
-+d08 "1 2"
++d08 "0 2"
++d09 "0 2"
++d10 "0 4"
 +h01 "0 2"
 +h02 "1 2"
 +h03 "1 2"
