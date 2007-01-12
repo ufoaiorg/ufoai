@@ -1243,13 +1243,13 @@ void FS_GetMaps(qboolean reset)
 				status = CheckBSPFile(filename);
 				if (!status) {
 					/*searched a specific map? */
-					maps[anzInstalledMaps] = (char *) malloc(MAX_QPATH * sizeof(char));
-					if (maps[anzInstalledMaps] == NULL) {
+					maps[anzInstalledMaps+1] = (char *) malloc(MAX_QPATH * sizeof(char));
+					if (maps[anzInstalledMaps+1] == NULL) {
 						Com_Printf("Could not allocate memory in MN_GetMaps\n");
 						free(dirnames[i]);
 						continue;
 					}
-					Q_strncpyz(maps[anzInstalledMaps], filename, MAX_QPATH);
+					Q_strncpyz(maps[anzInstalledMaps+1], filename, MAX_QPATH);
 					anzInstalledMaps++;
 				} else
 					Com_Printf("invalid mapstatus: %i (%s)\n", status, dirnames[i]);
