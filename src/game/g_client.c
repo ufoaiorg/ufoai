@@ -1993,6 +1993,7 @@ static int G_PlayerSoldiersCount (player_t* player)
 void G_ClientEndRound(player_t * player, qboolean quiet)
 {
 	player_t *p;
+	qboolean sanity = qfalse;
 	int i, lastTeam, nextTeam;
 
 	/* inactive players can't end their inactive round :) */
@@ -2027,15 +2028,25 @@ void G_ClientEndRound(player_t * player, qboolean quiet)
 	while (level.activeTeam == -1) {
 		/* search next team */
 		nextTeam = -1;
+
 		for (i = lastTeam + 1; i != lastTeam; i++) {
-			if (i >= MAX_TEAMS)
+			if (i >= MAX_TEAMS) {
+				if (!sanity)
+					sanity = qtrue;
+				else {
+					Com_Printf("Not enough spawn positions in this map\n");
+					break;
+				}
 				i = 0;
+			}
+
 			if (((level.num_alive[i] || (level.num_spawnpoints[i] && !level.num_spawned[i]))
 				 && i != lastTeam)) {
 				nextTeam = i;
 				break;
 			}
 		}
+
 		if (nextTeam == -1) {
 /*			gi.bprintf( PRINT_HIGH, "Can't change round - no living actors left.\n" ); */
 			level.activeTeam = lastTeam;
