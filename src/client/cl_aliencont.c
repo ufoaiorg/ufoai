@@ -34,6 +34,7 @@ aliensTmp_t cargo[MAX_CARGO];
 
 /**
  * @brief Prepares Alien Containment - names, states, and zeroed amount.
+ * @sa B_BuildBase
  */
 void AL_FillInContainment(void)
 {
@@ -227,9 +228,9 @@ void AL_AddAliens()
 	j = 0;
 	while (j < aircraft->alientypes) {
 		if (tobase->alienscont[j].state == 1)
-			Com_Printf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount+1);
+			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount+1);
 		if (tobase->alienscont[j].state == 0)
-				Com_Printf("AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount+1);
+				Com_DPrintf("AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount+1);
 		j++;
 	}
 }
@@ -320,6 +321,67 @@ void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action)
 	default:
 		return;
 	}
+}
+
+/**
+ * @brief Get index of alien.
+ * @param[in] alientype
+ * @return index of alien
+ * @sa RS_AssignTechIdxs
+ */
+int AL_GetAlienIdx(char *id)
+{
+	int i;
+
+	for (i = 0; i < AL_UNKNOWN; i++) {
+		if (!Q_strncmp(id, AL_AlienTypeToName(i), MAX_VAR))
+			return i;
+	}
+
+	Com_Printf("AL_GetAlien(): Alien \"%s\" not found!\n", id);
+	return -1;
+}
+
+/**
+ * @brief Get amount of live aliens of alien bodies stored in Containment.
+ * @param[in] index of alien
+ * @param[in] requirement type (RS_LINK_ALIEN/RS_LINK_ALIEN_DEAD
+ * @return amount of desired alien/body
+ * @sa RS_RequirementsMet
+ * @sa RS_CheckCollected
+ */
+int AL_GetAlienAmount(int idx, requirementType_t reqtype)
+{
+	int i, state;
+	base_t *base = NULL;
+	aliensCont_t *containment = NULL;
+
+	if (baseCurrent) {
+		base = baseCurrent;
+	} else {
+		/* should never happen */
+		Com_Printf("AL_GetAlienAmount()... No base selected!\n");
+		return -1;
+	}
+
+	containment = base->alienscont;
+	switch (reqtype) {
+	case RS_LINK_ALIEN:
+		state = 1;
+	case RS_LINK_ALIEN_DEAD:
+		state = 0;
+	default:
+		state = 0;
+	}
+
+	for (i = 0; i < (AL_UNKNOWN * 2); i++) {
+		if ((Q_strncmp(containment[i].alientype, AL_AlienTypeToName(idx), MAX_VAR) == 0)
+		&& (containment[i].state == state))
+			return containment[i].amount;
+	}
+
+	Com_Printf("AL_GetAlienAmount()... Could not calculate amount!\n");
+	return -1;
 }
 
 /**

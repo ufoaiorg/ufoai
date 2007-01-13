@@ -1732,6 +1732,7 @@ void B_BuildBase(void)
 			Q_strncpyz(messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string), MAX_MESSAGE_TEXT);
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			Radar_Initialise(&(baseCurrent->radar), 0);
+			AL_FillInContainment();
 
 			/* initial base equipment */
 			if (gd.numBases == 1) {

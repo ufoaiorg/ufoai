@@ -2095,7 +2095,10 @@ tech rs_alien_ortnok_autopsy
 	pre_description	"_ortnok_autopsy_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech TODO }
+	require_AND
+	{
+		alien_dead Ortnok 1
+	}
 	time	1500
 
 	// menuModel - see models.ufo
@@ -2114,7 +2117,10 @@ tech rs_alien_taman_autopsy
 	pre_description	"_taman_autopsy_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech TODO }
+	require_AND
+	{
+		alien_dead Taman 1
+	}
 	time	1500
 
 	// menuModel - see models.ufo
@@ -2131,7 +2137,10 @@ tech rs_alien_shevaar_autopsy
 	pre_description	"_shevaar_autopsy_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech TODO }
+	require_AND
+	{
+		alien_dead Shevaar 1
+	}
 	time	1500
 
 	// menuModel - see models.ufo

@@ -119,10 +119,12 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 			case RS_LINK_EVENT:
 				break;
 			case RS_LINK_ALIEN:
-				/* TODO:  Check if the the required amount of the alien with the index required->idx[i] has been captured alive, if not set met_AND = qfalse; */
+				if (AL_GetAlienAmount(required_AND->idx[i], RS_LINK_ALIEN) < required_AND->amount[i])
+					met_AND = qfalse;
 				break;
 			case RS_LINK_ALIEN_DEAD:
-				/* TODO:  Check if the the required amount of the alien with the index required->idx[i] has been captured dead, if not set met_AND = qfalse; */
+				if (AL_GetAlienAmount(required_AND->idx[i], RS_LINK_ALIEN_DEAD) < required_AND->amount[i])
+					met_AND = qfalse;
 				break;
 			default:
 				break;
@@ -154,10 +156,12 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 			case RS_LINK_EVENT:
 				break;
 			case RS_LINK_ALIEN:
-				/* TODO:  Check if the the required amount of the alien with the index required->idx[i] has been captured alive, if so set met_OR = qtrue; */
+				if (AL_GetAlienAmount(required_AND->idx[i], RS_LINK_ALIEN) >= required_OR->amount[i])
+					met_OR = qtrue;
 				break;
 			case RS_LINK_ALIEN_DEAD:
-				/* TODO:  Check if the the required amount of the alien with the index required->idx[i] has been captured dead, if so set met_OR = qtrue; */
+				if (AL_GetAlienAmount(required_AND->idx[i], RS_LINK_ALIEN_DEAD) >= required_OR->amount[i])
+					met_OR = qtrue;
 				break;
 			default:
 				break;
@@ -214,10 +218,16 @@ qboolean RS_CheckCollected(requirements_t *required)
 			}
 			break;
 		case RS_LINK_ALIEN:
-			/* TODO: Check if the alien with the index required->idx[i] has been captured alive, if not set tech->statusCollected = qfalse; */
+			if (AL_GetAlienAmount(required->idx[i], RS_LINK_ALIEN) > 0)
+				tech->statusCollected = qtrue;
+			else
+				tech->statusCollected = qfalse;
 			break;
 		case RS_LINK_ALIEN_DEAD:
-			/* TODO:  Check if the alien with the index required->idx[i] has been captured dead. if not set tech->statusCollected = qfalse; */
+			if (AL_GetAlienAmount(required->idx[i], RS_LINK_ALIEN) > 0)
+				tech->statusCollected = qtrue;
+			else
+				tech->statusCollected = qfalse;
 			break;
 		default:
 			break;
@@ -322,10 +332,8 @@ void RS_AssignTechIdxs(requirements_t *req)
 			/* TODO: Get index of event in event-list. */
 			break;
 		case RS_LINK_ALIEN:
-			/* TODO:  Get index of live alien with the identifier req->id[i] and set req->idx[i] ti this value. */
-			break;
 		case RS_LINK_ALIEN_DEAD:
-			/* TODO:  Get index of dead alien with the identifier req->id[i] and set req->idx[i] ti this value. */
+			req->idx[i] = AL_GetAlienIdx(req->id[i]);
 			break;
 		default:
 			break;
