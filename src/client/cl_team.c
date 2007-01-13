@@ -1674,15 +1674,11 @@ void CL_ParseResults(sizebuf_t * buf)
 
 		/* check for stunned aliens;
 		 TODO: make this reversible, like CL_CollectItems above */
-		if (winner == we) {
+		if (winner == we)
 			/* FIXME: when AlienContainment stuff is finished, remove
 			unnecesary CL_CollectAliens() */
 			/* CL_CollectAliens(); */
 			CL_CollectingAliens();
-			/* FIXME: CL_DropshipReturned() should be called when dropship returns
-			to base, not here */
-			CL_DropshipReturned(baseCurrent, &baseCurrent->aircraft[baseCurrent->aircraftCurrent]);
-		}
 
 		/* clear unused LE inventories */
 		LE_Cleanup();

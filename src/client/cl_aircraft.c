@@ -555,6 +555,7 @@ void CL_CampaignRunAircraft(int dt)
 							MN_PushMenu("popup_intercept_ready");
 						} else if (aircraft->status == AIR_RETURNING) {
 							/* aircraft enter in  homebase */
+							CL_DropshipReturned(aircraft->homebase, aircraft);
 							aircraft->status = AIR_REFUEL;
 						} else
 							aircraft->status = AIR_IDLE;

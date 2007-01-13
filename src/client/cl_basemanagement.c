@@ -2580,6 +2580,7 @@ aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index)
  * @param[in] base
  * @note Place here any stuff, which should be called
  * when Drophip returns to base.
+ * @sa CL_CampaignRunAircraft
  */
 void CL_DropshipReturned(base_t* base, aircraft_t* aircraft)
 {
