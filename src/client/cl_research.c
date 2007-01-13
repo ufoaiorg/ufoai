@@ -1492,12 +1492,6 @@ void RS_ParseTechnologies(char *id, char **text)
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
 						}
-					} else if (!Q_strcmp(token, "alien_dead")) {
-						token = COM_Parse(text);
-						Com_DPrintf("RS_ParseTechnologies: alien dead - %s\n", token);
-						required_temp->type[required_temp->numLinks] = RS_LINK_ALIEN_DEAD;
-						/* Get name/id & amount of required item. */
-						/* TODO */
 					} else {
 						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", id, token);
 					}
