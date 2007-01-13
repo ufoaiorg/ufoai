@@ -176,16 +176,16 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 }
 
 /**
- * @brief Checks if any items have been collected (in the current base) and correct the value for each requirement.
+ * @brief Checks if anything has been collected (in the current base) and correct the value for each requirement.
  * @note Does not check if the collected items satisfy the needed "amount". This is done in RS_RequirementsMet. tech->statusCollected is just needed so the item is at least displayed somewhere.
- * @return Returns qtrue if there are any collected items otherwise qfalse.
+ * @return Returns qtrue if there are is ANYTHING collected for each entry otherwise qfalse.
  * @todo Get rid (or improve) this statusCollected stuff.
  */
 qboolean RS_CheckCollected(requirements_t *required)
 {
 	int i;
-	int item_amount;
-	qboolean all_collected = qtrue;
+	int amount;
+	qboolean somehting_collected_from_each = qtrue;
 	technology_t *tech = NULL;
 
 	if (!required)
@@ -197,12 +197,12 @@ qboolean RS_CheckCollected(requirements_t *required)
 	for (i = 0; i < required->numLinks; i++) {
 		switch (required->type[i]) {
 		case RS_LINK_ITEM:
-			item_amount = B_ItemInBase(required->idx[i], baseCurrent);
-			if (item_amount > 0) {
-				required->collected[i] = item_amount;
+			amount = B_ItemInBase(required->idx[i], baseCurrent);
+			if (amount > 0) {
+				required->collected[i] = amount;
 			} else {
 				required->collected[i] = 0;
-				all_collected = qfalse;
+				somehting_collected_from_each = qfalse;
 			}
 			break;
 		case RS_LINK_TECH:
@@ -211,29 +211,30 @@ qboolean RS_CheckCollected(requirements_t *required)
 			if (tech->type == RS_LOGIC) {
 				if (!RS_CheckCollected(&tech->require_AND)) {
 					tech->statusCollected = qfalse;
-					all_collected = qfalse;
+					somehting_collected_from_each = qfalse;
 				} else {
 					tech->statusCollected = qtrue;
 				}
 			}
 			break;
 		case RS_LINK_ALIEN:
-			if (AL_GetAlienAmount(required->idx[i], RS_LINK_ALIEN) > 0)
-				tech->statusCollected = qtrue;
-			else
-				tech->statusCollected = qfalse;
-			break;
 		case RS_LINK_ALIEN_DEAD:
-			if (AL_GetAlienAmount(required->idx[i], RS_LINK_ALIEN) > 0)
-				tech->statusCollected = qtrue;
-			else
-				tech->statusCollected = qfalse;
+			/* Use alien=index and RS_LINK_ALIEN (or RS_LINK_ALIEN_DEAD) to get correct amount.*/
+			amount = AL_GetAlienAmount(required->idx[i], required->type[i]); 
+			if ( amount > 0) {
+				required->collected[i] = amount;
+			} else {
+				required->collected[i] = 0;
+				somehting_collected_from_each = qfalse;
+			}
+			break;
+		case RS_LINK_EVENT:
 			break;
 		default:
 			break;
 		}
 	}
-	return all_collected;
+	return somehting_collected_from_each;
 }
 
 /**
