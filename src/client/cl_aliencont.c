@@ -72,6 +72,8 @@ void AL_FillInContainment(void)
  * @brief Type of alien to its name.
  * @param[in] type
  * @return name
+ * @note Those names does not need to be translateable - used only
+ * for string compares.
  */
 char *AL_AlienTypeToName(alienType_t type)
 {
@@ -380,7 +382,6 @@ int AL_GetAlienAmount(int idx, requirementType_t reqtype)
 			return containment[i].amount;
 	}
 
-	Com_Printf("AL_GetAlienAmount()... Could not calculate amount!\n");
 	return -1;
 }
 
