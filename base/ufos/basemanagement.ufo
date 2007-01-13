@@ -67,8 +67,8 @@ building building_aliencontainment
 	varcosts	1000
 	map_name	"aliencont"
 	pedia		rs_building_aliencontainment
-	firstbase	false
-	pos		    "2 4"
+	firstbase	true
+	pos		"0 2"
 	more_than_one	true
 	onclick		"building_open"
 }
