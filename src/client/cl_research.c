@@ -156,11 +156,11 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 			case RS_LINK_EVENT:
 				break;
 			case RS_LINK_ALIEN:
-				if (AL_GetAlienAmount(required_AND->idx[i], RS_LINK_ALIEN) >= required_OR->amount[i])
+				if (AL_GetAlienAmount(required_OR->idx[i], RS_LINK_ALIEN) >= required_OR->amount[i])
 					met_OR = qtrue;
 				break;
 			case RS_LINK_ALIEN_DEAD:
-				if (AL_GetAlienAmount(required_AND->idx[i], RS_LINK_ALIEN_DEAD) >= required_OR->amount[i])
+				if (AL_GetAlienAmount(required_OR->idx[i], RS_LINK_ALIEN_DEAD) >= required_OR->amount[i])
 					met_OR = qtrue;
 				break;
 			default:
