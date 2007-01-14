@@ -86,7 +86,7 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 	qboolean met_AND = qfalse;
 	qboolean met_OR = qfalse;
 
-	if (!required_AND && !required_AND) {
+	if (!required_AND && !required_OR) {
 		Com_Printf("RS_RequirementsMet: No requirement list(s) given as parameter.\n");
 		return qfalse;
 	}
