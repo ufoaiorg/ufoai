@@ -72,7 +72,7 @@ void AL_FillInContainment(void)
  * @brief Type of alien to its name.
  * @param[in] type
  * @return name
- * @note Those names does not need to be translateable - used only
+ * @note Those names do not need to be translateable - used only
  * for string compares.
  */
 char *AL_AlienTypeToName(alienType_t type)
@@ -185,7 +185,6 @@ void CL_CollectingAliens(void)
 void AL_AddAliens()
 {
 	int i, j;
-	int alienTypeNum = 0;
 	base_t *tobase = NULL;
 	aliensTmp_t *cargo = NULL;
 	aircraft_t *aircraft = NULL;
@@ -213,22 +212,14 @@ void AL_AddAliens()
 
 	cargo = aircraft->aliencargo;
 
-	j = 0; i = 0;
+	j = 0; 
 	while (i < aircraft->alientypes) {
-		if ((Q_strncmp(tobase->alienscont[i].alientype, cargo[j].alientype, MAX_VAR) == 0) && (tobase->alienscont[i].state == cargo[j].state)) {
-			tobase->alienscont[i].amount += cargo[j].amount;
-			i++; j++;
-			continue;
+		for (j = 0; j < (AL_UNKNOWN * 2); j++) {
+			if ((Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0)
+			&& (tobase->alienscont[j].state == cargo[i].state))
+				tobase->alienscont[j].amount += cargo[i].amount;
 		}
-
-		if (i == alienTypeNum) {
-			Q_strncpyz(tobase->alienscont[i].alientype, cargo[j].alientype, MAX_VAR);
-			tobase->alienscont[i].amount = cargo[j].amount;
-			tobase->alienscont[i].state = cargo[j].state;
-			alienTypeNum++;
-		}
-
-		i++; j++;
+		i++;
 	}    
 
 	/* print all of them */
