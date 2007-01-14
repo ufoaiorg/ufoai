@@ -20,7 +20,7 @@ endif
 
 # Linux like
 ifeq ($(TARGET_OS),linux-gnu)
-	CFLAGS +=-D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
+	CFLAGS +=-D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
 endif
 
 # FreeBSD like
