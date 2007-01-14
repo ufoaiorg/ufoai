@@ -267,8 +267,8 @@ void R_DrawShadow(entity_t * e);
 extern cvar_t *gl_shadows;
 extern cvar_t *gl_shadow_debug_shade;
 extern cvar_t *gl_shadow_debug_volume;
-extern cvar_t *r_ati_separate_stencil;
-extern cvar_t *r_stencil_two_side;
+extern cvar_t *gl_ati_separate_stencil;
+extern cvar_t *gl_stencil_two_side;
 
 extern cvar_t *gl_dynamic;
 extern cvar_t *gl_monolightmap;

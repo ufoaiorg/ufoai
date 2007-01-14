@@ -117,8 +117,8 @@ cvar_t *gl_lightmap;
 cvar_t *gl_shadows;
 cvar_t *gl_shadow_debug_volume;
 cvar_t *gl_shadow_debug_shade;
-cvar_t *r_ati_separate_stencil;
-cvar_t *r_stencil_two_side;
+cvar_t *gl_ati_separate_stencil;
+cvar_t *gl_stencil_two_side;
 
 cvar_t *gl_drawclouds;
 cvar_t *gl_imagefilter;
@@ -1119,10 +1119,10 @@ static void R_Register(void)
 	gl_mode = ri.Cvar_Get("gl_mode", "3", CVAR_ARCHIVE, NULL);
 	gl_lightmap = ri.Cvar_Get("gl_lightmap", "0", 0, NULL);
 	gl_shadows = ri.Cvar_Get("gl_shadows", "1", CVAR_ARCHIVE, NULL);
-	gl_shadow_debug_volume = ri.Cvar_Get("r_shadow_debug_volume", "0", CVAR_ARCHIVE, NULL);
-	gl_shadow_debug_shade = ri.Cvar_Get("r_shadow_debug_shade", "0", CVAR_ARCHIVE, NULL);
-	r_ati_separate_stencil = ri.Cvar_Get("r_ati_separate_stencil", "1", CVAR_ARCHIVE, NULL);
-	r_stencil_two_side = ri.Cvar_Get("r_stencil_two_side", "1", CVAR_ARCHIVE, NULL);
+	gl_shadow_debug_volume = ri.Cvar_Get("gl_shadow_debug_volume", "0", CVAR_ARCHIVE, NULL);
+	gl_shadow_debug_shade = ri.Cvar_Get("gl_shadow_debug_shade", "0", CVAR_ARCHIVE, NULL);
+	gl_ati_separate_stencil = ri.Cvar_Get("gl_ati_separate_stencil", "1", CVAR_ARCHIVE, NULL);
+	gl_stencil_two_side = ri.Cvar_Get("gl_stencil_two_side", "1", CVAR_ARCHIVE, NULL);
 	gl_drawclouds = ri.Cvar_Get("gl_drawclouds", "0", CVAR_ARCHIVE, NULL);
 	gl_imagefilter = ri.Cvar_Get("gl_imagefilter", "1", CVAR_ARCHIVE, NULL);
 	gl_dynamic = ri.Cvar_Get("gl_dynamic", "1", 0, NULL);
@@ -1538,7 +1538,7 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 
 	gl_state.ati_separate_stencil = qfalse;
 	if (strstr(gl_config.extensions_string, "GL_ATI_separate_stencil")) {
-		if (!r_ati_separate_stencil->value) {
+		if (!gl_ati_separate_stencil->value) {
 			ri.Con_Printf(PRINT_ALL, "...ignoring GL_ATI_separate_stencil\n");
 			gl_state.ati_separate_stencil = qfalse;
 		} else {
@@ -1550,7 +1550,22 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_ATI_separate_stencil not found\n");
 		gl_state.ati_separate_stencil = qfalse;
-		ri.Cvar_Set("r_ati_separate_stencil", "0");
+		ri.Cvar_Set("gl_ati_separate_stencil", "0");
+	}
+
+	gl_state.stencil_two_side = qfalse;
+	if (strstr(gl_config.extensions_string, "GL_EXT_stencil_two_side")) {
+		if (!gl_stencil_two_side->value) {
+			ri.Con_Printf(PRINT_ALL, "...ignoring GL_EXT_stencil_two_side\n");
+			gl_state.stencil_two_side = qfalse;
+		} else {
+			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_stencil_two_side\n");
+			gl_state.stencil_two_side = qtrue;
+		}
+	} else {
+		ri.Con_Printf(PRINT_ALL, "...GL_EXT_stencil_two_side not found\n");
+		gl_state.stencil_two_side = qfalse;
+		ri.Cvar_Set("gl_stencil_two_side", "0");
 	}
 
 	{
