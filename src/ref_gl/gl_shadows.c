@@ -324,27 +324,23 @@ static void GL_RenderVolumes(dmdl_t * paliashdr, vec3_t lightdir, int projdist)
 	int incr = gl_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR;
 	int decr = gl_state.stencil_wrap ? GL_DECR_WRAP_EXT : GL_DECR;
 
-	if (!gl_state.ati_separate_stencil && !gl_state.stencil_two_side) {
-		qglCullFace(GL_BACK);
-		qglStencilOp(GL_KEEP, incr, GL_KEEP);
-		BuildShadowVolume(paliashdr, lightdir, projdist);
-		qglCullFace(GL_FRONT);
-		qglStencilOp(GL_KEEP, decr, GL_KEEP);
-		BuildShadowVolume(paliashdr, lightdir, projdist);
-	}
-
 	if (gl_state.ati_separate_stencil) {	/* ati separate stensil support for r300+ by Kirk Barnes */
 		qglDisable(GL_CULL_FACE);
 		qglStencilOpSeparateATI(GL_BACK, GL_KEEP, incr, GL_KEEP);
 		qglStencilOpSeparateATI(GL_FRONT, GL_KEEP, decr, GL_KEEP);
 		BuildShadowVolume(paliashdr, lightdir, projdist);
-	}
-
-	if (gl_state.stencil_two_side) {	/* two side stensil support for nv30+ by Kirk Barnes */
+	} else if (gl_state.stencil_two_side) {	/* two side stensil support for nv30+ by Kirk Barnes */
 		qglDisable(GL_CULL_FACE);
 		qglActiveStencilFaceEXT(GL_BACK);
 		qglStencilOp(GL_KEEP, incr, GL_KEEP);
 		qglActiveStencilFaceEXT(GL_FRONT);
+		qglStencilOp(GL_KEEP, decr, GL_KEEP);
+		BuildShadowVolume(paliashdr, lightdir, projdist);
+	} else {
+		qglCullFace(GL_BACK);
+		qglStencilOp(GL_KEEP, incr, GL_KEEP);
+		BuildShadowVolume(paliashdr, lightdir, projdist);
+		qglCullFace(GL_FRONT);
 		qglStencilOp(GL_KEEP, decr, GL_KEEP);
 		BuildShadowVolume(paliashdr, lightdir, projdist);
 	}
@@ -477,6 +473,9 @@ void R_DrawShadow(entity_t * e)
 	vec3_t frontv, backv;
 	int i;
 
+	if (gl_shadows->integer != 1)
+		return;
+
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
@@ -515,7 +514,7 @@ void R_DrawShadow(entity_t * e)
 /*	GL_LerpVerts( paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv,0); */
 
 	/*|RF_NOSHADOW */
-	if (gl_shadows->value == 1 && !(currententity->flags & (RF_TRANSLUCENT | RF_WEAPONMODEL))) {
+	if (!(currententity->flags & (RF_TRANSLUCENT | RF_WEAPONMODEL))) {
 		qglPushMatrix();
 		{
 			vec3_t end;
@@ -592,7 +591,7 @@ void R_DrawShadowVolume(entity_t * e)
 /*	GL_LerpVerts( paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv,0); */
 
 /*	|RF_NOSHADOW|RF_NOSHADOW2 */
-	if (gl_shadows->integer == 2 && !(currententity->flags & (RF_TRANSLUCENT | RF_WEAPONMODEL))) {
+	if (!(currententity->flags & (RF_TRANSLUCENT | RF_WEAPONMODEL))) {
 		qglPushMatrix();
 		{
 			qglDisable(GL_TEXTURE_2D);
