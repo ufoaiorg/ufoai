@@ -413,6 +413,7 @@ qboolean GLimp_Init( HINSTANCE hinstance, WNDPROC wndproc )
 
 /**
  * @brief
+ * @sa VID_CreateWindow
  */
 qboolean GLimp_InitGL (void)
 {
@@ -430,7 +431,7 @@ qboolean GLimp_InitGL (void)
 		0,								/* no accumulation buffer */
 		0, 0, 0, 0, 					/* accum bits ignored */
 		24,								/* 24-bit z-buffer */
-#if 0
+#if 1
 		8,								/* 8 bit stencil buffer */
 #else
 		0,								/* no stencil buffer */
