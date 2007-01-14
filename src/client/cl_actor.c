@@ -1612,16 +1612,16 @@ void CL_ActorDie(sizebuf_t * sb)
 	} else {
 		switch (le->team) {
 		case (TEAM_CIVILIAN):
-			Com_Printf(_("A civilian was killed!\n"));
+			CL_DisplayHudMessage(_("A civilian was killed!\n"), 2000);
 			break;
 		case (TEAM_ALIEN):
-			Com_Printf(_("An alien was killed!\n"));
+			CL_DisplayHudMessage(_("An alien was killed!\n"), 2000);
 			break;
 		case (TEAM_PHALANX):
-			Com_Printf(_("A solider was killed\n"));
+			CL_DisplayHudMessage(_("A solider was killed\n"), 2000);
 			break;
 		default:
-			Com_Printf(_("A member of team %i was killed!\n"), le->team);
+			CL_DisplayHudMessage(va(_("A member of team %i was killed!\n"), le->team), 2000);
 			break;
 		}
 	}
