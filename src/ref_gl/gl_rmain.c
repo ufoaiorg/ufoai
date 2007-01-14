@@ -1561,6 +1561,7 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 		} else {
 			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_stencil_two_side\n");
 			gl_state.stencil_two_side = qtrue;
+			qglActiveStencilFaceEXT = (void (APIENTRY *) (GLenum)) qwglGetProcAddress("glActiveStencilFaceEXT");
 		}
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_EXT_stencil_two_side not found\n");
