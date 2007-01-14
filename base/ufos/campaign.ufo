@@ -152,7 +152,7 @@ campaign veryhard
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
-	credits		3500000
+	credits		4200000
 	map		    map_earth
 	visible		true
 
@@ -170,10 +170,19 @@ campaign hard
 	workers		2
 	medics		1
 	difficulty	2
+	character_data {
+		TEAM_PHALANX EMPL_SOLDIER skill 65 80
+		TEAM_PHALANX EMPL_SOLDIER ability 65 80
+		TEAM_ALIEN EMPL_SOLDIER skill 90 100
+		TEAM_ALIEN EMPL_SOLDIER ability 90 100
+	}
+	salary {
+		soldier_base 4000
+	}
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
-	credits		3700000
+	credits		4200000
 	map		    map_earth
 	visible		true
 
@@ -194,8 +203,8 @@ campaign main
 	character_data {
 		TEAM_PHALANX EMPL_SOLDIER skill 75 100
 		TEAM_PHALANX EMPL_SOLDIER ability 15 80
-		TEAM_ALIEN EMPL_SOLDIER skill 90 100
-		TEAM_ALIEN EMPL_SOLDIER ability 90 100
+		TEAM_ALIEN EMPL_SOLDIER skill 70 100
+		TEAM_ALIEN EMPL_SOLDIER ability 70 100
 	}
 	salary {
 		soldier_base 3200
@@ -204,7 +213,7 @@ campaign main
 //	ugvs	2
 	equipment	campaign_player
 	market		campaign_market
-	credits		4000000
+	credits		4500000
 	map		    map_earth
 	visible		true
 
@@ -222,6 +231,15 @@ campaign easy
 	workers		6
 	medics		3
 	difficulty	-2
+	character_data {
+		TEAM_PHALANX EMPL_SOLDIER skill 75 100
+		TEAM_PHALANX EMPL_SOLDIER ability 55 100
+		TEAM_ALIEN EMPL_SOLDIER skill 50 80
+		TEAM_ALIEN EMPL_SOLDIER ability 50 80
+	}
+	salary {
+		soldier_base 3000
+	}
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
@@ -243,6 +261,15 @@ campaign veryeasy
 	workers		9
 	medics		4
 	difficulty	-4
+	character_data {
+		TEAM_PHALANX EMPL_SOLDIER skill 85 100
+		TEAM_PHALANX EMPL_SOLDIER ability 75 100
+		TEAM_ALIEN EMPL_SOLDIER skill 50 70
+		TEAM_ALIEN EMPL_SOLDIER ability 50 70
+	}
+	salary {
+		soldier_base 1000
+	}
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
