@@ -212,7 +212,7 @@ void AL_AddAliens()
 
 	cargo = aircraft->aliencargo;
 
-	j = 0; 
+	i = 0; 
 	while (i < aircraft->alientypes) {
 		for (j = 0; j < (AL_UNKNOWN * 2); j++) {
 			if ((Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0)
@@ -224,7 +224,7 @@ void AL_AddAliens()
 
 	/* print all of them */
 	j = 0;
-	while (j < aircraft->alientypes) {
+	while (j < (AL_UNKNOWN * 2)) {
 		if (tobase->alienscont[j].state == 1)
 			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount);
 		if (tobase->alienscont[j].state == 0)
