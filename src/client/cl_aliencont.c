@@ -218,9 +218,9 @@ void AL_AddAliens()
 
 	/* print all of them */
 	for (i=0; i < AL_UNKNOWN; i++ ) {
-		if (tobase->alienscont[i].amount_dead > 0)
-			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_alive);
 		if (tobase->alienscont[i].amount_alive > 0)
+			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_alive);
+		if (tobase->alienscont[i].amount_dead > 0)
 			Com_DPrintf("AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_dead);
 	}
 }
