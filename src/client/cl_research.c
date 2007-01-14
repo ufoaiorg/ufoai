@@ -563,7 +563,7 @@ static void RS_ResearchDisplayInfo(void)
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
 	/* Display the base this tech is researched in. */
-	if (tech->scientists >= 0) {
+	if (tech->scientists > 0) {
 		if (tech->base_idx != baseCurrent->idx) {
 			base = &gd.bases[tech->base_idx];
 			Cvar_Set("mn_research_selbase", va(_("Researched in %s"), base->name));
@@ -923,7 +923,11 @@ void RS_UpdateData(void)
 				break;
 			}
 
-			/* Display the concated text in the correct list-entry. */
+			/* Display the concated text in the correct list-entry. 
+			 * But embed it in brackets if it isn't researched in the current base. */
+			if ((tech->scientists > 0) && (tech->base_idx != baseCurrent->idx)) {
+				Com_sprintf(name, MAX_VAR, "(%s)", name); 
+			}
 			Cvar_Set(va("mn_researchitem%i", j), _(name));
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */
 			researchList[j] = &gd.technologies[i];
