@@ -217,7 +217,7 @@ void AL_AddAliens()
 		for (j = 0; j < (AL_UNKNOWN * 2); j++) {
 			if ((Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0)
 			&& (tobase->alienscont[j].state == cargo[i].state))
-				tobase->alienscont[j].amount += cargo[i].amount;
+				tobase->alienscont[j].amount += (cargo[i].amount + 1);
 		}
 		i++;
 	}    
@@ -226,9 +226,9 @@ void AL_AddAliens()
 	j = 0;
 	while (j < aircraft->alientypes) {
 		if (tobase->alienscont[j].state == 1)
-			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount+1);
+			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount);
 		if (tobase->alienscont[j].state == 0)
-				Com_DPrintf("AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount+1);
+				Com_DPrintf("AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount);
 		j++;
 	}
 }
