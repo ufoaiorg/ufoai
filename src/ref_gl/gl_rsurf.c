@@ -750,8 +750,6 @@ static void R_RecursiveWorldNode(mnode_t * node)
 	cplane_t *plane;
 	msurface_t *surf;
 
-/*	msurface_t	**mark; */
-/*	mleaf_t		*pleaf; */
 	float dot;
 	image_t *image;
 

@@ -365,7 +365,7 @@ void R_DrawAliasModel(entity_t * e)
 		e->as.oldframe = 0;
 	}
 
-	if (!r_lerpmodels->value)
+	if (!r_lerpmodels->integer)
 		e->as.backlerp = 0;
 
 	/* check if model is out of fov */
@@ -442,7 +442,7 @@ void R_DrawAliasModel(entity_t * e)
 	if ((e->flags & RF_TRANSLUCENT) || (skin && skin->has_alpha))
 		qglDisable(GL_BLEND);
 
-	if (gl_shadows->value == 1 && (e->flags & RF_SHADOW)) {
+	if (gl_shadows->integer == 1 && (e->flags & RF_SHADOW)) {
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(0);
 		qglEnable(GL_BLEND);
@@ -465,7 +465,7 @@ void R_DrawAliasModel(entity_t * e)
 		qglDisable(GL_BLEND);
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(1);
-	} else if (gl_shadows->value == 2 && (e->flags & RF_SHADOW)) {
+	} else if (gl_shadows->integer == 2 && (e->flags & RF_SHADOW)) {
 		R_DrawShadowVolume(e);
 	}
 

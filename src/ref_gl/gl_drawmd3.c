@@ -133,7 +133,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	if (e->flags & RF_DEPTHHACK) /* hack the depth range to prevent view model from poking into walls */
 		qglDepthRange (gldepthmin, gldepthmin + 0.3*(gldepthmax-gldepthmin));
 
-	for(i=0; i < paliashdr->num_meshes; i++) {
+	for (i = 0; i < paliashdr->num_meshes; i++) {
 		c_alias_polys += paliashdr->meshes[i].num_tris;
 	}
 
@@ -160,10 +160,10 @@ void R_DrawAliasMD3Model (entity_t *e)
 		e->oldframe = 0;
 	}
 
-	if (!r_lerpmodels->value)
+	if (!r_lerpmodels->integer)
 		e->backlerp = 0;
 
-	if (gl_shadows->value == 1 && (e->flags & RF_SHADOW)) {
+	if (gl_shadows->integer == 1 && (e->flags & RF_SHADOW)) {
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(0);
 		qglEnable(GL_BLEND);
@@ -186,7 +186,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		qglDisable(GL_BLEND);
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(1);
-	} else if (gl_shadows->value == 2 && (e->flags & RF_SHADOW)) {
+	} else if (gl_shadows->integer == 2 && (e->flags & RF_SHADOW)) {
 		R_DrawShadowVolume(e);
 	}
 

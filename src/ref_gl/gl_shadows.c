@@ -211,6 +211,7 @@ static void GL_DrawAliasShadow(entity_t * e, dmdl_t * paliashdr, int posenum)
 
 /**
  * @brief
+ * @sa GL_RenderVolumes
  */
 static void BuildShadowVolume(dmdl_t * hdr, vec3_t light, float projectdistance)
 {
@@ -315,6 +316,8 @@ static void BuildShadowVolume(dmdl_t * hdr, vec3_t light, float projectdistance)
 
 /**
  * @brief
+ * @sa GL_DrawAliasShadowVolume
+ * @sa BuildShadowVolume
  */
 static void GL_RenderVolumes(dmdl_t * paliashdr, vec3_t lightdir, int projdist)
 {
@@ -364,9 +367,7 @@ static void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm)
 
 	l = r_newrefdef.dlights;
 
-	if (gl_shadows->value != 2)
-		return;
-	if (r_newrefdef.vieworg[2] < (currententity->origin[2]))
+	if (gl_shadows->integer != 2)
 		return;
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
@@ -537,6 +538,9 @@ void R_DrawShadow(entity_t * e)
 
 /**
  * @brief
+ * @sa R_DrawAliasModel
+ * @sa R_DrawAliasMD3Model
+ * @sa R_CastShadow
  */
 void R_DrawShadowVolume(entity_t * e)
 {
@@ -550,8 +554,9 @@ void R_DrawShadowVolume(entity_t * e)
 	int i;
 	int *order;
 
-	if (gl_shadows->value != 2)
+	if (gl_shadows->integer != 2)
 		return;
+
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
@@ -587,7 +592,7 @@ void R_DrawShadowVolume(entity_t * e)
 /*	GL_LerpVerts( paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv,0); */
 
 /*	|RF_NOSHADOW|RF_NOSHADOW2 */
-	if (gl_shadows->value == 2 && !(currententity->flags & (RF_TRANSLUCENT | RF_WEAPONMODEL))) {
+	if (gl_shadows->integer == 2 && !(currententity->flags & (RF_TRANSLUCENT | RF_WEAPONMODEL))) {
 		qglPushMatrix();
 		{
 			qglDisable(GL_TEXTURE_2D);
@@ -600,14 +605,15 @@ void R_DrawShadowVolume(entity_t * e)
 	}
 }
 
-#if 0
 /**
  * @brief
- * @note currently not used
  */
 void R_ShadowBlend(void)
 {
-	if (gl_shadows->value != 2)
+	if (gl_shadows->integer != 2)
+		return;
+
+	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
 	qglLoadIdentity();
@@ -616,12 +622,12 @@ void R_ShadowBlend(void)
 	qglRotatef(-90, 1, 0, 0);	/* put Z going up */
 	qglRotatef(90, 0, 0, 1);	/* put Z going up */
 
-	if (gl_shadow_debug_shade->value)
+	if (gl_shadow_debug_shade->integer)
 		qglColor3f(0, 0, 1);
 	else
 		qglColor4f(0, 0, 0, 0.3);
 
-	GLSTATE_DISABLE_ALPHATEST GLSTATE_ENABLE_BLEND qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	qglDisable(GL_DEPTH_TEST);
 
@@ -642,8 +648,8 @@ void R_ShadowBlend(void)
 	qglVertex3f(10, 100, -100);
 	qglEnd();
 
-	GLSTATE_DISABLE_BLEND qglEnable(GL_TEXTURE_2D);
-	GLSTATE_ENABLE_ALPHATEST qglDisable(GL_STENCIL_TEST);
+	qglEnable(GL_TEXTURE_2D);
+	qglDisable(GL_STENCIL_TEST);
 	qglDepthMask(qtrue);
 
 	if (gl_shadow_debug_shade->value)
@@ -651,4 +657,3 @@ void R_ShadowBlend(void)
 	else
 		qglColor4f(1, 1, 1, 1);
 }
-#endif

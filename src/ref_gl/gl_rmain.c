@@ -166,17 +166,15 @@ static void GL_Strings_f(void)
 	ri.Con_Printf(PRINT_ALL, "GL_MAX_TEXTURE_SIZE: %d\n", gl_config.maxTextureSize);
 }
 
-#if 0
 /**
  * @brief
- * @note currently not used - see gl_shadows cvar
  */
 static void R_CastShadow(void)
 {
 	int i;
 
 	/* no shadows at all */
-	if (!gl_shadows->value)
+	if (!gl_shadows->integer)
 		return;
 
 	for (i = 0; i < r_newrefdef.num_entities; i++) {
@@ -186,13 +184,13 @@ static void R_CastShadow(void)
 			continue;
 		if (currentmodel->type != mod_alias)
 			continue;
-		if (gl_shadows->value == 2)
+
+		if (gl_shadows->integer == 2)
 			R_DrawShadowVolume(currententity);
-		else if (gl_shadows->value == 1)
+		else if (gl_shadows->integer == 1)
 			R_DrawShadow(currententity);
 	}
 }
-#endif
 
 /**
  * @brief Returns true if the box is completely outside the frustom
@@ -948,7 +946,7 @@ static void R_Clear(void)
  */
 static void R_Flash(void)
 {
-/*	R_ShadowBlend(); */
+	R_ShadowBlend();
 	R_PolyBlend();
 }
 
@@ -1000,14 +998,16 @@ static void R_RenderView(refdef_t * fd)
 	R_TransformEntitiesOnList();
 	R_DrawEntitiesOnList();
 
-/* 	if (gl_shadows->value == 2) R_CastShadow(); */
+	if (gl_shadows->integer == 2)
+		R_CastShadow();
 
-	if (gl_wire->value)
+	if (gl_wire->integer)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	R_DrawAlphaSurfaces();
 
-/* 	if (gl_shadows->value == 1) R_CastShadow(); */
+	if (gl_shadows->integer == 1)
+		R_CastShadow();
 
 	R_DrawParticles();
 	R_DrawPtls();
