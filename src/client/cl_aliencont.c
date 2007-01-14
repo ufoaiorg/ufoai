@@ -198,6 +198,11 @@ void AL_AddAliens()
 		return;
 	}
 
+	if (!tobase->hasAlienCont)
+		/* do not storage aliens if Alien Containment not ready */
+		/* TODO: popup here */
+		return;
+
 	if (tobase->aircraftCurrent >= 0) {
 		aircraft = &tobase->aircraft[tobase->aircraftCurrent];
 	} else {
