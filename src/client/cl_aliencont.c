@@ -38,8 +38,7 @@ aliensTmp_t cargo[MAX_CARGO];
  */
 void AL_FillInContainment(void)
 {
-	int i, j;
-	char name[MAX_VAR];
+	int i;
 	base_t *base = NULL;
 	aliensCont_t *containment = NULL;
 
@@ -53,18 +52,12 @@ void AL_FillInContainment(void)
 
 	containment = base->alienscont;
 
-	for (i = 0, j = 0; i < (AL_UNKNOWN * 2); i+=2, j++) {
-		Q_strncpyz(name, AL_AlienTypeToName(j), MAX_VAR);
+	for (i = 0; i < AL_UNKNOWN; i++) {
 		/* dead */
 		containment[i].idx = i;
-		Q_strncpyz(containment[i].alientype, name, MAX_VAR);
-		containment[i].state = 0;
-		containment[i].amount = 0;
-		/* alive */
-		containment[i+1].idx = i+1;
-		Q_strncpyz(containment[i+1].alientype, name, MAX_VAR);
-		containment[i+1].state = 1;
-		containment[i+1].amount = 0;
+		Q_strncpyz(containment[i].alientype,  AL_AlienTypeToName(i), MAX_VAR);
+		containment[i].amount_alive = 0;
+		containment[i].amount_dead = 0;
 	}
 }
 
@@ -99,7 +92,6 @@ char *AL_AlienTypeToName(alienType_t type)
 void CL_CollectingAliens(void)
 {
 	int i, j;
-	int alstate;
 	int teamDescID = -1;
 
 	le_t *le = NULL;
@@ -139,42 +131,38 @@ void CL_CollectingAliens(void)
 			}
 
 			if (le->HP <= 0 || (le->state & STATE_STUN)) {
-				if (le->HP <= 0)
-					/* alien body */
-					alstate = 0;
-				else
-					/* alive alien */
-					alstate = 1;
-
-				j = 0;
-				while (j < aircraft->alientypes) {
-					/* search alien type (dead/alive are two types) and increase amount */
-					if ((Q_strncmp(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR) == 0) && (cargo[j].state == alstate)) {
-						cargo[j].amount++;
-						Com_DPrintf("Counting: %s state: %i count: %i\n", cargo[j].alientype, cargo[j].state, cargo[j].amount);
+				
+				for (j=0; j < aircraft->alientypes; j++) {
+					/* Search alien type (dead/alive are two types) and increase amount */
+					if (Q_strncmp(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR) == 0) {
+						if (le->HP <= 0) {
+							/* alien body */
+							cargo[j].amount_dead++;
+							Com_DPrintf("Counting: dead %s count: %i\n", cargo[j].alientype, cargo[j].amount_dead);
+						} else {
+							/* alive alien */
+							cargo[j].amount_alive++;
+							Com_DPrintf("Counting: alive %s count: %i\n", cargo[j].alientype, cargo[j].amount_alive);
+						}
 						break;
 					}
-					j++;
 				}
 				if (j == aircraft->alientypes) {
 					/* otherwise add new alien type */
 					Q_strncpyz(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR);
-					cargo[j].state = alstate;
 					aircraft->alientypes++;
-					Com_DPrintf("Adding: %s state: %i count: %i\n", cargo[j].alientype, cargo[j].state, cargo[j].amount);
+					Com_DPrintf("Adding: %s count: %i/%i\n", cargo[j].alientype,  cargo[j].amount_dead,  cargo[j].amount_alive);
 				}
 			}
 		}
 	}
 
 	/* print all of them */
-	j = 0;
-	while (j < aircraft->alientypes) {
-		if (cargo[j].state == 0)
-			Com_DPrintf("Collecting alien bodies... type: %s amount: %i\n", cargo[j].alientype, cargo[j].amount+1);
-		if (cargo[j].state == 1)
-			Com_DPrintf("Alive aliens captured... type: %s amount: %i\n", cargo[j].alientype, cargo[j].amount+1);
-		j++;
+	for (i=0; i < aircraft->alientypes; i++) {
+		if (cargo[i].amount_dead > 0)
+			Com_DPrintf("Collecting alien bodies... type: %s amount: %i\n", cargo[i].alientype, cargo[i].amount_dead +1);
+		if (cargo[i].amount_alive > 0)
+			Com_DPrintf("Alive aliens captured... type: %s amount: %i\n", cargo[i].alientype, cargo[i].amount_alive +1);
 	}
 }
 
@@ -212,24 +200,21 @@ void AL_AddAliens()
 
 	cargo = aircraft->aliencargo;
 
-	i = 0; 
-	while (i < aircraft->alientypes) {
-		for (j = 0; j < (AL_UNKNOWN * 2); j++) {
-			if ((Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0)
-			&& (tobase->alienscont[j].state == cargo[i].state))
-				tobase->alienscont[j].amount += (cargo[i].amount + 1);
+	for (i=0; i < aircraft->alientypes; i++) {
+		for (j = 0; j < AL_UNKNOWN; j++) {
+			if (Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0) {
+				tobase->alienscont[j].amount_dead += (cargo[i].amount_dead + 1);
+				tobase->alienscont[j].amount_alive += (cargo[i].amount_dead + 1);
+			}
 		}
-		i++;
 	}    
 
 	/* print all of them */
-	j = 0;
-	while (j < (AL_UNKNOWN * 2)) {
-		if (tobase->alienscont[j].state == 1)
-			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount);
-		if (tobase->alienscont[j].state == 0)
-				Com_DPrintf("AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[j].alientype, tobase->alienscont[j].amount);
-		j++;
+	for (i=0; i < AL_UNKNOWN; i++ ) {
+		if (tobase->alienscont[i].amount_dead > 0)
+			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n",cargo[i].alientype, tobase->alienscont[i].amount_dead);
+		if (tobase->alienscont[i].amount_alive > 0)
+			Com_DPrintf("AL_AddAliens bodies: %s amount: %i\n", cargo[i].alientype, tobase->alienscont[i].amount_alive);
 	}
 }
 
@@ -251,8 +236,8 @@ void AL_CountAll(void)
 		if (!base->hasAlienCont)
 			continue;
 		for (j = 0; j < (AL_UNKNOWN * 2); j++) {
-			if ((base->alienscont[j].alientype) && (base->alienscont[j].state == 1))
-				amount += base->alienscont[j].amount;
+			if (base->alienscont[j].alientype)
+				amount += base->alienscont[j].amount_alive;
 		}
 	}
 
@@ -294,23 +279,19 @@ void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action)
 			   in Alien Containment; then remove (amount) */
 			/* FIXME: do not let to remove to negative value */
 			for (j = 0; j < (AL_UNKNOWN * 2); j++) {
-				if (containment[j].state == 0)
-					continue;
-				if (maxamount < containment[j].amount) {
-					maxamount = containment[j].amount;
+				if (maxamount < containment[j].amount_alive) {
+					maxamount = containment[j].amount_alive;
 					maxidx = j;
 				}
 			}
 
-			containment[maxidx].amount -= amount;
+			containment[maxidx].amount_alive -= amount;
 			return;
 		}
 
 		for (j = 0; j < (AL_UNKNOWN * 2); j++) {
-			if (containment[j].state == 0)
-				continue;
 			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
-				containment[j].amount -= amount;
+				containment[j].amount_alive -= amount;
 				return;
 			}
 		}
@@ -350,14 +331,13 @@ int AL_GetAlienIdx(char *id)
  */
 int AL_GetAlienAmount(int idx, requirementType_t reqtype)
 {
-	int i, state;
 	base_t *base = NULL;
 	aliensCont_t *containment = NULL;
 
 	if (baseCurrent) {
 		base = baseCurrent;
 	} else {
-		/* should never happen */
+		/* Should never happen. */
 		Com_Printf("AL_GetAlienAmount()... No base selected!\n");
 		return -1;
 	}
@@ -365,19 +345,13 @@ int AL_GetAlienAmount(int idx, requirementType_t reqtype)
 	containment = base->alienscont;
 	switch (reqtype) {
 	case RS_LINK_ALIEN:
-		state = 1;
+		return containment[idx].amount_alive;
 	case RS_LINK_ALIEN_DEAD:
-		state = 0;
+		return containment[idx].amount_dead;
 	default:
-		state = 0;
+		return containment[idx].amount_dead;
 	}
-
-	for (i = 0; i < (AL_UNKNOWN * 2); i++) {
-		if ((Q_strncmp(containment[i].alientype, AL_AlienTypeToName(idx), MAX_VAR) == 0)
-		&& (containment[i].state == state))
-			return containment[i].amount;
-	}
-
+	
 	return -1;
 }
 

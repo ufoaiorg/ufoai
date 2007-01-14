@@ -52,14 +52,14 @@ typedef enum {		/* cases of alien amount calculation */
 typedef struct aliensCont {
 	int idx;			/* self link */
 	char alientype[MAX_VAR];	/* type of alien */ /* FIXME: alienType_t here */
-	int state;			/* dead or alive */
-	int amount;			/* amount */
+	int amount_alive;			/* Amount of live captured aliens. */
+	int amount_dead;			/* Amount of alien corpses. */
 } aliensCont_t;
 
 typedef struct aliensTmp {
 	char alientype[MAX_VAR];	/* type of alien */
-	int state;			/* dead or alive */
-	int amount;			/* amount */
+	int amount_alive;			/* Amount of live captured aliens. */
+	int amount_dead;			/* Amount of alien corpses. */
 } aliensTmp_t;
 
 /**
