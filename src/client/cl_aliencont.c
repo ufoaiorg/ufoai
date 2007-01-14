@@ -53,9 +53,8 @@ void AL_FillInContainment(void)
 	containment = base->alienscont;
 
 	for (i = 0; i < AL_UNKNOWN; i++) {
-		/* dead */
 		containment[i].idx = i;
-		Q_strncpyz(containment[i].alientype,  AL_AlienTypeToName(i), MAX_VAR);
+		Q_strncpyz(containment[i].alientype, AL_AlienTypeToName(i), MAX_VAR);
 		containment[i].amount_alive = 0;
 		containment[i].amount_dead = 0;
 	}
@@ -132,8 +131,8 @@ void CL_CollectingAliens(void)
 
 			if (le->HP <= 0 || (le->state & STATE_STUN)) {
 				
-				for (j=0; j < aircraft->alientypes; j++) {
-					/* Search alien type (dead/alive are two types) and increase amount */
+				for (j = 0; j < aircraft->alientypes; j++) {
+					/* Search alien type and increase amount */
 					if (Q_strncmp(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR) == 0) {
 						if (le->HP <= 0) {
 							/* alien body */
@@ -150,19 +149,27 @@ void CL_CollectingAliens(void)
 				if (j == aircraft->alientypes) {
 					/* otherwise add new alien type */
 					Q_strncpyz(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR);
+					if (le->HP <= 0) {
+						/* alien body */
+						cargo[j].amount_dead++;
+						Com_DPrintf("Adding: dead %s count: %i\n", cargo[j].alientype, cargo[j].amount_dead);
+					} else {
+						/* alive alien */
+						cargo[j].amount_alive++;
+						Com_DPrintf("Adding: alive %s count: %i\n", cargo[j].alientype, cargo[j].amount_alive);
+					}
 					aircraft->alientypes++;
-					Com_DPrintf("Adding: %s count: %i/%i\n", cargo[j].alientype,  cargo[j].amount_dead,  cargo[j].amount_alive);
 				}
 			}
 		}
 	}
 
 	/* print all of them */
-	for (i=0; i < aircraft->alientypes; i++) {
+	for (i = 0; i < aircraft->alientypes; i++) {
 		if (cargo[i].amount_dead > 0)
-			Com_DPrintf("Collecting alien bodies... type: %s amount: %i\n", cargo[i].alientype, cargo[i].amount_dead +1);
+			Com_DPrintf("Collecting alien bodies... type: %s amount: %i\n", cargo[i].alientype, cargo[i].amount_dead);
 		if (cargo[i].amount_alive > 0)
-			Com_DPrintf("Alive aliens captured... type: %s amount: %i\n", cargo[i].alientype, cargo[i].amount_alive +1);
+			Com_DPrintf("Alive aliens captured... type: %s amount: %i\n", cargo[i].alientype, cargo[i].amount_alive);
 	}
 }
 
@@ -203,8 +210,8 @@ void AL_AddAliens()
 	for (i=0; i < aircraft->alientypes; i++) {
 		for (j = 0; j < AL_UNKNOWN; j++) {
 			if (Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0) {
-				tobase->alienscont[j].amount_dead += (cargo[i].amount_dead + 1);
-				tobase->alienscont[j].amount_alive += (cargo[i].amount_dead + 1);
+				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
+				tobase->alienscont[j].amount_alive += cargo[i].amount_alive;
 			}
 		}
 	}    
@@ -212,9 +219,9 @@ void AL_AddAliens()
 	/* print all of them */
 	for (i=0; i < AL_UNKNOWN; i++ ) {
 		if (tobase->alienscont[i].amount_dead > 0)
-			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n",cargo[i].alientype, tobase->alienscont[i].amount_dead);
+			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_alive);
 		if (tobase->alienscont[i].amount_alive > 0)
-			Com_DPrintf("AL_AddAliens bodies: %s amount: %i\n", cargo[i].alientype, tobase->alienscont[i].amount_alive);
+			Com_DPrintf("AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_dead);
 	}
 }
 
@@ -235,7 +242,7 @@ void AL_CountAll(void)
 			continue;
 		if (!base->hasAlienCont)
 			continue;
-		for (j = 0; j < (AL_UNKNOWN * 2); j++) {
+		for (j = 0; j < AL_UNKNOWN; j++) {
 			if (base->alienscont[j].alientype)
 				amount += base->alienscont[j].amount_alive;
 		}
@@ -278,7 +285,7 @@ void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action)
 			/* search for the type of alien, which has max amount
 			   in Alien Containment; then remove (amount) */
 			/* FIXME: do not let to remove to negative value */
-			for (j = 0; j < (AL_UNKNOWN * 2); j++) {
+			for (j = 0; j < AL_UNKNOWN; j++) {
 				if (maxamount < containment[j].amount_alive) {
 					maxamount = containment[j].amount_alive;
 					maxidx = j;
@@ -289,7 +296,7 @@ void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action)
 			return;
 		}
 
-		for (j = 0; j < (AL_UNKNOWN * 2); j++) {
+		for (j = 0; j < AL_UNKNOWN; j++) {
 			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
 				containment[j].amount_alive -= amount;
 				return;
