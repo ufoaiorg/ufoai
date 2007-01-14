@@ -1439,10 +1439,10 @@ void RS_ParseTechnologies(char *id, char **text)
 					if (*token == '}')
 						break;
 
-					if ( (!Q_strcmp(token, "tech")) ||  (!Q_strcmp(token, "weapon")) ) {
+					if ( (!Q_strncmp(token, "tech", MAX_VAR)) ||  (!Q_strncmp(token, "weapon", MAX_VAR)) ) {
 						if (required_temp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
-							if (!Q_strcmp(token, "tech")) {
+							if (!Q_strncmp(token, "tech", MAX_VAR)) {
 								required_temp->type[required_temp->numLinks] = RS_LINK_TECH;
 								Com_DPrintf("RS_ParseTechnologies: tech - %s\n", required_temp->id[required_temp->numLinks]);
 							} else {	/* weapon */
@@ -1458,7 +1458,7 @@ void RS_ParseTechnologies(char *id, char **text)
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
 						}
-					} else if (!Q_strcmp(token, "item")) {
+					} else if (!Q_strncmp(token, "item", MAX_VAR)) {
 						/* Defines what items need to be collected for this item to be researchable. */
 						if (required_temp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
@@ -1474,17 +1474,17 @@ void RS_ParseTechnologies(char *id, char **text)
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
 						}
-					} else if (!Q_strcmp(token, "event")) {
+					} else if (!Q_strncmp(token, "event", MAX_VAR)) {
 						token = COM_Parse(text);
 						Com_DPrintf("RS_ParseTechnologies: event - %s\n", token);
 						required_temp->type[required_temp->numLinks] = RS_LINK_EVENT;
 						/* Get name/id & amount of required item. */
 						/* TODO: Implement final event esystem, so this can work 100% */
-					} else if ( (!Q_strcmp(token, "alien_dead")) ||  (!Q_strcmp(token, "alien")) ) { /* Does this only check the beginning of the string? */
+					} else if ( (!Q_strncmp(token, "alien_dead", MAX_VAR)) ||  (!Q_strncmp(token, "alien", MAX_VAR)) ) { /* Does this only check the beginning of the string? */
 						/* Defines what live or dead aliens need to be collected for this item to be researchable. */
 						if (required_temp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
-							if (!Q_strcmp(token, "alien_dead")) {
+							if (!Q_strncmp(token, "alien_dead", MAX_VAR)) {
 								required_temp->type[required_temp->numLinks] = RS_LINK_ALIEN_DEAD;
 								Com_DPrintf("RS_ParseTechnologies: alien dead - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
 							} else {
@@ -1682,7 +1682,7 @@ void RS_GetProvided(char *id, char *provided)
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
-		if (!strcmp(id, tech->id)) {
+		if (!Q_strncmp(id, tech->id, MAX_VAR)) {
 			for (j = 0; j < MAX_TECHLINKS; j++)
 				Com_sprintf(provided[j], MAX_VAR, tech->provides);
 			/*TODO: search for dependent items. */
