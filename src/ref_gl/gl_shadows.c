@@ -329,18 +329,25 @@ static void GL_RenderVolumes(dmdl_t * paliashdr, vec3_t lightdir, int projdist)
 		qglStencilOpSeparateATI(GL_BACK, GL_KEEP, incr, GL_KEEP);
 		qglStencilOpSeparateATI(GL_FRONT, GL_KEEP, decr, GL_KEEP);
 		BuildShadowVolume(paliashdr, lightdir, projdist);
+		qglEnable(GL_CULL_FACE);
 	} else if (gl_state.stencil_two_side) {	/* two side stensil support for nv30+ by Kirk Barnes */
 		qglDisable(GL_CULL_FACE);
+		qglEnable (GL_STENCIL_TEST_TWO_SIDE_EXT);
 		qglActiveStencilFaceEXT(GL_BACK);
 		qglStencilOp(GL_KEEP, incr, GL_KEEP);
 		qglActiveStencilFaceEXT(GL_FRONT);
 		qglStencilOp(GL_KEEP, decr, GL_KEEP);
 		BuildShadowVolume(paliashdr, lightdir, projdist);
+		qglDisable (GL_STENCIL_TEST_TWO_SIDE_EXT);
+		qglEnable(GL_CULL_FACE);
 	} else {
-		qglCullFace(GL_BACK);
+		/* decrement stencil if backface is behind depthbuffer */
+		qglCullFace(GL_BACK); /* quake is backwards, this culls front faces */
 		qglStencilOp(GL_KEEP, incr, GL_KEEP);
 		BuildShadowVolume(paliashdr, lightdir, projdist);
-		qglCullFace(GL_FRONT);
+
+		/* increment stencil if frontface is behind depthbuffer */
+		qglCullFace(GL_FRONT); /* quake is backwards, this culls back faces */
 		qglStencilOp(GL_KEEP, decr, GL_KEEP);
 		BuildShadowVolume(paliashdr, lightdir, projdist);
 	}

@@ -939,6 +939,11 @@ static void R_Clear(void)
 	}
 
 	qglDepthRange(gldepthmin, gldepthmax);
+
+	if (gl_shadows->integer == 2) {
+		qglClearStencil(1);
+		qglClear(GL_STENCIL_BUFFER_BIT);
+	}
 }
 
 /**
