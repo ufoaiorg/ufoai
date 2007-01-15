@@ -631,6 +631,7 @@ static void CL_Reconnect_f(void)
 typedef struct serverList_s
 {
 	netadr_t adr;
+	qboolean pinged;
 	char name[MAX_VAR];
 	char map[MAX_VAR];
 	int maxclient;
@@ -640,6 +641,30 @@ typedef struct serverList_s
 static char serverText[1024];
 static int serverListLength;
 static serverList_t serverList[MAX_SERVERLIST];
+
+/**
+ * @brief Pings all servers in serverList
+ * @sa CL_AddServerToList
+ */
+static void CL_PingServer (netadr_t* adr)
+{
+	Com_Printf ("pinging %s...\n", NET_AdrToString(*adr));
+	Netchan_OutOfBandPrint (NS_CLIENT, *adr, va("info %i", PROTOCOL_VERSION));
+}
+
+/**
+ * @brief Prints all the servers on the list to game console
+ */
+static void CL_PrintServerList_f (void)
+{
+	int i;
+
+	Com_Printf("%i servers on the list\n", serverListLength);
+
+	for (i = 0; i < serverListLength; i++) {
+		Com_Printf("%s\n", NET_AdrToString(serverList[i].adr));
+	}
+}
 
 /**
  * @brief Adds a server to the serverlist cache
@@ -654,7 +679,7 @@ static qboolean CL_AddServerToList (netadr_t* adr, char *msg)
 		return qfalse;
 
 	for (i = 0; i < serverListLength; i++) {
-		if (!memcmp(&(serverList[i].adr), adr, sizeof(adr->port))) {
+		if (!memcmp(&(serverList[i].adr), adr, sizeof(netadr_t))) {
 			if (!msg) {
 #ifdef DEBUG
 				Com_DPrintf("Server '%s' is alrady in cache\n", NET_AdrToString(*adr));
@@ -662,16 +687,20 @@ static qboolean CL_AddServerToList (netadr_t* adr, char *msg)
 				return qfalse;
 			} else {
 				/* TODO: parse server info and put it into serverList_t */
-
+#ifdef DEBUG
+				Com_DPrintf("Server '%s' answer: '%s'\n", NET_AdrToString(*adr), msg);
+#endif
+				/* mark this server as pinged */
+				serverList[i].pinged = qtrue;
 				/* we don't want to ping again - because msg is already the response */
-				return qtrue;
+				return qfalse;
 			}
 		}
 	}
+
+	memset(&(serverList[serverListLength]), 0, sizeof(serverList_t));
 	memcpy(&(serverList[serverListLength++].adr), adr, sizeof(netadr_t));
 
-	Com_Printf ("pinging %s...\n", NET_AdrToString(*adr));
-	Netchan_OutOfBandPrint (NS_CLIENT, *adr, va("info %i", PROTOCOL_VERSION));
 	return qtrue;
 }
 
@@ -689,10 +718,10 @@ static void CL_ParseStatusMessage(void)
 		return;
 
 	/* update the server string */
-	CL_AddServerToList(&net_from, s);
-
-	Q_strcat(serverText, s, sizeof(serverText));
-	menuText[TEXT_LIST] = serverText;
+	if (CL_AddServerToList(&net_from, s)) {
+		Q_strcat(serverText, s, sizeof(serverText));
+		menuText[TEXT_LIST] = serverText;
+	}
 }
 
 /**
@@ -884,8 +913,10 @@ static void CL_ParseMasterServerResponse(void)
 		if (!adr.port)
 			break;
 		Com_DPrintf("server: %s\n", adrstring);
-		CL_AddServerToList(&adr, NULL);
-/*		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));*/
+		if (CL_AddServerToList(&adr, NULL)) {
+			if (!serverList[serverListLength-1].pinged)
+				CL_PingServer(&adr);
+		}
 	}
 	/* end of stream */
 	net_message.readcount = net_message.cursize;
@@ -1728,6 +1759,7 @@ void CL_InitLocal(void)
 
 	/* text id is servers in menu_multiplayer.ufo */
 	Cmd_AddCommand("server_info", CL_ServerInfo_f, NULL);
+	Cmd_AddCommand("serverlist", CL_PrintServerList_f, NULL);
 	Cmd_AddCommand("servers_click", CL_ServerListClick_f, NULL);
 	Cmd_AddCommand("server_connect", CL_ServerConnect_f, NULL);
 	Cmd_AddCommand("bookmarks_click", CL_BookmarkListClick_f, NULL);
