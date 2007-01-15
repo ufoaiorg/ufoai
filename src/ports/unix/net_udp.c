@@ -476,19 +476,26 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
  */
 void NET_OpenIP (void)
 {
-	cvar_t	*port, *ip;
+	cvar_t	*ip;
+	int port;
 
-	port = Cvar_Get ("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);
+	port = Cvar_Get ("ip_hostport", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->integer;
+	if (!port) {
+		port = Cvar_Get("hostport", "0", CVAR_NOSET, NULL)->integer;
+		if (!port) {
+			port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->integer;
+		}
+	}
 	ip = Cvar_Get ("ip", "localhost", CVAR_NOSET, NULL);
 
 	if (!ip_sockets[NS_SERVER]) {
-		ip_sockets[NS_SERVER] = NET_Socket (ip->string, port->integer);
+		ip_sockets[NS_SERVER] = NET_Socket (ip->string, port);
 		if (!ip_sockets[NS_SERVER] && dedicated)
-			Com_Error (ERR_FATAL, "Couldn't allocate dedicated server IP port");
+			Com_Error (ERR_FATAL, "Couldn't allocate server IP port (%i) - use cvar port", port);
 	}
-	port = Cvar_Get ("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL);
+	port = Cvar_Get ("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->integer;
 	if (!ip_sockets[NS_CLIENT]) {
-		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, port->integer);
+		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, port);
 		if (!ip_sockets[NS_CLIENT])
 			ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY);
 	}
