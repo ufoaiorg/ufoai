@@ -211,6 +211,8 @@ void AL_AddAliens()
 		for (j = 0; j < AL_UNKNOWN; j++) {
 			if (Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0) {
 				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
+				if (cargo[i].amount_alive <= 0)
+					continue;
 				if (!RS_IsResearched_idx(RS_GetTechIdxByName("rs_alien_breathing"))) {
 					/* we cannot store alive aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
