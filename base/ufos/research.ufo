@@ -213,6 +213,22 @@ tech rs_monomolecular_blades
 	time	1500
 }
 
+tech rs_alien_mind
+{
+	type	tech
+	name	"_The Alien Mind"
+	up_chapter	threat
+	description	"_alien_mind_txt"
+	pre_description	"_alien_mind_pre_txt"
+
+	require_AND
+	{
+		tech rs_live_alien
+	}
+	time	1500
+}
+
+
 //=================================
 // weapons and items
 //=================================
