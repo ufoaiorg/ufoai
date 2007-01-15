@@ -126,18 +126,17 @@ tech rs_laser
 //}
 
 // Should contain _every_ organic enemy possible.
-//tech rs_contained_organic_alien
-//{
-//	type	logic
-//	name	"LOGIC:One Live Organic Alien"
-//	require_OR
-//	{
-//TODO: live alien support (i.e. containment)
-//		alien alien_taman 1
-//		alien alien_ortnok 1
-//		alien alien_shevaar 1
-//	}
-//}
+tech rs_contained_organic_alien
+{
+	type	logic
+	name	"LOGIC:One Live Organic Alien"
+	require_OR
+	{
+		alien Taman 1
+		alien Ortnok 1
+//		alien Shevaar 1
+	}
+}
 
 tech rs_live_alien
 {
@@ -146,25 +145,13 @@ tech rs_live_alien
 	up_chapter	aliens
 	description	"_live_alien_txt"
 	pre_description	"_live_alien_pre_txt"
-	require_OR
+	require_AND
 	{
-		alien Taman 1
-		alien Ortnok 1
+		tech rs_alien_breathing
+		tech rs_contained_organic_alien	// LOGIC tech - see there for more
 	}
-//TODO: require_AND {tech rs_alien_breathing require_OR { alien Taman 1 alien Ortnok 1 }}
-//
-//	require_OR
-//	{
-// Hoehrer, do a cleanup here, i do not know what is about to be removed
-// For now i (temporary) enabled it when alive Taman or Ortnok is placed
-// in base (@Zenerka 14.01.2007)
-//		tech nothing
-//TODO: live alien support (i.e. containment)
-//		alien alien_taman 1
-//		alien alien_ortnok 1
-//		alien alien_shevaar 1
-//	}
-		time	1500
+
+	time	1500
 //	image_top	techs/livealien	//TODO:add image
 }
 
@@ -181,6 +168,7 @@ tech rs_alien_breathing
 		tech rs_alien_taman_autopsy
 		tech rs_alien_shevaar_autopsy
 	}
+
 	time		1500
 //	image_top	techs/alienbreathing //TODO: add image
 }
@@ -198,10 +186,10 @@ tech rs_anti_alien_gas
 		tech rs_live_alien
 		tech rs_alien_ortnok_autopsy
 		tech rs_alien_taman_autopsy
+		tech rs_contained_organic_alien	// LOGIC tech - see there for more
 // commented out shevaar autopsy since that alien is not integrated
-// in game yet (@Zenerka 14.01.2007)
+// in game yet (--Zenerka 14.01.2007)
 //		tech rs_alien_shevaar_autopsy
-//		tech rs_contained_organic_alien	//TODO: see rs_contained_organic_alien
 	}
 
 	time	1500
@@ -2366,8 +2354,8 @@ tech rs_craft_weapon_particle_beam
 	{
 //		tech rs_craft_ufo_fighter
 //		tech rs_craft_ufo_harvester
-		tech rs_craft_ufo_fighter_AND_craft_weapon_particle_beam
-		tech rs_craft_ufo_harvester_AND_craft_weapon_particle_beam
+		tech rs_craft_ufo_fighter_AND_craft_weapon_particle_beam	// LOGIC tech - see there for more
+		tech rs_craft_ufo_harvester_AND_craft_weapon_particle_beam	// LOGIC tech - see there for more
 	}
 
 	time	100
