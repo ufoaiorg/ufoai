@@ -173,30 +173,6 @@ tech rs_alien_breathing
 //	image_top	techs/alienbreathing //TODO: add image
 }
 
-tech rs_anti_alien_gas
-{
-	type	tech
-	name "_Anti-Alien Gas"
-	up_chapter	aliens
-	description	"_anti_alien_gas_txt"
-	pre_description	"_anti_alien_gas_pre_txt"
-
-	require_AND
-	{
-		tech rs_live_alien
-		tech rs_alien_ortnok_autopsy
-		tech rs_alien_taman_autopsy
-		tech rs_contained_organic_alien	// LOGIC tech - see there for more
-// commented out shevaar autopsy since that alien is not integrated
-// in game yet (--Zenerka 14.01.2007)
-//		tech rs_alien_shevaar_autopsy
-	}
-
-	time	1500
-// TODO: add nice image of a gas-cloud or something (color?)
-//	image_top	techs/aliengas
-}
-
 tech rs_monomolecular_blades
 {
 	type	tech
@@ -1216,6 +1192,7 @@ tech rs_weapon_sniper_ammo
 	producetime	1
 }
 
+// Just for searching: uses "anti alien gas"
 tech rs_weapon_stungren
 {
 	type	weapon
@@ -1225,7 +1202,14 @@ tech rs_weapon_stungren
 
 	require_AND
 	{
-		tech rs_anti_alien_gas
+		tech rs_live_alien
+		tech rs_alien_ortnok_autopsy
+		tech rs_alien_taman_autopsy
+		tech rs_contained_organic_alien	// LOGIC tech - see there for more
+// commented out shevaar autopsy since that alien is not integrated
+// in game yet (--Zenerka 14.01.2007)
+//		tech rs_alien_shevaar_autopsy
+
 		tech rs_skill_explosive
 		tech rs_damage_stun
 	}
