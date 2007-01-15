@@ -151,6 +151,8 @@ tech rs_live_alien
 		alien Taman 1
 		alien Ortnok 1
 	}
+//TODO: require_AND {tech rs_alien_breathing require_OR { alien Taman 1 alien Ortnok 1 }}
+//
 //	require_OR
 //	{
 // Hoehrer, do a cleanup here, i do not know what is about to be removed
@@ -164,6 +166,23 @@ tech rs_live_alien
 //	}
 		time	1500
 //	image_top	techs/livealien	//TODO:add image
+}
+
+tech rs_alien_breathing
+{
+	type		tech
+	name		"_Alien Breathing Apparatus"
+	up_chapter	aliens
+	description	"_alien_breathing_txt"
+	pre_description	"_alien_breathing_pre_txt"
+	require_OR
+	{
+		tech rs_alien_ortnok_autopsy
+		tech rs_alien_taman_autopsy
+		tech rs_alien_shevaar_autopsy
+	}
+	time		1500
+//	image_top	techs/alienbreathing //TODO: add image
 }
 
 tech rs_anti_alien_gas
@@ -1214,7 +1233,7 @@ tech rs_weapon_stungren
 
 tech rs_weapon_stunrod
 {
-	type	weapon
+	type		weapon
 	up_chapter	equipment
 	description	"_stunrod_txt"
 	pre_description	"_stunrod_pre_txt"
@@ -1223,6 +1242,7 @@ tech rs_weapon_stunrod
 	{
 		tech rs_skill_close
 		tech rs_damage_stun
+		tech rs_alien_breathing
 	}
 
 	provides	stunrod
