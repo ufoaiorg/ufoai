@@ -79,6 +79,7 @@ void RS_MarkOneResearchable(int tech_idx)
  * @param[in] require_AND pointer to a list of AND-related requirements.
  * @param[in] require_OR pointer to a list of OR-related requirements.
  * @return Returns qtrue if all requirements are satisfied otherwise qfalse.
+ * @todo Add support for the "delay" value.
  */
 static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t *required_OR)
 {
@@ -1315,9 +1316,10 @@ static value_t valid_tech_vars[] = {
 	{"pre_description", V_TRANSLATION2_STRING, offsetof(technology_t, pre_description)},
 	/*what does this research provide */
 	{"provides", V_STRING, offsetof(technology_t, provides)},
-	/* ("require")	Handled in parser below. */
-	/* ("delay", V_INT, offsetof(technology_t, require->delay)}, can this work? */
-
+	/* ("require_AND")	Handled in parser below. */
+	/* ("require_OR")	Handled in parser below. */
+	/* ("up_chapter")	Handled in parser below. */
+	{"delay", V_INT, offsetof(technology_t, delay)},
 	{"producetime", V_INT, offsetof(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time)},
 	{"image_top", V_STRING, offsetof(technology_t, image_top)},
@@ -1509,10 +1511,6 @@ void RS_ParseTechnologies(char *id, char **text)
 						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", id, token);
 					}
 				} while (*text);
-			} else if (!Q_strncmp(token, "delay", MAX_VAR)) {
-				/* TODO: Move this to the default parser? See valid_tech_vars. */
-				token = COM_Parse(text);
-				Com_DPrintf("RS_ParseTechnologies: delay - %s\n", token);
 			} else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
 				/* ufopedia chapter */
 				token = COM_EParse(text, errhead, id);

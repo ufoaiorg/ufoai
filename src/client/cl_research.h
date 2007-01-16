@@ -73,8 +73,6 @@ typedef struct requirements_s {
 	int idx[MAX_TECHLINKS];		/* Dependency index (index in relation to array depends on the type) */
 	int amount[MAX_TECHLINKS];	/* How many items are needed for research ... if any. (fix) */
 	int collected[MAX_TECHLINKS];	/* How many items have been collected. (varies) */
-	int delay;			/* Number in days the system should wait until the tech is available. */
-					/* Starting from the time all other dependencies have been fulfilled. */
 } requirements_t;
 
 typedef struct stringlist_s {
@@ -90,24 +88,27 @@ typedef struct markResearched_s {
 } markResearched_t;
 
 typedef struct technology_s {
-	char id[MAX_VAR];			/* Short (unique) id/name. */
-	int idx;					/* Self-link in the global list */
-	char name[MAX_VAR];			/* Full name of this technology. */
-	char description[MAX_VAR];		/* Description of researched item. Short text-id to get the full text via gettext. */
+	char id[MAX_VAR];		/* Short (unique) id/name. */
+	int idx;			/* Self-link in the global list */
+	char name[MAX_VAR];		/* Full name of this technology. */
+	char description[MAX_VAR];	/* Description of researched item. Short text-id to get the full text via gettext. */
 	char pre_description[MAX_VAR];	/* Description of item before it's researched. Short text-id to get the full text via gettext. */
-	researchType_t type;
+	researchType_t type;		/* Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
 
 	requirements_t require_AND;	/* A list of requirements that ALL need to be met (= AND-related) See struct above. */
 	requirements_t require_OR;	/* A list of requirements where ANY need to be met (= OR-related) See struct above. */
 	qboolean statusCollected;	/* Did we loot any items of this tech?
-							* This is updated from the info stored in the require_OR and require_AND lists.
-							* See RS_CheckCollected and RS_CheckAllCollected. */
+					 * This is updated from the info stored in the require_OR and require_AND lists.
+					 * See RS_CheckCollected and RS_CheckAllCollected. */
 
 	char provides[MAX_VAR];		/* The item that this technology enables. */
-	float overalltime, time;	/* The time that is needed to research this tech. (in days). */
-						/* "overalltime" stays always the same, */
-						/* "time" will be modified when it is under research.*/
-
+	float overalltime, time;	/* The time that is needed to research this tech. (in days).
+					 * "overalltime" stays always the same,
+					 * "time" will be modified when it is under research.*/
+	int delay;			/* TODO: Number in days the system should wait until the tech is available for research.
+					 * Starting from the first time all other dependencies have been fulfilled and
+					 * counting only if a day has passed and they still are met. */
+	
 	researchStatus_t statusResearch;	/* Current status of the research. */
 
 	int base_idx;				/* The base this tech is researched in. */
@@ -122,9 +123,9 @@ typedef struct technology_s {
 
 	int produceTime;			/* How many days the production of this items runs. */
 	requirements_t require_for_production;	/* A list of items that are needed (and used up) on production of _this_ item.
-									 * Only "item"-type is allowed.
-									 * All requirements need to be fulfilled in order for _one_ item to be produced.
-									 * This check is done for each item.*/
+						 * Only "item"-type is allowed.
+						 * All requirements need to be fulfilled in order for _one_ item to be produced.
+						 * This check is done for each item.*/
 
 	int preResearchedDateDay, preResearchedDateMonth, preResearchedDateYear; /* Date for ufopedia. */
 	int researchedDateDay, researchedDateMonth, researchedDateYear; /* Date for ufopedia. */
@@ -132,9 +133,9 @@ typedef struct technology_s {
 	markResearched_t markResearched;	/* Mark as researched at parsing state - but i only know the date if we already started a campaign. */
 
 	/* Pedia info */
-	int up_chapter;			/* pedia chapter as stored in research.ufo. */
-	int prev;					/* Previous tech in pedia. */
-	int next;					/* Next tech in pedia. */
+	int up_chapter;			/* Ufopedia chapter as stored in research.ufo. */
+	int prev;			/* Previous tech in pedia. */
+	int next;			/* Next tech in pedia. */
 } technology_t;
 
 void RS_ResetResearch(void);
