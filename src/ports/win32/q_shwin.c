@@ -183,6 +183,8 @@ static qboolean CompareAttributes( unsigned found, unsigned musthave, unsigned c
 
 /**
  * @brief
+ * @sa Sys_FindNext
+ * @sa Sys_FindClose
  */
 char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave )
 {
@@ -194,16 +196,29 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave )
 
 	COM_FilePath (path, findbase);
 	findhandle = _findfirst (path, &findinfo);
-	if (findhandle == -1)
-		return NULL;
-	if ( !CompareAttributes( findinfo.attrib, musthave, canthave ) )
-		return NULL;
-	Com_sprintf (findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
-	return findpath;
+	while (filehandle != -1) {
+		if (findhandle == -1)
+			return NULL;
+		/* found one that matched */
+		if (CompareAttributes(findinfo.attrib, musthave, canthave)) {
+			Com_sprintf (findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
+			return findpath;
+		/* doesn't match - try the next one */
+		} else if (_findnext(findhandle, &findinfo) == -1) {
+			/* ok, no further entries here - leave the while loop */
+			_findclose(findhandle);
+			findhandle = -1;
+		}
+	}
+
+	/* none found */
+	return NULL;
 }
 
 /**
  * @brief
+ * @sa Sys_FindFirst
+ * @sa Sys_FindClose
  */
 char *Sys_FindNext ( unsigned musthave, unsigned canthave )
 {
@@ -211,17 +226,24 @@ char *Sys_FindNext ( unsigned musthave, unsigned canthave )
 
 	if (findhandle == -1)
 		return NULL;
-	if (_findnext (findhandle, &findinfo) == -1)
-		return NULL;
-	if ( !CompareAttributes( findinfo.attrib, musthave, canthave ) )
-		return NULL;
 
-	Com_sprintf (findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
-	return findpath;
+	/* until we found the next entry */
+	while (_findnext (findhandle, &findinfo) != -1) {
+		if (CompareAttributes(findinfo.attrib, musthave, canthave)) {
+			Com_sprintf (findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
+			return findpath;
+		}
+	}
+
+	/* none found */
+	return NULL;
 }
 
 /**
- * @brief
+ * @brief Closes the find handle
+ * @note Call this before calling a new Sys_FindFirst
+ * @sa Sys_FindNext
+ * @sa Sys_FindFirst
  */
 void Sys_FindClose (void)
 {
