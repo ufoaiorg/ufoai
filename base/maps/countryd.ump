@@ -34,6 +34,10 @@ base countryd/c_
 // vertical first col - acefgrst
 // vertical last col - adefgopq
 
+//--------------------------------------------------
+// AIRCRAFT
+//--------------------------------------------------
+
 // Dropship
 tile +drop
 {
@@ -45,6 +49,36 @@ acefgrst  +a       +a       +a       adefgopq
 0         abcdijk  abcdijk  abcdijk  0
 }
 //--
+
+// Big UFO
+tile +alienbig
+{
+8 6
+
+0         abcdlmn  abcdlmn  abcdlmn  abcdlmn  abcdlmn  abcdlmn  0
+acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
+acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
+acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
+acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
+0         abcdijk  abcdijk  abcdijk  abcdijk  abcdijk  abcdijk  0
+}
+//--
+
+// Small UFO
+tile +aliensmall
+{
+5 4
+
+0         abcdlmn  abcdlmn  abcdlmn  0
+acefgrst  +a       +a       +a       adefgopq
+acefgrst  +a       +a       +a       adefgopq
+0         abcdijk  abcdijk  abcdijk  0
+}
+//--
+
+//--------------------------------------------------
+// END AIRCRAFT
+//--------------------------------------------------
 
 // old fallen house
 tile +c01
@@ -691,7 +725,7 @@ size "7 7"
 
 assembly street
 {
-size "5 5"
+size "10 10"
 +s01 "1 20"
 +s01_2 "0 20"
 +s02 "0 20"
@@ -701,15 +735,17 @@ size "5 5"
 +s04 "0 20"
 +s04_2 "0 20"
 +s07 "0 20"
-+d01 "0 2"
-+d02 "0 2"
-+d03 "0 2"
-+d04 "0 2"
-+d05 "0 2"
-+d06 "0 2"
-+d07 "0 2"
-+d08 "0 2"
-+d09 "0 2"
-+d10 "0 2"
++d01 "0 8"
++d02 "0 8"
++d03 "0 8"
++d04 "0 8"
++d05 "0 8"
++d06 "0 8"
++d07 "0 8"
++d08 "0 8"
++d09 "0 8"
++d10 "0 8"
 +drop "1 1"
++aliensmall "1 1"
++alienbig "1 1"
 }
