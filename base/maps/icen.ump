@@ -88,25 +88,25 @@ size "6 6"
 // size "2 2"
 // +drop "1 1"
 // }
-// 
+//
 // assembly r1
 // {
 // size "2 2"
 // +r01 "1 1"
 // }
-// 
+//
 // assembly r2
 // {
 // size "2 2"
 // +r02 "1 1"
 // }
-// 
+//
 // assembly r3
 // {
 // size "2 2"
 // +r03 "1 1"
 // }
-// 
+//
 // assembly r4
 // {
 // size "2 2"

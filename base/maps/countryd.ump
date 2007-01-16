@@ -401,7 +401,7 @@ acefgrst  +a       +a       adefgopq
 it        +q       +a       adefgopq
 0         po       abcdijk  0
 }
-/--
+//--
 
 // rock end vertical front right
 tile +re03_2
@@ -570,7 +570,7 @@ acefgrst  +c   adefgopq
 0         cfh  0
 }
 
-// street cross 1
+// street cross 1 (not build in / set up)
 tile +s05
 {
 3 3
@@ -580,7 +580,7 @@ acefgrst  +g       adefgopq
 0         efh      0
 }
 
-// street cross 2
+// street cross 2 (not build in / set up)
 tile +s06
 {
 3 3
@@ -596,7 +596,7 @@ tile +s07
 3 3
 
 0   eg  0
-bd  +h  bc
+bc  +h  bd
 0   ef  0
 }
 

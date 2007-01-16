@@ -301,67 +301,67 @@ size "8 8"
 // size "3 2"
 // +drop "1 1"
 // }
-// 
+//
 // // small alien ship
 // assembly alien
 // {
 // size "2 2"
 // +aliensmall "1 1"
 // }
-// 
+//
 // // --------------------
-// 
+//
 // // Small house with 3 rooms and fireplace
 // assembly h1
 // {
 // size "2 2"
 // +h01 "1 1"
 // }
-// 
+//
 // // 2 storage buildings
 // assembly h2
 // {
 // size "3 2"
 // +h02 "1 1"
 // }
-// 
+//
 // // 3 trees, pile of wood
 // assembly h3
 // {
 // size "2 1"
 // +h03 "1 1"
 // }
-// 
+//
 // // Small house, 2 trees
 // assembly h4
 // {
 // size "1 2"
 // +h04 "1 1"
 // }
-// 
+//
 // // Small damaged house, 2 trees
 // assembly h5
 // {
 // size "1 2"
 // +h05 "1 1"
 // }
-// 
+//
 // // --------------------
-// 
+//
 // // Steelworks
 // assembly i1
 // {
 // size "4 2"
 // +i01 "1 1"
 // }
-// 
+//
 // // Refinery + pipeline
 // assembly i2
 // {
 // size "1 2"
 // +i02 "1 1"
 // }
-// 
+//
 // // 2 Ovens
 // assembly i3
 // {
@@ -369,37 +369,37 @@ size "8 8"
 // +i03 "1 1"
 // +n05 "0 1"
 // }
-// 
+//
 // // Container storage
 // assembly i4
 // {
 // size "2 2"
 // +i04 "1 1"
 // }
-// 
+//
 // // Pipeline
 // assembly i5
 // {
 // size "1 1"
 // +i05 "1 1"
 // }
-// 
+//
 // // 2 Containers, barrels
 // assembly i6
 // {
 // size "2 1"
 // +i06 "1 1"
 // }
-// 
+//
 // // --------------------
-// 
+//
 // // Plain, 2 trees
 // assembly n1
 // {
 // size "2 1"
 // +n01 "1 1"
 // }
-// 
+//
 // // Plain, 6 trees
 // assembly n2
 // {
@@ -407,21 +407,21 @@ size "8 8"
 // +n02 "1 1"
 // +n05 "0 1"
 // }
-// 
+//
 // // Plain, 4 trees
 // assembly n3
 // {
 // size "1 2"
 // +n03 "1 1"
 // }
-// 
+//
 // // Plain, 1 tree
 // assembly n4
 // {
 // size "1 1"
 // +n04 "1 1"
 // }
-// 
+//
 // // Plain
 // assembly n5
 // {

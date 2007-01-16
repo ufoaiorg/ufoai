@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 use strict;
 
-
 sub readDir
 {
 	my $dir = shift || die "No dir given in sub readDir\n";
@@ -31,6 +30,12 @@ sub checkump
 	my $assemblyTile = "";
 	my %tiles = ();
 	my $tilefound = 1;
+	my $noEOLprint = 0;
+	my $last = 0;
+	my $cols = 0;
+	my $rows = 0;
+	my @data = ();
+
 	foreach ( readDir( $dir ) ) {
 		next if $_ =~ /^\.|(CVS)/;
 		next if ( -d "$dir/$_" ); # umps are only in main maps folder - not in subdirs
@@ -45,14 +50,33 @@ sub checkump
 		foreach ( <UMP> ) {
 			$line++;
 			# only {, } or newline
-			next if ( $_ =~ /^[\}|\{]\n$/ );
-			next if ( $_ =~ /^\n$/ );
+			if ( $_ =~ /\r\n$/ ) {
+				unless ($noEOLprint) {
+					printf("You should use unix line endings here\n");
+				}
+				$noEOLprint = 1;
+			}
+			if ( $_ =~ /^\}\r?\n$/ ) {
+				$assembly = "";
+				if ($tile && $last) {
+					$last = $rows - $last;
+					die "Error in line $line: Row count ($last) doesn't match size ($rows)\n";
+				}
+				$tile = "";
+				next;
+			}
+			if ( $_ =~ /^\}$/ ) {
+				die "Missing newline at end of file\n";
+			}
+			next if ( $_ =~ /^\{\r?\n$/ );
+			next if ( $_ =~ /^\r?\n$/ );
+			next if ( $_ =~ /^\/\// );
 			if ( $assembly ) {
 				unless ( $base ) {
 					die "...error: no base defined\n";
 				}
 				# new assembly?
-				unless ( $_ =~ /assembly\s+(.*?)\n/ ) {
+				unless ( $_ =~ /^assembly\s+(.*?)\r?\n/ ) {
 					if ( $_=~ /^\+(.*?)\s+\"\d+\s+\d+\"/ ) {
 						$assemblyTile = $1;
 						$tilefound = 0;
@@ -71,18 +95,34 @@ sub checkump
 					}
 				}
 			} elsif ( $tile ) {
-				if ( $_ =~ /^(\d+\s+\d+)\n$/ ) {
-					print "  \\.. size: '$1'\n";
+				if ( $_ =~ /^((\d+)\s+(\d+))\r?\n$/ ) {
+					print "  \\.. size: '$2 $3'\n";
 					$tilesize = 1;
+					$cols = $2;
+					$last = $rows = $3;
 				} elsif ( ! $tilesize ) {
 					die "Error in line $line - missing size for tile $tile\n";
+				} else {
+					my @count = ();
+					my $count = 0;
+					if ( $last > 0 ) {
+						$last--;
+						chop($_);
+						@count = split(/\s+/, $_);
+						$count = scalar(@count);
+						if ($count != $cols) {
+							die "Error in line $line - wrong tile defition - size does not match ($count/$cols) (column count)\n";
+						}
+					} else {
+						die "Error in line $line - wrong tile defition - size does not match ($count/$cols) (not enough rows)\n";
+					}
 				}
 			}
-			if ( $_ =~ /base\s+(.*?)\n/ ) {
+			if ( $_ =~ /^base\s+(.*?)\r?\n/ ) {
 				$base = $1;
 				$assembly = "";
 				print "Use base: '$base'\n";
-			} elsif ( $_ =~ /tile\s+\+(.*?)\n/ ) {
+			} elsif ( $_ =~ /^tile\s+\+(.*?)\r?\n/ ) {
 				$tile = $1;
 				$tilesize = 0;
 				$assembly = "";
@@ -96,9 +136,9 @@ sub checkump
 				} elsif (!-e "$dir/$base$tile.map") {
 					die "Tile $tile does not exists: '$base$tile'\n";
 				}
-			} elsif ( $_ =~ /assembly\s+(.*?)\n/ ) {
+			} elsif ( $_ =~ /^assembly\s+(.*?)\r?\n/ ) {
 				$assembly = $1;
-				print "...found assembly $assembly '$assembly'\n";
+				print "...found assembly '$assembly'\n";
 			}
 		}
 		print "==============================================\n";
