@@ -171,8 +171,28 @@ static void RandomList(int n, short *list)
 #define SOLID 255
 
 /**
- * @brief Convert to tile spec
+ * @brief Convert to tile spec - normalize the characters
  * @sa SV_ParseMapTile
+ * @note a tile definition looks like this:
+ * @code tile +s02
+ * {
+ * 3 3
+ *
+ * 0      a      0
+ * b      +b     b
+ * 0      a      0
+ * }
+ * @endcode
+ * tile +s02 defines the name of the tile which can be refered to from the assembly
+ * the first two numbers defines the tile size - if you have a tile with the 'real'
+ * size of 1x1 (256x256 in radiant) the definition is 3x3 because you have to
+ * define the surroundings, too
+ * The field marked with the + is the 'real' mapparts all the others are the
+ * surroundings - the letters of the surroundings must have a tile definition with
+ * a + and the letter, too - otherwise the placing of the tile may fail
+ *
+ * @note If you marked a tile with + the mTile_t->spec at that position will be SOLID
+ * @note valid tile characters are 0-9 and a-z
  */
 static byte tileChar(const char chr)
 {
@@ -180,10 +200,14 @@ static byte tileChar(const char chr)
 		return SOLID;
 	else if (chr >= '0' && chr <= '9')
 		return chr - '0';
+	/* allow 0-9 - that's the +10 */
 	else if (chr >= 'a' && chr <= 'z')
 		return chr - ('a' + 10);
 	else if (chr >= 'A' && chr <= 'Z')
-		return chr - ('A' + 'z' - 'a' + 11);
+		return chr - ('A' + 10);
+	else
+		Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'\n", chr);
+	/* never reached */
 	return 0;
 }
 
@@ -353,7 +377,7 @@ static void SV_ParseAssembly(char *filename, char **text)
 
 
 /**
- * @bief
+ * @brief
  * @sa SV_AssembleMap
  */
 static void SV_AddTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, int *toFill)
@@ -365,6 +389,8 @@ static void SV_AddTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, in
 	/* add the new tile */
 	for (ty = 0; ty < tile->h; ty++)
 		for (tx = 0; tx < tile->w; tx++) {
+			assert(y+ty < 32);
+			assert(x+tx < 32);
 			if (tile->spec[ty][tx][0] == SOLID || !map[y + ty][x + tx][0]) {
 				/* copy the solid info */
 				if (tile->spec[ty][tx][0] == SOLID && toFill)
@@ -437,6 +463,7 @@ static qboolean SV_FitTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x
 				if (*m == SOLID)
 					touch = qtrue;
 
+				/* check whether maptile and surrounding specs are suitable */
 				for (a = 0; spec[a] && a < MAX_TILEALTS; a++)
 					for (b = 0; m[b] && b < MAX_TILEALTS; b++)
 						if (spec[a] == m[b])
@@ -706,7 +733,7 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 	}
 
 	if (tries >= MAX_ASSEMBLYRETRIES)
-		Com_Error(ERR_DROP, "SV_AssembleMap: Failed to assemble map (%s)\n", filename);
+		Com_Error(ERR_DROP, "SV_AssembleMap: Failed to assemble map (%s) (max-tries reached)\n", filename);
 
 	/* prepare map and pos strings */
 	if (basePath[0]) {
