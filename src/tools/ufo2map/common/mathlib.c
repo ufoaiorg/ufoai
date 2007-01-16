@@ -81,7 +81,7 @@ vec_t Q_rint (vec_t in)
 }
 
 /**
- * @brief
+ * @brief Sets vector_out (vc) to vevtor1 (va) + scale * vector2 (vb)
  */
 void VectorMA (vec3_t va, double scale, vec3_t vb, vec3_t vc)
 {
@@ -91,7 +91,7 @@ void VectorMA (vec3_t va, double scale, vec3_t vb, vec3_t vc)
 }
 
 /**
- * @brief
+ * @brief Cross prodcut of v1 and v2 saved in cross
  */
 void CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross)
 {
@@ -101,7 +101,7 @@ void CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross)
 }
 
 /**
- * @brief
+ * @brief Dot product of v1 and v2
  */
 vec_t _DotProduct (vec3_t v1, vec3_t v2)
 {
@@ -139,7 +139,7 @@ void _VectorCopy (vec3_t in, vec3_t out)
 }
 
 /**
- * @brief
+ * @brief Sets out to scale * v
  */
 void _VectorScale (vec3_t v, vec_t scale, vec3_t out)
 {
@@ -149,7 +149,8 @@ void _VectorScale (vec3_t v, vec_t scale, vec3_t out)
 }
 
 /**
- * @brief
+ * @brief Returns a vector in the same direction as the given vector but only
+ * one unit long
  */
 vec_t VectorNormalize (vec3_t in, vec3_t out)
 {
@@ -193,7 +194,7 @@ vec_t ColorNormalize (vec3_t in, vec3_t out)
 }
 
 /**
- * @brief
+ * @brief Sets vector to -1 * v
  */
 void VectorInverse (vec3_t v)
 {
@@ -203,7 +204,8 @@ void VectorInverse (vec3_t v)
 }
 
 /**
- * @brief
+ * @brief Sets mins and maxs to their starting points before using AddPointToBounds
+ * @sa AddPointToBounds
  */
 void ClearBounds (vec3_t mins, vec3_t maxs)
 {
@@ -212,7 +214,8 @@ void ClearBounds (vec3_t mins, vec3_t maxs)
 }
 
 /**
- * @brief
+ * @brief If the point is outside the box defined by mins and maxs, expand
+ * the box to accomodate it. Sets mins and maxs to their new values
  */
 void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs)
 {

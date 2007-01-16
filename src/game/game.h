@@ -37,19 +37,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	GAME_API_VERSION	4
 
-/* edict->svflags */
-
-#define	SVF_NOCLIENT			0x00000001	/* don't send entity to clients, even if it has effects */
-#define	SVF_DEADMONSTER			0x00000002	/* treat as CONTENTS_DEADMONSTER for collision */
-#define	SVF_MONSTER				0x00000004	/* treat as CONTENTS_MONSTER for collision */
-
 /* edict->solid values */
 
 typedef enum {
 	SOLID_NOT,					/* no interaction with other objects */
-	SOLID_TRIGGER,				/* only touch when inside, after moving */
-	SOLID_BBOX,					/* touch on edge */
-	SOLID_BSP					/* bsp clip, touch on edge */
+	SOLID_TRIGGER,				/* only touch when inside, after moving (triggers) */
+	SOLID_BBOX,					/* touch on edge (monsters, etc) */
+	SOLID_BSP					/* bsp clip, touch on edge (solid walls, blocks, etc) */
 } solid_t;
 
 /*=============================================================== */
@@ -93,13 +87,20 @@ struct edict_s {
 
 	/* tracing info */
 	solid_t solid;
-	int svflags;
 
-	vec3_t mins, maxs;
-	vec3_t absmin, absmax;
+	vec3_t mins, maxs; /* position of min and max points - relative to origin */
+	vec3_t absmin, absmax; /* position of min and max points - relative to world's origin */
 	vec3_t size;
 
+	/*
+	* usually the entity that spawned this entity - e.g. a bullet is owned
+	* but the player who fired it
+	*/
 	edict_t *owner;
+	/*
+	* type of objects the entity will not pass through
+	* can be any of MASK_* or CONTENTS_*
+	*/
 	int clipmask;
 	int modelindex;
 };
@@ -117,9 +118,13 @@ typedef struct {
 	struct routing_s *map;
 
 	/* special messages */
+
+	/* sends message to all entities */
 	void (*bprintf) (int printlevel, char *fmt, ...) __attribute__((format(printf, 2, 3)));
 	void (*dprintf) (char *fmt, ...) __attribute__((format(printf, 1, 2)));
+	/* sends message to only one entity */
 	void (*cprintf) (player_t * player, int printlevel, char *fmt, ...) __attribute__((format(printf, 3, 4)));
+	/* sends message to one entity and displays message on center of the screen */
 	void (*centerprintf) (player_t * player, char *fmt, ...) __attribute__((format(printf, 2, 3)));
 	void (*positioned_sound) (vec3_t origin, edict_t *ent, int channel, int soundinedex, float volume, float attenuation, float timeofs);
 
@@ -133,13 +138,26 @@ typedef struct {
 
 	/* the *index functions create configstrings and some internal server state */
 	int (*modelindex) (char *name);
+	/* during spawning is caches the sound, after that it simply returns the index which refers to that sound */
 	int (*soundindex) (char *name);
 	int (*imageindex) (char *name);
 
 	void (*setmodel) (edict_t * ent, char *name);
 
 	/* collision detection */
+	/* traces a box from start to end, ignoring entities passent, stoping if it hits an object of type specified
+	 * via contentmask (MASK_*). Mins and maxs set the box which will do the tracing - if NULL then a line is used instead
+	 * returns value of type trace_t with attributes:
+	 * allsolid - if true, entire trace was in a wall
+	 * startsolid - if true, trace started in a wall
+	 * fraction - fraction of trace completed (1.0 if totally completed)
+	 * endpos - point where trace ended
+	 * plane - surface normal at hitpoisee
+	 * ent - entity hit by trace
+	 */
 	trace_t(*trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
+	/* links entity into the world - so that it is sent to the client and used for
+	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
 	void (*linkentity) (edict_t * ent);
 	void (*unlinkentity) (edict_t * ent);	/* call before removing an interactive edict */
 

@@ -121,10 +121,13 @@ typedef struct {
 	char *item;
 	char *gravity;
 
+	/* left and right */
 	float minyaw;
 	float maxyaw;
+	/* up and down */
 	float minpitch;
 	float maxpitch;
+
 	int maxteams; /**< the max team amount for multiplayer games for the current map */
 } spawn_temp_t;
 
@@ -400,13 +403,20 @@ struct edict_s {
 
 	/* tracing info */
 	solid_t solid;
-	int svflags;
 
-	vec3_t mins, maxs;
-	vec3_t absmin, absmax;
+	vec3_t mins, maxs; /* position of min and max points - relative to origin */
+	vec3_t absmin, absmax; /* position of min and max points - relative to world's origin */
 	vec3_t size;
 
+	/*
+	 * usually the entity that spawned this entity - e.g. a bullet is owned
+	 * but the player who fired it
+	 */
 	edict_t *owner;
+	/*
+	 * type of objects the entity will not pass through
+	 * can be any of MASK_* or CONTENTS_*
+	 */
 	int clipmask;
 	int modelindex;
 
@@ -452,27 +462,28 @@ struct edict_s {
 	/* this is the inventory */
 	inventory_t i;
 
-	int spawnflags;
+	int spawnflags;	/* set via mapeditor */
 	char *classname;
 
-	float angle;
+	float angle;	/* entity yaw - set via mapeditor - -1=up; -2=down */
 
-	float speed;
-	float accel;
-	float decel;
-	char *target;
-	char *targetname;
-	char *message;
+	float speed;	/* speed of entities - e.g. doors */
+	float accel;	/* acceleration of plattforms/doors */
+	float decel;	/* deceleration of plattforms/doors */
+	char *target;	/* name of the entity to trigger or move towards */
+	char *targetname;	/* name pointed to by target */
+	char *message;	/* message when entity is activated - set via mapeditor */
 	char *particle;
-	float wait;
-	float delay;
-	float random;
-	int style;
-	int count;
-	int sounds;
-	int dmg;
-	int fieldSize;				/* ACTOR_SIZE_* */
+	float wait;		/* time to wait before platform moves to the next point on its path */
+	float delay;	/* time between triggering switch and effect activating */
+	float random;	/* used to add a bit of time variation of func_timer */
+	int style;		/* type of entities */
+	int count;		/* general purpose 'amount' variable - set via mapeditor often */
+	int sounds;		/* type of sounds to play - e.g. doors */
+	int dmg;		/* damage done by entity */
+	int fieldSize;	/* ACTOR_SIZE_* */
 
+	/* function to call when used */
 	void (*use) (edict_t * self, edict_t * other, edict_t * activator);
 };
 

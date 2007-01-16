@@ -320,9 +320,10 @@ void R_ConcatTransforms(float in1[3][4], float in2[3][4], float out[3][4])
 
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief Converts a vector to an angle vector
+ * @param[in] value1
+ * @param[in] angles Target vector for pitch, yaw, roll
+ * @sa anglemod
  */
 void VecToAngles(vec3_t value1, vec3_t angles)
 {
@@ -351,8 +352,11 @@ void VecToAngles(vec3_t value1, vec3_t angles)
 			pitch += 360;
 	}
 
+	/* up and down */
 	angles[PITCH] = -pitch;
+	/* left and right */
 	angles[YAW] = yaw;
+	/* tilt left and right */
 	angles[ROLL] = 0;
 }
 
@@ -361,9 +365,8 @@ void VecToAngles(vec3_t value1, vec3_t angles)
 
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief If the number is < 0, return -1 * number - otherwise return the number
+ * @param[in] f
  */
 float Q_fabs(float f)
 {
@@ -394,7 +397,8 @@ long Q_ftol(float f)
 #endif
 
 /**
- * @brief
+ * @brief Returns the angle resulting from turning fraction * angle
+ * from angle1 to angle2
  * @param
  * @sa
  */
@@ -409,9 +413,9 @@ float LerpAngle(float a2, float a1, float frac)
 
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief Returns the equivalent of angle between 0 and 360
+ * @param[in] a Angle
+ * @sa VecToAngles
  */
 float anglemod(float a)
 {
@@ -768,7 +772,7 @@ void ClearBounds(vec3_t mins, vec3_t maxs)
 }
 
 /**
- * @brief
+ * @brief If the point is outside the box defined by mins and maxs, expand
  * @param[in] v
  * @param[in] mins
  * @param[in] maxs
@@ -1996,9 +2000,10 @@ char *Info_ValueForKey(char *s, char *key)
 }
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief Searches through s for key and remove is
+ * @param[in] s String to search key in
+ * @param[in] key String to search for in s
+ * @sa Info_SetValueForKey
  */
 void Info_RemoveKey(char *s, const char *key)
 {
@@ -2060,9 +2065,10 @@ qboolean Info_Validate(char *s)
 }
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief Adds a new entry into string with given value.
+ * @note Removed any old version of the key
+ * @param[in] s
+ * @sa Info_RemoveKey
  */
 void Info_SetValueForKey(char *s, const char *key, const char *value)
 {

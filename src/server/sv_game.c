@@ -41,6 +41,7 @@ game_export_t *ge;
 
 /**
  * @brief Sends the contents of the mutlicast buffer to a single client
+ * @note This message will be send reliable
  */
 static void PF_Unicast(player_t * player)
 {

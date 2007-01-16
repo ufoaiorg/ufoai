@@ -277,6 +277,9 @@ void G_SetMovedir(vec3_t angles, vec3_t movedir)
 }
 #endif
 
+/**
+ * @brief Return the yaw component of the angle vector
+ */
 float vectoyaw(vec3_t vec)
 {
 	float yaw;
