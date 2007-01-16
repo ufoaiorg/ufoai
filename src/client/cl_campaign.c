@@ -26,6 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+/* Constants */
+#define DAYS_PER_YEAR 365
+#define DAYS_PER_YEAR_AVG 365.25
+#define MONTHS_PER_YEAR 12
+
 /* public vars */
 static mission_t missions[MAX_MISSIONS];
 static int numMissions;
@@ -241,7 +246,7 @@ extern qboolean CL_MapIsNight(vec2_t pos)
 	float p, q, a, root, x;
 
 	p = (float) ccs.date.sec / (3600 * 24);
-	q = (ccs.date.day + p) * 2 * M_PI / 365.25 - M_PI;
+	q = (ccs.date.day + p) * 2 * M_PI / DAYS_PER_YEAR_AVG - M_PI;
 	p = (0.5 + pos[0] / 360 - p) * 2 * M_PI - q;
 	a = sin(pos[1] * M_PI / 180);
 	root = sqrt(1. - a * a);
@@ -360,9 +365,9 @@ static qboolean CL_MapMaskFind(byte * color, vec2_t polar)
 }
 
 /**
- * @brief Returns the color value from geoscape of maskPic at a given position
- * @param[in] pos vec2_t value of position on map to get the color value from
- * @return the color value at given position
+ * @brief Returns the color value from geoscape of maskPic at a given position.
+ * @param[in] pos vec2_t Value of position on map to get the color value from.
+ * @return Returns the color value at given position.
  */
 extern byte *CL_GetMapColor(const vec2_t pos, mapType_t type)
 {
@@ -961,21 +966,28 @@ void CL_CampaignCheckEvents(void)
 		}
 }
 
-static int monthLength[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+static int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 /**
- * @brief
+ * @brief Converts a number of days into the number of the current month and the current day in this month.
+ * @note The seconds from "date" are ignored here.
+ * @note The function always starts calculation from Jan. and also catches new years.
+ * @param[in] date Contains the nubmer of days to be converted.
+ * @param[out] month The month.
+ * @param[out] day The day in the month above.
  */
 void CL_DateConvert(date_t * date, int *day, int *month)
 {
 	int i, d;
 
-	/* get day */
-	d = date->day % 365;
+	/* Get the day in the year. Other years are ignored. */
+	d = date->day % DAYS_PER_YEAR;
+	
+	/* Subtract days until no full month is left. */
 	for (i = 0; d >= monthLength[i]; i++)
 		d -= monthLength[i];
 
-	/* prepare return values */
+	/* Prepare return values. */
 	*day = d + 1;
 	*month = i;
 }
@@ -1276,7 +1288,7 @@ void CL_CampaignRun(void)
 			gd.fund = qfalse;
 		} else if (day > 1)
 			gd.fund = qtrue;
-		Cvar_Set("mn_mapdate", va("%i %s %i", ccs.date.day / 365, CL_DateGetMonthName(month), day));	/* CL_DateGetMonthName is already "gettexted" */
+		Cvar_Set("mn_mapdate", va("%i %s %i", ccs.date.day / DAYS_PER_YEAR, CL_DateGetMonthName(month), day));	/* CL_DateGetMonthName is already "gettexted" */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%02i:%02i"), ccs.date.sec / 3600, ((ccs.date.sec % 3600) / 60));
 		Cvar_Set("mn_maptime", messageBuffer);
 	}
