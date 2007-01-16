@@ -130,7 +130,7 @@ void CL_CollectingAliens(void)
 			}
 
 			if (le->HP <= 0 || (le->state & STATE_STUN)) {
-				
+
 				for (j = 0; j < aircraft->alientypes; j++) {
 					/* Search alien type and increase amount */
 					if (Q_strncmp(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR) == 0) {
@@ -177,7 +177,7 @@ void CL_CollectingAliens(void)
  * @brief Puts alien cargo into Alien Containment.
  * @sa CL_DropshipReturned
  */
-void AL_AddAliens()
+void AL_AddAliens(void)
 {
 	int i, j;
 	base_t *tobase = NULL;
@@ -207,7 +207,7 @@ void AL_AddAliens()
 
 	cargo = aircraft->aliencargo;
 
-	for (i=0; i < aircraft->alientypes; i++) {
+	for (i = 0; i < aircraft->alientypes; i++) {
 		for (j = 0; j < AL_UNKNOWN; j++) {
 			if (Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0) {
 				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
@@ -222,10 +222,10 @@ void AL_AddAliens()
 				}
 			}
 		}
-	}    
+	}
 
 	/* print all of them */
-	for (i=0; i < AL_UNKNOWN; i++ ) {
+	for (i = 0; i < AL_UNKNOWN; i++ ) {
 		if (tobase->alienscont[i].amount_alive > 0)
 			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_alive);
 		if (tobase->alienscont[i].amount_dead > 0)
@@ -366,7 +366,7 @@ int AL_GetAlienAmount(int idx, requirementType_t reqtype)
 	default:
 		return containment[idx].amount_dead;
 	}
-	
+
 	return -1;
 }
 
@@ -379,7 +379,7 @@ int AL_GetAlienAmount(int idx, requirementType_t reqtype)
  * @note Command to call this: aliencont_init
  * @note Should be called whenever the research menu gets active
  */
-void AC_Init (void)
+static void AC_Init (void)
 {
 	menuText[TEXT_STANDARD] = aliencontText;
 }
