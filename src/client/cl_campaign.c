@@ -972,7 +972,7 @@ static int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 
  * @brief Converts a number of days into the number of the current month and the current day in this month.
  * @note The seconds from "date" are ignored here.
  * @note The function always starts calculation from Jan. and also catches new years.
- * @param[in] date Contains the nubmer of days to be converted.
+ * @param[in] date Contains the number of days to be converted.
  * @param[out] month The month.
  * @param[out] day The day in the month above.
  */
@@ -982,7 +982,7 @@ void CL_DateConvert(date_t * date, int *day, int *month)
 
 	/* Get the day in the year. Other years are ignored. */
 	d = date->day % DAYS_PER_YEAR;
-	
+
 	/* Subtract days until no full month is left. */
 	for (i = 0; d >= monthLength[i]; i++)
 		d -= monthLength[i];
