@@ -301,6 +301,8 @@ int FS_Seek(qFILE * f, long offset, int origin)
 
 /**
  * @brief
+ * @returns filesize
+ * @sa FS_FOpenFileSingle
  */
 int FS_FOpenFile(const char *filename, qFILE * file)
 {

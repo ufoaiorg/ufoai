@@ -1475,6 +1475,7 @@ void CL_SpawnSoldiers_f (void)
 
 /**
  * @brief The server will send this command right before allowing the client into the server
+ * @sa CL_StartGame
  */
 void CL_Precache_f (void)
 {
@@ -1484,8 +1485,10 @@ void CL_Precache_f (void)
 
 	/* for singleplayer game this is already loaded in our local server */
 	if (!ccs.singleplayer) {
+		/* activate the map loading screen for multiplayer, too */
 		SCR_BeginLoadingPlaque();
 		CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS], &map_checksum);
+		/* checksum doesn't match with the one the server gave us via configstring */
 		if (map_checksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
 			MN_Popup(_("Error"), _("Local map version differs from server"));
 			Com_Error (ERR_DROP, "Local map version differs from server: %u != '%s'\n",
@@ -1501,7 +1504,9 @@ void CL_Precache_f (void)
 	spawnCountFromServer = atoi(Cmd_Argv(1));
 
 	/* send begin */
+	/* this will activate the render process (see client state ca_active) */
 	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
+	/* see CL_StartGame */
 	MSG_WriteString(&cls.netchan.message, va("begin %i\n", spawnCountFromServer));
 
 	/* for singleplayer the soldiers get spawned here */
@@ -1635,7 +1640,8 @@ void CL_ReadSinglePlayerData( void )
 }
 
 /**
- * @brief
+ * @brief Prints current ip to game console
+ * @sa Sys_ShowIP
  */
 static void CL_ShowIP_f (void)
 {
@@ -1644,7 +1650,9 @@ static void CL_ShowIP_f (void)
 
 
 /**
- * @brief
+ * @brief Calls all reset functions for all subsystems like production and research
+ * also inits the cvars and commands
+ * @sa CL_Init
  */
 void CL_InitLocal(void)
 {
