@@ -39,20 +39,19 @@ void E_Reset(void);
 /* if ( !maxEmployeesWorkersInLab ) maxEmployeesWorkersInLab = MAX_EMPLOYEES_IN_BUILDING; */
 /* if ( !maxEmployeesInWorkshop ) maxEmployeesInWorkshop = MAX_EMPLOYEES_IN_BUILDING; */
 
-/* The definition of an employee */
+/** The definition of an employee */
 typedef struct employee_s {
-	int idx;					/* self link in global employee-list. */
+	int idx;					/**< self link in global employee-list. */
 
-	/* this is true if the employee was already hired */
-	qboolean hired;				/* default is qfalse */
-	int baseIDHired;			/* baseID where the soldier is hired atm */
+	qboolean hired;				/**< this is true if the employee was already hired - default is false */
+	int baseIDHired;			/**< baseID where the soldier is hired atm */
 
-	char speed;					/* Speed of this Worker/Scientist at research/construction. */
+	char speed;					/**< Speed of this Worker/Scientist at research/construction. */
 
-	int buildingID;				/* assigned to this building in gd.buildings[baseIDHired][buildingID] */
+	int buildingID;				/**< assigned to this building in gd.buildings[baseIDHired][buildingID] */
 
-	character_t chr;		/* Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
-	inventory_t inv;			/* employee inventory */
+	character_t chr;			/**< Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
+	inventory_t inv;			/**< employee inventory */
 } employee_t;
 
 void E_ResetEmployees(void);

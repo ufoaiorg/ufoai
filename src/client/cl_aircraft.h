@@ -38,6 +38,7 @@ typedef struct mapline_s {
 	vec2_t p[LINE_MAXPTS];
 } mapline_t;
 
+/** @brief All different types of aircraft */
 typedef enum {
 	AIRCRAFT_TRANSPORTER,
 	AIRCRAFT_INTERCEPTOR,
@@ -46,6 +47,7 @@ typedef enum {
 
 struct actMis_s;
 
+/** @brief An aircraft with all it's data */
 typedef struct aircraft_s {
 	int idx;					/* unique id */
 	int idx_sample;				/* self-link in aircraft_sample list */

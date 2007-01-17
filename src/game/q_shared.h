@@ -479,7 +479,10 @@ CVARS (console variables)
                             /* but can be set from the command line */
 #define CVAR_LATCH      16      /* save changes until server restart */
 
-/* nothing outside the Cvar_*() functions should modify these fields! */
+/**
+ * @brief This is a cvar defintion. Cvars can be user modified and used in our menus e.g.
+ * @note nothing outside the Cvar_*() functions should modify these fields!
+ */
 typedef struct cvar_s {
 	char *name;				/* cvar name */
 	char *string;			/* value as string */
@@ -565,13 +568,15 @@ COLLISION DETECTION
 #define AREA_SOLID      1
 
 
-/* plane_t structure */
-/* !!! if this is changed, it must be changed in asm code too !!! */
+/**
+ * @brief plane_t structure
+ * @note !!! if this is changed, it must be changed in asm code too !!!
+ */
 typedef struct cplane_s {
 	vec3_t normal;
 	float dist;
-	byte type;                  /* for fast side tests */
-	byte signbits;              /* signx + (signy<<1) + (signz<<1) */
+	byte type;                  /**< for fast side tests */
+	byte signbits;              /**< signx + (signy<<1) + (signz<<1) */
 	byte pad[2];
 } cplane_t;
 
@@ -587,7 +592,7 @@ typedef struct cplane_s {
 
 typedef struct cmodel_s {
 	vec3_t mins, maxs;
-	vec3_t origin;              /* for sounds or lights */
+	vec3_t origin;              /**< for sounds or lights */
 	int tile;
 	int headnode;
 } cmodel_t;
@@ -603,17 +608,17 @@ typedef struct mapsurface_s {   /* used internally due to name len probs //ZOID 
 	char rname[32];
 } mapsurface_t;
 
-/* a trace is returned when a box is swept through the world */
+/** a trace is returned when a box is swept through the world */
 typedef struct {
-	qboolean allsolid;          /* if true, plane is not valid */
-	qboolean startsolid;        /* if true, the initial point was in a solid area */
-	float fraction;             /* time completed, 1.0 = didn't hit anything */
-	vec3_t endpos;              /* final position */
-	cplane_t plane;             /* surface normal at impact */
-	csurface_t *surface;        /* surface hit */
-	int contents;               /* contents on other side of surface hit */
-	struct le_s *le;            /* not set by CM_*() functions */
-	struct edict_s *ent;        /* not set by CM_*() functions */
+	qboolean allsolid;		/**< if true, plane is not valid */
+	qboolean startsolid;	/**< if true, the initial point was in a solid area */
+	float fraction;			/**< time completed, 1.0 = didn't hit anything */
+	vec3_t endpos;			/**< final position */
+	cplane_t plane;			/**< surface normal at impact */
+	csurface_t *surface;	/**< surface hit */
+	int contents;			/**< contents on other side of surface hit */
+	struct le_s *le;		/**< not set by CM_*() functions */
+	struct edict_s *ent;	/**< not set by CM_*() functions */
 } trace_t;
 
 
@@ -668,18 +673,19 @@ SCRIPT VALUE PARSING
 
 /* this is here to let the parsing function determine the right size */
 
-/* conditions for V_IF */
+/** conditions for V_IF */
 typedef enum menuIfCondition_s {
-	IF_EQ, /* == */
-	IF_LE, /* <= */
-	IF_GE, /* >= */
-	IF_GT, /* > */
-	IF_LT, /* < */
-	IF_NE, /* != */
+	IF_EQ, /**< == */
+	IF_LE, /**< <= */
+	IF_GE, /**< >= */
+	IF_GT, /**< > */
+	IF_LT, /**< < */
+	IF_NE, /**< != */
 
 	IF_SIZE
 } menuIfCondition_t;
 
+/** @sa menuIfCondition_t */
 typedef struct menuDepends_s {
 	char var[MAX_VAR];
 	char value[MAX_VAR];
@@ -693,6 +699,7 @@ typedef struct menuDepends_s {
 #endif
 #define ALIGN(size)  ((size) + ((ALIGN_BYTES - ((size) % ALIGN_BYTES)) % ALIGN_BYTES))
 
+/** possible values for parsing functions */
 typedef enum {
 	V_NULL,
 	V_BOOL,
@@ -725,6 +732,7 @@ typedef enum {
 
 extern char *vt_names[V_NUM_TYPES];
 
+/** possible alien values */
 typedef enum {
 	ALIGN_UL,
 	ALIGN_UC,
@@ -739,6 +747,7 @@ typedef enum {
 	ALIGN_LAST
 } align_t;
 
+/** possible blend modes */
 typedef enum {
 	BLEND_REPLACE,
 	BLEND_BLEND,
@@ -779,6 +788,7 @@ extern char *blend_names[BLEND_LAST];
 extern char *style_names[STYLE_LAST];
 extern char *fade_names[FADE_LAST];
 
+/** used e.g. in our parsers */
 typedef struct value_s {
 	char *string;
 	int type;
@@ -883,26 +893,27 @@ extern char *pa_format[128];
 
 #define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[!!(type & 0x80)])
 
+/** this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
-	char name[MAX_VAR];
-	char projectile[MAX_VAR];
+	char name[MAX_VAR];			/**< script id */
+	char projectile[MAX_VAR];	/**< particle */
 	char impact[MAX_VAR];
 	char hitBody[MAX_VAR];
-	char fireSound[MAX_VAR];
-	char impactSound[MAX_VAR];
+	char fireSound[MAX_VAR];	/**< the sound when a recruits fires */
+	char impactSound[MAX_VAR];	/**< the sound that is played on impact */
 	char hitBodySound[MAX_VAR];
-	char bounceSound[MAX_VAR];
+	char bounceSound[MAX_VAR];	/**< bouncing sound */
 	byte soundOnce;
-	byte gravity;
+	byte gravity;			/**< does gravity has any influence on this */
 	byte launched;
-	byte rolled;
+	byte rolled;			/**< can it be rolled - e.g. grenades */
 	byte dmgtype;
 	float speed;
 	vec2_t shotOrg;
 	vec2_t spread;
 	float modif;
 	int delay;
-	int bounce;
+	int bounce;				/**< is this bouncing? e.g. grenades */
 	float bounceFac;
 	float crouch;
 	float range;
@@ -912,8 +923,8 @@ typedef struct fireDef_s {
 	int time;
 	vec2_t damage, spldmg;
 	float splrad;
-	int weaponSkill;
-	int irgoggles;
+	int weaponSkill;		/**< what weapon skill is needed to fire this weapon */
+	int irgoggles;			/**< is this an irgoogles */
 } fireDef_t;
 
 /**
@@ -922,40 +933,40 @@ typedef struct fireDef_s {
  */
 typedef struct objDef_s {
 	/* Common */
-	char name[MAX_VAR];
-	char kurz[MAX_VAR];	/* Equals the object-"id" TODO: Should be renamed as such sometime in the future. */
-	char model[MAX_VAR];
-	char image[MAX_VAR];
-	char type[MAX_VAR];
+	char name[MAX_VAR];	/**< item name/scriptfile id */
+	char kurz[MAX_VAR];	/**< Equals the object-"id" TODO: Should be renamed as such sometime in the future. */
+	char model[MAX_VAR];	/**< model name - relative to game dir */
+	char image[MAX_VAR];	/**< object image file - relative to game dir */
+	char type[MAX_VAR];	/**< melee, rifle, ammo */
 	char extends_item[MAX_VAR];
-	int shape;
+	int shape;			/**< the shape in our inventory */
 
-	byte sx, sy;		/* Size in x and y direction. */
-	float scale;
-	vec3_t center;
-	char category;
-	byte weapon;		/* This item is a weapon or ammo. */
-	byte holdtwohanded;	/* The soldier needs both hands to hold this object.
-				 * Influences model-animations and which hands are blocked int he inventory screen.*/
-	byte firetwohanded;	/* The soldier needs both hands to fire this object.
-				 * Influences model-animations. */
-	byte extension;	/* Boolean: Is an extension. */
-	byte headgear;	/* Boolean: Is a headgear. */
-	byte thrown;		/* This item is thrown. */
-	int price;
-	int buytype;		/* In which category of the buy menu is this item listed. */
+	byte sx, sy;		/**< Size in x and y direction. */
+	float scale;		/**< scale value for images? and models */
+	vec3_t center;		/**< origin for models */
+	char category;		/**<  */
+	byte weapon;		/**< This item is a weapon or ammo. */
+	byte holdtwohanded;	/**< The soldier needs both hands to hold this object.
+				 		 * Influences model-animations and which hands are blocked int he inventory screen.*/
+	byte firetwohanded;	/**< The soldier needs both hands to fire this object.
+						  * Influences model-animations. */
+	byte extension;		/**< Boolean: Is an extension. */
+	byte headgear;		/**< Boolean: Is a headgear. */
+	byte thrown;		/**< This item is thrown. */
+	int price;			/**< the price for this item */
+	int buytype;		/**< In which category of the buy menu is this item listed. */
 
-	int forWeapon[MAX_TECHLINKS];	/* Ammo-only: A list of weapons this ammo can be used in.
-					 * The information is taken from the "weapon" requirements in the technology. */
+	int forWeapon[MAX_TECHLINKS];	/**< Ammo-only: A list of weapons this ammo can be used in.
+						 * The information is taken from the "weapon" requirements in the technology. */
 
 	/* Weapon specific */
-	int ammo;
-	int reload;
-	fireDef_t fd[2];
+	int ammo;			/**< how much can we load into this weapon at once */
+	int reload;			/**< time units for reloading the weapon */
+	fireDef_t fd[2];	/**< primary and secondard fire definition */
 
 	/* Technology link */
-	void *tech;		/* Technology link to item to use this extension for (if this is an extension) */
-	/* TODO: Can be used for menu highlighting and in ufopedia */
+	void *tech;		/**< Technology link to item to use this extension for (if this is an extension) */
+	/** @todo: Can be used for menu highlighting and in ufopedia */
 	void *extension_tech;
 
 	/* Armor specific */
@@ -965,28 +976,32 @@ typedef struct objDef_s {
 
 #define MAX_INVDEFS     16
 
+/** inventory definition for our menus */
 typedef struct invDef_s {
-	char name[MAX_VAR];
-	byte single, armor, all, temp, extension, headgear;
-	int shape[16];
+	char name[MAX_VAR];	/**< id from script files */
+	byte single, armor, all, temp, extension, headgear;	/**< type of this container or inventory */
+	int shape[16];	/**< the inventory form/shape */
 	int in, out;
 } invDef_t;
 
 #define MAX_CONTAINERS  MAX_INVDEFS
 #define MAX_INVLIST     1024
 
+/** item definition */
 typedef struct item_s {
-	int a;              /* number of ammo rounds left */
-	int m;              /* index of ammo type on csi->ods  */
-	int t;              /* index of weapon == csi->ods[m].link */
+	int a;              /**< number of ammo rounds left */
+	int m;              /**< index of ammo type on csi->ods  */
+	int t;              /**< index of weapon == csi->ods[m].link */
 } item_t;
 
+/** container/inventory list (linked list) with items */
 typedef struct invList_s {
-	item_t item;
-	int x, y;
-	struct invList_s *next;
+	item_t item;	/**< which item */
+	int x, y;		/**< position of the item */
+	struct invList_s *next;		/**< next entry in this list */
 } invList_t;
 
+/** inventory defintion with all its containers */
 typedef struct inventory_s {
 	invList_t *c[MAX_CONTAINERS];
 } inventory_t;
@@ -999,29 +1014,32 @@ typedef struct equipDef_s {
 	byte num_loose[MAX_OBJDEFS];
 } equipDef_t;
 
-/* the csi structure is the client-server-information structure */
-/* which contains all the UFO info needed by the server and the client */
+/** the csi structure is the client-server-information structure
+ * which contains all the UFO info needed by the server and the client */
 typedef struct csi_s {
-	/* object definitions */
+	/** object definitions */
 	objDef_t ods[MAX_OBJDEFS];
+	/** the amount of parsed object definitions */
 	int numODs;
 
-	/* inventory definitions */
+	/** inventory definitions */
 	invDef_t ids[MAX_INVDEFS];
+	/** the amount of parsed inventory definitions */
 	int numIDs;
-	int idRight, idLeft, idExtension;
-	int idHeadgear, idBackpack, idBelt, idHolster;
-	int idArmor, idFloor, idEquip;
+	int idRight, idLeft, idExtension;	/**< special container ids */
+	int idHeadgear, idBackpack, idBelt, idHolster;	/**< special container ids */
+	int idArmor, idFloor, idEquip;	/**< special container ids */
 
-	/* damage type ids */
+	/** damage type ids */
 	int damNormal, damBlast, damFire, damShock;
+	/** damage type ids */
 	int damLaser, damPlasma, damTachyon, damStun;
 
-	/* equipment definitions */
+	/** equipment definitions */
 	equipDef_t eds[MAX_EQUIPDEFS];
 	int numEDs;
 
-	/* damage types */
+	/** damage types */
 	char dts[MAX_DAMAGETYPES][MAX_VAR];
 	int numDTs;
 } csi_t;
@@ -1091,19 +1109,21 @@ typedef struct medals_s {
 	struct medals_s *next_medal;
 } medals_t;
 
+/** @brief Describes a rank that a recruit can gain */
 typedef struct rank_s {
 	char id[MAX_VAR];
 	char name[MAX_MEDALTITLE];
 	char image[MAX_VAR];
-	int type; /* employeeType_t */
+	int type; /**< employeeType_t */
 	int mind;
 	int killed_enemies;
 	int killed_others;
 } rank_t;
 
-extern rank_t ranks[MAX_RANKS]; /* Global list of all ranks defined in medals.ufo. */
-extern int numRanks;            /* The number of entries in the list above. */
+extern rank_t ranks[MAX_RANKS]; /**< Global list of all ranks defined in medals.ufo. */
+extern int numRanks;            /**< The number of entries in the list above. */
 
+/** @brief Describes a character with all its attributes */
 typedef struct character_s {
 	int ucn;
 	char name[MAX_VAR];
@@ -1112,12 +1132,12 @@ typedef struct character_s {
 	char head[MAX_VAR];
 	int skin;
 
-	/* new abilities and skills: */
+	/** new abilities and skills: */
 	int skills[SKILL_NUM_TYPES];
 
 	int HP, STUN, AP, morale;
 
-	/* score */
+	/** score */
 	int kills[KILLED_NUM_TYPES];
 /*  int     destroyed_objects; */
 /*  int     hit_ratio; */
@@ -1133,25 +1153,25 @@ typedef struct character_s {
 	/* *------------------** */
 	/* *------------------** */
 
-	int fieldSize;              /* ACTOR_SIZE_* */
+	int fieldSize;              /** ACTOR_SIZE_* */
 	inventory_t *inv;
 
-	/* Backlink to employee-struct. */
+	/** Backlink to employee-struct. */
 	int empl_idx;
 	int empl_type;
 
-	qboolean armor, weapons; /* able to use weapons/armor */
+	qboolean armor, weapons; /** able to use weapons/armor */
 	int teamDesc;
 } character_t;
 
-/* The types of employees */
+/** @brief The types of employees */
 typedef enum {
 	EMPL_SOLDIER,
 	EMPL_SCIENTIST,
-	EMPL_WORKER,				/* unused right now */
-	EMPL_MEDIC,					/* unused right now */
-	EMPL_ROBOT,					/* unused right now */
-	MAX_EMPL					/* for counting over all available enums */
+	EMPL_WORKER,
+	EMPL_MEDIC,
+	EMPL_ROBOT,
+	MAX_EMPL					/** for counting over all available enums */
 } employeeType_t;
 
 #define MAX_CAMPAIGNS	16
@@ -1187,6 +1207,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS],  char 
 #define FD_PRIMARY      0
 #define FD_SECONDARY        1
 
+/** @brief Available shoot types */
 typedef enum {
 	ST_RIGHT_PRIMARY,
 	ST_RIGHT_PRIMARY_REACTION,

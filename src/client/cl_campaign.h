@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* blue (not water) 128, 128, 255 */
 /* blue (not water, too) 0, 0, 255 */
 
+/** possible map types */
 typedef enum mapType_s {
 	MAPTYPE_CLIMAZONE,
 	MAPTYPE_NATIONS,
@@ -54,6 +55,7 @@ typedef enum mapType_s {
 	MAPTYPE_MAX
 } mapType_t;
 
+/** possible mission types */
 typedef enum missionType_s {
 	MIS_INTERCEPT, /* default */
 	MIS_BASEATTACK,
@@ -61,6 +63,7 @@ typedef enum missionType_s {
 	MIS_MAX
 } missionType_t;
 
+/** mission definition */
 typedef struct mission_s {
 	char *text;
 	char name[MAX_VAR];
@@ -133,30 +136,32 @@ typedef struct actMis_s {
 	vec2_t realPos;
 } actMis_t;
 
+/** campaign definition */
 typedef struct campaign_s {
-	int idx;					/* own index in global campaign array */
+	int idx;					/**< own index in global campaign array */
 	char id[MAX_VAR];
 	char name[MAX_VAR];
 	char team[MAX_VAR];
 	char researched[MAX_VAR];
 	char equipment[MAX_VAR];
 	char market[MAX_VAR];
-	char text[MAX_VAR];			/* placeholder for gettext stuff */
-	char map[MAX_VAR];			/* geoscape map */
+	char text[MAX_VAR];			/**< placeholder for gettext stuff */
+	char map[MAX_VAR];			/**< geoscape map */
 	char firststage[MAX_VAR];
-	int soldiers;				/* start with x soldiers */
-	int scientists;				/* start with x scientists */
-	int workers;				/* start with x workers */
-	int medics;					/* start with x medics */
-	int ugvs;					/* start with x ugvs (robots) */
-	int credits;				/* start with x credits */
+	int soldiers;				/**< start with x soldiers */
+	int scientists;				/**< start with x scientists */
+	int workers;				/**< start with x workers */
+	int medics;					/**< start with x medics */
+	int ugvs;					/**< start with x ugvs (robots) */
+	int credits;				/**< start with x credits */
 	int num;
-	signed int difficulty;		/* difficulty level -4 - 4 */
-	qboolean visible;			/* visible in campaign menu? */
-	date_t date;				/* starting date for this campaign */
+	signed int difficulty;		/**< difficulty level -4 - 4 */
+	qboolean visible;			/**< visible in campaign menu? */
+	date_t date;				/**< starting date for this campaign */
 	qboolean finished;
 } campaign_t;
 
+/** salary values for a campaign */
 typedef struct salary_s {
 	int soldier_base;
 	int soldier_rankbonus;
@@ -203,24 +208,26 @@ typedef struct salary_s {
 
 extern salary_t salaries[MAX_CAMPAIGNS];
 
+/** nation definition */
 typedef struct nation_s {
 	char id[MAX_VAR];
 	char name[MAX_VAR];
-	int funding;		/* how many (monthly) credits */
+	int funding;		/**< how many (monthly) credits */
 	float happiness;
 	vec4_t color;
-	vec2_t pos;			/* nation name position on geoscape */
+	vec2_t pos;			/**< nation name position on geoscape */
 	float alienFriendly;
-	int soldiers;		/* how many (monthly) soldiers */
-	int scientists;		/* how many (monthly) scientists */
-	int workers;		/* how many (monthly) workers */
-	int medics;			/* how many (monthly) medics */
-	int ugvs;			/* how many (monthly) ugvs (robots) */
+	int soldiers;		/**< how many (monthly) soldiers */
+	int scientists;		/**< how many (monthly) scientists */
+	int workers;		/**< how many (monthly) workers */
+	int medics;			/**< how many (monthly) medics */
+	int ugvs;			/**< how many (monthly) ugvs (robots) */
 	char names[MAX_VAR];
 } nation_t;
 
 #define MAX_NATIONS 8
 
+/** client structure */
 typedef struct ccs_s {
 	equipDef_t eMission, eMarket;
 
@@ -229,38 +236,40 @@ typedef struct ccs_s {
 	actMis_t mission[MAX_ACTMISSIONS];
 	int numMissions;
 
-	qboolean singleplayer;	/* singleplayer or multiplayer */
+	qboolean singleplayer;	/**< singleplayer or multiplayer */
 
-	int credits;			/* actual credits amount */
-	int civiliansKilled;	/* how many civilians were killed already */
-	int aliensKilled;		/* how many aliens were killed already */
-	date_t date;			/* current date */
+	int credits;			/**< actual credits amount */
+	int civiliansKilled;	/**< how many civilians were killed already */
+	int aliensKilled;		/**< how many aliens were killed already */
+	date_t date;			/**< current date */
 	float timer;
 
 	vec2_t center;
 	float zoom;
 } ccs_t;
 
+/** possible geoscape actions */
 typedef enum mapAction_s {
 	MA_NONE,
-	MA_NEWBASE,					/* build a new base */
-	MA_INTERCEPT,				/* intercept */
-	MA_BASEATTACK,				/* base attacking */
-	MA_UFORADAR					/* ufos are in our radar */
+	MA_NEWBASE,					/**< build a new base */
+	MA_INTERCEPT,				/**< intercept */
+	MA_BASEATTACK,				/**< base attacking */
+	MA_UFORADAR					/**< ufos are in our radar */
 } mapAction_t;
 
+/** possible aircraft states */
 typedef enum aircraftStatus_s {
 	AIR_NONE = 0,
-	AIR_REFUEL,					/* refill fuel */
-	AIR_HOME,					/* in homebase */
-	AIR_IDLE,					/* just sit there on geoscape */
-	AIR_TRANSIT,				/* moving */
-	AIR_MISSION,				/* moving to a mission */
-	AIR_UFO,					/* purchasing an ufo */
-	AIR_DROP,					/* ready to drop down */
-	AIR_INTERCEPT,				/* ready to intercept */
-	AIR_TRANSPORT,				/* transporting from one base to another */
-	AIR_RETURNING				/* returning to homebase */
+	AIR_REFUEL,					/**< refill fuel */
+	AIR_HOME,					/**< in homebase */
+	AIR_IDLE,					/**< just sit there on geoscape */
+	AIR_TRANSIT,				/**< moving */
+	AIR_MISSION,				/**< moving to a mission */
+	AIR_UFO,					/**< purchasing an ufo */
+	AIR_DROP,					/**< ready to drop down */
+	AIR_INTERCEPT,				/**< ready to intercept */
+	AIR_TRANSPORT,				/**< transporting from one base to another */
+	AIR_RETURNING				/**< returning to homebase */
 } aircraftStatus_t;
 
 extern actMis_t *selMis;

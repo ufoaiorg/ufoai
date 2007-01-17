@@ -29,37 +29,42 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_CARGO		256
 #define MAX_ALIENCONT_CAP	512
 
-typedef enum {		/* types of aliens */
+/** types of aliens */
+typedef enum {
 	AL_ORTNOK,
 	AL_TAMAN,
 	AL_SHEVAAR,
 	AL_FLYER,
-	AL_UNKNOWN	/* dummy, to get all */
+	AL_UNKNOWN	/**< dummy, to get all */
 } alienType_t;
 
-typedef enum {		/* specializations of aliens */
+/** specializations of aliens */
+typedef enum {
 	AS_PILOT,
 	AS_GUNNER,
 	AS_HARVESTER,
 	AS_SOLDIER
 } alienSpec_t;
 
-typedef enum {		/* cases of alien amount calculation */
+/** cases of alien amount calculation */
+typedef enum {
 	AL_RESEARCH,
 	AL_KILL
 } alienCalcType_t;
 
+/** todo - document me */
 typedef struct aliensCont {
-	int idx;			/* self link */
-	char alientype[MAX_VAR];	/* type of alien */ /* FIXME: alienType_t here */
-	int amount_alive;			/* Amount of live captured aliens. */
-	int amount_dead;			/* Amount of alien corpses. */
+	int idx;			/**< self link */
+	char alientype[MAX_VAR];	/**< type of alien */ /* FIXME: alienType_t here */
+	int amount_alive;			/**< Amount of live captured aliens. */
+	int amount_dead;			/**< Amount of alien corpses. */
 } aliensCont_t;
 
+/** todo - document me */
 typedef struct aliensTmp {
-	char alientype[MAX_VAR];	/* type of alien */
-	int amount_alive;			/* Amount of live captured aliens. */
-	int amount_dead;			/* Amount of alien corpses. */
+	char alientype[MAX_VAR];	/**< type of alien */
+	int amount_alive;			/**< Amount of live captured aliens. */
+	int amount_dead;			/**< Amount of alien corpses. */
 } aliensTmp_t;
 
 /**

@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 				 * Needs to be synced with MAX_TECHLINKS in q_shared.h */
 
 
+/** @brief The status of a research (per tech) */
 typedef enum researchStatus_s {
 	RS_NONE,
 	RS_RUNNING,
@@ -42,6 +43,7 @@ typedef enum researchStatus_s {
 	RS_FINISH
 } researchStatus_t;
 
+/** @brief Types of research topics */
 typedef enum researchType_s {
 	RS_TECH,
 	RS_WEAPON,
@@ -87,55 +89,56 @@ typedef struct markResearched_s {
 	int numDefinitions;
 } markResearched_t;
 
+/** @brief This is the technology parsed from research.ufo */
 typedef struct technology_s {
-	char id[MAX_VAR];		/* Short (unique) id/name. */
-	int idx;			/* Self-link in the global list */
-	char name[MAX_VAR];		/* Full name of this technology. */
-	char description[MAX_VAR];	/* Description of researched item. Short text-id to get the full text via gettext. */
-	char pre_description[MAX_VAR];	/* Description of item before it's researched. Short text-id to get the full text via gettext. */
-	researchType_t type;		/* Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
+	char id[MAX_VAR];		/**< Short (unique) id/name. */
+	int idx;			/**< Self-link in the global list */
+	char name[MAX_VAR];		/**< Full name of this technology. */
+	char description[MAX_VAR];	/**< Description of researched item. Short text-id to get the full text via gettext. */
+	char pre_description[MAX_VAR];	/**< Description of item before it's researched. Short text-id to get the full text via gettext. */
+	researchType_t type;		/**< Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
 
-	requirements_t require_AND;	/* A list of requirements that ALL need to be met (= AND-related) See struct above. */
-	requirements_t require_OR;	/* A list of requirements where ANY need to be met (= OR-related) See struct above. */
-	qboolean statusCollected;	/* Did we loot any items of this tech?
+	requirements_t require_AND;	/**< A list of requirements that ALL need to be met (= AND-related) See struct above. */
+	requirements_t require_OR;	/**< A list of requirements where ANY need to be met (= OR-related) See struct above. */
+	qboolean statusCollected;	/**< Did we loot any items of this tech?
 					 * This is updated from the info stored in the require_OR and require_AND lists.
 					 * See RS_CheckCollected and RS_CheckAllCollected. */
 
-	char provides[MAX_VAR];		/* The item that this technology enables. */
-	float overalltime, time;	/* The time that is needed to research this tech. (in days).
+	char provides[MAX_VAR];		/**< The item that this technology enables. */
+	float overalltime, time;	/**< The time that is needed to research this tech. (in days).
 					 * "overalltime" stays always the same,
 					 * "time" will be modified when it is under research.*/
-	int delay;			/* TODO: Number in days the system should wait until the tech is available for research.
+	int delay;			/**< TODO: Number in days the system should wait until the tech is available for research.
 					 * Starting from the first time all other dependencies have been fulfilled and
 					 * counting only if a day has passed and they still are met. */
-	
-	researchStatus_t statusResearch;	/* Current status of the research. */
 
-	int base_idx;				/* The base this tech is researched in. */
-	int scientists;				/* How many scientists are researching this tech. */
+	researchStatus_t statusResearch;	/**< Current status of the research. */
+
+	int base_idx;				/**< The base this tech is researched in. */
+	int scientists;				/**< How many scientists are researching this tech. */
 
 	char image_top[MAX_VAR];
 	char image_bottom[MAX_VAR];
 	char mdl_top[MAX_QPATH];
 	char mdl_bottom[MAX_QPATH];
 
-	byte statusResearchable;	/* Is this item researchable? */
+	byte statusResearchable;	/**< Is this item researchable? */
 
-	int produceTime;			/* How many days the production of this items runs. */
-	requirements_t require_for_production;	/* A list of items that are needed (and used up) on production of _this_ item.
+	int produceTime;			/**< How many days the production of this items runs. */
+	requirements_t require_for_production;	/**< A list of items that are needed (and used up) on production of _this_ item.
 						 * Only "item"-type is allowed.
 						 * All requirements need to be fulfilled in order for _one_ item to be produced.
 						 * This check is done for each item.*/
 
-	int preResearchedDateDay, preResearchedDateMonth, preResearchedDateYear; /* Date for ufopedia. */
-	int researchedDateDay, researchedDateMonth, researchedDateYear; /* Date for ufopedia. */
+	int preResearchedDateDay, preResearchedDateMonth, preResearchedDateYear; /**< Date for ufopedia. */
+	int researchedDateDay, researchedDateMonth, researchedDateYear; /**< Date for ufopedia. */
 
-	markResearched_t markResearched;	/* Mark as researched at parsing state - but i only know the date if we already started a campaign. */
+	markResearched_t markResearched;	/**< Mark as researched at parsing state - but i only know the date if we already started a campaign. */
 
 	/* Pedia info */
-	int up_chapter;			/* Ufopedia chapter as stored in research.ufo. */
-	int prev;			/* Previous tech in pedia. */
-	int next;			/* Next tech in pedia. */
+	int up_chapter;			/**< Ufopedia chapter as stored in research.ufo. */
+	int prev;			/**< Previous tech in pedia. */
+	int next;			/**< Next tech in pedia. */
 } technology_t;
 
 void RS_ResetResearch(void);

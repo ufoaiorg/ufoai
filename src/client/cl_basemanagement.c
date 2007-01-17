@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-vec2_t newBasePos;
+vec3_t newBasePos;
 static cvar_t *mn_base_title;
 static cvar_t *mn_base_count;
 
@@ -2595,7 +2595,7 @@ void CL_DropshipReturned(base_t* base, aircraft_t* aircraft)
  * @brief Check if the item has been collected (i.e it is in the storage .. and currently market) in the given base.
  * @param[in] item_idx The index of the item in the item-list.
  * @param[in] base The base to search in.
- * @return amount Number of available items in base 
+ * @return amount Number of available items in base
  * @todo TODO/FIXME: Make this work _only_ on base-storage, no market. See the comment in the code.
  * @note Formerly known as RS_ItemInBase.
  */
@@ -2628,7 +2628,7 @@ int B_ItemInBase(int item_idx, base_t *base)
  * @brief Check if the item has been collected (i.e it is in the storage) in the given base.
  * @param[in] item_idx The index of the item in the item-list.
  * @param[in] base The base to search in.
- * @return amount Number of available items in base 
+ * @return amount Number of available items in base
  * @note Duplicate of B_ItemInBase with the correct behaviour as the function name implies.
  * @sa B_ItemInBase
  * @todo Use this fucntion instead of B_ItemInBase everywhere.
