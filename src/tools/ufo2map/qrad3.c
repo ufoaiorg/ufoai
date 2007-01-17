@@ -80,7 +80,7 @@ MISC
 /**
  * @brief
  */
-void MakeBackplanes (void)
+static void MakeBackplanes (void)
 {
 	int i;
 
@@ -150,7 +150,7 @@ TRANSFER SCALES
 /**
  * @brief
  */
-int	PointInLeafnum (vec3_t point)
+static int PointInLeafnum (vec3_t point)
 {
 	int nodenum;
 	vec_t dist;

@@ -25,25 +25,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qrad.h"
 
-vec3_t	texture_reflectivity[MAX_MAP_TEXINFO];
+static vec3_t texture_reflectivity[MAX_MAP_TEXINFO];
 
 /*
 ===================================================================
-
-  TEXTURE LIGHT VALUES
-
+TEXTURE LIGHT VALUES
 ===================================================================
 */
 
 /**
-  *	@brief
-  */
-void CalcTextureReflectivity (void)
+ *	@brief
+ */
+extern void CalcTextureReflectivity (void)
 {
-	int				i, j;
+	int i, j;
 
-	byte			*palette;
-	char			path[1024];
+	byte *palette;
+	char path[1024];
 
 	sprintf (path, "%spics/colormap.pcx", gamedir);
 
@@ -55,9 +53,9 @@ void CalcTextureReflectivity (void)
 	texture_reflectivity[0][1] = 0.5;
 	texture_reflectivity[0][2] = 0.5;
 
-	for (i=0 ; i<numtexinfo ; i++) {
+	for (i = 0; i < numtexinfo; i++) {
 		/* see if an earlier texinfo allready got the value */
-		for (j=0 ; j<i ; j++)
+		for (j = 0; j < i; j++)
 			if (!strcmp (texinfo[i].texture, texinfo[j].texture)) {
 				VectorCopy (texture_reflectivity[j], texture_reflectivity[i]);
 				break;
@@ -73,16 +71,14 @@ void CalcTextureReflectivity (void)
 
 /*
 =======================================================================
-
 MAKE FACES
-
 =======================================================================
 */
 
 /**
-  *	@brief
-  */
-winding_t	*WindingFromFace (dface_t *f)
+ *	@brief
+ */
+static winding_t *WindingFromFace (dface_t *f)
 {
 	int			i;
 	int			se;
@@ -93,7 +89,7 @@ winding_t	*WindingFromFace (dface_t *f)
 	w = AllocWinding (f->numedges);
 	w->numpoints = f->numedges;
 
-	for (i=0 ; i<f->numedges ; i++) {
+	for (i = 0; i < f->numedges; i++) {
 		se = dsurfedges[f->firstedge + i];
 		if (se < 0)
 			v = dedges[-se].v[1];
@@ -110,9 +106,9 @@ winding_t	*WindingFromFace (dface_t *f)
 }
 
 /**
-  *	@brief
-  */
-void BaseLightForFace (dface_t *f, vec3_t color)
+ *	@brief
+ */
+static void BaseLightForFace (dface_t *f, vec3_t color)
 {
 	texinfo_t	*tx;
 
@@ -126,11 +122,11 @@ void BaseLightForFace (dface_t *f, vec3_t color)
 	VectorScale (texture_reflectivity[f->texinfo], tx->value, color);
 }
 
+static float totalarea;
 /**
-  *	@brief
-  */
-float	totalarea;
-void MakePatchForFace (int fn, winding_t *w)
+ *	@brief
+ */
+static void MakePatchForFace (int fn, winding_t *w)
 {
 	dface_t *f;
 	float	area;
@@ -196,11 +192,11 @@ void MakePatchForFace (int fn, winding_t *w)
 	num_patches++;
 }
 
-
+#if 0
 /**
-  *	@brief
-  */
-entity_t *EntityForModel (int modnum)
+ *	@brief
+ */
+static entity_t *EntityForModel (int modnum)
 {
 	int		i;
 	char	*s;
@@ -216,11 +212,12 @@ entity_t *EntityForModel (int modnum)
 
 	return &entities[0];
 }
+#endif
 
 /**
-  *	@brief
-  */
-void MakePatches (void)
+ *	@brief
+ */
+extern void MakePatches (void)
 {
 	int		i, j, k;
 	dface_t	*f;
@@ -231,16 +228,16 @@ void MakePatches (void)
 
 	qprintf ("%i faces\n", numfaces);
 
-	for (i=0 ; i<nummodels ; i++) {
+	for (i = 0; i < nummodels; i++) {
 		mod = &dmodels[i];
 		VectorCopy (vec3_origin, origin);
 
-		for (j=0 ; j<mod->numfaces ; j++) {
+		for (j = 0; j < mod->numfaces; j++) {
 			fn = mod->firstface + j;
 			VectorCopy (origin, face_offset[fn]);
 			f = &dfaces[fn];
 			w = WindingFromFace (f);
-			for (k=0 ; k<w->numpoints ; k++)
+			for (k = 0; k < w->numpoints; k++)
 				VectorAdd (w->p[k], origin, w->p[k]);
 			MakePatchForFace (fn, w);
 		}
@@ -251,16 +248,14 @@ void MakePatches (void)
 
 /*
 =======================================================================
-
 SUBDIVIDE
-
 =======================================================================
 */
 
 /**
-  *	@brief
-  */
-void FinishSplit (patch_t *patch, patch_t *newp)
+ *	@brief
+ */
+static void FinishSplit (patch_t *patch, patch_t *newp)
 {
 	dleaf_t		*leaf;
 
@@ -293,9 +288,9 @@ void FinishSplit (patch_t *patch, patch_t *newp)
 }
 
 /**
-  *	@brief Chops the patch only if its local bounds exceed the max size
-  */
-void SubdividePatch (patch_t *patch)
+ *	@brief Chops the patch only if its local bounds exceed the max size
+ */
+static void SubdividePatch (patch_t *patch)
 {
 	winding_t *w, *o1, *o2;
 	vec3_t	mins, maxs, total;
@@ -308,8 +303,8 @@ void SubdividePatch (patch_t *patch)
 	w = patch->winding;
 	mins[0] = mins[1] = mins[2] = 99999;
 	maxs[0] = maxs[1] = maxs[2] = -99999;
-	for (i=0 ; i<w->numpoints ; i++)
-		for (j=0 ; j<3 ; j++) {
+	for (i = 0; i < w->numpoints; i++)
+		for (j = 0; j < 3; j++) {
 			v = w->p[i][j];
 			if (v < mins[j])
 				mins[j] = v;
@@ -317,7 +312,7 @@ void SubdividePatch (patch_t *patch)
 				maxs[j] = v;
 		}
 	VectorSubtract (maxs, mins, total);
-	for (i=0 ; i<3 ; i++)
+	for (i = 0; i < 3; i++)
 		if (total[i] > (subdiv+1) )
 			break;
 	/* no splitting needed */
@@ -352,7 +347,7 @@ void SubdividePatch (patch_t *patch)
 /**
  *	@brief Chops the patch by a global grid
  */
-void DicePatch (patch_t *patch)
+static void DicePatch (patch_t *patch)
 {
 	winding_t *w, *o1, *o2;
 	vec3_t	mins, maxs;
@@ -363,7 +358,7 @@ void DicePatch (patch_t *patch)
 
 	w = patch->winding;
 	WindingBounds (w, mins, maxs);
-	for (i=0 ; i<3 ; i++)
+	for (i = 0; i < 3; i++)
 		if (floor((mins[i]+1)/subdiv) < floor((maxs[i]-1)/subdiv))
 			break;
 	/* no splitting needed */
@@ -396,18 +391,18 @@ void DicePatch (patch_t *patch)
 
 
 /**
-  *	@brief
-  */
-void SubdividePatches (void)
+ *	@brief
+ */
+extern void SubdividePatches (void)
 {
-	int		i, num;
+	int i, num;
 
 	if (subdiv < 1)
 		return;
 
 	/* because the list will grow */
 	num = num_patches;
-	for (i=0 ; i<num ; i++)
+	for (i = 0; i < num ; i++)
 		DicePatch (&patches[i]);
 	qprintf ("%i patches after subdivision\n", num_patches);
 }

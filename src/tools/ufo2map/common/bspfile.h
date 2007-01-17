@@ -14,9 +14,6 @@ extern	byte		droutedata[MAX_MAP_ROUTING];
 extern	int			lightdatasize;
 extern	byte		dlightdata[MAX_MAP_LIGHTING];
 
-extern	int			entdatasize;
-extern	char		dentdata[MAX_MAP_ENTSTRING];
-
 extern	int			numleafs;
 extern	dleaf_t		dleafs[MAX_MAP_LEAFS];
 
@@ -59,12 +56,10 @@ extern	dbrush_t	dbrushes[MAX_MAP_BRUSHES];
 extern	int			numbrushsides;
 extern	dbrushside_t	dbrushsides[MAX_MAP_BRUSHSIDES];
 
-extern	byte		dpop[256];
-
-void	LoadBSPFile (char *filename);
-void	LoadBSPFileTexinfo (char *filename);	/* just for qdata */
-void	WriteBSPFile (char *filename);
-void	PrintBSPFileSizes (void);
+void LoadBSPFile (char *filename);
+void LoadBSPFileTexinfo (char *filename);	/* just for qdata */
+void WriteBSPFile (char *filename);
+void PrintBSPFileSizes (void);
 
 /*=============== */
 
@@ -103,9 +98,7 @@ void 	GetVectorForKey (entity_t *ent, char *key, vec3_t vec);
 
 epair_t *ParseEpair (void);
 
-void PrintEntity (entity_t *ent);
-
 byte *CompressRouting( byte *dataStart, byte *destStart, int l );
-int DeCompressRouting( byte **source, byte *dataStart );
+/*int DeCompressRouting( byte **source, byte *dataStart );*/
 
 #endif /* _BSP_FILE */

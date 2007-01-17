@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qbsp.h"
 
-int		c_nofaces;
-int		c_facenodes;
+static int c_nofaces;
+static int c_facenodes;
 
 
 /*
@@ -35,13 +35,13 @@ ONLY SAVE OUT PLANES THAT ARE ACTUALLY USED AS NODES
 =========================================================
 */
 
-int		planeused[MAX_MAP_PLANES];
+static int planeused[MAX_MAP_PLANES];
 
 /**
  * @brief There is no oportunity to discard planes, because all of the original
  * brushes will be saved in the map.
  */
-void EmitPlanes (void)
+extern void EmitPlanes (void)
 {
 	int			i;
 	dplane_t	*dp;
@@ -63,7 +63,7 @@ void EmitPlanes (void)
 /**
  * @brief
  */
-void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
+static void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
 {
 	int			i;
 	int			facenum;
@@ -100,7 +100,7 @@ void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
 /**
  * @brief
  */
-void EmitLeaf (node_t *node)
+static void EmitLeaf (node_t *node)
 {
 	dleaf_t		*leaf_p;
 	portal_t	*p;
@@ -127,7 +127,7 @@ void EmitLeaf (node_t *node)
 
 	/* write the leafbrushes */
 	leaf_p->firstleafbrush = numleafbrushes;
-	for (b=node->brushlist ; b ; b=b->next) {
+	for (b = node->brushlist; b; b = b->next) {
 		if (numleafbrushes >= MAX_MAP_LEAFBRUSHES)
 			Error ("MAX_MAP_LEAFBRUSHES");
 
@@ -148,7 +148,7 @@ void EmitLeaf (node_t *node)
 
 	leaf_p->firstleafface = numleaffaces;
 
-	for (p = node->portals ; p ; p = p->next[s]) {
+	for (p = node->portals; p; p = p->next[s]) {
 		s = (p->nodes[1] == node);
 		f = p->face[s];
 		if (!f)
@@ -164,7 +164,7 @@ void EmitLeaf (node_t *node)
 /**
  * @brief
  */
-void EmitFace (face_t *f)
+static void EmitFace (face_t *f)
 {
 	dface_t	*df;
 	int		i;
@@ -207,7 +207,7 @@ void EmitFace (face_t *f)
 /**
  * @brief
  */
-int EmitDrawNode_r (node_t *node)
+static int EmitDrawNode_r (node_t *node)
 {
 	dnode_t	*n;
 	face_t	*f;
@@ -240,7 +240,7 @@ int EmitDrawNode_r (node_t *node)
 	else
 		c_facenodes++;
 
-	for (f=node->faces ; f ; f=f->next)
+	for (f = node->faces; f; f = f->next)
 		EmitFace (f);
 
 	n->numfaces = numfaces - n->firstface;
@@ -263,7 +263,7 @@ int EmitDrawNode_r (node_t *node)
 /**
  * @brief
  */
-void WriteBSP (node_t *headnode)
+extern void WriteBSP (node_t *headnode)
 {
 	int		oldfaces;
 
@@ -284,14 +284,14 @@ void WriteBSP (node_t *headnode)
 /**
  * @brief
  */
-void SetModelNumbers (void)
+extern void SetModelNumbers (void)
 {
 	int		i;
 	int		models;
 	char	value[10];
 
 	models = 1;
-	for (i=1 ; i<num_entities ; i++) {
+	for (i = 1; i < num_entities; i++) {
 		if (entities[i].numbrushes) {
 			sprintf (value, "*%i", models);
 			models++;
@@ -305,7 +305,7 @@ void SetModelNumbers (void)
 /**
  * @brief
  */
-void SetLightStyles (void)
+extern void SetLightStyles (void)
 {
 	int		stylenum;
 	char	*t;
@@ -318,7 +318,7 @@ void SetLightStyles (void)
 	/* must have a unique style number generated for it */
 
 	stylenum = 0;
-	for (i=1 ; i<num_entities ; i++) {
+	for (i = 1; i < num_entities; i++) {
 		e = &entities[i];
 
 		t = ValueForKey (e, "classname");
@@ -329,7 +329,7 @@ void SetLightStyles (void)
 			continue;
 
 		/* find this targetname */
-		for (j=0 ; j<stylenum ; j++)
+		for (j = 0; j < stylenum; j++)
 			if (!strcmp (lighttargets[j], t))
 				break;
 		if (j == stylenum) {
@@ -346,8 +346,9 @@ void SetLightStyles (void)
 
 /**
  * @brief
+ * @note routing.c - commented out
  */
-void EmitBrushes (void)
+static void EmitBrushes (void)
 {
 	int			i, j, bnum, s, x;
 	dbrush_t	*db;
@@ -360,14 +361,14 @@ void EmitBrushes (void)
 	numbrushsides = 0;
 	numbrushes = nummapbrushes;
 
-	for (bnum=0 ; bnum<nummapbrushes ; bnum++) {
+	for (bnum = 0; bnum < nummapbrushes; bnum++) {
 		b = &mapbrushes[bnum];
 		db = &dbrushes[bnum];
 
 		db->contents = b->contents;
 		db->firstside = numbrushsides;
 		db->numsides = b->numsides;
-		for (j=0 ; j<b->numsides ; j++) {
+		for (j = 0; j < b->numsides; j++) {
 			if (numbrushsides == MAX_MAP_BRUSHSIDES)
 				Error ("MAX_MAP_BRUSHSIDES");
 			cp = &dbrushsides[numbrushsides];
@@ -377,8 +378,8 @@ void EmitBrushes (void)
 		}
 
 		/* add any axis planes not contained in the brush to bevel off corners */
-		for (x=0 ; x<3 ; x++)
-			for (s=-1 ; s<=1 ; s+=2) {
+		for (x = 0; x < 3; x++)
+			for (s = -1 ; s <= 1; s += 2) {
 				/* add the plane */
 				VectorCopy (vec3_origin, normal);
 				normal[x] = s;
@@ -387,7 +388,7 @@ void EmitBrushes (void)
 				else
 					dist = b->maxs[x];
 				planenum = FindFloatPlane (normal, dist);
-				for (i=0 ; i<b->numsides ; i++)
+				for (i = 0; i < b->numsides; i++)
 					if (b->original_sides[i].planenum == planenum)
 						break;
 				if (i == b->numsides) {
@@ -408,7 +409,7 @@ void EmitBrushes (void)
  * @brief
  * @sa EndBSPFile
  */
-void BeginBSPFile (void)
+extern void BeginBSPFile (void)
 {
 	/* these values may actually be initialized */
 	/* if the file existed when loaded, so clear them explicitly */
@@ -437,7 +438,7 @@ void BeginBSPFile (void)
  * @brief
  * @sa BeginBSPFile
  */
-void EndBSPFile (void)
+extern void EndBSPFile (void)
 {
 	char	path[1024];
 /*	int		len; */
@@ -455,12 +456,13 @@ void EndBSPFile (void)
 
 
 static int firstmodleaf = 0;
-extern	int firstmodeledge;
-extern	int	firstmodelface;
+extern int firstmodeledge;
+extern int firstmodelface;
 /**
  * @brief
+ * @sa EndModel
  */
-void BeginModel (void)
+extern void BeginModel (void)
 {
 	dmodel_t	*mod;
 	int			start, end;
@@ -486,7 +488,7 @@ void BeginModel (void)
 	end = start + e->numbrushes;
 	ClearBounds (mins, maxs);
 
-	for (j=start ; j<end ; j++) {
+	for (j = start; j < end; j++) {
 		b = &mapbrushes[j];
 		if (!b->numsides)
 			continue;	/* not a real brush (origin brush) */
@@ -501,8 +503,9 @@ void BeginModel (void)
 
 /**
  * @brief
+ * @sa BeginModel
  */
-void EndModel (void)
+extern void EndModel (void)
 {
 	dmodel_t	*mod;
 

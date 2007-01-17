@@ -33,13 +33,13 @@ textureref_t textureref[MAX_MAP_TEXTURES];
 /**
  * @brief
  */
-int	FindMiptex (char *name)
+extern int FindMiptex (char *name)
 {
-	int		i;
-	char	path[1024];
-	miptex_t	*mt;
+	int i;
+	char path[1024];
+	miptex_t *mt;
 
-	for (i=0 ; i<nummiptex ; i++)
+	for (i = 0; i < nummiptex; i++)
 		if (!strcmp (name, textureref[i].name)) {
 			return i;
 		}
@@ -90,7 +90,7 @@ static void TextureAxisFromPlane(plane_t *pln, vec3_t xv, vec3_t yv)
 	best = 0;
 	bestaxis = 0;
 
-	for (i=0 ; i<6 ; i++) {
+	for (i = 0; i < 6; i++) {
 		dot = DotProduct (pln->normal, baseaxis[i*3]);
 		if (dot > best) {
 			best = dot;
@@ -106,17 +106,16 @@ static void TextureAxisFromPlane(plane_t *pln, vec3_t xv, vec3_t yv)
 /**
  * @brief
  */
-int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin)
+extern int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin)
 {
-	vec3_t	vecs[2];
-	int		sv, tv;
-	vec_t	ang, sinv, cosv;
-	vec_t	ns, nt;
-	texinfo_t	tx, *tc;
-	int		i, j, k;
-	float	shift[2];
-	brush_texture_t		anim;
-	int				mt;
+	vec3_t vecs[2];
+	int sv, tv;
+	vec_t ang, sinv, cosv;
+	vec_t ns, nt;
+	texinfo_t tx, *tc;
+	int i, j, k, mt;
+	float shift[2];
+	brush_texture_t anim;
 
 	if (!bt->name[0])
 		return 0;
@@ -167,15 +166,15 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin)
 	else
 		tv = 2;
 
-	for (i=0 ; i<2 ; i++) {
+	for (i = 0; i < 2; i++) {
 		ns = cosv * vecs[i][sv] - sinv * vecs[i][tv];
 		nt = sinv * vecs[i][sv] +  cosv * vecs[i][tv];
 		vecs[i][sv] = ns;
 		vecs[i][tv] = nt;
 	}
 
-	for (i=0 ; i<2 ; i++)
-		for (j=0 ; j<3 ; j++)
+	for (i = 0; i < 2; i++)
+		for (j = 0; j < 3; j++)
 			tx.vecs[i][j] = vecs[i][j] / bt->scale[i];
 
 	tx.vecs[0][3] = bt->shift[0] + shift[0];
@@ -185,15 +184,15 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin)
 
 	/* find the texinfo */
 	tc = texinfo;
-	for (i=0 ; i<numtexinfo ; i++, tc++) {
+	for (i = 0; i < numtexinfo; i++, tc++) {
 		if (tc->flags != tx.flags)
 			continue;
 		if (tc->value != tx.value)
 			continue;
-		for (j=0 ; j<2 ; j++) {
+		for (j = 0; j < 2; j++) {
 			if (strcmp (tc->texture, tx.texture))
 				goto skip;
-			for (k=0 ; k<4 ; k++) {
+			for (k = 0; k < 4; k++) {
 				if (tc->vecs[j][k] != tx.vecs[j][k])
 					goto skip;
 			}

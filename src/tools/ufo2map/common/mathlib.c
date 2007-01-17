@@ -51,7 +51,7 @@ qboolean VectorCompare (vec3_t v1, vec3_t v2)
 {
 	int		i;
 
-	for (i=0 ; i<3 ; i++)
+	for (i = 0; i < 3; i++)
 		if (fabs(v1[i]-v2[i]) > EQUAL_EPSILON)
 			return qfalse;
 
@@ -65,7 +65,7 @@ qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp)
 {
 	int		i;
 
-	for (i=0 ; i<3 ; i++)
+	for (i = 0; i < 3; i++)
 		if (fabs(v1[i]-comp[i]) < fabs(v2[i]-comp[i]) )
 			return qtrue;
 
@@ -222,7 +222,7 @@ void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs)
 	int		i;
 	vec_t	val;
 
-	for (i=0 ; i<3 ; i++) {
+	for (i = 0; i < 3; i++) {
 		val = v[i];
 		if (val < mins[i])
 			mins[i] = val;

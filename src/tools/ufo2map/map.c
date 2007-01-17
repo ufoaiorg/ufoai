@@ -737,7 +737,7 @@ static qboolean ParseMapEntity (void)
 		return qfalse;
 
 	if (strcmp (token, "{") )
-		Error ("ParseEntity: { not found");
+		Error ("ParseMapEntity: { not found");
 
 	if (num_entities == MAX_MAP_ENTITIES)
 		Error ("num_entities == MAX_MAP_ENTITIES");
@@ -755,7 +755,7 @@ static qboolean ParseMapEntity (void)
 
 	do {
 		if (!GetToken (qtrue))
-			Error ("ParseEntity: EOF without closing brace");
+			Error ("ParseMapEntity: EOF without closing brace");
 		if (!strcmp (token, "}") )
 			break;
 		if (!strcmp (token, "{") )
@@ -771,9 +771,9 @@ static qboolean ParseMapEntity (void)
 
 	/* if there was an origin brush, offset all of the planes and texinfo */
 	if (mapent->origin[0] || mapent->origin[1] || mapent->origin[2]) {
-		for (i=0 ; i<mapent->numbrushes ; i++) {
+		for (i = 0; i < mapent->numbrushes; i++) {
 			b = &mapbrushes[mapent->firstbrush + i];
-			for (j=0 ; j<b->numsides ; j++) {
+			for (j = 0; j < b->numsides; j++) {
 				s = &b->original_sides[j];
 				newdist = mapplanes[s->planenum].dist -
 					DotProduct (mapplanes[s->planenum].normal, mapent->origin);
@@ -797,7 +797,7 @@ static qboolean ParseMapEntity (void)
 	/* areaportal entities move their brushes, but don't eliminate */
 	/* the entity */
 	if (!strcmp ("func_areaportal", ValueForKey (mapent, "classname"))) {
-		char	str[128];
+		char str[128];
 
 		if (mapent->numbrushes != 1)
 			Error ("Entity %i: func_areaportal can only be a single brush", num_entities-1);
@@ -838,13 +838,13 @@ static void TestExpandBrushes (void)
 
 	fprintf (f, "{\n\"classname\" \"worldspawn\"\n");
 
-	for (bn=0 ; bn<nummapbrushes ; bn++) {
+	for (bn = 0; bn < nummapbrushes; bn++) {
 		brush = &mapbrushes[bn];
 		fprintf (f, "{\n");
-		for (i=0 ; i<brush->numsides ; i++) {
+		for (i = 0; i < brush->numsides; i++) {
 			s = brush->original_sides + i;
 			dist = mapplanes[s->planenum].dist;
-			for (j=0 ; j<3 ; j++)
+			for (j = 0; j < 3; j++)
 				dist += fabs( 16 * mapplanes[s->planenum].normal[j] );
 
 			w = BaseWindingForPlane (mapplanes[s->planenum].normal, dist);
@@ -871,7 +871,7 @@ static void TestExpandBrushes (void)
  */
 extern void LoadMapFile (char *filename)
 {
-	int		i;
+	int i;
 
 	qprintf ("--- LoadMapFile ---\n");
 
@@ -883,14 +883,14 @@ extern void LoadMapFile (char *filename)
 	while (ParseMapEntity ());
 
 	ClearBounds (map_mins, map_maxs);
-	for (i=0 ; i<entities[0].numbrushes ; i++) {
+	for (i = 0; i < entities[0].numbrushes ; i++) {
 		if (mapbrushes[i].mins[0] > 4096)
 			continue;	/* no valid points */
 		AddPointToBounds (mapbrushes[i].mins, map_mins, map_maxs);
 		AddPointToBounds (mapbrushes[i].maxs, map_mins, map_maxs);
 	}
 
-	for ( i = 0; i < nummapbrushes; i++ )
+	for (i = 0; i < nummapbrushes; i++)
 		mapbrushes[i].finished = qfalse;
 
 	/* save a copy of the brushes */

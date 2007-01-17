@@ -44,12 +44,14 @@ several games based on the Quake III Arena engine, in the form of "Q3Map2."
  */
 static void ConvertSurface (FILE *f, entity_t* e, int entity_num, int surfaceNum, vec3_t origin)
 {
-	mapbrush_t		*b;
-	int				i, v, face, a, c;
-	vec3_t			normal;
-	char			name[ 1024 ];
+	mapbrush_t *mb;
+	int i, face, a, b, c;
+/*	int v;*/
+/*	vec3_t normal;*/
+	char name[ 1024 ];
+	dvertex_t *dv;
 
-	b = &mapbrushes[surfaceNum];
+	mb = &mapbrushes[surfaceNum];
 
 	/* print object header for each dsurf */
 	sprintf(name, "mat%dmodel%dsurf%d", surfaceNum, entity_num, surfaceNum );
@@ -80,16 +82,14 @@ static void ConvertSurface (FILE *f, entity_t* e, int entity_num, int surfaceNum
 		break;
 	}*/
 
-#if 0
 	/* export vertex xyz */
 	fprintf(f, "\t\t*MESH_VERTEX_LIST\t{\r\n");
-	for (i = 0; i < ds->numVerts; i++) {
-		v = i + ds->firstVert;
-		dv = &bspDrawVerts[v];
-		fprintf(f, "\t\t\t*MESH_VERTEX\t%d\t%f\t%f\t%f\r\n", i, dv->xyz[0], dv->xyz[1], dv->xyz[2]);
+	for (i = 0, dv = dvertexes; i < numvertexes; i++, dv++) {
+		fprintf(f, "\t\t\t*MESH_VERTEX\t%d\t%f\t%f\t%f\r\n", i, dv->point[0], dv->point[1], dv->point[2]);
 	}
 	fprintf(f, "\t\t}\r\n");
 
+#if 0
 	/* export vertex normals */
 	fprintf(f, "\t\t*MESH_NORMALS\t{\r\n");
 	for (i = 0; i < ds->numIndexes; i += 3) {
@@ -109,42 +109,44 @@ static void ConvertSurface (FILE *f, entity_t* e, int entity_num, int surfaceNum
 		fprintf(f, "\t\t\t*MESH_VERTEXNORMAL\t%d\t%f\t%f\t%f\r\n", i, dv->normal[ 0 ], dv->normal[ 1 ], dv->normal[ 2 ] );
 	}
 	fprintf(f, "\t\t}\r\n" );
+#endif
 
 	/* export faces */
 	fprintf(f, "\t\t*MESH_FACE_LIST\t{\r\n" );
-	for ( i = 0; i < ds->numIndexes; i += 3 ) {
+	for (i = 0; i < numfaces; i += 3) {
 		face = (i / 3);
-		a = bspDrawIndexes[ i + ds->firstIndex ];
-		c = bspDrawIndexes[ i + ds->firstIndex + 1 ];
-		b = bspDrawIndexes[ i + ds->firstIndex + 2 ];
+		a = dedges[dfaces[i].firstedge].v[0];
+		c = dedges[dfaces[i].firstedge].v[1];
+		b = dedges[dfaces[i].firstedge].v[2];
 		fprintf( f, "\t\t\t*MESH_FACE\t%d\tA:\t%d\tB:\t%d\tC:\t%d\tAB:\t1\tBC:\t1\tCA:\t1\t*MESH_SMOOTHING\t0\t*MESH_MTLID\t0\r\n",
 			face, a, b, c );
 	}
 	fprintf( f, "\t\t}\r\n" );
 
+#if 0
 	/* export vertex st */
-	fprintf(f, "\t\t*MESH_NUMTVERTEX\t%d\r\n", ds->numVerts );
+	fprintf(f, "\t\t*MESH_NUMTVERTEX\t%d\r\n", numvertexes );
 	fprintf(f, "\t\t*MESH_TVERTLIST\t{\r\n" );
-	for ( i = 0; i < ds->numVerts; i++ ) {
+	for ( i = 0; i < numvertexes; i++ ) {
 		v = i + ds->firstVert;
 		dv = &bspDrawVerts[ v ];
 		fprintf(f, "\t\t\t*MESH_TVERT\t%d\t%f\t%f\t%f\r\n", i, dv->st[ 0 ], (1.0 - dv->st[ 1 ]), 1.0f );
 	}
 	fprintf(f, "\t\t}\r\n" );
+#endif
 
 	/* export texture faces */
-	fprintf(f, "\t\t*MESH_NUMTVFACES\t%d\r\n", ds->numIndexes / 3 );
+	fprintf(f, "\t\t*MESH_NUMTVFACES\t%d\r\n", numfaces / 3 );
 	fprintf(f, "\t\t*MESH_TFACELIST\t{\r\n" );
-	for ( i = 0; i < ds->numIndexes; i += 3 ) {
+	for (i = 0; i < numfaces; i += 3) {
 		face = (i / 3);
-		a = bspDrawIndexes[ i + ds->firstIndex ];
-		c = bspDrawIndexes[ i + ds->firstIndex + 1 ];
-		b = bspDrawIndexes[ i + ds->firstIndex + 2 ];
+		a = dedges[dfaces[i].firstedge].v[0];
+		c = dedges[dfaces[i].firstedge].v[1];
+		b = dedges[dfaces[i].firstedge].v[2];
 		fprintf(f, "\t\t\t*MESH_TFACE\t%d\t%d\t%d\t%d\r\n", face, a, b, c );
 	}
 	fprintf(f, "\t\t}\r\n");
 
-#endif
 	/* print mesh footer */
 	fprintf(f, "\t}\r\n");
 
@@ -175,6 +177,7 @@ static void ConvertModel (FILE *f, entity_t* e, int entity_num, vec3_t origin)
 	}
 }
 
+#if 0
 /**
  * @brief exports a bsp shader to an ase chunk
  * @code
@@ -249,28 +252,35 @@ static void ConvertShader( FILE *f, char* image, int imagenum )
 
 	fprintf(f, "\t}\r\n" );
 }
-
+#endif
 
 /**
  * @brief exports an 3d studio ase file from the bsp
  */
 int ConvertBSPToASE( char *bspName )
 {
-	int				i;
-	FILE			*f;
-	entity_t		*e;
-	vec3_t			origin;
-	const char		*key;
-	char			name[ 1024 ], base[ 1024 ];
+	int i;
+	FILE *f;
+	entity_t *e;
+	vec3_t origin;
+	const char *key;
+	char name[1024], base[1024];
 
 	/* note it */
 	printf( "--- Convert BSP to ASE ---\n" );
 
 	/* create the ase filename from the bsp name */
-	strcpy( name, bspName );
+	strcpy(name, bspName);
+
+	StripExtension(name);
+	strcat(name, ".bsp");
+	LoadBSPFile (name);
+	ParseEntities();
+	printf("converting '%s'\n", name);
+
 	StripExtension( name );
-	strcat( name, ".ase" );
-	printf( "writing %s\n", name );
+	strcat(name, ".ase");
+	printf("writing '%s'\n", name);
 
 	ExtractFileBase( bspName, base );
 	strcat( base, ".bsp" );
@@ -295,15 +305,17 @@ int ConvertBSPToASE( char *bspName )
 
 	/* print materials */
 	fprintf( f, "*MATERIAL_LIST\t{\r\n" );
+	fprintf( f, "\t*MATERIAL_COUNT\t%d\r\n", numtexinfo );
+	printf ("...exporting %i materials\n", numtexinfo);
+	for (i = 0; i < numtexinfo; i++) {
 #if 0
-	fprintf( f, "\t*MATERIAL_COUNT\t%d\r\n", numBSPShaders );
-	for( i = 0; i < numBSPShaders; i++ ) {
 		shader = &bspShaders[i];
 		ConvertShader(f, shader, i);
-	}
 #endif
+	}
 	fprintf(f, "}\r\n");
 
+	printf ("...exporting %i entities\n", num_entities);
 	/* walk entity list */
 	for (i = 0; i < num_entities; i++) {
 		/* get entity and model */

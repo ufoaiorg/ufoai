@@ -36,7 +36,7 @@ static int oldleafs, oldleaffaces, oldleafbrushes, oldplanes, oldvertexes, oldno
 /**
  * @brief
  */
-void PushInfo ( void )
+extern void PushInfo ( void )
 {
 	oldleafs = numleafs;
 	oldleaffaces = numleaffaces;
@@ -53,7 +53,7 @@ void PushInfo ( void )
 /**
  * @brief
  */
-void PopInfo ( void )
+extern void PopInfo ( void )
 {
 	numleafs = oldleafs;
 	numleaffaces = oldleaffaces;
@@ -71,14 +71,14 @@ void PopInfo ( void )
 /**
  * @brief
  */
-int BuildNodeChildren( vec3_t mins, vec3_t maxs, int n[3] )
+static int BuildNodeChildren( vec3_t mins, vec3_t maxs, int n[3] )
 {
 	int		node;
 	int		i;
 
 	node = -1;
 
-	for ( i = 0; i < 3; i++ ) {
+	for (i = 0; i < 3; i++) {
 		if ( n[i] == -1 )
 			continue;
 
@@ -123,7 +123,7 @@ int BuildNodeChildren( vec3_t mins, vec3_t maxs, int n[3] )
 /**
  * @brief
  */
-int	ConstructLevelNodes_r( int levelnum, vec3_t cmins, vec3_t cmaxs )
+static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 {
 	bspbrush_t	*list;
 	tree_t		*tree;
@@ -217,7 +217,7 @@ int	ConstructLevelNodes_r( int levelnum, vec3_t cmins, vec3_t cmaxs )
 /**
  * @brief
  */
-void ProcessLevel (int levelnum)
+extern void ProcessLevel (int levelnum)
 {
 	vec3_t		mins, maxs;
 	dmodel_t	*dm;

@@ -29,16 +29,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	MAX_THREADS	64
 
-int dispatch;
-int workcount;
-int oldf;
-qboolean pacifier;
-qboolean threaded;
+static int dispatch;
+static int workcount;
+static int oldf;
+static qboolean pacifier;
+static qboolean threaded;
 
 /**
  * @brief
+ * @sa ThreadWorkerFunction
  */
-int	GetThreadWork (void)
+static int GetThreadWork (void)
 {
 	int	r;
 	int	f;
@@ -71,8 +72,9 @@ void (*workfunction) (unsigned int);
 
 /**
  * @brief
+ * @sa GetThreadWork
  */
-void ThreadWorkerFunction (unsigned int threadnum)
+static void ThreadWorkerFunction (unsigned int threadnum)
 {
 	int		work;
 
@@ -88,7 +90,7 @@ void ThreadWorkerFunction (unsigned int threadnum)
 /**
  * @brief
  */
-void RunThreadsOnIndividual (int workcnt, qboolean showpacifier, void(*func)(unsigned int))
+extern void RunThreadsOnIndividual (int workcnt, qboolean showpacifier, void(*func)(unsigned int))
 {
 	if (numthreads == -1)
 		ThreadSetDefault ();

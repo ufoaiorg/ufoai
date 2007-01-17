@@ -46,13 +46,13 @@ int ConvertBSPToASE (char *bspName);
  * @brief Check for bsping command line parameters
  * @note Some are also used for radiosity (e.g. threads)
  */
-void Check_BSP_Parameter ( int argc, char **argv )
+static void Check_BSP_Parameter ( int argc, char **argv )
 {
 	int i;
 #if defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
 	int nice = 0;
 #endif
-	for (i=1 ; i<argc ; i++) {
+	for (i = 1; i < argc; i++) {
 		if (!strcmp(argv[i],"-threads")) {
 			numthreads = atoi (argv[i+1]);
 			i++;
@@ -155,10 +155,10 @@ void Check_BSP_Parameter ( int argc, char **argv )
 /**
  * @brief Check for radiosity command line parameters
  */
-void Check_RAD_Parameter( int argc, char** argv )
+static void Check_RAD_Parameter( int argc, char** argv )
 {
 	int i;
-	for (i=1 ; i<argc ; i++) {
+	for (i = 1; i < argc; i++) {
 		if (!strcmp(argv[i],"-dump"))
 			dumppatches = qtrue;
 		else if (!strcmp(argv[i],"-bounce")) {

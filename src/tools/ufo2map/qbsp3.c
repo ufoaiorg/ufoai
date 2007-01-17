@@ -55,7 +55,7 @@ int level;
 /**
  * @brief
  */
-void ProcessWorldModel (void)
+static void ProcessWorldModel (void)
 {
 	entity_t	*e;
 	int			i;
@@ -99,7 +99,7 @@ void ProcessWorldModel (void)
 /**
  * @brief
  */
-void ProcessSubModel (void)
+static void ProcessSubModel (void)
 {
 	entity_t	*e;
 	int			start, end;
@@ -137,7 +137,7 @@ void ProcessSubModel (void)
 /**
  * @brief
  */
-void ProcessModels (void)
+extern void ProcessModels (void)
 {
 	BeginBSPFile ();
 

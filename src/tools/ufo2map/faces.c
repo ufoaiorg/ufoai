@@ -56,7 +56,7 @@ static int edge_verts[MAX_MAP_VERTS];
 float subdivide_size = 240;
 
 
-face_t *NewFaceFromFace (face_t *f);
+static face_t *NewFaceFromFace (face_t *f);
 
 #define	HASH_SIZE	64
 
@@ -142,7 +142,7 @@ static int GetVertexnum (vec3_t v)
 	c_totalverts++;
 
 	/* make really close values exactly integral */
-	for (i=0 ; i<3 ; i++) {
+	for (i = 0; i < 3; i++) {
 		if ( fabs(v[i] - (int)(v[i]+0.5)) < INTEGRAL_EPSILON )
 			v[i] = (int)(v[i]+0.5);
 		if (v[i] < -4096 || v[i] > 4096)
@@ -150,8 +150,8 @@ static int GetVertexnum (vec3_t v)
 	}
 
 	/* search for an existing vertex match */
-	for (i=0, dv=dvertexes ; i<numvertexes ; i++, dv++) {
-		for (j=0 ; j<3 ; j++) {
+	for (i = 0, dv = dvertexes; i < numvertexes; i++, dv++) {
+		for (j = 0; j < 3; j++) {
 			d = v[j] - dv->point[j];
 			if ( d > POINT_EPSILON || d < -POINT_EPSILON)
 				break;
@@ -200,7 +200,7 @@ static void FaceFromSuperverts (node_t *node, face_t *f, int base)
 		node->faces = newf;
 
 		newf->numpoints = MAXEDGES;
-		for (i=0 ; i<MAXEDGES ; i++)
+		for (i = 0; i < MAXEDGES; i++)
 			newf->vertexnums[i] = superverts[(i+base)%numsuperverts];
 
 		f->split[1] = NewFaceFromFace (f);
@@ -214,7 +214,7 @@ static void FaceFromSuperverts (node_t *node, face_t *f, int base)
 
 	/* copy the vertexes back to the face */
 	f->numpoints = remaining;
-	for (i=0 ; i<remaining ; i++)
+	for (i = 0; i < remaining; i++)
 		f->vertexnums[i] = superverts[(i+base)%numsuperverts];
 }
 
@@ -231,7 +231,7 @@ static void EmitFaceVertexes (node_t *node, face_t *f)
 		return;
 
 	w = f->w;
-	for (i=0 ; i<w->numpoints ; i++) {
+	for (i = 0; i < w->numpoints; i++) {
 		/* make every point unique */
 		if (noweld) {
 			if (numvertexes == MAX_MAP_VERTS)
@@ -261,10 +261,10 @@ static void EmitVertexes_r (node_t *node)
 	if (node->planenum == PLANENUM_LEAF)
 		return;
 
-	for (f=node->faces ; f ; f=f->next)
+	for (f = node->faces; f; f = f->next)
 		EmitFaceVertexes (node, f);
 
-	for (i=0 ; i<2 ; i++)
+	for (i = 0; i < 2; i++)
 		EmitVertexes_r (node->children[i]);
 }
 
@@ -295,9 +295,9 @@ static void FindEdgeVerts (vec3_t v1, vec3_t v2)
 		y2 = t;
 	}
 	num_edge_verts = 0;
-	for (x=x1 ; x <= x2 ; x++)
-		for (y=y1 ; y <= y2 ; y++)
-			for (vnum=hashverts[y*HASH_SIZE+x] ; vnum ; vnum=vertexchain[vnum])
+	for (x = x1; x <= x2; x++)
+		for (y = y1; y <= y2; y++)
+			for (vnum = hashverts[y*HASH_SIZE+x]; vnum; vnum = vertexchain[vnum])
 				edge_verts[num_edge_verts++] = vnum;
 }
 
@@ -310,7 +310,7 @@ static void FindEdgeVerts (vec3_t v1, vec3_t v2)
 	int		i;
 
 	num_edge_verts = numvertexes-1;
-	for (i=0 ; i<num_edge_verts ; i++)
+	for (i = 0; i < num_edge_verts; i++)
 		edge_verts[i] = i+1;
 }
 #endif
@@ -334,9 +334,9 @@ static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 		return;		/* degenerate edge */
 	}
 
-	for (k=startvert ; k<num_edge_verts ; k++) {
+	for (k = startvert; k < num_edge_verts; k++) {
 		j = edge_verts[k];
-		if (j==p1 || j == p2)
+		if (j == p1 || j == p2)
 			continue;
 
 		VectorCopy (dvertexes[j].point, p);
@@ -383,9 +383,9 @@ static void FixFaceEdges (node_t *node, face_t *f)
 
 	numsuperverts = 0;
 
-	for (i=0 ; i<f->numpoints ; i++) {
+	for (i = 0; i < f->numpoints; i++) {
 		p1 = f->vertexnums[i];
-		p2 = f->vertexnums[(i+1)%f->numpoints];
+		p2 = f->vertexnums[(i+1) % f->numpoints];
 
 		VectorCopy (dvertexes[p1].point, edge_start);
 		VectorCopy (dvertexes[p2].point, e2);
@@ -411,7 +411,7 @@ static void FixFaceEdges (node_t *node, face_t *f)
 	/* we want to pick a vertex that doesn't have tjunctions */
 	/* on either side, which can cause artifacts on trifans, */
 	/* especially underwater */
-	for (i=0 ; i<f->numpoints ; i++) {
+	for (i = 0; i < f->numpoints; i++) {
 		if (count[i] == 1 && count[(i+f->numpoints-1)%f->numpoints] == 1)
 			break;
 	}
@@ -439,10 +439,10 @@ static void FixEdges_r (node_t *node)
 	if (node->planenum == PLANENUM_LEAF)
 		return;
 
-	for (f=node->faces ; f ; f=f->next)
+	for (f = node->faces; f; f = f->next)
 		FixFaceEdges (node, f);
 
-	for (i=0 ; i<2 ; i++)
+	for (i = 0; i < 2; i++)
 		FixEdges_r (node->children[i]);
 }
 
@@ -480,12 +480,12 @@ extern void FixTjuncs (node_t *headnode)
 
 /*======================================================== */
 
-int		c_faces;
+static int c_faces;
 
 /**
  * @brief
  */
-face_t *AllocFace (void)
+static face_t *AllocFace (void)
 {
 	face_t	*f;
 
@@ -499,7 +499,7 @@ face_t *AllocFace (void)
 /**
  * @brief
  */
-face_t *NewFaceFromFace (face_t *f)
+static face_t *NewFaceFromFace (face_t *f)
 {
 	face_t	*newf;
 
@@ -514,7 +514,7 @@ face_t *NewFaceFromFace (face_t *f)
 /**
  * @brief
  */
-void FreeFace (face_t *f)
+extern void FreeFace (face_t *f)
 {
 	if (f->w)
 		FreeWinding (f->w);
@@ -528,7 +528,7 @@ void FreeFace (face_t *f)
  * @note Called by writebsp.
  * @note Don't allow four way edges
  */
-int GetEdge2 (int v1, int v2,  face_t *f)
+extern int GetEdge2 (int v1, int v2,  face_t *f)
 {
 	dedge_t	*edge;
 	int		i;
@@ -536,10 +536,10 @@ int GetEdge2 (int v1, int v2,  face_t *f)
 	c_tryedges++;
 
 	if (!noshare) {
-		for (i=firstmodeledge ; i < numedges ; i++) {
+		for (i = firstmodeledge; i < numedges; i++) {
 			edge = &dedges[i];
 			if (v1 == edge->v[1] && v2 == edge->v[0]
-			&& edgefaces[i][0]->contents == f->contents) {
+				&& edgefaces[i][0]->contents == f->contents) {
 				if (edgefaces[i][1])
 					continue;
 				edgefaces[i][1] = f;
@@ -562,9 +562,7 @@ int GetEdge2 (int v1, int v2,  face_t *f)
 
 /*
 ===========================================================================
-
 FACE MERGING
-
 ===========================================================================
 */
 
@@ -576,9 +574,8 @@ FACE MERGING
  *
  * @return NULL if the faces couldn't be merged, or the new face.
  * @note The originals will NOT be freed.
-=============
-*/
-winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
+ */
+static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
 {
 	vec_t		*p1, *p2, *p3, *p4, *back;
 	winding_t	*newf;
@@ -592,19 +589,19 @@ winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
 	p1 = p2 = NULL;	/* stop compiler warning */
 	j = 0;
 
-	for (i=0 ; i<f1->numpoints ; i++) {
+	for (i = 0; i < f1->numpoints; i++) {
 		p1 = f1->p[i];
-		p2 = f1->p[(i+1)%f1->numpoints];
-		for (j=0 ; j<f2->numpoints ; j++) {
+		p2 = f1->p[(i+1) % f1->numpoints];
+		for (j = 0; j < f2->numpoints; j++) {
 			p3 = f2->p[j];
-			p4 = f2->p[(j+1)%f2->numpoints];
-			for (k=0 ; k<3 ; k++) {
+			p4 = f2->p[(j+1) % f2->numpoints];
+			for (k = 0; k < 3; k++) {
 				if (fabs(p1[k] - p4[k]) > EQUAL_EPSILON)
 					break;
 				if (fabs(p2[k] - p3[k]) > EQUAL_EPSILON)
 					break;
 			}
-			if (k==3)
+			if (k == 3)
 				break;
 		}
 		if (j < f2->numpoints)
@@ -617,12 +614,12 @@ winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
 
 	/* check slope of connected lines */
 	/* if the slopes are colinear, the point can be removed */
-	back = f1->p[(i+f1->numpoints-1)%f1->numpoints];
+	back = f1->p[(i+f1->numpoints-1) % f1->numpoints];
 	VectorSubtract (p1, back, delta);
 	CrossProduct (planenormal, delta, normal);
 	VectorNormalize (normal, normal);
 
-	back = f2->p[(j+2)%f2->numpoints];
+	back = f2->p[(j+2) % f2->numpoints];
 	VectorSubtract (back, p1, delta);
 	dot = DotProduct (delta, normal);
 	/* not a convex polygon */
@@ -647,8 +644,8 @@ winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
 	newf = AllocWinding (f1->numpoints + f2->numpoints);
 
 	/* copy first polygon */
-	for (k=(i+1)%f1->numpoints ; k != i ; k=(k+1)%f1->numpoints) {
-		if (k==(i+1)%f1->numpoints && !keep2)
+	for (k = (i+1) % f1->numpoints; k != i; k = (k+1) % f1->numpoints) {
+		if (k == (i+1) % f1->numpoints && !keep2)
 			continue;
 
 		VectorCopy (f1->p[k], newf->p[newf->numpoints]);
@@ -656,8 +653,8 @@ winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
 	}
 
 	/* copy second polygon */
-	for (l= (j+1)%f2->numpoints ; l != j ; l=(l+1)%f2->numpoints) {
-		if (l==(j+1)%f2->numpoints && !keep1)
+	for (l = (j+1) % f2->numpoints; l != j; l = (l+1) % f2->numpoints) {
+		if (l == (j+1) % f2->numpoints && !keep1)
 			continue;
 		VectorCopy (f2->p[l], newf->p[newf->numpoints]);
 		newf->numpoints++;
@@ -673,7 +670,7 @@ winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
  * @return NULL if the faces couldn't be merged, or the new face.
  * @note The originals will NOT be freed.
  */
-face_t *TryMerge (face_t *f1, face_t *f2, vec3_t planenormal)
+static face_t *TryMerge (face_t *f1, face_t *f2, vec3_t planenormal)
 {
 	face_t		*newf;
 	winding_t	*nw;
@@ -686,7 +683,6 @@ face_t *TryMerge (face_t *f1, face_t *f2, vec3_t planenormal)
 		return NULL;
 	if (f1->contents != f2->contents)
 		return NULL;
-
 
 	nw = TryMergeWinding (f1->w, f2->w, planenormal);
 	if (!nw)
@@ -714,10 +710,10 @@ static void MergeNodeFaces (node_t *node)
 	plane = &mapplanes[node->planenum];
 	merged = NULL;
 
-	for (f1 = node->faces ; f1 ; f1 = f1->next) {
+	for (f1 = node->faces; f1; f1 = f1->next) {
 		if (f1->merged || f1->split[0] || f1->split[1])
 			continue;
-		for (f2 = node->faces ; f2 != f1 ; f2=f2->next) {
+		for (f2 = node->faces; f2 != f1; f2 = f2->next) {
 			if (f2->merged || f2->split[0] || f2->split[1])
 				continue;
 			merged = TryMerge (f1, f2, plane->normal);
@@ -726,8 +722,8 @@ static void MergeNodeFaces (node_t *node)
 
 			/* add merged to the end of the node face list */
 			/* so it will be checked against all the faces again */
-			for (end = node->faces ; end->next ; end = end->next)
-			;
+			for (end = node->faces; end->next; end = end->next);
+
 			merged->next = NULL;
 			end->next = merged;
 			break;
@@ -740,7 +736,7 @@ static void MergeNodeFaces (node_t *node)
 /**
  * @brief Chop up faces that are larger than we want in the surface cache
  */
-void SubdivideFace (node_t *node, face_t *f)
+static void SubdivideFace (node_t *node, face_t *f)
 {
 	float		mins, maxs;
 	vec_t		v;
@@ -759,14 +755,14 @@ void SubdivideFace (node_t *node, face_t *f)
 	if ( tex->flags & SURF_WARP )
 		return;
 
-	for (axis = 0 ; axis < 2 ; axis++) {
+	for (axis = 0; axis < 2; axis++) {
 		while (1) {
 			mins = 999999;
 			maxs = -999999;
 
 			VectorCopy (tex->vecs[axis], temp);
 			w = f->w;
-			for (i=0 ; i<w->numpoints ; i++) {
+			for (i = 0; i < w->numpoints; i++) {
 				v = DotProduct (w->p[i], temp);
 				if (v < mins)
 					mins = v;
@@ -811,23 +807,20 @@ void SubdivideFace (node_t *node, face_t *f)
 /**
  * @brief
  */
-void SubdivideNodeFaces (node_t *node)
+static void SubdivideNodeFaces (node_t *node)
 {
 	face_t	*f;
 
-	for (f = node->faces ; f ; f=f->next)
+	for (f = node->faces; f; f = f->next)
 		SubdivideFace (node, f);
 }
 
-/*=========================================================================== */
-
-int	c_nodefaces;
-
+static int c_nodefaces;
 
 /**
  * @brief
  */
-face_t *FaceFromPortal (portal_t *p, int pside)
+static face_t *FaceFromPortal (portal_t *p, int pside)
 {
 	face_t	*f;
 	side_t	*side;
@@ -872,7 +865,7 @@ face_t *FaceFromPortal (portal_t *p, int pside)
  * - water / empty : water
  * - water / water : none
  */
-void MakeFaces_r (node_t *node)
+static void MakeFaces_r (node_t *node)
 {
 	portal_t	*p;
 	int			s;
@@ -896,7 +889,7 @@ void MakeFaces_r (node_t *node)
 		return;
 
 	/* see which portals are valid */
-	for (p=node->portals ; p ; p = p->next[s]) {
+	for (p = node->portals; p; p = p->next[s]) {
 		s = (p->nodes[1] == node);
 
 		p->face[s] = FaceFromPortal (p, s);
@@ -911,7 +904,7 @@ void MakeFaces_r (node_t *node)
 /**
  * @brief
  */
-void MakeFaces (node_t *node)
+extern void MakeFaces (node_t *node)
 {
 	qprintf ("--- MakeFaces ---\n");
 	c_merge = 0;

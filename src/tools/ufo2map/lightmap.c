@@ -45,11 +45,11 @@ vec3_t vnormals[MAX_MAP_VERTS];
  */
 extern void LinkPlaneFaces (void)
 {
-	int		i;
-	dface_t	*f;
+	int i;
+	dface_t *f;
 
 	f = dfaces;
-	for (i=0 ; i<numfaces ; i++, f++) {
+	for (i = 0; i < numfaces; i++, f++) {
 		facelinks[i] = planelinks[f->side][f->planenum];
 		planelinks[f->side][f->planenum] = i;
 	}
@@ -60,13 +60,13 @@ extern void LinkPlaneFaces (void)
  */
 extern void PairEdges (void)
 {
-	int		i, j, k;
-	dface_t	*f;
-	edgeshare_t	*e;
+	int i, j, k;
+	dface_t *f;
+	edgeshare_t *e;
 
 	f = dfaces;
-	for (i=0 ; i<numfaces ; i++, f++) {
-		for (j=0 ; j<f->numedges ; j++) {
+	for (i = 0; i < numfaces; i++, f++) {
+		for (j = 0; j < f->numedges; j++) {
 			k = dsurfedges[f->firstedge + j];
 			if (k < 0) {
 				e = &edgeshare[-k];
@@ -224,7 +224,7 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 	p0 = trian->points[e->p0]->origin;
 	p1 = trian->points[e->p1]->origin;
 	best = 1.1;
-	for (i=0 ; i< trian->numpoints ; i++) {
+	for (i = 0; i < trian->numpoints; i++) {
 		p = trian->points[i]->origin;
 		/* a 0 dist will form a degenerate triangle */
 		if (DotProduct(p, e->normal) - e->dist < 0)
@@ -249,7 +249,7 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 	nt->edges[0] = e;
 	nt->edges[1] = FindEdge (trian, e->p1, bestp);
 	nt->edges[2] = FindEdge (trian, bestp, e->p0);
-	for (i=0 ; i<3 ; i++)
+	for (i = 0; i < 3; i++)
 		nt->edges[i]->tri = nt;
 	TriEdge_r (trian, FindEdge (trian, bestp, e->p1));
 	TriEdge_r (trian, FindEdge (trian, e->p0, bestp));
@@ -271,9 +271,9 @@ static void TriangulatePoints (triangulation_t *trian)
 
 	/* find the two closest points */
 	bestd = 9999;
-	for (i=0 ; i<trian->numpoints ; i++) {
+	for (i = 0; i < trian->numpoints; i++) {
 		p1 = trian->points[i]->origin;
-		for (j=i+1 ; j<trian->numpoints ; j++) {
+		for (j = i+1; j < trian->numpoints; j++) {
 			p2 = trian->points[j]->origin;
 			VectorSubtract (p2, p1, v1);
 			d = VectorLength (v1);
@@ -349,7 +349,7 @@ static qboolean PointInTriangle (vec3_t point, triangle_t *t)
 	triedge_t	*e;
 	vec_t	d;
 
-	for (i=0 ; i<3 ; i++) {
+	for (i = 0; i < 3; i++) {
 		e = t->edges[i];
 		d = DotProduct (e->normal, point) - e->dist;
 		if (d < 0)
@@ -391,7 +391,7 @@ static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t co
 	}
 
 	/* search for exterior edge */
-	for (e=trian->edges, j=0 ; j< trian->numedges ; e++, j++) {
+	for (e = trian->edges, j = 0; j < trian->numedges; e++, j++) {
 		if (e->tri)
 			continue;		/* not an exterior edge */
 
@@ -410,7 +410,7 @@ static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t co
 			continue;
 		if (d > 1)
 			continue;
-		for (i=0 ; i<3 ; i++)
+		for (i = 0; i < 3; i++)
 			color[i] = p0->totallight[i] + d * (p1->totallight[i] - p0->totallight[i]);
 		return;
 	}
@@ -418,12 +418,11 @@ static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t co
 	/* search for nearest point */
 	best = 99999;
 	p1 = NULL;
-	for (j=0 ; j<trian->numpoints ; j++) {
+	for (j = 0; j < trian->numpoints; j++) {
 		p0 = trian->points[j];
 		VectorSubtract (point, p0->origin, v1);
 		d = VectorLength (v1);
-		if (d < best)
-		{
+		if (d < best) {
 			best = d;
 			p1 = p0;
 		}
@@ -485,7 +484,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 
 	tex = &texinfo[s->texinfo];
 
-	for (i=0 ; i<s->numedges ; i++) {
+	for (i = 0; i < s->numedges; i++) {
 		e = dsurfedges[s->firstedge+i];
 		if (e >= 0)
 			v = dvertexes + dedges[e].v[0];
@@ -495,7 +494,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 /*		VectorAdd (v->point, l->modelorg, vt); */
 		VectorCopy (v->point, vt);
 
-		for (j=0 ; j<2 ; j++) {
+		for (j = 0; j < 2; j++) {
 			val = DotProduct (vt, tex->vecs[j]) + tex->vecs[j][3];
 			if (val < mins[j])
 				mins[j] = val;
@@ -504,7 +503,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 		}
 	}
 
-	for (i=0 ; i<2 ; i++) {
+	for (i = 0; i < 2; i++) {
 		l->exactmins[i] = mins[i];
 		l->exactmaxs[i] = maxs[i];
 
@@ -533,8 +532,8 @@ static void CalcFaceVectors (lightinfo_t *l)
 	tex = &texinfo[l->face->texinfo];
 
 	/* convert from float to double */
-	for (i=0 ; i<2 ; i++)
-		for (j=0 ; j<3 ; j++)
+	for (i = 0; i < 2; i++)
+		for (j = 0; j < 3; j++)
 			l->worldtotex[i][j] = tex->vecs[i][j];
 
 	/* calculate a normal to the texture axis.  points can be moved along this */
@@ -562,7 +561,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 	/* the distance along the plane normal */
 	distscale = 1/distscale;
 
-	for (i=0 ; i<2 ; i++) {
+	for (i = 0; i < 2; i++) {
 		len = VectorLength (l->worldtotex[i]);
 		dist = DotProduct (l->worldtotex[i], l->facenormal);
 		dist *= distscale;
@@ -572,7 +571,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 
 
 	/* calculate texorg on the texture plane */
-	for (i=0 ; i<3 ; i++)
+	for (i = 0; i < 3; i++)
 		l->texorg[i] = -tex->vecs[0][3]* l->textoworld[0][i] - tex->vecs[1][3] * l->textoworld[1][i];
 
 	/* project back to the face plane */
@@ -608,7 +607,7 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	mids = (l->exactmaxs[0] + l->exactmins[0])/2;
 	midt = (l->exactmaxs[1] + l->exactmins[1])/2;
 
-	for (j=0 ; j<3 ; j++)
+	for (j = 0; j < 3; j++)
 		facemid[j] = l->texorg[j] + l->textoworld[0][j]*mids + l->textoworld[1][j]*midt;
 
 	h = l->texsize[1]+1;
@@ -619,15 +618,15 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	starts = l->texmins[0]*step;
 	startt = l->texmins[1]*step;
 
-	for (t=0 ; t<h ; t++) {
-		for (s=0 ; s<w ; s++, surf+=3) {
+	for (t = 0; t < h; t++) {
+		for (s = 0; s < w; s++, surf += 3) {
 			us = starts + (s+sofs)*step;
 			ut = startt + (t+tofs)*step;
 
 			/* if a line can be traced from surf to facemid, the point is good */
-			for (i=0 ; i<6 ; i++) {
-			/* calculate texture point */
-				for (j=0 ; j<3 ; j++)
+			for (i = 0; i < 6; i++) {
+				/* calculate texture point */
+				for (j = 0; j < 3; j++)
 					surf[j] = l->texorg[j] + l->textoworld[0][j]*us
 					+ l->textoworld[1][j]*ut;
 
@@ -696,7 +695,7 @@ static entity_t *FindTargetEntity (char *target)
 	int		i;
 	char	*n;
 
-	for (i=0 ; i<num_entities ; i++) {
+	for (i = 0; i < num_entities; i++) {
 		n = ValueForKey (&entities[i], "targetname");
 		if (!strcmp (n, target))
 			return &entities[i];
@@ -726,7 +725,7 @@ void CreateDirectLights (void)
 	float	intensity;
 
 	/* surfaces */
-	for (i=0, p=patches ; i<num_patches ; i++, p++) {
+	for (i = 0, p=patches; i < num_patches; i++, p++) {
 		if (p->totallight[0] < DIRECT_LIGHT
 			&& p->totallight[1] < DIRECT_LIGHT
 			&& p->totallight[2] < DIRECT_LIGHT)
@@ -751,7 +750,7 @@ void CreateDirectLights (void)
 	}
 
 	/* entities */
-	for (i=0 ; i<num_entities ; i++) {
+	for (i = 0; i < num_entities; i++) {
 		e = &entities[i];
 		name = ValueForKey (e, "classname");
 		if (strncmp (name, "light", 5))
@@ -874,7 +873,7 @@ static void GatherSampleLight (vec3_t pos, vec3_t normal,
 	float			scale = 0.0f;
 	float			*dest;
 
-	for (l=directlights ; l ; l=l->next) {
+	for (l = directlights; l; l = l->next) {
 		VectorSubtract (l->origin, pos, delta);
 		dist = VectorNormalize (delta, delta);
 		dot = DotProduct (delta, normal);
@@ -969,10 +968,10 @@ static void AddSampleToPatch (vec3_t pos, vec3_t color, int facenum)
 	if (color[0] + color[1] + color[2] < 3)
 		return;
 
-	for (patch = face_patches[facenum] ; patch ; patch=patch->next) {
+	for (patch = face_patches[facenum]; patch; patch = patch->next) {
 		/* see if the point is in this patch (roughly) */
 		WindingBounds (patch->winding, mins, maxs);
-		for (i=0 ; i<3 ; i++) {
+		for (i = 0; i < 3; i++) {
 			if (mins[i] > pos[i] + 8)
 				goto nextpatch;
 			if (maxs[i] < pos[i] - 8)
@@ -1015,7 +1014,7 @@ void BuildFacelights (unsigned int facenum)
 		numsamples = 5;
 	else
 		numsamples = 1;
-	for (i=0 ; i<numsamples ; i++) {
+	for (i = 0; i < numsamples; i++) {
 		memset (&l[i], 0, sizeof(l[i]));
 		l[i].surfnum = facenum;
 		l[i].face = f;
@@ -1044,8 +1043,8 @@ void BuildFacelights (unsigned int facenum)
 	memcpy (fl->origins, l[0].surfpt, tablesize);
 
 	/* get the light samples */
-	for (i=0 ; i<l[0].numsurfpt ; i++) {
-		for (j=0 ; j<numsamples ; j++)
+	for (i = 0; i < l[0].numsurfpt; i++) {
+		for (j = 0; j < numsamples; j++)
 			GatherSampleLight (l[j].surfpt[i], l[0].facenormal, styletable,
 				i*3, tablesize, 1.0/numsamples);
 
@@ -1058,7 +1057,7 @@ void BuildFacelights (unsigned int facenum)
 		if (patch->samples)
 			VectorScale (patch->samplelight, 1.0/patch->samples, patch->samplelight);
 
-	for (i=0 ; i<MAX_LSTYLES ; i++) {
+	for (i = 0; i < MAX_LSTYLES; i++) {
 		if (!styletable[i])
 			continue;
 		if (fl->numstyles == MAX_STYLES)
@@ -1074,7 +1073,7 @@ void BuildFacelights (unsigned int facenum)
 		face_patches[facenum]->baselight[1] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT) {
 		spot = fl->samples[0];
-		for (i=0 ; i<l[0].numsurfpt ; i++, spot+=3)
+		for (i = 0; i < l[0].numsurfpt; i++, spot += 3)
 			VectorAdd (spot, face_patches[facenum]->baselight, spot);
 	}
 
@@ -1128,7 +1127,7 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 	/* set up the triangulation */
 	if (numbounce > 0) {
 		ClearBounds (facemins, facemaxs);
-		for (i=0 ; i<f->numedges ; i++) {
+		for (i = 0; i < f->numedges; i++) {
 			int ednum;
 
 			ednum = dsurfedges[f->firstedge+i];
@@ -1144,10 +1143,9 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 
 		/* for all faces on the plane, add the nearby patches */
 		/* to the triangulation */
-		for (pfacenum = planelinks[f->side][f->planenum]
-			; pfacenum ; pfacenum = facelinks[pfacenum]) {
-			for (patch = face_patches[pfacenum] ; patch ; patch=patch->next) {
-				for (i=0 ; i < 3 ; i++) {
+		for (pfacenum = planelinks[f->side][f->planenum]; pfacenum; pfacenum = facelinks[pfacenum]) {
+			for (patch = face_patches[pfacenum]; patch; patch = patch->next) {
+				for (i = 0; i < 3; i++) {
 					if (facemins[i] - patch->origin[i] > subdiv*2)
 						break;
 					if (patch->origin[i] - facemaxs[i] > subdiv*2)
@@ -1158,7 +1156,7 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 				AddPointToTriangulation (patch, trian);
 			}
 		}
-		for (i=0 ; i<trian->numpoints ; i++)
+		for (i = 0; i < trian->numpoints; i++)
 			memset (trian->edgematrix[i], 0, trian->numpoints*sizeof(trian->edgematrix[0][0]) );
 		TriangulatePoints (trian);
 	}
@@ -1182,9 +1180,9 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 			);
 	}
 
-	for (st=0 ; st<fl->numstyles ; st++) {
+	for (st = 0; st < fl->numstyles; st++) {
 		f->styles[st] = fl->stylenums[st];
-		for (j=0 ; j<fl->numsamples ; j++) {
+		for (j = 0; j < fl->numsamples; j++) {
 			VectorCopy ( (fl->samples[st]+j*3), lb);
 			if (numbounce > 0 && st == 0) {
 				vec3_t	add;
@@ -1200,7 +1198,7 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 			VectorScale (lb, lightscale, lb);
 
 			/* we need to clamp without allowing hue to change */
-			for (k=0 ; k<3 ; k++)
+			for (k = 0; k < 3; k++)
 				if (lb[k] < 1)
 					lb[k] = 1;
 			max = lb[0];
@@ -1217,7 +1215,7 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 			if (newmax > maxlight)
 				newmax = maxlight;
 
-			for (k=0 ; k<3 ; k++) {
+			for (k = 0; k < 3; k++) {
 				*dest++ = lb[k]*newmax/max;
 			}
 		}

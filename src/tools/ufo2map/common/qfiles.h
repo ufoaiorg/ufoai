@@ -392,7 +392,7 @@ typedef struct
 	short		numedges;
 	short		texinfo;
 
-/* lighting info */
+	/* lighting info */
 	byte		styles[MAXLIGHTMAPS];
 	int			lightofs;		/* start of [numstyles*surfsize] samples */
 } dface_t;

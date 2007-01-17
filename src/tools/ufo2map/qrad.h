@@ -157,7 +157,6 @@ extern	float	entity_scale;
 
 extern	vec3_t		vnormals[MAX_MAP_VERTS];
 
-int	PointInLeafnum (vec3_t point);
 void MakePatches (void);
 void SubdividePatches (void);
 void PairEdges (void);

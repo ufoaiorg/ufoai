@@ -40,7 +40,7 @@ typedef struct tnode_s
 	int		pad;
 } tnode_t;
 
-tnode_t		*tnodes, *tnode_p;
+static tnode_t *tnodes, *tnode_p;
 
 static int numtheads;
 static int thead[260];
@@ -53,12 +53,12 @@ static vec3_t tr_end;
 /**
  * @brief Converts the disk node structure into the efficient tracing structure
  */
-void MakeTnode (int nodenum)
+extern void MakeTnode (int nodenum)
 {
-	tnode_t			*t;
-	dplane_t		*plane;
-	int				i, contents;
-	dnode_t 		*node;
+	tnode_t *t;
+	dplane_t *plane;
+	int i, contents;
+	dnode_t *node;
 
 	t = tnode_p++;
 
@@ -69,7 +69,7 @@ void MakeTnode (int nodenum)
 	VectorCopy (plane->normal, t->normal);
 	t->dist = plane->dist;
 
-	for (i=0 ; i<2 ; i++) {
+	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {
 			contents = dleafs[-node->children[i] - 1].contents & ~(1<<31);
 			if ( (contents & neededContents) && !(contents & forbiddenContents) )
@@ -85,26 +85,24 @@ void MakeTnode (int nodenum)
 }
 
 
-/*
-=============
-BuildTnode_r
-=============
-*/
-void BuildTnode_r( int node )
+/**
+ * @brief
+ */
+static void BuildTnode_r (int node)
 {
-	if ( dnodes[node].planenum == -1 ) {
+	if (dnodes[node].planenum == -1) {
 		dnode_t *n;
 		tnode_t *t;
-		vec3_t	c0maxs, c1mins;
-		int		i;
+		vec3_t c0maxs, c1mins;
+		int i;
 
 		n = &dnodes[node];
 
 		/* alloc new node */
 		t = tnode_p++;
 
-		if ( n->children[0] < 0 || n->children[1] < 0 )
-			Error( "Unexpected leaf" );
+		if (n->children[0] < 0 || n->children[1] < 0)
+			Error("Unexpected leaf");
 
 		VectorCopy( dnodes[n->children[0]].maxs, c0maxs );
 		VectorCopy( dnodes[n->children[1]].mins, c1mins );
@@ -113,7 +111,7 @@ void BuildTnode_r( int node )
 		/*		(int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1], */
 		/*		(int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] ); */
 
-		for ( i = 0; i < 2; i++ )
+		for (i = 0; i < 2; i++)
 			if ( c0maxs[i] <= c1mins[i] ) {
 				/* create a separation plane */
 				t->type = i;
@@ -132,7 +130,7 @@ void BuildTnode_r( int node )
 		/* can't construct such a separation plane */
 		t->type = PLANE_NONE;
 
-		for ( i = 0; i < 2; i++ ) {
+		for (i = 0; i < 2; i++) {
 			t->children[i] = tnode_p - tnodes;
 			BuildTnode_r( n->children[i] );
 		}
@@ -145,9 +143,9 @@ void BuildTnode_r( int node )
 /**
  * @brief Loads the node structure out of a .bsp file to be used for light occlusion
  */
-void MakeTnodes ( int levels )
+void MakeTnodes (int levels)
 {
-	int		i;
+	int i;
 
 	/* 32 byte align the structs */
 	tnodes = malloc( (numnodes+1) * sizeof(tnode_t));
@@ -155,8 +153,8 @@ void MakeTnodes ( int levels )
 	tnode_p = tnodes;
 	numtheads = 0;
 
-	for ( i = 0; i < levels; i++ ) {
-		if ( !dmodels[i].numfaces )
+	for (i = 0; i < levels; i++) {
+		if (!dmodels[i].numfaces)
 			continue;
 
 		thead[numtheads] = tnode_p - tnodes;
@@ -167,9 +165,9 @@ void MakeTnodes ( int levels )
 }
 
 
-/*========================================================== */
-
-
+/**
+ * @brief
+ */
 int TestLine_r (int node, vec3_t start, vec3_t stop)
 {
 	tnode_t	*tnode;
@@ -228,7 +226,9 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 	return TestLine_r (tnode->children[!side], mid, stop);
 }
 
-
+/**
+ * @brief
+ */
 int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 {
 	tnode_t	*tnode;
@@ -301,7 +301,9 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 	return TestLineDist_r (tnode->children[!side], mid, stop);
 }
 
-
+/**
+ * @brief
+ */
 int TestLine (vec3_t start, vec3_t stop)
 {
 	int i;
@@ -313,6 +315,9 @@ int TestLine (vec3_t start, vec3_t stop)
 	return 0;
 }
 
+/**
+ * @brief
+ */
 int TestLineMask (vec3_t start, vec3_t stop, int levels)
 {
 	int i;
@@ -327,6 +332,9 @@ int TestLineMask (vec3_t start, vec3_t stop, int levels)
 	return 0;
 }
 
+/**
+ * @brief
+ */
 int TestLineDM (vec3_t start, vec3_t stop, vec3_t end, int levels)
 {
 	int i;
@@ -348,13 +356,9 @@ int TestLineDM (vec3_t start, vec3_t stop, vec3_t end, int levels)
 		return 1;
 }
 
-
-
-/*
-==============
-TestContents_r
-==============
-*/
+/**
+ * @brief
+ */
 int TestContents_r (int node, vec3_t pos)
 {
 	tnode_t	*tnode;
@@ -392,6 +396,9 @@ int TestContents_r (int node, vec3_t pos)
 }
 
 
+/**
+ * @brief
+ */
 int TestContents (vec3_t pos)
 {
 	int i;

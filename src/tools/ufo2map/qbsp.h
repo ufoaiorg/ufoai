@@ -304,7 +304,7 @@ void WriteBSP (node_t *headnode);
 void EndBSPFile (void);
 void BeginModel (void);
 void EndModel (void);
-void EmitBrushes (void);
+/*void EmitBrushes (void);*/
 void EmitPlanes (void);
 
 /* faces.c */

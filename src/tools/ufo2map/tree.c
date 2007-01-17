@@ -34,8 +34,8 @@ void RemovePortalFromNode (portal_t *portal, node_t *l);
  */
 static void FreeTreePortals_r (node_t *node)
 {
-	portal_t	*p, *nextp;
-	int			s;
+	portal_t *p, *nextp;
+	int s;
 
 	/* free children */
 	if (node->planenum != PLANENUM_LEAF) {
@@ -44,7 +44,7 @@ static void FreeTreePortals_r (node_t *node)
 	}
 
 	/* free portals */
-	for (p=node->portals ; p ; p=nextp) {
+	for (p = node->portals; p; p = nextp) {
 		s = (p->nodes[1] == node);
 		nextp = p->next[s];
 
@@ -59,7 +59,7 @@ static void FreeTreePortals_r (node_t *node)
  */
 static void FreeTree_r (node_t *node)
 {
-	face_t		*f, *nextf;
+	face_t *f, *nextf;
 
 	/* free children */
 	if (node->planenum != PLANENUM_LEAF) {
@@ -71,7 +71,7 @@ static void FreeTree_r (node_t *node)
 	FreeBrushList (node->brushlist);
 
 	/* free faces */
-	for (f=node->faces ; f ; f=nextf) {
+	for (f = node->faces; f; f = nextf) {
 		nextf = f->next;
 		FreeFace (f);
 	}
@@ -105,7 +105,7 @@ static void PrintTree_r (node_t *node, int depth)
 	plane_t	*plane;
 	bspbrush_t	*bb;
 
-	for (i=0 ; i<depth ; i++)
+	for (i = 0; i < depth; i++)
 		printf ("  ");
 	if (node->planenum == PLANENUM_LEAF) {
 		if (!node->brushlist)

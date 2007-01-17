@@ -43,11 +43,11 @@ typedef struct
 #define	MAX_INCLUDES	8
 static script_t	scriptstack[MAX_INCLUDES];
 static script_t	*script;
-int			scriptline;
+int scriptline; /* extern - qdata */
 
-char    token[MAXTOKEN];
-qboolean endofscript;
-static qboolean tokenready;                     /* only true if UnGetToken was just called */
+char token[MAXTOKEN];
+qboolean endofscript; /* extern - qdata */
+/* only true if UnGetToken was just called */
 
 /**
  * @brief
@@ -76,20 +76,19 @@ static void AddScriptToStack (char *filename)
 /**
  * @brief
  */
-void LoadScriptFile (char *filename)
+extern void LoadScriptFile (char *filename)
 {
 	script = scriptstack;
 	AddScriptToStack (filename);
 
 	endofscript = qfalse;
-	tokenready = qfalse;
 }
 
 
 /**
  * @brief
  */
-void ParseFromMemory (char *buffer, int size)
+extern void ParseFromMemory (char *buffer, int size)
 {
 	script = scriptstack;
 	script++;
@@ -103,28 +102,12 @@ void ParseFromMemory (char *buffer, int size)
 	script->end_p = script->buffer + size;
 
 	endofscript = qfalse;
-	tokenready = qfalse;
 }
-
-
-/**
- * @brief Signals that the current token was not used, and should be reported for the next GetToken.
- * @note that
- * GetToken (qtrue);
- * UnGetToken ();
- * GetToken (qfalse);
- * could cross a line boundary.
- */
-void UnGetToken (void)
-{
-	tokenready = qtrue;
-}
-
 
 /**
  * @brief
  */
-qboolean EndOfScript (qboolean crossline)
+static qboolean EndOfScript (qboolean crossline)
 {
 	if (!crossline)
 		Error ("Line %i is incomplete\n",scriptline);
@@ -148,14 +131,9 @@ qboolean EndOfScript (qboolean crossline)
 /**
  * @brief
  */
-qboolean GetToken (qboolean crossline)
+extern qboolean GetToken (qboolean crossline)
 {
 	char *token_p;
-	/* is a token allready waiting? */
-	if (tokenready) {
-		tokenready = qfalse;
-		return qtrue;
-	}
 
 	if (script->script_p >= script->end_p)
 		return EndOfScript (crossline);
@@ -238,7 +216,7 @@ skipspace:
 /**
  * @brief Returns true if there is another token on the line
  */
-qboolean TokenAvailable (void)
+extern qboolean TokenAvailable (void)
 {
 	char *search_p;
 
