@@ -45,7 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef __linux__
 # include <execinfo.h>
 # include <sys/utsname.h>
-# define __USE_GNU
 # include <link.h>
 # include <sys/ucontext.h>
 
