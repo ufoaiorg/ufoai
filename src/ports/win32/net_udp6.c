@@ -427,7 +427,8 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 
 	/* Detection of IPX address clashes with IPv6 addresses. Resolve this later. */
 #if 0
-	if ((strlen(s) >= 23) && (s[8] == ':') && (s[21] == ':')) {	// check for an IPX address
+	/* check for an IPX address */
+	if ((strlen(s) >= 23) && (s[8] == ':') && (s[21] == ':')) {
 		((struct sockaddr_ipx *)sadr)->sa_family = AF_IPX;
 		copy[2] = 0;
 		DO(0, sa_netnum[0]);

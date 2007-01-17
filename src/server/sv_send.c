@@ -39,7 +39,7 @@ Com_Printf redirection
 =============================================================================
 */
 
-char sv_outputbuf[SV_OUTPUTBUF_LENGTH];
+char sv_outputbuf[SV_OUTPUTBUF_LENGTH]; /**< redirect buffer */
 
 /**
  * @brief

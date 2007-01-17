@@ -160,44 +160,44 @@ PROTOCOL
 #define	UPDATE_MASK		(UPDATE_BACKUP-1)
 
 /**
-  * @brief server to client
-  *
-  * the svc_strings[] array in cl_parse.c should mirror this
-  */
+ * @brief server to client
+ *
+ * the svc_strings[] array in cl_parse.c should mirror this
+ */
 enum svc_ops_e {
 	svc_bad,
 
-	/* these ops are known to the game dll */
+	/** these ops are known to the game dll */
 	svc_inventory,
 
-	/* the rest are private to the client and server */
+	/** the rest are private to the client and server */
 	svc_nop,
 	svc_disconnect,
 	svc_reconnect,
-	svc_sound,					/* <see code> */
-	svc_print,					/* [byte] id [string] null terminated string */
-	svc_stufftext,				/* [string] stuffed into client's console buffer, should be \n terminated */
-	svc_serverdata,				/* [long] protocol ... */
-	svc_configstring,			/* [short] [string] */
+	svc_sound,					/**< <see code> */
+	svc_print,					/**< [byte] id [string] null terminated string */
+	svc_stufftext,				/**< [string] stuffed into client's console buffer, should be \n terminated */
+	svc_serverdata,				/**< [long] protocol ... */
+	svc_configstring,			/**< [short] [string] */
 	svc_spawnbaseline,
-	svc_centerprint,			/* [string] to put in center of the screen */
-	svc_playerinfo,				/* variable */
-	svc_event					/* ... */
+	svc_centerprint,			/**< [string] to put in center of the screen */
+	svc_playerinfo,				/**< variable */
+	svc_event					/**< ... */
 };
 
 /*============================================== */
 
 /**
-  * @brief client to server
-  */
+ * @brief client to server
+ */
 enum clc_ops_e {
 	clc_bad,
 	clc_nop,
 	clc_endround,
 	clc_teaminfo,
 	clc_action,
-	clc_userinfo,				/* [[userinfo string] */
-	clc_stringcmd				/* [string] message */
+	clc_userinfo,				/**< [[userinfo string] */
+	clc_stringcmd				/**< [string] message */
 };
 
 
@@ -293,7 +293,7 @@ qboolean Qcommon_ServerActive(void);
 #define NUMVERTEXNORMALS	162
 extern vec3_t bytedirs[NUMVERTEXNORMALS];
 
-/* this is in the client code, but can be used for debugging from server */
+/** this is in the client code, but can be used for debugging from server */
 void SCR_DebugGraph(float value, int color);
 
 /*
@@ -308,9 +308,8 @@ void Sys_Sleep(int milliseconds);
 void Sys_AppActivate(void);
 
 void Sys_UnloadGame(void);
+/** loads the game dll and calls the api init function */
 game_export_t *Sys_GetGameAPI(game_import_t * parms);
-
-/* loads the game dll and calls the api init function */
 
 char *Sys_ConsoleInput(void);
 void Sys_ConsoleOutput(char *string);
