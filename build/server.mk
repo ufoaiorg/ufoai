@@ -10,6 +10,7 @@ SERVER_SRCS += \
 	qcommon/cvar.c \
 	qcommon/files.c \
 	qcommon/md4.c \
+	qcommon/md5.c \
 	qcommon/net_chan.c \
 	qcommon/scripts.c \
 	\
