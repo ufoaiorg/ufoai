@@ -124,12 +124,10 @@ void Com_Printf(char *fmt, ...)
 	char msg[MAXPRINTMSG];
 
 	va_start(argptr, fmt);
-#ifndef _WIN32
-	vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
-#else
-	vsprintf(msg, fmt, argptr);
-#endif
+	Q_vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
 	va_end(argptr);
+
+	msg[sizeof(msg)-1] = 0;
 
 	if (rd_target) {
 		if ((strlen(msg) + strlen(rd_buffer)) > (rd_buffersize - 1)) {
@@ -179,12 +177,10 @@ void Com_DPrintf(char *fmt, ...)
 		return;
 
 	va_start(argptr, fmt);
-#ifndef _WIN32
-	vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
-#else
-	vsprintf(msg, fmt, argptr);
-#endif
+	Q_vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
 	va_end(argptr);
+
+	msg[sizeof(msg)-1] = 0;
 
 	Com_Printf("%s", msg);
 }
@@ -211,12 +207,10 @@ void Com_Error(int code, char *fmt, ...)
 	recursive = qtrue;
 
 	va_start(argptr, fmt);
-#ifndef _WIN32
-	vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
-#else
-	vsprintf(msg, fmt, argptr);
-#endif
+	Q_vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
 	va_end(argptr);
+
+	msg[sizeof(msg)-1] = 0;
 
 	if (code == ERR_DISCONNECT) {
 		CL_Drop();

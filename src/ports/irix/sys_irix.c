@@ -69,8 +69,10 @@ void Sys_Printf (char *fmt, ...)
 	unsigned char		*p;
 
 	va_start (argptr,fmt);
-	vsprintf (text,fmt,argptr);
-	va_end (argptr);
+	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
+	va_end(argptr);
+
+	msg[sizeof(msg)-1] = 0;
 
 	if (strlen(text) > sizeof(text))
 		Sys_Error("memory overwrite in Sys_Printf");
@@ -112,8 +114,11 @@ void Sys_Error (char *error, ...)
 	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
 	va_start (argptr,error);
-	vsprintf (string,error,argptr);
-	va_end (argptr);
+	Q_vsnprintf(string, sizeof(string), error, argptr);
+	va_end(argptr);
+
+	string[sizeof(string)-1] = 0;
+
 	fprintf(stderr, "Error: %s\n", string);
 
 	CL_Shutdown ();
@@ -127,8 +132,11 @@ void Sys_Warn (char *warning, ...)
 	char        string[1024];
 
 	va_start (argptr,warning);
-	vsprintf (string,warning,argptr);
-	va_end (argptr);
+	Q_vsnprintf(string, sizeof(string), warning, argptr);
+	va_end(argptr);
+
+	string[sizeof(string)-1] = 0;
+
 	fprintf(stderr, "Warning: %s", string);
 }
 

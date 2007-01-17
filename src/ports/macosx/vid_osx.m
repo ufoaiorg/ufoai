@@ -122,12 +122,12 @@ void VID_Printf (int thePrintLevel, char *theFormat, ...)
 	va_list		myArgPtr;
 	char		myMessage[VID_MAX_PRINT_MSG];
 
-	// formatted output conversion:
+	/* formatted output conversion: */
 	va_start (myArgPtr, theFormat);
-	vsnprintf (myMessage, VID_MAX_PRINT_MSG, theFormat, myArgPtr);
+	Q_vsnprintf (myMessage, VID_MAX_PRINT_MSG, theFormat, myArgPtr);
 	va_end (myArgPtr);
 
-	// print according to the print level:
+	/* print according to the print level: */
 	if (thePrintLevel == PRINT_ALL)
 		Com_Printf ("%s", myMessage);
 	else
@@ -142,12 +142,12 @@ void VID_Error (int theErrorLevel, char *theFormat, ...)
 	va_list		myArgPtr;
 	char		myMessage[VID_MAX_PRINT_MSG];
 
-	// formatted output conversion:
+	/* formatted output conversion: */
 	va_start (myArgPtr, theFormat);
-	vsnprintf (myMessage, VID_MAX_PRINT_MSG, theFormat, myArgPtr);
+	Q_vsnprintf (myMessage, VID_MAX_PRINT_MSG, theFormat, myArgPtr);
 	va_end (myArgPtr);
 
-	// submitt the error string:
+	/* submitt the error string: */
 	Com_Error (theErrorLevel, "%s", myMessage);
 }
 

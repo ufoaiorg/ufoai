@@ -1534,6 +1534,7 @@ void Swap_Init(void)
 
 }
 
+#define VA_BUFSIZE 4096
 /**
  * @brief does a varargs printf into a temp buffer, so I don't need to have
  * varargs versions of all text functions.
@@ -1543,7 +1544,7 @@ char *va(char *format, ...)
 {
 	va_list argptr;
 	/* in case va is called by nested functions */
-	static char string[2][4096];
+	static char string[2][VA_BUFSIZE];
 	static int index = 0;
 	char *buf;
 
@@ -1551,12 +1552,10 @@ char *va(char *format, ...)
 	index++;
 
 	va_start(argptr, format);
-#ifndef _WIN32
-	vsnprintf(buf, sizeof(string), format, argptr);
-#else
-	vsprintf(buf, format, argptr);
-#endif
+	Q_vsnprintf(buf, VA_BUFSIZE, format, argptr);
 	va_end(argptr);
+
+	buf[VA_BUFSIZE-1] = 0;
 
 	return buf;
 }
@@ -1934,12 +1933,11 @@ qboolean Com_sprintf(char *dest, size_t size, char *fmt, ...)
 		return qfalse;
 
 	va_start(argptr, fmt);
-#ifndef _WIN32
-	len = vsnprintf(bigbuffer, 0x10000, fmt, argptr);
-#else
-	len = vsprintf(bigbuffer, fmt, argptr);
-#endif
+	len = Q_vsnprintf(bigbuffer, sizeof(bigbuffer), fmt, argptr);
 	va_end(argptr);
+
+	bigbuffer[sizeof(bigbuffer)-1] = 0;
+
 	if (len >= size) {
 #ifdef PARANOID
 		Com_Printf("Com_sprintf: overflow of %Zu in %Zu\n", len, size);

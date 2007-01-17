@@ -325,8 +325,10 @@ void Sys_Printf (char *fmt, ...)
 		return;
 
 	va_start (argptr,fmt);
-	vsnprintf (text,1024,fmt,argptr);
+	Q_vsnprintf (text, sizeof(text), fmt, argptr);
 	va_end (argptr);
+
+	text[sizeof(text)-1] = 0;
 
 	if (strlen(text) > sizeof(text))
 		Sys_Error("memory overwrite in Sys_Printf");
@@ -422,8 +424,10 @@ void Sys_Error (char *error, ...)
 	Qcommon_Shutdown ();
 
 	va_start (argptr,error);
-	vsnprintf (string,1024,error,argptr);
+	Q_vsnprintf (string, sizeof(string), error, argptr);
 	va_end (argptr);
+
+	string[sizeof(string)-1] = 0;
 
 	fprintf(stderr, "Error: %s\n", string);
 	exit (1);
@@ -438,7 +442,7 @@ void Sys_Warn (char *warning, ...)
 	char        string[1024];
 
 	va_start (argptr,warning);
-	vsnprintf (string,1024,warning,argptr);
+	Q_vsnprintf (string, sizeof(string), warning, argptr);
 	va_end (argptr);
 	fprintf(stderr, "Warning: %s", string);
 }

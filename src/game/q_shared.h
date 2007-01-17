@@ -85,6 +85,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # ifndef snprintf
 #  define snprintf _snprintf
 # endif
+# define Q_vsnprintf _vsnprintf
+#else
+# define Q_vsnprintf vsnprintf
 #endif
 
 /* i18n support via gettext */

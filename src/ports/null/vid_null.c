@@ -50,8 +50,10 @@ void VID_Printf (int print_level, char *fmt, ...)
 	char		msg[MAXPRINTMSG];
 
 	va_start (argptr,fmt);
-	vsprintf (msg,fmt,argptr);
-	va_end (argptr);
+	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
+	va_end(argptr);
+
+	msg[sizeof(msg)-1] = 0;
 
 	if (print_level == PRINT_ALL)
 		Com_Printf ("%s", msg);
@@ -68,8 +70,10 @@ void VID_Error (int err_level, char *fmt, ...)
 	char		msg[MAXPRINTMSG];
 
 	va_start (argptr,fmt);
-	vsprintf (msg,fmt,argptr);
-	va_end (argptr);
+	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
+	va_end(argptr);
+
+	msg[sizeof(msg)-1] = 0;
 
 	Com_Error (err_level, "%s", msg);
 }

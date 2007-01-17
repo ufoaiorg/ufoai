@@ -310,7 +310,7 @@ void Sys_Error (char *theError, ...)
 	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
 	va_start (myArgPtr, theError);
-	vsnprintf (myString, SYS_STRING_SIZE, theError, myArgPtr);
+	Q_vsnprintf (myString, SYS_STRING_SIZE, theError, myArgPtr);
 	va_end (myArgPtr);
 
 #ifdef DEDICATED_ONLY

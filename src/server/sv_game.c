@@ -74,7 +74,7 @@ static void PF_dprintf(char *fmt, ...)
 	va_list argptr;
 
 	va_start(argptr, fmt);
-	vsprintf(msg, fmt, argptr);
+	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
 
 	Com_Printf("%s", msg);
@@ -101,8 +101,10 @@ static void PF_cprintf(player_t * player, int level, char *fmt, ...)
 	}
 
 	va_start(argptr, fmt);
-	vsprintf(msg, fmt, argptr);
+	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
+
+	msg[sizeof(msg)-1] = 0;
 
 	if (player)
 		SV_ClientPrintf(svs.clients + n, level, "%s", msg);
@@ -128,8 +130,10 @@ static void PF_centerprintf(player_t * player, char *fmt, ...)
 		return;
 
 	va_start(argptr, fmt);
-	vsprintf(msg, fmt, argptr);
+	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
+
+	msg[sizeof(msg)-1] = 0;
 
 	MSG_WriteByte(&sv.multicast, svc_centerprint);
 	MSG_WriteString(&sv.multicast, msg);
@@ -151,8 +155,10 @@ static void PF_error(char *fmt, ...)
 #endif
 
 	va_start(argptr, fmt);
-	vsprintf(msg, fmt, argptr);
+	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
+
+	msg[sizeof(msg)-1] = 0;
 
 	Com_Error(ERR_DROP, "Game Error: %s", msg);
 }

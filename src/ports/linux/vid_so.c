@@ -88,8 +88,8 @@ void VID_Printf (int print_level, char *fmt, ...)
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
-	va_start (argptr,fmt);
-	vsnprintf (msg, sizeof(msg)-1, fmt, argptr);
+	va_start (argptr, fmt);
+	Q_vsnprintf (msg, sizeof(msg), fmt, argptr);
 	va_end (argptr);
 
 	msg[sizeof(msg)-1] = 0;
@@ -101,7 +101,8 @@ void VID_Printf (int print_level, char *fmt, ...)
 }
 
 /**
- * @brief
+ * @brief Calls Com_Error with err_level
+ * @sa Com_Error
  */
 void VID_Error (int err_level, char *fmt, ...)
 {
@@ -109,12 +110,12 @@ void VID_Error (int err_level, char *fmt, ...)
 	char		msg[MAXPRINTMSG];
 
 	va_start (argptr,fmt);
-	vsnprintf (msg, sizeof(msg)-1, fmt,argptr);
+	Q_vsnprintf (msg, sizeof(msg), fmt, argptr);
 	va_end (argptr);
 
 	msg[sizeof(msg)-1] = 0;
 
-	Com_Error (err_level,"%s", msg);
+	Com_Error (err_level, "%s", msg);
 }
 
 /**

@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t *nostdout;
 
-unsigned	sys_frame_time;
+unsigned sys_frame_time;
 
 qboolean stdin_active = qtrue;
 
@@ -51,6 +51,9 @@ qboolean stdin_active = qtrue;
 /* General routines */
 /* ======================================================================= */
 
+/**
+ * @brief
+ */
 void Sys_ConsoleOutput (char *string)
 {
 	if (nostdout && nostdout->value)
@@ -59,15 +62,20 @@ void Sys_ConsoleOutput (char *string)
 	fputs(string, stdout);
 }
 
+/**
+ * @brief
+ */
 void Sys_Printf (char *fmt, ...)
 {
-	va_list		argptr;
-	char		text[1024];
-	unsigned char		*p;
+	va_list argptr;
+	char text[1024];
+	unsigned char *p;
 
 	va_start (argptr,fmt);
-	vsprintf (text,fmt,argptr);
-	va_end (argptr);
+	Q_vsnprintf(text, sizeof(text), fmt, argptr);
+	va_end(argptr);
+
+	text[sizeof(text)-1] = 0;
 
 	if (strlen(text) > sizeof(text))
 		Sys_Error("memory overwrite in Sys_Printf");
@@ -102,15 +110,17 @@ void Sys_Init(void)
 
 void Sys_Error (char *error, ...)
 {
-	va_list     argptr;
-	char        string[1024];
+	va_list argptr;
+	char string[1024];
 
 	/* change stdin to non blocking */
 	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
 	va_start (argptr,error);
-	vsprintf (string,error,argptr);
-	va_end (argptr);
+	Q_vsnprintf(string, sizeof(string), error, argptr);
+	va_end(argptr);
+
+	string[sizeof(string)-1] = 0;
 	fprintf(stderr, "Error: %s\n", string);
 
 	CL_Shutdown ();
@@ -124,8 +134,11 @@ void Sys_Warn (char *warning, ...)
 	char        string[1024];
 
 	va_start (argptr,warning);
-	vsprintf (string,warning,argptr);
-	va_end (argptr);
+	Q_vsnprintf(string, sizeof(string), warning, argptr);
+	va_end(argptr);
+
+	string[sizeof(string)-1] = 0;
+
 	fprintf(stderr, "Warning: %s", string);
 }
 
