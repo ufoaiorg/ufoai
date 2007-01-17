@@ -1,7 +1,7 @@
 [Project]
 FileName=ufo_ded.dev
 Name=ufoded
-UnitCount=26
+UnitCount=27
 Type=0
 Ver=1
 ObjFiles=
@@ -300,6 +300,16 @@ BuildCmd=
 FileName=..\..\src\server\server.h
 CompileCpp=0
 Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit27]
+FileName=..\..\src\qcommon\md5.c
+CompileCpp=0
+Folder=Source Files
 Compile=1
 Link=1
 Priority=1000

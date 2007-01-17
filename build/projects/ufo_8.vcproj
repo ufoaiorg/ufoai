@@ -658,6 +658,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\qcommon\md5.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\qcommon\net_chan.c"
 				>
 			</File>
