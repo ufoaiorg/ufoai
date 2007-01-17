@@ -584,7 +584,7 @@ sfx_t *S_FindName(char *name, qboolean create)
 
 	/* see if already loaded */
 	for (i = 0; i < num_sfx; i++)
-		if (!strcmp(known_sfx[i].name, name)) {
+		if (!Q_strncmp(known_sfx[i].name, name, sizeof(known_sfx[i].name))) {
 			return &known_sfx[i];
 		}
 
