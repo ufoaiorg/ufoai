@@ -61,7 +61,7 @@ typedef enum {
 	B_STATUS_DOWN				/**< totally damaged */
 } buildingStatus_t;
 
-/** @brief All different buliding types */
+/** @brief All different building types */
 typedef enum {
 	B_MISC,			/**< this building is nothing with a special function */
 	B_LAB,			/**< this building is a lab */
@@ -73,7 +73,7 @@ typedef enum {
 	B_ALIEN_CONTAINMENT	/**< this building is an alien containment */
 } buildingType_t;
 
-/** @brief A bulding with all it's data */
+/** @brief A building with all it's data */
 typedef struct building_s {
 	int idx;					/**< self link in "buildings" list. */
 	int type_idx;				/**< self link in "buildingTypes" list. */
