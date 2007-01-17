@@ -827,13 +827,14 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 		else
 			sv.configstrings[CS_POSITIONS][0] = 0;
 
-		CM_LoadMap(map, pos);
+		CM_LoadMap(map, pos, &checksum);
 		break;
 	default:
-		CM_LoadMap("", NULL);
+		CM_LoadMap("", NULL, &checksum);
 		break;
 	}
 
+	Com_Printf("checksum for this map: %i\n", checksum);
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
 
 	/* clear physics interaction links */

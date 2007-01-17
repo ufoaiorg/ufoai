@@ -1099,7 +1099,7 @@ static unsigned CM_AddMapTile(char *name, int sX, int sY, int sZ)
  * @brief Loads in the map and all submodels
  * @sa CM_AddMapTile
  */
-void CM_LoadMap(char *tiles, char *pos)
+void CM_LoadMap(char *tiles, char *pos, unsigned *mapchecksum)
 {
 	char *token;
 	char name[MAX_VAR];
@@ -1147,10 +1147,12 @@ void CM_LoadMap(char *tiles, char *pos)
 					Com_Error(ERR_DROP, "CM_LoadMap: invalid positions\n");
 				sh[i] = atoi(token);
 			}
+			/* random maps doesn't have a checksum atm */
+			*mapchecksum = 0;
 			CM_AddMapTile(name, sh[0], sh[1], 0);
 		} else {
 			/* load only a single tile, if no positions are specified */
-			CM_AddMapTile(name, 0, 0, 0);
+			*mapchecksum = CM_AddMapTile(name, 0, 0, 0);
 			return;
 		}
 	}

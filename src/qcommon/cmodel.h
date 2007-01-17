@@ -1,8 +1,6 @@
 /*
 ==============================================================
-
 CMODEL
-
 ==============================================================
 */
 #include "../qcommon/qfiles.h"
@@ -11,7 +9,7 @@ CMODEL
 
 extern vec3_t map_min, map_max;
 
-void CM_LoadMap(char *tiles, char *pos);
+void CM_LoadMap(char *tiles, char *pos, unsigned *checksum);
 int CheckBSPFile(char *filename);
 cmodel_t *CM_InlineModel(char *name);	/* *0, *1, *2, etc */
 
@@ -21,17 +19,15 @@ char *CM_EntityString(void);
 
 /*
 ==============================================================
-
 CMODEL BOX TRACING
-
 ==============================================================
 */
 
-/* WARNING: The functions, that are commented out, */
+/* FIXME/WARNING: The functions, that are commented out, */
 /* possibly don't give the expected results, because of */
 /* the new map tiles, all the others should work */
 
-/* creates a clipping hull for an arbitrary box */
+/** creates a clipping hull for an arbitrary box */
 int CM_HeadnodeForBox(int tile, vec3_t mins, vec3_t maxs);
 
 
@@ -51,9 +47,7 @@ int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end);
 
 /*
 ==========================================================
-
-  GRID ORIENTED MOVEMENT AND SCANNING
-
+GRID ORIENTED MOVEMENT AND SCANNING
 ==========================================================
 */
 
@@ -71,12 +65,8 @@ void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec);
 
 /*
 ==========================================================
-
-  MISC WORLD RELATED
-
+MISC WORLD RELATED
 ==========================================================
 */
 
 float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
-
-

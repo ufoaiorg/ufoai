@@ -1478,13 +1478,20 @@ void CL_SpawnSoldiers_f (void)
  */
 void CL_Precache_f (void)
 {
+	unsigned map_checksum = 0;
 	/* stop sound, back to the console */
 	S_StopAllSounds();
 	MN_PopMenu(qtrue);
 
 	/* for singleplayer game this is already loaded in our local server */
-	if (!ccs.singleplayer)
-		CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
+	if (!ccs.singleplayer) {
+		CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS], &map_checksum);
+		if (map_checksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
+			Com_Error (ERR_DROP, "Local map version differs from server: %i != '%s'\n",
+				map_checksum, cl.configstrings[CS_MAPCHECKSUM]);
+			return;
+		}
+	}
 
 	CL_RegisterSounds();
 	CL_PrepRefresh();
