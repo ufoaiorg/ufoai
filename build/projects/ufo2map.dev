@@ -9,15 +9,15 @@ CppCompiler=
 Includes=D:\Programme\Dev-Cpp\include
 Linker=_@@__@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=30
-Folders=
+UnitCount=36
+Folders=Headers,Source
 ObjFiles=
 PrivateResource=
 ResourceIncludes=
 MakeIncludes=
 Icon=
 ExeOutput=..\..\
-ObjectOutput=
+ObjectOutput=ufo2map
 OverrideOutput=0
 HostApplication=
 CommandLine=
@@ -31,7 +31,7 @@ OverrideOutputName=ufo2map.exe
 
 [Unit10]
 FileName=..\..\src\tools\ufo2map\portals.c
-Folder=ufo2map
+Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
@@ -41,7 +41,7 @@ BuildCmd=
 
 [Unit11]
 FileName=..\..\src\tools\ufo2map\qbsp3.c
-Folder=ufo2map
+Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
@@ -51,7 +51,7 @@ BuildCmd=
 
 [Unit14]
 FileName=..\..\src\tools\ufo2map\qrad.h
-Folder=ufo2map
+Folder=Headers
 Compile=1
 CompileCpp=1
 Link=1
@@ -61,7 +61,7 @@ BuildCmd=
 
 [Unit16]
 FileName=..\..\src\tools\ufo2map\textures.c
-Folder=ufo2map
+Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
@@ -71,7 +71,7 @@ BuildCmd=
 
 [Unit17]
 FileName=..\..\src\tools\ufo2map\tree.c
-Folder=ufo2map
+Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
@@ -81,7 +81,7 @@ BuildCmd=
 
 [Unit18]
 FileName=..\..\src\tools\ufo2map\ufo2map.c
-Folder=ufo2map
+Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
@@ -91,7 +91,7 @@ BuildCmd=
 
 [Unit21]
 FileName=..\..\src\tools\ufo2map\common\mathlib.c
-Folder=ufo2map
+Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
@@ -101,7 +101,7 @@ BuildCmd=$(CC) -c mathlib.c -o mathlib.o $(CFLAGS)
 
 [Unit22]
 FileName=..\..\src\tools\ufo2map\common\polylib.c
-Folder=ufo2map
+Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
@@ -111,7 +111,7 @@ BuildCmd=$(CC) -c polylib.c -o polylib.o $(CFLAGS)
 
 [Unit25]
 FileName=..\..\src\tools\ufo2map\common\scriplib.h
-Folder=ufo2map
+Folder=Headers
 Compile=1
 CompileCpp=1
 Link=1
@@ -121,7 +121,7 @@ BuildCmd=
 
 [Unit26]
 FileName=..\..\src\tools\ufo2map\common\scriplib.c
-Folder=ufo2map
+Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
@@ -131,7 +131,7 @@ BuildCmd=$(CC) -c scriplib.c -o scriplib.o $(CFLAGS)
 
 [Unit27]
 FileName=..\..\src\tools\ufo2map\common\trace.c
-Folder=ufo2map
+Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
@@ -141,7 +141,7 @@ BuildCmd=$(CC) -c trace.c -o trace.o $(CFLAGS)
 
 [Unit28]
 FileName=..\..\src\tools\ufo2map\common\lbmlib.h
-Folder=ufo2map
+Folder=Headers
 Compile=1
 CompileCpp=1
 Link=1
@@ -151,7 +151,7 @@ BuildCmd=
 
 [Unit29]
 FileName=..\..\src\tools\ufo2map\common\lbmlib.c
-Folder=ufo2map
+Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
@@ -161,7 +161,7 @@ BuildCmd=$(CC) -c lbmlib.c -o lbmlib.o $(CFLAGS)
 
 [Unit30]
 FileName=..\..\src\tools\ufo2map\convert_ase.c
-Folder=ufo2map
+Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
@@ -170,18 +170,18 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c convert_ase.c -o convert_ase.o $(CFLAGS)
 
 [Unit31]
-FileName=..\..\src\tools\ufo2map\common\lbmlib.c
-Folder=ufo2map
+FileName=..\..\src\tools\ufo2map\common\threads.h
+Folder=Headers
 Compile=1
-CompileCpp=0
+CompileCpp=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
 [Unit32]
-FileName=..\..\src\tools\ufo2map\common\lbmlib.h
-Folder=ufo2map
+FileName=..\..\src\tools\ufo2map\common\bspfile.h
+Folder=Headers
 Compile=1
 CompileCpp=1
 Link=1
@@ -190,28 +190,28 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit33]
-FileName=..\..\src\tools\ufo2map\common\mathlib.c
-Folder=ufo2map
+FileName=..\..\src\tools\ufo2map\common\cmdlib.h
+Folder=Headers
 Compile=1
-CompileCpp=0
+CompileCpp=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
 [Unit35]
-FileName=..\..\src\tools\ufo2map\common\polylib.c
-Folder=ufo2map
+FileName=..\..\src\tools\ufo2map\common\polylib.h
+Folder=Headers
 Compile=1
-CompileCpp=0
+CompileCpp=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
 [Unit36]
-FileName=..\..\src\tools\ufo2map\common\polylib.h
-Folder=ufo2map
+FileName=..\..\src\tools\ufo2map\common\qfiles.h
+Folder=Headers
 Compile=1
 CompileCpp=1
 Link=1
@@ -329,7 +329,7 @@ BuildCmd=
 [Unit7]
 FileName=..\..\src\tools\ufo2map\map.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -339,7 +339,7 @@ BuildCmd=
 [Unit8]
 FileName=..\..\src\tools\ufo2map\nodraw.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -349,7 +349,7 @@ BuildCmd=
 [Unit12]
 FileName=..\..\src\tools\ufo2map\qbsp.h
 CompileCpp=1
-Folder=ufo2map
+Folder=Headers
 Compile=1
 Link=1
 Priority=1000
@@ -359,7 +359,7 @@ BuildCmd=
 [Unit34]
 FileName=..\..\src\tools\ufo2map\common\mathlib.h
 CompileCpp=1
-Folder=ufo2map
+Folder=Headers
 Compile=1
 Link=1
 Priority=1000
@@ -389,7 +389,7 @@ BuildCmd=
 [Unit4]
 FileName=..\..\src\tools\ufo2map\glfile.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -399,7 +399,7 @@ BuildCmd=
 [Unit1]
 FileName=..\..\src\tools\ufo2map\brushbsp.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -409,7 +409,7 @@ BuildCmd=
 [Unit3]
 FileName=..\..\src\tools\ufo2map\faces.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -419,7 +419,7 @@ BuildCmd=
 [Unit6]
 FileName=..\..\src\tools\ufo2map\lightmap.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -429,7 +429,7 @@ BuildCmd=
 [Unit9]
 FileName=..\..\src\tools\ufo2map\patches.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -439,7 +439,7 @@ BuildCmd=
 [Unit13]
 FileName=..\..\src\tools\ufo2map\qrad3.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -449,7 +449,7 @@ BuildCmd=
 [Unit15]
 FileName=..\..\src\tools\ufo2map\routing.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -459,7 +459,7 @@ BuildCmd=
 [Unit19]
 FileName=..\..\src\tools\ufo2map\writebsp.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -469,7 +469,7 @@ BuildCmd=
 [Unit23]
 FileName=..\..\src\tools\ufo2map\common\threads.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -479,7 +479,7 @@ BuildCmd=$(CC) -c threads.c -o threads.o $(CFLAGS)
 [Unit5]
 FileName=..\..\src\tools\ufo2map\levels.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -489,7 +489,7 @@ BuildCmd=
 [Unit2]
 FileName=..\..\src\tools\ufo2map\csg.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -499,7 +499,7 @@ BuildCmd=
 [Unit20]
 FileName=..\..\src\tools\ufo2map\common\cmdlib.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
@@ -509,7 +509,7 @@ BuildCmd=$(CC) -c cmdlib.c -o cmdlib.o $(CFLAGS)
 [Unit24]
 FileName=..\..\src\tools\ufo2map\common\bspfile.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
