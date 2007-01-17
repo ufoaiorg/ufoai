@@ -834,7 +834,7 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 		break;
 	}
 
-	Com_Printf("checksum for this map: %i\n", checksum);
+	Com_DPrintf("checksum for this map: %u\n", checksum);
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
 
 	/* clear physics interaction links */

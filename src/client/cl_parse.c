@@ -509,6 +509,9 @@ void CL_StartGame( sizebuf_t *sb )
 
 	CL_EventReset();
 
+	/* back to the console */
+	MN_PopMenu(qtrue);
+
 	if (!ccs.singleplayer && baseCurrent) {
 		if (team_play) {
 			MN_PushMenu("multiplayer_selectteam");
