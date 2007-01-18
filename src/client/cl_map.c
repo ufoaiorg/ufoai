@@ -757,12 +757,12 @@ extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 			/* Draw base radar info */
 			RADAR_DrawCoverage(node, &(base->radar),base->pos);
 
-		menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
+		menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
 		return;
 	case MA_BASEATTACK:
 		if (selMis)
 			break;
-		menuText[TEXT_STANDARD] = _("Aliens are attacking our base\nat this very moment.\n");
+		menuText[TEXT_STANDARD] = _("Aliens are attacking our base at this very moment.\n");
 		return;
 	case MA_INTERCEPT:
 		if (selMis)
