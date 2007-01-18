@@ -487,15 +487,16 @@ CVARS (console variables)
  * @note nothing outside the Cvar_*() functions should modify these fields!
  */
 typedef struct cvar_s {
-	char *name;				/* cvar name */
-	char *string;			/* value as string */
-	char *latched_string;	/* for CVAR_LATCH vars */
-	char *old_string;		/* value of the cvar before we changed it */
-	char *description;		/* cvar description */
-	int flags;				/* cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */
-	qboolean modified;		/* set each time the cvar is changed */
-	float value;			/* value as float */
-	int integer;			/* value as integer */
+	char *name;				/**< cvar name */
+	char *string;			/**< value as string */
+	char *latched_string;	/**< for CVAR_LATCH vars */
+	char *old_string;		/**< value of the cvar before we changed it */
+	char *description;		/**< cvar description */
+	int flags;				/**< cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */
+	qboolean modified;		/**< set each time the cvar is changed */
+	float value;			/**< value as float */
+	int integer;			/**< value as integer */
+	qboolean (*check) (void);	/**< cvar check function */
 	struct cvar_s *next;
 	struct cvar_s *hash_next;
 } cvar_t;
@@ -1287,7 +1288,7 @@ typedef enum {
 /* Each config string can be at most MAX_QPATH characters. */
 #define CS_NAME             0
 #define CS_CDTRACK          1
-#define CS_STATUSBAR        2   /* display program string */
+#define CS_MAPTITLE         2   /* display map title string - translated client side */
 #define CS_MAXCLIENTS       3
 #define CS_MAPCHECKSUM      4   /* for catching cheater maps */
 #define CS_MAXSOLDIERS      5   /* max soldiers per team */

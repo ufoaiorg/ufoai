@@ -88,4 +88,14 @@ extern qboolean userinfo_modified;
 /* this is set each time a CVAR_USERINFO variable is changed */
 /* so that the client knows to send it to the server */
 
+qboolean Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, qboolean shouldBeIntegral);
 
+/* this function checks cvar ranges and integral values */
+
+qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize);
+
+/* this function checks whether the cvar string is a valid string in char ** array */
+
+qboolean Cvar_SetCheckFunction (char *var_name, qboolean (*check) (void) );
+
+/* Sets the check functions for a cvar (e.g. Cvar_Assert) */
