@@ -244,6 +244,7 @@ typedef struct ccs_s {
 	date_t date;			/**< current date */
 	float timer;
 
+	vec3_t angles;			/**< 3d geoscape rotation */
 	vec2_t center;
 	float zoom;
 } ccs_t;

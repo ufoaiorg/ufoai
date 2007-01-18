@@ -5,11 +5,11 @@
  * input sources (say, mouse button 1 and the control key) can both press the
  * same button, but the button should only be released when both of the
  * pressing key have been released.
- * 
+ *
  * When a key event issues a button command (+forward, +attack, etc), it appends
  * its key number as a parameter to the command so it can be matched up with
  * the release.
- * 
+ *
  * state bit 0 is the current state of the key
  * state bit 1 is edge triggered on the up to down transition
  * state bit 2 is edge triggered on the down to up transition
@@ -1119,17 +1119,17 @@ void CL_ParseInput(void)
 	switch (mouseSpace) {
 	case MS_ROTATE:
 		/* rotate a model */
-		rotateAngles[1] -= ROTATE_SPEED * (mx - oldx);
-		rotateAngles[2] += ROTATE_SPEED * (my - oldy);
-		while (rotateAngles[1] > 360.0)
-			rotateAngles[1] -= 360.0;
-		while (rotateAngles[1] < 0.0)
-			rotateAngles[1] += 360.0;
+		rotateAngles[YAW] -= ROTATE_SPEED * (mx - oldx);
+		rotateAngles[ROLL] += ROTATE_SPEED * (my - oldy);
+		while (rotateAngles[YAW] > 360.0)
+			rotateAngles[YAW] -= 360.0;
+		while (rotateAngles[YAW] < 0.0)
+			rotateAngles[YAW] += 360.0;
 
-		if (rotateAngles[2] < 0.0)
-			rotateAngles[2] = 0.0;
-		else if (rotateAngles[2] > 180.0)
-			rotateAngles[2] = 180.0;
+		if (rotateAngles[ROLL] < 0.0)
+			rotateAngles[ROLL] = 0.0;
+		else if (rotateAngles[ROLL] > 180.0)
+			rotateAngles[ROLL] = 180.0;
 		return;
 
 	case MS_SHIFTMAP:
@@ -1149,9 +1149,19 @@ void CL_ParseInput(void)
 		return;
 
 	case MS_SHIFT3DMAP:
-		/* shift the map */
-		ccs.center[0] -= (float) (mx - oldx);
-		ccs.center[1] -= (float) (my - oldy);
+		/* rotate a model */
+		ccs.angles[PITCH] -= ROTATE_SPEED * (mx - oldx);
+		ccs.angles[YAW] += ROTATE_SPEED * (my - oldy);
+
+		while (ccs.angles[YAW] > 360.0)
+			ccs.angles[YAW] -= 360.0;
+		while (ccs.angles[YAW] < 0.0)
+			ccs.angles[YAW] += 360.0;
+
+		while (ccs.angles[PITCH] > 360.0)
+			ccs.angles[PITCH] -= 360.0;
+		while (ccs.angles[PITCH] < 0.0)
+			ccs.angles[PITCH] += 360.0;
 		return;
 
 	case MS_ZOOMMAP:

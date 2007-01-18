@@ -121,18 +121,18 @@ static void GL_InitGlobeChain (void)
 			float ctheta = (float) (cos (theta));
 
 			globetexes[texespos++] = s;
-			globetexes[texespos++] = t;
-
-			globeverts[vertspos++] = stheta * srho * 4096.0;
-			globeverts[vertspos++] = ctheta * srho * 4096.0;
-			globeverts[vertspos++] = crho * 4096.0;
-
-			globetexes[texespos++] = s;
 			globetexes[texespos++] = (t - dt);
 
 			globeverts[vertspos++] = stheta * srhodrho * 4096.0;
 			globeverts[vertspos++] = ctheta * srhodrho * 4096.0;
 			globeverts[vertspos++] = crhodrho * 4096.0;
+
+			globetexes[texespos++] = s;
+			globetexes[texespos++] = t;
+
+			globeverts[vertspos++] = stheta * srho * 4096.0;
+			globeverts[vertspos++] = ctheta * srho * 4096.0;
+			globeverts[vertspos++] = crho * 4096.0;
 
 			s += ds;
 		}
@@ -788,11 +788,8 @@ void Draw_3DMapLine(int n, float dist, vec2_t * path)
 /**
  * @brief responsible for drawing the 3d globe on geoscape
  */
-void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
+void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float iz, char *map)
 {
-	static float rotateX = 0.0f;
-	static float rotateY = 0.0f;
-	static float lastcx = 0.0f, lastcy = 0.0f;
 	/* globe scaling */
 	float value = iz;
 	float fullscale = value / 4;
@@ -848,26 +845,10 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 	/* flatten the sphere */
 	qglScalef (fullscale, fullscale, halfscale);
 
-	if (lastcx != cx || lastcy != cy) {
-		rotateX += cx;
-		rotateY += cy;
-		lastcx = cx;
-		lastcy = cy;
-		if (rotateX > 360.0f)
-			rotateX -= 360.0f;
-		if (rotateY > 360.0f)
-			rotateY -= 360.0f;
-		if (rotateX < 0.0f)
-			rotateX += 360.0f;
-		if (rotateY < 0.0f)
-			rotateY += 360.0f;
-	}
-
-	/* rotate in x direction */
-	qglRotatef (rotateX, 1, 0, 0);
-
-	/* rotate in y direction */
-	qglRotatef (rotateY, 0, 1, 0);
+	/* rotate the globe as given in ccs.angles */
+	qglRotatef (rotate[YAW], 1, 0, 0);
+	qglRotatef (rotate[ROLL], 0, 1, 0);
+	qglRotatef (rotate[PITCH], 0, 0, 1);
 
 	/* solid globe texture */
 	qglBindTexture (GL_TEXTURE_2D, gl->texnum);
@@ -892,11 +873,10 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 	/* corners on the globesphere may potentially overlap */
 	qglScalef (reducedfull, reducedfull, reducedhalf);
 
-	/* orient it so that the poles are unobtrusive */
-	qglRotatef (rotateX, 1, 0, 0);
-
-	/* make it not always at right angles to the player */
-	qglRotatef (rotateY, 0, 1, 0);
+	/* rotate the globe as given in ccs.angles */
+	qglRotatef (rotate[YAW], 1, 0, 0);
+	qglRotatef (rotate[ROLL], 0, 1, 0);
+	qglRotatef (rotate[PITCH], 0, 0, 1);
 
 	gl = GL_FindImage(va("pics/menu/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */

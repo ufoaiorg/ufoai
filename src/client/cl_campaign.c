@@ -1898,6 +1898,9 @@ int CL_GameLoad(char *filename)
 	/* set ccs.singleplayer to true (gameloading is singleplayer only) */
 	CL_StartSingleplayer(qtrue);
 
+	/* FIXME: fix this after texture mapping of the globe is fixed, too */
+	ccs.angles[YAW] = -90;
+
 	/* read date */
 	ccs.date.day = MSG_ReadLong(&sb);
 	ccs.date.sec = MSG_ReadLong(&sb);
@@ -4000,6 +4003,10 @@ static void CL_GameNew(void)
 	/* reset, set time */
 	selMis = NULL;
 	memset(&ccs, 0, sizeof(ccs_t));
+
+	/* FIXME: fix this after texture mapping of the globe is fixed, too */
+	ccs.angles[YAW] = -90;
+
 	ccs.date = curCampaign->date;
 
 	/* ensure ccs.singleplayer is set to true */

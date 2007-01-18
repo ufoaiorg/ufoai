@@ -1217,7 +1217,10 @@ void MN_RightClick(int x, int y)
 				break;
 			case MN_MAP:
 				MAP_ResetAction();
-				mouseSpace = MS_SHIFTMAP;
+				if (!cl_3dmap->value)
+					mouseSpace = MS_SHIFTMAP;
+				else
+					mouseSpace = MS_SHIFT3DMAP;
 				break;
 			case MN_TEXT:
 				MN_TextRightClick(node, mouseOver);

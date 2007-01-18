@@ -596,7 +596,7 @@ typedef struct globe_triangle_s {
 								 /* satellites, in meters. */
 #define NOT_SELECTABLE ~0U		/* For picking reasons, see which_site() */
 
-void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
+void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float iz, char *map);
 void Draw_3DMapLine(int n, float dist, vec2_t * path);
 void Draw_3DMapMarkers(float latitude, float longitude, char *image);
 
