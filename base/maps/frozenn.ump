@@ -193,6 +193,7 @@ a      +a     +a     a
 assembly small
 {
 size "4 5"
+title "_Snow"
 +n01 "0 4"
 +n02 "0 4"
 +n03 "0 4"
@@ -208,6 +209,7 @@ size "4 5"
 assembly alienlandingnature
 {
 size "6 6"
+title "_Alien landing - Snow"
 +n01 "0 8"
 +n02 "0 8"
 +n03 "0 8"
@@ -224,6 +226,7 @@ size "6 6"
 assembly industrial
 {
 size "6 6"
+title "_Industrial"
 +n01 "0 8"
 +n02 "0 8"
 +n03 "0 8"
@@ -242,6 +245,7 @@ size "6 6"
 assembly alienlandingindustrial
 {
 size "8 8"
+title "_Alien landing - Industrial"
 +n01 "0 8"
 +n02 "0 8"
 +n03 "0 8"
