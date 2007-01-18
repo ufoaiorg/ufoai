@@ -376,6 +376,9 @@ cvar_t *cl_camzoomquant;
 cvar_t *cl_camzoommax;
 cvar_t *cl_camzoommin;
 
+cvar_t *cl_mapzoommax;
+cvar_t *cl_mapzoommin;
+
 cvar_t *cl_anglespeedkey;
 
 #define MIN_CAMROT_SPEED	50
@@ -1167,10 +1170,10 @@ void CL_ParseInput(void)
 	case MS_ZOOMMAP:
 		/* zoom the map */
 		ccs.zoom *= pow(0.995, my - oldy);
-		if (ccs.zoom < 1.0)
-			ccs.zoom = 1.0;
-		else if (ccs.zoom > 6.0)
-			ccs.zoom = 6.0;
+		if (ccs.zoom < cl_mapzoommin->value)
+			ccs.zoom = cl_mapzoommin->value;
+		else if (ccs.zoom > cl_mapzoommax->value)
+			ccs.zoom = cl_mapzoommax->value;
 
 		if (ccs.center[1] < 0.5 / ccs.zoom)
 			ccs.center[1] = 0.5 / ccs.zoom;

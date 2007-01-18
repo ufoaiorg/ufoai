@@ -1319,10 +1319,10 @@ void MN_MouseWheel(qboolean down, int x, int y)
 			switch (node->type) {
 			case MN_MAP:
 				ccs.zoom *= pow(0.995, (down ? 10: -10));
-				if (ccs.zoom < 1.0)
-					ccs.zoom = 1.0;
-				else if (ccs.zoom > 6.0)
-					ccs.zoom = 6.0;
+				if (ccs.zoom < cl_mapzoommin->value)
+					ccs.zoom = cl_mapzoommin->value;
+				else if (ccs.zoom > cl_mapzoommax->value)
+					ccs.zoom = cl_mapzoommax->value;
 
 				if (ccs.center[1] < 0.5 / ccs.zoom)
 					ccs.center[1] = 0.5 / ccs.zoom;
@@ -1331,10 +1331,10 @@ void MN_MouseWheel(qboolean down, int x, int y)
 				break;
 			case MN_3DMAP:
 				ccs.zoom *= pow(0.995, (down ? 10: -10));
-				if (ccs.zoom < 1.0)
-					ccs.zoom = 1.0;
-				else if (ccs.zoom > 6.0)
-					ccs.zoom = 6.0;
+				if (ccs.zoom < cl_mapzoommin->value)
+					ccs.zoom = cl_mapzoommin->value;
+				else if (ccs.zoom > cl_mapzoommax->value)
+					ccs.zoom = cl_mapzoommax->value;
 				break;
 			case MN_TEXT:
 				MN_TextScroll(node, (down ? 1 : -1));

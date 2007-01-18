@@ -712,7 +712,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 
 	if (ccs.zoom >= 3.0f) {
 		/* TODO: Draw nation borders */
-		for (i=0; i<gd.numNations; i++) {
+		for (i = 0; i < gd.numNations; i++) {
 			/* font color for nations */
 			re.DrawColor(gd.nations[i].color);
 			MAP_MapToScreen(node, gd.nations[i].pos, &x, &y);

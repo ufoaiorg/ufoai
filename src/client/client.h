@@ -291,6 +291,9 @@ extern cvar_t *cl_camzoomquant;
 extern cvar_t *cl_camzoommax;
 extern cvar_t *cl_camzoommin;
 
+extern cvar_t *cl_mapzoommax;
+extern cvar_t *cl_mapzoommin;
+
 extern cvar_t *cl_anglespeedkey;
 
 extern cvar_t *cl_fps;

@@ -1699,9 +1699,12 @@ void CL_InitLocal(void)
 	cl_campitchmin = Cvar_Get("cl_campitchmin", "35", 0, "Min camera pitch - under 35 presents difficulty positioning cursor");
 	cl_campitchspeed = Cvar_Get("cl_campitchspeed", "0.5", 0, NULL);
 	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.16", 0, NULL);
-	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.7", 0, NULL);
-	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.4", 0, NULL);
-	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, NULL);
+	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.7", 0, "Minimum zoom value for tactical missions");
+	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.4", 0, "Maximum zoom value for tactical missions");
+	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, "Center the view when selecting a new soldier");
+
+	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
+	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
 
 	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE, NULL);
 	cl_markactors = Cvar_Get("cl_markactors", "1", CVAR_ARCHIVE, NULL);
