@@ -124,7 +124,7 @@ static void SV_New_f(void)
 }
 
 /**
- * @brief
+ * @brief Send the configstrings to the client
  */
 static void SV_Configstrings_f(void)
 {

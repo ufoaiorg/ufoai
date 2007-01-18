@@ -414,7 +414,7 @@ void CL_PrepRefresh(void)
 		return;					/* no map loaded */
 
 	loadingMessage = qtrue;
-	Com_sprintf (loadingMessages, sizeof(loadingMessages), _("loading %s"), cl.configstrings[CS_TILES]);
+	Com_sprintf (loadingMessages, sizeof(loadingMessages), _("loading %s"), _(cl.configstrings[CS_MAPTITLE]));
 	loadingPercent = 0;
 
 	CL_ResetWeaponButtons();

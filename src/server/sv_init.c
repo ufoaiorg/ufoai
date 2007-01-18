@@ -119,6 +119,7 @@ typedef struct mTile_s {
 
 typedef struct mAssembly_s {
 	char name[MAX_VAR];
+	char title[MAX_VAR];
 	byte min[MAX_TILETYPES];
 	byte max[MAX_TILETYPES];
 	byte fT[MAX_FIXEDTILES];
@@ -324,7 +325,16 @@ static void SV_ParseAssembly(char *filename, char **text)
 		if (!text || *token == '}')
 			break;
 
-		if (!Q_strncmp(token, "size", 4)) {
+		if (!Q_strncmp(token, "title", 5)) {
+			/* get map title */
+			token = COM_EParse(text, errhead, filename);
+			if (!text)
+				break;
+
+			Q_strncpyz(a->title, token, sizeof(a->title));
+			continue;
+			/* fix tilename x y */
+		} else if (!Q_strncmp(token, "size", 4)) {
 			/* get map size */
 			token = COM_EParse(text, errhead, filename);
 			if (!text)
@@ -758,6 +768,28 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 	Com_DPrintf("tiles: %i tries: %i\n", numPlaced, tries + 1);
 }
 
+/**
+ * @brief Get the map title for a given map
+ * @note the title string must be translated client side
+ * @return Never NULL - mapname or maptitle (if defined in assembly)
+ */
+static const char* SV_GetMapTitle (const char* const mapname)
+{
+	assert(mapname);
+
+	if (mapname[0] == '+') {
+		if (mAsm && mAsm->title[0]) {
+			/* return the assembly title itself - must be translated client side */
+			if (mAsm->title[0] == '_')
+				return mAsm->title + 1;
+			else {
+				Com_Printf("The assembly title '%s' is not marked as translateable\n", mAsm->title);
+				return mAsm->title;
+			}
+		}
+	}
+	return mapname;
+}
 
 /**
  * @brief Change the server to a new map, taking all connected clients along with it.
@@ -836,6 +868,8 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 
 	Com_DPrintf("checksum for this map: %u\n", checksum);
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
+
+	Com_sprintf(sv.configstrings[CS_MAPTITLE], sizeof(sv.configstrings[CS_MAPTITLE]), "%s", SV_GetMapTitle(server));
 
 	/* clear physics interaction links */
 	SV_ClearWorld();
