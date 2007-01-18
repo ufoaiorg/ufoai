@@ -1539,6 +1539,10 @@ qboolean CL_GameSave(char *filename, char *comment)
 	Com_sprintf(savegame, MAX_OSPATH, "%s/save/%s.sav", FS_Gamedir(), filename);
 
 	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
+	if (!buf) {
+		Com_Printf("Error: Could not allocate enough memory to save this game\n");
+		return qfalse;
+	}
 
 	/* create data */
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
@@ -1560,7 +1564,7 @@ qboolean CL_GameSave(char *filename, char *comment)
 	MSG_WriteFloat(&sb, ccs.center[1]);
 	MSG_WriteFloat(&sb, ccs.zoom);
 
-	/* FIXME: We should remove the version stuff and include the sizeof(globalData_t) as info */
+	/* no more version included - we are using the sizeof(globalData_t) as info */
 	/* when size of globalData_t in savegame differs from actual size of globalData_t we won't even load the game */
 	Com_DPrintf("CL_GameSave: sizeof globalData_t: %i max.gamedatasize: %i\n", sizeof(globalData_t), MAX_GAMESAVESIZE);
 	SZ_Write(&sb, &gd, sizeof(globalData_t));
@@ -1687,7 +1691,7 @@ static void CL_GameSave_f(void)
 
 	/* get argument */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: game_save <filename> <comment>\n");
+		Com_Printf("Usage: game_save <filename> <comment|*cvar>\n");
 		return;
 	}
 
@@ -1699,8 +1703,10 @@ static void CL_GameSave_f(void)
 	/* get comment */
 	if (Cmd_Argc() > 2) {
 		arg = Cmd_Argv(2);
+		/* comment from slot cvar (mn_slotX) */
 		if (arg[0] == '*')
 			Q_strncpyz(comment, Cvar_VariableString(arg + 1), MAX_COMMENTLENGTH);
+		/* comment as parameter */
 		else
 			Q_strncpyz(comment, arg, MAX_COMMENTLENGTH);
 	} else
