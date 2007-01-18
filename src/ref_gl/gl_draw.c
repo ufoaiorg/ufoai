@@ -32,7 +32,7 @@ image_t *shadow;
 
 static float globe_fog[4];
 static int spherelist = -1;
-#define GLOBE_TRIS 10
+#define GLOBE_TRIS 80
 #define GLOBE_TEXES (GLOBE_TRIS+1)*(GLOBE_TRIS+1)*4
 #define GLOBE_VERTS (GLOBE_TRIS+1)*(GLOBE_TRIS+1)*6
 static float globetexes[GLOBE_TEXES];
@@ -55,16 +55,20 @@ static void GL_DrawSphere (void)
 
 		qglNewList (spherelist, GL_COMPILE);
 
+		qglEnable (GL_NORMALIZE);
+
 		for (i = 0; i < GLOBE_TRIS; i++) {
 			qglBegin (GL_TRIANGLE_STRIP);
 
 			for (j = 0; j <= GLOBE_TRIS; j++) {
+				qglNormal3fv (&globeverts[vertspos]);
 				qglTexCoord2fv (&globetexes[texespos]);
 				qglVertex3fv (&globeverts[vertspos]);
 
 				texespos += 2;
 				vertspos += 3;
 
+				qglNormal3fv (&globeverts[vertspos]);
 				qglTexCoord2fv (&globetexes[texespos]);
 				qglVertex3fv (&globeverts[vertspos]);
 
@@ -74,6 +78,8 @@ static void GL_DrawSphere (void)
 
 			qglEnd ();
 		}
+
+		qglDisable(GL_NORMALIZE);
 
 		qglEndList ();
 	}
@@ -85,11 +91,11 @@ static void GL_DrawSphere (void)
  */
 static void GL_InitGlobeChain (void)
 {
-	const float drho = 0.3141592653589;
-	const float dtheta = 0.6283185307180;
+	const float drho = M_PI / GLOBE_TRIS;
+	const float dtheta = M_PI / (GLOBE_TRIS / 2);
 
-	const float ds = 0.1;
-	const float dt = 0.1;
+	const float ds = 1.0f / (GLOBE_TRIS * 2);
+	const float dt = 1.0f / GLOBE_TRIS;
 
 	float t = 1.0f;
 	float s = 0.0f;
@@ -902,7 +908,7 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float 
 		qglBindTexture (GL_TEXTURE_2D, gl->texnum);
 
 		/* draw the sphere */
-		qglCallList (spherelist);
+/*		qglCallList (spherelist);*/
 
 		/* back to normal mode */
 		qglDisable (GL_BLEND);
