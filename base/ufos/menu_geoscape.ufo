@@ -148,18 +148,19 @@ menu map
 	// texts
 	// ==================
 
-	text description
-	{
-		pos		"34 632"
-		size	"400 100"
-		format	"20 0"
-		height	"8"
-	}
-
 	string daytime
 	{
 		string	"*cvar mn_mapdaytime"
-		pos		"34 718"
+		pos		"34 634"
+	}
+
+	text description
+	{
+		pos		"34 652"
+		size	"320 80"
+		format	"18 0"
+		height	"5"
+		wheel // FIXME: Current problem is, that the geoscape will zoom, too if we are using the mousewheel
 	}
 
 	// ==================

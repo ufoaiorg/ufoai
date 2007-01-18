@@ -410,7 +410,7 @@ mission farm
 	music		PsymongN2
 	pos			"116 52"
 	aliens  	4
-	alienteam	taman	
+	alienteam	taman
 	alienequip	stage1_workers
 	civilians	3
 	civteam		european
