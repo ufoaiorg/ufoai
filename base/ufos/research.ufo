@@ -99,7 +99,7 @@ up_chapters main
 tech rs_laser
 {
 	type	tech
-	name "_Advanced Laser Technology"
+	name "_Continuous Wave Laser Operation"
 	up_chapter	tech
 	description	"_laser_txt"
 	pre_description	"_laser_pre_txt"
