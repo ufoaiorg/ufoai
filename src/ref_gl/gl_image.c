@@ -1940,7 +1940,7 @@ static qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, 
 #define DAN_WIDTH	512
 #define DAN_HEIGHT	256
 
-#define DAEMMERUNG	0.03
+#define DAWN		0.03
 
 static byte DaNalpha[DAN_WIDTH * DAN_HEIGHT];
 image_t *DaN;
@@ -1991,12 +1991,12 @@ void GL_CalcDayAndNight(float q)
 		for (x = 0; x < DAN_WIDTH; x++) {
 			pos = sin_phi[x] * root * sin_q - (a * SIN_ALPHA + cos_phi[x] * root * COS_ALPHA) * cos_q;
 
-			if (pos >= DAEMMERUNG)
+			if (pos >= DAWN)
 				*px++ = 255;
-			else if (pos <= -DAEMMERUNG)
+			else if (pos <= -DAWN)
 				*px++ = 0;
 			else
-				*px++ = (byte) (128.0 * (pos / DAEMMERUNG + 1));
+				*px++ = (byte) (128.0 * (pos / DAWN + 1));
 		}
 	}
 
