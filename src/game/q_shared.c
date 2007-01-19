@@ -318,6 +318,29 @@ void R_ConcatTransforms(float in1[3][4], float in2[3][4], float out[3][4])
 	out[2][3] = in1[2][0] * in2[0][3] + in1[2][1] * in2[1][3] + in1[2][2] * in2[2][3] + in1[2][3];
 }
 
+/**
+ * @brief Converts longitude and latitude to vector coordinates
+ * @sa VecToPolar
+ */
+void PolarToVec(const vec2_t a, vec3_t v)
+{
+	float p, t;
+
+	p = a[0] * torad;	/* long */
+	t = a[1] * torad;	/* lat */
+	/* v[0] = z, v[1] = x, v[2] = y - wtf? */
+	VectorSet(v, cos(p) * cos(t), sin(p) * cos(t), sin(t));
+}
+
+/**
+ * @brief Converts vector coordinates into polar coordinates
+ * @sa PolarToVec
+ */
+void VecToPolar(const vec3_t v, vec2_t a)
+{
+	a[0] = todeg * atan2(v[1], v[0]);	/* long */
+	a[1] = 90 - todeg * acos(v[2]);	/* lat */
+}
 
 /**
  * @brief Converts a vector to an angle vector

@@ -79,8 +79,6 @@ static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, in
 extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
 static void MAP_ScreenTo3DMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
-static void PolarToVec(const vec2_t a, vec3_t v);
-static void VecToPolar(const vec3_t v, vec2_t a);
 extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line);
 static void MAP_Draw3DMapMarkers(const menuNode_t* node, float latitude, float longitude);
@@ -286,9 +284,10 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y, qboolean globe)
 		if (!MapIsWater(CL_GetMapColor(pos, MAPTYPE_CLIMAZONE))) {
 			newBasePos[0] = pos[0];
 			newBasePos[1] = pos[1];
+			Com_Printf("MAP_MapClick: Build base at: %.0f:%.0f\n", pos[0], pos[1]);
 			nation = MAP_GetNation(pos);
 			if (nation)
-				Com_Printf("MAP_MapClick: Build base in nation '%s'\n", nation->id);
+				Com_DPrintf("MAP_MapClick: Build base in nation '%s'\n", nation->id);
 			MN_PushMenu("popup_newbase");
 			return;
 		} else {
@@ -453,33 +452,6 @@ static void MAP_ScreenTo3DMap(const menuNode_t* node, int x, int y, vec2_t pos)
 		pos[0] += 360.0;
 }
 
-#define torad (M_PI/180.0f)
-#define todeg (180.0f/M_PI)
-
-/**
- * @brief Converts longitude and latitude to vector coordinates
- * @sa VecToPolar
- */
-static void PolarToVec(const vec2_t a, vec3_t v)
-{
-	float p, t;
-
-	p = a[0] * torad;	/* long */
-	t = a[1] * torad;	/* lat */
-	/* v[0] = z, v[1] = x, v[2] = y - wtf? */
-	VectorSet(v, cos(p) * cos(t), sin(p) * cos(t), sin(t));
-}
-
-/**
- * @brief Converts vector coordinates into polar coordinates
- * @sa PolarToVec
- */
-static void VecToPolar(const vec3_t v, vec2_t a)
-{
-	a[0] = todeg * atan2(v[1], v[0]);	/* long */
-	a[1] = 90 - todeg * acos(v[2]);	/* lat */
-}
-
 /**
  * @brief
  */
@@ -611,28 +583,23 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
 		ms = &ccs.mission[i];
 		if (!MAP_3DMapToScreen(node, ms->realPos, &x, &y))
 			continue;
-		re.Draw3DMapMarkers(ccs.angles, latitude, longitude, "cross");
+		re.Draw3DMapMarkers(ccs.angles, ccs.zoom, latitude, longitude, "cross");
 
 		if (ms == selMis) {
-			re.Draw3DMapMarkers(ccs.angles, latitude, longitude, selMis->def->active ? "circleactive" : "circle");
-/*			if ( CL_3DMapIsNight( ms->realPos ) ) Cvar_Set( "mn_mapdaytime", _("Night") );
-			else Cvar_Set( "mn_mapdaytime", _("Day") ); */
+			re.Draw3DMapMarkers(ccs.angles, ccs.zoom, latitude, longitude, selMis->def->active ? "circleactive" : "circle");
+			Cvar_Set("mn_mapdaytime", CL_MapIsNight(ms->realPos) ? _("Night") : _("Day"));
 		}
 	}
 
 	/* draw base pics */
 	for (j = 0; j < gd.numBases; j++)
 		if (gd.bases[j].founded) {
-			if (!MAP_3DMapToScreen(node, gd.bases[j].pos, &x, &y))
-				continue;
-			re.Draw3DMapMarkers(ccs.angles, latitude, longitude, "base");
+			re.Draw3DMapMarkers(ccs.angles, ccs.zoom, latitude, longitude, "base");
 
 			/* draw aircraft */
 			for (i = 0, aircraft = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, aircraft++)
 				if (aircraft->status > AIR_HOME) {
-					if (!MAP_3DMapToScreen(node, aircraft->pos, &x, &y))
-						continue;
-					re.Draw3DMapMarkers(ccs.angles, latitude, longitude, aircraft->image);
+					re.Draw3DMapMarkers(ccs.angles, ccs.zoom, latitude, longitude, aircraft->image);
 
 					if (aircraft->status >= AIR_TRANSIT) {
 						mapline_t path;
@@ -640,7 +607,7 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
 						path.n = aircraft->route.n - aircraft->point;
 						memcpy(path.p + 1, aircraft->route.p + aircraft->point + 1, (path.n - 1) * sizeof(vec2_t));
 						memcpy(path.p, aircraft->pos, sizeof(vec2_t));
-						re.Draw3DMapLine(ccs.angles, path.n, path.dist, path.p);
+						re.Draw3DMapLine(ccs.angles, ccs.zoom, path.n, path.dist, path.p);
 					}
 				}
 		}

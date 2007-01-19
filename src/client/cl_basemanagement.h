@@ -209,7 +209,7 @@ building_t *B_GetBuildingByIdx(base_t* base, int idx);
 building_t *B_GetBuildingInBase(base_t* base, char* buildingID);
 building_t *B_GetBuildingType(char *buildingName);
 
-/** Coordinates to place the new base at */
+/** Coordinates to place the new base at (long, lat) */
 extern vec3_t newBasePos;
 
 void B_BuildingInit(void);

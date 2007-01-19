@@ -767,12 +767,42 @@ void Draw_LineStrip(int points, int *verts)
 }
 
 
+#define MARKER_SIZE 0.03
 /**
  * @brief
  */
-void Draw_3DMapMarkers(vec3_t angles, float latitude, float longitude, char *image)
+void Draw_3DMapMarkers(vec3_t angles, float zoom, float latitude, float longitude, char *image)
 {
+	float factor;
+	vec3_t v;
+	vec2_t a;
+	image_t *gl;
 
+	gl = Draw_FindPic(image);
+	if (!gl) {
+		ri.Sys_Error(ERR_FATAL, "MapMakers: could not find '%s'", image);
+		return;
+	}
+
+	Vector2Set(a, latitude, longitude);
+
+	qglPushMatrix();
+
+	factor = 1.0 + (2.0 * MARKER_SIZE) / zoom;
+
+	/* convert to vector coordinates */
+	PolarToVec(a, v);
+
+	/* translate the position */
+	qglTranslated(v[1] * factor, v[2] * factor, v[1] * factor);
+
+	/* bind the marker texture */
+	GL_Bind(gl->texnum);
+
+	/* TODO - draw a marker */
+
+	/* restore the matrix */
+	qglPopMatrix();
 }
 
 /**
@@ -781,19 +811,18 @@ void Draw_3DMapMarkers(vec3_t angles, float latitude, float longitude, char *ima
  * "to" and "from" in the comments in the code refers to the two
  * points given as arguments.
  */
-void Draw_3DMapLine(vec3_t angles, int n, float dist, vec2_t * path)
+void Draw_3DMapLine(vec3_t angles, float zoom, int n, float dist, vec2_t * path)
 {
 }
 
 /**
  * @brief responsible for drawing the 3d globe on geoscape
  */
-void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float iz, char *map)
+void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, char *map)
 {
 	/* globe scaling */
-	float value = iz;
-	float fullscale = value / 4;
-	float halfscale = value / 8;
+	float fullscale = zoom / 4;
+	float halfscale = zoom / 8;
 
 	image_t* gl = NULL;
 	float nx, ny, nw, nh;
@@ -830,6 +859,7 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, f
 	/* texture matrix, for much the same effect */
 	qglMatrixMode (GL_TEXTURE);
 	qglLoadIdentity ();
+	/* scale the texture */
 	qglScalef (2, 1, 1);
 	qglMatrixMode (GL_MODELVIEW);
 

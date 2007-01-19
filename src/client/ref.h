@@ -330,9 +330,9 @@ typedef struct {
 	void (*DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
 	void (*DrawLineStrip) (int points, int *verts);
 	void (*DrawCircle) (vec3_t mid, float radius, const vec4_t color);
-	void (*Draw3DGlobe) (int x, int y, int w, int h, float p, float q, vec3_t rotate, float iz, char *map);
-	void (*Draw3DMapMarkers) (vec3_t angles, float latitude, float longitude, char *image);
-	void (*Draw3DMapLine) (vec3_t angles, int n, float dist, vec2_t * v);
+	void (*Draw3DGlobe) (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, char *map);
+	void (*Draw3DMapMarkers) (vec3_t angles, float zoom, float latitude, float longitude, char *image);
+	void (*Draw3DMapLine) (vec3_t angles, float zoom, int n, float dist, vec2_t * v);
 
 	void (*AnimAppend) (animState_t * as, struct model_s * mod, char *name);
 	void (*AnimChange) (animState_t * as, struct model_s * mod, char *name);

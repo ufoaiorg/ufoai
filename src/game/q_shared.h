@@ -331,6 +331,9 @@ int Q_log2(int val);
 
 void VecToAngles(vec3_t vec, vec3_t angles);
 
+void VecToPolar(const vec3_t v, vec2_t a);
+void PolarToVec(const vec2_t a, vec3_t v);
+
 void R_ConcatRotations(float in1[3][3], float in2[3][3], float out[3][3]);
 void R_ConcatTransforms(float in1[3][4], float in2[3][4], float out[3][4]);
 
@@ -625,6 +628,8 @@ typedef struct {
 	struct edict_s *ent;	/**< not set by CM_*() functions */
 } trace_t;
 
+#define torad (M_PI/180.0f)
+#define todeg (180.0f/M_PI)
 
 /* entity_state_t->renderfx flags */
 #define RF_MINLIGHT         0x00000001  /* allways have some light (viewmodel) */
