@@ -1,1 +1,2 @@
 find ../base/ufos -name '*.ufo' -print
+find ../base/maps -name '*.ump' -print
