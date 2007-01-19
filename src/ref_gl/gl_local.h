@@ -541,60 +541,12 @@ void GLimp_EnableLogging(qboolean enable);
 void GLimp_LogNewFrame(void);
 void GLimp_SetGamma(void);
 
+/* 3d globe */
 
-/*
-====================================================================
-3D Globe functions
-Note: This code was taken from xtraceroute and adopted
-====================================================================
-*/
-
-typedef struct globe_triangle_s {
-	vec3_t vec[3];
-} globe_triangle_t;
-
-
-/* for icosahedron */
-#define CZ (0.866025403)		/* cos(30) */
-#define SZ (0.5)				/* sin(30) */
-#define C1 (0.951056516)		/* cos(18) */
-#define S1 (0.309016994)		/* sin(18) */
-#define C2 (0.587785252)		/* cos(54) */
-#define S2 (0.809016994)		/* sin(54) */
-#define X1 (C1*CZ)
-#define Y1 (S1*CZ)
-#define X2 (C2*CZ)
-#define Y2 (S2*CZ)
-
-#define Ip0     {0.,    1.,     0.}
-#define Ip1     {-X2,   SZ,    -Y2}
-#define Ip2     {X2,    SZ,    -Y2}
-#define Ip3     {X1,    SZ,     Y1}
-#define Ip4     {0,     SZ,     CZ}
-#define Ip5     {-X1,   SZ,     Y1}
-
-#define Im0     {-X1,   -SZ,    -Y1}
-#define Im1     {0,     -SZ,    -CZ}
-#define Im2     {X1,    -SZ,    -Y1}
-#define Im3     {X2,    -SZ,     Y2}
-#define Im4     {-X2,   -SZ,     Y2}
-#define Im5     {0.,    -1.,     0.}
-
-#define MAX_ICOSAHEDRON 20
-
-#define GLOBE_TORAD (M_PI/180.0f)
-#define GLOBE_TODEG (180.0f/M_PI)
-#define MAX_SITES  40
-#define Z_OF_EYE 4				/* s.g. distance between eye and object on z axis */
-#define SITE_MARKER_SIZE  0.03
-#define EARTH_SIZE 1.0
 #define PHYSICAL_EARTH_RADIUS 6378137	/* Earth's radius, in meters. (From RFC1876) */
-#define SPEED_OF_LIGHT 299792458	/* The big C, in meters/second. */
-#define MAXSELECT 100
+#define SPEED_OF_LIGHT 299792458		/* The big C, in meters/second. */
 #define PHYSICAL_EARTH_CIRC (2.0 * M_PI * PHYSICAL_EARTH_RADIUS)
-#define GEOSYNC_SAT_ALT 36000000	/* Approx. altitude of geosynchronous */
-								 /* satellites, in meters. */
-#define NOT_SELECTABLE ~0U		/* For picking reasons, see which_site() */
+#define NOT_SELECTABLE ~0U				/* For picking reasons, see which_site() */
 
 void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float iz, char *map);
 void Draw_3DMapLine(int n, float dist, vec2_t * path);
