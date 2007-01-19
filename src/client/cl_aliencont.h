@@ -75,7 +75,7 @@ void AL_FillInContainment(void);
 char *AL_AlienTypeToName(alienType_t type);
 void CL_CollectingAliens(void);
 void AL_AddAliens(void);
-void AL_CountAll(void);
+int AL_CountAll(void);
 void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action);
 int AL_GetAlienIdx(char *id);
 int AL_GetAlienAmount(int idx, requirementType_t reqtype);

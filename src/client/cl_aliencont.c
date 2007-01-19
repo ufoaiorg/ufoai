@@ -238,8 +238,9 @@ void AL_AddAliens(void)
  * @note This should be called whenever you add or remove
  * aliens from alien containment.
  * @sa CL_DropshipReturned
+ * @return amount of all alive aliens stored in containments
  */
-void AL_CountAll(void)
+int AL_CountAll(void)
 {
 	int i, j;
 	int amount = 0;
@@ -255,8 +256,7 @@ void AL_CountAll(void)
 				amount += base->alienscont[j].amount_alive;
 		}
 	}
-
-	Cvar_SetValue("al_globalamount", amount);
+	return amount;
 }
 
 /**
@@ -381,6 +381,7 @@ int AL_GetAlienAmount(int idx, requirementType_t reqtype)
  */
 static void AC_Init (void)
 {
+	Cvar_SetValue("al_globalamount", AL_CountAll());
 	menuText[TEXT_STANDARD] = aliencontText;
 }
 
