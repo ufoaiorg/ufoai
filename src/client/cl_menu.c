@@ -679,6 +679,10 @@ static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
 {
 	int sx, sy, tx, ty;
 
+	/* don't hover nodes if we are executing an action on geoscape like rotating or moving */
+	if (mouseSpace >= MS_ROTATE && mouseSpace <= MS_SHIFT3DMAP)
+		return qfalse;
+
 	if (*node->depends.var) {
 		/* menuIfCondition_t */
 		switch (node->depends.cond) {
