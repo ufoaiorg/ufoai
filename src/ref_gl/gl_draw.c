@@ -770,7 +770,7 @@ void Draw_LineStrip(int points, int *verts)
 /**
  * @brief
  */
-void Draw_3DMapMarkers(float latitude, float longitude, char *image)
+void Draw_3DMapMarkers(vec3_t angles, float latitude, float longitude, char *image)
 {
 
 }
@@ -781,7 +781,7 @@ void Draw_3DMapMarkers(float latitude, float longitude, char *image)
  * "to" and "from" in the comments in the code refers to the two
  * points given as arguments.
  */
-void Draw_3DMapLine(int n, float dist, vec2_t * path)
+void Draw_3DMapLine(vec3_t angles, int n, float dist, vec2_t * path)
 {
 }
 
@@ -794,10 +794,8 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, f
 	float value = iz;
 	float fullscale = value / 4;
 	float halfscale = value / 8;
-	float reducedfull = fullscale * 0.9;
-	float reducedhalf = halfscale * 0.9;
 
-	image_t* gl;
+	image_t* gl = NULL;
 	float nx, ny, nw, nh;
 
 	/* normalize */
@@ -859,56 +857,54 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, f
 	/* draw the sphere */
 	qglCallList (spherelist);
 
-	/* restore the previous matrix */
-	qglPopMatrix ();
+	/* qglMTexCoord2fSGIS isn't working with compiled lists afaik */
+#if 0
+	/* test for multitexture and env_combine support */
+	if (qglSelectTextureSGIS || qglActiveTextureARB) {
+		gl = GL_FindImage(va("pics/menu/%s_night", map), it_pic);
+		/* maybe the campaign map doesn't have a night image */
+		if (gl) {
+			/* init combiner */
+			qglEnable(GL_BLEND);
 
-	/* foreground */
-	/* go to a new matrix */
-	qglPushMatrix ();
+			/* night texture */
+			GL_SelectTexture(gl_texture0);
+			GL_Bind(gl->texnum);
 
-	/* center it */
-	qglTranslatef (x+w/2, y+h/2, 0);
+			/* mask texture */
+			GL_SelectTexture(gl_texture1);
+			if (!DaN || lastQ != q) {
+				/* calculate new mask */
+				GL_CalcDayAndNight(q);
+				lastQ = q;
+			}
 
-	/* flatten the sphere and shrink it a little - the reduced scale prevents artefacts appearing when */
-	/* corners on the globesphere may potentially overlap */
-	qglScalef (reducedfull, reducedfull, reducedhalf);
+			GL_Bind(DaN->texnum);
 
-	/* rotate the globe as given in ccs.angles */
-	qglRotatef (rotate[YAW], 1, 0, 0);
-	qglRotatef (rotate[ROLL], 0, 1, 0);
-	qglRotatef (rotate[PITCH], 0, 0, 1);
+			/* draw night image */
+			qglCallList (spherelist);
 
-	gl = GL_FindImage(va("pics/menu/%s_night", map), it_wrappic);
-	/* maybe the campaign map doesn't have a night image */
-	if (gl) {
-		/* blend mode */
-		qglEnable (GL_BLEND);
+			GL_SelectTexture(gl_texture0);
 
-		/* alpha globe texture */
-		qglBindTexture (GL_TEXTURE_2D, gl->texnum);
-
-		/* draw the sphere */
-/*		qglCallList (spherelist);*/
-
-		/* back to normal mode */
-		qglDisable (GL_BLEND);
+			qglDisable(GL_BLEND);
+		}
 	}
+#endif
+
+#ifdef HAVE_SHADERS
+	if (gl->shader)
+		SH_UseShader(gl->shader, qfalse);
+#endif
 
 	qglDisable(GL_CULL_FACE);
-
-	/* restore the previous matrix */
-	qglPopMatrix ();
 
 	if (gl_fog->value) {
 		/* turn off fog */
 		qglDisable (GL_FOG);
 	}
 
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qtrue);
-#endif
-
+	/* restore the previous matrix */
+	qglPopMatrix ();
 	qglMatrixMode (GL_TEXTURE);
 	qglLoadIdentity ();
 	qglMatrixMode (GL_MODELVIEW);

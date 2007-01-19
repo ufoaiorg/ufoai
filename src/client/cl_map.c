@@ -377,6 +377,32 @@ static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, in
 /**
  * @brief
  */
+extern qboolean MAP_3DMapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y)
+{
+	float sx;
+
+	/* TODO: ccs.angles */
+
+	/* get "raw" position */
+	sx = pos[0] / 360 + ccs.center[0] - 0.5;
+
+	/* shift it on screen */
+	if (sx < -0.5)
+		sx += 1.0;
+	else if (sx > +0.5)
+		sx -= 1.0;
+
+	*x = node->pos[0] + 0.5 * node->size[0] - sx * node->size[0] * ccs.zoom;
+	*y = node->pos[1] + 0.5 * node->size[1] - (pos[1] / 180 + ccs.center[1] - 0.5) * node->size[1] * ccs.zoom;
+
+	if (*x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
+		return qfalse;
+	return qtrue;
+}
+
+/**
+ * @brief
+ */
 extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
@@ -427,25 +453,31 @@ static void MAP_ScreenTo3DMap(const menuNode_t* node, int x, int y, vec2_t pos)
 		pos[0] += 360.0;
 }
 
+#define torad (M_PI/180.0f)
+#define todeg (180.0f/M_PI)
+
 /**
- * @brief
+ * @brief Converts longitude and latitude to vector coordinates
+ * @sa VecToPolar
  */
 static void PolarToVec(const vec2_t a, vec3_t v)
 {
 	float p, t;
 
-	p = a[0] * M_PI / 180;
-	t = a[1] * M_PI / 180;
+	p = a[0] * torad;	/* long */
+	t = a[1] * torad;	/* lat */
+	/* v[0] = z, v[1] = x, v[2] = y - wtf? */
 	VectorSet(v, cos(p) * cos(t), sin(p) * cos(t), sin(t));
 }
 
 /**
- * @brief
+ * @brief Converts vector coordinates into polar coordinates
+ * @sa PolarToVec
  */
 static void VecToPolar(const vec3_t v, vec2_t a)
 {
-	a[0] = 180 / M_PI * atan2(v[1], v[0]);
-	a[1] = 90 - 180 / M_PI * acos(v[2]);
+	a[0] = todeg * atan2(v[1], v[0]);	/* long */
+	a[1] = 90 - todeg * acos(v[2]);	/* lat */
 }
 
 /**
@@ -577,12 +609,12 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
-		if (!MAP_MapToScreen(node, ms->realPos, &x, &y))
+		if (!MAP_3DMapToScreen(node, ms->realPos, &x, &y))
 			continue;
-		re.Draw3DMapMarkers(latitude, longitude, "cross");
+		re.Draw3DMapMarkers(ccs.angles, latitude, longitude, "cross");
 
 		if (ms == selMis) {
-			re.Draw3DMapMarkers(latitude, longitude, selMis->def->active ? "circleactive" : "circle");
+			re.Draw3DMapMarkers(ccs.angles, latitude, longitude, selMis->def->active ? "circleactive" : "circle");
 /*			if ( CL_3DMapIsNight( ms->realPos ) ) Cvar_Set( "mn_mapdaytime", _("Night") );
 			else Cvar_Set( "mn_mapdaytime", _("Day") ); */
 		}
@@ -591,16 +623,16 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
 	/* draw base pics */
 	for (j = 0; j < gd.numBases; j++)
 		if (gd.bases[j].founded) {
-			if (!MAP_MapToScreen(node, gd.bases[j].pos, &x, &y))
+			if (!MAP_3DMapToScreen(node, gd.bases[j].pos, &x, &y))
 				continue;
-			re.Draw3DMapMarkers(latitude, longitude, "base");
+			re.Draw3DMapMarkers(ccs.angles, latitude, longitude, "base");
 
 			/* draw aircraft */
 			for (i = 0, aircraft = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, aircraft++)
 				if (aircraft->status > AIR_HOME) {
-					if (!MAP_MapToScreen(node, aircraft->pos, &x, &y))
+					if (!MAP_3DMapToScreen(node, aircraft->pos, &x, &y))
 						continue;
-					re.Draw3DMapMarkers(latitude, longitude, aircraft->image);
+					re.Draw3DMapMarkers(ccs.angles, latitude, longitude, aircraft->image);
 
 					if (aircraft->status >= AIR_TRANSIT) {
 						mapline_t path;
@@ -608,7 +640,7 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
 						path.n = aircraft->route.n - aircraft->point;
 						memcpy(path.p + 1, aircraft->route.p + aircraft->point + 1, (path.n - 1) * sizeof(vec2_t));
 						memcpy(path.p, aircraft->pos, sizeof(vec2_t));
-						re.Draw3DMapLine(path.n, path.dist, path.p);
+						re.Draw3DMapLine(ccs.angles, path.n, path.dist, path.p);
 					}
 				}
 		}
