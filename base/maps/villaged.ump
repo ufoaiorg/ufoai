@@ -382,6 +382,7 @@ a     +a     +a     a
 assembly residential
 {
 size "6 6"
+title "_Village residential"
 +s01 "1 2"
 +s02 "0 4"
 +s03 "0 4"
@@ -419,6 +420,7 @@ size "6 6"
 assembly recreational
 {
 size "6 6"
+title "_Village recreational"
 +s01 "0 1"
 +s02 "0 4"
 +s03 "0 4"
@@ -454,6 +456,7 @@ size "6 6"
 assembly commercial
 {
 size "7 7"
+title "_Village commercial"
 +s01 "0 2"
 +s02 "0 4"
 +s03 "0 4"
@@ -491,6 +494,7 @@ size "7 7"
 assembly big
 {
 size "10 10"
+title "_Village big"
 +s01 "0 8"
 +s02 "0 32"
 +s03 "0 32"

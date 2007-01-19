@@ -147,27 +147,27 @@ a      +a     a
 // *** Test-Maps ***
 
 // short-range weapon-testing :-)
-assembly test
-{
-size "3 3"
-+h05 "0 2"
-+h06 "0 2"
-+h09 "0 2"
-+h10 "0 2"
-+drop "1 1"
-}
+//assembly test
+//{
+//size "3 3"
+//+h05 "0 2"
+//+h06 "0 2"
+//+h09 "0 2"
+//+h10 "0 2"
+//+drop "1 1"
+//}
 
-assembly tiny
-{
-size "3 3"
-+h01 "0 1"
-+h07 "0 1"
-+h05 "0 2"
-+h06 "0 2"
-+h09 "0 2"
-+h10 "0 2"
-+drop "1 1"
-}
+//assembly tiny
+//{
+//size "3 3"
+//+h01 "0 1"
+//+h07 "0 1"
+//+h05 "0 2"
+//+h06 "0 2"
+//+h09 "0 2"
+//+h10 "0 2"
+//+drop "1 1"
+//}
 
 // *********************************
 // *** Game-Maps ***
@@ -175,6 +175,7 @@ size "3 3"
 assembly small
 {
 size "4 4"
+title "_Oriental small"
 +h01 "0 2"
 +h02 "0 1"
 +h03 "1 2"
@@ -194,6 +195,7 @@ size "4 4"
 assembly medium
 {
 size "5 6"
+title "_Oriental medium"
 +h01 "0 2"
 +h02 "0 1"
 +h03 "1 2"
@@ -212,6 +214,7 @@ size "5 6"
 assembly big
 {
 size "7 7"
+title "_Oriental big"
 +h01 "1 3"
 +h02 "1 3"
 +h03 "1 3"

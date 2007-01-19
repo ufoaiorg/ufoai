@@ -217,6 +217,8 @@ abc     +a     +a     +a     abc
 assembly river
 {
 size "8 5"
+title "_Tropical river"
+
 +r01 "1 1"
 +r02 "0 8"
 +r03 "0 8"
@@ -247,6 +249,7 @@ size "8 5"
 assembly drug
 {
 size "6 6"
+title "_Tropical drug"
 
 +h01 "1 2"
 +h02 "1 1"
