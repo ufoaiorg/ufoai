@@ -2166,36 +2166,36 @@ tech rs_alien_shevaar_autopsy
 }
 
 // HOVERNET
-
-tech rs_alien_stinger_notes
-{
-	type	alien
-	name	"_Live Specimen - Stinger"
-	description	"_hovernet_notes_txt"
-	pre_description	"_hovernet_notes_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	time	2000
-
-	// menuModel - see models.ufo
-	mdl_top	alien_hovernet
-}
-
-tech rs_alien_stinger_autopsy
-{
-	type	alien
-	name	"_Alien Autopsy - Stinger"
-	description	"_hovernet_autopsy_txt"
-	pre_description	"_hovernet_autopsy_pre_txt"
-	up_chapter	aliens
-
-	require_AND { tech TODO }
-	time	1500
-
-	// menuModel - see models.ufo
-	mdl_top	alien_hovernet
-}
+// I am commenting this since this tech seems to have three
+// different names everywhere: HOVERNET, FLYER and STINGER
+// and nothing about it is ready anyway
+// -Zenerka 20.01.2007
+//tech rs_alien_stinger_notes
+//{
+//	type	alien
+//name	"_Live Specimen - Stinger"
+//	description	"_hovernet_notes_txt"
+//	pre_description	"_hovernet_notes_pre_txt"
+//	up_chapter	aliens
+//require_AND { tech TODO }
+//	time	2000
+//// menuModel - see models.ufo
+//	mdl_top	alien_hovernet
+//}
+//tech rs_alien_stinger_autopsy
+//{
+//	type	alien
+//	name	"_Alien Autopsy - Stinger"
+//	description	"_hovernet_autopsy_txt"
+//	pre_description	"_hovernet_autopsy_pre_txt"
+//	up_chapter	aliens
+//
+//	require_AND { tech TODO }
+//	time	1500
+//
+//	// menuModel - see models.ufo
+//	mdl_top	alien_hovernet
+//}
 
 // CYBORG ORTNOK
 

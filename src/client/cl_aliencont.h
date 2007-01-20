@@ -56,15 +56,16 @@ typedef enum {
 typedef struct aliensCont_s {
 	int idx;			/**< self link */
 	char alientype[MAX_VAR];	/**< type of alien */ /* FIXME: alienType_t here */
-	int amount_alive;			/**< Amount of live captured aliens. */
-	int amount_dead;			/**< Amount of alien corpses. */
+	int amount_alive;		/**< Amount of live captured aliens. */
+	int amount_dead;		/**< Amount of alien corpses. */
+	int techIdx;			/**< Idx of related tech. */
 } aliensCont_t;
 
 /** todo - document me */
 typedef struct aliensTmp_s {
 	char alientype[MAX_VAR];	/**< type of alien */
-	int amount_alive;			/**< Amount of live captured aliens. */
-	int amount_dead;			/**< Amount of alien corpses. */
+	int amount_alive;		/**< Amount of live captured aliens. */
+	int amount_dead;		/**< Amount of alien corpses. */
 } aliensTmp_t;
 
 /**

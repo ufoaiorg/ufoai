@@ -243,19 +243,23 @@ teamdesc shevaar
 	alien	true
 }
 
-teamdesc hovernet
-{
-	name "_Hovernet"
-	tech "rs_alien_hovernet_autopsy"
-	alien	true
-}
-
-teamdesc cyborg_ortnok
-{
-	name "_Cyborg Ortnok"
-	tech "rs_alien_cyborg_ortnok_autopsy"
-	alien	true
-}
+// I am commenting this since this team seems to have three
+// different names everywhere: HOVERNET, FLYER and STINGER
+// and nothing about it is ready anyway; the same for
+// cyborg ortnok
+// -Zenerka 20.01.2007
+//teamdesc hovernet
+//{
+//	name "_Hovernet"
+//	tech "rs_alien_hovernet_autopsy"
+//	alien	true
+//}
+//teamdesc cyborg_ortnok
+//{
+//	name "_Cyborg Ortnok"
+//	tech "rs_alien_cyborg_ortnok_autopsy"
+//	alien	true
+//}
 
 //========================================================================
 // ALIENS
