@@ -84,7 +84,6 @@ int AL_GetAlienAmount(int idx, requirementType_t reqtype);
  */
 int AL_CountAll(void);
 int AL_CountInBase(void);
-int AL_CountKilled(int alienidx);
 
 #endif /* CLIENT_CL_ALIENCONT_H */
 

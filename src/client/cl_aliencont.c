@@ -414,10 +414,11 @@ int AL_CountInBase(void)
 /**
  * @brief Counts killed aliens of given type in all bases.
  * @param[in] alientype
+ * @param[in] state: 0 - killed, 1 - alive
  * @return amount of killed aliens of given type
  * @sa AC_SelectAlien_f
  */
-int AL_CountKilled(int alienidx)
+static int AL_CountForMenu(int alienidx, int state)
 {
 	int i, j;
 	int amount = 0;
@@ -430,8 +431,12 @@ int AL_CountKilled(int alienidx)
 			continue;
 		for (j = 0; j < AL_UNKNOWN; j++) {
 			if ((base->alienscont[j].alientype) && 
-			(Q_strncmp(base->alienscont[j].alientype, AL_AlienTypeToName(alienidx), MAX_VAR)) == 0)
-				amount += base->alienscont[j].amount_dead;
+			(Q_strncmp(base->alienscont[j].alientype, AL_AlienTypeToName(alienidx), MAX_VAR)) == 0) {
+				if (state == 0)
+					amount += base->alienscont[j].amount_dead;
+				else
+					amount += base->alienscont[j].amount_alive;
+			}
 		}
 	}
 	return amount;
@@ -454,7 +459,8 @@ static void AC_SelectAlien_f (void)
 
 	Cvar_Set("mn_al_alienmodel", tech->mdl_top);
 	Cvar_Set("mn_al_alientype", _(aliencontCurrent->alientype));
-	Cvar_SetValue("mn_al_killed", AL_CountKilled(aliencontCurrent->idx));
+	Cvar_SetValue("mn_al_killed", AL_CountForMenu(aliencontCurrent->idx, 0));
+	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->idx, 1));
 }
 
 /**

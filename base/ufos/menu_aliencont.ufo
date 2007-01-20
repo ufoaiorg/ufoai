@@ -226,14 +226,14 @@ menu aliencont
 
 	string txt_alc_capturedall
 	{
-		string "_In all bases:"
+		string "_Captured in all bases:"
 		pos "645 530"
 		color "0 .78 0 1"
 	}
 
 	string txt_alc_capturedall_v
 	{
-		string "*cvar mn_al_globalamount"
+		string "*cvar mn_al_alive"
 		pos "880 530"
 		color "0 .78 0 1"
 	}
