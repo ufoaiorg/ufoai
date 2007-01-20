@@ -115,7 +115,7 @@ menu aliencont
 
 	string txt_all_aliens_v
 	{
-		string "*cvar al_globalamount"
+		string "*cvar mn_al_globalamount"
 		pos "380 40"
 		color "0 .78 0 1"
 	}
@@ -130,7 +130,7 @@ menu aliencont
 
 	string txt_here_aliens_v
 	{
-		string "*cvar al_localamount"
+		string "*cvar mn_al_localamount"
 		pos "380 60"
 		color "0 .78 0 1"
 	}

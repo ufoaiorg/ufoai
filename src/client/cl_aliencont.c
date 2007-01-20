@@ -416,10 +416,17 @@ int AL_CountInBase(void)
  */
 static void AC_SelectAlien_f (void)
 {
+	technology_t *tech = NULL;
+
 	if (!aliencontCurrent || !baseCurrent)
 		return;
 
-	Cvar_Set("mn_al_alienmodel", ""); /* TODO */
+	tech = RS_GetTechByIDX(aliencontCurrent->techIdx);
+
+	if (!tech)
+		return;
+
+	Cvar_Set("mn_al_alienmodel", tech->mdl_top);
 	Cvar_Set("mn_al_alientype", _(aliencontCurrent->alientype));
 }
 
@@ -434,6 +441,7 @@ static void AC_Init (void)
 	/* tmp buffer for string generating */
 	char tmp[128];
 	technology_t* tech;
+	aliensCont_t *containment = NULL;
 
 	/* reset the aliencont list */
 	aliencontText[0] = '\0';
@@ -445,25 +453,27 @@ static void AC_Init (void)
 	}
 
 	if (baseCurrent->hasAlienCont) {
+		containment = baseCurrent->alienscont;
 		for (i = 0; i < AL_UNKNOWN; i++) {
-			if (baseCurrent->alienscont[i].alientype) {
-				tech = RS_GetTechByProvided(baseCurrent->alienscont[i].alientype);
+			if (containment[i].alientype) {
+				tech = RS_GetTechByIDX(containment[i].techIdx);
 				if (tech == NULL) {
-					Com_Printf("Could not find tech '%s'\n", baseCurrent->alienscont[i].alientype);
+					Com_Printf("Could not find tech '%i'\n", containment[i].techIdx);
 					/* to let the click function still work */
 					Q_strcat(aliencontText, "missing tech\n", sizeof(aliencontText));
 					continue;
 				}
 				if (!aliencontCurrent) {
-					aliencontCurrent = &baseCurrent->alienscont[i];
-					AC_SelectAlien_f();
+					aliencontCurrent = &containment[i];
 				}
-				Com_sprintf(tmp, sizeof(tmp), "%s\t%i\t%s\n",
-					tech->name,
-					baseCurrent->alienscont[i].amount_alive,
-					(RS_IsResearched_ptr(tech) ? "" : _("needs autopsy")));
-				Q_strcat(aliencontText, tmp, sizeof(aliencontText));
-				numAliensOnList++;
+				if ((containment[i].amount_alive > 0) || (containment[i].amount_dead > 0)) {
+					Com_sprintf(tmp, sizeof(tmp), "%s\t%s\t%i\n",
+						containment[i].alientype,
+						(RS_IsResearched_ptr(tech) ? _("Yes") : _("Needs autopsy!")),
+						containment[i].amount_alive);
+					Q_strcat(aliencontText, tmp, sizeof(aliencontText));
+					numAliensOnList++;
+				}
 			}
 		}
 	}
