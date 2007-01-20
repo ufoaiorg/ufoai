@@ -43,7 +43,7 @@ static aliensCont_t* aliencontCurrent;
  */
 void AL_FillInContainment(void)
 {
-	int i;
+	int i, j;
 	base_t *base = NULL;
 	aliensCont_t *containment = NULL;
 
