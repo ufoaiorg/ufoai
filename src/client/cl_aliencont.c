@@ -27,6 +27,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 static char aliencontText[1024];
 
+/* amount of aliens that are on the aliencont list - see AC_Init */
+static int numAliensOnList;
+
+/* current selected aliencont */
+static aliensCont_t* aliencontCurrent;
+
 /**
  *Collecting aliens functions
  */
@@ -384,7 +390,7 @@ int AL_CountInBase(void)
 	int j;
 	int amount = 0;
 	base_t *base;
-	
+
 	if (baseCurrent) {
 		base = baseCurrent;
 	} else {
@@ -402,6 +408,17 @@ int AL_CountInBase(void)
 	return amount;
 }
 
+/**
+ * @brief Update menu cvars for selected alien
+ */
+static void AC_SelectAlien_f (void)
+{
+	if (!aliencontCurrent || !baseCurrent)
+		return;
+
+	Cvar_Set("mn_al_alienmodel", ""); /* TODO */
+	Cvar_Set("mn_al_alientype", _(aliencontCurrent->alientype));
+}
 
 /**
  * @brief Alien containment menu init function
@@ -410,9 +427,75 @@ int AL_CountInBase(void)
  */
 static void AC_Init (void)
 {
-	Cvar_SetValue("al_globalamount", AL_CountAll());
-	Cvar_SetValue("al_localamount", AL_CountInBase());
+	int i;
+	/* tmp buffer for string generating */
+	char tmp[128];
+	technology_t* tech;
+
+	/* reset the aliencont list */
+	aliencontText[0] = '\0';
+	numAliensOnList = 0;
+
+	if (!baseCurrent) {
+		Com_Printf("No base selected\n");
+		return;
+	}
+
+	if (baseCurrent->hasAlienCont) {
+		for (i = 0; i < AL_UNKNOWN; i++) {
+			if (baseCurrent->alienscont[i].alientype) {
+				tech = RS_GetTechByProvided(baseCurrent->alienscont[i].alientype);
+				if (tech == NULL) {
+					Com_Printf("Could not find tech '%s'\n", baseCurrent->alienscont[i].alientype);
+					/* to let the click function still work */
+					Q_strcat(aliencontText, "missing tech\n", sizeof(aliencontText));
+					continue;
+				}
+				if (!aliencontCurrent) {
+					aliencontCurrent = &baseCurrent->alienscont[i];
+					AC_SelectAlien_f();
+				}
+				Com_sprintf(tmp, sizeof(tmp), "%s\t%i\t%s\n",
+					tech->name,
+					baseCurrent->alienscont[i].amount_alive,
+					(RS_IsResearched_ptr(tech) ? "" : _("needs autopsy")));
+				Q_strcat(aliencontText, tmp, sizeof(aliencontText));
+				numAliensOnList++;
+			}
+		}
+	}
+
+	Cvar_SetValue("mn_al_globalamount", AL_CountAll());
+	Cvar_SetValue("mn_al_localamount", AL_CountInBase());
+
 	menuText[TEXT_STANDARD] = aliencontText;
+}
+
+/**
+ * @brief Click function for aliencont menu list
+ * @sa AC_Reset
+ */
+static void AC_AlienListClick_f (void)
+{
+	int num;
+
+	if (Cmd_Argc() < 2 || !baseCurrent) {
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+		return;
+	}
+
+	/* which item from the list? */
+	num = atoi(Cmd_Argv(1));
+
+	Com_DPrintf("AC_AlienListClick_f: listnumber %i\n", num);
+
+	if (num > numAliensOnList || num < 0) {
+		Com_DPrintf("AC_AlienListClick_f: max exceeded %i/%i\n", num, numAliensOnList);
+		return;
+	}
+
+	aliencontCurrent = &baseCurrent->alienscont[num];
+	AC_SelectAlien_f();
 }
 
 /**
@@ -423,9 +506,12 @@ void AC_Reset (void)
 {
 	/* add commands */
 	Cmd_AddCommand("aliencont_init", AC_Init, "Init function for alien containment menu");
+	Cmd_AddCommand("aliencontlist_click", AC_AlienListClick_f, "Click function for aliencont list");
+	Cmd_AddCommand("aliencont_select", AC_SelectAlien_f, "Updates the menu cvars for the current selected alien");
 
 	/* add cvars */
 	/* TODO */
 
 	memset(aliencontText, 0, sizeof(aliencontText));
+	aliencontCurrent = NULL;
 }

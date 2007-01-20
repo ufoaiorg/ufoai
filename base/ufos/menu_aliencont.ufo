@@ -100,7 +100,7 @@ menu aliencont
 		click	{ cmd mn_pop }
 	}
 
-	
+
 	// ==================
 	// main window
 	// ==================
@@ -135,60 +135,44 @@ menu aliencont
 		color "0 .78 0 1"
 	}
 
-	//FIXME
-	//list of aliens should be calculate whenever AC_Init() is called
-	//all values below should be calculate
-	string txt_alientypes_g { 
+	string txt_alientypes
+	{
 	    string "_Aliens available to process:"
-	    pos "50 100"	
-	    color "0 .78 0 1" 
+	    pos "50 100"
+	    color "0 .78 0 1"
 	}
-	string txt_alcheader_1 { 
+
+	string txt_alcheader_type
+	{
 	    string "_Alien type"
 	    pos "50 130"
 	    color "0 .78 0 1"
 	}
-	string txt_alcheader_2 { 
+
+	string txt_alcheader_examinated
+	{
 	    string "_Examinated"
-	    pos "220 130"	
+	    pos "220 130"
 	    color "0 .78 0 1"
 	}
-	string txt_alcheader_3 { 
+
+	string txt_alcheader_amount
+	{
 	    string "_Amount"
-	    pos "380 130"
+	    pos "390 130"
 	    color "0 .78 0 1"
 	}
-	
-	string txt_alcal1_h1 	{ 
-	    string "_Ortnok"
-	    pos "50 165"
-	    color "0 .78 0 1"
-	}
-	string txt_alcal1_h2	{ 
-	    string "_yes"
-	    pos "220 165"
-	    color "0 .78 0 1"
-	}
-	string txt_alcal1_h3 	{ 
-	    string "42"
-	    pos "380 165"
-	    color "0 .78 0 1"
-	}
-	
-	string txt_alcal2_h1	{ 
-	    string "_Taman"
-	    pos "50 180"
-	    color "0 .78 0 1"
-	}
-	string txt_alcal2_h2	{ 
-	    string "_needs autopsy"
-	    pos "220 180"
-	    color "6 .78 7 1"
-	}
-	string txt_alcal2_h3 	{ 
-	    string "42"
-	    pos "380 180"
-	    color "0 .78 0 1"
+
+	text aliencontlist
+	{
+		pos "50 150"
+		size "480 580"
+		format "16 170"
+		num 0
+//		bgcolor "1 1 1 0.5"
+		mousefx true
+		wheel
+		click mclick rclick
 	}
 
 	// ==================
@@ -201,8 +185,6 @@ menu aliencont
 		pos "615 200"
 	}
 
-	//FIXME
-	//add proper alien type
 	string txt_alc_alientype
 	{
 		string "_Alien Type:"
@@ -214,24 +196,20 @@ menu aliencont
 	//add proper value
 	string txt_alc_alientype_v
 	{
-		string "42"
+		string "*cvar mn_al_alientype"
 		pos "880 230"
 		color "0 .78 0 1"
 	}
 
-	//FIXME
-	//add proper alien model
 	model mdl_alc_alien
 	{
-		md2	"aliens/bloodspider/bloodspider"
+		md2	"*cvar mn_al_alienmodel"
 		angles	"0 0 120"
 		color	"0.5 0.5 0.5 1"
 		origin	"805 340 0"
 		size	"240 240"
 	}
 
-	//FIXME
-	//count and display
 	string txt_alc_capturedhere
 	{
 		string "_In this base:"
@@ -239,18 +217,13 @@ menu aliencont
 		color "0 .78 0 1"
 	}
 
-	//FIXME
-	//add proper value
 	string txt_alc_capturedhere_v
 	{
-		string "42"
+		string "*cvar mn_al_localamount"
 		pos "880 500"
 		color "0 .78 0 1"
 	}
 
-
-	//FIXME
-	//count and display
 	string txt_alc_capturedall
 	{
 		string "_In all bases:"
@@ -258,11 +231,9 @@ menu aliencont
 		color "0 .78 0 1"
 	}
 
-	//FIXME
-	//add proper value
 	string txt_alc_capturedall_v
 	{
-		string "42"
+		string "*cvar mn_al_globalamount"
 		pos "880 530"
 		color "0 .78 0 1"
 	}
@@ -276,5 +247,3 @@ menu aliencont
 	}
 
 }
-
-
