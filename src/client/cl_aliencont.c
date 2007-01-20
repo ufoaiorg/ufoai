@@ -412,6 +412,32 @@ int AL_CountInBase(void)
 }
 
 /**
+ * @brief Counts killed aliens of given type in all bases.
+ * @param[in] alientype
+ * @return amount of killed aliens of given type
+ * @sa AC_SelectAlien_f
+ */
+int AL_CountKilled(int alienidx)
+{
+	int i, j;
+	int amount = 0;
+	base_t *base;
+
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
+		if (!base->founded)
+			continue;
+		if (!base->hasAlienCont)
+			continue;
+		for (j = 0; j < AL_UNKNOWN; j++) {
+			if ((base->alienscont[j].alientype) && 
+			(Q_strncmp(base->alienscont[j].alientype, AL_AlienTypeToName(alienidx), MAX_VAR)) == 0)
+				amount += base->alienscont[j].amount_dead;
+		}
+	}
+	return amount;
+}
+
+/**
  * @brief Update menu cvars for selected alien
  */
 static void AC_SelectAlien_f (void)
@@ -428,6 +454,7 @@ static void AC_SelectAlien_f (void)
 
 	Cvar_Set("mn_al_alienmodel", tech->mdl_top);
 	Cvar_Set("mn_al_alientype", _(aliencontCurrent->alientype));
+	Cvar_SetValue("mn_al_killed", AL_CountKilled(aliencontCurrent->idx));
 }
 
 /**

@@ -210,16 +210,16 @@ menu aliencont
 		size	"240 240"
 	}
 
-	string txt_alc_capturedhere
+	string txt_alc_killed
 	{
-		string "_In this base:"
+		string "_Killed:"
 		pos "645 500"
 		color "0 .78 0 1"
 	}
 
-	string txt_alc_capturedhere_v
+	string txt_alc_killed_v
 	{
-		string "*cvar mn_al_localamount"
+		string "*cvar mn_al_killed"
 		pos "880 500"
 		color "0 .78 0 1"
 	}
