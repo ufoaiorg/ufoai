@@ -232,7 +232,7 @@ teamdesc ortnok
 teamdesc taman
 {
 	name "_Taman"
-	tech "rs_alien_antarean_autopsy"
+	tech "rs_alien_taman_autopsy"
 	alien	true
 }
 
