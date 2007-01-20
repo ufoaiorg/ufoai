@@ -917,15 +917,7 @@ static value_t teamDescValues[] = {
 	,
 	{"name", V_TRANSLATION_STRING, offsetof(teamDesc_t, name)} /**< internal team name */
 	,
-	{"combat_notes", V_STRING, offsetof(teamDesc_t, combat_notes)}
-	,
-	{"autopsy", V_STRING, offsetof(teamDesc_t, autopsy)}
-	,
-	{"xenobiology", V_STRING, offsetof(teamDesc_t, xenobiology)}
-	,
-	{"interrogation", V_STRING, offsetof(teamDesc_t, interrogation)}
-	,
-	{"interrogation_com", V_STRING, offsetof(teamDesc_t, interrogation_com)}
+	{"alien", V_BOOL, offsetof(teamDesc_t, alien)} /**< is this an alien? */
 	,
 	{NULL, 0, 0}
 };

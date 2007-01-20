@@ -23,12 +23,8 @@ typedef enum {
 
 typedef struct teamDesc_s {
 	char id[MAX_VAR];
+	qboolean alien;			/**< is this an alien teamdesc definition */
 	char name[MAX_VAR];
-	char combat_notes[MAX_VAR];
-	char autopsy[MAX_VAR];
-	char xenobiology[MAX_VAR];
-	char interrogation[MAX_VAR];
-	char interrogation_com[MAX_VAR];
 	char tech[MAX_VAR]; /**< tech id from research.ufo */
 } teamDesc_t;
 

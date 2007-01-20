@@ -67,7 +67,7 @@ STATIC DEFINITION
 
 /* Functions */
 static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y);
-static void MAP_ScreenTo3DMap(const menuNode_t* node, int x, int y, vec2_t pos);
+static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 
 /* static variables */
@@ -245,7 +245,7 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y, qboolean globe)
 
 	/* get map position */
 	if (globe) {
-		MAP_ScreenTo3DMap(node, x, y, pos);
+		MAP3D_ScreenToMap(node, x, y, pos);
 	} else {
 		MAP_ScreenToMap(node, x, y, pos);
 	}
@@ -426,7 +426,7 @@ static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
  * @param[in] y Y coordinate on the screen that was clicked to
  * @param[in] node The current menuNode we was clicking into (3dmap or map)
  */
-static void MAP_ScreenTo3DMap(const menuNode_t* node, int x, int y, vec2_t pos)
+static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
 {
 	pos[0] = (((node->pos[0] - x) / node->size[0] + 0.5) / ccs.zoom - (ccs.center[0] - 0.5)) * 360.0;
 	pos[1] = (((node->pos[1] - y) / node->size[1] + 0.5) / ccs.zoom - (ccs.center[1] - 0.5)) * 180.0;

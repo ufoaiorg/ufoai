@@ -119,12 +119,9 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
 				break;
 			case RS_LINK_EVENT:
 				break;
-			case RS_LINK_ALIEN:
-				if (AL_GetAlienAmount(required_AND->idx[i], RS_LINK_ALIEN) < required_AND->amount[i])
-					met_AND = qfalse;
-				break;
 			case RS_LINK_ALIEN_DEAD:
-				if (AL_GetAlienAmount(required_AND->idx[i], RS_LINK_ALIEN_DEAD) < required_AND->amount[i])
+			case RS_LINK_ALIEN:
+				if (AL_GetAlienAmount(required_AND->idx[i], required_AND->type[i]) < required_AND->amount[i])
 					met_AND = qfalse;
 				break;
 			default:
@@ -221,7 +218,7 @@ qboolean RS_CheckCollected(requirements_t *required)
 		case RS_LINK_ALIEN:
 		case RS_LINK_ALIEN_DEAD:
 			/* Use alien=index and RS_LINK_ALIEN (or RS_LINK_ALIEN_DEAD) to get correct amount.*/
-			amount = AL_GetAlienAmount(required->idx[i], required->type[i]); 
+			amount = AL_GetAlienAmount(required->idx[i], required->type[i]);
 			if ( amount > 0) {
 				required->collected[i] = amount;
 			} else {
@@ -924,10 +921,10 @@ void RS_UpdateData(void)
 				break;
 			}
 
-			/* Display the concated text in the correct list-entry. 
+			/* Display the concated text in the correct list-entry.
 			 * But embed it in brackets if it isn't researched in the current base. */
 			if ((tech->scientists > 0) && (tech->base_idx != baseCurrent->idx)) {
-				Com_sprintf(name, MAX_VAR, "(%s)", name); 
+				Com_sprintf(name, MAX_VAR, "(%s)", name);
 			}
 			Cvar_Set(va("mn_researchitem%i", j), _(name));
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */
@@ -1422,7 +1419,7 @@ void RS_ParseTechnologies(char *id, char **text)
 			|| (!Q_strncmp(token, "require_for_production", MAX_VAR))
 			) {
 				/* Link to correct list. */
-				if (!Q_strncmp(token, "require_AND", MAX_VAR)) { 
+				if (!Q_strncmp(token, "require_AND", MAX_VAR)) {
 					required_temp = &tech->require_AND;
 				} else if (!Q_strncmp(token, "require_OR", MAX_VAR)) {
 					required_temp = &tech->require_OR;
@@ -1459,7 +1456,7 @@ void RS_ParseTechnologies(char *id, char **text)
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
 							Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
-							
+
 							required_temp->numLinks++;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
@@ -1485,7 +1482,7 @@ void RS_ParseTechnologies(char *id, char **text)
 						Com_DPrintf("RS_ParseTechnologies: event - %s\n", token);
 						required_temp->type[required_temp->numLinks] = RS_LINK_EVENT;
 						/* Get name/id & amount of required item. */
-						/* TODO: Implement final event esystem, so this can work 100% */
+						/* TODO: Implement final event system, so this can work 100% */
 					} else if ( (!Q_strncmp(token, "alien_dead", MAX_VAR)) ||  (!Q_strncmp(token, "alien", MAX_VAR)) ) { /* Does this only check the beginning of the string? */
 						/* Defines what live or dead aliens need to be collected for this item to be researchable. */
 						if (required_temp->numLinks < MAX_TECHLINKS) {

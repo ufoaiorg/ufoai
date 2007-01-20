@@ -2533,59 +2533,6 @@ void CL_GameAbort(void)
 
 /* =========================================================== */
 
-/**
- * @brief Collect aliens from battlefield (e.g. for autopsy)
- *
- * loop through all entities and put the ones that are stunned
- * as living aliens into our labs
- * TODO: put them into the labs
- * @sa Com_ParseTeamDesc
- */
-void CL_CollectAliens(void)
-{
-	int i, j;
-	le_t *le = NULL;
-	teamDesc_t *td = NULL;
-	technology_t *tech = NULL;
-
-	for (i = 0, le = LEs; i < numLEs; i++, le++) {
-		if (!le->inuse)
-			continue;
-
-		if ((le->type == ET_ACTOR || le->type == ET_UGV) && le->team == TEAM_ALIEN) {
-			if (le->state & STATE_STUN) {
-				/* a stunned actor */
-				for (j = 0, td = teamDesc; j < numTeamDesc; j++) {
-					if (!Q_strncmp(td->id, selMis->def->alienTeam, MAX_VAR)) {
-						/* get interrogation tech */
-						tech = RS_GetTechByID(td->interrogation);
-						if (tech)
-							tech->statusCollected++;
-						/* get interrogation_commander tech */
-						tech = RS_GetTechByID(td->interrogation_com);
-						if (tech)
-							tech->statusCollected++;
-						/* TODO: get xenobiology tech */
-						tech = RS_GetTechByID(td->xenobiology);
-						if (tech)
-							tech->statusCollected++;
-					}
-				}
-			} else if (le->HP <= 0) { /* TODO: <= -50, etc. */
-				/* a dead actor */
-				for (j = 0, td = teamDesc; j < numTeamDesc; j++) {
-					if (!Q_strncmp(td->id, selMis->def->alienTeam, MAX_VAR)) {
-						/* get autopsy tech */
-						tech = RS_GetTechByID(td->autopsy);
-						if (tech)
-							tech->statusCollected++;
-					}
-				}
-			}
-		}
-	}
-}
-
 equipDef_t eTempMarket; /* a terrible hack so that "abort;try again" works */
 int eTempCredits;
 

@@ -1675,9 +1675,6 @@ void CL_ParseResults(sizebuf_t * buf)
 		/* check for stunned aliens;
 		 TODO: make this reversible, like CL_CollectItems above */
 		if (winner == we)
-			/* FIXME: when AlienContainment stuff is finished, remove
-			unnecesary CL_CollectAliens() */
-			/* CL_CollectAliens(); */
 			CL_CollectingAliens();
 
 		/* clear unused LE inventories */
