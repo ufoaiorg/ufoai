@@ -225,53 +225,36 @@ actors hovernet
 teamdesc ortnok
 {
 	name "_Ortnok"
-	combat_notes "rs_alien_ortnok_notes"
-	autopsy "rs_alien_ortnok_autopsy"
-	xenobiology "rs_alien_ortnok_xenobiology"
-	interrogation "rs_alien_ortnok_interrogation"
-	interrogation_com ""
-	// FIXME
 	tech rs_alien_ortnok_autopsy
+	alien	true
 }
 
 teamdesc taman
 {
 	name "_Taman"
-	combat_notes "rs_alien_antarean_notes"
-	autopsy "rs_alien_antarean_autopsy"
-	xenobiology "rs_alien_antarean_xenobiology"
-	interrogation "rs_alien_antarean_interrogation"
-	interrogation_com "rs_alien_antarean_interrogation_commander"
+	tech "rs_alien_antarean_autopsy"
+	alien	true
 }
 
 teamdesc shevaar
 {
 	name "_Shevaar"
-	combat_notes "rs_alien_shevaar_notes"
-	autopsy "rs_alien_shevaar_autopsy"
-	xenobiology "rs_alien_shevaar_xenobiology"
-	interrogation ""
-	interrogation_com ""
+	tech "rs_alien_shevaar_autopsy"
+	alien	true
 }
 
 teamdesc hovernet
 {
 	name "_Hovernet"
-	combat_notes "rs_alien_hovernet_notes"
-	autopsy "rs_alien_hovernet_autopsy"
-	xenobiology "rs_alien_hovernet_xenobiology"
-	interrogation ""
-	interrogation_com ""
+	tech "rs_alien_hovernet_autopsy"
+	alien	true
 }
 
 teamdesc cyborg_ortnok
 {
 	name "_Cyborg Ortnok"
-	combat_notes "rs_alien_cyborg_ortnok_notes"
-	autopsy "rs_alien_cyborg_ortnok_autopsy"
-	xenobiology "rs_alien_cyborg_ortnok_xenobiology"
-	interrogation "rs_alien_ortnok_interrogation"
-	interrogation_com ""
+	tech "rs_alien_cyborg_ortnok_autopsy"
+	alien	true
 }
 
 //========================================================================
@@ -373,7 +356,7 @@ team alien
 {
 	{
 	ortnok
-	taman	
+	taman
 // 	shevaar
 // 	hovernet
 // 	cyborg_ortnok
