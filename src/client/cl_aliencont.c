@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 static char aliencontText[1024];
-aliensTmp_t cargo[MAX_CARGO];
 
 /**
  *Collecting aliens functions
@@ -234,32 +233,6 @@ void AL_AddAliens(void)
 }
 
 /**
- * @brief Counts alive aliens in all bases.
- * @note This should be called whenever you add or remove
- * aliens from alien containment.
- * @sa CL_DropshipReturned
- * @return amount of all alive aliens stored in containments
- */
-int AL_CountAll(void)
-{
-	int i, j;
-	int amount = 0;
-	base_t *base;
-
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (!base->founded)
-			continue;
-		if (!base->hasAlienCont)
-			continue;
-		for (j = 0; j < AL_UNKNOWN; j++) {
-			if (base->alienscont[j].alientype)
-				amount += base->alienscont[j].amount_alive;
-		}
-	}
-	return amount;
-}
-
-/**
  * @brief Removes alien(s) from Alien Containment.
  * @param[in] alientype
  * @param[in] amount of alientype to be removed
@@ -373,6 +346,60 @@ int AL_GetAlienAmount(int idx, requirementType_t reqtype)
 /**
  * Menu functions
  */
+
+/**
+ * @brief Counts alive aliens in all bases.
+ * @note This should be called whenever you add or remove
+ * aliens from alien containment.
+ * @sa CL_DropshipReturned
+ * @return amount of all alive aliens stored in containments
+ */
+int AL_CountAll(void)
+{
+	int i, j;
+	int amount = 0;
+	base_t *base;
+
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
+		if (!base->founded)
+			continue;
+		if (!base->hasAlienCont)
+			continue;
+		for (j = 0; j < AL_UNKNOWN; j++) {
+			if (base->alienscont[j].alientype)
+				amount += base->alienscont[j].amount_alive;
+		}
+	}
+	return amount;
+}
+
+/**
+ * @brief Counts alive aliens in current base.
+ * @return amount of all alive aliens stored in containment
+ */
+int AL_CountInBase(void)
+{
+	int j;
+	int amount = 0;
+	base_t *base;
+	
+	if (baseCurrent) {
+		base = baseCurrent;
+	} else {
+		/* should never happen */
+		Com_Printf("AL_CountInBase()... No base selected!\n");
+		return -1;
+	}
+	if (!base->hasAlienCont)
+		return 0;
+	for (j = 0; j < AL_UNKNOWN; j++) {
+		if (base->alienscont[j].alientype)
+			amount += base->alienscont[j].amount_alive;
+	}
+
+	return amount;
+}
+
 
 /**
  * @brief Alien containment menu init function

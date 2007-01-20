@@ -113,12 +113,25 @@ menu aliencont
 		size "275 16"
 	}
 
-	//FIXME
-	//count and add proper value
 	string txt_all_aliens_v
 	{
-		string "42"
+		string "*cvar al_globalamount"
 		pos "380 40"
+		color "0 .78 0 1"
+	}
+
+	string txt_here_aliens
+	{
+		string "_Alive Aliens in this base:"
+		pos "50 60"
+		color "0 .78 0 1"
+		size "275 16"
+	}
+
+	string txt_here_aliens_v
+	{
+		string "*cvar al_localamount"
+		pos "380 60"
 		color "0 .78 0 1"
 	}
 
