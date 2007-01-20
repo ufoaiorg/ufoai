@@ -351,8 +351,9 @@ int AL_GetAlienAmount(int idx, requirementType_t reqtype)
  * @brief Counts alive aliens in all bases.
  * @note This should be called whenever you add or remove
  * aliens from alien containment.
- * @sa CL_DropshipReturned
  * @return amount of all alive aliens stored in containments
+ * @sa CL_DropshipReturned
+ * @sa AC_Init
  */
 int AL_CountAll(void)
 {
@@ -376,6 +377,7 @@ int AL_CountAll(void)
 /**
  * @brief Counts alive aliens in current base.
  * @return amount of all alive aliens stored in containment
+ * @sa AC_Init
  */
 int AL_CountInBase(void)
 {
@@ -409,6 +411,7 @@ int AL_CountInBase(void)
 static void AC_Init (void)
 {
 	Cvar_SetValue("al_globalamount", AL_CountAll());
+	Cvar_SetValue("al_localamount", AL_CountInBase());
 	menuText[TEXT_STANDARD] = aliencontText;
 }
 
