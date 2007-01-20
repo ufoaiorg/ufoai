@@ -34,7 +34,6 @@ typedef enum {
 	AL_ORTNOK,
 	AL_TAMAN,
 	AL_SHEVAAR,
-	AL_FLYER,
 	AL_UNKNOWN	/**< dummy, to get all */
 } alienType_t;
 

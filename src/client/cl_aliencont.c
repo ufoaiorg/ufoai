@@ -62,6 +62,11 @@ void AL_FillInContainment(void)
 		Q_strncpyz(containment[i].alientype, AL_AlienTypeToName(i), MAX_VAR);
 		containment[i].amount_alive = 0;
 		containment[i].amount_dead = 0;
+		for (j = 0; j < numTeamDesc; j++) {
+			if ((Q_strncmp(containment[i].alientype, teamDesc[j].name, MAX_VAR)) == 0)
+				containment[i].techIdx = RS_GetTechIdxByName(teamDesc[j].tech);
+		}
+		Com_DPrintf("AL_FillInContainment()... type: %s techIdx: %i\n", containment[i].alientype, containment[i].techIdx);
 	}
 }
 
@@ -81,8 +86,6 @@ char *AL_AlienTypeToName(alienType_t type)
 		return "Taman";
 	case AL_SHEVAAR:
 		return "Shevaar";
-	case AL_FLYER:
-		return "Flyer";
 	case AL_UNKNOWN:
 	default:
 		return "Unknown";
