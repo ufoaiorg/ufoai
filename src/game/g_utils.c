@@ -291,7 +291,7 @@ float vectoyaw(vec3_t vec)
 		else if (vec[YAW] < 0)
 			yaw = -90;
 	} else {
-		yaw = (int) (atan2(vec[YAW], vec[PITCH]) * 180 / M_PI);
+		yaw = (int) (atan2(vec[YAW], vec[PITCH]) * todeg);
 		if (yaw < 0)
 			yaw += 360;
 	}

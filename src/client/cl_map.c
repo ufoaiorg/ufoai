@@ -65,34 +65,10 @@ STATIC DEFINITION
 ==============================================================
 */
 
-/* Functions : clic on map and multi selection */
-static void MAP_MultiSelectListAddItem(multiSelectType_t item_type, int item_id,
-	const char* item_description, const char* item_name);
-static void MAP_MultiSelectExecuteAction_f(void);
-static void MAP_MultiSelectNotifyMissionRemoved(const actMis_t* mission);
-static void MAP_MultiSelectNotifyUfoRemoved(const aircraft_t* ufo);
-static void MAP_MultiSelectNotifyUfoDisappeared(const aircraft_t* ufo);
-extern void MAP_MapClick(const menuNode_t* node, int x, int y, qboolean globe);
-
-/* Functions : Drawing map and coordinates */
+/* Functions */
 static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y);
-extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
 static void MAP_ScreenTo3DMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
-extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
-static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line);
-static void MAP_Draw3DMapMarkers(const menuNode_t* node, float latitude, float longitude);
-static void MAP_DrawMapMarkers(const menuNode_t* node);
-extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D);
-
-/* Others functions */
-extern void MAP_ResetAction(void);
-extern void MAP_SelectAircraft(aircraft_t* aircraft);
-extern void MAP_SelectMission(actMis_t* mission);
-extern void MAP_NotifyMissionRemoved(const actMis_t* mission);
-extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo);
-extern void MAP_NotifyUfoDisappear(const aircraft_t* ufo);
-extern void MAP_GameInit(void);
 
 /* static variables */
 static cvar_t* cl_showCoords;
@@ -438,8 +414,17 @@ static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
 }
 
 /**
- * @brief
+ * @brief Return longitude and latitude for the 3d globe
  * FIXME
+ * @todo implement me
+ * x = cos(alpha)
+ * y = sin(alpha)
+ * long -180° (w) - 180° (e)
+ * lat -90 (n) - 90° (s)
+ * @return pos vec2_t was filled with longitude and latitude
+ * @param[in] x X coordinate on the screen that was clicked to
+ * @param[in] y Y coordinate on the screen that was clicked to
+ * @param[in] node The current menuNode we was clicking into (3dmap or map)
  */
 static void MAP_ScreenTo3DMap(const menuNode_t* node, int x, int y, vec2_t pos)
 {
@@ -473,8 +458,8 @@ extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* lin
 
 	/* get transformation */
 	VecToPolar(normal, trafo);
-	cosTrafo = cos(trafo[1] * M_PI / 180);
-	sinTrafo = sin(trafo[1] * M_PI / 180);
+	cosTrafo = cos(trafo[1] * torad);
+	sinTrafo = sin(trafo[1] * torad);
 
 	sa[0] = start[0] - trafo[0];
 	sa[1] = start[1];
@@ -500,7 +485,7 @@ extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* lin
 
 /*	Com_Printf( "#(%3.1f %3.1f) -> (%3.1f %3.1f)\n", start[0], start[1], end[0], end[1] ); */
 
-	line->dist = fabs(phiEnd - phiStart) / n * 180 / M_PI;
+	line->dist = fabs(phiEnd - phiStart) / n * todeg;
 	line->n = n + 1;
 	dPhi = (phiEnd - phiStart) / n;
 	p = NULL;
@@ -649,7 +634,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 			continue;
 
 		/* Draw base radar info */
-		RADAR_DrawInMap(node, &(base->radar), x, y, base->pos);
+		RADAR_DrawInMap(node, &(base->radar), x, y, base->pos, qfalse);
 
 		/* Draw base */
 		if (base->baseStatus == BASE_UNDER_ATTACK)
@@ -663,7 +648,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 			if (aircraft->status > AIR_HOME && MAP_MapToScreen(node, aircraft->pos, &x, &y)) {
 
 				/* Draw aircraft radar */
-				RADAR_DrawInMap(node, &(aircraft->radar), x, y, aircraft->pos);
+				RADAR_DrawInMap(node, &(aircraft->radar), x, y, aircraft->pos, qfalse);
 
 				/* Draw aircraft */
 				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, aircraft->image);
@@ -754,7 +739,7 @@ extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 	case MA_NEWBASE:
 		for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--)
 			/* Draw base radar info */
-			RADAR_DrawCoverage(node, &(base->radar),base->pos);
+			RADAR_DrawCoverage(node, &(base->radar),base->pos, map3D);
 
 		menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
 		return;
@@ -802,6 +787,7 @@ extern void MAP_ResetAction(void)
 		gd.mapAction = MA_NONE;
 
 	/* FIXME: Don't reset the selMis when we are in tactical mission and enter the geoscape via mn_push map */
+	/* TODO: I think this doesn't matter anymore, don't it? */
 	gd.interceptAircraft = -1;
 	if (selMis) {
 		selMis->def->active = qfalse;

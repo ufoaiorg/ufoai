@@ -1283,7 +1283,7 @@ void CL_ActorTurnMouse(void)
 
 	/* calculate dv */
 	VectorSubtract(mousePos, selActor->pos, div);
-	dv = AngleToDV((int) (atan2(div[1], div[0]) * 180 / M_PI));
+	dv = AngleToDV((int) (atan2(div[1], div[0]) * todeg));
 
 	/* send message to server */
 	MSG_Write_PA(PA_TURN, selActor->entnum, dv);
@@ -2123,7 +2123,7 @@ float CL_TargetingToHit(pos3_t toPos)
 	width = 2 * PLAYER_WIDTH * pseudosin;
 	height = ((le->state & STATE_CROUCHED) ? PLAYER_CROUCH : PLAYER_STAND) - PLAYER_MIN;
 
-	acc = M_PI / 180
+	acc = torad
 		* GET_ACC(selChr->skills[ABILITY_ACCURACY],
 			selFD->weaponSkill
 			? selChr->skills[selFD->weaponSkill]

@@ -2850,7 +2850,7 @@ float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, qboolean launched, 
 
 	/* are we rolling? */
 	if (rolled) {
-		alpha = rollAngle * M_PI / 180;
+		alpha = rollAngle * torad;
 		theta = atan2(d, -h) - 2 * alpha;
 		k = gd2 / (len * cos(theta) - h);
 		if (k <= 0)	/* impossible shot at any velocity */

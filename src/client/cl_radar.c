@@ -26,22 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec2_t pos);
-extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos);
-static qboolean RADAR_AddUfo(radar_t* radar, int numUfo);
-static int RADAR_IsUfoSensored(const radar_t* radar, int numUfo);
-extern void RADAR_RemoveUfo(radar_t* radar, const aircraft_t* ufo);
-extern void Radar_NotifyUfoRemoved(radar_t* radar, const aircraft_t* ufo);
-extern void RADAR_ChangeRange(radar_t* radar, int change);
-extern void Radar_Initialise(radar_t* radar, int range);
-extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
-	const aircraft_t* ufo, qboolean wasUfoSensored);
-
 #define RADAR_DRAW_POINTS	60
 /**
  * @brief Show Radar coverage
  */
-extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec2_t pos)
+extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean map3d)
 {
 	int i, xCircle, yCircle;
 	int pts[RADAR_DRAW_POINTS * 2 + 2];
@@ -76,7 +65,7 @@ extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec
 /**
  * @brief Display radar in geoscape
  */
-extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos)
+extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos, qboolean map3d)
 {
 	int i;
 	const vec4_t color = {0, 1, 0, 1};
@@ -86,7 +75,7 @@ extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x,
 		return;
 
 	/* Show radar range zones */
-	RADAR_DrawCoverage(node,radar,pos);
+	RADAR_DrawCoverage(node,radar,pos, map3d);
 
 	/* Set color */
 	re.DrawColor(color);
@@ -184,7 +173,7 @@ extern void Radar_Initialise(radar_t* radar, int range)
  * Return true if the aircraft is inside sensor
  */
 extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
-const aircraft_t* ufo, qboolean wasUfoSensored)
+	const aircraft_t* ufo, qboolean wasUfoSensored)
 {
 	int dist;
 	int num;

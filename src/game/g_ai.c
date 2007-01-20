@@ -46,7 +46,7 @@ qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 	/* spread data */
 	if (spread < 1.0)
 		spread = 1.0;
-	spread *= M_PI / 180;
+	spread *= torad;
 	cosSpread = cos(spread);
 	VectorSubtract(target, ent->origin, dtarget);
 	VectorNormalize(dtarget);
@@ -80,7 +80,7 @@ qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 
 #define CLOSE_IN_DIST		1200.0
 #define SPREAD_FACTOR		8.0
-#define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*M_PI/180) : 0)
+#define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*torad) : 0)
 #define HIDE_DIST			7
 
 /**

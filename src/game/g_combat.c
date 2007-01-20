@@ -944,7 +944,7 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 	if (mock)
 		prev_dir = ent->dir;
 	VectorSubtract(at, ent->pos, dir);
-	ent->dir = AngleToDV((int) (atan2(dir[1], dir[0]) * 180 / M_PI));
+	ent->dir = AngleToDV((int) (atan2(dir[1], dir[0]) * todeg));
 
 	if (!mock) {
 		G_CheckVisTeam(ent->team, NULL, qfalse);

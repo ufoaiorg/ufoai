@@ -248,8 +248,8 @@ extern qboolean CL_MapIsNight(vec2_t pos)
 	p = (float) ccs.date.sec / (3600 * 24);
 	q = (ccs.date.day + p) * 2 * M_PI / DAYS_PER_YEAR_AVG - M_PI;
 	p = (0.5 + pos[0] / 360 - p) * 2 * M_PI - q;
-	a = sin(pos[1] * M_PI / 180);
-	root = sqrt(1. - a * a);
+	a = sin(pos[1] * torad);
+	root = sqrt(1.0 - a * a);
 	x = sin(p) * root * sin(q) - (a * SIN_ALPHA + cos(p) * root * COS_ALPHA) * cos(q);
 	return (x > 0);
 }
@@ -428,7 +428,7 @@ extern qboolean CL_NewBase(vec2_t pos)
 		Com_DPrintf("Articbase\n");
 		baseCurrent->mapChar = 'a';
 	} else if (MapIsWater(color)) {
-		/* This should already have been catched in MN_MapClick (cl_menu.c), but just in case. */
+		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
 		MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL);
 		return qfalse;
 	} else {
