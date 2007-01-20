@@ -925,7 +925,6 @@ static value_t teamDescValues[] = {
 
 /**
  * @brief Parse the team descriptions (teamdesc) in the teams*.ufo files.
- * @sa CL_CollectAliens
  */
 static void Com_ParseTeamDesc(char *title, char **text)
 {
