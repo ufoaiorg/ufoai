@@ -553,7 +553,7 @@ static void AC_Init (void)
 					Com_sprintf(tmp, sizeof(tmp), "%s\t%s\t%i\n",
 						_(containment[i].alientype),
 						(RS_IsResearched_ptr(tech) ? _("Yes") : _("Needs autopsy!")),
-						containment[i].amount_alive);
+						containment[i].amount_alive); /* FIXME: what about the dead ones */
 					Q_strcat(aliencontText, tmp, sizeof(aliencontText));
 					numAliensOnList++;
 				}
@@ -596,15 +596,14 @@ static void AC_AlienListClick_f (void)
 		containment = baseCurrent->alienscont;
 		for (i = 0, step = 0; i < numTeamDesc; i++) {
 			if (!teamDesc[i].alien)
-				num++;
-
+				continue;
 			if (!containment[i].amount_alive && !containment[i].amount_dead)
-				step++;
-
-			if (step >= num) {
-				num += step;
+				continue;
+			if (step == num) {
+				num = i;
 				break;
 			}
+			step++;
 		}
 	} else
 		return;
