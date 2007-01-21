@@ -1,11 +1,16 @@
 // .. model:	(string)
-// .. need:	(string)
+// .. need:		(string)
+// .. tag		(string)	the tag where the model should be placed in the main-model - never in main model
+// .. parent	(string)	the menumodel parent with the tag specified - never in main model
+// .. anim		(string)	the animation from *.anm files
 // NOTE: This has to be top down
 
 // ============== Aliens ===========================
 menu_model alien_ortnok_head
 {
 	model	"models/aliens/ortnok/head01.md2"
+	tag	"tag_head"
+	parent	"alien_ortnok"
 }
 menu_model alien_ortnok
 {
@@ -17,6 +22,8 @@ menu_model alien_ortnok
 menu_model alien_ortnok_medium_head
 {
 	model	"models/aliens/ortnokmedium/head01.md2"
+	tag	"tag_head"
+	parent	"alien_ortnok_medium"
 }
 menu_model alien_ortnok_medium
 {
@@ -28,6 +35,8 @@ menu_model alien_ortnok_medium
 menu_model alien_ortnok_light_head
 {
 	model	"models/aliens/ortnoklight/head01.md2"
+	tag	"tag_head"
+	parent	alien_ortnok_light
 }
 menu_model alien_ortnok_light
 {
@@ -39,28 +48,34 @@ menu_model alien_ortnok_light
 menu_model alien_taman_head
 {
 	model	"models/aliens/blue/head01.md2"
+	tag	"tag_head"
+	parent	"alien_taman"
 }
 menu_model alien_taman
 {
 	model	"models/aliens/blue/body01.md2"
 	need	"alien_taman_head"
-	anim	stand_still
+	anim	"stand2"
 }
 
 menu_model alien_taman_light_head
 {
 	model	"models/aliens/bluelight/head01.md2"
+	tag	"tag_head"
+	parent	"alien_taman_light"
 }
 menu_model alien_taman_light
 {
 	model	"models/aliens/bluelight/body01.md2"
 	need	"alien_taman_light_head"
-	anim	stand_still
+	anim	stand_menu
 }
 
 menu_model alien_taman_medium_head
 {
 	model	"models/aliens/bluemedium/head01.md2"
+	tag	"tag_head"
+	parent	"alien_taman_medium"
 }
 menu_model alien_taman_medium
 {
@@ -72,6 +87,8 @@ menu_model alien_taman_medium
 menu_model alien_shevaar_head
 {
 	model	"models/aliens/shevaar/head01.md2"
+	tag	"tag_head"
+	parent	"alien_shevaar"
 }
 menu_model alien_shevaar
 {
@@ -83,6 +100,8 @@ menu_model alien_shevaar
 //menu_model alien_hovernet_head
 //{
 //	model	"models/aliens/hovernet/head01.md2"
+//	tag	"tag_head"
+//	parent	"alien_hovernet"
 //}
 //menu_model alien_hovernet
 //{
@@ -94,6 +113,8 @@ menu_model alien_shevaar
 menu_model alien_cyborg_ortnok_head
 {
 	model	"models/aliens/cyborg_ortnok/head01.md2"
+	tag	"tag_head"
+	parent	"alien_cyborg_ortnok"
 }
 menu_model alien_cyborg_ortnok
 {
@@ -107,6 +128,8 @@ menu_model alien_cyborg_ortnok
 menu_model civ_female_head
 {
 	model	"models/civilians/female/head04c.md2"
+	tag	"tag_head"
+	parent	"civ_female"
 }
 menu_model civ_female
 {

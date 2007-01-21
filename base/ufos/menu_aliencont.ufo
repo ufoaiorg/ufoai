@@ -214,11 +214,13 @@ menu aliencont
 	model mdl_alc_alien
 	{
 		md2	"*cvar mn_al_alienmodel"
-		angles	"0 0 120"
+		angles	"0 70 90"
 		color	"0.5 0.5 0.5 1"
 		origin	"805 380 0"
+		scale	"4 4 4"
 		pos	"685 260"
 //		bgcolor	"1 1 1 0.5"
+		anim	"stand2"
 		size	"240 240"
 	}
 
