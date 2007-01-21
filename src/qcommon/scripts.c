@@ -915,7 +915,7 @@ static void Com_ParseActors(char *title, char **text)
 static value_t teamDescValues[] = {
 	{"tech", V_STRING, offsetof(teamDesc_t, tech)} /**< tech id from research.ufo */
 	,
-	{"name", V_TRANSLATION_STRING, offsetof(teamDesc_t, name)} /**< internal team name */
+	{"name", V_TRANSLATION2_STRING, offsetof(teamDesc_t, name)} /**< internal team name */
 	,
 	{"alien", V_BOOL, offsetof(teamDesc_t, alien)} /**< is this an alien? */
 	,
