@@ -320,7 +320,6 @@ void UP_AircraftDescription (technology_t* t)
 extern void UP_Article (technology_t* tech)
 {
 	int i, day, month, year;
-	static char buf[8192];
 
 	assert(tech);
 
