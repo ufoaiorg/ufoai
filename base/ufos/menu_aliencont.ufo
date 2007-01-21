@@ -116,7 +116,7 @@ menu aliencont
 	string txt_all_aliens_v
 	{
 		string "*cvar mn_al_globalamount"
-		pos "380 40"
+		pos "390 40"
 		color "0 .78 0 1"
 	}
 
@@ -131,7 +131,7 @@ menu aliencont
 	string txt_here_aliens_v
 	{
 		string "*cvar mn_al_localamount"
-		pos "380 60"
+		pos "390 60"
 		color "0 .78 0 1"
 	}
 
@@ -175,6 +175,17 @@ menu aliencont
 		click mclick rclick
 	}
 
+	text aliencontUFOpedia
+	{
+		pos "50 300"
+		size "480 580"
+		format "16 170"
+		num 1
+//              bgcolor "1 1 1 0.5"
+		mousefx true
+		wheel
+	}
+
 	// ==================
 	// info window
 	// ==================
@@ -192,8 +203,6 @@ menu aliencont
 		color "0 .78 0 1"
 	}
 
-	//FIXME
-	//add proper value
 	string txt_alc_alientype_v
 	{
 		string "*cvar mn_al_alientype"
