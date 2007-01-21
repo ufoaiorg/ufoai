@@ -166,9 +166,10 @@ menu aliencont
 	text aliencontlist
 	{
 		pos "50 150"
-		size "480 580"
+		size "480 160"
 		format "16 170"
 		num 0
+		height	"10"
 //		bgcolor "1 1 1 0.5"
 		mousefx true
 		wheel
@@ -177,11 +178,12 @@ menu aliencont
 
 	text aliencontUFOpedia
 	{
-		pos "50 300"
-		size "480 580"
+		pos "50 330"
+		size "480 400"
 		format "16 170"
-		num 1
-//              bgcolor "1 1 1 0.5"
+		num 2
+		height	"25"
+//		bgcolor "1 1 1 0.5"
 		mousefx true
 		wheel
 	}

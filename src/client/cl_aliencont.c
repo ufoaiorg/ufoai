@@ -430,7 +430,7 @@ static int AL_CountForMenu(int alienidx, int state)
 		if (!base->hasAlienCont)
 			continue;
 		for (j = 0; j < numTeamDesc; j++) {
-			if ((base->alienscont[j].alientype) && 
+			if ((base->alienscont[j].alientype) &&
 			(Q_strncmp(base->alienscont[j].alientype, AL_AlienTypeToName(alienidx), MAX_VAR)) == 0) {
 				if (state == 0)
 					amount += base->alienscont[j].amount_dead;
@@ -454,13 +454,17 @@ static void AC_SelectAlien_f (void)
 
 	tech = RS_GetTechByIDX(aliencontCurrent->techIdx);
 
-	if (!tech)
+	if (!tech) {
+		menuText[TEXT_UFOPEDIA] = NULL;
 		return;
+	}
 
 	Cvar_Set("mn_al_alienmodel", tech->mdl_top);
 	Cvar_Set("mn_al_alientype", _(aliencontCurrent->alientype));
 	Cvar_SetValue("mn_al_killed", AL_CountForMenu(aliencontCurrent->idx, 0));
 	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->idx, 1));
+
+	menuText[TEXT_UFOPEDIA] = _(tech->description);
 }
 
 /**
@@ -515,6 +519,7 @@ static void AC_Init (void)
 	Cvar_SetValue("mn_al_localamount", AL_CountInBase());
 
 	menuText[TEXT_STANDARD] = aliencontText;
+	menuText[TEXT_UFOPEDIA] = NULL;
 }
 
 /**
