@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-01-20 20:00+0100\n"
-"PO-Revision-Date: 2007-01-20 21:37+0100\n"
+"POT-Creation-Date: 2007-01-21 20:42+0100\n"
+"PO-Revision-Date: 2007-01-21 20:45+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -540,22 +540,22 @@ msgstr "Examiné"
 msgid "Amount"
 msgstr "Quantité"
 
-#: ../base/ufos/menu_aliencont.ufo:184
+#: ../base/ufos/menu_aliencont.ufo:196
 #: ../base/ufos/menu_research.ufo:825
 msgid "Base Info"
 msgstr "Info sur la base"
 
-#: ../base/ufos/menu_aliencont.ufo:190
+#: ../base/ufos/menu_aliencont.ufo:202
 msgid "Alien Type:"
 msgstr "Espèce Alienne:"
 
-#: ../base/ufos/menu_aliencont.ufo:215
-msgid "In this base:"
-msgstr "Dans cette base:"
-
 #: ../base/ufos/menu_aliencont.ufo:229
-msgid "In all bases:"
-msgstr "Dans toutes les bases:"
+msgid "Killed:"
+msgstr "Tués:"
+
+#: ../base/ufos/menu_aliencont.ufo:243
+msgid "Captured in all bases:"
+msgstr "Capturés dans toutes les base:"
 
 #: ../base/ufos/menu_althud.ufo:45
 #: ../base/ufos/menu_inventory.ufo:172
@@ -2594,9 +2594,8 @@ msgid "Live Alien"
 msgstr "Alien Vivant"
 
 #: ../base/ufos/research.ufo:146
-#, fuzzy
 msgid "live_alien_txt"
-msgstr "<TODO>"
+msgstr "live_alien_txt"
 
 #: ../base/ufos/research.ufo:147
 msgid "live_alien_pre_txt"
@@ -2681,9 +2680,8 @@ msgid "The Alien Mind"
 msgstr "L'Esprit Alien"
 
 #: ../base/ufos/research.ufo:197
-#, fuzzy
 msgid "alien_mind_txt"
-msgstr "Cette grenade éclaire une petite zone sur le champs de bataille, ainsi que toutes les unités dans son rayon d'action. Elle peut être retardée de la même façon que les grenades à fragmentation."
+msgstr "alien_mind_txt"
 
 #: ../base/ufos/research.ufo:198
 msgid "alien_mind_pre_txt"
@@ -2859,46 +2857,8 @@ msgstr ""
 "Aucun."
 
 #: ../base/ufos/research.ufo:301
-#, fuzzy
 msgid "monoknife_txt"
-msgstr ""
-"Spécifications techniques : Poignard de Combat\n"
-"\n"
-"NIVEAU DE CONFIDENTIALITE JAUNE\n"
-"\n"
-"Unité de réaction extraterrestre PHALANX\n"
-"\n"
-"Document Technique, Autorisation Delta\n"
-"\n"
-"Classé le : 20 Mars 2084\n"
-"\n"
-"Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
-"\n"
-"\n"
-"\n"
-"Considérations générales\n"
-"\n"
-"L'attaque alienne sur Mumbai a rendu notre situation douloureusement claire. Leur technologie est beaucoup plus avancée que la nôtre. L'incapacité complète des troupes du Commonwealth à repousser l'offensive de Mumbai a révélé les failles de l'entraînement militaire actuel et des équipements utilisés. Elles perdirent trois bataillons, uniquement pour parvenir à stopper l'avancée alienne ; et sans pour autant leur infliger de pertes significatives. PHALANX doit parvenir à renverser le rapport de force, et pour cela nous avons besoin de ce que la technologie humaine propose de meilleur.\n"
-"\n"
-"Le Programme Excalibur fut créé pour développer les armes les plus performantes sur Terre en réévaluant les qualités de fabrication, les résistances, et en réexaminant les performances en action de nos armes dans les situations où nous sommes parvenus à engager le combat avec les aliens.\n"
-"\n"
-"Le poignard de combat est une solide lame de vingt-six centimètres d'acier tranchant, et peut être utilisé pour de nombreuses utilisations quotidiennes. En tant qu'arme, le fil du poignard de combat est renforcé par des céramiques résistantes pour améliorer sa capacité à percer les armures. Il est également équilibré pour le lancé si la situation le nécessite. Il dispose enfin d'un tenon pour le fixer sur le canon d'un vieux fusil de guerre et l'utiliser comme baïonnette.\n"
-"\n"
-"L'ajout du poignard de combat dans notre arsenal fut le sujet d'un long débat. Mumbai nous a enseigné que même dans les conditions les plus favorables, un couteau n'est rien face à l'armement alien. Si un soldat armé d'un poignard n'est pas tué avant d'avoir réussi à atteindre sa cible, il sera probablement éviscéré par l'une de ces redoutable lame qui tranche même à travers une armure. Ce n'est qu'en de rares occasions qu'un combattant expérimenté au maniement du poignard est parvenu à prendre le dessus sur un alien.\n"
-"\n"
-"Cependant, le poignard de combat a sauvé de nombreuses vies lors de défaillances ou de manque de munitions des armes à feu. Des siècles d'améliorations technologiques ne sont pas parvenus à le rendre obsolète ; et même les aliens utilisent des armes blanches. Lorsque le chargeur est vide, mieux vaut avoir un couteau que se battre à main nues.\n"
-"\n"
-"Si un soldat parvient à entrer en corps à corps, cette arme le servira bien.\n"
-"\n"
-"\n"
-"Doctrine recommandée\n"
-"\n"
-"En combat, le poignard est l'arme du dernier recours. Si aucune autre arme n'est disponible, et que l'ennemi arrive, alors un couteau permettra peut-être de voir le soleil se coucher. Cependant, même en de telles situations désespérées, il s'agit d'un acte risqué. Attaquer ainsi un ennemi qui n'a pas été préalablement blessé ou affaibli est moyen efficace de terminer à la morgue.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"Aucun."
+msgstr "monoknife_txt"
 
 #: ../base/ufos/research.ufo:302
 msgid "monoknife_pre_txt"
@@ -3306,18 +3266,16 @@ msgstr ""
 "--Cdt Navarre"
 
 #: ../base/ufos/research.ufo:491
-#, fuzzy
 msgid "heavylaser_txt"
-msgstr "Les Lasers Lourds sont encombrants et difficiles à manier à cause du triple générateur de laser qu'ils logent. A cause de son volume, le Laser Lourd est moins précis qu'un Fusil Laser, mais sa portée utile est plus grande. Il crée également beaucoup plus de dommages."
+msgstr "heavylaser_txt"
 
 #: ../base/ufos/research.ufo:492
 msgid "heavylaser_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:509
-#, fuzzy
 msgid "heavylaser_ammo_txt"
-msgstr "Les Lasers Lourds sont encombrants et difficiles à manier à cause du triple générateur de laser qu'ils logent. A cause de son volume, le Laser Lourd est moins précis qu'un Fusil Laser, mais sa portée utile est plus grande. Il crée également beaucoup plus de dommages."
+msgstr "heavylaser_ammo_txt"
 
 #: ../base/ufos/research.ufo:510
 msgid "heavylaser_ammo_pre_txt"
@@ -3419,36 +3377,32 @@ msgstr ""
 "--Cdt Navarre"
 
 #: ../base/ufos/research.ufo:561
-#, fuzzy
 msgid "laserpistol_txt"
-msgstr "Utilisant une version plus petite et moins puissante que le 'réacteur laser YAG', le LAS-10 est comme son grand frère, le fusil laser LAS-24, un produit des récentes avancées réalisées dans le domaine du laser. A cause du 'Réacteur YAG' de plus petites dimensions, les photons ont une énergie cinétique inférieure et une puissance de pénétration plus faible. Les dégats occasionés sont limités mais l'arme est plus précise qu'un pistolet grâce à l'absence de recul. Comme les pistolets, les Pistolets Laser peuvent être utilisés des deux mains."
+msgstr "laserpistol_txt"
 
 #: ../base/ufos/research.ufo:562
 msgid "laserpistol_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:578
-#, fuzzy
 msgid "laserpistol_mag_txt"
-msgstr "Utilisant une version plus petite et moins puissante que le 'réacteur laser YAG', le LAS-10 est comme son grand frère, le fusil laser LAS-24, un produit des récentes avancées réalisées dans le domaine du laser. A cause du 'Réacteur YAG' de plus petites dimensions, les photons ont une énergie cinétique inférieure et une puissance de pénétration plus faible. Les dégats occasionés sont limités mais l'arme est plus précise qu'un pistolet grâce à l'absence de recul. Comme les pistolets, les Pistolets Laser peuvent être utilisés des deux mains."
+msgstr "laserpistol_mag_txt"
 
 #: ../base/ufos/research.ufo:579
 msgid "laserpistol_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:596
-#, fuzzy
 msgid "laserrifle_txt"
-msgstr "Comme le fusil d'assaut, le fusil Laser est efficace à moyenne portée. Il provoque des dégats raisonnables et est plus précis que le fusil d'assaut grâce à l'absence de recul."
+msgstr "laserrifle_txt"
 
 #: ../base/ufos/research.ufo:597
 msgid "laserrifle_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:614
-#, fuzzy
 msgid "laserrifle_mag_txt"
-msgstr "Comme le fusil d'assaut, le fusil Laser est efficace à moyenne portée. Il provoque des dégats raisonnables et est plus précis que le fusil d'assaut grâce à l'absence de recul."
+msgstr "laserrifle_mag_txt"
 
 #: ../base/ufos/research.ufo:615
 msgid "laserrifle_mag_pre_txt"
@@ -4007,32 +3961,28 @@ msgstr ""
 "Aucun."
 
 #: ../base/ufos/research.ufo:941
-#, fuzzy
 msgid "chaingun_txt"
-msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
+msgstr "chaingun_txt"
 
 #: ../base/ufos/research.ufo:942
 msgid "chaingun_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:959
-#, fuzzy
 msgid "chaingun_ammo_txt"
-msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
+msgstr "chaingun_ammo_txt"
 
 #: ../base/ufos/research.ufo:960
 msgid "chaingun_ammo_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:979
-#, fuzzy
 msgid "shotgun_txt"
-msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
+msgstr "shotgun_txt"
 
 #: ../base/ufos/research.ufo:998
-#, fuzzy
 msgid "shotgun_ammo_txt"
-msgstr "Les unités Phalanx utilisent le SG-260 avec beaucoup de succès depuis un certain temps. Comparé aux autres fusils à pompe traditionnellement utilisés par beaucoup d'unités d'intervention, le SG-260 est capable de mieux orienter les projectiles à la sortie du canon. La porte effective de cette arme est ainsi améliorée de façon à ce qu'elle soit utilisable non seulement à courte mais aussi à moyenne portée. Le SG-260 est un bon choix pour le combat urbain, notamment pour nettoyer un immeuble. Son avantage sur le pistolet mitrailleur est qu'il fait plus de dégâts, le rendant plus efficace contre les cibles renforcées."
+msgstr "shotgun_ammo_txt"
 
 #: ../base/ufos/research.ufo:1018
 msgid "shotgun2_txt"
@@ -4508,54 +4458,48 @@ msgstr ""
 "Dr Connor"
 
 #: ../base/ufos/research.ufo:1245
-#, fuzzy
 msgid "tachyonpistol_txt"
-msgstr "Cette arme est équipée d'une version miniature d'un accélérateur à  tachyons. Ainsi, le pistolet à tachyons a une cadence de tir et une précision inférieures comparées aux autres armes à tachyons. L'avantage majeur du pistolet à tachyons réside dans son faible poids et ses petites dimensions qui en font une arme de poing appréciable."
+msgstr "tachyonpistol_txt"
 
 #: ../base/ufos/research.ufo:1246
 msgid "tachyonpistol_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:1263
-#, fuzzy
 msgid "tachyonpistol_mag_txt"
-msgstr "Cette arme est équipée d'une version miniature d'un accélérateur à  tachyons. Ainsi, le pistolet à tachyons a une cadence de tir et une précision inférieures comparées aux autres armes à tachyons. L'avantage majeur du pistolet à tachyons réside dans son faible poids et ses petites dimensions qui en font une arme de poing appréciable."
+msgstr "tachyonpistol_mag_txt"
 
 #: ../base/ufos/research.ufo:1264
 msgid "tachyonpistol_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:1282
-#, fuzzy
 msgid "tachyonrifle_txt"
-msgstr "Même si nos ingénieurs ne comprennent pas encore complètement les principes d'altération des tachyons à l'échelle sub-atomique, ils ont été capables de reproduire la technologie de l'accélérateur à tachyons. Apparemment, le spin des tachyons est fixé dans l'accélérateur afin qu'ils soient capable d'intéragir avec tous les matériaux. Ils ont toujours tendance à pénétrer facilement n'importe quelle armure et ne perdent leur énergie particulaire qu'après une distance de pénétration d'environ 10 cm. Ainsi, un soldat touché par une charge tachyons ne soufre que de blessures légères en surface, mais est pourtant gravement blessé dans ses organes internes."
+msgstr "tachyonrifle_txt"
 
 #: ../base/ufos/research.ufo:1283
 msgid "tachyonrifle_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:1301
-#, fuzzy
 msgid "tachyonrifle_mag_txt"
-msgstr "Même si nos ingénieurs ne comprennent pas encore complètement les principes d'altération des tachyons à l'échelle sub-atomique, ils ont été capables de reproduire la technologie de l'accélérateur à tachyons. Apparemment, le spin des tachyons est fixé dans l'accélérateur afin qu'ils soient capable d'intéragir avec tous les matériaux. Ils ont toujours tendance à pénétrer facilement n'importe quelle armure et ne perdent leur énergie particulaire qu'après une distance de pénétration d'environ 10 cm. Ainsi, un soldat touché par une charge tachyons ne soufre que de blessures légères en surface, mais est pourtant gravement blessé dans ses organes internes."
+msgstr "tachyonrifle_mag_txt"
 
 #: ../base/ufos/research.ufo:1302
 msgid "tachyonrifle_mag_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:1320
-#, fuzzy
 msgid "tachyonsniper_txt"
-msgstr "Le fusil de sniper à tachyons utilise aussi la technologie récemment découverte de l'accélérateur à tachyons, retrouvée initialement dans un vaisseau d'exploration Ortnok. A la différence du fusil à tachyons, cette arme a une cadence de tir relativement basse car il faut charger les particules avant de les tirer. Cela signifie que les coups tirés d'un fusil de sniper à tachyons sont plus concentrés, donc plus précis, et ont une meilleure capacité de pénétration."
+msgstr "tachyonsniper_txt"
 
 #: ../base/ufos/research.ufo:1321
 msgid "tachyonsniper_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:1338
-#, fuzzy
 msgid "tachyonsniper_mag_txt"
-msgstr "Le fusil de sniper à tachyons utilise aussi la technologie récemment découverte de l'accélérateur à tachyons, retrouvée initialement dans un vaisseau d'exploration Ortnok. A la différence du fusil à tachyons, cette arme a une cadence de tir relativement basse car il faut charger les particules avant de les tirer. Cela signifie que les coups tirés d'un fusil de sniper à tachyons sont plus concentrés, donc plus précis, et ont une meilleure capacité de pénétration."
+msgstr "tachyonsniper_mag_txt"
 
 #: ../base/ufos/research.ufo:1339
 msgid "tachyonsniper_mag_pre_txt"
@@ -5572,18 +5516,16 @@ msgstr ""
 "Capacité d'armement: 2 Attaches moyennes (corps de l'appareil)"
 
 #: ../base/ufos/research.ufo:1991
-#, fuzzy
 msgid "ufo_scout_txt"
-msgstr "<TODO>"
+msgstr "ufo_scout_txt"
 
 #: ../base/ufos/research.ufo:1992
 msgid "ufo_scout_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:2024
-#, fuzzy
 msgid "ufo_fighter_txt"
-msgstr "Les Vaisseaux de Guerre sont des vaisseaux qui offrent plus de puissance de feu que les croiseurs et transportent presque autant de troupes que les Tranports. Ces vaisseaux sont un danger même isolés et doivent être engagés avec prudence."
+msgstr "ufo_fighter_txt"
 
 #: ../base/ufos/research.ufo:2025
 msgid "ufo_fighter_pre_txt"
@@ -5594,9 +5536,8 @@ msgid "UFO - Harvester"
 msgstr "OVNI - Moissonneuse"
 
 #: ../base/ufos/research.ufo:2052
-#, fuzzy
 msgid "ufo_harvester_txt"
-msgstr "Les Vaisseaux de Guerre sont des vaisseaux qui offrent plus de puissance de feu que les croiseurs et transportent presque autant de troupes que les Tranports. Ces vaisseaux sont un danger même isolés et doivent être engagés avec prudence."
+msgstr "ufo_harvester_txt"
 
 #: ../base/ufos/research.ufo:2053
 msgid "ufo_harvester_pre_txt"
@@ -5607,9 +5548,8 @@ msgid "Live Specimen - Bloodspider"
 msgstr "Spécimen Vivant - Araignée sanglante"
 
 #: ../base/ufos/research.ufo:2080
-#, fuzzy
 msgid "bloodspider_notes_txt"
-msgstr "<TODO>"
+msgstr "bloodspider_notes_txt"
 
 #: ../base/ufos/research.ufo:2081
 msgid "bloodspider_notes_pre_txt"
@@ -5671,24 +5611,23 @@ msgstr ""
 "\n"
 "Dr Connor"
 
-#: ../base/ufos/research.ufo:2111
+#: ../base/ufos/research.ufo:2115
 msgid "Alien Autopsy - Ortnok"
 msgstr "Autopsie Alienne - Ortnok"
 
-#: ../base/ufos/research.ufo:2112
-#, fuzzy
+#: ../base/ufos/research.ufo:2116
 msgid "ortnok_autopsy_txt"
-msgstr "Leur peau verte est dure et composée d'écailles. L'analyse cellulaire indique une abondance de chlorophylle, la molécule qui rend les plantes vertes. Le système digestif n'apparaît pas comme sous-dimensionné. Nous pouvons ainsi supposer que l'Ortnok peut évoluer dans un environnement où la nourriture se fait rare, et se rabattre alors sur l'énergie solaire quand c'est la dernière option disponible. Les organes reproducteurs de cette espèce sont très actifs, et ils ne cessent seulement de fonctionner que 14 heures après la mort. Les Antareans les utilisent sans limite comme chair à canon dans tous les terrains qu'ils ont décidé de conquérir."
+msgstr "ortnok_autopsy_txt"
 
-#: ../base/ufos/research.ufo:2113
+#: ../base/ufos/research.ufo:2117
 msgid "ortnok_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2133
+#: ../base/ufos/research.ufo:2137
 msgid "Alien Autopsy - Taman"
 msgstr "Autopsie Alienne - Taman"
 
-#: ../base/ufos/research.ufo:2134
+#: ../base/ufos/research.ufo:2138
 msgid "taman_autopsy_txt"
 msgstr ""
 "POUR: Commandant de Base, PHALANX, Commandement des Opérations Atlantique\n"
@@ -5736,7 +5675,7 @@ msgstr ""
 "\n"
 "Dr Connor"
 
-#: ../base/ufos/research.ufo:2135
+#: ../base/ufos/research.ufo:2139
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "POUR: Commandant de Base, PHALANX, Commandement des Opérations Atlantique\n"
@@ -5756,90 +5695,60 @@ msgstr ""
 "\n"
 "Dr Connor"
 
-#: ../base/ufos/research.ufo:2153
+#: ../base/ufos/research.ufo:2157
 msgid "Alien Autopsy - Shevaar"
 msgstr "Autopsie Alienne - Shevaar"
 
-#: ../base/ufos/research.ufo:2154
-#, fuzzy
+#: ../base/ufos/research.ufo:2158
 msgid "shevaar_autopsy_txt"
-msgstr "L'impressionnante masse musculaire d'un Shevaar est soutenue par un squelette trappu, donnant à l'espèce sa force terrifiante. Les deux machoires sont fixées sur les énormes clavicules de la créature, les rendant presques aussi large que la créature en elle même et leur donnant une force de broyage phénoménale. Le large museau humide de la bête est en fait son cerveau, couvert par un ensemble dense de senseurs variés. Bien que l'abilité du Shevaar à pourchasser sa proie soit augmentée par cet organe sensitif et cognitif combiné, sont emplacement proéminent et le manque d'os protecteur le rend sensible aux attaques psioniques ainsi qu'offrant un point faible évident en combat rapproché."
+msgstr "shevaar_autopsy_txt"
 
-#: ../base/ufos/research.ufo:2155
+#: ../base/ufos/research.ufo:2159
 msgid "shevaar_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2173
-msgid "Live Specimen - Stinger"
-msgstr "Spécimen Vivant - Stinger"
-
-#: ../base/ufos/research.ufo:2174
-#, fuzzy
-msgid "hovernet_notes_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2175
-msgid "hovernet_notes_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2188
-msgid "Alien Autopsy - Stinger"
-msgstr "Autopsie Alienne - Stinger"
-
-#: ../base/ufos/research.ufo:2189
-#, fuzzy
-msgid "hovernet_autopsy_txt"
-msgstr "Le démêlement du réseau de fibres molles, qui forme au moins 90% du hovernet, révèle un disque solide de fabrication inconnue. Les points de support des armements sont clairement visibles, et bien que les inscriptions situées à côté reste encore indéchiffrables, elles devraient être notre première succès dans la compréhension du langage Alien. Aucun joint n'est visible entre le disque et les douzaines de fibres qui sortent de lui, même sous un microscope électronique. Il est possible que les fibres soient expulsées du disque lui-même, qui doit fournir et distribuer la plus importante part d'énergie et de force de propulsion du hovernet. L'arrangement lâche des fibres suggère qu'un tir au but avec un projectile ou une arme à énergie dirigée est peu efficace, et les armes explosives ou incendiaires doivent causer plus de dégâts."
-
-#: ../base/ufos/research.ufo:2190
-msgid "hovernet_autopsy_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
-#: ../base/ufos/research.ufo:2205
+#: ../base/ufos/research.ufo:2209
 msgid "Alien Autopsy - Ortnok Cyborg"
 msgstr "Autopsie Alienne - Cyborg Ortnok"
 
-#: ../base/ufos/research.ufo:2206
-#, fuzzy
+#: ../base/ufos/research.ufo:2210
 msgid "cyborg_ortnok_autopsy_txt"
-msgstr "La séparation de l'endo-squelette du cyborg de la chair du spécimen produit des étincelles et libère des vapeurs acides et explosives. L'intérieur de l'endo-squelette glisse hors des ouvertures d'accès de la structure d'os artificielle, attaché par des tendons implantés chirurgicalement et qui apparaissent être de nature biomécanique. Il semble que le système digestif et les organes de reproduction aient été enlevés et remplacés par de nombreux petits moteurs enchâssés à l'intérieur de l'endo-squelette. L'énergie créée par la chlorophylle de la peau de l'Ortnok semble démarrer les réactions dans ces micro-moteurs. Le but du programme cyborg d'Antarean est clairement la conversion de l'Ortnok en une machine de guerre biomécanique qui exige une production d'énergie beaucoup plus importante et la suppression de l'instinct reproducteur."
+msgstr "cyborg_ortnok_autopsy_txt"
 
-#: ../base/ufos/research.ufo:2207
+#: ../base/ufos/research.ufo:2211
 msgid "cyborg_ortnok_autopsy_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2225
+#: ../base/ufos/research.ufo:2229
 msgid "Phoenix UGV"
 msgstr "VTSP Phoenix"
 
-#: ../base/ufos/research.ufo:2226
-#, fuzzy
+#: ../base/ufos/research.ufo:2230
 msgid "ugv_phoenix_txt"
 msgstr "Véhicule Terrestre Sans Pilote Phoenix"
 
-#: ../base/ufos/research.ufo:2227
+#: ../base/ufos/research.ufo:2231
 msgid "ugv_phoenix_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2241
+#: ../base/ufos/research.ufo:2245
 msgid "Triax UGV"
 msgstr "VTSP Triax"
 
-#: ../base/ufos/research.ufo:2242
-#, fuzzy
+#: ../base/ufos/research.ufo:2246
 msgid "ugv_triax_txt"
 msgstr "Véhicule Terrestre Sans Pilote Triax"
 
-#: ../base/ufos/research.ufo:2243
+#: ../base/ufos/research.ufo:2247
 msgid "ugv_triax_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2261
+#: ../base/ufos/research.ufo:2265
 msgid "Raven ECM Unit"
 msgstr "Unité Raven ECM"
 
-#: ../base/ufos/research.ufo:2263
-#: ../base/ufos/research.ufo:2279
+#: ../base/ufos/research.ufo:2267
+#: ../base/ufos/research.ufo:2283
 msgid "craft_shield_light_txt"
 msgstr ""
 "Spécifications techniques : Unité CME \"Corbeau\"\n"
@@ -5878,15 +5787,15 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:2277
+#: ../base/ufos/research.ufo:2281
 msgid "Polymer Aircraft Armour"
 msgstr "Armure Polymère"
 
-#: ../base/ufos/research.ufo:2293
+#: ../base/ufos/research.ufo:2297
 msgid "SHIVA Rotary Cannon"
 msgstr "Canon Rotatif SHIVA"
 
-#: ../base/ufos/research.ufo:2295
+#: ../base/ufos/research.ufo:2299
 msgid "craft_weapon_flac_txt"
 msgstr ""
 "Spécifications techniques : Canon Rotatif SHIVA\n"
@@ -5929,42 +5838,39 @@ msgstr ""
 "\n"
 "Aucun."
 
-#: ../base/ufos/research.ufo:2309
+#: ../base/ufos/research.ufo:2313
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Lance-missiles Sparrowhawk AA"
 
-#: ../base/ufos/research.ufo:2311
-#, fuzzy
+#: ../base/ufos/research.ufo:2315
 msgid "craft_weapon_sparrowhawk_txt"
-msgstr "craft_weapon_flac_txt"
+msgstr "craft_weapon_sparrowhawk_txt"
 
-#: ../base/ufos/research.ufo:2325
+#: ../base/ufos/research.ufo:2329
 msgid "TR-20 Rocket Pod"
 msgstr "Lance-Roquettes TR-20"
 
-#: ../base/ufos/research.ufo:2327
-#, fuzzy
+#: ../base/ufos/research.ufo:2331
 msgid "craft_weapon_tr20_txt"
-msgstr "craft_weapon_flac_txt"
+msgstr "craft_weapon_tr20_txt"
 
-#: ../base/ufos/research.ufo:2347
+#: ../base/ufos/research.ufo:2351
 msgid "Particle Beam Weapon"
 msgstr "Arme à Faisceau de Particules"
 
-#: ../base/ufos/research.ufo:2348
+#: ../base/ufos/research.ufo:2352
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
-#: ../base/ufos/research.ufo:2349
-#, fuzzy
+#: ../base/ufos/research.ufo:2353
 msgid "craft_weapon_particle_beam_txt"
-msgstr "craft_weapon_flac_txt"
+msgstr "craft_weapon_particle_beam_txt"
 
-#: ../base/ufos/research.ufo:2373
+#: ../base/ufos/research.ufo:2377
 msgid "Political Situation Before The Invasion"
 msgstr "Situation Politique Avant l'Invasion"
 
-#: ../base/ufos/research.ufo:2374
+#: ../base/ufos/research.ufo:2378
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "En l'année 2084, la Terre connaissait sa période la plus prospère depuis plus d'un siècle. Peut-être pour la première fois, la paix et la coopération sont la norme plutôt que l'exception. Cette situation nouvelle ne peut cependant être expliquée qu'à travers les évènements brutaux du 21ème siècle.\n"
@@ -5983,11 +5889,11 @@ msgstr ""
 "\n"
 "L'armée loyaliste compta de nombreux déserteurs dans les jours qui suivirent, ce qui fini par sceller le sort du gouvernement. Plus de six millions de vies furent perdues avant que les forces loyalistes ne se rendent le 15 août 2036, s'étant battues jusqu'au bout et ayant massivement employé des stratégies de terres brûlées. Les rebelles parvinrent toutefois à les repousser lentement jusqu'à l'océan Indien, ce qui marqua la fin officielle de la Seconde Guerre Froide."
 
-#: ../base/ufos/research.ufo:2384
+#: ../base/ufos/research.ufo:2388
 msgid "After The War"
 msgstr "Après La Guerre"
 
-#: ../base/ufos/research.ufo:2385
+#: ../base/ufos/research.ufo:2389
 msgid "news_after_the_war_txt"
 msgstr ""
 "La République Asiatique:\n"
@@ -6102,11 +6008,11 @@ msgstr ""
 "\n"
 "L'essentiel des forces militaire de l'Océanie réside dans sa flotte. Son armée terrestre est ridicule comparée à celle de toutes les autres nations, à l'exception de celle des États-Unis. Elle ne sert que de force de défense, avec un entraînement et un équipement de niveau moyen. Elle peut cependant répondre rapidement aux situations d'urgence."
 
-#: ../base/ufos/research.ufo:2395
+#: ../base/ufos/research.ufo:2399
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "Les conséquences de Mumbai et PHALANX"
 
-#: ../base/ufos/research.ufo:2396
+#: ../base/ufos/research.ufo:2400
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "Le \"Projet PHALANX\" vit le jour au département de la défense des États-Unis en 1955, après plusieurs années d'inquiétude grandissante quant au nombre en constante augmentation d'OVNIs aperçus à travers le monde. L'éventualité d'une invasion extraterrestre effrayait les politiciens déjà hantés par la puissance nucléaire de l'Union Soviétique. Si la possibilité de l' existence d'une vie extraterrestre hostile dans l'univers semblait être très faible, celle qu'une telle vie trouve la Terre dans l'immensité spatiale semblait minuscule. Mais l'Amérique pouvait-elle prendre le risque de la négliger ?\n"
@@ -6306,43 +6212,35 @@ msgstr "Finalement : L'attaque de la base aliens..."
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr ""
-"Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
+msgstr "Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr ""
-"La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au coeur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
+msgstr "La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au coeur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr ""
-"Pour la plupart des gens, la vie semble avoir repris son cours."
+msgstr "Pour la plupart des gens, la vie semble avoir repris son cours."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr ""
-"La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNIs sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
+msgstr "La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNIs sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr ""
-"Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaquent s'enchaînent rapidement, plus importantes et mortelles encore, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
+msgstr "Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaquent s'enchaînent rapidement, plus importantes et mortelles encore, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr ""
-"Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens au mieux de leur possibilité. Les succès sont peu nombreux."
+msgstr "Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens au mieux de leur possibilité. Les succès sont peu nombreux."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr ""
-"Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
+msgstr "Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr ""
-"Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
+msgstr "Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
 
 #: ../base/ufos/seq_intro.ufo:73
 #: ../base/ufos/seq_intro.ufo:192
@@ -6351,53 +6249,43 @@ msgstr "Retour au contenu"
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr ""
-"POUR: Commandant de la Base, PHALANX, Commandement des Opérations Atlantique"
+msgstr "POUR: Commandant de la Base, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr ""
-"DE: Secrétaire Général Mahouf Serra, Nations Unies, New York"
+msgstr "DE: Secrétaire Général Mahouf Serra, Nations Unies, New York"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr ""
-"DATE: 21 Mars 2084"
+msgstr "DATE: 21 Mars 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr ""
-"SUJET: Bonne Chance"
+msgstr "SUJET: Bonne Chance"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr ""
-"Bienvenu dans vos nouvelles fonctions, Commandant. Vous avez dès maintenant les pleins pouvoirs sur l'Unité de Réaction Extraterrestre PHALANX. Votre mission est de protéger les citoyens de la Terre et de stopper la menace alienne à tout prix. La façon dont vous procéderez nous importe peu, notre seule exigence est votre réussite."
+msgstr "Bienvenu dans vos nouvelles fonctions, Commandant. Vous avez dès maintenant les pleins pouvoirs sur l'Unité de Réaction Extraterrestre PHALANX. Votre mission est de protéger les citoyens de la Terre et de stopper la menace alienne à tout prix. La façon dont vous procéderez nous importe peu, notre seule exigence est votre réussite."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr ""
-"Votre première mission est d'aménager votre quartier général. Les Nations Unies ont accès à n'importe quelle base à travers le monde, et vous pouvez par conséquent envisager la totalité du globe pour l'installation de votre centre d'opération. Choisissez cet endroit judicieusement, car il aura beaucoup d'influence sur les chances de succès du projet PHALANX."
+msgstr "Votre première mission est d'aménager votre quartier général. Les Nations Unies ont accès à n'importe quelle base à travers le monde, et vous pouvez par conséquent envisager la totalité du globe pour l'installation de votre centre d'opération. Choisissez cet endroit judicieusement, car il aura beaucoup d'influence sur les chances de succès du projet PHALANX."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr ""
-"Une analyse récente des attaques sur Mumbai et Bonn révèle que les observations d'OVNI et d'activités aliennes semblent se concentrer dans les régions les plus densément peuplées du monde. Ceci inclus les zones côtières d'Amérique du nord et du sud, l'Europe, l'Asie de l'est, l'Afrique du sud et l'Afrique méditerranéenne, ainsi que l'Australie. Vous devriez envisager d'inclure ces terres dans votre rayon d'action."
+msgstr "Une analyse récente des attaques sur Mumbai et Bonn révèle que les observations d'OVNI et d'activités aliennes semblent se concentrer dans les régions les plus densément peuplées du monde. Ceci inclus les zones côtières d'Amérique du nord et du sud, l'Europe, l'Asie de l'est, l'Afrique du sud et l'Afrique méditerranéenne, ainsi que l'Australie. Vous devriez envisager d'inclure ces terres dans votre rayon d'action."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr ""
-"Une fois votre première base établie, vous devez préparer vos soldats à l'action. Les recrues que nous avons assignées à PHALANX doivent être affectées à un appareil de transport, puis équipées pour le combat."
+msgstr "Une fois votre première base établie, vous devez préparer vos soldats à l'action. Les recrues que nous avons assignées à PHALANX doivent être affectées à un appareil de transport, puis équipées pour le combat."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr ""
-"Prenez soin d'elles, Commandant. Nous comptons tous sur vous, et prions pour vous."
+msgstr "Prenez soin d'elles, Commandant. Nous comptons tous sur vous, et prions pour vous."
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr ""
-"Ce sera tout. Bonne chance, et bonne chasse."
+msgstr "Ce sera tout. Bonne chance, et bonne chasse."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -6526,14 +6414,6 @@ msgstr "Taman"
 #: ../base/ufos/team_aliens.ufo:241
 msgid "Shevaar"
 msgstr "Shevaar"
-
-#: ../base/ufos/team_aliens.ufo:248
-msgid "Hovernet"
-msgstr "Hovernet"
-
-#: ../base/ufos/team_aliens.ufo:255
-msgid "Cyborg Ortnok"
-msgstr "Cyborg Ortnok"
 
 #: ../base/ufos/team_humans.ufo:1529
 msgid "Phoenix"
@@ -8021,20 +7901,20 @@ msgstr "À FAIRE\n"
 msgid "Unknown - need to research this"
 msgstr "Inconnu - Nécessite une recherche"
 
-#: client/cl_menu.c:434
+#: client/cl_menu.c:436
 msgid "Set playersoldiers lower than teamsoldiers"
 msgstr "Fixer soldats par jouer inéfrieur aux soldat par équipe"
 
-#: client/cl_menu.c:434
+#: client/cl_menu.c:436
 msgid "Settings doesn't make sense"
 msgstr "Les réglages ne sont pas cohérents"
 
-#: client/cl_menu.c:1516
+#: client/cl_menu.c:1518
 #, c-format
 msgid "Key: %s"
 msgstr "Touche: %s"
 
-#: client/cl_menu.c:2735
+#: client/cl_menu.c:2799
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Cacher le HUD (Appuyer sur ESC pour réactiver le HUD)"
 
@@ -8629,15 +8509,15 @@ msgstr "Carburant:\t%i\n"
 msgid "Shield:\t%s\n"
 msgstr "Bouclier:\t%s\n"
 
-#: client/cl_ufopedia.c:393
+#: client/cl_ufopedia.c:375
 msgid "No pre-research description available."
 msgstr "Pas de description disponible."
 
-#: client/cl_ufopedia.c:507
+#: client/cl_ufopedia.c:533
 msgid "Ufopedia Content"
 msgstr "Contenu Ufopedia"
 
-#: client/cl_ufopedia.c:562
+#: client/cl_ufopedia.c:588
 #, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Index Ufopédia: %s"
@@ -8764,6 +8644,40 @@ msgstr "1 jour"
 msgid "5 days"
 msgstr "5 jours"
 
+#~ msgid "In this base:"
+#~ msgstr "Dans cette base:"
+#~ msgid "Live Specimen - Stinger"
+#~ msgstr "Spécimen Vivant - Stinger"
+
+#, fuzzy
+#~ msgid "hovernet_notes_txt"
+#~ msgstr "<TODO>"
+#~ msgid "hovernet_notes_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Alien Autopsy - Stinger"
+#~ msgstr "Autopsie Alienne - Stinger"
+
+#, fuzzy
+#~ msgid "hovernet_autopsy_txt"
+#~ msgstr ""
+#~ "Le démêlement du réseau de fibres molles, qui forme au moins 90% du "
+#~ "hovernet, révèle un disque solide de fabrication inconnue. Les points de "
+#~ "support des armements sont clairement visibles, et bien que les "
+#~ "inscriptions situées à côté reste encore indéchiffrables, elles devraient "
+#~ "être notre première succès dans la compréhension du langage Alien. Aucun "
+#~ "joint n'est visible entre le disque et les douzaines de fibres qui "
+#~ "sortent de lui, même sous un microscope électronique. Il est possible que "
+#~ "les fibres soient expulsées du disque lui-même, qui doit fournir et "
+#~ "distribuer la plus importante part d'énergie et de force de propulsion du "
+#~ "hovernet. L'arrangement lâche des fibres suggère qu'un tir au but avec un "
+#~ "projectile ou une arme à énergie dirigée est peu efficace, et les armes "
+#~ "explosives ou incendiaires doivent causer plus de dégâts."
+#~ msgid "hovernet_autopsy_pre_txt"
+#~ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+#~ msgid "Hovernet"
+#~ msgstr "Hovernet"
+#~ msgid "Cyborg Ortnok"
+#~ msgstr "Cyborg Ortnok"
 #~ msgid "yes"
 #~ msgstr "oui"
 #~ msgid "needs autopsy"
