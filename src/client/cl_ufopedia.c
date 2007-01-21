@@ -312,6 +312,11 @@ void UP_AircraftDescription (technology_t* t)
 	UP_DisplayTechTree(t);
 }
 
+/**
+ * @brief Display only the TEXT_UFOPEDIA part - don't reset any other menuText pointers here
+ * @param[in] tech The technology_t pointer to print the ufopedia article for
+ * @sa UP_DrawEntry
+ */
 extern void UP_Article (technology_t* tech)
 {
 	int i, day, month, year;
@@ -393,11 +398,6 @@ void UP_DrawEntry (technology_t* tech)
 {
 	if (!tech)
 		return;
-
-#if 0
- * int preResearchedDateDay, preResearchedDateMonth, preResearchedDateYear;
- * int researchedDateDay, researchedDateMonth, researchedDateYear;
-#endif
 
 	menuText[TEXT_LIST] = menuText[TEXT_STANDARD] = menuText[TEXT_UFOPEDIA] = NULL;
 
