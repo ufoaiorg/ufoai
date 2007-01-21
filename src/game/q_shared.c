@@ -1561,7 +1561,6 @@ void Swap_Init(void)
 /**
  * @brief does a varargs printf into a temp buffer, so I don't need to have
  * varargs versions of all text functions.
- * FIXME: make this buffer size safe someday
  */
 char *va(char *format, ...)
 {

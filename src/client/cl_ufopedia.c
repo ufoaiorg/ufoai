@@ -312,49 +312,24 @@ void UP_AircraftDescription (technology_t* t)
 	UP_DisplayTechTree(t);
 }
 
-/**
- * @brief Displays the ufopedia information about a technology
- * @param tech technology_t pointer for the tech to display the information about
- * @sa UP_AircraftDescription
- * @sa UP_BuildingDescription
- * @sa UP_TechDescription
- * @sa UP_ArmorDescription
- * @sa CL_ItemDescription
- */
-void UP_DrawEntry (technology_t* tech)
+extern void UP_Article (technology_t* tech)
 {
-	int i;
-	if (!tech)
-		return;
+	int i, day, month, year;
+	static char buf[8192];
 
-	menuText[TEXT_LIST] = menuText[TEXT_STANDARD] = menuText[TEXT_UFOPEDIA] = NULL;
-
-	Cvar_Set("mn_uppreavailable", "0");
-	Cvar_Set("mn_upmodel_top", "");
-	Cvar_Set("mn_upmodel_bottom", "");
-	Cvar_Set("mn_upimage_top", "base/empty");
-	Cvar_Set("mn_upimage_bottom", "base/empty");
-	if (*tech->mdl_top)
-		Cvar_Set("mn_upmodel_top", tech->mdl_top);
-	if (*tech->mdl_bottom )
-		Cvar_Set("mn_upmodel_bottom", tech->mdl_bottom);
-	if (!*tech->mdl_top && *tech->image_top)
-		Cvar_Set("mn_upimage_top", tech->image_top);
-	if (!*tech->mdl_bottom && *tech->mdl_bottom)
-		Cvar_Set("mn_upimage_bottom", tech->image_bottom);
-
-	currentChapter = tech->up_chapter;
-
-	UP_ChangeDisplay(UFOPEDIA_ARTICLE);
+	assert(tech);
 
 	if (RS_IsResearched_ptr(tech)) {
+		day = tech->researchedDateDay;
+		month = tech->researchedDateMonth;
+		year = tech->researchedDateYear;
 		Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
 		/* If researched -> display research text */
 		menuText[TEXT_UFOPEDIA] = _(tech->description);
 		if (*tech->pre_description) {
 			if (mn_uppretext->value)
 				menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
-			Cvar_Set("mn_uppreavailable", "1");
+			Cvar_SetValue("mn_uppreavailable", 1);
 		}
 
 		if (upCurrent) {
@@ -385,14 +360,66 @@ void UP_DrawEntry (technology_t* tech)
 			}
 		}
 	} else if (RS_Collected_(tech)) {
+		day = tech->preResearchedDateDay;
+		month = tech->preResearchedDateMonth;
+		year = tech->preResearchedDateYear;
 		Cvar_Set("mn_uptitle", _(tech->name));
 		/* Not researched but some items collected -> display pre-research text if available. */
 		if (*tech->pre_description)
 			menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
 		else
 			menuText[TEXT_UFOPEDIA] = _("No pre-research description available.");
-	} else
+	} else {
 		Cvar_Set("mn_uptitle", _(tech->name));
+		menuText[TEXT_UFOPEDIA] = NULL;
+	}
+
+	/* and now set the dates */
+	/* FIXME: will this produce memory bugs if the description doesn't have  day month year placeholders? */
+/*	Com_sprintf(buf, sizeof(buf), menuText[TEXT_UFOPEDIA], day, month, year);
+	menuText[TEXT_UFOPEDIA] = buf;*/
+}
+
+/**
+ * @brief Displays the ufopedia information about a technology
+ * @param tech technology_t pointer for the tech to display the information about
+ * @sa UP_AircraftDescription
+ * @sa UP_BuildingDescription
+ * @sa UP_TechDescription
+ * @sa UP_ArmorDescription
+ * @sa CL_ItemDescription
+ */
+void UP_DrawEntry (technology_t* tech)
+{
+	if (!tech)
+		return;
+
+#if 0
+ * int preResearchedDateDay, preResearchedDateMonth, preResearchedDateYear;
+ * int researchedDateDay, researchedDateMonth, researchedDateYear;
+#endif
+
+	menuText[TEXT_LIST] = menuText[TEXT_STANDARD] = menuText[TEXT_UFOPEDIA] = NULL;
+
+	Cvar_SetValue("mn_uppreavailable", 0);
+	Cvar_Set("mn_upmodel_top", "");
+	Cvar_Set("mn_upmodel_bottom", "");
+	Cvar_Set("mn_upimage_top", "base/empty");
+	Cvar_Set("mn_upimage_bottom", "base/empty");
+	if (*tech->mdl_top)
+		Cvar_Set("mn_upmodel_top", tech->mdl_top);
+	if (*tech->mdl_bottom )
+		Cvar_Set("mn_upmodel_bottom", tech->mdl_bottom);
+	if (!*tech->mdl_top && *tech->image_top)
+		Cvar_Set("mn_upimage_top", tech->image_top);
+	if (!*tech->mdl_bottom && *tech->mdl_bottom)
+		Cvar_Set("mn_upimage_bottom", tech->image_bottom);
+
+	currentChapter = tech->up_chapter;
+
+	UP_ChangeDisplay(UFOPEDIA_ARTICLE);
+
+	UP_Article(tech);
 }
 
 /**

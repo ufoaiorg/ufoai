@@ -1,3 +1,4 @@
+
 /**
  * @file cl_aliencont.c
  * @brief Deals with the alien containment stuff
@@ -40,6 +41,7 @@ static aliensCont_t* aliencontCurrent;
 /**
  * @brief Prepares Alien Containment - names, states, and zeroed amount.
  * @sa B_BuildBase
+ * @sa AL_AddAliens
  */
 void AL_FillInContainment(void)
 {
@@ -58,14 +60,24 @@ void AL_FillInContainment(void)
 	containment = base->alienscont;
 
 	for (i = 0; i < numTeamDesc; i++) {
+		if (!teamDesc[i].alien)
+			continue;
 		containment[i].idx = i;
 		Q_strncpyz(containment[i].alientype, AL_AlienTypeToName(i), MAX_VAR);
 		containment[i].amount_alive = 0;
 		containment[i].amount_dead = 0;
+		/* for sanity checking */
+		containment[i].techIdx = -1;
 		for (j = 0; j < numTeamDesc; j++) {
-			if ((Q_strncmp(containment[i].alientype, teamDesc[j].name, MAX_VAR)) == 0)
+			if (!teamDesc[j].alien)
+				continue;
+			if ((Q_strncmp(containment[i].alientype, teamDesc[j].name, MAX_VAR)) == 0) {
 				containment[i].techIdx = RS_GetTechIdxByName(teamDesc[j].tech);
+				break;
+			}
 		}
+		if (containment[i].techIdx == -1)
+			Sys_Error("Could not find a valid tech for '%s'\n", containment[i].alientype);
 		Com_DPrintf("AL_FillInContainment()... type: %s techIdx: %i\n", containment[i].alientype, containment[i].techIdx);
 	}
 }
@@ -77,19 +89,11 @@ void AL_FillInContainment(void)
  * @note Those names do not need to be translateable - used only
  * for string compares.
  */
-char *AL_AlienTypeToName(alienType_t type)
+char *AL_AlienTypeToName(int teamDescIdx)
 {
-	switch (type) {
-	case AL_ORTNOK:
-		return "Ortnok";
-	case AL_TAMAN:
-		return "Taman";
-	case AL_SHEVAAR:
-		return "Shevaar";
-	case AL_UNKNOWN:
-	default:
-		return "Unknown";
-    }
+	if (teamDescIdx < 0 || teamDescIdx >= numTeamDesc)
+		return "";
+	return teamDesc[teamDescIdx].name;
 }
 
 /**
@@ -138,8 +142,8 @@ void CL_CollectingAliens(void)
 			}
 
 			if (le->HP <= 0 || (le->state & STATE_STUN)) {
-
 				for (j = 0; j < aircraft->alientypes; j++) {
+					Com_Printf("searching for '%s'\n", cargo[j].alientype);
 					/* Search alien type and increase amount */
 					if (Q_strncmp(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR) == 0) {
 						if (le->HP <= 0) {
@@ -184,6 +188,7 @@ void CL_CollectingAliens(void)
 /**
  * @brief Puts alien cargo into Alien Containment.
  * @sa CL_DropshipReturned
+ * @sa AL_FillInContainment
  */
 void AL_AddAliens(void)
 {
@@ -191,6 +196,9 @@ void AL_AddAliens(void)
 	base_t *tobase = NULL;
 	aliensTmp_t *cargo = NULL;
 	aircraft_t *aircraft = NULL;
+	qboolean messageAlreadySet = qfalse;
+	qboolean alienBreathing = qfalse;
+	technology_t *tech;
 
 	if (baseCurrent) {
 		tobase = baseCurrent;
@@ -215,29 +223,53 @@ void AL_AddAliens(void)
 
 	cargo = aircraft->aliencargo;
 
+	alienBreathing = RS_IsResearched_idx(RS_GetTechIdxByName("rs_alien_breathing"));
+
 	for (i = 0; i < aircraft->alientypes; i++) {
 		for (j = 0; j < numTeamDesc; j++) {
+			if (!teamDesc[j].alien)
+				continue;
 			if (Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0) {
 				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
 				if (cargo[i].amount_alive <= 0)
 					continue;
-				if (!RS_IsResearched_idx(RS_GetTechIdxByName("rs_alien_breathing"))) {
+				if (!alienBreathing) {
 					/* we cannot store alive aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
-					MN_AddNewMessage(_("Notice"), _("You cannot hold alive aliens yet. Aliens have been killed."), qfalse, MSG_STANDARD, NULL);
+					/* only once */
+					if (!messageAlreadySet) {
+						MN_AddNewMessage(_("Notice"), _("You cannot hold alive aliens yet. Aliens died."), qfalse, MSG_STANDARD, NULL);
+						messageAlreadySet = qtrue;
+					}
 				} else {
 					tobase->alienscont[j].amount_alive += cargo[i].amount_alive;
+					/* only once */
+					if (!messageAlreadySet) {
+						MN_AddNewMessage(_("Notice"), _("You've captured new aliens."), qfalse, MSG_STANDARD, NULL);
+						messageAlreadySet = qtrue;
+					}
 				}
 			}
 		}
 	}
 
-	/* print all of them */
 	for (i = 0; i < numTeamDesc; i++ ) {
+		if (!teamDesc[i].alien)
+			continue;
+#ifdef DEBUG
+		if (tobase->alienscont[i].techIdx == -1)
+			Sys_Error("AL_AddAliens: Failed to initialize the tech for '%s'\n", tobase->alienscont[i].alientype);
+#endif
+		tech = RS_GetTechByIDX(tobase->alienscont[i].techIdx);
+		/* we need this to let RS_Collected_ return true */
+		tech->statusCollected = tobase->alienscont[i].amount_alive + tobase->alienscont[i].amount_dead;
+#ifdef DEBUG
+		/* print all of them */
 		if (tobase->alienscont[i].amount_alive > 0)
 			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_alive);
 		if (tobase->alienscont[i].amount_dead > 0)
 			Com_DPrintf("AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_dead);
+#endif
 	}
 }
 
@@ -276,6 +308,8 @@ void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action)
 			   in Alien Containment; then remove (amount) */
 			/* FIXME: do not let to remove to negative value */
 			for (j = 0; j < numTeamDesc; j++) {
+				if (!teamDesc[j].alien)
+					continue;
 				if (maxamount < containment[j].amount_alive) {
 					maxamount = containment[j].amount_alive;
 					maxidx = j;
@@ -287,6 +321,8 @@ void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action)
 		}
 
 		for (j = 0; j < numTeamDesc; j++) {
+			if (!teamDesc[j].alien)
+				continue;
 			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
 				containment[j].amount_alive -= amount;
 				return;
@@ -310,6 +346,8 @@ int AL_GetAlienIdx(char *id)
 	int i;
 
 	for (i = 0; i < numTeamDesc; i++) {
+		if (!teamDesc[i].alien)
+			continue;
 		if (!Q_strncmp(id, AL_AlienTypeToName(i), MAX_VAR))
 			return i;
 	}
@@ -376,6 +414,8 @@ int AL_CountAll(void)
 		if (!base->hasAlienCont)
 			continue;
 		for (j = 0; j < numTeamDesc; j++) {
+			if (!teamDesc[j].alien)
+				continue;
 			if (base->alienscont[j].alientype)
 				amount += base->alienscont[j].amount_alive;
 		}
@@ -404,6 +444,8 @@ int AL_CountInBase(void)
 	if (!base->hasAlienCont)
 		return 0;
 	for (j = 0; j < numTeamDesc; j++) {
+		if (!teamDesc[j].alien)
+			continue;
 		if (base->alienscont[j].alientype)
 			amount += base->alienscont[j].amount_alive;
 	}
@@ -414,11 +456,11 @@ int AL_CountInBase(void)
 /**
  * @brief Counts killed aliens of given type in all bases.
  * @param[in] alientype
- * @param[in] state: 0 - killed, 1 - alive
+ * @param[in] alive boolean whether the alien is alive or already dead
  * @return amount of killed aliens of given type
  * @sa AC_SelectAlien_f
  */
-static int AL_CountForMenu(int alienidx, int state)
+static int AL_CountForMenu(int alienidx, qboolean alive)
 {
 	int i, j;
 	int amount = 0;
@@ -430,9 +472,11 @@ static int AL_CountForMenu(int alienidx, int state)
 		if (!base->hasAlienCont)
 			continue;
 		for (j = 0; j < numTeamDesc; j++) {
+			if (!teamDesc[j].alien)
+				continue;
 			if ((base->alienscont[j].alientype) &&
-			(Q_strncmp(base->alienscont[j].alientype, AL_AlienTypeToName(alienidx), MAX_VAR)) == 0) {
-				if (state == 0)
+				(Q_strncmp(base->alienscont[j].alientype, AL_AlienTypeToName(alienidx), MAX_VAR)) == 0) {
+				if (alive == qfalse)
 					amount += base->alienscont[j].amount_dead;
 				else
 					amount += base->alienscont[j].amount_alive;
@@ -461,10 +505,10 @@ static void AC_SelectAlien_f (void)
 
 	Cvar_Set("mn_al_alienmodel", tech->mdl_top);
 	Cvar_Set("mn_al_alientype", _(aliencontCurrent->alientype));
-	Cvar_SetValue("mn_al_killed", AL_CountForMenu(aliencontCurrent->idx, 0));
-	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->idx, 1));
+	Cvar_SetValue("mn_al_killed", AL_CountForMenu(aliencontCurrent->idx, qfalse));
+	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->idx, qtrue));
 
-	menuText[TEXT_UFOPEDIA] = _(tech->description);
+	UP_Article(tech);
 }
 
 /**
@@ -492,6 +536,8 @@ static void AC_Init (void)
 	if (baseCurrent->hasAlienCont) {
 		containment = baseCurrent->alienscont;
 		for (i = 0; i < numTeamDesc; i++) {
+			if (!teamDesc[i].alien)
+				continue;
 			if (containment[i].alientype) {
 				tech = RS_GetTechByIDX(containment[i].techIdx);
 				if (tech == NULL) {
@@ -505,7 +551,7 @@ static void AC_Init (void)
 				}
 				if ((containment[i].amount_alive > 0) || (containment[i].amount_dead > 0)) {
 					Com_sprintf(tmp, sizeof(tmp), "%s\t%s\t%i\n",
-						containment[i].alientype,
+						_(containment[i].alientype),
 						(RS_IsResearched_ptr(tech) ? _("Yes") : _("Needs autopsy!")),
 						containment[i].amount_alive);
 					Q_strcat(aliencontText, tmp, sizeof(aliencontText));
@@ -528,7 +574,8 @@ static void AC_Init (void)
  */
 static void AC_AlienListClick_f (void)
 {
-	int num;
+	int num, i, step;
+	aliensCont_t *containment = NULL;
 
 	if (Cmd_Argc() < 2 || !baseCurrent) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -544,6 +591,23 @@ static void AC_AlienListClick_f (void)
 		Com_DPrintf("AC_AlienListClick_f: max exceeded %i/%i\n", num, numAliensOnList);
 		return;
 	}
+
+	if (baseCurrent->hasAlienCont) {
+		containment = baseCurrent->alienscont;
+		for (i = 0, step = 0; i < numTeamDesc; i++) {
+			if (!teamDesc[i].alien)
+				num++;
+
+			if (!containment[i].amount_alive && !containment[i].amount_dead)
+				step++;
+
+			if (step >= num) {
+				num += step;
+				break;
+			}
+		}
+	} else
+		return;
 
 	aliencontCurrent = &baseCurrent->alienscont[num];
 	AC_SelectAlien_f();
