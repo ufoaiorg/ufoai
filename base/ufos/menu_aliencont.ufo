@@ -184,7 +184,6 @@ menu aliencont
 		num 2
 		height	"25"
 //		bgcolor "1 1 1 0.5"
-		mousefx true
 		wheel
 	}
 
@@ -217,35 +216,37 @@ menu aliencont
 		md2	"*cvar mn_al_alienmodel"
 		angles	"0 0 120"
 		color	"0.5 0.5 0.5 1"
-		origin	"805 340 0"
+		origin	"805 380 0"
+		pos	"685 260"
+//		bgcolor	"1 1 1 0.5"
 		size	"240 240"
 	}
 
 	string txt_alc_killed
 	{
 		string "_Killed:"
-		pos "645 500"
+		pos "645 510"
 		color "0 .78 0 1"
 	}
 
 	string txt_alc_killed_v
 	{
 		string "*cvar mn_al_killed"
-		pos "880 500"
+		pos "880 510"
 		color "0 .78 0 1"
 	}
 
 	string txt_alc_capturedall
 	{
 		string "_Captured in all bases:"
-		pos "645 530"
+		pos "645 540"
 		color "0 .78 0 1"
 	}
 
 	string txt_alc_capturedall_v
 	{
 		string "*cvar mn_al_alive"
-		pos "880 530"
+		pos "880 540"
 		color "0 .78 0 1"
 	}
 
