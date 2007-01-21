@@ -36,36 +36,36 @@ menu_model alien_ortnok_light
 	anim	stand_still
 }
 
-menu_model alien_antarean_head
+menu_model alien_taman_head
 {
 	model	"models/aliens/blue/head01.md2"
 }
-menu_model alien_antarean
+menu_model alien_taman
 {
 	model	"models/aliens/blue/body01.md2"
-	need	"alien_antarean_head"
+	need	"alien_taman_head"
 	anim	stand_still
 }
 
-menu_model alien_antarean_light_head
+menu_model alien_taman_light_head
 {
 	model	"models/aliens/bluelight/head01.md2"
 }
-menu_model alien_antarean_light
+menu_model alien_taman_light
 {
 	model	"models/aliens/bluelight/body01.md2"
-	need	"alien_antarean_light_head"
+	need	"alien_taman_light_head"
 	anim	stand_still
 }
 
-menu_model alien_antarean_medium_head
+menu_model alien_taman_medium_head
 {
 	model	"models/aliens/bluemedium/head01.md2"
 }
-menu_model alien_antarean_medium
+menu_model alien_taman_medium
 {
 	model	"models/aliens/bluemedium/body01.md2"
-	need	"alien_antarean_medium_head"
+	need	"alien_taman_medium_head"
 	anim	stand_still
 }
 
@@ -80,16 +80,16 @@ menu_model alien_shevaar
 	anim	stand_still
 }
 
-menu_model alien_hovernet_head
-{
-	model	"models/aliens/hovernet/head01.md2"
-}
-menu_model alien_hovernet
-{
-	model	"models/aliens/hovernet/body01.md2"
-	need	"alien_hovernet_head"
-	anim	stand_still
-}
+//menu_model alien_hovernet_head
+//{
+//	model	"models/aliens/hovernet/head01.md2"
+//}
+//menu_model alien_hovernet
+//{
+//	model	"models/aliens/hovernet/body01.md2"
+//	need	"alien_hovernet_head"
+//	anim	stand_still
+//}
 
 menu_model alien_cyborg_ortnok_head
 {
