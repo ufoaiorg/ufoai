@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-01-19 12:00+0100\n"
-"PO-Revision-Date: 2007-01-21 14:17+0100\n"
+"PO-Revision-Date: 2007-01-21 19:23+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -228,7 +228,7 @@ msgstr "Firebird-Klasse Landungsschiff"
 
 #: ../base/ufos/basemanagement.ufo:342
 msgid "Firebird D"
-msgstr ""
+msgstr "Firebird D"
 
 #: ../base/ufos/basemanagement.ufo:360
 msgid "Stiletto-class Interceptor"
@@ -236,7 +236,7 @@ msgstr "Stiletto-Klasse Abfangjäger"
 
 #: ../base/ufos/basemanagement.ufo:361
 msgid "Stiletto I"
-msgstr ""
+msgstr "Stiletto I"
 
 #: ../base/ufos/basemanagement.ufo:382
 msgid "Saracen-class Interceptor"
@@ -244,7 +244,7 @@ msgstr "Sarazen-Klasse Abfangjäger"
 
 #: ../base/ufos/basemanagement.ufo:383
 msgid "Saracen I"
-msgstr ""
+msgstr "Saracen I"
 
 #: ../base/ufos/basemanagement.ufo:404
 #: ../base/ufos/research.ufo:1990
@@ -533,7 +533,7 @@ msgstr "Alien Spezies"
 
 #: ../base/ufos/menu_aliencont.ufo:139
 msgid "Examinated"
-msgstr ""
+msgstr "Geprüft"
 
 #: ../base/ufos/menu_aliencont.ufo:144
 msgid "Amount"
@@ -760,7 +760,7 @@ msgstr "Zur nächsten Basis"
 
 #: ../base/ufos/menu_bases.ufo:484
 msgid "Destroy building"
-msgstr "Gebäude abreissen"
+msgstr "Gebäude abreißen"
 
 #: ../base/ufos/menu_bases.ufo:493
 msgid "Are you sure, that you want to destroy this building?"
@@ -2551,7 +2551,7 @@ msgstr "Autopsien und Überwachungen"
 
 #: ../base/ufos/research.ufo:92
 msgid "The Alien Threat"
-msgstr ""
+msgstr "Die Alienbedrohung"
 
 #: ../base/ufos/research.ufo:102
 msgid "Continuous Wave Laser Operation"
@@ -7518,7 +7518,7 @@ msgstr "Keine Zielbasis ausgewählt"
 
 #: client/cl_basemanagement.c:2213
 msgid "Please select the target base from the list"
-msgstr ""
+msgstr "Bitte wähle die Zielbasis aus der Liste"
 
 #: client/cl_basemanagement.c:2218
 msgid "No aircraft selected"
@@ -7526,7 +7526,7 @@ msgstr "Keinen Flugzeug ausgewählt"
 
 #: client/cl_basemanagement.c:2218
 msgid "Please select the aircraft to use from the list"
-msgstr ""
+msgstr "Bitte wähle das gewünschte Flugzeug aus der Liste"
 
 #: client/cl_basemanagement.c:2334
 msgid "You can transfer equipment - this base has a storage building\n"
