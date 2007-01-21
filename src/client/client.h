@@ -877,6 +877,8 @@ typedef struct menuModel_s {
 	char id[MAX_VAR];
 	char need[MAX_VAR];
 	char anim[MAX_VAR];
+	char parent[MAX_VAR];
+	char tag[MAX_VAR];
 	int skin;
 	char model[MAX_QPATH];
 	animState_t animState;

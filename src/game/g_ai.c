@@ -646,7 +646,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 			ent->pnum = player->num;
 			gi.linkentity(ent);
 
-			/* skills; TODO: more power to Ortnoks, more mind to Antareans */
+			/* skills; TODO: more power to Ortnoks, more mind to Tamans */
 			Com_CharGenAbilitySkills(&ent->chr, team);
 			ent->chr.skills[ABILITY_MIND] += 100;
 			if (ent->chr.skills[ABILITY_MIND] >= MAX_SKILL)

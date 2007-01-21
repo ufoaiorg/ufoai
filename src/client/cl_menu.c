@@ -151,6 +151,8 @@ static value_t menuModelValues[] = {
 	{"scale", V_VECTOR, offsetof(menuModel_t, scale)},
 	{"angles", V_VECTOR, offsetof(menuModel_t, angles)},
 	{"color", V_COLOR, offsetof(menuModel_t, color)},
+	{"tag", V_STRING, offsetof(menuModel_t, tag)},
+	{"parent", V_STRING, offsetof(menuModel_t, parent)},
 
 	{NULL, V_NULL, 0},
 };
@@ -1614,7 +1616,8 @@ void MN_DrawMenus(void)
 	char *cur, *tab, *end;
 	int y, x;
 	message_t *message;
-	menuModel_t *menuModel = NULL;
+	menuModel_t *menuModel = NULL, *menuModelParent = NULL;
+	void *oldAnimState = NULL;
 	int width, height;
 
 	/* render every menu on top of a menu with a render node */
@@ -1960,12 +1963,16 @@ void MN_DrawMenus(void)
 
 				case MN_MODEL:
 					/* set model properties */
+					if (source && !*source)
+						break;
 					node->menuModel = MN_GetMenuModel(source);
 					if (!node->menuModel) {
 						menuModel = NULL;
 						mi.model = re.RegisterModel(source);
-						if (!mi.model)
+						if (!mi.model) {
+							Com_Printf("Could not find '%s'\n", source);
 							break;
+						}
 					} else
 						menuModel = node->menuModel;
 
@@ -2003,17 +2010,64 @@ void MN_DrawMenus(void)
 								mi.color = menuModel->color;
 							if (!mi.model) {
 								menuModel = menuModel->next;
+								/* list end */
 								if (!menuModel)
 									break;
 								continue;
 							}
 							mi.skin = menuModel->skin;
-							if (*menuModel->anim) {
-								as = &menuModel->animState;
-								anim = re.AnimGetName(as, mi.model);
-								if (anim && Q_strncmp(anim, ref, MAX_VAR))
-									re.AnimChange(as, mi.model, ref);
-								re.AnimRun(as, mi.model, cls.frametime * 1000);
+
+							if (!*menuModel->tag && !*menuModel->parent) {
+								if (node->data[1] && *(char *) node->data[1])
+									ref = MN_GetReferenceString(menu, node->data[1]);
+								else
+									ref = menuModel->anim;
+
+								if (*ref) {
+									as = &menuModel->animState;
+									anim = re.AnimGetName(as, mi.model);
+									/* initial animation or animation change */
+									if (!anim || (anim && Q_strncmp(anim, ref, MAX_VAR)))
+										re.AnimChange(as, mi.model, ref);
+									else
+										re.AnimRun(as, mi.model, cls.frametime * 1000);
+
+									mi.frame = as->frame;
+									mi.oldframe = as->oldframe;
+									mi.backlerp = as->backlerp;
+								}
+							} else {
+								/* place this menumodel part on an already existing menumodel tag */
+								menuModelParent = MN_GetMenuModel(menuModel->parent);
+								if (!menuModelParent) {
+									Com_Printf("Menumodel: Could not get the menuModel '%s'\n", menuModel->parent);
+									break;
+								}
+								pmi.model = re.RegisterModel(menuModelParent->model);
+								if (!pmi.model) {
+									Com_Printf("Menumodel: Could not get the model '%s'\n", menuModelParent->model);
+									break;
+								}
+
+								pmi.name = menuModelParent->model;
+								pmi.origin = menuModelParent->origin;
+								pmi.angles = menuModelParent->angles;
+								pmi.scale = menuModelParent->scale;
+								pmi.center = menuModelParent->center;
+
+								/* autoscale? */
+								if (!node->scale[0]) {
+									mi.scale = NULL;
+									mi.center = node->size;
+								}
+
+								as = &menuModelParent->animState;
+								pmi.frame = as->frame;
+								pmi.oldframe = as->oldframe;
+								pmi.backlerp = as->backlerp;
+
+								re.DrawModelDirect(&mi, &pmi, menuModel->tag);
+								break;
 							}
 							re.DrawModelDirect(&mi, NULL, NULL);
 						} else {
@@ -2026,14 +2080,22 @@ void MN_DrawMenus(void)
 							/* do animations */
 							if (node->data[1] && *(char *) node->data[1]) {
 								ref = MN_GetReferenceString(menu, node->data[1]);
+								/* needed if model changed - and that model doesn't have the old animstate */
 								if (!node->data[2] && Q_strncmp(oldSource, source, MAX_VAR)) {
 									Q_strncpyz(oldSource, source, MAX_VAR);
+									oldAnimState = node->data[4];
 									node->data[4] = NULL;
 								}
 								if (!node->data[4]) {
-									/* new anim state */
-									as = (animState_t *) curadata;
-									curadata += sizeof(animState_t);
+									/* model has changed but mem is already reserved in curadata */
+									if (!oldAnimState) {
+										/* new anim state */
+										as = (animState_t *) curadata;
+										curadata += sizeof(animState_t);
+									} else {
+										as = oldAnimState;
+										oldAnimState = NULL;
+									}
 									memset(as, 0, sizeof(animState_t));
 									re.AnimChange(as, mi.model, ref);
 									node->data[4] = as;
@@ -2059,8 +2121,10 @@ void MN_DrawMenus(void)
 
 								Q_strncpyz(parent, MN_GetReferenceString(menu, node->data[2]), MAX_VAR);
 								tag = parent;
+								/* tag "menuNodeName modelTag" */
 								while (*tag && *tag != ' ')
 									tag++;
+								/* split node name and tag */
 								*tag++ = 0;
 
 								for (search = menu->firstNode; search != node && search; search = search->next)

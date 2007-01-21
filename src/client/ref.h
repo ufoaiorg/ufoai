@@ -182,12 +182,12 @@ typedef struct {
 	vec3_t origin;
 	vec3_t color;
 	float intensity;
-    vec3_t direction;   /* used by MD3 */
+    vec3_t direction;   /**< used by MD3 */
 } dlight_t;
 
 typedef struct {
 	struct model_s *model;
-	char *name;
+	char *name;				/**< model path */
 
 
 	float *origin;
@@ -198,7 +198,7 @@ typedef struct {
 	int frame, oldframe;
 	float backlerp;
 
-	int skin;
+	int skin;				/**< skin number */
 	float *color;
 } modelInfo_t;
 
