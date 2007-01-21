@@ -57,7 +57,7 @@ void AL_FillInContainment(void)
 
 	containment = base->alienscont;
 
-	for (i = 0; i < AL_UNKNOWN; i++) {
+	for (i = 0; i < numTeamDesc; i++) {
 		containment[i].idx = i;
 		Q_strncpyz(containment[i].alientype, AL_AlienTypeToName(i), MAX_VAR);
 		containment[i].amount_alive = 0;
@@ -216,7 +216,7 @@ void AL_AddAliens(void)
 	cargo = aircraft->aliencargo;
 
 	for (i = 0; i < aircraft->alientypes; i++) {
-		for (j = 0; j < AL_UNKNOWN; j++) {
+		for (j = 0; j < numTeamDesc; j++) {
 			if (Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0) {
 				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
 				if (cargo[i].amount_alive <= 0)
@@ -233,7 +233,7 @@ void AL_AddAliens(void)
 	}
 
 	/* print all of them */
-	for (i = 0; i < AL_UNKNOWN; i++ ) {
+	for (i = 0; i < numTeamDesc; i++ ) {
 		if (tobase->alienscont[i].amount_alive > 0)
 			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_alive);
 		if (tobase->alienscont[i].amount_dead > 0)
@@ -275,7 +275,7 @@ void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action)
 			/* search for the type of alien, which has max amount
 			   in Alien Containment; then remove (amount) */
 			/* FIXME: do not let to remove to negative value */
-			for (j = 0; j < AL_UNKNOWN; j++) {
+			for (j = 0; j < numTeamDesc; j++) {
 				if (maxamount < containment[j].amount_alive) {
 					maxamount = containment[j].amount_alive;
 					maxidx = j;
@@ -286,7 +286,7 @@ void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action)
 			return;
 		}
 
-		for (j = 0; j < AL_UNKNOWN; j++) {
+		for (j = 0; j < numTeamDesc; j++) {
 			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
 				containment[j].amount_alive -= amount;
 				return;
@@ -309,7 +309,7 @@ int AL_GetAlienIdx(char *id)
 {
 	int i;
 
-	for (i = 0; i < AL_UNKNOWN; i++) {
+	for (i = 0; i < numTeamDesc; i++) {
 		if (!Q_strncmp(id, AL_AlienTypeToName(i), MAX_VAR))
 			return i;
 	}
@@ -375,7 +375,7 @@ int AL_CountAll(void)
 			continue;
 		if (!base->hasAlienCont)
 			continue;
-		for (j = 0; j < AL_UNKNOWN; j++) {
+		for (j = 0; j < numTeamDesc; j++) {
 			if (base->alienscont[j].alientype)
 				amount += base->alienscont[j].amount_alive;
 		}
@@ -403,7 +403,7 @@ int AL_CountInBase(void)
 	}
 	if (!base->hasAlienCont)
 		return 0;
-	for (j = 0; j < AL_UNKNOWN; j++) {
+	for (j = 0; j < numTeamDesc; j++) {
 		if (base->alienscont[j].alientype)
 			amount += base->alienscont[j].amount_alive;
 	}
@@ -429,7 +429,7 @@ static int AL_CountForMenu(int alienidx, int state)
 			continue;
 		if (!base->hasAlienCont)
 			continue;
-		for (j = 0; j < AL_UNKNOWN; j++) {
+		for (j = 0; j < numTeamDesc; j++) {
 			if ((base->alienscont[j].alientype) && 
 			(Q_strncmp(base->alienscont[j].alientype, AL_AlienTypeToName(alienidx), MAX_VAR)) == 0) {
 				if (state == 0)
@@ -487,7 +487,7 @@ static void AC_Init (void)
 
 	if (baseCurrent->hasAlienCont) {
 		containment = baseCurrent->alienscont;
-		for (i = 0; i < AL_UNKNOWN; i++) {
+		for (i = 0; i < numTeamDesc; i++) {
 			if (containment[i].alientype) {
 				tech = RS_GetTechByIDX(containment[i].techIdx);
 				if (tech == NULL) {
