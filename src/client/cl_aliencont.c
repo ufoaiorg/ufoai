@@ -208,10 +208,10 @@ void AL_AddAliens(void)
 		return;
 	}
 
-	if (!tobase->hasAlienCont)
-		/* do not storage aliens if Alien Containment not ready */
-		/* TODO: popup here */
+	if (!tobase->hasAlienCont) {
+		MN_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."), qfalse, MSG_STANDARD, NULL);
 		return;
+	}
 
 	if (tobase->aircraftCurrent >= 0) {
 		aircraft = &tobase->aircraft[tobase->aircraftCurrent];
