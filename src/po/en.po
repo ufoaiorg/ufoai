@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-01-19 12:00+0100\n"
-"PO-Revision-Date: 2007-01-19 12:00+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"POT-Creation-Date: 2007-01-21 18:26+0100\n"
+"PO-Revision-Date: 2007-01-21 19:26+0100\n"
+"Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -519,56 +519,42 @@ msgstr "Check Ufopedia Entry"
 msgid "Alive Aliens in all bases:"
 msgstr "Alive Aliens in all bases:"
 
-#: ../base/ufos/menu_aliencont.ufo:129
+#: ../base/ufos/menu_aliencont.ufo:125
+msgid "Alive Aliens in this base:"
+msgstr "Alive Aliens in this base:"
+
+#: ../base/ufos/menu_aliencont.ufo:140
 msgid "Aliens available to process:"
 msgstr "Aliens available to process:"
 
-#: ../base/ufos/menu_aliencont.ufo:134
+#: ../base/ufos/menu_aliencont.ufo:147
 msgid "Alien type"
 msgstr "Alien type"
 
-#: ../base/ufos/menu_aliencont.ufo:139
+#: ../base/ufos/menu_aliencont.ufo:154
 msgid "Examinated"
 msgstr "Examinated"
 
-#: ../base/ufos/menu_aliencont.ufo:144
+#: ../base/ufos/menu_aliencont.ufo:161
 msgid "Amount"
 msgstr "Amount"
 
-#: ../base/ufos/menu_aliencont.ufo:150
-#: ../base/ufos/team_aliens.ufo:227
-msgid "Ortnok"
-msgstr "Ortnok"
-
-#: ../base/ufos/menu_aliencont.ufo:155
-msgid "yes"
-msgstr "yes"
-
-#: ../base/ufos/menu_aliencont.ufo:166
-#: ../base/ufos/team_aliens.ufo:239
-msgid "Taman"
-msgstr "Taman"
-
-#: ../base/ufos/menu_aliencont.ufo:171
-msgid "needs autopsy"
-msgstr "needs autopsy"
-
-#: ../base/ufos/menu_aliencont.ufo:187
+#: ../base/ufos/menu_aliencont.ufo:196
 #: ../base/ufos/menu_research.ufo:825
 msgid "Base Info"
 msgstr "Base Info"
 
-#: ../base/ufos/menu_aliencont.ufo:195
+#: ../base/ufos/menu_aliencont.ufo:202
 msgid "Alien Type:"
 msgstr "Alien Type:"
 
-#: ../base/ufos/menu_aliencont.ufo:224
-msgid "In this base:"
-msgstr "In this base:"
+#: ../base/ufos/menu_aliencont.ufo:229
+msgid "Killed:"
+msgstr "Killed:"
 
 #: ../base/ufos/menu_aliencont.ufo:243
-msgid "In all bases:"
-msgstr "In all bases:"
+msgid "Captured in all bases:"
+msgstr "Captured in all bases:"
 
 #: ../base/ufos/menu_althud.ufo:45
 #: ../base/ufos/menu_inventory.ufo:172
@@ -692,7 +678,7 @@ msgstr "Buy a new aircraft"
 #: ../base/ufos/menu_geoscape.ufo:717
 #: ../base/ufos/menu_transfer.ufo:49
 #: ../base/ufos/research.ufo:86
-#: client/cl_map.c:321
+#: client/cl_map.c:296
 msgid "Aircraft"
 msgstr "Aircraft"
 
@@ -2122,7 +2108,7 @@ msgid "Selected aircraft"
 msgstr "Selected aircraft"
 
 #: ../base/ufos/menu_transfer.ufo:76
-#: client/cl_map.c:315
+#: client/cl_map.c:290
 msgid "Base"
 msgstr "Base"
 
@@ -2550,11 +2536,55 @@ msgstr "Continuous Wave Laser Operation"
 
 #: ../base/ufos/research.ufo:104
 msgid "laser_txt"
-msgstr "Laser (Light Amplification by Stimulated Emission of Radiation) technology is long known by mankind, but so-called Tactical High-Energy Laser or THEL have only been around for a short period of time. Although a mobile variant called Mobile Tactical High-Energy Laser (MTHEL) already exists, such systems are too large and inefficient to have any real advantages over conventional weapons. The basic design of these weapons involves a chemical laser (in this case, a deuterium fluoride laser), which our scientists found out how to make significantly more efficient and compact. This may lead to new lightweight MTHEL weapons in the near future. "
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Re: Continuous Wave Laser Operation\n"
+"\n"
+"\n"
+"Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.\n"
+"\n"
+"The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise have been much too large and cumbersome for an infantryman to carry into battle. Until now their combat applications were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.\n"
+"\n"
+"Now, however, we at PHALANX have built a conventional laser cannon in miniature. Despite its small size it is fully capable of handling the deuterium-fluoride reaction and containing the toxic waste products without danger of contamination. Let me give you a brief description of the inner workings.\n"
+"\n"
+"Inside the combustion chamber, ethylene is burned in nitrogen trifluoride. This reaction produces excited fluorine radicals, which are then brought into contact with a mixture of helium and deuterium gas. The deuterium reacts with the fluorine, producing excited molecules of deuterium fluoride. These undergo stimulated emission in the weapon's optical resonator, generating the beam. A series of intelligent lenses then focuses and directs the beam to the shooter's aiming point and even corrects for minor movement by the shooter or the target. The deuterium waste gas is rammed through our custom-designed high-pressure filtering system, which catches all toxic or radioactive molecules before expelling the remaining harmless vapour back into the atmosphere.\n"
+"\n"
+"The filter needs to be replaced after every mission, but we've designed the system to make this easy and painless. If the filter system is somehow damaged during the course of an operation, the weapon will immediately stop functioning in order to prevent contamination.\n"
+"\n"
+"The laser operates on mid-infrared wavelengths, so it produces no visible beam except to those wearing IR goggles.\n"
+"\n"
+"The prototype we built is unfortunately not yet ready for full-scale production as an infantry weapon, since more refining and balancing is required for human use, but the innovations we've made can also be applied to vehicle weapons -- perhaps even aircraft guns. I've submitted several new proposals to your inbox for the principal ideas we've drawn up.\n"
+"\n"
+"Let me know when you want us to start working on them, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:105
 msgid "laser_pre_txt"
-msgstr "No pre research info available"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Continuous Wave Laser Operation\n"
+"\n"
+"\n"
+"Our collected UN research files have yielded a lot of valuable information about weapons development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfers energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
+"\n"
+"Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research, as well as whole libraries filled with the highest technology on Earth. I believe that not only can we make an effective man-portable laser weapon, we can make it into sizes previously unheard-of for a DEW.\n"
+"\n"
+"Commander, we should pursue this research as soon as possible. Varying our arsenal will make it much more difficult to defend against, and our experience may lead us to develop viable aircraft lasers that could more effectively target high-speed UFOs than conventional firearms.\n"
+"\n"
+"As far as I'm concerned, we at PHALANX are going to do the impossible, and we can start doing it as soon as you approve this proposal.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:144
 msgid "Live Alien"
@@ -2573,14 +2603,62 @@ msgid "Alien Breathing Apparatus"
 msgstr "Alien Breathing Apparatus"
 
 #: ../base/ufos/research.ufo:163
-#, fuzzy
 msgid "alien_breathing_txt"
-msgstr "live_alien_txt"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Re: Alien Breathing Apparatus\n"
+"\n"
+"\n"
+"Commander,\n"
+"\n"
+"I have made a thorough examination of the devices found during the alien autopsies we've performed. I believe we're now ready to present our conclusions.\n"
+"\n"
+"From our investigation of tissue growth and scarring around the alien larynx, we conclude that these artifacts are surgically implanted in an alien's throat at a very early age. Somewhere during adolescence, the child-sized device is removed and an adult version is implanted.\n"
+"\n"
+"We've examined several different possibilities for the device's function, from food preprocessors to suicide equipment, but the obvious answer turned out to be the correct one. It is some kind of respirator, allowing the aliens to survive in our atmosphere, and possibly other atmospheres as well. Every organic specimen we've autopsied has carried one of these devices, all with the same basic functionality, implying that their constant operation is either required for survival on the alien homeworld or that we are seeing only specimens which are intended for frequent planetary operations. Certainly external breathing apparatus would be easier and more economical to use if these specimens were only intended to take short trips into hostile atmospheres.\n"
+"\n"
+"The device itself consists of a sophisticated filter stretched across the subject's windpipe, and two small spherical tanks positioned on either side of the brainstem, connected to the windpipe by a small metal tube. These tanks are filled with a gas mixture compressed into a liquid state, functioning much like a scuba diver's oxygen bottles. The filter mechanism is semi-intelligent; it scrupulously removes all elements that are harmful to the subject, but allows beneficial elements to pass through. The tanks are refilled by way of a small mechanical navel at the back of the alien's neck.\n"
+"\n"
+"An examination of the tanks' contents has given us our first accurate data on the alien atmosphere. We now have several mixtures on record that we believe will be able to support various alien lifeforms in our Containment unit. A few of the mixtures are nitrogen-oxygen compounds, very similar to our own, but others don't contain any oxygen at all. If all of these mixtures are actively used by one or more alien species, some of our enemies seem to breathe an atmosphere of almost pure methane.\n"
+"\n"
+"The vastly different mixtures are actually giving us a bit of a puzzle. Surely it would be more economical to use segregated crews than to force these species to coexist in the same place?\n"
+"\n"
+"Future questions aside, I'm well pleased with our present results. We can now store aliens in our Containment unit for prolonged periods of time -- they will no longer suffocate when their atmosphere tanks run out. This usually happens after 24 hours without replenishment, so no delays should be afforded when we manage to capture a specimen.\n"
+"\n"
+"My team and I are all looking forward to finally getting our hands on a live one, Commander.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:164
-#, fuzzy
 msgid "alien_breathing_pre_txt"
-msgstr "No pre research info available"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Alien Breathing Apparatus\n"
+"\n"
+"\n"
+"Commander,\n"
+"\n"
+"During autopsy of the alien corpses we've recovered, my team and I uncovered some peculiar machinery implanted into the throat of the alien specimen. It consists of two metal spheres located on either side of the brainstem, connected directly to the windpipe by way of a small tube. The windpipe itself is protected by some manner of valve or filter. We believe this interconnected apparatus may be some kind of breathing equipment or rebreather, or even something else entirely; we're not sure how it works yet.\n"
+"\n"
+"I would like your permission and funding to examine these items more closely than our autopsy would allow. At this point in the war, anything that enhances our knowledge base about the alien threat is useful, and we may discover critical clues about alien technology and biology. Certainly we need to find out what the aliens breathe before we can accomodate them in our Containment unit for any period of time.\n"
+"\n"
+"Cdr. Navarre and his team will be assisting us on the technical side. He has committed his full support to the proposal.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:179
 msgid "Monomolecular Blades"
@@ -2599,15 +2677,10 @@ msgid "The Alien Mind"
 msgstr "The Alien Mind"
 
 #: ../base/ufos/research.ufo:197
-#, fuzzy
 msgid "alien_mind_txt"
-msgstr ""
-"A nasty surprise for Phalanx forces. This terrible alien artifact is much lighter and, at the same time, much more devastating than the usual human incendiary grenades. The fire is of tremendous intensity and lasts long enough to make a tactical difference. Being of alien production the grenade turns out to be quite effective against aliens themselves. Scientists explain it uses an as of yet unknown type of super-hot and long burning gel, instead of the conventional phosphorus or napalm used in human incendiary ammunition.\n"
-"\n"
-"Battle Implications: This grenade will set afire a small area on the battlefield, and all units caught in its blast radius. "
+msgstr "alien_mind_txt"
 
 #: ../base/ufos/research.ufo:198
-#, fuzzy
 msgid "alien_mind_pre_txt"
 msgstr "No pre research info available"
 
@@ -4368,7 +4441,7 @@ msgstr ""
 "\n"
 "The effects on organic tissue are harsh. Even minor contact with the skin or mucous membranes will cause severe irritation, resulting in restricted breathing and excruciating pain. Contact with the eyes can cause prolonged, even permanent blindness if left untreated. The agony caused by CHOKE is so acute and disabling that it will knock the fight out of almost anything with which it comes into contact. Our organic alien captives have all demonstrated very satisfying responses; most targets go into shock and exhibit little to no motor control until dosed up with painkillers and anti-CHOKE medication. Their breathing apparatus offers no defence whatsoever against an agent which doesn't need to enter the lungs.\n"
 "\n"
-"SMOKE is equally effective against humans. Volunteer testing has left battle-hardened soldiers hunched on the floor in a foetal position, frozen in place and barely able to breathe. Two subjects had to be rushed to hospital due to blistering of the lungs and fluid buildup, but I'm happy to report both will survive. It is however recommended that our troops be kept away from any deployed CHOKE at all times. If one of our troops does manage to come into contact with it, we've loaded our medikits with the appropriate drugs to treat and revive.\n"
+"CHOKE is equally effective against humans. Volunteer testing has left battle-hardened soldiers hunched on the floor in a foetal position, frozen in place and barely able to breathe. Two subjects had to be rushed to hospital due to blistering of the lungs and fluid buildup, but I'm happy to report both will survive. It is however recommended that our troops be kept away from any deployed CHOKE at all times. If one of our troops does manage to come into contact with it, we've loaded our medikits with the appropriate drugs to treat and revive.\n"
 "\n"
 "The only defence against CHOKE is full body coverage. Any exposed skin or breathing passage is a vulnerability, and so far the aliens have deployed no armour that would protect their troops against this kind of attack. As far as PHALANX agents are concerned, a full head-enclosing gas mask should protect them adequately, since our standard uniforms and armours provide airtight coverage of the soldier's body.\n"
 "\n"
@@ -5802,11 +5875,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2111
+#: ../base/ufos/research.ufo:2115
 msgid "Alien Autopsy - Ortnok"
 msgstr "Alien Autopsy - Ortnok"
 
-#: ../base/ufos/research.ufo:2112
+#: ../base/ufos/research.ufo:2116
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5840,9 +5913,19 @@ msgstr ""
 "\n"
 "- All Ortnok specimens we've seen so far were not equipped with reproductive organs. From surgical scarring around the groin area, we believe they may have been neutered for some reason.\n"
 "\n"
-"In combat, specimens seem to be used most often in the role of heavy infantry and fire support. They are not particularly accurate with their somewhat cumbersome weapons, but when working in numbers they usually lay down enough fire to suppress and then annihilate a PHALANX squad. Ortnoks do not seem to serve in many specialist capacities; they are never used as technicians according to our camera observations, and usually busy themselves handling perimeter security for the Tamans when not engaged in combat."
+"In combat, specimens seem to be used most often in the role of heavy infantry and fire support. They are not particularly accurate with their somewhat cumbersome weapons, but when working in numbers they usually lay down enough fire to suppress and then annihilate a PHALANX squad. Ortnoks do not seem to serve in many specialist capacities; they are never used as technicians according to our camera observations, and usually busy themselves handling perimeter security for the Tamans when not engaged in combat.\n"
+"\n"
+"There is a complex set of implants in the subject's throat that will require further research to be fully understood. I will send you a more detailed analysis along with a research proposal.\n"
+"\n"
+"We have no idea quite where the name 'Ortnok' came from. The troops don't seem to know, and neither do we. Still, it's as good a name as any, and it seems to have stuck.\n"
+"\n"
+"That's all I have for you right now, Commander. I'll contact you again as soon as something new develops.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
-#: ../base/ufos/research.ufo:2113
+#: ../base/ufos/research.ufo:2117
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5862,11 +5945,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2133
+#: ../base/ufos/research.ufo:2137
 msgid "Alien Autopsy - Taman"
 msgstr "Alien Autopsy - Taman"
 
-#: ../base/ufos/research.ufo:2134
+#: ../base/ufos/research.ufo:2138
 msgid "taman_autopsy_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5888,9 +5971,33 @@ msgstr ""
 "\n"
 "First and probably most interesting is the fact that this creature looks almost human. Two arms, two legs, a torso and a head; bipedal locomotion; visual, olfactory and auditory organs all in the same general location. The subject's hands and feet have three long digits, one of which (the 'thumb') is opposable. This species is on average shorter than humans and possesses a thin, almost delicate frame which belies their toughness.\n"
 "\n"
-"The subject has a very simple set of vital organs; heart, lungs, liver, and so on. It lacks most of the redundant or obsolete organs that humans have carried through our evolutionary history. Biologically, the most interesting part of the subject's internals is the digestive tract. The creature has a total of three stomachs meant for the digestion of very tough plant matter. It is incapable of digesting meat of any kind. This implies that, wherever they come from, the Tamans are herbivores feeding on some kind of plant life. This finding has comforted some of our more excitable staff. At least we know the aliens aren't harvesting us for our meat."
+"The subject has a very simple set of vital organs; heart, lungs, liver, and so on. It lacks most of the redundant or obsolete organs that humans have carried through our evolutionary history. Biologically, the most interesting part of the subject's internals is the digestive tract. The creature has a total of three stomachs meant for the digestion of very tough plant matter. It is incapable of digesting meat of any kind. This implies that, wherever they come from, the Tamans are herbivores feeding on some kind of plant life. This finding has comforted some of our more excitable staff. At least we know the aliens aren't harvesting us for our meat.\n"
+"\n"
+"There is a complex set of implants in the subject's throat that will require further research to be fully understood. I will send you a more detailed analysis along with a research proposal.\n"
+"\n"
+"The large, overdeveloped eyes equip the Taman with natural night-vision. It has special irises that protect the retinas from bright light such as sunlight, but if a sudden blast of highly intense illumination were to hit the retina before the iris can adjust, it could cause prolonged or even permanent blindness. Our flashbang may be highly effective here.\n"
+"\n"
+"The greyness of the skin is a particularly curious feature. It is actually caused by the secretion of trace amounts of silicon, which hardens over the supple inner skin to provide a kind of natural armour. This makes a Taman fairly resistant to impact and heat.\n"
+"\n"
+"From our analysis, we can conclude the following:\n"
+"\n"
+"-- The Tamans have a natural resistance to bullets and blunt trauma, but not enough to render such weapons combat ineffective.\n"
+"\n"
+"-- Their skin easily disperses small to medium amounts of heat, but prolonged exposure to a flamethrower or incendiary compound will still do the trick. Lasers will do slightly less damage than normal.\n"
+"\n"
+"-- Though the body is limber and elastic, the Taman's internal organs are badly protected against concussion, which makes them particularly vulnerable to the shockwaves of explosive ordnance.\n"
+"\n"
+"Further study has ruled out other wild-eyed theories. Though the Tamans' appearance is very similar to that of humans, almost enough to imply a kind of relationship, they seem to be more a case of convergent evolution (two different paths to a similar end result) than a blood relation. There are very few similarities between the Taman gene sequences and that of humans, and the structure of chromatin in their DNA is several orders of magnitude more complex than ours. This seems to preclude a hypothetical common origin.\n"
+"\n"
+"In combat, Tamans present a significant threat. They are highly agile and can wield a variety of weapons with great accuracy. Besides serving as soldiers, they fill many specialist roles in the alien war machine, positions in which Tamans seem to be the most numerous. Complex weapons and advanced armour are more often wielded by Tamans than any other species. This is most likely due to their large brains, sensory organs and delicate manipulators.\n"
+"\n"
+"Whether or not the Tamans are the 'greys' of old UFO abduction stories, I couldn't say, but it seems extremely unlikely. PHALANX has never been able to verify a single report of alien activity since the 1950s. The UFOs we're seeing now are certainly not flying saucers. If they could've invaded Earth a century ago, why wait until now to do it? It doesn't really add up -- but then, who can know the motivations of an alien mind?\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
-#: ../base/ufos/research.ufo:2135
+#: ../base/ufos/research.ufo:2139
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5910,84 +6017,60 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2153
+#: ../base/ufos/research.ufo:2157
 msgid "Alien Autopsy - Shevaar"
 msgstr "Alien Autopsy - Shevaar"
 
-#: ../base/ufos/research.ufo:2154
+#: ../base/ufos/research.ufo:2158
 msgid "shevaar_autopsy_txt"
 msgstr "The sheer muscular bulk of the Shevaar is supported by a stout, rugged skeleton, giving the species its fearsome strength. The two sets of jaws are anchored on the creature's enormous shoulder blades, making them as wide as the creature itself, and provide phenomenal crushing force.The huge wet nose of the beast is in fact its brain, covered with a dense array of sensory cells of varying types. While the ability of the Shevaar to hunt down its prey is heightened by this combined sensory and cognitive organ, its prominent placement and lack of protective bone renders it susceptible to psionic attack, as well as providing an obvious weak point in melee combat."
 
-#: ../base/ufos/research.ufo:2155
+#: ../base/ufos/research.ufo:2159
 msgid "shevaar_autopsy_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2173
-msgid "Live Specimen - Stinger"
-msgstr "Live Specimen - Stinger"
-
-#: ../base/ufos/research.ufo:2174
-msgid "hovernet_notes_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2175
-msgid "hovernet_notes_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2188
-msgid "Alien Autopsy - Stinger"
-msgstr "Alien Autopsy - Stinger"
-
-#: ../base/ufos/research.ufo:2189
-msgid "hovernet_autopsy_txt"
-msgstr "Untangling the network of loose, fibrous material that forms at least 90% of the hovernet reveals a solid disc of unknown construction. Mounting points for weaponry are clearly visible, though the markings alongside them have yet to be deciphered and would be our first breakthrough in understanding the alien language.No joints can be seen between the disc and the dozens of fibres that protrude from it, even under an electron microscope. It is possible that the fibres are extruded from the disc itself, which must provide the most efficient distribution of the hovernet's energy and propulsive force.The loose arrangement of the fibres suggests that a successful hit with a projectile or directed energy weapon is unlikely, and blast or incendiary weapons would have greater effect."
-
-#: ../base/ufos/research.ufo:2190
-msgid "hovernet_autopsy_pre_txt"
-msgstr "No pre research info available"
-
-#: ../base/ufos/research.ufo:2205
+#: ../base/ufos/research.ufo:2209
 msgid "Alien Autopsy - Ortnok Cyborg"
 msgstr "Alien Autopsy - Ortnok Cyborg"
 
-#: ../base/ufos/research.ufo:2206
+#: ../base/ufos/research.ufo:2210
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr "Separating the cyborg endoskeleton from the specimen's flesh generates sparks and releases choking, acidic vapours. The internals of the endoskeleton slide out of access holes in the artificial bone structure, attached to surgically implanted tendrils that appear to be bio-mechanical. It seems that digestive systems and reproductive organs have been removed and replaced by numerous small engines encased within the endoskeleton. Energy created by the chlorophyll in the Ortnok's skin appears to kick-start the reactions in these micro-engines.The purpose of the Antarean cyborg programme is clearly the conversion of the Ortnok into a bio-mechanical weapons platform that demands much greater energy output and suppression of the reproductive instinct."
 
-#: ../base/ufos/research.ufo:2207
+#: ../base/ufos/research.ufo:2211
 msgid "cyborg_ortnok_autopsy_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2225
+#: ../base/ufos/research.ufo:2229
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:2226
+#: ../base/ufos/research.ufo:2230
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2227
+#: ../base/ufos/research.ufo:2231
 msgid "ugv_phoenix_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2241
+#: ../base/ufos/research.ufo:2245
 msgid "Triax UGV"
 msgstr "Triax UGV"
 
-#: ../base/ufos/research.ufo:2242
+#: ../base/ufos/research.ufo:2246
 msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2243
+#: ../base/ufos/research.ufo:2247
 msgid "ugv_triax_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2261
+#: ../base/ufos/research.ufo:2265
 msgid "Raven ECM Unit"
 msgstr "Raven ECM Unit"
 
-#: ../base/ufos/research.ufo:2263
-#: ../base/ufos/research.ufo:2279
+#: ../base/ufos/research.ufo:2267
+#: ../base/ufos/research.ufo:2283
 msgid "craft_shield_light_txt"
 msgstr ""
 "Technical Specifications: \"Raven\" ECM Unit\n"
@@ -6026,15 +6109,15 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2277
+#: ../base/ufos/research.ufo:2281
 msgid "Polymer Aircraft Armour"
 msgstr "Polymer Aircraft Armour"
 
-#: ../base/ufos/research.ufo:2293
+#: ../base/ufos/research.ufo:2297
 msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA Rotary Cannon"
 
-#: ../base/ufos/research.ufo:2295
+#: ../base/ufos/research.ufo:2299
 msgid "craft_weapon_flac_txt"
 msgstr ""
 "Technical Specifications: SHIVA Rotary Cannon\n"
@@ -6077,27 +6160,27 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2309
+#: ../base/ufos/research.ufo:2313
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Sparrowhawk AA Missile Rack"
 
-#: ../base/ufos/research.ufo:2311
+#: ../base/ufos/research.ufo:2315
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2325
+#: ../base/ufos/research.ufo:2329
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 Rocket Pod"
 
-#: ../base/ufos/research.ufo:2327
+#: ../base/ufos/research.ufo:2331
 msgid "craft_weapon_tr20_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2347
+#: ../base/ufos/research.ufo:2351
 msgid "Particle Beam Weapon"
 msgstr "Particle Beam Weapon"
 
-#: ../base/ufos/research.ufo:2348
+#: ../base/ufos/research.ufo:2352
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6113,7 +6196,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2349
+#: ../base/ufos/research.ufo:2353
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6141,11 +6224,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2373
+#: ../base/ufos/research.ufo:2377
 msgid "Political Situation Before The Invasion"
 msgstr "Political Situation Before The Invasion"
 
-#: ../base/ufos/research.ufo:2374
+#: ../base/ufos/research.ufo:2378
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "In the year 2084, Earth is in better shape than it has been for more than a century. Perhaps for the first time, peace and cooperation are the norm rather than the exception. The current state of affairs, however, can only be explained through the brutal history of the 21st century.\n"
@@ -6164,11 +6247,11 @@ msgstr ""
 "\n"
 "The loyalist army suffered massive desertions in the days that followed; it was the single event that eventually spelled doom for the government. More than six million lives were lost before the surrender of loyalist forces on 15 August 2036, having fought tooth and nail and employed large-scale scorched earth tactics as the rebels slowly drove them into the Indian Ocean. This is the official ending of the Second Cold War."
 
-#: ../base/ufos/research.ufo:2384
+#: ../base/ufos/research.ufo:2388
 msgid "After The War"
 msgstr "After The War"
 
-#: ../base/ufos/research.ufo:2385
+#: ../base/ufos/research.ufo:2389
 msgid "news_after_the_war_txt"
 msgstr ""
 "The Asian Republic:\n"
@@ -6281,11 +6364,11 @@ msgstr ""
 "\n"
 "Oceania's military consists mainly of a powerful navy. Its land army is minuscule compared to that of any nation except United America, and serves only in a defensive capacity, with average training and equipment. However, it can respond fairly quickly in emergency situations."
 
-#: ../base/ufos/research.ufo:2395
+#: ../base/ufos/research.ufo:2399
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX And The Mumbai Aftermath"
 
-#: ../base/ufos/research.ufo:2396
+#: ../base/ufos/research.ufo:2400
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "\"Project PHALANX\" was first conceived by the United States Department of Defense in 1955, after years of growing concern over increased numbers of UFO sightings all across the world. The possibility of an alien invasion plagued badly on the minds of politicians already unnerved by the nuclear power of the Soviet Union. The existence of hostile extraterrestrial life in the universe seemed a very remote possibility, even moreso that these hostiles might find Earth among all the vastness of space -- but could America afford to take that chance?\n"
@@ -6676,17 +6759,17 @@ msgstr "Cycle through visible enemies"
 msgid "End round"
 msgstr "End round"
 
-#: ../base/ufos/team_aliens.ufo:249
+#: ../base/ufos/team_aliens.ufo:227
+msgid "Ortnok"
+msgstr "Ortnok"
+
+#: ../base/ufos/team_aliens.ufo:234
+msgid "Taman"
+msgstr "Taman"
+
+#: ../base/ufos/team_aliens.ufo:241
 msgid "Shevaar"
 msgstr "Shevaar"
-
-#: ../base/ufos/team_aliens.ufo:259
-msgid "Hovernet"
-msgstr "Hovernet"
-
-#: ../base/ufos/team_aliens.ufo:269
-msgid "Cyborg Ortnok"
-msgstr "Cyborg Ortnok"
 
 #: ../base/ufos/team_humans.ufo:1529
 msgid "Phoenix"
@@ -7257,15 +7340,15 @@ msgstr "Aircraft started"
 #: client/cl_campaign.c:2480
 #: client/cl_campaign.c:2517
 #: client/cl_campaign.c:2519
-#: client/cl_campaign.c:2889
-#: client/cl_map.c:295
-#: client/cl_research.c:671
+#: client/cl_campaign.c:2836
+#: client/cl_map.c:270
+#: client/cl_research.c:668
+#: client/cl_research.c:790
 #: client/cl_research.c:793
-#: client/cl_research.c:796
-#: client/cl_research.c:800
-#: client/cl_research.c:813
-#: client/cl_research.c:842
-#: client/cl_research.c:988
+#: client/cl_research.c:797
+#: client/cl_research.c:810
+#: client/cl_research.c:839
+#: client/cl_research.c:985
 #: client/cl_ufo.c:195
 #: client/cl_ufo.c:200
 msgid "Notice"
@@ -7320,14 +7403,14 @@ msgid "Back to base"
 msgstr "Back to base"
 
 #: client/cl_aircraft.c:359
-#: client/cl_map.c:820
+#: client/cl_map.c:772
 #: client/cl_ufopedia.c:306
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr "Speed:\t%.0f\n"
 
 #: client/cl_aircraft.c:360
-#: client/cl_map.c:821
+#: client/cl_map.c:773
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Fuel:\t%i/%i\n"
@@ -7541,7 +7624,7 @@ msgid "Building finished"
 msgstr "Building finished"
 
 #: client/cl_campaign.c:432
-#: client/cl_map.c:295
+#: client/cl_map.c:270
 msgid "Could not set up your base at this location"
 msgstr "Could not set up your base at this location"
 
@@ -7675,28 +7758,28 @@ msgstr[0] "credit"
 msgstr[1] "credits"
 
 #: client/cl_campaign.c:1116
-#: client/cl_campaign.c:4104
+#: client/cl_campaign.c:4051
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "scientist"
 msgstr[1] "scientists"
 
 #: client/cl_campaign.c:1117
-#: client/cl_campaign.c:4106
+#: client/cl_campaign.c:4053
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "medic"
 msgstr[1] "medics"
 
 #: client/cl_campaign.c:1118
-#: client/cl_campaign.c:4103
+#: client/cl_campaign.c:4050
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldier"
 msgstr[1] "soldiers"
 
 #: client/cl_campaign.c:1119
-#: client/cl_campaign.c:4105
+#: client/cl_campaign.c:4052
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "worker"
@@ -7838,34 +7921,34 @@ msgstr "Assemble or load a team"
 msgid "Your dropship is not near the landing zone"
 msgstr "Your dropship is not near the landing zone"
 
-#: client/cl_campaign.c:2745
+#: client/cl_campaign.c:2692
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s has been promoted to %s.\n"
 
-#: client/cl_campaign.c:2747
+#: client/cl_campaign.c:2694
 #, c-format
 msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 
-#: client/cl_campaign.c:2748
+#: client/cl_campaign.c:2695
 msgid "Soldier promoted"
 msgstr "Soldier promoted"
 
-#: client/cl_campaign.c:2888
+#: client/cl_campaign.c:2835
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Defense of base: %s successful!"
 
-#: client/cl_campaign.c:4099
+#: client/cl_campaign.c:4046
 msgid "Aliens"
 msgstr "Aliens"
 
-#: client/cl_campaign.c:4099
+#: client/cl_campaign.c:4046
 msgid "Human"
 msgstr "Human"
 
-#: client/cl_campaign.c:4101
+#: client/cl_campaign.c:4048
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -8109,39 +8192,41 @@ msgstr "Very Hard"
 msgid "Insane"
 msgstr "Insane"
 
-#: client/cl_map.c:280
+#: client/cl_map.c:254
 msgid "Click"
 msgstr "Click"
 
-#: client/cl_map.c:332
+#: client/cl_map.c:307
 msgid "UFO"
 msgstr "UFO"
 
-#: client/cl_map.c:675
+#: client/cl_map.c:575
+#: client/cl_map.c:627
 msgid "Day"
 msgstr "Day"
 
-#: client/cl_map.c:675
+#: client/cl_map.c:575
+#: client/cl_map.c:627
 msgid "Night"
 msgstr "Night"
 
-#: client/cl_map.c:792
+#: client/cl_map.c:744
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Select the desired location of the new base on the map.\n"
 
-#: client/cl_map.c:797
+#: client/cl_map.c:749
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Aliens are attacking our base at this very moment.\n"
 
-#: client/cl_map.c:802
+#: client/cl_map.c:754
 msgid "Select ufo or mission on map\n"
 msgstr "Select ufo or mission on map\n"
 
-#: client/cl_map.c:807
+#: client/cl_map.c:759
 msgid "UFO in radar range\n"
 msgstr "UFO in radar range\n"
 
-#: client/cl_map.c:813
+#: client/cl_map.c:765
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -8152,12 +8237,12 @@ msgstr ""
 "Type: %s\n"
 "Objective: %s\n"
 
-#: client/cl_map.c:818
+#: client/cl_map.c:770
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Name:\t%s (%i/%i)\n"
 
-#: client/cl_map.c:819
+#: client/cl_map.c:771
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Status:\t%s\n"
@@ -8172,20 +8257,20 @@ msgstr "TODO\n"
 msgid "Unknown - need to research this"
 msgstr "Unknown - need to research this"
 
-#: client/cl_menu.c:434
+#: client/cl_menu.c:436
 msgid "Set playersoldiers lower than teamsoldiers"
 msgstr "Set playersoldiers lower than teamsoldiers"
 
-#: client/cl_menu.c:434
+#: client/cl_menu.c:436
 msgid "Settings doesn't make sense"
 msgstr "Settings doesn't make sense"
 
-#: client/cl_menu.c:1516
+#: client/cl_menu.c:1518
 #, c-format
 msgid "Key: %s"
 msgstr "Key: %s"
 
-#: client/cl_menu.c:2735
+#: client/cl_menu.c:2799
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Hide the HUD (press ESC to reactivate HUD)"
 
@@ -8265,50 +8350,50 @@ msgstr "Queue full!"
 msgid "You cannot queue any more items!"
 msgstr "You cannot queue any more items!"
 
-#: client/cl_research.c:563
+#: client/cl_research.c:560
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Available scientists in this base: %i"
 
-#: client/cl_research.c:564
+#: client/cl_research.c:561
 msgid "Not researched in any base."
 msgstr "Not researched in any base."
 
-#: client/cl_research.c:570
+#: client/cl_research.c:567
 #, c-format
 msgid "Researched in %s"
 msgstr "Researched in %s"
 
-#: client/cl_research.c:572
+#: client/cl_research.c:569
 msgid "Researched in this base."
 msgstr "Researched in this base."
 
-#: client/cl_research.c:583
+#: client/cl_research.c:580
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Progress: %.1f%%"
 
-#: client/cl_research.c:585
+#: client/cl_research.c:582
 msgid "Progress: Not available."
 msgstr "Progress: Not available."
 
-#: client/cl_research.c:589
+#: client/cl_research.c:586
 msgid "Status: Under research"
 msgstr "Status: Under research"
 
-#: client/cl_research.c:592
+#: client/cl_research.c:589
 msgid "Status: Research paused"
 msgstr "Status: Research paused"
 
-#: client/cl_research.c:595
+#: client/cl_research.c:592
 msgid "Status: Research finished"
 msgstr "Status: Research finished"
 
-#: client/cl_research.c:598
+#: client/cl_research.c:595
 msgid "Status: Unknown technology"
 msgstr "Status: Unknown technology"
 
-#: client/cl_research.c:672
+#: client/cl_research.c:669
 msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
@@ -8318,20 +8403,20 @@ msgstr ""
 "You need to build one or free another\n"
 "in order to assign scientists to research this technology.\n"
 
-#: client/cl_research.c:793
+#: client/cl_research.c:790
 msgid "This item is already under research by your scientists."
 msgstr "This item is already under research by your scientists."
 
-#: client/cl_research.c:796
+#: client/cl_research.c:793
 msgid "The research on this item continues."
 msgstr "The research on this item continues."
 
-#: client/cl_research.c:800
-#: client/cl_research.c:842
+#: client/cl_research.c:797
+#: client/cl_research.c:839
 msgid "The research on this item is complete."
 msgstr "The research on this item is complete."
 
-#: client/cl_research.c:813
+#: client/cl_research.c:810
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -8339,24 +8424,24 @@ msgstr ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 
-#: client/cl_research.c:881
+#: client/cl_research.c:878
 msgid " [not yet researchable]"
 msgstr " [not yet researchable]"
 
-#: client/cl_research.c:988
+#: client/cl_research.c:985
 msgid "Build a laboratory first"
 msgstr "Build a laboratory first"
 
-#: client/cl_research.c:1069
+#: client/cl_research.c:1066
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Research of %s finished\n"
 
-#: client/cl_research.c:1070
+#: client/cl_research.c:1067
 msgid "Research finished"
 msgstr "Research finished"
 
-#: client/cl_research.c:1368
+#: client/cl_research.c:1365
 msgid "No description available."
 msgstr "No description available."
 
@@ -8399,7 +8484,7 @@ msgid "Toggle to next soldier"
 msgstr "Toggle to next soldier"
 
 #: client/cl_team.c:1636
-#: client/cl_team.c:1687
+#: client/cl_team.c:1684
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens killed\t%i\n"
@@ -8419,7 +8504,7 @@ msgstr ""
 "\n"
 
 #: client/cl_team.c:1645
-#: client/cl_team.c:1691
+#: client/cl_team.c:1688
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -8496,27 +8581,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1690
+#: client/cl_team.c:1687
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Aliens captured\t%i\n"
 
-#: client/cl_team.c:1694
+#: client/cl_team.c:1691
 #, c-format
 msgid "Phalanx soldiers killed by Aliens\t%i\n"
 msgstr "Phalanx soldiers killed by Aliens\t%i\n"
 
-#: client/cl_team.c:1695
+#: client/cl_team.c:1692
 #, c-format
 msgid "Phalanx soldiers missing in action\t%i\n"
 msgstr "Phalanx soldiers missing in action\t%i\n"
 
-#: client/cl_team.c:1696
+#: client/cl_team.c:1693
 #, c-format
 msgid "Phalanx friendly fire losses\t%i\n"
 msgstr "Phalanx friendly fire losses\t%i\n"
 
-#: client/cl_team.c:1697
+#: client/cl_team.c:1694
 #, c-format
 msgid ""
 "Phalanx survivors\t%i\n"
@@ -8525,17 +8610,17 @@ msgstr ""
 "Phalanx survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1699
+#: client/cl_team.c:1696
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civilians killed by Aliens\t%i\n"
 
-#: client/cl_team.c:1700
+#: client/cl_team.c:1697
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civilians killed by friendly fire\t%i\n"
 
-#: client/cl_team.c:1701
+#: client/cl_team.c:1698
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -8544,12 +8629,12 @@ msgstr ""
 "Civilians saved\t%i\n"
 "\n"
 
-#: client/cl_team.c:1705
+#: client/cl_team.c:1702
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
 msgstr "Items salvaged and sold\t%i\n"
 
-#: client/cl_team.c:1706
+#: client/cl_team.c:1703
 #, c-format
 msgid ""
 "Total item sale value\t%i\n"
@@ -8558,7 +8643,7 @@ msgstr ""
 "Total item sale value\t%i\n"
 "\n"
 
-#: client/cl_team.c:1722
+#: client/cl_team.c:1719
 #, c-format
 msgid ""
 "\n"
@@ -8571,15 +8656,15 @@ msgstr ""
 "Enemies killed:  %i\n"
 "Team survivors:  %i"
 
-#: client/cl_team.c:1724
+#: client/cl_team.c:1721
 msgid "You won the game!"
 msgstr "You won the game!"
 
-#: client/cl_team.c:1726
+#: client/cl_team.c:1723
 msgid "Congratulations"
 msgstr "Congratulations"
 
-#: client/cl_team.c:1728
+#: client/cl_team.c:1725
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -8589,15 +8674,15 @@ msgstr ""
 "\n"
 "No survivors left on any side."
 
-#: client/cl_team.c:1729
+#: client/cl_team.c:1726
 msgid "Game Drawn!"
 msgstr "Game Drawn!"
 
-#: client/cl_team.c:1731
+#: client/cl_team.c:1728
 msgid "You lost the game"
 msgstr "You lost the game"
 
-#: client/cl_team.c:1733
+#: client/cl_team.c:1730
 msgid "Better luck next time"
 msgstr "Better luck next time"
 
@@ -8772,15 +8857,15 @@ msgstr "Fuel:\t%i\n"
 msgid "Shield:\t%s\n"
 msgstr "Shield:\t%s\n"
 
-#: client/cl_ufopedia.c:393
+#: client/cl_ufopedia.c:375
 msgid "No pre-research description available."
 msgstr "No pre-research description available."
 
-#: client/cl_ufopedia.c:507
+#: client/cl_ufopedia.c:533
 msgid "Ufopedia Content"
 msgstr "Ufopedia Content"
 
-#: client/cl_ufopedia.c:562
+#: client/cl_ufopedia.c:588
 #, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Ufopedia Index: %s"
@@ -8907,6 +8992,40 @@ msgstr "1 day"
 msgid "5 days"
 msgstr "5 days"
 
+#~ msgid "In this base:"
+#~ msgstr "In this base:"
+#~ msgid "Live Specimen - Stinger"
+#~ msgstr "Live Specimen - Stinger"
+#~ msgid "hovernet_notes_txt"
+#~ msgstr "<TODO>"
+#~ msgid "hovernet_notes_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Alien Autopsy - Stinger"
+#~ msgstr "Alien Autopsy - Stinger"
+#~ msgid "hovernet_autopsy_txt"
+#~ msgstr ""
+#~ "Untangling the network of loose, fibrous material that forms at least 90% "
+#~ "of the hovernet reveals a solid disc of unknown construction. Mounting "
+#~ "points for weaponry are clearly visible, though the markings alongside "
+#~ "them have yet to be deciphered and would be our first breakthrough in "
+#~ "understanding the alien language.No joints can be seen between the disc "
+#~ "and the dozens of fibres that protrude from it, even under an electron "
+#~ "microscope. It is possible that the fibres are extruded from the disc "
+#~ "itself, which must provide the most efficient distribution of the "
+#~ "hovernet's energy and propulsive force.The loose arrangement of the "
+#~ "fibres suggests that a successful hit with a projectile or directed "
+#~ "energy weapon is unlikely, and blast or incendiary weapons would have "
+#~ "greater effect."
+#~ msgid "hovernet_autopsy_pre_txt"
+#~ msgstr "No pre research info available"
+#~ msgid "Hovernet"
+#~ msgstr "Hovernet"
+#~ msgid "Cyborg Ortnok"
+#~ msgstr "Cyborg Ortnok"
+#~ msgid "yes"
+#~ msgstr "yes"
+#~ msgid "needs autopsy"
+#~ msgstr "needs autopsy"
 #~ msgid "Advanced Laser Technology"
 #~ msgstr "Advanced Laser Technology"
 #~ msgid "Anti-Alien Gas"

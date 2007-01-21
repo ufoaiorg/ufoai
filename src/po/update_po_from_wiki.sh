@@ -154,6 +154,7 @@ clean_html()
 	BEGIN=`grep -n "<div class=\"printfooter\">" downloaded_page.tmp | cut -d : -f 1`
 	END=`wc -l downloaded_page.tmp | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
 	$sed_soft $BEGIN','$END'd' downloaded_page.tmp |
+	$sed_soft 's/(Extra:.*researched)[ \t]*//g;s/[ \t]*(End Extra)//g' |
 	$sed_soft ':a;N;$!ba;s/\n//g;s/^[ \t]*//g;s/[ \t]*$//g;s/&amp;/\&/g;s/&nbsp;/ /g;s/\s\+$//;s/<br \/>//g;s/<b>//g;s/<\/b>//g;s/<hr \/>//g;s/<\/p>/<p>/g;s/<i>//g;s/<\/i>//g;s/<\/h1>/<p>/g;s/<\/h2>/<p>/g;s/<\/h3>/<p>/g;s/<\/h4>/<p>/g;s/<dd>/<p>/g;s/<dl>/<p>/g;s/<\/dd>/<p>/g;s/<\/dl>/<p>/g;s/[ \t]*<p>[ \t]*/<p>/g;s/:/: /g;s/[ \t][ \t]*/ /g;s/class=\"image\"/><p></g' > downloaded_page
 	rm -f downloaded_page.tmp
 

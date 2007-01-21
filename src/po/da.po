@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-01-19 12:00+0100\n"
+"POT-Creation-Date: 2007-01-21 18:26+0100\n"
 "PO-Revision-Date: 2006-10-24 13:31+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -480,55 +480,42 @@ msgstr "Ufopædi Indhold"
 msgid "Alive Aliens in all bases:"
 msgstr ""
 
-#: ../base/ufos/menu_aliencont.ufo:129
+#: ../base/ufos/menu_aliencont.ufo:125
+msgid "Alive Aliens in this base:"
+msgstr ""
+
+#: ../base/ufos/menu_aliencont.ufo:140
 msgid "Aliens available to process:"
 msgstr ""
 
-#: ../base/ufos/menu_aliencont.ufo:134
+#: ../base/ufos/menu_aliencont.ufo:147
 #, fuzzy
 msgid "Alien type"
 msgstr "Rumvæsen-arter"
 
-#: ../base/ufos/menu_aliencont.ufo:139
+#: ../base/ufos/menu_aliencont.ufo:154
 msgid "Examinated"
 msgstr ""
 
-#: ../base/ufos/menu_aliencont.ufo:144
+#: ../base/ufos/menu_aliencont.ufo:161
 msgid "Amount"
 msgstr ""
 
-#: ../base/ufos/menu_aliencont.ufo:150 ../base/ufos/team_aliens.ufo:227
-msgid "Ortnok"
-msgstr ""
-
-#: ../base/ufos/menu_aliencont.ufo:155
-msgid "yes"
-msgstr ""
-
-#: ../base/ufos/menu_aliencont.ufo:166 ../base/ufos/team_aliens.ufo:239
-#, fuzzy
-msgid "Taman"
-msgstr "Våben"
-
-#: ../base/ufos/menu_aliencont.ufo:171
-msgid "needs autopsy"
-msgstr ""
-
-#: ../base/ufos/menu_aliencont.ufo:187 ../base/ufos/menu_research.ufo:825
+#: ../base/ufos/menu_aliencont.ufo:196 ../base/ufos/menu_research.ufo:825
 msgid "Base Info"
 msgstr ""
 
-#: ../base/ufos/menu_aliencont.ufo:195
+#: ../base/ufos/menu_aliencont.ufo:202
 #, fuzzy
 msgid "Alien Type:"
 msgstr "Rumvæsen-arter"
 
-#: ../base/ufos/menu_aliencont.ufo:224
-msgid "In this base:"
+#: ../base/ufos/menu_aliencont.ufo:229
+msgid "Killed:"
 msgstr ""
 
 #: ../base/ufos/menu_aliencont.ufo:243
-msgid "In all bases:"
+msgid "Captured in all bases:"
 msgstr ""
 
 #: ../base/ufos/menu_althud.ufo:45 ../base/ufos/menu_inventory.ufo:172
@@ -637,7 +624,7 @@ msgstr "Luftfartøj"
 
 #: ../base/ufos/menu_bases.ufo:142 ../base/ufos/menu_geoscape.ufo:717
 #: ../base/ufos/menu_transfer.ufo:49 ../base/ufos/research.ufo:86
-#: client/cl_map.c:321
+#: client/cl_map.c:296
 msgid "Aircraft"
 msgstr "Luftfartøj"
 
@@ -1913,7 +1900,7 @@ msgstr ""
 msgid "Selected aircraft"
 msgstr "Luftfartøj"
 
-#: ../base/ufos/menu_transfer.ufo:76 client/cl_map.c:315
+#: ../base/ufos/menu_transfer.ufo:76 client/cl_map.c:290
 #, fuzzy
 msgid "Base"
 msgstr "Våben"
@@ -2919,171 +2906,147 @@ msgstr ""
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2111
+#: ../base/ufos/research.ufo:2115
 msgid "Alien Autopsy - Ortnok"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2112
+#: ../base/ufos/research.ufo:2116
 msgid "ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2113
+#: ../base/ufos/research.ufo:2117
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2133
+#: ../base/ufos/research.ufo:2137
 msgid "Alien Autopsy - Taman"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2134
+#: ../base/ufos/research.ufo:2138
 msgid "taman_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2135
+#: ../base/ufos/research.ufo:2139
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2153
+#: ../base/ufos/research.ufo:2157
 msgid "Alien Autopsy - Shevaar"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2154
+#: ../base/ufos/research.ufo:2158
 msgid "shevaar_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2155
+#: ../base/ufos/research.ufo:2159
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2173
-msgid "Live Specimen - Stinger"
-msgstr ""
-
-#: ../base/ufos/research.ufo:2174
-msgid "hovernet_notes_txt"
-msgstr ""
-
-#: ../base/ufos/research.ufo:2175
-msgid "hovernet_notes_pre_txt"
-msgstr ""
-
-#: ../base/ufos/research.ufo:2188
-msgid "Alien Autopsy - Stinger"
-msgstr ""
-
-#: ../base/ufos/research.ufo:2189
-msgid "hovernet_autopsy_txt"
-msgstr ""
-
-#: ../base/ufos/research.ufo:2190
-msgid "hovernet_autopsy_pre_txt"
-msgstr ""
-
-#: ../base/ufos/research.ufo:2205
+#: ../base/ufos/research.ufo:2209
 msgid "Alien Autopsy - Ortnok Cyborg"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2206
+#: ../base/ufos/research.ufo:2210
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2207
+#: ../base/ufos/research.ufo:2211
 msgid "cyborg_ortnok_autopsy_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2225
+#: ../base/ufos/research.ufo:2229
 msgid "Phoenix UGV"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2226
+#: ../base/ufos/research.ufo:2230
 msgid "ugv_phoenix_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2227
+#: ../base/ufos/research.ufo:2231
 msgid "ugv_phoenix_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2241
+#: ../base/ufos/research.ufo:2245
 msgid "Triax UGV"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2242
+#: ../base/ufos/research.ufo:2246
 msgid "ugv_triax_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2243
+#: ../base/ufos/research.ufo:2247
 msgid "ugv_triax_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2261
+#: ../base/ufos/research.ufo:2265
 msgid "Raven ECM Unit"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2263 ../base/ufos/research.ufo:2279
+#: ../base/ufos/research.ufo:2267 ../base/ufos/research.ufo:2283
 msgid "craft_shield_light_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2277
+#: ../base/ufos/research.ufo:2281
 msgid "Polymer Aircraft Armour"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2293
+#: ../base/ufos/research.ufo:2297
 msgid "SHIVA Rotary Cannon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2295
+#: ../base/ufos/research.ufo:2299
 msgid "craft_weapon_flac_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2309
+#: ../base/ufos/research.ufo:2313
 msgid "Sparrowhawk AA Missile Rack"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2311
+#: ../base/ufos/research.ufo:2315
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2325
+#: ../base/ufos/research.ufo:2329
 msgid "TR-20 Rocket Pod"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2327
+#: ../base/ufos/research.ufo:2331
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2347
+#: ../base/ufos/research.ufo:2351
 msgid "Particle Beam Weapon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2348
+#: ../base/ufos/research.ufo:2352
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2349
+#: ../base/ufos/research.ufo:2353
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2373
+#: ../base/ufos/research.ufo:2377
 msgid "Political Situation Before The Invasion"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2374
+#: ../base/ufos/research.ufo:2378
 msgid "news_initial_political_situation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2384
+#: ../base/ufos/research.ufo:2388
 msgid "After The War"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2385
+#: ../base/ufos/research.ufo:2389
 msgid "news_after_the_war_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2395
+#: ../base/ufos/research.ufo:2399
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2396
+#: ../base/ufos/research.ufo:2400
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 
@@ -3445,16 +3408,17 @@ msgstr ""
 msgid "End round"
 msgstr ""
 
-#: ../base/ufos/team_aliens.ufo:249
+#: ../base/ufos/team_aliens.ufo:227
+msgid "Ortnok"
+msgstr ""
+
+#: ../base/ufos/team_aliens.ufo:234
+#, fuzzy
+msgid "Taman"
+msgstr "Våben"
+
+#: ../base/ufos/team_aliens.ufo:241
 msgid "Shevaar"
-msgstr ""
-
-#: ../base/ufos/team_aliens.ufo:259
-msgid "Hovernet"
-msgstr ""
-
-#: ../base/ufos/team_aliens.ufo:269
-msgid "Cyborg Ortnok"
 msgstr ""
 
 #: ../base/ufos/team_humans.ufo:1529
@@ -4000,9 +3964,9 @@ msgstr "Luftfartøj"
 #: client/cl_campaign.c:1196 client/cl_campaign.c:1203
 #: client/cl_campaign.c:1211 client/cl_campaign.c:2480
 #: client/cl_campaign.c:2517 client/cl_campaign.c:2519
-#: client/cl_campaign.c:2889 client/cl_map.c:295 client/cl_research.c:671
-#: client/cl_research.c:793 client/cl_research.c:796 client/cl_research.c:800
-#: client/cl_research.c:813 client/cl_research.c:842 client/cl_research.c:988
+#: client/cl_campaign.c:2836 client/cl_map.c:270 client/cl_research.c:668
+#: client/cl_research.c:790 client/cl_research.c:793 client/cl_research.c:797
+#: client/cl_research.c:810 client/cl_research.c:839 client/cl_research.c:985
 #: client/cl_ufo.c:195 client/cl_ufo.c:200
 msgid "Notice"
 msgstr ""
@@ -4055,12 +4019,12 @@ msgstr ""
 msgid "Back to base"
 msgstr ""
 
-#: client/cl_aircraft.c:359 client/cl_map.c:820 client/cl_ufopedia.c:306
+#: client/cl_aircraft.c:359 client/cl_map.c:772 client/cl_ufopedia.c:306
 #, fuzzy, c-format
 msgid "Speed:\t%.0f\n"
 msgstr "Spreder"
 
-#: client/cl_aircraft.c:360 client/cl_map.c:821
+#: client/cl_aircraft.c:360 client/cl_map.c:773
 #, fuzzy, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Helbred\t%i\n"
@@ -4264,7 +4228,7 @@ msgstr ""
 msgid "Building finished"
 msgstr "Bygninger"
 
-#: client/cl_campaign.c:432 client/cl_map.c:295
+#: client/cl_campaign.c:432 client/cl_map.c:270
 msgid "Could not set up your base at this location"
 msgstr ""
 
@@ -4406,25 +4370,25 @@ msgid_plural "credits"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/cl_campaign.c:1116 client/cl_campaign.c:4104
+#: client/cl_campaign.c:1116 client/cl_campaign.c:4051
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/cl_campaign.c:1117 client/cl_campaign.c:4106
+#: client/cl_campaign.c:1117 client/cl_campaign.c:4053
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/cl_campaign.c:1118 client/cl_campaign.c:4103
+#: client/cl_campaign.c:1118 client/cl_campaign.c:4050
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/cl_campaign.c:1119 client/cl_campaign.c:4105
+#: client/cl_campaign.c:1119 client/cl_campaign.c:4052
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] ""
@@ -4555,37 +4519,37 @@ msgstr ""
 msgid "Your dropship is not near the landing zone"
 msgstr ""
 
-#: client/cl_campaign.c:2745
+#: client/cl_campaign.c:2692
 #, fuzzy, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s har taget kommandoen over hold %i.\n"
 
-#: client/cl_campaign.c:2747
+#: client/cl_campaign.c:2694
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
 "in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2748
+#: client/cl_campaign.c:2695
 msgid "Soldier promoted"
 msgstr ""
 
-#: client/cl_campaign.c:2888
+#: client/cl_campaign.c:2835
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr ""
 
-#: client/cl_campaign.c:4099
+#: client/cl_campaign.c:4046
 #, fuzzy
 msgid "Aliens"
 msgstr "Rumvæsen set"
 
-#: client/cl_campaign.c:4099
+#: client/cl_campaign.c:4046
 msgid "Human"
 msgstr ""
 
-#: client/cl_campaign.c:4101
+#: client/cl_campaign.c:4048
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -4815,41 +4779,41 @@ msgstr ""
 msgid "Insane"
 msgstr ""
 
-#: client/cl_map.c:280
+#: client/cl_map.c:254
 msgid "Click"
 msgstr ""
 
-#: client/cl_map.c:332
+#: client/cl_map.c:307
 msgid "UFO"
 msgstr ""
 
-#: client/cl_map.c:675
+#: client/cl_map.c:575 client/cl_map.c:627
 #, fuzzy
 msgid "Day"
 msgstr "Maj"
 
-#: client/cl_map.c:675
+#: client/cl_map.c:575 client/cl_map.c:627
 msgid "Night"
 msgstr ""
 
-#: client/cl_map.c:792
+#: client/cl_map.c:744
 msgid "Select the desired location of the new base on the map.\n"
 msgstr ""
 
-#: client/cl_map.c:797
+#: client/cl_map.c:749
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr ""
 
-#: client/cl_map.c:802
+#: client/cl_map.c:754
 msgid "Select ufo or mission on map\n"
 msgstr ""
 
-#: client/cl_map.c:807
+#: client/cl_map.c:759
 #, fuzzy
 msgid "UFO in radar range\n"
 msgstr "%s er gået berserk!\n"
 
-#: client/cl_map.c:813
+#: client/cl_map.c:765
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -4857,12 +4821,12 @@ msgid ""
 "Objective: %s\n"
 msgstr ""
 
-#: client/cl_map.c:818
+#: client/cl_map.c:770
 #, fuzzy, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Helbred\t%i\n"
 
-#: client/cl_map.c:819
+#: client/cl_map.c:771
 #, fuzzy, c-format
 msgid "Status:\t%s\n"
 msgstr "Våben"
@@ -4875,20 +4839,20 @@ msgstr ""
 msgid "Unknown - need to research this"
 msgstr "Ukendt - du må researche dette"
 
-#: client/cl_menu.c:434
+#: client/cl_menu.c:436
 msgid "Set playersoldiers lower than teamsoldiers"
 msgstr ""
 
-#: client/cl_menu.c:434
+#: client/cl_menu.c:436
 msgid "Settings doesn't make sense"
 msgstr ""
 
-#: client/cl_menu.c:1516
+#: client/cl_menu.c:1518
 #, c-format
 msgid "Key: %s"
 msgstr ""
 
-#: client/cl_menu.c:2735
+#: client/cl_menu.c:2799
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr ""
 
@@ -4974,92 +4938,92 @@ msgstr ""
 msgid "You cannot queue any more items!"
 msgstr ""
 
-#: client/cl_research.c:563
+#: client/cl_research.c:560
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr ""
 
-#: client/cl_research.c:564
+#: client/cl_research.c:561
 msgid "Not researched in any base."
 msgstr ""
 
-#: client/cl_research.c:570
+#: client/cl_research.c:567
 #, c-format
 msgid "Researched in %s"
 msgstr ""
 
-#: client/cl_research.c:572
+#: client/cl_research.c:569
 msgid "Researched in this base."
 msgstr ""
 
-#: client/cl_research.c:583
+#: client/cl_research.c:580
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr ""
 
-#: client/cl_research.c:585
+#: client/cl_research.c:582
 msgid "Progress: Not available."
 msgstr ""
 
-#: client/cl_research.c:589
+#: client/cl_research.c:586
 msgid "Status: Under research"
 msgstr ""
 
-#: client/cl_research.c:592
+#: client/cl_research.c:589
 msgid "Status: Research paused"
 msgstr ""
 
-#: client/cl_research.c:595
+#: client/cl_research.c:592
 msgid "Status: Research finished"
 msgstr ""
 
-#: client/cl_research.c:598
+#: client/cl_research.c:595
 msgid "Status: Unknown technology"
 msgstr ""
 
-#: client/cl_research.c:672
+#: client/cl_research.c:669
 msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
 "in order to assign scientists to research this technology.\n"
 msgstr ""
 
-#: client/cl_research.c:793
+#: client/cl_research.c:790
 msgid "This item is already under research by your scientists."
 msgstr ""
 
-#: client/cl_research.c:796
+#: client/cl_research.c:793
 msgid "The research on this item continues."
 msgstr ""
 
-#: client/cl_research.c:800 client/cl_research.c:842
+#: client/cl_research.c:797 client/cl_research.c:839
 msgid "The research on this item is complete."
 msgstr ""
 
-#: client/cl_research.c:813
+#: client/cl_research.c:810
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 msgstr ""
 
-#: client/cl_research.c:881
+#: client/cl_research.c:878
 msgid " [not yet researchable]"
 msgstr ""
 
-#: client/cl_research.c:988
+#: client/cl_research.c:985
 msgid "Build a laboratory first"
 msgstr ""
 
-#: client/cl_research.c:1069
+#: client/cl_research.c:1066
 #, c-format
 msgid "Research of %s finished\n"
 msgstr ""
 
-#: client/cl_research.c:1070
+#: client/cl_research.c:1067
 msgid "Research finished"
 msgstr ""
 
-#: client/cl_research.c:1368
+#: client/cl_research.c:1365
 msgid "No description available."
 msgstr ""
 
@@ -5102,7 +5066,7 @@ msgstr ""
 msgid "Toggle to next soldier"
 msgstr ""
 
-#: client/cl_team.c:1636 client/cl_team.c:1687
+#: client/cl_team.c:1636 client/cl_team.c:1684
 #, fuzzy, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Civil set"
@@ -5119,7 +5083,7 @@ msgid ""
 "\n"
 msgstr "Civil set"
 
-#: client/cl_team.c:1645 client/cl_team.c:1691
+#: client/cl_team.c:1645 client/cl_team.c:1688
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -5185,63 +5149,63 @@ msgid ""
 "\n"
 msgstr "Civil set"
 
-#: client/cl_team.c:1690
+#: client/cl_team.c:1687
 #, fuzzy, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Civil set"
 
-#: client/cl_team.c:1694
+#: client/cl_team.c:1691
 #, c-format
 msgid "Phalanx soldiers killed by Aliens\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1695
+#: client/cl_team.c:1692
 #, c-format
 msgid "Phalanx soldiers missing in action\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1696
+#: client/cl_team.c:1693
 #, c-format
 msgid "Phalanx friendly fire losses\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1697
+#: client/cl_team.c:1694
 #, c-format
 msgid ""
 "Phalanx survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1699
+#: client/cl_team.c:1696
 #, fuzzy, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civil set"
 
-#: client/cl_team.c:1700
+#: client/cl_team.c:1697
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1701
+#: client/cl_team.c:1698
 #, fuzzy, c-format
 msgid ""
 "Civilians saved\t%i\n"
 "\n"
 msgstr "Civil set"
 
-#: client/cl_team.c:1705
+#: client/cl_team.c:1702
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1706
+#: client/cl_team.c:1703
 #, c-format
 msgid ""
 "Total item sale value\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1722
+#: client/cl_team.c:1719
 #, c-format
 msgid ""
 "\n"
@@ -5250,30 +5214,30 @@ msgid ""
 "Team survivors:  %i"
 msgstr ""
 
-#: client/cl_team.c:1724
+#: client/cl_team.c:1721
 msgid "You won the game!"
 msgstr ""
 
-#: client/cl_team.c:1726
+#: client/cl_team.c:1723
 msgid "Congratulations"
 msgstr ""
 
-#: client/cl_team.c:1728
+#: client/cl_team.c:1725
 msgid ""
 "The game was a draw!\n"
 "\n"
 "No survivors left on any side."
 msgstr ""
 
-#: client/cl_team.c:1729
+#: client/cl_team.c:1726
 msgid "Game Drawn!"
 msgstr ""
 
-#: client/cl_team.c:1731
+#: client/cl_team.c:1728
 msgid "You lost the game"
 msgstr ""
 
-#: client/cl_team.c:1733
+#: client/cl_team.c:1730
 msgid "Better luck next time"
 msgstr ""
 
@@ -5444,17 +5408,17 @@ msgstr "Helbred\t%i\n"
 msgid "Shield:\t%s\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:393
+#: client/cl_ufopedia.c:375
 msgid "No pre-research description available."
 msgstr ""
 
 # #ufopedia
-#: client/cl_ufopedia.c:507
+#: client/cl_ufopedia.c:533
 msgid "Ufopedia Content"
 msgstr "Ufopædi Indhold"
 
 # #ufopedia
-#: client/cl_ufopedia.c:562
+#: client/cl_ufopedia.c:588
 #, fuzzy, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Ufopædi Indhold"

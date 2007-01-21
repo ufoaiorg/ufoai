@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-01-19 12:00+0100\n"
+"POT-Creation-Date: 2007-01-21 18:26+0100\n"
 "PO-Revision-Date: 2006-11-13 05:27+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -487,65 +487,45 @@ msgstr "Ufopedia sisu"
 msgid "Alive Aliens in all bases:"
 msgstr ""
 
-#: ../base/ufos/menu_aliencont.ufo:129
+#: ../base/ufos/menu_aliencont.ufo:125
+#, fuzzy
+msgid "Alive Aliens in this base:"
+msgstr "Vabu teadlasi selles baasis: %i"
+
+#: ../base/ufos/menu_aliencont.ufo:140
 msgid "Aliens available to process:"
 msgstr ""
 
-#: ../base/ufos/menu_aliencont.ufo:134
+#: ../base/ufos/menu_aliencont.ufo:147
 #, fuzzy
 msgid "Alien type"
 msgstr "Tulnukate liigid"
 
-#: ../base/ufos/menu_aliencont.ufo:139
+#: ../base/ufos/menu_aliencont.ufo:154
 msgid "Examinated"
 msgstr ""
 
-#: ../base/ufos/menu_aliencont.ufo:144
+#: ../base/ufos/menu_aliencont.ufo:161
 #, fuzzy
 msgid "Amount"
 msgstr "Sihtimata Valang"
 
-#: ../base/ufos/menu_aliencont.ufo:150 ../base/ufos/team_aliens.ufo:227
-msgid "Ortnok"
-msgstr ""
-"Ortnokid suudavad kasutada lihtsamaid tulnukate püsse, nad ei suuda kasutada "
-"ei raskerelvastust ega granaate, kuna see on nende piiratud mõistusele liiga "
-"raske.Rohelise nahaga esireasõdurid. Alistatud Antareanside poolt sajandeid "
-"tagasi, on nad nüüd Antareanide impeeriumi orjad. Inteligentsuselt on nad "
-"võrreldavad Maa ahvidega, isaseid  Ortnoke treenitakse sünnist peale "
-"tugevateks ja osavateks sõduriteks. Emased hoitakse nn. sünnitus hoidlates, "
-"kinnitamaks, et Antareansidel oleks alati värske varu \"kahuriliha\""
-
-#: ../base/ufos/menu_aliencont.ufo:155
-#, fuzzy
-msgid "yes"
-msgstr "Jah"
-
-#: ../base/ufos/menu_aliencont.ufo:166 ../base/ufos/team_aliens.ufo:239
-#, fuzzy
-msgid "Taman"
-msgstr "Tiim"
-
-#: ../base/ufos/menu_aliencont.ufo:171
-msgid "needs autopsy"
-msgstr ""
-
-#: ../base/ufos/menu_aliencont.ufo:187 ../base/ufos/menu_research.ufo:825
+#: ../base/ufos/menu_aliencont.ufo:196 ../base/ufos/menu_research.ufo:825
 msgid "Base Info"
 msgstr "Baasi info"
 
-#: ../base/ufos/menu_aliencont.ufo:195
+#: ../base/ufos/menu_aliencont.ufo:202
 #, fuzzy
 msgid "Alien Type:"
 msgstr "Tulnukate liigid"
 
-#: ../base/ufos/menu_aliencont.ufo:224
+#: ../base/ufos/menu_aliencont.ufo:229
 #, fuzzy
-msgid "In this base:"
-msgstr "Selle Baasi nimi"
+msgid "Killed:"
+msgstr "Lille"
 
 #: ../base/ufos/menu_aliencont.ufo:243
-msgid "In all bases:"
+msgid "Captured in all bases:"
 msgstr ""
 
 #: ../base/ufos/menu_althud.ufo:45 ../base/ufos/menu_inventory.ufo:172
@@ -654,7 +634,7 @@ msgstr "Osta uus lnnumasin"
 
 #: ../base/ufos/menu_bases.ufo:142 ../base/ufos/menu_geoscape.ufo:717
 #: ../base/ufos/menu_transfer.ufo:49 ../base/ufos/research.ufo:86
-#: client/cl_map.c:321
+#: client/cl_map.c:296
 msgid "Aircraft"
 msgstr "Lennumasin"
 
@@ -1916,7 +1896,7 @@ msgstr "Tegelaste võimed"
 msgid "Selected aircraft"
 msgstr "Vali lennumasin"
 
-#: ../base/ufos/menu_transfer.ufo:76 client/cl_map.c:315
+#: ../base/ufos/menu_transfer.ufo:76 client/cl_map.c:290
 msgid "Base"
 msgstr "Baas"
 
@@ -3501,11 +3481,11 @@ msgstr ""
 "kergelt jahtida igat saaki, aga kuna tema aju pole kaitstud ei naha ega "
 "luude poolt on Shevaar nõrk nii psionic rünnakule kui ka lähivõitluses."
 
-#: ../base/ufos/research.ufo:2111
+#: ../base/ufos/research.ufo:2115
 msgid "Alien Autopsy - Ortnok"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2112
+#: ../base/ufos/research.ufo:2116
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "Rohelin nahk on soomuseline ja tugev, rakuanalüüsid näitavad, et kehas on "
@@ -3516,7 +3496,7 @@ msgstr ""
 "töötades isegi kuni 14 tundi pärast ortnoki surma.Sellepärast kasutavadgi "
 "Antareanid neid kauhrilihana kõikides kohtades mida nad tahavd valitseda."
 
-#: ../base/ufos/research.ufo:2113
+#: ../base/ufos/research.ufo:2117
 #, fuzzy
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
@@ -3528,24 +3508,24 @@ msgstr ""
 "töötades isegi kuni 14 tundi pärast ortnoki surma.Sellepärast kasutavadgi "
 "Antareanid neid kauhrilihana kõikides kohtades mida nad tahavd valitseda."
 
-#: ../base/ufos/research.ufo:2133
+#: ../base/ufos/research.ufo:2137
 msgid "Alien Autopsy - Taman"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2134
+#: ../base/ufos/research.ufo:2138
 msgid "taman_autopsy_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2135
+#: ../base/ufos/research.ufo:2139
 #, fuzzy
 msgid "taman_autopsy_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2153
+#: ../base/ufos/research.ufo:2157
 msgid "Alien Autopsy - Shevaar"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2154
+#: ../base/ufos/research.ufo:2158
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "Tugev ja muskliline keha toetub suurele, sirgel skelettile andes sellel "
@@ -3555,7 +3535,7 @@ msgstr ""
 "kergelt jahtida igat saaki, aga kuna tema aju pole kaitstud ei naha ega "
 "luude poolt on Shevaar nõrk nii psionic rünnakule kui ka lähivõitluses."
 
-#: ../base/ufos/research.ufo:2155
+#: ../base/ufos/research.ufo:2159
 #, fuzzy
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
@@ -3566,55 +3546,11 @@ msgstr ""
 "kergelt jahtida igat saaki, aga kuna tema aju pole kaitstud ei naha ega "
 "luude poolt on Shevaar nõrk nii psionic rünnakule kui ka lähivõitluses."
 
-#: ../base/ufos/research.ufo:2173
-msgid "Live Specimen - Stinger"
-msgstr ""
-
-#: ../base/ufos/research.ufo:2174
-msgid "hovernet_notes_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2175
-#, fuzzy
-msgid "hovernet_notes_pre_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:2188
-msgid "Alien Autopsy - Stinger"
-msgstr ""
-
-#: ../base/ufos/research.ufo:2189
-msgid "hovernet_autopsy_txt"
-msgstr ""
-"Arutades lahti segipaisatud traadi Hoverneti kehal, tuleb välja tugev, "
-"mittepainduv tundmatu kontstruktsiooniga plokk. Relvade liitmis kohad on "
-"selgelt nähtavad, läbi märgistuste mida mei teadlased veel tõlgivad. Neist "
-"aru saamine oleks esimene samm    mõista tulnukate keelt.Ühtegi liitmiskohta "
-"pole näha traadi küljes mis ulatuvad plokkist välja, isegi mitte elektri "
-"mikroskoobi all. On võimalike, et traadid tehti korraga koos plokkiga, et "
-"jagad võrdselt hoverneti energiat ja panna ta hõljuma. Lahtiseid traate on "
-"raske lasta kuulide või energiarelvadega, kõige paremini mõjuksid plahvatus "
-"või tule relvad. "
-
-#: ../base/ufos/research.ufo:2190
-#, fuzzy
-msgid "hovernet_autopsy_pre_txt"
-msgstr ""
-"Arutades lahti segipaisatud traadi Hoverneti kehal, tuleb välja tugev, "
-"mittepainduv tundmatu kontstruktsiooniga plokk. Relvade liitmis kohad on "
-"selgelt nähtavad, läbi märgistuste mida mei teadlased veel tõlgivad. Neist "
-"aru saamine oleks esimene samm    mõista tulnukate keelt.Ühtegi liitmiskohta "
-"pole näha traadi küljes mis ulatuvad plokkist välja, isegi mitte elektri "
-"mikroskoobi all. On võimalike, et traadid tehti korraga koos plokkiga, et "
-"jagad võrdselt hoverneti energiat ja panna ta hõljuma. Lahtiseid traate on "
-"raske lasta kuulide või energiarelvadega, kõige paremini mõjuksid plahvatus "
-"või tule relvad. "
-
-#: ../base/ufos/research.ufo:2205
+#: ../base/ufos/research.ufo:2209
 msgid "Alien Autopsy - Ortnok Cyborg"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2206
+#: ../base/ufos/research.ufo:2210
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
 "Eraldades cyborgi metall-luustiku eluka kehast lendab sädemeid ja väljub "
@@ -3625,7 +3561,7 @@ msgstr ""
 "eesmärk on luua super ortnok, mis oleks vastupidavam ja tugevam kui tavaline "
 "ortnok ja mida saaks kasutada kõikjal"
 
-#: ../base/ufos/research.ufo:2207
+#: ../base/ufos/research.ufo:2211
 #, fuzzy
 msgid "cyborg_ortnok_autopsy_pre_txt"
 msgstr ""
@@ -3637,110 +3573,110 @@ msgstr ""
 "eesmärk on luua super ortnok, mis oleks vastupidavam ja tugevam kui tavaline "
 "ortnok ja mida saaks kasutada kõikjal"
 
-#: ../base/ufos/research.ufo:2225
+#: ../base/ufos/research.ufo:2229
 #, fuzzy
 msgid "Phoenix UGV"
 msgstr "Phoenix"
 
-#: ../base/ufos/research.ufo:2226
+#: ../base/ufos/research.ufo:2230
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2227
+#: ../base/ufos/research.ufo:2231
 #, fuzzy
 msgid "ugv_phoenix_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2241
+#: ../base/ufos/research.ufo:2245
 #, fuzzy
 msgid "Triax UGV"
 msgstr "Triax"
 
-#: ../base/ufos/research.ufo:2242
+#: ../base/ufos/research.ufo:2246
 msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2243
+#: ../base/ufos/research.ufo:2247
 #, fuzzy
 msgid "ugv_triax_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2261
+#: ../base/ufos/research.ufo:2265
 msgid "Raven ECM Unit"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2263 ../base/ufos/research.ufo:2279
+#: ../base/ufos/research.ufo:2267 ../base/ufos/research.ufo:2283
 #, fuzzy
 msgid "craft_shield_light_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2277
+#: ../base/ufos/research.ufo:2281
 msgid "Polymer Aircraft Armour"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2293
+#: ../base/ufos/research.ufo:2297
 msgid "SHIVA Rotary Cannon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2295
+#: ../base/ufos/research.ufo:2299
 msgid "craft_weapon_flac_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2309
+#: ../base/ufos/research.ufo:2313
 msgid "Sparrowhawk AA Missile Rack"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2311
+#: ../base/ufos/research.ufo:2315
 #, fuzzy
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2325
+#: ../base/ufos/research.ufo:2329
 msgid "TR-20 Rocket Pod"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2327
+#: ../base/ufos/research.ufo:2331
 #, fuzzy
 msgid "craft_weapon_tr20_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2347
+#: ../base/ufos/research.ufo:2351
 msgid "Particle Beam Weapon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2348
+#: ../base/ufos/research.ufo:2352
 #, fuzzy
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2349
+#: ../base/ufos/research.ufo:2353
 #, fuzzy
 msgid "craft_weapon_particle_beam_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2373
+#: ../base/ufos/research.ufo:2377
 #, fuzzy
 msgid "Political Situation Before The Invasion"
 msgstr "Poolitiline olukord enne kallaletungi"
 
-#: ../base/ufos/research.ufo:2374
+#: ../base/ufos/research.ufo:2378
 msgid "news_initial_political_situation_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2384
+#: ../base/ufos/research.ufo:2388
 #, fuzzy
 msgid "After The War"
 msgstr "Pärast sõda"
 
-#: ../base/ufos/research.ufo:2385
+#: ../base/ufos/research.ufo:2389
 msgid "news_after_the_war_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2395
+#: ../base/ufos/research.ufo:2399
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2396
+#: ../base/ufos/research.ufo:2400
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr "<TODO>"
 
@@ -4165,7 +4101,23 @@ msgstr "Vaatle erinevaid nähtavaid vastaseid"
 msgid "End round"
 msgstr "Lõpeta round"
 
-#: ../base/ufos/team_aliens.ufo:249
+#: ../base/ufos/team_aliens.ufo:227
+msgid "Ortnok"
+msgstr ""
+"Ortnokid suudavad kasutada lihtsamaid tulnukate püsse, nad ei suuda kasutada "
+"ei raskerelvastust ega granaate, kuna see on nende piiratud mõistusele liiga "
+"raske.Rohelise nahaga esireasõdurid. Alistatud Antareanside poolt sajandeid "
+"tagasi, on nad nüüd Antareanide impeeriumi orjad. Inteligentsuselt on nad "
+"võrreldavad Maa ahvidega, isaseid  Ortnoke treenitakse sünnist peale "
+"tugevateks ja osavateks sõduriteks. Emased hoitakse nn. sünnitus hoidlates, "
+"kinnitamaks, et Antareansidel oleks alati värske varu \"kahuriliha\""
+
+#: ../base/ufos/team_aliens.ufo:234
+#, fuzzy
+msgid "Taman"
+msgstr "Tiim"
+
+#: ../base/ufos/team_aliens.ufo:241
 msgid "Shevaar"
 msgstr ""
 "Alguses tungivad Shevaarid vastasele otse kallale ja ründavad neid "
@@ -4177,30 +4129,6 @@ msgstr ""
 "hambareaga suudab Shevaar kergesti ära rebida inimeste jäsemeid jm. Nende "
 "nahk on väga paks. Sellepärast kasutavad Antareanid neid sõjakoeradena. Sell "
 "ajal kui vastane tegeleb shevaaridega, tulistavad Antareanid neid kaugelt."
-
-#: ../base/ufos/team_aliens.ufo:259
-msgid "Hovernet"
-msgstr ""
-"Hovernetid on kaugjuhitavad ja nad ilmuvad ainult UFO maandumis/vallutamise "
-"ja baasi rünnakute ajal. Kuigi hovernetidel on ka bioloogilisi osi on nad "
-"siiski masinad. Nende tulistamine hävitab enamus nende elutähtsaid osi. Et "
-"püüda hoverneti elusalt, peab hävitama Antareani kes hovernette kontrollib. "
-"Tavaliselt asub ta laeva kontroll ruumis.Need on väiksed, hõljuvad, "
-"mehaanilised, relvad kellel anti hüüdnimeks \"Hovernet\" nende poolt kes "
-"elasid üle esimese kokkupuute nendega. Nende nimi tuleneb 2 sõnast Hover - "
-"hõljuma ja Net - võrk. Nad hõljuvad maapinna kohal ja nad on väga ohtlikud, "
-"sest nad on relvastatud tachyoni snaiper püssiga. Arvatavasti on nad "
-"kaitsesüsteem mis aktiveerub kui UFO maandub või sunnitakse maanduma."
-
-#: ../base/ufos/team_aliens.ufo:269
-msgid "Cyborg Ortnok"
-msgstr ""
-"Erinevalt tavalistest Ortnokidest, on Cyborg Ortnoki relvad ehitatud tema "
-"käte kohapeale. Need käe-relvad võivad olla tachyoni automaatidest kuni "
-"granaadi heitjateni.Nad on Antareanide masinprogrammi tulemus, jäsemed ja "
-"enamus siseelundid on eemaldatud ja asendatud masinatega, pealuu on "
-"tugendatud metalliga mis on sulatatud kolju külge kinni. Cybork Ortnokid on "
-"väga agresiivsed lahingus."
 
 #: ../base/ufos/team_humans.ufo:1529
 #, fuzzy
@@ -4759,9 +4687,9 @@ msgstr "Lennumasin alustatud"
 #: client/cl_campaign.c:1196 client/cl_campaign.c:1203
 #: client/cl_campaign.c:1211 client/cl_campaign.c:2480
 #: client/cl_campaign.c:2517 client/cl_campaign.c:2519
-#: client/cl_campaign.c:2889 client/cl_map.c:295 client/cl_research.c:671
-#: client/cl_research.c:793 client/cl_research.c:796 client/cl_research.c:800
-#: client/cl_research.c:813 client/cl_research.c:842 client/cl_research.c:988
+#: client/cl_campaign.c:2836 client/cl_map.c:270 client/cl_research.c:668
+#: client/cl_research.c:790 client/cl_research.c:793 client/cl_research.c:797
+#: client/cl_research.c:810 client/cl_research.c:839 client/cl_research.c:985
 #: client/cl_ufo.c:195 client/cl_ufo.c:200
 msgid "Notice"
 msgstr "Teade"
@@ -4814,12 +4742,12 @@ msgstr "Transpordi mission"
 msgid "Back to base"
 msgstr "Tagasi baasi"
 
-#: client/cl_aircraft.c:359 client/cl_map.c:820 client/cl_ufopedia.c:306
+#: client/cl_aircraft.c:359 client/cl_map.c:772 client/cl_ufopedia.c:306
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr "Kiirus:\t%0f\n"
 
-#: client/cl_aircraft.c:360 client/cl_map.c:821
+#: client/cl_aircraft.c:360 client/cl_map.c:773
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Kütus:\t%i/%i\n"
@@ -5026,7 +4954,7 @@ msgstr "%s ehitamine on lõpetatud baas %s"
 msgid "Building finished"
 msgstr "Ehitis lõpetatud"
 
-#: client/cl_campaign.c:432 client/cl_map.c:295
+#: client/cl_campaign.c:432 client/cl_map.c:270
 msgid "Could not set up your base at this location"
 msgstr "Ei suutnud luua baasi sellesse kohta"
 
@@ -5165,28 +5093,28 @@ msgid_plural "credits"
 msgstr[0] "Autorid ja abilised"
 msgstr[1] "Autorid ja abilised"
 
-#: client/cl_campaign.c:1116 client/cl_campaign.c:4104
+#: client/cl_campaign.c:1116 client/cl_campaign.c:4051
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "teadlane(sed)"
 msgstr[1] "teadlane(sed)"
 
-#: client/cl_campaign.c:1117 client/cl_campaign.c:4106
+#: client/cl_campaign.c:1117 client/cl_campaign.c:4053
 #, fuzzy
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "Meedik"
 msgstr[1] "Meedik"
 
-#: client/cl_campaign.c:1118 client/cl_campaign.c:4103
+#: client/cl_campaign.c:1118 client/cl_campaign.c:4050
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Sõdur"
 msgstr[1] "Sõdur"
 
-#: client/cl_campaign.c:1119 client/cl_campaign.c:4105
+#: client/cl_campaign.c:1119 client/cl_campaign.c:4052
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
@@ -5327,38 +5255,38 @@ msgstr "Kogu või lae tiim"
 msgid "Your dropship is not near the landing zone"
 msgstr "Sinu transpordilaev ei ole maadumispaiga lähedal "
 
-#: client/cl_campaign.c:2745
+#: client/cl_campaign.c:2692
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s on ülendatud %s.\n"
 
-#: client/cl_campaign.c:2747
+#: client/cl_campaign.c:2694
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
 "in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2748
+#: client/cl_campaign.c:2695
 msgid "Soldier promoted"
 msgstr "Sõdur sai ametikõrgendust"
 
-#: client/cl_campaign.c:2888
+#: client/cl_campaign.c:2835
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Baasi kaitse: %s edukas"
 
-#: client/cl_campaign.c:4099
+#: client/cl_campaign.c:4046
 #, fuzzy
 msgid "Aliens"
 msgstr "Tulnukas"
 
-#: client/cl_campaign.c:4099
+#: client/cl_campaign.c:4046
 #, fuzzy
 msgid "Human"
 msgstr "Busan"
 
-#: client/cl_campaign.c:4101
+#: client/cl_campaign.c:4048
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -5595,45 +5523,45 @@ msgstr "Väga Raske"
 msgid "Insane"
 msgstr "Hullumeelne"
 
-#: client/cl_map.c:280
+#: client/cl_map.c:254
 msgid "Click"
 msgstr "Kliki"
 
-#: client/cl_map.c:332
+#: client/cl_map.c:307
 msgid "UFO"
 msgstr "UFO"
 
-#: client/cl_map.c:675
+#: client/cl_map.c:575 client/cl_map.c:627
 msgid "Day"
 msgstr "Päev"
 
-#: client/cl_map.c:675
+#: client/cl_map.c:575 client/cl_map.c:627
 msgid "Night"
 msgstr "Öö"
 
-#: client/cl_map.c:792
+#: client/cl_map.c:744
 #, fuzzy
 msgid "Select the desired location of the new base on the map.\n"
 msgstr ""
 "Vali Soovitud asukoht uue\n"
 "baasi jaoks sellel kaartil.\n"
 
-#: client/cl_map.c:797
+#: client/cl_map.c:749
 #, fuzzy
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr ""
 "Tulnukad ründavad meie\n"
 "baasi !!!!\n"
 
-#: client/cl_map.c:802
+#: client/cl_map.c:754
 msgid "Select ufo or mission on map\n"
 msgstr "Vali UFO või mission kaartil\n"
 
-#: client/cl_map.c:807
+#: client/cl_map.c:759
 msgid "UFO in radar range\n"
 msgstr "Ufo on radari ulatuseses\n"
 
-#: client/cl_map.c:813
+#: client/cl_map.c:765
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -5644,12 +5572,12 @@ msgstr ""
 "Tüüp: %s\n"
 "Ülesanne: %s\n"
 
-#: client/cl_map.c:818
+#: client/cl_map.c:770
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Nimii:\t%s (%i/%i)\n"
 
-#: client/cl_map.c:819
+#: client/cl_map.c:771
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Seisund:\t%s\n"
@@ -5663,20 +5591,20 @@ msgstr "TODO"
 msgid "Unknown - need to research this"
 msgstr "Tundmatu ese - seda on vaja uurida"
 
-#: client/cl_menu.c:434
+#: client/cl_menu.c:436
 msgid "Set playersoldiers lower than teamsoldiers"
 msgstr "Pane mängitavadid sõdureid vähemaks kui tiimi sõdureid"
 
-#: client/cl_menu.c:434
+#: client/cl_menu.c:436
 msgid "Settings doesn't make sense"
 msgstr "Seadistused ei ole õiged"
 
-#: client/cl_menu.c:1516
+#: client/cl_menu.c:1518
 #, c-format
 msgid "Key: %s"
 msgstr "Nupp %s"
 
-#: client/cl_menu.c:2735
+#: client/cl_menu.c:2799
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr ""
 
@@ -5756,50 +5684,50 @@ msgstr "Järjekord on täis! "
 msgid "You cannot queue any more items!"
 msgstr ""
 
-#: client/cl_research.c:563
+#: client/cl_research.c:560
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Vabu teadlasi selles baasis: %i"
 
-#: client/cl_research.c:564
+#: client/cl_research.c:561
 msgid "Not researched in any base."
 msgstr "Ei uurita ühesgi baasis"
 
-#: client/cl_research.c:570
+#: client/cl_research.c:567
 #, c-format
 msgid "Researched in %s"
 msgstr "Uuritakse %s"
 
-#: client/cl_research.c:572
+#: client/cl_research.c:569
 msgid "Researched in this base."
 msgstr "Uuritakse selles baasis"
 
-#: client/cl_research.c:583
+#: client/cl_research.c:580
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Edasijõudmine: %.1f%%"
 
-#: client/cl_research.c:585
+#: client/cl_research.c:582
 msgid "Progress: Not available."
 msgstr "Areng: Pole teada"
 
-#: client/cl_research.c:589
+#: client/cl_research.c:586
 msgid "Status: Under research"
 msgstr "Seisund: Uuritakse praegu"
 
-#: client/cl_research.c:592
+#: client/cl_research.c:589
 msgid "Status: Research paused"
 msgstr "Seisund: Uurimine on peatatud"
 
-#: client/cl_research.c:595
+#: client/cl_research.c:592
 msgid "Status: Research finished"
 msgstr "Seisund: Uurimine lõpetatud"
 
-#: client/cl_research.c:598
+#: client/cl_research.c:595
 msgid "Status: Unknown technology"
 msgstr "Seisund: Tundmatu tehnoloogja"
 
-#: client/cl_research.c:672
+#: client/cl_research.c:669
 msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
@@ -5809,19 +5737,19 @@ msgstr ""
 " Sa pead ehitama uue labori või peatama teise\n"
 " uurimuse, et teadlased saaksid seda tehnoloogjat uurida.\n"
 
-#: client/cl_research.c:793
+#: client/cl_research.c:790
 msgid "This item is already under research by your scientists."
 msgstr "Seda asja juba uuritakse juba meie teadlaste poolt."
 
-#: client/cl_research.c:796
+#: client/cl_research.c:793
 msgid "The research on this item continues."
 msgstr "Selle asja uurimine jätkub."
 
-#: client/cl_research.c:800 client/cl_research.c:842
+#: client/cl_research.c:797 client/cl_research.c:839
 msgid "The research on this item is complete."
 msgstr "Uurimus selle asja kohta on lõppenud."
 
-#: client/cl_research.c:813
+#: client/cl_research.c:810
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -5829,24 +5757,24 @@ msgstr ""
 "See uurimus ei ole veel kättesaadav.\n"
 " Sa pead uurima tehnoloogiad millele see uurimus on rajatud"
 
-#: client/cl_research.c:881
+#: client/cl_research.c:878
 msgid " [not yet researchable]"
 msgstr "[pole piisavalt infot uurimiseks]"
 
-#: client/cl_research.c:988
+#: client/cl_research.c:985
 msgid "Build a laboratory first"
 msgstr "Ehita labor enne"
 
-#: client/cl_research.c:1069
+#: client/cl_research.c:1066
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "%s uurimine lõpetatud\n"
 
-#: client/cl_research.c:1070
+#: client/cl_research.c:1067
 msgid "Research finished"
 msgstr "Uurimustöö lõpetatud"
 
-#: client/cl_research.c:1368
+#: client/cl_research.c:1365
 msgid "No description available."
 msgstr "Ei ole infot selle asja kohta"
 
@@ -5889,7 +5817,7 @@ msgstr "Vali sõdurenimekirjast"
 msgid "Toggle to next soldier"
 msgstr "Järgmine tulnukas"
 
-#: client/cl_team.c:1636 client/cl_team.c:1687
+#: client/cl_team.c:1636 client/cl_team.c:1684
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Tulnukaid tapetud\t%i\n"
@@ -5908,7 +5836,7 @@ msgstr ""
 "Tulnukaid kinnipüütud\t%i\n"
 "\n"
 
-#: client/cl_team.c:1645 client/cl_team.c:1691
+#: client/cl_team.c:1645 client/cl_team.c:1688
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -5985,27 +5913,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1690
+#: client/cl_team.c:1687
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Tulnukaid kinnipüütud\t%i\n"
 
-#: client/cl_team.c:1694
+#: client/cl_team.c:1691
 #, c-format
 msgid "Phalanx soldiers killed by Aliens\t%i\n"
 msgstr "Phalanxi sõdureid tapetud tulnukate poolt\t%i\n"
 
-#: client/cl_team.c:1695
+#: client/cl_team.c:1692
 #, c-format
 msgid "Phalanx soldiers missing in action\t%i\n"
 msgstr "Phalanxi sõdureid kadunud lahingus\t%i\n"
 
-#: client/cl_team.c:1696
+#: client/cl_team.c:1693
 #, c-format
 msgid "Phalanx friendly fire losses\t%i\n"
 msgstr "Phalanxi poolt tapetud tiimikaaslasi\t%i\n"
 
-#: client/cl_team.c:1697
+#: client/cl_team.c:1694
 #, c-format
 msgid ""
 "Phalanx survivors\t%i\n"
@@ -6014,17 +5942,17 @@ msgstr ""
 "Phalanxi ellujäänud\t%i\n"
 "\n"
 
-#: client/cl_team.c:1699
+#: client/cl_team.c:1696
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Tulnukate tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:1700
+#: client/cl_team.c:1697
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Phalanxi poolt tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:1701
+#: client/cl_team.c:1698
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -6033,12 +5961,12 @@ msgstr ""
 "Inimesi päästetud\t%i\n"
 "\n"
 
-#: client/cl_team.c:1705
+#: client/cl_team.c:1702
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
 msgstr "Asju kogutud ja müüdud\t%i\n"
 
-#: client/cl_team.c:1706
+#: client/cl_team.c:1703
 #, c-format
 msgid ""
 "Total item sale value\t%i\n"
@@ -6047,7 +5975,7 @@ msgstr ""
 "Kõikide asjade müügi hind\t%i\n"
 "\n"
 
-#: client/cl_team.c:1722
+#: client/cl_team.c:1719
 #, c-format
 msgid ""
 "\n"
@@ -6056,32 +5984,32 @@ msgid ""
 "Team survivors:  %i"
 msgstr ""
 
-#: client/cl_team.c:1724
+#: client/cl_team.c:1721
 #, fuzzy
 msgid "You won the game!"
 msgstr "Sa VÕITSID lahingu"
 
-#: client/cl_team.c:1726
+#: client/cl_team.c:1723
 msgid "Congratulations"
 msgstr ""
 
-#: client/cl_team.c:1728
+#: client/cl_team.c:1725
 msgid ""
 "The game was a draw!\n"
 "\n"
 "No survivors left on any side."
 msgstr ""
 
-#: client/cl_team.c:1729
+#: client/cl_team.c:1726
 msgid "Game Drawn!"
 msgstr ""
 
-#: client/cl_team.c:1731
+#: client/cl_team.c:1728
 #, fuzzy
 msgid "You lost the game"
 msgstr "Sa KAOTASID lahingu"
 
-#: client/cl_team.c:1733
+#: client/cl_team.c:1730
 msgid "Better luck next time"
 msgstr ""
 
@@ -6254,15 +6182,15 @@ msgstr "Kütus:\t%i\n"
 msgid "Shield:\t%s\n"
 msgstr "Kilp:\t%s\n"
 
-#: client/cl_ufopedia.c:393
+#: client/cl_ufopedia.c:375
 msgid "No pre-research description available."
 msgstr "Ei ole uuritud infot selle eseme kohta"
 
-#: client/cl_ufopedia.c:507
+#: client/cl_ufopedia.c:533
 msgid "Ufopedia Content"
 msgstr "Ufopedia sisu"
 
-#: client/cl_ufopedia.c:562
+#: client/cl_ufopedia.c:588
 #, fuzzy, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Ufopedia sisu"
@@ -6388,6 +6316,69 @@ msgstr ""
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr ""
+
+#, fuzzy
+#~ msgid "In this base:"
+#~ msgstr "Selle Baasi nimi"
+
+#~ msgid "hovernet_notes_txt"
+#~ msgstr "<TODO>"
+
+#, fuzzy
+#~ msgid "hovernet_notes_pre_txt"
+#~ msgstr "<TODO>"
+
+#~ msgid "hovernet_autopsy_txt"
+#~ msgstr ""
+#~ "Arutades lahti segipaisatud traadi Hoverneti kehal, tuleb välja tugev, "
+#~ "mittepainduv tundmatu kontstruktsiooniga plokk. Relvade liitmis kohad on "
+#~ "selgelt nähtavad, läbi märgistuste mida mei teadlased veel tõlgivad. "
+#~ "Neist aru saamine oleks esimene samm    mõista tulnukate keelt.Ühtegi "
+#~ "liitmiskohta pole näha traadi küljes mis ulatuvad plokkist välja, isegi "
+#~ "mitte elektri mikroskoobi all. On võimalike, et traadid tehti korraga "
+#~ "koos plokkiga, et jagad võrdselt hoverneti energiat ja panna ta hõljuma. "
+#~ "Lahtiseid traate on raske lasta kuulide või energiarelvadega, kõige "
+#~ "paremini mõjuksid plahvatus või tule relvad. "
+
+#, fuzzy
+#~ msgid "hovernet_autopsy_pre_txt"
+#~ msgstr ""
+#~ "Arutades lahti segipaisatud traadi Hoverneti kehal, tuleb välja tugev, "
+#~ "mittepainduv tundmatu kontstruktsiooniga plokk. Relvade liitmis kohad on "
+#~ "selgelt nähtavad, läbi märgistuste mida mei teadlased veel tõlgivad. "
+#~ "Neist aru saamine oleks esimene samm    mõista tulnukate keelt.Ühtegi "
+#~ "liitmiskohta pole näha traadi küljes mis ulatuvad plokkist välja, isegi "
+#~ "mitte elektri mikroskoobi all. On võimalike, et traadid tehti korraga "
+#~ "koos plokkiga, et jagad võrdselt hoverneti energiat ja panna ta hõljuma. "
+#~ "Lahtiseid traate on raske lasta kuulide või energiarelvadega, kõige "
+#~ "paremini mõjuksid plahvatus või tule relvad. "
+
+#~ msgid "Hovernet"
+#~ msgstr ""
+#~ "Hovernetid on kaugjuhitavad ja nad ilmuvad ainult UFO maandumis/"
+#~ "vallutamise ja baasi rünnakute ajal. Kuigi hovernetidel on ka "
+#~ "bioloogilisi osi on nad siiski masinad. Nende tulistamine hävitab enamus "
+#~ "nende elutähtsaid osi. Et püüda hoverneti elusalt, peab hävitama "
+#~ "Antareani kes hovernette kontrollib. Tavaliselt asub ta laeva kontroll "
+#~ "ruumis.Need on väiksed, hõljuvad, mehaanilised, relvad kellel anti "
+#~ "hüüdnimeks \"Hovernet\" nende poolt kes elasid üle esimese kokkupuute "
+#~ "nendega. Nende nimi tuleneb 2 sõnast Hover - hõljuma ja Net - võrk. Nad "
+#~ "hõljuvad maapinna kohal ja nad on väga ohtlikud, sest nad on relvastatud "
+#~ "tachyoni snaiper püssiga. Arvatavasti on nad kaitsesüsteem mis aktiveerub "
+#~ "kui UFO maandub või sunnitakse maanduma."
+
+#~ msgid "Cyborg Ortnok"
+#~ msgstr ""
+#~ "Erinevalt tavalistest Ortnokidest, on Cyborg Ortnoki relvad ehitatud tema "
+#~ "käte kohapeale. Need käe-relvad võivad olla tachyoni automaatidest kuni "
+#~ "granaadi heitjateni.Nad on Antareanide masinprogrammi tulemus, jäsemed ja "
+#~ "enamus siseelundid on eemaldatud ja asendatud masinatega, pealuu on "
+#~ "tugendatud metalliga mis on sulatatud kolju külge kinni. Cybork Ortnokid "
+#~ "on väga agresiivsed lahingus."
+
+#, fuzzy
+#~ msgid "yes"
+#~ msgstr "Jah"
 
 #~ msgid "Advanced Laser Technology"
 #~ msgstr "Arenenud Laser tehnoloogja"
