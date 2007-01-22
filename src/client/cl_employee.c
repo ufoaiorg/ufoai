@@ -53,7 +53,7 @@ static void E_EmployeeListClick_f (void)
 	if (num < 0 || num >= employeesInCurrentList)
 		return;
 
-	Cbuf_AddText(va("employee_hire %i", num));
+	Cbuf_AddText(va("employee_hire +%i", num));
 }
 
 /**
@@ -821,20 +821,29 @@ int E_CountUnassigned(const base_t* const base, employeeType_t type)
  */
 void E_EmployeeHire_f (void)
 {
-	int num;
+	int num, minus = 0, plus = 0;
+	char *arg;
 
 	if (!baseCurrent)
 		return;
 
 	/* Check syntax. */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: employee_hire <num>\n");
+		Com_Printf("Usage: employee_hire <+num>\n");
 		return;
 	}
-	num = atoi(Cmd_Argv(1));
+
+	arg = Cmd_Argv(1);
+	if (*arg == '+') {
+		num = atoi(arg+1);
+		minus = employeeListNode->textScroll % cl_numnames->integer;
+	} else {
+		num = atoi(Cmd_Argv(1));
+		plus = employeeListNode->textScroll;
+	}
 
 	/* Some sanity checks. */
-	if (employeeCategory >= MAX_EMPL && employeeCategory < EMPL_SOLDIER )
+	if (employeeCategory >= MAX_EMPL && employeeCategory < EMPL_SOLDIER)
 		return;
 
 	if (num >= employeesInCurrentList || num < 0)
@@ -850,14 +859,14 @@ void E_EmployeeHire_f (void)
 		if (!E_UnhireEmployee(&gd.bases[gd.employees[employeeCategory][num].baseIDHired], employeeCategory, num)) {
 			/* TODO: message - Couldn't fire employee. */
 		}
-		Cbuf_AddText(va("employeedel%i\n", num - (employeeListNode->textScroll % cl_numnames->integer)));
+		Cbuf_AddText(va("employeedel%i\n", num - minus));
 	} else {
 		if (!E_HireEmployee(baseCurrent, employeeCategory, num)) {
 			/* TODO: message - Couldn't hire employee. */
 		}
-		Cbuf_AddText(va("employeeadd%i\n", num - (employeeListNode->textScroll % cl_numnames->integer)));
+		Cbuf_AddText(va("employeeadd%i\n", num - minus));
 	}
-	Cbuf_AddText(va("employee_select %i\n", num));
+	Cbuf_AddText(va("employee_select %i\n", num + plus));
 }
 
 /**
