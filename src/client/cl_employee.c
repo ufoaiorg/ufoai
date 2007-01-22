@@ -50,10 +50,8 @@ static void E_EmployeeListClick_f (void)
 
 	num = atoi(Cmd_Argv(1));
 
-	if (num < 0 || num >= cl_numnames->integer)
+	if (num < 0 || num >= employeesInCurrentList)
 		return;
-
-	num += employeeListNode->textScroll;
 
 	Cbuf_AddText(va("employee_hire %i", num));
 }
@@ -128,9 +126,9 @@ static void E_EmployeeList_f (void)
 		if (employeesInCurrentList < cl_numnames->integer) {
 			if (employee->hired) {
 				if (employee->baseIDHired == baseCurrent->idx)
-					Cbuf_AddText(va("employeeadd%i\n", employeesInCurrentList));
+					Cbuf_AddText(va("employeeadd%i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
 				else
-					Cbuf_AddText(va("employeedisable%i\n", employeesInCurrentList));
+					Cbuf_AddText(va("employeedisable%i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
 			} else
 				Cbuf_AddText(va("employeedel%i\n", employeesInCurrentList));
 		}
@@ -279,7 +277,7 @@ employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int idx
 	if (!base || type >= MAX_EMPL || idx < 0)
 		return NULL;
 
-	for (i=0; i<gd.numEmployees[type]; i++) {
+	for (i = 0; i < gd.numEmployees[type]; i++) {
 		if (i == idx && (!gd.employees[type][i].hired || gd.employees[type][i].baseIDHired == base->idx))
 			return &gd.employees[type][i];
 	}
@@ -852,12 +850,12 @@ void E_EmployeeHire_f (void)
 		if (!E_UnhireEmployee(&gd.bases[gd.employees[employeeCategory][num].baseIDHired], employeeCategory, num)) {
 			/* TODO: message - Couldn't fire employee. */
 		}
-		Cbuf_AddText(va("employeedel%i\n", num));
+		Cbuf_AddText(va("employeedel%i\n", num - (employeeListNode->textScroll % cl_numnames->integer)));
 	} else {
 		if (!E_HireEmployee(baseCurrent, employeeCategory, num)) {
 			/* TODO: message - Couldn't hire employee. */
 		}
-		Cbuf_AddText(va("employeeadd%i\n", num));
+		Cbuf_AddText(va("employeeadd%i\n", num - (employeeListNode->textScroll % cl_numnames->integer)));
 	}
 	Cbuf_AddText(va("employee_select %i\n", num));
 }
@@ -880,7 +878,7 @@ static void E_EmployeeSelect_f(void)
 		return;
 
 	/* console commands */
-	Cvar_ForceSet("cl_selected", va("%i", num));
+	Cvar_ForceSet("cl_selected", va("%i", num - (employeeListNode->textScroll % cl_numnames->integer)));
 
 	/* set info cvars */
 	CL_CharacterCvars(&(gd.employees[employeeCategory][num].chr));
