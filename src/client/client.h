@@ -403,7 +403,7 @@ extern refexport_t re;
 void CL_Init(void);
 void CL_ParseScriptFirst(char *type, char *name, char **text);
 void CL_ReadSinglePlayerData( void );
-void CL_InitAfter(void);
+
 void CL_StartSingleplayer(qboolean singleplayer);
 void CL_Disconnect(void);
 void CL_GetChallengePacket(void);

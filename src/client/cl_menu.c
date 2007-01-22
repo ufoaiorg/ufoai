@@ -770,7 +770,7 @@ static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
 	if (node->type == MN_TEXT) {
 		assert(node->texh[0]);
 		if (node->textScroll)
-			return (int) (ty / node->texh[0]) + node->textScroll;
+			return (int) (ty / node->texh[0]) + node->textScroll + 1;
 		else
 			return (int) (ty / node->texh[0]) + 1;
 	} else
