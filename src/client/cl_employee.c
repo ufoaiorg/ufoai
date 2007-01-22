@@ -30,19 +30,75 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int employeeCategory = 0;
 /* how many employees in current list (changes on every catergory change, too) */
 static int employeesInCurrentList = 0;
+/* the menu node of the employee list */
+static menuNode_t *employeeListNode;
 
 /*****************************************************
  * VISUAL/GUI STUFF
  *****************************************************/
 
 /**
- * @brief Will fill the list with employees
- * @note is the init function in employee menu
+ * @brief Click function for employee_list node
+ * @sa E_EmployeeList_f
  */
-static void E_EmployeeList (void)
+static void E_EmployeeListClick_f (void)
+{
+	int num; /* clicked at which position? determined by node format string */
+
+	if (Cmd_Argc() < 2)
+		return;
+
+	num = atoi(Cmd_Argv(1));
+
+	if (num < 0 || num >= cl_numnames->integer)
+		return;
+
+	num += employeeListNode->textScroll;
+
+	Cbuf_AddText(va("employee_hire %i", num));
+}
+
+/**
+ * @brief Click function for employee_list node
+ * @sa E_EmployeeList_f
+ */
+static void E_EmployeeListScroll_f (void)
+{
+	int j, cnt = 0;
+	employee_t* employee;
+
+	for (j = employeeListNode->textScroll, employee = &(gd.employees[employeeCategory][employeeListNode->textScroll]); j < gd.numEmployees[employeeCategory]; j++, employee++) {
+		/* change the buttons */
+		if (employee->hired) {
+			if (employee->baseIDHired == baseCurrent->idx)
+				Cbuf_AddText(va("employeeadd%i\n", cnt));
+			else
+				Cbuf_AddText(va("employeedisable%i\n", cnt));
+		} else
+			Cbuf_AddText(va("employeedel%i\n", cnt));
+
+		cnt++;
+
+		/* only 19 buttons */
+		if (cnt >= cl_numnames->integer)
+			break;
+	}
+
+	for (;cnt < cl_numnames->integer; cnt++) {
+		Cvar_ForceSet(va("mn_name%i", cnt), "");
+		Cbuf_AddText(va("employeedisable%i\n", cnt));
+	}
+}
+
+/**
+ * @brief Will fill the list with employees
+ * @note this is the init function in employee menu
+ */
+static void E_EmployeeList_f (void)
 {
 	int i, j;
 	employee_t* employee = NULL;
+	static char hirelist[2048];
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent || !curCampaign)
@@ -58,22 +114,19 @@ static void E_EmployeeList (void)
 
 	employeesInCurrentList = 0;
 
-	for (j=0, employee=gd.employees[employeeCategory]; j<gd.numEmployees[employeeCategory]; j++, employee++) {
-		Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
-		/* TODO; Check whether he is assigned to aircraft and/or carries weapons */
+	for (j = 0, employee = gd.employees[employeeCategory]; j < gd.numEmployees[employeeCategory]; j++, employee++) {
+		Q_strcat(hirelist, va("%s\n", employee->chr.name), sizeof(hirelist));
 		/* change the buttons */
-		if (employee->hired) {
-			if (employee->baseIDHired == baseCurrent->idx)
-				Cbuf_AddText(va("employeeadd%i\n", employeesInCurrentList));
-			else
-				Cbuf_AddText(va("employeedisable%i\n", employeesInCurrentList));
-		} else
-			Cbuf_AddText(va("employeedel%i\n", employeesInCurrentList));
-
+		if (employeesInCurrentList < cl_numnames->integer) {
+			if (employee->hired) {
+				if (employee->baseIDHired == baseCurrent->idx)
+					Cbuf_AddText(va("employeeadd%i\n", employeesInCurrentList));
+				else
+					Cbuf_AddText(va("employeedisable%i\n", employeesInCurrentList));
+			} else
+				Cbuf_AddText(va("employeedel%i\n", employeesInCurrentList));
+		}
 		employeesInCurrentList++;
-		/* we can't display more than 19 employees */
-		if (employeesInCurrentList >= cl_numnames->integer)
-			break;
 	}
 
 	/* if the list is empty don't show the model*/
@@ -89,6 +142,9 @@ static void E_EmployeeList (void)
 		Cbuf_AddText(va("employeedisable%i\n", i));
 	}
 	Cbuf_AddText("employee_select 0\n");
+
+	/* bind to menu text array */
+	menuText[TEXT_LIST] = hirelist;
 }
 
 
@@ -155,6 +211,21 @@ employeeType_t E_GetEmployeeType(char* type)
 }
 
 /**
+ * @brief Set the employeelist node for faster lookups
+ * @sa CL_InitAfter
+ */
+extern void E_Init (void)
+{
+	menu_t* menu = MN_GetMenu("employees");
+	if (!menu)
+		Sys_Error("Could not find the employees menu\n");
+
+	employeeListNode = MN_GetNode(menu, "employee_list");
+	if (!employeeListNode)
+		Sys_Error("Could not find the employee_list node in employees menu\n");
+}
+
+/**
  * @brief Clears the employees list for loaded and new games
  * @sa CL_ResetSinglePlayerData
  * @sa E_DeleteEmployee
@@ -162,8 +233,9 @@ employeeType_t E_GetEmployeeType(char* type)
 void E_ResetEmployees(void)
 {
 	int i;
+
 	Com_DPrintf("E_ResetEmployees: Delete all employees\n");
-	for (i=EMPL_SOLDIER;i<MAX_EMPL;i++)
+	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++)
 		if (gd.numEmployees[i]) {
 			memset(gd.employees[i], 0, sizeof(employee_t)*MAX_EMPLOYEES);
 			gd.numEmployees[i] = 0;
@@ -800,8 +872,6 @@ static void E_EmployeeSelect_f(void)
 		return;
 
 	/* console commands */
-	Cbuf_AddText(va("employeedeselect%i\n", cl_selected->integer));
-	Cbuf_AddText(va("employeeselect%i\n", num));
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
 	/* set info cvars */
@@ -813,10 +883,12 @@ static void E_EmployeeSelect_f(void)
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal
  */
-void E_Reset(void)
+extern void E_Reset(void)
 {
 	/* add commands */
-	Cmd_AddCommand("employee_init", E_EmployeeList, NULL);
+	Cmd_AddCommand("employee_init", E_EmployeeList_f, "Init function for employee hire menu");
 	Cmd_AddCommand("employee_hire", E_EmployeeHire_f, NULL);
 	Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
+	Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
+	Cmd_AddCommand("employee_list_click", E_EmployeeListClick_f, "Callback for employee_list click function");
 }

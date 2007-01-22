@@ -1516,6 +1516,16 @@ void CL_Precache_f (void)
 }
 
 /**
+ * @brief Init function for clients - called after menu was inited and ufo-scripts were parsed
+ * @sa Qcommon_Init
+ */
+void CL_InitAfter (void)
+{
+	/* this will init some more employee stuff */
+	E_Init();
+}
+
+/**
  * @brief Called at client startup
  * @note not called for dedicated servers
  * parses all *.ufos that are needed for single- and multiplayer

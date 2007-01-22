@@ -79,5 +79,6 @@ int E_CountUnassigned(const base_t* const base, employeeType_t type);
 void E_UnhireAllEmployees(const base_t* const base, employeeType_t type);
 void E_DeleteAllEmployees(const base_t* const base);
 extern qboolean E_IsInBase(employee_t* empl, const base_t* const base);
+void E_Init(void);
 
 #endif /* CLIENT_CL_EMPLOYEE */

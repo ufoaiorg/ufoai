@@ -65,26 +65,6 @@ menu employees
 		*bt_employee16 image hud/buttons1
 		*bt_employee17 image hud/buttons1
 		*bt_employee18 image hud/buttons1
-
-		*txt_employee0 color "0 .78 0 1"
-		*txt_employee1 color "0 .78 0 1"
-		*txt_employee2 color "0 .78 0 1"
-		*txt_employee3 color "0 .78 0 1"
-		*txt_employee4 color "0 .78 0 1"
-		*txt_employee5 color "0 .78 0 1"
-		*txt_employee6 color "0 .78 0 1"
-		*txt_employee7 color "0 .78 0 1"
-		*txt_employee8 color "0 .78 0 1"
-		*txt_employee9 color "0 .78 0 1"
-		*txt_employee10 color "0 .78 0 1"
-		*txt_employee11 color "0 .78 0 1"
-		*txt_employee12 color "0 .78 0 1"
-		*txt_employee13 color "0 .78 0 1"
-		*txt_employee14 color "0 .78 0 1"
-		*txt_employee15 color "0 .78 0 1"
-		*txt_employee16 color "0 .78 0 1"
-		*txt_employee17 color "0 .78 0 1"
-		*txt_employee18 color "0 .78 0 1"
 	}
 
 	confunc employeedel0 { *bt_employee0 image hud/buttons1 }
@@ -146,46 +126,6 @@ menu employees
 	confunc employeedisable16 { *bt_employee16 image hud/buttons1g }
 	confunc employeedisable17 { *bt_employee17 image hud/buttons1g }
 	confunc employeedisable18 { *bt_employee18 image hud/buttons1g }
-
-	confunc employeeselect0 { *txt_employee0 color "1 1 1 1" }
-	confunc employeeselect1 { *txt_employee1 color "1 1 1 1" }
-	confunc employeeselect2 { *txt_employee2 color "1 1 1 1" }
-	confunc employeeselect3 { *txt_employee3 color "1 1 1 1" }
-	confunc employeeselect4 { *txt_employee4 color "1 1 1 1" }
-	confunc employeeselect5 { *txt_employee5 color "1 1 1 1" }
-	confunc employeeselect6 { *txt_employee6 color "1 1 1 1" }
-	confunc employeeselect7 { *txt_employee7 color "1 1 1 1" }
-	confunc employeeselect8 { *txt_employee8 color "1 1 1 1" }
-	confunc employeeselect9 { *txt_employee9 color "1 1 1 1" }
-	confunc employeeselect10 { *txt_employee10 color "1 1 1 1" }
-	confunc employeeselect11 { *txt_employee11 color "1 1 1 1" }
-	confunc employeeselect12 { *txt_employee12 color "1 1 1 1" }
-	confunc employeeselect13 { *txt_employee13 color "1 1 1 1" }
-	confunc employeeselect14 { *txt_employee14 color "1 1 1 1" }
-	confunc employeeselect15 { *txt_employee15 color "1 1 1 1" }
-	confunc employeeselect16 { *txt_employee16 color "1 1 1 1" }
-	confunc employeeselect17 { *txt_employee17 color "1 1 1 1" }
-	confunc employeeselect18 { *txt_employee18 color "1 1 1 1" }
-
-	confunc employeedeselect0 { *txt_employee0 color "0 .78 0 1" }
-	confunc employeedeselect1 { *txt_employee1 color "0 .78 0 1" }
-	confunc employeedeselect2 { *txt_employee2 color "0 .78 0 1" }
-	confunc employeedeselect3 { *txt_employee3 color "0 .78 0 1" }
-	confunc employeedeselect4 { *txt_employee4 color "0 .78 0 1" }
-	confunc employeedeselect5 { *txt_employee5 color "0 .78 0 1" }
-	confunc employeedeselect6 { *txt_employee6 color "0 .78 0 1" }
-	confunc employeedeselect7 { *txt_employee7 color "0 .78 0 1" }
-	confunc employeedeselect8 { *txt_employee8 color "0 .78 0 1" }
-	confunc employeedeselect9 { *txt_employee9 color "0 .78 0 1" }
-	confunc employeedeselect10 { *txt_employee10 color "0 .78 0 1" }
-	confunc employeedeselect11 { *txt_employee11 color "0 .78 0 1" }
-	confunc employeedeselect12 { *txt_employee12 color "0 .78 0 1" }
-	confunc employeedeselect13 { *txt_employee13 color "0 .78 0 1" }
-	confunc employeedeselect14 { *txt_employee14 color "0 .78 0 1" }
-	confunc employeedeselect15 { *txt_employee15 color "0 .78 0 1" }
-	confunc employeedeselect16 { *txt_employee16 color "0 .78 0 1" }
-	confunc employeedeselect17 { *txt_employee17 color "0 .78 0 1" }
-	confunc employeedeselect18 { *txt_employee18 color "0 .78 0 1" }
 
 	pic bt_employee0
 	{
@@ -359,138 +299,18 @@ menu employees
 		click { cmd "employee_hire 18" }
 	}
 
-	string txt_employee0
+	text employee_list
 	{
-		string	"*cvar mn_name0"
+		height	"19"
+		format	"38 100"
+		color	"0 .78 0 1"
+		mousefx	true
 		pos		"50 32"
-		size	"290 16"
-		click { cmd "employee_select 0" }
-	}
-	string txt_employee1
-	{
-		string	"*cvar mn_name1"
-		pos		"50 70"
-		size	"290 16"
-		click { cmd "employee_select 1" }
-	}
-	string txt_employee2
-	{
-		string	"*cvar mn_name2"
-		pos		"50 108"
-		size	"290 16"
-		click { cmd "employee_select 2" }
-	}
-	string txt_employee3
-	{
-		string	"*cvar mn_name3"
-		pos		"50 146"
-		size	"290 16"
-		click { cmd "employee_select 3" }
-	}
-	string txt_employee4
-	{
-		string	"*cvar mn_name4"
-		pos		"50 184"
-		size	"290 16"
-		click { cmd "employee_select 4" }
-	}
-	string txt_employee5
-	{
-		string	"*cvar mn_name5"
-		pos		"50 222"
-		size	"290 16"
-		click { cmd "employee_select 5" }
-	}
-	string txt_employee6
-	{
-		string	"*cvar mn_name6"
-		pos		"50 260"
-		size	"290 16"
-		click { cmd "employee_select 6" }
-	}
-	string txt_employee7
-	{
-		string	"*cvar mn_name7"
-		pos		"50 298"
-		size	"290 16"
-		click { cmd "employee_select 7" }
-	}
-	string txt_employee8
-	{
-		string	"*cvar mn_name8"
-		pos		"50 336"
-		size	"290 16"
-		click { cmd "employee_select 8" }
-	}
-	string txt_employee9
-	{
-		string	"*cvar mn_name9"
-		pos		"50 374"
-		size	"290 16"
-		click { cmd "employee_select 9" }
-	}
-	string txt_employee10
-	{
-		string	"*cvar mn_name10"
-		pos		"50 412"
-		size	"290 16"
-		click { cmd "employee_select 10" }
-	}
-	string txt_employee11
-	{
-		string	"*cvar mn_name11"
-		pos		"50 450"
-		size	"290 16"
-		click { cmd "employee_select 11" }
-	}
-	string txt_employee12
-	{
-		string	"*cvar mn_name12"
-		pos		"50 488"
-		size	"290 16"
-		click { cmd "employee_select 12" }
-	}
-	string txt_employee13
-	{
-		string	"*cvar mn_name13"
-		pos		"50 526"
-		size	"290 16"
-		click { cmd "employee_select 13" }
-	}
-	string txt_employee14
-	{
-		string	"*cvar mn_name14"
-		pos		"50 564"
-		size	"290 16"
-		click { cmd "employee_select 14" }
-	}
-	string txt_employee15
-	{
-		string	"*cvar mn_name15"
-		pos		"50 602"
-		size	"290 16"
-		click { cmd "employee_select 15" }
-	}
-	string txt_employee16
-	{
-		string	"*cvar mn_name16"
-		pos		"50 640"
-		size	"290 16"
-		click { cmd "employee_select 16" }
-	}
-	string txt_employee17
-	{
-		string	"*cvar mn_name17"
-		pos		"50 678"
-		size	"290 16"
-		click { cmd "employee_select 17" }
-	}
-	string txt_employee18
-	{
-		string	"*cvar mn_name18"
-		pos		"50 716"
-		size	"290 16"
-		click { cmd "employee_select 18" }
+		size	"290 702"
+		num		1
+//		bgcolor	"1 1 1 0.5"
+		click
+		wheel	{ cmd "employee_scroll" }
 	}
 
 	// ==================
@@ -800,5 +620,6 @@ menu employees
 	{
 		employee_clear
 		empl_soldiers
+		cmd "employee_init"
 	}
 }

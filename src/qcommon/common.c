@@ -1499,6 +1499,8 @@ void Qcommon_Init(int argc, char **argv)
 
 	if (Cvar_VariableInteger("cl_precachemenus"))
 		MN_PrecacheMenus();
+
+	CL_InitAfter();
 #endif
 
 	Com_Printf("====== UFO Initialized ======\n\n");

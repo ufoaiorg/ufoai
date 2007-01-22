@@ -1205,6 +1205,7 @@ void Com_AddObjectLinks(void)
  * @sa CL_ParseClientData
  * @sa CL_ParseScriptFirst
  * @sa CL_ParseScriptSecond
+ * @sa Qcommon_Init
  */
 void Com_ParseScripts(void)
 {

@@ -1121,7 +1121,7 @@ static qboolean MN_TextScroll(menuNode_t *node, int offset)
 		return qtrue;
 
 	} else if (textScroll_new >= (node->textLines + 1 - node->height)) {
-		/* Goto last possible line line, no matter how big the offset was. */
+		/* Goto last possible line, no matter how big the offset was. */
 		node->textScroll = node->textLines + 1 - node->height;
 		return qtrue;
 
