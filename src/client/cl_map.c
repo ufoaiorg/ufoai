@@ -351,11 +351,14 @@ static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, in
 
 /**
  * @brief
+ * @param[in] x normalized x value of mouseclick
+ * @param[in] y normalized y value of mouseclick
+ * @param[in] pos vector to return the screen coordinates
+ * @sa MAP_MapToScreen
  */
 extern qboolean MAP_3DMapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
-
 	/* TODO: ccs.angles */
 
 	/* get "raw" position */
@@ -377,6 +380,7 @@ extern qboolean MAP_3DMapToScreen(const menuNode_t* node, const vec2_t pos, int 
 
 /**
  * @brief
+ * @sa MAP_3DMapToScreen
  */
 extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y)
 {
@@ -428,17 +432,26 @@ static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
  */
 static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
 {
-	pos[0] = (((node->pos[0] - x) / node->size[0] + 0.5) / ccs.zoom - (ccs.center[0] - 0.5)) * 360.0;
-	pos[1] = (((node->pos[1] - y) / node->size[1] + 0.5) / ccs.zoom - (ccs.center[1] - 0.5)) * 180.0;
+	vec2_t mid;
+	float dist;
+	const float radius = gl_3dmapradius->value * (ccs.zoom / 4.0f) * 0.1;
 
-	while (pos[0] > 180.0)
-		pos[0] -= 360.0;
-	while (pos[0] < -180.0)
-		pos[0] += 360.0;
+	Vector2Set(mid, (node->pos[0] + node->size[0]) / 2.0f, (node->pos[1] + node->size[1]) / 2.0f);
+
+	dist = sqrt((abs(x - mid[0]) * abs(x - mid[0])) + ((abs(y - mid[1]) * abs(y - mid[1]))));
+
+	/* check whether we clicked the geoscape */
+	if (dist <= radius) {
+		/* FIXME */
+		pos[0] = x * torad;
+		pos[1] = y * torad;
+	} else
+		Vector2Set(pos, -1.0, -1.0);
 }
 
 /**
  * @brief
+ * @sa MAP_MapDrawLine
  */
 extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line)
 {
@@ -512,6 +525,7 @@ extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* lin
 
 /**
  * @brief
+ * @sa MAP_MapCalcLine
  */
 static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line)
 {
