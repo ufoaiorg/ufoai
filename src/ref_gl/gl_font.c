@@ -152,7 +152,7 @@ void Font_CleanCache(void)
 	/* free the surfaces */
 	for (; i < numInCache; i++) {
 		if (fontCache[i].texPos >= 0)
-			qglDeleteTextures(1, &(fontCache[i].texPos)); 
+			qglDeleteTextures(1, &(fontCache[i].texPos));
 	}
 
 	memset(fontCache, 0, sizeof(fontCache));
@@ -545,7 +545,7 @@ int Font_DrawString(const char *fontID, int align, int x, int y, int absX, int a
 				/* Due to scrolling this line and the following are not visible */
 				return -1;
 			}
-			if (line < scroll_pos) {
+			if (line <= scroll_pos) {
 				/* Due to scrolling this line is not visible. See if (!skipline)" code below.*/
 				skipline = qtrue;
 				/*ri.Con_Printf(PRINT_ALL, "skipline line: %i scroll_pos: %i\n", line, scroll_pos);*/
