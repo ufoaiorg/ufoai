@@ -817,7 +817,7 @@ int E_CountUnassigned(const base_t* const base, employeeType_t type)
 }
 
 /**
- * @brief
+ * @brief Callback for employee_hire command
  */
 void E_EmployeeHire_f (void)
 {
@@ -851,17 +851,17 @@ void E_EmployeeHire_f (void)
 
 	/* Already hired in another base. */
 	/* TODO: Should hired employees in another base be listed here at all? */
-	if (gd.employees[employeeCategory][num].hired
-	 && gd.employees[employeeCategory][num].baseIDHired != baseCurrent->idx)
+	if (gd.employees[employeeCategory][num + plus].hired
+		&& gd.employees[employeeCategory][num + plus].baseIDHired != baseCurrent->idx)
 		return;
 
-	if (gd.employees[employeeCategory][num].hired) {
-		if (!E_UnhireEmployee(&gd.bases[gd.employees[employeeCategory][num].baseIDHired], employeeCategory, num)) {
+	if (gd.employees[employeeCategory][num + plus].hired) {
+		if (!E_UnhireEmployee(&gd.bases[gd.employees[employeeCategory][num + plus].baseIDHired], employeeCategory, num + plus)) {
 			/* TODO: message - Couldn't fire employee. */
 		}
 		Cbuf_AddText(va("employeedel%i\n", num - minus));
 	} else {
-		if (!E_HireEmployee(baseCurrent, employeeCategory, num)) {
+		if (!E_HireEmployee(baseCurrent, employeeCategory, num + plus)) {
 			/* TODO: message - Couldn't hire employee. */
 		}
 		Cbuf_AddText(va("employeeadd%i\n", num - minus));
@@ -885,9 +885,6 @@ static void E_EmployeeSelect_f(void)
 
 	if (num >= gd.numEmployees[employeeCategory])
 		return;
-
-	/* console commands */
-	Cvar_ForceSet("cl_selected", va("%i", num - (employeeListNode->textScroll % cl_numnames->integer)));
 
 	/* set info cvars */
 	CL_CharacterCvars(&(gd.employees[employeeCategory][num].chr));
