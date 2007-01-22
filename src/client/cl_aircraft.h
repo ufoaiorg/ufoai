@@ -49,36 +49,36 @@ struct actMis_s;
 
 /** @brief An aircraft with all it's data */
 typedef struct aircraft_s {
-	int idx;					/* unique id */
-	int idx_sample;				/* self-link in aircraft_sample list */
-	char id[MAX_VAR];			/* internal id from script file */
-	char name[MAX_VAR];			/* translateable name */
-	char shortname[MAX_VAR];		/* translateable shortname */
-	char image[MAX_VAR];		/* image on geoscape */
+	int idx;					/**< unique id */
+	int idx_sample;				/**< self-link in aircraft_sample list */
+	char id[MAX_VAR];			/**< internal id from script file */
+	char name[MAX_VAR];			/**< translateable name */
+	char shortname[MAX_VAR];		/**< translateable shortname */
+	char image[MAX_VAR];		/**< image on geoscape */
 	aircraftType_t type;
-	int status;					/* see aircraftStatus_t */
+	int status;					/**< see aircraftStatus_t */
 	float speed;
-	vec3_t angles;				/* menu values for rotating */
-	vec3_t scale;				/* menu values for scaling */
-	vec3_t center;				/* menu values for shifting */
-	vec3_t anglesEquip;			/* menu values for rotating - aircraft_equip menu */
-	vec3_t scaleEquip;			/* menu values for scaling - aircraft_equip menu */
-	vec3_t centerEquip;			/* menu values for shifting - aircraft_equip menu */
+	vec3_t angles;				/**< menu values for rotating */
+	vec3_t scale;				/**< menu values for scaling */
+	vec3_t center;				/**< menu values for shifting */
+	vec3_t anglesEquip;			/**< menu values for rotating - aircraft_equip menu */
+	vec3_t scaleEquip;			/**< menu values for scaling - aircraft_equip menu */
+	vec3_t centerEquip;			/**< menu values for shifting - aircraft_equip menu */
 	int price;
-	int fuel;					/* actual fuel */
-	int fuelSize;				/* max fuel */
-	int size;					/* how many soldiers max */
-	vec2_t pos;					/* actual pos on geoscape */
+	int fuel;					/**< actual fuel */
+	int fuelSize;				/**< max fuel */
+	int size;					/**< how many soldiers max */
+	vec2_t pos;					/**< actual pos on geoscape */
 	int point;
 	int time;
-	int idxInBase;				/* id in base */
-	int idxBase;				/* id of base */
+	int idxInBase;				/**< id in base */
+	int idxBase;				/**< id of base */
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
-	int *teamSize;				/* how many soldiers on board */
-	int teamIdxs[MAX_ACTIVETEAM];              /* array of team members on board employee idx*/
+	int *teamSize;				/**< how many soldiers on board */
+	int teamIdxs[MAX_ACTIVETEAM];              /**< array of team members on board employee idx*/
 
-	/* equipment on board */
-	/* only indexes from global array */
+	/** equipment on board
+	  * only indexes from global array */
 	int num[MAX_OBJDEFS];
 	int techs[MAX_TECHNOLOGIES];
 	int employees[MAX_EMPLOYEES];
@@ -90,22 +90,23 @@ typedef struct aircraft_s {
 	char shield_string[MAX_VAR];
 	technology_t *shield;
 	mapline_t route;
-	void *homebase;				/* pointer to homebase */
-	aliensTmp_t aliencargo[MAX_CARGO];	/* cargo of aliens */
-	int alientypes;				/* how many types we collected */
+	void *homebase;				/**< pointer to homebase */
+	void *transferBase;				/**< pointer to the base we are transfering equipment to */
+	aliensTmp_t aliencargo[MAX_CARGO];	/**< cargo of aliens */
+	int alientypes;				/**< how many types we collected */
 
-	char building[MAX_VAR];		/* id of the building needed as hangar */
+	char building[MAX_VAR];		/**< id of the building needed as hangar */
 
 	int numUpgrades;
 
-	struct actMis_s* mission;	/* The mission the aircraft is moving to */
-	int ufo;				/* Ufo's id the aircraft is purchasing (gd.ufos + id) */
-	radar_t	radar;			/* Radar to track ufos */
+	struct actMis_s* mission;	/**< The mission the aircraft is moving to */
+	int ufo;				/**< Ufo's id the aircraft is purchasing (gd.ufos + id) */
+	radar_t	radar;			/**< Radar to track ufos */
 
-	qboolean visible;		/* The ufo is visible ? */
+	qboolean visible;		/**< The ufo is visible ? */
 } aircraft_t;
 
-extern aircraft_t aircraft_samples[MAX_AIRCRAFT]; /* available aircraft types */
+extern aircraft_t aircraft_samples[MAX_AIRCRAFT]; /**< available aircraft types */
 extern int numAircraft_samples;
 
 /* script functions */
