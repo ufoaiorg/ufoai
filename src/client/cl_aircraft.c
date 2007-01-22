@@ -57,14 +57,21 @@ static qboolean AIR_Fight(aircraft_t* air, aircraft_t* ufo)
 /**
  * @brief
  */
-void CL_ListAircraft_f(void)
+void CL_ListAircraft_f (void)
 {
-	int i, j;
+	int i, j, k, baseid = -1;
 	base_t *base;
 	aircraft_t *aircraft;
+	character_t *chr;
+
+	if (Cmd_Argc() == 2)
+		baseid = atoi(Cmd_Argv(1));
 
 	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
 		if (!base->founded)
+			continue;
+
+		if (baseid != -1 && baseid != base->idx)
 			continue;
 
 		Com_Printf("Aircrafts in base %s: %i\n", base->name, base->numAircraftInBase);
@@ -77,6 +84,16 @@ void CL_ListAircraft_f(void)
 			Com_Printf("...size %i\n", aircraft->size);
 			Com_Printf("...status %s\n", CL_AircraftStatusToName(aircraft));
 			Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
+			Com_Printf("...team: (%i/%i)\n", *aircraft->teamSize, aircraft->size);
+			for (k = 0; k < aircraft->size; k++)
+				if (aircraft->teamIdxs[k] != -1) {
+					Com_Printf("......idx: %i\n", k);
+					chr = E_GetHiredCharacter(base, EMPL_SOLDIER, k);
+					if (chr)
+						Com_Printf(".........name: %s\n", chr->name);
+					else
+						Com_Printf(".........ERROR: Could not get character for %i\n", k);
+				}
 		}
 	}
 }
@@ -84,7 +101,7 @@ void CL_ListAircraft_f(void)
 /**
  * @brief Start an aircraft or stops the current mission and let the aircraft idle around
  */
-void CL_AircraftStart_f(void)
+void CL_AircraftStart_f (void)
 {
 	aircraft_t *aircraft;
 
@@ -273,12 +290,13 @@ void MN_PrevAircraft_f(void)
  * call this from baseview via "aircraft_return"
  * calculates the way back to homebase
  */
-extern void CL_AircraftReturnToBase(aircraft_t *aircraft)
+extern void CL_AircraftReturnToBase (aircraft_t *aircraft)
 {
 	base_t *base;
 
 	if (aircraft && aircraft->status != AIR_HOME) {
 		base = (base_t *) aircraft->homebase;
+		Com_DPrintf("return '%s' (%i) to base ('%s')\n", aircraft->name, aircraft->idx, base->name);
 		MAP_MapCalcLine(aircraft->pos, base->pos, &aircraft->route);
 		aircraft->status = AIR_RETURNING;
 		aircraft->time = 0;
@@ -292,6 +310,8 @@ extern void CL_AircraftReturnToBase(aircraft_t *aircraft)
  *
  * Sends the current aircraft back to homebase and updates
  * the cvars
+ * @sa CL_GameAutoGo
+ * @sa CL_GameResultsCmd
  */
 void CL_AircraftReturnToBase_f(void)
 {
@@ -547,7 +567,7 @@ void CL_CampaignRunAircraft(int dt)
 							aircraft->status = AIR_DROP;
 							/* set baseCurrent information so the
 							 * correct team goes to the mission */
-							baseCurrent = aircraft->homebase;
+							baseCurrent = (base_t*)aircraft->homebase;
 							baseCurrent->aircraftCurrent = i;
 							MAP_SelectMission(aircraft->mission);
 							gd.interceptAircraft = aircraft->idx;
@@ -555,7 +575,7 @@ void CL_CampaignRunAircraft(int dt)
 							MN_PushMenu("popup_intercept_ready");
 						} else if (aircraft->status == AIR_RETURNING) {
 							/* aircraft enter in  homebase */
-							CL_DropshipReturned(aircraft->homebase, aircraft);
+							CL_DropshipReturned((base_t*)aircraft->homebase, aircraft);
 							aircraft->status = AIR_REFUEL;
 						} else
 							aircraft->status = AIR_IDLE;
@@ -798,8 +818,10 @@ extern aircraft_t* CL_AircraftGetFromIdx(int idx)
 
 	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft ; aircraft--)
-			if (aircraft->idx == idx)
+			if (aircraft->idx == idx) {
+				Com_DPrintf("CL_AircraftGetFromIdx: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
 				return aircraft;
+			}
 
 	return NULL;
 }
@@ -1047,8 +1069,8 @@ void CL_ResetAircraftTeam(aircraft_t *aircraft)
 {
 	int i;
 
-	for (i=0; i<aircraft->size; i++)
-		aircraft->teamIdxs[i]=-1;
+	for (i = 0; i < aircraft->size; i++)
+		aircraft->teamIdxs[i] = -1;
 }
 
 /**
@@ -1056,17 +1078,17 @@ void CL_ResetAircraftTeam(aircraft_t *aircraft)
  * @param[in] aircraft
  * @param[in] idx
  */
-void CL_AddToAircraftTeam(aircraft_t *aircraft,int idx)
+void CL_AddToAircraftTeam (aircraft_t *aircraft,int idx)
 {
-	if (aircraft==NULL) {
+	if (aircraft == NULL) {
 		Com_DPrintf("CL_AddToAircraftTeam: null aircraft \n");
 		return ;
 	}
-	if (*(aircraft->teamSize)<aircraft->size) {
+	if (*(aircraft->teamSize) < aircraft->size) {
 		int i;
-		for (i=0; i<aircraft->size; i++)
-			if (aircraft->teamIdxs[i]==-1) {
-				aircraft->teamIdxs[i]=idx;
+		for (i = 0; i < aircraft->size; i++)
+			if (aircraft->teamIdxs[i] == -1) {
+				aircraft->teamIdxs[i] = idx;
 				Com_DPrintf("CL_AddToAircraftTeam: added idx '%d'\n", idx);
 				break;
 			}
@@ -1082,21 +1104,21 @@ void CL_AddToAircraftTeam(aircraft_t *aircraft,int idx)
  * @param[in] aircraft
  * @param[in] idx
  */
-void CL_RemoveFromAircraftTeam(aircraft_t *aircraft,int idx)
+void CL_RemoveFromAircraftTeam(aircraft_t *aircraft, int idx)
 {
 	int i;
 
-	if (aircraft==NULL) {
+	if (aircraft == NULL) {
 		Com_DPrintf("CL_RemoveFromAircraftTeam: null aircraft \n");
 		return ;
 	}
-	for (i=0; i<aircraft->size; i++)
+	for (i = 0; i < aircraft->size; i++)
 		if (aircraft->teamIdxs[i]==idx)	{
 			aircraft->teamIdxs[i]=-1;
-			Com_DPrintf("CL_RemoveFromAircraftTeam: removed idx '%d' \n",idx);
+			Com_DPrintf("CL_RemoveFromAircraftTeam: removed idx '%d' \n", idx);
 			return;
 		}
-	Com_DPrintf("CL_RemoveFromAircraftTeam: error: idx '%d' not on aircraft\n",idx);
+	Com_DPrintf("CL_RemoveFromAircraftTeam: error: idx '%d' not on aircraft\n", idx);
 }
 
 /**
@@ -1104,17 +1126,17 @@ void CL_RemoveFromAircraftTeam(aircraft_t *aircraft,int idx)
  * @param[in] aircraft
  * @param[in] idx
  */
-void CL_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft,int idx)
+void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft,int idx)
 {
 	int i;
 
-	if  (aircraft==NULL) {
+	if (aircraft == NULL)
 		return ;
-	}
-	for (i=0; i<aircraft->size; i++)
+
+	for (i = 0; i < aircraft->size; i++)
 		if (aircraft->teamIdxs[i]>idx) {
 			aircraft->teamIdxs[i]--;
-			Com_DPrintf("CL_DecreaseAircraftTeamIdxGreaterThan: decreased idx '%d' \n",aircraft->teamIdxs[i]+1);
+			Com_DPrintf("CL_DecreaseAircraftTeamIdxGreaterThan: decreased idx '%d' \n", aircraft->teamIdxs[i]+1);
 		}
 }
 
@@ -1123,18 +1145,32 @@ void CL_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft,int idx)
  * @param[in] aircraft
  * @param[in] idx
  */
-qboolean CL_IsInAircraftTeam(aircraft_t *aircraft,int idx)
+qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int idx)
 {
 	int i;
+#if defined (DEBUG) || defined (PARANOID)
+	base_t* base;
+#endif
 
-	if  (aircraft==NULL) {
+	if (aircraft == NULL) {
+		Com_DPrintf("CL_IsInAircraftTeam: No aircraft given\n");
 		return qfalse;
 	}
-	for (i=0; i<aircraft->size; i++)
-		if (aircraft->teamIdxs[i]==idx) {
-			Com_DPrintf("CL_IsInAircraftTeam: found idx '%d' \n",idx);
+#ifdef PARANOID
+	else {
+		base = aircraft->homebase;
+		Com_DPrintf("CL_IsInAircraftTeam: aircraft: '%s' (base: '%s')\n", aircraft->name, base->name);
+	}
+#endif
+
+	for (i = 0; i < aircraft->size; i++)
+		if (aircraft->teamIdxs[i] == idx) {
+#ifdef DEBUG
+			base = (base_t*)(aircraft->homebase);
+			Com_DPrintf("CL_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", idx, base ? base->name : "", baseCurrent ? baseCurrent->name : "");
+#endif
 			return qtrue;
 		}
-	Com_DPrintf("CL_IsInAircraftTeam:not found idx '%d' \n",idx);
+	Com_DPrintf("CL_IsInAircraftTeam:not found idx '%d' \n", idx);
 	return qfalse;
 }
