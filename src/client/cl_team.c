@@ -904,21 +904,19 @@ qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
 
 	assert(baseCurrent);
 
-	if ( employee_idx < 0 )
+	if (employee_idx < 0)
 		return qfalse;
 
-	if ( aircraft_idx < 0) {
+	if (aircraft_idx < 0) {
 		/* Search if he is in _any_ aircraft and return true if it's the case. */
-		for ( i = 0; i < gd.numAircraft; i++ ) {
-			if ( CL_SoldierInAircraft(employee_idx, i) )
+		for (i = 0; i < gd.numAircraft; i++) {
+			if (CL_SoldierInAircraft(employee_idx, i) )
 				return qtrue;
 		}
+		return qfalse;
 	}
 
-	if ( aircraft_idx < 0 )
-		return qfalse;
-
-	return CL_IsInAircraftTeam(CL_AircraftGetFromIdx(aircraft_idx),employee_idx);
+	return CL_IsInAircraftTeam(CL_AircraftGetFromIdx(aircraft_idx), employee_idx);
 }
 
 /**
@@ -932,21 +930,19 @@ void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
 	aircraft_t *aircraft;
 	int i;
 
-	if ( employee_idx < 0 )
+	if (employee_idx < 0)
 		return;
 
-	if ( aircraft_idx < 0 ) {
+	if (aircraft_idx < 0) {
 		/* Search if he is in _any_ aircraft and set the aircraft_idx if found.. */
-		for ( i = 0; i < gd.numAircraft; i++ ) {
-			if ( CL_SoldierInAircraft(employee_idx, i) ) {
+		for (i = 0; i < gd.numAircraft; i++) {
+			if (CL_SoldierInAircraft(employee_idx, i) ) {
 				aircraft_idx = i;
 				break;
 			}
 		}
-	}
-
-	if ( aircraft_idx < 0 )
 		return;
+	}
 
 	aircraft = &baseCurrent->aircraft[aircraft_idx];
 
