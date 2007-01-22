@@ -1523,6 +1523,9 @@ void CL_InitAfter (void)
 {
 	/* this will init some more employee stuff */
 	E_Init();
+
+	/* init some production menu nodes */
+	PR_Init();
 }
 
 /**

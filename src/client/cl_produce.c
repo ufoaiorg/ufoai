@@ -46,12 +46,14 @@ static const int PRODUCE_DIVISOR = 2;
 static cvar_t* mn_production_limit;
 static cvar_t* mn_production_workers;
 
+static menuNode_t *node1, *node2, *prodlist;
+
 /** @brief number of blank lines between queued items and tech list */
 #define QUEUE_SPACERS 2
 
 /**
  * @brief Check if the production requirements are met for a defined amount.
- * @param[in] amount How many items are planned to be produced. 
+ * @param[in] amount How many items are planned to be produced.
  * @param[in] req The production requirements of the item that is to be produced.
  * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
  */
@@ -60,7 +62,7 @@ static int PR_RequirementsMet(int amount, requirements_t *req)
 	int a,i;
 	int produceable_amount;
 	qboolean produceable = qfalse;
-	
+
 	for (a = 0; a < amount; a++) {
 		produceable = qtrue;
 		for (i = 0; i < req->numLinks; i++) {
@@ -90,10 +92,10 @@ static void PR_UpdateRequiredItemsInBasestorage(int amount, requirements_t *req)
 {
 	int i;
 	equipDef_t *ed = NULL;
-	
+
 	if (!baseCurrent)
 		return;
-	
+
 	ed = &baseCurrent->storage;
 	if (!ed)
 		return;
@@ -156,9 +158,9 @@ static void PR_QueueDelete(production_queue_t *queue, int index)
 	objDef_t *od = NULL;
 	technology_t *tech = NULL;
 	production_t *prod = NULL;
-	
+
 	prod = &queue->items[index];
-	
+
 	if (prod->items_cached) {
 		/* Get technology of the item in the selected queue-entry. */
 		od = &csi.ods[prod->objID];
@@ -168,14 +170,14 @@ static void PR_QueueDelete(production_queue_t *queue, int index)
 			PR_UpdateRequiredItemsInBasestorage(prod->amount, &tech->require_for_production);
 		} else {
 			Com_DPrintf("PR_QueueDelete: Problem getting technology entry for %i\n", index);
-		}			
+		}
 		prod->items_cached = qfalse;
 	}
 
 	queue->numItems--;
 	if (queue->numItems < 0)
 		queue->numItems = 0;
-	
+
 	/* Copy up other items. */
 	for (i = index; i < queue->numItems; i++) {
 		queue->items[i] = queue->items[i+1];
@@ -505,7 +507,7 @@ static void PR_UpdateProductionList(void)
 /**
  * @brief will select a new tab on the produciton list
  */
-static void PR_ProductionSelect(void)
+static void PR_ProductionSelect_f (void)
 {
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
@@ -516,19 +518,23 @@ static void PR_ProductionSelect(void)
 		return;
 	}
 	produceCategory = atoi(Cmd_Argv(1));
+
+	/* reset scroll values */
+	node1->textScroll = node2->textScroll = prodlist->textScroll = 0;
+
 	PR_UpdateProductionList();
 }
 
 /**
  * @brief Will fill the list of produceable items
  */
-static void PR_ProductionList (void)
+static void PR_ProductionList_f (void)
 {
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
 		return;
 
-	PR_ProductionSelect();
+	PR_ProductionSelect_f();
 	PR_ProductionInfo();
 	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP));
 	Cvar_SetValue("mn_production_workers", E_CountHired(baseCurrent, EMPL_WORKER));
@@ -556,15 +562,6 @@ qboolean PR_ProductionAllowed(void)
  */
 static void PR_ProductionListScroll_f (void)
 {
-	menuNode_t *node1, *node2, *prodlist;
-
-	prodlist = MN_GetNodeFromCurrentMenu("prodlist");
-	node1 = MN_GetNodeFromCurrentMenu("prodlist_amount");
-	node2 = MN_GetNodeFromCurrentMenu("prodlist_queued");
-
-	if (!prodlist || !node1 || !node2)
-		return;
-
 	node1->textScroll = node2->textScroll = prodlist->textScroll;
 }
 
@@ -579,7 +576,24 @@ void PR_ProductionInit(void)
 	mn_production_workers = Cvar_Get("mn_production_workers", "0", 0, NULL);
 }
 
-	
+/**
+ * @brief
+ * @sa CL_InitAfter
+ */
+extern void PR_Init (void)
+{
+	menu_t* menu = MN_GetMenu("production");
+	if (!menu)
+		Sys_Error("Could not find the production menu\n");
+
+	prodlist = MN_GetNode(menu, "prodlist");
+	node1 = MN_GetNode(menu, "prodlist_amount");
+	node2 = MN_GetNode(menu, "prodlist_queued");
+
+	if (!prodlist || !node1 || !node2)
+		Sys_Error("Could not find the needed menu nodes in production menu\n");
+}
+
 /**
  * @brief Increase the production amount by given parameter
  */
@@ -608,11 +622,11 @@ void PR_ProductionIncrease(void)
 		if (selectedIndex < 0)
 			return;
 		prod = PR_QueueNew(queue, selectedIndex, amount);
-		
+
 		/* Get technology of the item in the selected queue-entry. */
 		od = &csi.ods[prod->objID];
 		tech = (technology_t*)(od->tech);
-		
+
 		if (tech)
 			produceable_amount = PR_RequirementsMet(amount,  &tech->require_for_production);
 		else
@@ -633,7 +647,7 @@ void PR_ProductionIncrease(void)
 			if (prod) {
 				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), csi.ods[selectedIndex].name);
 				MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
-				
+
 				/* Now we select the item we just created. */
 				selectedQueueItem = qtrue;
 				selectedIndex = queue->numItems-1;
@@ -756,9 +770,9 @@ static void PR_ProductionDown(void)
 void PR_ResetProduction(void)
 {
 	/* add commands */
-	Cmd_AddCommand("prod_init", PR_ProductionList, NULL);
+	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
 	Cmd_AddCommand("prod_scroll", PR_ProductionListScroll_f, "Scrolls the production lists");
-	Cmd_AddCommand("prod_select", PR_ProductionSelect, NULL);
+	Cmd_AddCommand("prod_select", PR_ProductionSelect_f, NULL);
 	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
 	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
 	Cmd_AddCommand("prod_inc", PR_ProductionIncrease, NULL);
