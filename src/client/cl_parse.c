@@ -640,8 +640,10 @@ void CL_ActorDoStartMove( sizebuf_t *sb )
 void CL_ActorAppear( sizebuf_t *sb )
 {
 	qboolean newActor;
-	le_t	*le;
-	int		entnum, modelnum1, modelnum2;
+	le_t *le;
+	char tmpbuf[128];
+	int entnum, modelnum1, modelnum2;
+	int teamDescID = -1;
 
 	/* check if the actor is already visible */
 	entnum = MSG_ReadShort( sb );
@@ -716,10 +718,15 @@ void CL_ActorAppear( sizebuf_t *sb )
 			/* message */
 			if ( le->team != TEAM_CIVILIAN ) {
 				if (curCampaign) {
-					if (le->teamDesc)
-						/* TODO: Display the alien race name */
-						CL_DisplayHudMessage( _("Alien spotted!\n"), 2000 );
-					else
+					if (le->teamDesc) {
+						teamDescID = le->teamDesc - 1;
+						if (RS_IsResearched_idx(RS_GetTechIdxByName(teamDesc[teamDescID].tech))) {
+							Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s!\n",
+							_("Alien spotted:"), _(teamDesc[teamDescID].name));
+							CL_DisplayHudMessage( tmpbuf, 2000 );
+						} else
+							CL_DisplayHudMessage( _("Alien spotted!\n"), 2000 );
+					} else
 						CL_DisplayHudMessage( _("Alien spotted!\n"), 2000 );
 				} else
 					CL_DisplayHudMessage( _("Enemy spotted!\n"), 2000 );
