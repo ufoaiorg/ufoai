@@ -471,7 +471,7 @@ static int numNameCats = 0;
 static int numTeamDefs = 0;
 int numTeamDesc = 0;
 
-char *name_strings[NAME_NUM_TYPES] = {
+const char *name_strings[NAME_NUM_TYPES] = {
 	"neutral",
 	"female",
 	"male",
@@ -912,6 +912,7 @@ static void Com_ParseActors(char *title, char **text)
 	} while (*text);
 }
 
+/** @brief possible teamdesc values (ufo-scriptfiles) */
 static value_t teamDescValues[] = {
 	{"tech", V_STRING, offsetof(teamDesc_t, tech)} /**< tech id from research.ufo */
 	,

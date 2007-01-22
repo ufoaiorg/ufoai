@@ -31,7 +31,7 @@ typedef struct teamDesc_s {
 extern teamDesc_t teamDesc[MAX_TEAMDEFS];
 extern int numTeamDesc;
 
-extern char *name_strings[NAME_NUM_TYPES];
+extern const char *name_strings[NAME_NUM_TYPES];
 
 char *Com_GiveName(int gender, char *category);
 char *Com_GiveModel(int type, int gender, char *category);
