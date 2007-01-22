@@ -105,10 +105,8 @@ extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo)
 
 #if 0
 /*========================================
- *
- * POPUP_INTERCEPT_READY
- *
- *========================================*/
+POPUP_INTERCEPT_READY
+========================================*/
 
 /* Ask confirmation just before entering in mission */
 
@@ -175,10 +173,8 @@ static void CL_PopupInterceptionReadyCancel_f(void)
 
 #endif
 /*========================================
- *
- * POPUP_AIRCRAFT
- *
- *========================================*/
+POPUP_AIRCRAFT
+========================================*/
 
 /* popup_aircraft display the actions availables for an aircraft */
 
@@ -247,7 +243,7 @@ extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft)
 }
 
 /**
- * @ brief User just select an item in the popup_aircraft
+ * @brief User just select an item in the popup_aircraft
  */
 static void CL_PopupAircraftClick_f(void)
 {
@@ -310,10 +306,8 @@ static void CL_PopupAircraftNotifyMissionRemoved(const actMis_t* mission)
 
 
 /*========================================
- *
- * POPUP_INTERCEPT
- *
- *========================================*/
+POPUP_INTERCEPT
+========================================*/
 
 /* popup_intercept display list of aircraft availables to move to a mission or an ufo */
 
