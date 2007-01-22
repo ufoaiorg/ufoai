@@ -106,6 +106,7 @@ menu campaigns
 		format	"20 0"
 		num	13
 		click	{ }
+		height	"21"
 		wheel
 	}
 
@@ -114,8 +115,8 @@ menu campaigns
 		pos	"500 300"
 		format	"20 0"
 		size	"420 400"
-		num	0
-		height	20
+		num		0
+		height	21
 		wheel
 	}
 
