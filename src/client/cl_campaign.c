@@ -1645,7 +1645,7 @@ qboolean CL_GameSave(char *filename, char *comment)
 
 	/* stores the select mission on geoscape */
 	if (selMis)
-		MSG_WriteLong(&sb, ccs.mission - selMis);
+		MSG_WriteLong(&sb, selMis - ccs.mission);
 	else
 		MSG_WriteLong(&sb, -1);
 
@@ -2071,9 +2071,9 @@ int CL_GameLoad(char *filename)
 		selMis = NULL;
 
 	/* and now fix the mission pointers or let the aircraft return to base */
-	for (i=0; i<gd.numBases; i++) {
+	for (i = 0; i < gd.numBases; i++) {
 		base = &gd.bases[i];
-		for (j=0; j<base->numAircraftInBase; j++) {
+		for (j = 0; j < base->numAircraftInBase; j++) {
 			if (base->aircraft[j].status == AIR_MISSION) {
 				if (selMis)
 					base->aircraft[j].mission = selMis;
