@@ -1331,7 +1331,7 @@ menu multiplayer_selectteam
 		align	uc
 	}
 
-	string teamplay
+	string teamplay_v
 	{
 		font	f_small
 		color	"0 0.5 0 1"
