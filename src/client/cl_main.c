@@ -2229,6 +2229,7 @@ void CL_Frame(int msec)
 /**
  * @brief
  * @sa CL_Shutdown
+ * @sa CL_InitAfter
  */
 void CL_Init(void)
 {
