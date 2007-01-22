@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static char aliencontText[1024];
 
 /* amount of aliens that are on the aliencont list - see AC_Init */
-static int numAliensOnList;
+static int numAliensOnList = 0;
 
 /* current selected aliencont */
 static aliensCont_t* aliencontCurrent;
@@ -586,7 +586,7 @@ static void AC_AlienListClick_f (void)
 
 	Com_DPrintf("AC_AlienListClick_f: listnumber %i\n", num);
 
-	if (num > numAliensOnList || num < 0) {
+	if (num >= numAliensOnList || num < 0) {
 		Com_DPrintf("AC_AlienListClick_f: max exceeded %i/%i\n", num, numAliensOnList);
 		return;
 	}
