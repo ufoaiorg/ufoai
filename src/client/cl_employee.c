@@ -847,7 +847,7 @@ static void E_EmployeeHire_f (void)
 	if (employeeCategory >= MAX_EMPL && employeeCategory < EMPL_SOLDIER)
 		return;
 
-	if (num >= employeesInCurrentList || num < 0)
+	if (num + plus >= employeesInCurrentList || num - minus < 0)
 		return;
 
 	/* Already hired in another base. */
