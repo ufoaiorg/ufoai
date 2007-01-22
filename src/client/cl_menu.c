@@ -1809,7 +1809,9 @@ void MN_DrawMenus(void)
 								*tab++ = '\0';
 								/* now check whether we should draw this string */
 								/*Com_Printf("tab - first part - node->textLines: %i \n", node->textLines);*/
+								node->textLines++;
 								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse);
+								node->textLines--;
 								/* increase the x value as given via menu definition format string */
 								/* or use 1/3 of the node size (width) */
 								if (!node->texh[1])
