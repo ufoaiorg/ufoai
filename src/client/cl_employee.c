@@ -108,11 +108,19 @@ static void E_EmployeeList_f (void)
 		Com_Printf("Usage: employee_init <category>\n");
 		return;
 	}
+
 	employeeCategory = atoi(Cmd_Argv(1));
 	if (employeeCategory >= MAX_EMPL || employeeCategory < 0)
 		employeeCategory = EMPL_SOLDIER;
 
+	/* clear current hirelist */
+	hirelist[0] = '\0';
+
+	/* reset the employee count */
 	employeesInCurrentList = 0;
+
+	/* reset scrolling */
+	employeeListNode->textScroll = 0;
 
 	for (j = 0, employee = gd.employees[employeeCategory]; j < gd.numEmployees[employeeCategory]; j++, employee++) {
 		Q_strcat(hirelist, va("%s\n", employee->chr.name), sizeof(hirelist));
