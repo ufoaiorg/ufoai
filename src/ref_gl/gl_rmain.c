@@ -147,6 +147,7 @@ cvar_t *gl_fog;
 cvar_t *gl_showbox;
 
 cvar_t *gl_3dlabs_broken;
+cvar_t *gl_3dmapradius;
 
 cvar_t *vid_fullscreen;
 cvar_t *vid_gamma;
@@ -1173,6 +1174,8 @@ static void R_Register(void)
 	gl_saturatelighting = ri.Cvar_Get("gl_saturatelighting", "0", 0, NULL);
 
 	gl_3dlabs_broken = ri.Cvar_Get("gl_3dlabs_broken", "1", CVAR_ARCHIVE, NULL);
+
+	gl_3dmapradius = ri.Cvar_Get("gl_3dmapradius", "8192.0", CVAR_NOSET, NULL);
 
 	vid_fullscreen = ri.Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, NULL);
 	vid_gamma = ri.Cvar_Get("vid_gamma", "1.0", CVAR_ARCHIVE, NULL);

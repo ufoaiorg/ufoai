@@ -83,6 +83,7 @@ cvar_t *cl_worldlevel;
 cvar_t *cl_selected;
 
 cvar_t *cl_3dmap;
+cvar_t *gl_3dmapradius;
 
 cvar_t *cl_numnames;
 
@@ -1731,6 +1732,7 @@ void CL_InitLocal(void)
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
 
 	cl_3dmap = Cvar_Get("cl_3dmap", "0", CVAR_ARCHIVE, "3D geoscape or float geoscape");
+	gl_3dmapradius = Cvar_Get("gl_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
 
 	/* only 19 soldiers in soldier selection list */
 	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET, NULL);

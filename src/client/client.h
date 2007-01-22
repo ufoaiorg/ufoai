@@ -314,6 +314,7 @@ extern cvar_t *cl_worldlevel;
 extern cvar_t *cl_selected;
 
 extern cvar_t *cl_3dmap;
+extern cvar_t *gl_3dmapradius;
 
 extern cvar_t *cl_numnames;
 
@@ -872,7 +873,7 @@ void AC_Reset (void);
 
 #define MAX_MENUTEXTLEN		32768
 
-
+/** @brief Model that have more than one part (head, body) but may only use one menu node */
 typedef struct menuModel_s {
 	char id[MAX_VAR];
 	char need[MAX_VAR];

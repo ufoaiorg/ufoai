@@ -32,7 +32,7 @@ image_t *shadow;
 
 static float globe_fog[4];
 static int spherelist = -1;
-#define GLOBE_TRIS 80
+#define GLOBE_TRIS 20
 #define GLOBE_TEXES (GLOBE_TRIS+1)*(GLOBE_TRIS+1)*4
 #define GLOBE_VERTS (GLOBE_TRIS+1)*(GLOBE_TRIS+1)*6
 static float globetexes[GLOBE_TEXES];
@@ -85,7 +85,6 @@ static void GL_DrawSphere (void)
 	}
 }
 
-
 /**
  * @brief Initialize the globe chain arrays
  */
@@ -123,16 +122,16 @@ static void GL_InitGlobeChain (void)
 			globetexes[texespos++] = s;
 			globetexes[texespos++] = (t - dt);
 
-			globeverts[vertspos++] = stheta * srhodrho * 4096.0;
-			globeverts[vertspos++] = ctheta * srhodrho * 4096.0;
-			globeverts[vertspos++] = crhodrho * 4096.0;
+			globeverts[vertspos++] = stheta * srhodrho * gl_3dmapradius->value;
+			globeverts[vertspos++] = ctheta * srhodrho * gl_3dmapradius->value;
+			globeverts[vertspos++] = crhodrho * gl_3dmapradius->value;
 
 			globetexes[texespos++] = s;
 			globetexes[texespos++] = t;
 
-			globeverts[vertspos++] = stheta * srho * 4096.0;
-			globeverts[vertspos++] = ctheta * srho * 4096.0;
-			globeverts[vertspos++] = crho * 4096.0;
+			globeverts[vertspos++] = stheta * srho * gl_3dmapradius->value;
+			globeverts[vertspos++] = ctheta * srho * gl_3dmapradius->value;
+			globeverts[vertspos++] = crho * gl_3dmapradius->value;
 
 			s += ds;
 		}
@@ -821,8 +820,7 @@ void Draw_3DMapLine(vec3_t angles, float zoom, int n, float dist, vec2_t * path)
 void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, char *map)
 {
 	/* globe scaling */
-	float fullscale = zoom / 4;
-	float halfscale = zoom / 8;
+	float fullscale = zoom / 4.0f;
 
 	image_t* gl = NULL;
 	float nx, ny, nw, nh;
@@ -847,7 +845,7 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, f
 	if (gl_fog->value) {
 		qglFogi (GL_FOG_MODE, GL_LINEAR);
 		qglFogfv (GL_FOG_COLOR, globe_fog);
-		qglFogf (GL_FOG_START, 5);
+		qglFogf (GL_FOG_START, 5.0);
 
 		/* must tweak the fog end too!!! */
 		qglFogf (GL_FOG_END, r_newrefdef.fog);
@@ -868,10 +866,10 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, f
 	qglPushMatrix ();
 
 	/* center it */
-	qglTranslatef (x+w/2, y+h/2, 0);
+	qglTranslatef ((nx+nw)/2, (ny+nh)/2, 0);
 
 	/* flatten the sphere */
-	qglScalef (fullscale, fullscale, halfscale);
+	qglScalef (fullscale, fullscale, fullscale);
 
 	/* rotate the globe as given in ccs.angles */
 	qglRotatef (rotate[YAW], 1, 0, 0);

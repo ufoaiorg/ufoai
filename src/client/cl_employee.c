@@ -316,9 +316,8 @@ employee_t* E_GetHiredEmployee(const base_t* const base, employeeType_t type, in
 					return employee;
 				j--;
 			}
-		} else {
+		} else
 			continue;
-		}
 	}
 	return NULL;
 }

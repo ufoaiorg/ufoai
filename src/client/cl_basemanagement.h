@@ -233,6 +233,8 @@ int B_ItemInBase2(int item_idx, base_t *base);
 aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index);
 void B_ReviveSoldiersInBase(base_t* base); /* TODO */
 
+void B_TransferAircraftMenu (aircraft_t* aircraft);
+
 void B_BuildingDestroy (building_t* building, base_t* base);
 void CL_DropshipReturned(base_t* base, aircraft_t* aircraft);
 

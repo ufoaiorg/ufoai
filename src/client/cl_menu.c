@@ -159,6 +159,7 @@ static value_t menuModelValues[] = {
 
 /* =========================================================== */
 
+/** @brief possible menu node types */
 typedef enum mn_s {
 	MN_NULL,
 	MN_CONFUNC,

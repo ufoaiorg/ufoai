@@ -2183,6 +2183,26 @@ static void B_TransferSelect_f (void)
 }
 
 /**
+ * @brief Shows potential targets for aircraft on transfer mission
+ */
+extern void B_TransferAircraftMenu (aircraft_t* aircraft)
+{
+	int i;
+	static char transferBaseSelectPopup[512];
+
+	transferBaseSelectPopup[0] = '\0';
+	transferAircraft = aircraft;
+
+	for (i = 0; i < gd.numBases; i++) {
+		if (!gd.bases[i].founded)
+			continue;
+		Q_strcat(transferBaseSelectPopup, gd.bases[i].name, sizeof(transferBaseSelectPopup));
+	}
+	menuText[TEXT_LIST] = transferBaseSelectPopup;
+	MN_PushMenu("popup_transferbaselist");
+}
+
+/**
  * @brief
  * @sa B_TransferSelect_f
  * @sa B_TransferInit_f
@@ -2193,8 +2213,15 @@ static void B_TransferStart_f (void)
 		Com_Printf("B_TransferStart_f: No aircraft selected\n");
 		return;
 	}
+	if (!transferBase) {
+		Com_Printf("B_TransferStart_f: No base selected\n");
+		return;
+	}
+
 	transferAircraft->status = AIR_TRANSPORT;
-	/* TODO */
+	transferAircraft->transferBase = transferBase;
+
+	MAP_MapCalcLine(transferAircraft->pos, transferBase->pos, &transferAircraft->route);
 }
 
 /**
@@ -2293,6 +2320,34 @@ static void B_TransferAircraftListClick_f (void)
 	Cvar_Set("mn_trans_aircraft_name", transferAircraft->shortname);
 
 	B_TransferDisplayAircraftInfo();
+}
+
+static void B_TransferBaseSelectPopup_f (void)
+{
+	int i, j = 0, num;
+	base_t* base;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("usage: trans_bases_click <type>\n");
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
+		if (base->founded == qfalse || base == baseCurrent)
+			continue;
+		j++;
+		if (j == num) {
+			break;
+		}
+	}
+
+	/* no base founded */
+	if (j < 0)
+		return;
+
+	transferBase = base;
 }
 
 /**
@@ -2456,6 +2511,7 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("trans_start", B_TransferStart_f, "Starts the tranfer");
 	Cmd_AddCommand("trans_select", B_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
 	Cmd_AddCommand("trans_init", B_TransferInit_f, "Init transfer menu");
+	Cmd_AddCommand("trans_baselist_click", B_TransferBaseSelectPopup_f, "Callback for transfer base list popup");
 	Cmd_AddCommand("trans_bases_click", B_TransferBaseSelect_f, "Callback for base list node click");
 	Cmd_AddCommand("trans_list_click", B_TransferListSelect_f, "Callback for transfer list node click");
 	Cmd_AddCommand("trans_aircraft_click", B_TransferAircraftListClick_f, "Callback for aircraft list node click");

@@ -10,7 +10,7 @@ Changes:
 11/06/06, Eddy Cullen (ScreamingWithNoSound): 
           Added documentation comments and updated copyright notice.
           Modified comment blocks to single C-Sytle comment.
-          
+
 Original file from Quake 2 v3.21: quake2-2.31/client/adivtab.h
 
 Copyright (C) 1997-2001 Id Software, Inc.

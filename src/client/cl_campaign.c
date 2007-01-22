@@ -2663,15 +2663,20 @@ void CL_UpdateCharacterStats(int won)
 	character_t *chr = NULL;
 	rank_t *rank = NULL;
 	aircraft_t *aircraft;
-	int i, j;
+	int i, j, idx = 0;
 
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	aircraft = &baseCurrent->aircraft[gd.interceptAircraft];
+
+	Com_DPrintf("CL_UpdateCharacterStats: baseCurrent: %s\n", baseCurrent->name);
 
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
-			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
+		if (CL_SoldierInAircraft(i, gd.interceptAircraft) ) {
+			/* negative value see E_GetHiredEmployee */
+			idx--;
+			Com_DPrintf("CL_UpdateCharacterStats: searching for soldier: idx: %i, i: %i\n", idx, i);
+			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, idx);
 			assert(chr);
 			chr->assigned_missions++;
 
@@ -2740,15 +2745,13 @@ static void CL_GameResultsCmd(void)
 	int won;
 	int civilians_killed;
 	int aliens_killed;
-
 	int i;
-
 	employee_t* employee;
 	int numberofsoldiers = 0; /* DEBUG */
 	base_t *attackedbase = NULL;
 	character_t *chr = NULL;
 
-	Com_Printf("CL_GameResultsCmd\n");
+	Com_DPrintf("CL_GameResultsCmd\n");
 
 	/* multiplayer? */
 	if (!curCampaign || !selMis || !baseCurrent)
@@ -2768,6 +2771,7 @@ static void CL_GameResultsCmd(void)
 	won = atoi(Cmd_Argv(1));
 
 	baseCurrent = CL_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
+	baseCurrent->aircraftCurrent = gd.interceptAircraft;
 
 	/* add the looted goods to base storage and market */
 	baseCurrent->storage = ccs.eMission; /* copied, including the arrays! */
@@ -2815,8 +2819,13 @@ static void CL_GameResultsCmd(void)
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won, baseCurrent);
 
-	/* send the dropship back to base */
-	CL_AircraftReturnToBase_f();
+	if (!baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes
+		|| (baseCurrent->hasAlienCont && baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes)) {
+		/* send the dropship back to base */
+		baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;
+		CL_AircraftReturnToBase_f();
+	} else
+		B_TransferAircraftMenu(&(baseCurrent->aircraft[baseCurrent->aircraftCurrent]));
 
 	/* campaign effects */
 	selMis->cause->done++;
