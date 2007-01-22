@@ -143,7 +143,6 @@ void CL_CollectingAliens(void)
 
 			if (le->HP <= 0 || (le->state & STATE_STUN)) {
 				for (j = 0; j < aircraft->alientypes; j++) {
-					Com_Printf("searching for '%s'\n", cargo[j].alientype);
 					/* Search alien type and increase amount */
 					if (Q_strncmp(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR) == 0) {
 						if (le->HP <= 0) {
