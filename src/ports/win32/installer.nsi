@@ -331,13 +331,6 @@ Section "Game" SEC01
   File "..\..\..\base\models\objects\boat\*.md2"
 
 ;======================================================================
-; models/objects/geoscape
-;======================================================================
-  SetOutPath "$INSTDIR\base\models\objects\geoscape"
-;  File "..\..\..\base\models\objects\geoscape\*.jpg"
-  File "..\..\..\base\models\objects\geoscape\*.md2"
-
-;======================================================================
 ; models/objects/rubbish
 ;======================================================================
   SetOutPath "$INSTDIR\base\models\objects\rubbish"
@@ -599,7 +592,7 @@ Section "Game" SEC01
   File "..\..\..\base\models\weapons\pistol\*.jpg"
   File "..\..\..\base\models\weapons\pistol\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\pistol2"
-  File "..\..\..\base\models\weapons\pistol2\*.tga"
+  File "..\..\..\base\models\weapons\pistol2\*.jpg"
   File "..\..\..\base\models\weapons\pistol2\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\plasblade"
   File "..\..\..\base\models\weapons\plasblade\*.jpg"
