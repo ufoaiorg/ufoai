@@ -58,7 +58,6 @@ void E_ResetEmployees(void);
 employee_t * E_CreateEmployee(employeeType_t type);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
 qboolean E_HireEmployee(const base_t* const base, employeeType_t type, int num);
-qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int num);
 qboolean E_RemoveEmployeeFromBuilding(employee_t *employee);
 
 employeeType_t E_GetEmployeeType(char* type);

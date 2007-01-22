@@ -34,8 +34,8 @@ static int employeesInCurrentList = 0;
 static menuNode_t *employeeListNode;
 
 /*****************************************************
- * VISUAL/GUI STUFF
- *****************************************************/
+VISUAL/GUI STUFF
+*****************************************************/
 
 /**
  * @brief Click function for employee_list node
@@ -53,6 +53,7 @@ static void E_EmployeeListClick_f (void)
 	if (num < 0 || num >= employeesInCurrentList)
 		return;
 
+	/* the + indicates, that values bigger than cl_numnames could be possible */
 	Cbuf_AddText(va("employee_hire +%i", num));
 }
 
@@ -155,13 +156,13 @@ static void E_EmployeeList_f (void)
 
 
 /*****************************************************
- * EMPLOYEE BACKEND STUFF
- *****************************************************/
+EMPLOYEE BACKEND STUFF
+*****************************************************/
 
 /**
  * @brief Checks whether the given employee is in the given base
  */
-extern qboolean E_IsInBase(employee_t* empl, const base_t const * base)
+extern qboolean E_IsInBase (employee_t* empl, const base_t const * base)
 {
 	if (empl->baseIDHired == base->idx)
 		return qtrue;
@@ -173,7 +174,7 @@ extern qboolean E_IsInBase(employee_t* empl, const base_t const * base)
  * @param type employeeType_t value
  * @return translated employee string
  */
-extern char* E_GetEmployeeString(employeeType_t type)
+extern char* E_GetEmployeeString (employeeType_t type)
 {
 	switch (type) {
 	case EMPL_SOLDIER:
@@ -197,7 +198,7 @@ extern char* E_GetEmployeeString(employeeType_t type)
  * @param type Pointer to employee type string
  * @return employeeType_t
  */
-employeeType_t E_GetEmployeeType(char* type)
+extern employeeType_t E_GetEmployeeType (char* type)
 {
 	assert(type);
 	if ( !Q_strncmp(type, "EMPL_SCIENTIST", 14 ) )
@@ -212,7 +213,7 @@ employeeType_t E_GetEmployeeType(char* type)
 		return EMPL_ROBOT;
 	else {
 		Sys_Error("Unknown employee type '%s'\n", type);
-		return MAX_EMPL;
+		return MAX_EMPL; /* never reached */
 	}
 }
 
@@ -236,7 +237,7 @@ extern void E_Init (void)
  * @sa CL_ResetSinglePlayerData
  * @sa E_DeleteEmployee
  */
-void E_ResetEmployees(void)
+extern void E_ResetEmployees (void)
 {
 	int i;
 
@@ -248,20 +249,21 @@ void E_ResetEmployees(void)
 		}
 }
 
+#if 0
 /**
  * @brief Returns true if the employee is only assigned to quarters but not to labs and workshops.
- *
  * @param[in] employee The employee_t pointer to check
  * @return qboolean
  * @sa E_EmployeeIsUnassigned
  */
-qboolean E_EmployeeIsFree(employee_t * employee)
+static qboolean E_EmployeeIsFree (employee_t * employee)
 {
-	if ( !employee )
-		Sys_Error("E_EmployeeIsUnassigned: Employee is NULL.\n");
+	if (!employee)
+		Sys_Error("E_EmployeeIsFree: Employee is NULL.\n");
 
 	return (employee->buildingID < 0 && employee->hired);
 }
+#endif
 
 /**
  * @brief Return a given employee pointer in the given base of a given type.
@@ -270,7 +272,7 @@ qboolean E_EmployeeIsFree(employee_t * employee)
  * @param[in] idx Which employee id (in global employee array)
  * @return employee_t pointer or NULL
  */
-employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int idx)
+extern employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int idx)
 {
 	int i;
 
@@ -286,33 +288,13 @@ employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int idx
 }
 
 /**
- * @brief Reset the hired flag for all employees of a given type in a given base
- * @param[in] base Which base the employee should be fired from.
- * @param[in] type Which employee type do we search.
- */
-void E_UnhireAllEmployees(const base_t* const base, employeeType_t type)
-{
-	int i;
-	employee_t *employee = NULL;
-
-	if (!base || type > MAX_EMPL)
-		return;
-
-	for (i = 0; i < gd.numEmployees[type]; i++) {
-		employee = &gd.employees[type][i];
-		if (employee->baseIDHired == base->idx)
-			E_UnhireEmployee(base, type, i);
-	}
-}
-
-/**
  * @brief Return a given character pointer of an employee in the given base of a given type
  * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
  * @param[in] idx Which employee id (in global employee array)
  * @return character_t pointer or NULL
  */
-character_t* E_GetCharacter(const base_t* const base, employeeType_t type, int idx)
+extern character_t* E_GetCharacter (const base_t* const base, employeeType_t type, int idx)
 {
 	employee_t* employee = E_GetEmployee(base, type, idx); /* Parameter sanity is checked here. */
 	if (employee)
@@ -330,7 +312,7 @@ character_t* E_GetCharacter(const base_t* const base, employeeType_t type, int i
  * @sa E_UnhireEmployee
  * @sa E_HireEmployee
  */
-employee_t* E_GetUnhiredEmployee(employeeType_t type, int idx)
+static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
 {
 	int i = 0;
 	int j = -1;	/* The number of found unhired employees. Ignore the minus. */
@@ -370,7 +352,7 @@ employee_t* E_GetUnhiredEmployee(employeeType_t type, int idx)
  * @sa E_HireEmployee
  * @sa E_UnhireEmployee
  */
-employee_t* E_GetHiredEmployee(const base_t* const base, employeeType_t type, int idx)
+extern employee_t* E_GetHiredEmployee (const base_t* const base, employeeType_t type, int idx)
 {
 	int i = 0;
 	int j = -1;	/* The number of found hired employees. Ignore the minus. */
@@ -407,7 +389,7 @@ employee_t* E_GetHiredEmployee(const base_t* const base, employeeType_t type, in
  * @param[in] idx Which employee id (in global employee array)
  * @return character_t pointer or NULL
  */
-character_t* E_GetHiredCharacter(const base_t* const base, employeeType_t type, int idx)
+extern character_t* E_GetHiredCharacter (const base_t* const base, employeeType_t type, int idx)
 {
 	employee_t* employee = E_GetHiredEmployee(base, type, idx);	 /* Parameter sanity is checked here. */
 	if (employee)
@@ -423,9 +405,9 @@ character_t* E_GetHiredCharacter(const base_t* const base, employeeType_t type, 
  * @return qboolean
  * @sa E_EmployeeIsFree
  */
-qboolean E_EmployeeIsUnassigned(employee_t * employee)
+static qboolean E_EmployeeIsUnassigned (employee_t * employee)
 {
-	if ( !employee )
+	if (!employee)
 		Sys_Error("E_EmployeeIsUnassigned: Employee is NULL.\n");
 
 	return (employee->buildingID < 0);
@@ -440,15 +422,15 @@ qboolean E_EmployeeIsUnassigned(employee_t * employee)
  * @sa E_EmployeesInBase
  * @note assigned is not hired - they are already hired in a base, in a quarter _and_ working in another building.
  */
-employee_t * E_GetAssignedEmployee(const base_t* const base, employeeType_t type)
+extern employee_t* E_GetAssignedEmployee (const base_t* const base, employeeType_t type)
 {
 	int i;
 	employee_t *employee = NULL;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if ( employee->baseIDHired == base->idx
-			 && !E_EmployeeIsUnassigned(employee) )
+		if (employee->baseIDHired == base->idx
+			&& !E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
 	return NULL;
@@ -456,22 +438,21 @@ employee_t * E_GetAssignedEmployee(const base_t* const base, employeeType_t type
 
 /**
  * @brief Gets an assigned employee of a given type from the given base.
- *
  * @param[in] type The type of employee to search.
  * @return employee_t
  * @sa E_EmployeeIsUnassigned
  * @sa E_EmployeesInBase
  * @note unassigned is not unhired - they are already hired in a base but are at quarters
  */
-employee_t * E_GetUnassignedEmployee(const base_t* const base, employeeType_t type)
+extern employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeType_t type)
 {
 	int i;
 	employee_t *employee = NULL;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if ( employee->baseIDHired == base->idx
-			 && E_EmployeeIsUnassigned(employee) )
+		if (employee->baseIDHired == base->idx
+			&& E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
 	return NULL;
@@ -485,7 +466,7 @@ employee_t * E_GetUnassignedEmployee(const base_t* const base, employeeType_t ty
  * @todo Check for quarter space
  * @sa E_UnhireEmployee
  */
-qboolean E_HireEmployee(const base_t* const base, employeeType_t type, int idx)
+extern qboolean E_HireEmployee (const base_t* const base, employeeType_t type, int idx)
 {
 	employee_t* employee = NULL;
 	employee = E_GetUnhiredEmployee(type, idx);
@@ -505,12 +486,12 @@ qboolean E_HireEmployee(const base_t* const base, employeeType_t type, int idx)
  * @param[in] idx Which employee id (in global employee array) See E_GetHiredEmployee for usage.
  * @sa E_HireEmployee
  */
-qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx)
+static qboolean E_UnhireEmployee (const base_t* const base, employeeType_t type, int idx)
 {
 	employee_t* employee = NULL;
 	employee = E_GetHiredEmployee(base, type, idx);
 	if (employee) {
-		if (employee->buildingID >= 0 ) {
+		if (employee->buildingID >= 0) {
 			/* Remove employee from building (and tech/production). */
 			E_RemoveEmployeeFromBuilding(employee);
 			/* TODO: Assign a new employee to the tech/production) if one is available.
@@ -521,11 +502,10 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
 		 * TODO: why not merge it with E_RemoveEmployeeFromBuilding, where the building is Dropship Hangar
 		 * (unless hangar can hold more than one aircraft...)?
 		 */
-		if (type == EMPL_SOLDIER ) {
+		if (type == EMPL_SOLDIER) {
 			/* Remove soldier from aircraft/team if he was assigned to one. */
-			if ( CL_SoldierInAircraft(employee->idx, -1) ){
+			if (CL_SoldierInAircraft(employee->idx, -1))
 				CL_RemoveSoldierFromAircraft(employee->idx, -1);
-			}
 		}
 		/* Set all employee-tags to 'unhired'. */
 		employee->hired = qfalse;
@@ -541,13 +521,32 @@ qboolean E_UnhireEmployee(const base_t* const base, employeeType_t type, int idx
 }
 
 /**
+ * @brief Reset the hired flag for all employees of a given type in a given base
+ * @param[in] base Which base the employee should be fired from.
+ * @param[in] type Which employee type do we search.
+ */
+extern void E_UnhireAllEmployees (const base_t* const base, employeeType_t type)
+{
+	int i;
+	employee_t *employee = NULL;
+
+	if (!base || type > MAX_EMPL)
+		return;
+
+	for (i = 0; i < gd.numEmployees[type]; i++) {
+		employee = &gd.employees[type][i];
+		if (employee->baseIDHired == base->idx)
+			E_UnhireEmployee(base, type, i);
+	}
+}
+
+/**
  * @brief Creates an entry of a new employee in the global list and assignes it to no building/base.
- *
  * @param[in] type Tell the function what type of employee to create.
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-employee_t* E_CreateEmployee(employeeType_t type)
+extern employee_t* E_CreateEmployee (employeeType_t type)
 {
 	employee_t* employee = NULL;
 
@@ -571,34 +570,33 @@ employee_t* E_CreateEmployee(employeeType_t type)
 	employee->buildingID = -1;
 
 	switch (type) {
-		case EMPL_SOLDIER:
-			CL_GenerateCharacter(employee, Cvar_VariableString("team"), type);
-			break;
-		case EMPL_SCIENTIST:
-		case EMPL_MEDIC:
-		case EMPL_WORKER:
-			CL_GenerateCharacter(employee, Cvar_VariableString("team"), type);
-			employee->speed = 100;
-			break;
-		case EMPL_ROBOT:
-			CL_GenerateCharacter(employee, Cvar_VariableString("team"), type);
-			break;
-		default:
-			break;
-		}
+	case EMPL_SOLDIER:
+		CL_GenerateCharacter(employee, Cvar_VariableString("team"), type);
+		break;
+	case EMPL_SCIENTIST:
+	case EMPL_MEDIC:
+	case EMPL_WORKER:
+		CL_GenerateCharacter(employee, Cvar_VariableString("team"), type);
+		employee->speed = 100;
+		break;
+	case EMPL_ROBOT:
+		CL_GenerateCharacter(employee, Cvar_VariableString("team"), type);
+		break;
+	default:
+		break;
+	}
 	gd.numEmployees[type]++;
 	return employee;
 }
 
 /**
  * @brief Removes the employee completely from the game (buildings + global list).
- *
  * @param[in] employee The pointer to the employee you want to remove.
  * @return True if the employee was removed sucessfully, otherwise false.
  * @sa E_CreateEmployee
  * @sa E_ResetEmployees
  */
-qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
+extern qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 {
 	int i, idx;
 	qboolean found = qfalse;
@@ -606,23 +604,21 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 	if (!employee)
 		return qfalse;
 
-	idx=employee->idx;
+	idx = employee->idx;
 	/* Fire the employee. This will also:
 		1) remove him from buildings&work
 		2) remove his inventory
 	*/
 
-	if (employee->baseIDHired >= 0)	{
+	if (employee->baseIDHired >= 0)
 		E_UnhireEmployee(&gd.bases[employee->baseIDHired], type, employee->idx);
-	}
 
 	/* Remove the employee from the global list. */
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		if (gd.employees[type][i].idx == employee->idx)	{
+		if (gd.employees[type][i].idx == employee->idx)
 			found = qtrue;
-		}
-		if (found) {
 
+		if (found) {
 			if ( i < MAX_EMPLOYEES-1) { /* Just in case we have _that much_ employees. :) */
 				/* Move all the following employees in the list one place forward and correct its index. */
 				gd.employees[type][i] = gd.employees[type][i + 1];
@@ -636,7 +632,7 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
 		gd.numEmployees[type]--;
 
 		if (type == EMPL_SOLDIER) {
-			for ( i = 0; i < gd.numAircraft; i++ )
+			for (i = 0; i < gd.numAircraft; i++)
 				CL_DecreaseAircraftTeamIdxGreaterThan(CL_AircraftGetFromIdx(i),idx);
 		}
 	} else {
@@ -652,22 +648,22 @@ qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type)
  * @note Used if the base e.g is destroyed by the aliens.
  * @param[in] base Which base the employee should be fired from.
  */
-void E_DeleteAllEmployees(const base_t* const base)
+extern void E_DeleteAllEmployees (const base_t* const base)
 {
 	int i;
 	employeeType_t type;
 	employee_t *employee = NULL;
 
-	if ( !base )
+	if (!base)
 		return;
 	Com_DPrintf("E_DeleteAllEmployees: starting ...\n");
-	for ( type = EMPL_SOLDIER; type < MAX_EMPL; type++ ) {
+	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++) {
 		Com_DPrintf("E_DeleteAllEmployees: Removing empl-type %i | num %i\n", type, gd.numEmployees[type]);
 		/* Attention:
 			gd.numEmployees[type] is changed in E_DeleteAllEmployees!  (it's decreased by 1 per call)
 			For this reason we start this loop from the back of the empl-list. toward 0.
 		*/
-		for ( i = gd.numEmployees[type]-1; i >= 0 ; i--) {
+		for (i = gd.numEmployees[type]-1; i >= 0 ; i--) {
 			Com_DPrintf("E_DeleteAllEmployees: %i\n", i);
 			employee = &gd.employees[type][i];
 			if (employee->baseIDHired == base->idx) {
@@ -693,7 +689,7 @@ TODO: Will later on be used in e.g RS_AssignScientist_f
  * @sa E_RemoveEmployeeFromBuilding
  * @return Returns true if adding was possible/sane otherwise false. In the later case nothing will be changed.
  */
-qboolean E_AssignEmployeeToBuilding(building_t *building, employeeType_t type)
+extern qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
 {
 	employee_t * employee = NULL;
 
@@ -718,13 +714,12 @@ qboolean E_AssignEmployeeToBuilding(building_t *building, employeeType_t type)
 
 /**
  * @brief Remove one employee from building.
- *
  * @todo Add check for base vs. employee_type and abort if they do not match.
  * @param[in] employee What employee to remove from its building.
  * @return Returns true if removing was possible/sane otherwise false.
  * @sa E_AssignEmployeeToBuilding
  */
-qboolean E_RemoveEmployeeFromBuilding(employee_t *employee)
+extern qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 {
 	character_t *chr = NULL;
 	technology_t *tech = NULL;
@@ -765,7 +760,7 @@ qboolean E_RemoveEmployeeFromBuilding(employee_t *employee)
  * @param[in] base The base where we count
  * @return count of hired employees of a given type in a given base
  */
-int E_CountHired(const base_t* const base, employeeType_t type)
+extern int E_CountHired (const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
 	employee_t *employee = NULL;
@@ -785,7 +780,7 @@ int E_CountHired(const base_t* const base, employeeType_t type)
  * @param[in] base The base where we count
  * @return count of hired employees of a given type in a given base
  */
-int E_CountUnhired(employeeType_t type)
+extern int E_CountUnhired (employeeType_t type)
 {
 	int count = 0, i;
 	employee_t *employee = NULL;
@@ -803,7 +798,7 @@ int E_CountUnhired(employeeType_t type)
  * @param[in] type The type of employee to search.
  * @param[in] base The base where we count
  */
-int E_CountUnassigned(const base_t* const base, employeeType_t type)
+extern int E_CountUnassigned (const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
 	employee_t *employee = NULL;
@@ -819,7 +814,7 @@ int E_CountUnassigned(const base_t* const base, employeeType_t type)
 /**
  * @brief Callback for employee_hire command
  */
-void E_EmployeeHire_f (void)
+static void E_EmployeeHire_f (void)
 {
 	int num, minus = 0, plus = 0;
 	char *arg;
@@ -834,9 +829,15 @@ void E_EmployeeHire_f (void)
 	}
 
 	arg = Cmd_Argv(1);
+
+	/* check whether this is called with the text node click function
+	 * with values from 0 - #available employees (bigger values than
+	 * cl_numnames [19]) possible ... */
 	if (*arg == '+') {
 		num = atoi(arg+1);
 		minus = employeeListNode->textScroll % cl_numnames->integer;
+	/* ... or with the hire pictures that are using only values from
+	 * 0 - cl_numnames [19] */
 	} else {
 		num = atoi(Cmd_Argv(1));
 		plus = employeeListNode->textScroll;
@@ -870,9 +871,9 @@ void E_EmployeeHire_f (void)
 }
 
 /**
- * @brief
+ * @brief Callback function that updates the character cvars when calling employee_select
  */
-static void E_EmployeeSelect_f(void)
+static void E_EmployeeSelect_f (void)
 {
 	int num;
 
@@ -895,7 +896,7 @@ static void E_EmployeeSelect_f(void)
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal
  */
-extern void E_Reset(void)
+extern void E_Reset (void)
 {
 	/* add commands */
 	Cmd_AddCommand("employee_init", E_EmployeeList_f, "Init function for employee hire menu");
