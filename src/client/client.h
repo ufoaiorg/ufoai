@@ -819,6 +819,7 @@ extern stats_t stats;
 /* message systems */
 typedef enum {
 	MSG_DEBUG,
+	MSG_INFO,			/**< don't save these messages */
 	MSG_STANDARD,
 	MSG_RESEARCH,
 	MSG_CONSTRUCTION,

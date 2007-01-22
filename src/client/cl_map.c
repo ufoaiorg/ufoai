@@ -267,7 +267,7 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y, qboolean globe)
 			MN_PushMenu("popup_newbase");
 			return;
 		} else {
-			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL);
+			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
 		}
 	} else if (gd.mapAction == MA_UFORADAR) {
 		MN_PushMenu("popup_intercept_ufo");

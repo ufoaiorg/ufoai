@@ -429,7 +429,7 @@ extern qboolean CL_NewBase(vec2_t pos)
 		baseCurrent->mapChar = 'a';
 	} else if (MapIsWater(color)) {
 		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
-		MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL);
+		MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
 		return qfalse;
 	} else {
 		Com_DPrintf("Graslandbase\n");
@@ -1497,6 +1497,10 @@ void CL_MessageSave(sizebuf_t * sb, message_t * message)
 		return;
 	/* bottom up */
 	CL_MessageSave(sb, message->next);
+
+	/* don't save these message types */
+	if (message->type == MSG_INFO)
+		return;
 
 	if (message->pedia)
 		idx = message->pedia->idx;
