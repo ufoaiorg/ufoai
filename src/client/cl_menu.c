@@ -3617,6 +3617,7 @@ message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup,
 
 	switch (type) {
 	case MSG_DEBUG:
+	case MSG_INFO:
 	case MSG_STANDARD:
 	case MSG_TRANSFERFINISHED:
 	case MSG_PROMOTION:
