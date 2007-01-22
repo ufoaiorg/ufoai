@@ -319,6 +319,22 @@ void R_ConcatTransforms(float in1[3][4], float in2[3][4], float out[3][4])
 }
 
 /**
+ * @brief
+ */
+void Print3Vector (const vec3_t v)
+{
+	Com_Printf("(%f, %f, %f)\n", v[0], v[1], v[2]);
+}
+
+/**
+ * @brief
+ */
+void Print2Vector (const vec2_t v)
+{
+	Com_Printf("(%f, %f)\n", v[0], v[1]);
+}
+
+/**
  * @brief Converts longitude and latitude to vector coordinates
  * @sa VecToPolar
  */
