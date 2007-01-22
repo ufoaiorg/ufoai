@@ -244,10 +244,10 @@ campaign easy
 	name		"_Easy Campaign"
 	text		"_txt_easy_campaign"
 	team		human
-	soldiers	12
-	scientists	9
-	workers		6
-	medics		3
+	soldiers	25
+	scientists	16
+	workers		10
+	medics		10
 	difficulty	-2
 	character_data {
 		TEAM_PHALANX EMPL_SOLDIER skill 75 100
@@ -274,10 +274,10 @@ campaign veryeasy
 	name		"_Very Easy Campaign"
 	text		"_txt_veryeasy_campaign"
 	team		human
-	soldiers	15
-	scientists	12
-	workers		9
-	medics		4
+	soldiers	35
+	scientists	26
+	workers		20
+	medics		20
 	difficulty	-4
 	character_data {
 		TEAM_PHALANX EMPL_SOLDIER skill 85 100
