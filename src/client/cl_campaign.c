@@ -369,25 +369,25 @@ static qboolean CL_MapMaskFind(byte * color, vec2_t polar)
  * @param[in] pos vec2_t Value of position on map to get the color value from.
  * @return Returns the color value at given position.
  */
-extern byte *CL_GetMapColor(const vec2_t pos, mapType_t type)
+extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
 {
 	int x, y;
 	int width, height;
 	byte *mask;
 
 	switch (type) {
-		case MAPTYPE_CLIMAZONE:
-			mask = maskPic;
-			width = maskWidth;
-			height = maskHeight;
-			break;
-		case MAPTYPE_NATIONS:
-			mask = nationsPic;
-			width = nationsWidth;
-			height = nationsHeight;
-			break;
-		default:
-			Sys_Error("Unknown maptype %i\n", type);
+	case MAPTYPE_CLIMAZONE:
+		mask = maskPic;
+		width = maskWidth;
+		height = maskHeight;
+		break;
+	case MAPTYPE_NATIONS:
+		mask = nationsPic;
+		width = nationsWidth;
+		height = nationsHeight;
+		break;
+	default:
+		Sys_Error("Unknown maptype %i\n", type);
 	}
 
 	/* get coordinates */
@@ -476,6 +476,7 @@ static qboolean CL_StageSetDone(char *name)
 
 /**
  * @brief
+ * @sa CL_CampaignExecute
  */
 static void CL_CampaignActivateStageSets(stage_t *stage)
 {
@@ -512,8 +513,10 @@ static void CL_CampaignActivateStageSets(stage_t *stage)
 
 /**
  * @brief
+ * @sa CL_CampaignActivateStageSets
+ * @sa CL_CampaignExecute
  */
-static stageState_t *CL_CampaignActivateStage(char *name, qboolean setsToo)
+static stageState_t *CL_CampaignActivateStage (char *name, qboolean setsToo)
 {
 	stage_t *stage;
 	stageState_t *state;
@@ -549,8 +552,9 @@ static stageState_t *CL_CampaignActivateStage(char *name, qboolean setsToo)
 
 /**
  * @brief
+ * @sa CL_CampaignExecute
  */
-static void CL_CampaignEndStage(char *name)
+static void CL_CampaignEndStage (char *name)
 {
 	stageState_t *state;
 	int i;
@@ -569,8 +573,11 @@ static void CL_CampaignEndStage(char *name)
 
 /**
  * @brief
+ * @sa CL_CampaignActivateStage
+ * @sa CL_CampaignEndStage
+ * @sa CL_CampaignActivateStageSets
  */
-static void CL_CampaignExecute(setState_t * set)
+static void CL_CampaignExecute (setState_t * set)
 {
 	/* handle stages, execute commands */
 	if (*set->def->nextstage)
@@ -633,12 +640,13 @@ void CP_MissionList_f (void)
 	}
 }
 
+#define DIST_MIN_BASE_MISSION 4
 /**
  * @brief
  * @sa CL_CampaignRemoveMission
+ * @sa CL_CampaignCheckEvents
  */
-#define DIST_MIN_BASE_MISSION 4
-static void CL_CampaignAddMission(setState_t * set)
+static void CL_CampaignAddMission (setState_t * set)
 {
 	actMis_t *mis;
 
@@ -758,7 +766,7 @@ static void CL_CampaignAddMission(setState_t * set)
  * @brief
  * @sa CL_CampaignAddMission
  */
-static void CL_CampaignRemoveMission(actMis_t * mis)
+static void CL_CampaignRemoveMission (actMis_t * mis)
 {
 	int i, num;
 	base_t *base;
@@ -792,7 +800,7 @@ static void CL_CampaignRemoveMission(actMis_t * mis)
 /**
  * @brief Builds the aircraft list for textfield with id
  */
-static void CL_BuildingAircraftList_f(void)
+static void CL_BuildingAircraftList_f (void)
 {
 	char *s;
 	int i, j;
@@ -909,6 +917,11 @@ void CL_BaseRansacked(base_t *base)
 
 /**
  * @brief
+ * @sa CL_CampaignAddMission
+ * @sa CL_CampaignExecute
+ * @sa UFO_CampaignCheckEvents
+ * @sa CL_CampaignRemoveMission
+ * @sa CL_HandleNationData
  */
 void CL_CampaignCheckEvents(void)
 {
@@ -942,22 +955,22 @@ void CL_CampaignCheckEvents(void)
 		if (mis->expire.day && Date_LaterThan(ccs.date, mis->expire)) {
 			/* Mission is expired. Calculating penalties for the various mission types. */
 			switch (mis->def->missionType) {
-				case MIS_BASEATTACK:
-					/* Base attack mission never attended to, so
-					 * invaders had plenty of time to ransack it */
-					base = (base_t*)mis->def->data;
-					CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
-					CL_BaseRansacked(base);
-					break;
-				case MIS_INTERCEPT:
-					/* Normal ground mission. */
-					CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
-					Q_strncpyz(messageBuffer, va(ngettext("The mission expired and %i civilian died.", "The mission expired and %i civilians died.", mis->def->civilians), mis->def->civilians), MAX_MESSAGE_TEXT);
-					MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
-					break;
-				default:
-					Sys_Error("Unknown missionType for '%s'\n", mis->def->name);
-					break;
+			case MIS_BASEATTACK:
+				/* Base attack mission never attended to, so
+					* invaders had plenty of time to ransack it */
+				base = (base_t*)mis->def->data;
+				CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
+				CL_BaseRansacked(base);
+				break;
+			case MIS_INTERCEPT:
+				/* Normal ground mission. */
+				CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
+				Q_strncpyz(messageBuffer, va(ngettext("The mission expired and %i civilian died.", "The mission expired and %i civilians died.", mis->def->civilians), mis->def->civilians), MAX_MESSAGE_TEXT);
+				MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+				break;
+			default:
+				Sys_Error("Unknown missionType for '%s'\n", mis->def->name);
+				break;
 			}
 			/* Remove mission from the map. */
 			if (mis->cause->def->number && mis->cause->num >= mis->cause->def->number)
