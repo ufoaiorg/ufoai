@@ -414,7 +414,7 @@ void RS_InitTree(void)
 				item = &csi.ods[j];
 
 				/* This item has been 'provided' -> get the correct data. */
-				if (!Q_strncmp(tech->provides, item->kurz, MAX_VAR)) {
+				if (!Q_strncmp(tech->provides, item->id, MAX_VAR)) {
 					found = qtrue;
 					if (!*tech->name)
 						Com_sprintf(tech->name, MAX_VAR, item->name);
@@ -1714,7 +1714,7 @@ int RS_GetItem(char *id)
 #endif
 	for (i = 0; i < csi.numODs; i++) {	/* i = item index */
 		item = &csi.ods[i];
-		if (!Q_strncmp(id, item->kurz, MAX_VAR)) {
+		if (!Q_strncmp(id, item->id, MAX_VAR)) {
 			return i;
 		}
 	}

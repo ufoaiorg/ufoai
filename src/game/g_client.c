@@ -896,16 +896,16 @@ void G_InventoryToFloor(edict_t * ent)
 				   TODO: for items other than armor we should really
 				   just spill into adjacent locations */
 				if (Q_strncmp(gi.csi->ods[ic->item.t].type, "armor", MAX_VAR))
-					gi.dprintf("G_InventoryToFloor: Warning: could not drop item to floor: %s\n", gi.csi->ods[ic->item.t].kurz);
+					gi.dprintf("G_InventoryToFloor: Warning: could not drop item to floor: %s\n", gi.csi->ods[ic->item.t].id);
 				if (!Com_RemoveFromInventory(&ent->i, k, ic->x, ic->y))
-					gi.dprintf("G_InventoryToFloor: Error: could not remove item: %s\n", gi.csi->ods[ic->item.t].kurz);
+					gi.dprintf("G_InventoryToFloor: Error: could not remove item: %s\n", gi.csi->ods[ic->item.t].id);
 			} else {
 				ic->x = x;
 				ic->y = y;
 				ic->next = FLOOR(floor);
 				FLOOR(floor) = ic;
 #ifdef PARANOID
-				Com_DPrintf("G_InventoryToFloor: item to floor: %s\n", gi.csi->ods[ic->item.t].kurz);
+				Com_DPrintf("G_InventoryToFloor: item to floor: %s\n", gi.csi->ods[ic->item.t].id);
 #endif
 			}
 		}
@@ -1921,7 +1921,7 @@ void G_ClientTeamInfo (player_t * player)
 					/* gi.dprintf("G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y); */
 
 					Com_AddToInventory(&ent->i, item, container, x, y);
-					/* gi.dprintf("G_ClientTeamInfo: add %s to inventory (container %i - idArmor: %i)\n", gi.csi->ods[ent->i.c[container]->item.t].kurz, container, gi.csi->idArmor); */
+					/* gi.dprintf("G_ClientTeamInfo: add %s to inventory (container %i - idArmor: %i)\n", gi.csi->ods[ent->i.c[container]->item.t].id, container, gi.csi->idArmor); */
 				}
 			}
 

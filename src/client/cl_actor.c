@@ -616,7 +616,7 @@ void CL_ActorUpdateCVars(void)
 			menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
 			/* in multiplayer RS_ItemIsResearched always returns true,
 			so we are able to use the aliens weapons */
-			if ( selWeapon && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].kurz) ) {
+			if (selWeapon && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].id)) {
 				CL_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
 				cl.cmode = M_MOVE;
 			} else if (selWeapon && selFD) {
@@ -1198,7 +1198,7 @@ void CL_ActorReload(int hand)
 	if (!csi.ods[weapon].reload)
 		return;
 
-	if (!RS_ItemIsResearched(csi.ods[weapon].kurz)) {
+	if (!RS_ItemIsResearched(csi.ods[weapon].id)) {
 		CL_DisplayHudMessage(_("You cannot reload this unknown item.\nYou need to research it and its ammunition first.\n"), 2000);
 		return;
 	}
@@ -1211,7 +1211,7 @@ void CL_ActorReload(int hand)
 			/* we've already found. */
 			for (ic = inv->c[container]; ic; ic = ic->next)
 				if (INV_LoadableInWeapon(&csi.ods[ic->item.t], weapon)
-				&& RS_ItemIsResearched(csi.ods[ic->item.t].kurz) ) {
+				&& RS_ItemIsResearched(csi.ods[ic->item.t].id) ) {
 					x = ic->x;
 					y = ic->y;
 					tu = csi.ids[container].out;

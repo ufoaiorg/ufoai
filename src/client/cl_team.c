@@ -60,7 +60,7 @@ char* CL_GetTeamSkinName(int id)
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
 {
 	assert (item.t != NONE);
-/*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].kurz, container, item.t, item.a, item.m, x, y);*/
+/*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
 	MSG_WriteFormat(buf, "bbbbbb",
 					item.t, item.a, item.m, container, x, y);
 }

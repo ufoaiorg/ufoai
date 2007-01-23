@@ -2667,7 +2667,7 @@ int B_ItemInBase(int item_idx, base_t *base)
 	if (!ed)
 		return -1;
 
-	/* Com_DPrintf("B_ItemInBase: DEBUG idx %s\n",  csi.ods[item_idx].kurz); */
+	/* Com_DPrintf("B_ItemInBase: DEBUG idx %s\n",  csi.ods[item_idx].id); */
 
 	/* FIXME/TODO: currently since all alien artifacts are added to the
 	 * market, this check ensures market items are researchable too...

@@ -174,7 +174,7 @@ void CL_ItemDescription(int item)
 	od = &csi.ods[item];
 	Cvar_Set("mn_itemname", _(od->name));
 
-	Cvar_Set("mn_item", od->kurz);
+	Cvar_Set("mn_item", od->id);
 	Cvar_Set("mn_weapon", "");
 	Cvar_Set("mn_ammo", "");
 
@@ -239,26 +239,26 @@ void UP_ArmorDescription (technology_t* t)
 
 	/* select item */
 	for ( i = 0; i < csi.numODs; i++ )
-		if ( !Q_strncmp( t->provides, csi.ods[i].kurz, MAX_VAR ) ) {
+		if ( !Q_strncmp( t->provides, csi.ods[i].id, MAX_VAR ) ) {
 			od = &csi.ods[i];
 			break;
 		}
 
 #ifdef DEBUG
-	if ( od == NULL )
-		Com_sprintf( upBuffer, MAX_UPTEXT, _("Could not find armor definition") );
-	else if ( Q_strncmp(od->type, "armor", MAX_VAR ) )
-		Com_sprintf( upBuffer, MAX_UPTEXT, _("Item %s is no armor but %s"), od->kurz, od->type );
+	if (od == NULL)
+		Com_sprintf( upBuffer, MAX_UPTEXT, _("Could not find armor definition"));
+	else if (Q_strncmp(od->type, "armor", MAX_VAR))
+		Com_sprintf(upBuffer, MAX_UPTEXT, _("Item %s is no armor but %s"), od->id, od->type);
 	else
 #endif
 	{
-		Cvar_Set( "mn_upmodel_top", "" );
-		Cvar_Set( "mn_upmodel_bottom", "" );
-		Cvar_Set( "mn_upimage_bottom", "base/empty" );
-		Cvar_Set( "mn_upimage_top", t->image_top );
+		Cvar_Set("mn_upmodel_top", "");
+		Cvar_Set("mn_upmodel_bottom", "");
+		Cvar_Set("mn_upimage_bottom", "base/empty");
+		Cvar_Set("mn_upimage_top", t->image_top);
 		upBuffer[0] = '\0';
-		for ( i = 0; i < csi.numDTs; i++ )
-			Q_strcat(upBuffer, va ( _("%s:\tProtection: %i\tHardness: %i\n"), _(csi.dts[i]), od->protection[i], od->hardness[i] ), sizeof(upBuffer));
+		for (i = 0; i < csi.numDTs; i++)
+			Q_strcat(upBuffer, va(_("%s:\tProtection: %i\tHardness: %i\n"), _(csi.dts[i]), od->protection[i], od->hardness[i]), sizeof(upBuffer));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 	UP_DisplayTechTree(t);
@@ -281,7 +281,7 @@ void UP_BuildingDescription (technology_t* t)
 {
 	building_t* b = B_GetBuildingType ( t->provides );
 
-	if ( !b ) {
+	if (!b) {
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find building") );
 	} else {
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Depends:\t%s\n"), b->dependsBuilding >= 0 ? gd.buildingTypes[b->dependsBuilding].name : _("None") );
@@ -343,7 +343,7 @@ extern void UP_Article (technology_t* tech)
 				break;
 			case RS_WEAPON:
 				for (i = 0; i < csi.numODs; i++) {
-					if (!Q_strncmp(tech->provides, csi.ods[i].kurz, MAX_VAR)) {
+					if (!Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR)) {
 						CL_ItemDescription(i);
 						UP_DisplayTechTree(tech);
 						break;

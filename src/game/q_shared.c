@@ -2345,7 +2345,7 @@ invList_t *Com_AddToInventory(inventory_t * const i, item_t item, int container,
 	invUnused = invUnused->next;
 	i->c[container]->next = ic;
 	ic = i->c[container];
-/*	Com_Printf("Add to container %i: %s\n", container, CSI->ods[item.t].kurz);*/
+/*	Com_Printf("Add to container %i: %s\n", container, CSI->ods[item.t].id);*/
 
 	/* set the data */
 	ic->item = item;
@@ -2477,8 +2477,8 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 
 		if (ic && INV_LoadableInWeapon(&CSI->ods[cacheItem.t], ic->item.t)) {
 			/* TODO (or do this in two places in cl_menu.c):
-			if ( !RS_ItemIsResearched(CSI->ods[ic->item.t].kurz)
-				 || !RS_ItemIsResearched(CSI->ods[cacheItem.t].kurz) ) {
+			if ( !RS_ItemIsResearched(CSI->ods[ic->item.t].id)
+				 || !RS_ItemIsResearched(CSI->ods[cacheItem.t].id) ) {
 				return IA_NORELOAD;
 			} */
 			if (ic->item.a >= CSI->ods[ic->item.t].ammo
@@ -2494,7 +2494,7 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 					*TU -= time;
 				if (ic->item.a >= CSI->ods[ic->item.t].ammo) {
 					/* exchange ammo */
-					item_t item = {0,NONE,ic->item.m};
+					item_t item = {0, NONE, ic->item.m};
 
 					Com_AddToInventory(i, item, from, fx, fy);
 
@@ -2639,7 +2639,7 @@ void Com_FindSpace(const inventory_t* const inv, const int item, const int conta
 	cache_Com_CheckToInventory = 0;
 
 #ifdef PARANOID
-	Com_DPrintf("Com_FindSpace: no space for %s: %s in %s\n", CSI->ods[item].type, CSI->ods[item].kurz, CSI->ids[container].name);
+	Com_DPrintf("Com_FindSpace: no space for %s: %s in %s\n", CSI->ods[item].type, CSI->ods[item].id, CSI->ids[container].name);
 #endif
 	*px = *py = NONE;
 }
@@ -2710,7 +2710,7 @@ CHARACTER GENERATION AND HANDLING
  * @param[in] name The name of the equipment for debug messages
  * @sa INV_LoadableInWeapon
  */
-int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, char *name)
+int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, char *name)
 {
 	int ammo = -1; /* this variable is never used before being set */
 	item_t item = {0,NONE,NONE};
@@ -2746,7 +2746,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 			}
 
 		if (ammo < 0) {
-			Com_DPrintf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].kurz, name);
+			Com_DPrintf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
 			return 0;
 		}
 		/* load ammo */
@@ -2755,7 +2755,7 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 	}
 
 	if (item.m == NONE) {
-		Com_Printf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].kurz, name);
+		Com_Printf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
 		return 0;
 	}
 
@@ -2779,9 +2779,8 @@ int Com_PackAmmoAndWeapon(inventory_t* const inv, const int weapon, const int eq
 		max_price = 0;
 		for (i = 0; i < CSI->numODs; i++) {
 			obj = CSI->ods[i];
-			if ( equip[i]
-			&& INV_LoadableInWeapon(&obj, weapon) ) {
-				if ( obj.price > max_price && obj.price < prev_price ) {
+			if (equip[i] && INV_LoadableInWeapon(&obj, weapon) ) {
+				if (obj.price > max_price && obj.price < prev_price) {
 					max_price = obj.price;
 					ammo = i;
 				}
@@ -3261,7 +3260,7 @@ static char returnModel[MAX_VAR];
  */
 char *Com_CharGetBody(character_t * const chr)
 {
-	char kurz[MAX_VAR];
+	char id[MAX_VAR];
 	char *underline;
 
 	assert(chr);
@@ -3279,15 +3278,15 @@ char *Com_CharGetBody(character_t * const chr)
 	/* models of UGVs don't change - because they are already armored */
 	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
 		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmor]->item.t].type, "armor"));
-/*		Com_Printf("Com_CharGetBody: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz);*/
+/*		Com_Printf("Com_CharGetBody: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id);*/
 
 		/* check for the underline */
-		Q_strncpyz(kurz, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, MAX_VAR);
-		underline = strchr(kurz, '_');
+		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id, MAX_VAR);
+		underline = strchr(id, '_');
 		if (underline)
 			*underline = '\0';
 
-		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, kurz, chr->body);
+		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, id, chr->body);
 	} else
 		Com_sprintf(returnModel, MAX_VAR, "%s/%s", chr->path, chr->body);
 	return returnModel;
@@ -3300,7 +3299,7 @@ char *Com_CharGetBody(character_t * const chr)
  */
 char *Com_CharGetHead(character_t * const chr)
 {
-	char kurz[MAX_VAR];
+	char id[MAX_VAR];
 	char *underline;
 
 	assert(chr);
@@ -3318,15 +3317,15 @@ char *Com_CharGetHead(character_t * const chr)
 	/* models of UGVs don't change - because they are already armored */
 	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
 		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmor]->item.t].type, "armor"));
-/*		Com_Printf("Com_CharGetHead: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz);*/
+/*		Com_Printf("Com_CharGetHead: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id);*/
 
 		/* check for the underline */
-		Q_strncpyz(kurz, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, MAX_VAR);
-		underline = strchr(kurz, '_');
+		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id, MAX_VAR);
+		underline = strchr(id, '_');
 		if (underline)
 			*underline = '\0';
 
-		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, kurz, chr->head);
+		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, id, chr->head);
 	} else
 		Com_sprintf(returnModel, MAX_VAR, "%s/%s", chr->path, chr->head);
 	return returnModel;
@@ -3807,7 +3806,7 @@ void Com_PrintItemDescription(int i)
 	objDef_t *ods_temp;
 
 	ods_temp = &CSI->ods[i];
-	Com_Printf("Item: %s\n", ods_temp->kurz);
+	Com_Printf("Item: %s\n", ods_temp->id);
 	Com_Printf("... name          -> %s\n", ods_temp->name);
 	Com_Printf("... type          -> %s\n", ods_temp->type);
 	Com_Printf("... category      -> %i\n", ods_temp->category);
@@ -3859,7 +3858,7 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
 		}
 	}
 #if 0
-	Com_DPrintf("INV_LoadableInWeapon: item '%s' usable (%i) in weapon '%s'.\n", od->kurz,usable, CSI->ods[weapon_idx].kurz );
+	Com_DPrintf("INV_LoadableInWeapon: item '%s' usable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weapon_idx].id );
 #endif
 	return usable;
 }

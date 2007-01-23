@@ -245,7 +245,7 @@ static void Com_ParseItem(char *name, char **text)
 	/* default value is no ammo */
 	memset(od->forWeapon, -1, sizeof(od->forWeapon));
 
-	Q_strncpyz(od->kurz, name, MAX_VAR);
+	Q_strncpyz(od->id, name, MAX_VAR);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -522,7 +522,7 @@ static void Com_ParseEquipment(char *name, char **text)
 			return;
 
 		for (i = 0; i < csi.numODs; i++)
-			if (!Q_strncmp(token, csi.ods[i].kurz, MAX_VAR)) {
+			if (!Q_strncmp(token, csi.ods[i].id, MAX_VAR)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text || *token == '}') {
 					Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
@@ -1175,10 +1175,10 @@ void Com_AddObjectLinks(void)
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		/* Add links to technologies. */
-		tech = RS_GetTechByProvided(od->kurz);
+		tech = RS_GetTechByProvided(od->id);
 		od->tech = tech;
 		if (!od->tech) {
-			Com_Printf("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->kurz);
+			Com_Printf("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->id);
 			continue;
 		}
 
@@ -1194,7 +1194,7 @@ void Com_AddObjectLinks(void)
 				}
 			}
 			if (k == 0)
-				Com_Printf("Com_AddObjectLinks: Ammo '%s' is not useable in any weapon\n", od->kurz);
+				Com_Printf("Com_AddObjectLinks: Ammo '%s' is not useable in any weapon\n", od->id);
 		}
 	}
 #endif

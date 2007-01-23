@@ -1231,7 +1231,7 @@ static void CL_HandleBudget(void)
  * @sa CL_CampaignRun
  * @sa CL_GameNew
  */
-static void CL_CampaignRunMarket(void)
+static void CL_CampaignRunMarket (void)
 {
 	int i;
 	equipDef_t *ed;
@@ -1242,23 +1242,21 @@ static void CL_CampaignRunMarket(void)
 	assert (i != csi.numEDs);
 	/* supply and demand */
 	for (i = 0; i < csi.numODs; i++)
-		if ( RS_ItemIsResearched(csi.ods[i].kurz) )
-			if ( ccs.eMarket.num[i] < ceil((2.0 + ed->num[i] * 2.0) * pow(frand(), 5.0)) )
+		if (RS_ItemIsResearched(csi.ods[i].id))
+			if (ccs.eMarket.num[i] < ceil((2.0 + ed->num[i] * 2.0) * pow(frand(), 5.0)))
 				ccs.eMarket.num[i] += ceil(ed->num[i] / 7.0 * frand());
 }
 
 /**
  * @brief Called every frame when we are in geoscape view
- *
- * Called for node types MN_MAP and MN_3DMAP
- *
+ * @note Called for node types MN_MAP and MN_3DMAP
  * @sa MN_DrawMenus
  * @sa CL_HandleBudget
  * @sa B_UpdateBaseData
  * @sa CL_CampaignRunAircraft
  * @sa CL_CampaignCheckEvents
  */
-void CL_CampaignRun(void)
+void CL_CampaignRun (void)
 {
 	/* advance time */
 	ccs.timer += cls.frametime * gd.gameTimeScale;
@@ -1317,7 +1315,7 @@ typedef struct gameLapse_s {
 
 #define NUM_TIMELAPSE 6
 
-static gameLapse_t lapse[NUM_TIMELAPSE] = {
+static const gameLapse_t lapse[NUM_TIMELAPSE] = {
 	{"5 sec", 5},
 	{"5 mins", 5 * 60},
 	{"1 hour", 60 * 60},
@@ -1326,7 +1324,7 @@ static gameLapse_t lapse[NUM_TIMELAPSE] = {
 	{"5 days", 5 * 24 * 3600}
 };
 
-int gameLapse;
+static int gameLapse;
 
 /**
  * @brief Stop game time speed
@@ -2385,9 +2383,9 @@ static void CP_AddItemAsCollected (void)
 	/* i = item index */
 	for (i = 0; i < csi.numODs; i++) {
 		item = &csi.ods[i];
-		if (!Q_strncmp(id, item->kurz, MAX_VAR)) {
+		if (!Q_strncmp(id, item->id, MAX_VAR)) {
 			gd.bases[baseID].storage.num[i]++;
-			Com_DPrintf("add item: '%s'\n", item->kurz);
+			Com_DPrintf("add item: '%s'\n", item->id);
 			assert(item->tech);
 			((technology_t*)(item->tech))->statusCollected = qtrue;
 		}
@@ -2395,7 +2393,7 @@ static void CP_AddItemAsCollected (void)
 }
 
 /**< mission trigger functions */
-static cmdList_t cp_commands[] = {
+static const cmdList_t cp_commands[] = {
 	{"cp_add_item", CP_AddItemAsCollected, "Add an item as collected"},
 
 	{NULL, NULL, NULL}
@@ -2408,7 +2406,7 @@ static cmdList_t cp_commands[] = {
  */
 static void CP_MissionTriggerFunctions(qboolean add)
 {
-	cmdList_t *commands;
+	const cmdList_t *commands;
 
 	for (commands = cp_commands; commands->name; commands++)
 		if (add)

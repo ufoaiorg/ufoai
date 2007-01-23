@@ -264,7 +264,7 @@ void PR_ProductionRun(void)
 		t = (technology_t*)(od->tech);
 #ifdef DEBUG
 		if (!t)
-			Sys_Error("PR_ProductionRun: No tech pointer for object id %i ('%s')\n", prod->objID, od->kurz);
+			Sys_Error("PR_ProductionRun: No tech pointer for object id %i ('%s')\n", prod->objID, od->id);
 #endif
 		prod->timeLeft--;
 		if (prod->timeLeft <= 0) {
@@ -357,7 +357,7 @@ static void PR_ProductionListRightClick_f (void)
 			t = (technology_t*)(od->tech);
 #ifdef DEBUG
 			if (!t)
-				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object id %i ('%s')\n", i, od->kurz);
+				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object id %i ('%s')\n", i, od->id);
 #endif
 			/* Open up ufopedia for this entry. */
 			if (od->buytype == produceCategory && RS_IsResearched_ptr(t)) {
@@ -421,10 +421,10 @@ static void PR_ProductionListClick_f (void)
 			t = (technology_t*)(od->tech);
 #ifdef DEBUG
 			if (!t)
-				Sys_Error("PR_ProductionListClick_f: No tech pointer for object id %i ('%s')\n", i, od->kurz);
+				Sys_Error("PR_ProductionListClick_f: No tech pointer for object id %i ('%s')\n", i, od->id);
 #endif
 			/* We can only produce items that fulfill the following conditions... */
-			if (	od->buytype == produceCategory	/* Item is int he current inventory-category */
+			if (od->buytype == produceCategory	/* Item is in the current inventory-category */
 				&& RS_IsResearched_ptr(t)		/* Tech is researched */
 				&& *od->name				/* Item has a name defined. TODO: produce error if this is not true? */
 				&& t->produceTime >= 0		/* Item is produceable */

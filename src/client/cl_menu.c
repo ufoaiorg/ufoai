@@ -1956,7 +1956,7 @@ void MN_DrawMenus(void)
 					}
 
 					for (item.t = 0; item.t < csi.numODs; item.t++)
-						if (!Q_strncmp(ref, csi.ods[item.t].kurz, MAX_VAR))
+						if (!Q_strncmp(ref, csi.ods[item.t].id, MAX_VAR))
 							break;
 					if (item.t == csi.numODs)
 						break;

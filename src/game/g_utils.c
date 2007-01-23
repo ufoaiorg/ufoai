@@ -92,7 +92,7 @@ const char* G_GetWeaponNameForFiredef (fireDef_t* fd)
 	if (!obj)
 		return "unknown";
 	else
-		return obj->name;
+		return obj->id;
 }
 
 /**

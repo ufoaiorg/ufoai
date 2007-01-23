@@ -946,7 +946,7 @@ typedef struct fireDef_s {
 typedef struct objDef_s {
 	/* Common */
 	char name[MAX_VAR];	/**< item name/scriptfile id */
-	char kurz[MAX_VAR];	/**< Equals the object-"id" TODO: Should be renamed as such sometime in the future. */
+	char id[MAX_VAR];	/**< short identifier */
 	char model[MAX_VAR];	/**< model name - relative to game dir */
 	char image[MAX_VAR];	/**< object image file - relative to game dir */
 	char type[MAX_VAR];	/**< melee, rifle, ammo */
