@@ -48,7 +48,7 @@ menu multiplayer
 	pic button_join
 	{
 		pos	"80 220"
-		click	{ cmd "mn_pop;mn_push mp_join_lan;" }
+		click	{ cmd "mn_pop;mn_push mp_serverbrowser;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
@@ -127,7 +127,7 @@ menu multiplayer
 
 	func init
 	{
-		cmd "mn_escpop 5;mn_push mp_join_lan;maxclients 2;"
+		cmd "mn_escpop 5;mn_push mp_serverbrowser;maxclients 2;"
 	}
 }
 
@@ -544,47 +544,90 @@ menu serverinfo
 // ==================
 // JOIN LAN MENU
 // ==================
-menu mp_join_lan
+menu mp_serverbrowser
 {
+	string status_str
+	{
+		string	"_Serverfilter:"
+		pos		"620 170"
+	}
+	string status_value
+	{
+		string	"*cvar mn_serverliststr"
+		pos		"840 170"
+		align	ur
+	}
+	pic status_dec
+	{
+		image	menu/buttons_small
+		pos		"868 174"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modifywrap mn_serverlist -1 0 2;"
+			cmd "mn_translate mn_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
+			cmd "pingservers refresh;"
+		}
+	}
+	pic status_inc
+	{
+		image	menu/buttons_small
+		pos		"884 174"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modifywrap mn_serverlist +1 0 2;"
+			cmd "mn_translate mn_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
+			cmd "pingservers refresh;"
+		}
+	}
+
 	// ====================
 	// lan / inet buttons
 	// ====================
-	pic button_lan_lan
+	pic button_serverbrowser
 	{
 		image	menu/multi_buttons3a
 		texh	"256 64"
 		texl	"0 33"
 		pos	"500 130"
 	}
-	pic button_lan_inet
+
+	string string_serverbrowser
+	{
+		font	f_menu
+		color	"1 1 1 1"
+		string	"_Serverbrowser"
+		pos	"590 128"
+		align	uc
+	}
+
+	pic button_bookmarks
 	{
 		image	menu/multi_buttons3
 		click
 		{
 			cmd "mn_escpop 1;"
 			cmd "mn_pop esc;"
-			cmd "mn_push mp_join_internet;"
+			cmd "mn_push mp_bookmarks;"
 			cmd "mn_escpop 3;"
 		}
 		texh	"256 64"
 		texl	"0 33"
 		pos	"726 130"
-		out	{ *string_inet color "0 0.5 0 1" *button_lan_inet image menu/multi_buttons3 }
-		in	{ *string_inet color "1 1 1 1" *button_lan_inet image menu/multi_buttons3a }
+		out	{ *string_bookmarks color "0 0.5 0 1" *button_bookmarks image menu/multi_buttons3 }
+		in	{ *string_bookmarks color "1 1 1 1" *button_bookmarks image menu/multi_buttons3a }
 	}
-	string string_lan
-	{
-		font	f_menu
-		color	"1 1 1 1"
-		string	"_LAN"
-		pos	"590 128"
-		align	uc
-	}
-	string string_inet
+
+	string string_bookmarks
 	{
 		font	f_menu
 		color	"0 0.5 0 1"
-		string	"_Internet"
+		string	"_Bookmarks"
 		pos	"816 128"
 		align	uc
 	}
@@ -593,9 +636,15 @@ menu mp_join_lan
 	text servers
 	{
 		pos	"500 200"
-		size	"420 550"
-		format	"20 200"
+		size	"420 340"
+		format	"20 198"
 		mousefx	true
+		border 3
+		bordercolor "0 0.5 0 1"
+		padding 10
+		bgcolor	"0.3 0.3 0.3 0.4"
+		wheel
+		height	"16"
 		num	1
 		click	{ }
 		rclick	{ cmd "pingservers;" }
@@ -605,15 +654,15 @@ menu mp_join_lan
 	// preferences
 	// ==================
 
-	pic button_lan_refresh
+	pic button_serverbrowser_refresh
 	{
 		image	menu/multi_buttons3
 		click	{ cmd "pingservers refresh;" }
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 33"
 		pos	"726 650"
-		out	{ *string_refresh color "0 0.5 0 1" *button_lan_refresh image menu/multi_buttons3 }
-		in	{ *string_refresh color "1 1 1 1" *button_lan_refresh image menu/multi_buttons3a }
+		out	{ *string_refresh color "0 0.5 0 1" *button_serverbrowser_refresh image menu/multi_buttons3 }
+		in	{ *string_refresh color "1 1 1 1" *button_serverbrowser_refresh image menu/multi_buttons3a }
 	}
 	string string_refresh
 	{
@@ -624,80 +673,6 @@ menu mp_join_lan
 		align	uc
 	}
 
-	func init
-	{
-		cmd	"pingservers;"
-	}
-
-	func event
-	{
-		timeout	60000
-		cmd "pingservers refresh;"
-	}
-}
-
-// ==================
-// INTERNET MENU
-// ==================
-
-menu mp_join_internet
-{
-	// ====================
-	// lan / inet buttons
-	// ====================
-	pic button_lan_lan
-	{
-		image	menu/multi_buttons3
-		texh	"256 64"
-		texl	"0 33"
-		pos	"500 130"
-		out	{ *string_lan color "0 0.5 0 1" *button_lan_lan image menu/multi_buttons3 }
-		in	{ *string_lan color "1 1 1 1" *button_lan_lan image menu/multi_buttons3a }
-		click	{ cmd "mn_pop esc; mn_push multiplayer;pingservers;" }
-	}
-	pic button_lan_inet
-	{
-		image	menu/multi_buttons3a
-		texh	"256 64"
-		texl	"0 33"
-		pos	"726 130"
-	}
-	string string_lan
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_LAN"
-		pos	"590 128"
-		align	uc
-	}
-	string string_inet
-	{
-		font	f_menu
-		color	"1 1 1 1"
-		string	"_Internet"
-		pos	"816 128"
-		align	uc
-	}
-
-	string inet_bookmarks
-	{
-		font	f_menubig
-		color	"0 0.5 0 1"
-		string	"_Bookmarks"
-		pos	"700 170"
-		align	uc
-	}
-
-	text bookmarks
-	{
-		pos	"500 230"
-		size	"420 520"
-		format	"20 200"
-		mousefx	true
-		num	1
-		click	{ }
-	}
-
 	// ====================
 	// lobby
 	// ====================
@@ -705,16 +680,16 @@ menu mp_join_internet
 	{
 		image	menu/multi_buttons3
 		click	{ cmd "irc_connect; mn_push irc;" }
-		texh	"256 32"
-		texl	"0 0"
-		pos		"500 515"
-		out		{ *string_inet_lobby color "0 0.5 0 1" *button_inet_lobby image menu/multi_buttons3 }
-		in		{ *string_inet_lobby color "1 1 1 1" *button_inet_lobby image menu/multi_buttons3a }
+		texh	"176 64"
+		texl	"0 33"
+		pos		"500 650"
+		out		{ *string_bookmarks_lobby color "0 0.5 0 1" *button_inet_lobby image menu/multi_buttons3 }
+		in		{ *string_bookmarks_lobby color "1 1 1 1" *button_inet_lobby image menu/multi_buttons3a }
 	}
-	string string_inet_lobby
+	string string_bookmarks_lobby
 	{
 		string	"_Lobby"
-		pos		"628 514"
+		pos		"590 648"
 		font	f_menu
 		color	"0 0.5 0 1"
 		align	uc
@@ -730,10 +705,10 @@ menu mp_join_internet
 		texh	"256 32"
 		texl	"0 0"
 		pos	"500 615"
-		out	{ *string_inet_connect_to_ip color "0 0.5 0 1" *button_inet_connect_to_ip image menu/multi_buttons3 }
-		in	{ *string_inet_connect_to_ip color "1 1 1 1" *button_inet_connect_to_ip image menu/multi_buttons3a }
+		out	{ *string_bookmarks_connect_to_ip color "0 0.5 0 1" *button_inet_connect_to_ip image menu/multi_buttons3 }
+		in	{ *string_bookmarks_connect_to_ip color "1 1 1 1" *button_inet_connect_to_ip image menu/multi_buttons3a }
 	}
-	string string_inet_connect_to_ip
+	string string_bookmarks_connect_to_ip
 	{
 		string	"_Connect"
 		pos	"628 614"
@@ -764,6 +739,81 @@ menu mp_join_internet
 		color	"0 .78 0 1"
 	}
 	confunc mn_server_ip_changed { *txt_inet_ip color "0 .78 0 1" *txt_inet_ip mousefx false }
+
+	func init
+	{
+		cmd	"pingservers;"
+		cmd "mn_translate mn_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
+	}
+
+	func event
+	{
+		timeout	60000
+		cmd "pingservers refresh;"
+	}
+}
+
+// ==================
+// INTERNET MENU
+// ==================
+
+menu mp_bookmarks
+{
+	// ====================
+	// lan / inet buttons
+	// ====================
+	pic button_lan_lan
+	{
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 33"
+		pos	"500 130"
+		out	{ *string_serverbrowser color "0 0.5 0 1" *button_lan_lan image menu/multi_buttons3 }
+		in	{ *string_serverbrowser color "1 1 1 1" *button_lan_lan image menu/multi_buttons3a }
+		click	{ cmd "mn_pop esc; mn_push multiplayer;pingservers;" }
+	}
+	pic button_bookmarks
+	{
+		image	menu/multi_buttons3a
+		texh	"256 64"
+		texl	"0 33"
+		pos	"726 130"
+	}
+	string string_serverbrowser
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Serverbrowser"
+		pos	"590 128"
+		align	uc
+	}
+	string string_bookmarks
+	{
+		font	f_menu
+		color	"1 1 1 1"
+		string	"_Bookmarks"
+		pos	"816 128"
+		align	uc
+	}
+
+	string inet_bookmarks
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Bookmarks"
+		pos	"700 170"
+		align	uc
+	}
+
+	text bookmarks
+	{
+		pos	"500 230"
+		size	"420 520"
+		format	"20 200"
+		mousefx	true
+		num	1
+		click	{ }
+	}
 
 	func init
 	{

@@ -2004,7 +2004,7 @@ char *Info_ValueForKey(char *s, char *key)
 	static char value[2][512];
 
 	/* work without stomping on each other */
-	static int valueindex;
+	static int valueindex = 0;
 	char *o;
 
 	valueindex ^= 1;

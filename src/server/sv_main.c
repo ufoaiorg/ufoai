@@ -230,12 +230,16 @@ static void SVC_Ack(void)
 /**
  * @brief Responds with short info for broadcast scans
  * @note The second parameter should be the current protocol version number.
+ * @note Only a short server description - the user can determine whether he is
+ * interested in a full status
+ * @sa CL_ParseStatusMessage
  */
 static void SVC_Info(void)
 {
 	char string[64];
 	int i, count;
 	int version;
+	char infostring[MAX_INFO_STRING];
 
 	if (sv_maxclients->value == 1) {
 		Com_DPrintf("Ignore info string in singleplayer mode\n");
@@ -252,10 +256,17 @@ static void SVC_Info(void)
 			if (svs.clients[i].state >= cs_spawning)
 				count++;
 
-		Com_sprintf(string, sizeof(string), "%s\t%s\t%2i/%2i\n", hostname->string, sv.name, count, sv_maxclients->integer);
+		infostring[0] = '\0';
+
+		Info_SetValueForKey(infostring, "protocol", va("%i", PROTOCOL_VERSION));
+		Info_SetValueForKey(infostring, "hostname", hostname->string);
+		Info_SetValueForKey(infostring, "mapname", sv.name);
+		Info_SetValueForKey(infostring, "clients", va("%i", count));
+		Info_SetValueForKey(infostring, "maxclients", sv_maxclients->string);
+		Info_SetValueForKey(infostring, "version", UFO_VERSION);
 	}
 
-	Netchan_OutOfBandPrint(NS_SERVER, net_from, "info\n%s", string);
+	Netchan_OutOfBandPrint(NS_SERVER, net_from, "info\n%s", infostring);
 }
 
 /**

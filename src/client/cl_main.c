@@ -87,6 +87,8 @@ cvar_t *gl_3dmapradius;
 
 cvar_t *cl_numnames;
 
+cvar_t *mn_serverlist;
+
 cvar_t *mn_main;
 cvar_t *mn_sequence;
 cvar_t *mn_active;
@@ -667,6 +669,12 @@ static void CL_PrintServerList_f (void)
 	}
 }
 
+typedef enum {
+	SERVERLIST_SHOWALL,
+	SERVERLIST_HIDEFULL,
+	SERVERLIST_HIDEEMPTY
+} serverListStatus_t;
+
 /**
  * @brief Adds a server to the serverlist cache
  * @return false if it is no valid address or server already exists
@@ -678,6 +686,35 @@ static qboolean CL_AddServerToList (netadr_t* adr, char *msg)
 	/* check whether the port was set */
 	if (!adr->port)
 		return qfalse;
+
+	/* check some server data */
+	if (msg) {
+		if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "protocol"))) {
+			Com_Printf("Protocol mismatch\n");
+			return qfalse;
+		}
+		if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "version"))) {
+			Com_Printf("Version mismatch\n");
+			return qfalse;
+		}
+		/* hide full servers */
+		switch (mn_serverlist->integer) {
+		case SERVERLIST_SHOWALL:
+			break;
+		case SERVERLIST_HIDEFULL:
+			if (atoi(Info_ValueForKey(msg, "maxclients")) <= atoi(Info_ValueForKey(msg, "clients"))) {
+				Com_Printf("Server is full - hide from list\n");
+				return qfalse;
+			}
+			break;
+		case SERVERLIST_HIDEEMPTY:
+			if (!atoi(Info_ValueForKey(msg, "clients"))) {
+				Com_Printf("Server is empty - hide from list\n");
+				return qfalse;
+			}
+			break;
+		}
+	}
 
 	for (i = 0; i < serverListLength; i++) {
 		if (!memcmp(&(serverList[i].adr), adr, sizeof(netadr_t))) {
@@ -706,12 +743,15 @@ static qboolean CL_AddServerToList (netadr_t* adr, char *msg)
 }
 
 /**
- * @brief Handle a reply from a ping
+ * @brief Handle the short reply from a ping
  * @sa CL_PingServers_f
+ * @sa SVC_Info
  */
 static void CL_ParseStatusMessage(void)
 {
 	char *s = MSG_ReadString(&net_message);
+	char string[MAX_INFO_STRING];
+	char hostname_str[MAX_VAR], mapname_str[MAX_VAR], clients_str[MAX_VAR], maxclients_str[MAX_VAR];
 
 	Com_DPrintf("CL_ParseStatusMessage: %s\n", s);
 
@@ -720,7 +760,13 @@ static void CL_ParseStatusMessage(void)
 
 	/* update the server string */
 	if (CL_AddServerToList(&net_from, s)) {
-		Q_strcat(serverText, s, sizeof(serverText));
+		Q_strncpyz(hostname_str, Info_ValueForKey(s, "hostname"), sizeof(hostname_str));
+		Q_strncpyz(mapname_str, Info_ValueForKey(s, "mapname"), sizeof(hostname_str));
+		Q_strncpyz(clients_str, Info_ValueForKey(s, "clients"), sizeof(hostname_str));
+		Q_strncpyz(maxclients_str, Info_ValueForKey(s, "maxclients"), sizeof(hostname_str));
+
+		Com_sprintf(string, sizeof(string), "%s\t%s\t%s/%s\n", hostname_str, mapname_str, clients_str, maxclients_str);
+		Q_strcat(serverText, string, sizeof(serverText));
 		menuText[TEXT_LIST] = serverText;
 	}
 }
@@ -1134,7 +1180,8 @@ void CL_PingServers_f (void)
 		serversAlreadyQueried = qfalse;
 	}
 
-	menuText[TEXT_LIST] = NULL;
+	menuText[TEXT_STANDARD] = NULL;
+	menuText[TEXT_LIST] = serverText;
 
 	NET_Config(qtrue);			/* allow remote */
 
@@ -1787,6 +1834,8 @@ void CL_InitLocal(void)
 	mn_active = Cvar_Get("mn_active", "", 0, NULL);
 	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "Which is the current selected hud");
 	mn_lastsave = Cvar_Get("mn_lastsave", "", CVAR_ARCHIVE, NULL);
+
+	mn_serverlist = Cvar_Get("mn_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
 
 	/* userinfo */
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);

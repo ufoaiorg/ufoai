@@ -933,7 +933,7 @@ void NET_OpenIP (void)
 		ip6_sockets[NS_SERVER] = NET_IPSocket (ip->string, port, NS_SERVER, AF_INET6);
 		ip_sockets[NS_SERVER] = NET_IPSocket (ip->string, port, NS_SERVER, AF_INET);
 		if (!ip_sockets[NS_SERVER] && !ip6_sockets[NS_SERVER] && dedicated)
-			Com_Error (ERR_FATAL, "Couldn't allocate server IP port (%i)  - use cvar port", port);
+			Com_Error (ERR_FATAL, "Couldn't allocate server IP port (%i)  - use cvar ip_hostport", port);
 	}
 
 	/* dedicated servers don't need client ports */

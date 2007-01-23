@@ -105,6 +105,8 @@ static value_t nps[] = {
 	{"blend", V_BOOL, offsetof(menuNode_t, blend)},
 	{"texh", V_POS, offsetof(menuNode_t, texh)},
 	{"texl", V_POS, offsetof(menuNode_t, texl)},
+	{"border", V_INT, offsetof(menuNode_t, border)},
+	{"padding", V_INT, offsetof(menuNode_t, padding)},
 	{"pos", V_POS, offsetof(menuNode_t, pos)},
 	{"size", V_POS, offsetof(menuNode_t, size)},
 	{"format", V_POS, offsetof(menuNode_t, texh)},
@@ -118,6 +120,7 @@ static value_t nps[] = {
 	{"timeout", V_INT, offsetof(menuNode_t, timeOut)},
 	{"timeout_once", V_BOOL, offsetof(menuNode_t, timeOutOnce)},
 	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor)},
+	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor)},
 	{"key", V_STRING, offsetof(menuNode_t, key)},
 	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
 	{"tooltip", V_STRING, -5},	/* translated in MN_Tooltip */
@@ -1712,8 +1715,24 @@ void MN_DrawMenus(void)
 				}
 
 				/* check node size x and y value to check whether they are zero */
-				if (node->bgcolor && node->size[0] && node->size[1] && node->pos)
-					re.DrawFill(node->pos[0] - 3, node->pos[1] - 3, node->size[0] + 6, node->size[1] + 6, 0, node->bgcolor);
+				if (node->bgcolor && node->size[0] && node->size[1] && node->pos) {
+					re.DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding, node->size[0] + (node->padding*2), node->size[1] + (node->padding*2), 0, node->bgcolor);
+				}
+
+				if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos) {
+					/* left */
+					re.DrawFill(node->pos[0] - node->padding - node->border, node->pos[1] - node->padding - node->border,
+						node->border, node->size[1] + (node->padding*2) + (node->border*2), 0, node->bordercolor);
+					/* right */
+					re.DrawFill(node->pos[0] + node->size[0] + node->padding, node->pos[1] - node->padding - node->border,
+						node->border, node->size[1] + (node->padding*2) + (node->border*2), 0, node->bordercolor);
+					/* top */
+					re.DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding - node->border,
+						node->size[0] + (node->padding*2), node->border, 0, node->bordercolor);
+					/* down */
+					re.DrawFill(node->pos[0] - node->padding, node->pos[1] + node->size[1] + node->padding,
+						node->size[0] + (node->padding*2), node->border, 0, node->bordercolor);
+				}
 
 				/* mouse darken effect */
 				VectorScale(node->color, 0.8, color);
@@ -2186,8 +2205,10 @@ void MN_DrawMenus(void)
 				if (node->state == qtrue)
 					menu->hoverNode = node;
 
-				if (mn_debugmenu->value)
-					re.FontDrawString("f_verysmall", ALIGN_UL, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], node->name, 0, 0, NULL, qfalse);
+				if (mn_debugmenu->value) {
+					MN_DrawTooltip("f_small", node->name, node->pos[0], node->pos[1], node->size[1]);
+/*					re.FontDrawString("f_verysmall", ALIGN_UL, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], node->name, 0, 0, NULL, qfalse);*/
+				}
 			}	/* if */
 
 		}	/* for */
@@ -3235,6 +3256,8 @@ qboolean MN_ParseMenuBody(menu_t * menu, char **text)
 					}
 
 					node->type = i;
+					/* node default values */
+					node->padding = 3;
 
 /*					Com_Printf( " %s %s\n", nt_strings[i], *token ); */
 

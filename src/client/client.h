@@ -323,6 +323,8 @@ extern cvar_t *cl_start_employees;
 extern cvar_t *cl_initial_equipment;
 extern cvar_t *cl_start_buildings;
 
+extern cvar_t *mn_serverlist;
+
 extern cvar_t *mn_active;
 extern cvar_t *mn_main;
 extern cvar_t *mn_sequence;
@@ -895,8 +897,9 @@ typedef struct menuAction_s {
 	struct menuAction_s *next;
 } menuAction_t;
 
+/** @brief menu node */
 typedef struct menuNode_s {
-	void *data[6];				/* needs to be first */
+	void *data[6];				/**< needs to be first */
 	char name[MAX_VAR];
 	char key[MAX_VAR];
 	int type;
@@ -905,27 +908,32 @@ typedef struct menuNode_s {
 	menuModel_t *menuModel;
 	byte state;
 	int align;
+	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
+	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	byte invis, blend;
 	int mousefx;
-	int textScroll;				/* textfields - current scroll position */
-	int textLines;				/* How many lines there are (set by MN_DrawMenus)*/
-	int timeOut;				/* ms value until invis is set (see cl.time) */
-	int timePushed;				/* when a menu was pushed this value is set to cl.time */
-	qboolean timeOutOnce;		/* timeOut is decreased if this value is true */
-	int num, height;			/* textfields - num: menutexts-id; height: max. rows to show */
-	vec4_t color;				/* rgba */
-	vec4_t bgcolor;				/* rgba */
+	int textScroll;				/**< textfields - current scroll position */
+	int textLines;				/**< How many lines there are (set by MN_DrawMenus)*/
+	int timeOut;				/**< ms value until invis is set (see cl.time) */
+	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
+	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
+	int num, height;			/**< textfields - num: menutexts-id; height: max. rows to show */
+	vec4_t color;				/**< rgba */
+	vec4_t bgcolor;				/**< rgba */
+	vec4_t bordercolor;			/**< rgba - see border and padding */
 	menuAction_t *click, *rclick, *mclick, *wheel, *mouseIn, *mouseOut;
 	menuDepends_t depends;
 	struct menuNode_s *next;
 } menuNode_t;
 
+/** @brief menu with all it's nodes linked in */
 typedef struct menu_s {
 	char name[MAX_VAR];
 	int eventTime;
 	menuNode_t *firstNode, *initNode, *closeNode, *renderNode, *popupNode, *hoverNode, *eventNode;
 } menu_t;
 
+/** @brief linked into menuText - defined in menu scripts via num */
 typedef enum {
 	TEXT_STANDARD,
 	TEXT_LIST,
@@ -939,7 +947,7 @@ typedef enum {
 	TEXT_AIRCRAFT_LIST,
 	TEXT_AIRCRAFT = 10,
 	TEXT_AIRCRAFT_INFO,
-	TEXT_MESSAGESYSTEM,			/* just a dummy for messagesystem - we use the stack */
+	TEXT_MESSAGESYSTEM,			/**< just a dummy for messagesystem - we use the stack */
 	TEXT_CAMPAIGN_LIST,
 	TEXT_MULTISELECTION,
 	TEXT_PRODUCTION_LIST = 15,
