@@ -651,7 +651,7 @@ static serverList_t serverList[MAX_SERVERLIST];
  */
 static void CL_PingServer (netadr_t* adr)
 {
-	Com_Printf ("pinging %s...\n", NET_AdrToString(*adr));
+	Com_DPrintf ("pinging %s...\n", NET_AdrToString(*adr));
 	Netchan_OutOfBandPrint (NS_CLIENT, *adr, va("info %i", PROTOCOL_VERSION));
 }
 
@@ -690,11 +690,11 @@ static qboolean CL_AddServerToList (netadr_t* adr, char *msg)
 	/* check some server data */
 	if (msg) {
 		if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "protocol"))) {
-			Com_Printf("Protocol mismatch\n");
+			Com_DPrintf("Protocol mismatch\n");
 			return qfalse;
 		}
 		if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "version"))) {
-			Com_Printf("Version mismatch\n");
+			Com_DPrintf("Version mismatch\n");
 			return qfalse;
 		}
 		/* hide full servers */
@@ -703,13 +703,13 @@ static qboolean CL_AddServerToList (netadr_t* adr, char *msg)
 			break;
 		case SERVERLIST_HIDEFULL:
 			if (atoi(Info_ValueForKey(msg, "maxclients")) <= atoi(Info_ValueForKey(msg, "clients"))) {
-				Com_Printf("Server is full - hide from list\n");
+				Com_DPrintf("Server is full - hide from list\n");
 				return qfalse;
 			}
 			break;
 		case SERVERLIST_HIDEEMPTY:
 			if (!atoi(Info_ValueForKey(msg, "clients"))) {
-				Com_Printf("Server is empty - hide from list\n");
+				Com_DPrintf("Server is empty - hide from list\n");
 				return qfalse;
 			}
 			break;
@@ -1234,7 +1234,7 @@ void CL_PingServers_f (void)
 			if (!adr.port)
 				adr.port = BigShort(masterserver_port->integer);
 			adr.type = NA_IP;
-			Com_Printf("Send master server query request to '%s:%s'\n", masterserver_ip->string, masterserver_port->string);
+			Com_DPrintf("Send master server query request to '%s:%s'\n", masterserver_ip->string, masterserver_port->string);
 			Netchan_OutOfBandPrint (NS_CLIENT, adr, "getservers");
 		}
 	}
