@@ -343,8 +343,8 @@ static void G_Damage(edict_t * ent, fireDef_t *fd, int damage, edict_t * attacke
 				}
 			} else {
 				Com_Printf("[STATS] %s %s %s (own team) with %s of %s\n",
-						G_GetPlayerName(ent->pnum), (ent->HP == 0 ? "kills" : "stuns"),
-						ent->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+					G_GetPlayerName(ent->pnum), (ent->HP == 0 ? "kills" : "stuns"),
+					ent->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 			}
 		}
 

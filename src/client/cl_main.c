@@ -1477,6 +1477,7 @@ void CL_SpawnSoldiers_f (void)
 /**
  * @brief The server will send this command right before allowing the client into the server
  * @sa CL_StartGame
+ * @todo recheck the checksum server side
  */
 void CL_Precache_f (void)
 {
