@@ -869,6 +869,12 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 	Com_DPrintf("checksum for this map: %u\n", checksum);
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
 
+	checksum = 0;	/* TODO */
+	Com_DPrintf("ufo script checksum %u\n", checksum);
+	Com_sprintf(sv.configstrings[CS_UFOCHECKSUM], sizeof(sv.configstrings[CS_UFOCHECKSUM]), "%i", checksum);
+
+	Com_sprintf(sv.configstrings[CS_VERSION], sizeof(sv.configstrings[CS_VERSION]), UFO_VERSION);
+
 	Com_sprintf(sv.configstrings[CS_MAPTITLE], sizeof(sv.configstrings[CS_MAPTITLE]), "%s", SV_GetMapTitle(server));
 
 	/* clear physics interaction links */

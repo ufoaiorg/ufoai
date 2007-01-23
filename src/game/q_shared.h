@@ -1001,9 +1001,9 @@ typedef struct invDef_s {
 
 /** item definition */
 typedef struct item_s {
-	int a;              /**< number of ammo rounds left */
-	int m;              /**< index of ammo type on csi->ods  */
-	int t;              /**< index of weapon == csi->ods[m].link */
+	int a;	/**< number of ammo rounds left */
+	int m;	/**< index of ammo type on csi->ods  */
+	int t;	/**< index of weapon == csi->ods[m].link */
 } item_t;
 
 /** container/inventory list (linked list) with items */
@@ -1165,14 +1165,14 @@ typedef struct character_s {
 	/* *------------------** */
 	/* *------------------** */
 
-	int fieldSize;              /** ACTOR_SIZE_* */
+	int fieldSize;              /**< ACTOR_SIZE_* */
 	inventory_t *inv;
 
 	/** Backlink to employee-struct. */
 	int empl_idx;
 	int empl_type;
 
-	qboolean armor, weapons; /** able to use weapons/armor */
+	qboolean armor, weapons; /**< able to use weapons/armor */
 	int teamDesc;
 } character_t;
 
@@ -1183,7 +1183,7 @@ typedef enum {
 	EMPL_WORKER,
 	EMPL_MEDIC,
 	EMPL_ROBOT,
-	MAX_EMPL					/** for counting over all available enums */
+	MAX_EMPL					/**< for counting over all available enums */
 } employeeType_t;
 
 #define MAX_CAMPAIGNS	16
@@ -1257,63 +1257,66 @@ typedef enum {
 
 /* state flags */
 /* public */
-#define STATE_PUBLIC        0x00FF
-#define STATE_DEAD          0x0003  /* 0 alive, 1-3 different deaths */
-#define STATE_CROUCHED      0x0004
-#define STATE_PANIC         0x0008
+#define STATE_PUBLIC		0x00FF
+#define STATE_DEAD			0x0003	/**< 0 alive, 1-3 different deaths */
+#define STATE_CROUCHED		0x0004
+#define STATE_PANIC			0x0008
 
-#define STATE_RAGE          0x0010  /* pretty self-explaining */
-#define STATE_INSANE        0x0030
-#define STATE_STUN      0x0043  /* stunned - includes death */
-#define STATE_DAZED			0x0080  /* dazed and unable to move */
+#define STATE_RAGE			0x0010	/**< pretty self-explaining */
+#define STATE_INSANE		0x0030
+#define STATE_STUN			0x0043	/**< stunned - includes death */
+#define STATE_DAZED			0x0080	/**< dazed and unable to move */
 
 /* private */
-#define STATE_REACTION_ONCE 0x0100
-#define STATE_REACTION_MANY 0x0200
-#define STATE_REACTION      0x0300  /* reaction - once or many */
-#define STATE_SHAKEN        0x0400  /* forced reaction fire */
+#define STATE_REACTION_ONCE	0x0100
+#define STATE_REACTION_MANY	0x0200
+#define STATE_REACTION		0x0300	/**< reaction - once or many */
+#define STATE_SHAKEN		0x0400	/**< forced reaction fire */
 
-#define ANGLE2SHORT(x)  ((int)((x)*65536/360) & 65535)
-#define SHORT2ANGLE(x)  ((x)*(360.0/65536))
+#define ANGLE2SHORT(x)		((int)((x)*65536/360) & 65535)
+#define SHORT2ANGLE(x)		((x)*(360.0/65536))
 
-#define EYE_STAND       15
-#define EYE_CROUCH      3
-#define PLAYER_STAND    20
-#define PLAYER_CROUCH   5
-#define PLAYER_DEAD     -12
-#define PLAYER_MIN      -24
-#define PLAYER_WIDTH    9
+#define EYE_STAND			15
+#define EYE_CROUCH			3
+#define PLAYER_STAND		20
+#define PLAYER_CROUCH		5
+#define PLAYER_DEAD			-12
+#define PLAYER_MIN			-24
+#define PLAYER_WIDTH		9
 
 /* field marker box */
-#define BOX_DELTA_WIDTH 11
-#define BOX_DELTA_LENGTH 11
-#define BOX_DELTA_HEIGHT 27
+#define BOX_DELTA_WIDTH		11
+#define BOX_DELTA_LENGTH	11
+#define BOX_DELTA_HEIGHT	27
 
-#define GRAVITY         500.0
+#define GRAVITY				500.0
 
-/* config strings are a general means of communication from */
-/* the server to all connected clients. */
-/* Each config string can be at most MAX_QPATH characters. */
-#define CS_NAME             0
-#define CS_CDTRACK          1
-#define CS_MAPTITLE         2   /* display map title string - translated client side */
-#define CS_MAXCLIENTS       3
-#define CS_MAPCHECKSUM      4   /* for catching cheater maps */
-#define CS_MAXSOLDIERS      5   /* max soldiers per team */
-#define CS_MAXSOLDIERSPERPLAYER 6   /* max soldiers per player when in teamplay mode */
-#define CS_ENABLEMORALE     7   /* enable the morale states in multiplayer */
-#define CS_MAXTEAMS         8   /* how many multiplayer teams for this map */
+/**
+ * config strings are a general means of communication from
+ * the server to all connected clients.
+ * Each config string can be at most MAX_QPATH characters. */
+#define CS_NAME				0
+#define CS_CDTRACK			1
+#define CS_MAPTITLE			2		/**< display map title string - translated client side */
+#define CS_MAXCLIENTS		3
+#define CS_MAPCHECKSUM		4		/**< for catching cheater maps */
+#define CS_MAXSOLDIERS		5		/**< max soldiers per team */
+#define CS_MAXSOLDIERSPERPLAYER	6	/**< max soldiers per player when in teamplay mode */
+#define CS_ENABLEMORALE		7		/**< enable the morale states in multiplayer */
+#define CS_MAXTEAMS			8		/**< how many multiplayer teams for this map */
+#define CS_VERSION			9		/**< what is the servers version */
+#define CS_UFOCHECKSUM		10		/**< checksum of ufo files */
 
-#define CS_TILES            16
-#define CS_POSITIONS        (CS_TILES+MAX_TILESTRINGS)
-#define CS_MODELS           (CS_POSITIONS+MAX_TILESTRINGS)
-#define CS_SOUNDS           (CS_MODELS+MAX_MODELS)
-#define CS_IMAGES           (CS_SOUNDS+MAX_SOUNDS)
-#define CS_LIGHTS           (CS_IMAGES+MAX_IMAGES)
-#define CS_ITEMS            (CS_LIGHTS+MAX_LIGHTSTYLES)
-#define CS_PLAYERSKINS      (CS_ITEMS+MAX_ITEMS)
-#define CS_GENERAL          (CS_PLAYERSKINS+MAX_CLIENTS)
-#define MAX_CONFIGSTRINGS   (CS_GENERAL+MAX_GENERAL)
+#define CS_TILES			16
+#define CS_POSITIONS		(CS_TILES+MAX_TILESTRINGS)
+#define CS_MODELS			(CS_POSITIONS+MAX_TILESTRINGS)
+#define CS_SOUNDS			(CS_MODELS+MAX_MODELS)
+#define CS_IMAGES			(CS_SOUNDS+MAX_SOUNDS)
+#define CS_LIGHTS			(CS_IMAGES+MAX_IMAGES)
+#define CS_ITEMS			(CS_LIGHTS+MAX_LIGHTSTYLES)
+#define CS_PLAYERSKINS		(CS_ITEMS+MAX_ITEMS)
+#define CS_GENERAL			(CS_PLAYERSKINS+MAX_CLIENTS)
+#define MAX_CONFIGSTRINGS	(CS_GENERAL+MAX_GENERAL)
 
 void Com_PrintItemDescription(int i);
 void Com_InventoryList_f(void);
