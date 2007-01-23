@@ -847,11 +847,17 @@ static void CL_ParseServerInfoMessage(void)
 			*s++ = '\0';
 
 		if (!Q_strncmp(var, "mapname", 7)) {
-			if (FS_CheckFile(va("pics/maps/shots/%s.jpg", value)) != -1)
-				Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value));
-
 			Cvar_ForceSet("mapname", value);
 			Q_strcat(serverInfoText, va(_("Map:\t%s\n"), value), sizeof(serverInfoText));
+
+			if (FS_CheckFile(va("pics/maps/shots/%s.jpg", value)) != -1)
+				Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value));
+			else {
+				value[strlen(value)-1] = '\0';
+				if (FS_CheckFile(va("pics/maps/shots/%s.jpg", value)) != -1)
+					Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value));
+			}
+
 		} else if (!Q_strncmp(var, "version", 7))
 			Q_strcat(serverInfoText, va(_("Version:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "hostname", 8))
