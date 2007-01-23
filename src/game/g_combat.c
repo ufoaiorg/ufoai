@@ -214,6 +214,7 @@ static void G_UpdateShotMock(shot_mock_t *mock, edict_t *shooter, edict_t *struc
  */
 static void G_Damage(edict_t * ent, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
 {
+	const char *victimName = NULL, *attackerName = NULL;
 	qboolean stun = (fd->dmgtype == gi.csi->damStun);
 	qboolean shock = (fd->dmgtype == gi.csi->damShock);
 
@@ -330,20 +331,48 @@ static void G_Damage(edict_t * ent, fireDef_t *fd, int damage, edict_t * attacke
 		/* prints stats for multiplayer to game console */
 		if (sv_maxclients->integer > 1) {
 			if (ent->pnum != attacker->pnum) {
+				victimName = G_GetPlayerName(ent->pnum);
+				if (!*victimName) { /* empty string */
+					switch (ent->team) {
+					case TEAM_CIVILIAN:
+						victimName = "civilian";
+						break;
+					case TEAM_ALIEN:
+						victimName = "alien";
+						break;
+					default:
+						victimName = "unknown";
+						break;
+					}
+				}
+				attackerName = G_GetPlayerName(attacker->pnum);
+				if (!*attackerName) { /* empty string */
+					switch (attacker->team) {
+					case TEAM_CIVILIAN:
+						attackerName = "civilian";
+						break;
+					case TEAM_ALIEN:
+						attackerName = "alien";
+						break;
+					default:
+						attackerName = "unknown";
+						break;
+					}
+				}
 				if (ent->team != attacker->team) {
 					Com_Printf("[STATS] %s (%s) %s %s (%s) with %s of %s\n",
-						G_GetPlayerName(attacker->pnum), attacker->chr.name,
+						attackerName, attacker->chr.name,
 						(ent->HP == 0 ? "kills" : "stuns"),
-						G_GetPlayerName(ent->pnum), ent->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+						victimName, ent->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 				} else {
 					Com_Printf("[STATS] %s (%s) %s %s (%s) (teamkill) with %s of %s\n",
-						G_GetPlayerName(attacker->pnum), attacker->chr.name,
+						attackerName, attacker->chr.name,
 						(ent->HP == 0 ? "kills" : "stuns"),
-						G_GetPlayerName(ent->pnum), ent->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+						victimName, ent->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 				}
 			} else {
 				Com_Printf("[STATS] %s %s %s (own team) with %s of %s\n",
-					G_GetPlayerName(ent->pnum), (ent->HP == 0 ? "kills" : "stuns"),
+					attackerName, (ent->HP == 0 ? "kills" : "stuns"),
 					ent->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 			}
 		}
