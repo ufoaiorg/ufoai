@@ -56,6 +56,9 @@ cvar_t *maxentities;
 cvar_t *dedicated;
 cvar_t *developer;
 
+cvar_t *logstats;
+FILE *logstatsfile;
+
 cvar_t *filterban;
 
 cvar_t *sv_gravity;
@@ -140,6 +143,7 @@ void InitGame(void)
 	gi.cvar("gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	gi.cvar("gamedate", __DATE__, CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	developer = gi.cvar("developer", "0", 0, "Print out a lot of developer debug messages - useful to track down bugs");
+	logstats = gi.cvar("logstats", "1", CVAR_ARCHIVE, "Server logfile output for kills");
 
 	/* max. players per team (original quake) */
 	maxplayers = gi.cvar("maxplayers", "8", CVAR_SERVERINFO | CVAR_LATCH, "How many players (humans) may a team have");
@@ -230,6 +234,10 @@ void InitGame(void)
 	/* init csi and inventory */
 	Com_InitCSI(gi.csi);
 	Com_InitInventory(invChain);
+
+	logstatsfile = NULL;
+	if (logstats->integer)
+		logstatsfile = fopen("stats.log", "a");
 }
 
 
@@ -243,6 +251,10 @@ void InitGame(void)
 void ShutdownGame(void)
 {
 	gi.dprintf("==== ShutdownGame ====\n");
+
+	if (logstatsfile)
+		fclose(logstatsfile);
+	logstatsfile = NULL;
 
 	gi.FreeTags(TAG_LEVEL);
 	gi.FreeTags(TAG_GAME);

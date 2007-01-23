@@ -107,6 +107,65 @@ const char* G_GetPlayerName (int pnum)
 }
 
 /**
+ * @brief Prints stats about who killed who with what and how
+ * @sa G_Damage
+ */
+extern void G_PrintStats (edict_t* victim, edict_t* attacker, fireDef_t* fd)
+{
+	const char *victimName = NULL, *attackerName = NULL;
+	char buffer[512];
+
+	if (victim->pnum != attacker->pnum) {
+		victimName = G_GetPlayerName(victim->pnum);
+		if (!*victimName) { /* empty string */
+			switch (victim->team) {
+			case TEAM_CIVILIAN:
+				victimName = "civilian";
+				break;
+			case TEAM_ALIEN:
+				victimName = "alien";
+				break;
+			default:
+				victimName = "unknown";
+				break;
+			}
+		}
+		attackerName = G_GetPlayerName(attacker->pnum);
+		if (!*attackerName) { /* empty string */
+			switch (attacker->team) {
+			case TEAM_CIVILIAN:
+				attackerName = "civilian";
+				break;
+			case TEAM_ALIEN:
+				attackerName = "alien";
+				break;
+			default:
+				attackerName = "unknown";
+				break;
+			}
+		}
+		if (victim->team != attacker->team) {
+			Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) with %s of %s\n",
+				attackerName, attacker->chr.name,
+				(victim->HP == 0 ? "kills" : "stuns"),
+				victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+		} else {
+			Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) (teamkill) with %s of %s\n",
+				attackerName, attacker->chr.name,
+				(victim->HP == 0 ? "kills" : "stuns"),
+				victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+		}
+	} else {
+		Com_sprintf(buffer, sizeof(buffer), "%s %s %s (own team) with %s of %s\n",
+			attackerName, (victim->HP == 0 ? "kills" : "stuns"),
+			victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+	}
+	Com_Printf("[STATS] %s", buffer);
+	if (logstatsfile)
+		fprintf(logstatsfile, "%s", buffer);
+}
+
+/**
  * @brief Searches all active entities for the next one that holds
  * the matching string at fieldofs (use the offsetof() macro) in the structure.
  *
