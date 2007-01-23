@@ -156,6 +156,7 @@ extern void G_PrintStats (edict_t* victim, edict_t* attacker, fireDef_t* fd)
 				victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 		}
 	} else {
+		attackerName = G_GetPlayerName(attacker->pnum);
 		Com_sprintf(buffer, sizeof(buffer), "%s %s %s (own team) with %s of %s\n",
 			attackerName, (victim->HP == 0 ? "kills" : "stuns"),
 			victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
