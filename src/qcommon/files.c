@@ -727,7 +727,7 @@ void FS_SetGamedir(const char *dir)
 /**
  * @brief Creates a filelink_t
  */
-void FS_Link_f(void)
+static void FS_Link_f (void)
 {
 	filelink_t *l, **prev;
 
@@ -822,7 +822,7 @@ char **FS_ListFiles(const char *findname, int *numfiles, unsigned musthave, unsi
 /**
  * @brief
  */
-void FS_Dir_f(void)
+static void FS_Dir_f (void)
 {
 	char *path = NULL;
 	char findname[1024];
@@ -860,7 +860,7 @@ void FS_Dir_f(void)
 /**
  * @brief
  */
-void FS_Path_f(void)
+static void FS_Path_f (void)
 {
 	searchpath_t *s;
 	filelink_t *l;
