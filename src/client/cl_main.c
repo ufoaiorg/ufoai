@@ -635,14 +635,18 @@ typedef struct serverList_s
 {
 	netadr_t adr;
 	qboolean pinged;
-	char name[MAX_VAR];
-	char map[MAX_VAR];
-	int maxclient;
+	char hostname[MAX_VAR];
+	char mapname[MAX_VAR];
+	char version[MAX_VAR];
+	int maxclients;
+	int clients;
+	int serverListPos;
 } serverList_t;
 
 #define MAX_SERVERLIST 128
 static char serverText[1024];
-static int serverListLength;
+static int serverListLength = 0;
+static int serverListPos = 0;
 static serverList_t serverList[MAX_SERVERLIST];
 
 /**
@@ -665,7 +669,7 @@ static void CL_PrintServerList_f (void)
 	Com_Printf("%i servers on the list\n", serverListLength);
 
 	for (i = 0; i < serverListLength; i++) {
-		Com_Printf("%s\n", NET_AdrToString(serverList[i].adr));
+		Com_Printf("%02i: %s (pinged: %i)\n", i, NET_AdrToString(serverList[i].adr), serverList[i].pinged);
 	}
 }
 
@@ -679,23 +683,24 @@ typedef enum {
  * @brief Adds a server to the serverlist cache
  * @return false if it is no valid address or server already exists
  */
-static qboolean CL_AddServerToList (netadr_t* adr, char *msg)
+static int CL_AddServerToList (netadr_t* adr, char *msg)
 {
 	int i;
+	char string[MAX_VAR];
 
 	/* check whether the port was set */
-	if (!adr->port)
-		return qfalse;
+	if (!adr || !adr->port)
+		return -1;
 
 	/* check some server data */
 	if (msg) {
 		if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "protocol"))) {
-			Com_DPrintf("Protocol mismatch\n");
-			return qfalse;
+			Com_Printf("Protocol mismatch\n");
+			return -1;
 		}
 		if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "version"))) {
-			Com_DPrintf("Version mismatch\n");
-			return qfalse;
+			Com_Printf("Version mismatch\n");
+			return -1;
 		}
 		/* hide full servers */
 		switch (mn_serverlist->integer) {
@@ -704,45 +709,56 @@ static qboolean CL_AddServerToList (netadr_t* adr, char *msg)
 		case SERVERLIST_HIDEFULL:
 			if (atoi(Info_ValueForKey(msg, "maxclients")) <= atoi(Info_ValueForKey(msg, "clients"))) {
 				Com_DPrintf("Server is full - hide from list\n");
-				return qfalse;
+				return -1;
 			}
 			break;
 		case SERVERLIST_HIDEEMPTY:
 			if (!atoi(Info_ValueForKey(msg, "clients"))) {
 				Com_DPrintf("Server is empty - hide from list\n");
-				return qfalse;
+				return -1;
 			}
 			break;
 		}
 	}
 
+	/* we only need this if serverListLength > 0 */
+	if (serverListLength > 0)
+		Q_strncpyz(string, NET_AdrToString(*adr), sizeof(string));
+
 	for (i = 0; i < serverListLength; i++) {
-		if (!memcmp(&(serverList[i].adr), adr, sizeof(netadr_t))) {
-			if (!msg) {
-#ifdef DEBUG
-				Com_DPrintf("Server '%s' is alrady in cache\n", NET_AdrToString(*adr));
-#endif
-				return qfalse;
-			} else {
-				/* TODO: parse server info and put it into serverList_t */
-#ifdef DEBUG
-				Com_DPrintf("Server '%s' answer: '%s'\n", NET_AdrToString(*adr), msg);
-#endif
-				/* mark this server as pinged */
-				serverList[i].pinged = qtrue;
+		if (!Q_strcmp(string, NET_AdrToString(serverList[i].adr))) {
+			/* mark this server as pinged */
+			if (msg) {
+				if (!serverList[i].pinged) {
+					serverList[i].pinged = qtrue;
+					Q_strncpyz(serverList[i].hostname,
+						Info_ValueForKey(msg, "hostname"),
+						sizeof(serverList[i].hostname));
+					Q_strncpyz(serverList[i].mapname,
+						Info_ValueForKey(msg, "mapname"),
+						sizeof(serverList[i].mapname));
+					serverList[i].clients = atoi(Info_ValueForKey(msg, "clients"));
+					serverList[i].maxclients = atoi(Info_ValueForKey(msg, "maxclients"));
+					/* first time response - add it to the list */
+					return i;
+				}
 				/* we don't want to ping again - because msg is already the response */
-				return qfalse;
-			}
+				return -1;
+			} else
+				return -1;
 		}
 	}
 
+	if (msg)
+		Com_Printf("Warning: a response for a server that was not on the list before\n");
+
 	memset(&(serverList[serverListLength]), 0, sizeof(serverList_t));
 	memcpy(&(serverList[serverListLength].adr), adr, sizeof(netadr_t));
-
 	/* increase the number of servers in the list now */
 	serverListLength++;
+	CL_PingServer(adr);
 
-	return qtrue;
+	return -1;
 }
 
 /**
@@ -752,9 +768,9 @@ static qboolean CL_AddServerToList (netadr_t* adr, char *msg)
  */
 static void CL_ParseStatusMessage(void)
 {
+	int serverID = -1;
 	char *s = MSG_ReadString(&net_message);
 	char string[MAX_INFO_STRING];
-	char hostname_str[MAX_VAR], mapname_str[MAX_VAR], clients_str[MAX_VAR], maxclients_str[MAX_VAR];
 
 	Com_DPrintf("CL_ParseStatusMessage: %s\n", s);
 
@@ -762,13 +778,15 @@ static void CL_ParseStatusMessage(void)
 		return;
 
 	/* update the server string */
-	if (CL_AddServerToList(&net_from, s)) {
-		Q_strncpyz(hostname_str, Info_ValueForKey(s, "hostname"), sizeof(hostname_str));
-		Q_strncpyz(mapname_str, Info_ValueForKey(s, "mapname"), sizeof(hostname_str));
-		Q_strncpyz(clients_str, Info_ValueForKey(s, "clients"), sizeof(hostname_str));
-		Q_strncpyz(maxclients_str, Info_ValueForKey(s, "maxclients"), sizeof(hostname_str));
-
-		Com_sprintf(string, sizeof(string), "%s\t%s\t%s/%s\n", hostname_str, mapname_str, clients_str, maxclients_str);
+	serverID = CL_AddServerToList(&net_from, s);
+	if (serverID != -1) {
+		Com_sprintf(string, sizeof(string), "%s\t%s\t%i/%i\n",
+			serverList[serverID].hostname,
+			serverList[serverID].mapname,
+			serverList[serverID].clients,
+			serverList[serverID].maxclients);
+		serverList[serverID].serverListPos = serverListPos;
+		serverListPos++;
 		Q_strcat(serverText, string, sizeof(serverText));
 		menuText[TEXT_LIST] = serverText;
 	}
@@ -969,10 +987,7 @@ static void CL_ParseMasterServerResponse(void)
 		if (!adr.port)
 			break;
 		Com_DPrintf("server: %s\n", adrstring);
-		if (CL_AddServerToList(&adr, NULL)) {
-			if (!serverList[serverListLength-1].pinged)
-				CL_PingServer(&adr);
-		}
+		CL_AddServerToList(&adr, NULL);
 	}
 	/* end of stream */
 	net_message.readcount = net_message.cursize;
@@ -1114,11 +1129,11 @@ void CL_ServerInfo_f (void)
 }
 
 /**
- * @brief
+ * @brief Callback for text node serverlist in multiplayer menu
  */
 void CL_ServerListClick_f (void)
 {
-	int num;
+	int num, i;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("usage: servers_click <num>\n");
@@ -1126,11 +1141,15 @@ void CL_ServerListClick_f (void)
 	}
 	num = atoi(Cmd_Argv(1));
 
+	Com_Printf("num: %i\n", num);
+
 	menuText[TEXT_STANDARD] = serverInfoText;
-	if (num >= 0 && num < serverListLength) {
-		Netchan_OutOfBandPrint(NS_CLIENT, serverList[num].adr, "status %i", PROTOCOL_VERSION);
-		Cvar_Set("mn_server_ip", NET_AdrToString(serverList[num].adr));
-	}
+	if (num >= 0 && num < serverListLength)
+		for (i = 0; i < serverListLength; i++)
+			if (serverList[i].serverListPos == num) {
+				Netchan_OutOfBandPrint(NS_CLIENT, serverList[i].adr, "status %i", PROTOCOL_VERSION);
+				Cvar_Set("mn_server_ip", NET_AdrToString(serverList[i].adr));
+			}
 }
 
 /**
@@ -1179,8 +1198,10 @@ void CL_PingServers_f (void)
 	if (Cmd_Argc() == 2) {
 		/* reset current list */
 		serverText[0] = 0;
+		serverListPos = 0;
 		serverListLength = 0;
 		serversAlreadyQueried = qfalse;
+		memset(serverList, 0, sizeof(serverList_t) * MAX_SERVERLIST);
 	}
 
 	menuText[TEXT_STANDARD] = NULL;
