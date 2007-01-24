@@ -737,7 +737,10 @@ static qboolean CL_AddServerToList (netadr_t* adr, char *msg)
 	}
 
 	memset(&(serverList[serverListLength]), 0, sizeof(serverList_t));
-	memcpy(&(serverList[serverListLength++].adr), adr, sizeof(netadr_t));
+	memcpy(&(serverList[serverListLength].adr), adr, sizeof(netadr_t));
+
+	/* increase the number of servers in the list now */
+	serverListLength++;
 
 	return qtrue;
 }
@@ -1260,7 +1263,7 @@ void CL_ConnectionlessPacket (void)
 
 	c = Cmd_Argv(0);
 
-	Com_Printf("%s: %s\n", NET_AdrToString(net_from), c);
+	Com_DPrintf("%s: %s\n", NET_AdrToString(net_from), c);
 
 	/* server connection */
 	if (!Q_strncmp(c, "client_connect", 13)) {
