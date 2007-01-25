@@ -231,7 +231,7 @@ void SV_LinkEdict(edict_t * ent)
  * @note ??? does this always return the world?
  * @sa SV_AreaEdicts
  */
-void SV_AreaEdicts_r(areanode_t * node)
+static void SV_AreaEdicts_r(areanode_t * node)
 {
 	link_t *l, *next, *start;
 	edict_t *check;
@@ -282,7 +282,7 @@ void SV_AreaEdicts_r(areanode_t * node)
  * @brief
  * @sa SV_AreaEdicts_r
  */
-int SV_AreaEdicts(vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int areatype)
+static int SV_AreaEdicts(vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int areatype)
 {
 	area_mins = mins;
 	area_maxs = maxs;
@@ -338,8 +338,10 @@ int SV_HullForEntity(edict_t * ent, int *tile)
 
 /**
  * @brief
+ * @sa SV_Trace
+ * @sa SV_AreaEdicts
  */
-void SV_ClipMoveToEntities(moveclip_t * clip)
+static void SV_ClipMoveToEntities(moveclip_t * clip)
 {
 	int i, num;
 	edict_t *touchlist[MAX_EDICTS], *touch;

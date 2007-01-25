@@ -280,8 +280,6 @@ void SV_ClearWorld(void);
 void SV_UnlinkEdict(edict_t * ent);
 void SV_LinkEdict(edict_t * ent);
 
-int SV_AreaEdicts(vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int areatype);
-
 /*=================================================================== */
 
 /* returns the CONTENTS_* value from the world at the given point. */
