@@ -251,6 +251,7 @@ static void G_Damage(edict_t * ent, fireDef_t *fd, int damage, edict_t * attacke
 				ent->HP = MAX(ent->HP - damage, 0);
 			}
 		}
+		/* Com_Printf("remaining hps: %i\n", ent->HP); */
 		return;
 	}
 
@@ -645,19 +646,19 @@ static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int
  * @param[in] at Grid coordinate of the target.
  * @param[in] mask ?? TODO Visibility bit-mask of the others?
  */
-void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
+static void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
 	vec3_t cur_loc;	/* The current location of the projectile. */
 	vec3_t impact;	/* The location of the target (-center?) */
 	vec3_t temp;
-	trace_t tr;	/* ?? TODO */
+	trace_t tr;	/* the traceing */
 	float acc;	/* Accuracy modifier for the angle of the shot. */
 	float range;	/* ?? TODO */
 	float gauss1;
 	float gauss2;   /* For storing 2 gaussian distributed random values. */
-	int bounce;	/* ?? TODO */
+	int bounce;	/* count the bouncing */
 	int damage;	/* The damage to be dealt to the target. */
 	byte flags;	/* ?? TODO */
 /*	int i; */
@@ -703,11 +704,13 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 
 		/* Do the trace from current position of the projectile
 		   to the end_of_range location.*/
+		/* FIXME: This trace doesn't seam to hit any func_breakable - why?? */
+		/* mins and maxs should be set via lm_t don't they? */
 		tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
 		/* _Now_ we copy the correct impact location. */
 		VectorCopy(tr.endpos, impact);
 
-		/* set flags */
+		/* set flags when trace hit something */
 		if (tr.fraction < 1.0) {
 			if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV)
 				/* check if we differenciate between body and wall */
@@ -720,7 +723,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 		}
 
 #if 0
-/* please debug, currently it causes double sounds */
+		/* please debug, currently it causes double sounds */
 		/* calculate additional visibility */
 		for (i = 0; i < MAX_TEAMS; i++)
 			if (G_TeamPointVis(i, impact))
@@ -748,12 +751,12 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 		}
 
 		/* do splash damage */
-		if (tr.fraction < 1.0 && fd->splrad && !fd-> bounce) {
+		if (tr.fraction < 1.0 && fd->splrad && !fd->bounce) {
 			VectorMA(impact, sv_shot_origin->value, tr.plane.normal, impact);
 			G_SplashDamage(ent, fd, impact, mock);
 		}
 
-		/* do damage */
+		/* do damage if the trace hit an entity */
 		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV || tr.ent->type == ET_BREAKABLE)) {
 			damage = fd->damage[0]; /* + fd->damage[1] * crand(); //  REMOVED random component - it's quite random enough already */
 			G_Damage(tr.ent, fd, damage, ent, mock);
@@ -814,7 +817,10 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at
 	}
 }
 
-void G_GetShotOrigin(edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t shotOrigin)
+/**
+ * @brief
+ */
+static void G_GetShotOrigin(edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t shotOrigin)
 {
 	/* get weapon position */
 	gi.GridPosToVec(gi.map, shooter->pos, shotOrigin);

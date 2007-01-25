@@ -160,7 +160,6 @@ void CL_ParseEntitystring(char *es)
 	int maxlevel = 8;
 	int maxmultiplayerteams = 2;
 	int entnum;
-	int nosmooth;
 	int skin;
 	int frame;
 
@@ -203,7 +202,6 @@ void CL_ParseEntitystring(char *es)
 		animname[0] = 0;
 		model[0] = 0;
 		particle[0] = 0;
-		nosmooth = 0;
 		skin = 0;
 
 		/* parse the opening brace */
@@ -293,9 +291,6 @@ void CL_ParseEntitystring(char *es)
 			if (!Q_strcmp(keyname, "fogcolor"))
 				sscanf(com_token, "%f %f %f", &(map_fogColor[0]), &(map_fogColor[1]), &(map_fogColor[2]));
 
-			if (!Q_strcmp(keyname, "nosmooth"))
-				nosmooth = atoi(com_token);
-
 			if (!Q_strcmp(keyname, "skin"))
 				skin = atoi(com_token);
 		}
@@ -367,8 +362,6 @@ void CL_ParseEntitystring(char *es)
 					lm->lightorigin[2] = cos(lightangles[PITCH]);
 					lm->lightorigin[3] = 0.0;
 				}
-				if (nosmooth)
-					lm->flags |= LMF_NOSMOOTH;
 				lm->skin = skin;
 				lm->frame = frame;
 				if (!lm->frame)

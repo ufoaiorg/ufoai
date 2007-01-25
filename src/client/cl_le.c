@@ -204,6 +204,7 @@ void CL_RegisterLocalModels(void)
 
 /**
  * @brief
+ * @sa CL_ParseEntitystring
  */
 lm_t *CL_AddLocalModel(char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags)
 {

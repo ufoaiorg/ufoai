@@ -586,12 +586,17 @@ static void SP_misc_dummy(edict_t * self)
 /**
  * @brief QUAKED func_breakable (0.3 0.3 0.3) ?
  * Used for breakable objects.
+ * @note These edicts are added client side as local models
+ * the are stored in the lmList (because they are inline models)
+ * for tracing (see inlineList in cmodel.c)
+ * @sa CM_EntTestLine
+ * @sa CL_AddLocalModel
  */
 static void SP_func_breakable(edict_t * self)
 {
 	self->type = ET_BREAKABLE;
-
 	VectorSet(self->origin, 0, 0, 0);
+	/* set an inline model */
 	gi.setmodel(self, self->model);
 
 #if 0

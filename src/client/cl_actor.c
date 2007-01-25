@@ -47,7 +47,7 @@ int lastMoveLength; /* keeps track of actorMoveLength */
 int lastTU; /* keeps track of selActor->TU */
 
 /* a cbuf string for each button_types_t */
-static char *shoot_type_strings[BT_NUM_TYPES] = {
+static const char *shoot_type_strings[BT_NUM_TYPES] = {
 	"pr\n",
 	"reaction\n",
 	"sr\n",
@@ -274,7 +274,7 @@ void CL_ActorGlobalCVars(void)
 	}
 }
 
-/*
+/**
  * @brief get state of the reaction-fire button
  */
 int CL_GetReactionState(le_t *le) {
@@ -317,6 +317,9 @@ static int CL_CalcReloadTime(int weapon_id)
 	return tu;
 }
 
+/**
+ * @brief
+ */
 static void ClearHighlights()
 {
 	int i;
@@ -328,6 +331,9 @@ static void ClearHighlights()
 		}
 }
 
+/**
+ * @brief
+ */
 static void HighlightWeaponButton(int button)
 {
 	char cbufText[MAX_VAR];
@@ -341,12 +347,15 @@ static void HighlightWeaponButton(int button)
 	weaponButtonState[button] = 2;
 }
 
+/**
+ * @brief
+ */
 void CL_ResetWeaponButtons(void)
 {
 	memset(weaponButtonState, -1, sizeof(weaponButtonState));
 }
 
-/*
+/**
  * @brief Sets the display for a single weapon/reload HUD button
  */
 static void SetWeaponButton(int button, int state)
@@ -775,9 +784,7 @@ void CL_ActorUpdateCVars(void)
 
 /*
 ==============================================================
-
 ACTOR SELECTION AND TEAM LIST
-
 ==============================================================
 */
 
@@ -1015,8 +1022,11 @@ void CL_BuildForbiddenList(void)
 			continue;
 		if (!(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV))
 			fb_list[fb_length++] = le->pos;
-		else if (le->type == ET_BREAKABLE)
+		else if (le->type == ET_BREAKABLE) {
 			fb_list[fb_length++] = le->pos;
+			/* this is for let a trace find a breakable, too */
+			/*le->contents = CONTENTS_SOLID;*/ /* doesn't work */
+		}
 	}
 
 	if (fb_length > MAX_EDICTS)
