@@ -988,7 +988,7 @@ ACTOR MOVEMENT AND SHOOTING
  *
  * @see CL_BuildForbiddenList(void)
  */
-byte *fb_list[MAX_FB_LIST];
+byte *fb_list[MAX_EDICTS];
 /**
  * @brief Current length of fb_list.
  *
@@ -1006,29 +1006,20 @@ int fb_length;
 void CL_BuildForbiddenList(void)
 {
 	le_t *le;
-	int i, j, k;
+	int i;
 
 	fb_length = 0;
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV) ) {
-			if (le->fieldSize == ACTOR_SIZE_NORMAL) {
-				fb_list[fb_length++] = le->pos;
-			} else {
-				/* FIXME: remove me after getting this stuff ready */
-				Com_DPrintf("...unit bigger that 1 field (%i)\n", le->fieldSize);
-				/* we don't need the height value because */
-				/* the unit is always on the same level */
-				for (j = 0; j < le->fieldSize; j++) {
-					for (k = 0; k < le->fieldSize; k++) {
-						/* FIXME: put all vec3_t's in here */
-						fb_list[fb_length++] = le->pos;
-					}
-				}
-			}
-		}
+	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+		if (!le->inuse)
+			continue;
+		if (!(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV))
+			fb_list[fb_length++] = le->pos;
+		else if (le->type == ET_BREAKABLE)
+			fb_list[fb_length++] = le->pos;
+	}
 
-	if (fb_length > MAX_FB_LIST)
+	if (fb_length > MAX_EDICTS)
 		Com_Error(ERR_DROP, "CL_BuildForbiddenList: list too long");
 }
 

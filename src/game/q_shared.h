@@ -189,8 +189,6 @@ typedef uint8_t byte;
 #define MAX_ITEMS           256
 #define MAX_GENERAL         (MAX_CLIENTS*2) /* general config strings */
 
-#define MAX_FB_LIST         1024
-
 #define MAX_HP 100
 
 /* game print flags */

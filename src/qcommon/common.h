@@ -65,10 +65,10 @@ float MSG_ReadAngle16(sizebuf_t * sb);
 void MSG_ReadDir(sizebuf_t * sb, vec3_t vector);
 
 void MSG_ReadData(sizebuf_t * sb, void *buffer, int size);
-void MSG_V_ReadFormat(sizebuf_t * sb, char *format, va_list ap);
-void MSG_ReadFormat(sizebuf_t * sb, char *format, ...);
+void MSG_V_ReadFormat(sizebuf_t * sb, const char *format, va_list ap);
+void MSG_ReadFormat(sizebuf_t * sb, const char *format, ...);
 
-int MSG_LengthFormat(sizebuf_t * sb, char *format);
+int MSG_LengthFormat(sizebuf_t * sb, const char *format);
 
 /*============================================================================ */
 

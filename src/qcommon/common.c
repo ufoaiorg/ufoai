@@ -790,7 +790,7 @@ void MSG_ReadDir(sizebuf_t * sb, vec3_t dir)
 /**
  * @brief Reads from a buffer according to format; version without syntactic sugar for variable arguments, to call it from other functions with variable arguments
  */
-void MSG_V_ReadFormat(sizebuf_t * msg_read, char *format, va_list ap)
+void MSG_V_ReadFormat(sizebuf_t * msg_read, const char *format, va_list ap)
 {
 	char typeID;
 
@@ -859,7 +859,7 @@ void MSG_V_ReadFormat(sizebuf_t * msg_read, char *format, va_list ap)
 /**
  * @brief The user-friendly version of MSG_ReadFormat that reads variable arguments from a buffer according to format
  */
-void MSG_ReadFormat(sizebuf_t * msg_read, char *format, ...)
+void MSG_ReadFormat(sizebuf_t * msg_read, const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
@@ -874,7 +874,7 @@ void MSG_ReadFormat(sizebuf_t * msg_read, char *format, ...)
  * calculated the length of a sizebuf_t by summing up
  * the size of each format char
  */
-int MSG_LengthFormat(sizebuf_t * sb, char *format)
+int MSG_LengthFormat(sizebuf_t * sb, const char *format)
 {
 	char typeID;
 	int length, delta = 0;

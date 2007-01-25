@@ -372,8 +372,6 @@ extern shader_t r_shaders[MAX_SHADERS];
 
 void CL_ClearEffects(void);
 
-void CL_ParseConfigString(void);
-
 void CL_SetLightstyle(int i);
 void CL_RunLightStyles(void);
 void CL_AddLightStyles(void);
@@ -644,7 +642,7 @@ extern le_t *selActor;
 extern int actorMoveLength;
 extern invList_t invList[MAX_INVLIST];
 
-extern byte *fb_list[MAX_FB_LIST];
+extern byte *fb_list[MAX_EDICTS];
 extern int fb_length;
 
 #define IS_MODE_FIRE_RIGHT(x)	((x) == M_FIRE_PR || (x) == M_FIRE_SR \
@@ -1038,15 +1036,12 @@ extern int numPtls;
 
 
 /* cl_parse.c */
-extern char *svc_strings[256];
-extern char *ev_format[128];
-extern void (*ev_func[128]) (sizebuf_t * sb);
+extern const char *ev_format[128];
 extern qboolean blockEvents;
 
 void CL_SetLastMoving(le_t *le);
 void CL_ParseServerMessage(void);
 void CL_LoadClientinfo(clientinfo_t * ci, char *s);
-void SHOWNET(char *s);
 void CL_ParseClientinfo(int player);
 void CL_InitEvents(void);
 void CL_Events(void);

@@ -920,7 +920,7 @@ void G_InventoryToFloor(edict_t * ent)
 }
 
 
-byte *fb_list[MAX_FB_LIST];
+byte *fb_list[MAX_EDICTS];
 int fb_length;
 
 /**
@@ -933,21 +933,23 @@ void G_BuildForbiddenList(int team)
 	int i;
 
 	fb_length = 0;
+
+	/* team visibility */
 	if (team)
 		vis_mask = 1 << team;
 	else
 		vis_mask = 0xFFFFFFFF;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->visflags & vis_mask)) {
-			/* TODO: Implement fieldSize */
-			switch(ent->fieldSize) {
-			default:
-				fb_list[fb_length++] = ent->pos;
-			}
-		}
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
+		if (!ent->inuse)
+			continue;
+		if ((ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->visflags & vis_mask))
+			fb_list[fb_length++] = ent->pos;
+		else if (ent->type == ET_BREAKABLE)
+			fb_list[fb_length++] = ent->pos;
+	}
 
-	if (fb_length > MAX_FB_LIST)
+	if (fb_length > MAX_EDICTS)
 		gi.error("G_BuildForbiddenList: list too long\n");
 }
 

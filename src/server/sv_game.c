@@ -166,7 +166,8 @@ static void PF_error(char *fmt, ...)
 
 /**
  * @brief
- * Also sets mins and maxs for inline bmodels
+ * @note Also sets mins and maxs for inline bmodels
+ * @sa CM_InlineModel
  */
 static void PF_SetModel(edict_t * ent, char *name)
 {
