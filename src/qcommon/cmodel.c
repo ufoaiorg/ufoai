@@ -148,7 +148,7 @@ static int checkcount;
 static int numInline;
 static byte sh_low;
 static byte sh_big;
-static char **inlineList;
+static char **inlineList; /**< a list with all local models (like func_breakable) */
 static int cur_level;
 static vec3_t tr_end;
 static byte *cmod_base;
@@ -489,7 +489,7 @@ static void CMod_LoadBrushSides(lump_t * l)
 
 	/* need to save space for box planes */
 	if (count > MAX_MAP_BRUSHSIDES)
-		Com_Error(ERR_DROP, "Map has too many planes");
+		Com_Error(ERR_DROP, "Map has too many brushsides");
 
 	/* add some for the box */
 	out = Hunk_Alloc((count + 6) * sizeof(cbrushside_t));
@@ -581,14 +581,14 @@ int CheckBSPFile(char *filename)
 }
 
 /**
- * @brief
+ * @brief Checks traces against all inline models
  * @param[in] start
  * @param[in] stop
  * @sa CM_TestLine
  * @sa CM_InlineModel
  * @sa CM_TransformedBoxTrace
  */
-int CM_EntTestLine(vec3_t start, vec3_t stop)
+int CM_EntTestLine (vec3_t start, vec3_t stop)
 {
 	trace_t trace;
 	cmodel_t *model;
@@ -597,10 +597,12 @@ int CM_EntTestLine(vec3_t start, vec3_t stop)
 	/* trace against world first */
 	if (CM_TestLine(start, stop))
 		return 1;
+	/* no local models */
 	if (!inlineList)
 		return 0;
 
 	for (name = inlineList; *name; name++) {
+		/* check whether this is really an inline model */
 		if (**name != '*')
 			continue;
 		model = CM_InlineModel(*name);
@@ -608,6 +610,8 @@ int CM_EntTestLine(vec3_t start, vec3_t stop)
 			continue;
 /*		Com_Printf("CM_EntTestLine call function\n"); */
 		trace = CM_TransformedBoxTrace(start, stop, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, model->origin, vec3_origin);
+		/* if we started the trace in a wall */
+		/* or the trace is not finished */
 		if (trace.startsolid || trace.fraction < 1.0)
 			return 1;
 	}
@@ -638,6 +642,7 @@ int CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 		return blocked;
 
 	for (name = inlineList; *name; name++) {
+		/* check whether this is really an inline model */
 		if (**name != '*')
 			continue;
 		model = CM_InlineModel(*name);
@@ -645,10 +650,12 @@ int CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 			continue;
 /*		Com_Printf("CM_EntTestLineDM call function\n"); */
 		trace = CM_TransformedBoxTrace(start, end, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, model->origin, vec3_origin);
+		/* if we started the trace in a wall */
 		if (trace.startsolid) {
 			VectorCopy(start, end);
 			return 1;
 		}
+		/* trace not finishd */
 		if (trace.fraction < 1.0) {
 			blocked = 1;
 			VectorCopy(trace.endpos, end);
@@ -1161,8 +1168,9 @@ void CM_LoadMap(char *tiles, char *pos, unsigned *mapchecksum)
 }
 
 /**
- * @brief
- * @param[in] name
+ * @brief Searches all inline models and return the cmodel_t pointer for the
+ * given modelnumber or -name
+ * @param[in] name The modelnumber (e.g. "*2") or the modelname
  */
 cmodel_t *CM_InlineModel(char *name)
 {
@@ -1802,7 +1810,7 @@ void CM_RecursiveHullCheck(int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
  * @sa CM_TransformedBoxTrace
  * @sa CM_CompleteBoxTrace
  */
-trace_t CM_BoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask)
+static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask)
 {
 	int i;
 
@@ -1923,7 +1931,7 @@ trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t max
 	}
 
 	/* sweep the box through the model */
-	trace = CM_BoxTrace(start_l, end_l, mins, maxs, tile, headnode, brushmask);
+	trace = CM_BoxTrace (start_l, end_l, mins, maxs, tile, headnode, brushmask);
 
 	if (rotated && trace.fraction != 1.0) {
 		/* FIXME: figure out how to do this with existing angles */
@@ -2662,8 +2670,9 @@ void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec)
  * @sa CM_InlineModel
  * @sa CM_CheckUnit
  * @sa CM_TestConnection
+ * @param[in] list The local models list
  */
-void Grid_RecalcRouting(struct routing_s *map, char *name, char **list)
+void Grid_RecalcRouting (struct routing_s *map, char *name, char **list)
 {
 	cmodel_t *model;
 	pos3_t min, max;
