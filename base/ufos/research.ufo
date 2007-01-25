@@ -2260,86 +2260,172 @@ tech rs_ugv_triax
 
 tech rs_craft_el_raven_ecm
 {
-	type	craftshield
-//	type	craftelectronics
+	type		craftshield
+//	type		craftelectronics
 //	TODO: add code to parse craftelectronics -Zenerka 25.01.2007
 	up_chapter	crafts
-	name	"_Raven ECM Unit"
+	name		"_\"Raven\" ECM Unit"
 	// pre_description	"_craft_electronics_raven_pre_txt"
 	description	"_craft_electronics_raven_txt"
 
-	// FIXME
 //	provides	craft_electronics_raven
 	require_AND { tech nothing }
-	time	0
+	time		0
+	producetime	1221
 
 	image_top	"techs/craft_electronics_raven"
 }
 
 tech rs_craft_def_polymer_armour
 {
-	type	craftshield
+	type		craftshield
 	up_chapter	crafts
-	name	"_Polymer Aircraft Armour"
+	name		"_Polymer Aircraft Armour"
 	// pre_description	"_craft_shield_light_pre_txt"
 	description	"_craft_shield_light_txt"
 
-	// FIXME
 //	provides	craft_shield_polymer
 	require_AND { tech nothing }
-	time	0
+	time		0
+	producetime	1678
 
 	image_top	"techs/craft_shield_light"
 }
 
 tech rs_craft_weapon_shiva
 {
-	type	craftweapon
+	type		craftweapon
 	up_chapter	crafts
-	name	"_SHIVA Rotary Cannon"
+	name		"_SHIVA Rotary Cannon"
 	// pre_description	"_craft_weapon_shiva_pre_txt"
 	description	"_craft_weapon_shiva_txt"
 
-	// FIXME
 //	provides	craft_weapon_shiva
 	require_AND { tech nothing }
-	time	0
+	time		0
+	producetime	1111
 
 	mdl_top		"aircraft/shiva/shiva"
 }
 
+tech rs_craft_ammo_shiva_1
+{
+	type		craftweapon
+//	type		craftammo
+//	TODO: add code to parse craftammo -Zenerka 25.01.2007
+	up_chapter	crafts
+	name		"_SHIVA 20mm API Rounds"
+	// pre_description	"_craft_ammo_shiva_1_pre_txt"
+	description	"_craft_ammo_shiva_1_txt"
+
+//	provides	craft_ammo_shiva_API
+	require_AND
+	{ 
+		tech rs_craft_weapon_shiva
+	}
+	time		0
+	producetime	10
+
+	image_top	"techs/craft_ammo_shiva_1
+}
+
+tech rs_craft_ammo_shiva_2
+{
+	type		craftweapon
+//	type		craftammo
+//	TODO: add code to parse craftammo -Zenerka 25.01.2007
+	up_chapter	crafts
+	name		"_SHIVA 20mm HEI Rounds"
+	// pre_description	"_craft_ammo_shiva_2_pre_txt"
+	description	"_craft_ammo_shiva_2_txt"
+
+//	provides	craft_ammo_shiva_HEI
+	require_AND
+	{
+		tech rs_craft_weapon_shiva
+	}
+	time		0
+	producetime	10
+
+	image_top	"techs/craft_ammo_shiva_2"
+}
+
 tech rs_craft_weapon_sparrowhawk
 {
-	type	craftweapon
+	type		craftweapon
 	up_chapter	crafts
-	name	"_Sparrowhawk AA Missile Rack"
+	name		"_\"Sparrowhawk\" AA Missile Rack"
 	// pre_description	"_craft_weapon_sparrowhawk_pre_txt"
 	description	"_craft_weapon_sparrowhawk_txt"
 
-	// FIXME
 //	provides	craft_weapon_sparrowhawk
 	require_AND { tech nothing }
-	time	0
+	time		0
+	producetime	1255
 
 	image_top	"techs/craft_weapon_sparrowhawk"
 }
 
+tech rs_craft_ammo_sparrowhawk
+{
+	type		craftweapon
+//	type		craftammo
+//	TODO: add code to parse craftammo -Zenerka 25.01.2007
+	up_chapter	crafts
+	name		"_\"Sparrowhawk\" Missile"
+	// pre_description	"_craft_ammo_sparrowhawk_pre_txt"
+	description	"_craft_ammo_sparrowhawk_txt"
+
+//	provides	craft_ammo_sparrowhawk
+	require_AND
+	{
+		tech rs_craft_weapon_sparrowhawk
+	}
+	time		0
+	producetime	200
+
+	image_top	"techs/craft_ammo_sparrowhawk"
+}
+
 tech rs_craft_weapon_tr20
 {
-	type	craftweapon
+	type		craftweapon
 	up_chapter	crafts
-	name	"_TR-20 Rocket Pod"
-	//  pre_description	"_craft_weapon_tr20_pre_txt"
+	name		"_TR-20 Rocket Pod"
+	// pre_description	"_craft_weapon_tr20_pre_txt"
 	description	"_craft_weapon_tr20_txt"
 
-	// FIXME
 //	provides	craft_weapon_tr20
 	require_AND { tech nothing }
-	time	0
+	time		0
+	producetime	1810
 
 	image_top	"techs/craft_weapon_tr20"
 }
 
+tech rs_craft_ammo_tr20
+{
+	type		craftweapon
+//	type		craftammo
+//	TODO: add code to parse craftammo -Zenerka 25.01.2007
+	up_chapter	crafts
+	name		"_TR-20 Rocket"
+	// pre_description	"_craft_ammo_tr20_pre_txt"
+	description	"_craft_ammo_tr20_txt"
+
+//	provides	craft_ammo_tr20
+	require_AND
+	{
+		tech rs_craft_weapon_tr20
+	}
+	time		0
+	producetime	250
+
+	image_top	"techs/craft_ammo_tr20"
+}
+
+// that entry is to be removed as soon as craftitem-related
+// code is ready :> -Zenerka 25.01.2007
 item craft_weapon_particle
 {
 	// dummy package to that we can link
@@ -2348,9 +2434,9 @@ item craft_weapon_particle
 
 tech rs_craft_weapon_particle
 {
-	type	craftweapon
+	type		craftweapon
 	up_chapter	crafts
-	name	"_Particle Beam Weapon"
+	name		"_Particle Beam Weapon"
 	pre_description	"_craft_weapon_particle_beam_pre_txt"
 	description	"_craft_weapon_particle_beam_txt"
 
@@ -2364,7 +2450,8 @@ tech rs_craft_weapon_particle
 		tech rs_craft_ufo_harvester_AND_craft_weapon_particle	// LOGIC tech - see there for more
 	}
 
-	time	100
+	time		100
+	producetime	2233
 
 	image_top	"techs/craft_weapon_particle"
 }
@@ -2379,13 +2466,12 @@ tech rs_craft_el_targeting
 	// pre_description	"_craft_electronics_targeting_pre_txt"
 	description	"_craft_electronics_targeting_txt"
 
-	// FIXME
 //	provides	craft_electronics_targeting
 	require_AND	{ tech nothing }
 	time		0
+	producetime	571
 	
 	image_top	"techs/craft_electronics_targeting"
-
 }
 
 tech rs_craft_el_fuelpod
@@ -2398,10 +2484,10 @@ tech rs_craft_el_fuelpod
 	// pre_description	"_craft_electronics_fuelpod_pre_txt"
 	description	"_craft_electronics_fuelpod_txt"
 
-	// FIXME
 //	provides	craft_electronics_fuelpod
 	require_AND	{ tech nothing }
 	time		0
+	producetime	400
 
 	image_top	"techs/craft_electronics_fuelpod"
 }
