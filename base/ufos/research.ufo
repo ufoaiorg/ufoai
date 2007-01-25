@@ -2258,20 +2258,22 @@ tech rs_ugv_triax
 // Craft Stuff
 //========================
 
-tech rs_craft_def_raven_ecm
+tech rs_craft_el_raven_ecm
 {
 	type	craftshield
+//	type	craftelectronics
+//	TODO: add code to parse craftelectronics -Zenerka 25.01.2007
 	up_chapter	crafts
 	name	"_Raven ECM Unit"
-	// pre_description	"_craft_shield_light_pre_txt"
-	description	"_craft_shield_light_txt"
+	// pre_description	"_craft_electronics_raven_pre_txt"
+	description	"_craft_electronics_raven_txt"
 
 	// FIXME
-	provides	light
+//	provides	craft_electronics_raven
 	require_AND { tech nothing }
 	time	0
 
-	image_top	"techs/craftshield_light"
+	image_top	"techs/craft_electronics_raven"
 }
 
 tech rs_craft_def_polymer_armour
@@ -2283,11 +2285,11 @@ tech rs_craft_def_polymer_armour
 	description	"_craft_shield_light_txt"
 
 	// FIXME
-	provides	light
+//	provides	craft_shield_polymer
 	require_AND { tech nothing }
 	time	0
 
-	image_top	"techs/craftshield_light"
+	image_top	"techs/craft_shield_light"
 }
 
 tech rs_craft_weapon_shiva
@@ -2299,7 +2301,7 @@ tech rs_craft_weapon_shiva
 	description	"_craft_weapon_flac_txt"
 
 	// FIXME
-	provides	assault
+//	provides	craft_weapon_shiva
 	require_AND { tech nothing }
 	time	0
 
@@ -2315,11 +2317,11 @@ tech rs_craft_weapon_sparrowhawk
 	description	"_craft_weapon_sparrowhawk_txt"
 
 	// FIXME
-	provides	assault
+//	provides	craft_weapon_sparrowhawk
 	require_AND { tech nothing }
 	time	0
 
-	image_top	"techs/craftweapon_sparrowhawk"
+	image_top	"techs/craft_weapon_sparrowhawk"
 }
 
 tech rs_craft_weapon_tr20
@@ -2331,20 +2333,20 @@ tech rs_craft_weapon_tr20
 	description	"_craft_weapon_tr20_txt"
 
 	// FIXME
-	provides	assault
+//	provides	craft_weapon_tr20
 	require_AND { tech nothing }
 	time	0
 
-	image_top	"techs/craftweapon_tr20"
+	image_top	"techs/craft_weapon_tr20"
 }
 
-item craft_weapon_particle_beam
+item craft_weapon_particle
 {
 	// dummy package to that we can link
 	weapon false
 }
 
-tech rs_craft_weapon_particle_beam
+tech rs_craft_weapon_particle
 {
 	type	craftweapon
 	up_chapter	crafts
@@ -2352,19 +2354,56 @@ tech rs_craft_weapon_particle_beam
 	pre_description	"_craft_weapon_particle_beam_pre_txt"
 	description	"_craft_weapon_particle_beam_txt"
 
-	provides	craft_weapon_particle_beam
+	provides	craft_weapon_particle
 
 	require_OR
 	{
 //		tech rs_craft_ufo_fighter
 //		tech rs_craft_ufo_harvester
-		tech rs_craft_ufo_fighter_AND_craft_weapon_particle_beam	// LOGIC tech - see there for more
-		tech rs_craft_ufo_harvester_AND_craft_weapon_particle_beam	// LOGIC tech - see there for more
+		tech rs_craft_ufo_fighter_AND_craft_weapon_particle	// LOGIC tech - see there for more
+		tech rs_craft_ufo_harvester_AND_craft_weapon_particle	// LOGIC tech - see there for more
 	}
 
 	time	100
 
-	image_top	"techs/craftweapon_particle_beam"
+	image_top	"techs/craft_weapon_particle"
+}
+
+tech rs_craft_el_targeting
+{
+	type		craftshield
+//	type		craftelectronics
+//	TODO: add code to parse craftelectronics -Zenerka 25.01.2007
+	up_chapter	crafts
+	name		"_Targeting Computer"
+	// pre_description	"_craft_electronics_targeting_pre_txt"
+	description	"_craft_electronics_targeting_txt"
+
+	// FIXME
+//	provides	craft_electronics_targeting
+	require_AND	{ tech nothing }
+	time		0
+	
+	image_top	"techs/craft_electronics_targeting"
+
+}
+
+tech rs_craft_el_fuelpod
+{
+	type		craftshield
+//	type		craftelectronics
+//	TODO: add code to parse craftelectronics -Zenerka 25.01.2007
+	up_chapter	crafts
+	name		"_Fuel Pod"
+	// pre_description	"_craft_electronics_fuelpod_pre_txt"
+	description	"_craft_electronics_fuelpod_txt"
+
+	// FIXME
+//	provides	craft_electronics_fuelpod
+	require_AND	{ tech nothing }
+	time		0
+
+	image_top	"techs/craft_electronics_fuelpod"
 }
 
 //========================
