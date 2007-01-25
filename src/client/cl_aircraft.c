@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 aircraft_t aircraft_samples[MAX_AIRCRAFT]; /* available aircraft types */
 int numAircraft_samples = 0; /* TODO: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
-
+static int airequipID = -1;
 #define AIRCRAFT_RADAR_RANGE	20
 
 /* =========================================================== */
@@ -150,6 +150,14 @@ void CL_AircraftInit(void)
 			air_samp->shield = RS_GetTechByID(air_samp->shield_string);
 		} else
 			 air_samp->shield = NULL;
+
+		if (*air_samp->item_string) {
+			/* link with tech pointer */
+			Com_DPrintf("....item: %s\n", air_samp->item_string);
+			air_samp->item = RS_GetTechByID(air_samp->item_string);
+		} else
+			 air_samp->item = NULL;
+
 		air_samp->homebase = &gd.bases[air_samp->idxBase]; /* TODO: looks like a nonsense */
 		air_samp->teamSize = &gd.bases[air_samp->idxBase].teamNum[air_samp->idxInBase];
 	}
@@ -374,12 +382,14 @@ void CL_AircraftSelect(void)
 	Cvar_Set("mn_aircraft_shield", aircraft->shield ? aircraft->shield->name : "");
 	Cvar_Set("mn_aircraft_weapon_img", aircraft->weapon ? aircraft->weapon->image_top : "menu/airequip_no_weapon");
 	Cvar_Set("mn_aircraft_shield_img", aircraft->shield ? aircraft->shield->image_top : "menu/airequip_no_shield");
+	Cvar_Set("mn_aircraft_item_img", aircraft->item ? aircraft->item->image_top : "menu/airequip_no_item");
 
 	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\n"), aircraft->speed);
 	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->fuelSize / 1000), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), aircraft->weapon ? _(aircraft->weapon->name) : _("None")), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Shield:\t%s"), aircraft->shield ? _(aircraft->shield->name) : _("None")), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Shield:\t%s\n"), aircraft->shield ? _(aircraft->shield->name) : _("None")), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Equipment:\t%s"), aircraft->item ? _(aircraft->item->name) : _("None")), sizeof(aircraftInfo));
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 
@@ -658,11 +668,20 @@ void CL_CampaignRunAircraft(int dt)
  */
 void CL_AircraftEquipmenuMenuInit_f(void)
 {
-	static char bufferShields[1024];
-	static char bufferWeapons[1024];
+	static char buffer[1024];
 	technology_t **list;
+	int type;
 	menuNode_t *node;
 	aircraft_t *aircraft;
+
+	if (Cmd_Argc() != 2) {
+		if (airequipID == -1) {
+			Com_Printf("Usage airequip_init <num>\n");
+			return;
+		} else {
+			type = airequipID;
+		}
+	}
 
 	node = MN_GetNodeFromCurrentMenu("aircraftequip");
 
@@ -683,27 +702,34 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 	VectorCopy(aircraft->anglesEquip, node->angles);
 	rotateAngles = aircraft->angles;
 
-	/* shields */
-	Com_sprintf(bufferShields, sizeof(bufferShields), _("None\n"));
-	list = RS_GetTechsByType(RS_CRAFTSHIELD);
-	while (*list) {
-		/*Com_Printf("%s\n", (*list)->id);*/
-		if (RS_IsResearched_ptr(*list))
-			Q_strcat(bufferShields, va("%s\n", _((*list)->name)), sizeof(bufferShields) );
-		list++;
-	}
-	menuText[TEXT_LIST] = bufferShields;
+	type = atoi(Cmd_Argv(1));
 
-	/* weapons */
-	Com_sprintf(bufferWeapons, sizeof(bufferWeapons), _("None\n"));
-	list = RS_GetTechsByType(RS_CRAFTWEAPON);
+	Com_sprintf(buffer, sizeof(buffer), _("None\n"));
+	switch (type) {
+	case 1:
+		/* shields */
+		list = RS_GetTechsByType(RS_CRAFTSHIELD);
+		airequipID = RS_CRAFTSHIELD;
+		break;
+	case 2:
+		/* items */
+		list = RS_GetTechsByType(RS_CRAFTITEM);
+		airequipID = RS_CRAFTITEM;
+		break;
+	default:
+		/* weapons */
+		list = RS_GetTechsByType(RS_CRAFTWEAPON);
+		airequipID = RS_CRAFTWEAPON;
+		break;
+	}
+
 	while (*list) {
 		/*Com_Printf("%s\n", (*list)->id);*/
 		if (RS_IsResearched_ptr(*list))
-			Q_strcat(bufferWeapons, va("%s\n", _((*list)->name)), sizeof(bufferWeapons) );
+			Q_strcat(buffer, va("%s\n", _((*list)->name)), sizeof(buffer) );
 		list++;
 	}
-	menuText[TEXT_AIRCRAFT_LIST] = bufferWeapons;
+	menuText[TEXT_LIST] = buffer;
 
 	/* shield / weapon description */
 	menuText[TEXT_STANDARD] = NULL;
@@ -713,18 +739,18 @@ void CL_AircraftEquipmenuMenuInit_f(void)
  * @brief Assigns the weapon to current selected aircraft when clicked on the list
  * @sa CL_AircraftEquipmenuMenuInit_f
  */
-void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
+void CL_AircraftEquipmenuMenuClick_f (void)
 {
 	aircraft_t *aircraft;
 	int num;
-	static char weaponDesc[512];
+	static char desc[512];
 	technology_t **list;
 
-	if ( baseCurrent->aircraftCurrent < 0 )
+	if (baseCurrent->aircraftCurrent < 0 || airequipID == -1)
 		return;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: airequip_weapons_click <arg>\n");
+		Com_Printf("Usage: airequip_list_click <arg>\n");
 		return;
 	}
 
@@ -732,22 +758,48 @@ void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 	num = atoi(Cmd_Argv(1));
 
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	if ( num < 1 ) {
-		Com_DPrintf("Reset the aircraft weapon\n");
-		aircraft->weapon = NULL;
-		Com_sprintf(weaponDesc, sizeof(weaponDesc), _("No weapon assigned"));
+	if (num < 1) {
+		switch (airequipID) {
+		case RS_CRAFTWEAPON:
+			Com_sprintf(desc, sizeof(desc), _("No weapon assigned"));
+			aircraft->weapon = NULL;
+			break;
+		case RS_CRAFTITEM:
+			Com_sprintf(desc, sizeof(desc), _("No item assigned"));
+			aircraft->item = NULL;
+			break;
+		case RS_CRAFTSHIELD:
+			Com_sprintf(desc, sizeof(desc), _("No shield assigned"));
+			aircraft->shield = NULL;
+			break;
+		}
 		CL_AircraftSelect();
 	} else {
-		list = RS_GetTechsByType(RS_CRAFTWEAPON);
+		list = RS_GetTechsByType(airequipID);
 		/* to prevent overflows we go through the list instead of address it directly */
 		while (*list) {
 			if (RS_IsResearched_ptr(*list))
 				num--;
 			/* found it */
 			if (num <= 0) {
-				aircraft->weapon = *list;
-				Q_strncpyz(aircraft->weapon_string, (*list)->id, MAX_VAR);
-				Com_sprintf(weaponDesc, sizeof(weaponDesc), (*list)->name);
+				switch (airequipID) {
+				case RS_CRAFTWEAPON:
+					aircraft->weapon = *list;
+					Q_strncpyz(aircraft->weapon_string, (*list)->id, MAX_VAR);
+					aircraft->weapon = NULL;
+					break;
+				case RS_CRAFTITEM:
+					aircraft->item = *list;
+					Q_strncpyz(aircraft->item_string, (*list)->id, MAX_VAR);
+					aircraft->item = NULL;
+					break;
+				case RS_CRAFTSHIELD:
+					aircraft->shield = *list;
+					Q_strncpyz(aircraft->shield_string, (*list)->id, MAX_VAR);
+					aircraft->shield = NULL;
+					break;
+				}
+				Com_sprintf(desc, sizeof(desc), (*list)->name);
 				CL_AircraftSelect();
 				CL_AircraftEquipmenuMenuInit_f();
 				break;
@@ -755,57 +807,7 @@ void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 			list++;
 		}
 	}
-	menuText[TEXT_STANDARD] = weaponDesc;
-}
-
-/**
- * @brief Asseigns the shield to current selected aircraft when clicked on the list
- * @sa CL_AircraftEquipmenuMenuInit_f
- */
-void CL_AircraftEquipmenuMenuShieldsClick_f(void)
-{
-	aircraft_t *aircraft;
-	int num;
-	static char shieldDesc[512];
-	technology_t **list;
-
-	if ( baseCurrent->aircraftCurrent < 0 )
-		return;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: airequip_shields_click <arg>\n");
-		return;
-	}
-
-	/* which shield? */
-	num = atoi(Cmd_Argv(1));
-
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-
-	if ( num < 1 ) {
-		Com_DPrintf("Reset the aircraft shield\n");
-		aircraft->shield = NULL;
-		Com_sprintf(shieldDesc, sizeof(shieldDesc), _("No shield assigned"));
-		CL_AircraftSelect();
-	} else {
-		list = RS_GetTechsByType(RS_CRAFTSHIELD);
-		/* to prevent overflows we go through the list instead of address it directly */
-		while (*list) {
-			if (RS_IsResearched_ptr(*list))
-				num--;
-			/* found it */
-			if (num <= 0) {
-				aircraft->shield = *list;
-				Q_strncpyz(aircraft->shield_string, (*list)->id, MAX_VAR);
-				Com_sprintf(shieldDesc, sizeof(shieldDesc), (*list)->name);
-				CL_AircraftSelect();
-				CL_AircraftEquipmenuMenuInit_f();
-				break;
-			}
-			list++;
-		}
-	}
-	menuText[TEXT_STANDARD] = shieldDesc;
+	menuText[TEXT_STANDARD] = desc;
 }
 
 /**
@@ -893,6 +895,8 @@ static value_t aircraft_vals[] = {
 	{"weapon", V_STRING, offsetof(aircraft_t, weapon_string)}
 	,
 	{"shield", V_STRING, offsetof(aircraft_t, shield_string)}
+	,
+	{"item", V_STRING, offsetof(aircraft_t, item_string)}
 	,
 
 	{"model", V_STRING, offsetof(aircraft_t, model)}

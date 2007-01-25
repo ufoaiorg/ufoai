@@ -400,22 +400,6 @@ menu aircraft_equip
 		size	"415 728"
 //		bgcolor	"1 1 1 0.5"
 	}
-	pic aircraftshield
-	{
-		tooltip	"_Shield"
-		pos	"40 40"
-		size	"128 128"
-		image "*cvar mn_aircraft_shield_img"
-		click
-	}
-	pic aircraftweapon
-	{
-		tooltip	"_Weapon"
-		pos	"267 40"
-		size	"128 128"
-		image "*cvar mn_aircraft_weapon_img"
-		click
-	}
 	string airequip_available
 	{
 		string	"_Available equipment:"
@@ -423,6 +407,7 @@ menu aircraft_equip
 		font	f_big
 		align	uc
 	}
+
 	text airequip_selected_description
 	{
 		pos	"474 474"
@@ -430,26 +415,71 @@ menu aircraft_equip
 		format	"20 0"
 //		bgcolor	"1 1 1 0.5"
 	}
-	text airequip_shields
+
+	pic airequip_button_weapons
 	{
-		pos	"474 134"
-		size	"256 300"
+		tooltip	"_Weapons"
+		mousefx	true
+		pos		"490 4"
+		image	menu/button_blue
+		texl	"0 0"
+		texh	"128 52"
+		click	{ cmd "airequip_init 0;"  }
+	}
+	string airequip_button_weapons_str
+	{
+		string "_Weapons"
+		pos		"554 20"
+		align	uc
+	}
+
+	pic airequip_button_shields
+	{
+		tooltip	"_Shields"
+		mousefx	true
+		pos		"670 4"
+		image	menu/button_blue
+		texl	"0 0"
+		texh	"128 52"
+		click	{ cmd "airequip_init 1;"  }
+	}
+	string airequip_button_shields_str
+	{
+		string "_Shields"
+		pos		"734 20"
+		align	uc
+	}
+
+	pic airequip_button_items
+	{
+		tooltip	"_Items"
+		mousefx	true
+		pos		"850 4"
+		image	menu/button_blue
+		texl	"0 0"
+		texh	"128 52"
+		click	{ cmd "airequip_init 2;"  }
+	}
+	string airequip_button_items_str
+	{
+		string "_Items"
+		pos		"914 20"
+		align	uc
+	}
+
+	text airequip_list
+	{
+		pos	"476 134"
+		size	"252 300"
 //		bgcolor	"1 1 1 0.5"
 		format	"20 0"
-		num	1
+		wheel
+		height	"15"
+		num 1
 		mousefx	true
 		click
 	}
-	text airequip_weapons
-	{
-		pos	"742 134"
-		size	"260 300"
-//		bgcolor	"1 1 1 0.5"
-		format	"20 0"
-		num	9
-		mousefx	true
-		click
-	}
+
 	pic airequip_button_leave
 	{
 		tooltip	"_Done"
@@ -460,11 +490,12 @@ menu aircraft_equip
 		texh	"64 37"
 		click	{ cmd "mn_pop"  }
 	}
+
 	text aircraft_description
 	{
 		pos	"474 665"
 		size	"530 85"
-		format	"20 0"
+		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
 		num 11
 	}
@@ -475,6 +506,6 @@ menu aircraft_equip
 
 	func init
 	{
-		cmd "airequip_init"
+		cmd "airequip_init 0"
 	}
 }

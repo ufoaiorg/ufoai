@@ -394,10 +394,11 @@ void RS_InitTree(void)
 
 		/* Search in correct data/.ufo */
 		switch (tech->type) {
+		case RS_CRAFTITEM:
 		case RS_CRAFTWEAPON:
 		case RS_CRAFTSHIELD:
 			if (!*tech->name)
-				Com_DPrintf("RS_InitTree: \"%s\" A type craftshield or craftweapon item needs to have a 'name\txxx' defined.", tech->id);
+				Com_DPrintf("RS_InitTree: \"%s\" A type craftshield, craftitem or craftweapon item needs to have a 'name\txxx' defined.", tech->id);
 			break;
 		case RS_NEWS:
 			if (!*tech->name)
@@ -1402,6 +1403,8 @@ void RS_ParseTechnologies(char *id, char **text)
 				tech->type = RS_CRAFTWEAPON;
 			else if (!Q_strncmp(token, "craftshield", MAX_VAR))
 				tech->type = RS_CRAFTSHIELD;
+			else if (!Q_strncmp(token, "craftitem", MAX_VAR))
+				tech->type = RS_CRAFTITEM;
 			else if (!Q_strncmp(token, "building", MAX_VAR))
 				tech->type = RS_BUILDING;
 			else if (!Q_strncmp(token, "alien", MAX_VAR))

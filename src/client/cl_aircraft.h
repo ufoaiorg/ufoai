@@ -89,6 +89,8 @@ typedef struct aircraft_s {
 	technology_t *weapon;
 	char shield_string[MAX_VAR];
 	technology_t *shield;
+	char item_string[MAX_VAR];
+	technology_t *item;
 	mapline_t route;
 	void *homebase;				/**< pointer to homebase */
 	void *transferBase;				/**< pointer to the base we are transfering equipment to */
@@ -117,8 +119,7 @@ void MN_NextAircraft_f(void);
 void MN_PrevAircraft_f(void);
 void CL_AircraftReturnToBase_f(void);
 void CL_AircraftEquipmenuMenuInit_f(void);
-void CL_AircraftEquipmenuMenuWeaponsClick_f(void);
-void CL_AircraftEquipmenuMenuShieldsClick_f(void);
+void CL_AircraftEquipmenuMenuClick_f(void);
 char *CL_AircraftStatusToName(aircraft_t * aircraft);
 qboolean CL_IsAircraftInBase(aircraft_t * aircraft);
 void CL_AircraftInit(void);

@@ -51,6 +51,7 @@ typedef enum researchType_s {
 	RS_CRAFT,
 	RS_CRAFTWEAPON,
 	RS_CRAFTSHIELD,
+	RS_CRAFTITEM,
 	RS_BUILDING,
 	RS_ALIEN,
 	RS_UGV,

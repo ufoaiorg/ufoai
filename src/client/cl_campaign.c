@@ -1769,6 +1769,7 @@ void CL_UpdatePointersInGlobalData(void)
 			aircraft->homebase = &gd.bases[aircraft->idxBase];
 			aircraft->shield = RS_GetTechByID(aircraft->shield_string);
 			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
+			aircraft->item = RS_GetTechByID(aircraft->item_string);
 		}
 
 		/* initalize team to null */
@@ -3790,9 +3791,7 @@ static const cmdList_t game_commands[] = {
 	,
 	{"airequip_init", CL_AircraftEquipmenuMenuInit_f, NULL}
 	,
-	{"airequip_weapons_click", CL_AircraftEquipmenuMenuWeaponsClick_f, NULL}
-	,
-	{"airequip_shields_click", CL_AircraftEquipmenuMenuShieldsClick_f, NULL}
+	{"airequip_list_click", CL_AircraftEquipmenuMenuClick_f, NULL}
 	,
 	{"mn_next_aircraft", MN_NextAircraft_f, NULL}
 	,
