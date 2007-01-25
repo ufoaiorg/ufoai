@@ -2297,8 +2297,8 @@ tech rs_craft_weapon_shiva
 	type	craftweapon
 	up_chapter	crafts
 	name	"_SHIVA Rotary Cannon"
-	// pre_description	"_craft_weapon_flac_pre_txt"
-	description	"_craft_weapon_flac_txt"
+	// pre_description	"_craft_weapon_shiva_pre_txt"
+	description	"_craft_weapon_shiva_txt"
 
 	// FIXME
 //	provides	craft_weapon_shiva
@@ -2450,7 +2450,7 @@ tech news_phalanx_mumbai_aftermath
 // Concept of using dummy techs for extended requirements (they should not be displayed anywhere - thus the "logic" type)
 // These entries can later be moved in front of the rs_craft_weapon_particle_beam entry.
 
-tech rs_craft_ufo_fighter_AND_craft_weapon_particle_beam
+tech rs_craft_ufo_fighter_AND_craft_weapon_particle
 {
 	type	logic
 	name	"LOGIC:Fighter AND 1beamweapon"
@@ -2461,7 +2461,7 @@ tech rs_craft_ufo_fighter_AND_craft_weapon_particle_beam
 	}
 }
 
-tech rs_craft_ufo_harvester_AND_craft_weapon_particle_beam
+tech rs_craft_ufo_harvester_AND_craft_weapon_particle
 {
 	type	logic
 	name	"LOGIC:Harvester AND 1beamweapon"
