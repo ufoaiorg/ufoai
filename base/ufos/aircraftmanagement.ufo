@@ -1,0 +1,150 @@
+// Every item designed for use in aircraft should be defined as craftitem
+//
+// craftitem of type: craftweapon has weight parameter, which is as follows:
+//	light	- for light weapons
+//	medium	- for medium weapons
+//	heavy	- for heavy weapons
+//
+// other parameters are as follows:
+//	price		- cost of buying one item
+//	model		- model path
+//	weapon		- only for type: ammo, defines which weapon uses this ammo
+//
+// aircraft parameters which can get influenced by craft equipement:
+//	range - the range of the aircraft, which tells how far aircraft can fly
+//	wrange - the range of the weapon, which tells the minimum distance of opening fire
+//	speed - the speed of the aircraft, which tells how fast the aircraft is
+//	shield - the parameter of aircraft armour, which tells aircraft's protection
+//	ecm - the parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy
+//	damage - the parameter of weapon power, which tells how much damage such aircraft can do
+//	accuracy - the parameter of weapon accuracy, the bigger, the bigger possibility to hit an enemy
+// understanding the values:
+// shield 1.50 means: the shield of the aircraft is 50% stronger
+// shield +10 means: the shield of the aircraft is stronger by 10 points 
+// speed 0.75 means: the aircraft is 25% slower
+// damage 1.35 means: the aircraft weapon power is 35% stronger
+// damage +40 means: the aircraft weapon power is stronger by 40 points
+//
+
+craftitem craft_weapon_shiva
+{
+	tech		rs_craft_weapon_shiva
+        model           aircraft/shiva/shiva
+	weight		light
+        price           34000
+}
+
+craftitem craft_ammo_shiva_API
+{
+	tech		rs_craft_ammo_shiva_1
+	model		aircraft/shiva_ammo1/shiva_ammo1
+	weapon		craft_weapon_shiva
+	price		100
+
+	damage	+15
+	wrange	30
+}
+
+craftitem craft_ammo_shiva_HEI
+{
+	tech		rs_craft_ammo_shiva_2
+	model		aircraft/shiva_ammo2/shiva_ammo2
+	weapon		craft_weapon_shiva
+	price		100
+	
+	damage	+18
+	wrange  35
+}
+
+craftitem craft_electronics_raven
+{
+	tech		rs_craft_electronics_raven
+	model		aircraft/raven/raven
+	price		12345
+
+	ecm		1.25
+}
+
+craftitem craft_weapon_sparrowhawk
+{
+	tech		rs_craft_weapon_sparrowhawk
+	model		aircraft/sparrowhawk/sparrowhawk
+	weight		light
+	price		12321
+
+	speed		-10
+}
+
+craftitem craft_ammo_sparrowhawk
+{
+	tech		rs_craft_ammo_sparrowhawk
+	model		aircraft/sparrowhawk_ammo/sparrowhawk_ammo
+	weapon		craft_weapon_sparrowhawk
+	price		250
+
+	damage	+20
+	wrange	50
+}
+
+craftitem craft_weapon_tr20
+{
+	tech		rs_craft_weapon_tr20
+	model		aircraft/tr20/tr20
+	weight		medium
+	price		19998
+	
+	speed		-14
+}
+
+craftitem craft_ammo_tr20
+{
+	tech		rs_craft_ammo_tr20
+	model		aircraft/tr20_ammo/tr20_ammo
+	weapon		craft_weapon_tr20
+	price		310
+
+	damage	+28
+	wrange	42
+}
+
+craftitem craft_weapon_particle_beam
+{
+	tech		rs_craft_weapon_particle
+	model		aircraft/particle_beam/particle_beam
+	weight		medium
+	price		25252
+
+	damage	+35
+	speed	0.75
+	wrange	70
+}
+
+craftitem craft_electronics_targeting
+{
+	tech		rs_craft_electronics_targeting
+	model		aircraft/targeting_comp/targeting_comp
+	price		33333
+
+	accuracy	1.50
+}
+
+craftitem craft_electronics_fuelpod
+{
+	tech		rs_craft_electronics_fuelpod
+	model		aircraft/fuelpod/fuelpod
+	price		8500
+
+	range		+100
+	speed		0.75
+}
+
+craftitem craft_shield_polymer
+{
+	tech		rs_craft_shield_polymer
+	model		aircraft/light/light
+	price		16000
+
+	shield		1.25
+}
+
+
