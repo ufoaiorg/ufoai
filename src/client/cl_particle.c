@@ -45,6 +45,7 @@ typedef struct ptlDef_s {
 
 /* =========================================================== */
 
+/** @brief particle functions enums - see pf_strings and pf_values */
 typedef enum pf_s {
 	PF_INIT,
 	PF_RUN,
@@ -54,6 +55,7 @@ typedef enum pf_s {
 	PF_NUM_PTLFUNCS
 } pf_t;
 
+/** @brief valid particle functions - see pf_t and pf_values */
 static char *pf_strings[PF_NUM_PTLFUNCS] = {
 	"init",
 	"run",
@@ -61,6 +63,7 @@ static char *pf_strings[PF_NUM_PTLFUNCS] = {
 	"round"
 };
 
+/** @brief particle functions offsets - see pf_strings and pf_t */
 static size_t pf_values[PF_NUM_PTLFUNCS] = {
 	offsetof(ptlDef_t, init),
 	offsetof(ptlDef_t, run),
@@ -68,7 +71,7 @@ static size_t pf_values[PF_NUM_PTLFUNCS] = {
 	offsetof(ptlDef_t, round)
 };
 
-
+/** @brief particle commands - see pc_strings */
 typedef enum pc_s {
 	PC_END,
 
@@ -85,6 +88,7 @@ typedef enum pc_s {
 	PC_NUM_PTLCMDS
 } pc_t;
 
+/** @brief particle commands - see pc_t */
 static char *pc_strings[PC_NUM_PTLCMDS] = {
 	"end",
 
@@ -103,6 +107,7 @@ static char *pc_strings[PC_NUM_PTLCMDS] = {
 #define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
 #define ONLY		(1<<31)
 
+/** @brief particle commands parameter and types */
 static int pc_types[PC_NUM_PTLCMDS] = {
 	0,
 
@@ -117,6 +122,7 @@ static int pc_types[PC_NUM_PTLCMDS] = {
 	ONLY | V_STRING, ONLY | V_STRING, ONLY | V_STRING
 };
 
+/** @brief particle script values */
 static value_t pps[] = {
 	{"image", V_STRING, offsetof(ptl_t, pic)},
 	{"model", V_STRING, offsetof(ptl_t, model)},
@@ -153,6 +159,7 @@ static value_t pps[] = {
 	{NULL, 0, 0}
 };
 
+/** @brief particle art type */
 typedef enum art_s {
 	ART_PIC,
 	ART_MODEL
@@ -1064,7 +1071,7 @@ int CL_GetParticleIndex(char *name)
 }
 
 /**
- * @brief
+ * @brief Parses particle definitions from UFO-script files
  */
 void CL_ParseParticle(char *name, char **text)
 {

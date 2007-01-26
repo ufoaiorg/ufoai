@@ -29,6 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 aircraft_t aircraft_samples[MAX_AIRCRAFT]; /* available aircraft types */
 int numAircraft_samples = 0; /* TODO: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
 static int airequipID = -1;
+static int numAircraftItems = 0;
+aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];
+
 #define AIRCRAFT_RADAR_RANGE	20
 
 /* =========================================================== */
@@ -863,6 +866,94 @@ extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission
 	return qtrue;
 }
 
+/** @brief valid aircraft items (craftitem) definition values from script files */
+static value_t aircraftitems_vals[] = {
+	{"tech", V_TRANSLATION_STRING, offsetof(aircraftItem_t, tech)}
+	,
+	{"speed", V_FLOAT, offsetof(aircraftItem_t, speed)}
+	,
+	{"shield", V_FLOAT, offsetof(aircraftItem_t, shield)}
+	,
+	{"price", V_INT, offsetof(aircraftItem_t, price)}
+	,
+	{"wrange", V_FLOAT, offsetof(aircraftItem_t, weaponRange)}
+	,
+	{"range", V_FLOAT, offsetof(aircraftItem_t, range)}
+	,
+	{"damage", V_FLOAT, offsetof(aircraftItem_t, damage)}
+	,
+	{"accuracy", V_FLOAT, offsetof(aircraftItem_t, accuracy)}
+	,
+	{"ecm", V_FLOAT, offsetof(aircraftItem_t, ecm)}
+	,
+	{"weight", V_STRING, offsetof(aircraftItem_t, weight)}
+	,
+	{"weapon", V_STRING, offsetof(aircraftItem_t, weapon)}
+	,
+
+	{NULL, 0, 0}
+};
+
+/**
+ * @brief Parses all aircraft items that are defined in our UFO-scripts
+ * @sa CL_ParseClientData
+ */
+extern void CL_ParseAircraftItem (char *name, char **text)
+{
+	char *errhead = "CL_ParseAircraftItem: unexptected end of file (aircraft ";
+	aircraftItem_t *airItem;
+	value_t *vp;
+	char *token;
+
+	if (numAircraft_samples >= MAX_AIRCRAFTITEMS) {
+		Com_Printf("CL_ParseAircraftItem: too many craftitem definitions; def \"%s\" ignored\n", name);
+		return;
+	}
+
+	/* initialize the menu */
+	airItem = &aircraftItems[numAircraftItems++];
+	memset(airItem, 0, sizeof(aircraftItem_t));
+
+	Com_DPrintf("...found craftitem %s\n", name);
+	airItem->idx = numAircraftItems++;
+	Q_strncpyz(airItem->id, name, MAX_VAR);
+
+	/* get it's body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("CL_ParseAircraftItem: craftitem def \"%s\" without body ignored\n", name);
+		numAircraftItems--;
+		return;
+	}
+
+	do {
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		/* check for some standard values */
+		for (vp = aircraftitems_vals; vp->string; vp++)
+			if (!Q_strcmp(token, vp->string)) {
+				/* found a definition */
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				Com_ParseValue(airItem, token, vp->type, vp->ofs);
+				break;
+			}
+
+		if (!vp->string) {
+			Com_Printf("CL_ParseAircraftItem: unknown token \"%s\" ignored (craftitem %s)\n", token, name);
+			COM_EParse(text, errhead, name);
+		}
+	} while (*text);
+}
+
+/** @brief valid aircraft definition values from script files */
 static value_t aircraft_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(aircraft_t, name)}
 	,
@@ -917,7 +1008,7 @@ static value_t aircraft_vals[] = {
  * @sa CL_ParseClientData
  * @note parses the aircraft into our aircraft_sample array to use as reference
  */
-void CL_ParseAircraft(char *name, char **text)
+extern void CL_ParseAircraft(char *name, char **text)
 {
 	char *errhead = "CL_ParseAircraft: unexptected end of file (aircraft ";
 	aircraft_t *air_samp;

@@ -1651,6 +1651,8 @@ void CL_ParseClientData (char *type, char *name, char **text)
 		CL_ParseSequence(name, text);
 	else if (!Q_strncmp(type, "aircraft", 8))
 		CL_ParseAircraft(name, text);
+	else if (!Q_strncmp(type, "craftitem", 8))
+		CL_ParseAircraftItem(name, text);
 	else if (!Q_strncmp(type, "campaign", 8))
 		CL_ParseCampaign(name, text);
 	else if (!Q_strncmp(type, "ugv", 3))

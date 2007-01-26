@@ -47,6 +47,25 @@ typedef enum {
 
 struct actMis_s;
 
+#define MAX_AIRCRAFTITEMS 64
+
+/** @brief parsed craftitem from script files */
+typedef struct aircraftItem_s {
+	char id[MAX_VAR];			/**< from script files */
+	int idx;					/**< self link */
+	char tech[MAX_VAR];			/**< tech id */
+	char weapon[MAX_VAR];		/**< if this is ammo there must be a weapon */
+	int weight;
+	float damage;
+	float range;
+	float weaponRange;
+	float speed;
+	float shield;
+	float accuracy;
+	float ecm;
+	int price;
+} aircraftItem_t;
+
 /** @brief An aircraft with all it's data */
 typedef struct aircraft_s {
 	int idx;					/**< unique id */
@@ -139,6 +158,7 @@ extern aircraft_t* CL_AircraftGetFromIdx(int idx);
 extern void CP_GetRandomPosForAircraft(float *pos);
 extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void CL_ParseAircraft(char *name, char **text);
+void CL_ParseAircraftItem(char *name, char **text);
 extern void CL_AircraftReturnToBase(aircraft_t *aircraft);
 extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
 extern void CL_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);
