@@ -484,6 +484,23 @@ tech rs_weapon_grenl_plasma_ammo
 	producetime	1
 }
 
+tech rs_weapon_laserammo
+{
+	type		weapon
+	up_chapter	equipment
+	description	"_laser_ammo_txt"
+	pre_description	"_laser_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_laser
+		tech rs_damage_laser
+	}
+//	provides	laserammo
+	time		1200
+	producetime	3
+}
+
 tech rs_weapon_heavylaser
 {
 	type	weapon
