@@ -3589,6 +3589,21 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 		((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, token);
 		return ALIGN(sizeof(menuDepends_t));
 
+	case V_RELABS:
+		if (token[0] == '-' || token[0] == '+') {
+			if (abs(atof(token + 1)) <= 2.0f)
+				Com_Printf("Com_ParseValue: a V_RELABS (absolute) value should always be bigger than +/-2.0\n");
+			if (token[0] == '-')
+				*(float *) b = atof(token+1) * (-1);
+			else
+				*(float *) b = atof(token+1);
+		} else {
+			if (abs(atof(token)) > 2.0f)
+				Com_Printf("Com_ParseValue: a V_RELABS (relative) value should only be between 0.00..1 and 2.0\n");
+			*(float *) b = atof(token);
+		}
+		return ALIGN(sizeof(float));
+
 	default:
 		Sys_Error("Com_ParseValue: unknown value type\n");
 		return -1;
@@ -3790,6 +3805,18 @@ char *Com_ValueToStr(void *base, int type, int ofs)
 
 	case V_IF:
 		return "";
+
+	case V_RELABS:
+		/* absolute value */
+		if (*(float *) b > 2.0)
+			Com_sprintf(valuestr, MAX_VAR, "+%.2f", *(float *) b);
+		/* absolute value */
+		else if (*(float *) b < 2.0)
+			Com_sprintf(valuestr, MAX_VAR, "-%.2f", *(float *) b);
+		/* relative value */
+		else
+			Com_sprintf(valuestr, MAX_VAR, "%.2f", *(float *) b);
+		return valuestr;
 
 	default:
 		Sys_Error("Com_ParseValue: unknown value type %i\n", type);

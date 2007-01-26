@@ -721,8 +721,8 @@ typedef enum {
 	V_COLOR,
 	V_RGBA,
 	V_STRING,
-	V_TRANSLATION_STRING = 10,       /* translate via gettext */
-	V_TRANSLATION2_STRING,      /* remove _ but don't translate */
+	V_TRANSLATION_STRING = 10,	/**< translate via gettext */
+	V_TRANSLATION2_STRING,		/**< remove _ but don't translate */
 	V_LONGSTRING,
 	V_POINTER,
 	V_ALIGN,
@@ -734,6 +734,7 @@ typedef enum {
 	V_DMGTYPE = 20,
 	V_DATE,
 	V_IF,
+	V_RELABS,					/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
 
 	V_NUM_TYPES
 } value_types;

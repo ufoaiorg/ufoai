@@ -872,19 +872,19 @@ static value_t aircraftitems_vals[] = {
 	,
 	{"speed", V_FLOAT, offsetof(aircraftItem_t, speed)}
 	,
-	{"shield", V_FLOAT, offsetof(aircraftItem_t, shield)}
-	,
 	{"price", V_INT, offsetof(aircraftItem_t, price)}
 	,
-	{"wrange", V_FLOAT, offsetof(aircraftItem_t, weaponRange)}
+	{"shield", V_RELABS, offsetof(aircraftItem_t, shield)}
 	,
-	{"range", V_FLOAT, offsetof(aircraftItem_t, range)}
+	{"wrange", V_RELABS, offsetof(aircraftItem_t, weaponRange)}
 	,
-	{"damage", V_FLOAT, offsetof(aircraftItem_t, damage)}
+	{"range", V_RELABS, offsetof(aircraftItem_t, range)}
 	,
-	{"accuracy", V_FLOAT, offsetof(aircraftItem_t, accuracy)}
+	{"damage", V_RELABS, offsetof(aircraftItem_t, damage)}
 	,
-	{"ecm", V_FLOAT, offsetof(aircraftItem_t, ecm)}
+	{"accuracy", V_RELABS, offsetof(aircraftItem_t, accuracy)}
+	,
+	{"ecm", V_RELABS, offsetof(aircraftItem_t, ecm)}
 	,
 	{"weight", V_STRING, offsetof(aircraftItem_t, weight)}
 	,
