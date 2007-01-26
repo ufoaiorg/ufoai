@@ -880,9 +880,9 @@ static value_t aircraftitems_vals[] = {
 	,
 	{"range", V_RELABS, offsetof(aircraftItem_t, range)}
 	,
-	{"damage", V_RELABS, offsetof(aircraftItem_t, damage)}
+	{"damage", V_INT, offsetof(aircraftItem_t, damage)}
 	,
-	{"accuracy", V_RELABS, offsetof(aircraftItem_t, accuracy)}
+	{"accuracy", V_INT, offsetof(aircraftItem_t, accuracy)}
 	,
 	{"ecm", V_RELABS, offsetof(aircraftItem_t, ecm)}
 	,
