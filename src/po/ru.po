@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-01-21 18:26+0100\n"
+"POT-Creation-Date: 2007-01-26 09:19+0100\n"
 "PO-Revision-Date: 2006-12-23 20:30+0200\n"
 "Last-Translator: Игорь <zsx@ua.fm>\n"
 "Language-Team: \n"
@@ -349,24 +349,24 @@ msgstr "Крест"
 msgid "Coin"
 msgstr "Орден"
 
-#: ../base/ufos/medals.ufo:30 client/cl_employee.c:120
+#: ../base/ufos/medals.ufo:30 client/cl_employee.c:183
 #, fuzzy
 msgid "Scientist"
 msgstr "Ученый"
 
-#: ../base/ufos/medals.ufo:37 client/cl_employee.c:124
+#: ../base/ufos/medals.ufo:37 client/cl_employee.c:187
 #, fuzzy
 msgid "Medic"
 msgstr "Врач"
 
 # автоматичекая боевая машина
 #: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1525
-#: ../base/ufos/team_humans.ufo:1545 client/cl_employee.c:126
+#: ../base/ufos/team_humans.ufo:1545 client/cl_employee.c:189
 #, fuzzy
 msgid "UGV"
 msgstr "АБМ"
 
-#: ../base/ufos/medals.ufo:51 client/cl_employee.c:122
+#: ../base/ufos/medals.ufo:51 client/cl_employee.c:185
 #, fuzzy
 msgid "Worker"
 msgstr "Рабочий"
@@ -442,7 +442,7 @@ msgid "Transfer equipment or personnel"
 msgstr "Передать снаряжение или персонал"
 
 #: ../base/ufos/menu_aircraft.ufo:211 ../base/ufos/menu_bases.ufo:213
-#: ../base/ufos/menu_transfer.ufo:145
+#: ../base/ufos/menu_geoscape.ufo:458 ../base/ufos/menu_transfer.ufo:145
 msgid "Transfer"
 msgstr "Трансфер"
 
@@ -454,7 +454,7 @@ msgstr "Снарядить оружием и защитой"
 msgid "Equip"
 msgstr "Оборудовать"
 
-#: ../base/ufos/menu_aircraft.ufo:278 ../base/ufos/menu_aircraft.ufo:455
+#: ../base/ufos/menu_aircraft.ufo:278 ../base/ufos/menu_aircraft.ufo:485
 #: ../base/ufos/menu_hospital.ufo:125 ../base/ufos/menu_hospital.ufo:330
 #: ../base/ufos/menu_team.ufo:932 ../base/ufos/menu_team.ufo:1542
 msgid "Done"
@@ -474,18 +474,21 @@ msgstr "Члены команды:"
 
 #: ../base/ufos/menu_aircraft.ufo:405
 #, fuzzy
-msgid "Shield"
-msgstr "Броня"
-
-#: ../base/ufos/menu_aircraft.ufo:413
-#, fuzzy
-msgid "Weapon"
-msgstr "Оружие"
-
-#: ../base/ufos/menu_aircraft.ufo:421
-#, fuzzy
 msgid "Available equipment:"
 msgstr "Доступное снаряжения:"
+
+#: ../base/ufos/menu_aircraft.ufo:421 ../base/ufos/menu_aircraft.ufo:431
+msgid "Weapons"
+msgstr "Оружие"
+
+#: ../base/ufos/menu_aircraft.ufo:438 ../base/ufos/menu_aircraft.ufo:448
+#, fuzzy
+msgid "Shields"
+msgstr "Броня"
+
+#: ../base/ufos/menu_aircraft.ufo:455 ../base/ufos/menu_aircraft.ufo:465
+msgid "Items"
+msgstr ""
 
 #: ../base/ufos/menu_aliencont.ufo:48 ../base/ufos/menu_bases.ufo:335
 #: ../base/ufos/menu_buildings.ufo:76 ../base/ufos/menu_buy.ufo:708
@@ -495,7 +498,7 @@ msgid "CREDIT"
 msgstr "Деньги"
 
 #: ../base/ufos/menu_aliencont.ufo:68 ../base/ufos/menu_buildings.ufo:58
-#: ../base/ufos/menu_buy.ufo:820 ../base/ufos/menu_hire.ufo:786
+#: ../base/ufos/menu_buy.ufo:820 ../base/ufos/menu_hire.ufo:606
 #: ../base/ufos/menu_production.ufo:371 ../base/ufos/menu_research.ufo:945
 #: ../base/ufos/menu_transfer.ufo:264
 msgid "Back to baseview"
@@ -661,7 +664,7 @@ msgstr "Управление самолетами"
 msgid "Buy a new aircraft"
 msgstr "Купить новый самолет"
 
-#: ../base/ufos/menu_bases.ufo:142 ../base/ufos/menu_geoscape.ufo:717
+#: ../base/ufos/menu_bases.ufo:142 ../base/ufos/menu_geoscape.ufo:792
 #: ../base/ufos/menu_transfer.ufo:49 ../base/ufos/research.ufo:86
 #: client/cl_map.c:296
 msgid "Aircraft"
@@ -733,17 +736,18 @@ msgid "Are you sure, that you want to destroy this building?"
 msgstr ""
 
 #: ../base/ufos/menu_bases.ufo:500 ../base/ufos/menu_geoscape.ufo:322
-#: ../base/ufos/menu_geoscape.ufo:438 ../base/ufos/menu_geoscape.ufo:535
-#: ../base/ufos/menu_geoscape.ufo:586 ../base/ufos/menu_geoscape.ufo:678
-#: ../base/ufos/menu_geoscape.ufo:746 ../base/ufos/menu_geoscape.ufo:799
-#: ../base/ufos/menu_options.ufo:599
+#: ../base/ufos/menu_geoscape.ufo:425 ../base/ufos/menu_geoscape.ufo:513
+#: ../base/ufos/menu_geoscape.ufo:610 ../base/ufos/menu_geoscape.ufo:661
+#: ../base/ufos/menu_geoscape.ufo:753 ../base/ufos/menu_geoscape.ufo:821
+#: ../base/ufos/menu_geoscape.ufo:874 ../base/ufos/menu_options.ufo:599
 msgid "Close this dialog"
 msgstr "Закрыть диалог"
 
 #: ../base/ufos/menu_bases.ufo:513 ../base/ufos/menu_geoscape.ufo:335
-#: ../base/ufos/menu_geoscape.ufo:462 ../base/ufos/menu_geoscape.ufo:548
-#: ../base/ufos/menu_geoscape.ufo:599 ../base/ufos/menu_geoscape.ufo:691
-#: ../base/ufos/menu_geoscape.ufo:759 ../base/ufos/menu_options.ufo:623
+#: ../base/ufos/menu_geoscape.ufo:438 ../base/ufos/menu_geoscape.ufo:537
+#: ../base/ufos/menu_geoscape.ufo:623 ../base/ufos/menu_geoscape.ufo:674
+#: ../base/ufos/menu_geoscape.ufo:766 ../base/ufos/menu_geoscape.ufo:834
+#: ../base/ufos/menu_options.ufo:623
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -913,11 +917,11 @@ msgstr "Готов"
 msgid "Aircraft reached desired location - what to do?"
 msgstr "Самолет достиг точки назначения - ожидаются указания."
 
-#: ../base/ufos/menu_geoscape.ufo:342 ../base/ufos/menu_geoscape.ufo:606
+#: ../base/ufos/menu_geoscape.ufo:342 ../base/ufos/menu_geoscape.ufo:681
 msgid "Enter the battlefield"
 msgstr "На поле боя"
 
-#: ../base/ufos/menu_geoscape.ufo:355 ../base/ufos/menu_geoscape.ufo:619
+#: ../base/ufos/menu_geoscape.ufo:355 ../base/ufos/menu_geoscape.ufo:694
 #, fuzzy
 msgid "Enter"
 msgstr "Вход"
@@ -932,186 +936,195 @@ msgstr "Автоматически заканчивать миссию"
 msgid "Auto mission"
 msgstr "Авто миссия"
 
-#: ../base/ufos/menu_geoscape.ufo:406
+#: ../base/ufos/menu_geoscape.ufo:405
+msgid "Select base to transfer to"
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:445
+#, fuzzy
+msgid "Start the transfer"
+msgstr "Старт сервера"
+
+#: ../base/ufos/menu_geoscape.ufo:481
 msgid "New base"
 msgstr "Новая база"
 
-#: ../base/ufos/menu_geoscape.ufo:413 ../base/ufos/menu_geoscape.ufo:506
-#: ../base/ufos/menu_geoscape.ufo:662 ../base/ufos/menu_options.ufo:1288
+#: ../base/ufos/menu_geoscape.ufo:488 ../base/ufos/menu_geoscape.ufo:581
+#: ../base/ufos/menu_geoscape.ufo:737 ../base/ufos/menu_options.ufo:1288
 msgid "Name:"
 msgstr "Имя:"
 
-#: ../base/ufos/menu_geoscape.ufo:426
+#: ../base/ufos/menu_geoscape.ufo:501
 msgid "Cost:"
 msgstr "Цена:"
 
-#: ../base/ufos/menu_geoscape.ufo:431
+#: ../base/ufos/menu_geoscape.ufo:506
 msgid "100000 c"
 msgstr "100000 кр"
 
-#: ../base/ufos/menu_geoscape.ufo:449
+#: ../base/ufos/menu_geoscape.ufo:524
 msgid "Build the base"
 msgstr "Построить базу"
 
-#: ../base/ufos/menu_geoscape.ufo:470
+#: ../base/ufos/menu_geoscape.ufo:545
 #, fuzzy
 msgid "Build"
 msgstr "Построить"
 
-#: ../base/ufos/menu_geoscape.ufo:499
+#: ../base/ufos/menu_geoscape.ufo:574
 msgid "Select aircraft"
 msgstr "Выберите самолет"
 
-#: ../base/ufos/menu_geoscape.ufo:512
+#: ../base/ufos/menu_geoscape.ufo:587
 msgid "Status:"
 msgstr "Статус:"
 
-#: ../base/ufos/menu_geoscape.ufo:518
+#: ../base/ufos/menu_geoscape.ufo:593
 msgid "Base:"
 msgstr "База:"
 
-#: ../base/ufos/menu_geoscape.ufo:573
+#: ../base/ufos/menu_geoscape.ufo:648
 #, fuzzy
 msgid "Base attack"
 msgstr "Атака базы"
 
-#: ../base/ufos/menu_geoscape.ufo:580
+#: ../base/ufos/menu_geoscape.ufo:655
 msgid "What to do?"
 msgstr "Какие приказы?"
 
-#: ../base/ufos/menu_geoscape.ufo:649
+#: ../base/ufos/menu_geoscape.ufo:724
 #, fuzzy
 msgid "Select item"
 msgstr "Выбрать предмет"
 
-#: ../base/ufos/menu_geoscape.ufo:656
+#: ../base/ufos/menu_geoscape.ufo:731
 msgid "Type:"
 msgstr "Тип:"
 
-#: ../base/ufos/menu_geoscape.ufo:724
+#: ../base/ufos/menu_geoscape.ufo:799
 #, fuzzy
 msgid "Action:"
 msgstr "Действие:"
 
-#: ../base/ufos/menu_geoscape.ufo:730
+#: ../base/ufos/menu_geoscape.ufo:805
 #, fuzzy
 msgid "Description:"
 msgstr "Описание:"
 
-#: ../base/ufos/menu_geoscape.ufo:812
+#: ../base/ufos/menu_geoscape.ufo:887
 msgid "OK"
 msgstr ""
 
-#: ../base/ufos/menu_hire.ufo:192 ../base/ufos/menu_hire.ufo:201
-#: ../base/ufos/menu_hire.ufo:210 ../base/ufos/menu_hire.ufo:219
-#: ../base/ufos/menu_hire.ufo:228 ../base/ufos/menu_hire.ufo:237
-#: ../base/ufos/menu_hire.ufo:246 ../base/ufos/menu_hire.ufo:255
-#: ../base/ufos/menu_hire.ufo:264 ../base/ufos/menu_hire.ufo:273
-#: ../base/ufos/menu_hire.ufo:282 ../base/ufos/menu_hire.ufo:291
-#: ../base/ufos/menu_hire.ufo:300 ../base/ufos/menu_hire.ufo:309
-#: ../base/ufos/menu_hire.ufo:318 ../base/ufos/menu_hire.ufo:327
-#: ../base/ufos/menu_hire.ufo:336 ../base/ufos/menu_hire.ufo:345
-#: ../base/ufos/menu_hire.ufo:354
+#: ../base/ufos/menu_hire.ufo:132 ../base/ufos/menu_hire.ufo:141
+#: ../base/ufos/menu_hire.ufo:150 ../base/ufos/menu_hire.ufo:159
+#: ../base/ufos/menu_hire.ufo:168 ../base/ufos/menu_hire.ufo:177
+#: ../base/ufos/menu_hire.ufo:186 ../base/ufos/menu_hire.ufo:195
+#: ../base/ufos/menu_hire.ufo:204 ../base/ufos/menu_hire.ufo:213
+#: ../base/ufos/menu_hire.ufo:222 ../base/ufos/menu_hire.ufo:231
+#: ../base/ufos/menu_hire.ufo:240 ../base/ufos/menu_hire.ufo:249
+#: ../base/ufos/menu_hire.ufo:258 ../base/ufos/menu_hire.ufo:267
+#: ../base/ufos/menu_hire.ufo:276 ../base/ufos/menu_hire.ufo:285
+#: ../base/ufos/menu_hire.ufo:294
 msgid "Hire/Unhire"
 msgstr "Нанять/Уволить"
 
-#: ../base/ufos/menu_hire.ufo:541 ../base/ufos/menu_hospital.ufo:219
+#: ../base/ufos/menu_hire.ufo:361 ../base/ufos/menu_hospital.ufo:219
 #: ../base/ufos/menu_physdat.ufo:52 ../base/ufos/menu_team.ufo:829
 #: ../base/ufos/menu_team.ufo:1365
 msgid "Power:"
 msgstr "Сила:"
 
-#: ../base/ufos/menu_hire.ufo:554 ../base/ufos/menu_hospital.ufo:224
+#: ../base/ufos/menu_hire.ufo:374 ../base/ufos/menu_hospital.ufo:224
 #: ../base/ufos/menu_physdat.ufo:57 ../base/ufos/menu_team.ufo:834
 #: ../base/ufos/menu_team.ufo:1370
 msgid "Speed:"
 msgstr "Скорость:"
 
-#: ../base/ufos/menu_hire.ufo:568 ../base/ufos/menu_hospital.ufo:229
+#: ../base/ufos/menu_hire.ufo:388 ../base/ufos/menu_hospital.ufo:229
 #: ../base/ufos/menu_physdat.ufo:62 ../base/ufos/menu_team.ufo:839
 #: ../base/ufos/menu_team.ufo:1375
 msgid "Accuracy:"
 msgstr "Точность:"
 
-#: ../base/ufos/menu_hire.ufo:582 ../base/ufos/menu_hospital.ufo:234
+#: ../base/ufos/menu_hire.ufo:402 ../base/ufos/menu_hospital.ufo:234
 #: ../base/ufos/menu_physdat.ufo:67 ../base/ufos/menu_team.ufo:844
 #: ../base/ufos/menu_team.ufo:1380
 msgid "Mind:"
 msgstr "Психика:"
 
-#: ../base/ufos/menu_hire.ufo:595 ../base/ufos/menu_hospital.ufo:239
+#: ../base/ufos/menu_hire.ufo:415 ../base/ufos/menu_hospital.ufo:239
 #: ../base/ufos/menu_physdat.ufo:72 ../base/ufos/menu_team.ufo:849
 #: ../base/ufos/menu_team.ufo:1385
 msgid "Close Combat:"
 msgstr "Ближний Бой:"
 
-#: ../base/ufos/menu_hire.ufo:608 ../base/ufos/menu_hospital.ufo:244
+#: ../base/ufos/menu_hire.ufo:428 ../base/ufos/menu_hospital.ufo:244
 #: ../base/ufos/menu_physdat.ufo:77 ../base/ufos/menu_team.ufo:854
 #: ../base/ufos/menu_team.ufo:1390
 msgid "Heavy Weapons:"
 msgstr "Тяжёлое Оружие:"
 
-#: ../base/ufos/menu_hire.ufo:621 ../base/ufos/menu_hospital.ufo:249
+#: ../base/ufos/menu_hire.ufo:441 ../base/ufos/menu_hospital.ufo:249
 #: ../base/ufos/menu_physdat.ufo:82 ../base/ufos/menu_team.ufo:859
 #: ../base/ufos/menu_team.ufo:1395
 msgid "Assault Guns:"
 msgstr "Штурмовые:"
 
-#: ../base/ufos/menu_hire.ufo:634 ../base/ufos/menu_hospital.ufo:254
+#: ../base/ufos/menu_hire.ufo:454 ../base/ufos/menu_hospital.ufo:254
 #: ../base/ufos/menu_physdat.ufo:87 ../base/ufos/menu_team.ufo:864
 #: ../base/ufos/menu_team.ufo:1400
 msgid "Sniper Rifles:"
 msgstr "Снайперские:"
 
-#: ../base/ufos/menu_hire.ufo:647 ../base/ufos/menu_hospital.ufo:259
+#: ../base/ufos/menu_hire.ufo:467 ../base/ufos/menu_hospital.ufo:259
 #: ../base/ufos/menu_physdat.ufo:92 ../base/ufos/menu_team.ufo:869
 #: ../base/ufos/menu_team.ufo:1405
 #, fuzzy
 msgid "High-Explosives:"
 msgstr "Взрывчатые:"
 
-#: ../base/ufos/menu_hire.ufo:661 ../base/ufos/menu_team.ufo:874
+#: ../base/ufos/menu_hire.ufo:481 ../base/ufos/menu_team.ufo:874
 msgid "Survived Missions:"
 msgstr "Выполнено заданий:"
 
-#: ../base/ufos/menu_hire.ufo:668 ../base/ufos/menu_team.ufo:876
+#: ../base/ufos/menu_hire.ufo:488 ../base/ufos/menu_team.ufo:876
 msgid "Killed Enemies:"
 msgstr "Убито противников:"
 
-#: ../base/ufos/menu_hire.ufo:706
+#: ../base/ufos/menu_hire.ufo:526
 msgid "Hire soldiers"
 msgstr "Нанять бойцов"
 
-#: ../base/ufos/menu_hire.ufo:721
+#: ../base/ufos/menu_hire.ufo:541
 #, fuzzy
 msgid "Soldiers"
 msgstr "Бойцы"
 
-#: ../base/ufos/menu_hire.ufo:726
+#: ../base/ufos/menu_hire.ufo:546
 #, fuzzy
 msgid "Hire scientists"
 msgstr "Нанять ученых"
 
-#: ../base/ufos/menu_hire.ufo:741
+#: ../base/ufos/menu_hire.ufo:561
 #, fuzzy
 msgid "Scientists"
 msgstr "Ученые"
 
-#: ../base/ufos/menu_hire.ufo:746
+#: ../base/ufos/menu_hire.ufo:566
 msgid "Hire workers"
 msgstr "Нанять рабочих"
 
-#: ../base/ufos/menu_hire.ufo:761 ../base/ufos/menu_production.ufo:89
+#: ../base/ufos/menu_hire.ufo:581 ../base/ufos/menu_production.ufo:89
 #, fuzzy
 msgid "Workers"
 msgstr "Рабочие"
 
-#: ../base/ufos/menu_hire.ufo:766
+#: ../base/ufos/menu_hire.ufo:586
 #, fuzzy
 msgid "Hire medics"
 msgstr "Нанять врача"
 
-#: ../base/ufos/menu_hire.ufo:781 ../base/ufos/menu_hospital.ufo:105
+#: ../base/ufos/menu_hire.ufo:601 ../base/ufos/menu_hospital.ufo:105
 #, fuzzy
 msgid "Medics"
 msgstr "Врачи"
@@ -1251,7 +1264,7 @@ msgstr "Пояс"
 msgid "Floor"
 msgstr "Пол"
 
-#: ../base/ufos/menu_irc.ufo:46 ../base/ufos/menu_multiplayer.ufo:716
+#: ../base/ufos/menu_irc.ufo:46 ../base/ufos/menu_multiplayer.ufo:691
 msgid "Lobby"
 msgstr "Приемная"
 
@@ -1370,150 +1383,151 @@ msgstr "Имя"
 msgid "Bookmark"
 msgstr "Отметить"
 
-#: ../base/ufos/menu_multiplayer.ufo:508 ../base/ufos/menu_multiplayer.ufo:738
+#: ../base/ufos/menu_multiplayer.ufo:508 ../base/ufos/menu_multiplayer.ufo:713
 msgid "Connect"
 msgstr "Соединиться"
 
-#: ../base/ufos/menu_multiplayer.ufo:579 ../base/ufos/menu_multiplayer.ufo:669
-msgid "LAN"
-msgstr "LAN (локальная сеть)"
+#: ../base/ufos/menu_multiplayer.ufo:551
+msgid "Serverfilter:"
+msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:587 ../base/ufos/menu_multiplayer.ufo:677
-msgid "Internet"
-msgstr "Интернет"
+#: ../base/ufos/menu_multiplayer.ufo:604 ../base/ufos/menu_multiplayer.ufo:786
+msgid "Serverbrowser"
+msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:622
-msgid "Refresh"
-msgstr "Обновить"
-
-#: ../base/ufos/menu_multiplayer.ufo:686
+#: ../base/ufos/menu_multiplayer.ufo:630 ../base/ufos/menu_multiplayer.ufo:794
+#: ../base/ufos/menu_multiplayer.ufo:803
 msgid "Bookmarks"
 msgstr "Закладки"
 
-#: ../base/ufos/menu_multiplayer.ufo:750
+#: ../base/ufos/menu_multiplayer.ufo:671
+msgid "Refresh"
+msgstr "Обновить"
+
+#: ../base/ufos/menu_multiplayer.ufo:725
 msgid "Connect to IP"
 msgstr "Соединение с IP"
 
-#: ../base/ufos/menu_multiplayer.ufo:786
+#: ../base/ufos/menu_multiplayer.ufo:836
 msgid "Make this server public:"
 msgstr "Сделать этот сервер общедоступным:"
 
-#: ../base/ufos/menu_multiplayer.ufo:797
+#: ../base/ufos/menu_multiplayer.ufo:847
 msgid "Don't make it public via masterserver"
 msgstr "Не делать его общедоступным через masterserver"
 
-#: ../base/ufos/menu_multiplayer.ufo:811
+#: ../base/ufos/menu_multiplayer.ufo:861
 msgid "Publish server address via masterserver"
 msgstr "Опубликовать адрес сервера через masterserver"
 
-#: ../base/ufos/menu_multiplayer.ufo:829
+#: ../base/ufos/menu_multiplayer.ufo:879
 msgid "Enable morale states:"
 msgstr "Включить мораль:"
 
-#: ../base/ufos/menu_multiplayer.ufo:870
+#: ../base/ufos/menu_multiplayer.ufo:920
 msgid "Dedicated server:"
 msgstr "Выделенный сервер:"
 
-#: ../base/ufos/menu_multiplayer.ufo:911
+#: ../base/ufos/menu_multiplayer.ufo:961
 msgid "Teamplay:"
 msgstr "Командная игра:"
 
-#: ../base/ufos/menu_multiplayer.ufo:952
+#: ../base/ufos/menu_multiplayer.ufo:1002
 msgid "Max. clients:"
 msgstr "Максимум игроков:"
 
-#: ../base/ufos/menu_multiplayer.ufo:954
+#: ../base/ufos/menu_multiplayer.ufo:1004
 #, fuzzy
 msgid "Sets the max allowed clients to connect"
 msgstr "Устанавливает максимально допустимое кол-во клиентов"
 
-#: ../base/ufos/menu_multiplayer.ufo:986
+#: ../base/ufos/menu_multiplayer.ufo:1036
 msgid "Max. soldiers per team:"
 msgstr "Максимум бойцов в отряде:"
 
-#: ../base/ufos/menu_multiplayer.ufo:988
+#: ../base/ufos/menu_multiplayer.ufo:1038
 msgid "Sets the max allowed soldiers per team"
 msgstr "Устанавливает максимальное число бойцов в команде"
 
-#: ../base/ufos/menu_multiplayer.ufo:1020
+#: ../base/ufos/menu_multiplayer.ufo:1070
 msgid "Max. soldiers per player:"
 msgstr "Максимум бойцов у игрока:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1022
+#: ../base/ufos/menu_multiplayer.ufo:1072
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr ""
 "Устанавливает максимальное число бойцов у игрока во время командной игры"
 
-#: ../base/ufos/menu_multiplayer.ufo:1055
+#: ../base/ufos/menu_multiplayer.ufo:1105
 msgid "Max. players per team:"
 msgstr "Максимум игроков в команде:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1088
+#: ../base/ufos/menu_multiplayer.ufo:1138
 msgid "Max. AI actors:"
 msgstr "Максимум АИ игроков:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1090
+#: ../base/ufos/menu_multiplayer.ufo:1140
 msgid "Max AI actors for teamplay mode"
 msgstr "Максимальное АИ персонажей для командного режима"
 
-#: ../base/ufos/menu_multiplayer.ufo:1122
+#: ../base/ufos/menu_multiplayer.ufo:1172
 msgid "Server-Password:"
 msgstr "Пароль Сервера:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1145
+#: ../base/ufos/menu_multiplayer.ufo:1195
 msgid "RCON-Password:"
 msgstr "RCON Пароль:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1168
+#: ../base/ufos/menu_multiplayer.ufo:1218
 msgid "Hostname:"
 msgstr "Имя сервера:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1191
+#: ../base/ufos/menu_multiplayer.ufo:1241
 msgid "Map"
 msgstr "Карта"
 
-#: ../base/ufos/menu_multiplayer.ufo:1271
+#: ../base/ufos/menu_multiplayer.ufo:1321
 msgid "Start server"
 msgstr "Старт сервера"
 
-#: ../base/ufos/menu_multiplayer.ufo:1320
+#: ../base/ufos/menu_multiplayer.ufo:1370
 #, fuzzy
 msgid "Team selection"
 msgstr "Выбор команды"
 
-#: ../base/ufos/menu_multiplayer.ufo:1329
+#: ../base/ufos/menu_multiplayer.ufo:1379
 #, fuzzy
 msgid "Teamplay"
 msgstr "Командная игра"
 
-#: ../base/ufos/menu_multiplayer.ufo:1365
+#: ../base/ufos/menu_multiplayer.ufo:1415
 #, fuzzy
 msgid "Max. players per team"
 msgstr "Максимум игроков в команде"
 
-#: ../base/ufos/menu_multiplayer.ufo:1377
+#: ../base/ufos/menu_multiplayer.ufo:1427
 msgid "Max. teams for this map"
 msgstr "Макс. кол-во команд на карте"
 
-#: ../base/ufos/menu_multiplayer.ufo:1389
+#: ../base/ufos/menu_multiplayer.ufo:1439
 msgid "Team preference:"
 msgstr "Команда:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1400
+#: ../base/ufos/menu_multiplayer.ufo:1450
 msgid "Next free team"
 msgstr "Следующая свободная команда"
 
-#: ../base/ufos/menu_multiplayer.ufo:1410
+#: ../base/ufos/menu_multiplayer.ufo:1460
 #, fuzzy
 msgid "Previous free team"
 msgstr "Предыдущая свободная команда"
 
-#: ../base/ufos/menu_multiplayer.ufo:1454
+#: ../base/ufos/menu_multiplayer.ufo:1504
 #, fuzzy
 msgid "Please wait"
 msgstr "Доброжелательное"
 
-#: ../base/ufos/menu_multiplayer.ufo:1460
+#: ../base/ufos/menu_multiplayer.ufo:1510
 msgid "Waiting for other players to join the game"
 msgstr ""
 
@@ -2311,7 +2325,7 @@ msgstr "Большое вторжение пришельцев"
 msgid "Stop them"
 msgstr "Остановите их"
 
-#: ../base/ufos/missions.ufo:859 client/cl_campaign.c:717
+#: ../base/ufos/missions.ufo:859 client/cl_campaign.c:725
 #, fuzzy
 msgid "Base Attack"
 msgstr "Атака базы"
@@ -3760,47 +3774,67 @@ msgstr ""
 "Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
 "складское помещение предоставляет место для пятидесяти мест снаряжения."
 
-#: ../base/ufos/research.ufo:2265
+#: ../base/ufos/research.ufo:2267
 msgid "Raven ECM Unit"
 msgstr "Модуль ECM \"Ворон\""
 
-#: ../base/ufos/research.ufo:2267 ../base/ufos/research.ufo:2283
-msgid "craft_shield_light_txt"
+#: ../base/ufos/research.ufo:2269
+#, fuzzy
+msgid "craft_electronics_raven_txt"
 msgstr ""
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:2281
+#: ../base/ufos/research.ufo:2283
 msgid "Polymer Aircraft Armour"
 msgstr "Полимерная броня самолетов"
 
-#: ../base/ufos/research.ufo:2297
+#: ../base/ufos/research.ufo:2285
+msgid "craft_shield_light_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2299
 msgid "SHIVA Rotary Cannon"
 msgstr "Вращающаяся пушка \"SHIVA\""
 
-#: ../base/ufos/research.ufo:2299
-msgid "craft_weapon_flac_txt"
+#: ../base/ufos/research.ufo:2301
+#, fuzzy
+msgid "craft_weapon_shiva_txt"
 msgstr ""
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:2313
+#: ../base/ufos/research.ufo:2315
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Подвес ракет \"Sparrowhawk\""
 
-#: ../base/ufos/research.ufo:2315
+#: ../base/ufos/research.ufo:2317
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2329
+#: ../base/ufos/research.ufo:2331
 msgid "TR-20 Rocket Pod"
 msgstr "Ракетная установка \"TR-20\""
 
-#: ../base/ufos/research.ufo:2331
+#: ../base/ufos/research.ufo:2333
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2351
+#: ../base/ufos/research.ufo:2353
 msgid "Particle Beam Weapon"
 msgstr "Лучевое оружие"
 
-#: ../base/ufos/research.ufo:2352
+#: ../base/ufos/research.ufo:2354
 #, fuzzy
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
@@ -3813,31 +3847,55 @@ msgstr ""
 "зарядом получает лишь незначительное поверхностное повреждение и "
 "одновременно тяжёлое повреждение внутренних органов."
 
-#: ../base/ufos/research.ufo:2353
+#: ../base/ufos/research.ufo:2355
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2377
-msgid "Political Situation Before The Invasion"
-msgstr "Политическая обстановка перед вторжением"
-
 #: ../base/ufos/research.ufo:2378
-msgid "news_initial_political_situation_txt"
+msgid "Targeting Computer"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2388
-msgid "After The War"
-msgstr "После войны"
+#: ../base/ufos/research.ufo:2380
+#, fuzzy
+msgid "craft_electronics_targeting_txt"
+msgstr ""
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:2389
-msgid "news_after_the_war_txt"
+#: ../base/ufos/research.ufo:2397
+msgid "Fuel Pod"
 msgstr ""
 
 #: ../base/ufos/research.ufo:2399
+msgid "craft_electronics_fuelpod_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2416
+msgid "Political Situation Before The Invasion"
+msgstr "Политическая обстановка перед вторжением"
+
+#: ../base/ufos/research.ufo:2417
+msgid "news_initial_political_situation_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2427
+msgid "After The War"
+msgstr "После войны"
+
+#: ../base/ufos/research.ufo:2428
+msgid "news_after_the_war_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2438
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2400
+#: ../base/ufos/research.ufo:2439
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 
@@ -4762,12 +4820,12 @@ msgstr "Божественно"
 msgid "Rank: %s"
 msgstr "Звание: %s"
 
-#: client/cl_actor.c:594
+#: client/cl_actor.c:603
 #, c-format
 msgid "Armor  %i\tMorale  %i\n"
 msgstr "Броня  %i\tМораль  %i\n"
 
-#: client/cl_actor.c:601
+#: client/cl_actor.c:610
 #, c-format
 msgid ""
 "Armor  %i\tMorale  %i\n"
@@ -4776,7 +4834,7 @@ msgstr ""
 "Броня  %i\tМораль  %i\n"
 "Движ. %i (%i ОД было)\n"
 
-#: client/cl_actor.c:620
+#: client/cl_actor.c:629
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -4784,7 +4842,7 @@ msgstr ""
 "Невозможно использовать предмет.\n"
 "Необходимо сначала исследовать.\n"
 
-#: client/cl_actor.c:637
+#: client/cl_actor.c:646
 #, c-format
 msgid ""
 "%s\n"
@@ -4793,19 +4851,19 @@ msgstr ""
 "%s\n"
 "(пусто)\n"
 
-#: client/cl_actor.c:646
+#: client/cl_actor.c:655
 msgid "Currently panics!\n"
 msgstr "В панике!\n"
 
-#: client/cl_actor.c:1057
+#: client/cl_actor.c:1058
 msgid "Nobody selected\n"
 msgstr "Никто не выбран\n"
 
-#: client/cl_actor.c:1068
+#: client/cl_actor.c:1069
 msgid "This isn't your round\n"
 msgstr "Сейчас не Ваш ход\n"
 
-#: client/cl_actor.c:1202
+#: client/cl_actor.c:1203
 #, fuzzy
 msgid ""
 "You cannot reload this unknown item.\n"
@@ -4814,166 +4872,176 @@ msgstr ""
 "Невозможно перезарядить предмет.\n"
 "Необходимо сначала исследовать.\n"
 
-#: client/cl_actor.c:1609
+#: client/cl_actor.c:1610
 #, fuzzy, c-format
 msgid "%s has been killed!\n"
 msgstr "%s был убит!\n"
 
-#: client/cl_actor.c:1615
+#: client/cl_actor.c:1616
 msgid "A civilian was killed!\n"
 msgstr "Мирный житель убит!\n"
 
-#: client/cl_actor.c:1618
+#: client/cl_actor.c:1619
 #, fuzzy
 msgid "An alien was killed!\n"
 msgstr "Пришельцец убит!\n"
 
-#: client/cl_actor.c:1621
+#: client/cl_actor.c:1622
 #, fuzzy
 msgid "A solider was killed\n"
 msgstr "Боец убит\n"
 
-#: client/cl_actor.c:1624
+#: client/cl_actor.c:1625
 #, c-format
 msgid "A member of team %i was killed!\n"
 msgstr "Член команды %i убит!\n"
 
-#: client/cl_actor.c:1774
+#: client/cl_actor.c:1775
 msgid "Your round started!\n"
 msgstr "Ваш ход начался!\n"
 
-#: client/cl_aircraft.c:103
+#: client/cl_aircraft.c:120
 msgid "Aircraft started"
 msgstr "Самолет запущен"
 
-#: client/cl_aircraft.c:103 client/cl_aircraft.c:418 client/cl_aircraft.c:577
-#: client/cl_aircraft.c:816 client/cl_basemanagement.c:544
+#: client/cl_aircraft.c:120 client/cl_aircraft.c:448 client/cl_aircraft.c:607
+#: client/cl_aircraft.c:840 client/cl_basemanagement.c:544
 #: client/cl_basemanagement.c:2050 client/cl_campaign.c:432
-#: client/cl_campaign.c:905 client/cl_campaign.c:956 client/cl_campaign.c:1121
-#: client/cl_campaign.c:1132 client/cl_campaign.c:1142
-#: client/cl_campaign.c:1152 client/cl_campaign.c:1162
-#: client/cl_campaign.c:1173 client/cl_campaign.c:1186
-#: client/cl_campaign.c:1196 client/cl_campaign.c:1203
-#: client/cl_campaign.c:1211 client/cl_campaign.c:2480
-#: client/cl_campaign.c:2517 client/cl_campaign.c:2519
-#: client/cl_campaign.c:2836 client/cl_map.c:270 client/cl_research.c:668
-#: client/cl_research.c:790 client/cl_research.c:793 client/cl_research.c:797
-#: client/cl_research.c:810 client/cl_research.c:839 client/cl_research.c:985
+#: client/cl_campaign.c:913 client/cl_campaign.c:969 client/cl_campaign.c:1134
+#: client/cl_campaign.c:1145 client/cl_campaign.c:1155
+#: client/cl_campaign.c:1165 client/cl_campaign.c:1175
+#: client/cl_campaign.c:1186 client/cl_campaign.c:1199
+#: client/cl_campaign.c:1209 client/cl_campaign.c:1216
+#: client/cl_campaign.c:1224 client/cl_campaign.c:2496
+#: client/cl_campaign.c:2533 client/cl_campaign.c:2535
+#: client/cl_campaign.c:2861 client/cl_map.c:270 client/cl_research.c:669
+#: client/cl_research.c:791 client/cl_research.c:794 client/cl_research.c:798
+#: client/cl_research.c:811 client/cl_research.c:840 client/cl_research.c:986
 #: client/cl_ufo.c:195 client/cl_ufo.c:200
 msgid "Notice"
 msgstr "Предупреждение"
 
-#: client/cl_aircraft.c:154
+#: client/cl_aircraft.c:179
 msgid "ON RED ALERT"
 msgstr "ПО БОЕВОЙ ТРЕВОГЕ"
 
-#: client/cl_aircraft.c:158
+#: client/cl_aircraft.c:183
 msgid "Nothing - should not be displayed"
 msgstr "Ничего - не должно отображаться"
 
-#: client/cl_aircraft.c:160
+#: client/cl_aircraft.c:185
 msgid "At homebase"
 msgstr "На базе"
 
-#: client/cl_aircraft.c:162
+#: client/cl_aircraft.c:187
 msgid "Refuel"
 msgstr "Заправить"
 
-#: client/cl_aircraft.c:164
+#: client/cl_aircraft.c:189
 msgid "Idle"
 msgstr "Ожидает"
 
-#: client/cl_aircraft.c:166
+#: client/cl_aircraft.c:191
 msgid "On transit"
 msgstr "В полете"
 
-#: client/cl_aircraft.c:168
+#: client/cl_aircraft.c:193
 #, fuzzy
 msgid "Moving to mission"
 msgstr "Направляется к миссии"
 
-#: client/cl_aircraft.c:170
+#: client/cl_aircraft.c:195
 msgid "Pursuing a UFO"
 msgstr "Преследует НЛО"
 
-#: client/cl_aircraft.c:172
+#: client/cl_aircraft.c:197
 msgid "Ready for drop down"
 msgstr "Готов к высадке"
 
-#: client/cl_aircraft.c:174
+#: client/cl_aircraft.c:199
 msgid "On interception"
 msgstr "На перехвате"
 
-#: client/cl_aircraft.c:176
+#: client/cl_aircraft.c:201
 msgid "Transportmission"
 msgstr "Перевозит груз"
 
-#: client/cl_aircraft.c:178
+#: client/cl_aircraft.c:203
 #, fuzzy
 msgid "Back to base"
 msgstr "Обратно к обзору базы"
 
-#: client/cl_aircraft.c:359 client/cl_map.c:772 client/cl_ufopedia.c:306
+#: client/cl_aircraft.c:388 client/cl_map.c:788 client/cl_ufopedia.c:306
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr "Скорость:\t%.0f\n"
 
-#: client/cl_aircraft.c:360 client/cl_map.c:773
+#: client/cl_aircraft.c:389 client/cl_map.c:789
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Топливо:\t%i/%i\n"
 
-#: client/cl_aircraft.c:361 client/cl_aircraft.c:362 client/cl_ufopedia.c:287
-#: client/cl_ufopedia.c:308 client/cl_ufopedia.c:309
+#: client/cl_aircraft.c:390 client/cl_aircraft.c:391 client/cl_aircraft.c:392
+#: client/cl_ufopedia.c:287 client/cl_ufopedia.c:308 client/cl_ufopedia.c:309
 msgid "None"
 msgstr "Нет"
 
-#: client/cl_aircraft.c:361 client/cl_ufopedia.c:308
+#: client/cl_aircraft.c:390 client/cl_ufopedia.c:308
 #, c-format
 msgid "Weapon:\t%s\n"
 msgstr "Оружие:\t%s\n"
 
-#: client/cl_aircraft.c:362
-#, fuzzy, c-format
-msgid "Shield:\t%s"
-msgstr "Щит:\t%s"
+#: client/cl_aircraft.c:391 client/cl_ufopedia.c:309
+#, c-format
+msgid "Shield:\t%s\n"
+msgstr "Защита:\t%s\n"
 
-#: client/cl_aircraft.c:417
+#: client/cl_aircraft.c:392
+#, fuzzy, c-format
+msgid "Equipment:\t%s"
+msgstr "Снаряжение"
+
+#: client/cl_aircraft.c:447
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Прибыл новый самолет \"%s\" на базу %s"
 
-#: client/cl_aircraft.c:577
+#: client/cl_aircraft.c:607
 msgid "Your dropship has low fuel and returns to base"
 msgstr "У транспорта заканчивается топливо, и он возвращается на базу"
 
-#: client/cl_aircraft.c:616 client/cl_aircraft.c:623
+#: client/cl_aircraft.c:646 client/cl_aircraft.c:653
 #, fuzzy
 msgid "Interception"
 msgstr "Перехват"
 
-#: client/cl_aircraft.c:616 client/cl_campaign.c:2517
+#: client/cl_aircraft.c:646 client/cl_campaign.c:2533
 msgid "You've won the battle"
 msgstr "Вы победили в бою"
 
-#: client/cl_aircraft.c:623 client/cl_campaign.c:2519
+#: client/cl_aircraft.c:653 client/cl_campaign.c:2535
 msgid "You've lost the battle"
 msgstr "Вы проиграли бой"
 
-#: client/cl_aircraft.c:667 client/cl_aircraft.c:678
+#: client/cl_aircraft.c:707
 #, fuzzy
 msgid "None\n"
 msgstr "Нет\n"
 
-#: client/cl_aircraft.c:718
+#: client/cl_aircraft.c:764
 msgid "No weapon assigned"
 msgstr "Оружие не установлено"
 
 #: client/cl_aircraft.c:768
+#, fuzzy
+msgid "No item assigned"
+msgstr "Броня не установлена"
+
+#: client/cl_aircraft.c:772
 msgid "No shield assigned"
 msgstr "Броня не установлена"
 
-#: client/cl_aircraft.c:816
+#: client/cl_aircraft.c:840
 msgid "Assign a team to aircraft"
 msgstr "Назначить отряд на самолет"
 
@@ -5028,7 +5096,7 @@ msgstr[0] "%i дней осталось"
 msgstr[1] "%i день осталcя"
 msgstr[2] "%i дня осталось"
 
-#: client/cl_basemanagement.c:1366 client/cl_campaign.c:1386
+#: client/cl_basemanagement.c:1366 client/cl_campaign.c:1397
 #, c-format
 msgid "%i c"
 msgstr "%i кр."
@@ -5038,7 +5106,7 @@ msgstr "%i кр."
 msgid "Base is under attack"
 msgstr "База атакована"
 
-#: client/cl_basemanagement.c:1652 client/cl_team.c:1123 client/cl_team.c:1316
+#: client/cl_basemanagement.c:1652 client/cl_team.c:1119 client/cl_team.c:1312
 msgid "NewTeam"
 msgstr "НовыйОтряд"
 
@@ -5075,57 +5143,57 @@ msgstr ""
 msgid "Transfer is not possible - the base doesn't have a lab"
 msgstr ""
 
-#: client/cl_basemanagement.c:2213
+#: client/cl_basemanagement.c:2240
 #, fuzzy
 msgid "No target base selected"
 msgstr "Ничего не выбрано"
 
-#: client/cl_basemanagement.c:2213
+#: client/cl_basemanagement.c:2240
 msgid "Please select the target base from the list"
 msgstr ""
 
-#: client/cl_basemanagement.c:2218
+#: client/cl_basemanagement.c:2245
 #, fuzzy
 msgid "No aircraft selected"
 msgstr "Ничего не выбрано"
 
-#: client/cl_basemanagement.c:2218
+#: client/cl_basemanagement.c:2245
 msgid "Please select the aircraft to use from the list"
 msgstr ""
 
-#: client/cl_basemanagement.c:2334
+#: client/cl_basemanagement.c:2389
 msgid "You can transfer equipment - this base has a storage building\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2337
+#: client/cl_basemanagement.c:2392
 #, fuzzy
 msgid "No storage building in this base\n"
 msgstr "Нет построек на начальной базе"
 
-#: client/cl_basemanagement.c:2341
+#: client/cl_basemanagement.c:2396
 msgid "You can transfer employees - this base has quarters\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2344
+#: client/cl_basemanagement.c:2399
 #, fuzzy
 msgid "No quarters in this base\n"
 msgstr "Название базы"
 
-#: client/cl_basemanagement.c:2347
+#: client/cl_basemanagement.c:2402
 msgid "You can transfer techs - this base has a laboratory\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2349
+#: client/cl_basemanagement.c:2404
 #, fuzzy
 msgid "No laboratory in this base\n"
 msgstr "Свободный лабораторий на базе: %i"
 
-#: client/cl_basemanagement.c:2503
+#: client/cl_basemanagement.c:2559
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Завершено строительство %s на базе %s."
 
-#: client/cl_basemanagement.c:2504
+#: client/cl_basemanagement.c:2560
 msgid "Building finished"
 msgstr "Завершено строительство"
 
@@ -5133,21 +5201,21 @@ msgstr "Завершено строительство"
 msgid "Could not set up your base at this location"
 msgstr "В этом месте невозможно построить базу."
 
-#: client/cl_campaign.c:716
+#: client/cl_campaign.c:724
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "Ваша база %s атакуется."
 
-#: client/cl_campaign.c:741
+#: client/cl_campaign.c:749
 #, fuzzy, c-format
 msgid "Alien activity has been reported: '%s'"
 msgstr "Обнаружена активность пришельцев: '%s'"
 
-#: client/cl_campaign.c:742
+#: client/cl_campaign.c:750
 msgid "Alien activity"
 msgstr "Активность пришельцев"
 
-#: client/cl_campaign.c:904
+#: client/cl_campaign.c:912
 #, c-format
 msgid ""
 "Your base: %s has been ransacked! All employees killed and all equipment "
@@ -5155,7 +5223,7 @@ msgid ""
 msgstr ""
 "Ваша база %s разграблена! Все служащие убиты и оборудование уничтожено."
 
-#: client/cl_campaign.c:955
+#: client/cl_campaign.c:968
 #, c-format
 msgid "The mission expired and %i civilian died."
 msgid_plural "The mission expired and %i civilians died."
@@ -5163,112 +5231,112 @@ msgstr[0] "Миссия не была вовремя выполнена и %i м
 msgstr[1] "Миссия не была вовремя выполнена и %i мирный житель погиб."
 msgstr[2] "Миссия не была вовремя выполнена и %i мирных жителя погибло."
 
-#: client/cl_campaign.c:1004
+#: client/cl_campaign.c:1017
 msgid "Jan"
 msgstr "Янв"
 
-#: client/cl_campaign.c:1006
+#: client/cl_campaign.c:1019
 msgid "Feb"
 msgstr "Фев"
 
-#: client/cl_campaign.c:1008
+#: client/cl_campaign.c:1021
 #, fuzzy
 msgid "Mar"
 msgstr "Мар"
 
-#: client/cl_campaign.c:1010
+#: client/cl_campaign.c:1023
 msgid "Apr"
 msgstr "Апр"
 
-#: client/cl_campaign.c:1012
+#: client/cl_campaign.c:1025
 #, fuzzy
 msgid "May"
 msgstr "Май"
 
-#: client/cl_campaign.c:1014
+#: client/cl_campaign.c:1027
 msgid "Jun"
 msgstr "Июн"
 
-#: client/cl_campaign.c:1016
+#: client/cl_campaign.c:1029
 msgid "Jul"
 msgstr "Июл"
 
-#: client/cl_campaign.c:1018
+#: client/cl_campaign.c:1031
 msgid "Aug"
 msgstr "Авг"
 
-#: client/cl_campaign.c:1020
+#: client/cl_campaign.c:1033
 msgid "Sep"
 msgstr "Сен"
 
-#: client/cl_campaign.c:1022
+#: client/cl_campaign.c:1035
 msgid "Oct"
 msgstr "Окт"
 
-#: client/cl_campaign.c:1024
+#: client/cl_campaign.c:1037
 #, fuzzy
 msgid "Nov"
 msgstr "Ноя"
 
-#: client/cl_campaign.c:1026
+#: client/cl_campaign.c:1039
 msgid "Dec"
 msgstr "Дек"
 
-#: client/cl_campaign.c:1040
+#: client/cl_campaign.c:1053
 msgid "Giving up"
 msgstr "Разорвано"
 
-#: client/cl_campaign.c:1042
+#: client/cl_campaign.c:1055
 msgid "Furious"
 msgstr "Яростное"
 
-#: client/cl_campaign.c:1044
+#: client/cl_campaign.c:1057
 msgid "Angry"
 msgstr "Разгневанное"
 
-#: client/cl_campaign.c:1046
+#: client/cl_campaign.c:1059
 msgid "Mad"
 msgstr "Обеспокоенное"
 
-#: client/cl_campaign.c:1048
+#: client/cl_campaign.c:1061
 msgid "Upset"
 msgstr "Огорченное"
 
-#: client/cl_campaign.c:1050
+#: client/cl_campaign.c:1063
 #, fuzzy
 msgid "Tolerant"
 msgstr "Спокойное"
 
-#: client/cl_campaign.c:1052
+#: client/cl_campaign.c:1065
 #, fuzzy
 msgid "Neutral"
 msgstr "Нейтральное"
 
-#: client/cl_campaign.c:1054
+#: client/cl_campaign.c:1067
 #, fuzzy
 msgid "Content"
 msgstr "Удолетворительное"
 
-#: client/cl_campaign.c:1056
+#: client/cl_campaign.c:1069
 #, fuzzy
 msgid "Pleased"
 msgstr "Доброжелательное"
 
-#: client/cl_campaign.c:1058
+#: client/cl_campaign.c:1071
 #, fuzzy
 msgid "Happy"
 msgstr "Довольное"
 
-#: client/cl_campaign.c:1060
+#: client/cl_campaign.c:1073
 msgid "Exuberant"
 msgstr "Отличное"
 
-#: client/cl_campaign.c:1114
+#: client/cl_campaign.c:1127
 #, fuzzy, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Получено %i %s, %i %s, %i %s, %i %s, и %i %s от нации %s (%s)"
 
-#: client/cl_campaign.c:1115
+#: client/cl_campaign.c:1128
 #, fuzzy
 msgid "credit"
 msgid_plural "credits"
@@ -5276,7 +5344,7 @@ msgstr[0] "кредит"
 msgstr[1] "кредит"
 msgstr[2] "кредита"
 
-#: client/cl_campaign.c:1116 client/cl_campaign.c:4051
+#: client/cl_campaign.c:1129 client/cl_campaign.c:4074
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
@@ -5284,7 +5352,7 @@ msgstr[0] "ученых"
 msgstr[1] "ученый"
 msgstr[2] "ученых"
 
-#: client/cl_campaign.c:1117 client/cl_campaign.c:4053
+#: client/cl_campaign.c:1130 client/cl_campaign.c:4076
 #, fuzzy
 msgid "medic"
 msgid_plural "medics"
@@ -5292,7 +5360,7 @@ msgstr[0] "врач"
 msgstr[1] "врач"
 msgstr[2] "врача"
 
-#: client/cl_campaign.c:1118 client/cl_campaign.c:4050
+#: client/cl_campaign.c:1131 client/cl_campaign.c:4073
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
@@ -5300,7 +5368,7 @@ msgstr[0] "боецов"
 msgstr[1] "боец"
 msgstr[2] "боеца"
 
-#: client/cl_campaign.c:1119 client/cl_campaign.c:4052
+#: client/cl_campaign.c:1132 client/cl_campaign.c:4075
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
@@ -5308,57 +5376,57 @@ msgstr[0] "рабочих"
 msgstr[1] "рабочий"
 msgstr[2] "рабочих"
 
-#: client/cl_campaign.c:1130
+#: client/cl_campaign.c:1143
 #, fuzzy, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Заплачено %i кредитов бойцам"
 
-#: client/cl_campaign.c:1140
+#: client/cl_campaign.c:1153
 #, fuzzy, c-format
 msgid "Paid %i credits to workers"
 msgstr "Заплачено %i кредитов рабочим"
 
-#: client/cl_campaign.c:1150
+#: client/cl_campaign.c:1163
 #, fuzzy, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Заплачено %i кредитов ученым"
 
-#: client/cl_campaign.c:1160
+#: client/cl_campaign.c:1173
 #, fuzzy, c-format
 msgid "Paid %i credits to medics"
 msgstr "Заплачено %i кредитов врачам"
 
-#: client/cl_campaign.c:1171
+#: client/cl_campaign.c:1184
 #, fuzzy, c-format
 msgid "Paid %i credits for robots"
 msgstr "Заплачено %i кредитов за роботов"
 
-#: client/cl_campaign.c:1184
+#: client/cl_campaign.c:1197
 #, fuzzy, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Заплачено %i кредитов за самолеты"
 
-#: client/cl_campaign.c:1195
+#: client/cl_campaign.c:1208
 #, fuzzy, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "Заплачено %i кредитов за содержание базы %s"
 
-#: client/cl_campaign.c:1201
+#: client/cl_campaign.c:1214
 #, fuzzy, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Заплачено %i административных издержек. "
 
-#: client/cl_campaign.c:1209
+#: client/cl_campaign.c:1222
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Заплачено %i кредитов по долговым процентам."
 
-#: client/cl_campaign.c:1292
+#: client/cl_campaign.c:1303
 #, c-format
 msgid "%02i:%02i"
 msgstr ""
 
-#: client/cl_campaign.c:1407
+#: client/cl_campaign.c:1418
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -5369,7 +5437,7 @@ msgstr ""
 "Проиграно:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:1412
+#: client/cl_campaign.c:1423
 #, c-format
 msgid ""
 "Build:\t%i\n"
@@ -5380,42 +5448,42 @@ msgstr ""
 "Активно:\t%i\n"
 "Атаковано:\t%i\n"
 
-#: client/cl_campaign.c:1419
+#: client/cl_campaign.c:1430
 #, fuzzy, c-format
 msgid "%s\t%s\n"
 msgstr "Карта:\t%s\n"
 
-#: client/cl_campaign.c:1426
+#: client/cl_campaign.c:1437
 #, c-format
 msgid "%s\t%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:1452
+#: client/cl_campaign.c:1463
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Служащие:\t%i кр.\n"
 
-#: client/cl_campaign.c:1461
+#: client/cl_campaign.c:1472
 #, fuzzy, c-format
 msgid "Aircrafts:\t%i c\n"
 msgstr "Самолеты:\t%i кр.\n"
 
-#: client/cl_campaign.c:1469
+#: client/cl_campaign.c:1480
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "База (%s):\t%i кр.\n"
 
-#: client/cl_campaign.c:1474
+#: client/cl_campaign.c:1485
 #, fuzzy, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Административные издержки:\t%i кр\n"
 
-#: client/cl_campaign.c:1481
+#: client/cl_campaign.c:1492
 #, fuzzy, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Долг:\t%i кр\n"
 
-#: client/cl_campaign.c:1484
+#: client/cl_campaign.c:1495
 #, c-format
 msgid ""
 "\n"
@@ -5426,29 +5494,29 @@ msgstr ""
 "\t--------\n"
 "Всего:\t%i кр.\n"
 
-#: client/cl_campaign.c:1723
+#: client/cl_campaign.c:1738
 msgid "Error saving game. Check free disk space!"
 msgstr "Ошибка сохранения игры. Проверьте свободное место."
 
-#: client/cl_campaign.c:1723 client/cl_campaign.c:2311 client/cl_team.c:1168
+#: client/cl_campaign.c:1738 client/cl_campaign.c:2327 client/cl_team.c:1164
 msgid "Note"
 msgstr "Замечание"
 
-#: client/cl_campaign.c:2311
+#: client/cl_campaign.c:2327
 msgid "Assemble or load a team"
 msgstr "Создайте или загрузите отряд"
 
-#: client/cl_campaign.c:2480
+#: client/cl_campaign.c:2496
 #, fuzzy
 msgid "Your dropship is not near the landing zone"
 msgstr "Ваш транспорт далеко от зоны приземления"
 
-#: client/cl_campaign.c:2692
+#: client/cl_campaign.c:2713
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s был повышел до звания %s.\n"
 
-#: client/cl_campaign.c:2694
+#: client/cl_campaign.c:2715
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
@@ -5457,26 +5525,26 @@ msgstr ""
 "%s был награжден посмертно званием %s\\за отважную борьбу с превосходящими "
 "силами противника.\n"
 
-#: client/cl_campaign.c:2695
+#: client/cl_campaign.c:2716
 msgid "Soldier promoted"
 msgstr "Солдат повышен"
 
-#: client/cl_campaign.c:2835
+#: client/cl_campaign.c:2860
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Защита базы: %s успешно!"
 
-#: client/cl_campaign.c:4046
+#: client/cl_campaign.c:4069
 #, fuzzy
 msgid "Aliens"
 msgstr "Пришелец"
 
-#: client/cl_campaign.c:4046
+#: client/cl_campaign.c:4069
 #, fuzzy
 msgid "Human"
 msgstr "Короткая Очередь"
 
-#: client/cl_campaign.c:4048
+#: client/cl_campaign.c:4071
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -5491,7 +5559,7 @@ msgstr ""
 "Сложность: %s\n"
 "%s\n"
 
-#: client/cl_employee.c:118
+#: client/cl_employee.c:181
 #, fuzzy
 msgid "Soldier"
 msgstr "Боец"
@@ -5592,19 +5660,20 @@ msgstr "Подтвердить текущее действие"
 msgid "Toggle first-person/third-person camera mode"
 msgstr "Переключится с вида отпервого лица к виду от третьего лица"
 
-#: client/cl_main.c:370 client/cl_main.c:937
+#: client/cl_main.c:373 client/cl_main.c:1008
 msgid "Assemble a team first"
 msgstr "Сначала соберите отряд"
 
-#: client/cl_main.c:370 client/cl_main.c:937 client/cl_main.c:1493
+#: client/cl_main.c:373 client/cl_main.c:1008 client/cl_main.c:1572
+#: client/cl_main.c:1577 client/cl_main.c:1583 client/cl_main.c:1588
 msgid "Error"
 msgstr "Ошибка"
 
-#: client/cl_main.c:791
+#: client/cl_main.c:859
 msgid "No player connected\n"
 msgstr "Нет подключенных игроков\n"
 
-#: client/cl_main.c:829
+#: client/cl_main.c:897
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -5613,110 +5682,125 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:853
+#: client/cl_main.c:918
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Карта:\t%s\n"
 
-#: client/cl_main.c:855
+#: client/cl_main.c:929
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Версия:\t%s\n"
 
-#: client/cl_main.c:857
+#: client/cl_main.c:931
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Имя сервера:\t%s\n"
 
-#: client/cl_main.c:859
+#: client/cl_main.c:933
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Мораль:\t%s\n"
 
-#: client/cl_main.c:861
+#: client/cl_main.c:935
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Командная игра:\t%s\n"
 
-#: client/cl_main.c:863
+#: client/cl_main.c:937
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Максимум игроков в команде:\t%s\n"
 
-#: client/cl_main.c:865
+#: client/cl_main.c:939
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Макс. количество команд на этой карте:\t%s\n"
 
-#: client/cl_main.c:867
+#: client/cl_main.c:941
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Максимум игроков:\t%s\n"
 
-#: client/cl_main.c:869
+#: client/cl_main.c:943
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Максимум бойцов у игрока:\t%s\n"
 
-#: client/cl_main.c:871
+#: client/cl_main.c:945
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Максимум бойцов в отряде:\t%s\n"
 
-#: client/cl_main.c:1099
+#: client/cl_main.c:1174
 msgid "Select a free team or your coop team"
 msgstr "Выберите свободную команду или присоединяйтесь к команде"
 
-#: client/cl_main.c:1396 client/cl_main.c:1410
+#: client/cl_main.c:1474 client/cl_main.c:1488
 #, fuzzy, c-format
 msgid "Current team: %i"
 msgstr "Текущий отряд: %i"
 
-#: client/cl_main.c:1400 client/cl_main.c:1414
+#: client/cl_main.c:1478 client/cl_main.c:1492
 #, fuzzy
 msgid "Team is already in use"
 msgstr "Команда уже используется"
 
-#: client/cl_main.c:1424 client/cl_main.c:1450
+#: client/cl_main.c:1502 client/cl_main.c:1528
 msgid "Invalid or full team"
 msgstr "Неправильная или укомплектованная команда"
 
-#: client/cl_main.c:1493
+#: client/cl_main.c:1572
+msgid "Local game version differs from the servers"
+msgstr ""
+
+#: client/cl_main.c:1577
 msgid "Local map version differs from server"
 msgstr ""
 
-#: client/cl_main.c:1757
+#: client/cl_main.c:1583
+msgid ""
+"You are using modified ufo script files - you won't be able to connect to "
+"the server"
+msgstr ""
+
+#: client/cl_main.c:1588
+#, c-format
+msgid "Local game version differs from the servers (%s)"
+msgstr ""
+
+#: client/cl_main.c:1867
 #, fuzzy
 msgid "Unnamed"
 msgstr "Без имени"
 
-#: client/cl_main.c:1991
+#: client/cl_main.c:2101
 msgid "Chicken-hearted"
 msgstr "Уязвимый, как цыпленок"
 
-#: client/cl_main.c:1993
+#: client/cl_main.c:2103
 msgid "Very Easy"
 msgstr "Очень легкая"
 
-#: client/cl_main.c:1996
+#: client/cl_main.c:2106
 msgid "Easy"
 msgstr "Легкая"
 
-#: client/cl_main.c:1998
+#: client/cl_main.c:2108
 #, fuzzy
 msgid "Normal"
 msgstr "Нормальная"
 
-#: client/cl_main.c:2001
+#: client/cl_main.c:2111
 #, fuzzy
 msgid "Hard"
 msgstr "Тежелая"
 
-#: client/cl_main.c:2003
+#: client/cl_main.c:2113
 msgid "Very Hard"
 msgstr "Очень тяжелая"
 
-#: client/cl_main.c:2005
+#: client/cl_main.c:2115
 #, fuzzy
 msgid "Insane"
 msgstr "Безумная"
@@ -5729,38 +5813,38 @@ msgstr "Щелчок мыши"
 msgid "UFO"
 msgstr "НЛО"
 
-#: client/cl_map.c:575 client/cl_map.c:627
+#: client/cl_map.c:589 client/cl_map.c:641
 #, fuzzy
 msgid "Day"
 msgstr "День"
 
-#: client/cl_map.c:575 client/cl_map.c:627
+#: client/cl_map.c:589 client/cl_map.c:641
 msgid "Night"
 msgstr "Ночь"
 
-#: client/cl_map.c:744
+#: client/cl_map.c:758
 #, fuzzy
 msgid "Select the desired location of the new base on the map.\n"
 msgstr ""
 "Выберите место для постройки\n"
 "новой базы.\n"
 
-#: client/cl_map.c:749
+#: client/cl_map.c:763
 #, fuzzy
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr ""
 "Пришельцы атакуют нашу базу\n"
 "в этот самый момент.\n"
 
-#: client/cl_map.c:754
+#: client/cl_map.c:768
 msgid "Select ufo or mission on map\n"
 msgstr "Выберете НЛО или миссию на карте\n"
 
-#: client/cl_map.c:759
+#: client/cl_map.c:773
 msgid "UFO in radar range\n"
 msgstr "НЛО в пределах радара\n"
 
-#: client/cl_map.c:765
+#: client/cl_map.c:781
 #, fuzzy, c-format
 msgid ""
 "Location: %s\n"
@@ -5771,12 +5855,12 @@ msgstr ""
 "Тип: %s\n"
 "Задание: %s\n"
 
-#: client/cl_map.c:770
+#: client/cl_map.c:786
 #, fuzzy, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Имя:\t%s (%i/%i)\n"
 
-#: client/cl_map.c:771
+#: client/cl_map.c:787
 #, fuzzy, c-format
 msgid "Status:\t%s\n"
 msgstr "Статус:\t%s\n"
@@ -5789,146 +5873,151 @@ msgstr "Нужно сделать\n"
 msgid "Unknown - need to research this"
 msgstr "Неизвестно - необходимо исследовать"
 
-#: client/cl_menu.c:436
+#: client/cl_menu.c:440
 msgid "Set playersoldiers lower than teamsoldiers"
 msgstr "Установите число бойцов игрока меньше, чем бойцов в отряде"
 
-#: client/cl_menu.c:436
+#: client/cl_menu.c:440
 msgid "Settings doesn't make sense"
 msgstr "Установки не имеют смысла"
 
-#: client/cl_menu.c:1518
+#: client/cl_menu.c:1522
 #, c-format
 msgid "Key: %s"
 msgstr "Клавиша: %s"
 
-#: client/cl_menu.c:2799
+#: client/cl_menu.c:2823
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Скрыть HUD (нажмите ESC чтобы отобразить HUD)"
 
-#: client/cl_parse.c:721 client/cl_parse.c:723
+#: client/cl_parse.c:734
+#, fuzzy
+msgid "Alien spotted:"
+msgstr "Обнаружен пришелец!\n"
+
+#: client/cl_parse.c:737 client/cl_parse.c:739
 msgid "Alien spotted!\n"
 msgstr "Обнаружен пришелец!\n"
 
-#: client/cl_parse.c:725
+#: client/cl_parse.c:741
 msgid "Enemy spotted!\n"
 msgstr "Обнаружен противник!\n"
 
-#: client/cl_parse.c:727
+#: client/cl_parse.c:743
 msgid "Civilian spotted!\n"
 msgstr "Обнаружен гражданский!\n"
 
-#: client/cl_popup.c:232
+#: client/cl_popup.c:228
 #, fuzzy, c-format
 msgid "Back to base\t%s\n"
 msgstr "Обратно к обзору базы \t%s\n"
 
-#: client/cl_popup.c:234
+#: client/cl_popup.c:230
 msgid "Stop\n"
 msgstr "Стоп\n"
 
-#: client/cl_popup.c:241
+#: client/cl_popup.c:237
 #, c-format
 msgid "Mission\t%s (%s)\n"
 msgstr "Миссия\t%s (%s)\n"
 
-#: client/cl_produce.c:226
+#: client/cl_produce.c:228
 #, fuzzy, c-format
 msgid "Production queue for base %s is empty"
 msgstr "На базе %s завершено производство"
 
-#: client/cl_produce.c:227
+#: client/cl_produce.c:229
 #, fuzzy
 msgid "Production queue empty"
 msgstr "Очередь производства пуста"
 
-#: client/cl_produce.c:278
+#: client/cl_produce.c:280
 #, fuzzy, c-format
 msgid "The production of %s has finished."
 msgstr "Производство %s запущено"
 
-#: client/cl_produce.c:279
+#: client/cl_produce.c:281
 #, fuzzy
 msgid "Production finished"
 msgstr "Строительство завершено"
 
-#: client/cl_produce.c:309
+#: client/cl_produce.c:311
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "Цена за штуку\t%i кр.\n"
 
-#: client/cl_produce.c:311
+#: client/cl_produce.c:313
 #, fuzzy, c-format
 msgid "Productiontime\t%ih\n"
 msgstr "Время производства\t%i ч.\n"
 
-#: client/cl_produce.c:315
+#: client/cl_produce.c:317
 #, fuzzy
 msgid "No item selected"
 msgstr "Ничего не выбрано"
 
-#: client/cl_produce.c:634
+#: client/cl_produce.c:648
 #, fuzzy, c-format
 msgid "Production of %s started"
 msgstr "Производство %s запущено"
 
-#: client/cl_produce.c:635
+#: client/cl_produce.c:649
 #, fuzzy
 msgid "Production started"
 msgstr "Производство запущено"
 
-#: client/cl_produce.c:642
+#: client/cl_produce.c:656
 msgid "Queue full!"
 msgstr "Добавить в очередь больше нельзя"
 
-#: client/cl_produce.c:642
+#: client/cl_produce.c:656
 msgid "You cannot queue any more items!"
 msgstr "Заполнена!"
 
-#: client/cl_research.c:560
+#: client/cl_research.c:561
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Свободный учёных на базе: %i"
 
-#: client/cl_research.c:561
+#: client/cl_research.c:562
 msgid "Not researched in any base."
 msgstr "Не исследуется ни на одной базе."
 
-#: client/cl_research.c:567
+#: client/cl_research.c:568
 #, c-format
 msgid "Researched in %s"
 msgstr "Исследовано на базе: %s"
 
-#: client/cl_research.c:569
+#: client/cl_research.c:570
 msgid "Researched in this base."
 msgstr "Исследовано на этой базе."
 
-#: client/cl_research.c:580
+#: client/cl_research.c:581
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Прогресс: %.1f%%"
 
-#: client/cl_research.c:582
+#: client/cl_research.c:583
 msgid "Progress: Not available."
 msgstr "Прогресс: Не доступно."
 
-#: client/cl_research.c:586
+#: client/cl_research.c:587
 msgid "Status: Under research"
 msgstr "Статус: Исследуется"
 
-#: client/cl_research.c:589
+#: client/cl_research.c:590
 msgid "Status: Research paused"
 msgstr "Статус: Приостановлено"
 
-#: client/cl_research.c:592
+#: client/cl_research.c:593
 msgid "Status: Research finished"
 msgstr "Статус: Завершено"
 
-#: client/cl_research.c:595
+#: client/cl_research.c:596
 msgid "Status: Unknown technology"
 msgstr "Статус: Неизвестная технология"
 
-#: client/cl_research.c:669
+#: client/cl_research.c:670
 #, fuzzy
 msgid ""
 "There is no free lab available.\n"
@@ -5939,19 +6028,19 @@ msgstr ""
 "Чтобы начать исследование необходимо\n"
 "освободить существующую или построить новую.\n"
 
-#: client/cl_research.c:790
+#: client/cl_research.c:791
 msgid "This item is already under research by your scientists."
 msgstr "Этот объект уже исследуется Вашими учеными."
 
-#: client/cl_research.c:793
+#: client/cl_research.c:794
 msgid "The research on this item continues."
 msgstr "Исследование этого объекта продолжаются."
 
-#: client/cl_research.c:797 client/cl_research.c:839
+#: client/cl_research.c:798 client/cl_research.c:840
 msgid "The research on this item is complete."
 msgstr "Исследование этого объекта завершено."
 
-#: client/cl_research.c:810
+#: client/cl_research.c:811
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -5959,24 +6048,24 @@ msgstr ""
 "Исследование этого объекта пока невозможно.\n"
 "Сначала необходимо открыть технологии, на которых основано это исследование."
 
-#: client/cl_research.c:878
+#: client/cl_research.c:879
 msgid " [not yet researchable]"
 msgstr " [недоступно для исследования]"
 
-#: client/cl_research.c:985
+#: client/cl_research.c:986
 msgid "Build a laboratory first"
 msgstr "Сначала постройте лабораторию."
 
-#: client/cl_research.c:1066
+#: client/cl_research.c:1067
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Исследование завершено: %s\n"
 
-#: client/cl_research.c:1067
+#: client/cl_research.c:1068
 msgid "Research finished"
 msgstr "Исследование завершено"
 
-#: client/cl_research.c:1365
+#: client/cl_research.c:1366
 msgid "No description available."
 msgstr "Описание не доступно."
 
@@ -6007,29 +6096,29 @@ msgstr "Арктика"
 msgid "%i of %i"
 msgstr "%i из %i"
 
-#: client/cl_team.c:1168
+#: client/cl_team.c:1164
 msgid "Error saving team. Check free disk space!"
 msgstr "Ошибка при записи на диск. Проверьте свободное место!"
 
-#: client/cl_team.c:1339
+#: client/cl_team.c:1335
 msgid "Select a soldier from list"
 msgstr "Выбрать бойца из списка"
 
-#: client/cl_team.c:1340
+#: client/cl_team.c:1336
 msgid "Toggle to next soldier"
 msgstr "Переключится к следующему солдату"
 
-#: client/cl_team.c:1636 client/cl_team.c:1684
+#: client/cl_team.c:1632 client/cl_team.c:1680
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Пришельцев убито\t%i\n"
 
-#: client/cl_team.c:1639
+#: client/cl_team.c:1635
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Противников убито\t%i\n"
 
-#: client/cl_team.c:1644
+#: client/cl_team.c:1640
 #, fuzzy, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -6038,7 +6127,7 @@ msgstr ""
 "Пришельцев захвачено\t%i\n"
 "\n"
 
-#: client/cl_team.c:1645 client/cl_team.c:1688
+#: client/cl_team.c:1641 client/cl_team.c:1684
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -6047,14 +6136,14 @@ msgstr ""
 "Пришельцев уцелело\t%i\n"
 "\n"
 
-#: client/cl_team.c:1647
+#: client/cl_team.c:1643
 #, fuzzy, c-format
 msgid ""
 "Enemies captured\t%i\n"
 "\n"
 msgstr "Противников захвачено\t%i\n"
 
-#: client/cl_team.c:1648
+#: client/cl_team.c:1644
 #, fuzzy, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -6063,22 +6152,22 @@ msgstr ""
 "Противников уцелело\t%i\n"
 "\n"
 
-#: client/cl_team.c:1652
+#: client/cl_team.c:1648
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Отряд потерял\t%i\n"
 
-#: client/cl_team.c:1653
+#: client/cl_team.c:1649
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Отряд потерял на задании\t%i\n"
 
-#: client/cl_team.c:1654
+#: client/cl_team.c:1650
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Убито в отряде своими\t%i\n"
 
-#: client/cl_team.c:1655
+#: client/cl_team.c:1651
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -6087,22 +6176,22 @@ msgstr ""
 "Уцелело в отряде\t%i\n"
 "\n"
 
-#: client/cl_team.c:1658
+#: client/cl_team.c:1654
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Мирных жителей убито пришельцами\t%i\n"
 
-#: client/cl_team.c:1660
+#: client/cl_team.c:1656
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Мирных жителей убито противниками\t%i\n"
 
-#: client/cl_team.c:1662
+#: client/cl_team.c:1658
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Мирных жителей убито отрядом\t%i\n"
 
-#: client/cl_team.c:1663
+#: client/cl_team.c:1659
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -6113,27 +6202,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1687
+#: client/cl_team.c:1683
 #, fuzzy, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Пришельцев захвачено\t%i\n"
 
-#: client/cl_team.c:1691
+#: client/cl_team.c:1687
 #, fuzzy, c-format
 msgid "Phalanx soldiers killed by Aliens\t%i\n"
 msgstr "Бойцов ФАЛАНКС убито пришельцами\t%i\n"
 
-#: client/cl_team.c:1692
+#: client/cl_team.c:1688
 #, fuzzy, c-format
 msgid "Phalanx soldiers missing in action\t%i\n"
 msgstr "Бойцов ФАЛАНКС потерено в задании\t%i\n"
 
-#: client/cl_team.c:1693
+#: client/cl_team.c:1689
 #, fuzzy, c-format
 msgid "Phalanx friendly fire losses\t%i\n"
 msgstr "Убито в отряде своими\t%i\n"
 
-#: client/cl_team.c:1694
+#: client/cl_team.c:1690
 #, fuzzy, c-format
 msgid ""
 "Phalanx survivors\t%i\n"
@@ -6142,17 +6231,17 @@ msgstr ""
 "Уцелело в ФАЛАНКС\t%i\n"
 "\n"
 
-#: client/cl_team.c:1696
+#: client/cl_team.c:1692
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Мирных жителей убито пришельцами\t%i\n"
 
-#: client/cl_team.c:1697
+#: client/cl_team.c:1693
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Мирных жителей убито своими\t%i\n"
 
-#: client/cl_team.c:1698
+#: client/cl_team.c:1694
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -6162,12 +6251,12 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1702
+#: client/cl_team.c:1698
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
 msgstr "Захвачено и продано трофеев\t%i\n"
 
-#: client/cl_team.c:1703
+#: client/cl_team.c:1699
 #, c-format
 msgid ""
 "Total item sale value\t%i\n"
@@ -6176,7 +6265,7 @@ msgstr ""
 "Всего выручено\t%i\n"
 "\n"
 
-#: client/cl_team.c:1719
+#: client/cl_team.c:1715
 #, c-format
 msgid ""
 "\n"
@@ -6189,16 +6278,16 @@ msgstr ""
 "Врагов убито:  %i\n"
 "Выжило в команде:  %i"
 
-#: client/cl_team.c:1721
+#: client/cl_team.c:1717
 #, fuzzy
 msgid "You won the game!"
 msgstr "Вы победили в бою"
 
-#: client/cl_team.c:1723
+#: client/cl_team.c:1719
 msgid "Congratulations"
 msgstr "Поздравления"
 
-#: client/cl_team.c:1725
+#: client/cl_team.c:1721
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -6208,16 +6297,16 @@ msgstr ""
 "\n"
 "Нет выживших ни на одной стороне."
 
-#: client/cl_team.c:1726
+#: client/cl_team.c:1722
 msgid "Game Drawn!"
 msgstr "Ничья!"
 
-#: client/cl_team.c:1728
+#: client/cl_team.c:1724
 #, fuzzy
 msgid "You lost the game"
 msgstr "Вы проиграли бой"
 
-#: client/cl_team.c:1730
+#: client/cl_team.c:1726
 msgid "Better luck next time"
 msgstr "Удачи в следующий раз"
 
@@ -6392,11 +6481,6 @@ msgstr "Ошибка - самолет не найден"
 msgid "Fuel:\t%i\n"
 msgstr "Топливо:\t%i\n"
 
-#: client/cl_ufopedia.c:309
-#, c-format
-msgid "Shield:\t%s\n"
-msgstr "Защита:\t%s\n"
-
 #: client/cl_ufopedia.c:375
 msgid "No pre-research description available."
 msgstr "Предварительное описание не доступно."
@@ -6410,13 +6494,13 @@ msgstr "Содержание НЛОпедии"
 msgid "Ufopedia Index: %s"
 msgstr "Указатель НЛОпедии: %s"
 
-#: client/cl_view.c:417 client/cl_view.c:453 client/cl_view.c:483
-#: client/cl_view.c:495
+#: client/cl_view.c:410 client/cl_view.c:446 client/cl_view.c:476
+#: client/cl_view.c:488
 #, fuzzy, c-format
 msgid "loading %s"
 msgstr "загрузка %s"
 
-#: client/cl_view.c:432
+#: client/cl_view.c:425
 msgid "loading models..."
 msgstr "загрузка модели..."
 
@@ -6473,31 +6557,31 @@ msgid ""
 "ammunition!\n"
 msgstr "Невозможно выполнить действие - оружие полностью заряжено!\n"
 
-#: game/g_client.c:1210
+#: game/g_client.c:1212
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "Испуган, отказывается исполнять приказ.\n"
 
-#: game/g_client.c:1281
+#: game/g_client.c:1283
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s паникует!\n"
 
-#: game/g_client.c:1334
+#: game/g_client.c:1336
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s буйствует.\n"
 
-#: game/g_client.c:1336
+#: game/g_client.c:1338
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s разъярён!\n"
 
-#: game/g_client.c:1389
+#: game/g_client.c:1391
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s испуган.\n"
 
-#: game/g_client.c:1835
+#: game/g_client.c:1837
 #, c-format
 msgid "Team %i ( %s) will get the first turn.\n"
 msgstr ""
@@ -6533,6 +6617,20 @@ msgstr ""
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Weapon"
+#~ msgstr "Оружие"
+
+#~ msgid "LAN"
+#~ msgstr "LAN (локальная сеть)"
+
+#~ msgid "Internet"
+#~ msgstr "Интернет"
+
+#, fuzzy
+#~ msgid "Shield:\t%s"
+#~ msgstr "Щит:\t%s"
 
 #~ msgid "In this base:"
 #~ msgstr "На этой базе"
@@ -6642,9 +6740,6 @@ msgstr ""
 
 #~ msgid "Technologies & Discoveries"
 #~ msgstr "Технологии и Открытия"
-
-#~ msgid "Weapons"
-#~ msgstr "Оружие"
 
 #~ msgid "Armors"
 #~ msgstr "Броня"
@@ -7418,17 +7513,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Hard Shield"
 #~ msgstr "Щит:\t%s"
-
-#, fuzzy
-#~ msgid "craft_weapon_tr20_pre_txt"
-#~ msgstr ""
-#~ "Эта броня является практически неразрушаемой поскольку создана с "
-#~ "использованием наилегчайшего материала сделанного из соединенных друг с "
-#~ "другом фуллереновых колец как кольчуга в наномасштабе. Физические "
-#~ "воздействия распределяются по окружающему пространству снижая общие "
-#~ "повреждения нанесённые солдату. Энергетические атаки рассеиваются от "
-#~ "точки контакта и распределяются по всей поверхности брони, а после "
-#~ "постепенно отражается во внешнюю среду."
 
 #, fuzzy
 #~ msgid "Machine Pistol Clip"
