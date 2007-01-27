@@ -484,6 +484,9 @@ tech rs_weapon_grenl_plasma_ammo
 	producetime	1
 }
 
+// Generic laser ammo
+// See http://ufo.myexp.de/wiki/index.php/Equipment/Ammunition/D-F_Cartridge for more.
+// TODO fix the "provides" info. Which model should we use?
 tech rs_weapon_laserammo
 {
 	type		weapon
@@ -493,6 +496,9 @@ tech rs_weapon_laserammo
 
 	require_AND
 	{
+		weapon rs_weapon_heavylaser
+		weapon rs_weapon_laserpistol
+		weapon rs_weapon_laserrifle
 		tech rs_laser
 		tech rs_damage_laser
 	}
