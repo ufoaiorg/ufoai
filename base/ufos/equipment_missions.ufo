@@ -401,9 +401,9 @@ equipment multiplayer_initial
 	bolterrifle			8
 	bolterrifle_ammo	13
 	laserpistol			10
-	laserpistol_ammo	25
+//	laserpistol_ammo	25
 	laserrifle			7
-	laserrifle_ammo		13
+	laserrifle_ammo		38
 //	heavylaser			6
 //	heavylaser_ammo		13
 	plaspistol			10

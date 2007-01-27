@@ -63,11 +63,11 @@ equipment campaign_market
 	bolterrifle				2
 	bolterrifle_ammo		20
 	laserpistol				1
-	laserpistol_ammo		20
+//	laserpistol_ammo		20
 	laserrifle				1
-	laserrifle_ammo			10
+	laserrifle_ammo			35
 	heavylaser				1
-	heavylaser_ammo			5
+//	heavylaser_ammo			5
 	fraggrenade				40
 	incgrenade				10
 	smokegrenade			10
@@ -133,11 +133,11 @@ equipment campaign_market_aliens
 	bolterrifle				2
 	bolterrifle_ammo		20
 	laserpistol				1
-	laserpistol_ammo		20
+//	laserpistol_ammo		20
 	laserrifle				1
-	laserrifle_ammo			10
+	laserrifle_ammo			35
 	heavylaser				1
-	heavylaser_ammo			5
+//	heavylaser_ammo			5
 	fraggrenade				40
 	kerrblade				20
 	irgoggles				2
@@ -184,11 +184,11 @@ equipment multiplayer
 	bolterrifle			1
 	bolterrifle_ammo	3
 	laserpistol			2
-	laserpistol_ammo	5
+//	laserpistol_ammo	5
 	laserrifle			1
-	laserrifle_ammo		3
+	laserrifle_ammo		11
 	heavylaser			1
-	heavylaser_ammo		3
+//	heavylaser_ammo		3
 	plaspistol			2
 	plaspistol_ammo		5
 	plasrifle			1
@@ -251,11 +251,11 @@ equipment testing_and_tweaking
 	bolterrifle			2
 	bolterrifle_ammo	4
 	laserpistol			2
-	laserpistol_ammo	4
+//	laserpistol_ammo	4
 	laserrifle			2
-	laserrifle_ammo		4
+	laserrifle_ammo		12
 	heavylaser			2
-	heavylaser_ammo		4
+//	heavylaser_ammo		4
 	plaspistol			2
 	plaspistol_ammo		4
 	plasrifle			2
