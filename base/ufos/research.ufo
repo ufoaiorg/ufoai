@@ -2347,7 +2347,7 @@ tech rs_craft_ammo_shiva_1
 	time		0
 	producetime	10
 
-	image_top	"techs/craft_ammo_shiva_1
+	image_top	"techs/craft_ammo_shiva_1"
 }
 
 tech rs_craft_ammo_shiva_2
