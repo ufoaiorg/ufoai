@@ -1,4 +1,4 @@
-//===============
+la//===============
 // RESEARCH TREE (and other discovered things)
 //===============
 
@@ -486,7 +486,7 @@ tech rs_weapon_grenl_plasma_ammo
 
 // Generic laser ammo
 // See http://ufo.myexp.de/wiki/index.php/Equipment/Ammunition/D-F_Cartridge for more.
-// TODO fix the "provides" info. Which model should we use?
+// TODO fix the "provides" info. Which model should we use? I currently set it to use the laserrifle ammo.
 tech rs_weapon_laserammo
 {
 	type		weapon
@@ -502,7 +502,7 @@ tech rs_weapon_laserammo
 		tech rs_laser
 		tech rs_damage_laser
 	}
-//	provides	laserammo
+	provides	laserrifle_ammo
 	time		1200
 	producetime	3
 }
@@ -516,32 +516,32 @@ tech rs_weapon_heavylaser
 
 	require_AND
 	{
+		tech rs_laser
 		tech rs_skill_sniper
 		tech rs_skill_heavy
-		tech rs_weapon_laserrifle
 	}
 	provides	heavylaser
 	time	1500
 	producetime	80
 }
 
-tech rs_weapon_heavylaser_ammo
-{
-	type	weapon
-	up_chapter	equipment
-	description	"_heavylaser_ammo_txt"
-	pre_description	"_heavylaser_ammo_pre_txt"
-
-	require_AND
-	{
-		weapon rs_weapon_heavylaser
-		tech rs_damage_laser
-		tech rs_weapon_heavylaser
-	}
-	provides	heavylaser_ammo
-	time	0
-	producetime	1
-}
+//tech rs_weapon_heavylaser_ammo
+//{
+//	type	weapon
+//	up_chapter	equipment
+//	description	"_heavylaser_ammo_txt"
+//	pre_description	"_heavylaser_ammo_pre_txt"
+//
+//	require_AND
+//	{
+//		weapon rs_weapon_heavylaser
+//		tech rs_weapon_heavylaser
+//		tech rs_damage_laser
+//	}
+//	provides	heavylaser_ammo
+//	time	0
+//	producetime	1
+//}
 
 tech rs_irgoggles
 {
@@ -568,9 +568,9 @@ tech rs_weapon_kerrblade
 
 	require_AND
 	{
+		item kerrblade 1
 		tech rs_skill_close
 		tech rs_damage_normal
-		item kerrblade 1
 	}
 	provides	kerrblade
 	time	200
@@ -586,31 +586,31 @@ tech rs_weapon_laserpistol
 
 	require_AND
 	{
-		tech rs_skill_close
 		tech rs_laser
+		tech rs_skill_close
 	}
 	provides	laserpistol
 	time	1000
 	producetime	50
 }
 
-tech rs_weapon_laserpistol_ammo
-{
-	type	weapon
-	up_chapter	equipment
-	description	"_laserpistol_mag_txt"
-	pre_description	"_laserpistol_mag_pre_txt"
-
-	require_AND
-	{
-		weapon rs_weapon_laserpistol
-		tech rs_damage_laser
-		tech rs_weapon_laserpistol
-	}
-	provides	laserpistol_ammo
-	time	0
-	producetime	1
-}
+//tech rs_weapon_laserpistol_ammo
+//{
+//	type	weapon
+//	up_chapter	equipment
+//	description	"_laserpistol_mag_txt"
+//	pre_description	"_laserpistol_mag_pre_txt"
+//
+//	require_AND
+//	{
+//		weapon rs_weapon_laserpistol
+//		tech rs_damage_laser
+//		tech rs_weapon_laserpistol
+//	}
+//	provides	laserpistol_ammo
+//	time	0
+//	producetime	1
+//}
 
 tech rs_weapon_laserrifle
 {
@@ -621,32 +621,32 @@ tech rs_weapon_laserrifle
 
 	require_AND
 	{
+		tech rs_laser
 		tech rs_skill_sniper
 		tech rs_skill_assault
-		tech rs_weapon_laserpistol
 	}
 	provides	laserrifle
 	time	1750
 	producetime	70
 }
 
-tech rs_weapon_laserrifle_ammo
-{
-	type	weapon
-	up_chapter	equipment
-	description	"_laserrifle_mag_txt"
-	pre_description	"_laserrifle_mag_pre_txt"
-
-	require_AND
-	{
-		weapon rs_weapon_laserrifle
-		tech rs_damage_laser
-		tech rs_weapon_laserrifle
-	}
-	provides	laserrifle_ammo
-	time	0
-	producetime	1
-}
+//tech rs_weapon_laserrifle_ammo
+//{
+//	type	weapon
+//	up_chapter	equipment
+//	description	"_laserrifle_mag_txt"
+//	pre_description	"_laserrifle_mag_pre_txt"
+//
+//	require_AND
+//	{
+//		weapon rs_weapon_laserrifle
+//		tech rs_damage_laser
+//		tech rs_weapon_laserrifle
+//	}
+//	provides	laserrifle_ammo
+//	time	0
+//	producetime	1
+//}
 
 tech rs_medikit
 {
