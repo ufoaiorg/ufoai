@@ -19,56 +19,58 @@ item laserpistol
 	buytype		1
 }
 
-item laserpistol_ammo
-{
-	name		"_Laser Pistol Charge"
-	model		weapons/laserpistol/laserpistol_clip
-	type		ammo
-	category	0
-	shape		"0 0 1 2"
-	center		"0 0 0"
-	scale		1.6
-	price		130
-	buytype		1
-
-	primary
-	{
-		name	"_Single Pulse"
-		skill 	close
-		projtl	laserPulse
-		impact	laserImpact
-		hitbody	laserImpact
-		firesnd	weapons/laser.wav
-		speed	0
-		spread	"0 1"
-		crouch	0.8
-		range	64
-		shots	1
-		ammo	1
-		time	5
-		damage	"32 6"
-		dmgtype laser
-	}
-	secondary
-	{
-		name	"_Multiple Pulses"
-		skill 	close
-		projtl	laserPulse
-		impact	laserImpact
-		hitbody	laserImpact
-		firesnd	weapons/laser.wav
-		speed	0
-		spread	"0 2"
-		crouch	1.0
-		range	56
-		shots	4
-		ammo	4
-		rof		6
-		time	8
-		damage	"28 5"
-		dmgtype laser
-	}
-}
+// Commented out since all laser wepaons will use the common D-F Cartridge from now on.
+// TODO: We still need to correct the different stats for each weapon though.
+//item laserpistol_ammo
+//{
+//	name		"_Laser Pistol Charge"
+//	model		weapons/laserpistol/laserpistol_clip
+//	type		ammo
+//	category	0
+//	shape		"0 0 1 2"
+//	center		"0 0 0"
+//	scale		1.6
+//	price		130
+//	buytype		1
+//
+//	primary
+//	{
+//		name	"_Single Pulse"
+//		skill 	close
+//		projtl	laserPulse
+//		impact	laserImpact
+//		hitbody	laserImpact
+//		firesnd	weapons/laser.wav
+//		speed	0
+//		spread	"0 1"
+//		crouch	0.8
+//		range	64
+//		shots	1
+//		ammo	1
+//		time	5
+//		damage	"32 6"
+//		dmgtype laser
+//	}
+//	secondary
+//	{
+//		name	"_Multiple Pulses"
+//		skill 	close
+//		projtl	laserPulse
+//		impact	laserImpact
+//		hitbody	laserImpact
+//		firesnd	weapons/laser.wav
+//		speed	0
+//		spread	"0 2"
+//		crouch	1.0
+//		range	56
+//		shots	4
+//		ammo	4
+//		rof		6
+//		time	8
+//		damage	"28 5"
+//		dmgtype laser
+//	}
+//}
 
 
 // =======================
@@ -94,7 +96,7 @@ item laserrifle
 
 item laserrifle_ammo
 {
-	name		"_Laser Rifle Charge"
+	name		"_D-F Cartridge"
 	model		weapons/laserrifle/laserrifle_clip
 	type		ammo
 	category	0
@@ -165,54 +167,56 @@ item heavylaser
 	buytype		0
 }
 
-item heavylaser_ammo
-{
-	name		"_Heavy Laser Charge"
-	model		weapons/laserrifle/laserrifle_clip
-//	model		weapons/laserheavy/laserheavy_clip
-	type		ammo
-	category	0
-	shape		"0 0 1 2"
-	center		"0 0 0"
-	scale		1.8
-	price		700
-	buytype		0
-
-	primary
-	{
-		name	"_Rapid Pulses"
-		skill	heavy
-		projtl	laserPulse
-		impact	laserImpact
-		hitbody	laserImpact
-		firesnd	weapons/laser.wav
-		speed	0
-		spread	"0 2"
-		crouch	0.7
-		range	90
-		shots	5
-		ammo	1
-		rof		10
-		time	10
-		damage	"72 6"
-		dmgtype laser
-	}
-	secondary
-	{
-		name	"_Overload"
-		skill	heavy
-		projtl	laserOverload
-		impact	laserImpact
-		hitbody	laserImpact
-		firesnd	weapons/heavy_laser.wav
-		speed	0
-		spread	"0 0.2"
-		crouch	0.7
-		range	250
-		shots	1
-		ammo	1
-		time	14
-		damage	"245 70"
-		dmgtype laser
-	}
-}
+// Commented out since all laser wepaons will use the common D-F Cartridge from now on.
+// TODO: We still need to correct the different stats for each weapon though.
+//item heavylaser_ammo
+//{
+//	name		"_Heavy Laser Charge"
+//	model		weapons/laserrifle/laserrifle_clip
+////	model		weapons/laserheavy/laserheavy_clip
+//	type		ammo
+//	category	0
+//	shape		"0 0 1 2"
+//	center		"0 0 0"
+//	scale		1.8
+//	price		700
+//	buytype		0
+//
+//	primary
+//	{
+//		name	"_Rapid Pulses"
+//		skill	heavy
+//		projtl	laserPulse
+//		impact	laserImpact
+//		hitbody	laserImpact
+//		firesnd	weapons/laser.wav
+//		speed	0
+//		spread	"0 2"
+//		crouch	0.7
+//		range	90
+//		shots	5
+//		ammo	1
+//		rof		10
+//		time	10
+//		damage	"72 6"
+//		dmgtype laser
+//	}
+//	secondary
+//	{
+//		name	"_Overload"
+//		skill	heavy
+//		projtl	laserOverload
+//		impact	laserImpact
+//		hitbody	laserImpact
+//		firesnd	weapons/heavy_laser.wav
+//		speed	0
+//		spread	"0 0.2"
+//		crouch	0.7
+//		range	250
+//		shots	1
+//		ammo	1
+//		time	14
+//		damage	"245 70"
+//		dmgtype laser
+//	}
+//}
