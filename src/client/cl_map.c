@@ -260,7 +260,7 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y, qboolean globe)
 		if (!MapIsWater(CL_GetMapColor(pos, MAPTYPE_CLIMAZONE))) {
 			newBasePos[0] = pos[0];
 			newBasePos[1] = pos[1];
-			Com_Printf("MAP_MapClick: Build base at: %.0f:%.0f\n", pos[0], pos[1]);
+			Com_DPrintf("MAP_MapClick: Build base at: %.0f:%.0f\n", pos[0], pos[1]);
 			nation = MAP_GetNation(pos);
 			if (nation)
 				Com_DPrintf("MAP_MapClick: Build base in nation '%s'\n", nation->id);
