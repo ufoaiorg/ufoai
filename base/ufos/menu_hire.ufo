@@ -620,6 +620,6 @@ menu employees
 	{
 		employee_clear
 		empl_soldiers
-		cmd "employee_init"
+		cmd "employee_init 0"
 	}
 }
