@@ -32,6 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+#define TECH_HASH_SIZE 64
+technology_t *tech_hash[TECH_HASH_SIZE];
+
 qboolean RS_TechIsResearchable(technology_t *t);
 
 /* A (local) list of displayed technology-entries (the research list in the base) */
@@ -65,7 +68,7 @@ void RS_ResearchFinish (technology_t* tech)
  * @brief Marks one tech as researchable.
  * @param id unique id of a technology_t
  */
-void RS_MarkOneResearchable(int tech_idx)
+void RS_MarkOneResearchable (int tech_idx)
 {
 	technology_t *tech = &gd.technologies[tech_idx];
 	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", tech->id);
@@ -81,7 +84,7 @@ void RS_MarkOneResearchable(int tech_idx)
  * @return Returns qtrue if all requirements are satisfied otherwise qfalse.
  * @todo Add support for the "delay" value.
  */
-static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t *required_OR)
+static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t *required_OR)
 {
 	int i;
 	qboolean met_AND = qfalse;
@@ -179,7 +182,7 @@ static qboolean RS_RequirementsMet(requirements_t *required_AND, requirements_t 
  * @return Returns qtrue if there are is ANYTHING collected for each entry otherwise qfalse.
  * @todo Get rid (or improve) this statusCollected stuff.
  */
-qboolean RS_CheckCollected(requirements_t *required)
+qboolean RS_CheckCollected (requirements_t *required)
 {
 	int i;
 	int amount;
@@ -239,7 +242,7 @@ qboolean RS_CheckCollected(requirements_t *required)
  * @brief Checks if any items have been collected in the current base and correct the values for each requirement.
  * @todo Add support for items in the require_OR list.
  */
-void RS_CheckAllCollected(void)
+void RS_CheckAllCollected (void)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -266,7 +269,7 @@ void RS_CheckAllCollected(void)
  * Should be called when a new item is researched (RS_MarkResearched) and after
  * the tree-initialisation (RS_InitTree)
  */
-void RS_MarkResearchable(void)
+void RS_MarkResearchable (void)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -312,7 +315,7 @@ void RS_MarkResearchable(void)
  * @brief Assign required tech/item/etc... IDXs for a single requirements list.
  * @note A function with the same behaviour was formerly also known as RS_InitRequirementList
  */
-void RS_AssignTechIdxs(requirements_t *req)
+void RS_AssignTechIdxs (requirements_t *req)
 {
 	int i;
 
@@ -344,7 +347,7 @@ void RS_AssignTechIdxs(requirements_t *req)
  * @brief Assign IDXs to all required techs/items/etc...
  * @note This replaces the RS_InitRequirementList function (since the switch to the _OR and _AND list)
  */
-void RS_RequiredIdxAssign(void)
+void RS_RequiredIdxAssign (void)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -367,7 +370,7 @@ void RS_RequiredIdxAssign(void)
  * @todo Add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
  * @todo Enhance ammo model display (see comment in code).
  */
-void RS_InitTree(void)
+void RS_InitTree (void)
 {
 	int i, j, k;
 	technology_t *tech = NULL;
@@ -517,7 +520,7 @@ void RS_InitTree(void)
  * @param[out] name Full name of this technology_t (technology_t->name) - defaults to id if nothing is found.
  * @note name has a maxlength of MAX_VAR
  */
-void RS_GetName(char *id, char *name)
+void RS_GetName (char *id, char *name)
 {
 	technology_t *tech = NULL;
 
@@ -543,7 +546,7 @@ void RS_GetName(char *id, char *name)
  * @brief Displays the informations of the current selected technology in the description-area.
  * See menu_research.ufo for the layout/called functions.
  */
-static void RS_ResearchDisplayInfo(void)
+static void RS_ResearchDisplayInfo (void)
 {
 	technology_t *tech = NULL;
 	base_t *base = NULL;
@@ -604,7 +607,7 @@ static void RS_ResearchDisplayInfo(void)
  * @brief Changes the active research-list entry to the currently selected.
  * See menu_research.ufo for the layout/called functions.
  */
-static void CL_ResearchSelectCmd(void)
+static void CL_ResearchSelect_f (void)
 {
 	int num;
 
@@ -633,7 +636,7 @@ static void CL_ResearchSelectCmd(void)
  * @param[in] tech What technology you want to assign the scientist to.
  * @sa RS_AssignScientist_f
  */
-void RS_AssignScientist(technology_t* tech)
+void RS_AssignScientist (technology_t* tech)
 {
 	building_t *building = NULL;
 	employee_t *employee = NULL;
@@ -641,7 +644,7 @@ void RS_AssignScientist(technology_t* tech)
 
 	Com_DPrintf("RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
 
-	if  (tech->base_idx >= 0) {
+	if (tech->base_idx >= 0) {
 		base = &gd.bases[tech->base_idx];
 	} else {
 		base = baseCurrent;
@@ -684,7 +687,7 @@ void RS_AssignScientist(technology_t* tech)
  * @sa RS_AssignScientist
  * @sa RS_RemoveScientist_f
  */
-static void RS_AssignScientist_f(void)
+static void RS_AssignScientist_f (void)
 {
 	int num;
 
@@ -708,7 +711,7 @@ static void RS_AssignScientist_f(void)
  * @sa RS_RemoveScientist_f
  * @sa RS_AssignScientist
  */
-static void RS_RemoveScientist(technology_t* tech)
+static void RS_RemoveScientist (technology_t* tech)
 {
 	employee_t *employee = NULL;
 
@@ -732,7 +735,7 @@ static void RS_RemoveScientist(technology_t* tech)
  * @sa RS_AssignScientist_f
  * @sa RS_RemoveScientist
  */
-static void RS_RemoveScientist_f(void)
+static void RS_RemoveScientist_f (void)
 {
 	int num;
 
@@ -756,7 +759,7 @@ static void RS_RemoveScientist_f(void)
  * @brief Starts the research of the selected research-list entry.
  * TODO: Check if laboratory is available.
  */
-static void RS_ResearchStart(void)
+static void RS_ResearchStart (void)
 {
 	technology_t *tech = NULL;
 
@@ -817,7 +820,7 @@ static void RS_ResearchStart(void)
  * @brief Pauses the research of the selected research-list entry.
  * TODO: Check if laboratory is available
  */
-static void RS_ResearchStop(void)
+static void RS_ResearchStop (void)
 {
 	technology_t *tech = NULL;
 
@@ -853,7 +856,7 @@ static void RS_ResearchStop(void)
  * @note See menu_research.ufo for the layout/called functions.
  * @todo Display free space in all labs in the current base for each item.
  */
-void RS_UpdateData(void)
+void RS_UpdateData (void)
 {
 	char name[MAX_VAR];
 	int i, j;
@@ -863,7 +866,7 @@ void RS_UpdateData(void)
 	/* Make everything the same (predefined in the ufo-file) color. */
 	Cbuf_AddText("research_clear\n");
 
-	for (i=0; i < gd.numBases; i++) {
+	for (i = 0; i < gd.numBases; i++) {
 		available[i] = E_CountUnassigned(&gd.bases[i], EMPL_SCIENTIST);
 	}
 	RS_CheckAllCollected();
@@ -973,7 +976,7 @@ void RS_UpdateData(void)
  * @sa RS_UpdateData
  * @sa MN_ResearchInit
  */
-void CL_ResearchType(void)
+void CL_ResearchType (void)
 {
 	/* Update and display the list. */
 	RS_UpdateData();
@@ -1019,14 +1022,14 @@ static qboolean RS_DependsOn(char *id1, char *id2)
  * @brief Mark technologies as researched. This includes techs that depends in "id" and have time=0
  * @param[in] id Unique id of a technology_t
  */
-void RS_MarkResearched(char *id)
+void RS_MarkResearched (char *id)
 {
-	int i;
+	unsigned hash;
 	technology_t *tech = NULL;
 
-	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
-		if (!Q_strncmp(id, tech->id, MAX_VAR)) {
+	hash = Com_HashKey(id, TECH_HASH_SIZE);
+	for (tech = tech_hash[hash]; tech; tech = tech->hash_next) {
+		if (!Q_stricmp (id, tech->id)) {
 			RS_ResearchFinish(tech);
 			Com_DPrintf("Research of \"%s\" finished.\n", tech->id);
 #if 0
@@ -1044,7 +1047,7 @@ void RS_MarkResearched(char *id)
  * @todo Needs to check on the exact time that elapsed since the last check fo the status.
  *
  */
-void CL_CheckResearchStatus(void)
+void CL_CheckResearchStatus (void)
 {
 	int i, newResearch = 0;
 	technology_t *tech = NULL;
@@ -1055,7 +1058,7 @@ void CL_CheckResearchStatus(void)
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 		if (tech->statusResearch == RS_RUNNING) {
-			if ( ( tech->time > 0 ) && ( tech->scientists >= 0 ) ) {
+			if ((tech->time > 0) && (tech->scientists >= 0)) {
 				Com_DPrintf("timebefore %.2f\n", tech->time);
 				Com_DPrintf("timedelta %.2f\n", tech->scientists * 0.8);
 				/* TODO: Just for testing, better formular may be needed. */
@@ -1091,7 +1094,7 @@ void CL_CheckResearchStatus(void)
  * @brief Returns a list of technologies for the given type
  * @note this list is terminated by a NULL pointer
  */
-static char *RS_TechTypeToName(researchType_t type)
+static char *RS_TechTypeToName (researchType_t type)
 {
 	switch(type) {
 	case RS_TECH:
@@ -1126,7 +1129,7 @@ static char *RS_TechTypeToName(researchType_t type)
  * @brief List all parsed technologies and their attributes in commandline/console.
  * Command to call this: techlist
  */
-static void RS_TechnologyList_f(void)
+static void RS_TechnologyList_f (void)
 {
 	int i, j;
 	technology_t *tech = NULL;
@@ -1191,7 +1194,7 @@ static void RS_TechnologyList_f(void)
  * @note Should be called whenever the research menu gets active
  * @sa CL_ResearchType
  */
-void MN_ResearchInit(void)
+void MN_ResearchInit (void)
 {
 	CL_ResearchType();
 }
@@ -1201,7 +1204,7 @@ void MN_ResearchInit(void)
  * @sa CL_Connect_f
  * @sa MN_StartServer
  */
-void RS_MarkResearchedAll(void)
+void RS_MarkResearchedAll (void)
 {
 	int i;
 
@@ -1218,7 +1221,7 @@ void RS_MarkResearchedAll(void)
  * @brief Set all item to researched
  * @note Just for debugging purposes
  */
-static void RS_DebugResearchAll(void)
+static void RS_DebugResearchAll (void)
 {
 	technology_t *tech = NULL;
 
@@ -1236,7 +1239,7 @@ static void RS_DebugResearchAll(void)
  * @brief Set all item to researched
  * @note Just for debugging purposes
  */
-static void RS_DebugResearchableAll(void)
+static void RS_DebugResearchableAll (void)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -1251,9 +1254,9 @@ static void RS_DebugResearchableAll(void)
 	} else {
 		tech = RS_GetTechByID(Cmd_Argv(1));
 		if (tech) {
-				Com_Printf("...mark %s as researchable\n", tech->id);
-				RS_MarkOneResearchable(tech->idx);
-				tech->statusCollected = qtrue;
+			Com_Printf("...mark %s as researchable\n", tech->id);
+			RS_MarkOneResearchable(tech->idx);
+			tech->statusCollected = qtrue;
 		}
 	}
 }
@@ -1283,12 +1286,12 @@ void RS_DependenciesClick_f (void)
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal
  */
-void RS_ResetResearch(void)
+void RS_ResetResearch (void)
 {
 	researchListLength = 0;
 	/* add commands and cvars */
 	Cmd_AddCommand("research_init", MN_ResearchInit, "Research menu init function binding");
-	Cmd_AddCommand("research_select", CL_ResearchSelectCmd, NULL);
+	Cmd_AddCommand("research_select", CL_ResearchSelect_f, NULL);
 	Cmd_AddCommand("research_type", CL_ResearchType, NULL);
 	Cmd_AddCommand("mn_start_research", RS_ResearchStart, NULL);
 	Cmd_AddCommand("mn_stop_research", RS_ResearchStop, NULL);
@@ -1307,7 +1310,7 @@ void RS_ResetResearch(void)
 /**
  * @brief The valid definition names in the research.ufo file.
  */
-static value_t valid_tech_vars[] = {
+static const value_t valid_tech_vars[] = {
 	/*name of technology */
 	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name)},
 	{"description", V_TRANSLATION2_STRING, offsetof(technology_t, description)},
@@ -1332,10 +1335,11 @@ static value_t valid_tech_vars[] = {
  * @param[in] id Unique id of a technology_t. This is parsed from "tech xxx" -> id=xxx
  * @param[in] text the whole following text that is part of the "tech" item definition in research.ufo.
  */
-void RS_ParseTechnologies(char *id, char **text)
+extern void RS_ParseTechnologies (char *id, char **text)
 {
-	value_t *var = NULL;
+	const value_t *var = NULL;
 	technology_t *tech = NULL;
+	unsigned hash;
 	int tech_old;
 	char *errhead = "RS_ParseTechnologies: unexptected end of file.";
 	char *token = NULL;
@@ -1363,7 +1367,13 @@ void RS_ParseTechnologies(char *id, char **text)
 	/*set standard values */
 	tech->idx = gd.numTechnologies - 1;
 	Com_sprintf(tech->id, MAX_VAR, id);
+	hash = Com_HashKey (tech->id, TECH_HASH_SIZE);
 	Com_sprintf(tech->description, MAX_VAR, _("No description available."));
+
+	/* link the variable in */
+	tech->hash_next = tech_hash[hash];
+	tech_hash[hash] = tech;
+
 	tech->type = RS_TECH;
 	tech->statusResearch = RS_NONE;
 	tech->statusResearchable = qfalse;
@@ -1447,11 +1457,11 @@ void RS_ParseTechnologies(char *id, char **text)
 
 					if ( (!Q_strncmp(token, "tech", MAX_VAR)) ||  (!Q_strncmp(token, "weapon", MAX_VAR)) ) {
 						if (required_temp->numLinks < MAX_TECHLINKS) {
-							
+
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
 							Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
-							
+
 							/* Set requirement-type. */
 							if (!Q_strncmp(token, "tech", MAX_VAR)) {
 								required_temp->type[required_temp->numLinks] = RS_LINK_TECH;
@@ -1574,7 +1584,7 @@ void RS_ParseTechnologies(char *id, char **text)
  * @brief Checks whether an item is already researched
  * @sa RS_IsResearched_ptr
  */
-qboolean RS_IsResearched_idx(int idx)
+qboolean RS_IsResearched_idx (int idx)
 {
 	if (ccs.singleplayer == qfalse)
 		return qtrue;
@@ -1588,7 +1598,7 @@ qboolean RS_IsResearched_idx(int idx)
  * @sa RS_IsResearched_idx
  * Call this function if you already hold a tech pointer
  */
-qboolean RS_IsResearched_ptr(technology_t * tech)
+qboolean RS_IsResearched_ptr (technology_t * tech)
 {
 	if (ccs.singleplayer == qfalse)
 		return qtrue;
@@ -1603,23 +1613,19 @@ qboolean RS_IsResearched_ptr(technology_t * tech)
  * @return qboolean
  * @sa RS_IsResearched_ptr
  */
-qboolean RS_ItemIsResearched(char *id_provided)
+qboolean RS_ItemIsResearched (char *id_provided)
 {
-	int i;
 	technology_t *tech = NULL;
 
 	/* in multiplaer everyting is researched */
 	if (!ccs.singleplayer)
 		return qtrue;
 
-	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
-		/* Provided item found. */
-		if (!Q_strncmp(id_provided, tech->provides, MAX_VAR))
-			return RS_IsResearched_ptr(tech);
-	}
-	/* no research needed */
-	return qtrue;
+	tech = RS_GetTechByProvided(id_provided);
+	if (!tech)
+		return qtrue;
+
+	return RS_IsResearched_ptr(tech);
 }
 
 /**
@@ -1627,7 +1633,7 @@ qboolean RS_ItemIsResearched(char *id_provided)
  * @sa RS_ItemCollected
  * Call this function if you already hold a tech pointer.
  */
-int RS_Collected_(technology_t * tech)
+int RS_Collected_ (technology_t * tech)
 {
 	if (tech)
 		return tech->statusCollected;
@@ -1641,7 +1647,7 @@ int RS_Collected_(technology_t * tech)
  * @param[in] tech_idx index of the technology.
  * @return qboolean Returns qtrue if the technology has been researched, otherwise qfalse;
  */
-qboolean RS_TechIsResearched(int tech_idx)
+qboolean RS_TechIsResearched (int tech_idx)
 {
 	if (tech_idx < 0)
 		return qfalse;
@@ -1659,7 +1665,7 @@ qboolean RS_TechIsResearched(int tech_idx)
  * @return qboolean
  * @sa RS_TechIsResearched
  */
-qboolean RS_TechIsResearchable(technology_t * tech)
+qboolean RS_TechIsResearchable (technology_t * tech)
 {
 	if (!tech)
 		return qfalse;
@@ -1679,7 +1685,7 @@ qboolean RS_TechIsResearchable(technology_t * tech)
  * This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
  */
 #if 0
-void RS_GetProvided(char *id, char *provided)
+void RS_GetProvided (char *id, char *provided)
 {
 	int i, j;
 	technology_t *tech = NULL;
@@ -1708,7 +1714,7 @@ void RS_GetProvided(char *id, char *provided)
  * @note id may not be null or empty
  * @param[in] id the item id in our object definition array (csi.ods)
  */
-int RS_GetItem(char *id)
+int RS_GetItem (char *id)
 {
 	int i;
 	objDef_t *item = NULL;
@@ -1733,7 +1739,7 @@ int RS_GetItem(char *id)
  * @brief Returns the tech pointer
  * @param id unique id of a technology_t
  */
-technology_t* RS_GetTechByIDX(int tech_idx)
+technology_t* RS_GetTechByIDX (int tech_idx)
 {
 	if (tech_idx < 0 || tech_idx >= gd.numTechnologies)
 		return NULL;
@@ -1745,9 +1751,10 @@ technology_t* RS_GetTechByIDX(int tech_idx)
 /**
  * @brief return a pointer to the technology identified by given id string
  */
-technology_t *RS_GetTechByID(const char *id)
+technology_t *RS_GetTechByID (const char *id)
 {
-	int i = 0;
+	unsigned hash;
+	technology_t *tech;
 
 	if (!id || !*id)
 		return NULL;
@@ -1755,18 +1762,19 @@ technology_t *RS_GetTechByID(const char *id)
 	if (!Q_strncmp((char *) id, "nothing", MAX_VAR))
 		return NULL;
 
-	for (; i < gd.numTechnologies; i++) {
-		if (!Q_strncmp((char *) id, gd.technologies[i].id, MAX_VAR))
-			return &gd.technologies[i];
-	}
-	Com_DPrintf("RS_GetTechByID: Could not find a technology with id \"%s\"\n", id);
+	hash = Com_HashKey (id, TECH_HASH_SIZE);
+	for (tech = tech_hash[hash]; tech; tech = tech->hash_next)
+		if (!Q_stricmp (id, tech->id))
+			return tech;
+
+	Com_Printf("RS_GetTechByID: Could not find a technology with id \"%s\"\n", id);
 	return NULL;
 }
 
 /**
  * @brief returns a pointer to the item tech (as listed in "provides")
  */
-technology_t *RS_GetTechByProvided(const char *id_provided)
+technology_t *RS_GetTechByProvided (const char *id_provided)
 {
 	int i;
 
@@ -1783,17 +1791,17 @@ technology_t *RS_GetTechByProvided(const char *id_provided)
  * @brief Returns a list of technologies for the given type
  * @note this list is terminated by a NULL pointer
  */
-technology_t **RS_GetTechsByType(researchType_t type)
+technology_t **RS_GetTechsByType (researchType_t type)
 {
 	static technology_t *techList[MAX_TECHNOLOGIES];
 	int i, j = 0;
 
-	for (i=0; i<gd.numTechnologies;i++) {
-		if (gd.technologies[i].type == type ) {
+	for (i = 0; i < gd.numTechnologies; i++) {
+		if (gd.technologies[i].type == type) {
 			techList[j] = &gd.technologies[i];
 			j++;
 			/* j+1 because last item have to be NULL */
-			if ( j+1 >= MAX_TECHNOLOGIES ) {
+			if (j + 1 >= MAX_TECHNOLOGIES) {
 				Com_Printf("RS_GetTechsByType: MAX_TECHNOLOGIES limit hit\n");
 				break;
 			}
@@ -1809,16 +1817,16 @@ technology_t **RS_GetTechsByType(researchType_t type)
  * @param[in] base_idx In what base the tech shoudl be researched.
  * @sa E_RemoveEmployeeFromBuilding
  */
-technology_t *RS_GetTechWithMostScientists( int base_idx )
+technology_t *RS_GetTechWithMostScientists (int base_idx)
 {
 	technology_t *tech = NULL;
 	technology_t *tech_temp = NULL;
 	int i = 0;
 	int max = 0;
 
-	for (i=0; i<gd.numTechnologies;i++) {
+	for (i = 0; i < gd.numTechnologies; i++) {
 		tech_temp = &gd.technologies[i];
-		if ( (tech_temp->statusResearch == RS_RUNNING) && (tech_temp->base_idx == base_idx) ) {
+		if ((tech_temp->statusResearch == RS_RUNNING) && (tech_temp->base_idx == base_idx)) {
 			if (tech_temp->scientists > max) {
 				tech = tech_temp;
 				max = tech->scientists;
@@ -1834,22 +1842,21 @@ technology_t *RS_GetTechWithMostScientists( int base_idx )
  * @param[in] name the name of the tech
  * TODO: this method is extremely inefficient... it could be dramatically improved
  */
-int RS_GetTechIdxByName(char *name)
+int RS_GetTechIdxByName (char *name)
 {
-	int i;
 	technology_t *tech;
+	unsigned hash;
 
 	/* return -1 if tech matches "nothing" */
 	if (!Q_strncmp(name, "nothing", MAX_VAR))
 		return -1;
 
-	/* search through all techs for a match */
-	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
-		if (!Q_strncmp(name, tech->id, MAX_VAR))
-			return i;
-	}
+	hash = Com_HashKey (name, TECH_HASH_SIZE);
+	for (tech = tech_hash[hash]; tech; tech = tech->hash_next)
+		if (!Q_stricmp (name, tech->id))
+			return tech->idx;
 
+	Com_Printf("RS_GetTechIdxByName: Could not find tech '%s'\n", name);
 	/* return -1 if not found */
 	return -1;
 }

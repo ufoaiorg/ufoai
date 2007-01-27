@@ -140,6 +140,7 @@ typedef struct technology_s {
 	int up_chapter;			/**< Ufopedia chapter as stored in research.ufo. */
 	int prev;			/**< Previous tech in pedia. */
 	int next;			/**< Next tech in pedia. */
+	struct technology_s *hash_next;
 } technology_t;
 
 void RS_ResetResearch(void);
