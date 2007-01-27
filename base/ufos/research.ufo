@@ -2281,7 +2281,7 @@ tech rs_craft_el_raven_ecm
 //	type		craftelectronics
 //	TODO: add code to parse craftelectronics -Zenerka 25.01.2007
 	up_chapter	crafts
-	name		"_\"Raven\" ECM Unit"
+	name		"_'Raven' ECM Unit"
 	// pre_description	"_craft_electronics_raven_pre_txt"
 	description	"_craft_electronics_raven_txt"
 
@@ -2328,8 +2328,6 @@ tech rs_craft_weapon_shiva
 tech rs_craft_ammo_shiva_1
 {
 	type		craftweapon
-//	type		craftammo
-//	TODO: add code to parse craftammo -Zenerka 25.01.2007
 	up_chapter	crafts
 	name		"_SHIVA 20mm API Rounds"
 	// pre_description	"_craft_ammo_shiva_1_pre_txt"
@@ -2349,8 +2347,6 @@ tech rs_craft_ammo_shiva_1
 tech rs_craft_ammo_shiva_2
 {
 	type		craftweapon
-//	type		craftammo
-//	TODO: add code to parse craftammo -Zenerka 25.01.2007
 	up_chapter	crafts
 	name		"_SHIVA 20mm HEI Rounds"
 	// pre_description	"_craft_ammo_shiva_2_pre_txt"
@@ -2371,7 +2367,7 @@ tech rs_craft_weapon_sparrowhawk
 {
 	type		craftweapon
 	up_chapter	crafts
-	name		"_\"Sparrowhawk\" AA Missile Rack"
+	name		"_'Sparrowhawk' AA Missile Rack"
 	// pre_description	"_craft_weapon_sparrowhawk_pre_txt"
 	description	"_craft_weapon_sparrowhawk_txt"
 
@@ -2386,10 +2382,8 @@ tech rs_craft_weapon_sparrowhawk
 tech rs_craft_ammo_sparrowhawk
 {
 	type		craftweapon
-//	type		craftammo
-//	TODO: add code to parse craftammo -Zenerka 25.01.2007
 	up_chapter	crafts
-	name		"_\"Sparrowhawk\" Missile"
+	name		"_'Sparrowhawk' Missile"
 	// pre_description	"_craft_ammo_sparrowhawk_pre_txt"
 	description	"_craft_ammo_sparrowhawk_txt"
 
@@ -2423,8 +2417,6 @@ tech rs_craft_weapon_tr20
 tech rs_craft_ammo_tr20
 {
 	type		craftweapon
-//	type		craftammo
-//	TODO: add code to parse craftammo -Zenerka 25.01.2007
 	up_chapter	crafts
 	name		"_TR-20 Rocket"
 	// pre_description	"_craft_ammo_tr20_pre_txt"
