@@ -1450,11 +1450,11 @@ void RS_ParseTechnologies(char *id, char **text)
 							/* Set requirement-type. */
 							if (!Q_strncmp(token, "tech", MAX_VAR)) {
 								required_temp->type[required_temp->numLinks] = RS_LINK_TECH;
-								Com_DPrintf("RS_ParseTechnologies: tech - %s\n", required_temp->id[required_temp->numLinks]);
+								Com_DPrintf("RS_ParseTechnologies: require-tech - %s\n", required_temp->id[required_temp->numLinks]);
 							} else {	/* weapon */
 								/* Ammo only: Defines what weapon can use this ammo. */
 								required_temp->type[required_temp->numLinks] = RS_LINK_WEAPON;
-								Com_DPrintf("RS_ParseTechnologies: weapon - %s\n", required_temp->id[required_temp->numLinks]);
+								Com_DPrintf("RS_ParseTechnologies: require-weapon - %s\n", required_temp->id[required_temp->numLinks]);
 							}
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
@@ -1475,14 +1475,14 @@ void RS_ParseTechnologies(char *id, char **text)
 							/* Set requirement-amount of item. */
 							token = COM_Parse(text);
 							required_temp->amount[required_temp->numLinks] = atoi(token);
-							Com_DPrintf("RS_ParseTechnologies: item - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
+							Com_DPrintf("RS_ParseTechnologies: require-item - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
 							required_temp->numLinks++;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
 						}
 					} else if (!Q_strncmp(token, "event", MAX_VAR)) {
 						token = COM_Parse(text);
-						Com_DPrintf("RS_ParseTechnologies: event - %s\n", token);
+						Com_DPrintf("RS_ParseTechnologies: require-event - %s\n", token);
 						required_temp->type[required_temp->numLinks] = RS_LINK_EVENT;
 						/* Get name/id & amount of required item. */
 						/* TODO: Implement final event system, so this can work 100% */
@@ -1492,10 +1492,10 @@ void RS_ParseTechnologies(char *id, char **text)
 							/* Set requirement-type. */
 							if (!Q_strncmp(token, "alien_dead", MAX_VAR)) {
 								required_temp->type[required_temp->numLinks] = RS_LINK_ALIEN_DEAD;
-								Com_DPrintf("RS_ParseTechnologies: alien dead - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
+								Com_DPrintf("RS_ParseTechnologies:  require-alien dead - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
 							} else {
 								required_temp->type[required_temp->numLinks] = RS_LINK_ALIEN;
-								Com_DPrintf("RS_ParseTechnologies: alien alive - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
+								Com_DPrintf("RS_ParseTechnologies:  require-alien alive - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
 							}
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
