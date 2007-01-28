@@ -2234,7 +2234,7 @@ tech rs_alien_cyborg_ortnok_autopsy
 	pre_description	"_cyborg_ortnok_autopsy_pre_txt"
 	up_chapter	aliens
 
-	require_AND { tech TODO }
+	require_AND { //tech TODO }
 	time	1500
 
 	// menuModel - see models.ufo
