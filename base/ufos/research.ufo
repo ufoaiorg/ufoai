@@ -2299,7 +2299,7 @@ tech rs_craft_el_raven_ecm
 	image_top	"techs/craft_electronics_raven"
 }
 
-tech rs_craft_def_polymer_armour
+tech rs_craft_shield_polymer
 {
 	type		craftshield
 	up_chapter	crafts
