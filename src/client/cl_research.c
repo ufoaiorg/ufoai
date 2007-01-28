@@ -1789,9 +1789,12 @@ technology_t *RS_GetTechByProvided (const char *id_provided)
 	return NULL;
 }
 
-/**
+#if 0
+/* Not really used anywhere, but i;ll just leave it in here if it is needed again*/
+ /**
  * @brief Returns a list of technologies for the given type
- * @note this list is terminated by a NULL pointer
+ * @note This list is terminated by a NULL pointer.
+* @sa * AC_GetTechsByType
  */
 technology_t **RS_GetTechsByType (researchType_t type)
 {
@@ -1813,6 +1816,8 @@ technology_t **RS_GetTechsByType (researchType_t type)
 	Com_DPrintf("techlist with %i entries\n", j);
 	return techList;
 }
+#endif
+
 
 /**
  * @brief Searches for the technology that has teh most scientists assigned in a given base.
