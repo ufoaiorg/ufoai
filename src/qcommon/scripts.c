@@ -1189,6 +1189,8 @@ void Com_AddObjectLinks(void)
 				if (tech->require_AND.type[j] == RS_LINK_WEAPON) {
 					/* "tech->require_AND.idx[j]" is the technology-index of the weapon */
 					tech_weapon = RS_GetTechByIDX(tech->require_AND.idx[j]);
+					if (!tech_weapon)
+						Sys_Error("Could not get the tech with idx: %i\n", tech->require_AND.idx[j]);
 					od->forWeapon[k] = RS_GetItem(tech_weapon->provides);
 					k++;
 				}
