@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 aircraft_t aircraft_samples[MAX_AIRCRAFT]; /* available aircraft types */
 int numAircraft_samples = 0; /* TODO: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
 static int airequipID = -1;
+static qboolean noparams = qfalse;
 static int numAircraftItems = 0;
 aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];
 
@@ -41,8 +42,8 @@ aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];
  * @brief Calculates the fight between aircraft and ufo
  * @param[in] aircraft the aircraft we attack with
  * @param[in] the ufo we attack
- * @return qtrue when aircraft hits ufo
- * @return qfalse when ufo hits aircraft
+ * @return qtrue When aircraft hits ufo.
+ * @return qfalse When ufo hits aircraft.
  * TODO : display an attack popup
  */
 static qboolean AIR_Fight(aircraft_t* air, aircraft_t* ufo)
@@ -745,13 +746,28 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 	int type;
 	menuNode_t *node;
 	aircraft_t *aircraft;
-	
-	if (Cmd_Argc() != 2) {
+
+
+	if (Cmd_Argc() != 2 || noparams) {
+		Com_Printf("CL_AircraftEquipmenuMenuInit_f inline usage: %i\n", airequipID);
 		if (airequipID == -1) {
 			Com_Printf("Usage airequip_init <num>\n");
 			return;
 		} else {
-			type = airequipID;
+			switch (airequipID) {
+			case AC_ITEM_ARMOUR:
+				/* armour */
+				type = 1;
+				break;
+			case AC_ITEM_ELECTRONICS:
+				/* items */
+				type = 2;
+				break;
+			default:
+				type = 0;
+				break;
+			}
+			Com_Printf("CL_AircraftEquipmenuMenuInit_f inline usage: type %i\n", type);
 		}
 	} else {
 		type = atoi(Cmd_Argv(1));
@@ -776,8 +792,6 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 	VectorCopy(aircraft->anglesEquip, node->angles);
 	rotateAngles = aircraft->angles;
 
-	type = atoi(Cmd_Argv(1));
-
 	Com_sprintf(buffer, sizeof(buffer), _("None\n"));
 	
 	switch (type) {
@@ -794,7 +808,7 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 		airequipID = AC_ITEM_WEAPON;
 		break;
 	}
-
+Com_Printf("CL_AircraftEquipmenuMenuInit_f inline2 usage: %i\n", airequipID);
 	while (*list) {
 		/*Com_Printf("%s\n", (*list)->id);*/
 		if (RS_IsResearched_ptr(*list))
@@ -805,6 +819,7 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 
 	/* shield / weapon description */
 	menuText[TEXT_STANDARD] = NULL;
+	noparams = qfalse;
 }
 
 /**
@@ -873,6 +888,7 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 				}
 				Com_sprintf(desc, sizeof(desc), (*list)->name);
 				CL_AircraftSelect();
+				noparams=qtrue; /* used for CL_AircraftEquipmenuMenuInit_f */
 				CL_AircraftEquipmenuMenuInit_f();
 				break;
 			}
