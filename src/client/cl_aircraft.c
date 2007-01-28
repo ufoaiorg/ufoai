@@ -992,11 +992,12 @@ extern void CL_ParseAircraftItem (char *name, char **text)
 			break;
 
 		if (!Q_strncmp(token, "type", MAX_VAR)) {
-			/* what type of craft item this is */
+			/* Craftitem type definition. */
 			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				return;
 
+			/* Check which type it is and store the correct one.*/
 			if (!Q_strncmp(token, "weapon", MAX_VAR))
 				airItem->type = AC_ITEM_WEAPON;
 			else if (!Q_strncmp(token, "ammo", MAX_VAR))
@@ -1007,23 +1008,23 @@ extern void CL_ParseAircraftItem (char *name, char **text)
 				airItem->type = AC_ITEM_ELECTRONICS;
 			else
 				Com_Printf("CL_ParseAircraftItem: \"%s\" unknown craftitem type: \"%s\" - ignored.\n", name, token);
-		}
+		} else {
+			/* Check for some standard values. */
+			for (vp = aircraftitems_vals; vp->string; vp++) {
+				if (!Q_strcmp(token, vp->string)) {
+					/* found a definition */
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
+						return;
 
-		/* check for some standard values */
-		for (vp = aircraftitems_vals; vp->string; vp++)
-			if (!Q_strcmp(token, vp->string)) {
-				/* found a definition */
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				Com_ParseValue(airItem, token, vp->type, vp->ofs);
-				break;
+					Com_ParseValue(airItem, token, vp->type, vp->ofs);
+					break;
+				}
 			}
-
-		if (!vp->string) {
-			Com_Printf("CL_ParseAircraftItem: unknown token \"%s\" ignored (craftitem %s)\n", token, name);
-			COM_EParse(text, errhead, name);
+			if (!vp->string) {
+				Com_Printf("CL_ParseAircraftItem: unknown token \"%s\" ignored (craftitem %s)\n", token, name);
+				COM_EParse(text, errhead, name);
+			}
 		}
 	} while (*text);
 }
