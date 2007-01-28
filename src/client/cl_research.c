@@ -1457,18 +1457,23 @@ extern void RS_ParseTechnologies (char *id, char **text)
 
 					if ( (!Q_strncmp(token, "tech", MAX_VAR)) ||  (!Q_strncmp(token, "weapon", MAX_VAR)) ) {
 						if (required_temp->numLinks < MAX_TECHLINKS) {
-
-							/* Set requirement-name (id). */
-							token = COM_Parse(text);
-							Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
-
 							/* Set requirement-type. */
 							if (!Q_strncmp(token, "tech", MAX_VAR)) {
 								required_temp->type[required_temp->numLinks] = RS_LINK_TECH;
+
+								/* Set requirement-name (id). */
+								token = COM_Parse(text);
+								Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
+
 								Com_DPrintf("RS_ParseTechnologies: require-tech - %s\n", required_temp->id[required_temp->numLinks]);
 							} else {	/* weapon */
 								/* Ammo only: Defines what weapon can use this ammo. */
 								required_temp->type[required_temp->numLinks] = RS_LINK_WEAPON;
+
+								/* Set requirement-name (id). */
+								token = COM_Parse(text);
+								Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
+
 								Com_DPrintf("RS_ParseTechnologies: require-weapon - %s\n", required_temp->id[required_temp->numLinks]);
 							}
 
