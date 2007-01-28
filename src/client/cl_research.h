@@ -162,15 +162,15 @@ void RS_MarkCollected(equipDef_t *ed);
 void RS_MarkResearchable(void);
 void RS_MarkOneResearchable(int tech_idx);
 void RS_MarkResearchedAll(void);
-void RS_MarkResearched(char *id);
+void RS_MarkResearched(const char *id);
 void RS_AssignScientist(technology_t* tech);
 technology_t *RS_GetTechByID(const char *id);
 technology_t *RS_GetTechByProvided(const char *id_provided);
 technology_t **RS_GetTechsByType(researchType_t type);
 technology_t* RS_GetTechByIDX(int tech_idx);
 technology_t *RS_GetTechWithMostScientists(int base_idx);
-int RS_GetTechIdxByName(char *name);
-int RS_GetItem(char *id);
+int RS_GetTechIdxByName(const char *name);
+int RS_GetItem(const char *id);
 
 /* ufopedia function - but needs technology_t */
 void UP_DrawEntry(technology_t* tech);

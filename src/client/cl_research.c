@@ -1022,7 +1022,7 @@ static qboolean RS_DependsOn(char *id1, char *id2)
  * @brief Mark technologies as researched. This includes techs that depends in "id" and have time=0
  * @param[in] id Unique id of a technology_t
  */
-void RS_MarkResearched (char *id)
+void RS_MarkResearched (const char *id)
 {
 	unsigned hash;
 	technology_t *tech = NULL;
@@ -1714,7 +1714,7 @@ void RS_GetProvided (char *id, char *provided)
  * @note id may not be null or empty
  * @param[in] id the item id in our object definition array (csi.ods)
  */
-int RS_GetItem (char *id)
+int RS_GetItem (const char *id)
 {
 	int i;
 	objDef_t *item = NULL;
@@ -1777,7 +1777,12 @@ technology_t *RS_GetTechByID (const char *id)
 technology_t *RS_GetTechByProvided (const char *id_provided)
 {
 	int i;
+#if 0
+	unsigned hash;
 
+	hash = Com_HashKey(id_provided, TECH_HASH_SIZE);
+	/* TODO */
+#endif
 	for (i = 0; i < gd.numTechnologies; i++)
 		if (!Q_strncmp((char *) id_provided, gd.technologies[i].provides, MAX_VAR))
 			return &gd.technologies[i];
@@ -1842,7 +1847,7 @@ technology_t *RS_GetTechWithMostScientists (int base_idx)
  * @param[in] name the name of the tech
  * TODO: this method is extremely inefficient... it could be dramatically improved
  */
-int RS_GetTechIdxByName (char *name)
+int RS_GetTechIdxByName (const char *name)
 {
 	technology_t *tech;
 	unsigned hash;
