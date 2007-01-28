@@ -160,10 +160,10 @@ craftitem craft_ammo_shiva_HEI
 	wrange  35
 }
 
-craftitem craft_electronics_raven
+craftitem craft_el_raven
 {
 	type	electronics
-	tech		rs_craft_electronics_raven
+	tech		rs_craft_el_raven
 	price		12345
 
 	ecm		1.25
@@ -223,19 +223,19 @@ craftitem craft_weapon_particle_beam
 	wrange		70
 }
 
-craftitem craft_electronics_targeting
+craftitem craft_el_targeting
 {
 	type	electronics
-	tech		rs_craft_electronics_targeting
+	tech		rs_craft_el_targeting
 	price		33333
 
 	accuracy	50
 }
 
-craftitem craft_electronics_fuelpod
+craftitem craft_el_fuelpod
 {
 	type	electronics
-	tech		rs_craft_electronics_fuelpod
+	tech		rs_craft_el_fuelpod
 	price		8500
 
 	range		+100

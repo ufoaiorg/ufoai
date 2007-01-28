@@ -59,7 +59,7 @@ researched rslist_human
 	rs_craft_stiletto_interceptor
 	rs_ugv_phoenix
 	rs_ugv_triax
-	rs_craft_electronics_raven
+	rs_craft_el_raven
 	rs_craft_shield_polymer
 	rs_craft_weapon_shiva
 	rs_craft_weapon_sparrowhawk
@@ -93,7 +93,7 @@ researchable rslist_human
 	rs_craft_stiletto_interceptor
 	rs_ugv_phoenix
 	rs_ugv_triax
-	rs_craft_electronics_raven
+	rs_craft_el_raven
 	rs_craft_weapon_shiva
 	rs_alien_body_armour
 }

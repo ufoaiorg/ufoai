@@ -2281,7 +2281,7 @@ tech rs_ugv_triax
 // Craft Stuff
 //========================
 
-tech rs_craft_electronics_raven
+tech rs_craft_el_raven
 {
 	type		craftitem
 	up_chapter	crafts
@@ -2289,7 +2289,7 @@ tech rs_craft_electronics_raven
 	// pre_description	"_craft_electronics_raven_pre_txt"
 	description	"_craft_electronics_raven_txt"
 
-//	provides	craft_electronics_raven
+//	provides	craft_el_raven
 	require_AND { tech nothing }
 	time		0
 	producetime	1221
@@ -2477,7 +2477,7 @@ tech rs_craft_el_targeting
 	// pre_description	"_craft_electronics_targeting_pre_txt"
 	description	"_craft_electronics_targeting_txt"
 
-//	provides	craft_electronics_targeting
+//	provides	craft_el_targeting
 	require_AND	{ tech nothing }
 	time		0
 	producetime	571
@@ -2493,7 +2493,7 @@ tech rs_craft_el_fuelpod
 	// pre_description	"_craft_electronics_fuelpod_pre_txt"
 	description	"_craft_electronics_fuelpod_txt"
 
-//	provides	craft_electronics_fuelpod
+//	provides	craft_el_fuelpod
 	require_AND	{ tech nothing }
 	time		0
 	producetime	400
