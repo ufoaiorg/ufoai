@@ -2459,8 +2459,8 @@ tech rs_craft_weapon_particle
 	{
 //		tech rs_craft_ufo_fighter
 //		tech rs_craft_ufo_harvester
-		tech rs_craft_ufo_fighter_AND_craft_weapon_particle	// LOGIC tech - see there for more
-		tech rs_craft_ufo_harvester_AND_craft_weapon_particle	// LOGIC tech - see there for more
+		tech rs_fighter_AND_particle	// LOGIC tech - see there for more
+		tech rs_harvester_AND_particle	// LOGIC tech - see there for more
 	}
 
 	time		100
@@ -2545,7 +2545,7 @@ tech news_phalanx_mumbai_aftermath
 // Concept of using dummy techs for extended requirements (they should not be displayed anywhere - thus the "logic" type)
 // These entries can later be moved in front of the rs_craft_weapon_particle_beam entry.
 
-tech rs_craft_ufo_fighter_AND_craft_weapon_particle
+tech rs_fighter_AND_particle
 {
 	type	logic
 	name	"LOGIC:Fighter AND 1beamweapon"
@@ -2556,7 +2556,7 @@ tech rs_craft_ufo_fighter_AND_craft_weapon_particle
 	}
 }
 
-tech rs_craft_ufo_harvester_AND_craft_weapon_particle
+tech rs_harvester_AND_particle
 {
 	type	logic
 	name	"LOGIC:Harvester AND 1beamweapon"
