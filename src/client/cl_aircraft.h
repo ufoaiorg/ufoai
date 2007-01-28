@@ -64,6 +64,7 @@ typedef struct aircraftItem_s {
 	int idx;					/**< self link */
 	aircraftItemType_t type;		/**< The type of the aircraft item. */
 	char tech[MAX_VAR];		/**< tech id for this item.*/
+	char tech_idx;				/**< tech index for this item.*/
 	char weapon[MAX_VAR];		/**< if this is ammo there must be a weapon */
 	int weight;
 	float damage;
