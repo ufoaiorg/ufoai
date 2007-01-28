@@ -139,6 +139,8 @@ void CL_AircraftInit(void)
 	technology_t *tech = NULL;
 	aircraftItem_t *aircraftitem = NULL;
 
+	Com_Printf("Initializing aircraft and aircraft-items ...\n");
+	
 	for (i = 0; i < numAircraft_samples; i++) {
 		air_samp = &aircraft_samples[i];
 		/* link with tech pointer */
@@ -167,19 +169,20 @@ void CL_AircraftInit(void)
 		air_samp->teamSize = &gd.bases[air_samp->idxBase].teamNum[air_samp->idxInBase];
 	}
 	
-	/* Link technologies */
+	/* Link technologies for craftitems. */
 	for (i = 0; i < numAircraftItems; i++) {
 		aircraftitem = &aircraftItems[i];
+		aircraftitem->tech_idx = -1; /* Default is -1 so it can be checked. */
 		if (aircraftitem) {
 			tech = RS_GetTechByID(aircraftitem->tech);
 			if (tech)
 				aircraftitem->tech_idx = tech->idx;
 			else
-				Com_Printf("CL_AircraftInit: No tech found for craftitem '%s'\n",  aircraftitem->id);
+				Com_Printf("CL_AircraftInit: No tech with the name '%s' found for craftitem '%s'.\n",  aircraftitem->tech, aircraftitem->id);
 		}
 	}
 	
-	Com_Printf("...aircraft and aircreft-items inited\n");
+	Com_Printf("...aircraft and aircraft-items inited\n");
 }
 
 /**
