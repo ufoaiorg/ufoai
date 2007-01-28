@@ -162,29 +162,29 @@ actors shevaar
 // cyborg_ortnok
 // ==================
 
-names cyborg_ortnok
-{
-	neutral
-	{
-	Akrokk
-	Mkeek
-	Rniuk
-	}
-	lastname
-	{
-	"Uk Kronok"
-	"Np Zlrok"
-	}
-}
+//names cyborg_ortnok
+//{
+//	neutral
+//	{
+//	Akrokk
+//	Mkeek
+//	Rniuk
+//	}
+//	lastname
+//	{
+//	"Uk Kronok"
+//	"Np Zlrok"
+//	}
+//}
 
-actors cyborg_ortnok
-{
-	neutral
-	{
-		aliens/cyborg_ortnok body01 head01 0
-		aliens/cyborg_ortnok body01 head01 1
-	}
-}
+//actors cyborg_ortnok
+//{
+//	neutral
+//	{
+//		aliens/cyborg_ortnok body01 head01 0
+//		aliens/cyborg_ortnok body01 head01 1
+//	}
+//}
 
 // ==================
 // hovernet
@@ -382,18 +382,18 @@ team ortnok
 	}
 }
 
-team cyborg_ortnok
-{
-	{
-	cyborg_ortnok
-	}
-}
+//team cyborg_ortnok
+//{
+//	{
+//	cyborg_ortnok
+//	}
+//}
 
 team ortnok_all
 {
 	{
 	ortnok
-	cyborg_ortnok
+//	cyborg_ortnok
 	}
 }
 

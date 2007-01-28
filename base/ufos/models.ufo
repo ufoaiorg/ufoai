@@ -110,18 +110,18 @@ menu_model alien_shevaar
 //	anim	stand_still
 //}
 
-menu_model alien_cyborg_ortnok_head
-{
-	model	"models/aliens/cyborg_ortnok/head01.md2"
-	tag	"tag_head"
-	parent	"alien_cyborg_ortnok"
-}
-menu_model alien_cyborg_ortnok
-{
-	model	"models/aliens/cyborg_ortnok/body01.md2"
-	need	"alien_cyborg_ortnok_head"
-	anim	stand_still
-}
+//menu_model alien_cyborg_ortnok_head
+//{
+//	model	"models/aliens/cyborg_ortnok/head01.md2"
+//	tag	"tag_head"
+//	parent	"alien_cyborg_ortnok"
+//}
+//menu_model alien_cyborg_ortnok
+//{
+//	model	"models/aliens/cyborg_ortnok/body01.md2"
+//	need	"alien_cyborg_ortnok_head"
+//	anim	stand_still
+//}
 
 
 // ============== Civilian female ==================

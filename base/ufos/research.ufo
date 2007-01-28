@@ -2226,20 +2226,22 @@ tech rs_alien_shevaar_autopsy
 
 // CYBORG ORTNOK
 
-tech rs_alien_cyborg_ortnok_autopsy
-{
-	type	alien
-	name	"_Alien Autopsy - Ortnok Cyborg"
-	description	"_cyborg_ortnok_autopsy_txt"
-	pre_description	"_cyborg_ortnok_autopsy_pre_txt"
-	up_chapter	aliens
-
-	require_AND { //tech TODO }
-	time	1500
-
-	// menuModel - see models.ufo
-	mdl_top	alien_cyborg_ortnok
-}
+//tech rs_alien_cyborg_ortnok_autopsy
+//{
+//	type	alien
+//	name	"_Alien Autopsy - Ortnok Cyborg"
+//	description	"_cyborg_ortnok_autopsy_txt"
+//	pre_description	"_cyborg_ortnok_autopsy_pre_txt"
+//	up_chapter	aliens
+//
+//	require_AND
+//	{
+//		tech TODO
+//	}
+//	time	1500
+//
+//	mdl_top	alien_cyborg_ortnok
+//}
 
 //========================
 // UGVs
