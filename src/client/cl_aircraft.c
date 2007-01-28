@@ -977,11 +977,12 @@ extern void CL_ParseAircraftItem (char *name, char **text)
 	}
 
 	/* initialize the menu */
-	airItem = &aircraftItems[numAircraftItems++];
+	airItem = &aircraftItems[numAircraftItems];
 	memset(airItem, 0, sizeof(aircraftItem_t));
 
 	Com_DPrintf("...found craftitem %s\n", name);
-	airItem->idx = numAircraftItems++;
+	airItem->idx = numAircraftItems;
+	numAircraftItems++;
 	Q_strncpyz(airItem->id, name, MAX_VAR);
 
 	/* get it's body */
