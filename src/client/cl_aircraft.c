@@ -876,7 +876,7 @@ static value_t aircraftitems_vals[] = {
 	,
 	{"shield", V_RELABS, offsetof(aircraftItem_t, shield)}
 	,
-	{"wrange", V_RELABS, offsetof(aircraftItem_t, weaponRange)}
+	{"wrange", V_INT, offsetof(aircraftItem_t, weaponRange)}
 	,
 	{"range", V_RELABS, offsetof(aircraftItem_t, range)}
 	,
