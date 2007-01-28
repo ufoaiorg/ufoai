@@ -136,6 +136,8 @@ void CL_AircraftInit(void)
 {
 	aircraft_t *air_samp;
 	int i = 0;
+	technology_t *tech = NULL;
+	aircraftItem_t *aircraftitem = NULL;
 
 	for (i = 0; i < numAircraft_samples; i++) {
 		air_samp = &aircraft_samples[i];
@@ -164,8 +166,14 @@ void CL_AircraftInit(void)
 		air_samp->homebase = &gd.bases[air_samp->idxBase]; /* TODO: looks like a nonsense */
 		air_samp->teamSize = &gd.bases[air_samp->idxBase].teamNum[air_samp->idxInBase];
 	}
-
-	Com_Printf("...aircraft inited\n");
+	
+	for (i = 0; i<MAX_AIRCRAFTITEMS; i++) {
+		aircraftitem = &aircraftItems[i];
+		tech = RS_GetTechByID(aircraftitem->tech);
+		aircraftitem->tech_idx = tech->idx;
+	}
+	
+	Com_Printf("...aircraft and aircreft-items inited\n");
 }
 
 /**
@@ -665,6 +673,56 @@ void CL_CampaignRunAircraft(int dt)
 }
 
 /**
+ * @brief Returns a list of craftitem technologies for the given type.
+ * @note this list is terminated by a NULL pointer
+ */
+static technology_t **AC_GetCraftitemTechsByType (int type, qboolean usetypedef)
+{
+	static technology_t *techList[MAX_TECHNOLOGIES];
+	aircraftItem_t *aircraftitem = NULL;
+	int i, j = 0;
+
+	for (i = 0; i<MAX_AIRCRAFTITEMS; i++) {
+		aircraftitem = &aircraftItems[i];
+		if (usetypedef) {
+			if (aircraftitem->type == type) {
+				techList[j] = &gd.technologies[aircraftitem->tech_idx];
+				j++;
+			}
+		} else {
+			switch (type) {
+			case 1: /* armour */
+				if (aircraftitem->type == AC_ITEM_ARMOUR ) {
+					techList[j] = &gd.technologies[aircraftitem->tech_idx];
+					j++;
+				}
+				break;
+			case 2:	/* items */
+				if ( aircraftitem->type == AC_ITEM_ELECTRONICS )	{
+					techList[j] = &gd.technologies[aircraftitem->tech_idx];
+					j++;
+				}
+				break;
+			default:
+				if ( aircraftitem->type == AC_ITEM_WEAPON ) {
+					techList[j] = &gd.technologies[aircraftitem->tech_idx];
+					j++;
+				}
+				break;
+			}
+		}
+		/* j+1 because last item have to be NULL */
+		if (j + 1 >= MAX_TECHNOLOGIES) {
+			Com_Printf("CL_AircraftEquipmenuMenuInit_f: MAX_TECHNOLOGIES limit hit\n");
+			break;
+		}
+	}
+	techList[j] = NULL;
+	Com_DPrintf("techlist with %i entries\n", j);
+	return techList;
+}
+
+/**
  * @brief Fills the weapon and shield list of the aircraft equip menu
  * @sa CL_AircraftEquipmenuMenuWeaponsClick_f
  * @sa CL_AircraftEquipmenuMenuShieldsClick_f
@@ -676,7 +734,7 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 	int type;
 	menuNode_t *node;
 	aircraft_t *aircraft;
-
+	
 	if (Cmd_Argc() != 2) {
 		if (airequipID == -1) {
 			Com_Printf("Usage airequip_init <num>\n");
@@ -707,23 +765,20 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 
 	type = atoi(Cmd_Argv(1));
 
-	/* TODO: change the typedefs below to the ones defined in aircraftItemType_t */
 	Com_sprintf(buffer, sizeof(buffer), _("None\n"));
+	
 	switch (type) {
-	case 1:
-		/* shields */
-		list = RS_GetTechsByType(RS_CRAFTSHIELD);
-		airequipID = RS_CRAFTSHIELD;
+	case 1: /* armour */
+		list = AC_GetCraftitemTechsByType(type, qfalse);
+		airequipID = AC_ITEM_ARMOUR;
 		break;
-	case 2:
-		/* items */
-		list = RS_GetTechsByType(RS_CRAFTITEM);
-		airequipID = RS_CRAFTITEM;
+	case 2:	/* items */
+		list = AC_GetCraftitemTechsByType(type, qfalse);
+		airequipID = AC_ITEM_ELECTRONICS;
 		break;
 	default:
-		/* weapons */
-		list = RS_GetTechsByType(RS_CRAFTWEAPON);
-		airequipID = RS_CRAFTWEAPON;
+		list = AC_GetCraftitemTechsByType(type, qfalse);
+		airequipID = AC_ITEM_WEAPON;
 		break;
 	}
 
@@ -765,22 +820,22 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	if (num < 1) {
 		switch (airequipID) {
-		case RS_CRAFTWEAPON:
+		case AC_ITEM_WEAPON:
 			Com_sprintf(desc, sizeof(desc), _("No weapon assigned"));
 			aircraft->weapon = NULL;
 			break;
-		case RS_CRAFTITEM:
+		case AC_ITEM_ELECTRONICS:
 			Com_sprintf(desc, sizeof(desc), _("No item assigned"));
 			aircraft->item = NULL;
 			break;
-		case RS_CRAFTSHIELD:
+		case AC_ITEM_ARMOUR:
 			Com_sprintf(desc, sizeof(desc), _("No shield assigned"));
 			aircraft->shield = NULL;
 			break;
 		}
 		CL_AircraftSelect();
 	} else {
-		list = RS_GetTechsByType(airequipID);
+		list = AC_GetCraftitemTechsByType(airequipID, qtrue);
 		/* to prevent overflows we go through the list instead of address it directly */
 		while (*list) {
 			if (RS_IsResearched_ptr(*list))
@@ -788,17 +843,17 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 			/* found it */
 			if (num <= 0) {
 				switch (airequipID) {
-				case RS_CRAFTWEAPON:
+				case AC_ITEM_WEAPON:
 					aircraft->weapon = *list;
 					Q_strncpyz(aircraft->weapon_string, (*list)->id, MAX_VAR);
 					aircraft->weapon = NULL;
 					break;
-				case RS_CRAFTITEM:
+				case AC_ITEM_ELECTRONICS:
 					aircraft->item = *list;
 					Q_strncpyz(aircraft->item_string, (*list)->id, MAX_VAR);
 					aircraft->item = NULL;
 					break;
-				case RS_CRAFTSHIELD:
+				case AC_ITEM_ARMOUR:
 					aircraft->shield = *list;
 					Q_strncpyz(aircraft->shield_string, (*list)->id, MAX_VAR);
 					aircraft->shield = NULL;
@@ -945,7 +1000,7 @@ extern void CL_ParseAircraftItem (char *name, char **text)
 			if (!Q_strncmp(token, "weapon", MAX_VAR))
 				airItem->type = AC_ITEM_WEAPON;
 			else if (!Q_strncmp(token, "ammo", MAX_VAR))
-				airItem->type = AC_ITEM_AMMO;
+				airItem->type = AC_ITEM_WEAPON;	/* NOTE: Same as weapon right now. Might change int he future. */
 			else if (!Q_strncmp(token, "armour", MAX_VAR))
 				airItem->type = AC_ITEM_ARMOUR;
 			else if (!Q_strncmp(token, "electronics", MAX_VAR))

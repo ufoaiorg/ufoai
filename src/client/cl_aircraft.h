@@ -48,7 +48,7 @@ typedef enum {
 /** @brief All different types of craft items. */
 typedef enum {
 	AC_ITEM_WEAPON,
-	AC_ITEM_AMMO,
+/*	AC_ITEM_AMMO, unused right now */
 	AC_ITEM_ARMOUR,
 	AC_ITEM_ELECTRONICS,
 	MAX_ACITEMS
