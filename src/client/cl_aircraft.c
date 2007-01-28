@@ -167,10 +167,16 @@ void CL_AircraftInit(void)
 		air_samp->teamSize = &gd.bases[air_samp->idxBase].teamNum[air_samp->idxInBase];
 	}
 	
-	for (i = 0; i<MAX_AIRCRAFTITEMS; i++) {
+	/* Link technologies */
+	for (i = 0; i < numAircraftItems; i++) {
 		aircraftitem = &aircraftItems[i];
-		tech = RS_GetTechByID(aircraftitem->tech);
-		aircraftitem->tech_idx = tech->idx;
+		if (aircraftitem) {
+			tech = RS_GetTechByID(aircraftitem->tech);
+			if (tech)
+				aircraftitem->tech_idx = tech->idx;
+			else
+				Com_Printf("CL_AircraftInit: No tech found for craftitem '%s'\n",  aircraftitem->id);
+		}
 	}
 	
 	Com_Printf("...aircraft and aircreft-items inited\n");
