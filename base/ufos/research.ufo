@@ -2281,7 +2281,7 @@ tech rs_ugv_triax
 // Craft Stuff
 //========================
 
-tech rs_craft_el_raven_ecm
+tech rs_craft_electronics_raven
 {
 	type		craftshield
 //	type		craftelectronics
