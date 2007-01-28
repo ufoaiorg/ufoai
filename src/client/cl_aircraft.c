@@ -749,7 +749,6 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 
 
 	if (Cmd_Argc() != 2 || noparams) {
-		Com_Printf("CL_AircraftEquipmenuMenuInit_f inline usage: %i\n", airequipID);
 		if (airequipID == -1) {
 			Com_Printf("Usage airequip_init <num>\n");
 			return;
@@ -767,7 +766,6 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 				type = 0;
 				break;
 			}
-			Com_Printf("CL_AircraftEquipmenuMenuInit_f inline usage: type %i\n", type);
 		}
 	} else {
 		type = atoi(Cmd_Argv(1));
@@ -808,7 +806,7 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 		airequipID = AC_ITEM_WEAPON;
 		break;
 	}
-Com_Printf("CL_AircraftEquipmenuMenuInit_f inline2 usage: %i\n", airequipID);
+
 	while (*list) {
 		/*Com_Printf("%s\n", (*list)->id);*/
 		if (RS_IsResearched_ptr(*list))
