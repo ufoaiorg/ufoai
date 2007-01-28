@@ -132,6 +132,7 @@ aircraft craft_ufo_fighter
 
 craftitem craft_weapon_shiva
 {
+	type	weapon
 	tech		rs_craft_weapon_shiva
 	weight		light
         price           34000
@@ -139,6 +140,7 @@ craftitem craft_weapon_shiva
 
 craftitem craft_ammo_shiva_API
 {
+	type	ammo
 	tech		rs_craft_ammo_shiva_1
 	weapon		craft_weapon_shiva
 	price		100
@@ -149,6 +151,7 @@ craftitem craft_ammo_shiva_API
 
 craftitem craft_ammo_shiva_HEI
 {
+	type	ammo
 	tech		rs_craft_ammo_shiva_2
 	weapon		craft_weapon_shiva
 	price		100
@@ -159,6 +162,7 @@ craftitem craft_ammo_shiva_HEI
 
 craftitem craft_electronics_raven
 {
+	type	electronics
 	tech		rs_craft_electronics_raven
 	price		12345
 
@@ -167,6 +171,7 @@ craftitem craft_electronics_raven
 
 craftitem craft_weapon_sparrowhawk
 {
+	type	weapon
 	tech		rs_craft_weapon_sparrowhawk
 	weight		light
 	price		12321
@@ -176,6 +181,7 @@ craftitem craft_weapon_sparrowhawk
 
 craftitem craft_ammo_sparrowhawk
 {
+	type	ammo
 	tech		rs_craft_ammo_sparrowhawk
 	weapon		craft_weapon_sparrowhawk
 	price		250
@@ -186,6 +192,7 @@ craftitem craft_ammo_sparrowhawk
 
 craftitem craft_weapon_tr20
 {
+	type	weapon
 	tech		rs_craft_weapon_tr20
 	weight		medium
 	price		19998
@@ -195,6 +202,7 @@ craftitem craft_weapon_tr20
 
 craftitem craft_ammo_tr20
 {
+	type	ammo
 	tech		rs_craft_ammo_tr20
 	weapon		craft_weapon_tr20
 	price		310
@@ -205,6 +213,7 @@ craftitem craft_ammo_tr20
 
 craftitem craft_weapon_particle_beam
 {
+	type	weapon
 	tech		rs_craft_weapon_particle
 	weight		medium
 	price		25252
@@ -216,6 +225,7 @@ craftitem craft_weapon_particle_beam
 
 craftitem craft_electronics_targeting
 {
+	type	electronics
 	tech		rs_craft_electronics_targeting
 	price		33333
 
@@ -224,6 +234,7 @@ craftitem craft_electronics_targeting
 
 craftitem craft_electronics_fuelpod
 {
+	type	electronics
 	tech		rs_craft_electronics_fuelpod
 	price		8500
 
@@ -233,6 +244,7 @@ craftitem craft_electronics_fuelpod
 
 craftitem craft_shield_polymer
 {
+	type	armour
 	tech		rs_craft_shield_polymer
 	price		16000
 

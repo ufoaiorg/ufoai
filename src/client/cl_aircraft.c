@@ -707,6 +707,7 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 
 	type = atoi(Cmd_Argv(1));
 
+	/* TODO: change the typedefs below to the ones defined in aircraftItemType_t */
 	Com_sprintf(buffer, sizeof(buffer), _("None\n"));
 	switch (type) {
 	case 1:
@@ -760,6 +761,7 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 	/* which weapon? */
 	num = atoi(Cmd_Argv(1));
 
+	/* TODO: change the typedefs below to the ones defined in aircraftItemType_t */
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	if (num < 1) {
 		switch (airequipID) {
@@ -933,6 +935,24 @@ extern void CL_ParseAircraftItem (char *name, char **text)
 			break;
 		if (*token == '}')
 			break;
+
+		if (!Q_strncmp(token, "type", MAX_VAR)) {
+			/* what type of craft item this is */
+			token = COM_EParse(text, errhead, name);
+			if (!*text)
+				return;
+
+			if (!Q_strncmp(token, "weapon", MAX_VAR))
+				airItem->type = AC_ITEM_WEAPON;
+			else if (!Q_strncmp(token, "ammo", MAX_VAR))
+				airItem->type = AC_ITEM_AMMO;
+			else if (!Q_strncmp(token, "armour", MAX_VAR))
+				airItem->type = AC_ITEM_ARMOUR;
+			else if (!Q_strncmp(token, "electronics", MAX_VAR))
+				airItem->type = AC_ITEM_ELECTRONICS;
+			else
+				Com_Printf("CL_ParseAircraftItem: \"%s\" unknown craftitem type: \"%s\" - ignored.\n", name, token);
+		}
 
 		/* check for some standard values */
 		for (vp = aircraftitems_vals; vp->string; vp++)

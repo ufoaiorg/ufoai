@@ -38,12 +38,21 @@ typedef struct mapline_s {
 	vec2_t p[LINE_MAXPTS];
 } mapline_t;
 
-/** @brief All different types of aircraft */
+/** @brief All different types of aircraft. */
 typedef enum {
 	AIRCRAFT_TRANSPORTER,
 	AIRCRAFT_INTERCEPTOR,
 	AIRCRAFT_UFO
 } aircraftType_t;
+
+/** @brief All different types of craft items. */
+typedef enum {
+	AC_ITEM_WEAPON,
+	AC_ITEM_AMMO,
+	AC_ITEM_ARMOUR,
+	AC_ITEM_ELECTRONICS,
+	MAX_ACITEMS
+} aircraftItemType_t;
 
 struct actMis_s;
 
@@ -53,7 +62,8 @@ struct actMis_s;
 typedef struct aircraftItem_s {
 	char id[MAX_VAR];			/**< from script files */
 	int idx;					/**< self link */
-	char tech[MAX_VAR];			/**< tech id */
+	aircraftItemType_t type;		/**< The type of the aircraft item. */
+	char tech[MAX_VAR];		/**< tech id for this item.*/
 	char weapon[MAX_VAR];		/**< if this is ammo there must be a weapon */
 	int weight;
 	float damage;

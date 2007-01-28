@@ -2283,9 +2283,7 @@ tech rs_ugv_triax
 
 tech rs_craft_electronics_raven
 {
-	type		craftshield
-//	type		craftelectronics
-//	TODO: add code to parse craftelectronics -Zenerka 25.01.2007
+	type		craftitem
 	up_chapter	crafts
 	name		"_'Raven' ECM Unit"
 	// pre_description	"_craft_electronics_raven_pre_txt"
@@ -2301,7 +2299,7 @@ tech rs_craft_electronics_raven
 
 tech rs_craft_shield_polymer
 {
-	type		craftshield
+	type		craftitem
 	up_chapter	crafts
 	name		"_Polymer Aircraft Armour"
 	// pre_description	"_craft_shield_light_pre_txt"
@@ -2317,7 +2315,7 @@ tech rs_craft_shield_polymer
 
 tech rs_craft_weapon_shiva
 {
-	type		craftweapon
+	type		craftitem
 	up_chapter	crafts
 	name		"_SHIVA Rotary Cannon"
 	// pre_description	"_craft_weapon_shiva_pre_txt"
@@ -2333,7 +2331,7 @@ tech rs_craft_weapon_shiva
 
 tech rs_craft_ammo_shiva_1
 {
-	type		craftweapon
+	type		craftitem
 	up_chapter	crafts
 	name		"_SHIVA 20mm API Rounds"
 	// pre_description	"_craft_ammo_shiva_1_pre_txt"
@@ -2352,7 +2350,7 @@ tech rs_craft_ammo_shiva_1
 
 tech rs_craft_ammo_shiva_2
 {
-	type		craftweapon
+	type		craftitem
 	up_chapter	crafts
 	name		"_SHIVA 20mm HEI Rounds"
 	// pre_description	"_craft_ammo_shiva_2_pre_txt"
@@ -2371,7 +2369,7 @@ tech rs_craft_ammo_shiva_2
 
 tech rs_craft_weapon_sparrowhawk
 {
-	type		craftweapon
+	type		craftitem
 	up_chapter	crafts
 	name		"_'Sparrowhawk' AA Missile Rack"
 	// pre_description	"_craft_weapon_sparrowhawk_pre_txt"
@@ -2387,7 +2385,7 @@ tech rs_craft_weapon_sparrowhawk
 
 tech rs_craft_ammo_sparrowhawk
 {
-	type		craftweapon
+	type		craftitem
 	up_chapter	crafts
 	name		"_'Sparrowhawk' Missile"
 	// pre_description	"_craft_ammo_sparrowhawk_pre_txt"
@@ -2406,7 +2404,7 @@ tech rs_craft_ammo_sparrowhawk
 
 tech rs_craft_weapon_tr20
 {
-	type		craftweapon
+	type		craftitem
 	up_chapter	crafts
 	name		"_TR-20 Rocket Pod"
 	// pre_description	"_craft_weapon_tr20_pre_txt"
@@ -2422,7 +2420,7 @@ tech rs_craft_weapon_tr20
 
 tech rs_craft_ammo_tr20
 {
-	type		craftweapon
+	type		craftitem
 	up_chapter	crafts
 	name		"_TR-20 Rocket"
 	// pre_description	"_craft_ammo_tr20_pre_txt"
@@ -2449,7 +2447,7 @@ item craft_weapon_particle
 
 tech rs_craft_weapon_particle
 {
-	type		craftweapon
+	type		craftitem
 	up_chapter	crafts
 	name		"_Particle Beam Weapon"
 	pre_description	"_craft_weapon_particle_beam_pre_txt"
@@ -2473,9 +2471,7 @@ tech rs_craft_weapon_particle
 
 tech rs_craft_el_targeting
 {
-	type		craftshield
-//	type		craftelectronics
-//	TODO: add code to parse craftelectronics -Zenerka 25.01.2007
+	type		craftitem
 	up_chapter	crafts
 	name		"_Targeting Computer"
 	// pre_description	"_craft_electronics_targeting_pre_txt"
@@ -2491,9 +2487,7 @@ tech rs_craft_el_targeting
 
 tech rs_craft_el_fuelpod
 {
-	type		craftshield
-//	type		craftelectronics
-//	TODO: add code to parse craftelectronics -Zenerka 25.01.2007
+	type		craftitem
 	up_chapter	crafts
 	name		"_Fuel Pod"
 	// pre_description	"_craft_electronics_fuelpod_pre_txt"
