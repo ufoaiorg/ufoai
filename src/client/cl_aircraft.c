@@ -684,6 +684,8 @@ void CL_CampaignRunAircraft(int dt)
 /**
  * @brief Returns a list of craftitem technologies for the given type.
  * @note this list is terminated by a NULL pointer
+ * param[in] type Type of the craft-items to return.
+ * param[in] usetypedef Defines if the type param shoudl be handled as a aircraftItemType_t (qtrue) or not (qfalse - See the code).
  */
 static technology_t **AC_GetCraftitemTechsByType (int type, qboolean usetypedef)
 {
@@ -722,12 +724,12 @@ static technology_t **AC_GetCraftitemTechsByType (int type, qboolean usetypedef)
 		}
 		/* j+1 because last item have to be NULL */
 		if (j + 1 >= MAX_TECHNOLOGIES) {
-			Com_Printf("CL_AircraftEquipmenuMenuInit_f: MAX_TECHNOLOGIES limit hit\n");
+			Com_Printf("AC_GetCraftitemTechsByType: MAX_TECHNOLOGIES limit hit.\n");
 			break;
 		}
 	}
 	techList[j] = NULL;
-	Com_DPrintf("techlist with %i entries\n", j);
+	Com_DPrintf("Techlist with %i entries.\n", j);
 	return techList;
 }
 
@@ -751,6 +753,8 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 		} else {
 			type = airequipID;
 		}
+	} else {
+		type = atoi(Cmd_Argv(1));
 	}
 
 	node = MN_GetNodeFromCurrentMenu("aircraftequip");
@@ -822,10 +826,9 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 		return;
 	}
 
-	/* which weapon? */
+	/* Which entry in the list? */
 	num = atoi(Cmd_Argv(1));
 
-	/* TODO: change the typedefs below to the ones defined in aircraftItemType_t */
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	if (num < 1) {
 		switch (airequipID) {
