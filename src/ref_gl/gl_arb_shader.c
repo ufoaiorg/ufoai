@@ -252,12 +252,12 @@ unsigned int SH_LoadProgram_GLSL(shader_t* s)
 	s->glslpid = qglCreateProgram();
 
 	if (s->frag) {
-		s->fpid = qglCreateShader(GL_FRAGMENT_SHADER);
+		s->fpid = qglCreateShader(GL_FRAGMENT_SHADER_ARB);
 		qglShaderSource(s->fpid, 1, (const char**)&fbuf, NULL);
 		qglCompileShader(s->fpid);
 		qglAttachShader(s->glslpid, s->fpid);
 	} else if (s->vertex) {
-		s->vpid = qglCreateShader(GL_VERTEX_SHADER);
+		s->vpid = qglCreateShader(GL_VERTEX_SHADER_ARB);
 		qglShaderSource(s->vpid, 1, (const char**)&fbuf, NULL);
 		qglCompileShader(s->vpid);
 		qglAttachShader(s->glslpid, s->vpid);
