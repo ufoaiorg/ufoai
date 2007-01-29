@@ -1,0 +1,145 @@
+// =====================
+// PARTICLE EDITOR  MENU
+// =====================
+
+menu particle_editor
+{
+	zone render
+	{
+		pos		"140 50"
+		size	"886 718"
+		origin	"0 0 0"
+	}
+
+	string loop_str
+	{
+		string	"_Loop"
+		pos		"700 10"
+	}
+	string loop_value
+	{
+		string	"*cvar ptledit_loop"
+		pos		"840 10"
+		align	ur
+	}
+	pic loop_dec
+	{
+		image	menu/buttons_small
+		tooltip	"_Show the particle only once"
+		pos		"868 14"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "ptledit_loop 0;" }
+	}
+	pic loop_inc
+	{
+		image	menu/buttons_small
+		tooltip	"_Loop the particle"
+		pos		"884 14"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "ptledit_loop 1;" }
+	}
+
+	string speed_str
+	{
+		string	"_Speed:"
+		pos		"700 30"
+	}
+	pic speedveryslow
+	{
+		image	menu/buttons_small
+		pos		"852 34"
+		tooltip	"_Very slow"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "ptledit_veryslow;" }
+	}
+	pic speedslow
+	{
+		image	menu/buttons_small
+		tooltip	"_Slow"
+		pos		"868 34"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "ptledit_slow;" }
+	}
+	pic speednormal
+	{
+		image	menu/buttons_small
+		tooltip	"_Normal"
+		pos		"884 34"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "ptledit_normal;" }
+	}
+
+	zone background
+	{
+		pos "149 0"
+		size "881 50"
+		bgcolor "0.5 0.5 0.5 0.5"
+		border	3
+		bordercolor	"1 1 1 1"
+	}
+
+	string ptledit_loaded
+	{
+		string	"_Currently loaded:"
+		pos	"200 10"
+		color	"0 0.78 0 1"
+	}
+
+	string ptledit_name
+	{
+		string	""
+		pos	"200 30"
+		color	"0 0.78 0 1"
+	}
+
+	text ptledit_list
+	{
+		pos	"0 0"
+		size	"140 768"
+		bgcolor	"0.5 0.5 0.5 0.5"
+		format	"14 0"
+		num	1
+		font	f_verysmall
+		wheel click
+		height	54
+		mousefx	true
+		border	3
+		bordercolor	"1 1 1 1"
+	}
+
+	func close
+	{
+		cmd "particle_editor_close"
+	}
+
+	confunc ptledit_veryslow
+	{
+		*event timeout 100
+	}
+
+	confunc ptledit_slow
+	{
+		*event timeout 10
+	}
+
+	confunc ptledit_normal
+	{
+		*event timeout 1
+	}
+
+	func event
+	{
+		timeout	1
+		cmd "ptledit_frame;"
+	}
+}
