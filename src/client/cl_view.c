@@ -52,9 +52,6 @@ static dlight_t r_dlights[MAX_DLIGHTS];
 static int r_numentities;
 static entity_t r_entities[MAX_ENTITIES];
 
-static int r_numparticles;
-static particle_t r_particles[MAX_PARTICLES];
-
 static lightstyle_t r_lightstyles[MAX_LIGHTSTYLES];
 
 static dlight_t map_lights[MAX_MAP_LIGHTS];
@@ -71,7 +68,6 @@ void V_ClearScene(void)
 {
 	r_numdlights = 0;
 	r_numentities = 0;
-	r_numparticles = 0;
 }
 
 
@@ -510,7 +506,7 @@ void CL_PrepRefresh(void)
  * Should generally be called after any changes are made to the zoom level (via cl.cam.zoom)
  * @sa
  */
-void CalcFovX(void)
+void CalcFovX (void)
 {
 	if (cl_isometric->value) {
 		float zoom =  3.6*(cl.cam.zoom - cl_camzoommin->value) + 0.3*cl_camzoommin->value;
@@ -525,7 +521,7 @@ void CalcFovX(void)
  * @param
  * @sa
  */
-static void CalcFovY(float width, float height)
+static void CalcFovY (float width, float height)
 {
 	float x;
 
@@ -538,7 +534,7 @@ static void CalcFovY(float width, float height)
  * @param
  * @sa
  */
-void CL_CalcRefdef(void)
+void CL_CalcRefdef (void)
 {
 	VectorCopy(cl.cam.camorg, cl.refdef.vieworg);
 	VectorCopy(cl.cam.angles, cl.refdef.viewangles);
@@ -560,7 +556,7 @@ void CL_CalcRefdef(void)
  *
  * TODO: Implement and extend this function
  */
-static void CL_DrawGrid(void)
+static void CL_DrawGrid (void)
 {
 	int i;
 
@@ -569,21 +565,19 @@ static void CL_DrawGrid(void)
 		return;
 
 	Com_DPrintf("CL_DrawGrid: %i\n", fb_length);
-	for (i=0; i<fb_length; i++) {
+	for (i = 0; i < fb_length; i++) {
 	}
 }
 
 /**
  * @brief Updates the cl.refdef
  */
-void V_UpdateRefDef(void)
+void V_UpdateRefDef (void)
 {
 	/* setup refdef */
 	cl.refdef.worldlevel = cl_worldlevel->value;
 	cl.refdef.num_entities = r_numentities;
 	cl.refdef.entities = r_entities;
-	cl.refdef.num_particles = r_numparticles;
-	cl.refdef.particles = r_particles;
 	cl.refdef.num_shaders = r_numshaders;
 	cl.refdef.shaders = r_shaders;
 	cl.refdef.num_dlights = r_numdlights;
@@ -597,7 +591,7 @@ void V_UpdateRefDef(void)
 	cl.refdef.ptl_art = ptlArt;
 
 	cl.refdef.sun = &map_sun;
-	if (cls.state == ca_sequence)
+	if (cls.state == ca_sequence || cls.state == ca_ptledit)
 		cl.refdef.num_lights = 0;
 	else {
 		cl.refdef.ll = map_lights;
@@ -610,9 +604,9 @@ void V_UpdateRefDef(void)
  * @param stereo_separation
  * @sa SCR_UpdateScreen
  */
-void V_RenderView(float stereo_separation)
+void V_RenderView (float stereo_separation)
 {
-	if (cls.state != ca_active && cls.state != ca_sequence)
+	if (cls.state != ca_active && cls.state != ca_sequence && cls.state != ca_ptledit)
 		return;
 
 	if (!scr_vrect.width || !scr_vrect.height)
@@ -633,6 +627,9 @@ void V_RenderView(float stereo_separation)
 
 	if (cls.state == ca_sequence) {
 		CL_SequenceRender();
+		cl.refdef.rdflags |= RDF_NOWORLDMODEL;
+	} else if (cls.state == ca_ptledit) {
+		PE_RenderParticles();
 		cl.refdef.rdflags |= RDF_NOWORLDMODEL;
 	} else {
 		LM_AddToScene();
@@ -656,9 +653,9 @@ void V_RenderView(float stereo_separation)
 	/* render the frame */
 	re.RenderFrame(&cl.refdef);
 	if (cl_stats->value)
-		Com_Printf("ent:%i  lt:%i  part:%i\n", r_numentities, r_numdlights, r_numparticles);
+		Com_Printf("ent:%i  lt:%i\n", r_numentities, r_numdlights);
 	if (log_stats->value && (log_stats_file != 0))
-		fprintf(log_stats_file, "%i,%i,%i,", r_numentities, r_numdlights, r_numparticles);
+		fprintf(log_stats_file, "%i,%i,", r_numentities, r_numdlights);
 	if (cl_drawgrid->value)
 		CL_DrawGrid();
 

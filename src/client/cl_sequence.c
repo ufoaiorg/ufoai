@@ -153,7 +153,7 @@ static cvar_t *seq_animspeed;
  * @brief Sets the client state to ca_disconnected
  * @sa CL_SequenceStart_f
  */
-void CL_SequenceEnd_f(void)
+void CL_SequenceEnd_f (void)
 {
 	cls.state = ca_disconnected;
 }
@@ -163,7 +163,7 @@ void CL_SequenceEnd_f(void)
  * @brief Set the camera values for a sequence
  * @sa CL_SequenceRender
  */
-void CL_SequenceCamera(void)
+static void CL_SequenceCamera (void)
 {
 	if (!scr_vrect.width || !scr_vrect.height)
 		return;
@@ -234,7 +234,7 @@ seq2D_t *CL_SequenceFind2D(char *name)
  * @sa MN_PopMenu
  * @sa CL_SequenceFindEnt
  */
-void CL_SequenceRender(void)
+void CL_SequenceRender (void)
 {
 	entity_t ent;
 	seqCmd_t *sc;
@@ -301,7 +301,7 @@ void CL_SequenceRender(void)
  * @brief Renders text and images
  * @sa CL_ResetSequences
  */
-void CL_Sequence2D(void)
+void CL_Sequence2D (void)
 {
 	seq2D_t *s2d;
 	int i, j;
@@ -358,7 +358,7 @@ void CL_Sequence2D(void)
  * @note Script binding for seq_click
  * @sa menu sequence in menu_main.ufo
  */
-void CL_SequenceClick_f(void)
+void CL_SequenceClick_f (void)
 {
 	if (seqLocked) {
 		seqEndClickLoop = qtrue;
@@ -371,7 +371,7 @@ void CL_SequenceClick_f(void)
  * @brief Start a sequence
  * @sa CL_SequenceEnd_f
  */
-void CL_SequenceStart_f(void)
+void CL_SequenceStart_f (void)
 {
 	sequence_t *sp;
 	char *name, *menuName;

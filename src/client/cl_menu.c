@@ -288,7 +288,7 @@ void MN_SetNewNodePos (menuNode_t* node, int x, int y)
 /**
  * @brief
  */
-static char *MN_GetReferenceString(const menu_t* const menu, char *ref)
+static char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 {
 	if (!ref)
 		return NULL;
@@ -1649,9 +1649,9 @@ void MN_DrawMenus(void)
 			}
 		}
 		for (node = menu->firstNode; node; node = node->next) {
-			if (!node->invis && (node->data[0] /* 0 are images, models and strings e.g. */
+			if (!node->invis && ((node->data[0] /* 0 are images, models and strings e.g. */
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP
-					|| node->type == MN_3DMAP)) {
+					|| node->type == MN_3DMAP) || (node->type == MN_ZONE && node->bgcolor[3]))) {
 				/* if construct */
 				if (*node->depends.var) {
 					/* menuIfCondition_t */
@@ -1744,7 +1744,7 @@ void MN_DrawMenus(void)
 
 				/* get the reference */
 				if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_TEXT && node->type != MN_MAP
-					&& node->type != MN_3DMAP) {
+					&& node->type != MN_3DMAP && node->type != MN_ZONE) {
 					ref = MN_GetReferenceString(menu, node->data[0]);
 					if (!ref) {
 						/* bad reference */

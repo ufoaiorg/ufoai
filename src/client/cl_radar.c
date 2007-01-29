@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Show Radar coverage
  */
-extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean map3d)
+extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean globe)
 {
 	int i, xCircle, yCircle;
 	int pts[RADAR_DRAW_POINTS * 2 + 2];
@@ -48,15 +48,22 @@ extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec
 		sinus = sin(i * 6.283185306 / RADAR_DRAW_POINTS);
 		posCircle[0] = pos[0] + cosinus * radar->range;
 		posCircle[1] = pos[1] + sinus * radar->range;
-		MAP_MapToScreen(node, posCircle, &xCircle, &yCircle);
+		if (!globe)
+			MAP_MapToScreen(node, posCircle, &xCircle, &yCircle);
+		else
+			MAP_3DMapToScreen(node, posCircle, &xCircle, &yCircle);
 		pts[i * 2] = xCircle;
 		pts[i * 2 + 1] = yCircle;
 		posCircle[0] = pos[0] + cosinus * rangeTracking;
 		posCircle[1] = pos[1] + sinus * rangeTracking;
-		MAP_MapToScreen(node, posCircle, &xCircle, &yCircle);
+		if (!globe)
+			MAP_MapToScreen(node, posCircle, &xCircle, &yCircle);
+		else
+			MAP_3DMapToScreen(node, posCircle, &xCircle, &yCircle);
 		pts2[i * 2] = xCircle;
 		pts2[i * 2 + 1] = yCircle;
 	}
+	/* FIXME for globe */
 	re.DrawLineStrip(RADAR_DRAW_POINTS + 1, pts);
 	re.DrawLineStrip(RADAR_DRAW_POINTS + 1, pts2);
 	re.DrawColor(NULL);
@@ -65,7 +72,7 @@ extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec
 /**
  * @brief Display radar in geoscape
  */
-extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos, qboolean map3d)
+extern void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos, qboolean globe)
 {
 	int i;
 	const vec4_t color = {0, 1, 0, 1};
@@ -75,7 +82,7 @@ extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x,
 		return;
 
 	/* Show radar range zones */
-	RADAR_DrawCoverage(node,radar,pos, map3d);
+	RADAR_DrawCoverage(node,radar,pos, globe);
 
 	/* Set color */
 	re.DrawColor(color);
@@ -83,9 +90,12 @@ extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x,
 	/* Draw lines from radar to ufos sensored */
 	Vector2Set(pts, x, y);
 	for (i = radar->numUfos - 1 ; i >= 0 ; i--)
-		if (MAP_MapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y)) {
+		if (!globe && MAP_MapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y)) {
 			Vector2Set(pts + 2, x, y);
 			re.DrawLineStrip(2, pts);
+		} else if (globe && MAP_3DMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y)) {
+			Vector2Set(pts + 2, x, y);
+			re.DrawLineStrip(2, pts); /* FIXME */
 		}
 
 	re.DrawColor(NULL);

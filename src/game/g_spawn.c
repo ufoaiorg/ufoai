@@ -187,7 +187,7 @@ static char *ED_NewString(char *string)
 /**
  * @brief Takes a key/value pair and sets the binary values in an edict
  */
-static void ED_ParseField(char *key, char *value, edict_t * ent)
+static void ED_ParseField (char *key, char *value, edict_t * ent)
 {
 	field_t *f;
 	byte *b;
@@ -245,7 +245,7 @@ static void ED_ParseField(char *key, char *value, edict_t * ent)
  * @brief Parses an edict out of the given string, returning the new position
  * @param[in] ent should be a properly initialized empty edict.
  */
-static char *ED_ParseEdict(char *data, edict_t * ent)
+static char *ED_ParseEdict (char *data, edict_t * ent)
 {
 	qboolean init;
 	char keyname[256];
@@ -293,7 +293,7 @@ static char *ED_ParseEdict(char *data, edict_t * ent)
  * @brief Creates a server's entity / program execution context
  * by parsing textual entity definitions out of an ent file.
  */
-void SpawnEntities(char *mapname, char *entities)
+void SpawnEntities (char *mapname, char *entities)
 {
 	edict_t *ent;
 	int entnum;
@@ -352,7 +352,6 @@ void SpawnEntities(char *mapname, char *entities)
 #endif
 	}
 }
-
 
 /**
  * @brief QUAKED light (0 1 0) (-8 -8 -8) (8 8 8)
@@ -617,7 +616,7 @@ static void SP_func_breakable(edict_t * self)
  * "maxlevel"	max. level to use in the map
  * "maxteams"	max team amount for multiplayergames for the current map
  */
-static void SP_worldspawn(edict_t * ent)
+static void SP_worldspawn (edict_t * ent)
 {
 	ent->solid = SOLID_BSP;
 	/* since the world doesn't use G_Spawn() */

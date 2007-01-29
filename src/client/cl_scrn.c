@@ -557,7 +557,7 @@ static void SCR_Loading_f(void)
 /**
  * @brief
  */
-static void SCR_TimeRefresh_f(void)
+static void SCR_TimeRefresh_f (void)
 {
 	int i;
 	int start, stop;
@@ -656,7 +656,7 @@ static void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont)
  * @sa SCR_DrawConsole
  * @sa SCR_DrawCursor
  */
-void SCR_UpdateScreen(void)
+void SCR_UpdateScreen (void)
 {
 	int numframes;
 	int i;

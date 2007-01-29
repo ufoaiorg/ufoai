@@ -36,8 +36,9 @@ PARTICLE DRAWING
  * @param[in] p the particle to give the dimensions for
  * @param[out] right the output right vector for the particle
  * @param[out] up the output up vector for the particle
+ * @sa R_DrawSprite
  */
-static void R_GetSpriteVectors(ptl_t *p, vec3_t right, vec3_t up)
+static void R_GetSpriteVectors (ptl_t *p, vec3_t right, vec3_t up)
 {
 	/* get transformation */
 	switch (p->style) {
@@ -70,8 +71,9 @@ static void R_GetSpriteVectors(ptl_t *p, vec3_t right, vec3_t up)
 
 /**
  * @brief
+ * @sa R_DrawPtls
  */
-void R_DrawSprite(ptl_t * p)
+static void R_DrawSprite (ptl_t * p)
 {
 	ptl_t *q;
 	vec3_t up, right;
@@ -135,8 +137,9 @@ void R_DrawSprite(ptl_t * p)
 
 /**
  * @brief
+ * @sa R_DrawPtls
  */
-static void R_DrawPtlModel(ptl_t * p)
+static void R_DrawPtlModel (ptl_t * p)
 {
 	modelInfo_t mi;
 
@@ -154,8 +157,9 @@ static void R_DrawPtlModel(ptl_t * p)
 
 /**
  * @brief
+ * @sa R_DrawPtls
  */
-static void R_DrawPtlLine(ptl_t * p)
+static void R_DrawPtlLine (ptl_t * p)
 {
 	qglDisable(GL_TEXTURE_2D);
 	qglEnable(GL_LINE_SMOOTH);
@@ -181,6 +185,7 @@ GENERIC PARTICLE FUNCTIONS
 static int blend_mode;
 /**
  * @brief
+ * @sa R_DrawPtls
  */
 static void GL_SetBlendMode(int mode)
 {
@@ -219,7 +224,7 @@ static void GL_SetBlendMode(int mode)
  * @note the r_newrefdef.ptls is the ptl array from cl_particle.c
  * @sa V_UpdateRefDef
  */
-void R_DrawPtls(void)
+extern void R_DrawPtls (void)
 {
 	ptl_t *p;
 	int i;

@@ -91,31 +91,31 @@ typedef struct animState_s {
 } animState_t;
 
 typedef struct entity_s {
-	struct model_s *model;		/* opaque type outside refresh */
+	struct model_s *model;		/**< opaque type outside refresh */
 	float angles[3];
 
-	float origin[3];			/* also used as RF_BEAM's "from" */
-	float oldorigin[3];			/* also used as RF_BEAM's "to" */
+	float origin[3];			/**< also used as RF_BEAM's "from" */
+	float oldorigin[3];			/**< also used as RF_BEAM's "to" */
 
 	/*
 	 ** tag positioning
 	 */
-	struct entity_s *tagent;	/* pointer to the parent entity */
-	char *tagname;				/* name of the tag */
+	struct entity_s *tagent;	/**< pointer to the parent entity */
+	char *tagname;				/**< name of the tag */
 
 	/*
 	 ** misc
 	 */
-	int skinnum;				/* also used as RF_BEAM's palette index */
+	int skinnum;				/**< also used as RF_BEAM's palette index */
 
-	float *lightcolor;			/* color for fixed light */
-	float *lightambient;		/* ambient color for fixed light */
-	float *lightparam;			/* fraction lit by the sun */
+	float *lightcolor;			/**< color for fixed light */
+	float *lightambient;		/**< ambient color for fixed light */
+	float *lightparam;			/**< fraction lit by the sun */
 
-	int lightstyle;				/* for flashing entities */
-	float alpha;				/* ignore if RF_TRANSLUCENT isn't set */
+	int lightstyle;				/**< for flashing entities */
+	float alpha;				/**< ignore if RF_TRANSLUCENT isn't set */
 
-	struct image_s *skin;		/* NULL for inline skin */
+	struct image_s *skin;		/**< NULL for inline skin */
 	int flags;
 
 	animState_t as;
@@ -137,17 +137,17 @@ typedef struct entity_s {
 typedef struct shader_s {
 	/* title is internal for finding the shader */
 
-	/* we should use this shader when loading the image */
+	/** we should use this shader when loading the image */
 	char title[MAX_VAR];
 
-	/* filename is for an external filename to load the shader from */
+	/** filename is for an external filename to load the shader from */
 	char filename[MAX_VAR];
 
-	qboolean glsl;				/* glsl shader */
-	qboolean frag;				/* fragment-shader */
-	qboolean vertex;			/* vertex-shader */
+	qboolean glsl;				/**< glsl shader */
+	qboolean frag;				/**< fragment-shader */
+	qboolean vertex;			/**< vertex-shader */
 
-	qboolean emboss;			/* active emboss mapping */
+	qboolean emboss;			/**< active emboss mapping */
 	qboolean embossHigh;
 	qboolean embossLow;
 	qboolean emboss2;
@@ -162,14 +162,8 @@ typedef struct shader_s {
 } shader_t;
 
 typedef struct {
-	vec3_t origin;
-	int color;
-	float alpha;
-} particle_t;
-
-typedef struct {
-	float rgb[3];				/* 0.0 - 2.0 */
-	float white;				/* highest of rgb */
+	float rgb[3];				/**< 0.0 - 2.0 */
+	float white;				/**< highest of rgb */
 } lightstyle_t;
 
 typedef struct {
@@ -204,10 +198,10 @@ typedef struct {
 
 typedef struct ptl_s {
 	/* used by ref */
-	qboolean inuse;
-	int pic, model;
-	byte blend;
-	byte style;
+	qboolean inuse;			/**< particle active? */
+	int pic, model;			/**< index of pic or model */
+	byte blend;				/**< blend mode */
+	byte style;				/**< style mode */
 	vec2_t size;
 	vec3_t scale;
 	vec4_t color;
@@ -216,9 +210,9 @@ typedef struct ptl_s {
 	vec3_t angles;
 	int levelFlags;
 
-	struct ptl_s* children;	/* list of children */
-	struct ptl_s* next;		/* next peer in list */
-	struct ptl_s* parent;   /* pointer to parent */
+	struct ptl_s* children;	/**< list of children */
+	struct ptl_s* next;		/**< next peer in list */
+	struct ptl_s* parent;   /**< pointer to parent */
 
 	/* private */
 	struct ptlDef_s *ctrl;
@@ -241,27 +235,24 @@ typedef struct ptlArt_s {
 } ptlArt_t;
 
 typedef struct {
-	int x, y, width, height;	/* in virtual screen coordinates */
+	int x, y, width, height;	/**< in virtual screen coordinates */
 	float fov_x, fov_y;
 	float vieworg[3];
 	float viewangles[3];
-	float blend[4];				/* rgba 0-1 full screen blend */
-	float time;					/* time is used to auto animate */
-	int rdflags;				/* RDF_UNDERWATER, etc */
+	float blend[4];				/**< rgba 0-1 full screen blend */
+	float time;					/**< time is used to auto animate */
+	int rdflags;				/**< RDF_UNDERWATER, etc */
 	int worldlevel;
 
-	byte *areabits;				/* if not NULL, only areas with set bits will be drawn */
+	byte *areabits;				/**< if not NULL, only areas with set bits will be drawn */
 
-	lightstyle_t *lightstyles;	/* [MAX_LIGHTSTYLES] */
+	lightstyle_t *lightstyles;	/**< [MAX_LIGHTSTYLES] */
 
 	int num_entities;
 	entity_t *entities;
 
 	int num_dlights;
 	dlight_t *dlights;
-
-	int num_particles;
-	particle_t *particles;
 
 	int num_shaders;
 	shader_t *shaders;
@@ -314,6 +305,7 @@ typedef struct {
 	void (*RenderFrame) (refdef_t * fd);
 	void (*SetRefDef) (refdef_t * fd);
 
+	void (*DrawPtls) (void);
 	void (*DrawModelDirect) (modelInfo_t * mi, modelInfo_t * pmi, char *tag);
 	void (*DrawGetPicSize) (int *w, int *h, char *name);	/* will return 0 0 if not found */
 	void (*DrawPic) (int x, int y, char *name);

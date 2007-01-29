@@ -56,7 +56,7 @@ typedef enum pf_s {
 } pf_t;
 
 /** @brief valid particle functions - see pf_t and pf_values */
-static char *pf_strings[PF_NUM_PTLFUNCS] = {
+static const char *pf_strings[PF_NUM_PTLFUNCS] = {
 	"init",
 	"run",
 	"think",
@@ -64,7 +64,7 @@ static char *pf_strings[PF_NUM_PTLFUNCS] = {
 };
 
 /** @brief particle functions offsets - see pf_strings and pf_t */
-static size_t pf_values[PF_NUM_PTLFUNCS] = {
+static const size_t pf_values[PF_NUM_PTLFUNCS] = {
 	offsetof(ptlDef_t, init),
 	offsetof(ptlDef_t, run),
 	offsetof(ptlDef_t, think),
@@ -89,7 +89,7 @@ typedef enum pc_s {
 } pc_t;
 
 /** @brief particle commands - see pc_t */
-static char *pc_strings[PC_NUM_PTLCMDS] = {
+static const char *pc_strings[PC_NUM_PTLCMDS] = {
 	"end",
 
 	"push", "pop", "kpop",
@@ -108,7 +108,7 @@ static char *pc_strings[PC_NUM_PTLCMDS] = {
 #define ONLY		(1<<31)
 
 /** @brief particle commands parameter and types */
-static int pc_types[PC_NUM_PTLCMDS] = {
+static const int pc_types[PC_NUM_PTLCMDS] = {
 	0,
 
 	V_UNTYPED, V_UNTYPED, V_UNTYPED,
@@ -123,7 +123,7 @@ static int pc_types[PC_NUM_PTLCMDS] = {
 };
 
 /** @brief particle script values */
-static value_t pps[] = {
+static const const value_t pps[] = {
 	{"image", V_STRING, offsetof(ptl_t, pic)},
 	{"model", V_STRING, offsetof(ptl_t, model)},
 	{"blend", V_BLEND, offsetof(ptl_t, blend)},
@@ -195,13 +195,15 @@ ptl_t ptl[MAX_PTLS];
 int numPtlArt;
 int numPtls;
 
+static void CL_ParticleRun2 (ptl_t *p);
+
 /* =========================================================== */
 
 
 /**
  * @brief
  */
-void CL_ParticleRegisterArt(void)
+void CL_ParticleRegisterArt (void)
 {
 	ptlArt_t *a;
 	int i;
@@ -230,7 +232,7 @@ void CL_ParticleRegisterArt(void)
  * @note searches the global particle art list and checks whether the pic or model was already loaded
  * @return index of global art array
  */
-static int CL_ParticleGetArt(char *name, int frame, char type)
+static int CL_ParticleGetArt (char *name, int frame, char type)
 {
 	ptlArt_t *a;
 	int i;
@@ -273,11 +275,212 @@ static int CL_ParticleGetArt(char *name, int frame, char type)
 	return numPtlArt - 1;
 }
 
+/*==============================================================================
+PARTICLE EDITOR
+==============================================================================*/
+
+static int activeParticle = -1;
+static char ptledit_ptlName[MAX_VAR];
+static ptl_t* ptledit_ptl = NULL;
+static cvar_t* ptledit_loop;
+
+/** @brief Menu nodes that should be updated */
+static struct ptleditMenu_s {
+	menuNode_t* ptlName;
+	menuNode_t* renderZone;
+} ptleditMenu;
+
+/**
+ * @brief Set the camera values for a sequence
+ * @sa CL_SequenceRender
+ */
+static void PE_SetCamera (void)
+{
+	if (!scr_vrect.width || !scr_vrect.height)
+		return;
+
+	/* set camera */
+	VectorClear(cl.cam.reforg);
+	cl.cam.angles[0] = 20;
+
+	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
+	VectorMA(cl.cam.reforg, -100, cl.cam.axis[0], cl.cam.camorg);
+	cl.cam.zoom = MIN_ZOOM;
+
+	/* fudge to get isometric and perspective modes looking similar */
+	if (cl_isometric->value)
+		cl.cam.zoom /= 1.35;
+
+	CalcFovX();
+}
 
 /**
  * @brief
  */
-void CL_ResetParticles(void)
+extern void PE_RenderParticles (void)
+{
+	PE_SetCamera();
+}
+
+/**
+ * @brief Updates menu nodes with current particle values
+ */
+static void PE_UpdateMenu (ptlDef_t* p)
+{
+	char *type, *name, *text;
+	static char ptlList[1024];
+
+	FS_BuildFileList("ufos/*.ufo");
+	FS_NextScriptHeader(NULL, NULL, NULL);
+	text = NULL;
+
+	memset(ptlList, 0, sizeof(ptlList));
+	memset(ptledit_ptlName, 0, sizeof(ptledit_ptlName));
+
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
+		if (!Q_strncmp(type, "particle", 8))
+			Q_strcat(ptlList, va("%s\n", name), sizeof(ptlList));
+
+	if (p)
+		Q_strncpyz(ptledit_ptlName, p->name, sizeof(ptledit_ptlName));
+
+	/* link them */
+	ptleditMenu.ptlName->data[0] = ptledit_ptlName;
+	menuText[TEXT_LIST] = ptlList;
+}
+
+
+/**
+ * @brief
+ */
+static void PE_LoadParticle_f (void)
+{
+	int i;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("usage: ptledit_load <particleid>\n");
+		return;
+	}
+
+	if (ptledit_ptl)
+		CL_ParticleFree(ptledit_ptl);
+	ptledit_ptl = NULL;
+
+	activeParticle = -1;
+	for (i = 0; i < numPtlDefs; i++)
+		if (!Q_strncmp(ptlDef[i].name, Cmd_Argv(1), sizeof(ptlDef[i].name)))
+			activeParticle = i;
+
+	if (activeParticle != -1) {
+		PE_UpdateMenu(&ptlDef[activeParticle]);
+		ptledit_ptl = CL_ParticleSpawn(ptlDef[activeParticle].name, 0, ptleditMenu.renderZone->origin, NULL, NULL);
+	} else
+		PE_UpdateMenu(NULL);
+}
+
+/**
+ * @brief Event function that will be called every frame
+ */
+static void PE_Frame_f (void)
+{
+	if (ptledit_ptl) {
+		if (ptledit_ptl->inuse) {
+			CL_ParticleRun2(ptledit_ptl);
+			PE_UpdateMenu(&ptlDef[activeParticle]);
+		} else {
+			/* let main particles respawn if the ptledit_loop cvar is set */
+			if (ptledit_loop->integer && !ptledit_ptl->parent) {
+				ptledit_ptl = CL_ParticleSpawn(ptlDef[activeParticle].name, 0, ptleditMenu.renderZone->origin, NULL, NULL);
+			} else {
+				if (ptledit_ptl->parent)
+					Com_Printf("particle '%s' - lifetime exceeded\n", ptlDef[activeParticle].name);
+				PE_UpdateMenu(NULL);
+				ptledit_ptl = NULL;
+			}
+		}
+	}
+}
+
+/**
+ * @brief
+ */
+static void PE_ListClick_f (void)
+{
+	int num;
+
+	if (Cmd_Argc() < 2)
+		return;
+
+	/* which particle? */
+	num = atoi(Cmd_Argv(1));
+
+	if (num < 0 || num >= numPtlDefs)
+		return;
+
+	Cbuf_ExecuteText(EXEC_NOW, va("ptledit_load %s", ptlDef[num].name));
+}
+
+/**
+ * @brief particle editor commands - use particle_editor_open to activate them
+ * and particle_editor_close to remove them again
+ */
+static const cmdList_t ptl_edit[] = {
+	{"ptledit_frame", PE_Frame_f, "Renders the particle editor menu frame"},
+	{"ptledit_load", PE_LoadParticle_f, "Loads the particle from buffer"},
+	{"ptledit_list_click", PE_ListClick_f, "Click callback for particle list"},
+
+	{NULL, NULL, NULL}
+};
+
+/**
+ * @brief This will open up the particle editor
+ */
+static void CL_ParticleEditor_f (void)
+{
+	const cmdList_t *commands;
+
+	if (!Q_strncmp(Cmd_Argv(0), "particle_editor_open", MAX_VAR)) {
+		for (commands = ptl_edit; commands->name; commands++)
+			Cmd_AddCommand(commands->name, commands->function, commands->description);
+		MN_PushMenu("particle_editor");
+
+		/* now init the menu nodes */
+		ptleditMenu.ptlName = MN_GetNodeFromCurrentMenu("ptledit_name");
+		if (!ptleditMenu.ptlName)
+			Sys_Error("Could not find the menu node ptledit_name in particle_editor menu\n");
+		ptleditMenu.ptlName->data[0] = _("No particle loaded");
+
+		ptleditMenu.renderZone = MN_GetNodeFromCurrentMenu("render");
+		if (!ptleditMenu.renderZone)
+			Sys_Error("Could not find the menu node render in particle_editor menu\n");
+
+		/* init sequence state */
+		cls.state = ca_ptledit;
+		cl.refresh_prepped = qtrue;
+
+		/* init sun */
+		VectorSet(map_sun.dir, 2, 2, 3);
+		VectorSet(map_sun.ambient, 1.6, 1.6, 1.6);
+		map_sun.ambient[3] = 5.4;
+		VectorSet(map_sun.color, 1.2, 1.2, 1.2);
+		map_sun.color[3] = 1.0;
+
+		PE_UpdateMenu(NULL);
+	} else {
+		MN_PopMenu(qfalse);
+		for (commands = ptl_edit; commands->name; commands++)
+			Cmd_RemoveCommand(commands->name);
+		CL_ClearState();
+	}
+
+	ptledit_loop = Cvar_Get("ptledit_loop", "1", 0, "Should particles automatically respawn in editor mode");
+}
+
+/**
+ * @brief
+ * @sa CL_InitLocal
+ */
+extern void CL_ResetParticles (void)
 {
 	numPtls = 0;
 	numPtlCmds = 0;
@@ -285,13 +488,16 @@ void CL_ResetParticles(void)
 
 	numPtlArt = 0;
 	pcmdPos = 0;
+
+	Cmd_AddCommand("particle_editor_open", CL_ParticleEditor_f, "Open the particle editor");
+	Cmd_AddCommand("particle_editor_close", CL_ParticleEditor_f, "Open the particle editor");
 }
 
 
 /**
  * @brief
  */
-void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
+void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 {
 	int s, e;
 	int type;
@@ -556,7 +762,7 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
  * @sa V_UpdateRefDef
  * @sa R_DrawPtls
  */
-ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a)
+ptl_t *CL_ParticleSpawn (char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a)
 {
 	ptlDef_t *pd;
 	ptl_t *p;
@@ -625,7 +831,7 @@ ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a
  * @param[in] p the particle to free
  * @sa CL_ParticleSpawn
  */
-void CL_ParticleFree(ptl_t *p)
+void CL_ParticleFree (ptl_t *p)
 {
 	ptl_t *c;
 
@@ -649,7 +855,7 @@ void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb)
 
 	levelflags = MSG_ReadShort(sb);
 	MSG_ReadGPos(sb, originPos);
-	for (i=0;i<3;i++)
+	for (i = 0; i < 3; i++)
 		origin[i] = (float)originPos[i];
 
 	MSG_ReadByte(sb); /* for stringlength */
@@ -663,7 +869,7 @@ void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb)
 /**
  * @brief
  */
-void CL_Fading(vec4_t color, byte fade, float frac, qboolean onlyAlpha)
+void CL_Fading (vec4_t color, byte fade, float frac, qboolean onlyAlpha)
 {
 	int i;
 
@@ -699,7 +905,7 @@ void CL_Fading(vec4_t color, byte fade, float frac, qboolean onlyAlpha)
  * @note also calls the round function of each particle (if defined)
  * @sa CL_ParticleFunction
  */
-void CL_ParticleCheckRounds(void)
+void CL_ParticleCheckRounds (void)
 {
 	ptl_t *p;
 	int i;
@@ -717,14 +923,80 @@ void CL_ParticleCheckRounds(void)
 		}
 }
 
+/**
+ * @brief
+ * @sa CL_ParticleRun
+ */
+static void CL_ParticleRun2 (ptl_t *p)
+{
+	qboolean onlyAlpha;
+
+	/* advance time */
+	p->dt = cls.frametime;
+	p->t = (cl.time - p->startTime) * 0.001f;
+	p->lastThink += p->dt;
+	p->lastFrame += p->dt;
+
+	if (p->rounds && !p->roundsCnt)
+		p->roundsCnt = p->rounds;
+
+	/* test for end of life */
+	if (p->life && p->t >= p->life && !p->parent) {
+		CL_ParticleFree(p);
+		return;
+	}
+
+	/* kinematics */
+	if (p->style != STYLE_LINE) {
+		VectorMA(p->s, 0.5 * p->dt * p->dt, p->a, p->s);
+		VectorMA(p->s, p->dt, p->v, p->s);
+		VectorMA(p->v, p->dt, p->a, p->v);
+		VectorMA(p->angles, p->dt, p->omega, p->angles);
+	}
+
+	/* run */
+	CL_ParticleFunction(p, p->ctrl->run);
+
+	/* think */
+	while (p->tps && p->lastThink * p->tps >= 1) {
+		CL_ParticleFunction(p, p->ctrl->think);
+		p->lastThink -= 1.0 / p->tps;
+	}
+
+	/* animate */
+	while (p->fps && p->lastFrame * p->fps >= 1) {
+		/* advance frame */
+		p->frame++;
+		if (p->frame > p->endFrame)
+			p->frame = 0;
+		p->lastFrame -= 1.0 / p->fps;
+
+		/* load next frame */
+		p->pic = CL_ParticleGetArt(ptlArt[p->pic].name, p->frame, ART_PIC);
+	}
+
+	/* fading */
+	if (p->thinkFade || p->frameFade) {
+		onlyAlpha = (p->blend == BLEND_BLEND);
+		if (!onlyAlpha) {
+			p->color[0] = p->color[1] = p->color[2] = p->color[3] = 1.0;
+		} else
+			p->color[3] = 1.0;
+			if (p->thinkFade)
+				CL_Fading(p->color, p->thinkFade, p->lastThink * p->tps, p->blend == BLEND_BLEND);
+			if (p->frameFade)
+				CL_Fading(p->color, p->frameFade, p->lastFrame * p->fps, p->blend == BLEND_BLEND);
+	}
+	if (p->light)
+		V_AddLight(p->s, 256, p->color[0], p->color[1], p->color[2]);
+}
 
 /**
  * @brief
  * @sa CL_Frame
  */
-void CL_ParticleRun(void)
+void CL_ParticleRun (void)
 {
-	qboolean onlyAlpha;
 	ptl_t *p;
 	int i;
 
@@ -732,66 +1004,8 @@ void CL_ParticleRun(void)
 		return;
 
 	for (i = 0, p = ptl; i < numPtls; i++, p++)
-		if (p->inuse) {
-			/* advance time */
-			p->dt = cls.frametime;
-			p->t = (cl.time - p->startTime) * 0.001f;
-			p->lastThink += p->dt;
-			p->lastFrame += p->dt;
-
-			if (p->rounds && !p->roundsCnt)
-				p->roundsCnt = p->rounds;
-
-			/* test for end of life */
-			if (p->life && p->t >= p->life && !p->parent) {
-				CL_ParticleFree(p);
-				continue;
-			}
-
-			/* kinematics */
-			if (p->style != STYLE_LINE) {
-				VectorMA(p->s, 0.5 * p->dt * p->dt, p->a, p->s);
-				VectorMA(p->s, p->dt, p->v, p->s);
-				VectorMA(p->v, p->dt, p->a, p->v);
-				VectorMA(p->angles, p->dt, p->omega, p->angles);
-			}
-
-			/* run */
-			CL_ParticleFunction(p, p->ctrl->run);
-
-			/* think */
-			while (p->tps && p->lastThink * p->tps >= 1) {
-				CL_ParticleFunction(p, p->ctrl->think);
-				p->lastThink -= 1.0 / p->tps;
-			}
-
-			/* animate */
-			while (p->fps && p->lastFrame * p->fps >= 1) {
-				/* advance frame */
-				p->frame++;
-				if (p->frame > p->endFrame)
-					p->frame = 0;
-				p->lastFrame -= 1.0 / p->fps;
-
-				/* load next frame */
-				p->pic = CL_ParticleGetArt(ptlArt[p->pic].name, p->frame, ART_PIC);
-			}
-
-			/* fading */
-			if (p->thinkFade || p->frameFade) {
-				onlyAlpha = (p->blend == BLEND_BLEND);
-				if (!onlyAlpha) {
-					p->color[0] = p->color[1] = p->color[2] = p->color[3] = 1.0;
-				} else
-					p->color[3] = 1.0;
-				if (p->thinkFade)
-					CL_Fading(p->color, p->thinkFade, p->lastThink * p->tps, p->blend == BLEND_BLEND);
-				if (p->frameFade)
-					CL_Fading(p->color, p->frameFade, p->lastFrame * p->fps, p->blend == BLEND_BLEND);
-			}
-			if (p->light)
-				V_AddLight(p->s, 256, p->color[0], p->color[1], p->color[2]);
-		}
+		if (p->inuse)
+			CL_ParticleRun2(p);
 }
 
 
@@ -800,11 +1014,11 @@ void CL_ParticleRun(void)
 /**
  * @brief
  */
-void CL_ParseMapParticle(ptl_t * ptl, char *es, qboolean afterwards)
+void CL_ParseMapParticle (ptl_t * ptl, char *es, qboolean afterwards)
 {
 	char keyname[MAX_QPATH];
 	char *key, *token;
-	value_t *pp;
+	const value_t *pp;
 
 	key = keyname + 1;
 	do {
@@ -853,7 +1067,7 @@ void CL_ParseMapParticle(ptl_t * ptl, char *es, qboolean afterwards)
 /**
  * @brief
  */
-void CL_RunMapParticles(void)
+void CL_RunMapParticles (void)
 {
 	mp_t *mp;
 	ptl_t *ptl;
@@ -891,10 +1105,10 @@ void CL_RunMapParticles(void)
 /**
  * @brief
  */
-void CL_ParsePtlCmds(char *name, char **text)
+void CL_ParsePtlCmds (char *name, char **text)
 {
 	ptlCmd_t *pc;
-	value_t *pp;
+	const value_t *pp;
 	char *errhead = "CL_ParsePtlCmds: unexptected end of file";
 	char *token;
 	int i, j;
@@ -1053,7 +1267,7 @@ void CL_ParsePtlCmds(char *name, char **text)
  * @param[in] name Name of the particle
  * @return id of the particle in ptlDef array
  */
-int CL_GetParticleIndex(char *name)
+int CL_GetParticleIndex (char *name)
 {
 	int i;
 
@@ -1072,13 +1286,16 @@ int CL_GetParticleIndex(char *name)
 
 /**
  * @brief Parses particle definitions from UFO-script files
+ * @param[in] name particle name/id
+ * @param[in] text pointer to the buffer to parse from
+ * @return the position of the particle in ptlDef array
  */
-void CL_ParseParticle(char *name, char **text)
+int CL_ParseParticle (char *name, char **text)
 {
 	char *errhead = "CL_ParseParticle: unexptected end of file (particle ";
 	ptlDef_t *pd;
 	char *token;
-	int i;
+	int i, pos;
 
 	/* search for menus with same name */
 	for (i = 0; i < numPtlDefs; i++)
@@ -1086,12 +1303,14 @@ void CL_ParseParticle(char *name, char **text)
 			break;
 
 	if (i < numPtlDefs) {
-		Com_Printf("CL_ParseParticle: particle def \"%s\" with same name found, second ignored\n", name);
-		return;
+		Com_Printf("CL_ParseParticle: particle def \"%s\" with same name found, reset first one\n", name);
+		pos = i;
+		pd = &ptlDef[i];
+	} else {
+		/* initialize the new particle */
+		pos = numPtlDefs;
+		pd = &ptlDef[numPtlDefs++];
 	}
-
-	/* initialize the menu */
-	pd = &ptlDef[numPtlDefs++];
 	memset(pd, 0, sizeof(ptlDef_t));
 
 	Q_strncpyz(pd->name, name, MAX_VAR);
@@ -1101,8 +1320,9 @@ void CL_ParseParticle(char *name, char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseParticle: particle def \"%s\" without body ignored\n", name);
-		numPtlDefs--;
-		return;
+		if (i == numPtlDefs)
+			numPtlDefs--;
+		return -1;
 	}
 
 	do {
@@ -1133,6 +1353,9 @@ void CL_ParseParticle(char *name, char **text)
 	/* check for an init function */
 	if (!pd->init) {
 		Com_Printf("CL_ParseParticle: particle definition %s without init function ignored\n", name);
-		numPtlDefs--;
+		if (i == numPtlDefs)
+			numPtlDefs--;
+		return -1;
 	}
+	return pos;
 }

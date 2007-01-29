@@ -77,10 +77,10 @@ extern tutorial_t tutorials[MAX_TUTORIALS];
 #define FLOOR(e) ((e)->i.c[csi.idFloor])
 
 typedef struct {
-	int serverframe;			/* if not current, this ent isn't in the frame */
+	int serverframe;			/**< if not current, this ent isn't in the frame */
 
-	int trailcount;				/* for diminishing grenade trails */
-	vec3_t lerp_origin;			/* for trails (variable hz) */
+	int trailcount;				/**< for diminishing grenade trails */
+	vec3_t lerp_origin;			/**< for trails (variable hz) */
 
 	int fly_stoptime;
 } centity_t;
@@ -111,7 +111,7 @@ typedef struct {
 	vec3_t speed;
 	vec3_t angles;
 	vec3_t omega;
-	vec3_t axis[3];				/* set when refdef.angles is set */
+	vec3_t axis[3];				/**< set when refdef.angles is set */
 
 	float lerplevel;
 	float zoom;
@@ -122,7 +122,7 @@ typedef enum { CAMERA_MODE_REMOTE, CAMERA_MODE_FIRSTPERSON } camera_mode_t;
 
 camera_mode_t camera_mode;
 
-/* don't mess with the order!!! */
+/** @brief don't mess with the order!!! */
 typedef enum {
 	M_MOVE,
 	M_FIRE_PR,
@@ -147,25 +147,28 @@ typedef enum {
 				|| (x) == M_PEND_FIRE_SR || (x) == M_PEND_FIRE_SL)
 #define MODE_FD_PRIO(x)		(IS_MODE_FIRE_PRIMARY(x) ? FD_PRIMARY : FD_SECONDARY)
 
-/* the client_state_t structure is wiped completely at every */
-/* server map change */
+/**
+ * @brief the client_state_t structure is wiped completely at every server map change
+ * @note the client_static_t structure is persistant through an arbitrary
+ * number of server connections
+ */
 typedef struct {
 	int timeoutcount;
 
 	int timedemo_frames;
 	int timedemo_start;
 
-	qboolean refresh_prepped;	/* false if on new level or new ref dll */
-	qboolean sound_prepped;		/* ambient sounds can start */
-	qboolean force_refdef;		/* vid has changed, so we can't use a paused refdef */
+	qboolean refresh_prepped;	/**< false if on new level or new ref dll */
+	qboolean sound_prepped;		/**< ambient sounds can start */
+	qboolean force_refdef;		/**< vid has changed, so we can't use a paused refdef */
 
-	int surpressCount;			/* number of messages rate supressed */
+	int surpressCount;			/**< number of messages rate supressed */
 
-	int parse_entities;			/* index (not anded off) into cl_parse_entities[] */
+	int parse_entities;			/**< index (not anded off) into cl_parse_entities[] */
 
-	int time;					/* this is the time value that the client */
-	/* is rendering at.  always <= cls.realtime */
-	int eventTime;				/* similar to time, but not counting if blockEvents is set */
+	int time;					/**< this is the time value that the client */
+	/** is rendering at.  always <= cls.realtime */
+	int eventTime;				/**< similar to time, but not counting if blockEvents is set */
 
 	camera_t cam;
 
@@ -182,16 +185,16 @@ typedef struct {
 	int numTeamList;
 	int numAliensSpotted;
 
-	/* server state information */
-	qboolean attractloop;		/* running the attract loop, any key will menu */
-	int servercount;			/* server identification for prespawns */
+	/** server state information */
+	qboolean attractloop;		/**< running the attract loop, any key will menu */
+	int servercount;			/**< server identification for prespawns */
 	char gamedir[MAX_QPATH];
 	int pnum;
 	int actTeam;
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
-	/* locally derived information from server state */
+	/** locally derived information from server state */
 	struct model_s *model_draw[MAX_MODELS];
 	struct cmodel_s *model_clip[MAX_MODELS];
 	struct model_s *model_weapons[MAX_OBJDEFS];
@@ -205,20 +208,14 @@ typedef struct {
 
 extern client_state_t cl;
 
-/*
-==================================================================
-the client_static_t structure is persistant through an arbitrary number
-of server connections
-==================================================================
-*/
-
 typedef enum {
 	ca_uninitialized,
-	ca_disconnected,			/* not talking to a server */
-	ca_sequence,				/* rendering a sequence */
-	ca_connecting,				/* sending request packets to the server */
-	ca_connected,				/* netchan_t established, waiting for svc_serverdata */
-	ca_active					/* game views should be displayed */
+	ca_disconnected,			/**< not talking to a server */
+	ca_sequence,				/**< rendering a sequence */
+	ca_connecting,				/**< sending request packets to the server */
+	ca_connected,				/**< netchan_t established, waiting for svc_serverdata */
+	ca_ptledit,					/**< particles should be rendered */
+	ca_active					/**< game views should be displayed */
 } connstate_t;
 
 typedef enum { key_game, key_irc, key_console, key_message } keydest_t;
@@ -228,8 +225,8 @@ typedef struct {
 	keydest_t key_dest;
 
 	int framecount;
-	int realtime;				/* always increasing, no clamping, etc */
-	float frametime;			/* seconds since last frame */
+	int realtime;				/**< always increasing, no clamping, etc */
+	float frametime;			/**< seconds since last frame */
 
 	int framedelta;
 	float framerate;
@@ -242,22 +239,22 @@ typedef struct {
 	/* > cls.disable_servercount, clear disable_screen */
 
 	/* connection information */
-	char servername[MAX_OSPATH];	/* name of server from original connect */
-	float connect_time;			/* for connection retransmits */
+	char servername[MAX_OSPATH];	/**< name of server from original connect */
+	float connect_time;			/**< for connection retransmits */
 
 	int ufoPort;				/* a 16 bit value that allows ufo servers */
 								/* to work around address translating routers */
 	netchan_t netchan;
-	int serverProtocol;			/* in case we are doing some kind of version hack */
+	int serverProtocol;			/**< in case we are doing some kind of version hack */
 
-	int challenge;				/* from the server to use for connecting */
+	int challenge;				/**< from the server to use for connecting */
 
 	/* demo recording info must be here, so it isn't cleared on level change */
 	qboolean demorecording;
-	qboolean demowaiting;		/* don't record until a non-delta message is received */
+	qboolean demowaiting;		/**< don't record until a non-delta message is received */
 	qFILE demofile;
 
-	/* needs to be here, because server can be shutdown, before we see the ending screen */
+	/** needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;
 } client_static_t;
 
@@ -339,13 +336,13 @@ extern cvar_t *confirm_movement;
 extern cvar_t *cl_precachemenus;
 
 typedef struct {
-	int key;					/* so entities can reuse same entry */
+	int key;					/**< so entities can reuse same entry */
 	vec3_t color;
 	vec3_t origin;
 	float radius;
-	float die;					/* stop lighting after this time */
-	float decay;				/* drop this each second */
-	float minlight;				/* don't add when contributing less */
+	float die;					/**< stop lighting after this time */
+	float decay;				/**< drop this each second */
+	float minlight;				/**< don't add when contributing less */
 } cdlight_t;
 
 extern centity_t cl_entities[MAX_EDICTS];
@@ -422,9 +419,9 @@ extern float loadingPercent;
 
 /* cl_input */
 typedef struct {
-	int down[2];				/* key nums holding it down */
-	unsigned downtime;			/* msec timestamp */
-	unsigned msec;				/* msec down this frame */
+	int down[2];				/**< key nums holding it down */
+	unsigned downtime;			/**< msec timestamp */
+	unsigned msec;				/**< msec down this frame */
 	int state;
 } kbutton_t;
 
@@ -468,6 +465,8 @@ void CL_SniperModeSet(void);
 void CL_SniperModeUnset(void);
 
 /* cl_le.c */
+
+/** @brief a local entity */
 typedef struct le_s {
 	qboolean inuse;
 	qboolean invis;
@@ -482,7 +481,7 @@ typedef struct le_s {
 	int TU, maxTU;
 	int morale, maxMorale;
 	int HP, maxHP;
-	int STUN;					/* if stunned - state STATE_STUN */
+	int STUN;					/**< if stunned - state STATE_STUN */
 	int AP;
 	int state;
 	int reaction_minhit;
@@ -502,25 +501,25 @@ typedef struct le_s {
 
 /* 	character_t	*chr; */
 
-	/* is called every frame */
+	/** is called every frame */
 	void (*think) (struct le_s * le);
 
-	/* various think function vars */
+	/** various think function vars */
 	byte path[32];
 	int pathLength, pathPos;
 	int startTime, endTime;
 	int speed;
 
-	/* gfx */
+	/** gfx */
 	animState_t as;
 	ptl_t *ptl;
 	char *ref1, *ref2;
 	inventory_t i;
 	int left, right, extension;
-	int fieldSize;				/* ACTOR_SIZE_* */
+	int fieldSize;				/**< ACTOR_SIZE_* */
 	int teamDesc;
 
-	/* is called before adding a le to scene */
+	/** is called before adding a le to scene */
 	qboolean(*addFunc) (struct le_s * le, entity_t * ent);
 } le_t;							/* local entity */
 
@@ -530,6 +529,7 @@ typedef struct le_s {
 #define LMF_LIGHTFIXED		1
 #define LMF_NOSMOOTH		2
 
+/** @brief local models */
 typedef struct lm_s {
 	char name[MAX_VAR];
 	char particle[MAX_VAR];
@@ -543,8 +543,8 @@ typedef struct lm_s {
 	int num;
 	int skin;
 	int flags;
-	int frame;	/* which frame to show */
-	char animname[MAX_QPATH];	/* is this an animated model */
+	int frame;	/**< which frame to show */
+	char animname[MAX_QPATH];	/**< is this an animated model */
 	int levelflags;
 	float sunfrac;
 	animState_t as;
@@ -552,6 +552,7 @@ typedef struct lm_s {
 	struct model_s *model;
 } lm_t;							/* local models */
 
+/** @brief map particles */
 typedef struct mp_s {
 	char ptl[MAX_QPATH];
 	char *info;
@@ -725,13 +726,13 @@ struct aircraft_s;
 struct menuNode_s;
 
 typedef struct radar_s {
-	int range;						/* Range of radar */
-	int ufos[MAX_UFOONGEOSCAPE];	/* Ufos id sensored by radar (gd.ufos[id]) */
-	int numUfos;					/* Num ufos sensored by radar */
+	int range;						/**< Range of radar */
+	int ufos[MAX_UFOONGEOSCAPE];	/**< Ufos id sensored by radar (gd.ufos[id]) */
+	int numUfos;					/**< Num ufos sensored by radar */
 } radar_t;
 
-extern void RADAR_DrawCoverage(const struct menuNode_s* node, const radar_t* radar, vec2_t pos, qboolean map3d);
-extern void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, int x, int y, vec2_t pos, qboolean map3d);
+extern void RADAR_DrawCoverage(const struct menuNode_s* node, const radar_t* radar, vec2_t pos, qboolean globe);
+extern void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, int x, int y, vec2_t pos, qboolean globe);
 extern void RADAR_RemoveUfo(radar_t* radar, const struct aircraft_s* ufo);
 extern void Radar_NotifyUfoRemoved(radar_t* radar, const struct aircraft_s* ufo);
 extern void RADAR_ChangeRange(radar_t* radar, int change);
@@ -804,7 +805,7 @@ typedef struct stats_s {
 	int basesAttacked;
 	int interceptions;
 	int soldiersLost;
-	int soldiersNew;			/* new recruits */
+	int soldiersNew;			/**< new recruits */
 	int killedAliens;
 	int rescuedCivilians;
 	int researchedTechnologies;
@@ -839,7 +840,7 @@ typedef struct message_s {
 	char title[MAX_VAR];
 	char text[MAX_MESSAGE_TEXT];
 	messagetype_t type;
-	technology_t *pedia;		/* link to ufopedia if a research has finished. */
+	technology_t *pedia;		/**< link to ufopedia if a research has finished. */
 	struct message_s *next;
 	int d, m, y, h, min, s;
 } message_t;
@@ -885,7 +886,7 @@ typedef struct menuModel_s {
 	char model[MAX_QPATH];
 	animState_t animState;
 	vec3_t origin, scale, angles, center;
-	vec4_t color;				/* rgba */
+	vec4_t color;				/**< rgba */
 	struct menuModel_s *next;
 } menuModel_t;
 
@@ -1025,8 +1026,9 @@ void CL_ParticleRegisterArt(void);
 void CL_ResetParticles(void);
 void CL_ParticleRun(void);
 void CL_RunMapParticles(void);
-void CL_ParseParticle(char *name, char **text);
+int CL_ParseParticle(char *name, char **text);
 ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a);
+void PE_RenderParticles(void);
 
 extern ptlArt_t ptlArt[MAX_PTL_ART];
 extern ptl_t ptl[MAX_PTLS];
@@ -1087,6 +1089,7 @@ unsigned long *x86_TimerGetHistogram(void);
 /* cl_map.c */
 extern nation_t* MAP_GetNation(const vec2_t pos);
 extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
+extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y);
 extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D);
 extern void MAP_MapClick(const menuNode_t * node, int x, int y, qboolean globe);

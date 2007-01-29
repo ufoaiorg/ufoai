@@ -527,7 +527,7 @@ void B_NewBuilding(void)
  * @param[in] row Set building (baseCurrent->buildingCurrent) to row
  * @param[in] col Set building (baseCurrent->buildingCurrent) to col
  */
-void B_SetBuildingByClick(int row, int col)
+void B_SetBuildingByClick (int row, int col)
 {
 	int j;
 	qboolean freeSlot = qfalse;
@@ -917,7 +917,7 @@ void B_BuildingClick_f(void)
 		return;
 	}
 
-	/*which building? */
+	/* which building? */
 	num = atoi(Cmd_Argv(1));
 
 	Com_DPrintf("B_BuildingClick_f: listnumber %i base %i\n", num, baseCurrent->idx);

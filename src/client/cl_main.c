@@ -493,7 +493,7 @@ void CL_ClearState(void)
  * Sends a disconnect message to the server
  * This is also called on Com_Error, so it shouldn't cause any errors
  */
-void CL_Disconnect(void)
+void CL_Disconnect (void)
 {
 	byte final[32];
 
@@ -535,7 +535,7 @@ void CL_Disconnect(void)
  * @sa CL_Drop
  * @sa SV_ShutdownWhenEmpty
  */
-static void CL_Disconnect_f(void)
+static void CL_Disconnect_f (void)
 {
 	SV_ShutdownWhenEmpty();
 	CL_Drop();
@@ -1763,7 +1763,7 @@ static void CL_ShowIP_f (void)
  * also inits the cvars and commands
  * @sa CL_Init
  */
-void CL_InitLocal(void)
+void CL_InitLocal (void)
 {
 	cls.state = ca_disconnected;
 	cls.realtime = Sys_Milliseconds();
@@ -2172,7 +2172,7 @@ void CL_CvarCheck(void)
  * @brief
  * @sa Qcommon_Frame
  */
-void CL_Frame(int msec)
+void CL_Frame (int msec)
 {
 	static int extratime = 0;
 	static int lasttimecalled = 0;

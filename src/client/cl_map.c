@@ -66,7 +66,7 @@ STATIC DEFINITION
 */
 
 /* Functions */
-static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y);
+static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y, qboolean globe);
 static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 
@@ -281,18 +281,18 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y, qboolean globe)
 
 	/* Get selected missions */
 	for (i = 0, ms = ccs.mission; i < ccs.numMissions && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++, ms++)
-		if (MAP_IsMapPositionSelected(node, ms->realPos, x, y))
+		if (MAP_IsMapPositionSelected(node, ms->realPos, x, y, globe))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_MISSION, i, _(ms->def->type), _(ms->def->location));
 
 	/* Get selected bases */
 	for (i = 0; i < gd.numBases && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++) {
-		if (MAP_IsMapPositionSelected(node, gd.bases[i].pos, x, y))
+		if (MAP_IsMapPositionSelected(node, gd.bases[i].pos, x, y, globe))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, i, _("Base"), gd.bases[i].name);
 
 		/* Get selected aircrafts wich belong to the base */
 		for (aircraft = gd.bases[i].aircraft + gd.bases[i].numAircraftInBase - 1;
 		aircraft >= gd.bases[i].aircraft ; aircraft--)
-			if (aircraft->status > AIR_HOME && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
+			if (aircraft->status > AIR_HOME && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y, globe))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
 	}
 
@@ -303,7 +303,7 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y, qboolean globe)
 		|| Cvar_VariableInteger("showufos")
 #endif
 		)
-			if (aircraft->status > AIR_HOME && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
+			if (aircraft->status > AIR_HOME && MAP_IsMapPositionSelected(node, aircraft->pos, x, y, globe))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - gd.ufos, _("UFO"), aircraft->name);
 
 	if (multiSelect.nbSelect == 1) {
@@ -337,14 +337,21 @@ GEOSCAPE DRAWING AND COORDINATES
  * @brief Tell if the specified position is considered clicked
  */
 #define MN_MAP_DIST_SELECTION 15
-static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y)
+static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, int x, int y, qboolean globe)
 {
 	int msx, msy;
 
-	if (MAP_MapToScreen(node, pos, &msx, &msy))
-		if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION
-		&& y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
-			return qtrue;
+	if (!globe) {
+		if (MAP_MapToScreen(node, pos, &msx, &msy))
+			if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION
+			&& y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
+				return qtrue;
+	} else {
+		if (MAP_3DMapToScreen(node, pos, &msx, &msy))
+			if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION
+			&& y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
+				return qtrue;
+	}
 
 	return qfalse;
 }
@@ -356,7 +363,7 @@ static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, in
  * @param[in] pos vector to return the screen coordinates
  * @sa MAP_MapToScreen
  */
-extern qboolean MAP_3DMapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y)
+extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
 	/* TODO: ccs.angles */
@@ -382,7 +389,7 @@ extern qboolean MAP_3DMapToScreen(const menuNode_t* node, const vec2_t pos, int 
  * @brief
  * @sa MAP_3DMapToScreen
  */
-extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y)
+extern qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
 

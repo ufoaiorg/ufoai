@@ -617,93 +617,6 @@ static void R_DrawEntitiesOnList(void)
 /**
  * @brief
  */
-static void GL_DrawParticles(int num_particles, const particle_t particles[], const unsigned colortable[768])
-{
-	const particle_t *p;
-	int i;
-	vec3_t up, right;
-	float scale;
-	byte color[4];
-
-	GL_Bind(r_particletexture->texnum);
-	qglDepthMask(GL_FALSE);		/* no z buffering */
-	qglEnable(GL_BLEND);
-	GL_TexEnv(GL_MODULATE);
-	qglBegin(GL_TRIANGLES);
-
-	VectorScale(vup, 1.5, up);
-	VectorScale(vright, 1.5, right);
-
-	for (p = particles, i = 0; i < num_particles; i++, p++) {
-		/* hack a scale up to keep particles from disapearing */
-		scale = (p->origin[0] - r_origin[0]) * vpn[0] + (p->origin[1] - r_origin[1]) * vpn[1] + (p->origin[2] - r_origin[2]) * vpn[2];
-
-		if (scale < 20)
-			scale = 1;
-		else
-			scale = 1 + scale * 0.004;
-
-		*(int *) color = colortable[p->color];
-		color[3] = p->alpha * 255;
-
-		qglColor4ubv(color);
-
-		qglTexCoord2f(0.0625, 0.0625);
-		qglVertex3fv(p->origin);
-
-		qglTexCoord2f(1.0625, 0.0625);
-		qglVertex3f(p->origin[0] + up[0] * scale, p->origin[1] + up[1] * scale, p->origin[2] + up[2] * scale);
-
-		qglTexCoord2f(0.0625, 1.0625);
-		qglVertex3f(p->origin[0] + right[0] * scale, p->origin[1] + right[1] * scale, p->origin[2] + right[2] * scale);
-	}
-
-	qglEnd();
-	qglDisable(GL_BLEND);
-	qglColor4f(1, 1, 1, 1);
-	qglDepthMask(1);			/* back to normal Z buffering */
-	GL_TexEnv(GL_REPLACE);
-}
-
-/**
- * @brief
- */
-static void R_DrawParticles(void)
-{
-	if (gl_ext_pointparameters->value && qglPointParameterfEXT) {
-		int i;
-		unsigned char color[4];
-		const particle_t *p;
-
-		qglDepthMask(GL_FALSE);
-		qglEnable(GL_BLEND);
-		qglDisable(GL_TEXTURE_2D);
-
-		qglPointSize(gl_particle_size->value);
-
-		qglBegin(GL_POINTS);
-		for (i = 0, p = r_newrefdef.particles; i < r_newrefdef.num_particles; i++, p++) {
-			*(int *) color = d_8to24table[p->color];
-			color[3] = p->alpha * 255;
-
-			qglColor4ubv(color);
-
-			qglVertex3fv(p->origin);
-		}
-		qglEnd();
-
-		qglDisable(GL_BLEND);
-		qglColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		qglDepthMask(GL_TRUE);
-		qglEnable(GL_TEXTURE_2D);
-	} else
-		GL_DrawParticles(r_newrefdef.num_particles, r_newrefdef.particles, d_8to24table);
-}
-
-
-/**
- * @brief
- */
 static void R_PolyBlend(void)
 {
 	if (!gl_polyblend->value)
@@ -871,7 +784,7 @@ static void R_SetupGL(void)
 	/* set up projection matrix */
 	qglMatrixMode(GL_PROJECTION);
 	qglLoadIdentity();
-	MYgluPerspective(4., 4096.);
+	MYgluPerspective(4.0, 4096.0);
 
 	qglCullFace(GL_FRONT);
 
@@ -959,7 +872,7 @@ static void R_Flash(void)
 /**
  * @brief r_newrefdef must be set before the first call
  */
-static void R_SetRefreshDefinition(refdef_t * fd)
+static void R_SetRefreshDefinition (refdef_t * fd)
 {
 	if (r_norefresh->value)
 		return;
@@ -970,7 +883,7 @@ static void R_SetRefreshDefinition(refdef_t * fd)
 /**
  * @brief r_newrefdef must be set before the first call
  */
-static void R_RenderView(refdef_t * fd)
+static void R_RenderView (refdef_t * fd)
 {
 	if (r_norefresh->value)
 		return;
@@ -1015,7 +928,6 @@ static void R_RenderView(refdef_t * fd)
 	if (gl_shadows->integer == 1)
 		R_CastShadow();
 
-	R_DrawParticles();
 	R_DrawPtls();
 
 	R_RenderDlights();
@@ -1070,7 +982,7 @@ static void R_SetGL2D(void)
 /**
  * @brief
  */
-static void R_RenderFrame(refdef_t * fd)
+static void R_RenderFrame (refdef_t * fd)
 {
 	R_RenderView(fd);
 	R_SetGL2D();
@@ -1764,6 +1676,7 @@ refexport_t GetRefAPI(refimport_t rimp)
 
 	re.RenderFrame = R_RenderFrame;
 	re.SetRefDef = R_SetRefreshDefinition;
+	re.DrawPtls = R_DrawPtls;
 
 	re.DrawModelDirect = R_DrawModelDirect;
 	re.DrawGetPicSize = Draw_GetPicSize;

@@ -2393,7 +2393,7 @@ static void CP_AddItemAsCollected (void)
 	}
 }
 
-/**< mission trigger functions */
+/** @brief mission trigger functions */
 static const cmdList_t cp_commands[] = {
 	{"cp_add_item", CP_AddItemAsCollected, "Add an item as collected"},
 
