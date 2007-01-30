@@ -902,7 +902,6 @@ extern char *pa_format[128];
 #define MAX_WEAPONS_PER_OBJDEF 4
 #define MAX_FIREDEFS_PER_WEAPON 4
 #define MAX_DAMAGETYPES 32
-#define MAX_TECHLINKS	16 /* Needs to be synced with MAX_TECHLINKS in cl_research.h */
 
 #define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[0][!!(type & 0x80)])
 /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
@@ -970,9 +969,10 @@ typedef struct objDef_s {
 	int price;			/**< the price for this item */
 	int buytype;		/**< In which category of the buy menu is this item listed. */
 
+#if 0
 	int forWeapon[MAX_TECHLINKS];	/**< Ammo-only: A list of weapons this ammo can be used in.
 						 * The information is taken from the "weapon" requirements in the technology. */
-
+#endif
 	/* Weapon specific */
 	int ammo;			/**< how much can we load into this weapon at once */
 	int reload;			/**< time units for reloading the weapon */

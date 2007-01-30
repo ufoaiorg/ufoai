@@ -241,7 +241,7 @@ static void Com_ParseItem(char *name, char **text)
 	memset(od, 0, sizeof(objDef_t));
 
 	/* default value is no ammo */
-	memset(od->forWeapon, -1, sizeof(od->forWeapon));
+	memset(od->weap_idx, -1, sizeof(od->weap_idx));
 
 	Q_strncpyz(od->id, name, MAX_VAR);
 
@@ -1204,11 +1204,6 @@ void Com_AddObjectLinks(void)
 #ifndef DEDICATED_ONLY
 	objDef_t *od = NULL;
 	int i, j;
-#if 0
-	technology_t *tech = NULL;
-	technology_t *tech_weapon = NULL;
-	int k;
-#endif
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		/* Add links to weapons. */
@@ -1216,33 +1211,6 @@ void Com_AddObjectLinks(void)
 		for (j = 0; j < od->numWeapons; j++ ) {
 			od->weap_idx[j] = RS_GetItem(od->weap_id[j]);
 		}
-#if 0
-		/* Add links to technologies. */
-		tech = RS_GetTechByProvided(od->id);
-		
-		od->tech = tech;
-		if (!od->tech) {
-			Com_Printf("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->id);
-			continue;
-		}
-
-		if (!Q_strncmp(od->type, "ammo", 4)) {
-			/* Add weapon-links to ammo items. */
-			k = 0;
-			for (j = 0; j < tech->require_AND.numLinks; j++) {
-				if (tech->require_AND.type[j] == RS_LINK_WEAPON) {
-					/* "tech->require_AND.idx[j]" is the technology-index of the weapon */
-					tech_weapon = RS_GetTechByIDX(tech->require_AND.idx[j]);
-					if (!tech_weapon)
-						Sys_Error("Could not get the tech with idx: %i\n", tech->require_AND.idx[j]);
-					od->forWeapon[k] = RS_GetItem(tech_weapon->provides);
-					k++;
-				}
-			}
-			if (k == 0)
-				Com_Printf("Com_AddObjectLinks: Ammo '%s' is not useable in any weapon\n", od->id);
-		}
-#endif
 	}
 #endif
 }
