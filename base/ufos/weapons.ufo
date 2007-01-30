@@ -15,7 +15,7 @@ item medikit
 	buytype		2
 	thrown		true
 
-	weapon medikit
+	weapon_mod medikit
 	{
 		firedef
 		{
@@ -69,7 +69,7 @@ item irgoggles
 	thrown		true
 	headgear		true
 
-	weapon irgoggles
+	weapon_mod irgoggles
 	{
 		firedef
 		{
@@ -119,7 +119,7 @@ item fraggrenade
 	buytype		2
 	thrown		true
 
-	weapon fraggrenade
+	weapon_mod fraggrenade
 	{
 		firedef 
 		{
@@ -191,7 +191,7 @@ item flashbang
 	buytype		2
 	thrown		true
 
-	weapon flashbang
+	weapon_mod flashbang
 	{
 		firedef 
 		{
@@ -262,7 +262,7 @@ item smokegrenade
 	buytype		2
 	thrown		true
 
-	weapon smokegrenade
+	weapon_mod smokegrenade
 	{
 		firedef 
 		{
@@ -333,7 +333,7 @@ item stungrenade
 	buytype		2
 	thrown		true
 
-	weapon stungrenade
+	weapon_mod stungrenade
 	{
 		firedef 
 		{
@@ -405,7 +405,7 @@ item incgrenade
 	buytype		2
 	thrown		true
 
-	weapon incgrenade
+	weapon_mod incgrenade
 	{
 		firedef 
 		{
@@ -476,7 +476,7 @@ item plasmagrenade
 	buytype		2
 	thrown		true
 
-	weapon plasmagrenade
+	weapon_mod plasmagrenade
 	{
 		firedef 
 		{

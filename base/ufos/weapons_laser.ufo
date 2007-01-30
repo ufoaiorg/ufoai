@@ -106,7 +106,7 @@ item laserrifle_ammo
 	price		210
 	buytype		0
 
-	weapon laserpistol
+	weapon_mod laserpistol
 	{
 		firedef 
 		{
@@ -147,7 +147,7 @@ item laserrifle_ammo
 		}
 	}
 
-	weapon laserrifle
+	weapon_mod laserrifle
 	{
 		firedef 
 		{
@@ -188,7 +188,7 @@ item laserrifle_ammo
 		}
 	}
 
-	weapon heavylaser
+	weapon_mod heavylaser
 	{
 		firedef 
 		{

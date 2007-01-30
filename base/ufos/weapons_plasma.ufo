@@ -31,7 +31,7 @@ item plaspistol_ammo
 	price		1700
 	buytype		1
 
-	weapon plaspistol
+	weapon_mod plaspistol
 	{
 		firedef 
 		{
@@ -109,7 +109,7 @@ item plasrifle_ammo
 	price		2000
 	buytype		0
 
-	weapon plasrifle
+	weapon_mod plasrifle
 	{
 		firedef 
 		{
@@ -187,7 +187,7 @@ item plasblaster_ammo
 	price		4000
 	buytype		0
 
-	weapon plasblaster
+	weapon_mod plasblaster
 	{
 		firedef 
 		{

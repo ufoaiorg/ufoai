@@ -31,7 +31,7 @@ item assault_ammo
 	price		130
 	buytype		0
 
-	weapon assault
+	weapon_mod assault
 	{
 		firedef 
 		{
@@ -110,7 +110,7 @@ item chaingun_ammo
 	price		300
 	buytype		0
 
-	weapon chaingun
+	weapon_mod chaingun
 	{
 		firedef 
 		{
@@ -186,7 +186,7 @@ item sniper_ammo
 	price		190
 	buytype		0
 
-	weapon sniper
+	weapon_mod sniper
 	{
 		firedef 
 		{
@@ -263,7 +263,7 @@ item pistol_ammo
 	price		20
 	buytype		1
 
-	weapon pistol
+	weapon_mod pistol
 	{
 		firedef 
 		{
@@ -339,7 +339,7 @@ item pistol2_ammo
 	price		20
 	buytype		1
 
-	weapon pistol2
+	weapon_mod pistol2
 	{
 		firedef 
 		{
@@ -415,7 +415,7 @@ item smg_ammo
 	price		40
 	buytype		1
 
-	weapon smg
+	weapon_mod smg
 	{
 		firedef 
 		{
@@ -550,7 +550,7 @@ item shotgun2_slug_ammo
 	price		35
 	buytype		0
 
-	weapon shotgun2
+	weapon_mod shotgun2
 	{
 		firedef 
 		{
@@ -630,7 +630,7 @@ item shotgun_ammo
 	price		35
 	buytype		0
 
-	weapon shotgun
+	weapon_mod shotgun
 	{
 		firedef 
 		{
@@ -710,7 +710,7 @@ item shotgun_micro_ammo
 	price		35
 	buytype		1
 
-	weapon shotgun_micro
+	weapon_mod shotgun_micro
 	{
 		firedef 
 		{
@@ -755,7 +755,7 @@ item shotgun_micro_ammo
 		}
 	}
 
-	weapon shotgun2
+	weapon_mod shotgun2
 	{
 		firedef 
 		{
@@ -834,7 +834,7 @@ item flamer_ammo
 	price		270
 	buytype		0
 
-	weapon flamer
+	weapon_mod flamer
 	{
 		firedef 
 		{
@@ -913,7 +913,7 @@ item rpg_ammo
 	price		430
 	buytype		0
 
-	weapon rpg
+	weapon_mod rpg
 	{
 		firedef 
 		{
@@ -974,7 +974,7 @@ item rpg_incendiary_ammo
 	price		630
 	buytype		0
 
-	weapon rpg
+	weapon_mod rpg
 	{
 		firedef 
 		{
@@ -1036,7 +1036,7 @@ item rpg_tachyon_ammo
 	price	2740
 	buytype	0
 
-	weapon rpg
+	weapon_mod rpg
 	{
 		firedef 
 		{
@@ -1119,7 +1119,7 @@ item grenl_incendiary_ammo
 	price		135
 	buytype		0
 
-	weapon grenl
+	weapon_mod grenl
 	{
 		firedef 
 		{
@@ -1187,7 +1187,7 @@ item grenl_fle_ammo
 	price		135
 	buytype		0
 
-	weapon grenl
+	weapon_mod grenl
 	{
 		firedef 
 		{
@@ -1255,7 +1255,7 @@ item grenl_ammo
 	price		135
 	buytype		0
 
-	weapon grenl
+	weapon_mod grenl
 	{
 		firedef 
 		{
@@ -1323,7 +1323,7 @@ item grenl_plasma_ammo
 	price		530
 	buytype		0
 
-	weapon grenl
+	weapon_mod grenl
 	{
 		firedef 
 		{
@@ -1413,7 +1413,7 @@ item bolterrifle_ammo
 	price           930
 	buytype         0
 
-	weapon grenl
+	weapon_mod bolterrifle
 	{
 		firedef 
 		{

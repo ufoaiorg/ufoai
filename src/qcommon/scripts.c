@@ -45,7 +45,7 @@ typedef enum objdefs {
 } objdef_t;
 
 static value_t od_vals[] = {
-	{"weapon", V_NULL, 0},
+	{"weapon_mod", V_NULL, 0},
 	{"protection", V_NULL, 0},
 	{"hardness", V_NULL, 0},
 
@@ -278,6 +278,14 @@ static void Com_ParseItem(char *name, char **text)
 						/* Save the weapon id. */
 						token = COM_Parse(text);
 						Q_strncpyz(od->weap_id[od->numWeapons], token, MAX_VAR);
+
+						/* get it's body */
+						token = COM_Parse(text);
+
+						if (!*text || *token != '{') {
+							Com_Printf("Com_ParseItem: weapon_mod \"%s\" without body ignored\n", name);
+							break;
+						}
 
 						/* For parse each firedef entry for this weapon.  */
 						do {

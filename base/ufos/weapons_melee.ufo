@@ -15,7 +15,7 @@ item knife
 	buytype		1
 	thrown		true
 
-	weapon knife
+	weapon_mod knife
 	{
 		firedef 
 		{
@@ -70,7 +70,7 @@ item knifemono
 	buytype		1
 	thrown		true
 
-	weapon knifemono
+	weapon_mod knifemono
 	{
 		firedef 
 		{
@@ -125,7 +125,7 @@ item stunrod
 	buytype	1
 	thrown	false
 
-	weapon stunrod
+	weapon_mod stunrod
 	{
 		firedef 
 		{
@@ -180,7 +180,7 @@ item kerrblade
 	buytype		1
 	thrown		true
 
-	weapon kerrblade
+	weapon_mod kerrblade
 	{
 		firedef 
 		{
@@ -237,7 +237,7 @@ item plasblade
 	buytype		1
 	thrown		true
 
-	weapon plasblade
+	weapon_mod plasblade
 	{
 		firedef 
 		{
