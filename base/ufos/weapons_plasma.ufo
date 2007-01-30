@@ -31,44 +31,47 @@ item plaspistol_ammo
 	price		1700
 	buytype		1
 
-	primary
+	weapon plaspistol
 	{
-		name	"_Charged Pulse"
-		skill 	close
-		projtl	plasmaMiniPulse
-		impact	plasmaImpactCharged
-		hitbody	plasmaImpactCharged
-		firesnd	weapons/plasma_s.wav
-		speed	1800
-		spread	"0 3"
-		crouch	0.8
-		range	15
-		shots	5
-		ammo	1
-		rof		6
-		time	7
-		damage	"11 5"
-		dmgtype plasma
-	}
-	secondary
-	{
-		name	"_Continuous Stream"
-		skill 	assault
-		projtl	plasmaContinuous
-		impact	plasmaImpact
-		hitbody	plasmaImpact
-		firesnd	weapons/plasma_c.wav
-		sndonce true
-		speed	0
-		spread	"1 5"
-		crouch	1.0
-		range	10
-		shots	30
-		ammo	3
-		rof		32
-		time	15
-		damage	"6 2"
-		dmgtype plasma
+		firedef 
+		{
+			name	"_Charged Pulse"
+			skill 	close
+			projtl	plasmaMiniPulse
+			impact	plasmaImpactCharged
+			hitbody	plasmaImpactCharged
+			firesnd	weapons/plasma_s.wav
+			speed	1800
+			spread	"0 3"
+			crouch	0.8
+			range	15
+			shots	5
+			ammo	1
+			rof		6
+			time	7
+			damage	"11 5"
+			dmgtype plasma
+		}
+		firedef 
+		{
+			name	"_Continuous Stream"
+			skill 	assault
+			projtl	plasmaContinuous
+			impact	plasmaImpact
+			hitbody	plasmaImpact
+			firesnd	weapons/plasma_c.wav
+			sndonce true
+			speed	0
+			spread	"1 5"
+			crouch	1.0
+			range	10
+			shots	30
+			ammo	3
+			rof		32
+			time	15
+			damage	"6 2"
+			dmgtype plasma
+		}
 	}
 }
 
@@ -106,44 +109,47 @@ item plasrifle_ammo
 	price		2000
 	buytype		0
 
-	primary
+	weapon plasrifle
 	{
-		name	"_Charged Pulse"
-		skill 	assault
-		projtl	plasmaPulse
-		impact	plasmaImpactCharged
-		hitbody	plasmaImpactCharged
-		firesnd	weapons/plasma_s.wav
-		speed	1700
-		spread	"0 2"
-		crouch	0.7
-		range	22
-		shots	5
-		ammo	1
-		rof		5
-		time	9
-		damage	"14 5"
-		dmgtype plasma
-	}
-	secondary
-	{
-		name	"_Continuous Stream"
-		skill 	heavy
-		projtl	plasmaContinuous
-		impact	plasmaImpact
-		hitbody	plasmaImpact
-		firesnd	weapons/plasma_big.wav
-		sndonce true
-		speed	0
-		spread	"1 4"
-		crouch	1.0
-		range	18
-		shots	30
-		ammo	3
-		rof		21
-		time	14
-		damage	"12 2"
-		dmgtype plasma
+		firedef 
+		{
+			name	"_Charged Pulse"
+			skill 	assault
+			projtl	plasmaPulse
+			impact	plasmaImpactCharged
+			hitbody	plasmaImpactCharged
+			firesnd	weapons/plasma_s.wav
+			speed	1700
+			spread	"0 2"
+			crouch	0.7
+			range	22
+			shots	5
+			ammo	1
+			rof		5
+			time	9
+			damage	"14 5"
+			dmgtype plasma
+		}
+		firedef
+		{
+			name	"_Continuous Stream"
+			skill 	heavy
+			projtl	plasmaContinuous
+			impact	plasmaImpact
+			hitbody	plasmaImpact
+			firesnd	weapons/plasma_big.wav
+			sndonce true
+			speed	0
+			spread	"1 4"
+			crouch	1.0
+			range	18
+			shots	30
+			ammo	3
+			rof		21
+			time	14
+			damage	"12 2"
+			dmgtype plasma
+		}
 	}
 }
 
@@ -181,48 +187,51 @@ item plasblaster_ammo
 	price		4000
 	buytype		0
 
-	primary
+	weapon plasblaster
 	{
-		name	"_Charged Ball"
-		skill 	explosive
-		projtl	plasmaBigBall
-		impact	plasmaBigImpact
-		hitbody	plasmaBigImpact
-		firesnd	weapons/plasma_s.wav
-		impsnd	weapons/plasma_grenade.wav
-		bodysnd	weapons/plasma_grenade.wav
-		gravity	true
-		launched true
-		spread	"0 1"
-		range	17
-		shots	1
-		ammo	1
-		rof		1
-		time	10
-		damage	"60 10"
-		spldmg	"120 20"
-		splrad	5
-		dmgtype plasma
-	}
-	secondary
-	{
-		name	"_Continuous Beam"
-		skill 	heavy
-		projtl	plasmaContinuous
-		impact	plasmaImpact
-		hitbody	plasmaImpact
-		firesnd	weapons/plasma_big.wav
-		sndonce true
-		speed	0
-		spread	"1 5"
-		crouch	1.0
-		range	15
-		shots	15
-		ammo	1
-		rof		15
-		time	12
-		damage	"21 6"
-		dmgtype plasma
+		firedef 
+		{
+			name	"_Charged Ball"
+			skill 	explosive
+			projtl	plasmaBigBall
+			impact	plasmaBigImpact
+			hitbody	plasmaBigImpact
+			firesnd	weapons/plasma_s.wav
+			impsnd	weapons/plasma_grenade.wav
+			bodysnd	weapons/plasma_grenade.wav
+			gravity	true
+			launched true
+			spread	"0 1"
+			range	17
+			shots	1
+			ammo	1
+			rof		1
+			time	10
+			damage	"60 10"
+			spldmg	"120 20"
+			splrad	5
+			dmgtype plasma
+		}
+		firedef
+		{
+			name	"_Continuous Beam"
+			skill 	heavy
+			projtl	plasmaContinuous
+			impact	plasmaImpact
+			hitbody	plasmaImpact
+			firesnd	weapons/plasma_big.wav
+			sndonce true
+			speed	0
+			spread	"1 5"
+			crouch	1.0
+			range	15
+			shots	15
+			ammo	1
+			rof		15
+			time	12
+			damage	"21 6"
+			dmgtype plasma
+		}
 	}
 }
 
