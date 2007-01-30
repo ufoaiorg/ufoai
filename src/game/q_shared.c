@@ -2877,11 +2877,11 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 						if (ammo < CSI->numODs) {
 							primary =
 								/* to avoid two tachyon weapons */
-								!(CSI->ods[ammo].fd[0].dmgtype
-								== CSI->damTachyon)
+								!(CSI->ods[ammo].fd[0][0].dmgtype
+								== CSI->damTachyon) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 								/* to avoid SMG + Assault Rifle */
-								&& !(CSI->ods[ammo].fd[0].dmgtype
-									== CSI->damNormal);
+								&& !(CSI->ods[ammo].fd[0][0].dmgtype
+									== CSI->damNormal); /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 						}
 						max_price = 0; /* one primary weapon is enough */
 						missed_primary = 0;

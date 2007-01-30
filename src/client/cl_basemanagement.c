@@ -1531,22 +1531,22 @@ static void CL_SwapSkills(character_t *team[], int num)
 				cp1 = team[i1];
 
 				/* disregard left hand, or dual-wielding guys are too good */
-				no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[FD_PRIMARY].weaponSkill)
-					+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[FD_SECONDARY].weaponSkill)
+				no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[0][FD_PRIMARY].weaponSkill) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+					+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[0][FD_SECONDARY].weaponSkill) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 					+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
-					   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[FD_PRIMARY].weaponSkill)
+					   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[0][FD_PRIMARY].weaponSkill) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 					+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
-					   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[FD_SECONDARY].weaponSkill);
+					   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[0][FD_SECONDARY].weaponSkill); /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 
 				for (i2 = i1 + 1 ; i2 < num; i2++) {
 					cp2 = team[i2];
 
-					no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[FD_PRIMARY].weaponSkill)
-						+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[FD_SECONDARY].weaponSkill)
+					no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[0][FD_PRIMARY].weaponSkill) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+						+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[0][FD_SECONDARY].weaponSkill) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 						+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
-						   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[FD_PRIMARY].weaponSkill)
+						   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[0][FD_PRIMARY].weaponSkill) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 						+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
-						   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[FD_SECONDARY].weaponSkill);
+						   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[0][FD_SECONDARY].weaponSkill); /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 
 					if ( no1 > no2 /* more use of this skill */
 						 || (no1 && no1 == no2) ) { /* or earlier on list */

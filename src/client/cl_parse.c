@@ -235,10 +235,10 @@ extern void CL_RegisterSounds (void)
 	/* load weapon sounds */
 	for ( i = 0; i < csi.numODs; i++ )
 		for ( j = 0; j < 2; j++ ) {
-			if ( csi.ods[i].fd[j].fireSound[0] )
-				S_RegisterSound( csi.ods[i].fd[j].fireSound );
-			if ( csi.ods[i].fd[j].impactSound[0] )
-				S_RegisterSound( csi.ods[i].fd[j].impactSound );
+			if ( csi.ods[i].fd[0][j].fireSound[0] ) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+				S_RegisterSound( csi.ods[i].fd[0][j].fireSound ); /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+			if ( csi.ods[i].fd[0][j].impactSound[0] ) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+				S_RegisterSound( csi.ods[i].fd[0][j].impactSound ); /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 			/* pump message loop */
 			Sys_SendKeyEvents ();
 		}

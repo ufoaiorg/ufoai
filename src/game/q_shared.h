@@ -899,10 +899,13 @@ extern char *pa_format[128];
 
 /* this is the absolute max for now */
 #define MAX_OBJDEFS     128
+#define MAX_WEAPONS_PER_OBJDEF 4
+#define MAX_FIREDEFS_PER_WEAPON 4
 #define MAX_DAMAGETYPES 32
 #define MAX_TECHLINKS	16 /* Needs to be synced with MAX_TECHLINKS in cl_research.h */
 
-#define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[!!(type & 0x80)])
+#define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[0][!!(type & 0x80)])
+/* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 
 /** this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
@@ -973,7 +976,11 @@ typedef struct objDef_s {
 	/* Weapon specific */
 	int ammo;			/**< how much can we load into this weapon at once */
 	int reload;			/**< time units for reloading the weapon */
-	fireDef_t fd[2];	/**< primary and secondard fire definition */
+	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon. */
+	int numFiredefs[MAX_WEAPONS_PER_OBJDEF];			/**< Numnber of firemodes per weapon. */
+	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];			/**< List of weapon ids */
+	/* int weap_idx[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];		**< List of weapon ids */
+	int numWeapons;							/**< Number of weapons. */
 
 	/* Technology link */
 	void *tech;		/**< Technology link to item to use this extension for (if this is an extension) */

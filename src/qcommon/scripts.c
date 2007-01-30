@@ -39,15 +39,13 @@ static char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
 };
 
 typedef enum objdefs {
-	OD_PRIMARY,
-	OD_SECONDARY,
+	OD_WEAPON,
 	OD_PROTECTION,
 	OD_HARDNESS
 } objdef_t;
 
 static value_t od_vals[] = {
-	{"primary", V_NULL, 0},
-	{"secondary", V_NULL, 0},
+	{"weapon", V_NULL, 0},
 	{"protection", V_NULL, 0},
 	{"hardness", V_NULL, 0},
 
@@ -275,14 +273,42 @@ static void Com_ParseItem(char *name, char **text)
 					Com_ParseValue(od, token, val->type, val->ofs);
 				} else {
 					/* parse fire definitions */
-					if (i == OD_PRIMARY)
-						Com_ParseFire(name, text, &od->fd[FD_PRIMARY]);
-					else if (i == OD_SECONDARY)
-						Com_ParseFire(name, text, &od->fd[FD_SECONDARY]);
-					else if (i == OD_PROTECTION)
+					switch (i) {
+					case OD_WEAPON:
+						/* Save the weapon id. */
+						token = COM_Parse(text);
+						Q_strncpyz(od->weap_id[od->numWeapons], token, MAX_VAR);
+
+						/* For parse each firedef entry for this weapon.  */
+						do {
+							token = COM_EParse(text, errhead, name);
+							if (!*text)
+								return;
+							if (*token == '}')
+								break;
+
+							if (!Q_strncmp(token, "firedef", MAX_VAR)) {
+								/* Parse firemode into fd[IDXweapon][IDXfiremode] */
+								Com_ParseFire(name, text, &od->fd[od->numWeapons][od->numFiredefs[od->numWeapons]]);
+								od->numFiredefs[od->numWeapons]++;
+							}
+							/*
+							else {
+								Bad syntax.
+							}
+							*/
+						} while (*text);
+						od->numWeapons++;
+						break;
+					case OD_PROTECTION:
 						Com_ParseArmor(name, text, od->protection);
-					else if (i == OD_HARDNESS)
+						break;
+					case OD_HARDNESS:
 						Com_ParseArmor(name, text, od->hardness);
+						break;
+					default:
+						break;
+					}
 				}
 				break;
 			}

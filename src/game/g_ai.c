@@ -166,7 +166,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		if (!od)
 			continue;
 
-		fd = &od->fd[SHOT_FD_PRIO(fm)];
+		fd = &od->fd[0][SHOT_FD_PRIO(fm)]; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 
 		nspread = SPREAD_NORM((fd->spread[0]+fd->spread[1])*0.5 + GET_ACC(ent->chr.skills[ABILITY_ACCURACY]*(1+fd->modif),
 								 fd->weaponSkill));

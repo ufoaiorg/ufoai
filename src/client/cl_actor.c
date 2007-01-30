@@ -438,7 +438,7 @@ static void CL_RefreshWeaponButtons(int time)
 	/* weapon firing buttons */
 	if ( !weaponr || weaponr->item.m == NONE
 		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a <= 0)
-		 || time < csi.ods[weaponr->item.m].fd[FD_PRIMARY].time
+		 || time < csi.ods[weaponr->item.m].fd[0][FD_PRIMARY].time /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 		 || (csi.ods[weaponr->item.t].firetwohanded && LEFT(selActor)) )
 		SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
 	else
@@ -446,7 +446,7 @@ static void CL_RefreshWeaponButtons(int time)
 
 	if ( !weaponr || weaponr->item.m == NONE
 		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a <= 0)
-		 || time < csi.ods[weaponr->item.m].fd[FD_SECONDARY].time
+		 || time < csi.ods[weaponr->item.m].fd[0][FD_SECONDARY].time /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 		 || (csi.ods[weaponr->item.t].firetwohanded && LEFT(selActor)) )
 		SetWeaponButton(BT_RIGHT_SECONDARY, qfalse);
 	else
@@ -454,14 +454,14 @@ static void CL_RefreshWeaponButtons(int time)
 
 	if ( !weaponl || weaponl->item.m == NONE
 		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a <= 0)
-		 || time < csi.ods[weaponl->item.m].fd[FD_PRIMARY].time )
+		 || time < csi.ods[weaponl->item.m].fd[0][FD_PRIMARY].time ) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 		SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
 	else
 		SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
 
 	if ( !weaponl || weaponl->item.m == NONE
 		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a <= 0)
-		 || time < csi.ods[weaponl->item.m].fd[FD_SECONDARY].time )
+		 || time < csi.ods[weaponl->item.m].fd[0][FD_SECONDARY].time )/* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 		SetWeaponButton(BT_LEFT_SECONDARY, qfalse);
 	else
 		SetWeaponButton(BT_LEFT_SECONDARY, qtrue);
@@ -490,7 +490,7 @@ qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode)
 			Com_Printf("Weapon cannot be fired one handed!\n");
 			return qfalse;
 		}
-		if ( time < csi.ods[weapon->item.m].fd[(mode)].time ) {
+		if ( time < csi.ods[weapon->item.m].fd[0][(mode)].time ) {/* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 			Com_Printf("Can't perform action: not enough TUs.\n");
 			return qfalse;
 		}
@@ -581,7 +581,7 @@ void CL_ActorUpdateCVars(void)
 			if (selWeapon->item.m == NONE) {
 				selFD = NULL;
 			} else {
-				selFD = &csi.ods[selWeapon->item.m].fd[MODE_FD_PRIO(cl.cmode)];
+				selFD = &csi.ods[selWeapon->item.m].fd[0][MODE_FD_PRIO(cl.cmode)]; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 			}
 		} else {
 			selFD = NULL;

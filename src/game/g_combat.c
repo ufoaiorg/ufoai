@@ -866,7 +866,7 @@ qboolean G_GetShotFromType(edict_t *ent, int type, item_t **weapon, int *contain
 		return qfalse;
 	}
 
-	*fd = &gi.csi->ods[(*weapon)->m].fd[SHOT_FD_PRIO(type)];
+	*fd = &gi.csi->ods[(*weapon)->m].fd[0][SHOT_FD_PRIO(type)]; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used */
 
 	return qtrue;
 }
@@ -1175,24 +1175,24 @@ int G_GetFiringTUs(edict_t *ent, edict_t *target, int *hand)
 			&& gi.csi->ods[RIGHT(ent)->item.t].weapon
 			&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
 				|| RIGHT(ent)->item.a > 0)
-			&& gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->integer <= ent->TU
-			&& gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
+			&& gi.csi->ods[RIGHT(ent)->item.m].fd[0][FD_PRIMARY].time + sv_reaction_leftover->integer <= ent->TU /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+			&& gi.csi->ods[RIGHT(ent)->item.m].fd[0][FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) { /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 
 		if (hand)
 			*hand = ST_RIGHT_PRIMARY_REACTION;
-		return gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->integer;
+		return gi.csi->ods[RIGHT(ent)->item.m].fd[0][FD_PRIMARY].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 	}
 	if (LEFT(ent)
 		&& (LEFT(ent)->item.m != NONE)
 		&& gi.csi->ods[LEFT(ent)->item.t].weapon
 		&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 			|| LEFT(ent)->item.a > 0)
-		&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->integer <= ent->TU
-		&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
+		&& gi.csi->ods[LEFT(ent)->item.m].fd[0][FD_PRIMARY].time + sv_reaction_leftover->integer <= ent->TU /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+		&& gi.csi->ods[LEFT(ent)->item.m].fd[0][FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) { /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 
 		if (hand)
 			*hand = ST_LEFT_PRIMARY_REACTION;
-		return gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->integer;
+		return gi.csi->ods[LEFT(ent)->item.m].fd[0][FD_PRIMARY].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 	}
 	return -1;
 }
