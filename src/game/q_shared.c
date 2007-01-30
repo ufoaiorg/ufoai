@@ -3876,10 +3876,10 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
 	int i;
 	qboolean usable = qfalse;
 
-	for (i = 0; i < MAX_TECHLINKS; i++) {
-		if (od->forWeapon[i] < 0)
+	for (i = 0; i < od->numWeapons; i++) {
+		if (od->weap_idx[i] < 0)
 			break;
-		if (weapon_idx == od->forWeapon[i]) {
+		if (weapon_idx == od->weap_idx[i]) {
 			usable = qtrue;
 			break;
 		}
@@ -3888,4 +3888,27 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
 	Com_DPrintf("INV_LoadableInWeapon: item '%s' usable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weapon_idx].id );
 #endif
 	return usable;
+}
+
+/**
+ * @brief Returns the index of the array that has the firedefinitions for a given weapon (-index)
+ * @param[in] od The object definition of the item.
+ * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
+ * @return int Returns the index in the fd array. -1 if the weapon-idx was not found. 0 if an invalid or unknown weapon idx was given.
+ */
+int INV_FiredefIDXForWeapon (objDef_t *od, int weapon_idx)
+{
+	int i;
+
+	if (!od)
+		return -1;
+
+	if (weapon_idx == -1)
+		return 0;
+
+	for (i = 0; i < od->numWeapons; i++) {
+		if (weapon_idx == od->weap_idx)
+			return i;
+	}
+	return -1;
 }

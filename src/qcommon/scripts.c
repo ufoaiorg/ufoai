@@ -1200,8 +1200,15 @@ void Com_AddObjectLinks(void)
 	int i, j, k;
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		/* Add links to weapons. */
+
+		for (j = 0; j < od->numWeapons; j++ ) {
+			od->weap_id[j] = RS_GetItem(od->weap_id[j]);
+		}
+#if 0
 		/* Add links to technologies. */
 		tech = RS_GetTechByProvided(od->id);
+		
 		od->tech = tech;
 		if (!od->tech) {
 			Com_Printf("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->id);
@@ -1224,6 +1231,7 @@ void Com_AddObjectLinks(void)
 			if (k == 0)
 				Com_Printf("Com_AddObjectLinks: Ammo '%s' is not useable in any weapon\n", od->id);
 		}
+#endif
 	}
 #endif
 }

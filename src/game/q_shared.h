@@ -979,7 +979,7 @@ typedef struct objDef_s {
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon. */
 	int numFiredefs[MAX_WEAPONS_PER_OBJDEF];			/**< Numnber of firemodes per weapon. */
 	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];			/**< List of weapon ids */
-	/* int weap_idx[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];		**< List of weapon ids */
+	int weap_idx[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon indices (bascially replaces forWeapon if done correctly) */
 	int numWeapons;							/**< Number of weapons. */
 
 	/* Technology link */
