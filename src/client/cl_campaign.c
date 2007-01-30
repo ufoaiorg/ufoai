@@ -358,8 +358,8 @@ static qboolean CL_MapMaskFind(byte * color, vec2_t polar)
 
 	/* transform to polar coords */
 	res = (c - maskPic) / 4;
-	polar[0] = 180. - 360. * ((float) (res % maskWidth) + 0.5) / maskWidth;
-	polar[1] = 90. - 180. * ((float) (res / maskWidth) + 0.5) / maskHeight;
+	polar[0] = 180.0 - 360.0 * ((float) (res % maskWidth) + 0.5) / maskWidth;
+	polar[1] = 90.0 - 180.0 * ((float) (res / maskWidth) + 0.5) / maskHeight;
 	Com_DPrintf("Set new coords for mission to %.0f:%.0f\n", polar[0], polar[1]);
 	return qtrue;
 }
@@ -1914,8 +1914,7 @@ int CL_GameLoad(char *filename)
 	/* set ccs.singleplayer to true (gameloading is singleplayer only) */
 	CL_StartSingleplayer(qtrue);
 
-	/* FIXME: fix this after texture mapping of the globe is fixed, too */
-	ccs.angles[YAW] = -90;
+	ccs.angles[YAW] = GLOBE_ROTATE;
 
 	/* read date */
 	ccs.date.day = MSG_ReadLong(&sb);
@@ -3974,8 +3973,7 @@ static void CL_GameNew(void)
 	selMis = NULL;
 	memset(&ccs, 0, sizeof(ccs_t));
 
-	/* FIXME: fix this after texture mapping of the globe is fixed, too */
-	ccs.angles[YAW] = -90;
+	ccs.angles[YAW] = GLOBE_ROTATE;
 
 	ccs.date = curCampaign->date;
 
