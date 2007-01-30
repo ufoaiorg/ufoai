@@ -356,6 +356,7 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, i
 	return qfalse;
 }
 
+#define GLOBE_RADIUS gl_3dmapradius->value * (ccs.zoom / 4.0f) * 0.1
 /**
  * @brief
  * @param[in] x normalized x value of mouseclick
@@ -365,23 +366,16 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, i
  */
 extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y)
 {
-	float sx;
-	/* TODO: ccs.angles */
+	const float radius = GLOBE_RADIUS;
 
-	/* get "raw" position */
-	sx = pos[0] / 360 + ccs.center[0] - 0.5;
+	*x = radius * cos(pos[0]) * cos(pos[1]);
+	*y = radius * cos(pos[0]) * sin(pos[1]);
 
-	/* shift it on screen */
-	if (sx < -0.5)
-		sx += 1.0;
-	else if (sx > +0.5)
-		sx -= 1.0;
+	Com_Printf("MAP_3DMapToScreen: %i:%i\n", *x, *y);
 
-	*x = node->pos[0] + 0.5 * node->size[0] - sx * node->size[0] * ccs.zoom;
-	*y = node->pos[1] + 0.5 * node->size[1] - (pos[1] / 180 + ccs.center[1] - 0.5) * node->size[1] * ccs.zoom;
-
-	if (*x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
-		return qfalse;
+	/* TODO: Check ccs.angle */
+/*	if (*x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
+		return qfalse;*/
 	return qtrue;
 }
 
@@ -441,7 +435,9 @@ static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
 {
 	vec2_t mid;
 	float dist;
-	const float radius = gl_3dmapradius->value * (ccs.zoom / 4.0f) * 0.1;
+	float theta;
+	float phi;
+	const float radius = GLOBE_RADIUS;
 
 	Vector2Set(mid, (node->pos[0] + node->size[0]) / 2.0f, (node->pos[1] + node->size[1]) / 2.0f);
 
@@ -449,9 +445,19 @@ static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
 
 	/* check whether we clicked the geoscape */
 	if (dist <= radius) {
+		/* z-coordinates (y on screen) */
+		theta = asin((float)(y - mid[1]) / radius); /* ok */
+		/* x-coordinates */
+		phi = acos((float)(x - mid[0]) / radius / cos(theta));
+		pos[0] = theta * todeg;	/* longitude */
+		pos[1] = 90.0f - (phi * todeg); /* latitude */
 		/* FIXME */
-		pos[0] = x * torad;
-		pos[1] = y * torad;
+/*		pos[0] += ccs.angles[PITCH];
+		pos[1] += (ccs.angles[YAW] - GLOBE_ROTATE);*/
+#if 1
+		Com_Printf("long: %.1f, lat: %.1f\n", pos[0], pos[1]);
+		Com_Printf("rotate: %.1f: %.1f\n", ccs.angles[PITCH], ccs.angles[YAW] - GLOBE_ROTATE);
+#endif
 	} else
 		Vector2Set(pos, -1.0, -1.0);
 }
