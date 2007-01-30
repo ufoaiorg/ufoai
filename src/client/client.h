@@ -1087,6 +1087,7 @@ unsigned long *x86_TimerGetHistogram(void);
 #endif /* id386 */
 
 /* cl_map.c */
+#define GLOBE_ROTATE -90
 extern nation_t* MAP_GetNation(const vec2_t pos);
 extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
 extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y);

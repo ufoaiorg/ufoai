@@ -992,7 +992,7 @@ typedef struct invDef_s {
 	char name[MAX_VAR];	/**< id from script files */
 	byte single, armor, all, temp, extension, headgear;	/**< type of this container or inventory */
 	int shape[16];	/**< the inventory form/shape */
-	int in, out;
+	int in, out;	/**< TU costs */
 } invDef_t;
 
 #define MAX_CONTAINERS  MAX_INVDEFS
