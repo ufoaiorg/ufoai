@@ -106,42 +106,127 @@ item laserrifle_ammo
 	price		210
 	buytype		0
 
-	primary
+	weapon laserpistol
 	{
-		name	"_Single Pulse"
-		skill 	sniper
-		projtl	laserPulse
-		impact	laserImpact
-		hitbody	laserImpact
-		firesnd	weapons/laser.wav
-		speed	0
-		spread	"0 0.2"
-		crouch	0.7
-		range	84
-		shots	1
-		ammo	1
-		time	10
-		damage	"42 6"
-		dmgtype laser
+		firedef 
+		{
+			name	"_Single Pulse"
+			skill 	close
+			projtl	laserPulse
+			impact	laserImpact
+			hitbody	laserImpact
+			firesnd	weapons/laser.wav
+			speed	0
+			spread	"0 1"
+			crouch	0.8
+			range	64
+			shots	1
+			ammo	1
+			time	5
+			damage	"32 6"
+			dmgtype laser
+		}
+		firedef
+		{
+			name	"_Multiple Pulses"
+			skill 	close
+			projtl	laserPulse
+			impact	laserImpact
+			hitbody	laserImpact
+			firesnd	weapons/laser.wav
+			speed	0
+			spread	"0 2"
+			crouch	1.0
+			range	56
+			shots	4
+			ammo	4
+			rof		6
+			time	8
+			damage	"28 5"
+			dmgtype laser
+		}
 	}
-	secondary
+
+	weapon laserrifle
 	{
-		name	"_Multiple Pulses"
-		skill 	assault
-		projtl	laserPulse
-		impact	laserImpact
-		hitbody	laserImpact
-		firesnd	weapons/laser.wav
-		speed	0
-		spread	"0 2"
-		crouch	1.0
-		range	68
-		shots	4
-		ammo	4
-		rof		6
-		time	14
-		damage	"34 6"
-		dmgtype laser
+		firedef 
+		{
+			name	"_Single Pulse"
+			skill 	sniper
+			projtl	laserPulse
+			impact	laserImpact
+			hitbody	laserImpact
+			firesnd	weapons/laser.wav
+			speed	0
+			spread	"0 0.2"
+			crouch	0.7
+			range	84
+			shots	1
+			ammo	1
+			time	10
+			damage	"42 6"
+			dmgtype laser
+		}
+		firedef
+		{
+			name	"_Multiple Pulses"
+			skill 	assault
+			projtl	laserPulse
+			impact	laserImpact
+			hitbody	laserImpact
+			firesnd	weapons/laser.wav
+			speed	0
+			spread	"0 2"
+			crouch	1.0
+			range	68
+			shots	4
+			ammo	4
+			rof		6
+			time	14
+			damage	"34 6"
+			dmgtype laser
+		}
+	}
+
+	weapon heavylaser
+	{
+		firedef 
+		{
+			name	"_Rapid Pulses"
+			skill	heavy
+			projtl	laserPulse
+			impact	laserImpact
+			hitbody	laserImpact
+			firesnd	weapons/laser.wav
+			speed	0
+			spread	"0 2"
+			crouch	0.7
+			range	90
+			shots	5
+			ammo	1
+			rof		10
+			time	10
+			damage	"72 6"
+			dmgtype laser
+		}
+		firedef
+		{
+			name	"_Overload"
+			skill	heavy
+			projtl	laserOverload
+			impact	laserImpact
+			hitbody	laserImpact
+			firesnd	weapons/heavy_laser.wav
+			speed	0
+			spread	"0 0.2"
+			crouch	0.7
+			range	250
+			shots	1
+			ammo	1
+			time	14
+			damage	"245 70"
+			dmgtype laser
+		}
 	}
 }
 
