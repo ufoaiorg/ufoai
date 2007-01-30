@@ -170,7 +170,7 @@ static void GL_Strings_f(void)
 /**
  * @brief
  */
-static void R_CastShadow(void)
+static void R_CastShadow (void)
 {
 	int i;
 
@@ -183,7 +183,7 @@ static void R_CastShadow(void)
 		currentmodel = currententity->model;
 		if (!currentmodel)
 			continue;
-		if (currentmodel->type != mod_alias)
+		if (currentmodel->type != mod_alias && currentmodel->type != mod_alias_md3)
 			continue;
 
 		if (gl_shadows->integer == 2)
@@ -766,7 +766,7 @@ static void MYgluPerspective(GLdouble zNear, GLdouble zFar)
 /**
  * @brief
  */
-static void R_SetupGL(void)
+static void R_SetupGL (void)
 {
 	int x, x2, y2, y, w, h;
 
@@ -855,7 +855,9 @@ static void R_Clear(void)
 	qglDepthRange(gldepthmin, gldepthmax);
 
 	if (gl_shadows->integer == 2) {
-		qglClearStencil(0);
+		/* set the reference stencil value */
+		qglClearStencil(128);
+		/* reset stencil buffer */
 		qglClear(GL_STENCIL_BUFFER_BIT);
 	}
 }
@@ -863,7 +865,7 @@ static void R_Clear(void)
 /**
  * @brief
  */
-static void R_Flash(void)
+static void R_Flash (void)
 {
 	R_ShadowBlend();
 	R_PolyBlend();
@@ -1443,12 +1445,10 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 		qglAttachShader  = (void *) qwglGetProcAddress("glAttachObjectARB");
 		qglLinkProgram   = (void *) qwglGetProcAddress("glLinkProgramARB");
 		qglUseProgram    = (void *) qwglGetProcAddress("glUseProgramObjectARB");
-		/* FIXME: I don't know the names of these two function */
-		/* will currently segfault on shader shutdown */
-		qglDeleteShader  = (void *) qwglGetProcAddress("glDeleteShadersARB");
-		qglDeleteProgram = (void *) qwglGetProcAddress("glDeleteProgramsARB");
+		qglDeleteShader  = (void *) qwglGetProcAddress("glDeleteObjectARB");
+		qglDeleteProgram = (void *) qwglGetProcAddress("glDeleteObjectARB");
 		if (!qglCreateShader)
-			Sys_Error("bla\n");
+			Sys_Error("Could not load all needed GLSL functions\n");
 		gl_state.glsl_program = qtrue;
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_ARB_shading_language_100 not found\n");

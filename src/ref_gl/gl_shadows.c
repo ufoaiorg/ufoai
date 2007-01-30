@@ -137,7 +137,7 @@ static int model_dlights_num;
 /**
  * @brief
  */
-static void GL_DrawAliasShadow(entity_t * e, dmdl_t * paliashdr, int posenum)
+static void GL_DrawAliasShadow (entity_t * e, dmdl_t * paliashdr, int posenum)
 {
 	dtrivertx_t *verts;
 	int *order;
@@ -213,7 +213,7 @@ static void GL_DrawAliasShadow(entity_t * e, dmdl_t * paliashdr, int posenum)
  * @brief
  * @sa GL_RenderVolumes
  */
-static void BuildShadowVolume(dmdl_t * hdr, vec3_t light, float projectdistance)
+static void BuildShadowVolume (dmdl_t * hdr, vec3_t light, float projectdistance)
 {
 	dtriangle_t *ot, *tris;
 	int i, j;
@@ -319,7 +319,7 @@ static void BuildShadowVolume(dmdl_t * hdr, vec3_t light, float projectdistance)
  * @sa GL_DrawAliasShadowVolume
  * @sa BuildShadowVolume
  */
-static void GL_RenderVolumes(dmdl_t * paliashdr, vec3_t lightdir, int projdist)
+static void GL_RenderVolumes (dmdl_t * paliashdr, vec3_t lightdir, int projdist)
 {
 	int incr = gl_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR;
 	int decr = gl_state.stencil_wrap ? GL_DECR_WRAP_EXT : GL_DECR;
@@ -355,8 +355,9 @@ static void GL_RenderVolumes(dmdl_t * paliashdr, vec3_t lightdir, int projdist)
 
 /**
  * @brief
+ * @sa R_DrawShadowVolume
  */
-static void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm)
+static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 {
 	int *order, i, o, dist;
 	vec3_t light, temp;
@@ -391,6 +392,8 @@ static void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm)
 
 /*	if (!ri.IsVisible(r_newrefdef.vieworg, currententity->origin)) return; */
 
+	qglPushAttrib(GL_STENCIL_BUFFER_BIT); /* save stencil buffer */
+
 	if (gl_shadow_debug_volume->value)
 		qglColor3f(1, 0, 0);
 	else
@@ -404,13 +407,14 @@ static void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm)
 /*	if (clamp) qglEnable(GL_DEPTH_CLAMP_NV); */
 
 	qglDepthMask(qfalse);
-	qglStencilMask((GLuint) ~ 0);
+	qglStencilMask(255);
 	qglDepthFunc(GL_LESS);
 
 	if (gl_state.ati_separate_stencil)
-		qglStencilFuncSeparateATI(GL_ALWAYS, GL_ALWAYS, 0, (GLuint) ~ 0);
-
-	qglStencilFunc(GL_ALWAYS, 0, (GLuint) ~ 0);
+		qglStencilFuncSeparateATI(GL_NOTEQUAL, GL_NOTEQUAL, 128, 255);
+	else
+		qglStencilFunc(GL_NOTEQUAL, 128, 255);
+	qglStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
 
 	for (i = 0; i < r_newrefdef.num_dlights; i++, l++) {
 		if ((l->origin[0] == currententity->origin[0]) && (l->origin[1] == currententity->origin[1]) && (l->origin[2] == currententity->origin[2]))
@@ -461,6 +465,8 @@ static void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm)
 	else
 		qglColorMask(1, 1, 1, 1);
 
+	qglPopAttrib(); /* restore stencil buffer */
+	qglStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 	qglDepthMask(qtrue);
 	qglDepthFunc(GL_LEQUAL);
 }
@@ -548,7 +554,7 @@ void R_DrawShadow(entity_t * e)
  * @sa R_DrawAliasMD3Model
  * @sa R_CastShadow
  */
-void R_DrawShadowVolume(entity_t * e)
+void R_DrawShadowVolume (entity_t * e)
 {
 	dmdl_t *paliashdr;
 
@@ -613,8 +619,9 @@ void R_DrawShadowVolume(entity_t * e)
 
 /**
  * @brief
+ * @sa R_Flash
  */
-void R_ShadowBlend(void)
+void R_ShadowBlend (void)
 {
 	if (gl_shadows->integer != 2)
 		return;
@@ -642,9 +649,9 @@ void R_ShadowBlend(void)
 	qglEnable(GL_STENCIL_TEST);
 
 	if (gl_state.ati_separate_stencil)
-		qglStencilFuncSeparateATI(GL_NOTEQUAL, GL_NOTEQUAL, 0, (GLuint) ~ 0);
-
-	qglStencilFunc(GL_NOTEQUAL, 0, (GLuint) ~ 0);
+		qglStencilFuncSeparateATI(GL_NOTEQUAL, GL_NOTEQUAL, 128, 255);
+	else
+		qglStencilFunc(GL_NOTEQUAL, 128, 255);
 	qglStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 	qglDisable(GL_TEXTURE_2D);
 	qglBegin(GL_QUADS);
