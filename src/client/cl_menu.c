@@ -494,11 +494,21 @@ static void MN_DrawDisabled(menuNode_t* node)
 /**
  * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
  */
-static void MN_DrawFree(int posx, int posy, int sizex, int sizey)
+static void MN_DrawFree(int container, menuNode_t * node, int posx, int posy, int sizex, int sizey, qboolean showTUs)
 {
 	static vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
+
+	invDef_t* inv = &csi.ids[container];
+
 	re.DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
 	re.DrawColor(NULL);
+
+	/* if showTUs is true (only the first time in none single containers)
+	 * and we are connected to a game */
+	if (showTUs && cls.state == ca_active)
+		re.FontDrawString("f_verysmall", 0, node->pos[0] + 3, node->pos[1] + 3,
+			node->pos[0] + 3, node->pos[1] + 3, node->size[0] - 6, 0, 0,
+			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse);
 }
 
 /**
@@ -511,6 +521,8 @@ static void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
 	int container = node->mousefx;
 	int itemshape;
 
+	qboolean showTUs = qtrue;
+
 	/* The shape of the free positions. */
 	int free[16];
 	int x, y;
@@ -518,18 +530,20 @@ static void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
 	/* Draw only in dragging-mode and not for the equip-floor */
 	if (mouseSpace == MS_DRAG) {
 		assert(inv);
-		memset(free, 0, sizeof(free));
+
 #if 0
 		/* TODO: add armor support */
 		if (csi.ids[container].armor) {
 		} else
 #endif
-			/* if  single container (hands) */
+
+		/* if  single container (hands) */
 		if (csi.ids[container].single) {
 			/* if container is free or the dragged-item is in it */
 			if (node->mousefx == dragFrom || Com_CheckToInventory(inv, item, container, 0, 0))
-				MN_DrawFree(node->pos[0], node->pos[1], node->size[0], node->size[1]);
+				MN_DrawFree(container, node, node->pos[0], node->pos[1], node->size[0], node->size[1], qtrue);
 		} else {
+			memset(free, 0, sizeof(free));
 			for (y = 0; y < 16; y++) {
 				for (x = 0; x < 32; x++) {
 					/* Check if the current position is useable (topleft of the item) */
@@ -540,8 +554,10 @@ static void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
 					}
 					/* Only draw on existing positions */
 					if (Com_CheckShape(csi.ids[container].shape, x, y)) {
-						if (Com_CheckShape(free, x, y))
-							MN_DrawFree(node->pos[0] + x * C_UNIT, node->pos[1] + y * C_UNIT, C_UNIT, C_UNIT);
+						if (Com_CheckShape(free, x, y)) {
+							MN_DrawFree(container, node, node->pos[0] + x * C_UNIT, node->pos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
+							showTUs = qfalse;
+						}
 					}
 				}	/* for x */
 			}	/* for y */
@@ -1640,7 +1656,7 @@ void MN_DrawMenus(void)
 		menu = menuStack[sp++];
 		/* event node */
 		if (menu->eventNode) {
-			if (!menu->eventTime || (menu->eventTime + menu->eventNode->timeOut < cls.realtime)) {
+			if (menu->eventNode->timeOut == 1 || (!menu->eventTime || (menu->eventTime + menu->eventNode->timeOut < cls.realtime))) {
 				menu->eventTime = cls.realtime;
 				MN_ExecuteActions(menu, menu->eventNode->click);
 #ifdef DEBUG
