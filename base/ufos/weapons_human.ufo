@@ -31,45 +31,48 @@ item assault_ammo
 	price		130
 	buytype		0
 
-	primary
+	weapon assault
 	{
-		name	"_Snap Burst"
-		skill	assault
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/assault.wav
-		speed	0
-		spread	"1.4 1.4"
-		modif	0.7
-		crouch	0.7
-		range	60
-		shots	3
-		ammo	3
-		rof		5
-		time	15
-		damage	"37 0"
-		dmgtype normal
-	}
-	secondary
-	{
-		name	"_Aimed Burst"
-		skill	assault
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/assault.wav
-		speed	0
-		spread	"0.8 0.8"
-		modif	0.7
-		crouch	0.6
-		range	60
-		shots	3
-		ammo	3
-		rof		10
-		time	18
-		damage	"37 0"
-		dmgtype normal
+		firedef 
+		{
+			name	"_Snap Burst"
+			skill	assault
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/assault.wav
+			speed	0
+			spread	"1.4 1.4"
+			modif	0.7
+			crouch	0.7
+			range	60
+			shots	3
+			ammo	3
+			rof		5
+			time	15
+			damage	"37 0"
+			dmgtype normal
+		}
+		firedef
+		{
+			name	"_Aimed Burst"
+			skill	assault
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/assault.wav
+			speed	0
+			spread	"0.8 0.8"
+			modif	0.7
+			crouch	0.6
+			range	60
+			shots	3
+			ammo	3
+			rof		10
+			time	18
+			damage	"37 0"
+			dmgtype normal
+		}
 	}
 }
 
@@ -107,43 +110,46 @@ item chaingun_ammo
 	price		300
 	buytype		0
 
-	primary
+	weapon chaingun
 	{
-		name	"_Burst"
-		skill	heavy
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/chaingun.wav
-		speed	0
-		spread	"0 2"
-		crouch	0.7
-		range	60
-		shots	3
-		ammo	3
-		rof		5
-		time	7
-		damage	"20 5"
-		dmgtype normal
-	}
-	secondary
-	{
-		name	"_Auto"
-		skill	heavy
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/chaingun.wav
-		speed	0
-		spread	"1 2"
-		crouch	0.6
-		range	60
-		shots	9
-		ammo	9
-		rof		10
-		time	9
-		damage	"20 5"
-		dmgtype normal
+		firedef 
+		{
+			name	"_Burst"
+			skill	heavy
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/chaingun.wav
+			speed	0
+			spread	"0 2"
+			crouch	0.7
+			range	60
+			shots	3
+			ammo	3
+			rof		5
+			time	7
+			damage	"20 5"
+			dmgtype normal
+		}
+		firedef
+		{
+			name	"_Auto"
+			skill	heavy
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/chaingun.wav
+			speed	0
+			spread	"1 2"
+			crouch	0.6
+			range	60
+			shots	9
+			ammo	9
+			rof		10
+			time	9
+			damage	"20 5"
+			dmgtype normal
+		}
 	}
 }
 
@@ -180,43 +186,46 @@ item sniper_ammo
 	price		190
 	buytype		0
 
-	primary
+	weapon sniper
 	{
-		name	"_Aimed Shot"
-		skill	sniper
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/sniper.wav
-		speed	0
-		spread	"0.1 0.1"
-		modif	1.7
-		crouch	0.7
-		range	250
-		shots	1
-		ammo	1
-		time	18
-		damage	"105 0"
-		dmgtype normal
-	}
-	secondary
-	{
-		name	"_Aimed Shot"
-		skill	sniper
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/sniper.wav
-		speed	0
-		spread	"0.1 0.1"
-		modif	1.7
-		crouch	0.7
-		range	250
-		shots	1
-		ammo	1
-		time	18
-		damage	"105 0"
-		dmgtype normal
+		firedef 
+		{
+			name	"_Aimed Shot"
+			skill	sniper
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/sniper.wav
+			speed	0
+			spread	"0.1 0.1"
+			modif	1.7
+			crouch	0.7
+			range	250
+			shots	1
+			ammo	1
+			time	18
+			damage	"105 0"
+			dmgtype normal
+		}
+		firedef
+		{
+			name	"_Aimed Shot"
+			skill	sniper
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/sniper.wav
+			speed	0
+			spread	"0.1 0.1"
+			modif	1.7
+			crouch	0.7
+			range	250
+			shots	1
+			ammo	1
+			time	18
+			damage	"105 0"
+			dmgtype normal
+		}
 	}
 }
 
@@ -254,43 +263,46 @@ item pistol_ammo
 	price		20
 	buytype		1
 
-	primary
+	weapon pistol
 	{
-		name	"_Snap Shot"
-		skill	close
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/pistol.wav
-		speed	0
-		spread	"2.2 2.2"
-		crouch	0.9
-		range	40
-		shots	1
-		ammo	1
-		time	6
-		damage	"37 0"
-		dmgtype normal
-	}
-	secondary
-	{
-		name	"_Aimed Shot"
-		skill	close
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/pistol.wav
-		speed	0
-		spread	"1.2 1.2"
-		modif	0.7
-		crouch	0.9
-		range	40
-		shots	1
-		ammo	1
-		rof		10
-		time	8
-		damage	"37 0"
-		dmgtype normal
+		firedef 
+		{
+			name	"_Snap Shot"
+			skill	close
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/pistol.wav
+			speed	0
+			spread	"2.2 2.2"
+			crouch	0.9
+			range	40
+			shots	1
+			ammo	1
+			time	6
+			damage	"37 0"
+			dmgtype normal
+		}
+		firedef
+		{
+			name	"_Aimed Shot"
+			skill	close
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/pistol.wav
+			speed	0
+			spread	"1.2 1.2"
+			modif	0.7
+			crouch	0.9
+			range	40
+			shots	1
+			ammo	1
+			rof		10
+			time	8
+			damage	"37 0"
+			dmgtype normal
+		}
 	}
 }
 
@@ -327,42 +339,45 @@ item pistol2_ammo
 	price		20
 	buytype		1
 
-	primary
+	weapon pistol2
 	{
-		name	"_Single Shot"
-		skill	close
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/pistol.wav
-		speed	0
-		spread	"0 1"
-		crouch	0.9
-		range	40
-		shots	1
-		ammo	1
-		time	5
-		damage	"20 5"
-		dmgtype normal
-	}
-	secondary
-	{
-		name	"_Rapid Fire"
-		skill	close
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/pistol.wav
-		speed	0
-		spread	"1 2"
-		crouch	0.9
-		range	40
-		shots	3
-		ammo	3
-		rof		10
-		time	7
-		damage	"20 5"
-		dmgtype normal
+		firedef 
+		{
+			name	"_Single Shot"
+			skill	close
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/pistol.wav
+			speed	0
+			spread	"0 1"
+			crouch	0.9
+			range	40
+			shots	1
+			ammo	1
+			time	5
+			damage	"20 5"
+			dmgtype normal
+		}
+		firedef
+		{
+			name	"_Rapid Fire"
+			skill	close
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/pistol.wav
+			speed	0
+			spread	"1 2"
+			crouch	0.9
+			range	40
+			shots	3
+			ammo	3
+			rof		10
+			time	7
+			damage	"20 5"
+			dmgtype normal
+		}
 	}
 }
 
@@ -400,44 +415,47 @@ item smg_ammo
 	price		40
 	buytype		1
 
-	primary
+	weapon smg
 	{
-		name	"_Snap Burst"
-		skill	assault
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/smg.wav
-		speed	0
-		spread	"2.7 2.7"
-		crouch	0.7
-		range	60
-		shots	3
-		ammo	3
-		rof		10
-		time	9
-		damage	"25 0"
-		dmgtype normal
-	}
-	secondary
-	{
-		name	"_Aimed Burst"
-		skill	assault
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/smg.wav
-		speed	0
-		spread	"1.6 1.6"
-		modif	0.1
-		crouch	0.7
-		range	60
-		shots	3
-		ammo	3
-		rof		10
-		time	12
-		damage	"25 0"
-		dmgtype normal
+		firedef 
+		{
+			name	"_Snap Burst"
+			skill	assault
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/smg.wav
+			speed	0
+			spread	"2.7 2.7"
+			crouch	0.7
+			range	60
+			shots	3
+			ammo	3
+			rof		10
+			time	9
+			damage	"25 0"
+			dmgtype normal
+		}
+		firedef
+		{
+			name	"_Aimed Burst"
+			skill	assault
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/smg.wav
+			speed	0
+			spread	"1.6 1.6"
+			modif	0.1
+			crouch	0.7
+			range	60
+			shots	3
+			ammo	3
+			rof		10
+			time	12
+			damage	"25 0"
+			dmgtype normal
+		}
 	}
 }
 
@@ -532,46 +550,49 @@ item shotgun2_slug_ammo
 	price		35
 	buytype		0
 
-	primary
+	weapon shotgun2
 	{
-		name	"_Single Shot"
-		skill	heavy
-		projtl	null
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/shotgun.wav
-		sndonce true
-		speed	0
-		spread	"3.6 3.6"
-		crouch	1.0
-		range	60
-		shots	10
-		ammo	1
-		rof		0
-		time	12
-		damage	"11 0"
-		dmgtype blast
-	}
+		firedef 
+		{
+			name	"_Single Shot"
+			skill	heavy
+			projtl	null
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/shotgun.wav
+			sndonce true
+			speed	0
+			spread	"3.6 3.6"
+			crouch	1.0
+			range	60
+			shots	10
+			ammo	1
+			rof		0
+			time	12
+			damage	"11 0"
+			dmgtype blast
+		}
 
-	secondary
-	{
-		name	"_Double Shot"
-		skill	heavy
-		projtl	null
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/shotgun.wav
-		sndonce true
-		speed	0
-		spread	"5.5 5.5"
-		crouch	1.0
-		range	60
-		shots	16
-		ammo	2
-		rof		0
-		time	17
-		damage	"11 0"
-		dmgtype blast
+		firedef
+		{
+			name	"_Double Shot"
+			skill	heavy
+			projtl	null
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/shotgun.wav
+			sndonce true
+			speed	0
+			spread	"5.5 5.5"
+			crouch	1.0
+			range	60
+			shots	16
+			ammo	2
+			rof		0
+			time	17
+			damage	"11 0"
+			dmgtype blast
+		}
 	}
 }
 
@@ -609,46 +630,49 @@ item shotgun_ammo
 	price		35
 	buytype		0
 
-	primary
+	weapon shotgun
 	{
-		name	"_Single Shot"
-		skill	heavy
-		projtl	null
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/shotgun.wav
-		sndonce true
-		speed	0
-		spread	"3.6 3.6"
-		crouch	1.0
-		range	60
-		shots	10
-		ammo	1
-		rof		0
-		time	12
-		damage	"11 0"
-		dmgtype blast
-	}
+		firedef 
+		{
+			name	"_Single Shot"
+			skill	heavy
+			projtl	null
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/shotgun.wav
+			sndonce true
+			speed	0
+			spread	"3.6 3.6"
+			crouch	1.0
+			range	60
+			shots	10
+			ammo	1
+			rof		0
+			time	12
+			damage	"11 0"
+			dmgtype blast
+		}
 
-	secondary
-	{
-		name	"_Double Shot"
-		skill	heavy
-		projtl	null
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/shotgun.wav
-		sndonce true
-		speed	0
-		spread	"5.5 5.5"
-		crouch	1.0
-		range	60
-		shots	16
-		ammo	2
-		rof		0
-		time	17
-		damage	"11 0"
-		dmgtype blast
+		firedef
+		{
+			name	"_Double Shot"
+			skill	heavy
+			projtl	null
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/shotgun.wav
+			sndonce true
+			speed	0
+			spread	"5.5 5.5"
+			crouch	1.0
+			range	60
+			shots	16
+			ammo	2
+			rof		0
+			time	17
+			damage	"11 0"
+			dmgtype blast
+		}
 	}
 }
 
@@ -686,46 +710,94 @@ item shotgun_micro_ammo
 	price		35
 	buytype		1
 
-	primary
+	weapon shotgun_micro
 	{
-		name	"_Single Shot"
-		skill	heavy
-		projtl	null
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/shotgunmicro.wav
-		sndonce true
-		speed	0
-		spread	"4 0"
-		crouch	1.0
-		range	60
-		shots	6
-		ammo	1
-		rof		0
-		time	4
-		damage	"6 2"
-		dmgtype blast
+		firedef 
+		{
+			name	"_Single Shot"
+			skill	heavy
+			projtl	null
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/shotgunmicro.wav
+			sndonce true
+			speed	0
+			spread	"4 0"
+			crouch	1.0
+			range	60
+			shots	6
+			ammo	1
+			rof		0
+			time	4
+			damage	"6 2"
+			dmgtype blast
+		}
+
+		firedef
+		{
+			name	"_Double Shot"
+			skill	heavy
+			projtl	null
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/shotgunmicro.wav
+			sndonce true
+			speed	0
+			spread	"5 0"
+			crouch	1.0
+			range	40
+			shots	12
+			ammo	2
+			rof		0
+			time	7
+			damage	"6 2"
+			dmgtype blast
+		}
 	}
 
-	secondary
+	weapon shotgun2
 	{
-		name	"_Double Shot"
-		skill	heavy
-		projtl	null
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/shotgunmicro.wav
-		sndonce true
-		speed	0
-		spread	"5 0"
-		crouch	1.0
-		range	40
-		shots	12
-		ammo	2
-		rof		0
-		time	7
-		damage	"6 2"
-		dmgtype blast
+		firedef 
+		{
+			name	"_Single Shot"
+			skill	heavy
+			projtl	null
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/shotgun.wav
+			sndonce true
+			speed	0
+			spread	"3.6 3.6"
+			crouch	1.0
+			range	60
+			shots	10
+			ammo	1
+			rof		0
+			time	12
+			damage	"11 0"
+			dmgtype blast
+		}
+
+		firedef
+		{
+			name	"_Double Shot"
+			skill	heavy
+			projtl	null
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/shotgun.wav
+			sndonce true
+			speed	0
+			spread	"5.5 5.5"
+			crouch	1.0
+			range	60
+			shots	16
+			ammo	2
+			rof		0
+			time	17
+			damage	"11 0"
+			dmgtype blast
+		}
 	}
 }
 
@@ -762,45 +834,48 @@ item flamer_ammo
 	price		270
 	buytype		0
 
-	primary
+	weapon flamer
 	{
-		name	"_Candlelight"
-		skill	heavy
-		projtl	fireBall
-		impact	fireImpact
-		hitbody burning
-		firesnd	weapons/flamer_s.wav
-		sndonce true
-		speed	500
-		spread	"3 1"
-		crouch  1.0
-		range	8
-		shots	15
-		ammo	1
-		rof		25
-		time	8
-		damage	"6 2"
-		dmgtype fire
-	}
-	secondary
-	{
-		name	"_Inferno"
-		skill	heavy
-		projtl	fireBall
-		impact	fireImpact
-		hitbody burning
-		firesnd	weapons/flamer_l.wav
-		sndonce true
-		speed	500
-		spread	"4 1"
-		crouch  1.0
-		range	8
-		shots	30
-		ammo	2
-		rof		25
-		time	10
-		damage	"6 2"
-		dmgtype fire
+		firedef 
+		{
+			name	"_Candlelight"
+			skill	heavy
+			projtl	fireBall
+			impact	fireImpact
+			hitbody burning
+			firesnd	weapons/flamer_s.wav
+			sndonce true
+			speed	500
+			spread	"3 1"
+			crouch  1.0
+			range	8
+			shots	15
+			ammo	1
+			rof		25
+			time	8
+			damage	"6 2"
+			dmgtype fire
+		}
+		firedef
+		{
+			name	"_Inferno"
+			skill	heavy
+			projtl	fireBall
+			impact	fireImpact
+			hitbody burning
+			firesnd	weapons/flamer_l.wav
+			sndonce true
+			speed	500
+			spread	"4 1"
+			crouch  1.0
+			range	8
+			shots	30
+			ammo	2
+			rof		25
+			time	10
+			damage	"6 2"
+			dmgtype fire
+		}
 	}
 }
 
@@ -838,49 +913,52 @@ item rpg_ammo
 	price		430
 	buytype		0
 
-	primary
+	weapon rpg
 	{
-		name	"_Aimed Shot"
-		skill	explosive
-		projtl	rocket
-		impact	explosion
-		hitbody explosion
-		firesnd	weapons/rpg.wav
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		speed	250
-		spread	"0.2 0.6"
-		crouch	0.6
-		range	250
-		shots	1
-		ammo	1
-		time	14
-		damage	"120 30"
-		spldmg	"240 60"
-		splrad	4
-		dmgtype blast
-	}
-	secondary
-	{
-		name	"_Aimed Shot"
-		skill	explosive
-		projtl	rocket
-		impact	explosion
-		hitbody explosion
-		firesnd	weapons/rpg.wav
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		speed	250
-		spread	"0.2 0.6"
-		crouch	0.6
-		range	250
-		shots	1
-		ammo	1
-		time	14
-		damage	"120 30"
-		spldmg	"240 60"
-		splrad	4
-		dmgtype blast
+		firedef 
+		{
+			name	"_Aimed Shot"
+			skill	explosive
+			projtl	rocket
+			impact	explosion
+			hitbody explosion
+			firesnd	weapons/rpg.wav
+			impsnd	misc/big_boom.wav
+			bodysnd	misc/big_boom.wav
+			speed	250
+			spread	"0.2 0.6"
+			crouch	0.6
+			range	250
+			shots	1
+			ammo	1
+			time	14
+			damage	"120 30"
+			spldmg	"240 60"
+			splrad	4
+			dmgtype blast
+		}
+		firedef
+		{
+			name	"_Aimed Shot"
+			skill	explosive
+			projtl	rocket
+			impact	explosion
+			hitbody explosion
+			firesnd	weapons/rpg.wav
+			impsnd	misc/big_boom.wav
+			bodysnd	misc/big_boom.wav
+			speed	250
+			spread	"0.2 0.6"
+			crouch	0.6
+			range	250
+			shots	1
+			ammo	1
+			time	14
+			damage	"120 30"
+			spldmg	"240 60"
+			splrad	4
+			dmgtype blast
+		}
 	}
 }
 
@@ -896,49 +974,52 @@ item rpg_incendiary_ammo
 	price		630
 	buytype		0
 
-	primary
+	weapon rpg
 	{
-		name	"_Aimed Shot"
-		skill	explosive
-		projtl	rocket_inc
-		impact	fire_explosion
-		hitbody fire_explosion
-		firesnd	weapons/rpg.wav
-		impsnd	weapons/incendiary_rocket.wav
-		bodysnd	weapons/incendiary_rocket.wav
-		speed	250
-		spread	"0.2 0.6"
-		crouch	0.6
-		range	250
-		shots	1
-		ammo	1
-		time	14
-		damage	"60 30"
-		spldmg	"120 30"
-		splrad	2
-		dmgtype fire
-	}
-	secondary
-	{
-		name	"_Aimed Shot"
-		skill	explosive
-		projtl	rocket_inc
-		impact	fire_explosion
-		hitbody fire_explosion
-		firesnd	weapons/rpg.wav
-		impsnd	weapons/incendiary_rocket.wav
-		bodysnd	weapons/incendiary_rocket.wav
-		speed	250
-		spread	"0.2 0.6"
-		crouch	0.6
-		range	250
-		shots	1
-		ammo	1
-		time	14
-		damage	"60 30"
-		spldmg	"120 30"
-		splrad	2
-		dmgtype fire
+		firedef 
+		{
+			name	"_Aimed Shot"
+			skill	explosive
+			projtl	rocket_inc
+			impact	fire_explosion
+			hitbody fire_explosion
+			firesnd	weapons/rpg.wav
+			impsnd	weapons/incendiary_rocket.wav
+			bodysnd	weapons/incendiary_rocket.wav
+			speed	250
+			spread	"0.2 0.6"
+			crouch	0.6
+			range	250
+			shots	1
+			ammo	1
+			time	14
+			damage	"60 30"
+			spldmg	"120 30"
+			splrad	2
+			dmgtype fire
+		}
+		firedef
+		{
+			name	"_Aimed Shot"
+			skill	explosive
+			projtl	rocket_inc
+			impact	fire_explosion
+			hitbody fire_explosion
+			firesnd	weapons/rpg.wav
+			impsnd	weapons/incendiary_rocket.wav
+			bodysnd	weapons/incendiary_rocket.wav
+			speed	250
+			spread	"0.2 0.6"
+			crouch	0.6
+			range	250
+			shots	1
+			ammo	1
+			time	14
+			damage	"60 30"
+			spldmg	"120 30"
+			splrad	2
+			dmgtype fire
+		}
 	}
 }
 
@@ -955,49 +1036,52 @@ item rpg_tachyon_ammo
 	price	2740
 	buytype	0
 
-	primary
+	weapon rpg
 	{
-		name	"_Aimed Shot"
-		skill	explosive
-		projtl	rocket_tachyon
-		impact	tachyonBigImpact
-		hitbody	tachyonBigImpact
-		firesnd	weapons/rpg.wav
-		impsnd	weapons/tachyon_beam_rocket.wav
-		bodysnd	weapons/tachyon_beam_rocket.wav
-		speed	250
-		spread	"0.2 0.6"
-		crouch	0.6
-		range	250
-		shots	1
-		ammo	1
-		time	14
-		damage	"60 60"
-		spldmg	"420 30"
-		splrad	3
-		dmgtype	tachyon
-	}
-	secondary
-	{
-		name	"_Aimed Shot"
-		skill	explosive
-		projtl	rocket_tachyon
-		impact	tachyonBigImpact
-		hitbody	tachyonBigImpact
-		firesnd	weapons/rpg.wav
-		impsnd	weapons/tachyon_beam_rocket.wav
-		bodysnd	weapons/tachyon_beam_rocket.wav
-		speed	250
-		spread	"0.2 0.6"
-		crouch	0.6
-		range	250
-		shots	1
-		ammo	1
-		time	14
-		damage	"60 60"
-		spldmg	"420 30"
-		splrad	3
-		dmgtype	tachyon
+		firedef 
+		{
+			name	"_Aimed Shot"
+			skill	explosive
+			projtl	rocket_tachyon
+			impact	tachyonBigImpact
+			hitbody	tachyonBigImpact
+			firesnd	weapons/rpg.wav
+			impsnd	weapons/tachyon_beam_rocket.wav
+			bodysnd	weapons/tachyon_beam_rocket.wav
+			speed	250
+			spread	"0.2 0.6"
+			crouch	0.6
+			range	250
+			shots	1
+			ammo	1
+			time	14
+			damage	"60 60"
+			spldmg	"420 30"
+			splrad	3
+			dmgtype	tachyon
+		}
+		firedef
+		{
+			name	"_Aimed Shot"
+			skill	explosive
+			projtl	rocket_tachyon
+			impact	tachyonBigImpact
+			hitbody	tachyonBigImpact
+			firesnd	weapons/rpg.wav
+			impsnd	weapons/tachyon_beam_rocket.wav
+			bodysnd	weapons/tachyon_beam_rocket.wav
+			speed	250
+			spread	"0.2 0.6"
+			crouch	0.6
+			range	250
+			shots	1
+			ammo	1
+			time	14
+			damage	"60 60"
+			spldmg	"420 30"
+			splrad	3
+			dmgtype	tachyon
+		}
 	}
 }
 */
@@ -1035,56 +1119,59 @@ item grenl_incendiary_ammo
 	price		135
 	buytype		0
 
-	primary
+	weapon grenl
 	{
-		name	"_Airburst Grenade"
-		skill	explosive
-		projtl	grenl_ammo
-		impact	frag_explosion
-		hitbody frag_explosion
-		firesnd	weapons/grenade_launcher.wav
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		launched true
-		spread	"0 3"
-		range	15
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		damage	"20 10"
-		spldmg	"70 20"
-		splrad	4
-		dmgtype blast
-	}
+		firedef 
+		{
+			name	"_Airburst Grenade"
+			skill	explosive
+			projtl	grenl_ammo
+			impact	frag_explosion
+			hitbody frag_explosion
+			firesnd	weapons/grenade_launcher.wav
+			impsnd	misc/big_boom.wav
+			bodysnd	misc/big_boom.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			launched true
+			spread	"0 3"
+			range	15
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			damage	"20 10"
+			spldmg	"70 20"
+			splrad	4
+			dmgtype blast
+		}
 
-	secondary
-	{
-		name	"_Timed Grenade"
-		skill	explosive
-		projtl	grenl_ammo
-		impact	frag_explosion
-		hitbody frag_explosion
-		firesnd	weapons/grenade_launcher.wav
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		launched true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"0 3"
-		range	15
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"70 20"
-		splrad	4
-		dmgtype blast
+		firedef
+		{
+			name	"_Timed Grenade"
+			skill	explosive
+			projtl	grenl_ammo
+			impact	frag_explosion
+			hitbody frag_explosion
+			firesnd	weapons/grenade_launcher.wav
+			impsnd	misc/big_boom.wav
+			bodysnd	misc/big_boom.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			launched true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"0 3"
+			range	15
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"70 20"
+			splrad	4
+			dmgtype blast
+		}
 	}
 }
 
@@ -1100,56 +1187,59 @@ item grenl_fle_ammo
 	price		135
 	buytype		0
 
-	primary
+	weapon grenl
 	{
-		name	"_Airburst Grenade"
-		skill	explosive
-		projtl	grenl_ammo
-		impact	frag_explosion
-		hitbody frag_explosion
-		firesnd	weapons/grenade_launcher.wav
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		launched true
-		spread	"0 3"
-		range	15
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		damage	"20 10"
-		spldmg	"70 20"
-		splrad	4
-		dmgtype blast
-	}
+		firedef 
+		{
+			name	"_Airburst Grenade"
+			skill	explosive
+			projtl	grenl_ammo
+			impact	frag_explosion
+			hitbody frag_explosion
+			firesnd	weapons/grenade_launcher.wav
+			impsnd	misc/big_boom.wav
+			bodysnd	misc/big_boom.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			launched true
+			spread	"0 3"
+			range	15
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			damage	"20 10"
+			spldmg	"70 20"
+			splrad	4
+			dmgtype blast
+		}
 
-	secondary
-	{
-		name	"_Timed Grenade"
-		skill	explosive
-		projtl	grenl_ammo
-		impact	frag_explosion
-		hitbody frag_explosion
-		firesnd	weapons/grenade_launcher.wav
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		launched true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"0 3"
-		range	15
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"70 20"
-		splrad	4
-		dmgtype blast
+		firedef
+		{
+			name	"_Timed Grenade"
+			skill	explosive
+			projtl	grenl_ammo
+			impact	frag_explosion
+			hitbody frag_explosion
+			firesnd	weapons/grenade_launcher.wav
+			impsnd	misc/big_boom.wav
+			bodysnd	misc/big_boom.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			launched true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"0 3"
+			range	15
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"70 20"
+			splrad	4
+			dmgtype blast
+		}
 	}
 }
 
@@ -1165,56 +1255,59 @@ item grenl_ammo
 	price		135
 	buytype		0
 
-	primary
+	weapon grenl
 	{
-		name	"_Airburst Grenade"
-		skill	explosive
-		projtl	grenl_ammo
-		impact	frag_explosion
-		hitbody frag_explosion
-		firesnd	weapons/grenade_launcher.wav
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		launched true
-		spread	"0 3"
-		range	15
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		damage	"20 10"
-		spldmg	"70 20"
-		splrad	4
-		dmgtype blast
-	}
+		firedef 
+		{
+			name	"_Airburst Grenade"
+			skill	explosive
+			projtl	grenl_ammo
+			impact	frag_explosion
+			hitbody frag_explosion
+			firesnd	weapons/grenade_launcher.wav
+			impsnd	misc/big_boom.wav
+			bodysnd	misc/big_boom.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			launched true
+			spread	"0 3"
+			range	15
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			damage	"20 10"
+			spldmg	"70 20"
+			splrad	4
+			dmgtype blast
+		}
 
-	secondary
-	{
-		name	"_Timed Grenade"
-		skill	explosive
-		projtl	grenl_ammo
-		impact	frag_explosion
-		hitbody frag_explosion
-		firesnd	weapons/grenade_launcher.wav
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		launched true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"0 3"
-		range	15
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"70 20"
-		splrad	4
-		dmgtype blast
+		firedef
+		{
+			name	"_Timed Grenade"
+			skill	explosive
+			projtl	grenl_ammo
+			impact	frag_explosion
+			hitbody frag_explosion
+			firesnd	weapons/grenade_launcher.wav
+			impsnd	misc/big_boom.wav
+			bodysnd	misc/big_boom.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			launched true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"0 3"
+			range	15
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"70 20"
+			splrad	4
+			dmgtype blast
+		}
 	}
 }
 
@@ -1230,56 +1323,59 @@ item grenl_plasma_ammo
 	price		530
 	buytype		0
 
-	primary
+	weapon grenl
 	{
-		name	"_Airburst Grenade"
-		skill	explosive
-		projtl	grenl_plasma_ammo
-		impact	plasmaBigExplosion
-		hitbody plasmaBigExplosion
-		firesnd	weapons/grenade_launcher.wav
-		impsnd	weapons/plasma_grenade.wav
-		bodysnd	weapons/plasma_grenade.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		launched true
-		spread	"0 3"
-		range	15
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		damage	"20 10"
-		spldmg	"100 20"
-		splrad	5
-		dmgtype plasma
-	}
+		firedef 
+		{
+			name	"_Airburst Grenade"
+			skill	explosive
+			projtl	grenl_plasma_ammo
+			impact	plasmaBigExplosion
+			hitbody plasmaBigExplosion
+			firesnd	weapons/grenade_launcher.wav
+			impsnd	weapons/plasma_grenade.wav
+			bodysnd	weapons/plasma_grenade.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			launched true
+			spread	"0 3"
+			range	15
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			damage	"20 10"
+			spldmg	"100 20"
+			splrad	5
+			dmgtype plasma
+		}
 
-	secondary
-	{
-		name	"_Timed Grenade"
-		skill	explosive
-		projtl	grenl_plasma_ammo
-		impact	plasmaBigExplosion
-		hitbody plasmaBigExplosion
-		firesnd	weapons/grenade_launcher.wav
-		impsnd	weapons/plasma_grenade.wav
-		bodysnd	weapons/plasma_grenade.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		launched true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"0 3"
-		range	15
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"100 20"
-		splrad	5
-		dmgtype plasma
+		firedef
+		{
+			name	"_Timed Grenade"
+			skill	explosive
+			projtl	grenl_plasma_ammo
+			impact	plasmaBigExplosion
+			hitbody plasmaBigExplosion
+			firesnd	weapons/grenade_launcher.wav
+			impsnd	weapons/plasma_grenade.wav
+			bodysnd	weapons/plasma_grenade.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			launched true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"0 3"
+			range	15
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"100 20"
+			splrad	5
+			dmgtype plasma
+		}
 	}
 }
 
@@ -1317,42 +1413,45 @@ item bolterrifle_ammo
 	price           930
 	buytype         0
 
-	primary
+	weapon grenl
 	{
-		name    "_Single Shot"
-		skill   heavy
-		projtl  bullet
-		impact  bulletImpact
-		hitbody blood
-		firesnd weapons/bolter.wav
-		speed   0
-		spread  "0 2"
-		crouch  0.8
-		range	250
-		shots   1
-		ammo    1
-		time    8
-		damage  "80 5"
-		dmgtype normal
-	}
+		firedef 
+		{
+			name    "_Single Shot"
+			skill   heavy
+			projtl  bullet
+			impact  bulletImpact
+			hitbody blood
+			firesnd weapons/bolter.wav
+			speed   0
+			spread  "0 2"
+			crouch  0.8
+			range	250
+			shots   1
+			ammo    1
+			time    8
+			damage  "80 5"
+			dmgtype normal
+		}
 
-	secondary
-	{
-		name    "_Cannonade"
-		skill   heavy
-		projtl  bullet
-		impact  bulletImpact
-		hitbody blood
-		firesnd weapons/bolter2.wav
-		speed   0
-		spread  "2 3"
-		crouch  0.5
-		range	250
-		shots   3
-		ammo    3
-		rof     2
-		time    10
-		damage  "80 5"
-		dmgtype normal
+		firedef
+		{
+			name    "_Cannonade"
+			skill   heavy
+			projtl  bullet
+			impact  bulletImpact
+			hitbody blood
+			firesnd weapons/bolter2.wav
+			speed   0
+			spread  "2 3"
+			crouch  0.5
+			range	250
+			shots   3
+			ammo    3
+			rof     2
+			time    10
+			damage  "80 5"
+			dmgtype normal
+		}
 	}
 }

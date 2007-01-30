@@ -15,35 +15,38 @@ item medikit
 	buytype		2
 	thrown		true
 
-	primary
+	weapon medikit
 	{
-		name	"_Heal"
-		projtl	null
-		impact	null
-		hitbody null
-		firesnd	misc/klonk01.wav
-		speed	0
-		range	1.5
-		shots	1
-		time	20
-		damage	"-40 20"
-	}
-	secondary
-	{
-		name	"_Throw"
-		skill	close
-		projtl	medikit
-		impsnd	misc/klonk03.wav
-		bodysnd misc/klonk01.wav
-		gravity	true
-		speed	220
-		range	8
-		spread	"4 7"
-		shots	1
-		ammo	1
-		time	10
-		damage	"1 1"
-		dmgtype normal
+		firedef
+		{
+			name	"_Heal"
+			projtl	null
+			impact	null
+			hitbody null
+			firesnd	misc/klonk01.wav
+			speed	0
+			range	1.5
+			shots	1
+			time	20
+			damage	"-40 20"
+		}
+		firedef
+		{
+			name	"_Throw"
+			skill	close
+			projtl	medikit
+			impsnd	misc/klonk03.wav
+			bodysnd misc/klonk01.wav
+			gravity	true
+			speed	220
+			range	8
+			spread	"4 7"
+			shots	1
+			ammo	1
+			time	10
+			damage	"1 1"
+			dmgtype normal
+		}
 	}
 }
 
@@ -66,32 +69,35 @@ item irgoggles
 	thrown		true
 	headgear		true
 
-	primary
+	weapon irgoggles
 	{
-		name	"_Scan"
-		firesnd	misc/plopp03.wav
-		splrad	10
-		range	9.5
-		time	12
-		shots	1
-		irgoggles	true
-	}
-	secondary
-	{
-		name	"_Throw"
-		skill	close
-		projtl	irgoggles
-		impsnd	misc/klonk03.wav
-		bodysnd misc/klonk01.wav
-		gravity	true
-		speed	220
-		range	10
-		spread	"4 7"
-		shots	1
-		ammo	1
-		time	10
-		damage	"1 2"
-		dmgtype normal
+		firedef
+		{
+			name	"_Scan"
+			firesnd	misc/plopp03.wav
+			splrad	10
+			range	9.5
+			time	12
+			shots	1
+			irgoggles	true
+		}
+		firedef
+		{
+			name	"_Throw"
+			skill	close
+			projtl	irgoggles
+			impsnd	misc/klonk03.wav
+			bodysnd misc/klonk01.wav
+			gravity	true
+			speed	220
+			range	10
+			spread	"4 7"
+			shots	1
+			ammo	1
+			time	10
+			damage	"1 2"
+			dmgtype normal
+		}
 	}
 }
 
@@ -113,54 +119,57 @@ item fraggrenade
 	buytype		2
 	thrown		true
 
-	primary
+	weapon fraggrenade
 	{
-		name	"_Lob"
-		skill	explosive
-		projtl	fraggren
-		impact	frag_explosion
-		hitbody frag_explosion
-		impsnd	weapons/frag_grenade.wav
-		bodysnd	weapons/frag_grenade.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"2 6"
-		range	14
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"300 90"
-		splrad	6
-		dmgtype blast
-	}
-	secondary
-	{
-		name	"_Roll"
-		skill	explosive
-		projtl	fraggren
-		impact	frag_explosion
-		hitbody frag_explosion
-		impsnd	weapons/frag_grenade.wav
-		bodysnd	weapons/frag_grenade.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		rolled true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"2 6"
-		range	14
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"300 90"
-		splrad	6
-		dmgtype blast
+		firedef 
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	fraggren
+			impact	frag_explosion
+			hitbody frag_explosion
+			impsnd	weapons/frag_grenade.wav
+			bodysnd	weapons/frag_grenade.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	14
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"300 90"
+			splrad	6
+			dmgtype blast
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	fraggren
+			impact	frag_explosion
+			hitbody frag_explosion
+			impsnd	weapons/frag_grenade.wav
+			bodysnd	weapons/frag_grenade.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	14
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"300 90"
+			splrad	6
+			dmgtype blast
+		}
 	}
 }
 
@@ -182,54 +191,57 @@ item flashbang
 	buytype		2
 	thrown		true
 
-	primary
+	weapon flashbang
 	{
-		name	"_Lob"
-		skill	explosive
-		projtl	smokegren
-		impact	flash_explosion
-		hitbody flash_explosion
-		impsnd	weapons/flashbang.wav
-		bodysnd	weapons/flashbang.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	12
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"999 0"	// TODO: needed at all?
-		splrad	5
-		dmgtype shock
-	}
-	secondary
-	{
-		name	"_Roll"
-		skill	explosive
-		projtl	smokegren
-		impact	flash_explosion
-		hitbody flash_explosion
-		impsnd	weapons/flashbang.wav
-		bodysnd	weapons/flashbang.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		rolled true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	12
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"999 0"	// TODO: needed at all?
-		splrad	5
-		dmgtype shock
+		firedef 
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	smokegren
+			impact	flash_explosion
+			hitbody flash_explosion
+			impsnd	weapons/flashbang.wav
+			bodysnd	weapons/flashbang.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"7 7"
+			range	12
+			shots	1
+			ammo	1
+			rof		1
+			time	12
+			spldmg	"999 0"	// TODO: needed at all?
+			splrad	5
+			dmgtype shock
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	smokegren
+			impact	flash_explosion
+			hitbody flash_explosion
+			impsnd	weapons/flashbang.wav
+			bodysnd	weapons/flashbang.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"7 7"
+			range	12
+			shots	1
+			ammo	1
+			rof		1
+			time	12
+			spldmg	"999 0"	// TODO: needed at all?
+			splrad	5
+			dmgtype shock
+		}
 	}
 }
 
@@ -250,54 +262,57 @@ item smokegrenade
 	buytype		2
 	thrown		true
 
-	primary
+	weapon smokegrenade
 	{
-		name	"_Lob"
-		skill	explosive
-		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
-		impsnd	weapons/smoke_grenade.wav
-		bodysnd	weapons/smoke_grenade.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"2 6"
-		range	12
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"5 5"
-		splrad	6
-		dmgtype normal
-	}
-	secondary
-	{
-		name	"_Roll"
-		skill	explosive
-		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
-		impsnd	weapons/smoke_grenade.wav
-		bodysnd	weapons/smoke_grenade.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		rolled true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"2 6"
-		range	12
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"5 5"
-		splrad	6
-		dmgtype normal
+		firedef 
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	smokegren
+			impact	smoke_explosion
+			hitbody smoke_explosion
+			impsnd	weapons/smoke_grenade.wav
+			bodysnd	weapons/smoke_grenade.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"5 5"
+			splrad	6
+			dmgtype normal
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	smokegren
+			impact	smoke_explosion
+			hitbody smoke_explosion
+			impsnd	weapons/smoke_grenade.wav
+			bodysnd	weapons/smoke_grenade.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"5 5"
+			splrad	6
+			dmgtype normal
+		}
 	}
 }
 
@@ -318,54 +333,57 @@ item stungrenade
 	buytype		2
 	thrown		true
 
-	primary
+	weapon stungrenade
 	{
-		name	"_Lob"
-		skill	explosive
-		projtl	stungren
-		impact	coronaImpact
-		hitbody	coronaImpact
-		impsnd	weapons/stun_grenade.wav
-		bodysnd	weapons/stun_grenade.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"2 6"
-		range	12
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"150 60"
-		splrad	6
-		dmgtype stun
-	}
-	secondary
-	{
-		name	"_Roll"
-		skill	explosive
-		projtl	stungren
-		impact	coronaImpact
-		hitbody	coronaImpact
-		impsnd	weapons/stun_grenade.wav
-		bodysnd	weapons/stun_grenade.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		rolled true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"2 6"
-		range	12
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"150 60"
-		splrad	6
-		dmgtype stun
+		firedef 
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	stungren
+			impact	coronaImpact
+			hitbody	coronaImpact
+			impsnd	weapons/stun_grenade.wav
+			bodysnd	weapons/stun_grenade.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"150 60"
+			splrad	6
+			dmgtype stun
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	stungren
+			impact	coronaImpact
+			hitbody	coronaImpact
+			impsnd	weapons/stun_grenade.wav
+			bodysnd	weapons/stun_grenade.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"150 60"
+			splrad	6
+			dmgtype stun
+		}
 	}
 }
 
@@ -387,54 +405,57 @@ item incgrenade
 	buytype		2
 	thrown		true
 
-	primary
+	weapon incgrenade
 	{
-		name	"_Lob"
-		skill	explosive
-		projtl	incgren
-		impact	fire_explosion
-		hitbody fire_explosion
-		impsnd	weapons/incendiary_grenade.wav
-		bodysnd	weapons/incendiary_grenade.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"2 6"
-		range	12
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"210 60"
-		splrad	3
-		dmgtype "fire"
-	}
-	secondary
-	{
-		name	"_Roll"
-		skill	explosive
-		projtl	incgren
-		impact	fire_explosion
-		hitbody fire_explosion
-		impsnd	weapons/incendiary_grenade.wav
-		bodysnd	weapons/incendiary_grenade.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		rolled true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"2 6"
-		range	12
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"210 60"
-		splrad	3
-		dmgtype "fire"
+		firedef 
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	incgren
+			impact	fire_explosion
+			hitbody fire_explosion
+			impsnd	weapons/incendiary_grenade.wav
+			bodysnd	weapons/incendiary_grenade.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"210 60"
+			splrad	3
+			dmgtype "fire"
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	incgren
+			impact	fire_explosion
+			hitbody fire_explosion
+			impsnd	weapons/incendiary_grenade.wav
+			bodysnd	weapons/incendiary_grenade.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"210 60"
+			splrad	3
+			dmgtype "fire"
+		}
 	}
 }
 
@@ -455,54 +476,57 @@ item plasmagrenade
 	buytype		2
 	thrown		true
 
-	primary
+	weapon plasmagrenade
 	{
-		name	"_Lob"
-		skill	explosive
-		projtl	plasmagren
-		impact	plasmaBigExplosion
-		hitbody	plasmaBigExplosion
-		impsnd	weapons/plasma_grenade.wav
-		bodysnd	weapons/plasma_grenade.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"2 6"
-		range	12
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"420 60"
-		splrad	7
-		dmgtype "plasma"
-	}
-	secondary
-	{
-		name	"_Roll"
-		skill	explosive
-		projtl	plasmagren
-		impact	plasmaBigExplosion
-		hitbody	plasmaBigExplosion
-		impsnd	weapons/plasma_grenade.wav
-		bodysnd	weapons/plasma_grenade.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		rolled true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"2 6"
-		range	12
-		shots	1
-		ammo	1
-		rof		1
-		time	8
-		spldmg	"420 60"
-		splrad	7
-		dmgtype "plasma"
+		firedef 
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	plasmagren
+			impact	plasmaBigExplosion
+			hitbody	plasmaBigExplosion
+			impsnd	weapons/plasma_grenade.wav
+			bodysnd	weapons/plasma_grenade.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"420 60"
+			splrad	7
+			dmgtype "plasma"
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	plasmagren
+			impact	plasmaBigExplosion
+			hitbody	plasmaBigExplosion
+			impsnd	weapons/plasma_grenade.wav
+			bodysnd	weapons/plasma_grenade.wav
+			bncsnd	misc/klonk03.wav
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			rof		1
+			time	8
+			spldmg	"420 60"
+			splrad	7
+			dmgtype "plasma"
+		}
 	}
 }
 
