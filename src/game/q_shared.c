@@ -3907,7 +3907,7 @@ int INV_FiredefIDXForWeapon (objDef_t *od, int weapon_idx)
 		return 0;
 
 	for (i = 0; i < od->numWeapons; i++) {
-		if (weapon_idx == od->weap_idx)
+		if (weapon_idx == od->weap_idx[i])
 			return i;
 	}
 	return -1;

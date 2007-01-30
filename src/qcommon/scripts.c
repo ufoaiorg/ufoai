@@ -1195,15 +1195,18 @@ void Com_AddObjectLinks(void)
 {
 #ifndef DEDICATED_ONLY
 	objDef_t *od = NULL;
+	int i, j;
+#if 0
 	technology_t *tech = NULL;
 	technology_t *tech_weapon = NULL;
-	int i, j, k;
+	int k;
+#endif
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		/* Add links to weapons. */
 
 		for (j = 0; j < od->numWeapons; j++ ) {
-			od->weap_id[j] = RS_GetItem(od->weap_id[j]);
+			od->weap_idx[j] = RS_GetItem(od->weap_id[j]);
 		}
 #if 0
 		/* Add links to technologies. */
