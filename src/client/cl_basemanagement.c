@@ -1530,8 +1530,12 @@ static void CL_SwapSkills(character_t *team[], int num)
 		for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++) {
 			for (i1 = 0; i1 < num - 1; i1++) {
 				cp1 = team[i1];
-				weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp1)->item.m], RIGHT(cp1)->item.t);
-				weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp1)->item.m], HOLSTER(cp1)->item.t);
+				weaponr_fd_idx = -1;
+				weaponh_fd_idx = -1;
+				if (RIGHT(cp1) && RIGHT(cp1)->item.m != NONE && RIGHT(cp1)->item.t != NONE)
+					weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp1)->item.m], RIGHT(cp1)->item.t);
+				if (HOLSTER(cp1) && HOLSTER(cp1)->item.m != NONE && HOLSTER(cp1)->item.t != NONE)
+					weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp1)->item.m], HOLSTER(cp1)->item.t);
 				/* disregard left hand, or dual-wielding guys are too good */
 				no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][FD_PRIMARY].weaponSkill)
 					+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][FD_SECONDARY].weaponSkill)
@@ -1542,8 +1546,12 @@ static void CL_SwapSkills(character_t *team[], int num)
 
 				for (i2 = i1 + 1 ; i2 < num; i2++) {
 					cp2 = team[i2];
-					weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp2)->item.m], RIGHT(cp2)->item.t);
-					weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp2)->item.m], HOLSTER(cp2)->item.t);
+					weaponr_fd_idx = -1;
+					weaponh_fd_idx = -1;
+					if (RIGHT(cp2) && RIGHT(cp2)->item.m != NONE && RIGHT(cp2)->item.t != NONE)
+						weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp2)->item.m], RIGHT(cp2)->item.t);
+					if (HOLSTER(cp2) && HOLSTER(cp2)->item.m != NONE && HOLSTER(cp2)->item.t != NONE)
+						weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp2)->item.m], HOLSTER(cp2)->item.t);
 					no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][FD_PRIMARY].weaponSkill) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 						+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][FD_SECONDARY].weaponSkill) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 						+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload

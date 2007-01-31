@@ -437,7 +437,9 @@ static void CL_RefreshWeaponButtons(int time)
 		SetWeaponButton(BT_LEFT_RELOAD, qtrue);
 
 	/* Weapon firing buttons */
-	weapon_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t);
+	weapon_fd_idx  = -1;
+	if (weaponr && weaponr->item.m != NONE && weaponr->item.m != NONE)
+		weapon_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t);
 	if ( !weaponr || weaponr->item.m == NONE 
 		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a <= 0)
 		 || time < csi.ods[weaponr->item.m].fd[weapon_fd_idx][FD_PRIMARY].time
@@ -454,7 +456,9 @@ static void CL_RefreshWeaponButtons(int time)
 	else
 		SetWeaponButton(BT_RIGHT_SECONDARY, qtrue);
 
-	weapon_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t);
+	weapon_fd_idx  = -1;
+	if (weaponl && weaponl->item.m != NONE && weaponl->item.m != NONE)
+		weapon_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t);
 	if ( !weaponl || weaponl->item.m == NONE
 		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a <= 0)
 		 || time < csi.ods[weaponl->item.m].fd[weapon_fd_idx][FD_PRIMARY].time )
