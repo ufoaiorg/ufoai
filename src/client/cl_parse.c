@@ -220,28 +220,32 @@ static qboolean parsedDeath = qfalse;
  */
 extern void CL_RegisterSounds (void)
 {
-	int		i, j;
+	int i, j, k;
 
 	S_BeginRegistration ();
 
 	/* load game sounds */
-	for (i=1 ; i<MAX_SOUNDS ; i++) {
+	for ( i=1; i < MAX_SOUNDS; i++ ) {
 		if (!cl.configstrings[CS_SOUNDS+i][0])
 			break;
 		cl.sound_precache[i] = S_RegisterSound (cl.configstrings[CS_SOUNDS+i]);
 		/* pump message loop */
 		Sys_SendKeyEvents ();
 	}
+
 	/* load weapon sounds */
-	for ( i = 0; i < csi.numODs; i++ )
-		for ( j = 0; j < 2; j++ ) {
-			if ( csi.ods[i].fd[0][j].fireSound[0] ) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
-				S_RegisterSound( csi.ods[i].fd[0][j].fireSound ); /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
-			if ( csi.ods[i].fd[0][j].impactSound[0] ) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
-				S_RegisterSound( csi.ods[i].fd[0][j].impactSound ); /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
-			/* pump message loop */
-			Sys_SendKeyEvents ();
+	for ( i = 0; i < csi.numODs; i++ ) { /* i = obj */
+		for (j = 0; j < csi.ods[i].numWeapons; j++ ) {	/* j = weapon-entry per obj */
+			for ( k = 0; k < csi.ods[i].numFiredefs[j]; j++ ) { /* k = firedef per wepaon */
+				if ( csi.ods[i].fd[j][k].fireSound[0] )
+					S_RegisterSound( csi.ods[i].fd[j][k].fireSound );
+				if ( csi.ods[i].fd[j][k].impactSound[0] )
+					S_RegisterSound( csi.ods[i].fd[j][k].impactSound );
+				/* pump message loop */
+				Sys_SendKeyEvents ();
+			}
 		}
+	}
 
 	S_EndRegistration ();
 }
