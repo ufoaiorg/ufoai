@@ -969,10 +969,6 @@ typedef struct objDef_s {
 	int price;			/**< the price for this item */
 	int buytype;		/**< In which category of the buy menu is this item listed. */
 
-#if 0
-	int forWeapon[MAX_TECHLINKS];	/**< Ammo-only: A list of weapons this ammo can be used in.
-						 * The information is taken from the "weapon" requirements in the technology. */
-#endif
 	/* Weapon specific */
 	int ammo;			/**< how much can we load into this weapon at once */
 	int reload;			/**< time units for reloading the weapon */
@@ -1327,7 +1323,7 @@ typedef enum {
 void Com_PrintItemDescription(int i);
 void Com_InventoryList_f(void);
 qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx);
-
+int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx);
 
 /* g_spawn.c */
 

@@ -2878,10 +2878,10 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 							primary =
 								/* to avoid two tachyon weapons */
 								!(CSI->ods[ammo].fd[0][0].dmgtype
-								== CSI->damTachyon) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+								== CSI->damTachyon)
 								/* to avoid SMG + Assault Rifle */
 								&& !(CSI->ods[ammo].fd[0][0].dmgtype
-									== CSI->damNormal); /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+									== CSI->damNormal); /* fd[0][0] Seems to be ok here since we just check the damage type and they are the same for all fds i've found. */
 						}
 						max_price = 0; /* one primary weapon is enough */
 						missed_primary = 0;
@@ -3895,7 +3895,7 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
  * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
  * @return int Returns the index in the fd array. -1 if the weapon-idx was not found. 0 if an invalid or unknown weapon idx was given.
  */
-int INV_FiredefIDXForWeapon (objDef_t *od, int weapon_idx)
+int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 {
 	int i;
 

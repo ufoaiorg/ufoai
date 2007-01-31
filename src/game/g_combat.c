@@ -846,6 +846,8 @@ static void G_GetShotOrigin(edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t 
  */
 qboolean G_GetShotFromType(edict_t *ent, int type, item_t **weapon, int *container, fireDef_t **fd)
 {
+	int weapon_fd_idx;
+
 	if (type >= ST_NUM_SHOOT_TYPES)
 		gi.error("G_GetShotFromType: unknown shoot type %i.\n", type);
 
@@ -865,8 +867,9 @@ qboolean G_GetShotFromType(edict_t *ent, int type, item_t **weapon, int *contain
 		*weapon = NULL;
 		return qfalse;
 	}
-
-	*fd = &gi.csi->ods[(*weapon)->m].fd[0][SHOT_FD_PRIO(type)]; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used */
+	weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->m], (*weapon)->t);
+	/* fd = od[weapon_fd_idx][firemodeidx] */
+	*fd = &gi.csi->ods[(*weapon)->m].fd[weapon_fd_idx][SHOT_FD_PRIO(type)];
 
 	return qtrue;
 }
@@ -1169,30 +1172,36 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
  */
 int G_GetFiringTUs(edict_t *ent, edict_t *target, int *hand)
 {
+	int weapon_fd_idx;
 	/* Fire the first weapon in hands if everything is ok. */
 	if ( RIGHT(ent)
-			&& (RIGHT(ent)->item.m != NONE)
-			&& gi.csi->ods[RIGHT(ent)->item.t].weapon
-			&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
-				|| RIGHT(ent)->item.a > 0)
-			&& gi.csi->ods[RIGHT(ent)->item.m].fd[0][FD_PRIMARY].time + sv_reaction_leftover->integer <= ent->TU /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
-			&& gi.csi->ods[RIGHT(ent)->item.m].fd[0][FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) { /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+		&& (RIGHT(ent)->item.m != NONE)
+		&& gi.csi->ods[RIGHT(ent)->item.t].weapon
+		&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
+			|| RIGHT(ent)->item.a > 0) ) {
+		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[RIGHT(ent)->item.m], RIGHT(ent)->item.t);
+					
+		if ( gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][FD_PRIMARY].time + sv_reaction_leftover->integer <= ent->TU
+		  && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
 
-		if (hand)
-			*hand = ST_RIGHT_PRIMARY_REACTION;
-		return gi.csi->ods[RIGHT(ent)->item.m].fd[0][FD_PRIMARY].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+			if (hand)
+				*hand = ST_RIGHT_PRIMARY_REACTION;
+			return gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][FD_PRIMARY].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+		}
 	}
 	if (LEFT(ent)
 		&& (LEFT(ent)->item.m != NONE)
 		&& gi.csi->ods[LEFT(ent)->item.t].weapon
 		&& (!gi.csi->ods[LEFT(ent)->item.t].reload
-			|| LEFT(ent)->item.a > 0)
-		&& gi.csi->ods[LEFT(ent)->item.m].fd[0][FD_PRIMARY].time + sv_reaction_leftover->integer <= ent->TU /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
-		&& gi.csi->ods[LEFT(ent)->item.m].fd[0][FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) { /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+			|| LEFT(ent)->item.a > 0) ) {
+		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
+		if ( gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][FD_PRIMARY].time + sv_reaction_leftover->integer <= ent->TU 
+		  && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) { 
 
-		if (hand)
-			*hand = ST_LEFT_PRIMARY_REACTION;
-		return gi.csi->ods[LEFT(ent)->item.m].fd[0][FD_PRIMARY].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+			if (hand)
+				*hand = ST_LEFT_PRIMARY_REACTION;
+			return gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][FD_PRIMARY].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+		}
 	}
 	return -1;
 }

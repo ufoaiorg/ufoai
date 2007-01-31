@@ -139,25 +139,32 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	/* shooting */
 	maxDmg = 0.0;
 	for (fm = 0; fm < ST_NUM_SHOOT_TYPES; fm++) {
-		objDef_t *od = NULL;
+		objDef_t *od = NULL;	/* Ammo pointer */
+		int weap_idx;		/* Weapon index */
 		fireDef_t *fd;
 
 		/* optimization: reaction fire is automatic */;
 		if (IS_SHOT_REACTION(fm))
 			continue;
 
-		if (IS_SHOT_RIGHT(fm) && RIGHT(ent)
-			&& RIGHT(ent)->item.m != NONE
-			&& gi.csi->ods[RIGHT(ent)->item.t].weapon
-			&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
+		if (IS_SHOT_RIGHT(fm) && RIGHT(ent)) {
+			weap_idx = RIGHT(ent)->item.t;
+			if (RIGHT(ent)->item.m != NONE
+			&& gi.csi->ods[weap_idx].weapon
+			&& (!gi.csi->ods[weap_idx].reload
 				|| RIGHT(ent)->item.a > 0)) {
-			od = &gi.csi->ods[RIGHT(ent)->item.m];
-		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)
-			&& (LEFT(ent)->item.m != NONE)
-			&& gi.csi->ods[LEFT(ent)->item.t].weapon
-			&& (!gi.csi->ods[LEFT(ent)->item.t].reload
+				od = &gi.csi->ods[RIGHT(ent)->item.m];
+			}
+			
+		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)) {
+			weap_idx = LEFT(ent)->item.t;
+			if((LEFT(ent)->item.m != NONE)
+			&& gi.csi->ods[weap_idx].weapon
+			&& (!gi.csi->ods[weap_idx].reload
 				|| LEFT(ent)->item.a > 0)) {
-			od = &gi.csi->ods[LEFT(ent)->item.m];
+				od = &gi.csi->ods[LEFT(ent)->item.m];
+			}
+			
 		} else {
 			/* TODO: grenade/knife toss from inventory using empty hand */
 			/* TODO: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
@@ -166,7 +173,8 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		if (!od)
 			continue;
 
-		fd = &od->fd[0][SHOT_FD_PRIO(fm)]; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+		
+		fd = &od->fd[INV_FiredefsIDXForWeapon(od, weap_idx)][SHOT_FD_PRIO(fm)];
 
 		nspread = SPREAD_NORM((fd->spread[0]+fd->spread[1])*0.5 + GET_ACC(ent->chr.skills[ABILITY_ACCURACY]*(1+fd->modif),
 								 fd->weaponSkill));
