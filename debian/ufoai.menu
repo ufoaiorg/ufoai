@@ -1,2 +1,0 @@
-?package(ufoai):needs="X11" section="Games/Strategy" \
-  title="UFO: Alien Invasion" command="/usr/games/ufo"
