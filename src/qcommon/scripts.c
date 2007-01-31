@@ -286,27 +286,35 @@ static void Com_ParseItem(char *name, char **text)
 							Com_Printf("Com_ParseItem: weapon_mod \"%s\" without body ignored\n", name);
 							break;
 						}
+						
+						if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
+							/* For parse each firedef entry for this weapon.  */
+							do {
+								token = COM_EParse(text, errhead, name);
+								if (!*text)
+									return;
+								if (*token == '}')
+									break;
 
-						/* For parse each firedef entry for this weapon.  */
-						do {
-							token = COM_EParse(text, errhead, name);
-							if (!*text)
-								return;
-							if (*token == '}')
-								break;
-
-							if (!Q_strncmp(token, "firedef", MAX_VAR)) {
-								/* Parse firemode into fd[IDXweapon][IDXfiremode] */
-								Com_ParseFire(name, text, &od->fd[od->numWeapons][od->numFiredefs[od->numWeapons]]);
-								od->numFiredefs[od->numWeapons]++;
-							}
-							/*
-							else {
-								Bad syntax.
-							}
-							*/
-						} while (*text);
-						od->numWeapons++;
+								if (!Q_strncmp(token, "firedef", MAX_VAR)) {
+									if (od->numFiredefs[od->numWeapons] < MAX_FIREDEFS_PER_WEAPON) {
+										/* Parse firemode into fd[IDXweapon][IDXfiremode] */
+										Com_ParseFire(name, text, &od->fd[od->numWeapons][od->numFiredefs[od->numWeapons]]);
+										od->numFiredefs[od->numWeapons]++;
+									} else {
+										Com_Printf("Com_ParseItem: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
+									}
+								}
+								/*
+								else {
+									Bad syntax.
+								}
+								*/
+							} while (*text);
+							od->numWeapons++;
+						} else {
+							Com_Printf("Com_ParseItem: Too many weapon_mod definitions at \"%s\". Max is %i\n", name, MAX_WEAPONS_PER_OBJDEF);
+						}
 						break;
 					case OD_PROTECTION:
 						Com_ParseArmor(name, text, od->protection);
