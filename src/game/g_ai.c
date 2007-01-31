@@ -147,24 +147,21 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		if (IS_SHOT_REACTION(fm))
 			continue;
 
-		if (IS_SHOT_RIGHT(fm) && RIGHT(ent)) {
-			weap_idx = RIGHT(ent)->item.t;
-			if (RIGHT(ent)->item.m != NONE
-			&& gi.csi->ods[weap_idx].weapon
-			&& (!gi.csi->ods[weap_idx].reload
+		if (IS_SHOT_RIGHT(fm) && RIGHT(ent) 
+			&& RIGHT(ent)->item.m != NONE
+			&& gi.csi->ods[RIGHT(ent)->item.t].weapon
+			&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
 				|| RIGHT(ent)->item.a > 0)) {
-				od = &gi.csi->ods[RIGHT(ent)->item.m];
-			}
+			od = &gi.csi->ods[RIGHT(ent)->item.m];
+			weap_idx = RIGHT(ent)->item.t;
 			
-		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)) {
-			weap_idx = LEFT(ent)->item.t;
-			if((LEFT(ent)->item.m != NONE)
-			&& gi.csi->ods[weap_idx].weapon
-			&& (!gi.csi->ods[weap_idx].reload
+		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)
+			&& (LEFT(ent)->item.m != NONE)
+			&& gi.csi->ods[LEFT(ent)->item.t].weapon
+			&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 				|| LEFT(ent)->item.a > 0)) {
-				od = &gi.csi->ods[LEFT(ent)->item.m];
-			}
-			
+			od = &gi.csi->ods[LEFT(ent)->item.m];
+			weap_idx = LEFT(ent)->item.t;
 		} else {
 			/* TODO: grenade/knife toss from inventory using empty hand */
 			/* TODO: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
