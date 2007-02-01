@@ -1415,8 +1415,10 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 	le = LE_Get(number);
 
 	/* get the fire def */
+	Com_Printf( "CL_ActorDoShoot: %i %i %i DEBUG\n",obj_idx,weap_idx,fd_idx );
 	fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
-
+	Com_Printf( "CL_ActorDoShoot: %i %i %i DEBUG\n",fd->obj_idx,fd->weap_idx,fd->fd_idx );
+	
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal);
 

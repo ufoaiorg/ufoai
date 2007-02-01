@@ -1233,6 +1233,33 @@ void Com_AddObjectLinks(void)
 		}
 	}
 #endif
+
+#if 0
+/* TODO: can we use this for all compile-flags? */
+	objDef_t *od = NULL;
+	int i;
+	byte j, k;
+	int i2;
+	objDef_t *od2 = NULL;
+
+	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		/* Add links to weapons. */
+
+		for (j = 0; j < od->numWeapons; j++ ) {
+			for (i2 = 0, od2 = csi.ods; i2 < csi.numODs; i2++, od2++) {
+				if (!Q_strncmp(od->weap_id[j], od2->id, MAX_VAR)) {
+					od->weap_idx[j] = i2;
+					break;
+				}
+			}
+
+			/* Back-link the obj-idx inside the fds */
+			for (k = 0; k < od->numFiredefs[j]; k++ ) {
+				od->fd[j][k].obj_idx = i;
+			}
+		}
+	}
+#endif
 }
 
 /**

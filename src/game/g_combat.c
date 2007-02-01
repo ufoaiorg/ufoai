@@ -748,6 +748,7 @@ static void G_ShootSingle(edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at,
 
 		if (!mock) {
 			/* send shot */
+			gi.dprintf("G_ShootSingle: %i %i %i DEBUG\n", fd->obj_idx, fd->weap_idx, fd->fd_idx);
 			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(fd->obj_idx);
