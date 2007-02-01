@@ -765,4 +765,168 @@ menu hud
 		cmd "music_start;"
 		cmd "set mn_showchatbuttons 0;"
 	}
+	
+	// ==================
+	// WIP firemode display (this one has seperate lists for each weaponhand)
+	// ==================
+/*
+	confunc set_left_ina0 { *bt_left_fm0    image althud/firemode_inactive }
+	confunc set_left_ina1 { *bt_left_fm1    image althud/firemode_inactive }
+	confunc set_left_ina2 { *bt_left_fm2    image althud/firemode_inactive }
+	confunc set_left_ina3 { *bt_left_fm3    image althud/firemode_inactive }
+	confunc set_right_ina0 { *bt_right_fm0    image althud/firemode_inactive }
+	confunc set_right_ina1 { *bt_right_fm1    image althud/firemode_inactive }
+	confunc set_right_ina2 { *bt_right_fm2    image althud/firemode_inactive }
+	confunc set_right_ina3 { *bt_right_fm3    image althud/firemode_inactive }
+
+	confunc set_left_inv0 { *bt_left_fm0    invis true *left_fm_name0 invis true }
+	confunc set_left_inv1 { *bt_left_fm1    invis true *left_fm_name1 invis true }
+	confunc set_left_inv2 { *bt_left_fm2    invis true *left_fm_name2 invis true }
+	confunc set_left_inv3 { *bt_left_fm3    invis true *left_fm_name3 invis true }
+	confunc set_right_inv0 { *bt_right_fm0    invis true *right_fm_name0 invis true }
+	confunc set_right_inv1 { *bt_right_fm1    invis true *right_fm_name1 invis true }
+	confunc set_right_inv2 { *bt_right_fm2    invis true *right_fm_name2 invis true }
+	confunc set_right_inv3 { *bt_right_fm3    invis true *right_fm_name3 invis true }
+
+
+	pic bt_left_fm0
+	{
+		image	althud/firemode
+		pos		"600 400"
+		mousefx	false
+		click	{ cmd fire_l 0; }
+	}
+
+	pic bt_left_fm1
+	{
+		image	althud/firemode
+		pos		"600 464"
+		mousefx	false
+		click	{ cmd fire_l 1; }
+	}
+
+	pic bt_left_fm2
+	{
+		image	althud/firemode
+		pos		"600 528"
+		mousefx	false
+		click	{ cmd fire_l 2; }
+	}
+
+	pic bt_left_fm3
+	{
+		image	althud/firemode
+		pos		"600 592"
+		mousefx	false
+		click	{ cmd fire_l 3; }
+	}
+
+	pic bt_right_fm0
+	{
+		image	althud/firemode
+		pos		"800 400"
+		mousefx	false
+		click	{ cmd fire_r 0; }
+	}
+
+	pic bt_right_fm1
+	{
+		image	althud/firemode
+		pos		"800 464"
+		mousefx	false
+		click	{ cmd fire_r 1; }
+	}
+
+	pic bt_right_fm2
+	{
+		image	althud/firemode
+		pos		"800 528"
+		mousefx	false
+		click	{ cmd fire_r 2; }
+	}
+
+	pic bt_right_fm3
+	{
+		image	althud/firemode
+		pos		"800 592"
+		mousefx	false
+		click	{ cmd fire_r 3; }
+	}
+
+	string left_fm_name0 {
+		string	"*cvar mn_l_fm_name0"
+		pos		"600 400"
+	}
+	string left_fm_name1
+	{
+		string	"*cvar mn_l_fm_name1"
+		pos		"600 464"
+	}
+	string left_fm_name2 {
+		string	"*cvar mn_l_fm_name2"
+		pos		"600 528"
+	}
+	string left_fm_name3
+	{
+		string	"*cvar mn_l_fm_name3"
+		pos		"600 592"
+	}
+
+	string right_fm_name0 {
+		string	"*cvar mn_r_fm_name0"
+		pos		"800 400"
+	}
+	string right_fm_name1
+	{
+		string	"*cvar mn_r_fm_name1"
+		pos		"800 464"
+	}
+	string right_fm_name2 {
+		string	"*cvar mn_r_fm_name2"
+		pos		"800 528"
+	}
+	string right_fm_name3
+	{
+		string	"*cvar mn_r_fm_name3"
+		pos		"800 592"
+	}
+
+	string left_fm_tu0 {
+		string	"*cvar mn_l_fm_tu0"
+		pos		"600 400"
+	}
+	string left_fm_tu1
+	{
+		string	"*cvar mn_l_fm_tu1"
+		pos		"600 464"
+	}
+	string left_fm_tu2 {
+		string	"*cvar mn_l_fm_tu2"
+		pos		"600 528"
+	}
+	string left_fm_tu3
+	{
+		string	"*cvar mn_l_fm_tu3"
+		pos		"600 592"
+	}
+
+	string right_fm_tu0 {
+		string	"*cvar mn_r_fm_tu0"
+		pos		"800 400"
+	}
+	string right_fm_tu1
+	{
+		string	"*cvar mn_r_fm_tu1"
+		pos		"800 464"
+	}
+	string right_fm_tu2 {
+		string	"*cvar mn_r_fm_tu2"
+		pos		"800 528"
+	}
+	string right_fm_tu3
+	{
+		string	"*cvar mn_r_fm_tu3"
+		pos		"800 592"
+	}
+*/
 }
