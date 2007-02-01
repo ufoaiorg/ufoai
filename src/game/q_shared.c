@@ -3897,7 +3897,7 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
  * @brief Returns the index of the array that has the firedefinitions for a given weapon (-index)
  * @param[in] od The object definition of the item.
  * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
- * @return int Returns the index in the fd array. -1 if the weapon-idx was not found. 0 if an invalid or unknown weapon idx was given.
+ * @return int Returns the index in the fd array. -1 if the weapon-idx was not found. 0 (equals the default firemode) if an invalid or unknown weapon idx was given.
  */
 int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 {
@@ -3906,8 +3906,10 @@ int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 	if (!od)
 		return -1;
 
-	if (weapon_idx == -1)
+	if (weapon_idx == -1) {
+		Com_DPrintf("INV_FiredefsIDXForWeapon: bad weapon_idx (%i) in item '%s' - using default weapon/firemodes.\n", weapon_idx, od->id);
 		return 0;
+	}
 
 	for (i = 0; i < od->numWeapons; i++) {
 		if (weapon_idx == od->weap_idx[i])
