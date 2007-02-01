@@ -482,7 +482,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 /**
  * @brief
  */
-static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
+static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
@@ -565,7 +565,9 @@ static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int
 					/* explode */
 					gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
 					gi.WriteShort(dt * 1000);
-					gi.WriteByte(type);
+					gi.WriteShort(fd->obj_idx);
+					gi.WriteByte(fd->weap_idx);
+					gi.WriteByte(fd->fd_idx);
 					if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))
 						gi.WriteByte(flags | SF_BODY);
 					else
@@ -620,7 +622,9 @@ static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int
 				/* send */
 				gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
 				gi.WriteShort(dt * 1000);
-				gi.WriteByte(type);
+				gi.WriteShort(fd->obj_idx);
+				gi.WriteByte(fd->weap_idx);
+				gi.WriteByte(fd->fd_idx);
 				gi.WriteByte(flags);
 				gi.WritePos(last);
 				gi.WritePos(startV);
@@ -650,13 +654,11 @@ static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int
  * @brief Fires straight shots.
  * @param[in] ent The attacker.
  * @param[in] fd The fire definition that is used for the shot.
- * @param[in] wi ?? TODO
  * @param[in] from Location of the gun muzzle.
  * @param[in] at Grid coordinate of the target.
  * @param[in] mask ?? TODO Visibility bit-mask of the others?
  */
-/*static void G_ShootSingle(edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)*/
-static void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
+static void G_ShootSingle(edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
@@ -748,12 +750,9 @@ static void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, po
 			/* send shot */
 			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
 			gi.WriteShort(ent->number);
-			gi.WriteByte(wi);
-			/* replace  wi with the following
-			gi.WriteInt(fd->obj_idx);
+			gi.WriteShort(fd->obj_idx);
 			gi.WriteByte(fd->weap_idx);
 			gi.WriteByte(fd->fd_idx);
-			*/
 			gi.WriteByte(flags);
 			gi.WritePos(cur_loc);
 			gi.WritePos(impact);
@@ -762,12 +761,9 @@ static void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, po
 			/* send shot sound to the others */
 			gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 			gi.WriteByte(qfalse);
-			gi.WriteByte(wi);
-			/* replace  wi with the following
-			gi.WriteInt(fd->obj_idx);
+			gi.WriteShort(fd->obj_idx);
 			gi.WriteByte(fd->weap_idx);
 			gi.WriteByte(fd->fd_idx);
-			*/
 		}
 
 		/* do splash damage */
@@ -903,7 +899,7 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 	edict_t *ent;
 	item_t *weapon;
 	vec3_t dir, center, target, shotOrigin;
-	int i, ammo, wi, prev_dir = 0, reaction_leftover, shots;
+	int i, ammo, prev_dir = 0, reaction_leftover, shots;
 	int container, mask;
 	qboolean quiet;
 
@@ -916,7 +912,6 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 		return qfalse;
 	}
 
-	wi = weapon->m | (SHOT_FD_PRIO(type) << 7/*move to byte end*/);
 	ammo = weapon->a;
 	reaction_leftover = IS_SHOT_REACTION(type) ? sv_reaction_leftover->value : 0;
 
@@ -989,24 +984,18 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 		/* start shoot */
 		gi.AddEvent(G_VisToPM(mask), EV_ACTOR_START_SHOOT);
 		gi.WriteShort(ent->number);
-		gi.WriteByte(wi);
-		/* replace  wi with the following
-		gi.WriteInt(fd->obj_idx);
+		gi.WriteShort(fd->obj_idx);
 		gi.WriteByte(fd->weap_idx);
 		gi.WriteByte(fd->fd_idx);
-		*/
 		gi.WriteGPos(ent->pos);
 		gi.WriteGPos(at);
 
 		/* send shot sound to the others */
 		gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 		gi.WriteByte(qtrue);
-		gi.WriteByte(wi);
-		/* replace  wi with the following
-		gi.WriteInt(fd->obj_idx);
+		gi.WriteShort(fd->obj_idx);
 		gi.WriteByte(fd->weap_idx);
 		gi.WriteByte(fd->fd_idx);
-		*/
 
 		/* ammo... */
 		if (fd->ammo) {
@@ -1039,9 +1028,9 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 	/* fire all shots */
 	for (i = 0; i < shots; i++)
 		if (fd->gravity)
-			G_ShootGrenade(player, ent, fd, wi, shotOrigin, at, mask, weapon, mock);
+			G_ShootGrenade(player, ent, fd, shotOrigin, at, mask, weapon, mock);
 		else
-			G_ShootSingle(ent, fd, wi, shotOrigin, at, mask, weapon, mock);
+			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock);
 
 	if (!mock) {
 		/* send TUs if ent still alive */

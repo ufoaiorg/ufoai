@@ -903,18 +903,18 @@ extern char *pa_format[128];
 #define MAX_FIREDEFS_PER_WEAPON 4
 #define MAX_DAMAGETYPES 32
 
-#define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[0][!!(type & 0x80)])
+/* #define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[0][!!(type & 0x80)]) TODO remove me */
 /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 
-/* #define GET_FIREDEF(obj_idx,weap_idx,fd_idx)   (&csi.ods[obj_idx].fd[weap_idx][fd_idx]) */
+#define GET_FIREDEF(obj_idx,weap_idx,fd_idx)   (&csi.ods[obj_idx].fd[weap_idx][fd_idx])
 
 /** this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
-	/* Some of these might be needed later on (they can be created in Com_ParseItem and/or Com_AddObjectLinks) ....
-	int obj_idx;		**< The weapon/ammo (csi.ods[obj_idx]) this fd is located in.
-	byte weap_idx;		**< The weapon_mod entry (objDef_t->fd[weap_idx]) this fd is located in.
-	byte fd_idx;		**< Self link of the fd in the objDef_t->fd[][fd_idx] array.
-	*/
+	/* These values are created in Com_ParseItem and Com_AddObjectLinks. They are used for self-referencing the firedef. */
+	int obj_idx;		/**< The weapon/ammo (csi.ods[obj_idx]) this fd is located in. */
+	byte weap_idx;		/**< The weapon_mod entry (objDef_t->fd[weap_idx]) this fd is located in. */
+	byte fd_idx;		/**< Self link of the fd in the objDef_t->fd[][fd_idx] array. */
+
 	char name[MAX_VAR];			/**< script id */
 	char projectile[MAX_VAR];	/**< particle */
 	char impact[MAX_VAR];

@@ -301,9 +301,9 @@ static void Com_ParseItem(char *name, char **text)
 										/* Parse firemode into fd[IDXweapon][IDXfiremode] */
 										Com_ParseFire(name, text, &od->fd[od->numWeapons][od->numFiredefs[od->numWeapons]]);
 										/* Self-link fd */
-										/* od->fd[od->numWeapons][od->numFiredefs[od->numWeapons]].fd_idx = od->numFiredefs[od->numWeapons]; */
+										od->fd[od->numWeapons][od->numFiredefs[od->numWeapons]].fd_idx = od->numFiredefs[od->numWeapons];
 										/* Self-link weapn_mod */
-										/* od->fd[od->numWeapons][od->numFiredefs[od->numWeapons]].weap_idx = od->numWeapons; */
+										od->fd[od->numWeapons][od->numFiredefs[od->numWeapons]].weap_idx = od->numWeapons;
 										od->numFiredefs[od->numWeapons]++;
 									} else {
 										Com_Printf("Com_ParseItem: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
@@ -1216,8 +1216,7 @@ void Com_AddObjectLinks(void)
 #ifndef DEDICATED_ONLY
 	objDef_t *od = NULL;
 	int i;
-	byte j;
-/*    byte k; */
+	byte j, k;
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		/* Add links to weapons. */
@@ -1225,11 +1224,9 @@ void Com_AddObjectLinks(void)
 		for (j = 0; j < od->numWeapons; j++ ) {
 			od->weap_idx[j] = RS_GetItem(od->weap_id[j]);
 			/* Back-link the obj-idx inside the fds */
-			/*
 			for (k = 0; k < od->numFiredefs[od->numWeapons]; k++ ) {
 				od->fd[j][k].obj_idx = i;
 			}
-			*/
 		}
 	}
 #endif

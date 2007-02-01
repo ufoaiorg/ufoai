@@ -87,15 +87,17 @@ const char *ev_format[] =
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
 	"!s*",				/* EV_ACTOR_MOVE; beware of the '!' */
-	"sbgg",			    /* EV_ACTOR_START_SHOOT */
-	"sbbppb",			/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
-	"bb",				/* EV_ACTOR_SHOOT_HIDDEN */
-	/* Replace the above formats with these when changing firemdode code
-	"ssbbgg",			EV_ACTOR_START_SHOOT
-	"ssbbbppb",			EV_ACTOR_SHOOT; the last 'b' cannot be 'd'
-	"bsbb",				EV_ACTOR_SHOOT_HIDDEN
+	/*
+	"sbgg",			    * EV_ACTOR_START_SHOOT *
+	"sbbppb",			* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' *
+	"bb",				* EV_ACTOR_SHOOT_HIDDEN *
+	"sbbpp",			* EV_ACTOR_THROW *
 	*/
-	"sbbpp",			/* EV_ACTOR_THROW */
+	"ssbbgg",			/* EV_ACTOR_START_SHOOT */
+	"ssbbbppb",		/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
+	"bsbb",			/* EV_ACTOR_SHOOT_HIDDEN */
+	"ssbbbpp",			/* EV_ACTOR_THROW */
+	
 	"ss",				/* EV_ACTOR_DIE */
 	"!sbsbbb",		    /* EV_ACTOR_STATS; beware of the '!' */
 	"ss",				/* EV_ACTOR_STATECHANGE */
@@ -1185,18 +1187,16 @@ static void CL_ParseEvent (void)
 				{
 					fireDef_t *fd;
 					qboolean first;
-					int type;
-					/* int obj_idx; byte weap_idx, fd_idx; */
+					int obj_idx;
+					byte weap_idx, fd_idx;
 
-					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &type);
-					/* MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_idx, &fd_idx); */
+					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_idx, &fd_idx);
 
 					if (first) {
 						nextTime += 500;
 						impactTime = shootTime = nextTime;
 					} else {
-						fd = GET_FIREDEF(type);
-						/* fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx); */
+						fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
 /*
 						TODO: not needed? and SF_BOUNCED?
 						if ( fd->speed )
@@ -1215,16 +1215,14 @@ static void CL_ParseEvent (void)
 				{
 					fireDef_t	*fd;
 					int		flags, dummy;
-					int		type;
-					/* int obj_idx; byte weap_idx, fd_idx; */
+					int obj_idx;
+					byte weap_idx, fd_idx;
 					vec3_t	muzzle, impact;
 
 					/* read data */
-					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT], &dummy, &type, &flags, &muzzle, &impact, &dummy);
-					/* MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT], &dummy, &obj_idx, &weap_idx, &fd_idx, &flags, &muzzle, &impact, &dummy); */
+					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT], &dummy, &obj_idx, &weap_idx, &fd_idx, &flags, &muzzle, &impact, &dummy);
 
-					fd = GET_FIREDEF( type );
-					/* fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx); */
+					fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
 
 					if ( !(flags & SF_BOUNCED) ) {
 						/* shooting */
