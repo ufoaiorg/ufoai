@@ -747,7 +747,7 @@ static void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, po
 			/* send shot */
 			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
 			gi.WriteShort(ent->number);
-			gi.WriteByte(wi);gi.csi->ods[weapon->t]
+			gi.WriteByte(wi);
 			gi.WriteByte(flags);
 			gi.WritePos(cur_loc);
 			gi.WritePos(impact);
