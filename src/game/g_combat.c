@@ -655,6 +655,7 @@ static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int
  * @param[in] at Grid coordinate of the target.
  * @param[in] mask ?? TODO Visibility bit-mask of the others?
  */
+/*static void G_ShootSingle(edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)*/
 static void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
@@ -748,6 +749,11 @@ static void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, po
 			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
 			gi.WriteShort(ent->number);
 			gi.WriteByte(wi);
+			/* replace  wi with the following
+			gi.WriteInt(fd->obj_idx);
+			gi.WriteByte(fd->weap_idx);
+			gi.WriteByte(fd->fd_idx);
+			*/
 			gi.WriteByte(flags);
 			gi.WritePos(cur_loc);
 			gi.WritePos(impact);
@@ -757,6 +763,11 @@ static void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, po
 			gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 			gi.WriteByte(qfalse);
 			gi.WriteByte(wi);
+			/* replace  wi with the following
+			gi.WriteInt(fd->obj_idx);
+			gi.WriteByte(fd->weap_idx);
+			gi.WriteByte(fd->fd_idx);
+			*/
 		}
 
 		/* do splash damage */
@@ -979,6 +990,11 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 		gi.AddEvent(G_VisToPM(mask), EV_ACTOR_START_SHOOT);
 		gi.WriteShort(ent->number);
 		gi.WriteByte(wi);
+		/* replace  wi with the following
+		gi.WriteInt(fd->obj_idx);
+		gi.WriteByte(fd->weap_idx);
+		gi.WriteByte(fd->fd_idx);
+		*/
 		gi.WriteGPos(ent->pos);
 		gi.WriteGPos(at);
 
@@ -986,6 +1002,11 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 		gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 		gi.WriteByte(qtrue);
 		gi.WriteByte(wi);
+		/* replace  wi with the following
+		gi.WriteInt(fd->obj_idx);
+		gi.WriteByte(fd->weap_idx);
+		gi.WriteByte(fd->fd_idx);
+		*/
 
 		/* ammo... */
 		if (fd->ammo) {

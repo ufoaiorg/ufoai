@@ -906,6 +906,8 @@ extern char *pa_format[128];
 #define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[0][!!(type & 0x80)])
 /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 
+/* #define GET_FIREDEF(obj_idx,weap_idx,fd_idx)   (&csi.ods[obj_idx].fd[weap_idx][fd_idx]) */
+
 /** this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
 	/* Some of these might be needed later on (they can be created in Com_ParseItem and/or Com_AddObjectLinks) ....

@@ -1409,12 +1409,14 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 
 	/* read data */
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &number, &type, &flags, &muzzle, &impact, &normal);
+	/* MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &number, &obj_idx, &weap_idx, &fd_idx, &flags, &muzzle, &impact, &normal); */
 
 	/* get le */
 	le = LE_Get(number);
 
 	/* get the fire def */
 	fd = GET_FIREDEF(type);
+	/* fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx); */
 
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal);
@@ -1468,9 +1470,11 @@ void CL_ActorShootHidden( sizebuf_t *sb )
 	int		type;
 
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &type);
+	/* MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_idx, &fd_idx); */
 
 	/* get the fire def */
 	fd = GET_FIREDEF( type );
+	/* fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx); */
 
 	/* start the sound; TODO: is check for SF_BOUNCED needed? */
 	if ( ((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0] )
@@ -1495,9 +1499,11 @@ void CL_ActorDoThrow(sizebuf_t * sb)
 
 	/* read data */
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_THROW], &dtime, &type, &flags, &muzzle, &v0);
+	/* MSG_ReadFormat(sb, ev_format[EV_ACTOR_THROW], &dtime, &obj_idx, &weap_idx, &fd_idx, &flags, &muzzle, &v0); */
 
 	/* get the fire def */
 	fd = GET_FIREDEF(type);
+	/* fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx); */
 
 	/* add effect le (local entity) */
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime);
@@ -1522,8 +1528,11 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 	int number, type;
 
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_SHOOT], &number, &type, &from, &target);
+	/* MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_SHOOT], &number, &obj_idx, &weap_idx, &fd_idx, &from, &target); */
 
 	fd = GET_FIREDEF(type);
+	/* fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx); */
+
 	le = LE_Get(number);
 
 	/* center view (if wanted) */

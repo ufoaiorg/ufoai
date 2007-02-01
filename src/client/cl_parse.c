@@ -90,6 +90,11 @@ const char *ev_format[] =
 	"sbgg",			    /* EV_ACTOR_START_SHOOT */
 	"sbbppb",			/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
 	"bb",				/* EV_ACTOR_SHOOT_HIDDEN */
+	/* Replace the above formats with these when changing firemdode code
+	"ssbbgg",			EV_ACTOR_START_SHOOT
+	"ssbbbppb",			EV_ACTOR_SHOOT; the last 'b' cannot be 'd'
+	"bsbb",				EV_ACTOR_SHOOT_HIDDEN
+	*/
 	"sbbpp",			/* EV_ACTOR_THROW */
 	"ss",				/* EV_ACTOR_DIE */
 	"!sbsbbb",		    /* EV_ACTOR_STATS; beware of the '!' */

@@ -1216,7 +1216,8 @@ void Com_AddObjectLinks(void)
 #ifndef DEDICATED_ONLY
 	objDef_t *od = NULL;
 	int i;
-	byte j, k;
+	byte j;
+/*    byte k; */
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		/* Add links to weapons. */
