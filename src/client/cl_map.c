@@ -366,12 +366,16 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, i
  */
 extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y)
 {
+	vec2_t tmp;
 	const float radius = GLOBE_RADIUS;
 
-	*x = radius * cos(pos[0]) * cos(pos[1]);
-	*y = radius * cos(pos[0]) * sin(pos[1]);
+	Vector2Set(tmp, (node->pos[0] + node->size[0]) / 2.0f, (node->pos[1] + node->size[1]) / 2.0f);
 
-	Com_Printf("MAP_3DMapToScreen: %i:%i\n", *x, *y);
+	/* pos[0] = longitude (theta) */
+	/* pos[1] = latitude (phi) */
+	*x = (radius * cos(pos[0]) * cos(pos[1]+ccs.angles[1])) + tmp[0];
+	*y = (radius * cos(pos[0]) * sin(pos[1]+ccs.angles[1])) + tmp[1];
+/*	Com_Printf("MAP_3DMapToScreen: %i:%i\n", *x, *y);*/
 
 	/* TODO: Check ccs.angle */
 /*	if (*x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
@@ -446,9 +450,9 @@ static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
 	/* check whether we clicked the geoscape */
 	if (dist <= radius) {
 		/* z-coordinates (y on screen) */
-		theta = asin((float)(y - mid[1]) / radius); /* ok */
+		theta = asin((float)(y - mid[1]) / dist);
 		/* x-coordinates */
-		phi = acos((float)(x - mid[0]) / radius / cos(theta));
+		phi = acos((float)(x - mid[0]) / dist / cos(theta));
 		pos[0] = theta * todeg;	/* longitude */
 		pos[1] = 90.0f - (phi * todeg); /* latitude */
 		/* FIXME */
@@ -588,6 +592,16 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
 	aircraft_t *aircraft;
 	actMis_t *ms;
 	int i, j, x, y;
+	vec2_t pos = {0, 0};
+
+	if (MAP_3DMapToScreen(node, pos, &x, &y))
+		re.FontDrawString("f_verysmall", 0, x, y, x, y, node->size[0], 0, 0, "0, 0", 0, 0, NULL, qfalse);
+	pos[0] = 90; pos[1] = 90;
+	if (MAP_3DMapToScreen(node, pos, &x, &y))
+		re.FontDrawString("f_verysmall", 0, x, y, x, y, node->size[0], 0, 0, "90, 90", 0, 0, NULL, qfalse);
+	pos[0] = 90; pos[1] = 180;
+	if (MAP_3DMapToScreen(node, pos, &x, &y))
+		re.FontDrawString("f_verysmall", 0, x, y, x, y, node->size[0], 0, 0, "90, 180", 0, 0, NULL, qfalse);
 
 	/* draw mission pics */
 	Cvar_Set("mn_mapdaytime", "");

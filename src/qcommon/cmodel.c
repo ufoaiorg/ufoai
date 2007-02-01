@@ -2281,6 +2281,7 @@ int TestLineDist_r(int node, vec3_t start, vec3_t stop)
  * @param[in] start
  * @param[in] stop
  * @sa TestLine_r
+ * @sa CL_TargetingToHit
  */
 int CM_TestLine(vec3_t start, vec3_t stop)
 {
@@ -2302,6 +2303,7 @@ int CM_TestLine(vec3_t start, vec3_t stop)
  * @param[in] stop
  * @param[in] end
  * @sa CM_TestLine
+ * @sa CL_ActorMouseTrace
  */
 int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 {

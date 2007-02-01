@@ -1022,11 +1022,6 @@ void CL_BuildForbiddenList(void)
 			continue;
 		if (!(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV))
 			fb_list[fb_length++] = le->pos;
-		else if (le->type == ET_BREAKABLE) {
-			fb_list[fb_length++] = le->pos;
-			/* this is for let a trace find a breakable, too */
-			/*le->contents = CONTENTS_SOLID;*/ /* doesn't work */
-		}
 	}
 
 	if (fb_length > MAX_EDICTS)
@@ -1138,8 +1133,8 @@ void CL_ActorStartMove(le_t * le, pos3_t to)
 
 /**
  * @brief Shoot with actor.
- * @param[in] le
- * @param[in] at
+ * @param[in] le Who is shooting
+ * @param[in] at Position you are targetting to
  */
 void CL_ActorShoot(le_t * le, pos3_t at)
 {
@@ -1234,7 +1229,7 @@ void CL_ActorReload(int hand)
  * @brief Moves actor.
  * @param[in] sb
  */
-void CL_ActorDoMove(sizebuf_t * sb)
+void CL_ActorDoMove (sizebuf_t * sb)
 {
 	le_t *le;
 
@@ -1391,6 +1386,8 @@ static qboolean firstShot = qfalse;
 
 /**
  * @brief Shoot with weapon.
+ * @sa CL_ActorShoot
+ * @sa CL_ActorShootHidden
  */
 void CL_ActorDoShoot(sizebuf_t * sb)
 {
@@ -1449,11 +1446,10 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 }
 
 
-/*
-=====================
-CL_ActorShootHidden
-=====================
-*/
+/**
+ * @brief
+ * @sa CL_ActorShoot
+ */
 void CL_ActorShootHidden( sizebuf_t *sb )
 {
 	fireDef_t	*fd;
@@ -1506,6 +1502,9 @@ void CL_ActorDoThrow(sizebuf_t * sb)
 /**
  * @brief Starts shooting with actor.
  * @param[in] sb
+ * @sa CL_ActorShootHidden
+ * @sa CL_ActorShoot
+ * @sa CL_ActorDoShoot
  */
 void CL_ActorStartShoot(sizebuf_t * sb)
 {
@@ -1636,9 +1635,7 @@ void CL_ActorDie(sizebuf_t * sb)
 
 /*
 ==============================================================
-
 MOUSE INPUT
-
 ==============================================================
 */
 
@@ -1714,9 +1711,7 @@ void CL_ActorActionMouse(void)
 
 
 /*==============================================================
-
 ROUND MANAGEMENT
-
 ==============================================================*/
 
 /**
@@ -2106,8 +2101,11 @@ float CL_TargetingToHit(pos3_t toPos)
 		if (le->inuse && VectorCompare(le->pos, toPos))
 			break;
 
-	if (i >= numLEs || le == selActor )
-		/* no target there or suicide attempted */
+	if (i >= numLEs)
+		/* no target there */
+		return 0.0;
+	/* or suicide attempted */
+	if (le == selActor && selFD->damage[0] > 0)
 		return 0.0;
 
 	VectorCopy(selActor->origin, shooter);

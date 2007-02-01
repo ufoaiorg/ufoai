@@ -199,7 +199,7 @@ void G_SendInventory(int player_mask, edict_t * ent)
 /**
  * @brief
  */
-void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
+extern void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 {
 	int maxMorale;
 
@@ -269,7 +269,7 @@ void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 /**
  * @brief Checks whether a point is "visible" from the edicts position
  */
-qboolean G_FrustomVis(edict_t * from, vec3_t point)
+extern qboolean G_FrustomVis (edict_t * from, vec3_t point)
 {
 	/* view frustom check */
 	vec3_t delta;
@@ -295,7 +295,7 @@ qboolean G_FrustomVis(edict_t * from, vec3_t point)
  * @param[to] to    The point to check visibility to
  * @return true if the points are visible from each other, false otherwise.
  */
-qboolean G_LineVis(vec3_t from, vec3_t to)
+static qboolean G_LineVis (vec3_t from, vec3_t to)
 {
 #if 0 /* this version is more accurate the other version is much faster */
 	trace_t tr;
@@ -309,7 +309,7 @@ qboolean G_LineVis(vec3_t from, vec3_t to)
 /**
  * @brief calculate how much check is "visible" from from
  */
-float G_ActorVis(vec3_t from, edict_t * check, qboolean full)
+extern float G_ActorVis (vec3_t from, edict_t * check, qboolean full)
 {
 	vec3_t test, dir;
 	float delta;
@@ -944,8 +944,6 @@ void G_BuildForbiddenList(int team)
 		if (!ent->inuse)
 			continue;
 		if ((ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->visflags & vis_mask))
-			fb_list[fb_length++] = ent->pos;
-		else if (ent->type == ET_BREAKABLE)
 			fb_list[fb_length++] = ent->pos;
 	}
 

@@ -1156,14 +1156,14 @@ void CL_ParseInput(void)
 		ccs.angles[PITCH] -= ROTATE_SPEED * (mx - oldx);
 		ccs.angles[YAW] += ROTATE_SPEED * (my - oldy);
 
-		while (ccs.angles[YAW] > 360.0)
+		while (ccs.angles[YAW] > 180.0)
 			ccs.angles[YAW] -= 360.0;
-		while (ccs.angles[YAW] < 0.0)
+		while (ccs.angles[YAW] < -180.0)
 			ccs.angles[YAW] += 360.0;
 
-		while (ccs.angles[PITCH] > 360.0)
+		while (ccs.angles[PITCH] > 180.0)
 			ccs.angles[PITCH] -= 360.0;
-		while (ccs.angles[PITCH] < 0.0)
+		while (ccs.angles[PITCH] < -180.0)
 			ccs.angles[PITCH] += 360.0;
 		return;
 

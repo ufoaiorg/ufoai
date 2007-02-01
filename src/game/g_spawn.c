@@ -597,7 +597,9 @@ static void SP_func_breakable(edict_t * self)
 	VectorSet(self->origin, 0, 0, 0);
 	/* set an inline model */
 	gi.setmodel(self, self->model);
-
+	/* trace against it */
+	self->solid = SOLID_BSP;
+	gi.linkentity(self);
 #if 0
 	Com_Printf( "model (%s) num: %i mins: %i %i %i maxs: %i %i %i\n",
 		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
