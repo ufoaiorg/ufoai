@@ -210,6 +210,11 @@ static void G_UpdateShotMock(shot_mock_t *mock, edict_t *shooter, edict_t *struc
 
 /**
  * @brief Deals damage of a give type and amount to a target.
+ * @param[in] ent TODO ???
+ * @param[in] fd The fire definition that defines what type of damage is dealt.
+ * @param[in] damage The value of the damage.
+ * @param[in] attacker The attacker.
+ * @param[in] mock TODO ???
  * @sa G_SplashDamage
  * @sa G_PrintStats
  */
@@ -367,7 +372,7 @@ static void G_Damage(edict_t * ent, fireDef_t *fd, int damage, edict_t * attacke
 }
 
 /**
- * @brief
+ * @brief Stun all members of a giben team.
  */
 void G_StunTeam(void)
 {
@@ -400,7 +405,11 @@ void G_StunTeam(void)
 }
 
 /**
- * @brief
+ * @brief Deals splash damage to a target and its surroundings.
+ * @param[in] ent TODO ???
+ * @param[in] fd The fire definition that defines what type of damage is dealt and how big the splash radius is.
+ * @param[in] impact TODO ???
+ * @param[in] mock TODO ???
  */
 void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *mock)
 {
@@ -640,7 +649,7 @@ static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int
 /**
  * @brief Fires straight shots.
  * @param[in] ent The attacker.
- * @param[in] fd ?? TODO
+ * @param[in] fd The fire definition that is used for the shot.
  * @param[in] wi ?? TODO
  * @param[in] from Location of the gun muzzle.
  * @param[in] at Grid coordinate of the target.
