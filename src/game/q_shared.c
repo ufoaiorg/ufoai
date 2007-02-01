@@ -3876,15 +3876,19 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
 	qboolean usable = qfalse;
 
 	for (i = 0; i < od->numWeapons; i++) {
-		if (od->weap_idx[i] < 0)
+#ifdef DEBUG
+		if (od->weap_idx[i] < 0) {
+			Com_DPrintf("INV_LoadableInWeapon: negative weap_idx entry (%s) found in item '%s'.\n", od->weap_id[i], od->id );
 			break;
+		}
+#endif
 		if (weapon_idx == od->weap_idx[i]) {
 			usable = qtrue;
 			break;
 		}
 	}
 #if 0
-	Com_DPrintf("INV_LoadableInWeapon: item '%s' usable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weapon_idx].id );
+	Com_DPrintf("INV_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weapon_idx].id );
 #endif
 	return usable;
 }
