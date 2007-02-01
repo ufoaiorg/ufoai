@@ -966,17 +966,17 @@ typedef struct objDef_s {
 	byte extension;		/**< Boolean: Is an extension. */
 	byte headgear;		/**< Boolean: Is a headgear. */
 	byte thrown;		/**< This item is thrown. */
-	int price;			/**< the price for this item */
+	int price;		/**< the price for this item */
 	int buytype;		/**< In which category of the buy menu is this item listed. */
 
 	/* Weapon specific */
 	int ammo;			/**< how much can we load into this weapon at once */
 	int reload;			/**< time units for reloading the weapon */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon. */
-	int numFiredefs[MAX_WEAPONS_PER_OBJDEF];			/**< Numnber of firemodes per weapon. */
-	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];			/**< List of weapon ids */
+	byte numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Numnber of firemodes per weapon. */
+	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];	/**< List of weapon ids */
 	int weap_idx[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon indices (bascially replaces forWeapon if done correctly) */
-	int numWeapons;							/**< Number of weapons. */
+	byte numWeapons;				/**< Number of weapons. */
 
 	/* Technology link */
 	void *tech;		/**< Technology link to item to use this extension for (if this is an extension) */
