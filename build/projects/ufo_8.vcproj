@@ -261,12 +261,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib winmm.lib wsock32.lib advapi32.lib"
-				OutputFile=".\../ufo.exe"
+				AdditionalDependencies="kernel32.lib user32.lib winmm.lib wsock32.lib advapi32.lib zlib.lib &quot;$(ProjectDir)\..\..\src\ports\win32\vc8\intl.lib&quot;"
+				OutputFile="..\..\ufo.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
-				IgnoreDefaultLibraryNames=""
+				GenerateManifest="true"
+				IgnoreDefaultLibraryNames="libcmt.lib"
 				ProgramDatabaseFile=".\../ufo.pdb"
 				SubSystem="2"
 				TargetMachine="1"
@@ -355,11 +355,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
-				AdditionalDependencies="kernel32.lib user32.lib winmm.lib wsock32.lib advapi32.lib"
+				AdditionalDependencies="kernel32.lib user32.lib winmm.lib wsock32.lib advapi32.lib zlib.lib &quot;$(ProjectDir)\..\..\src\ports\win32\vc8\intl.lib&quot;"
 				OutputFile="..\..\ufo.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
+				AdditionalLibraryDirectories=""
+				GenerateManifest="true"
+				IgnoreDefaultLibraryNames="libcmtd.lib"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\debug/ufo.pdb"
 				GenerateMapFile="true"
@@ -429,7 +431,7 @@
 				InlineFunctionExpansion="1"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF;HAVE_GETTEXT"
 				StringPooling="true"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				PrecompiledHeaderFile=".\release/ufo.pch"
 				AssemblerListingLocation=".\release/"
@@ -453,12 +455,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
-				AdditionalDependencies="kernel32.lib user32.lib winmm.lib wsock32.lib advapi32.lib sdl.lib sdl_ttf.lib"
-				OutputFile=".\../ufo.exe"
+				AdditionalDependencies="kernel32.lib user32.lib winmm.lib wsock32.lib advapi32.lib sdl.lib sdl_ttf.lib &quot;$(ProjectDir)\..\..\src\ports\win32\vc8\intl.lib&quot; "
+				OutputFile="..\..\ufo.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
-				IgnoreDefaultLibraryNames=""
+				GenerateManifest="true"
+				IgnoreDefaultLibraryNames="libcmt.lib"
 				ProgramDatabaseFile=".\../ufo.pdb"
 				SubSystem="2"
 				TargetMachine="1"
@@ -864,7 +866,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\ports\win32\intl.lib"
+				RelativePath="..\..\src\ports\win32\vc8\intl.lib"
 				>
 			</File>
 			<File
