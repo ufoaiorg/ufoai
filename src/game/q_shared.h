@@ -909,9 +909,9 @@ extern char *pa_format[128];
 /** this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
 	/* Some of these might be needed later on (they can be created in Com_ParseItem and/or Com_AddObjectLinks) ....
-	int obj_idx;		The weapon/ammo (csi.ods[obj_idx]) this fd is located in.
-	byte weap_idx;		The weapon_mod entry (objDef_t->fd[weap_idx]) this fd is located in.
-	byte fd_idx;		Self link of the fd in the objDef_t->fd[][fd_idx] array.
+	int obj_idx;		**< The weapon/ammo (csi.ods[obj_idx]) this fd is located in.
+	byte weap_idx;		**< The weapon_mod entry (objDef_t->fd[weap_idx]) this fd is located in.
+	byte fd_idx;		**< Self link of the fd in the objDef_t->fd[][fd_idx] array.
 	*/
 	char name[MAX_VAR];			/**< script id */
 	char projectile[MAX_VAR];	/**< particle */
