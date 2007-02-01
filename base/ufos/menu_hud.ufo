@@ -768,25 +768,28 @@ menu hud
 	
 	// ==================
 	// WIP firemode display (this one has seperate lists for each weaponhand)
+	// Some helpful info:
+	// hud/firemode (active)	->	texl "0 0"	texh "255 63"
+	// hud/firemode (inactive)	->	texl "0 64"	texh "255 128"
 	// ==================
 /*
-	confunc set_left_ina0 { *bt_left_fm0    image althud/firemode_inactive }
-	confunc set_left_ina1 { *bt_left_fm1    image althud/firemode_inactive }
-	confunc set_left_ina2 { *bt_left_fm2    image althud/firemode_inactive }
-	confunc set_left_ina3 { *bt_left_fm3    image althud/firemode_inactive }
-	confunc set_right_ina0 { *bt_right_fm0    image althud/firemode_inactive }
-	confunc set_right_ina1 { *bt_right_fm1    image althud/firemode_inactive }
-	confunc set_right_ina2 { *bt_right_fm2    image althud/firemode_inactive }
-	confunc set_right_ina3 { *bt_right_fm3    image althud/firemode_inactive }
+	confunc set_left_ina0 { *bt_left_fm0	texl "0 64"	texh "255 128" }
+	confunc set_left_ina1 { *bt_left_fm1	texl "0 64"	texh "255 128" }
+	confunc set_left_ina2 { *bt_left_fm2	texl "0 64"	texh "255 128" }
+	confunc set_left_ina3 { *bt_left_fm3	texl "0 64"	texh "255 128" }
+	confunc set_right_ina0 { *bt_right_fm0	texl "0 64"	texh "255 128" }
+	confunc set_right_ina1 { *bt_right_fm1	texl "0 64"	texh "255 128" }
+	confunc set_right_ina2 { *bt_right_fm2	texl "0 64"	texh "255 128" }
+	confunc set_right_ina3 { *bt_right_fm3	texl "0 64"	texh "255 128" }
 	
-	confunc set_left_a0 { *bt_left_fm0    image althud/firemode }
-	confunc set_left_a1 { *bt_left_fm1    image althud/firemode }
-	confunc set_left_a2 { *bt_left_fm2    image althud/firemode }
-	confunc set_left_a3 { *bt_left_fm3    image althud/firemode }
-	confunc set_right_a0 { *bt_right_fm0    image althud/firemode }
-	confunc set_right_a1 { *bt_right_fm1    image althud/firemode }
-	confunc set_right_a2 { *bt_right_fm2    image althud/firemode }
-	confunc set_right_a3 { *bt_right_fm3    image althud/firemode }
+	confunc set_left_a0 { *bt_left_fm0	texl "0 0"	texh "255 63" }
+	confunc set_left_a1 { *bt_left_fm1	texl "0 0"	texh "255 63" }
+	confunc set_left_a2 { *bt_left_fm2	texl "0 0"	texh "255 63" }
+	confunc set_left_a3 { *bt_left_fm3	texl "0 0"	texh "255 63" }
+	confunc set_right_a0 { *bt_right_fm0	texl "0 0"	texh "255 63" }
+	confunc set_right_a1 { *bt_right_fm1	texl "0 0"	texh "255 63" }
+	confunc set_right_a2 { *bt_right_fm2	texl "0 0"	texh "255 63" }
+	confunc set_right_a3 { *bt_right_fm3	texl "0 0"	texh "255 63" }
 
 	confunc set_left_inv0 { *bt_left_fm0    invis true *left_fm_name0 invis true }
 	confunc set_left_inv1 { *bt_left_fm1    invis true *left_fm_name1 invis true }
@@ -807,66 +810,83 @@ menu hud
 	confunc set_right_vis3 { *bt_right_fm3    invis false *right_fm_name3 invis false }
 
 
+	
 	pic bt_left_fm0
 	{
-		image	althud/firemode
+		image	hud/firemode
 		pos		"600 400"
+		texl	"0 0"
+		texh	"255 63"
 		mousefx	false
 		click	{ cmd fire_l 0; }
 	}
 
 	pic bt_left_fm1
 	{
-		image	althud/firemode
+		image	hud/firemode
 		pos		"600 464"
+		texl	"0 0"
+		texh	"255 63"
 		mousefx	false
 		click	{ cmd fire_l 1; }
 	}
 
 	pic bt_left_fm2
 	{
-		image	althud/firemode
+		image	hud/firemode
 		pos		"600 528"
+		texl	"0 0"
+		texh	"255 63"
 		mousefx	false
 		click	{ cmd fire_l 2; }
 	}
 
 	pic bt_left_fm3
 	{
-		image	althud/firemode
+		image	hud/firemode
 		pos		"600 592"
+		texl	"0 0"
+		texh	"255  63"
 		mousefx	false
 		click	{ cmd fire_l 3; }
 	}
 
 	pic bt_right_fm0
 	{
-		image	althud/firemode
+		image	hud/firemode
 		pos		"800 400"
+		texl	"0 0"
+		texh	"255 63"
 		mousefx	false
 		click	{ cmd fire_r 0; }
 	}
 
 	pic bt_right_fm1
 	{
-		image	althud/firemode
+		image	hud/firemode
 		pos		"800 464"
+		texl	"0 0"
+		texh	"255 63"
 		mousefx	false
 		click	{ cmd fire_r 1; }
 	}
 
 	pic bt_right_fm2
 	{
-		image	althud/firemode
+		image	hud/firemode
 		pos		"800 528"
+		texl	"0 0"
+		texh	"255 63"
 		mousefx	false
 		click	{ cmd fire_r 2; }
 	}
 
 	pic bt_right_fm3
 	{
-		image	althud/firemode
+		image	hud/firemode
 		pos		"800 592"
+		texl	"0 0"
+		texh	"255 63"
 		mousefx	false
 		click	{ cmd fire_r 3; }
 	}
