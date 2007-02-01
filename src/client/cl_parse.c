@@ -1186,14 +1186,17 @@ static void CL_ParseEvent (void)
 					fireDef_t *fd;
 					qboolean first;
 					int type;
+					/* int obj_idx; byte weap_idx, fd_idx; */
 
 					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &type);
+					/* MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_idx, &fd_idx); */
 
 					if (first) {
 						nextTime += 500;
 						impactTime = shootTime = nextTime;
 					} else {
 						fd = GET_FIREDEF(type);
+						/* fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx); */
 /*
 						TODO: not needed? and SF_BOUNCED?
 						if ( fd->speed )
@@ -1211,13 +1214,18 @@ static void CL_ParseEvent (void)
 			case EV_ACTOR_SHOOT:
 				{
 					fireDef_t	*fd;
-					int		type, flags, dummy;
+					int		flags, dummy;
+					int		type;
+					/* int obj_idx; byte weap_idx, fd_idx; */
 					vec3_t	muzzle, impact;
 
 					/* read data */
 					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT], &dummy, &type, &flags, &muzzle, &impact, &dummy);
+					/* MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT], &dummy, &obj_idx, &weap_idx, &fd_idx, &flags, &muzzle, &impact, &dummy); */
 
 					fd = GET_FIREDEF( type );
+					/* fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx); */
+
 					if ( !(flags & SF_BOUNCED) ) {
 						/* shooting */
 						if ( fd->speed )
