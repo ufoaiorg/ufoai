@@ -778,6 +778,15 @@ menu hud
 	confunc set_right_ina1 { *bt_right_fm1    image althud/firemode_inactive }
 	confunc set_right_ina2 { *bt_right_fm2    image althud/firemode_inactive }
 	confunc set_right_ina3 { *bt_right_fm3    image althud/firemode_inactive }
+	
+	confunc set_left_a0 { *bt_left_fm0    image althud/firemode }
+	confunc set_left_a1 { *bt_left_fm1    image althud/firemode }
+	confunc set_left_a2 { *bt_left_fm2    image althud/firemode }
+	confunc set_left_a3 { *bt_left_fm3    image althud/firemode }
+	confunc set_right_a0 { *bt_right_fm0    image althud/firemode }
+	confunc set_right_a1 { *bt_right_fm1    image althud/firemode }
+	confunc set_right_a2 { *bt_right_fm2    image althud/firemode }
+	confunc set_right_a3 { *bt_right_fm3    image althud/firemode }
 
 	confunc set_left_inv0 { *bt_left_fm0    invis true *left_fm_name0 invis true }
 	confunc set_left_inv1 { *bt_left_fm1    invis true *left_fm_name1 invis true }
@@ -787,6 +796,15 @@ menu hud
 	confunc set_right_inv1 { *bt_right_fm1    invis true *right_fm_name1 invis true }
 	confunc set_right_inv2 { *bt_right_fm2    invis true *right_fm_name2 invis true }
 	confunc set_right_inv3 { *bt_right_fm3    invis true *right_fm_name3 invis true }
+	
+	confunc set_left_vis0 { *bt_left_fm0    invis false *left_fm_name0 invis false }
+	confunc set_left_vis1 { *bt_left_fm1    invis false *left_fm_name1 invis false }
+	confunc set_left_vis2 { *bt_left_fm2    invis false *left_fm_name2 invis false }
+	confunc set_left_vis3 { *bt_left_fm3    invis false *left_fm_name3 invis false }
+	confunc set_right_vis0 { *bt_right_fm0    invis false *right_fm_name0 invis false }
+	confunc set_right_vis1 { *bt_right_fm1    invis false *right_fm_name1 invis false }
+	confunc set_right_vis2 { *bt_right_fm2    invis false *right_fm_name2 invis false }
+	confunc set_right_vis3 { *bt_right_fm3    invis false *right_fm_name3 invis false }
 
 
 	pic bt_left_fm0
