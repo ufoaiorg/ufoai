@@ -272,7 +272,7 @@ static qboolean E_EmployeeIsFree (employee_t * employee)
  * @param[in] idx Which employee id (in global employee array)
  * @return employee_t pointer or NULL
  */
-extern employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int idx)
+extern employee_t* E_GetEmployee (const base_t* const base, employeeType_t type, int idx)
 {
 	int i;
 
@@ -911,3 +911,18 @@ extern void E_Reset (void)
 	Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
 	Cmd_AddCommand("employee_list_click", E_EmployeeListClick_f, "Callback for employee_list click function");
 }
+
+/**
+ * @brief Searches all soldiers employees for the ucn (character id)
+ */
+extern employee_t* E_GetEmployeeFromChrUCN (int ucn)
+{
+	int i;
+
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
+		if (gd.employees[EMPL_SOLDIER][i].chr.ucn == ucn)
+			return &(gd.employees[EMPL_SOLDIER][i]);
+
+	return NULL;
+}
+

@@ -55,7 +55,7 @@ typedef struct employee_s {
 } employee_t;
 
 void E_ResetEmployees(void);
-employee_t * E_CreateEmployee(employeeType_t type);
+employee_t* E_CreateEmployee(employeeType_t type);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
 qboolean E_HireEmployee(const base_t* const base, employeeType_t type, int num);
 qboolean E_RemoveEmployeeFromBuilding(employee_t *employee);
@@ -64,13 +64,14 @@ employeeType_t E_GetEmployeeType(char* type);
 extern char* E_GetEmployeeString(employeeType_t type);
 int E_EmployeesInBase(const base_t* const base, employeeType_t type, qboolean free_only);
 
-employee_t * E_GetEmployee(const base_t* const base, employeeType_t type, int num);
-character_t * E_GetCharacter(const base_t* const base, employeeType_t type, int num);
-employee_t * E_GetHiredEmployee(const base_t* const base, employeeType_t type, int num);
-character_t * E_GetHiredCharacter(const base_t* const base, employeeType_t type, int num);
-employee_t * E_GetUnassignedEmployee(const base_t* const base, employeeType_t type);
-employee_t * E_GetAssignedEmployee(const base_t* const base, employeeType_t type);
-employee_t * E_GetHiredEmployeeByUcn(const base_t* const base, employeeType_t type, int ucn);
+employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int num);
+character_t* E_GetCharacter(const base_t* const base, employeeType_t type, int num);
+employee_t* E_GetHiredEmployee(const base_t* const base, employeeType_t type, int num);
+character_t* E_GetHiredCharacter(const base_t* const base, employeeType_t type, int num);
+employee_t* E_GetUnassignedEmployee(const base_t* const base, employeeType_t type);
+employee_t* E_GetAssignedEmployee(const base_t* const base, employeeType_t type);
+employee_t* E_GetHiredEmployeeByUcn(const base_t* const base, employeeType_t type, int ucn);
+employee_t* E_GetEmployeeFromChrUCN(int ucn);
 
 int E_CountHired(const base_t* const base, employeeType_t type);
 int E_CountUnhired(employeeType_t type);
