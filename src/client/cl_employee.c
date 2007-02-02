@@ -765,6 +765,9 @@ extern int E_CountHired (const base_t* const base, employeeType_t type)
 	int count = 0, i;
 	employee_t *employee = NULL;
 
+	if (!base)
+		return 0;
+
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
 		if (employee->hired && employee->baseIDHired == base->idx)
@@ -802,6 +805,9 @@ extern int E_CountUnassigned (const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
 	employee_t *employee = NULL;
+
+	if (!base)
+		return 0;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
