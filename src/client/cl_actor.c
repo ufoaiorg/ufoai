@@ -404,33 +404,42 @@ static void DisplayFiremodeEntryLeft(fireDef_t *fd, byte status)
 
 
 /**
- * @brief Displays the firemdoes for teh left hand.
- * @param[in] weapon_idx The ods index of the weapon that is used.
- * @param[in] ammo_idx The ods index of the ammo that is used in the weapon.
- * @param[in] TUs The time untis the actor has left.
+ * @brief Displays the firemdoes for the left hand.
+ * @note selAActor needs to be set correctly and item.t & item.m need to reflect the used weapon/ammo.
+ * @todo Check if above requirements are fulfilled.
  * @todo Make this work for left and right hand.
  */
-static void DisplayFiremodesLeft(int weapon_idx, int ammo_idx, int TUs) /* TODO: maybe get an "item_t" here? */
+static void DisplayFiremodesLeft(void)
 {
+	invList_t *invlist_weapon = NULL;
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
 	byte weap_fd_idx;
 	byte i;
 	
-	if (weapon_idx < 0 || ammo_idx < 0)
+	if (!selActor)
 		return;
 	
-	weapon = &csi.ods[weapon_idx];
-	ammo = &csi.ods[ammo_idx];
+	invlist_weapon = LEFT(selActor);
 	
-	if (!weapon || !ammo)
+	if (!invlist_weapon || invlist_weapon->item.t < 0)
 		return;
 	
-	weap_fd_idx = INV_FiredefsIDXForWeapon (ammo, weapon_idx);
+	weapon = &csi.ods[invlist_weapon->item.t];
+	
+	if (!weapon || invlist_weapon->item.m < 0)
+		return;
+	
+	ammo = &csi.ods[invlist_weapon->item.m];
+	
+	if (!ammo)
+		return;
+	
+	weap_fd_idx = INV_FiredefsIDXForWeapon (ammo, invlist_weapon->item.t);
 	
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-		if (i < weapon->numFiredefs[weap_fd_idx]) { /* We have a defined fd */
-			if (weapon->fd[weap_fd_idx][i].time <= TUs) {  /*enough timeunits for this firemode?*/
+		if ( i < weapon->numFiredefs[weap_fd_idx] ) { /* We have a defined fd */
+			if ( weapon->fd[weap_fd_idx][i].time <= selActor->TU ) {  /* Enough timeunits for this firemode?*/
 				DisplayFiremodeEntryLeft(&weapon->fd[weap_fd_idx][i], 1);
 			} else{
 				DisplayFiremodeEntryLeft(&weapon->fd[weap_fd_idx][i], 0);
