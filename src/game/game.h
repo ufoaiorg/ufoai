@@ -82,14 +82,14 @@ struct edict_s {
 	vec3_t angles;
 
 	/* FIXME: move these fields to a server private sv_entity_t */
-	link_t area;				/* linked to a division node or leaf */
-	int headnode;				/* unused if num_clusters != -1 */
+	link_t area;				/**< linked to a division node or leaf */
+	int headnode;				/**< unused if num_clusters != -1 */
 
 	/* tracing info */
 	solid_t solid;
 
-	vec3_t mins, maxs; /* position of min and max points - relative to origin */
-	vec3_t absmin, absmax; /* position of min and max points - relative to world's origin */
+	vec3_t mins, maxs; /**< position of min and max points - relative to origin */
+	vec3_t absmin, absmax; /**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
 	/*
