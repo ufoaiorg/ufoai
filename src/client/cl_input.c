@@ -773,6 +773,7 @@ void CL_InitInput(void)
 	Cmd_AddCommand("firers", CL_FireRightSecondary, NULL);
 	Cmd_AddCommand("firelp", CL_FireLeftPrimary, NULL);
 	Cmd_AddCommand("firels", CL_FireLeftSecondary, NULL);
+	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft, NULL);
 	Cmd_AddCommand("reloadright", CL_ReloadRight, NULL);
 	Cmd_AddCommand("nextround", CL_NextRound, _("Ends current round"));

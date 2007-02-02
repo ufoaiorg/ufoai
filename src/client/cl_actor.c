@@ -380,26 +380,59 @@ static void SetWeaponButton(int button, int state)
 }
 
 /**
+ * @brief Makes all entries of the firemode lists invisible.
+ * @todo Check if this make them compeltetly 'ignored'.
+ */
+static void HideFiremodes(void)
+{
+	Cbuf_AddText("set_left_inv0\n");
+	Cbuf_AddText("set_left_inv1\n");
+	Cbuf_AddText("set_left_inv2\n");
+	Cbuf_AddText("set_left_inv3\n");
+	Cbuf_AddText("set_right_inv0\n");
+	Cbuf_AddText("set_right_inv1\n");
+	Cbuf_AddText("set_right_inv2\n");
+	Cbuf_AddText("set_right_inv3\n");
+}
+
+/**
  * @brief Sets the display for a single weapon/reload HUD button
  * @param[in] fd The firedefinition/firemode to be displayed.
+ * @param[in] hand Which list to display. 'l' for left hand list, 'r' for right hand list.
  * @param[in] status Display the firemode clickable/active (1) or inactive (0).
  * @todo Make this work for left and right hand.
  */
-static void DisplayFiremodeEntryLeft(fireDef_t *fd, byte status)
+static void DisplayFiremodeEntry(fireDef_t *fd, char hand, byte status)
 {
 	if (!fd)
 		return;
-
-	Cbuf_AddText(va("set_left_vis0%i\n", fd->fd_idx)); /* Make this entry visible (in case it wasn't). */
 	
-	if (status) {
-		Cbuf_AddText(va("set_left_a%i\n", fd->fd_idx));
+	if (hand == 'r') {
+		Cbuf_AddText(va("set_right_vis%i\n", fd->fd_idx)); /* Make this entry visible (in case it wasn't). */
+	
+		if (status) {
+			Cbuf_AddText(va("set_right_a%i\n", fd->fd_idx));
+		} else {
+			Cbuf_AddText(va("set_right_a%i\n", fd->fd_idx));
+		}
+		
+		Cvar_Set(va("mn_r_fm_name%i", fd->fd_idx), va("%s", fd->name));
+		Cvar_Set(va("mn_r_fm_tu%i", fd->fd_idx), va("%i", fd->time));	
+	} else if (hand == 'l') {
+		Cbuf_AddText(va("set_left_vis%i\n", fd->fd_idx)); /* Make this entry visible (in case it wasn't). */
+	
+		if (status) {
+			Cbuf_AddText(va("set_left_a%i\n", fd->fd_idx));
+		} else {
+			Cbuf_AddText(va("set_left_a%i\n", fd->fd_idx));
+		}
+		
+		Cvar_Set(va("mn_l_fm_name%i", fd->fd_idx), va("%s", fd->name));
+		Cvar_Set(va("mn_l_fm_tu%i", fd->fd_idx), va("%i", fd->time));
 	} else {
-		Cbuf_AddText(va("set_left_a%i\n", fd->fd_idx));
+		/* TODO: Add good error note. */
+		return;
 	}
-	
-	Cvar_Set(va("mn_l_fm_name%i", fd->fd_idx), va("%s", fd->name));
-	Cvar_Set(va("mn_l_fm_tu%i", fd->fd_idx), va("%i", fd->time));
 }
 
 
@@ -409,19 +442,36 @@ static void DisplayFiremodeEntryLeft(fireDef_t *fd, byte status)
  * @todo Check if above requirements are fulfilled.
  * @todo Make this work for left and right hand.
  */
-static void DisplayFiremodesLeft(void)
+void CL_DisplayFiremodes(void)
 {
 	invList_t *invlist_weapon = NULL;
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
 	byte weap_fd_idx;
 	byte i;
+	char *hand;
 	
+	/* HideFiremodes();  Hides all firemode lists ... TODO only needed for development, but can't hurt. */
+	
+	if (Cmd_Argc() < 2) { /* no argument given */
+		hand = "r";
+	} else {
+		hand = Cmd_Argv(1);
+	}
+
+	if (hand[0] != 'r' && hand[0] != 'l') {
+		Com_Printf("Usage: list_firemodes [l|r]\n");
+		return;
+	}
+
 	if (!selActor)
 		return;
-	
-	invlist_weapon = LEFT(selActor);
-	
+
+	if (hand[0] == 'r')
+		invlist_weapon = RIGHT(selActor);
+	else
+		invlist_weapon = LEFT(selActor);
+
 	if (!invlist_weapon || invlist_weapon->item.t < 0)
 		return;
 	
@@ -437,12 +487,14 @@ static void DisplayFiremodesLeft(void)
 	
 	weap_fd_idx = INV_FiredefsIDXForWeapon (ammo, invlist_weapon->item.t);
 	
+	Com_Printf("CL_DisplayFiremodes: displaying %s firemodes.\n", hand);
+
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 		if ( i < weapon->numFiredefs[weap_fd_idx] ) { /* We have a defined fd */
 			if ( weapon->fd[weap_fd_idx][i].time <= selActor->TU ) {  /* Enough timeunits for this firemode?*/
-				DisplayFiremodeEntryLeft(&weapon->fd[weap_fd_idx][i], 1);
+				DisplayFiremodeEntry(&weapon->fd[weap_fd_idx][i], hand[0], 1);
 			} else{
-				DisplayFiremodeEntryLeft(&weapon->fd[weap_fd_idx][i], 0);
+				DisplayFiremodeEntry(&weapon->fd[weap_fd_idx][i], hand[0], 0);
 			}
 		} else { /* No more fd left in the list */
 			Cbuf_AddText(va("set_left_inv%i\n", i)); /* Hide this entry */
