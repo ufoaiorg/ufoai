@@ -381,7 +381,6 @@ static void SetWeaponButton(int button, int state)
 
 /**
  * @brief Makes all entries of the firemode lists invisible.
- * @todo Check if this make them compeltetly 'ignored'.
  */
 static void HideFiremodes(void)
 {
@@ -400,7 +399,6 @@ static void HideFiremodes(void)
  * @param[in] fd The firedefinition/firemode to be displayed.
  * @param[in] hand Which list to display. 'l' for left hand list, 'r' for right hand list.
  * @param[in] status Display the firemode clickable/active (1) or inactive (0).
- * @todo Make this work for left and right hand.
  */
 static void DisplayFiremodeEntry(fireDef_t *fd, char hand, byte status)
 {
@@ -435,16 +433,48 @@ static void DisplayFiremodeEntry(fireDef_t *fd, char hand, byte status)
 	}
 }
 
+/**
+ * @brief Start targetting/aiming with the correct weapon&firemode.
+ * @param[in] hand Which weapon(-hand) to use.
+ * @param[out] weapon The weapon in the hand.
+ * @param[out] ammo The ammo used in the weapon (is the same as weapon for grenades and similar).
+ * @param[out] weap_fd_idx weapon_mod index in the ammo for the weapon.
+ */
+static void GetWeaponAndAmmo(char hand, objDef_t *weapon, objDef_t *ammo, byte *weap_fd_idx)
+{
+	invList_t *invlist_weapon = NULL;
+	
+	if (!selActor)
+		return;
+
+	if (hand == 'r')
+		invlist_weapon = RIGHT(selActor);
+	else
+		invlist_weapon = LEFT(selActor);
+
+	if (!invlist_weapon || invlist_weapon->item.t < 0 || invlist_weapon->item.m < 0)
+		return;
+	
+	weapon = &csi.ods[invlist_weapon->item.t];
+	
+	if (!weapon)
+		return;
+	
+	if (weapon->numWeapons)
+		ammo = weapon; /* This weapon doesn't need ammo it already has firedefs */
+	else
+		ammo = &csi.ods[invlist_weapon->item.m];
+	
+	(*weap_fd_idx) = INV_FiredefsIDXForWeapon (ammo, invlist_weapon->item.t);
+	
+	Com_DPrintf("CL_DisplayFiremodes: weapon %i ammo %i\n", invlist_weapon->item.t, invlist_weapon->item.m);
+}
 
 /**
- * @brief Displays the firemdoes for the left hand.
- * @note selAActor needs to be set correctly and item.t & item.m need to reflect the used weapon/ammo.
- * @todo Check if above requirements are fulfilled.
- * @todo Make this work for left and right hand.
+ * @brief Displays the firemodes for the left hand.
  */
 void CL_DisplayFiremodes(void)
 {
-	invList_t *invlist_weapon = NULL;
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
 	byte weap_fd_idx;
@@ -464,33 +494,10 @@ void CL_DisplayFiremodes(void)
 		return;
 	}
 
-	if (!selActor)
-		return;
-
-	if (hand[0] == 'r')
-		invlist_weapon = RIGHT(selActor);
-	else
-		invlist_weapon = LEFT(selActor);
-
-	if (!invlist_weapon || invlist_weapon->item.t < 0 || invlist_weapon->item.m < 0)
-		return;
+	GetWeaponAndAmmo(hand[0], weapon, ammo, &weap_fd_idx);
 	
-	weapon = &csi.ods[invlist_weapon->item.t];
-	
-	if (!weapon)
-		return;
-	
-	if (weapon->numWeapons)
-		ammo = weapon; /* This weapon doesn't need ammo it already has firedefs */
-	else
-		ammo = &csi.ods[invlist_weapon->item.m];
-	
-	if (!ammo)
-		return;
-	
-	Com_DPrintf("CL_DisplayFiremodes: weapon %i ammo %i\n", invlist_weapon->item.t, invlist_weapon->item.m);
-	
-	weap_fd_idx = INV_FiredefsIDXForWeapon (ammo, invlist_weapon->item.t);
+	if (!weapon || !ammo)
+		return;	
 	
 	Com_Printf("CL_DisplayFiremodes: displaying %s firemodes.\n", hand);
 
@@ -510,6 +517,52 @@ void CL_DisplayFiremodes(void)
 	}
 }
 
+
+/**
+ * @brief Starts aiming/target mode for selected left/right firemode.
+ */
+void CL_FireWeapon(void)
+{
+	char *hand;
+	byte firemode;
+
+	objDef_t *weapon = NULL;
+	objDef_t *ammo = NULL;
+	byte weap_fd_idx;
+	
+	if (Cmd_Argc() < 3) { /* no argument given */
+		Com_Printf("Usage: fireweap [l|r] <num>   num=firemode number\n");
+		return;
+	}
+	
+	hand = Cmd_Argv(1);
+
+	if (hand[0] != 'r' && hand[0] != 'l') {
+		Com_Printf("Usage: fireweap [l|r] <num>   num=firemode number\n");
+		return;
+	}
+	
+	if (!selActor)
+		return;
+	
+	firemode = atoi(Cmd_Argv(2));
+	
+	if (firemode >= MAX_FIREDEFS_PER_WEAPON) {
+		Com_Printf("CL_FireWeapon: Firemode index to big (%i). Highest possible number is %i.\n", firemode, MAX_FIREDEFS_PER_WEAPON-1);
+		return;
+	}
+	
+	GetWeaponAndAmmo(hand[0], weapon, ammo, &weap_fd_idx);
+
+	
+	if ( ammo->fd[weap_fd_idx][firemode].time <= selActor->TU ) {
+		/* TODO: actually start aiming */
+		HideFiremodes();
+	} else {
+		Com_Printf("CL_FireWeapon: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
+		return;
+	}	
+}
 
 /**
  * @brief Refreshes the weapon/reload buttons on the HUD
