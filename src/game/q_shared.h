@@ -600,8 +600,8 @@ typedef struct cplane_s {
 
 typedef struct cmodel_s {
 	vec3_t mins, maxs;
-	vec3_t origin;              /**< for sounds or lights */
-	int tile;
+	vec3_t origin;				/**< for sounds or lights */
+	int tile;					/**< which tile in assembly */
 	int headnode;
 } cmodel_t;
 
@@ -820,9 +820,13 @@ ELEMENTS COMMUNICATED ACROSS THE NET
 #define TEAM_PHALANX    1
 #define TEAM_ALIEN      7
 
-/* add this flag for instant event execution */
+/** add this flag for instant event execution */
 #define INSTANTLY   0x80
 
+/**
+ * @brief Possible event values
+ * @sa cl_parse.c for event bindings
+ */
 typedef enum {
 	EV_NULL,
 	EV_RESET,
@@ -833,6 +837,7 @@ typedef enum {
 
 	EV_ENT_APPEAR,
 	EV_ENT_PERISH,
+	EV_ENT_BREAKABLE,
 
 	EV_ACTOR_APPEAR,
 	EV_ACTOR_START_MOVE,

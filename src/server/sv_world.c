@@ -48,7 +48,7 @@ FIXME: this use of "area" is different from the bsp file use
 #define	EDICT_FROM_AREA(l) STRUCT_FROM_LINK(l,edict_t,area)
 
 typedef struct areanode_s {
-	int axis;					/* -1 = leaf node */
+	int axis;					/**< -1 = leaf node */
 	float dist;
 	struct areanode_s *children[2];
 	link_t trigger_edicts;
@@ -64,7 +64,6 @@ static int sv_numareanodes;
 static float *area_mins, *area_maxs;
 static edict_t **area_list;
 static int area_count, area_maxcount;
-static int area_type;
 
 /**
  * @brief ClearLink is used for new headnodes
@@ -214,7 +213,7 @@ extern void SV_LinkEdict (edict_t * ent)
 
 	/* link it in */
 	if (ent->solid == SOLID_TRIGGER)
-		InsertLinkBefore (&ent->area, &node->trigger_edicts);
+		InsertLinkBefore(&ent->area, &node->trigger_edicts);
 	else
 		InsertLinkBefore(&ent->area, &node->solid_edicts);
 }
@@ -222,13 +221,13 @@ extern void SV_LinkEdict (edict_t * ent)
 
 /**
  * @brief fills in a table of edict pointers with edicts that have bounding boxes
- * that intersect the given area.  It is possible for a non-axial bmodel
+ * that intersect the given area. It is possible for a non-axial bmodel
  * to be returned that doesn't actually intersect the area on an exact test.
  * @return the number of pointers filled in
  * @note ??? does this always return the world?
  * @sa SV_AreaEdicts
  */
-static void SV_AreaEdicts_r (areanode_t * node)
+static void SV_AreaEdicts_r (areanode_t * node, int area_type)
 {
 	link_t *l, *next, *start;
 	edict_t *check;
@@ -257,7 +256,7 @@ static void SV_AreaEdicts_r (areanode_t * node)
 			continue;			/* not touching */
 
 		if (area_count == area_maxcount) {
-			Com_Printf("SV_AreaEdicts: MAXCOUNT\n");
+			Com_Printf("SV_AreaEdicts_r: MAXCOUNT\n");
 			return;
 		}
 
@@ -270,9 +269,9 @@ static void SV_AreaEdicts_r (areanode_t * node)
 
 	/* recurse down both sides */
 	if (area_maxs[node->axis] > node->dist)
-		SV_AreaEdicts_r(node->children[0]);
+		SV_AreaEdicts_r(node->children[0], area_type);
 	if (area_mins[node->axis] < node->dist)
-		SV_AreaEdicts_r(node->children[1]);
+		SV_AreaEdicts_r(node->children[1], area_type);
 }
 
 /**
@@ -286,19 +285,19 @@ static int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t ** list, int maxcoun
 	area_list = list;
 	area_count = 0;
 	area_maxcount = maxcount;
-	area_type = areatype;
 
-	SV_AreaEdicts_r(sv_areanodes);
+	SV_AreaEdicts_r(sv_areanodes, areatype);
 
 	return area_count;
 }
 
 /*=========================================================================== */
 
+/** @brief Server side moveclip - see cmodel.c */
 typedef struct {
-	vec3_t boxmins, boxmaxs;	/* enclose the test object along entire move */
-	float *mins, *maxs;			/* size of the moving object */
-	vec3_t mins2, maxs2;		/* size when clipping against mosnters */
+	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
+	float *mins, *maxs;			/**< size of the moving object */
+	vec3_t mins2, maxs2;		/**< size when clipping against mosnters */
 	float *start, *end;
 	trace_t trace;
 	edict_t *passedict;
@@ -321,7 +320,7 @@ static int SV_HullForEntity (edict_t * ent, int *tile)
 		model = sv.models[ent->modelindex];
 
 		if (!model)
-			Com_Error(ERR_FATAL, "MOVETYPE_PUSH with a non bsp model");
+			Com_Error(ERR_FATAL, "SOLID_BSP with a non bsp model");
 
 		*tile = model->tile;
 		return model->headnode;
@@ -337,12 +336,14 @@ static int SV_HullForEntity (edict_t * ent, int *tile)
  * @brief
  * @sa SV_Trace
  * @sa SV_AreaEdicts
+ * @sa CL_ClipMoveToLEs
  */
 static void SV_ClipMoveToEntities (moveclip_t * clip)
 {
 	int i, num;
 	edict_t *touchlist[MAX_EDICTS], *touch;
 	trace_t trace;
+	float *angles;
 	int tile = 0, headnode = 0;
 
 	num = SV_AreaEdicts(clip->boxmins, clip->boxmaxs, touchlist, MAX_EDICTS, AREA_SOLID);
@@ -355,9 +356,10 @@ static void SV_ClipMoveToEntities (moveclip_t * clip)
 			continue;
 		if (touch == clip->passedict)
 			continue;
-/*		if (clip->trace.allsolid)
-			return;*/
 #if 0
+		if (clip->trace.allsolid)
+			return;
+
 		if (clip->passedict) {
 			if (touch->owner == clip->passedict)
 				continue;		/* don't clip against own missiles */
@@ -365,28 +367,37 @@ static void SV_ClipMoveToEntities (moveclip_t * clip)
 				continue;		/* don't clip against owner */
 		}
 #endif
+
 		/* might intersect, so do an exact clip */
 		headnode = SV_HullForEntity(touch, &tile);
+		angles = touch->angles;
+		if (touch->solid != SOLID_BSP)
+			angles = vec3_origin;	/* boxes don't rotate */
 
-		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, touch->origin, vec3_origin);
+		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, touch->origin, angles);
 
-/*		Com_Printf( "%i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex,
+#ifdef PARANOID
+		Com_DPrintf("SV_ClipMoveToEntities: %i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex,
 			(int)touch->mins[0], (int)touch->mins[1], (int)touch->mins[2],
 			(int)touch->maxs[0], (int)touch->maxs[1], (int)touch->maxs[2],
 			(int)touch->origin[0], (int)touch->origin[1], (int)touch->origin[2] );
-*/
+#endif
+
 		if (trace.fraction < clip->trace.fraction) {
 			qboolean oldStart;
 
 			/* make sure we keep a startsolid from a previous trace */
 			oldStart = clip->trace.startsolid;
-			clip->trace = trace;
-			clip->trace.startsolid |= oldStart;
-		} else if (trace.allsolid || trace.startsolid) {
 			trace.ent = touch;
 			clip->trace = trace;
-		} else if (trace.startsolid)
+			clip->trace.startsolid |= oldStart;
+		} else if (trace.allsolid) {
+			trace.ent = touch;
+			clip->trace = trace;
+		} else if (trace.startsolid) {
+			trace.ent = touch;
 			clip->trace.startsolid = qtrue;
+		}
 	}
 }
 

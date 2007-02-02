@@ -298,6 +298,7 @@ extern qboolean G_FrustomVis (edict_t * from, vec3_t point)
 static qboolean G_LineVis (vec3_t from, vec3_t to)
 {
 #if 0 /* this version is more accurate the other version is much faster */
+	/* FIXME: this version is not working with func_breakable */
 	trace_t tr;
 	tr = gi.trace(from, NULL, NULL, to, NULL, MASK_SOLID);
 	return (tr.fraction >= 1.0);
@@ -374,7 +375,7 @@ extern float G_ActorVis (vec3_t from, edict_t * check, qboolean full)
  * @brief test if check is visible by from
  * from is from team team
  */
-float G_Vis(int team, edict_t * from, edict_t * check, int flags)
+float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 {
 	vec3_t eye;
 
@@ -926,7 +927,7 @@ int fb_length;
 /**
  * @brief
  */
-void G_BuildForbiddenList(int team)
+void G_BuildForbiddenList (int team)
 {
 	edict_t *ent;
 	int vis_mask;
@@ -954,7 +955,7 @@ void G_BuildForbiddenList(int team)
 /**
  * @brief
  */
-void G_MoveCalc(int team, pos3_t from, int distance)
+void G_MoveCalc (int team, pos3_t from, int distance)
 {
 	G_BuildForbiddenList(team);
 	gi.MoveCalc(gi.map, from, distance, fb_list, fb_length);
@@ -964,7 +965,7 @@ void G_MoveCalc(int team, pos3_t from, int distance)
 /**
  * @brief
  */
-static qboolean G_CheckMoveBlock(pos3_t from, int dv)
+static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 {
 	edict_t *ent;
 	pos3_t pos;
@@ -988,7 +989,7 @@ static qboolean G_CheckMoveBlock(pos3_t from, int dv)
  * @brief
  * @sa CL_ActorStartMove
  */
-void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean stop, qboolean quiet)
+void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean stop, qboolean quiet)
 {
 	edict_t *ent;
 	int length, status, initTU;
@@ -1990,7 +1991,7 @@ static int G_PlayerSoldiersCount (player_t* player)
  * @brief
  * @sa G_PlayerSoldiersCount
  */
-void G_ClientEndRound(player_t * player, qboolean quiet)
+void G_ClientEndRound (player_t * player, qboolean quiet)
 {
 	player_t *p;
 	qboolean sanity = qfalse;
@@ -2095,11 +2096,41 @@ void G_ClientEndRound(player_t * player, qboolean quiet)
 }
 
 /**
+ * @brief
+ */
+static void G_SendVisibleEdicts (void)
+{
+	int i;
+	edict_t *ent;
+	qboolean end = qfalse;
+
+	/* make every edict visible thats not an actor or an ugv */
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++) {
+		/* don't add actors here */
+		if (!ent->inuse)
+			continue;
+		if (ent->type == ET_BREAKABLE) {
+			gi.AddEvent(~G_VisToPM(ent->visflags), EV_ENT_BREAKABLE);
+			gi.WriteShort(ent->number);
+			gi.WriteShort(ent->modelindex);
+			gi.WriteGPos(ent->pos);
+			gi.WritePos(ent->mins);
+			gi.WritePos(ent->maxs);
+			ent->visflags |= ~ent->visflags;
+			end = qtrue;
+		}
+	}
+
+	if (end)
+		gi.EndEvents();
+}
+
+/**
  * @brief This functions starts the client
  * @sa G_ClientSpawn
  * @sa CL_StartGame
  */
-void G_ClientBegin(player_t* player)
+void G_ClientBegin (player_t* player)
 {
 	/* this doesn't belong here, but it works */
 	if (!level.routed) {
@@ -2136,7 +2167,7 @@ void G_ClientBegin(player_t* player)
  * @sa G_ClientBegin
  * @sa CL_Reset
  */
-qboolean G_ClientSpawn(player_t * player)
+qboolean G_ClientSpawn (player_t * player)
 {
 	/* TODO: Check player->pers.team here */
 	if (level.activeTeam == -1) {
@@ -2161,6 +2192,9 @@ qboolean G_ClientSpawn(player_t * player)
 	G_ClearVisFlags(player->pers.team);
 	G_CheckVis(NULL, qfalse);
 	G_SendPlayerStats(player);
+
+	/* send things like doors and breakables */
+	G_SendVisibleEdicts();
 
 	/* give time units */
 	G_GiveTimeUnits(player->pers.team);

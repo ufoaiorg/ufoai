@@ -559,7 +559,7 @@ void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 /**
  * @brief
  */
-le_t *LE_Add(int entnum)
+le_t *LE_Add (int entnum)
 {
 	int i;
 	le_t *le;
@@ -704,11 +704,11 @@ void LE_Cleanup(void)
  LE Tracing
 =========================================================================== */
 
-
+/** @brief Client side moveclip */
 typedef struct {
-	vec3_t boxmins, boxmaxs;	/* enclose the test object along entire move */
-	float *mins, *maxs;			/* size of the moving object */
-	vec3_t mins2, maxs2;		/* size when clipping against mosnters */
+	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
+	float *mins, *maxs;			/**< size of the moving object */
+	vec3_t mins2, maxs2;		/**< size when clipping against mosnters */
 	float *start, *end;
 	trace_t trace;
 	le_t *passle, *passle2;
@@ -717,14 +717,18 @@ typedef struct {
 
 
 /**
- * @brief
+ * @brief Clip against solid entities
+ * @sa CL_Trace
+ * @sa SV_ClipMoveToEntities
  */
-static void CL_ClipMoveToLEs(moveclip_t * clip)
+static void CL_ClipMoveToLEs (moveclip_t * clip)
 {
 	int i;
 	le_t *le;
 	trace_t trace;
 	int headnode;
+	cmodel_t *cmodel;
+	float *angles;
 
 	if (clip->trace.allsolid)
 		return;
@@ -735,19 +739,37 @@ static void CL_ClipMoveToLEs(moveclip_t * clip)
 		if (le == clip->passle || le == clip->passle2)
 			continue;
 
-		/* might intersect, so do an exact clip */
-		/* TODO: make headnode = HullForLe(le, &tile) ... the counterpart of SV_HullForEntity in server/sv_world.c */
-		headnode = CM_HeadnodeForBox(0, le->mins, le->maxs);
+		if (le->type == ET_BREAKABLE) {
+			/* special value for bmodel */
+			cmodel = cl.model_clip[le->modelnum1];
+			if (!cmodel)
+				continue;
+			headnode = cmodel->headnode;
+			angles = le->angles;
+		} else {
+			/* might intersect, so do an exact clip */
+			/* TODO: make headnode = HullForLe(le, &tile) ... the counterpart of SV_HullForEntity in server/sv_world.c */
+			headnode = CM_HeadnodeForBox(0, le->mins, le->maxs);
+			angles = vec3_origin;
+		}
 
-		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, 0, headnode, clip->contentmask, le->origin, vec3_origin);
+		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, 0, headnode, clip->contentmask, le->origin, angles);
 
-		if (trace.allsolid || trace.startsolid || trace.fraction < clip->trace.fraction) {
+		if (trace.fraction < clip->trace.fraction) {
+			qboolean oldStart;
+
+			/* make sure we keep a startsolid from a previous trace */
+			oldStart = clip->trace.startsolid;
 			trace.le = le;
 			clip->trace = trace;
-			if (clip->trace.startsolid)
-				clip->trace.startsolid = qtrue;
-		} else if (trace.startsolid)
+			clip->trace.startsolid |= oldStart;
+		} else if (trace.allsolid) {
+			trace.le = le;
+			clip->trace = trace;
+		} else if (trace.startsolid) {
+			trace.le = le;
 			clip->trace.startsolid = qtrue;
+		}
 	}
 }
 
@@ -775,8 +797,9 @@ static void CL_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, v
  * @brief Moves the given mins/maxs volume through the world from start to end.
  * @note Passedict and edicts owned by passedict are explicitly not checked.
  * @sa CL_TraceBounds
+ * @sa CL_ClipMoveToLEs
  */
-trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * passle, le_t * passle2, int contentmask)
+trace_t CL_Trace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * passle, le_t * passle2, int contentmask)
 {
 	moveclip_t clip;
 

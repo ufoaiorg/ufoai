@@ -82,6 +82,7 @@ const char *ev_format[] =
 
 	"sbg",				/* EV_ENT_APPEAR */
 	"s",				/* EV_ENT_PERISH */
+	"ssgpp",			/* EV_ENT_BREAKABLE */
 
 	"!sbbbgbbbssbsbbbs",		/* EV_ACTOR_APPEAR; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
@@ -116,6 +117,7 @@ static const char *ev_names[] =
 
 	"EV_ENT_APPEAR",
 	"EV_ENT_PERISH",
+	"EV_ENT_BREAKABLE",
 
 	"EV_ACTOR_APPEAR",
 	"EV_ACTOR_START_MOVE",
@@ -145,6 +147,7 @@ static void CL_StartGame( sizebuf_t *sb );
 static void CL_CenterView( sizebuf_t *sb );
 static void CL_EntAppear( sizebuf_t *sb );
 static void CL_EntPerish( sizebuf_t *sb );
+static void CL_EntBreakable( sizebuf_t *sb );
 static void CL_ActorDoStartMove( sizebuf_t *sb );
 static void CL_ActorAppear( sizebuf_t *sb );
 static void CL_ActorStats( sizebuf_t *sb );
@@ -165,6 +168,7 @@ static void (*ev_func[])( sizebuf_t *sb ) =
 
 	CL_EntAppear,
 	CL_EntPerish,
+	CL_EntBreakable,
 
 	CL_ActorAppear,
 	CL_ActorDoStartMove,
@@ -225,7 +229,7 @@ extern void CL_RegisterSounds (void)
 	S_BeginRegistration ();
 
 	/* load game sounds */
-	for (i=1 ; i<MAX_SOUNDS ; i++) {
+	for (i = 1; i < MAX_SOUNDS; i++) {
 		if (!cl.configstrings[CS_SOUNDS+i][0])
 			break;
 		cl.sound_precache[i] = S_RegisterSound (cl.configstrings[CS_SOUNDS+i]);
@@ -233,11 +237,11 @@ extern void CL_RegisterSounds (void)
 		Sys_SendKeyEvents ();
 	}
 	/* load weapon sounds */
-	for ( i = 0; i < csi.numODs; i++ )
-		for ( j = 0; j < 2; j++ ) {
-			if ( csi.ods[i].fd[j].fireSound[0] )
+	for (i = 0; i < csi.numODs; i++)
+		for (j = 0; j < 2; j++) {
+			if (csi.ods[i].fd[j].fireSound[0])
 				S_RegisterSound( csi.ods[i].fd[j].fireSound );
-			if ( csi.ods[i].fd[j].impactSound[0] )
+			if (csi.ods[i].fd[j].impactSound[0])
 				S_RegisterSound( csi.ods[i].fd[j].impactSound );
 			/* pump message loop */
 			Sys_SendKeyEvents ();
@@ -429,7 +433,7 @@ static void CL_EventReset (void)
 	int		i;
 
 	/* reset events */
-	for ( i = 0, et = evTimes; i < EV_TIMES-1; i++ ) {
+	for (i = 0, et = evTimes; i < EV_TIMES-1; i++) {
 		last = et++;
 		et->next = last;
 	}
@@ -560,9 +564,8 @@ static void CL_EntAppear (sizebuf_t *sb)
 	}
 
 	le->type = type;
-	le->pos[0] = pos[0]; /* how to write this more elegantly? */
-	le->pos[1] = pos[1];
-	le->pos[2] = pos[2];
+
+	VectorCopy(pos, le->pos);
 	Grid_PosToVec( &clMap, le->pos, le->origin );
 }
 
@@ -616,6 +619,39 @@ static void CL_EntPerish (sizebuf_t *sb)
 
 /*	le->startTime = cl.time; */
 /*	le->think = LET_Perish; */
+}
+
+/**
+ * @brief Inits the breakable objects
+ */
+static void CL_EntBreakable (sizebuf_t *sb)
+{
+	le_t *le;
+	int entnum, modelnum1;
+	pos3_t pos;
+	vec3_t mins, maxs;
+
+	MSG_ReadFormat(sb, ev_format[EV_ENT_BREAKABLE], &entnum, &modelnum1, &pos, &mins, &maxs);
+
+	/* check if the ent is already visible */
+	le = LE_Get(entnum);
+	if (!le) {
+		le = LE_Add(entnum);
+	} else {
+		Com_DPrintf("Entity appearing already visible... overwriting the old one\n");
+		le->inuse = qtrue;
+	}
+
+	le->type = ET_BREAKABLE;
+	le->modelnum1 = modelnum1;
+
+	/* to allow tracing against this le */
+	le->contents = CONTENTS_SOLID;
+
+	VectorCopy(pos, le->pos);
+	VectorCopy(mins, le->mins);
+	VectorCopy(maxs, le->maxs);
+	Grid_PosToVec(&clMap, le->pos, le->origin);
 }
 
 
