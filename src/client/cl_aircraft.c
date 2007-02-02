@@ -141,7 +141,7 @@ void CL_AircraftInit(void)
 	aircraftItem_t *aircraftitem = NULL;
 
 	Com_Printf("Initializing aircraft and aircraft-items ...\n");
-	
+
 	for (i = 0; i < numAircraft_samples; i++) {
 		air_samp = &aircraft_samples[i];
 		/* link with tech pointer */
@@ -169,7 +169,7 @@ void CL_AircraftInit(void)
 		air_samp->homebase = &gd.bases[air_samp->idxBase]; /* TODO: looks like a nonsense */
 		air_samp->teamSize = &gd.bases[air_samp->idxBase].teamNum[air_samp->idxInBase];
 	}
-	
+
 	/* Link technologies for craftitems. */
 	for (i = 0; i < numAircraftItems; i++) {
 		aircraftitem = &aircraftItems[i];
@@ -182,7 +182,7 @@ void CL_AircraftInit(void)
 				Com_Printf("CL_AircraftInit: No tech with the name '%s' found for craftitem '%s'.\n",  aircraftitem->tech, aircraftitem->id);
 		}
 	}
-	
+
 	Com_Printf("...aircraft and aircraft-items inited\n");
 }
 
@@ -791,7 +791,7 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 	rotateAngles = aircraft->angles;
 
 	Com_sprintf(buffer, sizeof(buffer), _("None\n"));
-	
+
 	switch (type) {
 	case 1: /* armour */
 		list = AC_GetCraftitemTechsByType(type, qfalse);
@@ -1057,7 +1057,7 @@ extern void CL_ParseAircraftItem (char *name, char **text)
 }
 
 /** @brief valid aircraft definition values from script files */
-static value_t aircraft_vals[] = {
+static const value_t aircraft_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(aircraft_t, name)}
 	,
 	{"shortname", V_TRANSLATION_STRING, offsetof(aircraft_t, shortname)}
@@ -1115,7 +1115,7 @@ extern void CL_ParseAircraft(char *name, char **text)
 {
 	char *errhead = "CL_ParseAircraft: unexptected end of file (aircraft ";
 	aircraft_t *air_samp;
-	value_t *vp;
+	const value_t *vp;
 	char *token;
 
 	if (numAircraft_samples >= MAX_AIRCRAFT) {
@@ -1194,9 +1194,9 @@ extern void CL_AircraftsNotifyMissionRemoved(const actMis_t *const mission)
 	aircraft_t*	aircraft;
 
 	/* Aircrafts currently moving to the mission will be redirect to base */
-	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ;
-		aircraft >= base->aircraft ; aircraft--)
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
+			aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status == AIR_MISSION) {
 				if (aircraft->mission == mission)
 					CL_AircraftReturnToBase(aircraft);
@@ -1214,9 +1214,9 @@ extern void CL_AircraftsNotifyUfoRemoved(const aircraft_t *const ufo)
 	aircraft_t*	aircraft;
 
 	/* Aircrafts currently purchasing the specified ufo will be redirect to base */
-	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ;
-		aircraft >= base->aircraft ; aircraft--)
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
+			aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status == AIR_UFO) {
 				if (ufo - gd.ufos == aircraft->ufo)
 					CL_AircraftReturnToBase(aircraft);
@@ -1228,15 +1228,15 @@ extern void CL_AircraftsNotifyUfoRemoved(const aircraft_t *const ufo)
 /**
  * @brief Notify that an ufo disappear from radars
  */
-extern void CL_AircraftsUfoDisappear(const aircraft_t *const ufo)
+extern void CL_AircraftsUfoDisappear (const aircraft_t *const ufo)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
 
 	/* Aircrafts currently pursuing the specified ufo will be redirect to base */
-	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ;
-		aircraft >= base->aircraft ; aircraft--)
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
+			aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status == AIR_UFO)
 				if (ufo - gd.ufos == aircraft->ufo)
 					CL_AircraftReturnToBase(aircraft);
@@ -1245,7 +1245,7 @@ extern void CL_AircraftsUfoDisappear(const aircraft_t *const ufo)
 /**
  * @brief Make the specified aircraft purchasing an ufo
  */
-extern void CL_SendAircraftPurchasingUfo(aircraft_t* aircraft,aircraft_t* ufo)
+extern void CL_SendAircraftPurchasingUfo (aircraft_t* aircraft,aircraft_t* ufo)
 {
 	int num = ufo - gd.ufos;
 
@@ -1263,12 +1263,11 @@ extern void CL_SendAircraftPurchasingUfo(aircraft_t* aircraft,aircraft_t* ufo)
  * @brief
  * @param[in] aircraft
  */
-void CL_ResetAircraftTeam(aircraft_t *aircraft)
+void CL_ResetAircraftTeam (aircraft_t *aircraft)
 {
 	int i;
 
-	for (i = 0; i < aircraft->size; i++)
-		aircraft->teamIdxs[i] = -1;
+	memset(aircraft->teamIdxs, -1, aircraft->size * sizeof(int));
 }
 
 /**
@@ -1276,7 +1275,7 @@ void CL_ResetAircraftTeam(aircraft_t *aircraft)
  * @param[in] aircraft
  * @param[in] idx
  */
-void CL_AddToAircraftTeam (aircraft_t *aircraft,int idx)
+extern void CL_AddToAircraftTeam (aircraft_t *aircraft,int idx)
 {
 	if (aircraft == NULL) {
 		Com_DPrintf("CL_AddToAircraftTeam: null aircraft \n");
@@ -1302,7 +1301,7 @@ void CL_AddToAircraftTeam (aircraft_t *aircraft,int idx)
  * @param[in] aircraft
  * @param[in] idx
  */
-void CL_RemoveFromAircraftTeam(aircraft_t *aircraft, int idx)
+void CL_RemoveFromAircraftTeam (aircraft_t *aircraft, int idx)
 {
 	int i;
 
@@ -1311,8 +1310,8 @@ void CL_RemoveFromAircraftTeam(aircraft_t *aircraft, int idx)
 		return ;
 	}
 	for (i = 0; i < aircraft->size; i++)
-		if (aircraft->teamIdxs[i]==idx)	{
-			aircraft->teamIdxs[i]=-1;
+		if (aircraft->teamIdxs[i] == idx)	{
+			aircraft->teamIdxs[i] = -1;
 			Com_DPrintf("CL_RemoveFromAircraftTeam: removed idx '%d' \n", idx);
 			return;
 		}
@@ -1332,7 +1331,7 @@ void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft,int idx)
 		return ;
 
 	for (i = 0; i < aircraft->size; i++)
-		if (aircraft->teamIdxs[i]>idx) {
+		if (aircraft->teamIdxs[i] > idx) {
 			aircraft->teamIdxs[i]--;
 			Com_DPrintf("CL_DecreaseAircraftTeamIdxGreaterThan: decreased idx '%d' \n", aircraft->teamIdxs[i]+1);
 		}
