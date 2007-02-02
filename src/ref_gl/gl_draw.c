@@ -925,6 +925,8 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, f
 #endif
 
 	qglDisable(GL_CULL_FACE);
+	/* revert the cullface mode */
+	qglCullFace(GL_FRONT);
 
 	if (gl_fog->value) {
 		/* turn off fog */
