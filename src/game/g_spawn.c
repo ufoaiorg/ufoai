@@ -590,16 +590,18 @@ static void SP_misc_dummy(edict_t * self)
  * for tracing (see inlineList in cmodel.c)
  * @sa CM_EntTestLine
  * @sa CL_AddLocalModel
+ * @sa PF_SetModel
  */
 static void SP_func_breakable(edict_t * self)
 {
 	self->type = ET_BREAKABLE;
 	VectorSet(self->origin, 0, 0, 0);
 	/* set an inline model */
+	/* also set self->solid = SOLID_BSP here */
+	/* also linked into the world here */
 	gi.setmodel(self, self->model);
-	/* trace against it */
-	self->solid = SOLID_BSP;
-	gi.linkentity(self);
+	if (self->solid != SOLID_BSP)
+		Com_Printf("Error - func_breakable with no SOLID_BSP\n");
 #if 0
 	Com_Printf( "model (%s) num: %i mins: %i %i %i maxs: %i %i %i\n",
 		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
