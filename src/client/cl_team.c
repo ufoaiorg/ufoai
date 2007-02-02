@@ -702,8 +702,10 @@ static void CL_Select_f (void)
 		}
 		menuInventory = baseCurrent->curTeam[num]->inv;
 	} else if (!Q_strncmp(command, "team", 4)) {
-		if (!baseCurrent || num >= E_CountHired(baseCurrent, EMPL_SOLDIER))
+		if (!baseCurrent || num >= E_CountHired(baseCurrent, EMPL_SOLDIER)) {
+			/*Com_Printf("num: %i / max: %i\n", num, E_CountHired(baseCurrent, EMPL_SOLDIER));*/
 			return;
+		}
 	}
 
 	/* console commands */
@@ -714,11 +716,11 @@ static void CL_Select_f (void)
 	Com_DPrintf("CL_Select_f: Command: '%s' - num: %i\n", command, num);
 
 	if (!Q_strncmp(command, "team", 4)) {
-		/* set info cvars */
 		num++;
 		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -num);
 		if (!chr)
 			Sys_Error("CL_Select_f: No hired character at pos %i (base: %i)\n", num, baseCurrent->idx);
+		/* set info cvars */
 		/* FIXME: This isn't true ACTOR_SIZE_NORMAL has nothing to do with ugvs anymore - old code */
 		if (chr->fieldSize == ACTOR_SIZE_NORMAL)
 			CL_CharacterCvars(chr);
@@ -726,8 +728,9 @@ static void CL_Select_f (void)
 			CL_UGVCvars(chr);
 	} else {
 		/* set info cvars */
+		/* FIXME: This isn't true ACTOR_SIZE_NORMAL has nothing to do with ugvs anymore - old code */
 		chr = baseCurrent->curTeam[num];
-		if ( chr->fieldSize == ACTOR_SIZE_NORMAL )
+		if (chr->fieldSize == ACTOR_SIZE_NORMAL)
 			CL_CharacterCvars(baseCurrent->curTeam[num]);
 		else
 			CL_UGVCvars(baseCurrent->curTeam[num]);
@@ -752,6 +755,7 @@ extern void CL_UpdateHireVar (void)
 {
 	int i, p;
 	aircraft_t *aircraft = NULL;
+	employee_t *employee = NULL;
 
 	assert(baseCurrent);
 
@@ -759,9 +763,12 @@ extern void CL_UpdateHireVar (void)
 	Cvar_Set("mn_hired", va(_("%i of %i"), baseCurrent->teamNum[baseCurrent->aircraftCurrent], aircraft->size));
 
 	/* update curTeam list */
-	for (i = 0, p = 0; i < cl_numnames->integer; i++) {
-		if (CL_SoldierInAircraft(i, aircraft->idx)) {
-			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
+	for (i = 0, p = 0; i < E_CountHired(baseCurrent, EMPL_SOLDIER); i++) {
+		employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, -(i+1));
+		if (!employee)
+			Sys_Error("CL_UpdateHireVar: Could not get employee %i\n", i);
+		if (CL_SoldierInAircraft(employee->idx, aircraft->idx)) {
+			baseCurrent->curTeam[p] = &employee->chr;
 			p++;
 		}
 	}
@@ -852,18 +859,21 @@ static void CL_MarkTeam_f (void)
 	CL_UpdateHireVar();
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 
-	for (i = 0; i < cl_numnames->integer; i++) {
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 		alreadyInOtherShip = qfalse;
-		/* don't show other base's recruits */
+		/* don't show other base's recruits or none hired ones */
 		if (!gd.employees[EMPL_SOLDIER][i].hired || gd.employees[EMPL_SOLDIER][i].baseIDHired != baseCurrent->idx)
 			continue;
+
+		/* search all aircrafts except the current one */
 		for (j = 0; j < gd.numAircraft; j++) {
 			if (j == aircraft->idx)
 				continue;
 			/* already on another aircraft */
-			if (CL_SoldierInAircraft(i, j) )
+			if (CL_SoldierInAircraft(i, j))
 				alreadyInOtherShip = qtrue;
 		}
+
 		Cvar_ForceSet(va("mn_name%i", k), gd.employees[EMPL_SOLDIER][i].chr.name);
 		/* change the buttons */
 		if (!alreadyInOtherShip && CL_SoldierInAircraft(i, aircraft->idx))
@@ -882,6 +892,8 @@ static void CL_MarkTeam_f (void)
 		else
 			Cbuf_AddText(va("listholdsnoequip%i\n", k));
 		k++;
+		if (k >= cl_numnames->integer)
+			break;
 	}
 
 	for (;k < cl_numnames->integer; k++) {
@@ -898,7 +910,7 @@ static void CL_MarkTeam_f (void)
  * @return qboolean qtrue if the soldier was found in the aircraft(s) else: qfalse.
  * @pre Needs baseCurrent set to the base the aircraft is located in.
  */
-qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
+qboolean CL_SoldierInAircraft (int employee_idx, int aircraft_idx)
 {
 	int i;
 
@@ -910,7 +922,7 @@ qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
 	if (aircraft_idx < 0) {
 		/* Search if he is in _any_ aircraft and return true if it's the case. */
 		for (i = 0; i < gd.numAircraft; i++) {
-			if (CL_SoldierInAircraft(employee_idx, i) )
+			if (CL_SoldierInAircraft(employee_idx, i))
 				return qtrue;
 		}
 		return qfalse;
@@ -981,7 +993,7 @@ void CL_RemoveSoldiersFromAircraft (int aircraft_idx, int base_idx)
 static qboolean CL_AssignSoldierToAircraft (int employee_idx, int aircraft_idx)
 {
 	aircraft_t *aircraft = NULL;
-	if ( employee_idx < 0 || aircraft_idx < 0 )
+	if (employee_idx < 0 || aircraft_idx < 0)
 		return qfalse;
 
 	if (baseCurrent->teamNum[aircraft_idx] < MAX_ACTIVETEAM) {
@@ -1001,9 +1013,46 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, int aircraft_idx)
 			baseCurrent->teamNum[aircraft_idx]++;
 			return qtrue;
 		}
+#ifdef DEBUG
+	} else {
+		Com_DPrintf("CL_AssignSoldierToAircraft: aircraft full - not added\n");
+#endif
 	}
 	return qfalse;
 }
+
+
+#ifdef DEBUG
+static void CL_TeamListDebug_f (void)
+{
+	int i, cnt;
+	character_t *team;
+	employee_t *employee;
+
+	if (!baseCurrent) {
+		Com_Printf("Build and select a base first\n");
+		return;
+	}
+
+	if (!baseCurrent->aircraftCurrent == -1) {
+		Com_Printf("Select an aircraft\n");
+		return;
+	}
+
+	cnt = B_GetNumOnTeam();
+	team = baseCurrent->curTeam[baseCurrent->aircraftCurrent];
+
+	Com_Printf("%i members in the current team", cnt);
+	for (i = 0; i < cnt; i++) {
+		employee = E_GetEmployeeFromChrUCN(team->ucn);
+		if (!employee)
+			Com_Printf("Could not find a valid employee for ucn %i\n", team->ucn);
+		else
+			Com_Printf("ucn %i - employee->idx: %i\n", team->ucn, employee->idx);
+		team++;
+	}
+}
+#endif
 
 /**
  * @brief Adds or removes a soldier to/from an aircraft.
@@ -1022,8 +1071,10 @@ static void CL_AssignSoldier_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	/* baseCurrent is checked here */
-	if (num >= E_CountHired(baseCurrent, EMPL_SOLDIER) || num >= cl_numnames->integer)
+	if (num >= E_CountHired(baseCurrent, EMPL_SOLDIER) || num >= cl_numnames->integer) {
+		/*Com_Printf("num: %i, max: %i\n", num, E_CountHired(baseCurrent, EMPL_SOLDIER));*/
 		return;
+	}
 
 	employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, -(num+1));
 	if (!employee)
@@ -1040,7 +1091,7 @@ static void CL_AssignSoldier_f (void)
 		Cbuf_AddText(va("listholdsnoequip%i\n", num));
 	} else {
 		Com_DPrintf("CL_AssignSoldier_f: assigning\n");
-		/* Assign soldier to aircraft/team. */
+		/* Assign soldier to aircraft/team if aircraft is not full */
 		if (CL_AssignSoldierToAircraft(employee->idx, baseCurrent->aircraftCurrent))
 			Cbuf_AddText(va("listadd%i\n", num));
 	}
@@ -1098,7 +1149,7 @@ static void CL_MessageMenu_f (void)
 /**
  * @brief Saves a team
  */
-qboolean CL_SaveTeam(char *filename)
+qboolean CL_SaveTeam (char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
@@ -1169,7 +1220,7 @@ static void CL_SaveTeamSlot_f (void)
  * @brief Load a team member for multiplayer
  * @sa CL_LoadTeam
  */
-void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
+void CL_LoadTeamMember (sizebuf_t * sb, character_t * chr)
 {
 	int i;
 
@@ -1210,7 +1261,7 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
  * @sa CL_LoadTeam
  * @sa CL_SaveTeam
  */
-void CL_LoadTeamMultiplayer(char *filename)
+void CL_LoadTeamMultiplayer (char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
@@ -1244,7 +1295,7 @@ void CL_LoadTeamMultiplayer(char *filename)
 	num = MSG_ReadByte(&sb);
 	Com_DPrintf("load %i teammembers\n", num);
 	E_ResetEmployees();
-	for (i=0; i<num; i++) {
+	for (i = 0; i < num; i++) {
 		/* New employee */
 		employee = E_CreateEmployee(EMPL_SOLDIER);
 		employee->hired = qtrue;
@@ -1274,14 +1325,14 @@ void CL_LoadTeamMultiplayer(char *filename)
 	}
 
 	for (i = 0, p = 0; i < num; i++)
-		if ( CL_SoldierInAircraft(i, 0) )
+		if (CL_SoldierInAircraft(i, 0))
 			gd.bases[0].curTeam[p++] = E_GetHiredCharacter(&gd.bases[0], EMPL_SOLDIER, i);
 
 	/* gd.bases[0].numHired = p; */
 
 	Com_DPrintf("Load team with %i members and %i slots\n", p, num);
 
-	for (;p<MAX_ACTIVETEAM;p++)
+	for (;p < MAX_ACTIVETEAM; p++)
 		gd.bases[0].curTeam[p] = NULL;
 }
 
@@ -1318,7 +1369,7 @@ void CL_GenerateNewTeam_f (void)
 /**
  * @brief
  */
-void CL_ResetTeams(void)
+void CL_ResetTeams (void)
 {
 	Cmd_AddCommand("new_team", CL_GenerateNewTeam_f, NULL);
 	Cmd_AddCommand("givename", CL_GiveName_f, NULL);
@@ -1338,6 +1389,9 @@ void CL_ResetTeams(void)
 	Cmd_AddCommand("saveteamslot", CL_SaveTeamSlot_f, NULL);
 	Cmd_AddCommand("loadteamslot", CL_LoadTeamSlot_f, NULL);
 	Cmd_AddCommand("msgmenu", CL_MessageMenu_f, NULL);
+#ifdef DEBUG
+	Cmd_AddCommand("teamlist", CL_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
+#endif
 }
 
 
@@ -1346,7 +1400,7 @@ void CL_ResetTeams(void)
  *
  * Called by CL_SaveTeam to store the team info
  */
-void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
+void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
 {
 	character_t *chr;
 	int i, j;
@@ -1359,10 +1413,8 @@ void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
 	MSG_WriteByte(buf, num);
 
 	for (i = 0; i < num; i++) {
-		/* FIXME: This will not lead to the i.th character if we have more than one base
-		maybe not even if we only have one base
-		*/
 		chr = E_GetHiredCharacter(&gd.bases[baseID], EMPL_SOLDIER, -(i+1));
+		assert(chr);
 		/* send the fieldSize ACTOR_SIZE_* */
 		MSG_WriteByte(buf, chr->fieldSize);
 
@@ -1403,7 +1455,7 @@ void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num)
  *
  * @note Called in cl_main.c CL_Precache_f to send the team info to server
  */
-void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
+void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
 {
 	character_t *chr;
 	int i, j;
