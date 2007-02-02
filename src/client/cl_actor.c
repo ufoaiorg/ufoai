@@ -440,7 +440,7 @@ static void DisplayFiremodeEntry(fireDef_t *fd, char hand, byte status)
  * @param[out] ammo The ammo used in the weapon (is the same as weapon for grenades and similar).
  * @param[out] weap_fd_idx weapon_mod index in the ammo for the weapon.
  */
-static void GetWeaponAndAmmo(char hand, objDef_t *weapon, objDef_t *ammo, byte *weap_fd_idx)
+static void GetWeaponAndAmmo(char hand, objDef_t **weapon, objDef_t **ammo, byte *weap_fd_idx)
 {
 	invList_t *invlist_weapon = NULL;
 	
@@ -455,19 +455,19 @@ static void GetWeaponAndAmmo(char hand, objDef_t *weapon, objDef_t *ammo, byte *
 	if (!invlist_weapon || invlist_weapon->item.t < 0 || invlist_weapon->item.m < 0)
 		return;
 	
-	weapon = &csi.ods[invlist_weapon->item.t];
+	*weapon = &csi.ods[invlist_weapon->item.t];
 	
 	if (!weapon)
 		return;
 	
-	if (weapon->numWeapons)
-		ammo = weapon; /* This weapon doesn't need ammo it already has firedefs */
+	if ((*weapon)->numWeapons)
+		*ammo = *weapon; /* This weapon doesn't need ammo it already has firedefs */
 	else
-		ammo = &csi.ods[invlist_weapon->item.m];
+		*ammo = &csi.ods[invlist_weapon->item.m];
 	
-	(*weap_fd_idx) = INV_FiredefsIDXForWeapon (ammo, invlist_weapon->item.t);
+	*weap_fd_idx = INV_FiredefsIDXForWeapon (*ammo, invlist_weapon->item.t);
 	
-	Com_DPrintf("CL_DisplayFiremodes: weapon %i ammo %i\n", invlist_weapon->item.t, invlist_weapon->item.m);
+	Com_Printf("GetWeaponAndAmmo: weapon %i ammo %i -- %s %s %i\n", invlist_weapon->item.t, invlist_weapon->item.m, (*weapon)->name, (*ammo)->name, *weap_fd_idx);
 }
 
 /**
@@ -494,7 +494,8 @@ void CL_DisplayFiremodes(void)
 		return;
 	}
 
-	GetWeaponAndAmmo(hand[0], weapon, ammo, &weap_fd_idx);
+	GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
+	Com_Printf("CL_DisplayFiremodes: %s %s %i\n", weapon->name, ammo->name, weap_fd_idx);
 	
 	if (!weapon || !ammo)
 		return;	
@@ -552,11 +553,24 @@ void CL_FireWeapon(void)
 		return;
 	}
 	
-	GetWeaponAndAmmo(hand[0], weapon, ammo, &weap_fd_idx);
+	GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
+	Com_Printf("CL_FireWeapon: %s %s %i\n", weapon->name, ammo->name, weap_fd_idx);
 
 	
 	if ( ammo->fd[weap_fd_idx][firemode].time <= selActor->TU ) {
-		/* TODO: actually start aiming */
+		/* Actually start aiming */
+		/* TODO: The M_FIRE_ stuff below is just a workaround until this primary/secondary stuff is changed. */
+		if (firemode == 0) {
+			if (hand[0] == 'r')
+				cl.cmode = M_FIRE_PR;
+			else
+				cl.cmode = M_FIRE_PL;
+		} else if  (firemode == 1) {
+			if (hand[0] == 'r')
+				cl.cmode = M_FIRE_SR;
+			else
+				cl.cmode = M_FIRE_SL;
+		}
 		HideFiremodes();
 	} else {
 		Com_Printf("CL_FireWeapon: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
