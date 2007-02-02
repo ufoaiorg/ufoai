@@ -773,7 +773,7 @@ menu hud
 	// hud/firemode (inactive)	->	texl "0 64"	texh "255 128"
 	// ==================
 
-	confunc set_all_inv { cmd "set_left_inv0;set_left_inv1;set_left_inv2;set_left_inv3;set_right_inv0;set_right_inv1;set_right_inv2;set_right_inv3;"}
+	// confunc set_all_inv { cmd "set_left_inv0;set_left_inv1;set_left_inv2;set_left_inv3;set_right_inv0;set_right_inv1;set_right_inv2;set_right_inv3;"}
 	
 	confunc set_left_ina0 { *bt_left_fm0	texl "0 64"	*bt_left_fm0 texh "255 128" }
 	confunc set_left_ina1 { *bt_left_fm1	texl "0 64"	*bt_left_fm1 texh "255 128" }
@@ -821,7 +821,7 @@ menu hud
 		texh	"255  63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap l 0;set_all_inv;" }
+		click	{ cmd "fireweap l 0;" }
 	}
 
 	pic bt_left_fm1
@@ -832,7 +832,7 @@ menu hud
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap l 1;set_all_inv;" }
+		click	{ cmd "fireweap l 1;" }
 	}
 
 	pic bt_left_fm2
@@ -843,7 +843,7 @@ menu hud
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap l 2;set_all_inv;" }
+		click	{ cmd "fireweap l 2;" }
 	}
 
 	pic bt_left_fm3
@@ -854,7 +854,7 @@ menu hud
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap l 3;set_all_inv;" }
+		click	{ cmd "fireweap l 3;" }
 	}
 
 
@@ -866,7 +866,7 @@ menu hud
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap r 0;set_all_inv;" }
+		click	{ cmd "fireweap r 0;" }
 	}
 
 	pic bt_right_fm1
@@ -877,7 +877,7 @@ menu hud
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap r 1;set_all_inv;" }
+		click	{ cmd "fireweap r 1;" }
 	}
 
 	pic bt_right_fm2
@@ -888,7 +888,7 @@ menu hud
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap r 2;set_all_inv;" }
+		click	{ cmd "fireweap r 2;" }
 	}
 
 	pic bt_right_fm3
@@ -899,7 +899,7 @@ menu hud
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap r 3;set_all_inv;" }
+		click	{ cmd "fireweap r 3;" }
 	}
 
 	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "832 596"	invis true }
