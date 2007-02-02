@@ -863,7 +863,7 @@ static void G_GetShotOrigin(edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t 
  */
 qboolean G_GetShotFromType(edict_t *ent, int type, item_t **weapon, int *container, fireDef_t **fd)
 {
-	int weapon_fd_idx;
+	byte weapon_fd_idx;
 
 	if (type >= ST_NUM_SHOOT_TYPES)
 		gi.error("G_GetShotFromType: unknown shoot type %i.\n", type);
@@ -1192,7 +1192,7 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
  */
 int G_GetFiringTUs(edict_t *ent, edict_t *target, int *hand)
 {
-	int weapon_fd_idx;
+	byte weapon_fd_idx;
 	/* Fire the first weapon in hands if everything is ok. */
 	if ( RIGHT(ent)
 		&& (RIGHT(ent)->item.m != NONE)

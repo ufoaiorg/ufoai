@@ -3899,7 +3899,7 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
  * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
  * @return int Returns the index in the fd array. -1 if the weapon-idx was not found. 0 (equals the default firemode) if an invalid or unknown weapon idx was given.
  */
-int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
+byte INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 {
 	int i;
 

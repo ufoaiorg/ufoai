@@ -380,6 +380,69 @@ static void SetWeaponButton(int button, int state)
 }
 
 /**
+ * @brief Sets the display for a single weapon/reload HUD button
+ * @param[in] fd The firedefinition/firemode to be displayed.
+ * @param[in] status Display the firemode clickable/active (1) or inactive (0).
+ * @todo Make this work for left and right hand.
+ */
+static void DisplayFiremodeEntryLeft(fireDef_t *fd, byte status)
+{
+	if (!fd)
+		return;
+
+	Cbuf_AddText(va("set_left_vis0%i\n", fd->fd_idx)); /* Make this entry visible (in case it wasn't). */
+	
+	if (status) {
+		Cbuf_AddText(va("set_left_a%i\n", fd->fd_idx));
+	} else {
+		Cbuf_AddText(va("set_left_a%i\n", fd->fd_idx));
+	}
+	
+	Cvar_Set(va("mn_l_fm_name%i", fd->fd_idx), va("%s", fd->name));
+	Cvar_Set(va("mn_l_fm_tu%i", fd->fd_idx), va("%i", fd->time));
+}
+
+
+/**
+ * @brief Displays the firemdoes for teh left hand.
+ * @param[in] weapon_idx The ods index of the weapon that is used.
+ * @param[in] ammo_idx The ods index of the ammo that is used in the weapon.
+ * @param[in] TUs The time untis the actor has left.
+ * @todo Make this work for left and right hand.
+ */
+static void DisplayFiremodesLeft(int weapon_idx, int ammo_idx, int TUs) /* TODO: maybe get an "item_t" here? */
+{
+	objDef_t *weapon = NULL;
+	objDef_t *ammo = NULL;
+	byte weap_fd_idx;
+	byte i;
+	
+	if (weapon_idx < 0 || ammo_idx < 0)
+		return;
+	
+	weapon = &csi.ods[weapon_idx];
+	ammo = &csi.ods[ammo_idx];
+	
+	if (!weapon || !ammo)
+		return;
+	
+	weap_fd_idx = INV_FiredefsIDXForWeapon (ammo, weapon_idx);
+	
+	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+		if (i < weapon->numFiredefs[weap_fd_idx]) { /* We have a defined fd */
+			if (weapon->fd[weap_fd_idx][i].time <= TUs) {  /*enough timeunits for this firemode?*/
+				DisplayFiremodeEntryLeft(&weapon->fd[weap_fd_idx][i], 1);
+			} else{
+				DisplayFiremodeEntryLeft(&weapon->fd[weap_fd_idx][i], 0);
+			}
+		} else { /* No more fd left in the list */
+			Cbuf_AddText(va("set_left_inv%i\n", i)); /* Hide this entry */
+		}
+	}
+}
+
+
+/**
  * @brief Refreshes the weapon/reload buttons on the HUD
  *
  * @sa CL_ActorUpdateCVars
@@ -387,7 +450,7 @@ static void SetWeaponButton(int button, int state)
 static void CL_RefreshWeaponButtons(int time)
 {
 	invList_t *weaponr, *weaponl = NULL;
-	int weapon_fd_idx;
+	byte weapon_fd_idx;
 
 	if (!selActor)
 		return;

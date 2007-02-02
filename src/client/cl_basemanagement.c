@@ -1520,7 +1520,7 @@ static void CL_SwapSkills(character_t *team[], int num)
 {
 	int j, i1, i2, skill, no1, no2, tmp1, tmp2;
 	character_t *cp1, *cp2;
-	int weaponr_fd_idx, weaponh_fd_idx;
+	byte weaponr_fd_idx, weaponh_fd_idx;
 
 	j = num;
 	while (j--) {
