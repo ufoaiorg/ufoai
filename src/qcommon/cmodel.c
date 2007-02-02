@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct {
 	cplane_t *plane;
 	vec3_t mins, maxs;
-	int children[2];			/* negative numbers are leafs */
+	int children[2];			/**< negative numbers are leafs */
 } cnode_t;
 
 typedef struct {
@@ -57,7 +57,7 @@ typedef struct {
 	int contents;
 	int numsides;
 	int firstbrushside;
-	int checkcount;				/* to avoid repeated testings */
+	int checkcount;				/**< to avoid repeated testings */
 } cbrush_t;
 
 typedef struct tnode_s {
@@ -587,6 +587,7 @@ int CheckBSPFile(char *filename)
  * @sa CM_TestLine
  * @sa CM_InlineModel
  * @sa CM_TransformedBoxTrace
+ * @return 1 - hit something; 0 - hit nothing
  */
 int CM_EntTestLine (vec3_t start, vec3_t stop)
 {
@@ -1889,7 +1890,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
-trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask, vec3_t origin, vec3_t angles)
+trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask, vec3_t origin, vec3_t angles)
 {
 	trace_t trace;
 	vec3_t start_l, end_l;
@@ -1960,7 +1961,7 @@ trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t max
 /**
  * @brief Handles all 255 level specific submodels too
  */
-trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int levelmask, int brushmask)
+trace_t CM_CompleteBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int levelmask, int brushmask)
 {
 	trace_t newtr, tr;
 	int tile, i;
