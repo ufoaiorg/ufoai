@@ -413,22 +413,22 @@ static void DisplayFiremodeEntry(fireDef_t *fd, char hand, byte status)
 		if (status) {
 			Cbuf_AddText(va("set_right_a%i\n", fd->fd_idx));
 		} else {
-			Cbuf_AddText(va("set_right_a%i\n", fd->fd_idx));
+			Cbuf_AddText(va("set_right_ina%i\n", fd->fd_idx));
 		}
-		
-		Cvar_Set(va("mn_r_fm_name%i", fd->fd_idx), va("%s", fd->name));
-		Cvar_Set(va("mn_r_fm_tu%i", fd->fd_idx), va("%i", fd->time));	
+
+		Cvar_Set(va("mn_r_fm_name%i", fd->fd_idx),  va("%s", fd->name));
+		Cvar_Set(va("mn_r_fm_tu%i", fd->fd_idx), va(_("TU: %i"), fd->time));
 	} else if (hand == 'l') {
 		Cbuf_AddText(va("set_left_vis%i\n", fd->fd_idx)); /* Make this entry visible (in case it wasn't). */
 	
 		if (status) {
 			Cbuf_AddText(va("set_left_a%i\n", fd->fd_idx));
 		} else {
-			Cbuf_AddText(va("set_left_a%i\n", fd->fd_idx));
+			Cbuf_AddText(va("set_left_ina%i\n", fd->fd_idx));
 		}
 		
 		Cvar_Set(va("mn_l_fm_name%i", fd->fd_idx), va("%s", fd->name));
-		Cvar_Set(va("mn_l_fm_tu%i", fd->fd_idx), va("%i", fd->time));
+		Cvar_Set(va("mn_l_fm_tu%i", fd->fd_idx), va(_("TU: %i"), fd->time));
 	} else {
 		/* TODO: Add good error note. */
 		return;
@@ -472,32 +472,40 @@ void CL_DisplayFiremodes(void)
 	else
 		invlist_weapon = LEFT(selActor);
 
-	if (!invlist_weapon || invlist_weapon->item.t < 0)
+	if (!invlist_weapon || invlist_weapon->item.t < 0 || invlist_weapon->item.m < 0)
 		return;
 	
 	weapon = &csi.ods[invlist_weapon->item.t];
 	
-	if (!weapon || invlist_weapon->item.m < 0)
+	if (!weapon)
 		return;
 	
-	ammo = &csi.ods[invlist_weapon->item.m];
+	if (weapon->numWeapons)
+		ammo = weapon; /* This weapon doesn't need ammo it already has firedefs */
+	else
+		ammo = &csi.ods[invlist_weapon->item.m];
 	
 	if (!ammo)
 		return;
+	
+	Com_DPrintf("CL_DisplayFiremodes: weapon %i ammo %i\n", invlist_weapon->item.t, invlist_weapon->item.m);
 	
 	weap_fd_idx = INV_FiredefsIDXForWeapon (ammo, invlist_weapon->item.t);
 	
 	Com_Printf("CL_DisplayFiremodes: displaying %s firemodes.\n", hand);
 
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-		if ( i < weapon->numFiredefs[weap_fd_idx] ) { /* We have a defined fd */
-			if ( weapon->fd[weap_fd_idx][i].time <= selActor->TU ) {  /* Enough timeunits for this firemode?*/
-				DisplayFiremodeEntry(&weapon->fd[weap_fd_idx][i], hand[0], 1);
+		if ( i < ammo->numFiredefs[weap_fd_idx] ) { /* We have a defined fd */
+			if ( ammo->fd[weap_fd_idx][i].time <= selActor->TU ) {  /* Enough timeunits for this firemode?*/
+				DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], 1);
 			} else{
-				DisplayFiremodeEntry(&weapon->fd[weap_fd_idx][i], hand[0], 0);
+				DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], 0);
 			}
 		} else { /* No more fd left in the list */
-			Cbuf_AddText(va("set_left_inv%i\n", i)); /* Hide this entry */
+			if (hand[0] == 'r')
+				Cbuf_AddText(va("set_right_inv%i\n", i)); /* Hide this entry */
+			else
+				Cbuf_AddText(va("set_left_inv%i\n", i)); /* Hide this entry */
 		}
 	}
 }

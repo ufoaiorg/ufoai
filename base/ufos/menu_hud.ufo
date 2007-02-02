@@ -773,6 +773,8 @@ menu hud
 	// hud/firemode (inactive)	->	texl "0 64"	texh "255 128"
 	// ==================
 
+	confunc set_all_inv { cmd "set_left_inv0;set_left_inv1;set_left_inv2;set_left_inv3;set_right_inv0;set_right_inv1;set_right_inv2;set_right_inv3;"}
+	
 	confunc set_left_ina0 { *bt_left_fm0	texl "0 64"	*bt_left_fm0 texh "255 128" }
 	confunc set_left_ina1 { *bt_left_fm1	texl "0 64"	*bt_left_fm1 texh "255 128" }
 	confunc set_left_ina2 { *bt_left_fm2	texl "0 64"	*bt_left_fm2 texh "255 128" }
@@ -791,54 +793,57 @@ menu hud
 	confunc set_right_a2 { *bt_right_fm2	texl "0 0"	*bt_right_fm2 texh "255 63" }
 	confunc set_right_a3 { *bt_right_fm3	texl "0 0"	*bt_right_fm3 texh "255 63" }
 
-	confunc set_left_inv0 { *bt_left_fm0    invis true *left_fm_name0 invis true }
-	confunc set_left_inv1 { *bt_left_fm1    invis true *left_fm_name1 invis true }
-	confunc set_left_inv2 { *bt_left_fm2    invis true *left_fm_name2 invis true }
-	confunc set_left_inv3 { *bt_left_fm3    invis true *left_fm_name3 invis true }
-	confunc set_right_inv0 { *bt_right_fm0    invis true *right_fm_name0 invis true }
-	confunc set_right_inv1 { *bt_right_fm1    invis true *right_fm_name1 invis true }
-	confunc set_right_inv2 { *bt_right_fm2    invis true *right_fm_name2 invis true }
-	confunc set_right_inv3 { *bt_right_fm3    invis true *right_fm_name3 invis true }
+	confunc set_left_inv0 { *bt_left_fm0    invis true *left_fm_name0 invis true *left_fm_tu0 invis true }
+	confunc set_left_inv1 { *bt_left_fm1    invis true *left_fm_name1 invis true *left_fm_tu1 invis true }
+	confunc set_left_inv2 { *bt_left_fm2    invis true *left_fm_name2 invis true *left_fm_tu2 invis true }
+	confunc set_left_inv3 { *bt_left_fm3    invis true *left_fm_name3 invis true *left_fm_tu3 invis true }
+	confunc set_right_inv0 { *bt_right_fm0    invis true *right_fm_name0 invis true *right_fm_tu0 invis true }
+	confunc set_right_inv1 { *bt_right_fm1    invis true *right_fm_name1 invis true *right_fm_tu1 invis true }
+	confunc set_right_inv2 { *bt_right_fm2    invis true *right_fm_name2 invis true *right_fm_tu2 invis true }
+	confunc set_right_inv3 { *bt_right_fm3    invis true *right_fm_name3 invis true *right_fm_tu3 invis true }
 	
-	confunc set_left_vis0 { *bt_left_fm0    invis false *left_fm_name0 invis false }
-	confunc set_left_vis1 { *bt_left_fm1    invis false *left_fm_name1 invis false }
-	confunc set_left_vis2 { *bt_left_fm2    invis false *left_fm_name2 invis false }
-	confunc set_left_vis3 { *bt_left_fm3    invis false *left_fm_name3 invis false }
-	confunc set_right_vis0 { *bt_right_fm0    invis false *right_fm_name0 invis false }
-	confunc set_right_vis1 { *bt_right_fm1    invis false *right_fm_name1 invis false }
-	confunc set_right_vis2 { *bt_right_fm2    invis false *right_fm_name2 invis false }
-	confunc set_right_vis3 { *bt_right_fm3    invis false *right_fm_name3 invis false }
+	confunc set_left_vis0 { *bt_left_fm0    invis false *left_fm_name0 invis false *left_fm_tu0 invis false }
+	confunc set_left_vis1 { *bt_left_fm1    invis false *left_fm_name1 invis false *left_fm_tu1 invis false }
+	confunc set_left_vis2 { *bt_left_fm2    invis false *left_fm_name2 invis false *left_fm_tu2 invis false }
+	confunc set_left_vis3 { *bt_left_fm3    invis false *left_fm_name3 invis false *left_fm_tu3 invis false }
+	confunc set_right_vis0 { *bt_right_fm0    invis false *right_fm_name0 invis false *right_fm_tu0 invis false }
+	confunc set_right_vis1 { *bt_right_fm1    invis false *right_fm_name1 invis false *right_fm_tu1 invis false }
+	confunc set_right_vis2 { *bt_right_fm2    invis false *right_fm_name2 invis false *right_fm_tu2 invis false }
+	confunc set_right_vis3 { *bt_right_fm3    invis false *right_fm_name3 invis false *right_fm_tu3 invis false }
 
 
 
 	pic bt_left_fm0
 	{
 		image	hud/firemode
-		pos		"100 592"
+		pos		"800 592"
 		texl	"0 0"
 		texh	"255  63"
 		mousefx	false
-		click	{ cmd "fireweap l 0" }
+		invis true
+		click	{ cmd "fireweap l 0;set_all_inv;" }
 	}
 
 	pic bt_left_fm1
 	{
 		image	hud/firemode
-		pos		"100 528"
+		pos		"800 528"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
-		click	{ cmd "fireweap l 1" }
+		invis true
+		click	{ cmd "fireweap l 1;set_all_inv;" }
 	}
 
 	pic bt_left_fm2
 	{
 		image	hud/firemode
-		pos		"100 464"
+		pos		"800 464"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
-		click	{ cmd "fireweap l 2" }
+		invis true
+		click	{ cmd "fireweap l 2;set_all_inv;" }
 	}
 
 	pic bt_left_fm3
@@ -848,38 +853,42 @@ menu hud
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
-		click	{ cmd "fireweap l 3" }
+		invis true
+		click	{ cmd "fireweap l 3;set_all_inv;" }
 	}
 
 
 	pic bt_right_fm0
 	{
 		image	hud/firemode
-		pos		"800 592"
+		pos		"100 592"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
-		click	{ cmd "fireweap r 0" }
+		invis true
+		click	{ cmd "fireweap r 0;set_all_inv;" }
 	}
 
 	pic bt_right_fm1
 	{
 		image	hud/firemode
-		pos		"800 528"
+		pos		"100 528"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
-		click	{ cmd "fireweap r 1" }
+		invis true
+		click	{ cmd "fireweap r 1;set_all_inv;" }
 	}
 
 	pic bt_right_fm2
 	{
 		image	hud/firemode
-		pos		"800 464"
+		pos		"100 464"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
-		click	{ cmd "fireweap r 2" }
+		invis true
+		click	{ cmd "fireweap r 2;set_all_inv;" }
 	}
 
 	pic bt_right_fm3
@@ -889,23 +898,24 @@ menu hud
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
-		click	{ cmd "fireweap r 3" }
+		invis true
+		click	{ cmd "fireweap r 3;set_all_inv;" }
 	}
 
-	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "800 592" }
-	string left_fm_name1 { string "*cvar mn_l_fm_name1"	pos "800 528" }
-	string left_fm_name2 { string "*cvar mn_l_fm_name2"	pos "800 464" }
-	string left_fm_name3 { string "*cvar mn_l_fm_name3"	pos "800 400" }
-	string right_fm_name0 { string "*cvar mn_r_fm_name0"	pos "100 592" }
-	string right_fm_name1 { string "*cvar mn_r_fm_name1"	pos "100 528" }
-	string right_fm_name2 { string "*cvar mn_r_fm_name2"	pos "100 464" }
-	string right_fm_name3 { string "*cvar mn_r_fm_name3"	pos "100 400" }
-	string left_fm_tu0 { string "*cvar mn_l_fm_tu0"	pos "800 592" }
-	string left_fm_tu1 { string "*cvar mn_l_fm_tu1"	pos "800 528" }
-	string left_fm_tu2 { string "*cvar mn_l_fm_tu2"	pos "800 464" }
-	string left_fm_tu3 { string "*cvar mn_l_fm_tu3"	pos "800 400" }
-	string right_fm_tu0 { string "*cvar mn_r_fm_tu0"	pos "100 592" }
-	string right_fm_tu1 { string "*cvar mn_r_fm_tu1"	pos "100 528" }
-	string right_fm_tu2 { string "*cvar mn_r_fm_tu2"	pos "100 464" }
-	string right_fm_tu3 { string "*cvar mn_r_fm_tu3"	pos "100 400" }
+	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "832 596"	invis true }
+	string left_fm_name1 { string "*cvar mn_l_fm_name1"	pos "832 532"	invis true }
+	string left_fm_name2 { string "*cvar mn_l_fm_name2"	pos "832 468"	invis true }
+	string left_fm_name3 { string "*cvar mn_l_fm_name3"	pos "832 404"	invis true }
+	string right_fm_name0 { string "*cvar mn_r_fm_name0"	pos "132 596"	invis true }
+	string right_fm_name1 { string "*cvar mn_r_fm_name1"	pos "132 532"	invis true }
+	string right_fm_name2 { string "*cvar mn_r_fm_name2"	pos "132 468"	invis true }
+	string right_fm_name3 { string "*cvar mn_r_fm_name3"	pos "132 404"	invis true }
+	string left_fm_tu0 { string "*cvar mn_l_fm_tu0"	pos "832 628"	invis true }
+	string left_fm_tu1 { string "*cvar mn_l_fm_tu1"	pos "832 564"	invis true }
+	string left_fm_tu2 { string "*cvar mn_l_fm_tu2"	pos "832 501"	invis true }
+	string left_fm_tu3 { string "*cvar mn_l_fm_tu3"	pos "832 436"	invis true }
+	string right_fm_tu0 { string "*cvar mn_r_fm_tu0"	pos "132 628"	invis true }
+	string right_fm_tu1 { string "*cvar mn_r_fm_tu1"	pos "132 564"	invis true }
+	string right_fm_tu2 { string "*cvar mn_r_fm_tu2"	pos "132 501"	invis true }
+	string right_fm_tu3 { string "*cvar mn_r_fm_tu3"	pos "132 436"	invis true }
 }
