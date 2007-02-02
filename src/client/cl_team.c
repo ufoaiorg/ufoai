@@ -117,7 +117,7 @@ void CL_ReceiveInventory(sizebuf_t * buf, inventory_t * i)
  * Usage: givename <gender> <category> [num]
  * valid genders are male, female, neutral
  */
-static void CL_GiveNameCmd(void)
+static void CL_GiveName_f (void)
 {
 	char *name;
 	int i, j, num;
@@ -300,7 +300,7 @@ void CL_ResetCharacters(base_t* const base)
 /**
  * @brief
  */
-static void CL_GenerateNamesCmd(void)
+static void CL_GenerateNames_f (void)
 {
 	Cbuf_AddText("disconnect\ngame_exit\n");
 }
@@ -309,7 +309,7 @@ static void CL_GenerateNamesCmd(void)
 /**
  * @brief Change the name of the selected actor
  */
-static void CL_ChangeNameCmd(void)
+static void CL_ChangeName_f (void)
 {
 	int sel;
 
@@ -327,7 +327,7 @@ static void CL_ChangeNameCmd(void)
 /**
  * @brief Change the skin of the selected actor
  */
-static void CL_ChangeSkinCmd(void)
+static void CL_ChangeSkin_f (void)
 {
 	int sel, newSkin;
 
@@ -347,7 +347,7 @@ static void CL_ChangeSkinCmd(void)
 /**
  * @brief Reads tha comments from team files
  */
-static void CL_TeamCommentsCmd(void)
+static void CL_TeamComments_f (void)
 {
 	char comment[MAX_VAR];
 	FILE *f;
@@ -550,7 +550,7 @@ void CL_CleanTempInventory(void)
  * @note This function is called everytime the equipment screen for the team pops up
  * @sa CL_UpdatePointersInGlobalData
  */
-static void CL_GenerateEquipmentCmd(void)
+static void CL_GenerateEquipment_f (void)
 {
 	equipDef_t unused;
 	int i, p;
@@ -576,14 +576,14 @@ static void CL_GenerateEquipmentCmd(void)
 			/* maybe we already have soldiers in this aircraft */
 			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
 			if (!baseCurrent->curTeam[p])
-				Sys_Error("CL_GenerateEquipmentCmd: Could not get employee character with idx: %i\n", p);
+				Sys_Error("CL_GenerateEquipment_f: Could not get employee character with idx: %i\n", p);
 			Com_DPrintf("add %s to curTeam (pos: %i)\n", baseCurrent->curTeam[p]->name, p);
 			Cvar_ForceSet(va("mn_name%i", p), baseCurrent->curTeam[p]->name);
 			p++;
 		}
 
 	if ( p != baseCurrent->teamNum[baseCurrent->aircraftCurrent])
-		Sys_Error("CL_GenerateEquipmentCmd: numEmployees: %i, teamNum[%i]: %i, p: %i\n",
+		Sys_Error("CL_GenerateEquipment_f: numEmployees: %i, teamNum[%i]: %i, p: %i\n",
 			gd.numEmployees[EMPL_SOLDIER],
 			baseCurrent->aircraftCurrent,
 			baseCurrent->teamNum[baseCurrent->aircraftCurrent],
@@ -629,7 +629,7 @@ static void CL_GenerateEquipmentCmd(void)
 /**
  * @brief
  */
-static void CL_EquipTypeCmd(void)
+static void CL_EquipType_f (void)
 {
 	int num;
 
@@ -654,7 +654,7 @@ static void CL_EquipTypeCmd(void)
  * @note This function has various console commands:
  * team_select, soldier_select, equip_select
  */
-static void CL_SelectCmd(void)
+static void CL_Select_f (void)
 {
 	char *arg;
 	char command[MAX_VAR];
@@ -666,10 +666,12 @@ static void CL_SelectCmd(void)
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
+
 	num = atoi(Cmd_Argv(1));
 
 	/* change highlights */
 	arg = Cmd_Argv(0);
+	/* there must be a _ in the console command */
 	*strchr(arg, '_') = 0;
 	Q_strncpyz(command, arg, MAX_VAR);
 
@@ -709,16 +711,16 @@ static void CL_SelectCmd(void)
 	Cbuf_AddText(va("%sselect%i\n", command, num));
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
-	Com_DPrintf("CL_SelectCmd: Command: '%s' - num: %i\n", command, num);
+	Com_DPrintf("CL_Select_f: Command: '%s' - num: %i\n", command, num);
 
 	if (!Q_strncmp(command, "team", 4)) {
 		/* set info cvars */
 		num++;
 		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -num);
 		if (!chr)
-			Sys_Error("CL_SelectCmd: No hired character at pos %i (base: %i)\n", num, baseCurrent->idx);
+			Sys_Error("CL_Select_f: No hired character at pos %i (base: %i)\n", num, baseCurrent->idx);
 		/* FIXME: This isn't true ACTOR_SIZE_NORMAL has nothing to do with ugvs anymore - old code */
-		if ( chr->fieldSize == ACTOR_SIZE_NORMAL )
+		if (chr->fieldSize == ACTOR_SIZE_NORMAL)
 			CL_CharacterCvars(chr);
 		else
 			CL_UGVCvars(chr);
@@ -735,7 +737,7 @@ static void CL_SelectCmd(void)
 /**
  * @brief implements the "nextsoldier" command
  */
-static void CL_NextSoldierCmd(void)
+static void CL_NextSoldier_f (void)
 {
 	if (CL_OnBattlescape()) {
 		CL_ActorSelectNext();
@@ -746,7 +748,7 @@ static void CL_NextSoldierCmd(void)
 /**
  * @brief
  */
-void CL_UpdateHireVar(void)
+extern void CL_UpdateHireVar (void)
 {
 	int i, p;
 	aircraft_t *aircraft = NULL;
@@ -758,19 +760,19 @@ void CL_UpdateHireVar(void)
 
 	/* update curTeam list */
 	for (i = 0, p = 0; i < cl_numnames->integer; i++) {
-		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
+		if (CL_SoldierInAircraft(i, aircraft->idx)) {
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
 		}
 	}
-	if ( p != baseCurrent->teamNum[baseCurrent->aircraftCurrent])
+	if (p != baseCurrent->teamNum[baseCurrent->aircraftCurrent])
 		Sys_Error("CL_UpdateHireVar: SoldiersInBase: %i, teamNum[%i]: %i, p: %i\n",
-				  E_CountHired(baseCurrent, EMPL_SOLDIER),
-				  baseCurrent->aircraftCurrent,
-				  baseCurrent->teamNum[baseCurrent->aircraftCurrent],
-				  p);
+				E_CountHired(baseCurrent, EMPL_SOLDIER),
+				baseCurrent->aircraftCurrent,
+				baseCurrent->teamNum[baseCurrent->aircraftCurrent],
+				p);
 
-	for (; p<MAX_ACTIVETEAM; p++)
+	for (; p < MAX_ACTIVETEAM; p++)
 		baseCurrent->curTeam[p] = NULL;
 }
 
@@ -782,7 +784,7 @@ void CL_UpdateHireVar(void)
  * @note available via script command team_reset
  * @note called when initializing the multiplayer menu (for init node and new team button)
  */
-void CL_ResetTeamInBase(void)
+extern void CL_ResetTeamInBase (void)
 {
 	employee_t* employee;
 
@@ -805,7 +807,7 @@ void CL_ResetTeamInBase(void)
 		employee = E_CreateEmployee(EMPL_SOLDIER);
 		employee->hired = qtrue;
 		employee->baseIDHired = baseCurrent->idx;
-		Com_DPrintf("B_ClearBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
+		Com_DPrintf("CL_ResetTeamInBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
 	}
 
 	/* reset the multiplayer inventory; stored in baseCurrent->storage */
@@ -816,7 +818,7 @@ void CL_ResetTeamInBase(void)
 
 		/* search equipment definition */
 		name = "multiplayer";
-		Com_DPrintf("CL_GenerateEquipmentCmd: no curCampaign - using equipment '%s'\n", name);
+		Com_DPrintf("CL_ResetTeamInBase: no curCampaign - using equipment '%s'\n", name);
 		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
 			if (!Q_strncmp(name, ed->name, MAX_VAR))
 				break;
@@ -833,7 +835,7 @@ void CL_ResetTeamInBase(void)
  * @brief Init the teamlist checkboxes
  * @sa CL_UpdateHireVar
  */
-static void CL_MarkTeamCmd(void)
+static void CL_MarkTeam_f (void)
 {
 	int i, j, k = 0;
 	qboolean alreadyInOtherShip = qfalse;
@@ -856,7 +858,7 @@ static void CL_MarkTeamCmd(void)
 		if (!gd.employees[EMPL_SOLDIER][i].hired || gd.employees[EMPL_SOLDIER][i].baseIDHired != baseCurrent->idx)
 			continue;
 		for (j = 0; j < gd.numAircraft; j++) {
-			if (j==aircraft->idx)
+			if (j == aircraft->idx)
 				continue;
 			/* already on another aircraft */
 			if (CL_SoldierInAircraft(i, j) )
@@ -871,9 +873,7 @@ static void CL_MarkTeamCmd(void)
 			Cbuf_AddText(va("listdisable%i\n", k));
 
 		for (j = 0; j < csi.numIDs; j++) {
-			if ( j != csi.idFloor
-				 && j != csi.idEquip
-				 && gd.employees[EMPL_SOLDIER][i].inv.c[j] )
+			if (j != csi.idFloor && j != csi.idEquip && gd.employees[EMPL_SOLDIER][i].inv.c[j])
 				break;
 		}
 
@@ -925,7 +925,7 @@ qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx)
  * @param[in] aircraft_idx The index of aircraft in the base. Use -1 to remove the soldier from any aircraft.
  * @pre Needs baseCurrent set to the base the aircraft is located in.
  */
-void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
+void CL_RemoveSoldierFromAircraft (int employee_idx, int aircraft_idx)
 {
 	aircraft_t *aircraft;
 	int i;
@@ -956,7 +956,7 @@ void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx)
  * @param[in] aircraft_idx The index of aircraft in the base.
  * @param[in] base_idx The index of the base the aircraft is located in.
  */
-void CL_RemoveSoldiersFromAircraft(int aircraft_idx, int base_idx)
+void CL_RemoveSoldiersFromAircraft (int aircraft_idx, int base_idx)
 {
 	int i = 0;
 	base_t *base = NULL;
@@ -978,7 +978,7 @@ void CL_RemoveSoldiersFromAircraft(int aircraft_idx, int base_idx)
  * @param[in] aircraft_idx The index of aircraft in the base.
  * @return returns true if a soldier could be assigned to the aircraft.
  */
-static qboolean CL_AssignSoldierToAircraft(int employee_idx, int aircraft_idx)
+static qboolean CL_AssignSoldierToAircraft (int employee_idx, int aircraft_idx)
 {
 	aircraft_t *aircraft = NULL;
 	if ( employee_idx < 0 || aircraft_idx < 0 )
@@ -997,7 +997,7 @@ static qboolean CL_AssignSoldierToAircraft(int employee_idx, int aircraft_idx)
 		/* Assign the soldier to the aircraft. */
 		if (aircraft->size > baseCurrent->teamNum[aircraft_idx]) {
 			Com_DPrintf("CL_AssignSoldierToAircraft: attemting to add idx '%d' \n",employee_idx);
-			CL_AddToAircraftTeam(aircraft,employee_idx);
+			CL_AddToAircraftTeam(aircraft, employee_idx);
 			baseCurrent->teamNum[aircraft_idx]++;
 			return qtrue;
 		}
@@ -1008,7 +1008,7 @@ static qboolean CL_AssignSoldierToAircraft(int employee_idx, int aircraft_idx)
 /**
  * @brief Adds or removes a soldier to/from an aircraft.
  */
-static void CL_AssignSoldierCmd(void)
+static void CL_AssignSoldier_f (void)
 {
 	int num = -1;
 	employee_t *employee = NULL;
@@ -1021,24 +1021,25 @@ static void CL_AssignSoldierCmd(void)
 	}
 	num = atoi(Cmd_Argv(1));
 
+	/* baseCurrent is checked here */
 	if (num >= E_CountHired(baseCurrent, EMPL_SOLDIER) || num >= cl_numnames->integer)
 		return;
 
 	employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, -(num+1));
 	if (!employee)
-		Sys_Error("CL_AssignSoldierCmd: Could not get employee %i\n", num);
+		Sys_Error("CL_AssignSoldier_f: Could not get employee %i\n", num);
 
-	Com_DPrintf("CL_AssignSoldierCmd: employee with idx %i selected\n", employee->idx);
+	Com_DPrintf("CL_AssignSoldier_f: employee with idx %i selected\n", employee->idx);
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 
-	if ( CL_SoldierInAircraft(employee->idx, aircraft->idx) ) {
-		Com_DPrintf("CL_AssignSoldierCmd: removing\n");
+	if (CL_SoldierInAircraft(employee->idx, aircraft->idx)) {
+		Com_DPrintf("CL_AssignSoldier_f: removing\n");
 		/* Remove soldier from aircraft/team. */
 		Cbuf_AddText(va("listdel%i\n", num));
 		CL_RemoveSoldierFromAircraft(employee->idx, baseCurrent->aircraftCurrent);
 		Cbuf_AddText(va("listholdsnoequip%i\n", num));
 	} else {
-		Com_DPrintf("CL_AssignSoldierCmd: assigning\n");
+		Com_DPrintf("CL_AssignSoldier_f: assigning\n");
 		/* Assign soldier to aircraft/team. */
 		if (CL_AssignSoldierToAircraft(employee->idx, baseCurrent->aircraftCurrent))
 			Cbuf_AddText(va("listadd%i\n", num));
@@ -1058,7 +1059,7 @@ static void CL_AssignSoldierCmd(void)
  *
  * Done by the script command msgmenu [?|!|:][cvarname]
  */
-static void CL_MessageMenuCmd(void)
+static void CL_MessageMenu_f (void)
 {
 	static char nameBackup[MAX_VAR];
 	static char cvarName[MAX_VAR];
@@ -1154,7 +1155,7 @@ qboolean CL_SaveTeam(char *filename)
 /**
  * @brief Stores a team in a specified teamslot (multiplayer)
  */
-static void CL_SaveTeamSlotCmd(void)
+static void CL_SaveTeamSlot_f (void)
 {
 	char filename[MAX_QPATH];
 
@@ -1287,7 +1288,7 @@ void CL_LoadTeamMultiplayer(char *filename)
 /**
  * @brief Loads the selected teamslot
  */
-static void CL_LoadTeamSlotCmd(void)
+static void CL_LoadTeamSlot_f (void)
 {
 	char filename[MAX_QPATH];
 
@@ -1306,11 +1307,11 @@ static void CL_LoadTeamSlotCmd(void)
 /**
  * @brief Call all the needed functions to generate a new initial team (e.g. for multiplayer)
  */
-void CL_GenerateNewTeam (void)
+void CL_GenerateNewTeam_f (void)
 {
 	CL_ResetTeamInBase();
 	Cvar_Set("mn_teamname", _("NewTeam"));
-	CL_GenerateNamesCmd();
+	CL_GenerateNames_f();
 	MN_PushMenu("team");
 }
 
@@ -1319,24 +1320,24 @@ void CL_GenerateNewTeam (void)
  */
 void CL_ResetTeams(void)
 {
-	Cmd_AddCommand("new_team", CL_GenerateNewTeam, NULL);
-	Cmd_AddCommand("givename", CL_GiveNameCmd, NULL);
-	Cmd_AddCommand("gennames", CL_GenerateNamesCmd, NULL);
+	Cmd_AddCommand("new_team", CL_GenerateNewTeam_f, NULL);
+	Cmd_AddCommand("givename", CL_GiveName_f, NULL);
+	Cmd_AddCommand("gennames", CL_GenerateNames_f, NULL);
 	Cmd_AddCommand("team_reset", CL_ResetTeamInBase, NULL);
-	Cmd_AddCommand("genequip", CL_GenerateEquipmentCmd, NULL);
-	Cmd_AddCommand("equip_type", CL_EquipTypeCmd, NULL);
-	Cmd_AddCommand("team_mark", CL_MarkTeamCmd, NULL);
-	Cmd_AddCommand("team_hire", CL_AssignSoldierCmd, NULL);
-	Cmd_AddCommand("team_select", CL_SelectCmd, NULL);
-	Cmd_AddCommand("team_changename", CL_ChangeNameCmd, NULL);
-	Cmd_AddCommand("team_changeskin", CL_ChangeSkinCmd, NULL);
-	Cmd_AddCommand("team_comments", CL_TeamCommentsCmd, NULL);
-	Cmd_AddCommand("equip_select", CL_SelectCmd, NULL);
-	Cmd_AddCommand("soldier_select", CL_SelectCmd, _("Select a soldier from list"));
-	Cmd_AddCommand("nextsoldier", CL_NextSoldierCmd, _("Toggle to next soldier"));
-	Cmd_AddCommand("saveteamslot", CL_SaveTeamSlotCmd, NULL);
-	Cmd_AddCommand("loadteamslot", CL_LoadTeamSlotCmd, NULL);
-	Cmd_AddCommand("msgmenu", CL_MessageMenuCmd, NULL);
+	Cmd_AddCommand("genequip", CL_GenerateEquipment_f, NULL);
+	Cmd_AddCommand("equip_type", CL_EquipType_f, NULL);
+	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
+	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, NULL);
+	Cmd_AddCommand("team_select", CL_Select_f, NULL);
+	Cmd_AddCommand("team_changename", CL_ChangeName_f, NULL);
+	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, NULL);
+	Cmd_AddCommand("team_comments", CL_TeamComments_f, NULL);
+	Cmd_AddCommand("equip_select", CL_Select_f, NULL);
+	Cmd_AddCommand("soldier_select", CL_Select_f, _("Select a soldier from list"));
+	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
+	Cmd_AddCommand("saveteamslot", CL_SaveTeamSlot_f, NULL);
+	Cmd_AddCommand("loadteamslot", CL_LoadTeamSlot_f, NULL);
+	Cmd_AddCommand("msgmenu", CL_MessageMenu_f, NULL);
 }
 
 
