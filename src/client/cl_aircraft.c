@@ -1265,8 +1265,6 @@ extern void CL_SendAircraftPurchasingUfo (aircraft_t* aircraft,aircraft_t* ufo)
  */
 void CL_ResetAircraftTeam (aircraft_t *aircraft)
 {
-	int i;
-
 	memset(aircraft->teamIdxs, -1, aircraft->size * sizeof(int));
 }
 
