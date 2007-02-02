@@ -1549,9 +1549,6 @@ void Mod_DrawModelBBox (vec4_t bbox[8], entity_t *e)
 	if (!gl_showbox->value)
 		return;
 
-	if (e->flags & RF_WEAPONMODEL || e->flags & RF_VIEWERMODEL || e->flags & RF_BEAM)
-		return;
-
 	qglDisable (GL_CULL_FACE);
 	qglPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
 
