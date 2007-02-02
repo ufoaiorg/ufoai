@@ -1220,7 +1220,7 @@ void CL_ActorStartMove(le_t * le, pos3_t to)
  * @param[in] le
  * @param[in] at
  */
-void CL_ActorShoot(le_t * le, pos3_t at)
+void CL_ActorShoot (le_t * le, pos3_t at)
 {
 	int shot_type;
 
@@ -1244,7 +1244,7 @@ void CL_ActorShoot(le_t * le, pos3_t at)
  * @param[in] hand
  * @sa CL_CheckAction
  */
-void CL_ActorReload(int hand)
+void CL_ActorReload (int hand)
 {
 	inventory_t *inv;
 	invList_t *ic;
@@ -1350,7 +1350,7 @@ void CL_ActorDoMove(sizebuf_t * sb)
 /**
  * @brief Turns the actor around without moving
  */
-void CL_ActorTurnMouse(void)
+void CL_ActorTurnMouse (void)
 {
 	vec3_t div;
 	byte dv;
@@ -1374,7 +1374,7 @@ void CL_ActorTurnMouse(void)
  * @brief Turns actor.
  * @param[in] sb
  */
-void CL_ActorDoTurn(sizebuf_t *sb)
+void CL_ActorDoTurn (sizebuf_t *sb)
 {
 	le_t *le;
 	int entnum, dir;
@@ -1383,7 +1383,7 @@ void CL_ActorDoTurn(sizebuf_t *sb)
 
 	/* get le */
 	le = LE_Get(entnum);
-	if ( !le || (le->type != ET_ACTOR && le->type != ET_UGV) ) {
+	if (!le || (le->type != ET_ACTOR && le->type != ET_UGV)) {
 		Com_Printf("Can't turn, LE doesn't exist or is not an actor\n");
 		return;
 	}
@@ -1401,7 +1401,7 @@ void CL_ActorDoTurn(sizebuf_t *sb)
 /**
  * @brief Stands or crouches actor.
  */
-void CL_ActorStandCrouch(void)
+void CL_ActorStandCrouch (void)
 {
 	if (!CL_CheckAction())
 		return;
@@ -1420,7 +1420,7 @@ void CL_ActorStandCrouch(void)
  * @note: we can do this because STATE_STUN is 0x43 and STATE_DEAD is 0x03 (checking for STATE_DEAD is also true when STATE_STUN was set)
  * @note: Do we really need this as a script command? Currently there is no binding - but who knows?
  */
-void CL_ActorStun(void)
+void CL_ActorStun (void)
 {
 	if (!CL_CheckAction())
 		return;
@@ -1434,7 +1434,7 @@ void CL_ActorStun(void)
 /**
  * @brief Toggles reaction fire.
  */
-void CL_ActorToggleReaction(void)
+void CL_ActorToggleReaction (void)
 {
 	int state = 0;
 
@@ -1471,7 +1471,7 @@ static qboolean firstShot = qfalse;
 /**
  * @brief Shoot with weapon.
  */
-void CL_ActorDoShoot(sizebuf_t * sb)
+void CL_ActorDoShoot (sizebuf_t * sb)
 {
 	fireDef_t *fd;
 	le_t *le;
@@ -1501,12 +1501,12 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 	firstShot = qfalse;
 
 	/* do actor related stuff */
-	if ( !le ) {
+	if (!le) {
 		/* it's OK, the actor not visible */
 		return;
 	}
 
-	if ( le->type != ET_ACTOR && le->type != ET_UGV ) {
+	if (le->type != ET_ACTOR && le->type != ET_UGV) {
 		Com_Printf("Can't shoot, LE is not an actor\n");
 		return;
 	}
@@ -1536,7 +1536,7 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 CL_ActorShootHidden
 =====================
 */
-void CL_ActorShootHidden( sizebuf_t *sb )
+void CL_ActorShootHidden (sizebuf_t *sb)
 {
 	fireDef_t	*fd;
 	qboolean	first;
@@ -1561,7 +1561,7 @@ void CL_ActorShootHidden( sizebuf_t *sb )
  * @brief Throw item with actor.
  * @param[in] sb
  */
-void CL_ActorDoThrow(sizebuf_t * sb)
+void CL_ActorDoThrow (sizebuf_t * sb)
 {
 	fireDef_t *fd;
 	vec3_t muzzle, v0;
@@ -1591,7 +1591,7 @@ void CL_ActorDoThrow(sizebuf_t * sb)
  * @brief Starts shooting with actor.
  * @param[in] sb
  */
-void CL_ActorStartShoot(sizebuf_t * sb)
+void CL_ActorStartShoot (sizebuf_t * sb)
 {
 	fireDef_t *fd;
 	le_t *le;
@@ -1646,7 +1646,7 @@ void CL_ActorStartShoot(sizebuf_t * sb)
  * @brief Kills actor.
  * @param[in] sb
  */
-void CL_ActorDie(sizebuf_t * sb)
+void CL_ActorDie (sizebuf_t * sb)
 {
 	le_t *le;
 	int number, state;
@@ -1734,7 +1734,7 @@ MOUSE INPUT
  * @sa CL_ActorSelectMouse
  * @sa CL_ActorActionMouse
  */
-void CL_ActorMoveMouse(void)
+void CL_ActorMoveMouse (void)
 {
 	if (cl.cmode == M_PEND_MOVE) {
 		if (VectorCompare(mousePos, mousePendPos)) {
@@ -1759,7 +1759,7 @@ void CL_ActorMoveMouse(void)
 /**
  * @brief Selects an actor using the mouse.
  */
-void CL_ActorSelectMouse(void)
+void CL_ActorSelectMouse (void)
 {
 	if (mouseSpace != MS_WORLD)
 		return;
@@ -1787,7 +1787,7 @@ void CL_ActorSelectMouse(void)
  * @sa CL_ActionDown
  * @sa CL_ActorStartMove
  */
-void CL_ActorActionMouse(void)
+void CL_ActorActionMouse (void)
 {
 	if (!selActor || mouseSpace != MS_WORLD)
 		return;
@@ -1809,7 +1809,7 @@ ROUND MANAGEMENT
 /**
  * @brief Finishes the current round of the player in battlescape and starts the round for the next team.
  */
-void CL_NextRound(void)
+void CL_NextRound (void)
 {
 	/* can't end round if we are not in battlescape */
 	if (!CL_OnBattlescape())
@@ -1833,7 +1833,7 @@ void CL_NextRound(void)
  * @param[in] time is a ms values
  * @param[in] text text is already translated here
  */
-void CL_DisplayHudMessage(char *text, int time)
+void CL_DisplayHudMessage (char *text, int time)
 {
 	cl.msgTime = cl.time + time;
 	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));
@@ -1843,7 +1843,7 @@ void CL_DisplayHudMessage(char *text, int time)
  * @brief Performs end-of-turn processing.
  * @param[in] sb
  */
-void CL_DoEndRound(sizebuf_t * sb)
+void CL_DoEndRound (sizebuf_t * sb)
 {
 	/* hud changes */
 	if (cls.team == cl.actTeam)
@@ -1868,16 +1868,15 @@ void CL_DoEndRound(sizebuf_t * sb)
 
 /*
 ==============================================================
-
 MOUSE SCANNING
-
 ==============================================================
 */
 
 /**
  * @brief Recalculates the currently selected Actor's move length.
  * */
-void CL_ResetActorMoveLength(void) {
+void CL_ResetActorMoveLength (void)
+{
 	actorMoveLength = Grid_MoveLength(&clMap, mousePos, qfalse);
 	if (selActor->state & STATE_CROUCHED)
 		actorMoveLength *= 1.5;
@@ -1888,7 +1887,7 @@ void CL_ResetActorMoveLength(void) {
  * @note Sets global var mouseActor to current selected le
  * @sa CL_ParseInput
  */
-void CL_ActorMouseTrace(void)
+void CL_ActorMouseTrace (void)
 {
 	int i, restingLevel, intersectionLevel;
 	float cur[2], frustumslope[2], projectiondistance = 2048;
@@ -2034,7 +2033,7 @@ ACTOR GRAPHICS
  * @param[in] ent
  * @sa CL_AddUGV
  */
-qboolean CL_AddActor(le_t * le, entity_t * ent)
+qboolean CL_AddActor (le_t * le, entity_t * ent)
 {
 	entity_t add;
 
@@ -2104,7 +2103,7 @@ qboolean CL_AddActor(le_t * le, entity_t * ent)
  * @param[in] ent
  * @sa CL_AddActor
  */
-qboolean CL_AddUGV(le_t * le, entity_t * ent)
+qboolean CL_AddUGV (le_t * le, entity_t * ent)
 {
 	entity_t add;
 
@@ -2179,7 +2178,7 @@ TARGETING GRAPHICS
  * @brief Calculates chance to hit.
  * @param[in] toPos
  */
-float CL_TargetingToHit(pos3_t toPos)
+float CL_TargetingToHit (pos3_t toPos)
 {
 	vec3_t shooter, target;
 	float distance, pseudosin, width, height, acc, perpX, perpY, hitchance;
@@ -2290,8 +2289,9 @@ float CL_TargetingToHit(pos3_t toPos)
 /**
  * @brief Show weapon radius
  * @param[in] pos The center of the circle
+ * TODO/FIXME make this working
  */
-static void CL_Targeting_Radius(vec3_t center)
+static void CL_Targeting_Radius (vec3_t center)
 {
 	const vec4_t color = {0, 1, 0, 1};
 
@@ -2305,6 +2305,8 @@ static void CL_Targeting_Radius(vec3_t center)
  * @brief Draws line to target.
  * @param[in] fromPos
  * @param[in] toPos
+ * @sa CL_AddTargeting
+ * @sa CL_Trace
  */
 void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 {
@@ -2475,13 +2477,13 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 /**
  * @brief field marker box
  */
-const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT };
+static const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT };
 #define BoxSize(i,source,target) (target[0]=i*source[0],target[1]=i*source[1],target[2]=source[2])
 
 /**
   * @brief create a targeting box at the given position
   */
-void CL_AddTargetingBox(pos3_t pos, qboolean pendBox)
+void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 {
 	entity_t ent;
 	vec3_t realBoxSize;
@@ -2543,11 +2545,14 @@ void CL_AddTargetingBox(pos3_t pos, qboolean pendBox)
 
 
 /**
-  * @brief Adds a target.
-  *
-  * Draws the tracer (red, yellow, green box) on the grid
-  */
-void CL_AddTargeting(void)
+ * @brief Adds a target.
+ * @sa CL_TargetingStraight
+ * @sa CL_TargetingGrenade
+ * @sa CL_AddTargetingBox
+ * @sa CL_TraceMove
+ * Draws the tracer (red, yellow, green box) on the grid
+ */
+extern void CL_AddTargeting (void)
 {
 	if (mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE)
 		return;
