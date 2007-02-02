@@ -218,7 +218,7 @@ static void G_UpdateShotMock(shot_mock_t *mock, edict_t *shooter, edict_t *struc
  * @sa G_SplashDamage
  * @sa G_PrintStats
  */
-static void G_Damage(edict_t * ent, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
+static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
 {
 	qboolean stun = (fd->dmgtype == gi.csi->damStun);
 	qboolean shock = (fd->dmgtype == gi.csi->damShock);
@@ -1466,7 +1466,7 @@ void G_ReactToPostFire(edict_t *target)
  * @brief Called at the end of turn, all outstanding reaction fire is resolved
  * @sa G_ClientEndRound
  */
-void G_ReactToEndTurn()
+void G_ReactToEndTurn(void)
 {
 	edict_t *ent;
 	int i;

@@ -40,36 +40,30 @@ void Svcmd_Test_f(void)
 	gi.cprintf(NULL, PRINT_HIGH, "Svcmd_Test_f()\n");
 }
 
-/*
-==============================================================================
-
-PACKET FILTERING
-
-
-You can add or remove addresses from the filter list with:
-
-addip <ip>
-removeip <ip>
-
-The ip address is specified in dot format, and any unspecified digits will match any value, so you can specify an entire class C network with "addip 192.246.40".
-
-Removeip will only remove an address specified exactly the same way.  You cannot addip a subnet, then removeip a single host.
-
-listip
-Prints the current list of filters.
-
-writeip
-Dumps "addip <ip>" commands to listip.cfg so it can be execed at a later date.  The filter lists are not saved and restored by default, because I beleive it would cause too much confusion.
-
-filterban <0 or 1>
-
-If 1 (the default), then ip addresses matching the current list will be prohibited from entering the game.  This is the default setting.
-
-If 0, then only addresses matching the list will be allowed.  This lets you easily set up a private game, or a game that only allows players from your local network.
-
-
-==============================================================================
-*/
+/**
+ * @brief PACKET FILTERING
+ *
+ * You can add or remove addresses from the filter list with:
+ *
+ * addip <ip>
+ * removeip <ip>
+ *
+ * The ip address is specified in dot format, and any unspecified digits will match any value, so you can specify an entire class C network with "addip 192.246.40".
+ *
+ * Removeip will only remove an address specified exactly the same way.  You cannot addip a subnet, then removeip a single host.
+ *
+ * listip
+ * Prints the current list of filters.
+ *
+ * writeip
+ * Dumps "addip <ip>" commands to listip.cfg so it can be execed at a later date.  The filter lists are not saved and restored by default, because I beleive it would cause too much confusion.
+ *
+ * filterban <0 or 1>
+ *
+ * If 1 (the default), then ip addresses matching the current list will be prohibited from entering the game.  This is the default setting.
+ *
+ * If 0, then only addresses matching the list will be allowed.  This lets you easily set up a private game, or a game that only allows players from your local network.
+ */
 
 typedef struct {
 	unsigned mask;
@@ -78,15 +72,13 @@ typedef struct {
 
 #define	MAX_IPFILTERS	1024
 
-ipfilter_t ipfilters[MAX_IPFILTERS];
-int numipfilters;
+static ipfilter_t ipfilters[MAX_IPFILTERS];
+static int numipfilters;
 
-/*
-=================
-StringToFilter
-=================
-*/
-static qboolean StringToFilter(char *s, ipfilter_t * f)
+/**
+ * @brief
+ */
+static qboolean StringToFilter (char *s, ipfilter_t * f)
 {
 	char num[128];
 	int i, j;
@@ -124,12 +116,10 @@ static qboolean StringToFilter(char *s, ipfilter_t * f)
 	return qtrue;
 }
 
-/*
-=================
-SV_FilterPacket
-=================
-*/
-qboolean SV_FilterPacket(char *from)
+/**
+ * @brief
+ */
+extern qboolean SV_FilterPacket (char *from)
 {
 	int i;
 	unsigned in;
@@ -159,12 +149,10 @@ qboolean SV_FilterPacket(char *from)
 }
 
 
-/*
-=================
-SV_AddIP_f
-=================
-*/
-void SVCmd_AddIP_f(void)
+/**
+ * @brief
+ */
+static void SVCmd_AddIP_f (void)
 {
 	int i;
 
@@ -188,12 +176,10 @@ void SVCmd_AddIP_f(void)
 		ipfilters[i].compare = 0xffffffff;
 }
 
-/*
-=================
-SV_RemoveIP_f
-=================
-*/
-void SVCmd_RemoveIP_f(void)
+/**
+ * @brief
+ */
+static void SVCmd_RemoveIP_f (void)
 {
 	ipfilter_t f;
 	int i, j;
@@ -217,12 +203,10 @@ void SVCmd_RemoveIP_f(void)
 	gi.cprintf(NULL, PRINT_HIGH, "Didn't find %s.\n", gi.argv(2));
 }
 
-/*
-=================
-SV_ListIP_f
-=================
-*/
-void SVCmd_ListIP_f(void)
+/**
+ * @brief
+ */
+static void SVCmd_ListIP_f (void)
 {
 	int i;
 	byte b[4];
@@ -234,12 +218,10 @@ void SVCmd_ListIP_f(void)
 	}
 }
 
-/*
-=================
-SV_WriteIP_f
-=================
-*/
-void SVCmd_WriteIP_f(void)
+/**
+ * @brief
+ */
+static void SVCmd_WriteIP_f (void)
 {
 	FILE *f;
 	char name[MAX_OSPATH];
@@ -272,12 +254,10 @@ void SVCmd_WriteIP_f(void)
 	fclose(f);
 }
 
-/*
-=================
-SVCmd_AI_Add_f
-=================
-*/
-void SVCmd_AI_Add_f(void)
+/**
+ * @brief
+ */
+static void SVCmd_AI_Add_f (void)
 {
 	int team;
 
@@ -294,12 +274,10 @@ void SVCmd_AI_Add_f(void)
 }
 
 
-/*
-=================
-SVCmd_Win_f
-=================
-*/
-void SVCmd_Win_f(void)
+/**
+ * @brief
+ */
+static void SVCmd_Win_f (void)
 {
 	int team;
 
@@ -314,12 +292,10 @@ void SVCmd_Win_f(void)
 		Com_Printf("Bad team number.\n");
 }
 
-/*
-=================
-SVCmd_ShowAll_f
-=================
-*/
-void SVCmd_ShowAll_f(void)
+/**
+ * @brief
+ */
+static void SVCmd_ShowAll_f (void)
 {
 	edict_t *ent;
 	int i;
@@ -333,16 +309,12 @@ void SVCmd_ShowAll_f(void)
 	Com_Printf("All items and creatures revealed to all sides\n");
 }
 
-/*
-=================
-ServerCommand
-
-ServerCommand will be called when an "sv" command is issued.
-The game can issue gi.argc() / gi.argv() commands to get the rest
-of the parameters
-=================
-*/
-void ServerCommand(void)
+/**
+ * @brief ServerCommand will be called when an "sv" command is issued.
+ * The game can issue gi.argc() / gi.argv() commands to get the rest
+ * of the parameters
+ */
+extern void ServerCommand (void)
 {
 	char *cmd;
 
