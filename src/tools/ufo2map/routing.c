@@ -125,7 +125,7 @@ static void CheckUnit_Thread (unsigned int unitnum)
 			else
 				filled[y][x] |= 1 << z; /* don't enter */
 		} else {
-/*			printf( "." ); */
+/*			Sys_Printf( "." ); */
 			/* elevated a lot */
 			end[2] = start[2];
 			start[2] += UH-PH;
@@ -149,7 +149,7 @@ static void CheckUnit_Thread (unsigned int unitnum)
 				end[2] = start[2] + PH - (start[2]-tr_end[2]);
 				height = UH - (start[2]-tr_end[2]);
 
-/*				printf( "%i %i\n", (int)height, (int)(start[2]-tr_end[2]) ); */
+/*				Sys_Printf( "%i %i\n", (int)height, (int)(start[2]-tr_end[2]) ); */
 
 				if ( !TestLineDM( start, end, tr_end, 2 ) )
 					area[z][y][x] = ((height+QUANT/2)/QUANT < 0) ? 0 : (height+QUANT/2)/QUANT;
@@ -271,14 +271,14 @@ extern void DoRouting(void)
 	VecToPos( worldMaxs, wpMaxs );
 	VectorAdd( wpMaxs, v_epsilon, wpMaxs );
 
-	for ( i = 0; i < 3; i++ ) {
+	for (i = 0; i < 3; i++) {
 		if ( wpMins[i] <   0 )
 			wpMins[i] = 0;
 		if ( wpMaxs[i] > 255 )
 			wpMaxs[i] = 255;
 	}
 
-/*	printf( "(%i %i %i) (%i %i %i)\n", wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2] ); */
+/*	Sys_Printf( "(%i %i %i) (%i %i %i)\n", wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2] ); */
 
 	/* scan area heights */
 	RunThreadsOnIndividual ( HEIGHT*WIDTH*WIDTH, !verbose, CheckUnit_Thread);

@@ -454,27 +454,27 @@ static void FixEdges_r (node_t *node)
 extern void FixTjuncs (node_t *headnode)
 {
 	/* snap and merge all vertexes */
-	qprintf ("---- snap verts ----\n");
+	Sys_FPrintf( SYS_VRB, "---- snap verts ----\n");
 	memset (hashverts, 0, sizeof(hashverts));
 	c_totalverts = 0;
 	c_uniqueverts = 0;
 	c_faceoverflows = 0;
 	EmitVertexes_r (headnode);
-	qprintf ("%i unique from %i\n", c_uniqueverts, c_totalverts);
+	Sys_FPrintf( SYS_VRB, "%i unique from %i\n", c_uniqueverts, c_totalverts);
 
 	/* break edges on tjunctions */
-	qprintf ("---- tjunc ----\n");
+	Sys_FPrintf( SYS_VRB, "---- tjunc ----\n");
 	c_tryedges = 0;
 	c_degenerate = 0;
 	c_facecollapse = 0;
 	c_tjunctions = 0;
 	if (!notjunc)
 		FixEdges_r (headnode);
-	qprintf ("%5i edges degenerated\n", c_degenerate);
-	qprintf ("%5i faces degenerated\n", c_facecollapse);
-	qprintf ("%5i edges added by tjunctions\n", c_tjunctions);
-	qprintf ("%5i faces added by tjunctions\n", c_faceoverflows);
-	qprintf ("%5i bad start verts\n", c_badstartverts);
+	Sys_FPrintf( SYS_VRB, "%5i edges degenerated\n", c_degenerate);
+	Sys_FPrintf( SYS_VRB, "%5i faces degenerated\n", c_facecollapse);
+	Sys_FPrintf( SYS_VRB, "%5i edges added by tjunctions\n", c_tjunctions);
+	Sys_FPrintf( SYS_VRB, "%5i faces added by tjunctions\n", c_faceoverflows);
+	Sys_FPrintf( SYS_VRB, "%5i bad start verts\n", c_badstartverts);
 }
 
 
@@ -906,14 +906,14 @@ static void MakeFaces_r (node_t *node)
  */
 extern void MakeFaces (node_t *node)
 {
-	qprintf ("--- MakeFaces ---\n");
+	Sys_FPrintf( SYS_VRB, "--- MakeFaces ---\n");
 	c_merge = 0;
 	c_subdivide = 0;
 	c_nodefaces = 0;
 
 	MakeFaces_r (node);
 
-	qprintf ("%5i makefaces\n", c_nodefaces);
-	qprintf ("%5i merged\n", c_merge);
-	qprintf ("%5i subdivided\n", c_subdivide);
+	Sys_FPrintf( SYS_VRB, "%5i makefaces\n", c_nodefaces);
+	Sys_FPrintf( SYS_VRB, "%5i merged\n", c_merge);
+	Sys_FPrintf( SYS_VRB, "%5i subdivided\n", c_subdivide);
 }

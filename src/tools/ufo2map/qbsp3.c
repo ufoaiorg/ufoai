@@ -79,7 +79,7 @@ static void ProcessWorldModel (void)
 			if ( !(i%26) ) {
 				fprintf (stdout, "%i...", (int)(i/26));
 				fflush(stdout);
-			/*	printf ("%i...", (int)(i/26) );*/
+			/*	Sys_Printf ("%i...", (int)(i/26) );*/
 			}
 
 			/* process brushes with that level mask */
@@ -87,7 +87,7 @@ static void ProcessWorldModel (void)
 		}
 		end = I_FloatTime();
 
-		printf( " (%i)\n", end-start );
+		Sys_Printf( " (%i)\n", end-start );
 	}
 
 	/* calculate routing */
@@ -145,7 +145,7 @@ extern void ProcessModels (void)
 		if (!entities[entity_num].numbrushes)
 			continue;
 
-		qprintf ("############### model %i ###############\n", nummodels);
+		Sys_FPrintf( SYS_VRB, "############### model %i ###############\n", nummodels);
 		if (entity_num == 0)
 			ProcessWorldModel ();
 		else

@@ -175,7 +175,7 @@ static int PointInLeafnum (vec3_t point)
 /**
  * @brief
  */
-dleaf_t *PointInLeafRad (vec3_t point)
+dleaf_t *Rad_PointInLeaf (vec3_t point)
 {
 	int num;
 
@@ -440,20 +440,20 @@ void BounceLight (void)
 	char	name[64];
 	patch_t	*p;
 
-	for (i=0 ; i<num_patches ; i++) {
+	for (i = 0; i < num_patches; i++) {
 		p = &patches[i];
-		for (j=0 ; j<3 ; j++) {
+		for (j = 0; j < 3; j++) {
 /*			p->totallight[j] = p->samplelight[j]; */
 			radiosity[i][j] = p->samplelight[j] * p->reflectivity[j] * p->area;
 		}
 	}
 
-	for (i=0 ; i<numbounce ; i++) {
+	for (i = 0; i < numbounce; i++) {
 		RunThreadsOnIndividual (num_patches, qfalse, ShootLight);
 		added = CollectLight ();
 
-		qprintf ("bounce:%i added:%f\n", i, added);
-		if ( dumppatches && (i==0 || i == numbounce-1) ) {
+		Sys_FPrintf( SYS_VRB, "bounce:%i added:%f\n", i, added);
+		if (dumppatches && (i == 0 || i == numbounce-1)) {
 			sprintf (name, "bounce%i.txt", i);
 			WriteWorld (name);
 		}
@@ -472,7 +472,7 @@ void CheckPatches (void)
 	unsigned int i;
 	patch_t *patch;
 
-	for (i=0 ; i<num_patches ; i++) {
+	for (i = 0; i < num_patches; i++) {
 		patch = &patches[i];
 		if (patch->totallight[0] < 0 || patch->totallight[1] < 0 || patch->totallight[2] < 0)
 			Error ("negative patch totallight\n");
@@ -508,7 +508,7 @@ void RadWorld (void)
 	if (numbounce > 0) {
 		/* build transfer lists */
 		RunThreadsOnIndividual (num_patches, qtrue, MakeTransfers);
-		qprintf ("transfer lists: %5.1f megs\n"
+		Sys_FPrintf( SYS_VRB, "transfer lists: %5.1f megs\n"
 		, (float)total_transfer * sizeof(transfer_t) / (1024*1024));
 
 		/* spread light around */

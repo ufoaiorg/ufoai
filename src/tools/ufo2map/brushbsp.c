@@ -51,7 +51,7 @@ static void FindBrushInTree (node_t *node, int brushnum)
 	if (node->planenum == PLANENUM_LEAF) {
 		for (b = node->brushlist; b; b = b->next)
 			if (b->original->brushnum == brushnum)
-				printf ("here\n");
+				Sys_Printf ("here\n");
 		return;
 	}
 	FindBrushInTree (node->children[0], brushnum);
@@ -799,7 +799,7 @@ extern void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bsp
 	}
 
 	if (WindingIsHuge (w))
-		qprintf ("WARNING: huge winding\n");
+		Sys_FPrintf( SYS_VRB, "WARNING: huge winding\n");
 
 	midwinding = w;
 
@@ -843,7 +843,7 @@ extern void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bsp
 		BoundBrush (b[i]);
 		for (j=0 ; j<3 ; j++) {
 			if (b[i]->mins[j] < -4096 || b[i]->maxs[j] > 4096) {
-				qprintf ("bogus brush after clip\n");
+				Sys_FPrintf( SYS_VRB, "bogus brush after clip\n");
 				break;
 			}
 		}
@@ -856,9 +856,9 @@ extern void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bsp
 
 	if (!(b[0] && b[1])) {
 		if (!b[0] && !b[1])
-			qprintf ("split removed brush\n");
+			Sys_FPrintf( SYS_VRB, "split removed brush\n");
 		else
-			qprintf ("split not on both sides\n");
+			Sys_FPrintf( SYS_VRB, "split not on both sides\n");
 		if (b[0]) {
 			FreeBrush (b[0]);
 			*front = CopyBrush (brush);
@@ -894,7 +894,7 @@ extern void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bsp
 		if (v1 < 1.0) {
 			FreeBrush (b[i]);
 			b[i] = NULL;
-/*			qprintf ("tiny volume after clip\n"); */
+/*			Sys_FPrintf( SYS_VRB, "tiny volume after clip\n"); */
 		}
 	}
 	}
@@ -1023,7 +1023,7 @@ extern tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 	int			i;
 	vec_t		volume;
 
-	qprintf ("--- BrushBSP ---\n");
+	Sys_FPrintf( SYS_VRB, "--- BrushBSP ---\n");
 
 	tree = AllocTree ();
 
@@ -1035,7 +1035,7 @@ extern tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 
 		volume = BrushVolume (b);
 		if (volume < microvolume) {
-			printf ("WARNING: entity %i, brush %i: microbrush\n",
+			Sys_Printf ("WARNING: entity %i, brush %i: microbrush\n",
 				b->original->entitynum, b->original->brushnum);
 		}
 
@@ -1056,9 +1056,9 @@ extern tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 		AddPointToBounds (b->maxs, tree->mins, tree->maxs);
 	}
 
-	qprintf ("%5i brushes\n", c_brushes);
-	qprintf ("%5i visible faces\n", c_faces);
-	qprintf ("%5i nonvisible faces\n", c_nonvisfaces);
+	Sys_FPrintf( SYS_VRB, "%5i brushes\n", c_brushes);
+	Sys_FPrintf( SYS_VRB, "%5i visible faces\n", c_faces);
+	Sys_FPrintf( SYS_VRB, "%5i nonvisible faces\n", c_nonvisfaces);
 
 	c_nodes = 0;
 	c_nonvis = 0;
@@ -1069,9 +1069,9 @@ extern tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 	tree->headnode = node;
 
 	node = BuildTree_r (node, brushlist);
-	qprintf ("%5i visible nodes\n", c_nodes/2 - c_nonvis);
-	qprintf ("%5i nonvis nodes\n", c_nonvis);
-	qprintf ("%5i leafs\n", (c_nodes+1)/2);
+	Sys_FPrintf( SYS_VRB, "%5i visible nodes\n", c_nodes/2 - c_nonvis);
+	Sys_FPrintf( SYS_VRB, "%5i nonvis nodes\n", c_nonvis);
+	Sys_FPrintf( SYS_VRB, "%5i leafs\n", (c_nodes+1)/2);
 #if 0
 {	/* debug code */
 static node_t	*tnode;

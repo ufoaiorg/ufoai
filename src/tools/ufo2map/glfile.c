@@ -64,8 +64,8 @@ static void OutputWinding (winding_t *w, FILE *glview)
 
 	fprintf (glview, "%i\n", w->numpoints);
 	level += 28;
-	light = (level&255)/255.0;
-	for (i=0 ; i<w->numpoints ; i++) {
+	light = (level & 255) / 255.0;
+	for (i = 0; i < w->numpoints; i++) {
 		fprintf (glview, "%6.3f %6.3f %6.3f %6.3f %6.3f %6.3f\n",
 			w->p[i][0],
 			w->p[i][1],
@@ -116,7 +116,7 @@ static void WriteGLView_r (node_t *node, FILE *glview)
 	}
 
 	/* write all the portals */
-	for (p=node->portals ; p ; p=nextp) {
+	for (p = node->portals; p; p = nextp) {
 		if (p->nodes[0] == node) {
 			OutputPortal (p, glview);
 			nextp = p->next[0];
@@ -136,7 +136,7 @@ extern void WriteGLView (tree_t *tree, char *source)
 
 	c_glfaces = 0;
 	sprintf (name, "%s%s.gl",outbase, source);
-	printf ("Writing %s\n", name);
+	Sys_Printf ("Writing %s\n", name);
 
 	glview = fopen (name, "w");
 	if (!glview)
@@ -144,6 +144,6 @@ extern void WriteGLView (tree_t *tree, char *source)
 	WriteGLView_r (tree->headnode, glview);
 	fclose (glview);
 
-	printf ("%5i c_glfaces\n", c_glfaces);
+	Sys_Printf ("%5i c_glfaces\n", c_glfaces);
 }
 

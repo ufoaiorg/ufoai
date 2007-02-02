@@ -549,7 +549,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 	/* flip it towards plane normal */
 	distscale = DotProduct (texnormal, l->facenormal);
 	if (!distscale) {
-		qprintf ("WARNING: Texture axis perpendicular to face\n");
+		Sys_FPrintf (SYS_VRB, "WARNING: Texture axis perpendicular to face\n");
 		distscale = 1;
 	}
 	if (distscale < 0) {
@@ -630,7 +630,7 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 					surf[j] = l->texorg[j] + l->textoworld[0][j]*us
 					+ l->textoworld[1][j]*ut;
 
-				leaf = PointInLeafRad (surf);
+				leaf = Rad_PointInLeaf (surf);
 				if (leaf->contents != CONTENTS_SOLID) {
 					if (!TestLine (facemid, surf))
 						break;	/* got it */
@@ -737,7 +737,7 @@ void CreateDirectLights (void)
 
 		VectorCopy (p->origin, dl->origin);
 
-		leaf = PointInLeafRad (dl->origin);
+		leaf = Rad_PointInLeaf (dl->origin);
 		dl->next = directlights;
 		directlights = dl;
 
@@ -785,16 +785,16 @@ void CreateDirectLights (void)
 		dl->type = emit_point;
 
 		target = ValueForKey (e, "target");
-		if (target[0]) {
+		if (!strcmp(name, "light_spot") || target[0]) {
 			dl->type = emit_spotlight;
 			dl->stopdot = FloatForKey (e, "_cone");
 			if (!dl->stopdot)
 				dl->stopdot = 10;
-			dl->stopdot = cos(dl->stopdot/180*3.14159);
+			dl->stopdot = cos(dl->stopdot/180.0f*M_PI);
 			if (target[0]) {	/* point towards target */
 				e2 = FindTargetEntity (target);
 				if (!e2)
-					printf ("WARNING: light at (%i %i %i) has missing target\n",
+					Sys_Printf ("WARNING: light at (%i %i %i) has missing target\n",
 					(int)dl->origin[0], (int)dl->origin[1], (int)dl->origin[2]);
 				else {
 					GetVectorForKey (e2, "origin", dest);
@@ -839,8 +839,8 @@ void CreateDirectLights (void)
 		angles = ValueForKey( e, "angles" );
 		sscanf( angles, "%f %f", &sun_pitch, &sun_yaw );
 
-		sun_yaw *= 3.14159/180;
-		sun_pitch *= 3.14159/180;
+		sun_yaw *= M_PI/180.0f;
+		sun_pitch *= M_PI/180.0f;
 
 		sun_dir[0] = cos( sun_yaw ) * sin( sun_pitch );
 		sun_dir[1] = sin( sun_yaw ) * sin( sun_pitch );
@@ -854,7 +854,7 @@ void CreateDirectLights (void)
 	ambient_green *= 128;
 	ambient_blue *= 128;
 
-	qprintf ("%i direct lights\n", numdlights);
+	Sys_FPrintf (SYS_VRB, "%i direct lights\n", numdlights);
 }
 
 
@@ -985,7 +985,7 @@ nextpatch:;
 	}
 }
 
-static float sampleofs[5][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4}, {0.4, 0.4}, {-0.4, 0.4} };
+static const float sampleofs[5][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4}, {0.4, 0.4}, {-0.4, 0.4} };
 
 /**
  * @brief
@@ -1110,11 +1110,11 @@ void FinalLightFace (unsigned int facenum)
 	f->lightofs = lightdatasize;
 	lightdatasize += fl->numstyles*(fl->numsamples*3);
 
-/* add green sentinals between lightmaps */
 #if 0
-lightdatasize += 64*3;
-for (i=0 ; i<64 ; i++)
-dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
+	/* add green sentinals between lightmaps */
+	lightdatasize += 256 * 3;
+	for (i = 0; i < 256; i++)
+		dlightdata[lightdatasize - (i+1) * 3 + 1] = 255;
 #endif
 
 	if (lightdatasize > MAX_MAP_LIGHTING)
@@ -1173,7 +1173,7 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 
 	if (fl->numstyles > MAXLIGHTMAPS) {
 		fl->numstyles = MAXLIGHTMAPS;
-		printf ("face with too many lightstyles: (%f %f %f)\n",
+		Sys_Printf ("face with too many lightstyles: (%f %f %f)\n",
 			face_patches[facenum]->origin[0],
 			face_patches[facenum]->origin[1],
 			face_patches[facenum]->origin[2]

@@ -392,7 +392,7 @@ extern void LoadBSPFileTexinfo (char *filename)
 
 	f = fopen (filename, "rb");
 	if (fread (header, sizeof(dheader_t), 1, f) != 1) {
-		printf("LoadBSPFileTexinfo: Header size mismatch\n");
+		Sys_Printf("LoadBSPFileTexinfo: Header size mismatch\n");
 		free (header);
 		return;
 	}
@@ -412,7 +412,7 @@ extern void LoadBSPFileTexinfo (char *filename)
 
 	fseek (f, ofs, SEEK_SET);
 	if (fread (texinfo, length, 1, f) != 1)
-		printf("LoadBSPFileTexInfo: Warning, read error\n");
+		Sys_Printf("LoadBSPFileTexInfo: Warning, read error\n");
 	fclose (f);
 
 	numtexinfo = length / sizeof(texinfo_t);
@@ -473,6 +473,7 @@ extern void WriteBSPFile (char *filename)
 	AddLump (LUMP_AREAPORTALS, dareaportals, numareaportals*sizeof(dareaportal_t));
 
 	AddLump (LUMP_LIGHTING, dlightdata, lightdatasize);
+	/* removed LUMP_VISIBILITY and use LUMP_ROUTING */
 	AddLump (LUMP_ROUTING, droutedata, routedatasize);
 	AddLump (LUMP_ENTITIES, dentdata, entdatasize);
 	AddLump (LUMP_POP, dpop, sizeof(dpop));
@@ -491,38 +492,38 @@ extern void PrintBSPFileSizes (void)
 	if (!num_entities)
 		ParseEntities ();
 
-	printf ("%5i models       %7i\n"
+	Sys_Printf ("%5i models       %7i\n"
 		,nummodels, (int)(nummodels*sizeof(dmodel_t)));
-	printf ("%5i brushes      %7i\n"
+	Sys_Printf ("%5i brushes      %7i\n"
 		,numbrushes, (int)(numbrushes*sizeof(dbrush_t)));
-	printf ("%5i brushsides   %7i\n"
+	Sys_Printf ("%5i brushsides   %7i\n"
 		,numbrushsides, (int)(numbrushsides*sizeof(dbrushside_t)));
-	printf ("%5i planes       %7i\n"
+	Sys_Printf ("%5i planes       %7i\n"
 		,numplanes, (int)(numplanes*sizeof(dplane_t)));
-	printf ("%5i texinfo      %7i\n"
+	Sys_Printf ("%5i texinfo      %7i\n"
 		,numtexinfo, (int)(numtexinfo*sizeof(texinfo_t)));
-	printf ("%5i entdata      %7i\n", num_entities, entdatasize);
+	Sys_Printf ("%5i entdata      %7i\n", num_entities, entdatasize);
 
-	printf ("\n");
+	Sys_Printf ("\n");
 
-	printf ("%5i vertexes     %7i\n"
+	Sys_Printf ("%5i vertexes     %7i\n"
 		,numvertexes, (int)(numvertexes*sizeof(dvertex_t)));
-	printf ("%5i nodes        %7i\n"
+	Sys_Printf ("%5i nodes        %7i\n"
 		,numnodes, (int)(numnodes*sizeof(dnode_t)));
-	printf ("%5i faces        %7i\n"
+	Sys_Printf ("%5i faces        %7i\n"
 		,numfaces, (int)(numfaces*sizeof(dface_t)));
-	printf ("%5i leafs        %7i\n"
+	Sys_Printf ("%5i leafs        %7i\n"
 		,numleafs, (int)(numleafs*sizeof(dleaf_t)));
-	printf ("%5i leaffaces    %7i\n"
+	Sys_Printf ("%5i leaffaces    %7i\n"
 		,numleaffaces, (int)(numleaffaces*sizeof(dleaffaces[0])));
-	printf ("%5i leafbrushes  %7i\n"
+	Sys_Printf ("%5i leafbrushes  %7i\n"
 		,numleafbrushes, (int)(numleafbrushes*sizeof(dleafbrushes[0])));
-	printf ("%5i surfedges    %7i\n"
+	Sys_Printf ("%5i surfedges    %7i\n"
 		,numsurfedges, (int)(numsurfedges*sizeof(dsurfedges[0])));
-	printf ("%5i edges        %7i\n"
+	Sys_Printf ("%5i edges        %7i\n"
 		,numedges, (int)(numedges*sizeof(dedge_t)));
-	printf ("      lightdata    %7i\n", lightdatasize);
-	printf ("      routedata    %7i\n", routedatasize);
+	Sys_Printf ("      lightdata    %7i\n", lightdatasize);
+	Sys_Printf ("      routedata    %7i\n", routedatasize);
 }
 
 
@@ -651,7 +652,7 @@ extern void UnparseEntities (void)
 			strncpy (value, ep->value, sizeof(value));
 			StripTrailing (value);
 
-			sprintf (line, "\"%s\" \"%s\"\n", key, value);
+			snprintf (line, sizeof(line), "\"%s\" \"%s\"\n", key, value);
 			strcat (end, line);
 			end += strlen(line);
 		}
@@ -672,9 +673,9 @@ static void PrintEntity (entity_t *ent)
 {
 	epair_t *ep;
 
-	printf ("------- entity %p -------\n", ent);
-	for (ep=ent->epairs ; ep ; ep=ep->next)
-		printf ("%s = %s\n", ep->key, ep->value);
+	Sys_Printf ("------- entity %p -------\n", ent);
+	for (ep = ent->epairs; ep; ep = ep->next)
+		Sys_Printf ("%s = %s\n", ep->key, ep->value);
 }
 #endif
 
@@ -685,7 +686,7 @@ extern void SetKeyValue (entity_t *ent, char *key, char *value)
 {
 	epair_t *ep;
 
-	for (ep=ent->epairs ; ep ; ep=ep->next)
+	for (ep = ent->epairs; ep; ep = ep->next)
 		if (!strcmp (ep->key, key) ) {
 			free (ep->value);
 			ep->value = copystring(value);

@@ -331,13 +331,14 @@ int TestContents (vec3_t pos);
 extern vec3_t	v_epsilon;
 extern vec3_t	worldMins, worldMaxs;
 
-void PushInfo( void );
-void PopInfo( void );
-void ProcessLevel( int levelnum );
+void PushInfo(void);
+void PopInfo(void);
+void ProcessLevel(int levelnum);
+void PruneNodes(node_t *node);
 
 /* routing.c */
 
-void DoRouting( void );
+void DoRouting(void);
 
 extern qboolean	noprune;
 extern qboolean	nodetail;

@@ -51,11 +51,11 @@ static int GetThreadWork (void)
 		return -1;
 	}
 
-	f = 10*dispatch / workcount;
+	f = 10 * dispatch / workcount;
 	if (f != oldf) {
 		oldf = f;
 		if (pacifier) {
-			fprintf (stdout, "%i...", f);
+			fprintf(stdout, "%i...", f);
 			fflush(stdout);
 		}
 	}
@@ -82,7 +82,7 @@ static void ThreadWorkerFunction (unsigned int threadnum)
 		work = GetThreadWork ();
 		if (work == -1)
 			break;
-/* 		printf ("thread %i, work %i\n", threadnum, work); */
+/* 		Sys_Printf ("thread %i, work %i\n", threadnum, work); */
 		workfunction(work);
 	}
 }
@@ -128,7 +128,7 @@ void ThreadSetDefault (void)
 			numthreads = 1;
 	}
 
-	qprintf ("%i threads\n", numthreads);
+	Sys_FPrintf(SYS_VRB, "%i threads\n", numthreads);
 }
 
 
@@ -181,17 +181,17 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 	if (numthreads == 1) {	/* use same thread */
 		func (0);
 	} else {
-		for (i=0 ; i<numthreads ; i++) {
+		for (i = 0; i < numthreads; i++) {
 			threadhandle[i] = CreateThread(
 			   NULL,	/* LPSECURITY_ATTRIBUTES lpsa, */
-			   0,		/* DWORD cbStack, */
+			   (4096 * 1024),		/* DWORD cbStack, */
 			   (LPTHREAD_START_ROUTINE)func,	/* LPTHREAD_START_ROUTINE lpStartAddr, */
 			   (LPVOID)i,	/* LPVOID lpvThreadParm, */
 			   0,			/*   DWORD fdwCreate, */
 			   &threadid[i]);
 		}
 
-		for (i=0 ; i<numthreads ; i++)
+		for (i = 0; i < numthreads; i++)
 			WaitForSingleObject (threadhandle[i], INFINITE);
 	}
 	DeleteCriticalSection (&crit);
@@ -199,7 +199,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 	threaded = qfalse;
 	end = I_FloatTime ();
 	if (pacifier)
-		printf (" (%i)\n", end-start);
+		Sys_Printf (" (%i)\n", end-start);
 }
 
 
@@ -301,7 +301,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 
 	end = I_FloatTime ();
 	if (pacifier)
-		printf (" (%i)\n", end-start);
+		Sys_Printf(" (%i)\n", end-start);
 }
 
 
@@ -332,7 +332,7 @@ void ThreadSetDefault (void)
 {
 	if (numthreads == -1)
 		numthreads = prctl(PR_MAXPPROCS);
-	printf ("%i threads\n", numthreads);
+	Sys_Printf ("%i threads\n", numthreads);
 	usconfig (CONF_INITUSERS, numthreads);
 }
 
@@ -394,7 +394,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 
 	end = I_FloatTime ();
 	if (pacifier)
-		printf (" (%i)\n", end-start);
+		Sys_Printf (" (%i)\n", end-start);
 }
 
 
@@ -424,7 +424,7 @@ void ThreadSetDefault (void)
 	}
 
 	if (numthreads > 1)
-		printf("threads: %d\n", numthreads);
+		Sys_Printf("threads: %d\n", numthreads);
 }
 
 #include <pthread.h>
@@ -558,7 +558,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 
 	end = I_FloatTime();
 	if (pacifier)
-		printf (" (%i)\n", end-start);
+		Sys_Printf (" (%i)\n", end-start);
 }
 #endif /* __linux__ */
 
@@ -614,7 +614,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 
 	end = I_FloatTime ();
 	if (pacifier)
-		printf (" (%i)\n", end-start);
+		Sys_Printf (" (%i)\n", end-start);
 }
 
 #endif

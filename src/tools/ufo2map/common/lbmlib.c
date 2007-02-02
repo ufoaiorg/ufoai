@@ -709,5 +709,17 @@ void LoadTGA (char *name, byte **pixels, int *width, int *height)
 			breakOut:;
 		}
 	}
+
+	/* vertically flipped */
+	if ((targa_header.attributes & (1<<5))) {
+		int flip;
+		for (row = 0; row < .5f * rows; row++) {
+			for (column = 0; column < columns; column++) {
+				flip = *( (int*)targa_rgba + row * columns + column);
+				*( (int*)targa_rgba + row * columns + column) = *( (int*)targa_rgba + ( ( rows - 1 ) - row ) * columns + column );
+				*( (int*)targa_rgba + ( ( rows - 1 ) - row ) * columns + column ) = flip;
+			}
+		}
+	}
 	fclose(fin);
 }

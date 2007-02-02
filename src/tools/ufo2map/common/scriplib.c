@@ -64,7 +64,7 @@ static void AddScriptToStack (char *filename)
 
 	size = LoadFile (script->filename, (void **)&script->buffer);
 
-	printf ("entering %s\n", script->filename);
+	Sys_Printf ("entering %s\n", script->filename);
 
 	script->line = 1;
 
@@ -124,7 +124,7 @@ static qboolean EndOfScript (qboolean crossline)
 	}
 	script--;
 	scriptline = script->line;
-	printf ("returning to %s\n", script->filename);
+	Sys_Printf ("returning to %s\n", script->filename);
 	return GetToken (crossline);
 }
 

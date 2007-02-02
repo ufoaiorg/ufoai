@@ -59,94 +59,94 @@ static void Check_BSP_Parameter ( int argc, char **argv )
 		} else if (!strcmp(argv[i],"-glview"))
 			glview = qtrue;
 		else if (!strcmp(argv[i], "-v")) {
-			printf ("verbose = true\n");
+			Sys_Printf ("verbose = true\n");
 			verbose = qtrue;
 		} else if (!strcmp(argv[i], "-draw")) {
-			printf ("drawflag = true\n");
+			Sys_Printf ("drawflag = true\n");
 			drawflag = qtrue;
 		} else if (!strcmp(argv[i], "-convert")) {
-			printf ("convert bsp to ase = true\n");
+			Sys_Printf ("convert bsp to ase = true\n");
 			convertFunc = ConvertBSPToASE;
 		} else if (!strcmp(argv[i], "-noweld")) {
-			printf ("noweld = true\n");
+			Sys_Printf ("noweld = true\n");
 			noweld = qtrue;
 		} else if (!strcmp(argv[i], "-nocsg")) {
-			printf ("nocsg = true\n");
+			Sys_Printf ("nocsg = true\n");
 			nocsg = qtrue;
 		} else if (!strcmp(argv[i], "-noshare")) {
-			printf ("noshare = true\n");
+			Sys_Printf ("noshare = true\n");
 			noshare = qtrue;
 		} else if (!strcmp(argv[i], "-notjunc")) {
-			printf ("notjunc = true\n");
+			Sys_Printf ("notjunc = true\n");
 			notjunc = qtrue;
 		} else if (!strcmp(argv[i], "-nowater")) {
-			printf ("nowater = true\n");
+			Sys_Printf ("nowater = true\n");
 			nowater = qtrue;
 		} else if (!strcmp(argv[i], "-nice")) {
 #if defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
 			nice = atoi(argv[i+1]);
-			printf ("nice = %i\n", nice);
+			Sys_Printf ("nice = %i\n", nice);
 			if (setpriority(PRIO_PROCESS, 0, nice))
-				printf("failed to set nice level of %i\n", nice);
+				Sys_Printf("failed to set nice level of %i\n", nice);
 #else
-			printf ("nice not implemented for this arch\n");
+			Sys_Printf ("nice not implemented for this arch\n");
 #endif
 			i++;
 		} else if (!strcmp(argv[i], "-noopt")) {
-			printf ("noopt = true\n");
+			Sys_Printf ("noopt = true\n");
 			noopt = qtrue;
 		} else if (!strcmp(argv[i], "-noprune")) {
-			printf ("noprune = true\n");
+			Sys_Printf ("noprune = true\n");
 			noprune = qtrue;
 		} else if (!strcmp(argv[i], "-nofill")) {
-			printf ("nofill = true\n");
+			Sys_Printf ("nofill = true\n");
 			nofill = qtrue;
 		} else if (!strcmp(argv[i], "-nomerge")) {
-			printf ("nomerge = true\n");
+			Sys_Printf ("nomerge = true\n");
 			nomerge = qtrue;
 		} else if (!strcmp(argv[i], "-nosubdiv")) {
-			printf ("nosubdiv = true\n");
+			Sys_Printf ("nosubdiv = true\n");
 			nosubdiv = qtrue;
 		} else if (!strcmp(argv[i], "-nodetail")) {
-			printf ("nodetail = true\n");
+			Sys_Printf ("nodetail = true\n");
 			nodetail = qtrue;
 		} else if (!strcmp(argv[i], "-fulldetail")) {
-			printf ("fulldetail = true\n");
+			Sys_Printf ("fulldetail = true\n");
 			fulldetail = qtrue;
 		} else if (!strcmp(argv[i], "-onlyents")) {
-			printf ("onlyents = true\n");
+			Sys_Printf ("onlyents = true\n");
 			onlyents = qtrue;
 		} else if (!strcmp(argv[i], "-micro")) {
 			microvolume = atof(argv[i+1]);
-			printf ("microvolume = %f\n", microvolume);
+			Sys_Printf ("microvolume = %f\n", microvolume);
 			i++;
 		} else if (!strcmp(argv[i], "-verboseentities")) {
-			printf ("verboseentities = true\n");
+			Sys_Printf ("verboseentities = true\n");
 			verboseentities = qtrue;
 		} else if (!strcmp(argv[i], "-chop")) {
 			subdivide_size = atof(argv[i+1]);
-			printf ("subdivide_size = %f\n", subdivide_size);
+			Sys_Printf ("subdivide_size = %f\n", subdivide_size);
 			i++;
 		} else if (!strcmp(argv[i], "-block")) {
 			block_xl = block_xh = atoi(argv[i+1]);
 			block_yl = block_yh = atoi(argv[i+2]);
-			printf ("block: %i,%i\n", block_xl, block_yl);
+			Sys_Printf ("block: %i,%i\n", block_xl, block_yl);
 			i+=2;
 		} else if (!strcmp(argv[i], "-blocks")) {
 			block_xl = atoi(argv[i+1]);
 			block_yl = atoi(argv[i+2]);
 			block_xh = atoi(argv[i+3]);
 			block_yh = atoi(argv[i+4]);
-			printf ("blocks: %i,%i to %i,%i\n",
+			Sys_Printf ("blocks: %i,%i to %i,%i\n",
 				block_xl, block_yl, block_xh, block_yh);
 			i+=4;
 		} else if (!strcmp (argv[i],"-tmpout"))
 			strcpy (outbase, "/tmp");
 		else if (!strcmp (argv[i],"-norouting")) {
-			printf ("norouting = true\n");
+			Sys_Printf ("norouting = true\n");
 			norouting = qtrue;
 		} else if (!strcmp(argv[i], "-nobackclip")) {
-			printf ("nobackclip = true\n");
+			Sys_Printf ("nobackclip = true\n");
 			nobackclip = qtrue;
 		}
 	}
@@ -163,11 +163,11 @@ static void Check_RAD_Parameter( int argc, char** argv )
 			dumppatches = qtrue;
 		else if (!strcmp(argv[i],"-bounce")) {
 			numbounce = atoi (argv[i+1]);
-			printf ("light bounces = %i\n", numbounce);
+			Sys_Printf ("light bounces = %i\n", numbounce);
 			i++;
 		} else if (!strcmp(argv[i],"-extra")) {
 			extrasamples = qtrue;
-			printf ("extrasamples = true\n");
+			Sys_Printf ("extrasamples = true\n");
 		} else if (!strcmp(argv[i],"-chop")) {
 			subdiv = atoi (argv[i+1]);
 			i++;
@@ -181,20 +181,20 @@ static void Check_RAD_Parameter( int argc, char** argv )
 			i++;
 		} else if (!strcmp(argv[i],"-direct")) {
 			direct_scale *= atof(argv[i+1]);
-			printf ("direct light scaling at %f\n", direct_scale);
+			Sys_Printf ("direct light scaling at %f\n", direct_scale);
 			i++;
 		} else if (!strcmp(argv[i],"-entity")) {
 			entity_scale *= atof(argv[i+1]);
-			printf ("entity light scaling at %f\n", entity_scale);
+			Sys_Printf ("entity light scaling at %f\n", entity_scale);
 			i++;
 		} else if (!strcmp(argv[i],"-nopvs")) {
 			nopvs = qtrue;
-			printf ("nopvs = true\n");
+			Sys_Printf ("nopvs = true\n");
 		} else if (!strcmp(argv[i],"-maxlight")) {
 			maxlight = atof (argv[i+1]) * 128;
 			i++;
 		} else if (!strcmp(argv[i], "-noradiosity")) {
-			printf ("noradiosity = true\n");
+			Sys_Printf ("noradiosity = true\n");
 			noradiosity = qtrue;
 		}
 	}
@@ -211,7 +211,7 @@ int main (int argc, char **argv)
 
 	convertFunc = NULL;
 
-	printf ("---- ufo2map %s ----\n", VERSION);
+	Sys_Printf ("---- ufo2map %s ----\n", VERSION);
 
 	Check_BSP_Parameter( argc, argv );
 	Check_RAD_Parameter( argc, argv );
@@ -263,10 +263,10 @@ int main (int argc, char **argv)
 	}
 
 	end = I_FloatTime ();
-	printf ("%5.0f seconds elapsed\n", end-start);
+	Sys_Printf ("%5.0f seconds elapsed\n", end-start);
 
 	if (!convertFunc && !onlyents && !noradiosity) {
-		printf ("----- Radiosity ----\n");
+		Sys_Printf ("----- Radiosity ----\n");
 
 		begin = start;
 
@@ -281,13 +281,13 @@ int main (int argc, char **argv)
 		RadWorld ();
 
 		sprintf (name, "%s%s", outbase, source);
-		printf ("writing %s\n", name);
+		Sys_Printf ("writing %s\n", name);
 		WriteBSPFile (name);
 
 		end = I_FloatTime ();
 
-		printf ("%5.0f seconds elapsed\n", end-start);
-		printf ("sum: %5.0f seconds elapsed\n\n", end-begin);
+		Sys_Printf ("%5.0f seconds elapsed\n", end-start);
+		Sys_Printf ("sum: %5.0f seconds elapsed\n\n", end-begin);
 	}
 
 	return 0;

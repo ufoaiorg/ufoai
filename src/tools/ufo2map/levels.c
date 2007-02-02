@@ -141,7 +141,7 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 
 	VectorSubtract( bmaxs, bmins, diff );
 
-/*	printf( "(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, (int)diff[0], (int)diff[1],
+/*	Sys_Printf( "(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, (int)diff[0], (int)diff[1],
 		(int)cmins[0], (int)cmins[1], (int)cmaxs[0], (int)cmaxs[1],
 		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1] ); */
 
@@ -161,12 +161,12 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 		VectorCopy( bmaxs, nmaxs );
 
 		nmaxs[n] -= diff[n]/2;
-/*		printf( "  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1] ); */
+/*		Sys_Printf( "  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1] ); */
 		nn[0] = ConstructLevelNodes_r( levelnum, nmins, nmaxs );
 
 		nmins[n] += diff[n]/2;
 		nmaxs[n] += diff[n]/2;
-/*		printf( "    (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1] ); */
+/*		Sys_Printf( "    (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1] ); */
 		nn[1] = ConstructLevelNodes_r( levelnum, nmins, nmaxs );
 	} else {
 		/* no children */
@@ -196,6 +196,9 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 	MakeFaces (tree->headnode);
 	FixTjuncs (tree->headnode);
 
+	if (!noprune)
+		PruneNodes (tree->headnode);
+
 	/* correct bounds */
 	n = tree->headnode;
 	VectorAdd( bmins, v_epsilon, n->mins );
@@ -207,7 +210,7 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 
 /*	EndModel (); */
 
-/*	printf( "  headnode: %i\n", dmodels[nummodels].headnode ); */
+/*	Sys_Printf( "  headnode: %i\n", dmodels[nummodels].headnode ); */
 
 	nn[2] = dmodels[nummodels].headnode;
 	return BuildNodeChildren( bmins, bmaxs, nn );
@@ -244,7 +247,7 @@ extern void ProcessLevel (int levelnum)
 	dm->numfaces = numfaces - dm->firstface;
 
 /*	if (!dm->numfaces)
-		printf( "level: %i -> %i : f %i\n", levelnum, dm->headnode, dm->numfaces );
+		Sys_Printf( "level: %i -> %i : f %i\n", levelnum, dm->headnode, dm->numfaces );
 */
 }
 

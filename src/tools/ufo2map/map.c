@@ -279,11 +279,11 @@ static int BrushContents (mapbrush_t *b)
 	s = &b->original_sides[0];
 	contents = s->contents;
 	trans = texinfo[s->texinfo].flags;
-	for (i=1 ; i<b->numsides ; i++, s++) {
+	for (i = 1; i < b->numsides; i++, s++) {
 		s = &b->original_sides[i];
 		trans |= texinfo[s->texinfo].flags;
 		if (s->contents != contents) {
-			printf ("Entity %i, Brush %i: mixed face contents\n"
+			Sys_Printf("Entity %i, Brush %i: mixed face contents\n"
 				, b->entitynum, b->brushnum);
 			break;
 		}
@@ -324,10 +324,10 @@ static void AddBrushBevels (mapbrush_t *b)
 
 	/* add the axial planes */
 	order = 0;
-	for (axis=0 ; axis <3 ; axis++) {
-		for (dir=-1 ; dir <= 1 ; dir+=2, order++) {
+	for (axis = 0; axis < 3; axis++) {
+		for (dir = -1; dir <= 1; dir += 2, order++) {
 			/* see if the plane is allready present */
-			for (i=0, s=b->original_sides ; i<b->numsides ; i++,s++) {
+			for (i = 0, s = b->original_sides; i < b->numsides; i++, s++) {
 				if (mapplanes[s->planenum].normal[axis] == dir)
 					break;
 			}
@@ -369,26 +369,26 @@ static void AddBrushBevels (mapbrush_t *b)
 		return;		/* pure axial */
 
 	/* test the non-axial plane edges */
-	for (i=6 ; i<b->numsides ; i++) {
+	for (i = 6; i < b->numsides; i++) {
 		s = b->original_sides + i;
 		w = s->winding;
 		if (!w)
 			continue;
-		for (j=0 ; j<w->numpoints ; j++) {
-			k = (j+1)%w->numpoints;
+		for (j = 0; j < w->numpoints; j++) {
+			k = (j+1) % w->numpoints;
 			VectorSubtract (w->p[j], w->p[k], vec);
 			if (VectorNormalize (vec, vec) < 0.5)
 				continue;
 			SnapVector (vec);
-			for (k=0 ; k<3 ; k++)
-				if ( vec[k] == -1 || vec[k] == 1)
+			for (k = 0; k < 3; k++)
+				if (vec[k] == -1 || vec[k] == 1)
 					break;	/* axial */
 			if (k != 3)
 				continue;	/* only test non-axial edges */
 
 			/* try the six possible slanted axials from this edge */
-			for (axis=0 ; axis <3 ; axis++) {
-				for (dir=-1 ; dir <= 1 ; dir+=2) {
+			for (axis = 0; axis < 3; axis++) {
+				for (dir = -1 ; dir <= 1; dir += 2) {
 					/* construct a plane */
 					VectorClear (vec2);
 					vec2[axis] = dir;
@@ -399,7 +399,7 @@ static void AddBrushBevels (mapbrush_t *b)
 
 					/* if all the points on all the sides are */
 					/* behind this plane, it is a proper edge bevel */
-					for (k=0 ; k<b->numsides ; k++) {
+					for (k = 0; k < b->numsides; k++) {
 						/* if this plane has allready been used, skip it */
 						if (PlaneEqual (&mapplanes[b->original_sides[k].planenum]
 							, normal, dist) )
@@ -449,7 +449,7 @@ static qboolean MakeBrushWindings (mapbrush_t *ob)
 
 	ClearBounds (ob->mins, ob->maxs);
 
-	for (i=0 ; i<ob->numsides ; i++) {
+	for (i = 0; i < ob->numsides; i++) {
 		plane = &mapplanes[ob->original_sides[i].planenum];
 		w = BaseWindingForPlane (plane->normal, plane->dist);
 		for (j=0 ; j<ob->numsides && w; j++) {
@@ -465,16 +465,16 @@ static qboolean MakeBrushWindings (mapbrush_t *ob)
 		side->winding = w;
 		if (w) {
 			side->visible = qtrue;
-			for (j=0 ; j<w->numpoints ; j++)
+			for (j = 0; j < w->numpoints; j++)
 				AddPointToBounds (w->p[j], ob->mins, ob->maxs);
 		}
 	}
 
-	for (i=0 ; i<3 ; i++) {
+	for (i = 0; i < 3; i++) {
 		if (ob->mins[0] < -4096 || ob->maxs[0] > 4096)
-			printf ("entity %i, brush %i: bounds out of range\n", ob->entitynum, ob->brushnum);
+			Sys_Printf("entity %i, brush %i: bounds out of range\n", ob->entitynum, ob->brushnum);
 		if (ob->mins[0] > 4096 || ob->maxs[0] < -4096)
-			printf ("entity %i, brush %i: no visible sides on brush\n", ob->entitynum, ob->brushnum);
+			Sys_Printf("entity %i, brush %i: no visible sides on brush\n", ob->entitynum, ob->brushnum);
 	}
 
 	return qtrue;
@@ -577,7 +577,7 @@ static void ParseBrush (entity_t *mapent)
 		/* find the plane number */
 		planenum = PlaneFromPoints (planepts[0], planepts[1], planepts[2]);
 		if (planenum == -1) {
-			printf ("Entity %i, Brush %i: plane with no normal\n"
+			Sys_Printf("Entity %i, Brush %i: plane with no normal\n"
 				, b->entitynum, b->brushnum);
 			continue;
 		}
@@ -586,12 +586,12 @@ static void ParseBrush (entity_t *mapent)
 		for (k=0 ; k<b->numsides ; k++) {
 			s2 = b->original_sides + k;
 			if (s2->planenum == planenum) {
-				printf ("Entity %i, Brush %i: duplicate plane\n"
+				Sys_Printf("Entity %i, Brush %i: duplicate plane\n"
 					, b->entitynum, b->brushnum);
 				break;
 			}
 			if ( s2->planenum == (planenum^1) ) {
-				printf ("Entity %i, Brush %i: mirrored plane\n"
+				Sys_Printf("Entity %i, Brush %i: mirrored plane\n"
 					, b->entitynum, b->brushnum);
 				break;
 			}
@@ -831,7 +831,7 @@ static void TestExpandBrushes (void)
 	mapbrush_t	*brush;
 	vec_t	dist;
 
-	printf ("writing %s\n", name);
+	Sys_Printf ("writing %s\n", name);
 	f = fopen (name, "wb");
 	if (!f)
 		Error ("Can't write %s\b", name);
@@ -873,7 +873,7 @@ extern void LoadMapFile (char *filename)
 {
 	int i;
 
-	qprintf ("--- LoadMapFile ---\n");
+	Sys_FPrintf( SYS_VRB, "--- LoadMapFile ---\n");
 
 	LoadScriptFile (filename);
 
@@ -896,15 +896,15 @@ extern void LoadMapFile (char *filename)
 	/* save a copy of the brushes */
 	memcpy( mapbrushes + nummapbrushes, mapbrushes, sizeof(mapbrush_t)*nummapbrushes );
 
-	qprintf ("%5i brushes\n", nummapbrushes);
-	qprintf ("%5i clipbrushes\n", c_clipbrushes);
-	qprintf ("%5i total sides\n", nummapbrushsides);
-	qprintf ("%5i boxbevels\n", c_boxbevels);
-	qprintf ("%5i edgebevels\n", c_edgebevels);
-	qprintf ("%5i entities\n", num_entities);
-	qprintf ("%5i planes\n", nummapplanes);
-	qprintf ("%5i areaportals\n", c_areaportals);
-	qprintf ("size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n", map_mins[0],map_mins[1],map_mins[2],
+	Sys_FPrintf( SYS_VRB, "%5i brushes\n", nummapbrushes);
+	Sys_FPrintf( SYS_VRB, "%5i clipbrushes\n", c_clipbrushes);
+	Sys_FPrintf( SYS_VRB, "%5i total sides\n", nummapbrushsides);
+	Sys_FPrintf( SYS_VRB, "%5i boxbevels\n", c_boxbevels);
+	Sys_FPrintf( SYS_VRB, "%5i edgebevels\n", c_edgebevels);
+	Sys_FPrintf( SYS_VRB, "%5i entities\n", num_entities);
+	Sys_FPrintf( SYS_VRB, "%5i planes\n", nummapplanes);
+	Sys_FPrintf( SYS_VRB, "%5i areaportals\n", c_areaportals);
+	Sys_FPrintf( SYS_VRB, "size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n", map_mins[0],map_mins[1],map_mins[2],
 		map_maxs[0],map_maxs[1],map_maxs[2]);
 
 #ifdef TESTEXPANDBRUSHES

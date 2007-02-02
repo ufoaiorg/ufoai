@@ -122,8 +122,8 @@ static void EmitLeaf (node_t *node)
 	leaf_p->area = node->area;
 
 	/* write bounding box info */
-	VectorCopy (node->mins, leaf_p->mins);
-	VectorCopy (node->maxs, leaf_p->maxs);
+	VectorCopy ((short)node->mins, leaf_p->mins);
+	VectorCopy ((short)node->maxs, leaf_p->maxs);
 
 	/* write the leafbrushes */
 	leaf_p->firstleafbrush = numleafbrushes;
@@ -224,8 +224,8 @@ static int EmitDrawNode_r (node_t *node)
 	n = &dnodes[numnodes];
 	numnodes++;
 
-	VectorCopy (node->mins, n->mins);
-	VectorCopy (node->maxs, n->maxs);
+	VectorCopy ((short)node->mins, n->mins);
+	VectorCopy ((short)node->maxs, n->maxs);
 
 	planeused[node->planenum]++;
 	planeused[node->planenum^1]++;
@@ -245,9 +245,8 @@ static int EmitDrawNode_r (node_t *node)
 
 	n->numfaces = numfaces - n->firstface;
 
-
 	/* recursively output the other nodes */
-	for (i=0 ; i<2 ; i++) {
+	for (i = 0; i < 2; i++) {
 		if (node->children[i]->planenum == PLANENUM_LEAF) {
 			n->children[i] = -(numleafs + 1);
 			EmitLeaf (node->children[i]);
@@ -270,15 +269,15 @@ extern void WriteBSP (node_t *headnode)
 	c_nofaces = 0;
 	c_facenodes = 0;
 
-	qprintf ("--- WriteBSP ---\n");
+	Sys_FPrintf (SYS_VRB, "--- WriteBSP ---\n");
 
 	oldfaces = numfaces;
 	dmodels[nummodels].headnode = EmitDrawNode_r (headnode);
 	EmitAreaPortals (headnode);
 
-	qprintf ("%5i nodes with faces\n", c_facenodes);
-	qprintf ("%5i nodes without faces\n", c_nofaces);
-	qprintf ("%5i faces\n", numfaces-oldfaces);
+	Sys_FPrintf (SYS_VRB, "%5i nodes with faces\n", c_facenodes);
+	Sys_FPrintf (SYS_VRB, "%5i nodes without faces\n", c_nofaces);
+	Sys_FPrintf (SYS_VRB, "%5i faces\n", numfaces-oldfaces);
 }
 
 /**
@@ -382,7 +381,7 @@ static void EmitBrushes (void)
 			for (s = -1 ; s <= 1; s += 2) {
 				/* add the plane */
 				VectorCopy (vec3_origin, normal);
-				normal[x] = s;
+				normal[x] = (float)s;
 				if (s == -1)
 					dist = -b->mins[x];
 				else
@@ -441,8 +440,18 @@ extern void BeginBSPFile (void)
 extern void EndBSPFile (void)
 {
 	char	path[1024];
-/*	int		len; */
-/*	byte	*buf; */
+#if 0
+	int		len;
+	byte	*buf;
+#endif
+
+#if 0
+	/* load the pop */
+	sprintf (path, "%s/pics/pop.lmp", gamedir);
+	len = LoadFile (path, &buf);
+	memcpy (dpop, buf, sizeof(dpop));
+	free (buf);
+#endif
 
 	EmitBrushes ();
 	EmitPlanes ();
@@ -450,7 +459,7 @@ extern void EndBSPFile (void)
 
 	/* write the map */
 	sprintf (path, "%s.bsp", source);
-	printf ("Writing %s\n", path);
+	Sys_Printf ("Writing %s\n", path);
 	WriteBSPFile (path);
 }
 

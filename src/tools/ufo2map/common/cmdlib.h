@@ -32,6 +32,13 @@ typedef enum {qfalse, qtrue} qboolean;
 typedef unsigned char byte;
 #endif
 
+extern	qboolean verbose;
+
+#define SYS_VRB 0 /* verbose support (on/off) */
+#define SYS_STD 1 /* standard print level */
+#define SYS_WRN 2 /* warnings */
+#define SYS_ERR 3 /* error */
+
 /* the dec offsetof macro doesnt work very well... */
 #define myoffsetof(type,identifier) ((size_t)&((type *)0)->identifier)
 
@@ -42,73 +49,70 @@ extern char **myargv;
 
 char *strupr (char *in);
 char *strlower (char *in);
-int Q_strncasecmp (char *s1, char *s2, int n);
-int Q_strcasecmp (char *s1, char *s2);
+int Q_strncasecmp (const char *s1, const char *s2, int n);
+int Q_strcasecmp (const char *s1, const char *s2);
 void Q_getwd (char *out);
 
 int Q_filelength (FILE *f);
-int	FileTime (char *path);
+int FileTime (const char *path);
 
-void	Q_mkdir (char *path);
+void Q_mkdir (const char *path);
 
-extern	char		qdir[1024];
-extern	char		gamedir[1024];
-void SetQdirFromPath (char *path);
-char *ExpandArg (char *path);	/* from cmd line */
-char *ExpandPath (char *path);	/* from scripts */
-char *ExpandPathAndArchive (char *path);
-
+extern char qdir[1024];
+extern char gamedir[1024];
+void SetQdirFromPath (const char *path);
+char *ExpandArg (const char *path);	/* from cmd line */
+char *ExpandPath (const char *path);	/* from scripts */
+char *ExpandPathAndArchive (const char *path);
 
 double I_FloatTime (void);
 
-void	Error (char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
-int		CheckParm (char *check);
+int CheckParm (char *check);
 
-FILE	*SafeOpenWrite (char *filename);
-FILE	*SafeOpenRead (char *filename);
-void	SafeRead (FILE *f, void *buffer, int count);
-void	SafeWrite (FILE *f, void *buffer, int count);
+FILE *SafeOpenWrite (const char *filename);
+FILE *SafeOpenRead (const char *filename);
+void SafeRead (FILE *f, void *buffer, int count);
+void SafeWrite (FILE *f, void *buffer, int count);
 
-int		LoadFile (char *filename, void **bufferptr);
-int		TryLoadFile (char *filename, void **bufferptr);
-void	SaveFile (char *filename, void *buffer, int count);
-qboolean	FileExists (char *filename);
+int LoadFile (const char *filename, void **bufferptr);
+int TryLoadFile (const char *filename, void **bufferptr);
+void SaveFile (const char *filename, void *buffer, int count);
+qboolean FileExists (const char *filename);
 
-void 	DefaultExtension (char *path, char *extension);
-void 	DefaultPath (char *path, char *basepath);
-void 	StripFilename (char *path);
-void 	StripExtension (char *path);
+void DefaultExtension (char *path, char *extension);
+void DefaultPath (char *path, char *basepath);
+void StripFilename (char *path);
+void StripExtension (char *path);
 
-void 	ExtractFilePath (char *path, char *dest);
-void 	ExtractFileBase (char *path, char *dest);
-void	ExtractFileExtension (char *path, char *dest);
+void ExtractFilePath (char *path, char *dest);
+void ExtractFileBase (char *path, char *dest);
+void ExtractFileExtension (char *path, char *dest);
 
-int 	ParseNum (char *str);
+int ParseNum (char *str);
 
-short	BigShort (short l);
-short	LittleShort (short l);
-int		BigLong (int l);
-int		LittleLong (int l);
-float	BigFloat (float l);
-float	LittleFloat (float l);
+short BigShort (short l);
+short LittleShort (short l);
+int BigLong (int l);
+int LittleLong (int l);
+float BigFloat (float l);
+float LittleFloat (float l);
 
 
 char *COM_Parse (char *data);
 
-char *copystring(char *s);
+char *copystring(const char *s);
 
-void	CreatePath (char *path);
-void	QCopyFile (char *from, char *to);
+void CreatePath (char *path);
+void QCopyFile (const char *from, char *to);
 
-extern	qboolean		archive;
-extern	char			archivedir[1024];
+extern qboolean archive;
+extern char archivedir[1024];
 
-
-extern	qboolean verbose;
-void qprintf (char *format, ...) __attribute__((format(printf, 1, 2)));
+void Error (const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
+void Sys_Printf (const char *format, ...) __attribute__((format(printf, 1, 2)));
+void Sys_FPrintf (int flag, const char *text, ...) __attribute__((format(printf, 2, 3)));
 
 void ExpandWildcards (int *argc, char ***argv);
-
 
 /* for compression routines */
 typedef struct
@@ -116,6 +120,5 @@ typedef struct
 	byte	*data;
 	int		count;
 } cblock_t;
-
 
 #endif

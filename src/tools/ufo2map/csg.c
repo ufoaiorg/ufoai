@@ -393,8 +393,8 @@ extern bspbrush_t *ChopBrushes (bspbrush_t *head)
 	bspbrush_t	*sub, *sub2;
 	int			c1, c2;
 
-	qprintf ("---- ChopBrushes ----\n");
-	qprintf ("original brushes: %i\n", CountBrushList (head));
+	Sys_FPrintf( SYS_VRB, "---- ChopBrushes ----\n");
+	Sys_FPrintf( SYS_VRB, "original brushes: %i\n", CountBrushList (head));
 
 	keep = NULL;
 
@@ -402,12 +402,12 @@ newlist:
 	/* find tail */
 	if (!head)
 		return NULL;
-	for (tail=head ; tail->next ; tail=tail->next)
-	;
 
-	for (b1=head ; b1 ; b1=next) {
+	for (tail = head; tail->next; tail = tail->next);
+
+	for (b1 = head; b1; b1 = next) {
 		next = b1->next;
-		for (b2=b1->next ; b2 ; b2 = b2->next) {
+		for (b2 = b1->next; b2; b2 = b2->next) {
 			if (BrushesDisjoint (b1, b2))
 				continue;
 
@@ -473,7 +473,7 @@ newlist:
 		}
 	}
 
-	qprintf ("output brushes: %i\n", CountBrushList (keep));
+	Sys_FPrintf( SYS_VRB, "output brushes: %i\n", CountBrushList (keep));
 	return keep;
 }
 

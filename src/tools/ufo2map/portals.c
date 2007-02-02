@@ -175,22 +175,6 @@ void RemovePortalFromNode (portal_t *portal, node_t *l)
 	}
 }
 
-/*============================================================================ */
-
-/**
- * @brief
- */
-void PrintPortal (portal_t *p)
-{
-	int i;
-	winding_t *w;
-
-	w = p->winding;
-	for (i=0 ; i<w->numpoints ; i++)
-		printf ("(%5.0f,%5.0f,%5.0f)\n",w->p[i][0]
-		, w->p[i][1], w->p[i][2]);
-}
-
 /**
  * @brief The created portals will face the global outside_node
  */
@@ -216,9 +200,9 @@ void MakeHeadnodePortals (tree_t *tree)
 	tree->outside_node.portals = NULL;
 	tree->outside_node.contents = 0;
 
-	for (i=0 ; i<3 ; i++)
-		for (j=0 ; j<2 ; j++) {
-			n = j*3 + i;
+	for (i = 0; i < 3; i++)
+		for (j = 0; j < 2; j++) {
+			n = j * 3 + i;
 
 			p = AllocPortal ();
 			portals[n] = p;
@@ -238,8 +222,8 @@ void MakeHeadnodePortals (tree_t *tree)
 		}
 
 	/* clip the basewindings by all the other planes */
-	for (i=0 ; i<6 ; i++) {
-		for (j=0 ; j<6 ; j++) {
+	for (i = 0; i < 6; i++) {
+		for (j = 0; j < 6; j++) {
 			if (j == i)
 				continue;
 			ChopWindingInPlace (&portals[i]->winding, bplanes[j].normal, bplanes[j].dist, ON_EPSILON);
@@ -451,12 +435,12 @@ void MakeTreePortals_r (node_t *node)
 
 	CalcNodeBounds (node);
 	if (node->mins[0] >= node->maxs[0]) {
-		printf ("WARNING: node without a volume\n");
+		Sys_Printf ("WARNING: node without a volume\n");
 	}
 
 	for (i=0 ; i<3 ; i++) {
 		if (node->mins[i] < -8000 || node->maxs[i] > 8000) {
-			printf ("WARNING: node with unbounded volume\n");
+			Sys_Printf ("WARNING: node with unbounded volume\n");
 			break;
 		}
 	}
@@ -549,11 +533,11 @@ qboolean FloodEntities (tree_t *tree)
 	node_t *headnode;
 
 	headnode = tree->headnode;
-	qprintf ("--- FloodEntities ---\n");
+	Sys_FPrintf( SYS_VRB, "--- FloodEntities ---\n");
 	inside = qfalse;
 	tree->outside_node.occupied = 0;
 
-	for (i=1 ; i<num_entities ; i++) {
+	for (i = 1; i < num_entities; i++) {
 		GetVectorForKey (&entities[i], "origin", origin);
 		if (VectorCompare(origin, vec3_origin))
 			continue;
@@ -566,8 +550,8 @@ qboolean FloodEntities (tree_t *tree)
 		if (!strcmp (cl, "info_player_start")) {
 			int	x, y;
 
-			for (x=-16 ; x<=16 ; x += 16) {
-				for (y=-16 ; y<=16 ; y += 16) {
+			for (x = -16; x <= 16; x += 16) {
+				for (y = -16; y <= 16; y += 16) {
 					origin[0] += x;
 					origin[1] += y;
 					if (PlaceOccupant (headnode, origin, &entities[i])) {
@@ -586,9 +570,9 @@ gotit: ;
 	}
 
 	if (!inside) {
-		qprintf ("no entities in open -- no filling\n");
+		Sys_FPrintf( SYS_VRB, "no entities in open -- no filling\n");
 	} else if (tree->outside_node.occupied) {
-		qprintf ("entity reached from outside -- no filling\n");
+		Sys_FPrintf( SYS_VRB, "entity reached from outside -- no filling\n");
 	}
 
 	return (qboolean)(inside && !tree->outside_node.occupied);
@@ -624,7 +608,7 @@ void FloodAreas_r (node_t *node)
 
 		/* note the current area as bounding the portal */
 		if (e->portalareas[1]) {
-			printf ("WARNING: areaportal entity %i touches > 2 areas\n", b->original->entitynum);
+			Sys_Printf ("WARNING: areaportal entity %i touches > 2 areas\n", b->original->entitynum);
 			return;
 		}
 		if (e->portalareas[0])
@@ -703,7 +687,7 @@ void SetAreaPortalAreas_r (node_t *node)
 		e = &entities[b->original->entitynum];
 		node->area = e->portalareas[0];
 		if (!e->portalareas[1]) {
-			printf ("WARNING: areaportal entity %i doesn't touch two areas\n", b->original->entitynum);
+			Sys_Printf ("WARNING: areaportal entity %i doesn't touch two areas\n", b->original->entitynum);
 			return;
 		}
 	}
@@ -723,9 +707,9 @@ void EmitAreaPortals (node_t *headnode)
 	numareas = c_areas+1;
 	numareaportals = 1;		/* leave 0 as an error */
 
-	for (i=1 ; i<=c_areas ; i++) {
+	for (i = 1; i <= c_areas; i++) {
 		dareas[i].firstareaportal = numareaportals;
-		for (j=0 ; j<num_entities ; j++) {
+		for (j = 0; j < num_entities; j++) {
 			e = &entities[j];
 			if (!e->areaportalnum)
 				continue;
@@ -743,8 +727,8 @@ void EmitAreaPortals (node_t *headnode)
 		dareas[i].numareaportals = numareaportals - dareas[i].firstareaportal;
 	}
 
-	qprintf ("%5i numareas\n", numareas);
-	qprintf ("%5i numareaportals\n", numareaportals);
+	Sys_FPrintf( SYS_VRB, "%5i numareas\n", numareas);
+	Sys_FPrintf( SYS_VRB, "%5i numareaportals\n", numareaportals);
 }
 
 /**
@@ -752,10 +736,10 @@ void EmitAreaPortals (node_t *headnode)
  */
 void FloodAreas (tree_t *tree)
 {
-	qprintf ("--- FloodAreas ---\n");
+	Sys_FPrintf( SYS_VRB, "--- FloodAreas ---\n");
 	FindAreas_r (tree->headnode);
 	SetAreaPortalAreas_r (tree->headnode);
-	qprintf ("%5i areas\n", c_areas);
+	Sys_FPrintf( SYS_VRB, "%5i areas\n", c_areas);
 }
 
 /*====================================================== */
@@ -795,11 +779,11 @@ void FillOutside (node_t *headnode)
 	c_outside = 0;
 	c_inside = 0;
 	c_solid = 0;
-	qprintf ("--- FillOutside ---\n");
+	Sys_FPrintf( SYS_VRB, "--- FillOutside ---\n");
 	FillOutside_r (headnode);
-	qprintf ("%5i solid leafs\n", c_solid);
-	qprintf ("%5i leafs filled\n", c_outside);
-	qprintf ("%5i inside leafs\n", c_inside);
+	Sys_FPrintf( SYS_VRB, "%5i solid leafs\n", c_solid);
+	Sys_FPrintf( SYS_VRB, "%5i leafs filled\n", c_outside);
+	Sys_FPrintf( SYS_VRB, "%5i inside leafs\n", c_inside);
 }
 
 
@@ -830,16 +814,15 @@ void FindPortalSide (portal_t *p)
 	bestside = NULL;
 	bestdot = 0;
 
-	for (j=0 ; j<2 ; j++) {
+	for (j = 0; j < 2; j++) {
 		n = p->nodes[j];
 		p1 = &mapplanes[p->onnode->planenum];
 		for (bb=n->brushlist ; bb ; bb=bb->next) {
 			brush = bb->original;
 
-			if ( !(brush->contents & viscontents) )
+			if (!(brush->contents & viscontents))
 				continue;
-			for (i=0 ; i<brush->numsides ; i++)
-			{
+			for (i = 0; i < brush->numsides; i++) {
 				side = &brush->original_sides[i];
 				if (side->bevel)
 					continue;
@@ -862,7 +845,7 @@ void FindPortalSide (portal_t *p)
 
 gotit:
 	if (!bestside)
-		qprintf ("WARNING: side not found for portal\n");
+		Sys_FPrintf( SYS_VRB, "WARNING: side not found for portal\n");
 
 	p->sidefound = qtrue;
 	p->side = bestside;
@@ -888,7 +871,7 @@ void MarkVisibleSides_r (node_t *node)
 		return;
 
 	/* see if there is a visible face */
-	for (p=node->portals ; p ; p = p->next[!s]) {
+	for (p = node->portals; p; p = p->next[!s]) {
 		s = (p->nodes[0] == node);
 		if (!p->onnode)
 			continue;		/* edge of world */
@@ -909,13 +892,13 @@ void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 	mapbrush_t	*mb;
 	int		numsides;
 
-	qprintf ("--- MarkVisibleSides ---\n");
+	Sys_FPrintf( SYS_VRB, "--- MarkVisibleSides ---\n");
 
 	/* clear all the visible flags */
-	for (i=startbrush ; i<endbrush ; i++) {
+	for (i = startbrush; i < endbrush; i++) {
 		mb = &mapbrushes[i];
 		numsides = mb->numsides;
-		for (j=0 ; j<numsides ; j++)
+		for (j = 0; j < numsides; j++)
 			mb->original_sides[j].visible = qfalse;
 	}
 

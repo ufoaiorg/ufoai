@@ -167,10 +167,10 @@ static void MakePatchForFace (int fn, winding_t *w)
 
 	WindingCenter (w, patch->origin);
 	VectorAdd (patch->origin, patch->plane->normal, patch->origin);
-	leaf = PointInLeafRad(patch->origin);
+	leaf = Rad_PointInLeaf(patch->origin);
 	patch->cluster = leaf->cluster;
 	if (patch->cluster == -1)
-		qprintf ("patch->cluster == -1\n");
+		Sys_FPrintf( SYS_VRB, "patch->cluster == -1\n");
 
 	patch->area = area;
 	if (patch->area <= 1)
@@ -204,7 +204,7 @@ static entity_t *EntityForModel (int modnum)
 
 	sprintf (name, "*%i", modnum);
 	/* search the entities for one using modnum */
-	for (i=0 ; i<num_entities ; i++) {
+	for (i = 0; i < num_entities; i++) {
 		s = ValueForKey (&entities[i], "model");
 		if (!strcmp (s, name))
 			return &entities[i];
@@ -226,7 +226,7 @@ extern void MakePatches (void)
 	dmodel_t	*mod;
 	vec3_t		origin;
 
-	qprintf ("%i faces\n", numfaces);
+	Sys_FPrintf( SYS_VRB, "%i faces\n", numfaces);
 
 	for (i = 0; i < nummodels; i++) {
 		mod = &dmodels[i];
@@ -243,7 +243,7 @@ extern void MakePatches (void)
 		}
 	}
 
-	qprintf ("%i square feet\n", (int)(totalarea/64));
+	Sys_FPrintf( SYS_VRB, "%i square feet\n", (int)(totalarea/64));
 }
 
 /*
@@ -274,17 +274,17 @@ static void FinishSplit (patch_t *patch, patch_t *newp)
 
 	WindingCenter (patch->winding, patch->origin);
 	VectorAdd (patch->origin, patch->plane->normal, patch->origin);
-	leaf = PointInLeafRad(patch->origin);
+	leaf = Rad_PointInLeaf(patch->origin);
 	patch->cluster = leaf->cluster;
 	if (patch->cluster == -1)
-		qprintf ("patch->cluster == -1\n");
+		Sys_FPrintf( SYS_VRB, "patch->cluster == -1\n");
 
 	WindingCenter (newp->winding, newp->origin);
 	VectorAdd (newp->origin, newp->plane->normal, newp->origin);
-	leaf = PointInLeafRad(newp->origin);
+	leaf = Rad_PointInLeaf(newp->origin);
 	newp->cluster = leaf->cluster;
 	if (newp->cluster == -1)
-		qprintf ("patch->cluster == -1\n");
+		Sys_FPrintf( SYS_VRB, "patch->cluster == -1\n");
 }
 
 /**
@@ -404,5 +404,5 @@ extern void SubdividePatches (void)
 	num = num_patches;
 	for (i = 0; i < num ; i++)
 		DicePatch (&patches[i]);
-	qprintf ("%i patches after subdivision\n", num_patches);
+	Sys_FPrintf( SYS_VRB, "%i patches after subdivision\n", num_patches);
 }

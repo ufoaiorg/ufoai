@@ -267,7 +267,7 @@ int ConvertBSPToASE( char *bspName )
 	char name[1024], base[1024];
 
 	/* note it */
-	printf( "--- Convert BSP to ASE ---\n" );
+	Sys_Printf( "--- Convert BSP to ASE ---\n" );
 
 	/* create the ase filename from the bsp name */
 	strcpy(name, bspName);
@@ -276,11 +276,11 @@ int ConvertBSPToASE( char *bspName )
 	strcat(name, ".bsp");
 	LoadBSPFile (name);
 	ParseEntities();
-	printf("converting '%s'\n", name);
+	Sys_Printf("converting '%s'\n", name);
 
 	StripExtension( name );
 	strcat(name, ".ase");
-	printf("writing '%s'\n", name);
+	Sys_Printf("writing '%s'\n", name);
 
 	ExtractFileBase( bspName, base );
 	strcat( base, ".bsp" );
@@ -306,7 +306,7 @@ int ConvertBSPToASE( char *bspName )
 	/* print materials */
 	fprintf( f, "*MATERIAL_LIST\t{\r\n" );
 	fprintf( f, "\t*MATERIAL_COUNT\t%d\r\n", numtexinfo );
-	printf ("...exporting %i materials\n", numtexinfo);
+	Sys_Printf ("...exporting %i materials\n", numtexinfo);
 	for (i = 0; i < numtexinfo; i++) {
 #if 0
 		shader = &bspShaders[i];
@@ -315,7 +315,7 @@ int ConvertBSPToASE( char *bspName )
 	}
 	fprintf(f, "}\r\n");
 
-	printf ("...exporting %i entities\n", num_entities);
+	Sys_Printf ("...exporting %i entities\n", num_entities);
 	/* walk entity list */
 	for (i = 0; i < num_entities; i++) {
 		/* get entity and model */

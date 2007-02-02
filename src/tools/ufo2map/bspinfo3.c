@@ -44,7 +44,7 @@ int main (int argc, char **argv)
 		Error ("usage: bspinfo bspfile [bspfiles]");
 
 	for (i = 1; i < argc; i++) {
-		printf ("---------------------\n");
+		Sys_Printf( ("---------------------\n");
 		strcpy (source, argv[i]);
 		DefaultExtension (source, ".bsp");
 		f = fopen (source, "rb");
@@ -53,11 +53,11 @@ int main (int argc, char **argv)
 			fclose (f);
 		} else
 			size = 0;
-		printf ("%s: %i\n", source, size);
+		Sys_Printf( ("%s: %i\n", source, size);
 
 		LoadBSPFile (source);
 		PrintBSPFileSizes ();
-		printf ("---------------------\n");
+		Sys_Printf( ("---------------------\n");
 	}
 	return 0;
 }

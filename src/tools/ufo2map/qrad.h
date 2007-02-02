@@ -35,8 +35,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <windows.h>
 #endif
 
-extern qboolean	glview;
+#ifndef M_PI
+#define M_PI        3.14159265358979323846  /* matches value in gcc v2 math.h */
+#endif
 
+extern qboolean	glview;
 
 typedef enum
 {
@@ -44,8 +47,6 @@ typedef enum
 	emit_point,
 	emit_spotlight
 } emittype_t;
-
-
 
 typedef struct directlight_s
 {
@@ -144,7 +145,7 @@ int TestLine (vec3_t start, vec3_t stop);
 
 void CreateDirectLights (void);
 
-dleaf_t		*PointInLeafRad (vec3_t point);
+dleaf_t		*Rad_PointInLeaf (vec3_t point);
 
 
 extern	dplane_t	backplanes[MAX_MAP_PLANES];

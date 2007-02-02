@@ -51,6 +51,8 @@ static char com_token[1024];
 qboolean com_eof, archive;
 char archivedir[1024];
 
+/* only printf if in verbose mode */
+qboolean verbose = qfalse;
 
 #define	MAX_EX_ARGC	1024
 int ex_argc;
@@ -105,7 +107,7 @@ void ExpandWildcards (int *argc, char ***argv)
 /**
  * @brief For abnormal program terminations in windowed apps
  */
-void Error (char *error, ...)
+void Error (const char *error, ...)
 {
 	va_list argptr;
 	char	text[1024];
@@ -128,34 +130,20 @@ void Error (char *error, ...)
 /**
  * @brief For abnormal program terminations in console apps
  */
-void Error (char *error, ...)
+void Error (const char *error, ...)
 {
 	va_list argptr;
 
-	printf ("\n************ ERROR ************\n");
+	Sys_Printf ("\n************ ERROR ************\n");
 
 	va_start (argptr,error);
 	vprintf (error,argptr);
 	va_end (argptr);
-	printf ("\n");
+	Sys_Printf ("%s\n", error);
 
 	exit (1);
 }
 #endif
-
-/* only printf if in verbose mode */
-qboolean verbose = qfalse;
-void qprintf (char *format, ...)
-{
-	va_list argptr;
-
-	if (!verbose)
-		return;
-
-	va_start (argptr,format);
-	vprintf (format,argptr);
-	va_end (argptr);
-}
 
 
 /**
@@ -171,7 +159,7 @@ char gamedir[1024];
 /**
  * @brief
  */
-void SetQdirFromPath (char *path)
+void SetQdirFromPath (const char *path)
 {
 	char	temp[1024];
 	char	c[1024];
@@ -195,7 +183,7 @@ void SetQdirFromPath (char *path)
 		if ( FileExists(temp) ) {
 			strncpy (gamedir, c, strlen(c)-1);
 			strncat (gamedir, "/"BASEDIR"/", sizeof(gamedir));
-			qprintf ("gamedir: %s\n", gamedir);
+			Sys_FPrintf( SYS_VRB, "gamedir: %s\n", gamedir);
 			return;
 		}
 	}
@@ -205,7 +193,7 @@ void SetQdirFromPath (char *path)
 /**
  * @brief
  */
-char *ExpandArg (char *path)
+char *ExpandArg (const char *path)
 {
 	static char full[1024];
 
@@ -220,13 +208,15 @@ char *ExpandArg (char *path)
 /**
  * @brief
  */
-char *ExpandPath (char *path)
+char *ExpandPath (const char *path)
 {
 	static char full[1024];
 	if (!qdir)
 		Error ("ExpandPath called without qdir set");
-	if (path[0] == '/' || path[0] == '\\' || path[1] == ':')
-		return path;
+	if (path[0] == PATHSEPERATOR) {
+		strncpy(full, path, sizeof(full));
+		return full;
+	}
 	snprintf (full, sizeof(full), "%s%s", qdir, path);
 	return full;
 }
@@ -234,7 +224,7 @@ char *ExpandPath (char *path)
 /**
  * @brief
  */
-char *ExpandPathAndArchive (char *path)
+char *ExpandPathAndArchive (const char *path)
 {
 	char *expanded;
 	char archivename[1024];
@@ -252,7 +242,7 @@ char *ExpandPathAndArchive (char *path)
 /**
  * @brief
  */
-char *copystring(char *s)
+char *copystring(const char *s)
 {
 	char	*b;
 	b = (char*)malloc(sizeof(char)*(strlen(s)+1));
@@ -295,7 +285,7 @@ void Q_getwd (char *out)
 	strcat (out, "\\");
 #else
 	if (getcwd(out, 256) == NULL)
-		printf("Warning, getcwd failed\n");
+		Sys_Printf("Warning, getcwd failed\n");
 	strcat (out, "/");
 #endif
 }
@@ -304,7 +294,7 @@ void Q_getwd (char *out)
 /**
  * @brief
  */
-void Q_mkdir (char *path)
+void Q_mkdir (const char *path)
 {
 #ifdef _WIN32
 	if (_mkdir (path) != -1)
@@ -321,7 +311,7 @@ void Q_mkdir (char *path)
  * @brief
  * @return -1 if not present
  */
-int	FileTime (char *path)
+int	FileTime (const char *path)
 {
 	struct stat buf;
 
@@ -401,7 +391,7 @@ skipwhite:
 /**
  * @brief
  */
-int Q_strncasecmp (char *s1, char *s2, int n)
+int Q_strncasecmp (const char *s1, const char *s2, int n)
 {
 	int c1, c2;
 
@@ -428,7 +418,7 @@ int Q_strncasecmp (char *s1, char *s2, int n)
 /**
  * @brief
  */
-int Q_strcasecmp (char *s1, char *s2)
+int Q_strcasecmp (const char *s1, const char *s2)
 {
 	return Q_strncasecmp (s1, s2, 99999);
 }
@@ -504,7 +494,7 @@ int Q_filelength (FILE *f)
 /**
  * @brief
  */
-FILE *SafeOpenWrite (char *filename)
+FILE *SafeOpenWrite (const char *filename)
 {
 	FILE	*f;
 
@@ -518,7 +508,7 @@ FILE *SafeOpenWrite (char *filename)
 /**
  * @brief
  */
-FILE *SafeOpenRead (char *filename)
+FILE *SafeOpenRead (const char *filename)
 {
 	FILE	*f;
 
@@ -553,7 +543,7 @@ void SafeWrite (FILE *f, void *buffer, int count)
 /**
  * @brief
  */
-qboolean FileExists (char *filename)
+qboolean FileExists (const char *filename)
 {
 	FILE	*f;
 
@@ -568,7 +558,7 @@ qboolean FileExists (char *filename)
  * @brief
  * @sa SaveFile
  */
-int LoadFile (char *filename, void **bufferptr)
+int LoadFile (const char *filename, void **bufferptr)
 {
 	FILE *f;
 	int length;
@@ -591,7 +581,7 @@ int LoadFile (char *filename, void **bufferptr)
  * @note Allows failure
  * @sa LoadFile
  */
-int TryLoadFile (char *filename, void **bufferptr)
+int TryLoadFile (const char *filename, void **bufferptr)
 {
 	FILE *f;
 	int length;
@@ -616,7 +606,7 @@ int TryLoadFile (char *filename, void **bufferptr)
  * @brief
  * @sa LoadFile
  */
-void SaveFile (char *filename, void *buffer, int count)
+void SaveFile (const char *filename, void *buffer, int count)
 {
 	FILE *f;
 
@@ -682,7 +672,7 @@ void StripExtension (char *path)
 	length = strlen(path)-1;
 	while (length > 0 && path[length] != '.') {
 		length--;
-		if (path[length] == '/')
+		if (path[length] == PATHSEPERATOR)
 			return;		/* no extension */
 	}
 	if (length)
@@ -954,9 +944,9 @@ void CreatePath (char *path)
 	if (path[1] == ':')
 		path += 2;
 
-	for (ofs = path+1 ; *ofs ; ofs++) {
+	for (ofs = path + 1; *ofs; ofs++) {
 		c = *ofs;
-		if (c == '/' || c == '\\') {	/* create the directory */
+		if (c == PATHSEPERATOR) {	/* create the directory */
 			*ofs = 0;
 			Q_mkdir (path);
 			*ofs = c;
@@ -968,7 +958,7 @@ void CreatePath (char *path)
 /**
  * @brief Used to archive source files
  */
-void QCopyFile (char *from, char *to)
+void QCopyFile (const char *from, char *to)
 {
 	void	*buffer;
 	int		length;
@@ -977,4 +967,37 @@ void QCopyFile (char *from, char *to)
 	CreatePath (to);
 	SaveFile (to, buffer, length);
 	free (buffer);
+}
+
+/**
+ * @brief
+ */
+void Sys_FPrintf (int flag, const char *format, ...)
+{
+	char out_buffer[4096];
+	va_list argptr;
+
+	if ((flag == SYS_VRB) && (verbose == qfalse))
+		return;
+
+	va_start (argptr, format);
+	vsprintf (out_buffer, format, argptr);
+	va_end (argptr);
+
+	printf(out_buffer);
+}
+
+/**
+ * @brief
+ */
+void Sys_Printf (const char *format, ...)
+{
+	char out_buffer[4096];
+	va_list argptr;
+
+	va_start (argptr, format);
+	vsprintf (out_buffer, format, argptr);
+	va_end (argptr);
+
+	printf(out_buffer);
 }
